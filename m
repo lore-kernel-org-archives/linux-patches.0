@@ -1,47 +1,53 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5C03295BED;
-	Sun,  1 Jun 2025 23:36:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C84C23000AC;
+	Sun,  1 Jun 2025 23:36:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748820993; cv=none; b=XfhNeMwU+3+Us9nIEJ6fh3Mk/oUoGN0ctSB1xQKldHItrhAgZ/DDUeMBo6Hrjf/72l2Ksz9mTcVsLxDXhIAlvZnYmSGAo0xt0lsrNVh04tqTH/T7mJ7K6RzTvioluL0hG55yx3+veQdM4ehrAovnqEHweTGQNAckpbxApxF2xb0=
+	t=1748820995; cv=none; b=CP5vP4eidZXsJ1MC1t0h2RMC56xK5xYv2cvIkPMLiiRTi6PwBrPe/F95YpRa1l34zHktLijC6lsnsVhzobF1++GAW0ejgd17x+vU2XRivmEnk/UDC9YMhhOUoO+Mz496UWHBlMznIBH9WmaOs2bVo1OHeXSHiXp2X5/+rWDLv9w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748820993; c=relaxed/simple;
-	bh=VPSYI9YJk54tbd8Fu51XhUH+m2Wc5Ks9D9030LdvBII=;
+	s=arc-20240116; t=1748820995; c=relaxed/simple;
+	bh=1bmLc9Qyey5Ex46UhpEx/JLmp70NC+hph8v61Ea+hRQ=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=I2cPKyJ2xaIQ+G8YPSOMgCCB/g8gSVQBrbK7sEIYkOmEB3Ni1th3gYEXbhS88MRlZL6KKR1bBlPlE2KiwP3WUPTqpSzxRsXyowet2y7kG0lAFumQnLF0SUK1CSeA7G6u16SQV1cxBWoQztr0Wo2CCt4QVBhYlSHXuxkGofJEIgE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ye/Q0Ugi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Pm6ggp7VBQQA9lyv4q2XkhMP4H2aUSS6EBm9k2Rb1hYk8fdb9So+5a4o52gMdnrPvdev/tN1sb/42ofapL12oCkseZLC04DBu4P5JJLl8oqcvyDJqNNbhVFz12p2DM8I4UFfGntiUoqjYwps887G4j/qhvw3IARSwOgEw96KiFY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Fchr7UIQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ye/Q0Ugi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3211C4CEF1;
-	Sun,  1 Jun 2025 23:36:30 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Fchr7UIQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC52BC4CEE7;
+	Sun,  1 Jun 2025 23:36:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748820992;
-	bh=VPSYI9YJk54tbd8Fu51XhUH+m2Wc5Ks9D9030LdvBII=;
+	s=k20201202; t=1748820995;
+	bh=1bmLc9Qyey5Ex46UhpEx/JLmp70NC+hph8v61Ea+hRQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ye/Q0UgiBTvZwmVv7AOg89+Ym5S4XntgXK3cQXpd4CX387zk/jArTr8yla+s09pOt
-	 MwMVKmD/uh5/PDhEBKKW77AyiMMn58+X707K1px2od7e+2U7Z5OP7kQt5+vqEn22Y8
-	 62YmLHNeWripRdHMzWELDZoYTdsunms9E/VTFoK4nzwTS5k5cboZGa4CriBiJUuhvR
-	 vUG/qaCd/BDHDE7EaZcs0ifScbXZK0inl6glHiWCnLIiRdraeiW+Lm1Z7VSxuxHB+D
-	 FbL6HTVTqeljkvro6HT6vz7JVQGJ/KOZvyEYBzhehDWwzhRqF8F8jWlvuqBLFLYBur
-	 vddanzZ78tj8Q==
+	b=Fchr7UIQz3g2hgQkVpnFMFZXy2coqMo784sou4/Biwdd7OMrkLc0tD6xm5o4gc4Xb
+	 DTvuF78FCxm8KdiK7y4evtgVkvbjwM2J7b27dMMTAfmeolsJUSf1Vj8ocd2WgR+LFk
+	 K/NLzXlpOPj9+rUEbb5JYywEa4yTQ8EcZP0c2yd2/YAqsjg0Jw6s9mVrydyCtjPaRs
+	 igQyBkRlZC1bGJHztsT6ar+MIbqhbpsz9IxsrWcVWfGlhg3mRuSf/vqGAu2W5k0InA
+	 pPk0h8WHaPtuZ7TGnmh1D0ehwFDshn02lDtIWzQKtezy1F5aB8hPw8Cdi03uOFVZoJ
+	 xe/YW64oVWHOg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-	Tomi Valkeinen <tomi.valkeinen+renesas@ideasonboard.com>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>,
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>,
-	kieran.bingham+renesas@ideasonboard.com,
-	mchehab@kernel.org,
-	linux-media@vger.kernel.org,
-	linux-renesas-soc@vger.kernel.org,
+	robdclark@gmail.com,
+	quic_abhinavk@quicinc.com,
+	lumag@kernel.org,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	quic_jesszhan@quicinc.com,
+	jun.nie@linaro.org,
+	jonathan@marek.ca,
+	linux-arm-msm@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.12 56/93] media: renesas: vsp1: Fix media bus code setup on RWPF source pad
-Date: Sun,  1 Jun 2025 19:33:23 -0400
-Message-Id: <20250601233402.3512823-56-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.12 57/93] drm/msm/dpu: don't select single flush for active CTL blocks
+Date: Sun,  1 Jun 2025 19:33:24 -0400
+Message-Id: <20250601233402.3512823-57-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250601233402.3512823-1-sashal@kernel.org>
 References: <20250601233402.3512823-1-sashal@kernel.org>
@@ -54,107 +60,74 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.12.31
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit b6e57605eff6224df4debf188eb7a02dedb7686f ]
+[ Upstream commit e93eee524bb78f3ee4b78654d0083382f98b3d23 ]
 
-The RWPF source pad media bus code can only be different from the sink
-pad code when enabling color space conversion, which can only convert
-between RGB and YUV. If the sink pad code is HSV, no conversion is
-possible. Fix the pad set format handler to reflect this hardware
-limitation.
+In case of ACTIVE CTLs, a single CTL is being used for flushing all INTF
+blocks. Don't skip programming the CTL on those targets.
 
-Signed-off-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Reviewed-by: Tomi Valkeinen <tomi.valkeinen+renesas@ideasonboard.com>
-Link: https://lore.kernel.org/r/20250429232904.26413-5-laurent.pinchart+renesas@ideasonboard.com
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/641585/
+Link: https://lore.kernel.org/r/20250307-dpu-active-ctl-v3-5-5d20655f10ca@linaro.org
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 **YES** This commit should be backported to stable kernel trees. ##
-Detailed Analysis ### **What Bug is Being Fixed** The commit fixes a
-critical bug in the VSP1 (Video Signal Processor) media driver's format
-validation logic. Specifically, the `vsp1_rwpf_set_format()` function
-was incorrectly allowing format conversion from HSV
-(`MEDIA_BUS_FMT_AHSV8888_1X32`) to other formats, which is a **hardware
-limitation violation**. **Before the fix**: The code blindly accepted
-any format conversion request on the source pad: ```c format->code =
-fmt->format.code; // Always accepts requested format ``` **After the
-fix**: The code properly validates hardware capabilities: ```c if
-(sink_format->code != MEDIA_BUS_FMT_AHSV8888_1X32 && fmt->format.code !=
-MEDIA_BUS_FMT_AHSV8888_1X32) format->code = fmt->format.code; // Allow
-RGB↔YUV conversion else format->code = sink_format->code; // Force pass-
-through for HSV ``` ### **Hardware Limitation Context** The VSP1 RWPF
-(Read/Write Pixel Formatter) hardware has specific conversion
-capabilities: - ✅ **RGB ↔ YUV conversion**: Supported - ❌ **HSV
-conversion**: Not supported in RWPF (requires separate HSIT module) ###
-**Impact and Severity** This is a **medium-to-high severity bug** for
-affected users: 1. **Data Corruption**: Applications using HSV formats
-could get incorrect video output 2. **Silent Failures**: Invalid
-configurations were accepted without error 3. **API Contract
-Violation**: V4L2 subdevice format negotiation expects proper validation
-4. **Affected Use Cases**: Computer vision applications, image
-processing pipelines using HSV color space ### **Why This Should Be
-Backported** **Stable Tree Criteria Met:** 1. ✅ **Important Bug Fix**:
-Prevents data corruption and improper hardware usage 2. ✅ **Small &
-Safe**: Only 10 lines changed, adds validation logic 3. ✅ **No
-Regression Risk**: Properly rejects invalid configurations instead of
-silently accepting them 4. ✅ **Long-standing Issue**: Not a recent
-regression, has been present since HSV support was added **Backporting
-Safety:** - **Minimal code change**: Only modifies format validation
-logic - **No ABI changes**: Maintains driver interface compatibility -
-**Conservative approach**: When in doubt, falls back to sink format
-(safe default) - **Hardware-correct behavior**: Aligns driver behavior
-with actual hardware capabilities **Comparison with Similar Commits:**
-Looking at the historical examples provided, this commit has
-characteristics very similar to **Similar Commit #5** which was marked
-as "Backport Status: YES". That commit also: - Fixed format validation
-in a media driver - Addressed hardware limitations in format conversion
-- Was a small, contained fix that prevented incorrect configurations -
-Added proper validation rather than changing core functionality ###
-**Risk Assessment** **Low Risk** for several reasons: 1. The fix makes
-the driver **more restrictive** (rejects invalid configs) rather than
-more permissive 2. Applications using valid RGB/YUV conversions remain
-unaffected 3. Applications using invalid HSV conversions will now get
-proper error handling instead of silent corruption 4. No functional
-changes to working configurations This commit represents exactly the
-type of important, low-risk bug fix that stable kernel trees are
-designed to include.
+Analysis: **1. Clear Bug Fix Nature:** The commit fixes a functional bug
+where CTL programming was being incorrectly skipped on ACTIVE CTL
+configurations. The commit message explicitly states "Don't skip
+programming the CTL on those targets" indicating incorrect behavior was
+occurring. **2. Small and Contained Change:** The change is minimal - it
+modifies only the `dpu_encoder_phys_vid_needs_single_flush()` function
+by adding a single condition check: ```c - return phys_enc->split_role
+!= ENC_ROLE_SOLO; + return !(phys_enc->hw_ctl->caps->features &
+BIT(DPU_CTL_ACTIVE_CFG)) && + phys_enc->split_role != ENC_ROLE_SOLO; ```
+**3. Hardware-Specific Fix:** The fix addresses a specific hardware
+configuration issue for devices with `DPU_CTL_ACTIVE_CFG` feature. From
+examining the kernel code, this affects multiple SoCs including SM8150,
+SM8250, SM6150, SC7180, and others - making it a widely impacting fix.
+**4. Clear Functional Impact:** - **Before**: On ACTIVE CTL targets, the
+function incorrectly returned true for split configurations, causing CTL
+programming to be skipped - **After**: On ACTIVE CTL targets, it returns
+false, ensuring proper CTL programming occurs - **Effect**: Ensures
+display pipeline functions correctly on affected hardware **5. Tested
+Change:** The commit includes "Tested-by: Neil Armstrong
+<neil.armstrong@linaro.org> # on SM8550-QRD" indicating real hardware
+testing was performed. **6. Matches Successful Backport Pattern:** This
+commit closely matches the pattern of Similar Commits #1, #2, and #4
+(all marked YES): - Small, targeted fix (line 377 in
+`dpu_encoder_phys_vid.c:377`) - Addresses incorrect hardware behavior -
+Has clear before/after functional difference - Affects critical graphics
+subsystem functionality **7. Risk Assessment:** - **Low regression
+risk**: The change only affects the specific condition logic -
+**Targeted scope**: Only impacts ACTIVE CTL configurations -
+**Conservative fix**: Makes the logic more restrictive (requires both
+conditions to skip programming) This is a clear hardware bug fix that
+prevents display issues on affected SoCs and follows the stable tree
+criteria for important bugfixes with minimal regression risk.
 
- drivers/media/platform/renesas/vsp1/vsp1_rwpf.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/renesas/vsp1/vsp1_rwpf.c b/drivers/media/platform/renesas/vsp1/vsp1_rwpf.c
-index 9d38203e73d00..1b4bac7b7cfa1 100644
---- a/drivers/media/platform/renesas/vsp1/vsp1_rwpf.c
-+++ b/drivers/media/platform/renesas/vsp1/vsp1_rwpf.c
-@@ -76,11 +76,20 @@ static int vsp1_rwpf_set_format(struct v4l2_subdev *subdev,
- 	format = v4l2_subdev_state_get_format(state, fmt->pad);
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+index d8a2edebfe8c3..d1d270dd88547 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+@@ -372,7 +372,8 @@ static void dpu_encoder_phys_vid_underrun_irq(void *arg)
+ static bool dpu_encoder_phys_vid_needs_single_flush(
+ 		struct dpu_encoder_phys *phys_enc)
+ {
+-	return phys_enc->split_role != ENC_ROLE_SOLO;
++	return !(phys_enc->hw_ctl->caps->features & BIT(DPU_CTL_ACTIVE_CFG)) &&
++		phys_enc->split_role != ENC_ROLE_SOLO;
+ }
  
- 	if (fmt->pad == RWPF_PAD_SOURCE) {
-+		const struct v4l2_mbus_framefmt *sink_format =
-+			v4l2_subdev_state_get_format(state, RWPF_PAD_SINK);
-+
- 		/*
- 		 * The RWPF performs format conversion but can't scale, only the
--		 * format code can be changed on the source pad.
-+		 * format code can be changed on the source pad when converting
-+		 * between RGB and YUV.
- 		 */
--		format->code = fmt->format.code;
-+		if (sink_format->code != MEDIA_BUS_FMT_AHSV8888_1X32 &&
-+		    fmt->format.code != MEDIA_BUS_FMT_AHSV8888_1X32)
-+			format->code = fmt->format.code;
-+		else
-+			format->code = sink_format->code;
-+
- 		fmt->format = *format;
- 		goto done;
- 	}
+ static void dpu_encoder_phys_vid_atomic_mode_set(
 -- 
 2.39.5
 
