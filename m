@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3482D271478;
-	Sun,  1 Jun 2025 23:40:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 831BE317FB1;
+	Sun,  1 Jun 2025 23:40:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748821206; cv=none; b=IgwiqnrLqWDG++0GXn7++vV52ZMDIMGWE0kBeMk96C1BYQmAPLL4MPskOvzW10xz8z4/HavKr4s7KVtHPKlKEcIYeEfR5hKCpmH+0ce84preZmrC3hvAxPXD15uqYUTUQ2OG5lQylNAav342OdxYP/qeZtbz09+C6Tnj1HvEonA=
+	t=1748821207; cv=none; b=Hdg80u/vrIaqvU6UWlwDEQ/xG0pAnS5vWuY+59hZ+LV45nfXpgvGbUhKjWWrQdttnQZCGBF/lbcctv9Cw1I9wyeYUsVHT4/rWk3ZvwePYLE25x0xYDpD7Zb3cJZcwVSbXDdNF/+UpsrkFDIpisrVTkrXpev5QJfy+hslcaowlDU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748821206; c=relaxed/simple;
-	bh=+ZH6OTkRxGA/CUXwXFSQTiU9wUtruA/4MRlla24b+Pg=;
+	s=arc-20240116; t=1748821207; c=relaxed/simple;
+	bh=n0M/wQVZo/kUxUGlIqqyj2MoFjGtXjzCGIX1oHALJLc=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=acUvXZW8ct02vm7KaevCh3Y7rEL+kBuH2fWXgh27sggGHk8wRrVUpMAKmMLpAbwtc32MzBCDeERQBb6E9VMDaF+CMNdP/+MZPFk4PKmVqGFeN/uNIk+nTg4rzWPYw28j3FIUN6fVMTkmGdDVs+a3qYssJx6jre/w/opj8U/j+Jc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=u9E4k074; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Lbcr9nfb4dpS265d5jkSoq67oe3NlAojQk3bQ1KuLWot1WCP5gielBTigPjdWlajzOgiTjkX6wgaPhu8JVsPIK4fCOW6XI7R/wxNJBym7mTk6rJvDXiyNLyc7gfHhhsHoTilnDJ6mYyDB+8KB6Xg36G90431cAY2qjdwRcST25s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OeStQPHJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="u9E4k074"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1437CC4CEF1;
-	Sun,  1 Jun 2025 23:40:04 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OeStQPHJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79610C4CEF2;
+	Sun,  1 Jun 2025 23:40:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748821206;
-	bh=+ZH6OTkRxGA/CUXwXFSQTiU9wUtruA/4MRlla24b+Pg=;
+	s=k20201202; t=1748821207;
+	bh=n0M/wQVZo/kUxUGlIqqyj2MoFjGtXjzCGIX1oHALJLc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u9E4k074F1ARIe6YJsNyQViFqwReTkgWph7P1gMnHrKy1RZCIse7C8b7kn7eyj1tU
-	 lr3y+zeZhS+jo1tFRbPMZZ/LgM94gejf1d/kbQUzaAJE8VrlXUZnTBA5U0RJRrGcit
-	 BDZADTsKjrMnzYM0BBaZihF/bSw3MGIOoVJ4lLD5AX0HTkHOnmRhL013tuJifb9srq
-	 ILw2GzfSrJEAW19rmvzX225UXbbgOk8xQVySSdZLy+iuJab57TEjZPEEAICvRTrtlg
-	 vThVL8f+eQXdVTjFie7hlhxdr9t3J23c2PcEiUaeSICnUKp97pFonCLFPkcXELBWIf
-	 LIrMYNbu410bw==
+	b=OeStQPHJUj3Ko6KW1BN6i5YjR4oK3tk5tAOHGCI/j9sqIYh1kHgP4YnPgVxDOccAu
+	 Z1ccGK4orhDNO8G9Ie6FoyTiZ1iVefavb0VLVuD8o0vtGxAPkoRzJPxEna92ZCv7xj
+	 FNpJBv/1ICYhYoHnjKzhf3UvPfsWfFAcBJ4hl7MtOM864Wzd3vm1eyFyw3JyLir0BE
+	 6+i+FVGzqKkiS3qCQadNywYurU/mdQzZ/HZXLnzBy+B7WKv8F5Iaio9qYDroK4V3P0
+	 pk4Adw+swMd4DRWOvTFg/jYKvtlXkRJb2b78ztGHUwrmYxst7DvcdjCAzpSWKCUFw7
+	 hrGR4n3R7TExA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: =?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
-	Willy Tarreau <w@1wt.eu>,
+Cc: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Bartosz Golaszewski <brgl@bgdev.pl>,
 	Sasha Levin <sashal@kernel.org>,
-	linux@weissschuh.net,
-	nathan@kernel.org,
-	linux-kernel@vger.kernel.org,
-	llvm@lists.linux.dev
-Subject: [PATCH AUTOSEL 6.6 64/66] tools/nolibc: use intmax definitions from compiler
-Date: Sun,  1 Jun 2025 19:37:41 -0400
-Message-Id: <20250601233744.3514795-64-sashal@kernel.org>
+	linus.walleij@linaro.org,
+	linux-gpio@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.6 65/66] gpio: ds4520: don't check the 'ngpios' property in the driver
+Date: Sun,  1 Jun 2025 19:37:42 -0400
+Message-Id: <20250601233744.3514795-65-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250601233744.3514795-1-sashal@kernel.org>
 References: <20250601233744.3514795-1-sashal@kernel.org>
@@ -48,94 +47,90 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.6.92
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-[ Upstream commit e5407c0820ea5fa7117b85ed32b724af73156d63 ]
+[ Upstream commit df1540f8f311a8b2ef0e450e7e40710784acc8c7 ]
 
-The printf format checking in the compiler uses the intmax types from
-the compiler, not libc. This can lead to compiler errors.
+This is already done by the gpio-regmap abstraction by calling
+gpiochip_get_ngpios(). We don't need to do this at the driver level.
 
-Instead use the types already provided by the compiler.
-
-Example issue with clang 19 for arm64:
-
-nolibc-test.c:30:2: error: format specifies type 'uintmax_t' (aka 'unsigned long') but the argument has type 'uintmax_t' (aka 'unsigned long long') [-Werror,-Wformat]
-
-Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-Acked-by: Willy Tarreau <w@1wt.eu>
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Link: https://lore.kernel.org/r/20250408-gpio-regmap-ngpios-v2-1-26f254014f57@linaro.org
+Signed-off-by: Bartosz Golaszewski <brgl@bgdev.pl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-**YES** This commit should be backported to stable kernel trees. Here's
-my extensive analysis: ## Analysis of the Code Changes The commit makes
-a targeted fix to resolve compiler format checking errors by changing
-the intmax type definitions in `tools/include/nolibc/stdint.h`: ```c
--typedef int64_t intmax_t; -typedef uint64_t uintmax_t; +typedef
-__INTMAX_TYPE__ intmax_t; +typedef __UINTMAX_TYPE__ uintmax_t; ``` ##
-Why This Should Be Backported ### 1. **Fixes Real Compilation Errors**
-The commit addresses actual compiler errors that prevent successful
-builds, as demonstrated by the clang 19 error message: ``` nolibc-
-test.c:30:2: error: format specifies type 'uintmax_t' (aka 'unsigned
-long') but the argument has type 'uintmax_t' (aka 'unsigned long long')
-[-Werror,-Wformat] ``` This is a critical build breakage, not just a
-warning. ### 2. **Small, Contained, Low-Risk Change** - Only changes 2
-lines of code in a single header file - Does not modify any algorithms
-or control flow - Uses well-established compiler built-ins that have
-been available for decades - No risk of behavioral changes beyond fixing
-the type compatibility issue ### 3. **Follows Established Pattern** The
-change aligns with existing practice in the same file, which already
-uses `__SIZE_TYPE__` for `size_t` definition. This demonstrates that
-using compiler built-ins for fundamental types is the established
-approach in nolibc. ### 4. **Cross-Platform Compatibility Fix** The
-issue particularly affects: - Different compiler backends (GCC vs Clang)
-- Different architectures where `long` vs `long long` sizes vary
-(especially arm64) - Cross-compilation scenarios - Builds with strict
-format checking enabled (`-Wformat -Werror`) ### 5. **Comparison with
-Similar Commits** Looking at the reference commits provided: - **Similar
-Commit #4** (Status: YES): Also fixes integer type issues in nolibc for
-platform compatibility - **Similar Commit #5** (Status: YES): Also fixes
-printf format mismatches with explicit stable tree marking (`Cc:
-stable@vger.kernel.org`) This commit follows the same pattern of fixing
-type/format compatibility issues that have been deemed worthy of
-backporting. ### 6. **Tools Subsystem Stability** While this is in the
-tools directory, nolibc is used for: - Kernel testing infrastructure -
-Minimal userspace environments - Cross-compilation toolchains - Kernel
-selftests Breaking builds in these contexts can impact kernel
-development workflows across different platforms. ### 7. **No
-Architectural Changes** The commit: - Doesn't introduce new features -
-Doesn't change APIs - Doesn't modify kernel core functionality - Simply
-ensures type consistency between compiler and library definitions ##
-Conclusion This is exactly the type of targeted bug fix that stable
-trees are designed for: it fixes a real compilation issue that affects
-users, uses a minimal and safe approach, follows established patterns,
-and has no risk of introducing regressions. The fix ensures that nolibc
-can be compiled successfully across different compiler/architecture
-combinations, which is essential for kernel development infrastructure.
+NO This commit should NOT be backported to stable kernel trees.
+**Analysis:** This commit removes driver-level handling of the 'ngpios'
+property in the ds4520 GPIO driver, relying instead on the gpio-regmap
+abstraction layer to handle this automatically via
+`gpiochip_get_ngpios()`. **Reasons this should NOT be backported:** 1.
+**Code cleanup, not a bugfix**: The commit message explicitly states
+"This is already done by the gpio-regmap abstraction by calling
+gpiochip_get_ngpios(). We don't need to do this at the driver level."
+This indicates the change removes redundant code rather than fixing a
+functional issue. 2. **No user-visible impact**: Both the before and
+after code achieve the same functionality - reading the 'ngpios'
+property and configuring the GPIO count. The driver worked correctly
+before this change. 3. **Architectural cleanup**: The change moves
+responsibility from the driver level to the abstraction layer, which is
+a code organization improvement rather than a critical fix. 4. **Missing
+infrastructure dependencies**: Looking at the code in
+`/home/sasha/linux/drivers/gpio/gpio-regmap.c:274-278`, the automatic
+ngpios handling was added in commit db305161880a "gpio: regmap: Allow
+ngpio to be read from the property". Without this infrastructure change
+being backported first, this commit would break the ds4520 driver in
+stable trees. 5. **Similar commits marked NO**: The reference commits
+show that code organization changes (#1, #4, #5) are marked as NO for
+backporting, while actual bugfixes (#2, #3) are marked as YES. 6. **No
+stable tree indicators**: The commit message contains no "Fixes:" tag,
+"Cc: stable" notation, or indication that this addresses a user-
+impacting issue. 7. **Risk vs benefit**: The change removes 6 lines of
+working code (lines 28, 36-38, 47 in the original) without fixing any
+reported issues. The risk of regression outweighs any benefit for stable
+trees. The ds4520 driver was relatively new (first commit 659ad5f7efec)
+and this cleanup came shortly after, making it an optimization rather
+than a critical fix requiring backport.
 
- tools/include/nolibc/stdint.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpio/gpio-ds4520.c | 6 ------
+ 1 file changed, 6 deletions(-)
 
-diff --git a/tools/include/nolibc/stdint.h b/tools/include/nolibc/stdint.h
-index 6665e272e2132..87a2b09e2dda5 100644
---- a/tools/include/nolibc/stdint.h
-+++ b/tools/include/nolibc/stdint.h
-@@ -39,8 +39,8 @@ typedef   size_t      uint_fast32_t;
- typedef  int64_t       int_fast64_t;
- typedef uint64_t      uint_fast64_t;
+diff --git a/drivers/gpio/gpio-ds4520.c b/drivers/gpio/gpio-ds4520.c
+index 1903deaef3e9b..f52ecae382a45 100644
+--- a/drivers/gpio/gpio-ds4520.c
++++ b/drivers/gpio/gpio-ds4520.c
+@@ -25,7 +25,6 @@ static int ds4520_gpio_probe(struct i2c_client *client)
+ 	struct gpio_regmap_config config = { };
+ 	struct device *dev = &client->dev;
+ 	struct regmap *regmap;
+-	u32 ngpio;
+ 	u32 base;
+ 	int ret;
  
--typedef  int64_t           intmax_t;
--typedef uint64_t          uintmax_t;
-+typedef __INTMAX_TYPE__    intmax_t;
-+typedef __UINTMAX_TYPE__  uintmax_t;
+@@ -33,10 +32,6 @@ static int ds4520_gpio_probe(struct i2c_client *client)
+ 	if (ret)
+ 		return dev_err_probe(dev, ret, "Missing 'reg' property.\n");
  
- /* limits of integral types */
+-	ret = device_property_read_u32(dev, "ngpios", &ngpio);
+-	if (ret)
+-		return dev_err_probe(dev, ret, "Missing 'ngpios' property.\n");
+-
+ 	regmap = devm_regmap_init_i2c(client, &ds4520_regmap_config);
+ 	if (IS_ERR(regmap))
+ 		return dev_err_probe(dev, PTR_ERR(regmap),
+@@ -44,7 +39,6 @@ static int ds4520_gpio_probe(struct i2c_client *client)
  
+ 	config.regmap = regmap;
+ 	config.parent = dev;
+-	config.ngpio = ngpio;
+ 
+ 	config.reg_dat_base = base + DS4520_IO_STATUS0;
+ 	config.reg_set_base = base + DS4520_PULLUP0;
 -- 
 2.39.5
 
