@@ -1,46 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F64A33D2D9;
-	Sun,  1 Jun 2025 23:45:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F46A33D2D7;
+	Sun,  1 Jun 2025 23:45:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748821557; cv=none; b=Pvn//sCAG+59iLmDDNNlZshp0xtY3y4Isx93U8ysNr4cWnQT/D6YqeYl7m+ztM3nptgp4CO/yqmwqv6RC8xB6Lnyd4t6J3fPgrg6NgvY+czo23TyP1Fe0zUsks9xXb8qEyyS2HifpC50KmUtIKxnmfDvx7GNH48dCtm7A9GambU=
+	t=1748821559; cv=none; b=gc2BdU/6+f+Rli0LFa2Rhpdht9fbPmB07T8cTEEs+FrGBoQKUdNCF+aS2PDSdBD+8mXMxUfg/NvyDZg2l5IaZHJ1w1MDO1VEDDxd2ZBbYweLO312Fbl2exxTBCj1S3w+WiiCcYA3An4kikmAXpxgOYb2HkIU0r5t23t0e57uDRo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748821557; c=relaxed/simple;
-	bh=lz6HZW0YPk7zKbjNFmy7h+kpF5GL+p0B2ua3GPSZIrA=;
+	s=arc-20240116; t=1748821559; c=relaxed/simple;
+	bh=oRYfet5O5zVlMoCwv5gI1g0JwzzmCXCTMTQmrGdRK0c=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=FpZMMfztluUr8cu5vfwIEuIRT5qIoKrFRQKYe5zkfzt26ikUHALyz75jmpEuUFAFJKO8KLrkdbIdPIGqceMod2zIynqbIvT57BruLeV0BFHGj+84I2oc8eAdVsdG+XVg7qgqzJxOeZ5Qm+mEJ8FMjer4GfZUJukxs1855nrQxCM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dUZZEZO3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XBpgnPgx9IEJJfFpHd7UMra5pPf3r/MFKYvRoL4JfCPa8XOOQqgoXKdVTqvXP+YJSvnyPVMQOKAW5a2/kvTe6ho47mIHt6AvPykkR7NbDyqA8Vv1AMVlc9+LrFjXEmy1/QNhxHVIYbFC35nLvzKnIHX5dbgbkw3jidmZQ0/HZ04=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=I0U8B0YM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dUZZEZO3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FECFC4CEEE;
-	Sun,  1 Jun 2025 23:45:55 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="I0U8B0YM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B00CEC4CEE7;
+	Sun,  1 Jun 2025 23:45:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748821556;
-	bh=lz6HZW0YPk7zKbjNFmy7h+kpF5GL+p0B2ua3GPSZIrA=;
+	s=k20201202; t=1748821558;
+	bh=oRYfet5O5zVlMoCwv5gI1g0JwzzmCXCTMTQmrGdRK0c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dUZZEZO328byVScU5w3nRGk0M6SuCJt/jO0D6UKF9/gKALH2zPv6AepgpKlte9qSi
-	 EpbhCdnkCH2lHxcxbL2OvGc9eAXMQL313Tex+xLlSezO5wVz4J+IW08R5WZtWeMAle
-	 wDQ9EktQghrRvo/NPh7LP90TMH1DCuJ2Uke5qROcnP4wTiUNPMHS1yRc0hFWuqqqHp
-	 KocQbXgdMCdzVYqEaDX3WpjLqVOXPWM+VTEqg17YAwqxYxI+6arAY6xTotP4/XKyhZ
-	 jtJbB59U0wnP8GQQYXyICCcX+Rpv9paFzy1aCM/9G+ltzBcHdbTHxqHSVAFsLCN4ov
-	 7kcMTIfrw5cEA==
+	b=I0U8B0YMuhWagaz1ITNqxJWxiJ/M2sfSQPrnBj43YrNdqDvPz6LmKbkl8LO9spYs4
+	 piMQMg1fsOdm5frwKeN4p+81TMV1MJDUIB8+AqAZhPnOGYdRXXJWQP33SjMGAYqkT/
+	 0j2Zy732pBsbhPzaG6x4pCTnJHBuTkoANI7H8jjxU/HjccqgZPwcl44ggMpZlefQ4I
+	 iQfeHVnBEJtwBZFikUAnmWXAq2ZFKmmOq2nTpZHEe4DosXk4TubeIojnnrCmE40089
+	 YJz4TN86KIRvltCJDzpWTeyfVfE+iHp1t7ylmBJ4N8s6dhzkgA3mxDxt4C7HJhQ+Qa
+	 F7OwhBOpF8v2g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Wentao Liang <vulab@iscas.ac.cn>,
-	Hans Verkuil <hverkuil@xs4all.nl>,
+Cc: Simon Schuster <schuster.simon@siemens-energy.com>,
+	Andreas Oetken <andreas.oetken@siemens-energy.com>,
+	Dinh Nguyen <dinguyen@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	mchehab@kernel.org,
-	krzk@kernel.org,
-	linux-media@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-samsung-soc@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.4 16/22] media: platform: exynos4-is: Add hardware sync wait to fimc_is_hw_change_mode()
-Date: Sun,  1 Jun 2025 19:45:07 -0400
-Message-Id: <20250601234515.3519309-16-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.4 17/22] nios2: force update_mmu_cache on spurious tlb-permission--related pagefaults
+Date: Sun,  1 Jun 2025 19:45:08 -0400
+Message-Id: <20250601234515.3519309-17-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250601234515.3519309-1-sashal@kernel.org>
 References: <20250601234515.3519309-1-sashal@kernel.org>
@@ -53,81 +49,115 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 5.4.293
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Simon Schuster <schuster.simon@siemens-energy.com>
 
-[ Upstream commit bd9f6ce7d512fa21249415c16af801a4ed5d97b6 ]
+[ Upstream commit 2d8a3179ea035f9341b6a73e5ba4029fc67e983d ]
 
-In fimc_is_hw_change_mode(), the function changes camera modes without
-waiting for hardware completion, risking corrupted data or system hangs
-if subsequent operations proceed before the hardware is ready.
+NIOS2 uses a software-managed TLB for virtual address translation. To
+flush a cache line, the original mapping is replaced by one to physical
+address 0x0 with no permissions (rwx mapped to 0) set. This can lead to
+TLB-permission--related traps when such a nominally flushed entry is
+encountered as a mapping for an otherwise valid virtual address within a
+process (e.g. due to an MMU-PID-namespace rollover that previously
+flushed the complete TLB including entries of existing, running
+processes).
 
-Add fimc_is_hw_wait_intmsr0_intmsd0() after mode configuration, ensuring
-hardware state synchronization and stable interrupt handling.
+The default ptep_set_access_flags implementation from mm/pgtable-generic.c
+only forces a TLB-update when the page-table entry has changed within the
+page table:
 
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+	/*
+	 * [...] We return whether the PTE actually changed, which in turn
+	 * instructs the caller to do things like update__mmu_cache. [...]
+	 */
+	int ptep_set_access_flags(struct vm_area_struct *vma,
+				  unsigned long address, pte_t *ptep,
+				  pte_t entry, int dirty)
+	{
+		int changed = !pte_same(*ptep, entry);
+		if (changed) {
+			set_pte_at(vma->vm_mm, address, ptep, entry);
+			flush_tlb_fix_spurious_fault(vma, address);
+		}
+		return changed;
+	}
+
+However, no cross-referencing with the TLB-state occurs, so the
+flushing-induced pseudo entries that are responsible for the pagefault
+in the first place are never pre-empted from TLB on this code path.
+
+This commit fixes this behaviour by always requesting a TLB-update in
+this part of the pagefault handling, fixing spurious page-faults on the
+way. The handling is a straightforward port of the logic from the MIPS
+architecture via an arch-specific ptep_set_access_flags function ported
+from arch/mips/include/asm/pgtable.h.
+
+Signed-off-by: Simon Schuster <schuster.simon@siemens-energy.com>
+Signed-off-by: Andreas Oetken <andreas.oetken@siemens-energy.com>
+Signed-off-by: Dinh Nguyen <dinguyen@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Based on my analysis of the commit and examination of the kernel code,
-here is my assessment: **YES** This commit should be backported to
-stable kernel trees for the following reasons: ## Analysis of the Code
-Change The commit adds a single line
-`fimc_is_hw_wait_intmsr0_intmsd0(is);` at line 167 in the
-`fimc_is_hw_change_mode()` function in
-`drivers/media/platform/samsung/exynos4-is/fimc-is-regs.c`. ## Why This
-Should Be Backported 1. **Clear Bug Fix**: The commit message explicitly
-states this fixes a race condition where "the function changes camera
-modes without waiting for hardware completion, risking corrupted data or
-system hangs if subsequent operations proceed before the hardware is
-ready." This is a classic hardware synchronization bug. 2. **Consistent
-Pattern**: Examining the surrounding code shows that ALL other similar
-hardware control functions (`fimc_is_hw_get_setfile_addr()`,
-`fimc_is_hw_load_setfile()`, `fimc_is_hw_stream_on()`,
-`fimc_is_hw_stream_off()`) already call
-`fimc_is_hw_wait_intmsr0_intmsd0()` before writing to hardware
-registers. The `fimc_is_hw_change_mode()` function was the only outlier
-missing this synchronization. 3. **Minimal and Safe**: The change is
-extremely small (one line) and uses an existing, well-tested
-synchronization primitive. The `fimc_is_hw_wait_intmsr0_intmsd0()`
-function implements a timeout-based wait with proper error handling. 4.
-**Critical Subsystem**: This affects camera hardware control in Samsung
-Exynos4 SoCs. Hardware synchronization issues in camera drivers can
-cause: - System hangs (as mentioned in commit message) - Data corruption
-- Unpredictable hardware state 5. **Runtime Safety**: The wait function
-has built-in timeout protection (2000 iterations with 1μs delay each),
-so it cannot cause infinite hangs even if hardware fails. 6. **Follows
-Hardware Protocol**: The pattern clearly shows the proper hardware
-protocol is: wait for ready state → write command → trigger interrupt.
-The missing wait was a protocol violation. ## Comparison with Historical
-References Looking at the provided similar commits marked "NO" for
-backporting, they were all: - Documentation/binding changes (commits #1,
-#2) - Code cleanup/feature removal (commit #3) - Architecture changes
-(commit #4) The one commit marked "YES" (commit #5) was a simple bug fix
-correcting a return value check, very similar in nature to this
-synchronization fix. This commit fits the stable tree criteria
-perfectly: it's a small, contained bug fix addressing a real hardware
-synchronization issue that could cause system instability, with minimal
-risk of regression.
+**YES** This commit should be backported to stable kernel trees for the
+following reasons: **1. Fixes a Real User-Affecting Bug:** The commit
+addresses infinite page fault loops that can occur when: - NIOS2's
+software-managed TLB encounters spurious permission-related page faults
+- TLB entries flushed to physical address 0x0 with no permissions
+persist due to MMU-PID-namespace rollovers - The generic
+`ptep_set_access_flags` implementation fails to flush these stale TLB
+entries because it only flushes when the PTE actually changes in the
+page table **2. Small, Contained Fix:** The code change is minimal and
+surgical: - Adds an arch-specific `ptep_set_access_flags` function in
+`arch/nios2/include/asm/pgtable.h:284-297` - Always returns `true` to
+force `update_mmu_cache` execution, ensuring TLB invalidation even when
+the PTE hasn't changed - Identical pattern to MIPS architecture
+(arch/mips/include/asm/pgtable.h), proven and stable **3. Architecture-
+Specific with No Side Effects:** - Only affects NIOS2 architecture
+(`arch/nios2/include/asm/pgtable.h`) - No cross-architecture
+dependencies or changes to core MM code - Uses existing `set_ptes()` and
+`update_mmu_cache` infrastructure **4. Consistent with Similar
+Backported Fixes:** - Similar commit #5 (xtensa: define update_mmu_tlb
+function) was marked **YES** for backport with `Cc:
+stable@vger.kernel.org # 5.12+` - Both fix TLB invalidation issues in
+software-managed TLB architectures - Both address spurious page fault
+scenarios **5. Meets Stable Tree Criteria:** - **Important bugfix**:
+Prevents infinite page fault loops - **Minimal risk**: Architecture-
+specific, follows proven MIPS pattern - **No architectural changes**:
+Uses existing MM infrastructure - **Confined to subsystem**: Limited to
+NIOS2 TLB management The fix directly addresses a critical reliability
+issue where users experience system hangs due to infinite page faults,
+making it an ideal candidate for stable backporting.
 
- drivers/media/platform/exynos4-is/fimc-is-regs.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/nios2/include/asm/pgtable.h | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/drivers/media/platform/exynos4-is/fimc-is-regs.c b/drivers/media/platform/exynos4-is/fimc-is-regs.c
-index 366e6393817d2..5f9c44e825a5f 100644
---- a/drivers/media/platform/exynos4-is/fimc-is-regs.c
-+++ b/drivers/media/platform/exynos4-is/fimc-is-regs.c
-@@ -164,6 +164,7 @@ int fimc_is_hw_change_mode(struct fimc_is *is)
- 	if (WARN_ON(is->config_index >= ARRAY_SIZE(cmd)))
- 		return -EINVAL;
+diff --git a/arch/nios2/include/asm/pgtable.h b/arch/nios2/include/asm/pgtable.h
+index 99985d8b71664..506bbc7730879 100644
+--- a/arch/nios2/include/asm/pgtable.h
++++ b/arch/nios2/include/asm/pgtable.h
+@@ -297,4 +297,20 @@ extern void __init mmu_init(void);
+ extern void update_mmu_cache(struct vm_area_struct *vma,
+ 			     unsigned long address, pte_t *pte);
  
-+	fimc_is_hw_wait_intmsr0_intmsd0(is);
- 	mcuctl_write(cmd[is->config_index], is, MCUCTL_REG_ISSR(0));
- 	mcuctl_write(is->sensor_index, is, MCUCTL_REG_ISSR(1));
- 	mcuctl_write(is->setfile.sub_index, is, MCUCTL_REG_ISSR(2));
++static inline int pte_same(pte_t pte_a, pte_t pte_b);
++
++#define __HAVE_ARCH_PTEP_SET_ACCESS_FLAGS
++static inline int ptep_set_access_flags(struct vm_area_struct *vma,
++					unsigned long address, pte_t *ptep,
++					pte_t entry, int dirty)
++{
++	if (!pte_same(*ptep, entry))
++		set_ptes(vma->vm_mm, address, ptep, entry, 1);
++	/*
++	 * update_mmu_cache will unconditionally execute, handling both
++	 * the case that the PTE changed and the spurious fault case.
++	 */
++	return true;
++}
++
+ #endif /* _ASM_NIOS2_PGTABLE_H */
 -- 
 2.39.5
 
