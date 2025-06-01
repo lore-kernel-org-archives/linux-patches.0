@@ -1,47 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 962D9301CA1;
-	Sun,  1 Jun 2025 23:36:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76F22301CD4;
+	Sun,  1 Jun 2025 23:36:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748821009; cv=none; b=jXxk/AUqtqLOuwCQJk47I9lSL4mLoO5YNwc68bTGCRVU8H94gcBRubaxaZqdLqPIBqyZVKOklEO2WkQX08ERBEZm+IV2FR2J/BlHwN/o18N4MJ9xQKh2NaAib7+oW5kgXCC0hDrY75V6BVTFmUQibFReEOJLombMAI0YPdLz65o=
+	t=1748821011; cv=none; b=iUp813g6FEzNmvgscu0T+xlEZwFpDPgV/IAxMpXoyOK2DLZKcZOG98qvD/5ENRvacWCEiqZNUgnWAL4Ius7764k4EU/qT4Bl/VWlbqDB1cFhomVbGliPhOw3FZBEC1nIrppdOAeIPopCye5WX5OE419W/pjnJ8Ko2HXcDaoc7eU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748821009; c=relaxed/simple;
-	bh=KbpjC7W+x7j7ZSi2UqKwT88V4htHhwJQ9LImURUUmbY=;
+	s=arc-20240116; t=1748821011; c=relaxed/simple;
+	bh=EFzZa+Nch75GomygTs6THnTdW39Dbqe4N6p6BnzEhuA=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=QQlBP5Io8cuQPLrX1hnTWXXLSbx/VNwZZ1XsZWlvLpmEABQN9ouqdAhpA9G/aMMygi1CqAHQmy5Rh+ojCwWIx+RvvJ6VZ4MktP1VpB+skQgPLMG0maSA1sUSc2c2ZVhtNkjt34bcYQ436BEggHAwGX6cg1b/zUHqLadhaKFWV/4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SO0iHmTl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Qfn5xbTv0zILIgDDPfFTleg82ZdH8WnS5eVy7Ce+S+FZvFp+8piNcZ0kDKHISk6PLntc8PfL0grdTU1bRAEgF+rAqEZbUTPKOrXBTX0JMzpsKrvwCbrXB4oDFPrhou1IxVzUt5x+MOUUqqG7OMqVaYSSoUpG/+uLMacz7Vngc7Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qPJ5Tfhc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SO0iHmTl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28BA5C4CEF2;
-	Sun,  1 Jun 2025 23:36:48 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qPJ5Tfhc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3256C4CEE7;
+	Sun,  1 Jun 2025 23:36:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748821009;
-	bh=KbpjC7W+x7j7ZSi2UqKwT88V4htHhwJQ9LImURUUmbY=;
+	s=k20201202; t=1748821011;
+	bh=EFzZa+Nch75GomygTs6THnTdW39Dbqe4N6p6BnzEhuA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SO0iHmTleAkUtcFX4g2I9I7BDREalarBRJGobN06iPSPav+d6dhsDrid8OndFctOt
-	 Bx6EM/zU+Shs+JoXk0bf7/ozyOqS3qgleBYQvSna00/izB6riMc9ZjeEnbB+QwDY3f
-	 fFPWGjOre7/Gketc7t9zNQ2St3AIhSs86UBg9+ljjth0lqQNwr/sO9JjNV4TxckcOy
-	 i0gu+VvHBZOv6xn9f+YzNq2cl2YbzCrLMBN/iIm9SvrAnIGuE7BKGKUqIulZDVFJ1G
-	 Vb5g1Xxs1vETCAPWLYzkS7MozXBILfxk3iZQ1fjYvLPPDDtTD6QVOt7GYoAd7zpORS
-	 peJt0tTjlbmag==
+	b=qPJ5TfhczRONo95YX4N5e7mmH2Jm/u7v+3BgnWnvUMESbBzAlMQjuvuD+R9yU8s34
+	 22qsE6RooPnJRwiIwB8pq2CO75ryC6twn4a5NoxXoHeGuGtHwsQnUqImr6YN9tCw0+
+	 nR3c7+myJ1UiSosqZaEXaMWJlX4rnKmAB8iaWJYbmHauk+QFElfGY2Wq97/bz19cx5
+	 qTHs1m5RujeFdfRWW14Kf7lUK5Jy2jXFcIrAnjIzDvpcXGwjGzkScmGocNQ7kmdv/1
+	 bTyIBB+Q5O42OqaQTvXTSNqZJa6yqwwQwx+WkqhH3P4ZfTWyfA5FnHE498pJpu20PR
+	 yb23U/8f0z4Wg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Nas Chung <nas.chung@chipsnmedia.com>,
-	Sebastian Fricke <sebastian.fricke@collabora.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>,
+Cc: Antonin Godard <antonin.godard@bootlin.com>,
+	Dmitry Baryshkov <lumag@kernel.org>,
+	Louis Chauvet <louis.chauvet@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>,
-	quic_vgarodia@quicinc.com,
-	quic_dikshita@quicinc.com,
-	mchehab@kernel.org,
-	linux-media@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
+	neil.armstrong@linaro.org,
+	maarten.lankhorst@linux.intel.com,
+	mripard@kernel.org,
+	tzimmermann@suse.de,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.12 65/93] media: qcom: venus: Fix uninitialized variable warning
-Date: Sun,  1 Jun 2025 19:33:32 -0400
-Message-Id: <20250601233402.3512823-65-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.12 66/93] drm/panel: simple: Add POWERTIP PH128800T004-ZZA01 panel entry
+Date: Sun,  1 Jun 2025 19:33:33 -0400
+Message-Id: <20250601233402.3512823-66-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250601233402.3512823-1-sashal@kernel.org>
 References: <20250601233402.3512823-1-sashal@kernel.org>
@@ -56,75 +58,100 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.12.31
 Content-Transfer-Encoding: 8bit
 
-From: Nas Chung <nas.chung@chipsnmedia.com>
+From: Antonin Godard <antonin.godard@bootlin.com>
 
-[ Upstream commit 8e172e38a623ce284baf2514f963b29e4d47c62e ]
+[ Upstream commit 6374a1005f20c1c2f7bbcc1bc735c2be4910a685 ]
 
-Avoid uninitialized variable when both V4L2_TYPE_IS_OUTPUT() and
-V4L2_TYPE_IS_CAPTURE() return false.
+Add support for the POWERTIP PH128800T004-ZZA01 10.1" (1280x800)
+LCD-TFT panel. Its panel description is very much like the POWERTIP
+PH128800T006-ZHC01 configured below this one, only its timings are
+different.
 
-Signed-off-by: Nas Chung <nas.chung@chipsnmedia.com>
-Signed-off-by: Sebastian Fricke <sebastian.fricke@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Signed-off-by: Antonin Godard <antonin.godard@bootlin.com>
+Reviewed-by: Dmitry Baryshkov <lumag@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250311-add-powertip-ph128800t004-v1-2-7f95e6984cea@bootlin.com
+Signed-off-by: Louis Chauvet <louis.chauvet@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-**YES** This commit should be backported to stable kernel trees.
-**Analysis:** This commit fixes a legitimate uninitialized variable bug
-in the `find_format_by_index()` function in
-`drivers/media/platform/qcom/venus/vdec.c`. Here's why it meets the
-criteria for stable backporting: 1. **Bug Fix Nature**: The commit
-addresses a clear code defect where the `valid` variable could be used
-uninitialized. In the original code at line 157, `bool valid;` is
-declared but not initialized. The logic then uses an `if-else if`
-construct: - `if (V4L2_TYPE_IS_OUTPUT(type))` - sets `valid` - `else if
-(V4L2_TYPE_IS_CAPTURE(type))` - sets `valid` - But if neither condition
-is true, `valid` remains uninitialized 2. **Potential Impact**: Based on
-the V4L2 macro definitions, `V4L2_TYPE_IS_CAPTURE(type)` is defined as
-`(!V4L2_TYPE_IS_OUTPUT(type))`, which means these should be mutually
-exclusive and cover all cases. However, the bug exists because the
-original code used `else if` instead of just `else`, creating a
-theoretical path where neither executes. 3. **Minimal Risk Fix**: The
-fix is extremely simple and safe - changing `bool valid;` to `bool valid
-= false;` and replacing `else if` with `else`. This ensures the variable
-is always initialized and the logic covers all possible cases. 4.
-**Consistency with Similar Commits**: This fix is very similar to
-"Similar Commit #1" which was marked as "Backport Status: YES". That
-commit also fixed an uninitialized variable in the venus driver with a
-simple initialization. The pattern and impact are nearly identical. 5.
-**No Side Effects**: The change is purely defensive programming - it
-doesn't alter the intended behavior but prevents undefined behavior in
-edge cases. 6. **Compiler/Static Analysis Issue**: This type of
-uninitialized variable warning is commonly flagged by static analysis
-tools and newer compiler versions, indicating it's a legitimate code
-quality issue that should be fixed. The commit follows stable tree rules
-perfectly: it's a small, contained bugfix with minimal regression risk
-that addresses a potential runtime issue in the venus media driver.
+NO This commit should NOT be backported to stable kernel trees based on
+the following analysis: **Commit Classification**: This is a new
+hardware support addition, not a bug fix. **Analysis of the commit**: 1.
+**Nature of Change**: The commit adds support for a brand new panel
+variant (POWERTIP PH128800T004-ZZA01) to the panel-simple driver. This
+is purely additive functionality for new hardware. 2. **Code Changes
+Review**: - Adds a new `powertip_ph128800t004_zza01_mode` structure with
+display timing parameters - Adds a new `powertip_ph128800t004_zza01`
+panel descriptor - Adds a new device tree compatible string entry in the
+`platform_of_match` table - The changes are isolated and only add new
+entries without modifying existing functionality 3. **Reference to
+Similar Commits**: All the provided historical examples of panel
+additions (Similar Commits #1, #2, #5) were marked as "Backport Status:
+NO", indicating that new panel support commits are typically not
+backported. 4. **Stable Tree Criteria Violation**: - This is new feature
+addition, not a bug fix - It doesn't address any existing user-affecting
+issues - It enables support for hardware that previously wasn't
+supported at all - No indication of fixing broken functionality 5.
+**Exception Analysis**: The only similar commit marked "YES" (Similar
+Commit #4) was specifically fixing missing display mode flags for an
+existing panel, which was a clear bug fix with a "Fixes:" tag. This
+current commit has no such characteristics. 6. **Risk Assessment**:
+While the change is low-risk and isolated, it doesn't meet the
+fundamental criteria for stable backporting as it's new hardware
+enablement rather than fixing existing functionality. The stable tree
+policy specifically excludes new hardware support unless it fixes
+existing broken functionality, which this commit does not do.
 
- drivers/media/platform/qcom/venus/vdec.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/panel/panel-simple.c | 29 ++++++++++++++++++++++++++++
+ 1 file changed, 29 insertions(+)
 
-diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
-index d12089370d91e..cb252a3e2a351 100644
---- a/drivers/media/platform/qcom/venus/vdec.c
-+++ b/drivers/media/platform/qcom/venus/vdec.c
-@@ -154,14 +154,14 @@ find_format_by_index(struct venus_inst *inst, unsigned int index, u32 type)
- 		return NULL;
+diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
+index d041ff542a4ee..ed09ffc0e2b48 100644
+--- a/drivers/gpu/drm/panel/panel-simple.c
++++ b/drivers/gpu/drm/panel/panel-simple.c
+@@ -3685,6 +3685,32 @@ static const struct panel_desc pda_91_00156_a0  = {
+ 	.bus_format = MEDIA_BUS_FMT_RGB888_1X24,
+ };
  
- 	for (i = 0; i < size; i++) {
--		bool valid;
-+		bool valid = false;
- 
- 		if (fmt[i].type != type)
- 			continue;
- 
- 		if (V4L2_TYPE_IS_OUTPUT(type)) {
- 			valid = venus_helper_check_codec(inst, fmt[i].pixfmt);
--		} else if (V4L2_TYPE_IS_CAPTURE(type)) {
-+		} else {
- 			valid = venus_helper_check_format(inst, fmt[i].pixfmt);
- 
- 			if (fmt[i].pixfmt == V4L2_PIX_FMT_QC10C &&
++static const struct drm_display_mode powertip_ph128800t004_zza01_mode = {
++	.clock = 71150,
++	.hdisplay = 1280,
++	.hsync_start = 1280 + 48,
++	.hsync_end = 1280 + 48 + 32,
++	.htotal = 1280 + 48 + 32 + 80,
++	.vdisplay = 800,
++	.vsync_start = 800 + 9,
++	.vsync_end = 800 + 9 + 8,
++	.vtotal = 800 + 9 + 8 + 6,
++	.flags = DRM_MODE_FLAG_PHSYNC | DRM_MODE_FLAG_PVSYNC,
++};
++
++static const struct panel_desc powertip_ph128800t004_zza01 = {
++	.modes = &powertip_ph128800t004_zza01_mode,
++	.num_modes = 1,
++	.bpc = 8,
++	.size = {
++		.width = 216,
++		.height = 135,
++	},
++	.bus_format = MEDIA_BUS_FMT_RGB888_1X7X4_SPWG,
++	.bus_flags = DRM_BUS_FLAG_DE_HIGH,
++	.connector_type = DRM_MODE_CONNECTOR_LVDS,
++};
++
+ static const struct drm_display_mode powertip_ph128800t006_zhc01_mode = {
+ 	.clock = 66500,
+ 	.hdisplay = 1280,
+@@ -4960,6 +4986,9 @@ static const struct of_device_id platform_of_match[] = {
+ 	}, {
+ 		.compatible = "pda,91-00156-a0",
+ 		.data = &pda_91_00156_a0,
++	}, {
++		.compatible = "powertip,ph128800t004-zza01",
++		.data = &powertip_ph128800t004_zza01,
+ 	}, {
+ 		.compatible = "powertip,ph128800t006-zhc01",
+ 		.data = &powertip_ph128800t006_zhc01,
 -- 
 2.39.5
 
