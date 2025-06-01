@@ -1,47 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E45731EB1E;
-	Sun,  1 Jun 2025 23:41:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C72632749EC;
+	Sun,  1 Jun 2025 23:41:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748821277; cv=none; b=sUjbDY9b7B74pSt+NmReS61pY/SzLRVO/PeVfE0I0vQkF8EeC1ReENMH0Rag94gAGJxHNBnA9lk/iJBTQOwBTiY1L+b9Rqw6VdNcSkRuaeIS1m/Q/S7Ya0Vyi+k/INk2s3BFWCMTXQe66qrhcDChZVyfPexAEHcCFmnO7DODcOk=
+	t=1748821278; cv=none; b=j6sDVXSj2g+UuP7sr3zQUgCZDVWtOtMwK5ZgIqUCnXtalTjh6UE2KiDy/dkDpZcseDw/miBxzp+loKI5MEq9Q7JxeCQ5yrChRf8XxPUBt2vFkZQ9ejA3/RK2E1Qc0kFpEpnhDJCg9eFSJ7khF74iiXX0E/MW0oCd8emp5EcrOPM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748821277; c=relaxed/simple;
-	bh=VF4j48O/cWgREqTqPQG4SIrIc94zW6XMSKcgN3iaLwM=;
+	s=arc-20240116; t=1748821278; c=relaxed/simple;
+	bh=P4uC/ZOYR8bI5UtT60SpxdRlXKZ9BUDR+v8TiQuIrQM=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hIcP4gMTnwNj6Kur+bkwlJDS9P+qaUvbCacycg19fbFMra3r6lmmprLOBylM/4PiydHjPC4iY4pj6axmfl6kPo/Tn3e9IUMXuxN0Owc/2tmFH5jJwZTpipG2adY6xsbrRQJ+wrDc2/gnYL4ZNOmJfeUltdQQgsJiSRAReTASqOw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PhJgIFyw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=TJt8UdqwwJ89RJgVq5zBslkRrNETVZNXtR6FGUmuH66uhAKMQDh30oc9ql79pWrA7YtQPPaB6rb+VdaoHiDmBlUTN0Y8YsDjMVT64wmgSFsPKlAg34eOIbJUGva/wtfiuPHHUI/+hW3tc9wccrjGjHWmSmPXiu3aO09MOVWUajg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=u243pULF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PhJgIFyw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13AB3C4CEEE;
-	Sun,  1 Jun 2025 23:41:14 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="u243pULF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7747C4CEF2;
+	Sun,  1 Jun 2025 23:41:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748821276;
-	bh=VF4j48O/cWgREqTqPQG4SIrIc94zW6XMSKcgN3iaLwM=;
+	s=k20201202; t=1748821278;
+	bh=P4uC/ZOYR8bI5UtT60SpxdRlXKZ9BUDR+v8TiQuIrQM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PhJgIFywAr55/Ea41uJX5ORIFqSnlz6FrNS6R/LcRen0VaSfyF0REH0co5TvjsvFo
-	 4aqoU+T5VJn7E+bYx7FmA5dAee8bMxtYVRSA56iWu/fwxXBCUbAJXQdFnDZCQCVmw8
-	 yeC/C9SdSBIAU/Y+9pEk3nk7/KTX1BSUgLfmq+QPrSP+j0WRPEzM461iKaYM330nMn
-	 PFlYz88ya0qy0kfhpY8aFrU44tx5usx2TH14wr6U8/XJwgV+cn3g1V3jA+VkUJqOjm
-	 QagIp4dYch3eHGJ66ng8kpawZ9RDxi7P6USa6+WhFtF8v8UWFTE34Og42ZIFovhgyg
-	 pWppsngRNRB0w==
+	b=u243pULFasyipNpwP1CNbUQt7rLnjqt/EvjIz8VWtV/NF1hpT/ERMDhwYToKSHCb4
+	 Bx3aJgw78xPKnu7S0xq185X41U5qQ1n050jifV9XjKlEezRffEvSLsB4IJFihjb9tO
+	 EoMkG1hGDnaKNFlxEHwZk2NNoc6/TFQrEu37aYVBnH24QfH22jLH9+RD5Gw34CwztW
+	 M7PPaqHjKrEgwoVH4X2jOvT171M7gVGIPFQONVjekXyYhWa/lYVhTJAwKGl1gN83aW
+	 BO+MlmqHKS/8Ksvv86sKDi6JosCGOZPcJNHJ1dO/MY7+np9Sy0TNmnbCjV9JXyNd9V
+	 okfXkoq58WBlQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>,
+Cc: Long Li <leo.lilong@huawei.com>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>,
-	ezequiel@vanguardiasur.com.ar,
-	mchehab@kernel.org,
-	gregkh@linuxfoundation.org,
-	linux-media@vger.kernel.org,
-	linux-rockchip@lists.infradead.org,
-	linux-staging@lists.linux.dev,
+	trondmy@kernel.org,
+	anna@kernel.org,
+	jlayton@kernel.org,
+	davem@davemloft.net,
+	edumazet@google.com,
+	kuba@kernel.org,
+	pabeni@redhat.com,
+	linux-nfs@vger.kernel.org,
+	netdev@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.1 26/58] media: rkvdec: Initialize the m2m context before the controls
-Date: Sun,  1 Jun 2025 19:39:39 -0400
-Message-Id: <20250601234012.3516352-26-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.1 27/58] sunrpc: fix race in cache cleanup causing stale nextcheck time
+Date: Sun,  1 Jun 2025 19:39:40 -0400
+Message-Id: <20250601234012.3516352-27-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250601234012.3516352-1-sashal@kernel.org>
 References: <20250601234012.3516352-1-sashal@kernel.org>
@@ -57,99 +60,133 @@ X-stable-base: Linux 6.1.140
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+From: Long Li <leo.lilong@huawei.com>
 
-[ Upstream commit d43d7db3c8a1868dcbc6cb8de90a3cdf309d6cbb ]
+[ Upstream commit 2298abcbe11e9b553d03c0f1d084da786f7eff88 ]
 
-Setting up the control handler calls into .s_ctrl ops. While validating
-the controls the ops may need to access some of the context state, which
-could lead to a crash if not properly initialized.
+When cache cleanup runs concurrently with cache entry removal, a race
+condition can occur that leads to incorrect nextcheck times. This can
+delay cache cleanup for the cache_detail by up to 1800 seconds:
 
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+1. cache_clean() sets nextcheck to current time plus 1800 seconds
+2. While scanning a non-empty bucket, concurrent cache entry removal can
+   empty that bucket
+3. cache_clean() finds no cache entries in the now-empty bucket to update
+   the nextcheck time
+4. This maybe delays the next scan of the cache_detail by up to 1800
+   seconds even when it should be scanned earlier based on remaining
+   entries
+
+Fix this by moving the hash_lock acquisition earlier in cache_clean().
+This ensures bucket emptiness checks and nextcheck updates happen
+atomically, preventing the race between cleanup and entry removal.
+
+Signed-off-by: Long Li <leo.lilong@huawei.com>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Now let me analyze the specific changes proposed in the commit: ##
-Analysis **YES** This commit should be backported to stable kernel
-trees. Here's my extensive analysis: ### Core Issue Analysis The commit
-addresses a critical initialization order bug that can lead to crashes.
-The problem occurs in the `rkvdec_open()` function at lines 822-830 in
-the current code: 1. **Current problematic order:** - Line 822:
-`rkvdec_init_ctrls(ctx)` is called first - Line 826-830:
-`v4l2_m2m_ctx_init()` is called second 2. **The problem:** According to
-the commit message and my analysis of the kernel documentation,
-`v4l2_ctrl_handler_setup()` (called inside `rkvdec_init_ctrls()`) calls
-`.s_ctrl` for all controls unconditionally to initialize hardware to
-default values. The `.s_ctrl` handlers may need to access the m2m
-context state, but if the m2m context (`ctx->fh.m2m_ctx`) isn't
-initialized yet, this can cause a crash or undefined behavior. ### Code
-Changes Analysis The fix is minimal and surgical: - **Lines moved:** The
-initialization order is swapped - m2m context initialization moves
-before control handler setup - **Error handling updated:** The error
-handling paths are correctly updated to match the new initialization
-order - **No functional changes:** The fix doesn't change driver
-functionality, only initialization sequence ### Why This Should Be
-Backported 1. **Fixes a real crash bug:** This addresses a potential
-crash scenario that affects users 2. **Small and contained:** The change
-is minimal - just reordering initialization and updating error paths 3.
-**Low regression risk:** Moving m2m init before control init is safer
-since m2m context doesn't depend on controls, but controls may depend on
-m2m context 4. **Follows established patterns:** Similar commit #2 in
-the historical examples shows a "YES" backport for proper initialization
-order in V4L2 drivers 5. **Critical subsystem:** Media drivers crashing
-can affect user applications ### Comparison with Historical Commits -
-**Similar to commit #2 (YES):** Also fixes initialization order in V4L2
-media driver to prevent crashes - **Similar to commit #4 (YES):** Media
-driver fix that's low-risk and contained - **Unlike commits #1, #3, #5
-(NO):** This actually fixes a bug rather than just cleanup/code style
-improvements ### Stable Tree Criteria Met ✅ **Important bugfix:**
-Prevents crashes ✅ **Minimal risk:** Simple reordering with no side
-effects ✅ **Small change:** Only affects initialization sequence ✅ **No
-architectural changes:** Pure bug fix ✅ **Confined to subsystem:** Only
-affects rkvdec driver The fix follows the stable tree rules perfectly -
-it's an important crash prevention fix with minimal regression risk,
-making it an ideal backport candidate.
+Now let me analyze this commit in detail based on what I've learned:
+**ANALYSIS:** **YES** - This commit should be backported to stable
+kernel trees. ## Detailed Analysis: ### 1. **Bug Impact Assessment**
+This commit fixes a **race condition** that can cause cache cleanup
+delays of up to **1800 seconds (30 minutes)**. This is a significant
+performance regression that affects the SUNRPC cache subsystem's ability
+to clean expired entries in a timely manner. ### 2. **Root Cause
+Analysis** The race condition occurs in the `cache_clean()` function
+between these steps: - **Line 461**: `current_detail->nextcheck =
+seconds_since_boot()+30*60;` (sets nextcheck to current time + 1800
+seconds) - **Lines 466-469**: The code searches for non-empty buckets
+**without holding hash_lock** - **Lines 479-496**: The code then
+acquires `hash_lock` and processes entries, updating nextcheck based on
+entry expiry times **The race window**: Between lines 466-469 and 479,
+concurrent cache operations (like `sunrpc_cache_unhash()`) can remove
+entries from buckets, making them empty. When `cache_clean()` later
+acquires the hash_lock, it finds empty buckets and cannot update the
+nextcheck time appropriately. ### 3. **Code Change Analysis** The fix is
+**minimal and surgical**: ```c // BEFORE: hash_lock acquired late (line
+479) if (current_detail && current_index < current_detail->hash_size) {
+// ... variable declarations ... spin_lock(&current_detail->hash_lock);
+// TOO LATE! // AFTER: hash_lock acquired early (before bucket search)
+spin_lock(&current_detail->hash_lock); while (current_index <
+current_detail->hash_size &&
+hlist_empty(&current_detail->hash_table[current_index]))
+current_index++; ``` This ensures that: 1. **Atomicity**: Bucket
+emptiness checks and nextcheck updates happen atomically 2. **Race
+prevention**: No concurrent entry removal can happen during bucket
+scanning 3. **Correctness**: nextcheck times are updated based on the
+actual state of buckets at scan time ### 4. **Risk Assessment** **Low
+Risk**: - **Scope**: Changes only affect the locking order in
+`cache_clean()` - **Backwards compatibility**: No API changes - **Side
+effects**: Minimal - just holds the lock slightly longer, which is safe
+- **Testing**: The change preserves existing logic while fixing the race
+### 5. **Stable Tree Criteria Compliance** ✅ **Fixes important bug**:
+30-minute cache cleanup delays significantly impact performance ✅
+**Small and contained**: Only 12 lines changed in a single function ✅
+**No architectural changes**: Just reorders lock acquisition ✅ **Minimal
+regression risk**: The change is conservative and preserves existing
+behavior ✅ **Clear side effects**: Only improves correctness, no
+negative impacts ### 6. **Comparison with Similar Commits** Looking at
+the historical examples: - **Similar to Commit #3 (YES)**: Fixes a race
+condition with minimal code changes and clear correctness improvement -
+**Unlike Commits #1,#2,#4,#5 (NO)**: Those were either reverted,
+cosmetic, or changed behavior significantly ### 7. **Critical System
+Impact** SUNRPC cache is used by: - **NFS client/server operations** -
+**RPC authentication caching** - **Various network filesystem
+operations** A 30-minute delay in cache cleanup can cause: - Memory
+bloat from stale entries - Performance degradation - Potential service
+disruptions **Conclusion**: This is a clear bug fix with minimal risk
+that addresses a significant performance issue in a critical kernel
+subsystem. It meets all criteria for stable tree backporting.
 
- drivers/staging/media/rkvdec/rkvdec.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ net/sunrpc/cache.c | 15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/staging/media/rkvdec/rkvdec.c b/drivers/staging/media/rkvdec/rkvdec.c
-index d16cf4115d03a..6cf551cc861a4 100644
---- a/drivers/staging/media/rkvdec/rkvdec.c
-+++ b/drivers/staging/media/rkvdec/rkvdec.c
-@@ -821,24 +821,24 @@ static int rkvdec_open(struct file *filp)
- 	rkvdec_reset_decoded_fmt(ctx);
- 	v4l2_fh_init(&ctx->fh, video_devdata(filp));
- 
--	ret = rkvdec_init_ctrls(ctx);
--	if (ret)
--		goto err_free_ctx;
--
- 	ctx->fh.m2m_ctx = v4l2_m2m_ctx_init(rkvdec->m2m_dev, ctx,
- 					    rkvdec_queue_init);
- 	if (IS_ERR(ctx->fh.m2m_ctx)) {
- 		ret = PTR_ERR(ctx->fh.m2m_ctx);
--		goto err_cleanup_ctrls;
-+		goto err_free_ctx;
+diff --git a/net/sunrpc/cache.c b/net/sunrpc/cache.c
+index d1a10972dd539..2dbd57f2dbbe6 100644
+--- a/net/sunrpc/cache.c
++++ b/net/sunrpc/cache.c
+@@ -453,24 +453,21 @@ static int cache_clean(void)
+ 		}
  	}
  
-+	ret = rkvdec_init_ctrls(ctx);
-+	if (ret)
-+		goto err_cleanup_m2m_ctx;
++	spin_lock(&current_detail->hash_lock);
 +
- 	filp->private_data = &ctx->fh;
- 	v4l2_fh_add(&ctx->fh);
+ 	/* find a non-empty bucket in the table */
+-	while (current_detail &&
+-	       current_index < current_detail->hash_size &&
++	while (current_index < current_detail->hash_size &&
+ 	       hlist_empty(&current_detail->hash_table[current_index]))
+ 		current_index++;
  
- 	return 0;
+ 	/* find a cleanable entry in the bucket and clean it, or set to next bucket */
+-
+-	if (current_detail && current_index < current_detail->hash_size) {
++	if (current_index < current_detail->hash_size) {
+ 		struct cache_head *ch = NULL;
+ 		struct cache_detail *d;
+ 		struct hlist_head *head;
+ 		struct hlist_node *tmp;
  
--err_cleanup_ctrls:
--	v4l2_ctrl_handler_free(&ctx->ctrl_hdl);
-+err_cleanup_m2m_ctx:
-+	v4l2_m2m_ctx_release(ctx->fh.m2m_ctx);
+-		spin_lock(&current_detail->hash_lock);
+-
+ 		/* Ok, now to clean this strand */
+-
+ 		head = &current_detail->hash_table[current_index];
+ 		hlist_for_each_entry_safe(ch, tmp, head, cache_list) {
+ 			if (current_detail->nextcheck > ch->expiry_time)
+@@ -491,8 +488,10 @@ static int cache_clean(void)
+ 		spin_unlock(&cache_list_lock);
+ 		if (ch)
+ 			sunrpc_end_cache_remove_entry(ch, d);
+-	} else
++	} else {
++		spin_unlock(&current_detail->hash_lock);
+ 		spin_unlock(&cache_list_lock);
++	}
  
- err_free_ctx:
- 	kfree(ctx);
+ 	return rv;
+ }
 -- 
 2.39.5
 
