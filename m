@@ -1,42 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B4E525C6FA;
-	Sun,  1 Jun 2025 23:25:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38EF32580EC;
+	Sun,  1 Jun 2025 23:25:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748820310; cv=none; b=m6y2PuqzVAjmvdcQmDDgS2CjRXHg59DBICs1X9H+SNXEnjCBKeb9yAxUUjfigsS+0DkBm1tT4sJUTGo64cOZIHOAlAhw56/A8VIvsikLIFCctSmTaZjy/JJ10iv1RTOVibfHztDGwDw3MgjWwTZ4VAGKuVMtMalozKX+qs8P5pI=
+	t=1748820312; cv=none; b=WYV0lJa+xVx9wxaeSlo4O1/T6mhcYEarTPC1cokEc1yk1fPo5q7o8cb1bcFd4e9PXg1/COgBde5viMAlMSUekFKj+A2Hl6QLBUxuv0Nh6e2v+75IkttWJYMv4STVgUk1w+dC8AT1t7Mf/gNCWpMrDLYON8YThfGLAw5z6YkwnUA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748820310; c=relaxed/simple;
-	bh=WWf+w19bmkrwobcwzNW07foiBwK6muj5RYtOwNEqpcE=;
+	s=arc-20240116; t=1748820312; c=relaxed/simple;
+	bh=G5ptFgI035r6QM783wg67cRlLhJPu1qeqOLJdtsVheU=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=udfhvCWKt3lAVp/TdvIhIQeGKezW3nhGt3PXWO1Z1GWlb2xPbOp6rZ2IbcShxj7LusHPtDbB10C86n6TqnbF2phwCiX9yq2nVEt9Mko/XcABeR46dJpfqNmxzePHqvVDve3SU3eSVsCU53VH7Jzn+b8wtyYKoDMM78ikRhptamA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hlbKl3uG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=kBIvk7Px2qsBqKxavflHw+r6iPl45esgbMwJ9r2MGNK9n55nceZ7C8+dWqv5stvOypUvy2Ae0dHkpBnlOmvgqFQGHYSduNhcDgBQl3IsvjnS6DYcYA0DJOJsIHakeao6YgAucK3dt/IkGPAzBcwWbIjKifuIxE//9j4jMe/7wMU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dkJ16yZW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hlbKl3uG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2678C4CEF1;
-	Sun,  1 Jun 2025 23:25:08 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dkJ16yZW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1671CC4CEE7;
+	Sun,  1 Jun 2025 23:25:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748820309;
-	bh=WWf+w19bmkrwobcwzNW07foiBwK6muj5RYtOwNEqpcE=;
+	s=k20201202; t=1748820311;
+	bh=G5ptFgI035r6QM783wg67cRlLhJPu1qeqOLJdtsVheU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hlbKl3uGDnLFpQ6zzbz2nxyAGZKZP4mEDnGK0SJK/uWoacaMwFDEGnjNwFH/awmvT
-	 MxmvkNrSHEBU0VolR+8vUyU4r2N5e4AIKuuNtsTc6378RyuFOizSSVwHPI5hkscAVB
-	 mWGtqmYzxx3Whff1f3Am2H+LuYwUgOvJSPjAr+rly2Aubri3koxmlt37O63Oa+BC3s
-	 CLIXFCpYW5Kz+5Ig0ApoX6VHtWgzYGo3hUofYpcPaDqvJOuIiLA2nXquGEkMFlaTVP
-	 uOB1POc8Cjlb1Cgx5VZgNwTvx0PFFpCBSXIuttLrzN4JWIx3R/hEr9NXfgXWMYriJu
-	 uWBxAEH+fmDiQ==
+	b=dkJ16yZWYs9REk3HZ+2fIRhJyISuGgSVk+Rp6D2oonvPHB83VR1wky75HvwhBOb0Q
+	 7DBEd3YO3tsgFm2rZqjUrgVFHR0jdEaFSyjSKcSx9VKbxk8MyzU7UKxJ9nO4oAKU0A
+	 w4DfazKmJFfMJc+BrCku81XMp4PJ13ILWrgwq4vwbgrruF1+lNfyn0omJ2gsawdlp8
+	 3cbWeFxp6AOp0sSvqVzHbTlXrElwlDLgR+9OMxngvmeSU7wTwb91eFMIpenn3n8HxS
+	 cgCNbgKt3BYihbDGTkUz1c9//NzwDjCrX/VKIKYqtmejBXRh7NSoOx93tSPFtfFhQf
+	 jwJEyuntVzCTw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jiayuan Chen <jiayuan.chen@linux.dev>,
-	syzbot+01affb1491750534256d@syzkaller.appspotmail.com,
-	Tejun Heo <tj@kernel.org>,
+Cc: Anusha Srivatsa <asrivats@redhat.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Tejas Vipin <tejasvipin76@gmail.com>,
+	Doug Anderson <dianders@chromium.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>,
+	maarten.lankhorst@linux.intel.com,
+	tzimmermann@suse.de,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.15 012/110] workqueue: Fix race condition in wq->stats incrementation
-Date: Sun,  1 Jun 2025 19:22:54 -0400
-Message-Id: <20250601232435.3507697-12-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.15 013/110] drm/panel/sharp-ls043t1le01: Use _multi variants
+Date: Sun,  1 Jun 2025 19:22:55 -0400
+Message-Id: <20250601232435.3507697-13-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250601232435.3507697-1-sashal@kernel.org>
 References: <20250601232435.3507697-1-sashal@kernel.org>
@@ -52,85 +61,173 @@ X-stable-base: Linux 6.15
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Anusha Srivatsa <asrivats@redhat.com>
 
-[ Upstream commit 70e1683ca3a6474360af1d3a020a9a98c8492cc0 ]
+[ Upstream commit 20e8219205145e1af3b98b6a0a3cc59568116a05 ]
 
-Fixed a race condition in incrementing wq->stats[PWQ_STAT_COMPLETED] by
-moving the operation under pool->lock.
+Move away from using deprecated API and use _multi variants
+if available. Use mipi_dsi_msleep() and mipi_dsi_usleep_range()
+instead of msleep() and usleep_range() respectively.
 
-Reported-by: syzbot+01affb1491750534256d@syzkaller.appspotmail.com
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Used Coccinelle to find the _multi variant APIs,replacing
+mpi_dsi_msleep() where necessary and for returning
+dsi_ctx.accum_err in these functions. mipi_dsi_dcs_write()
+does not have a corresponding _multi() variant. Replacing it with
+mipi_dsi_dcs_write_seq_multi() instead. This change is manual.
+
+The Coccinelle script is the same as the one in commit c8ba07caaecc
+("drm/panel/synaptics-r63353: Use _multi variants")
+
+v2: Use mipi_dsi_write_buffer_multi() in place of
+mipi_dsi_dcs_write(). (Dmitry)
+
+v3: add commit details where the same coccinelle script is
+used and remove the actual script from commit log.
+Use mipi_dsi_dcs_write_seq_multi() for mipi_dsi_dcs_write() (Doug)
+
+Cc: Maxime Ripard <mripard@kernel.org>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Tejas Vipin <tejasvipin76@gmail.com>
+Cc: Doug Anderson <dianders@chromium.org>
+Signed-off-by: Anusha Srivatsa <asrivats@redhat.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Link: https://lore.kernel.org/r/20250326-b4-panel-ls043t1le01-v3-1-96c554c0ea2b@redhat.com
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-**YES** This commit should be backported to stable kernel trees. Here's
-my detailed analysis: ## Race Condition Analysis The commit fixes a
-**data race condition** in `pwq->stats[PWQ_STAT_COMPLETED]++` that is
-directly related to a previously fixed race condition for
-`pwq->stats[PWQ_STAT_STARTED]++` (commit fe48ba7daefe). **The Problem:**
-- Line 3244 in the current kernel shows
-`pwq->stats[PWQ_STAT_COMPLETED]++` is executed **outside** the
-`pool->lock` protection - Multiple worker threads can concurrently
-increment this counter, creating a race condition identical to the one
-fixed in commit fe48ba7daefe - The syzbot report confirms this is a real
-issue affecting production systems **The Fix:** The commit moves
-`pwq->stats[PWQ_STAT_COMPLETED]++` from line ~3244 (before
-`lock_map_release`) to after `raw_spin_lock_irq(&pool->lock)` at line
-~3273, ensuring atomic access under lock protection. ## Backport
-Suitability Criteria **✅ Fixes Important Bug:** Yes - race conditions
-can lead to incorrect statistics and potential corruption **✅ Small and
-Contained:** The change is minimal - just moving one line of code to a
-different location **✅ No Side Effects:** Moving the stats increment
-under lock protection has no functional side effects beyond fixing the
-race **✅ No Architectural Changes:** This is purely a synchronization
-fix with no design changes **✅ Critical Subsystem:** Workqueue is a core
-kernel subsystem used throughout the kernel **✅ Clear Stable Tree
-Compliance:** - Important bugfix ✓ - Minimal risk ✓ - Confined to
-workqueue subsystem ✓ - Reported by automated testing (syzbot) ✓ ##
-Historical Precedent The commit directly parallels the **previously
-backported** commit fe48ba7daefe (Similar Commit #1), which fixed the
-same type of race condition for `PWQ_STAT_STARTED`. That commit was
-marked "Backport Status: YES" and demonstrates that: 1. KCSAN-detected
-race conditions in workqueue stats are considered backport-worthy 2.
-Moving stats increments under lock protection is an established fix
-pattern 3. The workqueue maintainer (Tejun Heo) accepts such fixes ##
-Risk Assessment **Minimal Risk:** The change only affects when the
-counter is incremented (under lock vs. outside lock). Since both
-locations are in the same execution path, there's no functional behavior
-change - only proper synchronization. **No Regression Potential:** The
-fix follows the exact same pattern as the successful previous fix,
-reducing the likelihood of introducing new issues. This commit
-represents a clear, low-risk bug fix that addresses a real concurrency
-issue in a critical kernel subsystem, making it an ideal candidate for
-stable tree backporting.
+Looking at this commit, I need to analyze whether it should be
+backported to stable kernel trees. **Answer: NO** **Detailed Analysis:**
+This commit is a **code modernization/refactoring change** that converts
+from deprecated MIPI DSI APIs to newer "_multi" variants. Here's my
+detailed reasoning: ## 1. **Nature of Changes - API Modernization Only**
+The changes are purely about replacing deprecated function calls with
+their modern equivalents: - `mipi_dsi_dcs_exit_sleep_mode()` →
+`mipi_dsi_dcs_exit_sleep_mode_multi()` -
+`mipi_dsi_dcs_set_pixel_format()` →
+`mipi_dsi_dcs_set_pixel_format_multi()` -
+`mipi_dsi_dcs_set_display_on()` → `mipi_dsi_dcs_set_display_on_multi()`
+- `mipi_dsi_dcs_write()` → `mipi_dsi_dcs_write_seq_multi()` - `msleep()`
+→ `mipi_dsi_msleep()` This is classic API modernization, not a bug fix.
+## 2. **No Functional Bug Fixes** The commit doesn't address any user-
+visible issues, crashes, security vulnerabilities, or hardware
+compatibility problems. The panel functionality remains identical - this
+is purely about using preferred APIs for better error handling patterns.
+## 3. **Pattern Consistent with Similar Commits** All the reference
+commits provided show the same pattern and are marked as **"Backport
+Status: NO"**: - **Similar Commit #1**: "Switch to
+mipi_dsi_dcs_write_seq_multi()" - mechanical conversion for code
+reduction - **Similar Commit #2**: "add more multi functions" - adding
+new API variants and deprecating old ones - **Similar Commit #4**:
+"Transition to mipi_dsi_dcs_write_seq_multi" - replacing deprecated
+macros - **Similar Commit #5**: "use mipi_dsi_dcs_nop_multi()" -
+removing conditional code using multi wrappers All these similar commits
+involve the same type of API modernization and none were backported. ##
+4. **Error Handling Changes Don't Fix Existing Bugs** While the new
+"_multi" pattern provides better error handling through
+`dsi_ctx.accum_err`, the original code was already handling errors
+properly with explicit return checks. The change improves code
+maintainability but doesn't fix any error handling bugs. ## 5. **Stable
+Tree Criteria Violation** This commit violates stable tree rules: -
+**Not a critical bugfix**: No user-impacting issues resolved -
+**Introduces new features**: Uses newer API variants that may not exist
+in older kernels - **Code churn without necessity**: Changes working
+code for style/modernization reasons - **Potential compatibility
+issues**: "_multi" variants may not be available in all stable branches
+## 6. **Risk vs. Benefit Analysis** - **Risk**: Potential
+incompatibility with older kernel versions, unnecessary code churn -
+**Benefit**: None for stable users - no bugs fixed, no new functionality
+for end users ## **Conclusion** This is a textbook example of a commit
+that should **NOT** be backported to stable trees. It's pure code
+modernization that doesn't fix any user-visible problems, follows the
+same pattern as other non-backported similar commits, and could
+potentially introduce compatibility issues in stable branches. Stable
+trees should only receive critical fixes, not API modernization changes.
 
- kernel/workqueue.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ .../gpu/drm/panel/panel-sharp-ls043t1le01.c   | 41 +++++++------------
+ 1 file changed, 15 insertions(+), 26 deletions(-)
 
-diff --git a/kernel/workqueue.c b/kernel/workqueue.c
-index cf62032827375..1ea62b8c76b32 100644
---- a/kernel/workqueue.c
-+++ b/kernel/workqueue.c
-@@ -3241,7 +3241,7 @@ __acquires(&pool->lock)
- 	 * point will only record its address.
- 	 */
- 	trace_workqueue_execute_end(work, worker->current_func);
--	pwq->stats[PWQ_STAT_COMPLETED]++;
-+
- 	lock_map_release(&lockdep_map);
- 	if (!bh_draining)
- 		lock_map_release(pwq->wq->lockdep_map);
-@@ -3272,6 +3272,8 @@ __acquires(&pool->lock)
+diff --git a/drivers/gpu/drm/panel/panel-sharp-ls043t1le01.c b/drivers/gpu/drm/panel/panel-sharp-ls043t1le01.c
+index 729cbb0d8403f..36abfa2e65e96 100644
+--- a/drivers/gpu/drm/panel/panel-sharp-ls043t1le01.c
++++ b/drivers/gpu/drm/panel/panel-sharp-ls043t1le01.c
+@@ -36,60 +36,49 @@ static inline struct sharp_nt_panel *to_sharp_nt_panel(struct drm_panel *panel)
+ static int sharp_nt_panel_init(struct sharp_nt_panel *sharp_nt)
+ {
+ 	struct mipi_dsi_device *dsi = sharp_nt->dsi;
+-	int ret;
++	struct mipi_dsi_multi_context dsi_ctx = { .dsi = dsi };
  
- 	raw_spin_lock_irq(&pool->lock);
+ 	dsi->mode_flags |= MIPI_DSI_MODE_LPM;
  
-+	pwq->stats[PWQ_STAT_COMPLETED]++;
-+
- 	/*
- 	 * In addition to %WQ_CPU_INTENSIVE, @worker may also have been marked
- 	 * CPU intensive by wq_worker_tick() if @work hogged CPU longer than
+-	ret = mipi_dsi_dcs_exit_sleep_mode(dsi);
+-	if (ret < 0)
+-		return ret;
++	mipi_dsi_dcs_exit_sleep_mode_multi(&dsi_ctx);
+ 
+-	msleep(120);
++	mipi_dsi_msleep(&dsi_ctx, 120);
+ 
+ 	/* Novatek two-lane operation */
+-	ret = mipi_dsi_dcs_write(dsi, 0xae, (u8[]){ 0x03 }, 1);
+-	if (ret < 0)
+-		return ret;
++	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0xae,  0x03);
+ 
+ 	/* Set both MCU and RGB I/F to 24bpp */
+-	ret = mipi_dsi_dcs_set_pixel_format(dsi, MIPI_DCS_PIXEL_FMT_24BIT |
+-					(MIPI_DCS_PIXEL_FMT_24BIT << 4));
+-	if (ret < 0)
+-		return ret;
++	mipi_dsi_dcs_set_pixel_format_multi(&dsi_ctx,
++					    MIPI_DCS_PIXEL_FMT_24BIT |
++					    (MIPI_DCS_PIXEL_FMT_24BIT << 4));
+ 
+-	return 0;
++	return dsi_ctx.accum_err;
+ }
+ 
+ static int sharp_nt_panel_on(struct sharp_nt_panel *sharp_nt)
+ {
+ 	struct mipi_dsi_device *dsi = sharp_nt->dsi;
+-	int ret;
++	struct mipi_dsi_multi_context dsi_ctx = { .dsi = dsi };
+ 
+ 	dsi->mode_flags |= MIPI_DSI_MODE_LPM;
+ 
+-	ret = mipi_dsi_dcs_set_display_on(dsi);
+-	if (ret < 0)
+-		return ret;
++	mipi_dsi_dcs_set_display_on_multi(&dsi_ctx);
+ 
+-	return 0;
++	return dsi_ctx.accum_err;
+ }
+ 
+ static int sharp_nt_panel_off(struct sharp_nt_panel *sharp_nt)
+ {
+ 	struct mipi_dsi_device *dsi = sharp_nt->dsi;
+-	int ret;
++	struct mipi_dsi_multi_context dsi_ctx = { .dsi = dsi };
+ 
+ 	dsi->mode_flags &= ~MIPI_DSI_MODE_LPM;
+ 
+-	ret = mipi_dsi_dcs_set_display_off(dsi);
+-	if (ret < 0)
+-		return ret;
++	mipi_dsi_dcs_set_display_off_multi(&dsi_ctx);
+ 
+-	ret = mipi_dsi_dcs_enter_sleep_mode(dsi);
+-	if (ret < 0)
+-		return ret;
++	mipi_dsi_dcs_enter_sleep_mode_multi(&dsi_ctx);
+ 
+-	return 0;
++	return dsi_ctx.accum_err;
+ }
+ 
+ static int sharp_nt_panel_unprepare(struct drm_panel *panel)
 -- 
 2.39.5
 
