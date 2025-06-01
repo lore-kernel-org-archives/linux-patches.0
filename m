@@ -1,47 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A80C725DCF3;
-	Sun,  1 Jun 2025 23:28:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52363270EBF;
+	Sun,  1 Jun 2025 23:28:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748820510; cv=none; b=Ym3YzEWFdhnNJOEJ0yTkPupeums1E2ZGvRnOCGB9PdUOvN387MENBfYy1UyUTcC4tGFFtaiuymrlP4A0PUYG8nrXimXVM01+IM1lnY65OqsqCDla4SlEXpcXivtu9jYHDKOaPvR8Rw2KZX+LkE9gLx9ceuchIfnwm37blJiZ9Hk=
+	t=1748820513; cv=none; b=mQG12Jj6e80YKyoAUHrQFyOQLbG7NtC3IZvjH09HCQpa+kguiqmxDt9DBz+LhJs4bOL18PifndXiy/FEmu4syNFrErSMs0aeo/4XdFu+XhqJ8jQ6LKnk53qGQsf62gicGZCUWEECMLYNFEzWH9iZdMuc24kZ6f/7CtNaNAVK9Vs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748820510; c=relaxed/simple;
-	bh=RXLXYPf25IYAL30WtOgQao+qkK8DvqIH5LiDksgBCRc=;
+	s=arc-20240116; t=1748820513; c=relaxed/simple;
+	bh=yf7en2mIQnu6hy59e0wXMpo5+D7zigwRK3HjVtholac=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=j6Mb+rTRvSwcUHV6roJ78ezHoV6UFPHYwcH3Kuyw5rdwexiipzgp+awzwQUxok4PnrhFGUE3JNdvsViOOxAAzhkZTHCkWmYJg8M30cKbEmWdA9OQZo58C3mlD0O2aYDlBKXilnX2GvisQ7vff4dI8zIVWOpT4SCrxiNoNFRJIvM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HwYQyoWD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C/XvIEp4VC2t3a0jxXa4B46bwcTHKd0dxhHeQDKOIFq4sixexEVXwkodFfuo35Y+Ydjh3AsSuNCJRh2HpqJe8PHsmH3+reTMMOY/6hZeTygbg8KUxFSacH8hqh3UTQ9iNFkKEViSArJ2ZlGhKcD+snyP/llU51h4ImqFjJrBa9g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X+TApWYw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HwYQyoWD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD5F3C4CEF1;
-	Sun,  1 Jun 2025 23:28:28 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X+TApWYw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C83DC4CEE7;
+	Sun,  1 Jun 2025 23:28:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748820510;
-	bh=RXLXYPf25IYAL30WtOgQao+qkK8DvqIH5LiDksgBCRc=;
+	s=k20201202; t=1748820511;
+	bh=yf7en2mIQnu6hy59e0wXMpo5+D7zigwRK3HjVtholac=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HwYQyoWDKqdFcKeQfhKR6n31XB5SLluMWkyPLnMdujf8qMWhBHlgWl5Cp+hmqQYVw
-	 zBkTLJekbI7MTb2e8f+mg+WJLCPW0haz1ZA2Cxc43H7RTDGKuvmTjetnEKzdqKD9eE
-	 OUvqt9kkVgw/ILXCx68rqU0ahe6ufUAztz2b49iPTigIkyA8VxhwayoufsuWNQ6Gwl
-	 EkcD7y4GMco4XX+nvHQTDS2OYz/Q02DIK8Eyp1rYrMViyfgPLAtnBgOU3rUiJtVD0R
-	 2fNLF08Q238xZD3OAsUZb/GVWai8knFsctFJSp7j+5IqMxfREydCKsjzohmX5UHsbO
-	 +/d38mvFo4apw==
+	b=X+TApWYwiTzgZw7j86olNcrKjj0LCqdwRbRRNLVsFC0IAvV9Pa/EfnPhWs4IMIgyR
+	 920TG21m68RM2BN8bWz06ahAY6xoJ8rIwL2Z0Mo8AXQmrG8KKYtSDkdWvyDpDj6P23
+	 tAVOBqtYeYEqv9PYin5YfOwRpoVP3QElARwOjFopyD3OlHrvvDqwmOedssJ/xYZAqG
+	 ielKRErQYyrf43STXFhuF03kO3AR1dw8+DSlKsUYZUiz4GgeA0JRjUsE4FrV6F8HNq
+	 yJ/ck0PAhf0M8Lf8Qr69nBDeL6VJjYrQY6DSsdFWHf9CqMMI19UjTALclKa88T+yvX
+	 ZCeqyw+YcruFA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Lucas De Marchi <lucas.demarchi@intel.com>,
-	John Harrison <John.C.Harrison@Intel.com>,
+Cc: Nas Chung <nas.chung@chipsnmedia.com>,
+	Sebastian Fricke <sebastian.fricke@collabora.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>,
-	thomas.hellstrom@linux.intel.com,
-	rodrigo.vivi@intel.com,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	intel-xe@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org,
+	quic_vgarodia@quicinc.com,
+	quic_dikshita@quicinc.com,
+	mchehab@kernel.org,
+	linux-media@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.15 077/110] drm/xe/uc: Remove static from loop variable
-Date: Sun,  1 Jun 2025 19:23:59 -0400
-Message-Id: <20250601232435.3507697-77-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.15 078/110] media: qcom: venus: Fix uninitialized variable warning
+Date: Sun,  1 Jun 2025 19:24:00 -0400
+Message-Id: <20250601232435.3507697-78-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250601232435.3507697-1-sashal@kernel.org>
 References: <20250601232435.3507697-1-sashal@kernel.org>
@@ -54,75 +54,77 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.15
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lucas De Marchi <lucas.demarchi@intel.com>
+From: Nas Chung <nas.chung@chipsnmedia.com>
 
-[ Upstream commit 75584c8213d341ddd5b7c72abf822e62f4b3ab27 ]
+[ Upstream commit 8e172e38a623ce284baf2514f963b29e4d47c62e ]
 
-The `entries` variable is used to loop through the array - it's supposed
-to be const, but not static.
+Avoid uninitialized variable when both V4L2_TYPE_IS_OUTPUT() and
+V4L2_TYPE_IS_CAPTURE() return false.
 
-Reviewed-by: John Harrison <John.C.Harrison@Intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250307-xe-per-gt-fw-v1-1-459574d76400@intel.com
-Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
+Signed-off-by: Nas Chung <nas.chung@chipsnmedia.com>
+Signed-off-by: Sebastian Fricke <sebastian.fricke@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-**YES** This commit should be backported to stable kernel trees. Here's
-my extensive analysis: ## Commit Analysis **Type of Issue:** This commit
-fixes an incorrect use of the `static` storage class specifier on a
-local variable that should be a simple `const` pointer. **Code
-Analysis:** - The problematic line changes `static const struct
-uc_fw_entry *entries;` to `const struct uc_fw_entry *entries;` - This
-variable is used as a loop iteration pointer in the
-`uc_fw_auto_select()` function - The variable gets assigned from
-`blobs_all[uc_fw->type].entries` and is used to iterate through firmware
-entries - The `static` keyword is incorrect here because this should be
-a local variable that gets reinitialized on each function call **Impact
-Assessment:** - **Bug severity:** This is a subtle but real bug that
-affects driver correctness - **User impact:** Could cause firmware
-selection issues in Intel Xe GPU drivers, potentially leading to
-graphics driver failures or incorrect firmware loading - **Risk:** The
-incorrect `static` storage could cause the `entries` pointer to retain
-stale values across function calls, leading to unpredictable firmware
-selection behavior **Backport Suitability Criteria:** 1. ✅ **Fixes a
-real bug:** Yes, incorrect storage class affects program correctness 2.
-✅ **Small and contained:** Single line change, minimal risk 3. ✅ **No
-side effects:** Pure bug fix with no behavioral changes beyond
-correcting the error 4. ✅ **No architectural changes:** Simple variable
-declaration fix 5. ✅ **Minimal regression risk:** Extremely low risk -
-makes the code work as originally intended 6. ✅ **Follows stable tree
-rules:** Important bugfix, minimal risk, contained change **Historical
-Precedent:** This commit is nearly identical to the i915 commit
-`5821a0bbb4c3` which was backported (marked as "YES" in the reference
-commits). Both commits: - Fix the exact same type of bug (accidental
-`static` on local variable) - Affect similar firmware selection code in
-Intel GPU drivers - Have identical risk profiles and change patterns -
-Were authored by the same team working on Intel GPU microcontroller
-firmware **Conclusion:** This is a clear candidate for backporting - it
-fixes a genuine bug that could affect system stability, has minimal risk
-of regression, and follows the established pattern of similar fixes that
-have been successfully backported.
+**YES** This commit should be backported to stable kernel trees.
+**Analysis:** This commit fixes a legitimate uninitialized variable bug
+in the `find_format_by_index()` function in
+`drivers/media/platform/qcom/venus/vdec.c`. Here's why it meets the
+criteria for stable backporting: 1. **Bug Fix Nature**: The commit
+addresses a clear code defect where the `valid` variable could be used
+uninitialized. In the original code at line 157, `bool valid;` is
+declared but not initialized. The logic then uses an `if-else if`
+construct: - `if (V4L2_TYPE_IS_OUTPUT(type))` - sets `valid` - `else if
+(V4L2_TYPE_IS_CAPTURE(type))` - sets `valid` - But if neither condition
+is true, `valid` remains uninitialized 2. **Potential Impact**: Based on
+the V4L2 macro definitions, `V4L2_TYPE_IS_CAPTURE(type)` is defined as
+`(!V4L2_TYPE_IS_OUTPUT(type))`, which means these should be mutually
+exclusive and cover all cases. However, the bug exists because the
+original code used `else if` instead of just `else`, creating a
+theoretical path where neither executes. 3. **Minimal Risk Fix**: The
+fix is extremely simple and safe - changing `bool valid;` to `bool valid
+= false;` and replacing `else if` with `else`. This ensures the variable
+is always initialized and the logic covers all possible cases. 4.
+**Consistency with Similar Commits**: This fix is very similar to
+"Similar Commit #1" which was marked as "Backport Status: YES". That
+commit also fixed an uninitialized variable in the venus driver with a
+simple initialization. The pattern and impact are nearly identical. 5.
+**No Side Effects**: The change is purely defensive programming - it
+doesn't alter the intended behavior but prevents undefined behavior in
+edge cases. 6. **Compiler/Static Analysis Issue**: This type of
+uninitialized variable warning is commonly flagged by static analysis
+tools and newer compiler versions, indicating it's a legitimate code
+quality issue that should be fixed. The commit follows stable tree rules
+perfectly: it's a small, contained bugfix with minimal regression risk
+that addresses a potential runtime issue in the venus media driver.
 
- drivers/gpu/drm/xe/xe_uc_fw.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/platform/qcom/venus/vdec.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_uc_fw.c b/drivers/gpu/drm/xe/xe_uc_fw.c
-index fb0eda3d56829..b553079ae3d64 100644
---- a/drivers/gpu/drm/xe/xe_uc_fw.c
-+++ b/drivers/gpu/drm/xe/xe_uc_fw.c
-@@ -222,8 +222,8 @@ uc_fw_auto_select(struct xe_device *xe, struct xe_uc_fw *uc_fw)
- 		[XE_UC_FW_TYPE_HUC] = { entries_huc, ARRAY_SIZE(entries_huc) },
- 		[XE_UC_FW_TYPE_GSC] = { entries_gsc, ARRAY_SIZE(entries_gsc) },
- 	};
--	static const struct uc_fw_entry *entries;
- 	enum xe_platform p = xe->info.platform;
-+	const struct uc_fw_entry *entries;
- 	u32 count;
- 	int i;
+diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
+index 9f82882b77bcc..39d0556d7237d 100644
+--- a/drivers/media/platform/qcom/venus/vdec.c
++++ b/drivers/media/platform/qcom/venus/vdec.c
+@@ -154,14 +154,14 @@ find_format_by_index(struct venus_inst *inst, unsigned int index, u32 type)
+ 		return NULL;
  
+ 	for (i = 0; i < size; i++) {
+-		bool valid;
++		bool valid = false;
+ 
+ 		if (fmt[i].type != type)
+ 			continue;
+ 
+ 		if (V4L2_TYPE_IS_OUTPUT(type)) {
+ 			valid = venus_helper_check_codec(inst, fmt[i].pixfmt);
+-		} else if (V4L2_TYPE_IS_CAPTURE(type)) {
++		} else {
+ 			valid = venus_helper_check_format(inst, fmt[i].pixfmt);
+ 
+ 			if (fmt[i].pixfmt == V4L2_PIX_FMT_QC10C &&
 -- 
 2.39.5
 
