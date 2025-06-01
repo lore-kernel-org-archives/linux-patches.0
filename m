@@ -1,50 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F05628C2B8;
-	Sun,  1 Jun 2025 23:30:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0FBB28C5B0;
+	Sun,  1 Jun 2025 23:30:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748820649; cv=none; b=NgJRLYPJkjpd+TwV6J5xTjBMBpZ7ikSc+m5ING7gDTK6/A+HVeDzYT173QwYY/ZsDbYNdExgIEAaf52AZV62YCy2Ehq6B19vx+0FaTge2EKGYykXCZJIlfiq2xUcOsypJwJqjGNwzocTywep5f2TbLz7MmqhbQgkAf7pvPXDAOQ=
+	t=1748820651; cv=none; b=NCMDr4Bx4T6KvvBG1eKRHOT+QtZBRc4LLDoXz4L9kVZm2bHm4Se7XGfpA0EZRB5EDjKpx8KXlhPk8m0ee1hgbAgD4p8V5Oj11L7etesf+lYFQKzWAK7JFfuJ8DWtLede0u5nD6HiS+dfV066WuPMKQade1wgnTTHYgVKQxZ5qWk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748820649; c=relaxed/simple;
-	bh=VCcvcps+8wA1B2/uwnP2l3Lg12YiaCgutRuD3eJxutQ=;
+	s=arc-20240116; t=1748820651; c=relaxed/simple;
+	bh=LVXBbKR8ncPzNFowKEp48fVuiS+MuCGt8umKkfuRD+M=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=VjCbvNs7Qqg6fkV+XRerlYxD0o5+Y4MlX5mZ+es9h2DfnIkAUdJZX747CdSlpZpn1AuQzInsmTXIPrAVzzRFIqlKdogsrOjMLOqETLGapbbDaQYnsxADv1I7zU+QAMhnw0nJdkGODmFaESBwEJqahSwfDRi1L8bxi74gtvrWwGs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=onbLbt40; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=U/3U8YLGykF/nWbdlNJ0xv6ru1Y/ky5xxBFnMh3Knx6ragC9Y4RAmIlTheuCOXo7RWCCJdWZpUF3OzImauBdOu9EhJYxV+mDSG2Sam5eDUkO4drBejKhoz7XxtEybYnzWk+6mC1FNx+NpeprKvU/tsPbY/7DCWCckMjDxHbA+VY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qrfTKczY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="onbLbt40"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68164C4CEF1;
-	Sun,  1 Jun 2025 23:30:47 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qrfTKczY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60142C4CEE7;
+	Sun,  1 Jun 2025 23:30:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748820649;
-	bh=VCcvcps+8wA1B2/uwnP2l3Lg12YiaCgutRuD3eJxutQ=;
+	s=k20201202; t=1748820650;
+	bh=LVXBbKR8ncPzNFowKEp48fVuiS+MuCGt8umKkfuRD+M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=onbLbt40fnL+L1YeIIEXxL9vvQJoZ0zm7Tk3qDZ16AbX1NrRo9GMDc306c78PrzXE
-	 NtSMvfDC0CV1/KLFq4GO4EZZfuEcbqU4vDOz/SqPd1Ku475NpIcoheNGqVYYG0OzrS
-	 CXSCS1Qcm0ZMZjFMN80QuYG5RYAfcXGdgMaAednjxxjjv2PtptVW3L1lTt2Q9/gnjO
-	 tni2AH2AmPIDCZjWrSEZ9SvoaupFK1VA8VGAxo81W9Owoo7kaY3B33g0pS8XCSF5WH
-	 WC4x0sRqdeZY4bvp+oyK0g47Vm1yYiwCcTDRi5eWeJy+nQgbylLMhSMulwTZy/RDJF
-	 zsBcJjc5uoZQw==
+	b=qrfTKczYvLhl/EcmcApcJegXpw6sbKfe/mlUBX3G+1BDqA0Amecey1YohQGdWQJyD
+	 eCVFwvpigf4sK+ezNj8yDf8Vy1QiCPqcTh59rK75Z785lSR1vTO+EMhYkbzorm8va8
+	 4O1E6T5MHMV51mD/fqoH/xcWpdMQytrcITzpiwXAxw1OPoibYXgv4daoKzlpGgbM6D
+	 hLPN73P8w+iihV52g9Gq6YzoVzZYiuEV2LvFsYIimhmPNHRJshPZmWuhNg7hAtxTNT
+	 394Fq89rEZ0QY27K/vcqPZ3uDF4QUDY6Q2TNba8zx+zYOfa3VKJCmuSGykOiKpokJz
+	 QGYSykkDI7DgA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Jessica Zhang <quic_jesszhan@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+Cc: Nas Chung <nas.chung@chipsnmedia.com>,
+	Sebastian Fricke <sebastian.fricke@collabora.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>,
-	robdclark@gmail.com,
-	quic_abhinavk@quicinc.com,
-	lumag@kernel.org,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	linux-arm-msm@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org,
+	mchehab@kernel.org,
+	linux-media@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.14 027/102] drm/msm/hdmi: add runtime PM calls to DDC transfer function
-Date: Sun,  1 Jun 2025 19:28:19 -0400
-Message-Id: <20250601232937.3510379-27-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.14 028/102] media: uapi: v4l: Fix V4L2_TYPE_IS_OUTPUT condition
+Date: Sun,  1 Jun 2025 19:28:20 -0400
+Message-Id: <20250601232937.3510379-28-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250601232937.3510379-1-sashal@kernel.org>
 References: <20250601232937.3510379-1-sashal@kernel.org>
@@ -57,108 +51,74 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.14.9
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Nas Chung <nas.chung@chipsnmedia.com>
 
-[ Upstream commit 531b4e2c206e5f7dead04d9da84dfa693ac57481 ]
+[ Upstream commit f81f69a0e3da141bdd73a16b8676f4e542533d87 ]
 
-We must be sure that the HDMI controller is powered on, while performing
-the DDC transfer. Add corresponding runtime PM calls to
-msm_hdmi_i2c_xfer().
+V4L2_TYPE_IS_OUTPUT() returns true for V4L2_BUF_TYPE_VIDEO_OVERLAY
+which definitely belongs to CAPTURE.
 
-Reviewed-by: Jessica Zhang <quic_jesszhan@quicinc.com>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/651727/
-Link: https://lore.kernel.org/r/20250505-fd-hdmi-hpd-v5-8-48541f76318c@oss.qualcomm.com
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Nas Chung <nas.chung@chipsnmedia.com>
+Signed-off-by: Sebastian Fricke <sebastian.fricke@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-**YES** This commit should be backported to stable kernel trees. Here's
-my detailed analysis: ## Bug Fix Analysis This commit addresses a
-**critical power management bug** in the MSM HDMI DDC (Display Data
-Channel) implementation. The issue is that DDC transfers can occur when
-the HDMI controller is not properly powered, leading to potential
-hardware access failures or system instability. ## Code Changes Analysis
-The changes in `drivers/gpu/drm/msm/hdmi/hdmi_i2c.c` are **minimal and
-well-contained**: 1. **Added runtime PM calls around DDC operations**: -
-`pm_runtime_resume_and_get()` at function start (line ~110) -
-`pm_runtime_put()` in success path (line ~206) - `pm_runtime_put()` in
-error path (line ~224) 2. **Fixed error handling flow**: - Changed
-direct returns to proper `goto fail` to ensure PM put operations - Lines
-113-114 and 172 now use `goto fail` instead of direct returns ## Risk
-Assessment - LOW RISK **Minimal scope**: Only affects the
-`msm_hdmi_i2c_xfer()` function, which is the DDC transfer entry point.
-**Consistent with existing patterns**: The kernel tree analysis shows
-runtime PM is already used extensively in this driver: -
-`hdmi_bridge.c`: Uses `pm_runtime_get_sync()` and `pm_runtime_put()` -
-`hdmi_hpd.c`: Uses runtime PM in 4 locations for HPD operations **No
-architectural changes**: This follows the existing runtime PM pattern
-established in commit 6ed9ed484d04 from 2017. ## Comparison with Similar
-Commits This matches the characteristics of **Similar Commit #1**
-(marked YES for backport): - Fixes a resource management bug (runtime PM
-vs devres helper) - Small, contained change - Improves driver robustness
-- Follows existing patterns The commit is **unlike** the rejected
-commits (#2-#5) which were: - Code cleanups/refactoring - API
-modernization - Feature additions - Non-critical improvements ##
-Critical System Impact DDC is essential for HDMI functionality - it's
-used for: - Reading display EDID data - Monitor detection - Display
-capability negotiation Without proper power management, DDC operations
-could fail intermittently, causing display detection issues or system
-hangs when accessing unpowered hardware. ## Conclusion This is a **low-
-risk, high-value bugfix** that ensures hardware is properly powered
-during DDC operations. It follows established driver patterns, has
-minimal scope, and fixes a potentially serious power management issue
-that could affect display functionality.
+**YES** This commit should be backported to stable kernel trees.
+**Detailed Analysis:** **1. Nature of the Bug:** The commit fixes a
+fundamental logic error in the `V4L2_TYPE_IS_OUTPUT` macro that has
+existed since 2012 (commit 607ca46e97a1b). The macro incorrectly
+classifies `V4L2_BUF_TYPE_VIDEO_OVERLAY` as an OUTPUT buffer type when
+it should be classified as a CAPTURE type. This is a clear logical bug
+in a core V4L2 API macro. **2. Code Impact Analysis:** The fix removes
+this line from the macro: ```c || (type) == V4L2_BUF_TYPE_VIDEO_OVERLAY
+``` My investigation shows the macro is used in critical V4L2 core
+functions, particularly in: - **Crop/Selection handling**
+(`drivers/media/v4l2-core/v4l2-ioctl.c:2517, 2547, 2597`): The macro
+determines whether to use `V4L2_SEL_TGT_COMPOSE` (for output) vs
+`V4L2_SEL_TGT_CROP` (for capture) targets - **Parameter handling**
+(`drivers/media/v4l2-core/v4l2-ioctl.c:2269`): Affects how output vs
+capture parameters are processed - **Buffer management** in videobuf2
+framework: Affects buffer direction logic **3. User Impact:**
+Applications using video overlay functionality have been subject to
+incorrect behavior where: - Overlay buffers were processed with output
+buffer logic instead of capture buffer logic - Wrong selection targets
+were used for crop operations on overlay devices - Parameter handling
+followed the wrong code paths **4. Risk Assessment:** - **Low regression
+risk**: The fix corrects clearly wrong behavior - there's no valid use
+case where VIDEO_OVERLAY should be treated as OUTPUT - **Contained
+scope**: Only affects the classification logic for one specific buffer
+type - **Clear correctness**: The fix aligns the code with the V4L2
+specification and logical expectations **5. Comparison with Similar
+Commits:** Looking at the historical commits provided, while they show
+refactoring and API improvements that were not backported, this commit
+fixes a fundamental logical bug in core API behavior, which is different
+from cosmetic or enhancement changes. **6. Backport Suitability:** This
+meets all stable backport criteria: - ✅ Fixes a clear bug affecting
+users - ✅ Small, contained change with minimal risk - ✅ No new features
+or architectural changes - ✅ Affects core V4L2 functionality that could
+cause incorrect application behavior - ✅ Logic error that has persisted
+for over a decade The fix should be backported to ensure VIDEO_OVERLAY
+applications work correctly across all supported kernel versions.
 
- drivers/gpu/drm/msm/hdmi/hdmi_i2c.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ include/uapi/linux/videodev2.h | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_i2c.c b/drivers/gpu/drm/msm/hdmi/hdmi_i2c.c
-index 7aa500d24240f..ebefea4fb4085 100644
---- a/drivers/gpu/drm/msm/hdmi/hdmi_i2c.c
-+++ b/drivers/gpu/drm/msm/hdmi/hdmi_i2c.c
-@@ -107,11 +107,15 @@ static int msm_hdmi_i2c_xfer(struct i2c_adapter *i2c,
- 	if (num == 0)
- 		return num;
- 
-+	ret = pm_runtime_resume_and_get(&hdmi->pdev->dev);
-+	if (ret)
-+		return ret;
-+
- 	init_ddc(hdmi_i2c);
- 
- 	ret = ddc_clear_irq(hdmi_i2c);
- 	if (ret)
--		return ret;
-+		goto fail;
- 
- 	for (i = 0; i < num; i++) {
- 		struct i2c_msg *p = &msgs[i];
-@@ -169,7 +173,7 @@ static int msm_hdmi_i2c_xfer(struct i2c_adapter *i2c,
- 				hdmi_read(hdmi, REG_HDMI_DDC_SW_STATUS),
- 				hdmi_read(hdmi, REG_HDMI_DDC_HW_STATUS),
- 				hdmi_read(hdmi, REG_HDMI_DDC_INT_CTRL));
--		return ret;
-+		goto fail;
- 	}
- 
- 	ddc_status = hdmi_read(hdmi, REG_HDMI_DDC_SW_STATUS);
-@@ -202,7 +206,13 @@ static int msm_hdmi_i2c_xfer(struct i2c_adapter *i2c,
- 		}
- 	}
- 
-+	pm_runtime_put(&hdmi->pdev->dev);
-+
- 	return i;
-+
-+fail:
-+	pm_runtime_put(&hdmi->pdev->dev);
-+	return ret;
- }
- 
- static u32 msm_hdmi_i2c_func(struct i2c_adapter *adapter)
+diff --git a/include/uapi/linux/videodev2.h b/include/uapi/linux/videodev2.h
+index e7c4dce390074..8130b899bd1bc 100644
+--- a/include/uapi/linux/videodev2.h
++++ b/include/uapi/linux/videodev2.h
+@@ -164,7 +164,6 @@ enum v4l2_buf_type {
+ #define V4L2_TYPE_IS_OUTPUT(type)				\
+ 	((type) == V4L2_BUF_TYPE_VIDEO_OUTPUT			\
+ 	 || (type) == V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE		\
+-	 || (type) == V4L2_BUF_TYPE_VIDEO_OVERLAY		\
+ 	 || (type) == V4L2_BUF_TYPE_VIDEO_OUTPUT_OVERLAY	\
+ 	 || (type) == V4L2_BUF_TYPE_VBI_OUTPUT			\
+ 	 || (type) == V4L2_BUF_TYPE_SLICED_VBI_OUTPUT		\
 -- 
 2.39.5
 
