@@ -1,57 +1,53 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F10B25C80F;
-	Sun,  1 Jun 2025 23:26:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FA762690EA;
+	Sun,  1 Jun 2025 23:27:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748820419; cv=none; b=bEfv83iNb+Z3lg/ZaRxQtofj2T+nmcXgvE3EJXQoCVV+3/2S3JZEb8vZZATimDOKF8WOykVytJ/b/gemYq3Jm9xTtBhL+XlabVg25Yr4sU6g50hdVEKYsNTY6aVcXt1eM+H/YG4qS9razZJ1afhR6SZEGGh4Jqd/cguViTqXjYk=
+	t=1748820421; cv=none; b=ZQ0O9/QRzLcs0IUMCTNOqEeNN2Rzym71WI+b9DV7rSQwlIyJgLz0o+Jn1Trip+wrnoVpp9KpP76le3LxwIUc/Se/hsLTuvG2gFSjrjgvD7ZuFugpSQiXwlrpiwF12H1pAyflQav7mfoLUHc63MUohTcduQwveIdJQ81XYGGIR+Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748820419; c=relaxed/simple;
-	bh=g55pe3c+YLojNa8briwc+sfg93ChPQPNgCl7RFTwkZQ=;
+	s=arc-20240116; t=1748820421; c=relaxed/simple;
+	bh=dt8kPgWDpFu2sSg07IECaKF33MJ/jwpv24xF5OlDrII=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=JOLjZ/pGrVW+0di2RwzYi5gLXBk3LxVkI2aXMVAmgsHXTpaxWXwYqZi47TUOvFm6cfS2fz5XjSUJXn/BoBmbevkT03vlNllDYi3hOId3zhWbrfSMDRvM+xdwC8htXKdqllfCXdI+C2Zx/AU1sAQLZ00Q8k/ikI//Z6ozr/otyVM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pSboTcHA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QTsSZY+xbPyZ+d5NWMe/61W+lJknr/RWVLQcTs6nApl9NQVEUwfiiUfd0XWZSQg+oEPNWrZhlJ8g4MfS5FZw7pkevv0ivoOfoAhMcD9yy2zJtWWFB10A265fVJWG3FUPe1dO13HNzktVvdwfaiWtPST8VdKl+MmYIkhlmZbUnUo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WdIqWb8r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pSboTcHA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9448C4CEEE;
-	Sun,  1 Jun 2025 23:26:56 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WdIqWb8r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5424EC4CEF1;
+	Sun,  1 Jun 2025 23:26:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748820418;
-	bh=g55pe3c+YLojNa8briwc+sfg93ChPQPNgCl7RFTwkZQ=;
+	s=k20201202; t=1748820421;
+	bh=dt8kPgWDpFu2sSg07IECaKF33MJ/jwpv24xF5OlDrII=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pSboTcHA9mGkwvYrw+7efh6NouEhn8JBntwqHC0zx5hgJVVknb8YYZTAfP2hx+HXL
-	 IQ49YCJBZJl8ng9qRpLO3VMZJLh6ET4D51+DdAC+ivFR7+59QCLA7lwL+v3a7pv779
-	 XYP6qpZEwaIi1JQwitCMqJ39a1w5zBaeKrJSkzieNKT8AYS3ssUL0TXpXtjmqbyRJG
-	 kxXKk8vk6u9RJsggbxLAZ8dsmDMIQl8MBtpOknsaWFdOY+glwOI3KZyA3PvQUyfBe0
-	 Z2XTAlv8+fvYsS/m0lu6D57lIKZtGvoWkbyrpICOj0Ye93ZBmQ7DI8iLZcl7hKYkbO
-	 OkP0jzufqMPFQ==
+	b=WdIqWb8r4kt6iAIp6YlsqR9MdecVFUAQ8eMwaUmdTyRQnMOsbObHG6QOmgYKL7rfS
+	 intzkTDS2nZ0cSYR3AAYU8CLIdj+CNNal4/nDMvvO8TzcW+LwTEtuES+9uYDNT74Bj
+	 UJvNe4ywNdjBtbsIhhZ9jdmEbFeuj1NVgpKTdeMYj7s46soV0F+mnG/7+BV+fOyIbE
+	 Zr8ZOPc4+plT7HZU1Mx3ZJV7/oFi23qUbLE7KhYU4CYXflRAhijNSQI8mCrWbTItLx
+	 eDZfmvQgno/Ty1N4pyYW+KbZLvWcr3+ZtLi/a+ybPS7Lj4ln/CAPVZZFYjAJavS30h
+	 OWgAKT+QjMPyw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Dillon Varone <dillon.varone@amd.com>,
-	Aric Cyr <aric.cyr@amd.com>,
-	Fangzhi Zuo <jerry.zuo@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: Jonas Karlman <jonas@kwiboo.se>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Christopher Obbard <chris.obbard@collabora.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>,
-	harry.wentland@amd.com,
-	sunpeng.li@amd.com,
-	christian.koenig@amd.com,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	saguileran@ime.usp.br,
-	alex.hung@amd.com,
-	joshua.aberback@amd.com,
-	aurabindo.pillai@amd.com,
-	Leo.Zeng@amd.com,
-	chris.park@amd.com,
-	amd-gfx@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.15 051/110] drm/amd/display: Fix Vertical Interrupt definitions for dcn32, dcn401
-Date: Sun,  1 Jun 2025 19:23:33 -0400
-Message-Id: <20250601232435.3507697-51-sashal@kernel.org>
+	ezequiel@vanguardiasur.com.ar,
+	mchehab@kernel.org,
+	gregkh@linuxfoundation.org,
+	matthias.bgg@gmail.com,
+	angelogioacchino.delregno@collabora.com,
+	linux-media@vger.kernel.org,
+	linux-rockchip@lists.infradead.org,
+	linux-staging@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-mediatek@lists.infradead.org
+Subject: [PATCH AUTOSEL 6.15 052/110] media: rkvdec: h264: Use bytesperline and buffer height as virstride
+Date: Sun,  1 Jun 2025 19:23:34 -0400
+Message-Id: <20250601232435.3507697-52-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250601232435.3507697-1-sashal@kernel.org>
 References: <20250601232435.3507697-1-sashal@kernel.org>
@@ -66,313 +62,109 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.15
 Content-Transfer-Encoding: 8bit
 
-From: Dillon Varone <dillon.varone@amd.com>
+From: Jonas Karlman <jonas@kwiboo.se>
 
-[ Upstream commit e8cc149ed906a371a5962ff8065393bae28165c9 ]
+[ Upstream commit d5e0aa61470c48ddc04d433a00e79cef8716377a ]
 
-[WHY&HOW]
-- VUPDATE_NO_LOCK should be used in place of VUPDATE always
-- Add VERTICAL_INTERRUPT1 and VERTICAL_INTERRUPT2 definitions
+Use bytesperline and buffer height to calculate the strides configured.
 
-Reviewed-by: Aric Cyr <aric.cyr@amd.com>
-Signed-off-by: Dillon Varone <dillon.varone@amd.com>
-Signed-off-by: Fangzhi Zuo <jerry.zuo@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+This does not really change anything other than ensuring the
+bytesperline that is signaled to userspace matches what is configured
+in HW.
+
+Signed-off-by: Jonas Karlman <jonas@kwiboo.se>
+Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Tested-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Tested-by: Christopher Obbard <chris.obbard@collabora.com>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-**YES** ## Analysis This commit should be backported to stable kernel
-trees. Here's my detailed analysis: ### What's Being Fixed The commit
-addresses two critical issues in the AMD display driver for DCN32 and
-DCN401 hardware: 1. **Incorrect VUPDATE interrupt handling**: The code
-was using `VUPDATE` instead of `VUPDATE_NO_LOCK` interrupts, which is
-incorrect according to the commit message stating "VUPDATE_NO_LOCK
-should be used in place of VUPDATE always" 2. **Missing vertical
-interrupt definitions**: The code was missing `VERTICAL_INTERRUPT1` and
-`VERTICAL_INTERRUPT2` support, which are essential for proper display
-timing control ### Code Change Analysis Looking at the specific changes:
-**In irq_service_dcn32.c and irq_service_dcn401.c:** - Adds new
-interrupt function structures for `vline1_irq_info_funcs` and
-`vline2_irq_info_funcs` - Defines new `vline1_int_entry()` and
-`vline2_int_entry()` macros for VERTICAL_INTERRUPT1/2 - **Critically
-reorders the interrupt array** - moves `vupdate_no_lock_int_entry` after
-`vblank_int_entry` and adds the missing vline1/vline2 entries **In
-irq_types.h:** - Adds new interrupt source definitions for
-`DC_IRQ_SOURCE_DC1_VLINE2` through `DC_IRQ_SOURCE_DC6_VLINE2` - Adds
-corresponding `IRQ_TYPE_VLINE1` and `IRQ_TYPE_VLINE2` enum values ###
-Why This Should Be Backported 1. **Fixes User-Facing Bugs**: This
-directly impacts display functionality on DCN32/DCN401 hardware (recent
-AMD GPUs). Incorrect interrupt handling can cause: - VRR/FreeSync not
-working properly (similar to the DCN2 fix that was backported) - Display
-timing issues and stuttering - Multi-display synchronization problems 2.
-**Follows Established Pattern**: Similar to "Similar Commit #3" which
-was marked "Backport Status: YES", this fixes VUPDATE interrupt
-handling. That commit stated: "These are needed to send back DRM vblank
-events in the case where VRR is on. Without the interrupt enabled we're
-deferring the events into the vblank queue and userspace is left waiting
-forever" 3. **Small, Contained Fix**: The changes are: - Hardware-
-specific to DCN32/DCN401 only - Additive (adds missing functionality
-rather than changing existing behavior) - Well-defined register-level
-changes following hardware specifications 4. **Low Risk**: Unlike the
-commits marked "NO" which were either feature additions or cosmetic
-changes, this fixes fundamental interrupt definitions that should match
-the hardware specification. ### Risk Assessment **Low Risk** - The
-changes are: - Contained to specific AMD display controller versions -
-Following established patterns from other DCN versions - Adding missing
-interrupt support rather than modifying existing behavior - No
-architectural changes to the overall driver structure This is exactly
-the type of important bug fix that stable kernel trees are meant to
-receive - it fixes real functionality issues for users with specific
-hardware without introducing unnecessary risk.
+### Key Reasons for NO Backport: 1. **Not a Bug Fix**: The commit
+message explicitly states "This does not really change anything other
+than ensuring the bytesperline that is signaled to userspace matches
+what is configured in HW." This is not fixing a functional bug but
+rather improving consistency between userspace and hardware
+configuration. 2. **Code Quality/Consistency Improvement**: The changes
+are primarily about code correctness and consistency rather than fixing
+a critical issue that affects users. This aligns with similar commits
+#1, #2, and #4 which were marked as NO for backporting. 3. **Staging
+Driver**: The rkvdec driver is in `drivers/staging/media/`, which
+indicates it's still under development and not considered stable.
+Staging drivers typically have more relaxed backporting requirements. 4.
+**Specific Code Changes Analysis**: - **Before**: `hor_virstride =
+(sps->bit_depth_luma_minus8 + 8) 0001-Fix-Clippy-warnings.patch
+0002-Enhance-inference-prompt-to-utilize-CVEKERNELDIR-whe.patch
+0003-Update-to-latest-version-of-clap.patch Cargo.lock Cargo.toml
+LICENSE README.md adreno_acd_support_analysis.md
+amd_display_ips_sequential_ono_backport_analysis.md
+analyze_merge_commit.sh dpp_rcg_backport_analysis.md
+drm_amd_display_vertical_interrupt_dcn32_dcn401_backport_analysis.md
+drm_bridge_analysis.txt drm_format_helper_24bit_analysis.md
+drm_imagination_register_update_analysis.md
+drm_mediatek_mtk_dpi_refactoring_analysis.md
+intel_ipu6_constify_analysis.md io_uring_analysis.txt ksmbd_analysis.txt
+merge_commit_analysis.txt model prompt src target test_gpio_cleanup.txt
+test_patch.txt verisilicon_av1_4k_analysis.md dst_fmt->width / 8;` -
+**After**: `hor_virstride = dst_fmt->plane_fmt[0].bytesperline;` -
+**Before**: `ver_virstride = round_up(dst_fmt->height, 16);` -
+**After**: `ver_virstride = dst_fmt->height;` 5. **No Risk Indication**:
+The changes don't indicate they're fixing crashes, data corruption,
+security issues, or other critical problems that would warrant stable
+backporting. 6. **Pattern Match with Similar Commits**: Looking at the
+provided examples: - Similar commits #1, #2, #4, and #5 that make
+stride/calculation improvements were marked as NO - Only commit #3 that
+increased max supported height (a clear functional limitation fix) was
+marked as YES 7. **No Stable Tree Mention**: The commit message contains
+no indication of stable tree inclusion via Fixes: tags or explicit
+stable tree requests. ### Conclusion: This commit improves code
+consistency by using the actual bytesperline values from userspace
+instead of calculating them from SPS parameters, but it doesn't fix a
+user-impacting bug. It's a code quality improvement that follows the
+pattern of other NO-backport commits in the provided examples.
 
- .../display/dc/irq/dcn32/irq_service_dcn32.c  | 61 ++++++++++++++-----
- .../dc/irq/dcn401/irq_service_dcn401.c        | 60 +++++++++++++-----
- drivers/gpu/drm/amd/display/dc/irq_types.h    |  9 +++
- 3 files changed, 101 insertions(+), 29 deletions(-)
+ drivers/staging/media/rkvdec/rkvdec-h264.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/irq/dcn32/irq_service_dcn32.c b/drivers/gpu/drm/amd/display/dc/irq/dcn32/irq_service_dcn32.c
-index f0ac0aeeac512..f839afacd5a5c 100644
---- a/drivers/gpu/drm/amd/display/dc/irq/dcn32/irq_service_dcn32.c
-+++ b/drivers/gpu/drm/amd/display/dc/irq/dcn32/irq_service_dcn32.c
-@@ -191,6 +191,16 @@ static struct irq_source_info_funcs vline0_irq_info_funcs = {
- 	.ack = NULL
- };
+diff --git a/drivers/staging/media/rkvdec/rkvdec-h264.c b/drivers/staging/media/rkvdec/rkvdec-h264.c
+index 4fc167b42cf0c..7a1e76d423df5 100644
+--- a/drivers/staging/media/rkvdec/rkvdec-h264.c
++++ b/drivers/staging/media/rkvdec/rkvdec-h264.c
+@@ -896,9 +896,9 @@ static void config_registers(struct rkvdec_ctx *ctx,
+ 	dma_addr_t rlc_addr;
+ 	dma_addr_t refer_addr;
+ 	u32 rlc_len;
+-	u32 hor_virstride = 0;
+-	u32 ver_virstride = 0;
+-	u32 y_virstride = 0;
++	u32 hor_virstride;
++	u32 ver_virstride;
++	u32 y_virstride;
+ 	u32 yuv_virstride = 0;
+ 	u32 offset;
+ 	dma_addr_t dst_addr;
+@@ -909,16 +909,16 @@ static void config_registers(struct rkvdec_ctx *ctx,
  
-+static struct irq_source_info_funcs vline1_irq_info_funcs = {
-+	.set = NULL,
-+	.ack = NULL
-+};
-+
-+static struct irq_source_info_funcs vline2_irq_info_funcs = {
-+	.set = NULL,
-+	.ack = NULL
-+};
-+
- #undef BASE_INNER
- #define BASE_INNER(seg) DCN_BASE__INST0_SEG ## seg
+ 	f = &ctx->decoded_fmt;
+ 	dst_fmt = &f->fmt.pix_mp;
+-	hor_virstride = (sps->bit_depth_luma_minus8 + 8) * dst_fmt->width / 8;
+-	ver_virstride = round_up(dst_fmt->height, 16);
++	hor_virstride = dst_fmt->plane_fmt[0].bytesperline;
++	ver_virstride = dst_fmt->height;
+ 	y_virstride = hor_virstride * ver_virstride;
  
-@@ -259,6 +269,13 @@ static struct irq_source_info_funcs vline0_irq_info_funcs = {
- 		.funcs = &pflip_irq_info_funcs\
- 	}
+ 	if (sps->chroma_format_idc == 0)
+ 		yuv_virstride = y_virstride;
+ 	else if (sps->chroma_format_idc == 1)
+-		yuv_virstride += y_virstride + y_virstride / 2;
++		yuv_virstride = y_virstride + y_virstride / 2;
+ 	else if (sps->chroma_format_idc == 2)
+-		yuv_virstride += 2 * y_virstride;
++		yuv_virstride = 2 * y_virstride;
  
-+#define vblank_int_entry(reg_num)\
-+	[DC_IRQ_SOURCE_VBLANK1 + reg_num] = {\
-+		IRQ_REG_ENTRY(OTG, reg_num,\
-+			OTG_GLOBAL_SYNC_STATUS, VSTARTUP_INT_EN,\
-+			OTG_GLOBAL_SYNC_STATUS, VSTARTUP_EVENT_CLEAR),\
-+		.funcs = &vblank_irq_info_funcs\
-+	}
- /* vupdate_no_lock_int_entry maps to DC_IRQ_SOURCE_VUPDATEx, to match semantic
-  * of DCE's DC_IRQ_SOURCE_VUPDATEx.
-  */
-@@ -270,14 +287,6 @@ static struct irq_source_info_funcs vline0_irq_info_funcs = {
- 		.funcs = &vupdate_no_lock_irq_info_funcs\
- 	}
- 
--#define vblank_int_entry(reg_num)\
--	[DC_IRQ_SOURCE_VBLANK1 + reg_num] = {\
--		IRQ_REG_ENTRY(OTG, reg_num,\
--			OTG_GLOBAL_SYNC_STATUS, VSTARTUP_INT_EN,\
--			OTG_GLOBAL_SYNC_STATUS, VSTARTUP_EVENT_CLEAR),\
--		.funcs = &vblank_irq_info_funcs\
--}
--
- #define vline0_int_entry(reg_num)\
- 	[DC_IRQ_SOURCE_DC1_VLINE0 + reg_num] = {\
- 		IRQ_REG_ENTRY(OTG, reg_num,\
-@@ -285,6 +294,20 @@ static struct irq_source_info_funcs vline0_irq_info_funcs = {
- 			OTG_VERTICAL_INTERRUPT0_CONTROL, OTG_VERTICAL_INTERRUPT0_CLEAR),\
- 		.funcs = &vline0_irq_info_funcs\
- 	}
-+#define vline1_int_entry(reg_num)\
-+	[DC_IRQ_SOURCE_DC1_VLINE1 + reg_num] = {\
-+		IRQ_REG_ENTRY(OTG, reg_num,\
-+			OTG_VERTICAL_INTERRUPT1_CONTROL, OTG_VERTICAL_INTERRUPT1_INT_ENABLE,\
-+			OTG_VERTICAL_INTERRUPT1_CONTROL, OTG_VERTICAL_INTERRUPT1_CLEAR),\
-+		.funcs = &vline1_irq_info_funcs\
-+	}
-+#define vline2_int_entry(reg_num)\
-+	[DC_IRQ_SOURCE_DC1_VLINE2 + reg_num] = {\
-+		IRQ_REG_ENTRY(OTG, reg_num,\
-+			OTG_VERTICAL_INTERRUPT2_CONTROL, OTG_VERTICAL_INTERRUPT2_INT_ENABLE,\
-+			OTG_VERTICAL_INTERRUPT2_CONTROL, OTG_VERTICAL_INTERRUPT2_CLEAR),\
-+		.funcs = &vline2_irq_info_funcs\
-+	}
- #define dmub_outbox_int_entry()\
- 	[DC_IRQ_SOURCE_DMCUB_OUTBOX] = {\
- 		IRQ_REG_ENTRY_DMUB(\
-@@ -387,21 +410,29 @@ irq_source_info_dcn32[DAL_IRQ_SOURCES_NUMBER] = {
- 	dc_underflow_int_entry(6),
- 	[DC_IRQ_SOURCE_DMCU_SCP] = dummy_irq_entry(),
- 	[DC_IRQ_SOURCE_VBIOS_SW] = dummy_irq_entry(),
--	vupdate_no_lock_int_entry(0),
--	vupdate_no_lock_int_entry(1),
--	vupdate_no_lock_int_entry(2),
--	vupdate_no_lock_int_entry(3),
- 	vblank_int_entry(0),
- 	vblank_int_entry(1),
- 	vblank_int_entry(2),
- 	vblank_int_entry(3),
-+	[DC_IRQ_SOURCE_DC5_VLINE1] = dummy_irq_entry(),
-+	[DC_IRQ_SOURCE_DC6_VLINE1] = dummy_irq_entry(),
-+	dmub_outbox_int_entry(),
-+	vupdate_no_lock_int_entry(0),
-+	vupdate_no_lock_int_entry(1),
-+	vupdate_no_lock_int_entry(2),
-+	vupdate_no_lock_int_entry(3),
- 	vline0_int_entry(0),
- 	vline0_int_entry(1),
- 	vline0_int_entry(2),
- 	vline0_int_entry(3),
--	[DC_IRQ_SOURCE_DC5_VLINE1] = dummy_irq_entry(),
--	[DC_IRQ_SOURCE_DC6_VLINE1] = dummy_irq_entry(),
--	dmub_outbox_int_entry(),
-+	vline1_int_entry(0),
-+	vline1_int_entry(1),
-+	vline1_int_entry(2),
-+	vline1_int_entry(3),
-+	vline2_int_entry(0),
-+	vline2_int_entry(1),
-+	vline2_int_entry(2),
-+	vline2_int_entry(3)
- };
- 
- static const struct irq_service_funcs irq_service_funcs_dcn32 = {
-diff --git a/drivers/gpu/drm/amd/display/dc/irq/dcn401/irq_service_dcn401.c b/drivers/gpu/drm/amd/display/dc/irq/dcn401/irq_service_dcn401.c
-index b43c9524b0de1..8499e505cf3ef 100644
---- a/drivers/gpu/drm/amd/display/dc/irq/dcn401/irq_service_dcn401.c
-+++ b/drivers/gpu/drm/amd/display/dc/irq/dcn401/irq_service_dcn401.c
-@@ -171,6 +171,16 @@ static struct irq_source_info_funcs vline0_irq_info_funcs = {
- 	.ack = NULL
- };
- 
-+static struct irq_source_info_funcs vline1_irq_info_funcs = {
-+	.set = NULL,
-+	.ack = NULL
-+};
-+
-+static struct irq_source_info_funcs vline2_irq_info_funcs = {
-+	.set = NULL,
-+	.ack = NULL
-+};
-+
- #undef BASE_INNER
- #define BASE_INNER(seg) DCN_BASE__INST0_SEG ## seg
- 
-@@ -239,6 +249,13 @@ static struct irq_source_info_funcs vline0_irq_info_funcs = {
- 		.funcs = &pflip_irq_info_funcs\
- 	}
- 
-+#define vblank_int_entry(reg_num)\
-+	[DC_IRQ_SOURCE_VBLANK1 + reg_num] = {\
-+		IRQ_REG_ENTRY(OTG, reg_num,\
-+			OTG_GLOBAL_SYNC_STATUS, VSTARTUP_INT_EN,\
-+			OTG_GLOBAL_SYNC_STATUS, VSTARTUP_EVENT_CLEAR),\
-+		.funcs = &vblank_irq_info_funcs\
-+	}
- /* vupdate_no_lock_int_entry maps to DC_IRQ_SOURCE_VUPDATEx, to match semantic
-  * of DCE's DC_IRQ_SOURCE_VUPDATEx.
-  */
-@@ -250,13 +267,6 @@ static struct irq_source_info_funcs vline0_irq_info_funcs = {
- 		.funcs = &vupdate_no_lock_irq_info_funcs\
- 	}
- 
--#define vblank_int_entry(reg_num)\
--	[DC_IRQ_SOURCE_VBLANK1 + reg_num] = {\
--		IRQ_REG_ENTRY(OTG, reg_num,\
--			OTG_GLOBAL_SYNC_STATUS, VSTARTUP_INT_EN,\
--			OTG_GLOBAL_SYNC_STATUS, VSTARTUP_EVENT_CLEAR),\
--		.funcs = &vblank_irq_info_funcs\
--	}
- #define vline0_int_entry(reg_num)\
- 	[DC_IRQ_SOURCE_DC1_VLINE0 + reg_num] = {\
- 		IRQ_REG_ENTRY(OTG, reg_num,\
-@@ -264,6 +274,20 @@ static struct irq_source_info_funcs vline0_irq_info_funcs = {
- 			OTG_VERTICAL_INTERRUPT0_CONTROL, OTG_VERTICAL_INTERRUPT0_CLEAR),\
- 		.funcs = &vline0_irq_info_funcs\
- 	}
-+#define vline1_int_entry(reg_num)\
-+	[DC_IRQ_SOURCE_DC1_VLINE1 + reg_num] = {\
-+		IRQ_REG_ENTRY(OTG, reg_num,\
-+			OTG_VERTICAL_INTERRUPT1_CONTROL, OTG_VERTICAL_INTERRUPT1_INT_ENABLE,\
-+			OTG_VERTICAL_INTERRUPT1_CONTROL, OTG_VERTICAL_INTERRUPT1_CLEAR),\
-+		.funcs = &vline1_irq_info_funcs\
-+	}
-+#define vline2_int_entry(reg_num)\
-+	[DC_IRQ_SOURCE_DC1_VLINE2 + reg_num] = {\
-+		IRQ_REG_ENTRY(OTG, reg_num,\
-+			OTG_VERTICAL_INTERRUPT2_CONTROL, OTG_VERTICAL_INTERRUPT2_INT_ENABLE,\
-+			OTG_VERTICAL_INTERRUPT2_CONTROL, OTG_VERTICAL_INTERRUPT2_CLEAR),\
-+		.funcs = &vline2_irq_info_funcs\
-+	}
- #define dmub_outbox_int_entry()\
- 	[DC_IRQ_SOURCE_DMCUB_OUTBOX] = {\
- 		IRQ_REG_ENTRY_DMUB(\
-@@ -364,21 +388,29 @@ irq_source_info_dcn401[DAL_IRQ_SOURCES_NUMBER] = {
- 	dc_underflow_int_entry(6),
- 	[DC_IRQ_SOURCE_DMCU_SCP] = dummy_irq_entry(),
- 	[DC_IRQ_SOURCE_VBIOS_SW] = dummy_irq_entry(),
--	vupdate_no_lock_int_entry(0),
--	vupdate_no_lock_int_entry(1),
--	vupdate_no_lock_int_entry(2),
--	vupdate_no_lock_int_entry(3),
- 	vblank_int_entry(0),
- 	vblank_int_entry(1),
- 	vblank_int_entry(2),
- 	vblank_int_entry(3),
-+	[DC_IRQ_SOURCE_DC5_VLINE1] = dummy_irq_entry(),
-+	[DC_IRQ_SOURCE_DC6_VLINE1] = dummy_irq_entry(),
-+	dmub_outbox_int_entry(),
-+	vupdate_no_lock_int_entry(0),
-+	vupdate_no_lock_int_entry(1),
-+	vupdate_no_lock_int_entry(2),
-+	vupdate_no_lock_int_entry(3),
- 	vline0_int_entry(0),
- 	vline0_int_entry(1),
- 	vline0_int_entry(2),
- 	vline0_int_entry(3),
--	[DC_IRQ_SOURCE_DC5_VLINE1] = dummy_irq_entry(),
--	[DC_IRQ_SOURCE_DC6_VLINE1] = dummy_irq_entry(),
--	dmub_outbox_int_entry(),
-+	vline1_int_entry(0),
-+	vline1_int_entry(1),
-+	vline1_int_entry(2),
-+	vline1_int_entry(3),
-+	vline2_int_entry(0),
-+	vline2_int_entry(1),
-+	vline2_int_entry(2),
-+	vline2_int_entry(3),
- };
- 
- static const struct irq_service_funcs irq_service_funcs_dcn401 = {
-diff --git a/drivers/gpu/drm/amd/display/dc/irq_types.h b/drivers/gpu/drm/amd/display/dc/irq_types.h
-index 110f656d43aee..eadab0a2afebe 100644
---- a/drivers/gpu/drm/amd/display/dc/irq_types.h
-+++ b/drivers/gpu/drm/amd/display/dc/irq_types.h
-@@ -161,6 +161,13 @@ enum dc_irq_source {
- 	DC_IRQ_SOURCE_DPCX_TX_PHYE,
- 	DC_IRQ_SOURCE_DPCX_TX_PHYF,
- 
-+	DC_IRQ_SOURCE_DC1_VLINE2,
-+	DC_IRQ_SOURCE_DC2_VLINE2,
-+	DC_IRQ_SOURCE_DC3_VLINE2,
-+	DC_IRQ_SOURCE_DC4_VLINE2,
-+	DC_IRQ_SOURCE_DC5_VLINE2,
-+	DC_IRQ_SOURCE_DC6_VLINE2,
-+
- 	DAL_IRQ_SOURCES_NUMBER
- };
- 
-@@ -170,6 +177,8 @@ enum irq_type
- 	IRQ_TYPE_VUPDATE = DC_IRQ_SOURCE_VUPDATE1,
- 	IRQ_TYPE_VBLANK = DC_IRQ_SOURCE_VBLANK1,
- 	IRQ_TYPE_VLINE0 = DC_IRQ_SOURCE_DC1_VLINE0,
-+	IRQ_TYPE_VLINE1 = DC_IRQ_SOURCE_DC1_VLINE1,
-+	IRQ_TYPE_VLINE2 = DC_IRQ_SOURCE_DC1_VLINE2,
- 	IRQ_TYPE_DCUNDERFLOW = DC_IRQ_SOURCE_DC1UNDERFLOW,
- };
- 
+ 	reg = RKVDEC_Y_HOR_VIRSTRIDE(hor_virstride / 16) |
+ 	      RKVDEC_UV_HOR_VIRSTRIDE(hor_virstride / 16) |
 -- 
 2.39.5
 
