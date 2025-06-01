@@ -1,47 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6C4827CCEB;
-	Sun,  1 Jun 2025 23:28:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EE7C27E7D8;
+	Sun,  1 Jun 2025 23:28:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748820530; cv=none; b=ikuNUe6mqV/QoEDjSmtZJ+iycC3zmMPjAZeAqDBGfVjIwYTSPckHweHOD0VGRgO22+bjSSP+ZHM/q3kMI/pGKV32dtj9AaCqa33uf7PlLjgsCZrIXZLP2SKtWjzJCwNo41YI228WEQd8xQyGusHzxfYaCNXxMwNOBZMqcdNBYMA=
+	t=1748820532; cv=none; b=gNxv5ivzWiciS2UEt/86N9dNghJm6HvtaFDVPDX8jiiyll/kjqX2GykjCot/oEa0/ZxOjgnTfhpdtbIrmxdhHq8sqdH/b37eW7+oFJUpJKbQJAMekT3T7ADDNrlqwF21XQDh3ahT1mXfHYv4CDyLFhoiNkAZmD/un474+4Frz48=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748820530; c=relaxed/simple;
-	bh=xt1922hGTLaMdflCLOntAvppka8T3QMYTAxfOubtOSc=;
+	s=arc-20240116; t=1748820532; c=relaxed/simple;
+	bh=h38rPSHv9NrOPJgcJVStv0JO2Bs0iDHmgXZ8nMZC1jU=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=QcpH8XOf9m+dEzGdQqa42f+vClw4642wKPoVDFIRhmzuW0Tff78uXp8JndugFGt9ZV3KVAbfnmNQjBSVjl3rhBbsPgtow9XZfnWPUzLJNaYog9nkVOrEO8PfdMmaYo2zL15/S2qk3oKnXxPS4XQOpQ0Nd/El26Us9ZMpJiq5wMo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rC+c9D+q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cE6Vub+kxXjHqLqgCXiySZDEBmWZdqNHb94tRzeYwNizSxFmPfMIkD2x++7a5NI6pyqK7nHrc5Oy1aEtC0Hnvi9iNOdB6A5ZKBGJjTczAS7+7coSnyff913AEHW8UOz3FlkiSLlbcKlz767vlxZa0JYAx/Sxc+6JcMI3N53eEPs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ao17wwSL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rC+c9D+q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E9E8C4CEE7;
-	Sun,  1 Jun 2025 23:28:49 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ao17wwSL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBBAFC4CEE7;
+	Sun,  1 Jun 2025 23:28:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748820530;
-	bh=xt1922hGTLaMdflCLOntAvppka8T3QMYTAxfOubtOSc=;
+	s=k20201202; t=1748820532;
+	bh=h38rPSHv9NrOPJgcJVStv0JO2Bs0iDHmgXZ8nMZC1jU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rC+c9D+qK2KGql3q+2y8EGME5cuQREcRxWxBbsok75B5SniKmZLlq/vccluLsogNP
-	 emdWuAoQ03JIR+xX4W+YutNrM9YkOO9hGAw0iWAy3CG3+U6AY2bj5cbMpa7p7c1nsO
-	 sHWeW1expijrhu16OlWqEqFgchrEsGvvT9zKNX+q/2k42v6hILx5pyBMcUeLrP/uib
-	 7Z9BpFyEdtjHI9yaZM2QNKVMRlWjx7Qv7jsJGACqfnX5ek9U4cQhYPbasiFHg/Eecx
-	 jRUCiVaxcPVq2xYhGRWVBvXkiH+L3OpJDYZXQ4VnyX3U9wF4LcMrQU/VIM+4gSl1Dm
-	 y/9qZwkF6nTtQ==
+	b=Ao17wwSLjKMGccS7x1UbQc0qp9hTEtHYFFs3ZE59B9xEKTxMETKsi0bsM1AU3Zq3T
+	 ZGReuIsH8T7HjraGscI/JBMwKjLhxnSRDRjR6z/0ErGYOskUdmVaCU09ViL5aa4rDA
+	 xWSzbeLmkJ9eu0Zo9rXq3a5vsOzkx7mDPntFkWuGua6yKBbVDn/WU2IIClxG24Uc8G
+	 td3UR/VubWJIV8xAn3tkkRH3t5CwkRo8i4EVxwz/zxurNpAd+C3OlcDyJwGE+dMipC
+	 oMPvbs4nQe9vB4LPGJIJMXhm59yuYa0h+KbhpAshk+fYE8jXivwHvGqLQtylHMl5zp
+	 mSwEfTnno+5NA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Stefan Binding <sbinding@opensource.cirrus.com>,
-	Takashi Iwai <tiwai@suse.de>,
+Cc: Peng Fan <peng.fan@nxp.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>,
-	perex@perex.cz,
-	tiwai@suse.com,
-	kailang@realtek.com,
-	simont@opensource.cirrus.com,
-	josh@joshuagrisham.com,
-	linux-sound@vger.kernel.org,
+	robert.jarzmik@free.fr,
+	brgl@bgdev.pl,
+	linux-gpio@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.15 088/110] ALSA: hda/realtek: Add support for Acer Helios Laptops using CS35L41 HDA
-Date: Sun,  1 Jun 2025 19:24:10 -0400
-Message-Id: <20250601232435.3507697-88-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.15 089/110] gpio: pxa: Make irq_chip immutable
+Date: Sun,  1 Jun 2025 19:24:11 -0400
+Message-Id: <20250601232435.3507697-89-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250601232435.3507697-1-sashal@kernel.org>
 References: <20250601232435.3507697-1-sashal@kernel.org>
@@ -56,97 +54,111 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.15
 Content-Transfer-Encoding: 8bit
 
-From: Stefan Binding <sbinding@opensource.cirrus.com>
+From: Peng Fan <peng.fan@nxp.com>
 
-[ Upstream commit d64cbb5ed9227566c068ac9300a85912234d10aa ]
+[ Upstream commit 20117cf426b677e7aced4e7a1b2b37f6080a46dc ]
 
-Laptops use 2 CS35L41 Amps with HDA, using External boost with I2C.
-Similar to previous Acer laptops, these laptops also need the
-ALC255_FIXUP_PREDATOR_SUBWOOFER quirk to function properly.
+Kernel warns about mutable irq_chips:
+"not an immutable chip, please consider fixing!"
 
-Signed-off-by: Stefan Binding <sbinding@opensource.cirrus.com>
-Link: https://patch.msgid.link/20250515162848.405055-2-sbinding@opensource.cirrus.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Constify pxa_muxed_gpio_chip, flag the irq_chip as IRQCHIP_IMMUTABLE,
+add the new helper functions, and call the appropriate gpiolib functions.
+
+Signed-off-by: Peng Fan <peng.fan@nxp.com>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Link: https://lore.kernel.org/r/20250509-gpio-v1-9-639377c98288@nxp.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Based on my analysis of the commit and comparing it to similar commits
-that were marked with "Backport Status: YES", I can now provide my
-assessment: **YES** This commit should be backported to stable kernel
-trees. **Detailed Analysis:** **Code Changes Analysis:** 1. **Enum
-Addition**: The commit adds `ALC287_FIXUP_PREDATOR_SPK_CS35L41_I2C_2` to
-the enum list at line 8029, which is a standard pattern for adding new
-HDA fixups. 2. **Fixup Implementation**: Lines 9303-9307 add the actual
-fixup implementation: ```c [ALC287_FIXUP_PREDATOR_SPK_CS35L41_I2C_2] = {
-.type = HDA_FIXUP_FUNC, .v.func = cs35l41_fixup_i2c_two, .chained =
-true, .chain_id = ALC255_FIXUP_PREDATOR_SUBWOOFER }; ``` This follows
-the exact same pattern as existing CS35L41 fixups in the codebase. 3.
-**Device Quirks**: Lines 10444-10446 add three new Acer Helios laptop
-models: ```c SND_PCI_QUIRK(0x1025, 0x1826, "Acer Helios ZPC",
-ALC287_FIXUP_PREDATOR_SPK_CS35L41_I2C_2), SND_PCI_QUIRK(0x1025, 0x182c,
-"Acer Helios ZPD", ALC287_FIXUP_PREDATOR_SPK_CS35L41_I2C_2),
-SND_PCI_QUIRK(0x1025, 0x1844, "Acer Helios ZPS",
-ALC287_FIXUP_PREDATOR_SPK_CS35L41_I2C_2), ``` **Comparison to Similar
-Commits:** This commit is nearly identical in structure and purpose to
-Similar Commits #1-4, which were all marked with "Backport Status: YES".
-Like those commits: - It adds hardware support for specific laptop
-models - Uses existing CS35L41 infrastructure (`cs35l41_fixup_i2c_two`
-function) - Chains to existing predator subwoofer fixup
-(`ALC255_FIXUP_PREDATOR_SUBWOOFER`) - Makes minimal, contained changes -
-Follows established patterns for HDA audio fixups **Backport
-Suitability:** 1. **Important Bug Fix**: This enables audio
-functionality on specific Acer Helios laptop models that would otherwise
-have non-functional speakers 2. **Small and Contained**: The changes are
-minimal and isolated to the realtek patch file 3. **Low Risk**: Uses
-existing, well-tested CS35L41 and predator subwoofer code paths 4. **No
-Architectural Changes**: Simply adds new device IDs and combines
-existing fixups 5. **Hardware Enablement**: Essential for users with
-these specific laptop models The commit message indicates this adds
-support for CS35L41 amplifiers with I2C interface and external boost,
-which is critical for proper audio functionality on these laptops.
-Without this fix, users would have non-functional speakers on these
-specific Acer Helios models. This follows the stable tree criteria
-perfectly: it's an important hardware enablement fix with minimal risk
-of regression.
+**YES** This commit should be backported to stable kernel trees. Here's
+my extensive analysis: ## Backport Analysis: gpio: pxa: Make irq_chip
+immutable ### Code Changes Analysis The commit makes three key changes
+to `drivers/gpio/gpio-pxa.c`: 1. **Makes irq_chip structure const**:
+Changes `static struct irq_chip pxa_muxed_gpio_chip` to `static const
+struct irq_chip pxa_muxed_gpio_chip` 2. **Adds IRQCHIP_IMMUTABLE flag**:
+Includes `.flags = IRQCHIP_IMMUTABLE` in the irq_chip structure 3.
+**Adds resource helper macros**: Includes
+`GPIOCHIP_IRQ_RESOURCE_HELPERS` macro 4. **Updates mask/unmask
+functions**: Adds proper `gpiochip_disable_irq()` and
+`gpiochip_enable_irq()` calls in the mask and unmask functions
+respectively ### Why This Should Be Backported **1. Follows Established
+Pattern** This commit follows the exact same pattern as the reference
+commits marked "YES" for backporting: - Similar to gpio-vf610 (commit
+e6ef4f8ede09) which was backported - Identical to gpio-104-idio-16
+(commit 410a5041aa60) which was backported - Same transformation pattern
+as dozens of other GPIO drivers **2. Fixes Kernel Warning** The commit
+explicitly addresses a kernel warning: "not an immutable chip, please
+consider fixing!" This is the same warning addressed in all the
+reference "YES" commits. **3. Small, Contained Changes** - Only modifies
+one file (`drivers/gpio/gpio-pxa.c`) - Changes are minimal and
+mechanical - No architectural changes or new features - Low risk of
+introducing regressions **4. Important Bug Fix for Users** - Eliminates
+annoying kernel warnings that users encounter - Brings driver in
+compliance with modern kernel IRQ subsystem requirements - Improves
+system reliability by preventing dynamic modification of irq_chip
+callbacks **5. No Side Effects** - The changes are purely structural
+improvements - Maintains identical functionality - Does not change the
+driver's external behavior - Only makes the irq_chip structure immutable
+for safety **6. Critical Subsystem Compliance** - GPIO subsystem
+actively enforces immutable irq_chips - This is part of a kernel-wide
+migration to improve memory safety - Prevents potential security issues
+from dynamic irq_chip modification **7. Hardware Support Impact** The
+PXA GPIO driver supports widely-used ARM processors: - Intel PXA25x,
+PXA26x, PXA27x, PXA3xx series - Marvell PXA93x, MMP, MMP2, PXA1928
+series - These are found in many embedded systems and IoT devices ###
+Comparison with Current Tree The analysis shows that in the current
+kernel tree (`/home/sasha/linux/`), the gpio-pxa.c driver still has the
+old mutable irq_chip structure (line 523: `static struct irq_chip
+pxa_muxed_gpio_chip`), while the target directory shows it has already
+been converted. This confirms this is a legitimate conversion commit
+that needs backporting. ### Risk Assessment **Very Low Risk:** -
+Mechanical transformation following established pattern - No functional
+changes to GPIO operations - Extensive precedent from similar successful
+backports - Changes are compile-time enforced (const keyword) This
+commit represents a straightforward compliance fix that eliminates user-
+visible warnings while improving code safety, making it an ideal
+candidate for stable tree backporting.
 
- sound/pci/hda/patch_realtek.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/gpio/gpio-pxa.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index 20ab1fb2195ff..cd0d7ba7320ef 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -8029,6 +8029,7 @@ enum {
- 	ALC283_FIXUP_DELL_HP_RESUME,
- 	ALC294_FIXUP_ASUS_CS35L41_SPI_2,
- 	ALC274_FIXUP_HP_AIO_BIND_DACS,
-+	ALC287_FIXUP_PREDATOR_SPK_CS35L41_I2C_2,
+diff --git a/drivers/gpio/gpio-pxa.c b/drivers/gpio/gpio-pxa.c
+index 91cea97255fa6..530ddeaba2f19 100644
+--- a/drivers/gpio/gpio-pxa.c
++++ b/drivers/gpio/gpio-pxa.c
+@@ -497,6 +497,8 @@ static void pxa_mask_muxed_gpio(struct irq_data *d)
+ 	gfer = readl_relaxed(base + GFER_OFFSET) & ~GPIO_bit(gpio);
+ 	writel_relaxed(grer, base + GRER_OFFSET);
+ 	writel_relaxed(gfer, base + GFER_OFFSET);
++
++	gpiochip_disable_irq(&pchip->chip, gpio);
+ }
+ 
+ static int pxa_gpio_set_wake(struct irq_data *d, unsigned int on)
+@@ -516,17 +518,21 @@ static void pxa_unmask_muxed_gpio(struct irq_data *d)
+ 	unsigned int gpio = irqd_to_hwirq(d);
+ 	struct pxa_gpio_bank *c = gpio_to_pxabank(&pchip->chip, gpio);
+ 
++	gpiochip_enable_irq(&pchip->chip, gpio);
++
+ 	c->irq_mask |= GPIO_bit(gpio);
+ 	update_edge_detect(c);
+ }
+ 
+-static struct irq_chip pxa_muxed_gpio_chip = {
++static const struct irq_chip pxa_muxed_gpio_chip = {
+ 	.name		= "GPIO",
+ 	.irq_ack	= pxa_ack_muxed_gpio,
+ 	.irq_mask	= pxa_mask_muxed_gpio,
+ 	.irq_unmask	= pxa_unmask_muxed_gpio,
+ 	.irq_set_type	= pxa_gpio_irq_type,
+ 	.irq_set_wake	= pxa_gpio_set_wake,
++	.flags = IRQCHIP_IMMUTABLE,
++	GPIOCHIP_IRQ_RESOURCE_HELPERS,
  };
  
- /* A special fixup for Lenovo C940 and Yoga Duet 7;
-@@ -9301,6 +9302,12 @@ static const struct hda_fixup alc269_fixups[] = {
- 			{ }
- 		}
- 	},
-+	[ALC287_FIXUP_PREDATOR_SPK_CS35L41_I2C_2] = {
-+		.type = HDA_FIXUP_FUNC,
-+		.v.func = cs35l41_fixup_i2c_two,
-+		.chained = true,
-+		.chain_id = ALC255_FIXUP_PREDATOR_SUBWOOFER
-+	},
- 	[ALC256_FIXUP_MEDION_HEADSET_NO_PRESENCE] = {
- 		.type = HDA_FIXUP_PINS,
- 		.v.pins = (const struct hda_pintbl[]) {
-@@ -10456,6 +10463,9 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x1025, 0x1534, "Acer Predator PH315-54", ALC255_FIXUP_ACER_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1025, 0x159c, "Acer Nitro 5 AN515-58", ALC2XX_FIXUP_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1025, 0x169a, "Acer Swift SFG16", ALC256_FIXUP_ACER_SFG16_MICMUTE_LED),
-+	SND_PCI_QUIRK(0x1025, 0x1826, "Acer Helios ZPC", ALC287_FIXUP_PREDATOR_SPK_CS35L41_I2C_2),
-+	SND_PCI_QUIRK(0x1025, 0x182c, "Acer Helios ZPD", ALC287_FIXUP_PREDATOR_SPK_CS35L41_I2C_2),
-+	SND_PCI_QUIRK(0x1025, 0x1844, "Acer Helios ZPS", ALC287_FIXUP_PREDATOR_SPK_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x1028, 0x0470, "Dell M101z", ALC269_FIXUP_DELL_M101Z),
- 	SND_PCI_QUIRK(0x1028, 0x053c, "Dell Latitude E5430", ALC292_FIXUP_DELL_E7X),
- 	SND_PCI_QUIRK(0x1028, 0x054b, "Dell XPS one 2710", ALC275_FIXUP_DELL_XPS),
+ static int pxa_gpio_nums(struct platform_device *pdev)
 -- 
 2.39.5
 
