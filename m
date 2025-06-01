@@ -1,44 +1,53 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76EC125F7B3;
-	Sun,  1 Jun 2025 23:25:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC45B25F993;
+	Sun,  1 Jun 2025 23:25:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748820339; cv=none; b=Sjhp9F3JhwNLoCD2EudguN4JGxQHXaf25asEAXQyR1EhgU4LB1mT/VlOF+IX5KqYMtWWixOCZw1uai6AcrpHlRf+wsfTP0neMElMjsrYXxdh67C4ytZlrV38fBwHJKqqR+Is5RsKk7Q88hOkiXjsBJUZuPTyQ3SSz9sgjeovvjw=
+	t=1748820342; cv=none; b=qw8KHlkyPaJmIGF3yLcFxivBIAgYfPxCui6JchkFh4b5hcDUtj2oqQUe2jAd/5IoJSTMp3JjzheuO+gtGR6nOViAe9itJeY4h5vjqVixVw9CCthLUMWOPjIYUFIkUZXN+PEGCPjpfdwtHO6xR7dtx5PAgYKVzkFkJvzzJ+yq6yM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748820339; c=relaxed/simple;
-	bh=iFtuyAwbz+GsTdsY9gBdkxZEz7gIkMicr6z563Tlceo=;
+	s=arc-20240116; t=1748820342; c=relaxed/simple;
+	bh=v7iuiDi1cfL9bA1B17SrshztrjCI1bjyMxJuzqGdkWM=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hB3bfMOd/f5VxtPs/H6I0nqzOW5VPy5LsPi7cCDqkDoIUtuIQ9vxDAkIbn4thMAzErIeTpNuyjUC8sYoIUyZfy796wlx7cbr/fyiPM+88maHwWarNq6P+XuIConVJfRxPU8R+tAr+6yqhXEXadJtojVPvkWFVcSGzpWZFTmJpiY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lTwVNMid; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qSQXFgH9OcGRk9EUAPuGv333XvIaHHhdJzuq2KUAzIRswjyC3E5gVUMkkT83OHspWROw0Ll+fQ6kZ/FAfjiupJlYY6UOirGwV8RUrdV28HDTZV0ff+Dv1vJzMDbeEukQTlQSuO+cgToetJSWWlnwTMDoAHERqvWBOV+xvNmQ7aQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=O2ALfnFM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lTwVNMid"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF520C4CEF2;
-	Sun,  1 Jun 2025 23:25:37 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="O2ALfnFM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B164C4CEF3;
+	Sun,  1 Jun 2025 23:25:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748820339;
-	bh=iFtuyAwbz+GsTdsY9gBdkxZEz7gIkMicr6z563Tlceo=;
+	s=k20201202; t=1748820341;
+	bh=v7iuiDi1cfL9bA1B17SrshztrjCI1bjyMxJuzqGdkWM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lTwVNMidVMO5psTFFEqdb0JFk2RwECrobjV1720w8tLcfEsCHgV1ggdtoDsQb2EKM
-	 qlmHe368XR0syESMl/Yk/M8Q83Tf1ppQpYRpoEAUrUZqtghAQVqYYkGDDf22Y48WOu
-	 K7Lm68tzCdfTSFgacxvMPiEA2OT0UTZ45JF15eylKqNKWLyJVg5zEHVadUbvD+zqsk
-	 lPDh/u82iiV/AyGUd3C6zXmgOHiwZEZtlQUNUzbxxXaqOw3dSBwjXeyTvnM1xKTVjF
-	 CGA7onrx8+PnqH7lef204ADkdKQpa4ViX3lhAqIY1V3ISZimeViZEWLCrA4crTr5dD
-	 QPB2jBiLVS56w==
+	b=O2ALfnFMIPTx8VbwoLE/KVyunjHdRD3WPZrg5gmaZQELvqrhdukG5Bif2JBj5OLb/
+	 6pSRddlNsZ9Ym6bgCfPizyyjih/eKJdO/XuESYpkxHqhcBQxDR/OSogckOVreK+S1o
+	 BH11WqqXqcBVvFAimFY4ORgfuUQx7RV51zT/qEKtuZXRV/nhsKv5zBt4JDtk3nv/g6
+	 TFVt9V9LlUaNI7Xb133XSeJiLeZtSBRPt6s/fwDsjjRhMuR1F1Zgo+1YXQzY4AoC8q
+	 6p6OYVkVF1r8clj8BiDv/pCQ6cx753wWWK/1tvZ5jQLyGSdxnj1XduvjuNx/qBEfgq
+	 R3FEGlvKrKaew==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Tarang Raval <tarang.raval@siliconsignals.io>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>,
+Cc: Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Zaeem Mohamed <zaeem.mohamed@amd.com>,
+	Mark Broadworth <mark.broadworth@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	mchehab@kernel.org,
-	linux-media@vger.kernel.org,
+	austin.zheng@amd.com,
+	jun.lei@amd.com,
+	harry.wentland@amd.com,
+	sunpeng.li@amd.com,
+	christian.koenig@amd.com,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	amd-gfx@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.15 024/110] media: i2c: imx334: Enable runtime PM before sub-device registration
-Date: Sun,  1 Jun 2025 19:23:06 -0400
-Message-Id: <20250601232435.3507697-24-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.15 025/110] drm/amd/display: Avoid divide by zero by initializing dummy pitch to 1
+Date: Sun,  1 Jun 2025 19:23:07 -0400
+Message-Id: <20250601232435.3507697-25-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250601232435.3507697-1-sashal@kernel.org>
 References: <20250601232435.3507697-1-sashal@kernel.org>
@@ -51,97 +60,74 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.15
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tarang Raval <tarang.raval@siliconsignals.io>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit 01dfdf6a80c57151af0589af0db7adbbdd1361c7 ]
+[ Upstream commit 7e40f64896e8e3dca471e287672db5ace12ea0be ]
 
-Runtime PM is fully initialized before calling
-v4l2_async_register_subdev_sensor(). Moving the runtime PM initialization
-earlier prevents potential access to an uninitialized or powered-down
-device.
+[Why]
+If the dummy values in `populate_dummy_dml_surface_cfg()` aren't updated
+then they can lead to a divide by zero in downstream callers like
+CalculateVMAndRowBytes()
 
-Signed-off-by: Tarang Raval <tarang.raval@siliconsignals.io>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+[How]
+Initialize dummy value to a value to avoid divide by zero.
+
+Reviewed-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Zaeem Mohamed <zaeem.mohamed@amd.com>
+Tested-by: Mark Broadworth <mark.broadworth@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 **YES** This commit should be backported to stable kernel trees.
-**Analysis:** **1. Pattern Recognition from Similar Commits:** The
-provided historical commits show a clear pattern: - **Similar commits
-marked YES**: imx355 and smiapp drivers with identical runtime PM
-ordering fixes - **Similar commits marked NO**: imx319, ov4689, ov2740
-commits that appear to be more general cleanup/improvement rather than
-bug fixes **2. Code Analysis:** The imx334 commit makes the exact same
-critical fix as the accepted imx355 commit: **Before (problematic):**
-```c ret = v4l2_async_register_subdev_sensor(&imx334->sd); // Device
-becomes accessible /bin /bin.usr-is-merged /boot /dev /etc /home /init
-/lib /lib.usr-is-merged /lib64 /lost+found /media /mnt /opt /proc /root
-/run /sbin /sbin.usr-is-merged /snap /srv /sys /tmp /usr /var ... model/
-prompt/ src/ target/ pm_runtime_set_active(imx334->dev); // Runtime PM
-enabled AFTER pm_runtime_enable(imx334->dev); ``` **After (fixed):**
-```c pm_runtime_set_active(imx334->dev); // Runtime PM enabled BEFORE
-pm_runtime_enable(imx334->dev); ret =
-v4l2_async_register_subdev_sensor(&imx334->sd); // Device becomes
-accessible ``` **3. Bug Significance:** The commit message explicitly
-states this prevents "potential access to an uninitialized or powered-
-down device." This is a **race condition bug** where: - The sensor
-device becomes accessible via v4l2_async_register_subdev_sensor() -
-Other components (like ipu-bridge) may immediately try to access the
-device via runtime PM - If runtime PM isn't initialized yet, these
-accesses will fail **4. Backport Criteria Assessment:** ✓ **Fixes a
-user-affecting bug**: Race condition causing device access failures ✓
-**Small and contained**: Only reorders initialization, no logic changes
-✓ **No architectural changes**: Pure initialization ordering fix ✓
-**Minimal regression risk**: The change aligns with established patterns
-✓ **Follows stable tree rules**: Important bugfix with minimal risk **5.
-Consistency with Accepted Patterns:** The imx355 commit (marked YES) has
-an identical issue and fix pattern. The key difference from rejected
-commits is that imx355 and imx334 explicitly mention preventing device
-access failures, while others were general improvements. **6. Error
-Handling Analysis:** The commit properly adds runtime PM cleanup in
-error paths: ```c error_media_entity: pm_runtime_disable(imx334->dev);
-pm_runtime_set_suspended(imx334->dev); ``` This is a critical race
-condition fix that prevents real-world device access failures, follows
-established successful backport patterns, and has minimal risk - making
-it an excellent stable backport candidate.
+**Analysis:** This is a classic divide-by-zero prevention fix that
+follows the exact same pattern as all the similar commits marked "YES"
+in the historical examples. The commit: 1. **Fixes a critical bug**:
+Prevents division by zero errors that could cause kernel crashes or
+undefined behavior 2. **Extremely minimal and safe change**: Only
+changes `out->PitchC[location] = 0;` to `out->PitchC[location] = 1;` on
+line 900 of
+`drivers/gpu/drm/amd/display/dc/dml2/dml2_translation_helper.c` 3.
+**Well-documented issue**: The commit message clearly explains that
+dummy values in `populate_dummy_dml_surface_cfg()` can lead to divide by
+zero in downstream callers like `CalculateVMAndRowBytes()` 4. **Follows
+established pattern**: The fix is identical to Similar Commits #1, #2,
+and #5 which were all marked "YES" for backporting The code change is in
+the `populate_dummy_dml_surface_cfg()` function where dummy/placeholder
+values are initialized. Setting `PitchC[location]` to 1 instead of 0
+ensures that any downstream code performing calculations using this
+value as a denominator won't encounter division by zero errors. **Key
+evidence supporting backporting:** - **AMD Display subsystem**: This is
+a critical graphics subsystem where crashes can severely impact user
+experience - **Crash prevention**: Division by zero can cause kernel
+panics - **Zero risk of regression**: Changing a dummy value from 0 to 1
+has no functional impact other than preventing crashes - **Small,
+contained fix**: Single line change in one function - **Clear
+precedent**: Multiple similar commits fixing divide-by-zero in AMD
+display code have been backported This fix directly addresses a
+potential stability issue with minimal risk, making it an ideal
+candidate for stable tree backporting under the kernel's stable tree
+rules.
 
- drivers/media/i2c/imx334.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dml2/dml2_translation_helper.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/i2c/imx334.c b/drivers/media/i2c/imx334.c
-index a544fc3df39c2..b51721c01e1d6 100644
---- a/drivers/media/i2c/imx334.c
-+++ b/drivers/media/i2c/imx334.c
-@@ -1391,6 +1391,9 @@ static int imx334_probe(struct i2c_client *client)
- 		goto error_handler_free;
- 	}
- 
-+	pm_runtime_set_active(imx334->dev);
-+	pm_runtime_enable(imx334->dev);
-+
- 	ret = v4l2_async_register_subdev_sensor(&imx334->sd);
- 	if (ret < 0) {
- 		dev_err(imx334->dev,
-@@ -1398,13 +1401,13 @@ static int imx334_probe(struct i2c_client *client)
- 		goto error_media_entity;
- 	}
- 
--	pm_runtime_set_active(imx334->dev);
--	pm_runtime_enable(imx334->dev);
- 	pm_runtime_idle(imx334->dev);
- 
- 	return 0;
- 
- error_media_entity:
-+	pm_runtime_disable(imx334->dev);
-+	pm_runtime_set_suspended(imx334->dev);
- 	media_entity_cleanup(&imx334->sd.entity);
- error_handler_free:
- 	v4l2_ctrl_handler_free(imx334->sd.ctrl_handler);
+diff --git a/drivers/gpu/drm/amd/display/dc/dml2/dml2_translation_helper.c b/drivers/gpu/drm/amd/display/dc/dml2/dml2_translation_helper.c
+index ab6baf2698012..5de775fd8fcee 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml2/dml2_translation_helper.c
++++ b/drivers/gpu/drm/amd/display/dc/dml2/dml2_translation_helper.c
+@@ -896,7 +896,7 @@ static void populate_dummy_dml_surface_cfg(struct dml_surface_cfg_st *out, unsig
+ 	out->SurfaceWidthC[location] = in->timing.h_addressable;
+ 	out->SurfaceHeightC[location] = in->timing.v_addressable;
+ 	out->PitchY[location] = ((out->SurfaceWidthY[location] + 127) / 128) * 128;
+-	out->PitchC[location] = 0;
++	out->PitchC[location] = 1;
+ 	out->DCCEnable[location] = false;
+ 	out->DCCMetaPitchY[location] = 0;
+ 	out->DCCMetaPitchC[location] = 0;
 -- 
 2.39.5
 
