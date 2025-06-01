@@ -1,57 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE52A309075;
-	Sun,  1 Jun 2025 23:37:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62C8A309092;
+	Sun,  1 Jun 2025 23:37:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748821074; cv=none; b=DOjmqrzOhhCbtX67ZlEqKTN55nFdfghgIMBnjMOFL4XdmiEiY8kduYjJg8Lj/3tykqfms68iPG6fFmlydD5dts+9dsx1P+TAfCLSDWGNuOIbSlHgTTPCAdeJtIMCjjVgUz5udOQkuhdHzjkAIOp2w0SYPTU7we/ZzRkcKrcp8ig=
+	t=1748821076; cv=none; b=CJiyXNR0zXnxMzswOjQ7A2pmwfV+deS/HrGzrzFXWr0vZbvhMRWxBk1K6p8ViFrRzs37uNpk7w1EovbeATBKqMRhyvBC+CbZDqe2yn31afkzx+N+LfSr9781r58NuewuYoZxPFH5sp7aY14o5ZMCniv2N+/WuIcwFDx6FptOu00=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748821074; c=relaxed/simple;
-	bh=oKZnUoB8V8ofoWzhkl/5BUoCMmCopf8CnGJ9r1Dj9s8=;
+	s=arc-20240116; t=1748821076; c=relaxed/simple;
+	bh=e8ymqZAFuprxS5tyjzcb69WzfduYOVF9Qu5nAvYDBVs=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=W/Li+H49jgm7/gNXNTYAyvGIY9RZG9ktzuc7OMlJuyHpU6XHMCEa1QOXYapd9qOfDvf1xJgvTBYSfYdtXU6RePUAmnTpRcaM7jpnro5iS/MEmnzhyQz7v9iBixdyyiDOoP9hbQaPyl8l0qDk2ClXtlzSNSjom3eAztk3f+dzGzE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Mlf4Q9Db; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YXGge4UpQyzV6D2xjMg/pMi50G8clYWA2PvoBrqb2UIOwdz8NoUek3qCZmwYJrQnkHFaEQP3f7Z7vznjDzVMI8id0F+D7mJom13vDyGWxPQyC4Rx1xnpCjYB+fIbkqqwbHnMh8DSG3QTi7bkxUvr0mekkriBUQKNNCUZcYnRXZo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hqKGH1i9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Mlf4Q9Db"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01313C4CEEE;
-	Sun,  1 Jun 2025 23:37:51 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hqKGH1i9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9211C4CEF1;
+	Sun,  1 Jun 2025 23:37:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748821074;
-	bh=oKZnUoB8V8ofoWzhkl/5BUoCMmCopf8CnGJ9r1Dj9s8=;
+	s=k20201202; t=1748821076;
+	bh=e8ymqZAFuprxS5tyjzcb69WzfduYOVF9Qu5nAvYDBVs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Mlf4Q9DbqzIbLl2iOxU6o2WJM6hIqb2PCmO30WIznEh+4IqA9Tg5+trCW3dI2GgqK
-	 PrMXqzf2ogOOUuRJq9eUEhsj+cCNDH8cvugDvHdl6n6llwxFxbmpuKmtCbdUR9GPyp
-	 iv0enMiKTSP0zlJ5zNvgN055DkWJ8P4rrkhohqK6bvLfCoFRLkvZP+3fz7wFni7ND9
-	 cazCWB8doCaFznCEDLuSl7S/icz/b1KKpyF6okUyi79epTZX6n2vjph8g+fZX91fYp
-	 Uk3uzZWTmSbr6vYiZUbIkyTuccq40FfosAjrAqbtHiarWk/BH1++c8EulxAnBmrH0z
-	 3vzfnQ+T8dPGg==
+	b=hqKGH1i9wAiTtslPuuxW3U5/Fkqo4HYj8UO5UEncSVnBEZgFeLlcwLlUWie1G5Egi
+	 25F3GxmOV5jT6bNDvq8dhyyg3ERjjrkJowUUXwdO5mIGN6rQxiGiAbV+iL90MZG70Z
+	 id+mof9gOlqR+bIPurtHBX1MNEVhmcCRooofCH9Kh61RDjVyli+AlcL6p5pMKp6NZM
+	 G4mZ621QONmRzSoD4fmFFbgH/9usOLZI6AlNl7AStKiYViZoOzTRkzOFBr71TdnIhq
+	 VVgKmjEHNGiLGWmn7hOWysVkSaTZPTeTgkL7buQbRnp1SyePaWpuEGEDs0nwSoEh2M
+	 JxGuaaYZWlvhQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Dave Airlie <airlied@redhat.com>,
-	Ben Skeggs <bskeggs@nvidia.com>,
-	Timur Tabi <ttabi@nvidia.com>,
+Cc: Long Li <leo.lilong@huawei.com>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>,
-	maarten.lankhorst@linux.intel.com,
-	mripard@kernel.org,
-	tzimmermann@suse.de,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	lumag@kernel.org,
-	jani.nikula@intel.com,
-	imre.deak@intel.com,
-	lyude@redhat.com,
-	suraj.kandpal@intel.com,
-	abel.vesa@linaro.org,
-	andy.yan@rock-chips.com,
-	arun.r.murthy@intel.com,
-	mitulkumar.ajitkumar.golani@intel.com,
-	dri-devel@lists.freedesktop.org,
+	trondmy@kernel.org,
+	anna@kernel.org,
+	jlayton@kernel.org,
+	davem@davemloft.net,
+	edumazet@google.com,
+	kuba@kernel.org,
+	pabeni@redhat.com,
+	linux-nfs@vger.kernel.org,
+	netdev@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.6 03/66] drm/dp: add option to disable zero sized address only transactions.
-Date: Sun,  1 Jun 2025 19:36:40 -0400
-Message-Id: <20250601233744.3514795-3-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.6 04/66] sunrpc: update nextcheck time when adding new cache entries
+Date: Sun,  1 Jun 2025 19:36:41 -0400
+Message-Id: <20250601233744.3514795-4-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250601233744.3514795-1-sashal@kernel.org>
 References: <20250601233744.3514795-1-sashal@kernel.org>
@@ -66,155 +59,99 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.6.92
 Content-Transfer-Encoding: 8bit
 
-From: Dave Airlie <airlied@redhat.com>
+From: Long Li <leo.lilong@huawei.com>
 
-[ Upstream commit f0ddbb1eed1898286d2bd99fd6ab64ca9700d267 ]
+[ Upstream commit 5ca00634c8bbb2979c73465588f486b9632f5ed5 ]
 
-Some older NVIDIA and some newer NVIDIA hardware/firmware seems to
-have issues with address only transactions (firmware rejects them).
+The cache_detail structure uses a "nextcheck" field to control hash table
+scanning intervals. When a table scan begins, nextcheck is set to current
+time plus 1800 seconds. During scanning, if cache_detail is not empty and
+a cache entry's expiry time is earlier than the current nextcheck, the
+nextcheck is updated to that expiry time.
 
-Add an option to the core drm dp to avoid address only transactions,
-This just puts the MOT flag removal on the last message of the transfer
-and avoids the start of transfer transaction.
+This mechanism ensures that:
+1) Empty cache_details are scanned every 1800 seconds to avoid unnecessary
+   scans
+2) Non-empty cache_details are scanned based on the earliest expiry time
+   found
 
-This with the flag set in nouveau, allows eDP probing on GB203 device.
+However, when adding a new cache entry to an empty cache_detail, the
+nextcheck time was not being updated, remaining at 1800 seconds. This
+could delay cache cleanup for up to 1800 seconds, potentially blocking
+threads(such as nfsd) that are waiting for cache cleanup.
 
-Signed-off-by: Dave Airlie <airlied@redhat.com>
-Reviewed-by: Ben Skeggs <bskeggs@nvidia.com>
-Reviewed-by: Timur Tabi <ttabi@nvidia.com>
-Tested-by: Timur Tabi <ttabi@nvidia.com>
-Signed-off-by: Dave Airlie <airlied@redhat.com>
+Fix this by updating the nextcheck time whenever a new cache entry is
+added.
+
+Signed-off-by: Long Li <leo.lilong@huawei.com>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-**YES** This commit should be backported to stable kernel trees for the
-following reasons: 1. **Fixes Critical Hardware Functionality**: The
-commit addresses a significant bug where eDP displays cannot be probed
-on certain NVIDIA hardware (GB203 and others). The commit message
-explicitly states: "This with the flag set in nouveau, allows eDP
-probing on GB203 device." Without this fix, users with affected hardware
-cannot use their displays - a core functionality issue. 2. **Low
-Regression Risk - Opt-in Design**: The code changes show this is
-implemented as an opt-in feature through the `no_zero_sized` boolean
-flag: ```c /bin /bin.usr-is-merged /boot /dev /etc /home /init /lib
-/lib.usr-is-merged /lib64 /lost+found /media /mnt /opt /proc /root /run
-/sbin /sbin.usr-is-merged /snap /srv /sys /tmp /usr /var 0001-Fix-
-Clippy-warnings.patch 0002-Enhance-inference-prompt-to-utilize-
-CVEKERNELDIR-whe.patch 0003-Update-to-latest-version-of-clap.patch
-Cargo.lock Cargo.toml LICENSE README.md analyze_merge_commit.sh
-dpp_rcg_backport_analysis.md io_uring_analysis.txt ksmbd_analysis.txt
-merge_commit_analysis.txt model prompt src target test_gpio_cleanup.txt
-test_patch.txt @no_zero_sized: If the hw can't use zero sized transfers
-(NVIDIA) model/ prompt/ src/ target/ bool no_zero_sized; ``` The
-modified behavior only activates when this flag is explicitly set,
-meaning existing functionality remains unchanged for all other hardware.
-3. **Minimal and Contained Changes**: The code modifications are limited
-to: - Adding a single boolean field to the `drm_dp_aux` structure -
-Wrapping existing zero-sized transaction code in conditional checks: `if
-(!aux->no_zero_sized)` - Adding a special case to remove the MOT flag on
-the last message when the flag is set 4. **Historical Precedent**:
-Similar commits addressing DP AUX transaction issues have been
-backported: - Commit #2 (drm/nouveau/i2c/gf119-: add support for
-address-only transactions) was backported to fix display regressions -
-Commit #5 (drm/bridge: analogix_dp: properly handle zero sized AUX
-transactions) was explicitly marked with "CC: stable@vger.kernel.org" 5.
-**Affects Multiple Hardware Generations**: The commit message indicates
-this affects "Some older NVIDIA and some newer NVIDIA
-hardware/firmware", suggesting a widespread issue across different
-hardware generations that stable kernel users would encounter. 6.
-**Well-Tested Solution**: The commit has been: - Reviewed by Ben Skeggs
-(nouveau maintainer) - Reviewed and tested by Timur Tabi (NVIDIA
-engineer) - Signed off by Dave Airlie (DRM maintainer) The commit
-clearly meets stable kernel criteria: it fixes an important bug (display
-functionality), has minimal risk due to its opt-in nature, doesn't
-introduce new features or architectural changes, and addresses a real
-hardware compatibility issue that affects users.
+Based on my analysis of the commit, the code changes, and the kernel
+repository context, here is my assessment: **YES** This commit should be
+backported to stable kernel trees. Here's my extensive analysis: ##
+Analysis of the Problem The commit addresses a specific cache management
+issue in the SUNRPC subsystem that can cause significant delays (up to
+1800 seconds/30 minutes) in cache cleanup operations. The problem occurs
+when: 1. A cache_detail starts empty, with nextcheck set to current time
++ 1800 seconds 2. A new cache entry is added to this empty cache_detail
+3. The nextcheck time is NOT updated to reflect the new entry's expiry
+time 4. This means cache cleanup won't occur until the original
+1800-second timeout expires 5. During this delay, threads like nfsd that
+depend on cache cleanup can be blocked ## Code Change Analysis The fix
+is minimal and surgical: ```c + if (detail->nextcheck >
+new->expiry_time) + detail->nextcheck = new->expiry_time + 1; ``` This
+2-line addition in `sunrpc_cache_add_entry()` ensures that when a new
+cache entry is added, if its expiry time is earlier than the current
+nextcheck time, nextcheck is updated to trigger cleanup at the
+appropriate time. ## Why This Qualifies for Stable Backporting **1. Bug
+Fix Nature**: This clearly fixes a bug where cache cleanup could be
+inappropriately delayed, affecting system functionality. **2. Minimal
+Risk**: The change is extremely small and contained. It only adds a
+simple conditional check that makes the cache cleanup more responsive.
+There's no architectural change or complex logic. **3. Critical
+Subsystem Impact**: The SUNRPC cache affects NFS operations, which are
+critical for many production systems. A 1800-second delay in cache
+cleanup can severely impact NFS server responsiveness. **4. Clear User
+Impact**: The commit message explicitly mentions that this can block
+threads like nfsd, which directly affects users experiencing NFS service
+delays or hangs. **5. Historical Context**: Looking at the similar
+commits provided as reference, this fix is actually addressing a more
+fundamental timing issue than some of the other cache-related changes
+that were marked as "NO" for backporting. Those commits dealt with
+interface behavior changes or feature additions, while this fixes a
+clear performance/delay bug. **6. Low Complexity**: The fix doesn't
+introduce new features, change APIs, or modify behavioral contracts. It
+simply ensures that cache cleanup happens when it should happen. **7.
+Contained Scope**: The change is isolated to a single function
+(`sunrpc_cache_add_entry`) and only affects the timing of cache cleanup,
+not the cleanup logic itself. ## Comparison with Reference Commits
+Unlike the reference commits marked "NO" which involved: - Interface
+behavior changes (flush interface semantics) - Feature additions (new
+cache operations) - Complex timing logic modifications - Architectural
+changes This commit simply fixes a timing bug with a minimal, obvious
+correction that ensures cache cleanup occurs at the appropriate time
+rather than being unnecessarily delayed. The fix follows the stable tree
+rules perfectly: it's an important bugfix with minimal risk that
+addresses a clear user-visible issue in a critical kernel subsystem.
 
- drivers/gpu/drm/display/drm_dp_helper.c | 39 +++++++++++++++----------
- include/drm/display/drm_dp_helper.h     |  5 ++++
- 2 files changed, 28 insertions(+), 16 deletions(-)
+ net/sunrpc/cache.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/display/drm_dp_helper.c b/drivers/gpu/drm/display/drm_dp_helper.c
-index 851f0baf94600..830c27cc8a637 100644
---- a/drivers/gpu/drm/display/drm_dp_helper.c
-+++ b/drivers/gpu/drm/display/drm_dp_helper.c
-@@ -1896,14 +1896,17 @@ static int drm_dp_i2c_xfer(struct i2c_adapter *adapter, struct i2c_msg *msgs,
+diff --git a/net/sunrpc/cache.c b/net/sunrpc/cache.c
+index cb6a6bc9fea77..50013f0c9f2eb 100644
+--- a/net/sunrpc/cache.c
++++ b/net/sunrpc/cache.c
+@@ -135,6 +135,8 @@ static struct cache_head *sunrpc_cache_add_entry(struct cache_detail *detail,
  
- 	for (i = 0; i < num; i++) {
- 		msg.address = msgs[i].addr;
--		drm_dp_i2c_msg_set_request(&msg, &msgs[i]);
--		/* Send a bare address packet to start the transaction.
--		 * Zero sized messages specify an address only (bare
--		 * address) transaction.
--		 */
--		msg.buffer = NULL;
--		msg.size = 0;
--		err = drm_dp_i2c_do_msg(aux, &msg);
-+
-+		if (!aux->no_zero_sized) {
-+			drm_dp_i2c_msg_set_request(&msg, &msgs[i]);
-+			/* Send a bare address packet to start the transaction.
-+			 * Zero sized messages specify an address only (bare
-+			 * address) transaction.
-+			 */
-+			msg.buffer = NULL;
-+			msg.size = 0;
-+			err = drm_dp_i2c_do_msg(aux, &msg);
-+		}
+ 	hlist_add_head_rcu(&new->cache_list, head);
+ 	detail->entries++;
++	if (detail->nextcheck > new->expiry_time)
++		detail->nextcheck = new->expiry_time + 1;
+ 	cache_get(new);
+ 	spin_unlock(&detail->hash_lock);
  
- 		/*
- 		 * Reset msg.request in case in case it got
-@@ -1922,6 +1925,8 @@ static int drm_dp_i2c_xfer(struct i2c_adapter *adapter, struct i2c_msg *msgs,
- 			msg.buffer = msgs[i].buf + j;
- 			msg.size = min(transfer_size, msgs[i].len - j);
- 
-+			if (j + msg.size == msgs[i].len && aux->no_zero_sized)
-+				msg.request &= ~DP_AUX_I2C_MOT;
- 			err = drm_dp_i2c_drain_msg(aux, &msg);
- 
- 			/*
-@@ -1939,15 +1944,17 @@ static int drm_dp_i2c_xfer(struct i2c_adapter *adapter, struct i2c_msg *msgs,
- 	}
- 	if (err >= 0)
- 		err = num;
--	/* Send a bare address packet to close out the transaction.
--	 * Zero sized messages specify an address only (bare
--	 * address) transaction.
--	 */
--	msg.request &= ~DP_AUX_I2C_MOT;
--	msg.buffer = NULL;
--	msg.size = 0;
--	(void)drm_dp_i2c_do_msg(aux, &msg);
- 
-+	if (!aux->no_zero_sized) {
-+		/* Send a bare address packet to close out the transaction.
-+		 * Zero sized messages specify an address only (bare
-+		 * address) transaction.
-+		 */
-+		msg.request &= ~DP_AUX_I2C_MOT;
-+		msg.buffer = NULL;
-+		msg.size = 0;
-+		(void)drm_dp_i2c_do_msg(aux, &msg);
-+	}
- 	return err;
- }
- 
-diff --git a/include/drm/display/drm_dp_helper.h b/include/drm/display/drm_dp_helper.h
-index 65d76f9e84305..2c8838f3adf6a 100644
---- a/include/drm/display/drm_dp_helper.h
-+++ b/include/drm/display/drm_dp_helper.h
-@@ -454,6 +454,11 @@ struct drm_dp_aux {
- 	 * @powered_down: If true then the remote endpoint is powered down.
- 	 */
- 	bool powered_down;
-+
-+	/**
-+	 * @no_zero_sized: If the hw can't use zero sized transfers (NVIDIA)
-+	 */
-+	bool no_zero_sized;
- };
- 
- int drm_dp_dpcd_probe(struct drm_dp_aux *aux, unsigned int offset);
 -- 
 2.39.5
 
