@@ -1,49 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25FDE2D3A60;
-	Sun,  1 Jun 2025 23:35:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E13052D3A74;
+	Sun,  1 Jun 2025 23:35:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748820944; cv=none; b=W2D3CjAyAK5qe57bGA1iuLLhAYlmhfumcoRQB+0CMkAlQAmGpe2vkOCDCcww3mMdIxYCPRVv0wNclQuFkEH8vNaAsZEOKc12WYLGIcXQwnsm63M+FPbAXurFIeHrCsl+inwlzc4jvepzygl4hXwa2ZiOU80mpmonSIgwpl+uKkU=
+	t=1748820947; cv=none; b=WrzuyIbVgpYXZ7IQ5wGUmlGzpE70zE6RNl6HgPNr93lUMo1XuZM4rOYSke8UsAEcBNanIkUZeNFu0vhi+Sf58pxRILCEmvuisN7yG0cqhmj8O6A06FZo4RORw/fBJgPaK79l3OcP7my4QZr8Oz4zDg8/83g3GhN9HhCuRo2k0Vw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748820944; c=relaxed/simple;
-	bh=oDNkJhz2y30E7Y85yCXPycYGKD6JW9PDUeuAG+fELRk=;
+	s=arc-20240116; t=1748820947; c=relaxed/simple;
+	bh=//9ROFbO/D+wZZjy61n9Lv1SEKt4LcfYSPao6P0Bz3Y=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uMZ8wUp7sl3WIcjBEN6sQ2seRfzLpqmu+LAhCPOz0rozXdbRM0fkzy+m3tuRbBSjTX35R/elEKY4w7OBl5T32SNxpENmSSx0ojRP0l7Pglhup8rvcgwOW3E3rzqim+/g8zbX/k0lkYgmGiDEje6y/uK5DI2+oXeGDAF6W4Vdq7Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WOUIHn84; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WRNpuK8lvyItTVzSF8YuYeJP7ypnq3/Dst6qwWa/4Yl3R3vweZvsebVGyDMc6b0RcGD6MXjOwCvtcQ4tsMgf85fOP859L2kwepOb4ufvN+hr2ERA/L59gra7/g3D92gMg4YTAUVxGHz2HgDZ5aGUCiBMqazRcM9dQGdLY7ytm6A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FqPrk7DD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WOUIHn84"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86775C4CEE7;
-	Sun,  1 Jun 2025 23:35:42 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FqPrk7DD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B48AC4CEF2;
+	Sun,  1 Jun 2025 23:35:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748820944;
-	bh=oDNkJhz2y30E7Y85yCXPycYGKD6JW9PDUeuAG+fELRk=;
+	s=k20201202; t=1748820945;
+	bh=//9ROFbO/D+wZZjy61n9Lv1SEKt4LcfYSPao6P0Bz3Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WOUIHn841FIYoaSHlSFaq0db+zK37StkCrllIeGQrTjZWr9/sn+fm8Ihz5M5jb/Ew
-	 mSW1AbclkkEsgThvXClhsOgCZevOU/vCDj/TEFDMaFoiRVtN1aO6nJ5S3i+/YF+Egk
-	 HfkpE8f1UTfbrEKBqDgzwAtCbz28ZQTTtKaZGJg6yRHBm8q/l285iSjNspYozl26Fk
-	 ZXNm9EHgPH/LLa84flGRNiGeNXLIRH6Lkfk+hy2/Q9RVJqosQt91f86YbUGDo8atpO
-	 33fBZsfg6LH/4Frly0/kKFO0xZTHB0k7OIeelQbYgrpKlqb6ZoCP25sy6S7WjBB1lL
-	 Iod8TeMEX6DUg==
+	b=FqPrk7DD8ulMYn/axH26ZjEcWm5bAPMtfMiOT7STzln6NQNu/b6pVtUiBLEfPEfuB
+	 Bq42gWMouLnFw2EkYT1C+fIkh42M25eCi7N0AckmsXp6p0Z31XH+GoXNYtCwGEMvDV
+	 MAYpkWPEv+UFP1inQpfDoAeqr2Us/SFHJWAi4Kjrsvuxle8+o2FvWaYyp/yA4klvzj
+	 8g4vl+tMNQYAJaReWOLxtzZY/GCZWGr6BUCAmHe2gKBtyIdto+QOSPsf6hBlAPejzv
+	 3v3rp1Y1SOJy9QyVMg1h22T5QuIFu+vBI4WyHr+nHv+hCLA3x1/9xvRkF31GwwmTrl
+	 faWahQUpM5Lsw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Alex Deucher <alexander.deucher@amd.com>,
-	Rodrigo Siqueira <siqueira@igalia.com>,
+Cc: Zhang Yi <yi.zhang@huawei.com>,
+	Theodore Ts'o <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>,
-	christian.koenig@amd.com,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	sunil.khatri@amd.com,
-	boyuan.zhang@amd.com,
-	kevinyang.wang@amd.com,
-	amd-gfx@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org,
+	adilger.kernel@dilger.ca,
+	linux-ext4@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.12 40/93] drm/amdgpu/gfx7: fix CSIB handling
-Date: Sun,  1 Jun 2025 19:33:07 -0400
-Message-Id: <20250601233402.3512823-40-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.12 41/93] ext4: ext4: unify EXT4_EX_NOCACHE|NOFAIL flags in ext4_ext_remove_space()
+Date: Sun,  1 Jun 2025 19:33:08 -0400
+Message-Id: <20250601233402.3512823-41-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250601233402.3512823-1-sashal@kernel.org>
 References: <20250601233402.3512823-1-sashal@kernel.org>
@@ -56,80 +50,157 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.12.31
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Zhang Yi <yi.zhang@huawei.com>
 
-[ Upstream commit be7652c23d833d1ab2c67b16e173b1a4e69d1ae6 ]
+[ Upstream commit 53ce42accd2002cc490fc86000ac532530507a74 ]
 
-We shouldn't return after the last section.
-We need to update the rest of the CSIB.
+When removing space, we should use EXT4_EX_NOCACHE because we don't
+need to cache extents, and we should also use EXT4_EX_NOFAIL to prevent
+metadata inconsistencies that may arise from memory allocation failures.
+While ext4_ext_remove_space() already uses these two flags in most
+places, they are missing in ext4_ext_search_right() and
+read_extent_tree_block() calls. Unify the flags to ensure consistent
+behavior throughout the extent removal process.
 
-Reviewed-by: Rodrigo Siqueira <siqueira@igalia.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
+Link: https://patch.msgid.link/20250423085257.122685-2-yi.zhang@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-**YES** This commit should be backported to stable kernel trees. Here's
-my detailed analysis: ## Bug Analysis The commit fixes a critical bug in
-the `gfx_v7_0_get_csb_buffer()` function in
-`/drivers/gpu/drm/amd/amdgpu/gfx_v7_0.c`. The bug is on lines 3909-3911
-where the function has: ```c } else { return; // BUG: Early return
-prevents completion of CSB buffer } ``` The fix removes the early
-`return` statement, changing it to: ```c } ``` ## What the Bug Does 1.
-**CSB (Clear State Buffer)** is a critical GPU initialization buffer
-that contains register programming sequences needed to properly
-initialize the graphics hardware on GFX7 generation AMD GPUs (Bonaire,
-Kaveri, Kabini, Mullins, Hawaii). 2. **The Bug**: When iterating through
-clear state sections, if the function encounters any section that is NOT
-`SECT_CONTEXT`, it immediately returns, **preventing the completion of
-the CSB buffer initialization**. 3. **Missing Critical Code**: After the
-early return, the function skips: - Setting `PA_SC_RASTER_CONFIG`
-register (lines 3915-3939) - critical for rasterization configuration -
-Adding `PACKET3_PREAMBLE_END_CLEAR_STATE` (lines 3941-3942) - proper
-command stream termination - Adding `PACKET3_CLEAR_STATE` command (lines
-3944-3945) - final clear state execution ## Impact Assessment This is a
-**hardware initialization bug** that affects: - **Affected Hardware**:
-All GFX7 AMD GPUs (Bonaire, Kaveri, Kabini, Mullins, Hawaii chips) -
-**Scope**: Fundamental GPU initialization during driver load -
-**Symptoms**: Incomplete GPU state initialization, potential rendering
-issues, GPU hangs, or system instability ## Why This Should Be
-Backported 1. **Fixes Important Hardware Bug**: This addresses a
-fundamental hardware initialization issue that can cause GPU
-malfunction. 2. **Small, Contained Fix**: The change is minimal
-(removing 2 lines) with no architectural implications. 3. **Clear Bug
-with Clear Fix**: The commit message explains exactly what's wrong ("We
-shouldn't return after the last section. We need to update the rest of
-the CSIB"). 4. **Critical Subsystem**: GPU initialization is a critical
-path that must work correctly for stable system operation. 5. **Matches
-Stable Criteria**: - Important bugfix ✓ - Minimal risk ✓ - Small change
-✓ - No new features ✓ - Confined to one subsystem ✓ 6. **Historical
-Pattern**: Looking at the provided similar commits, the fix pattern
-matches "Similar Commit #4" which was marked as "Backport Status: YES" -
-it fixes a functional bug in AMDGPU command submission handling. 7.
-**User Impact**: Users with GFX7 AMD hardware could experience graphics
-instability or initialization failures due to incomplete CSB
-programming. The fix ensures that the CSB buffer is properly completed
-with all necessary register programming and command stream termination,
-which is essential for stable GPU operation.
+Based on my thorough analysis of this commit and the kernel code
+context, here is my assessment: **YES** This commit should be backported
+to stable kernel trees. ## Detailed Analysis: ### **Nature of the Bug
+Fix** This commit addresses an important consistency issue in the ext4
+extent removal process. The problem is that `ext4_ext_remove_space()`
+inconsistently applies critical flags (`EXT4_EX_NOCACHE |
+EXT4_EX_NOFAIL`) across all its `read_extent_tree_block()` calls. ###
+**Technical Impact** 1. **`EXT4_EX_NOCACHE`**: Prevents caching of
+extents during removal operations. Without this flag in
+`ext4_ext_search_right()` calls (lines 1607, 1615), the extent cache
+could become polluted with stale entries during space removal,
+potentially leading to incorrect block mappings. 2.
+**`EXT4_EX_NOFAIL`**: Ensures memory allocation cannot fail during
+critical metadata operations. The absence of this flag in the affected
+calls could cause metadata inconsistencies if memory allocation fails
+during extent tree traversal. ### **Risk Assessment - Low Risk** -
+**Small, contained change**: Only adds consistent flag usage across
+existing function calls - **No algorithmic changes**: The core logic
+remains unchanged - **Well-understood flags**: Both flags are already
+used extensively in the same function ### **Comparison with Historical
+Commits** **Similar to "YES" commits:** - Like commit #1 (ext4 cache
+pollution fix): Addresses extent cache consistency issues - Like commit
+#2 (nofail preallocation): Prevents metadata inconsistencies from
+allocation failures - Small, targeted fix with clear purpose - Addresses
+potential data corruption scenarios **Unlike "NO" commits:** - Not a
+cleanup/refactoring (commits #3, #4, #5 were architectural changes) -
+Not removing functionality or making API changes - Fixes an actual bug
+rather than just code organization ### **Code Evidence** The changes are
+in `/fs/ext4/extents.c:1607, 1615, 2980, 2920, 4299`: 1. **Lines 1607,
+1615**: `ext4_ext_search_right()` now receives and uses flags parameter
+2. **Line 2980**: `read_extent_tree_block()` in the main removal loop
+now uses unified flags 3. **Line 2920**: `ext4_ext_search_right()` call
+now passes flags consistently 4. **Line 4299**: Non-removal path
+correctly passes 0 flags (no change in behavior) ### **Subsystem
+Context** From examining the kernel source: - `EXT4_EX_NOCACHE` prevents
+extent caching when `depth == 0` (line ~460 in extents.c) -
+`EXT4_EX_NOFAIL` adds `__GFP_NOFAIL` to allocation flags (line ~397 in
+extents.c) - The function `ext4_ext_remove_space()` is called during
+truncation and punch hole operations ### **User Impact** This fixes
+potential filesystem corruption during: - File truncation operations -
+Punch hole operations - Any extent removal scenarios The inconsistent
+flag usage could lead to stale extent cache entries and allocation
+failures during critical metadata operations, both of which can cause
+filesystem corruption. ### **Conclusion** This is a clear bug fix that
+prevents potential filesystem corruption with minimal risk of
+regression. It follows the pattern of similar commits that were
+successfully backported and addresses a real consistency issue that
+could affect filesystem reliability.
 
- drivers/gpu/drm/amd/amdgpu/gfx_v7_0.c | 2 --
- 1 file changed, 2 deletions(-)
+ fs/ext4/extents.c | 19 ++++++++++---------
+ 1 file changed, 10 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v7_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v7_0.c
-index f146806c4633b..323fb57ef21a2 100644
---- a/drivers/gpu/drm/amd/amdgpu/gfx_v7_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gfx_v7_0.c
-@@ -3900,8 +3900,6 @@ static void gfx_v7_0_get_csb_buffer(struct amdgpu_device *adev,
- 				buffer[count++] = cpu_to_le32(ext->reg_index - PACKET3_SET_CONTEXT_REG_START);
- 				for (i = 0; i < ext->reg_count; i++)
- 					buffer[count++] = cpu_to_le32(ext->extent[i]);
--			} else {
--				return;
- 			}
- 		}
+diff --git a/fs/ext4/extents.c b/fs/ext4/extents.c
+index ba3419958a832..4d7729321c80e 100644
+--- a/fs/ext4/extents.c
++++ b/fs/ext4/extents.c
+@@ -1530,7 +1530,7 @@ static int ext4_ext_search_left(struct inode *inode,
+ static int ext4_ext_search_right(struct inode *inode,
+ 				 struct ext4_ext_path *path,
+ 				 ext4_lblk_t *logical, ext4_fsblk_t *phys,
+-				 struct ext4_extent *ret_ex)
++				 struct ext4_extent *ret_ex, int flags)
+ {
+ 	struct buffer_head *bh = NULL;
+ 	struct ext4_extent_header *eh;
+@@ -1604,7 +1604,8 @@ static int ext4_ext_search_right(struct inode *inode,
+ 	ix++;
+ 	while (++depth < path->p_depth) {
+ 		/* subtract from p_depth to get proper eh_depth */
+-		bh = read_extent_tree_block(inode, ix, path->p_depth - depth, 0);
++		bh = read_extent_tree_block(inode, ix, path->p_depth - depth,
++					    flags);
+ 		if (IS_ERR(bh))
+ 			return PTR_ERR(bh);
+ 		eh = ext_block_hdr(bh);
+@@ -1612,7 +1613,7 @@ static int ext4_ext_search_right(struct inode *inode,
+ 		put_bh(bh);
  	}
+ 
+-	bh = read_extent_tree_block(inode, ix, path->p_depth - depth, 0);
++	bh = read_extent_tree_block(inode, ix, path->p_depth - depth, flags);
+ 	if (IS_ERR(bh))
+ 		return PTR_ERR(bh);
+ 	eh = ext_block_hdr(bh);
+@@ -2821,6 +2822,7 @@ int ext4_ext_remove_space(struct inode *inode, ext4_lblk_t start,
+ 	struct partial_cluster partial;
+ 	handle_t *handle;
+ 	int i = 0, err = 0;
++	int flags = EXT4_EX_NOCACHE | EXT4_EX_NOFAIL;
+ 
+ 	partial.pclu = 0;
+ 	partial.lblk = 0;
+@@ -2851,8 +2853,7 @@ int ext4_ext_remove_space(struct inode *inode, ext4_lblk_t start,
+ 		ext4_fsblk_t pblk;
+ 
+ 		/* find extent for or closest extent to this block */
+-		path = ext4_find_extent(inode, end, NULL,
+-					EXT4_EX_NOCACHE | EXT4_EX_NOFAIL);
++		path = ext4_find_extent(inode, end, NULL, flags);
+ 		if (IS_ERR(path)) {
+ 			ext4_journal_stop(handle);
+ 			return PTR_ERR(path);
+@@ -2918,7 +2919,7 @@ int ext4_ext_remove_space(struct inode *inode, ext4_lblk_t start,
+ 			 */
+ 			lblk = ex_end + 1;
+ 			err = ext4_ext_search_right(inode, path, &lblk, &pblk,
+-						    NULL);
++						    NULL, flags);
+ 			if (err < 0)
+ 				goto out;
+ 			if (pblk) {
+@@ -2994,8 +2995,7 @@ int ext4_ext_remove_space(struct inode *inode, ext4_lblk_t start,
+ 				  i + 1, ext4_idx_pblock(path[i].p_idx));
+ 			memset(path + i + 1, 0, sizeof(*path));
+ 			bh = read_extent_tree_block(inode, path[i].p_idx,
+-						    depth - i - 1,
+-						    EXT4_EX_NOCACHE);
++						    depth - i - 1, flags);
+ 			if (IS_ERR(bh)) {
+ 				/* should we reset i_size? */
+ 				err = PTR_ERR(bh);
+@@ -4314,7 +4314,8 @@ int ext4_ext_map_blocks(handle_t *handle, struct inode *inode,
+ 	if (err)
+ 		goto out;
+ 	ar.lright = map->m_lblk;
+-	err = ext4_ext_search_right(inode, path, &ar.lright, &ar.pright, &ex2);
++	err = ext4_ext_search_right(inode, path, &ar.lright, &ar.pright,
++				    &ex2, 0);
+ 	if (err < 0)
+ 		goto out;
+ 
 -- 
 2.39.5
 
