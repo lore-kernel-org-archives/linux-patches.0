@@ -1,53 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 905CA3272CE;
-	Sun,  1 Jun 2025 23:42:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D83703272DC;
+	Sun,  1 Jun 2025 23:42:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748821353; cv=none; b=WqezrIrQBaNVwxSoLsPgrDT5vLBsbwppbIH+wEdm7aBRlxgjJe4ggR1Arymo/+x4YE7XmOGmUR3otj9G9U5n0VS49+XiDsXkhFBzGlKaFam9boCacqgX0etyN0lWyBcopG5TKzV+PIHzYKyuypjQYZ40AG3SCxfw0BbudMqBFKE=
+	t=1748821355; cv=none; b=mI14iJmgIHRj5NI+bmTnvQKxpr6d3O3WVLEDuj9RfMjDLoSScxGdAeptkPO0NPnD58R0oYwQVQcf6bZIuuv6sJ4km4MHeCE8svwWOz7hbvTALCMTIWfPuJ98yWThwnWe05s7Od0iBmCSgNOvD0Iwy9nTkXAZXdh3pxF5pY28InY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748821353; c=relaxed/simple;
-	bh=c+m7O386U7lCQyrSkPUAJ7GvuxBWqv5w1rks2sHOQ5U=;
+	s=arc-20240116; t=1748821355; c=relaxed/simple;
+	bh=tMidnKVaOTE7+RjEwHftZqIJFcRDvk2XlxyhrIPrzII=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Ouv61OiMDDmm/wI/uMP7rJOWF1aR7dFwyEssGmlnZXxjO0L09mxJZl79/n0Bx3NOhvmaihHKt2CFV53w5agjV7ujaZ3G8EEJShLy3a7k+PrxU0kLkPTfEs7jEncQlt57uOuA8HC1VccOypCB/WHxYUuqA+fgVP3/WO4vu4XSoLs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AyONTrui; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=o+dKtxC9yDGert02QrpgzsmBMWdgb9mbDnMw9Yzwl1IUxgLBSA3WU3OgMcmwLFXvhT3dBLu6uoTpjGjQEr7noPlSAgKtZ7iEgtv71wLS+yC130Sa1CUCO3nXHEc2KPNNY3moNr3S50FcR8ZFAkjMWKRHGF7ED9mIrdykWGfV+AY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=t/kiID9f; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AyONTrui"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C5A6C4CEFC;
-	Sun,  1 Jun 2025 23:42:31 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="t/kiID9f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EFCCC4CEF1;
+	Sun,  1 Jun 2025 23:42:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748821353;
-	bh=c+m7O386U7lCQyrSkPUAJ7GvuxBWqv5w1rks2sHOQ5U=;
+	s=k20201202; t=1748821354;
+	bh=tMidnKVaOTE7+RjEwHftZqIJFcRDvk2XlxyhrIPrzII=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AyONTrui3BBCqW98PVYfj1LJjx+IN0RqC43XsEolYRED6N7I+tkSPwz0Wfi9vdSOh
-	 UBmI35WD1T3PlQYHAXmm5+5oyVozSN+tr3HHlbodocjJPbM2s0NNnTEctK15dwH7bA
-	 QB1z0tCFW9pO8keJHyeB4lFtRZyfQJ/03EWZ+F6ZJwHtcPqJasGmGyiqoZzIj3453g
-	 kPiwRwftm2GSa5lSKIWfZLEI3tL4Nk3Ns7yBLv/8rrYBttWBBJuogV3s5pp9cRwMWe
-	 CcJvDFCyY2YGPY3L9C523w2G1OLikopMTG5Nj/4DkYRo+geaIgdKJUPGgj2yxJgfRP
-	 BCJxApJGIGidg==
+	b=t/kiID9fnoJWlbP1Dh1s6035OLXMY5gqeNa7w3Y56ym9rUc5eVWMTmal14FrGkAzv
+	 ho654aoZVgWxGqFkDoLX9vaHufgC0nYAWnFDGuMHvQIkKXjbve1nlXDICsWsQwkpY3
+	 zngiLVRmZe44oEc9U9SGe1KjNhCII6VVHJRNiXyxaxULVbhZXNa9XyXlul51mZKUOW
+	 qV2RaI4FcXSn0d4HApHmaNFphMbAkmOEb77OgSsMUI8ZTRXlYen2AtPk1vOlGvaqW0
+	 YM+XmNAZchkBq9XmJtGCUAS9/CRdkE4UXnZJdazeIy2Rtn6N7vfTJWe7fkNjoQWfyr
+	 x3vT6hRV7vZHQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Damon Ding <damon.ding@rock-chips.com>,
-	Douglas Anderson <dianders@chromium.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+Cc: Namjae Jeon <linkinjeon@kernel.org>,
+	Jianzhou Zhao <xnxc22xnxc22@qq.com>,
 	Sasha Levin <sashal@kernel.org>,
-	andrzej.hajda@intel.com,
-	neil.armstrong@linaro.org,
-	rfoss@kernel.org,
-	maarten.lankhorst@linux.intel.com,
-	mripard@kernel.org,
-	tzimmermann@suse.de,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	l.stach@pengutronix.de,
-	bivvy.bi@rock-chips.com,
-	dri-devel@lists.freedesktop.org,
+	sj1557.seo@samsung.com,
+	linux-fsdevel@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.15 03/43] drm/bridge: analogix_dp: Add irq flag IRQF_NO_AUTOEN instead of calling disable_irq()
-Date: Sun,  1 Jun 2025 19:41:43 -0400
-Message-Id: <20250601234224.3517599-3-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.15 04/43] exfat: fix double free in delayed_free
+Date: Sun,  1 Jun 2025 19:41:44 -0400
+Message-Id: <20250601234224.3517599-4-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250601234224.3517599-1-sashal@kernel.org>
 References: <20250601234224.3517599-1-sashal@kernel.org>
@@ -60,89 +50,89 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 5.15.184
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Damon Ding <damon.ding@rock-chips.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit efab13e7d13a641a22c7508cde6e1a5285161944 ]
+[ Upstream commit 1f3d9724e16d62c7d42c67d6613b8512f2887c22 ]
 
-The IRQF_NO_AUTOEN can be used for the drivers that don't want
-interrupts to be enabled automatically via devm_request_threaded_irq().
-Using this flag can provide be more robust compared to the way of
-calling disable_irq() after devm_request_threaded_irq() without the
-IRQF_NO_AUTOEN flag.
+The double free could happen in the following path.
 
-Suggested-by: Douglas Anderson <dianders@chromium.org>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Damon Ding <damon.ding@rock-chips.com>
-Link: https://lore.kernel.org/r/20250310104114.2608063-2-damon.ding@rock-chips.com
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+exfat_create_upcase_table()
+        exfat_create_upcase_table() : return error
+        exfat_free_upcase_table() : free ->vol_utbl
+        exfat_load_default_upcase_table : return error
+     exfat_kill_sb()
+           delayed_free()
+                  exfat_free_upcase_table() <--------- double free
+This patch set ->vol_util as NULL after freeing it.
+
+Reported-by: Jianzhou Zhao <xnxc22xnxc22@qq.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-**YES** This commit should be backported to stable kernel trees based on
-the following analysis: ## Code Change Analysis The commit makes a
-simple, targeted fix to address a race condition in interrupt handling:
-1. **Line 1639**: Changes `irq_flags = IRQF_TRIGGER_RISING |
-IRQF_TRIGGER_FALLING;` to `irq_flags = IRQF_TRIGGER_RISING |
-IRQF_TRIGGER_FALLING | IRQF_NO_AUTOEN;` 2. **Line 1642**: Changes
-`irq_flags = 0;` to `irq_flags = IRQF_NO_AUTOEN;` 3. **Line 1659**:
-Removes the `disable_irq(dp->irq);` call that was previously needed
-after `devm_request_threaded_irq()` ## Backport Suitability Assessment
-**Matches Stable Tree Criteria:** 1. **Fixes an Important Bug**: The
-commit addresses a race condition where interrupts can fire between
-`devm_request_threaded_irq()` and `disable_irq()`, which could cause
-system instability or unexpected behavior. 2. **Small and Contained
-Change**: The modification is minimal (3 lines changed) and affects only
-the interrupt setup logic in `analogix_dp_core.c:1608-1659`. 3. **Low
-Risk of Regression**: The change uses a well-established kernel pattern
-(IRQF_NO_AUTOEN) that's been proven safe across multiple subsystems. 4.
-**Clear Technical Merit**: As noted in the commit message, using
-`IRQF_NO_AUTOEN` is "more robust compared to the way of calling
-disable_irq() after devm_request_threaded_irq()". **Strong Precedent
-from Similar Commits:** The analysis shows **ALL** similar commits in
-the provided reference set have "Backport Status: YES": -
-`drm/msm/adreno: Use IRQF_NO_AUTOEN flag in request_irq()` - **YES** -
-`drm/imx/dcss: Use IRQF_NO_AUTOEN flag in request_irq()` (both
-instances) - **YES** - `drm/imx/ipuv3: Use IRQF_NO_AUTOEN flag in
-request_irq()` - **YES** - `drm/exynos: move to use request_irq by
-IRQF_NO_AUTOEN flag` - **YES** **Additional Context from Kernel
-Repository:** Examination of `/home/sasha/linux/drivers/gpu/drm/bridge/a
-nalogix/analogix_dp_core.c:1659` confirms this follows the exact same
-pattern as other successful backports - replacing the `request_irq()` +
-`disable_irq()` sequence with `IRQF_NO_AUTOEN` flag usage. This is a
-textbook example of a stable tree candidate: it fixes a real race
-condition bug with minimal, proven-safe code changes that follow
-established kernel patterns.
+Based on my thorough analysis of the commit and examination of the
+kernel tree, here is my assessment: **YES** This commit should be
+backported to stable kernel trees. Here's my extensive analysis: ## Code
+Analysis **The Problem:** The commit fixes a classic double-free
+vulnerability in the exfat filesystem. Looking at the current kernel
+code, the vulnerability exists in this execution path: 1.
+`exfat_create_upcase_table()` calls `exfat_load_upcase_table()` which
+may fail 2. On failure (`ret && ret != -EIO`), it calls
+`exfat_free_upcase_table(sbi)` 3. Then it goes to `load_default:` and
+calls `exfat_load_default_upcase_table()` which may also fail 4. When
+the filesystem unmounts, `exfat_kill_sb()` → `delayed_free()` →
+`exfat_free_upcase_table(sbi)` is called again **The Current Vulnerable
+Code:** ```c void exfat_free_upcase_table(struct exfat_sb_info *sbi) {
+kvfree(sbi->vol_utbl); // No NULL assignment - vulnerable to double free
+} ``` **The Fix:** The patch adds `sbi->vol_utbl = NULL;` after the
+`kvfree()`, which prevents the double-free because `kvfree(NULL)` is
+safe. ## Backport Criteria Assessment **1. Bug Severity: HIGH** - This
+is a memory corruption vulnerability (double-free) - Double-free bugs
+can lead to heap corruption, crashes, and potentially security exploits
+- The bug affects the reliability and security of the exfat filesystem
+**2. Fix Quality: EXCELLENT** - The fix is minimal (just one line:
+`sbi->vol_utbl = NULL;`) - Extremely low risk of introducing regressions
+- Follows standard defensive programming practices - The fix is
+contained within a single function **3. Backport Suitability: PERFECT**
+- Small, isolated change that doesn't affect any APIs - No architectural
+changes or new features - The fix addresses the root cause directly -
+Compatible with all kernel versions that have the vulnerable code **4.
+Historical Context:** Looking at the similar commits provided: -
+**Similar Commit #2** (Status: YES): Also a memory leak fix in exfat
+with `Cc: stable@vger.kernel.org` - **Similar Commit #4** (Status: YES):
+Another memory corruption prevention fix in exfat - Both demonstrate
+that small, targeted memory management fixes in exfat are appropriate
+for stable backporting **5. Impact Assessment:** - **User Impact:** High
+- prevents filesystem crashes and potential data corruption - **Risk:**
+Very low - the change only affects error paths and adds defensive
+programming - **Complexity:** Minimal - single line change with clear
+semantics **6. RCU Context:** The commit a13d1a4de3b0 introduced the
+`delayed_free()` mechanism that made this double-free possible, making
+this fix essential for kernels with that change. ## Conclusion This
+commit represents exactly the type of fix that stable kernels need: a
+small, surgical fix for a potentially serious memory corruption bug with
+minimal risk of regression. The double-free vulnerability could lead to
+system instability and the fix is trivial to apply and verify. Given the
+similarities with other exfat memory management fixes that were
+successfully backported, this should definitely be included in stable
+kernel trees.
 
- drivers/gpu/drm/bridge/analogix/analogix_dp_core.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ fs/exfat/nls.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c b/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
-index f0305f833b6c0..8c35bc016dbcc 100644
---- a/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
-+++ b/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
-@@ -1771,10 +1771,10 @@ analogix_dp_probe(struct device *dev, struct analogix_dp_plat_data *plat_data)
- 		 * that we can get the current state of the GPIO.
- 		 */
- 		dp->irq = gpiod_to_irq(dp->hpd_gpiod);
--		irq_flags = IRQF_TRIGGER_RISING | IRQF_TRIGGER_FALLING;
-+		irq_flags = IRQF_TRIGGER_RISING | IRQF_TRIGGER_FALLING | IRQF_NO_AUTOEN;
- 	} else {
- 		dp->irq = platform_get_irq(pdev, 0);
--		irq_flags = 0;
-+		irq_flags = IRQF_NO_AUTOEN;
- 	}
- 
- 	if (dp->irq == -ENXIO) {
-@@ -1791,7 +1791,6 @@ analogix_dp_probe(struct device *dev, struct analogix_dp_plat_data *plat_data)
- 		dev_err(&pdev->dev, "failed to request irq\n");
- 		goto err_disable_clk;
- 	}
--	disable_irq(dp->irq);
- 
- 	return dp;
- 
+diff --git a/fs/exfat/nls.c b/fs/exfat/nls.c
+index 314d5407a1be5..a75d5fb2404c7 100644
+--- a/fs/exfat/nls.c
++++ b/fs/exfat/nls.c
+@@ -804,4 +804,5 @@ int exfat_create_upcase_table(struct super_block *sb)
+ void exfat_free_upcase_table(struct exfat_sb_info *sbi)
+ {
+ 	kvfree(sbi->vol_utbl);
++	sbi->vol_utbl = NULL;
+ }
 -- 
 2.39.5
 
