@@ -1,47 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBCF633BD96;
-	Sun,  1 Jun 2025 23:45:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A256233BDA2;
+	Sun,  1 Jun 2025 23:45:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748821545; cv=none; b=ARGHiUgHVBkUcVNicNqygOAwtWRjJHq6lEi13MeWrsLb7ie2Rea9DoQiNvLh0g741i5Vjp5zt74fXAGUvXStw6O6AdZz3H5TINAoiHUkm7fX2vs3AiX9gIk95gEc/GXjyijEaRYBRbe/U5GIVeUcR4lRnQgGIuUxUQxFygAOgPg=
+	t=1748821545; cv=none; b=P880Gbvu1MAGrQ2v8tCxE2OKfyaw8FDuOLj/VdO9yO1mh8Qa6AEeXsRX9jfZLwEYnzWvqcHpogQOqEzmcha4ancTVdn2/vraTR/HZ1MAtd6sb3mUnK+lqbp4SGJkZKhEAV6mM0SB2gacWVciDYRrrBazZilPWNzEBXYlbSupGIE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1748821545; c=relaxed/simple;
-	bh=t7tNlpjbNybYIvOLVoId8P3s9HNqsYU18YHAWFmjG14=;
+	bh=JYXwUulkZ0bX9p/Ea6mB6iXnAeNyjfRskRSSI04G1LM=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dTRgitjXFr/NPVRpkVhe2xga2cHHlxWUv531BIkKEblhishG/9sYBoH93sZgzeKsBmdi+IbR3h2EHpa+9VKJDK1oZ6lHDKCB3xN+G+Rmw1Iq2Spw/aPZiyXnXiTAxmuf3GtmPPbp4TRGxZ7inD/FdCTWBfSTwgSnoBxBvd7zh24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Bw8LvCvL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=lf7Mo6h9mbedqs2LXhsrRypnFtS+gBIoMTfllZFJQGQ8DTF8HayUV38XquV5cEMvAZtD2xK/swtlhI7PI3dIgsRkM9X04be59Y5B8LZZFZUZV/4+8LOIAwbw8F9p7O2Us3S+sfoYHw11u8IZCw9mDLPZoO5xm6SDWzvd1mUnDeY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Hg7avQxi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Bw8LvCvL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BF92C4CEE7;
-	Sun,  1 Jun 2025 23:45:41 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Hg7avQxi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFBF0C4CEEE;
+	Sun,  1 Jun 2025 23:45:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748821542;
-	bh=t7tNlpjbNybYIvOLVoId8P3s9HNqsYU18YHAWFmjG14=;
+	s=k20201202; t=1748821545;
+	bh=JYXwUulkZ0bX9p/Ea6mB6iXnAeNyjfRskRSSI04G1LM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bw8LvCvL+BuR+35lW7IbJhfIw7yo5TMvap5vaNPk7+Qd2i4bdyE8G4wQHKdMhVMLv
-	 kt9XwvsHJvjf8qnxDRCrnw92PMYLYcfzsARdg8ULu8okBqQo85ac7z9oYXdMtU5bSl
-	 vXZmi3UU61fLQroQmJmqqSBk0Rm/CFMFmlvw9dfsxj/jn+Apwz9521ZVmZkUxmXJRp
-	 tWQLCdQ9oAy+YH4Y4m1f1O+i9rvBr3KLaxzZlceuTXa/D8pEDF7ieWOZt6dIWmafF4
-	 0lMCF3MWMDFpMgC1ZoB1KEM/YM0gIovzwP4sT7CVHf/XEanZaN8Ry9NRZbQfJZDPKc
-	 5EkgfS3aF/nUQ==
+	b=Hg7avQxib0lXxgR8ghn4tFie6nnkBkO/9Te7shCy827NCEY/7/t4XCme7cGofYbnr
+	 N2pednwTIksxKNyN+xmBoQMYjD+OR+QBFHx+AmD6hUvMVSFX1ma/vw7bSdgcfzKEqb
+	 G9Sr1Bf854CJahD1yEwpspMPGUbIJgV+4F9X63jbSjiJg02ARd9J4ijMYVDCcNiVsx
+	 rF4YCVoAOV5CH9HFP8ld8KQw54LIQJyh50SeqOuVvyYeicK/gkV/P+L08UoVO8qhdG
+	 d/esgCF2fLLm/UE3G+4Fx6qbGcHQZEVypUcnzF1qz7M4GkwbGSNcsdk5E5RqURw7Lu
+	 VwNUDDRUZJSfw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Aditya Dutt <duttaditya18@gmail.com>,
-	syzbot+b974bd41515f770c608b@syzkaller.appspotmail.com,
-	Dave Kleikamp <dave.kleikamp@oracle.com>,
+Cc: Alex Deucher <alexander.deucher@amd.com>,
+	Rodrigo Siqueira <siqueira@igalia.com>,
 	Sasha Levin <sashal@kernel.org>,
-	shaggy@kernel.org,
-	ghanshyam1898@gmail.com,
-	r.smirnov@omp.ru,
-	eadavis@qq.com,
-	jfs-discussion@lists.sourceforge.net,
+	christian.koenig@amd.com,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	sunil.khatri@amd.com,
+	boyuan.zhang@amd.com,
+	Prike.Liang@amd.com,
+	kevinyang.wang@amd.com,
+	mario.limonciello@amd.com,
+	amd-gfx@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.4 10/22] jfs: fix array-index-out-of-bounds read in add_missing_indices
-Date: Sun,  1 Jun 2025 19:45:01 -0400
-Message-Id: <20250601234515.3519309-10-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.4 11/22] drm/amdgpu/gfx8: fix CSIB handling
+Date: Sun,  1 Jun 2025 19:45:02 -0400
+Message-Id: <20250601234515.3519309-11-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250601234515.3519309-1-sashal@kernel.org>
 References: <20250601234515.3519309-1-sashal@kernel.org>
@@ -57,130 +61,69 @@ X-stable-base: Linux 5.4.293
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Aditya Dutt <duttaditya18@gmail.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-[ Upstream commit 5dff41a86377563f7a2b968aae00d25b4ceb37c9 ]
+[ Upstream commit c8b8d7a4f1c5cdfbd61d75302fb3e3cdefb1a7ab ]
 
-stbl is s8 but it must contain offsets into slot which can go from 0 to
-127.
+We shouldn't return after the last section.
+We need to update the rest of the CSIB.
 
-Added a bound check for that error and return -EIO if the check fails.
-Also make jfs_readdir return with error if add_missing_indices returns
-with an error.
-
-Reported-by: syzbot+b974bd41515f770c608b@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com./bug?extid=b974bd41515f770c608b
-Signed-off-by: Aditya Dutt <duttaditya18@gmail.com>
-Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+Reviewed-by: Rodrigo Siqueira <siqueira@igalia.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-**YES** This commit should be backported to stable kernel trees. Here's
-my detailed analysis: ## Security and Stability Impact 1. **Critical
-Array-Index-Out-of-Bounds Fix**: The commit addresses a serious array-
-index-out-of-bounds vulnerability in the JFS filesystem's
-`add_missing_indices()` function at `fs/jfs/jfs_dtree.c:2648`. The code
-was accessing `p->slot[stbl[i]]` without validating that `stbl[i]` is
-within valid bounds (0-127). 2. **Consistent with Established Pattern**:
-This fix follows the exact same pattern as **all 5 similar commits**
-that were marked as "Backport Status: YES": - Similar Commits #1, #2, #3
-all add bounds checking for `stbl[i] < 0 || stbl[i] > 127` - Similar
-Commits #4, #5 add bounds checking for array indices in JFS - All were
-successfully backported due to their security importance 3. **Syzbot-
-Reported Vulnerability**: The commit fixes a vulnerability reported by
-syzbot (`syzbot+b974bd41515f770c608b@syzkaller.appspotmail.com`),
-indicating this is a real exploitable issue found through fuzzing. ##
-Code Analysis **Key Changes Made:** 1. **Bounds Check Addition**: Added
-validation `if (stbl[i] < 0)` before accessing `p->slot[stbl[i]]` 2.
-**Error Handling**: Changed `add_missing_indices()` from `void` to `int`
-return type to propagate errors 3. **Proper Error Propagation**:
-Modified `jfs_readdir()` to check return value and exit on error: `if
-((rc = add_missing_indices(ip, bn))) goto out;` 4. **Transaction
-Cleanup**: Added `txAbort(tid, 0)` on error path to properly clean up
-the transaction **Technical Context:** - `stbl` is declared as `s8 *`
-(signed 8-bit array) but must contain valid slot indices (0-127) -
-`DTPAGEMAXSLOT` is defined as 128, so valid indices are 0-127 - Negative
-values in `stbl[i]` cause array-index-out-of-bounds when accessing
-`p->slot[stbl[i]]` ## Backport Criteria Assessment ✅ **Fixes Important
-Bug**: Prevents potential kernel crashes and security issues ✅ **Small
-and Contained**: Limited to one function with clear, minimal changes ✅
-**No Side Effects**: Only adds bounds checking and error handling ✅ **No
-Architectural Changes**: Preserves existing logic flow ✅ **Critical
-Subsystem**: Filesystem corruption/crashes affect system stability ✅
-**Clear Pattern**: Identical to 5 other successfully backported JFS
-fixes ✅ **Minimal Regression Risk**: Only adds safety checks, doesn't
-change core logic ✅ **Confined to Subsystem**: Changes isolated to JFS
-dtree handling ## Existing Infrastructure The kernel already has
-extensive bounds checking for `stbl` indices throughout `jfs_dtree.c`: -
-Line 2895-2898: `if (stbl[i] < 0 || stbl[i] > 127)` in `jfs_readdir()` -
-Line 3099-3102: `if (stbl[0] < 0 || stbl[0] > 127)` in `dtReadFirst()` -
-Line 637-640: `if (stbl[index] < 0)` in search functions This commit
-simply extends the same pattern to the previously missed
-`add_missing_indices()` function, maintaining consistency with the
-existing codebase security measures. The fix is essential for preventing
-potential kernel crashes and maintaining filesystem integrity, making it
-an ideal candidate for stable tree backporting.
+**YES** This commit should be backported to stable kernel trees.
+**Extensive Analysis:** **1. Critical Bug Nature:** The code changes fix
+a serious logic error in the CSIB (Clear State Indirect Buffer) handling
+for AMD GFX8 hardware. The bug occurs in `gfx_v8_0_get_csb_buffer()`
+where there's an early `return` statement in the `else` branch at line
+1252: ```c if (sect->id == SECT_CONTEXT) { // Handle SECT_CONTEXT
+sections... } else { return; // BUG: Early exit prevents rest of buffer
+setup! } ``` **2. Impact and Severity:** This bug has significant
+functional impact because: - The function is responsible for setting up
+the Clear State Buffer, which is critical for GPU state initialization -
+When encountering any section that isn't `SECT_CONTEXT` (such as
+`SECT_CLEAR`, `SECT_CTRLCONST`, or `SECT_NONE` as defined in
+`clearstate_defs.h`), the function exits early - This prevents the
+essential final buffer setup steps from executing: - PA_SC_RASTER_CONFIG
+register setup (lines 1257-1261) - PACKET3_PREAMBLE_END_CLEAR_STATE
+packet (lines 1263-1264) - PACKET3_CLEAR_STATE packet (lines 1266-1267)
+**3. Real-World Consequences:** An incomplete CSB buffer can lead to: -
+GPU initialization failures - Rendering corruption - System instability
+- Potential hangs during graphics operations **4. Code Quality
+Assessment:** - **Small and contained:** The fix removes only 2 lines of
+problematic code - **No architectural changes:** Pure bug fix with no
+design modifications - **Clear intent:** The commit message explicitly
+states the problem and solution - **Low regression risk:** Removing an
+early return cannot introduce new failures **5. Comparison with
+Historical Examples:** This commit aligns perfectly with the "Backport
+Status: YES" example (#4) which also fixed a critical handling issue in
+AMD GPU code. Like that commit, this: - Fixes a clear functional bug -
+Has immediate user impact - Is small and low-risk - Affects critical GPU
+subsystem functionality **6. Stable Tree Compliance:** ✓ Fixes important
+user-affecting bug ✓ Small, contained change ✓ No new features
+introduced ✓ Critical hardware subsystem affected ✓ Clear regression
+prevention The fix ensures that all necessary GPU state initialization
+packets are properly written to the buffer, which is essential for
+correct hardware operation on GFX8 hardware generations.
 
- fs/jfs/jfs_dtree.c | 18 +++++++++++++++---
- 1 file changed, 15 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/gfx_v8_0.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/fs/jfs/jfs_dtree.c b/fs/jfs/jfs_dtree.c
-index 4666aee2e1f4b..93df5f3bb3bbb 100644
---- a/fs/jfs/jfs_dtree.c
-+++ b/fs/jfs/jfs_dtree.c
-@@ -2909,7 +2909,7 @@ void dtInitRoot(tid_t tid, struct inode *ip, u32 idotdot)
-  *	     fsck.jfs should really fix this, but it currently does not.
-  *	     Called from jfs_readdir when bad index is detected.
-  */
--static void add_missing_indices(struct inode *inode, s64 bn)
-+static int add_missing_indices(struct inode *inode, s64 bn)
- {
- 	struct ldtentry *d;
- 	struct dt_lock *dtlck;
-@@ -2918,7 +2918,7 @@ static void add_missing_indices(struct inode *inode, s64 bn)
- 	struct lv *lv;
- 	struct metapage *mp;
- 	dtpage_t *p;
--	int rc;
-+	int rc = 0;
- 	s8 *stbl;
- 	tid_t tid;
- 	struct tlock *tlck;
-@@ -2943,6 +2943,16 @@ static void add_missing_indices(struct inode *inode, s64 bn)
- 
- 	stbl = DT_GETSTBL(p);
- 	for (i = 0; i < p->header.nextindex; i++) {
-+		if (stbl[i] < 0) {
-+			jfs_err("jfs: add_missing_indices: Invalid stbl[%d] = %d for inode %ld, block = %lld",
-+				i, stbl[i], (long)inode->i_ino, (long long)bn);
-+			rc = -EIO;
-+
-+			DT_PUTPAGE(mp);
-+			txAbort(tid, 0);
-+			goto end;
-+		}
-+
- 		d = (struct ldtentry *) &p->slot[stbl[i]];
- 		index = le32_to_cpu(d->index);
- 		if ((index < 2) || (index >= JFS_IP(inode)->next_index)) {
-@@ -2960,6 +2970,7 @@ static void add_missing_indices(struct inode *inode, s64 bn)
- 	(void) txCommit(tid, 1, &inode, 0);
- end:
- 	txEnd(tid);
-+	return rc;
- }
- 
- /*
-@@ -3313,7 +3324,8 @@ int jfs_readdir(struct file *file, struct dir_context *ctx)
+diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v8_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v8_0.c
+index 467ed7fca884d..79347df0620d0 100644
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v8_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v8_0.c
+@@ -1267,8 +1267,6 @@ static void gfx_v8_0_get_csb_buffer(struct amdgpu_device *adev,
+ 						PACKET3_SET_CONTEXT_REG_START);
+ 				for (i = 0; i < ext->reg_count; i++)
+ 					buffer[count++] = cpu_to_le32(ext->extent[i]);
+-			} else {
+-				return;
+ 			}
  		}
- 
- 		if (fix_page) {
--			add_missing_indices(ip, bn);
-+			if ((rc = add_missing_indices(ip, bn)))
-+				goto out;
- 			page_fixed = 1;
- 		}
- 
+ 	}
 -- 
 2.39.5
 
