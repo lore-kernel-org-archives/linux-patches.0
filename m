@@ -1,43 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5795732BD18;
-	Sun,  1 Jun 2025 23:43:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B60C32BD15;
+	Sun,  1 Jun 2025 23:43:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748821397; cv=none; b=O8dh6hqmnthX9Bll78U5k0Ku+bZPZyDD7CLWZ5BbGTBT3t04vjSILIBLznQs9JOo90ZycgJZGPZv6xIp6Z5cspuheuon72QFOY2baYN2PbABq724ajkqeUruSzPeBTUMM2vFIMPkr5ZLMv7D6oT60jyhbLsNYX62aFe76m3SHh4=
+	t=1748821398; cv=none; b=RDQGyMvvOUL/St2LEqdtmmXmmL4efwk+naqhkYAftPilM2mh6/TddDpEhhuZ324VbK268RJtTdh6l9+n3RlVsf39IyTAYdCR5KNoFiBUgKUKAv4HLGXJ8Nl4e6WQUQ4vhtAZGbu8H4E8mz2v34/zRQ+PBcV0Wwno+R2YIav9jp8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748821397; c=relaxed/simple;
-	bh=cH5HsFOoMBk0XQmUmhORLHnRSswQ4L6RVz78cuOimz0=;
+	s=arc-20240116; t=1748821398; c=relaxed/simple;
+	bh=h3Ft2t6Dkg/2cQWC41aMGuz3WU+mBUcmJ0V6DWOESUU=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=ArGjSdCk+FM7ZCSnx1wddtagrztp2p9dAILQUqzSC4eGHAEa6IvL4OHi7+GUx+p5XjI9/4R5+bg3YnO8Qx2AoSSDZCSt31fP4F9a4+JJkVx2CdDoTw7mdAGno7CrDkaldWJKN035sS/wQJoX3+IMx/LIz4xC4T1CqAUo65PRQu8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Tu5SzdPp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=pa+UqGYajweR2TsbX7XH3SGvofiiHCOrQelKFnTlSmQbuaK+CvB4DVc7gPhVKvZh7wfLWWJ1fYimj7lrWb68i06kmfAn9J9ieJN8US3M+Wns5CZ+bmeV/FyGvKyIw1C0+TzmkiRPeFrFWkHWLxzn0/8AAkzf9zypuKFOaL4fuOM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qvG/WkCg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Tu5SzdPp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AD6EC4CEE7;
-	Sun,  1 Jun 2025 23:43:16 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qvG/WkCg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83D42C4CEF1;
+	Sun,  1 Jun 2025 23:43:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748821397;
-	bh=cH5HsFOoMBk0XQmUmhORLHnRSswQ4L6RVz78cuOimz0=;
+	s=k20201202; t=1748821393;
+	bh=h3Ft2t6Dkg/2cQWC41aMGuz3WU+mBUcmJ0V6DWOESUU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tu5SzdPpjqgPlPmvXTH4xqkukg37Qm5O4pRW0cHEGkbrIut2F//NQtfjJxwRESqYz
-	 dDyFt4e0a2BWQhWbtVva2UB0hLB6iaM2Fdepv9jRkidbSpRbnuKs6fOwtzZvqPjuhu
-	 asA6frUXl1qUb7uzm1S+C0wBTSeCrLFINs6zCHGFYaCpcNWSuBIAUTwbfww/Z9Wepc
-	 z9UEwoMmEI5e/7Bqyf9JckorPdQvq1A7fhmtCKIJw/su31beQjt1l8hgfmSRHnAsYg
-	 8VDi6sXKm+e/XVRl8LuLTfOOsrURyNTQ62lLTe1ORCnxwEYBQyl7q8Y2Ivouu1de0u
-	 NlQ/nflsObuxQ==
+	b=qvG/WkCg+JgLCwJ28YvJYYJ86vY1csbLPgwFSMz5sUQVBfv9Mj7Sl6I8dNRee64oZ
+	 MTfoviltz/iRlMDoQMef8kITUgQgIhNtyP/czy/JguwBmpcPlTdynue8DrPVwYSzfM
+	 4eNT4T1ej1L5c5sIsUcBblC+fezLgiGOkbKkvrTpnjfd8pwa0XvrLiyg4SFNzqACDj
+	 dLP3oOeBGm1bRpPd16vv7zZYGqUqAvr+uMnwcXeCTzCQT5HZ/sSXK3KUjwoxJnyIAN
+	 rJJ5vyxuE0yavO0K9mpJE9biAToWjYzlEqm1TBSBx4EUf8rRN8ZUXWr+QhAjEWkylD
+	 +wDD+6+jLY9uQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Zhang Yi <yi.zhang@huawei.com>,
-	Theodore Ts'o <tytso@mit.edu>,
+Cc: Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>,
-	adilger.kernel@dilger.ca,
-	linux-ext4@vger.kernel.org,
+	ezequiel@vanguardiasur.com.ar,
+	mchehab@kernel.org,
+	gregkh@linuxfoundation.org,
+	linux-media@vger.kernel.org,
+	linux-rockchip@lists.infradead.org,
+	linux-staging@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.15 23/43] ext4: prevent stale extent cache entries caused by concurrent get es_cache
-Date: Sun,  1 Jun 2025 19:42:03 -0400
-Message-Id: <20250601234224.3517599-23-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.15 21/43] media: rkvdec: Initialize the m2m context before the controls
+Date: Sun,  1 Jun 2025 19:42:01 -0400
+Message-Id: <20250601234224.3517599-21-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250601234224.3517599-1-sashal@kernel.org>
 References: <20250601234224.3517599-1-sashal@kernel.org>
@@ -50,128 +54,102 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 5.15.184
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Yi <yi.zhang@huawei.com>
+From: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 
-[ Upstream commit f22a0ef2231a7d8374bb021eb86404d0e9de5a02 ]
+[ Upstream commit d43d7db3c8a1868dcbc6cb8de90a3cdf309d6cbb ]
 
-The EXT4_IOC_GET_ES_CACHE and EXT4_IOC_PRECACHE_EXTENTS currently
-invokes ext4_ext_precache() to preload the extent cache without holding
-the inode's i_rwsem. This can result in stale extent cache entries when
-competing with operations such as ext4_collapse_range() which calls
-ext4_ext_remove_space() or ext4_ext_shift_extents().
+Setting up the control handler calls into .s_ctrl ops. While validating
+the controls the ops may need to access some of the context state, which
+could lead to a crash if not properly initialized.
 
-The problem arises when ext4_ext_remove_space() temporarily releases
-i_data_sem due to insufficient journal credits. During this interval, a
-concurrent EXT4_IOC_GET_ES_CACHE or EXT4_IOC_PRECACHE_EXTENTS may cache
-extent entries that are about to be deleted. As a result, these cached
-entries become stale and inconsistent with the actual extents.
-
-Loading the extents cache without holding the inode's i_rwsem or the
-mapping's invalidate_lock is not permitted besides during the writeback.
-Fix this by holding the i_rwsem during EXT4_IOC_GET_ES_CACHE and
-EXT4_IOC_PRECACHE_EXTENTS.
-
-Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
-Link: https://patch.msgid.link/20250423085257.122685-6-yi.zhang@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Based on my comprehensive analysis of this commit and comparison with
-the historical similar commits, here is my assessment: **YES** This
-commit should be backported to stable kernel trees for the following
-reasons: ## Analysis Summary ### **Type of Bug Fix** This commit
-addresses a **race condition** that can lead to **stale extent cache
-entries** in the ext4 filesystem. The race occurs between: 1.
-`EXT4_IOC_GET_ES_CACHE` and `EXT4_IOC_PRECACHE_EXTENTS` operations 2.
-Concurrent `ext4_collapse_range()` operations that call
-`ext4_ext_remove_space()` or `ext4_ext_shift_extents()` ### **Technical
-Details of the Race** The problem stems from the fact that
-`ext4_ext_remove_space()` temporarily releases `i_data_sem` when journal
-credits are insufficient. During this critical window: - The extent
-precaching operations (`ext4_ext_precache()`) can cache extent entries -
-These cached entries are about to be deleted by the ongoing
-collapse/shift operation - Result: **stale, inconsistent extent cache
-entries** ### **Code Changes Analysis** The fix is **minimal and
-surgical**: **In `fs/ext4/extents.c` (ext4_get_es_cache function):**
-```c if (fieinfo->fi_flags & FIEMAP_FLAG_CACHE) { +
-inode_lock_shared(inode); error = ext4_ext_precache(inode); +
-inode_unlock_shared(inode); if (error) return error; ``` **In
-`fs/ext4/ioctl.c` (EXT4_IOC_PRECACHE_EXTENTS case):** ```c case
-EXT4_IOC_PRECACHE_EXTENTS: - return ext4_ext_precache(inode); +{ + int
-ret; + + inode_lock_shared(inode); + ret = ext4_ext_precache(inode); +
-inode_unlock_shared(inode); + return ret; +} ``` ### **Why This
-Qualifies for Backporting** 1. **Important Bug Fix**: Stale extent cache
-entries can lead to filesystem inconsistencies and potential data
-corruption scenarios. 2. **Minimal Risk**: The changes are extremely
-small and contained: - Only adds proper locking around existing
-operations - Uses shared locking (`inode_lock_shared`) which allows
-concurrent readers - No algorithmic changes or new features 3. **Follows
-Established Patterns**: Similar commits in the repository (marked with
-"Backport Status: YES") show this pattern: - Similar commit #2: "ext4:
-fix data races when using cached status extents" - also deals with
-extent cache consistency - Similar commit #3: "ext4: convert to
-exclusive lock while inserting delalloc extents" - addresses similar
-race conditions with proper locking - Similar commit #4: "ext4: do not
-polute the extents cache while shifting extents" - prevents extent cache
-corruption during shift operations 4. **Clear Impact**: The commit
-message explicitly states this prevents "stale extent cache entries"
-which can cause inconsistency with actual extents. 5. **Contained to
-Subsystem**: Changes are limited to ext4 extent management and don't
-affect other kernel subsystems. 6. **Stable Backport Indicators**: - No
-"Cc: stable@" tag is present, but the nature of the fix (race condition
-leading to corruption) makes it a good candidate - The fix follows
-ext4's established locking protocol requirements - Multiple similar
-extent cache race condition fixes have been backported ### **Risk
-Assessment** - **Very Low Regression Risk**: Only adds locking
-protection, doesn't change functional behavior - **Well-understood
-Fix**: The locking pattern matches established ext4 conventions -
-**Limited Scope**: Only affects two specific ioctl code paths This
-commit represents exactly the type of fix that stable trees are meant
-for: a small, safe fix for a real bug that can cause filesystem
-corruption without introducing new functionality or architectural
-changes.
+Now let me analyze the specific changes proposed in the commit: ##
+Analysis **YES** This commit should be backported to stable kernel
+trees. Here's my extensive analysis: ### Core Issue Analysis The commit
+addresses a critical initialization order bug that can lead to crashes.
+The problem occurs in the `rkvdec_open()` function at lines 822-830 in
+the current code: 1. **Current problematic order:** - Line 822:
+`rkvdec_init_ctrls(ctx)` is called first - Line 826-830:
+`v4l2_m2m_ctx_init()` is called second 2. **The problem:** According to
+the commit message and my analysis of the kernel documentation,
+`v4l2_ctrl_handler_setup()` (called inside `rkvdec_init_ctrls()`) calls
+`.s_ctrl` for all controls unconditionally to initialize hardware to
+default values. The `.s_ctrl` handlers may need to access the m2m
+context state, but if the m2m context (`ctx->fh.m2m_ctx`) isn't
+initialized yet, this can cause a crash or undefined behavior. ### Code
+Changes Analysis The fix is minimal and surgical: - **Lines moved:** The
+initialization order is swapped - m2m context initialization moves
+before control handler setup - **Error handling updated:** The error
+handling paths are correctly updated to match the new initialization
+order - **No functional changes:** The fix doesn't change driver
+functionality, only initialization sequence ### Why This Should Be
+Backported 1. **Fixes a real crash bug:** This addresses a potential
+crash scenario that affects users 2. **Small and contained:** The change
+is minimal - just reordering initialization and updating error paths 3.
+**Low regression risk:** Moving m2m init before control init is safer
+since m2m context doesn't depend on controls, but controls may depend on
+m2m context 4. **Follows established patterns:** Similar commit #2 in
+the historical examples shows a "YES" backport for proper initialization
+order in V4L2 drivers 5. **Critical subsystem:** Media drivers crashing
+can affect user applications ### Comparison with Historical Commits -
+**Similar to commit #2 (YES):** Also fixes initialization order in V4L2
+media driver to prevent crashes - **Similar to commit #4 (YES):** Media
+driver fix that's low-risk and contained - **Unlike commits #1, #3, #5
+(NO):** This actually fixes a bug rather than just cleanup/code style
+improvements ### Stable Tree Criteria Met ✅ **Important bugfix:**
+Prevents crashes ✅ **Minimal risk:** Simple reordering with no side
+effects ✅ **Small change:** Only affects initialization sequence ✅ **No
+architectural changes:** Pure bug fix ✅ **Confined to subsystem:** Only
+affects rkvdec driver The fix follows the stable tree rules perfectly -
+it's an important crash prevention fix with minimal regression risk,
+making it an ideal backport candidate.
 
- fs/ext4/extents.c | 2 ++
- fs/ext4/ioctl.c   | 8 +++++++-
- 2 files changed, 9 insertions(+), 1 deletion(-)
+ drivers/staging/media/rkvdec/rkvdec.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/fs/ext4/extents.c b/fs/ext4/extents.c
-index b9bbe4dbedf4f..4c55789d1a558 100644
---- a/fs/ext4/extents.c
-+++ b/fs/ext4/extents.c
-@@ -5045,7 +5045,9 @@ int ext4_get_es_cache(struct inode *inode, struct fiemap_extent_info *fieinfo,
+diff --git a/drivers/staging/media/rkvdec/rkvdec.c b/drivers/staging/media/rkvdec/rkvdec.c
+index 29b68a13674ee..0c763b4af3322 100644
+--- a/drivers/staging/media/rkvdec/rkvdec.c
++++ b/drivers/staging/media/rkvdec/rkvdec.c
+@@ -788,24 +788,24 @@ static int rkvdec_open(struct file *filp)
+ 	rkvdec_reset_decoded_fmt(ctx);
+ 	v4l2_fh_init(&ctx->fh, video_devdata(filp));
+ 
+-	ret = rkvdec_init_ctrls(ctx);
+-	if (ret)
+-		goto err_free_ctx;
+-
+ 	ctx->fh.m2m_ctx = v4l2_m2m_ctx_init(rkvdec->m2m_dev, ctx,
+ 					    rkvdec_queue_init);
+ 	if (IS_ERR(ctx->fh.m2m_ctx)) {
+ 		ret = PTR_ERR(ctx->fh.m2m_ctx);
+-		goto err_cleanup_ctrls;
++		goto err_free_ctx;
  	}
  
- 	if (fieinfo->fi_flags & FIEMAP_FLAG_CACHE) {
-+		inode_lock_shared(inode);
- 		error = ext4_ext_precache(inode);
-+		inode_unlock_shared(inode);
- 		if (error)
- 			return error;
- 		fieinfo->fi_flags &= ~FIEMAP_FLAG_CACHE;
-diff --git a/fs/ext4/ioctl.c b/fs/ext4/ioctl.c
-index 18002b0a908ce..bd90b454c6213 100644
---- a/fs/ext4/ioctl.c
-+++ b/fs/ext4/ioctl.c
-@@ -1130,8 +1130,14 @@ static long __ext4_ioctl(struct file *filp, unsigned int cmd, unsigned long arg)
- 		return 0;
- 	}
- 	case EXT4_IOC_PRECACHE_EXTENTS:
--		return ext4_ext_precache(inode);
-+	{
-+		int ret;
++	ret = rkvdec_init_ctrls(ctx);
++	if (ret)
++		goto err_cleanup_m2m_ctx;
++
+ 	filp->private_data = &ctx->fh;
+ 	v4l2_fh_add(&ctx->fh);
  
-+		inode_lock_shared(inode);
-+		ret = ext4_ext_precache(inode);
-+		inode_unlock_shared(inode);
-+		return ret;
-+	}
- 	case FS_IOC_SET_ENCRYPTION_POLICY:
- 		if (!ext4_has_feature_encrypt(sb))
- 			return -EOPNOTSUPP;
+ 	return 0;
+ 
+-err_cleanup_ctrls:
+-	v4l2_ctrl_handler_free(&ctx->ctrl_hdl);
++err_cleanup_m2m_ctx:
++	v4l2_m2m_ctx_release(ctx->fh.m2m_ctx);
+ 
+ err_free_ctx:
+ 	kfree(ctx);
 -- 
 2.39.5
 
