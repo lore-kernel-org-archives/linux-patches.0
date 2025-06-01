@@ -1,51 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39380328E77;
-	Sun,  1 Jun 2025 23:42:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A22372BD312;
+	Sun,  1 Jun 2025 23:42:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748821373; cv=none; b=scB8LKQdC5bblba6Ypk7evjw7MygyQizRO9kBl+VFz9uEfNIZ0dGVF0/OExMTvDY6h4zKAi9fvZyEkzm4Vj6BTIRh9PesGPJ7dA/Rk9OFqU7HtSz4KoXxIMrAsbtxg8BhWpM4UNRduGNxKBp4AIUzP3E+AhpCi8cNa6qQxfDx/8=
+	t=1748821374; cv=none; b=NNl+p0QxMgyEBQH+DVX7QuZuH0BqFEcs/t+YVhmqDt8XnylS2goJyURDKCexk+0kCbKIauf6rFadqAzUKJhasseOgdXTbph/IGiGQ4ONemROVJWTMBE1yv2xiIOWwHgmsKwcXC/I9OE1iZBToWhlgahLmfwMbMoq50sEZlGpgnk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748821373; c=relaxed/simple;
-	bh=Wk9huzNtKxrghZ5TB9fm1WP8v/xhpkShjbwMAFGIO3Y=;
+	s=arc-20240116; t=1748821374; c=relaxed/simple;
+	bh=izvMzs+0Ffyxl0wJNeiQeI9uo5d2xCTUdG2LEFZDhJk=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=jPbxgQUbBhwPbGUN0izDHJ/8I+tX8CK2tQFgrGysoXCtE9WtmEn6ilKoxBqVZaaUq951IZfilQPfMhVUvZw4bz7pviTOFEe1iwzAoQj8pjxHP1cYfHwB/ssrMXNt2SKmbRJjTNnEutjTzcjklAYA1cZfiOT4gJiZ3EsMbfAFqwk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mk3crJUv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=t6SAmRuj4HGP2BlZO5Y6coWMfyyeI/mVCPbaDQ62bygwwrLatMVIRBy8S1TWSj6JYLghi5r7+btV/svT82QxROefo+CBmzoCftDmCdME43Qccb9ocDlsKbTJLV6TkLgtwOB9eMqbZYe52zpnBIlF45TUp8C7oWx7ymQ1HKxx+bo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=M3iSliEK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mk3crJUv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A6B4C4CEE7;
-	Sun,  1 Jun 2025 23:42:51 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="M3iSliEK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F597C4CEEE;
+	Sun,  1 Jun 2025 23:42:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748821373;
-	bh=Wk9huzNtKxrghZ5TB9fm1WP8v/xhpkShjbwMAFGIO3Y=;
+	s=k20201202; t=1748821374;
+	bh=izvMzs+0Ffyxl0wJNeiQeI9uo5d2xCTUdG2LEFZDhJk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mk3crJUv6o0ur2hdpziijzDmfMhOmGFVbxP+wN8OLjDRoJnLaav7se3+girDM4M5+
-	 QyNkwf3TcoIMyvtzlogjPcdifppeRHipZ+OkBJIOpWFGr/envFqaIO0jWk2+qc7zqG
-	 e+iUw70SxhWSR2nOW4omwr7cLoOR6UmhYVHoEx65rCzbk4FTLKj9Q5dCnchBhHu7ut
-	 INYR8QQnm4YDwxK4YWlGiNq1JpSZmMCFjppg+in8ZNuKMYSFaNFwz46qBUYbxd+PwT
-	 cR0UWfvXNMIw59W4bS1mEl6jjeHGlonOpYcajxctA5K5FeFHDiKpkNfWH/cH45q9Ah
-	 exazTYFT5fL8g==
+	b=M3iSliEKNlXkEPguD01n2w3hyrET9JVZPmsnDQORXS9uWaT/huVvIA6a8XCKC/pQq
+	 Wzmh5OMveEs8lw5rCdSgz0DY61srUiIeg4Sd8rZUDhCCHIhFXMti9vFaNRRPdjMgl9
+	 7fpLp94wx6SoMk/BEVW+IH0QUGALg3IHOZWkw0MVauRKzyDhWJ/eGC1XReLxLUV0e/
+	 THjiGjfqaov1Lb7qpa6BXg0OW7hqo14/+uS4+q2V9N6qV7jwlMxjj+3RD6ve5OIA1x
+	 5aJ+43KZJp4O7fAtwa1jOFS3s0dFn86kG895yx/aCaMAOH5yUn2HZ1mmNx2N44vgrq
+	 10K96wjjfGtog==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Akhil P Oommen <quic_akhilpo@quicinc.com>,
-	Maya Matuszczyk <maccraft123mc@gmail.com>,
-	Anthony Ruhier <aruhier@mailbox.org>,
-	Rob Clark <robdclark@chromium.org>,
+Cc: Tarang Raval <tarang.raval@siliconsignals.io>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>,
-	robdclark@gmail.com,
-	quic_abhinavk@quicinc.com,
-	lumag@kernel.org,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	linux-arm-msm@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org,
+	mchehab@kernel.org,
+	linux-media@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.15 11/43] drm/msm/a6xx: Increase HFI response timeout
-Date: Sun,  1 Jun 2025 19:41:51 -0400
-Message-Id: <20250601234224.3517599-11-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.15 12/43] media: i2c: imx334: Fix runtime PM handling in remove function
+Date: Sun,  1 Jun 2025 19:41:52 -0400
+Message-Id: <20250601234224.3517599-12-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250601234224.3517599-1-sashal@kernel.org>
 References: <20250601234224.3517599-1-sashal@kernel.org>
@@ -58,96 +51,100 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 5.15.184
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Akhil P Oommen <quic_akhilpo@quicinc.com>
+From: Tarang Raval <tarang.raval@siliconsignals.io>
 
-[ Upstream commit 5f02f5e78ec9688e29b6857813185b1181796abe ]
+[ Upstream commit b493cd3c03641f9bbaa9787e43ca92163cb50051 ]
 
-When ACD feature is enabled, it triggers some internal calibrations
-which result in a pretty long delay during the first HFI perf vote.
-So, increase the HFI response timeout to match the downstream driver.
+pm_runtime_suspended() only checks the current runtime PM status and does
+not modify it, making it ineffective in this context. This could result in
+improper power management if the device remains active when removed.
 
-Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
-Tested-by: Maya Matuszczyk <maccraft123mc@gmail.com>
-Tested-by: Anthony Ruhier <aruhier@mailbox.org>
-Patchwork: https://patchwork.freedesktop.org/patch/649344/
-Signed-off-by: Rob Clark <robdclark@chromium.org>
+This patch fixes the issue by introducing a check with
+pm_runtime_status_suspended() to determine if the device is already
+suspended. If it is not, it calls imx334_power_off() to power down the
+device and then uses pm_runtime_set_suspended() to correctly update the
+runtime PM status to suspended.
+
+Signed-off-by: Tarang Raval <tarang.raval@siliconsignals.io>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-The environment variable is not set. Based on the commit information
-provided, I can analyze this commit without needing to examine the
-actual file in the repository. **Analysis of the commit:** **Subject:**
-drm/msm/a6xx: Increase HFI response timeout **Commit Message Analysis:**
-The commit message clearly explains that when the ACD (Adaptive Clock
-Distribution) feature is enabled, it triggers internal calibrations that
-cause significant delays during the first HFI performance vote. The
-solution is to increase the timeout to match what the downstream driver
-uses. **Code Changes Analysis:** The change is very simple and
-contained: - File: `drivers/gpu/drm/msm/adreno/a6xx_hfi.c` - Location:
-Line ~109 in the `a6xx_hfi_wait_for_msg_interrupt()` function - Change:
-Timeout increased from `5000` microseconds (5ms) to `1000000`
-microseconds (1000ms = 1 second) - The change is in the
-`gmu_poll_timeout()` call where it waits for
-`A6XX_GMU_GMU2HOST_INTR_INFO_MSGQ` **Comparing to Similar Commits:**
-Looking at the historical similar commits provided, I notice all 5
-similar commits were marked as "Backport Status: NO" but they all
-involved timeout increases in GPU drivers: 1. HFI v2 for A640/A650 -
-architectural changes (NO) 2. HFI polling changes - architectural
-changes (NO) 3. MES submission timeout increase - timeout adjustment
-(NO) 4. SMU message timeout increase - timeout adjustment (NO) 5.
-Register polling robustness - polling improvement (NO) However, commits
-#3, #4, and #5 are very similar to this current commit - they all
-increase timeouts to fix real-world issues, yet were marked NO.
-**Backport Assessment:** **YES** **Extensive Explanation:** This commit
-should be backported to stable kernel trees for the following reasons:
-1. **Fixes Real User-Affecting Bug**: The commit addresses a concrete
-timeout issue that occurs when ACD feature is enabled, causing HFI
-communication to fail during the first performance vote. This would
-manifest as GPU initialization failures or performance issues for users
-with affected hardware. 2. **Small, Contained Change**: The fix is
-minimal - just changing a single timeout value from 5ms to 1000ms in one
-location (`drivers/gpu/drm/msm/adreno/a6xx_hfi.c:109`). There are no
-algorithmic changes, no new features, and no architectural
-modifications. 3. **Low Regression Risk**: Increasing a timeout value
-has minimal risk of introducing regressions. The worst case scenario is
-slightly longer waits during error conditions, but normal operation is
-unaffected. The new timeout (1000ms) aligns with the downstream driver,
-providing validation. 4. **Critical Subsystem**: GPU functionality is
-essential for modern systems, and timeouts that are too short can cause
-complete GPU failure on affected hardware configurations. 5. **Hardware-
-Specific Fix**: The commit specifically addresses the ACD feature's
-internal calibration delays. This is a hardware-imposed timing
-requirement, not a software design choice, making the timeout increase
-necessary rather than optional. 6. **Follows Stable Rules**: This meets
-the stable tree criteria of being an important bugfix with minimal risk
-that doesn't introduce new features or make architectural changes. 7.
-**Clear Justification**: The commit message provides clear technical
-justification - ACD calibrations take longer than the original 5ms
-timeout, and the fix aligns with proven downstream implementation. While
-the similar historical commits were marked NO, those involved more
-complex changes (architectural modifications, polling method changes, or
-broader system impacts). This commit is purely a timeout adjustment to
-accommodate hardware timing requirements, making it a suitable candidate
-for stable backporting.
+**YES** This commit should **definitely** be backported to stable kernel
+trees. Here's my extensive analysis: ## Bug Analysis **The Core Issue**:
+Line 1435 in the current `imx334_remove()` function contains a critical
+bug: ```c pm_runtime_suspended(&client->dev); // WRONG - this is a
+boolean query function ``` This should be: ```c
+pm_runtime_set_suspended(&client->dev); // CORRECT - this sets the PM
+state ``` ## Evidence from Code Analysis 1. **Function Signature
+Mismatch**: - `pm_runtime_suspended()` returns `bool` and only
+**queries** the current state - `pm_runtime_set_suspended()` returns
+`void` and **modifies** the runtime PM state 2. **Comparison with
+Similar Drivers**: Every other IMX sensor driver in the kernel uses the
+correct pattern: - **imx290.c**:
+`pm_runtime_set_suspended(imx290->dev);` - **imx258.c**:
+`pm_runtime_set_suspended(&client->dev);` - **imx412.c**:
+`pm_runtime_set_suspended(&client->dev);` - **imx274.c**:
+`pm_runtime_set_suspended(&client->dev);` - **imx415.c**:
+`pm_runtime_set_suspended(&client->dev);` 3. **Missing Power
+Management**: The current imx334 driver fails to ensure the device is
+powered off during removal, unlike the established pattern: ```c if
+(!pm_runtime_status_suspended(&client->dev)) {
+imx334_power_off(&client->dev); pm_runtime_set_suspended(&client->dev);
+} ``` ## Impact Assessment **Why This Is Critical for Stable
+Backporting**: 1. **Resource Leaks**: If the device is powered on during
+removal, the clock (`imx334->inclk`) and GPIO resources may not be
+properly released, leading to resource leaks. 2. **Runtime PM State
+Corruption**: The kernel's runtime PM subsystem maintains internal state
+that becomes inconsistent when `pm_runtime_suspended()` is called
+instead of `pm_runtime_set_suspended()`. 3. **Driver Reload Issues**: If
+the driver is unloaded and reloaded, the inconsistent PM state can cause
+subsequent power management operations to fail. 4. **System Power
+Management**: Improper PM cleanup can affect system-wide power
+management, potentially preventing proper suspend/resume cycles. ##
+Stable Tree Suitability Criteria ✅ **Fixes a clear bug**: Yes - wrong
+function call causing runtime PM state corruption ✅ **Small and
+contained**: Yes - 3-line change in one function ✅ **Minimal regression
+risk**: Yes - follows established patterns from other drivers ✅
+**Important bugfix**: Yes - affects device cleanup and system stability
+✅ **No architectural changes**: Yes - simple correction to existing code
+✅ **Follows similar pattern**: Yes - matches Similar Commit #2 which was
+marked "YES" ## Comparison with Similar Commits This commit closely
+matches **Similar Commit #2** (CCS driver runtime PM fix) which was
+marked for backporting because it: - Fixed runtime PM status handling in
+remove function - Had minimal risk and clear benefit - Followed
+established patterns The commit is much more suitable than **Similar
+Commits #1, #3, #4, #5** which were marked "NO" because they involved: -
+Code cleanup/refactoring (#1) - Redundant code removal (#3) - Complex
+error handling changes (#4) - Major feature additions (#5) ## Conclusion
+This is a textbook example of a stable tree candidate: it fixes a clear,
+impactful bug with minimal code change and follows well-established
+patterns. The fix prevents resource leaks and runtime PM state
+corruption that can affect system stability.
 
- drivers/gpu/drm/msm/adreno/a6xx_hfi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/i2c/imx334.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_hfi.c b/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
-index d4c65bf0a1b7f..a40ad74877623 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
-@@ -102,7 +102,7 @@ static int a6xx_hfi_wait_for_ack(struct a6xx_gmu *gmu, u32 id, u32 seqnum,
+diff --git a/drivers/media/i2c/imx334.c b/drivers/media/i2c/imx334.c
+index 57b7416bbfab3..af09aafeddf78 100644
+--- a/drivers/media/i2c/imx334.c
++++ b/drivers/media/i2c/imx334.c
+@@ -1102,7 +1102,10 @@ static int imx334_remove(struct i2c_client *client)
+ 	v4l2_ctrl_handler_free(sd->ctrl_handler);
  
- 	/* Wait for a response */
- 	ret = gmu_poll_timeout(gmu, REG_A6XX_GMU_GMU2HOST_INTR_INFO, val,
--		val & A6XX_GMU_GMU2HOST_INTR_INFO_MSGQ, 100, 5000);
-+		val & A6XX_GMU_GMU2HOST_INTR_INFO_MSGQ, 100, 1000000);
+ 	pm_runtime_disable(&client->dev);
+-	pm_runtime_suspended(&client->dev);
++	if (!pm_runtime_status_suspended(&client->dev)) {
++		imx334_power_off(&client->dev);
++		pm_runtime_set_suspended(&client->dev);
++	}
  
- 	if (ret) {
- 		DRM_DEV_ERROR(gmu->dev,
+ 	mutex_destroy(&imx334->mutex);
+ 
 -- 
 2.39.5
 
