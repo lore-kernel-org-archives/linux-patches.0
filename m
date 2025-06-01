@@ -1,64 +1,53 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7082126988A;
-	Sun,  1 Jun 2025 23:35:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B39A72D4B78;
+	Sun,  1 Jun 2025 23:35:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748820957; cv=none; b=E74pv51xG4gd6Uk/G+dAFYUBlZysoGGikOd7UmL/WWCfoLbcB5wFOSbQui6MwtzkE2t+be2jZnBEqizDdVsMn5nlpLQGMMgipdnZr9NTwYkFCUR3Mt9PbqFmNN7472icPTsi1u3F7WNB2LgZxc2lOaG+HqI8aKJkgLW47iha5hM=
+	t=1748820959; cv=none; b=gYtJ+jNaK4kv7xl7HJLsxBDp0n4z7k0i4oo54J0PLqCYl/NwR+BtULamHsOSH0+29V9DpdP524bk7WilIOJBLIq62p9GrjCCzdxDJAEiHFDDJ8p2epUEHpc8cCr/GuUEr5xIe882QD4f0HF9Mal3w+HNbnegruRCENuqA72Hj4k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748820957; c=relaxed/simple;
-	bh=SlX4GW8y0lubyLET+n2aELuOmXkESx75eHr/WmpnBlk=;
+	s=arc-20240116; t=1748820959; c=relaxed/simple;
+	bh=dt8kPgWDpFu2sSg07IECaKF33MJ/jwpv24xF5OlDrII=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=U1Jesqqj00D5rL6LgxOdr8XyRNTx2yysZSFmdXjwDfUBh/myg9QhK4sSFE/ugFEnv+rCQndwnXBIaxutccfvxeOL4vT0WMLyV7wXrSoUp+5q20Y4ZFL1pjzStc/wVws5oeRcdQ6RCUYDjcfPN+LCOo2kAB2qenj+Oy9RiPwhawI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tikMusc8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rNHPjmF4mSmsXVrpIWvkCNYU/ppsBfzkPCdnR6C8gm/cyCPS9Q5m6ua/dbmCdc4gtjTgE3w9H9IAdKXCX2ORM7l9gqw4ZwTq394sQhPZIyIvfVfQFzZiZ3chZIzn+ltucaqVzW6/gdzGDB5mikIC8wnGP2okdoMm7kMu0O62Alw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=epGJlrNt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tikMusc8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E347C4CEE7;
-	Sun,  1 Jun 2025 23:35:54 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="epGJlrNt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6B69C4CEE7;
+	Sun,  1 Jun 2025 23:35:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748820957;
-	bh=SlX4GW8y0lubyLET+n2aELuOmXkESx75eHr/WmpnBlk=;
+	s=k20201202; t=1748820959;
+	bh=dt8kPgWDpFu2sSg07IECaKF33MJ/jwpv24xF5OlDrII=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tikMusc8xMxOgK6GmxilfU2+EjEz3DT/yDgBpLiUA8X6Mntvsp0spWszveYUctRDS
-	 f1qVU/e++nq7VefnIE+OrvsgMN6zQ1pd+FRieIUvohJw+GwMXohe7xw+FhHtoqeSCJ
-	 HqeYAY5His8rvwBrtO7gxDfqBBl46nS+mJMrG7tThJxlvw1fQJc7VrmRK6s0yWXoDp
-	 VXnmzirfTFO/HE14n4y3t1pvUD7lQFoAdUfXSBE9uMNwVqevQCphZ4sIj5yAvur4lx
-	 K9OYtY+ksDjkIA6W/YyJmNs+cbGcgilUZOcCn8RkFMHPgT8HAEwe+su6OASVa2lm5E
-	 cRi3mIne8yWRw==
+	b=epGJlrNtKhKIcSTtI8cqt8YALfJr5978EHciwqZYLULaGePSlYKqOSAgdCr6rljjd
+	 63ShEDibjhTHBRM+qKphYxB/96mmwJQtGKYAJAf39tZN/KyTjzwVU0wxRxEhOBrcYp
+	 INmbnSHdVsQK81XZd12bdBThxoPjYMeIJ+xUslZSOIOg3QJcjdKuSeCmIilDPaSwTz
+	 iTYIaSjIzWtMqjecag3ghbGUkqFLFF064WuON2K9dVWrRL9kdypjmAf+b6//dfEK9h
+	 PJYA8Y7hDP5YGb1wdjJF/arZRnExL/j8/wSO+SJnh5+yyVPrwplPzuEvVjQ7GX+6cK
+	 bTO5/DOnpzE6g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Kevin Gao <kevin.gao3@amd.com>,
-	Charlene Liu <charlene.liu@amd.com>,
-	Roman Li <roman.li@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: Jonas Karlman <jonas@kwiboo.se>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Christopher Obbard <chris.obbard@collabora.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>,
-	harry.wentland@amd.com,
-	sunpeng.li@amd.com,
-	christian.koenig@amd.com,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	Charlene.Liu@amd.com,
-	martin.leung@amd.com,
-	nicholas.kazlauskas@amd.com,
-	zaeem.mohamed@amd.com,
-	chiahsuan.chung@amd.com,
-	alex.hung@amd.com,
-	Ausef.Yousof@amd.com,
-	Nicholas.Susanto@amd.com,
-	sungjoon.kim@amd.com,
-	PeiChen.Huang@amd.com,
-	alvin.lee2@amd.com,
-	dillon.varone@amd.com,
-	ryanseto@amd.com,
-	amd-gfx@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.12 44/93] drm/amd/display: Correct SSC enable detection for DCN351
-Date: Sun,  1 Jun 2025 19:33:11 -0400
-Message-Id: <20250601233402.3512823-44-sashal@kernel.org>
+	ezequiel@vanguardiasur.com.ar,
+	mchehab@kernel.org,
+	gregkh@linuxfoundation.org,
+	matthias.bgg@gmail.com,
+	angelogioacchino.delregno@collabora.com,
+	linux-media@vger.kernel.org,
+	linux-rockchip@lists.infradead.org,
+	linux-staging@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-mediatek@lists.infradead.org
+Subject: [PATCH AUTOSEL 6.12 45/93] media: rkvdec: h264: Use bytesperline and buffer height as virstride
+Date: Sun,  1 Jun 2025 19:33:12 -0400
+Message-Id: <20250601233402.3512823-45-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250601233402.3512823-1-sashal@kernel.org>
 References: <20250601233402.3512823-1-sashal@kernel.org>
@@ -71,144 +60,111 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.12.31
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kevin Gao <kevin.gao3@amd.com>
+From: Jonas Karlman <jonas@kwiboo.se>
 
-[ Upstream commit d01a7306e1bec9c02268793f58144e3e42695bf0 ]
+[ Upstream commit d5e0aa61470c48ddc04d433a00e79cef8716377a ]
 
-[Why]
-Due to very small clock register delta between DCN35 and DCN351, clock
-spread is being checked on the wrong register for DCN351, causing the
-display driver to believe that DPREFCLK downspread to be disabled when
-in some stacks it is enabled. This causes the clock values for audio to
-be incorrect.
+Use bytesperline and buffer height to calculate the strides configured.
 
-[How]
-Both DCN351 and DCN35 use the same clk_mgr, so we modify the DCN35
-function that checks for SSC enable to read CLK6 instead of CLK5 when
-using DCN351. This allows us to read for DPREFCLK downspread correctly
-so the clock can properly compensate when setting values.
+This does not really change anything other than ensuring the
+bytesperline that is signaled to userspace matches what is configured
+in HW.
 
-Reviewed-by: Charlene Liu <charlene.liu@amd.com>
-Signed-off-by: Kevin Gao <kevin.gao3@amd.com>
-Signed-off-by: Roman Li <roman.li@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Jonas Karlman <jonas@kwiboo.se>
+Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Tested-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Tested-by: Christopher Obbard <chris.obbard@collabora.com>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-**YES** This commit should be backported to stable kernel trees. Here's
-my detailed analysis: ## Bug Fix Classification This is a clear bug fix
-that addresses incorrect register reading for SSC (Spread Spectrum
-Clock) detection in DCN351. The commit fixes a fundamental hardware
-register access issue that causes incorrect audio clock values. ## Issue
-Severity The bug has significant functional impact: - **Audio
-functionality broken**: Incorrect clock values cause audio issues when
-DPREFCLK downspread is enabled - **Hardware-specific regression**:
-Affects DCN351 specifically due to register differences from DCN35 -
-**Silent failure**: The driver believes downspread is disabled when it's
-actually enabled, causing subtle but important timing issues ## Code
-Analysis The fix is minimal and targeted: 1. **New register
-definition**: Adds `mmCLK6_spll_field_8` for DCN351 in
-`dcn351_clk_mgr.c` 2. **Conditional logic**: In `dcn35_clk_mgr.c`, adds
-a DCN version check: ```c if (clk_mgr_base->ctx->dce_version ==
-DCN_VERSION_3_51) { ssc_enable = REG_READ(CLK6_spll_field_8) &
-CLK6_spll_field_8__spll_ssc_en_MASK; } else { ssc_enable =
-REG_READ(CLK5_spll_field_8) & CLK5_spll_field_8__spll_ssc_en_MASK; } ```
-3. **Register addition**: Updates `clk_mgr_internal.h` to include the
-new register ## Risk Assessment - **Low regression risk**: The change is
-conditional based on DCN version, so it only affects DCN351 hardware -
-**Minimal code impact**: Very small, targeted change that doesn't affect
-other subsystems - **Hardware-specific**: Only impacts specific AMD
-DCN351 display hardware ## Comparison with Similar Commits Looking at
-the provided similar commits: - **Similar Commit #2 (YES)**: Also fixes
-incorrect register addresses causing SSC issues - very similar pattern -
-**Similar Commit #3 (YES)**: Addresses dprefclk adjustment with SS
-percentage - related audio timing issue This commit follows the exact
-same pattern as Similar Commit #2, which was marked for backporting and
-addresses nearly identical issues (incorrect register offset for SSC
-functionality). ## Stable Tree Criteria Met ✅ **Fixes important user-
-facing bug** (broken audio on DCN351) ✅ **Small, contained change**
-(minimal lines of code) ✅ **Low regression risk** (hardware-specific,
-conditional logic) ✅ **Clear hardware issue** (register offset
-correction) ✅ **Affects real users** (anyone with DCN351 hardware
-experiencing audio issues) The commit represents a critical hardware
-compatibility fix that should be available in stable kernels to ensure
-proper audio functionality on affected AMD hardware.
+### Key Reasons for NO Backport: 1. **Not a Bug Fix**: The commit
+message explicitly states "This does not really change anything other
+than ensuring the bytesperline that is signaled to userspace matches
+what is configured in HW." This is not fixing a functional bug but
+rather improving consistency between userspace and hardware
+configuration. 2. **Code Quality/Consistency Improvement**: The changes
+are primarily about code correctness and consistency rather than fixing
+a critical issue that affects users. This aligns with similar commits
+#1, #2, and #4 which were marked as NO for backporting. 3. **Staging
+Driver**: The rkvdec driver is in `drivers/staging/media/`, which
+indicates it's still under development and not considered stable.
+Staging drivers typically have more relaxed backporting requirements. 4.
+**Specific Code Changes Analysis**: - **Before**: `hor_virstride =
+(sps->bit_depth_luma_minus8 + 8) 0001-Fix-Clippy-warnings.patch
+0002-Enhance-inference-prompt-to-utilize-CVEKERNELDIR-whe.patch
+0003-Update-to-latest-version-of-clap.patch Cargo.lock Cargo.toml
+LICENSE README.md adreno_acd_support_analysis.md
+amd_display_ips_sequential_ono_backport_analysis.md
+analyze_merge_commit.sh dpp_rcg_backport_analysis.md
+drm_amd_display_vertical_interrupt_dcn32_dcn401_backport_analysis.md
+drm_bridge_analysis.txt drm_format_helper_24bit_analysis.md
+drm_imagination_register_update_analysis.md
+drm_mediatek_mtk_dpi_refactoring_analysis.md
+intel_ipu6_constify_analysis.md io_uring_analysis.txt ksmbd_analysis.txt
+merge_commit_analysis.txt model prompt src target test_gpio_cleanup.txt
+test_patch.txt verisilicon_av1_4k_analysis.md dst_fmt->width / 8;` -
+**After**: `hor_virstride = dst_fmt->plane_fmt[0].bytesperline;` -
+**Before**: `ver_virstride = round_up(dst_fmt->height, 16);` -
+**After**: `ver_virstride = dst_fmt->height;` 5. **No Risk Indication**:
+The changes don't indicate they're fixing crashes, data corruption,
+security issues, or other critical problems that would warrant stable
+backporting. 6. **Pattern Match with Similar Commits**: Looking at the
+provided examples: - Similar commits #1, #2, #4, and #5 that make
+stride/calculation improvements were marked as NO - Only commit #3 that
+increased max supported height (a clear functional limitation fix) was
+marked as YES 7. **No Stable Tree Mention**: The commit message contains
+no indication of stable tree inclusion via Fixes: tags or explicit
+stable tree requests. ### Conclusion: This commit improves code
+consistency by using the actual bytesperline values from userspace
+instead of calculating them from SPS parameters, but it doesn't fix a
+user-impacting bug. It's a code quality improvement that follows the
+pattern of other NO-backport commits in the provided examples.
 
- .../gpu/drm/amd/display/dc/clk_mgr/dcn35/dcn351_clk_mgr.c | 1 +
- .../gpu/drm/amd/display/dc/clk_mgr/dcn35/dcn35_clk_mgr.c  | 8 +++++++-
- drivers/gpu/drm/amd/display/dc/inc/hw/clk_mgr_internal.h  | 3 ++-
- 3 files changed, 10 insertions(+), 2 deletions(-)
+ drivers/staging/media/rkvdec/rkvdec-h264.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn35/dcn351_clk_mgr.c b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn35/dcn351_clk_mgr.c
-index 6a6ae618650b6..4607eff07253c 100644
---- a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn35/dcn351_clk_mgr.c
-+++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn35/dcn351_clk_mgr.c
-@@ -65,6 +65,7 @@
- #define mmCLK1_CLK5_ALLOW_DS 0x16EB1
+diff --git a/drivers/staging/media/rkvdec/rkvdec-h264.c b/drivers/staging/media/rkvdec/rkvdec-h264.c
+index 4fc167b42cf0c..7a1e76d423df5 100644
+--- a/drivers/staging/media/rkvdec/rkvdec-h264.c
++++ b/drivers/staging/media/rkvdec/rkvdec-h264.c
+@@ -896,9 +896,9 @@ static void config_registers(struct rkvdec_ctx *ctx,
+ 	dma_addr_t rlc_addr;
+ 	dma_addr_t refer_addr;
+ 	u32 rlc_len;
+-	u32 hor_virstride = 0;
+-	u32 ver_virstride = 0;
+-	u32 y_virstride = 0;
++	u32 hor_virstride;
++	u32 ver_virstride;
++	u32 y_virstride;
+ 	u32 yuv_virstride = 0;
+ 	u32 offset;
+ 	dma_addr_t dst_addr;
+@@ -909,16 +909,16 @@ static void config_registers(struct rkvdec_ctx *ctx,
  
- #define mmCLK5_spll_field_8 0x1B04B
-+#define mmCLK6_spll_field_8 0x1B24B
- #define mmDENTIST_DISPCLK_CNTL 0x0124
- #define regDENTIST_DISPCLK_CNTL 0x0064
- #define regDENTIST_DISPCLK_CNTL_BASE_IDX 1
-diff --git a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn35/dcn35_clk_mgr.c b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn35/dcn35_clk_mgr.c
-index a4ac601a30c35..1ccdf82057545 100644
---- a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn35/dcn35_clk_mgr.c
-+++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn35/dcn35_clk_mgr.c
-@@ -90,6 +90,7 @@
- #define mmCLK1_CLK5_ALLOW_DS 0x16EB1
+ 	f = &ctx->decoded_fmt;
+ 	dst_fmt = &f->fmt.pix_mp;
+-	hor_virstride = (sps->bit_depth_luma_minus8 + 8) * dst_fmt->width / 8;
+-	ver_virstride = round_up(dst_fmt->height, 16);
++	hor_virstride = dst_fmt->plane_fmt[0].bytesperline;
++	ver_virstride = dst_fmt->height;
+ 	y_virstride = hor_virstride * ver_virstride;
  
- #define mmCLK5_spll_field_8 0x1B24B
-+#define mmCLK6_spll_field_8 0x1B24B
- #define mmDENTIST_DISPCLK_CNTL 0x0124
- #define regDENTIST_DISPCLK_CNTL 0x0064
- #define regDENTIST_DISPCLK_CNTL_BASE_IDX 1
-@@ -116,6 +117,7 @@
- #define DENTIST_DISPCLK_CNTL__DENTIST_DPPCLK_WDIVIDER_MASK 0x7F000000L
+ 	if (sps->chroma_format_idc == 0)
+ 		yuv_virstride = y_virstride;
+ 	else if (sps->chroma_format_idc == 1)
+-		yuv_virstride += y_virstride + y_virstride / 2;
++		yuv_virstride = y_virstride + y_virstride / 2;
+ 	else if (sps->chroma_format_idc == 2)
+-		yuv_virstride += 2 * y_virstride;
++		yuv_virstride = 2 * y_virstride;
  
- #define CLK5_spll_field_8__spll_ssc_en_MASK 0x00002000L
-+#define CLK6_spll_field_8__spll_ssc_en_MASK 0x00002000L
- 
- #define SMU_VER_THRESHOLD 0x5D4A00 //93.74.0
- #undef FN
-@@ -574,7 +576,11 @@ static bool dcn35_is_spll_ssc_enabled(struct clk_mgr *clk_mgr_base)
- 
- 	uint32_t ssc_enable;
- 
--	ssc_enable = REG_READ(CLK5_spll_field_8) & CLK5_spll_field_8__spll_ssc_en_MASK;
-+	if (clk_mgr_base->ctx->dce_version == DCN_VERSION_3_51) {
-+		ssc_enable = REG_READ(CLK6_spll_field_8) & CLK6_spll_field_8__spll_ssc_en_MASK;
-+	} else {
-+		ssc_enable = REG_READ(CLK5_spll_field_8) & CLK5_spll_field_8__spll_ssc_en_MASK;
-+	}
- 
- 	return ssc_enable != 0;
- }
-diff --git a/drivers/gpu/drm/amd/display/dc/inc/hw/clk_mgr_internal.h b/drivers/gpu/drm/amd/display/dc/inc/hw/clk_mgr_internal.h
-index 221645c023b50..bac8febad69a5 100644
---- a/drivers/gpu/drm/amd/display/dc/inc/hw/clk_mgr_internal.h
-+++ b/drivers/gpu/drm/amd/display/dc/inc/hw/clk_mgr_internal.h
-@@ -199,6 +199,7 @@ enum dentist_divider_range {
- 	CLK_SR_DCN35(CLK1_CLK4_ALLOW_DS), \
- 	CLK_SR_DCN35(CLK1_CLK5_ALLOW_DS), \
- 	CLK_SR_DCN35(CLK5_spll_field_8), \
-+	CLK_SR_DCN35(CLK6_spll_field_8), \
- 	SR(DENTIST_DISPCLK_CNTL), \
- 
- #define CLK_COMMON_MASK_SH_LIST_DCN32(mask_sh) \
-@@ -307,7 +308,7 @@ struct clk_mgr_registers {
- 	uint32_t CLK1_CLK4_ALLOW_DS;
- 	uint32_t CLK1_CLK5_ALLOW_DS;
- 	uint32_t CLK5_spll_field_8;
--
-+	uint32_t CLK6_spll_field_8;
- };
- 
- struct clk_mgr_shift {
+ 	reg = RKVDEC_Y_HOR_VIRSTRIDE(hor_virstride / 16) |
+ 	      RKVDEC_UV_HOR_VIRSTRIDE(hor_virstride / 16) |
 -- 
 2.39.5
 
