@@ -1,45 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1340B314F5F;
-	Sun,  1 Jun 2025 23:39:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 694E529A348;
+	Sun,  1 Jun 2025 23:39:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748821187; cv=none; b=k2tez8QDtajc+ksTCu7NvQT2kmXuR3Rj7JJC7uLsXkJ9gXANOzvTqOGKj9QIX2QzIO1zjcqtniD9FeqjOUVXcsKwpcTmArHF3jeFlXoEPLBqF0OW+FjdNG1E9yOsitImqZWvpS8SFJOfqgvES1igYvc8IQWHyjQph3VhcuHRi0I=
+	t=1748821188; cv=none; b=jSIQn+aQf33v+rb4/XVcx7XMA+r73KpjGeV1mZluG5RSbY3ld8Si97nf7pytXeZlfPbXsuu+mi4040pFu31NMW4j4DihLQ2B7YTZySS06mMjWX1TmE+gkGvLQRQg2mxQhTlKWsbjND3QyIbmT8neB7Pr7NddOSsK0lf/Y5+9AyU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748821187; c=relaxed/simple;
-	bh=7qxEVkWQUqjGg6AXH7BohttBCHzgjF8dhW2VloMSoaU=;
+	s=arc-20240116; t=1748821188; c=relaxed/simple;
+	bh=FeysDK5Zkk29A0a59R07pTBvwv94ysU0lWCO+KNnWas=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nbk0IkypSL6k/2DyDMKYIiROWl/GxpgaA7NZLw90wR3bJjBNyPNYhjUv8ZRuNK8z6vZ89olcvEg7TrI4ZUNSiG8VYPPgdMKbmHSlV6NO4UsUMGEuJrAoznrseny6vaS1K0/y16WlagTm2SyAe7WhGHXXLXwlpolzJYP1VXvFWIA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=H6lk2clv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=b5epPPR8QjhkFS/PeS1wsHC+/+x/MKsIJk2CG6EOXGc/0Pw6FxXeDwCGUtCl211jLG2jQ9hS2fXH9owVYE/JRg+uaYbCY+SEysMG/AHBhXsz5tj1dD0QZT/HFpN1subIO212BJVn3tQWOHk/SRzXXAh01rtgRXLfZe0f2u3Ppig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dWq3XRJc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="H6lk2clv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FE45C4CEEE;
-	Sun,  1 Jun 2025 23:39:45 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dWq3XRJc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDF83C4CEF1;
+	Sun,  1 Jun 2025 23:39:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748821186;
-	bh=7qxEVkWQUqjGg6AXH7BohttBCHzgjF8dhW2VloMSoaU=;
+	s=k20201202; t=1748821188;
+	bh=FeysDK5Zkk29A0a59R07pTBvwv94ysU0lWCO+KNnWas=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H6lk2clvLr6yZFuD9mJZ68kAy7sMkA0Ait/mamm5zWuEbFZbETtIjGyx54IRmECeP
-	 lqKiP6YemoWPRaP5GLgHhy0CkRHgKTwzouybA2ek/1tUvdRTm73IwJh0ROt0/EFy45
-	 qVqHoXGPyLGJqHi94J0ct91RJbP2C5wK4q4poPdZszxH2GyYU9STZcjCaLrFqjETkr
-	 lg+yFDGLtZm2FrSEMujifSes81i3Hrlt9+HSWkzBcrd7dn9orpSPsv4bnVtRIXxoaa
-	 vChG4jwkRIm1XEtVsceXuiv0WvgYA5ppYJf+vZuBXpDx9R9pZHOHhtFcU30oBeImk+
-	 9J7W4EsgdI2hQ==
+	b=dWq3XRJc++PKbLIsUYSzEoPNpP21kvWTrcg8c9y8s7aVB2cgeKk4mYtt8W0LKAxU8
+	 hoS/EH3qx2eAN7QqoQXXLj0r672f6hV61jYbD+9+PEMsqnyvgssZ/JIbhdrtw+Dm7N
+	 fizkhjsiEd4OZdzAelSWUcSP8JZ9Tx0YpLpV3LjTeb2RKEWJjsApu1hUWdgcIflyF1
+	 TLPFUAUIMB4DysH3H1u5tlWY3TZR57CnYbyw3vQfRH+xh8H+Uc7VZn1YUTv4hE4vuO
+	 c+QpPbLV8AFDVHx9R1biWcHHjCzkwIaj4B6wrxE9AKL56ByC6ieqecqqgoQVJDmtYC
+	 1T5PlzqmukO0g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Brian Norris <briannorris@chromium.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
+Cc: Luke Wang <ziniu.wang_1@nxp.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>,
-	matthias.bgg@gmail.com,
-	angelogioacchino.delregno@collabora.com,
-	linux-kernel@vger.kernel.org,
+	haibo.chen@nxp.com,
+	shawnguo@kernel.org,
+	linux-mmc@vger.kernel.org,
+	imx@lists.linux.dev,
+	s32@nxp.com,
 	linux-arm-kernel@lists.infradead.org,
-	linux-mediatek@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.6 54/66] genirq: Retain disable depth for managed interrupts across CPU hotplug
-Date: Sun,  1 Jun 2025 19:37:31 -0400
-Message-Id: <20250601233744.3514795-54-sashal@kernel.org>
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.6 55/66] mmc: sdhci-esdhc-imx: Save tuning value when card stays powered in suspend
+Date: Sun,  1 Jun 2025 19:37:32 -0400
+Message-Id: <20250601233744.3514795-55-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250601233744.3514795-1-sashal@kernel.org>
 References: <20250601233744.3514795-1-sashal@kernel.org>
@@ -55,327 +58,241 @@ X-stable-base: Linux 6.6.92
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Brian Norris <briannorris@chromium.org>
+From: Luke Wang <ziniu.wang_1@nxp.com>
 
-[ Upstream commit 788019eb559fd0b365f501467ceafce540e377cc ]
+[ Upstream commit c63d25cdc59ae2891b39ba2da950910291d9bcbf ]
 
-Affinity-managed interrupts can be shut down and restarted during CPU
-hotunplug/plug. Thereby the interrupt may be left in an unexpected state.
-Specifically:
+For SoCs like i.MX6UL(L/Z) and i.MX7D, USDHC powers off completely during
+system power management (PM), causing the internal tuning status to be
+lost. To address this, save the tuning value when system suspend and
+restore it for any command issued after system resume when re-tuning is
+held.
 
- 1. Interrupt is affine to CPU N
- 2. disable_irq() -> depth is 1
- 3. CPU N goes offline
- 4. irq_shutdown() -> depth is set to 1 (again)
- 5. CPU N goes online
- 6. irq_startup() -> depth is set to 0 (BUG! driver expects that the interrupt
-    		     	      	        still disabled)
- 7. enable_irq() -> depth underflow / unbalanced enable_irq() warning
+A typical case involves SDIO WiFi devices with the MMC_PM_KEEP_POWER and
+MMC_PM_WAKE_SDIO_IRQ flag, which retain power during system PM. To
+conserve power, WiFi switches to 1-bit mode and restores 4-bit mode upon
+resume. As per the specification, tuning commands are not supported in
+1-bit mode. When sending CMD52 to restore 4-bit mode, re-tuning must be
+held. However, CMD52 still requires a correct sample point to avoid CRC
+errors, necessitating preservation of the previous tuning value.
 
-This is only a problem for managed interrupts and CPU hotplug, all other
-cases like request()/free()/request() truly needs to reset a possibly stale
-disable depth value.
-
-Provide a startup function, which takes the disable depth into account, and
-invoked it for the managed interrupts in the CPU hotplug path.
-
-This requires to change irq_shutdown() to do a depth increment instead of
-setting it to 1, which allows to retain the disable depth, but is harmless
-for the other code paths using irq_startup(), which will still reset the
-disable depth unconditionally to keep the original correct behaviour.
-
-A kunit tests will be added separately to cover some of these aspects.
-
-[ tglx: Massaged changelog ]
-
-Suggested-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Brian Norris <briannorris@chromium.org>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/all/20250514201353.3481400-2-briannorris@chromium.org
+Signed-off-by: Luke Wang <ziniu.wang_1@nxp.com>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Link: https://lore.kernel.org/r/20250328112517.2624806-1-ziniu.wang_1@nxp.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Based on my analysis of the commit and the current kernel code, here is
-my assessment: **YES** This commit should be backported to stable kernel
-trees. Here's my extensive analysis: ## Bug Analysis The commit fixes a
-critical bug in the interrupt subsystem's CPU hotplug handling that
-affects affinity-managed interrupts. The bug manifests as follows: 1.
-**Problem Scenario**: When a managed interrupt is disabled (depth=1),
-then its CPU goes offline causing `irq_shutdown()`, and later the CPU
-comes back online triggering `irq_startup()`, the disable depth
-accounting becomes corrupted. 2. **Current Broken Behavior** (from
-existing kernel code): - `irq_shutdown()` sets `desc->depth = 1`
-unconditionally (line seen in grep output) - `irq_startup()` sets
-`desc->depth = 0` unconditionally - This overwrites any previous disable
-state, violating the disable/enable balance 3. **User-Visible Impact**:
-The bug causes: - Unbalanced `enable_irq()` warnings - Interrupts being
-unexpectedly enabled during CPU hotplug - Potential system instability
-or incorrect device behavior ## Code Changes Analysis The fix makes
-surgical changes to preserve disable depth: ### 1. **irq_shutdown()
-Change** (kernel/irq/chip.c): ```c - desc->depth = 1; + /bin /bin.usr-
-is-merged /boot /dev /etc /home /init /lib /lib.usr-is-merged /lib64
-/lost+found /media /mnt /opt /proc /root /run /sbin /sbin.usr-is-merged
-/snap /srv /sys /tmp /usr /var +
-amd_display_timing_generator_analysis.md
-amd_doorbell_analysis_framework.md
-amd_gpu_documentation_backport_analysis.md amd_si_chip_analysis.md
-amdgpu_csb_analysis.md amdgpu_mqd_prop_backport_analysis.md
-analogix_dp_backport_analysis.md cgroup_rstat_analysis.sh
-cgroup_rstat_analysis_guide.md cpuset_comment_fix_backport_analysis.md
-csiphy_x1e80100_backport_analysis.md
-dcn315_smu_indirect_register_access_analysis.md
-drm_dp_helper_dpcd_refactoring_backport_analysis.md
-drm_format_helper_generic_8bit_conversion_backport_analysis.md
-es8375_codec_driver_backport_analysis.md expected_findings_summary.md
-hdmi_read_request_analysis.md kernel_analysis_commands.sh
-kselftest_harness_teardown_metadata_backport_analysis.md linux-kernel
-mediatek_vcodec_h264_backport_analysis.md
-pidfd_open_kselftest_harness_compatibility_analysis.md
-qualcomm_camss_bus_type_backport_analysis.md
-selftests_harness_libatomic_backport_analysis.md
-sphinx_version_compatibility_backport_analysis.md
-spi_sh_msiof_grpmask_backport_analysis.md
-spi_sh_msiof_sitmdr2_sirmdr2_bitfield_conversion_backport_analysis.md
-sta2x11_removal_analysis.md test_unused_param.c test_unused_param.o
-ti_bridge_encoder_crtc_refactoring_backport_analysis.md
-xe_driver_flr_vf_restriction_analysis.md
-xe_firmware_per_gt_backport_analysis.md
-xe_sriov_logging_backport_analysis.md Increment disable depth, so that a
-managed shutdown on + amd_display_timing_generator_analysis.md
-amd_doorbell_analysis_framework.md
-amd_gpu_documentation_backport_analysis.md amd_si_chip_analysis.md
-amdgpu_csb_analysis.md amdgpu_mqd_prop_backport_analysis.md
-analogix_dp_backport_analysis.md cgroup_rstat_analysis.sh
-cgroup_rstat_analysis_guide.md cpuset_comment_fix_backport_analysis.md
-csiphy_x1e80100_backport_analysis.md
-dcn315_smu_indirect_register_access_analysis.md
-drm_dp_helper_dpcd_refactoring_backport_analysis.md
-drm_format_helper_generic_8bit_conversion_backport_analysis.md
-es8375_codec_driver_backport_analysis.md expected_findings_summary.md
-hdmi_read_request_analysis.md kernel_analysis_commands.sh
-kselftest_harness_teardown_metadata_backport_analysis.md linux-kernel
-mediatek_vcodec_h264_backport_analysis.md
-pidfd_open_kselftest_harness_compatibility_analysis.md
-qualcomm_camss_bus_type_backport_analysis.md
-selftests_harness_libatomic_backport_analysis.md
-sphinx_version_compatibility_backport_analysis.md
-spi_sh_msiof_grpmask_backport_analysis.md
-spi_sh_msiof_sitmdr2_sirmdr2_bitfield_conversion_backport_analysis.md
-sta2x11_removal_analysis.md test_unused_param.c test_unused_param.o
-ti_bridge_encoder_crtc_refactoring_backport_analysis.md
-xe_driver_flr_vf_restriction_analysis.md
-xe_firmware_per_gt_backport_analysis.md
-xe_sriov_logging_backport_analysis.md CPU hotunplug preserves the actual
-disabled state when the + amd_display_timing_generator_analysis.md
-amd_doorbell_analysis_framework.md
-amd_gpu_documentation_backport_analysis.md amd_si_chip_analysis.md
-amdgpu_csb_analysis.md amdgpu_mqd_prop_backport_analysis.md
-analogix_dp_backport_analysis.md cgroup_rstat_analysis.sh
-cgroup_rstat_analysis_guide.md cpuset_comment_fix_backport_analysis.md
-csiphy_x1e80100_backport_analysis.md
-dcn315_smu_indirect_register_access_analysis.md
-drm_dp_helper_dpcd_refactoring_backport_analysis.md
-drm_format_helper_generic_8bit_conversion_backport_analysis.md
-es8375_codec_driver_backport_analysis.md expected_findings_summary.md
-hdmi_read_request_analysis.md kernel_analysis_commands.sh
-kselftest_harness_teardown_metadata_backport_analysis.md linux-kernel
-mediatek_vcodec_h264_backport_analysis.md
-pidfd_open_kselftest_harness_compatibility_analysis.md
-qualcomm_camss_bus_type_backport_analysis.md
-selftests_harness_libatomic_backport_analysis.md
-sphinx_version_compatibility_backport_analysis.md
-spi_sh_msiof_grpmask_backport_analysis.md
-spi_sh_msiof_sitmdr2_sirmdr2_bitfield_conversion_backport_analysis.md
-sta2x11_removal_analysis.md test_unused_param.c test_unused_param.o
-ti_bridge_encoder_crtc_refactoring_backport_analysis.md
-xe_driver_flr_vf_restriction_analysis.md
-xe_firmware_per_gt_backport_analysis.md
-xe_sriov_logging_backport_analysis.md CPU comes back online. See
-irq_startup_managed(). + linux-kernel/ + desc->depth++; ``` This
-preserves the original disable state instead of overwriting it. ### 2.
-**New irq_startup_managed() Function**: ```c +void
-irq_startup_managed(struct irq_desc *desc) +{ + /bin /bin.usr-is-merged
-/boot /dev /etc /home /init /lib /lib.usr-is-merged /lib64 /lost+found
-/media /mnt /opt /proc /root /run /sbin /sbin.usr-is-merged /snap /srv
-/sys /tmp /usr /var + amd_display_timing_generator_analysis.md
-amd_doorbell_analysis_framework.md
-amd_gpu_documentation_backport_analysis.md amd_si_chip_analysis.md
-amdgpu_csb_analysis.md amdgpu_mqd_prop_backport_analysis.md
-analogix_dp_backport_analysis.md cgroup_rstat_analysis.sh
-cgroup_rstat_analysis_guide.md cpuset_comment_fix_backport_analysis.md
-csiphy_x1e80100_backport_analysis.md
-dcn315_smu_indirect_register_access_analysis.md
-drm_dp_helper_dpcd_refactoring_backport_analysis.md
-drm_format_helper_generic_8bit_conversion_backport_analysis.md
-es8375_codec_driver_backport_analysis.md expected_findings_summary.md
-hdmi_read_request_analysis.md kernel_analysis_commands.sh
-kselftest_harness_teardown_metadata_backport_analysis.md linux-kernel
-mediatek_vcodec_h264_backport_analysis.md
-pidfd_open_kselftest_harness_compatibility_analysis.md
-qualcomm_camss_bus_type_backport_analysis.md
-selftests_harness_libatomic_backport_analysis.md
-sphinx_version_compatibility_backport_analysis.md
-spi_sh_msiof_grpmask_backport_analysis.md
-spi_sh_msiof_sitmdr2_sirmdr2_bitfield_conversion_backport_analysis.md
-sta2x11_removal_analysis.md test_unused_param.c test_unused_param.o
-ti_bridge_encoder_crtc_refactoring_backport_analysis.md
-xe_driver_flr_vf_restriction_analysis.md
-xe_firmware_per_gt_backport_analysis.md
-xe_sriov_logging_backport_analysis.md Only start it up when the disable
-depth is 1, so that a disable, +
-amd_display_timing_generator_analysis.md
-amd_doorbell_analysis_framework.md
-amd_gpu_documentation_backport_analysis.md amd_si_chip_analysis.md
-amdgpu_csb_analysis.md amdgpu_mqd_prop_backport_analysis.md
-analogix_dp_backport_analysis.md cgroup_rstat_analysis.sh
-cgroup_rstat_analysis_guide.md cpuset_comment_fix_backport_analysis.md
-csiphy_x1e80100_backport_analysis.md
-dcn315_smu_indirect_register_access_analysis.md
-drm_dp_helper_dpcd_refactoring_backport_analysis.md
-drm_format_helper_generic_8bit_conversion_backport_analysis.md
-es8375_codec_driver_backport_analysis.md expected_findings_summary.md
-hdmi_read_request_analysis.md kernel_analysis_commands.sh
-kselftest_harness_teardown_metadata_backport_analysis.md linux-kernel
-mediatek_vcodec_h264_backport_analysis.md
-pidfd_open_kselftest_harness_compatibility_analysis.md
-qualcomm_camss_bus_type_backport_analysis.md
-selftests_harness_libatomic_backport_analysis.md
-sphinx_version_compatibility_backport_analysis.md
-spi_sh_msiof_grpmask_backport_analysis.md
-spi_sh_msiof_sitmdr2_sirmdr2_bitfield_conversion_backport_analysis.md
-sta2x11_removal_analysis.md test_unused_param.c test_unused_param.o
-ti_bridge_encoder_crtc_refactoring_backport_analysis.md
-xe_driver_flr_vf_restriction_analysis.md
-xe_firmware_per_gt_backport_analysis.md
-xe_sriov_logging_backport_analysis.md hotunplug, hotplug sequence does
-not end up enabling it during + amd_display_timing_generator_analysis.md
-amd_doorbell_analysis_framework.md
-amd_gpu_documentation_backport_analysis.md amd_si_chip_analysis.md
-amdgpu_csb_analysis.md amdgpu_mqd_prop_backport_analysis.md
-analogix_dp_backport_analysis.md cgroup_rstat_analysis.sh
-cgroup_rstat_analysis_guide.md cpuset_comment_fix_backport_analysis.md
-csiphy_x1e80100_backport_analysis.md
-dcn315_smu_indirect_register_access_analysis.md
-drm_dp_helper_dpcd_refactoring_backport_analysis.md
-drm_format_helper_generic_8bit_conversion_backport_analysis.md
-es8375_codec_driver_backport_analysis.md expected_findings_summary.md
-hdmi_read_request_analysis.md kernel_analysis_commands.sh
-kselftest_harness_teardown_metadata_backport_analysis.md linux-kernel
-mediatek_vcodec_h264_backport_analysis.md
-pidfd_open_kselftest_harness_compatibility_analysis.md
-qualcomm_camss_bus_type_backport_analysis.md
-selftests_harness_libatomic_backport_analysis.md
-sphinx_version_compatibility_backport_analysis.md
-spi_sh_msiof_grpmask_backport_analysis.md
-spi_sh_msiof_sitmdr2_sirmdr2_bitfield_conversion_backport_analysis.md
-sta2x11_removal_analysis.md test_unused_param.c test_unused_param.o
-ti_bridge_encoder_crtc_refactoring_backport_analysis.md
-xe_driver_flr_vf_restriction_analysis.md
-xe_firmware_per_gt_backport_analysis.md
-xe_sriov_logging_backport_analysis.md hotplug unconditionally. + linux-
-kernel/ + desc->depth--; + if (!desc->depth) + irq_startup(desc,
-IRQ_RESEND, IRQ_START_COND); +} ``` This provides proper depth-aware
-startup specifically for managed interrupts. ### 3. **IRQ_STARTUP_ABORT
-Case Update**: ```c case IRQ_STARTUP_ABORT: + desc->depth = 1;
-irqd_set_managed_shutdown(d); return 0; ``` Ensures consistent depth
-handling in abort cases. ### 4. **CPU Hotplug Integration**
-(kernel/irq/cpuhotplug.c): ```c - irq_startup(desc, IRQ_RESEND,
-IRQ_START_COND); + irq_startup_managed(desc); ``` Uses the new depth-
-aware function for managed interrupt restoration. ## Backport
-Suitability Assessment **Meets All Stable Criteria:** 1. **Fixes
-Important Bug**: ✅ Corrects interrupt enable/disable balance corruption
-2. **Small & Contained**: ✅ Minimal changes confined to IRQ subsystem 3.
-**Low Regression Risk**: ✅ Only affects managed interrupts during CPU
-hotplug 4. **No New Features**: ✅ Pure bug fix, no architectural changes
-5. **Critical Subsystem**: ✅ IRQ handling is fundamental to system
-stability **Similar Pattern Match**: This closely resembles Similar
-Commit #3 and #5 (both marked YES) which also fix managed interrupt CPU
-hotplug issues with surgical changes to preserve state across hotplug
-events. **Real-World Impact**: The bug can cause: - Server/datacenter
-systems using CPU hotplug for power management to experience interrupt
-handling issues - Multi-queue device drivers to malfunction after CPU
-hotplug cycles - Unbalanced IRQ state leading to system instability The
-fix is well-contained, addresses a clear functional bug with user-
-visible symptoms, and follows established patterns for stable backports
-in the IRQ subsystem.
+**YES** This commit should be backported to stable kernel trees. Here's
+my extensive analysis: ## Why This Qualifies for Backporting ### 1.
+**Fixes a Real User-Facing Bug** The commit addresses a critical issue
+where SDIO WiFi devices lose tuning parameters during suspend/resume
+cycles on i.MX SoCs. The commit message clearly describes a specific
+scenario: - SDIO WiFi devices with MMC_PM_KEEP_POWER flag retain power
+during suspend - WiFi switches to 1-bit mode for power conservation and
+restores 4-bit mode on resume - CMD52 commands (needed for 4-bit mode
+restoration) require correct tuning values to avoid CRC errors - Without
+saved tuning values, these commands fail, breaking WiFi functionality
+### 2. **Hardware-Specific Critical Issue** The code changes target
+specific i.MX SoCs (i.MX6UL/ULL/ULZ and i.MX7D) where "USDHC powers off
+completely during system power management (PM), causing the internal
+tuning status to be lost." This is a documented hardware limitation, not
+a software design flaw. ### 3. **Well-Contained and Low-Risk Changes**
+**Code Analysis of Key Changes:** - **New tuning preservation fields**:
+Adds `saved_tuning_delay_cell` to platform data (line 239) - minimal
+risk, just data storage - **Save function (`sdhc_esdhc_tuning_save`)**:
+Only saves tuning values for SDR50/SDR104 modes when specific conditions
+are met (SDIO device keeping power) - very targeted scope - **Restore
+function (`sdhc_esdhc_tuning_restore`)**: Carefully restores saved
+values using existing register manipulation patterns already used
+throughout the driver - **Integration points**: Adds save/restore calls
+only in suspend/resume paths with proper conditional checks **Register
+manipulation uses established patterns:** ```c // Uses existing
+FIELD_PREP macro and register constants
+writel(FIELD_PREP(ESDHC_TUNE_CTRL_STATUS_DLY_CELL_SET_PRE_MASK,
+imx_data->boarddata.saved_tuning_delay_cell), host->ioaddr +
+ESDHC_TUNE_CTRL_STATUS); ``` ### 4. **Follows Stable Tree Criteria** **✓
+Important bugfix**: Fixes WiFi connectivity after suspend/resume **✓
+Minimal risk**: Changes are well-contained to specific code paths and
+hardware **✓ No architectural changes**: Uses existing driver
+infrastructure **✓ Confined to subsystem**: Only affects sdhci-esdhc-imx
+driver ### 5. **Similar Historical Precedent** Looking at the provided
+similar commits, this aligns with "Similar Commit #4" and "Similar
+Commit #5" which were both marked "Backport Status: YES". Both dealt
+with SDIO tuning issues and were considered appropriate for stable
+trees: - Commit #4: Fixed SDIO retuning in 1-bit mode (had `Fixes:` tag
+and `Cc: stable@vger.kernel.org`) - Commit #5: Disabled CMD CRC check
+for tuning to prevent timing issues ### 6. **No Alternative
+Workarounds** Users cannot work around this issue in userspace - it
+requires kernel-level preservation of hardware tuning state during
+suspend/resume cycles. ### 7. **Critical for Embedded Systems** i.MX
+SoCs are widely used in embedded systems where: - SDIO WiFi is common -
+Suspend/resume cycles are frequent (battery-powered devices) - WiFi
+connectivity after resume is essential for functionality ## Conclusion
+This commit fixes a legitimate hardware bug affecting real-world usage
+scenarios with minimal risk. The changes are well-engineered, follow
+existing code patterns, and address a problem that significantly impacts
+user experience on affected platforms. It meets all criteria for stable
+tree backporting.
 
- kernel/irq/chip.c       | 22 +++++++++++++++++++++-
- kernel/irq/cpuhotplug.c |  2 +-
- kernel/irq/internals.h  |  1 +
- 3 files changed, 23 insertions(+), 2 deletions(-)
+ drivers/mmc/host/sdhci-esdhc-imx.c | 88 +++++++++++++++++++++++++++++-
+ 1 file changed, 86 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/irq/chip.c b/kernel/irq/chip.c
-index dc94e0bf2c940..cb8dc8d3d8f76 100644
---- a/kernel/irq/chip.c
-+++ b/kernel/irq/chip.c
-@@ -223,6 +223,19 @@ __irq_startup_managed(struct irq_desc *desc, const struct cpumask *aff,
- 		return IRQ_STARTUP_ABORT;
- 	return IRQ_STARTUP_MANAGED;
- }
+diff --git a/drivers/mmc/host/sdhci-esdhc-imx.c b/drivers/mmc/host/sdhci-esdhc-imx.c
+index e4e9b84f210b2..28ece6839aead 100644
+--- a/drivers/mmc/host/sdhci-esdhc-imx.c
++++ b/drivers/mmc/host/sdhci-esdhc-imx.c
+@@ -80,6 +80,8 @@
+ #define  ESDHC_TUNE_CTRL_STEP		1
+ #define  ESDHC_TUNE_CTRL_MIN		0
+ #define  ESDHC_TUNE_CTRL_MAX		((1 << 7) - 1)
++#define  ESDHC_TUNE_CTRL_STATUS_TAP_SEL_PRE_MASK	GENMASK(30, 24)
++#define  ESDHC_TUNE_CTRL_STATUS_DLY_CELL_SET_PRE_MASK	GENMASK(14, 8)
+ 
+ /* strobe dll register */
+ #define ESDHC_STROBE_DLL_CTRL		0x70
+@@ -231,6 +233,7 @@ struct esdhc_platform_data {
+ 	unsigned int tuning_step;       /* The delay cell steps in tuning procedure */
+ 	unsigned int tuning_start_tap;	/* The start delay cell point in tuning procedure */
+ 	unsigned int strobe_dll_delay_target;	/* The delay cell for strobe pad (read clock) */
++	unsigned int saved_tuning_delay_cell;	/* save the value of tuning delay cell */
+ };
+ 
+ struct esdhc_soc_data {
+@@ -1052,7 +1055,7 @@ static void esdhc_reset_tuning(struct sdhci_host *host)
+ {
+ 	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
+ 	struct pltfm_imx_data *imx_data = sdhci_pltfm_priv(pltfm_host);
+-	u32 ctrl;
++	u32 ctrl, tuning_ctrl;
+ 	int ret;
+ 
+ 	/* Reset the tuning circuit */
+@@ -1066,6 +1069,16 @@ static void esdhc_reset_tuning(struct sdhci_host *host)
+ 			writel(0, host->ioaddr + ESDHC_TUNE_CTRL_STATUS);
+ 		} else if (imx_data->socdata->flags & ESDHC_FLAG_STD_TUNING) {
+ 			writel(ctrl, host->ioaddr + ESDHC_MIX_CTRL);
++			/*
++			 * enable the std tuning just in case it cleared in
++			 * sdhc_esdhc_tuning_restore.
++			 */
++			tuning_ctrl = readl(host->ioaddr + ESDHC_TUNING_CTRL);
++			if (!(tuning_ctrl & ESDHC_STD_TUNING_EN)) {
++				tuning_ctrl |= ESDHC_STD_TUNING_EN;
++				writel(tuning_ctrl, host->ioaddr + ESDHC_TUNING_CTRL);
++			}
 +
-+void irq_startup_managed(struct irq_desc *desc)
+ 			ctrl = readl(host->ioaddr + SDHCI_AUTO_CMD_STATUS);
+ 			ctrl &= ~ESDHC_MIX_CTRL_SMPCLK_SEL;
+ 			ctrl &= ~ESDHC_MIX_CTRL_EXE_TUNE;
+@@ -1144,7 +1157,8 @@ static void esdhc_prepare_tuning(struct sdhci_host *host, u32 val)
+ 	reg |= ESDHC_MIX_CTRL_EXE_TUNE | ESDHC_MIX_CTRL_SMPCLK_SEL |
+ 			ESDHC_MIX_CTRL_FBCLK_SEL;
+ 	writel(reg, host->ioaddr + ESDHC_MIX_CTRL);
+-	writel(val << 8, host->ioaddr + ESDHC_TUNE_CTRL_STATUS);
++	writel(FIELD_PREP(ESDHC_TUNE_CTRL_STATUS_DLY_CELL_SET_PRE_MASK, val),
++	       host->ioaddr + ESDHC_TUNE_CTRL_STATUS);
+ 	dev_dbg(mmc_dev(host->mmc),
+ 		"tuning with delay 0x%x ESDHC_TUNE_CTRL_STATUS 0x%x\n",
+ 			val, readl(host->ioaddr + ESDHC_TUNE_CTRL_STATUS));
+@@ -1532,6 +1546,57 @@ static void sdhci_esdhc_imx_hwinit(struct sdhci_host *host)
+ 	}
+ }
+ 
++static void sdhc_esdhc_tuning_save(struct sdhci_host *host)
 +{
++	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
++	struct pltfm_imx_data *imx_data = sdhci_pltfm_priv(pltfm_host);
++	u32 reg;
++
 +	/*
-+	 * Only start it up when the disable depth is 1, so that a disable,
-+	 * hotunplug, hotplug sequence does not end up enabling it during
-+	 * hotplug unconditionally.
++	 * SD/eMMC do not need this tuning save because it will re-init
++	 * after system resume back.
++	 * Here save the tuning delay value for SDIO device since it may
++	 * keep power during system PM. And for usdhc, only SDR50 and
++	 * SDR104 mode for SDIO device need to do tuning, and need to
++	 * save/restore.
 +	 */
-+	desc->depth--;
-+	if (!desc->depth)
-+		irq_startup(desc, IRQ_RESEND, IRQ_START_COND);
++	if (host->timing == MMC_TIMING_UHS_SDR50 ||
++	    host->timing == MMC_TIMING_UHS_SDR104) {
++		reg = readl(host->ioaddr + ESDHC_TUNE_CTRL_STATUS);
++		reg = FIELD_GET(ESDHC_TUNE_CTRL_STATUS_TAP_SEL_PRE_MASK, reg);
++		imx_data->boarddata.saved_tuning_delay_cell = reg;
++	}
 +}
 +
- #else
- static __always_inline int
- __irq_startup_managed(struct irq_desc *desc, const struct cpumask *aff,
-@@ -275,6 +288,7 @@ int irq_startup(struct irq_desc *desc, bool resend, bool force)
- 			ret = __irq_startup(desc);
- 			break;
- 		case IRQ_STARTUP_ABORT:
-+			desc->depth = 1;
- 			irqd_set_managed_shutdown(d);
- 			return 0;
- 		}
-@@ -307,7 +321,13 @@ void irq_shutdown(struct irq_desc *desc)
- {
- 	if (irqd_is_started(&desc->irq_data)) {
- 		clear_irq_resend(desc);
--		desc->depth = 1;
-+		/*
-+		 * Increment disable depth, so that a managed shutdown on
-+		 * CPU hotunplug preserves the actual disabled state when the
-+		 * CPU comes back online. See irq_startup_managed().
-+		 */
-+		desc->depth++;
++static void sdhc_esdhc_tuning_restore(struct sdhci_host *host)
++{
++	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
++	struct pltfm_imx_data *imx_data = sdhci_pltfm_priv(pltfm_host);
++	u32 reg;
 +
- 		if (desc->irq_data.chip->irq_shutdown) {
- 			desc->irq_data.chip->irq_shutdown(&desc->irq_data);
- 			irq_state_set_disabled(desc);
-diff --git a/kernel/irq/cpuhotplug.c b/kernel/irq/cpuhotplug.c
-index eb86283901565..20067a655e203 100644
---- a/kernel/irq/cpuhotplug.c
-+++ b/kernel/irq/cpuhotplug.c
-@@ -219,7 +219,7 @@ static void irq_restore_affinity_of_irq(struct irq_desc *desc, unsigned int cpu)
- 		return;
++	if (host->timing == MMC_TIMING_UHS_SDR50 ||
++	    host->timing == MMC_TIMING_UHS_SDR104) {
++		/*
++		 * restore the tuning delay value actually is a
++		 * manual tuning method, so clear the standard
++		 * tuning enable bit here. Will set back this
++		 * ESDHC_STD_TUNING_EN in esdhc_reset_tuning()
++		 * when trigger re-tuning.
++		 */
++		reg = readl(host->ioaddr + ESDHC_TUNING_CTRL);
++		reg &= ~ESDHC_STD_TUNING_EN;
++		writel(reg, host->ioaddr + ESDHC_TUNING_CTRL);
++
++		reg = readl(host->ioaddr + ESDHC_MIX_CTRL);
++		reg |= ESDHC_MIX_CTRL_SMPCLK_SEL | ESDHC_MIX_CTRL_FBCLK_SEL;
++		writel(reg, host->ioaddr + ESDHC_MIX_CTRL);
++
++		writel(FIELD_PREP(ESDHC_TUNE_CTRL_STATUS_DLY_CELL_SET_PRE_MASK,
++				  imx_data->boarddata.saved_tuning_delay_cell),
++		       host->ioaddr + ESDHC_TUNE_CTRL_STATUS);
++	}
++}
++
+ static void esdhc_cqe_enable(struct mmc_host *mmc)
+ {
+ 	struct sdhci_host *host = mmc_priv(mmc);
+@@ -1856,6 +1921,15 @@ static int sdhci_esdhc_suspend(struct device *dev)
+ 	if (host->tuning_mode != SDHCI_TUNING_MODE_3)
+ 		mmc_retune_needed(host->mmc);
  
- 	if (irqd_is_managed_and_shutdown(data))
--		irq_startup(desc, IRQ_RESEND, IRQ_START_COND);
-+		irq_startup_managed(desc);
++	/*
++	 * For the device need to keep power during system PM, need
++	 * to save the tuning delay value just in case the usdhc
++	 * lost power during system PM.
++	 */
++	if (mmc_card_keep_power(host->mmc) && mmc_card_wake_sdio_irq(host->mmc) &&
++	    esdhc_is_usdhc(imx_data))
++		sdhc_esdhc_tuning_save(host);
++
+ 	ret = sdhci_suspend_host(host);
+ 	if (ret)
+ 		return ret;
+@@ -1872,6 +1946,8 @@ static int sdhci_esdhc_suspend(struct device *dev)
+ static int sdhci_esdhc_resume(struct device *dev)
+ {
+ 	struct sdhci_host *host = dev_get_drvdata(dev);
++	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
++	struct pltfm_imx_data *imx_data = sdhci_pltfm_priv(pltfm_host);
+ 	int ret;
  
- 	/*
- 	 * If the interrupt can only be directed to a single target
-diff --git a/kernel/irq/internals.h b/kernel/irq/internals.h
-index fbeecc608f54c..0ebdcbc5f6bef 100644
---- a/kernel/irq/internals.h
-+++ b/kernel/irq/internals.h
-@@ -87,6 +87,7 @@ extern void __enable_irq(struct irq_desc *desc);
- extern int irq_activate(struct irq_desc *desc);
- extern int irq_activate_and_startup(struct irq_desc *desc, bool resend);
- extern int irq_startup(struct irq_desc *desc, bool resend, bool force);
-+extern void irq_startup_managed(struct irq_desc *desc);
+ 	ret = pinctrl_pm_select_default_state(dev);
+@@ -1885,6 +1961,14 @@ static int sdhci_esdhc_resume(struct device *dev)
+ 	if (ret)
+ 		return ret;
  
- extern void irq_shutdown(struct irq_desc *desc);
- extern void irq_shutdown_and_deactivate(struct irq_desc *desc);
++	/*
++	 * restore the saved tuning delay value for the device which keep
++	 * power during system PM.
++	 */
++	if (mmc_card_keep_power(host->mmc) && mmc_card_wake_sdio_irq(host->mmc) &&
++	    esdhc_is_usdhc(imx_data))
++		sdhc_esdhc_tuning_restore(host);
++
+ 	if (host->mmc->caps2 & MMC_CAP2_CQE)
+ 		ret = cqhci_resume(host->mmc);
+ 
 -- 
 2.39.5
 
