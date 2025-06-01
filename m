@@ -1,46 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5980303BF1;
-	Sun,  1 Jun 2025 23:37:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C94F0303C07;
+	Sun,  1 Jun 2025 23:37:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748821025; cv=none; b=G4lO3cSQ+WYYw9ind7/dw1Eur4gk7T8y3eQHOrAFTzW8NXvB2LNI5Q5IVp6RvGSWOnHyfZYB4iu7rtAUNHUyY0Zb8bNsatOyYZ5JVKS8RBuyG9lTo6welH7dNe1LGyrwQUBUE5xCpJ6pecTnFM7VqKul8B055U/d45T+wmDK9RI=
+	t=1748821026; cv=none; b=qFRN9oimqc8ZWKBxKjp/XpZYm+Ojc3nKQknQdyQeFPCz5KtHVzjcB8+EY7QeNtyGhqQf4hrPFBKOkn//5wbeTDLVRx5GDPG9MyaT8eVsDkJQFEAFi7V5AYEgftqh9lzuj/AG0HU2lTNL7UPQw246qx7ZckuX/gBVQB6OvuPFp34=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748821025; c=relaxed/simple;
-	bh=hr95H+EQED96vd1xQnOVdC9R2WoCM4lZqmScNMPGxYU=;
+	s=arc-20240116; t=1748821026; c=relaxed/simple;
+	bh=h38rPSHv9NrOPJgcJVStv0JO2Bs0iDHmgXZ8nMZC1jU=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=diWvTxvqvD6RtKMubnk1mZmc19jRWZ0vbdrS5USwoyB2xRuAD/WwHwyHnbv2QpkxXbkiZYuanxnZj/3Wjh8MNLhKNRIjDo5m8wIGddqsZCYfGOLpZRyVYgFdbB0hyRN20kS5GpcxAfBDMOgUDkIZX5boGePJHphflfhljjZ8Ums=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cWCnneuU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bdun9I+AJwN4iSSnRW74Zj1S+XZkp85WlVrImmxGexmKofUJQVrqnmkzZOtZJtO+jCFXlqTT1DchnwhnQMiiCV/xyNBne60V6FDz+VZQFw/sGS/KRog+bitCpQE2wdjNJ2kxY8JL8SgUuVEaOa+9I+dmlzcKAt/h7ap59PEBJ9s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kAAFC5s2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cWCnneuU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDDA5C4CEE7;
-	Sun,  1 Jun 2025 23:37:03 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kAAFC5s2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C266C4CEF2;
+	Sun,  1 Jun 2025 23:37:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748821025;
-	bh=hr95H+EQED96vd1xQnOVdC9R2WoCM4lZqmScNMPGxYU=;
+	s=k20201202; t=1748821026;
+	bh=h38rPSHv9NrOPJgcJVStv0JO2Bs0iDHmgXZ8nMZC1jU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cWCnneuUVTQnlGhVjPrBqHxai0ZlwuLLUbM7fYn2Ufr3+KYcsAJU9/aAmq49m/g3W
-	 sytgJGcK04zsFB71uPhblgi0gUKA0qy3O3MgkD82+3Yx6289qUwJA+z2QO4vEpIZXw
-	 7vy9l/eJDP14B7jvR/oLPHHrLaLV97M7WZw2LmTiW6Qcna0HALo+Sie31MPG8MKUeD
-	 FQ7P5KJxLdcO6P6CFIVUfF+AEAQQUSLnVwRBXlHVa9++eEENXj/dBJez0srw3g5GLJ
-	 tPQBzUHrG8vhem6/dMZWsFh3uKp6IJMey/yIDh4X2yN0h3caStluGsufNT+477Kn4Z
-	 CY+88kyYV3FLA==
+	b=kAAFC5s2HX7jet5YuzSDxU2ssrLyJYbYe3LauOXFOka1eW4Pe4prjOHp87iXn1zjl
+	 oH7ON40QEWdYNgHDzD3uJxpGBMshwuBb2uaXGOLkbCtgcaH8p/MQprQzKa0PILH6fO
+	 cY8amAKrN0rZgpIA3bms4YYgWx/aE91COtsKOceYAOtPaqTXL4OW+R51DBaHPKelLJ
+	 u4CvPr4xjBDdqNi4tFYJThFvSHl6ZfbgTES6tyDHylfz1+hrs4auG9R7Nc+rCvkXjk
+	 bQsdpslhLdZvJ+bNuc4SVyziuCNSjRJkv8ubB/j2gMTZ5vpYvyTW33EIkqxTuc4Xnm
+	 OZhMBs3BIlZGQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Pohsun Su <pohsuns@nvidia.com>,
-	Robert Lin <robelin@nvidia.com>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
+Cc: Peng Fan <peng.fan@nxp.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>,
-	tglx@linutronix.de,
-	thierry.reding@gmail.com,
-	jonathanh@nvidia.com,
-	linux-kernel@vger.kernel.org,
-	linux-tegra@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.12 74/93] clocksource/drivers/timer-tegra186: Fix watchdog self-pinging
-Date: Sun,  1 Jun 2025 19:33:41 -0400
-Message-Id: <20250601233402.3512823-74-sashal@kernel.org>
+	robert.jarzmik@free.fr,
+	brgl@bgdev.pl,
+	linux-gpio@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.12 75/93] gpio: pxa: Make irq_chip immutable
+Date: Sun,  1 Jun 2025 19:33:42 -0400
+Message-Id: <20250601233402.3512823-75-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250601233402.3512823-1-sashal@kernel.org>
 References: <20250601233402.3512823-1-sashal@kernel.org>
@@ -55,135 +54,111 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.12.31
 Content-Transfer-Encoding: 8bit
 
-From: Pohsun Su <pohsuns@nvidia.com>
+From: Peng Fan <peng.fan@nxp.com>
 
-[ Upstream commit b42d781e0350c969ef8155b800e33400f5f8b8a6 ]
+[ Upstream commit 20117cf426b677e7aced4e7a1b2b37f6080a46dc ]
 
-This change removes watchdog self-pinging behavior.
+Kernel warns about mutable irq_chips:
+"not an immutable chip, please consider fixing!"
 
-The timer irq handler is triggered due to the 1st expiration,
-the handler disables and enables watchdog but also implicitly
-clears the expiration count so the count can only be 0 or 1.
+Constify pxa_muxed_gpio_chip, flag the irq_chip as IRQCHIP_IMMUTABLE,
+add the new helper functions, and call the appropriate gpiolib functions.
 
-Since this watchdog supports opened, configured, or pinged by
-systemd, We remove this behavior or the watchdog may not bark
-when systemd crashes since the 5th expiration never comes.
-
-Signed-off-by: Pohsun Su <pohsuns@nvidia.com>
-Signed-off-by: Robert Lin <robelin@nvidia.com>
-Link: https://lore.kernel.org/r/20250507044311.3751033-3-robelin@nvidia.com
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+Signed-off-by: Peng Fan <peng.fan@nxp.com>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Link: https://lore.kernel.org/r/20250509-gpio-v1-9-639377c98288@nxp.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-## YES **Extensive Analysis:** This commit should be backported to
-stable kernel trees as it fixes a critical watchdog functionality bug
-that affects system reliability and crash recovery. ### Code Changes
-Analysis: **1. Removal of Self-Pinging IRQ Handler (lines 368-378):**
-The commit removes the `tegra186_timer_irq()` function that was
-automatically resetting the watchdog on first timeout. This function was
-calling `tegra186_wdt_disable()` followed by `tegra186_wdt_enable()`,
-which had the side effect of clearing the expiration count. **2. Removal
-of Local Interrupt Enable (line 173):** The code removes `value |=
-WDTCR_LOCAL_INT_ENABLE;` from `tegra186_wdt_enable()`, which was
-enabling the interrupt that triggered the self-pinging behavior. **3.
-Removal of IRQ Infrastructure (lines 384, 403, 431-436):** The commit
-removes the IRQ request and associated error handling since the IRQ is
-no longer needed without the self-pinging behavior. ### Why This Should
-Be Backported: **1. Critical Bug Fix:** This addresses a fundamental
-flaw where the watchdog would never reach its intended 5th expiration
-because the IRQ handler was resetting the count after the 1st
-expiration. The comment in the original code states "system reset
-happens on the fifth expiration" (line 156/157), but this never occurred
-due to the self-pinging. **2. System Reliability Impact:** When systemd
-or other watchdog managers crash, the system should reboot via watchdog
-timeout. With the old behavior, systems would hang indefinitely instead
-of recovering, which is a serious reliability issue in production
-environments. **3. Hardware Design Intent:** The Tegra186 watchdog is
-designed to count 5 expirations before resetting the system. The self-
-pinging behavior was defeating this safety mechanism, making the
-watchdog unreliable for its primary purpose. **4. Minimal Risk:** - The
-change is small and well-contained - It removes problematic code rather
-than adding complex new logic - No new features or architectural changes
-- Follows the "do one thing well" principle for watchdogs **5. Clear
-User Impact:** Systems using Tegra186/234 SoCs with systemd or other
-watchdog daemons would benefit from proper crash recovery functionality.
-**6. Stable Tree Suitability:** - Fixes an important bug affecting users
-- Small, contained change with minimal regression risk - No new features
-introduced - Affects a specific hardware platform (limited blast radius)
-The commit properly removes flawed self-recovery logic that was
-preventing the watchdog from functioning as designed, making systems
-more reliable by ensuring proper reboot behavior when watchdog daemons
-fail.
+**YES** This commit should be backported to stable kernel trees. Here's
+my extensive analysis: ## Backport Analysis: gpio: pxa: Make irq_chip
+immutable ### Code Changes Analysis The commit makes three key changes
+to `drivers/gpio/gpio-pxa.c`: 1. **Makes irq_chip structure const**:
+Changes `static struct irq_chip pxa_muxed_gpio_chip` to `static const
+struct irq_chip pxa_muxed_gpio_chip` 2. **Adds IRQCHIP_IMMUTABLE flag**:
+Includes `.flags = IRQCHIP_IMMUTABLE` in the irq_chip structure 3.
+**Adds resource helper macros**: Includes
+`GPIOCHIP_IRQ_RESOURCE_HELPERS` macro 4. **Updates mask/unmask
+functions**: Adds proper `gpiochip_disable_irq()` and
+`gpiochip_enable_irq()` calls in the mask and unmask functions
+respectively ### Why This Should Be Backported **1. Follows Established
+Pattern** This commit follows the exact same pattern as the reference
+commits marked "YES" for backporting: - Similar to gpio-vf610 (commit
+e6ef4f8ede09) which was backported - Identical to gpio-104-idio-16
+(commit 410a5041aa60) which was backported - Same transformation pattern
+as dozens of other GPIO drivers **2. Fixes Kernel Warning** The commit
+explicitly addresses a kernel warning: "not an immutable chip, please
+consider fixing!" This is the same warning addressed in all the
+reference "YES" commits. **3. Small, Contained Changes** - Only modifies
+one file (`drivers/gpio/gpio-pxa.c`) - Changes are minimal and
+mechanical - No architectural changes or new features - Low risk of
+introducing regressions **4. Important Bug Fix for Users** - Eliminates
+annoying kernel warnings that users encounter - Brings driver in
+compliance with modern kernel IRQ subsystem requirements - Improves
+system reliability by preventing dynamic modification of irq_chip
+callbacks **5. No Side Effects** - The changes are purely structural
+improvements - Maintains identical functionality - Does not change the
+driver's external behavior - Only makes the irq_chip structure immutable
+for safety **6. Critical Subsystem Compliance** - GPIO subsystem
+actively enforces immutable irq_chips - This is part of a kernel-wide
+migration to improve memory safety - Prevents potential security issues
+from dynamic irq_chip modification **7. Hardware Support Impact** The
+PXA GPIO driver supports widely-used ARM processors: - Intel PXA25x,
+PXA26x, PXA27x, PXA3xx series - Marvell PXA93x, MMP, MMP2, PXA1928
+series - These are found in many embedded systems and IoT devices ###
+Comparison with Current Tree The analysis shows that in the current
+kernel tree (`/home/sasha/linux/`), the gpio-pxa.c driver still has the
+old mutable irq_chip structure (line 523: `static struct irq_chip
+pxa_muxed_gpio_chip`), while the target directory shows it has already
+been converted. This confirms this is a legitimate conversion commit
+that needs backporting. ### Risk Assessment **Very Low Risk:** -
+Mechanical transformation following established pattern - No functional
+changes to GPIO operations - Extensive precedent from similar successful
+backports - Changes are compile-time enforced (const keyword) This
+commit represents a straightforward compliance fix that eliminates user-
+visible warnings while improving code safety, making it an ideal
+candidate for stable tree backporting.
 
- drivers/clocksource/timer-tegra186.c | 27 ---------------------------
- 1 file changed, 27 deletions(-)
+ drivers/gpio/gpio-pxa.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/clocksource/timer-tegra186.c b/drivers/clocksource/timer-tegra186.c
-index 304537dadf2c1..ebe3ffa79591a 100644
---- a/drivers/clocksource/timer-tegra186.c
-+++ b/drivers/clocksource/timer-tegra186.c
-@@ -169,9 +169,6 @@ static void tegra186_wdt_enable(struct tegra186_wdt *wdt)
- 		value &= ~WDTCR_PERIOD_MASK;
- 		value |= WDTCR_PERIOD(1);
- 
--		/* enable local interrupt for WDT petting */
--		value |= WDTCR_LOCAL_INT_ENABLE;
--
- 		/* enable local FIQ and remote interrupt for debug dump */
- 		if (0)
- 			value |= WDTCR_REMOTE_INT_ENABLE |
-@@ -365,23 +362,10 @@ static int tegra186_timer_usec_init(struct tegra186_timer *tegra)
- 	return clocksource_register_hz(&tegra->usec, USEC_PER_SEC);
+diff --git a/drivers/gpio/gpio-pxa.c b/drivers/gpio/gpio-pxa.c
+index 91cea97255fa6..530ddeaba2f19 100644
+--- a/drivers/gpio/gpio-pxa.c
++++ b/drivers/gpio/gpio-pxa.c
+@@ -497,6 +497,8 @@ static void pxa_mask_muxed_gpio(struct irq_data *d)
+ 	gfer = readl_relaxed(base + GFER_OFFSET) & ~GPIO_bit(gpio);
+ 	writel_relaxed(grer, base + GRER_OFFSET);
+ 	writel_relaxed(gfer, base + GFER_OFFSET);
++
++	gpiochip_disable_irq(&pchip->chip, gpio);
  }
  
--static irqreturn_t tegra186_timer_irq(int irq, void *data)
--{
--	struct tegra186_timer *tegra = data;
--
--	if (watchdog_active(&tegra->wdt->base)) {
--		tegra186_wdt_disable(tegra->wdt);
--		tegra186_wdt_enable(tegra->wdt);
--	}
--
--	return IRQ_HANDLED;
--}
--
- static int tegra186_timer_probe(struct platform_device *pdev)
- {
- 	struct device *dev = &pdev->dev;
- 	struct tegra186_timer *tegra;
--	unsigned int irq;
- 	int err;
+ static int pxa_gpio_set_wake(struct irq_data *d, unsigned int on)
+@@ -516,17 +518,21 @@ static void pxa_unmask_muxed_gpio(struct irq_data *d)
+ 	unsigned int gpio = irqd_to_hwirq(d);
+ 	struct pxa_gpio_bank *c = gpio_to_pxabank(&pchip->chip, gpio);
  
- 	tegra = devm_kzalloc(dev, sizeof(*tegra), GFP_KERNEL);
-@@ -400,8 +384,6 @@ static int tegra186_timer_probe(struct platform_device *pdev)
- 	if (err < 0)
- 		return err;
++	gpiochip_enable_irq(&pchip->chip, gpio);
++
+ 	c->irq_mask |= GPIO_bit(gpio);
+ 	update_edge_detect(c);
+ }
  
--	irq = err;
--
- 	/* create a watchdog using a preconfigured timer */
- 	tegra->wdt = tegra186_wdt_create(tegra, 0);
- 	if (IS_ERR(tegra->wdt)) {
-@@ -428,17 +410,8 @@ static int tegra186_timer_probe(struct platform_device *pdev)
- 		goto unregister_osc;
- 	}
+-static struct irq_chip pxa_muxed_gpio_chip = {
++static const struct irq_chip pxa_muxed_gpio_chip = {
+ 	.name		= "GPIO",
+ 	.irq_ack	= pxa_ack_muxed_gpio,
+ 	.irq_mask	= pxa_mask_muxed_gpio,
+ 	.irq_unmask	= pxa_unmask_muxed_gpio,
+ 	.irq_set_type	= pxa_gpio_irq_type,
+ 	.irq_set_wake	= pxa_gpio_set_wake,
++	.flags = IRQCHIP_IMMUTABLE,
++	GPIOCHIP_IRQ_RESOURCE_HELPERS,
+ };
  
--	err = devm_request_irq(dev, irq, tegra186_timer_irq, 0,
--			       "tegra186-timer", tegra);
--	if (err < 0) {
--		dev_err(dev, "failed to request IRQ#%u: %d\n", irq, err);
--		goto unregister_usec;
--	}
--
- 	return 0;
- 
--unregister_usec:
--	clocksource_unregister(&tegra->usec);
- unregister_osc:
- 	clocksource_unregister(&tegra->osc);
- unregister_tsc:
+ static int pxa_gpio_nums(struct platform_device *pdev)
 -- 
 2.39.5
 
