@@ -1,49 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 181A5305139;
-	Sun,  1 Jun 2025 23:37:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1792B296F01;
+	Sun,  1 Jun 2025 23:37:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748821038; cv=none; b=estysvHCulwFmav6w8KZwHdxTf/BpDU9X8k0cJK8a15i+5QHGFRpFavdiuKat2E6KgHyKAEadH87u/+ZNbdYq03PpKLRXZOrloo1uZ6bzkyNTo1hxRqLnvzynXekGXoppGtkSeSA56hctSBnhOWpxPdfB2HKyHniKoQt86eJTOw=
+	t=1748821043; cv=none; b=VHszYOR79YKygu0TA1OU1w0wVfOkETqfyp0/Jq0xxP6G4XneaxXbAVQUEJmVq2pT9GuypNZz+J6t3/U9qhI1LxCqnDes59SNjsPZGxglPVkP4JVW/BRqmtnuPI7x+2ADxECqh2n5aS6qACiYQ98+EuuAh7oaEQqZ/y6MtwIcnsw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748821038; c=relaxed/simple;
-	bh=hA5zra00rW5RJQOJ7G/k/ozubQUPYz5/Rv/wh5CMMQY=;
+	s=arc-20240116; t=1748821043; c=relaxed/simple;
+	bh=dzehEnKuFqAjZllfxUir9czThNJS0k9Jue7QYLz34CM=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=mXkp/THx+QrfOa0IDafdiKaOqUQzlxYP+bTMufgMq8EBGJU0EYre3R0ZL2TVS6N7wir8tHateOiw248PC+Uvl+wM19xeQG9KPa8cUhyfa/NyrXUjkgIWGHG7RQwF1mhkTusjYk0+t9IznI5zM+bA84OsUlA2oaeBWKy9WxhRXhA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=E9PPozUn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gQp064qbCNWex+Wdqm0QpT6n+UC6mKLW/zjscCkoNlR5wqVQS8IzqjCN/kG7K7g78xirVpzS2Vlema47LSDvAiCjYHEh9sSP8C7egRVhbBi2Gwz+4LbbiOI4YFCNcae1rnEY0kxy4llsVJ0pntSRCnZGYyouAj9rrMi0eWBgsWQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=b+QjN3xz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="E9PPozUn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72395C4CEEE;
-	Sun,  1 Jun 2025 23:37:16 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="b+QjN3xz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B406C4CEE7;
+	Sun,  1 Jun 2025 23:37:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748821038;
-	bh=hA5zra00rW5RJQOJ7G/k/ozubQUPYz5/Rv/wh5CMMQY=;
+	s=k20201202; t=1748821042;
+	bh=dzehEnKuFqAjZllfxUir9czThNJS0k9Jue7QYLz34CM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E9PPozUne78+brNB5Cberl+SouHz8wnh9n6IHTWDiGJopGSeh6SEqtYP0mB01MSBp
-	 2geh6w1DJR6sdAuVAS3X8T86JE1j5ekWlB2IMuqOEVCiX7q3S4HaLYdyByvHfw8pcX
-	 1jzTfEKEXI1/PY9RqtURfb7Ez31gLykbue+vQxKyzH1zjjJrTiaSnzJ6zENbuG1SV9
-	 shQZI72BBke4Wv1eSUFZvmRTglmAxhejfNREfkievWMgjyMvRRswGW+MXznPsw7ggB
-	 YX1kVPbGWIpRz9wAcfyiuTMRbe2r6XgrT3LKvol5Bb4/gi60E+djfkFpkCg0SwblC/
-	 E3FfWccDfeUkQ==
+	b=b+QjN3xzZR4XVCjmvKjAuvf0o4yn4XKBw93GW5/V9H3k0zXGF1Iu7O1af6uVVc/Gs
+	 kDxDHAyTK0okQ5jPhetmyjbZrxdrvs7ACMazc1VBwVgsgdP5M3o/E+1vEgO5yKjDfv
+	 r8GoMlS5vhbA+6jnU7B6zKCVSxXoviraC/RdOxsXjsr+2KB1Kfj9CFOjBADeXS+OKt
+	 V7MVdYr/apuWkFM37ZdOt003oJ9ojzLDQQYrMQalo4ra5Vv+DK0rluAcTEy/xdrTqY
+	 a1rVInEHml64Ma0Ku3xFNbgqACTq+RCTKY9RGqWAzg5eI/IxbPxJ/ohtbBgmJ8NMrn
+	 U+kkLodaUc5Aw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Erick Shepherd <erick.shepherd@ni.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+Cc: I Hsin Cheng <richard120310@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	avri.altman@wdc.com,
-	keita.aihara@sony.com,
-	dsimic@manjaro.org,
-	jonathan@raspberrypi.com,
-	wsa+renesas@sang-engineering.com,
-	cw9316.lee@samsung.com,
-	linux-mmc@vger.kernel.org,
+	lgirdwood@gmail.com,
+	perex@perex.cz,
+	tiwai@suse.com,
+	yung-chuan.liao@linux.intel.com,
+	pierre-louis.bossart@linux.dev,
+	Vijendar.Mukunda@amd.com,
+	peterz@infradead.org,
+	linux-sound@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.12 80/93] mmc: Add quirk to disable DDR50 tuning
-Date: Sun,  1 Jun 2025 19:33:47 -0400
-Message-Id: <20250601233402.3512823-80-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.12 81/93] ASoC: intel/sdw_utils: Assign initial value in asoc_sdw_rt_amp_spk_rtd_init()
+Date: Sun,  1 Jun 2025 19:33:48 -0400
+Message-Id: <20250601233402.3512823-81-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250601233402.3512823-1-sashal@kernel.org>
 References: <20250601233402.3512823-1-sashal@kernel.org>
@@ -58,174 +58,88 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.12.31
 Content-Transfer-Encoding: 8bit
 
-From: Erick Shepherd <erick.shepherd@ni.com>
+From: I Hsin Cheng <richard120310@gmail.com>
 
-[ Upstream commit 9510b38dc0ba358c93cbf5ee7c28820afb85937b ]
+[ Upstream commit 5fb3878216aece471af030b33a9fbef3babd8617 ]
 
-Adds the MMC_QUIRK_NO_UHS_DDR50_TUNING quirk and updates
-mmc_execute_tuning() to return 0 if that quirk is set. This fixes an
-issue on certain Swissbit SD cards that do not support DDR50 tuning
-where tuning requests caused I/O errors to be thrown.
+Initialize "ret" with "-EINVAL" to handle cases where "strstr()" for
+"codec_dai->component->name_prefix" doesn't find "-1" nor "-2". In that
+case "name_prefix" is invalid because for current implementation it's
+expected to have either "-1" or "-2" in it. (Maybe "-3", "-4" and so on
+in the future.)
 
-Signed-off-by: Erick Shepherd <erick.shepherd@ni.com>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Link: https://lore.kernel.org/r/20250331221337.1414534-1-erick.shepherd@ni.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Link: https://scan5.scan.coverity.com/#/project-view/36179/10063?selectedIssue=1627120
+Signed-off-by: I Hsin Cheng <richard120310@gmail.com>
+Link: https://patch.msgid.link/20250505185423.680608-1-richard120310@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-**YES** This commit should be backported to stable kernel trees based on
-the following detailed analysis: ## Critical Hardware Compatibility Fix
-The commit addresses a specific and serious hardware compatibility issue
-where certain Swissbit SD cards (series S46-u, manufactured 01/2019)
-throw I/O errors during DDR50 tuning requests, particularly on Bay Trail
-host controllers. This represents a real-world deployed hardware issue
-that causes system instability. ## Code Analysis - Low Risk, High Impact
-**1. Minimal and Targeted Changes:** - Adds a single quirk bit
-(`MMC_QUIRK_NO_UHS_DDR50_TUNING`) in `include/linux/mmc/card.h` -
-Introduces a simple helper function `mmc_card_no_uhs_ddr50_tuning()` in
-`drivers/mmc/core/card.h` - Adds one specific quirk entry for the
-problematic Swissbit cards in `drivers/mmc/core/quirks.h` - Modifies the
-tuning logic in `drivers/mmc/core/sd.c` to respect the new quirk **2.
-Functional Impact Analysis:** The key change is in the
-`mmc_sd_use_tuning()` function where DDR50 tuning can now be disabled:
-```c case MMC_TIMING_UHS_DDR50: return
-!mmc_card_no_uhs_ddr50_tuning(card); ``` This change ensures that: -
-DDR50 mode still functions normally - Only the tuning optimization is
-disabled - Cards fall back to fixed sampling clock (still functional) -
-No loss of core functionality, only slight performance optimization loss
-**3. Risk Assessment:** - **Very Low Risk**: The quirk only disables
-tuning optimization, not DDR50 functionality itself - **Highly
-Targeted**: Affects only very specific cards (Swissbit 0016G,
-manufactured 2019/01) - **Maintains Compatibility**: Cards remain fully
-functional in DDR50 mode without tuning - **No Regression Potential**:
-Other cards are completely unaffected ## Alignment with Stable Backport
-Criteria **1. Important Bugfix**: Resolves I/O errors and system
-instability on deployed hardware **2. Minimal Risk**: Only disables
-optimization feature, maintains full functionality **3. Small and
-Contained**: Changes are isolated to the MMC quirk system **4. No
-Architectural Changes**: Uses existing quirk infrastructure **5. Clear
-User Impact**: Fixes real-world hardware compatibility issues ##
-Historical Pattern Consistency This commit follows the same pattern as
-other successful stable backports in the MMC subsystem (like Similar
-Commit #2 and #5 marked "YES"), which address specific hardware quirks
-with minimal, targeted fixes that resolve compatibility issues without
-introducing new functionality or architectural changes. The commit
-represents exactly the type of hardware compatibility fix that stable
-kernel trees are designed to accommodate - resolving real issues on
-deployed hardware with minimal risk and maximal benefit.
+Based on my comprehensive analysis of this commit, I can now provide my
+backport recommendation: **YES** This commit should be backported to
+stable kernel trees. Here's my extensive analysis: ## Bug Description
+and Analysis The commit fixes a critical bug in the
+`asoc_sdw_rt_amp_spk_rtd_init()` function in
+`sound/soc/sdw_utils/soc_sdw_rt_amp.c`. The issue is that the `ret`
+variable is declared but never initialized, and in certain execution
+paths, it may be returned uninitialized. ### Specific Problem Details 1.
+**Uninitialized Variable Issue**: The `ret` variable is declared on line
+193 but never given an initial value. 2. **Problematic Code Path**: In
+the `for_each_rtd_codec_dais()` loop (lines 204-209), `ret` is only
+assigned a value if `strstr()` finds either "-1" or "-2" in the
+`codec_dai->component->name_prefix`. However, if neither condition is
+met, `ret` remains uninitialized. 3. **Return of Garbage Value**: When
+the function reaches `return ret;` on line 211, if neither condition in
+the loop was satisfied, the function returns an uninitialized value,
+which could be any random memory content. ### Why This Is a Serious Bug
+1. **Unpredictable Behavior**: The function may return success (0) or
+failure (non-zero) randomly depending on stack contents, leading to
+inconsistent system behavior. 2. **Audio Subsystem Impact**: The
+function is used as an `rtd_init` callback for multiple Realtek audio
+amplifier codecs (rt1308, rt1316, rt1318, rt1320) as evidenced by the
+codec info list in `soc_sdw_utils.c`. 3. **Error Propagation**: The
+return value is checked in `asoc_sdw_rtd_init()` and propagated upward -
+a garbage positive value would cause audio initialization to fail
+unexpectedly. ### Evidence from Code Analysis The function is called via
+the `rtd_init` callback mechanism: ```c if
+(codec_info->dais[dai_index].rtd_init) { ret =
+codec_info->dais[dai_index].rtd_init(rtd, dai); if (ret) return ret; //
+Failure propagated upward } ``` The fix correctly initializes `ret =
+-EINVAL` to handle the case where the `name_prefix` doesn't contain the
+expected "-1" or "-2" suffixes, which indicates an invalid configuration
+that should properly return an error. ### Characteristics Supporting
+Backport 1. **Clear Bug Fix**: This is a straightforward bug fix with no
+new features or architectural changes. 2. **Minimal Risk**: The change
+is one line adding initialization - extremely low risk of introducing
+regressions. 3. **Wide Hardware Impact**: Affects multiple Realtek audio
+amplifier codecs used in Intel SoundWire configurations. 4. **Stable
+Tree Compatible**: Bug was introduced in v6.10 (commit 84e0a19adb73d),
+making it applicable to stable kernels from v6.10 onward. 5. **Static
+Analysis Found**: The bug was found by Coverity static analysis,
+indicating it's a real issue that could manifest in practice. 6. **User
+Impact**: Audio hardware initialization failures can significantly
+impact user experience, especially on laptops and embedded systems using
+these codecs. This commit perfectly fits the stable kernel criteria: it
+fixes an important bug, has minimal risk, is contained to a specific
+subsystem, and addresses undefined behavior that could cause random
+failures in audio hardware initialization.
 
- drivers/mmc/core/card.h   |  6 ++++++
- drivers/mmc/core/quirks.h | 10 ++++++++++
- drivers/mmc/core/sd.c     | 32 ++++++++++++++++++++++++--------
- include/linux/mmc/card.h  |  1 +
- 4 files changed, 41 insertions(+), 8 deletions(-)
+ sound/soc/sdw_utils/soc_sdw_rt_amp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mmc/core/card.h b/drivers/mmc/core/card.h
-index 3205feb1e8ff6..9cbdd240c3a7d 100644
---- a/drivers/mmc/core/card.h
-+++ b/drivers/mmc/core/card.h
-@@ -89,6 +89,7 @@ struct mmc_fixup {
- #define CID_MANFID_MICRON       0x13
- #define CID_MANFID_SAMSUNG      0x15
- #define CID_MANFID_APACER       0x27
-+#define CID_MANFID_SWISSBIT     0x5D
- #define CID_MANFID_KINGSTON     0x70
- #define CID_MANFID_HYNIX	0x90
- #define CID_MANFID_KINGSTON_SD	0x9F
-@@ -294,4 +295,9 @@ static inline int mmc_card_broken_sd_poweroff_notify(const struct mmc_card *c)
- 	return c->quirks & MMC_QUIRK_BROKEN_SD_POWEROFF_NOTIFY;
- }
+diff --git a/sound/soc/sdw_utils/soc_sdw_rt_amp.c b/sound/soc/sdw_utils/soc_sdw_rt_amp.c
+index 6951dfb565263..b3d6ca2499734 100644
+--- a/sound/soc/sdw_utils/soc_sdw_rt_amp.c
++++ b/sound/soc/sdw_utils/soc_sdw_rt_amp.c
+@@ -190,7 +190,7 @@ int asoc_sdw_rt_amp_spk_rtd_init(struct snd_soc_pcm_runtime *rtd, struct snd_soc
+ 	const struct snd_soc_dapm_route *rt_amp_map;
+ 	char codec_name[CODEC_NAME_SIZE];
+ 	struct snd_soc_dai *codec_dai;
+-	int ret;
++	int ret = -EINVAL;
+ 	int i;
  
-+static inline int mmc_card_no_uhs_ddr50_tuning(const struct mmc_card *c)
-+{
-+	return c->quirks & MMC_QUIRK_NO_UHS_DDR50_TUNING;
-+}
-+
- #endif
-diff --git a/drivers/mmc/core/quirks.h b/drivers/mmc/core/quirks.h
-index 89b512905be14..7f893bafaa607 100644
---- a/drivers/mmc/core/quirks.h
-+++ b/drivers/mmc/core/quirks.h
-@@ -34,6 +34,16 @@ static const struct mmc_fixup __maybe_unused mmc_sd_fixups[] = {
- 		   MMC_QUIRK_BROKEN_SD_CACHE | MMC_QUIRK_BROKEN_SD_POWEROFF_NOTIFY,
- 		   EXT_CSD_REV_ANY),
- 
-+	/*
-+	 * Swissbit series S46-u cards throw I/O errors during tuning requests
-+	 * after the initial tuning request expectedly times out. This has
-+	 * only been observed on cards manufactured on 01/2019 that are using
-+	 * Bay Trail host controllers.
-+	 */
-+	_FIXUP_EXT("0016G", CID_MANFID_SWISSBIT, 0x5342, 2019, 1,
-+		   0, -1ull, SDIO_ANY_ID, SDIO_ANY_ID, add_quirk_sd,
-+		   MMC_QUIRK_NO_UHS_DDR50_TUNING, EXT_CSD_REV_ANY),
-+
- 	END_FIXUP
- };
- 
-diff --git a/drivers/mmc/core/sd.c b/drivers/mmc/core/sd.c
-index 63915541c0e49..916ae9996e9d7 100644
---- a/drivers/mmc/core/sd.c
-+++ b/drivers/mmc/core/sd.c
-@@ -613,6 +613,29 @@ static int sd_set_current_limit(struct mmc_card *card, u8 *status)
- 	return 0;
- }
- 
-+/*
-+ * Determine if the card should tune or not.
-+ */
-+static bool mmc_sd_use_tuning(struct mmc_card *card)
-+{
-+	/*
-+	 * SPI mode doesn't define CMD19 and tuning is only valid for SDR50 and
-+	 * SDR104 mode SD-cards. Note that tuning is mandatory for SDR104.
-+	 */
-+	if (mmc_host_is_spi(card->host))
-+		return false;
-+
-+	switch (card->host->ios.timing) {
-+	case MMC_TIMING_UHS_SDR50:
-+	case MMC_TIMING_UHS_SDR104:
-+		return true;
-+	case MMC_TIMING_UHS_DDR50:
-+		return !mmc_card_no_uhs_ddr50_tuning(card);
-+	}
-+
-+	return false;
-+}
-+
- /*
-  * UHS-I specific initialization procedure
-  */
-@@ -656,14 +679,7 @@ static int mmc_sd_init_uhs_card(struct mmc_card *card)
- 	if (err)
- 		goto out;
- 
--	/*
--	 * SPI mode doesn't define CMD19 and tuning is only valid for SDR50 and
--	 * SDR104 mode SD-cards. Note that tuning is mandatory for SDR104.
--	 */
--	if (!mmc_host_is_spi(card->host) &&
--		(card->host->ios.timing == MMC_TIMING_UHS_SDR50 ||
--		 card->host->ios.timing == MMC_TIMING_UHS_DDR50 ||
--		 card->host->ios.timing == MMC_TIMING_UHS_SDR104)) {
-+	if (mmc_sd_use_tuning(card)) {
- 		err = mmc_execute_tuning(card);
- 
- 		/*
-diff --git a/include/linux/mmc/card.h b/include/linux/mmc/card.h
-index eb67d3d5ff5b2..2e455b20c37c2 100644
---- a/include/linux/mmc/card.h
-+++ b/include/linux/mmc/card.h
-@@ -295,6 +295,7 @@ struct mmc_card {
- #define MMC_QUIRK_BROKEN_SD_CACHE	(1<<15)	/* Disable broken SD cache support */
- #define MMC_QUIRK_BROKEN_CACHE_FLUSH	(1<<16)	/* Don't flush cache until the write has occurred */
- #define MMC_QUIRK_BROKEN_SD_POWEROFF_NOTIFY	(1<<17) /* Disable broken SD poweroff notify support */
-+#define MMC_QUIRK_NO_UHS_DDR50_TUNING	(1<<18) /* Disable DDR50 tuning */
- 
- 	bool			written_flag;	/* Indicates eMMC has been written since power on */
- 	bool			reenable_cmdq;	/* Re-enable Command Queue */
+ 	rt_amp_map = get_codec_name_and_route(dai, codec_name);
 -- 
 2.39.5
 
