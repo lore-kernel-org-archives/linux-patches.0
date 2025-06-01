@@ -1,43 +1,52 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E48C02BD036;
-	Sun,  1 Jun 2025 23:34:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C4212BD5A9;
+	Sun,  1 Jun 2025 23:34:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748820892; cv=none; b=BiIFwvFOhKAa0+7d1d7TPGThQ8OhNh1dUEPqTKPLg74YdMr1YUTJ1U3s2twPdWDzTT3D/Cy4XUXa3RQmYoI0B8NhEYy2qw0Yp54tvz82eNdrL7Hda5h2jqGe500BKALgx8rxLg9zvVdzIr+YjTcNE6JvnhCrlHu8mzl4cU3bFeo=
+	t=1748820895; cv=none; b=Mh5wMMsKyrjvK8NWrYNa6Kp9PQrpM+LUtlf6MX4rGgQMvhxKKnitTUe7aAOyZOFWbt5/juB7nV9pMNGUZTIdgdH18T8Z2GqKwItfoA7HJ3mIYqMG6x94DNANL4URnTtNyHjEeymqpPKddyEWbbxsbHiajSv2WRcSOHQFEwXxEEs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748820892; c=relaxed/simple;
-	bh=GxCg3FYbJYfw6S55Hs5ahV3f9R4+2oYpVxXLirMTjVA=;
+	s=arc-20240116; t=1748820895; c=relaxed/simple;
+	bh=4LJn9spfIHUOIyWj7TfjJCI8RYYi2CVSaX/PA1YOrsM=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=TChIyPC8axElQcx1dCwYbx1H5DB9IqiHxsuGYivd+G1r9WlN9sc0YXrhNTcWVpVvhlSFWMhDaoZRS1USR3qxNznSXUHCi7/hB2Nf1iPZihNH5JNYiDiFZRUXj/9uFXGesA7svEwzk11+VgkgmMNrZerX0SeFbSukNVq5L0I3iXQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kwwCPPiR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l4Jc6JcEjloDvYL1prqOO+GVLDjeVZS1ZbW0URH54zV9McdF/9UoPpCB+n6r0YB9/WzZGAi8Rmn7Fb0+ktkfdSXnk6N/vLgeSHPdZ/SThXW9RnWWPZ6768+oYvnqFeIEwO2XlyRLVmNswav8OA2sAX0p9aWfgQyvMrIjtP0R0Y0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uuUcOLMS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kwwCPPiR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BB0EC4CEEE;
-	Sun,  1 Jun 2025 23:34:50 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uuUcOLMS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7676C4CEF1;
+	Sun,  1 Jun 2025 23:34:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748820891;
-	bh=GxCg3FYbJYfw6S55Hs5ahV3f9R4+2oYpVxXLirMTjVA=;
+	s=k20201202; t=1748820894;
+	bh=4LJn9spfIHUOIyWj7TfjJCI8RYYi2CVSaX/PA1YOrsM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kwwCPPiRjPQ7YeXEIC2S7vZn7lvGXVjCSqSejDwxdWJ3Jhz5FW2xWtxSSw+3os3jK
-	 gTSWOL0YHZnjvbSIR8SAQPCnnWXjS1ODqRtiq2zMEfccFLTBqy0q4EnW7OVzljmrJr
-	 k8qoWXexDjHj7laUm30Nlv9UXzHuyb03G3TQDFbfpF3OtR2rgZ91moiUsfxChlTk8V
-	 L+a1wz6f0ZfwInfrTyhkUPmtRwRlJC0+a10sDY/nhwhf3Vvu/ugeQ7R4vkjy3RypXN
-	 T9QT/exXZCuItFGrd6F9sezZ+OyrA5HJYV+cNBDsxp3Qz+uFVoydCYtgEkHJWtFT6D
-	 nBQAVIP3a2/hA==
+	b=uuUcOLMSCHQG2VW1Dj8YiSCpFpkCJVihkKo6INL/aWeSpxOa/2D1+EOXf6wT+jehp
+	 2BbgGI4P07+pepSpYpIzbW/CS+Yxv1mqldU/Sp+oflozV++FM5yEk/KWwofdZhV6i9
+	 bxgTj4qJVOhdPZ1znMNJ/raEkRGtZsvGejJmxzESlVOBHv7O54648iuLW+No2TijCf
+	 mDqqbfT/UAwYUIb/jAoHw+0CFos4s8XJH5BjMaYZ67Ln6G3JcLHP2Iq8MJLUmhAo4I
+	 ZaQi1amITkbIR31AtDuRmLODpmesIK5dbGScCFpdcupDa+ZEycTmKOqfDUpFyPn+UG
+	 6Q31wwXJFFEUQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Yuezhang Mo <Yuezhang.Mo@sony.com>,
-	Sungjong Seo <sj1557.seo@samsung.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+Cc: Alex Deucher <alexander.deucher@amd.com>,
+	Rodrigo Siqueira <siqueira@igalia.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-fsdevel@vger.kernel.org,
+	christian.koenig@amd.com,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	sunil.khatri@amd.com,
+	vitaly.prosyak@amd.com,
+	srinivasan.shanmugam@amd.com,
+	tim.huang@amd.com,
+	Prike.Liang@amd.com,
+	Jesse.zhang@amd.com,
+	amd-gfx@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.12 18/93] exfat: do not clear volume dirty flag during sync
-Date: Sun,  1 Jun 2025 19:32:45 -0400
-Message-Id: <20250601233402.3512823-18-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.12 19/93] drm/amdgpu/gfx11: fix CSIB handling
+Date: Sun,  1 Jun 2025 19:32:46 -0400
+Message-Id: <20250601233402.3512823-19-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250601233402.3512823-1-sashal@kernel.org>
 References: <20250601233402.3512823-1-sashal@kernel.org>
@@ -52,135 +61,72 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.12.31
 Content-Transfer-Encoding: 8bit
 
-From: Yuezhang Mo <Yuezhang.Mo@sony.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-[ Upstream commit 46a557694b464881b3c2c4a0ba389a6436419a37 ]
+[ Upstream commit a9a8bccaa3ba64d509cf7df387cf0b5e1cd06499 ]
 
-xfstests generic/482 tests the file system consistency after each
-FUA operation. It fails when run on exfat.
+We shouldn't return after the last section.
+We need to update the rest of the CSIB.
 
-exFAT clears the volume dirty flag with a FUA operation during sync.
-Since s_lock is not held when data is being written to a file, sync
-can be executed at the same time. When data is being written to a
-file, the FAT chain is updated first, and then the file size is
-updated. If sync is executed between updating them, the length of the
-FAT chain may be inconsistent with the file size.
-
-To avoid the situation where the file system is inconsistent but the
-volume dirty flag is cleared, this commit moves the clearing of the
-volume dirty flag from exfat_fs_sync() to exfat_put_super(), so that
-the volume dirty flag is not cleared until unmounting. After the
-move, there is no additional action during sync, so exfat_fs_sync()
-can be deleted.
-
-Reviewed-by: Sungjong Seo <sj1557.seo@samsung.com>
-Signed-off-by: Yuezhang Mo <Yuezhang.Mo@sony.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Reviewed-by: Rodrigo Siqueira <siqueira@igalia.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Looking at this commit to analyze for backport suitability: **YES** This
-commit addresses a critical data consistency issue in the exFAT
-filesystem that can cause file corruption when remounting read-only. The
-commit resolves a race condition where the volume dirty flag could be
-cleared prematurely, potentially leaving the filesystem in an
-inconsistent state. ## Key Analysis Points: **1. Critical Bug Fix**: The
-commit message clearly identifies this fixes a specific test failure
-(xfstests generic/482) that tests filesystem consistency. File system
-corruption is a serious user-facing issue that affects data integrity.
-**2. Small, Contained Changes**: The code changes are minimal and
-surgical: - Removes the `exfat_sync_fs()` function (only 20 lines) -
-Moves `exfat_clear_volume_dirty(sb)` call from sync to unmount
-(`exfat_put_super()`) - Updates the remount function to explicitly sync
-and clear dirty flag - Removes the `.sync_fs` callback from the
-super_operations structure **3. Race Condition Fix**: The commit
-addresses a fundamental race condition where: - FAT chain updates happen
-first - File size updates happen second - If sync occurs between these
-steps, the filesystem becomes inconsistent - The volume dirty flag could
-be cleared despite the inconsistency **4. Follows Stable Tree Rules**:
-This is exactly the type of fix that should be backported: - Fixes file
-system corruption - Minimal risk of regression - Small, focused change -
-Addresses data integrity issue **5. Similar Historical Precedents**:
-Looking at the similar commits provided: - Similar Commit #2 (Status:
-YES) also deals with exFAT fsync functionality and data consistency -
-Similar Commit #4 (Status: YES) addresses exFAT remount synchronization
-issues - These precedents show that exFAT data consistency fixes are
-typically backported **6. No Architectural Changes**: The fix doesn't
-introduce new features or make architectural changes - it simply moves
-when the volume dirty flag is cleared to prevent premature clearing
-during race conditions. **7. Critical Subsystem**: Filesystem data
-integrity is a critical subsystem where corruption bugs must be fixed to
-protect user data. The code changes are straightforward - instead of
-clearing the dirty flag during sync operations (which can race with
-ongoing writes), the flag is only cleared at unmount time when no more
-writes can occur. This ensures the filesystem dirty state accurately
-reflects whether pending changes exist.
+**YES** This commit should be backported to stable kernel trees. ##
+Analysis ### Code Change Analysis The commit fixes a **critical bug in
+CSIB (Clear State Init Buffer) handling** in the GFX11 AMD GPU driver.
+The problematic code in `gfx_v11_0_get_csb_buffer()` at line 861
+contained: ```c } else { return; // This was the bug! } ``` This early
+return statement prevented the function from completing the CSIB setup
+when encountering non-SECT_CONTEXT sections. The fix removes this
+premature return, allowing the function to continue and properly
+complete the buffer initialization with: 1.
+**PA_SC_TILE_STEERING_OVERRIDE register setup** (lines 866-870) 2.
+**PACKET3_PREAMBLE_END_CLEAR_STATE** (lines 872-873) 3.
+**PACKET3_CLEAR_STATE** (lines 875-876) ### Why This Qualifies for
+Backporting 1. **Fixes Important Hardware Initialization Bug**: CSIB is
+critical for GPU state management. Incomplete initialization can cause
+GPU hangs, rendering artifacts, or system instability. 2. **Small,
+Contained Fix**: The change removes only 2 lines (`} else { return; }`)
+- minimal and low-risk. 3. **No Architectural Changes**: This is a pure
+bugfix with no new features or major code restructuring. 4. **Critical
+Subsystem**: Graphics drivers are essential for system functionality,
+and GPU state corruption can cause severe user-visible issues. 5.
+**Pattern Consistency**: Looking at similar sections across different
+GFX versions (v10, v9, etc.), they all handle non-SECT_CONTEXT sections
+by continuing rather than returning early, confirming this was indeed a
+bug. ### Historical Context Support From examining the codebase, this
+pattern is consistent across all GFX generations: - **gfx_v10_0.c:4227**
+and **gfx_v10_0.c:4266**: Handle SECT_CONTEXT but continue for other
+sections - **gfx_v9_0.c:1609** and **gfx_v9_0.c:1645**: Same pattern -
+**gfx_v8_0.c**, **gfx_v7_0.c**, **gfx_v6_0.c**: All follow the same
+approach The previous GFX10 CSIB fix (commit 4905880b4515) shows AMD's
+commitment to ensuring proper CSIB initialization across GPU
+generations, reinforcing the importance of this subsystem. ### Risk
+Assessment - **Regression Risk**: Extremely low - only removes incorrect
+early termination - **Testing Surface**: Affects GFX11 GPU
+initialization, easily testable - **Side Effects**: None - only allows
+completion of intended initialization sequence This is a textbook
+example of a stable-worthy fix: important bug, minimal change, no
+regression risk, and affects critical hardware functionality.
 
- fs/exfat/super.c | 30 +++++++-----------------------
- 1 file changed, 7 insertions(+), 23 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/fs/exfat/super.c b/fs/exfat/super.c
-index bd57844414aa6..04fdc8ae2ecc4 100644
---- a/fs/exfat/super.c
-+++ b/fs/exfat/super.c
-@@ -36,31 +36,12 @@ static void exfat_put_super(struct super_block *sb)
- 	struct exfat_sb_info *sbi = EXFAT_SB(sb);
- 
- 	mutex_lock(&sbi->s_lock);
-+	exfat_clear_volume_dirty(sb);
- 	exfat_free_bitmap(sbi);
- 	brelse(sbi->boot_bh);
- 	mutex_unlock(&sbi->s_lock);
- }
- 
--static int exfat_sync_fs(struct super_block *sb, int wait)
--{
--	struct exfat_sb_info *sbi = EXFAT_SB(sb);
--	int err = 0;
--
--	if (unlikely(exfat_forced_shutdown(sb)))
--		return 0;
--
--	if (!wait)
--		return 0;
--
--	/* If there are some dirty buffers in the bdev inode */
--	mutex_lock(&sbi->s_lock);
--	sync_blockdev(sb->s_bdev);
--	if (exfat_clear_volume_dirty(sb))
--		err = -EIO;
--	mutex_unlock(&sbi->s_lock);
--	return err;
--}
--
- static int exfat_statfs(struct dentry *dentry, struct kstatfs *buf)
- {
- 	struct super_block *sb = dentry->d_sb;
-@@ -228,7 +209,6 @@ static const struct super_operations exfat_sops = {
- 	.write_inode	= exfat_write_inode,
- 	.evict_inode	= exfat_evict_inode,
- 	.put_super	= exfat_put_super,
--	.sync_fs	= exfat_sync_fs,
- 	.statfs		= exfat_statfs,
- 	.show_options	= exfat_show_options,
- 	.shutdown	= exfat_shutdown,
-@@ -761,10 +741,14 @@ static void exfat_free(struct fs_context *fc)
- 
- static int exfat_reconfigure(struct fs_context *fc)
- {
-+	struct super_block *sb = fc->root->d_sb;
- 	fc->sb_flags |= SB_NODIRATIME;
- 
--	/* volume flag will be updated in exfat_sync_fs */
--	sync_filesystem(fc->root->d_sb);
-+	sync_filesystem(sb);
-+	mutex_lock(&EXFAT_SB(sb)->s_lock);
-+	exfat_clear_volume_dirty(sb);
-+	mutex_unlock(&EXFAT_SB(sb)->s_lock);
-+
- 	return 0;
- }
- 
+diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
+index 1f06b22dbe7c6..ab8a1cea63196 100644
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
+@@ -847,8 +847,6 @@ static void gfx_v11_0_get_csb_buffer(struct amdgpu_device *adev,
+ 						PACKET3_SET_CONTEXT_REG_START);
+ 				for (i = 0; i < ext->reg_count; i++)
+ 					buffer[count++] = cpu_to_le32(ext->extent[i]);
+-			} else {
+-				return;
+ 			}
+ 		}
+ 	}
 -- 
 2.39.5
 
