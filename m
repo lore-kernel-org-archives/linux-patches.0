@@ -1,49 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11E3529B76F;
-	Sun,  1 Jun 2025 23:34:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C23E729B794;
+	Sun,  1 Jun 2025 23:34:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748820850; cv=none; b=EntzMf8XLqAbNRMZh/N3eAYSe1CaitIVpsZILtJVxP6n5XyLc6O/D7q73vdo2QxaoDtfKx8KdFZFzJVBsyag60g57JRA4q/e30C5OviwEmEnaHP+YhLhr+FNUvFA4bBdN5A+J99qOdtIvFNdRWa1i4xE87Lf/5uCWs1cVp0mFc4=
+	t=1748820852; cv=none; b=OzqujiI4i2YNwNgui2F7hbyXGBudCnL8jbjIwoLxlOYTsdNJqa1KfpQeRdwRIAtmXC4c8/n8svjZ9di1ka+1XqQjnvEYIK4aR5wFATkEYQV6s75S3vJL2VGBYuMslZpylKGN5Z4cikh8Ecp2bJhquLw1xPoBt0FtS3kHSyy0Buo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748820850; c=relaxed/simple;
-	bh=tCzeWEM42hh0yiCA0XpBAaN3QXZfrvdg8NiZ30c9z8I=;
+	s=arc-20240116; t=1748820852; c=relaxed/simple;
+	bh=WBtWz338729X7c73XQLl33q8B9TDmNRhC+XpdvsV1D8=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=LtGVOcdMvVJXJk0r258zgL6nDxL+HMGw0X+NZRpp9bId5RBPe/fDFn9akj7w2qL0jfInmapo+T9NrtVX75AB4s7g4dM3oz8NuQmzqK+Is3DPEufHyz7/YlCTZ3U12XrHrym0v9P1PBV3wk4frcqESjhE3QCcrfQ9EtWodmAoTPM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uhgJ1TKA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lRpDrdWEbN32CZT+JVe7qlmarlocPjBLTuvoBvEDLFccpHuOzxJpyzRdM0n4CTfH7sgymVSjGHd9Gun/SysxOaeYb+OaYW2RmFqqpZdL+AleMHoLCNdULgPBbZu/5qfYbXaOETCbW40ljuZh9PoJCXes4N2Im79ngOwddfKaYvw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QVlSpc7y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uhgJ1TKA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AF07C4CEF1;
-	Sun,  1 Jun 2025 23:34:08 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QVlSpc7y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00227C4CEF1;
+	Sun,  1 Jun 2025 23:34:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748820849;
-	bh=tCzeWEM42hh0yiCA0XpBAaN3QXZfrvdg8NiZ30c9z8I=;
+	s=k20201202; t=1748820852;
+	bh=WBtWz338729X7c73XQLl33q8B9TDmNRhC+XpdvsV1D8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uhgJ1TKAbyKSuKp8qLPE2pEYQHBUgLClQWX0t1pKEtrY/1eCqh39eSd/C0cR0T8Uy
-	 gpvVD5cRokU+MtgTaRjrKszys0IWLCDtPaRk6M2hDHoidqzHcT54Xku/dbrwg62oeD
-	 tFJ0XjhskeLirXQPAK0wW3wD9tS3Zv8PMrktzfrMvgmNdulKxHTHuMi1eqiOs40ZtW
-	 wrCl9wqNoVykJGh79VUzkz1avpP6A4UGONnDq78Rdc2u7o6MyPGW7LeIUipux7evjT
-	 g0Bw3QQNFnmKomOMXlXKDTuK3zhqWvp1biXHuWUYDU7SBOhk23Wq1BTNayB1GJSZrb
-	 FKqbCSAOUU/jg==
+	b=QVlSpc7ySgM7k4FeelWr42GztV4OmWkBAo2PlU+vVnoMYfVi2BW5GxnaMiePWjjZ2
+	 beD+xsqeBPHAbfA2kX4HH5qa+oF8Z+A4Fw9N4kQLdabQMZNe6n3IlTeMDaL4ErN+BH
+	 CXhkH8UXl4B1GARkjcKC+lwgZVtVQDUrGw4RkoefJCo1aM6sSojOh5EGJaYEJhYSC0
+	 fa/nrlS7ZR2r/nkVBSx3Vw7+Pbft3eJgCU9CFsckFLavPaMMgWTARqjX6LTSw0ta2R
+	 l7XRTUQNK1i1aNSNfykjR9faGXDZJvcOP5PUB++PDdc1DQw4PaUsacN7KSucbTA+1Q
+	 /Wc/n8pFwR3IQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+Cc: Alex Deucher <alexander.deucher@amd.com>,
+	Rodrigo Siqueira <siqueira@igalia.com>,
 	Sasha Levin <sashal@kernel.org>,
-	andrzej.hajda@intel.com,
-	rfoss@kernel.org,
-	maarten.lankhorst@linux.intel.com,
-	mripard@kernel.org,
-	tzimmermann@suse.de,
+	christian.koenig@amd.com,
 	airlied@gmail.com,
 	simona@ffwll.ch,
+	sunil.khatri@amd.com,
+	alexandre.f.demers@gmail.com,
+	boyuan.zhang@amd.com,
+	kevinyang.wang@amd.com,
+	mario.limonciello@amd.com,
+	amd-gfx@lists.freedesktop.org,
 	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.12 02/93] drm/bridge: select DRM_KMS_HELPER for AUX_BRIDGE
-Date: Sun,  1 Jun 2025 19:32:29 -0400
-Message-Id: <20250601233402.3512823-2-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.12 03/93] drm/amdgpu/gfx6: fix CSIB handling
+Date: Sun,  1 Jun 2025 19:32:30 -0400
+Message-Id: <20250601233402.3512823-3-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250601233402.3512823-1-sashal@kernel.org>
 References: <20250601233402.3512823-1-sashal@kernel.org>
@@ -58,69 +60,71 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.12.31
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-[ Upstream commit b12fa5e76e1463fc5a196f2717040e4564e184b6 ]
+[ Upstream commit 8307ebc15c1ea98a8a0b7837af1faa6c01514577 ]
 
-The aux bridge uses devm_drm_of_get_bridge() from the panel bridge (and
-correctly selects DRM_PANEL_BRIDGE). However panel bridge is not a
-separate module, it is compiled into the drm_kms_helper.o. Select
-DRM_KMS_HELPER too to express this dependency.
+We shouldn't return after the last section.
+We need to update the rest of the CSIB.
 
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/20250411-aux-select-kms-v1-1-c4276f905a56@oss.qualcomm.com
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Rodrigo Siqueira <siqueira@igalia.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Based on my analysis, here is my determination: **YES** This commit
-should be backported to stable kernel trees for the following reasons:
-1. **It fixes a missing dependency issue**: The commit addresses a real
-dependency problem where `DRM_AUX_BRIDGE` uses
-`devm_drm_of_get_bridge()` which is implemented in `bridge/panel.c`. As
-shown in the Makefile analysis, `panel.o` is built into
-`drm_kms_helper.o` when `CONFIG_DRM_PANEL_BRIDGE` is selected (line 149
-of drivers/gpu/drm/Makefile: `drm_kms_helper-$(CONFIG_DRM_PANEL_BRIDGE)
-+= bridge/panel.o`). 2. **It prevents build failures**: Without
-selecting `DRM_KMS_HELPER`, the aux bridge can fail to link properly
-because the actual implementation of `devm_drm_of_get_bridge()` won't be
-available. This can lead to undefined reference errors during linking,
-similar to the issue described in Similar Commit #1 where
-`devm_drm_of_get_bridge` was undefined. 3. **The fix is minimal and
-safe**: The change is a simple one-line addition to select
-`DRM_KMS_HELPER` in the Kconfig. This is a build configuration fix with
-no runtime impact - it merely ensures the correct dependencies are
-satisfied at build time. 4. **It follows established patterns**: Looking
-at other bridge drivers in the same Kconfig file, we can see that
-drivers using similar functionality already select `DRM_KMS_HELPER`
-(e.g., lines 38, 53, 64, 88, 99 in the Kconfig show other drivers
-selecting it). 5. **Similar to backported commit #2**: This fix is
-conceptually similar to Similar Commit #2 which was backported and dealt
-with circular dependencies and proper module organization for
-`devm_drm_of_get_bridge()`. 6. **No architectural changes**: This commit
-doesn't introduce new features or change any architecture - it simply
-fixes a missing Kconfig dependency that should have been there from the
-beginning when `DRM_AUX_BRIDGE` was introduced. The commit meets the
-stable tree criteria as it: - Fixes a real bug (missing dependency
-leading to potential build failures) - Is minimal and contained (single
-line Kconfig change) - Has no risk of regression (only affects build
-configuration) - Doesn't introduce new features or architectural changes
+Now let me understand what the bug is. Looking at the original code:
+```c for (sect = adev->gfx.rlc.cs_data; sect->section != NULL; ++sect) {
+for (ext = sect->section; ext->extent != NULL; ++ext) { if (sect->id ==
+SECT_CONTEXT) { // process SECT_CONTEXT sections } else { return; //
+BUG: This returns early, skipping remaining code } } } // Important code
+that should always run: buffer[count++] =
+cpu_to_le32(PACKET3(PACKET3_SET_CONTEXT_REG, 1)); buffer[count++] =
+cpu_to_le32(mmPA_SC_RASTER_CONFIG - PACKET3_SET_CONTEXT_REG_START); //
+... more important buffer initialization ``` The fix removes the early
+return so that all sections are processed and the important buffer
+initialization at the end always runs. **YES** This commit should be
+backported to stable kernel trees for the following reasons: 1. **Clear
+Bug Fix**: The commit fixes a clear logic error where an early return
+statement prevents critical buffer initialization code from executing.
+The original code would return immediately when encountering a non-
+SECT_CONTEXT section, skipping the important packet commands that should
+always be written to the buffer (PACKET3_SET_CONTEXT_REG,
+PACKET3_PREAMBLE_END_CLEAR_STATE, PACKET3_CLEAR_STATE). 2. **Functional
+Impact**: This bug affects the Clear State Indirect Buffer (CSIB)
+handling in AMD GPU driver for GFX6 hardware. The incomplete buffer
+initialization could lead to: - Incorrect GPU state during graphics
+operations - Potential rendering issues or GPU hangs - Inconsistent
+hardware behavior 3. **Small and Contained Fix**: The fix is minimal -
+it simply removes two lines (the else block with return statement). This
+is a low-risk change that doesn't introduce new functionality or alter
+the architecture. 4. **Hardware-Specific Bug**: This affects real users
+with GFX6 AMD GPUs. The bug prevents proper initialization of the GPU's
+clear state buffer, which is essential for correct GPU operation. 5.
+**Similar to Historical Backports**: Looking at commit 4 in the similar
+commits (marked as YES for backporting), which also fixed preamble
+handling issues in the AMD GPU driver, this follows a similar pattern of
+fixing command buffer handling bugs. The commit message clearly
+indicates this is a bug fix ("We shouldn't return after the last
+section. We need to update the rest of the CSIB"), and the code change
+confirms that critical buffer initialization was being skipped due to
+the premature return.
 
- drivers/gpu/drm/bridge/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/amd/amdgpu/gfx_v6_0.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/bridge/Kconfig b/drivers/gpu/drm/bridge/Kconfig
-index 3eb955333c809..0385dd8e16283 100644
---- a/drivers/gpu/drm/bridge/Kconfig
-+++ b/drivers/gpu/drm/bridge/Kconfig
-@@ -16,6 +16,7 @@ config DRM_AUX_BRIDGE
- 	tristate
- 	depends on DRM_BRIDGE && OF
- 	select AUXILIARY_BUS
-+	select DRM_KMS_HELPER
- 	select DRM_PANEL_BRIDGE
- 	help
- 	  Simple transparent bridge that is used by several non-DRM drivers to
+diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v6_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v6_0.c
+index 564f0b9336b6a..00d3ce5a6eda6 100644
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v6_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v6_0.c
+@@ -2859,8 +2859,6 @@ static void gfx_v6_0_get_csb_buffer(struct amdgpu_device *adev,
+ 				buffer[count++] = cpu_to_le32(ext->reg_index - 0xa000);
+ 				for (i = 0; i < ext->reg_count; i++)
+ 					buffer[count++] = cpu_to_le32(ext->extent[i]);
+-			} else {
+-				return;
+ 			}
+ 		}
+ 	}
 -- 
 2.39.5
 
