@@ -1,51 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 019B329DB76;
-	Sun,  1 Jun 2025 23:34:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC87229DB8A;
+	Sun,  1 Jun 2025 23:34:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748820878; cv=none; b=UatVyU9ENtzpXYBgiMSQNCX2Y6KdrvwIYkhmLm6a0cs81X1ONex0KSRgQrJ60usuxE2YS/YBt+5OamcY/Evc4EyemUXG4SMRt6NUufRIokuKdNsAodYciUnMm6hyqTu2Et7cV+rR025rkfwOC/O0QTvwEecWXELVz0IBeh0LB6s=
+	t=1748820879; cv=none; b=cShrLiks7FYO3yykznHMWJu7TV8Wb7fToibWf881xJwf7tjq4VaPDI2UKLaoN9p1LUXDmaec1C6d0HHxrGxNBYv9QB2MYEp5KFDpD9ZZEahTSKUyu58ok03Ua0qkfvErIE6mmHvtYUObaxtcP0eekDDbxIdB4Tl5uryayDtO23s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748820878; c=relaxed/simple;
-	bh=G5ptFgI035r6QM783wg67cRlLhJPu1qeqOLJdtsVheU=;
+	s=arc-20240116; t=1748820879; c=relaxed/simple;
+	bh=qeaYsChK5nr9rSe+pp5hAEu/C1ACGe+t3EnImvBNz2w=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=I0gqxfKdypL9/X7OBZZoX3JYV9+8tawx5Q76GI9EpKtbWi9wwHtoMnR5btdOEq/571TuAQV3w1Mj85ZUvoLNUksMME0+vTvdDKpd2PRpZ9aes+FCKmH40VVthl9f0zf+q+xlMeV9IfyA6TFIKY3Q9dN/Z7Die4wFBjohLPxAPzs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dU8kpc/e; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=TUHrVzGs8ROP+CF7Aq9oXe6z2HlOXArYV+UTXBRe1qCbRKnHKnBV7P1GMLcsYvSC0BZUH6Z72e8TapuwYX/QklLlFECgLWDnV5Xu/LeGG/I8KOQaVIL7ajKfiHA7suUPkINkwi88lxIC6yVrdMR3O7gVt7RqB0FqzIoqzYPxzDg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tmKrh9Cg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dU8kpc/e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAC3DC4CEE7;
-	Sun,  1 Jun 2025 23:34:35 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tmKrh9Cg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5C5EC4CEF2;
+	Sun,  1 Jun 2025 23:34:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748820877;
-	bh=G5ptFgI035r6QM783wg67cRlLhJPu1qeqOLJdtsVheU=;
+	s=k20201202; t=1748820878;
+	bh=qeaYsChK5nr9rSe+pp5hAEu/C1ACGe+t3EnImvBNz2w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dU8kpc/eTuIOneymkeVr2vl07xOyuE2J/AoLn3P2BTOfwh6Uf0ylIOtTDJIfZ6S+g
-	 1JRQ3j7Nx3zsc+CrJhiZNQp3+RaNVC6JfZpJve6t61TCwaxcNjGDgNJiXCE58N4swH
-	 eALt/GI4m6BBwYnwUsSEOVKeaLTJTm61pzMwWaOCXK2CiiAKegEM9w01wO/w8jthPK
-	 cDXdmBhmTmc1sokhgtCzxHU1q0ljY/BbqGnWPdxpV4qC/+IaLHVgR7cZZGeKFrmkS+
-	 t5sicJMYHQMNpYrRBO9lKke9o/NMcItieZpGUcgtyB2ov+wuqNp0beD4MhVdft/XtA
-	 z0eimha26nGmw==
+	b=tmKrh9Cg4iN4c7AnpvPWaTeSZ9IJOgz/b9eZ9F2lIuvk6pLEVsvjS7hYe5kczjQ9w
+	 Nu//Bz0baKX0iZ8Y1FTwQ0JNCUJjrRqcCvn2DW6y8gKw26ZR6pGwWPPfQOiLMkoxDG
+	 aiqO9cFRYUX7OW0EbN8p7zj1dLdl0vLE4C9dGUpYrfGDR31xB27lAezV/4E6MS7m78
+	 7zAD5Lr4VPXbDA0F4JqEKT7S0GG0UgtCdsh9bl2/kZuEzHoEHzD2nRsTgeEwrnMiS5
+	 fb2/ThbM/udEjYDbJ0gdOUsL3k7nVsRpwoXsTYBIpx9oa1E+IS+IduxuJB5n12/xDN
+	 drXN+Zq96aHAA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Anusha Srivatsa <asrivats@redhat.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Tejas Vipin <tejasvipin76@gmail.com>,
-	Doug Anderson <dianders@chromium.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+Cc: Namjae Jeon <linkinjeon@kernel.org>,
+	Jianzhou Zhao <xnxc22xnxc22@qq.com>,
 	Sasha Levin <sashal@kernel.org>,
-	maarten.lankhorst@linux.intel.com,
-	tzimmermann@suse.de,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	dri-devel@lists.freedesktop.org,
+	sj1557.seo@samsung.com,
+	linux-fsdevel@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.12 12/93] drm/panel/sharp-ls043t1le01: Use _multi variants
-Date: Sun,  1 Jun 2025 19:32:39 -0400
-Message-Id: <20250601233402.3512823-12-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.12 13/93] exfat: fix double free in delayed_free
+Date: Sun,  1 Jun 2025 19:32:40 -0400
+Message-Id: <20250601233402.3512823-13-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250601233402.3512823-1-sashal@kernel.org>
 References: <20250601233402.3512823-1-sashal@kernel.org>
@@ -61,173 +53,86 @@ X-stable-base: Linux 6.12.31
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Anusha Srivatsa <asrivats@redhat.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 20e8219205145e1af3b98b6a0a3cc59568116a05 ]
+[ Upstream commit 1f3d9724e16d62c7d42c67d6613b8512f2887c22 ]
 
-Move away from using deprecated API and use _multi variants
-if available. Use mipi_dsi_msleep() and mipi_dsi_usleep_range()
-instead of msleep() and usleep_range() respectively.
+The double free could happen in the following path.
 
-Used Coccinelle to find the _multi variant APIs,replacing
-mpi_dsi_msleep() where necessary and for returning
-dsi_ctx.accum_err in these functions. mipi_dsi_dcs_write()
-does not have a corresponding _multi() variant. Replacing it with
-mipi_dsi_dcs_write_seq_multi() instead. This change is manual.
+exfat_create_upcase_table()
+        exfat_create_upcase_table() : return error
+        exfat_free_upcase_table() : free ->vol_utbl
+        exfat_load_default_upcase_table : return error
+     exfat_kill_sb()
+           delayed_free()
+                  exfat_free_upcase_table() <--------- double free
+This patch set ->vol_util as NULL after freeing it.
 
-The Coccinelle script is the same as the one in commit c8ba07caaecc
-("drm/panel/synaptics-r63353: Use _multi variants")
-
-v2: Use mipi_dsi_write_buffer_multi() in place of
-mipi_dsi_dcs_write(). (Dmitry)
-
-v3: add commit details where the same coccinelle script is
-used and remove the actual script from commit log.
-Use mipi_dsi_dcs_write_seq_multi() for mipi_dsi_dcs_write() (Doug)
-
-Cc: Maxime Ripard <mripard@kernel.org>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Tejas Vipin <tejasvipin76@gmail.com>
-Cc: Doug Anderson <dianders@chromium.org>
-Signed-off-by: Anusha Srivatsa <asrivats@redhat.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Link: https://lore.kernel.org/r/20250326-b4-panel-ls043t1le01-v3-1-96c554c0ea2b@redhat.com
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reported-by: Jianzhou Zhao <xnxc22xnxc22@qq.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Looking at this commit, I need to analyze whether it should be
-backported to stable kernel trees. **Answer: NO** **Detailed Analysis:**
-This commit is a **code modernization/refactoring change** that converts
-from deprecated MIPI DSI APIs to newer "_multi" variants. Here's my
-detailed reasoning: ## 1. **Nature of Changes - API Modernization Only**
-The changes are purely about replacing deprecated function calls with
-their modern equivalents: - `mipi_dsi_dcs_exit_sleep_mode()` →
-`mipi_dsi_dcs_exit_sleep_mode_multi()` -
-`mipi_dsi_dcs_set_pixel_format()` →
-`mipi_dsi_dcs_set_pixel_format_multi()` -
-`mipi_dsi_dcs_set_display_on()` → `mipi_dsi_dcs_set_display_on_multi()`
-- `mipi_dsi_dcs_write()` → `mipi_dsi_dcs_write_seq_multi()` - `msleep()`
-→ `mipi_dsi_msleep()` This is classic API modernization, not a bug fix.
-## 2. **No Functional Bug Fixes** The commit doesn't address any user-
-visible issues, crashes, security vulnerabilities, or hardware
-compatibility problems. The panel functionality remains identical - this
-is purely about using preferred APIs for better error handling patterns.
-## 3. **Pattern Consistent with Similar Commits** All the reference
-commits provided show the same pattern and are marked as **"Backport
-Status: NO"**: - **Similar Commit #1**: "Switch to
-mipi_dsi_dcs_write_seq_multi()" - mechanical conversion for code
-reduction - **Similar Commit #2**: "add more multi functions" - adding
-new API variants and deprecating old ones - **Similar Commit #4**:
-"Transition to mipi_dsi_dcs_write_seq_multi" - replacing deprecated
-macros - **Similar Commit #5**: "use mipi_dsi_dcs_nop_multi()" -
-removing conditional code using multi wrappers All these similar commits
-involve the same type of API modernization and none were backported. ##
-4. **Error Handling Changes Don't Fix Existing Bugs** While the new
-"_multi" pattern provides better error handling through
-`dsi_ctx.accum_err`, the original code was already handling errors
-properly with explicit return checks. The change improves code
-maintainability but doesn't fix any error handling bugs. ## 5. **Stable
-Tree Criteria Violation** This commit violates stable tree rules: -
-**Not a critical bugfix**: No user-impacting issues resolved -
-**Introduces new features**: Uses newer API variants that may not exist
-in older kernels - **Code churn without necessity**: Changes working
-code for style/modernization reasons - **Potential compatibility
-issues**: "_multi" variants may not be available in all stable branches
-## 6. **Risk vs. Benefit Analysis** - **Risk**: Potential
-incompatibility with older kernel versions, unnecessary code churn -
-**Benefit**: None for stable users - no bugs fixed, no new functionality
-for end users ## **Conclusion** This is a textbook example of a commit
-that should **NOT** be backported to stable trees. It's pure code
-modernization that doesn't fix any user-visible problems, follows the
-same pattern as other non-backported similar commits, and could
-potentially introduce compatibility issues in stable branches. Stable
-trees should only receive critical fixes, not API modernization changes.
+Based on my thorough analysis of the commit and examination of the
+kernel tree, here is my assessment: **YES** This commit should be
+backported to stable kernel trees. Here's my extensive analysis: ## Code
+Analysis **The Problem:** The commit fixes a classic double-free
+vulnerability in the exfat filesystem. Looking at the current kernel
+code, the vulnerability exists in this execution path: 1.
+`exfat_create_upcase_table()` calls `exfat_load_upcase_table()` which
+may fail 2. On failure (`ret && ret != -EIO`), it calls
+`exfat_free_upcase_table(sbi)` 3. Then it goes to `load_default:` and
+calls `exfat_load_default_upcase_table()` which may also fail 4. When
+the filesystem unmounts, `exfat_kill_sb()` → `delayed_free()` →
+`exfat_free_upcase_table(sbi)` is called again **The Current Vulnerable
+Code:** ```c void exfat_free_upcase_table(struct exfat_sb_info *sbi) {
+kvfree(sbi->vol_utbl); // No NULL assignment - vulnerable to double free
+} ``` **The Fix:** The patch adds `sbi->vol_utbl = NULL;` after the
+`kvfree()`, which prevents the double-free because `kvfree(NULL)` is
+safe. ## Backport Criteria Assessment **1. Bug Severity: HIGH** - This
+is a memory corruption vulnerability (double-free) - Double-free bugs
+can lead to heap corruption, crashes, and potentially security exploits
+- The bug affects the reliability and security of the exfat filesystem
+**2. Fix Quality: EXCELLENT** - The fix is minimal (just one line:
+`sbi->vol_utbl = NULL;`) - Extremely low risk of introducing regressions
+- Follows standard defensive programming practices - The fix is
+contained within a single function **3. Backport Suitability: PERFECT**
+- Small, isolated change that doesn't affect any APIs - No architectural
+changes or new features - The fix addresses the root cause directly -
+Compatible with all kernel versions that have the vulnerable code **4.
+Historical Context:** Looking at the similar commits provided: -
+**Similar Commit #2** (Status: YES): Also a memory leak fix in exfat
+with `Cc: stable@vger.kernel.org` - **Similar Commit #4** (Status: YES):
+Another memory corruption prevention fix in exfat - Both demonstrate
+that small, targeted memory management fixes in exfat are appropriate
+for stable backporting **5. Impact Assessment:** - **User Impact:** High
+- prevents filesystem crashes and potential data corruption - **Risk:**
+Very low - the change only affects error paths and adds defensive
+programming - **Complexity:** Minimal - single line change with clear
+semantics **6. RCU Context:** The commit a13d1a4de3b0 introduced the
+`delayed_free()` mechanism that made this double-free possible, making
+this fix essential for kernels with that change. ## Conclusion This
+commit represents exactly the type of fix that stable kernels need: a
+small, surgical fix for a potentially serious memory corruption bug with
+minimal risk of regression. The double-free vulnerability could lead to
+system instability and the fix is trivial to apply and verify. Given the
+similarities with other exfat memory management fixes that were
+successfully backported, this should definitely be included in stable
+kernel trees.
 
- .../gpu/drm/panel/panel-sharp-ls043t1le01.c   | 41 +++++++------------
- 1 file changed, 15 insertions(+), 26 deletions(-)
+ fs/exfat/nls.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/panel/panel-sharp-ls043t1le01.c b/drivers/gpu/drm/panel/panel-sharp-ls043t1le01.c
-index 729cbb0d8403f..36abfa2e65e96 100644
---- a/drivers/gpu/drm/panel/panel-sharp-ls043t1le01.c
-+++ b/drivers/gpu/drm/panel/panel-sharp-ls043t1le01.c
-@@ -36,60 +36,49 @@ static inline struct sharp_nt_panel *to_sharp_nt_panel(struct drm_panel *panel)
- static int sharp_nt_panel_init(struct sharp_nt_panel *sharp_nt)
+diff --git a/fs/exfat/nls.c b/fs/exfat/nls.c
+index d47896a895965..1729bf42eb516 100644
+--- a/fs/exfat/nls.c
++++ b/fs/exfat/nls.c
+@@ -801,4 +801,5 @@ int exfat_create_upcase_table(struct super_block *sb)
+ void exfat_free_upcase_table(struct exfat_sb_info *sbi)
  {
- 	struct mipi_dsi_device *dsi = sharp_nt->dsi;
--	int ret;
-+	struct mipi_dsi_multi_context dsi_ctx = { .dsi = dsi };
- 
- 	dsi->mode_flags |= MIPI_DSI_MODE_LPM;
- 
--	ret = mipi_dsi_dcs_exit_sleep_mode(dsi);
--	if (ret < 0)
--		return ret;
-+	mipi_dsi_dcs_exit_sleep_mode_multi(&dsi_ctx);
- 
--	msleep(120);
-+	mipi_dsi_msleep(&dsi_ctx, 120);
- 
- 	/* Novatek two-lane operation */
--	ret = mipi_dsi_dcs_write(dsi, 0xae, (u8[]){ 0x03 }, 1);
--	if (ret < 0)
--		return ret;
-+	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0xae,  0x03);
- 
- 	/* Set both MCU and RGB I/F to 24bpp */
--	ret = mipi_dsi_dcs_set_pixel_format(dsi, MIPI_DCS_PIXEL_FMT_24BIT |
--					(MIPI_DCS_PIXEL_FMT_24BIT << 4));
--	if (ret < 0)
--		return ret;
-+	mipi_dsi_dcs_set_pixel_format_multi(&dsi_ctx,
-+					    MIPI_DCS_PIXEL_FMT_24BIT |
-+					    (MIPI_DCS_PIXEL_FMT_24BIT << 4));
- 
--	return 0;
-+	return dsi_ctx.accum_err;
+ 	kvfree(sbi->vol_utbl);
++	sbi->vol_utbl = NULL;
  }
- 
- static int sharp_nt_panel_on(struct sharp_nt_panel *sharp_nt)
- {
- 	struct mipi_dsi_device *dsi = sharp_nt->dsi;
--	int ret;
-+	struct mipi_dsi_multi_context dsi_ctx = { .dsi = dsi };
- 
- 	dsi->mode_flags |= MIPI_DSI_MODE_LPM;
- 
--	ret = mipi_dsi_dcs_set_display_on(dsi);
--	if (ret < 0)
--		return ret;
-+	mipi_dsi_dcs_set_display_on_multi(&dsi_ctx);
- 
--	return 0;
-+	return dsi_ctx.accum_err;
- }
- 
- static int sharp_nt_panel_off(struct sharp_nt_panel *sharp_nt)
- {
- 	struct mipi_dsi_device *dsi = sharp_nt->dsi;
--	int ret;
-+	struct mipi_dsi_multi_context dsi_ctx = { .dsi = dsi };
- 
- 	dsi->mode_flags &= ~MIPI_DSI_MODE_LPM;
- 
--	ret = mipi_dsi_dcs_set_display_off(dsi);
--	if (ret < 0)
--		return ret;
-+	mipi_dsi_dcs_set_display_off_multi(&dsi_ctx);
- 
--	ret = mipi_dsi_dcs_enter_sleep_mode(dsi);
--	if (ret < 0)
--		return ret;
-+	mipi_dsi_dcs_enter_sleep_mode_multi(&dsi_ctx);
- 
--	return 0;
-+	return dsi_ctx.accum_err;
- }
- 
- static int sharp_nt_panel_unprepare(struct drm_panel *panel)
 -- 
 2.39.5
 
