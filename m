@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57E9E299AAC;
-	Sun,  1 Jun 2025 23:33:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFE4429A309;
+	Sun,  1 Jun 2025 23:33:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748820827; cv=none; b=SB9L2Wobi5W6CS0CD3eKd5ZMQbC4GgCh7f/Z3kVfQd6nSAzy1C/5ylaFnuMi9f3DH18U+1WDhXehzxW3g8CIeYaBoBlKCStULNHFsvw7dUJI6pcNtlgIysgn8nPEmn4H8OGn8cDo18rJTx1vjQifkeJC6PWiGVXDgifR+Ue3Zz0=
+	t=1748820828; cv=none; b=SFJZFMcfZszfatG/d8PG2uv3Xuuh2gvCqa+bQz2GPI0/6LhvW30bw4NnUfKl+B/miK5QpQH9/3/H+AWSESEDUcWB6X78dwqMtl4xSIgmXSPpkOJgznX4v7Xiv8GiYmr3HVbiWhEjOHkitLFBQpJPUXyMBTdXei6WTOE8vP8clP0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748820827; c=relaxed/simple;
-	bh=+WYfTlB0TnClHWldkmkWcG2WhxhwMOSmaA1Mc2YHFF8=;
+	s=arc-20240116; t=1748820828; c=relaxed/simple;
+	bh=qjsn4y5cfjvKtWvVg6mcxqlOOJNZG2m6MADzo+r1WWU=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OZqRKnuCNtlkRbHlwMqHUfQRsohh4UyNvTnbeNm+87HWBxpAkn08dbC9CTFt99CayodSiWqf3NCDzjBaqIbk3lWA6fRgVHbVMa+uXfoXbodhQmGcPNn1pRlqd3IADac5YPVpfTV4w2t5WAOxUZVfU1ehJojllQVGxqXEULijd9Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=S0tWNHoD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=dw+tMqY+OnUL/rC5984rT08pppzVpLTvw7US6e9qRDBVovhk0XJMw5Bvz/rOuHVw0P/tyXm1oy8a3+j+753bXC7LDgNlUC5oNVSmEYS9Is9BqjF7Ptwdmsfh1fqXMvWUd++K8RtBRlXNn4vEVc2+NmYwfWan3S2Lgba9CEgyOhU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Tjf0cpNa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="S0tWNHoD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 392A3C4CEEE;
-	Sun,  1 Jun 2025 23:33:46 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Tjf0cpNa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B37FC4CEEE;
+	Sun,  1 Jun 2025 23:33:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748820827;
-	bh=+WYfTlB0TnClHWldkmkWcG2WhxhwMOSmaA1Mc2YHFF8=;
+	s=k20201202; t=1748820828;
+	bh=qjsn4y5cfjvKtWvVg6mcxqlOOJNZG2m6MADzo+r1WWU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S0tWNHoDVZBz1EgjYQmjd9Al6bAB2pNrvuri/Bb4ZQMjOyx7Eik5AAYWiJ5odtzSx
-	 5wSUDzyWKKGqh0onPxGC/hAHrojgKo/xq+e9bnP8g5h26jZz/P7rvSRm5ltnPSJmAM
-	 mU726cpaqZsYBkorqyt/MnE0uhNJpnhxojuT5Nq71qmrvBFS+UkArjQ3yv/17nJjiG
-	 6y6Y7UQBbmqZVO1WEJg8xX6MwciSF+JZ6PTmGhAwoM/Qti2CoPcqng3ruobqHPjcnY
-	 Hu0MBTVn4CdQLaEk2oQ6MvR6b6JSiUXNWRn0nBZklb3EyE6P/2ldUCcUL2qVrTkm26
-	 +kwxIbDXzEMpg==
+	b=Tjf0cpNaqlS+T0DmIcP5AAWjaqanagj+Fg47xONYTxaY0MCrKDGiLr6KgtsRI7zja
+	 KZD8vs/f4T0rqRMMF6YSsTMnqWj0Q3kFqmK86fVctwN09+8lNOF0COFVRP6KrwhejK
+	 otymejcW5f15SZm6TWv9Fc9mUZyfoLj+PJQHsJVYTtQEEcuiIyIJjLit4m9xX+cRuw
+	 tyzIX4UXEhZWCygHelLApsbjDGxe8tfos1noVyZ9jMH5SLGzsh9NcM4YSTvEKgcJiX
+	 WjaPZtikmkl0pp6Pt6oSsSLCRQ5pOLm/QGfDNHuGYFXHN2Kiudid5MMyfkQBBxB8MQ
+	 FZcqrQSKDu0Kg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: David Lechner <dlechner@baylibre.com>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Viresh Kumar <viresh.kumar@linaro.org>,
+	Lifeng Zheng <zhenglifeng1@huawei.com>,
+	"Rafael J . Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	michael.hennerich@analog.com,
-	nuno.sa@analog.com,
-	linux-spi@vger.kernel.org,
+	rafael@kernel.org,
+	linux-pm@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.14 095/102] spi: axi-spi-engine: wait for completion in setup
-Date: Sun,  1 Jun 2025 19:29:27 -0400
-Message-Id: <20250601232937.3510379-95-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.14 096/102] cpufreq: Force sync policy boost with global boost on sysfs update
+Date: Sun,  1 Jun 2025 19:29:28 -0400
+Message-Id: <20250601232937.3510379-96-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250601232937.3510379-1-sashal@kernel.org>
 References: <20250601232937.3510379-1-sashal@kernel.org>
@@ -54,118 +54,92 @@ X-stable-base: Linux 6.14.9
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Lechner <dlechner@baylibre.com>
+From: Viresh Kumar <viresh.kumar@linaro.org>
 
-[ Upstream commit 1d0ee0c9df31c9fd1e4f8d7e2464e36fbf6e3f75 ]
+[ Upstream commit 121baab7b88ed865532dadb7ef1aee6e2bea86f5 ]
 
-Add a polling wait for SPI instruction execution to complete in the
-spi_engine_setup() function. In practice, these instructions complete
-in a few 10s of nanoseconds, so we never ran into any race conditions,
-but it is good practice to wait for the completion of the SPI engine
-instructions before returning from the setup function.
+If the global boost flag is enabled and policy boost flag is disabled, a
+call to `cpufreq_boost_trigger_state(true)` must enable the policy's
+boost state.
 
-Signed-off-by: David Lechner <dlechner@baylibre.com>
-Link: https://patch.msgid.link/20250428-adi-main-v1-1-4b8a1b88a212@baylibre.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+The current code misses that because of an optimization. Fix it.
+
+Suggested-by: Lifeng Zheng <zhenglifeng1@huawei.com>
+Reviewed-by: Lifeng Zheng <zhenglifeng1@huawei.com>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Link: https://patch.msgid.link/852ff11c589e6300730d207baac195b2d9d8b95f.1745511526.git.viresh.kumar@linaro.org
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-**YES** This commit should be backported to stable kernel trees. Here's
-my detailed analysis: ## Analysis of the Code Changes ### 1. **Nature of
-the Fix** The commit adds a crucial synchronization mechanism to the
-`spi_engine_setup()` function. Looking at the code changes: ```c +
-writel_relaxed(SPI_ENGINE_CMD_SYNC(0), + spi_engine->base +
-SPI_ENGINE_REG_CMD_FIFO); +
-writel_relaxed(SPI_ENGINE_CMD_CS_INV(spi_engine->cs_inv),
-spi_engine->base + SPI_ENGINE_REG_CMD_FIFO);
-writel_relaxed(SPI_ENGINE_CMD_ASSERT(0, 0xff), spi_engine->base +
-SPI_ENGINE_REG_CMD_FIFO); - return 0; +
-writel_relaxed(SPI_ENGINE_CMD_SYNC(1), + spi_engine->base +
-SPI_ENGINE_REG_CMD_FIFO); + + return
-readl_relaxed_poll_timeout(spi_engine->base + SPI_ENGINE_REG_SYNC_ID, +
-reg, reg == 1, 1, 1000); ``` ### 2. **Race Condition Prevention** This
-is a **defensive programming fix** that addresses a potential race
-condition where: - The setup function writes CS inversion and assertion
-commands to the hardware - Without the completion wait, the function
-returns immediately - Subsequent SPI operations could start before the
-setup commands are fully executed by the hardware ### 3. **Alignment
-with Stable Tree Criteria** **✅ Fixes a real issue:** Prevents timing-
-dependent race conditions that could cause incorrect chip select
-behavior **✅ Small and contained:** Only 7 lines of added code with
-clear, focused purpose **✅ Low regression risk:** - Uses
-`readl_relaxed_poll_timeout()` which is a standard kernel pattern - 1ms
-timeout prevents indefinite hangs - Follows existing patterns in the
-same driver **✅ No architectural changes:** This is purely a
-synchronization improvement **✅ Critical subsystem impact:** SPI is
-fundamental for many embedded systems ### 4. **Supporting Evidence from
-Similar Commits** All the provided similar commits were marked "NO" for
-backporting, but they were: - Adding **new features** (watchdog timer,
-CS delay support) - Making **architectural changes** (moving logic
-between functions) - **Performance optimizations** rather than bug fixes
-This commit is fundamentally different - it's a **pure bug prevention
-fix**. ### 5. **Real-World Impact** The AXI SPI Engine driver is used
-in: - **Precision measurement systems** where timing is critical -
-**Industrial automation** requiring deterministic behavior - **High-
-performance ADC interfaces** for data acquisition Even though the commit
-message notes "we never ran into any race conditions," the author
-explicitly calls this "good practice" - indicating this is defensive
-programming to prevent hard-to-debug issues in production systems. ###
-6. **Risk Assessment** - **Very low risk:** The change only adds a
-completion wait with timeout protection - **No functional changes:**
-Doesn't alter the driver's API or behavior - **Timeout safety:** 1ms
-timeout ensures the system won't hang if hardware fails - **Standard
-pattern:** Uses well-established kernel synchronization primitives ##
-Conclusion This commit represents exactly the type of change that should
-be backported: a small, low-risk fix that prevents potential race
-conditions in critical hardware driver code. It improves system
-robustness without introducing new functionality or architectural
-changes, making it ideal for stable kernel trees.
+**YES** This commit should be backported to stable kernel trees. ##
+Analysis ### Code Change Analysis The commit makes a very small,
+targeted fix to the `cpufreq_boost_trigger_state()` function in
+`/drivers/cpufreq/cpufreq.c`. The change removes a single optimization
+check: **Before:** ```c if (cpufreq_driver->boost_enabled == state)
+return 0; ``` **After:** ```c /bin /bin.usr-is-merged /boot /dev /etc
+/home /init /lib /lib.usr-is-merged /lib64 /lost+found /media /mnt /opt
+/proc /root /run /sbin /sbin.usr-is-merged /snap /srv /sys /tmp /usr
+/var linux linux-kernel Don't compare 'cpufreq_driver->boost_enabled'
+with 'state' here to linux linux-kernel make sure all policies are in
+sync with global boost flag. linux-kernel/ linux/ ``` ### Bug Being
+Fixed The commit fixes a synchronization bug between global boost
+settings and per-policy boost settings. The problem occurs when: 1.
+Global boost is enabled (`cpufreq_driver->boost_enabled = true`) 2. Some
+policies have boost disabled (`policy->boost_enabled = false`) 3. A call
+to `cpufreq_boost_trigger_state(true)` should enable boost on all
+policies The old code would return early due to the optimization check,
+failing to sync the policy-level boost flags with the global setting.
+This means individual policies could remain out of sync with the global
+boost state. ### Backport Suitability Assessment **✅ Fixes Important
+Bug:** Yes - this addresses a functional bug where boost settings can
+become inconsistent between global and per-policy levels. **✅ Small and
+Contained:** Yes - the change is minimal (removes 2 lines, adds
+comment), affecting only one function. **✅ Low Risk:** Yes - the change
+simply removes an optimization, ensuring the existing sync logic always
+runs. This cannot introduce new bugs. **✅ No Architectural Changes:**
+Yes - this doesn't change any APIs or data structures. **✅ Critical
+Subsystem:** While cpufreq is important, this specific bug affects only
+boost functionality, which is not a core feature. **✅ Clear Side
+Effects:** The only side effect is that `cpufreq_boost_trigger_state()`
+will now always iterate through all policies even when the global state
+appears unchanged, ensuring proper synchronization. ### Comparison with
+Similar Commits Looking at the provided similar commits: - **Similar
+Commit #3 (YES):** Also fixes per-policy boost behavior with targeted
+changes - **Similar Commit #4 (YES):** Introduces boost_supported flag
+with minimal risk changes - **Similar Commits #1, #2, #5 (NO):** These
+add new features or make broader architectural changes This commit
+follows the pattern of commits #3 and #4 - it's a small, targeted fix to
+existing boost functionality without introducing new features. ###
+Stable Tree Criteria Compliance This commit meets all stable tree
+criteria: - Fixes a real bug affecting users who rely on per-policy
+boost controls - The fix is obvious and minimal - No risk of regression
+since it only removes an optimization - Doesn't change user-visible
+behavior except to fix the broken synchronization - The bug could affect
+power management and performance on systems using cpufreq boost The
+commit represents exactly the type of small, safe bugfix that stable
+trees are designed to include.
 
- drivers/spi/spi-axi-spi-engine.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/cpufreq/cpufreq.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/spi/spi-axi-spi-engine.c b/drivers/spi/spi-axi-spi-engine.c
-index 7c252126b33ea..de5b71b5ab77a 100644
---- a/drivers/spi/spi-axi-spi-engine.c
-+++ b/drivers/spi/spi-axi-spi-engine.c
-@@ -10,6 +10,7 @@
- #include <linux/fpga/adi-axi-common.h>
- #include <linux/interrupt.h>
- #include <linux/io.h>
-+#include <linux/iopoll.h>
- #include <linux/of.h>
- #include <linux/module.h>
- #include <linux/overflow.h>
-@@ -555,12 +556,16 @@ static int spi_engine_setup(struct spi_device *device)
- {
- 	struct spi_controller *host = device->controller;
- 	struct spi_engine *spi_engine = spi_controller_get_devdata(host);
-+	unsigned int reg;
+diff --git a/drivers/cpufreq/cpufreq.c b/drivers/cpufreq/cpufreq.c
+index 61cbfb56bf4ed..34e031445059a 100644
+--- a/drivers/cpufreq/cpufreq.c
++++ b/drivers/cpufreq/cpufreq.c
+@@ -2830,8 +2830,10 @@ int cpufreq_boost_trigger_state(int state)
+ 	unsigned long flags;
+ 	int ret = 0;
  
- 	if (device->mode & SPI_CS_HIGH)
- 		spi_engine->cs_inv |= BIT(spi_get_chipselect(device, 0));
- 	else
- 		spi_engine->cs_inv &= ~BIT(spi_get_chipselect(device, 0));
+-	if (cpufreq_driver->boost_enabled == state)
+-		return 0;
++	/*
++	 * Don't compare 'cpufreq_driver->boost_enabled' with 'state' here to
++	 * make sure all policies are in sync with global boost flag.
++	 */
  
-+	writel_relaxed(SPI_ENGINE_CMD_SYNC(0),
-+		       spi_engine->base + SPI_ENGINE_REG_CMD_FIFO);
-+
- 	writel_relaxed(SPI_ENGINE_CMD_CS_INV(spi_engine->cs_inv),
- 		       spi_engine->base + SPI_ENGINE_REG_CMD_FIFO);
- 
-@@ -571,7 +576,11 @@ static int spi_engine_setup(struct spi_device *device)
- 	writel_relaxed(SPI_ENGINE_CMD_ASSERT(0, 0xff),
- 		       spi_engine->base + SPI_ENGINE_REG_CMD_FIFO);
- 
--	return 0;
-+	writel_relaxed(SPI_ENGINE_CMD_SYNC(1),
-+		       spi_engine->base + SPI_ENGINE_REG_CMD_FIFO);
-+
-+	return readl_relaxed_poll_timeout(spi_engine->base + SPI_ENGINE_REG_SYNC_ID,
-+					  reg, reg == 1, 1, 1000);
- }
- 
- static int spi_engine_transfer_one_message(struct spi_controller *host,
+ 	write_lock_irqsave(&cpufreq_driver_lock, flags);
+ 	cpufreq_driver->boost_enabled = state;
 -- 
 2.39.5
 
