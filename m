@@ -1,51 +1,53 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A936833142A;
-	Sun,  1 Jun 2025 23:44:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABD1333144C;
+	Sun,  1 Jun 2025 23:44:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748821442; cv=none; b=N/rdh96mAKl5a2BPNS54p5QgUFiac4QoknNYkA09f6pP8HGEonmG9O7npIwlzoRshvEJ9PFu7E9lvTDiAvOFN3hhmkYdgYeogGeO//DgcnwWIbCcZ8pk8kam+T6rBWoVIKS3gLcfA6Rq4fmfJMDbL0WdmZhnGGKGJYWCybznYBI=
+	t=1748821444; cv=none; b=Z+p+FQpEodDHcjRRJakUwr4BHyLiY1KdAqE/CqgkC2pPMFQuhup1ddc6abV4NLQcc8Fesqr2cgc+yzhr+sCVrB1ofRDWG5gVgRgn+1khYfltpWkZUaNHbcFA7TbiSfn/DmZO6EsHVvXFN5BDd0e/u1qJdHM6ePuVnQXgV6q9hgE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748821442; c=relaxed/simple;
-	bh=8ap7oBQTRaglvG6WPf8bWVn25FVVNO5wlzMPqfDUgaE=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=EEzLTDmGKN7XUyY2Q117zgwQHsqx2EpIDdIxEN7Cb+14Y1WWm3DpWv+bhTl6QPJGu03g/p2bJrqQU6ALNklpg2DGNYUJ3PrFtYwUIANreoZDB/eEhlmPsYXDx3V9mBmkKE08AWTRRTzRgwQi4/SwL8XPcZuaOHARfETQKp2Jx4c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IFamE6Y2; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1748821444; c=relaxed/simple;
+	bh=GiTz9HmvFxFDEj7W0pJSipg5/0TyaLfer38ui2vP6vc=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=N6amv/4H8fol3AgHmdMhCBWPU588kLdUd/fW3tPjLJZ1JBH1tww3Q9oPgREX7Jlm7zLJnXC3UcIJV6/xtiBUNA46JjFhcK7ARyjLdIQ8Vhl3FnvCKdLzJslO1E0ALSlAjafdBhvD6P4po5QTmHJ0M0C84oB0eJUSOD9+fxVh0v8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L3eOcyfj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IFamE6Y2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8343AC4CEE7;
-	Sun,  1 Jun 2025 23:44:00 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L3eOcyfj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A296C4CEEE;
+	Sun,  1 Jun 2025 23:44:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748821442;
-	bh=8ap7oBQTRaglvG6WPf8bWVn25FVVNO5wlzMPqfDUgaE=;
-	h=From:To:Cc:Subject:Date:From;
-	b=IFamE6Y2LE480zrjtS5v8nXnaQDapjsW3OnlxxvXAnmkAt44QvyOK5+VUtNjJxday
-	 wTAipizwOjSlH1ug67fZmA9SkDcKljGDWU1YPgCjQRhqElTCv5ScfZ7ZK4NECDlCZJ
-	 gWG86k7eSpCF30scc9Aw2ljpxeuhgADe0ACJBZh5tC3N1vWQ03QseLcrbDPBxrWRIB
-	 ZjsM5dxaC7Nw44KEPoMOL1sWGKFSQwLoSF4iJiRlFltfJ07in9CHGlFegg/LCoLd1Y
-	 acmSWOvsNEeRhtkVzXSpfjU4DnWWBx6A8Pn5B5LceRonWjI+8HDeyAa+9NffVdflqz
-	 HsSr8W18/6c/A==
+	s=k20201202; t=1748821444;
+	bh=GiTz9HmvFxFDEj7W0pJSipg5/0TyaLfer38ui2vP6vc=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=L3eOcyfj7+UP0e0v9kViQqbs0SLGHeXrrdc5OLGCD3su+wlI6p2dw1tuuMRIhdxgt
+	 XLkWB5F5QtXSSVwUOCUhXv6HzXTWyuzgKo9jTPGc3BfFKioi/Xe7vvWV6jhkxWj+hS
+	 LaMCOfeO8gytw9S1osb6F4qPCrduJBPKfD79aMinkKlDZ+STL+ng1ClVFtKa2da+3n
+	 WCaApsdWVoVsap7NgKGOdvRNWi0lr6n4UrAZp8aYCkfkAaK3mMKmh536SrN4BgpL69
+	 Ls9Ts9g3WhWHeUSsgErhHa1zHaNwDHu8Y/YfJ8oeGKr5NH0MQRvdpYvz/INmFSfH79
+	 3WOD+TIdaj4Pw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Alex Deucher <alexander.deucher@amd.com>,
-	Rodrigo Siqueira <siqueira@igalia.com>,
+Cc: Long Li <leo.lilong@huawei.com>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>,
-	christian.koenig@amd.com,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	sunil.khatri@amd.com,
-	alexandre.f.demers@gmail.com,
-	boyuan.zhang@amd.com,
-	kevinyang.wang@amd.com,
-	mario.limonciello@amd.com,
-	amd-gfx@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org,
+	jlayton@kernel.org,
+	trondmy@kernel.org,
+	anna@kernel.org,
+	davem@davemloft.net,
+	edumazet@google.com,
+	kuba@kernel.org,
+	pabeni@redhat.com,
+	linux-nfs@vger.kernel.org,
+	netdev@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.10 01/34] drm/amdgpu/gfx6: fix CSIB handling
-Date: Sun,  1 Jun 2025 19:43:25 -0400
-Message-Id: <20250601234359.3518595-1-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.10 02/34] sunrpc: update nextcheck time when adding new cache entries
+Date: Sun,  1 Jun 2025 19:43:26 -0400
+Message-Id: <20250601234359.3518595-2-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250601234359.3518595-1-sashal@kernel.org>
+References: <20250601234359.3518595-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -57,71 +59,99 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 5.10.237
 Content-Transfer-Encoding: 8bit
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Long Li <leo.lilong@huawei.com>
 
-[ Upstream commit 8307ebc15c1ea98a8a0b7837af1faa6c01514577 ]
+[ Upstream commit 5ca00634c8bbb2979c73465588f486b9632f5ed5 ]
 
-We shouldn't return after the last section.
-We need to update the rest of the CSIB.
+The cache_detail structure uses a "nextcheck" field to control hash table
+scanning intervals. When a table scan begins, nextcheck is set to current
+time plus 1800 seconds. During scanning, if cache_detail is not empty and
+a cache entry's expiry time is earlier than the current nextcheck, the
+nextcheck is updated to that expiry time.
 
-Reviewed-by: Rodrigo Siqueira <siqueira@igalia.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+This mechanism ensures that:
+1) Empty cache_details are scanned every 1800 seconds to avoid unnecessary
+   scans
+2) Non-empty cache_details are scanned based on the earliest expiry time
+   found
+
+However, when adding a new cache entry to an empty cache_detail, the
+nextcheck time was not being updated, remaining at 1800 seconds. This
+could delay cache cleanup for up to 1800 seconds, potentially blocking
+threads(such as nfsd) that are waiting for cache cleanup.
+
+Fix this by updating the nextcheck time whenever a new cache entry is
+added.
+
+Signed-off-by: Long Li <leo.lilong@huawei.com>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Now let me understand what the bug is. Looking at the original code:
-```c for (sect = adev->gfx.rlc.cs_data; sect->section != NULL; ++sect) {
-for (ext = sect->section; ext->extent != NULL; ++ext) { if (sect->id ==
-SECT_CONTEXT) { // process SECT_CONTEXT sections } else { return; //
-BUG: This returns early, skipping remaining code } } } // Important code
-that should always run: buffer[count++] =
-cpu_to_le32(PACKET3(PACKET3_SET_CONTEXT_REG, 1)); buffer[count++] =
-cpu_to_le32(mmPA_SC_RASTER_CONFIG - PACKET3_SET_CONTEXT_REG_START); //
-... more important buffer initialization ``` The fix removes the early
-return so that all sections are processed and the important buffer
-initialization at the end always runs. **YES** This commit should be
-backported to stable kernel trees for the following reasons: 1. **Clear
-Bug Fix**: The commit fixes a clear logic error where an early return
-statement prevents critical buffer initialization code from executing.
-The original code would return immediately when encountering a non-
-SECT_CONTEXT section, skipping the important packet commands that should
-always be written to the buffer (PACKET3_SET_CONTEXT_REG,
-PACKET3_PREAMBLE_END_CLEAR_STATE, PACKET3_CLEAR_STATE). 2. **Functional
-Impact**: This bug affects the Clear State Indirect Buffer (CSIB)
-handling in AMD GPU driver for GFX6 hardware. The incomplete buffer
-initialization could lead to: - Incorrect GPU state during graphics
-operations - Potential rendering issues or GPU hangs - Inconsistent
-hardware behavior 3. **Small and Contained Fix**: The fix is minimal -
-it simply removes two lines (the else block with return statement). This
-is a low-risk change that doesn't introduce new functionality or alter
-the architecture. 4. **Hardware-Specific Bug**: This affects real users
-with GFX6 AMD GPUs. The bug prevents proper initialization of the GPU's
-clear state buffer, which is essential for correct GPU operation. 5.
-**Similar to Historical Backports**: Looking at commit 4 in the similar
-commits (marked as YES for backporting), which also fixed preamble
-handling issues in the AMD GPU driver, this follows a similar pattern of
-fixing command buffer handling bugs. The commit message clearly
-indicates this is a bug fix ("We shouldn't return after the last
-section. We need to update the rest of the CSIB"), and the code change
-confirms that critical buffer initialization was being skipped due to
-the premature return.
+Based on my analysis of the commit, the code changes, and the kernel
+repository context, here is my assessment: **YES** This commit should be
+backported to stable kernel trees. Here's my extensive analysis: ##
+Analysis of the Problem The commit addresses a specific cache management
+issue in the SUNRPC subsystem that can cause significant delays (up to
+1800 seconds/30 minutes) in cache cleanup operations. The problem occurs
+when: 1. A cache_detail starts empty, with nextcheck set to current time
++ 1800 seconds 2. A new cache entry is added to this empty cache_detail
+3. The nextcheck time is NOT updated to reflect the new entry's expiry
+time 4. This means cache cleanup won't occur until the original
+1800-second timeout expires 5. During this delay, threads like nfsd that
+depend on cache cleanup can be blocked ## Code Change Analysis The fix
+is minimal and surgical: ```c + if (detail->nextcheck >
+new->expiry_time) + detail->nextcheck = new->expiry_time + 1; ``` This
+2-line addition in `sunrpc_cache_add_entry()` ensures that when a new
+cache entry is added, if its expiry time is earlier than the current
+nextcheck time, nextcheck is updated to trigger cleanup at the
+appropriate time. ## Why This Qualifies for Stable Backporting **1. Bug
+Fix Nature**: This clearly fixes a bug where cache cleanup could be
+inappropriately delayed, affecting system functionality. **2. Minimal
+Risk**: The change is extremely small and contained. It only adds a
+simple conditional check that makes the cache cleanup more responsive.
+There's no architectural change or complex logic. **3. Critical
+Subsystem Impact**: The SUNRPC cache affects NFS operations, which are
+critical for many production systems. A 1800-second delay in cache
+cleanup can severely impact NFS server responsiveness. **4. Clear User
+Impact**: The commit message explicitly mentions that this can block
+threads like nfsd, which directly affects users experiencing NFS service
+delays or hangs. **5. Historical Context**: Looking at the similar
+commits provided as reference, this fix is actually addressing a more
+fundamental timing issue than some of the other cache-related changes
+that were marked as "NO" for backporting. Those commits dealt with
+interface behavior changes or feature additions, while this fixes a
+clear performance/delay bug. **6. Low Complexity**: The fix doesn't
+introduce new features, change APIs, or modify behavioral contracts. It
+simply ensures that cache cleanup happens when it should happen. **7.
+Contained Scope**: The change is isolated to a single function
+(`sunrpc_cache_add_entry`) and only affects the timing of cache cleanup,
+not the cleanup logic itself. ## Comparison with Reference Commits
+Unlike the reference commits marked "NO" which involved: - Interface
+behavior changes (flush interface semantics) - Feature additions (new
+cache operations) - Complex timing logic modifications - Architectural
+changes This commit simply fixes a timing bug with a minimal, obvious
+correction that ensures cache cleanup occurs at the appropriate time
+rather than being unnecessarily delayed. The fix follows the stable tree
+rules perfectly: it's an important bugfix with minimal risk that
+addresses a clear user-visible issue in a critical kernel subsystem.
 
- drivers/gpu/drm/amd/amdgpu/gfx_v6_0.c | 2 --
- 1 file changed, 2 deletions(-)
+ net/sunrpc/cache.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v6_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v6_0.c
-index 79c52c7a02e3a..d447b2416b98b 100644
---- a/drivers/gpu/drm/amd/amdgpu/gfx_v6_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gfx_v6_0.c
-@@ -2896,8 +2896,6 @@ static void gfx_v6_0_get_csb_buffer(struct amdgpu_device *adev,
- 				buffer[count++] = cpu_to_le32(ext->reg_index - 0xa000);
- 				for (i = 0; i < ext->reg_count; i++)
- 					buffer[count++] = cpu_to_le32(ext->extent[i]);
--			} else {
--				return;
- 			}
- 		}
- 	}
+diff --git a/net/sunrpc/cache.c b/net/sunrpc/cache.c
+index 486c466ab4668..0a91945db88fe 100644
+--- a/net/sunrpc/cache.c
++++ b/net/sunrpc/cache.c
+@@ -133,6 +133,8 @@ static struct cache_head *sunrpc_cache_add_entry(struct cache_detail *detail,
+ 
+ 	hlist_add_head_rcu(&new->cache_list, head);
+ 	detail->entries++;
++	if (detail->nextcheck > new->expiry_time)
++		detail->nextcheck = new->expiry_time + 1;
+ 	cache_get(new);
+ 	spin_unlock(&detail->hash_lock);
+ 
 -- 
 2.39.5
 
