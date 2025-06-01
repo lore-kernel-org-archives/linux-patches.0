@@ -1,44 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E6A52BE6D3;
-	Sun,  1 Jun 2025 23:43:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FB532BE9B2;
+	Sun,  1 Jun 2025 23:43:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748821429; cv=none; b=maC41/+gMrh8DKCHY0NunNumgPqiIhfk+mqneFN6AlZsQrh9MmETAcUMUKg+fgbPrcJMy9Q9EK3T56iVIboh8fZZ5t4yTo+ZLEGZlUSttepI7MhChPfXN8gh3AtHV4gOQgUOZtthu6TEoHBbIY7tJfZZsUbuGmqTh7Tc5BG7Xto=
+	t=1748821432; cv=none; b=d7RQH4XTtVbPG8WXG5W2bemw8smZ55VnbaZ+giSZ6BdZKE3jqYpTNRKKsmuvmTayq0lxWpbvwchkG6YUFv8Uo8qbs+wYWCtTmMeFTidcvGC5X627samPP/ZKSjuCM7wCxIl8KH1WxRg7sJuNhBlf2aQaslYhzE/valHxnSaV2ng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748821429; c=relaxed/simple;
-	bh=JncBFgDuiujNWeIfO4TPwiUOKwSqHUMdoraFKUadBEg=;
+	s=arc-20240116; t=1748821432; c=relaxed/simple;
+	bh=6YfKX0H1CC8Q3E7OyTtXb5uF6mX/Y0slsj7eqFPJ5d0=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=fBhofhMT5WWqlUji5i15sEZvbCaUxqJPdpvohcZQ3tjShvC6R2k7cv8/C93Ucm9cgBORL0iHO/xlHbnvePTh6hIVEYsg02d40AGRQ711wCTfgdPQDpFdkmfBA0/rsCZ3zN90+BUtvLAiajVzzTBYTvxsN7zdZE1oGpltzn0ezMg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rgIncbSI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dW+pjOZz8FCVK+nLFdjzubBKDCm6/vv0AWTlLOr2kmqdazOmzXy3vWod38rQzt3tD5o4vu4FI9iEpAf0hHw+OBVVP/upzSHMGzaCR4wPUhZ1HB8KbH5GbYqlnUWbrWuvS2DWAapcFp/4ZHCjyPWZNShdErR72AKD/rCr0YMzE2w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DGebChAx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rgIncbSI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5D83C4CEE7;
-	Sun,  1 Jun 2025 23:43:47 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DGebChAx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD7E5C4CEE7;
+	Sun,  1 Jun 2025 23:43:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748821428;
-	bh=JncBFgDuiujNWeIfO4TPwiUOKwSqHUMdoraFKUadBEg=;
+	s=k20201202; t=1748821431;
+	bh=6YfKX0H1CC8Q3E7OyTtXb5uF6mX/Y0slsj7eqFPJ5d0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rgIncbSII91jbmWqLab+8y0CFRupMqlcpJMiy9rN8X5LaUYc0WHSAIxjw1W9eFe6w
-	 Nn5dVmPH/9QxPnrhrZIgPLpQ+6cu1AxwNW/RqSf/RF+ep7CQumcnOQtOwnj4IABB25
-	 uMllZDV9TvZrlEgKoOWLpCjUSt/1AtOUlHcnW0+zBm+CJ8IDNemAID7uHtopdzYr30
-	 eD3XPtHyF94IH2mcsvPIz8nCayR3dNMv7HerREK0wPLE5kduBjqaKayJdaDsOPE4fq
-	 yNUQvt+g7gSzywIKrnA//rhgXyLLx7vLY+oAQ3uR9Kz6pelR0AmkWtPdRmWaSSJPW+
-	 UaV2IzrypwMRw==
+	b=DGebChAx84CD0RU58xaQz70KKlf2Y9E9AZxoqlsn0CkdifYphVRiUCW5xr+CTkI47
+	 Q2V7SQYMeLeQ7xf4Vs2uYh28QFXTlo3E5SyWP9KRT4mhK5ehkAztlzTJIi1Q+IgmlG
+	 KHBnQ5na18EPiMPM7/Ks8fO7dO9qR3f0TpH4mIdF0TiY830rSWYiDTPCTx4EeY27Ul
+	 2yhoCWnRNUcCf4/HmoWWyTmPtxtoq7T5Gvcg/z+bnORHf7QpakkRVJVUjQJCHfrAmE
+	 fLsaD8m8PL07S6AKIZIFbSYhBpOU7chsChI1Y+2IwhYYZjvqB25WURaXQPE5LdAT26
+	 bcXqA4sNtTLvw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: gldrk <me@rarity.fan>,
-	"Rafael J . Wysocki" <rafael.j.wysocki@intel.com>,
+Cc: "Dr. David Alan Gilbert" <linux@treblig.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	robert.moore@intel.com,
-	linux-acpi@vger.kernel.org,
-	acpica-devel@lists.linux.dev,
+	perex@perex.cz,
+	tiwai@suse.com,
+	yuehaibing@huawei.com,
+	linux-sound@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.15 39/43] ACPICA: utilities: Fix overflow check in vsnprintf()
-Date: Sun,  1 Jun 2025 19:42:19 -0400
-Message-Id: <20250601234224.3517599-39-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.15 40/43] ALSA: seq: Remove unused snd_seq_queue_client_leave_cells
+Date: Sun,  1 Jun 2025 19:42:20 -0400
+Message-Id: <20250601234224.3517599-40-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250601234224.3517599-1-sashal@kernel.org>
 References: <20250601234224.3517599-1-sashal@kernel.org>
@@ -51,80 +52,102 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 5.15.184
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: gldrk <me@rarity.fan>
+From: "Dr. David Alan Gilbert" <linux@treblig.org>
 
-[ Upstream commit 12b660251007e00a3e4d47ec62dbe3a7ace7023e ]
+[ Upstream commit 81ea9e92941091bb3178d49e63b13bf4df2ee46b ]
 
-ACPICA commit d9d59b7918514ae55063b93f3ec041b1a569bf49
+The last use of snd_seq_queue_client_leave_cells() was removed in 2018
+by
+commit 85d59b57be59 ("ALSA: seq: Remove superfluous
+snd_seq_queue_client_leave_cells() call")
 
-The old version breaks sprintf on 64-bit systems for buffers
-outside [0..UINT32_MAX].
+Remove it.
 
-Link: https://github.com/acpica/acpica/commit/d9d59b79
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/4994935.GXAFRqVoOG@rjwysocki.net
-Signed-off-by: gldrk <me@rarity.fan>
-[ rjw: Added the tag from gldrk ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Dr. David Alan Gilbert <linux@treblig.org>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20250502235219.1000429-4-linux@treblig.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-**YES** This commit should definitely be backported to stable kernel
-trees. Here's my detailed analysis: ## Critical Bug Analysis This commit
-fixes a serious overflow vulnerability in the ACPICA vsnprintf()
-function that affects 64-bit systems. The commit message explicitly
-states "The old version breaks sprintf on 64-bit systems for buffers
-outside [0..UINT32_MAX]", indicating this is a critical functionality
-bug. ## Code Change Analysis The fix replaces problematic boundary
-checking logic: **Old problematic code:** ```c if (size !=
-ACPI_UINT32_MAX) { end = string + size; } else { end =
-ACPI_CAST_PTR(char, ACPI_UINT32_MAX); } ``` **New safe code:** ```c size
-= ACPI_MIN(size, ACPI_PTR_DIFF(ACPI_MAX_PTR, string)); end = string +
-size; ``` ## Why This Needs Backporting 1. **Security Issue**: The old
-code could cause buffer overflows when `string + size` exceeds the
-maximum pointer value on 64-bit systems, potentially leading to memory
-corruption. 2. **Functional Breakage**: As stated in the commit message,
-sprintf() functionality is completely broken for large buffers on 64-bit
-systems, which could cause system crashes or boot failures. 3. **Low
-Risk Fix**: The change is minimal and well-contained, using proper
-ACPICA macros (`ACPI_MIN`, `ACPI_PTR_DIFF`, `ACPI_MAX_PTR`) that are
-designed for safe pointer arithmetic. 4. **Core Utility Function**: This
-affects `vsnprintf()`, a fundamental string formatting function used
-throughout ACPICA, meaning the impact could be widespread. ## Comparison
-to Similar Commits Unlike the previous ACPICA commits shown (which were
-mostly code style changes, fallthrough annotations, or parameter
-additions), this commit fixes an actual functional bug that breaks core
-functionality on 64-bit systems. ## Stable Tree Criteria Met - ✅ Fixes
-important bug affecting users - ✅ Small, contained change - ✅ Minimal
-regression risk - ✅ Affects critical subsystem (ACPICA string handling)
-- ✅ Clear technical necessity (prevents crashes/corruption) This is
-exactly the type of critical bugfix that stable trees are designed to
-carry.
+NO This commit should not be backported to stable kernel trees for
+several reasons: **1. This is a code cleanup, not a bug fix** The commit
+removes dead code (`snd_seq_queue_client_leave_cells()`) that hasn't
+been used since 2018. The commit message explicitly states this function
+was already removed from use by commit 85d59b57be59 in 2018, and this
+commit is simply cleaning up the unused function definition. This is
+purely a maintenance/cleanup change with no functional impact. **2. No
+user-visible impact or bug being fixed** The removed function
+`snd_seq_queue_client_leave_cells()` was already unused, so removing it
+doesn't fix any existing bugs, security issues, or user-reported
+problems. The code changes show: - Removal of the function
+implementation from `sound/core/seq/seq_queue.c` (lines that iterate
+through queues and call `snd_seq_prioq_leave()`) - Removal of the
+function declaration from `sound/core/seq/seq_queue.h` **3. Follows
+pattern of similar non-backported commits** Looking at the similar
+commits provided: - **Similar Commit #1**: Removed superfluous function
+call - Status: NO - **Similar Commit #2**: Removed useless function -
+Status: NO - **Similar Commit #4**: Removed unused declarations -
+Status: NO - **Similar Commit #5**: Code refactoring with no functional
+changes - Status: NO Only **Similar Commit #3** was backported (Status:
+YES), and that was because it fixed an actual race condition bug that
+could cause long stalls, not because it was removing unused code. **4.
+Stable tree criteria not met** Stable kernel backports should focus on:
+- Important bug fixes that affect users - Security fixes - Critical
+functionality issues This commit doesn't meet any of these criteria.
+It's purely cosmetic code cleanup that removes dead code without
+changing any runtime behavior. **5. Risk vs. benefit analysis** While
+the risk of regression is minimal since the function was unused, there's
+no benefit to users of stable kernels from this change. Stable trees
+should minimize churn and only include changes that provide tangible
+benefits to users. The commit represents good housekeeping for the
+mainline kernel but doesn't provide the type of user-impacting fix that
+justifies inclusion in stable kernel trees.
 
- drivers/acpi/acpica/utprint.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ sound/core/seq/seq_queue.c | 16 ----------------
+ sound/core/seq/seq_queue.h |  1 -
+ 2 files changed, 17 deletions(-)
 
-diff --git a/drivers/acpi/acpica/utprint.c b/drivers/acpi/acpica/utprint.c
-index 05426596d1f4a..f910714b51f34 100644
---- a/drivers/acpi/acpica/utprint.c
-+++ b/drivers/acpi/acpica/utprint.c
-@@ -333,11 +333,8 @@ int vsnprintf(char *string, acpi_size size, const char *format, va_list args)
+diff --git a/sound/core/seq/seq_queue.c b/sound/core/seq/seq_queue.c
+index bc933104c3eea..da4e84839d1b2 100644
+--- a/sound/core/seq/seq_queue.c
++++ b/sound/core/seq/seq_queue.c
+@@ -585,22 +585,6 @@ void snd_seq_queue_client_leave(int client)
  
- 	pos = string;
+ /*----------------------------------------------------------------*/
  
--	if (size != ACPI_UINT32_MAX) {
--		end = string + size;
--	} else {
--		end = ACPI_CAST_PTR(char, ACPI_UINT32_MAX);
+-/* remove cells from all queues */
+-void snd_seq_queue_client_leave_cells(int client)
+-{
+-	int i;
+-	struct snd_seq_queue *q;
+-
+-	for (i = 0; i < SNDRV_SEQ_MAX_QUEUES; i++) {
+-		q = queueptr(i);
+-		if (!q)
+-			continue;
+-		snd_seq_prioq_leave(q->tickq, client, 0);
+-		snd_seq_prioq_leave(q->timeq, client, 0);
+-		queuefree(q);
 -	}
-+	size = ACPI_MIN(size, ACPI_PTR_DIFF(ACPI_MAX_PTR, string));
-+	end = string + size;
+-}
+-
+ /* remove cells based on flush criteria */
+ void snd_seq_queue_remove_cells(int client, struct snd_seq_remove_events *info)
+ {
+diff --git a/sound/core/seq/seq_queue.h b/sound/core/seq/seq_queue.h
+index c69105dc1a103..5f6b9c768fec2 100644
+--- a/sound/core/seq/seq_queue.h
++++ b/sound/core/seq/seq_queue.h
+@@ -66,7 +66,6 @@ void snd_seq_queue_client_leave(int client);
+ int snd_seq_enqueue_event(struct snd_seq_event_cell *cell, int atomic, int hop);
  
- 	for (; *format; ++format) {
- 		if (*format != '%') {
+ /* Remove events */
+-void snd_seq_queue_client_leave_cells(int client);
+ void snd_seq_queue_remove_cells(int client, struct snd_seq_remove_events *info);
+ 
+ /* return pointer to queue structure for specified id */
 -- 
 2.39.5
 
