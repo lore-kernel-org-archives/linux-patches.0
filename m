@@ -1,57 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D44FF258CDF;
-	Sun,  1 Jun 2025 23:25:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AF1A25DCE0;
+	Sun,  1 Jun 2025 23:25:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748820324; cv=none; b=D7MIMTgMdmJWEj+cbq/owJcgNBVvFyQkjXm2D4sNwgeDKEEHB6Sd4ZIyfymhJ5NKemT8frliaAE+74Stt+kuZskV/yO8icAfgIVFG34z/QgQ9JFWvCJn5FH/Z140JpntQ8utauhj4nmzN0a9bD4N2LtNx/YvWdwbcmnHgDsW550=
+	t=1748820326; cv=none; b=WAHHGCgdAUtyPtzjG+3A8DgbCAZruHuUyYTxIoBYKZB9O1oOKp9vJpYW2xkSwBGVky8sTeZ2d8A6mYuT4yUfKsspttui5+so4Rx4UuDnDxvaFRnzRJQnnossin39NFg0BYIFApCAGjSpcapxQA9Kfr+nWtqBBQxVCLcujZaC0G0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748820324; c=relaxed/simple;
-	bh=P4Zd3p3LKhfy5AS+Eq3Yw96Ok2iEUmG+zgb5jzPB74w=;
+	s=arc-20240116; t=1748820326; c=relaxed/simple;
+	bh=GlF/7nNGkKcM8Bkhd2WAsT/UJVnoFHO3xaPg2NSYqY4=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nAFyQQ6lIyHwI15s7W0MonlKazmNHZeY4phcwI94VZD6ffjLwkgS/LFoCC9W/YNg1/lPCr81vMPm1Vv9eTCHAMakZ0ZD6pwQEIlf2cjJKcFdBPjFhhJjpflSGtNSG92kRtfMv6B6bbYgZ7i/olpHsWVr7ofj2yIztEB3qiNzQzk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TcbVy5OL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MjBQskxjklLVHkizapftGpX+hWaeG+8sNDbqz68Z3Uo7xcjkl8ou1DZxVkzztXw+i4+KRtYaz6XfW68O2kgZNbv2xGyfF4F6WK9MhFHDbpFbzRtUfwyN9wU04+zBpW+yoAL2bxuzjaQF2Y6hThrXvU5m9jzGanpIxHsvJET+RvM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UsAFWSY/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TcbVy5OL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 769EFC4CEF1;
-	Sun,  1 Jun 2025 23:25:22 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UsAFWSY/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 238BEC4CEEE;
+	Sun,  1 Jun 2025 23:25:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748820324;
-	bh=P4Zd3p3LKhfy5AS+Eq3Yw96Ok2iEUmG+zgb5jzPB74w=;
+	s=k20201202; t=1748820326;
+	bh=GlF/7nNGkKcM8Bkhd2WAsT/UJVnoFHO3xaPg2NSYqY4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TcbVy5OLrqPDznql5qVH9iKSAbTsEV2v+LiZ/M6Xh+Nid2odKgSmyDmONA4xVDp6r
-	 EhZ9GyY7kzNdbzYf2jwk8gY2fSivyAD2vn1wG9AX/cuwahMDsP5e2jcLQMRIvEwBne
-	 zZzTE+/LPjO17PA8I0Iuutkc3mS7UBfLR1go3SrJJP6YnYOKElgMJeZxANasTaXMWu
-	 vDvDKZCNM1juWMtjP5ZnUjDsjEQM6YUPR1o9CMuV3sGKw6l+g5gl8HoPWmu8niDgtf
-	 lL5egzPLqWVALRAZLnPPshTPeV+sNS39ZQWAqZjYqtAQX96yCLbA89jSI8rF8B5Nbu
-	 dNLbkIjkKis5g==
+	b=UsAFWSY/KVLvc0+c1f6lx5W+r/CkAN8Kv+QFL0zcpAZ1kZjbeVF0zwKuDHqyDBnk+
+	 6qHdOfne0H5cZEXHQogcZ5ykJlXotZeUdMZe7fGe4tufVXeGRP6X3ANLHZ6VpM8YOp
+	 fN3qeptaneckH3nxW2JpmBgwMfQUlcQr+a5WtH1IAGlqiLVqARq0qXhLXJz5XbEozM
+	 r2duR7qGfh2mhCd5+GuvNSD2TUwc/sOJijXs/oDahqPhArMxdnoRSjukIiCvmyN+zv
+	 MP+334ZbbErJ5dOYvntQizyBilrAABJVzcVrxKkYOuRAhHZQitydKRkByDq8ZJsLse
+	 kveY9CGuL4oNA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ayushi Makhija <quic_amakhija@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+Cc: Yuezhang Mo <Yuezhang.Mo@sony.com>,
+	Sungjong Seo <sj1557.seo@samsung.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	andrzej.hajda@intel.com,
-	neil.armstrong@linaro.org,
-	rfoss@kernel.org,
-	maarten.lankhorst@linux.intel.com,
-	mripard@kernel.org,
-	tzimmermann@suse.de,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	lumag@kernel.org,
-	dianders@chromium.org,
-	wenst@chromium.org,
-	treapking@chromium.org,
-	xji@analogixsemi.com,
-	robh@kernel.org,
-	dri-devel@lists.freedesktop.org,
+	linux-fsdevel@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.15 018/110] drm/bridge: anx7625: change the gpiod_set_value API
-Date: Sun,  1 Jun 2025 19:23:00 -0400
-Message-Id: <20250601232435.3507697-18-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.15 019/110] exfat: do not clear volume dirty flag during sync
+Date: Sun,  1 Jun 2025 19:23:01 -0400
+Message-Id: <20250601232435.3507697-19-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250601232435.3507697-1-sashal@kernel.org>
 References: <20250601232435.3507697-1-sashal@kernel.org>
@@ -64,110 +50,137 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.15
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ayushi Makhija <quic_amakhija@quicinc.com>
+From: Yuezhang Mo <Yuezhang.Mo@sony.com>
 
-[ Upstream commit 50935044e58e563cdcfd556d62f27bc8744dd64e ]
+[ Upstream commit 46a557694b464881b3c2c4a0ba389a6436419a37 ]
 
-Use gpiod_set_value_cansleep() instead of gpiod_set_value()
-to fix the below call trace in the boot log:
+xfstests generic/482 tests the file system consistency after each
+FUA operation. It fails when run on exfat.
 
-[    5.690534] Call trace:
-[    5.690536]  gpiod_set_value+0x40/0xa4
-[    5.690540]  anx7625_runtime_pm_resume+0xa0/0x324 [anx7625]
-[    5.690545]  __rpm_callback+0x48/0x1d8
-[    5.690549]  rpm_callback+0x6c/0x78
+exFAT clears the volume dirty flag with a FUA operation during sync.
+Since s_lock is not held when data is being written to a file, sync
+can be executed at the same time. When data is being written to a
+file, the FAT chain is updated first, and then the file size is
+updated. If sync is executed between updating them, the length of the
+FAT chain may be inconsistent with the file size.
 
-Certain GPIO controllers require access via message-based buses
-such as I2C or SPI, which may cause the GPIOs to enter a sleep
-state. Therefore, use the gpiod_set_value_cansleep().
+To avoid the situation where the file system is inconsistent but the
+volume dirty flag is cleared, this commit moves the clearing of the
+volume dirty flag from exfat_fs_sync() to exfat_put_super(), so that
+the volume dirty flag is not cleared until unmounting. After the
+move, there is no additional action during sync, so exfat_fs_sync()
+can be deleted.
 
-Signed-off-by: Ayushi Makhija <quic_amakhija@quicinc.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20250505094245.2660750-7-quic_amakhija@quicinc.com
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Sungjong Seo <sj1557.seo@samsung.com>
+Signed-off-by: Yuezhang Mo <Yuezhang.Mo@sony.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-**YES** This commit should be backported to stable kernel trees.
-**Detailed Analysis:** **1. Bug Fix Nature:** The commit fixes a real
-runtime issue that produces call traces in the boot log. The commit
-message clearly shows a call trace stack: ``` [ 5.690534] Call trace: [
-5.690536] gpiod_set_value+0x40/0xa4 [ 5.690540]
-anx7625_runtime_pm_resume+0xa0/0x324 [anx7625] ``` This indicates users
-are experiencing actual crashes or warnings when using this driver with
-certain GPIO controllers. **2. Small, Contained Fix:** The code changes
-are minimal and surgical - only 4 lines changed, replacing
-`gpiod_set_value()` with `gpiod_set_value_cansleep()` in the
-`anx7625_power_on()` and `anx7625_power_standby()` functions: - Line
-1260: `gpiod_set_value(ctx->pdata.gpio_p_on, 1)` →
-`gpiod_set_value_cansleep(ctx->pdata.gpio_p_on, 1)` - Line 1263:
-`gpiod_set_value(ctx->pdata.gpio_reset, 1)` →
-`gpiod_set_value_cansleep(ctx->pdata.gpio_reset, 1)` - Line 1283:
-`gpiod_set_value(ctx->pdata.gpio_reset, 0)` →
-`gpiod_set_value_cansleep(ctx->pdata.gpio_reset, 0)` - Line 1285:
-`gpiod_set_value(ctx->pdata.gpio_p_on, 0)` →
-`gpiod_set_value_cansleep(ctx->pdata.gpio_p_on, 0)` **3. Well-
-Established Pattern:** Looking at the similar commits provided as
-reference, this exact type of GPIO API fix is common and consistently
-handles the same underlying issue. All 5 similar commits (marked as "NO"
-for backport) show the same pattern of switching from
-`gpiod_set_value()` to `gpiod_set_value_cansleep()` to handle GPIO
-controllers on message-based buses (I2C/SPI). **4. Technical
-Correctness:** The fix is technically sound. These functions are called
-during power management operations (`anx7625_power_on()` and
-`anx7625_power_standby()`) where sleeping is acceptable and expected.
-The `_cansleep` variant is the correct API when GPIO controllers might
-be accessed via slow buses like I2C or SPI. **5. Low Risk:** The change
-has minimal risk of regression. The `gpiod_set_value_cansleep()`
-function provides the same functionality as `gpiod_set_value()` but
-allows sleeping, making it safe to use in contexts where the original
-was used incorrectly. **6. Critical Subsystem Impact:** This affects the
-DRM bridge subsystem and display functionality. Users with anx7625
-bridge chips connected to I2C GPIO expanders would experience boot-time
-call traces, which is a user-visible issue that should be fixed in
-stable kernels. **7. Real Hardware Impact:** The commit specifically
-mentions "Certain GPIO controllers require access via message-based
-buses such as I2C or SPI" - this is a real hardware configuration that
-users deploy, not an edge case. This commit meets all the criteria for
-stable backporting: it fixes a user-visible bug, has minimal risk, is
-contained to a single driver, and follows an established pattern for
-this type of GPIO API fix.
+Looking at this commit to analyze for backport suitability: **YES** This
+commit addresses a critical data consistency issue in the exFAT
+filesystem that can cause file corruption when remounting read-only. The
+commit resolves a race condition where the volume dirty flag could be
+cleared prematurely, potentially leaving the filesystem in an
+inconsistent state. ## Key Analysis Points: **1. Critical Bug Fix**: The
+commit message clearly identifies this fixes a specific test failure
+(xfstests generic/482) that tests filesystem consistency. File system
+corruption is a serious user-facing issue that affects data integrity.
+**2. Small, Contained Changes**: The code changes are minimal and
+surgical: - Removes the `exfat_sync_fs()` function (only 20 lines) -
+Moves `exfat_clear_volume_dirty(sb)` call from sync to unmount
+(`exfat_put_super()`) - Updates the remount function to explicitly sync
+and clear dirty flag - Removes the `.sync_fs` callback from the
+super_operations structure **3. Race Condition Fix**: The commit
+addresses a fundamental race condition where: - FAT chain updates happen
+first - File size updates happen second - If sync occurs between these
+steps, the filesystem becomes inconsistent - The volume dirty flag could
+be cleared despite the inconsistency **4. Follows Stable Tree Rules**:
+This is exactly the type of fix that should be backported: - Fixes file
+system corruption - Minimal risk of regression - Small, focused change -
+Addresses data integrity issue **5. Similar Historical Precedents**:
+Looking at the similar commits provided: - Similar Commit #2 (Status:
+YES) also deals with exFAT fsync functionality and data consistency -
+Similar Commit #4 (Status: YES) addresses exFAT remount synchronization
+issues - These precedents show that exFAT data consistency fixes are
+typically backported **6. No Architectural Changes**: The fix doesn't
+introduce new features or make architectural changes - it simply moves
+when the volume dirty flag is cleared to prevent premature clearing
+during race conditions. **7. Critical Subsystem**: Filesystem data
+integrity is a critical subsystem where corruption bugs must be fixed to
+protect user data. The code changes are straightforward - instead of
+clearing the dirty flag during sync operations (which can race with
+ongoing writes), the flag is only cleared at unmount time when no more
+writes can occur. This ensures the filesystem dirty state accurately
+reflects whether pending changes exist.
 
- drivers/gpu/drm/bridge/analogix/anx7625.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ fs/exfat/super.c | 30 +++++++-----------------------
+ 1 file changed, 7 insertions(+), 23 deletions(-)
 
-diff --git a/drivers/gpu/drm/bridge/analogix/anx7625.c b/drivers/gpu/drm/bridge/analogix/anx7625.c
-index 99ef3f27ae429..95d5a4e265788 100644
---- a/drivers/gpu/drm/bridge/analogix/anx7625.c
-+++ b/drivers/gpu/drm/bridge/analogix/anx7625.c
-@@ -1257,10 +1257,10 @@ static void anx7625_power_on(struct anx7625_data *ctx)
- 	usleep_range(11000, 12000);
+diff --git a/fs/exfat/super.c b/fs/exfat/super.c
+index 8465033a6cf0c..7ed858937d45d 100644
+--- a/fs/exfat/super.c
++++ b/fs/exfat/super.c
+@@ -36,31 +36,12 @@ static void exfat_put_super(struct super_block *sb)
+ 	struct exfat_sb_info *sbi = EXFAT_SB(sb);
  
- 	/* Power on pin enable */
--	gpiod_set_value(ctx->pdata.gpio_p_on, 1);
-+	gpiod_set_value_cansleep(ctx->pdata.gpio_p_on, 1);
- 	usleep_range(10000, 11000);
- 	/* Power reset pin enable */
--	gpiod_set_value(ctx->pdata.gpio_reset, 1);
-+	gpiod_set_value_cansleep(ctx->pdata.gpio_reset, 1);
- 	usleep_range(10000, 11000);
+ 	mutex_lock(&sbi->s_lock);
++	exfat_clear_volume_dirty(sb);
+ 	exfat_free_bitmap(sbi);
+ 	brelse(sbi->boot_bh);
+ 	mutex_unlock(&sbi->s_lock);
+ }
  
- 	DRM_DEV_DEBUG_DRIVER(dev, "power on !\n");
-@@ -1280,9 +1280,9 @@ static void anx7625_power_standby(struct anx7625_data *ctx)
- 		return;
- 	}
+-static int exfat_sync_fs(struct super_block *sb, int wait)
+-{
+-	struct exfat_sb_info *sbi = EXFAT_SB(sb);
+-	int err = 0;
+-
+-	if (unlikely(exfat_forced_shutdown(sb)))
+-		return 0;
+-
+-	if (!wait)
+-		return 0;
+-
+-	/* If there are some dirty buffers in the bdev inode */
+-	mutex_lock(&sbi->s_lock);
+-	sync_blockdev(sb->s_bdev);
+-	if (exfat_clear_volume_dirty(sb))
+-		err = -EIO;
+-	mutex_unlock(&sbi->s_lock);
+-	return err;
+-}
+-
+ static int exfat_statfs(struct dentry *dentry, struct kstatfs *buf)
+ {
+ 	struct super_block *sb = dentry->d_sb;
+@@ -219,7 +200,6 @@ static const struct super_operations exfat_sops = {
+ 	.write_inode	= exfat_write_inode,
+ 	.evict_inode	= exfat_evict_inode,
+ 	.put_super	= exfat_put_super,
+-	.sync_fs	= exfat_sync_fs,
+ 	.statfs		= exfat_statfs,
+ 	.show_options	= exfat_show_options,
+ 	.shutdown	= exfat_shutdown,
+@@ -751,10 +731,14 @@ static void exfat_free(struct fs_context *fc)
  
--	gpiod_set_value(ctx->pdata.gpio_reset, 0);
-+	gpiod_set_value_cansleep(ctx->pdata.gpio_reset, 0);
- 	usleep_range(1000, 1100);
--	gpiod_set_value(ctx->pdata.gpio_p_on, 0);
-+	gpiod_set_value_cansleep(ctx->pdata.gpio_p_on, 0);
- 	usleep_range(1000, 1100);
+ static int exfat_reconfigure(struct fs_context *fc)
+ {
++	struct super_block *sb = fc->root->d_sb;
+ 	fc->sb_flags |= SB_NODIRATIME;
  
- 	ret = regulator_bulk_disable(ARRAY_SIZE(ctx->pdata.supplies),
+-	/* volume flag will be updated in exfat_sync_fs */
+-	sync_filesystem(fc->root->d_sb);
++	sync_filesystem(sb);
++	mutex_lock(&EXFAT_SB(sb)->s_lock);
++	exfat_clear_volume_dirty(sb);
++	mutex_unlock(&EXFAT_SB(sb)->s_lock);
++
+ 	return 0;
+ }
+ 
 -- 
 2.39.5
 
