@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E376299AAC;
-	Sun,  1 Jun 2025 23:33:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D229429AAEA;
+	Sun,  1 Jun 2025 23:33:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748820831; cv=none; b=P5XENqoemIiP2eUaEDsNLQ916zIa77owBGVD4AjaJymZyeR0iQ6UMTM+P0q9CnVLNsHvHXcFvJpYNesODofmrtq3Biu7xwcJ9nyLi3AI8oTmkhlZgYRDAPVime9A92YkMFRnDcxh7LbU0JR4ZO80gjzz8GFBkfe2Pnf8wyxpQMg=
+	t=1748820832; cv=none; b=fTZyP0ACfxI1wz0Zzpa1G5WAUQHiujs9Jc8ghTzREt5SXTALikEbCGBYqVOGs98VT5SO/euhgcA4aZ+ehm/94U/qcHlq3UDXYCLKtbNh9oiVCOxIq4/NqIj2kEL5I0ibK/S4Xx2UbVnhsVL97mDdE3d4RUEW8bEIEg8xEY8+Gp8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748820831; c=relaxed/simple;
-	bh=C/YTaGm6mtkWnxS8DPl1/hbQyDkSrdLPkjsHiWcMnfU=;
+	s=arc-20240116; t=1748820832; c=relaxed/simple;
+	bh=PZXekloZst164va3gdtMUsb5TqdDdEpP6i7c1kQ7+HI=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=RAszezn6+uGSxa9uinBOTVDlbAV0a24uJd0PNqGpfDivDVvW/PMc9utOGhKxj/ZNkb9UPcuz7mstgpIW/jYMI4JbTmdxNS99Yjt4BZvzeZYTEo7X+hp7Fr2rAxAI9YQxsUJIFJ1B1zBoqr0ZWiE3/H9CWSrVVPJMaHpXG+7Gdgo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EaEw7Jcz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=H5TgNbcHA4A3FlwMC/PaShDk5V5TAsgX1eJdDF6hvaw6aKhVCbrA+L4VjFhP5Pp5drD1G0AEgPAMiEk2QIcJXtTqCQilK6bo6zp/2F0rlxkHu5Ybzwx3X1HPWV8MFKVDg57KbSgmAEDVTMSfiYBpVdcYuy/f4eraz8jI51xwkUM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CJUaacwe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EaEw7Jcz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E3EFC4CEF1;
-	Sun,  1 Jun 2025 23:33:50 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CJUaacwe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3F13C4CEF2;
+	Sun,  1 Jun 2025 23:33:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748820831;
-	bh=C/YTaGm6mtkWnxS8DPl1/hbQyDkSrdLPkjsHiWcMnfU=;
+	s=k20201202; t=1748820832;
+	bh=PZXekloZst164va3gdtMUsb5TqdDdEpP6i7c1kQ7+HI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EaEw7Jczs/EFrtdPJVtMS4mxmLLOdIbps5/Jpx6rIYD6vx2oVU1ik4RHTsfgbJHQP
-	 KqN4FN6Zm5KjTSiQC8JjJT3htkUW0ZI2XGKkDNCJM5+IU1Srf/ODANudrLdZaT/sFF
-	 8Jb1RN/tTfvb3W0TEyuDR7sZ2lmCXHw1GutjARMNP+nejE39/YcONy7BZJkVhQrWen
-	 iAVn36WL590eNOeDB81xnwSQrS3fgrF0LOaHA8BHY0MssoOB4GGfIKvDLQsR0O/JBS
-	 fO9vcIqoFpG27wOvb5h4VjpWi/Kv6iWwKdm4HtTQndhzyXu67CMAitF5MAAvdGMUbd
-	 ftZgVAXhpfM7Q==
+	b=CJUaacwe0hgYxIIqttHDwTbO/A0BHtMA/RlR4k4c+YCnCez6+NCRODePYMKcXwE+p
+	 q36X7G5xla2zqoyPjmtw4qm4VNG+AMaYt5bS9m/O8BnV/F98l67NFT5np/y0XrFv3T
+	 zb9t7doTNlNeHMZbRBiV8u3/VY3wSkr4RhtXWM0Eo8g9x7szARrXqvtDuqGgaIphLq
+	 p/sbfXBbHF83YHeccPHQpW1F4itT3L2b9plkfSiP7vCMPApRk/MfswRhNA675Qr391
+	 i43jbiZ6ErQCAe3LzRVN63pi6+4JXUpc2DhqA1H/r2Ht7NKRiiQE1SHLTElZGMK83p
+	 eZ2oC8KLR2eRQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ulf Hansson <ulf.hansson@linaro.org>,
-	Dhruva Gole <d-gole@ti.com>,
+Cc: =?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
+	Willy Tarreau <w@1wt.eu>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-pm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.14 098/102] pmdomain: core: Reset genpd->states to avoid freeing invalid data
-Date: Sun,  1 Jun 2025 19:29:30 -0400
-Message-Id: <20250601232937.3510379-98-sashal@kernel.org>
+	linux@weissschuh.net,
+	nathan@kernel.org,
+	linux-kernel@vger.kernel.org,
+	llvm@lists.linux.dev
+Subject: [PATCH AUTOSEL 6.14 099/102] tools/nolibc: use intmax definitions from compiler
+Date: Sun,  1 Jun 2025 19:29:31 -0400
+Message-Id: <20250601232937.3510379-99-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250601232937.3510379-1-sashal@kernel.org>
 References: <20250601232937.3510379-1-sashal@kernel.org>
@@ -46,95 +48,94 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.14.9
 Content-Transfer-Encoding: 8bit
 
-From: Ulf Hansson <ulf.hansson@linaro.org>
+From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
 
-[ Upstream commit 99012014c902cd9ad85fd288d8a107f33a69855e ]
+[ Upstream commit e5407c0820ea5fa7117b85ed32b724af73156d63 ]
 
-If genpd_alloc_data() allocates data for the default power-states for the
-genpd, let's make sure to also reset the pointer in the error path. This
-makes sure a genpd provider driver doesn't end up trying to free the data
-again, but using an invalid pointer.
+The printf format checking in the compiler uses the intmax types from
+the compiler, not libc. This can lead to compiler errors.
 
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Reviewed-by: Dhruva Gole <d-gole@ti.com>
-Link: https://lore.kernel.org/r/20250402120613.1116711-1-ulf.hansson@linaro.org
+Instead use the types already provided by the compiler.
+
+Example issue with clang 19 for arm64:
+
+nolibc-test.c:30:2: error: format specifies type 'uintmax_t' (aka 'unsigned long') but the argument has type 'uintmax_t' (aka 'unsigned long long') [-Werror,-Wformat]
+
+Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+Acked-by: Willy Tarreau <w@1wt.eu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Now I can see that the commit "99012014c9 pmdomain: core: Reset
-genpd->states to avoid freeing invalid data" is already in the kernel.
-Let me analyze the backport suitability based on the code changes and
-the similar commits provided. **YES** This commit should be backported
-to stable kernel trees based on the following analysis: ## Backport
-Justification: ### 1. **Critical Bug Fix with Security Implications**
-The commit fixes a use-after-free/double-free vulnerability in the power
-domain management core. This is exactly the type of critical bug that
-stable trees are designed to address. The bug manifests when: - A genpd
-provider driver calls `pm_genpd_init()` - `genpd_alloc_data()`
-successfully allocates default power states but then fails later (e.g.,
-in `ida_alloc()`) - The error path leaves `genpd->states` pointing to
-freed memory - Subsequent cleanup by provider drivers can cause
-`kfree()` to be called on invalid memory ### 2. **Small, Contained Fix**
-The code change is minimal and surgical: ```c - if (genpd->free_states
-== genpd_free_default_power_state) + if (genpd->free_states ==
-genpd_free_default_power_state) { kfree(genpd->states); + genpd->states
-= NULL; + } ``` This adds only 2 lines of code to reset a pointer to
-NULL, which has minimal risk of introducing regressions. ### 3.
-**Comparison with Historical Similar Commits** Looking at the provided
-similar commits: - **Similar Commit #1** (Status: YES): "Fix error path
-in pm_genpd_init() when ida alloc fails" - Also fixes error handling in
-genpd initialization, similar scope and impact - **Similar Commit #4**
-(Status: YES): "Add missing put_device()" - Also fixes resource cleanup
-in genpd, small contained fix with `Cc: stable@vger.kernel.org` Both of
-these accepted backports deal with similar error handling issues in the
-same subsystem, supporting the case for this commit. ### 4. **Critical
-Subsystem Impact** The power domain management subsystem is fundamental
-to kernel operation, especially on embedded systems and SoCs. A use-
-after-free bug in this core infrastructure could: - Cause kernel panics
-during device initialization failures - Lead to memory corruption that's
-difficult to debug - Affect system stability during error recovery
-scenarios ### 5. **Clear Bug Pattern** The commit follows the
-established pattern of good backport candidates: - Fixes a clear,
-reproducible bug (invalid pointer access) - Has minimal code changes
-with clear intent - Addresses memory management correctness - Authored
-by the subsystem maintainer (Ulf Hansson) - Includes a detailed commit
-message explaining the fix ### 6. **Error Path Robustness** This fix
-improves the robustness of error handling, which is crucial for stable
-kernel operation. When hardware initialization fails or memory
-allocation fails, the kernel must handle these conditions gracefully
-without corrupting memory or crashing. ### 7. **No Architectural
-Changes** Unlike Similar Commits #2, #3, and #5 (marked NO), this commit
-doesn't introduce new features, architectural changes, or performance
-optimizations. It purely fixes a correctness issue in existing error
-handling logic. The commit represents exactly the type of important bug
-fix that stable trees should include: small, contained, addresses a real
-correctness issue, minimal regression risk, and affects a critical
-kernel subsystem.
+**YES** This commit should be backported to stable kernel trees. Here's
+my extensive analysis: ## Analysis of the Code Changes The commit makes
+a targeted fix to resolve compiler format checking errors by changing
+the intmax type definitions in `tools/include/nolibc/stdint.h`: ```c
+-typedef int64_t intmax_t; -typedef uint64_t uintmax_t; +typedef
+__INTMAX_TYPE__ intmax_t; +typedef __UINTMAX_TYPE__ uintmax_t; ``` ##
+Why This Should Be Backported ### 1. **Fixes Real Compilation Errors**
+The commit addresses actual compiler errors that prevent successful
+builds, as demonstrated by the clang 19 error message: ``` nolibc-
+test.c:30:2: error: format specifies type 'uintmax_t' (aka 'unsigned
+long') but the argument has type 'uintmax_t' (aka 'unsigned long long')
+[-Werror,-Wformat] ``` This is a critical build breakage, not just a
+warning. ### 2. **Small, Contained, Low-Risk Change** - Only changes 2
+lines of code in a single header file - Does not modify any algorithms
+or control flow - Uses well-established compiler built-ins that have
+been available for decades - No risk of behavioral changes beyond fixing
+the type compatibility issue ### 3. **Follows Established Pattern** The
+change aligns with existing practice in the same file, which already
+uses `__SIZE_TYPE__` for `size_t` definition. This demonstrates that
+using compiler built-ins for fundamental types is the established
+approach in nolibc. ### 4. **Cross-Platform Compatibility Fix** The
+issue particularly affects: - Different compiler backends (GCC vs Clang)
+- Different architectures where `long` vs `long long` sizes vary
+(especially arm64) - Cross-compilation scenarios - Builds with strict
+format checking enabled (`-Wformat -Werror`) ### 5. **Comparison with
+Similar Commits** Looking at the reference commits provided: - **Similar
+Commit #4** (Status: YES): Also fixes integer type issues in nolibc for
+platform compatibility - **Similar Commit #5** (Status: YES): Also fixes
+printf format mismatches with explicit stable tree marking (`Cc:
+stable@vger.kernel.org`) This commit follows the same pattern of fixing
+type/format compatibility issues that have been deemed worthy of
+backporting. ### 6. **Tools Subsystem Stability** While this is in the
+tools directory, nolibc is used for: - Kernel testing infrastructure -
+Minimal userspace environments - Cross-compilation toolchains - Kernel
+selftests Breaking builds in these contexts can impact kernel
+development workflows across different platforms. ### 7. **No
+Architectural Changes** The commit: - Doesn't introduce new features -
+Doesn't change APIs - Doesn't modify kernel core functionality - Simply
+ensures type consistency between compiler and library definitions ##
+Conclusion This is exactly the type of targeted bug fix that stable
+trees are designed for: it fixes a real compilation issue that affects
+users, uses a minimal and safe approach, follows established patterns,
+and has no risk of introducing regressions. The fix ensures that nolibc
+can be compiled successfully across different compiler/architecture
+combinations, which is essential for kernel development infrastructure.
 
- drivers/pmdomain/core.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ tools/include/nolibc/stdint.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pmdomain/core.c b/drivers/pmdomain/core.c
-index 949445e929731..951071e1093ac 100644
---- a/drivers/pmdomain/core.c
-+++ b/drivers/pmdomain/core.c
-@@ -2194,8 +2194,10 @@ static int genpd_alloc_data(struct generic_pm_domain *genpd)
- 	return 0;
- put:
- 	put_device(&genpd->dev);
--	if (genpd->free_states == genpd_free_default_power_state)
-+	if (genpd->free_states == genpd_free_default_power_state) {
- 		kfree(genpd->states);
-+		genpd->states = NULL;
-+	}
- free:
- 	if (genpd_is_cpu_domain(genpd))
- 		free_cpumask_var(genpd->cpus);
+diff --git a/tools/include/nolibc/stdint.h b/tools/include/nolibc/stdint.h
+index cd79ddd6170e0..b052ad6303c38 100644
+--- a/tools/include/nolibc/stdint.h
++++ b/tools/include/nolibc/stdint.h
+@@ -39,8 +39,8 @@ typedef   size_t      uint_fast32_t;
+ typedef  int64_t       int_fast64_t;
+ typedef uint64_t      uint_fast64_t;
+ 
+-typedef  int64_t           intmax_t;
+-typedef uint64_t          uintmax_t;
++typedef __INTMAX_TYPE__    intmax_t;
++typedef __UINTMAX_TYPE__  uintmax_t;
+ 
+ /* limits of integral types */
+ 
 -- 
 2.39.5
 
