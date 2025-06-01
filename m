@@ -1,49 +1,57 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF6C9297434;
-	Sun,  1 Jun 2025 23:37:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE52A309075;
+	Sun,  1 Jun 2025 23:37:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748821070; cv=none; b=uARk1Hxqn4uUeLZEbbiLxZS/xa2C1DKFJuZvKn6SZmGp/748LjlTpBA7ikdNO9giSBD18B5noxQnvL5Y5EaZD68FU9iE9OKCoHAROEV91D6jGGj/tr4pe/Lkwez1dZAeOBDDLlFCOTQ71zuNJmY+psZyzGo39ZKzdckTcA0trfA=
+	t=1748821074; cv=none; b=DOjmqrzOhhCbtX67ZlEqKTN55nFdfghgIMBnjMOFL4XdmiEiY8kduYjJg8Lj/3tykqfms68iPG6fFmlydD5dts+9dsx1P+TAfCLSDWGNuOIbSlHgTTPCAdeJtIMCjjVgUz5udOQkuhdHzjkAIOp2w0SYPTU7we/ZzRkcKrcp8ig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748821070; c=relaxed/simple;
-	bh=zv8ZRgZq/0dbeugcXHWe2rbJBNGGL580SzsO5M2Zk1g=;
+	s=arc-20240116; t=1748821074; c=relaxed/simple;
+	bh=oKZnUoB8V8ofoWzhkl/5BUoCMmCopf8CnGJ9r1Dj9s8=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=YlQpYGjCTLY/4zcEqjBatgPos3+whMMCpEvD0T6GbOyuThz9cwqU5Bf5Nao5gyT+JZDRigTVT/x4C1JcKZNMqWfsZneWRl1Mmz/WqxXNQbrup0d5GBMm2oB0V80gV02jFvpJwJGeOFmrtIMFiiWo1qkGn9czPNcWT53nXUDxH8E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RZihP9FW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W/Li+H49jgm7/gNXNTYAyvGIY9RZG9ktzuc7OMlJuyHpU6XHMCEa1QOXYapd9qOfDvf1xJgvTBYSfYdtXU6RePUAmnTpRcaM7jpnro5iS/MEmnzhyQz7v9iBixdyyiDOoP9hbQaPyl8l0qDk2ClXtlzSNSjom3eAztk3f+dzGzE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Mlf4Q9Db; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RZihP9FW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56C97C4CEE7;
-	Sun,  1 Jun 2025 23:37:48 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Mlf4Q9Db"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01313C4CEEE;
+	Sun,  1 Jun 2025 23:37:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748821069;
-	bh=zv8ZRgZq/0dbeugcXHWe2rbJBNGGL580SzsO5M2Zk1g=;
+	s=k20201202; t=1748821074;
+	bh=oKZnUoB8V8ofoWzhkl/5BUoCMmCopf8CnGJ9r1Dj9s8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RZihP9FWUysey/C1EjoNNxvzzu3p7Btz9ZxoD0AWYmkqmG7RuZwhXiVlAnG3hr4og
-	 nTuFEmHc66t6/MyusFkgVmMhz1FEOxcJVYqgZ56glZV/IBWuxA9IM7mv30SPcbkLKl
-	 7/2QH37bk9A4N8JF/mgojZK699Zeh5EZM9RrbdkjdHUJ9NbDkHYqy2BVa0ORwcqcMB
-	 Lio+kbQS7AE4dhDBYuIk3arRNdprXr51owA/rTreqGfFIZ4hW+CQvbTubNmrxVGwNx
-	 FdEVd2PD2Axpal+A/ShAq7pFunl+HZ78WBfDZruEitv6nqsxfiGEi0VjrruEmnMrkI
-	 PlPK1AFZ4btZA==
+	b=Mlf4Q9DbqzIbLl2iOxU6o2WJM6hIqb2PCmO30WIznEh+4IqA9Tg5+trCW3dI2GgqK
+	 PrMXqzf2ogOOUuRJq9eUEhsj+cCNDH8cvugDvHdl6n6llwxFxbmpuKmtCbdUR9GPyp
+	 iv0enMiKTSP0zlJ5zNvgN055DkWJ8P4rrkhohqK6bvLfCoFRLkvZP+3fz7wFni7ND9
+	 cazCWB8doCaFznCEDLuSl7S/icz/b1KKpyF6okUyi79epTZX6n2vjph8g+fZX91fYp
+	 Uk3uzZWTmSbr6vYiZUbIkyTuccq40FfosAjrAqbtHiarWk/BH1++c8EulxAnBmrH0z
+	 3vzfnQ+T8dPGg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ming Qian <ming.qian@oss.nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>,
+Cc: Dave Airlie <airlied@redhat.com>,
+	Ben Skeggs <bskeggs@nvidia.com>,
+	Timur Tabi <ttabi@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>,
-	mirela.rabulea@nxp.com,
-	mchehab@kernel.org,
-	shawnguo@kernel.org,
-	imx@lists.linux.dev,
-	linux-media@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
+	maarten.lankhorst@linux.intel.com,
+	mripard@kernel.org,
+	tzimmermann@suse.de,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	lumag@kernel.org,
+	jani.nikula@intel.com,
+	imre.deak@intel.com,
+	lyude@redhat.com,
+	suraj.kandpal@intel.com,
+	abel.vesa@linaro.org,
+	andy.yan@rock-chips.com,
+	arun.r.murthy@intel.com,
+	mitulkumar.ajitkumar.golani@intel.com,
+	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.6 02/66] media: imx-jpeg: Check decoding is ongoing for motion-jpeg
-Date: Sun,  1 Jun 2025 19:36:39 -0400
-Message-Id: <20250601233744.3514795-2-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.6 03/66] drm/dp: add option to disable zero sized address only transactions.
+Date: Sun,  1 Jun 2025 19:36:40 -0400
+Message-Id: <20250601233744.3514795-3-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250601233744.3514795-1-sashal@kernel.org>
 References: <20250601233744.3514795-1-sashal@kernel.org>
@@ -58,141 +66,155 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.6.92
 Content-Transfer-Encoding: 8bit
 
-From: Ming Qian <ming.qian@oss.nxp.com>
+From: Dave Airlie <airlied@redhat.com>
 
-[ Upstream commit fd5b6cd730676940df63b0970bb1ba30bca1aac3 ]
+[ Upstream commit f0ddbb1eed1898286d2bd99fd6ab64ca9700d267 ]
 
-As the first frame in "repeat-mode" is the pattern, the pattern done
-interrupt is ignored by the driver. With small resolution bitstreams,
-the interrupts might fire too quickly and hardware combine two irqs to
-once because irq handle have latency. Thus the driver might miss the
-frame decode done interrupt from the first actual frame.
+Some older NVIDIA and some newer NVIDIA hardware/firmware seems to
+have issues with address only transactions (firmware rejects them).
 
-In order to avoid the driver wait for the frame done interrupt that has
-been combined to the pattern done interrupt and been ignored, driver
-will check the curr_desc and slot_status registers to figure out if the
-decoding of actual frame is finished or not.
+Add an option to the core drm dp to avoid address only transactions,
+This just puts the MOT flag removal on the last message of the transfer
+and avoids the start of transfer transaction.
 
-Firstly we check the curr_desc register,
-- if it is still pointing to the pattern descriptor, the second actual
-frame is not started, we can wait for its frame-done interrupt.
-- if the curr_desc has pointed to the frame descriptor, then we check the
-ongoing bit of slot_status register.
-- if the ongoing bit is set to 1, the decoding of the actual frame is not
-finished, we can wait for its frame-done interrupt.
-- if the ongoing bit is set to 0, the decoding of the actual frame is
-finished, we can't wait for the second interrupt, but mark it as done.
+This with the flag set in nouveau, allows eDP probing on GB203 device.
 
-But there is still a small problem, that the curr_desc and slot_status
-registers are not synchronous. curr_desc is updated when the
-next_descpt_ptr is loaded, but the ongoing bit of slot_status is set
-after the 32 bytes descriptor is loaded, there will be a short time
-interval in between, which may cause fake false. Consider read register
-is quite slow compared with IP read 32byte from memory, read twice
-slot_status can avoid this situation.
-
-Signed-off-by: Ming Qian <ming.qian@oss.nxp.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Signed-off-by: Dave Airlie <airlied@redhat.com>
+Reviewed-by: Ben Skeggs <bskeggs@nvidia.com>
+Reviewed-by: Timur Tabi <ttabi@nvidia.com>
+Tested-by: Timur Tabi <ttabi@nvidia.com>
+Signed-off-by: Dave Airlie <airlied@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Based on my analysis of both the commit message and code changes, here
-is my determination: **YES** This commit should be backported to stable
-kernel trees for the following reasons: 1. **Fixes a real bug causing
-driver hangs**: The commit addresses a specific issue where the driver
-can wait indefinitely for an interrupt that has already been combined
-with a previous ignored interrupt. This causes the driver to hang,
-making the hardware unusable for motion-JPEG decoding with small
-resolution bitstreams. 2. **Clear bug fix with minimal changes**: The
-fix is targeted and minimal - it adds one new function
-(`mxc_dec_is_ongoing()`) and modifies one condition in the IRQ handler.
-The changes are well-contained within the imx-jpeg driver with no impact
-on other subsystems. 3. **Hardware-specific race condition**: The commit
-addresses a hardware behavior where interrupts can be combined when they
-fire too quickly. This is a real issue that affects users of the i.MX8
-JPEG hardware decoder, particularly when processing small resolution
-motion-JPEG streams. 4. **No architectural changes**: The fix doesn't
-introduce any new features or change the driver's architecture. It
-simply adds additional state checking to handle a specific hardware race
-condition. 5. **Low regression risk**: The changes are defensive - they
-add additional checks before proceeding rather than changing existing
-behavior. The worst case would be that the new checks might not catch
-all edge cases, but they won't break existing working scenarios. 6.
-**Similar to other backported commits**: Looking at the similar commits
-marked as "YES" for backporting (like "media: imx-jpeg: Disable slot
-interrupt when frame done"), this follows the same pattern of fixing
-specific hardware issues that cause system problems. The commit
-specifically fixes a condition where the driver becomes stuck waiting
-for an interrupt that will never come, which is exactly the kind of bug
-that stable kernels should fix to ensure reliable operation of hardware.
+**YES** This commit should be backported to stable kernel trees for the
+following reasons: 1. **Fixes Critical Hardware Functionality**: The
+commit addresses a significant bug where eDP displays cannot be probed
+on certain NVIDIA hardware (GB203 and others). The commit message
+explicitly states: "This with the flag set in nouveau, allows eDP
+probing on GB203 device." Without this fix, users with affected hardware
+cannot use their displays - a core functionality issue. 2. **Low
+Regression Risk - Opt-in Design**: The code changes show this is
+implemented as an opt-in feature through the `no_zero_sized` boolean
+flag: ```c /bin /bin.usr-is-merged /boot /dev /etc /home /init /lib
+/lib.usr-is-merged /lib64 /lost+found /media /mnt /opt /proc /root /run
+/sbin /sbin.usr-is-merged /snap /srv /sys /tmp /usr /var 0001-Fix-
+Clippy-warnings.patch 0002-Enhance-inference-prompt-to-utilize-
+CVEKERNELDIR-whe.patch 0003-Update-to-latest-version-of-clap.patch
+Cargo.lock Cargo.toml LICENSE README.md analyze_merge_commit.sh
+dpp_rcg_backport_analysis.md io_uring_analysis.txt ksmbd_analysis.txt
+merge_commit_analysis.txt model prompt src target test_gpio_cleanup.txt
+test_patch.txt @no_zero_sized: If the hw can't use zero sized transfers
+(NVIDIA) model/ prompt/ src/ target/ bool no_zero_sized; ``` The
+modified behavior only activates when this flag is explicitly set,
+meaning existing functionality remains unchanged for all other hardware.
+3. **Minimal and Contained Changes**: The code modifications are limited
+to: - Adding a single boolean field to the `drm_dp_aux` structure -
+Wrapping existing zero-sized transaction code in conditional checks: `if
+(!aux->no_zero_sized)` - Adding a special case to remove the MOT flag on
+the last message when the flag is set 4. **Historical Precedent**:
+Similar commits addressing DP AUX transaction issues have been
+backported: - Commit #2 (drm/nouveau/i2c/gf119-: add support for
+address-only transactions) was backported to fix display regressions -
+Commit #5 (drm/bridge: analogix_dp: properly handle zero sized AUX
+transactions) was explicitly marked with "CC: stable@vger.kernel.org" 5.
+**Affects Multiple Hardware Generations**: The commit message indicates
+this affects "Some older NVIDIA and some newer NVIDIA
+hardware/firmware", suggesting a widespread issue across different
+hardware generations that stable kernel users would encounter. 6.
+**Well-Tested Solution**: The commit has been: - Reviewed by Ben Skeggs
+(nouveau maintainer) - Reviewed and tested by Timur Tabi (NVIDIA
+engineer) - Signed off by Dave Airlie (DRM maintainer) The commit
+clearly meets stable kernel criteria: it fixes an important bug (display
+functionality), has minimal risk due to its opt-in nature, doesn't
+introduce new features or architectural changes, and addresses a real
+hardware compatibility issue that affects users.
 
- .../media/platform/nxp/imx-jpeg/mxc-jpeg-hw.h |  1 +
- .../media/platform/nxp/imx-jpeg/mxc-jpeg.c    | 31 ++++++++++++++++++-
- 2 files changed, 31 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/display/drm_dp_helper.c | 39 +++++++++++++++----------
+ include/drm/display/drm_dp_helper.h     |  5 ++++
+ 2 files changed, 28 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/media/platform/nxp/imx-jpeg/mxc-jpeg-hw.h b/drivers/media/platform/nxp/imx-jpeg/mxc-jpeg-hw.h
-index a2b4fb9e29e7d..cbb2de369838c 100644
---- a/drivers/media/platform/nxp/imx-jpeg/mxc-jpeg-hw.h
-+++ b/drivers/media/platform/nxp/imx-jpeg/mxc-jpeg-hw.h
-@@ -89,6 +89,7 @@
- /* SLOT_STATUS fields for slots 0..3 */
- #define SLOT_STATUS_FRMDONE			(0x1 << 3)
- #define SLOT_STATUS_ENC_CONFIG_ERR		(0x1 << 8)
-+#define SLOT_STATUS_ONGOING			(0x1 << 31)
+diff --git a/drivers/gpu/drm/display/drm_dp_helper.c b/drivers/gpu/drm/display/drm_dp_helper.c
+index 851f0baf94600..830c27cc8a637 100644
+--- a/drivers/gpu/drm/display/drm_dp_helper.c
++++ b/drivers/gpu/drm/display/drm_dp_helper.c
+@@ -1896,14 +1896,17 @@ static int drm_dp_i2c_xfer(struct i2c_adapter *adapter, struct i2c_msg *msgs,
  
- /* SLOT_IRQ_EN fields TBD */
+ 	for (i = 0; i < num; i++) {
+ 		msg.address = msgs[i].addr;
+-		drm_dp_i2c_msg_set_request(&msg, &msgs[i]);
+-		/* Send a bare address packet to start the transaction.
+-		 * Zero sized messages specify an address only (bare
+-		 * address) transaction.
+-		 */
+-		msg.buffer = NULL;
+-		msg.size = 0;
+-		err = drm_dp_i2c_do_msg(aux, &msg);
++
++		if (!aux->no_zero_sized) {
++			drm_dp_i2c_msg_set_request(&msg, &msgs[i]);
++			/* Send a bare address packet to start the transaction.
++			 * Zero sized messages specify an address only (bare
++			 * address) transaction.
++			 */
++			msg.buffer = NULL;
++			msg.size = 0;
++			err = drm_dp_i2c_do_msg(aux, &msg);
++		}
  
-diff --git a/drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c b/drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c
-index 092d83b7e7954..3b789e0ebdf46 100644
---- a/drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c
-+++ b/drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c
-@@ -877,6 +877,34 @@ static u32 mxc_jpeg_get_plane_size(struct mxc_jpeg_q_data *q_data, u32 plane_no)
- 	return size;
+ 		/*
+ 		 * Reset msg.request in case in case it got
+@@ -1922,6 +1925,8 @@ static int drm_dp_i2c_xfer(struct i2c_adapter *adapter, struct i2c_msg *msgs,
+ 			msg.buffer = msgs[i].buf + j;
+ 			msg.size = min(transfer_size, msgs[i].len - j);
+ 
++			if (j + msg.size == msgs[i].len && aux->no_zero_sized)
++				msg.request &= ~DP_AUX_I2C_MOT;
+ 			err = drm_dp_i2c_drain_msg(aux, &msg);
+ 
+ 			/*
+@@ -1939,15 +1944,17 @@ static int drm_dp_i2c_xfer(struct i2c_adapter *adapter, struct i2c_msg *msgs,
+ 	}
+ 	if (err >= 0)
+ 		err = num;
+-	/* Send a bare address packet to close out the transaction.
+-	 * Zero sized messages specify an address only (bare
+-	 * address) transaction.
+-	 */
+-	msg.request &= ~DP_AUX_I2C_MOT;
+-	msg.buffer = NULL;
+-	msg.size = 0;
+-	(void)drm_dp_i2c_do_msg(aux, &msg);
+ 
++	if (!aux->no_zero_sized) {
++		/* Send a bare address packet to close out the transaction.
++		 * Zero sized messages specify an address only (bare
++		 * address) transaction.
++		 */
++		msg.request &= ~DP_AUX_I2C_MOT;
++		msg.buffer = NULL;
++		msg.size = 0;
++		(void)drm_dp_i2c_do_msg(aux, &msg);
++	}
+ 	return err;
  }
  
-+static bool mxc_dec_is_ongoing(struct mxc_jpeg_ctx *ctx)
-+{
-+	struct mxc_jpeg_dev *jpeg = ctx->mxc_jpeg;
-+	u32 curr_desc;
-+	u32 slot_status;
+diff --git a/include/drm/display/drm_dp_helper.h b/include/drm/display/drm_dp_helper.h
+index 65d76f9e84305..2c8838f3adf6a 100644
+--- a/include/drm/display/drm_dp_helper.h
++++ b/include/drm/display/drm_dp_helper.h
+@@ -454,6 +454,11 @@ struct drm_dp_aux {
+ 	 * @powered_down: If true then the remote endpoint is powered down.
+ 	 */
+ 	bool powered_down;
 +
-+	curr_desc = readl(jpeg->base_reg + MXC_SLOT_OFFSET(ctx->slot, SLOT_CUR_DESCPT_PTR));
-+	if (curr_desc == jpeg->slot_data.cfg_desc_handle)
-+		return true;
-+
-+	slot_status = readl(jpeg->base_reg + MXC_SLOT_OFFSET(ctx->slot, SLOT_STATUS));
-+	if (slot_status & SLOT_STATUS_ONGOING)
-+		return true;
-+
-+	/*
-+	 * The curr_desc register is updated when next_descpt_ptr is loaded,
-+	 * the ongoing bit of slot_status is set when the 32 bytes descriptor is loaded.
-+	 * So there will be a short time interval in between, which may cause fake false.
-+	 * Consider read register is quite slow compared with IP read 32byte from memory,
-+	 * read twice slot_status can avoid this situation.
++	/**
++	 * @no_zero_sized: If the hw can't use zero sized transfers (NVIDIA)
 +	 */
-+	slot_status = readl(jpeg->base_reg + MXC_SLOT_OFFSET(ctx->slot, SLOT_STATUS));
-+	if (slot_status & SLOT_STATUS_ONGOING)
-+		return true;
-+
-+	return false;
-+}
-+
- static irqreturn_t mxc_jpeg_dec_irq(int irq, void *priv)
- {
- 	struct mxc_jpeg_dev *jpeg = priv;
-@@ -946,7 +974,8 @@ static irqreturn_t mxc_jpeg_dec_irq(int irq, void *priv)
- 		mxc_jpeg_enc_mode_go(dev, reg, mxc_jpeg_is_extended_sequential(q_data->fmt));
- 		goto job_unlock;
- 	}
--	if (jpeg->mode == MXC_JPEG_DECODE && jpeg_src_buf->dht_needed) {
-+	if (jpeg->mode == MXC_JPEG_DECODE && jpeg_src_buf->dht_needed &&
-+	    mxc_dec_is_ongoing(ctx)) {
- 		jpeg_src_buf->dht_needed = false;
- 		dev_dbg(dev, "Decoder DHT cfg finished. Start decoding...\n");
- 		goto job_unlock;
++	bool no_zero_sized;
+ };
+ 
+ int drm_dp_dpcd_probe(struct drm_dp_aux *aux, unsigned int offset);
 -- 
 2.39.5
 
