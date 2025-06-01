@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6199B309997;
-	Sun,  1 Jun 2025 23:38:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B528726E142;
+	Sun,  1 Jun 2025 23:38:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748821084; cv=none; b=MuqqDrNA1G8wHBEKRKtKNh1SF8DpqQmsW6080YooNoduNdHmaPfgTcWudSmXOzi0FZPPp36v+IdiyULtbP03Y3j+mxxBzWjrO4Aq19WgPqArU+Mdbpy4IFDuYzeH5Wdb9srGk0ydQcBypjQHuIkzRwUwrTW75rPU2naafcEOb20=
+	t=1748821085; cv=none; b=iRrMU4yrg8/nyyYU66/VumwfVAYpXS0x6CHjfVPgPG1Jk5W7Eajl7cEviMRLZ3bcpR9ohu3GmtUpldWkbuMYKeWBzJ4ABTl0yvZ/960Wcb29egdE9hT0e6h1BGmZGmuuMbJ48klfTQdqOBmk9xU/jpJsCW7gKzMt3FK4Lt7VBtc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748821084; c=relaxed/simple;
-	bh=0JZPRXZ/4kFSPERQfK2yij+1TwpexOjgdO1yFV7OcXE=;
+	s=arc-20240116; t=1748821085; c=relaxed/simple;
+	bh=1nLAPJTQkEwASNq5o4+7jzC2fG13vPWHCf7TfkBjozw=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uWXqHysLTdiFuZLLbgHF0fhgj2m9w2waqC4nvA9wX5GJi4YDAsjm/Bq1NAKur/nRuXZIhetEJloq47o/qJ0kUrVWeIUM8tLs080jCMAtbCs4Mxn7gO8t/qX88EVnhXYjCUuRz+eTXa4iv9P/QbB0ow41xoCLPDFHzcjfRwDndyM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Wripm3tB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Evx1VyIlgRL9zUNOf/P4z+31W6pJG/ajBHw/3Wh/oownRKpKG+7G3IX5IoKwM9q9CXV8iarZJSa2M7ue3TTfPvZ6CKy8ae7MnZriPkTGPiixpQdO112GCGWw0Vp5je+JrwVbZUNhl8MY87RCOKQrOJ+RtvkFKBQTOtIm85I3RMk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Au79rBe5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Wripm3tB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AEEEC4CEE7;
-	Sun,  1 Jun 2025 23:38:03 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Au79rBe5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6577C4CEF4;
+	Sun,  1 Jun 2025 23:38:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748821084;
-	bh=0JZPRXZ/4kFSPERQfK2yij+1TwpexOjgdO1yFV7OcXE=;
+	s=k20201202; t=1748821085;
+	bh=1nLAPJTQkEwASNq5o4+7jzC2fG13vPWHCf7TfkBjozw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wripm3tB5jfBnwooSPvAlfe27D4jyOS7IQS7CtX09RsPpZgpvwesjrdtukv/4lzd5
-	 saXwIR8xokmM6xG/9yBPfYjo42agVQHIKJp265LYC9lHhezMGQ+HbuEzKD5WA1Vs6a
-	 hBAUarJoBw/AQYa3QY/6VySknxAIQhNVQqhm6KXtEd6HyJWocaD7PZcl8RuBbvTWcn
-	 kFCcDUIw79289GRYl5bk/G/dRXrRzKFdpLlEEFMCu3b7lo0A4R15uoM34Y5B14nSQW
-	 Nhe+C220oeF6F3jqGZiCbTiimraLPedz+oQhLMVLuD0ObwK7G9I1M8PlCZom+VgjGY
-	 Ox8H4AQQb5JtA==
+	b=Au79rBe5UXSpqN3q5gprS65bbnK8GY0uUluKlzvbozf9/YQT77QIpIk5EKUX73dXj
+	 28qdIa9W1+dTC8qNOrs+qPwG7ELUvDxg4XtxT7MJw2TZv++mTGUXU3sHt3ChBXll9v
+	 jZPDznqDHtfq8wGLYHMpJTHiyt93PRvMYR2zCA8BmYJhkc+uYY9AOJeJeyDiJ4jtV1
+	 mgSBuwowp47hPmxPkWrwHlfj8LbIOQesWCTowR1YWVoxO4H/lNbL0TOH60KVz8ZNr5
+	 xxEm3Y+b4TYA/zVRhsvO98a2PNWf503ffndHvSeoZzfqnTW66pJTYEdQxaJ66BcPUA
+	 vcE1xONUA5qaQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jiayuan Chen <jiayuan.chen@linux.dev>,
-	syzbot+01affb1491750534256d@syzkaller.appspotmail.com,
-	Tejun Heo <tj@kernel.org>,
+Cc: Namjae Jeon <linkinjeon@kernel.org>,
+	Jianzhou Zhao <xnxc22xnxc22@qq.com>,
 	Sasha Levin <sashal@kernel.org>,
+	sj1557.seo@samsung.com,
+	linux-fsdevel@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.6 07/66] workqueue: Fix race condition in wq->stats incrementation
-Date: Sun,  1 Jun 2025 19:36:44 -0400
-Message-Id: <20250601233744.3514795-7-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.6 08/66] exfat: fix double free in delayed_free
+Date: Sun,  1 Jun 2025 19:36:45 -0400
+Message-Id: <20250601233744.3514795-8-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250601233744.3514795-1-sashal@kernel.org>
 References: <20250601233744.3514795-1-sashal@kernel.org>
@@ -52,85 +53,86 @@ X-stable-base: Linux 6.6.92
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 70e1683ca3a6474360af1d3a020a9a98c8492cc0 ]
+[ Upstream commit 1f3d9724e16d62c7d42c67d6613b8512f2887c22 ]
 
-Fixed a race condition in incrementing wq->stats[PWQ_STAT_COMPLETED] by
-moving the operation under pool->lock.
+The double free could happen in the following path.
 
-Reported-by: syzbot+01affb1491750534256d@syzkaller.appspotmail.com
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+exfat_create_upcase_table()
+        exfat_create_upcase_table() : return error
+        exfat_free_upcase_table() : free ->vol_utbl
+        exfat_load_default_upcase_table : return error
+     exfat_kill_sb()
+           delayed_free()
+                  exfat_free_upcase_table() <--------- double free
+This patch set ->vol_util as NULL after freeing it.
+
+Reported-by: Jianzhou Zhao <xnxc22xnxc22@qq.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-**YES** This commit should be backported to stable kernel trees. Here's
-my detailed analysis: ## Race Condition Analysis The commit fixes a
-**data race condition** in `pwq->stats[PWQ_STAT_COMPLETED]++` that is
-directly related to a previously fixed race condition for
-`pwq->stats[PWQ_STAT_STARTED]++` (commit fe48ba7daefe). **The Problem:**
-- Line 3244 in the current kernel shows
-`pwq->stats[PWQ_STAT_COMPLETED]++` is executed **outside** the
-`pool->lock` protection - Multiple worker threads can concurrently
-increment this counter, creating a race condition identical to the one
-fixed in commit fe48ba7daefe - The syzbot report confirms this is a real
-issue affecting production systems **The Fix:** The commit moves
-`pwq->stats[PWQ_STAT_COMPLETED]++` from line ~3244 (before
-`lock_map_release`) to after `raw_spin_lock_irq(&pool->lock)` at line
-~3273, ensuring atomic access under lock protection. ## Backport
-Suitability Criteria **✅ Fixes Important Bug:** Yes - race conditions
-can lead to incorrect statistics and potential corruption **✅ Small and
-Contained:** The change is minimal - just moving one line of code to a
-different location **✅ No Side Effects:** Moving the stats increment
-under lock protection has no functional side effects beyond fixing the
-race **✅ No Architectural Changes:** This is purely a synchronization
-fix with no design changes **✅ Critical Subsystem:** Workqueue is a core
-kernel subsystem used throughout the kernel **✅ Clear Stable Tree
-Compliance:** - Important bugfix ✓ - Minimal risk ✓ - Confined to
-workqueue subsystem ✓ - Reported by automated testing (syzbot) ✓ ##
-Historical Precedent The commit directly parallels the **previously
-backported** commit fe48ba7daefe (Similar Commit #1), which fixed the
-same type of race condition for `PWQ_STAT_STARTED`. That commit was
-marked "Backport Status: YES" and demonstrates that: 1. KCSAN-detected
-race conditions in workqueue stats are considered backport-worthy 2.
-Moving stats increments under lock protection is an established fix
-pattern 3. The workqueue maintainer (Tejun Heo) accepts such fixes ##
-Risk Assessment **Minimal Risk:** The change only affects when the
-counter is incremented (under lock vs. outside lock). Since both
-locations are in the same execution path, there's no functional behavior
-change - only proper synchronization. **No Regression Potential:** The
-fix follows the exact same pattern as the successful previous fix,
-reducing the likelihood of introducing new issues. This commit
-represents a clear, low-risk bug fix that addresses a real concurrency
-issue in a critical kernel subsystem, making it an ideal candidate for
-stable tree backporting.
+Based on my thorough analysis of the commit and examination of the
+kernel tree, here is my assessment: **YES** This commit should be
+backported to stable kernel trees. Here's my extensive analysis: ## Code
+Analysis **The Problem:** The commit fixes a classic double-free
+vulnerability in the exfat filesystem. Looking at the current kernel
+code, the vulnerability exists in this execution path: 1.
+`exfat_create_upcase_table()` calls `exfat_load_upcase_table()` which
+may fail 2. On failure (`ret && ret != -EIO`), it calls
+`exfat_free_upcase_table(sbi)` 3. Then it goes to `load_default:` and
+calls `exfat_load_default_upcase_table()` which may also fail 4. When
+the filesystem unmounts, `exfat_kill_sb()` → `delayed_free()` →
+`exfat_free_upcase_table(sbi)` is called again **The Current Vulnerable
+Code:** ```c void exfat_free_upcase_table(struct exfat_sb_info *sbi) {
+kvfree(sbi->vol_utbl); // No NULL assignment - vulnerable to double free
+} ``` **The Fix:** The patch adds `sbi->vol_utbl = NULL;` after the
+`kvfree()`, which prevents the double-free because `kvfree(NULL)` is
+safe. ## Backport Criteria Assessment **1. Bug Severity: HIGH** - This
+is a memory corruption vulnerability (double-free) - Double-free bugs
+can lead to heap corruption, crashes, and potentially security exploits
+- The bug affects the reliability and security of the exfat filesystem
+**2. Fix Quality: EXCELLENT** - The fix is minimal (just one line:
+`sbi->vol_utbl = NULL;`) - Extremely low risk of introducing regressions
+- Follows standard defensive programming practices - The fix is
+contained within a single function **3. Backport Suitability: PERFECT**
+- Small, isolated change that doesn't affect any APIs - No architectural
+changes or new features - The fix addresses the root cause directly -
+Compatible with all kernel versions that have the vulnerable code **4.
+Historical Context:** Looking at the similar commits provided: -
+**Similar Commit #2** (Status: YES): Also a memory leak fix in exfat
+with `Cc: stable@vger.kernel.org` - **Similar Commit #4** (Status: YES):
+Another memory corruption prevention fix in exfat - Both demonstrate
+that small, targeted memory management fixes in exfat are appropriate
+for stable backporting **5. Impact Assessment:** - **User Impact:** High
+- prevents filesystem crashes and potential data corruption - **Risk:**
+Very low - the change only affects error paths and adds defensive
+programming - **Complexity:** Minimal - single line change with clear
+semantics **6. RCU Context:** The commit a13d1a4de3b0 introduced the
+`delayed_free()` mechanism that made this double-free possible, making
+this fix essential for kernels with that change. ## Conclusion This
+commit represents exactly the type of fix that stable kernels need: a
+small, surgical fix for a potentially serious memory corruption bug with
+minimal risk of regression. The double-free vulnerability could lead to
+system instability and the fix is trivial to apply and verify. Given the
+similarities with other exfat memory management fixes that were
+successfully backported, this should definitely be included in stable
+kernel trees.
 
- kernel/workqueue.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/exfat/nls.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/kernel/workqueue.c b/kernel/workqueue.c
-index 59b6efb2a11c3..78d4f51a9506e 100644
---- a/kernel/workqueue.c
-+++ b/kernel/workqueue.c
-@@ -2637,7 +2637,7 @@ __acquires(&pool->lock)
- 	 * point will only record its address.
- 	 */
- 	trace_workqueue_execute_end(work, worker->current_func);
--	pwq->stats[PWQ_STAT_COMPLETED]++;
-+
- 	lock_map_release(&lockdep_map);
- 	lock_map_release(&pwq->wq->lockdep_map);
- 
-@@ -2666,6 +2666,8 @@ __acquires(&pool->lock)
- 
- 	raw_spin_lock_irq(&pool->lock);
- 
-+	pwq->stats[PWQ_STAT_COMPLETED]++;
-+
- 	/*
- 	 * In addition to %WQ_CPU_INTENSIVE, @worker may also have been marked
- 	 * CPU intensive by wq_worker_tick() if @work hogged CPU longer than
+diff --git a/fs/exfat/nls.c b/fs/exfat/nls.c
+index 705710f93e2dd..0e05c6b5a2864 100644
+--- a/fs/exfat/nls.c
++++ b/fs/exfat/nls.c
+@@ -804,4 +804,5 @@ int exfat_create_upcase_table(struct super_block *sb)
+ void exfat_free_upcase_table(struct exfat_sb_info *sbi)
+ {
+ 	kvfree(sbi->vol_utbl);
++	sbi->vol_utbl = NULL;
+ }
 -- 
 2.39.5
 
