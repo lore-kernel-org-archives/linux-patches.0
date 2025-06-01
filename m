@@ -1,47 +1,53 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81E38334277;
-	Sun,  1 Jun 2025 23:44:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30E2F33429E;
+	Sun,  1 Jun 2025 23:44:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748821473; cv=none; b=i6oTNG4p6kphBlwBJqqmAg4HdtALHJbimsbruFfKSCytl/Ix3To5CIvmNxGSvHd99aZeyYDfiGXR8EqujZDVR0AuQtuOiduOoR5mvFYL0YCkg8XuktkP/b3mxXA800P5B5KPf/Lrhv+9Q13g/Dg8tzE/m4oO9Ul7Dp5Nqsw1Ikw=
+	t=1748821476; cv=none; b=HgvPr3lNFPPV/Yk4QPyX3S6pC1/oWNAaVtEJYLVGc9DSoo60fYTKCQEkvopZdAX5baK6ZWYnuGLahq8MR3/UJVnbPC3HMLuQhhQSlRUEIJnssOxwnIlxoDweTJ9LJWku56vsIJNsuL9sxX1u4IIlB3Wy8uBC+0emFc0F9Z9cb3M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748821473; c=relaxed/simple;
-	bh=wq5sNo98hWUjLSt36P3bpW+ygCORKRX2Q95XC/m0MEA=;
+	s=arc-20240116; t=1748821476; c=relaxed/simple;
+	bh=Qry0W7+8+DMWlUTxM4kClLEnmvalIp8zlvCEMMvluoQ=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=eMEvoxmFl3itZw8vBgyKPqGYKkg78an/7UK6kmb9MKDXgyqJ5Jk98xwQnjH2MuI1pD0HtLChamjwCe5llhmPRuW9gLNq5ep7rJAUpSVmndiw6ZNNkoxs2yTIJgy8BJB5V5elzG41lvE1VbMdm74eBUXPm/Q38vkyr3juhbdUE3g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=I0dWggTk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hOWQGYb1bylLlefnvIflbvFDpFBlLdQjxpGoXHp6pYxHXFoswE1nqD8GQ0/KzvGFDjuH4ZPLwQd48IOM1aNoIgMdFqKyGJXVTtwAkdAUoyIWLLTrIa/nyrQbP9aPujy8bKQyTfjdut0ia/BqhdvOLyl3ckWM+x25M2Hr3Ng0ojk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HtLiz12l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="I0dWggTk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 187D0C4CEF1;
-	Sun,  1 Jun 2025 23:44:32 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HtLiz12l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C857DC4CEF1;
+	Sun,  1 Jun 2025 23:44:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748821473;
-	bh=wq5sNo98hWUjLSt36P3bpW+ygCORKRX2Q95XC/m0MEA=;
+	s=k20201202; t=1748821475;
+	bh=Qry0W7+8+DMWlUTxM4kClLEnmvalIp8zlvCEMMvluoQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I0dWggTkxbjltZi8vDEN5rzODMKUcv8ijgOFkWhuHM1yS3jzuEE6gelEI4ZfAMK/W
-	 LoQAYTuo+hoClbNKaRb5HlHK4pOXudyQsZMPXqiaFsNyHD5nDbcjCGolUHyU6ixmd1
-	 lOG9vQ+aHGRKz27MX2p+IaFvv1MZJaBbUcxSBaRioQU4TJx0E1mh94KtPN74ypCoRB
-	 q+WqcoNZD1zQIHYgi0L9L2KbrqEkk/OvjKWyrknnM8V0tFGmdbjUawAB3qRHG9JrUk
-	 hQ+WjdLVEaKXPo/bc4kkCa2DpMOxDXmCMTRDMXbnMwXwgsmakQNN9vE2zuZmyBHd/f
-	 kAyV0xsm1P8bg==
+	b=HtLiz12lL6qeT7hA7ybRZ+hPxil6/e2Y56lwhU6U5KKSihTamCg984L1jONHDmwQR
+	 mAXvPwtVJTfd0PyAwlySNZmU9ZJU4QuhFp1FEQGcNkWPzYikuQDlw0PobBH8qxSPJG
+	 CmMETk3fuybXR6IbdTN1IPM8Rzd63iISw5BaVXOimbSOCKddhe7pwYrdiQrJnS8ZSu
+	 dIZrqqE8vDG919YRcKRnCuXMgSAyrTKprKGf7tlN0phGWiT4F1rA05i1lac+NkKtyc
+	 jH98hIdP0x0S+kzZtHCrAysPYYHmiflADTDBbvXiiHKseECpGd9eocqvffjHiXtBDv
+	 U/WtN2Kbmv7oQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Aditya Dutt <duttaditya18@gmail.com>,
-	syzbot+b974bd41515f770c608b@syzkaller.appspotmail.com,
-	Dave Kleikamp <dave.kleikamp@oracle.com>,
+Cc: Jonas Karlman <jonas@kwiboo.se>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Christopher Obbard <chris.obbard@collabora.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>,
-	shaggy@kernel.org,
-	ghanshyam1898@gmail.com,
-	eadavis@qq.com,
-	r.smirnov@omp.ru,
-	jfs-discussion@lists.sourceforge.net,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.10 14/34] jfs: fix array-index-out-of-bounds read in add_missing_indices
-Date: Sun,  1 Jun 2025 19:43:38 -0400
-Message-Id: <20250601234359.3518595-14-sashal@kernel.org>
+	ezequiel@vanguardiasur.com.ar,
+	mchehab@kernel.org,
+	gregkh@linuxfoundation.org,
+	matthias.bgg@gmail.com,
+	angelogioacchino.delregno@collabora.com,
+	linux-media@vger.kernel.org,
+	linux-rockchip@lists.infradead.org,
+	linux-staging@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-mediatek@lists.infradead.org
+Subject: [PATCH AUTOSEL 5.10 15/34] media: rkvdec: h264: Use bytesperline and buffer height as virstride
+Date: Sun,  1 Jun 2025 19:43:39 -0400
+Message-Id: <20250601234359.3518595-15-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250601234359.3518595-1-sashal@kernel.org>
 References: <20250601234359.3518595-1-sashal@kernel.org>
@@ -54,133 +60,111 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 5.10.237
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Aditya Dutt <duttaditya18@gmail.com>
+From: Jonas Karlman <jonas@kwiboo.se>
 
-[ Upstream commit 5dff41a86377563f7a2b968aae00d25b4ceb37c9 ]
+[ Upstream commit d5e0aa61470c48ddc04d433a00e79cef8716377a ]
 
-stbl is s8 but it must contain offsets into slot which can go from 0 to
-127.
+Use bytesperline and buffer height to calculate the strides configured.
 
-Added a bound check for that error and return -EIO if the check fails.
-Also make jfs_readdir return with error if add_missing_indices returns
-with an error.
+This does not really change anything other than ensuring the
+bytesperline that is signaled to userspace matches what is configured
+in HW.
 
-Reported-by: syzbot+b974bd41515f770c608b@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com./bug?extid=b974bd41515f770c608b
-Signed-off-by: Aditya Dutt <duttaditya18@gmail.com>
-Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+Signed-off-by: Jonas Karlman <jonas@kwiboo.se>
+Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Tested-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Tested-by: Christopher Obbard <chris.obbard@collabora.com>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-**YES** This commit should be backported to stable kernel trees. Here's
-my detailed analysis: ## Security and Stability Impact 1. **Critical
-Array-Index-Out-of-Bounds Fix**: The commit addresses a serious array-
-index-out-of-bounds vulnerability in the JFS filesystem's
-`add_missing_indices()` function at `fs/jfs/jfs_dtree.c:2648`. The code
-was accessing `p->slot[stbl[i]]` without validating that `stbl[i]` is
-within valid bounds (0-127). 2. **Consistent with Established Pattern**:
-This fix follows the exact same pattern as **all 5 similar commits**
-that were marked as "Backport Status: YES": - Similar Commits #1, #2, #3
-all add bounds checking for `stbl[i] < 0 || stbl[i] > 127` - Similar
-Commits #4, #5 add bounds checking for array indices in JFS - All were
-successfully backported due to their security importance 3. **Syzbot-
-Reported Vulnerability**: The commit fixes a vulnerability reported by
-syzbot (`syzbot+b974bd41515f770c608b@syzkaller.appspotmail.com`),
-indicating this is a real exploitable issue found through fuzzing. ##
-Code Analysis **Key Changes Made:** 1. **Bounds Check Addition**: Added
-validation `if (stbl[i] < 0)` before accessing `p->slot[stbl[i]]` 2.
-**Error Handling**: Changed `add_missing_indices()` from `void` to `int`
-return type to propagate errors 3. **Proper Error Propagation**:
-Modified `jfs_readdir()` to check return value and exit on error: `if
-((rc = add_missing_indices(ip, bn))) goto out;` 4. **Transaction
-Cleanup**: Added `txAbort(tid, 0)` on error path to properly clean up
-the transaction **Technical Context:** - `stbl` is declared as `s8 *`
-(signed 8-bit array) but must contain valid slot indices (0-127) -
-`DTPAGEMAXSLOT` is defined as 128, so valid indices are 0-127 - Negative
-values in `stbl[i]` cause array-index-out-of-bounds when accessing
-`p->slot[stbl[i]]` ## Backport Criteria Assessment ✅ **Fixes Important
-Bug**: Prevents potential kernel crashes and security issues ✅ **Small
-and Contained**: Limited to one function with clear, minimal changes ✅
-**No Side Effects**: Only adds bounds checking and error handling ✅ **No
-Architectural Changes**: Preserves existing logic flow ✅ **Critical
-Subsystem**: Filesystem corruption/crashes affect system stability ✅
-**Clear Pattern**: Identical to 5 other successfully backported JFS
-fixes ✅ **Minimal Regression Risk**: Only adds safety checks, doesn't
-change core logic ✅ **Confined to Subsystem**: Changes isolated to JFS
-dtree handling ## Existing Infrastructure The kernel already has
-extensive bounds checking for `stbl` indices throughout `jfs_dtree.c`: -
-Line 2895-2898: `if (stbl[i] < 0 || stbl[i] > 127)` in `jfs_readdir()` -
-Line 3099-3102: `if (stbl[0] < 0 || stbl[0] > 127)` in `dtReadFirst()` -
-Line 637-640: `if (stbl[index] < 0)` in search functions This commit
-simply extends the same pattern to the previously missed
-`add_missing_indices()` function, maintaining consistency with the
-existing codebase security measures. The fix is essential for preventing
-potential kernel crashes and maintaining filesystem integrity, making it
-an ideal candidate for stable tree backporting.
+### Key Reasons for NO Backport: 1. **Not a Bug Fix**: The commit
+message explicitly states "This does not really change anything other
+than ensuring the bytesperline that is signaled to userspace matches
+what is configured in HW." This is not fixing a functional bug but
+rather improving consistency between userspace and hardware
+configuration. 2. **Code Quality/Consistency Improvement**: The changes
+are primarily about code correctness and consistency rather than fixing
+a critical issue that affects users. This aligns with similar commits
+#1, #2, and #4 which were marked as NO for backporting. 3. **Staging
+Driver**: The rkvdec driver is in `drivers/staging/media/`, which
+indicates it's still under development and not considered stable.
+Staging drivers typically have more relaxed backporting requirements. 4.
+**Specific Code Changes Analysis**: - **Before**: `hor_virstride =
+(sps->bit_depth_luma_minus8 + 8) 0001-Fix-Clippy-warnings.patch
+0002-Enhance-inference-prompt-to-utilize-CVEKERNELDIR-whe.patch
+0003-Update-to-latest-version-of-clap.patch Cargo.lock Cargo.toml
+LICENSE README.md adreno_acd_support_analysis.md
+amd_display_ips_sequential_ono_backport_analysis.md
+analyze_merge_commit.sh dpp_rcg_backport_analysis.md
+drm_amd_display_vertical_interrupt_dcn32_dcn401_backport_analysis.md
+drm_bridge_analysis.txt drm_format_helper_24bit_analysis.md
+drm_imagination_register_update_analysis.md
+drm_mediatek_mtk_dpi_refactoring_analysis.md
+intel_ipu6_constify_analysis.md io_uring_analysis.txt ksmbd_analysis.txt
+merge_commit_analysis.txt model prompt src target test_gpio_cleanup.txt
+test_patch.txt verisilicon_av1_4k_analysis.md dst_fmt->width / 8;` -
+**After**: `hor_virstride = dst_fmt->plane_fmt[0].bytesperline;` -
+**Before**: `ver_virstride = round_up(dst_fmt->height, 16);` -
+**After**: `ver_virstride = dst_fmt->height;` 5. **No Risk Indication**:
+The changes don't indicate they're fixing crashes, data corruption,
+security issues, or other critical problems that would warrant stable
+backporting. 6. **Pattern Match with Similar Commits**: Looking at the
+provided examples: - Similar commits #1, #2, #4, and #5 that make
+stride/calculation improvements were marked as NO - Only commit #3 that
+increased max supported height (a clear functional limitation fix) was
+marked as YES 7. **No Stable Tree Mention**: The commit message contains
+no indication of stable tree inclusion via Fixes: tags or explicit
+stable tree requests. ### Conclusion: This commit improves code
+consistency by using the actual bytesperline values from userspace
+instead of calculating them from SPS parameters, but it doesn't fix a
+user-impacting bug. It's a code quality improvement that follows the
+pattern of other NO-backport commits in the provided examples.
 
- fs/jfs/jfs_dtree.c | 18 +++++++++++++++---
- 1 file changed, 15 insertions(+), 3 deletions(-)
+ drivers/staging/media/rkvdec/rkvdec-h264.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/fs/jfs/jfs_dtree.c b/fs/jfs/jfs_dtree.c
-index 417d1c2fc2911..27ca98614b0bb 100644
---- a/fs/jfs/jfs_dtree.c
-+++ b/fs/jfs/jfs_dtree.c
-@@ -2909,7 +2909,7 @@ void dtInitRoot(tid_t tid, struct inode *ip, u32 idotdot)
-  *	     fsck.jfs should really fix this, but it currently does not.
-  *	     Called from jfs_readdir when bad index is detected.
-  */
--static void add_missing_indices(struct inode *inode, s64 bn)
-+static int add_missing_indices(struct inode *inode, s64 bn)
- {
- 	struct ldtentry *d;
- 	struct dt_lock *dtlck;
-@@ -2918,7 +2918,7 @@ static void add_missing_indices(struct inode *inode, s64 bn)
- 	struct lv *lv;
- 	struct metapage *mp;
- 	dtpage_t *p;
--	int rc;
-+	int rc = 0;
- 	s8 *stbl;
- 	tid_t tid;
- 	struct tlock *tlck;
-@@ -2943,6 +2943,16 @@ static void add_missing_indices(struct inode *inode, s64 bn)
+diff --git a/drivers/staging/media/rkvdec/rkvdec-h264.c b/drivers/staging/media/rkvdec/rkvdec-h264.c
+index ddccd97a359fa..a5c37c5c3e518 100644
+--- a/drivers/staging/media/rkvdec/rkvdec-h264.c
++++ b/drivers/staging/media/rkvdec/rkvdec-h264.c
+@@ -907,9 +907,9 @@ static void config_registers(struct rkvdec_ctx *ctx,
+ 	dma_addr_t rlc_addr;
+ 	dma_addr_t refer_addr;
+ 	u32 rlc_len;
+-	u32 hor_virstride = 0;
+-	u32 ver_virstride = 0;
+-	u32 y_virstride = 0;
++	u32 hor_virstride;
++	u32 ver_virstride;
++	u32 y_virstride;
+ 	u32 yuv_virstride = 0;
+ 	u32 offset;
+ 	dma_addr_t dst_addr;
+@@ -920,16 +920,16 @@ static void config_registers(struct rkvdec_ctx *ctx,
  
- 	stbl = DT_GETSTBL(p);
- 	for (i = 0; i < p->header.nextindex; i++) {
-+		if (stbl[i] < 0) {
-+			jfs_err("jfs: add_missing_indices: Invalid stbl[%d] = %d for inode %ld, block = %lld",
-+				i, stbl[i], (long)inode->i_ino, (long long)bn);
-+			rc = -EIO;
-+
-+			DT_PUTPAGE(mp);
-+			txAbort(tid, 0);
-+			goto end;
-+		}
-+
- 		d = (struct ldtentry *) &p->slot[stbl[i]];
- 		index = le32_to_cpu(d->index);
- 		if ((index < 2) || (index >= JFS_IP(inode)->next_index)) {
-@@ -2960,6 +2970,7 @@ static void add_missing_indices(struct inode *inode, s64 bn)
- 	(void) txCommit(tid, 1, &inode, 0);
- end:
- 	txEnd(tid);
-+	return rc;
- }
+ 	f = &ctx->decoded_fmt;
+ 	dst_fmt = &f->fmt.pix_mp;
+-	hor_virstride = (sps->bit_depth_luma_minus8 + 8) * dst_fmt->width / 8;
+-	ver_virstride = round_up(dst_fmt->height, 16);
++	hor_virstride = dst_fmt->plane_fmt[0].bytesperline;
++	ver_virstride = dst_fmt->height;
+ 	y_virstride = hor_virstride * ver_virstride;
  
- /*
-@@ -3313,7 +3324,8 @@ int jfs_readdir(struct file *file, struct dir_context *ctx)
- 		}
+ 	if (sps->chroma_format_idc == 0)
+ 		yuv_virstride = y_virstride;
+ 	else if (sps->chroma_format_idc == 1)
+-		yuv_virstride += y_virstride + y_virstride / 2;
++		yuv_virstride = y_virstride + y_virstride / 2;
+ 	else if (sps->chroma_format_idc == 2)
+-		yuv_virstride += 2 * y_virstride;
++		yuv_virstride = 2 * y_virstride;
  
- 		if (fix_page) {
--			add_missing_indices(ip, bn);
-+			if ((rc = add_missing_indices(ip, bn)))
-+				goto out;
- 			page_fixed = 1;
- 		}
- 
+ 	reg = RKVDEC_Y_HOR_VIRSTRIDE(hor_virstride / 16) |
+ 	      RKVDEC_UV_HOR_VIRSTRIDE(hor_virstride / 16) |
 -- 
 2.39.5
 
