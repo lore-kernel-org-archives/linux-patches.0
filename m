@@ -1,52 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA04428B4E1;
-	Sun,  1 Jun 2025 23:30:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD4FA28B514;
+	Sun,  1 Jun 2025 23:30:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748820636; cv=none; b=Rog3gyLmKcmYXC2lZMDCsDT+vUJQuy2XvdNOUmzhcta5xBSmHE8GB6P11VkfUxjH4U1MEOSuNLlsBTA6kv63KBie14U5h6IJRU8lTxiHirDcegS4VjIIOkzjoR6FCTqJVFLAZUt70+dNqSLRRM1OIhBo6dRsPJQbL6/qeNjtWRA=
+	t=1748820638; cv=none; b=gUnk7qfm+LzekVn9kGEFLZHNjm5Wg64v0dYbJs6GusyufJU/fCKbUVcDg3Tk6QiLMxeEvjQ2bmWM/H3CiHM0kEDBtoFTnUhH3ovs3F9QhIsQJru8ke7yfLVEBw0DUiVbUeLAeYsqTixnNTGruw5iqjJkct8eTuLDLlfNPRjjjJs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748820636; c=relaxed/simple;
-	bh=29NBcHQHWtqh2gzCoQamWy8eEn9O0h9e48EmVeFAWN0=;
+	s=arc-20240116; t=1748820638; c=relaxed/simple;
+	bh=DIIbz0lEb7dnY47PJIaYKLyq8zk6dH2bQFA62F8ojNo=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=qk8tR4RRqedQTkfQ7t6XGhCHAtFTd3mlWsaIlCeNjS1x3HVWeEO6HQ+H+fiNhJuIYmir5PV55BDfqEmAsLyE55zVTioGxeB+qs8+F36LZUdjnHtFT4sZ7uc7i2sLB7JBhGP39QJk7GOrk//yHWJ6gbE6BcclnrYhFywGVm40804=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YJYsx24+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UOEA6UBLAN/H5Nm1y4iUy8ilq2DZir46H5AUPK+kn5z6ZZvU70UT1xs3DmbJ/n/xD3jj2ClmqvqQ4Q77PfLnYBZGXjVYequobdgK9ijxqCkaHuBlVUz27EBu5YbnRTrW3qbVgXJ9rOw0HDhRhsVhEBUSYk3hb9G6spqiYqhgaDg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iV58evyu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YJYsx24+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CCD6C4CEE7;
-	Sun,  1 Jun 2025 23:30:34 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iV58evyu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CE35C4CEF3;
+	Sun,  1 Jun 2025 23:30:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748820636;
-	bh=29NBcHQHWtqh2gzCoQamWy8eEn9O0h9e48EmVeFAWN0=;
+	s=k20201202; t=1748820637;
+	bh=DIIbz0lEb7dnY47PJIaYKLyq8zk6dH2bQFA62F8ojNo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YJYsx24+2rSJU1FPU/cd7p9qfd50DqUSw/lhSoAfYeeaRL8dywLeIlIjWnOXodh04
-	 LVKfnlUcmSCBOyzYB9SerohIJQAR4Z1W8ErVS0iKUQAtRh5EBcJD+xbLLo5SAWI6Qx
-	 mUSPHmJDulZ+khCtLYto0ox2zLQnDesVYiQ8qcyxlzZnuTB83eNY2oCJJ3FXfsyJrO
-	 TCIhv8j1RM3h5rjyvtRnCFtyJIXWjeQInajvbIiQnqPBvCKGXdxQ6UIe49JF1+lUV/
-	 gTMNNPLKbwIQ3dLFz5FX4B5lVw2HAftpunJOSLEz9USrb2c41ij2zZ4jnEOU+p1rYY
-	 vhUugFPG7pIjA==
+	b=iV58evyuh2UCQg3VEZpFMKA2HSwMkgxK1UNPHz1Iiz+8i3d6rotKkjRZsH8UnIPWa
+	 3hcvj9zeXyDwj8i1yzgArDyQOt6McGLAd602nR0iX8XLgauIR7TPfKJgbVcTxKJ/SO
+	 xo0Bgdko5vktzAIMvK+cM+8vnFi//Dbz3UZRbMpp4OtP5aJ7t+o1aUzh051NAKUDId
+	 lKg/+KKZO9rH5AzFrfWroKm7MPcF3jLBR6qUyoW2ktug0AZ7HQlG4nkdVEX8bHNdee
+	 BElbUS00ZjyNV1HCjGdk0OT+PAHa1Ant527qMGgAVey8AeNgmZvC484M1Xr/HVlbEd
+	 ocknDmSO1uq+Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Alex Deucher <alexander.deucher@amd.com>,
-	Rodrigo Siqueira <siqueira@igalia.com>,
+Cc: Michael Chang <zhang971090220@gmail.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>,
-	christian.koenig@amd.com,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	sunil.khatri@amd.com,
-	vitaly.prosyak@amd.com,
-	srinivasan.shanmugam@amd.com,
-	tim.huang@amd.com,
-	Prike.Liang@amd.com,
-	Jesse.zhang@amd.com,
-	amd-gfx@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org,
+	kwliu@nuvoton.com,
+	kflin@nuvoton.com,
+	mchehab@kernel.org,
+	linux-media@vger.kernel.org,
+	openbmc@lists.ozlabs.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.14 021/102] drm/amdgpu/gfx11: fix CSIB handling
-Date: Sun,  1 Jun 2025 19:28:13 -0400
-Message-Id: <20250601232937.3510379-21-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.14 022/102] media: nuvoton: npcm-video: Fix stuck due to no video signal error
+Date: Sun,  1 Jun 2025 19:28:14 -0400
+Message-Id: <20250601232937.3510379-22-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250601232937.3510379-1-sashal@kernel.org>
 References: <20250601232937.3510379-1-sashal@kernel.org>
@@ -61,72 +55,89 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.14.9
 Content-Transfer-Encoding: 8bit
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Michael Chang <zhang971090220@gmail.com>
 
-[ Upstream commit a9a8bccaa3ba64d509cf7df387cf0b5e1cd06499 ]
+[ Upstream commit 497f1fb94759fa0c638f15c12b1ab3e586bccfcb ]
 
-We shouldn't return after the last section.
-We need to update the rest of the CSIB.
+Fix the issue when start_frame and detect_resolution
+functions are executed at the same time, which may cause driver
+stops capturing due to status of no video signal error.
 
-Reviewed-by: Rodrigo Siqueira <siqueira@igalia.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Michael Chang <zhang971090220@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-**YES** This commit should be backported to stable kernel trees. ##
-Analysis ### Code Change Analysis The commit fixes a **critical bug in
-CSIB (Clear State Init Buffer) handling** in the GFX11 AMD GPU driver.
-The problematic code in `gfx_v11_0_get_csb_buffer()` at line 861
-contained: ```c } else { return; // This was the bug! } ``` This early
-return statement prevented the function from completing the CSIB setup
-when encountering non-SECT_CONTEXT sections. The fix removes this
-premature return, allowing the function to continue and properly
-complete the buffer initialization with: 1.
-**PA_SC_TILE_STEERING_OVERRIDE register setup** (lines 866-870) 2.
-**PACKET3_PREAMBLE_END_CLEAR_STATE** (lines 872-873) 3.
-**PACKET3_CLEAR_STATE** (lines 875-876) ### Why This Qualifies for
-Backporting 1. **Fixes Important Hardware Initialization Bug**: CSIB is
-critical for GPU state management. Incomplete initialization can cause
-GPU hangs, rendering artifacts, or system instability. 2. **Small,
-Contained Fix**: The change removes only 2 lines (`} else { return; }`)
-- minimal and low-risk. 3. **No Architectural Changes**: This is a pure
-bugfix with no new features or major code restructuring. 4. **Critical
-Subsystem**: Graphics drivers are essential for system functionality,
-and GPU state corruption can cause severe user-visible issues. 5.
-**Pattern Consistency**: Looking at similar sections across different
-GFX versions (v10, v9, etc.), they all handle non-SECT_CONTEXT sections
-by continuing rather than returning early, confirming this was indeed a
-bug. ### Historical Context Support From examining the codebase, this
-pattern is consistent across all GFX generations: - **gfx_v10_0.c:4227**
-and **gfx_v10_0.c:4266**: Handle SECT_CONTEXT but continue for other
-sections - **gfx_v9_0.c:1609** and **gfx_v9_0.c:1645**: Same pattern -
-**gfx_v8_0.c**, **gfx_v7_0.c**, **gfx_v6_0.c**: All follow the same
-approach The previous GFX10 CSIB fix (commit 4905880b4515) shows AMD's
-commitment to ensuring proper CSIB initialization across GPU
-generations, reinforcing the importance of this subsystem. ### Risk
-Assessment - **Regression Risk**: Extremely low - only removes incorrect
-early termination - **Testing Surface**: Affects GFX11 GPU
-initialization, easily testable - **Side Effects**: None - only allows
-completion of intended initialization sequence This is a textbook
-example of a stable-worthy fix: important bug, minimal change, no
-regression risk, and affects critical hardware functionality.
+Now let me analyze this commit based on the provided information:
+**YES** This commit should be backported to stable kernel trees based on
+the following analysis: 1. **Bug Fix Nature**: The commit specifically
+addresses a driver stuck issue caused by a race condition between the
+`start_frame` and `detect_resolution` functions. This is a clear bugfix
+that affects the operational functionality of the driver. 2. **User
+Impact**: When this race condition occurs, the driver stops capturing
+completely due to a "no video signal error" - this directly impacts
+users who rely on the video capture functionality. 3. **Minimal and
+Contained Changes**: The fix makes only a small, targeted change to the
+`npcm_video_detect_resolution()` function in
+`drivers/media/platform/nuvoton/npcm-video.c`. Specifically: - Removes
+the premature setting of `video->v4l2_input_status =
+V4L2_IN_ST_NO_SIGNAL` at the beginning - Only sets this status flag when
+the resolution is actually invalid (width/height are 0) - Adds proper
+debugging messages for both valid and invalid resolution cases 4. **Low
+Risk**: The change is logical and safe - instead of immediately assuming
+"no signal" and then potentially overriding it later, the code now only
+sets the "no signal" status when there's actually an invalid resolution
+detected. This eliminates the race condition without introducing new
+complexity. 5. **Similar Pattern to Backported Commits**: Looking at the
+reference commits, this follows the same pattern as "Similar Commit #1"
+(marked YES) which also fixed reference handling issues in the same
+driver. Both commits: - Fix driver-specific bugs - Make small, contained
+changes - Address operational issues that affect users - Don't introduce
+new features or architectural changes 6. **Race Condition Fix**: Race
+condition fixes are typically good candidates for stable backporting as
+they address timing-dependent bugs that can be difficult to diagnose and
+significantly impact system reliability. The fix addresses a specific
+functional bug where the driver could get stuck due to improper status
+flag handling during concurrent operations, making it an appropriate
+candidate for stable tree inclusion.
 
- drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/media/platform/nuvoton/npcm-video.c | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
-index e050c2e4ea734..a1a49042e6152 100644
---- a/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
-@@ -857,8 +857,6 @@ static void gfx_v11_0_get_csb_buffer(struct amdgpu_device *adev,
- 						PACKET3_SET_CONTEXT_REG_START);
- 				for (i = 0; i < ext->reg_count; i++)
- 					buffer[count++] = cpu_to_le32(ext->extent[i]);
--			} else {
--				return;
- 			}
- 		}
+diff --git a/drivers/media/platform/nuvoton/npcm-video.c b/drivers/media/platform/nuvoton/npcm-video.c
+index 7a9d8928ae401..3022fdcf66ec7 100644
+--- a/drivers/media/platform/nuvoton/npcm-video.c
++++ b/drivers/media/platform/nuvoton/npcm-video.c
+@@ -863,7 +863,6 @@ static void npcm_video_detect_resolution(struct npcm_video *video)
+ 	struct regmap *gfxi = video->gfx_regmap;
+ 	unsigned int dispst;
+ 
+-	video->v4l2_input_status = V4L2_IN_ST_NO_SIGNAL;
+ 	det->width = npcm_video_hres(video);
+ 	det->height = npcm_video_vres(video);
+ 
+@@ -892,12 +891,16 @@ static void npcm_video_detect_resolution(struct npcm_video *video)
+ 		clear_bit(VIDEO_RES_CHANGING, &video->flags);
  	}
+ 
+-	if (det->width && det->height)
++	if (det->width && det->height) {
+ 		video->v4l2_input_status = 0;
+-
+-	dev_dbg(video->dev, "Got resolution[%dx%d] -> [%dx%d], status %d\n",
+-		act->width, act->height, det->width, det->height,
+-		video->v4l2_input_status);
++		dev_dbg(video->dev, "Got resolution[%dx%d] -> [%dx%d], status %d\n",
++			act->width, act->height, det->width, det->height,
++			video->v4l2_input_status);
++	} else {
++		video->v4l2_input_status = V4L2_IN_ST_NO_SIGNAL;
++		dev_err(video->dev, "Got invalid resolution[%dx%d]\n", det->width,
++			det->height);
++	}
+ }
+ 
+ static int npcm_video_set_resolution(struct npcm_video *video,
 -- 
 2.39.5
 
