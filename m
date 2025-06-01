@@ -1,45 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8F3D2571BC;
-	Sun,  1 Jun 2025 23:40:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6047A29AF45;
+	Sun,  1 Jun 2025 23:40:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748821202; cv=none; b=TaN4Ky4AvdyWXjFi+A5g2gkTx6BP7S7Gz1UmsQ/d44L0dDycPoC5vQK0uDtkm3BlP5J3E6elQNau/N2AmqpXmnttqTSyRS812Rd0J7Z6cMGUxOBZnioBGvGozhI5/cpPWsqtd4XYId6OPpVl/zgdtrzoCrGtDgQJ13PBitVI3+A=
+	t=1748821203; cv=none; b=TjMfnd+1dpTacvVHRSF6oSRUZsdLztSXlpBUotZM4CVAzB01StURUCiehjKNhNd4EuOx7wLY+UnegusTGP5As1zcCONHbwwbhdDurX8CnOzYKZ7YFjz0nwXeqGEYTQfUZxusOCALOMjKMICnIBu4g2gttK6gumvpN93qSb5FJy4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748821202; c=relaxed/simple;
-	bh=6YfKX0H1CC8Q3E7OyTtXb5uF6mX/Y0slsj7eqFPJ5d0=;
+	s=arc-20240116; t=1748821203; c=relaxed/simple;
+	bh=2OE2FvpW5hi7i8qLCpP0Z4AlcfO6HdJlOvKBWXgUAPU=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=a4BSf0jw0tYtjROs4HgfbP4OHRtgx6BwLJ+T1BRaijZlOv/+ujVs1gIPAkTiXXS/xIRr90DC/L4Vqe28W2jCnuCV2798sl96pUb5XfJMDiCvTMfYAZqpN0zTFpw9WPFLFwMOIlIqaZ9vrGi/ebH07kCRFXeod7Qp9KrxZ22KcLc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Qefo4VJ6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=QlN3vPpWMB5Sqg//Da8YWxjWgAce+VE/OameuVFgXxGenVnW7UFFPFvpwaqEmamLaUj3Va0daIEIxDyPoiw4zJ1EK6QoWvDDeuCIoWg8IKAW1Ziu08bdjA2mJym3a8KXRf5LIOfiQcwxXqqLQ24aPo5zTdoQu/P8zMPqofNT2Jo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eq2FNEVr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Qefo4VJ6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A633EC4CEE7;
-	Sun,  1 Jun 2025 23:40:00 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eq2FNEVr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32B98C4CEEE;
+	Sun,  1 Jun 2025 23:40:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748821201;
-	bh=6YfKX0H1CC8Q3E7OyTtXb5uF6mX/Y0slsj7eqFPJ5d0=;
+	s=k20201202; t=1748821203;
+	bh=2OE2FvpW5hi7i8qLCpP0Z4AlcfO6HdJlOvKBWXgUAPU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qefo4VJ6hWI+808vG/2DFAPk80rD+S2g/kP1VVS6570Ap/Wi9H1OD4x3lad+tJ8QJ
-	 JNP/Y4d3oUZHqV8ssbfGI7dp/7UuzgCSgVefwza/zV7MAOm8MAKRqlB26RgyIwqtc6
-	 VF3VOch+wgEtaQCIanCnc319hSnA6SH5g9HGxk3SBOizvrVrgfPXDEHJvjsOJLtmNh
-	 LQ629Ii74yTPbrwPy2UKk773IT9DVs0IFV8vBBQVM801PVVVNY2PptnE4g8E1D3jFL
-	 DawgRdjpkwoGIKBD3K4j6Z+vwmoS/g90kYJMEIPFwqnOUVdrJTGZb85eBdlKhwJvUB
-	 MzfBEaYTeyZAA==
+	b=eq2FNEVrAdJot6CSv5J/njB8QcRpoqHLO4zWotWXMpOjP2sWMFrlBer+XbBnKHlUG
+	 1YXUmsrp/LQ4kAFFpNDmiGA36/dpsJxLn33E4wbP99vxvwjmdMRsFj7BU/h2U13WAU
+	 YCVw+2k9cqMeP/LzsQ+/SA6fyP/1m79djer10n3XXqZISPX+oJIKup6clOHoPqoU7e
+	 E7a6c/6r6+5uSE+uGiNu5zNXZWeqUfzyA5vaDpT9+Emx+QUM6nY/ctiisGEpURlP6Q
+	 hLXGOeW1lIkGR/goxQ/XRpkTJBv5r0m3CH3d/GPqTDNdoPXnk5utW2C7jE1aq90qWa
+	 2VpCEi0LFoCpQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: "Dr. David Alan Gilbert" <linux@treblig.org>,
-	Takashi Iwai <tiwai@suse.de>,
+Cc: Viresh Kumar <viresh.kumar@linaro.org>,
+	Lifeng Zheng <zhenglifeng1@huawei.com>,
+	"Rafael J . Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	perex@perex.cz,
-	tiwai@suse.com,
-	yuehaibing@huawei.com,
-	linux-sound@vger.kernel.org,
+	rafael@kernel.org,
+	linux-pm@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.6 61/66] ALSA: seq: Remove unused snd_seq_queue_client_leave_cells
-Date: Sun,  1 Jun 2025 19:37:38 -0400
-Message-Id: <20250601233744.3514795-61-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.6 62/66] cpufreq: Force sync policy boost with global boost on sysfs update
+Date: Sun,  1 Jun 2025 19:37:39 -0400
+Message-Id: <20250601233744.3514795-62-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250601233744.3514795-1-sashal@kernel.org>
 References: <20250601233744.3514795-1-sashal@kernel.org>
@@ -52,102 +51,95 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.6.92
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: "Dr. David Alan Gilbert" <linux@treblig.org>
+From: Viresh Kumar <viresh.kumar@linaro.org>
 
-[ Upstream commit 81ea9e92941091bb3178d49e63b13bf4df2ee46b ]
+[ Upstream commit 121baab7b88ed865532dadb7ef1aee6e2bea86f5 ]
 
-The last use of snd_seq_queue_client_leave_cells() was removed in 2018
-by
-commit 85d59b57be59 ("ALSA: seq: Remove superfluous
-snd_seq_queue_client_leave_cells() call")
+If the global boost flag is enabled and policy boost flag is disabled, a
+call to `cpufreq_boost_trigger_state(true)` must enable the policy's
+boost state.
 
-Remove it.
+The current code misses that because of an optimization. Fix it.
 
-Signed-off-by: Dr. David Alan Gilbert <linux@treblig.org>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20250502235219.1000429-4-linux@treblig.org
+Suggested-by: Lifeng Zheng <zhenglifeng1@huawei.com>
+Reviewed-by: Lifeng Zheng <zhenglifeng1@huawei.com>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Link: https://patch.msgid.link/852ff11c589e6300730d207baac195b2d9d8b95f.1745511526.git.viresh.kumar@linaro.org
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-NO This commit should not be backported to stable kernel trees for
-several reasons: **1. This is a code cleanup, not a bug fix** The commit
-removes dead code (`snd_seq_queue_client_leave_cells()`) that hasn't
-been used since 2018. The commit message explicitly states this function
-was already removed from use by commit 85d59b57be59 in 2018, and this
-commit is simply cleaning up the unused function definition. This is
-purely a maintenance/cleanup change with no functional impact. **2. No
-user-visible impact or bug being fixed** The removed function
-`snd_seq_queue_client_leave_cells()` was already unused, so removing it
-doesn't fix any existing bugs, security issues, or user-reported
-problems. The code changes show: - Removal of the function
-implementation from `sound/core/seq/seq_queue.c` (lines that iterate
-through queues and call `snd_seq_prioq_leave()`) - Removal of the
-function declaration from `sound/core/seq/seq_queue.h` **3. Follows
-pattern of similar non-backported commits** Looking at the similar
-commits provided: - **Similar Commit #1**: Removed superfluous function
-call - Status: NO - **Similar Commit #2**: Removed useless function -
-Status: NO - **Similar Commit #4**: Removed unused declarations -
-Status: NO - **Similar Commit #5**: Code refactoring with no functional
-changes - Status: NO Only **Similar Commit #3** was backported (Status:
-YES), and that was because it fixed an actual race condition bug that
-could cause long stalls, not because it was removing unused code. **4.
-Stable tree criteria not met** Stable kernel backports should focus on:
-- Important bug fixes that affect users - Security fixes - Critical
-functionality issues This commit doesn't meet any of these criteria.
-It's purely cosmetic code cleanup that removes dead code without
-changing any runtime behavior. **5. Risk vs. benefit analysis** While
-the risk of regression is minimal since the function was unused, there's
-no benefit to users of stable kernels from this change. Stable trees
-should minimize churn and only include changes that provide tangible
-benefits to users. The commit represents good housekeeping for the
-mainline kernel but doesn't provide the type of user-impacting fix that
-justifies inclusion in stable kernel trees.
+**YES** This commit should be backported to stable kernel trees. ##
+Analysis ### Code Change Analysis The commit makes a very small,
+targeted fix to the `cpufreq_boost_trigger_state()` function in
+`/drivers/cpufreq/cpufreq.c`. The change removes a single optimization
+check: **Before:** ```c if (cpufreq_driver->boost_enabled == state)
+return 0; ``` **After:** ```c /bin /bin.usr-is-merged /boot /dev /etc
+/home /init /lib /lib.usr-is-merged /lib64 /lost+found /media /mnt /opt
+/proc /root /run /sbin /sbin.usr-is-merged /snap /srv /sys /tmp /usr
+/var linux linux-kernel Don't compare 'cpufreq_driver->boost_enabled'
+with 'state' here to linux linux-kernel make sure all policies are in
+sync with global boost flag. linux-kernel/ linux/ ``` ### Bug Being
+Fixed The commit fixes a synchronization bug between global boost
+settings and per-policy boost settings. The problem occurs when: 1.
+Global boost is enabled (`cpufreq_driver->boost_enabled = true`) 2. Some
+policies have boost disabled (`policy->boost_enabled = false`) 3. A call
+to `cpufreq_boost_trigger_state(true)` should enable boost on all
+policies The old code would return early due to the optimization check,
+failing to sync the policy-level boost flags with the global setting.
+This means individual policies could remain out of sync with the global
+boost state. ### Backport Suitability Assessment **✅ Fixes Important
+Bug:** Yes - this addresses a functional bug where boost settings can
+become inconsistent between global and per-policy levels. **✅ Small and
+Contained:** Yes - the change is minimal (removes 2 lines, adds
+comment), affecting only one function. **✅ Low Risk:** Yes - the change
+simply removes an optimization, ensuring the existing sync logic always
+runs. This cannot introduce new bugs. **✅ No Architectural Changes:**
+Yes - this doesn't change any APIs or data structures. **✅ Critical
+Subsystem:** While cpufreq is important, this specific bug affects only
+boost functionality, which is not a core feature. **✅ Clear Side
+Effects:** The only side effect is that `cpufreq_boost_trigger_state()`
+will now always iterate through all policies even when the global state
+appears unchanged, ensuring proper synchronization. ### Comparison with
+Similar Commits Looking at the provided similar commits: - **Similar
+Commit #3 (YES):** Also fixes per-policy boost behavior with targeted
+changes - **Similar Commit #4 (YES):** Introduces boost_supported flag
+with minimal risk changes - **Similar Commits #1, #2, #5 (NO):** These
+add new features or make broader architectural changes This commit
+follows the pattern of commits #3 and #4 - it's a small, targeted fix to
+existing boost functionality without introducing new features. ###
+Stable Tree Criteria Compliance This commit meets all stable tree
+criteria: - Fixes a real bug affecting users who rely on per-policy
+boost controls - The fix is obvious and minimal - No risk of regression
+since it only removes an optimization - Doesn't change user-visible
+behavior except to fix the broken synchronization - The bug could affect
+power management and performance on systems using cpufreq boost The
+commit represents exactly the type of small, safe bugfix that stable
+trees are designed to include.
 
- sound/core/seq/seq_queue.c | 16 ----------------
- sound/core/seq/seq_queue.h |  1 -
- 2 files changed, 17 deletions(-)
+ drivers/cpufreq/cpufreq.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/sound/core/seq/seq_queue.c b/sound/core/seq/seq_queue.c
-index bc933104c3eea..da4e84839d1b2 100644
---- a/sound/core/seq/seq_queue.c
-+++ b/sound/core/seq/seq_queue.c
-@@ -585,22 +585,6 @@ void snd_seq_queue_client_leave(int client)
+diff --git a/drivers/cpufreq/cpufreq.c b/drivers/cpufreq/cpufreq.c
+index 6682f422cadd9..11264692ac686 100644
+--- a/drivers/cpufreq/cpufreq.c
++++ b/drivers/cpufreq/cpufreq.c
+@@ -2793,8 +2793,10 @@ int cpufreq_boost_trigger_state(int state)
+ 	unsigned long flags;
+ 	int ret = 0;
  
- /*----------------------------------------------------------------*/
+-	if (cpufreq_driver->boost_enabled == state)
+-		return 0;
++	/*
++	 * Don't compare 'cpufreq_driver->boost_enabled' with 'state' here to
++	 * make sure all policies are in sync with global boost flag.
++	 */
  
--/* remove cells from all queues */
--void snd_seq_queue_client_leave_cells(int client)
--{
--	int i;
--	struct snd_seq_queue *q;
--
--	for (i = 0; i < SNDRV_SEQ_MAX_QUEUES; i++) {
--		q = queueptr(i);
--		if (!q)
--			continue;
--		snd_seq_prioq_leave(q->tickq, client, 0);
--		snd_seq_prioq_leave(q->timeq, client, 0);
--		queuefree(q);
--	}
--}
--
- /* remove cells based on flush criteria */
- void snd_seq_queue_remove_cells(int client, struct snd_seq_remove_events *info)
- {
-diff --git a/sound/core/seq/seq_queue.h b/sound/core/seq/seq_queue.h
-index c69105dc1a103..5f6b9c768fec2 100644
---- a/sound/core/seq/seq_queue.h
-+++ b/sound/core/seq/seq_queue.h
-@@ -66,7 +66,6 @@ void snd_seq_queue_client_leave(int client);
- int snd_seq_enqueue_event(struct snd_seq_event_cell *cell, int atomic, int hop);
- 
- /* Remove events */
--void snd_seq_queue_client_leave_cells(int client);
- void snd_seq_queue_remove_cells(int client, struct snd_seq_remove_events *info);
- 
- /* return pointer to queue structure for specified id */
+ 	write_lock_irqsave(&cpufreq_driver_lock, flags);
+ 	cpufreq_driver->boost_enabled = state;
 -- 
 2.39.5
 
