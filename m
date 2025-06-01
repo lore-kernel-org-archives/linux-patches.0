@@ -1,47 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 200C926659A;
-	Sun,  1 Jun 2025 23:33:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB8AD2951DF;
+	Sun,  1 Jun 2025 23:33:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748820786; cv=none; b=rEeGDLk5hi48iRrNpDsslseSuVp/CGCrM90B9lH7G6ck8vRNEnzu2OzL/y4t+JHcnydMhOpPfP5700WsXZ6razoPiAc/loYy6T+1Y2nAOcker0l7fNbU8eQNuSSuXZVPbW2JwZM5jsUu0fzcuuiTbA466YXIvRTJdTzu+CQ4ubU=
+	t=1748820787; cv=none; b=fwffnsgCBcBeDhFCkDLxKePzWXb5KYjgsDHArhtzwBXBi9KN3IGUkSoP8SfBGl9i6di8CrJwn3cOuTBCnjF8OvgiRDHk8prTsIafIFT14/RFo8CLoiBNy6rJU1G5mLAYuGyCdDSNU5nBijo4zEdlNyvvHVtY9uRqzhFLpKJox6Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748820786; c=relaxed/simple;
-	bh=XNSap6QhciLGyaZDQYljtuYcLNgbj5uBczJcxzAWWYI=;
+	s=arc-20240116; t=1748820787; c=relaxed/simple;
+	bh=JrFiIa0aVNDgppSre2V1u5GhTFUo3wKv9edxo9b/NtM=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=u1e64JxDz5KtxmOU1e3WDTc8z7RiznNXda58scsJtODx/+wjb6PzVBwV20MosZw2qEe9dIAro06AHmzdP5cONK4YYPQwChE6yEBDTmRipmfdkHhe77K9LEqpyAK9BrN+u5kR9jq5kTIhO7ws6KjSKwJNoDEGIsu4Yz8boGS1JFo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IwnJHRGG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kLtHbd1P9a2zK8PJ+kMWDPd/7GphbRpCVsEztCV2jjBo8MCr0iBX7RoyP/UGsYEXUUO2r8mvC9tpG46PFWOaaO0UJzRnwj4Ywjo6z1O8feTfM2TU57g0eDZIXrCzD3zXV7TtAfZ8kd7Y7V3x4oc1744I5n4cHys9XZ8ED1ODSFo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lStmVk60; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IwnJHRGG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DC60C4CEF1;
-	Sun,  1 Jun 2025 23:33:04 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lStmVk60"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50A42C4CEE7;
+	Sun,  1 Jun 2025 23:33:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748820785;
-	bh=XNSap6QhciLGyaZDQYljtuYcLNgbj5uBczJcxzAWWYI=;
+	s=k20201202; t=1748820787;
+	bh=JrFiIa0aVNDgppSre2V1u5GhTFUo3wKv9edxo9b/NtM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IwnJHRGG4T/nDp0VQxOH7o1a+Gtct9U1/XolW8SiOkEhcEd8/ef5d/g+QB84rZc+C
-	 Uptssy8PHEK20WjM8weohxgjY+4Zk96Lq06Ss+v6ShvqIeKFZ+NEUl2q1By8EKMK80
-	 QUuBZuCEE4fk61M9gChTrQsad/Kx3Z457S0vgBwbGEglKMVyxAiaiMDu7lvFBacDpW
-	 1ap+3Ss1+EwLBPqNLy92jjV20IX/y3VgJgLwvlYjlp3TuOHwG6HZJQzgcocdoryByt
-	 HhoVv1Ua3tZpkLvWXusT5qR8WzrISgCXJES8r8Q/NVKHTz8oK64GiNuf5/FjviN1/T
-	 zmpp/vhURFV8Q==
+	b=lStmVk60f+W1MbvQMUPKOx7llI0aeWRm/uhKRFSz9Db8OMXmUP2O2J4Rtju8oW8eN
+	 VPQzvuk4EyucsKJ9UagIX32JLUDHlflg0DiwaFBc/h9NuhrebZBLWxin8lc8b7B7zN
+	 i78Ths8E2XDNvS2q6gi4Fc59OxncoJr4/+mNzRG4EHuxuhTnyeDwBSnutlieG5Y42C
+	 MyXYEqxjMHuOn5cEi4cq0ArqAJL6Ov9aLAzZzsMiefU3kXTR6J2bIA9frKFh7D8brV
+	 ZIrmhuzb3/cKoj/8fYTS9EFwZCvDSE5xPFVg/9QrPxd9BGv8MYyZoQBQvlE4UND95O
+	 F+2KfO49FlNJg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Stephen Rothwell <sfr@canb.auug.org.au>,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
-	Nathan Chancellor <nathan@kernel.org>,
+Cc: Armin Wolf <W_Armin@gmx.de>,
+	"Rafael J . Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-kbuild@vger.kernel.org,
+	rafael@kernel.org,
+	linux-acpi@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.14 074/102] Make 'cc-option' work correctly for the -Wno-xyzzy pattern
-Date: Sun,  1 Jun 2025 19:29:06 -0400
-Message-Id: <20250601232937.3510379-74-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.14 075/102] ACPI: bus: Bail out if acpi_kobj registration fails
+Date: Sun,  1 Jun 2025 19:29:07 -0400
+Message-Id: <20250601232937.3510379-75-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250601232937.3510379-1-sashal@kernel.org>
 References: <20250601232937.3510379-1-sashal@kernel.org>
@@ -51,118 +47,74 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.14.9
 Content-Transfer-Encoding: 8bit
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Armin Wolf <W_Armin@gmx.de>
 
-[ Upstream commit 550ccb178de2f379f5e1a1833dd6f4bdafef4b68 ]
+[ Upstream commit 94a370fc8def6038dbc02199db9584b0b3690f1a ]
 
-This is the follow-up to commit a79be02bba5c ("Fix mis-uses of
-'cc-option' for warning disablement") where I mentioned that the best
-fix would be to just make 'cc-option' a bit smarter, and work for all
-compiler options, including the '-Wno-xyzzy' pattern that it used to
-accept unknown options for.
+The ACPI sysfs code will fail to initialize if acpi_kobj is NULL,
+together with some ACPI drivers.
 
-It turns out that fixing cc-option is pretty straightforward: just
-rewrite any '-Wno-xyzzy' option pattern to use '-Wxyzzy' instead for
-testing.
+Follow the other firmware subsystems and bail out if the kobject
+cannot be registered.
 
-That makes the whole artificial distinction between 'cc-option' and
-'cc-disable-warning' go away, and we can happily forget about the odd
-build rule that you have to treat compiler options that disable warnings
-specially.
-
-The 'cc-disable-warning' helper remains as a backwards compatibility
-syntax for now, but is implemented in terms of the new and improved
-cc-option.
-
-Acked-by: Masahiro Yamada <masahiroy@kernel.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Arnd Bergmann <arnd@arndb.de>
-Cc: Stephen Rothwell <sfr@canb.auug.org.au>
-Cc: Thomas Weißschuh <linux@weissschuh.net>
-Cc: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Armin Wolf <W_Armin@gmx.de>
+Link: https://patch.msgid.link/20250518185111.3560-2-W_Armin@gmx.de
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-I can see an example of the problem on line 48: `-Wno-sign-compare` is
-being added directly instead of using `cc-disable-warning`. Now let me
-analyze the specific changes in the commit to understand what the fix
-does. Based on my analysis of the commit "Make 'cc-option' work
-correctly for the -Wno-xyzzy pattern", here is my assessment: **YES**
-This commit should be backported to stable kernel trees. Here's my
-detailed analysis: ## Analysis of the Code Changes The commit makes a
-crucial fix to the `cc-option` and `cc-disable-warning` functions in
-`scripts/Makefile.compiler`. The key changes are: 1. **In `__cc-option`
-function (line 45)**: Changed from: ```makefile $(1) -Werror $(2) $(3)
--c -x c /dev/null -o "$$TMP",$(3),$(4) ``` to: ```makefile $(1) -Werror
-$(2) $(3:-Wno-%=-W%) -c -x c /dev/null -o "$$TMP",$(3),$(4) ``` 2. **In
-`cc-disable-warning` function (line 60)**: Simplified from: ```makefile
-cc-disable-warning = $(if $(call cc-option,-W$(strip $1)),-Wno-$(strip
-$1)) ``` to: ```makefile cc-disable-warning = $(call cc-
-option,-Wno-$(strip $1)) ``` ## Why This Should Be Backported ### 1.
-**Fixes a Fundamental Build System Bug** The bug is that GCC silently
-accepts unknown `-Wno-*` options and only warns about them when there
-are other warnings in the source. This means `cc-option` would
-incorrectly return "supported" for unsupported warning disable flags,
-leading to build warnings that shouldn't exist. ### 2. **Improves Build
-System Reliability** The fix ensures that build-time compiler feature
-detection works correctly across all supported compiler versions,
-preventing spurious warnings that could confuse developers and automated
-build systems. ### 3. **Minimal Risk of Regression** - The change is
-contained to the build system macros - It makes the behavior more
-correct rather than changing functionality - The fix is elegant: it
-transforms `-Wno-xyzzy` to `-Wxyzzy` for testing, then uses the original
-form if supported - No actual kernel code is affected, only the build
-logic ### 4. **Affects Critical Infrastructure Code** From my
-examination of the kernel repository, `cc-disable-warning` and `cc-
-option` are used extensively throughout the kernel build system. The fix
-ensures these fundamental macros work correctly across all architectures
-and configurations. ### 5. **Follows Stable Tree Criteria** -
-**Important bug fix**: Yes, fixes incorrect compiler option detection -
-**Minimal risk**: Yes, only changes build macros, no functional code
-changes - **Contained scope**: Yes, limited to
-`scripts/Makefile.compiler` - **No architectural changes**: Correct,
-just fixes existing functionality ### 6. **Historical Precedent**
-Looking at the similar commits provided, commits that fix build system
-issues and compiler option handling (like the similar commits marked
-"NO" but for different reasons) are generally good candidates when they
-fix fundamental problems rather than just optimization cleanups. The
-commit addresses a real problem where the build system could accept
-invalid compiler options, leading to confusing warnings. This type of
-fundamental correctness fix is exactly what stable trees are meant to
-include.
+**YES** This commit should be backported to stable kernel trees. Here's
+the detailed analysis: **Bug Fix Nature**: The commit fixes a real bug
+where ACPI initialization continues silently even when `acpi_kobj`
+registration fails. This creates an inconsistent system state where ACPI
+sysfs functionality and some drivers that depend on `acpi_kobj` will
+fail later without clear indication of the root cause. **Code Change
+Analysis**: - Changes `pr_debug()` to `pr_err()` for better visibility
+of the failure - Returns `-ENOMEM` immediately when
+`kobject_create_and_add()` fails instead of continuing - The existing
+`kobject_put(acpi_kobj)` cleanup in the error path after
+`acpi_bus_init()` is already present **Comparison with Similar
+Commits**: This follows the exact pattern of Similar Commit #1 (Status:
+YES) which added `kobject_put()` cleanup. Both commits address resource
+management issues in the same function (`acpi_init`) and represent
+important bugfixes with minimal risk. **Risk Assessment**: - Very low
+risk - only affects the error path when kobject creation fails - Early
+failure is better than silent failure leading to confusing symptoms
+later - Change is contained to a single function with clear error
+handling - Consistent with how other firmware subsystems handle kobject
+registration failures **Stable Tree Criteria Met**: - Fixes important
+bug affecting system reliability - Minimal and contained change - No
+architectural modifications - Clear improvement in error handling and
+debugging The commit addresses a legitimate reliability issue where ACPI
+would continue initialization with a NULL `acpi_kobj`, leading to
+failures in dependent subsystems that would be harder to diagnose than
+an early, clear failure.
 
- scripts/Makefile.compiler | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/acpi/bus.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/scripts/Makefile.compiler b/scripts/Makefile.compiler
-index 75356d2acc0b5..47ab407f73ec2 100644
---- a/scripts/Makefile.compiler
-+++ b/scripts/Makefile.compiler
-@@ -43,7 +43,7 @@ as-instr = $(call try-run,\
- # __cc-option
- # Usage: MY_CFLAGS += $(call __cc-option,$(CC),$(MY_CFLAGS),-march=winchip-c6,-march=i586)
- __cc-option = $(call try-run,\
--	$(1) -Werror $(2) $(3) -c -x c /dev/null -o "$$TMP",$(3),$(4))
-+	$(1) -Werror $(2) $(3:-Wno-%=-W%) -c -x c /dev/null -o "$$TMP",$(3),$(4))
+diff --git a/drivers/acpi/bus.c b/drivers/acpi/bus.c
+index 058910af82bca..c2ab2783303f2 100644
+--- a/drivers/acpi/bus.c
++++ b/drivers/acpi/bus.c
+@@ -1446,8 +1446,10 @@ static int __init acpi_init(void)
+ 	}
  
- # cc-option
- # Usage: cflags-y += $(call cc-option,-march=winchip-c6,-march=i586)
-@@ -57,7 +57,7 @@ cc-option-yn = $(if $(call cc-option,$1),y,n)
+ 	acpi_kobj = kobject_create_and_add("acpi", firmware_kobj);
+-	if (!acpi_kobj)
+-		pr_debug("%s: kset create error\n", __func__);
++	if (!acpi_kobj) {
++		pr_err("Failed to register kobject\n");
++		return -ENOMEM;
++	}
  
- # cc-disable-warning
- # Usage: cflags-y += $(call cc-disable-warning,unused-but-set-variable)
--cc-disable-warning = $(if $(call cc-option,-W$(strip $1)),-Wno-$(strip $1))
-+cc-disable-warning = $(call cc-option,-Wno-$(strip $1))
- 
- # gcc-min-version
- # Usage: cflags-$(call gcc-min-version, 70100) += -foo
+ 	init_prmt();
+ 	acpi_init_pcc();
 -- 
 2.39.5
 
