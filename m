@@ -1,53 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F9FC2BDC75;
-	Sun,  1 Jun 2025 23:43:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5795732BD18;
+	Sun,  1 Jun 2025 23:43:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748821392; cv=none; b=VkK+Kzr9KVXGlzMzP8fzyi3rh6/wawhLgdnTR5UhyV6Bxzx2wZAHTf7UNYN9nvTcM8OXun5OiYMUpnTMoh56OlKHnXLKW0K+TvCBcvGZtliMh4fCQx5HvpdyXGtc+ODBcRCg2Suym49z5lRGTnlcsWDJTetSCFlgRtCAXDBlkNk=
+	t=1748821397; cv=none; b=O8dh6hqmnthX9Bll78U5k0Ku+bZPZyDD7CLWZ5BbGTBT3t04vjSILIBLznQs9JOo90ZycgJZGPZv6xIp6Z5cspuheuon72QFOY2baYN2PbABq724ajkqeUruSzPeBTUMM2vFIMPkr5ZLMv7D6oT60jyhbLsNYX62aFe76m3SHh4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748821392; c=relaxed/simple;
-	bh=8uGsla5TvHMV3zZ2Wv57F0Ctt5dM81m+Wcig2EZrqLo=;
+	s=arc-20240116; t=1748821397; c=relaxed/simple;
+	bh=cH5HsFOoMBk0XQmUmhORLHnRSswQ4L6RVz78cuOimz0=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=N7OkctRmVg69TsH0VYgkv5oLQJZd5cYSp6cuizqo/h2dJVnFPndqQlAIjSCI2IS82GDRLWNdr2nGGb0Ees19rJs9ghUQTvQ1EUUI0RREdHSAfIWuN0BmllIH9Zrayd7jGafhCv1egntyXZXx3jfuedH/GraZJE5npHQQkwNq/XE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iFQ+7SZL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ArGjSdCk+FM7ZCSnx1wddtagrztp2p9dAILQUqzSC4eGHAEa6IvL4OHi7+GUx+p5XjI9/4R5+bg3YnO8Qx2AoSSDZCSt31fP4F9a4+JJkVx2CdDoTw7mdAGno7CrDkaldWJKN035sS/wQJoX3+IMx/LIz4xC4T1CqAUo65PRQu8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Tu5SzdPp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iFQ+7SZL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 377D0C4CEEE;
-	Sun,  1 Jun 2025 23:43:10 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Tu5SzdPp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AD6EC4CEE7;
+	Sun,  1 Jun 2025 23:43:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748821392;
-	bh=8uGsla5TvHMV3zZ2Wv57F0Ctt5dM81m+Wcig2EZrqLo=;
+	s=k20201202; t=1748821397;
+	bh=cH5HsFOoMBk0XQmUmhORLHnRSswQ4L6RVz78cuOimz0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iFQ+7SZLTLjg9djpOSHgdw1oQApKJ4fvAHPxhQIJZZa0EXR/y3KFBl8hDTQbnyRXZ
-	 QHAMmGWQHXeZDMuWC4NKzgPjC2clkvk0yjBok8ADjBAbazHJwOBEgGTv0yCdsdmWdC
-	 FtVZXLMui1xKvNeOfBl32zoo5JKQD0k47V390AdW7W68R2/5zHFs4YdJRyOWy5att6
-	 6Wc9VgzJ7blntdrEAe3+/bLPX6XR/auapamiR/KA5n5PdDwTuTrcV3AHvqrBiscc0N
-	 jEkGhTpW5Z8k5t6lfahL6b/clWDnyinyvuanm5s38KUiJN1QBUY7XAHGm0Whj64DKa
-	 mGOb7LKcB0SzQ==
+	b=Tu5SzdPpjqgPlPmvXTH4xqkukg37Qm5O4pRW0cHEGkbrIut2F//NQtfjJxwRESqYz
+	 dDyFt4e0a2BWQhWbtVva2UB0hLB6iaM2Fdepv9jRkidbSpRbnuKs6fOwtzZvqPjuhu
+	 asA6frUXl1qUb7uzm1S+C0wBTSeCrLFINs6zCHGFYaCpcNWSuBIAUTwbfww/Z9Wepc
+	 z9UEwoMmEI5e/7Bqyf9JckorPdQvq1A7fhmtCKIJw/su31beQjt1l8hgfmSRHnAsYg
+	 8VDi6sXKm+e/XVRl8LuLTfOOsrURyNTQ62lLTe1ORCnxwEYBQyl7q8Y2Ivouu1de0u
+	 NlQ/nflsObuxQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jonas Karlman <jonas@kwiboo.se>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Christopher Obbard <chris.obbard@collabora.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>,
+Cc: Zhang Yi <yi.zhang@huawei.com>,
+	Theodore Ts'o <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>,
-	ezequiel@vanguardiasur.com.ar,
-	mchehab@kernel.org,
-	gregkh@linuxfoundation.org,
-	matthias.bgg@gmail.com,
-	angelogioacchino.delregno@collabora.com,
-	linux-media@vger.kernel.org,
-	linux-rockchip@lists.infradead.org,
-	linux-staging@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-mediatek@lists.infradead.org
-Subject: [PATCH AUTOSEL 5.15 20/43] media: rkvdec: h264: Use bytesperline and buffer height as virstride
-Date: Sun,  1 Jun 2025 19:42:00 -0400
-Message-Id: <20250601234224.3517599-20-sashal@kernel.org>
+	adilger.kernel@dilger.ca,
+	linux-ext4@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.15 23/43] ext4: prevent stale extent cache entries caused by concurrent get es_cache
+Date: Sun,  1 Jun 2025 19:42:03 -0400
+Message-Id: <20250601234224.3517599-23-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250601234224.3517599-1-sashal@kernel.org>
 References: <20250601234224.3517599-1-sashal@kernel.org>
@@ -62,109 +52,126 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 5.15.184
 Content-Transfer-Encoding: 8bit
 
-From: Jonas Karlman <jonas@kwiboo.se>
+From: Zhang Yi <yi.zhang@huawei.com>
 
-[ Upstream commit d5e0aa61470c48ddc04d433a00e79cef8716377a ]
+[ Upstream commit f22a0ef2231a7d8374bb021eb86404d0e9de5a02 ]
 
-Use bytesperline and buffer height to calculate the strides configured.
+The EXT4_IOC_GET_ES_CACHE and EXT4_IOC_PRECACHE_EXTENTS currently
+invokes ext4_ext_precache() to preload the extent cache without holding
+the inode's i_rwsem. This can result in stale extent cache entries when
+competing with operations such as ext4_collapse_range() which calls
+ext4_ext_remove_space() or ext4_ext_shift_extents().
 
-This does not really change anything other than ensuring the
-bytesperline that is signaled to userspace matches what is configured
-in HW.
+The problem arises when ext4_ext_remove_space() temporarily releases
+i_data_sem due to insufficient journal credits. During this interval, a
+concurrent EXT4_IOC_GET_ES_CACHE or EXT4_IOC_PRECACHE_EXTENTS may cache
+extent entries that are about to be deleted. As a result, these cached
+entries become stale and inconsistent with the actual extents.
 
-Signed-off-by: Jonas Karlman <jonas@kwiboo.se>
-Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Tested-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Tested-by: Christopher Obbard <chris.obbard@collabora.com>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Loading the extents cache without holding the inode's i_rwsem or the
+mapping's invalidate_lock is not permitted besides during the writeback.
+Fix this by holding the i_rwsem during EXT4_IOC_GET_ES_CACHE and
+EXT4_IOC_PRECACHE_EXTENTS.
+
+Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
+Link: https://patch.msgid.link/20250423085257.122685-6-yi.zhang@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-### Key Reasons for NO Backport: 1. **Not a Bug Fix**: The commit
-message explicitly states "This does not really change anything other
-than ensuring the bytesperline that is signaled to userspace matches
-what is configured in HW." This is not fixing a functional bug but
-rather improving consistency between userspace and hardware
-configuration. 2. **Code Quality/Consistency Improvement**: The changes
-are primarily about code correctness and consistency rather than fixing
-a critical issue that affects users. This aligns with similar commits
-#1, #2, and #4 which were marked as NO for backporting. 3. **Staging
-Driver**: The rkvdec driver is in `drivers/staging/media/`, which
-indicates it's still under development and not considered stable.
-Staging drivers typically have more relaxed backporting requirements. 4.
-**Specific Code Changes Analysis**: - **Before**: `hor_virstride =
-(sps->bit_depth_luma_minus8 + 8) 0001-Fix-Clippy-warnings.patch
-0002-Enhance-inference-prompt-to-utilize-CVEKERNELDIR-whe.patch
-0003-Update-to-latest-version-of-clap.patch Cargo.lock Cargo.toml
-LICENSE README.md adreno_acd_support_analysis.md
-amd_display_ips_sequential_ono_backport_analysis.md
-analyze_merge_commit.sh dpp_rcg_backport_analysis.md
-drm_amd_display_vertical_interrupt_dcn32_dcn401_backport_analysis.md
-drm_bridge_analysis.txt drm_format_helper_24bit_analysis.md
-drm_imagination_register_update_analysis.md
-drm_mediatek_mtk_dpi_refactoring_analysis.md
-intel_ipu6_constify_analysis.md io_uring_analysis.txt ksmbd_analysis.txt
-merge_commit_analysis.txt model prompt src target test_gpio_cleanup.txt
-test_patch.txt verisilicon_av1_4k_analysis.md dst_fmt->width / 8;` -
-**After**: `hor_virstride = dst_fmt->plane_fmt[0].bytesperline;` -
-**Before**: `ver_virstride = round_up(dst_fmt->height, 16);` -
-**After**: `ver_virstride = dst_fmt->height;` 5. **No Risk Indication**:
-The changes don't indicate they're fixing crashes, data corruption,
-security issues, or other critical problems that would warrant stable
-backporting. 6. **Pattern Match with Similar Commits**: Looking at the
-provided examples: - Similar commits #1, #2, #4, and #5 that make
-stride/calculation improvements were marked as NO - Only commit #3 that
-increased max supported height (a clear functional limitation fix) was
-marked as YES 7. **No Stable Tree Mention**: The commit message contains
-no indication of stable tree inclusion via Fixes: tags or explicit
-stable tree requests. ### Conclusion: This commit improves code
-consistency by using the actual bytesperline values from userspace
-instead of calculating them from SPS parameters, but it doesn't fix a
-user-impacting bug. It's a code quality improvement that follows the
-pattern of other NO-backport commits in the provided examples.
+Based on my comprehensive analysis of this commit and comparison with
+the historical similar commits, here is my assessment: **YES** This
+commit should be backported to stable kernel trees for the following
+reasons: ## Analysis Summary ### **Type of Bug Fix** This commit
+addresses a **race condition** that can lead to **stale extent cache
+entries** in the ext4 filesystem. The race occurs between: 1.
+`EXT4_IOC_GET_ES_CACHE` and `EXT4_IOC_PRECACHE_EXTENTS` operations 2.
+Concurrent `ext4_collapse_range()` operations that call
+`ext4_ext_remove_space()` or `ext4_ext_shift_extents()` ### **Technical
+Details of the Race** The problem stems from the fact that
+`ext4_ext_remove_space()` temporarily releases `i_data_sem` when journal
+credits are insufficient. During this critical window: - The extent
+precaching operations (`ext4_ext_precache()`) can cache extent entries -
+These cached entries are about to be deleted by the ongoing
+collapse/shift operation - Result: **stale, inconsistent extent cache
+entries** ### **Code Changes Analysis** The fix is **minimal and
+surgical**: **In `fs/ext4/extents.c` (ext4_get_es_cache function):**
+```c if (fieinfo->fi_flags & FIEMAP_FLAG_CACHE) { +
+inode_lock_shared(inode); error = ext4_ext_precache(inode); +
+inode_unlock_shared(inode); if (error) return error; ``` **In
+`fs/ext4/ioctl.c` (EXT4_IOC_PRECACHE_EXTENTS case):** ```c case
+EXT4_IOC_PRECACHE_EXTENTS: - return ext4_ext_precache(inode); +{ + int
+ret; + + inode_lock_shared(inode); + ret = ext4_ext_precache(inode); +
+inode_unlock_shared(inode); + return ret; +} ``` ### **Why This
+Qualifies for Backporting** 1. **Important Bug Fix**: Stale extent cache
+entries can lead to filesystem inconsistencies and potential data
+corruption scenarios. 2. **Minimal Risk**: The changes are extremely
+small and contained: - Only adds proper locking around existing
+operations - Uses shared locking (`inode_lock_shared`) which allows
+concurrent readers - No algorithmic changes or new features 3. **Follows
+Established Patterns**: Similar commits in the repository (marked with
+"Backport Status: YES") show this pattern: - Similar commit #2: "ext4:
+fix data races when using cached status extents" - also deals with
+extent cache consistency - Similar commit #3: "ext4: convert to
+exclusive lock while inserting delalloc extents" - addresses similar
+race conditions with proper locking - Similar commit #4: "ext4: do not
+polute the extents cache while shifting extents" - prevents extent cache
+corruption during shift operations 4. **Clear Impact**: The commit
+message explicitly states this prevents "stale extent cache entries"
+which can cause inconsistency with actual extents. 5. **Contained to
+Subsystem**: Changes are limited to ext4 extent management and don't
+affect other kernel subsystems. 6. **Stable Backport Indicators**: - No
+"Cc: stable@" tag is present, but the nature of the fix (race condition
+leading to corruption) makes it a good candidate - The fix follows
+ext4's established locking protocol requirements - Multiple similar
+extent cache race condition fixes have been backported ### **Risk
+Assessment** - **Very Low Regression Risk**: Only adds locking
+protection, doesn't change functional behavior - **Well-understood
+Fix**: The locking pattern matches established ext4 conventions -
+**Limited Scope**: Only affects two specific ioctl code paths This
+commit represents exactly the type of fix that stable trees are meant
+for: a small, safe fix for a real bug that can cause filesystem
+corruption without introducing new functionality or architectural
+changes.
 
- drivers/staging/media/rkvdec/rkvdec-h264.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ fs/ext4/extents.c | 2 ++
+ fs/ext4/ioctl.c   | 8 +++++++-
+ 2 files changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/staging/media/rkvdec/rkvdec-h264.c b/drivers/staging/media/rkvdec/rkvdec-h264.c
-index 438252fa19441..46e01037b7112 100644
---- a/drivers/staging/media/rkvdec/rkvdec-h264.c
-+++ b/drivers/staging/media/rkvdec/rkvdec-h264.c
-@@ -907,9 +907,9 @@ static void config_registers(struct rkvdec_ctx *ctx,
- 	dma_addr_t rlc_addr;
- 	dma_addr_t refer_addr;
- 	u32 rlc_len;
--	u32 hor_virstride = 0;
--	u32 ver_virstride = 0;
--	u32 y_virstride = 0;
-+	u32 hor_virstride;
-+	u32 ver_virstride;
-+	u32 y_virstride;
- 	u32 yuv_virstride = 0;
- 	u32 offset;
- 	dma_addr_t dst_addr;
-@@ -920,16 +920,16 @@ static void config_registers(struct rkvdec_ctx *ctx,
+diff --git a/fs/ext4/extents.c b/fs/ext4/extents.c
+index b9bbe4dbedf4f..4c55789d1a558 100644
+--- a/fs/ext4/extents.c
++++ b/fs/ext4/extents.c
+@@ -5045,7 +5045,9 @@ int ext4_get_es_cache(struct inode *inode, struct fiemap_extent_info *fieinfo,
+ 	}
  
- 	f = &ctx->decoded_fmt;
- 	dst_fmt = &f->fmt.pix_mp;
--	hor_virstride = (sps->bit_depth_luma_minus8 + 8) * dst_fmt->width / 8;
--	ver_virstride = round_up(dst_fmt->height, 16);
-+	hor_virstride = dst_fmt->plane_fmt[0].bytesperline;
-+	ver_virstride = dst_fmt->height;
- 	y_virstride = hor_virstride * ver_virstride;
+ 	if (fieinfo->fi_flags & FIEMAP_FLAG_CACHE) {
++		inode_lock_shared(inode);
+ 		error = ext4_ext_precache(inode);
++		inode_unlock_shared(inode);
+ 		if (error)
+ 			return error;
+ 		fieinfo->fi_flags &= ~FIEMAP_FLAG_CACHE;
+diff --git a/fs/ext4/ioctl.c b/fs/ext4/ioctl.c
+index 18002b0a908ce..bd90b454c6213 100644
+--- a/fs/ext4/ioctl.c
++++ b/fs/ext4/ioctl.c
+@@ -1130,8 +1130,14 @@ static long __ext4_ioctl(struct file *filp, unsigned int cmd, unsigned long arg)
+ 		return 0;
+ 	}
+ 	case EXT4_IOC_PRECACHE_EXTENTS:
+-		return ext4_ext_precache(inode);
++	{
++		int ret;
  
- 	if (sps->chroma_format_idc == 0)
- 		yuv_virstride = y_virstride;
- 	else if (sps->chroma_format_idc == 1)
--		yuv_virstride += y_virstride + y_virstride / 2;
-+		yuv_virstride = y_virstride + y_virstride / 2;
- 	else if (sps->chroma_format_idc == 2)
--		yuv_virstride += 2 * y_virstride;
-+		yuv_virstride = 2 * y_virstride;
- 
- 	reg = RKVDEC_Y_HOR_VIRSTRIDE(hor_virstride / 16) |
- 	      RKVDEC_UV_HOR_VIRSTRIDE(hor_virstride / 16) |
++		inode_lock_shared(inode);
++		ret = ext4_ext_precache(inode);
++		inode_unlock_shared(inode);
++		return ret;
++	}
+ 	case FS_IOC_SET_ENCRYPTION_POLICY:
+ 		if (!ext4_has_feature_encrypt(sb))
+ 			return -EOPNOTSUPP;
 -- 
 2.39.5
 
