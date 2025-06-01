@@ -1,45 +1,53 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72B1C2C0A68;
-	Sun,  1 Jun 2025 23:44:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEEE6280324;
+	Sun,  1 Jun 2025 23:44:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748821489; cv=none; b=DO5LrkuCb+5lf/4avY/En9T/ZlZ+KvvTItz0rUkI0hQLp7G9ehZvA38jBOQuUsdygyhW9VM5SE/p6huwNVl5HI82nrD/hk8JWfEu1tvnSHPJ/oAstvswcn0Fq5M1VeBkQfCK2FHVFoYALaaiwhjfzYsUXcTsnWpdfEmIhJSJRRA=
+	t=1748821492; cv=none; b=D5Xmf02CaiJjL/9p1dN1AbBwOy1uyz/XqtLYyc7JqgncTwOvSg8VQxuQscG6SrYsRU8RInHdP9cceg6I6VqrS6cbDgZNS6jKUiPOfgPylqrN2t2BNUUcqRa57iN46xHuuO/grq6lQfEGoGhv+13ebXkkKqDN7VawjZxwASjjz78=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748821489; c=relaxed/simple;
-	bh=lx0sLTxwVKT7MceorPuxK8d6JHSF7evmGLh8BNW5m1s=;
+	s=arc-20240116; t=1748821492; c=relaxed/simple;
+	bh=NHwSCXmQYR483FkTDemswKSZZ3F1Uk5wGRl2baDPVyM=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Nw8zRfm405dYra7KglnhAQndaYF8glKvGZgib+W/pqOkyIMUCTy6PJhExj+X98Kx7OfXatQFNI1c3dN3PRARlI1IbIqjkb+RAKptetxAjDuTESKNknMdAEvlet7uryctGPQ+SLxWZD6Dn634NXVuiox0d/74oztfhR4wKsITE5M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RW2MCizh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oq1QVQ38cppo9IbrAJu6RoFyvFPZUiQKYJihshtEUmXqNYdKolzsoRWdt03bh1rQWH9QzVCQ9FWAajAbIMSNu9Ich0YTzwRBTfnzz8y+ZSyEaW+ihBjxNEAZLEDfzY9Jb99uUDWfWiaGu8ykmE5O8WLth6Ak8DB1yybC2s+MTY0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=b7XK7/Je; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RW2MCizh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D00BC4CEF1;
-	Sun,  1 Jun 2025 23:44:48 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="b7XK7/Je"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1CA1C4CEE7;
+	Sun,  1 Jun 2025 23:44:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748821489;
-	bh=lx0sLTxwVKT7MceorPuxK8d6JHSF7evmGLh8BNW5m1s=;
+	s=k20201202; t=1748821492;
+	bh=NHwSCXmQYR483FkTDemswKSZZ3F1Uk5wGRl2baDPVyM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RW2MCizhqyHZL+8wT4PQUbKuSs6bwgPHbsZhMDNZJJ+137CdoWlXcNNrt+8ISBwUO
-	 SJQJCf/WZxqTdtS1eyBYo7zoljqNvz2g8o3OYt62bE0geDWFJi5OSDv4H8glsevuXN
-	 OJPyJ977SLI7iXhchQEApYwSQ8XbOQ1xKzABUpv6r9zj8GN0OmtNF4/Utp0zxnrIsk
-	 301YD6FQzWpHMSF7+6hITYm245qr6CxPLxQsg9kv0QkGr7lDthrz76qEEGUjMwrzBS
-	 TWahDiSPNULjK+vGhhb/OCHGKLRdVLtThfuhFp4WV8XfKRex2emvS3SfRjn+9BwFye
-	 RV/6C5SZuwgMw==
+	b=b7XK7/JelfhRBnoLeTpOPSawwr2e1zFglJB5qIU5KcHc1uCqyoAUBwwLCsrzhEK2F
+	 gMfT8PXN5NLuZCVrU15aZfzRFmob6ghetKIFLBio8K+LP4Lp2r8wSdnKPyxeJ9yumc
+	 6WsyJg2eQwFvDS32yTj7T25evwx3k3k7QKyrO/ZCiHqawAO92bWRsFAW/4bNRhbL5C
+	 8LsHh1WW5LuQRWhrftQNxhDlUZiswWvCqJEvwJusH+tqvEoPQe/uIo2AbCqrZtmPT4
+	 UBX/C1CmfxMYBuoqT6qVoqOVIPGhThcfpIQizAm8OM0b88C1Rz+WKnTryFJMchSdcm
+	 gMmrgwgXHTtMQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Dylan Wolff <wolffd@comp.nus.edu.sg>,
-	Jiacheng Xu <stitch@zju.edu.cn>,
-	Dave Kleikamp <dave.kleikamp@oracle.com>,
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>,
-	shaggy@kernel.org,
-	eadavis@qq.com,
-	jfs-discussion@lists.sourceforge.net,
+	robdclark@gmail.com,
+	quic_abhinavk@quicinc.com,
+	lumag@kernel.org,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	quic_jesszhan@quicinc.com,
+	jun.nie@linaro.org,
+	jonathan@marek.ca,
+	linux-arm-msm@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.10 21/34] jfs: Fix null-ptr-deref in jfs_ioc_trim
-Date: Sun,  1 Jun 2025 19:43:45 -0400
-Message-Id: <20250601234359.3518595-21-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.10 22/34] drm/msm/dpu: don't select single flush for active CTL blocks
+Date: Sun,  1 Jun 2025 19:43:46 -0400
+Message-Id: <20250601234359.3518595-22-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250601234359.3518595-1-sashal@kernel.org>
 References: <20250601234359.3518595-1-sashal@kernel.org>
@@ -54,165 +62,72 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 5.10.237
 Content-Transfer-Encoding: 8bit
 
-From: Dylan Wolff <wolffd@comp.nus.edu.sg>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit a4685408ff6c3e2af366ad9a7274f45ff3f394ee ]
+[ Upstream commit e93eee524bb78f3ee4b78654d0083382f98b3d23 ]
 
-[ Syzkaller Report ]
+In case of ACTIVE CTLs, a single CTL is being used for flushing all INTF
+blocks. Don't skip programming the CTL on those targets.
 
-Oops: general protection fault, probably for non-canonical address
-0xdffffc0000000087: 0000 [#1
-KASAN: null-ptr-deref in range [0x0000000000000438-0x000000000000043f]
-CPU: 2 UID: 0 PID: 10614 Comm: syz-executor.0 Not tainted
-6.13.0-rc6-gfbfd64d25c7a-dirty #1
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
-Sched_ext: serialise (enabled+all), task: runnable_at=-30ms
-RIP: 0010:jfs_ioc_trim+0x34b/0x8f0
-Code: e7 e8 59 a4 87 fe 4d 8b 24 24 4d 8d bc 24 38 04 00 00 48 8d 93
-90 82 fe ff 4c 89 ff 31 f6
-RSP: 0018:ffffc900055f7cd0 EFLAGS: 00010206
-RAX: 0000000000000087 RBX: 00005866a9e67ff8 RCX: 000000000000000a
-RDX: 0000000000000001 RSI: 0000000000000004 RDI: 0000000000000001
-RBP: dffffc0000000000 R08: ffff88807c180003 R09: 1ffff1100f830000
-R10: dffffc0000000000 R11: ffffed100f830001 R12: 0000000000000000
-R13: 0000000000000000 R14: 0000000000000001 R15: 0000000000000438
-FS:  00007fe520225640(0000) GS:ffff8880b7e80000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00005593c91b2c88 CR3: 000000014927c000 CR4: 00000000000006f0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
-<TASK>
-? __die_body+0x61/0xb0
-? die_addr+0xb1/0xe0
-? exc_general_protection+0x333/0x510
-? asm_exc_general_protection+0x26/0x30
-? jfs_ioc_trim+0x34b/0x8f0
-jfs_ioctl+0x3c8/0x4f0
-? __pfx_jfs_ioctl+0x10/0x10
-? __pfx_jfs_ioctl+0x10/0x10
-__se_sys_ioctl+0x269/0x350
-? __pfx___se_sys_ioctl+0x10/0x10
-? do_syscall_64+0xfb/0x210
-do_syscall_64+0xee/0x210
-? syscall_exit_to_user_mode+0x1e0/0x330
-entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7fe51f4903ad
-Code: c3 e8 a7 2b 00 00 0f 1f 80 00 00 00 00 f3 0f 1e fa 48 89 f8 48
-89 f7 48 89 d6 48 89 ca 4d
-RSP: 002b:00007fe5202250c8 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
-RAX: ffffffffffffffda RBX: 00007fe51f5cbf80 RCX: 00007fe51f4903ad
-RDX: 0000000020000680 RSI: 00000000c0185879 RDI: 0000000000000005
-RBP: 0000000000000000 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000246 R12: 00007fe520225640
-R13: 000000000000000e R14: 00007fe51f44fca0 R15: 00007fe52021d000
-</TASK>
-Modules linked in:
----[ end trace 0000000000000000 ]---
-RIP: 0010:jfs_ioc_trim+0x34b/0x8f0
-Code: e7 e8 59 a4 87 fe 4d 8b 24 24 4d 8d bc 24 38 04 00 00 48 8d 93
-90 82 fe ff 4c 89 ff 31 f6
-RSP: 0018:ffffc900055f7cd0 EFLAGS: 00010206
-RAX: 0000000000000087 RBX: 00005866a9e67ff8 RCX: 000000000000000a
-RDX: 0000000000000001 RSI: 0000000000000004 RDI: 0000000000000001
-RBP: dffffc0000000000 R08: ffff88807c180003 R09: 1ffff1100f830000
-R10: dffffc0000000000 R11: ffffed100f830001 R12: 0000000000000000
-R13: 0000000000000000 R14: 0000000000000001 R15: 0000000000000438
-FS:  00007fe520225640(0000) GS:ffff8880b7e80000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00005593c91b2c88 CR3: 000000014927c000 CR4: 00000000000006f0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Kernel panic - not syncing: Fatal exception
-
-[ Analysis ]
-
-We believe that we have found a concurrency bug in the `fs/jfs` module
-that results in a null pointer dereference. There is a closely related
-issue which has been fixed:
-
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=d6c1b3599b2feb5c7291f5ac3a36e5fa7cedb234
-
-... but, unfortunately, the accepted patch appears to still be
-susceptible to a null pointer dereference under some interleavings.
-
-To trigger the bug, we think that `JFS_SBI(ipbmap->i_sb)->bmap` is set
-to NULL in `dbFreeBits` and then dereferenced in `jfs_ioc_trim`. This
-bug manifests quite rarely under normal circumstances, but is
-triggereable from a syz-program.
-
-Reported-and-tested-by: Dylan J. Wolff<wolffd@comp.nus.edu.sg>
-Reported-and-tested-by: Jiacheng Xu <stitch@zju.edu.cn>
-Signed-off-by: Dylan J. Wolff<wolffd@comp.nus.edu.sg>
-Signed-off-by: Jiacheng Xu <stitch@zju.edu.cn>
-Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/641585/
+Link: https://lore.kernel.org/r/20250307-dpu-active-ctl-v3-5-5d20655f10ca@linaro.org
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-**YES** This commit should be backported to stable kernel trees. Here's
-my extensive analysis: ## Code Analysis The commit adds a crucial NULL
-pointer check in `jfs_ioc_trim()` function: ```c
-down_read(&sb->s_umount); bmp = JFS_SBI(ip->i_sb)->bmap; - if (minlen >
-bmp->db_agsize || + if (bmp == NULL || + minlen > bmp->db_agsize ||
-start >= bmp->db_mapsize || range->len < sb->s_blocksize) {
-up_read(&sb->s_umount); return -EINVAL; } ``` ## Why This Should Be
-Backported ### 1. **Critical Bug Fix with Clear User Impact** - **Kernel
-Panic**: The bug causes a general protection fault leading to kernel
-panic when `bmp` is NULL - **Syzkaller Report**: This is a security-
-relevant bug discovered by syzkaller, indicating it's triggerable from
-userspace - **Race Condition**: The commit message clearly describes a
-concurrency bug where `JFS_SBI(ipbmap->i_sb)->bmap` can be set to NULL
-in `dbFreeBits` while being dereferenced in `jfs_ioc_trim` ### 2.
-**Minimal and Safe Fix** - **Single Line Addition**: The fix only adds
-`bmp == NULL ||` to an existing validation check - **No Architectural
-Changes**: No complex logic changes or new features - **Follows Existing
-Pattern**: Uses the same error handling path (`return -EINVAL`) already
-established - **Proper Cleanup**: Correctly calls
-`up_read(&sb->s_umount)` before returning ### 3. **Matches Stable Tree
-Criteria** Comparing with the similar commits marked "YES": - **Like
-Similar Commit #1 (fm10k)**: Fixes NULL pointer dereference by adding
-proper error checking - **Like Similar Commit #2 (ssb)**: Addresses the
-same pattern of missing NULL checks leading to crashes - **Like Similar
-Commit #3 (bdev)**: Similar NULL pointer protection pattern - **Like
-Similar Commit #5 (jfs dtInsert)**: Another JFS fix with similar
-validation pattern ### 4. **Related Context Shows Importance** The
-related commit `d6c1b3599b2f` ("jfs: Fix uaf in dbFreeBits") addressed a
-similar race condition in the same subsystem, but as the commit message
-notes: "unfortunately, the accepted patch appears to still be
-susceptible to a null pointer dereference under some interleavings." ###
-5. **Low Risk Assessment** - **Contained to JFS**: Only affects JFS
-filesystem operations - **IOCTL Interface**: Only triggered through
-FITRIM ioctl, not normal filesystem operations - **Early Return**: The
-fix returns early with a standard error code, preventing further
-execution - **No Performance Impact**: The NULL check is minimal
-overhead ### 6. **Security Implications** - **Userspace Triggerable**:
-The crash can be triggered from userspace via the FITRIM ioctl -
-**Denial of Service**: Successful exploitation leads to kernel
-panic/system crash - **No Privilege Escalation**: While this is a crash
-bug, it demonstrates the importance of proper input validation ##
-Conclusion This commit fixes a critical NULL pointer dereference that
-causes kernel panics, uses a minimal and safe approach, and follows the
-same patterns as other commits successfully backported to stable trees.
-The fix addresses a security-relevant bug that can be triggered from
-userspace, making it an important candidate for stable backporting.
+**YES** This commit should be backported to stable kernel trees. ##
+Analysis: **1. Clear Bug Fix Nature:** The commit fixes a functional bug
+where CTL programming was being incorrectly skipped on ACTIVE CTL
+configurations. The commit message explicitly states "Don't skip
+programming the CTL on those targets" indicating incorrect behavior was
+occurring. **2. Small and Contained Change:** The change is minimal - it
+modifies only the `dpu_encoder_phys_vid_needs_single_flush()` function
+by adding a single condition check: ```c - return phys_enc->split_role
+!= ENC_ROLE_SOLO; + return !(phys_enc->hw_ctl->caps->features &
+BIT(DPU_CTL_ACTIVE_CFG)) && + phys_enc->split_role != ENC_ROLE_SOLO; ```
+**3. Hardware-Specific Fix:** The fix addresses a specific hardware
+configuration issue for devices with `DPU_CTL_ACTIVE_CFG` feature. From
+examining the kernel code, this affects multiple SoCs including SM8150,
+SM8250, SM6150, SC7180, and others - making it a widely impacting fix.
+**4. Clear Functional Impact:** - **Before**: On ACTIVE CTL targets, the
+function incorrectly returned true for split configurations, causing CTL
+programming to be skipped - **After**: On ACTIVE CTL targets, it returns
+false, ensuring proper CTL programming occurs - **Effect**: Ensures
+display pipeline functions correctly on affected hardware **5. Tested
+Change:** The commit includes "Tested-by: Neil Armstrong
+<neil.armstrong@linaro.org> # on SM8550-QRD" indicating real hardware
+testing was performed. **6. Matches Successful Backport Pattern:** This
+commit closely matches the pattern of Similar Commits #1, #2, and #4
+(all marked YES): - Small, targeted fix (line 377 in
+`dpu_encoder_phys_vid.c:377`) - Addresses incorrect hardware behavior -
+Has clear before/after functional difference - Affects critical graphics
+subsystem functionality **7. Risk Assessment:** - **Low regression
+risk**: The change only affects the specific condition logic -
+**Targeted scope**: Only impacts ACTIVE CTL configurations -
+**Conservative fix**: Makes the logic more restrictive (requires both
+conditions to skip programming) This is a clear hardware bug fix that
+prevents display issues on affected SoCs and follows the stable tree
+criteria for important bugfixes with minimal regression risk.
 
- fs/jfs/jfs_discard.c | 3 ++-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c | 3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/jfs/jfs_discard.c b/fs/jfs/jfs_discard.c
-index 5f4b305030ad5..4b660296caf39 100644
---- a/fs/jfs/jfs_discard.c
-+++ b/fs/jfs/jfs_discard.c
-@@ -86,7 +86,8 @@ int jfs_ioc_trim(struct inode *ip, struct fstrim_range *range)
- 	down_read(&sb->s_umount);
- 	bmp = JFS_SBI(ip->i_sb)->bmap;
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+index 33880f66625e6..f9da379999467 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+@@ -353,7 +353,8 @@ static void dpu_encoder_phys_vid_underrun_irq(void *arg, int irq_idx)
+ static bool dpu_encoder_phys_vid_needs_single_flush(
+ 		struct dpu_encoder_phys *phys_enc)
+ {
+-	return phys_enc->split_role != ENC_ROLE_SOLO;
++	return !(phys_enc->hw_ctl->caps->features & BIT(DPU_CTL_ACTIVE_CFG)) &&
++		phys_enc->split_role != ENC_ROLE_SOLO;
+ }
  
--	if (minlen > bmp->db_agsize ||
-+	if (bmp == NULL ||
-+	    minlen > bmp->db_agsize ||
- 	    start >= bmp->db_mapsize ||
- 	    range->len < sb->s_blocksize) {
- 		up_read(&sb->s_umount);
+ static void _dpu_encoder_phys_vid_setup_irq_hw_idx(
 -- 
 2.39.5
 
