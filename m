@@ -1,51 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C057225E818;
-	Sun,  1 Jun 2025 23:44:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 407B6333926;
+	Sun,  1 Jun 2025 23:44:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748821465; cv=none; b=lvKcXUiJT90vgyCqiE1RrKmefSkpxBNeBIop1+X1RP6/rDP3FZI1DD0nxyRvHjR43aSLmfKyLlChrdqbU8EBxKO6DXuqDWiUZF7IlYrAjfmFjyc5jxcAF7DMc1obasj7OcAHo9l01XiQYaxaHjf4Zws+jM+J5txnr4kcJnD9kDQ=
+	t=1748821467; cv=none; b=tamNjTwWIzLbfcqT7okGkMfFOw/i9LdhwwXjBZ7seYcYwBu+Aol4wu5eTLGEaxxQ7hgqUNjvdhm4XEzWpQC1QLx+Z/p9l1UyZxG4O9+PE20NixF43gAhnrmNkXj6Gn/r4InYfXb4diyEkquBHsyAhImb8oP3e/+/0OOWFx3lG6c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748821465; c=relaxed/simple;
-	bh=2ORpmKNrUmaoNbGbqv2xgeOpSvThl8JsKgOzRqY20xY=;
+	s=arc-20240116; t=1748821467; c=relaxed/simple;
+	bh=GpzfAzYfIDfzlhf4NnvgTC+Dm6bHYR+PDwYXkiwrRHc=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=TXAb4EzZyjmWq4xMGZsY5LCJZGxC52txI9ykLmZ0rc6cTUhKeB9O+NfpOkl7VVs6uNxN/UONH63CWaDZu0X2CH0TAdX2gR4wP3xdyW/8fMXCLNx1QVxXP4Wa0iX1oKMYaobhSf1DmbKzBiiPUWYIiQ1Gff1NLrka87GTT5o6T4s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OCOPMt8U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Prcmeua1or1x0lNUJBNBwRWu4vypIT4BQ97M3BehFoY6lrk6VmOGy+3+3SPhw9R1fGRof6hx4x5foBj6LioJovmmabC3/lVKUOzx0W8H8pRCgFPnuiKDGgPuUV2JgsTtndA5nuphhxDSl7r8SY7V4M8NEDCc2qja7w/HcqyX9z4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ceMvrswo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OCOPMt8U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86182C4CEE7;
-	Sun,  1 Jun 2025 23:44:23 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ceMvrswo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D0D8C4CEEE;
+	Sun,  1 Jun 2025 23:44:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748821465;
-	bh=2ORpmKNrUmaoNbGbqv2xgeOpSvThl8JsKgOzRqY20xY=;
+	s=k20201202; t=1748821466;
+	bh=GpzfAzYfIDfzlhf4NnvgTC+Dm6bHYR+PDwYXkiwrRHc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OCOPMt8UXtprzHlfpAklY7s/T/VVlTw5zpXPHDadlnwQ2aGHkf05P9C0FPMQ11Kek
-	 Kc2VcWgachXe7OTlYKohNcye/2pV2wPPWD/8JscqByq176SVpM+V0YPGnngyo9/6FQ
-	 4n0pVwt3W0S9BaEIT71KYtWHJaI+JGRMRYQkFggcU3AWLCfdFZgaewcnxuHgrKrsuC
-	 CwM/ybvGKRmEu2o14S0gtiJITJ1UvufEcePOdYVBdr924n+qIwGJUsw7hv7cNote8I
-	 Nd7OV8sDZnrMJg5cDPacSSLuQ6JjrcJgjYqs+0rzbfxg0QC7ZEVDDIJddjMzgh5v/O
-	 pU7d9D4x9Rpsg==
+	b=ceMvrswoiR1j90BQk6BjFfZf8PjFltKzpUrwxaVDLjcfZAHoQ7EzdS+xqabV7ONCJ
+	 BfPmdO8e8sVodUJ1Pa+8uLn1+DGmhGO38wPUWELoyxojtboxyCSBG/yiyt5rz/Hc1v
+	 Yasjfpvp1uXWzcDWBo02SrzoxrI709WYHS1e/ew5tF0VzTZCxGBrAmSHB6Jdbpe31K
+	 DvszMP4S8Tj6udfVTGQ3R43uj8lYH/4J+QRd+CMkSxhMJsZvkjC2CM3lmaZieD1969
+	 uvu0BLN+rvpbQch0t+GTdWfjFkL5LtC1kUNm6QTZkq+uiuQtJmmPIcrKzFT3F8jShM
+	 D7trHysZJY4/Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Alex Deucher <alexander.deucher@amd.com>,
-	Rodrigo Siqueira <siqueira@igalia.com>,
+Cc: Nas Chung <nas.chung@chipsnmedia.com>,
+	Michael Tretter <m.tretter@pengutronix.de>,
+	Sebastian Fricke <sebastian.fricke@collabora.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>,
-	christian.koenig@amd.com,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	sunil.khatri@amd.com,
-	srinivasan.shanmugam@amd.com,
-	vitaly.prosyak@amd.com,
-	Jesse.zhang@amd.com,
-	Jiadong.Zhu@amd.com,
-	amd-gfx@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org,
+	mchehab@kernel.org,
+	linux-media@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.10 10/34] drm/amdgpu/gfx10: fix CSIB handling
-Date: Sun,  1 Jun 2025 19:43:34 -0400
-Message-Id: <20250601234359.3518595-10-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.10 11/34] media: uapi: v4l: Change V4L2_TYPE_IS_CAPTURE condition
+Date: Sun,  1 Jun 2025 19:43:35 -0400
+Message-Id: <20250601234359.3518595-11-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250601234359.3518595-1-sashal@kernel.org>
 References: <20250601234359.3518595-1-sashal@kernel.org>
@@ -61,85 +55,101 @@ X-stable-base: Linux 5.10.237
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Nas Chung <nas.chung@chipsnmedia.com>
 
-[ Upstream commit 683308af030cd9b8d3f1de5cbc1ee51788878feb ]
+[ Upstream commit ad2698efce37e910dcf3c3914263e6cb3e86f8cd ]
 
-We shouldn't return after the last section.
-We need to update the rest of the CSIB.
+Explicitly compare a buffer type only with valid buffer types,
+to avoid matching a buffer type outside of the valid buffer type set.
 
-Reviewed-by: Rodrigo Siqueira <siqueira@igalia.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Nas Chung <nas.chung@chipsnmedia.com>
+Reviewed-by: Michael Tretter <m.tretter@pengutronix.de>
+Signed-off-by: Sebastian Fricke <sebastian.fricke@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-**YES** This commit should be backported to stable kernel trees. ##
-Detailed Analysis: ### The Bug The commit fixes a critical bug in the
-`gfx_v10_0_get_csb_buffer()` function in
-`/drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c`. The function is responsible
-for building a Command Stream Buffer (CSB) for GPU initialization. **The
-problematic code before the fix:** ```c for (sect =
-adev->gfx.rlc.cs_data; sect->section != NULL; ++sect) { for (ext =
-sect->section; ext->extent != NULL; ++ext) { if (sect->id ==
-SECT_CONTEXT) { buffer[count++] =
-cpu_to_le32(PACKET3(PACKET3_SET_CONTEXT_REG, ext->reg_count));
-buffer[count++] = cpu_to_le32(ext->reg_index -
-PACKET3_SET_CONTEXT_REG_START); for (i = 0; i < ext->reg_count; i++)
-buffer[count++] = cpu_to_le32(ext->extent[i]); } else { return; // ←
-BUG: Early return prevents rest of buffer initialization } } } ``` **The
-fix removes the early return:** ```c for (sect = adev->gfx.rlc.cs_data;
-sect->section != NULL; ++sect) { for (ext = sect->section; ext->extent
-!= NULL; ++ext) { if (sect->id == SECT_CONTEXT) { buffer[count++] =
-cpu_to_le32(PACKET3(PACKET3_SET_CONTEXT_REG, ext->reg_count));
-buffer[count++] = cpu_to_le32(ext->reg_index -
-PACKET3_SET_CONTEXT_REG_START); for (i = 0; i < ext->reg_count; i++)
-buffer[count++] = cpu_to_le32(ext->extent[i]); } // ← Early return
-removed - now continues to process rest of buffer } } ``` ### Why This
-Should Be Backported: 1. **Fixes Important GPU Initialization Bug**:
-This is a clear functional bug that affects AMDGPU GFX10 hardware.
-Looking at the clearstate data structure, I can see that
-`gfx10_cs_data[]` contains only `SECT_CONTEXT` sections, but if any
-future section was not `SECT_CONTEXT`, the early return would prevent
-critical buffer initialization from completing. 2. **Affects Critical
-Hardware Functionality**: The CSB (Command Stream Buffer) is essential
-for proper GPU initialization. An incomplete buffer could lead to: - GPU
-hang during initialization - Incorrect register states - System
-instability - Failed GPU bring-up 3. **Small, Contained Fix**: The fix
-is minimal - it simply removes an erroneous `else { return; }` clause.
-This has very low risk of introducing regressions. 4. **No Architectural
-Changes**: This doesn't change any APIs, interfaces, or architectural
-decisions. It's a pure bugfix. 5. **Follows Stable Tree Criteria**: -
-Important bugfix ✓ - Minimal risk ✓ - Confined to a subsystem ✓ - No new
-features ✓ 6. **Critical GPU Subsystem**: The commit touches GPU command
-submission infrastructure, which is critical for system stability when
-AMD GFX10 hardware is present. 7. **Clear Commit Message**: The commit
-message clearly explains the bug: "We shouldn't return after the last
-section. We need to update the rest of the CSIB." Looking at the
-reference commits, this aligns with "Similar Commit #4" which was marked
-YES for backporting - it's a clear functional bugfix in critical GPU
-subsystem code that prevents proper operation. The missing code after
-the early return includes essential buffer finalization: - Setting
-PA_SC_TILE_STEERING_OVERRIDE register - Adding
-PACKET3_PREAMBLE_END_CLEAR_STATE - Adding PACKET3_CLEAR_STATE command
-Without these, the GPU's clear state buffer would be incomplete,
-potentially causing initialization failures.
+**YES** This commit should be backported to stable kernel trees based on
+the following analysis: ## Code Change Analysis The commit fixes a
+logical flaw in the `V4L2_TYPE_IS_CAPTURE` macro in
+`include/uapi/linux/videodev2.h`. **Before the patch:** ```c #define
+V4L2_TYPE_IS_CAPTURE(type) (!V4L2_TYPE_IS_OUTPUT(type)) ``` **After the
+patch:** ```c #define V4L2_TYPE_IS_VALID(type) \ ((type) >=
+V4L2_BUF_TYPE_VIDEO_CAPTURE && (type) <= V4L2_BUF_TYPE_META_OUTPUT)
+#define V4L2_TYPE_IS_CAPTURE(type) \ (V4L2_TYPE_IS_VALID(type) &&
+!V4L2_TYPE_IS_OUTPUT(type)) ``` ## The Bug and Its Impact The original
+implementation has a critical flaw: **invalid buffer type values
+incorrectly return true for `V4L2_TYPE_IS_CAPTURE`**. Here's why: 1. For
+invalid buffer types (e.g., 0, 15, 100, 0x80), `V4L2_TYPE_IS_OUTPUT()`
+returns false 2. The negation `!V4L2_TYPE_IS_OUTPUT()` makes these
+invalid types appear as "capture" types 3. This can lead to incorrect
+code paths being taken in media drivers throughout the kernel ## Why
+This Should Be Backported 1. **Affects User-Facing API**: This is a UAPI
+header that defines kernel-userspace interface behavior. Incorrect
+behavior here can affect any V4L2 application. 2. **Potential
+Security/Stability Risk**: The bug could lead to: - Wrong buffer
+handling paths in media drivers - Potential out-of-bounds access or
+incorrect memory management - Driver state corruption when invalid
+buffer types are misclassified 3. **Small, Contained Fix**: The change
+is minimal and contained to macro definitions with clear semantics. It
+only adds proper validation without changing valid type behavior. 4.
+**No Regression Risk**: The fix only affects the handling of invalid
+buffer types, making them correctly return false instead of incorrectly
+returning true. Valid buffer types retain their existing behavior. 5.
+**Wide Impact**: Looking at the kernel tree, `V4L2_TYPE_IS_CAPTURE` is
+used extensively in media drivers: -
+`/drivers/media/v4l2-core/v4l2-mem2mem.c` - Multiple platform-specific
+drivers (Samsung, Mediatek, Verisilicon, etc.) - Any incorrect behavior
+propagates to all these drivers 6. **Consistent with Historical
+Pattern**: Looking at similar commits like commit 4b837c6d7ee7 ("media:
+v4l: uAPI: V4L2_BUF_TYPE_META_OUTPUT is an output buffer type"), UAPI
+fixes for buffer type handling have been backported before. ## Backport
+Criteria Met - ✅ **Fixes important bugs**: Corrects fundamental macro
+logic affecting buffer type validation - ✅ **Minimal risk**: Only adds
+validation, doesn't change existing valid behavior - ✅ **Small and
+contained**: Changes only macro definitions in header file - ✅ **No
+architectural changes**: Pure bug fix without feature additions - ✅
+**Affects critical subsystem**: Media/V4L2 is widely used across many
+device drivers The fix ensures that only valid buffer types (1-14) can
+be classified as capture types, preventing potential mishandling of
+invalid values throughout the media subsystem.
 
- drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c | 2 --
- 1 file changed, 2 deletions(-)
+ include/uapi/linux/videodev2.h | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c
-index 72410a2d4e6bf..567183a69660c 100644
---- a/drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c
-@@ -4002,8 +4002,6 @@ static void gfx_v10_0_get_csb_buffer(struct amdgpu_device *adev,
- 						PACKET3_SET_CONTEXT_REG_START);
- 				for (i = 0; i < ext->reg_count; i++)
- 					buffer[count++] = cpu_to_le32(ext->extent[i]);
--			} else {
--				return;
- 			}
- 		}
- 	}
+diff --git a/include/uapi/linux/videodev2.h b/include/uapi/linux/videodev2.h
+index a0671e510bc4a..1ee25344c0760 100644
+--- a/include/uapi/linux/videodev2.h
++++ b/include/uapi/linux/videodev2.h
+@@ -153,10 +153,18 @@ enum v4l2_buf_type {
+ 	V4L2_BUF_TYPE_SDR_OUTPUT           = 12,
+ 	V4L2_BUF_TYPE_META_CAPTURE         = 13,
+ 	V4L2_BUF_TYPE_META_OUTPUT	   = 14,
++	/*
++	 * Note: V4L2_TYPE_IS_VALID and V4L2_TYPE_IS_OUTPUT must
++	 * be updated if a new type is added.
++	 */
+ 	/* Deprecated, do not use */
+ 	V4L2_BUF_TYPE_PRIVATE              = 0x80,
+ };
+ 
++#define V4L2_TYPE_IS_VALID(type)		 \
++	((type) >= V4L2_BUF_TYPE_VIDEO_CAPTURE &&\
++	 (type) <= V4L2_BUF_TYPE_META_OUTPUT)
++
+ #define V4L2_TYPE_IS_MULTIPLANAR(type)			\
+ 	((type) == V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE	\
+ 	 || (type) == V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE)
+@@ -170,7 +178,8 @@ enum v4l2_buf_type {
+ 	 || (type) == V4L2_BUF_TYPE_SDR_OUTPUT			\
+ 	 || (type) == V4L2_BUF_TYPE_META_OUTPUT)
+ 
+-#define V4L2_TYPE_IS_CAPTURE(type) (!V4L2_TYPE_IS_OUTPUT(type))
++#define V4L2_TYPE_IS_CAPTURE(type)	\
++	(V4L2_TYPE_IS_VALID(type) && !V4L2_TYPE_IS_OUTPUT(type))
+ 
+ enum v4l2_tuner_type {
+ 	V4L2_TUNER_RADIO	     = 1,
 -- 
 2.39.5
 
