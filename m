@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3329A29AF6D;
-	Sun,  1 Jun 2025 23:40:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3482D271478;
+	Sun,  1 Jun 2025 23:40:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748821205; cv=none; b=DMNXrKx3EGXfJ+bQGEoXS9F3lgFDqXVEYPfh1kidR8ubpvrGUg60ba70mgk5am7z7BFgYU8Xd/P3vSUqwu17ptH2cvsXOsj1MoN30fq2Lz7yGpQs9TI9qcRA+UKTec7mFobYs+2fudJCdpi5wVHP0aHqjEmtK2ZAZcXVFReUXwI=
+	t=1748821206; cv=none; b=IgwiqnrLqWDG++0GXn7++vV52ZMDIMGWE0kBeMk96C1BYQmAPLL4MPskOvzW10xz8z4/HavKr4s7KVtHPKlKEcIYeEfR5hKCpmH+0ce84preZmrC3hvAxPXD15uqYUTUQ2OG5lQylNAav342OdxYP/qeZtbz09+C6Tnj1HvEonA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748821205; c=relaxed/simple;
-	bh=qd63tPReUGHX7R/i3o0Gg28sx06U8VGdSBoVlAhYvt4=;
+	s=arc-20240116; t=1748821206; c=relaxed/simple;
+	bh=+ZH6OTkRxGA/CUXwXFSQTiU9wUtruA/4MRlla24b+Pg=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Ii9Kq2m1VsMmvte2zHZTZjebVaQ/i4KzprOhdQcmBEWZrFpIwIXHmG8Ml/5FCIy8kgwxk1kkNmcIxgePiSBjBMU1zTDxqfO/uI323QQwnujbNSyCgLiTS/2YZqwJZvbUUe5IcH29gFr+ZNqliLFotiuvVzjzUZCRMbvdVn92y1Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sxQ1QNJ7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=acUvXZW8ct02vm7KaevCh3Y7rEL+kBuH2fWXgh27sggGHk8wRrVUpMAKmMLpAbwtc32MzBCDeERQBb6E9VMDaF+CMNdP/+MZPFk4PKmVqGFeN/uNIk+nTg4rzWPYw28j3FIUN6fVMTkmGdDVs+a3qYssJx6jre/w/opj8U/j+Jc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=u9E4k074; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sxQ1QNJ7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6495C4CEE7;
-	Sun,  1 Jun 2025 23:40:03 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="u9E4k074"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1437CC4CEF1;
+	Sun,  1 Jun 2025 23:40:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748821204;
-	bh=qd63tPReUGHX7R/i3o0Gg28sx06U8VGdSBoVlAhYvt4=;
+	s=k20201202; t=1748821206;
+	bh=+ZH6OTkRxGA/CUXwXFSQTiU9wUtruA/4MRlla24b+Pg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sxQ1QNJ7/u8z9vtnPrwgqif5mmMiJ19bPXZQcBegyMdcDMYs7McEiKRhHOYzURMRg
-	 MkrahXkGHMLy0b0beJQObmkRu2yg00mwYdtuTTSnIlXWnBvzxrs7rtQW2nN53/xgdm
-	 gwNtTZFrEpHUFAILM0TJWg/oD/EpKOkMbD9bdTtM+woIDvYJBc9GdxO4sIDApjjuyP
-	 oAZJlRjOPAsEMf/ON9cL2Imylia4P1aKxH/HOLYYDeDGXeUOwfg3NKr3XxL730P049
-	 sl41krrBmdZyP3hiLDuMNok1s1qI925ggaW4xYjH1Ma6XHaj3uc/7GdZpIjUznt3/+
-	 +6wLW7DOW3SAA==
+	b=u9E4k074F1ARIe6YJsNyQViFqwReTkgWph7P1gMnHrKy1RZCIse7C8b7kn7eyj1tU
+	 lr3y+zeZhS+jo1tFRbPMZZ/LgM94gejf1d/kbQUzaAJE8VrlXUZnTBA5U0RJRrGcit
+	 BDZADTsKjrMnzYM0BBaZihF/bSw3MGIOoVJ4lLD5AX0HTkHOnmRhL013tuJifb9srq
+	 ILw2GzfSrJEAW19rmvzX225UXbbgOk8xQVySSdZLy+iuJab57TEjZPEEAICvRTrtlg
+	 vThVL8f+eQXdVTjFie7hlhxdr9t3J23c2PcEiUaeSICnUKp97pFonCLFPkcXELBWIf
+	 LIrMYNbu410bw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jerry Lv <Jerry.Lv@axis.com>,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+Cc: =?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
+	Willy Tarreau <w@1wt.eu>,
 	Sasha Levin <sashal@kernel.org>,
-	sre@kernel.org,
-	linux-pm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.6 63/66] power: supply: bq27xxx: Retrieve again when busy
-Date: Sun,  1 Jun 2025 19:37:40 -0400
-Message-Id: <20250601233744.3514795-63-sashal@kernel.org>
+	linux@weissschuh.net,
+	nathan@kernel.org,
+	linux-kernel@vger.kernel.org,
+	llvm@lists.linux.dev
+Subject: [PATCH AUTOSEL 6.6 64/66] tools/nolibc: use intmax definitions from compiler
+Date: Sun,  1 Jun 2025 19:37:41 -0400
+Message-Id: <20250601233744.3514795-64-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250601233744.3514795-1-sashal@kernel.org>
 References: <20250601233744.3514795-1-sashal@kernel.org>
@@ -54,139 +54,87 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.6.92
 Content-Transfer-Encoding: 8bit
 
-From: Jerry Lv <Jerry.Lv@axis.com>
+From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
 
-[ Upstream commit f16d9fb6cf03fdbdefa41a8b32ba1e57afb7ae3d ]
+[ Upstream commit e5407c0820ea5fa7117b85ed32b724af73156d63 ]
 
-Multiple applications may access the battery gauge at the same time, so
-the gauge may be busy and EBUSY will be returned. The driver will set a
-flag to record the EBUSY state, and this flag will be kept until the next
-periodic update. When this flag is set, bq27xxx_battery_get_property()
-will just return ENODEV until the flag is updated.
+The printf format checking in the compiler uses the intmax types from
+the compiler, not libc. This can lead to compiler errors.
 
-Even if the gauge was busy during the last accessing attempt, returning
-ENODEV is not ideal, and can cause confusion in the applications layer.
+Instead use the types already provided by the compiler.
 
-Instead, retry accessing the I2C to update the flag is as expected, for
-the gauge typically recovers from busy state within a few milliseconds.
-If still failed to access the gauge, the real error code would be returned
-instead of ENODEV (as suggested by Pali Rohár).
+Example issue with clang 19 for arm64:
 
-Reviewed-by: Pali Rohár <pali@kernel.org>
-Signed-off-by: Jerry Lv <Jerry.Lv@axis.com>
-Link: https://lore.kernel.org/r/20250415-foo-fix-v2-1-5b45a395e4cc@axis.com
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+nolibc-test.c:30:2: error: format specifies type 'uintmax_t' (aka 'unsigned long') but the argument has type 'uintmax_t' (aka 'unsigned long long') [-Werror,-Wformat]
+
+Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+Acked-by: Willy Tarreau <w@1wt.eu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Based on my thorough analysis of the commit and examination of the
-kernel source code, here is my assessment: **YES** This commit should be
-backported to stable kernel trees for the following extensive reasons:
-## Primary Analysis ### 1. **Significant User-Facing Bug Fix** The
-commit fixes a substantial functional issue where the bq27xxx battery
-driver incorrectly returns `-ENODEV` (device not found) when the battery
-gauge is merely temporarily busy with `-EBUSY`. This causes: -
-**Application Confusion**: Battery monitoring applications and power
-management daemons interpret `-ENODEV` as "battery removed/missing"
-rather than "device temporarily busy" - **Persistent Wrong State**: The
-incorrect ENODEV state persists until the next periodic update
-(potentially 5+ seconds), during which all battery properties appear
-unavailable - **User Experience Impact**: Users may see incorrect "no
-battery detected" warnings or lose power management functionality ### 2.
-**Technical Correctness Improvement** The changes fix semantically
-incorrect error handling: **In bq27xxx_battery.c (line 2066):** -
-**Before**: `return -ENODEV;` when `di->cache.flags < 0` - **After**:
-`return di->cache.flags;` (returns actual error code like `-EBUSY`,
-`-EIO`) This change ensures applications receive the correct error code
-and can make informed decisions about retry logic or user notifications.
-**In bq27xxx_battery_i2c.c:** - Adds bounded retry mechanism (max 3
-attempts) for `-EBUSY` conditions - Uses appropriate 10ms delay between
-retries - Falls back to returning the actual error if retries fail ###
-3. **Low Risk Assessment** The changes are well-contained and follow
-established kernel patterns: - **Bounded Retries**: Maximum 3 retries
-with 10ms delays prevent infinite loops - **Existing Patterns**: Similar
-retry mechanisms exist in other I2C drivers throughout the kernel -
-**Fallback Safety**: If retries fail, the real error code is properly
-propagated - **No ABI Changes**: The power supply interface remains the
-same; only error semantics improve ### 4. **Alignment with Stable Tree
-Criteria** This commit meets all stable tree requirements: - **Important
-Bug Fix**: Resolves user-impacting functional issue - **Small and
-Contained**: Changes are minimal and localized to one driver - **No
-Architectural Changes**: Uses existing error handling patterns - **Clear
-Side Effects**: Improved error reporting with bounded retry behavior -
-**Subsystem Confined**: Limited to power supply bq27xxx driver ### 5.
-**Comparison with Historical Precedents** Looking at the provided
-similar commits, this change aligns with accepted backport patterns: -
-Similar to "Fix bq27xxx_battery_update() race condition" (Status: YES) -
-fixes driver robustness - Similar to "make status more robust" (Status:
-YES) - improves reliability - Unlike "fix reporting critical level"
-(Status: NO) which was a flag precedence fix ### 6. **Real-World
-Impact** This fix addresses a common scenario in embedded systems and
-laptops where: - Multiple applications access battery information
-simultaneously - I2C bus contention can cause temporary EBUSY conditions
-- Battery monitoring is critical for power management decisions - Users
-expect consistent battery status reporting ## Conclusion This commit
-represents exactly the type of important bug fix that stable trees are
-designed to include: it resolves a significant user-facing issue with
-minimal risk, follows established patterns, and improves the robustness
-of a critical hardware interface. The semantic correction from ENODEV to
-proper error codes, combined with sensible retry logic, makes this a
-clear candidate for backporting.
+**YES** This commit should be backported to stable kernel trees. Here's
+my extensive analysis: ## Analysis of the Code Changes The commit makes
+a targeted fix to resolve compiler format checking errors by changing
+the intmax type definitions in `tools/include/nolibc/stdint.h`: ```c
+-typedef int64_t intmax_t; -typedef uint64_t uintmax_t; +typedef
+__INTMAX_TYPE__ intmax_t; +typedef __UINTMAX_TYPE__ uintmax_t; ``` ##
+Why This Should Be Backported ### 1. **Fixes Real Compilation Errors**
+The commit addresses actual compiler errors that prevent successful
+builds, as demonstrated by the clang 19 error message: ``` nolibc-
+test.c:30:2: error: format specifies type 'uintmax_t' (aka 'unsigned
+long') but the argument has type 'uintmax_t' (aka 'unsigned long long')
+[-Werror,-Wformat] ``` This is a critical build breakage, not just a
+warning. ### 2. **Small, Contained, Low-Risk Change** - Only changes 2
+lines of code in a single header file - Does not modify any algorithms
+or control flow - Uses well-established compiler built-ins that have
+been available for decades - No risk of behavioral changes beyond fixing
+the type compatibility issue ### 3. **Follows Established Pattern** The
+change aligns with existing practice in the same file, which already
+uses `__SIZE_TYPE__` for `size_t` definition. This demonstrates that
+using compiler built-ins for fundamental types is the established
+approach in nolibc. ### 4. **Cross-Platform Compatibility Fix** The
+issue particularly affects: - Different compiler backends (GCC vs Clang)
+- Different architectures where `long` vs `long long` sizes vary
+(especially arm64) - Cross-compilation scenarios - Builds with strict
+format checking enabled (`-Wformat -Werror`) ### 5. **Comparison with
+Similar Commits** Looking at the reference commits provided: - **Similar
+Commit #4** (Status: YES): Also fixes integer type issues in nolibc for
+platform compatibility - **Similar Commit #5** (Status: YES): Also fixes
+printf format mismatches with explicit stable tree marking (`Cc:
+stable@vger.kernel.org`) This commit follows the same pattern of fixing
+type/format compatibility issues that have been deemed worthy of
+backporting. ### 6. **Tools Subsystem Stability** While this is in the
+tools directory, nolibc is used for: - Kernel testing infrastructure -
+Minimal userspace environments - Cross-compilation toolchains - Kernel
+selftests Breaking builds in these contexts can impact kernel
+development workflows across different platforms. ### 7. **No
+Architectural Changes** The commit: - Doesn't introduce new features -
+Doesn't change APIs - Doesn't modify kernel core functionality - Simply
+ensures type consistency between compiler and library definitions ##
+Conclusion This is exactly the type of targeted bug fix that stable
+trees are designed for: it fixes a real compilation issue that affects
+users, uses a minimal and safe approach, follows established patterns,
+and has no risk of introducing regressions. The fix ensures that nolibc
+can be compiled successfully across different compiler/architecture
+combinations, which is essential for kernel development infrastructure.
 
- drivers/power/supply/bq27xxx_battery.c     |  2 +-
- drivers/power/supply/bq27xxx_battery_i2c.c | 13 ++++++++++++-
- 2 files changed, 13 insertions(+), 2 deletions(-)
+ tools/include/nolibc/stdint.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/power/supply/bq27xxx_battery.c b/drivers/power/supply/bq27xxx_battery.c
-index 23c8736567574..e51fa2c694bc6 100644
---- a/drivers/power/supply/bq27xxx_battery.c
-+++ b/drivers/power/supply/bq27xxx_battery.c
-@@ -2044,7 +2044,7 @@ static int bq27xxx_battery_get_property(struct power_supply *psy,
- 	mutex_unlock(&di->lock);
+diff --git a/tools/include/nolibc/stdint.h b/tools/include/nolibc/stdint.h
+index 6665e272e2132..87a2b09e2dda5 100644
+--- a/tools/include/nolibc/stdint.h
++++ b/tools/include/nolibc/stdint.h
+@@ -39,8 +39,8 @@ typedef   size_t      uint_fast32_t;
+ typedef  int64_t       int_fast64_t;
+ typedef uint64_t      uint_fast64_t;
  
- 	if (psp != POWER_SUPPLY_PROP_PRESENT && di->cache.flags < 0)
--		return -ENODEV;
-+		return di->cache.flags;
+-typedef  int64_t           intmax_t;
+-typedef uint64_t          uintmax_t;
++typedef __INTMAX_TYPE__    intmax_t;
++typedef __UINTMAX_TYPE__  uintmax_t;
  
- 	switch (psp) {
- 	case POWER_SUPPLY_PROP_STATUS:
-diff --git a/drivers/power/supply/bq27xxx_battery_i2c.c b/drivers/power/supply/bq27xxx_battery_i2c.c
-index 886e0a8e2abd1..8877fa333cd02 100644
---- a/drivers/power/supply/bq27xxx_battery_i2c.c
-+++ b/drivers/power/supply/bq27xxx_battery_i2c.c
-@@ -6,6 +6,7 @@
-  *	Andrew F. Davis <afd@ti.com>
-  */
- 
-+#include <linux/delay.h>
- #include <linux/i2c.h>
- #include <linux/interrupt.h>
- #include <linux/module.h>
-@@ -32,6 +33,7 @@ static int bq27xxx_battery_i2c_read(struct bq27xxx_device_info *di, u8 reg,
- 	struct i2c_msg msg[2];
- 	u8 data[2];
- 	int ret;
-+	int retry = 0;
- 
- 	if (!client->adapter)
- 		return -ENODEV;
-@@ -48,7 +50,16 @@ static int bq27xxx_battery_i2c_read(struct bq27xxx_device_info *di, u8 reg,
- 	else
- 		msg[1].len = 2;
- 
--	ret = i2c_transfer(client->adapter, msg, ARRAY_SIZE(msg));
-+	do {
-+		ret = i2c_transfer(client->adapter, msg, ARRAY_SIZE(msg));
-+		if (ret == -EBUSY && ++retry < 3) {
-+			/* sleep 10 milliseconds when busy */
-+			usleep_range(10000, 11000);
-+			continue;
-+		}
-+		break;
-+	} while (1);
-+
- 	if (ret < 0)
- 		return ret;
+ /* limits of integral types */
  
 -- 
 2.39.5
