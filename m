@@ -1,43 +1,57 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A16CF2580F2;
-	Sun,  1 Jun 2025 23:25:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 420A42586C9;
+	Sun,  1 Jun 2025 23:25:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748820313; cv=none; b=i4L0UbPpm/ODJgUp1wgEI8kv09cFsNK57uN8UJ5gNRkXqQHWw2oyH2AX0QtOsG6td6qyLwyxZDYYROqHddw8gww++VTR1LMcbheagQVZ6CFmxOe0sAnH/utMX2guOoK0nOnj0+eNAJsDFVAVYY1ZSubaAVZp+pDEme88faC/qbM=
+	t=1748820320; cv=none; b=ih0sMH20/B2+sv1qeyF7EaYMb5C9xn5HfrhTDvnv5asImAboF7XU1SsxvgN9Wfiq8UjtF3A+WtI+3Y6iLIyKNxCyWdJrcU9MsKwpneatpKc76ZyHqYUeInNDqTYs8IPXbNpxcXICr/CaYqsdttX+ag/CvLt6sDoH33VDz4oMfHo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748820313; c=relaxed/simple;
-	bh=qeaYsChK5nr9rSe+pp5hAEu/C1ACGe+t3EnImvBNz2w=;
+	s=arc-20240116; t=1748820320; c=relaxed/simple;
+	bh=qYT/5UcpFwSL+g9PPj+IKZggYjFpbFb3JYDZ3n7U8dk=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Vlg8U2qm8aW1pEDscUePCdmlQ0K9PdNHDh5/97NAcZDJLHYyTNO6BujnW/JBfHtO2hSdI1nb16vKnIE+PJAG++qqOyQAvm1JeZMfMk5OiCqaJ3c741tRHiFdrAbV5RWzhrj0RCJJ/scA7d5yRC7Q6/i2gbVayrak3auPQgLKgko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KELMxqxh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=cKtgYY/af+ucJ/WEkns5SmKsI36PnB483Xm4mv3iWFrpxmcAK4q1U/8QY0yLs7C+Ec2UhgpOR9YFLyZOakS8CnYDoU9Mf3JQWLPOcZksfejv4DoHLb1DwMUB2FO71StEr/CArGd7RZcFEFJX8WAlTYKNom13yBVookyFhIJ3Z7Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cPU+c4vW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KELMxqxh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A4FCC4CEEE;
-	Sun,  1 Jun 2025 23:25:12 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cPU+c4vW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71FB6C4CEE7;
+	Sun,  1 Jun 2025 23:25:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748820313;
-	bh=qeaYsChK5nr9rSe+pp5hAEu/C1ACGe+t3EnImvBNz2w=;
+	s=k20201202; t=1748820316;
+	bh=qYT/5UcpFwSL+g9PPj+IKZggYjFpbFb3JYDZ3n7U8dk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KELMxqxhLSMJ5oVeWOzfD3oWXNk+whDztvcWBKKsW/+6bPsv8/NGopXvACOXFzDM1
-	 5pcJzUor22jC2JMrqpNxKuyeRWSpfpJozrEo608tDGYBCVKO7pvLbOE2q4ILFLpJiv
-	 Cltmxv7HfBxXihFSd9+XB8wrvhmnfnodFrXdbQZBu+6wILD939ANJo4fojyaoprPoB
-	 2jrpQP9/X7kQYj3zgDSk8FA2reqaIgnrowxDj7iorLdHDn4EYj1h7zrpzu0Dm7bsIr
-	 gSsMkGj+5sGW/Jo/naqPoFhP1Ol5tXtB14iMGUhQhOJlVk8Tb5a0JqV3cKkbFNs/pB
-	 V510UjqCEaLXw==
+	b=cPU+c4vWCULOBvZLlgQLlsRrRV2KQ2wfevRch/zD0loXiTLkxW79LlIxViya4Dpt+
+	 pkNjTUghn2HyP5x3vGxiYCBbQFGJww7Y4/Fyvb2T+pcaKw6Covh1eSxx+vaJeRer4m
+	 H5ralRnj/wpc4agfgJeUZxHX1LBR7fswz9Dxb8RHRztsLrBibFYG8EYZ/0LsXBwWCg
+	 UnnhQU0dy/B4NgnqD3ST9BPrSOhTTSJZZ9tnt9MvRQBxxAFraN5qlmtKs8HKMRqxrA
+	 xWAl/MU20y/hM2oIvCH7Zd5rC/V4KnlSZU81d0NH6a1umcqxtaHSTx1FA9WXLn+Fil
+	 ra4lBlngowmqQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Namjae Jeon <linkinjeon@kernel.org>,
-	Jianzhou Zhao <xnxc22xnxc22@qq.com>,
+Cc: Ayushi Makhija <quic_amakhija@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>,
-	sj1557.seo@samsung.com,
-	linux-fsdevel@vger.kernel.org,
+	andrzej.hajda@intel.com,
+	neil.armstrong@linaro.org,
+	rfoss@kernel.org,
+	maarten.lankhorst@linux.intel.com,
+	mripard@kernel.org,
+	tzimmermann@suse.de,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	lumag@kernel.org,
+	dianders@chromium.org,
+	nichen@iscas.ac.cn,
+	u.kleine-koenig@baylibre.com,
+	xji@analogixsemi.com,
+	robh@kernel.org,
+	wenst@chromium.org,
+	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.15 014/110] exfat: fix double free in delayed_free
-Date: Sun,  1 Jun 2025 19:22:56 -0400
-Message-Id: <20250601232435.3507697-14-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.15 015/110] drm/bridge: anx7625: enable HPD interrupts
+Date: Sun,  1 Jun 2025 19:22:57 -0400
+Message-Id: <20250601232435.3507697-15-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250601232435.3507697-1-sashal@kernel.org>
 References: <20250601232435.3507697-1-sashal@kernel.org>
@@ -53,86 +67,110 @@ X-stable-base: Linux 6.15
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Ayushi Makhija <quic_amakhija@quicinc.com>
 
-[ Upstream commit 1f3d9724e16d62c7d42c67d6613b8512f2887c22 ]
+[ Upstream commit ca8a78cdceb48ad3b753f836068611265840ef22 ]
 
-The double free could happen in the following path.
+When the device enters the suspend state, it prevents
+HPD interrupts from occurring. To address this, implement
+.hpd_enable() and .hpd_disable() callbacks functions of
+the drm_bridge.
 
-exfat_create_upcase_table()
-        exfat_create_upcase_table() : return error
-        exfat_free_upcase_table() : free ->vol_utbl
-        exfat_load_default_upcase_table : return error
-     exfat_kill_sb()
-           delayed_free()
-                  exfat_free_upcase_table() <--------- double free
-This patch set ->vol_util as NULL after freeing it.
-
-Reported-by: Jianzhou Zhao <xnxc22xnxc22@qq.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Ayushi Makhija <quic_amakhija@quicinc.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20250505094245.2660750-4-quic_amakhija@quicinc.com
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Based on my thorough analysis of the commit and examination of the
-kernel tree, here is my assessment: **YES** This commit should be
-backported to stable kernel trees. Here's my extensive analysis: ## Code
-Analysis **The Problem:** The commit fixes a classic double-free
-vulnerability in the exfat filesystem. Looking at the current kernel
-code, the vulnerability exists in this execution path: 1.
-`exfat_create_upcase_table()` calls `exfat_load_upcase_table()` which
-may fail 2. On failure (`ret && ret != -EIO`), it calls
-`exfat_free_upcase_table(sbi)` 3. Then it goes to `load_default:` and
-calls `exfat_load_default_upcase_table()` which may also fail 4. When
-the filesystem unmounts, `exfat_kill_sb()` → `delayed_free()` →
-`exfat_free_upcase_table(sbi)` is called again **The Current Vulnerable
-Code:** ```c void exfat_free_upcase_table(struct exfat_sb_info *sbi) {
-kvfree(sbi->vol_utbl); // No NULL assignment - vulnerable to double free
-} ``` **The Fix:** The patch adds `sbi->vol_utbl = NULL;` after the
-`kvfree()`, which prevents the double-free because `kvfree(NULL)` is
-safe. ## Backport Criteria Assessment **1. Bug Severity: HIGH** - This
-is a memory corruption vulnerability (double-free) - Double-free bugs
-can lead to heap corruption, crashes, and potentially security exploits
-- The bug affects the reliability and security of the exfat filesystem
-**2. Fix Quality: EXCELLENT** - The fix is minimal (just one line:
-`sbi->vol_utbl = NULL;`) - Extremely low risk of introducing regressions
-- Follows standard defensive programming practices - The fix is
-contained within a single function **3. Backport Suitability: PERFECT**
-- Small, isolated change that doesn't affect any APIs - No architectural
-changes or new features - The fix addresses the root cause directly -
-Compatible with all kernel versions that have the vulnerable code **4.
-Historical Context:** Looking at the similar commits provided: -
-**Similar Commit #2** (Status: YES): Also a memory leak fix in exfat
-with `Cc: stable@vger.kernel.org` - **Similar Commit #4** (Status: YES):
-Another memory corruption prevention fix in exfat - Both demonstrate
-that small, targeted memory management fixes in exfat are appropriate
-for stable backporting **5. Impact Assessment:** - **User Impact:** High
-- prevents filesystem crashes and potential data corruption - **Risk:**
-Very low - the change only affects error paths and adds defensive
-programming - **Complexity:** Minimal - single line change with clear
-semantics **6. RCU Context:** The commit a13d1a4de3b0 introduced the
-`delayed_free()` mechanism that made this double-free possible, making
-this fix essential for kernels with that change. ## Conclusion This
-commit represents exactly the type of fix that stable kernels need: a
-small, surgical fix for a potentially serious memory corruption bug with
-minimal risk of regression. The double-free vulnerability could lead to
-system instability and the fix is trivial to apply and verify. Given the
-similarities with other exfat memory management fixes that were
-successfully backported, this should definitely be included in stable
-kernel trees.
+**YES** This commit should be backported to stable kernel trees. ##
+Extensive Analysis ### **This is a User-Affecting Bug Fix, Not a Feature
+Addition** The commit message states this addresses a real problem:
+"When the device enters the suspend state, it prevents HPD interrupts
+from occurring." The investigation of the kernel repository reveals this
+fixes a significant architectural gap where the anx7625 driver: 1.
+**Declares HPD support** by setting `DRM_BRIDGE_OP_HPD` flag (line
+2594-2595 in the driver) 2. **Fails to implement required callbacks**
+that the DRM bridge framework expects when this flag is set 3. **Causes
+unreliable external display detection** particularly during
+suspend/resume cycles ### **Code Changes Analysis** The implementation
+is extremely minimal and safe: ```c +static void
+anx7625_bridge_hpd_enable(struct drm_bridge *bridge) +{ + struct
+anx7625_data *ctx = bridge_to_anx7625(bridge); + struct device *dev =
+ctx->dev; + + pm_runtime_get_sync(dev); +} + +static void
+anx7625_bridge_hpd_disable(struct drm_bridge *bridge) +{ + struct
+anx7625_data *ctx = bridge_to_anx7625(bridge); + struct device *dev =
+ctx->dev; + + pm_runtime_put_sync(dev); +} ``` - **Only 18 lines of code
+added** (including function signatures and braces) - **Uses existing,
+well-tested PM runtime APIs**
+(`pm_runtime_get_sync`/`pm_runtime_put_sync`) - **No new logic or
+complex state management** - simply ensures power is on when HPD is
+enabled - **Follows established patterns** already used throughout the
+anx7625 driver ### **Meets All Stable Tree Criteria** 1. **✅ Important
+Bug Fix**: Fixes missing DRM bridge framework contract compliance that
+causes unreliable display detection 2. **✅ Small and Contained**:
+Minimal code change confined to a single driver 3. **✅ Low Regression
+Risk**: Uses existing PM runtime APIs with no new complex logic 4. **✅
+No Architectural Changes**: Simple callback additions to existing
+framework 5. **✅ Subsystem Isolation**: Limited to anx7625 bridge
+driver, doesn't affect core kernel ### **Historical Precedent**
+Comparing to similar HPD-related commits: - **Similar Commit #3 (Status:
+YES)**: Another small anx7625 HPD fix addressing hardware timing issues
+- This commit follows the same pattern: small, targeted fix for real
+user issues ### **Real-World Impact Evidence** The kernel repository
+shows multiple recent commits addressing anx7625 HPD and power
+management issues: - Power management deadlocks affecting Chromebook
+external displays - Bridge suspend/resume problems - HPD detection
+window timing issues This commit completes the framework integration
+needed to prevent these classes of problems. ### **Risk Assessment**
+**Extremely low risk** because: - The PM runtime calls used are the same
+ones already extensively used in the driver - The callbacks are only
+invoked by the DRM bridge connector framework in well-defined contexts -
+No existing functionality is modified - only missing callbacks are added
+- Failure modes are limited to the same PM runtime error paths already
+handled This is a textbook example of a stable-tree-appropriate fix:
+small, safe, addresses real user problems, and completes missing
+functionality that users expect to work.
 
- fs/exfat/nls.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/bridge/analogix/anx7625.c | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-diff --git a/fs/exfat/nls.c b/fs/exfat/nls.c
-index d47896a895965..1729bf42eb516 100644
---- a/fs/exfat/nls.c
-+++ b/fs/exfat/nls.c
-@@ -801,4 +801,5 @@ int exfat_create_upcase_table(struct super_block *sb)
- void exfat_free_upcase_table(struct exfat_sb_info *sbi)
- {
- 	kvfree(sbi->vol_utbl);
-+	sbi->vol_utbl = NULL;
+diff --git a/drivers/gpu/drm/bridge/analogix/anx7625.c b/drivers/gpu/drm/bridge/analogix/anx7625.c
+index 0b97b66de5774..99ef3f27ae429 100644
+--- a/drivers/gpu/drm/bridge/analogix/anx7625.c
++++ b/drivers/gpu/drm/bridge/analogix/anx7625.c
+@@ -2474,6 +2474,22 @@ static const struct drm_edid *anx7625_bridge_edid_read(struct drm_bridge *bridge
+ 	return anx7625_edid_read(ctx);
  }
+ 
++static void anx7625_bridge_hpd_enable(struct drm_bridge *bridge)
++{
++	struct anx7625_data *ctx = bridge_to_anx7625(bridge);
++	struct device *dev = ctx->dev;
++
++	pm_runtime_get_sync(dev);
++}
++
++static void anx7625_bridge_hpd_disable(struct drm_bridge *bridge)
++{
++	struct anx7625_data *ctx = bridge_to_anx7625(bridge);
++	struct device *dev = ctx->dev;
++
++	pm_runtime_put_sync(dev);
++}
++
+ static const struct drm_bridge_funcs anx7625_bridge_funcs = {
+ 	.attach = anx7625_bridge_attach,
+ 	.detach = anx7625_bridge_detach,
+@@ -2487,6 +2503,8 @@ static const struct drm_bridge_funcs anx7625_bridge_funcs = {
+ 	.atomic_reset = drm_atomic_helper_bridge_reset,
+ 	.detect = anx7625_bridge_detect,
+ 	.edid_read = anx7625_bridge_edid_read,
++	.hpd_enable = anx7625_bridge_hpd_enable,
++	.hpd_disable = anx7625_bridge_hpd_disable,
+ };
+ 
+ static int anx7625_register_i2c_dummy_clients(struct anx7625_data *ctx,
 -- 
 2.39.5
 
