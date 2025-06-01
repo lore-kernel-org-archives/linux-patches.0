@@ -1,51 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6D412E62DE;
-	Sun,  1 Jun 2025 23:36:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BEBF295BD8;
+	Sun,  1 Jun 2025 23:36:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748820988; cv=none; b=llkRyIJuuSH6nDCOGGzAAuoiQODOVQXAGIpDOTYNtXz0VlOpXphiUtRiHUCFnhAwRINpoKHIni3FbPTFZOrqBc1jYMRU5oPl8bKhTuG1v92Upv55L/mOa4o1eDvFu2JBQ3/+YYqwD2MfXxUxgJKhD5lLvSnQqYhdLA1VPLP13aA=
+	t=1748820991; cv=none; b=thkiAs1ghsQyCTQ9OB/QR/7gnqHd3+2KZ3S4lZNVIACv93sNUkcFt0yJXM2KLmGv5FX5S6Lm+Mi3JBligkLIompuMLGVaY3jlTdP0u6Ig7NyRLtWnVJrdv60RfDfxzMtQX1r/4O9ULR4QgFvJAJ0osRC4m62mE2Oe5VaLiymYHE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748820988; c=relaxed/simple;
-	bh=XdHPcloIJz9lRR4gMtP7+fMmnRlyGZpOB26JKWZkGZU=;
+	s=arc-20240116; t=1748820991; c=relaxed/simple;
+	bh=lx0sLTxwVKT7MceorPuxK8d6JHSF7evmGLh8BNW5m1s=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MNs3PgZtvAQCt+zIuTi4aNIVDvg6vYtvdLkJZvT6Avu4dr+povt4/kl8xug00VXsZptRe15eVtPrDI5Bk3lDAi8AcAbymFHg/FPkBCMBG1bByC8OJvF+l2vL/ustibodS0TCotV0Bpi5Ju8mT9rvpHB60BDXC2NJioGCliF2vUc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fN9BDpdv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sVTzXumLKvLv8vc0y6SP48DntrtNwr0huhAHLehQUQ4jkuplD/IeSknF652+Nl/y4jngz1uIG7gyBRPo40lJOiW0CMsGt9OWiQbHKou6gKs9+8z48jFJbMM7UW7H//uRz5p3oXR1OSSlymBqsOHS3fbpdfyMRjUpn3wS/Y0Ltd4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SWAzUDY8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fN9BDpdv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 770D9C4CEEE;
-	Sun,  1 Jun 2025 23:36:26 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SWAzUDY8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5683BC4CEE7;
+	Sun,  1 Jun 2025 23:36:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748820988;
-	bh=XdHPcloIJz9lRR4gMtP7+fMmnRlyGZpOB26JKWZkGZU=;
+	s=k20201202; t=1748820990;
+	bh=lx0sLTxwVKT7MceorPuxK8d6JHSF7evmGLh8BNW5m1s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fN9BDpdvBud4gfEwmXggEaMnsP+6N89AoTfLjjXOY5KcOcPEthodqfSTC6G0WCAMl
-	 k7oGrxp9hRTOrD71uHM/bKgTloElEi257L6xbiccGS2TRvuVEn+hKx+vOaSe86DIvM
-	 X8kjoXJ/hQl1BU2vjAEBYRXlpDqQF4r0CB1IJefNW+5ZLrU000JZfx0Niy3NFPi2pL
-	 M/F5n6eK6BA1iGTU7WsC8IIkHdOAMyRVghPx4sYTpmbQzaEc089CciKIvzPFMH/Ivj
-	 0eIFjewdbp3ssXe0Sx/Rg8ZBoAvqcpMp57xfNeph6tNEpK70stK3CRgTWOSzn5l/hD
-	 j2+gFmHUzCWzg==
+	b=SWAzUDY8oRhQbaSCRiXMoENeJj6FP472tDkIRbu91eEo8jA7qdv372gbZyHXtpJGq
+	 Qi8tCnxKTDBJ0Eikmf1NZI5TW5n7xU7MQaljeqiqoOQ2QgiGhRgu/5FF0M6gmuGXKx
+	 JenxSrQV1undYpPJkpgTlZY+rgehMFktve7AuXNC+1hVT2oVYGzWIRtUMaXzNbCoaT
+	 0iMk0HxumWckJTKgxRuDZmsFwOA6wBww7+E9b4KTHIVAZLp6DzBB2vq6uzXr1XZklF
+	 mOVuog6NDSSL3kP9GdFsraKH1PnmV+rqWH3zcCIrg3RPWwU2o4vZ/3Jq2AhB2zRtV9
+	 U4MAMpFLUVgBg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Alex Deucher <alexander.deucher@amd.com>,
-	Rodrigo Siqueira <siqueira@igalia.com>,
+Cc: Dylan Wolff <wolffd@comp.nus.edu.sg>,
+	Jiacheng Xu <stitch@zju.edu.cn>,
+	Dave Kleikamp <dave.kleikamp@oracle.com>,
 	Sasha Levin <sashal@kernel.org>,
-	christian.koenig@amd.com,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	sunil.khatri@amd.com,
-	vitaly.prosyak@amd.com,
-	srinivasan.shanmugam@amd.com,
-	Jiadong.Zhu@amd.com,
-	kevinyang.wang@amd.com,
-	amd-gfx@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org,
+	shaggy@kernel.org,
+	eadavis@qq.com,
+	jfs-discussion@lists.sourceforge.net,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.12 54/93] drm/amdgpu/gfx9: fix CSIB handling
-Date: Sun,  1 Jun 2025 19:33:21 -0400
-Message-Id: <20250601233402.3512823-54-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.12 55/93] jfs: Fix null-ptr-deref in jfs_ioc_trim
+Date: Sun,  1 Jun 2025 19:33:22 -0400
+Message-Id: <20250601233402.3512823-55-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250601233402.3512823-1-sashal@kernel.org>
 References: <20250601233402.3512823-1-sashal@kernel.org>
@@ -58,85 +52,167 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.12.31
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Dylan Wolff <wolffd@comp.nus.edu.sg>
 
-[ Upstream commit a4a4c0ae6742ec7d6bf1548d2c6828de440814a0 ]
+[ Upstream commit a4685408ff6c3e2af366ad9a7274f45ff3f394ee ]
 
-We shouldn't return after the last section.
-We need to update the rest of the CSIB.
+[ Syzkaller Report ]
 
-Reviewed-by: Rodrigo Siqueira <siqueira@igalia.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Oops: general protection fault, probably for non-canonical address
+0xdffffc0000000087: 0000 [#1
+KASAN: null-ptr-deref in range [0x0000000000000438-0x000000000000043f]
+CPU: 2 UID: 0 PID: 10614 Comm: syz-executor.0 Not tainted
+6.13.0-rc6-gfbfd64d25c7a-dirty #1
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
+Sched_ext: serialise (enabled+all), task: runnable_at=-30ms
+RIP: 0010:jfs_ioc_trim+0x34b/0x8f0
+Code: e7 e8 59 a4 87 fe 4d 8b 24 24 4d 8d bc 24 38 04 00 00 48 8d 93
+90 82 fe ff 4c 89 ff 31 f6
+RSP: 0018:ffffc900055f7cd0 EFLAGS: 00010206
+RAX: 0000000000000087 RBX: 00005866a9e67ff8 RCX: 000000000000000a
+RDX: 0000000000000001 RSI: 0000000000000004 RDI: 0000000000000001
+RBP: dffffc0000000000 R08: ffff88807c180003 R09: 1ffff1100f830000
+R10: dffffc0000000000 R11: ffffed100f830001 R12: 0000000000000000
+R13: 0000000000000000 R14: 0000000000000001 R15: 0000000000000438
+FS:  00007fe520225640(0000) GS:ffff8880b7e80000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00005593c91b2c88 CR3: 000000014927c000 CR4: 00000000000006f0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+<TASK>
+? __die_body+0x61/0xb0
+? die_addr+0xb1/0xe0
+? exc_general_protection+0x333/0x510
+? asm_exc_general_protection+0x26/0x30
+? jfs_ioc_trim+0x34b/0x8f0
+jfs_ioctl+0x3c8/0x4f0
+? __pfx_jfs_ioctl+0x10/0x10
+? __pfx_jfs_ioctl+0x10/0x10
+__se_sys_ioctl+0x269/0x350
+? __pfx___se_sys_ioctl+0x10/0x10
+? do_syscall_64+0xfb/0x210
+do_syscall_64+0xee/0x210
+? syscall_exit_to_user_mode+0x1e0/0x330
+entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7fe51f4903ad
+Code: c3 e8 a7 2b 00 00 0f 1f 80 00 00 00 00 f3 0f 1e fa 48 89 f8 48
+89 f7 48 89 d6 48 89 ca 4d
+RSP: 002b:00007fe5202250c8 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
+RAX: ffffffffffffffda RBX: 00007fe51f5cbf80 RCX: 00007fe51f4903ad
+RDX: 0000000020000680 RSI: 00000000c0185879 RDI: 0000000000000005
+RBP: 0000000000000000 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 00007fe520225640
+R13: 000000000000000e R14: 00007fe51f44fca0 R15: 00007fe52021d000
+</TASK>
+Modules linked in:
+---[ end trace 0000000000000000 ]---
+RIP: 0010:jfs_ioc_trim+0x34b/0x8f0
+Code: e7 e8 59 a4 87 fe 4d 8b 24 24 4d 8d bc 24 38 04 00 00 48 8d 93
+90 82 fe ff 4c 89 ff 31 f6
+RSP: 0018:ffffc900055f7cd0 EFLAGS: 00010206
+RAX: 0000000000000087 RBX: 00005866a9e67ff8 RCX: 000000000000000a
+RDX: 0000000000000001 RSI: 0000000000000004 RDI: 0000000000000001
+RBP: dffffc0000000000 R08: ffff88807c180003 R09: 1ffff1100f830000
+R10: dffffc0000000000 R11: ffffed100f830001 R12: 0000000000000000
+R13: 0000000000000000 R14: 0000000000000001 R15: 0000000000000438
+FS:  00007fe520225640(0000) GS:ffff8880b7e80000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00005593c91b2c88 CR3: 000000014927c000 CR4: 00000000000006f0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Kernel panic - not syncing: Fatal exception
+
+[ Analysis ]
+
+We believe that we have found a concurrency bug in the `fs/jfs` module
+that results in a null pointer dereference. There is a closely related
+issue which has been fixed:
+
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=d6c1b3599b2feb5c7291f5ac3a36e5fa7cedb234
+
+... but, unfortunately, the accepted patch appears to still be
+susceptible to a null pointer dereference under some interleavings.
+
+To trigger the bug, we think that `JFS_SBI(ipbmap->i_sb)->bmap` is set
+to NULL in `dbFreeBits` and then dereferenced in `jfs_ioc_trim`. This
+bug manifests quite rarely under normal circumstances, but is
+triggereable from a syz-program.
+
+Reported-and-tested-by: Dylan J. Wolff<wolffd@comp.nus.edu.sg>
+Reported-and-tested-by: Jiacheng Xu <stitch@zju.edu.cn>
+Signed-off-by: Dylan J. Wolff<wolffd@comp.nus.edu.sg>
+Signed-off-by: Jiacheng Xu <stitch@zju.edu.cn>
+Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Now I'll analyze the specific code changes and provide my backport
-recommendation: **YES** This commit should be backported to stable
-kernel trees. Here's my detailed analysis: ## Code Analysis The commit
-fixes a logic bug in the `gfx_v9_0_get_csb_buffer()` function that
-builds GPU command buffers for AMD GFX9 hardware. Looking at the code
-change: **Before:** ```c if (sect->id == SECT_CONTEXT) { buffer[count++]
-= cpu_to_le32(PACKET3(PACKET3_SET_CONTEXT_REG, ext->reg_count));
-buffer[count++] = cpu_to_le32(ext->reg_index -
-PACKET3_SET_CONTEXT_REG_START); for (i = 0; i < ext->reg_count; i++)
-buffer[count++] = cpu_to_le32(ext->extent[i]); } else { return; // ←
-BUGGY early return } ``` **After:** ```c if (sect->id == SECT_CONTEXT) {
-buffer[count++] = cpu_to_le32(PACKET3(PACKET3_SET_CONTEXT_REG,
-ext->reg_count)); buffer[count++] = cpu_to_le32(ext->reg_index -
-PACKET3_SET_CONTEXT_REG_START); for (i = 0; i < ext->reg_count; i++)
-buffer[count++] = cpu_to_le32(ext->extent[i]); } // ← Early return
-removed, execution continues ``` ## Why This Should Be Backported ### 1.
-**Fixes a Clear Logic Bug** The early return prevents the function from
-completing its work. After the loop, the function needs to write
-critical termination packets: ```c buffer[count++] =
-cpu_to_le32(PACKET3(PACKET3_PREAMBLE_CNTL, 0)); buffer[count++] =
-cpu_to_le32(PACKET3_PREAMBLE_END_CLEAR_STATE); buffer[count++] =
-cpu_to_le32(PACKET3(PACKET3_CLEAR_STATE, 0)); buffer[count++] =
-cpu_to_le32(0); ``` ### 2. **Meets Stable Tree Criteria** - **Small and
-contained**: Simple one-line removal with clear intent - **Low
-regression risk**: Removing early return allows proper completion -
-**Important bug fix**: Prevents GPU command buffer corruption - **No
-architectural changes**: Pure bug fix without new features ### 3.
-**Comparison with Historical Examples** Looking at the provided
-historical commits, this fix is similar to commit #3 (marked YES) which
-also fixed preamble handling. Both commits: - Fix logic bugs in AMD GPU
-driver - Have minimal code changes - Address proper command/state
-handling - Are critical for correct driver operation ### 4. **Stability
-Impact** While currently masked because all existing clear state data
-only uses `SECT_CONTEXT` sections, this bug creates: - **Buffer
-corruption risk**: Incomplete command buffers sent to GPU - **Forward
-compatibility issues**: Future hardware might use other section types -
-**Inconsistent state**: Size calculation function has same bug pattern
-### 5. **Hardware Criticality** This affects the GFX9 generation which
-includes widely deployed GPUs like: - Vega series (RX Vega 56/64) -
-Raven Ridge APUs (Ryzen 2000G/3000G series) - Renoir APUs (Ryzen 4000
-series) ### 6. **Clear Commit Message** The commit message explicitly
-states "We need to update the rest of the CSIB" - indicating this fixes
-incomplete processing, exactly what stable backports target.
-**Conclusion**: This is a textbook stable backport candidate - a small,
-contained fix for a clear logic bug in a critical GPU initialization
-path that could lead to hardware instability. The risk/reward ratio
-strongly favors backporting.
+**YES** This commit should be backported to stable kernel trees. Here's
+my extensive analysis: ## Code Analysis The commit adds a crucial NULL
+pointer check in `jfs_ioc_trim()` function: ```c
+down_read(&sb->s_umount); bmp = JFS_SBI(ip->i_sb)->bmap; - if (minlen >
+bmp->db_agsize || + if (bmp == NULL || + minlen > bmp->db_agsize ||
+start >= bmp->db_mapsize || range->len < sb->s_blocksize) {
+up_read(&sb->s_umount); return -EINVAL; } ``` ## Why This Should Be
+Backported ### 1. **Critical Bug Fix with Clear User Impact** - **Kernel
+Panic**: The bug causes a general protection fault leading to kernel
+panic when `bmp` is NULL - **Syzkaller Report**: This is a security-
+relevant bug discovered by syzkaller, indicating it's triggerable from
+userspace - **Race Condition**: The commit message clearly describes a
+concurrency bug where `JFS_SBI(ipbmap->i_sb)->bmap` can be set to NULL
+in `dbFreeBits` while being dereferenced in `jfs_ioc_trim` ### 2.
+**Minimal and Safe Fix** - **Single Line Addition**: The fix only adds
+`bmp == NULL ||` to an existing validation check - **No Architectural
+Changes**: No complex logic changes or new features - **Follows Existing
+Pattern**: Uses the same error handling path (`return -EINVAL`) already
+established - **Proper Cleanup**: Correctly calls
+`up_read(&sb->s_umount)` before returning ### 3. **Matches Stable Tree
+Criteria** Comparing with the similar commits marked "YES": - **Like
+Similar Commit #1 (fm10k)**: Fixes NULL pointer dereference by adding
+proper error checking - **Like Similar Commit #2 (ssb)**: Addresses the
+same pattern of missing NULL checks leading to crashes - **Like Similar
+Commit #3 (bdev)**: Similar NULL pointer protection pattern - **Like
+Similar Commit #5 (jfs dtInsert)**: Another JFS fix with similar
+validation pattern ### 4. **Related Context Shows Importance** The
+related commit `d6c1b3599b2f` ("jfs: Fix uaf in dbFreeBits") addressed a
+similar race condition in the same subsystem, but as the commit message
+notes: "unfortunately, the accepted patch appears to still be
+susceptible to a null pointer dereference under some interleavings." ###
+5. **Low Risk Assessment** - **Contained to JFS**: Only affects JFS
+filesystem operations - **IOCTL Interface**: Only triggered through
+FITRIM ioctl, not normal filesystem operations - **Early Return**: The
+fix returns early with a standard error code, preventing further
+execution - **No Performance Impact**: The NULL check is minimal
+overhead ### 6. **Security Implications** - **Userspace Triggerable**:
+The crash can be triggered from userspace via the FITRIM ioctl -
+**Denial of Service**: Successful exploitation leads to kernel
+panic/system crash - **No Privilege Escalation**: While this is a crash
+bug, it demonstrates the importance of proper input validation ##
+Conclusion This commit fixes a critical NULL pointer dereference that
+causes kernel panics, uses a minimal and safe approach, and follows the
+same patterns as other commits successfully backported to stable trees.
+The fix addresses a security-relevant bug that can be triggered from
+userspace, making it an important candidate for stable backporting.
 
- drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c | 2 --
- 1 file changed, 2 deletions(-)
+ fs/jfs/jfs_discard.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
-index 114653a0b5701..2589ae021cba6 100644
---- a/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
-@@ -1639,8 +1639,6 @@ static void gfx_v9_0_get_csb_buffer(struct amdgpu_device *adev,
- 						PACKET3_SET_CONTEXT_REG_START);
- 				for (i = 0; i < ext->reg_count; i++)
- 					buffer[count++] = cpu_to_le32(ext->extent[i]);
--			} else {
--				return;
- 			}
- 		}
- 	}
+diff --git a/fs/jfs/jfs_discard.c b/fs/jfs/jfs_discard.c
+index 5f4b305030ad5..4b660296caf39 100644
+--- a/fs/jfs/jfs_discard.c
++++ b/fs/jfs/jfs_discard.c
+@@ -86,7 +86,8 @@ int jfs_ioc_trim(struct inode *ip, struct fstrim_range *range)
+ 	down_read(&sb->s_umount);
+ 	bmp = JFS_SBI(ip->i_sb)->bmap;
+ 
+-	if (minlen > bmp->db_agsize ||
++	if (bmp == NULL ||
++	    minlen > bmp->db_agsize ||
+ 	    start >= bmp->db_mapsize ||
+ 	    range->len < sb->s_blocksize) {
+ 		up_read(&sb->s_umount);
 -- 
 2.39.5
 
