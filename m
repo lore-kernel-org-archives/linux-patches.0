@@ -1,55 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E80A925A320;
-	Sun,  1 Jun 2025 23:26:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A54F52638BF;
+	Sun,  1 Jun 2025 23:26:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748820362; cv=none; b=SX3HfChLlF8Z4rK94bqVEv8ZEIa06gdDI3YpL9kfjd+iJQmvoQlKHL49jthJlaVig+u0fssPLk/nSh/lx7DWvA1Xfi7uG7dL13VnI6CAoCCpkiKbSpKEGTUNIqUBfokzQ4n7p6NfBgbthz+CxSETS9yBrrb5lVRkgAyrqDuJytY=
+	t=1748820363; cv=none; b=kpFY+OazFNwZ4QZCScfHQPFBA+V07c4d7WvrUVmLpDJtV+Semb9O7aDk93TqJQ1DGk1s67kNICAr5t2zag+gelZsZLfc9H9kF8ZMiaEP46hIuGT4vwq8X+jyA17noZ+eEnLiL0jOfmV950+4mTaHLdEhGHNwJPfecNnEAa0phiM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748820362; c=relaxed/simple;
-	bh=EEO5q/anlUp9Wf8k9dVDWiAKdrMGhZ2pHpowvmT+wOg=;
+	s=arc-20240116; t=1748820363; c=relaxed/simple;
+	bh=TLto0RxbMnRRa5lPrNxh/em4QAn4kW8P1T4XGKcs3gY=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=LPJwURzVCmtlVp4O5QdO3kEH8nukgoIF7ORaRDPu+CBAWZILU2b1Ybq+ABqIoMC1S3LrzTMYa2qJ4ghpg0wcL37qGMulKBuoPV+uGc27hsL0ZanJmMJwnACHbZRoTZ+Y912QCA+eO33IG6Lb27xbdsX4aUie98kxaE6jPCUf11s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GPf4QneH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n4BDFpftsZ7uOZPpT49hyv3wJy3PMs+nfXlGI5LhlRfT0eMz/delGIly8HjtPGjj9Xf8Jki9C5I56v0e+/H1bOWsxY9XG2z2IUdOspqtm/2rtO/emRmpdz6nc75o5KZxkaSHgz+CJ5rmM9vW9GOcTh4OwITxdDdmaXF+aFqXuAw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=S6MdrLwj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GPf4QneH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C88B5C4CEE7;
-	Sun,  1 Jun 2025 23:25:59 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="S6MdrLwj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BACDC4CEF2;
+	Sun,  1 Jun 2025 23:26:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748820361;
-	bh=EEO5q/anlUp9Wf8k9dVDWiAKdrMGhZ2pHpowvmT+wOg=;
+	s=k20201202; t=1748820363;
+	bh=TLto0RxbMnRRa5lPrNxh/em4QAn4kW8P1T4XGKcs3gY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GPf4QneHVad1LykXYma4p4uQHHkyc4yueXriwyJPD7WB9wdc+DyTId1j/wqMip+W5
-	 gK1VaVpGFLyX+WhDbueq+oRPMIiYPR+/b6rjibMs5PZMfMIn4n+xrqE1aN9FHmoFQ3
-	 u5Gk68zsYC8JJK9HaWRL7zv4ck9grvt9W5pEObfV2sjUrg+LZ1nf3TD4nmRgseMGTF
-	 SG0ZMxrdCZlHKg6cvPXkmBMnTifkpFK2hMhhWxYB3ctn6NP8fv+slSBpaWA/PCESLT
-	 dwRx+YfP6wCXWTEePBK+Gtey1KtV8b/VvvCNrAFEQDjiNyzlpeOtaO+NyQWhW1LBEx
-	 TIvLJmnYkCBmA==
+	b=S6MdrLwjEibSAjZOBT5qhEqWuGXN3d/jqNBdt+zXg03rcM00AbpSZHV0WIgAm+Fme
+	 ntlKCFCqx7Ju4j2arAS0zgvcHF9b8gEr8XDqx1NZuvgIMESUGr6O9ERfikxA0IcuCG
+	 gaZgmP3qClAr6mK1qo9P56TPF44EoyK9WnEzinLXj/SHu3EyFRIwoPMeZIDtLJi1EY
+	 +sxJmIxDAplUD1f7w3KJnFFU4nlKBwSsBEDIor03c8Azg4OBdCqJDTU/CVUckCH5rl
+	 ecsbdABfqLaYKfdP2lupdWd6PHOSSMKRjTzCEotJVmFlY5jwlg7sEcFWZ8Rx/NjusR
+	 fEbg++d4cbSWQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Lijo Lazar <lijo.lazar@amd.com>,
-	Hawking Zhang <Hawking.Zhang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: Alexander Aring <aahringo@redhat.com>,
+	Heming zhao <heming.zhao@suse.com>,
+	David Teigland <teigland@redhat.com>,
 	Sasha Levin <sashal@kernel.org>,
-	christian.koenig@amd.com,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	matthias.bgg@gmail.com,
-	angelogioacchino.delregno@collabora.com,
-	tao.zhou1@amd.com,
-	ganglxie@amd.com,
-	candice.li@amd.com,
-	Stanley.Yang@amd.com,
-	amd-gfx@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-mediatek@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.15 032/110] drm/amdgpu: Add basic validation for RAS header
-Date: Sun,  1 Jun 2025 19:23:14 -0400
-Message-Id: <20250601232435.3507697-32-sashal@kernel.org>
+	gfs2@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.15 033/110] dlm: use SHUT_RDWR for SCTP shutdown
+Date: Sun,  1 Jun 2025 19:23:15 -0400
+Message-Id: <20250601232435.3507697-33-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250601232435.3507697-1-sashal@kernel.org>
 References: <20250601232435.3507697-1-sashal@kernel.org>
@@ -62,125 +50,117 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.15
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lijo Lazar <lijo.lazar@amd.com>
+From: Alexander Aring <aahringo@redhat.com>
 
-[ Upstream commit 5df0d6addb7e9b6f71f7162d1253762a5be9138e ]
+[ Upstream commit 55612ddb62fc12437a7ff2f27b51a8981bc187a4 ]
 
-If RAS header read from EEPROM is corrupted, it could result in trying
-to allocate huge memory for reading the records. Add some validation to
-header fields.
+Currently SCTP shutdown() call gets stuck because there is no incoming
+EOF indicator on its socket. On the peer side the EOF indicator as
+recvmsg() returns 0 will be triggered as mechanism to flush the socket
+queue on the receive side. In SCTP recvmsg() function sctp_recvmsg() we
+can see that only if sk_shutdown has the bit RCV_SHUTDOWN set SCTP will
+recvmsg() will return EOF. The RCV_SHUTDOWN bit will only be set when
+shutdown with SHUT_RD is called. We use now SHUT_RDWR to also get a EOF
+indicator from recvmsg() call on the shutdown() initiator.
 
-Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
-Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+SCTP does not support half closed sockets and the semantic of SHUT_WR is
+different here, it seems that calling SHUT_WR on sctp sockets keeps the
+socket open to have the possibility to do some specific SCTP operations on
+it that we don't do here.
+
+There exists still a difference in the limitations of TCP vs SCTP in
+case if we are required to have a half closed socket functionality. This
+was tried to archieve with DLM protocol changes in the past and
+hopefully we really don't require half closed socket functionality.
+
+Signed-off-by: Alexander Aring <aahringo@redhat.com>
+Tested-by: Heming zhao <heming.zhao@suse.com>
+Reviewed-by: Heming zhao <heming.zhao@suse.com>
+Signed-off-by: David Teigland <teigland@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 Based on my analysis, here is my assessment: **YES** This commit should
-be backported to stable kernel trees. Here's my extensive analysis: ##
-Security Vulnerability Analysis **Critical Memory Allocation
-Vulnerability:** The commit fixes a serious security vulnerability where
-corrupted RAS (Reliability, Availability, and Serviceability) EEPROM
-header data could cause huge memory allocations. In
-`/home/sasha/linux/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c:3011`, the
-code performs: ```c bps = kcalloc(control->ras_num_recs, sizeof(*bps),
-GFP_KERNEL); ``` **Before the fix:** If `control->ras_num_recs` contains
-a corrupted large value (e.g., 0xFFFFFFFF), this would attempt to
-allocate `0xFFFFFFFF 0001-Fix-Clippy-warnings.patch 0002-Enhance-
-inference-prompt-to-utilize-CVEKERNELDIR-whe.patch 0003-Update-to-
-latest-version-of-clap.patch Cargo.lock Cargo.toml LICENSE README.md
-analyze_merge_commit.sh dpp_rcg_backport_analysis.md
-drm_bridge_analysis.txt drm_imagination_register_update_analysis.md
-drm_mediatek_mtk_dpi_refactoring_analysis.md io_uring_analysis.txt
-ksmbd_analysis.txt merge_commit_analysis.txt model prompt src target
-test_gpio_cleanup.txt test_patch.txt verisilicon_av1_4k_analysis.md 24
-bytes` = ~96GB of memory, likely causing: 1. System memory exhaustion 2.
-Denial of service 3. Potential system crash/instability ## Code Changes
-Analysis **1. Version Validation Enhancement:** The fix replaces a
-simple `if/else` with a robust `switch` statement: ```c // Before: Only
-checked for version >= V2_1 if (hdr->version >= RAS_TABLE_VER_V2_1) { //
-After: Explicit validation of known versions switch (hdr->version) {
-case RAS_TABLE_VER_V2_1: case RAS_TABLE_VER_V3: // Future-proofing //
-V2.1+ handling break; case RAS_TABLE_VER_V1: // V1 handling break;
-default: dev_err(adev->dev, "RAS header invalid, unsupported version:
-%u", hdr->version); return -EINVAL; } ``` **2. Record Count Bounds
-Checking:** Critical addition of bounds validation: ```c if
-(control->ras_num_recs > control->ras_max_record_count) {
-dev_err(adev->dev, "RAS header invalid, records in header: %u max
-allowed :%u", control->ras_num_recs, control->ras_max_record_count);
-return -EINVAL; } ``` This prevents the memory allocation attack by
-ensuring `ras_num_recs` cannot exceed reasonable bounds. ## Stable Tree
-Criteria Assessment ✅ **Fixes important security bug:** Prevents DoS via
-memory exhaustion ✅ **Small and contained:** Only adds validation logic,
-no functional changes ✅ **Clear side effects:** None - only adds error
-checking ✅ **No architectural changes:** Pure validation enhancement ✅
-**Touches critical subsystem:** Graphics driver reliability/security ✅
-**Minimal regression risk:** Only adds stricter validation ## Comparison
-with Historical Patterns Looking at the provided similar commits (all
-marked "NO"), they were architectural refactoring changes that: - Split
-functions (`ras_eeprom_init into init and check functions`) - Added new
-infrastructure (`Hook EEPROM table to RAS`) - Wrapped function calls
-(`RAS xfer to read/write`) - Added entirely new features (`Add RAS
-EEPROM table`) In contrast, this commit is a **security hardening fix**
-that adds essential input validation to prevent memory exhaustion
-attacks. ## Impact Assessment **Risk if NOT backported:** - Systems with
-AMD GPUs vulnerable to DoS attacks via corrupted EEPROM data - Potential
-for system instability when corrupted data triggers massive allocations
-- Security exposure in enterprise/server environments using AMD GPUs
-**Risk if backported:** - Minimal: Only adds validation, existing
-correct data will continue to work - Possible rejection of previously
-accepted (but actually corrupted) EEPROM data - this is desired behavior
-This fix addresses a clear security vulnerability with minimal code
-changes and should definitely be backported to stable trees to protect
-users from memory exhaustion attacks via corrupted RAS EEPROM headers.
+be backported to stable kernel trees. ## Analysis ### The Problem The
+commit addresses a critical functional issue in DLM (Distributed Lock
+Manager) when using SCTP protocol. The issue is that SCTP shutdown
+operations get stuck because there's no incoming EOF indicator on the
+socket, preventing proper connection cleanup. ### Root Cause Analysis
+from Code Changes 1. **Current behavior (before patch)**: DLM always
+uses `SHUT_WR` for both TCP and SCTP protocols in
+`kernel_sock_shutdown(con->sock, SHUT_WR)` at line 813 in the
+`shutdown_connection()` function. 2. **SCTP-specific problem**: Unlike
+TCP, SCTP requires both read and write shutdown (`SHUT_RDWR`) to
+properly trigger the EOF condition. The commit message explains that
+SCTP's `recvmsg()` function (`sctp_recvmsg()`) only returns EOF when
+`sk_shutdown` has the `RCV_SHUTDOWN` bit set, which only happens with
+`SHUT_RD` or `SHUT_RDWR`. 3. **The fix**: The patch introduces a new
+`how` field in the `dlm_proto_ops` structure and sets: - TCP: `SHUT_WR`
+(maintains existing behavior) - SCTP: `SHUT_RDWR` (fixes the EOF
+detection issue) ### Why This Should Be Backported 1. **Critical Bug
+Fix**: This fixes a fundamental functional issue where DLM connections
+using SCTP cannot properly shutdown, leading to stuck operations. 2.
+**Minimal and Contained Change**: - Adds only one new field to a
+protocol operations structure - Changes only the shutdown method
+parameter based on protocol - No architectural changes or new features
+3. **Clear Side Effects Assessment**: The change is protocol-specific
+and maintains backward compatibility. TCP behavior is unchanged, and
+SCTP behavior is fixed to work as intended. 4. **Follows Stable Tree
+Rules**: - Fixes an important bug affecting users of DLM with SCTP -
+Small, well-contained change with minimal regression risk - No
+introduction of new features 5. **Historical Context**: Looking at the
+git history, there have been multiple fixes for DLM shutdown handling,
+indicating this is an actively maintained and critical subsystem. This
+specific fix addresses a protocol-level compatibility issue that has
+likely affected users. 6. **Similar Backport Patterns**: This is similar
+to "Similar Commit #1" which was marked as YES - it's a contained fix
+for connection handling in DLM with clear problem scope and minimal code
+changes. The fix is essential for environments using DLM with SCTP
+protocol, as without it, proper connection shutdown is impossible,
+leading to resource leaks and potentially affecting cluster operations.
 
- .../gpu/drm/amd/amdgpu/amdgpu_ras_eeprom.c    | 22 ++++++++++++++++---
- 1 file changed, 19 insertions(+), 3 deletions(-)
+ fs/dlm/lowcomms.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ras_eeprom.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_ras_eeprom.c
-index 0ea7cfaf3587d..e979a6086178c 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ras_eeprom.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ras_eeprom.c
-@@ -1392,17 +1392,33 @@ int amdgpu_ras_eeprom_init(struct amdgpu_ras_eeprom_control *control)
+diff --git a/fs/dlm/lowcomms.c b/fs/dlm/lowcomms.c
+index 70abd4da17a63..90abcd07f8898 100644
+--- a/fs/dlm/lowcomms.c
++++ b/fs/dlm/lowcomms.c
+@@ -160,6 +160,7 @@ struct dlm_proto_ops {
+ 	bool try_new_addr;
+ 	const char *name;
+ 	int proto;
++	int how;
  
- 	__decode_table_header_from_buf(hdr, buf);
- 
--	if (hdr->version >= RAS_TABLE_VER_V2_1) {
-+	switch (hdr->version) {
-+	case RAS_TABLE_VER_V2_1:
-+	case RAS_TABLE_VER_V3:
- 		control->ras_num_recs = RAS_NUM_RECS_V2_1(hdr);
- 		control->ras_record_offset = RAS_RECORD_START_V2_1;
- 		control->ras_max_record_count = RAS_MAX_RECORD_COUNT_V2_1;
--	} else {
-+		break;
-+	case RAS_TABLE_VER_V1:
- 		control->ras_num_recs = RAS_NUM_RECS(hdr);
- 		control->ras_record_offset = RAS_RECORD_START;
- 		control->ras_max_record_count = RAS_MAX_RECORD_COUNT;
-+		break;
-+	default:
-+		dev_err(adev->dev,
-+			"RAS header invalid, unsupported version: %u",
-+			hdr->version);
-+		return -EINVAL;
+ 	void (*sockopts)(struct socket *sock);
+ 	int (*bind)(struct socket *sock);
+@@ -810,7 +811,7 @@ static void shutdown_connection(struct connection *con, bool and_other)
+ 		return;
  	}
--	control->ras_fri = RAS_OFFSET_TO_INDEX(control, hdr->first_rec_offset);
  
-+	if (control->ras_num_recs > control->ras_max_record_count) {
-+		dev_err(adev->dev,
-+			"RAS header invalid, records in header: %u max allowed :%u",
-+			control->ras_num_recs, control->ras_max_record_count);
-+		return -EINVAL;
-+	}
-+
-+	control->ras_fri = RAS_OFFSET_TO_INDEX(control, hdr->first_rec_offset);
- 	control->ras_num_mca_recs = 0;
- 	control->ras_num_pa_recs = 0;
- 	return 0;
+-	ret = kernel_sock_shutdown(con->sock, SHUT_WR);
++	ret = kernel_sock_shutdown(con->sock, dlm_proto_ops->how);
+ 	up_read(&con->sock_lock);
+ 	if (ret) {
+ 		log_print("Connection %p failed to shutdown: %d will force close",
+@@ -1858,6 +1859,7 @@ static int dlm_tcp_listen_bind(struct socket *sock)
+ static const struct dlm_proto_ops dlm_tcp_ops = {
+ 	.name = "TCP",
+ 	.proto = IPPROTO_TCP,
++	.how = SHUT_WR,
+ 	.sockopts = dlm_tcp_sockopts,
+ 	.bind = dlm_tcp_bind,
+ 	.listen_validate = dlm_tcp_listen_validate,
+@@ -1896,6 +1898,7 @@ static void dlm_sctp_sockopts(struct socket *sock)
+ static const struct dlm_proto_ops dlm_sctp_ops = {
+ 	.name = "SCTP",
+ 	.proto = IPPROTO_SCTP,
++	.how = SHUT_RDWR,
+ 	.try_new_addr = true,
+ 	.sockopts = dlm_sctp_sockopts,
+ 	.bind = dlm_sctp_bind,
 -- 
 2.39.5
 
