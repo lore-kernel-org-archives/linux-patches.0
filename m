@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C72A188907;
-	Mon,  2 Jun 2025 14:35:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB03815CD55;
+	Mon,  2 Jun 2025 14:35:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748874919; cv=none; b=jmBfyrpuK6hV2ylZJx0xWah86F6EJ7+qk2BGZd+OerrmujNVb31fay08Te7jwnYZgPKCaXfFNRVEMG+jygmZsZrtUq08NtjUk6uUDZdSc9HAVDYXHSCKMJIor1ebBGNEqp+jNTcQWTGbkVa0qQEn8KFt5BoVffceYigoEkv/S5E=
+	t=1748874922; cv=none; b=hnOZvG3R1TZWcXQp5CbkJ7rxDOxnNYatMlXS7qSDIfSNhC8LvpTjr7PlcO5Ds2pPYuXgTwIRcd1b/ij4NlBI60NxrWEVDQCqBPDT2hat/3bRIO6HXX2V9OoNfIM+26ZStPQ+XH8YVpYxCMyVe2uTM+tq7aJJIoidihSs/KKgTsQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748874919; c=relaxed/simple;
-	bh=6VS/A7YdtS8LxuVmmkPmTmsvKEbPdS7jZXHOzHMiDYM=;
+	s=arc-20240116; t=1748874922; c=relaxed/simple;
+	bh=DwwR0VdQ4IMBjxMZsYKByUCMsdLUnzUlUHkeKUY3Szw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cjsi2JNUY2GFn2uUTOEteTRi1xdTUaKko9ue0LVYHjvsCEYEoCDbAnXmLgzQ0Lo4z65tvEqRMq2W9Qg9ERcPoGCtiZiyC+NYwrtpDqN77OihAKPfBtYuYJbNSVUZfO/YqinWKzqttuMUUGdV+e72XlJDYTVlddNFdlNFpHQU+KU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DqtKUiL+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z/5BXzavuc6oOuQ2Q3T0ZkGFVRRA1URC/0hFrLRlbJ72Kn8Y/1IjiGFn1LkNNR3OSsdg6Bv5YxqN+8a3OGBRB/dhHuMtOa7aTpPTYAINd+kxnD43jrBeUGXszSVGvzswkcwG0JgAnA5GYgNcFGBIJBEhucAxge/ABKM1P6gdLIA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w1EaYoHG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DqtKUiL+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05631C4CEEB;
-	Mon,  2 Jun 2025 14:35:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w1EaYoHG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27807C4CEEB;
+	Mon,  2 Jun 2025 14:35:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748874919;
-	bh=6VS/A7YdtS8LxuVmmkPmTmsvKEbPdS7jZXHOzHMiDYM=;
+	s=korg; t=1748874922;
+	bh=DwwR0VdQ4IMBjxMZsYKByUCMsdLUnzUlUHkeKUY3Szw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DqtKUiL+mBrPDyzWt2b2H75oJ4KFr20cbVhSsnsiAL0Rk+AAR7EQ72N5RpBbQlfhV
-	 j6UV6JuJF6ePqjshvPULG+af1d4/aaRh9FAduPDk6NIL5lpiGhYrncNPc5w7tIeKAx
-	 /PU2sOl1HRduNSiOBzymZlJ4bbe1e/D2Qx7fuRtw=
+	b=w1EaYoHG5KWkEVGm8GAWHRaycOAOfwYseYIOL9sMsuDq6q0aJIi+UuRU7rZoYv7OO
+	 d/7EoTpJKtcAN2pv6SHeoCsl3RSSsay1a0vPdb6QOASkAqI0b5m5nJ28nyeCs/IfRV
+	 6NliX/qZB994T0qXX/yNe0q/N9FAJSlaY8heZUA0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Valentin Caron <valentin.caron@foss.st.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Konstantin Andreev <andreev@swemel.ru>,
+	Casey Schaufler <casey@schaufler-ca.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 145/204] pinctrl: devicetree: do not goto err when probing hogs in pinctrl_dt_to_map
-Date: Mon,  2 Jun 2025 15:47:58 +0200
-Message-ID: <20250602134301.351436627@linuxfoundation.org>
+Subject: [PATCH 5.4 146/204] smack: recognize ipv4 CIPSO w/o categories
+Date: Mon,  2 Jun 2025 15:47:59 +0200
+Message-ID: <20250602134301.390198408@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134255.449974357@linuxfoundation.org>
 References: <20250602134255.449974357@linuxfoundation.org>
@@ -51,107 +51,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Valentin Caron <valentin.caron@foss.st.com>
+From: Konstantin Andreev <andreev@swemel.ru>
 
-[ Upstream commit c98868e816209e568c9d72023ba0bc1e4d96e611 ]
+[ Upstream commit a158a937d864d0034fea14913c1f09c6d5f574b8 ]
 
-Cross case in pinctrl framework make impossible to an hogged pin and
-another, not hogged, used within the same device-tree node. For example
-with this simplified device-tree :
+If SMACK label has CIPSO representation w/o categories, e.g.:
 
-  &pinctrl {
-    pinctrl_pin_1: pinctrl-pin-1 {
-      pins = "dummy-pinctrl-pin";
-    };
-  };
+| # cat /smack/cipso2
+| foo  10
+| @ 250/2
+| ...
 
-  &rtc {
-    pinctrl-names = "default"
-    pinctrl-0 = <&pinctrl_pin_1 &rtc_pin_1>
+then SMACK does not recognize such CIPSO in input ipv4 packets
+and substitues '*' label instead. Audit records may look like
 
-    rtc_pin_1: rtc-pin-1 {
-      pins = "dummy-rtc-pin";
-    };
-  };
+| lsm=SMACK fn=smack_socket_sock_rcv_skb action=denied
+|   subject="*" object="_" requested=w pid=0 comm="swapper/1" ...
 
-"pinctrl_pin_1" configuration is never set. This produces this path in
-the code:
+This happens in two steps:
 
-  really_probe()
-    pinctrl_bind_pins()
-    | devm_pinctrl_get()
-    |   pinctrl_get()
-    |     create_pinctrl()
-    |       pinctrl_dt_to_map()
-    |         // Hog pin create an abort for all pins of the node
-    |         ret = dt_to_map_one_config()
-    |         | /* Do not defer probing of hogs (circular loop) */
-    |         | if (np_pctldev == p->dev->of_node)
-    |         |   return -ENODEV;
-    |         if (ret)
-    |           goto err
-    |
-    call_driver_probe()
-      stm32_rtc_probe()
-        pinctrl_enable()
-          pinctrl_claim_hogs()
-            create_pinctrl()
-              for_each_maps(maps_node, i, map)
-                // Not hog pin is skipped
-                if (pctldev && strcmp(dev_name(pctldev->dev),
-                                      map->ctrl_dev_name))
-                  continue;
+1) security/smack/smackfs.c`smk_set_cipso
+   does not clear NETLBL_SECATTR_MLS_CAT
+   from (struct smack_known *)skp->smk_netlabel.flags
+   on assigning CIPSO w/o categories:
 
-At the first call of create_pinctrl() the hogged pin produces an abort to
-avoid a defer of hogged pins. All other pin configurations are trashed.
+| rcu_assign_pointer(skp->smk_netlabel.attr.mls.cat, ncats.attr.mls.cat);
+| skp->smk_netlabel.attr.mls.lvl = ncats.attr.mls.lvl;
 
-At the second call, create_pinctrl is now called with pctldev parameter to
-get hogs, but in this context only hogs are set. And other pins are
-skipped.
+2) security/smack/smack_lsm.c`smack_from_secattr
+   can not match skp->smk_netlabel with input packet's
+   struct netlbl_lsm_secattr *sap
+   because sap->flags have not NETLBL_SECATTR_MLS_CAT (what is correct)
+   but skp->smk_netlabel.flags have (what is incorrect):
 
-To handle this, do not produce an abort in the first call of
-create_pinctrl(). Classic pin configuration will be set in
-pinctrl_bind_pins() context. And the hogged pin configuration will be set
-in pinctrl_claim_hogs() context.
+| if ((sap->flags & NETLBL_SECATTR_MLS_CAT) == 0) {
+| 	if ((skp->smk_netlabel.flags &
+| 		 NETLBL_SECATTR_MLS_CAT) == 0)
+| 		found = 1;
+| 	break;
+| }
 
-Signed-off-by: Valentin Caron <valentin.caron@foss.st.com>
-Link: https://lore.kernel.org/20250116170009.2075544-1-valentin.caron@foss.st.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+This commit sets/clears NETLBL_SECATTR_MLS_CAT in
+skp->smk_netlabel.flags according to the presense of CIPSO categories.
+The update of smk_netlabel is not atomic, so input packets processing
+still may be incorrect during short time while update proceeds.
+
+Signed-off-by: Konstantin Andreev <andreev@swemel.ru>
+Signed-off-by: Casey Schaufler <casey@schaufler-ca.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/devicetree.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ security/smack/smackfs.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/pinctrl/devicetree.c b/drivers/pinctrl/devicetree.c
-index 200357094e3be..e9bfb96a2e0e8 100644
---- a/drivers/pinctrl/devicetree.c
-+++ b/drivers/pinctrl/devicetree.c
-@@ -141,10 +141,14 @@ static int dt_to_map_one_config(struct pinctrl *p,
- 		pctldev = get_pinctrl_dev_from_of_node(np_pctldev);
- 		if (pctldev)
- 			break;
--		/* Do not defer probing of hogs (circular loop) */
-+		/*
-+		 * Do not defer probing of hogs (circular loop)
-+		 *
-+		 * Return 1 to let the caller catch the case.
-+		 */
- 		if (np_pctldev == p->dev->of_node) {
- 			of_node_put(np_pctldev);
--			return -ENODEV;
-+			return 1;
- 		}
- 	}
- 	of_node_put(np_pctldev);
-@@ -268,6 +272,8 @@ int pinctrl_dt_to_map(struct pinctrl *p, struct pinctrl_dev *pctldev)
- 			ret = dt_to_map_one_config(p, pctldev, statename,
- 						   np_config);
- 			of_node_put(np_config);
-+			if (ret == 1)
-+				continue;
- 			if (ret < 0)
- 				goto err;
- 		}
+diff --git a/security/smack/smackfs.c b/security/smack/smackfs.c
+index ddb0a292802ef..526598b40b13c 100644
+--- a/security/smack/smackfs.c
++++ b/security/smack/smackfs.c
+@@ -921,6 +921,10 @@ static ssize_t smk_set_cipso(struct file *file, const char __user *buf,
+ 	if (rc >= 0) {
+ 		old_cat = skp->smk_netlabel.attr.mls.cat;
+ 		rcu_assign_pointer(skp->smk_netlabel.attr.mls.cat, ncats.attr.mls.cat);
++		if (ncats.attr.mls.cat)
++			skp->smk_netlabel.flags |= NETLBL_SECATTR_MLS_CAT;
++		else
++			skp->smk_netlabel.flags &= ~(u32)NETLBL_SECATTR_MLS_CAT;
+ 		skp->smk_netlabel.attr.mls.lvl = ncats.attr.mls.lvl;
+ 		synchronize_rcu();
+ 		netlbl_catmap_free(old_cat);
 -- 
 2.39.5
 
