@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 103AE22A7E4;
-	Mon,  2 Jun 2025 14:59:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CDEC22ACD6;
+	Mon,  2 Jun 2025 14:59:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748876386; cv=none; b=R9D5CmVlp1X4zTANu+B0h08hebj1H0rik9LYuZEoirBg9PkPH2UBn4UmPSvMPSbLig62g6zsYadOKGmdEuitYtWM/2/K2fbhh9YBNfu6KYQ2c8as9UUwvvcfbn5bKn0CwsxJ1k4y0IFPf6+CRrzlvtnzByhFj7Evl0VfPaMHzJ0=
+	t=1748876389; cv=none; b=uqLEmASOPwMIaIvpbD/2joR6lIIYTg8iKXnjCSdSDLYuzIZTBQviXFdu9KH8MuSJ9SAIBX1TINqlfVwaWdIJeqBvpItiBh6edkUlAh9h46WCRDWOJYVpTiEkklSsyCgX5uhTBoZfiUKToOJ2InT1r3CVVm4S2Ja9O79v4FKcWFg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748876386; c=relaxed/simple;
-	bh=H3iabgjzWGDBvdWTXK+o1wcPcmY4lUN6/AiHT/EToq0=;
+	s=arc-20240116; t=1748876389; c=relaxed/simple;
+	bh=YBiOVvLSsdzOqvqYB4heWBnekybTa/efAs/nlLv9T4g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bUybpb4AXUpDprw1thAk29fZ6AocH39qlKcMUv9rs6Hlc2nu/HVmjk6wrOc8TsPyvJF91iKlZ+nE1/+zLwhT/UNuyeacpp3xbgy9F02hC6A83+nYnaTYgJgW/RISeJ1yDeSrEmGhxwrirq3kyMonhcPcMgUbkMXv0DKJmMgH1oQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=be4Celva; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=uM3TWpFUOfe0k0jViB+42y/Ih+/iKfPd85kvw56jViAi0aWfgLVXk26ykoYDHo6g6s4Od3FiOe07+Rf9yVmmWRZT5RG7ti+nN5+osn6NxFlEpaSkxjCKtWjgeIrILtb4pUYN2W6Rnj9DLSTOhvbz+FLd27MY1133vBFpdUshVfM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VSS3houy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="be4Celva"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C9D7C4CEEB;
-	Mon,  2 Jun 2025 14:59:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VSS3houy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8BF7C4CEEB;
+	Mon,  2 Jun 2025 14:59:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748876385;
-	bh=H3iabgjzWGDBvdWTXK+o1wcPcmY4lUN6/AiHT/EToq0=;
+	s=korg; t=1748876389;
+	bh=YBiOVvLSsdzOqvqYB4heWBnekybTa/efAs/nlLv9T4g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=be4CelvaDUdDiP1HvW+xVhaDwJpcizb05N5wZ/bIcNnozxHNZGRqdMK/UsvYHyCJB
-	 +fGEuvWAj1zCeTJmn0wyz4CjDIr7uK6P5ii3JBefZXIeeT4LTsSXHjLMxF7kO1qayl
-	 ZORS/yvdsTMcogCiBrnJEzpNu6k+kf/GWcsTkOWk=
+	b=VSS3houy/FaCTMmE1Q3mhIEiGqCGMx2U+jPkBDdLdCfXOL1XgHoLiWhyy0k/CI8Hv
+	 HR44cDB47zxdBsbxCk9G3QVTjL+j1OCKtqzhIiD9DRLE774hfyOs7Wld6e6cAcd1py
+	 KaeFnr+AsnS/Y2ZJVdU+7fHIcTTKIsn2SmITBs0I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Brauner <brauner@kernel.org>,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 161/207] __legitimize_mnt(): check for MNT_SYNC_UMOUNT should be under mount_lock
-Date: Mon,  2 Jun 2025 15:48:53 +0200
-Message-ID: <20250602134305.026554807@linuxfoundation.org>
+	=?UTF-8?q?Matti=20Lehtim=C3=A4ki?= <matti.lehtimaki@gmail.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Luca Weiss <luca.weiss@fairphone.com>
+Subject: [PATCH 5.15 162/207] remoteproc: qcom_wcnss: Fix on platforms without fallback regulators
+Date: Mon,  2 Jun 2025 15:48:54 +0200
+Message-ID: <20250602134305.070651017@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134258.769974467@linuxfoundation.org>
 References: <20250602134258.769974467@linuxfoundation.org>
@@ -45,51 +46,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Matti Lehtimäki <matti.lehtimaki@gmail.com>
 
-[ Upstream commit 250cf3693060a5f803c5f1ddc082bb06b16112a9 ]
+[ Upstream commit 4ca45af0a56d00b86285d6fdd720dca3215059a7 ]
 
-... or we risk stealing final mntput from sync umount - raising mnt_count
-after umount(2) has verified that victim is not busy, but before it
-has set MNT_SYNC_UMOUNT; in that case __legitimize_mnt() doesn't see
-that it's safe to quietly undo mnt_count increment and leaves dropping
-the reference to caller, where it'll be a full-blown mntput().
+Recent change to handle platforms with only single power domain broke
+pronto-v3 which requires power domains and doesn't have fallback voltage
+regulators in case power domains are missing. Add a check to verify
+the number of fallback voltage regulators before using the code which
+handles single power domain situation.
 
-Check under mount_lock is needed; leaving the current one done before
-taking that makes no sense - it's nowhere near common enough to bother
-with.
-
-Reviewed-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+Fixes: 65991ea8a6d1 ("remoteproc: qcom_wcnss: Handle platforms with only single power domain")
+Signed-off-by: Matti Lehtimäki <matti.lehtimaki@gmail.com>
+Tested-by: Luca Weiss <luca.weiss@fairphone.com> # sdm632-fairphone-fp3
+Link: https://lore.kernel.org/r/20250511234026.94735-1-matti.lehtimaki@gmail.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/namespace.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ drivers/remoteproc/qcom_wcnss.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/namespace.c b/fs/namespace.c
-index 27ec6d0a68ff5..a99a060e89316 100644
---- a/fs/namespace.c
-+++ b/fs/namespace.c
-@@ -589,12 +589,8 @@ int __legitimize_mnt(struct vfsmount *bastard, unsigned seq)
- 	smp_mb();		// see mntput_no_expire() and do_umount()
- 	if (likely(!read_seqretry(&mount_lock, seq)))
- 		return 0;
--	if (bastard->mnt_flags & MNT_SYNC_UMOUNT) {
--		mnt_add_count(mnt, -1);
--		return 1;
--	}
- 	lock_mount_hash();
--	if (unlikely(bastard->mnt_flags & MNT_DOOMED)) {
-+	if (unlikely(bastard->mnt_flags & (MNT_SYNC_UMOUNT | MNT_DOOMED))) {
- 		mnt_add_count(mnt, -1);
- 		unlock_mount_hash();
- 		return 1;
+diff --git a/drivers/remoteproc/qcom_wcnss.c b/drivers/remoteproc/qcom_wcnss.c
+index 3e07f5621d0f2..90c09cde6e0fb 100644
+--- a/drivers/remoteproc/qcom_wcnss.c
++++ b/drivers/remoteproc/qcom_wcnss.c
+@@ -446,7 +446,8 @@ static int wcnss_init_regulators(struct qcom_wcnss *wcnss,
+ 	if (wcnss->num_pds) {
+ 		info += wcnss->num_pds;
+ 		/* Handle single power domain case */
+-		num_vregs += num_pd_vregs - wcnss->num_pds;
++		if (wcnss->num_pds < num_pd_vregs)
++			num_vregs += num_pd_vregs - wcnss->num_pds;
+ 	} else {
+ 		num_vregs += num_pd_vregs;
+ 	}
 -- 
 2.39.5
 
