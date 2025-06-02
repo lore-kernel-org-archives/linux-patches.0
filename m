@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D99591EA65;
-	Mon,  2 Jun 2025 14:32:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16FA8226CF3;
+	Mon,  2 Jun 2025 14:32:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748874760; cv=none; b=ny6RaeeH3nzZwNi4OWHA27Qw5YXH/YIiErWkYkoYDiM43XBQcnNnax7Quia0xAgTdxzBb2mEluc9FQQQE/JjGTULHNkOd7O1I3CBuOD+2r4zAfR3sI+MAlrXThgGgVPp95+dqG68l2WoYoSvKW0SnEP1+2P0EA5YLhpqlru6r4A=
+	t=1748874764; cv=none; b=MfZQyqxbTi70g0S4MgUXhLMkLpkN/mMisolokKjL42mo1WfTNBhDMliKNgfJt0Pfa/J7taaMD/xLv8t9xC1KXY80aRV+HFtGRaFPoddXfVfyNMzoGhVJlXojFnsQap/bturi+793piXyoHmkKG3XdswC45RqffmtIW6Oevkd4wc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748874760; c=relaxed/simple;
-	bh=zqrhbT7wLaF92UF3bG56yNESLMVkGJXtS8JqYtjo6n8=;
+	s=arc-20240116; t=1748874764; c=relaxed/simple;
+	bh=lY2TFMZeUpyFzo57wBuNiAp7wttc+iRUhUn6mFcvqe4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tfMymIwQNM4BxY/mJotMPPTmlGcywbtajxqjmI98/wBSMUyJsVKJKpUv85qKR1sOYvTgSlmikNOqT49L9Ck3zRUMTjSkMH7klhpl7GE4mU2cPXGEjeel3EVWXF7CtpixGfc4S6IPDQyQb+YCODMm5W8pn2GQzBb1Z5NYUuMFY44=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lglKV5Bb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lnx18sytPI4qRVCW2DmPO1N0Xqk7818nig9z4CnLNd32hAqXeB63qtjqK+L3rto9vx8qzKYm1d3SCBq8eq/GkO8zUmhA5pW6LXVSb3OauCILsFh0dt2WRhTZwKx698VZItjNLnlJBPLtl9dfT7F3HrlsyXCFj3cxFgHbcjHrNXc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LkGYKwuT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lglKV5Bb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9627C4CEEB;
-	Mon,  2 Jun 2025 14:32:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LkGYKwuT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 107DDC4CEEB;
+	Mon,  2 Jun 2025 14:32:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748874760;
-	bh=zqrhbT7wLaF92UF3bG56yNESLMVkGJXtS8JqYtjo6n8=;
+	s=korg; t=1748874763;
+	bh=lY2TFMZeUpyFzo57wBuNiAp7wttc+iRUhUn6mFcvqe4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lglKV5BbJMdf021VsCPI0dTECfESPkFbTsDAhY8RIT2IcgV2WiT2X0JGx9Ca/9Hs4
-	 gRBu3RqBju9N6tvzZssk0a31utgyMfX6X/pGVY3AaO7Rd6WQseSnhSg4TWr1wZ210Z
-	 yUN1Rbpyb7C3POiiK6r48xST0uNodRIRYzVJTsKM=
+	b=LkGYKwuTdXX+Q5t8jkpA/UF0/0dhguF77Hs0nIsack0tLH8/ugwD5gjTE2PV6ha7q
+	 zTD04fQ5HonHpe8sj0RzY0y0WSxlntgX7uqw1ZjBfJ53CJyAA3Y5USa5bDQdAfV+Zt
+	 /NNtLzIPyF4RwY6hgSFhhDkZ0q3WLSCiftSHpIn0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ang Tien Sung <tien.sung.ang@intel.com>,
-	Kuhanh Murugasen Krishnan <kuhanh.murugasen.krishnan@intel.com>,
-	Xu Yilun <yilun.xu@intel.com>,
-	Xu Yilun <yilun.xu@linux.intel.com>,
+	Moshe Shemesh <moshe@nvidia.com>,
+	Shahar Shitrit <shshitrit@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 127/204] fpga: altera-cvp: Increase credit timeout
-Date: Mon,  2 Jun 2025 15:47:40 +0200
-Message-ID: <20250602134300.636346321@linuxfoundation.org>
+Subject: [PATCH 5.4 128/204] net/mlx5: Avoid report two health errors on same syndrome
+Date: Mon,  2 Jun 2025 15:47:41 +0200
+Message-ID: <20250602134300.673804261@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134255.449974357@linuxfoundation.org>
 References: <20250602134255.449974357@linuxfoundation.org>
@@ -53,41 +54,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuhanh Murugasen Krishnan <kuhanh.murugasen.krishnan@intel.com>
+From: Moshe Shemesh <moshe@nvidia.com>
 
-[ Upstream commit 0f05886a40fdc55016ba4d9ae0a9c41f8312f15b ]
+[ Upstream commit b5d7b2f04ebcff740f44ef4d295b3401aeb029f4 ]
 
-Increase the timeout for SDM (Secure device manager) data credits from
-20ms to 40ms. Internal stress tests running at 500 loops failed with the
-current timeout of 20ms. At the start of a FPGA configuration, the CVP
-host driver reads the transmit credits from SDM. It then sends bitstream
-FPGA data to SDM based on the total credits. Each credit allows the
-CVP host driver to send 4kBytes of data. There are situations whereby,
-the SDM did not respond in time during testing.
+In case health counter has not increased for few polling intervals, miss
+counter will reach max misses threshold and health report will be
+triggered for FW health reporter. In case syndrome found on same health
+poll another health report will be triggered.
 
-Signed-off-by: Ang Tien Sung <tien.sung.ang@intel.com>
-Signed-off-by: Kuhanh Murugasen Krishnan <kuhanh.murugasen.krishnan@intel.com>
-Acked-by: Xu Yilun <yilun.xu@intel.com>
-Link: https://lore.kernel.org/r/20250212221249.2715929-1-tien.sung.ang@intel.com
-Signed-off-by: Xu Yilun <yilun.xu@linux.intel.com>
+Avoid two health reports on same syndrome by marking this syndrome as
+already known.
+
+Signed-off-by: Moshe Shemesh <moshe@nvidia.com>
+Reviewed-by: Shahar Shitrit <shshitrit@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/fpga/altera-cvp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx5/core/health.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/fpga/altera-cvp.c b/drivers/fpga/altera-cvp.c
-index 4e0edb60bfba6..d107ad73a188c 100644
---- a/drivers/fpga/altera-cvp.c
-+++ b/drivers/fpga/altera-cvp.c
-@@ -52,7 +52,7 @@
- /* V2 Defines */
- #define VSE_CVP_TX_CREDITS		0x49	/* 8bit */
- 
--#define V2_CREDIT_TIMEOUT_US		20000
-+#define V2_CREDIT_TIMEOUT_US		40000
- #define V2_CHECK_CREDIT_US		10
- #define V2_POLL_TIMEOUT_US		1000000
- #define V2_USER_TIMEOUT_US		500000
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/health.c b/drivers/net/ethernet/mellanox/mlx5/core/health.c
+index d4ad0e4192bbe..44e3f8cfecacb 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/health.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/health.c
+@@ -736,6 +736,7 @@ static void poll_health(struct timer_list *t)
+ 	health->prev = count;
+ 	if (health->miss_counter == MAX_MISSES) {
+ 		mlx5_core_err(dev, "device's health compromised - reached miss count\n");
++		health->synd = ioread8(&h->synd);
+ 		print_health_info(dev);
+ 		queue_work(health->wq, &health->report_work);
+ 	}
 -- 
 2.39.5
 
