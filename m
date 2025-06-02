@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E32FD231846;
-	Mon,  2 Jun 2025 14:18:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CECA31CBA18;
+	Mon,  2 Jun 2025 14:18:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748873912; cv=none; b=TO9Vh86veu69UvjPg/F5Ti0Da7unuDKPTU/cg07BkwO2MMggIf7rLeSC9s5JSyyJCOd72yOU+ahqCS5c3XjdR8C29hA5D/wiLJkY2FFrKgdbs5k5RH+KXetzlObbarLbjbpmppJDAs2bjmotL506aw+4PKWNbe7JAxgKZkQbnmM=
+	t=1748873914; cv=none; b=hr19A4krKXQ32ZcX9+E9GloSGuj/iCnjmWAqE1WEe0kYECKTNJFnccY/Eo6Pi0n8msHMQ6POQB4e/yOf9Rgj382gHZxAfXYH+HFbBF+xaWRWa6vDtHEa9AIfKi2JvHxbKkg/VgxqqxSLjrf4WVWDkBQq3UWXxrIdffM6z6sSRnI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748873912; c=relaxed/simple;
-	bh=Ik/9l/GV4e6YrJZ1CIoL7QlDShCuBFkl7kIaF1oclfU=;
+	s=arc-20240116; t=1748873914; c=relaxed/simple;
+	bh=wdWFbBuYXmnpskCXzMtSB1dzdJF+qyj1OZ/tZ+I0OZM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dH2bSIAFToOx1clNKKKnWwyqoBhcpQcBXF2+07pj3X82BzRKpIxobFGKz4K02+S40Y3MQXaPBGp5mUeCqWZQThKJoSxDan2CeodWusS1q6S2LR4mZ+HdQ/wh4Ni/8r2FEKLTwCyfyYJ2NtmV8jpt7pi2qmRFu+cPPbLa3Chxt0o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CXvBgvMa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Zb3cCYrG0Ce7ukmbDZA++vwhaOG7M/OBwoG2rqMH2/JCaOvj6aGdjU2ALZi8PSPNpnoaSxRLYGtsFC0zhe77aUdomhwSiBPfUib0a4+T2zCGB//pUg8w+2V2dfeyldZbsHezJgiC2PwaYuDBeSMXsZhXRlrhrdGerO8VSfhAHsI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yefcfnPz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CXvBgvMa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 762EBC4CEEB;
-	Mon,  2 Jun 2025 14:18:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yefcfnPz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A8ACC4CEEB;
+	Mon,  2 Jun 2025 14:18:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748873911;
-	bh=Ik/9l/GV4e6YrJZ1CIoL7QlDShCuBFkl7kIaF1oclfU=;
+	s=korg; t=1748873914;
+	bh=wdWFbBuYXmnpskCXzMtSB1dzdJF+qyj1OZ/tZ+I0OZM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CXvBgvMaeedWJ3dEvSToex3HW7DUqi86PfoE05DRyUecCDWWKwOpE9D6zjRXPJMVe
-	 JTf9clOHHsSZ7ZCfgrpOeh4ScEHHRo7TtDtL7sLRmS0jg6quWiClVoQ2UEGT/GzGol
-	 tOTESS1mlDJt77a0DdhTPdyMso8E1JC1y+wPYPOI=
+	b=yefcfnPzz8MWYHsxBTKWyWVw++hZ86WgN2JDD+vrdpkD3dRQv7wTafMvkCE2r4oyN
+	 s392049LTZVv1yhReSCd7A2Wp6XJMQDENdPsgRRiBPSFLcCaSDlw6rW8rRj7z3hFYL
+	 zUH2GrTrkYm2PKbUfn2vLhD6Z++M5RKgrxl8p2eY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Jocelyn Falempe <jfalempe@redhat.com>,
+	Viktor Malik <vmalik@redhat.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Quentin Monnet <qmo@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 294/444] drm/ast: Find VBIOS mode from regular display size
-Date: Mon,  2 Jun 2025 15:45:58 +0200
-Message-ID: <20250602134352.885157834@linuxfoundation.org>
+Subject: [PATCH 6.6 295/444] bpftool: Fix readlink usage in get_fd_type
+Date: Mon,  2 Jun 2025 15:45:59 +0200
+Message-ID: <20250602134352.924768119@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -51,87 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Zimmermann <tzimmermann@suse.de>
+From: Viktor Malik <vmalik@redhat.com>
 
-[ Upstream commit c81202906b5cd56db403e95db3d29c9dfc8c74c1 ]
+[ Upstream commit 0053f7d39d491b6138d7c526876d13885cbb65f1 ]
 
-The ast driver looks up supplied display modes from an internal list of
-display modes supported by the VBIOS.
+The `readlink(path, buf, sizeof(buf))` call reads at most sizeof(buf)
+bytes and *does not* append null-terminator to buf. With respect to
+that, fix two pieces in get_fd_type:
 
-Do not use the crtc_-prefixed display values from struct drm_display_mode
-for looking up the VBIOS mode. The fields contain raw values that the
-driver programs to hardware. They are affected by display settings like
-double-scan or interlace.
+1. Change the truncation check to contain sizeof(buf) rather than
+   sizeof(path).
+2. Append null-terminator to buf.
 
-Instead use the regular vdisplay and hdisplay fields for lookup. As the
-programmed values can now differ from the values used for lookup, set
-struct drm_display_mode.crtc_vdisplay and .crtc_hdisplay from the VBIOS
-mode.
+Reported by Coverity.
 
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Reviewed-by: Jocelyn Falempe <jfalempe@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250131092257.115596-9-tzimmermann@suse.de
+Signed-off-by: Viktor Malik <vmalik@redhat.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Reviewed-by: Quentin Monnet <qmo@kernel.org>
+Link: https://lore.kernel.org/bpf/20250129071857.75182-1-vmalik@redhat.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/ast/ast_mode.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ tools/bpf/bpftool/common.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/ast/ast_mode.c b/drivers/gpu/drm/ast/ast_mode.c
-index 3de0f457fff6a..5f58da6ebaadb 100644
---- a/drivers/gpu/drm/ast/ast_mode.c
-+++ b/drivers/gpu/drm/ast/ast_mode.c
-@@ -132,7 +132,7 @@ static bool ast_get_vbios_mode_info(const struct drm_format_info *format,
- 		return false;
+diff --git a/tools/bpf/bpftool/common.c b/tools/bpf/bpftool/common.c
+index 9b75639434b81..0a764426d9358 100644
+--- a/tools/bpf/bpftool/common.c
++++ b/tools/bpf/bpftool/common.c
+@@ -461,10 +461,11 @@ int get_fd_type(int fd)
+ 		p_err("can't read link type: %s", strerror(errno));
+ 		return -1;
  	}
+-	if (n == sizeof(path)) {
++	if (n == sizeof(buf)) {
+ 		p_err("can't read link type: path too long!");
+ 		return -1;
+ 	}
++	buf[n] = '\0';
  
--	switch (mode->crtc_hdisplay) {
-+	switch (mode->hdisplay) {
- 	case 640:
- 		vbios_mode->enh_table = &res_640x480[refresh_rate_index];
- 		break;
-@@ -146,7 +146,7 @@ static bool ast_get_vbios_mode_info(const struct drm_format_info *format,
- 		vbios_mode->enh_table = &res_1152x864[refresh_rate_index];
- 		break;
- 	case 1280:
--		if (mode->crtc_vdisplay == 800)
-+		if (mode->vdisplay == 800)
- 			vbios_mode->enh_table = &res_1280x800[refresh_rate_index];
- 		else
- 			vbios_mode->enh_table = &res_1280x1024[refresh_rate_index];
-@@ -158,7 +158,7 @@ static bool ast_get_vbios_mode_info(const struct drm_format_info *format,
- 		vbios_mode->enh_table = &res_1440x900[refresh_rate_index];
- 		break;
- 	case 1600:
--		if (mode->crtc_vdisplay == 900)
-+		if (mode->vdisplay == 900)
- 			vbios_mode->enh_table = &res_1600x900[refresh_rate_index];
- 		else
- 			vbios_mode->enh_table = &res_1600x1200[refresh_rate_index];
-@@ -167,7 +167,7 @@ static bool ast_get_vbios_mode_info(const struct drm_format_info *format,
- 		vbios_mode->enh_table = &res_1680x1050[refresh_rate_index];
- 		break;
- 	case 1920:
--		if (mode->crtc_vdisplay == 1080)
-+		if (mode->vdisplay == 1080)
- 			vbios_mode->enh_table = &res_1920x1080[refresh_rate_index];
- 		else
- 			vbios_mode->enh_table = &res_1920x1200[refresh_rate_index];
-@@ -211,6 +211,7 @@ static bool ast_get_vbios_mode_info(const struct drm_format_info *format,
- 	hborder = (vbios_mode->enh_table->flags & HBorder) ? 8 : 0;
- 	vborder = (vbios_mode->enh_table->flags & VBorder) ? 8 : 0;
- 
-+	adjusted_mode->crtc_hdisplay = vbios_mode->enh_table->hde;
- 	adjusted_mode->crtc_htotal = vbios_mode->enh_table->ht;
- 	adjusted_mode->crtc_hblank_start = vbios_mode->enh_table->hde + hborder;
- 	adjusted_mode->crtc_hblank_end = vbios_mode->enh_table->ht - hborder;
-@@ -220,6 +221,7 @@ static bool ast_get_vbios_mode_info(const struct drm_format_info *format,
- 					 vbios_mode->enh_table->hfp +
- 					 vbios_mode->enh_table->hsync);
- 
-+	adjusted_mode->crtc_vdisplay = vbios_mode->enh_table->vde;
- 	adjusted_mode->crtc_vtotal = vbios_mode->enh_table->vt;
- 	adjusted_mode->crtc_vblank_start = vbios_mode->enh_table->vde + vborder;
- 	adjusted_mode->crtc_vblank_end = vbios_mode->enh_table->vt - vborder;
+ 	if (strstr(buf, "bpf-map"))
+ 		return BPF_OBJ_MAP;
 -- 
 2.39.5
 
