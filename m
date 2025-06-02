@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37F15221DA2;
-	Mon,  2 Jun 2025 13:58:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15B6D221739;
+	Mon,  2 Jun 2025 13:58:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748872697; cv=none; b=sEfwUpqILm9SxOZe+DND0tECMOMeZ+I9Cgs47p91ktn0I+ZBVsEUkxv4UjYFaumNkf42XfM/g82cR0MOvicO000ZFBRp3brKHraZ4s1R1Cmhdjzm3omXjSUP2s67L3yA7Nnzk4T8zV140FoUl3eTfU0ZX8xvwROMlA2v6DI+79E=
+	t=1748872701; cv=none; b=BqpUajCKpEQsNdKt2vmM5AJMGEtxc7jUX+hLjUF2Ptzws1+4aD9DD17A2Pj1+58lSe8IYIYaewgJWGb8nk7s5zibyhwczSEPHwzicxBO/ViQ44FEImvP28vatGiAk2/m8NVWRVamgzRfmhLurS+JNXN01Ja+7w8y96E+5tw1M5I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748872697; c=relaxed/simple;
-	bh=LXZRB7P8LBKDgbFyZZR5S6mLlrerVF953sZgx0el2Mg=;
+	s=arc-20240116; t=1748872701; c=relaxed/simple;
+	bh=s4bpNvtPW2fxMjT7OYwu7prl27hua/sUYsgirlex09E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hPw8LdOMtbuYhvPWoUGErRXjf5wnENzxYfhNLPPHn/KjxYNjzdmUwUgxilGqK1DclBGUQz20UFcRIDd42pQsj2cGMFWqM/EUGKqnHcErYmhpyd7DW8eOhWHsOQoQn4ECtbXGHpTKA4t6VNsGMiq3g6r+X6zBKDRkrAgwj2iSGJ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yNI5abqX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bcXrLsyRx7USpZkoKriAomerhHj8qAxQmJ5ezfTusSRUzeu1RJ+FsF1/2Y/70leCv34sZPfLyXsqRIcdbyePntOlohEaPPGVC8c3URaB8E8Q0hQr5NY/dbxCaroO+6QrFkk67roG9ldjAxXkdeOSh4uKvePJ7lalTBBAYipPLi0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u9MNsgWV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yNI5abqX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC662C4CEEB;
-	Mon,  2 Jun 2025 13:58:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u9MNsgWV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93627C4CEEB;
+	Mon,  2 Jun 2025 13:58:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748872697;
-	bh=LXZRB7P8LBKDgbFyZZR5S6mLlrerVF953sZgx0el2Mg=;
+	s=korg; t=1748872701;
+	bh=s4bpNvtPW2fxMjT7OYwu7prl27hua/sUYsgirlex09E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yNI5abqX1SJJNNcCMDQznE8tOPL3HsLDLk4Wj4kbtzY5jZ58I2X5BgD+0QbvhVnXb
-	 cLvB/+DTnm8dpVuKHuHa5vDPSAZM+g2jE4NmHcIYfGlyExg82R4YC3TfF2Xv+zwzWx
-	 grLYPnywFNx+tVydz996n6EaE9Q9ntNeiyX+pBk4=
+	b=u9MNsgWVqL1fVEDLzyo9i2rq5q+M3giPlEIykTHE9gdEC4xG07QteQn+LJfFFlbe3
+	 HfJD7lh37Q8eJGxd9tMdEze5Ei6Rx2f/zgqB056jBkblQ098vIQh6VXN89R4jf4Kcb
+	 MfYRrLsdMao5MI+7yaExCJWwrnkCBBGNGa4HW728=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Robin Murphy <robin.murphy@arm.com>,
-	Ilkka Koskinen <ilkka@os.amperecomputing.com>,
 	Will Deacon <will@kernel.org>
-Subject: [PATCH 6.14 43/73] perf/arm-cmn: Initialise cmn->cpu earlier
-Date: Mon,  2 Jun 2025 15:47:29 +0200
-Message-ID: <20250602134243.386923123@linuxfoundation.org>
+Subject: [PATCH 6.14 44/73] perf/arm-cmn: Add CMN S3 ACPI binding
+Date: Mon,  2 Jun 2025 15:47:30 +0200
+Message-ID: <20250602134243.425018518@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134241.673490006@linuxfoundation.org>
 References: <20250602134241.673490006@linuxfoundation.org>
@@ -53,41 +52,31 @@ Content-Transfer-Encoding: 8bit
 
 From: Robin Murphy <robin.murphy@arm.com>
 
-commit 597704e201068db3d104de3c7a4d447ff8209127 upstream.
+commit 8c138a189f6db295ceb32258d46ac061df0823e5 upstream.
 
-For all the complexity of handling affinity for CPU hotplug, what we've
-apparently managed to overlook is that arm_cmn_init_irqs() has in fact
-always been setting the *initial* affinity of all IRQs to CPU 0, not the
-CPU we subsequently choose for event scheduling. Oh dear.
+An ACPI binding for CMN S3 was not yet finalised when the driver support
+was originally written, but v1.2 of DEN0093 "ACPI for Arm Components"
+has at last been published; support ACPI systems using the proper HID.
 
 Cc: stable@vger.kernel.org
-Fixes: 0ba64770a2f2 ("perf: Add Arm CMN-600 PMU driver")
+Fixes: 0dc2f4963f7e ("perf/arm-cmn: Support CMN S3")
 Signed-off-by: Robin Murphy <robin.murphy@arm.com>
-Reviewed-by: Ilkka Koskinen <ilkka@os.amperecomputing.com>
-Link: https://lore.kernel.org/r/b12fccba6b5b4d2674944f59e4daad91cd63420b.1747069914.git.robin.murphy@arm.com
+Link: https://lore.kernel.org/r/7dafe147f186423020af49d7037552ee59c60e97.1747652164.git.robin.murphy@arm.com
 Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/perf/arm-cmn.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/perf/arm-cmn.c |    1 +
+ 1 file changed, 1 insertion(+)
 
 --- a/drivers/perf/arm-cmn.c
 +++ b/drivers/perf/arm-cmn.c
-@@ -2557,6 +2557,7 @@ static int arm_cmn_probe(struct platform
- 
- 	cmn->dev = &pdev->dev;
- 	cmn->part = (unsigned long)device_get_match_data(cmn->dev);
-+	cmn->cpu = cpumask_local_spread(0, dev_to_node(cmn->dev));
- 	platform_set_drvdata(pdev, cmn);
- 
- 	if (cmn->part == PART_CMN600 && has_acpi_companion(cmn->dev)) {
-@@ -2584,7 +2585,6 @@ static int arm_cmn_probe(struct platform
- 	if (err)
- 		return err;
- 
--	cmn->cpu = cpumask_local_spread(0, dev_to_node(cmn->dev));
- 	cmn->pmu = (struct pmu) {
- 		.module = THIS_MODULE,
- 		.parent = cmn->dev,
+@@ -2650,6 +2650,7 @@ static const struct acpi_device_id arm_c
+ 	{ "ARMHC600", PART_CMN600 },
+ 	{ "ARMHC650" },
+ 	{ "ARMHC700" },
++	{ "ARMHC003" },
+ 	{}
+ };
+ MODULE_DEVICE_TABLE(acpi, arm_cmn_acpi_match);
 
 
