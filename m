@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF3FD1EA65;
-	Mon,  2 Jun 2025 14:24:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2E9D1FBC90;
+	Mon,  2 Jun 2025 14:24:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748874289; cv=none; b=XOO7i9JRIxqK/3h438bQeHk6D388W9upcBQN42PseFVOpneFVXqZucTcH+BiHMgSpaiAHco0q/oU1iYFk4W3UPq/qzNp1FKIRB93tRWdfSEIR89G9KquHpJW6a0zxm+VotHntcVuJ9Uu1PrXbylI2o+Qs4QBm/vXXGVGJgWWRU4=
+	t=1748874292; cv=none; b=oKT7Y55K/ybJqxl+rcG6fOHWxTHTAYcL+j7rlSfHP8/KnX87msinAXO+xPihVHuTyGEWhj2uFYldK6S7i3A3aYSfF+XiIrGOsSAXrDnIiu2xYYbGpj3yuYlpEqXwvf1L8SN+We6WT8FpkHgRS+ltDZt6ZvyV+gamAFIaHiGw+O4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748874289; c=relaxed/simple;
-	bh=UcdXwakM+9H5HUA572cYYg7q0sb3NdoA2PSBvdsBXeo=;
+	s=arc-20240116; t=1748874292; c=relaxed/simple;
+	bh=RAYEDRFTYf+LPvEH4IOlTQtwSqJ4zl3VgDFJ9ME7K9U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hCfSw3p+2eKKlxRO7Aa52ro5znJNzR5NqGixmhfmI6/gMUUJK3qaAL4lOZCh8esdghwA09AJ+bkL+2loVZRlu38BVx6QOnJUuCeksWimxB0Q7XNvHMMonsyv4hmSk4aqtN8qohjejmpxaTmnuSMgfpxZGft66iG6Kgal4UgZw8E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WQjIiiYi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Wn5hrSV4FF0PtJPPoGkL2Nkz5SmZWygf9FsQgxGXSlwkwFI7a7w3ZC6+xsmJ/te+oxro0UkwQwIFxC3jmc//mx6wA5btP4DmRPjMLhkZWA2gmxMMksjJwux9BmfT44wQYRgDC9UwcS0X4tEtu90ryz2F8kZ6Fpogsw2YHubLreA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y2hsrLva; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WQjIiiYi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A501C4CEEB;
-	Mon,  2 Jun 2025 14:24:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y2hsrLva"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73198C4CEEB;
+	Mon,  2 Jun 2025 14:24:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748874288;
-	bh=UcdXwakM+9H5HUA572cYYg7q0sb3NdoA2PSBvdsBXeo=;
+	s=korg; t=1748874291;
+	bh=RAYEDRFTYf+LPvEH4IOlTQtwSqJ4zl3VgDFJ9ME7K9U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WQjIiiYibqvHxBI0FEAMCD/UUPXha9N6s3HHfjCUm/hfG/S0RaJOH12DCjwKTtTld
-	 VGLgR7jGpFPgPZGijrxtZ8olzNzCIy8LL6/MaE1b5n95vfiy0xHYi6JeuuDsth88W4
-	 NFfW5FaTvw307nLmRf4U/lKdMOVsQ2GIJFWmLlZY=
+	b=y2hsrLvaFeHLOW2FbjItd21ndJt3ezYiTFNVj7WaixX2Q2oFALxDoF3vox6Xs2c0R
+	 pfAds38qPaCFkzDoMJ3o8Jy2ZFORWVTtS6WFml4WMtNtB972tas9l6B6Yj1TJZgcsl
+	 Ixxh6uDA2RYc6PnOabbvQ53hD62HVvig9OxAjsCM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzkaller <syzkaller@googlegroups.com>,
-	Shigeru Yoshida <syoshida@redhat.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Lee Jones <lee@kernel.org>
-Subject: [PATCH 6.6 420/444] af_unix: Fix uninit-value in __unix_walk_scc()
-Date: Mon,  2 Jun 2025 15:48:04 +0200
-Message-ID: <20250602134357.993787797@linuxfoundation.org>
+	Md Sadre Alam <quic_mdalam@quicinc.com>,
+	Stephan Gerhold <stephan.gerhold@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 6.6 421/444] arm64: dts: qcom: ipq9574: Add missing properties for cryptobam
+Date: Mon,  2 Jun 2025 15:48:05 +0200
+Message-ID: <20250602134358.033692550@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -53,103 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shigeru Yoshida <syoshida@redhat.com>
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
 
-commit 927fa5b3e4f52e0967bfc859afc98ad1c523d2d5 upstream.
+commit b4cd966edb2deb5c75fe356191422e127445b830 upstream.
 
-KMSAN reported uninit-value access in __unix_walk_scc() [1].
+num-channels and qcom,num-ees are required for BAM nodes without clock,
+because the driver cannot ensure the hardware is powered on when trying to
+obtain the information from the hardware registers. Specifying the node
+without these properties is unsafe and has caused early boot crashes for
+other SoCs before [1, 2].
 
-In the list_for_each_entry_reverse() loop, when the vertex's index
-equals it's scc_index, the loop uses the variable vertex as a
-temporary variable that points to a vertex in scc. And when the loop
-is finished, the variable vertex points to the list head, in this case
-scc, which is a local variable on the stack (more precisely, it's not
-even scc and might underflow the call stack of __unix_walk_scc():
-container_of(&scc, struct unix_vertex, scc_entry)).
+Add the missing information from the hardware registers to ensure the
+driver can probe successfully without causing crashes.
 
-However, the variable vertex is used under the label prev_vertex. So
-if the edge_stack is not empty and the function jumps to the
-prev_vertex label, the function will access invalid data on the
-stack. This causes the uninit-value access issue.
+[1]: https://lore.kernel.org/r/CY01EKQVWE36.B9X5TDXAREPF@fairphone.com/
+[2]: https://lore.kernel.org/r/20230626145959.646747-1-krzysztof.kozlowski@linaro.org/
 
-Fix this by introducing a new temporary variable for the loop.
-
-[1]
-BUG: KMSAN: uninit-value in __unix_walk_scc net/unix/garbage.c:478 [inline]
-BUG: KMSAN: uninit-value in unix_walk_scc net/unix/garbage.c:526 [inline]
-BUG: KMSAN: uninit-value in __unix_gc+0x2589/0x3c20 net/unix/garbage.c:584
- __unix_walk_scc net/unix/garbage.c:478 [inline]
- unix_walk_scc net/unix/garbage.c:526 [inline]
- __unix_gc+0x2589/0x3c20 net/unix/garbage.c:584
- process_one_work kernel/workqueue.c:3231 [inline]
- process_scheduled_works+0xade/0x1bf0 kernel/workqueue.c:3312
- worker_thread+0xeb6/0x15b0 kernel/workqueue.c:3393
- kthread+0x3c4/0x530 kernel/kthread.c:389
- ret_from_fork+0x6e/0x90 arch/x86/kernel/process.c:147
- ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
-
-Uninit was stored to memory at:
- unix_walk_scc net/unix/garbage.c:526 [inline]
- __unix_gc+0x2adf/0x3c20 net/unix/garbage.c:584
- process_one_work kernel/workqueue.c:3231 [inline]
- process_scheduled_works+0xade/0x1bf0 kernel/workqueue.c:3312
- worker_thread+0xeb6/0x15b0 kernel/workqueue.c:3393
- kthread+0x3c4/0x530 kernel/kthread.c:389
- ret_from_fork+0x6e/0x90 arch/x86/kernel/process.c:147
- ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
-
-Local variable entries created at:
- ref_tracker_free+0x48/0xf30 lib/ref_tracker.c:222
- netdev_tracker_free include/linux/netdevice.h:4058 [inline]
- netdev_put include/linux/netdevice.h:4075 [inline]
- dev_put include/linux/netdevice.h:4101 [inline]
- update_gid_event_work_handler+0xaa/0x1b0 drivers/infiniband/core/roce_gid_mgmt.c:813
-
-CPU: 1 PID: 12763 Comm: kworker/u8:31 Not tainted 6.10.0-rc4-00217-g35bb670d65fc #32
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-2.fc40 04/01/2014
-Workqueue: events_unbound __unix_gc
-
-Fixes: 3484f063172d ("af_unix: Detect Strongly Connected Components.")
-Reported-by: syzkaller <syzkaller@googlegroups.com>
-Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://patch.msgid.link/20240702160428.10153-1-syoshida@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Lee Jones <lee@kernel.org>
+Cc: stable@vger.kernel.org
+Tested-by: Md Sadre Alam <quic_mdalam@quicinc.com>
+Fixes: ffadc79ed99f ("arm64: dts: qcom: ipq9574: Enable crypto nodes")
+Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+Link: https://lore.kernel.org/r/20250212-bam-dma-fixes-v1-6-f560889e65d8@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/unix/garbage.c |    9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ arch/arm64/boot/dts/qcom/ipq9574.dtsi |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/net/unix/garbage.c
-+++ b/net/unix/garbage.c
-@@ -476,6 +476,7 @@ prev_vertex:
- 	}
+--- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+@@ -231,6 +231,8 @@
+ 			interrupts = <GIC_SPI 207 IRQ_TYPE_LEVEL_HIGH>;
+ 			#dma-cells = <1>;
+ 			qcom,ee = <1>;
++			qcom,num-ees = <4>;
++			num-channels = <16>;
+ 			qcom,controlled-remotely;
+ 		};
  
- 	if (vertex->index == vertex->scc_index) {
-+		struct unix_vertex *v;
- 		struct list_head scc;
- 		bool scc_dead = true;
- 
-@@ -486,15 +487,15 @@ prev_vertex:
- 		 */
- 		__list_cut_position(&scc, &vertex_stack, &vertex->scc_entry);
- 
--		list_for_each_entry_reverse(vertex, &scc, scc_entry) {
-+		list_for_each_entry_reverse(v, &scc, scc_entry) {
- 			/* Don't restart DFS from this vertex in unix_walk_scc(). */
--			list_move_tail(&vertex->entry, &unix_visited_vertices);
-+			list_move_tail(&v->entry, &unix_visited_vertices);
- 
- 			/* Mark vertex as off-stack. */
--			vertex->index = unix_vertex_grouped_index;
-+			v->index = unix_vertex_grouped_index;
- 
- 			if (scc_dead)
--				scc_dead = unix_vertex_dead(vertex);
-+				scc_dead = unix_vertex_dead(v);
- 		}
- 
- 		if (scc_dead)
 
 
