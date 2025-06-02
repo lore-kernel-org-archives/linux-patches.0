@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E95821882B;
-	Mon,  2 Jun 2025 14:33:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81AB6221558;
+	Mon,  2 Jun 2025 14:33:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748874780; cv=none; b=io0guIS4u2zxbf3Pd2o30Na9QD4bRww2wSUYgtbPJxKoBVLUacOsJslUcH3p3G1VLzALvopzLIltypepgtGfD0JST+sOF8xjtlvTAl8BdA/mDqYtlpd5kbP2sP1mG/H9Q/Q6jZ+YBAtdpA0tSPh0+qFdjoF8K9bMOdjam51vFGg=
+	t=1748874783; cv=none; b=rE+k3jzLSzA1cfmEJ9srdgke5Q96JWnO8I+b8sOSO/wjCgpZKObJXzL2Q6kOnc8nEBr2XT1Pk60MvKv9+Zd+2jd/4xtq5Qka9qkO0DEc3qQmmL2SF8mm1ODvImefp3AGBTmmKwECo3K/FI0FT0DlaIsIs//1QzF4PXoMXQjKHhI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748874780; c=relaxed/simple;
-	bh=HU7HTt4EGikjshpirHO029ynR1FwZBlSgJdB/plR4S0=;
+	s=arc-20240116; t=1748874783; c=relaxed/simple;
+	bh=U1/zH4LKtcvupLFMSM6tme45y/mYSyUsCmedwBemPs8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pANsUxpy7BKS7VfCn15Uq/E5u4Ry0E77faqBfh9ZSz/ofN6ypqGm2Mt/CMcKvVniBrIjFgelSuk3yHKZxxePzXzTxM/r4BO7+rlrGkEXgbcH0QJJPxbVxSXHCxAryfUBdRYuuFjedXVFEPYZbmm2V0vmUHZPQWB0OlRAMMIrmgw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yugXi2ro; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FVNZuIxWjjfQr8G2T+SgOk1pk4ZKX9xqGvstZMJYERVy9jf0uXYnS7SRk1HtUovnRxtEtuZ0flbPS5Fik680VVlhhJOaqnjU/m5AQtKJaKuxfHgemhF5MSNcZAjzRYrkFpQ+/8wzEADLvk+6MUJDrJ/gX7RGvUFcUfnszdfSgrM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kwcsckds; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yugXi2ro"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FFD8C4CEEB;
-	Mon,  2 Jun 2025 14:32:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kwcsckds"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3E6BC4CEEB;
+	Mon,  2 Jun 2025 14:33:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748874780;
-	bh=HU7HTt4EGikjshpirHO029ynR1FwZBlSgJdB/plR4S0=;
+	s=korg; t=1748874783;
+	bh=U1/zH4LKtcvupLFMSM6tme45y/mYSyUsCmedwBemPs8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yugXi2roxoOZF19hngmTPpD0XWqG4/m0D94PN6jy8gT3zWOCgQKQmxE4UgBl9Wq64
-	 aB4zz8RqvYBUQRd9+nAEVUoxu91GGXd7Je0ShsEdU2tZ8hjaRzdDCCIoGImH9dGho0
-	 c8cBM01r17zVeVhJ6AMLu+QabdCI4FSa741huk24=
+	b=KwcsckdssgDAyAzZxV/SkijpBCIlnN3IO3CpN7CGfgGFOXj0DyV9Q2d2qAT6Sg7vx
+	 nnCMVYWN6EyeWnan/TK9gJ73h8kX+wjJWgQdlNFzmfMMS0/Xe01LqnB1PNk14Dk6Hk
+	 z1C+CRCtZYtepfoByJrc3MgyaH/U5GMaG6TM+K0Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Kai=20M=C3=A4kisara?= <Kai.Makisara@kolumbus.fi>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Artem Bityutskiy <artem.bityutskiy@linux.intel.com>,
+	Christian Loehle <christian.loehle@arm.com>,
+	Aboorva Devarajan <aboorvad@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 106/204] scsi: st: Tighten the page format heuristics with MODE SELECT
-Date: Mon,  2 Jun 2025 15:47:19 +0200
-Message-ID: <20250602134259.830399745@linuxfoundation.org>
+Subject: [PATCH 5.4 133/204] cpuidle: menu: Avoid discarding useful information
+Date: Mon,  2 Jun 2025 15:47:46 +0200
+Message-ID: <20250602134300.878922057@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134255.449974357@linuxfoundation.org>
 References: <20250602134255.449974357@linuxfoundation.org>
@@ -45,49 +47,69 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kai Mäkisara <Kai.Makisara@kolumbus.fi>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 8db816c6f176321e42254badd5c1a8df8bfcfdb4 ]
+[ Upstream commit 85975daeaa4d6ec560bfcd354fc9c08ad7f38888 ]
 
-In the days when SCSI-2 was emerging, some drives did claim SCSI-2 but did
-not correctly implement it. The st driver first tries MODE SELECT with the
-page format bit set to set the block descriptor.  If not successful, the
-non-page format is tried.
+When giving up on making a high-confidence prediction,
+get_typical_interval() always returns UINT_MAX which means that the
+next idle interval prediction will be based entirely on the time till
+the next timer.  However, the information represented by the most
+recent intervals may not be completely useless in those cases.
 
-The test only tests the sense code and this triggers also from illegal
-parameter in the parameter list. The test is limited to "old" devices and
-made more strict to remove false alarms.
+Namely, the largest recent idle interval is an upper bound on the
+recently observed idle duration, so it is reasonable to assume that
+the next idle duration is unlikely to exceed it.  Moreover, this is
+still true after eliminating the suspected outliers if the sample
+set still under consideration is at least as large as 50% of the
+maximum sample set size.
 
-Signed-off-by: Kai Mäkisara <Kai.Makisara@kolumbus.fi>
-Link: https://lore.kernel.org/r/20250311112516.5548-4-Kai.Makisara@kolumbus.fi
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Accordingly, make get_typical_interval() return the current maximum
+recent interval value in that case instead of UINT_MAX.
+
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reported-by: Artem Bityutskiy <artem.bityutskiy@linux.intel.com>
+Tested-by: Artem Bityutskiy <artem.bityutskiy@linux.intel.com>
+Reviewed-by: Christian Loehle <christian.loehle@arm.com>
+Tested-by: Christian Loehle <christian.loehle@arm.com>
+Tested-by: Aboorva Devarajan <aboorvad@linux.ibm.com>
+Link: https://patch.msgid.link/7770672.EvYhyI6sBW@rjwysocki.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/st.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/cpuidle/governors/menu.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/st.c b/drivers/scsi/st.c
-index 2b5e3e2ba3b8b..8f927851ccf86 100644
---- a/drivers/scsi/st.c
-+++ b/drivers/scsi/st.c
-@@ -3076,7 +3076,9 @@ static int st_int_ioctl(struct scsi_tape *STp, unsigned int cmd_in, unsigned lon
- 			   cmd_in == MTSETDRVBUFFER ||
- 			   cmd_in == SET_DENS_AND_BLK) {
- 			if (cmdstatp->sense_hdr.sense_key == ILLEGAL_REQUEST &&
--			    !(STp->use_pf & PF_TESTED)) {
-+				cmdstatp->sense_hdr.asc == 0x24 &&
-+				(STp->device)->scsi_level <= SCSI_2 &&
-+				!(STp->use_pf & PF_TESTED)) {
- 				/* Try the other possible state of Page Format if not
- 				   already tried */
- 				STp->use_pf = (STp->use_pf ^ USE_PF) | PF_TESTED;
+diff --git a/drivers/cpuidle/governors/menu.c b/drivers/cpuidle/governors/menu.c
+index e5a5d0c8d66b1..bb7288f6adbf6 100644
+--- a/drivers/cpuidle/governors/menu.c
++++ b/drivers/cpuidle/governors/menu.c
+@@ -259,8 +259,19 @@ static unsigned int get_typical_interval(struct menu_device *data,
+ 	 * This can deal with workloads that have long pauses interspersed
+ 	 * with sporadic activity with a bunch of short pauses.
+ 	 */
+-	if ((divisor * 4) <= INTERVALS * 3)
++	if (divisor * 4 <= INTERVALS * 3) {
++		/*
++		 * If there are sufficiently many data points still under
++		 * consideration after the outliers have been eliminated,
++		 * returning without a prediction would be a mistake because it
++		 * is likely that the next interval will not exceed the current
++		 * maximum, so return the latter in that case.
++		 */
++		if (divisor >= INTERVALS / 2)
++			return max;
++
+ 		return UINT_MAX;
++	}
+ 
+ 	thresh = max - 1;
+ 	goto again;
 -- 
 2.39.5
 
