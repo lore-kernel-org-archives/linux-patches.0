@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 433F6221FC3;
-	Mon,  2 Jun 2025 15:03:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6452C221FC3;
+	Mon,  2 Jun 2025 15:03:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748876613; cv=none; b=Ryuuc7ripBiITn+1g3bSAW9oj2MIDmOlD5AEPvGp5qm91d16HvA0ZOskHcr49HjGwVjtBu17ghgFAVaRXiI/v/46E816EjiE0qbyk7lMxoPDxm2ReEGYcre6ku3hAYSXM37i/lPyuZy7afWjUvJs7zUQ6fU/H1fhJUh86BO4y/0=
+	t=1748876616; cv=none; b=jizsdZg+2WV3cFykFUsad34Dz9TQXTZbx+1Ip85F1q2VbizjCU7bZJjHKrR2MzANw8nRqVIS8zexxz8dloNB5ttG9dRT50DfgQopIJCPW7l+xPH4g9QkWiit9+2IEASAiKdP1BMF4kdjiBUdFR3Dg/90FNaojszZZf1QSlZ96DM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748876613; c=relaxed/simple;
-	bh=qYqBgwM1kxYkcC2ovPtKYWLhZ9LnrLJbtEEWt8TQOWc=;
+	s=arc-20240116; t=1748876616; c=relaxed/simple;
+	bh=bY4NXoBHwA4TGeKYU2dw7BR2BX8Ha6W4YMgIC99/gFA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lRtvUpTmh1nTzU9dCNStbyoLXkyXJXxBdhI5Wb92ev41zk5Uo2PS9T+naB5Oo0SzLd30Hj74iuj7a8dtlJ3TBZWIpaYRY4CWKCpjHFxyC7VYW2dZt/gW71O3f/9YqKab3FgfearAUBcpdldJ/26eYCZrVRGUXPKLE80pdvWXP9c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VsdgtEkp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BH3Xcrdxe46Bu5aaRw6OamjWKtY+AX7+pkQ2hr76YH++7F62MkDFL+H3YprkEgbZEam0t9teUA4q9SBH9KVz6YWCH9qXNOcY0sY/ZH4U6dktInd0FE36ilosAz13hmVSwCQW7sXRILiVwaLeyZx0yo03OepMDZ+ySbOyfYNgKIg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CRQTIBFj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VsdgtEkp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B69C3C4CEEB;
-	Mon,  2 Jun 2025 15:03:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CRQTIBFj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7422C4CEEB;
+	Mon,  2 Jun 2025 15:03:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748876613;
-	bh=qYqBgwM1kxYkcC2ovPtKYWLhZ9LnrLJbtEEWt8TQOWc=;
+	s=korg; t=1748876616;
+	bh=bY4NXoBHwA4TGeKYU2dw7BR2BX8Ha6W4YMgIC99/gFA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VsdgtEkpujZ8Ph6xhjh40nS9WrJeEQJcwmXGgg8ljPjdDe8W74eC0skWf3kqaawQ6
-	 1b2Z/3ls4LUexYynLQn+zsJwZqS91tYSXM9ptAlLtM60Reu49Tnq3YTjhYByTfLfO8
-	 ehJ1jjM6sBnvFL/LMjOZrfUwjfu0u4jKqflGIQKk=
+	b=CRQTIBFjZiUjpnMNpYActVBNq5P6i0x9Ugi9UYcaeScwhNGQ0UeX2ZZgjWpBn7zUQ
+	 lB9WU/z5L2fyUvi8R+9olD/+4Q8mYv1sW9pKgjCJxug0pdkG1eBgInk1nqOUGzBUAo
+	 kEbrmji6Te+GFFw42e4nUNtCXS9+latyEMw2gp6M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Gomez <da.gomez@samsung.com>,
-	Masahiro Yamada <masahiroy@kernel.org>,
+	Anthony Krowiak <akrowiak@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 019/325] kconfig: merge_config: use an empty file as initfile
-Date: Mon,  2 Jun 2025 15:44:55 +0200
-Message-ID: <20250602134320.521135143@linuxfoundation.org>
+Subject: [PATCH 6.1 020/325] s390/vfio-ap: Fix no AP queue sharing allowed message written to kernel log
+Date: Mon,  2 Jun 2025 15:44:56 +0200
+Message-ID: <20250602134320.562732242@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134319.723650984@linuxfoundation.org>
 References: <20250602134319.723650984@linuxfoundation.org>
@@ -51,46 +52,189 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Gomez <da.gomez@samsung.com>
+From: Anthony Krowiak <akrowiak@linux.ibm.com>
 
-[ Upstream commit a26fe287eed112b4e21e854f173c8918a6a8596d ]
+[ Upstream commit d33d729afcc8ad2148d99f9bc499b33fd0c0d73b ]
 
-The scripts/kconfig/merge_config.sh script requires an existing
-$INITFILE (or the $1 argument) as a base file for merging Kconfig
-fragments. However, an empty $INITFILE can serve as an initial starting
-point, later referenced by the KCONFIG_ALLCONFIG Makefile variable
-if -m is not used. This variable can point to any configuration file
-containing preset config symbols (the merged output) as stated in
-Documentation/kbuild/kconfig.rst. When -m is used $INITFILE will
-contain just the merge output requiring the user to run make (i.e.
-KCONFIG_ALLCONFIG=<$INITFILE> make <allnoconfig/alldefconfig> or make
-olddefconfig).
+An erroneous message is written to the kernel log when either of the
+following actions are taken by a user:
 
-Instead of failing when `$INITFILE` is missing, create an empty file and
-use it as the starting point for merges.
+1. Assign an adapter or domain to a vfio_ap mediated device via its sysfs
+   assign_adapter or assign_domain attributes that would result in one or
+   more AP queues being assigned that are already assigned to a different
+   mediated device. Sharing of queues between mdevs is not allowed.
 
-Signed-off-by: Daniel Gomez <da.gomez@samsung.com>
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+2. Reserve an adapter or domain for the host device driver via the AP bus
+   driver's sysfs apmask or aqmask attribute that would result in providing
+   host access to an AP queue that is in use by a vfio_ap mediated device.
+   Reserving a queue for a host driver that is in use by an mdev is not
+   allowed.
+
+In both cases, the assignment will return an error; however, a message like
+the following is written to the kernel log:
+
+vfio_ap_mdev e1839397-51a0-4e3c-91e0-c3b9c3d3047d: Userspace may not
+re-assign queue 00.0028 already assigned to \
+e1839397-51a0-4e3c-91e0-c3b9c3d3047d
+
+Notice the mdev reporting the error is the same as the mdev identified
+in the message as the one to which the queue is being assigned.
+It is perfectly okay to assign a queue to an mdev to which it is
+already assigned; the assignment is simply ignored by the vfio_ap device
+driver.
+
+This patch logs more descriptive and accurate messages for both 1 and 2
+above to the kernel log:
+
+Example for 1:
+vfio_ap_mdev 0fe903a0-a323-44db-9daf-134c68627d61: Userspace may not assign
+queue 00.0033 to mdev: already assigned to \
+62177883-f1bb-47f0-914d-32a22e3a8804
+
+Example for 2:
+vfio_ap_mdev 62177883-f1bb-47f0-914d-32a22e3a8804: Can not reserve queue
+00.0033 for host driver: in use by mdev
+
+Signed-off-by: Anthony Krowiak <akrowiak@linux.ibm.com>
+Link: https://lore.kernel.org/r/20250311103304.1539188-1-akrowiak@linux.ibm.com
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/kconfig/merge_config.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/s390/crypto/vfio_ap_ops.c | 72 ++++++++++++++++++++-----------
+ 1 file changed, 46 insertions(+), 26 deletions(-)
 
-diff --git a/scripts/kconfig/merge_config.sh b/scripts/kconfig/merge_config.sh
-index 72da3b8d6f307..151f9938abaa7 100755
---- a/scripts/kconfig/merge_config.sh
-+++ b/scripts/kconfig/merge_config.sh
-@@ -105,8 +105,8 @@ INITFILE=$1
- shift;
+diff --git a/drivers/s390/crypto/vfio_ap_ops.c b/drivers/s390/crypto/vfio_ap_ops.c
+index 86a8bd5324899..11fe917fbd9d4 100644
+--- a/drivers/s390/crypto/vfio_ap_ops.c
++++ b/drivers/s390/crypto/vfio_ap_ops.c
+@@ -789,48 +789,66 @@ static void vfio_ap_mdev_remove(struct mdev_device *mdev)
+ 	vfio_put_device(&matrix_mdev->vdev);
+ }
  
- if [ ! -r "$INITFILE" ]; then
--	echo "The base file '$INITFILE' does not exist.  Exit." >&2
--	exit 1
-+	echo "The base file '$INITFILE' does not exist. Creating one..." >&2
-+	touch "$INITFILE"
- fi
+-#define MDEV_SHARING_ERR "Userspace may not re-assign queue %02lx.%04lx " \
+-			 "already assigned to %s"
++#define MDEV_SHARING_ERR "Userspace may not assign queue %02lx.%04lx to mdev: already assigned to %s"
  
- MERGE_LIST=$*
+-static void vfio_ap_mdev_log_sharing_err(struct ap_matrix_mdev *matrix_mdev,
+-					 unsigned long *apm,
+-					 unsigned long *aqm)
++#define MDEV_IN_USE_ERR "Can not reserve queue %02lx.%04lx for host driver: in use by mdev"
++
++static void vfio_ap_mdev_log_sharing_err(struct ap_matrix_mdev *assignee,
++					 struct ap_matrix_mdev *assigned_to,
++					 unsigned long *apm, unsigned long *aqm)
+ {
+ 	unsigned long apid, apqi;
+-	const struct device *dev = mdev_dev(matrix_mdev->mdev);
+-	const char *mdev_name = dev_name(dev);
+ 
+-	for_each_set_bit_inv(apid, apm, AP_DEVICES)
++	for_each_set_bit_inv(apid, apm, AP_DEVICES) {
++		for_each_set_bit_inv(apqi, aqm, AP_DOMAINS) {
++			dev_warn(mdev_dev(assignee->mdev), MDEV_SHARING_ERR,
++				 apid, apqi, dev_name(mdev_dev(assigned_to->mdev)));
++		}
++	}
++}
++
++static void vfio_ap_mdev_log_in_use_err(struct ap_matrix_mdev *assignee,
++					unsigned long *apm, unsigned long *aqm)
++{
++	unsigned long apid, apqi;
++
++	for_each_set_bit_inv(apid, apm, AP_DEVICES) {
+ 		for_each_set_bit_inv(apqi, aqm, AP_DOMAINS)
+-			dev_warn(dev, MDEV_SHARING_ERR, apid, apqi, mdev_name);
++			dev_warn(mdev_dev(assignee->mdev), MDEV_IN_USE_ERR, apid, apqi);
++	}
+ }
+ 
+ /**
+  * vfio_ap_mdev_verify_no_sharing - verify APQNs are not shared by matrix mdevs
+  *
++ * @assignee: the matrix mdev to which @mdev_apm and @mdev_aqm are being
++ *	      assigned; or, NULL if this function was called by the AP bus
++ *	      driver in_use callback to verify none of the APQNs being reserved
++ *	      for the host device driver are in use by a vfio_ap mediated device
+  * @mdev_apm: mask indicating the APIDs of the APQNs to be verified
+  * @mdev_aqm: mask indicating the APQIs of the APQNs to be verified
+  *
+- * Verifies that each APQN derived from the Cartesian product of a bitmap of
+- * AP adapter IDs and AP queue indexes is not configured for any matrix
+- * mediated device. AP queue sharing is not allowed.
++ * Verifies that each APQN derived from the Cartesian product of APIDs
++ * represented by the bits set in @mdev_apm and the APQIs of the bits set in
++ * @mdev_aqm is not assigned to a mediated device other than the mdev to which
++ * the APQN is being assigned (@assignee). AP queue sharing is not allowed.
+  *
+  * Return: 0 if the APQNs are not shared; otherwise return -EADDRINUSE.
+  */
+-static int vfio_ap_mdev_verify_no_sharing(unsigned long *mdev_apm,
++static int vfio_ap_mdev_verify_no_sharing(struct ap_matrix_mdev *assignee,
++					  unsigned long *mdev_apm,
+ 					  unsigned long *mdev_aqm)
+ {
+-	struct ap_matrix_mdev *matrix_mdev;
++	struct ap_matrix_mdev *assigned_to;
+ 	DECLARE_BITMAP(apm, AP_DEVICES);
+ 	DECLARE_BITMAP(aqm, AP_DOMAINS);
+ 
+-	list_for_each_entry(matrix_mdev, &matrix_dev->mdev_list, node) {
++	list_for_each_entry(assigned_to, &matrix_dev->mdev_list, node) {
+ 		/*
+-		 * If the input apm and aqm are fields of the matrix_mdev
+-		 * object, then move on to the next matrix_mdev.
++		 * If the mdev to which the mdev_apm and mdev_aqm is being
++		 * assigned is the same as the mdev being verified
+ 		 */
+-		if (mdev_apm == matrix_mdev->matrix.apm &&
+-		    mdev_aqm == matrix_mdev->matrix.aqm)
++		if (assignee == assigned_to)
+ 			continue;
+ 
+ 		memset(apm, 0, sizeof(apm));
+@@ -840,15 +858,16 @@ static int vfio_ap_mdev_verify_no_sharing(unsigned long *mdev_apm,
+ 		 * We work on full longs, as we can only exclude the leftover
+ 		 * bits in non-inverse order. The leftover is all zeros.
+ 		 */
+-		if (!bitmap_and(apm, mdev_apm, matrix_mdev->matrix.apm,
+-				AP_DEVICES))
++		if (!bitmap_and(apm, mdev_apm, assigned_to->matrix.apm,	AP_DEVICES))
+ 			continue;
+ 
+-		if (!bitmap_and(aqm, mdev_aqm, matrix_mdev->matrix.aqm,
+-				AP_DOMAINS))
++		if (!bitmap_and(aqm, mdev_aqm, assigned_to->matrix.aqm,	AP_DOMAINS))
+ 			continue;
+ 
+-		vfio_ap_mdev_log_sharing_err(matrix_mdev, apm, aqm);
++		if (assignee)
++			vfio_ap_mdev_log_sharing_err(assignee, assigned_to, apm, aqm);
++		else
++			vfio_ap_mdev_log_in_use_err(assigned_to, apm, aqm);
+ 
+ 		return -EADDRINUSE;
+ 	}
+@@ -877,7 +896,8 @@ static int vfio_ap_mdev_validate_masks(struct ap_matrix_mdev *matrix_mdev)
+ 					       matrix_mdev->matrix.aqm))
+ 		return -EADDRNOTAVAIL;
+ 
+-	return vfio_ap_mdev_verify_no_sharing(matrix_mdev->matrix.apm,
++	return vfio_ap_mdev_verify_no_sharing(matrix_mdev,
++					      matrix_mdev->matrix.apm,
+ 					      matrix_mdev->matrix.aqm);
+ }
+ 
+@@ -1945,7 +1965,7 @@ int vfio_ap_mdev_resource_in_use(unsigned long *apm, unsigned long *aqm)
+ 
+ 	mutex_lock(&matrix_dev->guests_lock);
+ 	mutex_lock(&matrix_dev->mdevs_lock);
+-	ret = vfio_ap_mdev_verify_no_sharing(apm, aqm);
++	ret = vfio_ap_mdev_verify_no_sharing(NULL, apm, aqm);
+ 	mutex_unlock(&matrix_dev->mdevs_lock);
+ 	mutex_unlock(&matrix_dev->guests_lock);
+ 
 -- 
 2.39.5
 
