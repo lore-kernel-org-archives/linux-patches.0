@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E19D022D785;
-	Mon,  2 Jun 2025 14:52:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D853214A93;
+	Mon,  2 Jun 2025 14:52:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748875926; cv=none; b=hi0uCi9V2Vi00TyjILf+Ot/zEJ8JmPUdFRq94Y4kr6YvQojCIwJKHQgoXWilNwxt+S9wfOeNkTEmMKIT0D56pAvzyKiIfELLRU85qS06mFbVPtwe8+PKOu26xMDxgXjeQN+YvXFvTQcu/r7hb3qgMwYeXMK0L30IjTQqL/Ip4LM=
+	t=1748875929; cv=none; b=dg9H7q5tj6cSejIMRUlwGJP/9OhnmWRT1qvaCZFshzuT1Rikmu+CkVoQngXWjQS6jxAn3nvJfev8ZR5KzVD7Nh+9JSVOoa84snq0Ebn1tzPy2bKgdFhsYlW0s9QgaHmj3mi2tiXI+oI2HZABgmappMdfMD7liVOs7aHfNs1mMzY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748875926; c=relaxed/simple;
-	bh=3l9CEfsskR4zvT1qcI/k8cY5jcVb4x8CpLMYN+xel6w=;
+	s=arc-20240116; t=1748875929; c=relaxed/simple;
+	bh=PzRG9qXSN2yksuqIOV5se9GNIf+hZ4HE8ahsG18beCE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uimjQt3Frp/lKhTdfzB6grA1FZ4zAEDgoos3z/dFg2+vbkC18m8z2oAtzgQydhnokfkZL6tjAakR2gL+4/NVYlry15CRzv7LW6Hq8SjBiVwKBowa5Vn4k3c8DLDVIV40Sst5cBp5kWZLRQm0XzsTcQ9vy+DMbU9ICRbhtXGsK2M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W9PX/mza; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LrgPio+NcX31SxJfnV4AgsYyVmz5Cxk9Egdo7qEiu0JplhEKqlETOSzf83xQ2g+nnksTpWeIf04s6fCd2zORkzvStfcO9oa8QLLQQY5ZUUEiL8kN8KmrfrlMK59PMT8L/V5xR31oDgitG+rbUOC1iqghSGCzjTgLgkTDOt4jwOE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D7mRAteE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W9PX/mza"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F6C5C4CEEB;
-	Mon,  2 Jun 2025 14:52:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D7mRAteE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91F9BC4CEEB;
+	Mon,  2 Jun 2025 14:52:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748875925;
-	bh=3l9CEfsskR4zvT1qcI/k8cY5jcVb4x8CpLMYN+xel6w=;
+	s=korg; t=1748875929;
+	bh=PzRG9qXSN2yksuqIOV5se9GNIf+hZ4HE8ahsG18beCE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W9PX/mzaIIEs0yJN9ovCEQL5Is/7YkdlE3LVa+SZoYr6fRP+iFMxAX6FQ5QjBwsXK
-	 O5Rq3N/31LTOadZYZWuA4q5LyA6gGS2wTirOes2WeKig8T/8+v76FNo1bTpRnX/bk6
-	 VS45Jv70Vr3B4tZ4z/tvMF3wUHNGaQ31O1zc89LM=
+	b=D7mRAteE0mrmD6YaZ+jXcVOH+X6pE6iYjJ6HNKBJ8HQqByqOEnbqdFFFYxzehkbMv
+	 tbgoFREFADTOJbmsls/2LSm9yTzwgS4bpUiyjnRYE+7YIS0Oe+nKzI6BhUuipmzbbI
+	 FKfvpA4+wpV/iR2GAVPWS+pLOgx07IUZwE6G4wZg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+efe683d57990864b8c8e@syzkaller.appspotmail.com,
-	Zhongqiu Han <quic_zhonhan@quicinc.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Jason Wang <jasowang@redhat.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 002/207] virtio_ring: Fix data race by tagging event_triggered as racy for KCSAN
-Date: Mon,  2 Jun 2025 15:46:14 +0200
-Message-ID: <20250602134258.867655972@linuxfoundation.org>
+Subject: [PATCH 5.15 003/207] dma-mapping: avoid potential unused data compilation warning
+Date: Mon,  2 Jun 2025 15:46:15 +0200
+Message-ID: <20250602134258.904958514@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134258.769974467@linuxfoundation.org>
 References: <20250602134258.769974467@linuxfoundation.org>
@@ -53,68 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhongqiu Han <quic_zhonhan@quicinc.com>
+From: Marek Szyprowski <m.szyprowski@samsung.com>
 
-[ Upstream commit 2e2f925fe737576df2373931c95e1a2b66efdfef ]
+[ Upstream commit c9b19ea63036fc537a69265acea1b18dabd1cbd3 ]
 
-syzbot reports a data-race when accessing the event_triggered, here is the
-simplified stack when the issue occurred:
+When CONFIG_NEED_DMA_MAP_STATE is not defined, dma-mapping clients might
+report unused data compilation warnings for dma_unmap_*() calls
+arguments. Redefine macros for those calls to let compiler to notice that
+it is okay when the provided arguments are not used.
 
-==================================================================
-BUG: KCSAN: data-race in virtqueue_disable_cb / virtqueue_enable_cb_delayed
-
-write to 0xffff8881025bc452 of 1 bytes by task 3288 on cpu 0:
- virtqueue_enable_cb_delayed+0x42/0x3c0 drivers/virtio/virtio_ring.c:2653
- start_xmit+0x230/0x1310 drivers/net/virtio_net.c:3264
- __netdev_start_xmit include/linux/netdevice.h:5151 [inline]
- netdev_start_xmit include/linux/netdevice.h:5160 [inline]
- xmit_one net/core/dev.c:3800 [inline]
-
-read to 0xffff8881025bc452 of 1 bytes by interrupt on cpu 1:
- virtqueue_disable_cb_split drivers/virtio/virtio_ring.c:880 [inline]
- virtqueue_disable_cb+0x92/0x180 drivers/virtio/virtio_ring.c:2566
- skb_xmit_done+0x5f/0x140 drivers/net/virtio_net.c:777
- vring_interrupt+0x161/0x190 drivers/virtio/virtio_ring.c:2715
- __handle_irq_event_percpu+0x95/0x490 kernel/irq/handle.c:158
- handle_irq_event_percpu kernel/irq/handle.c:193 [inline]
-
-value changed: 0x01 -> 0x00
-==================================================================
-
-When the data race occurs, the function virtqueue_enable_cb_delayed() sets
-event_triggered to false, and virtqueue_disable_cb_split/packed() reads it
-as false due to the race condition. Since event_triggered is an unreliable
-hint used for optimization, this should only cause the driver temporarily
-suggest that the device not send an interrupt notification when the event
-index is used.
-
-Fix this KCSAN reported data-race issue by explicitly tagging the access as
-data_racy.
-
-Reported-by: syzbot+efe683d57990864b8c8e@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/67c7761a.050a0220.15b4b9.0018.GAE@google.com/
-Signed-off-by: Zhongqiu Han <quic_zhonhan@quicinc.com>
-Message-Id: <20250312130412.3516307-1-quic_zhonhan@quicinc.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
+Reported-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Suggested-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Tested-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20250415075659.428549-1-m.szyprowski@samsung.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/virtio/virtio_ring.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/dma-mapping.h | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/virtio/virtio_ring.c b/drivers/virtio/virtio_ring.c
-index 067b68168f93e..b541d861475e6 100644
---- a/drivers/virtio/virtio_ring.c
-+++ b/drivers/virtio/virtio_ring.c
-@@ -2125,7 +2125,7 @@ bool virtqueue_enable_cb_delayed(struct virtqueue *_vq)
- 	struct vring_virtqueue *vq = to_vvq(_vq);
+diff --git a/include/linux/dma-mapping.h b/include/linux/dma-mapping.h
+index fe3849434b2a2..d7b91f82b0dce 100644
+--- a/include/linux/dma-mapping.h
++++ b/include/linux/dma-mapping.h
+@@ -595,10 +595,14 @@ static inline int dma_mmap_wc(struct device *dev,
+ #else
+ #define DEFINE_DMA_UNMAP_ADDR(ADDR_NAME)
+ #define DEFINE_DMA_UNMAP_LEN(LEN_NAME)
+-#define dma_unmap_addr(PTR, ADDR_NAME)           (0)
+-#define dma_unmap_addr_set(PTR, ADDR_NAME, VAL)  do { } while (0)
+-#define dma_unmap_len(PTR, LEN_NAME)             (0)
+-#define dma_unmap_len_set(PTR, LEN_NAME, VAL)    do { } while (0)
++#define dma_unmap_addr(PTR, ADDR_NAME)           \
++	({ typeof(PTR) __p __maybe_unused = PTR; 0; })
++#define dma_unmap_addr_set(PTR, ADDR_NAME, VAL)  \
++	do { typeof(PTR) __p __maybe_unused = PTR; } while (0)
++#define dma_unmap_len(PTR, LEN_NAME)             \
++	({ typeof(PTR) __p __maybe_unused = PTR; 0; })
++#define dma_unmap_len_set(PTR, LEN_NAME, VAL)    \
++	do { typeof(PTR) __p __maybe_unused = PTR; } while (0)
+ #endif
  
- 	if (vq->event_triggered)
--		vq->event_triggered = false;
-+		data_race(vq->event_triggered = false);
- 
- 	return vq->packed_ring ? virtqueue_enable_cb_delayed_packed(_vq) :
- 				 virtqueue_enable_cb_delayed_split(_vq);
+ #endif /* _LINUX_DMA_MAPPING_H */
 -- 
 2.39.5
 
