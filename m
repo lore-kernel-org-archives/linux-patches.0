@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45C0E1A01C6;
-	Mon,  2 Jun 2025 14:21:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7160821CC4F;
+	Mon,  2 Jun 2025 14:21:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748874112; cv=none; b=T5PQOBzHmuCQYM+86EvNde/FABBZASYapYkQgp7En+K+zU9xwwkg7Z9ZLhurNJ24pOluECyoNTF3k0Npik+8jG0KC8bPxYN0xL2KmY76zKPA8tDin8H/YJ3vXynCiQizvAvRI5rHoWEB2xivQnvpbzWdrRvpenehJUUaNLoq4EI=
+	t=1748874115; cv=none; b=TNK4qPZSiRSpncJbLYg7O0p8AgiqiJLZkGcMPI2bDTqOjHiPct35UdfVqKau2xYFRu6ODOsVMeiNJIDuHgq5Rpu78jwv5VYevW4Zo1GRdbzncxu3diG8QM3s9dagTVFsBrP6FE/60FoggyEvdHG/YDt/NkO6uqRS7q2XNUyNkdw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748874112; c=relaxed/simple;
-	bh=vPfezUKTEFYhc1cQAyNjL3s8Sf35igCmhWoOSEj0lgs=;
+	s=arc-20240116; t=1748874115; c=relaxed/simple;
+	bh=L+2ctSOkhR72Zt0aQm7x7Jgqi1DRiY2mnEw5FWD7nR4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cM+Ezv0aQEcOHv9QDr8UoFSZpEJpAvtJLrXGEEClANoukSP8Lmlqn0skCuziWmz3KC/vaHy0iAu9ETaLIzH1Hwu2AvsoZTUSgAJbZj6FM34Tg7BhV5bLPsYO+ainPyXZtGM6bXXtUQ27SnT1fGgDN5ab86COnp1pHCvS62VCLhE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2iOPrAzv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=mt/Lhv54Uo5Bo6UEJcuPS8vH3UcZjPPT/DizexoJKgzDCk+8jjP+nSbcAfesPIy5hg/JUUparOM4L9jZRYJBZ8ZZ+F8u0c2XeCv5RmcuF6E5uceRh6cmB67QKQJKNTYSsmsPYmUK0gMgocDixFaT1XLqk408XGnuOcYOxN4FYYk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sbWUVIkt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2iOPrAzv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FEF1C4CEEB;
-	Mon,  2 Jun 2025 14:21:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sbWUVIkt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2D33C4CEEB;
+	Mon,  2 Jun 2025 14:21:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748874112;
-	bh=vPfezUKTEFYhc1cQAyNjL3s8Sf35igCmhWoOSEj0lgs=;
+	s=korg; t=1748874115;
+	bh=L+2ctSOkhR72Zt0aQm7x7Jgqi1DRiY2mnEw5FWD7nR4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2iOPrAzvCCLYskqbmn4uO9m4rxiLVczJlfZxFRwetuOpE1IeR92fvPl2jIDAuHX5C
-	 /sfIJ9bSl8N6yELk3L+UWkOSfLnJtKcfPe5KSVHplTmDSi8GpzuVAVGDNCCGaVv9pt
-	 1cWlvmexYgAWQtaX9VqZbRfpB6GRYvghDuVTe3Us=
+	b=sbWUVIkt1w8kj15NIDvE/mByh8nLNTVs3XDvwCdP21cejUeQPRFb7Dd3Jk9sjqBvY
+	 MS3DQtdkSKHtGLHrPkXQIuc3lxjOVNw0p84/bJSr+wksAlNAy9hBxmx9lNV0eW83EV
+	 /2ltbRV5PEmbR4ITSLS3CfyAgYCh33sJNdEGcl7Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Seppo Ingalsuo <seppo.ingalsuo@linux.intel.com>,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
+	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
 	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
-	Liam Girdwood <liam.r.girdwood@intel.com>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.6 361/444] ASoC: SOF: ipc4-control: Use SOF_CTRL_CMD_BINARY as numid for bytes_ext
-Date: Mon,  2 Jun 2025 15:47:05 +0200
-Message-ID: <20250602134355.572735939@linuxfoundation.org>
+Subject: [PATCH 6.6 362/444] ASoc: SOF: topology: connect DAI to a single DAI link
+Date: Mon,  2 Jun 2025 15:47:06 +0200
+Message-ID: <20250602134355.610326410@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -47,70 +46,74 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+From: Kai Vehmanen <kai.vehmanen@linux.intel.com>
 
-commit 4d14b1069e9e672dbe1adab52594076da6f4a62d upstream.
+commit 6052f05254b4fe7b16bbd8224779af52fba98b71 upstream.
 
-The header.numid is set to scontrol->comp_id in bytes_ext_get and it is
-ignored during bytes_ext_put.
-The use of comp_id is not quite great as it is kernel internal
-identification number.
+The partial matching of DAI widget to link names, can cause problems if
+one of the widget names is a substring of another. E.g. with names
+"Foo1" and Foo10", it's not possible to correctly link up "Foo1".
 
-Set the header.numid to SOF_CTRL_CMD_BINARY during get and validate the
-numid during put to provide consistent and compatible identification
-number as IPC3.
+Modify the logic so that if multiple DAI links match the widget stream
+name, prioritize a full match if one is found.
 
-For IPC4 existing tooling also ignored the numid but with the use of
-SOF_CTRL_CMD_BINARY the different handling of the blobs can be dropped,
-providing better user experience.
-
-Reported-by: Seppo Ingalsuo <seppo.ingalsuo@linux.intel.com>
-Closes: https://github.com/thesofproject/linux/issues/5282
-Fixes: a062c8899fed ("ASoC: SOF: ipc4-control: Add support for bytes control get and put")
+Fixes: fe88788779fc ("ASoC: SOF: topology: Use partial match for connecting DAI link and DAI widget")
+Link: https://github.com/thesofproject/linux/issues/5308
+Signed-off-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
+Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Reviewed-by: Seppo Ingalsuo <seppo.ingalsuo@linux.intel.com>
-Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
-Reviewed-by: Liam Girdwood <liam.r.girdwood@intel.com>
-Link: https://patch.msgid.link/20250509085633.14930-1-peter.ujfalusi@linux.intel.com
+Link: https://patch.msgid.link/20250509085318.13936-1-peter.ujfalusi@linux.intel.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/sof/ipc4-control.c |   11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ sound/soc/sof/topology.c |   18 ++++++++++++++----
+ 1 file changed, 14 insertions(+), 4 deletions(-)
 
---- a/sound/soc/sof/ipc4-control.c
-+++ b/sound/soc/sof/ipc4-control.c
-@@ -483,6 +483,14 @@ static int sof_ipc4_bytes_ext_put(struct
- 		return -EINVAL;
- 	}
+--- a/sound/soc/sof/topology.c
++++ b/sound/soc/sof/topology.c
+@@ -1057,7 +1057,7 @@ static int sof_connect_dai_widget(struct
+ 				  struct snd_sof_dai *dai)
+ {
+ 	struct snd_soc_card *card = scomp->card;
+-	struct snd_soc_pcm_runtime *rtd;
++	struct snd_soc_pcm_runtime *rtd, *full, *partial;
+ 	struct snd_soc_dai *cpu_dai;
+ 	int stream;
+ 	int i;
+@@ -1074,12 +1074,22 @@ static int sof_connect_dai_widget(struct
+ 	else
+ 		goto end;
  
-+	/* Check header id */
-+	if (header.numid != SOF_CTRL_CMD_BINARY) {
-+		dev_err_ratelimited(scomp->dev,
-+				    "Incorrect numid for bytes put %d\n",
-+				    header.numid);
-+		return -EINVAL;
++	full = NULL;
++	partial = NULL;
+ 	list_for_each_entry(rtd, &card->rtd_list, list) {
+ 		/* does stream match DAI link ? */
+-		if (!rtd->dai_link->stream_name ||
+-		    !strstr(rtd->dai_link->stream_name, w->sname))
+-			continue;
++		if (rtd->dai_link->stream_name) {
++			if (!strcmp(rtd->dai_link->stream_name, w->sname)) {
++				full = rtd;
++				break;
++			} else if (strstr(rtd->dai_link->stream_name, w->sname)) {
++				partial = rtd;
++			}
++		}
 +	}
-+
- 	/* Verify the ABI header first */
- 	if (copy_from_user(&abi_hdr, tlvd->tlv, sizeof(abi_hdr)))
- 		return -EFAULT;
-@@ -565,7 +573,8 @@ static int _sof_ipc4_bytes_ext_get(struc
- 	if (data_size > size)
- 		return -ENOSPC;
  
--	header.numid = scontrol->comp_id;
-+	/* Set header id and length */
-+	header.numid = SOF_CTRL_CMD_BINARY;
- 	header.length = data_size;
- 
- 	if (copy_to_user(tlvd, &header, sizeof(struct snd_ctl_tlv)))
++	rtd = full ? full : partial;
++	if (rtd) {
+ 		for_each_rtd_cpu_dais(rtd, i, cpu_dai) {
+ 			/*
+ 			 * Please create DAI widget in the right order
 
 
