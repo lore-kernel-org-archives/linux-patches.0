@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0F54222590;
-	Mon,  2 Jun 2025 14:17:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0D70222590;
+	Mon,  2 Jun 2025 14:17:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748873844; cv=none; b=RgHqoBHPK91A13cBcEALubP768Lcd7iOnqm1dSC7HKpzG/frj8GsPGFBfLSYQO7T7H8A2QsqqWhZ/+non7QuMEdcR0UX4t4YC0XZkAXywodhXTtYFGdbH40yeCWqaxRVKYGOAvqBR+WfSgK5Ne8IVAOO1mLb2R3KVEZob2wBb24=
+	t=1748873846; cv=none; b=OeDb3ATtAd7K9t3t7H5yxXd9BbujLP+0SRqqI78ht/wuVHKEeoKNcSHOVbpAf8M9fQ+Upq/0X0n9AlWkSC9+rFSwDE2av3i2MFVBxNn4TiUoUuIRDm2sJDMZdqTZ23cWoh2yaMVUv7IYU1QSxkWBzATbFjolOqJDkYPwsfEp3Bk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748873844; c=relaxed/simple;
-	bh=QC2UVfSPRXwE+qliqaKmF8F5JrwljPvi5FrqkXolN28=;
+	s=arc-20240116; t=1748873846; c=relaxed/simple;
+	bh=fmtJ+lMf6NJ1AY2teVVInixuB6mHzCzw5tkY5JWSOag=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J/TNzNaoucpm1+mI+OTwRPKNT8HwJqwJJDUUPO8Hes0O6qmDF6F8Iwo0fkdZl3vzGTUH8Srb1FH9fVfp6eBEEGR5F5UopIMTuTpsmxQHSikHXd3qZDmAw1BcwY1Wpf8NfqMMWXAiZ8mcjEhwNhlnlwfd5+ydz/8Uo1NAwTTplZU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZOKzQ2G2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D6zb8bpZX5pIEmCbdL09JbYBwzDT/77XQwwDs9b3AyfB/EHtmy7q+gybQlv7bu/EGN0gYBH9c8j3jzXlsYlwCW6oIORQZlYQEOkYfJOauD6uXTRFPbhMlDuVvw9woc0Z6wuwuGKBoVTQhNxIMTxmoxLoa0DdKGReEWcImJiRI70=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RruR+fXh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZOKzQ2G2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62A92C4CEEE;
-	Mon,  2 Jun 2025 14:17:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RruR+fXh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50100C4CEEB;
+	Mon,  2 Jun 2025 14:17:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748873843;
-	bh=QC2UVfSPRXwE+qliqaKmF8F5JrwljPvi5FrqkXolN28=;
+	s=korg; t=1748873846;
+	bh=fmtJ+lMf6NJ1AY2teVVInixuB6mHzCzw5tkY5JWSOag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZOKzQ2G2yrcaom1X8sD6yxMrW+6MZ8gmFKeFbfmLckKYMEEDPrXgeeOKyaGCf8LfW
-	 LXicPxnFyuXazL4Rl+M8FKJ76YSbW4gTdMKSwU3apHInM9K8Rafc5Q7dLSkUlfmnjD
-	 A/f2ObLp7VA5VAZZ7KuaDnY/YQFy6M2f44WD/ytg=
+	b=RruR+fXhOZEvxKsDjVpqFYm8rbha0Fpx/Fs2+2aZ4NOZF7WP0Jjunn0Dt+NY5BOKb
+	 xSowz2eevFJilKpoagBFZBZsKd7vPJaXk6O2KCHFblhvfTq6BDU8P88Y0ciQiRVfO7
+	 31piQSpPOEfcZxG1TLqd+b2jHhbcY3DvYllBNNbs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damon Ding <damon.ding@rock-chips.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Vijendar Mukunda <Vijendar.Mukunda@amd.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 241/444] phy: core: dont require set_mode() callback for phy_get_mode() to work
-Date: Mon,  2 Jun 2025 15:45:05 +0200
-Message-ID: <20250602134350.695888039@linuxfoundation.org>
+Subject: [PATCH 6.6 242/444] soundwire: amd: change the soundwire wake enable/disable sequence
+Date: Mon,  2 Jun 2025 15:45:06 +0200
+Message-ID: <20250602134350.737723856@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -52,51 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
 
-[ Upstream commit d58c04e305afbaa9dda7969151f06c4efe2c98b0 ]
+[ Upstream commit dcc48a73eae7f791b1a6856ea1bcc4079282c88d ]
 
-As reported by Damon Ding, the phy_get_mode() call doesn't work as
-expected unless the PHY driver has a .set_mode() call. This prompts PHY
-drivers to have empty stubs for .set_mode() for the sake of being able
-to get the mode.
+During runtime suspend scenario, SoundWire wake should be enabled and
+during system level suspend scenario SoundWire wake should be disabled.
 
-Make .set_mode() callback truly optional and update PHY's mode even if
-it there is none.
+Implement the SoundWire wake enable/disable sequence as per design flow
+for SoundWire poweroff mode.
 
-Cc: Damon Ding <damon.ding@rock-chips.com>
-Link: https://lore.kernel.org/r/96f8310f-93f1-4bcb-8637-137e1159ff83@rock-chips.com
-Tested-by: Damon Ding <damon.ding@rock-chips.com>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20250209-phy-fix-set-moe-v2-1-76e248503856@linaro.org
+Signed-off-by: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
+Link: https://lore.kernel.org/r/20250207065841.4718-2-Vijendar.Mukunda@amd.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/phy-core.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/soundwire/amd_manager.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/phy/phy-core.c b/drivers/phy/phy-core.c
-index a892e1d7e2d02..9417372a01554 100644
---- a/drivers/phy/phy-core.c
-+++ b/drivers/phy/phy-core.c
-@@ -400,13 +400,14 @@ EXPORT_SYMBOL_GPL(phy_power_off);
- 
- int phy_set_mode_ext(struct phy *phy, enum phy_mode mode, int submode)
- {
--	int ret;
-+	int ret = 0;
- 
--	if (!phy || !phy->ops->set_mode)
-+	if (!phy)
- 		return 0;
- 
- 	mutex_lock(&phy->mutex);
--	ret = phy->ops->set_mode(phy, mode, submode);
-+	if (phy->ops->set_mode)
-+		ret = phy->ops->set_mode(phy, mode, submode);
- 	if (!ret)
- 		phy->attrs.mode = mode;
- 	mutex_unlock(&phy->mutex);
+diff --git a/drivers/soundwire/amd_manager.c b/drivers/soundwire/amd_manager.c
+index 79173ab540a6b..31b203ebbae0c 100644
+--- a/drivers/soundwire/amd_manager.c
++++ b/drivers/soundwire/amd_manager.c
+@@ -1138,6 +1138,7 @@ static int __maybe_unused amd_suspend(struct device *dev)
+ 		amd_sdw_wake_enable(amd_manager, false);
+ 		return amd_sdw_clock_stop(amd_manager);
+ 	} else if (amd_manager->power_mode_mask & AMD_SDW_POWER_OFF_MODE) {
++		amd_sdw_wake_enable(amd_manager, false);
+ 		/*
+ 		 * As per hardware programming sequence on AMD platforms,
+ 		 * clock stop should be invoked first before powering-off
+@@ -1165,6 +1166,7 @@ static int __maybe_unused amd_suspend_runtime(struct device *dev)
+ 		amd_sdw_wake_enable(amd_manager, true);
+ 		return amd_sdw_clock_stop(amd_manager);
+ 	} else if (amd_manager->power_mode_mask & AMD_SDW_POWER_OFF_MODE) {
++		amd_sdw_wake_enable(amd_manager, true);
+ 		ret = amd_sdw_clock_stop(amd_manager);
+ 		if (ret)
+ 			return ret;
 -- 
 2.39.5
 
