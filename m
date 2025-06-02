@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83D3519EEBD;
-	Mon,  2 Jun 2025 14:30:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3357619EEBD;
+	Mon,  2 Jun 2025 14:30:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748874625; cv=none; b=qfVHKbMdY/NqCBsq6HhdhI8elZZXlb0rHSxLH2nfcOsEhdBN4lcvNXcDcLtMl03uhTccK8cMcmpYhMjO0KouRXl4AMhFmpbbYidc7Xsn79OCwl3fUUZshsCTKWt8zzvi+qNI6Kmu7IRqo3gH2Lo70koWWkRZt2DrFe/Jp6l7gu0=
+	t=1748874628; cv=none; b=nVdHddPjO9M5GAD43L9zwNXhMKyaXQiHlAbtb/Yomf4397Pgz5Me/TIzayUJ2FjK6VW5I4H2ag8JfqSMYnmm5OvA6i5YtSJiH6vwAeviM7pWDaI4dq243cLrZWclH3h964QjTg5BDo+6GqO0v92iE7ePUPoWZ1/fkeycUglzCTg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748874625; c=relaxed/simple;
-	bh=cxhWKODbK+hNUHH5irpi6XgMDVSBApdQnQLjHfIH7R8=;
+	s=arc-20240116; t=1748874628; c=relaxed/simple;
+	bh=MnRwMwDhaI9ATDka1u3mNK8o2I3CB4FcE3Vy8plc8Xw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tcW456hMyMk2ALuWawdmAafSukBcO99lN/SewRHr2lPd0/gSG8uLiXPb+TyxkIZ564toU5qRF1fdQX7lyCiHhg8eqdr5+Mpw5nqT9cbufB/0t1gl9Y8Q+e3CruhrdJXSfTvAj5Bmg66otRVnl+0yHgE+ebrLkNcgH/no+kh//vA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nqPMbBbF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YBWVCWoLwRaI1mt0LT5RGdyQI6us4NhToxq+ZVqUdoiUJvPwMGtMfbI/dbebWdR0YHVDOgM+1e26RKOVcwATtrVQue/5zuywt7jXj320zFXQxi0IILvZc2E6pc/XAb40QPORDAwD+j/tjqquiyreXYuGR5buo4CtBHLEZsODz3s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0+pMulRp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nqPMbBbF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64DAAC4CEEB;
-	Mon,  2 Jun 2025 14:30:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0+pMulRp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FD6FC4CEEB;
+	Mon,  2 Jun 2025 14:30:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748874624;
-	bh=cxhWKODbK+hNUHH5irpi6XgMDVSBApdQnQLjHfIH7R8=;
+	s=korg; t=1748874628;
+	bh=MnRwMwDhaI9ATDka1u3mNK8o2I3CB4FcE3Vy8plc8Xw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nqPMbBbFr7l7+KPPsxcM2oNjf40vhoxFoQKQ4X2kJdj6HKcnE6cK+vSn+qtVVaqJ1
-	 j6UjjZQw6Sl//MpriqskQUMwZf5LAT390jFBy7lUZA0eN3NErv1cJZvwL9AQ3Eri79
-	 Lm9YgGaZD2w6GRZ9ti9fasYBVeBmDD6YuhPrNSQ0=
+	b=0+pMulRpJCeSVrM8ezfWfy8OimYAZlNA0BuiWX5EHCznYN02WEuJQdYWZjYWDnQEO
+	 zxa3rGMka3vyqnP+wFI7hkTAUNDzN+Pt3ugsFZVetrI1HYA+7h5uQXzDd1xYCaQ11s
+	 bXcNQcJ86AtEwzgiXSzgnzNrxX8M7O1XhfBtTyJM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthias Eilert <kernel.hias@eilert.tech>,
-	Aditya Garg <gargaditya08@live.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 5.4 084/204] Input: synaptics - enable InterTouch on TUXEDO InfinityBook Pro 14 v5
-Date: Mon,  2 Jun 2025 15:46:57 +0200
-Message-ID: <20250602134258.969478546@linuxfoundation.org>
+	Eelco Chaudron <echaudro@redhat.com>,
+	Ilya Maximets <i.maximets@ovn.org>,
+	Aaron Conole <aconole@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.4 085/204] openvswitch: Fix unsafe attribute parsing in output_userspace()
+Date: Mon,  2 Jun 2025 15:46:58 +0200
+Message-ID: <20250602134259.006515719@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134255.449974357@linuxfoundation.org>
 References: <20250602134255.449974357@linuxfoundation.org>
@@ -51,36 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aditya Garg <gargaditya08@live.com>
+From: Eelco Chaudron <echaudro@redhat.com>
 
-commit 2abc698ac77314e0de5b33a6d96a39c5159d88e4 upstream.
+commit 6beb6835c1fbb3f676aebb51a5fee6b77fed9308 upstream.
 
-Enable InterTouch mode on TUXEDO InfinityBook Pro 14 v5 by adding
-"SYN1221" to the list of SMBus-enabled variants.
+This patch replaces the manual Netlink attribute iteration in
+output_userspace() with nla_for_each_nested(), which ensures that only
+well-formed attributes are processed.
 
-Add support for InterTouch on SYN1221 by adding it to the list of
-SMBus-enabled variants.
-
-Reported-by: Matthias Eilert <kernel.hias@eilert.tech>
-Tested-by: Matthias Eilert <kernel.hias@eilert.tech>
-Signed-off-by: Aditya Garg <gargaditya08@live.com>
-Link: https://lore.kernel.org/r/PN3PR01MB9597C033C4BC20EE2A0C4543B888A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
-Cc: stable@vger.kernel.org
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Fixes: ccb1352e76cf ("net: Add Open vSwitch kernel components.")
+Signed-off-by: Eelco Chaudron <echaudro@redhat.com>
+Acked-by: Ilya Maximets <i.maximets@ovn.org>
+Acked-by: Aaron Conole <aconole@redhat.com>
+Link: https://patch.msgid.link/0bd65949df61591d9171c0dc13e42cea8941da10.1746541734.git.echaudro@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/mouse/synaptics.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/openvswitch/actions.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/input/mouse/synaptics.c
-+++ b/drivers/input/mouse/synaptics.c
-@@ -186,6 +186,7 @@ static const char * const smbus_pnp_ids[
- 	"LEN2044", /* L470  */
- 	"LEN2054", /* E480 */
- 	"LEN2055", /* E580 */
-+	"SYN1221", /* TUXEDO InfinityBook Pro 14 v5 */
- 	"SYN3003", /* HP EliteBook 850 G1 */
- 	"SYN3052", /* HP EliteBook 840 G4 */
- 	"SYN3221", /* HP 15-ay000 */
+--- a/net/openvswitch/actions.c
++++ b/net/openvswitch/actions.c
+@@ -967,8 +967,7 @@ static int output_userspace(struct datap
+ 	upcall.cmd = OVS_PACKET_CMD_ACTION;
+ 	upcall.mru = OVS_CB(skb)->mru;
+ 
+-	for (a = nla_data(attr), rem = nla_len(attr); rem > 0;
+-		 a = nla_next(a, &rem)) {
++	nla_for_each_nested(a, attr, rem) {
+ 		switch (nla_type(a)) {
+ 		case OVS_USERSPACE_ATTR_USERDATA:
+ 			upcall.userdata = a;
 
 
