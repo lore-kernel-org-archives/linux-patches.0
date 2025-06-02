@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47E611DED64;
-	Mon,  2 Jun 2025 14:15:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77556227E89;
+	Mon,  2 Jun 2025 14:15:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748873737; cv=none; b=DxETMraMAmBpFBYhlUCw6hXMsuLH9mWb2dfxIS4koCmuvPw1ZsiaxZsEKUAQnGOhonFWB5FEzZR+26u5PyQn/2IQrEE6hhlS6zPG/6h91rdB8T4uIMVK+wizp7Q5t6ZKwKt9Ve1Seqy/ccYHdxkhiiBrHERHFn4g6MR39hdFfuo=
+	t=1748873740; cv=none; b=KRI7p7NngcOMA1Y/8bHptnzJs9EfeUvc4oVJocP814QHscZQQ6WGFnCFyVOhNohmF1nL7vxZIooPTPJwTHrXtxPC6u2MU2xR2GTvdvsLqfk5HDjnh0ntyyOiktLLxQnpiX5qwuhY99+iVOyigkRQKQn1xV4kdKDpWba165druoo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748873737; c=relaxed/simple;
-	bh=WRav0Otm4mZsAfomFaqt91KVTOWyXKnD5j2l9n2QQIs=;
+	s=arc-20240116; t=1748873740; c=relaxed/simple;
+	bh=001vTVtvNsY4xsygy0Qw8xoUJ2K/sl84uCVnjs+5aMY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gWxHdUZWhRWUBU4muVgIofNr4v4twI0rYzPBzmfZCmNqDBJNMY3hxvHikdSZJB+eWjxvQ5FUmP8uJYqRzAQazsomMXwnsGVnemZ+ekNUFrQHM/Fqz5iD0BiWJi5cBfyGYgjsPyEBDbnwtMY0nkBnBAZ5499dPH8RXCiPN6UxBHs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YYRJAhc5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MD4LOcox2HJCw/8Z+uALmd52PFjcEy6M2jGuLkBaCBQkiSY7oGfq1AKvcCTDi0trZEvnzyovDHnrFx3xkPtRyspn3PC4RWGnyNZZpYCxdkAbulPvE1h8LkHJn9cqCBph/OfiaagvPEwsQ0OTwqLdBYAxRMTiZ+jOTwiYXRDzC5g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GYkUWtWs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YYRJAhc5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9BADC4CEEB;
-	Mon,  2 Jun 2025 14:15:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GYkUWtWs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D53FAC4CEEB;
+	Mon,  2 Jun 2025 14:15:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748873737;
-	bh=WRav0Otm4mZsAfomFaqt91KVTOWyXKnD5j2l9n2QQIs=;
+	s=korg; t=1748873740;
+	bh=001vTVtvNsY4xsygy0Qw8xoUJ2K/sl84uCVnjs+5aMY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YYRJAhc568kRv5u3kiJs/IamiGHrpuVnnb93YmUc6k+xCNTzGpLMxbRXoP1TuU3Yc
-	 AC8tFOaN278vALm1a/S1UD3Ys6LVzWQMZIoZlGs6yrFbbKNdHPLJLTGROIsIV+NjDO
-	 yY3cF8nXrqmNa5O+cCTZeMOroYcHcRharXoWWfQY=
+	b=GYkUWtWsucwpVB0SnHBcAxGLbU5ziYG4yay5ekSFwzg/iD93R7elnZbmx9B0cS0BU
+	 POlCIAk/fzAtyQ+6tioUdJFnsSXZbOM2c7rKLQEOJ+ZTYDVwMXEJSza8o36GieeMx7
+	 L/QkUGiU1P3yU36/uHTS92ZDDtSao5MT20DAnznY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Seiderer <ps.report@gmx.net>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 207/444] net: pktgen: fix access outside of user given buffer in pktgen_thread_write()
-Date: Mon,  2 Jun 2025 15:44:31 +0200
-Message-ID: <20250602134349.308190226@linuxfoundation.org>
+Subject: [PATCH 6.6 234/444] media: v4l: Memset argument to 0 before calling get_mbus_config pad op
+Date: Mon,  2 Jun 2025 15:44:58 +0200
+Message-ID: <20250602134350.408921267@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -52,47 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Seiderer <ps.report@gmx.net>
+From: Sakari Ailus <sakari.ailus@linux.intel.com>
 
-[ Upstream commit 425e64440ad0a2f03bdaf04be0ae53dededbaa77 ]
+[ Upstream commit 91d6a99acfa5ce9f95ede775074b80f7193bd717 ]
 
-Honour the user given buffer size for the strn_len() calls (otherwise
-strn_len() will access memory outside of the user given buffer).
+Memset the config argument to get_mbus_config V4L2 sub-device pad
+operation to zero before calling the operation. This ensures the callers
+don't need to bother with it nor the implementations need to set all
+fields that may not be relevant to them.
 
-Signed-off-by: Peter Seiderer <ps.report@gmx.net>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250219084527.20488-8-ps.report@gmx.net
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Reviewed-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/pktgen.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/media/v4l2-core/v4l2-subdev.c | 2 ++
+ include/media/v4l2-subdev.h           | 4 +++-
+ 2 files changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/net/core/pktgen.c b/net/core/pktgen.c
-index 1decd6300f34c..6afea369ca213 100644
---- a/net/core/pktgen.c
-+++ b/net/core/pktgen.c
-@@ -1877,8 +1877,8 @@ static ssize_t pktgen_thread_write(struct file *file,
- 	i = len;
- 
- 	/* Read variable name */
--
--	len = strn_len(&user_buffer[i], sizeof(name) - 1);
-+	max = min(sizeof(name) - 1, count - i);
-+	len = strn_len(&user_buffer[i], max);
- 	if (len < 0)
- 		return len;
- 
-@@ -1908,7 +1908,8 @@ static ssize_t pktgen_thread_write(struct file *file,
- 	if (!strcmp(name, "add_device")) {
- 		char f[32];
- 		memset(f, 0, 32);
--		len = strn_len(&user_buffer[i], sizeof(f) - 1);
-+		max = min(sizeof(f) - 1, count - i);
-+		len = strn_len(&user_buffer[i], max);
- 		if (len < 0) {
- 			ret = len;
- 			goto out;
+diff --git a/drivers/media/v4l2-core/v4l2-subdev.c b/drivers/media/v4l2-core/v4l2-subdev.c
+index 5f115438d0722..cb3ad72a3e54a 100644
+--- a/drivers/media/v4l2-core/v4l2-subdev.c
++++ b/drivers/media/v4l2-core/v4l2-subdev.c
+@@ -351,6 +351,8 @@ static int call_enum_dv_timings(struct v4l2_subdev *sd,
+ static int call_get_mbus_config(struct v4l2_subdev *sd, unsigned int pad,
+ 				struct v4l2_mbus_config *config)
+ {
++	memset(config, 0, sizeof(*config));
++
+ 	return check_pad(sd, pad) ? :
+ 	       sd->ops->pad->get_mbus_config(sd, pad, config);
+ }
+diff --git a/include/media/v4l2-subdev.h b/include/media/v4l2-subdev.h
+index b4fcd0164048e..0740dfc6c0488 100644
+--- a/include/media/v4l2-subdev.h
++++ b/include/media/v4l2-subdev.h
+@@ -822,7 +822,9 @@ struct v4l2_subdev_state {
+  *		     possible configuration from the remote end, likely calling
+  *		     this operation as close as possible to stream on time. The
+  *		     operation shall fail if the pad index it has been called on
+- *		     is not valid or in case of unrecoverable failures.
++ *		     is not valid or in case of unrecoverable failures. The
++ *		     config argument has been memset to 0 just before calling
++ *		     the op.
+  *
+  * @set_routing: enable or disable data connection routes described in the
+  *		 subdevice routing table.
 -- 
 2.39.5
 
