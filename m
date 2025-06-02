@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEB8C1DED64;
-	Mon,  2 Jun 2025 14:01:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3598F222560;
+	Mon,  2 Jun 2025 14:01:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748872895; cv=none; b=IhYFJ0wrrCuEiJV7DirWTMswPD5oHUxnMrwNzg3AIqKfUrSybJo+9k8+Na5Jnx+BnqUnUOSlSIkZlDcrJjBHqOMe1DSrUstLxdYookq0yOSYnpWNJqoAVl2vGT4J/WCclFwC1LjzdUGF+JBnMUbxGdY5Zg6K8i4YoTgs3sJE/f4=
+	t=1748872898; cv=none; b=jlSV5f3fD88I6aqM3+in3AFXZwinPU9ywZApxS2z+l+3T4l6fUKfEqfapjCylQ2k9Lrw/y3qcALhnOJKns8gl72+iPlHCOZ35omVuFZcjY1P6zZRrt1ZE6ptq7VnshQGR1QBkFXTqmhBO02VryFtL+qg5wqxhH+FcDTVOSmO7EU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748872895; c=relaxed/simple;
-	bh=14xDnfdgyyiIHbcKnWE2zjQCbbtFAhkwkb9K2gsAXCk=;
+	s=arc-20240116; t=1748872898; c=relaxed/simple;
+	bh=sa0tL9IBkfzMvsfeYwrUNP+iOUtJS0TethNqmp9JnIg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WiSBHkU/vsef/TKP7Vf7m/MGWt0GwC6/zJ6BHUH/AaXPAA6p9RtrL9RxkOujgvyfoZjIXsdLDNXMg5Yqt3VOBmEwktlU1mxPG/3NXBYCRRCxJj3vF2qR62cOR6rpz7W4xzrMGYBgP9y5tG/CWEa05FEOsON5UD7zBAaUkIU4Nlo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Qlyoh0w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dIO16tp7KKWovMqJKN9sGA4XK9DhqLuVR07Pl5fmKqwJivfSgrwkeuz+NuM9yiMMEMCuSynJh0a28N64OCzfQjl/qVIqAZRmhNepYNuLI9NyInlIiZRV0wDjtuLvE3JwhCidMOio0XRfuXcttzfeXsaRCjKjC6jxkQSN/OaqzYA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cMT81AQY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Qlyoh0w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 901E0C4CEF0;
-	Mon,  2 Jun 2025 14:01:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cMT81AQY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4143C4CEEE;
+	Mon,  2 Jun 2025 14:01:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748872895;
-	bh=14xDnfdgyyiIHbcKnWE2zjQCbbtFAhkwkb9K2gsAXCk=;
+	s=korg; t=1748872898;
+	bh=sa0tL9IBkfzMvsfeYwrUNP+iOUtJS0TethNqmp9JnIg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1Qlyoh0wYwCWXCo5gWl7xbNWX7n1DmmSNpiSkJf0LTJOODkVho7BrOVmgMbcReJqE
-	 0dFvlZ+D0TycAz3rNFMS+iNxkGRdbcOEGZ5dplaZjwuSaSzR8XhQpMwkFskZ84pYY/
-	 Sw7Dr2zSlAoMagD9t62MfGJrvI6k8+Pvm47TNPGE=
+	b=cMT81AQYmNlo1RSZxJGKCrmn+18FzRn5LKVrTHL99yYjxHlAWocim5c0gExN03Fn6
+	 T6uojr23D+PT6mjw+fm06X6Jeqf0EdQrS0RsAwgS4Oz/+jrOKTri6X/klXvvtH2Dgn
+	 3LDHHRwqeLI7F+VHINQnIgMa0RjSCQfG3cBFTX0E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Stephan Gerhold <stephan.gerhold@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.12 07/55] arm64: dts: qcom: sm8550: Add missing properties for cryptobam
-Date: Mon,  2 Jun 2025 15:47:24 +0200
-Message-ID: <20250602134238.558774473@linuxfoundation.org>
+Subject: [PATCH 6.12 08/55] arm64: dts: qcom: sm8650: Add missing properties for cryptobam
+Date: Mon,  2 Jun 2025 15:47:25 +0200
+Message-ID: <20250602134238.596804249@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134238.271281478@linuxfoundation.org>
 References: <20250602134238.271281478@linuxfoundation.org>
@@ -52,7 +52,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Stephan Gerhold <stephan.gerhold@linaro.org>
 
-commit 663cd2cad36da23cf1a3db7868fce9f1a19b2d61 upstream.
+commit 38b88722bce07b6a5927f45fbf7a9a85e834572c upstream.
 
 num-channels and qcom,num-ees are required for BAM nodes without clock,
 because the driver cannot ensure the hardware is powered on when trying to
@@ -67,25 +67,25 @@ driver can probe successfully without causing crashes.
 [2]: https://lore.kernel.org/r/20230626145959.646747-1-krzysztof.kozlowski@linaro.org/
 
 Cc: stable@vger.kernel.org
-Fixes: 433477c3bf0b ("arm64: dts: qcom: sm8550: add QCrypto nodes")
+Fixes: 10e024671295 ("arm64: dts: qcom: sm8650: add interconnect dependent device nodes")
 Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
-Link: https://lore.kernel.org/r/20250212-bam-dma-fixes-v1-3-f560889e65d8@linaro.org
+Link: https://lore.kernel.org/r/20250212-bam-dma-fixes-v1-4-f560889e65d8@linaro.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/qcom/sm8550.dtsi |    2 ++
+ arch/arm64/boot/dts/qcom/sm8650.dtsi |    2 ++
  1 file changed, 2 insertions(+)
 
---- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-@@ -1952,6 +1952,8 @@
- 			interrupts = <GIC_SPI 272 IRQ_TYPE_LEVEL_HIGH>;
- 			#dma-cells = <1>;
+--- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+@@ -2495,6 +2495,8 @@
+ 				 <&apps_smmu 0x481 0>;
+ 
  			qcom,ee = <0>;
 +			qcom,num-ees = <4>;
 +			num-channels = <20>;
  			qcom,controlled-remotely;
- 			iommus = <&apps_smmu 0x480 0x0>,
- 				 <&apps_smmu 0x481 0x0>;
+ 		};
+ 
 
 
