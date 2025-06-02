@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 186C822CBEC;
-	Mon,  2 Jun 2025 15:00:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 590A922CBEC;
+	Mon,  2 Jun 2025 15:00:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748876424; cv=none; b=r5JUJoC05UBHsGBgQIn00G/DKUwWHsgEco/57eYRqPqFh/l0udD2qPkrQurgenQROUgYvPNVgUmsagNAt38kBpf55TN2YXXRN80NDtDGnz7jazsbanRkDEzFbMqIgiMURpstOL+SyfO5/4gmsq5/Hx3I5Vr0mpl1PS8xKMYgWBk=
+	t=1748876428; cv=none; b=sgFVqcysmHn+OdI3vpRs/UG6ZjfKnM284B9yl/coYinz3hJsox+khk6cyw6473HslsCzI8GyfmtuBufbaHrTe2JkOM+37akmmQ3zKX5rxYKW1liGUfG3wDeZHdx0SfRNb0kUz1DIeO1SmMOC8fgX2FNcmraFDTSJI8k0WpX7m2Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748876424; c=relaxed/simple;
-	bh=1Ftr4HdEkH2n7WhLDwFywThCnnyq+z0QeULipoHnY8k=;
+	s=arc-20240116; t=1748876428; c=relaxed/simple;
+	bh=fI2NlzGVXG1HClYJwhwOJML6YHiZYwLpg2ZkG4c1erI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WlSra9RImAk0XZhtQVPDoBEDWNT/xYjoWafXa7lEYJd/Y10vP8e59TkrnPiR5smQnIB2zBIq4lB9l6WukeBTnUWzszInt6g83Ao6unWSSOw9XYlPlhMtNi+ormpOZN6T6mLkBAmdByhDN0b78JpHSSjGTiNylWqyu2pKgbI/EJo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QUZ2FTnA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Qad0QMcVuKtKgHdkd9lzYENL+xWCdo6U2iMdwVUIYkkI27N8Sd+4qhejHkibVo4jgxv5/zDjrM2rP3JNAir+ewRB8nPjN5YbvizYn2VECy2NKMUil53lThPio+LdAZM0hnFkjrGoB5ocM/FV26pFMDQ5PaAB3rRxQtPyjYzpGTg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NIJ9lpTQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QUZ2FTnA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17318C4CEEB;
-	Mon,  2 Jun 2025 15:00:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NIJ9lpTQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65651C4CEEB;
+	Mon,  2 Jun 2025 15:00:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748876424;
-	bh=1Ftr4HdEkH2n7WhLDwFywThCnnyq+z0QeULipoHnY8k=;
+	s=korg; t=1748876427;
+	bh=fI2NlzGVXG1HClYJwhwOJML6YHiZYwLpg2ZkG4c1erI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QUZ2FTnAeWLKxSsF68NQeivcKI6Tz1AKTBYzXOv5bcNdGGmn6VFz27mAk5hTsVqJ/
-	 cfxB+DDRg0P9I4ZpwxLK+QuouQZpmlubYRX2kVd431r1ot1AobPf0rXP/IKDmH0lie
-	 5A9HMjnXv2n9tVQdp6astGgVMf5d0KQ2t6LaPrX8=
+	b=NIJ9lpTQ9jZIBZZ3xoPyiE4g0ZxpTKSW/B4W06s9ilRh89u0BQon5EIxwb9Y+DWfM
+	 dHiH8ZmketBQrfjZPc6bF8HqIMTFei7MRUcpUWE10DEsImNQsqUTCjR5xjosnR8F14
+	 j1jEG8oSMQ1+b+Sro4VOitP6Tbpp3N17DsBmM0dE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivan Pravdin <ipravdin.official@gmail.com>,
+	Dominik Grzegorzek <dominik.grzegorzek@oracle.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 5.15 170/207] crypto: algif_hash - fix double free in hash_accept
-Date: Mon,  2 Jun 2025 15:49:02 +0200
-Message-ID: <20250602134305.403178530@linuxfoundation.org>
+Subject: [PATCH 5.15 171/207] padata: do not leak refcount in reorder_work
+Date: Mon,  2 Jun 2025 15:49:03 +0200
+Message-ID: <20250602134305.443662767@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134258.769974467@linuxfoundation.org>
 References: <20250602134258.769974467@linuxfoundation.org>
@@ -50,36 +50,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ivan Pravdin <ipravdin.official@gmail.com>
+From: Dominik Grzegorzek <dominik.grzegorzek@oracle.com>
 
-commit b2df03ed4052e97126267e8c13ad4204ea6ba9b6 upstream.
+commit d6ebcde6d4ecf34f8495fb30516645db3aea8993 upstream.
 
-If accept(2) is called on socket type algif_hash with
-MSG_MORE flag set and crypto_ahash_import fails,
-sk2 is freed. However, it is also freed in af_alg_release,
-leading to slab-use-after-free error.
+A recent patch that addressed a UAF introduced a reference count leak:
+the parallel_data refcount is incremented unconditionally, regardless
+of the return value of queue_work(). If the work item is already queued,
+the incremented refcount is never decremented.
 
-Fixes: fe869cdb89c9 ("crypto: algif_hash - User-space interface for hash operations")
+Fix this by checking the return value of queue_work() and decrementing
+the refcount when necessary.
+
+Resolves:
+
+Unreferenced object 0xffff9d9f421e3d80 (size 192):
+  comm "cryptomgr_probe", pid 157, jiffies 4294694003
+  hex dump (first 32 bytes):
+    80 8b cf 41 9f 9d ff ff b8 97 e0 89 ff ff ff ff  ...A............
+    d0 97 e0 89 ff ff ff ff 19 00 00 00 1f 88 23 00  ..............#.
+  backtrace (crc 838fb36):
+    __kmalloc_cache_noprof+0x284/0x320
+    padata_alloc_pd+0x20/0x1e0
+    padata_alloc_shell+0x3b/0xa0
+    0xffffffffc040a54d
+    cryptomgr_probe+0x43/0xc0
+    kthread+0xf6/0x1f0
+    ret_from_fork+0x2f/0x50
+    ret_from_fork_asm+0x1a/0x30
+
+Fixes: dd7d37ccf6b1 ("padata: avoid UAF for reorder_work")
 Cc: <stable@vger.kernel.org>
-Signed-off-by: Ivan Pravdin <ipravdin.official@gmail.com>
+Signed-off-by: Dominik Grzegorzek <dominik.grzegorzek@oracle.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- crypto/algif_hash.c |    4 ----
- 1 file changed, 4 deletions(-)
+ kernel/padata.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/crypto/algif_hash.c
-+++ b/crypto/algif_hash.c
-@@ -262,10 +262,6 @@ static int hash_accept(struct socket *so
- 		return err;
- 
- 	err = crypto_ahash_import(&ctx2->req, state);
--	if (err) {
--		sock_orphan(sk2);
--		sock_put(sk2);
--	}
- 
- 	return err;
+--- a/kernel/padata.c
++++ b/kernel/padata.c
+@@ -350,7 +350,8 @@ static void padata_reorder(struct parall
+ 		 * To avoid UAF issue, add pd ref here, and put pd ref after reorder_work finish.
+ 		 */
+ 		padata_get_pd(pd);
+-		queue_work(pinst->serial_wq, &pd->reorder_work);
++		if (!queue_work(pinst->serial_wq, &pd->reorder_work))
++			padata_put_pd(pd);
+ 	}
  }
+ 
 
 
