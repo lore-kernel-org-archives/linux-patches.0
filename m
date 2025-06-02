@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A45422AE5D;
-	Mon,  2 Jun 2025 15:00:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C55D22A4E8;
+	Mon,  2 Jun 2025 15:00:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748876403; cv=none; b=WVotm1en5MfkxU1B6MhEBBOU7sY52hKNZRzsGjrr4ntCVWZUlwb4q/iRKUuB1vN5SjN+++5rkHHAg8Nvg0NprYqQiQkikYlewxXbwUWREbG4PgB6yk2xMcKU4K0EXfUf9GcrqzSYdpnolQR+JAZN79vZ3OlsS2zifdFa5Cg3JNI=
+	t=1748876406; cv=none; b=ruDs8IwiCDBes15zxpHrGutSHZ9D1qxeFUpJOERMPoWqCwB+GFGJ+r3eFYG19RyB0MZUqJxyu5x5F6T0ss+XsgKDnJASX7bEVLuckV6OMHqS6YJaBy25xdPc5pNFFvUlwpMhxcprpExG5BQykZUddU+fPpC09mIF8KeLirqWnZk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748876403; c=relaxed/simple;
-	bh=noHCdlg77Xv/tonY2RLxtr3/z/rDcrhkjSqy8Ur59H8=;
+	s=arc-20240116; t=1748876406; c=relaxed/simple;
+	bh=T1zJ+nBIVmfDof2kFrvUvt+tMacjY5bOm36AuYnNJNQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OQaJ1pa+C570d+0v91lwG7MYxDtx807q/dBc0DMrlfNnGwQL6vn6LPJt0JB3sxZtHmxxMJLFBymCVWDvnfo4ciqREUNMrJDWsrD0+jgbEaV+WRPmsi+q0aVXsie1CgK+ay/7TDA0QyKaRJuzapRCymIc5penMy5NUE6S7l/NNQQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UKk1X0H/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rxHDoDEbc49Q4mR62AwHnZP6HiabgItFUmBZxs8XOscZCwroeh0ifFEmZZjaBsMWVMvAnIOqihXbxTDmZwMWYW4NfeEDhSuRklM7E1Ah5FJoxKp2haCcNgosXVdzr2c+lIyoma1FY7+NO1Jy08Eh/NqQDsJv/p1Hjcg4ga0jiWU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e3S49DHK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UKk1X0H/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75787C4CEEB;
-	Mon,  2 Jun 2025 15:00:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e3S49DHK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D7DBC4CEF0;
+	Mon,  2 Jun 2025 15:00:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748876403;
-	bh=noHCdlg77Xv/tonY2RLxtr3/z/rDcrhkjSqy8Ur59H8=;
+	s=korg; t=1748876405;
+	bh=T1zJ+nBIVmfDof2kFrvUvt+tMacjY5bOm36AuYnNJNQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UKk1X0H/9ULm3UOFlfpSE58Axfw7T6rbwEOx+3P/s87211li1EtBqDSsN+99ib6gO
-	 AiQVCiRjBGLarCUzdoMp36R7kqodEjxm90S3HykihwUpds95HDgf4Yo2dI24fSyRTC
-	 LJtHW5BY6xrRXBtrTaGaOzzL6YDwbHStUq9Et0QI=
+	b=e3S49DHKvFP9umFIYCJbYeDHTFigpYbJCIBoju3Eq+pFSLkPZRJ1QYyjfKiFOb+dI
+	 i1j6SmEiNNVjI3f6FZlmOm5DEHzBPLe6nbc+LlWdYIrj8yJQPHMSZaSTdWMhB9JGi1
+	 fEQi+49D3hHE9vqbmwTjyXLeOehgQNUqwOrVC0lI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mingi Cho <mincho@theori.io>,
-	Cong Wang <xiyou.wangcong@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
+	syzbot+55c12726619ff85ce1f6@syzkaller.appspotmail.com,
+	Wang Liang <wangliang74@huawei.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 167/207] sch_hfsc: Fix qlen accounting bug when using peek in hfsc_enqueue()
-Date: Mon,  2 Jun 2025 15:48:59 +0200
-Message-ID: <20250602134305.279725802@linuxfoundation.org>
+Subject: [PATCH 5.15 168/207] net/tipc: fix slab-use-after-free Read in tipc_aead_encrypt_done
+Date: Mon,  2 Jun 2025 15:49:00 +0200
+Message-ID: <20250602134305.317887898@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134258.769974467@linuxfoundation.org>
 References: <20250602134258.769974467@linuxfoundation.org>
@@ -54,60 +52,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cong Wang <xiyou.wangcong@gmail.com>
+From: Wang Liang <wangliang74@huawei.com>
 
-[ Upstream commit 3f981138109f63232a5fb7165938d4c945cc1b9d ]
+[ Upstream commit e279024617134c94fd3e37470156534d5f2b3472 ]
 
-When enqueuing the first packet to an HFSC class, hfsc_enqueue() calls the
-child qdisc's peek() operation before incrementing sch->q.qlen and
-sch->qstats.backlog. If the child qdisc uses qdisc_peek_dequeued(), this may
-trigger an immediate dequeue and potential packet drop. In such cases,
-qdisc_tree_reduce_backlog() is called, but the HFSC qdisc's qlen and backlog
-have not yet been updated, leading to inconsistent queue accounting. This
-can leave an empty HFSC class in the active list, causing further
-consequences like use-after-free.
+Syzbot reported a slab-use-after-free with the following call trace:
 
-This patch fixes the bug by moving the increment of sch->q.qlen and
-sch->qstats.backlog before the call to the child qdisc's peek() operation.
-This ensures that queue length and backlog are always accurate when packet
-drops or dequeues are triggered during the peek.
+  ==================================================================
+  BUG: KASAN: slab-use-after-free in tipc_aead_encrypt_done+0x4bd/0x510 net/tipc/crypto.c:840
+  Read of size 8 at addr ffff88807a733000 by task kworker/1:0/25
 
-Fixes: 12d0ad3be9c3 ("net/sched/sch_hfsc.c: handle corner cases where head may change invalidating calculated deadline")
-Reported-by: Mingi Cho <mincho@theori.io>
-Signed-off-by: Cong Wang <xiyou.wangcong@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250518222038.58538-2-xiyou.wangcong@gmail.com
-Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
+  Call Trace:
+   kasan_report+0xd9/0x110 mm/kasan/report.c:601
+   tipc_aead_encrypt_done+0x4bd/0x510 net/tipc/crypto.c:840
+   crypto_request_complete include/crypto/algapi.h:266
+   aead_request_complete include/crypto/internal/aead.h:85
+   cryptd_aead_crypt+0x3b8/0x750 crypto/cryptd.c:772
+   crypto_request_complete include/crypto/algapi.h:266
+   cryptd_queue_worker+0x131/0x200 crypto/cryptd.c:181
+   process_one_work+0x9fb/0x1b60 kernel/workqueue.c:3231
+
+  Allocated by task 8355:
+   kzalloc_noprof include/linux/slab.h:778
+   tipc_crypto_start+0xcc/0x9e0 net/tipc/crypto.c:1466
+   tipc_init_net+0x2dd/0x430 net/tipc/core.c:72
+   ops_init+0xb9/0x650 net/core/net_namespace.c:139
+   setup_net+0x435/0xb40 net/core/net_namespace.c:343
+   copy_net_ns+0x2f0/0x670 net/core/net_namespace.c:508
+   create_new_namespaces+0x3ea/0xb10 kernel/nsproxy.c:110
+   unshare_nsproxy_namespaces+0xc0/0x1f0 kernel/nsproxy.c:228
+   ksys_unshare+0x419/0x970 kernel/fork.c:3323
+   __do_sys_unshare kernel/fork.c:3394
+
+  Freed by task 63:
+   kfree+0x12a/0x3b0 mm/slub.c:4557
+   tipc_crypto_stop+0x23c/0x500 net/tipc/crypto.c:1539
+   tipc_exit_net+0x8c/0x110 net/tipc/core.c:119
+   ops_exit_list+0xb0/0x180 net/core/net_namespace.c:173
+   cleanup_net+0x5b7/0xbf0 net/core/net_namespace.c:640
+   process_one_work+0x9fb/0x1b60 kernel/workqueue.c:3231
+
+After freed the tipc_crypto tx by delete namespace, tipc_aead_encrypt_done
+may still visit it in cryptd_queue_worker workqueue.
+
+I reproduce this issue by:
+  ip netns add ns1
+  ip link add veth1 type veth peer name veth2
+  ip link set veth1 netns ns1
+  ip netns exec ns1 tipc bearer enable media eth dev veth1
+  ip netns exec ns1 tipc node set key this_is_a_master_key master
+  ip netns exec ns1 tipc bearer disable media eth dev veth1
+  ip netns del ns1
+
+The key of reproduction is that, simd_aead_encrypt is interrupted, leading
+to crypto_simd_usable() return false. Thus, the cryptd_queue_worker is
+triggered, and the tipc_crypto tx will be visited.
+
+  tipc_disc_timeout
+    tipc_bearer_xmit_skb
+      tipc_crypto_xmit
+        tipc_aead_encrypt
+          crypto_aead_encrypt
+            // encrypt()
+            simd_aead_encrypt
+              // crypto_simd_usable() is false
+              child = &ctx->cryptd_tfm->base;
+
+  simd_aead_encrypt
+    crypto_aead_encrypt
+      // encrypt()
+      cryptd_aead_encrypt_enqueue
+        cryptd_aead_enqueue
+          cryptd_enqueue_request
+            // trigger cryptd_queue_worker
+            queue_work_on(smp_processor_id(), cryptd_wq, &cpu_queue->work)
+
+Fix this by holding net reference count before encrypt.
+
+Reported-by: syzbot+55c12726619ff85ce1f6@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=55c12726619ff85ce1f6
+Fixes: fc1b6d6de220 ("tipc: introduce TIPC encryption & authentication")
+Signed-off-by: Wang Liang <wangliang74@huawei.com>
+Link: https://patch.msgid.link/20250520101404.1341730-1-wangliang74@huawei.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_hfsc.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/tipc/crypto.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/net/sched/sch_hfsc.c b/net/sched/sch_hfsc.c
-index d6c5fc543f652..05ac7d55482b8 100644
---- a/net/sched/sch_hfsc.c
-+++ b/net/sched/sch_hfsc.c
-@@ -1572,6 +1572,9 @@ hfsc_enqueue(struct sk_buff *skb, struct Qdisc *sch, struct sk_buff **to_free)
- 		return err;
+diff --git a/net/tipc/crypto.c b/net/tipc/crypto.c
+index b09c4a17b283e..35e0ffa1bd84b 100644
+--- a/net/tipc/crypto.c
++++ b/net/tipc/crypto.c
+@@ -828,12 +828,16 @@ static int tipc_aead_encrypt(struct tipc_aead *aead, struct sk_buff *skb,
+ 		goto exit;
  	}
  
-+	sch->qstats.backlog += len;
-+	sch->q.qlen++;
++	/* Get net to avoid freed tipc_crypto when delete namespace */
++	get_net(aead->crypto->net);
 +
- 	if (first && !cl->cl_nactive) {
- 		if (cl->cl_flags & HFSC_RSC)
- 			init_ed(cl, len);
-@@ -1587,9 +1590,6 @@ hfsc_enqueue(struct sk_buff *skb, struct Qdisc *sch, struct sk_buff **to_free)
+ 	/* Now, do encrypt */
+ 	rc = crypto_aead_encrypt(req);
+ 	if (rc == -EINPROGRESS || rc == -EBUSY)
+ 		return rc;
  
- 	}
+ 	tipc_bearer_put(b);
++	put_net(aead->crypto->net);
  
--	sch->qstats.backlog += len;
--	sch->q.qlen++;
--
- 	return NET_XMIT_SUCCESS;
+ exit:
+ 	kfree(ctx);
+@@ -871,6 +875,7 @@ static void tipc_aead_encrypt_done(struct crypto_async_request *base, int err)
+ 	kfree(tx_ctx);
+ 	tipc_bearer_put(b);
+ 	tipc_aead_put(aead);
++	put_net(net);
  }
  
+ /**
 -- 
 2.39.5
 
