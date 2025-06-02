@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74AE61401B;
-	Mon,  2 Jun 2025 13:57:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44EE11401B;
+	Mon,  2 Jun 2025 13:57:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748872644; cv=none; b=rixu+shZn6FNN/vwg+7oEujA52Qh+smFHN+XPpQgidwz/qdUGdJQtLYAqngzQZt4Q6t510XP1naoMNtM0h7RME4wuRgSwJNELP6xpttalPfFxlczLlKvZb+shfyib4qJFLEfwT6YiI5zH278flDAZFbBtEjlg9qgCs3b9AJDl50=
+	t=1748872647; cv=none; b=nzr2RlphPbQMaKiVceLQajDEhvvD6JWJCbCNTBjBY6Lb07VXDvTgdjMiBLD05pNypAXFz3RcsEjD4LpXQqx2pw+OapaQq4CX4N//T88Jbsl1sk54S5oy5NP4QLuziI7GoP9WN6UHEpVRZrjSeyI1ed1Vo8lss/Yies5Iz6pRQ5U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748872644; c=relaxed/simple;
-	bh=b0lE0hAqx0M6AyjGe04PlGPwpCnHIyXXHwhQVvMEcyQ=;
+	s=arc-20240116; t=1748872647; c=relaxed/simple;
+	bh=8EdFSnW4jD4t8aZEsOG97p3J+CZja6QgM6QmXxnAjQs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=thpuAVTx7OJ9rKsCs01lQrMzRU0NX2Q5YW2Z43SlL1IdbFLoo9SAQ5a2fSZMWPYXbHMqKPs2qYF6wThOZQGswnGglSC0F/thZItb8xAyXkaogdlJDytF1B63NhMAVgBznAraQ7zaZGFyfqNVYkbat6I1tx6AUUCK2fHcXdsPJwc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IOc8XU20; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TE1XwQKbdkm6pBUUDxhpMfcQzbSChbeHIsUMuig9i+aj25902PLQj7OqLGwKCq7j0NFI0XKt10e6euViHvp1oD95SEoIHOlKkqEJb+ILqE1Et+TAs9aHeYfy0vM0wLYwaUqHJ0EgJPMjmCSNAfyuK1q3x69CaDFlugw9Lt9BJHU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JxOlheu3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IOc8XU20"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 569B8C4CEEB;
-	Mon,  2 Jun 2025 13:57:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JxOlheu3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 910D4C4CEEB;
+	Mon,  2 Jun 2025 13:57:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748872643;
-	bh=b0lE0hAqx0M6AyjGe04PlGPwpCnHIyXXHwhQVvMEcyQ=;
+	s=korg; t=1748872647;
+	bh=8EdFSnW4jD4t8aZEsOG97p3J+CZja6QgM6QmXxnAjQs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IOc8XU20RjowDBcpBWEVgxks6ctmVwF7k1nmTIwynzN0EpkYd9gcqiL4pPINmdmwb
-	 rB0RGWCid5zrbuflJRwEj915w/t62d6hWeZzW07HiBAf4cO+MnDqzO6gTHHfYNswLV
-	 qEzqXkRHpnK4vfQ5NlnUb6fgHMVn4AXjbL3FTUe0=
+	b=JxOlheu3fv4z3bmBaQmhxxYijr7mRAu+gwX+FK61B3+a6l8eAI5g0zzCU9ULo1X43
+	 1EFwakSpZBGvhVFxDMUXmdxVlR/QKn9B/UroF1jDaCqDtfcRsPhmwoB5me8NpD+IZC
+	 PL6dNC8rWA9iPwkCKqD5IXGMofQHVumaznw2S9fQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.14 26/73] arm64: dts: qcom: x1e80100: Fix PCIe 3rd controller DBI size
-Date: Mon,  2 Jun 2025 15:47:12 +0200
-Message-ID: <20250602134242.729133050@linuxfoundation.org>
+	Judith Mendez <jm@ti.com>,
+	Udit Kumar <u-kumar1@ti.com>,
+	Bryan Brattlof <bb@ti.com>,
+	Nishanth Menon <nm@ti.com>
+Subject: [PATCH 6.14 27/73] arm64: dts: ti: k3-am62-main: Set eMMC clock parent to default
+Date: Mon,  2 Jun 2025 15:47:13 +0200
+Message-ID: <20250602134242.767820631@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134241.673490006@linuxfoundation.org>
 References: <20250602134241.673490006@linuxfoundation.org>
@@ -51,38 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abel Vesa <abel.vesa@linaro.org>
+From: Judith Mendez <jm@ti.com>
 
-commit 181faec4cc9d90dad0ec7f7c8124269c0ba2e107 upstream.
+commit 3a71cdfec94436079513d9adf4b1d4f7a7edd917 upstream.
 
-According to documentation, the DBI range size is 0xf20. So fix it.
+Set eMMC clock parents to the defaults which is MAIN_PLL0_HSDIV5_CLKOUT
+for eMMC. This change is necessary since DM is not implementing the
+correct procedure to switch PLL clock source for eMMC and MMC CLK mux is
+not glich-free. As a preventative action, lets switch back to the defaults.
 
-Cc: stable@vger.kernel.org # 6.14
-Fixes: f8af195beeb0 ("arm64: dts: qcom: x1e80100: Add support for PCIe3 on x1e80100")
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250422-x1e80100-dts-fix-pcie3-dbi-size-v1-1-c197701fd7e4@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: c37c58fdeb8a ("arm64: dts: ti: k3-am62: Add more peripheral nodes")
+Cc: stable@vger.kernel.org
+Signed-off-by: Judith Mendez <jm@ti.com>
+Acked-by: Udit Kumar <u-kumar1@ti.com>
+Acked-by: Bryan Brattlof <bb@ti.com>
+Link: https://lore.kernel.org/r/20250429163337.15634-2-jm@ti.com
+Signed-off-by: Nishanth Menon <nm@ti.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/qcom/x1e80100.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/ti/k3-am62-main.dtsi |    2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-index c04a2615ca77..06175b33bd92 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-+++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-@@ -3126,7 +3126,7 @@ pcie3: pcie@1bd0000 {
- 			device_type = "pci";
- 			compatible = "qcom,pcie-x1e80100";
- 			reg = <0x0 0x01bd0000 0x0 0x3000>,
--			      <0x0 0x78000000 0x0 0xf1d>,
-+			      <0x0 0x78000000 0x0 0xf20>,
- 			      <0x0 0x78000f40 0x0 0xa8>,
- 			      <0x0 0x78001000 0x0 0x1000>,
- 			      <0x0 0x78100000 0x0 0x100000>,
--- 
-2.49.0
-
+--- a/arch/arm64/boot/dts/ti/k3-am62-main.dtsi
++++ b/arch/arm64/boot/dts/ti/k3-am62-main.dtsi
+@@ -552,8 +552,6 @@
+ 		power-domains = <&k3_pds 57 TI_SCI_PD_EXCLUSIVE>;
+ 		clocks = <&k3_clks 57 5>, <&k3_clks 57 6>;
+ 		clock-names = "clk_ahb", "clk_xin";
+-		assigned-clocks = <&k3_clks 57 6>;
+-		assigned-clock-parents = <&k3_clks 57 8>;
+ 		bus-width = <8>;
+ 		mmc-ddr-1_8v;
+ 		mmc-hs200-1_8v;
 
 
