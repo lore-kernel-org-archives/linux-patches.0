@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7880222D9ED;
-	Mon,  2 Jun 2025 14:28:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D02F22DF84;
+	Mon,  2 Jun 2025 14:28:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748874483; cv=none; b=XTllNWamE0Y2ivzgYk4MlW8AMF112FoZq9NhkLXiERa02F+cNvgGxB1VTiw4lQH9hGlXWlMfp771EEEOtzLTpiN183HBG9fAqUIhR/Kns86+f1X5TIfq/9tcTrUuC0nvoct8d5mYOtQBRxSQ43huiVu5YaTf+EF5nTGKU2X+nM8=
+	t=1748874486; cv=none; b=JRtt0nBosMTf6hz2C2/eDI6UPT9mxH3q+O8qhf2EUPn4fzybAHHtBB7+kWxQIecvotXIvhbB0g8EcIG3xJCvvzLg5t+br5EK+4sshS7ofCQnij9+4MSklLLdHjjDgdGayUn74v7YAG8C+eGtyrtmtJvMaiaIY8S3oSs6NYbFTVw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748874483; c=relaxed/simple;
-	bh=udiIGy0dkDxGm0R+6NnrA1b5Qx1jqiT3/Icf3T+NrjA=;
+	s=arc-20240116; t=1748874486; c=relaxed/simple;
+	bh=q2LWGXIXg7e1TfKi/S+nmJTuQtuTz0kYC/7q6SIOSRw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SYE8DjWSJ9PBHolXGwgOo6xm11D+XwT6VT3ZKUPzvv7wfdYMeOYb8ba3tQ39JxCOzWQtKALbv/tcATZoirTFWYQYJeIBhSH0egxkI6uUXJRZBAE5XC+y5Rd7CBOgok5Onqowq+an3v2F7CO1rIZnuMw8e3I9xPWy4BDHyRoQW7c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PbiJVjJy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t6/CeTlje3KLf84HcqXWd7jFjElSL+Lsvu3xZCB2KAbUNhkTp7GzciqGahBKm8k2Vh2XyznJf3wxvYnn6KDjDh5y4JZZim3umzEZXUCa4hDvEoxDe7NYz7U6Pve/oK7IXcR8kZqRJHn0TpmffrWKSaiAU9clifxslUaVwEU4ehA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bqZIQXWy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PbiJVjJy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAF3BC4CEEB;
-	Mon,  2 Jun 2025 14:28:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bqZIQXWy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A0E3C4CEEB;
+	Mon,  2 Jun 2025 14:28:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748874483;
-	bh=udiIGy0dkDxGm0R+6NnrA1b5Qx1jqiT3/Icf3T+NrjA=;
+	s=korg; t=1748874486;
+	bh=q2LWGXIXg7e1TfKi/S+nmJTuQtuTz0kYC/7q6SIOSRw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PbiJVjJyLvBq1WrKxdTFopnurqxXjVHEo65jdMdV8rSdROZfDZihk3KG6MBMAXsdz
-	 geqLaZxdtJRY/jf1LCQ5foPv0qjKYagxh7ZchuqIUNQov4Hmusg2nOgqxoApQafVBa
-	 njsRfg9ubBDMlXeybo5gPtQBDUgtfcVfCctAmqfQ=
+	b=bqZIQXWydXzANx/AnRkOy/r69hvdClK8oMY0ieVUcVHB8XFU33n6Tt0AEweVyZqml
+	 qviPb2C/wMvAFuIdexDRcL7goh8kw8WXqumUuHTw7y7FJtWSmZxKufifqj4YEhxacp
+	 w3NbCwVxnzULEveW8jsWfOl6rQKy1yYMARNqQoNE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manuel Fombuena <fombuena@outlook.com>,
-	Aditya Garg <gargaditya08@live.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 5.4 037/204] Input: synaptics - enable InterTouch on Dynabook Portege X30-D
-Date: Mon,  2 Jun 2025 15:46:10 +0200
-Message-ID: <20250602134257.136752804@linuxfoundation.org>
+	Benjamin Marzinski <bmarzins@redhat.com>,
+	Mikulas Patocka <mpatocka@redhat.com>
+Subject: [PATCH 5.4 008/204] dm: always update the array size in realloc_argv on success
+Date: Mon,  2 Jun 2025 15:45:41 +0200
+Message-ID: <20250602134255.802604612@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134255.449974357@linuxfoundation.org>
 References: <20250602134255.449974357@linuxfoundation.org>
@@ -51,38 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manuel Fombuena <fombuena@outlook.com>
+From: Benjamin Marzinski <bmarzins@redhat.com>
 
-commit 6d7ea0881000966607772451b789b5fb5766f11d upstream.
+commit 5a2a6c428190f945c5cbf5791f72dbea83e97f66 upstream.
 
-[    5.989588] psmouse serio1: synaptics: Your touchpad (PNP: TOS0213 PNP0f03) says it can support a different bus. If i2c-hid and hid-rmi are not used, you might want to try setting psmouse.synaptics_intertouch to 1 and report this to linux-input@vger.kernel.org.
-[    6.039923] psmouse serio1: synaptics: Touchpad model: 1, fw: 9.32, id: 0x1e2a1, caps: 0xf00223/0x840300/0x12e800/0x52d884, board id: 3322, fw id: 2658004
+realloc_argv() was only updating the array size if it was called with
+old_argv already allocated. The first time it was called to create an
+argv array, it would allocate the array but return the array size as
+zero. dm_split_args() would think that it couldn't store any arguments
+in the array and would call realloc_argv() again, causing it to
+reallocate the initial slots (this time using GPF_KERNEL) and finally
+return a size. Aside from being wasteful, this could cause deadlocks on
+targets that need to process messages without starting new IO. Instead,
+realloc_argv should always update the allocated array size on success.
 
-The board is labelled TM3322.
-
-Present on the Toshiba / Dynabook Portege X30-D and possibly others.
-
-Confirmed working well with psmouse.synaptics_intertouch=1 and local build.
-
-Signed-off-by: Manuel Fombuena <fombuena@outlook.com>
-Signed-off-by: Aditya Garg <gargaditya08@live.com>
-Link: https://lore.kernel.org/r/PN3PR01MB9597711E7933A08389FEC31DB888A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
+Fixes: a0651926553c ("dm table: don't copy from a NULL pointer in realloc_argv()")
 Cc: stable@vger.kernel.org
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Benjamin Marzinski <bmarzins@redhat.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/mouse/synaptics.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/md/dm-table.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/input/mouse/synaptics.c
-+++ b/drivers/input/mouse/synaptics.c
-@@ -189,6 +189,7 @@ static const char * const smbus_pnp_ids[
- 	"SYN3221", /* HP 15-ay000 */
- 	"SYN323d", /* HP Spectre X360 13-w013dx */
- 	"SYN3257", /* HP Envy 13-ad105ng */
-+	"TOS0213", /* Dynabook Portege X30-D */
- 	NULL
- };
+--- a/drivers/md/dm-table.c
++++ b/drivers/md/dm-table.c
+@@ -573,9 +573,10 @@ static char **realloc_argv(unsigned *siz
+ 		gfp = GFP_NOIO;
+ 	}
+ 	argv = kmalloc_array(new_size, sizeof(*argv), gfp);
+-	if (argv && old_argv) {
+-		memcpy(argv, old_argv, *size * sizeof(*argv));
++	if (argv) {
+ 		*size = new_size;
++		if (old_argv)
++			memcpy(argv, old_argv, *size * sizeof(*argv));
+ 	}
  
+ 	kfree(old_argv);
 
 
