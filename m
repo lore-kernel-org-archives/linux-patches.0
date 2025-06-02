@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE5211F4165;
-	Mon,  2 Jun 2025 14:22:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA55A21C177;
+	Mon,  2 Jun 2025 14:22:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748874176; cv=none; b=nmrbPdWy2cvsQAN11amkZs4CDnufKlP0lBgicifblOghHKECkPs5uAJY5ZrHzdi9+CSvdeUj+ntwqhXhxIfgQz7EYQz0vXRva8n//PwCyv8IiNwd599nU1kpJ41yphyjkNLuZwOI0rW8xnJoPNcItluVjfhgIesRUHYZN2wfE9s=
+	t=1748874178; cv=none; b=SWJoJropscwgogiYirLPmYbahxgCeAXMKKMxwJZcTm4gJCyyzPw/4OyYZgtbs2rDHy9b/d5kbDKdFnXAr2d6yjogv9njgzrooC2LKMPBAAGvsupOBgf8YIq13MnOZ3Ecu8T5VPwI7D2kIcKvZVYYuX/9IPVPMG1XrK8gLq8Ab3E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748874176; c=relaxed/simple;
-	bh=zdDnEj5SKHLUFalBt5F3+wRcd9wC2z82pPKkgkYQO0I=;
+	s=arc-20240116; t=1748874178; c=relaxed/simple;
+	bh=wNVovduaz+cgykLDvui4Ne0zK6CNI54+QiukPmarwNA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=atYdvcp29LbYOYIxdpvCPO79xrwrSMCgkTbvbpzJUaJ9SX3F7z/vfOQ2cDAusIEh55dQ1ThwUI1M8qhUdWCoyv9Hi78yV6yMEsX78d0RX3fqw/Yu18hxhkLImFpwxczGDj/r6A/w/qAtbm8GFcFwf01ccs7pCChuaZjs4VoNljU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ctCceThV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gW+mZUXSxDq1+oW75RC85LoT1zMS6CJoM+Mjxvm6EdBWrXNS23En/8i7Y+fOwMpm5Guc2hYMwDYmSd09q8egloCNyuvD2ryN6mnWbR7o83Q2hVv5rjCHibR813altd3hA23A9u2lFy9VRyl/tpM/Vgy1k3nKU841OJOi2gLvY7k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HFPATlKc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ctCceThV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDAEAC4CEEB;
-	Mon,  2 Jun 2025 14:22:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HFPATlKc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD6FEC4CEEB;
+	Mon,  2 Jun 2025 14:22:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748874175;
-	bh=zdDnEj5SKHLUFalBt5F3+wRcd9wC2z82pPKkgkYQO0I=;
+	s=korg; t=1748874178;
+	bh=wNVovduaz+cgykLDvui4Ne0zK6CNI54+QiukPmarwNA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ctCceThVDxUXjSDgfot1b4traSdw1pKcjwFVxQqM4aqm8hSXBWrxUkExFQvRhaehZ
-	 biRN0XZcfGhqNFds+j5Dt6Y+mSEjmqH6VHlOZIZvvsIpw1zgf1rDvUQ411EacDhx/o
-	 2bOrNMU+0kpT3prpD5MoXHtoon8Wr9cS0soUUuPQ=
+	b=HFPATlKcGeN4LHoU95PPOAg3FlQIg8dALmXPU9c7r10X+dsAfMT9c44xeSp32KJjX
+	 pdse2x1zOsLZDjpefC7b26bEbat06bECB5AtFIWPB2H+LI6i8i6eSy0WIA1tiaqZqq
+	 dlBMaMAnI5vGrTzS7+UsoGiI1H5wYUQAK30cBSjk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Dobriyan <adobriyan@gmail.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	"H. Peter Anvin (Intel)" <hpa@zytor.com>,
-	Hendrik Donner <hd@os-cillation.de>
-Subject: [PATCH 6.6 383/444] x86/boot: Compile boot code with -std=gnu11 too
-Date: Mon,  2 Jun 2025 15:47:27 +0200
-Message-ID: <20250602134356.457680581@linuxfoundation.org>
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Hugh Dickins <hughd@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 384/444] highmem: add folio_test_partial_kmap()
+Date: Mon,  2 Jun 2025 15:47:28 +0200
+Message-ID: <20250602134356.497829352@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -52,34 +52,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexey Dobriyan <adobriyan@gmail.com>
+From: Matthew Wilcox (Oracle) <willy@infradead.org>
 
-commit b3bee1e7c3f2b1b77182302c7b2131c804175870 upstream.
+commit 97dfbbd135cb5e4426f37ca53a8fa87eaaa4e376 upstream.
 
-Use -std=gnu11 for consistency with main kernel code.
+In commit c749d9b7ebbc ("iov_iter: fix copy_page_from_iter_atomic() if
+KMAP_LOCAL_FORCE_MAP"), Hugh correctly noted that if KMAP_LOCAL_FORCE_MAP
+is enabled, we must limit ourselves to PAGE_SIZE bytes per call to
+kmap_local().  The same problem exists in memcpy_from_folio(),
+memcpy_to_folio(), folio_zero_tail(), folio_fill_tail() and
+memcpy_from_file_folio(), so add folio_test_partial_kmap() to do this more
+succinctly.
 
-It doesn't seem to change anything in vmlinux.
-
-Signed-off-by: Alexey Dobriyan <adobriyan@gmail.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Acked-by: H. Peter Anvin (Intel) <hpa@zytor.com>
-Link: https://lore.kernel.org/r/2058761e-12a4-4b2f-9690-3c3c1c9902a5@p183
-Cc: Hendrik Donner <hd@os-cillation.de>
+Link: https://lkml.kernel.org/r/20250514170607.3000994-2-willy@infradead.org
+Fixes: 00cdf76012ab ("mm: add memcpy_from_file_folio()")
+Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Al Viro <viro@zeniv.linux.org.uk>
+Cc: Hugh Dickins <hughd@google.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/Makefile |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/highmem.h    |    6 +++---
+ include/linux/page-flags.h |    7 +++++++
+ 2 files changed, 10 insertions(+), 3 deletions(-)
 
---- a/arch/x86/Makefile
-+++ b/arch/x86/Makefile
-@@ -43,7 +43,7 @@ endif
+--- a/include/linux/highmem.h
++++ b/include/linux/highmem.h
+@@ -448,7 +448,7 @@ static inline void memcpy_from_folio(cha
+ 		const char *from = kmap_local_folio(folio, offset);
+ 		size_t chunk = len;
  
- # How to compile the 16-bit code.  Note we always compile for -march=i386;
- # that way we can complain to the user if the CPU is insufficient.
--REALMODE_CFLAGS	:= -m16 -g -Os -DDISABLE_BRANCH_PROFILING -D__DISABLE_EXPORTS \
-+REALMODE_CFLAGS	:= -std=gnu11 -m16 -g -Os -DDISABLE_BRANCH_PROFILING -D__DISABLE_EXPORTS \
- 		   -Wall -Wstrict-prototypes -march=i386 -mregparm=3 \
- 		   -fno-strict-aliasing -fomit-frame-pointer -fno-pic \
- 		   -mno-mmx -mno-sse $(call cc-option,-fcf-protection=none)
+-		if (folio_test_highmem(folio) &&
++		if (folio_test_partial_kmap(folio) &&
+ 		    chunk > PAGE_SIZE - offset_in_page(offset))
+ 			chunk = PAGE_SIZE - offset_in_page(offset);
+ 		memcpy(to, from, chunk);
+@@ -469,7 +469,7 @@ static inline void memcpy_to_folio(struc
+ 		char *to = kmap_local_folio(folio, offset);
+ 		size_t chunk = len;
+ 
+-		if (folio_test_highmem(folio) &&
++		if (folio_test_partial_kmap(folio) &&
+ 		    chunk > PAGE_SIZE - offset_in_page(offset))
+ 			chunk = PAGE_SIZE - offset_in_page(offset);
+ 		memcpy(to, from, chunk);
+@@ -501,7 +501,7 @@ static inline size_t memcpy_from_file_fo
+ 	size_t offset = offset_in_folio(folio, pos);
+ 	char *from = kmap_local_folio(folio, offset);
+ 
+-	if (folio_test_highmem(folio)) {
++	if (folio_test_partial_kmap(folio)) {
+ 		offset = offset_in_page(offset);
+ 		len = min_t(size_t, len, PAGE_SIZE - offset);
+ 	} else
+--- a/include/linux/page-flags.h
++++ b/include/linux/page-flags.h
+@@ -551,6 +551,13 @@ PAGEFLAG(Readahead, readahead, PF_NO_COM
+ PAGEFLAG_FALSE(HighMem, highmem)
+ #endif
+ 
++/* Does kmap_local_folio() only allow access to one page of the folio? */
++#ifdef CONFIG_DEBUG_KMAP_LOCAL_FORCE_MAP
++#define folio_test_partial_kmap(f)	true
++#else
++#define folio_test_partial_kmap(f)	folio_test_highmem(f)
++#endif
++
+ #ifdef CONFIG_SWAP
+ static __always_inline bool folio_test_swapcache(struct folio *folio)
+ {
 
 
