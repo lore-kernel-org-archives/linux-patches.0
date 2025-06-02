@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D45A11E3772;
-	Mon,  2 Jun 2025 14:49:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7640226D1F;
+	Mon,  2 Jun 2025 14:49:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748875764; cv=none; b=ulNyPGSz+ZR8TwIX8vohO0ksOHKWlXHESWAfp2mixJldL5JDq4mxHmCWHk9HlsQyL3yXsMqou/nY7cDkNfam6/xp6YdjfprJpIvqcLwIEL/GvD9/VNFeAzb+C21G89L6a7B2zhjdAt9ZzINPrVoRr+SXY7SgXKCH72FTKEFEB7g=
+	t=1748875767; cv=none; b=OEpnYjjCOL8P42vShss118M1U+buOcXVtOabSy0nHScvd7DNQKcVOsnhOSIC1Iz/90YOQZgm7qdBTBw+NL/fiyjc+liUknmL3QRRV5xWNTGXqzWl3v2mpsGVKlJmSs19iXQoD9x6E8Ya1ojK9PcxBzHWp1SUtWsScKAUXUiXQXE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748875764; c=relaxed/simple;
-	bh=fW97tThfnU5fdPi6U4y9dQo8WpnqqsNI9swbIXoxFTk=;
+	s=arc-20240116; t=1748875767; c=relaxed/simple;
+	bh=NTc9U1pyUKnQ3k/rJS6HoDaYfMXxZIQ5YeLUCHMsJJw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sjBOGb0TjZ4jf24zAWHXPW2fpWLQiWlzzerB+VoRGI8s5xvZtYQDJN/kdQzL4X0YbwWuG4iGWr1k20JMxc4Pt3Mw5vw4FrFz2EApo/n6RmCPJ+JeSyB77Pp9AmFDnWuscqVKjX2Zqftf++8FYb2jdvecZ+WLcPQWdkp9soY3ylo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pjjRxco3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JiU84XjbSUGy1a4qYfgx8ubCtC+n2LCeHBafFvH5VEgj1ZAEOXwdsomxLtNXQ97WhSoVz/FDEyu1UGUgBu5odJSVMNc7ZwerHIpTcupgBLVEB1W7IHzK8PZidKkesTx+li2ZmT8J3LKIeCpNqWf3GkFz/U3uiZgVDnZsY0kER3Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YCCkEVR1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pjjRxco3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBCDEC4CEEB;
-	Mon,  2 Jun 2025 14:49:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YCCkEVR1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BDD3C4CEEB;
+	Mon,  2 Jun 2025 14:49:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748875764;
-	bh=fW97tThfnU5fdPi6U4y9dQo8WpnqqsNI9swbIXoxFTk=;
+	s=korg; t=1748875767;
+	bh=NTc9U1pyUKnQ3k/rJS6HoDaYfMXxZIQ5YeLUCHMsJJw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pjjRxco3HgS79pTNZ4kS9gizvwW8T6G48REWmanQ+4BU0WPLdb5alzP54Co1UoFvp
-	 xZI4/xyCbwjuNl1E0wERL53bMkujJFokT/zhXq4Iv3TyrSPZS2gAr95oBZ/TwGzy/B
-	 VxFBtJtLqlLgqie5gVNlsiL4wWWR/PO0eDxCFGyA=
+	b=YCCkEVR1teMCWUkAb/A0HkE3LF9RBGP+CdSron2n4+mVIHX+VzNUBho1UiZuK973o
+	 2ChuXERDAXobHWmPAyWSP+cXrnyqjYpijdtgFqFJOVr9b0ehdXGr7oaNggmNOuu6Yy
+	 MgZkKVL8vJgRAYdg7x/Nd2mrU/SWQvfTs0TKgQ1c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Kocialkowski <paulk@sys-base.io>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Corentin LABBE <clabbe.montjoie@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Mingi Cho <mincho@theori.io>,
+	Cong Wang <xiyou.wangcong@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 237/270] net: dwmac-sun8i: Use parsed internal PHY address instead of 1
-Date: Mon,  2 Jun 2025 15:48:42 +0200
-Message-ID: <20250602134317.003717353@linuxfoundation.org>
+Subject: [PATCH 5.10 238/270] sch_hfsc: Fix qlen accounting bug when using peek in hfsc_enqueue()
+Date: Mon,  2 Jun 2025 15:48:43 +0200
+Message-ID: <20250602134317.043802454@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134307.195171844@linuxfoundation.org>
 References: <20250602134307.195171844@linuxfoundation.org>
@@ -53,46 +54,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul Kocialkowski <paulk@sys-base.io>
+From: Cong Wang <xiyou.wangcong@gmail.com>
 
-[ Upstream commit 47653e4243f2b0a26372e481ca098936b51ec3a8 ]
+[ Upstream commit 3f981138109f63232a5fb7165938d4c945cc1b9d ]
 
-While the MDIO address of the internal PHY on Allwinner sun8i chips is
-generally 1, of_mdio_parse_addr is used to cleanly parse the address
-from the device-tree instead of hardcoding it.
+When enqueuing the first packet to an HFSC class, hfsc_enqueue() calls the
+child qdisc's peek() operation before incrementing sch->q.qlen and
+sch->qstats.backlog. If the child qdisc uses qdisc_peek_dequeued(), this may
+trigger an immediate dequeue and potential packet drop. In such cases,
+qdisc_tree_reduce_backlog() is called, but the HFSC qdisc's qlen and backlog
+have not yet been updated, leading to inconsistent queue accounting. This
+can leave an empty HFSC class in the active list, causing further
+consequences like use-after-free.
 
-A commit reworking the code ditched the parsed value and hardcoded the
-value 1 instead, which didn't really break anything but is more fragile
-and not future-proof.
+This patch fixes the bug by moving the increment of sch->q.qlen and
+sch->qstats.backlog before the call to the child qdisc's peek() operation.
+This ensures that queue length and backlog are always accurate when packet
+drops or dequeues are triggered during the peek.
 
-Restore the initial behavior using the parsed address returned from the
-helper.
-
-Fixes: 634db83b8265 ("net: stmmac: dwmac-sun8i: Handle integrated/external MDIOs")
-Signed-off-by: Paul Kocialkowski <paulk@sys-base.io>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Acked-by: Corentin LABBE <clabbe.montjoie@gmail.com>
-Tested-by: Corentin LABBE <clabbe.montjoie@gmail.com>
-Link: https://patch.msgid.link/20250519164936.4172658-1-paulk@sys-base.io
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 12d0ad3be9c3 ("net/sched/sch_hfsc.c: handle corner cases where head may change invalidating calculated deadline")
+Reported-by: Mingi Cho <mincho@theori.io>
+Signed-off-by: Cong Wang <xiyou.wangcong@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250518222038.58538-2-xiyou.wangcong@gmail.com
+Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/dwmac-sun8i.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sched/sch_hfsc.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-sun8i.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-sun8i.c
-index 958bbcfc2668d..d04bc6597e0f0 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac-sun8i.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-sun8i.c
-@@ -936,7 +936,7 @@ static int sun8i_dwmac_set_syscon(struct device *dev,
- 		/* of_mdio_parse_addr returns a valid (0 ~ 31) PHY
- 		 * address. No need to mask it again.
- 		 */
--		reg |= 1 << H3_EPHY_ADDR_SHIFT;
-+		reg |= ret << H3_EPHY_ADDR_SHIFT;
- 	} else {
- 		/* For SoCs without internal PHY the PHY selection bit should be
- 		 * set to 0 (external PHY).
+diff --git a/net/sched/sch_hfsc.c b/net/sched/sch_hfsc.c
+index adc16643779fb..45d17501a6ed0 100644
+--- a/net/sched/sch_hfsc.c
++++ b/net/sched/sch_hfsc.c
+@@ -1571,6 +1571,9 @@ hfsc_enqueue(struct sk_buff *skb, struct Qdisc *sch, struct sk_buff **to_free)
+ 		return err;
+ 	}
+ 
++	sch->qstats.backlog += len;
++	sch->q.qlen++;
++
+ 	if (first && !cl->cl_nactive) {
+ 		if (cl->cl_flags & HFSC_RSC)
+ 			init_ed(cl, len);
+@@ -1586,9 +1589,6 @@ hfsc_enqueue(struct sk_buff *skb, struct Qdisc *sch, struct sk_buff **to_free)
+ 
+ 	}
+ 
+-	sch->qstats.backlog += len;
+-	sch->q.qlen++;
+-
+ 	return NET_XMIT_SUCCESS;
+ }
+ 
 -- 
 2.39.5
 
