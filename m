@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81B74228C99;
-	Mon,  2 Jun 2025 14:06:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CECA227EB1;
+	Mon,  2 Jun 2025 14:06:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748873163; cv=none; b=iL7ol5FZ16ncwlvYihiIBBFjNckEBTopLtP0HUsbDefau/5gSKlr9Mqk8u3YdO7w4fBCxWN24JYxpZFQT38aw9V20KyA352s11ngup0zps8I/98Xgx/Aq2nBCzWVNBv3jEooFbnr8w939vzV1pXf0P6yWM/UuZdxNW4vN88sxJQ=
+	t=1748873166; cv=none; b=fjPulL0dR3gZ+DMME2rrYk74fiFNAzPXib2MA075219lzxx7K7kkay6e8KY+FBqxQQaT24v47jSPpTqbP7n6YUXPgwhgqxge02aSi/wdA76EXV+v5pg95lYBm7odDvqBi15VRrXzdJzrnGTRI/NkkJ6S38ovJieWCvuf1CDjkXo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748873163; c=relaxed/simple;
-	bh=df012jymOhCaPnGex1f3+zcJhC1GZq5rf1B78IZknCo=;
+	s=arc-20240116; t=1748873166; c=relaxed/simple;
+	bh=bvIU/Ooza9bV/SWyXN6IVjRaM/SiHCMnmjl7s1EkH/Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mUeRBOBnKHJR1J1/RF+5MdDDhVTouzmfl9hUmddFsxYsce/RCdwIkiWi7m7e40+qXMUnd5IYIo2hYCAh4h1eT/OxO8wBWeDK5XIVG0eyw2Od1ZqK95nju13uy/z1YjkUUlWLLGNcMle7mpzzObzztEEOe62i/5x+euiLzkuwZ1c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=biwfD01g; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Xvw/QII2Vi6cuxuaK+JohrTNK1OZFc3j39jkePwKMvUrholcXYa7vUceRIzKAMFyfyiYSsMGlphfJI1yCns4w3Ha4+AhUNF1hwkBv1+29hIf4UOIcwrIKh7HZSmu2VqIaMg4q/FrlAzILgpn5ZB6TMFtXFes5ve/AUljhiEs/zs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FA81wWh/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="biwfD01g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E64B0C4CEEE;
-	Mon,  2 Jun 2025 14:06:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FA81wWh/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4954C4CEEB;
+	Mon,  2 Jun 2025 14:06:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748873163;
-	bh=df012jymOhCaPnGex1f3+zcJhC1GZq5rf1B78IZknCo=;
+	s=korg; t=1748873166;
+	bh=bvIU/Ooza9bV/SWyXN6IVjRaM/SiHCMnmjl7s1EkH/Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=biwfD01gMUMUsNS3cXF6Y6tp3agNdmdEBqPN8zZQ7ajqJUwFp1tKvTtJhrzQQsXG0
-	 0FlWRUrqjmvVxS+daui1v2IsXGwPIE6rQdQFsxYy15sOw/GvmckZAVgc36Bjg6aF3g
-	 VcA449QSs2zPpK9v+yoqj+mNqNCqVM6fEtkQnsro=
+	b=FA81wWh/ieNP+UehB/EDS9STJq8rbWRQXA8tztcmRR02+TcphLHxieTLiX5vEiKjX
+	 NGvF8n0gc7eyVmIZEc9Jm/6nuqnuRmvzhOzGkFaqDqZ11cPHLTa95GmDwzrFwWSOx9
+	 avD6pE5WLacV0AXdUwfW1HM6St9+Hw/KoUTg4Fuo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alice Guo <alice.guo@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Jing Su <jingsusu@didiglobal.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 058/444] thermal/drivers/qoriq: Power down TMU on system suspend
-Date: Mon,  2 Jun 2025 15:42:02 +0200
-Message-ID: <20250602134343.281948402@linuxfoundation.org>
+Subject: [PATCH 6.6 059/444] dql: Fix dql->limit value when reset.
+Date: Mon,  2 Jun 2025 15:42:03 +0200
+Message-ID: <20250602134343.323110875@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -52,61 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alice Guo <alice.guo@nxp.com>
+From: Jing Su <jingsusu@didiglobal.com>
 
-[ Upstream commit 229f3feb4b0442835b27d519679168bea2de96c2 ]
+[ Upstream commit 3a17f23f7c36bac3a3584aaf97d3e3e0b2790396 ]
 
-Enable power-down of TMU (Thermal Management Unit) for TMU version 2 during
-system suspend to save power. Save approximately 4.3mW on VDD_ANA_1P8 on
-i.MX93 platforms.
+Executing dql_reset after setting a non-zero value for limit_min can
+lead to an unreasonable situation where dql->limit is less than
+dql->limit_min.
 
-Signed-off-by: Alice Guo <alice.guo@nxp.com>
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
-Link: https://lore.kernel.org/r/20241209164859.3758906-2-Frank.Li@nxp.com
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+For instance, after setting
+/sys/class/net/eth*/queues/tx-0/byte_queue_limits/limit_min,
+an ifconfig down/up operation might cause the ethernet driver to call
+netdev_tx_reset_queue, which in turn invokes dql_reset.
+
+In this case, dql->limit is reset to 0 while dql->limit_min remains
+non-zero value, which is unexpected. The limit should always be
+greater than or equal to limit_min.
+
+Signed-off-by: Jing Su <jingsusu@didiglobal.com>
+Link: https://patch.msgid.link/Z9qHD1s/NEuQBdgH@pilot-ThinkCentre-M930t-N000
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/qoriq_thermal.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ lib/dynamic_queue_limits.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/thermal/qoriq_thermal.c b/drivers/thermal/qoriq_thermal.c
-index 404f01cca4dab..ff8657afb31d3 100644
---- a/drivers/thermal/qoriq_thermal.c
-+++ b/drivers/thermal/qoriq_thermal.c
-@@ -18,6 +18,7 @@
- #define SITES_MAX		16
- #define TMR_DISABLE		0x0
- #define TMR_ME			0x80000000
-+#define TMR_CMD			BIT(29)
- #define TMR_ALPF		0x0c000000
- #define TMR_ALPF_V2		0x03000000
- #define TMTMIR_DEFAULT	0x0000000f
-@@ -356,6 +357,12 @@ static int __maybe_unused qoriq_tmu_suspend(struct device *dev)
- 	if (ret)
- 		return ret;
- 
-+	if (data->ver > TMU_VER1) {
-+		ret = regmap_set_bits(data->regmap, REGS_TMR, TMR_CMD);
-+		if (ret)
-+			return ret;
-+	}
-+
- 	clk_disable_unprepare(data->clk);
- 
- 	return 0;
-@@ -370,6 +377,12 @@ static int __maybe_unused qoriq_tmu_resume(struct device *dev)
- 	if (ret)
- 		return ret;
- 
-+	if (data->ver > TMU_VER1) {
-+		ret = regmap_clear_bits(data->regmap, REGS_TMR, TMR_CMD);
-+		if (ret)
-+			return ret;
-+	}
-+
- 	/* Enable monitoring */
- 	return regmap_update_bits(data->regmap, REGS_TMR, TMR_ME, TMR_ME);
- }
+diff --git a/lib/dynamic_queue_limits.c b/lib/dynamic_queue_limits.c
+index fde0aa2441480..a75a9ca46b594 100644
+--- a/lib/dynamic_queue_limits.c
++++ b/lib/dynamic_queue_limits.c
+@@ -116,7 +116,7 @@ EXPORT_SYMBOL(dql_completed);
+ void dql_reset(struct dql *dql)
+ {
+ 	/* Reset all dynamic values */
+-	dql->limit = 0;
++	dql->limit = dql->min_limit;
+ 	dql->num_queued = 0;
+ 	dql->num_completed = 0;
+ 	dql->last_obj_cnt = 0;
 -- 
 2.39.5
 
