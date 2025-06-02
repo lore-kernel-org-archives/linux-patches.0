@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16CFC22FE0A;
-	Mon,  2 Jun 2025 14:55:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A652122FE18;
+	Mon,  2 Jun 2025 14:55:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748876156; cv=none; b=OlWcQNYGBxWrnu4I406gQduD3yDEsbVj5Z4D5GSBqo/ov7xuLvewF9tEbO7vQSC2RTQiO554I8Vmch9YdrmnYrMzAXJGpHubvVHcid7WyXBjNHqGx7YOON+9SJiJkrXTSoPPD1J8sL0AOeJ84HmBtDU0/ZwAN7Y2tORqORgqC4Q=
+	t=1748876158; cv=none; b=Yo85ApMgoZAkQ1ehids3/HA3EyMf3yhyky/lNB52u4hNbHuGfg+M6XJRUAPyDHsM8ri+zbbpQFRAleKUSibYKozq3SRxmmYYptsLo5eei1QWcajrgh6EYPXw+eCC1JC72BKZ/vlo5inf98P4ks+57INbp/D02ccPcoFqxpagVsc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748876156; c=relaxed/simple;
-	bh=0HR1a8Jcn+uz3Cw3MJ7CKYODUulrilTiGnFNAYoKBgc=;
+	s=arc-20240116; t=1748876158; c=relaxed/simple;
+	bh=vh/A9RSvJj9pu01z/lTUXftNvminbeSsnhBaYuUl+bc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ddOh5XKLB/CGU6gClIceP7yaRHznXQ9kJ1W1wMJKdvyL3r+NfIoYaPEW7rog+5AZWsYj6+I5S+Nt+1wzdqCmyn1JvxCaHIZ3Dmj17sdMQpkkvZQKLV2ho153SwmRGgs0e4DmGwldxQaNlEZSz2NIso/JezJhbzSOT1CZWQ8LIXY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o4Sdublm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NLCV8hN63KO3d90KekJTLzj0guB1fn+ulhn62XFjE3J4A2SohRdwa0ipfkwjhwzBHqhcrGQd2NVaDgM9+MWACJP53NhD7hn8q0HzhRvX/T29504q+5LjV9O5wclTSJBwy+FTRdtdQQdBlfi1OeKeVu62cSrd14/jHxZBDsiKK8M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q1XonqIn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o4Sdublm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D162C4CEF0;
-	Mon,  2 Jun 2025 14:55:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q1XonqIn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D3B5C4CEEB;
+	Mon,  2 Jun 2025 14:55:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748876155;
-	bh=0HR1a8Jcn+uz3Cw3MJ7CKYODUulrilTiGnFNAYoKBgc=;
+	s=korg; t=1748876158;
+	bh=vh/A9RSvJj9pu01z/lTUXftNvminbeSsnhBaYuUl+bc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o4SdublmqVJlmY9we3YOpjaaaH0Wrr3A6seetvEMNoND+d1cNB5xrBCwFQHdIot2z
-	 tLmBwq9Mg0KJnORDH8wajgtN8Wn7vGU4lcd55s+jxA46rSRXc8MnSroRKceG5pPkZI
-	 JZyU117vpQidpYk5xaKeyd7KQS7na8XTULvjTPFY=
+	b=q1XonqInPghM+a7OuC0vqvoGJ1DpGU/Iliv/4BQLkHQ/Hx1STzp093i8zKa2u6eVL
+	 NA9RoqHeUklBAvWynfKFAKSq6VWbafTz5BygjzCJQObjwdgiyUjpebJVoFGCTouilw
+	 IdnefuvJm9hBWxn58KyyoAprRLvoAnLOygcBTgEQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Alexey Klimov <alexey.klimov@linaro.org>,
-	Mark Brown <broonie@kernel.org>,
+	Sumit Gupta <sumitg@nvidia.com>,
+	Thierry Reding <treding@nvidia.com>,
+	Aaron Kling <webgeek1234@gmail.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 058/207] ASoC: qcom: sm8250: explicitly set format in sm8250_be_hw_params_fixup()
-Date: Mon,  2 Jun 2025 15:47:10 +0200
-Message-ID: <20250602134301.023713068@linuxfoundation.org>
+Subject: [PATCH 5.15 059/207] cpufreq: tegra186: Share policy per cluster
+Date: Mon,  2 Jun 2025 15:47:11 +0200
+Message-ID: <20250602134301.062031152@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134258.769974467@linuxfoundation.org>
 References: <20250602134258.769974467@linuxfoundation.org>
@@ -52,46 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexey Klimov <alexey.klimov@linaro.org>
+From: Aaron Kling <luceoscutum@gmail.com>
 
-[ Upstream commit 89be3c15a58b2ccf31e969223c8ac93ca8932d81 ]
+[ Upstream commit be4ae8c19492cd6d5de61ccb34ffb3f5ede5eec8 ]
 
-Setting format to s16le is required for compressed playback on compatible
-soundcards.
+This functionally brings tegra186 in line with tegra210 and tegra194,
+sharing a cpufreq policy between all cores in a cluster.
 
-Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
-Link: https://patch.msgid.link/20250228161430.373961-1-alexey.klimov@linaro.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Reviewed-by: Sumit Gupta <sumitg@nvidia.com>
+Acked-by: Thierry Reding <treding@nvidia.com>
+Signed-off-by: Aaron Kling <webgeek1234@gmail.com>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/qcom/sm8250.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/cpufreq/tegra186-cpufreq.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/sound/soc/qcom/sm8250.c b/sound/soc/qcom/sm8250.c
-index a38a741ace379..34a6349754fb0 100644
---- a/sound/soc/qcom/sm8250.c
-+++ b/sound/soc/qcom/sm8250.c
-@@ -7,6 +7,7 @@
- #include <sound/soc.h>
- #include <sound/soc-dapm.h>
- #include <sound/pcm.h>
-+#include <sound/pcm_params.h>
- #include <linux/soundwire/sdw.h>
- #include "qdsp6/q6afe.h"
- #include "common.h"
-@@ -27,9 +28,11 @@ static int sm8250_be_hw_params_fixup(struct snd_soc_pcm_runtime *rtd,
- 					SNDRV_PCM_HW_PARAM_RATE);
- 	struct snd_interval *channels = hw_param_interval(params,
- 					SNDRV_PCM_HW_PARAM_CHANNELS);
-+	struct snd_mask *fmt = hw_param_mask(params, SNDRV_PCM_HW_PARAM_FORMAT);
+diff --git a/drivers/cpufreq/tegra186-cpufreq.c b/drivers/cpufreq/tegra186-cpufreq.c
+index 5d1943e787b0c..19597246f9ccb 100644
+--- a/drivers/cpufreq/tegra186-cpufreq.c
++++ b/drivers/cpufreq/tegra186-cpufreq.c
+@@ -73,11 +73,18 @@ static int tegra186_cpufreq_init(struct cpufreq_policy *policy)
+ {
+ 	struct tegra186_cpufreq_data *data = cpufreq_get_driver_data();
+ 	unsigned int cluster = data->cpus[policy->cpu].bpmp_cluster_id;
++	u32 cpu;
  
- 	rate->min = rate->max = 48000;
- 	channels->min = channels->max = 2;
-+	snd_mask_set_format(fmt, SNDRV_PCM_FORMAT_S16_LE);
+ 	policy->freq_table = data->clusters[cluster].table;
+ 	policy->cpuinfo.transition_latency = 300 * 1000;
+ 	policy->driver_data = NULL;
  
++	/* set same policy for all cpus in a cluster */
++	for (cpu = 0; cpu < ARRAY_SIZE(tegra186_cpus); cpu++) {
++		if (data->cpus[cpu].bpmp_cluster_id == cluster)
++			cpumask_set_cpu(cpu, policy->cpus);
++	}
++
  	return 0;
  }
+ 
 -- 
 2.39.5
 
