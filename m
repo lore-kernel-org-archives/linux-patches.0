@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9222E22D785;
-	Mon,  2 Jun 2025 14:51:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B339322330F;
+	Mon,  2 Jun 2025 14:52:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748875919; cv=none; b=HBTM6fSf0GL7V4vIVxgEZeNACCieSeOkChmXfAIpAh3/uTao5RYuC/PfxNKF0T/dn1f9l/UbhUJObuuDDTW7Iciw+6gL0prszUbiaTGQD4DwnAS+EHYQsVtc84wtTjDwY/2xrN8+8AAWm/y5MoI52OIpvr5RS2/lKHnZb3THIxM=
+	t=1748875922; cv=none; b=BGPubq5ZsxMYc/MRY3aXcDk+S9n+3D9/LEIdvotwiNMRZwXAt7NzRTAEcAKbUmR483pin1ryGDsbl068tRNuHZTWTxRaUjZyJayNnAPiT4dddmZGUwLweMfakqaWG2obTaSu6bR6WRCdktZppzk2CxX5nzVxeIqltR0cmhXf4ho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748875919; c=relaxed/simple;
-	bh=jgYxxFcdotbLIKbF13G3eyt48C/L0DmcUyG+7EiQ/uU=;
+	s=arc-20240116; t=1748875922; c=relaxed/simple;
+	bh=0Zd9efVg3Iqo6CukTrCBoCidUy7gYCFsrhch41FQUuo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Id1fBSpgjuquy98fX3pCElH+2n9NjPRaReqaxGsCB36bES+k5bSCQaH4OSPr7WRgir5IinRXsJARyTtF3LPrrw/TN2EpnMiTEQd47S/TCsJFvWOFXfOPku9PfaeYTVket3CL4Z/yznC3YIWk8hc9BxKb//sVx/vvzx6qS6cCFuY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RtqWFtUD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FOMX47EWoIkub6u6D6+qkA5uEvwi7C33Bt4VeRrSWhtosWcBnUYY/EBXbR6/A4PdvUpSxHqYUJlaVF4dQOii/0INy0GobM9VxtuvGPhzU6KoSl0L3nEnU3f5rZ7qGwcqSpQ/NahvazI2oKf65M9U0rdZ0LjdJ5uCR+gSCRsEO3Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J+LyvEu6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RtqWFtUD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB48FC4CEEB;
-	Mon,  2 Jun 2025 14:51:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J+LyvEu6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2402BC4CEEB;
+	Mon,  2 Jun 2025 14:52:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748875919;
-	bh=jgYxxFcdotbLIKbF13G3eyt48C/L0DmcUyG+7EiQ/uU=;
+	s=korg; t=1748875922;
+	bh=0Zd9efVg3Iqo6CukTrCBoCidUy7gYCFsrhch41FQUuo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RtqWFtUDGHfrfm700HlhhGDK5qC0N4QiTpu9CUQwXlyP6HtYGXOkEt6QbhuZPa0eh
-	 pHQ07/k+m+Muk2i5Zx3ySO/JOo1aqT1oqMZLXyR+lWv32Ba26WXq+ZzzNEFF8RPeaz
-	 dVqRJsbKho2uQiCyLdt9HuxyK9CNOjMhx0snh2a0=
+	b=J+LyvEu6XXUIhYE3N4hfGN8sqE/wTIPy/1Rctsml7dkZl0PQCUaZLwgyUSxO6MvMj
+	 IglKH7+0fPHxVttpwLCnZeJ8A9SUYIG05d+HADofrAqUH576jpwdofNRADR+JYUHdh
+	 2168A9JUcrKOEizBXWsl9/VpTXY+MwtaS21dV4e8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Benjamin Coddington <bcodding@redhat.com>,
 	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 015/207] NFSv4: Treat ENETUNREACH errors as fatal for state recovery
-Date: Mon,  2 Jun 2025 15:46:27 +0200
-Message-ID: <20250602134259.371047234@linuxfoundation.org>
+Subject: [PATCH 5.15 016/207] SUNRPC: rpc_clnt_set_transport() must not change the autobind setting
+Date: Mon,  2 Jun 2025 15:46:28 +0200
+Message-ID: <20250602134259.409770155@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134258.769974467@linuxfoundation.org>
 References: <20250602134258.769974467@linuxfoundation.org>
@@ -54,42 +54,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit 0af5fb5ed3d2fd9e110c6112271f022b744a849a ]
+[ Upstream commit bf9be373b830a3e48117da5d89bb6145a575f880 ]
 
-If a containerised process is killed and causes an ENETUNREACH or
-ENETDOWN error to be propagated to the state manager, then mark the
-nfs_client as being dead so that we don't loop in functions that are
-expecting recovery to succeed.
+The autobind setting was supposed to be determined in rpc_create(),
+since commit c2866763b402 ("SUNRPC: use sockaddr + size when creating
+remote transport endpoints").
 
 Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Reviewed-by: Benjamin Coddington <bcodding@redhat.com>
 Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/nfs4state.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ net/sunrpc/clnt.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/fs/nfs/nfs4state.c b/fs/nfs/nfs4state.c
-index 76e2cdddf95c1..b1dec7a9bd723 100644
---- a/fs/nfs/nfs4state.c
-+++ b/fs/nfs/nfs4state.c
-@@ -2726,7 +2726,15 @@ static void nfs4_state_manager(struct nfs_client *clp)
- 	pr_warn_ratelimited("NFS: state manager%s%s failed on NFSv4 server %s"
- 			" with error %d\n", section_sep, section,
- 			clp->cl_hostname, -status);
--	ssleep(1);
-+	switch (status) {
-+	case -ENETDOWN:
-+	case -ENETUNREACH:
-+		nfs_mark_client_ready(clp, -EIO);
-+		break;
-+	default:
-+		ssleep(1);
-+		break;
-+	}
- out_drain:
- 	memalloc_nofs_restore(memflags);
- 	nfs4_end_drain_session(clp);
+diff --git a/net/sunrpc/clnt.c b/net/sunrpc/clnt.c
+index 5de2fc7af268a..48ffdd4192538 100644
+--- a/net/sunrpc/clnt.c
++++ b/net/sunrpc/clnt.c
+@@ -275,9 +275,6 @@ static struct rpc_xprt *rpc_clnt_set_transport(struct rpc_clnt *clnt,
+ 	old = rcu_dereference_protected(clnt->cl_xprt,
+ 			lockdep_is_held(&clnt->cl_lock));
+ 
+-	if (!xprt_bound(xprt))
+-		clnt->cl_autobind = 1;
+-
+ 	clnt->cl_timeout = timeout;
+ 	rcu_assign_pointer(clnt->cl_xprt, xprt);
+ 	spin_unlock(&clnt->cl_lock);
 -- 
 2.39.5
 
