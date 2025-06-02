@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C03A023816E;
-	Mon,  2 Jun 2025 14:10:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DC72245006;
+	Mon,  2 Jun 2025 14:10:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748873404; cv=none; b=HXOPyTi61hbMbXVkZ1L6b081jIEW3/NVBlt7roRS0pcOJSw//oYFuCGI0HNOt0+QZn+BL5guOXcCAwkPnQhBtHkabEODZvaGxkjgY7MB4HwyChTCQYZ5yBCnYxmgtl1WOHFrwKkBx6awkk1Od7KcUOxC3zrsLjPwi3GCk3yxc8A=
+	t=1748873408; cv=none; b=aaqYUSQ+NvsqaM6uQYIzbBiIci9wfiUr6fgioDmdQiXH0ZewoPXXjqFJrGsLtPd0m20LQA+tXsQpOcWOPtEn78ttjuuFb9E6s4y646WM3zcAgqYxy1xJX37MwFHAjGmkPUPbDAS4Asx8DeS0dMszXNInE2SW9VdPLKxB35iLyEM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748873404; c=relaxed/simple;
-	bh=9+rEpatgy70j1JMj0CtekdZ7dSIH35sy2c47YS6YUSI=;
+	s=arc-20240116; t=1748873408; c=relaxed/simple;
+	bh=sZg+dbWoQ5Z1h1bR/tq7VdxUoyvUQej7L/V1V3ZatDs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kUbZdSMrsLwXJ9I5fFJhuBfc+3lK2ZqX5H6hK/7cjHM7oZ6JIwpzAbg9MUQKalMv4ag/OFbR7OezWxZ6sTW7NU18n4zZla3OqsqBH6Wxp4nbfpEpHEQWVsnsTDPz1G2OyOEfcWeW/Nvq6hfWj2lttSlWklFh4DxycTTBj+XGK2A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U1XFOJGm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eR0XA/xG6Xc+r0clHkplAVhgaXrnCTk5y34uplxry8raG44DH/5AXTitP7JDz1jl9LUxLuVAOFtcKPBrr4c4pm9tjvjG70zTQ68siVieEHHE+Rwrkf5R8RLSadi1QMJBHipUbnf44wewah3xzeRxRY31hqEzTJD9t/prRbJMblg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WvYRU5NQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U1XFOJGm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 474C9C4CEEE;
-	Mon,  2 Jun 2025 14:10:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WvYRU5NQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82554C4CEEB;
+	Mon,  2 Jun 2025 14:10:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748873404;
-	bh=9+rEpatgy70j1JMj0CtekdZ7dSIH35sy2c47YS6YUSI=;
+	s=korg; t=1748873407;
+	bh=sZg+dbWoQ5Z1h1bR/tq7VdxUoyvUQej7L/V1V3ZatDs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U1XFOJGm8FewQLPB3p9C+Q1q6itaMas3X/bMxZ6JgWaB35NhA2Vp0Rr+8V4Cm6MMS
-	 YgAUdv3IfBNgnzmUKo/zjo2zBLfdzbLN+f8JFTNBS3pLDf80FaATW9IZhaKZdlTeVI
-	 Ky9g4DTHbjyOGAMpwHDLU0S95vgkDBoJJEMz0SJU=
+	b=WvYRU5NQbShpmOKpBadzvlqz0h4cS0CusSpSuagje1xGCzE0ZV0gmWBRnPwkHuEkV
+	 1UM8xfcrwjsszjD6UU9xy48GYwPN8yg5ujrexBS/O0cX2/cbR8OsHV2J8nTn/Q3URW
+	 PQgpWa8R16DCnpd6WUPpHich/6JkuFcwzCgQHjd4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chin-Ting Kuo <chin-ting_kuo@aspeedtech.com>,
-	Andrew Jeffery <andrew@codeconstruct.com.au>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Wim Van Sebroeck <wim@linux-watchdog.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 130/444] watchdog: aspeed: Update bootstatus handling
-Date: Mon,  2 Jun 2025 15:43:14 +0200
-Message-ID: <20250602134346.162724705@linuxfoundation.org>
+Subject: [PATCH 6.6 131/444] crypto: lzo - Fix compression buffer overrun
+Date: Mon,  2 Jun 2025 15:43:15 +0200
+Message-ID: <20250602134346.209066129@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -53,180 +51,372 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chin-Ting Kuo <chin-ting_kuo@aspeedtech.com>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-[ Upstream commit 5c03f9f4d36292150c14ebd90788c4d3273ed9dc ]
+[ Upstream commit cc47f07234f72cbd8e2c973cdbf2a6730660a463 ]
 
-The boot status in the watchdog device struct is updated during
-controller probe stage. Application layer can get the boot status
-through the command, cat /sys/class/watchdog/watchdogX/bootstatus.
-The bootstatus can be,
-WDIOF_CARDRESET => System is reset due to WDT timeout occurs.
-Others          => Other reset events, e.g., power on reset.
+Unlike the decompression code, the compression code in LZO never
+checked for output overruns.  It instead assumes that the caller
+always provides enough buffer space, disregarding the buffer length
+provided by the caller.
 
-On ASPEED platforms, boot status is recorded in the SCU registers.
-- AST2400: Only a bit is used to represent system reset triggered by
-           any WDT controller.
-- AST2500/AST2600: System reset triggered by different WDT controllers
-                   can be distinguished by different SCU bits.
+Add a safe compression interface that checks for the end of buffer
+before each write.  Use the safe interface in crypto/lzo.
 
-Besides, on AST2400 and AST2500, since alternating boot event is
-also triggered by using WDT timeout mechanism, it is classified
-as WDIOF_CARDRESET.
-
-Signed-off-by: Chin-Ting Kuo <chin-ting_kuo@aspeedtech.com>
-Reviewed-by: Andrew Jeffery <andrew@codeconstruct.com.au>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20250113093737.845097-2-chin-ting_kuo@aspeedtech.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/aspeed_wdt.c | 81 ++++++++++++++++++++++++++++++++++-
- 1 file changed, 79 insertions(+), 2 deletions(-)
+ crypto/lzo-rle.c              |   2 +-
+ crypto/lzo.c                  |   2 +-
+ include/linux/lzo.h           |   8 +++
+ lib/lzo/Makefile              |   2 +-
+ lib/lzo/lzo1x_compress.c      | 102 +++++++++++++++++++++++++---------
+ lib/lzo/lzo1x_compress_safe.c |  18 ++++++
+ 6 files changed, 106 insertions(+), 28 deletions(-)
+ create mode 100644 lib/lzo/lzo1x_compress_safe.c
 
-diff --git a/drivers/watchdog/aspeed_wdt.c b/drivers/watchdog/aspeed_wdt.c
-index b72a858bbac70..7bc0fb1df1e00 100644
---- a/drivers/watchdog/aspeed_wdt.c
-+++ b/drivers/watchdog/aspeed_wdt.c
-@@ -11,21 +11,30 @@
- #include <linux/io.h>
- #include <linux/kernel.h>
- #include <linux/kstrtox.h>
-+#include <linux/mfd/syscon.h>
- #include <linux/module.h>
- #include <linux/of.h>
- #include <linux/of_irq.h>
- #include <linux/platform_device.h>
-+#include <linux/regmap.h>
- #include <linux/watchdog.h>
+diff --git a/crypto/lzo-rle.c b/crypto/lzo-rle.c
+index 0631d975bfac1..0abc2d87f0420 100644
+--- a/crypto/lzo-rle.c
++++ b/crypto/lzo-rle.c
+@@ -55,7 +55,7 @@ static int __lzorle_compress(const u8 *src, unsigned int slen,
+ 	size_t tmp_len = *dlen; /* size_t(ulong) <-> uint on 64 bit */
+ 	int err;
  
- static bool nowayout = WATCHDOG_NOWAYOUT;
- module_param(nowayout, bool, 0);
- MODULE_PARM_DESC(nowayout, "Watchdog cannot be stopped once started (default="
- 				__MODULE_STRING(WATCHDOG_NOWAYOUT) ")");
-+struct aspeed_wdt_scu {
-+	const char *compatible;
-+	u32 reset_status_reg;
-+	u32 wdt_reset_mask;
-+	u32 wdt_reset_mask_shift;
-+};
+-	err = lzorle1x_1_compress(src, slen, dst, &tmp_len, ctx);
++	err = lzorle1x_1_compress_safe(src, slen, dst, &tmp_len, ctx);
  
- struct aspeed_wdt_config {
- 	u32 ext_pulse_width_mask;
- 	u32 irq_shift;
- 	u32 irq_mask;
-+	struct aspeed_wdt_scu scu;
- };
+ 	if (err != LZO_E_OK)
+ 		return -EINVAL;
+diff --git a/crypto/lzo.c b/crypto/lzo.c
+index ebda132dd22bf..8338851c7406a 100644
+--- a/crypto/lzo.c
++++ b/crypto/lzo.c
+@@ -55,7 +55,7 @@ static int __lzo_compress(const u8 *src, unsigned int slen,
+ 	size_t tmp_len = *dlen; /* size_t(ulong) <-> uint on 64 bit */
+ 	int err;
  
- struct aspeed_wdt {
-@@ -39,18 +48,36 @@ static const struct aspeed_wdt_config ast2400_config = {
- 	.ext_pulse_width_mask = 0xff,
- 	.irq_shift = 0,
- 	.irq_mask = 0,
-+	.scu = {
-+		.compatible = "aspeed,ast2400-scu",
-+		.reset_status_reg = 0x3c,
-+		.wdt_reset_mask = 0x1,
-+		.wdt_reset_mask_shift = 1,
-+	},
- };
+-	err = lzo1x_1_compress(src, slen, dst, &tmp_len, ctx);
++	err = lzo1x_1_compress_safe(src, slen, dst, &tmp_len, ctx);
  
- static const struct aspeed_wdt_config ast2500_config = {
- 	.ext_pulse_width_mask = 0xfffff,
- 	.irq_shift = 12,
- 	.irq_mask = GENMASK(31, 12),
-+	.scu = {
-+		.compatible = "aspeed,ast2500-scu",
-+		.reset_status_reg = 0x3c,
-+		.wdt_reset_mask = 0x1,
-+		.wdt_reset_mask_shift = 2,
-+	},
- };
+ 	if (err != LZO_E_OK)
+ 		return -EINVAL;
+diff --git a/include/linux/lzo.h b/include/linux/lzo.h
+index e95c7d1092b28..4d30e3624acd2 100644
+--- a/include/linux/lzo.h
++++ b/include/linux/lzo.h
+@@ -24,10 +24,18 @@
+ int lzo1x_1_compress(const unsigned char *src, size_t src_len,
+ 		     unsigned char *dst, size_t *dst_len, void *wrkmem);
  
- static const struct aspeed_wdt_config ast2600_config = {
- 	.ext_pulse_width_mask = 0xfffff,
- 	.irq_shift = 0,
- 	.irq_mask = GENMASK(31, 10),
-+	.scu = {
-+		.compatible = "aspeed,ast2600-scu",
-+		.reset_status_reg = 0x74,
-+		.wdt_reset_mask = 0xf,
-+		.wdt_reset_mask_shift = 16,
-+	},
- };
++/* Same as above but does not write more than dst_len to dst. */
++int lzo1x_1_compress_safe(const unsigned char *src, size_t src_len,
++			  unsigned char *dst, size_t *dst_len, void *wrkmem);
++
+ /* This requires 'wrkmem' of size LZO1X_1_MEM_COMPRESS */
+ int lzorle1x_1_compress(const unsigned char *src, size_t src_len,
+ 		     unsigned char *dst, size_t *dst_len, void *wrkmem);
  
- static const struct of_device_id aspeed_wdt_of_table[] = {
-@@ -211,6 +238,56 @@ static int aspeed_wdt_restart(struct watchdog_device *wdd,
- 	return 0;
++/* Same as above but does not write more than dst_len to dst. */
++int lzorle1x_1_compress_safe(const unsigned char *src, size_t src_len,
++			     unsigned char *dst, size_t *dst_len, void *wrkmem);
++
+ /* safe decompression with overrun testing */
+ int lzo1x_decompress_safe(const unsigned char *src, size_t src_len,
+ 			  unsigned char *dst, size_t *dst_len);
+diff --git a/lib/lzo/Makefile b/lib/lzo/Makefile
+index 2f58fafbbdddc..fc7b2b7ef4b20 100644
+--- a/lib/lzo/Makefile
++++ b/lib/lzo/Makefile
+@@ -1,5 +1,5 @@
+ # SPDX-License-Identifier: GPL-2.0-only
+-lzo_compress-objs := lzo1x_compress.o
++lzo_compress-objs := lzo1x_compress.o lzo1x_compress_safe.o
+ lzo_decompress-objs := lzo1x_decompress_safe.o
+ 
+ obj-$(CONFIG_LZO_COMPRESS) += lzo_compress.o
+diff --git a/lib/lzo/lzo1x_compress.c b/lib/lzo/lzo1x_compress.c
+index 9d31e7126606a..f00dff9b9d4e1 100644
+--- a/lib/lzo/lzo1x_compress.c
++++ b/lib/lzo/lzo1x_compress.c
+@@ -18,11 +18,22 @@
+ #include <linux/lzo.h>
+ #include "lzodefs.h"
+ 
+-static noinline size_t
+-lzo1x_1_do_compress(const unsigned char *in, size_t in_len,
+-		    unsigned char *out, size_t *out_len,
+-		    size_t ti, void *wrkmem, signed char *state_offset,
+-		    const unsigned char bitstream_version)
++#undef LZO_UNSAFE
++
++#ifndef LZO_SAFE
++#define LZO_UNSAFE 1
++#define LZO_SAFE(name) name
++#define HAVE_OP(x) 1
++#endif
++
++#define NEED_OP(x) if (!HAVE_OP(x)) goto output_overrun
++
++static noinline int
++LZO_SAFE(lzo1x_1_do_compress)(const unsigned char *in, size_t in_len,
++			      unsigned char **out, unsigned char *op_end,
++			      size_t *tp, void *wrkmem,
++			      signed char *state_offset,
++			      const unsigned char bitstream_version)
+ {
+ 	const unsigned char *ip;
+ 	unsigned char *op;
+@@ -30,8 +41,9 @@ lzo1x_1_do_compress(const unsigned char *in, size_t in_len,
+ 	const unsigned char * const ip_end = in + in_len - 20;
+ 	const unsigned char *ii;
+ 	lzo_dict_t * const dict = (lzo_dict_t *) wrkmem;
++	size_t ti = *tp;
+ 
+-	op = out;
++	op = *out;
+ 	ip = in;
+ 	ii = ip;
+ 	ip += ti < 4 ? 4 - ti : 0;
+@@ -116,25 +128,32 @@ lzo1x_1_do_compress(const unsigned char *in, size_t in_len,
+ 		if (t != 0) {
+ 			if (t <= 3) {
+ 				op[*state_offset] |= t;
++				NEED_OP(4);
+ 				COPY4(op, ii);
+ 				op += t;
+ 			} else if (t <= 16) {
++				NEED_OP(17);
+ 				*op++ = (t - 3);
+ 				COPY8(op, ii);
+ 				COPY8(op + 8, ii + 8);
+ 				op += t;
+ 			} else {
+ 				if (t <= 18) {
++					NEED_OP(1);
+ 					*op++ = (t - 3);
+ 				} else {
+ 					size_t tt = t - 18;
++					NEED_OP(1);
+ 					*op++ = 0;
+ 					while (unlikely(tt > 255)) {
+ 						tt -= 255;
++						NEED_OP(1);
+ 						*op++ = 0;
+ 					}
++					NEED_OP(1);
+ 					*op++ = tt;
+ 				}
++				NEED_OP(t);
+ 				do {
+ 					COPY8(op, ii);
+ 					COPY8(op + 8, ii + 8);
+@@ -151,6 +170,7 @@ lzo1x_1_do_compress(const unsigned char *in, size_t in_len,
+ 		if (unlikely(run_length)) {
+ 			ip += run_length;
+ 			run_length -= MIN_ZERO_RUN_LENGTH;
++			NEED_OP(4);
+ 			put_unaligned_le32((run_length << 21) | 0xfffc18
+ 					   | (run_length & 0x7), op);
+ 			op += 4;
+@@ -243,10 +263,12 @@ lzo1x_1_do_compress(const unsigned char *in, size_t in_len,
+ 		ip += m_len;
+ 		if (m_len <= M2_MAX_LEN && m_off <= M2_MAX_OFFSET) {
+ 			m_off -= 1;
++			NEED_OP(2);
+ 			*op++ = (((m_len - 1) << 5) | ((m_off & 7) << 2));
+ 			*op++ = (m_off >> 3);
+ 		} else if (m_off <= M3_MAX_OFFSET) {
+ 			m_off -= 1;
++			NEED_OP(1);
+ 			if (m_len <= M3_MAX_LEN)
+ 				*op++ = (M3_MARKER | (m_len - 2));
+ 			else {
+@@ -254,14 +276,18 @@ lzo1x_1_do_compress(const unsigned char *in, size_t in_len,
+ 				*op++ = M3_MARKER | 0;
+ 				while (unlikely(m_len > 255)) {
+ 					m_len -= 255;
++					NEED_OP(1);
+ 					*op++ = 0;
+ 				}
++				NEED_OP(1);
+ 				*op++ = (m_len);
+ 			}
++			NEED_OP(2);
+ 			*op++ = (m_off << 2);
+ 			*op++ = (m_off >> 6);
+ 		} else {
+ 			m_off -= 0x4000;
++			NEED_OP(1);
+ 			if (m_len <= M4_MAX_LEN)
+ 				*op++ = (M4_MARKER | ((m_off >> 11) & 8)
+ 						| (m_len - 2));
+@@ -282,11 +308,14 @@ lzo1x_1_do_compress(const unsigned char *in, size_t in_len,
+ 				m_len -= M4_MAX_LEN;
+ 				*op++ = (M4_MARKER | ((m_off >> 11) & 8));
+ 				while (unlikely(m_len > 255)) {
++					NEED_OP(1);
+ 					m_len -= 255;
+ 					*op++ = 0;
+ 				}
++				NEED_OP(1);
+ 				*op++ = (m_len);
+ 			}
++			NEED_OP(2);
+ 			*op++ = (m_off << 2);
+ 			*op++ = (m_off >> 6);
+ 		}
+@@ -295,14 +324,20 @@ lzo1x_1_do_compress(const unsigned char *in, size_t in_len,
+ 		ii = ip;
+ 		goto next;
+ 	}
+-	*out_len = op - out;
+-	return in_end - (ii - ti);
++	*out = op;
++	*tp = in_end - (ii - ti);
++	return LZO_E_OK;
++
++output_overrun:
++	return LZO_E_OUTPUT_OVERRUN;
  }
  
-+static void aspeed_wdt_update_bootstatus(struct platform_device *pdev,
-+					 struct aspeed_wdt *wdt)
-+{
-+	const struct resource *res;
-+	struct aspeed_wdt_scu scu = wdt->cfg->scu;
-+	struct regmap *scu_base;
-+	u32 reset_mask_width;
-+	u32 reset_mask_shift;
-+	u32 idx = 0;
-+	u32 status;
-+	int ret;
+-static int lzogeneric1x_1_compress(const unsigned char *in, size_t in_len,
+-		     unsigned char *out, size_t *out_len,
+-		     void *wrkmem, const unsigned char bitstream_version)
++static int LZO_SAFE(lzogeneric1x_1_compress)(
++	const unsigned char *in, size_t in_len,
++	unsigned char *out, size_t *out_len,
++	void *wrkmem, const unsigned char bitstream_version)
+ {
++	unsigned char * const op_end = out + *out_len;
+ 	const unsigned char *ip = in;
+ 	unsigned char *op = out;
+ 	unsigned char *data_start;
+@@ -326,14 +361,18 @@ static int lzogeneric1x_1_compress(const unsigned char *in, size_t in_len,
+ 	while (l > 20) {
+ 		size_t ll = min_t(size_t, l, m4_max_offset + 1);
+ 		uintptr_t ll_end = (uintptr_t) ip + ll;
++		int err;
 +
-+	if (!of_device_is_compatible(pdev->dev.of_node, "aspeed,ast2400-wdt")) {
-+		res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-+		idx = ((intptr_t)wdt->base & 0x00000fff) / resource_size(res);
-+	}
-+
-+	scu_base = syscon_regmap_lookup_by_compatible(scu.compatible);
-+	if (IS_ERR(scu_base)) {
-+		wdt->wdd.bootstatus = WDIOS_UNKNOWN;
-+		return;
-+	}
-+
-+	ret = regmap_read(scu_base, scu.reset_status_reg, &status);
-+	if (ret) {
-+		wdt->wdd.bootstatus = WDIOS_UNKNOWN;
-+		return;
-+	}
-+
-+	reset_mask_width = hweight32(scu.wdt_reset_mask);
-+	reset_mask_shift = scu.wdt_reset_mask_shift +
-+			   reset_mask_width * idx;
-+
-+	if (status & (scu.wdt_reset_mask << reset_mask_shift))
-+		wdt->wdd.bootstatus = WDIOF_CARDRESET;
-+
-+	/* clear wdt reset event flag */
-+	if (of_device_is_compatible(pdev->dev.of_node, "aspeed,ast2400-wdt") ||
-+	    of_device_is_compatible(pdev->dev.of_node, "aspeed,ast2500-wdt")) {
-+		ret = regmap_read(scu_base, scu.reset_status_reg, &status);
-+		if (!ret) {
-+			status &= ~(scu.wdt_reset_mask << reset_mask_shift);
-+			regmap_write(scu_base, scu.reset_status_reg, status);
-+		}
-+	} else {
-+		regmap_write(scu_base, scu.reset_status_reg,
-+			     scu.wdt_reset_mask << reset_mask_shift);
-+	}
-+}
-+
- /* access_cs0 shows if cs0 is accessible, hence the reverted bit */
- static ssize_t access_cs0_show(struct device *dev,
- 			       struct device_attribute *attr, char *buf)
-@@ -447,10 +524,10 @@ static int aspeed_wdt_probe(struct platform_device *pdev)
- 		writel(duration - 1, wdt->base + WDT_RESET_WIDTH);
+ 		if ((ll_end + ((t + ll) >> 5)) <= ll_end)
+ 			break;
+ 		BUILD_BUG_ON(D_SIZE * sizeof(lzo_dict_t) > LZO1X_1_MEM_COMPRESS);
+ 		memset(wrkmem, 0, D_SIZE * sizeof(lzo_dict_t));
+-		t = lzo1x_1_do_compress(ip, ll, op, out_len, t, wrkmem,
+-					&state_offset, bitstream_version);
++		err = LZO_SAFE(lzo1x_1_do_compress)(
++			ip, ll, &op, op_end, &t, wrkmem,
++			&state_offset, bitstream_version);
++		if (err != LZO_E_OK)
++			return err;
+ 		ip += ll;
+-		op += *out_len;
+ 		l  -= ll;
+ 	}
+ 	t += l;
+@@ -342,20 +381,26 @@ static int lzogeneric1x_1_compress(const unsigned char *in, size_t in_len,
+ 		const unsigned char *ii = in + in_len - t;
+ 
+ 		if (op == data_start && t <= 238) {
++			NEED_OP(1);
+ 			*op++ = (17 + t);
+ 		} else if (t <= 3) {
+ 			op[state_offset] |= t;
+ 		} else if (t <= 18) {
++			NEED_OP(1);
+ 			*op++ = (t - 3);
+ 		} else {
+ 			size_t tt = t - 18;
++			NEED_OP(1);
+ 			*op++ = 0;
+ 			while (tt > 255) {
+ 				tt -= 255;
++				NEED_OP(1);
+ 				*op++ = 0;
+ 			}
++			NEED_OP(1);
+ 			*op++ = tt;
+ 		}
++		NEED_OP(t);
+ 		if (t >= 16) do {
+ 			COPY8(op, ii);
+ 			COPY8(op + 8, ii + 8);
+@@ -368,31 +413,38 @@ static int lzogeneric1x_1_compress(const unsigned char *in, size_t in_len,
+ 		} while (--t > 0);
  	}
  
-+	aspeed_wdt_update_bootstatus(pdev, wdt);
++	NEED_OP(3);
+ 	*op++ = M4_MARKER | 1;
+ 	*op++ = 0;
+ 	*op++ = 0;
+ 
+ 	*out_len = op - out;
+ 	return LZO_E_OK;
 +
- 	status = readl(wdt->base + WDT_TIMEOUT_STATUS);
- 	if (status & WDT_TIMEOUT_STATUS_BOOT_SECONDARY) {
--		wdt->wdd.bootstatus = WDIOF_CARDRESET;
--
- 		if (of_device_is_compatible(np, "aspeed,ast2400-wdt") ||
- 		    of_device_is_compatible(np, "aspeed,ast2500-wdt"))
- 			wdt->wdd.groups = bswitch_groups;
++output_overrun:
++	return LZO_E_OUTPUT_OVERRUN;
+ }
+ 
+-int lzo1x_1_compress(const unsigned char *in, size_t in_len,
+-		     unsigned char *out, size_t *out_len,
+-		     void *wrkmem)
++int LZO_SAFE(lzo1x_1_compress)(const unsigned char *in, size_t in_len,
++			       unsigned char *out, size_t *out_len,
++			       void *wrkmem)
+ {
+-	return lzogeneric1x_1_compress(in, in_len, out, out_len, wrkmem, 0);
++	return LZO_SAFE(lzogeneric1x_1_compress)(
++		in, in_len, out, out_len, wrkmem, 0);
+ }
+ 
+-int lzorle1x_1_compress(const unsigned char *in, size_t in_len,
+-		     unsigned char *out, size_t *out_len,
+-		     void *wrkmem)
++int LZO_SAFE(lzorle1x_1_compress)(const unsigned char *in, size_t in_len,
++				  unsigned char *out, size_t *out_len,
++				  void *wrkmem)
+ {
+-	return lzogeneric1x_1_compress(in, in_len, out, out_len,
+-				       wrkmem, LZO_VERSION);
++	return LZO_SAFE(lzogeneric1x_1_compress)(
++		in, in_len, out, out_len, wrkmem, LZO_VERSION);
+ }
+ 
+-EXPORT_SYMBOL_GPL(lzo1x_1_compress);
+-EXPORT_SYMBOL_GPL(lzorle1x_1_compress);
++EXPORT_SYMBOL_GPL(LZO_SAFE(lzo1x_1_compress));
++EXPORT_SYMBOL_GPL(LZO_SAFE(lzorle1x_1_compress));
+ 
++#ifndef LZO_UNSAFE
+ MODULE_LICENSE("GPL");
+ MODULE_DESCRIPTION("LZO1X-1 Compressor");
++#endif
+diff --git a/lib/lzo/lzo1x_compress_safe.c b/lib/lzo/lzo1x_compress_safe.c
+new file mode 100644
+index 0000000000000..371c9f8494928
+--- /dev/null
++++ b/lib/lzo/lzo1x_compress_safe.c
+@@ -0,0 +1,18 @@
++// SPDX-License-Identifier: GPL-2.0-only
++/*
++ *  LZO1X Compressor from LZO
++ *
++ *  Copyright (C) 1996-2012 Markus F.X.J. Oberhumer <markus@oberhumer.com>
++ *
++ *  The full LZO package can be found at:
++ *  http://www.oberhumer.com/opensource/lzo/
++ *
++ *  Changed for Linux kernel use by:
++ *  Nitin Gupta <nitingupta910@gmail.com>
++ *  Richard Purdie <rpurdie@openedhand.com>
++ */
++
++#define LZO_SAFE(name) name##_safe
++#define HAVE_OP(x) ((size_t)(op_end - op) >= (size_t)(x))
++
++#include "lzo1x_compress.c"
 -- 
 2.39.5
 
