@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 057832AE9A;
-	Mon,  2 Jun 2025 14:33:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2133B1465A1;
+	Mon,  2 Jun 2025 14:33:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748874815; cv=none; b=XAfL4KcsDjDMvFv4JVuPz4QfKvYTqfP/rH5fNr/MpUxGaM0iyHYP++ivSUSK05CChucj0/BFwKywh134+o7pPRrl5Db/QMkBip/QWSaKvRqdAxIU4Nsw6DjX5oZCifFZO0pUkaRHvGV2Ffb4mSP2UnMrxeZMoEF3JzqpHOxbywY=
+	t=1748874818; cv=none; b=rHR5eogqrghBUA8MIKpqaOFmQ3G0eFMbduCPR+mrL886erBC14OC4HNYrcFVTP+4agKe9s0HEQOysBuxJGlxHxl4x21C0UpP48n2gXB3AfAJFdfH3pRGiMRpidmQ/8S8dGw7tCc7DkVX497ScR9+RVxbAWbeVjHdLZn5gXpuoYs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748874815; c=relaxed/simple;
-	bh=kYS0A7lSf8NNjaFiTtAUQkUbDO1XAuGvIYBgm5MlpHU=;
+	s=arc-20240116; t=1748874818; c=relaxed/simple;
+	bh=4OgyoVQK2nh0EzeGK3945LhM2zcBYn5UVD5smgeRtFA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i9msFjEIBmWqJS4IXBwSt2vzWZqK+Fbco/7ub50cul0JWgbIHzhkc7irGW/WSR8E3ksbzOKNzRuHLxiJhUlqn48UhMniC0t4+GVm4SQqsvR1wbMjv9pdePQQUzZplcpyeE+dUEWzfmX6FBTZd3ct2IGl0MdvAkIlZFLO4nF/3n8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EvH6UO2z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J6g7fYwXw4kTSA/ErTDq/Ta8e3+C3LpAGLfkFrD8ZSC1+W0jWdTa5ZucOIpofUKIfNvoc0M4EuNOt6J9MIrLt2BiZmrDWRrvpmbzdrtHDh8/0zyIQxXlynOGTTLuOoUQPCxlrRR1XLuGRRAYetvqvU0MhEIYvIUa87Q/tgvpxkM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CJA8Ao1A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EvH6UO2z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72E66C4CEEB;
-	Mon,  2 Jun 2025 14:33:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CJA8Ao1A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85B6BC4CEEB;
+	Mon,  2 Jun 2025 14:33:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748874814;
-	bh=kYS0A7lSf8NNjaFiTtAUQkUbDO1XAuGvIYBgm5MlpHU=;
+	s=korg; t=1748874818;
+	bh=4OgyoVQK2nh0EzeGK3945LhM2zcBYn5UVD5smgeRtFA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EvH6UO2zPVOTtF/mb1QT67TToYLU6AiVNQN1Q4z0upXpOcjXoIhvXUjk/QwMMngkn
-	 jmDAQX8bqJ4sZmbnJzOunS96/rMPbIF7gbouLdXxOaag6PkN3IEAQyNzoxpheleU84
-	 uUKUM/5GD1aKHwuTzXiYssDFmiS242NJWZEr2Qgs=
+	b=CJA8Ao1AmI947VQV1R6TTDsaNPSxYRIGQY+rlnpbtI9gFYbptu61TZNRNGWD56j73
+	 iw8hZuar/IrY1frK5aolgmCXlaA+cOMF+1EAID/XsyxE7/szUcQjz8w7yT3qF0dqC3
+	 xnz7KYwIF4vHesHBHDKqweg+MQj1TZXTGFbhAKMU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Berg <benjamin@sipsolutions.net>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Peter Seiderer <ps.report@gmx.net>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 103/204] um: Store full CSGSFS and SS register from mcontext
-Date: Mon,  2 Jun 2025 15:47:16 +0200
-Message-ID: <20250602134259.709240231@linuxfoundation.org>
+Subject: [PATCH 5.4 138/204] net: pktgen: fix access outside of user given buffer in pktgen_thread_write()
+Date: Mon,  2 Jun 2025 15:47:51 +0200
+Message-ID: <20250602134301.076364371@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134255.449974357@linuxfoundation.org>
 References: <20250602134255.449974357@linuxfoundation.org>
@@ -51,38 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Berg <benjamin@sipsolutions.net>
+From: Peter Seiderer <ps.report@gmx.net>
 
-[ Upstream commit cef721e0d53d2b64f2ba177c63a0dfdd7c0daf17 ]
+[ Upstream commit 425e64440ad0a2f03bdaf04be0ae53dededbaa77 ]
 
-Doing this allows using registers as retrieved from an mcontext to be
-pushed to a process using PTRACE_SETREGS.
+Honour the user given buffer size for the strn_len() calls (otherwise
+strn_len() will access memory outside of the user given buffer).
 
-It is not entirely clear to me why CSGSFS was masked. Doing so creates
-issues when using the mcontext as process state in seccomp and simply
-copying the register appears to work perfectly fine for ptrace.
-
-Signed-off-by: Benjamin Berg <benjamin@sipsolutions.net>
-Link: https://patch.msgid.link/20250224181827.647129-2-benjamin@sipsolutions.net
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Peter Seiderer <ps.report@gmx.net>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250219084527.20488-8-ps.report@gmx.net
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/um/os-Linux/mcontext.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ net/core/pktgen.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/arch/x86/um/os-Linux/mcontext.c b/arch/x86/um/os-Linux/mcontext.c
-index 49c3744cac371..81b9d1f9f4e68 100644
---- a/arch/x86/um/os-Linux/mcontext.c
-+++ b/arch/x86/um/os-Linux/mcontext.c
-@@ -26,7 +26,6 @@ void get_regs_from_mc(struct uml_pt_regs *regs, mcontext_t *mc)
- 	COPY(RIP);
- 	COPY2(EFLAGS, EFL);
- 	COPY2(CS, CSGSFS);
--	regs->gp[CS / sizeof(unsigned long)] &= 0xffff;
--	regs->gp[CS / sizeof(unsigned long)] |= 3;
-+	regs->gp[SS / sizeof(unsigned long)] = mc->gregs[REG_CSGSFS] >> 48;
- #endif
- }
+diff --git a/net/core/pktgen.c b/net/core/pktgen.c
+index e7cde4f097908..4fd66e6466d29 100644
+--- a/net/core/pktgen.c
++++ b/net/core/pktgen.c
+@@ -1770,8 +1770,8 @@ static ssize_t pktgen_thread_write(struct file *file,
+ 	i = len;
+ 
+ 	/* Read variable name */
+-
+-	len = strn_len(&user_buffer[i], sizeof(name) - 1);
++	max = min(sizeof(name) - 1, count - i);
++	len = strn_len(&user_buffer[i], max);
+ 	if (len < 0)
+ 		return len;
+ 
+@@ -1801,7 +1801,8 @@ static ssize_t pktgen_thread_write(struct file *file,
+ 	if (!strcmp(name, "add_device")) {
+ 		char f[32];
+ 		memset(f, 0, 32);
+-		len = strn_len(&user_buffer[i], sizeof(f) - 1);
++		max = min(sizeof(f) - 1, count - i);
++		len = strn_len(&user_buffer[i], max);
+ 		if (len < 0) {
+ 			ret = len;
+ 			goto out;
 -- 
 2.39.5
 
