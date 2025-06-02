@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26AE42576;
-	Mon,  2 Jun 2025 15:19:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52C132C327E;
+	Mon,  2 Jun 2025 15:19:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748877595; cv=none; b=XMTnbQI7dqo5+SnzCEjrtYYPkyM6+oDoBxYV6IgMsyqCamg4mHcA/K4mJ3cpPQ5oPzXpVEHZ4EIRZ1AgAZlVNBbU1gMiLPi4w+WyYOJcbuwOw2ti/ofrVouza0oM+HhaPJMWzx+j6D078aDrGZAfGJD5RViFvf3P+if0exy3q8Y=
+	t=1748877598; cv=none; b=UNccKOhE4AM1+jql5RbgwSxgBjCXE/cLECqK5VYeoI7v3TCYV8GnRUmKSjQcc6v0qnkzHe6hsdV76Ds39nvupt3KoukTp182Cl0v6qHyR9Ct1fMeQB1hD9kwlchBXHPyt5fZkTxSuZnkn1NeqruHk3ED16ybaYIbCxlmV20TFFE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748877595; c=relaxed/simple;
-	bh=xp2caFPQs2p26Z4iy/QNUAPt+VZNPn3nCoyn1k4lCH8=;
+	s=arc-20240116; t=1748877598; c=relaxed/simple;
+	bh=SClDh4C81VioiLpi0Tfca+okqusZwfTqP6ENjjHad3E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LYxoGn+2FZw/mPo328P/g6Ew2ZvGkTMZs1wH9m3QH7CDIgmZUyMPBnDlBNYv/vplDmgKmM4EVmtCNGGLuBAUCui/27EWPu4D3Mg6Yk3SKPRCjWMIUhqAnFW9kQDk4u2/ApXvarSaY7mb4Glg39NZA57pnAbiSh9NQZeuJXFAuJI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pIYG+/L5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h86joDc5OtffSHUcly/TD4AH4xsqzS7pblNKJ7QWiUcYiOzha2pmp54VKrKhivGSrjqala4eHN++1WoYKZxbSOrGuzkZ7MmbHugYAGA8MTQoKzPr6idrnJYdk8bMBjGIDMxeWTmtuafLIRcHBTdJ0X4siHBCiYP8dP0G5TEzHMk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wk6gD0qh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pIYG+/L5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B8DFC4CEEB;
-	Mon,  2 Jun 2025 15:19:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wk6gD0qh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5C04C4CEEB;
+	Mon,  2 Jun 2025 15:19:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748877595;
-	bh=xp2caFPQs2p26Z4iy/QNUAPt+VZNPn3nCoyn1k4lCH8=;
+	s=korg; t=1748877598;
+	bh=SClDh4C81VioiLpi0Tfca+okqusZwfTqP6ENjjHad3E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pIYG+/L5jVJ7ACmg1dZKo1i1JUU64acIIhLL7rAkumqvgA5MImMiT4miCqRx8zA2C
-	 Z4nr8P2amaUACU6xK8dRMkMwjmGnQiBJJSKMSOy+dJT+ja08dZLTmfKi3IziCP8YP4
-	 sK35kmwLgDauFS3oJF61mtw5grsAW+YFq9c+agqM=
+	b=Wk6gD0qhpnHf5KLNnXRPP0fc5e2wChVf3HrpVwJYGooIJ0bQNy8JIv7mqfjp2hX40
+	 f+NqODqDCcMS/XhVoGf3++0iUETt6TWPjFoDPLLA1hy4RbZ5fdmiXj2ukwF2XDeaZe
+	 +Fs/gfzC0xMQm6qGFB5UeiqANhjK3b7/6daVvb84=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Michal Luczaj <mhal@rbox.co>,
 	Kuniyuki Iwashima <kuniyu@amazon.com>,
 	Paolo Abeni <pabeni@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
 	Lee Jones <lee@kernel.org>
-Subject: [PATCH 6.1 305/325] af_unix: Add dead flag to struct scm_fp_list.
-Date: Mon,  2 Jun 2025 15:49:41 +0200
-Message-ID: <20250602134332.307451719@linuxfoundation.org>
+Subject: [PATCH 6.1 306/325] af_unix: Fix garbage collection of embryos carrying OOB with SCM_RIGHTS
+Date: Mon,  2 Jun 2025 15:49:42 +0200
+Message-ID: <20250602134332.348327423@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134319.723650984@linuxfoundation.org>
 References: <20250602134319.723650984@linuxfoundation.org>
@@ -52,107 +52,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Michal Luczaj <mhal@rbox.co>
 
-commit 7172dc93d621d5dc302d007e95ddd1311ec64283 upstream.
+commit 041933a1ec7b4173a8e638cae4f8e394331d7e54 upstream.
 
-Commit 1af2dface5d2 ("af_unix: Don't access successor in unix_del_edges()
-during GC.") fixed use-after-free by avoid accessing edge->successor while
-GC is in progress.
+GC attempts to explicitly drop oob_skb's reference before purging the hit
+list.
 
-However, there could be a small race window where another process could
-call unix_del_edges() while gc_in_progress is true and __skb_queue_purge()
-is on the way.
+The problem is with embryos: kfree_skb(u->oob_skb) is never called on an
+embryo socket.
 
-So, we need another marker for struct scm_fp_list which indicates if the
-skb is garbage-collected.
+The python script below [0] sends a listener's fd to its embryo as OOB
+data.  While GC does collect the embryo's queue, it fails to drop the OOB
+skb's refcount.  The skb which was in embryo's receive queue stays as
+unix_sk(sk)->oob_skb and keeps the listener's refcount [1].
 
-This patch adds dead flag in struct scm_fp_list and set it true before
-calling __skb_queue_purge().
+Tell GC to dispose embryo's oob_skb.
 
-Fixes: 1af2dface5d2 ("af_unix: Don't access successor in unix_del_edges() during GC.")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Acked-by: Paolo Abeni <pabeni@redhat.com>
-Link: https://lore.kernel.org/r/20240508171150.50601-1-kuniyu@amazon.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[0]:
+from array import array
+from socket import *
+
+addr = '\x00unix-oob'
+lis = socket(AF_UNIX, SOCK_STREAM)
+lis.bind(addr)
+lis.listen(1)
+
+s = socket(AF_UNIX, SOCK_STREAM)
+s.connect(addr)
+scm = (SOL_SOCKET, SCM_RIGHTS, array('i', [lis.fileno()]))
+s.sendmsg([b'x'], [scm], MSG_OOB)
+lis.close()
+
+[1]
+$ grep unix-oob /proc/net/unix
+$ ./unix-oob.py
+$ grep unix-oob /proc/net/unix
+0000000000000000: 00000002 00000000 00000000 0001 02     0 @unix-oob
+0000000000000000: 00000002 00000000 00010000 0001 01  6072 @unix-oob
+
+Fixes: 4090fa373f0e ("af_unix: Replace garbage collection algorithm.")
+Signed-off-by: Michal Luczaj <mhal@rbox.co>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/scm.h  |    1 +
- net/core/scm.c     |    1 +
- net/unix/garbage.c |   14 ++++++++++----
- 3 files changed, 12 insertions(+), 4 deletions(-)
+ net/unix/garbage.c |   23 ++++++++++++++---------
+ 1 file changed, 14 insertions(+), 9 deletions(-)
 
---- a/include/net/scm.h
-+++ b/include/net/scm.h
-@@ -31,6 +31,7 @@ struct scm_fp_list {
- 	short			max;
- #ifdef CONFIG_UNIX
- 	bool			inflight;
-+	bool			dead;
- 	struct list_head	vertices;
- 	struct unix_edge	*edges;
- #endif
---- a/net/core/scm.c
-+++ b/net/core/scm.c
-@@ -91,6 +91,7 @@ static int scm_fp_copy(struct cmsghdr *c
- 		fpl->user = NULL;
- #if IS_ENABLED(CONFIG_UNIX)
- 		fpl->inflight = false;
-+		fpl->dead = false;
- 		fpl->edges = NULL;
- 		INIT_LIST_HEAD(&fpl->vertices);
- #endif
 --- a/net/unix/garbage.c
 +++ b/net/unix/garbage.c
-@@ -158,13 +158,11 @@ static void unix_add_edge(struct scm_fp_
- 	unix_update_graph(unix_edge_successor(edge));
- }
+@@ -342,6 +342,18 @@ enum unix_recv_queue_lock_class {
+ 	U_RECVQ_LOCK_EMBRYO,
+ };
  
--static bool gc_in_progress;
--
- static void unix_del_edge(struct scm_fp_list *fpl, struct unix_edge *edge)
- {
- 	struct unix_vertex *vertex = edge->predecessor->vertex;
- 
--	if (!gc_in_progress)
-+	if (!fpl->dead)
- 		unix_update_graph(unix_edge_successor(edge));
- 
- 	list_del(&edge->vertex_entry);
-@@ -240,7 +238,7 @@ void unix_del_edges(struct scm_fp_list *
- 		unix_del_edge(fpl, edge);
- 	} while (i < fpl->count_unix);
- 
--	if (!gc_in_progress) {
-+	if (!fpl->dead) {
- 		receiver = fpl->edges[0].successor;
- 		receiver->scm_stat.nr_unix_fds -= fpl->count_unix;
- 	}
-@@ -559,9 +557,12 @@ static void unix_walk_scc_fast(struct sk
- 	list_replace_init(&unix_visited_vertices, &unix_unvisited_vertices);
- }
- 
-+static bool gc_in_progress;
++static void unix_collect_queue(struct unix_sock *u, struct sk_buff_head *hitlist)
++{
++	skb_queue_splice_init(&u->sk.sk_receive_queue, hitlist);
 +
- static void __unix_gc(struct work_struct *work)
- {
- 	struct sk_buff_head hitlist;
-+	struct sk_buff *skb;
- 
- 	spin_lock(&unix_gc_lock);
- 
-@@ -579,6 +580,11 @@ static void __unix_gc(struct work_struct
- 
- 	spin_unlock(&unix_gc_lock);
- 
-+	skb_queue_walk(&hitlist, skb) {
-+		if (UNIXCB(skb).fp)
-+			UNIXCB(skb).fp->dead = true;
++#if IS_ENABLED(CONFIG_AF_UNIX_OOB)
++	if (u->oob_skb) {
++		WARN_ON_ONCE(skb_unref(u->oob_skb));
++		u->oob_skb = NULL;
 +	}
++#endif
++}
 +
- 	__skb_queue_purge(&hitlist);
- skip_gc:
- 	WRITE_ONCE(gc_in_progress, false);
+ static void unix_collect_skb(struct list_head *scc, struct sk_buff_head *hitlist)
+ {
+ 	struct unix_vertex *vertex;
+@@ -365,18 +377,11 @@ static void unix_collect_skb(struct list
+ 
+ 				/* listener -> embryo order, the inversion never happens. */
+ 				spin_lock_nested(&embryo_queue->lock, U_RECVQ_LOCK_EMBRYO);
+-				skb_queue_splice_init(embryo_queue, hitlist);
++				unix_collect_queue(unix_sk(skb->sk), hitlist);
+ 				spin_unlock(&embryo_queue->lock);
+ 			}
+ 		} else {
+-			skb_queue_splice_init(queue, hitlist);
+-
+-#if IS_ENABLED(CONFIG_AF_UNIX_OOB)
+-			if (u->oob_skb) {
+-				kfree_skb(u->oob_skb);
+-				u->oob_skb = NULL;
+-			}
+-#endif
++			unix_collect_queue(u, hitlist);
+ 		}
+ 
+ 		spin_unlock(&queue->lock);
 
 
