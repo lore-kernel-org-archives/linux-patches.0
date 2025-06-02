@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E87819EEBD;
-	Mon,  2 Jun 2025 14:30:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBB8C19EEBD;
+	Mon,  2 Jun 2025 14:30:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748874618; cv=none; b=r/qj54nfn1R23kgRY1XwahlrdfDlb3Tq+dLXSWf025oB43L3XL+pnUwShIDil/SQpn9JwvbJlBLOJLsyTlpkRLeIuvwM14+hmxNy1WBkmaZv4KJu2aO1S8sehzDYo16lixttoyrFVwWTqKuwE3vDe0e4Xa37RJWELHwvrGMMtE8=
+	t=1748874621; cv=none; b=ORy6STYqU5ota7DiTKe4WxuIWs6O4ZSwv8imu/UHaQdXpj1djzhdkQSaI7nTkhUuVriGwk9hNVXISLn67G8w3ab/3E+hUaM4ioo7MT6TZuphh6B4VnSdlmAnXD1AVDNwoDVMY5HnquIcxf1Wq/inMDfsuGNcj8VOrkXhpjLRcG0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748874618; c=relaxed/simple;
-	bh=v7Wda6zGACZIOppY5CjYgvdsW/7i0SGfYcGxg8ZmZyA=;
+	s=arc-20240116; t=1748874621; c=relaxed/simple;
+	bh=xkoOe4j5WIgmWhRhd9n9niDeVJyjFTvMCNdlG4uCT3A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U7mmAI35UKk8VkHHroMM0lHqDQfiB28ITMYcVGguRpuGAecR6K8rVwxK5XTeB4VNqtU7ngwfaq5XTj2NM3d956kEC1IreArPwwk1GjBcspcFYkErwqxGyuFGbR54bc1DOCHKITC+Eulo1w8NvKdQgxYdQh19rPNsODh7IEQJubg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s8xLLOA0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W0mIQzBwwkVvekyX9hFWuY8W9P90v9JX+evjKMToRLSJyetcHtp3nXJgQX1a/tWlZ/UGQ0Xg6ctQp4z3Sq7PcjEfcExJtp8vRn0yWXe1cbfyfUxzgOj4AEQqi8AgLzagObj21e9riLwzvqJELRMKpmsKubwwRqSzYuPlo9VvnR8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EmHJZvFa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s8xLLOA0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FD7CC4CEEB;
-	Mon,  2 Jun 2025 14:30:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EmHJZvFa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B14BC4CEEB;
+	Mon,  2 Jun 2025 14:30:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748874618;
-	bh=v7Wda6zGACZIOppY5CjYgvdsW/7i0SGfYcGxg8ZmZyA=;
+	s=korg; t=1748874621;
+	bh=xkoOe4j5WIgmWhRhd9n9niDeVJyjFTvMCNdlG4uCT3A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s8xLLOA0cXf4sqPa0MjY2hwOf6xfsn2ieitFCiRi6B8ATW/vzE8T8qqVk+CPG2T86
-	 6MXPExVP9RAJV6BUcJ7FRnvYSn2yhZqFwkuQXKL2De8TkjLLqBcM/1mDLWYylakeGk
-	 ytXjgst8EInOV5ClCuo/YSVC0JIwG02BnILSCjJk=
+	b=EmHJZvFalRUar6FWOBU6K/Eete2uJZTRT4xom8Txl0BRpspHHhj8o+e12NdcUHzgR
+	 +gL0URwi8FX9blFHslmCtW5rHkrhTkj/xOLpruVsDUBcuCFQle6k3FxLxbL204seJi
+	 0P8tGCyOhao/BCfu9b8RG5P/Y5FvtmSnCuHmMnCY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 5.4 082/204] clocksource/i8253: Use raw_spinlock_irqsave() in clockevent_i8253_disable()
-Date: Mon,  2 Jun 2025 15:46:55 +0200
-Message-ID: <20250602134258.892933217@linuxfoundation.org>
+	jt <enopatch@gmail.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Aditya Garg <gargaditya08@live.com>
+Subject: [PATCH 5.4 083/204] Input: synaptics - enable SMBus for HP Elitebook 850 G1
+Date: Mon,  2 Jun 2025 15:46:56 +0200
+Message-ID: <20250602134258.931437980@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134255.449974357@linuxfoundation.org>
 References: <20250602134255.449974357@linuxfoundation.org>
@@ -50,56 +51,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-commit 94cff94634e506a4a44684bee1875d2dbf782722 upstream.
+commit f04f03d3e99bc8f89b6af5debf07ff67d961bc23 upstream.
 
-On x86 during boot, clockevent_i8253_disable() can be invoked via
-x86_late_time_init -> hpet_time_init() -> pit_timer_init() which happens
-with enabled interrupts.
+The kernel reports that the touchpad for this device can support
+SMBus mode.
 
-If some of the old i8253 hardware is actually used then lockdep will notice
-that i8253_lock is used in hard interrupt context. This causes lockdep to
-complain because it observed the lock being acquired with interrupts
-enabled and in hard interrupt context.
-
-Make clockevent_i8253_disable() acquire the lock with
-raw_spinlock_irqsave() to cure this.
-
-[ tglx: Massage change log and use guard() ]
-
-Fixes: c8c4076723dac ("x86/timer: Skip PIT initialization on modern chipsets")
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reported-by: jt <enopatch@gmail.com>
+Link: https://lore.kernel.org/r/iys5dbv3ldddsgobfkxldazxyp54kay4bozzmagga6emy45jop@2ebvuxgaui4u
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20250404133116.p-XRWJXf@linutronix.de
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Aditya Garg <gargaditya08@live.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clocksource/i8253.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/input/mouse/synaptics.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/clocksource/i8253.c
-+++ b/drivers/clocksource/i8253.c
-@@ -103,7 +103,9 @@ int __init clocksource_i8253_init(void)
- #ifdef CONFIG_CLKEVT_I8253
- void clockevent_i8253_disable(void)
- {
--	raw_spin_lock(&i8253_lock);
-+	unsigned long flags;
-+
-+	raw_spin_lock_irqsave(&i8253_lock, flags);
- 
- 	/*
- 	 * Writing the MODE register should stop the counter, according to
-@@ -133,7 +135,7 @@ void clockevent_i8253_disable(void)
- 
- 	outb_p(0x30, PIT_MODE);
- 
--	raw_spin_unlock(&i8253_lock);
-+	raw_spin_unlock_irqrestore(&i8253_lock, flags);
- }
- 
- static int pit_shutdown(struct clock_event_device *evt)
+--- a/drivers/input/mouse/synaptics.c
++++ b/drivers/input/mouse/synaptics.c
+@@ -186,6 +186,7 @@ static const char * const smbus_pnp_ids[
+ 	"LEN2044", /* L470  */
+ 	"LEN2054", /* E480 */
+ 	"LEN2055", /* E580 */
++	"SYN3003", /* HP EliteBook 850 G1 */
+ 	"SYN3052", /* HP EliteBook 840 G4 */
+ 	"SYN3221", /* HP 15-ay000 */
+ 	"SYN323d", /* HP Spectre X360 13-w013dx */
 
 
