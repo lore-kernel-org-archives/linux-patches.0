@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAF122253E9;
-	Mon,  2 Jun 2025 14:48:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18F9D221F12;
+	Mon,  2 Jun 2025 14:48:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748875725; cv=none; b=kkTyjHrZ5gB3xH30QFH5YwfziB2QX7y3vo6ektt5POcL99nFMHF6Pav1kBj1+MI472+HFkDsRDkvoAO1EHflehEChOe1yZqDj1KFop0tSbLgbhTu05dyoja+NF6tiwE550wq+z/7n3GO4QSVd9Vsq+SXND5NGec9KzPGmYjeJvE=
+	t=1748875729; cv=none; b=TwROyRAfbnSPOTR5COx1au0pKrZZ43Hh4gGJUJhENqBFxdvvCpdZIXIMTYs57Ebu0qd1qaliz0L6U2LSMWsQVh6siE+pE8Wt/oqURsFxMn5ViKYVrAlZpQ3KJZR4AzkKoFnMvRluDu0q1t/z1V/OBi03CMQJx3gPJzZFk99TzuA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748875725; c=relaxed/simple;
-	bh=JQJoVYVpFvQlxdqJf2KUlqiy0L8uBhWv6UkcmnEhqKs=;
+	s=arc-20240116; t=1748875729; c=relaxed/simple;
+	bh=RQQxuj0MnwitMTcEu0m8XRa5aCtajyarRHJF4bAER2g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JiVhsmvdhaPVcBpw8cNNUQacSaKjXLFPHsvlM1FzTsDfBMO/rikREf4AJIgS+/oVkLO0XKQtqHaybFewDYx4qYgrRVQkYCMkZO1DvpzB5TsBsuCvA/oYxpRcg/V7Nn9sLM7r+pVvtAJHUILhWDVPUoCutjmBVSLE9O84FouxmCs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Iq1rVA9e; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=V6luBDLxMRv/7POeofMsUqmjFQs9xd9I+yeSMwJ9tz5jmfzfDuoyJsJQMae9/n8q8qndGtnO6b1xFaHlDFZ28l+ZjgywF31tcTfzSwx3ZZCXV0O5pG2EDIp5y2CZVI9ot6gIAvimlGz/2SgnT8Gt3bZO7S9vmyDkA6BnWNWZnRE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bDH4fIRB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Iq1rVA9e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 384B4C4CEEB;
-	Mon,  2 Jun 2025 14:48:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bDH4fIRB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B52FC4CEEB;
+	Mon,  2 Jun 2025 14:48:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748875725;
-	bh=JQJoVYVpFvQlxdqJf2KUlqiy0L8uBhWv6UkcmnEhqKs=;
+	s=korg; t=1748875729;
+	bh=RQQxuj0MnwitMTcEu0m8XRa5aCtajyarRHJF4bAER2g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Iq1rVA9ed4PRrSuXQk02QaKWPRDL7MElzDWX+xv1mfnUXpCeJGE9oRC0iA+v3fgta
-	 vKOYYSIjR8f+9JRqIPZTK42rpvbnUvEuEIuqDRU0impkdZn/vcTqHuMcpBYr73Ksqg
-	 lxoFCxxv22TWBMX42C+M/ohFFbIUNpXtNy63ClD4=
+	b=bDH4fIRBsbrxFV4E9qOcyePVwfcq1Ic7MpttJCRInEQuB9u3kTOrEl7Ax6OvTY75P
+	 56W6MbVdlRiQMTLynn9N2QK1gKicdbEXuQveYf2hrBRIieK+oBHS3oO4hsQ66t2GMa
+	 19eML3kNoVjrDTES871n9+gT/F71vz7Kxar/awno=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Xiaochun Lee <lixc17@lenovo.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 223/270] wifi: rtw88: Dont use static local variable in rtw8822b_set_tx_power_index_by_rate
-Date: Mon,  2 Jun 2025 15:48:28 +0200
-Message-ID: <20250602134316.293475032@linuxfoundation.org>
+Subject: [PATCH 5.10 195/270] PCI: Fix old_size lower bound in calculate_iosize() too
+Date: Mon,  2 Jun 2025 15:48:00 +0200
+Message-ID: <20250602134315.169357124@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134307.195171844@linuxfoundation.org>
 References: <20250602134307.195171844@linuxfoundation.org>
@@ -45,81 +46,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-[ Upstream commit 00451eb3bec763f708e7e58326468c1e575e5a66 ]
+[ Upstream commit ff61f380de5652e723168341480cc7adf1dd6213 ]
 
-Some users want to plug two identical USB devices at the same time.
-This static variable could theoretically cause them to use incorrect
-TX power values.
+Commit 903534fa7d30 ("PCI: Fix resource double counting on remove &
+rescan") fixed double counting of mem resources because of old_size being
+applied too early.
 
-Move the variable to the caller and pass a pointer to it to
-rtw8822b_set_tx_power_index_by_rate().
+Fix a similar counting bug on the io resource side.
 
-Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/8a60f581-0ab5-4d98-a97d-dd83b605008f@gmail.com
+Link: https://lore.kernel.org/r/20241216175632.4175-6-ilpo.jarvinen@linux.intel.com
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Tested-by: Xiaochun Lee <lixc17@lenovo.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw88/rtw8822b.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ drivers/pci/setup-bus.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw88/rtw8822b.c b/drivers/net/wireless/realtek/rtw88/rtw8822b.c
-index dbfd67c3f598c..1478cb22cf5f8 100644
---- a/drivers/net/wireless/realtek/rtw88/rtw8822b.c
-+++ b/drivers/net/wireless/realtek/rtw88/rtw8822b.c
-@@ -954,11 +954,11 @@ static void rtw8822b_query_rx_desc(struct rtw_dev *rtwdev, u8 *rx_desc,
+diff --git a/drivers/pci/setup-bus.c b/drivers/pci/setup-bus.c
+index a159bfdfa2512..04c3ae8efc0f8 100644
+--- a/drivers/pci/setup-bus.c
++++ b/drivers/pci/setup-bus.c
+@@ -806,11 +806,9 @@ static resource_size_t calculate_iosize(resource_size_t size,
+ 	size = (size & 0xff) + ((size & ~0xffUL) << 2);
+ #endif
+ 	size = size + size1;
+-	if (size < old_size)
+-		size = old_size;
+ 
+-	size = ALIGN(max(size, add_size) + children_add_size, align);
+-	return size;
++	size = max(size, add_size) + children_add_size;
++	return ALIGN(max(size, old_size), align);
  }
  
- static void
--rtw8822b_set_tx_power_index_by_rate(struct rtw_dev *rtwdev, u8 path, u8 rs)
-+rtw8822b_set_tx_power_index_by_rate(struct rtw_dev *rtwdev, u8 path,
-+				    u8 rs, u32 *phy_pwr_idx)
- {
- 	struct rtw_hal *hal = &rtwdev->hal;
- 	static const u32 offset_txagc[2] = {0x1d00, 0x1d80};
--	static u32 phy_pwr_idx;
- 	u8 rate, rate_idx, pwr_index, shift;
- 	int j;
- 
-@@ -966,12 +966,12 @@ rtw8822b_set_tx_power_index_by_rate(struct rtw_dev *rtwdev, u8 path, u8 rs)
- 		rate = rtw_rate_section[rs][j];
- 		pwr_index = hal->tx_pwr_tbl[path][rate];
- 		shift = rate & 0x3;
--		phy_pwr_idx |= ((u32)pwr_index << (shift * 8));
-+		*phy_pwr_idx |= ((u32)pwr_index << (shift * 8));
- 		if (shift == 0x3) {
- 			rate_idx = rate & 0xfc;
- 			rtw_write32(rtwdev, offset_txagc[path] + rate_idx,
--				    phy_pwr_idx);
--			phy_pwr_idx = 0;
-+				    *phy_pwr_idx);
-+			*phy_pwr_idx = 0;
- 		}
- 	}
- }
-@@ -979,11 +979,13 @@ rtw8822b_set_tx_power_index_by_rate(struct rtw_dev *rtwdev, u8 path, u8 rs)
- static void rtw8822b_set_tx_power_index(struct rtw_dev *rtwdev)
- {
- 	struct rtw_hal *hal = &rtwdev->hal;
-+	u32 phy_pwr_idx = 0;
- 	int rs, path;
- 
- 	for (path = 0; path < hal->rf_path_num; path++) {
- 		for (rs = 0; rs < RTW_RATE_SECTION_MAX; rs++)
--			rtw8822b_set_tx_power_index_by_rate(rtwdev, path, rs);
-+			rtw8822b_set_tx_power_index_by_rate(rtwdev, path, rs,
-+							    &phy_pwr_idx);
- 	}
- }
- 
+ static resource_size_t calculate_memsize(resource_size_t size,
 -- 
 2.39.5
 
