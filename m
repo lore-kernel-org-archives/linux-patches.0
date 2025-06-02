@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 117C822F772;
-	Mon,  2 Jun 2025 14:47:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B801221F11;
+	Mon,  2 Jun 2025 14:47:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748875624; cv=none; b=M1VFLYY6H+pF4Sl092Vrp4OkxgXFQXDj7nKrh3bEOpxyIG/5uTi1oSsT6zhrLROckuyAk0efo8VYC5sQFQkWavpCBSqljrenNxYw+SJ3KnA2AP/6U+NU38Rm5J6AdzsVZpHIKZ0A2/ocDzNiFWRpLbcPuNSLdKbZqaSG0P7L76k=
+	t=1748875627; cv=none; b=pcJGsupYuapzlFzC7dOt4uOs1i/Fg6wp+SLfz34mGaGJHAYp2qUomw3LD/BmylXbUw1uTVIEqTxP8YIiUwQbD19ciEGcj9D4eHEC6Q5pSjxRUogbYn0Gln1NP+vE+qHZGsO4CcI9bb5rqgYTkS+DBBBHh2ASQ74I/inbx1AWbdo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748875624; c=relaxed/simple;
-	bh=c2hbu2NttbuIqryBT6sCalUHnTW+ccIFdJP1s016X7I=;
+	s=arc-20240116; t=1748875627; c=relaxed/simple;
+	bh=KgmQmLbHMtoYb2v2RbEvkHDEtTjK4yKHK+pFJpydkTE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uUHKa+WWXLB7BBdqwLYKUrpmu7cgVuXJo0Q2jbSXec9P35FJTBGf+zN04a/Q1j+vR3ZvZNi5umSTmSY8lxvynkXL4awNypcx/QCG7WdICIeo16Wx8m96Xnzk2FUiA9WS/okzpfBrv72o3GR0IOcMivD3JMoeZ/q/zDAYnZJiZZA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TOaQbKcS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CZ7TjyfjqzlwnVzCa5fRwksHzlsMAYbseOoBbjjZhOwKph6ZA8DsUi73eGY2t65FELw0mlfQEG8J9GSbqBQaRM0oG8CMgrQryJxHfqLpCTSCnpzK4dd/wT4G9897hcf5rjh+Z28Aoe6+Zw1VzxMMGjA/scty51aedc1ghOYB2bk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U4EzStcB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TOaQbKcS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C486C4CEEB;
-	Mon,  2 Jun 2025 14:47:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U4EzStcB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFD36C4CEF0;
+	Mon,  2 Jun 2025 14:47:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748875623;
-	bh=c2hbu2NttbuIqryBT6sCalUHnTW+ccIFdJP1s016X7I=;
+	s=korg; t=1748875627;
+	bh=KgmQmLbHMtoYb2v2RbEvkHDEtTjK4yKHK+pFJpydkTE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TOaQbKcSByhb0RpoIU0ETtPU5vLJ1JF/yqLsICOHGycRDFlBtrGjz5lev0sgNcoIh
-	 dm5qXb+zsZWhIOOBuHHmkYUILKFufYyPEWVCMcwi3Y5lVsDU1BVCv25ZeYXhcPeMkN
-	 gumQFoFOF8PCuwrNfocpZRh/djWITg2cCYMp53GE=
+	b=U4EzStcB7ouhwmJzMCCuWBrKei7HcMkqKCJH0uGN5yC6nFos2XPs8zV/ApJBMe0OJ
+	 u3987I9fjkZoETkQ/VqrVKB8NvB/AGgyhIappvN1g+Y93AJ46p1uANggLid5Mk7v/n
+	 Hk7gyheVJzEt2u0Uzd7c/1nyZmoZ73PIg4266F58=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Mike Marshall <hubcap@omnibond.com>,
-	Christian Brauner <brauner@kernel.org>,
+	Victor Lu <victorchengchi.lu@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 162/270] orangefs: Do not truncate file size
-Date: Mon,  2 Jun 2025 15:47:27 +0200
-Message-ID: <20250602134313.844143119@linuxfoundation.org>
+Subject: [PATCH 5.10 163/270] drm/amdgpu: Do not program AGP BAR regs under SRIOV in gfxhub_v1_0.c
+Date: Mon,  2 Jun 2025 15:47:28 +0200
+Message-ID: <20250602134313.881982306@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134307.195171844@linuxfoundation.org>
 References: <20250602134307.195171844@linuxfoundation.org>
@@ -52,48 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Wilcox (Oracle) <willy@infradead.org>
+From: Victor Lu <victorchengchi.lu@amd.com>
 
-[ Upstream commit 062e8093592fb866b8e016641a8b27feb6ac509d ]
+[ Upstream commit 057fef20b8401110a7bc1c2fe9d804a8a0bf0d24 ]
 
-'len' is used to store the result of i_size_read(), so making 'len'
-a size_t results in truncation to 4GiB on 32-bit systems.
+SRIOV VF does not have write access to AGP BAR regs.
+Skip the writes to avoid a dmesg warning.
 
-Signed-off-by: "Matthew Wilcox (Oracle)" <willy@infradead.org>
-Link: https://lore.kernel.org/r/20250305204734.1475264-2-willy@infradead.org
-Tested-by: Mike Marshall <hubcap@omnibond.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Victor Lu <victorchengchi.lu@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/orangefs/inode.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/gfxhub_v1_0.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/fs/orangefs/inode.c b/fs/orangefs/inode.c
-index 48f0547d4850e..cd70ded309e47 100644
---- a/fs/orangefs/inode.c
-+++ b/fs/orangefs/inode.c
-@@ -22,9 +22,9 @@ static int orangefs_writepage_locked(struct page *page,
- 	struct orangefs_write_range *wr = NULL;
- 	struct iov_iter iter;
- 	struct bio_vec bv;
--	size_t len, wlen;
-+	size_t wlen;
- 	ssize_t ret;
--	loff_t off;
-+	loff_t len, off;
+diff --git a/drivers/gpu/drm/amd/amdgpu/gfxhub_v1_0.c b/drivers/gpu/drm/amd/amdgpu/gfxhub_v1_0.c
+index fad887a668866..7949a87b03a84 100644
+--- a/drivers/gpu/drm/amd/amdgpu/gfxhub_v1_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfxhub_v1_0.c
+@@ -70,12 +70,12 @@ static void gfxhub_v1_0_init_system_aperture_regs(struct amdgpu_device *adev)
+ {
+ 	uint64_t value;
  
- 	set_page_writeback(page);
- 
-@@ -93,8 +93,7 @@ static int orangefs_writepages_work(struct orangefs_writepages *ow,
- 	struct orangefs_write_range *wrp, wr;
- 	struct iov_iter iter;
- 	ssize_t ret;
--	size_t len;
--	loff_t off;
-+	loff_t len, off;
- 	int i;
- 
- 	len = i_size_read(inode);
+-	/* Program the AGP BAR */
+-	WREG32_SOC15_RLC(GC, 0, mmMC_VM_AGP_BASE, 0);
+-	WREG32_SOC15_RLC(GC, 0, mmMC_VM_AGP_BOT, adev->gmc.agp_start >> 24);
+-	WREG32_SOC15_RLC(GC, 0, mmMC_VM_AGP_TOP, adev->gmc.agp_end >> 24);
+-
+ 	if (!amdgpu_sriov_vf(adev) || adev->asic_type <= CHIP_VEGA10) {
++		/* Program the AGP BAR */
++		WREG32_SOC15_RLC(GC, 0, mmMC_VM_AGP_BASE, 0);
++		WREG32_SOC15_RLC(GC, 0, mmMC_VM_AGP_BOT, adev->gmc.agp_start >> 24);
++		WREG32_SOC15_RLC(GC, 0, mmMC_VM_AGP_TOP, adev->gmc.agp_end >> 24);
++
+ 		/* Program the system aperture low logical page number. */
+ 		WREG32_SOC15_RLC(GC, 0, mmMC_VM_SYSTEM_APERTURE_LOW_ADDR,
+ 			min(adev->gmc.fb_start, adev->gmc.agp_start) >> 18);
 -- 
 2.39.5
 
