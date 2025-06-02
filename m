@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3598F222560;
-	Mon,  2 Jun 2025 14:01:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DD02221FB8;
+	Mon,  2 Jun 2025 14:01:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748872898; cv=none; b=jlSV5f3fD88I6aqM3+in3AFXZwinPU9ywZApxS2z+l+3T4l6fUKfEqfapjCylQ2k9Lrw/y3qcALhnOJKns8gl72+iPlHCOZ35omVuFZcjY1P6zZRrt1ZE6ptq7VnshQGR1QBkFXTqmhBO02VryFtL+qg5wqxhH+FcDTVOSmO7EU=
+	t=1748872901; cv=none; b=k1EVS1KVLsEhyAKSDbaj7Ix5LZaEAr9a73/FSIh+d+4i8drIcydxGxnyXvX49EgTC1gk1nO/M0i7cP9Xr6D7xCMhBBfftntOZSgjKhtf5kNwQS9Kt83zVK45Z1pRps6Mdts4vTT9wjVwepG790/nMopnpHmF1KMRxIFNiyUROaE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748872898; c=relaxed/simple;
-	bh=sa0tL9IBkfzMvsfeYwrUNP+iOUtJS0TethNqmp9JnIg=;
+	s=arc-20240116; t=1748872901; c=relaxed/simple;
+	bh=/Aus7QI0/Sh/lqMwXv4z1NNQje8YQb6ZwUehXoQJG8w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dIO16tp7KKWovMqJKN9sGA4XK9DhqLuVR07Pl5fmKqwJivfSgrwkeuz+NuM9yiMMEMCuSynJh0a28N64OCzfQjl/qVIqAZRmhNepYNuLI9NyInlIiZRV0wDjtuLvE3JwhCidMOio0XRfuXcttzfeXsaRCjKjC6jxkQSN/OaqzYA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cMT81AQY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HKv4FhaAHSbrU7wtv+J5k6C0IhFqUJQgFNwAqktE4IiWK0Xu7nz92/Eo+zg8ucv6XaLggGPdoRxsEq1Ll2GGd8fpBsPDqfVGpeFEzBBgReVhW0PO27CP1zfYoZ3nQBCAbno1deftVXqzIt4bIsmraPDA09cwHR5VsyOV39xtnuQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZZ+oNiru; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cMT81AQY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4143C4CEEE;
-	Mon,  2 Jun 2025 14:01:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZZ+oNiru"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB423C4CEEB;
+	Mon,  2 Jun 2025 14:01:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748872898;
-	bh=sa0tL9IBkfzMvsfeYwrUNP+iOUtJS0TethNqmp9JnIg=;
+	s=korg; t=1748872901;
+	bh=/Aus7QI0/Sh/lqMwXv4z1NNQje8YQb6ZwUehXoQJG8w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cMT81AQYmNlo1RSZxJGKCrmn+18FzRn5LKVrTHL99yYjxHlAWocim5c0gExN03Fn6
-	 T6uojr23D+PT6mjw+fm06X6Jeqf0EdQrS0RsAwgS4Oz/+jrOKTri6X/klXvvtH2Dgn
-	 3LDHHRwqeLI7F+VHINQnIgMa0RjSCQfG3cBFTX0E=
+	b=ZZ+oNiru2D5SZaO/451wBEAqRaB2ZOKD0RROx89ZjAWqORJ60CrOFXGxFiSbnRRWQ
+	 qLQIS5zFLKxlZ9Ows0x3a4RuUbxy1BnMEiPdB8qir+zBI86nz4x9L5fr7k0tr5tGqv
+	 m06/L4HuLWjSlGqaIyRzSjJ1+CLA1tteKpsGdYyc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Stephan Gerhold <stephan.gerhold@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Abel Vesa <abel.vesa@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.12 08/55] arm64: dts: qcom: sm8650: Add missing properties for cryptobam
-Date: Mon,  2 Jun 2025 15:47:25 +0200
-Message-ID: <20250602134238.596804249@linuxfoundation.org>
+Subject: [PATCH 6.12 09/55] arm64: dts: qcom: x1e80100-asus-vivobook-s15: Fix vreg_l2j_1p2 voltage
+Date: Mon,  2 Jun 2025 15:47:26 +0200
+Message-ID: <20250602134238.643652096@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134238.271281478@linuxfoundation.org>
 References: <20250602134238.271281478@linuxfoundation.org>
@@ -52,39 +55,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Stephan Gerhold <stephan.gerhold@linaro.org>
 
-commit 38b88722bce07b6a5927f45fbf7a9a85e834572c upstream.
+commit 0fb9ecf8713a7a458f7378c86e0703467db2ad22 upstream.
 
-num-channels and qcom,num-ees are required for BAM nodes without clock,
-because the driver cannot ensure the hardware is powered on when trying to
-obtain the information from the hardware registers. Specifying the node
-without these properties is unsafe and has caused early boot crashes for
-other SoCs before [1, 2].
-
-Add the missing information from the hardware registers to ensure the
-driver can probe successfully without causing crashes.
-
-[1]: https://lore.kernel.org/r/CY01EKQVWE36.B9X5TDXAREPF@fairphone.com/
-[2]: https://lore.kernel.org/r/20230626145959.646747-1-krzysztof.kozlowski@linaro.org/
+In the ACPI DSDT table, PPP_RESOURCE_ID_LDO2_J is configured with 1256000
+uV instead of the 1200000 uV we have currently in the device tree. Use the
+same for consistency and correctness.
 
 Cc: stable@vger.kernel.org
-Fixes: 10e024671295 ("arm64: dts: qcom: sm8650: add interconnect dependent device nodes")
+Fixes: d0e2f8f62dff ("arm64: dts: qcom: Add device tree for ASUS Vivobook S 15")
 Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
-Link: https://lore.kernel.org/r/20250212-bam-dma-fixes-v1-4-f560889e65d8@linaro.org
+Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20250423-x1e-vreg-l2j-voltage-v1-3-24b6a2043025@linaro.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/qcom/sm8650.dtsi |    2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-@@ -2495,6 +2495,8 @@
- 				 <&apps_smmu 0x481 0>;
+--- a/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
++++ b/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
+@@ -314,8 +314,8 @@
  
- 			qcom,ee = <0>;
-+			qcom,num-ees = <4>;
-+			num-channels = <20>;
- 			qcom,controlled-remotely;
+ 		vreg_l2j_1p2: ldo2 {
+ 			regulator-name = "vreg_l2j_1p2";
+-			regulator-min-microvolt = <1200000>;
+-			regulator-max-microvolt = <1200000>;
++			regulator-min-microvolt = <1256000>;
++			regulator-max-microvolt = <1256000>;
+ 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
  		};
  
 
