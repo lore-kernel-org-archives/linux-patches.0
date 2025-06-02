@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C77C42153CB;
-	Mon,  2 Jun 2025 14:37:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5287D2153CB;
+	Mon,  2 Jun 2025 14:37:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748875028; cv=none; b=u6MQXJdNVwH8yrsUjwGzuPjG7I/zs9yNFySkrGZl2XcJX75ecgETQn7NF6YunZY9gYn3fggbYKXo4Nwkq0dyjfmoMR0XRI/e/wEt1FFOQDDWvWTXiolZ+Apr4F1wOTb0QCTT5/Eb1r/xFir33Du31xwh8DSbqz032X/dzhdNXtY=
+	t=1748875032; cv=none; b=gqRS0CCkDwwkw2ZlbsvPSXGTDg1batJ9f2w50JXMSQyP+G3Tiy8D3zJpaehPK8IBeDMrH5+SGHI6YLgVdBV3NS02DI4VTz0UQf3gY7fJkhi0XFBNgFlZl7DaBtVW3jnVKoEyUoY2i2XT/UEKXyYrgW5HF4Vv//Vqpit6TpRaJiY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748875028; c=relaxed/simple;
-	bh=rWKwgkZLWnGwusvO3hPyLc5YP/bpb58m+PILSuLT2+w=;
+	s=arc-20240116; t=1748875032; c=relaxed/simple;
+	bh=31hDpCvfpUhPgUT9gMGEcdMNuNsXxjok3vqOIBJnejI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FKhhQozaq63pb2gWvxa26tARqGytA672jWCDA/mYjKpcjUULzPYTfHWxXyn05rp5j/V7Q7WXxJwPk7Qg8xMP3syEyTA19JR6/DzGudfPSsxHIqoAdrbxA6qlVwHi4lAO+MH+i+E56jDowcnw16/9hGkQ448OMtf+OUlmH0ADQs4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ezwTE48N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R0XqyiHC/Tx/psyhekSOpQvcUOpFqQnAOziWL44ry1771Y1ZEz5aaiXXEDFu37kggPav0nxYTZgKdqyaKny6gfwyxCCc4cQAKVfkoWMIllSrA5+m3PZGQlxSPEJSYV0Jlor2RXWom0s69lEtX6gfhVsL9t0OUBx4Tl1Fpza7k9U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hW/KuTfJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ezwTE48N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C98BC4CEEB;
-	Mon,  2 Jun 2025 14:37:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hW/KuTfJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 704C5C4CEEB;
+	Mon,  2 Jun 2025 14:37:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748875028;
-	bh=rWKwgkZLWnGwusvO3hPyLc5YP/bpb58m+PILSuLT2+w=;
+	s=korg; t=1748875031;
+	bh=31hDpCvfpUhPgUT9gMGEcdMNuNsXxjok3vqOIBJnejI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ezwTE48NWl1gAzRIuVSgZNOdRN2rOHwIlAdvC4CER0OHrPf5tgc05D8pAwC/Yxhvm
-	 1WakF56o/ll1wY9STqlNBnmTpt+PtFtFncj8odzaa6wp5czvna0mRCuoWnzKP9J7y0
-	 LZLteoROG1lDN1T+DRuN2L9fDgRoE6L7I6MFO3q0=
+	b=hW/KuTfJGP7riqaSY7AiiKN3Pzi6OAIsXzUHvDlJwCiQ6IpdNDh2v+1kqt2pUu2Wz
+	 9Jpgl4tqgbUwfgQBtOeHV6gz/E/HSmSCPp+3ztSiCB9o8L0yHQ+C6iU6E0W/KNfwzx
+	 O2+Ca4Ar7II9gZ106NP9iUVrVqG1joZb6FSIgwDk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Brauner <brauner@kernel.org>,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 170/204] __legitimize_mnt(): check for MNT_SYNC_UMOUNT should be under mount_lock
-Date: Mon,  2 Jun 2025 15:48:23 +0200
-Message-ID: <20250602134302.333835280@linuxfoundation.org>
+	Jan Vejvalka <jan.vejvalka@lfmotol.cuni.cz>,
+	Juergen Gross <jgross@suse.com>,
+	Stefano Stabellini <sstabellini@kernel.org>,
+	Harshvardhan Jha <harshvardhan.j.jha@oracle.com>
+Subject: [PATCH 5.4 204/204] xen/swiotlb: relax alignment requirements
+Date: Mon,  2 Jun 2025 15:48:57 +0200
+Message-ID: <20250602134303.685893829@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134255.449974357@linuxfoundation.org>
 References: <20250602134255.449974357@linuxfoundation.org>
@@ -51,47 +52,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Juergen Gross <jgross@suse.com>
 
-[ Upstream commit 250cf3693060a5f803c5f1ddc082bb06b16112a9 ]
+commit 85fcb57c983f423180ba6ec5d0034242da05cc54 upstream.
 
-... or we risk stealing final mntput from sync umount - raising mnt_count
-after umount(2) has verified that victim is not busy, but before it
-has set MNT_SYNC_UMOUNT; in that case __legitimize_mnt() doesn't see
-that it's safe to quietly undo mnt_count increment and leaves dropping
-the reference to caller, where it'll be a full-blown mntput().
+When mapping a buffer for DMA via .map_page or .map_sg DMA operations,
+there is no need to check the machine frames to be aligned according
+to the mapped areas size. All what is needed in these cases is that the
+buffer is contiguous at machine level.
 
-Check under mount_lock is needed; leaving the current one done before
-taking that makes no sense - it's nowhere near common enough to bother
-with.
+So carve out the alignment check from range_straddles_page_boundary()
+and move it to a helper called by xen_swiotlb_alloc_coherent() and
+xen_swiotlb_free_coherent() directly.
 
-Reviewed-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 9f40ec84a797 ("xen/swiotlb: add alignment check for dma buffers")
+Reported-by: Jan Vejvalka <jan.vejvalka@lfmotol.cuni.cz>
+Tested-by: Jan Vejvalka <jan.vejvalka@lfmotol.cuni.cz>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Signed-off-by: Harshvardhan Jha <harshvardhan.j.jha@oracle.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/namespace.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ drivers/xen/swiotlb-xen.c |   18 +++++++++++-------
+ 1 file changed, 11 insertions(+), 7 deletions(-)
 
-diff --git a/fs/namespace.c b/fs/namespace.c
-index 809ec3acb147c..a5cb608778b1e 100644
---- a/fs/namespace.c
-+++ b/fs/namespace.c
-@@ -572,12 +572,8 @@ int __legitimize_mnt(struct vfsmount *bastard, unsigned seq)
- 	smp_mb();		// see mntput_no_expire() and do_umount()
- 	if (likely(!read_seqretry(&mount_lock, seq)))
- 		return 0;
--	if (bastard->mnt_flags & MNT_SYNC_UMOUNT) {
--		mnt_add_count(mnt, -1);
+--- a/drivers/xen/swiotlb-xen.c
++++ b/drivers/xen/swiotlb-xen.c
+@@ -85,19 +85,21 @@ static inline dma_addr_t xen_virt_to_bus
+ 	return xen_phys_to_bus(virt_to_phys(address));
+ }
+ 
++static inline bool range_requires_alignment(phys_addr_t p, size_t size)
++{
++	phys_addr_t algn = 1ULL << (get_order(size) + PAGE_SHIFT);
++	phys_addr_t bus_addr = pfn_to_bfn(XEN_PFN_DOWN(p)) << XEN_PAGE_SHIFT;
++
++	return IS_ALIGNED(p, algn) && !IS_ALIGNED(bus_addr, algn);
++}
++
+ static inline int range_straddles_page_boundary(phys_addr_t p, size_t size)
+ {
+ 	unsigned long next_bfn, xen_pfn = XEN_PFN_DOWN(p);
+ 	unsigned int i, nr_pages = XEN_PFN_UP(xen_offset_in_page(p) + size);
+-	phys_addr_t algn = 1ULL << (get_order(size) + PAGE_SHIFT);
+ 
+ 	next_bfn = pfn_to_bfn(xen_pfn);
+ 
+-	/* If buffer is physically aligned, ensure DMA alignment. */
+-	if (IS_ALIGNED(p, algn) &&
+-	    !IS_ALIGNED((phys_addr_t)next_bfn << XEN_PAGE_SHIFT, algn))
 -		return 1;
--	}
- 	lock_mount_hash();
--	if (unlikely(bastard->mnt_flags & MNT_DOOMED)) {
-+	if (unlikely(bastard->mnt_flags & (MNT_SYNC_UMOUNT | MNT_DOOMED))) {
- 		mnt_add_count(mnt, -1);
- 		unlock_mount_hash();
- 		return 1;
--- 
-2.39.5
-
+-
+ 	for (i = 1; i < nr_pages; i++)
+ 		if (pfn_to_bfn(++xen_pfn) != ++next_bfn)
+ 			return 1;
+@@ -320,7 +322,8 @@ xen_swiotlb_alloc_coherent(struct device
+ 	phys = *dma_handle;
+ 	dev_addr = xen_phys_to_bus(phys);
+ 	if (((dev_addr + size - 1 <= dma_mask)) &&
+-	    !range_straddles_page_boundary(phys, size))
++	    !range_straddles_page_boundary(phys, size) &&
++	    !range_requires_alignment(phys, size))
+ 		*dma_handle = dev_addr;
+ 	else {
+ 		if (xen_create_contiguous_region(phys, order,
+@@ -360,6 +363,7 @@ xen_swiotlb_free_coherent(struct device
+ 
+ 	if (!WARN_ON((dev_addr + size - 1 > dma_mask) ||
+ 		     range_straddles_page_boundary(phys, size)) &&
++	    !range_requires_alignment(phys, size) &&
+ 	    TestClearPageXenRemapped(page))
+ 		xen_destroy_contiguous_region(phys, order);
+ 
 
 
