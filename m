@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B9E51FE45A;
-	Mon,  2 Jun 2025 14:49:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 364BB226D00;
+	Mon,  2 Jun 2025 14:49:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748875755; cv=none; b=EuuXK0LLYwGC7kt+NxPa1fYELdmwBz6pAdxfJ3VJQ8QBLlARq4ost5AgJHgRDOENHwVFAwxTbvb+bTQkGcQqal291whVjeVAMG2C7jMGffAbGQx6GBQdwor+vcb71xScljC5NvLHMlCUa97ZcfxZax84DMD8e8q1wxQhzNyeDyo=
+	t=1748875758; cv=none; b=PjoKK1Nx1YAxJF6uq36jjjg1GIEUYaJB9OQO+6RONLOIoL5Ug+2B4KTlorGVInN81LCZ8TPZuWNOJbBl3vLQEU66xZFJkRBT5uTCmJdf9IPT79s2SZNLpH1O19ihaWWMXkxiVUCrjT6XnwlOBqSdvtAfXugA+0R2S8vT9KZIbUE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748875755; c=relaxed/simple;
-	bh=tjTeeSlZ6O/5nmLGXNLHgZANQkXTetrW7kqhbsyNEf8=;
+	s=arc-20240116; t=1748875758; c=relaxed/simple;
+	bh=BjodedgBl9+FSaomnsncRLbH0xS0v6d9Gv0FxPhpcj4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sWd52rWjGeH5a98cdYWS++HXgVHpuUNI5WFBOZqV0sV6WcqUsVVn6K5i/0QohaYSDlrnYc9AkAgNbF249pBEoaBIEz30NEwpyP6Ohm/B0i9DcaWM+iYC8vxRDAKb8z+0rGHdniftBnfGmtHnZnzZe4jklxOH1AbJbttC3ko93YU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ShPiDQJQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=neK39SDdpi3gDsz82FPDLyWEc1yAmzwnQ//K7sbSNYaOxHa95Lpd6nI/8uE+TIy1Z2yzLUI5PHweVxICRU0nSvN2TkY2vS2PBy37g9XQWaHHNBUfN5Usk1PI/324ha5H6y3E8mGx35i8YSdoJznkJHnXR9W7nyFrpHTzQvweG08=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NHb1ozle; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ShPiDQJQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E4A8C4CEF0;
-	Mon,  2 Jun 2025 14:49:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NHb1ozle"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 906C5C4CEEB;
+	Mon,  2 Jun 2025 14:49:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748875755;
-	bh=tjTeeSlZ6O/5nmLGXNLHgZANQkXTetrW7kqhbsyNEf8=;
+	s=korg; t=1748875758;
+	bh=BjodedgBl9+FSaomnsncRLbH0xS0v6d9Gv0FxPhpcj4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ShPiDQJQx447dsfgqthCRu2tAHC8bOY7xxa9LNQU68dqXKWeMH44XV3JwxcxqDOq5
-	 xlB1sZXCxBA9CMYx/EQA/SXD4c4gXWsUFtUcouBEz9HgVuSSK9XcLGcVyofFTR9tzS
-	 u072QIaRPzr9/2gEQCYPeBoquEHqhvi+/aAXxZUo=
+	b=NHb1ozlepFap2EHQCKJPEQdoLmavxSR3AjDtislm8wG8qMxm6bBaMGjwNWA2os0Ex
+	 cdOOzjQL+axKFCCIGedPeF29B/diRHH1kxh2jI4ISmVpNUScsgpJDzmEREsZF4gO8q
+	 0lsC3IHxECRiPsv2rTb89+wpon0B53VtVouCeoi4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Brauner <brauner@kernel.org>,
-	Al Viro <viro@zeniv.linux.org.uk>,
+	Paul Chaignon <paul.chaignon@gmail.com>,
+	Louis DeLosSantos <louis.delos.devel@gmail.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 234/270] __legitimize_mnt(): check for MNT_SYNC_UMOUNT should be under mount_lock
-Date: Mon,  2 Jun 2025 15:48:39 +0200
-Message-ID: <20250602134316.877556576@linuxfoundation.org>
+Subject: [PATCH 5.10 235/270] xfrm: Sanitize marks before insert
+Date: Mon,  2 Jun 2025 15:48:40 +0200
+Message-ID: <20250602134316.917949554@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134307.195171844@linuxfoundation.org>
 References: <20250602134307.195171844@linuxfoundation.org>
@@ -51,45 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Paul Chaignon <paul.chaignon@gmail.com>
 
-[ Upstream commit 250cf3693060a5f803c5f1ddc082bb06b16112a9 ]
+[ Upstream commit 0b91fda3a1f044141e1e615456ff62508c32b202 ]
 
-... or we risk stealing final mntput from sync umount - raising mnt_count
-after umount(2) has verified that victim is not busy, but before it
-has set MNT_SYNC_UMOUNT; in that case __legitimize_mnt() doesn't see
-that it's safe to quietly undo mnt_count increment and leaves dropping
-the reference to caller, where it'll be a full-blown mntput().
+Prior to this patch, the mark is sanitized (applying the state's mask to
+the state's value) only on inserts when checking if a conflicting XFRM
+state or policy exists.
 
-Check under mount_lock is needed; leaving the current one done before
-taking that makes no sense - it's nowhere near common enough to bother
-with.
+We discovered in Cilium that this same sanitization does not occur
+in the hot-path __xfrm_state_lookup. In the hot-path, the sk_buff's mark
+is simply compared to the state's value:
 
-Reviewed-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+    if ((mark & x->mark.m) != x->mark.v)
+        continue;
+
+Therefore, users can define unsanitized marks (ex. 0xf42/0xf00) which will
+never match any packet.
+
+This commit updates __xfrm_state_insert and xfrm_policy_insert to store
+the sanitized marks, thus removing this footgun.
+
+This has the side effect of changing the ip output, as the
+returned mark will have the mask applied to it when printed.
+
+Fixes: 3d6acfa7641f ("xfrm: SA lookups with mark")
+Signed-off-by: Paul Chaignon <paul.chaignon@gmail.com>
+Signed-off-by: Louis DeLosSantos <louis.delos.devel@gmail.com>
+Co-developed-by: Louis DeLosSantos <louis.delos.devel@gmail.com>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/namespace.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ net/xfrm/xfrm_policy.c | 3 +++
+ net/xfrm/xfrm_state.c  | 3 +++
+ 2 files changed, 6 insertions(+)
 
-diff --git a/fs/namespace.c b/fs/namespace.c
-index e46267e7d29d1..869cc6e06d889 100644
---- a/fs/namespace.c
-+++ b/fs/namespace.c
-@@ -572,12 +572,8 @@ int __legitimize_mnt(struct vfsmount *bastard, unsigned seq)
- 	smp_mb();		// see mntput_no_expire() and do_umount()
- 	if (likely(!read_seqretry(&mount_lock, seq)))
- 		return 0;
--	if (bastard->mnt_flags & MNT_SYNC_UMOUNT) {
--		mnt_add_count(mnt, -1);
--		return 1;
--	}
- 	lock_mount_hash();
--	if (unlikely(bastard->mnt_flags & MNT_DOOMED)) {
-+	if (unlikely(bastard->mnt_flags & (MNT_SYNC_UMOUNT | MNT_DOOMED))) {
- 		mnt_add_count(mnt, -1);
- 		unlock_mount_hash();
- 		return 1;
+diff --git a/net/xfrm/xfrm_policy.c b/net/xfrm/xfrm_policy.c
+index a1a662a55c2ae..64b971bb1d36a 100644
+--- a/net/xfrm/xfrm_policy.c
++++ b/net/xfrm/xfrm_policy.c
+@@ -1594,6 +1594,9 @@ int xfrm_policy_insert(int dir, struct xfrm_policy *policy, int excl)
+ 	struct xfrm_policy *delpol;
+ 	struct hlist_head *chain;
+ 
++	/* Sanitize mark before store */
++	policy->mark.v &= policy->mark.m;
++
+ 	spin_lock_bh(&net->xfrm.xfrm_policy_lock);
+ 	chain = policy_hash_bysel(net, &policy->selector, policy->family, dir);
+ 	if (chain)
+diff --git a/net/xfrm/xfrm_state.c b/net/xfrm/xfrm_state.c
+index 94179ff475f2f..da2d7012e5c74 100644
+--- a/net/xfrm/xfrm_state.c
++++ b/net/xfrm/xfrm_state.c
+@@ -1249,6 +1249,9 @@ static void __xfrm_state_insert(struct xfrm_state *x)
+ 
+ 	list_add(&x->km.all, &net->xfrm.state_all);
+ 
++	/* Sanitize mark before store */
++	x->mark.v &= x->mark.m;
++
+ 	h = xfrm_dst_hash(net, &x->id.daddr, &x->props.saddr,
+ 			  x->props.reqid, x->props.family);
+ 	hlist_add_head_rcu(&x->bydst, net->xfrm.state_bydst + h);
 -- 
 2.39.5
 
