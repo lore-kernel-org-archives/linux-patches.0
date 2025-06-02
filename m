@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 307282236F4;
-	Mon,  2 Jun 2025 14:39:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA7A2221FC9;
+	Mon,  2 Jun 2025 14:39:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748875140; cv=none; b=gpQwUDmL2YELOi55LdplSk2Fs5v1ZSxIPXAYr4jKXXSdcyjM9RTyTODNWJicQfI0Ksk3Wki+yhj/MK/ONgM0iDZotWW9xv9HP3u7edrtBasSXB9r3ZVQjnJOu3EeD18n2cAOUHXG8Pl/om9iPFolGNsE2Q880OtmUhQ+83B40c8=
+	t=1748875143; cv=none; b=KRFknKAawNRkMiUTyxwwVL0wAKXUd8xn05DeHoUUsyUYTMcDFy2tt1JaTcRH46rTJeqU8U0rcUbuVUihuqZ9tkgZMbZVnVu3cwkpfg1B75IJmOzUiFpRopprB8kapSKwZuOwomSHi07QUu4D88ME6RALhm52vqNyhioB0uygJnc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748875140; c=relaxed/simple;
-	bh=o2z0ye9enXeDaxNSAH6ps4Q+w8/Sw+LU6TthJftTwUI=;
+	s=arc-20240116; t=1748875143; c=relaxed/simple;
+	bh=dk76xtzYaAQ4V0Xkh1Zn1MH0HKEzaQN/4YzZwbgUYfU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gKAJQ09XGb5TmDX6VnWBjPGemzvfBx5be49ZswCsg1HTwGgd4/eoeUQ2uqH9CB9rSjbvFIk+EjJbIFNMbbRqCR6Oi9s98LW2vzcqKWRw/qIZled1tRGx1jwS7YKbemT37IPaIjlxpavUQLQneyU6QDGaETkq9LIKqZxdhKnzKOQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AhYrYDoj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PEx43COdNmoXg8f6Aga1GMqLtOFrt3KnD+hylhny1p6mlF4i7SZocmwWPs3x2PtOGn7K3Vg9XI3y1Umit4e3FANco3j9m/7D6cdPX2hQ+S9GIRNYk9zaqICaVeEb5uLXU2WifaWsEv4sslLwpTcaqC3zN2xGijVaQ2PjT517jbw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G3dRg1m7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AhYrYDoj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA899C4CEEB;
-	Mon,  2 Jun 2025 14:38:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G3dRg1m7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D56F8C4CEEB;
+	Mon,  2 Jun 2025 14:39:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748875140;
-	bh=o2z0ye9enXeDaxNSAH6ps4Q+w8/Sw+LU6TthJftTwUI=;
+	s=korg; t=1748875143;
+	bh=dk76xtzYaAQ4V0Xkh1Zn1MH0HKEzaQN/4YzZwbgUYfU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AhYrYDojqanT2jPomaKnG4ucNOkfA8Z+tFSlKZWlR58BzHnRp33K5P5yUBSGCK+f1
-	 F6DSqfTTMVLtc6uLQyOC9Y57EAsc2vwiwornbKZf7FaQPs5wqo+w+UpM1tBBejLrn2
-	 dy2aLNY5mHgoLbZ+NDO4SnESZPXFfDNnC/TFih4M=
+	b=G3dRg1m7yN+RQ9M1fxUaDFeKEwZL7SJGlKaQQY3CHtUAAtYgr0bPlmbdQOCz5g4R5
+	 1Zkc0nb96Lou51b8LBWrvQvgARpAxB86gGPTinu5tmG2LLhcC4gPPjHeo1NIfkltKG
+	 GQzadXxP2doscuN7TAuVm+bF4kz858XIB4myr2kQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Mike Christie <michael.christie@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 5.10 041/270] scsi: target: Fix WRITE_SAME No Data Buffer crash
-Date: Mon,  2 Jun 2025 15:45:26 +0200
-Message-ID: <20250602134308.866284745@linuxfoundation.org>
+	Marc Kleine-Budde <mkl@pengutronix.de>
+Subject: [PATCH 5.10 042/270] can: mcp251xfd: mcp251xfd_remove(): fix order of unregistration calls
+Date: Mon,  2 Jun 2025 15:45:27 +0200
+Message-ID: <20250602134308.906795452@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134307.195171844@linuxfoundation.org>
 References: <20250602134307.195171844@linuxfoundation.org>
@@ -51,71 +49,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mike Christie <michael.christie@oracle.com>
+From: Marc Kleine-Budde <mkl@pengutronix.de>
 
-commit ccd3f449052449a917a3e577d8ba0368f43b8f29 upstream.
+commit 84f5eb833f53ae192baed4cfb8d9eaab43481fc9 upstream.
 
-In newer version of the SBC specs, we have a NDOB bit that indicates there
-is no data buffer that gets written out. If this bit is set using commands
-like "sg_write_same --ndob" we will crash in target_core_iblock/file's
-execute_write_same handlers when we go to access the se_cmd->t_data_sg
-because its NULL.
+If a driver is removed, the driver framework invokes the driver's
+remove callback. A CAN driver's remove function calls
+unregister_candev(), which calls net_device_ops::ndo_stop further down
+in the call stack for interfaces which are in the "up" state.
 
-This patch adds a check for the NDOB bit in the common WRITE SAME code
-because we don't support it. And, it adds a check for zero SG elements in
-each handler in case the initiator tries to send a normal WRITE SAME with
-no data buffer.
+With the mcp251xfd driver the removal of the module causes the
+following warning:
 
-Link: https://lore.kernel.org/r/20220628022325.14627-2-michael.christie@oracle.com
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Mike Christie <michael.christie@oracle.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+| WARNING: CPU: 0 PID: 352 at net/core/dev.c:7342 __netif_napi_del_locked+0xc8/0xd8
+
+as can_rx_offload_del() deletes the NAPI, while it is still active,
+because the interface is still up.
+
+To fix the warning, first unregister the network interface, which
+calls net_device_ops::ndo_stop, which disables the NAPI, and then call
+can_rx_offload_del().
+
+Fixes: 55e5b97f003e ("can: mcp25xxfd: add driver for Microchip MCP25xxFD SPI CAN")
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20250502-can-rx-offload-del-v1-1-59a9b131589d@pengutronix.de
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/target/target_core_file.c   |    3 +++
- drivers/target/target_core_iblock.c |    4 ++++
- drivers/target/target_core_sbc.c    |    6 ++++++
- 3 files changed, 13 insertions(+)
+ drivers/net/can/spi/mcp251xfd/mcp251xfd-core.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/target/target_core_file.c
-+++ b/drivers/target/target_core_file.c
-@@ -455,6 +455,9 @@ fd_execute_write_same(struct se_cmd *cmd
- 		return TCM_LOGICAL_UNIT_COMMUNICATION_FAILURE;
- 	}
+--- a/drivers/net/can/spi/mcp251xfd/mcp251xfd-core.c
++++ b/drivers/net/can/spi/mcp251xfd/mcp251xfd-core.c
+@@ -2889,8 +2889,8 @@ static int mcp251xfd_remove(struct spi_d
+ 	struct mcp251xfd_priv *priv = spi_get_drvdata(spi);
+ 	struct net_device *ndev = priv->ndev;
  
-+	if (!cmd->t_data_nents)
-+		return TCM_INVALID_CDB_FIELD;
-+
- 	if (cmd->t_data_nents > 1 ||
- 	    cmd->t_data_sg[0].length != cmd->se_dev->dev_attrib.block_size) {
- 		pr_err("WRITE_SAME: Illegal SGL t_data_nents: %u length: %u"
---- a/drivers/target/target_core_iblock.c
-+++ b/drivers/target/target_core_iblock.c
-@@ -458,6 +458,10 @@ iblock_execute_write_same(struct se_cmd
- 		       " backends not supported\n");
- 		return TCM_LOGICAL_UNIT_COMMUNICATION_FAILURE;
- 	}
-+
-+	if (!cmd->t_data_nents)
-+		return TCM_INVALID_CDB_FIELD;
-+
- 	sg = &cmd->t_data_sg[0];
+-	can_rx_offload_del(&priv->offload);
+ 	mcp251xfd_unregister(priv);
++	can_rx_offload_del(&priv->offload);
+ 	spi->max_speed_hz = priv->spi_max_speed_hz_orig;
+ 	free_candev(ndev);
  
- 	if (cmd->t_data_nents > 1 ||
---- a/drivers/target/target_core_sbc.c
-+++ b/drivers/target/target_core_sbc.c
-@@ -312,6 +312,12 @@ sbc_setup_write_same(struct se_cmd *cmd,
- 		pr_warn("WRITE SAME with ANCHOR not supported\n");
- 		return TCM_INVALID_CDB_FIELD;
- 	}
-+
-+	if (flags & 0x01) {
-+		pr_warn("WRITE SAME with NDOB not supported\n");
-+		return TCM_INVALID_CDB_FIELD;
-+	}
-+
- 	/*
- 	 * Special case for WRITE_SAME w/ UNMAP=1 that ends up getting
- 	 * translated into block discard requests within backend code.
 
 
