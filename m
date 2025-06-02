@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5002322F769;
-	Mon,  2 Jun 2025 14:35:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E28092C3247;
+	Mon,  2 Jun 2025 14:35:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748874938; cv=none; b=ivbLk1eYN9rJVdj/2xErJSyAqvKRuWam3rg4JqB8upfmHOVHOtNgrVkCSfxsVAvpLQCuhMb7bI5kkBszwvb4unnlQoDc2bbVvEHpXjQUbr1PYKExWK0jbSzDMHo1ryCraxeVsiJnwPZ85rnRWnEVAlqvRWoK3+ywLDakcn4youo=
+	t=1748874943; cv=none; b=nteJllgmTQdktD9xWlQgZxHE94cZck7Uv2XwUf4S4keO8B6/Dg8yFOwiEGwGLUj2RvJOsqMAf/3sGhiKg0FsqjEBhydxdMoHC4wMurXvi/C0o7Oi+iMb1SIL7EIK4cymq/C3pTPHOScdUZ6rhG674ymlPGJgiHWJPQYf0HTgwvk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748874938; c=relaxed/simple;
-	bh=fuG5zlERhWmftJSkzPe/NkqM+WKggxFwRTJRTwFR+20=;
+	s=arc-20240116; t=1748874943; c=relaxed/simple;
+	bh=n0MXz1pUsTbOJKHUEWiXiOXalrG/q401Zk/VzndRgr0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JpQU3h0dwk88ZkZHa4l0QYeYEzZbfY9KGEWqfH2BA6+p0Px5eKrLfKWvtGGUkHuFbRlBCyyu7+kv3LJ6fB9elgVQtd6U7r6sC6dyzOU9uv1agnM0ignnjFYy79AYHxjCbMbiPKyJzCz4Asegi5q6S2QMJY1bVLMjTXoPAZI7GoM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2GHXkNzc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JC9KBZBJ8McouS42dZnchjKTLVwTRFN/MzOjDPrBgcIRIZDSA7a/pFwIAkeyORIYEB3XlUK7yUULLKdaCYFXpVOUVs8ExZGLC2cMqS6m/SSsGRFhmHaCtUKNTdhnlG4rac0+/IN5BgUDulUika+JreaZDSHszlo+TvStqT174tA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J2EdATgz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2GHXkNzc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA83AC4CEEB;
-	Mon,  2 Jun 2025 14:35:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J2EdATgz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E474DC4CEEB;
+	Mon,  2 Jun 2025 14:35:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748874938;
-	bh=fuG5zlERhWmftJSkzPe/NkqM+WKggxFwRTJRTwFR+20=;
+	s=korg; t=1748874941;
+	bh=n0MXz1pUsTbOJKHUEWiXiOXalrG/q401Zk/VzndRgr0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2GHXkNzcSg5Kcf9Oy/hStHXS2zArtnBVzco7ZMyoeFOCvCc3A79S8zV18QPJcyPjc
-	 mOaotpcCTNyAYoU2fShuHD7eDr1UVy4jwkWq1cwN5MqrGqwF/6XVf7L8toG5d3rq4G
-	 UNOl5LzPzEov1YGFkRP7UIuyJel55AQQp7Buz6KA=
+	b=J2EdATgzs89WVw/+64MFLX/WlfVZj5Du3LmS9vZdtNWS53SkhtCfeLgCUqwCuLqTJ
+	 0nIWIkHzos14wXkn0TjrmtOMuRixi2nngg/YJZgKXIVdNMqpFu/gHXPXeC7rK4n+aN
+	 oJcN0OOc8hhWHN1u+kasytiLkv1jCGplBvpHKESU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tianyang Zhang <zhangtianyang@loongson.cn>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Michal Hocko <mhocko@suse.com>,
-	Brendan Jackman <jackmanb@google.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Zi Yan <ziy@nvidia.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.4 182/204] mm/page_alloc.c: avoid infinite retries caused by cpuset race
-Date: Mon,  2 Jun 2025 15:48:35 +0200
-Message-ID: <20250602134302.810945405@linuxfoundation.org>
+	Xulin Sun <xulin.sun@windriver.com>,
+	Larisa Grigore <larisa.grigore@nxp.com>,
+	James Clark <james.clark@linaro.org>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 183/204] spi: spi-fsl-dspi: restrict register range for regmap access
+Date: Mon,  2 Jun 2025 15:48:36 +0200
+Message-ID: <20250602134302.850364361@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134255.449974357@linuxfoundation.org>
 References: <20250602134255.449974357@linuxfoundation.org>
@@ -56,79 +53,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tianyang Zhang <zhangtianyang@loongson.cn>
+From: Larisa Grigore <larisa.grigore@nxp.com>
 
-commit e05741fb10c38d70bbd7ec12b23c197b6355d519 upstream.
+[ Upstream commit 283ae0c65e9c592f4a1ba4f31917f5e766da7f31 ]
 
-__alloc_pages_slowpath has no change detection for ac->nodemask in the
-part of retry path, while cpuset can modify it in parallel.  For some
-processes that set mempolicy as MPOL_BIND, this results ac->nodemask
-changes, and then the should_reclaim_retry will judge based on the latest
-nodemask and jump to retry, while the get_page_from_freelist only
-traverses the zonelist from ac->preferred_zoneref, which selected by a
-expired nodemask and may cause infinite retries in some cases
+DSPI registers are NOT continuous, some registers are reserved and
+accessing them from userspace will trigger external abort, add regmap
+register access table to avoid below abort.
 
-cpu 64:
-__alloc_pages_slowpath {
-        /* ..... */
-retry:
-        /* ac->nodemask = 0x1, ac->preferred->zone->nid = 1 */
-        if (alloc_flags & ALLOC_KSWAPD)
-                wake_all_kswapds(order, gfp_mask, ac);
-        /* cpu 1:
-        cpuset_write_resmask
-            update_nodemask
-                update_nodemasks_hier
-                    update_tasks_nodemask
-                        mpol_rebind_task
-                         mpol_rebind_policy
-                          mpol_rebind_nodemask
-		// mempolicy->nodes has been modified,
-		// which ac->nodemask point to
+  For example on S32G:
 
-        */
-        /* ac->nodemask = 0x3, ac->preferred->zone->nid = 1 */
-        if (should_reclaim_retry(gfp_mask, order, ac, alloc_flags,
-                                 did_some_progress > 0, &no_progress_loops))
-                goto retry;
-}
+  # cat /sys/kernel/debug/regmap/401d8000.spi/registers
 
-Simultaneously starting multiple cpuset01 from LTP can quickly reproduce
-this issue on a multi node server when the maximum memory pressure is
-reached and the swap is enabled
+  Internal error: synchronous external abort: 96000210 1 PREEMPT SMP
+  ...
+  Call trace:
+  regmap_mmio_read32le+0x24/0x48
+  regmap_mmio_read+0x48/0x70
+  _regmap_bus_reg_read+0x38/0x48
+  _regmap_read+0x68/0x1b0
+  regmap_read+0x50/0x78
+  regmap_read_debugfs+0x120/0x338
 
-Link: https://lkml.kernel.org/r/20250416082405.20988-1-zhangtianyang@loongson.cn
-Fixes: c33d6c06f60f ("mm, page_alloc: avoid looking up the first zone in a zonelist twice")
-Signed-off-by: Tianyang Zhang <zhangtianyang@loongson.cn>
-Reviewed-by: Suren Baghdasaryan <surenb@google.com>
-Reviewed-by: Vlastimil Babka <vbabka@suse.cz>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Brendan Jackman <jackmanb@google.com>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Zi Yan <ziy@nvidia.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 1acbdeb92c87 ("spi/fsl-dspi: Convert to use regmap and add big-endian support")
+Co-developed-by: Xulin Sun <xulin.sun@windriver.com>
+Signed-off-by: Xulin Sun <xulin.sun@windriver.com>
+Signed-off-by: Larisa Grigore <larisa.grigore@nxp.com>
+Signed-off-by: James Clark <james.clark@linaro.org>
+Link: https://patch.msgid.link/20250522-james-nxp-spi-v2-1-bea884630cfb@linaro.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/page_alloc.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/spi/spi-fsl-dspi.c | 20 +++++++++++++++++++-
+ 1 file changed, 19 insertions(+), 1 deletion(-)
 
---- a/mm/page_alloc.c
-+++ b/mm/page_alloc.c
-@@ -4573,6 +4573,14 @@ restart:
- 	}
+diff --git a/drivers/spi/spi-fsl-dspi.c b/drivers/spi/spi-fsl-dspi.c
+index 351b2989db071..1d94fc89602f2 100644
+--- a/drivers/spi/spi-fsl-dspi.c
++++ b/drivers/spi/spi-fsl-dspi.c
+@@ -1,7 +1,7 @@
+ // SPDX-License-Identifier: GPL-2.0+
+ //
+ // Copyright 2013 Freescale Semiconductor, Inc.
+-// Copyright 2020 NXP
++// Copyright 2020-2025 NXP
+ //
+ // Freescale DSPI driver
+ // This file contains a driver for the Freescale DSPI
+@@ -946,6 +946,20 @@ static int dspi_resume(struct device *dev)
  
- retry:
-+	/*
-+	 * Deal with possible cpuset update races or zonelist updates to avoid
-+	 * infinite retries.
-+	 */
-+	if (check_retry_cpuset(cpuset_mems_cookie, ac) ||
-+	    check_retry_zonelist(zonelist_iter_cookie))
-+		goto restart;
+ static SIMPLE_DEV_PM_OPS(dspi_pm, dspi_suspend, dspi_resume);
+ 
++static const struct regmap_range dspi_yes_ranges[] = {
++	regmap_reg_range(SPI_MCR, SPI_MCR),
++	regmap_reg_range(SPI_TCR, SPI_CTAR(3)),
++	regmap_reg_range(SPI_SR, SPI_TXFR3),
++	regmap_reg_range(SPI_RXFR0, SPI_RXFR3),
++	regmap_reg_range(SPI_CTARE(0), SPI_CTARE(3)),
++	regmap_reg_range(SPI_SREX, SPI_SREX),
++};
 +
- 	/* Ensure kswapd doesn't accidentally go to sleep as long as we loop */
- 	if (alloc_flags & ALLOC_KSWAPD)
- 		wake_all_kswapds(order, gfp_mask, ac);
++static const struct regmap_access_table dspi_access_table = {
++	.yes_ranges	= dspi_yes_ranges,
++	.n_yes_ranges	= ARRAY_SIZE(dspi_yes_ranges),
++};
++
+ static const struct regmap_range dspi_volatile_ranges[] = {
+ 	regmap_reg_range(SPI_MCR, SPI_TCR),
+ 	regmap_reg_range(SPI_SR, SPI_SR),
+@@ -963,6 +977,8 @@ static const struct regmap_config dspi_regmap_config = {
+ 	.reg_stride	= 4,
+ 	.max_register	= 0x88,
+ 	.volatile_table	= &dspi_volatile_table,
++	.rd_table	= &dspi_access_table,
++	.wr_table	= &dspi_access_table,
+ };
+ 
+ static const struct regmap_range dspi_xspi_volatile_ranges[] = {
+@@ -984,6 +1000,8 @@ static const struct regmap_config dspi_xspi_regmap_config[] = {
+ 		.reg_stride	= 4,
+ 		.max_register	= 0x13c,
+ 		.volatile_table	= &dspi_xspi_volatile_table,
++		.rd_table	= &dspi_access_table,
++		.wr_table	= &dspi_access_table,
+ 	},
+ 	{
+ 		.name		= "pushr",
+-- 
+2.39.5
+
 
 
