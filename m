@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A11322A4ED;
-	Mon,  2 Jun 2025 14:26:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32B6E221299;
+	Mon,  2 Jun 2025 14:26:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748874366; cv=none; b=pw1/eYpqfUq9oZOPK+pyKJtecmIt7DGtjR/Lsn5ElwB9eQkazd1rSKp3MOILKVQ5pWAKmgRQsyTO9bKYZOd0tQf28QFzJZuh6zQw2ywDfPF54qT89oMDidbfeUTFaG53N5oiZFZ/ANjizoRtvcyOZetv4YT+5I2TPkSMuxZN5Tg=
+	t=1748874369; cv=none; b=cViPshDPZgKg0Ku1HmJmVUdemZman6QcYewWfaSQgpPmf9J0XUbD7UtteJQOeVIbWN7c4puUTuCT4a8V9Uv6hb4Gu2mXhhq7t7JqqDzK7LIHpcFADrHMS3+Eo14sz5ErJd2zjZJ3Iy+973jxKzkzP7/Poe12fmcP3wOfXl+A6Zw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748874366; c=relaxed/simple;
-	bh=RE4diVqyCBx5qjdmz5yBWbQFCGwns5q9pE63ElS8zUs=;
+	s=arc-20240116; t=1748874369; c=relaxed/simple;
+	bh=P4vgKvB1+JF/fOV1As6kEBDmsic07XYwPBy+iy/eXsY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X0lN5IvQSWJJ+CZ0HLa3MNvQ3rZESlSx6gVh5j2xSNczkFdPc0rNH/W58nE1CAxsMWtPLlt1qA7FtmbYRgFiDh3fAxj6o5jnSxh4VDbiykEdny4alG7I8VPS8USTbmqYVeVZkYuzZDItmDbMiNyuUwdBqbUdGsETh8Z0dSc/b9Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EeViHRqP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eR0EWR7RwboSfQme0rKKap+IhuIH+R1gqDOgW2RXxN1LrLt+qK2ZpJWw1SuiiQxqbGAYUoFbMtC0UIlH1jzH8mFpI2HDN+EAnpgHmXk63YGX/UGc09cbg4QxivX7FEdpvqWrOEWeDFPToSBxua2gr6u3BDGvr79PzGIg6Zsbo6Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s2ewTri1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EeViHRqP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A988BC4CEEB;
-	Mon,  2 Jun 2025 14:26:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s2ewTri1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFC23C4CEEB;
+	Mon,  2 Jun 2025 14:26:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748874366;
-	bh=RE4diVqyCBx5qjdmz5yBWbQFCGwns5q9pE63ElS8zUs=;
+	s=korg; t=1748874369;
+	bh=P4vgKvB1+JF/fOV1As6kEBDmsic07XYwPBy+iy/eXsY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EeViHRqPyrmKiOZf+Lmw05Dcyz6qvtmi159bl1NZzRz1t8OXXBmCuM0nWp2MrKJM2
-	 9Jhvxd9biwZttMHacFS5XP52O6SmCKwh8n/Hx1H+WtuPbwrfpLualtLug//xnR6UZy
-	 RPUY5NSSxDPmlB8jbOikFaQls0MebJFb2kgIzwR8=
+	b=s2ewTri1EivbZkHdGSYWNfWaWWf08peejd/rza5UYKTRCEtNniNFo8zPBQZ0kfunn
+	 fPvmPkjWuNT8QUcmxc3rh6jU/V30tIBClbTGOuUHqO9hJX0GwnSsfXb5KoVfL0x6ZQ
+	 7Io4b/6OUjReOdiUhzzHCrP5hyImBOI7ARlvN1Qw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenjing Liu <wenjing.liu@amd.com>,
-	George Shen <george.shen@amd.com>,
-	Ray Wu <ray.wu@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Hal Feng <hal.feng@starfivetech.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 436/444] drm/amd/display: fix link_set_dpms_off multi-display MST corner case
-Date: Mon,  2 Jun 2025 15:48:20 +0200
-Message-ID: <20250602134358.634430880@linuxfoundation.org>
+Subject: [PATCH 6.6 437/444] phy: starfive: jh7110-usb: Fix USB 2.0 host occasional detection failure
+Date: Mon,  2 Jun 2025 15:48:21 +0200
+Message-ID: <20250602134358.675164037@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -54,68 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: George Shen <george.shen@amd.com>
+From: Hal Feng <hal.feng@starfivetech.com>
 
-[ Upstream commit 3c1a467372e0c356b1d3c59f6d199ed5a6612dd1 ]
+[ Upstream commit 3f097adb9b6c804636bcf8d01e0e7bc037bee0d3 ]
 
-[Why & How]
-When MST config is unplugged/replugged too quickly, it can potentially
-result in a scenario where previous DC state has not been reset before
-the HPD link detection sequence begins. In this case, driver will
-disable the streams/link prior to re-enabling the link for link
-training.
+JH7110 USB 2.0 host fails to detect USB 2.0 devices occasionally. With a
+long time of debugging and testing, we found that setting Rx clock gating
+control signal to normal power consumption mode can solve this problem.
 
-There is a bug in the current logic that does not account for the fact
-that current_state can be released and cleared prior to swapping to a
-new state (resulting in the pipe_ctx stream pointers to be cleared) in
-between disabling streams.
-
-To resolve this, cache the original streams prior to committing any
-stream updates.
-
-Reviewed-by: Wenjing Liu <wenjing.liu@amd.com>
-Signed-off-by: George Shen <george.shen@amd.com>
-Signed-off-by: Ray Wu <ray.wu@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 1561782686ccc36af844d55d31b44c938dd412dc)
+Signed-off-by: Hal Feng <hal.feng@starfivetech.com>
+Link: https://lore.kernel.org/r/20250422101244.51686-1-hal.feng@starfivetech.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/link/link_dpms.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/phy/starfive/phy-jh7110-usb.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/link/link_dpms.c b/drivers/gpu/drm/amd/display/dc/link/link_dpms.c
-index 4901e27f678bc..9b470812d96a5 100644
---- a/drivers/gpu/drm/amd/display/dc/link/link_dpms.c
-+++ b/drivers/gpu/drm/amd/display/dc/link/link_dpms.c
-@@ -145,6 +145,7 @@ void link_blank_dp_stream(struct dc_link *link, bool hw_init)
- void link_set_all_streams_dpms_off_for_link(struct dc_link *link)
+diff --git a/drivers/phy/starfive/phy-jh7110-usb.c b/drivers/phy/starfive/phy-jh7110-usb.c
+index 633912f8a05d0..bf52b41110db8 100644
+--- a/drivers/phy/starfive/phy-jh7110-usb.c
++++ b/drivers/phy/starfive/phy-jh7110-usb.c
+@@ -16,6 +16,8 @@
+ #include <linux/usb/of.h>
+ 
+ #define USB_125M_CLK_RATE		125000000
++#define USB_CLK_MODE_OFF		0x0
++#define USB_CLK_MODE_RX_NORMAL_PWR	BIT(1)
+ #define USB_LS_KEEPALIVE_OFF		0x4
+ #define USB_LS_KEEPALIVE_ENABLE		BIT(4)
+ 
+@@ -68,6 +70,7 @@ static int jh7110_usb2_phy_init(struct phy *_phy)
  {
- 	struct pipe_ctx *pipes[MAX_PIPES];
-+	struct dc_stream_state *streams[MAX_PIPES];
- 	struct dc_state *state = link->dc->current_state;
- 	uint8_t count;
- 	int i;
-@@ -157,10 +158,18 @@ void link_set_all_streams_dpms_off_for_link(struct dc_link *link)
+ 	struct jh7110_usb2_phy *phy = phy_get_drvdata(_phy);
+ 	int ret;
++	unsigned int val;
  
- 	link_get_master_pipes_with_dpms_on(link, state, &count, pipes);
+ 	ret = clk_set_rate(phy->usb_125m_clk, USB_125M_CLK_RATE);
+ 	if (ret)
+@@ -77,6 +80,10 @@ static int jh7110_usb2_phy_init(struct phy *_phy)
+ 	if (ret)
+ 		return ret;
  
-+	/* The subsequent call to dc_commit_updates_for_stream for a full update
-+	 * will release the current state and swap to a new state. Releasing the
-+	 * current state results in the stream pointers in the pipe_ctx structs
-+	 * to be zero'd. Hence, cache all streams prior to dc_commit_updates_for_stream.
-+	 */
-+	for (i = 0; i < count; i++)
-+		streams[i] = pipes[i]->stream;
++	val = readl(phy->regs + USB_CLK_MODE_OFF);
++	val |= USB_CLK_MODE_RX_NORMAL_PWR;
++	writel(val, phy->regs + USB_CLK_MODE_OFF);
 +
- 	for (i = 0; i < count; i++) {
--		stream_update.stream = pipes[i]->stream;
-+		stream_update.stream = streams[i];
- 		dc_commit_updates_for_stream(link->ctx->dc, NULL, 0,
--				pipes[i]->stream, &stream_update,
-+				streams[i], &stream_update,
- 				state);
- 	}
+ 	return 0;
+ }
  
 -- 
 2.39.5
