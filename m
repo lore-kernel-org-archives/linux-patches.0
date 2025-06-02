@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E6272C3247;
-	Mon,  2 Jun 2025 14:36:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B0891FCFE2;
+	Mon,  2 Jun 2025 14:36:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748874975; cv=none; b=S4pg7ElgqQ1kqoj9E9Ehk0/uE9HNw8Gl0FTf1HFUM7F1cED0cBSlO+RpcNAYwUYeGZgdKucyfmI8IG8hhGao+qbGuxzGwgVtpjSXeVcVvIW7U/vMckndcKdX3xSjJ9FWphOPrK3IqXnbxGSeIJGdA3sxYcy9TkNIB7nFWkebhfo=
+	t=1748874978; cv=none; b=LOJR2IhlpwIcjfBVvOg9ckyMNOwMEzCf5GN90zTv6BTcF6YYR+L3T/R1ANw1dbR5PJPEc+C8jTX07EWlGcw9uTAkxTIv93RhB0TxqhHji/0m6nnoZ9GDtdZXnWp7+tbManEs/Q+TqGNtQAsuUTYSR+1aOURy9STDqU0l0FwJ6pg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748874975; c=relaxed/simple;
-	bh=kp+WSZdOuINjaGj5c3s6dJyNaLtwpBOqrWOUGFgFgAc=;
+	s=arc-20240116; t=1748874978; c=relaxed/simple;
+	bh=xDoFjpA07zXzEqPHLFhz85N/BnSZTJF4q9dGVCOAgY4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oqvHtzYWimVzI8lfDw0go3PbXguNRRDmxPUg3MVDsyiGYpAw+eebbn2aOsf7o1MvhRbTq3r3vZLPJVOPYFrBl/UjBhsR9YaaIIEWb3f0bKyw33+vDtpj0Q6xiJh18zX7eMxZVi1UE40KJkZPwMZQ//JKVy5pdh5m3EdjUg8xy3k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TC9mz+6z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t22lXUOPGsVvrDu+Njb4gv7e/20MqzyJm1SktB3EnBa0tBYKe1H+0yFX94w1V1Ui5QUKgDH9U3BZ5TlpbZwchVEa06ZHKHg+ERyjS1xZySniYq8p937LdqedACNEbysOYW9Z4iYvvr7OsPjso2sIrK2qCnDqONIAGNdxEhf1zkk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ngpxd5ia; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TC9mz+6z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8867EC4CEEB;
-	Mon,  2 Jun 2025 14:36:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ngpxd5ia"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01CF7C4CEEB;
+	Mon,  2 Jun 2025 14:36:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748874975;
-	bh=kp+WSZdOuINjaGj5c3s6dJyNaLtwpBOqrWOUGFgFgAc=;
+	s=korg; t=1748874978;
+	bh=xDoFjpA07zXzEqPHLFhz85N/BnSZTJF4q9dGVCOAgY4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TC9mz+6zEOi2v7bgxNYjdBzA9XcYUzcl5PW8LGaeo0jG1U4NKfnNsvJt6mi0KT2P4
-	 NLZeRQ5paeo7A1GWUElOtMSiWjWN5XljQiQ1K4w4wQ4jDwv4sVnoapYEOsMu3o5XHz
-	 FIk41RFOaH5vYMTY8P+mNZyN3hTbCyvWZTZ6ovUo=
+	b=ngpxd5iaw1C2u7aZWA92hswJUin7k9f1h8oaiCy/DonB93umGHpRfGZwPj7MvPhY8
+	 zdbGbl2pntbVaPbCk5k66s1VTMhYst6Ixfw2IG3S39Rvhwa40xEcpC6kIatDrEfW2s
+	 x73njEey2+eYxsNSpdLdamqMtwovgCuvgoEkyC0I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
-	Christian Kellner <christian@kellner.me>,
-	linux-api@vger.kernel.org,
-	Christian Brauner <christian.brauner@ubuntu.com>,
-	Oleg Nesterov <oleg@redhat.com>,
+	Jan Kara <jack@suse.cz>,
 	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 5.4 193/204] pidfd: check pid has attached task in fdinfo
-Date: Mon,  2 Jun 2025 15:48:46 +0200
-Message-ID: <20250602134303.260720932@linuxfoundation.org>
+Subject: [PATCH 5.4 194/204] pid: add pidfd_prepare()
+Date: Mon,  2 Jun 2025 15:48:47 +0200
+Message-ID: <20250602134303.298376621@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134255.449974357@linuxfoundation.org>
 References: <20250602134255.449974357@linuxfoundation.org>
@@ -54,76 +50,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <christian.brauner@ubuntu.com>
+From: Christian Brauner <brauner@kernel.org>
 
-commit 3d6d8da48d0b214d65ea0227d47228abc75d7c88 upstream.
+commit 6ae930d9dbf2d093157be33428538c91966d8a9f upstream.
 
-Currently, when a task is dead we still print the pid it used to use in
-the fdinfo files of its pidfds. This doesn't make much sense since the
-pid may have already been reused. So verify that the task is still alive
-by introducing the pid_has_task() helper which will be used by other
-callers in follow-up patches.
-If the task is not alive anymore, we will print -1. This allows us to
-differentiate between a task not being present in a given pid namespace
-- in which case we already print 0 - and a task having been reaped.
+Add a new helper that allows to reserve a pidfd and allocates a new
+pidfd file that stashes the provided struct pid. This will allow us to
+remove places that either open code this function or that call
+pidfd_create() but then have to call close_fd() because there are still
+failure points after pidfd_create() has been called.
 
-Note that this uses PIDTYPE_PID for the check. Technically, we could've
-checked PIDTYPE_TGID since pidfds currently only refer to thread-group
-leaders but if they won't anymore in the future then this check becomes
-problematic without it being immediately obvious to non-experts imho. If
-a thread is created via clone(CLONE_THREAD) than struct pid has a single
-non-empty list pid->tasks[PIDTYPE_PID] and this pid can't be used as a
-PIDTYPE_TGID meaning pid->tasks[PIDTYPE_TGID] will return NULL even
-though the thread-group leader might still be very much alive. So
-checking PIDTYPE_PID is fine and is easier to maintain should we ever
-allow pidfds to refer to threads.
-
-Cc: Jann Horn <jannh@google.com>
-Cc: Christian Kellner <christian@kellner.me>
-Cc: linux-api@vger.kernel.org
-Signed-off-by: Christian Brauner <christian.brauner@ubuntu.com>
-Reviewed-by: Oleg Nesterov <oleg@redhat.com>
-Link: https://lore.kernel.org/r/20191017101832.5985-1-christian.brauner@ubuntu.com
+Reviewed-by: Jan Kara <jack@suse.cz>
+Message-Id: <20230327-pidfd-file-api-v1-1-5c0e9a3158e4@kernel.org>
 Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/pid.h |    4 ++++
- kernel/fork.c       |   10 ++++++++--
- 2 files changed, 12 insertions(+), 2 deletions(-)
+ include/linux/pid.h |    1 
+ kernel/fork.c       |   85 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 86 insertions(+)
 
 --- a/include/linux/pid.h
 +++ b/include/linux/pid.h
-@@ -85,6 +85,10 @@ static inline struct pid *get_pid(struct
+@@ -75,6 +75,7 @@ extern const struct file_operations pidf
+ struct file;
  
- extern void put_pid(struct pid *pid);
- extern struct task_struct *pid_task(struct pid *pid, enum pid_type);
-+static inline bool pid_has_task(struct pid *pid, enum pid_type type)
-+{
-+	return !hlist_empty(&pid->tasks[type]);
-+}
- extern struct task_struct *get_pid_task(struct pid *pid, enum pid_type);
+ extern struct pid *pidfd_pid(const struct file *file);
++int pidfd_prepare(struct pid *pid, unsigned int flags, struct file **ret);
  
- extern struct pid *get_task_pid(struct task_struct *task, enum pid_type type);
+ static inline struct pid *get_pid(struct pid *pid)
+ {
 --- a/kernel/fork.c
 +++ b/kernel/fork.c
-@@ -1703,10 +1703,16 @@ static int pidfd_release(struct inode *i
- #ifdef CONFIG_PROC_FS
- static void pidfd_show_fdinfo(struct seq_file *m, struct file *f)
- {
--	struct pid_namespace *ns = proc_pid_ns(file_inode(m->file));
- 	struct pid *pid = f->private_data;
-+	struct pid_namespace *ns;
-+	pid_t nr = -1;
- 
--	seq_put_decimal_ull(m, "Pid:\t", pid_nr_ns(pid, ns));
-+	if (likely(pid_has_task(pid, PIDTYPE_PID))) {
-+		ns = proc_pid_ns(file_inode(m->file));
-+		nr = pid_nr_ns(pid, ns);
-+	}
-+
-+	seq_put_decimal_ll(m, "Pid:\t", nr);
- 	seq_putc(m, '\n');
- }
+@@ -1750,6 +1750,91 @@ const struct file_operations pidfd_fops
  #endif
+ };
+ 
++/**
++ * __pidfd_prepare - allocate a new pidfd_file and reserve a pidfd
++ * @pid:   the struct pid for which to create a pidfd
++ * @flags: flags of the new @pidfd
++ * @pidfd: the pidfd to return
++ *
++ * Allocate a new file that stashes @pid and reserve a new pidfd number in the
++ * caller's file descriptor table. The pidfd is reserved but not installed yet.
++
++ * The helper doesn't perform checks on @pid which makes it useful for pidfds
++ * created via CLONE_PIDFD where @pid has no task attached when the pidfd and
++ * pidfd file are prepared.
++ *
++ * If this function returns successfully the caller is responsible to either
++ * call fd_install() passing the returned pidfd and pidfd file as arguments in
++ * order to install the pidfd into its file descriptor table or they must use
++ * put_unused_fd() and fput() on the returned pidfd and pidfd file
++ * respectively.
++ *
++ * This function is useful when a pidfd must already be reserved but there
++ * might still be points of failure afterwards and the caller wants to ensure
++ * that no pidfd is leaked into its file descriptor table.
++ *
++ * Return: On success, a reserved pidfd is returned from the function and a new
++ *         pidfd file is returned in the last argument to the function. On
++ *         error, a negative error code is returned from the function and the
++ *         last argument remains unchanged.
++ */
++static int __pidfd_prepare(struct pid *pid, unsigned int flags, struct file **ret)
++{
++	int pidfd;
++	struct file *pidfd_file;
++
++	if (flags & ~(O_NONBLOCK | O_RDWR | O_CLOEXEC))
++		return -EINVAL;
++
++	pidfd = get_unused_fd_flags(O_RDWR | O_CLOEXEC);
++	if (pidfd < 0)
++		return pidfd;
++
++	pidfd_file = anon_inode_getfile("[pidfd]", &pidfd_fops, pid,
++					flags | O_RDWR | O_CLOEXEC);
++	if (IS_ERR(pidfd_file)) {
++		put_unused_fd(pidfd);
++		return PTR_ERR(pidfd_file);
++	}
++	get_pid(pid); /* held by pidfd_file now */
++	*ret = pidfd_file;
++	return pidfd;
++}
++
++/**
++ * pidfd_prepare - allocate a new pidfd_file and reserve a pidfd
++ * @pid:   the struct pid for which to create a pidfd
++ * @flags: flags of the new @pidfd
++ * @pidfd: the pidfd to return
++ *
++ * Allocate a new file that stashes @pid and reserve a new pidfd number in the
++ * caller's file descriptor table. The pidfd is reserved but not installed yet.
++ *
++ * The helper verifies that @pid is used as a thread group leader.
++ *
++ * If this function returns successfully the caller is responsible to either
++ * call fd_install() passing the returned pidfd and pidfd file as arguments in
++ * order to install the pidfd into its file descriptor table or they must use
++ * put_unused_fd() and fput() on the returned pidfd and pidfd file
++ * respectively.
++ *
++ * This function is useful when a pidfd must already be reserved but there
++ * might still be points of failure afterwards and the caller wants to ensure
++ * that no pidfd is leaked into its file descriptor table.
++ *
++ * Return: On success, a reserved pidfd is returned from the function and a new
++ *         pidfd file is returned in the last argument to the function. On
++ *         error, a negative error code is returned from the function and the
++ *         last argument remains unchanged.
++ */
++int pidfd_prepare(struct pid *pid, unsigned int flags, struct file **ret)
++{
++	if (!pid || !pid_has_task(pid, PIDTYPE_TGID))
++		return -EINVAL;
++
++	return __pidfd_prepare(pid, flags, ret);
++}
++
+ static void __delayed_free_task(struct rcu_head *rhp)
+ {
+ 	struct task_struct *tsk = container_of(rhp, struct task_struct, rcu);
 
 
