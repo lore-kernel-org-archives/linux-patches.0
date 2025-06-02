@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5C12239594;
-	Mon,  2 Jun 2025 14:21:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A14401E0DD8;
+	Mon,  2 Jun 2025 14:21:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748874061; cv=none; b=l1ntXA5V0C0Otx/qcIXXPYHKyrYJeiqoj2gYj2VLDreIvGKfa2s2W0/UWTS238MC7I9M2EzicxDZjpYOTfyrvGhImGHYG2Wb/lszGmf5uAb+Wxcyz2XfwHMqhDmohIOPflfajcmG8XS3z2QsfvnsWbEo8+7KssgHuwd5NQBbdgA=
+	t=1748874064; cv=none; b=LmmbLv2A72dpcXDPTeG3uUjEw/YzYL1mq4HpJ28Cea4Dey5AXXC9XLHGmD+7GIBzR0CfT0Iy142PnjNQRCMJkFkx3HbeKCksygHAoOC+gJsPfxRjL8nBx5WZU1lAZpz6EV/KGpVJOogZRw4+6iR9eKrxdPlgVwNDMH0hce8YgwM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748874061; c=relaxed/simple;
-	bh=G9wRVM2ioIBDTT2jtBYnOEr4u2wzXkLHxiql/NHIC+k=;
+	s=arc-20240116; t=1748874064; c=relaxed/simple;
+	bh=+63fiWr73XY87sKUYh0qUJbtFfH7c90B5gErEpaNCrI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pjSzfQKLvd5E6AgCLnaLEbLURh7ifPRY5lDeyD8X5KL+LHQqHZA/zb6to5NVZidi0greMPNHwLnbPXjVALCXl6DQXi4GHRxe2HIJ5zJ/UmejWAMLLL4oLI7QkhrBVf1oAEaB+cpt9W0LJ01pYXR/pfSDUM+EUQv+xbM/Xzg7Znc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VIVLLMls; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Smt8eBV13Ylv5OySBtLpw0fay8yLUBiTGkl8jSTJmtYQT3lIhSnj8Uf/H2f9nxsaemrBinNqpjIdalX5+Lur+ChGahQSZScBOreCWshxz/OrxH5yBABuI+gHfkV7fjTv0g/IXUWX9/Ka7E4N97zeiBPxBnqF9PmIMobb88/BuaM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yAPq2i4V; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VIVLLMls"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33FB0C4CEEB;
-	Mon,  2 Jun 2025 14:21:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yAPq2i4V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1263FC4CEEB;
+	Mon,  2 Jun 2025 14:21:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748874060;
-	bh=G9wRVM2ioIBDTT2jtBYnOEr4u2wzXkLHxiql/NHIC+k=;
+	s=korg; t=1748874064;
+	bh=+63fiWr73XY87sKUYh0qUJbtFfH7c90B5gErEpaNCrI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VIVLLMlsJKNiln2cpJjYT5mjGudSjNtnbqPt7kwQhL71UDSIlJTseGB5BZlT6Fqn7
-	 0IIkbdzHRUFbbL08R8uJ1EQHzSUREAfXH2nO77Sv94BB3Ydp2Qph8Ovki9dG4McdHM
-	 OWTrx0lTMC1AfwIiC0BektHozb+9qmwO3iAYrURA=
+	b=yAPq2i4V/gDSWRBAJauUVpPUiAKz0OP1lTZbDrL7kGYyplczdTgvxp5aNcw57BIaY
+	 wAo5eR7ZGwrBF3uJTCLResTH+cK+F3HcaISG/hTGaJ+8JneLeos5J1/tMJ8cjoVs/N
+	 ofRnBadehueMnXMnhfwRmd95hBa5gFrvRUlF6L5o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 345/444] pinctrl: qcom/msm: Convert to platform remove callback returning void
-Date: Mon,  2 Jun 2025 15:46:49 +0200
-Message-ID: <20250602134354.938454497@linuxfoundation.org>
+Subject: [PATCH 6.6 346/444] pinctrl: qcom: switch to devm_register_sys_off_handler()
+Date: Mon,  2 Jun 2025 15:46:50 +0200
+Message-ID: <20250602134354.980439144@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -45,731 +45,100 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-[ Upstream commit 22ee670a8ad3ec7cd9d872d4512fe8797130e191 ]
+[ Upstream commit 41e452e6933d14146381ea25cff5e4d1ac2abea1 ]
 
-The .remove() callback for a platform driver returns an int which makes
-many driver authors wrongly assume it's possible to do error handling by
-returning an error code. However the value returned is ignored (apart
-from emitting a warning) and this typically results in resource leaks.
+Error-handling paths in msm_pinctrl_probe() don't call
+a function required to unroll restart handler registration,
+unregister_restart_handler(). Instead of adding calls to this function,
+switch the msm pinctrl code into using devm_register_sys_off_handler().
 
-To improve here there is a quest to make the remove callback return
-void. In the first step of this quest all drivers are converted to
-.remove_new(), which already returns void. Eventually after all drivers
-are converted, .remove_new() will be renamed to .remove().
-
-To convert all those qcom pinctrl drivers, make msm_pinctrl_remove()
-return void (instead of zero) and use .remove_new in all drivers.
-
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Link: https://lore.kernel.org/r/20231009162510.335208-3-u.kleine-koenig@pengutronix.de
+Fixes: cf1fc1876289 ("pinctrl: qcom: use restart_notifier mechanism for ps_hold")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://lore.kernel.org/20250513-pinctrl-msm-fix-v2-2-249999af0fc1@oss.qualcomm.com
 Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Stable-dep-of: 41e452e6933d ("pinctrl: qcom: switch to devm_register_sys_off_handler()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/qcom/pinctrl-apq8064.c  | 2 +-
- drivers/pinctrl/qcom/pinctrl-apq8084.c  | 2 +-
- drivers/pinctrl/qcom/pinctrl-ipq4019.c  | 2 +-
- drivers/pinctrl/qcom/pinctrl-ipq5018.c  | 2 +-
- drivers/pinctrl/qcom/pinctrl-ipq5332.c  | 2 +-
- drivers/pinctrl/qcom/pinctrl-ipq6018.c  | 2 +-
- drivers/pinctrl/qcom/pinctrl-ipq8064.c  | 2 +-
- drivers/pinctrl/qcom/pinctrl-ipq8074.c  | 2 +-
- drivers/pinctrl/qcom/pinctrl-ipq9574.c  | 2 +-
- drivers/pinctrl/qcom/pinctrl-mdm9607.c  | 2 +-
- drivers/pinctrl/qcom/pinctrl-mdm9615.c  | 2 +-
- drivers/pinctrl/qcom/pinctrl-msm.c      | 4 +---
- drivers/pinctrl/qcom/pinctrl-msm.h      | 2 +-
- drivers/pinctrl/qcom/pinctrl-msm8226.c  | 2 +-
- drivers/pinctrl/qcom/pinctrl-msm8660.c  | 2 +-
- drivers/pinctrl/qcom/pinctrl-msm8909.c  | 2 +-
- drivers/pinctrl/qcom/pinctrl-msm8916.c  | 2 +-
- drivers/pinctrl/qcom/pinctrl-msm8953.c  | 2 +-
- drivers/pinctrl/qcom/pinctrl-msm8960.c  | 2 +-
- drivers/pinctrl/qcom/pinctrl-msm8976.c  | 2 +-
- drivers/pinctrl/qcom/pinctrl-msm8994.c  | 2 +-
- drivers/pinctrl/qcom/pinctrl-msm8996.c  | 2 +-
- drivers/pinctrl/qcom/pinctrl-msm8998.c  | 2 +-
- drivers/pinctrl/qcom/pinctrl-msm8x74.c  | 2 +-
- drivers/pinctrl/qcom/pinctrl-qcm2290.c  | 2 +-
- drivers/pinctrl/qcom/pinctrl-qcs404.c   | 2 +-
- drivers/pinctrl/qcom/pinctrl-qdf2xxx.c  | 2 +-
- drivers/pinctrl/qcom/pinctrl-qdu1000.c  | 2 +-
- drivers/pinctrl/qcom/pinctrl-sa8775p.c  | 2 +-
- drivers/pinctrl/qcom/pinctrl-sc7180.c   | 2 +-
- drivers/pinctrl/qcom/pinctrl-sc7280.c   | 2 +-
- drivers/pinctrl/qcom/pinctrl-sc8180x.c  | 2 +-
- drivers/pinctrl/qcom/pinctrl-sc8280xp.c | 2 +-
- drivers/pinctrl/qcom/pinctrl-sdm660.c   | 2 +-
- drivers/pinctrl/qcom/pinctrl-sdm670.c   | 2 +-
- drivers/pinctrl/qcom/pinctrl-sdm845.c   | 2 +-
- drivers/pinctrl/qcom/pinctrl-sdx55.c    | 2 +-
- drivers/pinctrl/qcom/pinctrl-sdx65.c    | 2 +-
- drivers/pinctrl/qcom/pinctrl-sdx75.c    | 2 +-
- drivers/pinctrl/qcom/pinctrl-sm6115.c   | 2 +-
- drivers/pinctrl/qcom/pinctrl-sm6125.c   | 2 +-
- drivers/pinctrl/qcom/pinctrl-sm6350.c   | 2 +-
- drivers/pinctrl/qcom/pinctrl-sm6375.c   | 2 +-
- drivers/pinctrl/qcom/pinctrl-sm7150.c   | 2 +-
- drivers/pinctrl/qcom/pinctrl-sm8150.c   | 2 +-
- drivers/pinctrl/qcom/pinctrl-sm8250.c   | 2 +-
- drivers/pinctrl/qcom/pinctrl-sm8350.c   | 2 +-
- drivers/pinctrl/qcom/pinctrl-sm8450.c   | 2 +-
- drivers/pinctrl/qcom/pinctrl-sm8550.c   | 2 +-
- 49 files changed, 49 insertions(+), 51 deletions(-)
+ drivers/pinctrl/qcom/pinctrl-msm.c | 23 ++++++++++++-----------
+ 1 file changed, 12 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/pinctrl/qcom/pinctrl-apq8064.c b/drivers/pinctrl/qcom/pinctrl-apq8064.c
-index 20c3b90250445..a18df41622999 100644
---- a/drivers/pinctrl/qcom/pinctrl-apq8064.c
-+++ b/drivers/pinctrl/qcom/pinctrl-apq8064.c
-@@ -629,7 +629,7 @@ static struct platform_driver apq8064_pinctrl_driver = {
- 		.of_match_table = apq8064_pinctrl_of_match,
- 	},
- 	.probe = apq8064_pinctrl_probe,
--	.remove = msm_pinctrl_remove,
-+	.remove_new = msm_pinctrl_remove,
- };
- 
- static int __init apq8064_pinctrl_init(void)
-diff --git a/drivers/pinctrl/qcom/pinctrl-apq8084.c b/drivers/pinctrl/qcom/pinctrl-apq8084.c
-index 3fc0a40762b63..afada80e52a23 100644
---- a/drivers/pinctrl/qcom/pinctrl-apq8084.c
-+++ b/drivers/pinctrl/qcom/pinctrl-apq8084.c
-@@ -1207,7 +1207,7 @@ static struct platform_driver apq8084_pinctrl_driver = {
- 		.of_match_table = apq8084_pinctrl_of_match,
- 	},
- 	.probe = apq8084_pinctrl_probe,
--	.remove = msm_pinctrl_remove,
-+	.remove_new = msm_pinctrl_remove,
- };
- 
- static int __init apq8084_pinctrl_init(void)
-diff --git a/drivers/pinctrl/qcom/pinctrl-ipq4019.c b/drivers/pinctrl/qcom/pinctrl-ipq4019.c
-index 1f7944dd829d1..cb13576ad6cfb 100644
---- a/drivers/pinctrl/qcom/pinctrl-ipq4019.c
-+++ b/drivers/pinctrl/qcom/pinctrl-ipq4019.c
-@@ -710,7 +710,7 @@ static struct platform_driver ipq4019_pinctrl_driver = {
- 		.of_match_table = ipq4019_pinctrl_of_match,
- 	},
- 	.probe = ipq4019_pinctrl_probe,
--	.remove = msm_pinctrl_remove,
-+	.remove_new = msm_pinctrl_remove,
- };
- 
- static int __init ipq4019_pinctrl_init(void)
-diff --git a/drivers/pinctrl/qcom/pinctrl-ipq5018.c b/drivers/pinctrl/qcom/pinctrl-ipq5018.c
-index e2951f81c3eeb..68f65b57003e9 100644
---- a/drivers/pinctrl/qcom/pinctrl-ipq5018.c
-+++ b/drivers/pinctrl/qcom/pinctrl-ipq5018.c
-@@ -754,7 +754,7 @@ static struct platform_driver ipq5018_pinctrl_driver = {
- 		.of_match_table = ipq5018_pinctrl_of_match,
- 	},
- 	.probe = ipq5018_pinctrl_probe,
--	.remove = msm_pinctrl_remove,
-+	.remove_new = msm_pinctrl_remove,
- };
- 
- static int __init ipq5018_pinctrl_init(void)
-diff --git a/drivers/pinctrl/qcom/pinctrl-ipq5332.c b/drivers/pinctrl/qcom/pinctrl-ipq5332.c
-index 625f8014051f6..8821751189708 100644
---- a/drivers/pinctrl/qcom/pinctrl-ipq5332.c
-+++ b/drivers/pinctrl/qcom/pinctrl-ipq5332.c
-@@ -834,7 +834,7 @@ static struct platform_driver ipq5332_pinctrl_driver = {
- 		.of_match_table = ipq5332_pinctrl_of_match,
- 	},
- 	.probe = ipq5332_pinctrl_probe,
--	.remove = msm_pinctrl_remove,
-+	.remove_new = msm_pinctrl_remove,
- };
- 
- static int __init ipq5332_pinctrl_init(void)
-diff --git a/drivers/pinctrl/qcom/pinctrl-ipq6018.c b/drivers/pinctrl/qcom/pinctrl-ipq6018.c
-index 0ad08647dbcdf..ac330d8712b5c 100644
---- a/drivers/pinctrl/qcom/pinctrl-ipq6018.c
-+++ b/drivers/pinctrl/qcom/pinctrl-ipq6018.c
-@@ -1080,7 +1080,7 @@ static struct platform_driver ipq6018_pinctrl_driver = {
- 		.of_match_table = ipq6018_pinctrl_of_match,
- 	},
- 	.probe = ipq6018_pinctrl_probe,
--	.remove = msm_pinctrl_remove,
-+	.remove_new = msm_pinctrl_remove,
- };
- 
- static int __init ipq6018_pinctrl_init(void)
-diff --git a/drivers/pinctrl/qcom/pinctrl-ipq8064.c b/drivers/pinctrl/qcom/pinctrl-ipq8064.c
-index e2bb94e86aef6..e10e1bc4c9113 100644
---- a/drivers/pinctrl/qcom/pinctrl-ipq8064.c
-+++ b/drivers/pinctrl/qcom/pinctrl-ipq8064.c
-@@ -631,7 +631,7 @@ static struct platform_driver ipq8064_pinctrl_driver = {
- 		.of_match_table = ipq8064_pinctrl_of_match,
- 	},
- 	.probe = ipq8064_pinctrl_probe,
--	.remove = msm_pinctrl_remove,
-+	.remove_new = msm_pinctrl_remove,
- };
- 
- static int __init ipq8064_pinctrl_init(void)
-diff --git a/drivers/pinctrl/qcom/pinctrl-ipq8074.c b/drivers/pinctrl/qcom/pinctrl-ipq8074.c
-index 337f3a1c92c19..fee32c1d1d3e9 100644
---- a/drivers/pinctrl/qcom/pinctrl-ipq8074.c
-+++ b/drivers/pinctrl/qcom/pinctrl-ipq8074.c
-@@ -1041,7 +1041,7 @@ static struct platform_driver ipq8074_pinctrl_driver = {
- 		.of_match_table = ipq8074_pinctrl_of_match,
- 	},
- 	.probe = ipq8074_pinctrl_probe,
--	.remove = msm_pinctrl_remove,
-+	.remove_new = msm_pinctrl_remove,
- };
- 
- static int __init ipq8074_pinctrl_init(void)
-diff --git a/drivers/pinctrl/qcom/pinctrl-ipq9574.c b/drivers/pinctrl/qcom/pinctrl-ipq9574.c
-index e2491617b2364..20ab59cb621bc 100644
---- a/drivers/pinctrl/qcom/pinctrl-ipq9574.c
-+++ b/drivers/pinctrl/qcom/pinctrl-ipq9574.c
-@@ -799,7 +799,7 @@ static struct platform_driver ipq9574_pinctrl_driver = {
- 		.of_match_table = ipq9574_pinctrl_of_match,
- 	},
- 	.probe = ipq9574_pinctrl_probe,
--	.remove = msm_pinctrl_remove,
-+	.remove_new = msm_pinctrl_remove,
- };
- 
- static int __init ipq9574_pinctrl_init(void)
-diff --git a/drivers/pinctrl/qcom/pinctrl-mdm9607.c b/drivers/pinctrl/qcom/pinctrl-mdm9607.c
-index e7cd3ef1cf3e8..415d24e16267d 100644
---- a/drivers/pinctrl/qcom/pinctrl-mdm9607.c
-+++ b/drivers/pinctrl/qcom/pinctrl-mdm9607.c
-@@ -1059,7 +1059,7 @@ static struct platform_driver mdm9607_pinctrl_driver = {
- 		.of_match_table = mdm9607_pinctrl_of_match,
- 	},
- 	.probe = mdm9607_pinctrl_probe,
--	.remove = msm_pinctrl_remove,
-+	.remove_new = msm_pinctrl_remove,
- };
- 
- static int __init mdm9607_pinctrl_init(void)
-diff --git a/drivers/pinctrl/qcom/pinctrl-mdm9615.c b/drivers/pinctrl/qcom/pinctrl-mdm9615.c
-index 0a2ae383d3d57..3f2eafea0b246 100644
---- a/drivers/pinctrl/qcom/pinctrl-mdm9615.c
-+++ b/drivers/pinctrl/qcom/pinctrl-mdm9615.c
-@@ -446,7 +446,7 @@ static struct platform_driver mdm9615_pinctrl_driver = {
- 		.of_match_table = mdm9615_pinctrl_of_match,
- 	},
- 	.probe = mdm9615_pinctrl_probe,
--	.remove = msm_pinctrl_remove,
-+	.remove_new = msm_pinctrl_remove,
- };
- 
- static int __init mdm9615_pinctrl_init(void)
 diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
-index b252fc22f64e6..4714d60f9ab9c 100644
+index 4714d60f9ab9c..ed70767ca0f0c 100644
 --- a/drivers/pinctrl/qcom/pinctrl-msm.c
 +++ b/drivers/pinctrl/qcom/pinctrl-msm.c
-@@ -1547,15 +1547,13 @@ int msm_pinctrl_probe(struct platform_device *pdev,
- }
- EXPORT_SYMBOL(msm_pinctrl_probe);
+@@ -43,7 +43,6 @@
+  * @pctrl:          pinctrl handle.
+  * @chip:           gpiochip handle.
+  * @desc:           pin controller descriptor
+- * @restart_nb:     restart notifier block.
+  * @irq:            parent irq for the TLMM irq_chip.
+  * @intr_target_use_scm: route irq to application cpu using scm calls
+  * @lock:           Spinlock to protect register resources as well
+@@ -63,7 +62,6 @@ struct msm_pinctrl {
+ 	struct pinctrl_dev *pctrl;
+ 	struct gpio_chip chip;
+ 	struct pinctrl_desc desc;
+-	struct notifier_block restart_nb;
  
--int msm_pinctrl_remove(struct platform_device *pdev)
-+void msm_pinctrl_remove(struct platform_device *pdev)
+ 	int irq;
+ 
+@@ -1424,10 +1422,9 @@ static int msm_gpio_init(struct msm_pinctrl *pctrl)
+ 	return 0;
+ }
+ 
+-static int msm_ps_hold_restart(struct notifier_block *nb, unsigned long action,
+-			       void *data)
++static int msm_ps_hold_restart(struct sys_off_data *data)
  {
+-	struct msm_pinctrl *pctrl = container_of(nb, struct msm_pinctrl, restart_nb);
++	struct msm_pinctrl *pctrl = data->cb_data;
+ 
+ 	writel(0, pctrl->regs[0] + PS_HOLD_OFFSET);
+ 	mdelay(1000);
+@@ -1438,7 +1435,11 @@ static struct msm_pinctrl *poweroff_pctrl;
+ 
+ static void msm_ps_hold_poweroff(void)
+ {
+-	msm_ps_hold_restart(&poweroff_pctrl->restart_nb, 0, NULL);
++	struct sys_off_data data = {
++		.cb_data = poweroff_pctrl,
++	};
++
++	msm_ps_hold_restart(&data);
+ }
+ 
+ static void msm_pinctrl_setup_pm_reset(struct msm_pinctrl *pctrl)
+@@ -1448,9 +1449,11 @@ static void msm_pinctrl_setup_pm_reset(struct msm_pinctrl *pctrl)
+ 
+ 	for (i = 0; i < pctrl->soc->nfunctions; i++)
+ 		if (!strcmp(func[i].name, "ps_hold")) {
+-			pctrl->restart_nb.notifier_call = msm_ps_hold_restart;
+-			pctrl->restart_nb.priority = 128;
+-			if (register_restart_handler(&pctrl->restart_nb))
++			if (devm_register_sys_off_handler(pctrl->dev,
++							  SYS_OFF_MODE_RESTART,
++							  128,
++							  msm_ps_hold_restart,
++							  pctrl))
+ 				dev_err(pctrl->dev,
+ 					"failed to setup restart handler.\n");
+ 			poweroff_pctrl = pctrl;
+@@ -1552,8 +1555,6 @@ void msm_pinctrl_remove(struct platform_device *pdev)
  	struct msm_pinctrl *pctrl = platform_get_drvdata(pdev);
  
  	gpiochip_remove(&pctrl->chip);
- 
- 	unregister_restart_handler(&pctrl->restart_nb);
 -
--	return 0;
+-	unregister_restart_handler(&pctrl->restart_nb);
  }
  EXPORT_SYMBOL(msm_pinctrl_remove);
  
-diff --git a/drivers/pinctrl/qcom/pinctrl-msm.h b/drivers/pinctrl/qcom/pinctrl-msm.h
-index 1d2f2e904da19..4968d08a384da 100644
---- a/drivers/pinctrl/qcom/pinctrl-msm.h
-+++ b/drivers/pinctrl/qcom/pinctrl-msm.h
-@@ -166,6 +166,6 @@ extern const struct dev_pm_ops msm_pinctrl_dev_pm_ops;
- 
- int msm_pinctrl_probe(struct platform_device *pdev,
- 		      const struct msm_pinctrl_soc_data *soc_data);
--int msm_pinctrl_remove(struct platform_device *pdev);
-+void msm_pinctrl_remove(struct platform_device *pdev);
- 
- #endif
-diff --git a/drivers/pinctrl/qcom/pinctrl-msm8226.c b/drivers/pinctrl/qcom/pinctrl-msm8226.c
-index 994619840a706..90b4004e7faf1 100644
---- a/drivers/pinctrl/qcom/pinctrl-msm8226.c
-+++ b/drivers/pinctrl/qcom/pinctrl-msm8226.c
-@@ -638,7 +638,7 @@ static struct platform_driver msm8226_pinctrl_driver = {
- 		.of_match_table = msm8226_pinctrl_of_match,
- 	},
- 	.probe = msm8226_pinctrl_probe,
--	.remove = msm_pinctrl_remove,
-+	.remove_new = msm_pinctrl_remove,
- };
- 
- static int __init msm8226_pinctrl_init(void)
-diff --git a/drivers/pinctrl/qcom/pinctrl-msm8660.c b/drivers/pinctrl/qcom/pinctrl-msm8660.c
-index 999a5f867eb50..dba6d531b4a14 100644
---- a/drivers/pinctrl/qcom/pinctrl-msm8660.c
-+++ b/drivers/pinctrl/qcom/pinctrl-msm8660.c
-@@ -981,7 +981,7 @@ static struct platform_driver msm8660_pinctrl_driver = {
- 		.of_match_table = msm8660_pinctrl_of_match,
- 	},
- 	.probe = msm8660_pinctrl_probe,
--	.remove = msm_pinctrl_remove,
-+	.remove_new = msm_pinctrl_remove,
- };
- 
- static int __init msm8660_pinctrl_init(void)
-diff --git a/drivers/pinctrl/qcom/pinctrl-msm8909.c b/drivers/pinctrl/qcom/pinctrl-msm8909.c
-index 756856d20d6b5..14b17ba9f9061 100644
---- a/drivers/pinctrl/qcom/pinctrl-msm8909.c
-+++ b/drivers/pinctrl/qcom/pinctrl-msm8909.c
-@@ -929,7 +929,7 @@ static struct platform_driver msm8909_pinctrl_driver = {
- 		.of_match_table = msm8909_pinctrl_of_match,
- 	},
- 	.probe = msm8909_pinctrl_probe,
--	.remove = msm_pinctrl_remove,
-+	.remove_new = msm_pinctrl_remove,
- };
- 
- static int __init msm8909_pinctrl_init(void)
-diff --git a/drivers/pinctrl/qcom/pinctrl-msm8916.c b/drivers/pinctrl/qcom/pinctrl-msm8916.c
-index cea5c54f92fec..184dcf8422735 100644
---- a/drivers/pinctrl/qcom/pinctrl-msm8916.c
-+++ b/drivers/pinctrl/qcom/pinctrl-msm8916.c
-@@ -969,7 +969,7 @@ static struct platform_driver msm8916_pinctrl_driver = {
- 		.of_match_table = msm8916_pinctrl_of_match,
- 	},
- 	.probe = msm8916_pinctrl_probe,
--	.remove = msm_pinctrl_remove,
-+	.remove_new = msm_pinctrl_remove,
- };
- 
- static int __init msm8916_pinctrl_init(void)
-diff --git a/drivers/pinctrl/qcom/pinctrl-msm8953.c b/drivers/pinctrl/qcom/pinctrl-msm8953.c
-index 998351bdfee13..c2253821ae8d3 100644
---- a/drivers/pinctrl/qcom/pinctrl-msm8953.c
-+++ b/drivers/pinctrl/qcom/pinctrl-msm8953.c
-@@ -1816,7 +1816,7 @@ static struct platform_driver msm8953_pinctrl_driver = {
- 		.of_match_table = msm8953_pinctrl_of_match,
- 	},
- 	.probe = msm8953_pinctrl_probe,
--	.remove = msm_pinctrl_remove,
-+	.remove_new = msm_pinctrl_remove,
- };
- 
- static int __init msm8953_pinctrl_init(void)
-diff --git a/drivers/pinctrl/qcom/pinctrl-msm8960.c b/drivers/pinctrl/qcom/pinctrl-msm8960.c
-index ebe230b3b437c..6b9148d226e9b 100644
---- a/drivers/pinctrl/qcom/pinctrl-msm8960.c
-+++ b/drivers/pinctrl/qcom/pinctrl-msm8960.c
-@@ -1246,7 +1246,7 @@ static struct platform_driver msm8960_pinctrl_driver = {
- 		.of_match_table = msm8960_pinctrl_of_match,
- 	},
- 	.probe = msm8960_pinctrl_probe,
--	.remove = msm_pinctrl_remove,
-+	.remove_new = msm_pinctrl_remove,
- };
- 
- static int __init msm8960_pinctrl_init(void)
-diff --git a/drivers/pinctrl/qcom/pinctrl-msm8976.c b/drivers/pinctrl/qcom/pinctrl-msm8976.c
-index c30d80e4e98ca..9a951888e8a1b 100644
---- a/drivers/pinctrl/qcom/pinctrl-msm8976.c
-+++ b/drivers/pinctrl/qcom/pinctrl-msm8976.c
-@@ -1096,7 +1096,7 @@ static struct platform_driver msm8976_pinctrl_driver = {
- 		.of_match_table = msm8976_pinctrl_of_match,
- 	},
- 	.probe = msm8976_pinctrl_probe,
--	.remove = msm_pinctrl_remove,
-+	.remove_new = msm_pinctrl_remove,
- };
- 
- static int __init msm8976_pinctrl_init(void)
-diff --git a/drivers/pinctrl/qcom/pinctrl-msm8994.c b/drivers/pinctrl/qcom/pinctrl-msm8994.c
-index b1a6759ab4a5e..1ed1dd32d6c79 100644
---- a/drivers/pinctrl/qcom/pinctrl-msm8994.c
-+++ b/drivers/pinctrl/qcom/pinctrl-msm8994.c
-@@ -1343,7 +1343,7 @@ static struct platform_driver msm8994_pinctrl_driver = {
- 		.of_match_table = msm8994_pinctrl_of_match,
- 	},
- 	.probe = msm8994_pinctrl_probe,
--	.remove = msm_pinctrl_remove,
-+	.remove_new = msm_pinctrl_remove,
- };
- 
- static int __init msm8994_pinctrl_init(void)
-diff --git a/drivers/pinctrl/qcom/pinctrl-msm8996.c b/drivers/pinctrl/qcom/pinctrl-msm8996.c
-index 46cc0b49dbab5..5f0e7f78fd517 100644
---- a/drivers/pinctrl/qcom/pinctrl-msm8996.c
-+++ b/drivers/pinctrl/qcom/pinctrl-msm8996.c
-@@ -1906,7 +1906,7 @@ static struct platform_driver msm8996_pinctrl_driver = {
- 		.of_match_table = msm8996_pinctrl_of_match,
- 	},
- 	.probe = msm8996_pinctrl_probe,
--	.remove = msm_pinctrl_remove,
-+	.remove_new = msm_pinctrl_remove,
- };
- 
- static int __init msm8996_pinctrl_init(void)
-diff --git a/drivers/pinctrl/qcom/pinctrl-msm8998.c b/drivers/pinctrl/qcom/pinctrl-msm8998.c
-index b7cbf32b3125a..4aaf45e54f3a7 100644
---- a/drivers/pinctrl/qcom/pinctrl-msm8998.c
-+++ b/drivers/pinctrl/qcom/pinctrl-msm8998.c
-@@ -1535,7 +1535,7 @@ static struct platform_driver msm8998_pinctrl_driver = {
- 		.of_match_table = msm8998_pinctrl_of_match,
- 	},
- 	.probe = msm8998_pinctrl_probe,
--	.remove = msm_pinctrl_remove,
-+	.remove_new = msm_pinctrl_remove,
- };
- 
- static int __init msm8998_pinctrl_init(void)
-diff --git a/drivers/pinctrl/qcom/pinctrl-msm8x74.c b/drivers/pinctrl/qcom/pinctrl-msm8x74.c
-index d5fe62992849c..58b4f6f31ae6a 100644
---- a/drivers/pinctrl/qcom/pinctrl-msm8x74.c
-+++ b/drivers/pinctrl/qcom/pinctrl-msm8x74.c
-@@ -1071,7 +1071,7 @@ static struct platform_driver msm8x74_pinctrl_driver = {
- 		.of_match_table = msm8x74_pinctrl_of_match,
- 	},
- 	.probe = msm8x74_pinctrl_probe,
--	.remove = msm_pinctrl_remove,
-+	.remove_new = msm_pinctrl_remove,
- };
- 
- static int __init msm8x74_pinctrl_init(void)
-diff --git a/drivers/pinctrl/qcom/pinctrl-qcm2290.c b/drivers/pinctrl/qcom/pinctrl-qcm2290.c
-index ba699eac9ee8b..f5c1c427b44e9 100644
---- a/drivers/pinctrl/qcom/pinctrl-qcm2290.c
-+++ b/drivers/pinctrl/qcom/pinctrl-qcm2290.c
-@@ -1113,7 +1113,7 @@ static struct platform_driver qcm2290_pinctrl_driver = {
- 		.of_match_table = qcm2290_pinctrl_of_match,
- 	},
- 	.probe = qcm2290_pinctrl_probe,
--	.remove = msm_pinctrl_remove,
-+	.remove_new = msm_pinctrl_remove,
- };
- 
- static int __init qcm2290_pinctrl_init(void)
-diff --git a/drivers/pinctrl/qcom/pinctrl-qcs404.c b/drivers/pinctrl/qcom/pinctrl-qcs404.c
-index ae7224012f8aa..9a875b7dc9989 100644
---- a/drivers/pinctrl/qcom/pinctrl-qcs404.c
-+++ b/drivers/pinctrl/qcom/pinctrl-qcs404.c
-@@ -1644,7 +1644,7 @@ static struct platform_driver qcs404_pinctrl_driver = {
- 		.of_match_table = qcs404_pinctrl_of_match,
- 	},
- 	.probe = qcs404_pinctrl_probe,
--	.remove = msm_pinctrl_remove,
-+	.remove_new = msm_pinctrl_remove,
- };
- 
- static int __init qcs404_pinctrl_init(void)
-diff --git a/drivers/pinctrl/qcom/pinctrl-qdf2xxx.c b/drivers/pinctrl/qcom/pinctrl-qdf2xxx.c
-index b5808fcfb13cd..4d2f6f495163b 100644
---- a/drivers/pinctrl/qcom/pinctrl-qdf2xxx.c
-+++ b/drivers/pinctrl/qcom/pinctrl-qdf2xxx.c
-@@ -145,7 +145,7 @@ static struct platform_driver qdf2xxx_pinctrl_driver = {
- 		.acpi_match_table = qdf2xxx_acpi_ids,
- 	},
- 	.probe = qdf2xxx_pinctrl_probe,
--	.remove = msm_pinctrl_remove,
-+	.remove_new = msm_pinctrl_remove,
- };
- 
- static int __init qdf2xxx_pinctrl_init(void)
-diff --git a/drivers/pinctrl/qcom/pinctrl-qdu1000.c b/drivers/pinctrl/qcom/pinctrl-qdu1000.c
-index 47bc529ef550d..da4f940bc8d4e 100644
---- a/drivers/pinctrl/qcom/pinctrl-qdu1000.c
-+++ b/drivers/pinctrl/qcom/pinctrl-qdu1000.c
-@@ -1248,7 +1248,7 @@ static struct platform_driver qdu1000_tlmm_driver = {
- 		.of_match_table = qdu1000_tlmm_of_match,
- 	},
- 	.probe = qdu1000_tlmm_probe,
--	.remove = msm_pinctrl_remove,
-+	.remove_new = msm_pinctrl_remove,
- };
- 
- static int __init qdu1000_tlmm_init(void)
-diff --git a/drivers/pinctrl/qcom/pinctrl-sa8775p.c b/drivers/pinctrl/qcom/pinctrl-sa8775p.c
-index 8fdea25d8d67e..5459c0c681a23 100644
---- a/drivers/pinctrl/qcom/pinctrl-sa8775p.c
-+++ b/drivers/pinctrl/qcom/pinctrl-sa8775p.c
-@@ -1530,7 +1530,7 @@ static struct platform_driver sa8775p_pinctrl_driver = {
- 		.of_match_table = sa8775p_pinctrl_of_match,
- 	},
- 	.probe = sa8775p_pinctrl_probe,
--	.remove = msm_pinctrl_remove,
-+	.remove_new = msm_pinctrl_remove,
- };
- 
- static int __init sa8775p_pinctrl_init(void)
-diff --git a/drivers/pinctrl/qcom/pinctrl-sc7180.c b/drivers/pinctrl/qcom/pinctrl-sc7180.c
-index 6eb0c73791c0b..c27aaa599b917 100644
---- a/drivers/pinctrl/qcom/pinctrl-sc7180.c
-+++ b/drivers/pinctrl/qcom/pinctrl-sc7180.c
-@@ -1159,7 +1159,7 @@ static struct platform_driver sc7180_pinctrl_driver = {
- 		.of_match_table = sc7180_pinctrl_of_match,
- 	},
- 	.probe = sc7180_pinctrl_probe,
--	.remove = msm_pinctrl_remove,
-+	.remove_new = msm_pinctrl_remove,
- };
- 
- static int __init sc7180_pinctrl_init(void)
-diff --git a/drivers/pinctrl/qcom/pinctrl-sc7280.c b/drivers/pinctrl/qcom/pinctrl-sc7280.c
-index 0c10eeb60b55e..c2db663e396eb 100644
---- a/drivers/pinctrl/qcom/pinctrl-sc7280.c
-+++ b/drivers/pinctrl/qcom/pinctrl-sc7280.c
-@@ -1505,7 +1505,7 @@ static struct platform_driver sc7280_pinctrl_driver = {
- 		.of_match_table = sc7280_pinctrl_of_match,
- 	},
- 	.probe = sc7280_pinctrl_probe,
--	.remove = msm_pinctrl_remove,
-+	.remove_new = msm_pinctrl_remove,
- };
- 
- static int __init sc7280_pinctrl_init(void)
-diff --git a/drivers/pinctrl/qcom/pinctrl-sc8180x.c b/drivers/pinctrl/qcom/pinctrl-sc8180x.c
-index d6a79ad41a40a..cfa7c8be9770c 100644
---- a/drivers/pinctrl/qcom/pinctrl-sc8180x.c
-+++ b/drivers/pinctrl/qcom/pinctrl-sc8180x.c
-@@ -1720,7 +1720,7 @@ static struct platform_driver sc8180x_pinctrl_driver = {
- 		.acpi_match_table = sc8180x_pinctrl_acpi_match,
- 	},
- 	.probe = sc8180x_pinctrl_probe,
--	.remove = msm_pinctrl_remove,
-+	.remove_new = msm_pinctrl_remove,
- };
- 
- static int __init sc8180x_pinctrl_init(void)
-diff --git a/drivers/pinctrl/qcom/pinctrl-sc8280xp.c b/drivers/pinctrl/qcom/pinctrl-sc8280xp.c
-index 96f4fb5a5d297..4b1c49697698d 100644
---- a/drivers/pinctrl/qcom/pinctrl-sc8280xp.c
-+++ b/drivers/pinctrl/qcom/pinctrl-sc8280xp.c
-@@ -1926,7 +1926,7 @@ static struct platform_driver sc8280xp_pinctrl_driver = {
- 		.of_match_table = sc8280xp_pinctrl_of_match,
- 	},
- 	.probe = sc8280xp_pinctrl_probe,
--	.remove = msm_pinctrl_remove,
-+	.remove_new = msm_pinctrl_remove,
- };
- 
- static int __init sc8280xp_pinctrl_init(void)
-diff --git a/drivers/pinctrl/qcom/pinctrl-sdm660.c b/drivers/pinctrl/qcom/pinctrl-sdm660.c
-index c2e0d5c034acf..b0c29a24b09b5 100644
---- a/drivers/pinctrl/qcom/pinctrl-sdm660.c
-+++ b/drivers/pinctrl/qcom/pinctrl-sdm660.c
-@@ -1428,7 +1428,7 @@ static struct platform_driver sdm660_pinctrl_driver = {
- 		.of_match_table = sdm660_pinctrl_of_match,
- 	},
- 	.probe = sdm660_pinctrl_probe,
--	.remove = msm_pinctrl_remove,
-+	.remove_new = msm_pinctrl_remove,
- };
- 
- static int __init sdm660_pinctrl_init(void)
-diff --git a/drivers/pinctrl/qcom/pinctrl-sdm670.c b/drivers/pinctrl/qcom/pinctrl-sdm670.c
-index cc3cce077de4e..1e694a966953a 100644
---- a/drivers/pinctrl/qcom/pinctrl-sdm670.c
-+++ b/drivers/pinctrl/qcom/pinctrl-sdm670.c
-@@ -1318,7 +1318,7 @@ static struct platform_driver sdm670_pinctrl_driver = {
- 		.of_match_table = sdm670_pinctrl_of_match,
- 	},
- 	.probe = sdm670_pinctrl_probe,
--	.remove = msm_pinctrl_remove,
-+	.remove_new = msm_pinctrl_remove,
- };
- 
- static int __init sdm670_pinctrl_init(void)
-diff --git a/drivers/pinctrl/qcom/pinctrl-sdm845.c b/drivers/pinctrl/qcom/pinctrl-sdm845.c
-index cc05c415ed155..3f3265e0018d6 100644
---- a/drivers/pinctrl/qcom/pinctrl-sdm845.c
-+++ b/drivers/pinctrl/qcom/pinctrl-sdm845.c
-@@ -1351,7 +1351,7 @@ static struct platform_driver sdm845_pinctrl_driver = {
- 		.acpi_match_table = ACPI_PTR(sdm845_pinctrl_acpi_match),
- 	},
- 	.probe = sdm845_pinctrl_probe,
--	.remove = msm_pinctrl_remove,
-+	.remove_new = msm_pinctrl_remove,
- };
- 
- static int __init sdm845_pinctrl_init(void)
-diff --git a/drivers/pinctrl/qcom/pinctrl-sdx55.c b/drivers/pinctrl/qcom/pinctrl-sdx55.c
-index 8826db9d21d04..c88b8bfcacb6a 100644
---- a/drivers/pinctrl/qcom/pinctrl-sdx55.c
-+++ b/drivers/pinctrl/qcom/pinctrl-sdx55.c
-@@ -990,7 +990,7 @@ static struct platform_driver sdx55_pinctrl_driver = {
- 		.of_match_table = sdx55_pinctrl_of_match,
- 	},
- 	.probe = sdx55_pinctrl_probe,
--	.remove = msm_pinctrl_remove,
-+	.remove_new = msm_pinctrl_remove,
- };
- 
- static int __init sdx55_pinctrl_init(void)
-diff --git a/drivers/pinctrl/qcom/pinctrl-sdx65.c b/drivers/pinctrl/qcom/pinctrl-sdx65.c
-index f6f319c997fc7..bd44ec0fcab43 100644
---- a/drivers/pinctrl/qcom/pinctrl-sdx65.c
-+++ b/drivers/pinctrl/qcom/pinctrl-sdx65.c
-@@ -939,7 +939,7 @@ static struct platform_driver sdx65_pinctrl_driver = {
- 		.of_match_table = sdx65_pinctrl_of_match,
- 	},
- 	.probe = sdx65_pinctrl_probe,
--	.remove = msm_pinctrl_remove,
-+	.remove_new = msm_pinctrl_remove,
- };
- 
- static int __init sdx65_pinctrl_init(void)
-diff --git a/drivers/pinctrl/qcom/pinctrl-sdx75.c b/drivers/pinctrl/qcom/pinctrl-sdx75.c
-index 3cfe8c7f04df8..396f6fc779a2e 100644
---- a/drivers/pinctrl/qcom/pinctrl-sdx75.c
-+++ b/drivers/pinctrl/qcom/pinctrl-sdx75.c
-@@ -1124,7 +1124,7 @@ static struct platform_driver sdx75_pinctrl_driver = {
- 		.of_match_table = sdx75_pinctrl_of_match,
- 	},
- 	.probe = sdx75_pinctrl_probe,
--	.remove = msm_pinctrl_remove,
-+	.remove_new = msm_pinctrl_remove,
- };
- 
- static int __init sdx75_pinctrl_init(void)
-diff --git a/drivers/pinctrl/qcom/pinctrl-sm6115.c b/drivers/pinctrl/qcom/pinctrl-sm6115.c
-index 2a06025f48858..87057089b2b64 100644
---- a/drivers/pinctrl/qcom/pinctrl-sm6115.c
-+++ b/drivers/pinctrl/qcom/pinctrl-sm6115.c
-@@ -895,7 +895,7 @@ static struct platform_driver sm6115_tlmm_driver = {
- 		.of_match_table = sm6115_tlmm_of_match,
- 	},
- 	.probe = sm6115_tlmm_probe,
--	.remove = msm_pinctrl_remove,
-+	.remove_new = msm_pinctrl_remove,
- };
- 
- static int __init sm6115_tlmm_init(void)
-diff --git a/drivers/pinctrl/qcom/pinctrl-sm6125.c b/drivers/pinctrl/qcom/pinctrl-sm6125.c
-index d5e2b896954c2..e07339ba72bca 100644
---- a/drivers/pinctrl/qcom/pinctrl-sm6125.c
-+++ b/drivers/pinctrl/qcom/pinctrl-sm6125.c
-@@ -1249,7 +1249,7 @@ static struct platform_driver sm6125_tlmm_driver = {
- 		.of_match_table = sm6125_tlmm_of_match,
- 	},
- 	.probe = sm6125_tlmm_probe,
--	.remove = msm_pinctrl_remove,
-+	.remove_new = msm_pinctrl_remove,
- };
- 
- static int __init sm6125_tlmm_init(void)
-diff --git a/drivers/pinctrl/qcom/pinctrl-sm6350.c b/drivers/pinctrl/qcom/pinctrl-sm6350.c
-index f3828c07b1345..4aeb1ba43ee3d 100644
---- a/drivers/pinctrl/qcom/pinctrl-sm6350.c
-+++ b/drivers/pinctrl/qcom/pinctrl-sm6350.c
-@@ -1373,7 +1373,7 @@ static struct platform_driver sm6350_tlmm_driver = {
- 		.of_match_table = sm6350_tlmm_of_match,
- 	},
- 	.probe = sm6350_tlmm_probe,
--	.remove = msm_pinctrl_remove,
-+	.remove_new = msm_pinctrl_remove,
- };
- 
- static int __init sm6350_tlmm_init(void)
-diff --git a/drivers/pinctrl/qcom/pinctrl-sm6375.c b/drivers/pinctrl/qcom/pinctrl-sm6375.c
-index c82c8516932ea..d86630d7125c2 100644
---- a/drivers/pinctrl/qcom/pinctrl-sm6375.c
-+++ b/drivers/pinctrl/qcom/pinctrl-sm6375.c
-@@ -1516,7 +1516,7 @@ static struct platform_driver sm6375_tlmm_driver = {
- 		.of_match_table = sm6375_tlmm_of_match,
- 	},
- 	.probe = sm6375_tlmm_probe,
--	.remove = msm_pinctrl_remove,
-+	.remove_new = msm_pinctrl_remove,
- };
- 
- static int __init sm6375_tlmm_init(void)
-diff --git a/drivers/pinctrl/qcom/pinctrl-sm7150.c b/drivers/pinctrl/qcom/pinctrl-sm7150.c
-index edb5984cd3519..b9f067de8ef0e 100644
---- a/drivers/pinctrl/qcom/pinctrl-sm7150.c
-+++ b/drivers/pinctrl/qcom/pinctrl-sm7150.c
-@@ -1254,7 +1254,7 @@ static struct platform_driver sm7150_tlmm_driver = {
- 		.of_match_table = sm7150_tlmm_of_match,
- 	},
- 	.probe = sm7150_tlmm_probe,
--	.remove = msm_pinctrl_remove,
-+	.remove_new = msm_pinctrl_remove,
- };
- 
- static int __init sm7150_tlmm_init(void)
-diff --git a/drivers/pinctrl/qcom/pinctrl-sm8150.c b/drivers/pinctrl/qcom/pinctrl-sm8150.c
-index 01aea9c70b7a7..f8f5bee74f1dc 100644
---- a/drivers/pinctrl/qcom/pinctrl-sm8150.c
-+++ b/drivers/pinctrl/qcom/pinctrl-sm8150.c
-@@ -1542,7 +1542,7 @@ static struct platform_driver sm8150_pinctrl_driver = {
- 		.of_match_table = sm8150_pinctrl_of_match,
- 	},
- 	.probe = sm8150_pinctrl_probe,
--	.remove = msm_pinctrl_remove,
-+	.remove_new = msm_pinctrl_remove,
- };
- 
- static int __init sm8150_pinctrl_init(void)
-diff --git a/drivers/pinctrl/qcom/pinctrl-sm8250.c b/drivers/pinctrl/qcom/pinctrl-sm8250.c
-index e9961a49ff981..54fda77bf2968 100644
---- a/drivers/pinctrl/qcom/pinctrl-sm8250.c
-+++ b/drivers/pinctrl/qcom/pinctrl-sm8250.c
-@@ -1351,7 +1351,7 @@ static struct platform_driver sm8250_pinctrl_driver = {
- 		.of_match_table = sm8250_pinctrl_of_match,
- 	},
- 	.probe = sm8250_pinctrl_probe,
--	.remove = msm_pinctrl_remove,
-+	.remove_new = msm_pinctrl_remove,
- };
- 
- static int __init sm8250_pinctrl_init(void)
-diff --git a/drivers/pinctrl/qcom/pinctrl-sm8350.c b/drivers/pinctrl/qcom/pinctrl-sm8350.c
-index 9c69458bd9109..ac7f2820f2cbf 100644
---- a/drivers/pinctrl/qcom/pinctrl-sm8350.c
-+++ b/drivers/pinctrl/qcom/pinctrl-sm8350.c
-@@ -1642,7 +1642,7 @@ static struct platform_driver sm8350_tlmm_driver = {
- 		.of_match_table = sm8350_tlmm_of_match,
- 	},
- 	.probe = sm8350_tlmm_probe,
--	.remove = msm_pinctrl_remove,
-+	.remove_new = msm_pinctrl_remove,
- };
- 
- static int __init sm8350_tlmm_init(void)
-diff --git a/drivers/pinctrl/qcom/pinctrl-sm8450.c b/drivers/pinctrl/qcom/pinctrl-sm8450.c
-index d11bb1ee9e3d8..6172867116952 100644
---- a/drivers/pinctrl/qcom/pinctrl-sm8450.c
-+++ b/drivers/pinctrl/qcom/pinctrl-sm8450.c
-@@ -1677,7 +1677,7 @@ static struct platform_driver sm8450_tlmm_driver = {
- 		.of_match_table = sm8450_tlmm_of_match,
- 	},
- 	.probe = sm8450_tlmm_probe,
--	.remove = msm_pinctrl_remove,
-+	.remove_new = msm_pinctrl_remove,
- };
- 
- static int __init sm8450_tlmm_init(void)
-diff --git a/drivers/pinctrl/qcom/pinctrl-sm8550.c b/drivers/pinctrl/qcom/pinctrl-sm8550.c
-index 3c847d9cb5d93..9184e0183755d 100644
---- a/drivers/pinctrl/qcom/pinctrl-sm8550.c
-+++ b/drivers/pinctrl/qcom/pinctrl-sm8550.c
-@@ -1762,7 +1762,7 @@ static struct platform_driver sm8550_tlmm_driver = {
- 		.of_match_table = sm8550_tlmm_of_match,
- 	},
- 	.probe = sm8550_tlmm_probe,
--	.remove = msm_pinctrl_remove,
-+	.remove_new = msm_pinctrl_remove,
- };
- 
- static int __init sm8550_tlmm_init(void)
 -- 
 2.39.5
 
