@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85D6220E026;
-	Mon,  2 Jun 2025 15:18:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C99CC228CB7;
+	Mon,  2 Jun 2025 15:18:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748877482; cv=none; b=tCaSC3FS+g9km0N+dJFAtrI0dq8E3WigEDLZALtfTPlh2ryonSDZ0xgmA3VQgfoMHws0VHhiQaZLzHF152deuXeirc5HYvjBaT7wbNc4TCuSVozwuyVOGen3HcJdbmMUMy1oFFAsidvIVP7bVHlONJ6r8o5i0ASxAsQU4aEx/O0=
+	t=1748877485; cv=none; b=WMkC/Io0IFKIhoFh2WMw5O8KMWShY17+f1gLmiWc4NkyW+F3Hnop+mv8GOEiIaW6tLJUxMJDMhHdTpBw67KyH/xRCX/79qMNtsgXPjhIV4eWHo0/HDEscP2eqEvQSJisj0mQ3JywaQBddEfbhM0WUZGh+PlgJl/qtoGLR4YRsPQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748877482; c=relaxed/simple;
-	bh=sFzijGUe2J1e43mYV73sPgCAyUjf14rasx9eBRe+/aY=;
+	s=arc-20240116; t=1748877485; c=relaxed/simple;
+	bh=mq0+s7penHUwEqd3N0bmZGeo6lfKEIutRLiBQ5VABBA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SliF4cIiQLdyH3rSxZ3+lamBUaM6x7Vfbs1attAl/znwaZqdO6ira4SsBqk2BFhXytBgV/p5hGeUza9OHASl+ABR+vTExnccPsuUXIGYk4HA4d0j1LLBGoAROEQBOVnyqKTj3ClVhcok5m0byyjS0Y46Xx/ZecCAeGgRfy4ZtZc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lwMfqJVV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hbXUIR4jGjk8Fx4/UvM23Wd7ULmDNdWg/Qy42ex7Q3tU9qc9e4NkcuQrStgefoEFsp+7E9re9BYAf5XmkzaUTpNZ9f4ReX/6h9VzPmP/WkQxOoTRxpSYf6XwAD/evY+qdyVs14ChjU69dxq0SENoP3oUbpADuma3UR18a0lsWhI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HNmY0k2J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lwMfqJVV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2D76C4CEEE;
-	Mon,  2 Jun 2025 15:18:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HNmY0k2J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 328E5C4CEEB;
+	Mon,  2 Jun 2025 15:18:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748877482;
-	bh=sFzijGUe2J1e43mYV73sPgCAyUjf14rasx9eBRe+/aY=;
+	s=korg; t=1748877485;
+	bh=mq0+s7penHUwEqd3N0bmZGeo6lfKEIutRLiBQ5VABBA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lwMfqJVV1tJOeD8gErmZy2VwiFSqZ7+jRJHRq5Ly9IoQbhbkA2gZpBIdw7qqCWZSl
-	 kTz6zNJbjv6ZdZpVfgCygTbxchh+F0y1w/ZLJUW6TBUyTee6xBNcSMHO63OWA6xX0Z
-	 FyXvU/aLlVDDffznxhHfJ+o/gXwJC9LyWduq92So=
+	b=HNmY0k2JsJc6yRhk+sunkKk17Si8KkRGhqFiuYH4exvf334+DQ0mx/LMMwu0lxY3K
+	 b/pNXtrRN/Exx3ZK3kMOg5SpV/YfrNLznXjtGNL2I4/DQEZhgoAAl/FO2xovs4Y6Fg
+	 5oh8qc1lVH/RzqVMPzcK7BIkmHHZ0ubIod2kfSEk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Lee Jones <lee@kernel.org>
-Subject: [PATCH 6.1 291/325] af_unix: Bulk update unix_tot_inflight/unix_inflight when queuing skb.
-Date: Mon,  2 Jun 2025 15:49:27 +0200
-Message-ID: <20250602134331.728639079@linuxfoundation.org>
+Subject: [PATCH 6.1 292/325] af_unix: Iterate all vertices by DFS.
+Date: Mon,  2 Jun 2025 15:49:28 +0200
+Message-ID: <20250602134331.767094622@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134319.723650984@linuxfoundation.org>
 References: <20250602134319.723650984@linuxfoundation.org>
@@ -54,97 +54,150 @@ Content-Transfer-Encoding: 8bit
 
 From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-commit 22c3c0c52d32f41cc38cd936ea0c93f22ced3315 upstream.
+commit 6ba76fd2848e107594ea4f03b737230f74bc23ea upstream.
 
-Currently, we track the number of inflight sockets in two variables.
-unix_tot_inflight is the total number of inflight AF_UNIX sockets on
-the host, and user->unix_inflight is the number of inflight fds per
-user.
+The new GC will use a depth first search graph algorithm to find
+cyclic references.  The algorithm visits every vertex exactly once.
 
-We update them one by one in unix_inflight(), which can be done once
-in batch.  Also, sendmsg() could fail even after unix_inflight(), then
-we need to acquire unix_gc_lock only to decrement the counters.
+Here, we implement the DFS part without recursion so that no one
+can abuse it.
 
-Let's bulk update the counters in unix_add_edges() and unix_del_edges(),
-which is called only for successfully passed fds.
+unix_walk_scc() marks every vertex unvisited by initialising index
+as UNIX_VERTEX_INDEX_UNVISITED and iterates inflight vertices in
+unix_unvisited_vertices and call __unix_walk_scc() to start DFS from
+an arbitrary vertex.
+
+__unix_walk_scc() iterates all edges starting from the vertex and
+explores the neighbour vertices with DFS using edge_stack.
+
+After visiting all neighbours, __unix_walk_scc() moves the visited
+vertex to unix_visited_vertices so that unix_walk_scc() will not
+restart DFS from the visited vertex.
 
 Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
 Acked-by: Paolo Abeni <pabeni@redhat.com>
-Link: https://lore.kernel.org/r/20240325202425.60930-5-kuniyu@amazon.com
+Link: https://lore.kernel.org/r/20240325202425.60930-6-kuniyu@amazon.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/unix/garbage.c |   18 +++++++-----------
- 1 file changed, 7 insertions(+), 11 deletions(-)
+ include/net/af_unix.h |    2 +
+ net/unix/garbage.c    |   74 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 76 insertions(+)
 
+--- a/include/net/af_unix.h
++++ b/include/net/af_unix.h
+@@ -33,12 +33,14 @@ struct unix_vertex {
+ 	struct list_head edges;
+ 	struct list_head entry;
+ 	unsigned long out_degree;
++	unsigned long index;
+ };
+ 
+ struct unix_edge {
+ 	struct unix_sock *predecessor;
+ 	struct unix_sock *successor;
+ 	struct list_head vertex_entry;
++	struct list_head stack_entry;
+ };
+ 
+ struct sock *unix_peer_get(struct sock *sk);
 --- a/net/unix/garbage.c
 +++ b/net/unix/garbage.c
-@@ -144,6 +144,7 @@ static void unix_free_vertices(struct sc
- }
+@@ -103,6 +103,11 @@ struct unix_sock *unix_get_socket(struct
  
- DEFINE_SPINLOCK(unix_gc_lock);
-+unsigned int unix_tot_inflight;
+ static LIST_HEAD(unix_unvisited_vertices);
  
- void unix_add_edges(struct scm_fp_list *fpl, struct unix_sock *receiver)
++enum unix_vertex_index {
++	UNIX_VERTEX_INDEX_UNVISITED,
++	UNIX_VERTEX_INDEX_START,
++};
++
+ static void unix_add_edge(struct scm_fp_list *fpl, struct unix_edge *edge)
  {
-@@ -168,7 +169,10 @@ void unix_add_edges(struct scm_fp_list *
- 		unix_add_edge(fpl, edge);
- 	} while (i < fpl->count_unix);
- 
-+	WRITE_ONCE(unix_tot_inflight, unix_tot_inflight + fpl->count_unix);
- out:
-+	WRITE_ONCE(fpl->user->unix_inflight, fpl->user->unix_inflight + fpl->count);
-+
- 	spin_unlock(&unix_gc_lock);
- 
- 	fpl->inflight = true;
-@@ -191,7 +195,10 @@ void unix_del_edges(struct scm_fp_list *
- 		unix_del_edge(fpl, edge);
- 	} while (i < fpl->count_unix);
- 
-+	WRITE_ONCE(unix_tot_inflight, unix_tot_inflight - fpl->count_unix);
- out:
-+	WRITE_ONCE(fpl->user->unix_inflight, fpl->user->unix_inflight - fpl->count);
-+
- 	spin_unlock(&unix_gc_lock);
- 
- 	fpl->inflight = false;
-@@ -234,7 +241,6 @@ void unix_destroy_fpl(struct scm_fp_list
+ 	struct unix_vertex *vertex = edge->predecessor->vertex;
+@@ -241,6 +246,73 @@ void unix_destroy_fpl(struct scm_fp_list
  	unix_free_vertices(fpl);
  }
  
--unsigned int unix_tot_inflight;
++static LIST_HEAD(unix_visited_vertices);
++
++static void __unix_walk_scc(struct unix_vertex *vertex)
++{
++	unsigned long index = UNIX_VERTEX_INDEX_START;
++	struct unix_edge *edge;
++	LIST_HEAD(edge_stack);
++
++next_vertex:
++	vertex->index = index;
++	index++;
++
++	/* Explore neighbour vertices (receivers of the current vertex's fd). */
++	list_for_each_entry(edge, &vertex->edges, vertex_entry) {
++		struct unix_vertex *next_vertex = edge->successor->vertex;
++
++		if (!next_vertex)
++			continue;
++
++		if (next_vertex->index == UNIX_VERTEX_INDEX_UNVISITED) {
++			/* Iterative deepening depth first search
++			 *
++			 *   1. Push a forward edge to edge_stack and set
++			 *      the successor to vertex for the next iteration.
++			 */
++			list_add(&edge->stack_entry, &edge_stack);
++
++			vertex = next_vertex;
++			goto next_vertex;
++
++			/*   2. Pop the edge directed to the current vertex
++			 *      and restore the ancestor for backtracking.
++			 */
++prev_vertex:
++			edge = list_first_entry(&edge_stack, typeof(*edge), stack_entry);
++			list_del_init(&edge->stack_entry);
++
++			vertex = edge->predecessor->vertex;
++		}
++	}
++
++	/* Don't restart DFS from this vertex in unix_walk_scc(). */
++	list_move_tail(&vertex->entry, &unix_visited_vertices);
++
++	/* Need backtracking ? */
++	if (!list_empty(&edge_stack))
++		goto prev_vertex;
++}
++
++static void unix_walk_scc(void)
++{
++	struct unix_vertex *vertex;
++
++	list_for_each_entry(vertex, &unix_unvisited_vertices, entry)
++		vertex->index = UNIX_VERTEX_INDEX_UNVISITED;
++
++	/* Visit every vertex exactly once.
++	 * __unix_walk_scc() moves visited vertices to unix_visited_vertices.
++	 */
++	while (!list_empty(&unix_unvisited_vertices)) {
++		vertex = list_first_entry(&unix_unvisited_vertices, typeof(*vertex), entry);
++		__unix_walk_scc(vertex);
++	}
++
++	list_replace_init(&unix_visited_vertices, &unix_unvisited_vertices);
++}
++
  static LIST_HEAD(gc_candidates);
  static LIST_HEAD(gc_inflight_list);
  
-@@ -255,13 +261,8 @@ void unix_inflight(struct user_struct *u
- 			WARN_ON_ONCE(list_empty(&u->link));
- 		}
- 		u->inflight++;
--
--		/* Paired with READ_ONCE() in wait_for_unix_gc() */
--		WRITE_ONCE(unix_tot_inflight, unix_tot_inflight + 1);
- 	}
+@@ -388,6 +460,8 @@ static void __unix_gc(struct work_struct
  
--	WRITE_ONCE(user->unix_inflight, user->unix_inflight + 1);
--
- 	spin_unlock(&unix_gc_lock);
- }
+ 	spin_lock(&unix_gc_lock);
  
-@@ -278,13 +279,8 @@ void unix_notinflight(struct user_struct
- 		u->inflight--;
- 		if (!u->inflight)
- 			list_del_init(&u->link);
--
--		/* Paired with READ_ONCE() in wait_for_unix_gc() */
--		WRITE_ONCE(unix_tot_inflight, unix_tot_inflight - 1);
- 	}
- 
--	WRITE_ONCE(user->unix_inflight, user->unix_inflight - 1);
--
- 	spin_unlock(&unix_gc_lock);
- }
- 
++	unix_walk_scc();
++
+ 	/* First, select candidates for garbage collection.  Only
+ 	 * in-flight sockets are considered, and from those only ones
+ 	 * which don't have any external reference.
 
 
