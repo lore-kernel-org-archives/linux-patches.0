@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F58E221FC6;
-	Mon,  2 Jun 2025 14:02:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A6832248B3;
+	Mon,  2 Jun 2025 14:02:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748872941; cv=none; b=sxJKoIweKuOrR+2doNXfCXN7MSt2Lqh/qOPIn1r5DT2/I8AqaTQk7+NSjldsFiYULq16OXlInFoTf5BjfIlMazxIp6cqONWsFlcScdRYHbcS/14OGOvFzv4nfy/tw2qMqu59HUx/oQ2v4aBP5Y/L7PWp8dmb7Q4C3Zu136NV5Y0=
+	t=1748872944; cv=none; b=EKTq4ML34IONOcIAKC08a4UCPbJsIoQivxJxeqtb7zgUoSp+wwCPo4CDWJ/FK1XrT5tvFdZ4F3lx2HJ68A7CnNMrELyjzd3yG3FEsa0iuVVzTc0KNaepbY0W/VeBCuK7pYlXqsmmq+2RAeLgr5CNuR7A97WPfkxUzMKtkBN0lJM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748872941; c=relaxed/simple;
-	bh=ac59jFzxmgj2lAdPa5GZZPXcIlgkHsAtzImKR2OSiqY=;
+	s=arc-20240116; t=1748872944; c=relaxed/simple;
+	bh=d7elWOw1LXkDbgdBq0m2EPpbNVp2vG5sYJ+XFpEXssg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a0qaXHT4iWDh+qYd3X0QGTKKyeTXn2Fu6WFuN/t1Ax3XUCNBKA580Mj2UIpWYeBqWsITId8klecj2FmUWBmEueaGwn0k7oOkdQu+aBrmjQudrJBHTadG3EVE6cGtodlxrt0USP/kRJQXPH29tIZNWsB95UT/LLID50vt0ZiPx5o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GRkgV0Kj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AONUd8VWCt7xUvpW0XnwLOW9J57mEyAcmLg33fNyOR5aAs7XElK3oh+YK6PBxbyPp40l443cMq/hw9Scwr7lpqHaNtDGMnM+dkPmgn7b/TQCrmClAYuoHN3xGS3K9q1L5j/v3r/sx/+xVFEz0T+/piyES3j8oyezFz+qbZMw4fg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OcD8jXvS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GRkgV0Kj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3D3FC4CEEB;
-	Mon,  2 Jun 2025 14:02:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OcD8jXvS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0165EC4CEEE;
+	Mon,  2 Jun 2025 14:02:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748872941;
-	bh=ac59jFzxmgj2lAdPa5GZZPXcIlgkHsAtzImKR2OSiqY=;
+	s=korg; t=1748872944;
+	bh=d7elWOw1LXkDbgdBq0m2EPpbNVp2vG5sYJ+XFpEXssg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GRkgV0KjybtJ74mEI3TKjjlaDQRAQdxHuEcS4Mw1CLs9wDMBWeK/Y8plyiCU9gyf9
-	 LbTD7MWxmSdBDC1gUtb9mFjA8W4G3Hk7mBaqDpCk3Uw+HbPKh9GY++mKlTdlOVR8Hg
-	 /MMrQIXo9Bnnc+Y2u0M3Ozo1eriUcRaV70XPFD3E=
+	b=OcD8jXvSec8ELIBIH33K3gySp65FhSpE3e8WoBUSnJ0dXh02bp/3c+nJlMtE9WIYy
+	 fsUChQ/kG/Ue2Lyg6PpjN78/GTjVOuo3wEoCQnBw6hbx1DJxFuBoc83fcJYqYcIjVV
+	 sDvZSRmGjOnBp08ZMNDHgVKRUd0zibEppFOyZCs4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Siddharth Vadapalli <s-vadapalli@ti.com>,
-	Udit Kumar <u-kumar1@ti.com>,
-	Nishanth Menon <nm@ti.com>
-Subject: [PATCH 6.12 27/55] arm64: dts: ti: k3-j722s-main: Disable "serdes_wiz0" and "serdes_wiz1"
-Date: Mon,  2 Jun 2025 15:47:44 +0200
-Message-ID: <20250602134239.346283159@linuxfoundation.org>
+	Alessandro Grassi <alessandro.grassi@mailbox.org>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 45/55] spi: spi-sun4i: fix early activation
+Date: Mon,  2 Jun 2025 15:48:02 +0200
+Message-ID: <20250602134240.055385114@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134238.271281478@linuxfoundation.org>
 References: <20250602134238.271281478@linuxfoundation.org>
@@ -51,62 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Siddharth Vadapalli <s-vadapalli@ti.com>
+From: Alessandro Grassi <alessandro.grassi@mailbox.org>
 
-commit 320d8a84f6f045dc876d4c2983f9024c7ac9d6df upstream.
+[ Upstream commit fb98bd0a13de2c9d96cb5c00c81b5ca118ac9d71 ]
 
-Since "serdes0" and "serdes1" which are the sub-nodes of "serdes_wiz0"
-and "serdes_wiz1" respectively, have been disabled in the SoC file already,
-and, given that these sub-nodes will only be enabled in a board file if the
-board utilizes any of the SERDES instances and the peripherals bound to
-them, we end up in a situation where the board file doesn't explicitly
-disable "serdes_wiz0" and "serdes_wiz1". As a consequence of this, the
-following errors show up when booting Linux:
+The SPI interface is activated before the CPOL setting is applied. In
+that moment, the clock idles high and CS goes low. After a short delay,
+CPOL and other settings are applied, which may cause the clock to change
+state and idle low. This transition is not part of a clock cycle, and it
+can confuse the receiving device.
 
-  wiz bus@f0000:phy@f000000: probe with driver wiz failed with error -12
-  ...
-  wiz bus@f0000:phy@f010000: probe with driver wiz failed with error -12
+To prevent this unexpected transition, activate the interface while CPOL
+and the other settings are being applied.
 
-To not only fix the above, but also, in order to follow the convention of
-disabling device-tree nodes in the SoC file and enabling them in the board
-files for those boards which require them, disable "serdes_wiz0" and
-"serdes_wiz1" device-tree nodes.
-
-Fixes: 628e0a0118e6 ("arm64: dts: ti: k3-j722s-main: Add SERDES and PCIe support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Siddharth Vadapalli <s-vadapalli@ti.com>
-Reviewed-by: Udit Kumar <u-kumar1@ti.com>
-Link: https://lore.kernel.org/r/20250417123246.2733923-3-s-vadapalli@ti.com
-Signed-off-by: Nishanth Menon <nm@ti.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Alessandro Grassi <alessandro.grassi@mailbox.org>
+Link: https://patch.msgid.link/20250502095520.13825-1-alessandro.grassi@mailbox.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/ti/k3-j722s-main.dtsi | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/spi/spi-sun4i.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/ti/k3-j722s-main.dtsi b/arch/arm64/boot/dts/ti/k3-j722s-main.dtsi
-index 6850f50530f1..beda9e40e931 100644
---- a/arch/arm64/boot/dts/ti/k3-j722s-main.dtsi
-+++ b/arch/arm64/boot/dts/ti/k3-j722s-main.dtsi
-@@ -32,6 +32,8 @@ serdes_wiz0: phy@f000000 {
- 		assigned-clocks = <&k3_clks 279 1>;
- 		assigned-clock-parents = <&k3_clks 279 5>;
+diff --git a/drivers/spi/spi-sun4i.c b/drivers/spi/spi-sun4i.c
+index 2ee6755b43f54..3019f57e65841 100644
+--- a/drivers/spi/spi-sun4i.c
++++ b/drivers/spi/spi-sun4i.c
+@@ -264,6 +264,9 @@ static int sun4i_spi_transfer_one(struct spi_controller *host,
+ 	else
+ 		reg |= SUN4I_CTL_DHB;
  
-+		status = "disabled";
++	/* Now that the settings are correct, enable the interface */
++	reg |= SUN4I_CTL_ENABLE;
 +
- 		serdes0: serdes@f000000 {
- 			compatible = "ti,j721e-serdes-10g";
- 			reg = <0x0f000000 0x00010000>;
-@@ -70,6 +72,8 @@ serdes_wiz1: phy@f010000 {
- 		assigned-clocks = <&k3_clks 280 1>;
- 		assigned-clock-parents = <&k3_clks 280 5>;
+ 	sun4i_spi_write(sspi, SUN4I_CTL_REG, reg);
  
-+		status = "disabled";
-+
- 		serdes1: serdes@f010000 {
- 			compatible = "ti,j721e-serdes-10g";
- 			reg = <0x0f010000 0x00010000>;
+ 	/* Ensure that we have a parent clock fast enough */
+@@ -404,7 +407,7 @@ static int sun4i_spi_runtime_resume(struct device *dev)
+ 	}
+ 
+ 	sun4i_spi_write(sspi, SUN4I_CTL_REG,
+-			SUN4I_CTL_ENABLE | SUN4I_CTL_MASTER | SUN4I_CTL_TP);
++			SUN4I_CTL_MASTER | SUN4I_CTL_TP);
+ 
+ 	return 0;
+ 
 -- 
-2.49.0
+2.39.5
 
 
 
