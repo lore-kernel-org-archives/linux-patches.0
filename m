@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D8D3221F0C;
-	Mon,  2 Jun 2025 13:49:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4129D221F11;
+	Mon,  2 Jun 2025 13:49:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748872182; cv=none; b=dEWIB7Zfdn5V8QW1T0Z1l33OLe6YTTsZKzNPhDEVzbGV0XCKV7vF6Oa90+oYbGavS1/JNrmTM6mvJop11RjeOFH7hZeLwCB/xOU0C2g6Lz18Y485IjWiTPDbOpUguJ3BjJHcFk+iM758Y2JsADUyVxVufDiV8spAQa8XA4FUr7I=
+	t=1748872184; cv=none; b=k7+gB/1Ki/LCW7B2EEppzLF9L7j38U4lF1Ap8m31oEviTC8Oftns/ROeMEbT8+X80rSU9yPjPb9cdU1MS01kzgLkc5NiHSGCVA78iJdqpp4ob+yeA9jR8vlhfKLTSK66hmHUV53f3izDj/0tKsbP49KJBUrL0VRatrmf2X0czUI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748872182; c=relaxed/simple;
-	bh=bscFpz+XabX3jpKovWD4/q7PWEokMLZeKGRnYz83hBI=;
+	s=arc-20240116; t=1748872184; c=relaxed/simple;
+	bh=I2+pVva3sk3zU2O8FRyvLYvEwH/MRxMN674JnVGKw5w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PUtKGF4Zasa2GDfJSsHhdT8hgd81B+xgHZIc2uIAXunhbf/P46itnRVkFg4M4HiGQiNhv/lJ21b5aNWG2BBbGdM7Ddzs9ioKnRVSmeHH8n67qDt39gDtEyxCMaZoxWtmV6lg09uriEAAVHBR7Y7EB7ug/QTs+p+w9SIVYgufzko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yjZcb1Yl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YkM2xPkRaf6HDE2SJ+ZMRM9lQ44u89nlvmEPOQ8ETn6Ezpg42DxC1MqILu9lzHmPow33beEP1nM5wY8cutOg5x877KWUNYiCaX1+vesQa8PcsT4Kzgk1m2rzwXxzzuqOnjCFSUq0tzWtHjI000A+u2W45+VUHhSHNMK0DEWSvNg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vbueSHGo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yjZcb1Yl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 935A7C4CEEB;
-	Mon,  2 Jun 2025 13:49:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vbueSHGo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2355C4CEEB;
+	Mon,  2 Jun 2025 13:49:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748872181;
-	bh=bscFpz+XabX3jpKovWD4/q7PWEokMLZeKGRnYz83hBI=;
+	s=korg; t=1748872184;
+	bh=I2+pVva3sk3zU2O8FRyvLYvEwH/MRxMN674JnVGKw5w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yjZcb1YljAnioG+R3w9SXCXqPOlQVVwwTTc7iCPZxWDD5WCbnsqur4i12zSEFk1rH
-	 qrxg0zGaCYJZSY6uXGm/b9ZLqafyXJPxwetO2+ja5hbXjkpD512bVpaiIAQz3993yX
-	 3NEA9u1BNn4M5gXgEzDJqtnYYI0x/niO9VGMeJlA=
+	b=vbueSHGox1I4Gmq97KTt3fYKaBOT/fGAp4UZKYNhZ0g8CIM1JWF6TkXTPL6ay+bPi
+	 3XDJgyDeaejbGnlSzY/EmcRndyfT6Rh2BDmGSKCPYa4j7miidgC8ZPX2Gx5Jczvfj2
+	 sA06LgoQhxPHOL4KgcvH7NR9KojPh/qsr6DrNUic=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robin Murphy <robin.murphy@arm.com>,
-	Will Deacon <will@kernel.org>
-Subject: [PATCH 6.15 44/49] perf/arm-cmn: Add CMN S3 ACPI binding
-Date: Mon,  2 Jun 2025 15:47:36 +0200
-Message-ID: <20250602134239.672339078@linuxfoundation.org>
+	Luca Boccassi <luca.boccassi@gmail.com>,
+	Oleg Nesterov <oleg@redhat.com>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 6.15 45/49] pidfs: move O_RDWR into pidfs_alloc_file()
+Date: Mon,  2 Jun 2025 15:47:37 +0200
+Message-ID: <20250602134239.710508332@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134237.940995114@linuxfoundation.org>
 References: <20250602134237.940995114@linuxfoundation.org>
@@ -50,33 +51,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Robin Murphy <robin.murphy@arm.com>
+From: Christian Brauner <brauner@kernel.org>
 
-commit 8c138a189f6db295ceb32258d46ac061df0823e5 upstream.
+commit c57f07b235871c9e5bffaccd458dca2d9a62b164 upstream.
 
-An ACPI binding for CMN S3 was not yet finalised when the driver support
-was originally written, but v1.2 of DEN0093 "ACPI for Arm Components"
-has at last been published; support ACPI systems using the proper HID.
+Since all pidfds must be O_RDWR currently enfore that directly in the
+file allocation function itself instead of letting callers specify it.
 
-Cc: stable@vger.kernel.org
-Fixes: 0dc2f4963f7e ("perf/arm-cmn: Support CMN S3")
-Signed-off-by: Robin Murphy <robin.murphy@arm.com>
-Link: https://lore.kernel.org/r/7dafe147f186423020af49d7037552ee59c60e97.1747652164.git.robin.murphy@arm.com
-Signed-off-by: Will Deacon <will@kernel.org>
+Link: https://lore.kernel.org/20250414-work-coredump-v2-1-685bf231f828@kernel.org
+Tested-by: Luca Boccassi <luca.boccassi@gmail.com>
+Reviewed-by: Oleg Nesterov <oleg@redhat.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/perf/arm-cmn.c |    1 +
+ fs/pidfs.c |    1 +
  1 file changed, 1 insertion(+)
 
---- a/drivers/perf/arm-cmn.c
-+++ b/drivers/perf/arm-cmn.c
-@@ -2651,6 +2651,7 @@ static const struct acpi_device_id arm_c
- 	{ "ARMHC600", PART_CMN600 },
- 	{ "ARMHC650" },
- 	{ "ARMHC700" },
-+	{ "ARMHC003" },
- 	{}
- };
- MODULE_DEVICE_TABLE(acpi, arm_cmn_acpi_match);
+--- a/fs/pidfs.c
++++ b/fs/pidfs.c
+@@ -888,6 +888,7 @@ struct file *pidfs_alloc_file(struct pid
+ 		return ERR_PTR(-ESRCH);
+ 
+ 	flags &= ~PIDFD_CLONE;
++	flags |= O_RDWR;
+ 	pidfd_file = dentry_open(&path, flags, current_cred());
+ 	/* Raise PIDFD_THREAD explicitly as do_dentry_open() strips it. */
+ 	if (!IS_ERR(pidfd_file))
 
 
