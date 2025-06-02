@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CB172C325E;
-	Mon,  2 Jun 2025 15:01:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1FAE290F;
+	Mon,  2 Jun 2025 15:02:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748876517; cv=none; b=BR+dMleT5i0QEN0prpMHOk7arZm8qJN781lG2/XNq5VNyGL9UsDKKDOjLL3qyCKQMlvatNnDZ96bnboQgvz2H9a62+n8BmYc6Tg60CnF3nfOm3+kpi5gtnQDSaLwSozWicwqXq79uznxAjWniuyXZaSya8EF4xQ42Z2o4Q7P+6U=
+	t=1748876520; cv=none; b=Ccl5zjykXX2Zc5hsMY2visUfG7QWg3SzuqFw9egsEII8Evjx4IB7ZiLQdlOZGz4H4bLb8AS2Yh1BgwDf0wyPqvHqFiKIEYFYTSSH113qsZEyaeuRSOTElIMhyzm/l+f+KBgPYCYH1RHU35Imc97gV/ROZd5IQzARRzFKe/bcnXQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748876517; c=relaxed/simple;
-	bh=KoCHj/LMcjkcQv5yYQI/NX7FYQCns1CtO9P6xmOkBTE=;
+	s=arc-20240116; t=1748876520; c=relaxed/simple;
+	bh=i5QW6dukcxgk0rspEYMV/+ZDysHqR6UG0CAwGxbJphg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lU6StSknBpD3aULebW4zIsSotDDxct0rFxQwORJlRuUWTVh5H0ye+5dOE2z3EjcyFH98ghR9RFfn3MMwUYgWcQwUD/WBPDTBw3pbGSyXr9h/049QzfT7I3az0p2etXZvVJ46OqVsboZllHduUdhlhcLnR6kcAGVq6zmnc1w22m4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cLPx7H2V; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qgDbjaap8gli8ucx6rOWxTCq07glX7nVmkc+Zf46DSp17Lqwxf/lg3X2UWf5XVVhSQjhQ9pJYWOsB1G63j69/mj5gNZ2M9VTMO1tJ+geBQKon1zSXQLDLPJkbIbkMg2164WJ7DMmdo8Zq2BIi+Od6c0TI/pX+jD7FONyWxMu+2s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jP/E72t4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cLPx7H2V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1E74C4CEEB;
-	Mon,  2 Jun 2025 15:01:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jP/E72t4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1149CC4CEEB;
+	Mon,  2 Jun 2025 15:01:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748876517;
-	bh=KoCHj/LMcjkcQv5yYQI/NX7FYQCns1CtO9P6xmOkBTE=;
+	s=korg; t=1748876520;
+	bh=i5QW6dukcxgk0rspEYMV/+ZDysHqR6UG0CAwGxbJphg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cLPx7H2V8sgh57XmvtK0h9O03jvo0ingsDVNa09x9b93LN2w+BD79ofKuxdd+oObV
-	 pX/tgV4PCVvXKs59Wgsu6ZahqTUpE2182PyleiAs1gQkEVJuaqOoOQwgCy2Qz3jznn
-	 tGEeQEB/+YIO49U1FmPzCPGZQjaf/lNa6sy/2/so=
+	b=jP/E72t4+biQrSuMfuSFBv20fWel0Bicc/29tiUcgueM85Kbs6xohWCRfqxeztGu5
+	 PPXE+bh4zC9NLS8aVGJxVv+kK+jkgTnvzX2gGuzNhMelpS9JQ9gOF/oD5fXoLokzB8
+	 poe6KKDu6uHHvlvCdctDnhzLiwx9Wi7UZxr9zD5w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Chau <johnchau@0atlas.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Johannes Berg <johannes@sipsolutions.net>,
+	David Gow <davidgow@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 200/207] platform/x86: thinkpad_acpi: Support also NEC Lavie X1475JAS
-Date: Mon,  2 Jun 2025 15:49:32 +0200
-Message-ID: <20250602134306.617046677@linuxfoundation.org>
+Subject: [PATCH 5.15 201/207] um: let make clean properly clean underlying SUBARCH as well
+Date: Mon,  2 Jun 2025 15:49:33 +0200
+Message-ID: <20250602134306.656657961@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134258.769974467@linuxfoundation.org>
 References: <20250602134258.769974467@linuxfoundation.org>
@@ -45,61 +47,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: John Chau <johnchau@0atlas.com>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-[ Upstream commit a032f29a15412fab9f4352e0032836d51420a338 ]
+[ Upstream commit ab09da75700e9d25c7dfbc7f7934920beb5e39b9 ]
 
-Change get_thinkpad_model_data() to check for additional vendor name
-"NEC" in order to support NEC Lavie X1475JAS notebook (and perhaps
-more).
+Building the kernel with O= is affected by stale in-tree build artifacts.
 
-The reason of this works with minimal changes is because NEC Lavie
-X1475JAS is a Thinkpad inside. ACPI dumps reveals its OEM ID to be
-"LENOVO", BIOS version "R2PET30W" matches typical Lenovo BIOS version,
-the existence of HKEY of LEN0268, with DMI fw string is "R2PHT24W".
+So, if the source tree is not clean, Kbuild displays the following:
 
-I compiled and tested with my own machine, attached the dmesg
-below as proof of work:
-[    6.288932] thinkpad_acpi: ThinkPad ACPI Extras v0.26
-[    6.288937] thinkpad_acpi: http://ibm-acpi.sf.net/
-[    6.288938] thinkpad_acpi: ThinkPad BIOS R2PET30W (1.11 ), EC R2PHT24W
-[    6.307000] thinkpad_acpi: radio switch found; radios are enabled
-[    6.307030] thinkpad_acpi: This ThinkPad has standard ACPI backlight brightness control, supported by the ACPI video driver
-[    6.307033] thinkpad_acpi: Disabling thinkpad-acpi brightness events by default...
-[    6.320322] thinkpad_acpi: rfkill switch tpacpi_bluetooth_sw: radio is unblocked
-[    6.371963] thinkpad_acpi: secondary fan control detected & enabled
-[    6.391922] thinkpad_acpi: battery 1 registered (start 0, stop 85, behaviours: 0x7)
-[    6.398375] input: ThinkPad Extra Buttons as /devices/platform/thinkpad_acpi/input/input13
+  $ make ARCH=um O=build defconfig
+  make[1]: Entering directory '/.../linux/build'
+  ***
+  *** The source tree is not clean, please run 'make ARCH=um mrproper'
+  *** in /.../linux
+  ***
+  make[2]: *** [/.../linux/Makefile:673: outputmakefile] Error 1
+  make[1]: *** [/.../linux/Makefile:248: __sub-make] Error 2
+  make[1]: Leaving directory '/.../linux/build'
+  make: *** [Makefile:248: __sub-make] Error 2
 
-Signed-off-by: John Chau <johnchau@0atlas.com>
-Link: https://lore.kernel.org/r/20250504165513.295135-1-johnchau@0atlas.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Usually, running 'make mrproper' is sufficient for cleaning the source
+tree for out-of-tree builds.
+
+However, building UML generates build artifacts not only in arch/um/,
+but also in the SUBARCH directory (i.e., arch/x86/). If in-tree stale
+files remain under arch/x86/, Kbuild will reuse them instead of creating
+new ones under the specified build directory.
+
+This commit makes 'make ARCH=um clean' recurse into the SUBARCH directory.
+
+Reported-by: Shuah Khan <skhan@linuxfoundation.org>
+Closes: https://lore.kernel.org/lkml/20250502172459.14175-1-skhan@linuxfoundation.org/
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Acked-by: Johannes Berg <johannes@sipsolutions.net>
+Reviewed-by: David Gow <davidgow@google.com>
+Reviewed-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/thinkpad_acpi.c | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/um/Makefile | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/platform/x86/thinkpad_acpi.c b/drivers/platform/x86/thinkpad_acpi.c
-index 5e44a4338706a..b994e07a61111 100644
---- a/drivers/platform/x86/thinkpad_acpi.c
-+++ b/drivers/platform/x86/thinkpad_acpi.c
-@@ -10935,6 +10935,8 @@ static int __must_check __init get_thinkpad_model_data(
- 		tp->vendor = PCI_VENDOR_ID_IBM;
- 	else if (dmi_name_in_vendors("LENOVO"))
- 		tp->vendor = PCI_VENDOR_ID_LENOVO;
-+	else if (dmi_name_in_vendors("NEC"))
-+		tp->vendor = PCI_VENDOR_ID_LENOVO;
- 	else
- 		return 0;
+diff --git a/arch/um/Makefile b/arch/um/Makefile
+index 3dbd0e3b660ea..1257ef03d1b7a 100644
+--- a/arch/um/Makefile
++++ b/arch/um/Makefile
+@@ -153,5 +153,6 @@ MRPROPER_FILES += $(HOST_DIR)/include/generated
+ archclean:
+ 	@find . \( -name '*.bb' -o -name '*.bbg' -o -name '*.da' \
+ 		-o -name '*.gcov' \) -type f -print | xargs rm -f
++	$(Q)$(MAKE) -f $(srctree)/Makefile ARCH=$(HEADER_ARCH) clean
  
+ export HEADER_ARCH SUBARCH USER_CFLAGS CFLAGS_NO_HARDENING OS DEV_NULL_PATH
 -- 
 2.39.5
 
