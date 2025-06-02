@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B076122A7F2;
-	Mon,  2 Jun 2025 14:57:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63B3C231C87;
+	Mon,  2 Jun 2025 14:57:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748876271; cv=none; b=uZf6CW2wwUL2f5yUbhcX4mCRMYlnf6WTfXBkf+lS+rF0QIYe1E1SwfaKy+hVPHVc+zoQpr6ntPCwoEZzDk8tfMzL+QVbZKpQHG43jLRlWli70BtyX495Cvfye9//0wf2pD93XnvxEc+7pUIhKIEyArHleNgPCmpTQhOhjDvr6nk=
+	t=1748876275; cv=none; b=gm4JdB3xyYkvrlKGTtQXoEFdp1yMu/wWIGmXx1r0D3ikXtV6fZsKV2y9uVrVkd+FUxCGo6/YOC6l6i9aG8EQZL0d9PWkdocrhnXeD//rqN9DqunnaLLOrYPbebGMmk3UaAIPfrZE6yF+6I3rNp83nF5JjYuxIpyTrmaJ7lNJF9s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748876271; c=relaxed/simple;
-	bh=+0Vt8okLqDVmuZhdKWFCUromc5PVZPzsU5F2jGzxp+E=;
+	s=arc-20240116; t=1748876275; c=relaxed/simple;
+	bh=hPVv9QOebvGVD9h3zvY7yN/R2mE0cgHbeXcuSmy5+94=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KCGUDeM033hD9MgmLSugt3IDurFlA4WYIWf5iClUcULxMA7k0TkuL7hE+ck0VO3zL+RYvagnt3MwBTdD/PiXfZlMz0Mvk94frOhgYMGdpRzgTTAXbdJiNnOECO2G9ZcGJsimEghGTPDjaM7l3O0qct8arEtTumr2Xjm9CTWYfgI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hwuTZKIM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V+hziG3fNWtuzeM6LDZwVZRV27e03rgCgYwJywPGrO7XCZ9VZgezRAeycEJUnEbFlQQIyXxqFSt50OgkVaFTgiqXy+3e7bOTrrqT324fXU4zAzoAef0GHGCD0MKgEqhFBK1SLM2Mo7RcDPlpzPj2mwHku4V+t9RSG9P+tlS2vJQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NCTSw461; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hwuTZKIM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38F56C4CEEB;
-	Mon,  2 Jun 2025 14:57:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NCTSw461"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64949C4CEEE;
+	Mon,  2 Jun 2025 14:57:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748876271;
-	bh=+0Vt8okLqDVmuZhdKWFCUromc5PVZPzsU5F2jGzxp+E=;
+	s=korg; t=1748876274;
+	bh=hPVv9QOebvGVD9h3zvY7yN/R2mE0cgHbeXcuSmy5+94=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hwuTZKIMxL2liUh6sAC/5GXsgWcf5f5rRwiPW+mZNRGyvj7y1ZE1dsbwHbWyM/Kbm
-	 Y/pRxwvFaq8ufsQw9d14Wj2IS5nnuj9pYUhHD6f/hM23EMnQFhrQOa0cgiow125u1J
-	 QxrR2SNh+CAKKzPy4noXl+mHlRfMuA3Ayc3HjJ2A=
+	b=NCTSw461ux88u9gaG40oJDwQouIvv4nljRvngXTKvj1raW90MCHVmNy88B/wr1tnB
+	 5NGBov5yppaXddilJEVS1j6OIhI+ycJPXvvICsU8AFFlLJK4vSoxedH2peWh5NQ1mO
+	 qhrzvVyZ44wpu6PlHLJSZmELRF+4TaDDncj7yG8M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	William Tu <witu@nvidia.com>,
-	Daniel Jurgens <danielj@nvidia.com>,
+	Bodong Wang <bodong@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
 	Tariq Toukan <tariqt@nvidia.com>,
 	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 126/207] net/mlx5e: set the tx_queue_len for pfifo_fast
-Date: Mon,  2 Jun 2025 15:48:18 +0200
-Message-ID: <20250602134303.647228058@linuxfoundation.org>
+Subject: [PATCH 5.15 127/207] net/mlx5e: reduce rep rxq depth to 256 for ECPF
+Date: Mon,  2 Jun 2025 15:48:19 +0200
+Message-ID: <20250602134303.684957566@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134258.769974467@linuxfoundation.org>
 References: <20250602134258.769974467@linuxfoundation.org>
@@ -56,40 +57,71 @@ Content-Transfer-Encoding: 8bit
 
 From: William Tu <witu@nvidia.com>
 
-[ Upstream commit a38cc5706fb9f7dc4ee3a443f61de13ce1e410ed ]
+[ Upstream commit b9cc8f9d700867aaa77aedddfea85e53d5e5d584 ]
 
-By default, the mq netdev creates a pfifo_fast qdisc. On a
-system with 16 core, the pfifo_fast with 3 bands consumes
-16 * 3 * 8 (size of pointer) * 1024 (default tx queue len)
-= 393KB. The patch sets the tx qlen to representor default
-value, 128 (1<<MLX5E_REP_PARAMS_DEF_LOG_SQ_SIZE), which
-consumes 16 * 3 * 8 * 128 = 49KB, saving 344KB for each
-representor at ECPF.
+By experiments, a single queue representor netdev consumes kernel
+memory around 2.8MB, and 1.8MB out of the 2.8MB is due to page
+pool for the RXQ. Scaling to a thousand representors consumes 2.8GB,
+which becomes a memory pressure issue for embedded devices such as
+BlueField-2 16GB / BlueField-3 32GB memory.
+
+Since representor netdevs mostly handles miss traffic, and ideally,
+most of the traffic will be offloaded, reduce the default non-uplink
+rep netdev's RXQ default depth from 1024 to 256 if mdev is ecpf eswitch
+manager. This saves around 1MB of memory per regular RQ,
+(1024 - 256) * 2KB, allocated from page pool.
+
+With rxq depth of 256, the netlink page pool tool reports
+$./tools/net/ynl/cli.py --spec Documentation/netlink/specs/netdev.yaml \
+	 --dump page-pool-get
+ {'id': 277,
+  'ifindex': 9,
+  'inflight': 128,
+  'inflight-mem': 786432,
+  'napi-id': 775}]
+
+This is due to mtu 1500 + headroom consumes half pages, so 256 rxq
+entries consumes around 128 pages (thus create a page pool with
+size 128), shown above at inflight.
+
+Note that each netdev has multiple types of RQs, including
+Regular RQ, XSK, PTP, Drop, Trap RQ. Since non-uplink representor
+only supports regular rq, this patch only changes the regular RQ's
+default depth.
 
 Signed-off-by: William Tu <witu@nvidia.com>
-Reviewed-by: Daniel Jurgens <danielj@nvidia.com>
+Reviewed-by: Bodong Wang <bodong@nvidia.com>
+Reviewed-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
 Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
-Link: https://patch.msgid.link/20250209101716.112774-9-tariqt@nvidia.com
+Link: https://patch.msgid.link/20250209101716.112774-8-tariqt@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_rep.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/mellanox/mlx5/core/en_rep.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c b/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
-index de168d8cf33f7..3c8bfedeafffd 100644
+index 3c8bfedeafffd..8e44fa0d3f371 100644
 --- a/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
 +++ b/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
-@@ -642,6 +642,8 @@ static void mlx5e_build_rep_netdev(struct net_device *netdev,
- 	netdev->ethtool_ops = &mlx5e_rep_ethtool_ops;
+@@ -58,6 +58,7 @@
+ #define MLX5E_REP_PARAMS_DEF_LOG_SQ_SIZE \
+ 	max(0x7, MLX5E_PARAMS_MINIMUM_LOG_SQ_SIZE)
+ #define MLX5E_REP_PARAMS_DEF_NUM_CHANNELS 1
++#define MLX5E_REP_PARAMS_DEF_LOG_RQ_SIZE 0x8
  
- 	netdev->watchdog_timeo    = 15 * HZ;
-+	if (mlx5_core_is_ecpf(mdev))
-+		netdev->tx_queue_len = 1 << MLX5E_REP_PARAMS_DEF_LOG_SQ_SIZE;
+ static const char mlx5e_rep_driver_name[] = "mlx5e_rep";
  
- #if IS_ENABLED(CONFIG_MLX5_CLS_ACT)
- 	netdev->hw_features    |= NETIF_F_HW_TC;
+@@ -615,6 +616,8 @@ static void mlx5e_build_rep_params(struct net_device *netdev)
+ 
+ 	/* RQ */
+ 	mlx5e_build_rq_params(mdev, params);
++	if (!mlx5e_is_uplink_rep(priv) && mlx5_core_is_ecpf(mdev))
++		params->log_rq_mtu_frames = MLX5E_REP_PARAMS_DEF_LOG_RQ_SIZE;
+ 
+ 	/* CQ moderation params */
+ 	params->rx_dim_enabled = MLX5_CAP_GEN(mdev, cq_moderation);
 -- 
 2.39.5
 
