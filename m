@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B59821FF39;
-	Mon,  2 Jun 2025 13:57:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B40B62576;
+	Mon,  2 Jun 2025 13:58:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748872676; cv=none; b=ouWzOg/px71c13hutnzQqETw6CmkajqlX03OOpfGIJTfCOhLA4Z+p1eLcuhZA9AyBi5AaAipBm3dN9TzB8Be4lKknkjWL8LK3Wlu3IMalAhZUtJc9rBrcSmDmKsotV67Lz39WpDjZOlyOLyg1Ym7E1LtoNAKzfv5yi6XOqc6VMQ=
+	t=1748872681; cv=none; b=m8MnRQrZVUPSuBOHM5tGtJs/FkARd4OophiNpQ+NzJXxb+wkQErEP+u9TyOWuYBR1sZtCnecxy2D/hnx8WHXo+CNWlPe+u5zxBYIJrl8+Aq7B7JKaCwE1NNoXXtYt4xGc0VI1YZKqNvBfkAa+sla3df1cT+hkETCSphIgZ5YfnY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748872676; c=relaxed/simple;
-	bh=1N7Wz8Dkc+aKJxqkt13qzXE6DV1JoVVMMX0/oHEKHRo=;
+	s=arc-20240116; t=1748872681; c=relaxed/simple;
+	bh=iEJlTnW0gTvw519vxXh7c/ctqYukAxAYMdCo0fAWD5g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O7B7N/JiK1A012XIyUvpQZI5jlWeR/2zEjKZo83AmrXjgBdFRn1yseza6VYYJ5lgxV8c+ojG3Hn3anMIjMwARrPvhubiNj0eJGLIz6rrmq05YWLAO+SQnWJJSjZ8dBx5EjvP/fdRYi3tbnie5N2bPF87tPkB1ZxObA36/ZKKiK8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=csV6pdle; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EsNT50iSX/eW8WZJoVu02UowReWO4FIt7UdKyY3d6mFgzVHx+5tIg6gGU2fP7FDZzib6N70rAn7gOeE4ZR5+lHFwnLxfTgvtuhHzyjPhqy3cRHpYD6LRWkaI+eB2oESUhldvYLrDk8JRTmDXfrMKYWjqsnX6Hc0kme3UsHp4xnk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p93TQNTe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="csV6pdle"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 381E4C4CEEB;
-	Mon,  2 Jun 2025 13:57:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p93TQNTe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E1A0C4CEF0;
+	Mon,  2 Jun 2025 13:58:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748872675;
-	bh=1N7Wz8Dkc+aKJxqkt13qzXE6DV1JoVVMMX0/oHEKHRo=;
+	s=korg; t=1748872681;
+	bh=iEJlTnW0gTvw519vxXh7c/ctqYukAxAYMdCo0fAWD5g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=csV6pdlejSKyd3a5U/qNzPIOXcz67rSyxdGjjPTDvloE4a1vTrmJCcrzzlTNjg6xg
-	 TEmK6oxYHWr2vYapYaCWSsVuIWETChBxDm9uxA/fXyJji/FPLKh8pK1cMDPaf6yT//
-	 h4MQvlw/78FrAQLfsDdrhmYeKhY/dOALUrLNVSoU=
+	b=p93TQNTexERMnZZ5zfYbVE1EGeIsw2PTljA+YwTr2n/SUGx3Drl2SNEK5HzwCWa6x
+	 wEGYpHtX4y8A5EeKEwWmcyXbNGaDjm4dMJlLyfaucRKw5WPuvnuNJQV3fd3qP3awlY
+	 +oW67oGzj1Msg2m9xg2lH3ZeqKJqR+GdxOr3jG4o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Karthik Sanagavarapu <quic_kartsana@quicinc.com>,
-	Ling Xu <quic_lxu5@quicinc.com>,
+	Alok Tiwari <alok.a.tiwari@oracle.com>,
 	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.14 07/73] arm64: dts: qcom: sa8775p: Remove cdsp compute-cb@10
-Date: Mon,  2 Jun 2025 15:46:53 +0200
-Message-ID: <20250602134241.969417206@linuxfoundation.org>
+Subject: [PATCH 6.14 08/73] arm64: dts: qcom: sm8350: Fix typo in pil_camera_mem node
+Date: Mon,  2 Jun 2025 15:46:54 +0200
+Message-ID: <20250602134242.006891256@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134241.673490006@linuxfoundation.org>
 References: <20250602134241.673490006@linuxfoundation.org>
@@ -52,40 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karthik Sanagavarapu <quic_kartsana@quicinc.com>
+From: Alok Tiwari <alok.a.tiwari@oracle.com>
 
-commit d180c2bd3b43d55f30c9b99de68bc6bb8420d1c1 upstream.
+commit 295217420a44403a33c30f99d8337fe7b07eb02b upstream.
 
-Remove the context bank compute-cb@10 because these SMMU ids are S2-only
-which is not used for S1 transaction.
+There is a typo in sm8350.dts where the node label
+mmeory@85200000 should be memory@85200000.
+This patch corrects the typo for clarity and consistency.
 
-Fixes: f7b01bfb4b47 ("arm64: qcom: sa8775p: Add ADSP and CDSP0 fastrpc nodes")
-Cc: stable@kernel.org
-Signed-off-by: Karthik Sanagavarapu <quic_kartsana@quicinc.com>
-Signed-off-by: Ling Xu <quic_lxu5@quicinc.com>
-Link: https://lore.kernel.org/r/4c9de858fda7848b77ea8c528c9b9d53600ad21a.1739260973.git.quic_lxu5@quicinc.com
+Fixes: b7e8f433a673 ("arm64: dts: qcom: Add basic devicetree support for SM8350 SoC")
+Cc: stable@vger.kernel.org
+Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
+Link: https://lore.kernel.org/r/20250514114656.2307828-1-alok.a.tiwari@oracle.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/qcom/sa8775p.dtsi |    8 --------
- 1 file changed, 8 deletions(-)
+ arch/arm64/boot/dts/qcom/sm8350.dtsi |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-@@ -4973,14 +4973,6 @@
- 						dma-coherent;
- 					};
+--- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+@@ -455,7 +455,7 @@
+ 			no-map;
+ 		};
  
--					compute-cb@10 {
--						compatible = "qcom,fastrpc-compute-cb";
--						reg = <10>;
--						iommus = <&apps_smmu 0x214a 0x04a0>,
--							 <&apps_smmu 0x218a 0x0400>;
--						dma-coherent;
--					};
--
- 					compute-cb@11 {
- 						compatible = "qcom,fastrpc-compute-cb";
- 						reg = <11>;
+-		pil_camera_mem: mmeory@85200000 {
++		pil_camera_mem: memory@85200000 {
+ 			reg = <0x0 0x85200000 0x0 0x500000>;
+ 			no-map;
+ 		};
 
 
