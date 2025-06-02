@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 698131DF73C;
-	Mon,  2 Jun 2025 15:11:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73DBD224AED;
+	Mon,  2 Jun 2025 15:11:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748877089; cv=none; b=OGz3rh3Y9rkr234+i4yT1mwoEb1GcCyfyQIQpSI6bsdHhmf8YCxe+m2nkWmduMiBlICMZ3FTabmvgfFtg+4WIrB1SVPA2XTu2Lmd+2Fx81KRsCeyG1zLhzSr9GCkIuUrSk21DLnUpyWecz0J1LxhEz/NeRPks1aempSrKcatOLU=
+	t=1748877092; cv=none; b=U3oWXPfdPILdIahoZ9TbnVjf/DZP3J+n6EVn0ZvXQ5t9gwSl3mC3MnCOkA05ubvOG24gl7hWzJKOyjS8Apkv0qboBhg8fAADbCf96mLkWAmabcdqaMM7DuoKR+8Pc9odgOsdqxaLlj4mRfe+VRSnAQSfs/ImpR28/fd8CK4Ax5U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748877089; c=relaxed/simple;
-	bh=DOTQOcgx5/2LnSs66q6DEuP607uuEEHz4wTF2/o7ABQ=;
+	s=arc-20240116; t=1748877092; c=relaxed/simple;
+	bh=uM8N2tBLnSTlaWsiEYKspCrkHBA0KrdlZDhsQCKQCCY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GR/ZGouMpBBDrDClBzpzt84XDqzalIbSiW0KNlQ0a+j6bm4+qEFHDjv8JZ4smy1aVYr025lMMV2e47qLGppI2nNbcmW73W9LPbMlW3/uZTxyDBUaeZV9t31UcdYezlrlPZ9y4BTsWJFHsJx2uUI1YDbq0Dim4ABiINftCZ0nix0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FsHiIyoO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gTAOwLwpM5emE18+TC4bkhh2Nvi5yZDJiR/yvCffosv7co6oIVV5oJXmGn3VfIYng1Qg6noX2OZ+6YgNQziqA37ShRf+0nZVJNzKt5f8SnY8UycRVwD/xhBF8Ec5HSvkT+ph0GOXQIwDxYzD38NMIQnV996GOWXcdYlxjSTmXuk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NpBlyBSX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FsHiIyoO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD875C4CEEB;
-	Mon,  2 Jun 2025 15:11:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NpBlyBSX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0201C4CEEB;
+	Mon,  2 Jun 2025 15:11:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748877089;
-	bh=DOTQOcgx5/2LnSs66q6DEuP607uuEEHz4wTF2/o7ABQ=;
+	s=korg; t=1748877092;
+	bh=uM8N2tBLnSTlaWsiEYKspCrkHBA0KrdlZDhsQCKQCCY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FsHiIyoO+zLSgt3ASxhdtcUVBE458Oz3IU31svJS7Us5BZ8BMrf6dnr7YKTdAMy4Q
-	 oOvtEQBNQfbSPpjcLk00qN+JV2DuyZxnBPJ32uVUsCrXQ2FIeB+0RoIJFJ26+DiauL
-	 IudzzDheLaAkaacB6EjDi2r94AJPfPQt0WGbt3Rc=
+	b=NpBlyBSXksNxLgZZlRYQ56VV+VAC8aQk4QLVmlWbENujCjsU1UmgmCaf/DOSAjvaE
+	 XvJI0ESZJchESIY5R+KC6umCxbggrPzYXJQT7yt55sySL2UD1SBG/G+yWh0uEoRGIB
+	 qrTn1GjqJ1qX6YvcTzUjTU4+gQVFa/8vUj3wMsUE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nandakumar Edamana <nandakumar@nandakumar.co.in>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Hector Martin <marcan@marcan.st>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 141/325] libbpf: Fix out-of-bound read
-Date: Mon,  2 Jun 2025 15:46:57 +0200
-Message-ID: <20250602134325.530389669@linuxfoundation.org>
+Subject: [PATCH 6.1 168/325] ASoC: tas2764: Add reg defaults for TAS2764_INT_CLK_CFG
+Date: Mon,  2 Jun 2025 15:47:24 +0200
+Message-ID: <20250602134326.642402867@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134319.723650984@linuxfoundation.org>
 References: <20250602134319.723650984@linuxfoundation.org>
@@ -51,41 +51,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nandakumar Edamana <nandakumar@nandakumar.co.in>
+From: Hector Martin <marcan@marcan.st>
 
-[ Upstream commit 236d3910117e9f97ebf75e511d8bcc950f1a4e5f ]
+[ Upstream commit d64c4c3d1c578f98d70db1c5e2535b47adce9d07 ]
 
-In `set_kcfg_value_str`, an untrusted string is accessed with the assumption
-that it will be at least two characters long due to the presence of checks for
-opening and closing quotes. But the check for the closing quote
-(value[len - 1] != '"') misses the fact that it could be checking the opening
-quote itself in case of an invalid input that consists of just the opening
-quote.
-
-This commit adds an explicit check to make sure the string is at least two
-characters long.
-
-Signed-off-by: Nandakumar Edamana <nandakumar@nandakumar.co.in>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20250221210110.3182084-1-nandakumar@nandakumar.co.in
+Signed-off-by: Hector Martin <marcan@marcan.st>
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://patch.msgid.link/20250208-asoc-tas2764-v1-4-dbab892a69b5@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/libbpf.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/codecs/tas2764.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
-index a0fb50718daef..98d5e566e0582 100644
---- a/tools/lib/bpf/libbpf.c
-+++ b/tools/lib/bpf/libbpf.c
-@@ -1751,7 +1751,7 @@ static int set_kcfg_value_str(struct extern_desc *ext, char *ext_val,
- 	}
+diff --git a/sound/soc/codecs/tas2764.c b/sound/soc/codecs/tas2764.c
+index fc8479d3d2852..72db361ac3611 100644
+--- a/sound/soc/codecs/tas2764.c
++++ b/sound/soc/codecs/tas2764.c
+@@ -636,6 +636,7 @@ static const struct reg_default tas2764_reg_defaults[] = {
+ 	{ TAS2764_TDM_CFG2, 0x0a },
+ 	{ TAS2764_TDM_CFG3, 0x10 },
+ 	{ TAS2764_TDM_CFG5, 0x42 },
++	{ TAS2764_INT_CLK_CFG, 0x19 },
+ };
  
- 	len = strlen(value);
--	if (value[len - 1] != '"') {
-+	if (len < 2 || value[len - 1] != '"') {
- 		pr_warn("extern (kcfg) '%s': invalid string config '%s'\n",
- 			ext->name, value);
- 		return -EINVAL;
+ static const struct regmap_range_cfg tas2764_regmap_ranges[] = {
 -- 
 2.39.5
 
