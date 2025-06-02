@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C2CB231857;
-	Mon,  2 Jun 2025 14:19:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2600222FDFF;
+	Mon,  2 Jun 2025 14:19:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748873978; cv=none; b=mFn0bBbmC0bTXsTTGWG+DgOGvH+cHbsSpAPhXfz9uZu40MV4Fvz3z8jEg8XbYNeYtcCVWMAhIJ8EtC/hOYzH+KrGsxK4MIZ6EUVOvD9Ol6NCb6czM+Kzz+gvgwXvy4MYw+GVZd3bPYGllGCownovVvCvrG1rIeHPg1DOL9NR5io=
+	t=1748873982; cv=none; b=hjMilp2aHR4JgYT9khsohFAwEVWrLRLQoq6xBldqi3K6WFTTMwN4oVh7GD73Lv6U9gfb78esUswG9ktElIiQcixXbQ2mudboTT3yZJWwCVRuY23MKvmPGF8GGdRIcj4ddqsA0F4DV3WAvIkF+GDcNpkhN+SM8kBK7XkbrFTcbAQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748873978; c=relaxed/simple;
-	bh=mhcaeDYtoXFIo6WXb3F9n8rX5myVsV5D4OhTYbfL+Vc=;
+	s=arc-20240116; t=1748873982; c=relaxed/simple;
+	bh=LvGQOZw0W+EyW0JZeIPoIWG72+4w62UZjnFoyNrQEio=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sWCh/YzL3qHXzg+Q+nN8gEE0Cg0rr/9+BA/H3VAnmCy9oDH4ptkalLQ+kls1c2gpaWarEp7C/8acy2ZZNGT2z7ert6JfbUhLpEwZD5dqavzd+iqNK3AOLe176fr9kCm+6PVXl8p5Z/miDbhp9zQSYRGx2v0GYhwScINgojs9i1c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oRDbDFSW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H770x9fIhxkaC5V6Nek0qWeHub5bFsoeOwH/rNZdPUjDNyByVAjA7MrvWOtRkGMwrnYodr0SLa1S5auWOR2jTCcaKgFrakARgP+G+1ucqQfNAAnPN0ZSmL003MomTW2Kj/AxVUVTVIEkimgyVw9si+/me/wPwzz6ADQ8WP9rf+E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xTfVwzPK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oRDbDFSW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E177C4CEF0;
-	Mon,  2 Jun 2025 14:19:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xTfVwzPK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EF91C4CEF2;
+	Mon,  2 Jun 2025 14:19:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748873978;
-	bh=mhcaeDYtoXFIo6WXb3F9n8rX5myVsV5D4OhTYbfL+Vc=;
+	s=korg; t=1748873981;
+	bh=LvGQOZw0W+EyW0JZeIPoIWG72+4w62UZjnFoyNrQEio=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oRDbDFSWjxSgQ3DViM+Zx/liqwgJzrF3bZ0RLGNNvQGBsgGOq0fGYTx+5GvLTCQXx
-	 KtrbidoOImGlh5X0gfUjJv56Diw/JtzBsHj3zV3AjxCEapzSrDs7kPBcgf2lqa3pcl
-	 bWbzOwuUI4YFrQQXVytk3LUYIRNxCAN5vTUQvCY8=
+	b=xTfVwzPK91WH2fHEvgv+JxGVFev4asaTk+iBFgUOtesTSRQNgVA3hFumHtrM+ipB/
+	 y0cStuqrfgleLdcVgHJ+fQL/KXpY6SCHPzIT7FA4lu/qpfrZLd3ckSofNg7T9dH2vv
+	 3SU1KTouoGexS+zZoNykOQjDxbPr83bgKApp0lnE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	Wentao Guan <guanwentao@uniontech.com>,
+	WangYuli <wangyuli@uniontech.com>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 317/444] ALSA: hda/realtek: Add quirk for HP Spectre x360 15-df1xxx
-Date: Mon,  2 Jun 2025 15:46:21 +0200
-Message-ID: <20250602134353.803498489@linuxfoundation.org>
+Subject: [PATCH 6.6 318/444] nvme-pci: add quirks for device 126f:1001
+Date: Mon,  2 Jun 2025 15:46:22 +0200
+Message-ID: <20250602134353.844646682@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -50,104 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Wentao Guan <guanwentao@uniontech.com>
 
-[ Upstream commit be0c40da888840fe91b45474cb70779e6cbaf7ca ]
+[ Upstream commit 5b960f92ac3e5b4d7f60a506a6b6735eead1da01 ]
 
-HP Spectre x360 15-df1xxx with SSID 13c:863e requires similar
-workarounds that were applied to another HP Spectre x360 models;
-it has a mute LED only, no micmute LEDs, and needs the speaker GPIO
-seup.
+This commit adds NVME_QUIRK_NO_DEEPEST_PS and NVME_QUIRK_BOGUS_NID for
+device [126f:1001].
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=220054
-Link: https://patch.msgid.link/20250427081035.11567-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+It is similar to commit e89086c43f05 ("drivers/nvme: Add quirks for
+device 126f:2262")
+
+Diff is according the dmesg, use NVME_QUIRK_IGNORE_DEV_SUBNQN.
+
+dmesg | grep -i nvme0:
+  nvme nvme0: pci function 0000:01:00.0
+  nvme nvme0: missing or invalid SUBNQN field.
+  nvme nvme0: 12/0/0 default/read/poll queues
+
+Link:https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=e89086c43f0500bc7c4ce225495b73b8ce234c1f
+Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
+Signed-off-by: WangYuli <wangyuli@uniontech.com>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 42 +++++++++++++++++++++++++++++++++++
- 1 file changed, 42 insertions(+)
+ drivers/nvme/host/pci.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index a13795e405a4d..77e9c7a928efe 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -6790,6 +6790,41 @@ static void alc285_fixup_hp_spectre_x360_eb1(struct hda_codec *codec,
- 	}
- }
- 
-+/* GPIO1 = amplifier on/off */
-+static void alc285_fixup_hp_spectre_x360_df1(struct hda_codec *codec,
-+					     const struct hda_fixup *fix,
-+					     int action)
-+{
-+	struct alc_spec *spec = codec->spec;
-+	static const hda_nid_t conn[] = { 0x02 };
-+	static const struct hda_pintbl pincfgs[] = {
-+		{ 0x14, 0x90170110 },  /* front/high speakers */
-+		{ 0x17, 0x90170130 },  /* back/bass speakers */
-+		{ }
-+	};
-+
-+	// enable mute led
-+	alc285_fixup_hp_mute_led_coefbit(codec, fix, action);
-+
-+	switch (action) {
-+	case HDA_FIXUP_ACT_PRE_PROBE:
-+		/* needed for amp of back speakers */
-+		spec->gpio_mask |= 0x01;
-+		spec->gpio_dir |= 0x01;
-+		snd_hda_apply_pincfgs(codec, pincfgs);
-+		/* share DAC to have unified volume control */
-+		snd_hda_override_conn_list(codec, 0x14, ARRAY_SIZE(conn), conn);
-+		snd_hda_override_conn_list(codec, 0x17, ARRAY_SIZE(conn), conn);
-+		break;
-+	case HDA_FIXUP_ACT_INIT:
-+		/* need to toggle GPIO to enable the amp of back speakers */
-+		alc_update_gpio_data(codec, 0x01, true);
-+		msleep(100);
-+		alc_update_gpio_data(codec, 0x01, false);
-+		break;
-+	}
-+}
-+
- static void alc285_fixup_hp_spectre_x360(struct hda_codec *codec,
- 					  const struct hda_fixup *fix, int action)
- {
-@@ -7401,6 +7436,7 @@ enum {
- 	ALC280_FIXUP_HP_9480M,
- 	ALC245_FIXUP_HP_X360_AMP,
- 	ALC285_FIXUP_HP_SPECTRE_X360_EB1,
-+	ALC285_FIXUP_HP_SPECTRE_X360_DF1,
- 	ALC285_FIXUP_HP_ENVY_X360,
- 	ALC288_FIXUP_DELL_HEADSET_MODE,
- 	ALC288_FIXUP_DELL1_MIC_NO_PRESENCE,
-@@ -9439,6 +9475,10 @@ static const struct hda_fixup alc269_fixups[] = {
- 		.type = HDA_FIXUP_FUNC,
- 		.v.func = alc285_fixup_hp_spectre_x360_eb1
- 	},
-+	[ALC285_FIXUP_HP_SPECTRE_X360_DF1] = {
-+		.type = HDA_FIXUP_FUNC,
-+		.v.func = alc285_fixup_hp_spectre_x360_df1
-+	},
- 	[ALC285_FIXUP_HP_ENVY_X360] = {
- 		.type = HDA_FIXUP_FUNC,
- 		.v.func = alc285_fixup_hp_envy_x360,
-@@ -10038,6 +10078,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x103c, 0x86c1, "HP Laptop 15-da3001TU", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
- 	SND_PCI_QUIRK(0x103c, 0x86c7, "HP Envy AiO 32", ALC274_FIXUP_HP_ENVY_GPIO),
- 	SND_PCI_QUIRK(0x103c, 0x86e7, "HP Spectre x360 15-eb0xxx", ALC285_FIXUP_HP_SPECTRE_X360_EB1),
-+	SND_PCI_QUIRK(0x103c, 0x863e, "HP Spectre x360 15-df1xxx", ALC285_FIXUP_HP_SPECTRE_X360_DF1),
- 	SND_PCI_QUIRK(0x103c, 0x86e8, "HP Spectre x360 15-eb0xxx", ALC285_FIXUP_HP_SPECTRE_X360_EB1),
- 	SND_PCI_QUIRK(0x103c, 0x86f9, "HP Spectre x360 13-aw0xxx", ALC285_FIXUP_HP_SPECTRE_X360_MUTE_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8716, "HP Elite Dragonfly G2 Notebook PC", ALC285_FIXUP_HP_GPIO_AMP_INIT),
-@@ -10786,6 +10827,7 @@ static const struct hda_model_fixup alc269_fixup_models[] = {
- 	{.id = ALC295_FIXUP_HP_OMEN, .name = "alc295-hp-omen"},
- 	{.id = ALC285_FIXUP_HP_SPECTRE_X360, .name = "alc285-hp-spectre-x360"},
- 	{.id = ALC285_FIXUP_HP_SPECTRE_X360_EB1, .name = "alc285-hp-spectre-x360-eb1"},
-+	{.id = ALC285_FIXUP_HP_SPECTRE_X360_DF1, .name = "alc285-hp-spectre-x360-df1"},
- 	{.id = ALC285_FIXUP_HP_ENVY_X360, .name = "alc285-hp-envy-x360"},
- 	{.id = ALC287_FIXUP_IDEAPAD_BASS_SPK_AMP, .name = "alc287-ideapad-bass-spk-amp"},
- 	{.id = ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN, .name = "alc287-yoga9-bass-spk-pin"},
+diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
+index 1e5c8220e365c..91c2dacb90430 100644
+--- a/drivers/nvme/host/pci.c
++++ b/drivers/nvme/host/pci.c
+@@ -3429,6 +3429,9 @@ static const struct pci_device_id nvme_id_table[] = {
+ 		.driver_data = NVME_QUIRK_BOGUS_NID, },
+ 	{ PCI_DEVICE(0x1217, 0x8760), /* O2 Micro 64GB Steam Deck */
+ 		.driver_data = NVME_QUIRK_DMAPOOL_ALIGN_512, },
++	{ PCI_DEVICE(0x126f, 0x1001),	/* Silicon Motion generic */
++		.driver_data = NVME_QUIRK_NO_DEEPEST_PS |
++				NVME_QUIRK_IGNORE_DEV_SUBNQN, },
+ 	{ PCI_DEVICE(0x126f, 0x2262),	/* Silicon Motion generic */
+ 		.driver_data = NVME_QUIRK_NO_DEEPEST_PS |
+ 				NVME_QUIRK_BOGUS_NID, },
 -- 
 2.39.5
 
