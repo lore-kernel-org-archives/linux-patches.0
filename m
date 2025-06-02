@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A3E4221FBF;
-	Mon,  2 Jun 2025 14:06:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B89921FBC8C;
+	Mon,  2 Jun 2025 14:06:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748873179; cv=none; b=dM9NMRAQWL+4Rf8thPMkPswtwOdmU6PniNtyDSeBv9+bgvgGLxaXQgMawj7fkIgDmY/B407shbfuYGPb0RcKw9G/ztvfZa2YaRYAp8So+kebwQ7Ven0RRvGwLGR8SUiwxZNYZXs1FqY9EdFw9oWXYXCTzbrL+9dBK4f+wTEAzJA=
+	t=1748873180; cv=none; b=D1iR/mD7JxGz7IE71JPEyoJ8pcnNenajAm0ZkurlDXqq7eKPRj0eZg+mgjdrOfc7E975EHOXagoqCOavioyv2NScSIH/GTsjqzuGJZZBODo95pKXywtSmZXEF7wlDOBwbKDhGCVXQGMFiqMRU6gfCzvUkhVJCMY27YjZBZ33iqU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748873179; c=relaxed/simple;
-	bh=8uct2s9PoQuwAf+c6L/Fx5IXXP/RQ4Xvd7xeWfVBfg4=;
+	s=arc-20240116; t=1748873180; c=relaxed/simple;
+	bh=KIKC4+XJPxdEyVmyoT6TxQ9W30qiLQjtKFx2aUpHR8g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AK4MbJ3Bibg1wTt5lcY/8ngMgLHgLnQbMbeqRisuWyXSJ4r6MSsmRO5Ofh64n1rZehzNGcVv+8uXhRinPKLMRe9/VZvBcCt7n1oLy/hHyNB4KRcqe9vte7iky9t35VcNJC2TlzMQT92WKpLprNobOWvVaxOARti8fcceIYdXzLo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k3/YJJX1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W+7ypRfnrNNWCxyBmp59XlehjBQY1pOXzj6kyfHIImoiAtug3uQc2Ov4rIwCKcAOzYMo9EDwdfo4cSFv3jBhr8K0ZSHPLEZnmYp5wk+7h79CZ8xw95caCUxGEKc9TMuCE1Fbjh9G20goZfm6PMT5E2I28FdQvgan3KDp2mULNMU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u+4blpsT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k3/YJJX1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46850C4CEEE;
-	Mon,  2 Jun 2025 14:06:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u+4blpsT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05F4BC4CEF2;
+	Mon,  2 Jun 2025 14:06:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748873177;
-	bh=8uct2s9PoQuwAf+c6L/Fx5IXXP/RQ4Xvd7xeWfVBfg4=;
+	s=korg; t=1748873180;
+	bh=KIKC4+XJPxdEyVmyoT6TxQ9W30qiLQjtKFx2aUpHR8g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k3/YJJX19Kwc7hFa41TEFOm6GHW612tibF8iD9Q3unfrkCulrS+mUcW7/H73ALuoI
-	 cYHuHw+69SivLcYSaPlRAGvUfUFd7AafIKcujG08pAcot5FiL9aer/G6almcXHoWBr
-	 IV5WsdkXjzfIHDuF9kaI4UIb21Efh3r2mTfNKrjA=
+	b=u+4blpsT8SiCwEGRpMZBludFFCQK407AXsNb7onkbcBHaF+0tqmmFMy5WQ/B3L61W
+	 G3B1wqNKL3bWjQgVwfI2DuE9JdWgp2sZNFwS7oYvtY5qtegdZMeIKKnpD9bKSKH659
+	 02I4dYDOmtXVdwFjuKSI5vIONm1clLNowLnBVJO8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	James Clark <james.clark@linaro.org>,
+	Ian Rogers <irogers@google.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 062/444] PCI: dwc: ep: Ensure proper iteration over outbound map windows
-Date: Mon,  2 Jun 2025 15:42:06 +0200
-Message-ID: <20250602134343.442862793@linuxfoundation.org>
+Subject: [PATCH 6.6 063/444] tools/build: Dont pass test log files to linker
+Date: Mon,  2 Jun 2025 15:42:07 +0200
+Message-ID: <20250602134343.480080426@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -51,43 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frank Li <Frank.Li@nxp.com>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit f3e1dccba0a0833fc9a05fb838ebeb6ea4ca0e1a ]
+[ Upstream commit 935e7cb5bb80106ff4f2fe39640f430134ef8cd8 ]
 
-Most systems' PCIe outbound map windows have non-zero physical addresses,
-but the possibility of encountering zero increased after following commit
-("PCI: dwc: Use parent_bus_offset").
+Separate test log files from object files. Depend on test log output
+but don't pass to the linker.
 
-'ep->outbound_addr[n]', representing 'parent_bus_address', might be 0 on
-some hardware, which trims high address bits through bus fabric before
-sending to the PCIe controller.
-
-Replace the iteration logic with 'for_each_set_bit()' to ensure only
-allocated map windows are iterated when determining the ATU index from a
-given address.
-
-Link: https://lore.kernel.org/r/20250315201548.858189-12-helgaas@kernel.org
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: James Clark <james.clark@linaro.org>
+Signed-off-by: Ian Rogers <irogers@google.com>
+Link: https://lore.kernel.org/r/20250311213628.569562-2-irogers@google.com
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pcie-designware-ep.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/build/Makefile.build | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pci/controller/dwc/pcie-designware-ep.c b/drivers/pci/controller/dwc/pcie-designware-ep.c
-index f2e5feba55267..26ad643fb4248 100644
---- a/drivers/pci/controller/dwc/pcie-designware-ep.c
-+++ b/drivers/pci/controller/dwc/pcie-designware-ep.c
-@@ -281,7 +281,7 @@ static int dw_pcie_find_index(struct dw_pcie_ep *ep, phys_addr_t addr,
- 	u32 index;
- 	struct dw_pcie *pci = to_dw_pcie_from_ep(ep);
+diff --git a/tools/build/Makefile.build b/tools/build/Makefile.build
+index fac42486a8cf0..27f4ee9cb4db4 100644
+--- a/tools/build/Makefile.build
++++ b/tools/build/Makefile.build
+@@ -141,6 +141,10 @@ objprefix    := $(subst ./,,$(OUTPUT)$(dir)/)
+ obj-y        := $(addprefix $(objprefix),$(obj-y))
+ subdir-obj-y := $(addprefix $(objprefix),$(subdir-obj-y))
  
--	for (index = 0; index < pci->num_ob_windows; index++) {
-+	for_each_set_bit(index, ep->ob_window_map, pci->num_ob_windows) {
- 		if (ep->outbound_addr[index] != addr)
- 			continue;
- 		*atu_index = index;
++# Separate out test log files from real build objects.
++test-y       := $(filter %_log, $(obj-y))
++obj-y        := $(filter-out %_log, $(obj-y))
++
+ # Final '$(obj)-in.o' object
+ in-target := $(objprefix)$(obj)-in.o
+ 
+@@ -151,7 +155,7 @@ $(subdir-y):
+ 
+ $(sort $(subdir-obj-y)): $(subdir-y) ;
+ 
+-$(in-target): $(obj-y) FORCE
++$(in-target): $(obj-y) $(test-y) FORCE
+ 	$(call rule_mkdir)
+ 	$(call if_changed,$(host)ld_multi)
+ 
 -- 
 2.39.5
 
