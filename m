@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ED1222D4CE;
-	Mon,  2 Jun 2025 15:08:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F7DF15CD55;
+	Mon,  2 Jun 2025 15:08:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748876907; cv=none; b=hoRbL7LAYyja4bqxoV+jR0zG9HAKGgkoBpVCktFl8vu9epwni4KZZ4oKPkuV6dkfaPvr8t5XN/R66bkH3dfhCOthCmSiXBL47OKeDx1UmZ36+7/RgKXDRyl4hyu1+Dr6VdupvDL3pVWZoNpjyzXMiWJ4RAyfhflUXZoUT0aTLgo=
+	t=1748876910; cv=none; b=iXfDEwG+Ft0TwsuvByV2RFdvejgkTke4xHXj7bLNdlyG+PK6VSzvWjxRbAQG8xGG8hNsQyf5/g36xwLsrUQmAjuIb77n/d2uI5mNgYBd6eOrHEKZNQrecnu8mKhZ0O0z70YOWZ4LrgkggNsFbr5DXMoNxPzD84RY1PdAiGGMYW0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748876907; c=relaxed/simple;
-	bh=67ozSBmzhS7zpZCxkXKXifaBRI2OAzCGN7a/N6kUSbM=;
+	s=arc-20240116; t=1748876910; c=relaxed/simple;
+	bh=eWfI8LkyUIYyDNF1Dlba1Bg1BphkX2SlKF+3eD8dJ8A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NFLenlcxkxg0zmd8Y7/0/LWS5PjwbXEu8n0WKABixhCZOdnt30QWsPPSsDNFaRulhXxvkniGqJ+iP21JAyVem83v7HRqjZSfWkuITU7aa41HFjG+hfTsVvH+4TXdrk/5ePGIbG3KQF6ph+cciG3vr7JoiZ1flCh2Y8FnKAkMMaY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1AMc3Xe4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YYYQWt5GF9Oz4vZAaojVdIQ9uAgwkeSuN9DrFe9BAPot18zwHw073ITJQkVz18J8cw+a4hVMHQN/hvWoba4HG+SM1HgGdx11CR26xpUe8nYnoIPGaz4xhIUp7+vwEN5pqFDiXGMZFecP7L/9Uvgfg5usmM6qx0NgPJhb933HnWE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lyu34wvZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1AMc3Xe4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69488C4CEEB;
-	Mon,  2 Jun 2025 15:08:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lyu34wvZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93C7CC4CEEB;
+	Mon,  2 Jun 2025 15:08:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748876906;
-	bh=67ozSBmzhS7zpZCxkXKXifaBRI2OAzCGN7a/N6kUSbM=;
+	s=korg; t=1748876910;
+	bh=eWfI8LkyUIYyDNF1Dlba1Bg1BphkX2SlKF+3eD8dJ8A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1AMc3Xe4hPL7kfWZmK3AVmsg6EDvNlzOC4eXQsmPCmsSZ/TW05pAicqzTOyL7DCZQ
-	 Lib8E0JSv9MS7zR3N83qgbyTg+22qC6AR313L0Q4K8Vcgwhq33w7Hbc2wkyfEyTF+F
-	 Ocb9JECChv+wGuN51nD4fWNNyWg7uJb/9/tRRRC8=
+	b=Lyu34wvZXNGRWDZV6fV3+/FXghYaEmRwowsDrpSznOfeaOVQYNYd3kww7ZAM84+1E
+	 X3Su9i4oAkMMglK8wD795xI/eJft1fwSgQZeYPjNme66PTg7KwsPN9cRoPIHa2qo5r
+	 cs/8BdegbuKNAKxQDkln+rU9PVAWAoerndJg9xj8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Shashank Gupta <shashankg@marvell.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 081/325] timer_list: Dont use %pK through printk()
-Date: Mon,  2 Jun 2025 15:45:57 +0200
-Message-ID: <20250602134323.070686724@linuxfoundation.org>
+Subject: [PATCH 6.1 072/325] crypto: octeontx2 - suppress auth failure screaming due to negative tests
+Date: Mon,  2 Jun 2025 15:45:48 +0200
+Message-ID: <20250602134322.711242965@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134319.723650984@linuxfoundation.org>
 References: <20250602134319.723650984@linuxfoundation.org>
@@ -45,67 +45,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+From: Shashank Gupta <shashankg@marvell.com>
 
-[ Upstream commit a52067c24ccf6ee4c85acffa0f155e9714f9adce ]
+[ Upstream commit 64b7871522a4cba99d092e1c849d6f9092868aaa ]
 
-This reverts commit f590308536db ("timer debug: Hide kernel addresses via
-%pK in /proc/timer_list")
+This patch addresses an issue where authentication failures were being
+erroneously reported due to negative test failures in the "ccm(aes)"
+selftest.
+pr_debug suppress unnecessary screaming of these tests.
 
-The timer list helper SEQ_printf() uses either the real seq_printf() for
-procfs output or vprintk() to print to the kernel log, when invoked from
-SysRq-q. It uses %pK for printing pointers.
-
-In the past %pK was prefered over %p as it would not leak raw pointer
-values into the kernel log. Since commit ad67b74d2469 ("printk: hash
-addresses printed with %p") the regular %p has been improved to avoid this
-issue.
-
-Furthermore, restricted pointers ("%pK") were never meant to be used
-through printk(). They can still unintentionally leak raw pointers or
-acquire sleeping looks in atomic contexts.
-
-Switch to the regular pointer formatting which is safer, easier to reason
-about and sufficient here.
-
-Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/lkml/20250113171731-dc10e3c1-da64-4af0-b767-7c7070468023@linutronix.de/
-Link: https://lore.kernel.org/all/20250311-restricted-pointers-timer-v1-1-6626b91e54ab@linutronix.de
+Signed-off-by: Shashank Gupta <shashankg@marvell.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/time/timer_list.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/crypto/marvell/octeontx2/otx2_cptvf_reqmgr.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/kernel/time/timer_list.c b/kernel/time/timer_list.c
-index ed7d6ad694fba..20a5e6962b696 100644
---- a/kernel/time/timer_list.c
-+++ b/kernel/time/timer_list.c
-@@ -46,7 +46,7 @@ static void
- print_timer(struct seq_file *m, struct hrtimer *taddr, struct hrtimer *timer,
- 	    int idx, u64 now)
- {
--	SEQ_printf(m, " #%d: <%pK>, %ps", idx, taddr, timer->function);
-+	SEQ_printf(m, " #%d: <%p>, %ps", idx, taddr, timer->function);
- 	SEQ_printf(m, ", S:%02x", timer->state);
- 	SEQ_printf(m, "\n");
- 	SEQ_printf(m, " # expires at %Lu-%Lu nsecs [in %Ld to %Ld nsecs]\n",
-@@ -98,7 +98,7 @@ print_active_timers(struct seq_file *m, struct hrtimer_clock_base *base,
- static void
- print_base(struct seq_file *m, struct hrtimer_clock_base *base, u64 now)
- {
--	SEQ_printf(m, "  .base:       %pK\n", base);
-+	SEQ_printf(m, "  .base:       %p\n", base);
- 	SEQ_printf(m, "  .index:      %d\n", base->index);
+diff --git a/drivers/crypto/marvell/octeontx2/otx2_cptvf_reqmgr.c b/drivers/crypto/marvell/octeontx2/otx2_cptvf_reqmgr.c
+index 811ded72ce5fb..798bb40fed68d 100644
+--- a/drivers/crypto/marvell/octeontx2/otx2_cptvf_reqmgr.c
++++ b/drivers/crypto/marvell/octeontx2/otx2_cptvf_reqmgr.c
+@@ -410,9 +410,10 @@ static int cpt_process_ccode(struct otx2_cptlfs_info *lfs,
+ 				break;
+ 			}
  
- 	SEQ_printf(m, "  .resolution: %u nsecs\n", hrtimer_resolution);
+-			dev_err(&pdev->dev,
+-				"Request failed with software error code 0x%x\n",
+-				cpt_status->s.uc_compcode);
++			pr_debug("Request failed with software error code 0x%x: algo = %s driver = %s\n",
++				 cpt_status->s.uc_compcode,
++				 info->req->areq->tfm->__crt_alg->cra_name,
++				 info->req->areq->tfm->__crt_alg->cra_driver_name);
+ 			otx2_cpt_dump_sg_list(pdev, info->req);
+ 			break;
+ 		}
 -- 
 2.39.5
 
