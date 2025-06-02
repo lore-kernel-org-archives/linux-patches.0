@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0581227BA4;
-	Mon,  2 Jun 2025 15:04:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 377C223027C;
+	Mon,  2 Jun 2025 15:04:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748876696; cv=none; b=ud0JkSEe9RmINBBqE1kz7KXZ3Tz2lnMuPAiLVb92KsUilnVls9nzt3dfWWtWN6SI0mmVW7+VEcZfMf43tU7caGQjNzEpOdHGN1f2gz4ptd8MD/ipx3xWEVyxgAmuaa1QuJOgu8+ooCe4vb4yHFdbuWnAlGbsATck7TybF7wqigc=
+	t=1748876698; cv=none; b=aezBpDvjbvwjfUcllAGOAma+F4cLa13dHwXyrmBRFrvTZHayEQshw5cC16I5tmDViM1ddb+DOAr3gvM8oMBw0RBwU7QkM5LAUcZl3UuMhZyQiXUl6K+8iMR7J4ZEtEpWPhuDE8RBg912TNBetl3+C+GDzd9TEvnKU6ZCIrGkYcI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748876696; c=relaxed/simple;
-	bh=kAyCGTiupVt71Rlap6WsqZ9H4iT3e1me76eBgHvwrsM=;
+	s=arc-20240116; t=1748876698; c=relaxed/simple;
+	bh=t7VsZ06P3xn7Cyxr4MHk6ZZAEjXWVpSZz/FYXCYQWd8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e7D5YB4igKkNyI3OEgYP7K98YHj/aWPTLrubyaUXK7m16YEv9mG/+p3RCWlfAZecBMfU2gVeFATwm7Q+ijcDGbYirwk4XFlUb6Q0bFYV9HhRc2actgRVaGPHDmeyWtPaqY/3nD936AVjGB5bdx5+Jaawwn8e52MLQ0UTUNaP5QY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DNUoV4HC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=AkXD42MbI6Pglo5UvYR2Cm4fCM4AEabEKMHBUFOmeSofJJtK2KGH4F6/ac8aGVtNX5egtLDSVEdSNvaWViSej0sb4TOuO6MAY7Tx529xqQgsQ7SKsNh7264IjrGYRnzUgju2HB168wxihTsVK6ZxzQ2k+K8qkfEcTqKtnoN9nS4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=an82cVBX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DNUoV4HC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6FFCC4CEEB;
-	Mon,  2 Jun 2025 15:04:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="an82cVBX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38542C4CEEB;
+	Mon,  2 Jun 2025 15:04:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748876694;
-	bh=kAyCGTiupVt71Rlap6WsqZ9H4iT3e1me76eBgHvwrsM=;
+	s=korg; t=1748876697;
+	bh=t7VsZ06P3xn7Cyxr4MHk6ZZAEjXWVpSZz/FYXCYQWd8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DNUoV4HCVrVPh5XX2OPz2okQRarMVm9bReA4/CBh2ji7i8hGHRmOD+F7OBv1EMf3C
-	 LJ6IJpY4X61UqAdXD8bZ4xoOkUkfKlhpBcZQzgIix+2ea4Gwce5/AkuFCIEiaB2hR4
-	 imajLMXLYr9VTUSqSVIgozUmM4FFZ/yqZP1ZI3/A=
+	b=an82cVBXhg1aLWzhAx1/+6MFMGzGQHv+byPKkTU1vunFLYkEMEZIjTUEDnnB5blv1
+	 5yZb+3e5To5FOc4V07nY4tzKOAqaZsUC2qiMGowveVSAMJv8th4iWsCraXeQF8k4b3
+	 3rJvQ4tVq2tiJKsEAPgFrc5vuYN06hWIwqhXiNXs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Wei Fang <wei.fang@nxp.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Felix Kuehling <felix.kuehling@amd.com>,
+	"Hao (Claire) Zhou" <hao.zhou@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 014/325] net: enetc: refactor bulk flipping of RX buffers to separate function
-Date: Mon,  2 Jun 2025 15:44:50 +0200
-Message-ID: <20250602134320.319381759@linuxfoundation.org>
+Subject: [PATCH 6.1 015/325] drm/amdgpu: Allow P2P access through XGMI
+Date: Mon,  2 Jun 2025 15:44:51 +0200
+Message-ID: <20250602134320.359382410@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134319.723650984@linuxfoundation.org>
 References: <20250602134319.723650984@linuxfoundation.org>
@@ -46,70 +47,90 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Felix Kuehling <felix.kuehling@amd.com>
 
-[ Upstream commit 1d587faa5be7e9785b682cc5f58ba8f4100c13ea ]
+[ Upstream commit a92741e72f91b904c1d8c3d409ed8dbe9c1f2b26 ]
 
-This small snippet of code ensures that we do something with the array
-of RX software buffer descriptor elements after passing the skb to the
-stack. In this case, we see if the other half of the page is reusable,
-and if so, we "turn around" the buffers, making them directly usable by
-enetc_refill_rx_ring() without going to enetc_new_page().
+If peer memory is accessible through XGMI, allow leaving it in VRAM
+rather than forcing its migration to GTT on DMABuf attachment.
 
-We will need to perform this kind of buffer flipping from a new code
-path, i.e. from XDP_PASS. Currently, enetc_build_skb() does it there
-buffer by buffer, but in a subsequent change we will stop using
-enetc_build_skb() for XDP_PASS.
-
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Reviewed-by: Wei Fang <wei.fang@nxp.com>
-Link: https://patch.msgid.link/20250417120005.3288549-3-vladimir.oltean@nxp.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Felix Kuehling <felix.kuehling@amd.com>
+Tested-by: Hao (Claire) Zhou <hao.zhou@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 372c8d72c3680fdea3fbb2d6b089f76b4a6d596a)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/enetc/enetc.c | 16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_dma_buf.c | 30 ++++++++++++++++++++-
+ 1 file changed, 29 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/freescale/enetc/enetc.c b/drivers/net/ethernet/freescale/enetc/enetc.c
-index 230b317d93dae..bf49c07c8b513 100644
---- a/drivers/net/ethernet/freescale/enetc/enetc.c
-+++ b/drivers/net/ethernet/freescale/enetc/enetc.c
-@@ -1536,6 +1536,16 @@ static void enetc_xdp_drop(struct enetc_bdr *rx_ring, int rx_ring_first,
- 	}
- }
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_dma_buf.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_dma_buf.c
+index ab06cb4d7b358..4dcc7de961d08 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_dma_buf.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_dma_buf.c
+@@ -42,6 +42,29 @@
+ #include <linux/pci-p2pdma.h>
+ #include <linux/pm_runtime.h>
  
-+static void enetc_bulk_flip_buff(struct enetc_bdr *rx_ring, int rx_ring_first,
-+				 int rx_ring_last)
++static const struct dma_buf_attach_ops amdgpu_dma_buf_attach_ops;
++
++/**
++ * dma_buf_attach_adev - Helper to get adev of an attachment
++ *
++ * @attach: attachment
++ *
++ * Returns:
++ * A struct amdgpu_device * if the attaching device is an amdgpu device or
++ * partition, NULL otherwise.
++ */
++static struct amdgpu_device *dma_buf_attach_adev(struct dma_buf_attachment *attach)
 +{
-+	while (rx_ring_first != rx_ring_last) {
-+		enetc_flip_rx_buff(rx_ring,
-+				   &rx_ring->rx_swbd[rx_ring_first]);
-+		enetc_bdr_idx_inc(rx_ring, &rx_ring_first);
++	if (attach->importer_ops == &amdgpu_dma_buf_attach_ops) {
++		struct drm_gem_object *obj = attach->importer_priv;
++		struct amdgpu_bo *bo = gem_to_amdgpu_bo(obj);
++
++		return amdgpu_ttm_adev(bo->tbo.bdev);
 +	}
++
++	return NULL;
 +}
 +
- static int enetc_clean_rx_ring_xdp(struct enetc_bdr *rx_ring,
- 				   struct napi_struct *napi, int work_limit,
- 				   struct bpf_prog *prog)
-@@ -1659,11 +1669,7 @@ static int enetc_clean_rx_ring_xdp(struct enetc_bdr *rx_ring,
- 				enetc_xdp_drop(rx_ring, orig_i, i);
- 				rx_ring->stats.xdp_redirect_failures++;
- 			} else {
--				while (orig_i != i) {
--					enetc_flip_rx_buff(rx_ring,
--							   &rx_ring->rx_swbd[orig_i]);
--					enetc_bdr_idx_inc(rx_ring, &orig_i);
--				}
-+				enetc_bulk_flip_buff(rx_ring, orig_i, i);
- 				xdp_redirect_frm_cnt++;
- 				rx_ring->stats.xdp_redirect++;
- 			}
+ /**
+  * amdgpu_dma_buf_attach - &dma_buf_ops.attach implementation
+  *
+@@ -53,12 +76,14 @@
+ static int amdgpu_dma_buf_attach(struct dma_buf *dmabuf,
+ 				 struct dma_buf_attachment *attach)
+ {
++	struct amdgpu_device *attach_adev = dma_buf_attach_adev(attach);
+ 	struct drm_gem_object *obj = dmabuf->priv;
+ 	struct amdgpu_bo *bo = gem_to_amdgpu_bo(obj);
+ 	struct amdgpu_device *adev = amdgpu_ttm_adev(bo->tbo.bdev);
+ 	int r;
+ 
+-	if (pci_p2pdma_distance(adev->pdev, attach->dev, false) < 0)
++	if (!amdgpu_dmabuf_is_xgmi_accessible(attach_adev, bo) &&
++	    pci_p2pdma_distance(adev->pdev, attach->dev, false) < 0)
+ 		attach->peer2peer = false;
+ 
+ 	r = pm_runtime_get_sync(adev_to_drm(adev)->dev);
+@@ -479,6 +504,9 @@ bool amdgpu_dmabuf_is_xgmi_accessible(struct amdgpu_device *adev,
+ 	struct drm_gem_object *obj = &bo->tbo.base;
+ 	struct drm_gem_object *gobj;
+ 
++	if (!adev)
++		return false;
++
+ 	if (obj->import_attach) {
+ 		struct dma_buf *dma_buf = obj->import_attach->dmabuf;
+ 
 -- 
 2.39.5
 
