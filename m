@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78602223327;
-	Mon,  2 Jun 2025 14:52:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8EA3221D92;
+	Mon,  2 Jun 2025 14:52:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748875976; cv=none; b=RHK5PU5z5G6uIqbDEOiX+CcPuyHZwOnKz1DLIsMc1lKhhAa1CvGr+XV6rJDMYIuknKhHOwTV6cNFpNgcc80hXoiFy44OkEfC7YZyebc4dfy0vpsmY9kzS6DhB2Q15/rKmkEF/0k2CgDuDLDNgue7Wjs2wZJwTKI2wBkAVGEbqCk=
+	t=1748875979; cv=none; b=rWEi1CFDiK1i8xuVLIgW4LieTDuXeUAgLLhf8TQL1vimfioGOpxaTbLTpyKzMxamv0dM06XSa2LASmBtnU/L3nI4olB285YXDlcLwn4WHxhiU8DKnstwSiicjqOJDvH2NwiVNbo6dT9yuHcWg67XrXaH5KsYtByT60qZXvSzyHI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748875976; c=relaxed/simple;
-	bh=FaipgzdkKT83M3sNy6571bZ8n8dJca8RgYbPkO/CeVw=;
+	s=arc-20240116; t=1748875979; c=relaxed/simple;
+	bh=r9ENm83W3YTWIOuIzTAXSnvRcy+VEELJBuRjM2IL67s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=neBH2yqL0dkiyKWh0Arhlv4KivKMUhz0SGT9O7MninZgtYIZCUuO8g7Ha1zJw4bWsvzcWBTp1OxkCI0e+nmpqWfuHm4jci03Ifa8l9gKUHVIeZEe44kBJSoeLrJKBsRmnEZxMskYe+VTd32D+VckJS6MzDHQxCWAiDk+MtYgVtc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PACMtXIC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oTbgLHVrUIdw7En+ehArdSu8UIg6/xZ8sD+KWAVhyIAc5DTOz47ffatIOZvOP6dRSwBDqCwoTaQ+Mcj4sbb38euA9CMMf7iJTOiCANSm5i1w0ilao4SLe1Una1V+VXcYJTfmZLeAAyHWlGw9hES4FG/aqpaZUNc/m+L5UNJGIfA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ymqw9vlB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PACMtXIC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD986C4CEEB;
-	Mon,  2 Jun 2025 14:52:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ymqw9vlB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D38BC4CEEB;
+	Mon,  2 Jun 2025 14:52:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748875976;
-	bh=FaipgzdkKT83M3sNy6571bZ8n8dJca8RgYbPkO/CeVw=;
+	s=korg; t=1748875979;
+	bh=r9ENm83W3YTWIOuIzTAXSnvRcy+VEELJBuRjM2IL67s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PACMtXIC60SESowgKUHD6ufji+WPvQgrtGqjxtQv3FoXxnG5lZceKabjW059n92wZ
-	 QzOlpae3o6r5sp5C8oY9ybUI5Qbs6IN663GTtreP4wK0r+YVmDh7t6jguFdOvK5dcB
-	 8r6VC/cdaldEgmk4udvPQpIYx1htPgV1MasKgqNo=
+	b=ymqw9vlB0WjjKUnt8pH+eYXAjo5vNPXYVsHUdDK72tR44HFCL5lKCJ60VDQw3ZgBQ
+	 wj/s9YGo8NMp33ji5kcDTDM8Z6O+mtfqkMZqEhTZBUU1dMNypjooBZtCN94xbiifnq
+	 HdTIAcYZj4WeU7WdAXKHq+TCNRkFQTNpfesYVfsk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Stanley Chu <yschu@nuvoton.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 033/207] btrfs: send: return -ENAMETOOLONG when attempting a path that is too long
-Date: Mon,  2 Jun 2025 15:46:45 +0200
-Message-ID: <20250602134300.061217142@linuxfoundation.org>
+Subject: [PATCH 5.15 034/207] i3c: master: svc: Fix missing STOP for master request
+Date: Mon,  2 Jun 2025 15:46:46 +0200
+Message-ID: <20250602134300.099350997@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134258.769974467@linuxfoundation.org>
 References: <20250602134258.769974467@linuxfoundation.org>
@@ -51,43 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Stanley Chu <yschu@nuvoton.com>
 
-[ Upstream commit a77749b3e21813566cea050bbb3414ae74562eba ]
+[ Upstream commit 0430bf9bc1ac068c8b8c540eb93e5751872efc51 ]
 
-When attempting to build a too long path we are currently returning
--ENOMEM, which is very odd and misleading. So update fs_path_ensure_buf()
-to return -ENAMETOOLONG instead. Also, while at it, move the WARN_ON()
-into the if statement's expression, as it makes it clear what is being
-tested and also has the effect of adding 'unlikely' to the statement,
-which allows the compiler to generate better code as this condition is
-never expected to happen.
+The controller driver nacked the master request but didn't emit a
+STOP to end the transaction. The driver shall refuse the unsupported
+requests and return the controller state to IDLE by emitting a STOP.
 
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Stanley Chu <yschu@nuvoton.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://lore.kernel.org/r/20250318053606.3087121-4-yschu@nuvoton.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/send.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/i3c/master/svc-i3c-master.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/btrfs/send.c b/fs/btrfs/send.c
-index 577980b33aeb7..a46076788bd7e 100644
---- a/fs/btrfs/send.c
-+++ b/fs/btrfs/send.c
-@@ -400,10 +400,8 @@ static int fs_path_ensure_buf(struct fs_path *p, int len)
- 	if (p->buf_len >= len)
- 		return 0;
- 
--	if (len > PATH_MAX) {
--		WARN_ON(1);
--		return -ENOMEM;
--	}
-+	if (WARN_ON(len > PATH_MAX))
-+		return -ENAMETOOLONG;
- 
- 	path_len = p->end - p->start;
- 	old_buf_len = p->buf_len;
+diff --git a/drivers/i3c/master/svc-i3c-master.c b/drivers/i3c/master/svc-i3c-master.c
+index 368429a34d600..92488ba5b5f2a 100644
+--- a/drivers/i3c/master/svc-i3c-master.c
++++ b/drivers/i3c/master/svc-i3c-master.c
+@@ -437,6 +437,7 @@ static void svc_i3c_master_ibi_work(struct work_struct *work)
+ 		queue_work(master->base.wq, &master->hj_work);
+ 		break;
+ 	case SVC_I3C_MSTATUS_IBITYPE_MASTER_REQUEST:
++		svc_i3c_master_emit_stop(master);
+ 	default:
+ 		break;
+ 	}
 -- 
 2.39.5
 
