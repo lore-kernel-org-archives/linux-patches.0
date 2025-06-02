@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4EB322576E;
-	Mon,  2 Jun 2025 14:44:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37114222576;
+	Mon,  2 Jun 2025 14:44:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748875441; cv=none; b=PBxdSR90QgueO4WrFalmcdANP3Fv2QdEJKJiCgg0c5J2HXel/QBzZFCqjVWEoOJYhKKk+F1bmubXAvurnSCl8N+Ek+9AmIcAk+ilLKSlx+ITEHNas6QtUb/9D6NBUKLRg1vwWk0WqSLgRocTRyrmy1Ionk4meir5xAOka7I1sv8=
+	t=1748875444; cv=none; b=cJGa9h35XzHrqiVIXRhRA1Ty4A2jYYKuhwFXL7fDlHlFGI2zfV3RNLHnCk/kWxVYo6kbcQuL6siaio2SXMKaSCewAVFP8TC4mf/MBAWRuIk685wB/DlVOrLDxJtfqRll8Zitt5oNtMvj+SeKTkBvq816SUKiTLFfi5yrD5uj68Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748875441; c=relaxed/simple;
-	bh=gomUuc+UroZ4D4Xq7P9Bad0YJFfbQrZQxOjUQC70Gf0=;
+	s=arc-20240116; t=1748875444; c=relaxed/simple;
+	bh=/VYvPp023OM+gBEnp22bAvP4HyfA42dXiMLLT0IAKxI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dl/bBZoqrN/abnuMHjxyIn/fKStgNQrFcXkaFdcWkYgqQtxiqo6yIFaZ/gWl6+D+mB2hx9UWcYdB9iE3WWnSgiCglWsfotlxpyLBWwaxyd7YKykotjQG/urJKCl+bKa0v0lPN2JE1BuqEEu8dNDgJJmXzXc/K9SdMLWmWQivTV0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kyBDeDkr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CG91+hA3FcQAmsMd8bDH4KKmZRirYsng7jYMobigiZo7jWZFhsjaHWDmR2qhHmdF0QUmZDigiqh1cKiqX/obIVfGPoMtrdqB8Q4/jd9/RulCBaTLzRcDCP+rKycOf1YdcUAX4TTYB2rPr3DDVOS0dnrFlegqIYbLqzVmE5v5cu8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vt0ACwTm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kyBDeDkr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55830C4CEEB;
-	Mon,  2 Jun 2025 14:44:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vt0ACwTm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 993B3C4CEEB;
+	Mon,  2 Jun 2025 14:44:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748875440;
-	bh=gomUuc+UroZ4D4Xq7P9Bad0YJFfbQrZQxOjUQC70Gf0=;
+	s=korg; t=1748875444;
+	bh=/VYvPp023OM+gBEnp22bAvP4HyfA42dXiMLLT0IAKxI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kyBDeDkrANYZiM2N9tns3yw27aDHClNn42jIZQv+t0/DYhXcMZ3U35vMit/HRW4+/
-	 Sj8x9oXm3yaB2kx1j2YxXsyIrmd0znwMKUl9sJi4kegEHytYnxj2ejNIFL5gPchMZ8
-	 3OvB7skft/LqG0KZWOp429Lacgzel/WViKPz6v/8=
+	b=Vt0ACwTm81JJ5P5AsTDWO6TMrYldPMqLtpEHdfseG5WSePC8kjYXioEzhyLfTliwK
+	 AWhg6xqawwuHpIasZ3oWfXLlv4u8ihcd/54pM5DTHBV6Dn2XqoISCyN+8oeENFo7xc
+	 4X12VN213+JnChL3FTfpIs9zW2J+23Yb9i0LCqSw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Mark Harmstone <maharmstone@fb.com>,
+	Filipe Manana <fdmanana@suse.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 136/270] btrfs: avoid linker error in btrfs_find_create_tree_block()
-Date: Mon,  2 Jun 2025 15:47:01 +0200
-Message-ID: <20250602134312.791172033@linuxfoundation.org>
+Subject: [PATCH 5.10 137/270] btrfs: send: return -ENAMETOOLONG when attempting a path that is too long
+Date: Mon,  2 Jun 2025 15:47:02 +0200
+Message-ID: <20250602134312.829510497@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134307.195171844@linuxfoundation.org>
 References: <20250602134307.195171844@linuxfoundation.org>
@@ -52,59 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Harmstone <maharmstone@fb.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit 7ef3cbf17d2734ca66c4ed8573be45f4e461e7ee ]
+[ Upstream commit a77749b3e21813566cea050bbb3414ae74562eba ]
 
-The inline function btrfs_is_testing() is hardcoded to return 0 if
-CONFIG_BTRFS_FS_RUN_SANITY_TESTS is not set. Currently we're relying on
-the compiler optimizing out the call to alloc_test_extent_buffer() in
-btrfs_find_create_tree_block(), as it's not been defined (it's behind an
- #ifdef).
+When attempting to build a too long path we are currently returning
+-ENOMEM, which is very odd and misleading. So update fs_path_ensure_buf()
+to return -ENAMETOOLONG instead. Also, while at it, move the WARN_ON()
+into the if statement's expression, as it makes it clear what is being
+tested and also has the effect of adding 'unlikely' to the statement,
+which allows the compiler to generate better code as this condition is
+never expected to happen.
 
-Add a stub version of alloc_test_extent_buffer() to avoid linker errors
-on non-standard optimization levels. This problem was seen on GCC 14
-with -O0 and is helps to see symbols that would be otherwise optimized
-out.
-
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Mark Harmstone <maharmstone@fb.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
 Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/extent_io.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ fs/btrfs/send.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/fs/btrfs/extent_io.c b/fs/btrfs/extent_io.c
-index 9cef930c4ecfb..8498994ef5c6d 100644
---- a/fs/btrfs/extent_io.c
-+++ b/fs/btrfs/extent_io.c
-@@ -5134,10 +5134,10 @@ struct extent_buffer *find_extent_buffer(struct btrfs_fs_info *fs_info,
- 	return NULL;
- }
+diff --git a/fs/btrfs/send.c b/fs/btrfs/send.c
+index a9e72f42e91e0..3e7bb24eb2276 100644
+--- a/fs/btrfs/send.c
++++ b/fs/btrfs/send.c
+@@ -390,10 +390,8 @@ static int fs_path_ensure_buf(struct fs_path *p, int len)
+ 	if (p->buf_len >= len)
+ 		return 0;
  
--#ifdef CONFIG_BTRFS_FS_RUN_SANITY_TESTS
- struct extent_buffer *alloc_test_extent_buffer(struct btrfs_fs_info *fs_info,
- 					u64 start)
- {
-+#ifdef CONFIG_BTRFS_FS_RUN_SANITY_TESTS
- 	struct extent_buffer *eb, *exists = NULL;
- 	int ret;
+-	if (len > PATH_MAX) {
+-		WARN_ON(1);
+-		return -ENOMEM;
+-	}
++	if (WARN_ON(len > PATH_MAX))
++		return -ENAMETOOLONG;
  
-@@ -5173,8 +5173,11 @@ struct extent_buffer *alloc_test_extent_buffer(struct btrfs_fs_info *fs_info,
- free_eb:
- 	btrfs_release_extent_buffer(eb);
- 	return exists;
--}
-+#else
-+	/* Stub to avoid linker error when compiled with optimizations turned off. */
-+	return NULL;
- #endif
-+}
- 
- struct extent_buffer *alloc_extent_buffer(struct btrfs_fs_info *fs_info,
- 					  u64 start)
+ 	path_len = p->end - p->start;
+ 	old_buf_len = p->buf_len;
 -- 
 2.39.5
 
