@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EC35227EA4;
-	Mon,  2 Jun 2025 14:06:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81B74228C99;
+	Mon,  2 Jun 2025 14:06:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748873160; cv=none; b=Als/CXfJGX1tRvhesvcOQCYBCC3pCDqAfNYNRt3XWbGePaFimh780AvRIyMjcPV+sv/5kpaVq3QcevgdXu56hzvQzd2wmJGzDSFALlX4dAkhFPYyfmwurn1krsanu00rm6CAbm3WT6FS6+iOv9a/sVrLzgrD/MLnD7gQK6rfzz8=
+	t=1748873163; cv=none; b=iL7ol5FZ16ncwlvYihiIBBFjNckEBTopLtP0HUsbDefau/5gSKlr9Mqk8u3YdO7w4fBCxWN24JYxpZFQT38aw9V20KyA352s11ngup0zps8I/98Xgx/Aq2nBCzWVNBv3jEooFbnr8w939vzV1pXf0P6yWM/UuZdxNW4vN88sxJQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748873160; c=relaxed/simple;
-	bh=JZzROz2SBIkkx8jPcidysB095MSeIjwXZAYmmgX5Qlw=;
+	s=arc-20240116; t=1748873163; c=relaxed/simple;
+	bh=df012jymOhCaPnGex1f3+zcJhC1GZq5rf1B78IZknCo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mkUFciIOqEr/vIciduGCdNjMi9QAik/KeZRSGEGJgfVCjoItKvmQ3GHJl8G0VOhX57MuJLPdbeVF3Todqphd/WeXdHIp6SS58ylrXl3mo3LQmkrk582L6dOFB5nJVwPXuIGirAw2QJ1m6hIhyprNRTnPop18w8a7rVi9u51kGI0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nx326gC8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mUeRBOBnKHJR1J1/RF+5MdDDhVTouzmfl9hUmddFsxYsce/RCdwIkiWi7m7e40+qXMUnd5IYIo2hYCAh4h1eT/OxO8wBWeDK5XIVG0eyw2Od1ZqK95nju13uy/z1YjkUUlWLLGNcMle7mpzzObzztEEOe62i/5x+euiLzkuwZ1c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=biwfD01g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nx326gC8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3313C4CEEE;
-	Mon,  2 Jun 2025 14:05:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="biwfD01g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E64B0C4CEEE;
+	Mon,  2 Jun 2025 14:06:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748873160;
-	bh=JZzROz2SBIkkx8jPcidysB095MSeIjwXZAYmmgX5Qlw=;
+	s=korg; t=1748873163;
+	bh=df012jymOhCaPnGex1f3+zcJhC1GZq5rf1B78IZknCo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nx326gC81nKHMhO+46fBEMMgYeAO4gIfKKCWLYhqpI3/73T5DVKEinDyNHgPQ7tWZ
-	 QP+TUqhTNh966W1Gxl65S9MqqhtKyRPl194J2ffJ3weoxKQhbw6AvU8fTM05pySEP3
-	 ZLZNPVWeBI0vsYdcVmKfale8ZUaAU+UcDNNfKDdw=
+	b=biwfD01gMUMUsNS3cXF6Y6tp3agNdmdEBqPN8zZQ7ajqJUwFp1tKvTtJhrzQQsXG0
+	 0FlWRUrqjmvVxS+daui1v2IsXGwPIE6rQdQFsxYy15sOw/GvmckZAVgc36Bjg6aF3g
+	 VcA449QSs2zPpK9v+yoqj+mNqNCqVM6fEtkQnsro=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luis de Arquer <luis.dearquer@inertim.com>,
-	Mark Brown <broonie@kernel.org>,
+	Alice Guo <alice.guo@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 057/444] spi-rockchip: Fix register out of bounds access
-Date: Mon,  2 Jun 2025 15:42:01 +0200
-Message-ID: <20250602134343.238825713@linuxfoundation.org>
+Subject: [PATCH 6.6 058/444] thermal/drivers/qoriq: Power down TMU on system suspend
+Date: Mon,  2 Jun 2025 15:42:02 +0200
+Message-ID: <20250602134343.281948402@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -51,35 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luis de Arquer <luis.dearquer@inertim.com>
+From: Alice Guo <alice.guo@nxp.com>
 
-[ Upstream commit 7a874e8b54ea21094f7fd2d428b164394c6cb316 ]
+[ Upstream commit 229f3feb4b0442835b27d519679168bea2de96c2 ]
 
-Do not write native chip select stuff for GPIO chip selects.
-GPIOs can be numbered much higher than native CS.
-Also, it makes no sense.
+Enable power-down of TMU (Thermal Management Unit) for TMU version 2 during
+system suspend to save power. Save approximately 4.3mW on VDD_ANA_1P8 on
+i.MX93 platforms.
 
-Signed-off-by: Luis de Arquer <luis.dearquer@inertim.com>
-Link: https://patch.msgid.link/365ccddfba110549202b3520f4401a6a936e82a8.camel@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Alice Guo <alice.guo@nxp.com>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Link: https://lore.kernel.org/r/20241209164859.3758906-2-Frank.Li@nxp.com
+Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-rockchip.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/thermal/qoriq_thermal.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/drivers/spi/spi-rockchip.c b/drivers/spi/spi-rockchip.c
-index 1f374cf4d6f65..1615f935c8f03 100644
---- a/drivers/spi/spi-rockchip.c
-+++ b/drivers/spi/spi-rockchip.c
-@@ -542,7 +542,7 @@ static int rockchip_spi_config(struct rockchip_spi *rs,
- 	cr0 |= (spi->mode & 0x3U) << CR0_SCPH_OFFSET;
- 	if (spi->mode & SPI_LSB_FIRST)
- 		cr0 |= CR0_FBM_LSB << CR0_FBM_OFFSET;
--	if (spi->mode & SPI_CS_HIGH)
-+	if ((spi->mode & SPI_CS_HIGH) && !(spi_get_csgpiod(spi, 0)))
- 		cr0 |= BIT(spi_get_chipselect(spi, 0)) << CR0_SOI_OFFSET;
+diff --git a/drivers/thermal/qoriq_thermal.c b/drivers/thermal/qoriq_thermal.c
+index 404f01cca4dab..ff8657afb31d3 100644
+--- a/drivers/thermal/qoriq_thermal.c
++++ b/drivers/thermal/qoriq_thermal.c
+@@ -18,6 +18,7 @@
+ #define SITES_MAX		16
+ #define TMR_DISABLE		0x0
+ #define TMR_ME			0x80000000
++#define TMR_CMD			BIT(29)
+ #define TMR_ALPF		0x0c000000
+ #define TMR_ALPF_V2		0x03000000
+ #define TMTMIR_DEFAULT	0x0000000f
+@@ -356,6 +357,12 @@ static int __maybe_unused qoriq_tmu_suspend(struct device *dev)
+ 	if (ret)
+ 		return ret;
  
- 	if (xfer->rx_buf && xfer->tx_buf)
++	if (data->ver > TMU_VER1) {
++		ret = regmap_set_bits(data->regmap, REGS_TMR, TMR_CMD);
++		if (ret)
++			return ret;
++	}
++
+ 	clk_disable_unprepare(data->clk);
+ 
+ 	return 0;
+@@ -370,6 +377,12 @@ static int __maybe_unused qoriq_tmu_resume(struct device *dev)
+ 	if (ret)
+ 		return ret;
+ 
++	if (data->ver > TMU_VER1) {
++		ret = regmap_clear_bits(data->regmap, REGS_TMR, TMR_CMD);
++		if (ret)
++			return ret;
++	}
++
+ 	/* Enable monitoring */
+ 	return regmap_update_bits(data->regmap, REGS_TMR, TMR_ME, TMR_ME);
+ }
 -- 
 2.39.5
 
