@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB03815CD55;
-	Mon,  2 Jun 2025 14:35:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9AE92248A4;
+	Mon,  2 Jun 2025 14:35:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748874922; cv=none; b=hnOZvG3R1TZWcXQp5CbkJ7rxDOxnNYatMlXS7qSDIfSNhC8LvpTjr7PlcO5Ds2pPYuXgTwIRcd1b/ij4NlBI60NxrWEVDQCqBPDT2hat/3bRIO6HXX2V9OoNfIM+26ZStPQ+XH8YVpYxCMyVe2uTM+tq7aJJIoidihSs/KKgTsQ=
+	t=1748874925; cv=none; b=UdcffgzpgYOa+GuupU+xcwS9Ht4WjKdRTk57uRBlZYKE0uByp1wBRCqtPIkv7AW8Idy44FnuVVoPZrj/tw8kx1UHfrUBP+cAh6Vahn+DN/MaeL4Bb9wMszksBP/pfwnrHWEu10jIaq5G6RI5HSDfsfhcyr6PzaiVU14ZWb6nT2c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748874922; c=relaxed/simple;
-	bh=DwwR0VdQ4IMBjxMZsYKByUCMsdLUnzUlUHkeKUY3Szw=;
+	s=arc-20240116; t=1748874925; c=relaxed/simple;
+	bh=4gFOtPrR+n0Y8U7ZLjXfbyF1b5KYcPlYM082hBKtlUM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z/5BXzavuc6oOuQ2Q3T0ZkGFVRRA1URC/0hFrLRlbJ72Kn8Y/1IjiGFn1LkNNR3OSsdg6Bv5YxqN+8a3OGBRB/dhHuMtOa7aTpPTYAINd+kxnD43jrBeUGXszSVGvzswkcwG0JgAnA5GYgNcFGBIJBEhucAxge/ABKM1P6gdLIA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w1EaYoHG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r+Kfr5aZy6YVUHNwIC0fV7g266+8VZW5Tab61PWSB7WypYbbO2SyCVcUkMvaIV1vYXxpr7N3m6LuGXQGrEazLjUupF7aeMyt/bgHzRmqibx/5pFGyvQeqEKDd4xnWDCW5OFmeJjaX7xI8HmGb1B9GVR5CC3WylBNqOsucZiXi+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FDGhGW2k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w1EaYoHG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27807C4CEEB;
-	Mon,  2 Jun 2025 14:35:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FDGhGW2k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2899CC4CEEB;
+	Mon,  2 Jun 2025 14:35:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748874922;
-	bh=DwwR0VdQ4IMBjxMZsYKByUCMsdLUnzUlUHkeKUY3Szw=;
+	s=korg; t=1748874925;
+	bh=4gFOtPrR+n0Y8U7ZLjXfbyF1b5KYcPlYM082hBKtlUM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w1EaYoHG5KWkEVGm8GAWHRaycOAOfwYseYIOL9sMsuDq6q0aJIi+UuRU7rZoYv7OO
-	 d/7EoTpJKtcAN2pv6SHeoCsl3RSSsay1a0vPdb6QOASkAqI0b5m5nJ28nyeCs/IfRV
-	 6NliX/qZB994T0qXX/yNe0q/N9FAJSlaY8heZUA0=
+	b=FDGhGW2k3tBcrFg60ONkGBFbHNtZgHWs3knMAEJMtFrZxDEYk74w/hqCwhUJ3+CT1
+	 Alx3ZoOOjEmPx7QGqzd1Z7X295WRpeM7YAoc07UMgVBgmYZpljfXicPZFDxM6yXixQ
+	 DMBh/0mAd63cWLlzCA568OTL7omTPSwUjqEpoqaw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konstantin Andreev <andreev@swemel.ru>,
-	Casey Schaufler <casey@schaufler-ca.com>,
+	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 146/204] smack: recognize ipv4 CIPSO w/o categories
-Date: Mon,  2 Jun 2025 15:47:59 +0200
-Message-ID: <20250602134301.390198408@linuxfoundation.org>
+Subject: [PATCH 5.4 137/204] wifi: rtw88: Fix rtw_init_ht_cap() for RTL8814AU
+Date: Mon,  2 Jun 2025 15:47:50 +0200
+Message-ID: <20250602134301.035417798@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134255.449974357@linuxfoundation.org>
 References: <20250602134255.449974357@linuxfoundation.org>
@@ -51,73 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konstantin Andreev <andreev@swemel.ru>
+From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
 
-[ Upstream commit a158a937d864d0034fea14913c1f09c6d5f574b8 ]
+[ Upstream commit c7eea1ba05ca5b0dbf77a27cf2e1e6e2fb3c0043 ]
 
-If SMACK label has CIPSO representation w/o categories, e.g.:
+Set the RX mask and the highest RX rate according to the number of
+spatial streams the chip can receive. For RTL8814AU that is 3.
 
-| # cat /smack/cipso2
-| foo  10
-| @ 250/2
-| ...
-
-then SMACK does not recognize such CIPSO in input ipv4 packets
-and substitues '*' label instead. Audit records may look like
-
-| lsm=SMACK fn=smack_socket_sock_rcv_skb action=denied
-|   subject="*" object="_" requested=w pid=0 comm="swapper/1" ...
-
-This happens in two steps:
-
-1) security/smack/smackfs.c`smk_set_cipso
-   does not clear NETLBL_SECATTR_MLS_CAT
-   from (struct smack_known *)skp->smk_netlabel.flags
-   on assigning CIPSO w/o categories:
-
-| rcu_assign_pointer(skp->smk_netlabel.attr.mls.cat, ncats.attr.mls.cat);
-| skp->smk_netlabel.attr.mls.lvl = ncats.attr.mls.lvl;
-
-2) security/smack/smack_lsm.c`smack_from_secattr
-   can not match skp->smk_netlabel with input packet's
-   struct netlbl_lsm_secattr *sap
-   because sap->flags have not NETLBL_SECATTR_MLS_CAT (what is correct)
-   but skp->smk_netlabel.flags have (what is incorrect):
-
-| if ((sap->flags & NETLBL_SECATTR_MLS_CAT) == 0) {
-| 	if ((skp->smk_netlabel.flags &
-| 		 NETLBL_SECATTR_MLS_CAT) == 0)
-| 		found = 1;
-| 	break;
-| }
-
-This commit sets/clears NETLBL_SECATTR_MLS_CAT in
-skp->smk_netlabel.flags according to the presense of CIPSO categories.
-The update of smk_netlabel is not atomic, so input packets processing
-still may be incorrect during short time while update proceeds.
-
-Signed-off-by: Konstantin Andreev <andreev@swemel.ru>
-Signed-off-by: Casey Schaufler <casey@schaufler-ca.com>
+Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/4e786f50-ed1c-4387-8b28-e6ff00e35e81@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/smack/smackfs.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/wireless/realtek/rtw88/main.c | 17 ++++++-----------
+ 1 file changed, 6 insertions(+), 11 deletions(-)
 
-diff --git a/security/smack/smackfs.c b/security/smack/smackfs.c
-index ddb0a292802ef..526598b40b13c 100644
---- a/security/smack/smackfs.c
-+++ b/security/smack/smackfs.c
-@@ -921,6 +921,10 @@ static ssize_t smk_set_cipso(struct file *file, const char __user *buf,
- 	if (rc >= 0) {
- 		old_cat = skp->smk_netlabel.attr.mls.cat;
- 		rcu_assign_pointer(skp->smk_netlabel.attr.mls.cat, ncats.attr.mls.cat);
-+		if (ncats.attr.mls.cat)
-+			skp->smk_netlabel.flags |= NETLBL_SECATTR_MLS_CAT;
-+		else
-+			skp->smk_netlabel.flags &= ~(u32)NETLBL_SECATTR_MLS_CAT;
- 		skp->smk_netlabel.attr.mls.lvl = ncats.attr.mls.lvl;
- 		synchronize_rcu();
- 		netlbl_catmap_free(old_cat);
+diff --git a/drivers/net/wireless/realtek/rtw88/main.c b/drivers/net/wireless/realtek/rtw88/main.c
+index 15c7a6fc37b90..e4d487468c4dd 100644
+--- a/drivers/net/wireless/realtek/rtw88/main.c
++++ b/drivers/net/wireless/realtek/rtw88/main.c
+@@ -766,6 +766,7 @@ static void rtw_init_ht_cap(struct rtw_dev *rtwdev,
+ 			    struct ieee80211_sta_ht_cap *ht_cap)
+ {
+ 	struct rtw_efuse *efuse = &rtwdev->efuse;
++	int i;
+ 
+ 	ht_cap->ht_supported = true;
+ 	ht_cap->cap = 0;
+@@ -780,17 +781,11 @@ static void rtw_init_ht_cap(struct rtw_dev *rtwdev,
+ 	ht_cap->ampdu_factor = IEEE80211_HT_MAX_AMPDU_64K;
+ 	ht_cap->ampdu_density = IEEE80211_HT_MPDU_DENSITY_16;
+ 	ht_cap->mcs.tx_params = IEEE80211_HT_MCS_TX_DEFINED;
+-	if (efuse->hw_cap.nss > 1) {
+-		ht_cap->mcs.rx_mask[0] = 0xFF;
+-		ht_cap->mcs.rx_mask[1] = 0xFF;
+-		ht_cap->mcs.rx_mask[4] = 0x01;
+-		ht_cap->mcs.rx_highest = cpu_to_le16(300);
+-	} else {
+-		ht_cap->mcs.rx_mask[0] = 0xFF;
+-		ht_cap->mcs.rx_mask[1] = 0x00;
+-		ht_cap->mcs.rx_mask[4] = 0x01;
+-		ht_cap->mcs.rx_highest = cpu_to_le16(150);
+-	}
++
++	for (i = 0; i < efuse->hw_cap.nss; i++)
++		ht_cap->mcs.rx_mask[i] = 0xFF;
++	ht_cap->mcs.rx_mask[4] = 0x01;
++	ht_cap->mcs.rx_highest = cpu_to_le16(150 * efuse->hw_cap.nss);
+ }
+ 
+ static void rtw_init_vht_cap(struct rtw_dev *rtwdev,
 -- 
 2.39.5
 
