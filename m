@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AA022376E6;
-	Mon,  2 Jun 2025 15:19:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7CFE22259F;
+	Mon,  2 Jun 2025 15:19:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748877544; cv=none; b=r95mRArkp1NzT6+dV240ZlUP26CAHA1tGCyrz9t8wCKq7i3gmooHZspAt8vCR8xT1L4a2NYBzH8e2z/1u7ncM9o5+K6oS3Zw4agD+rqZJMvgPg4Mp1T7PdKxVC4WTv/PBKajVjM72ivU9Gzoy+WT4evYYXBkujCuRzkWnz5imyo=
+	t=1748877547; cv=none; b=uAK3WQ/m5TIEux8dYkYC/q99+1Bm/mk4+Jt74qekkZLM9WbCu83lT2h5ehlECTfa+5mL/YBvTHoZp1FxYcLdJ45zoIRe8cwPiKy+eIfAn4YxYOfcQo4OP57s6z9NF9YjPR0gezi+keCSyTEaThz0i2STkitF568Vj0tHRZuWBOY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748877544; c=relaxed/simple;
-	bh=O9tX8Czi2xIm620S7XasWT+4HF+OmK3vQ0SHdYO7Ud4=;
+	s=arc-20240116; t=1748877547; c=relaxed/simple;
+	bh=mzglAR3bDNMNASRzIE54JjRdb6FQw1BpZ+Cp6ZvqplA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JUTWWCYkedtR0R6IKPv9tsVHZD04e1ZiiNHvgAu0xx8lnVtrhtGkURwWiYILK+qo5zhZvpos7kWL6i12oUEhqnPAypI/vf/uJC625lyOAPGze87mzQadqDR0V1W/WJc38XeF3oH6lWIro6B2ahcYl6GCBM+E+9+cukwVd2OMET8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nlWQWfIA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A7lT/AM5IC/6R6coPDhzyJHzLgQNhU6UBACjME7Vfw1sxzrzeMsQJtxMVoyVwk5RzYnT+75Ns1BaYHpsZJoIbzmCaFMi7rBIiCPJcgd75Wj9fGr2xaHHvB1XJggb+eP8Y8rNfX+PU01yw9N471nzApMZkT++dIBTyJi4G4ioy3k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wC+eNLTI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nlWQWfIA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D240C4CEEB;
-	Mon,  2 Jun 2025 15:19:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wC+eNLTI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEE6EC4CEEB;
+	Mon,  2 Jun 2025 15:19:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748877544;
-	bh=O9tX8Czi2xIm620S7XasWT+4HF+OmK3vQ0SHdYO7Ud4=;
+	s=korg; t=1748877547;
+	bh=mzglAR3bDNMNASRzIE54JjRdb6FQw1BpZ+Cp6ZvqplA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nlWQWfIAdRS6ngdyKA+oThMjwAgmD8UpXvvOUCsqFNmMlAeDJUG+O5+PXJ+/Bwu2t
-	 P1ZBViSC5BwyNNyqAn3IytP7nW4bf2ip+1DzuVx9bRnP0axvrB01R89O5L1c8o/p4X
-	 +xg9V1B2Su9N83fjrWRqs4Tyva7wz+QrSUGjzfDU=
+	b=wC+eNLTIJ9tDnjhoHSu5fQcWP0JBs+kgb0vZhf9yJ5LU+urnM5GYsvTR5CwfyvT1Y
+	 nKfqVOXBRnYp3UHXqwsPlAtmKifFcY9Gl+0SSFf1L4sAyVGuCuH4ehMHMin6g58hxU
+	 /xlfz25ASu6X5b124A1TSXJ5CTfu0lxcSwvI7d2E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"stable@vger.kernel.org, kernel test robot" <oliver.sang@intel.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Lee Jones <lee@kernel.org>,
-	kernel test robot <oliver.sang@intel.com>
-Subject: [PATCH 6.1 303/325] af_unix: Try not to hold unix_gc_lock during accept().
-Date: Mon,  2 Jun 2025 15:49:39 +0200
-Message-ID: <20250602134332.227570414@linuxfoundation.org>
+	Luca Boccassi <luca.boccassi@gmail.com>,
+	Oleg Nesterov <oleg@redhat.com>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 6.1 312/325] coredump: fix error handling for replace_fd()
+Date: Mon,  2 Jun 2025 15:49:48 +0200
+Message-ID: <20250602134332.612394149@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134319.723650984@linuxfoundation.org>
 References: <20250602134319.723650984@linuxfoundation.org>
@@ -53,117 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Christian Brauner <brauner@kernel.org>
 
-commit fd86344823b521149bb31d91eba900ba3525efa6 upstream.
+commit 95c5f43181fe9c1b5e5a4bd3281c857a5259991f upstream.
 
-Commit dcf70df2048d ("af_unix: Fix up unix_edge.successor for embryo
-socket.") added spin_lock(&unix_gc_lock) in accept() path, and it
-caused regression in a stress test as reported by kernel test robot.
+The replace_fd() helper returns the file descriptor number on success
+and a negative error code on failure. The current error handling in
+umh_pipe_setup() only works because the file descriptor that is replaced
+is zero but that's pretty volatile. Explicitly check for a negative
+error code.
 
-If the embryo socket is not part of the inflight graph, we need not
-hold the lock.
-
-To decide that in O(1) time and avoid the regression in the normal
-use case,
-
-  1. add a new stat unix_sk(sk)->scm_stat.nr_unix_fds
-
-  2. count the number of inflight AF_UNIX sockets in the receive
-     queue under unix_state_lock()
-
-  3. move unix_update_edges() call under unix_state_lock()
-
-  4. avoid locking if nr_unix_fds is 0 in unix_update_edges()
-
-Reported-by: kernel test robot <oliver.sang@intel.com>
-Closes: https://lore.kernel.org/oe-lkp/202404101427.92a08551-oliver.sang@intel.com
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://lore.kernel.org/r/20240413021928.20946-1-kuniyu@amazon.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Lee Jones <lee@kernel.org>
+Link: https://lore.kernel.org/20250414-work-coredump-v2-2-685bf231f828@kernel.org
+Tested-by: Luca Boccassi <luca.boccassi@gmail.com>
+Reviewed-by: Oleg Nesterov <oleg@redhat.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/af_unix.h |    1 +
- net/unix/af_unix.c    |    2 +-
- net/unix/garbage.c    |   20 ++++++++++++++++----
- 3 files changed, 18 insertions(+), 5 deletions(-)
+ fs/coredump.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/include/net/af_unix.h
-+++ b/include/net/af_unix.h
-@@ -67,6 +67,7 @@ struct unix_skb_parms {
- 
- struct scm_stat {
- 	atomic_t nr_fds;
-+	unsigned long nr_unix_fds;
- };
- 
- #define UNIXCB(skb)	(*(struct unix_skb_parms *)&((skb)->cb))
---- a/net/unix/af_unix.c
-+++ b/net/unix/af_unix.c
-@@ -1677,12 +1677,12 @@ static int unix_accept(struct socket *so
- 	}
- 
- 	tsk = skb->sk;
--	unix_update_edges(unix_sk(tsk));
- 	skb_free_datagram(sk, skb);
- 	wake_up_interruptible(&unix_sk(sk)->peer_wait);
- 
- 	/* attach accepted sock to socket */
- 	unix_state_lock(tsk);
-+	unix_update_edges(unix_sk(tsk));
- 	newsock->state = SS_CONNECTED;
- 	unix_sock_inherit_flags(sock, newsock);
- 	sock_graft(tsk, newsock);
---- a/net/unix/garbage.c
-+++ b/net/unix/garbage.c
-@@ -209,6 +209,7 @@ void unix_add_edges(struct scm_fp_list *
- 		unix_add_edge(fpl, edge);
- 	} while (i < fpl->count_unix);
- 
-+	receiver->scm_stat.nr_unix_fds += fpl->count_unix;
- 	WRITE_ONCE(unix_tot_inflight, unix_tot_inflight + fpl->count_unix);
- out:
- 	WRITE_ONCE(fpl->user->unix_inflight, fpl->user->unix_inflight + fpl->count);
-@@ -222,6 +223,7 @@ out:
- 
- void unix_del_edges(struct scm_fp_list *fpl)
+--- a/fs/coredump.c
++++ b/fs/coredump.c
+@@ -493,7 +493,9 @@ static int umh_pipe_setup(struct subproc
  {
-+	struct unix_sock *receiver;
- 	int i = 0;
+ 	struct file *files[2];
+ 	struct coredump_params *cp = (struct coredump_params *)info->data;
+-	int err = create_pipe_files(files, 0);
++	int err;
++
++	err = create_pipe_files(files, 0);
+ 	if (err)
+ 		return err;
  
- 	spin_lock(&unix_gc_lock);
-@@ -235,6 +237,8 @@ void unix_del_edges(struct scm_fp_list *
- 		unix_del_edge(fpl, edge);
- 	} while (i < fpl->count_unix);
+@@ -501,10 +503,13 @@ static int umh_pipe_setup(struct subproc
  
-+	receiver = fpl->edges[0].successor;
-+	receiver->scm_stat.nr_unix_fds -= fpl->count_unix;
- 	WRITE_ONCE(unix_tot_inflight, unix_tot_inflight - fpl->count_unix);
- out:
- 	WRITE_ONCE(fpl->user->unix_inflight, fpl->user->unix_inflight - fpl->count);
-@@ -246,10 +250,18 @@ out:
+ 	err = replace_fd(0, files[0], 0);
+ 	fput(files[0]);
++	if (err < 0)
++		return err;
++
+ 	/* and disallow core files too */
+ 	current->signal->rlim[RLIMIT_CORE] = (struct rlimit){1, 1};
  
- void unix_update_edges(struct unix_sock *receiver)
- {
--	spin_lock(&unix_gc_lock);
--	unix_update_graph(unix_sk(receiver->listener)->vertex);
--	receiver->listener = NULL;
--	spin_unlock(&unix_gc_lock);
-+	/* nr_unix_fds is only updated under unix_state_lock().
-+	 * If it's 0 here, the embryo socket is not part of the
-+	 * inflight graph, and GC will not see it, so no lock needed.
-+	 */
-+	if (!receiver->scm_stat.nr_unix_fds) {
-+		receiver->listener = NULL;
-+	} else {
-+		spin_lock(&unix_gc_lock);
-+		unix_update_graph(unix_sk(receiver->listener)->vertex);
-+		receiver->listener = NULL;
-+		spin_unlock(&unix_gc_lock);
-+	}
+-	return err;
++	return 0;
  }
  
- int unix_prepare_fpl(struct scm_fp_list *fpl)
+ void do_coredump(const kernel_siginfo_t *siginfo)
 
 
