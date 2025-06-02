@@ -1,50 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E7C822DA0F;
-	Mon,  2 Jun 2025 15:00:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EE6022E3F7;
+	Mon,  2 Jun 2025 15:00:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748876455; cv=none; b=Mzd78RSthuiSUNHfZIoALjcMJ2pcbnXO5sMO+0jLzuw6//dAntQFNuwCe9lJbgr0WjvGgNb+3QRVQTSKbGFChltIBG7OyL/IxpYRCvRQuuLwVwjgOfQQsonIt+Z8Glm4DDSJERIWHagZHX16JrUB1vj5iNJesuvoPdndotoxU8Y=
+	t=1748876458; cv=none; b=pWIovbylI5SFK4TEW5tFev+J3R4nd9KVtIBtJOPfuJQEwvDrOlkkNWNkcKvf6B3Bb1JxOEweFI30u2LGMOUXrAU1qw5iMALTIeM6z+0PrVJLlG00uIVJisTjaRr/xGr/HjbFA+Pn/BVAqc62DBjMdZhRjp5X2hdZns2b8Vy1QYQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748876455; c=relaxed/simple;
-	bh=SRs3RE+X4QejBQRKaq74EtWc4pceBuvX296x2rDNY1k=;
+	s=arc-20240116; t=1748876458; c=relaxed/simple;
+	bh=ix7gDJPD7Subs5f2WLAsXzRxrh7XsVUsMCfPKsJROM4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pHlzUYew1RcZUAzbdWHPCAafp6I3UIIBqGdWn2YoXyt9wHoV8XHym2LJQo1i3SV30bFi1ysmHuPq0SmMm8aqsetUAs7nNQou+QKPi+5XwL6htgHBS5qXS39eHjSKUnxDj+mtKA1kTBrpHINSCwQN+0jL3TojG7xRw37ha8Dpchg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nAkHYuxm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K0NiZiqtWYcH11M2PlzQ5brRq1nJdwPr89m8oHBG/cTXJySd1IDmcI/myz2a/Z0EKxcJA28tAHrqY51JEyL+5JHyIUYYJMOQPVsQpIKHeRhWw4Z2aDOxNSJls/vBOyCxGgGaCVOBYssstDB65jrlV245AYRwyS43jAMlnp1vD6k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s3ub2wRJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nAkHYuxm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 626CAC4CEEB;
-	Mon,  2 Jun 2025 15:00:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s3ub2wRJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E979C4CEEB;
+	Mon,  2 Jun 2025 15:00:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748876454;
-	bh=SRs3RE+X4QejBQRKaq74EtWc4pceBuvX296x2rDNY1k=;
+	s=korg; t=1748876458;
+	bh=ix7gDJPD7Subs5f2WLAsXzRxrh7XsVUsMCfPKsJROM4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nAkHYuxmKH6Xz27QD53N3pirMhOEWEiwOfoX3pky6ZN57f1ANR2VaGgAkj1KDi8/k
-	 IF+3p+ANcDUL14dlGOIT668JZBd+lmFc0j91u7AvAE+EJFaaLLaJQHsAFOxRmtW7pi
-	 oCd0FEELnGABoYnCFj96lwAT4fPCUDWpxw8AxZwo=
+	b=s3ub2wRJ1LW8dzUC6saaQhT/pjK0v9fbnsCN0/XKNCw3zStnrDZf5CSXL41BLrcm9
+	 or/V1FA25ENakI6K6tP5q4/33nFMBykrChsGEpACQZtV9myHu7Up8xqhSlkvn+5VCs
+	 H2TZn76EsfYaAilLmR6VqaeKdnqm0cf2xLfFgetA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pekka Paalanen <pekka.paalanen@collabora.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	David Airlie <airlied@gmail.com>,
-	Daniel Vetter <daniel@ffwll.ch>,
-	Rob Clark <robdclark@gmail.com>,
-	Simon Ser <contact@emersion.fr>,
-	Manasi Navare <navaremanasi@google.com>,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Simona Vetter <simona.vetter@intel.com>,
-	Simona Vetter <simona.vetter@ffwll.ch>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 152/207] drm/atomic: clarify the rules around drm_atomic_state->allow_modeset
-Date: Mon,  2 Jun 2025 15:48:44 +0200
-Message-ID: <20250602134304.673885250@linuxfoundation.org>
+	Breno Leitao <leitao@debian.org>,
+	Rik van Riel <riel@surriel.com>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Michael van der Westhuizen <rmikey@meta.com>,
+	Usama Arif <usamaarif642@gmail.com>,
+	Pavel Begunkov <asml.silence@gmail.com>,
+	Chen Ridong <chenridong@huawei.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Michal Hocko <mhocko@kernel.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Muchun Song <muchun.song@linux.dev>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.15 179/207] memcg: always call cond_resched() after fn()
+Date: Mon,  2 Jun 2025 15:49:11 +0200
+Message-ID: <20250602134305.763408988@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134258.769974467@linuxfoundation.org>
 References: <20250602134258.769974467@linuxfoundation.org>
@@ -57,94 +55,86 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Simona Vetter <simona.vetter@ffwll.ch>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit c5e3306a424b52e38ad2c28c7f3399fcd03e383d ]
+commit 06717a7b6c86514dbd6ab322e8083ffaa4db5712 upstream.
 
-msm is automagically upgrading normal commits to full modesets, and
-that's a big no-no:
+I am seeing soft lockup on certain machine types when a cgroup OOMs.  This
+is happening because killing the process in certain machine might be very
+slow, which causes the soft lockup and RCU stalls.  This happens usually
+when the cgroup has MANY processes and memory.oom.group is set.
 
-- for one this results in full on->off->on transitions on all these
-  crtc, at least if you're using the usual helpers. Which seems to be
-  the case, and is breaking uapi
+Example I am seeing in real production:
 
-- further even if the ctm change itself would not result in flicker,
-  this can hide modesets for other reasons. Which again breaks the
-  uapi
+       [462012.244552] Memory cgroup out of memory: Killed process 3370438 (crosvm) ....
+       ....
+       [462037.318059] Memory cgroup out of memory: Killed process 4171372 (adb) ....
+       [462037.348314] watchdog: BUG: soft lockup - CPU#64 stuck for 26s! [stat_manager-ag:1618982]
+       ....
 
-v2: I forgot the case of adding unrelated crtc state. Add that case
-and link to the existing kerneldoc explainers. This has come up in an
-irc discussion with Manasi and Ville about intel's bigjoiner mode.
-Also cc everyone involved in the msm irc discussion, more people
-joined after I sent out v1.
+Quick look at why this is so slow, it seems to be related to serial flush
+for certain machine types.  For all the crashes I saw, the target CPU was
+at console_flush_all().
 
-v3: Wording polish from Pekka and Thomas
+In the case above, there are thousands of processes in the cgroup, and it
+is soft locking up before it reaches the 1024 limit in the code (which
+would call the cond_resched()).  So, cond_resched() in 1024 blocks is not
+sufficient.
 
-Acked-by: Pekka Paalanen <pekka.paalanen@collabora.com>
-Acked-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-Cc: Maxime Ripard <mripard@kernel.org>
-Cc: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: David Airlie <airlied@gmail.com>
-Cc: Daniel Vetter <daniel@ffwll.ch>
-Cc: Pekka Paalanen <pekka.paalanen@collabora.com>
-Cc: Rob Clark <robdclark@gmail.com>
-Cc: Simon Ser <contact@emersion.fr>
-Cc: Manasi Navare <navaremanasi@google.com>
-Cc: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Simona Vetter <simona.vetter@intel.com>
-Signed-off-by: Simona Vetter <simona.vetter@ffwll.ch>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250108172417.160831-1-simona.vetter@ffwll.ch
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Remove the counter-based conditional rescheduling logic and call
+cond_resched() unconditionally after each task iteration, after fn() is
+called.  This avoids the lockup independently of how slow fn() is.
+
+Link: https://lkml.kernel.org/r/20250523-memcg_fix-v1-1-ad3eafb60477@debian.org
+Fixes: ade81479c7dd ("memcg: fix soft lockup in the OOM process")
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Suggested-by: Rik van Riel <riel@surriel.com>
+Acked-by: Shakeel Butt <shakeel.butt@linux.dev>
+Cc: Michael van der Westhuizen <rmikey@meta.com>
+Cc: Usama Arif <usamaarif642@gmail.com>
+Cc: Pavel Begunkov <asml.silence@gmail.com>
+Cc: Chen Ridong <chenridong@huawei.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Michal Hocko <mhocko@kernel.org>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Muchun Song <muchun.song@linux.dev>
+Cc: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/drm/drm_atomic.h | 23 +++++++++++++++++++++--
- 1 file changed, 21 insertions(+), 2 deletions(-)
+ mm/memcontrol.c |    6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/include/drm/drm_atomic.h b/include/drm/drm_atomic.h
-index 1701c2128a5cb..1b8dd160c51f9 100644
---- a/include/drm/drm_atomic.h
-+++ b/include/drm/drm_atomic.h
-@@ -353,8 +353,27 @@ struct drm_atomic_state {
- 	 *
- 	 * Allow full modeset. This is used by the ATOMIC IOCTL handler to
- 	 * implement the DRM_MODE_ATOMIC_ALLOW_MODESET flag. Drivers should
--	 * never consult this flag, instead looking at the output of
--	 * drm_atomic_crtc_needs_modeset().
-+	 * generally not consult this flag, but instead look at the output of
-+	 * drm_atomic_crtc_needs_modeset(). The detailed rules are:
-+	 *
-+	 * - Drivers must not consult @allow_modeset in the atomic commit path.
-+	 *   Use drm_atomic_crtc_needs_modeset() instead.
-+	 *
-+	 * - Drivers must consult @allow_modeset before adding unrelated struct
-+	 *   drm_crtc_state to this commit by calling
-+	 *   drm_atomic_get_crtc_state(). See also the warning in the
-+	 *   documentation for that function.
-+	 *
-+	 * - Drivers must never change this flag, it is under the exclusive
-+	 *   control of userspace.
-+	 *
-+	 * - Drivers may consult @allow_modeset in the atomic check path, if
-+	 *   they have the choice between an optimal hardware configuration
-+	 *   which requires a modeset, and a less optimal configuration which
-+	 *   can be committed without a modeset. An example would be suboptimal
-+	 *   scanout FIFO allocation resulting in increased idle power
-+	 *   consumption. This allows userspace to avoid flickering and delays
-+	 *   for the normal composition loop at reasonable cost.
- 	 */
- 	bool allow_modeset : 1;
- 	/**
--- 
-2.39.5
-
+--- a/mm/memcontrol.c
++++ b/mm/memcontrol.c
+@@ -1194,7 +1194,6 @@ int mem_cgroup_scan_tasks(struct mem_cgr
+ {
+ 	struct mem_cgroup *iter;
+ 	int ret = 0;
+-	int i = 0;
+ 
+ 	BUG_ON(memcg == root_mem_cgroup);
+ 
+@@ -1204,10 +1203,9 @@ int mem_cgroup_scan_tasks(struct mem_cgr
+ 
+ 		css_task_iter_start(&iter->css, CSS_TASK_ITER_PROCS, &it);
+ 		while (!ret && (task = css_task_iter_next(&it))) {
+-			/* Avoid potential softlockup warning */
+-			if ((++i & 1023) == 0)
+-				cond_resched();
+ 			ret = fn(task, arg);
++			/* Avoid potential softlockup warning */
++			cond_resched();
+ 		}
+ 		css_task_iter_end(&it);
+ 		if (ret) {
 
 
