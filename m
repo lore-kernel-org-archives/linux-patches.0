@@ -1,38 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA8A6227BA4;
-	Mon,  2 Jun 2025 14:44:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 208CE228CA9;
+	Mon,  2 Jun 2025 14:44:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748875489; cv=none; b=A3QD7I5f3Q53v6QfB/Fj5EEFetJPoRipuhyWuCI3w38ee0b0rQhUE4N7y4tYYl7VNnnzxPN3IU5+GTB9CF0c9clgEo0+zIF5YvP19LQMJtN5JlVREiYrPeyFvJh3gVQOMXz0SHt4VqVaNSyxln7kRNIRDo+BFJCNDtSQL2Qw3DQ=
+	t=1748875493; cv=none; b=W+l4qYpLQ//tSURAPSyrk/0U07fJWW8wA79fi+j8cww6nbbbDArCTEvLCLPQ85OY/lpAti/KLuqmKVSkfnnu9ju2u2UPd4cwETf8cyFMEwZ4lF0jLns7v200QfNXWZCi62xhtcZjSbwflvBVacYGH3cSYDq1q7FSpDvtPPLVT4w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748875489; c=relaxed/simple;
-	bh=VXpBokGVLs5g2KT+b3yzLvFYwvtGlgk8pP31jGgZ3tw=;
+	s=arc-20240116; t=1748875493; c=relaxed/simple;
+	bh=2zfCz0bQ9ZyjWwzdJ2DPjgfxbQImJEtM69s+b1+tP3E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A2piA6/h925xKTBdsZw6cFygBoFWpBvhDyq+9gtASykXDPBBWpDDKYpcOSbqjR5iXa6rS8jxaHCSmqB8WnvtAiw+rg+7QIH0+sSCC7BzRE8qndc9+lbf4hzB4dqUowTNZ9P5jx5sxCsGftSQZyG4vraxqgvF2wUvByvM/WgHDd8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e8aiQH7k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KIJ1e1zsuv0oACzlWsiJ66AJG7vMF0CBr+Os+vVv4CVFHd0CjoMy8KUflBMcBzn2keCzr4RmPvcBOtoIYZJkyBg3jZ3WSR3jkATX1n5lQchSQSUXl0ZOpGVHDAW2ZfywIbXRFSiFV2yjMnNmWxGQ6p/WrtLkA6BVlsVKaUgUVgg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j2g7X/wz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e8aiQH7k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48425C4CEEB;
-	Mon,  2 Jun 2025 14:44:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j2g7X/wz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C823C4CEEB;
+	Mon,  2 Jun 2025 14:44:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748875489;
-	bh=VXpBokGVLs5g2KT+b3yzLvFYwvtGlgk8pP31jGgZ3tw=;
+	s=korg; t=1748875493;
+	bh=2zfCz0bQ9ZyjWwzdJ2DPjgfxbQImJEtM69s+b1+tP3E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e8aiQH7kX2u4hF0rq/juoHLPa+F2QIfAihCNOCMghHik24HhpZ65zYZnu4QXWa/ZX
-	 o8Lqt1Q6C+J62KXw+orKYykh+CohuLpWXBvU/EFu4CUZ55g3mui2VX/JL0eUH8kBqd
-	 WMBe3zb4M/TKjrxZSAMgXnjLbFEi15ded7osPe6o=
+	b=j2g7X/wz2+JUaH9bBg69fkY895M5bfj5NdEwxYqsIoEBp/D1cKNc/1rcCs0NXO0jL
+	 3t2QRz9K+xMk1LLHKzbOysEUem+DVCxKsltKw77zNu0TvTwbeXA03hS5moadeB8Sz2
+	 TOb1sne6x6HfRSJ1vgMYr7zRvsoWBhbJrZePHwfM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolas Bouchinet <nicolas.bouchinet@ssi.gouv.fr>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Will Deacon <will@kernel.org>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	linux-arm-kernel@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 150/270] netfilter: conntrack: Bound nf_conntrack sysctl writes
-Date: Mon,  2 Jun 2025 15:47:15 +0200
-Message-ID: <20250602134313.352048326@linuxfoundation.org>
+Subject: [PATCH 5.10 151/270] arm64/mm: Check PUD_TYPE_TABLE in pud_bad()
+Date: Mon,  2 Jun 2025 15:47:16 +0200
+Message-ID: <20250602134313.390180682@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134307.195171844@linuxfoundation.org>
 References: <20250602134307.195171844@linuxfoundation.org>
@@ -51,83 +57,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolas Bouchinet <nicolas.bouchinet@ssi.gouv.fr>
+From: Ryan Roberts <ryan.roberts@arm.com>
 
-[ Upstream commit 8b6861390ffee6b8ed78b9395e3776c16fec6579 ]
+[ Upstream commit bfb1d2b9021c21891427acc86eb848ccedeb274e ]
 
-nf_conntrack_max and nf_conntrack_expect_max sysctls were authorized to
-be written any negative value, which would then be stored in the
-unsigned int variables nf_conntrack_max and nf_ct_expect_max variables.
+pud_bad() is currently defined in terms of pud_table(). Although for some
+configs, pud_table() is hard-coded to true i.e. when using 64K base pages
+or when page table levels are less than 3.
 
-While the do_proc_dointvec_conv function is supposed to limit writing
-handled by proc_dointvec proc_handler to INT_MAX. Such a negative value
-being written in an unsigned int leads to a very high value, exceeding
-this limit.
+pud_bad() is intended to check that the pud is configured correctly. Hence
+let's open-code the same check that the full version of pud_table() uses
+into pud_bad(). Then it always performs the check regardless of the config.
 
-Moreover, the nf_conntrack_expect_max sysctl documentation specifies the
-minimum value is 1.
-
-The proc_handlers have thus been updated to proc_dointvec_minmax in
-order to specify the following write bounds :
-
-* Bound nf_conntrack_max sysctl writings between SYSCTL_ZERO
-  and SYSCTL_INT_MAX.
-
-* Bound nf_conntrack_expect_max sysctl writings between SYSCTL_ONE
-  and SYSCTL_INT_MAX as defined in the sysctl documentation.
-
-With this patch applied, sysctl writes outside the defined in the bound
-will thus lead to a write error :
-
-```
-sysctl -w net.netfilter.nf_conntrack_expect_max=-1
-sysctl: setting key "net.netfilter.nf_conntrack_expect_max": Invalid argument
-```
-
-Signed-off-by: Nicolas Bouchinet <nicolas.bouchinet@ssi.gouv.fr>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Cc: Will Deacon <will@kernel.org>
+Cc: Ard Biesheuvel <ardb@kernel.org>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: linux-arm-kernel@lists.infradead.org
+Cc: linux-kernel@vger.kernel.org
+Signed-off-by: Ryan Roberts <ryan.roberts@arm.com>
+Signed-off-by: Anshuman Khandual <anshuman.khandual@arm.com>
+Link: https://lore.kernel.org/r/20250221044227.1145393-7-anshuman.khandual@arm.com
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conntrack_standalone.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ arch/arm64/include/asm/pgtable.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nf_conntrack_standalone.c b/net/netfilter/nf_conntrack_standalone.c
-index 8498bf27a3531..abf558868db11 100644
---- a/net/netfilter/nf_conntrack_standalone.c
-+++ b/net/netfilter/nf_conntrack_standalone.c
-@@ -613,7 +613,9 @@ static struct ctl_table nf_ct_sysctl_table[] = {
- 		.data		= &nf_conntrack_max,
- 		.maxlen		= sizeof(int),
- 		.mode		= 0644,
--		.proc_handler	= proc_dointvec,
-+		.proc_handler	= proc_dointvec_minmax,
-+		.extra1		= SYSCTL_ZERO,
-+		.extra2		= SYSCTL_INT_MAX,
- 	},
- 	[NF_SYSCTL_CT_COUNT] = {
- 		.procname	= "nf_conntrack_count",
-@@ -652,7 +654,9 @@ static struct ctl_table nf_ct_sysctl_table[] = {
- 		.data		= &nf_ct_expect_max,
- 		.maxlen		= sizeof(int),
- 		.mode		= 0644,
--		.proc_handler	= proc_dointvec,
-+		.proc_handler	= proc_dointvec_minmax,
-+		.extra1		= SYSCTL_ONE,
-+		.extra2		= SYSCTL_INT_MAX,
- 	},
- 	[NF_SYSCTL_CT_ACCT] = {
- 		.procname	= "nf_conntrack_acct",
-@@ -931,7 +935,9 @@ static struct ctl_table nf_ct_netfilter_table[] = {
- 		.data		= &nf_conntrack_max,
- 		.maxlen		= sizeof(int),
- 		.mode		= 0644,
--		.proc_handler	= proc_dointvec,
-+		.proc_handler	= proc_dointvec_minmax,
-+		.extra1		= SYSCTL_ZERO,
-+		.extra2		= SYSCTL_INT_MAX,
- 	},
- 	{ }
- };
+diff --git a/arch/arm64/include/asm/pgtable.h b/arch/arm64/include/asm/pgtable.h
+index 7756a365d4c49..d92b5aed354e9 100644
+--- a/arch/arm64/include/asm/pgtable.h
++++ b/arch/arm64/include/asm/pgtable.h
+@@ -601,7 +601,8 @@ static inline unsigned long pmd_page_vaddr(pmd_t pmd)
+ 	pr_err("%s:%d: bad pmd %016llx.\n", __FILE__, __LINE__, pmd_val(e))
+ 
+ #define pud_none(pud)		(!pud_val(pud))
+-#define pud_bad(pud)		(!pud_table(pud))
++#define pud_bad(pud)		((pud_val(pud) & PUD_TYPE_MASK) != \
++				 PUD_TYPE_TABLE)
+ #define pud_present(pud)	pte_present(pud_pte(pud))
+ #define pud_leaf(pud)		(pud_present(pud) && !pud_table(pud))
+ #define pud_valid(pud)		pte_valid(pud_pte(pud))
 -- 
 2.39.5
 
