@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B188223DCD;
-	Mon,  2 Jun 2025 14:03:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28E9A221FC6;
+	Mon,  2 Jun 2025 14:03:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748873016; cv=none; b=GdUYmjt/fsOMT/UI5uVKmqhKKY/lVHdaPATxDe525mjZgwRYJafTVOr8OQJFmjAoaf7kM2AghHdYnUNL/V8d5ICaklyax+/WNHIndBf4k/DxSd9SsgkGuCJYxMAPS5K9VDF9t9pdmJ8aQ7sM5vakHewWY/3J73s9yj7XmaJyIgI=
+	t=1748873020; cv=none; b=bYCY2YnJGOvIpoCA+qMLVjukXk1wZ2sH+3zNlKzgp6M+BjTL/UCHoKM+s5J18+iT6lY1mXr7aHTUs8DM+wkrSE8moeqJeuvN0FJ7YEp4lyH+yAJmzRI5uX3QQ/A+RKO99hT8e/jW8HdHt38hRE0wTUHNTCb5s9itvFDfaCBdgYg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748873016; c=relaxed/simple;
-	bh=7co+SJzbYUttvfPlnIBHXKfCFcHcqr1N49N73ntPv14=;
+	s=arc-20240116; t=1748873020; c=relaxed/simple;
+	bh=oT1ZjkKk/3pDfOImP1ZBPAtqrvqPgA4m7FzWMIPL98w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZzG0dWYZWqVv9jVMt5TEeIl/9trEcd8Qk6kl96VAzxtf90I6HUjwgZpLLeRv17r50xsvRmz/yvmXmulgmt/z93IxLIQYZfC0sWECxBjhG+Aa0M0sLEg8utK8TdXpa9AOXKwfJcfwzfY9H5tf3Ts9H3O1Q2rwuT1plTpvTPkELeM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ap45t3pL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PcWRhlScbWPH7Bkb1sQtoiUngN0NEFkucGqfJqRUn/vci/yPjJsoNGa45MDdYEG37LD0zC+0ZZvrnO/a6kiCDuN/yHQuKv0Sccctqth0DlCKggI8lh0/w4HdP43fi801zP2BfYHhGuFlgUOZZMeQiZeL9N+CDMFqV4d7mpc+59M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=egfWqekP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ap45t3pL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E861C4CEEB;
-	Mon,  2 Jun 2025 14:03:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="egfWqekP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D7D8C4CEEE;
+	Mon,  2 Jun 2025 14:03:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748873014;
-	bh=7co+SJzbYUttvfPlnIBHXKfCFcHcqr1N49N73ntPv14=;
+	s=korg; t=1748873020;
+	bh=oT1ZjkKk/3pDfOImP1ZBPAtqrvqPgA4m7FzWMIPL98w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ap45t3pL2JJSEK6Omy5fIpY4V0y4E3TvaXS447U5cWNqgt4sZvWihv8MxvonGkjTr
-	 Gg3es/Vs9q1muKLUNyYN1PEsbpsiFbRcTq7G1YERZ/RjTbFIofI8iPr+BdIBpQJfop
-	 9Y/J368s0s+M9s1ZjaJ7X3T3YcvQC9I5qoKKcmUg=
+	b=egfWqekP7hSgQyBMF057/k1n/bwifththeTJfLn+9Zxjc21oRySVpEt2cU9hxJCoZ
+	 NpmR/nL3l1EpzO24owexJosyFdOoqPV4/z38yCrlwMtnu0y09Attx6AXBcX2BIMfbC
+	 8muj5ZDY/LYlaCXNUmBivBqCgqBP2Apd3oCIKqI4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jarkko Nikula <jarkko.nikula@linux.intel.com>,
-	Jiawen Wu <jiawenwu@trustnetic.com>,
 	Andi Shyti <andi.shyti@kernel.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 004/444] i2c: designware: Uniform initialization flow for polling mode
-Date: Mon,  2 Jun 2025 15:41:08 +0200
-Message-ID: <20250602134341.092585329@linuxfoundation.org>
+Subject: [PATCH 6.6 005/444] i2c: designware: Remove ->disable() callback
+Date: Mon,  2 Jun 2025 15:41:09 +0200
+Message-ID: <20250602134341.131530849@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -52,134 +51,157 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jarkko Nikula <jarkko.nikula@linux.intel.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit 535677e44d57a31e1363529b5ecddb92653d7136 ]
+[ Upstream commit bc07fb417007b323d34651be20b9135480a947dc ]
 
-Currently initialization flow in i2c_dw_probe_master() skips a few steps
-and has code duplication for polling mode implementation.
+Commit 90312351fd1e ("i2c: designware: MASTER mode as separated driver")
+introduced ->disable() callback but there is no real use for it. Both
+i2c-designware-master.c and i2c-designware-slave.c set it to the same
+i2c_dw_disable() and scope is inside the same kernel module.
 
-Simplify this by adding a new ACCESS_POLLING flag that is set for those
-two platforms that currently use polling mode and use it to skip
-interrupt handler setup.
+That said, replace the callback by explicitly calling the i2c_dw_disable().
 
-Signed-off-by: Jarkko Nikula <jarkko.nikula@linux.intel.com>
-Tested-by: Jiawen Wu <jiawenwu@trustnetic.com>
+Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
 Stable-dep-of: 1cfe51ef07ca ("i2c: designware: Fix an error handling path in i2c_dw_pci_probe()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-designware-core.h    |  1 +
- drivers/i2c/busses/i2c-designware-master.c  | 42 ++++-----------------
- drivers/i2c/busses/i2c-designware-pcidrv.c  |  2 +-
- drivers/i2c/busses/i2c-designware-platdrv.c |  2 +-
- 4 files changed, 11 insertions(+), 36 deletions(-)
+ drivers/i2c/busses/i2c-designware-common.c  | 1 +
+ drivers/i2c/busses/i2c-designware-core.h    | 4 +---
+ drivers/i2c/busses/i2c-designware-master.c  | 1 -
+ drivers/i2c/busses/i2c-designware-pcidrv.c  | 5 +++--
+ drivers/i2c/busses/i2c-designware-platdrv.c | 4 ++--
+ drivers/i2c/busses/i2c-designware-slave.c   | 3 +--
+ 6 files changed, 8 insertions(+), 10 deletions(-)
 
+diff --git a/drivers/i2c/busses/i2c-designware-common.c b/drivers/i2c/busses/i2c-designware-common.c
+index ced2fb4aeda8d..79e083aab08e0 100644
+--- a/drivers/i2c/busses/i2c-designware-common.c
++++ b/drivers/i2c/busses/i2c-designware-common.c
+@@ -669,6 +669,7 @@ void i2c_dw_disable(struct dw_i2c_dev *dev)
+ 
+ 	i2c_dw_release_lock(dev);
+ }
++EXPORT_SYMBOL_GPL(i2c_dw_disable);
+ 
+ MODULE_DESCRIPTION("Synopsys DesignWare I2C bus adapter core");
+ MODULE_LICENSE("GPL");
 diff --git a/drivers/i2c/busses/i2c-designware-core.h b/drivers/i2c/busses/i2c-designware-core.h
-index 5eb130c1d6719..a26fff9716ddc 100644
+index a26fff9716ddc..e93870a0f9a45 100644
 --- a/drivers/i2c/busses/i2c-designware-core.h
 +++ b/drivers/i2c/busses/i2c-designware-core.h
-@@ -305,6 +305,7 @@ struct dw_i2c_dev {
- #define ACCESS_INTR_MASK			BIT(0)
- #define ACCESS_NO_IRQ_SUSPEND			BIT(1)
- #define ARBITRATION_SEMAPHORE			BIT(2)
-+#define ACCESS_POLLING				BIT(3)
+@@ -238,7 +238,6 @@ struct reset_control;
+  * @semaphore_idx: Index of table with semaphore type attached to the bus. It's
+  *	-1 if there is no semaphore.
+  * @shared_with_punit: true if this bus is shared with the SoCs PUNIT
+- * @disable: function to disable the controller
+  * @init: function to initialize the I2C hardware
+  * @set_sda_hold_time: callback to retrieve IP specific SDA hold timing
+  * @mode: operation mode - DW_IC_MASTER or DW_IC_SLAVE
+@@ -295,7 +294,6 @@ struct dw_i2c_dev {
+ 	void			(*release_lock)(void);
+ 	int			semaphore_idx;
+ 	bool			shared_with_punit;
+-	void			(*disable)(struct dw_i2c_dev *dev);
+ 	int			(*init)(struct dw_i2c_dev *dev);
+ 	int			(*set_sda_hold_time)(struct dw_i2c_dev *dev);
+ 	int			mode;
+@@ -340,7 +338,6 @@ int i2c_dw_wait_bus_not_busy(struct dw_i2c_dev *dev);
+ int i2c_dw_handle_tx_abort(struct dw_i2c_dev *dev);
+ int i2c_dw_set_fifo_size(struct dw_i2c_dev *dev);
+ u32 i2c_dw_func(struct i2c_adapter *adap);
+-void i2c_dw_disable(struct dw_i2c_dev *dev);
  
- #define MODEL_MSCC_OCELOT			BIT(8)
- #define MODEL_BAIKAL_BT1			BIT(9)
+ static inline void __i2c_dw_enable(struct dw_i2c_dev *dev)
+ {
+@@ -355,6 +352,7 @@ static inline void __i2c_dw_disable_nowait(struct dw_i2c_dev *dev)
+ }
+ 
+ void __i2c_dw_disable(struct dw_i2c_dev *dev);
++void i2c_dw_disable(struct dw_i2c_dev *dev);
+ 
+ extern void i2c_dw_configure_master(struct dw_i2c_dev *dev);
+ extern int i2c_dw_probe_master(struct dw_i2c_dev *dev);
 diff --git a/drivers/i2c/busses/i2c-designware-master.c b/drivers/i2c/busses/i2c-designware-master.c
-index 579c668cb78a6..c1e516df5cd4c 100644
+index c1e516df5cd4c..51f5491648c07 100644
 --- a/drivers/i2c/busses/i2c-designware-master.c
 +++ b/drivers/i2c/busses/i2c-designware-master.c
-@@ -991,31 +991,6 @@ static int i2c_dw_init_recovery_info(struct dw_i2c_dev *dev)
- 	return 0;
- }
+@@ -1001,7 +1001,6 @@ int i2c_dw_probe_master(struct dw_i2c_dev *dev)
+ 	init_completion(&dev->cmd_complete);
  
--static int i2c_dw_poll_adap_quirk(struct dw_i2c_dev *dev)
--{
--	struct i2c_adapter *adap = &dev->adapter;
--	int ret;
--
--	pm_runtime_get_noresume(dev->dev);
--	ret = i2c_add_numbered_adapter(adap);
--	if (ret)
--		dev_err(dev->dev, "Failed to add adapter: %d\n", ret);
--	pm_runtime_put_noidle(dev->dev);
--
--	return ret;
--}
--
--static bool i2c_dw_is_model_poll(struct dw_i2c_dev *dev)
--{
--	switch (dev->flags & MODEL_MASK) {
--	case MODEL_AMD_NAVI_GPU:
--	case MODEL_WANGXUN_SP:
--		return true;
--	default:
--		return false;
--	}
--}
--
- int i2c_dw_probe_master(struct dw_i2c_dev *dev)
- {
- 	struct i2c_adapter *adap = &dev->adapter;
-@@ -1071,9 +1046,6 @@ int i2c_dw_probe_master(struct dw_i2c_dev *dev)
- 	adap->dev.parent = dev->dev;
- 	i2c_set_adapdata(adap, dev);
+ 	dev->init = i2c_dw_init_master;
+-	dev->disable = i2c_dw_disable;
  
--	if (i2c_dw_is_model_poll(dev))
--		return i2c_dw_poll_adap_quirk(dev);
--
- 	if (dev->flags & ACCESS_NO_IRQ_SUSPEND) {
- 		irq_flags = IRQF_NO_SUSPEND;
- 	} else {
-@@ -1087,12 +1059,14 @@ int i2c_dw_probe_master(struct dw_i2c_dev *dev)
- 	regmap_write(dev->map, DW_IC_INTR_MASK, 0);
- 	i2c_dw_release_lock(dev);
- 
--	ret = devm_request_irq(dev->dev, dev->irq, i2c_dw_isr, irq_flags,
--			       dev_name(dev->dev), dev);
--	if (ret) {
--		dev_err(dev->dev, "failure requesting irq %i: %d\n",
--			dev->irq, ret);
--		return ret;
-+	if (!(dev->flags & ACCESS_POLLING)) {
-+		ret = devm_request_irq(dev->dev, dev->irq, i2c_dw_isr,
-+				       irq_flags, dev_name(dev->dev), dev);
-+		if (ret) {
-+			dev_err(dev->dev, "failure requesting irq %i: %d\n",
-+				dev->irq, ret);
-+			return ret;
-+		}
- 	}
- 
- 	ret = i2c_dw_init_recovery_info(dev);
+ 	ret = i2c_dw_init_regmap(dev);
+ 	if (ret)
 diff --git a/drivers/i2c/busses/i2c-designware-pcidrv.c b/drivers/i2c/busses/i2c-designware-pcidrv.c
-index 61d7a27aa0701..9be9a2658e1f6 100644
+index 9be9a2658e1f6..6db6f9d5d4d4e 100644
 --- a/drivers/i2c/busses/i2c-designware-pcidrv.c
 +++ b/drivers/i2c/busses/i2c-designware-pcidrv.c
-@@ -154,7 +154,7 @@ static int navi_amd_setup(struct pci_dev *pdev, struct dw_pci_controller *c)
+@@ -198,7 +198,7 @@ static int __maybe_unused i2c_dw_pci_runtime_suspend(struct device *dev)
  {
- 	struct dw_i2c_dev *dev = dev_get_drvdata(&pdev->dev);
+ 	struct dw_i2c_dev *i_dev = dev_get_drvdata(dev);
  
--	dev->flags |= MODEL_AMD_NAVI_GPU;
-+	dev->flags |= MODEL_AMD_NAVI_GPU | ACCESS_POLLING;
- 	dev->timings.bus_freq_hz = I2C_MAX_STANDARD_MODE_FREQ;
+-	i_dev->disable(i_dev);
++	i2c_dw_disable(i_dev);
  	return 0;
  }
+ 
+@@ -354,7 +354,8 @@ static void i2c_dw_pci_remove(struct pci_dev *pdev)
+ {
+ 	struct dw_i2c_dev *dev = pci_get_drvdata(pdev);
+ 
+-	dev->disable(dev);
++	i2c_dw_disable(dev);
++
+ 	pm_runtime_forbid(&pdev->dev);
+ 	pm_runtime_get_noresume(&pdev->dev);
+ 
 diff --git a/drivers/i2c/busses/i2c-designware-platdrv.c b/drivers/i2c/busses/i2c-designware-platdrv.c
-index 855b698e99c08..4ab41ba39d55f 100644
+index 4ab41ba39d55f..61c506092abdb 100644
 --- a/drivers/i2c/busses/i2c-designware-platdrv.c
 +++ b/drivers/i2c/busses/i2c-designware-platdrv.c
-@@ -290,7 +290,7 @@ static int dw_i2c_plat_probe(struct platform_device *pdev)
+@@ -407,7 +407,7 @@ static void dw_i2c_plat_remove(struct platform_device *pdev)
  
- 	dev->flags = (uintptr_t)device_get_match_data(&pdev->dev);
- 	if (device_property_present(&pdev->dev, "wx,i2c-snps-model"))
--		dev->flags = MODEL_WANGXUN_SP;
-+		dev->flags = MODEL_WANGXUN_SP | ACCESS_POLLING;
+ 	i2c_del_adapter(&dev->adapter);
  
- 	dev->dev = &pdev->dev;
- 	dev->irq = irq;
+-	dev->disable(dev);
++	i2c_dw_disable(dev);
+ 
+ 	pm_runtime_dont_use_autosuspend(&pdev->dev);
+ 	pm_runtime_put_sync(&pdev->dev);
+@@ -436,7 +436,7 @@ static int dw_i2c_plat_runtime_suspend(struct device *dev)
+ 	if (i_dev->shared_with_punit)
+ 		return 0;
+ 
+-	i_dev->disable(i_dev);
++	i2c_dw_disable(i_dev);
+ 	i2c_dw_prepare_clk(i_dev, false);
+ 
+ 	return 0;
+diff --git a/drivers/i2c/busses/i2c-designware-slave.c b/drivers/i2c/busses/i2c-designware-slave.c
+index 78e2c47e3d7da..345b532a2b455 100644
+--- a/drivers/i2c/busses/i2c-designware-slave.c
++++ b/drivers/i2c/busses/i2c-designware-slave.c
+@@ -88,7 +88,7 @@ static int i2c_dw_unreg_slave(struct i2c_client *slave)
+ 	struct dw_i2c_dev *dev = i2c_get_adapdata(slave->adapter);
+ 
+ 	regmap_write(dev->map, DW_IC_INTR_MASK, 0);
+-	dev->disable(dev);
++	i2c_dw_disable(dev);
+ 	synchronize_irq(dev->irq);
+ 	dev->slave = NULL;
+ 	pm_runtime_put(dev->dev);
+@@ -235,7 +235,6 @@ int i2c_dw_probe_slave(struct dw_i2c_dev *dev)
+ 	int ret;
+ 
+ 	dev->init = i2c_dw_init_slave;
+-	dev->disable = i2c_dw_disable;
+ 
+ 	ret = i2c_dw_init_regmap(dev);
+ 	if (ret)
 -- 
 2.39.5
 
