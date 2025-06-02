@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA9A2221727;
-	Mon,  2 Jun 2025 14:55:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5CE1221727;
+	Mon,  2 Jun 2025 14:55:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748876123; cv=none; b=sJOM21S/eMfuh0drRwxBp9d9gWSf3e+lmDrY2WTVV59Arz9AANDHa0CJfoBBledQbehHfpM017mdr//lcyz1fNsssD/GSttEHLajil7zCheH6AXnFcWefBKHJiqTEHV99139BUI5pnlrdbMRgKEQdlcwMkymCHIE+4Rh11Zv0Xs=
+	t=1748876127; cv=none; b=pGok7v0wzZ3ilO+zNwoJLorQ2y0MghjwHAInYi1yKHYxRGufQVxeVSt0g8cqIp9/ycIDW4AUaMmsD0xybMSaW7wxfrwy1X0vNE5Thf8OtPs1e8s/9c9EYHWguz/I9iWXySGrFQ+UD2qPYM+a25xik/nXWVESkGZnnnO95MXWQq4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748876123; c=relaxed/simple;
-	bh=wKzDoXSCSBxiVtu2/H+RIEF7Tz7SRbmYDbgH06+5eDM=;
+	s=arc-20240116; t=1748876127; c=relaxed/simple;
+	bh=7NfbzEc6UHcl1WO4+MdZaL2pF2e8qzJTWm1fAuq/VOA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UtzHO+7Z4A9WQIQtWqBDmYC6g1E9WIRhvb3qCcXhDi69Y7x8O44sshsHLx592uiqwWzGqG8A4YdQv3w/JEeLqvzYPZSg4QR5YoHj0YXb/4dzyG718gT1egPysMvPWsMdA4H5Ejj6pAt0Oj4QNppv82PQJ7jOKHWMRi7igsK1aXU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tmyzQKfC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Yp7qZDPj3hNaPXkCKYzzBy+K//5AmYIfgPqlt0NW0ftdyWzocTSgCahvLbGlrveIyjtX561vxHJv1mToMOSlWqUbAd8l2Ayuz6XF7hntgT3fc0waBIwjkbdtC0rhM0Uf0XXP/1sdMqAuRff5nW7jiuxEgMivbaKg7O0LLfZDPQU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w6fimMjM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tmyzQKfC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 281A7C4CEEB;
-	Mon,  2 Jun 2025 14:55:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w6fimMjM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62DBCC4CEEB;
+	Mon,  2 Jun 2025 14:55:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748876123;
-	bh=wKzDoXSCSBxiVtu2/H+RIEF7Tz7SRbmYDbgH06+5eDM=;
+	s=korg; t=1748876126;
+	bh=7NfbzEc6UHcl1WO4+MdZaL2pF2e8qzJTWm1fAuq/VOA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tmyzQKfCG6UQY17XipNSrj7w7jYEwiT6avUTw5OdimwFlYmwG1x/gDRu3FjDBrLNU
-	 DfM1Nx8p7X2Tltfj5OkFu03tVR3E+CnUqbFYINzcWS45vneGs0iZ65tavVWPQlFcbz
-	 5L85gVTUH7EhLyHKXuCINqoxFtLDl8A2Eb1grN4M=
+	b=w6fimMjMeanCUrwNowqcSBlA9un2++lD6JtLfKycUSE975Vuv/aV7lXLuZ9ObwOcW
+	 LO2CyjrlhvDh/RCtCPcHf+4zSyY4Cjx7/2RR3cwQVXXghnchUjYtJ0uKOW1mWZAPHv
+	 Fm6bIKnvTVLONpA9wXv2qSRZxMjUFYTswo98gCCs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peng Fan <peng.fan@nxp.com>,
-	Ahmad Fatoum <a.fatoum@pengutronix.de>,
-	Abel Vesa <abel.vesa@linaro.org>,
+	Breno Leitao <leitao@debian.org>,
+	Ingo Molnar <mingo@kernel.org>,
+	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	David Kaplan <David.Kaplan@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 078/207] clk: imx8mp: inform CCF of maximum frequency of clocks
-Date: Mon,  2 Jun 2025 15:47:30 +0200
-Message-ID: <20250602134301.791052972@linuxfoundation.org>
+Subject: [PATCH 5.15 079/207] x86/bugs: Make spectre user default depend on MITIGATION_SPECTRE_V2
+Date: Mon,  2 Jun 2025 15:47:31 +0200
+Message-ID: <20250602134301.829509606@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134258.769974467@linuxfoundation.org>
 References: <20250602134258.769974467@linuxfoundation.org>
@@ -52,212 +55,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ahmad Fatoum <a.fatoum@pengutronix.de>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit 06a61b5cb6a8638fa8823cd09b17233b29696fa2 ]
+[ Upstream commit 98fdaeb296f51ef08e727a7cc72e5b5c864c4f4d ]
 
-The IMX8MPCEC datasheet lists maximum frequencies allowed for different
-modules. Some of these limits are universal, but some depend on
-whether the SoC is operating in nominal or in overdrive mode.
+Change the default value of spectre v2 in user mode to respect the
+CONFIG_MITIGATION_SPECTRE_V2 config option.
 
-The imx8mp.dtsi currently assumes overdrive mode and configures some
-clocks in accordance with this. Boards wishing to make use of nominal
-mode will need to override some of the clock rates manually.
+Currently, user mode spectre v2 is set to auto
+(SPECTRE_V2_USER_CMD_AUTO) by default, even if
+CONFIG_MITIGATION_SPECTRE_V2 is disabled.
 
-As operating the clocks outside of their allowed range can lead to
-difficult to debug issues, it makes sense to register the maximum rates
-allowed in the driver, so the CCF can take them into account.
+Set the spectre_v2 value to auto (SPECTRE_V2_USER_CMD_AUTO) if the
+Spectre v2 config (CONFIG_MITIGATION_SPECTRE_V2) is enabled, otherwise
+set the value to none (SPECTRE_V2_USER_CMD_NONE).
 
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
-Signed-off-by: Ahmad Fatoum <a.fatoum@pengutronix.de>
-Link: https://lore.kernel.org/r/20250218-imx8m-clk-v4-6-b7697dc2dcd0@pengutronix.de
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+Important to say the command line argument "spectre_v2_user" overwrites
+the default value in both cases.
+
+When CONFIG_MITIGATION_SPECTRE_V2 is not set, users have the flexibility
+to opt-in for specific mitigations independently. In this scenario,
+setting spectre_v2= will not enable spectre_v2_user=, and command line
+options spectre_v2_user and spectre_v2 are independent when
+CONFIG_MITIGATION_SPECTRE_V2=n.
+
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Reviewed-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+Acked-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: David Kaplan <David.Kaplan@amd.com>
+Link: https://lore.kernel.org/r/20241031-x86_bugs_last_v2-v2-2-b7ff1dab840e@debian.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk-imx8mp.c | 151 +++++++++++++++++++++++++++++++++++
- 1 file changed, 151 insertions(+)
+ Documentation/admin-guide/kernel-parameters.txt |  2 ++
+ arch/x86/kernel/cpu/bugs.c                      | 10 +++++++---
+ 2 files changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/clk/imx/clk-imx8mp.c b/drivers/clk/imx/clk-imx8mp.c
-index 0f9ec5e0f5f81..0541ddfdf1020 100644
---- a/drivers/clk/imx/clk-imx8mp.c
-+++ b/drivers/clk/imx/clk-imx8mp.c
-@@ -8,6 +8,7 @@
- #include <linux/err.h>
- #include <linux/io.h>
- #include <linux/module.h>
-+#include <linux/units.h>
- #include <linux/of_address.h>
- #include <linux/platform_device.h>
- #include <linux/slab.h>
-@@ -405,11 +406,151 @@ static const char * const imx8mp_clkout_sels[] = {"audio_pll1_out", "audio_pll2_
- static struct clk_hw **hws;
- static struct clk_hw_onecell_data *clk_hw_data;
+diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
+index 4bc5d8c97d097..e0670357d23f8 100644
+--- a/Documentation/admin-guide/kernel-parameters.txt
++++ b/Documentation/admin-guide/kernel-parameters.txt
+@@ -5445,6 +5445,8 @@
  
-+struct imx8mp_clock_constraints {
-+	unsigned int clkid;
-+	u32 maxrate;
-+};
-+
-+/*
-+ * Below tables are taken from IMX8MPCEC Rev. 2.1, 07/2023
-+ * Table 13. Maximum frequency of modules.
-+ * Probable typos fixed are marked with a comment.
-+ */
-+static const struct imx8mp_clock_constraints imx8mp_clock_common_constraints[] = {
-+	{ IMX8MP_CLK_A53_DIV,             1000 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_ENET_AXI,             266666667 }, /* Datasheet claims 266MHz */
-+	{ IMX8MP_CLK_NAND_USDHC_BUS,       266666667 }, /* Datasheet claims 266MHz */
-+	{ IMX8MP_CLK_MEDIA_APB,            200 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_HDMI_APB,             133333333 }, /* Datasheet claims 133MHz */
-+	{ IMX8MP_CLK_ML_AXI,               800 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_AHB,                  133333333 },
-+	{ IMX8MP_CLK_IPG_ROOT,              66666667 },
-+	{ IMX8MP_CLK_AUDIO_AHB,            400 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_MEDIA_DISP2_PIX,      170 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_DRAM_ALT,             666666667 },
-+	{ IMX8MP_CLK_DRAM_APB,             200 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_CAN1,                  80 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_CAN2,                  80 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_PCIE_AUX,              10 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_I2C5,                  66666667 }, /* Datasheet claims 66MHz */
-+	{ IMX8MP_CLK_I2C6,                  66666667 }, /* Datasheet claims 66MHz */
-+	{ IMX8MP_CLK_SAI1,                  66666667 }, /* Datasheet claims 66MHz */
-+	{ IMX8MP_CLK_SAI2,                  66666667 }, /* Datasheet claims 66MHz */
-+	{ IMX8MP_CLK_SAI3,                  66666667 }, /* Datasheet claims 66MHz */
-+	{ IMX8MP_CLK_SAI5,                  66666667 }, /* Datasheet claims 66MHz */
-+	{ IMX8MP_CLK_SAI6,                  66666667 }, /* Datasheet claims 66MHz */
-+	{ IMX8MP_CLK_ENET_QOS,             125 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_ENET_QOS_TIMER,       200 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_ENET_REF,             125 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_ENET_TIMER,           125 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_ENET_PHY_REF,         125 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_NAND,                 500 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_QSPI,                 400 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_USDHC1,               400 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_USDHC2,               400 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_I2C1,                  66666667 }, /* Datasheet claims 66MHz */
-+	{ IMX8MP_CLK_I2C2,                  66666667 }, /* Datasheet claims 66MHz */
-+	{ IMX8MP_CLK_I2C3,                  66666667 }, /* Datasheet claims 66MHz */
-+	{ IMX8MP_CLK_I2C4,                  66666667 }, /* Datasheet claims 66MHz */
-+	{ IMX8MP_CLK_UART1,                 80 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_UART2,                 80 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_UART3,                 80 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_UART4,                 80 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_ECSPI1,                80 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_ECSPI2,                80 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_PWM1,                  66666667 }, /* Datasheet claims 66MHz */
-+	{ IMX8MP_CLK_PWM2,                  66666667 }, /* Datasheet claims 66MHz */
-+	{ IMX8MP_CLK_PWM3,                  66666667 }, /* Datasheet claims 66MHz */
-+	{ IMX8MP_CLK_PWM4,                  66666667 }, /* Datasheet claims 66MHz */
-+	{ IMX8MP_CLK_GPT1,                 100 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_GPT2,                 100 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_GPT3,                 100 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_GPT4,                 100 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_GPT5,                 100 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_GPT6,                 100 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_WDOG,                  66666667 }, /* Datasheet claims 66MHz */
-+	{ IMX8MP_CLK_IPP_DO_CLKO1,         200 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_IPP_DO_CLKO2,         200 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_HDMI_REF_266M,        266 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_USDHC3,               400 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_MEDIA_MIPI_PHY1_REF,  300 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_MEDIA_DISP1_PIX,      250 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_MEDIA_CAM2_PIX,       277 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_MEDIA_LDB,            595 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_MEDIA_MIPI_TEST_BYTE, 200 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_ECSPI3,                80 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_PDM,                  200 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_SAI7,                  66666667 }, /* Datasheet claims 66MHz */
-+	{ IMX8MP_CLK_MAIN_AXI,             400 * HZ_PER_MHZ },
-+	{ /* Sentinel */ }
-+};
-+
-+static const struct imx8mp_clock_constraints imx8mp_clock_nominal_constraints[] = {
-+	{ IMX8MP_CLK_M7_CORE,           600 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_ML_CORE,           800 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_GPU3D_CORE,        800 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_GPU3D_SHADER_CORE, 800 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_GPU2D_CORE,        800 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_AUDIO_AXI_SRC,     600 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_HSIO_AXI,          400 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_MEDIA_ISP,         400 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_VPU_BUS,           600 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_MEDIA_AXI,         400 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_HDMI_AXI,          400 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_GPU_AXI,           600 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_GPU_AHB,           300 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_NOC,               800 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_NOC_IO,            600 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_ML_AHB,            300 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_VPU_G1,            600 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_VPU_G2,            500 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_MEDIA_CAM1_PIX,    400 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_VPU_VC8000E,       400 * HZ_PER_MHZ }, /* Datasheet claims 500MHz */
-+	{ IMX8MP_CLK_DRAM_CORE,         800 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_GIC,               400 * HZ_PER_MHZ },
-+	{ /* Sentinel */ }
-+};
-+
-+static const struct imx8mp_clock_constraints imx8mp_clock_overdrive_constraints[] = {
-+	{ IMX8MP_CLK_M7_CORE,            800 * HZ_PER_MHZ},
-+	{ IMX8MP_CLK_ML_CORE,           1000 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_GPU3D_CORE,        1000 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_GPU3D_SHADER_CORE, 1000 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_GPU2D_CORE,        1000 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_AUDIO_AXI_SRC,      800 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_HSIO_AXI,           500 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_MEDIA_ISP,          500 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_VPU_BUS,            800 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_MEDIA_AXI,          500 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_HDMI_AXI,           500 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_GPU_AXI,            800 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_GPU_AHB,            400 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_NOC,               1000 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_NOC_IO,             800 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_ML_AHB,             400 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_VPU_G1,             800 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_VPU_G2,             700 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_MEDIA_CAM1_PIX,     500 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_VPU_VC8000E,        500 * HZ_PER_MHZ }, /* Datasheet claims 400MHz */
-+	{ IMX8MP_CLK_DRAM_CORE,         1000 * HZ_PER_MHZ },
-+	{ IMX8MP_CLK_GIC,                500 * HZ_PER_MHZ },
-+	{ /* Sentinel */ }
-+};
-+
-+static void imx8mp_clocks_apply_constraints(const struct imx8mp_clock_constraints constraints[])
-+{
-+	const struct imx8mp_clock_constraints *constr;
-+
-+	for (constr = constraints; constr->clkid; constr++)
-+		clk_hw_set_rate_range(hws[constr->clkid], 0, constr->maxrate);
-+}
-+
- static int imx8mp_clocks_probe(struct platform_device *pdev)
+ 			Selecting 'on' will also enable the mitigation
+ 			against user space to user space task attacks.
++			Selecting specific mitigation does not force enable
++			user mitigations.
+ 
+ 			Selecting 'off' will disable both the kernel and
+ 			the user space protections.
+diff --git a/arch/x86/kernel/cpu/bugs.c b/arch/x86/kernel/cpu/bugs.c
+index 63af3d73d19e5..30b9292ac58fd 100644
+--- a/arch/x86/kernel/cpu/bugs.c
++++ b/arch/x86/kernel/cpu/bugs.c
+@@ -1382,9 +1382,13 @@ static __ro_after_init enum spectre_v2_mitigation_cmd spectre_v2_cmd;
+ static enum spectre_v2_user_cmd __init
+ spectre_v2_parse_user_cmdline(void)
  {
- 	struct device *dev = &pdev->dev;
- 	struct device_node *np;
- 	void __iomem *anatop_base, *ccm_base;
-+	const char *opmode;
- 	int err;
++	enum spectre_v2_user_cmd mode;
+ 	char arg[20];
+ 	int ret, i;
  
- 	np = of_find_compatible_node(NULL, NULL, "fsl,imx8mp-anatop");
-@@ -720,6 +861,16 @@ static int imx8mp_clocks_probe(struct platform_device *pdev)
- 
- 	imx_check_clk_hws(hws, IMX8MP_CLK_END);
- 
-+	imx8mp_clocks_apply_constraints(imx8mp_clock_common_constraints);
++	mode = IS_ENABLED(CONFIG_MITIGATION_SPECTRE_V2) ?
++		SPECTRE_V2_USER_CMD_AUTO : SPECTRE_V2_USER_CMD_NONE;
 +
-+	err = of_property_read_string(np, "fsl,operating-mode", &opmode);
-+	if (!err) {
-+		if (!strcmp(opmode, "nominal"))
-+			imx8mp_clocks_apply_constraints(imx8mp_clock_nominal_constraints);
-+		else if (!strcmp(opmode, "overdrive"))
-+			imx8mp_clocks_apply_constraints(imx8mp_clock_overdrive_constraints);
-+	}
-+
- 	err = of_clk_add_hw_provider(np, of_clk_hw_onecell_get, clk_hw_data);
- 	if (err < 0) {
- 		dev_err(dev, "failed to register hws for i.MX8MP\n");
+ 	switch (spectre_v2_cmd) {
+ 	case SPECTRE_V2_CMD_NONE:
+ 		return SPECTRE_V2_USER_CMD_NONE;
+@@ -1397,7 +1401,7 @@ spectre_v2_parse_user_cmdline(void)
+ 	ret = cmdline_find_option(boot_command_line, "spectre_v2_user",
+ 				  arg, sizeof(arg));
+ 	if (ret < 0)
+-		return SPECTRE_V2_USER_CMD_AUTO;
++		return mode;
+ 
+ 	for (i = 0; i < ARRAY_SIZE(v2_user_options); i++) {
+ 		if (match_option(arg, ret, v2_user_options[i].option)) {
+@@ -1407,8 +1411,8 @@ spectre_v2_parse_user_cmdline(void)
+ 		}
+ 	}
+ 
+-	pr_err("Unknown user space protection option (%s). Switching to AUTO select\n", arg);
+-	return SPECTRE_V2_USER_CMD_AUTO;
++	pr_err("Unknown user space protection option (%s). Switching to default\n", arg);
++	return mode;
+ }
+ 
+ static inline bool spectre_v2_in_eibrs_mode(enum spectre_v2_mitigation mode)
 -- 
 2.39.5
 
