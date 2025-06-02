@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5D5020F07C;
-	Mon,  2 Jun 2025 14:05:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D0F320F07C;
+	Mon,  2 Jun 2025 14:05:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748873130; cv=none; b=fBXECMAX9qMJjTPziv8/VWYOOioJdt9gujHKa7hNhhBKK3Qsu5uObmWC3VVpsv0WBZcn8rRVk+ntRWay0JxitXM/Fw6r+ITmUF5REJ+uWufBhzvRmw5An3hxxIMv5J5Zrvpo32z4qG7AkXn1nfmUSdEiMMCMjDIU5qN/TMJ9wnw=
+	t=1748873134; cv=none; b=Z+Hz4ueQF2dZpCn34k8Ph4PtCZTNj/8EOF6aJIkM6hiX899Z4uxw5zWpZV/jFFEscaS5qPgIpF3PrcyVkIzRZ+Ok09lOSk4rkMuJAshxqmL9YaxsgFdjvqAid8pe9i/YrkOUGL5FZ9k2OY7+ivbSV10XXHTfv6bKgue5vPLbbaA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748873130; c=relaxed/simple;
-	bh=SJk6rd5+Ka5zPJ5WL2fv6GffL5OlbnghdSzjtePg1O4=;
+	s=arc-20240116; t=1748873134; c=relaxed/simple;
+	bh=A6n1IRx97fYxNFoCyEkHcBhcADRLemk6tI4arEFNG+c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BhxnOTmQkOKosq57xRlujxfZls0PN5VB0LunPf0zlZGSyg8xEw9Qfk3fbBdJYkMFdEvJVms6RkMlIpgSWKTsobyyDIPwtDZ8XbOHiaSB9dZtft1lFBfQr1ll1jJ/IEJLKPEpppqYApAH5znfB3DNes3toOMrDmspoNR8Ag02Xq4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a5YrCnol; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qmcnL4r2P06k97PEz9Rhbdk42tVcGQwwAUdsOgVfdkuKyEokXf7PcmC07fWLW1LHEoz4GAlqUewGYvKP/Qc3IEJcFL8Z98U3QF6syUBhOWC+D+xKt3UI6l0La0SnSWAae3sWqVzaGbKFsyXIVsxhosD20yi93oLEuqtOxoK342I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pa3G7Uxl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a5YrCnol"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4353DC4CEEB;
-	Mon,  2 Jun 2025 14:05:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pa3G7Uxl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86A21C4CEEB;
+	Mon,  2 Jun 2025 14:05:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748873130;
-	bh=SJk6rd5+Ka5zPJ5WL2fv6GffL5OlbnghdSzjtePg1O4=;
+	s=korg; t=1748873133;
+	bh=A6n1IRx97fYxNFoCyEkHcBhcADRLemk6tI4arEFNG+c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a5YrCnolBbvM76Q0FCr/1B7oucFRp0I0RSSd45M7V1MlPBfyjK4ddVTQApj9KK2jr
-	 vooLkzjLiAVqiMJQcw0/i6FVww0QBotkuWWQUfp8vUsH4KPBRrx+I0QjtYnlC7k1n4
-	 X5YRtMVcJ4PIUHwpz2fpfq6b3SMUAm1UnTVR0hCE=
+	b=Pa3G7UxljM1WNN55NRnK9B+S/aL4ZTLEf00Qo6PKjJhFc7k9X6LpWim0IqnMV7luN
+	 H3B5r5dTsKpRP7X6rYDrFNrF1oPggl3HiIuvqCsj5kwmb3dnxh4VPW8e91g4Tm7BzW
+	 Z8XNCBiMTpzcFwmX+WpUY0HtxYsGjLfnmUl4n614=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 017/444] nvmem: qfprom: switch to 4-byte aligned reads
-Date: Mon,  2 Jun 2025 15:41:21 +0200
-Message-ID: <20250602134341.609868986@linuxfoundation.org>
+Subject: [PATCH 6.6 008/444] phy: renesas: rcar-gen3-usb2: Add support to initialize the bus
+Date: Mon,  2 Jun 2025 15:41:12 +0200
+Message-ID: <20250602134341.249566530@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -51,82 +51,154 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 
-[ Upstream commit 3566a737db87a9bf360c2fd36433c5149f805f2e ]
+[ Upstream commit 4eae16375357a2a7e8501be5469532f7636064b3 ]
 
-All platforms since Snapdragon 8 Gen1 (SM8450) require using 4-byte
-reads to access QFPROM data. While older platforms were more than happy
-with 1-byte reads, change the qfprom driver to use 4-byte reads for all
-the platforms. Specify stride and word size of 4 bytes. To retain
-compatibility with the existing DT and to simplify porting data from
-vendor kernels, use fixup_dt_cell_info in order to bump alignment
-requirements.
+The Renesas RZ/G3S need to initialize the USB BUS before transferring data
+due to hardware limitation. As the register that need to be touched for
+this is in the address space of the USB PHY, and the UBS PHY need to be
+initialized before any other USB drivers handling data transfer, add
+support to initialize the USB BUS.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Link: https://lore.kernel.org/r/20250411112251.68002-12-srinivas.kandagatla@linaro.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+As the USB PHY is probed before any other USB drivers that enables
+clocks and de-assert the reset signals and the BUS initialization is done
+in the probe phase, we need to add code to de-assert reset signal and
+runtime resume the device (which enables its clocks) before accessing
+the registers.
+
+As the reset signals are not required by the USB PHY driver for the other
+USB PHY hardware variants, the reset signals and runtime PM was handled
+only in the function that initialize the USB BUS.
+
+The PHY initialization was done right after runtime PM enable to have
+all in place when the PHYs are registered.
+
+Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Link: https://lore.kernel.org/r/20240822152801.602318-11-claudiu.beznea.uj@bp.renesas.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Stable-dep-of: 9ce71e85b29e ("phy: renesas: rcar-gen3-usb2: Assert PLL reset on PHY power off")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvmem/qfprom.c | 26 ++++++++++++++++++++------
- 1 file changed, 20 insertions(+), 6 deletions(-)
+ drivers/phy/renesas/phy-rcar-gen3-usb2.c | 50 ++++++++++++++++++++++--
+ 1 file changed, 47 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/nvmem/qfprom.c b/drivers/nvmem/qfprom.c
-index 6c554040c6e67..7b0621fdbc82e 100644
---- a/drivers/nvmem/qfprom.c
-+++ b/drivers/nvmem/qfprom.c
-@@ -321,19 +321,32 @@ static int qfprom_reg_read(void *context,
- 			unsigned int reg, void *_val, size_t bytes)
- {
- 	struct qfprom_priv *priv = context;
--	u8 *val = _val;
--	int i = 0, words = bytes;
-+	u32 *val = _val;
- 	void __iomem *base = priv->qfpcorrected;
-+	int words = DIV_ROUND_UP(bytes, sizeof(u32));
-+	int i;
+diff --git a/drivers/phy/renesas/phy-rcar-gen3-usb2.c b/drivers/phy/renesas/phy-rcar-gen3-usb2.c
+index aa578be2bcb6d..d2bbf6c6ed5e0 100644
+--- a/drivers/phy/renesas/phy-rcar-gen3-usb2.c
++++ b/drivers/phy/renesas/phy-rcar-gen3-usb2.c
+@@ -19,12 +19,14 @@
+ #include <linux/platform_device.h>
+ #include <linux/pm_runtime.h>
+ #include <linux/regulator/consumer.h>
++#include <linux/reset.h>
+ #include <linux/string.h>
+ #include <linux/usb/of.h>
+ #include <linux/workqueue.h>
  
- 	if (read_raw_data && priv->qfpraw)
- 		base = priv->qfpraw;
+ /******* USB2.0 Host registers (original offset is +0x200) *******/
+ #define USB2_INT_ENABLE		0x000
++#define USB2_AHB_BUS_CTR	0x008
+ #define USB2_USBCTR		0x00c
+ #define USB2_SPD_RSM_TIMSET	0x10c
+ #define USB2_OC_TIMSET		0x110
+@@ -40,6 +42,10 @@
+ #define USB2_INT_ENABLE_USBH_INTB_EN	BIT(2)	/* For EHCI */
+ #define USB2_INT_ENABLE_USBH_INTA_EN	BIT(1)	/* For OHCI */
  
--	while (words--)
--		*val++ = readb(base + reg + i++);
-+	for (i = 0; i < words; i++)
-+		*val++ = readl(base + reg + i * sizeof(u32));
++/* AHB_BUS_CTR */
++#define USB2_AHB_BUS_CTR_MBL_MASK	GENMASK(1, 0)
++#define USB2_AHB_BUS_CTR_MBL_INCR4	2
++
+ /* USBCTR */
+ #define USB2_USBCTR_DIRPD	BIT(2)
+ #define USB2_USBCTR_PLL_RST	BIT(1)
+@@ -110,6 +116,7 @@ struct rcar_gen3_chan {
+ 	struct extcon_dev *extcon;
+ 	struct rcar_gen3_phy rphys[NUM_OF_PHYS];
+ 	struct regulator *vbus;
++	struct reset_control *rstc;
+ 	struct work_struct work;
+ 	struct mutex lock;	/* protects rphys[...].powered */
+ 	enum usb_dr_mode dr_mode;
+@@ -124,6 +131,7 @@ struct rcar_gen3_chan {
+ struct rcar_gen3_phy_drv_data {
+ 	const struct phy_ops *phy_usb2_ops;
+ 	bool no_adp_ctrl;
++	bool init_bus;
+ };
  
- 	return 0;
+ /*
+@@ -645,6 +653,35 @@ static enum usb_dr_mode rcar_gen3_get_dr_mode(struct device_node *np)
+ 	return candidate;
  }
  
-+/* Align reads to word boundary */
-+static void qfprom_fixup_dt_cell_info(struct nvmem_device *nvmem,
-+				      struct nvmem_cell_info *cell)
++static int rcar_gen3_phy_usb2_init_bus(struct rcar_gen3_chan *channel)
 +{
-+	unsigned int byte_offset = cell->offset % sizeof(u32);
++	struct device *dev = channel->dev;
++	int ret;
++	u32 val;
 +
-+	cell->bit_offset += byte_offset * BITS_PER_BYTE;
-+	cell->offset -= byte_offset;
-+	if (byte_offset && !cell->nbits)
-+		cell->nbits = cell->bytes * BITS_PER_BYTE;
++	channel->rstc = devm_reset_control_array_get_shared(dev);
++	if (IS_ERR(channel->rstc))
++		return PTR_ERR(channel->rstc);
++
++	ret = pm_runtime_resume_and_get(dev);
++	if (ret)
++		return ret;
++
++	ret = reset_control_deassert(channel->rstc);
++	if (ret)
++		goto rpm_put;
++
++	val = readl(channel->base + USB2_AHB_BUS_CTR);
++	val &= ~USB2_AHB_BUS_CTR_MBL_MASK;
++	val |= USB2_AHB_BUS_CTR_MBL_INCR4;
++	writel(val, channel->base + USB2_AHB_BUS_CTR);
++
++rpm_put:
++	pm_runtime_put(dev);
++
++	return ret;
 +}
 +
- static void qfprom_runtime_disable(void *data)
+ static int rcar_gen3_phy_usb2_probe(struct platform_device *pdev)
  {
- 	pm_runtime_disable(data);
-@@ -358,10 +371,11 @@ static int qfprom_probe(struct platform_device *pdev)
- 	struct nvmem_config econfig = {
- 		.name = "qfprom",
- 		.add_legacy_fixed_of_cells = true,
--		.stride = 1,
--		.word_size = 1,
-+		.stride = 4,
-+		.word_size = 4,
- 		.id = NVMEM_DEVID_AUTO,
- 		.reg_read = qfprom_reg_read,
-+		.fixup_dt_cell_info = qfprom_fixup_dt_cell_info,
- 	};
- 	struct device *dev = &pdev->dev;
- 	struct resource *res;
+ 	const struct rcar_gen3_phy_drv_data *phy_data;
+@@ -698,6 +735,15 @@ static int rcar_gen3_phy_usb2_probe(struct platform_device *pdev)
+ 		goto error;
+ 	}
+ 
++	platform_set_drvdata(pdev, channel);
++	channel->dev = dev;
++
++	if (phy_data->init_bus) {
++		ret = rcar_gen3_phy_usb2_init_bus(channel);
++		if (ret)
++			goto error;
++	}
++
+ 	channel->soc_no_adp_ctrl = phy_data->no_adp_ctrl;
+ 	if (phy_data->no_adp_ctrl)
+ 		channel->obint_enable_bits = USB2_OBINT_IDCHG_EN;
+@@ -725,9 +771,6 @@ static int rcar_gen3_phy_usb2_probe(struct platform_device *pdev)
+ 		channel->vbus = NULL;
+ 	}
+ 
+-	platform_set_drvdata(pdev, channel);
+-	channel->dev = dev;
+-
+ 	provider = devm_of_phy_provider_register(dev, rcar_gen3_phy_usb2_xlate);
+ 	if (IS_ERR(provider)) {
+ 		dev_err(dev, "Failed to register PHY provider\n");
+@@ -754,6 +797,7 @@ static void rcar_gen3_phy_usb2_remove(struct platform_device *pdev)
+ 	if (channel->is_otg_channel)
+ 		device_remove_file(&pdev->dev, &dev_attr_role);
+ 
++	reset_control_assert(channel->rstc);
+ 	pm_runtime_disable(&pdev->dev);
+ };
+ 
 -- 
 2.39.5
 
