@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B6ED290F;
-	Mon,  2 Jun 2025 14:47:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD4841FCFE2;
+	Mon,  2 Jun 2025 14:47:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748875642; cv=none; b=pMPMWJbtwGvWozh1PBmRu3zyJKg/bt2b7WGUIf0rF22qc4yYoPgzOwW06isEidBXdS27gqjCmrDLT0KFEcbJqzWx5HBvXisCRHVCKYUfUPu5vVVrc3LT8Umq0uY3FWQtCcOsU1yl+VeyoLqm12ZzbrTxb3Ul8wKFftj1aGN6MGQ=
+	t=1748875645; cv=none; b=Vi46gebL8il13QXbITbioojfHcObzlC7MUlHjmLzIcgvo3gwxps3i1wvhMFNDaFWl3n9pcgQrr9hlCx4o6aZsvdVK6n7PQjX4OLrdBhbeASotvv4Hs7dkMImzIMYTjV2EHYcqfiMdfYEPaP1CBr+PKjlBVWC0tMxOuoOW3QJR+M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748875642; c=relaxed/simple;
-	bh=Euvd478mm3Tkf9BbheQb2xWg96raW8k6YnsH4yciIIc=;
+	s=arc-20240116; t=1748875645; c=relaxed/simple;
+	bh=J7+Y5UANdBr0LHZbpbXILo3MBpBgf5bghlav54EqwLo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qu0uh41Ubd3V5OwXuNz06kvG7gBrzspeo/wVBv9UddWEQWroqFCtL490I2qnAKPygJYIOLdYnyl8DS7Ap7xtxMSucrQrEgxAIRLlJICikCXUsfy0bye/dTp4L6GUOwmrd54Gwd6t/G9JyQjMeaT0d40VezOlc6iL3Rc6YUCYwuc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tDucxkeS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Fg8y0z0VBU4ftgZb/fCiOJgnQ/ZWVtypiSXjfDu0CRRnerDf2tHSgjjA6myINlySPdlaIN8FtNt3uJvjurJQI48isX0Hfe35uem/zZWYatxNwguDQnV7E9cz+50ybP1oBqKnI59uUnJuvH4vyLqi/AcRod85rJP+MEmcr42ue5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ePcgGc/y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tDucxkeS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE7CEC4CEEB;
-	Mon,  2 Jun 2025 14:47:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ePcgGc/y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DE4BC4CEEB;
+	Mon,  2 Jun 2025 14:47:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748875642;
-	bh=Euvd478mm3Tkf9BbheQb2xWg96raW8k6YnsH4yciIIc=;
+	s=korg; t=1748875645;
+	bh=J7+Y5UANdBr0LHZbpbXILo3MBpBgf5bghlav54EqwLo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tDucxkeSxHD15xs/mTM/JPrSIoGelFiAY8+XqquSHAtNgZ4d6FaNPv0oGynmYsZ69
-	 TftEjZdSDlNCNYx/WghiTnWVHxzjJgJlXiOTXST+y0tNCziY2gcXg3sfAiZFE3UltN
-	 FiAgZi+VrbHEcsxr2q5TAzgoY+DEVhacfHLJ7lQ8=
+	b=ePcgGc/yL7MXxx2s9xGLpuIP8Z6ELdJx+i3JRgrPdGLaMTI1OvROIURdtP0yv5bLC
+	 2gIV/COoN6r4ouhYaiAKzZfbCahZWGNRHewICjrYWuE+FRROx3CbLFFXq/AF6H/RUa
+	 OpIFk6Vj3Q4Pvwo4MbCVBrv9E8aZxfOAm+/pbKTk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Stefan Schmidt <stefan@datenfreihafen.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Jason Baron <jbaron@akamai.com>,
+	Tony Luck <tony.luck@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 158/270] ieee802154: ca8210: Use proper setters and getters for bitwise types
-Date: Mon,  2 Jun 2025 15:47:23 +0200
-Message-ID: <20250602134313.672138266@linuxfoundation.org>
+Subject: [PATCH 5.10 192/270] EDAC/ie31200: work around false positive build warning
+Date: Mon,  2 Jun 2025 15:47:57 +0200
+Message-ID: <20250602134315.050939708@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134307.195171844@linuxfoundation.org>
 References: <20250602134307.195171844@linuxfoundation.org>
@@ -53,75 +52,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 169b2262205836a5d1213ff44dca2962276bece1 ]
+[ Upstream commit c29dfd661fe2f8d1b48c7f00590929c04b25bf40 ]
 
-Sparse complains that the driver doesn't respect the bitwise types:
+gcc-14 produces a bogus warning in some configurations:
 
-drivers/net/ieee802154/ca8210.c:1796:27: warning: incorrect type in assignment (different base types)
-drivers/net/ieee802154/ca8210.c:1796:27:    expected restricted __le16 [addressable] [assigned] [usertype] pan_id
-drivers/net/ieee802154/ca8210.c:1796:27:    got unsigned short [usertype]
-drivers/net/ieee802154/ca8210.c:1801:25: warning: incorrect type in assignment (different base types)
-drivers/net/ieee802154/ca8210.c:1801:25:    expected restricted __le16 [addressable] [assigned] [usertype] pan_id
-drivers/net/ieee802154/ca8210.c:1801:25:    got unsigned short [usertype]
-drivers/net/ieee802154/ca8210.c:1928:28: warning: incorrect type in argument 3 (different base types)
-drivers/net/ieee802154/ca8210.c:1928:28:    expected unsigned short [usertype] dst_pan_id
-drivers/net/ieee802154/ca8210.c:1928:28:    got restricted __le16 [addressable] [usertype] pan_id
+drivers/edac/ie31200_edac.c: In function 'ie31200_probe1.isra':
+drivers/edac/ie31200_edac.c:412:26: error: 'dimm_info' is used uninitialized [-Werror=uninitialized]
+  412 |         struct dimm_data dimm_info[IE31200_CHANNELS][IE31200_DIMMS_PER_CHANNEL];
+      |                          ^~~~~~~~~
+drivers/edac/ie31200_edac.c:412:26: note: 'dimm_info' declared here
+  412 |         struct dimm_data dimm_info[IE31200_CHANNELS][IE31200_DIMMS_PER_CHANNEL];
+      |                          ^~~~~~~~~
 
-Use proper setters and getters for bitwise types.
+I don't see any way the unintialized access could really happen here,
+but I can see why the compiler gets confused by the two loops.
 
-Note, in accordance with [1] the protocol is little endian.
+Instead, rework the two nested loops to only read the addr_decode
+registers and then keep only one instance of the dimm info structure.
 
-Link: https://www.cascoda.com/wp-content/uploads/2018/11/CA-8210_datasheet_0418.pdf [1]
-Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/20250305105656.2133487-2-andriy.shevchenko@linux.intel.com
-Signed-off-by: Stefan Schmidt <stefan@datenfreihafen.org>
+[Tony: Qiuxu pointed out that the "populate DIMM info" comment was left
+behind in the refactor and suggested moving it. I deleted the comment
+as unnecessry in front os a call to populate_dimm_info(). That seems
+pretty self-describing.]
+
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Acked-by: Jason Baron <jbaron@akamai.com>
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+Link: https://lore.kernel.org/all/20250122065031.1321015-1-arnd@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ieee802154/ca8210.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ drivers/edac/ie31200_edac.c | 28 +++++++++++++---------------
+ 1 file changed, 13 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/net/ieee802154/ca8210.c b/drivers/net/ieee802154/ca8210.c
-index 9a082910ec59f..35e2b7eb30761 100644
---- a/drivers/net/ieee802154/ca8210.c
-+++ b/drivers/net/ieee802154/ca8210.c
-@@ -1488,8 +1488,7 @@ static u8 mcps_data_request(
- 	command.pdata.data_req.src_addr_mode = src_addr_mode;
- 	command.pdata.data_req.dst.mode = dst_address_mode;
- 	if (dst_address_mode != MAC_MODE_NO_ADDR) {
--		command.pdata.data_req.dst.pan_id[0] = LS_BYTE(dst_pan_id);
--		command.pdata.data_req.dst.pan_id[1] = MS_BYTE(dst_pan_id);
-+		put_unaligned_le16(dst_pan_id, command.pdata.data_req.dst.pan_id);
- 		if (dst_address_mode == MAC_MODE_SHORT_ADDR) {
- 			command.pdata.data_req.dst.address[0] = LS_BYTE(
- 				dst_addr->short_address
-@@ -1838,12 +1837,12 @@ static int ca8210_skb_rx(
- 	}
- 	hdr.source.mode = data_ind[0];
- 	dev_dbg(&priv->spi->dev, "srcAddrMode: %#03x\n", hdr.source.mode);
--	hdr.source.pan_id = *(u16 *)&data_ind[1];
-+	hdr.source.pan_id = cpu_to_le16(get_unaligned_le16(&data_ind[1]));
- 	dev_dbg(&priv->spi->dev, "srcPanId: %#06x\n", hdr.source.pan_id);
- 	memcpy(&hdr.source.extended_addr, &data_ind[3], 8);
- 	hdr.dest.mode = data_ind[11];
- 	dev_dbg(&priv->spi->dev, "dstAddrMode: %#03x\n", hdr.dest.mode);
--	hdr.dest.pan_id = *(u16 *)&data_ind[12];
-+	hdr.dest.pan_id = cpu_to_le16(get_unaligned_le16(&data_ind[12]));
- 	dev_dbg(&priv->spi->dev, "dstPanId: %#06x\n", hdr.dest.pan_id);
- 	memcpy(&hdr.dest.extended_addr, &data_ind[14], 8);
+diff --git a/drivers/edac/ie31200_edac.c b/drivers/edac/ie31200_edac.c
+index cad20e87783b5..79a6612bd01e4 100644
+--- a/drivers/edac/ie31200_edac.c
++++ b/drivers/edac/ie31200_edac.c
+@@ -398,10 +398,9 @@ static int ie31200_probe1(struct pci_dev *pdev, int dev_idx)
+ 	int i, j, ret;
+ 	struct mem_ctl_info *mci = NULL;
+ 	struct edac_mc_layer layers[2];
+-	struct dimm_data dimm_info[IE31200_CHANNELS][IE31200_DIMMS_PER_CHANNEL];
+ 	void __iomem *window;
+ 	struct ie31200_priv *priv;
+-	u32 addr_decode, mad_offset;
++	u32 addr_decode[IE31200_CHANNELS], mad_offset;
  
-@@ -1970,7 +1969,7 @@ static int ca8210_skb_tx(
- 	status =  mcps_data_request(
- 		header.source.mode,
- 		header.dest.mode,
--		header.dest.pan_id,
-+		le16_to_cpu(header.dest.pan_id),
- 		(union macaddr *)&header.dest.extended_addr,
- 		skb->len - mac_len,
- 		&skb->data[mac_len],
+ 	/*
+ 	 * Kaby Lake, Coffee Lake seem to work like Skylake. Please re-visit
+@@ -459,19 +458,10 @@ static int ie31200_probe1(struct pci_dev *pdev, int dev_idx)
+ 		mad_offset = IE31200_MAD_DIMM_0_OFFSET;
+ 	}
+ 
+-	/* populate DIMM info */
+ 	for (i = 0; i < IE31200_CHANNELS; i++) {
+-		addr_decode = readl(window + mad_offset +
++		addr_decode[i] = readl(window + mad_offset +
+ 					(i * 4));
+-		edac_dbg(0, "addr_decode: 0x%x\n", addr_decode);
+-		for (j = 0; j < IE31200_DIMMS_PER_CHANNEL; j++) {
+-			populate_dimm_info(&dimm_info[i][j], addr_decode, j,
+-					   skl);
+-			edac_dbg(0, "size: 0x%x, rank: %d, width: %d\n",
+-				 dimm_info[i][j].size,
+-				 dimm_info[i][j].dual_rank,
+-				 dimm_info[i][j].x16_width);
+-		}
++		edac_dbg(0, "addr_decode: 0x%x\n", addr_decode[i]);
+ 	}
+ 
+ 	/*
+@@ -482,14 +472,22 @@ static int ie31200_probe1(struct pci_dev *pdev, int dev_idx)
+ 	 */
+ 	for (i = 0; i < IE31200_DIMMS_PER_CHANNEL; i++) {
+ 		for (j = 0; j < IE31200_CHANNELS; j++) {
++			struct dimm_data dimm_info;
+ 			struct dimm_info *dimm;
+ 			unsigned long nr_pages;
+ 
+-			nr_pages = IE31200_PAGES(dimm_info[j][i].size, skl);
++			populate_dimm_info(&dimm_info, addr_decode[j], i,
++					   skl);
++			edac_dbg(0, "size: 0x%x, rank: %d, width: %d\n",
++				 dimm_info.size,
++				 dimm_info.dual_rank,
++				 dimm_info.x16_width);
++
++			nr_pages = IE31200_PAGES(dimm_info.size, skl);
+ 			if (nr_pages == 0)
+ 				continue;
+ 
+-			if (dimm_info[j][i].dual_rank) {
++			if (dimm_info.dual_rank) {
+ 				nr_pages = nr_pages / 2;
+ 				dimm = edac_get_dimm(mci, (i * 2) + 1, j, 0);
+ 				dimm->nr_pages = nr_pages;
 -- 
 2.39.5
 
