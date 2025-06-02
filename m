@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9B1E1FF61E;
-	Mon,  2 Jun 2025 15:11:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 599D71FF61E;
+	Mon,  2 Jun 2025 15:11:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748877081; cv=none; b=GCoYCpHk/SjYbCobBAfJdFnQLtGXtT3Ytx5Z5pdbgDQofOIS29JZtt7pruFuhqLsufkfKy0vPUldoTMrV7oCIOiRsVXMwf/aTSUPfqY5EgPqT/pltBqlvzScmpfVkCcHUsq8grt41KRQx7jy/DYo1YL9kVhWYSXWUGmGIfWOq+Y=
+	t=1748877083; cv=none; b=Afm+hQJRqbH/DVAyUyEMBvTsNfUw1f2b3yyKRQj3CjK3SuPB9NVNuqKeX+ZF4YdZR7HrxKLXv77o/E6WdWOE5dmzRAArGqSlNj+ASJk7eZ6FHMow0H0U4oO11iEUqAppygnfFfdipj6ii7ZwuhuoFod2OlICWve7K18ljx4GnbM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748877081; c=relaxed/simple;
-	bh=umh8fiGDM5LuWbVmJUuEpdiSOCNAgEcDIrulbUmeI5g=;
+	s=arc-20240116; t=1748877083; c=relaxed/simple;
+	bh=itp0YnXLY1S7z/yIBJorG92Xf2SbQ29Mj52TucBaDNU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GThQDdU4PSYK0gLpxXTErdZ80hm8//do84wq6NOLZtnNJtYQ7twtN3qvjQOujwdVfQLqj168CJvF1pj+Ohyy1CDjrcDLcSG8VjxkfjS6LikmSnaxEY7yIidBP7rZwBJs0maPKLKNIj98GHL1f9V/J2ghTd44XLpfhX3WZlapG5s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JcqkiKjp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bvxs/3/5+F/L0cjKqDALrnvyd96IVRALJOiR28VY0yIXGxTZyrvuBCs4pNWzsPynAL9L+wn5/Ubsq1dur6OU32ShQcAg//6ZPvFmAiax2AhdqNvuj5pwzDeZ3u3vmtULc0krlWgHXhI4E3ohTsoESkeB3tJU9KFtDCrJq9SQCpA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c6EIRHaP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JcqkiKjp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9669C4CEEB;
-	Mon,  2 Jun 2025 15:11:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c6EIRHaP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4630C4CEEB;
+	Mon,  2 Jun 2025 15:11:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748877080;
-	bh=umh8fiGDM5LuWbVmJUuEpdiSOCNAgEcDIrulbUmeI5g=;
+	s=korg; t=1748877083;
+	bh=itp0YnXLY1S7z/yIBJorG92Xf2SbQ29Mj52TucBaDNU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JcqkiKjpGXg3qDbbUm2i62O4dMfnLkyVT+M0AJ8vlW/9oIpypapngF9Cab1mek5lT
-	 ZqRxnYarwQQqXwkMyefjpPCj9uWBznM9HT3aLJrbPYhKk6l3ulmKl/RpmPul9BnKnY
-	 VNddego5REbJsgzrrrwlbKB5sZJQOJ9qh/zQb4Mo=
+	b=c6EIRHaPC/nh7Dcxgo70cRfN4MAJpiuO3mITpzaOi8uc1X+LaWxvfprPHYB8IOCUt
+	 D3MnkUjKJQTWAQ+UZBJCPPJwRfYUdFuqS6Zq+sv3VDJAuKQgZ3VBIGtFQJOtosqJgv
+	 qOXQDQVub/zh1+x5rWUHqtok0M6ZWPP04qZH2XJE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Mateusz Polchlopek <mateusz.polchlopek@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 165/325] net/mlx5: Modify LSB bitmask in temperature event to include only the first bit
-Date: Mon,  2 Jun 2025 15:47:21 +0200
-Message-ID: <20250602134326.500076375@linuxfoundation.org>
+Subject: [PATCH 6.1 166/325] net/mlx5: Apply rate-limiting to high temperature warning
+Date: Mon,  2 Jun 2025 15:47:22 +0200
+Message-ID: <20250602134326.544236574@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134319.723650984@linuxfoundation.org>
 References: <20250602134319.723650984@linuxfoundation.org>
@@ -55,41 +55,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Shahar Shitrit <shshitrit@nvidia.com>
 
-[ Upstream commit 633f16d7e07c129a36b882c05379e01ce5bdb542 ]
+[ Upstream commit 9dd3d5d258aceb37bdf09c8b91fa448f58ea81f0 ]
 
-In the sensor_count field of the MTEWE register, bits 1-62 are
-supported only for unmanaged switches, not for NICs, and bit 63
-is reserved for internal use.
-
-To prevent confusing output that may include set bits that are
-not relevant to NIC sensors, we update the bitmask to retain only
-the first bit, which corresponds to the sensor ASIC.
+Wrap the high temperature warning in a temperature event with
+a call to net_ratelimit() to prevent flooding the kernel log
+with repeated warning messages when temperature exceeds the
+threshold multiple times within a short duration.
 
 Signed-off-by: Shahar Shitrit <shshitrit@nvidia.com>
 Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
 Reviewed-by: Mateusz Polchlopek <mateusz.polchlopek@intel.com>
-Link: https://patch.msgid.link/20250213094641.226501-4-tariqt@nvidia.com
+Link: https://patch.msgid.link/20250213094641.226501-2-tariqt@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/events.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/ethernet/mellanox/mlx5/core/events.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/net/ethernet/mellanox/mlx5/core/events.c b/drivers/net/ethernet/mellanox/mlx5/core/events.c
-index 9459e56ee90a6..68b92927c74e9 100644
+index 68b92927c74e9..6aa96d33c210b 100644
 --- a/drivers/net/ethernet/mellanox/mlx5/core/events.c
 +++ b/drivers/net/ethernet/mellanox/mlx5/core/events.c
-@@ -163,6 +163,10 @@ static int temp_warn(struct notifier_block *nb, unsigned long type, void *data)
- 	u64 value_msb;
- 
- 	value_lsb = be64_to_cpu(eqe->data.temp_warning.sensor_warning_lsb);
-+	/* bit 1-63 are not supported for NICs,
-+	 * hence read only bit 0 (asic) from lsb.
-+	 */
-+	value_lsb &= 0x1;
+@@ -169,9 +169,10 @@ static int temp_warn(struct notifier_block *nb, unsigned long type, void *data)
+ 	value_lsb &= 0x1;
  	value_msb = be64_to_cpu(eqe->data.temp_warning.sensor_warning_msb);
  
- 	mlx5_core_warn(events->dev,
+-	mlx5_core_warn(events->dev,
+-		       "High temperature on sensors with bit set %llx %llx",
+-		       value_msb, value_lsb);
++	if (net_ratelimit())
++		mlx5_core_warn(events->dev,
++			       "High temperature on sensors with bit set %llx %llx",
++			       value_msb, value_lsb);
+ 
+ 	return NOTIFY_OK;
+ }
 -- 
 2.39.5
 
