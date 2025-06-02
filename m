@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D723227BB5;
-	Mon,  2 Jun 2025 15:18:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5566222D4E9;
+	Mon,  2 Jun 2025 15:19:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748877537; cv=none; b=Ss9W5zQ+bjrx7YK9nn2h8ZLoSc3kZtgw22Q3DqnV91QNfcDjDQQgxIMyZybuEeE7mX1bPoUu6xw7eR44p4UePZozrKzUiA0wyzQTitttn7UDe3PvdHYYCBsUXivTPwDjF4PU3hEw1hygMx6+pC9Gqt0LAf1Egqbq12nAaRkrOr4=
+	t=1748877541; cv=none; b=ZofVZYTqKY5PSYRM6RzurT4+g0URVjqG7D+ppFgFouxvhvy/nDXACYYMGJ+pf8Bmnov8elU2dUrToMp9GE+gVBjKE6o4lGf7JY19J985cGmUPw2J3cv+eYANzPsoU2zwGUWUn4wzQJECX8Sh41VF4qsY4zq50YMvJy3QFucArwI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748877537; c=relaxed/simple;
-	bh=vrtQYds9l1Xxgd7YOz+RrEcDYshdXQvbJB99+8inj4Y=;
+	s=arc-20240116; t=1748877541; c=relaxed/simple;
+	bh=FAa3JnQAl7HTHGA20oqhpZxElEUPKJRE6tYXp+9RaPo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=plMiKrqf5MiuRDQqCh22X8AXXpXTDozvqkIkgxPcEZHGwt6Lh0sANR6s5n/4kjTU7q+p0rQdLEDuEADhVClXTSJkqvnak8y7JaSNlhgIe01pQlM4Sty6AaLFMdr2ajRUA7mv5WvFLfzLNy9Sha4iTsFDpZTJsyPqPr4XqiKQBgg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0wvhxkLT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lPQeFK1cpwldJtcV74tuPlqkBUZcn6Ly36Z+QGb2vK7stDihNeoZTj2nUnxXot898ttw8MQ/ORszRQCm6Oa2a6VTGsCqzeIpE7CSg/aHnUZKpfkf3rWANIi8nugUlCjNRnogtdZtQ/AVKIbzMBZRyeJAj7cDnaMQuUmeK8Lpj7A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qPuQkGXK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0wvhxkLT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF490C4CEF0;
-	Mon,  2 Jun 2025 15:18:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qPuQkGXK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48672C4CEEB;
+	Mon,  2 Jun 2025 15:19:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748877537;
-	bh=vrtQYds9l1Xxgd7YOz+RrEcDYshdXQvbJB99+8inj4Y=;
+	s=korg; t=1748877540;
+	bh=FAa3JnQAl7HTHGA20oqhpZxElEUPKJRE6tYXp+9RaPo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0wvhxkLTmXRImCljmpVcywooMaW2KC6iLoS7m3Re0dbl0Xi56DjoQbJPgLs7VY6Ie
-	 5SvvebksU0VmvuHbrXQc5fA0cNVaEHqLqE9EaS5YzyOsCsjV6Qy6KJqCHlC10lBLvU
-	 luSyJDuRlsCfTE+XrEUEOgIwuXHpB4AZ2nqoRWXI=
+	b=qPuQkGXKJZvPPHtepjqjWdoAtnpG4EgS0cSvHyFmac7SqR5HMa1B7cksJ0SxBtpha
+	 H4mICSEocPHD4SRnQdB4a9aFm+DCuunDDdvKD8lFKpqMs/vUzD6srGYKwJh6IBt3YO
+	 6xZ0B7wRVKWUSR+M8Dc4JAfpJBsLj+xejn4/KTM8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vlad Poenaru <vlad.wing@gmail.com>,
-	Usama Arif <usamaarif642@gmail.com>,
-	Frederic Weisbecker <frederic@kernel.org>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Zhaoyang Li <lizy04@hust.edu.cn>
-Subject: [PATCH 6.1 279/325] hrtimers: Force migrate away hrtimers queued after CPUHP_AP_HRTIMERS_DYING
-Date: Mon,  2 Jun 2025 15:49:15 +0200
-Message-ID: <20250602134331.097109724@linuxfoundation.org>
+	Linux Kernel Functional Testing <lkft@linaro.org>,
+	Marcus Seyfarth <m.seyfarth@gmail.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Masahiro Yamada <masahiroy@kernel.org>
+Subject: [PATCH 6.1 270/325] kbuild: Disable -Wdefault-const-init-unsafe
+Date: Mon,  2 Jun 2025 15:49:06 +0200
+Message-ID: <20250602134330.741551734@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134319.723650984@linuxfoundation.org>
 References: <20250602134319.723650984@linuxfoundation.org>
@@ -54,270 +52,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frederic Weisbecker <frederic@kernel.org>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit 53dac345395c0d2493cbc2f4c85fe38aef5b63f5 upstream.
+commit d0afcfeb9e3810ec89d1ffde1a0e36621bb75dca upstream.
 
-hrtimers are migrated away from the dying CPU to any online target at
-the CPUHP_AP_HRTIMERS_DYING stage in order not to delay bandwidth timers
-handling tasks involved in the CPU hotplug forward progress.
+A new on by default warning in clang [1] aims to flags instances where
+const variables without static or thread local storage or const members
+in aggregate types are not initialized because it can lead to an
+indeterminate value. This is quite noisy for the kernel due to
+instances originating from header files such as:
 
-However wakeups can still be performed by the outgoing CPU after
-CPUHP_AP_HRTIMERS_DYING. Those can result again in bandwidth timers being
-armed. Depending on several considerations (crystal ball power management
-based election, earliest timer already enqueued, timer migration enabled or
-not), the target may eventually be the current CPU even if offline. If that
-happens, the timer is eventually ignored.
+  drivers/gpu/drm/i915/gt/intel_ring.h:62:2: error: default initialization of an object of type 'typeof (ring->size)' (aka 'const unsigned int') leaves the object uninitialized [-Werror,-Wdefault-const-init-var-unsafe]
+     62 |         typecheck(typeof(ring->size), next);
+        |         ^
+  include/linux/typecheck.h:10:9: note: expanded from macro 'typecheck'
+     10 | ({      type __dummy; \
+        |              ^
 
-The most notable example is RCU which had to deal with each and every of
-those wake-ups by deferring them to an online CPU, along with related
-workarounds:
+  include/net/ip.h:478:14: error: default initialization of an object of type 'typeof (rt->dst.expires)' (aka 'const unsigned long') leaves the object uninitialized [-Werror,-Wdefault-const-init-var-unsafe]
+    478 |                 if (mtu && time_before(jiffies, rt->dst.expires))
+        |                            ^
+  include/linux/jiffies.h:138:26: note: expanded from macro 'time_before'
+    138 | #define time_before(a,b)        time_after(b,a)
+        |                                 ^
+  include/linux/jiffies.h:128:3: note: expanded from macro 'time_after'
+    128 |         (typecheck(unsigned long, a) && \
+        |          ^
+  include/linux/typecheck.h:11:12: note: expanded from macro 'typecheck'
+     11 |         typeof(x) __dummy2; \
+        |                   ^
 
-_ e787644caf76 (rcu: Defer RCU kthreads wakeup when CPU is dying)
-_ 9139f93209d1 (rcu/nocb: Fix RT throttling hrtimer armed from offline CPU)
-_ f7345ccc62a4 (rcu/nocb: Fix rcuog wake-up from offline softirq)
+  include/linux/list.h:409:27: warning: default initialization of an object of type 'union (unnamed union at include/linux/list.h:409:27)' with const member leaves the object uninitialized [-Wdefault-const-init-field-unsafe]
+    409 |         struct list_head *next = smp_load_acquire(&head->next);
+        |                                  ^
+  include/asm-generic/barrier.h:176:29: note: expanded from macro 'smp_load_acquire'
+    176 | #define smp_load_acquire(p) __smp_load_acquire(p)
+        |                             ^
+  arch/arm64/include/asm/barrier.h:164:59: note: expanded from macro '__smp_load_acquire'
+    164 |         union { __unqual_scalar_typeof(*p) __val; char __c[1]; } __u;   \
+        |                                                                  ^
+  include/linux/list.h:409:27: note: member '__val' declared 'const' here
 
-The problem isn't confined to RCU though as the stop machine kthread
-(which runs CPUHP_AP_HRTIMERS_DYING) reports its completion at the end
-of its work through cpu_stop_signal_done() and performs a wake up that
-eventually arms the deadline server timer:
+  crypto/scatterwalk.c:66:22: error: default initialization of an object of type 'struct scatter_walk' with const member leaves the object uninitialized [-Werror,-Wdefault-const-init-field-unsafe]
+     66 |         struct scatter_walk walk;
+        |                             ^
+  include/crypto/algapi.h:112:15: note: member 'addr' declared 'const' here
+    112 |                 void *const addr;
+        |                             ^
 
-   WARNING: CPU: 94 PID: 588 at kernel/time/hrtimer.c:1086 hrtimer_start_range_ns+0x289/0x2d0
-   CPU: 94 UID: 0 PID: 588 Comm: migration/94 Not tainted
-   Stopper: multi_cpu_stop+0x0/0x120 <- stop_machine_cpuslocked+0x66/0xc0
-   RIP: 0010:hrtimer_start_range_ns+0x289/0x2d0
-   Call Trace:
-   <TASK>
-     start_dl_timer
-     enqueue_dl_entity
-     dl_server_start
-     enqueue_task_fair
-     enqueue_task
-     ttwu_do_activate
-     try_to_wake_up
-     complete
-     cpu_stopper_thread
+  fs/hugetlbfs/inode.c:733:24: error: default initialization of an object of type 'struct vm_area_struct' with const member leaves the object uninitialized [-Werror,-Wdefault-const-init-field-unsafe]
+    733 |         struct vm_area_struct pseudo_vma;
+        |                               ^
+  include/linux/mm_types.h:803:20: note: member 'vm_flags' declared 'const' here
+    803 |                 const vm_flags_t vm_flags;
+        |                                  ^
 
-Instead of providing yet another bandaid to work around the situation, fix
-it in the hrtimers infrastructure instead: always migrate away a timer to
-an online target whenever it is enqueued from an offline CPU.
+Silencing the instances from typecheck.h is difficult because '= {}' is
+not available in older but supported compilers and '= {0}' would cause
+warnings about a literal 0 being treated as NULL. While it might be
+possible to come up with a local hack to silence the warning for
+clang-21+, it may not be worth it since -Wuninitialized will still
+trigger if an uninitialized const variable is actually used.
 
-This will also allow to revert all the above RCU disgraceful hacks.
+In all audited cases of the "field" variant of the warning, the members
+are either not used in the particular call path, modified through other
+means such as memset() / memcpy() because the containing object is not
+const, or are within a union with other non-const members.
 
-Fixes: 5c0930ccaad5 ("hrtimers: Push pending hrtimers away from outgoing CPU earlier")
-Reported-by: Vlad Poenaru <vlad.wing@gmail.com>
-Reported-by: Usama Arif <usamaarif642@gmail.com>
-Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Since this warning does not appear to have a high signal to noise ratio,
+just disable it.
+
 Cc: stable@vger.kernel.org
-Tested-by: Paul E. McKenney <paulmck@kernel.org>
-Link: https://lore.kernel.org/all/20250117232433.24027-1-frederic@kernel.org
-Closes: 20241213203739.1519801-1-usamaarif642@gmail.com
-Signed-off-by: Zhaoyang Li <lizy04@hust.edu.cn>
+Link: https://github.com/llvm/llvm-project/commit/576161cb6069e2c7656a8ef530727a0f4aefff30 [1]
+Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+Closes: https://lore.kernel.org/CA+G9fYuNjKcxFKS_MKPRuga32XbndkLGcY-PVuoSwzv6VWbY=w@mail.gmail.com/
+Reported-by: Marcus Seyfarth <m.seyfarth@gmail.com>
+Closes: https://github.com/ClangBuiltLinux/linux/issues/2088
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+[nathan: Apply change to Makefile instead of scripts/Makefile.extrawarn
+         due to lack of e88ca24319e4 in older stable branches]
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/hrtimer.h |    1 
- kernel/time/hrtimer.c   |  103 ++++++++++++++++++++++++++++++++++++++----------
- 2 files changed, 83 insertions(+), 21 deletions(-)
+ Makefile |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
---- a/include/linux/hrtimer.h
-+++ b/include/linux/hrtimer.h
-@@ -237,6 +237,7 @@ struct hrtimer_cpu_base {
- 	ktime_t				softirq_expires_next;
- 	struct hrtimer			*softirq_next_timer;
- 	struct hrtimer_clock_base	clock_base[HRTIMER_MAX_CLOCK_BASES];
-+	call_single_data_t		csd;
- } ____cacheline_aligned;
- 
- static inline void hrtimer_set_expires(struct hrtimer *timer, ktime_t time)
---- a/kernel/time/hrtimer.c
-+++ b/kernel/time/hrtimer.c
-@@ -58,6 +58,8 @@
- #define HRTIMER_ACTIVE_SOFT	(HRTIMER_ACTIVE_HARD << MASK_SHIFT)
- #define HRTIMER_ACTIVE_ALL	(HRTIMER_ACTIVE_SOFT | HRTIMER_ACTIVE_HARD)
- 
-+static void retrigger_next_event(void *arg);
+--- a/Makefile
++++ b/Makefile
+@@ -875,6 +875,18 @@ ifdef CONFIG_CC_IS_CLANG
+ KBUILD_CPPFLAGS += -Qunused-arguments
+ # The kernel builds with '-std=gnu11' so use of GNU extensions is acceptable.
+ KBUILD_CFLAGS += -Wno-gnu
 +
- /*
-  * The timer bases:
-  *
-@@ -111,7 +113,8 @@ DEFINE_PER_CPU(struct hrtimer_cpu_base,
- 			.clockid = CLOCK_TAI,
- 			.get_time = &ktime_get_clocktai,
- 		},
--	}
-+	},
-+	.csd = CSD_INIT(retrigger_next_event, NULL)
- };
++# Clang may emit a warning when a const variable, such as the dummy variables
++# in typecheck(), or const member of an aggregate type are not initialized,
++# which can result in unexpected behavior. However, in many audited cases of
++# the "field" variant of the warning, this is intentional because the field is
++# never used within a particular call path, the field is within a union with
++# other non-const members, or the containing object is not const so the field
++# can be modified via memcpy() / memset(). While the variable warning also gets
++# disabled with this same switch, there should not be too much coverage lost
++# because -Wuninitialized will still flag when an uninitialized const variable
++# is used.
++KBUILD_CFLAGS += $(call cc-disable-warning, default-const-init-unsafe)
+ else
  
- static const int hrtimer_clock_to_base_table[MAX_CLOCKS] = {
-@@ -124,6 +127,14 @@ static const int hrtimer_clock_to_base_t
- 	[CLOCK_TAI]		= HRTIMER_BASE_TAI,
- };
- 
-+static inline bool hrtimer_base_is_online(struct hrtimer_cpu_base *base)
-+{
-+	if (!IS_ENABLED(CONFIG_HOTPLUG_CPU))
-+		return true;
-+	else
-+		return likely(base->online);
-+}
-+
- /*
-  * Functions and macros which are different for UP/SMP systems are kept in a
-  * single place
-@@ -177,27 +188,54 @@ struct hrtimer_clock_base *lock_hrtimer_
- }
- 
- /*
-- * We do not migrate the timer when it is expiring before the next
-- * event on the target cpu. When high resolution is enabled, we cannot
-- * reprogram the target cpu hardware and we would cause it to fire
-- * late. To keep it simple, we handle the high resolution enabled and
-- * disabled case similar.
-+ * Check if the elected target is suitable considering its next
-+ * event and the hotplug state of the current CPU.
-+ *
-+ * If the elected target is remote and its next event is after the timer
-+ * to queue, then a remote reprogram is necessary. However there is no
-+ * guarantee the IPI handling the operation would arrive in time to meet
-+ * the high resolution deadline. In this case the local CPU becomes a
-+ * preferred target, unless it is offline.
-+ *
-+ * High and low resolution modes are handled the same way for simplicity.
-  *
-  * Called with cpu_base->lock of target cpu held.
-  */
--static int
--hrtimer_check_target(struct hrtimer *timer, struct hrtimer_clock_base *new_base)
-+static bool hrtimer_suitable_target(struct hrtimer *timer, struct hrtimer_clock_base *new_base,
-+				    struct hrtimer_cpu_base *new_cpu_base,
-+				    struct hrtimer_cpu_base *this_cpu_base)
- {
- 	ktime_t expires;
- 
-+	/*
-+	 * The local CPU clockevent can be reprogrammed. Also get_target_base()
-+	 * guarantees it is online.
-+	 */
-+	if (new_cpu_base == this_cpu_base)
-+		return true;
-+
-+	/*
-+	 * The offline local CPU can't be the default target if the
-+	 * next remote target event is after this timer. Keep the
-+	 * elected new base. An IPI will we issued to reprogram
-+	 * it as a last resort.
-+	 */
-+	if (!hrtimer_base_is_online(this_cpu_base))
-+		return true;
-+
- 	expires = ktime_sub(hrtimer_get_expires(timer), new_base->offset);
--	return expires < new_base->cpu_base->expires_next;
-+
-+	return expires >= new_base->cpu_base->expires_next;
- }
- 
--static inline
--struct hrtimer_cpu_base *get_target_base(struct hrtimer_cpu_base *base,
--					 int pinned)
-+static inline struct hrtimer_cpu_base *get_target_base(struct hrtimer_cpu_base *base, int pinned)
- {
-+	if (!hrtimer_base_is_online(base)) {
-+		int cpu = cpumask_any_and(cpu_online_mask, housekeeping_cpumask(HK_TYPE_TIMER));
-+
-+		return &per_cpu(hrtimer_bases, cpu);
-+	}
-+
- #if defined(CONFIG_SMP) && defined(CONFIG_NO_HZ_COMMON)
- 	if (static_branch_likely(&timers_migration_enabled) && !pinned)
- 		return &per_cpu(hrtimer_bases, get_nohz_timer_target());
-@@ -248,8 +286,8 @@ again:
- 		raw_spin_unlock(&base->cpu_base->lock);
- 		raw_spin_lock(&new_base->cpu_base->lock);
- 
--		if (new_cpu_base != this_cpu_base &&
--		    hrtimer_check_target(timer, new_base)) {
-+		if (!hrtimer_suitable_target(timer, new_base, new_cpu_base,
-+					     this_cpu_base)) {
- 			raw_spin_unlock(&new_base->cpu_base->lock);
- 			raw_spin_lock(&base->cpu_base->lock);
- 			new_cpu_base = this_cpu_base;
-@@ -258,8 +296,7 @@ again:
- 		}
- 		WRITE_ONCE(timer->base, new_base);
- 	} else {
--		if (new_cpu_base != this_cpu_base &&
--		    hrtimer_check_target(timer, new_base)) {
-+		if (!hrtimer_suitable_target(timer, new_base,  new_cpu_base, this_cpu_base)) {
- 			new_cpu_base = this_cpu_base;
- 			goto again;
- 		}
-@@ -718,8 +755,6 @@ static inline int hrtimer_is_hres_enable
- 	return hrtimer_hres_enabled;
- }
- 
--static void retrigger_next_event(void *arg);
--
- /*
-  * Switch to high resolution mode
-  */
-@@ -1205,6 +1240,7 @@ static int __hrtimer_start_range_ns(stru
- 				    u64 delta_ns, const enum hrtimer_mode mode,
- 				    struct hrtimer_clock_base *base)
- {
-+	struct hrtimer_cpu_base *this_cpu_base = this_cpu_ptr(&hrtimer_bases);
- 	struct hrtimer_clock_base *new_base;
- 	bool force_local, first;
- 
-@@ -1216,10 +1252,16 @@ static int __hrtimer_start_range_ns(stru
- 	 * and enforce reprogramming after it is queued no matter whether
- 	 * it is the new first expiring timer again or not.
- 	 */
--	force_local = base->cpu_base == this_cpu_ptr(&hrtimer_bases);
-+	force_local = base->cpu_base == this_cpu_base;
- 	force_local &= base->cpu_base->next_timer == timer;
- 
- 	/*
-+	 * Don't force local queuing if this enqueue happens on a unplugged
-+	 * CPU after hrtimer_cpu_dying() has been invoked.
-+	 */
-+	force_local &= this_cpu_base->online;
-+
-+	/*
- 	 * Remove an active timer from the queue. In case it is not queued
- 	 * on the current CPU, make sure that remove_hrtimer() updates the
- 	 * remote data correctly.
-@@ -1248,8 +1290,27 @@ static int __hrtimer_start_range_ns(stru
- 	}
- 
- 	first = enqueue_hrtimer(timer, new_base, mode);
--	if (!force_local)
--		return first;
-+	if (!force_local) {
-+		/*
-+		 * If the current CPU base is online, then the timer is
-+		 * never queued on a remote CPU if it would be the first
-+		 * expiring timer there.
-+		 */
-+		if (hrtimer_base_is_online(this_cpu_base))
-+			return first;
-+
-+		/*
-+		 * Timer was enqueued remote because the current base is
-+		 * already offline. If the timer is the first to expire,
-+		 * kick the remote CPU to reprogram the clock event.
-+		 */
-+		if (first) {
-+			struct hrtimer_cpu_base *new_cpu_base = new_base->cpu_base;
-+
-+			smp_call_function_single_async(new_cpu_base->cpu, &new_cpu_base->csd);
-+		}
-+		return 0;
-+	}
- 
- 	/*
- 	 * Timer was forced to stay on the current CPU to avoid
+ # gcc inanely warns about local variables called 'main'
 
 
