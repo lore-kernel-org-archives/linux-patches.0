@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21176233704;
-	Mon,  2 Jun 2025 14:02:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66EE9235061;
+	Mon,  2 Jun 2025 14:02:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748872976; cv=none; b=nT3Qp72GWisFqhZ2NIkwvhgdqNhWOHH7O3JqBe11zfSLgEUkLfugtedvaMZNTqLf7HJc0C6wN9IQRKKkjCCPIlZuo02TVJVIJqvzhyZJ7XnyQsdSkAQlFaQOyH6HDjTJ2jnnqicCXKdk15Q+YtC4dz/KuHaxJ/gfgSGGJVP2jXw=
+	t=1748872979; cv=none; b=nPSP26f6h5V5TLqVL5jg0Oy+6TTDpGnkQzFJzHaNEkc78ptQlWm6WTvY9wMtpD12QQJjNf55bjZU2ld3TTUTrvhPmOiYOWgVsHAYuhWkChukpReA+az1e5/pzQnhCo/XJ+lWQ4z6nVGIEvpY7HX17K/8nxWG9pzUAqrxILPMSlg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748872976; c=relaxed/simple;
-	bh=Qwb8zmG/11TRWv4GxeZQBa1yTUaZ1uiU6Vfc5+Q2Yog=;
+	s=arc-20240116; t=1748872979; c=relaxed/simple;
+	bh=yGEXisPko5+PnaMR00b3V66jFaHp6TT57hwnxVU1d2A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ruT6chwsspy1+eIKXhjn0yN95+UXmtI+C5OQGcAFQesox6rhkIpT7B6DDMtMJ1E/8T7G6LoJR2QzZy7H6FzGa0zM4MOC+G9hg8ytFz2x2kiVJUsbU0QO+SBGctKDF+umZ9L4FjTZ0CSfzKItG5Zjx/jEhktpv0OI43tAyd9jX10=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c/5zGWV3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kiOQgMQzIaCjHldJphbD/yqnZLhw/IWrcAn9KmGyR0FG/mjuPi5DHRlWIv6yGYZdVvYrne/RWpGlvmVwouV2a0Uz15v0HP2uQGjsTb8o7qsh9o/UcPfudQU3tE4ROR0x11/FwDcJ4xrrJn/SEKHvvtVX03dGmT5cemZL4toX1WI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EN9eCoLO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c/5zGWV3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9833FC4CEEE;
-	Mon,  2 Jun 2025 14:02:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EN9eCoLO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE918C4CEEE;
+	Mon,  2 Jun 2025 14:02:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748872976;
-	bh=Qwb8zmG/11TRWv4GxeZQBa1yTUaZ1uiU6Vfc5+Q2Yog=;
+	s=korg; t=1748872979;
+	bh=yGEXisPko5+PnaMR00b3V66jFaHp6TT57hwnxVU1d2A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c/5zGWV3jHEAstp1n+Wql9eQ3s4hWSu52WRE7PMD9CoCbl8fLbyEyeYzNCGpEI4DH
-	 /LfcQ3GpGVygBqhKWgXrODDx23a3SnbIPf9h077YJq5u+o25AlB3jD7Cbb7eItlqR4
-	 8ot1TQtuNwbHVPyj3MTuo6euBCXuu3dantw5eOhw=
+	b=EN9eCoLOOASTghk80KFkjkbkG1ZnucjAdHneQLabcNFQ/Oi+GqkP+8OUmsA7Gsebq
+	 dlfu8e25pukv2M5abPflP17RiTBjrK48xGpnBXPVYmZTywYebsreRT2rSZ9XhvAEa1
+	 4b/xGmQlr0SJlxp7zFCMFkSpUoBy9mg0wactKXUA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Siddharth Vadapalli <s-vadapalli@ti.com>,
-	Udit Kumar <u-kumar1@ti.com>,
-	Nishanth Menon <nm@ti.com>
-Subject: [PATCH 6.12 28/55] arm64: dts: ti: k3-j784s4-j742s2-main-common: Fix length of serdes_ln_ctrl
-Date: Mon,  2 Jun 2025 15:47:45 +0200
-Message-ID: <20250602134239.384588503@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 55/55] ksmbd: use list_first_entry_or_null for opinfo_get_list()
+Date: Mon,  2 Jun 2025 15:48:12 +0200
+Message-ID: <20250602134240.441210028@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134238.271281478@linuxfoundation.org>
 References: <20250602134238.271281478@linuxfoundation.org>
@@ -51,35 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Siddharth Vadapalli <s-vadapalli@ti.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit 3b62bd1fde50d54cc59015e14869e6cc3d6899e0 upstream.
+[ Upstream commit 10379171f346e6f61d30d9949500a8de4336444a ]
 
-Commit under Fixes corrected the "mux-reg-masks" property but did not
-update the "length" field of the "reg" property to account for the
-newly added register offsets which extend the region. Fix this.
+The list_first_entry() macro never returns NULL.  If the list is
+empty then it returns an invalid pointer.  Use list_first_entry_or_null()
+to check if the list is empty.
 
-Fixes: 38e7f9092efb ("arm64: dts: ti: k3-j784s4-j742s2-main-common: Fix serdes_ln_ctrl reg-masks")
-Cc: stable@vger.kernel.org
-Signed-off-by: Siddharth Vadapalli <s-vadapalli@ti.com>
-Reviewed-by: Udit Kumar <u-kumar1@ti.com>
-Link: https://lore.kernel.org/r/20250423151612.48848-1-s-vadapalli@ti.com
-Signed-off-by: Nishanth Menon <nm@ti.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/r/202505080231.7OXwq4Te-lkp@intel.com/
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/ti/k3-j784s4-j742s2-main-common.dtsi |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/smb/server/oplock.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
---- a/arch/arm64/boot/dts/ti/k3-j784s4-j742s2-main-common.dtsi
-+++ b/arch/arm64/boot/dts/ti/k3-j784s4-j742s2-main-common.dtsi
-@@ -77,7 +77,7 @@
+diff --git a/fs/smb/server/oplock.c b/fs/smb/server/oplock.c
+index 03f606afad93a..d7a8a580d0136 100644
+--- a/fs/smb/server/oplock.c
++++ b/fs/smb/server/oplock.c
+@@ -146,12 +146,9 @@ static struct oplock_info *opinfo_get_list(struct ksmbd_inode *ci)
+ {
+ 	struct oplock_info *opinfo;
  
- 		serdes_ln_ctrl: mux-controller@4080 {
- 			compatible = "reg-mux";
--			reg = <0x00004080 0x30>;
-+			reg = <0x00004080 0x50>;
- 			#mux-control-cells = <1>;
- 			mux-reg-masks = <0x0 0x3>, <0x4 0x3>, /* SERDES0 lane0/1 select */
- 					<0x8 0x3>, <0xc 0x3>, /* SERDES0 lane2/3 select */
+-	if (list_empty(&ci->m_op_list))
+-		return NULL;
+-
+ 	down_read(&ci->m_lock);
+-	opinfo = list_first_entry(&ci->m_op_list, struct oplock_info,
+-					op_entry);
++	opinfo = list_first_entry_or_null(&ci->m_op_list, struct oplock_info,
++					  op_entry);
+ 	if (opinfo) {
+ 		if (opinfo->conn == NULL ||
+ 		    !atomic_inc_not_zero(&opinfo->refcount))
+-- 
+2.39.5
+
 
 
