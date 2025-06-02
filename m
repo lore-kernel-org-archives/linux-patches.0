@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18CC222F765;
-	Mon,  2 Jun 2025 15:01:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28E42233712;
+	Mon,  2 Jun 2025 15:01:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748876496; cv=none; b=LmtCgVRiE0vV86XF++woKpjafQZQR+PEodYPglM/MY5dDMfBaJIIkklj5u+A6NFwA0046fGM6XukWAFPiMolZ55oBoGoDgkowLcqhCf3JeFiHDolAUVsx54zJJpq7UvzdhAuMN3nWQ5l1EcSP2zT8udlrE0ihLE206PYs7Q8TFE=
+	t=1748876499; cv=none; b=UWe6uba9hkiHyKn1+RXJie9XIr1skP/P2KA05nZ2o+Xu9cpsI1ccQ4nLNZ2MxCpfa5GX14iO8wgZA5rPWX1t+1uMxpD8qSyaf0aZWi/f7ngA00G4etnc4pi/HMhZeFaCNfmkLZkJG6yPVEqRSdh7i+dvVM9cIcq67jl4AF6mjEU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748876496; c=relaxed/simple;
-	bh=JUX7dmiP32lhndQ79OT+KUPRfn1J8esMWAzQzw46ldk=;
+	s=arc-20240116; t=1748876499; c=relaxed/simple;
+	bh=+8vvHsGEHtrJ3/lIs4E8kaGnVXIHoBeK4daoXxOBeFc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V7uLgqrc//dcI8PEMzjy+7TVRGmFSsiWpATEWyIkhQZeY1Xto4TSk7vCaqVZLPNnRvQRse318LDwCxttnSVflkMPPutZ2Vq8M6Cb20BDOsoi8hVLSePzSk65fh+uH5h5E2dQI6KXkY5a8QUBN6UN/9QLShzU5lOgnP1pNuFfVSY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zGhal9bm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=om/saGKr92HYzQIIGEs7/FWRvuRHYDEMUrKXhwwJDRFAq285chBVqpNnbQd81O43Y/K8hlMclG5xeXkkl3TLUdAFsYVnX9KacqgTG9FE61Gp47juI24fRQKKg0YYbH0GLNJC3i/SEylsiqkgMbztcSYCY1CrZAGlj5EXc4DPohk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WcNYz2Ib; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zGhal9bm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 169E6C4CEEB;
-	Mon,  2 Jun 2025 15:01:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WcNYz2Ib"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 369A9C4CEEB;
+	Mon,  2 Jun 2025 15:01:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748876495;
-	bh=JUX7dmiP32lhndQ79OT+KUPRfn1J8esMWAzQzw46ldk=;
+	s=korg; t=1748876498;
+	bh=+8vvHsGEHtrJ3/lIs4E8kaGnVXIHoBeK4daoXxOBeFc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zGhal9bm4dtUl9epQSXk3MVmdeATfLuBWgBCQ79/SMZliUwpOHDjRw7JFzm/jGDG8
-	 Y1yIVceK0rX/kS2G30hRtWte1wgssimjOXAlleRZAB8zBfKbohpW0KpcxlW/hHdmT+
-	 wPdGpVqUa4ID0WjrGs/UhHNmoXW0bOnBDJj4elLI=
+	b=WcNYz2Ibn9jfok3Zs+uOsz2sZl4BfbJbJt0PdIegocf7ROytGm8ZX9gHY70qz3MEB
+	 8zm0zl+K1FTJWq7j3Ra56ngFQW8JUCO7w5JZaFCmYdmfBrK2FFHB3lrb4X8sPdXW0c
+	 v7ajyD1+6LTxaDs0AbEjdPHhiWPeJrHv16t2MN6c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Savino Dicanosa <savy@syst3mfailure.io>,
-	William Liu <will@willsroot.io>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Victor Nogueira <victor@mojatatu.com>,
-	Pedro Tammela <pctammela@mojatatu.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 5.15 193/207] net_sched: hfsc: Address reentrant enqueue adding class to eltree twice
-Date: Mon,  2 Jun 2025 15:49:25 +0200
-Message-ID: <20250602134306.334462249@linuxfoundation.org>
+	Luca Boccassi <luca.boccassi@gmail.com>,
+	Oleg Nesterov <oleg@redhat.com>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 5.15 194/207] coredump: fix error handling for replace_fd()
+Date: Mon,  2 Jun 2025 15:49:26 +0200
+Message-ID: <20250602134306.372923932@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134258.769974467@linuxfoundation.org>
 References: <20250602134258.769974467@linuxfoundation.org>
@@ -54,85 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pedro Tammela <pctammela@mojatatu.com>
+From: Christian Brauner <brauner@kernel.org>
 
-commit ac9fe7dd8e730a103ae4481147395cc73492d786 upstream.
+commit 95c5f43181fe9c1b5e5a4bd3281c857a5259991f upstream.
 
-Savino says:
-    "We are writing to report that this recent patch
-    (141d34391abbb315d68556b7c67ad97885407547) [1]
-    can be bypassed, and a UAF can still occur when HFSC is utilized with
-    NETEM.
+The replace_fd() helper returns the file descriptor number on success
+and a negative error code on failure. The current error handling in
+umh_pipe_setup() only works because the file descriptor that is replaced
+is zero but that's pretty volatile. Explicitly check for a negative
+error code.
 
-    The patch only checks the cl->cl_nactive field to determine whether
-    it is the first insertion or not [2], but this field is only
-    incremented by init_vf [3].
-
-    By using HFSC_RSC (which uses init_ed) [4], it is possible to bypass the
-    check and insert the class twice in the eltree.
-    Under normal conditions, this would lead to an infinite loop in
-    hfsc_dequeue for the reasons we already explained in this report [5].
-
-    However, if TBF is added as root qdisc and it is configured with a
-    very low rate,
-    it can be utilized to prevent packets from being dequeued.
-    This behavior can be exploited to perform subsequent insertions in the
-    HFSC eltree and cause a UAF."
-
-To fix both the UAF and the infinite loop, with netem as an hfsc child,
-check explicitly in hfsc_enqueue whether the class is already in the eltree
-whenever the HFSC_RSC flag is set.
-
-[1] https://web.git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=141d34391abbb315d68556b7c67ad97885407547
-[2] https://elixir.bootlin.com/linux/v6.15-rc5/source/net/sched/sch_hfsc.c#L1572
-[3] https://elixir.bootlin.com/linux/v6.15-rc5/source/net/sched/sch_hfsc.c#L677
-[4] https://elixir.bootlin.com/linux/v6.15-rc5/source/net/sched/sch_hfsc.c#L1574
-[5] https://lore.kernel.org/netdev/8DuRWwfqjoRDLDmBMlIfbrsZg9Gx50DHJc1ilxsEBNe2D6NMoigR_eIRIG0LOjMc3r10nUUZtArXx4oZBIdUfZQrwjcQhdinnMis_0G7VEk=@willsroot.io/T/#u
-
-Fixes: 37d9cf1a3ce3 ("sched: Fix detection of empty queues in child qdiscs")
-Reported-by: Savino Dicanosa <savy@syst3mfailure.io>
-Reported-by: William Liu <will@willsroot.io>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Tested-by: Victor Nogueira <victor@mojatatu.com>
-Signed-off-by: Pedro Tammela <pctammela@mojatatu.com>
-Link: https://patch.msgid.link/20250522181448.1439717-2-pctammela@mojatatu.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Link: https://lore.kernel.org/20250414-work-coredump-v2-2-685bf231f828@kernel.org
+Tested-by: Luca Boccassi <luca.boccassi@gmail.com>
+Reviewed-by: Oleg Nesterov <oleg@redhat.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/sch_hfsc.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ fs/coredump.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/net/sched/sch_hfsc.c
-+++ b/net/sched/sch_hfsc.c
-@@ -176,6 +176,11 @@ struct hfsc_sched {
- 
- #define	HT_INFINITY	0xffffffffffffffffULL	/* infinite time value */
- 
-+static bool cl_in_el_or_vttree(struct hfsc_class *cl)
-+{
-+	return ((cl->cl_flags & HFSC_FSC) && cl->cl_nactive) ||
-+		((cl->cl_flags & HFSC_RSC) && !RB_EMPTY_NODE(&cl->el_node));
-+}
- 
- /*
-  * eligible tree holds backlogged classes being sorted by their eligible times.
-@@ -1038,6 +1043,8 @@ hfsc_change_class(struct Qdisc *sch, u32
- 	if (cl == NULL)
- 		return -ENOBUFS;
- 
-+	RB_CLEAR_NODE(&cl->el_node);
+--- a/fs/coredump.c
++++ b/fs/coredump.c
+@@ -564,7 +564,9 @@ static int umh_pipe_setup(struct subproc
+ {
+ 	struct file *files[2];
+ 	struct coredump_params *cp = (struct coredump_params *)info->data;
+-	int err = create_pipe_files(files, 0);
++	int err;
 +
- 	err = tcf_block_get(&cl->block, &cl->filter_list, sch, extack);
- 	if (err) {
- 		kfree(cl);
-@@ -1575,7 +1582,7 @@ hfsc_enqueue(struct sk_buff *skb, struct
- 	sch->qstats.backlog += len;
- 	sch->q.qlen++;
++	err = create_pipe_files(files, 0);
+ 	if (err)
+ 		return err;
  
--	if (first && !cl->cl_nactive) {
-+	if (first && !cl_in_el_or_vttree(cl)) {
- 		if (cl->cl_flags & HFSC_RSC)
- 			init_ed(cl, len);
- 		if (cl->cl_flags & HFSC_FSC)
+@@ -572,10 +574,13 @@ static int umh_pipe_setup(struct subproc
+ 
+ 	err = replace_fd(0, files[0], 0);
+ 	fput(files[0]);
++	if (err < 0)
++		return err;
++
+ 	/* and disallow core files too */
+ 	current->signal->rlim[RLIMIT_CORE] = (struct rlimit){1, 1};
+ 
+-	return err;
++	return 0;
+ }
+ 
+ void do_coredump(const kernel_siginfo_t *siginfo)
 
 
