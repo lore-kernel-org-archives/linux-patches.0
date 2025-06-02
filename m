@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C851A22DA0B;
-	Mon,  2 Jun 2025 15:08:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F219D22D4CE;
+	Mon,  2 Jun 2025 15:08:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748876893; cv=none; b=tk55HDjd5x+TcGpb+98Ui5oF5ToWPdgqj3VwNf22D/jikSvkOv4HF/H9kjneXfDPknMkUq/v6T9UHh5c6PK/5+mg5mHC/ghz/KiAWPsJSQLObnWfApsDACqByxWnhhr8Ggt9HzSCxfeklZqbxmpjFDjqLvZyBF6VnfVysLOWFLk=
+	t=1748876897; cv=none; b=cLnx56K1AWK3TARzt0+ZcJLmadLjhvOSck7wOQcHKRWSkmEvNxtDeCvGOjWnlGlDIAg1I6OZT5bewST/9wI5jIePZaYuV3ZWeuk0Ossopp8Zo1uTu0Wwkgyv9h/gJxdScpXN/7Ltl6AgznCpJkKDP7U9uE3MnamrmlNNk5Nrm+o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748876893; c=relaxed/simple;
-	bh=jMQjbn849OQZJDRNKEJJx1O+Z56t5ZWUv/+3a4mgtKo=;
+	s=arc-20240116; t=1748876897; c=relaxed/simple;
+	bh=ngZ9/YwZ3sOxw1lJLuvNmAzIm0aztW0XKky+e69blT4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jwLpb7emZsqwrRpm7lloSS3yIFHhrEX7xRBhx9YQNrahOQojWosE2exkhXGoQ83qEHdFyTqdH4PUfutrVeiWGTyyPRa01xwlncRwaPbMvVVgZq/1C7d91Xx8m1KKikpwcRxbTkcygIxxiSllWhfWX2ppL5utGkQvSigtgQAAROc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iePOxZlb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YiWRNE6m/QZfosVUd9XNMWO18+oBePemFea5itGitpyratLXRdWXWk/jB3U56ENET+gezHbYCN6xhVXd7s+ojzjYPnQNF9bZxhjWj5S1EnW4SsVtW4qDKWaQPe28vBW3Sj0D6GoNEQf/N+DMmITfex9fW5Gswp31E4iz4ZN1Bbk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aV96ZqSU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iePOxZlb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36253C4CEEB;
-	Mon,  2 Jun 2025 15:08:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aV96ZqSU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60E57C4CEEB;
+	Mon,  2 Jun 2025 15:08:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748876893;
-	bh=jMQjbn849OQZJDRNKEJJx1O+Z56t5ZWUv/+3a4mgtKo=;
+	s=korg; t=1748876896;
+	bh=ngZ9/YwZ3sOxw1lJLuvNmAzIm0aztW0XKky+e69blT4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iePOxZlbNAEn1ohOUuKux0FuzcSFlvn9MpRK38vB8oEzgmM/mD6WS5T2cvt0tJRrD
-	 vv/y67IabSyZDxGOQDXkghgRlT+YCSEEexhB323OfgJ94k2hq+K7qgqVhQod8GuD2y
-	 SofMoYGziWfaM3W7RGncTTNcYplSCYmB0MFaslKA=
+	b=aV96ZqSU2iTKKyxNWT5ghmndT01axE9RaexyY1QlStnF50kVShW9GTsd2QkPEu8DM
+	 dJmjXtEUe7S8aRTe24RiHsB+AXuOMHuOgkLrv13Tx6K89xNC5S40xDhUvu1hq0QVE1
+	 1REwZQCSImLPDrlpDkARDsUgSCoIiXF2+treT5l0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Morgan <macromorgan@hotmail.com>,
-	Ryan Walklin <ryan@testtoast.com>,
-	Philippe Simons <simons.philippe@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Baokun Li <libaokun1@huawei.com>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 077/325] ASoC: sun4i-codec: support hp-det-gpios property
-Date: Mon,  2 Jun 2025 15:45:53 +0200
-Message-ID: <20250602134322.909013510@linuxfoundation.org>
+Subject: [PATCH 6.1 078/325] ext4: reject the data_err=abort option in nojournal mode
+Date: Mon,  2 Jun 2025 15:45:54 +0200
+Message-ID: <20250602134322.947152625@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134319.723650984@linuxfoundation.org>
 References: <20250602134319.723650984@linuxfoundation.org>
@@ -53,126 +53,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryan Walklin <ryan@testtoast.com>
+From: Baokun Li <libaokun1@huawei.com>
 
-[ Upstream commit a149377c033afe6557c50892ebbfc0e8b7e2e253 ]
+[ Upstream commit 26343ca0df715097065b02a6cddb4a029d5b9327 ]
 
-Add support for GPIO headphone detection with the hp-det-gpios
-property. In order for this to properly disable the path upon
-removal of headphones, the output must be labelled Headphone which
-is a common sink in the driver.
+data_err=abort aborts the journal on I/O errors. However, this option is
+meaningless if journal is disabled, so it is rejected in nojournal mode
+to reduce unnecessary checks. Also, this option is ignored upon remount.
 
-Describe a headphone jack and detection GPIO in the driver, check for
-a corresponding device tree node, and enable jack detection in a new
-machine init function if described.
-
-Signed-off-by: Chris Morgan <macromorgan@hotmail.com>
-Signed-off-by: Ryan Walklin <ryan@testtoast.com>
-
---
-Changelog v1..v2:
-- Separate DAPM changes into separate patch and add rationale.
-
-Tested-by: Philippe Simons <simons.philippe@gmail.com>
-Link: https://patch.msgid.link/20250214220247.10810-4-ryan@testtoast.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/20250122110533.4116662-4-libaokun@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sunxi/sun4i-codec.c | 53 +++++++++++++++++++++++++++++++++++
- 1 file changed, 53 insertions(+)
+ fs/ext4/super.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/sound/soc/sunxi/sun4i-codec.c b/sound/soc/sunxi/sun4i-codec.c
-index 835dc34043670..1e310958f8c08 100644
---- a/sound/soc/sunxi/sun4i-codec.c
-+++ b/sound/soc/sunxi/sun4i-codec.c
-@@ -25,6 +25,7 @@
- #include <linux/gpio/consumer.h>
- 
- #include <sound/core.h>
-+#include <sound/jack.h>
- #include <sound/pcm.h>
- #include <sound/pcm_params.h>
- #include <sound/soc.h>
-@@ -239,6 +240,7 @@ struct sun4i_codec {
- 	struct clk	*clk_module;
- 	struct reset_control *rst;
- 	struct gpio_desc *gpio_pa;
-+	struct gpio_desc *gpio_hp;
- 
- 	/* ADC_FIFOC register is at different offset on different SoCs */
- 	struct regmap_field *reg_adc_fifoc;
-@@ -1273,6 +1275,49 @@ static struct snd_soc_dai_driver dummy_cpu_dai = {
- 	 },
- };
- 
-+static struct snd_soc_jack sun4i_headphone_jack;
-+
-+static struct snd_soc_jack_pin sun4i_headphone_jack_pins[] = {
-+	{ .pin = "Headphone", .mask = SND_JACK_HEADPHONE },
-+};
-+
-+static struct snd_soc_jack_gpio sun4i_headphone_jack_gpio = {
-+	.name = "hp-det",
-+	.report = SND_JACK_HEADPHONE,
-+	.debounce_time = 150,
-+};
-+
-+static int sun4i_codec_machine_init(struct snd_soc_pcm_runtime *rtd)
-+{
-+	struct snd_soc_card *card = rtd->card;
-+	struct sun4i_codec *scodec = snd_soc_card_get_drvdata(card);
-+	int ret;
-+
-+	if (scodec->gpio_hp) {
-+		ret = snd_soc_card_jack_new_pins(card, "Headphone Jack",
-+						 SND_JACK_HEADPHONE,
-+						 &sun4i_headphone_jack,
-+						 sun4i_headphone_jack_pins,
-+						 ARRAY_SIZE(sun4i_headphone_jack_pins));
-+		if (ret) {
-+			dev_err(rtd->dev,
-+				"Headphone jack creation failed: %d\n", ret);
-+			return ret;
-+		}
-+
-+		sun4i_headphone_jack_gpio.desc = scodec->gpio_hp;
-+		ret = snd_soc_jack_add_gpios(&sun4i_headphone_jack, 1,
-+					     &sun4i_headphone_jack_gpio);
-+
-+		if (ret) {
-+			dev_err(rtd->dev, "Headphone GPIO not added: %d\n", ret);
-+			return ret;
-+		}
-+	}
-+
-+	return 0;
-+}
-+
- static struct snd_soc_dai_link *sun4i_codec_create_link(struct device *dev,
- 							int *num_links)
- {
-@@ -1298,6 +1343,7 @@ static struct snd_soc_dai_link *sun4i_codec_create_link(struct device *dev,
- 	link->codecs->name	= dev_name(dev);
- 	link->platforms->name	= dev_name(dev);
- 	link->dai_fmt		= SND_SOC_DAIFMT_I2S;
-+	link->init		= sun4i_codec_machine_init;
- 
- 	*num_links = 1;
- 
-@@ -1738,6 +1784,13 @@ static int sun4i_codec_probe(struct platform_device *pdev)
- 		return ret;
+diff --git a/fs/ext4/super.c b/fs/ext4/super.c
+index 7f0231b349057..f829f989f2b59 100644
+--- a/fs/ext4/super.c
++++ b/fs/ext4/super.c
+@@ -2741,6 +2741,13 @@ static int ext4_check_opt_consistency(struct fs_context *fc,
  	}
  
-+	scodec->gpio_hp = devm_gpiod_get_optional(&pdev->dev, "hp-det", GPIOD_IN);
-+	if (IS_ERR(scodec->gpio_hp)) {
-+		ret = PTR_ERR(scodec->gpio_hp);
-+		dev_err_probe(&pdev->dev, ret, "Failed to get hp-det gpio\n");
-+		return ret;
-+	}
+ 	if (is_remount) {
++		if (!sbi->s_journal &&
++		    ctx_test_mount_opt(ctx, EXT4_MOUNT_DATA_ERR_ABORT)) {
++			ext4_msg(NULL, KERN_WARNING,
++				 "Remounting fs w/o journal so ignoring data_err option");
++			ctx_clear_mount_opt(ctx, EXT4_MOUNT_DATA_ERR_ABORT);
++		}
 +
- 	/* reg_field setup */
- 	scodec->reg_adc_fifoc = devm_regmap_field_alloc(&pdev->dev,
- 							scodec->regmap,
+ 		if (ctx_test_mount_opt(ctx, EXT4_MOUNT_DAX_ALWAYS) &&
+ 		    (test_opt(sb, DATA_FLAGS) == EXT4_MOUNT_JOURNAL_DATA)) {
+ 			ext4_msg(NULL, KERN_ERR, "can't mount with "
+@@ -5318,6 +5325,11 @@ static int __ext4_fill_super(struct fs_context *fc, struct super_block *sb)
+ 				 "data=, fs mounted w/o journal");
+ 			goto failed_mount3a;
+ 		}
++		if (test_opt(sb, DATA_ERR_ABORT)) {
++			ext4_msg(sb, KERN_ERR,
++				 "can't mount with data_err=abort, fs mounted w/o journal");
++			goto failed_mount3a;
++		}
+ 		sbi->s_def_mount_opt &= ~EXT4_MOUNT_JOURNAL_CHECKSUM;
+ 		clear_opt(sb, JOURNAL_CHECKSUM);
+ 		clear_opt(sb, DATA_FLAGS);
 -- 
 2.39.5
 
