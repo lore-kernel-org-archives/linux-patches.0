@@ -1,44 +1,44 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail11.truemail.it (mail11.truemail.it [217.194.8.81])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D59B6221F10;
-	Mon,  2 Jun 2025 15:20:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8096A223DEE
+	for <patches@lists.linux.dev>; Mon,  2 Jun 2025 15:59:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.194.8.81
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748877620; cv=none; b=ey0alV1CSFVXum0o7cYMog+fwgp+Gr7ZQkzEnv3Wi6ovKnCJvFFhlw6rh+yyO5F/rtwQSK2LwmKlIFCpLInnLLkgv1rQ8FaJ3yyIDdKx6JiBZjMqBy5VY/uasQfGPY4C8qWBqd5WHS8YRUKVAh+kkF9a+I0x+VbAmIhd2Ac9/Wk=
+	t=1748879948; cv=none; b=VV7XHQyhZHkscrGpCRrrBUHba/uDmeWox3QH+toZvqVTCUyIEhX+Pf+w53R+P+rVF2NyXcBtTNc3A54llNHIoAmcFba+As9whlXJs9mAXAmO5xu4zVJ/QKWuJd3ufR0AONk46lu1raSHnXKDX/6W++OKjoSr7lg1pXcw4DGdODg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748877620; c=relaxed/simple;
-	bh=ITVR3HMiYg5l6AZK7u7+eOql7sEf/xt3aCyBIPRjeWk=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KevTU8sePdAQhvs2hW0YCTBBfwYZfD0QwrmikBkQD/ecScg9jCSd9Yom2xtLu/H1QxIT2Nz9PHM6Fk7ks33wmE3/HnNowAqGCwWEU1Xx/uxEHP8NCpw2+88zefp6nfsC7yo7WeapmpIES79p/FJn/J2wAPfK2+ZyRTyPtdwpAEc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cZxNG7bM; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1748879948; c=relaxed/simple;
+	bh=pF2ZL1p4Ei/qjK+21n7JunfkAAqlUb8ntxONs3Z572o=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=tfL5PjrfcHqeuMh7rTHVs+FaOXXVfydZsA78SRQIucX5Am3Z0mHinDHYIhc/63x+nUQPfYS5ED5KlkNJn5uoXKf3V+ZdgJ7Ue/A1QwW4LV0MLm5PF4vrX2xQLYbJ1gS+0EbRXZEHsP3N4n+jW1JK4Xlinn2qafGve8qOWX5NgxU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=dolcini.it; spf=pass smtp.mailfrom=dolcini.it; dkim=pass (2048-bit key) header.d=dolcini.it header.i=@dolcini.it header.b=NsH/XNzm; arc=none smtp.client-ip=217.194.8.81
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=dolcini.it
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=dolcini.it
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cZxNG7bM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE6C3C4CEEB;
-	Mon,  2 Jun 2025 15:20:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748877615;
-	bh=ITVR3HMiYg5l6AZK7u7+eOql7sEf/xt3aCyBIPRjeWk=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cZxNG7bMTBQwp8X5ADhqyzS6LgQt6ms6rGKaGE5Tut6u9Crz++kXcJ5dv3TRXaPpa
-	 4FtEgtJtZ2uCzlreG1/jf2rngBZXfWbNQwvZXv8KVRm6gAPKBgxOiSBFLwF1rgHFL/
-	 jbIrTRe12O+EZDlFfa2oL/n9hwykE1g0x8Zu3pRY=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=dolcini.it header.i=@dolcini.it header.b="NsH/XNzm"
+Received: from francesco-nb.pivistrello.it (93-49-2-63.ip317.fastwebnet.it [93.49.2.63])
+	by mail11.truemail.it (Postfix) with ESMTPA id 4B6A81FA87;
+	Mon,  2 Jun 2025 17:59:03 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dolcini.it;
+	s=default; t=1748879943;
+	bh=EKCdMnhXKbL9nx4aXADmXEXPpwklZe+ysQFobHyuiso=; h=From:To:Subject;
+	b=NsH/XNzmlC1hrziF1koKU5UagtNFerZ171lYTq/Zr843VsX5ZyMzUKHEXGPaXtN+O
+	 KHpVCFWu1wXzpqsizu2QtyAnFx7vNMWfdtps+Kxnr7SA3/ErAGoCxx2L1zYE+0VaA2
+	 Y5DtaPxAKObdkmDCel3c68uJ2FfphJS3G0LyIH1XrWZTIBZLKSnA32l7XJCDGU9ZkM
+	 ioY/tNcaJrxY7gQ/r9HTpO9R+scMCPWcShJ72QkGIfYKf7AFZ3gZgLhGcOclGYFdZ3
+	 1p6+VRhFV0v8djDYSSo13C+VBNZixRu049qQ1Hf0wmrHRQ2fdh3j/D1YJEc8Rmle4L
+	 y4hNuW/AW5uNA==
+From: Francesco Dolcini <francesco@dolcini.it>
 To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+Cc: Marek Vasut <marex@denx.de>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robin Murphy <robin.murphy@arm.com>,
-	Ilkka Koskinen <ilkka@os.amperecomputing.com>,
-	Will Deacon <will@kernel.org>
-Subject: [PATCH 6.1 311/325] perf/arm-cmn: Initialise cmn->cpu earlier
-Date: Mon,  2 Jun 2025 15:49:47 +0200
-Message-ID: <20250602134332.560430740@linuxfoundation.org>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250602134319.723650984@linuxfoundation.org>
-References: <20250602134319.723650984@linuxfoundation.org>
-User-Agent: quilt/0.68
-X-stable: review
-X-Patchwork-Hint: ignore
+	Sasha Levin <sashal@kernel.org>,
+	Frieder Schrempf <frieder.schrempf@kontron.de>,
+	Shawn Guo <shawnguo@kernel.org>
+Subject: [PATCH 6.1.y] arm64: dts: imx8mm: Drop sd-vsel-gpios from i.MX8M Mini Verdin SoM
+Date: Mon,  2 Jun 2025 17:58:45 +0200
+Message-Id: <20250602155845.227354-1-francesco@dolcini.it>
+X-Mailer: git-send-email 2.39.5
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -47,47 +47,42 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+From: Marek Vasut <marex@denx.de>
 
-------------------
+[ Upstream commit 8bad8c923f217d238ba4f1a6d19d761e53bfbd26 ]
 
-From: Robin Murphy <robin.murphy@arm.com>
+The VSELECT pin is configured as MX8MM_IOMUXC_GPIO1_IO04_USDHC2_VSELECT
+and not as a GPIO, drop the bogus sd-vsel-gpios property as the eSDHC
+block handles the VSELECT pin on its own.
 
-commit 597704e201068db3d104de3c7a4d447ff8209127 upstream.
-
-For all the complexity of handling affinity for CPU hotplug, what we've
-apparently managed to overlook is that arm_cmn_init_irqs() has in fact
-always been setting the *initial* affinity of all IRQs to CPU 0, not the
-CPU we subsequently choose for event scheduling. Oh dear.
-
-Cc: stable@vger.kernel.org
-Fixes: 0ba64770a2f2 ("perf: Add Arm CMN-600 PMU driver")
-Signed-off-by: Robin Murphy <robin.murphy@arm.com>
-Reviewed-by: Ilkka Koskinen <ilkka@os.amperecomputing.com>
-Link: https://lore.kernel.org/r/b12fccba6b5b4d2674944f59e4daad91cd63420b.1747069914.git.robin.murphy@arm.com
-Signed-off-by: Will Deacon <will@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Marek Vasut <marex@denx.de>
+Reviewed-by: Frieder Schrempf <frieder.schrempf@kontron.de>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 ---
- drivers/perf/arm-cmn.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+6.1.y is currently broken on imx8mm-verdin, because commit
+5591ce0069ddda97cdbbea596bed53e698f399c2, that was backported correctly on 6.1,
+depends on this one.
 
---- a/drivers/perf/arm-cmn.c
-+++ b/drivers/perf/arm-cmn.c
-@@ -2313,6 +2313,7 @@ static int arm_cmn_probe(struct platform
- 
- 	cmn->dev = &pdev->dev;
- 	cmn->part = (unsigned long)device_get_match_data(cmn->dev);
-+	cmn->cpu = cpumask_local_spread(0, dev_to_node(cmn->dev));
- 	platform_set_drvdata(pdev, cmn);
- 
- 	if (cmn->part == PART_CMN600 && has_acpi_companion(cmn->dev)) {
-@@ -2340,7 +2341,6 @@ static int arm_cmn_probe(struct platform
- 	if (err)
- 		return err;
- 
--	cmn->cpu = cpumask_local_spread(0, dev_to_node(cmn->dev));
- 	cmn->pmu = (struct pmu) {
- 		.module = THIS_MODULE,
- 		.attr_groups = arm_cmn_attr_groups,
+This fixes the following error:
 
+[    1.735149] gpio-regulator: probe of regulator-usdhc2-vqmmc failed with error -16
+
+---
+ arch/arm64/boot/dts/freescale/imx8mm-verdin.dtsi | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/arch/arm64/boot/dts/freescale/imx8mm-verdin.dtsi b/arch/arm64/boot/dts/freescale/imx8mm-verdin.dtsi
+index 5b2493bb8dd9..37acaf62f5c7 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mm-verdin.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mm-verdin.dtsi
+@@ -362,7 +362,6 @@ pca9450: pmic@25 {
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&pinctrl_pmic>;
+ 		reg = <0x25>;
+-		sd-vsel-gpios = <&gpio1 4 GPIO_ACTIVE_HIGH>;
+ 
+ 		/*
+ 		 * The bootloader is expected to switch on the I2C level shifter for the TLA2024 ADC
+-- 
+2.39.5
 
