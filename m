@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80CE31A83E8;
-	Mon,  2 Jun 2025 14:58:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60C881F4165;
+	Mon,  2 Jun 2025 14:58:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748876335; cv=none; b=V0eoHysNyLD28sC3/ySjh7Dn9at1A7VMc3xwDgRbTv71EK7Fw9Y8pIvHrSxNmx/5vVB/qUO+S2v1DMHkvqvcIt0a4VjuqhFyoyNlmpP90blEiAofLxFKrsHhv6vY0pPPMAvCKQrZDkGqKzxxN7lbj/3GNkV0UfeA4sIgRIdG4zo=
+	t=1748876338; cv=none; b=CKp9V7+ktOch9zn3nLlFreHfgRIW20fPjMT2PwWklIDPh1E1zZlzLRm1rULbjx3877PtdnEB6kQDB7Wo0yKvLkg9rYdzqTOqN+dqclWYK3SDPjU1+Pu5Rg652OTwEY+pgBj2dG6MnOYMatAwFA4sWQMkFjN1O9iF5R/UEO/c+ig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748876335; c=relaxed/simple;
-	bh=+DIaJa9dpr9kdIA7FkpsD5vw1fHP3FfEN6Cbbegj9dE=;
+	s=arc-20240116; t=1748876338; c=relaxed/simple;
+	bh=wdLS0WjiuLOdD7TeTQvXIULLj7MECuAhppAWKAKymYI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=exVdH4PgNVRyD4V1FZlce7hsqOHHoRrdoupkGkk24HZLREEUeZ4zTIFJmVt5zuV1RpX5qU6us04n3R+dFmwWuc/2OKfXNGO+p+/lqrYNelMh1TMHdMej51zf/ZoaJYwyW2Pj7tK0GNgbpSwmc7kENv19Cg+CHKjjyJJfV2m4cy0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=grNHSD1h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ThcGmDNZ25Y0OHPILm+HJQ58USQ9pVSto4zv2VD24EcxnSShG1fn0eADaOFsY+gnHq4RFc+WqPYoOvCOazeTTplXkbG5dahu+4h4HhfpnMxBlow5BgbXmke691k/w4LvDuGOPvx14KSkTxw2xAWnET5jfDLiQI0os8Vy+kYtZoU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KUfTtiwZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="grNHSD1h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F3C4C4CEEB;
-	Mon,  2 Jun 2025 14:58:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KUfTtiwZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2CA5C4CEEB;
+	Mon,  2 Jun 2025 14:58:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748876335;
-	bh=+DIaJa9dpr9kdIA7FkpsD5vw1fHP3FfEN6Cbbegj9dE=;
+	s=korg; t=1748876338;
+	bh=wdLS0WjiuLOdD7TeTQvXIULLj7MECuAhppAWKAKymYI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=grNHSD1hk0z8/tEdYucPgXo7GVlX0Cdh/5Glt+6uHILLSwCxOW67/apvSnbm2UCEh
-	 WlC8zUynV0ro5Nt850bpufTrweW6Ek9/6kOWEbeWnvF7DVye/Q3twc1x9Wd9AIHmLE
-	 fQjGq4HRAMZjKwJinqjIUuWpLLCqRbu4qr3T9MQo=
+	b=KUfTtiwZ3Slktg/Fodb2s3VMbJ98WKY/AV3Ra8ABMtMGy5NHdvPHHLdigrR35Ts/q
+	 I+sW7BnYYuFvkDpud3mcj3g/vzZPFcs/wTtU4qpARDQZ9e4B9ZM4gnV367U9gV6vW0
+	 JGhWuks14Cs3J7RSd9B6IPo9YcthEj53NufprGPc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	junan <junan76@163.com>,
-	Jiri Kosina <jkosina@suse.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Jocelyn Falempe <jfalempe@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 144/207] HID: usbkbd: Fix the bit shift number for LED_KANA
-Date: Mon,  2 Jun 2025 15:48:36 +0200
-Message-ID: <20250602134304.363309269@linuxfoundation.org>
+Subject: [PATCH 5.15 145/207] drm/ast: Find VBIOS mode from regular display size
+Date: Mon,  2 Jun 2025 15:48:37 +0200
+Message-ID: <20250602134304.402022009@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134258.769974467@linuxfoundation.org>
 References: <20250602134258.769974467@linuxfoundation.org>
@@ -51,32 +51,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: junan <junan76@163.com>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-[ Upstream commit d73a4bfa2881a6859b384b75a414c33d4898b055 ]
+[ Upstream commit c81202906b5cd56db403e95db3d29c9dfc8c74c1 ]
 
-Since "LED_KANA" was defined as "0x04", the shift number should be "4".
+The ast driver looks up supplied display modes from an internal list of
+display modes supported by the VBIOS.
 
-Signed-off-by: junan <junan76@163.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Do not use the crtc_-prefixed display values from struct drm_display_mode
+for looking up the VBIOS mode. The fields contain raw values that the
+driver programs to hardware. They are affected by display settings like
+double-scan or interlace.
+
+Instead use the regular vdisplay and hdisplay fields for lookup. As the
+programmed values can now differ from the values used for lookup, set
+struct drm_display_mode.crtc_vdisplay and .crtc_hdisplay from the VBIOS
+mode.
+
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Reviewed-by: Jocelyn Falempe <jfalempe@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250131092257.115596-9-tzimmermann@suse.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/usbhid/usbkbd.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/ast/ast_mode.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/hid/usbhid/usbkbd.c b/drivers/hid/usbhid/usbkbd.c
-index df02002066cef..1d94d246f8162 100644
---- a/drivers/hid/usbhid/usbkbd.c
-+++ b/drivers/hid/usbhid/usbkbd.c
-@@ -160,7 +160,7 @@ static int usb_kbd_event(struct input_dev *dev, unsigned int type,
- 		return -1;
+diff --git a/drivers/gpu/drm/ast/ast_mode.c b/drivers/gpu/drm/ast/ast_mode.c
+index 08ed0d08d03b8..87d31d3b0e357 100644
+--- a/drivers/gpu/drm/ast/ast_mode.c
++++ b/drivers/gpu/drm/ast/ast_mode.c
+@@ -105,7 +105,7 @@ static bool ast_get_vbios_mode_info(const struct drm_format_info *format,
+ 		return false;
+ 	}
  
- 	spin_lock_irqsave(&kbd->leds_lock, flags);
--	kbd->newleds = (!!test_bit(LED_KANA,    dev->led) << 3) | (!!test_bit(LED_COMPOSE, dev->led) << 3) |
-+	kbd->newleds = (!!test_bit(LED_KANA,    dev->led) << 4) | (!!test_bit(LED_COMPOSE, dev->led) << 3) |
- 		       (!!test_bit(LED_SCROLLL, dev->led) << 2) | (!!test_bit(LED_CAPSL,   dev->led) << 1) |
- 		       (!!test_bit(LED_NUML,    dev->led));
+-	switch (mode->crtc_hdisplay) {
++	switch (mode->hdisplay) {
+ 	case 640:
+ 		vbios_mode->enh_table = &res_640x480[refresh_rate_index];
+ 		break;
+@@ -116,7 +116,7 @@ static bool ast_get_vbios_mode_info(const struct drm_format_info *format,
+ 		vbios_mode->enh_table = &res_1024x768[refresh_rate_index];
+ 		break;
+ 	case 1280:
+-		if (mode->crtc_vdisplay == 800)
++		if (mode->vdisplay == 800)
+ 			vbios_mode->enh_table = &res_1280x800[refresh_rate_index];
+ 		else
+ 			vbios_mode->enh_table = &res_1280x1024[refresh_rate_index];
+@@ -128,7 +128,7 @@ static bool ast_get_vbios_mode_info(const struct drm_format_info *format,
+ 		vbios_mode->enh_table = &res_1440x900[refresh_rate_index];
+ 		break;
+ 	case 1600:
+-		if (mode->crtc_vdisplay == 900)
++		if (mode->vdisplay == 900)
+ 			vbios_mode->enh_table = &res_1600x900[refresh_rate_index];
+ 		else
+ 			vbios_mode->enh_table = &res_1600x1200[refresh_rate_index];
+@@ -137,7 +137,7 @@ static bool ast_get_vbios_mode_info(const struct drm_format_info *format,
+ 		vbios_mode->enh_table = &res_1680x1050[refresh_rate_index];
+ 		break;
+ 	case 1920:
+-		if (mode->crtc_vdisplay == 1080)
++		if (mode->vdisplay == 1080)
+ 			vbios_mode->enh_table = &res_1920x1080[refresh_rate_index];
+ 		else
+ 			vbios_mode->enh_table = &res_1920x1200[refresh_rate_index];
+@@ -181,6 +181,7 @@ static bool ast_get_vbios_mode_info(const struct drm_format_info *format,
+ 	hborder = (vbios_mode->enh_table->flags & HBorder) ? 8 : 0;
+ 	vborder = (vbios_mode->enh_table->flags & VBorder) ? 8 : 0;
  
++	adjusted_mode->crtc_hdisplay = vbios_mode->enh_table->hde;
+ 	adjusted_mode->crtc_htotal = vbios_mode->enh_table->ht;
+ 	adjusted_mode->crtc_hblank_start = vbios_mode->enh_table->hde + hborder;
+ 	adjusted_mode->crtc_hblank_end = vbios_mode->enh_table->ht - hborder;
+@@ -190,6 +191,7 @@ static bool ast_get_vbios_mode_info(const struct drm_format_info *format,
+ 					 vbios_mode->enh_table->hfp +
+ 					 vbios_mode->enh_table->hsync);
+ 
++	adjusted_mode->crtc_vdisplay = vbios_mode->enh_table->vde;
+ 	adjusted_mode->crtc_vtotal = vbios_mode->enh_table->vt;
+ 	adjusted_mode->crtc_vblank_start = vbios_mode->enh_table->vde + vborder;
+ 	adjusted_mode->crtc_vblank_end = vbios_mode->enh_table->vt - vborder;
 -- 
 2.39.5
 
