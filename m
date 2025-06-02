@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98F9F17BBF;
-	Mon,  2 Jun 2025 14:53:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 443AA1FBC90;
+	Mon,  2 Jun 2025 14:53:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748876018; cv=none; b=Kj3yTD5/gMxO0e79XRyfE+5FSfzSqhWpMR9CE1bVFbsTH5PaCr6XMqCxLhmNVWQLFoNR+pxgCHV27oeUcex56l76lqXcJosf/mjzTkEwdncJx/oxItT2kziHsSFnLGyjWOTbTV11ErtEK5KtJbCpmD/fJjVn2VqdB7DWqgUNNAA=
+	t=1748876022; cv=none; b=eRbrBG/yp2qC/JCjRROdHCVBDS1fpqfIdIb+jS0nORgZwwydb7Et8ac580IgN3Kyl41sIZKCgzkFV1dx4qp+6YqGQfe3egyCX2Gi3bPJz/IXFKoihsjkpaqk119aM6wPIV9RF2gtvT2ni7c/eiQUw3782gQtljRqju+tlvRDbjk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748876018; c=relaxed/simple;
-	bh=c7c9orpvvcZHBDMTaxBle9PMb3+SPo4tuE2LxhsuFT8=;
+	s=arc-20240116; t=1748876022; c=relaxed/simple;
+	bh=lpHe9QHGhbkDDLc54xbt0suSrOKz5GGtBycyxorZKJ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=B76BCJTc1t5D89mdFeKW+WO0tqV9SpuLzhxf8E7Dr+sPn71l9tVXxj/N/RZnllaYxsRxNbiS30hArDrRMHki7jbUGwEiGm7NSxfiuuG8Gh4zFjvQE8zBoPZZtVgMQBb0VhxfbP2rENA3qd7UlW2wmdylTrMLDT/4SqAPv8o+mC0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hK7xJlRp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fK5SOldVsnuslOUJGfYLKtdQkVlO6htkOBbsXqE/rQBTOsAytT03An0GZsN+rjmV6jpuTT8cBBUqwRwMQSF/wBn9Y9JakmHIHW0kvyJh6mqRaOUgpH5QOGs3N0ZXFjtnq/DOV+/mPshw7To/OgvT5FqOnRIRHCD74mOOZP1cikA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FKZnV+1q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hK7xJlRp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2DF7C4CEEB;
-	Mon,  2 Jun 2025 14:53:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FKZnV+1q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42F1BC4CEEB;
+	Mon,  2 Jun 2025 14:53:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748876018;
-	bh=c7c9orpvvcZHBDMTaxBle9PMb3+SPo4tuE2LxhsuFT8=;
+	s=korg; t=1748876021;
+	bh=lpHe9QHGhbkDDLc54xbt0suSrOKz5GGtBycyxorZKJ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hK7xJlRpNJmqxMmIArflP+4mm3KLEILWagMx5wJf+MEyBBpbHDqLz3+F44Jc9MYW3
-	 6OOfzueSlUUPiiZ7PQZNvbTu8IgC+U/hbK16K9M5Vo9SH0wMIu/gLJm0c8qPLAnPNj
-	 fk0+D2mmjASOap6RHNXe207zYHEFQnHLdnkbr+I8=
+	b=FKZnV+1qCW7yBJ24eK70bd6B8T3bOJGhiAayF6DO1Z3y+HkNERPcwEzpUmZRGH4lx
+	 C8I5dP0TxhxJxoD7hIGh1zCpjdpz+hVPAERWoh02Ic+fIc8IgrWP9Y61QGthG0ePGX
+	 YBYnmnfl5GfsxrIvlSg1zqMMI1NVdZzjsOSEi3jo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
-	Mark Brown <broonie@kernel.org>,
+	Seyediman Seyedarab <imandevel@gmail.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 045/207] ASoC: mediatek: mt6359: Add stub for mt6359_accdet_enable_jack_detect
-Date: Mon,  2 Jun 2025 15:46:57 +0200
-Message-ID: <20250602134300.521482077@linuxfoundation.org>
+Subject: [PATCH 5.15 046/207] kbuild: fix argument parsing in scripts/config
+Date: Mon,  2 Jun 2025 15:46:58 +0200
+Message-ID: <20250602134300.558415932@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134258.769974467@linuxfoundation.org>
 References: <20250602134258.769974467@linuxfoundation.org>
@@ -46,50 +45,86 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+From: Seyediman Seyedarab <imandevel@gmail.com>
 
-[ Upstream commit 0116a7d84b32537a10d9bea1fd1bfc06577ef527 ]
+[ Upstream commit f757f6011c92b5a01db742c39149bed9e526478f ]
 
-Add a stub for mt6359_accdet_enable_jack_detect() to prevent linker
-failures in the machine sound drivers calling it when
-CONFIG_SND_SOC_MT6359_ACCDET is not enabled.
+The script previously assumed --file was always the first argument,
+which caused issues when it appeared later. This patch updates the
+parsing logic to scan all arguments to find --file, sets the config
+file correctly, and resets the argument list with the remaining
+commands.
 
-Suggested-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
-Link: https://patch.msgid.link/20250306-mt8188-accdet-v3-3-7828e835ff4b@collabora.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+It also fixes --refresh to respect --file by passing KCONFIG_CONFIG=$FN
+to make oldconfig.
+
+Signed-off-by: Seyediman Seyedarab <imandevel@gmail.com>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/mt6359-accdet.h | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ scripts/config | 26 ++++++++++++++++----------
+ 1 file changed, 16 insertions(+), 10 deletions(-)
 
-diff --git a/sound/soc/codecs/mt6359-accdet.h b/sound/soc/codecs/mt6359-accdet.h
-index c234f2f4276a1..78ada3a5bfae5 100644
---- a/sound/soc/codecs/mt6359-accdet.h
-+++ b/sound/soc/codecs/mt6359-accdet.h
-@@ -123,6 +123,15 @@ struct mt6359_accdet {
- 	struct workqueue_struct *jd_workqueue;
- };
+diff --git a/scripts/config b/scripts/config
+index ff88e2faefd35..ea475c07de283 100755
+--- a/scripts/config
++++ b/scripts/config
+@@ -32,6 +32,7 @@ commands:
+                              Disable option directly after other option
+ 	--module-after|-M beforeopt option
+                              Turn option into module directly after other option
++	--refresh            Refresh the config using old settings
  
-+#if IS_ENABLED(CONFIG_SND_SOC_MT6359_ACCDET)
- int mt6359_accdet_enable_jack_detect(struct snd_soc_component *component,
- 				     struct snd_soc_jack *jack);
-+#else
-+static inline int
-+mt6359_accdet_enable_jack_detect(struct snd_soc_component *component,
-+				 struct snd_soc_jack *jack)
-+{
-+	return -EOPNOTSUPP;
-+}
-+#endif
- #endif
+ 	commands can be repeated multiple times
+ 
+@@ -124,16 +125,22 @@ undef_var() {
+ 	txt_delete "^# $name is not set" "$FN"
+ }
+ 
+-if [ "$1" = "--file" ]; then
+-	FN="$2"
+-	if [ "$FN" = "" ] ; then
+-		usage
++FN=.config
++CMDS=()
++while [[ $# -gt 0 ]]; do
++	if [ "$1" = "--file" ]; then
++		if [ "$2" = "" ]; then
++			usage
++		fi
++		FN="$2"
++		shift 2
++	else
++		CMDS+=("$1")
++		shift
+ 	fi
+-	shift 2
+-else
+-	FN=.config
+-fi
++done
+ 
++set -- "${CMDS[@]}"
+ if [ "$1" = "" ] ; then
+ 	usage
+ fi
+@@ -217,9 +224,8 @@ while [ "$1" != "" ] ; do
+ 		set_var "${CONFIG_}$B" "${CONFIG_}$B=m" "${CONFIG_}$A"
+ 		;;
+ 
+-	# undocumented because it ignores --file (fixme)
+ 	--refresh)
+-		yes "" | make oldconfig
++		yes "" | make oldconfig KCONFIG_CONFIG=$FN
+ 		;;
+ 
+ 	*)
 -- 
 2.39.5
 
