@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7585221FD6;
-	Mon,  2 Jun 2025 14:04:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8E07226CF1;
+	Mon,  2 Jun 2025 14:05:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748873098; cv=none; b=pLyVtOcttwlGAEPoWeAua7nctOJGhJxs0dBLYiIz9s8OAdPDOgIOL86y6cjW2S3KDPDVIynwpjkAfKBPc+MkBfNmrkVWC4sliMyGrBjPpJ0B6S44hsLlx5sdPtVn4HXqMKSxrAUBU5e9ZUu5P+AyDjR15243EJ2qPt1Qk3jPyHM=
+	t=1748873102; cv=none; b=Uyln1ucYYpB91+glwOzoPpq2CjFRaAgbuEsPfMC5fbRnC6+i2lAcAuIdATIh5wJLKk5C1nWtMPAg1VoMNhpR2M8IkKqnyjeHhdS1r2Tjb1aqLpi8Yve+Ag30QOCaarkDgHyD4uhBaecEuC8EbgjvoW/kvxgB8bXkcVYkhNZGLgM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748873098; c=relaxed/simple;
-	bh=qFlH5/IwGtecYd5/VnnKdbFP5lVfeVuycGfIOMEvj7Q=;
+	s=arc-20240116; t=1748873102; c=relaxed/simple;
+	bh=P4woGr/BI6gR0vrGk0iXsiyreRu1lmiMSkE87zelXwI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=aEFEfK6M7Qfk0VhPBmRe+3wZ13Clf9Lrf0GGSuWNiRhWzAIkTqbu+D0PHALjM7e0unUrnXKDbD7B3zI7nL9UneYJerFoeK9IQ5lCTuH89voxPZQ7B9sXD/Dz2jUEgESY0gOWL+XZu6cV/CwitNLU8Akfd4NcLmeMmaGecP9Oot0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kTOqtMKv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JO3gXJt57khADewU6dxMeyivXThC29NflAS2xjfvdnvip8/k9gazcOWJHYwzV9mnNzpMw0AyVbn2ae4K3mqaFwsU3wuSoGFRIdO0c+97pKGjA0t9VOp80Qq8NhSe+mBsx004rRRHvPrzIOyd/COMDanetDvceOFdmmSa+1o29WA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rzy1Ygvi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kTOqtMKv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36E6CC4CEEB;
-	Mon,  2 Jun 2025 14:04:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rzy1Ygvi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 615CDC4CEEB;
+	Mon,  2 Jun 2025 14:05:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748873098;
-	bh=qFlH5/IwGtecYd5/VnnKdbFP5lVfeVuycGfIOMEvj7Q=;
+	s=korg; t=1748873101;
+	bh=P4woGr/BI6gR0vrGk0iXsiyreRu1lmiMSkE87zelXwI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kTOqtMKv2RvlhHzPcGhKakVKdoN7HGy2+WSeKnECHO7zbqE05gQC95VY89KjATfB+
-	 6pydYVBO0oWYv639WCdOPkAyEySA9zRB7kl8FXidoP9uXmqE1xaY1AXLX6CYcL0Ylt
-	 H7go1VmS0k/XS4qCnlcIVKJnJESn7FUo1Diz7JNs=
+	b=Rzy1YgviUJdd1XKXkILU8z3KdJ1XU+Fn2UaUZqWY5YRM/ACTs5y+Qfovo+xVmZKrn
+	 OX2BDxtRRRZx5BcF/Qqs6evyIztyLfWWpwbJP6W6bkOiNv7Mz4FBEmkK7tDOwhroIL
+	 S2sIajTCXuWrPqEYw64v9m84uuJOpoGwPsuVhhx0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 037/444] cifs: Fix negotiate retry functionality
-Date: Mon,  2 Jun 2025 15:41:41 +0200
-Message-ID: <20250602134342.434069890@linuxfoundation.org>
+Subject: [PATCH 6.6 011/444] phy: renesas: rcar-gen3-usb2: Assert PLL reset on PHY power off
+Date: Mon,  2 Jun 2025 15:41:15 +0200
+Message-ID: <20250602134341.371179283@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -45,108 +47,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pali Rohár <pali@kernel.org>
+From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 
-[ Upstream commit e94e882a6d69525c07589222cf3a6ff57ad12b5b ]
+[ Upstream commit 9ce71e85b29eb63e48e294479742e670513f03a0 ]
 
-SMB negotiate retry functionality in cifs_negotiate() is currently broken
-and does not work when doing socket reconnect. Caller of this function,
-which is cifs_negotiate_protocol() requires that tcpStatus after successful
-execution of negotiate callback stay in CifsInNegotiate. But if the
-CIFSSMBNegotiate() called from cifs_negotiate() fails due to connection
-issues then tcpStatus is changed as so repeated CIFSSMBNegotiate() call
-does not help.
+Assert PLL reset on PHY power off. This saves power.
 
-Fix this problem by moving retrying code from negotiate callback (which is
-either cifs_negotiate() or smb2_negotiate()) to cifs_negotiate_protocol()
-which is caller of those callbacks. This allows to properly handle and
-implement correct transistions between tcpStatus states as function
-cifs_negotiate_protocol() already handles it.
-
-With this change, cifs_negotiate_protocol() now handles also -EAGAIN error
-set by the RFC1002_NEGATIVE_SESSION_RESPONSE processing after reconnecting
-with NetBIOS session.
-
-Signed-off-by: Pali Rohár <pali@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: f3b5a8d9b50d ("phy: rcar-gen3-usb2: Add R-Car Gen3 USB2 PHY driver")
+Cc: stable@vger.kernel.org
+Reviewed-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+Tested-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+Reviewed-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Link: https://lore.kernel.org/r/20250507125032.565017-5-claudiu.beznea.uj@bp.renesas.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/connect.c | 10 ++++++++++
- fs/smb/client/smb1ops.c |  7 -------
- fs/smb/client/smb2ops.c |  3 ---
- 3 files changed, 10 insertions(+), 10 deletions(-)
+ drivers/phy/renesas/phy-rcar-gen3-usb2.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/fs/smb/client/connect.c b/fs/smb/client/connect.c
-index 54aba8d642ee7..267fba234c12d 100644
---- a/fs/smb/client/connect.c
-+++ b/fs/smb/client/connect.c
-@@ -3946,11 +3946,13 @@ int
- cifs_negotiate_protocol(const unsigned int xid, struct cifs_ses *ses,
- 			struct TCP_Server_Info *server)
- {
-+	bool in_retry = false;
- 	int rc = 0;
+diff --git a/drivers/phy/renesas/phy-rcar-gen3-usb2.c b/drivers/phy/renesas/phy-rcar-gen3-usb2.c
+index 793f076171170..9a6391361a0be 100644
+--- a/drivers/phy/renesas/phy-rcar-gen3-usb2.c
++++ b/drivers/phy/renesas/phy-rcar-gen3-usb2.c
+@@ -537,9 +537,17 @@ static int rcar_gen3_phy_usb2_power_off(struct phy *p)
+ 	struct rcar_gen3_chan *channel = rphy->ch;
+ 	int ret = 0;
  
- 	if (!server->ops->need_neg || !server->ops->negotiate)
- 		return -ENOSYS;
+-	scoped_guard(spinlock_irqsave, &channel->lock)
++	scoped_guard(spinlock_irqsave, &channel->lock) {
+ 		rphy->powered = false;
  
-+retry:
- 	/* only send once per connect */
- 	spin_lock(&server->srv_lock);
- 	if (server->tcpStatus != CifsGood &&
-@@ -3970,6 +3972,14 @@ cifs_negotiate_protocol(const unsigned int xid, struct cifs_ses *ses,
- 	spin_unlock(&server->srv_lock);
- 
- 	rc = server->ops->negotiate(xid, ses, server);
-+	if (rc == -EAGAIN) {
-+		/* Allow one retry attempt */
-+		if (!in_retry) {
-+			in_retry = true;
-+			goto retry;
++		if (rcar_gen3_are_all_rphys_power_off(channel)) {
++			u32 val = readl(channel->base + USB2_USBCTR);
++
++			val |= USB2_USBCTR_PLL_RST;
++			writel(val, channel->base + USB2_USBCTR);
 +		}
-+		rc = -EHOSTDOWN;
 +	}
- 	if (rc == 0) {
- 		spin_lock(&server->srv_lock);
- 		if (server->tcpStatus == CifsInNegotiate)
-diff --git a/fs/smb/client/smb1ops.c b/fs/smb/client/smb1ops.c
-index caa1d852ece49..280885dd6bf08 100644
---- a/fs/smb/client/smb1ops.c
-+++ b/fs/smb/client/smb1ops.c
-@@ -426,13 +426,6 @@ cifs_negotiate(const unsigned int xid,
- {
- 	int rc;
- 	rc = CIFSSMBNegotiate(xid, ses, server);
--	if (rc == -EAGAIN) {
--		/* retry only once on 1st time connection */
--		set_credits(server, 1);
--		rc = CIFSSMBNegotiate(xid, ses, server);
--		if (rc == -EAGAIN)
--			rc = -EHOSTDOWN;
--	}
- 	return rc;
- }
- 
-diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
-index b809a616728f2..cead96454bb3d 100644
---- a/fs/smb/client/smb2ops.c
-+++ b/fs/smb/client/smb2ops.c
-@@ -428,9 +428,6 @@ smb2_negotiate(const unsigned int xid,
- 	server->CurrentMid = 0;
- 	spin_unlock(&server->mid_lock);
- 	rc = SMB2_negotiate(xid, ses, server);
--	/* BB we probably don't need to retry with modern servers */
--	if (rc == -EAGAIN)
--		rc = -EHOSTDOWN;
- 	return rc;
- }
++
+ 	if (channel->vbus)
+ 		ret = regulator_disable(channel->vbus);
  
 -- 
 2.39.5
