@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8814D22D78F;
-	Mon,  2 Jun 2025 14:46:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D18722ACF3;
+	Mon,  2 Jun 2025 14:46:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748875572; cv=none; b=Aneu0Wub2INdFANVBSLuEQU3tcCyqD4oMD5ZrmMyMrthq3N1TEEcGMbD1D0FwBfeSVkD9F/F9Li0FtWKVKe6UlHhJvn43HqIiweXGFnMCSGDMn2HZKAbakCTt82FPHtrOi7O9fhpDRaD9QnFTQ8ljWJo3MWe3eKKKdh98YI9EnI=
+	t=1748875576; cv=none; b=ewWye7wWcXSU8P3JQIHPuCvu0QqKWXk1a//GZN4TAbLcwZtaUeHLJT4MIHUCSS5emZWr1K6DDGNYUiKADaivpWs4huMVMTCuSz0Ir6/VLjR5SF1nD9q6kTEdKRDkaF5Hpby9M/O86Dusmi2nOMSusFw/4YmGKg1JqJba4eVWalI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748875572; c=relaxed/simple;
-	bh=GYiUdnzDXT51Y9xB/76IqqTNcJ1XI33HpIoC8nWykgc=;
+	s=arc-20240116; t=1748875576; c=relaxed/simple;
+	bh=ARsr/HL+UJ3CFrofaub9KSVFP+oiUijq+gtBxX5M5TU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cvR32F15WFsPRWcYMYgymTSZCwOTAfIMPMGo5jHBRl61PnkWqYtVaiwXhRbRZ2m+0xyTyc7n34l7zBMazT/U8Y26bfnoK64HqE8EZ/piy6oDg/VCuvnLkHH4FwJvR+efU989miSMkgVc/WeFI3GkfzICYhVXZ5JL3p0aYezHl7U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kke0WX/V; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LDwkpWmUjfTRm5MVGUFLqgM6ydsGjk6Oc9g6WN/wEp5AgNlJw6Jhy5zubvPQxNGzz+YZaER8Y0+94EkteV8SvEFC+Suegq+WN/CzR+o/Liz3KaNTH2kREvQ53wClhZ2L1S8d5O3Fb0Q2fBLeDDvjidldcU7FA40GdR8BJIuLBuo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t+q6pNr3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kke0WX/V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AACDC4CEEB;
-	Mon,  2 Jun 2025 14:46:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t+q6pNr3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98B89C4CEEB;
+	Mon,  2 Jun 2025 14:46:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748875571;
-	bh=GYiUdnzDXT51Y9xB/76IqqTNcJ1XI33HpIoC8nWykgc=;
+	s=korg; t=1748875576;
+	bh=ARsr/HL+UJ3CFrofaub9KSVFP+oiUijq+gtBxX5M5TU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Kke0WX/VQgBloIzP+xNSfdEoBpvvZA8K32IkzxJHuYo7OYPxRkETzqFIpNYaReL/J
-	 K9CQTngZXFA55GvSsNyNBXEqrony0A4UeMQ2fiTGU9t7gNzZKZuqyPYrS/Aw80c9bl
-	 YvybOGV+oNdodrnIGl0rgxkRgRKrh6iHYlKaNVkc=
+	b=t+q6pNr3xbtDPR/g5gc8kv0+S+fAj/LPBtOGqaI+pYnFl82HGV/CBI+dGjbl4LsXx
+	 xglTgIy+4jI36duAa5FVakGi70UGtgfn1YLjlonn9UBZyiQ6FZBipcq57FmjhOp0/s
+	 L7dQqVP2XFMsmzXCBwf5Vv7kEy4JU4kx9UaIOdTk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Philip Yang <Philip.Yang@amd.com>,
-	Felix Kuehling <felix.kuehling@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Markus Elfring <elfring@users.sourceforge.net>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 177/270] drm/amdkfd: KFD release_work possible circular locking
-Date: Mon,  2 Jun 2025 15:47:42 +0200
-Message-ID: <20250602134314.452976741@linuxfoundation.org>
+Subject: [PATCH 5.10 160/270] media: c8sectpfe: Call of_node_put(i2c_bus) only once in c8sectpfe_probe()
+Date: Mon,  2 Jun 2025 15:47:25 +0200
+Message-ID: <20250602134313.751829381@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134307.195171844@linuxfoundation.org>
 References: <20250602134307.195171844@linuxfoundation.org>
@@ -52,78 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Philip Yang <Philip.Yang@amd.com>
+From: Markus Elfring <elfring@users.sourceforge.net>
 
-[ Upstream commit 1b9366c601039d60546794c63fbb83ce8e53b978 ]
+[ Upstream commit b773530a34df0687020520015057075f8b7b4ac4 ]
 
-If waiting for gpu reset done in KFD release_work, thers is WARNING:
-possible circular locking dependency detected
+An of_node_put(i2c_bus) call was immediately used after a pointer check
+for an of_find_i2c_adapter_by_node() call in this function implementation.
+Thus call such a function only once instead directly before the check.
 
-  #2  kfd_create_process
-        kfd_process_mutex
-          flush kfd release work
+This issue was transformed by using the Coccinelle software.
 
-  #1  kfd release work
-        wait for amdgpu reset work
-
-  #0  amdgpu_device_gpu_reset
-        kgd2kfd_pre_reset
-          kfd_process_mutex
-
-  Possible unsafe locking scenario:
-
-        CPU0                    CPU1
-        ----                    ----
-   lock((work_completion)(&p->release_work));
-                  lock((wq_completion)kfd_process_wq);
-                  lock((work_completion)(&p->release_work));
-   lock((wq_completion)amdgpu-reset-dev);
-
-To fix this, KFD create process move flush release work outside
-kfd_process_mutex.
-
-Signed-off-by: Philip Yang <Philip.Yang@amd.com>
-Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Markus Elfring <elfring@users.sourceforge.net>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_process.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/media/platform/sti/c8sectpfe/c8sectpfe-core.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_process.c b/drivers/gpu/drm/amd/amdkfd/kfd_process.c
-index 184527afe2bd5..05d2598f516d1 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_process.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_process.c
-@@ -755,6 +755,14 @@ struct kfd_process *kfd_create_process(struct file *filep)
- 	if (thread->group_leader->mm != thread->mm)
- 		return ERR_PTR(-EINVAL);
+diff --git a/drivers/media/platform/sti/c8sectpfe/c8sectpfe-core.c b/drivers/media/platform/sti/c8sectpfe/c8sectpfe-core.c
+index b7e0ec265b70c..6e3b3643a2cdb 100644
+--- a/drivers/media/platform/sti/c8sectpfe/c8sectpfe-core.c
++++ b/drivers/media/platform/sti/c8sectpfe/c8sectpfe-core.c
+@@ -811,13 +811,12 @@ static int c8sectpfe_probe(struct platform_device *pdev)
+ 		}
+ 		tsin->i2c_adapter =
+ 			of_find_i2c_adapter_by_node(i2c_bus);
++		of_node_put(i2c_bus);
+ 		if (!tsin->i2c_adapter) {
+ 			dev_err(&pdev->dev, "No i2c adapter found\n");
+-			of_node_put(i2c_bus);
+ 			ret = -ENODEV;
+ 			goto err_clk_disable;
+ 		}
+-		of_node_put(i2c_bus);
  
-+	/* If the process just called exec(3), it is possible that the
-+	 * cleanup of the kfd_process (following the release of the mm
-+	 * of the old process image) is still in the cleanup work queue.
-+	 * Make sure to drain any job before trying to recreate any
-+	 * resource for this process.
-+	 */
-+	flush_workqueue(kfd_process_wq);
-+
- 	/*
- 	 * take kfd processes mutex before starting of process creation
- 	 * so there won't be a case where two threads of the same process
-@@ -767,14 +775,6 @@ struct kfd_process *kfd_create_process(struct file *filep)
- 	if (process) {
- 		pr_debug("Process already found\n");
- 	} else {
--		/* If the process just called exec(3), it is possible that the
--		 * cleanup of the kfd_process (following the release of the mm
--		 * of the old process image) is still in the cleanup work queue.
--		 * Make sure to drain any job before trying to recreate any
--		 * resource for this process.
--		 */
--		flush_workqueue(kfd_process_wq);
--
- 		process = create_process(thread);
- 		if (IS_ERR(process))
- 			goto out;
+ 		tsin->rst_gpio = of_get_named_gpio(child, "reset-gpios", 0);
+ 
 -- 
 2.39.5
 
