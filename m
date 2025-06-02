@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFACE225785;
-	Mon,  2 Jun 2025 14:59:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 193EF239E73;
+	Mon,  2 Jun 2025 14:59:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748876361; cv=none; b=WF6323OvxwIojaGW/WplZFG8iq9yVYKdzKrSiWJRrWMM8Ar0V0g5oe97M4Whl1g7gHZlHDoFCmv7yw+XfmE4jw7gpgmaTNBAneexs7bl3+utZkn3lbgv/5L9XCbb79aVdjZPmYfj0iUZqB7Zz03eWa3KabwQd+MrDU4+9aGq/og=
+	t=1748876364; cv=none; b=dGcyJegc0wjpuQEenm2i1Q2Js/RMvIp07NsLGLMc1b/awoexUyxjuFg2lY+QMBNI00XAVb/rN9kEAlsyQVOdZtbGc9J4jkUkPL7XRdQ66amPAM+iSTRs295QDwH00WTTuD7kbL4i19FU9MP7hAPeRTEkOQHmZp+Wyqt0pezqR4o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748876361; c=relaxed/simple;
-	bh=XF+VFk5a19M+sYNpc/TS7V3iLd+Ck+vuqwZWxeBVXjo=;
+	s=arc-20240116; t=1748876364; c=relaxed/simple;
+	bh=u98jOjoZWWKznEfvWyN/LF1YnA2nWn3Ie9PnyZaBE+g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U/B6rqxyNwgu0CDjWRbX6+LnpQLcJrOrMKxd/fQroF8igX7fYosryGTA6H3p04dTgwUpOHKhj/PXQTJOPJdpgam6sp/86WMk8gVuMoECxkXuMKf2QHzm2rHOBu1u2SM4MseqW6pmW4Dt79pgYJCZLe+X8eGX2auzsZ/vkb0MyaE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HRsdt998; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y0lqB0MIPZAxmyQgqYhBwEHN6j6RvojQvR9eqJyjI/GuF7t4tv99VNGCu1QXHVgK0KZUeS7hSY0FCLIonWec4L/KBibZUTA+RKuAED3JlBU8y3O7RP6ceAMZiXG8V++4YYKB8/ls7SNoW1xLmRWpKGJyOUSLulNqQpNOWRxl7QU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jZTf+rtg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HRsdt998"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DB13C4CEEB;
-	Mon,  2 Jun 2025 14:59:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jZTf+rtg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88241C4CEEB;
+	Mon,  2 Jun 2025 14:59:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748876360;
-	bh=XF+VFk5a19M+sYNpc/TS7V3iLd+Ck+vuqwZWxeBVXjo=;
+	s=korg; t=1748876364;
+	bh=u98jOjoZWWKznEfvWyN/LF1YnA2nWn3Ie9PnyZaBE+g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HRsdt998NlqDO3EAwT7SIRCwDO9dvTDv1SqjSIRLPZtQO5ldMlrvVZFn9dI7x6nKq
-	 J0S0jsBA5KvI7WV7jLSuD2QmwboTcwbcAo/5lXLLOHxQ368CFgMxTjbEj72pVRNkQU
-	 jH+jE6JFZtOWS+1EmXJVWDuC//EqTwwcoOpmDZSM=
+	b=jZTf+rtgYHWvvNI60sx4yxn7eQAVOhgpmWWFevO4nPHAPp6SDCgT8dY6a5j1L0f/P
+	 4lzUZSqfO5u9U+5780s0fCbBb+lg9c8g4Y4qLUq0aCKK6Mm4thzo78MmzfvJd+gB7V
+	 b3oBkCpP9dPS0aKv6FRJr7sxduc3NEmILDTdO/io=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damon Ding <damon.ding@rock-chips.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Vinod Koul <vkoul@kernel.org>,
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Jiang Liu <gerry@linux.alibaba.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 122/207] phy: core: dont require set_mode() callback for phy_get_mode() to work
-Date: Mon,  2 Jun 2025 15:48:14 +0200
-Message-ID: <20250602134303.495375270@linuxfoundation.org>
+Subject: [PATCH 5.15 123/207] drm/amdgpu: reset psp->cmd to NULL after releasing the buffer
+Date: Mon,  2 Jun 2025 15:48:15 +0200
+Message-ID: <20250602134303.534274119@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134258.769974467@linuxfoundation.org>
 References: <20250602134258.769974467@linuxfoundation.org>
@@ -52,51 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Jiang Liu <gerry@linux.alibaba.com>
 
-[ Upstream commit d58c04e305afbaa9dda7969151f06c4efe2c98b0 ]
+[ Upstream commit e92f3f94cad24154fd3baae30c6dfb918492278d ]
 
-As reported by Damon Ding, the phy_get_mode() call doesn't work as
-expected unless the PHY driver has a .set_mode() call. This prompts PHY
-drivers to have empty stubs for .set_mode() for the sake of being able
-to get the mode.
+Reset psp->cmd to NULL after releasing the buffer in function psp_sw_fini().
 
-Make .set_mode() callback truly optional and update PHY's mode even if
-it there is none.
-
-Cc: Damon Ding <damon.ding@rock-chips.com>
-Link: https://lore.kernel.org/r/96f8310f-93f1-4bcb-8637-137e1159ff83@rock-chips.com
-Tested-by: Damon Ding <damon.ding@rock-chips.com>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20250209-phy-fix-set-moe-v2-1-76e248503856@linaro.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
+Signed-off-by: Jiang Liu <gerry@linux.alibaba.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/phy-core.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/phy/phy-core.c b/drivers/phy/phy-core.c
-index e2bfd56d5086e..21f12aeb7747f 100644
---- a/drivers/phy/phy-core.c
-+++ b/drivers/phy/phy-core.c
-@@ -360,13 +360,14 @@ EXPORT_SYMBOL_GPL(phy_power_off);
- 
- int phy_set_mode_ext(struct phy *phy, enum phy_mode mode, int submode)
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
+index a8b7f0aeacf83..64bf24b64446b 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
+@@ -353,7 +353,6 @@ static int psp_sw_fini(void *handle)
  {
--	int ret;
-+	int ret = 0;
+ 	struct amdgpu_device *adev = (struct amdgpu_device *)handle;
+ 	struct psp_context *psp = &adev->psp;
+-	struct psp_gfx_cmd_resp *cmd = psp->cmd;
  
--	if (!phy || !phy->ops->set_mode)
-+	if (!phy)
- 		return 0;
+ 	psp_memory_training_fini(psp);
+ 	if (psp->sos_fw) {
+@@ -373,8 +372,8 @@ static int psp_sw_fini(void *handle)
+ 	    adev->asic_type == CHIP_SIENNA_CICHLID)
+ 		psp_sysfs_fini(adev);
  
- 	mutex_lock(&phy->mutex);
--	ret = phy->ops->set_mode(phy, mode, submode);
-+	if (phy->ops->set_mode)
-+		ret = phy->ops->set_mode(phy, mode, submode);
- 	if (!ret)
- 		phy->attrs.mode = mode;
- 	mutex_unlock(&phy->mutex);
+-	kfree(cmd);
+-	cmd = NULL;
++	kfree(psp->cmd);
++	psp->cmd = NULL;
+ 
+ 	amdgpu_bo_free_kernel(&psp->fw_pri_bo,
+ 			      &psp->fw_pri_mc_addr, &psp->fw_pri_buf);
 -- 
 2.39.5
 
