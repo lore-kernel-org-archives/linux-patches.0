@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90FBB232368;
-	Mon,  2 Jun 2025 14:52:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0DB422F764;
+	Mon,  2 Jun 2025 14:52:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748875957; cv=none; b=Ps2k6RcRxP/TqoflyvW9tboUNCDtE7hFGiU7zzmRNk94x8c3JETA18xqwgPN0q49+wCAJGC58BkEL9XgcmCbHZevrj0AxlQ/e0ZllQetBeXvymv8mz0YJEAI/oBWr1Pxu9w332ppx6viZys3Eu6sT9sqC9G7hPsFSrDb9vu55Ng=
+	t=1748875960; cv=none; b=N5vD5dwzVWlPKoJ8+dxNneWtiE6YnqodzTQ9JjklWo4YwyFj0pQPRg3jKw1Awi9F2malj+bcWK60Y6NmbSN5UhSPYguxdyoMeNtfW6EilaGlTNja5ZyE8CTJvy0qkh9uauWHCpeqi+hnDntoL3jbM+NBk8XD4Wo0/TzaWVeP0eg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748875957; c=relaxed/simple;
-	bh=MmiQW32QBguyznkgPcieA+53rLTbWUJy1835+c2Cvyo=;
+	s=arc-20240116; t=1748875960; c=relaxed/simple;
+	bh=lwGicsb6PTuwmKgem0y9+gGanliVb9qxXVDAqhxWKGA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iBv9VgnYdk1aXWowEU0F6jKuGVQH6SZqM/MnmY5VBSithDC15qAnOgJV5U4Ww6PzI9NAR0JXeKIhXTWnHTvEC4J5vTHAfWIIEVNaSF3IYLql7voAcO2t+81GQovTIlLpYlnDwwSpVdJe0dOLQsYr2VQhpFUrtfS+iOpXF5y8VIE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ffVMRq6S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q00WA4CKCfUSeZT0cK0Z33XO1SXIdw+ASex2jWI/67t1a3kNKmhZW+2cHte0HsNFid9urLeykHBYiIBcltz78YmxKZMzO9wTj8I4LqdQDQsBoOQNjFr2hCSj5uA86P+2AHMPcAqxp1nHQ3I8iCL4MDxzMPovC7ufHrD4ixtEPy0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eR9Z4Tdn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ffVMRq6S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBCE6C4CEEB;
-	Mon,  2 Jun 2025 14:52:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eR9Z4Tdn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21C52C4CEEB;
+	Mon,  2 Jun 2025 14:52:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748875957;
-	bh=MmiQW32QBguyznkgPcieA+53rLTbWUJy1835+c2Cvyo=;
+	s=korg; t=1748875960;
+	bh=lwGicsb6PTuwmKgem0y9+gGanliVb9qxXVDAqhxWKGA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ffVMRq6SzT+miErxYJjKCzmbi2TQzusdd7WlQzHpeaJg7eyNSGwAidURuZTzgMsBQ
-	 KcBUaF13su+5CmfMsVttZTTSETTaOqi/pXVb98p5mBPons4JH1KR2lLIK1RA5laGSf
-	 +KmgypUB9FqSWeoufScG0tlIlBsRxDTdazgzrwIs=
+	b=eR9Z4TdnFEViNzSNf/+7uY8+mkS7ThSJGgHY5mg/cKl64ZLZpJFIk17+dA2AlcVzc
+	 C7HSCGkDU3qa9PWDEHEhhN2HrloeIF7AXOtGWfl0H5bAc8sH0t4a1zFj5o6FLI26vn
+	 1l4Ur8K6Q24UFsfp+fKuooeBDc8sJUcZFcrBwaFM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Fietkau <nbd@nbd.name>,
+	Stephan Gerhold <stephan.gerhold@kernkonzept.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 027/207] wifi: mt76: only mark tx-status-failed frames as ACKed on mt76x0/2
-Date: Mon,  2 Jun 2025 15:46:39 +0200
-Message-ID: <20250602134259.833871418@linuxfoundation.org>
+Subject: [PATCH 5.15 028/207] i2c: qup: Vote for interconnect bandwidth to DRAM
+Date: Mon,  2 Jun 2025 15:46:40 +0200
+Message-ID: <20250602134259.871798825@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134258.769974467@linuxfoundation.org>
 References: <20250602134258.769974467@linuxfoundation.org>
@@ -50,109 +51,137 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
 
-[ Upstream commit 0c5a89ceddc1728a40cb3313948401dd70e3c649 ]
+[ Upstream commit d4f35233a6345f62637463ef6e0708f44ffaa583 ]
 
-The interrupt status polling is unreliable, which can cause status events
-to get lost. On all newer chips, txs-timeout is an indication that the
-packet was either never sent, or never acked.
-Fixes issues with inactivity polling.
+When the I2C QUP controller is used together with a DMA engine it needs
+to vote for the interconnect path to the DRAM. Otherwise it may be
+unable to access the memory quickly enough.
 
-Link: https://patch.msgid.link/20250311103646.43346-6-nbd@nbd.name
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+The requested peak bandwidth is dependent on the I2C core clock.
+
+To avoid sending votes too often the bandwidth is always requested when
+a DMA transfer starts, but dropped only on runtime suspend. Runtime
+suspend should only happen if no transfer is active. After resumption we
+can defer the next vote until the first DMA transfer actually happens.
+
+The implementation is largely identical to the one introduced for
+spi-qup in commit ecdaa9473019 ("spi: qup: Vote for interconnect
+bandwidth to DRAM") since both drivers represent the same hardware
+block.
+
+Signed-off-by: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://lore.kernel.org/r/20231128-i2c-qup-dvfs-v1-3-59a0e3039111@kernkonzept.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt76.h       | 1 +
- drivers/net/wireless/mediatek/mt76/mt76x0/pci.c | 3 ++-
- drivers/net/wireless/mediatek/mt76/mt76x0/usb.c | 3 ++-
- drivers/net/wireless/mediatek/mt76/mt76x2/pci.c | 3 ++-
- drivers/net/wireless/mediatek/mt76/mt76x2/usb.c | 3 ++-
- drivers/net/wireless/mediatek/mt76/tx.c         | 3 ++-
- 6 files changed, 11 insertions(+), 5 deletions(-)
+ drivers/i2c/busses/i2c-qup.c | 36 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 36 insertions(+)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt76.h b/drivers/net/wireless/mediatek/mt76/mt76.h
-index 27f04fb2796d7..5a90fa556203f 100644
---- a/drivers/net/wireless/mediatek/mt76/mt76.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt76.h
-@@ -345,6 +345,7 @@ struct mt76_hw_cap {
- #define MT_DRV_RX_DMA_HDR		BIT(3)
- #define MT_DRV_HW_MGMT_TXQ		BIT(4)
- #define MT_DRV_AMSDU_OFFLOAD		BIT(5)
-+#define MT_DRV_IGNORE_TXS_FAILED	BIT(6)
+diff --git a/drivers/i2c/busses/i2c-qup.c b/drivers/i2c/busses/i2c-qup.c
+index b89eca2398d90..a2fb9dd58c95d 100644
+--- a/drivers/i2c/busses/i2c-qup.c
++++ b/drivers/i2c/busses/i2c-qup.c
+@@ -14,6 +14,7 @@
+ #include <linux/dma-mapping.h>
+ #include <linux/err.h>
+ #include <linux/i2c.h>
++#include <linux/interconnect.h>
+ #include <linux/interrupt.h>
+ #include <linux/io.h>
+ #include <linux/module.h>
+@@ -150,6 +151,8 @@
+ /* TAG length for DATA READ in RX FIFO  */
+ #define READ_RX_TAGS_LEN		2
  
- struct mt76_driver_ops {
- 	u32 drv_flags;
-diff --git a/drivers/net/wireless/mediatek/mt76/mt76x0/pci.c b/drivers/net/wireless/mediatek/mt76/mt76x0/pci.c
-index b795e7245c075..3255f9c0ef71f 100644
---- a/drivers/net/wireless/mediatek/mt76/mt76x0/pci.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt76x0/pci.c
-@@ -151,7 +151,8 @@ mt76x0e_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- 	static const struct mt76_driver_ops drv_ops = {
- 		.txwi_size = sizeof(struct mt76x02_txwi),
- 		.drv_flags = MT_DRV_TX_ALIGNED4_SKBS |
--			     MT_DRV_SW_RX_AIRTIME,
-+			     MT_DRV_SW_RX_AIRTIME |
-+			     MT_DRV_IGNORE_TXS_FAILED,
- 		.survey_flags = SURVEY_INFO_TIME_TX,
- 		.update_survey = mt76x02_update_channel,
- 		.tx_prepare_skb = mt76x02_tx_prepare_skb,
-diff --git a/drivers/net/wireless/mediatek/mt76/mt76x0/usb.c b/drivers/net/wireless/mediatek/mt76/mt76x0/usb.c
-index f2b2fa7338457..7a4d62bff28ff 100644
---- a/drivers/net/wireless/mediatek/mt76/mt76x0/usb.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt76x0/usb.c
-@@ -209,7 +209,8 @@ static int mt76x0u_probe(struct usb_interface *usb_intf,
- 			 const struct usb_device_id *id)
- {
- 	static const struct mt76_driver_ops drv_ops = {
--		.drv_flags = MT_DRV_SW_RX_AIRTIME,
-+		.drv_flags = MT_DRV_SW_RX_AIRTIME |
-+			     MT_DRV_IGNORE_TXS_FAILED,
- 		.survey_flags = SURVEY_INFO_TIME_TX,
- 		.update_survey = mt76x02_update_channel,
- 		.tx_prepare_skb = mt76x02u_tx_prepare_skb,
-diff --git a/drivers/net/wireless/mediatek/mt76/mt76x2/pci.c b/drivers/net/wireless/mediatek/mt76/mt76x2/pci.c
-index 5cd0379d86de8..4e369bd87c900 100644
---- a/drivers/net/wireless/mediatek/mt76/mt76x2/pci.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt76x2/pci.c
-@@ -22,7 +22,8 @@ mt76x2e_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- 	static const struct mt76_driver_ops drv_ops = {
- 		.txwi_size = sizeof(struct mt76x02_txwi),
- 		.drv_flags = MT_DRV_TX_ALIGNED4_SKBS |
--			     MT_DRV_SW_RX_AIRTIME,
-+			     MT_DRV_SW_RX_AIRTIME |
-+			     MT_DRV_IGNORE_TXS_FAILED,
- 		.survey_flags = SURVEY_INFO_TIME_TX,
- 		.update_survey = mt76x02_update_channel,
- 		.tx_prepare_skb = mt76x02_tx_prepare_skb,
-diff --git a/drivers/net/wireless/mediatek/mt76/mt76x2/usb.c b/drivers/net/wireless/mediatek/mt76/mt76x2/usb.c
-index 9369515f36a3a..09b01e09bcfe0 100644
---- a/drivers/net/wireless/mediatek/mt76/mt76x2/usb.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt76x2/usb.c
-@@ -29,7 +29,8 @@ static int mt76x2u_probe(struct usb_interface *intf,
- 			 const struct usb_device_id *id)
- {
- 	static const struct mt76_driver_ops drv_ops = {
--		.drv_flags = MT_DRV_SW_RX_AIRTIME,
-+		.drv_flags = MT_DRV_SW_RX_AIRTIME |
-+			     MT_DRV_IGNORE_TXS_FAILED,
- 		.survey_flags = SURVEY_INFO_TIME_TX,
- 		.update_survey = mt76x02_update_channel,
- 		.tx_prepare_skb = mt76x02u_tx_prepare_skb,
-diff --git a/drivers/net/wireless/mediatek/mt76/tx.c b/drivers/net/wireless/mediatek/mt76/tx.c
-index 134a735a06329..3fbf0153d13ca 100644
---- a/drivers/net/wireless/mediatek/mt76/tx.c
-+++ b/drivers/net/wireless/mediatek/mt76/tx.c
-@@ -93,7 +93,8 @@ __mt76_tx_status_skb_done(struct mt76_dev *dev, struct sk_buff *skb, u8 flags,
- 	__skb_unlink(skb, &dev->status_list);
++#define QUP_BUS_WIDTH			8
++
+ static unsigned int scl_freq;
+ module_param_named(scl_freq, scl_freq, uint, 0444);
+ MODULE_PARM_DESC(scl_freq, "SCL frequency override");
+@@ -227,6 +230,7 @@ struct qup_i2c_dev {
+ 	int			irq;
+ 	struct clk		*clk;
+ 	struct clk		*pclk;
++	struct icc_path		*icc_path;
+ 	struct i2c_adapter	adap;
  
- 	/* Tx status can be unreliable. if it fails, mark the frame as ACKed */
--	if (flags & MT_TX_CB_TXS_FAILED) {
-+	if (flags & MT_TX_CB_TXS_FAILED &&
-+	    (dev->drv->drv_flags & MT_DRV_IGNORE_TXS_FAILED)) {
- 		info->status.rates[0].count = 0;
- 		info->status.rates[0].idx = -1;
- 		info->flags |= IEEE80211_TX_STAT_ACK;
+ 	int			clk_ctl;
+@@ -255,6 +259,10 @@ struct qup_i2c_dev {
+ 	/* To configure when bus is in run state */
+ 	u32			config_run;
+ 
++	/* bandwidth votes */
++	u32			src_clk_freq;
++	u32			cur_bw_clk_freq;
++
+ 	/* dma parameters */
+ 	bool			is_dma;
+ 	/* To check if the current transfer is using DMA */
+@@ -453,6 +461,23 @@ static int qup_i2c_bus_active(struct qup_i2c_dev *qup, int len)
+ 	return ret;
+ }
+ 
++static int qup_i2c_vote_bw(struct qup_i2c_dev *qup, u32 clk_freq)
++{
++	u32 needed_peak_bw;
++	int ret;
++
++	if (qup->cur_bw_clk_freq == clk_freq)
++		return 0;
++
++	needed_peak_bw = Bps_to_icc(clk_freq * QUP_BUS_WIDTH);
++	ret = icc_set_bw(qup->icc_path, 0, needed_peak_bw);
++	if (ret)
++		return ret;
++
++	qup->cur_bw_clk_freq = clk_freq;
++	return 0;
++}
++
+ static void qup_i2c_write_tx_fifo_v1(struct qup_i2c_dev *qup)
+ {
+ 	struct qup_i2c_block *blk = &qup->blk;
+@@ -840,6 +865,10 @@ static int qup_i2c_bam_xfer(struct i2c_adapter *adap, struct i2c_msg *msg,
+ 	int ret = 0;
+ 	int idx = 0;
+ 
++	ret = qup_i2c_vote_bw(qup, qup->src_clk_freq);
++	if (ret)
++		return ret;
++
+ 	enable_irq(qup->irq);
+ 	ret = qup_i2c_req_dma(qup);
+ 
+@@ -1645,6 +1674,7 @@ static void qup_i2c_disable_clocks(struct qup_i2c_dev *qup)
+ 	config = readl(qup->base + QUP_CONFIG);
+ 	config |= QUP_CLOCK_AUTO_GATE;
+ 	writel(config, qup->base + QUP_CONFIG);
++	qup_i2c_vote_bw(qup, 0);
+ 	clk_disable_unprepare(qup->pclk);
+ }
+ 
+@@ -1745,6 +1775,11 @@ static int qup_i2c_probe(struct platform_device *pdev)
+ 			goto fail_dma;
+ 		}
+ 		qup->is_dma = true;
++
++		qup->icc_path = devm_of_icc_get(&pdev->dev, NULL);
++		if (IS_ERR(qup->icc_path))
++			return dev_err_probe(&pdev->dev, PTR_ERR(qup->icc_path),
++					     "failed to get interconnect path\n");
+ 	}
+ 
+ nodma:
+@@ -1793,6 +1828,7 @@ static int qup_i2c_probe(struct platform_device *pdev)
+ 		qup_i2c_enable_clocks(qup);
+ 		src_clk_freq = clk_get_rate(qup->clk);
+ 	}
++	qup->src_clk_freq = src_clk_freq;
+ 
+ 	/*
+ 	 * Bootloaders might leave a pending interrupt on certain QUP's,
 -- 
 2.39.5
 
