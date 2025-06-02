@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B6C122E3E3;
-	Mon,  2 Jun 2025 14:28:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26E1E22F16E;
+	Mon,  2 Jun 2025 14:28:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748874521; cv=none; b=Gmeh424ZegK0sXvoBSlgh0UMuGhTrDF+EcseJ8walh0VRw5VojtX743mL1egjTyzYk3hMS5vppXOmKojSoKDbLVsCZEpIrf0LyDxn/vvXa4eCJTownkyn9AxB63EfiycRkSJQSSZNiCcefIejAZ5w/P1rwkVPYffNyFsLb1IsZU=
+	t=1748874524; cv=none; b=re1QvhGyn7koC4Aj0ljR/FWBNxPiOuAqCrKQfyXkzrHvi6GkPqaGAy/JrR1bO5e/Gnn/aUY27/MjR7VxfQvuQgDsXpSVKS8+rIHfqCWZDHGQtQSmfa81P+9xbT1kYiTGs9caENAsXHbWM5rEUWLlzg9h5FDPTXsVD4PiJJCkZHY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748874521; c=relaxed/simple;
-	bh=TtZ1zSe7BH9+kyLCX7QOt/IczzUV9WVFKo9pHdKq0yI=;
+	s=arc-20240116; t=1748874524; c=relaxed/simple;
+	bh=FDGEkgaB3SeQZdx3SpuOqE00y5ELvvZnI9IhE8tR6I0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DprC97sd4X3gUyqD1mXGpHMJbNCcQMLYB56P1uxFkwT0eauIDmhzafY0i1Ympme89p1Tn/roqxKLJg0yIphUq6qT7/TqGWRSBElfzg7l0qHBa2w52rE035FRwrIlLj5eMeE+n+2knOIOt4KYDQV3fgnjqETWLjWpy5kKLe5wMeY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QsKp1BAN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TwxpBvPVOFkHpnhtoIJc5jTKHHrfLx5X6KRwR/JnDKEc5UVPKAabts9NF1lxQQKcAulxrCOR9Vlkh5e7GCmDMmEPF7T9YC8019eNra3HOmqxOdSAgiOvkwbsswK96ppWeIVThOId5vbm3BYdoQrdKoU6AH6jso9DchdI0NatlZ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pbOrImIn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QsKp1BAN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D0BFC4CEEB;
-	Mon,  2 Jun 2025 14:28:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pbOrImIn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98A68C4CEEB;
+	Mon,  2 Jun 2025 14:28:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748874521;
-	bh=TtZ1zSe7BH9+kyLCX7QOt/IczzUV9WVFKo9pHdKq0yI=;
+	s=korg; t=1748874524;
+	bh=FDGEkgaB3SeQZdx3SpuOqE00y5ELvvZnI9IhE8tR6I0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QsKp1BANh+ZAVQ4B9aniyyiVVSQuHjVjbVn98zNZ7eUH+BUTpLHsfOF1Sv5l5P0Ob
-	 6is0s60ffCBHt4BRv5EQhevp79+8wsQa/c/I+Nxyd1ke4sVeuhh4doGw2ehMhg7UY2
-	 piaIFdxjwWqMskxeO7ZbPcMvtuwIYPYC6pAGy39o=
+	b=pbOrImInQ12EsHPl9n8IOzjLQo7qbZoPMwGjxHLj0OE2O1QYsFiQua/4KuMXM0wsE
+	 +O/ogv6RKqCdQagwxiHMXyG+lcWloEVE5QUX1PrSLDIFh0q2uTH9lb1FscpOOJs/Ih
+	 H+ISQE5rTVcnlHRA81mpBCPg3ZSqhcwJmcnjMlAc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	RD Babiera <rdbabiera@google.com>,
-	Badhri Jagan Sridharan <badhri@google.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 5.4 051/204] usb: typec: tcpm: delay SNK_TRY_WAIT_DEBOUNCE to SRC_TRYWAIT transition
-Date: Mon,  2 Jun 2025 15:46:24 +0200
-Message-ID: <20250602134257.689749732@linuxfoundation.org>
+	Andrei Kuchynski <akuchynski@chromium.org>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Benson Leung <bleung@chromium.org>
+Subject: [PATCH 5.4 052/204] usb: typec: ucsi: displayport: Fix NULL pointer access
+Date: Mon,  2 Jun 2025 15:46:25 +0200
+Message-ID: <20250602134257.729440986@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134255.449974357@linuxfoundation.org>
 References: <20250602134255.449974357@linuxfoundation.org>
@@ -52,44 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: RD Babiera <rdbabiera@google.com>
+From: Andrei Kuchynski <akuchynski@chromium.org>
 
-commit e918d3959b5ae0e793b8f815ce62240e10ba03a4 upstream.
+commit 312d79669e71283d05c05cc49a1a31e59e3d9e0e upstream.
 
-This patch fixes Type-C Compliance Test TD 4.7.6 - Try.SNK DRP Connect
-SNKAS.
+This patch ensures that the UCSI driver waits for all pending tasks in the
+ucsi_displayport_work workqueue to finish executing before proceeding with
+the partner removal.
 
-The compliance tester moves into SNK_UNATTACHED during toggling and
-expects the PUT to apply Rp after tPDDebounce of detection. If the port
-is in SNK_TRY_WAIT_DEBOUNCE, it will move into SRC_TRYWAIT immediately
-and apply Rp. This violates TD 4.7.5.V.3, where the tester confirms that
-the PUT attaches Rp after the transitions to Unattached.SNK for
-tPDDebounce.
-
-Change the tcpm_set_state delay between SNK_TRY_WAIT_DEBOUNCE and
-SRC_TRYWAIT to tPDDebounce.
-
-Fixes: a0a3e04e6b2c ("staging: typec: tcpm: Check for Rp for tPDDebounce")
 Cc: stable <stable@kernel.org>
-Signed-off-by: RD Babiera <rdbabiera@google.com>
-Reviewed-by: Badhri Jagan Sridharan <badhri@google.com>
+Fixes: af8622f6a585 ("usb: typec: ucsi: Support for DisplayPort alt mode")
+Signed-off-by: Andrei Kuchynski <akuchynski@chromium.org>
 Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20250429234703.3748506-2-rdbabiera@google.com
+Reviewed-by: Benson Leung <bleung@chromium.org>
+Link: https://lore.kernel.org/r/20250424084429.3220757-3-akuchynski@chromium.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/tcpm/tcpm.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/typec/ucsi/displayport.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/usb/typec/tcpm/tcpm.c
-+++ b/drivers/usb/typec/tcpm/tcpm.c
-@@ -3787,7 +3787,7 @@ static void _tcpm_cc_change(struct tcpm_
- 	case SNK_TRY_WAIT_DEBOUNCE:
- 		if (!tcpm_port_is_sink(port)) {
- 			port->max_wait = 0;
--			tcpm_set_state(port, SRC_TRYWAIT, 0);
-+			tcpm_set_state(port, SRC_TRYWAIT, PD_T_PD_DEBOUNCE);
- 		}
- 		break;
- 	case SRC_TRY_WAIT:
+--- a/drivers/usb/typec/ucsi/displayport.c
++++ b/drivers/usb/typec/ucsi/displayport.c
+@@ -272,6 +272,8 @@ void ucsi_displayport_remove_partner(str
+ 	if (!dp)
+ 		return;
+ 
++	cancel_work_sync(&dp->work);
++
+ 	dp->data.conf = 0;
+ 	dp->data.status = 0;
+ 	dp->initialized = false;
 
 
