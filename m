@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96C62230BD9;
-	Mon,  2 Jun 2025 14:56:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAFF322A1EF;
+	Mon,  2 Jun 2025 14:56:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748876207; cv=none; b=cvwdvzPRAfH9qEmr+zFGUMuP0YZc+y5Gq4MHITEJvjkW3lnxIP8tiSuIJeEOd4gw/fMKPRO8wsPesAu+JDbHlphn5p3IqwlKNxOtS5a4eaO33rx6Z+bAEAPFPxu9aFJk2ylLt5D7mk6aE0N8+CE3SB9y/74A0nV+TjEoDLi72XE=
+	t=1748876210; cv=none; b=RSiJ2xHK3H8vtOFTD5vW8GsifuULUDoaQxSFpJagCdXyfEbk9lpVqu63uIL3EbwMPP4uobBawOEN8yGAnMb7Q9zF9iF0ibFyo/nOgtxXm1N63AlFuUglHZwUgL5/JHeC7N0AyvIKa8rb3ajh6iG+KIhojF7YmpEzBML6pdImxeI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748876207; c=relaxed/simple;
-	bh=0/EFMtPkeNJDGlmdz3yCtMxOsnqIeXPiA2cTuqafwh0=;
+	s=arc-20240116; t=1748876210; c=relaxed/simple;
+	bh=rRAFeekxioYgxFCkRzdEGSrIG17WhQq9NbkujgEEsKE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DPFe0pLlNHdp8QmijQrqLIj3waakWIbEUOFQjzc/4cEbjAseA8GqbbQP20erM8/9cyhGV37sUHVxj6gDeU2u09ukwGfFGW8EE6HqBreRZ3ErgFpBTuPpFA8Ux8AEDVqDabGo6/LVBBsI2eJQa+wBaOsxL2BMiPM4HIYeLfAVENA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XDHF7jaF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UlCL/GJ2DbuAOzTHtkBJkB/E1Rc3oApw3m2hWZDMdXZcJn6oViBOvT79E+yItupq1SBrIhP1dseinqfXURlOYqvmIko7KWgL0PHECbLswX8WBlKdy/h861hvBpCvD8tLW4YfF0X9GPaJxAw9gZLq+7CvrzwMvm4t7aB7dDOUWdA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uCruVBXX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XDHF7jaF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1624BC4CEEB;
-	Mon,  2 Jun 2025 14:56:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uCruVBXX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A614C4CEEB;
+	Mon,  2 Jun 2025 14:56:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748876207;
-	bh=0/EFMtPkeNJDGlmdz3yCtMxOsnqIeXPiA2cTuqafwh0=;
+	s=korg; t=1748876210;
+	bh=rRAFeekxioYgxFCkRzdEGSrIG17WhQq9NbkujgEEsKE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XDHF7jaFic1RUwLgkk5mtjIZWB1BrvL3a2ucb/HKS8bbklQeWo9isReSeqqWzj2KZ
-	 O7F/fUvaBOiLmUNMRFXk3MlK21fd6EbloFV4Ws5xTJD2I7v4JFZ0fNYdoM9G9pcP53
-	 IeISqxaU9fPBfAiINo3M19m6sgTD99XYAJLRsNcc=
+	b=uCruVBXXjDwfJGxLXZzWzCqk0InRDs9YAV0IlPvO8Ghkvw4mvsz54hcjcmMvAPeJu
+	 x0ZzXnd2yEY7Mg9rh9DJ7Y3PpThLzhSoeP3J5MEPQYR+gejB4l4aRAWsLyGf60aFjJ
+	 c1iSmEFOXrNvZcPhNKXl8loRQeU6/ii9owi1ayKI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Peter Seiderer <ps.report@gmx.net>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 105/207] wifi: rtw88: Fix rtw_desc_to_mcsrate() to handle MCS16-31
-Date: Mon,  2 Jun 2025 15:47:57 +0200
-Message-ID: <20250602134302.849139860@linuxfoundation.org>
+Subject: [PATCH 5.15 106/207] net: pktgen: fix access outside of user given buffer in pktgen_thread_write()
+Date: Mon,  2 Jun 2025 15:47:58 +0200
+Message-ID: <20250602134302.886993319@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134258.769974467@linuxfoundation.org>
 References: <20250602134258.769974467@linuxfoundation.org>
@@ -51,40 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+From: Peter Seiderer <ps.report@gmx.net>
 
-[ Upstream commit 86d04f8f991a0509e318fe886d5a1cf795736c7d ]
+[ Upstream commit 425e64440ad0a2f03bdaf04be0ae53dededbaa77 ]
 
-This function translates the rate number reported by the hardware into
-something mac80211 can understand. It was ignoring the 3SS and 4SS HT
-rates. Translate them too.
+Honour the user given buffer size for the strn_len() calls (otherwise
+strn_len() will access memory outside of the user given buffer).
 
-Also set *nss to 0 for the HT rates, just to make sure it's
-initialised.
-
-Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/d0a5a86b-4869-47f6-a5a7-01c0f987cc7f@gmail.com
+Signed-off-by: Peter Seiderer <ps.report@gmx.net>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250219084527.20488-8-ps.report@gmx.net
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw88/util.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/core/pktgen.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw88/util.c b/drivers/net/wireless/realtek/rtw88/util.c
-index 2c515af214e76..bfd017d53fef8 100644
---- a/drivers/net/wireless/realtek/rtw88/util.c
-+++ b/drivers/net/wireless/realtek/rtw88/util.c
-@@ -101,7 +101,8 @@ void rtw_desc_to_mcsrate(u16 rate, u8 *mcs, u8 *nss)
- 		*nss = 4;
- 		*mcs = rate - DESC_RATEVHT4SS_MCS0;
- 	} else if (rate >= DESC_RATEMCS0 &&
--		   rate <= DESC_RATEMCS15) {
-+		   rate <= DESC_RATEMCS31) {
-+		*nss = 0;
- 		*mcs = rate - DESC_RATEMCS0;
- 	}
- }
+diff --git a/net/core/pktgen.c b/net/core/pktgen.c
+index 28417fe2a7a2a..2b7b1de70cf47 100644
+--- a/net/core/pktgen.c
++++ b/net/core/pktgen.c
+@@ -1876,8 +1876,8 @@ static ssize_t pktgen_thread_write(struct file *file,
+ 	i = len;
+ 
+ 	/* Read variable name */
+-
+-	len = strn_len(&user_buffer[i], sizeof(name) - 1);
++	max = min(sizeof(name) - 1, count - i);
++	len = strn_len(&user_buffer[i], max);
+ 	if (len < 0)
+ 		return len;
+ 
+@@ -1907,7 +1907,8 @@ static ssize_t pktgen_thread_write(struct file *file,
+ 	if (!strcmp(name, "add_device")) {
+ 		char f[32];
+ 		memset(f, 0, 32);
+-		len = strn_len(&user_buffer[i], sizeof(f) - 1);
++		max = min(sizeof(f) - 1, count - i);
++		len = strn_len(&user_buffer[i], max);
+ 		if (len < 0) {
+ 			ret = len;
+ 			goto out;
 -- 
 2.39.5
 
