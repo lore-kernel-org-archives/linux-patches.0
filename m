@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6738722540B;
-	Mon,  2 Jun 2025 14:14:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECF232253BA;
+	Mon,  2 Jun 2025 14:14:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748873661; cv=none; b=KrF79Tr/Fg1hvnL52KHMgokfeC12wEeZb4ewybI0NYrFlT5nK1j124IZK7hZUpE5QTDuyi1UxS4R+dRxbym4CpRqCGcEuGfQagmBqXZWjPSCmaFfilbulL+tTRvQIKsDstDheL2B4tA2tPZq58P28dzZFaDJrcW8XRRo26l9KOI=
+	t=1748873664; cv=none; b=sbZZY/MkhcvbdWI6znv+sN/okVCTDwuhgyt6fNWCKV3lLBKz1/7Yqjd31bYlFCMIfvxeFO21EX4St2/9Db2t6rNiL3q2uCeu016ls6DL+S9hR7KWoQgAWYZlOSiPLl0w8iHAzXzxnDyjcfKDHEhhAE55LTQOhBIEha/Dxl16LrU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748873661; c=relaxed/simple;
-	bh=isqQ/Gncie7Zc39yqJxlb4Ulqunw+Vry8V9+eIyfsJw=;
+	s=arc-20240116; t=1748873664; c=relaxed/simple;
+	bh=67DM/IaDiD1GEhO+wtONZyHf9i/6jQSG/lRhMnVblFE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rZabQ3Ml7atZnThtGsxPSHLBor2iLgYJEor4Ou1HbZe8xVJsjWaM2yQzw7e205cKeOiSET+Lh1D4u4O45dAzma1MJjKioN6O45jgfE5vpKn8GVvdBeI5tl/2xD3I6JLjQ7lMcR1H0JPatUquqsKdxPtTQD6pJVvEJFKZXIBnLWg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GbyHrMzg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DWXhio15mvMu+VV/fqspjDs0A7kSMCDH9hScXV4MGFmkEQUrkLiw7qkaABFyFehtJkhx5+N8DK+DVLN8D/nlT2KlhMlcXNQhWNcPN6Wti5UOI1y0yFMmgHakoq68mYB5R6vBdrd2LuYWoyoE9z8C+g/3axVRWkseW0t+o0AO9Dk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q1liiMkL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GbyHrMzg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66D73C4CEEB;
-	Mon,  2 Jun 2025 14:14:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q1liiMkL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62878C4CEEB;
+	Mon,  2 Jun 2025 14:14:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748873660;
-	bh=isqQ/Gncie7Zc39yqJxlb4Ulqunw+Vry8V9+eIyfsJw=;
+	s=korg; t=1748873663;
+	bh=67DM/IaDiD1GEhO+wtONZyHf9i/6jQSG/lRhMnVblFE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GbyHrMzg1cyaOVwrgrf6xri6UIWofr21YyeHMVjKy2VDOY15psxQOjEM+ReSLjk7J
-	 BzXJv0/RTdO6OgY7N2OrZ1/b6C0Zcg+yGaG0VFNpK3uySR1l+YWnZ7uQ61oHDg8tt4
-	 TJM7bH81J4jgeFwZ3cdhW8qdHRcrX+pGvIUItTlA=
+	b=q1liiMkLpt94pGnj8HOCotFyytp7xblvn0SY5Elw5/ASOFIoGd2Z+g0Wzy17Lhmny
+	 izZ0PfQq9LxpSHILWDdq6rowcUR3z9lOgarqEO+/v7J9ivs74qUQ9H0DX4csqB49AW
+	 BXCzag9By7xQYfaPlYs2MNEKs+EMaysrCaoFfevc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Moshe Shemesh <moshe@nvidia.com>,
-	Shahar Shitrit <shshitrit@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 172/444] net/mlx5: Avoid report two health errors on same syndrome
-Date: Mon,  2 Jun 2025 15:43:56 +0200
-Message-ID: <20250602134347.881362217@linuxfoundation.org>
+Subject: [PATCH 6.6 205/444] wifi: rtw88: Fix rtw_desc_to_mcsrate() to handle MCS16-31
+Date: Mon,  2 Jun 2025 15:44:29 +0200
+Message-ID: <20250602134349.223512869@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -54,40 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Moshe Shemesh <moshe@nvidia.com>
+From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
 
-[ Upstream commit b5d7b2f04ebcff740f44ef4d295b3401aeb029f4 ]
+[ Upstream commit 86d04f8f991a0509e318fe886d5a1cf795736c7d ]
 
-In case health counter has not increased for few polling intervals, miss
-counter will reach max misses threshold and health report will be
-triggered for FW health reporter. In case syndrome found on same health
-poll another health report will be triggered.
+This function translates the rate number reported by the hardware into
+something mac80211 can understand. It was ignoring the 3SS and 4SS HT
+rates. Translate them too.
 
-Avoid two health reports on same syndrome by marking this syndrome as
-already known.
+Also set *nss to 0 for the HT rates, just to make sure it's
+initialised.
 
-Signed-off-by: Moshe Shemesh <moshe@nvidia.com>
-Reviewed-by: Shahar Shitrit <shshitrit@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/d0a5a86b-4869-47f6-a5a7-01c0f987cc7f@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/health.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/wireless/realtek/rtw88/util.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/health.c b/drivers/net/ethernet/mellanox/mlx5/core/health.c
-index d798834c4e755..3ac8043f76dac 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/health.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/health.c
-@@ -833,6 +833,7 @@ static void poll_health(struct timer_list *t)
- 	health->prev = count;
- 	if (health->miss_counter == MAX_MISSES) {
- 		mlx5_core_err(dev, "device's health compromised - reached miss count\n");
-+		health->synd = ioread8(&h->synd);
- 		print_health_info(dev);
- 		queue_work(health->wq, &health->report_work);
+diff --git a/drivers/net/wireless/realtek/rtw88/util.c b/drivers/net/wireless/realtek/rtw88/util.c
+index e222d3c01a77e..66819f6944055 100644
+--- a/drivers/net/wireless/realtek/rtw88/util.c
++++ b/drivers/net/wireless/realtek/rtw88/util.c
+@@ -101,7 +101,8 @@ void rtw_desc_to_mcsrate(u16 rate, u8 *mcs, u8 *nss)
+ 		*nss = 4;
+ 		*mcs = rate - DESC_RATEVHT4SS_MCS0;
+ 	} else if (rate >= DESC_RATEMCS0 &&
+-		   rate <= DESC_RATEMCS15) {
++		   rate <= DESC_RATEMCS31) {
++		*nss = 0;
+ 		*mcs = rate - DESC_RATEMCS0;
  	}
+ }
 -- 
 2.39.5
 
