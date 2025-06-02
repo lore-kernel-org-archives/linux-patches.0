@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 162831FC0EF;
-	Mon,  2 Jun 2025 15:19:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 617C51FC0EF;
+	Mon,  2 Jun 2025 15:19:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748877570; cv=none; b=V7yz1A9gIxbEBwmcsIjcfHYT8hM/kJRwwKV3ieD3twJAFJxNogcpuu3x0XSeZrXEtm7IYM8ejlqanSSwCdk37utdekhY2oN7oUL9+AyipfEaqC9Q+HBQXNl7UaWzGIfxws/2lvtgOVOUI6BPOBRloukizDzI3553qHlJW3WMyvo=
+	t=1748877573; cv=none; b=AnxMbkxz+1sJSHIUKdgo3Sv9wfjHGvPuL9pujhNJ3gq51qJowaPuYTt64okSiAxzUC4cqM4xMlLBIrFeBzincc0FLBnAbIazM/ruaw4l7DQNvhlAhkF6cuzRPqAK7y1j/oj+G6UMIOfj+yt5tCThzsQduAE1yWXYmvJKtewgzq0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748877570; c=relaxed/simple;
-	bh=GOkVOfidRk3M1NgL+lRy7dRQ6nF8mKpDbhGKtwYsYBs=;
+	s=arc-20240116; t=1748877573; c=relaxed/simple;
+	bh=UP9MXY0gHaO1YnnBPEO3izDVt+H6IN2I3ICXCntIDqA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QLEzWjn/JRjYMEZOOasPyWj6kO5LibTFrZ5RpHCiccg3gknogoRclybggrGARg8F5ua5DfoIqTDepSfLYXgfu+WhOimaIVbSXnk5k0JgTc0Q/V9gCbJTfsNG1xGA+N0k5weNqAz5l3+rEjBHRWKTy4ixMQvsNnnGmiWdxe1l2D0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=loCMKWoa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G9agyAmNCPpBYGQX3Qw+sL/KUeEkl8yTrEomLt84VDjTfOq8DOHW7ecluryoEURsFhg62K1TGuSecfYjAkSHfX4VzQQiqBsI5ZD2Ex/FwzL0xyodUTmM+CfEU5lnTgUSTH8OOjr0b1WtHXLRN+uzN/WppkmGPnXNM6YTn3jpMuI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2eWXSB1s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="loCMKWoa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7586CC4CEEE;
-	Mon,  2 Jun 2025 15:19:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2eWXSB1s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70293C4CEEB;
+	Mon,  2 Jun 2025 15:19:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748877569;
-	bh=GOkVOfidRk3M1NgL+lRy7dRQ6nF8mKpDbhGKtwYsYBs=;
+	s=korg; t=1748877572;
+	bh=UP9MXY0gHaO1YnnBPEO3izDVt+H6IN2I3ICXCntIDqA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=loCMKWoayd7Pyc4QbgdEfuM8Cl891KIu5rgthheTRTUNV/OBlAcROSwXsfHFRDVJj
-	 vM1cm/Xug96uU4jXuI82K7DQ9G3JN/ZqGGaJ4duOZBpDBbmtjumWQrsqQ5iH0c+toJ
-	 kS5YuYvZjiP6UPN3Nfh2YGqOsBGAvr42RlbzjThw=
+	b=2eWXSB1sgjCH+lpkFqcNFeFTZHlylGoCgIRbiobsOSyhD6PYmbBJ7niB8zmKI2yOu
+	 iy0fksa3aCXk6KokFe+zh1ypi9pR7o2j0EZHvjNOfPJNKFEPv2VS9aeZZrvNG+lTmj
+	 fTrrnzOIYbGO+1KJkKv0uvjyg9P2h9qgOowk1DjM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Johannes Berg <johannes@sipsolutions.net>,
-	David Gow <davidgow@google.com>,
+	Alessandro Grassi <alessandro.grassi@mailbox.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 319/325] um: let make clean properly clean underlying SUBARCH as well
-Date: Mon,  2 Jun 2025 15:49:55 +0200
-Message-ID: <20250602134332.892839328@linuxfoundation.org>
+Subject: [PATCH 6.1 320/325] spi: spi-sun4i: fix early activation
+Date: Mon,  2 Jun 2025 15:49:56 +0200
+Message-ID: <20250602134332.933296607@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134319.723650984@linuxfoundation.org>
 References: <20250602134319.723650984@linuxfoundation.org>
@@ -53,57 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masahiro Yamada <masahiroy@kernel.org>
+From: Alessandro Grassi <alessandro.grassi@mailbox.org>
 
-[ Upstream commit ab09da75700e9d25c7dfbc7f7934920beb5e39b9 ]
+[ Upstream commit fb98bd0a13de2c9d96cb5c00c81b5ca118ac9d71 ]
 
-Building the kernel with O= is affected by stale in-tree build artifacts.
+The SPI interface is activated before the CPOL setting is applied. In
+that moment, the clock idles high and CS goes low. After a short delay,
+CPOL and other settings are applied, which may cause the clock to change
+state and idle low. This transition is not part of a clock cycle, and it
+can confuse the receiving device.
 
-So, if the source tree is not clean, Kbuild displays the following:
+To prevent this unexpected transition, activate the interface while CPOL
+and the other settings are being applied.
 
-  $ make ARCH=um O=build defconfig
-  make[1]: Entering directory '/.../linux/build'
-  ***
-  *** The source tree is not clean, please run 'make ARCH=um mrproper'
-  *** in /.../linux
-  ***
-  make[2]: *** [/.../linux/Makefile:673: outputmakefile] Error 1
-  make[1]: *** [/.../linux/Makefile:248: __sub-make] Error 2
-  make[1]: Leaving directory '/.../linux/build'
-  make: *** [Makefile:248: __sub-make] Error 2
-
-Usually, running 'make mrproper' is sufficient for cleaning the source
-tree for out-of-tree builds.
-
-However, building UML generates build artifacts not only in arch/um/,
-but also in the SUBARCH directory (i.e., arch/x86/). If in-tree stale
-files remain under arch/x86/, Kbuild will reuse them instead of creating
-new ones under the specified build directory.
-
-This commit makes 'make ARCH=um clean' recurse into the SUBARCH directory.
-
-Reported-by: Shuah Khan <skhan@linuxfoundation.org>
-Closes: https://lore.kernel.org/lkml/20250502172459.14175-1-skhan@linuxfoundation.org/
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Acked-by: Johannes Berg <johannes@sipsolutions.net>
-Reviewed-by: David Gow <davidgow@google.com>
-Reviewed-by: Shuah Khan <skhan@linuxfoundation.org>
+Signed-off-by: Alessandro Grassi <alessandro.grassi@mailbox.org>
+Link: https://patch.msgid.link/20250502095520.13825-1-alessandro.grassi@mailbox.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/um/Makefile | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/spi/spi-sun4i.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/arch/um/Makefile b/arch/um/Makefile
-index 778c50f273992..25d0501549f54 100644
---- a/arch/um/Makefile
-+++ b/arch/um/Makefile
-@@ -155,5 +155,6 @@ MRPROPER_FILES += $(HOST_DIR)/include/generated
- archclean:
- 	@find . \( -name '*.bb' -o -name '*.bbg' -o -name '*.da' \
- 		-o -name '*.gcov' \) -type f -print | xargs rm -f
-+	$(Q)$(MAKE) -f $(srctree)/Makefile ARCH=$(HEADER_ARCH) clean
+diff --git a/drivers/spi/spi-sun4i.c b/drivers/spi/spi-sun4i.c
+index 6000d0761206c..6937f5c4d868f 100644
+--- a/drivers/spi/spi-sun4i.c
++++ b/drivers/spi/spi-sun4i.c
+@@ -263,6 +263,9 @@ static int sun4i_spi_transfer_one(struct spi_master *master,
+ 	else
+ 		reg |= SUN4I_CTL_DHB;
  
- export HEADER_ARCH SUBARCH USER_CFLAGS CFLAGS_NO_HARDENING OS DEV_NULL_PATH
++	/* Now that the settings are correct, enable the interface */
++	reg |= SUN4I_CTL_ENABLE;
++
+ 	sun4i_spi_write(sspi, SUN4I_CTL_REG, reg);
+ 
+ 	/* Ensure that we have a parent clock fast enough */
+@@ -403,7 +406,7 @@ static int sun4i_spi_runtime_resume(struct device *dev)
+ 	}
+ 
+ 	sun4i_spi_write(sspi, SUN4I_CTL_REG,
+-			SUN4I_CTL_ENABLE | SUN4I_CTL_MASTER | SUN4I_CTL_TP);
++			SUN4I_CTL_MASTER | SUN4I_CTL_TP);
+ 
+ 	return 0;
+ 
 -- 
 2.39.5
 
