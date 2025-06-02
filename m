@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADAF8222582;
-	Mon,  2 Jun 2025 14:27:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC69822B5A1;
+	Mon,  2 Jun 2025 14:27:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748874428; cv=none; b=sKZ3Oe4fxzLogBePrDCVQQyEBjGF2oN+9QAdc/AFkVkbqyvVDTRD3Xc9C0XCG5/9+ao6XFOKGBRUJun/myH5w51zYPSBPy2WA84m+c+kMWkjT3NFtyieAGvPEZ+80fP65euriiG9LTmrAemGaLLl9CNL9XOuTfSRsGvo+PKSo5I=
+	t=1748874432; cv=none; b=n1jmFfZ8q7lLCI7KYqgdFWaNk/ageHO7SzrwGtNTnNx99YT6dJ3Cmg5+vKyQsNpOOcMFPYdrlO8qlKiJT1JDktdiKyOFBM4gX7U5s7OvSGPQb/zSnk+UM4CD5iAucIscU7Z0PL3vfzWsMlI7ppOzxP30dGHwg33w4pSk9V56sTk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748874428; c=relaxed/simple;
-	bh=ZUfO1lt/1yA9ml/J/wweffJJggpKLZTk94NKrj7eAZc=;
+	s=arc-20240116; t=1748874432; c=relaxed/simple;
+	bh=bT1rsEE6O8B3Kfo39GfgW1zfB7cvnfwkGGVCjdJmT/8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=J6jXp0UJ4NalImmi61OT5EacRv5JRHfJypih+tgJD+TA0T1siiePRYTOvZfLIBKbIMQQXj7c90ZptdWynXFXFPGj++sMVb1mOsTRCcSANkctShCPKjGIsiTXlpMw+zqSsCUiy2zSGiXAP8UXKqa5I4+YJt13lhvAKUFa4R+RWgw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LgIQzU0Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sqDetPdHyEs7CqgAVzG4SndaJIDrbNS92dTJRErBX2s/Ss9iQAC2JhFfVWaSrhJnENl3o97LLOBQOR0n1D4sVT+SVwWA4HFu89ZU0kwCDq6CDa1GhZAsNi1ynLgFnaRkt2s19Weu/zphprW1HkgBzRpsFbJO8SFpq87nbcXBvbk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I2I2Nx0u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LgIQzU0Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B82AC4CEEB;
-	Mon,  2 Jun 2025 14:27:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I2I2Nx0u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45677C4CEEB;
+	Mon,  2 Jun 2025 14:27:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748874428;
-	bh=ZUfO1lt/1yA9ml/J/wweffJJggpKLZTk94NKrj7eAZc=;
+	s=korg; t=1748874431;
+	bh=bT1rsEE6O8B3Kfo39GfgW1zfB7cvnfwkGGVCjdJmT/8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LgIQzU0Y7NlPOo/nYcuKzgbKAilXecnPIDMNgQ1ED0arQfE2ukIlinTqI+TEwSImc
-	 S3o4LikDFrA+mRGbP1ynXYmxC0hK3yma2QLngvwRMkqdYwP1CbnFs2BYZV3ZrqqL8g
-	 8a7nCsfdwxOzXOzUQjfIPXFo3Sxj9jhaFmjT+170=
+	b=I2I2Nx0uDWsB7rN9Un/0q2dsIPUq4egUj56POi1D6WhGNqsixRdCRWjXEiS0II735
+	 89XVak3qxTYkowmRAMZ6jbyF7BVc4NGaoY/eRoXY7Wtx7nhRvAE2EbDMIAAuJY40ot
+	 J+XzpmSV2kflKWGdSeCXaN8k9PiAq9E9K0w4mlcU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Shtylyov <s.shtylyov@omp.ru>,
-	Rob Herring <robh@kernel.org>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@debian.org>
-Subject: [PATCH 5.4 021/204] of: module: add buffer overflow check in of_modalias()
-Date: Mon,  2 Jun 2025 15:45:54 +0200
-Message-ID: <20250602134256.517997615@linuxfoundation.org>
+	Gerrard Tai <gerrard.tai@starlabs.sg>,
+	Cong Wang <xiyou.wangcong@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 5.4 022/204] sch_htb: make htb_qlen_notify() idempotent
+Date: Mon,  2 Jun 2025 15:45:55 +0200
+Message-ID: <20250602134256.555884083@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134255.449974357@linuxfoundation.org>
 References: <20250602134255.449974357@linuxfoundation.org>
@@ -45,53 +47,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sergey Shtylyov <s.shtylyov@omp.ru>
+From: Cong Wang <xiyou.wangcong@gmail.com>
 
-commit cf7385cb26ac4f0ee6c7385960525ad534323252 upstream.
+commit 5ba8b837b522d7051ef81bacf3d95383ff8edce5 upstream.
 
-In of_modalias(), if the buffer happens to be too small even for the 1st
-snprintf() call, the len parameter will become negative and str parameter
-(if not NULL initially) will point beyond the buffer's end. Add the buffer
-overflow check after the 1st snprintf() call and fix such check after the
-strlen() call (accounting for the terminating NUL char).
+htb_qlen_notify() always deactivates the HTB class and in fact could
+trigger a warning if it is already deactivated. Therefore, it is not
+idempotent and not friendly to its callers, like fq_codel_dequeue().
 
-Fixes: bc575064d688 ("of/device: use of_property_for_each_string to parse compatible strings")
-Signed-off-by: Sergey Shtylyov <s.shtylyov@omp.ru>
-Link: https://lore.kernel.org/r/bbfc6be0-c687-62b6-d015-5141b93f313e@omp.ru
-Signed-off-by: Rob Herring <robh@kernel.org>
-Signed-off-by: "Uwe Kleine-König" <ukleinek@debian.org>
+Let's make it idempotent to ease qdisc_tree_reduce_backlog() callers'
+life.
+
+Reported-by: Gerrard Tai <gerrard.tai@starlabs.sg>
+Signed-off-by: Cong Wang <xiyou.wangcong@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250403211033.166059-2-xiyou.wangcong@gmail.com
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/of/device.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ net/sched/sch_htb.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/of/device.c
-+++ b/drivers/of/device.c
-@@ -213,14 +213,15 @@ static ssize_t of_device_get_modalias(st
- 	csize = snprintf(str, len, "of:N%pOFn%c%s", dev->of_node, 'T',
- 			 of_node_get_device_type(dev->of_node));
- 	tsize = csize;
-+	if (csize >= len)
-+		csize = len > 0 ? len - 1 : 0;
- 	len -= csize;
--	if (str)
--		str += csize;
-+	str += csize;
+--- a/net/sched/sch_htb.c
++++ b/net/sched/sch_htb.c
+@@ -1173,6 +1173,8 @@ static void htb_qlen_notify(struct Qdisc
+ {
+ 	struct htb_class *cl = (struct htb_class *)arg;
  
- 	of_property_for_each_string(dev->of_node, "compatible", p, compat) {
- 		csize = strlen(compat) + 1;
- 		tsize += csize;
--		if (csize > len)
-+		if (csize >= len)
- 			continue;
++	if (!cl->prio_activity)
++		return;
+ 	htb_deactivate(qdisc_priv(sch), cl);
+ }
  
- 		csize = snprintf(str, len, "C%s", compat);
 
 
