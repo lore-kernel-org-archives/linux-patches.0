@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9591E23F403;
-	Mon,  2 Jun 2025 14:51:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6884F22A814;
+	Mon,  2 Jun 2025 14:51:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748875861; cv=none; b=ktHqkMuZriCjS0G4or4DaZcTGK8Wr2HzA37RjHqwyGCLXau+QayhutfyoWA6f4yfo7sIk1WOBo0mIF8w8S18J/39E+2gAPnmMttppqXd1IMvADD78zh7tVcuHwLo8PIHwEzk9AG8xK33PsQX7ttPNH6AOJDRJgLlKEJu9k7ZS9c=
+	t=1748875864; cv=none; b=KuQGhIUVnERDK/R5ji8cBa6BMiQ2qrUrfi8jizzdoMSCMFC8CPlvELu3JQY4CnVegU1raKS4hAdCwtvqvBsRZSbJ1c6PPbeW4Nj9W3FUf0/0LtRvcvujLZ+rml0tzuWvBsEzC6K1cwhW/IL2q1k16l2pVkh77Wxaown1Azcw+Ns=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748875861; c=relaxed/simple;
-	bh=G7EDWtsS/CP3fwRzzdIDe59vqOYdd9vHimPVfiy9/Cw=;
+	s=arc-20240116; t=1748875864; c=relaxed/simple;
+	bh=noIJ5uW3aL5siMsgwUZSFkb+qp18jc3hUcsbDTbNOsY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=UktF6LU9Dj1NvJ/vDRZKBz+hVDcAZqwimX2tP9Ty8NBKDiSULII5CpUDDNT5719V3f2ucubqL9dGWUCJHAn6vXCyoUAinsspjHqgKG8em2f68bV8sTpD80pqMzW6bnwOP12B8VFFuXEPbzZq8wTMn153fkL9OpuvfgvernxUvUA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vv8nGaca; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=OUBKK2tBTRPUD329cP9U6bslUIFdMkPgX5hE0KirOHBznjbQtiI5bSsRZFs5n9qC9qmNE10LH3QabN9mg0zrtzBMxSpprnDXEzuX4bID5wjOPR1dit+kdrE3iBxK+1OUtXFf2k9Zjo0fMNSTXNTXA5AtzDGA6Q2SWLyPvlDCcr0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BPNJd/jT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vv8nGaca"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA772C4CEEB;
-	Mon,  2 Jun 2025 14:51:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BPNJd/jT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92EC2C4CEEE;
+	Mon,  2 Jun 2025 14:51:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748875861;
-	bh=G7EDWtsS/CP3fwRzzdIDe59vqOYdd9vHimPVfiy9/Cw=;
+	s=korg; t=1748875863;
+	bh=noIJ5uW3aL5siMsgwUZSFkb+qp18jc3hUcsbDTbNOsY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vv8nGacadp3ln2KvG8Xb6JI5nYoWKaYOasNZoR8l0vP/Pa+1LtcGB7l4N6S5CldT1
-	 l315z3s9F7GzHuLv8L8o7eXkrje7p96qKv3GrFHAaJk96vKLTsyFXVsWJQ+qSLDYWL
-	 6/CP6iYP332Qd3azqUEIqDM4PksCWCXZzvlQ/W0o=
+	b=BPNJd/jTszfQXRs3E3RUOFvUEbKCzG2rUUIadi4fNgG0qFBMmwj8y0X9OLTbHd9zi
+	 KU7Ou+GweJuaGPYIGyxgsEL9Cds1k83/gXi2r51j/zMpYuqmNAhFtuIoxZgtaoUa86
+	 QLbJLMuPfFDttu92mJlwVe5JfwQC1A8WM5+aUP/Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Valtteri Koskivuori <vkoskiv@gmail.com>,
-	Jonathan Woithe <jwoithe@just42.net>,
+	Derek Barbosa <debarbos@redhat.com>,
+	Mark Pearson <mpearson-lenovo@squebb.ca>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Armin Wolf <W_Armin@gmx.de>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 267/270] platform/x86: fujitsu-laptop: Support Lifebook S2110 hotkeys
-Date: Mon,  2 Jun 2025 15:49:12 +0200
-Message-ID: <20250602134318.254278066@linuxfoundation.org>
+Subject: [PATCH 5.10 268/270] platform/x86: thinkpad_acpi: Ignore battery threshold change event notification
+Date: Mon,  2 Jun 2025 15:49:13 +0200
+Message-ID: <20250602134318.292242844@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134307.195171844@linuxfoundation.org>
 References: <20250602134307.195171844@linuxfoundation.org>
@@ -53,106 +55,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Valtteri Koskivuori <vkoskiv@gmail.com>
+From: Mark Pearson <mpearson-lenovo@squebb.ca>
 
-[ Upstream commit a7e255ff9fe4d9b8b902023aaf5b7a673786bb50 ]
+[ Upstream commit 29e4e6b4235fefa5930affb531fe449cac330a72 ]
 
-The S2110 has an additional set of media playback control keys enabled
-by a hardware toggle button that switches the keys between "Application"
-and "Player" modes. Toggling "Player" mode just shifts the scancode of
-each hotkey up by 4.
+If user modifies the battery charge threshold an ACPI event is generated.
+Confirmed with Lenovo FW team this is only generated on user event. As no
+action is needed, ignore the event and prevent spurious kernel logs.
 
-Add defines for new scancodes, and a keymap and dmi id for the S2110.
-
-Tested on a Fujitsu Lifebook S2110.
-
-Signed-off-by: Valtteri Koskivuori <vkoskiv@gmail.com>
-Acked-by: Jonathan Woithe <jwoithe@just42.net>
-Link: https://lore.kernel.org/r/20250509184251.713003-1-vkoskiv@gmail.com
+Reported-by: Derek Barbosa <debarbos@redhat.com>
+Closes: https://lore.kernel.org/platform-driver-x86/7e9a1c47-5d9c-4978-af20-3949d53fb5dc@app.fastmail.com/T/#m5f5b9ae31d3fbf30d7d9a9d76c15fb3502dfd903
+Signed-off-by: Mark Pearson <mpearson-lenovo@squebb.ca>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Reviewed-by: Armin Wolf <W_Armin@gmx.de>
+Link: https://lore.kernel.org/r/20250517023348.2962591-1-mpearson-lenovo@squebb.ca
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/fujitsu-laptop.c | 33 +++++++++++++++++++++++----
- 1 file changed, 29 insertions(+), 4 deletions(-)
+ drivers/platform/x86/thinkpad_acpi.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/platform/x86/fujitsu-laptop.c b/drivers/platform/x86/fujitsu-laptop.c
-index 80929380ec7e3..04ccfdd99e277 100644
---- a/drivers/platform/x86/fujitsu-laptop.c
-+++ b/drivers/platform/x86/fujitsu-laptop.c
-@@ -17,13 +17,13 @@
- /*
-  * fujitsu-laptop.c - Fujitsu laptop support, providing access to additional
-  * features made available on a range of Fujitsu laptops including the
-- * P2xxx/P5xxx/S6xxx/S7xxx series.
-+ * P2xxx/P5xxx/S2xxx/S6xxx/S7xxx series.
-  *
-  * This driver implements a vendor-specific backlight control interface for
-  * Fujitsu laptops and provides support for hotkeys present on certain Fujitsu
-  * laptops.
-  *
-- * This driver has been tested on a Fujitsu Lifebook S6410, S7020 and
-+ * This driver has been tested on a Fujitsu Lifebook S2110, S6410, S7020 and
-  * P8010.  It should work on most P-series and S-series Lifebooks, but
-  * YMMV.
-  *
-@@ -102,7 +102,11 @@
- #define KEY2_CODE			0x411
- #define KEY3_CODE			0x412
- #define KEY4_CODE			0x413
--#define KEY5_CODE			0x420
-+#define KEY5_CODE			0x414
-+#define KEY6_CODE			0x415
-+#define KEY7_CODE			0x416
-+#define KEY8_CODE			0x417
-+#define KEY9_CODE			0x420
- 
- /* Hotkey ringbuffer limits */
- #define MAX_HOTKEY_RINGBUFFER_SIZE	100
-@@ -450,7 +454,7 @@ static const struct key_entry keymap_default[] = {
- 	{ KE_KEY, KEY2_CODE,            { KEY_PROG2 } },
- 	{ KE_KEY, KEY3_CODE,            { KEY_PROG3 } },
- 	{ KE_KEY, KEY4_CODE,            { KEY_PROG4 } },
--	{ KE_KEY, KEY5_CODE,            { KEY_RFKILL } },
-+	{ KE_KEY, KEY9_CODE,            { KEY_RFKILL } },
- 	/* Soft keys read from status flags */
- 	{ KE_KEY, FLAG_RFKILL,          { KEY_RFKILL } },
- 	{ KE_KEY, FLAG_TOUCHPAD_TOGGLE, { KEY_TOUCHPAD_TOGGLE } },
-@@ -474,6 +478,18 @@ static const struct key_entry keymap_p8010[] = {
- 	{ KE_END, 0 }
- };
- 
-+static const struct key_entry keymap_s2110[] = {
-+	{ KE_KEY, KEY1_CODE, { KEY_PROG1 } }, /* "A" */
-+	{ KE_KEY, KEY2_CODE, { KEY_PROG2 } }, /* "B" */
-+	{ KE_KEY, KEY3_CODE, { KEY_WWW } },   /* "Internet" */
-+	{ KE_KEY, KEY4_CODE, { KEY_EMAIL } }, /* "E-mail" */
-+	{ KE_KEY, KEY5_CODE, { KEY_STOPCD } },
-+	{ KE_KEY, KEY6_CODE, { KEY_PLAYPAUSE } },
-+	{ KE_KEY, KEY7_CODE, { KEY_PREVIOUSSONG } },
-+	{ KE_KEY, KEY8_CODE, { KEY_NEXTSONG } },
-+	{ KE_END, 0 }
-+};
-+
- static const struct key_entry *keymap = keymap_default;
- 
- static int fujitsu_laptop_dmi_keymap_override(const struct dmi_system_id *id)
-@@ -511,6 +527,15 @@ static const struct dmi_system_id fujitsu_laptop_dmi_table[] = {
- 		},
- 		.driver_data = (void *)keymap_p8010
- 	},
-+	{
-+		.callback = fujitsu_laptop_dmi_keymap_override,
-+		.ident = "Fujitsu LifeBook S2110",
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "FUJITSU SIEMENS"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "LIFEBOOK S2110"),
-+		},
-+		.driver_data = (void *)keymap_s2110
-+	},
- 	{}
- };
- 
+diff --git a/drivers/platform/x86/thinkpad_acpi.c b/drivers/platform/x86/thinkpad_acpi.c
+index e9e63d8cbfbfd..5a8434da60e78 100644
+--- a/drivers/platform/x86/thinkpad_acpi.c
++++ b/drivers/platform/x86/thinkpad_acpi.c
+@@ -195,6 +195,7 @@ enum tpacpi_hkey_event_t {
+ 	/* Thermal events */
+ 	TP_HKEY_EV_ALARM_BAT_HOT	= 0x6011, /* battery too hot */
+ 	TP_HKEY_EV_ALARM_BAT_XHOT	= 0x6012, /* battery critically hot */
++	TP_HKEY_EV_ALARM_BAT_LIM_CHANGE	= 0x6013, /* battery charge limit changed*/
+ 	TP_HKEY_EV_ALARM_SENSOR_HOT	= 0x6021, /* sensor too hot */
+ 	TP_HKEY_EV_ALARM_SENSOR_XHOT	= 0x6022, /* sensor critically hot */
+ 	TP_HKEY_EV_THM_TABLE_CHANGED	= 0x6030, /* windows; thermal table changed */
+@@ -4049,6 +4050,10 @@ static bool hotkey_notify_6xxx(const u32 hkey,
+ 		pr_alert("THERMAL EMERGENCY: battery is extremely hot!\n");
+ 		/* recommended action: immediate sleep/hibernate */
+ 		break;
++	case TP_HKEY_EV_ALARM_BAT_LIM_CHANGE:
++		pr_debug("Battery Info: battery charge threshold changed\n");
++		/* User changed charging threshold. No action needed */
++		return true;
+ 	case TP_HKEY_EV_ALARM_SENSOR_HOT:
+ 		pr_crit("THERMAL ALARM: a sensor reports something is too hot!\n");
+ 		/* recommended action: warn user through gui, that */
 -- 
 2.39.5
 
