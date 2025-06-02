@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2972015CD55;
-	Mon,  2 Jun 2025 15:15:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0F1922259C;
+	Mon,  2 Jun 2025 15:15:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748877312; cv=none; b=nRW0hllDV5yU8iDB9QDkgV2GCC+lmz2OnXkjZHoJlosetxGfy2p0do+RPiQPj0CAcelFvNTJ/jpZ/067ByNiNvnhv8nto+jo39ThIOyS5dMD/S+p7ThrHX5RrZ9PD0vFYJp7jcufrDlXszzTdzRGq1+jToD+xUy9ZUUrU9Oqstk=
+	t=1748877315; cv=none; b=F9oNVpQqIjB40qpKmWTIPgyJ8/LSpcREMzV7Pmz1zimgpfAtfGfK7nuXR8I/VlBLhYe876MrSGPjQjB9yrB6ZJUJsQwTjLyvxL8AXZJ95taLtpxNdGljZQcKS1kX22CgBd3XirYJrvKuR9dbcm6Wo4BX7wPNGmYk5xdt+iE/818=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748877312; c=relaxed/simple;
-	bh=pT4plt0hFY3BcabwB2BebMQN69NkxSKLTBxTdpcncvQ=;
+	s=arc-20240116; t=1748877315; c=relaxed/simple;
+	bh=XcGlgBxwYXYmzd4vjrbaDil5MONc7+/wwbV5OF9cos0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mu5bt31NCHYomFGL9RFw4PdxBVpkF+k30dFhuFSPaB2Y4l3KrPh2azorJSKGlYHx8PuTYdh3GDeVhzECykEUy+h+FV1FLC02EwD2BhJXKThHhv1FREONInRbinvlcv8o3wvc2/xMnZmb2YkNRO6nkPVtEAyhJ/XQz+palEwavdc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fxee7e3K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Vwu9Exlz7BPFFOgDIT6V1PpFOd3FXd+UFZ3C2BIB3TCr6OMNL+u+oRjue1EqbV+5fT3aI18vU8W9xX5eLWqXbwIKuWqeEuBHJdPcEmObzrRsdRgUdTsBUnFCkAVZdn/u3QthblnlpSfnKwi969mVwQxQDWjnn9aXUGlRmk2wdsY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oyVcqCOu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fxee7e3K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36F68C4CEEB;
-	Mon,  2 Jun 2025 15:15:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oyVcqCOu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61104C4CEF2;
+	Mon,  2 Jun 2025 15:15:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748877311;
-	bh=pT4plt0hFY3BcabwB2BebMQN69NkxSKLTBxTdpcncvQ=;
+	s=korg; t=1748877314;
+	bh=XcGlgBxwYXYmzd4vjrbaDil5MONc7+/wwbV5OF9cos0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fxee7e3KcXODFX/x0jaWbNsJBtTH6sNWcOAMTpvvs41kLEIy3TGoskQcVh/n6MYno
-	 Y0PNfCYw3qyqjiCCOv0OjztMDEYZYS4MmRV4cSW3I6npb0cMJAXrVSHfR5el6gRsDh
-	 PvYngRevv3TV4xnhaNF/aCFX1zUcVFfW7DoYaOoQ=
+	b=oyVcqCOuAZwFlLVcSDoVIseV2MJQDzZzFGHls1UFjYQELSTPj1hd/cRiDEVpKNKnP
+	 h2aRE9kx412qV0S2do+u0QCOssWoRYsa6txev4YLgwKHrLPm2aNXnoC4wRiWSn9+5U
+	 l6ixFQ0pONE9B3I+JwWxQL+MXii7XV0WdMtsBBL0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Chaignon <paul.chaignon@gmail.com>,
-	Louis DeLosSantos <louis.delos.devel@gmail.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Jocelyn Falempe <jfalempe@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 236/325] xfrm: Sanitize marks before insert
-Date: Mon,  2 Jun 2025 15:48:32 +0200
-Message-ID: <20250602134329.374510440@linuxfoundation.org>
+Subject: [PATCH 6.1 208/325] drm/ast: Find VBIOS mode from regular display size
+Date: Mon,  2 Jun 2025 15:48:04 +0200
+Message-ID: <20250602134328.250093356@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134319.723650984@linuxfoundation.org>
 References: <20250602134319.723650984@linuxfoundation.org>
@@ -52,69 +51,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul Chaignon <paul.chaignon@gmail.com>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-[ Upstream commit 0b91fda3a1f044141e1e615456ff62508c32b202 ]
+[ Upstream commit c81202906b5cd56db403e95db3d29c9dfc8c74c1 ]
 
-Prior to this patch, the mark is sanitized (applying the state's mask to
-the state's value) only on inserts when checking if a conflicting XFRM
-state or policy exists.
+The ast driver looks up supplied display modes from an internal list of
+display modes supported by the VBIOS.
 
-We discovered in Cilium that this same sanitization does not occur
-in the hot-path __xfrm_state_lookup. In the hot-path, the sk_buff's mark
-is simply compared to the state's value:
+Do not use the crtc_-prefixed display values from struct drm_display_mode
+for looking up the VBIOS mode. The fields contain raw values that the
+driver programs to hardware. They are affected by display settings like
+double-scan or interlace.
 
-    if ((mark & x->mark.m) != x->mark.v)
-        continue;
+Instead use the regular vdisplay and hdisplay fields for lookup. As the
+programmed values can now differ from the values used for lookup, set
+struct drm_display_mode.crtc_vdisplay and .crtc_hdisplay from the VBIOS
+mode.
 
-Therefore, users can define unsanitized marks (ex. 0xf42/0xf00) which will
-never match any packet.
-
-This commit updates __xfrm_state_insert and xfrm_policy_insert to store
-the sanitized marks, thus removing this footgun.
-
-This has the side effect of changing the ip output, as the
-returned mark will have the mask applied to it when printed.
-
-Fixes: 3d6acfa7641f ("xfrm: SA lookups with mark")
-Signed-off-by: Paul Chaignon <paul.chaignon@gmail.com>
-Signed-off-by: Louis DeLosSantos <louis.delos.devel@gmail.com>
-Co-developed-by: Louis DeLosSantos <louis.delos.devel@gmail.com>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Reviewed-by: Jocelyn Falempe <jfalempe@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250131092257.115596-9-tzimmermann@suse.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_policy.c | 3 +++
- net/xfrm/xfrm_state.c  | 3 +++
- 2 files changed, 6 insertions(+)
+ drivers/gpu/drm/ast/ast_mode.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/net/xfrm/xfrm_policy.c b/net/xfrm/xfrm_policy.c
-index a022f49846879..e015ff225b27a 100644
---- a/net/xfrm/xfrm_policy.c
-+++ b/net/xfrm/xfrm_policy.c
-@@ -1597,6 +1597,9 @@ int xfrm_policy_insert(int dir, struct xfrm_policy *policy, int excl)
- 	struct xfrm_policy *delpol;
- 	struct hlist_head *chain;
+diff --git a/drivers/gpu/drm/ast/ast_mode.c b/drivers/gpu/drm/ast/ast_mode.c
+index 1bc0220e6783e..9fe856fd8a84f 100644
+--- a/drivers/gpu/drm/ast/ast_mode.c
++++ b/drivers/gpu/drm/ast/ast_mode.c
+@@ -103,7 +103,7 @@ static bool ast_get_vbios_mode_info(const struct drm_format_info *format,
+ 		return false;
+ 	}
  
-+	/* Sanitize mark before store */
-+	policy->mark.v &= policy->mark.m;
-+
- 	spin_lock_bh(&net->xfrm.xfrm_policy_lock);
- 	chain = policy_hash_bysel(net, &policy->selector, policy->family, dir);
- 	if (chain)
-diff --git a/net/xfrm/xfrm_state.c b/net/xfrm/xfrm_state.c
-index b5047a94c7d01..58c53bb1c5838 100644
---- a/net/xfrm/xfrm_state.c
-+++ b/net/xfrm/xfrm_state.c
-@@ -1275,6 +1275,9 @@ static void __xfrm_state_insert(struct xfrm_state *x)
+-	switch (mode->crtc_hdisplay) {
++	switch (mode->hdisplay) {
+ 	case 640:
+ 		vbios_mode->enh_table = &res_640x480[refresh_rate_index];
+ 		break;
+@@ -117,7 +117,7 @@ static bool ast_get_vbios_mode_info(const struct drm_format_info *format,
+ 		vbios_mode->enh_table = &res_1152x864[refresh_rate_index];
+ 		break;
+ 	case 1280:
+-		if (mode->crtc_vdisplay == 800)
++		if (mode->vdisplay == 800)
+ 			vbios_mode->enh_table = &res_1280x800[refresh_rate_index];
+ 		else
+ 			vbios_mode->enh_table = &res_1280x1024[refresh_rate_index];
+@@ -129,7 +129,7 @@ static bool ast_get_vbios_mode_info(const struct drm_format_info *format,
+ 		vbios_mode->enh_table = &res_1440x900[refresh_rate_index];
+ 		break;
+ 	case 1600:
+-		if (mode->crtc_vdisplay == 900)
++		if (mode->vdisplay == 900)
+ 			vbios_mode->enh_table = &res_1600x900[refresh_rate_index];
+ 		else
+ 			vbios_mode->enh_table = &res_1600x1200[refresh_rate_index];
+@@ -138,7 +138,7 @@ static bool ast_get_vbios_mode_info(const struct drm_format_info *format,
+ 		vbios_mode->enh_table = &res_1680x1050[refresh_rate_index];
+ 		break;
+ 	case 1920:
+-		if (mode->crtc_vdisplay == 1080)
++		if (mode->vdisplay == 1080)
+ 			vbios_mode->enh_table = &res_1920x1080[refresh_rate_index];
+ 		else
+ 			vbios_mode->enh_table = &res_1920x1200[refresh_rate_index];
+@@ -182,6 +182,7 @@ static bool ast_get_vbios_mode_info(const struct drm_format_info *format,
+ 	hborder = (vbios_mode->enh_table->flags & HBorder) ? 8 : 0;
+ 	vborder = (vbios_mode->enh_table->flags & VBorder) ? 8 : 0;
  
- 	list_add(&x->km.all, &net->xfrm.state_all);
++	adjusted_mode->crtc_hdisplay = vbios_mode->enh_table->hde;
+ 	adjusted_mode->crtc_htotal = vbios_mode->enh_table->ht;
+ 	adjusted_mode->crtc_hblank_start = vbios_mode->enh_table->hde + hborder;
+ 	adjusted_mode->crtc_hblank_end = vbios_mode->enh_table->ht - hborder;
+@@ -191,6 +192,7 @@ static bool ast_get_vbios_mode_info(const struct drm_format_info *format,
+ 					 vbios_mode->enh_table->hfp +
+ 					 vbios_mode->enh_table->hsync);
  
-+	/* Sanitize mark before store */
-+	x->mark.v &= x->mark.m;
-+
- 	h = xfrm_dst_hash(net, &x->id.daddr, &x->props.saddr,
- 			  x->props.reqid, x->props.family);
- 	hlist_add_head_rcu(&x->bydst, net->xfrm.state_bydst + h);
++	adjusted_mode->crtc_vdisplay = vbios_mode->enh_table->vde;
+ 	adjusted_mode->crtc_vtotal = vbios_mode->enh_table->vt;
+ 	adjusted_mode->crtc_vblank_start = vbios_mode->enh_table->vde + vborder;
+ 	adjusted_mode->crtc_vblank_end = vbios_mode->enh_table->vt - vborder;
 -- 
 2.39.5
 
