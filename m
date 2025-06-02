@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E521519EEBD;
-	Mon,  2 Jun 2025 14:36:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 018832C324F;
+	Mon,  2 Jun 2025 14:36:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748875010; cv=none; b=FWdQWaNMb+4T+QNLz4aZUw4j96nFANQmvEd1JxqGm95KIgnugGUu8kaSqR4z642d1rlVO7ZtkzcunPRNiBmlLt8i3C8QqYffmZfElg+dEc6aiIHkatLFWcf7m3/3I9dQrv+83EWRtNForZEPTRvLYHTWrHAz/CFJL8brHMW0Ioo=
+	t=1748875013; cv=none; b=TLhMH5alKMX1BxkwMqGM+Dx/6V5m6e94dqr6/7qZK/VHY4uQozz9KiPbWnGJfXX2sOTuS7hrvzG4jcC3Jgq0pmfpoIlV9a9VKRRgFrVlPZpnVlKTpfGyyHfkmGF9enXpVeboRGdDsDtk/OTFPFl64at8l1W6YRIdUe5EvX44nnQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748875010; c=relaxed/simple;
-	bh=ee77+F6RjBX9dTRqgitOIsCYkNr/01SaQpknEb8dvAM=;
+	s=arc-20240116; t=1748875013; c=relaxed/simple;
+	bh=PM/2+2q4xCmDXHzeWyW3UWSl5/hPWrYbqqarT+80irg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l4RoEEnEcPiLzvVBowO3GHOkRZbmOF/A42ILa8BQ8IsfbKA3tnYSYlamFLgJl83nXuI/gjEhxIxkd2pf8U+n3FTkOLFQHwUuWMNAQXvdZGcUBOVUl5f+s4hg4gEvmFK+yafHiI8viwc0NGmuDHqw4nw2S/umsIcSKra9ilxOG8Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KF/AGSEf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t7wmdd/P63gescVeTadUKYX3tlacqSkmdqZNSx4F2N2FDKScI1WH7bB8ysprfr4I+m8gov1ya2JsQWu5xVu3FLjPcNlTcuWgmkUwMPFoGRcmG4kxe+YxXRQ2kHRqz795aMHNar9pkiYlEvb6g6ggJfDLwM4klhXWtSIeS90O5f4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zyaa93YC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KF/AGSEf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A40FC4CEEB;
-	Mon,  2 Jun 2025 14:36:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zyaa93YC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DC7DC4CEF0;
+	Mon,  2 Jun 2025 14:36:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748875009;
-	bh=ee77+F6RjBX9dTRqgitOIsCYkNr/01SaQpknEb8dvAM=;
+	s=korg; t=1748875012;
+	bh=PM/2+2q4xCmDXHzeWyW3UWSl5/hPWrYbqqarT+80irg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KF/AGSEfWwU62FmCEpJsdyMvFllTO+P+KpcsLnZgT9oGFIprARgwYiF716rvLZZpO
-	 3hQONoaVYP+DTfvrwtFFLCw8IHI+mznfxbCpQY36BJv+sCfNzzdDpt8TPX4w+goACW
-	 XRfiA6SnqcxtrryiCZ5oHRUpjzJLEwzX1sP0qoHU=
+	b=zyaa93YCfs18VO0r9hr0sUhCKcNYE9AqEoTztRnqkdqeA+nB3SwRnIMZkeXg6M3nb
+	 V/XKiVKBBCsCKX/4t0DKYvKgYrIy971Sz8DJQ/YLIvtNLj0FyUw5m7BYWw/zBFrjQ2
+	 cK8+pKsMZaNdqcXl2oH1n//YD6NJb3X2mqJL/Ye4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mingi Cho <mincho@theori.io>,
-	Cong Wang <xiyou.wangcong@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 174/204] sch_hfsc: Fix qlen accounting bug when using peek in hfsc_enqueue()
-Date: Mon,  2 Jun 2025 15:48:27 +0200
-Message-ID: <20250602134302.487311645@linuxfoundation.org>
+	Ivan Pravdin <ipravdin.official@gmail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 5.4 175/204] crypto: algif_hash - fix double free in hash_accept
+Date: Mon,  2 Jun 2025 15:48:28 +0200
+Message-ID: <20250602134302.525812388@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134255.449974357@linuxfoundation.org>
 References: <20250602134255.449974357@linuxfoundation.org>
@@ -54,62 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cong Wang <xiyou.wangcong@gmail.com>
+From: Ivan Pravdin <ipravdin.official@gmail.com>
 
-[ Upstream commit 3f981138109f63232a5fb7165938d4c945cc1b9d ]
+commit b2df03ed4052e97126267e8c13ad4204ea6ba9b6 upstream.
 
-When enqueuing the first packet to an HFSC class, hfsc_enqueue() calls the
-child qdisc's peek() operation before incrementing sch->q.qlen and
-sch->qstats.backlog. If the child qdisc uses qdisc_peek_dequeued(), this may
-trigger an immediate dequeue and potential packet drop. In such cases,
-qdisc_tree_reduce_backlog() is called, but the HFSC qdisc's qlen and backlog
-have not yet been updated, leading to inconsistent queue accounting. This
-can leave an empty HFSC class in the active list, causing further
-consequences like use-after-free.
+If accept(2) is called on socket type algif_hash with
+MSG_MORE flag set and crypto_ahash_import fails,
+sk2 is freed. However, it is also freed in af_alg_release,
+leading to slab-use-after-free error.
 
-This patch fixes the bug by moving the increment of sch->q.qlen and
-sch->qstats.backlog before the call to the child qdisc's peek() operation.
-This ensures that queue length and backlog are always accurate when packet
-drops or dequeues are triggered during the peek.
-
-Fixes: 12d0ad3be9c3 ("net/sched/sch_hfsc.c: handle corner cases where head may change invalidating calculated deadline")
-Reported-by: Mingi Cho <mincho@theori.io>
-Signed-off-by: Cong Wang <xiyou.wangcong@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250518222038.58538-2-xiyou.wangcong@gmail.com
-Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: fe869cdb89c9 ("crypto: algif_hash - User-space interface for hash operations")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Ivan Pravdin <ipravdin.official@gmail.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/sch_hfsc.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ crypto/algif_hash.c |    4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/net/sched/sch_hfsc.c b/net/sched/sch_hfsc.c
-index 5d73d02b8dce7..66c33d7e243d5 100644
---- a/net/sched/sch_hfsc.c
-+++ b/net/sched/sch_hfsc.c
-@@ -1573,6 +1573,9 @@ hfsc_enqueue(struct sk_buff *skb, struct Qdisc *sch, struct sk_buff **to_free)
+--- a/crypto/algif_hash.c
++++ b/crypto/algif_hash.c
+@@ -262,10 +262,6 @@ static int hash_accept(struct socket *so
  		return err;
- 	}
  
-+	sch->qstats.backlog += len;
-+	sch->q.qlen++;
-+
- 	if (first && !cl->cl_nactive) {
- 		if (cl->cl_flags & HFSC_RSC)
- 			init_ed(cl, len);
-@@ -1588,9 +1591,6 @@ hfsc_enqueue(struct sk_buff *skb, struct Qdisc *sch, struct sk_buff **to_free)
+ 	err = crypto_ahash_import(&ctx2->req, state);
+-	if (err) {
+-		sock_orphan(sk2);
+-		sock_put(sk2);
+-	}
  
- 	}
- 
--	sch->qstats.backlog += len;
--	sch->q.qlen++;
--
- 	return NET_XMIT_SUCCESS;
+ 	return err;
  }
- 
--- 
-2.39.5
-
 
 
