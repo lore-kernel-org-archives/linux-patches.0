@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C517D1B81DC;
-	Mon,  2 Jun 2025 14:23:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC1142C327E;
+	Mon,  2 Jun 2025 14:23:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748874224; cv=none; b=tTZ1eA/CeD94TZEKsqf/1CHQf09ARV+D1RLJFLmOWVLOn+aKtRitTPpOdBLGHzB1OVC1KHupbiWVOuaQWBGPjgMlF/NIEA4Ky9LORoliQ8/6ue2Lo2OuHtx9bRC+T402+VEFc+6QiPLo5TbQmvVQzuYIEMHQ5eH6SjCk36azatE=
+	t=1748874226; cv=none; b=DobqnyRng4MU3M2I4aDx2MxBUKAdK88TRJiynoxn4CePGhs3Y4kDupD4lf9AOr6Cv3nLXmaqw+AUJ5soJFhC957GZpoVZHl1Ff+J5kn3839cEoqkhknz9ukgnzEmLHKqERpgLPz0qJsO2tWKVflhKxYtj1ExWBi7YTZj0vFdC6M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748874224; c=relaxed/simple;
-	bh=GN9xcOX38iG7Qw9Q4orrPpX/LQDfn5a+eEp0jjVQvtU=;
+	s=arc-20240116; t=1748874226; c=relaxed/simple;
+	bh=YzLFo6S6+CAAoPn/lI8R0drJrPA5GgemhwTFGL4psfo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lhK0+sip8wgMXgvkOWbbDi004TCTRGdUTfWCF7+XFxcQlu1K5ky9EDrboMGNyU9+/xyOB0d5CmVfVoEoTQP/BiMtBZvmqKKDpCNB4/ItaKeHmxCat4ma91A9MPoe+7fjjPXK1YEnjLZpAc1XoZ32gRf5Uqk3l63rZkqOiZTTuXo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JGTptvEb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rrnnlW92dUH/lzcXkDoUnlZX6ZhnFI8HU94qFa0XFrm/WNV2Bks7eXrswrIX6yfHUGgglNh8Rb5LLKliWPenOBF4iHfBFHJP7W1S0Q+EtncOblCcX0wRrtM7nRo1lwMdC+D38plzCeY1R2hywYGTfZ8x+AFHBeyl5FCcQBynH5Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SyaLW3gD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JGTptvEb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4308C4CEEB;
-	Mon,  2 Jun 2025 14:23:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SyaLW3gD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B126C4CEEB;
+	Mon,  2 Jun 2025 14:23:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748874223;
-	bh=GN9xcOX38iG7Qw9Q4orrPpX/LQDfn5a+eEp0jjVQvtU=;
+	s=korg; t=1748874226;
+	bh=YzLFo6S6+CAAoPn/lI8R0drJrPA5GgemhwTFGL4psfo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JGTptvEbeuhRuudOA87wnYgbtGnNjkcZZlz+Gh/2GUi62vWU2fZUT/ssu/ZMvB1e7
-	 GcqsVbx3Bu/JG7S+kfC9FzXeNaJsseXV4fahYYChGShadrqHWJItAzoh0Oi+Sk7XG2
-	 6iw3MZIuOFEZeyVjYXoLcwtXzF0Iqq0Es/oor37Y=
+	b=SyaLW3gDMjZNI+EBy63GiuDLOqk6LcYWqIRngWQfD2r7genwpIp/KWVaCEU+ClAM1
+	 HHlz+cZROLuvs8vwWumdBdwCr7li/OXlK2Wmy0Svb814CogoTI8npX8aCwP6hsC5TW
+	 DFVlJR/qT++YbPqGpiXDCADTksNpxS+lXaZ//uDI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
-	Wang Zhaolong <wangzhaolong1@huawei.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.6 371/444] smb: client: Fix use-after-free in cifs_fill_dirent
-Date: Mon,  2 Jun 2025 15:47:15 +0200
-Message-ID: <20250602134355.976238505@linuxfoundation.org>
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Lee Jones <lee@kernel.org>
+Subject: [PATCH 6.6 398/444] af_unix: Replace BUG_ON() with WARN_ON_ONCE().
+Date: Mon,  2 Jun 2025 15:47:42 +0200
+Message-ID: <20250602134357.060913202@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -51,169 +52,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wang Zhaolong <wangzhaolong1@huawei.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-commit a7a8fe56e932a36f43e031b398aef92341bf5ea0 upstream.
+commit d0f6dc26346863e1f4a23117f5468614e54df064 upstream.
 
-There is a race condition in the readdir concurrency process, which may
-access the rsp buffer after it has been released, triggering the
-following KASAN warning.
+This is a prep patch for the last patch in this series so that
+checkpatch will not warn about BUG_ON().
 
- ==================================================================
- BUG: KASAN: slab-use-after-free in cifs_fill_dirent+0xb03/0xb60 [cifs]
- Read of size 4 at addr ffff8880099b819c by task a.out/342975
-
- CPU: 2 UID: 0 PID: 342975 Comm: a.out Not tainted 6.15.0-rc6+ #240 PREEMPT(full)
- Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.1-2.fc37 04/01/2014
- Call Trace:
-  <TASK>
-  dump_stack_lvl+0x53/0x70
-  print_report+0xce/0x640
-  kasan_report+0xb8/0xf0
-  cifs_fill_dirent+0xb03/0xb60 [cifs]
-  cifs_readdir+0x12cb/0x3190 [cifs]
-  iterate_dir+0x1a1/0x520
-  __x64_sys_getdents+0x134/0x220
-  do_syscall_64+0x4b/0x110
-  entry_SYSCALL_64_after_hwframe+0x76/0x7e
- RIP: 0033:0x7f996f64b9f9
- Code: ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 48 89 f8 48 89
- f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01
- f0 ff ff  0d f7 c3 0c 00 f7 d8 64 89 8
- RSP: 002b:00007f996f53de78 EFLAGS: 00000207 ORIG_RAX: 000000000000004e
- RAX: ffffffffffffffda RBX: 00007f996f53ecdc RCX: 00007f996f64b9f9
- RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000003
- RBP: 00007f996f53dea0 R08: 0000000000000000 R09: 0000000000000000
- R10: 0000000000000000 R11: 0000000000000207 R12: ffffffffffffff88
- R13: 0000000000000000 R14: 00007ffc8cd9a500 R15: 00007f996f51e000
-  </TASK>
-
- Allocated by task 408:
-  kasan_save_stack+0x20/0x40
-  kasan_save_track+0x14/0x30
-  __kasan_slab_alloc+0x6e/0x70
-  kmem_cache_alloc_noprof+0x117/0x3d0
-  mempool_alloc_noprof+0xf2/0x2c0
-  cifs_buf_get+0x36/0x80 [cifs]
-  allocate_buffers+0x1d2/0x330 [cifs]
-  cifs_demultiplex_thread+0x22b/0x2690 [cifs]
-  kthread+0x394/0x720
-  ret_from_fork+0x34/0x70
-  ret_from_fork_asm+0x1a/0x30
-
- Freed by task 342979:
-  kasan_save_stack+0x20/0x40
-  kasan_save_track+0x14/0x30
-  kasan_save_free_info+0x3b/0x60
-  __kasan_slab_free+0x37/0x50
-  kmem_cache_free+0x2b8/0x500
-  cifs_buf_release+0x3c/0x70 [cifs]
-  cifs_readdir+0x1c97/0x3190 [cifs]
-  iterate_dir+0x1a1/0x520
-  __x64_sys_getdents64+0x134/0x220
-  do_syscall_64+0x4b/0x110
-  entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
- The buggy address belongs to the object at ffff8880099b8000
-  which belongs to the cache cifs_request of size 16588
- The buggy address is located 412 bytes inside of
-  freed 16588-byte region [ffff8880099b8000, ffff8880099bc0cc)
-
- The buggy address belongs to the physical page:
- page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x99b8
- head: order:3 mapcount:0 entire_mapcount:0 nr_pages_mapped:0 pincount:0
- anon flags: 0x80000000000040(head|node=0|zone=1)
- page_type: f5(slab)
- raw: 0080000000000040 ffff888001e03400 0000000000000000 dead000000000001
- raw: 0000000000000000 0000000000010001 00000000f5000000 0000000000000000
- head: 0080000000000040 ffff888001e03400 0000000000000000 dead000000000001
- head: 0000000000000000 0000000000010001 00000000f5000000 0000000000000000
- head: 0080000000000003 ffffea0000266e01 00000000ffffffff 00000000ffffffff
- head: ffffffffffffffff 0000000000000000 00000000ffffffff 0000000000000008
- page dumped because: kasan: bad access detected
-
- Memory state around the buggy address:
-  ffff8880099b8080: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-  ffff8880099b8100: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
- >ffff8880099b8180: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-                             ^
-  ffff8880099b8200: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-  ffff8880099b8280: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
- ==================================================================
-
-POC is available in the link [1].
-
-The problem triggering process is as follows:
-
-Process 1                       Process 2
------------------------------------------------------------------
-cifs_readdir
-  /* file->private_data == NULL */
-  initiate_cifs_search
-    cifsFile = kzalloc(sizeof(struct cifsFileInfo), GFP_KERNEL);
-    smb2_query_dir_first ->query_dir_first()
-      SMB2_query_directory
-        SMB2_query_directory_init
-        cifs_send_recv
-        smb2_parse_query_directory
-          srch_inf->ntwrk_buf_start = (char *)rsp;
-          srch_inf->srch_entries_start = (char *)rsp + ...
-          srch_inf->last_entry = (char *)rsp + ...
-          srch_inf->smallBuf = true;
-  find_cifs_entry
-    /* if (cfile->srch_inf.ntwrk_buf_start) */
-    cifs_small_buf_release(cfile->srch_inf // free
-
-                        cifs_readdir  ->iterate_shared()
-                          /* file->private_data != NULL */
-                          find_cifs_entry
-                            /* in while (...) loop */
-                            smb2_query_dir_next  ->query_dir_next()
-                              SMB2_query_directory
-                                SMB2_query_directory_init
-                                cifs_send_recv
-                                  compound_send_recv
-                                    smb_send_rqst
-                                    __smb_send_rqst
-                                      rc = -ERESTARTSYS;
-                                      /* if (fatal_signal_pending()) */
-                                      goto out;
-                                      return rc
-                            /* if (cfile->srch_inf.last_entry) */
-                            cifs_save_resume_key()
-                              cifs_fill_dirent // UAF
-                            /* if (rc) */
-                            return -ENOENT;
-
-Fix this by ensuring the return code is checked before using pointers
-from the srch_inf.
-
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=220131 [1]
-Fixes: a364bc0b37f1 ("[CIFS] fix saving of resume key before CIFSFindNext")
-Cc: stable@vger.kernel.org
-Reviewed-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
-Signed-off-by: Wang Zhaolong <wangzhaolong1@huawei.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Acked-by: Jens Axboe <axboe@kernel.dk>
+Link: https://lore.kernel.org/r/20240129190435.57228-2-kuniyu@amazon.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/readdir.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/unix/garbage.c |    8 ++++----
+ net/unix/scm.c     |    8 ++++----
+ 2 files changed, 8 insertions(+), 8 deletions(-)
 
---- a/fs/smb/client/readdir.c
-+++ b/fs/smb/client/readdir.c
-@@ -756,11 +756,11 @@ find_cifs_entry(const unsigned int xid,
- 		rc = server->ops->query_dir_next(xid, tcon, &cfile->fid,
- 						 search_flags,
- 						 &cfile->srch_inf);
-+		if (rc)
-+			return -ENOENT;
- 		/* FindFirst/Next set last_entry to NULL on malformed reply */
- 		if (cfile->srch_inf.last_entry)
- 			cifs_save_resume_key(cfile->srch_inf.last_entry, cfile);
--		if (rc)
--			return -ENOENT;
- 	}
- 	if (index_to_find < cfile->srch_inf.index_of_last_entry) {
- 		/* we found the buffer that contains the entry */
+--- a/net/unix/garbage.c
++++ b/net/unix/garbage.c
+@@ -145,7 +145,7 @@ static void scan_children(struct sock *x
+ 			/* An embryo cannot be in-flight, so it's safe
+ 			 * to use the list link.
+ 			 */
+-			BUG_ON(!list_empty(&u->link));
++			WARN_ON_ONCE(!list_empty(&u->link));
+ 			list_add_tail(&u->link, &embryos);
+ 		}
+ 		spin_unlock(&x->sk_receive_queue.lock);
+@@ -224,8 +224,8 @@ static void __unix_gc(struct work_struct
+ 
+ 		total_refs = file_count(sk->sk_socket->file);
+ 
+-		BUG_ON(!u->inflight);
+-		BUG_ON(total_refs < u->inflight);
++		WARN_ON_ONCE(!u->inflight);
++		WARN_ON_ONCE(total_refs < u->inflight);
+ 		if (total_refs == u->inflight) {
+ 			list_move_tail(&u->link, &gc_candidates);
+ 			__set_bit(UNIX_GC_CANDIDATE, &u->gc_flags);
+@@ -318,7 +318,7 @@ static void __unix_gc(struct work_struct
+ 		list_move_tail(&u->link, &gc_inflight_list);
+ 
+ 	/* All candidates should have been detached by now. */
+-	BUG_ON(!list_empty(&gc_candidates));
++	WARN_ON_ONCE(!list_empty(&gc_candidates));
+ 
+ 	/* Paired with READ_ONCE() in wait_for_unix_gc(). */
+ 	WRITE_ONCE(gc_in_progress, false);
+--- a/net/unix/scm.c
++++ b/net/unix/scm.c
+@@ -51,10 +51,10 @@ void unix_inflight(struct user_struct *u
+ 
+ 	if (u) {
+ 		if (!u->inflight) {
+-			BUG_ON(!list_empty(&u->link));
++			WARN_ON_ONCE(!list_empty(&u->link));
+ 			list_add_tail(&u->link, &gc_inflight_list);
+ 		} else {
+-			BUG_ON(list_empty(&u->link));
++			WARN_ON_ONCE(list_empty(&u->link));
+ 		}
+ 		u->inflight++;
+ 		/* Paired with READ_ONCE() in wait_for_unix_gc() */
+@@ -71,8 +71,8 @@ void unix_notinflight(struct user_struct
+ 	spin_lock(&unix_gc_lock);
+ 
+ 	if (u) {
+-		BUG_ON(!u->inflight);
+-		BUG_ON(list_empty(&u->link));
++		WARN_ON_ONCE(!u->inflight);
++		WARN_ON_ONCE(list_empty(&u->link));
+ 
+ 		u->inflight--;
+ 		if (!u->inflight)
 
 
