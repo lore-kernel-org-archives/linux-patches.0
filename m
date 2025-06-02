@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F7781C5D72;
-	Mon,  2 Jun 2025 14:31:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E61DB1C5D72;
+	Mon,  2 Jun 2025 14:31:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748874687; cv=none; b=RhJdiEaXJUpzW6G1Z7AhvtiPY4TA3rZoUPXUQHEOoDhvwCh59X3xk3up5bDzgMocUN+B7AV33g7FqfeSYXZG9N/2kzDFg/layiPvN3aG7Dtam8F+nH6SbGww9MZW0OvZ3JuJUStZrnRdzH9QXLC0NnMpTRiwRWMpFrmXdxW6rTY=
+	t=1748874690; cv=none; b=JbYBUGstSTZvHRsQS1bpuBnot3Z1/WO76uXs0aDdPIX9kStCfAkVEuQRtJR03Qz7CciqrLoDn26wj+wseXilf+dMt8srB90QPnH3tKDuSUs71K/8rYjjG3j5+dq/utuwlPrbzvEiNkPjKEZ611PUVnXAchO1i80k3shcDq35j3Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748874687; c=relaxed/simple;
-	bh=i7MCvsjisZJXpAesjJhSWyvLCY6nD2FvOd2AGsd0xLs=;
+	s=arc-20240116; t=1748874690; c=relaxed/simple;
+	bh=Oqgg0pvMFfx0WCSutj6aRLdzTGx/bbTavCk1wuaygCk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AuR/uQftYs8t3LHGhbceFb9vmxVwR7gOuUqikzmP6N+uEuEISXnyLM5W5jKjWThSeIPCpYO6BwbQjG+V1e+lcsppAKNiMDkPH5e0YtHeG42iEjhWrCglkLIPi/xyVDk81Cm++l4I7zi7cnThbhGPCsTkBKzAmkWzCrKVsYJ15GY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K9+fk6Ka; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ufmkdUlKNbNPTF1g/6u4M5w+ieOQ/OXevwLU/Vj2xUss1raZ0C0rkabkoEu8I/n3J0iw/yfQ0pHERWQ/KrdN9DKnLJSNmar45i1Hg/xOimrpb70FFixBQ18xrRxPLgP+QdN4hE3DrID3go6YuDjno53OqAMYfJeC5PytPqLcK3g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nltHer67; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K9+fk6Ka"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C818C4CEEE;
-	Mon,  2 Jun 2025 14:31:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nltHer67"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54C9CC4CEEE;
+	Mon,  2 Jun 2025 14:31:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748874686;
-	bh=i7MCvsjisZJXpAesjJhSWyvLCY6nD2FvOd2AGsd0xLs=;
+	s=korg; t=1748874689;
+	bh=Oqgg0pvMFfx0WCSutj6aRLdzTGx/bbTavCk1wuaygCk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K9+fk6KaJMhCKe//wfyDXgSaIe8USr/fGMvV8zmjx+4983f1WglL5avWx+d2bBSb8
-	 LrFEmZvPM1C7ZipSoXolhxiJ4NZ7oYICERDbEAWl/unjLCYYe1wX9INZ4qjCRNPpkG
-	 ktsXMOmdHtWFZC43C674WT4I3y9rKSvIK7pX3twU=
+	b=nltHer67MD8N8+lVvdQXy9LSmqafFEkhULixUl4Csrnn2Owmm9F4rJdRl3VjJtwdq
+	 8sg5qITKbpa0xR0kwHA9Y7c+jGU66kvqCErC9SqHHJYV0sa8cwVh8HDHCGXe3ipNre
+	 4xeWv1WBCgqAysZ0hc9xrdoAWL7PZSHGKpo9zDU8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Abdun Nihaal <abdun.nihaal@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 102/204] btrfs: send: return -ENAMETOOLONG when attempting a path that is too long
-Date: Mon,  2 Jun 2025 15:47:15 +0200
-Message-ID: <20250602134259.669998744@linuxfoundation.org>
+Subject: [PATCH 5.4 074/204] qlcnic: fix memory leak in qlcnic_sriov_channel_cfg_cmd()
+Date: Mon,  2 Jun 2025 15:46:47 +0200
+Message-ID: <20250602134258.587431767@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134255.449974357@linuxfoundation.org>
 References: <20250602134255.449974357@linuxfoundation.org>
@@ -51,43 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Abdun Nihaal <abdun.nihaal@gmail.com>
 
-[ Upstream commit a77749b3e21813566cea050bbb3414ae74562eba ]
+[ Upstream commit 9d8a99c5a7c7f4f7eca2c168a4ec254409670035 ]
 
-When attempting to build a too long path we are currently returning
--ENOMEM, which is very odd and misleading. So update fs_path_ensure_buf()
-to return -ENAMETOOLONG instead. Also, while at it, move the WARN_ON()
-into the if statement's expression, as it makes it clear what is being
-tested and also has the effect of adding 'unlikely' to the statement,
-which allows the compiler to generate better code as this condition is
-never expected to happen.
+In one of the error paths in qlcnic_sriov_channel_cfg_cmd(), the memory
+allocated in qlcnic_sriov_alloc_bc_mbx_args() for mailbox arguments is
+not freed. Fix that by jumping to the error path that frees them, by
+calling qlcnic_free_mbx_args(). This was found using static analysis.
 
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: f197a7aa6288 ("qlcnic: VF-PF communication channel implementation")
+Signed-off-by: Abdun Nihaal <abdun.nihaal@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250512044829.36400-1-abdun.nihaal@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/send.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/qlogic/qlcnic/qlcnic_sriov_common.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/fs/btrfs/send.c b/fs/btrfs/send.c
-index e1063ef3dece5..b0933d9525939 100644
---- a/fs/btrfs/send.c
-+++ b/fs/btrfs/send.c
-@@ -397,10 +397,8 @@ static int fs_path_ensure_buf(struct fs_path *p, int len)
- 	if (p->buf_len >= len)
- 		return 0;
+diff --git a/drivers/net/ethernet/qlogic/qlcnic/qlcnic_sriov_common.c b/drivers/net/ethernet/qlogic/qlcnic/qlcnic_sriov_common.c
+index 5d8b9e10ddf84..d6fcef1651a7e 100644
+--- a/drivers/net/ethernet/qlogic/qlcnic/qlcnic_sriov_common.c
++++ b/drivers/net/ethernet/qlogic/qlcnic/qlcnic_sriov_common.c
+@@ -1486,8 +1486,11 @@ static int qlcnic_sriov_channel_cfg_cmd(struct qlcnic_adapter *adapter, u8 cmd_o
+ 	}
  
--	if (len > PATH_MAX) {
--		WARN_ON(1);
--		return -ENOMEM;
--	}
-+	if (WARN_ON(len > PATH_MAX))
-+		return -ENAMETOOLONG;
- 
- 	path_len = p->end - p->start;
- 	old_buf_len = p->buf_len;
+ 	cmd_op = (cmd.rsp.arg[0] & 0xff);
+-	if (cmd.rsp.arg[0] >> 25 == 2)
+-		return 2;
++	if (cmd.rsp.arg[0] >> 25 == 2) {
++		ret = 2;
++		goto out;
++	}
++
+ 	if (cmd_op == QLCNIC_BC_CMD_CHANNEL_INIT)
+ 		set_bit(QLC_BC_VF_STATE, &vf->state);
+ 	else
 -- 
 2.39.5
 
