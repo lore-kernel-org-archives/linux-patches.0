@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED39D21885A;
-	Mon,  2 Jun 2025 14:23:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1F8520E026;
+	Mon,  2 Jun 2025 14:24:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748874239; cv=none; b=nBrA7XRf6f5T+mcfUqixg9yFb2kp5UPCeRB95cTDla1ZwzbK9h+rfTN26yqmlKRHm6HDugdDq1140K8DAKfKGA2l7haLh4eCTh7tuTN680cJjZj9TQZXGABYUhy9Gh4mU3tSvfs+wFApsE6B+uKzKBqHNs8kA5PQnl8m5QRnfRE=
+	t=1748874242; cv=none; b=ZdigSF+2zIq8wIejxhiPbFutI59QcYHEeZyVn5g38zvfiXdgo08MXjUYwr3CxYJwJ/nieAlPYmWdakrMYFXSAV/oDWi32tq2XMS/ZjC2ODO6b2B4V/RmutmQTq/v9uYMpY642OBiGHHBHLwmNHx//OBFw+H+rbANOaZ2oay/QJQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748874239; c=relaxed/simple;
-	bh=VSGw4N0Ts4uDetnSFA3kTDzhqU/fux07fywHlVBWvV8=;
+	s=arc-20240116; t=1748874242; c=relaxed/simple;
+	bh=rvXUQ5vLsf1qvrUxheIRPxnZgurkpwpM5U8NtswBgPw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LphTVeRyzqUejwHF9ZbsWQS/il2d/Yi+1YBDRUCLvMPsPboXGZUFD3eh7ow4BxZrjXK3Pk3ON9QikZy4L6Noq+d9K7GZ2S3f4ZHvaszEHDk1lP/73c/nx7nW9nnmgQ6AcN7AHKTRdAdKzs4mnY+PFfezWo2HHjK9Z6RToX6Qw4w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P1GKJUZZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t24O5fRpnQA6Koxekv0B1lbHt06AABI0xj3O1AFAzA/CZo5NDarELG7j55UQxOg5smYtRmUMu4AleSQD4R8eC2cyKnLCxygT4g+6/E00DjTk7ACmwavpwynHqaNVilOGFc9BRZ3d4X2IAT1U1hQTuS3vPk5BGyKl/+LrG7vDzZY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uxvD5UDH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P1GKJUZZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67C58C4CEEB;
-	Mon,  2 Jun 2025 14:23:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uxvD5UDH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 696E3C4CEEB;
+	Mon,  2 Jun 2025 14:24:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748874238;
-	bh=VSGw4N0Ts4uDetnSFA3kTDzhqU/fux07fywHlVBWvV8=;
+	s=korg; t=1748874241;
+	bh=rvXUQ5vLsf1qvrUxheIRPxnZgurkpwpM5U8NtswBgPw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P1GKJUZZdMycNDtvm4k3qOxwOsxihQnY5YqKfe23jOLEg/iXC+hHZj+HWLRLE9C9s
-	 0dviSEvTQnr8cHacfj0ueJynkH5OXOa7j3y6XSx8yNScpLbMBDXafkWFP0al5Swl+X
-	 bmAa5i72Yvv2Yb/JYbR84HJfdw0IDCaKrHpBwNd8=
+	b=uxvD5UDHSdVHD3rTi1Me1MPs9Be1gsxYd3xmP8TdtmFCA7wLWmSLJ5d5criVQ916U
+	 0Smk8X/TdPXVWafMV+2YkXzsza5vnAh1MlSECi9u1SJv8gECIn9pDopD9VQeAylgdd
+	 8A/Fl20uTZHYhODVVDDQh1Xz4JwKse4oofgS6C5A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>
-Subject: [PATCH 6.6 374/444] Revert "drm/amd: Keep display off while going into S4"
-Date: Mon,  2 Jun 2025 15:47:18 +0200
-Message-ID: <20250602134356.096885647@linuxfoundation.org>
+	Vicki Pfau <vi@endrift.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 6.6 375/444] Input: xpad - add more controllers
+Date: Mon,  2 Jun 2025 15:47:19 +0200
+Message-ID: <20250602134356.137567724@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -50,41 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Vicki Pfau <vi@endrift.com>
 
-commit 7e7cb7a13c81073d38a10fa7b450d23712281ec4 upstream.
+commit f0d17942ea3edec191f1c0fc0d2cd7feca8de2f0 upstream.
 
-commit 68bfdc8dc0a1a ("drm/amd: Keep display off while going into S4")
-attempted to keep displays off during the S4 sequence by not resuming
-display IP.  This however leads to hangs because DRM clients such as the
-console can try to access registers and cause a hang.
+Adds support for a revision of the Turtle Beach Recon Wired Controller,
+the Turtle Beach Stealth Ultra, and the PowerA Wired Controller.
 
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4155
-Fixes: 68bfdc8dc0a1a ("drm/amd: Keep display off while going into S4")
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Link: https://lore.kernel.org/r/20250522141328.115095-1-mario.limonciello@amd.com
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit e485502c37b097b0bd773baa7e2741bf7bd2909a)
+Signed-off-by: Vicki Pfau <vi@endrift.com>
+Link: https://lore.kernel.org/r/20250513225950.2719387-1-vi@endrift.com
 Cc: stable@vger.kernel.org
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    5 -----
- 1 file changed, 5 deletions(-)
+ drivers/input/joystick/xpad.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -2896,11 +2896,6 @@ static int dm_resume(void *handle)
- 
- 		return 0;
- 	}
--
--	/* leave display off for S4 sequence */
--	if (adev->in_s4)
--		return 0;
--
- 	/* Recreate dc_state - DC invalidates it when setting power state to S3. */
- 	dc_release_state(dm_state->context);
- 	dm_state->context = dc_create_state(dm->dc);
+--- a/drivers/input/joystick/xpad.c
++++ b/drivers/input/joystick/xpad.c
+@@ -289,6 +289,8 @@ static const struct xpad_device {
+ 	{ 0x1038, 0x1430, "SteelSeries Stratus Duo", 0, XTYPE_XBOX360 },
+ 	{ 0x1038, 0x1431, "SteelSeries Stratus Duo", 0, XTYPE_XBOX360 },
+ 	{ 0x10f5, 0x7005, "Turtle Beach Recon Controller", 0, XTYPE_XBOXONE },
++	{ 0x10f5, 0x7008, "Turtle Beach Recon Controller", MAP_SHARE_BUTTON, XTYPE_XBOXONE },
++	{ 0x10f5, 0x7073, "Turtle Beach Stealth Ultra Controller", MAP_SHARE_BUTTON, XTYPE_XBOXONE },
+ 	{ 0x11c9, 0x55f0, "Nacon GC-100XF", 0, XTYPE_XBOX360 },
+ 	{ 0x11ff, 0x0511, "PXN V900", 0, XTYPE_XBOX360 },
+ 	{ 0x1209, 0x2882, "Ardwiino Controller", 0, XTYPE_XBOX360 },
+@@ -353,6 +355,7 @@ static const struct xpad_device {
+ 	{ 0x1ee9, 0x1590, "ZOTAC Gaming Zone", 0, XTYPE_XBOX360 },
+ 	{ 0x20d6, 0x2001, "BDA Xbox Series X Wired Controller", 0, XTYPE_XBOXONE },
+ 	{ 0x20d6, 0x2009, "PowerA Enhanced Wired Controller for Xbox Series X|S", 0, XTYPE_XBOXONE },
++	{ 0x20d6, 0x2064, "PowerA Wired Controller for Xbox", MAP_SHARE_BUTTON, XTYPE_XBOXONE },
+ 	{ 0x20d6, 0x281f, "PowerA Wired Controller For Xbox 360", 0, XTYPE_XBOX360 },
+ 	{ 0x24c6, 0x5000, "Razer Atrox Arcade Stick", MAP_TRIGGERS_TO_BUTTONS, XTYPE_XBOX360 },
+ 	{ 0x24c6, 0x5300, "PowerA MINI PROEX Controller", 0, XTYPE_XBOX360 },
 
 
