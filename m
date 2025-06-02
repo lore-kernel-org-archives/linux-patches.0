@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFB552C3267;
-	Mon,  2 Jun 2025 15:20:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A84622C324F;
+	Mon,  2 Jun 2025 15:20:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748877601; cv=none; b=mKGcTVEHc5kCNZz5PrH7h6ChUrR+jgq3TQo6Y3Fv9L3O1zRGm9+4vuS91e6erkFY6bwuHw59XiNHqqECTzm1S0/td42LBDiTX2nR3cyWQSN3RwBXBoebLf3lk689jVL7KFzzsDRwaikIsefAIyIcNDGxNIrdvCLvjrvXm3QB0p8=
+	t=1748877604; cv=none; b=fHIMcRqYqihGYBMxHDzh4EGGKIVknJGRW2tnBHrfwkmGlRNxFPD7vBkz9jO1X/XYvF72ZG1unzBMGawZLwMS/WNU4iJIDSpJEizFRp4fqD4lMROrOYVP9t8jmaO7OTRGvb1IiWSiJnlA3a9XXhebKP3f48lj5amBk0d1c1pahuw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748877601; c=relaxed/simple;
-	bh=pQcCEAKMAQOieyG7s5YdczP1X8pLECrQZHWEvg5TxPc=;
+	s=arc-20240116; t=1748877604; c=relaxed/simple;
+	bh=9KQjDIX5qNOhHFy+vyv1gTgyqrydlFOf56ZgcfFW6oE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WrMU3T/eV8zW2YNShJdVB/J8SKPx22bDrQIectBqtes+bNOr7oxCs5OrQ00U7NFULrK/8J1PUZTASsLqcDSaVNmL/GtUtoIvAjnJvolMy9JlW6syYBx3+8uBzpW+sHv9u3PvAprlPksmIeBh8N6wcRzTEOMVXBs7OGMs5BAdWOY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nBcVKwOp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XY2wDnBOeZV7NL/330v7AUozgIIKmZbRRXhJGTAgD+JnlbBOhev3JbRMft9AnEWHUF06QMv3OBD0FO6GPEb110r4obbEP+JprALIXX6O9Mxp5jHrEO9rf79DjaDpisQj2shmtCDB/mTwv3V2+mRl5BSlHFK7u5OshSjFR0jsv6M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G4KdsSzu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nBcVKwOp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0052C4CEEB;
-	Mon,  2 Jun 2025 15:20:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G4KdsSzu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 167A3C4CEEE;
+	Mon,  2 Jun 2025 15:20:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748877601;
-	bh=pQcCEAKMAQOieyG7s5YdczP1X8pLECrQZHWEvg5TxPc=;
+	s=korg; t=1748877604;
+	bh=9KQjDIX5qNOhHFy+vyv1gTgyqrydlFOf56ZgcfFW6oE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nBcVKwOpMBRpU+zcB3hRTbWkW4/+LoP818sNGeeL/WIy+UYl7K3gCMow4Rr61bokk
-	 d9nWhNKr2GQHzt1sVEKtnveHwf9UXRAYNjJnZPFatiH7uAT43Aa21wkKooOD/2ovde
-	 SlSdPuAEuGJ/JYZKgVpSHsYwkPOFCgwItIUYS6Yc=
+	b=G4KdsSzu0Ix6G2brUh49PEntJ0TiPCU9rAEN7C4aWgGK/GX53f3CVw39OfHf9pYFi
+	 8bVsxX5/qR7rtU/695uKXgDbMRmh1Ra0Kp4aJs2mpJI9SVtp7MKsvk1qjfM5zvZErs
+	 7GFyA+T1d7t81Pm7BqevDNAjjFruyYpIkDopUNXk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzkaller <syzkaller@googlegroups.com>,
-	Shigeru Yoshida <syoshida@redhat.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Lee Jones <lee@kernel.org>
-Subject: [PATCH 6.1 307/325] af_unix: Fix uninit-value in __unix_walk_scc()
-Date: Mon,  2 Jun 2025 15:49:43 +0200
-Message-ID: <20250602134332.390155332@linuxfoundation.org>
+	Alok Tiwari <alok.a.tiwari@oracle.com>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 6.1 308/325] arm64: dts: qcom: sm8350: Fix typo in pil_camera_mem node
+Date: Mon,  2 Jun 2025 15:49:44 +0200
+Message-ID: <20250602134332.437240609@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134319.723650984@linuxfoundation.org>
 References: <20250602134319.723650984@linuxfoundation.org>
@@ -53,103 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shigeru Yoshida <syoshida@redhat.com>
+From: Alok Tiwari <alok.a.tiwari@oracle.com>
 
-commit 927fa5b3e4f52e0967bfc859afc98ad1c523d2d5 upstream.
+commit 295217420a44403a33c30f99d8337fe7b07eb02b upstream.
 
-KMSAN reported uninit-value access in __unix_walk_scc() [1].
+There is a typo in sm8350.dts where the node label
+mmeory@85200000 should be memory@85200000.
+This patch corrects the typo for clarity and consistency.
 
-In the list_for_each_entry_reverse() loop, when the vertex's index
-equals it's scc_index, the loop uses the variable vertex as a
-temporary variable that points to a vertex in scc. And when the loop
-is finished, the variable vertex points to the list head, in this case
-scc, which is a local variable on the stack (more precisely, it's not
-even scc and might underflow the call stack of __unix_walk_scc():
-container_of(&scc, struct unix_vertex, scc_entry)).
-
-However, the variable vertex is used under the label prev_vertex. So
-if the edge_stack is not empty and the function jumps to the
-prev_vertex label, the function will access invalid data on the
-stack. This causes the uninit-value access issue.
-
-Fix this by introducing a new temporary variable for the loop.
-
-[1]
-BUG: KMSAN: uninit-value in __unix_walk_scc net/unix/garbage.c:478 [inline]
-BUG: KMSAN: uninit-value in unix_walk_scc net/unix/garbage.c:526 [inline]
-BUG: KMSAN: uninit-value in __unix_gc+0x2589/0x3c20 net/unix/garbage.c:584
- __unix_walk_scc net/unix/garbage.c:478 [inline]
- unix_walk_scc net/unix/garbage.c:526 [inline]
- __unix_gc+0x2589/0x3c20 net/unix/garbage.c:584
- process_one_work kernel/workqueue.c:3231 [inline]
- process_scheduled_works+0xade/0x1bf0 kernel/workqueue.c:3312
- worker_thread+0xeb6/0x15b0 kernel/workqueue.c:3393
- kthread+0x3c4/0x530 kernel/kthread.c:389
- ret_from_fork+0x6e/0x90 arch/x86/kernel/process.c:147
- ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
-
-Uninit was stored to memory at:
- unix_walk_scc net/unix/garbage.c:526 [inline]
- __unix_gc+0x2adf/0x3c20 net/unix/garbage.c:584
- process_one_work kernel/workqueue.c:3231 [inline]
- process_scheduled_works+0xade/0x1bf0 kernel/workqueue.c:3312
- worker_thread+0xeb6/0x15b0 kernel/workqueue.c:3393
- kthread+0x3c4/0x530 kernel/kthread.c:389
- ret_from_fork+0x6e/0x90 arch/x86/kernel/process.c:147
- ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
-
-Local variable entries created at:
- ref_tracker_free+0x48/0xf30 lib/ref_tracker.c:222
- netdev_tracker_free include/linux/netdevice.h:4058 [inline]
- netdev_put include/linux/netdevice.h:4075 [inline]
- dev_put include/linux/netdevice.h:4101 [inline]
- update_gid_event_work_handler+0xaa/0x1b0 drivers/infiniband/core/roce_gid_mgmt.c:813
-
-CPU: 1 PID: 12763 Comm: kworker/u8:31 Not tainted 6.10.0-rc4-00217-g35bb670d65fc #32
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-2.fc40 04/01/2014
-Workqueue: events_unbound __unix_gc
-
-Fixes: 3484f063172d ("af_unix: Detect Strongly Connected Components.")
-Reported-by: syzkaller <syzkaller@googlegroups.com>
-Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://patch.msgid.link/20240702160428.10153-1-syoshida@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Lee Jones <lee@kernel.org>
+Fixes: b7e8f433a673 ("arm64: dts: qcom: Add basic devicetree support for SM8350 SoC")
+Cc: stable@vger.kernel.org
+Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
+Link: https://lore.kernel.org/r/20250514114656.2307828-1-alok.a.tiwari@oracle.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/unix/garbage.c |    9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ arch/arm64/boot/dts/qcom/sm8350.dtsi |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/unix/garbage.c
-+++ b/net/unix/garbage.c
-@@ -476,6 +476,7 @@ prev_vertex:
- 	}
+--- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+@@ -421,7 +421,7 @@
+ 			no-map;
+ 		};
  
- 	if (vertex->index == vertex->scc_index) {
-+		struct unix_vertex *v;
- 		struct list_head scc;
- 		bool scc_dead = true;
- 
-@@ -486,15 +487,15 @@ prev_vertex:
- 		 */
- 		__list_cut_position(&scc, &vertex_stack, &vertex->scc_entry);
- 
--		list_for_each_entry_reverse(vertex, &scc, scc_entry) {
-+		list_for_each_entry_reverse(v, &scc, scc_entry) {
- 			/* Don't restart DFS from this vertex in unix_walk_scc(). */
--			list_move_tail(&vertex->entry, &unix_visited_vertices);
-+			list_move_tail(&v->entry, &unix_visited_vertices);
- 
- 			/* Mark vertex as off-stack. */
--			vertex->index = unix_vertex_grouped_index;
-+			v->index = unix_vertex_grouped_index;
- 
- 			if (scc_dead)
--				scc_dead = unix_vertex_dead(vertex);
-+				scc_dead = unix_vertex_dead(v);
- 		}
- 
- 		if (scc_dead)
+-		pil_camera_mem: mmeory@85200000 {
++		pil_camera_mem: memory@85200000 {
+ 			reg = <0x0 0x85200000 0x0 0x500000>;
+ 			no-map;
+ 		};
 
 
