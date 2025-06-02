@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45F8E1A3A80;
-	Mon,  2 Jun 2025 13:49:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E16E2C3247;
+	Mon,  2 Jun 2025 13:49:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748872159; cv=none; b=J9+JF9YdJbedQSK/YBTVpoxFnSrqaNZtKtxRW33m/K2dHQAr4EshaV41cQ8vcortlAHbh6LgokvydLUAKqoijkJ4znUgSOTTs7j12GPVXcNZyGo2WEGAcIE1USM67BOJO0z8cUQgqvpVoLUO6DOw2LLXzCo/2YPEaP7Eqa9grmk=
+	t=1748872160; cv=none; b=hJ7jf6fxS8s5i60UJclusp23YvdhtXNW6qm/7xmaJql6ZgFj1sYmWkMu08cX7/AotTZeOXyQ2WHug3oEEvRlr5+4aBiB6TWW37/kf+9R7OuvDX7JuE9K1QILTTR1OTVf/86HOqZMwGHa8dP5qvcNxeCdY7N0iyGiWp/7rU+a0LM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748872159; c=relaxed/simple;
-	bh=rffd3203g1cFgfDD2WpLeV19H7Unz5lOXHJBEkle9a4=;
+	s=arc-20240116; t=1748872160; c=relaxed/simple;
+	bh=Bg/TzFxg+k3NNiAbFRHVRS/gD7AePoDhKk9VQjrGTZA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E7xfHFeXPkvPWFNakT2EyfAxDGUrXNgJDxUKO3o98QLpbLFW+TDI0KS0x+ilEcTJp53/ozA4MuRFTuF95J4JZe86X7nrvRNyntOiqFFJ30tPp0qL35UI5ZeKZg13qMm85MdAFfurTJUTiGGR5aV12CLmLuTLJ8EFz8G9XC50TkM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ph4bFK23; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DEj3FibReTDGx+A6efqHR9w+0ZqpaDWL4DrjJwhppER+KBVDUnGS6jn6YAL56ywTGZs6LERhSyV/7IkE3BVrhH3bsw0Q5RnpoF6JmVJfBO2ibgJQ7LZLOh/MkvoyZGCZUDe80UgtDX2iFq02hjpULqqn/dyd1NmGmPRlXHpghUI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MGZ1f4fx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ph4bFK23"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A931CC4CEEE;
-	Mon,  2 Jun 2025 13:49:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MGZ1f4fx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 836E0C4CEEB;
+	Mon,  2 Jun 2025 13:49:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748872159;
-	bh=rffd3203g1cFgfDD2WpLeV19H7Unz5lOXHJBEkle9a4=;
+	s=korg; t=1748872156;
+	bh=Bg/TzFxg+k3NNiAbFRHVRS/gD7AePoDhKk9VQjrGTZA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ph4bFK23f5h2/34oTHF39roQdjy83G0EgmtdzYZm/HGAlOq9f8Sy0BDmGsa1OdVEl
-	 YFu28FmPoNVncCs4AJ4a7+JDg9CyEbHmIVaPC8kCW3Q6lrG90a0SErMDwxpUdr4Jyx
-	 zpW1xI/5iXRo9CP18dRF9qKNnGkNSi1D4fNoekz4=
+	b=MGZ1f4fxf/NMYbzTflIx4/y9s1UHvybSKEUiCoP6Up9pp8mlGDGs+wEf86+8Bm77f
+	 RL3okz/sfCvUMk3CSItNTPJJQqZguVFyOUdQW/qmnEcdbMNHiH/kWUt5jbBJrT+jTS
+	 B/SG8jVvCSwxVF68gHF2tuLJ6NxvUM9K6Vd0YbPE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alok Tiwari <alok.a.tiwari@oracle.com>,
+	stable@kernel.org,
+	Karthik Sanagavarapu <quic_kartsana@quicinc.com>,
+	Ling Xu <quic_lxu5@quicinc.com>,
 	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.15 08/49] arm64: dts: qcom: sm8350: Fix typo in pil_camera_mem node
-Date: Mon,  2 Jun 2025 15:47:00 +0200
-Message-ID: <20250602134238.269363133@linuxfoundation.org>
+Subject: [PATCH 6.15 07/49] arm64: dts: qcom: sa8775p: Remove cdsp compute-cb@10
+Date: Mon,  2 Jun 2025 15:46:59 +0200
+Message-ID: <20250602134238.232289649@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134237.940995114@linuxfoundation.org>
 References: <20250602134237.940995114@linuxfoundation.org>
@@ -50,34 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alok Tiwari <alok.a.tiwari@oracle.com>
+From: Karthik Sanagavarapu <quic_kartsana@quicinc.com>
 
-commit 295217420a44403a33c30f99d8337fe7b07eb02b upstream.
+commit d180c2bd3b43d55f30c9b99de68bc6bb8420d1c1 upstream.
 
-There is a typo in sm8350.dts where the node label
-mmeory@85200000 should be memory@85200000.
-This patch corrects the typo for clarity and consistency.
+Remove the context bank compute-cb@10 because these SMMU ids are S2-only
+which is not used for S1 transaction.
 
-Fixes: b7e8f433a673 ("arm64: dts: qcom: Add basic devicetree support for SM8350 SoC")
-Cc: stable@vger.kernel.org
-Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
-Link: https://lore.kernel.org/r/20250514114656.2307828-1-alok.a.tiwari@oracle.com
+Fixes: f7b01bfb4b47 ("arm64: qcom: sa8775p: Add ADSP and CDSP0 fastrpc nodes")
+Cc: stable@kernel.org
+Signed-off-by: Karthik Sanagavarapu <quic_kartsana@quicinc.com>
+Signed-off-by: Ling Xu <quic_lxu5@quicinc.com>
+Link: https://lore.kernel.org/r/4c9de858fda7848b77ea8c528c9b9d53600ad21a.1739260973.git.quic_lxu5@quicinc.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/qcom/sm8350.dtsi |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sa8775p.dtsi |    8 --------
+ 1 file changed, 8 deletions(-)
 
---- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-@@ -455,7 +455,7 @@
- 			no-map;
- 		};
+--- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
++++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+@@ -4973,14 +4973,6 @@
+ 						dma-coherent;
+ 					};
  
--		pil_camera_mem: mmeory@85200000 {
-+		pil_camera_mem: memory@85200000 {
- 			reg = <0x0 0x85200000 0x0 0x500000>;
- 			no-map;
- 		};
+-					compute-cb@10 {
+-						compatible = "qcom,fastrpc-compute-cb";
+-						reg = <10>;
+-						iommus = <&apps_smmu 0x214a 0x04a0>,
+-							 <&apps_smmu 0x218a 0x0400>;
+-						dma-coherent;
+-					};
+-
+ 					compute-cb@11 {
+ 						compatible = "qcom,fastrpc-compute-cb";
+ 						reg = <11>;
 
 
