@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 034AD223DC0;
-	Mon,  2 Jun 2025 15:11:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F808223DF6;
+	Mon,  2 Jun 2025 15:11:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748877062; cv=none; b=L643++3Y99FwPtkxE4E5LeaLzuz4ZFEYgU4UwHdsFBfbaBORpXKms+M7YV1ULHPCBLoy5O6drpkkRLP/LXg8NGJ7WYuNwYogVXnrgKwFKiUE9dG1FUdK07ddT2Q71W/8f0PPQNjVRdQl48hgw8pH2VrI+7yruM29xfQwHEJJAD8=
+	t=1748877064; cv=none; b=NNt5rx+4fx6FOC/6CvP3VkKmslIaimB6iWvvF967PMnepBMJifxR8/6dTlMRNkMoWpFrEA5+G8a9V5KYOJFId6PuOoyXE0Z+PwyI5L6d9RaM2UvrfA7FhDr3qPWlLSWFgPIAxT6ZHhUxwMgLwhmsaVu9Jz3XWkciddd+CgZJQew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748877062; c=relaxed/simple;
-	bh=deeLhae4Vok3Df8La9hyrxvhUaDJump76ZTD/8J1wcU=;
+	s=arc-20240116; t=1748877064; c=relaxed/simple;
+	bh=tJs7AfAwYkF2PTS9AM+4t24WaAxX/sAAPHsjtMPmJbE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uUvx4FB1ntLq14v06RFiGoA6xLoXaxBswcTGrjm6YnSqgvZ+net8x5JWDUzMZVWfm0cXB56vUKJOb/nHlgaeHxF2G/N0lyyHdyRcw8cWcH5kcKGbX7kyHoQUj1T2LvvJ6VxABgzkdtcLIXxkNDUTgWagU1l0gQVRxOhZurw+9Oo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UX1vWlQR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nkRAvwcRuqwoFyCOBNNRq50JYEIv6ptt3bDDAGW9m7XI9W/9n/SoG+T59lJtBlDxW6eXHkKqRBg+KPx31UvxReO8d5hMleRoMimIOY0z8WxhTmWKckEQ5l809hJd+Pk4kshQe2dQfL8E3OqGHOxsWoPQixwzLT7QlHGbReB2+Tc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zXA6jtVU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UX1vWlQR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D828C4CEF0;
-	Mon,  2 Jun 2025 15:11:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zXA6jtVU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 242B3C4CEEB;
+	Mon,  2 Jun 2025 15:11:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748877061;
-	bh=deeLhae4Vok3Df8La9hyrxvhUaDJump76ZTD/8J1wcU=;
+	s=korg; t=1748877064;
+	bh=tJs7AfAwYkF2PTS9AM+4t24WaAxX/sAAPHsjtMPmJbE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UX1vWlQRRwTdt9RP9MEKE+QCv1Dm8bUfIOlBEC3HWmKhKPggGL58mgIxBM0uffNeX
-	 92MhYlrppy6oJ0mVw6aZf6OeGOmEwSRbWORN/lBr0gs6ejQCyZuL4kiSbNk+HDQ7bU
-	 5Au+y7qqT5yS5EuYtxGv+Jj7CzHv36jn6pqer/uA=
+	b=zXA6jtVUifZv6k7SsefzIcwn8CY43KbZ4wKuNdjPhp3/Bp9jgtaTnJuHXraZDEKEl
+	 NCO2rGPTREALTnt8OUBRjzD1c7ucIh66SiYM68xHE26mzkU+rTDTkhUDALH/ke/Zxq
+	 ALOjFTZbebTq/jO6ySuBwxrjhQx11rtVvF2WzOMk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Vincent Mailhol <mailhol.vincent@wanadoo.fr>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 159/325] can: c_can: Use of_property_present() to test existence of DT property
-Date: Mon,  2 Jun 2025 15:47:15 +0200
-Message-ID: <20250602134326.267407867@linuxfoundation.org>
+Subject: [PATCH 6.1 160/325] eth: mlx4: dont try to complete XDP frames in netpoll
+Date: Mon,  2 Jun 2025 15:47:16 +0200
+Message-ID: <20250602134326.305412615@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134319.723650984@linuxfoundation.org>
 References: <20250602134319.723650984@linuxfoundation.org>
@@ -53,34 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit ab1bc2290fd8311d49b87c29f1eb123fcb581bee ]
+[ Upstream commit 8fdeafd66edaf420ea0063a1f13442fe3470fe70 ]
 
-of_property_read_bool() should be used only on boolean properties.
+mlx4 doesn't support ndo_xdp_xmit / XDP_REDIRECT and wasn't
+using page pool until now, so it could run XDP completions
+in netpoll (NAPI budget == 0) just fine. Page pool has calling
+context requirements, make sure we don't try to call it from
+what is potentially HW IRQ context.
 
-Cc: Rob Herring <robh@kernel.org>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
-Link: https://patch.msgid.link/20250212-syscon-phandle-args-can-v2-3-ac9a1253396b@linaro.org
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20250213010635.1354034-3-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/c_can/c_can_platform.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx4/en_tx.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/can/c_can/c_can_platform.c b/drivers/net/can/c_can/c_can_platform.c
-index c5d7093d54133..c29862b3bb1f3 100644
---- a/drivers/net/can/c_can/c_can_platform.c
-+++ b/drivers/net/can/c_can/c_can_platform.c
-@@ -334,7 +334,7 @@ static int c_can_plat_probe(struct platform_device *pdev)
- 		/* Check if we need custom RAMINIT via syscon. Mostly for TI
- 		 * platforms. Only supported with DT boot.
- 		 */
--		if (np && of_property_read_bool(np, "syscon-raminit")) {
-+		if (np && of_property_present(np, "syscon-raminit")) {
- 			u32 id;
- 			struct c_can_raminit *raminit = &priv->raminit_sys;
+diff --git a/drivers/net/ethernet/mellanox/mlx4/en_tx.c b/drivers/net/ethernet/mellanox/mlx4/en_tx.c
+index 7fccf1a79f09b..95eae224bbb4a 100644
+--- a/drivers/net/ethernet/mellanox/mlx4/en_tx.c
++++ b/drivers/net/ethernet/mellanox/mlx4/en_tx.c
+@@ -446,6 +446,8 @@ int mlx4_en_process_tx_cq(struct net_device *dev,
+ 
+ 	if (unlikely(!priv->port_up))
+ 		return 0;
++	if (unlikely(!napi_budget) && cq->type == TX_XDP)
++		return 0;
+ 
+ 	netdev_txq_bql_complete_prefetchw(ring->tx_queue);
  
 -- 
 2.39.5
