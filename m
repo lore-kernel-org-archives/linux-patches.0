@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 815001DE881;
-	Mon,  2 Jun 2025 14:08:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91AF61DE881;
+	Mon,  2 Jun 2025 14:08:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748873316; cv=none; b=lqyd68eNQB0/g1k4WpoYktNQh7aHPWpUx9GmvohSqQNjPja697nJozV22JAS6MHyOgpheGIdjBm0toIh2blJ5MvXLn71Q5HuT5ucL7TDUS7xvgMR9sp9QGKktfdwl5NaO1tbi4D4i9GHjyULI7J5HIPggPJ7RrP0dCFE5VRN0ps=
+	t=1748873319; cv=none; b=lpMb10uFbVPT9FGjPGVAtmNloWaMnNV9+Q3+Fm/KOKZlmoLgE/Sho77VWYChW128iQgmBU+wJbGrAebTP6fqZFL0nfpd8RBwLm5iQNT+gwUj6oOU1AsnQzQwXHvFRGJQw4DqKzMHgv5Ka4To9OcLHviwaWnd7GVHWQiK2cKefVw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748873316; c=relaxed/simple;
-	bh=G3GM+7DtpDzV0VC5ouK/M5NzPrQ7DaQ8yjvrvOwtCc0=;
+	s=arc-20240116; t=1748873319; c=relaxed/simple;
+	bh=NOHgCKLVj275M3cK9n+osij5ubizLf6HXIVjtMookTs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ntcub1fWeNXOOvVkMlEf3dDvtWzVSQ6EDMNu07aDS3W3yjN8u72/lFTu38qxHwNGJ7uhyiKsgRD5XbKt5xnKZED752YvqFF7N+nsA7piYldBeMk+YStwrygDYdlOiKgMMoAkuf1sL+KIu0NfLg99JNWZJy+88lTus/CuDFYO4cg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ta8L6bvF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TIb11UggcTlIpVFSToX44hgZualjXCMXXBu3P4xjq2VaaSRpT+UegOqHmgEjIfiWrRbgnseYeAUxyZYGgbm+GkSf56kDsod3634JdDRokxSlbbfZJZoW55lvyrpA2ioRNogxUQBOCDSEM+CfGpxjQ4hW7JDrgvtqzXb6W9yRoUs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RBN74QTF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ta8L6bvF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3A61C4CEEB;
-	Mon,  2 Jun 2025 14:08:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RBN74QTF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00D73C4CEEB;
+	Mon,  2 Jun 2025 14:08:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748873316;
-	bh=G3GM+7DtpDzV0VC5ouK/M5NzPrQ7DaQ8yjvrvOwtCc0=;
+	s=korg; t=1748873319;
+	bh=NOHgCKLVj275M3cK9n+osij5ubizLf6HXIVjtMookTs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ta8L6bvFe2c0yCdc/KsqV9TUrS1mKlZVtooI++J604A0cH5WipzIu2omwBnre1sGZ
-	 p6QbVlhqQiSVY3998cL2k8T4Nt9jynQfYaLVSBUVUsmxBVOEcnpoiVZM1waYKnvUpE
-	 WZpA1CIlSdPpF807figqCfxP/7qQAWBsId88Osyw=
+	b=RBN74QTFJSrlH+SC4zhkzJHMn5dDmGoTzCu7aKsEvA5+ZnmcpFeaYykY2fEgOdxrY
+	 6jsWgNzl9nx6uOoAMuTJRiJLDp8jtmycXvNPClPbnHnTpWwmcc/OZR9COMZW1AvAYG
+	 qGXU4C4Il/1CcMaEREJ9CWpsMMs1bdbCgGszoIN4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frediano Ziglio <frediano.ziglio@cloud.com>,
-	Juergen Gross <jgross@suse.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 103/444] xen: Add support for XenServer 6.1 platform device
-Date: Mon,  2 Jun 2025 15:42:47 +0200
-Message-ID: <20250602134345.084131278@linuxfoundation.org>
+Subject: [PATCH 6.6 077/444] btrfs: run btrfs_error_commit_super() early
+Date: Mon,  2 Jun 2025 15:42:21 +0200
+Message-ID: <20250602134344.034534588@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -51,63 +52,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frediano Ziglio <frediano.ziglio@cloud.com>
+From: Qu Wenruo <wqu@suse.com>
 
-[ Upstream commit 2356f15caefc0cc63d9cc5122641754f76ef9b25 ]
+[ Upstream commit df94a342efb451deb0e32b495d1d6cd4bb3a1648 ]
 
-On XenServer on Windows machine a platform device with ID 2 instead of
-1 is used.
+[BUG]
+Even after all the error fixes related the
+"ASSERT(list_empty(&fs_info->delayed_iputs));" in close_ctree(), I can
+still hit it reliably with my experimental 2K block size.
 
-This device is mainly identical to device 1 but due to some Windows
-update behaviour it was decided to use a device with a different ID.
+[CAUSE]
+In my case, all the error is triggered after the fs is already in error
+status.
 
-This causes compatibility issues with Linux which expects, if Xen
-is detected, to find a Xen platform device (5853:0001) otherwise code
-will crash due to some missing initialization (specifically grant
-tables). Specifically from dmesg
+I find the following call trace to be the cause of race:
 
-    RIP: 0010:gnttab_expand+0x29/0x210
-    Code: 90 0f 1f 44 00 00 55 31 d2 48 89 e5 41 57 41 56 41 55 41 89 fd
-          41 54 53 48 83 ec 10 48 8b 05 7e 9a 49 02 44 8b 35 a7 9a 49 02
-          <8b> 48 04 8d 44 39 ff f7 f1 45 8d 24 06 89 c3 e8 43 fe ff ff
-          44 39
-    RSP: 0000:ffffba34c01fbc88 EFLAGS: 00010086
-    ...
+           Main thread                       |     endio_write_workers
+---------------------------------------------+---------------------------
+close_ctree()                                |
+|- btrfs_error_commit_super()                |
+|  |- btrfs_cleanup_transaction()            |
+|  |  |- btrfs_destroy_all_ordered_extents() |
+|  |     |- btrfs_wait_ordered_roots()       |
+|  |- btrfs_run_delayed_iputs()              |
+|                                            | btrfs_finish_ordered_io()
+|                                            | |- btrfs_put_ordered_extent()
+|                                            |    |- btrfs_add_delayed_iput()
+|- ASSERT(list_empty(delayed_iputs))         |
+   !!! Triggered !!!
 
-The device 2 is presented by Xapi adding device specification to
-Qemu command line.
+The root cause is that, btrfs_wait_ordered_roots() only wait for
+ordered extents to finish their IOs, not to wait for them to finish and
+removed.
 
-Signed-off-by: Frediano Ziglio <frediano.ziglio@cloud.com>
-Acked-by: Juergen Gross <jgross@suse.com>
-Message-ID: <20250227145016.25350-1-frediano.ziglio@cloud.com>
-Signed-off-by: Juergen Gross <jgross@suse.com>
+[FIX]
+Since btrfs_error_commit_super() will flush and wait for all ordered
+extents, it should be executed early, before we start flushing the
+workqueues.
+
+And since btrfs_error_commit_super() now runs early, there is no need to
+run btrfs_run_delayed_iputs() inside it, so just remove the
+btrfs_run_delayed_iputs() call from btrfs_error_commit_super().
+
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/xen/platform-pci.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ fs/btrfs/disk-io.c | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/xen/platform-pci.c b/drivers/xen/platform-pci.c
-index 544d3f9010b92..1db82da56db62 100644
---- a/drivers/xen/platform-pci.c
-+++ b/drivers/xen/platform-pci.c
-@@ -26,6 +26,8 @@
+diff --git a/fs/btrfs/disk-io.c b/fs/btrfs/disk-io.c
+index 2387210231f23..1e1650012606e 100644
+--- a/fs/btrfs/disk-io.c
++++ b/fs/btrfs/disk-io.c
+@@ -4313,6 +4313,14 @@ void __cold close_ctree(struct btrfs_fs_info *fs_info)
+ 	/* clear out the rbtree of defraggable inodes */
+ 	btrfs_cleanup_defrag_inodes(fs_info);
  
- #define DRV_NAME    "xen-platform-pci"
- 
-+#define PCI_DEVICE_ID_XEN_PLATFORM_XS61	0x0002
++	/*
++	 * Handle the error fs first, as it will flush and wait for all ordered
++	 * extents.  This will generate delayed iputs, thus we want to handle
++	 * it first.
++	 */
++	if (unlikely(BTRFS_FS_ERROR(fs_info)))
++		btrfs_error_commit_super(fs_info);
 +
- static unsigned long platform_mmio;
- static unsigned long platform_mmio_alloc;
- static unsigned long platform_mmiolen;
-@@ -174,6 +176,8 @@ static int platform_pci_probe(struct pci_dev *pdev,
- static const struct pci_device_id platform_pci_tbl[] = {
- 	{PCI_VENDOR_ID_XEN, PCI_DEVICE_ID_XEN_PLATFORM,
- 		PCI_ANY_ID, PCI_ANY_ID, 0, 0, 0},
-+	{PCI_VENDOR_ID_XEN, PCI_DEVICE_ID_XEN_PLATFORM_XS61,
-+		PCI_ANY_ID, PCI_ANY_ID, 0, 0, 0},
- 	{0,}
- };
+ 	/*
+ 	 * Wait for any fixup workers to complete.
+ 	 * If we don't wait for them here and they are still running by the time
+@@ -4402,9 +4410,6 @@ void __cold close_ctree(struct btrfs_fs_info *fs_info)
+ 			btrfs_err(fs_info, "commit super ret %d", ret);
+ 	}
  
+-	if (BTRFS_FS_ERROR(fs_info))
+-		btrfs_error_commit_super(fs_info);
+-
+ 	kthread_stop(fs_info->transaction_kthread);
+ 	kthread_stop(fs_info->cleaner_kthread);
+ 
+@@ -4541,10 +4546,6 @@ static void btrfs_error_commit_super(struct btrfs_fs_info *fs_info)
+ 	/* cleanup FS via transaction */
+ 	btrfs_cleanup_transaction(fs_info);
+ 
+-	mutex_lock(&fs_info->cleaner_mutex);
+-	btrfs_run_delayed_iputs(fs_info);
+-	mutex_unlock(&fs_info->cleaner_mutex);
+-
+ 	down_write(&fs_info->cleanup_work_sem);
+ 	up_write(&fs_info->cleanup_work_sem);
+ }
 -- 
 2.39.5
 
