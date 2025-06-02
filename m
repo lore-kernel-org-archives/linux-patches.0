@@ -1,48 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9813A221727;
-	Mon,  2 Jun 2025 15:16:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44DDF223DC0;
+	Mon,  2 Jun 2025 15:16:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748877392; cv=none; b=P9Hds1fjn15Iqi2Fdb6e/3IgBJLf5aA257LfZEknJRoigpK/cQKzM0yqHGooxOvtOqs78Bi2XAAHGxs83lFYz4f6zVLLyLa73Bvrn0kft2OM+OMj14kwetb48Xgece6GA1ggOQhFwZQnByecU01Y7nRYI5P4Wfzm3Qpmta2ad5k=
+	t=1748877395; cv=none; b=EZW6QHQj0B1BVZLFMeM6WywGEOS5+oXWpW90eBKH4I8MbTsDTOBqcrvMvVF89xZl15aXTZMP8x1sHyZVGz43J8uDR73VaW96vBvEkjKTZG3x66TUhl9uXa2TVHvy+JrM/PF9WyUvdbgpVyqs+/iLfH5pJMKJteNoOpcLwI2Ej3E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748877392; c=relaxed/simple;
-	bh=BMkAGXtS2FY0QeMOVsr6iU3W3EGtEpu1CNbu0HUhcec=;
+	s=arc-20240116; t=1748877395; c=relaxed/simple;
+	bh=ulJ2vLC4i5dYBqEWE2rgxXz7EN1E/XvXMoDWoDlkBUo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gDIO2Na3aNjSTy5aPxmBk1WZtHdIzVtefou/T3B0jzl03DoyZjif48NIARqIyTaqwty86jLxFOy8uKnf/WXrBJTBSLAAAkvv+jUW/VkUapgFdxkjVe20gewN8JPxnMnhdOEI4IWfBmuu3ddeI3nHdRoQBiAMktz9q0bU50jPQmw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XvQ8EYin; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iBQF07h3pHXXzHq5UnP+BEYevCFQc6ekSTCXTnurhvbsi0pxbroFzFywfj8CqUkb3+kZetOLKN+Y1DfIEsCipPh4JC0MCfWEMnJGMQ+cPEB6UPOZ5+eGOCXDH9GS3FPfwItxuK1XMuI6hRIog/WFDJaeS1yRGn8XOBX+Mrj5VzY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rel8KTCh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XvQ8EYin"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DAF6C4CEEB;
-	Mon,  2 Jun 2025 15:16:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rel8KTCh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BED20C4CEEB;
+	Mon,  2 Jun 2025 15:16:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748877392;
-	bh=BMkAGXtS2FY0QeMOVsr6iU3W3EGtEpu1CNbu0HUhcec=;
+	s=korg; t=1748877395;
+	bh=ulJ2vLC4i5dYBqEWE2rgxXz7EN1E/XvXMoDWoDlkBUo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XvQ8EYinddkUk4GKda9T24eGuSbN9rIzgUUOLu8A/0CLphSsVur5sb0QdkheH04GY
-	 vQfyMvW1xnE/MyNaBms+PwpDuNwBHzGuSEUNYM3SesTjOd/mbi6uS/ASRxTL1BKcwb
-	 au+WmCDm7hdQ/qy96WD6JSHBfwcmb0sBR7s0CLs4=
+	b=rel8KTChc6aZfJhMdbxYLsAZa6wiqBXZsWM4cEDbIUszapZk42/U2iY9wy3FfBDYK
+	 +cis2up92tjaHS2PsHMuubt5MtO1blZp8SKW5nCrJ8AHXJVi6StIL9pNT9X7YWHGsw
+	 FMLxe2Bb2Ds6wqrcOrJXe3Q482MdSxiaICxIFMGw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	Rik van Riel <riel@surriel.com>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Michael van der Westhuizen <rmikey@meta.com>,
-	Usama Arif <usamaarif642@gmail.com>,
-	Pavel Begunkov <asml.silence@gmail.com>,
-	Chen Ridong <chenridong@huawei.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Michal Hocko <mhocko@kernel.org>,
+	Tianyang Zhang <zhangtianyang@loongson.cn>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
 	Michal Hocko <mhocko@suse.com>,
-	Muchun Song <muchun.song@linux.dev>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
+	Brendan Jackman <jackmanb@google.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Zi Yan <ziy@nvidia.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 263/325] memcg: always call cond_resched() after fn()
-Date: Mon,  2 Jun 2025 15:48:59 +0200
-Message-ID: <20250602134330.458945652@linuxfoundation.org>
+Subject: [PATCH 6.1 264/325] mm/page_alloc.c: avoid infinite retries caused by cpuset race
+Date: Mon,  2 Jun 2025 15:49:00 +0200
+Message-ID: <20250602134330.498435748@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134319.723650984@linuxfoundation.org>
 References: <20250602134319.723650984@linuxfoundation.org>
@@ -61,80 +56,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Tianyang Zhang <zhangtianyang@loongson.cn>
 
-commit 06717a7b6c86514dbd6ab322e8083ffaa4db5712 upstream.
+commit e05741fb10c38d70bbd7ec12b23c197b6355d519 upstream.
 
-I am seeing soft lockup on certain machine types when a cgroup OOMs.  This
-is happening because killing the process in certain machine might be very
-slow, which causes the soft lockup and RCU stalls.  This happens usually
-when the cgroup has MANY processes and memory.oom.group is set.
+__alloc_pages_slowpath has no change detection for ac->nodemask in the
+part of retry path, while cpuset can modify it in parallel.  For some
+processes that set mempolicy as MPOL_BIND, this results ac->nodemask
+changes, and then the should_reclaim_retry will judge based on the latest
+nodemask and jump to retry, while the get_page_from_freelist only
+traverses the zonelist from ac->preferred_zoneref, which selected by a
+expired nodemask and may cause infinite retries in some cases
 
-Example I am seeing in real production:
+cpu 64:
+__alloc_pages_slowpath {
+        /* ..... */
+retry:
+        /* ac->nodemask = 0x1, ac->preferred->zone->nid = 1 */
+        if (alloc_flags & ALLOC_KSWAPD)
+                wake_all_kswapds(order, gfp_mask, ac);
+        /* cpu 1:
+        cpuset_write_resmask
+            update_nodemask
+                update_nodemasks_hier
+                    update_tasks_nodemask
+                        mpol_rebind_task
+                         mpol_rebind_policy
+                          mpol_rebind_nodemask
+		// mempolicy->nodes has been modified,
+		// which ac->nodemask point to
 
-       [462012.244552] Memory cgroup out of memory: Killed process 3370438 (crosvm) ....
-       ....
-       [462037.318059] Memory cgroup out of memory: Killed process 4171372 (adb) ....
-       [462037.348314] watchdog: BUG: soft lockup - CPU#64 stuck for 26s! [stat_manager-ag:1618982]
-       ....
+        */
+        /* ac->nodemask = 0x3, ac->preferred->zone->nid = 1 */
+        if (should_reclaim_retry(gfp_mask, order, ac, alloc_flags,
+                                 did_some_progress > 0, &no_progress_loops))
+                goto retry;
+}
 
-Quick look at why this is so slow, it seems to be related to serial flush
-for certain machine types.  For all the crashes I saw, the target CPU was
-at console_flush_all().
+Simultaneously starting multiple cpuset01 from LTP can quickly reproduce
+this issue on a multi node server when the maximum memory pressure is
+reached and the swap is enabled
 
-In the case above, there are thousands of processes in the cgroup, and it
-is soft locking up before it reaches the 1024 limit in the code (which
-would call the cond_resched()).  So, cond_resched() in 1024 blocks is not
-sufficient.
-
-Remove the counter-based conditional rescheduling logic and call
-cond_resched() unconditionally after each task iteration, after fn() is
-called.  This avoids the lockup independently of how slow fn() is.
-
-Link: https://lkml.kernel.org/r/20250523-memcg_fix-v1-1-ad3eafb60477@debian.org
-Fixes: ade81479c7dd ("memcg: fix soft lockup in the OOM process")
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Suggested-by: Rik van Riel <riel@surriel.com>
-Acked-by: Shakeel Butt <shakeel.butt@linux.dev>
-Cc: Michael van der Westhuizen <rmikey@meta.com>
-Cc: Usama Arif <usamaarif642@gmail.com>
-Cc: Pavel Begunkov <asml.silence@gmail.com>
-Cc: Chen Ridong <chenridong@huawei.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Michal Hocko <mhocko@kernel.org>
+Link: https://lkml.kernel.org/r/20250416082405.20988-1-zhangtianyang@loongson.cn
+Fixes: c33d6c06f60f ("mm, page_alloc: avoid looking up the first zone in a zonelist twice")
+Signed-off-by: Tianyang Zhang <zhangtianyang@loongson.cn>
+Reviewed-by: Suren Baghdasaryan <surenb@google.com>
+Reviewed-by: Vlastimil Babka <vbabka@suse.cz>
 Cc: Michal Hocko <mhocko@suse.com>
-Cc: Muchun Song <muchun.song@linux.dev>
-Cc: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: Brendan Jackman <jackmanb@google.com>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Zi Yan <ziy@nvidia.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memcontrol.c |    6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ mm/page_alloc.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/mm/memcontrol.c
-+++ b/mm/memcontrol.c
-@@ -1242,7 +1242,6 @@ int mem_cgroup_scan_tasks(struct mem_cgr
- {
- 	struct mem_cgroup *iter;
- 	int ret = 0;
--	int i = 0;
+--- a/mm/page_alloc.c
++++ b/mm/page_alloc.c
+@@ -5195,6 +5195,14 @@ restart:
+ 	}
  
- 	BUG_ON(memcg == root_mem_cgroup);
- 
-@@ -1252,10 +1251,9 @@ int mem_cgroup_scan_tasks(struct mem_cgr
- 
- 		css_task_iter_start(&iter->css, CSS_TASK_ITER_PROCS, &it);
- 		while (!ret && (task = css_task_iter_next(&it))) {
--			/* Avoid potential softlockup warning */
--			if ((++i & 1023) == 0)
--				cond_resched();
- 			ret = fn(task, arg);
-+			/* Avoid potential softlockup warning */
-+			cond_resched();
- 		}
- 		css_task_iter_end(&it);
- 		if (ret) {
+ retry:
++	/*
++	 * Deal with possible cpuset update races or zonelist updates to avoid
++	 * infinite retries.
++	 */
++	if (check_retry_cpuset(cpuset_mems_cookie, ac) ||
++	    check_retry_zonelist(zonelist_iter_cookie))
++		goto restart;
++
+ 	/* Ensure kswapd doesn't accidentally go to sleep as long as we loop */
+ 	if (alloc_flags & ALLOC_KSWAPD)
+ 		wake_all_kswapds(order, gfp_mask, ac);
 
 
