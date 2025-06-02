@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 392BE1A4F12;
-	Mon,  2 Jun 2025 15:01:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A99F22331C;
+	Mon,  2 Jun 2025 15:01:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748876486; cv=none; b=Ejhw7lJPkDxBCNAd6YsMpOkNkOdioJbiwoJuLdQ1JQC1C3YoREewt+oh5/GEIUuAezDLI/m7D1PjdfeQKJTbocOFrwK/cMKIK17PtRKHrrFk6/gptUkklEpyVX2NUi79pTOozVLO1ORgZrPaLPndVl0OMfgj7paDcE/GgSlaDOQ=
+	t=1748876489; cv=none; b=nPl5E64I3lC+JbXYXFIXsyqClr1i1HlW31B9KiheGEopbVG31c+dXED6PGP12WHMFxFlFHDUZdGZkj6EebC/CtmFjRgGoRhLWuC8tiE0Nf7t00qDyQc22XG3VaAl3Y6f8V24Tx4ZYJLyGZIyAlVHe5fHbJ6MxaIQOe9Lm8CUU38=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748876486; c=relaxed/simple;
-	bh=nDXMQ5RGth47HDJOY6Wh9gNgOfINhjaG2kKU4WhDtis=;
+	s=arc-20240116; t=1748876489; c=relaxed/simple;
+	bh=gih6Y7j65CbGeK50ffsM2BqQSVOFDImWTd30uFtGSuk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HazC1ysdRQpxdclKBScDJadwFbIYiG9CsyOoVQWnnPMJbG6qqlOzYxZRHG8GdCaswgvvEEi8jnmtdX5pLTaLc2GIupIgxXd4wOSBs4Jp0JYwZoJdZh7nSz8OcLgg64+7xtKJnrf7zlsYSNjWOYXVhDmpTD06c4zeNKyz4h72w3c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jBhfCxZk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fE2lkgK1j6Cmt+EwHm/pwWR+bMKE+OhEalY19kat88Vp0RFQM6lg//j5jg/GfmBGzM+DtD/qGDf55IYikg8A7bOZxmd1NNbdaJ/Q2TflDOYL75K/Qyq1Usq6aQ3ISBg6n6lYaHG1Q/ElsDZ1JPv969OIf7wcmlwW9FiRYnlJPQ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=grdEX6tj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jBhfCxZk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1886C4CEEB;
-	Mon,  2 Jun 2025 15:01:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="grdEX6tj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCC83C4CEEE;
+	Mon,  2 Jun 2025 15:01:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748876486;
-	bh=nDXMQ5RGth47HDJOY6Wh9gNgOfINhjaG2kKU4WhDtis=;
+	s=korg; t=1748876489;
+	bh=gih6Y7j65CbGeK50ffsM2BqQSVOFDImWTd30uFtGSuk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jBhfCxZknqp4JcAAV+hP1tWbdrqFQ0jyXBu1O9p4XEki/U9caQfNAagqQfPfZpzun
-	 P49/6gKHigsTbBumhsemNDjFfhzoXzXVWFpHLBqF2uR35AReaKV+16QPOUYt8gfsnb
-	 Zza344AP2Avg7awlnDt1YuehwdZXZQ4NY2jt1SFM=
+	b=grdEX6tj7Yx9lofTCgRAO5yWJeDXusESm9+HF7waYL/IZiU/QrgR5UckPFgDL4wqX
+	 XmlZ7qTwBinYO6WT0/eSMpBMHrnJDca0erW0po8IYNfdR02GGrO7LSbR/EhbYldCFR
+	 RlN69yOensrkIldBSqZc6WpLZwKftZm9jdXe0CEA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Anderson <sean.anderson@linux.dev>,
+	Bogdan-Gabriel Roman <bogdan-gabriel.roman@nxp.com>,
+	Larisa Grigore <larisa.grigore@nxp.com>,
+	James Clark <james.clark@linaro.org>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 149/207] spi: zynqmp-gqspi: Always acknowledge interrupts
-Date: Mon,  2 Jun 2025 15:48:41 +0200
-Message-ID: <20250602134304.556138230@linuxfoundation.org>
+Subject: [PATCH 5.15 183/207] spi: spi-fsl-dspi: Halt the module after a new message transfer
+Date: Mon,  2 Jun 2025 15:49:15 +0200
+Message-ID: <20250602134305.918754048@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134258.769974467@linuxfoundation.org>
 References: <20250602134258.769974467@linuxfoundation.org>
@@ -51,70 +53,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Anderson <sean.anderson@linux.dev>
+From: Bogdan-Gabriel Roman <bogdan-gabriel.roman@nxp.com>
 
-[ Upstream commit 89785306453ce6d949e783f6936821a0b7649ee2 ]
+[ Upstream commit 8a30a6d35a11ff5ccdede7d6740765685385a917 ]
 
-RXEMPTY can cause an IRQ, even though we may not do anything about it
-(such as if we are waiting for more received data). We must still handle
-these IRQs because we can tell they were caused by the device.
+The XSPI mode implementation in this driver still uses the EOQ flag to
+signal the last word in a transmission and deassert the PCS signal.
+However, at speeds lower than ~200kHZ, the PCS signal seems to remain
+asserted even when SR[EOQF] = 1 indicates the end of a transmission.
+This is a problem for target devices which require the deassertation of
+the PCS signal between transfers.
 
-Signed-off-by: Sean Anderson <sean.anderson@linux.dev>
-Link: https://patch.msgid.link/20250116224130.2684544-6-sean.anderson@linux.dev
+Hence, this commit 'forces' the deassertation of the PCS by stopping the
+module through MCR[HALT] after completing a new transfer. According to
+the reference manual, the module stops or transitions from the Running
+state to the Stopped state after the current frame, when any one of the
+following conditions exist:
+- The value of SR[EOQF] = 1.
+- The chip is in Debug mode and the value of MCR[FRZ] = 1.
+- The value of MCR[HALT] = 1.
+
+This shouldn't be done if the last transfer in the message has cs_change
+set.
+
+Fixes: ea93ed4c181b ("spi: spi-fsl-dspi: Use EOQ for last word in buffer even for XSPI mode")
+Signed-off-by: Bogdan-Gabriel Roman <bogdan-gabriel.roman@nxp.com>
+Signed-off-by: Larisa Grigore <larisa.grigore@nxp.com>
+Signed-off-by: James Clark <james.clark@linaro.org>
+Link: https://patch.msgid.link/20250522-james-nxp-spi-v2-2-bea884630cfb@linaro.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-zynqmp-gqspi.c | 20 ++++++++------------
- 1 file changed, 8 insertions(+), 12 deletions(-)
+ drivers/spi/spi-fsl-dspi.c | 24 ++++++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
 
-diff --git a/drivers/spi/spi-zynqmp-gqspi.c b/drivers/spi/spi-zynqmp-gqspi.c
-index 1847e3485dfea..77aef2a265615 100644
---- a/drivers/spi/spi-zynqmp-gqspi.c
-+++ b/drivers/spi/spi-zynqmp-gqspi.c
-@@ -691,7 +691,6 @@ static void zynqmp_process_dma_irq(struct zynqmp_qspi *xqspi)
- static irqreturn_t zynqmp_qspi_irq(int irq, void *dev_id)
- {
- 	struct zynqmp_qspi *xqspi = (struct zynqmp_qspi *)dev_id;
--	irqreturn_t ret = IRQ_NONE;
- 	u32 status, mask, dma_status = 0;
+diff --git a/drivers/spi/spi-fsl-dspi.c b/drivers/spi/spi-fsl-dspi.c
+index 7c26eef0570e7..fdfd104fde9e2 100644
+--- a/drivers/spi/spi-fsl-dspi.c
++++ b/drivers/spi/spi-fsl-dspi.c
+@@ -61,6 +61,7 @@
+ #define SPI_SR_TFIWF			BIT(18)
+ #define SPI_SR_RFDF			BIT(17)
+ #define SPI_SR_CMDFFF			BIT(16)
++#define SPI_SR_TXRXS			BIT(30)
+ #define SPI_SR_CLEAR			(SPI_SR_TCFQF | \
+ 					SPI_SR_TFUF | SPI_SR_TFFF | \
+ 					SPI_SR_CMDTCF | SPI_SR_SPEF | \
+@@ -907,9 +908,20 @@ static int dspi_transfer_one_message(struct spi_controller *ctlr,
+ 	struct spi_device *spi = message->spi;
+ 	struct spi_transfer *transfer;
+ 	int status = 0;
++	u32 val = 0;
++	bool cs_change = false;
  
- 	status = zynqmp_gqspi_read(xqspi, GQSPI_ISR_OFST);
-@@ -706,27 +705,24 @@ static irqreturn_t zynqmp_qspi_irq(int irq, void *dev_id)
- 				   dma_status);
- 	}
+ 	message->actual_length = 0;
  
--	if (mask & GQSPI_ISR_TXNOT_FULL_MASK) {
-+	if (!mask && !dma_status)
-+		return IRQ_NONE;
++	/* Put DSPI in running mode if halted. */
++	regmap_read(dspi->regmap, SPI_MCR, &val);
++	if (val & SPI_MCR_HALT) {
++		regmap_update_bits(dspi->regmap, SPI_MCR, SPI_MCR_HALT, 0);
++		while (regmap_read(dspi->regmap, SPI_SR, &val) >= 0 &&
++		       !(val & SPI_SR_TXRXS))
++			;
++	}
 +
-+	if (mask & GQSPI_ISR_TXNOT_FULL_MASK)
- 		zynqmp_qspi_filltxfifo(xqspi, GQSPI_TX_FIFO_FILL);
--		ret = IRQ_HANDLED;
--	}
+ 	list_for_each_entry(transfer, &message->transfers, transfer_list) {
+ 		dspi->cur_transfer = transfer;
+ 		dspi->cur_msg = message;
+@@ -934,6 +946,7 @@ static int dspi_transfer_one_message(struct spi_controller *ctlr,
+ 				dspi->tx_cmd |= SPI_PUSHR_CMD_CONT;
+ 		}
  
--	if (dma_status & GQSPI_QSPIDMA_DST_I_STS_DONE_MASK) {
-+	if (dma_status & GQSPI_QSPIDMA_DST_I_STS_DONE_MASK)
- 		zynqmp_process_dma_irq(xqspi);
--		ret = IRQ_HANDLED;
--	} else if (!(mask & GQSPI_IER_RXEMPTY_MASK) &&
--			(mask & GQSPI_IER_GENFIFOEMPTY_MASK)) {
-+	else if (!(mask & GQSPI_IER_RXEMPTY_MASK) &&
-+			(mask & GQSPI_IER_GENFIFOEMPTY_MASK))
- 		zynqmp_qspi_readrxfifo(xqspi, GQSPI_RX_FIFO_FILL);
--		ret = IRQ_HANDLED;
--	}
- 
- 	if (xqspi->bytes_to_receive == 0 && xqspi->bytes_to_transfer == 0 &&
- 	    ((status & GQSPI_IRQ_MASK) == GQSPI_IRQ_MASK)) {
- 		zynqmp_gqspi_write(xqspi, GQSPI_IDR_OFST, GQSPI_ISR_IDR_MASK);
- 		complete(&xqspi->data_completion);
--		ret = IRQ_HANDLED;
++		cs_change = transfer->cs_change;
+ 		dspi->tx = transfer->tx_buf;
+ 		dspi->rx = transfer->rx_buf;
+ 		dspi->len = transfer->len;
+@@ -966,6 +979,15 @@ static int dspi_transfer_one_message(struct spi_controller *ctlr,
+ 		spi_transfer_delay_exec(transfer);
  	}
--	return ret;
-+	return IRQ_HANDLED;
- }
  
- /**
++	if (status || !cs_change) {
++		/* Put DSPI in stop mode */
++		regmap_update_bits(dspi->regmap, SPI_MCR,
++				   SPI_MCR_HALT, SPI_MCR_HALT);
++		while (regmap_read(dspi->regmap, SPI_SR, &val) >= 0 &&
++		       val & SPI_SR_TXRXS)
++			;
++	}
++
+ 	message->status = status;
+ 	spi_finalize_current_message(ctlr);
+ 
+@@ -1206,6 +1228,8 @@ static int dspi_init(struct fsl_dspi *dspi)
+ 	if (!spi_controller_is_slave(dspi->ctlr))
+ 		mcr |= SPI_MCR_MASTER;
+ 
++	mcr |= SPI_MCR_HALT;
++
+ 	regmap_write(dspi->regmap, SPI_MCR, mcr);
+ 	regmap_write(dspi->regmap, SPI_SR, SPI_SR_CLEAR);
+ 
 -- 
 2.39.5
 
