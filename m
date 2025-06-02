@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28DA022A1FA;
-	Mon,  2 Jun 2025 15:06:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C80D022A1FA;
+	Mon,  2 Jun 2025 15:06:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748876789; cv=none; b=GR2a+lPzSshIGMtczIhB7sol8e5/Ykkg9DilML04GcW7/v2naLwhlaPmmHbflXJZnXwRCag0fWmfoaq0Gm7ASdpDrICig9pDBuRGeVnRbqc3royPQ5PoArT6++1PUsN8qczmzjSWmmyjv7Qc1vtVNQ6sL+6DK+HULNueiVpnL8o=
+	t=1748876792; cv=none; b=bGc6YYg+SDmrUOEL9w8BvlAfQUSEchqbEz7ZjGSDx6dyLoEqge0UG4w6w3dPY1qriD8L0kkP0Nvscizx3msuXcNTgQ5Gf+xJwpC4yU1Sb24NNd/QxCeKjvjSWy0hgAcc77AaPepfEMOTQHJDNyRjwWRLJKvO6E+gBq/GUCirl84=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748876789; c=relaxed/simple;
-	bh=8syM/bJdD15IE4pbJT82dwdQ/vaPeSf2EHKrGIvJZFI=;
+	s=arc-20240116; t=1748876792; c=relaxed/simple;
+	bh=VMNAUQnqHhZMiNfvV4Rm0jSy4EtgNvG4lbWn8Z4/His=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SQCzsup6Um6M5YZFR6zRojD7oNV3SpS8Bv7IGKIAG6tZ1GmZW5KxvUN/fTd8HEpTB7uxBXRhZgugN52zdFMPd6jK+GktNEHn7blmlqngquBU6N7i7tDvzmPF6MOQSv9sZ/vmJ44DZcoIDOi6tE9u3W7d+uRFBWr4a7e3FnoDSJI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Iu3d3ZKF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=PXgCalO+1Aeul3IVBzy3Fbu9cvfoXX9zhdDbXZdF8Izk7PtKxH0yt4ksamPdlfIshNcfvt3y81sqgjenWxydPrkZfGSya9DbiPbOyUDkSfYQvAVbejZGfw+qyldXuxiQ934Djln/lI/mlfaJJudQvw/IAavmq8VIpGAPfl3eUFI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OmQuRIYZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Iu3d3ZKF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A14AC4CEEB;
-	Mon,  2 Jun 2025 15:06:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OmQuRIYZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE363C4CEEB;
+	Mon,  2 Jun 2025 15:06:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748876789;
-	bh=8syM/bJdD15IE4pbJT82dwdQ/vaPeSf2EHKrGIvJZFI=;
+	s=korg; t=1748876792;
+	bh=VMNAUQnqHhZMiNfvV4Rm0jSy4EtgNvG4lbWn8Z4/His=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Iu3d3ZKFw7aK3l4NSRv8BADEJaznn5B8p+AZYSPuYev+On0CR6Z57Vre1ajULzAjQ
-	 5B27MskzmNJ8rl+MtCRQpaduI6tUEB2APieE2POye1hHySstj5qQeXuhA3Iyah3Ip0
-	 3BXKVpzfLI3qkTHQ/QtKO2g8AWTjdAc6wNvxjozg=
+	b=OmQuRIYZ5odPjKsT4P5PzIpmHEsPP4wVoj0qr0iX9Z5JzJEUViv13Htq//QT4OGmC
+	 nSInnpT5EtpIFmq1HR1TF++eHD544ffo4W+94BpXS5CGYk9DkC1Q7uhHwEygb3wf/7
+	 JC22vwnZ7NkhvBncf/40kzUEPtSHnlcIIj46epZY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	=?UTF-8?q?Roger=20Pau=20Monn=C3=A9?= <roger.pau@citrix.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Juergen Gross <jgross@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 044/325] pNFS/flexfiles: Report ENETDOWN as a connection error
-Date: Mon,  2 Jun 2025 15:45:20 +0200
-Message-ID: <20250602134321.542071740@linuxfoundation.org>
+Subject: [PATCH 6.1 045/325] PCI: vmd: Disable MSI remapping bypass under Xen
+Date: Mon,  2 Jun 2025 15:45:21 +0200
+Message-ID: <20250602134321.583075644@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134319.723650984@linuxfoundation.org>
 References: <20250602134319.723650984@linuxfoundation.org>
@@ -46,41 +46,80 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Roger Pau Monne <roger.pau@citrix.com>
 
-[ Upstream commit aa42add73ce9b9e3714723d385c254b75814e335 ]
+[ Upstream commit 6c4d5aadf5df31ea0ac025980670eee9beaf466b ]
 
-If the client should see an ENETDOWN when trying to connect to the data
-server, it might still be able to talk to the metadata server through
-another NIC. If so, report the error.
+MSI remapping bypass (directly configuring MSI entries for devices on the
+VMD bus) won't work under Xen, as Xen is not aware of devices in such bus,
+and hence cannot configure the entries using the pIRQ interface in the PV
+case, and in the PVH case traps won't be setup for MSI entries for such
+devices.
 
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Tested-by: Jeff Layton <jlayton@kernel.org>
-Acked-by: Chuck Lever <chuck.lever@oracle.com>
+Until Xen is aware of devices in the VMD bus prevent the
+VMD_FEAT_CAN_BYPASS_MSI_REMAP capability from being used when running as
+any kind of Xen guest.
+
+The MSI remapping bypass is an optional feature of VMD bridges, and hence
+when running under Xen it will be masked and devices will be forced to
+redirect its interrupts from the VMD bridge.  That mode of operation must
+always be supported by VMD bridges and works when Xen is not aware of
+devices behind the VMD bridge.
+
+Signed-off-by: Roger Pau Monné <roger.pau@citrix.com>
+Acked-by: Bjorn Helgaas <bhelgaas@google.com>
+Message-ID: <20250219092059.90850-3-roger.pau@citrix.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/flexfilelayout/flexfilelayout.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/pci/controller/vmd.c | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
-diff --git a/fs/nfs/flexfilelayout/flexfilelayout.c b/fs/nfs/flexfilelayout/flexfilelayout.c
-index 8056b05bd8dca..07e5ea64dcd68 100644
---- a/fs/nfs/flexfilelayout/flexfilelayout.c
-+++ b/fs/nfs/flexfilelayout/flexfilelayout.c
-@@ -1255,6 +1255,7 @@ static void ff_layout_io_track_ds_error(struct pnfs_layout_segment *lseg,
- 		case -ECONNRESET:
- 		case -EHOSTDOWN:
- 		case -EHOSTUNREACH:
-+		case -ENETDOWN:
- 		case -ENETUNREACH:
- 		case -EADDRINUSE:
- 		case -ENOBUFS:
+diff --git a/drivers/pci/controller/vmd.c b/drivers/pci/controller/vmd.c
+index 09995b6e73bcc..771ff0f6971f9 100644
+--- a/drivers/pci/controller/vmd.c
++++ b/drivers/pci/controller/vmd.c
+@@ -17,6 +17,8 @@
+ #include <linux/rculist.h>
+ #include <linux/rcupdate.h>
+ 
++#include <xen/xen.h>
++
+ #include <asm/irqdomain.h>
+ 
+ #define VMD_CFGBAR	0
+@@ -919,6 +921,24 @@ static int vmd_probe(struct pci_dev *dev, const struct pci_device_id *id)
+ 	struct vmd_dev *vmd;
+ 	int err;
+ 
++	if (xen_domain()) {
++		/*
++		 * Xen doesn't have knowledge about devices in the VMD bus
++		 * because the config space of devices behind the VMD bridge is
++		 * not known to Xen, and hence Xen cannot discover or configure
++		 * them in any way.
++		 *
++		 * Bypass of MSI remapping won't work in that case as direct
++		 * write by Linux to the MSI entries won't result in functional
++		 * interrupts, as Xen is the entity that manages the host
++		 * interrupt controller and must configure interrupts.  However
++		 * multiplexing of interrupts by the VMD bridge will work under
++		 * Xen, so force the usage of that mode which must always be
++		 * supported by VMD bridges.
++		 */
++		features &= ~VMD_FEAT_CAN_BYPASS_MSI_REMAP;
++	}
++
+ 	if (resource_size(&dev->resource[VMD_CFGBAR]) < (1 << 20))
+ 		return -ENOMEM;
+ 
 -- 
 2.39.5
 
