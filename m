@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 515B822FE17;
-	Mon,  2 Jun 2025 14:35:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30D122C3247;
+	Mon,  2 Jun 2025 14:35:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748874954; cv=none; b=hmGiJYnoBAb6cTv/pntOgsYZjFKXjEufoApct0OJarqI+paHuJvn4XUl4QYJ6C8OEhUWhmZzjcU+88tDCdD1JI4w3TfppvLkog+IIlPUHcmZwnnLSp50eeKuYjjBJj2o6mo6F7Oo+iqp3hjTfVV9WprqU9r/7V6E0V6Iwd0ezSQ=
+	t=1748874957; cv=none; b=k7aj23M4I0P6fPLxUyzUVCI0cWKDUsmXHXdemB4DlYOtAP1LUxgXzeq/3zIl7RaGu0+2tPcPhU30I8ekNb8PJYPagqtbHNNyjPB098yTsCn/OzKU7F8g+PSO44k+Z0BT6MvkgDT7rOJeSSfapMZkAzrP699du6VoD33a4Fx6qCI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748874954; c=relaxed/simple;
-	bh=1BcpEgxOCBn/BWvUU/hRRiZd2+GA1CAX8CXQM/iCvdQ=;
+	s=arc-20240116; t=1748874957; c=relaxed/simple;
+	bh=xCHGzJxzVe9x8z9R+s+3+x+cFASDtWorr/Q25oO17yY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FQLfyRBq6ONRrDzUJPuVgkkyyv9gOFgSnCVaViPEdZI4v3TtSaLpNptOZhVg+HYEGzqdZ7Ck4qOUZPbyReokVnKTL7p3yx7/VjRFcB1SsaHo5Zfyuz3TjL/71VhDYyUvVXWl6ZV7NFi4qVbxeHcfOFeG38MrTScvMm/PMjoxqGA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cqNgZfTZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X6p8xCyvmPKIKtiGC7wjV8TE+uknXietRDWoaEPZ62kyQpWjCPvSlacsw8kXz0zzySA0doJa0Gc9ROL/kFoxPqMv0OT1zN1GZQFFOZDCg4IkeLD8/Lar5XTzG0NI7khqs8lgavrEaThP8HXC7Pp2fzl3l5Dj/zHv0QOMz4tEB9Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aV8rmafY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cqNgZfTZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B49AEC4CEEB;
-	Mon,  2 Jun 2025 14:35:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aV8rmafY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0C58C4CEEB;
+	Mon,  2 Jun 2025 14:35:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748874954;
-	bh=1BcpEgxOCBn/BWvUU/hRRiZd2+GA1CAX8CXQM/iCvdQ=;
+	s=korg; t=1748874957;
+	bh=xCHGzJxzVe9x8z9R+s+3+x+cFASDtWorr/Q25oO17yY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cqNgZfTZJPzvNhcgnDdQzSPNllbQWQlh2xda1hj/o/5nJM4IlKE9npGwVGLefHp4w
-	 oBIy51QfEEjroDgbP8WrhMBSSwyVbNISe0DUVs0REMNR/uLrG/T96XhriS5Xb/yecJ
-	 WDDvVESKQH08dipkvjHZCjPyMV/zcMunNRVV1UCg=
+	b=aV8rmafY5Ymk4jCHAoVoOhH9qIor8Tl9n8NjnuvHRhMP/C76fPZ//e3eWO0HpBLk7
+	 xaW67kV+CZ/ly4E0gZI7DnB147Ta39lML1z8uT0ASAVRv1pDOr8yKT6JtsvQi9tWe6
+	 cjCjg9zuynaS+mQsr3Y4RKfFXvjuSun5oRn08/O4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org,
-	netfilter-devel@vger.kernel.org
+To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b26935466701e56cfdc2@syzkaller.appspotmail.com,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 5.4 187/204] netfilter: nf_tables: do not defer rule destruction via call_rcu
-Date: Mon,  2 Jun 2025 15:48:40 +0200
-Message-ID: <20250602134303.027312575@linuxfoundation.org>
+	Kees Cook <kees@kernel.org>,
+	Nicolas Chauvet <kwizart@gmail.com>,
+	Damian Tometzki <damian@riscv-rocks.de>,
+	Zhenyu Wang <zhenyuw.linux@gmail.com>,
+	Jani Nikula <jani.nikula@intel.com>,
+	Nathan Chancellor <nathan@kernel.org>
+Subject: [PATCH 5.4 188/204] drm/i915/gvt: fix unterminated-string-initialization warning
+Date: Mon,  2 Jun 2025 15:48:41 +0200
+Message-ID: <20250602134303.068114449@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134255.449974357@linuxfoundation.org>
 References: <20250602134255.449974357@linuxfoundation.org>
@@ -52,149 +54,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Jani Nikula <jani.nikula@intel.com>
 
-commit b04df3da1b5c6f6dc7cdccc37941740c078c4043 upstream.
+commit 2e43ae7dd71cd9bb0d1bce1d3306bf77523feb81 upstream.
 
-nf_tables_chain_destroy can sleep, it can't be used from call_rcu
-callbacks.
+Initializing const char opregion_signature[16] = OPREGION_SIGNATURE
+(which is "IntelGraphicsMem") drops the NUL termination of the
+string. This is intentional, but the compiler doesn't know this.
 
-Moreover, nf_tables_rule_release() is only safe for error unwinding,
-while transaction mutex is held and the to-be-desroyed rule was not
-exposed to either dataplane or dumps, as it deactives+frees without
-the required synchronize_rcu() in-between.
+Switch to initializing header->signature directly from the string
+litaral, with sizeof destination rather than source. We don't treat the
+signature as a string other than for initialization; it's really just a
+blob of binary data.
 
-nft_rule_expr_deactivate() callbacks will change ->use counters
-of other chains/sets, see e.g. nft_lookup .deactivate callback, these
-must be serialized via transaction mutex.
+Add a static assert for good measure to cross-check the sizes.
 
-Also add a few lockdep asserts to make this more explicit.
-
-Calling synchronize_rcu() isn't ideal, but fixing this without is hard
-and way more intrusive.  As-is, we can get:
-
-WARNING: .. net/netfilter/nf_tables_api.c:5515 nft_set_destroy+0x..
-Workqueue: events nf_tables_trans_destroy_work
-RIP: 0010:nft_set_destroy+0x3fe/0x5c0
-Call Trace:
- <TASK>
- nf_tables_trans_destroy_work+0x6b7/0xad0
- process_one_work+0x64a/0xce0
- worker_thread+0x613/0x10d0
-
-In case the synchronize_rcu becomes an issue, we can explore alternatives.
-
-One way would be to allocate nft_trans_rule objects + one nft_trans_chain
-object, deactivate the rules + the chain and then defer the freeing to the
-nft destroy workqueue.  We'd still need to keep the synchronize_rcu path as
-a fallback to handle -ENOMEM corner cases though.
-
-Reported-by: syzbot+b26935466701e56cfdc2@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/67478d92.050a0220.253251.0062.GAE@google.com/T/
-Fixes: c03d278fdf35 ("netfilter: nf_tables: wait for rcu grace period on net_device removal")
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Reported-by: Kees Cook <kees@kernel.org>
+Closes: https://lore.kernel.org/r/20250310222355.work.417-kees@kernel.org
+Closes: https://gitlab.freedesktop.org/drm/i915/kernel/-/issues/13934
+Tested-by: Nicolas Chauvet <kwizart@gmail.com>
+Tested-by: Damian Tometzki <damian@riscv-rocks.de>
+Cc: stable@vger.kernel.org
+Reviewed-by: Zhenyu Wang <zhenyuw.linux@gmail.com>
+Link: https://lore.kernel.org/r/20250327124739.2609656-1-jani.nikula@intel.com
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+(cherry picked from commit 4f8207469094bd04aad952258ceb9ff4c77b6bfa)
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+[nathan: Move static_assert() to top of function to avoid instance of
+         -Wdeclaration-after-statement due to lack of b5ec6fd286df]
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/netfilter/nf_tables.h |    3 ---
- net/netfilter/nf_tables_api.c     |   31 ++++++++++++++-----------------
- 2 files changed, 14 insertions(+), 20 deletions(-)
+ drivers/gpu/drm/i915/gvt/opregion.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/include/net/netfilter/nf_tables.h
-+++ b/include/net/netfilter/nf_tables.h
-@@ -899,7 +899,6 @@ struct nft_chain {
- 	u8				flags:6,
- 					genmask:2;
- 	char				*name;
--	struct rcu_head			rcu_head;
- 
- 	/* Only used during control plane commit phase: */
- 	struct nft_rule			**rules_next;
-@@ -1016,7 +1015,6 @@ static inline void nft_use_inc_restore(u
-  *	@sets: sets in the table
-  *	@objects: stateful objects in the table
-  *	@flowtables: flow tables in the table
-- *	@net: netnamespace this table belongs to
-  *	@hgenerator: handle generator state
-  *	@handle: table handle
-  *	@use: number of chain references to this table
-@@ -1032,7 +1030,6 @@ struct nft_table {
- 	struct list_head		sets;
- 	struct list_head		objects;
- 	struct list_head		flowtables;
--	possible_net_t			net;
- 	u64				hgenerator;
- 	u64				handle;
- 	u32				use;
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -1109,7 +1109,6 @@ static int nf_tables_newtable(struct net
- 	INIT_LIST_HEAD(&table->sets);
- 	INIT_LIST_HEAD(&table->objects);
- 	INIT_LIST_HEAD(&table->flowtables);
--	write_pnet(&table->net, net);
- 	table->family = family;
- 	table->flags = flags;
- 	table->handle = ++table_handle;
-@@ -2824,6 +2823,8 @@ static void nf_tables_rule_destroy(const
- static void nf_tables_rule_release(const struct nft_ctx *ctx,
- 				   struct nft_rule *rule)
- {
-+	lockdep_commit_lock_is_held(ctx->net);
+--- a/drivers/gpu/drm/i915/gvt/opregion.c
++++ b/drivers/gpu/drm/i915/gvt/opregion.c
+@@ -223,7 +223,8 @@ int intel_vgpu_init_opregion(struct inte
+ 	u8 *buf;
+ 	struct opregion_header *header;
+ 	struct vbt v;
+-	const char opregion_signature[16] = OPREGION_SIGNATURE;
 +
- 	nft_rule_expr_deactivate(ctx, rule, NFT_TRANS_RELEASE);
- 	nf_tables_rule_destroy(ctx, rule);
- }
-@@ -4172,6 +4173,8 @@ void nf_tables_deactivate_set(const stru
- 			      struct nft_set_binding *binding,
- 			      enum nft_trans_phase phase)
- {
-+	lockdep_commit_lock_is_held(ctx->net);
++	static_assert(sizeof(header->signature) == sizeof(OPREGION_SIGNATURE) - 1);
+ 
+ 	gvt_dbg_core("init vgpu%d opregion\n", vgpu->id);
+ 	vgpu_opregion(vgpu)->va = (void *)__get_free_pages(GFP_KERNEL |
+@@ -237,8 +238,9 @@ int intel_vgpu_init_opregion(struct inte
+ 	/* emulated opregion with VBT mailbox only */
+ 	buf = (u8 *)vgpu_opregion(vgpu)->va;
+ 	header = (struct opregion_header *)buf;
+-	memcpy(header->signature, opregion_signature,
+-	       sizeof(opregion_signature));
 +
- 	switch (phase) {
- 	case NFT_TRANS_PREPARE_ERROR:
- 		nft_set_trans_unbind(ctx, set);
-@@ -8228,19 +8231,6 @@ static void __nft_release_basechain_now(
- 	nf_tables_chain_destroy(ctx->chain);
- }
- 
--static void nft_release_basechain_rcu(struct rcu_head *head)
--{
--	struct nft_chain *chain = container_of(head, struct nft_chain, rcu_head);
--	struct nft_ctx ctx = {
--		.family	= chain->table->family,
--		.chain	= chain,
--		.net	= read_pnet(&chain->table->net),
--	};
--
--	__nft_release_basechain_now(&ctx);
--	put_net(ctx.net);
--}
--
- int __nft_release_basechain(struct nft_ctx *ctx)
- {
- 	struct nft_rule *rule;
-@@ -8255,11 +8245,18 @@ int __nft_release_basechain(struct nft_c
- 	nft_chain_del(ctx->chain);
- 	nft_use_dec(&ctx->table->use);
- 
--	if (maybe_get_net(ctx->net))
--		call_rcu(&ctx->chain->rcu_head, nft_release_basechain_rcu);
--	else
-+	if (!maybe_get_net(ctx->net)) {
- 		__nft_release_basechain_now(ctx);
-+		return 0;
-+	}
++	memcpy(header->signature, OPREGION_SIGNATURE, sizeof(header->signature));
 +
-+	/* wait for ruleset dumps to complete.  Owning chain is no longer in
-+	 * lists, so new dumps can't find any of these rules anymore.
-+	 */
-+	synchronize_rcu();
- 
-+	__nft_release_basechain_now(ctx);
-+	put_net(ctx->net);
- 	return 0;
- }
- EXPORT_SYMBOL_GPL(__nft_release_basechain);
+ 	header->size = 0x8;
+ 	header->opregion_ver = 0x02000000;
+ 	header->mboxes = MBOX_VBT;
 
 
