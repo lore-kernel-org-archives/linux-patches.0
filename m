@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08A522405F8;
-	Mon,  2 Jun 2025 14:03:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CA9A2405FD;
+	Mon,  2 Jun 2025 14:03:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748873002; cv=none; b=nKMyFrgIl53PqGMvMaUlPeqvoAIxUXfMM6rMSp85qvUoNXk/pLPO4nEZeH9t2hXWCCZenWogo5g/I7FprPbYd/lQFjAKuB9+pvgo3FIP5EErGU6hFy15EyRcY0yDqWozxDk4U/KYKZVg/zxJf+FC5+V7O3A3sdJE1Q36MVkwcuk=
+	t=1748873005; cv=none; b=s2MvZGpHPmncQMofiBOH+f+VMDhxWt7a/TTF2Xxrf8tsd1wA9DqgYVlJWizheGpLQ2hv+LULxIvCEpPwr4/09pFj2RgdqX5mB2r6uKBPkRvMOI+VAL2YuEYZyNDyJ4VD+M5MoHdsFRiD0eVbHm2l2pREzWcyBLHZcfwo/HSD8KQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748873002; c=relaxed/simple;
-	bh=pH8ik2AtYWJVqKCKgIKKqg6Tc+7igSdO7d/GjboXyOs=;
+	s=arc-20240116; t=1748873005; c=relaxed/simple;
+	bh=vOYUuKrsMWUnySaIbniUcLC03MXf+tu0yitsV8yEZUY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QRElqUSi85QnCHDtX0xKohwFtCgW62BCazZugs+i+c2Q4qU/b3ZZptJZjjR4TaeJrS7pHE6XmE6x/kqtxssRrhC9F8bQDSsdZ+ktS1HY/gDncDY0FJhChAisNIwygM6f2AUBjnLIwpLXK4JeHynjr/KlnTs+CcxwYIQOoFFQA1w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DygxhgdJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=itYvea9A3EWZgf5AFguWn63Dltu6sM/KYQeA8ssPkaCFoyfVAn6WxMp2nrZ3DVxMcdoB/MJzn0V1KNWm12b+KvTcU2sVhE3kmTPN6DGxlHv58t2rj5uxPMZ2TCbzKo27bz71cJv0BAkpEz3AmU8wPRyUx/UbE+WbI3ybP+Ked4A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qgsHJoVz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DygxhgdJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56E86C4CEEB;
-	Mon,  2 Jun 2025 14:03:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qgsHJoVz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80C0CC4CEEB;
+	Mon,  2 Jun 2025 14:03:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748873001;
-	bh=pH8ik2AtYWJVqKCKgIKKqg6Tc+7igSdO7d/GjboXyOs=;
+	s=korg; t=1748873005;
+	bh=vOYUuKrsMWUnySaIbniUcLC03MXf+tu0yitsV8yEZUY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DygxhgdJlhjw50wFlHyCg65UXZ5Jyk2e6GTcFeLpH2YTgV5KF+f12yMWDMgd94B99
-	 Gxv2lRwri6nTUvt1cUZjDk8GH94AcKfkkauoATdJ4lcI92VvpqDaI9JhhNDdnZlyOu
-	 PrrFw8qkeTuvyAfIOoH5OrBLmWX4n/BIlmbuXuIE=
+	b=qgsHJoVzs+w8fIphs15EA10Uirbsxp4AjhXMGsupgW6dH7q+CKOFTx9h8FxXYMoYR
+	 U+gVRCwffoF0Gpl7MdKUQFuyzCfsNdUPtyS/a+VOksBvVlHBKdT7guucFoUENRYqgh
+	 UutfAzhxH9FtlEhEZmN5pzs1BL3O7M7LS6WEGvdw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yemike Abhilash Chandra <y-abhilashchandra@ti.com>,
-	Nishanth Menon <nm@ti.com>
-Subject: [PATCH 6.12 25/55] arm64: dts: ti: k3-j721e-sk: Add requiried voltage supplies for IMX219
-Date: Mon,  2 Jun 2025 15:47:42 +0200
-Message-ID: <20250602134239.266945954@linuxfoundation.org>
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 001/444] gpio: pca953x: Split pca953x_restore_context() and pca953x_save_context()
+Date: Mon,  2 Jun 2025 15:41:05 +0200
+Message-ID: <20250602134340.970935606@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250602134238.271281478@linuxfoundation.org>
-References: <20250602134238.271281478@linuxfoundation.org>
+In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
+References: <20250602134340.906731340@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,84 +47,102 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yemike Abhilash Chandra <y-abhilashchandra@ti.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-commit c6a20a250200da6fcaf80fe945b7b92cba8cfe0f upstream.
+[ Upstream commit ec5bde62019b0a5300c67bd81b9864a8ea12274e ]
 
-The device tree overlay for the IMX219 sensor requires three voltage
-supplies to be defined: VANA (analog), VDIG (digital core), and VDDL
-(digital I/O). Add the corresponding voltage supply definitions to
-avoid dtbs_check warnings.
+Split regcache handling to the respective helpers. It will allow to
+have further refactoring with ease.
 
-Fixes: f767eb918096 ("arm64: dts: ti: k3-j721e-sk: Add overlay for IMX219")
-Cc: stable@vger.kernel.org
-Signed-off-by: Yemike Abhilash Chandra <y-abhilashchandra@ti.com>
-Link: https://lore.kernel.org/r/20250415111328.3847502-5-y-abhilashchandra@ti.com
-Signed-off-by: Nishanth Menon <nm@ti.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Stable-dep-of: 3e38f946062b ("gpio: pca953x: fix IRQ storm on system wake up")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/ti/k3-j721e-sk-csi2-dual-imx219.dtso |   33 +++++++++++++++
- 1 file changed, 33 insertions(+)
+ drivers/gpio/gpio-pca953x.c | 44 ++++++++++++++++++++++++-------------
+ 1 file changed, 29 insertions(+), 15 deletions(-)
 
---- a/arch/arm64/boot/dts/ti/k3-j721e-sk-csi2-dual-imx219.dtso
-+++ b/arch/arm64/boot/dts/ti/k3-j721e-sk-csi2-dual-imx219.dtso
-@@ -19,6 +19,33 @@
- 		#clock-cells = <0>;
- 		clock-frequency = <24000000>;
- 	};
+diff --git a/drivers/gpio/gpio-pca953x.c b/drivers/gpio/gpio-pca953x.c
+index b882b26ab5007..fddf0cf031007 100644
+--- a/drivers/gpio/gpio-pca953x.c
++++ b/drivers/gpio/gpio-pca953x.c
+@@ -1168,9 +1168,9 @@ static int pca953x_probe(struct i2c_client *client)
+ }
+ 
+ #ifdef CONFIG_PM_SLEEP
+-static int pca953x_regcache_sync(struct device *dev)
++static int pca953x_regcache_sync(struct pca953x_chip *chip)
+ {
+-	struct pca953x_chip *chip = dev_get_drvdata(dev);
++	struct device *dev = &chip->client->dev;
+ 	int ret;
+ 	u8 regaddr;
+ 
+@@ -1217,13 +1217,37 @@ static int pca953x_regcache_sync(struct device *dev)
+ 	return 0;
+ }
+ 
+-static int pca953x_suspend(struct device *dev)
++static int pca953x_restore_context(struct pca953x_chip *chip)
+ {
+-	struct pca953x_chip *chip = dev_get_drvdata(dev);
++	int ret;
 +
-+	reg_2p8v: regulator-2p8v {
-+		compatible = "regulator-fixed";
-+		regulator-name = "2P8V";
-+		regulator-min-microvolt = <2800000>;
-+		regulator-max-microvolt = <2800000>;
-+		vin-supply = <&vdd_sd_dv>;
-+		regulator-always-on;
-+	};
++	mutex_lock(&chip->i2c_lock);
 +
-+	reg_1p8v: regulator-1p8v {
-+		compatible = "regulator-fixed";
-+		regulator-name = "1P8V";
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <1800000>;
-+		vin-supply = <&vdd_sd_dv>;
-+		regulator-always-on;
-+	};
++	regcache_cache_only(chip->regmap, false);
++	regcache_mark_dirty(chip->regmap);
++	ret = pca953x_regcache_sync(chip);
++	if (ret) {
++		mutex_unlock(&chip->i2c_lock);
++		return ret;
++	}
 +
-+	reg_1p2v: regulator-1p2v {
-+		compatible = "regulator-fixed";
-+		regulator-name = "1P2V";
-+		regulator-min-microvolt = <1200000>;
-+		regulator-max-microvolt = <1200000>;
-+		vin-supply = <&vdd_sd_dv>;
-+		regulator-always-on;
-+	};
- };
++	ret = regcache_sync(chip->regmap);
++	mutex_unlock(&chip->i2c_lock);
++	return ret;
++}
  
- &csi_mux {
-@@ -34,6 +61,9 @@
- 		reg = <0x10>;
++static void pca953x_save_context(struct pca953x_chip *chip)
++{
+ 	mutex_lock(&chip->i2c_lock);
+ 	regcache_cache_only(chip->regmap, true);
+ 	mutex_unlock(&chip->i2c_lock);
++}
++
++static int pca953x_suspend(struct device *dev)
++{
++	struct pca953x_chip *chip = dev_get_drvdata(dev);
++
++	pca953x_save_context(chip);
  
- 		clocks = <&clk_imx219_fixed>;
-+		VANA-supply = <&reg_2p8v>;
-+		VDIG-supply = <&reg_1p8v>;
-+		VDDL-supply = <&reg_1p2v>;
+ 	if (atomic_read(&chip->wakeup_path))
+ 		device_set_wakeup_path(dev);
+@@ -1246,17 +1270,7 @@ static int pca953x_resume(struct device *dev)
+ 		}
+ 	}
  
- 		port {
- 			csi2_cam0: endpoint {
-@@ -55,6 +85,9 @@
- 		reg = <0x10>;
- 
- 		clocks = <&clk_imx219_fixed>;
-+		VANA-supply = <&reg_2p8v>;
-+		VDIG-supply = <&reg_1p8v>;
-+		VDDL-supply = <&reg_1p2v>;
- 
- 		port {
- 			csi2_cam1: endpoint {
+-	mutex_lock(&chip->i2c_lock);
+-	regcache_cache_only(chip->regmap, false);
+-	regcache_mark_dirty(chip->regmap);
+-	ret = pca953x_regcache_sync(dev);
+-	if (ret) {
+-		mutex_unlock(&chip->i2c_lock);
+-		return ret;
+-	}
+-
+-	ret = regcache_sync(chip->regmap);
+-	mutex_unlock(&chip->i2c_lock);
++	ret = pca953x_restore_context(chip);
+ 	if (ret) {
+ 		dev_err(dev, "Failed to restore register map: %d\n", ret);
+ 		return ret;
+-- 
+2.39.5
+
 
 
