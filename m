@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3B611CBA18;
-	Mon,  2 Jun 2025 14:27:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94B7D2C324D;
+	Mon,  2 Jun 2025 14:27:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748874459; cv=none; b=DxHYJDJ76EimbAgFTIl+EQfZPupCxT/PtzyJfyakti7vUHHawZzSUgMbZBnla5oOUw+Va+0w5xs3JgUoMVGdt91ZQX9yOKacv3Jt0Osuto+4RgjLBIqXg7lHL57eO8BEDrLjH/WsA2+IxndlU2ryU3XLhy8UKZkeHlBsLtVx5jQ=
+	t=1748874462; cv=none; b=GbaTJ44vNP6f4zClaFj1PR9MzstBd0fb9k/2LN80MDWSYiVm5AmLod2Q0L1VLleHdKWUWvIqsM2u1t3ZOAPPE+vJSw89uc04vjNF4TX38PokKCgypMVTd6xkVdzronlNZso7jkAhz+KEaqbDiHCNzLm7jZgcqr1JCZk6X5n+7iM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748874459; c=relaxed/simple;
-	bh=fikL6MgJ+qCm5y0+elrR1eIQ7uZbpiwStvK+szkGRVU=;
+	s=arc-20240116; t=1748874462; c=relaxed/simple;
+	bh=vhz1JRrGAH8NRxOAdP4hRudbvwKjt0cgFxkZTfOVhtg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J8QPntyKC3yTw+2K3585Rk8RlwXvhcDk+1k+tDrVnTKPaiwiLbTrHKlB3ELhK/B98H5lIh8AILGcvkogvKbw7VMIgIXwhM4suqW20CjR3/EjG27t4Lt53aurWCMel00OAZHoyBHwBIzPsV0nMtfJ7zuReH5NEOwyloKMKeCXyAs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G8hrH2ed; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=khitK7nu4wUSvaLFT1B1i9IHuk3/8f57oLkuD2ASJatLB/qd36Ciu9lai7nw8zSZ+R2ORInBwCtm4iJhlQfk1wGLWfCyMZmQHPR/PzqazUvgcam/YQlwJpq8aJHK33hUACxusD21iP2GKF5SSgHtu6dMJuNWTz0cPYiFZ/8VplM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1D2V31wH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G8hrH2ed"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9EEAC4CEEB;
-	Mon,  2 Jun 2025 14:27:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1D2V31wH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3573C4CEEB;
+	Mon,  2 Jun 2025 14:27:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748874459;
-	bh=fikL6MgJ+qCm5y0+elrR1eIQ7uZbpiwStvK+szkGRVU=;
+	s=korg; t=1748874462;
+	bh=vhz1JRrGAH8NRxOAdP4hRudbvwKjt0cgFxkZTfOVhtg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G8hrH2edPFR4D60kLqxhCnHeAaIOD3ANW4twmIhErPnBEgvWI2JH+XHv1eK0tDe6x
-	 yKpLZP+5EW22al2MdqjMvD2cd+olPvEKPkRz/t9jbVvnijrYLpDmfK+r2tkUzMgg1u
-	 VmJL15MAcI0NBUgu58TAUUYWveRo2K45XuqOH/og=
+	b=1D2V31wHODIccK1YqYdzPAWo7jHQ0C6odBjEfKEqxdj+RhtngOYxKRtUFW1vyXHZh
+	 4smJeXzryqe8/TcBu4SOizQZ9P0nrFahuxOXn4U6gdwS3K1DIDxE/96aLgogIrsGKz
+	 idlGbXvFCdO9kAAwOYe6e4OFIcGi7HNgeV1kqKgg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Stuebner <heiko@sntech.de>,
+	Pavel Paklov <Pavel.Paklov@cyberprotect.ru>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 030/204] arm64: dts: rockchip: fix iface clock-name on px30 iommus
-Date: Mon,  2 Jun 2025 15:46:03 +0200
-Message-ID: <20250602134256.864945464@linuxfoundation.org>
+Subject: [PATCH 5.4 031/204] iommu/amd: Fix potential buffer overflow in parse_ivrs_acpihid
+Date: Mon,  2 Jun 2025 15:46:04 +0200
+Message-ID: <20250602134256.903879813@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134255.449974357@linuxfoundation.org>
 References: <20250602134255.449974357@linuxfoundation.org>
@@ -50,43 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiko Stuebner <heiko@sntech.de>
+From: Pavel Paklov <Pavel.Paklov@cyberprotect.ru>
 
-[ Upstream commit 8e57eed2047b9361deb8c5dc4cc3d4e679c5ce50 ]
+[ Upstream commit 8dee308e4c01dea48fc104d37f92d5b58c50b96c ]
 
-The iommu clock names are aclk+iface not aclk+hclk as in the vendor kernel,
-so fix that in the px30.dtsi
+There is a string parsing logic error which can lead to an overflow of hid
+or uid buffers. Comparing ACPIID_LEN against a total string length doesn't
+take into account the lengths of individual hid and uid buffers so the
+check is insufficient in some cases. For example if the length of hid
+string is 4 and the length of the uid string is 260, the length of str
+will be equal to ACPIID_LEN + 1 but uid string will overflow uid buffer
+which size is 256.
 
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://lore.kernel.org/r/20190917082659.25549-1-heiko@sntech.de
-Stable-dep-of: 8dee308e4c01 ("iommu/amd: Fix potential buffer overflow in parse_ivrs_acpihid")
+The same applies to the hid string with length 13 and uid string with
+length 250.
+
+Check the length of hid and uid strings separately to prevent
+buffer overflow.
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: ca3bf5d47cec ("iommu/amd: Introduces ivrs_acpihid kernel parameter")
+Cc: stable@vger.kernel.org
+Signed-off-by: Pavel Paklov <Pavel.Paklov@cyberprotect.ru>
+Link: https://lore.kernel.org/r/20250325092259.392844-1-Pavel.Paklov@cyberprotect.ru
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/px30.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/iommu/amd_iommu_init.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/rockchip/px30.dtsi b/arch/arm64/boot/dts/rockchip/px30.dtsi
-index 652998c836406..aff72ebfc68d0 100644
---- a/arch/arm64/boot/dts/rockchip/px30.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/px30.dtsi
-@@ -839,7 +839,7 @@
- 		interrupts = <GIC_SPI 77 IRQ_TYPE_LEVEL_HIGH>;
- 		interrupt-names = "vopb_mmu";
- 		clocks = <&cru ACLK_VOPB>, <&cru HCLK_VOPB>;
--		clock-names = "aclk", "hclk";
-+		clock-names = "aclk", "iface";
- 		power-domains = <&power PX30_PD_VO>;
- 		#iommu-cells = <0>;
- 		status = "disabled";
-@@ -871,7 +871,7 @@
- 		interrupts = <GIC_SPI 78 IRQ_TYPE_LEVEL_HIGH>;
- 		interrupt-names = "vopl_mmu";
- 		clocks = <&cru ACLK_VOPL>, <&cru HCLK_VOPL>;
--		clock-names = "aclk", "hclk";
-+		clock-names = "aclk", "iface";
- 		power-domains = <&power PX30_PD_VO>;
- 		#iommu-cells = <0>;
- 		status = "disabled";
+diff --git a/drivers/iommu/amd_iommu_init.c b/drivers/iommu/amd_iommu_init.c
+index 0abb714fdbf10..de29512c75ccc 100644
+--- a/drivers/iommu/amd_iommu_init.c
++++ b/drivers/iommu/amd_iommu_init.c
+@@ -3124,6 +3124,14 @@ static int __init parse_ivrs_acpihid(char *str)
+ 	while (*uid == '0' && *(uid + 1))
+ 		uid++;
+ 
++	if (strlen(hid) >= ACPIHID_HID_LEN) {
++		pr_err("Invalid command line: hid is too long\n");
++		return 1;
++	} else if (strlen(uid) >= ACPIHID_UID_LEN) {
++		pr_err("Invalid command line: uid is too long\n");
++		return 1;
++	}
++
+ 	i = early_acpihid_map_size++;
+ 	memcpy(early_acpihid_map[i].hid, hid, strlen(hid));
+ 	memcpy(early_acpihid_map[i].uid, uid, strlen(uid));
 -- 
 2.39.5
 
