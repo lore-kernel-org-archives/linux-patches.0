@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FA28225791;
-	Mon,  2 Jun 2025 15:17:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF598225776;
+	Mon,  2 Jun 2025 15:17:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748877424; cv=none; b=dR4qv1yPW5F2uadoBy67vfu94r8qO4mTsOiMpW1zZ3kyCKmSiniK6zYfsjt8Zdz6Fk+F35AqxyqnddqM/RR9foT3HrR0lFRrRmDeG4mOdfjxfhTtFSOC4AlpNPVFMDnw1DkMPpvfw7jPfDoDezdHTlktpNqoCE8BfBgKYG0xmgI=
+	t=1748877427; cv=none; b=mwM821eF167PIQVEO+02wnyVKYum3xuB+8c9e/T6MT6Lj+Ebr4x3Y/L1iXt/XzrS0kDrJGFKd/DC9SFmjz+f3pk7+DY45vvQ28BAXJjJShc8vpk5KiVPqnyA6X3k4l5maAnLBqzE93kHEvtToJKRgiZ2K8YFcL3DJeVbBlo73LM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748877424; c=relaxed/simple;
-	bh=qSJGXFMUGNMHDtr5LowcuFcW57ruJiTGxNlaQQadoPo=;
+	s=arc-20240116; t=1748877427; c=relaxed/simple;
+	bh=D8AZY29T13VlZ1JlTg0SRdQhCjIQY6ceHXERDZNreeI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pXVxtvnztYJNjADlRAMxFPw2aue9BUpuPp5MMFosNpcCP1qa4sw9oTpv2882GJe+Jcm+semZO78dFpiGD8FzvXY+SxTfMs1GFzcbK73rox9PY6rd0tZFSBaYVPye1qy8TdSoKWiKuHN/TRaMEwo3HIdp+DXdLx+qR4EjiPh4bg4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LCbpbpzQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IUw3RbK6aoJsPiJ1+EXjiRyAIKF+9DrsdyX7X4ZJAud3GDUEsMeCBC4Ldxv+0vD5DDGrerB5GeGvNkzMD4aLdxzfi9s0V/x3A2Ud8BjCA5tCeDpbgwqn0jXOxfWxjPzVtyCFTp+qJSM3CBOzcxYYgJFGtZHYiiCZceKy/DumlCY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nZt+znib; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LCbpbpzQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3092C4CEEB;
-	Mon,  2 Jun 2025 15:17:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nZt+znib"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09E22C4CEEB;
+	Mon,  2 Jun 2025 15:17:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748877424;
-	bh=qSJGXFMUGNMHDtr5LowcuFcW57ruJiTGxNlaQQadoPo=;
+	s=korg; t=1748877427;
+	bh=D8AZY29T13VlZ1JlTg0SRdQhCjIQY6ceHXERDZNreeI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LCbpbpzQdKMpLQ3kmytEVuyHzzFa53R8vn9Lpoqsotwt8llafdRyZO2WHCWxlu/N8
-	 0J4ZEdZRFh+F6hsIG9SREjF5G7QSgnLSNqeWdOnhB8VnHzDDyjYz1nlDjl4iLQGK7e
-	 HGIKykh05XIrnQAD4rhkK4pm2qSblJoshttv1Bwc=
+	b=nZt+znib5ir8lCwdyBadp/OAO+L7h6JrYirwRPvTlwaKwYBQ/dBBbN9+DGPVnFeDN
+	 L85/TyysegAH7ZtT+INCwIfZVQkynlDqSTCV1gWeXd/c1gx2FrEh6ZA2lfYW0VyB1l
+	 VQeyGgSzSoSkTtmf9DoG1LBwibMdy8YCC3x3wnG4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Begunkov <asml.silence@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Mingi Cho <mincho@theori.io>,
+	Cong Wang <xiyou.wangcong@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 243/325] io_uring: fix overflow resched cqe reordering
-Date: Mon,  2 Jun 2025 15:48:39 +0200
-Message-ID: <20250602134329.658617640@linuxfoundation.org>
+Subject: [PATCH 6.1 244/325] sch_hfsc: Fix qlen accounting bug when using peek in hfsc_enqueue()
+Date: Mon,  2 Jun 2025 15:48:40 +0200
+Message-ID: <20250602134329.698616972@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134319.723650984@linuxfoundation.org>
 References: <20250602134319.723650984@linuxfoundation.org>
@@ -51,36 +54,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavel Begunkov <asml.silence@gmail.com>
+From: Cong Wang <xiyou.wangcong@gmail.com>
 
-[ Upstream commit a7d755ed9ce9738af3db602eb29d32774a180bc7 ]
+[ Upstream commit 3f981138109f63232a5fb7165938d4c945cc1b9d ]
 
-Leaving the CQ critical section in the middle of a overflow flushing
-can cause cqe reordering since the cache cq pointers are reset and any
-new cqe emitters that might get called in between are not going to be
-forced into io_cqe_cache_refill().
+When enqueuing the first packet to an HFSC class, hfsc_enqueue() calls the
+child qdisc's peek() operation before incrementing sch->q.qlen and
+sch->qstats.backlog. If the child qdisc uses qdisc_peek_dequeued(), this may
+trigger an immediate dequeue and potential packet drop. In such cases,
+qdisc_tree_reduce_backlog() is called, but the HFSC qdisc's qlen and backlog
+have not yet been updated, leading to inconsistent queue accounting. This
+can leave an empty HFSC class in the active list, causing further
+consequences like use-after-free.
 
-Fixes: eac2ca2d682f9 ("io_uring: check if we need to reschedule during overflow flush")
-Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
-Link: https://lore.kernel.org/r/90ba817f1a458f091f355f407de1c911d2b93bbf.1747483784.git.asml.silence@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+This patch fixes the bug by moving the increment of sch->q.qlen and
+sch->qstats.backlog before the call to the child qdisc's peek() operation.
+This ensures that queue length and backlog are always accurate when packet
+drops or dequeues are triggered during the peek.
+
+Fixes: 12d0ad3be9c3 ("net/sched/sch_hfsc.c: handle corner cases where head may change invalidating calculated deadline")
+Reported-by: Mingi Cho <mincho@theori.io>
+Signed-off-by: Cong Wang <xiyou.wangcong@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250518222038.58538-2-xiyou.wangcong@gmail.com
+Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/io_uring.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/sched/sch_hfsc.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
-index f39d66589180e..ad462724246a7 100644
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -627,6 +627,7 @@ static bool __io_cqring_overflow_flush(struct io_ring_ctx *ctx, bool force)
- 		 * to care for a non-real case.
- 		 */
- 		if (need_resched()) {
-+			ctx->cqe_sentinel = ctx->cqe_cached;
- 			io_cq_unlock_post(ctx);
- 			mutex_unlock(&ctx->uring_lock);
- 			cond_resched();
+diff --git a/net/sched/sch_hfsc.c b/net/sched/sch_hfsc.c
+index fc1370c293730..ec6ee45100132 100644
+--- a/net/sched/sch_hfsc.c
++++ b/net/sched/sch_hfsc.c
+@@ -1568,6 +1568,9 @@ hfsc_enqueue(struct sk_buff *skb, struct Qdisc *sch, struct sk_buff **to_free)
+ 		return err;
+ 	}
+ 
++	sch->qstats.backlog += len;
++	sch->q.qlen++;
++
+ 	if (first && !cl->cl_nactive) {
+ 		if (cl->cl_flags & HFSC_RSC)
+ 			init_ed(cl, len);
+@@ -1583,9 +1586,6 @@ hfsc_enqueue(struct sk_buff *skb, struct Qdisc *sch, struct sk_buff **to_free)
+ 
+ 	}
+ 
+-	sch->qstats.backlog += len;
+-	sch->q.qlen++;
+-
+ 	return NET_XMIT_SUCCESS;
+ }
+ 
 -- 
 2.39.5
 
