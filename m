@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C156822E01E;
-	Mon,  2 Jun 2025 15:08:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4324D22E01E;
+	Mon,  2 Jun 2025 15:09:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748876939; cv=none; b=ehene8jmlJSf4XnLuoXFU/PuwTeXkcgvkQAUep2qyGI/7wlYJ5Xo9H0YeNNc89NH68I3GjQvExBpSnsLMOUIFZ+43itgHaK8Vel/EXqTZ1TSSnKoDcDPtau4LFVco6KPrhK49M9SOd53vPgI31EyMeu1QlMxAQu7NhpiatjNMZU=
+	t=1748876943; cv=none; b=q+mB5D8TSa9SSE3166pTW/4i3on816ghM88KKNDj3ZLT3EhkQeSUSlzGstC3JdzFhZcL3ubMm8IUfgZL2qkFz6QEpTUH61itoNEUBgS/xqRskBllmYrxbpFt1SDzZeCf+DjMPpORLz5lgnUmhS0bseQzGJTAJfMsVNPJ+3FZapo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748876939; c=relaxed/simple;
-	bh=vuc73rBOK/tP9MvhSVtqnsjbNFpLJe1T5ppJ6bAZRtU=;
+	s=arc-20240116; t=1748876943; c=relaxed/simple;
+	bh=yl9olcrvA6Wf0XHXJWNJYxi1FZwwNvQMxuP5+ghUQW4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p6LS0eU3sLZlSMAfMZL9Xpw8E07qFAYdAAjyyiEzwltBMy7jiME+rsPfLWD6JrAtX+ul/dQGKMrJyqfyLr8PCg+zQoB4/BwjcWoZXWpAuSEglSFR6I7v4ncHvbeLXig/jOqNSizmwg3W+SScV6vlRiC2YrQVG05k/v1re59baKo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uICMPfO2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dChT7HgD54eOfbqHXQ8e98Ia9IaOFTKM2bIQ69y8DuiIEqPnri3UB4M75e5Wa3oiGcGPaGpRuXPUhqgfA89iPedPu8/FAlmMqFYObrVwqN13zwHUTXyS8fyKsOUE5leP4ED/KOu9aGyiC2e5plDEC49zGgWxx1qo85effn6ICGk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xJEz15PW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uICMPfO2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30D3BC4CEEB;
-	Mon,  2 Jun 2025 15:08:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xJEz15PW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B072C4CEEB;
+	Mon,  2 Jun 2025 15:09:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748876939;
-	bh=vuc73rBOK/tP9MvhSVtqnsjbNFpLJe1T5ppJ6bAZRtU=;
+	s=korg; t=1748876942;
+	bh=yl9olcrvA6Wf0XHXJWNJYxi1FZwwNvQMxuP5+ghUQW4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uICMPfO2nIXSCxHt8VJhN4r6mRbiNC17jZGY3RBSMZVwD2IKDO+LA/H/WOtEUQp9P
-	 Je/7wWMXxg8B6Z8rRt56ryFc6zj5MHzdTchtQwjP1FcW289fk0tUrGR93gfY2l7ACW
-	 xB2KzAIPi9A/BgWrw6bCkw3cdgxnCiV+99CzwvBo=
+	b=xJEz15PWzn2jc9I8LrgXihlV5XGhLOeF/qrftUAyMvBzXueJpYyWe9PFR9yTTMI+f
+	 2RMAOqONPQULUZfYymozkKUWzoTdh908vmvazsGqivGJnG6J/Yd2hz0KXA+piAlStL
+	 tltf0y1g0+BL2PCx2njpJypRGzj3lld8q+u5Zlfw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ang Tien Sung <tien.sung.ang@intel.com>,
-	Kuhanh Murugasen Krishnan <kuhanh.murugasen.krishnan@intel.com>,
-	Xu Yilun <yilun.xu@intel.com>,
-	Xu Yilun <yilun.xu@linux.intel.com>,
+	Janne Grunau <j@jannau.net>,
+	Alyssa Rosenzweig <alyssa@rosenzweig.io>,
+	Sven Peter <sven@svenpeter.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 122/325] fpga: altera-cvp: Increase credit timeout
-Date: Mon,  2 Jun 2025 15:46:38 +0200
-Message-ID: <20250602134324.746719081@linuxfoundation.org>
+Subject: [PATCH 6.1 123/325] soc: apple: rtkit: Use high prio work queue
+Date: Mon,  2 Jun 2025 15:46:39 +0200
+Message-ID: <20250602134324.790208985@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134319.723650984@linuxfoundation.org>
 References: <20250602134319.723650984@linuxfoundation.org>
@@ -53,41 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuhanh Murugasen Krishnan <kuhanh.murugasen.krishnan@intel.com>
+From: Janne Grunau <j@jannau.net>
 
-[ Upstream commit 0f05886a40fdc55016ba4d9ae0a9c41f8312f15b ]
+[ Upstream commit 22af2fac88fa5dbc310bfe7d0b66d4de3ac47305 ]
 
-Increase the timeout for SDM (Secure device manager) data credits from
-20ms to 40ms. Internal stress tests running at 500 loops failed with the
-current timeout of 20ms. At the start of a FPGA configuration, the CVP
-host driver reads the transmit credits from SDM. It then sends bitstream
-FPGA data to SDM based on the total credits. Each credit allows the
-CVP host driver to send 4kBytes of data. There are situations whereby,
-the SDM did not respond in time during testing.
+rtkit messages as communication with the DCP firmware for framebuffer
+swaps or input events are time critical so use WQ_HIGHPRI to prevent
+user space CPU load to increase latency.
+With kwin_wayland 6's explicit sync mode user space load was able to
+delay the IOMFB rtkit communication enough to miss vsync for surface
+swaps. Minimal test scenario is constantly resizing a glxgears
+Xwayland window.
 
-Signed-off-by: Ang Tien Sung <tien.sung.ang@intel.com>
-Signed-off-by: Kuhanh Murugasen Krishnan <kuhanh.murugasen.krishnan@intel.com>
-Acked-by: Xu Yilun <yilun.xu@intel.com>
-Link: https://lore.kernel.org/r/20250212221249.2715929-1-tien.sung.ang@intel.com
-Signed-off-by: Xu Yilun <yilun.xu@linux.intel.com>
+Signed-off-by: Janne Grunau <j@jannau.net>
+Reviewed-by: Alyssa Rosenzweig <alyssa@rosenzweig.io>
+Link: https://lore.kernel.org/r/20250226-apple-soc-misc-v2-3-c3ec37f9021b@svenpeter.dev
+Signed-off-by: Sven Peter <sven@svenpeter.dev>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/fpga/altera-cvp.c | 2 +-
+ drivers/soc/apple/rtkit.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/fpga/altera-cvp.c b/drivers/fpga/altera-cvp.c
-index 4ffb9da537d82..5295ff90482bc 100644
---- a/drivers/fpga/altera-cvp.c
-+++ b/drivers/fpga/altera-cvp.c
-@@ -52,7 +52,7 @@
- /* V2 Defines */
- #define VSE_CVP_TX_CREDITS		0x49	/* 8bit */
+diff --git a/drivers/soc/apple/rtkit.c b/drivers/soc/apple/rtkit.c
+index 8ec74d7539eb4..1ec0c3ba0be22 100644
+--- a/drivers/soc/apple/rtkit.c
++++ b/drivers/soc/apple/rtkit.c
+@@ -731,7 +731,7 @@ static struct apple_rtkit *apple_rtkit_init(struct device *dev, void *cookie,
+ 	rtk->mbox_cl.rx_callback = &apple_rtkit_rx;
+ 	rtk->mbox_cl.tx_done = &apple_rtkit_tx_done;
  
--#define V2_CREDIT_TIMEOUT_US		20000
-+#define V2_CREDIT_TIMEOUT_US		40000
- #define V2_CHECK_CREDIT_US		10
- #define V2_POLL_TIMEOUT_US		1000000
- #define V2_USER_TIMEOUT_US		500000
+-	rtk->wq = alloc_ordered_workqueue("rtkit-%s", WQ_MEM_RECLAIM,
++	rtk->wq = alloc_ordered_workqueue("rtkit-%s", WQ_HIGHPRI | WQ_MEM_RECLAIM,
+ 					  dev_name(rtk->dev));
+ 	if (!rtk->wq) {
+ 		ret = -ENOMEM;
 -- 
 2.39.5
 
