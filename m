@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A5D21401B;
-	Mon,  2 Jun 2025 13:57:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F11461F5846;
+	Mon,  2 Jun 2025 13:57:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748872663; cv=none; b=czykDECoeLuMrgbxSryUkS7360ttIYl+NuV9IPBzHYEExNe5aCdhijDQ0NgWgVn3077QB375f7rDKolo8O+2iAxZD0uMkblOzszYpDHlZzUZJjb7s3cF6aFU+d3f+uGcZ4MykvMZiz/+/JYu2LXnHzqBK76DYh2YmkYGfpHm778=
+	t=1748872666; cv=none; b=N6KDzVUjGAilNDLb0pUi558mOUN+4IHn+TK1UZbbZ6YeNZzKZFgJZB8RM1g0OUm3VCsCenWzYRx4wpS4EK8dfpXSqoJCgSaO6dvvMgaJqDxfTIXlWl6Qw4wxy6hXjQaC6rzoSvMjXczFGc+zj6zJXye58NmgHIzh4RXEGHRoSx8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748872663; c=relaxed/simple;
-	bh=84XTny/KZKQqD9epOYc0d3ZD3fd4pr6blHLdqxwxqtM=;
+	s=arc-20240116; t=1748872666; c=relaxed/simple;
+	bh=jepyh0n+5EhHM9Q9iDXyqAnbyJRpAsH/K60faP8Hhb0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ItWPaih//AyAF2ZuKENK7q+f09ZpQHTf3YAs6HGLMJ4w5pfjgK5BuYqicfB5cJ/+QonNzfPeP3z9iwYXgq1NMLt2MvA1fasBXxvfQB4X/gKtc9y3BcungtzRx/foGQw/i5M7cxVj17djR2mO8AjrvphAax7s4kC37ERxsNp5aek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DlnbYNhg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g6FVjVbDvmGpu/Vy4SFqc1PXV/2Yv5eYgRZWw3A4xe+YFRSJWK2yI5Ya49NR1BX1lWwKIOtk8PPjieWrMfLO6r7nCub1AAGAHMjOWyHYvN7h1nv6e0C/5nXsIEBSevNHF+qqrQHb+8286JoBYMpZWB9nM7pJRhAjhrCnWWhtOqY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lxLwTzxc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DlnbYNhg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B5F1C4CEEB;
-	Mon,  2 Jun 2025 13:57:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lxLwTzxc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 737EBC4CEEB;
+	Mon,  2 Jun 2025 13:57:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748872662;
-	bh=84XTny/KZKQqD9epOYc0d3ZD3fd4pr6blHLdqxwxqtM=;
+	s=korg; t=1748872665;
+	bh=jepyh0n+5EhHM9Q9iDXyqAnbyJRpAsH/K60faP8Hhb0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DlnbYNhg2fs5XGZr0GmbGjhpCqOx6LL2dPH/LmsZhZyisNavzLJMawtKMWg8359+9
-	 4nrV4XDeX7NGvd4FqJGm53HsTkyaw1hZX7qQ6T/szKDMYpop67bIqY8QuDVCTZw6wt
-	 92dwqxR77lqLTjxYr968HW/ntrmrmP5O/z2vnqKg=
+	b=lxLwTzxcmIs9gfwT9cON8Vtj5BKbEB5WJXhsumrU7tyi7OnXd2i+VafEQc3lDdd7K
+	 S75lTXXz4tfl+/G7Q5xoUiRMpRbe6bVr5BYiR+mIWd4GtU8U3D41tGH64Dqr4xwlmt
+	 yKjQQO/aeoscekaXsONIt8MSe8PdRZ4XJkIR8kso=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yemike Abhilash Chandra <y-abhilashchandra@ti.com>,
-	Neha Malcom Francis <n-francis@ti.com>,
-	Jai Luthra <jai.luthra@linux.dev>,
-	Nishanth Menon <nm@ti.com>
-Subject: [PATCH 6.14 31/73] arm64: dts: ti: k3-am62x: Rename I2C switch to I2C mux in IMX219 overlay
-Date: Mon,  2 Jun 2025 15:47:17 +0200
-Message-ID: <20250602134242.925946058@linuxfoundation.org>
+	Md Sadre Alam <quic_mdalam@quicinc.com>,
+	Stephan Gerhold <stephan.gerhold@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 6.14 04/73] arm64: dts: qcom: ipq9574: Add missing properties for cryptobam
+Date: Mon,  2 Jun 2025 15:46:50 +0200
+Message-ID: <20250602134241.852235003@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134241.673490006@linuxfoundation.org>
 References: <20250602134241.673490006@linuxfoundation.org>
@@ -52,37 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yemike Abhilash Chandra <y-abhilashchandra@ti.com>
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
 
-commit 7b75dd2029ee01a8c11fcf4d97f3ccebbef9f8eb upstream.
+commit b4cd966edb2deb5c75fe356191422e127445b830 upstream.
 
-The IMX219 device tree overlay incorrectly defined an I2C switch
-instead of an I2C mux. According to the DT bindings, the correct
-terminology and node definition should use "i2c-mux" instead of
-"i2c-switch". Hence, update the same to avoid dtbs_check warnings.
+num-channels and qcom,num-ees are required for BAM nodes without clock,
+because the driver cannot ensure the hardware is powered on when trying to
+obtain the information from the hardware registers. Specifying the node
+without these properties is unsafe and has caused early boot crashes for
+other SoCs before [1, 2].
 
-Fixes: 4111db03dc05 ("arm64: dts: ti: k3-am62x: Add overlay for IMX219")
+Add the missing information from the hardware registers to ensure the
+driver can probe successfully without causing crashes.
+
+[1]: https://lore.kernel.org/r/CY01EKQVWE36.B9X5TDXAREPF@fairphone.com/
+[2]: https://lore.kernel.org/r/20230626145959.646747-1-krzysztof.kozlowski@linaro.org/
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Yemike Abhilash Chandra <y-abhilashchandra@ti.com>
-Reviewed-by: Neha Malcom Francis <n-francis@ti.com>
-Reviewed-by: Jai Luthra <jai.luthra@linux.dev>
-Link: https://lore.kernel.org/r/20250415111328.3847502-7-y-abhilashchandra@ti.com
-Signed-off-by: Nishanth Menon <nm@ti.com>
+Tested-by: Md Sadre Alam <quic_mdalam@quicinc.com>
+Fixes: ffadc79ed99f ("arm64: dts: qcom: ipq9574: Enable crypto nodes")
+Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+Link: https://lore.kernel.org/r/20250212-bam-dma-fixes-v1-6-f560889e65d8@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/ti/k3-am62x-sk-csi2-imx219.dtso |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/ipq9574.dtsi |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/arch/arm64/boot/dts/ti/k3-am62x-sk-csi2-imx219.dtso
-+++ b/arch/arm64/boot/dts/ti/k3-am62x-sk-csi2-imx219.dtso
-@@ -22,7 +22,7 @@
- 	#size-cells = <0>;
- 	status = "okay";
+--- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+@@ -378,6 +378,8 @@
+ 			interrupts = <GIC_SPI 207 IRQ_TYPE_LEVEL_HIGH>;
+ 			#dma-cells = <1>;
+ 			qcom,ee = <1>;
++			qcom,num-ees = <4>;
++			num-channels = <16>;
+ 			qcom,controlled-remotely;
+ 		};
  
--	i2c-switch@71 {
-+	i2c-mux@71 {
- 		compatible = "nxp,pca9543";
- 		#address-cells = <1>;
- 		#size-cells = <0>;
 
 
