@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B85F423C8A0;
-	Mon,  2 Jun 2025 14:11:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B33723C4F8;
+	Mon,  2 Jun 2025 14:11:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748873505; cv=none; b=eV1d/XKXJx+tn7TPUpQflN8ljGJNWr4SJCmV1LgcHpOLOhHegRsS1cvMM4T9xn4KchPGsJr2EYws1Ei/z4sUzHZIXrdUo3FCBP4de/2+YVDy5wfQ5QeW+SPZLPHPfxrD2fvqMaxgICeIJMJ+GvbRVfkRHeON0PqV4qunGhHm138=
+	t=1748873509; cv=none; b=pbK/bjE69Oj2z3/ExV0KG2Lu0mAbkTg0dq3aXwCvDBNtWKGqZwp8wWp6Tb4cJthD+62pxrKQbrBrbtU+JJqVwzFTrroEEAOAaqMVytirVkEp6E/BUpCUW/P1BbeR89UnB3JEcUdnVeNyFnHjjvYFfHgNYW0mmoOD5iFaO/SW/RM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748873505; c=relaxed/simple;
-	bh=tXVmcprS9AG9eFnoqxlkrG0N7aLEvhOZLvbKoGXEq9A=;
+	s=arc-20240116; t=1748873509; c=relaxed/simple;
+	bh=oEOQ15XYFH3e49Hx8hY6EGu1XEAA7FA0j1e1AJ6kBE8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n4+XxR0imyrbxU6/z1GgVxmLu6FSx42RXTzLXEQT25PBvUehulQAgM9iGPms0AvS+e5N0eOuKylNbqAkvoB1pPTEZkppO9Kywd8+3XzqmGbwXdFwYPUQ7tQtNJFhXcwpwvwtSZuJ4GWFCRjUAWUk2uIQJHyCx/OXDzXqcFD/g2U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lcYY6sRZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qrWgERvs7DQ+UQ/dVrsVZV2OkgPtUwrUzr1IshzhOi068GPn0Wl8DMhFlA+s+4mo+j3JW1vkOu7BfXC6Rhaaz3kSKGC3barw1SDlOXdt/0KcHEYaZ4Qx9f/ln1d6hpYSLxfngoHHE4ionjcGbruPNMLU+lLF4M+4c8pHiBq+aFM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0nWnGPQx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lcYY6sRZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41703C4CEEB;
-	Mon,  2 Jun 2025 14:11:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0nWnGPQx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C7ECC4CEEB;
+	Mon,  2 Jun 2025 14:11:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748873505;
-	bh=tXVmcprS9AG9eFnoqxlkrG0N7aLEvhOZLvbKoGXEq9A=;
+	s=korg; t=1748873508;
+	bh=oEOQ15XYFH3e49Hx8hY6EGu1XEAA7FA0j1e1AJ6kBE8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lcYY6sRZCyIjQb2VnUNt79IPJiMSxfCi6lnhwr3X3ZAchTocPXN8ZGQWNdPSjqIGP
-	 cMgTo4VFwqG4aHWpeKdK4OMdJWgEDYSDQeP30P+ylpkQiVpxl5BchHm0u28eFeN6TY
-	 jLZo6OU7kTzkDfDqD6oziO/osQiH/c4WE3cOAVJA=
+	b=0nWnGPQxWtTV6XL+9Q8UrNGUo8zrd6F+Q3wg6hql8UBDsTMwww32t14MxBRIJ5ZXk
+	 G99xxU+TCITid7pyZbisC/7QGupFKJgDkuMDVbqkOoPC3p85iX3QTYWJO5PoE5EY37
+	 F+cOll6tz1Cl5WzM2ZAnJHowv0ReYyijB1/4OojU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Bin <bin.li@microchip.com>,
-	Nicolas Ferre <nicolas.ferre@microchip.com>,
-	Ryan Wanner <Ryan.Wanner@microchip.com>,
-	Durai Manickam KR <durai.manickamkr@microchip.com>,
-	Andrei Simion <andrei.simion@microchip.com>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+	CK Hu <ck.hu@mediatek.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 162/444] ARM: at91: pm: fix at91_suspend_finish for ZQ calibration
-Date: Mon,  2 Jun 2025 15:43:46 +0200
-Message-ID: <20250602134347.483908886@linuxfoundation.org>
+Subject: [PATCH 6.6 163/444] drm/mediatek: mtk_dpi: Add checks for reg_h_fre_con existence
+Date: Mon,  2 Jun 2025 15:43:47 +0200
+Message-ID: <20250602134347.524992590@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -55,88 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Bin <bin.li@microchip.com>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-[ Upstream commit bc4722c3598d0e2c2dbf9609a3d3198993093e2b ]
+[ Upstream commit 8c9da7cd0bbcc90ab444454fecf535320456a312 ]
 
-For sama7g5 and sama7d65 backup mode, we encountered a "ZQ calibrate error"
-during recalibrating the impedance in BootStrap.
-We found that the impedance value saved in at91_suspend_finish() before
-the DDR entered self-refresh mode did not match the resistor values. The
-ZDATA field in the DDR3PHY_ZQ0CR0 register uses a modified gray code to
-select the different impedance setting.
-But these gray code are incorrect, a workaournd from design team fixed the
-bug in the calibration logic. The ZDATA contains four independent impedance
-elements, but the algorithm combined the four elements into one. The elements
-were fixed using properly shifted offsets.
+In preparation for adding support for newer DPI instances which
+do support direct-pin but do not have any H_FRE_CON register,
+like the one found in MT8195 and MT8188, add a branch to check
+if the reg_h_fre_con variable was declared in the mtk_dpi_conf
+structure for the probed SoC DPI version.
 
-Signed-off-by: Li Bin <bin.li@microchip.com>
-[nicolas.ferre@microchip.com: fix indentation and combine 2 patches]
-Signed-off-by: Nicolas Ferre <nicolas.ferre@microchip.com>
-Tested-by: Ryan Wanner <Ryan.Wanner@microchip.com>
-Tested-by: Durai Manickam KR <durai.manickamkr@microchip.com>
-Tested-by: Andrei Simion <andrei.simion@microchip.com>
-Signed-off-by: Ryan Wanner <Ryan.Wanner@microchip.com>
-Link: https://lore.kernel.org/r/28b33f9bcd0ca60ceba032969fe054d38f2b9577.1740671156.git.Ryan.Wanner@microchip.com
-Signed-off-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
+As a note, this is useful specifically only for cases in which
+the support_direct_pin variable is true, so mt8195-dpintf is
+not affected by any issue.
+
+Reviewed-by: CK Hu <ck.hu@mediatek.com>
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://patchwork.kernel.org/project/dri-devel/patch/20250217154836.108895-6-angelogioacchino.delregno@collabora.com/
+Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-at91/pm.c | 21 +++++++++++----------
- 1 file changed, 11 insertions(+), 10 deletions(-)
+ drivers/gpu/drm/mediatek/mtk_dpi.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/mach-at91/pm.c b/arch/arm/mach-at91/pm.c
-index 22ecaf09d00f9..f635ad29511f6 100644
---- a/arch/arm/mach-at91/pm.c
-+++ b/arch/arm/mach-at91/pm.c
-@@ -538,11 +538,12 @@ extern u32 at91_pm_suspend_in_sram_sz;
+diff --git a/drivers/gpu/drm/mediatek/mtk_dpi.c b/drivers/gpu/drm/mediatek/mtk_dpi.c
+index 54fc3f819577e..6391afdf202e2 100644
+--- a/drivers/gpu/drm/mediatek/mtk_dpi.c
++++ b/drivers/gpu/drm/mediatek/mtk_dpi.c
+@@ -410,12 +410,13 @@ static void mtk_dpi_config_swap_input(struct mtk_dpi *dpi, bool enable)
  
- static int at91_suspend_finish(unsigned long val)
+ static void mtk_dpi_config_2n_h_fre(struct mtk_dpi *dpi)
  {
--	unsigned char modified_gray_code[] = {
--		0x00, 0x01, 0x02, 0x03, 0x06, 0x07, 0x04, 0x05, 0x0c, 0x0d,
--		0x0e, 0x0f, 0x0a, 0x0b, 0x08, 0x09, 0x18, 0x19, 0x1a, 0x1b,
--		0x1e, 0x1f, 0x1c, 0x1d, 0x14, 0x15, 0x16, 0x17, 0x12, 0x13,
--		0x10, 0x11,
-+	/* SYNOPSYS workaround to fix a bug in the calibration logic */
-+	unsigned char modified_fix_code[] = {
-+		0x00, 0x01, 0x01, 0x06, 0x07, 0x0c, 0x06, 0x07, 0x0b, 0x18,
-+		0x0a, 0x0b, 0x0c, 0x0d, 0x0d, 0x0a, 0x13, 0x13, 0x12, 0x13,
-+		0x14, 0x15, 0x15, 0x12, 0x18, 0x19, 0x19, 0x1e, 0x1f, 0x14,
-+		0x1e, 0x1f,
- 	};
- 	unsigned int tmp, index;
- 	int i;
-@@ -553,25 +554,25 @@ static int at91_suspend_finish(unsigned long val)
- 		 * restore the ZQ0SR0 with the value saved here. But the
- 		 * calibration is buggy and restoring some values from ZQ0SR0
- 		 * is forbidden and risky thus we need to provide processed
--		 * values for these (modified gray code values).
-+		 * values for these.
- 		 */
- 		tmp = readl(soc_pm.data.ramc_phy + DDR3PHY_ZQ0SR0);
+-	mtk_dpi_mask(dpi, dpi->conf->reg_h_fre_con, H_FRE_2N, H_FRE_2N);
++	if (dpi->conf->reg_h_fre_con)
++		mtk_dpi_mask(dpi, dpi->conf->reg_h_fre_con, H_FRE_2N, H_FRE_2N);
+ }
  
- 		/* Store pull-down output impedance select. */
- 		index = (tmp >> DDR3PHY_ZQ0SR0_PDO_OFF) & 0x1f;
--		soc_pm.bu->ddr_phy_calibration[0] = modified_gray_code[index];
-+		soc_pm.bu->ddr_phy_calibration[0] = modified_fix_code[index] << DDR3PHY_ZQ0SR0_PDO_OFF;
+ static void mtk_dpi_config_disable_edge(struct mtk_dpi *dpi)
+ {
+-	if (dpi->conf->edge_sel_en)
++	if (dpi->conf->edge_sel_en && dpi->conf->reg_h_fre_con)
+ 		mtk_dpi_mask(dpi, dpi->conf->reg_h_fre_con, 0, EDGE_SEL_EN);
+ }
  
- 		/* Store pull-up output impedance select. */
- 		index = (tmp >> DDR3PHY_ZQ0SR0_PUO_OFF) & 0x1f;
--		soc_pm.bu->ddr_phy_calibration[0] |= modified_gray_code[index];
-+		soc_pm.bu->ddr_phy_calibration[0] |= modified_fix_code[index] << DDR3PHY_ZQ0SR0_PUO_OFF;
- 
- 		/* Store pull-down on-die termination impedance select. */
- 		index = (tmp >> DDR3PHY_ZQ0SR0_PDODT_OFF) & 0x1f;
--		soc_pm.bu->ddr_phy_calibration[0] |= modified_gray_code[index];
-+		soc_pm.bu->ddr_phy_calibration[0] |= modified_fix_code[index] << DDR3PHY_ZQ0SR0_PDODT_OFF;
- 
- 		/* Store pull-up on-die termination impedance select. */
- 		index = (tmp >> DDR3PHY_ZQ0SRO_PUODT_OFF) & 0x1f;
--		soc_pm.bu->ddr_phy_calibration[0] |= modified_gray_code[index];
-+		soc_pm.bu->ddr_phy_calibration[0] |= modified_fix_code[index] << DDR3PHY_ZQ0SRO_PUODT_OFF;
- 
- 		/*
- 		 * The 1st 8 words of memory might get corrupted in the process
 -- 
 2.39.5
 
