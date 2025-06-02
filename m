@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7E5E23371E;
-	Mon,  2 Jun 2025 14:19:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37F4F233727;
+	Mon,  2 Jun 2025 14:19:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748873953; cv=none; b=tDF4XB5jmfgsI0+4YrbgJAZ4n269Gd9ma/8E74X16nOfzH4exdY8uXXR1FFYFw7HXH8NX33GAMb36Jk+BwMNkCJyrCSQty2SSdvs6Rhxhv/RN1zrPuRTsqV4x4nVJ9INzkg8fttUyu9GH5vyV7+grxwIGI3x4wFIJDtzGN5vmRo=
+	t=1748873960; cv=none; b=TrAS0XJdpRW9zsXbfuMt2wEqtNEV9opN3AKjtAcHnFrGhcOS13vh97GsvzBs+mf4ix9+eNeuQVHOZJusiMqqHv7tZPn20NqkL/ah4Yi41lN1emRr0ICSz7mh2BkU2crToqx0yQlwEM2cZItIdCpUtjFB6q62+A5cpu3BYmIxPuw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748873953; c=relaxed/simple;
-	bh=dXg8y76OE49JWn2dLHIdukgbNu3qj1Ln+OpBOE2CiDY=;
+	s=arc-20240116; t=1748873960; c=relaxed/simple;
+	bh=cnj9JA4mgkWfvrcbwCW0ePEHFpXI9qrXeKqUrKK0+GE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=caxQuTBzjTaw7xwsZbM9I6yalgDgbTovsWctkwV8O/fzAXEP9iwS1NKQZEt/FnqEEJM2dQOBLs159EvUpiI8DLhu4UMPQ9wJktaTtOh0mVR5K2Yw8Ss+zzo4ebMyWrrPDtJHgzAwW+CzHbOW5IwZck6IFO5x3tpdLk8sxVkl7wA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vo1MLZ+3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iENsHROIbr9kmLiWjLKKIioTxtvwj/u7FYgxPiCRScgCPfCXYqYwV5ZR/7gPjHLJhFVZA2SHzoFmlUmz4U++QFFjgndmk/VgFluvnqX//iH96agkLt9lZET90rCmJU3JqJqEoFFjcIdvlrV8cQJdMVvtladDbYgnBn4lVHrKDdU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pd2isJZA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vo1MLZ+3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A510C4CEEB;
-	Mon,  2 Jun 2025 14:19:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pd2isJZA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AEBCC4CEEB;
+	Mon,  2 Jun 2025 14:19:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748873953;
-	bh=dXg8y76OE49JWn2dLHIdukgbNu3qj1Ln+OpBOE2CiDY=;
+	s=korg; t=1748873956;
+	bh=cnj9JA4mgkWfvrcbwCW0ePEHFpXI9qrXeKqUrKK0+GE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vo1MLZ+3Lk4H46x87UrUAvI4N+G8nnfJX9rgH3Dm3ZsKTTCyUPw9Dtc8gd24FU2xV
-	 HOlE+AhfFnlGqsn9ctJ97j9/g1pHBTYxy41oKzt3Xa/LI7bPO77NS51JbWD6VIexlx
-	 PNsxuPXcwBCX6u2VhH328F5pC9vQL4461TAHpfDo=
+	b=pd2isJZAQVUbjlvBWuVQZu7K5rjWyKxK/B0ZfLZbOrfo5CmI4ktJlMmck35Y5q/Oa
+	 00bye1mQIJUpIrgr8W5XaX0UCn8tWnAFkLyvNBeJpLYq6lkW3lDmlgE7iygbBpjSdk
+	 PcyS+Xmadt8LFnpmgKMYcSQN73SBoXoLBVcv5wCs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Machata <petrm@nvidia.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Wojciech Drewek <wojciech.drewek@intel.com>,
+	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>,
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 278/444] bridge: mdb: Allow replace of a host-joined group
-Date: Mon,  2 Jun 2025 15:45:42 +0200
-Message-ID: <20250602134352.241929592@linuxfoundation.org>
+Subject: [PATCH 6.6 279/444] ice: treat dyn_allowed only as suggestion
+Date: Mon,  2 Jun 2025 15:45:43 +0200
+Message-ID: <20250602134352.280332196@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -53,65 +54,131 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Petr Machata <petrm@nvidia.com>
+From: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
 
-[ Upstream commit d9e9f6d7b7d0c520bb87f19d2cbc57aeeb2091d5 ]
+[ Upstream commit a8c2d3932c1106af2764cc6869b29bcf3cb5bc47 ]
 
-Attempts to replace an MDB group membership of the host itself are
-currently bounced:
+It can be needed to have some MSI-X allocated as static and rest as
+dynamic. For example on PF VSI. We want to always have minimum one MSI-X
+on it, because of that it is allocated as a static one, rest can be
+dynamic if it is supported.
 
- # ip link add name br up type bridge vlan_filtering 1
- # bridge mdb replace dev br port br grp 239.0.0.1 vid 2
- # bridge mdb replace dev br port br grp 239.0.0.1 vid 2
- Error: bridge: Group is already joined by host.
+Change the ice_get_irq_res() to allow using static entries if they are
+free even if caller wants dynamic one.
 
-A similar operation done on a member port would succeed. Ignore the check
-for replacement of host group memberships as well.
+Adjust limit values to the new approach. Min and max in limit means the
+values that are valid, so decrease max and num_static by one.
 
-The bit of code that this enables is br_multicast_host_join(), which, for
-already-joined groups only refreshes the MC group expiration timer, which
-is desirable; and a userspace notification, also desirable.
+Set vsi::irq_dyn_alloc if dynamic allocation is supported.
 
-Change a selftest that exercises this code path from expecting a rejection
-to expecting a pass. The rest of MDB selftests pass without modification.
-
-Signed-off-by: Petr Machata <petrm@nvidia.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://patch.msgid.link/e5c5188b9787ae806609e7ca3aa2a0a501b9b5c4.1738685648.git.petrm@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
+Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
+Signed-off-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/br_mdb.c                                  | 2 +-
- tools/testing/selftests/net/forwarding/bridge_mdb.sh | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_irq.c | 25 ++++++++++++------------
+ drivers/net/ethernet/intel/ice/ice_lib.c |  2 ++
+ 2 files changed, 15 insertions(+), 12 deletions(-)
 
-diff --git a/net/bridge/br_mdb.c b/net/bridge/br_mdb.c
-index 7305f5f8215ca..96bea0c8408fe 100644
---- a/net/bridge/br_mdb.c
-+++ b/net/bridge/br_mdb.c
-@@ -1030,7 +1030,7 @@ static int br_mdb_add_group(const struct br_mdb_config *cfg,
+diff --git a/drivers/net/ethernet/intel/ice/ice_irq.c b/drivers/net/ethernet/intel/ice/ice_irq.c
+index ad82ff7d19957..09f9c7ba52795 100644
+--- a/drivers/net/ethernet/intel/ice/ice_irq.c
++++ b/drivers/net/ethernet/intel/ice/ice_irq.c
+@@ -45,7 +45,7 @@ static void ice_free_irq_res(struct ice_pf *pf, u16 index)
+ /**
+  * ice_get_irq_res - get an interrupt resource
+  * @pf: board private structure
+- * @dyn_only: force entry to be dynamically allocated
++ * @dyn_allowed: allow entry to be dynamically allocated
+  *
+  * Allocate new irq entry in the free slot of the tracker. Since xarray
+  * is used, always allocate new entry at the lowest possible index. Set
+@@ -53,11 +53,12 @@ static void ice_free_irq_res(struct ice_pf *pf, u16 index)
+  *
+  * Returns allocated irq entry or NULL on failure.
+  */
+-static struct ice_irq_entry *ice_get_irq_res(struct ice_pf *pf, bool dyn_only)
++static struct ice_irq_entry *ice_get_irq_res(struct ice_pf *pf,
++					     bool dyn_allowed)
+ {
+-	struct xa_limit limit = { .max = pf->irq_tracker.num_entries,
++	struct xa_limit limit = { .max = pf->irq_tracker.num_entries - 1,
+ 				  .min = 0 };
+-	unsigned int num_static = pf->irq_tracker.num_static;
++	unsigned int num_static = pf->irq_tracker.num_static - 1;
+ 	struct ice_irq_entry *entry;
+ 	unsigned int index;
+ 	int ret;
+@@ -66,9 +67,9 @@ static struct ice_irq_entry *ice_get_irq_res(struct ice_pf *pf, bool dyn_only)
+ 	if (!entry)
+ 		return NULL;
  
- 	/* host join */
- 	if (!port) {
--		if (mp->host_joined) {
-+		if (mp->host_joined && !(cfg->nlflags & NLM_F_REPLACE)) {
- 			NL_SET_ERR_MSG_MOD(extack, "Group is already joined by host");
- 			return -EEXIST;
- 		}
-diff --git a/tools/testing/selftests/net/forwarding/bridge_mdb.sh b/tools/testing/selftests/net/forwarding/bridge_mdb.sh
-index a3678dfe5848a..c151374ddf040 100755
---- a/tools/testing/selftests/net/forwarding/bridge_mdb.sh
-+++ b/tools/testing/selftests/net/forwarding/bridge_mdb.sh
-@@ -149,7 +149,7 @@ cfg_test_host_common()
- 	check_err $? "Failed to add $name host entry"
+-	/* skip preallocated entries if the caller says so */
+-	if (dyn_only)
+-		limit.min = num_static;
++	/* only already allocated if the caller says so */
++	if (!dyn_allowed)
++		limit.max = num_static;
  
- 	bridge mdb replace dev br0 port br0 grp $grp $state vid 10 &> /dev/null
--	check_fail $? "Managed to replace $name host entry"
-+	check_err $? "Failed to replace $name host entry"
+ 	ret = xa_alloc(&pf->irq_tracker.entries, &index, entry, limit,
+ 		       GFP_KERNEL);
+@@ -78,7 +79,7 @@ static struct ice_irq_entry *ice_get_irq_res(struct ice_pf *pf, bool dyn_only)
+ 		entry = NULL;
+ 	} else {
+ 		entry->index = index;
+-		entry->dynamic = index >= num_static;
++		entry->dynamic = index > num_static;
+ 	}
  
- 	bridge mdb del dev br0 port br0 grp $grp $state vid 10
- 	bridge mdb get dev br0 grp $grp vid 10 &> /dev/null
+ 	return entry;
+@@ -272,7 +273,7 @@ int ice_init_interrupt_scheme(struct ice_pf *pf)
+ /**
+  * ice_alloc_irq - Allocate new interrupt vector
+  * @pf: board private structure
+- * @dyn_only: force dynamic allocation of the interrupt
++ * @dyn_allowed: allow dynamic allocation of the interrupt
+  *
+  * Allocate new interrupt vector for a given owner id.
+  * return struct msi_map with interrupt details and track
+@@ -285,20 +286,20 @@ int ice_init_interrupt_scheme(struct ice_pf *pf)
+  * interrupt will be allocated with pci_msix_alloc_irq_at.
+  *
+  * Some callers may only support dynamically allocated interrupts.
+- * This is indicated with dyn_only flag.
++ * This is indicated with dyn_allowed flag.
+  *
+  * On failure, return map with negative .index. The caller
+  * is expected to check returned map index.
+  *
+  */
+-struct msi_map ice_alloc_irq(struct ice_pf *pf, bool dyn_only)
++struct msi_map ice_alloc_irq(struct ice_pf *pf, bool dyn_allowed)
+ {
+ 	int sriov_base_vector = pf->sriov_base_vector;
+ 	struct msi_map map = { .index = -ENOENT };
+ 	struct device *dev = ice_pf_to_dev(pf);
+ 	struct ice_irq_entry *entry;
+ 
+-	entry = ice_get_irq_res(pf, dyn_only);
++	entry = ice_get_irq_res(pf, dyn_allowed);
+ 	if (!entry)
+ 		return map;
+ 
+diff --git a/drivers/net/ethernet/intel/ice/ice_lib.c b/drivers/net/ethernet/intel/ice/ice_lib.c
+index 1fc4805353eb5..a6a290514e548 100644
+--- a/drivers/net/ethernet/intel/ice/ice_lib.c
++++ b/drivers/net/ethernet/intel/ice/ice_lib.c
+@@ -587,6 +587,8 @@ ice_vsi_alloc_def(struct ice_vsi *vsi, struct ice_channel *ch)
+ 			return -ENOMEM;
+ 	}
+ 
++	vsi->irq_dyn_alloc = pci_msix_can_alloc_dyn(vsi->back->pdev);
++
+ 	switch (vsi->type) {
+ 	case ICE_VSI_SWITCHDEV_CTRL:
+ 		/* Setup eswitch MSIX irq handler for VSI */
 -- 
 2.39.5
 
