@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08A9A1DED64;
-	Mon,  2 Jun 2025 14:15:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D5801DED64;
+	Mon,  2 Jun 2025 14:15:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748873731; cv=none; b=PHF6dOCf9gl8iDph8WSzWHrDSwOgb2KAA3JQfGp8lmSl19OzpTLxaC5F14ZtYAjpnZyPVGEm6KBBVkzq6WxiLVFsw9/3IqA0gDBsnXM+e8bv3divXhj0DeHwjXxvsosTlJVIJcELRKulZa3/RUzwItCvzgHpI422yUWXobmL2a0=
+	t=1748873734; cv=none; b=fXpVmxpMAltjGxliC8ILWeZWpcpLzjnr9FSCMQYzyjC5/q2xRQETWEvl/GIMF/thLJ0LeU4W5jp/aEhspokYeENUdPEA2Lhy1zz7JM5kKiUiN/1dmIkrciKiRLzpddb5VGs93EhkCeE3MW8a/wMyBy4/77inmBCESBa/+IA7+u0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748873731; c=relaxed/simple;
-	bh=kcUO2ek+BpJwqB/8K1BYNIFfXvZCVxDdLJ3dIFNReGg=;
+	s=arc-20240116; t=1748873734; c=relaxed/simple;
+	bh=XnqdrkyseXbfu4yDQSMNvhtO1GcMOrfjEjbWcRVEIko=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sVU0+Vc+yvPa/ywkeFzoA53PsG7FstCWlxoLCgOD3xdFLCGNgq2W0+h/5vyun2KzVp//59gnOZiMVTzmHoVbMMOjDs1aJ5iaVqjSrHMqiYprO4IeUBPcGoeWA8Ln/l/JqpYEXnbvwpgi0yyhXI77zYvV/hg7d4z+oT/XlZyUyxE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RjAFXTYF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mFA0Ztb1a4965yeyZv5GbhCWk60jeiGDUONp+3te0+2vSayjB6ZmSHrfOTvjDrnBywUMN4Pwh4hiX38zbfoxcOexHBbgA2vLppSTJ9FwW5o/+cFnX+9N2LCVqW3TrxXOBQZh0Por0gCiSuDS/KCiIbnay8c4BnxlqVPZ2WjXv1k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KU5WWRtU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RjAFXTYF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E47EC4CEEB;
-	Mon,  2 Jun 2025 14:15:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KU5WWRtU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F876C4CEEB;
+	Mon,  2 Jun 2025 14:15:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748873730;
-	bh=kcUO2ek+BpJwqB/8K1BYNIFfXvZCVxDdLJ3dIFNReGg=;
+	s=korg; t=1748873734;
+	bh=XnqdrkyseXbfu4yDQSMNvhtO1GcMOrfjEjbWcRVEIko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RjAFXTYFrc/sF02cTTDq7jPflCcDXb/E1vnym1NqnZmWvWce0h7LaWepH+W2IjiTY
-	 N0nOlEZwrFuoN/XKBs6n0sh3qyDG2VI11wdVexLjCYnp1OMBKTCPKGqmsMR45Vb+l0
-	 3NNpxYFxumoAue4SszUmklG0+mmGxbJEU0yYGcMY=
+	b=KU5WWRtUzl1xSNwsEE54SKNtVzQsxBwXmch6iSLSd5Hp6qc05OQpqdiGTiEiPadav
+	 ihacF7gc8AAHxkgjs4kjyfbQGlajFuCEmIDgngRbcrU1DZ/4LuROlv/+TX4e5kP73e
+	 xp6dhELrLHukwChiXIAUukcQTk3beF8u2/J7a1Yo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brendan Jackman <jackmanb@google.com>,
-	David Gow <davidgow@google.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	David Plowman <david.plowman@raspberrypi.com>,
+	Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
+	Dave Stevenson <dave.stevenson@raspberrypi.com>,
+	Jai Luthra <jai.luthra@ideasonboard.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 232/444] kunit: tool: Use qboot on QEMU x86_64
-Date: Mon,  2 Jun 2025 15:44:56 +0200
-Message-ID: <20250602134350.328056498@linuxfoundation.org>
+Subject: [PATCH 6.6 233/444] media: i2c: imx219: Correct the minimum vblanking value
+Date: Mon,  2 Jun 2025 15:44:57 +0200
+Message-ID: <20250602134350.367012799@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -52,44 +55,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Brendan Jackman <jackmanb@google.com>
+From: David Plowman <david.plowman@raspberrypi.com>
 
-[ Upstream commit 08fafac4c9f289a9d9a22d838921e4b3eb22c664 ]
+[ Upstream commit e3b82d49bf676f3c873e642038765eac32ab6d39 ]
 
-As noted in [0], SeaBIOS (QEMU default) makes a mess of the terminal,
-qboot does not.
+The datasheet for this sensor documents the minimum vblanking as being
+32 lines. It does fix some problems with occasional black lines at the
+bottom of images (tested on Raspberry Pi).
 
-It turns out this is actually useful with kunit.py, since the user is
-exposed to this issue if they set --raw_output=all.
-
-qboot is also faster than SeaBIOS, but it's is marginal for this
-usecase.
-
-[0] https://lore.kernel.org/all/CA+i-1C0wYb-gZ8Mwh3WSVpbk-LF-Uo+njVbASJPe1WXDURoV7A@mail.gmail.com/
-
-Both SeaBIOS and qboot are x86-specific.
-
-Link: https://lore.kernel.org/r/20250124-kunit-qboot-v1-1-815e4d4c6f7c@google.com
-Signed-off-by: Brendan Jackman <jackmanb@google.com>
-Reviewed-by: David Gow <davidgow@google.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Signed-off-by: David Plowman <david.plowman@raspberrypi.com>
+Reviewed-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
+Reviewed-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
+Signed-off-by: Jai Luthra <jai.luthra@ideasonboard.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/kunit/qemu_configs/x86_64.py | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/media/i2c/imx219.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/kunit/qemu_configs/x86_64.py b/tools/testing/kunit/qemu_configs/x86_64.py
-index dc79490768630..4a6bf4e048f5b 100644
---- a/tools/testing/kunit/qemu_configs/x86_64.py
-+++ b/tools/testing/kunit/qemu_configs/x86_64.py
-@@ -7,4 +7,6 @@ CONFIG_SERIAL_8250_CONSOLE=y''',
- 			   qemu_arch='x86_64',
- 			   kernel_path='arch/x86/boot/bzImage',
- 			   kernel_command_line='console=ttyS0',
--			   extra_qemu_params=[])
-+			   # qboot is faster than SeaBIOS and doesn't mess up
-+			   # the terminal.
-+			   extra_qemu_params=['-bios', 'qboot.rom'])
+diff --git a/drivers/media/i2c/imx219.c b/drivers/media/i2c/imx219.c
+index a14e571dc62bc..a3d5a8a7c660b 100644
+--- a/drivers/media/i2c/imx219.c
++++ b/drivers/media/i2c/imx219.c
+@@ -77,7 +77,7 @@
+ #define IMX219_VTS_30FPS_640x480	0x06e3
+ #define IMX219_VTS_MAX			0xffff
+ 
+-#define IMX219_VBLANK_MIN		4
++#define IMX219_VBLANK_MIN		32
+ 
+ /*Frame Length Line*/
+ #define IMX219_FLL_MIN			0x08a6
 -- 
 2.39.5
 
