@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ED8C15CD55;
-	Mon,  2 Jun 2025 15:15:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65A694120B;
+	Mon,  2 Jun 2025 15:15:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748877321; cv=none; b=iC8vgR74XlMul9zy+XQZqmIiIjR8c1LMoqDtNqHeQqIkFwnWJ91v9v4HPcoKPylVB1y93vO+TfGa4UmXjnR2qZXUFo4CeqJofE3uuXZE9LAPblVv4YE468WDs7xt01I+Vjx9pCtsz2b9nrHtnb50vmV99/8Kom8wGLzYad6naGA=
+	t=1748877324; cv=none; b=QE7f6667fT7oBdoaL2b3f4QNPwU5DOd3vGR65d5faNBCIxOmHjWQ9PMr92Debzt60TWxQvg9dg72q0HkKN+RLefif9WvSA1tCiTkDQfIVXHEtQcyJ6s2VZuvxQwkubmZD3OrCNPiDuloDtwrE6nHM3NsIpEppRmaegzN1ZzBKVs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748877321; c=relaxed/simple;
-	bh=xHsRNE9q+z7xXofaYeurIcQQjozCHoAmu5s7tk9qhk8=;
+	s=arc-20240116; t=1748877324; c=relaxed/simple;
+	bh=t6lYi9uLFfDMu4R3NkyNNwbk8h8bkGlVbL+ytJhttWo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MoPtl1y4ZxRfWtYF0zqGlrz9nJbwGiZmrAh5UG3ABtAw4nLcRGj/e6onFwBsOWuxaqlBf/uE9c/6Q55hFOksd3m1GEhIX1OqhvCWaH1iaQkO9aO+LcEp66Dfu7d9X2TkxCiVwSfJZWRqMEq/hSY+rjawZmqTy8rBiBFINuq1ZMg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eBWsvpqp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Yk0U0wa3/nvrb/Mc4gMvmfllzu9SzG3cLNsH8hEPezz70WQkl5qy729q4WYC29Q+WsGACC0YNthD6IdnYHcqpFWWGgq/87xJb1VzX0YYJBvU2OyNsx9sbHjFH+SjseO96S+F0pi4MjF7FG8lwJtlCrIbuMP4vShlWyMXVKFlTas=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xThDa/NM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eBWsvpqp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3DB1C4CEEB;
-	Mon,  2 Jun 2025 15:15:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xThDa/NM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C82A7C4CEF0;
+	Mon,  2 Jun 2025 15:15:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748877321;
-	bh=xHsRNE9q+z7xXofaYeurIcQQjozCHoAmu5s7tk9qhk8=;
+	s=korg; t=1748877324;
+	bh=t6lYi9uLFfDMu4R3NkyNNwbk8h8bkGlVbL+ytJhttWo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eBWsvpqpDqOqVCDkOFEJRgKk4vtCgErYiGVIKS5F/qrC+9cbooG1+na0eY6yf5ERA
-	 D//GGQAzo7aePKFd5akljkXCftlwf0c4PjB0WbzC3KTiUqpANQB7xvWjrwRKfzIPrO
-	 FS6h1xhhy8nQFYbBaTo9EvcJ8Z1qYR1ZN3Hh0nvs=
+	b=xThDa/NMcKUqFILjZaLekh3kJH9TwviKE13hzLmSBwZBuI1Xiv1H0JT7bbSHG2qsW
+	 ePGyjCGPsXRCRJPok9/HPH0AMKVIA59RuYZckMPjERwOQ5Tb3LL4AjkXFedurckSMv
+	 LMq7/nT2LwFEROVsmMimhfYF408r+a1UkGsB9Kko=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ravi Bangoria <ravi.bangoria@amd.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Soeren Moch <smoch@web.de>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 210/325] perf/amd/ibs: Fix perf_ibs_op.cnt_mask for CurCnt
-Date: Mon,  2 Jun 2025 15:48:06 +0200
-Message-ID: <20250602134328.332137634@linuxfoundation.org>
+Subject: [PATCH 6.1 211/325] wifi: rtl8xxxu: retry firmware download on error
+Date: Mon,  2 Jun 2025 15:48:07 +0200
+Message-ID: <20250602134328.372329943@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134319.723650984@linuxfoundation.org>
 References: <20250602134319.723650984@linuxfoundation.org>
@@ -52,61 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ravi Bangoria <ravi.bangoria@amd.com>
+From: Soeren Moch <smoch@web.de>
 
-[ Upstream commit 46dcf85566170d4528b842bf83ffc350d71771fa ]
+[ Upstream commit 3d3e28feca7ac8c6cf2a390dbbe1f97e3feb7f36 ]
 
-IBS Op uses two counters: MaxCnt and CurCnt. MaxCnt is programmed with
-the desired sample period. IBS hw generates sample when CurCnt reaches
-to MaxCnt. The size of these counter used to be 20 bits but later they
-were extended to 27 bits. The 7 bit extension is indicated by CPUID
-Fn8000_001B_EAX[6 / OpCntExt].
+Occasionally there is an EPROTO error during firmware download.
+This error is converted to EAGAIN in the download function.
+But nobody tries again and so device probe fails.
 
-perf_ibs->cnt_mask variable contains bit masks for MaxCnt and CurCnt.
-But IBS driver does not set upper 7 bits of CurCnt in cnt_mask even
-when OpCntExt CPUID bit is set. Fix this.
+Implement download retry to fix this.
 
-IBS driver uses cnt_mask[CurCnt] bits only while disabling an event.
-Fortunately, CurCnt bits are not read from MSR while re-enabling the
-event, instead MaxCnt is programmed with desired period and CurCnt is
-set to 0. Hence, we did not see any issues so far.
+This error was observed (and fix tested) on a tbs2910 board [1]
+with an embedded RTL8188EU (0bda:8179) device behind a USB hub.
 
-Signed-off-by: Ravi Bangoria <ravi.bangoria@amd.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Acked-by: Namhyung Kim <namhyung@kernel.org>
-Link: https://lkml.kernel.org/r/20250115054438.1021-5-ravi.bangoria@amd.com
+[1] arch/arm/boot/dts/nxp/imx/imx6q-tbs2910.dts
+
+Signed-off-by: Soeren Moch <smoch@web.de>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20250127194828.599379-1-smoch@web.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/amd/ibs.c         | 3 ++-
- arch/x86/include/asm/perf_event.h | 1 +
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ .../wireless/realtek/rtl8xxxu/rtl8xxxu_core.c   | 17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
-diff --git a/arch/x86/events/amd/ibs.c b/arch/x86/events/amd/ibs.c
-index 37cbbc5c659a5..8c385e231e070 100644
---- a/arch/x86/events/amd/ibs.c
-+++ b/arch/x86/events/amd/ibs.c
-@@ -1216,7 +1216,8 @@ static __init int perf_ibs_op_init(void)
- 	if (ibs_caps & IBS_CAPS_OPCNTEXT) {
- 		perf_ibs_op.max_period  |= IBS_OP_MAX_CNT_EXT_MASK;
- 		perf_ibs_op.config_mask	|= IBS_OP_MAX_CNT_EXT_MASK;
--		perf_ibs_op.cnt_mask    |= IBS_OP_MAX_CNT_EXT_MASK;
-+		perf_ibs_op.cnt_mask    |= (IBS_OP_MAX_CNT_EXT_MASK |
-+					    IBS_OP_CUR_CNT_EXT_MASK);
- 	}
+diff --git a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
+index 9ccf8550a0679..cd22c756acc69 100644
+--- a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
++++ b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
+@@ -798,9 +798,10 @@ rtl8xxxu_writeN(struct rtl8xxxu_priv *priv, u16 addr, u8 *buf, u16 len)
+ 	return len;
  
- 	if (ibs_caps & IBS_CAPS_ZEN4)
-diff --git a/arch/x86/include/asm/perf_event.h b/arch/x86/include/asm/perf_event.h
-index 4d810b9478a43..fa3576ef19daa 100644
---- a/arch/x86/include/asm/perf_event.h
-+++ b/arch/x86/include/asm/perf_event.h
-@@ -456,6 +456,7 @@ struct pebs_xmm {
-  */
- #define IBS_OP_CUR_CNT		(0xFFF80ULL<<32)
- #define IBS_OP_CUR_CNT_RAND	(0x0007FULL<<32)
-+#define IBS_OP_CUR_CNT_EXT_MASK	(0x7FULL<<52)
- #define IBS_OP_CNT_CTL		(1ULL<<19)
- #define IBS_OP_VAL		(1ULL<<18)
- #define IBS_OP_ENABLE		(1ULL<<17)
+ write_error:
+-	dev_info(&udev->dev,
+-		 "%s: Failed to write block at addr: %04x size: %04x\n",
+-		 __func__, addr, blocksize);
++	if (rtl8xxxu_debug & RTL8XXXU_DEBUG_REG_WRITE)
++		dev_info(&udev->dev,
++			 "%s: Failed to write block at addr: %04x size: %04x\n",
++			 __func__, addr, blocksize);
+ 	return -EAGAIN;
+ }
+ 
+@@ -3920,8 +3921,14 @@ static int rtl8xxxu_init_device(struct ieee80211_hw *hw)
+ 	 */
+ 	rtl8xxxu_write16(priv, REG_TRXFF_BNDY + 2, fops->trxff_boundary);
+ 
+-	ret = rtl8xxxu_download_firmware(priv);
+-	dev_dbg(dev, "%s: download_firmware %i\n", __func__, ret);
++	for (int retry = 5; retry >= 0 ; retry--) {
++		ret = rtl8xxxu_download_firmware(priv);
++		dev_dbg(dev, "%s: download_firmware %i\n", __func__, ret);
++		if (ret != -EAGAIN)
++			break;
++		if (retry)
++			dev_dbg(dev, "%s: retry firmware download\n", __func__);
++	}
+ 	if (ret)
+ 		goto exit;
+ 	ret = rtl8xxxu_start_firmware(priv);
 -- 
 2.39.5
 
