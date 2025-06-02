@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E84A622FDEE;
-	Mon,  2 Jun 2025 14:09:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 393A922FE19;
+	Mon,  2 Jun 2025 14:09:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748873352; cv=none; b=utPlzBGnmKd23lgi/RUux+g9w9Ke/whz95HUDo4MSbeK6990QGjsOg6ANM+bzcFeWFbSw1Z1FjPrPYdt1gj0Pi/GGj9N65lF6S/DLXG2tpwTkUkZQF2tSYNicfv4z5po4Wu1QWzDDT6xXcPoH+3yu9F+DxYUFQggkHn9x4Mb5Y0=
+	t=1748873355; cv=none; b=EO+0EwerkoyE9E57s05euA4Ty1EvvtsSAaHAMXnqQZll8G3UhqnMqpdjYRk8XtmZaE/ejcqoHPBJlhcC/k7Yj6himXpYsSXnK3FOL/q4IweHQMLoDIVJjCjEq/0kY2vnpjgV8yCHL03prKIH//nd3Iw8DocnR/XiAuNlZuI1eso=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748873352; c=relaxed/simple;
-	bh=E3hgb3nU4efIuV40sqryKbWcIk9RS+MfdmZJyJfouKE=;
+	s=arc-20240116; t=1748873355; c=relaxed/simple;
+	bh=x1pFILoOoh9WhUwZTO8g/Ml1dls8aS5Hv3MSSENAllU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X4Hmvhe2Y5P64W3LT7SFg0tGVk8Sngp82v5+ELqIFPXUboEI7hSI01WRi+KzaYsnjfR8kjFYaijPHET/qeDwwf6Wrbg5PNpH7ojp274/keyRHNH8hxFKNKmJG9fNpdeZtFHaDGgDJh+PCfF0lbUKbst0jPSkCkTM+DMvnrRvh/k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DN3PuDGM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p/LhMkaSQwh9r8AVgWhuX+wbegoavbVHVd80HwD39hrUssJcZ68jlZwaVDZOwjINxI66+vpSxkD9mhhKLf/nc40fSbUy/to6sdiSiNZvxA/vkDCfagbLpDU88G+13as7ykshh0YJzttkuAbtwIWg68XazCUNwkNv+kQ2YRKmXQM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ouStv+oY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DN3PuDGM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57A61C4CEEB;
-	Mon,  2 Jun 2025 14:09:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ouStv+oY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B886C4CEF7;
+	Mon,  2 Jun 2025 14:09:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748873351;
-	bh=E3hgb3nU4efIuV40sqryKbWcIk9RS+MfdmZJyJfouKE=;
+	s=korg; t=1748873355;
+	bh=x1pFILoOoh9WhUwZTO8g/Ml1dls8aS5Hv3MSSENAllU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DN3PuDGMeM/nukxJsT3RWlOluQzGQ4C1GmJ1NOkSgJNytGx26cij0TLqCAd0mcp+D
-	 9Uq+CR1QpRr4r84+bO02FlisxZUhEmCw95bjGfhOcWL0aStDmK4TD6TPNqj2W7g7iQ
-	 Oc3ZJN00RKf1fY2Z47uhA4pRG3RscPpXGapW91Uc=
+	b=ouStv+oYXg/FE4inRslUh1njhwdPwBkZdnFD0g3AZ+s3U72NdptfQi9gwLl9KDtLs
+	 2zLxCWimnZAsEqm2ZFCUSVszjD/IN+Cu1hCKF6s5nYpW8X9y2V8UpCgrzv/NNW6QLE
+	 gHLDfnqcPPrNutj+7QVk7Bb5oQWA831i7hza18Vc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vitalii Mordan <mordan@ispras.ru>,
-	Andi Shyti <andi.shyti@kernel.org>,
+	Baokun Li <libaokun1@huawei.com>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 074/444] i2c: pxa: fix call balance of i2c->clk handling routines
-Date: Mon,  2 Jun 2025 15:42:18 +0200
-Message-ID: <20250602134343.916166940@linuxfoundation.org>
+Subject: [PATCH 6.6 108/444] ext4: reject the data_err=abort option in nojournal mode
+Date: Mon,  2 Jun 2025 15:42:52 +0200
+Message-ID: <20250602134345.281532758@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -51,39 +53,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vitalii Mordan <mordan@ispras.ru>
+From: Baokun Li <libaokun1@huawei.com>
 
-[ Upstream commit be7113d2e2a6f20cbee99c98d261a1fd6fd7b549 ]
+[ Upstream commit 26343ca0df715097065b02a6cddb4a029d5b9327 ]
 
-If the clock i2c->clk was not enabled in i2c_pxa_probe(), it should not be
-disabled in any path.
+data_err=abort aborts the journal on I/O errors. However, this option is
+meaningless if journal is disabled, so it is rejected in nojournal mode
+to reduce unnecessary checks. Also, this option is ignored upon remount.
 
-Found by Linux Verification Center (linuxtesting.org) with Klever.
-
-Signed-off-by: Vitalii Mordan <mordan@ispras.ru>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/20250212172803.1422136-1-mordan@ispras.ru
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/20250122110533.4116662-4-libaokun@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-pxa.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/ext4/super.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/drivers/i2c/busses/i2c-pxa.c b/drivers/i2c/busses/i2c-pxa.c
-index 3bd406470940f..affdd94f06aaf 100644
---- a/drivers/i2c/busses/i2c-pxa.c
-+++ b/drivers/i2c/busses/i2c-pxa.c
-@@ -1504,7 +1504,10 @@ static int i2c_pxa_probe(struct platform_device *dev)
- 				i2c->adap.name);
+diff --git a/fs/ext4/super.c b/fs/ext4/super.c
+index 3dcaf06ada364..d2b58f940aab5 100644
+--- a/fs/ext4/super.c
++++ b/fs/ext4/super.c
+@@ -2821,6 +2821,13 @@ static int ext4_check_opt_consistency(struct fs_context *fc,
  	}
  
--	clk_prepare_enable(i2c->clk);
-+	ret = clk_prepare_enable(i2c->clk);
-+	if (ret)
-+		return dev_err_probe(&dev->dev, ret,
-+				     "failed to enable clock\n");
- 
- 	if (i2c->use_pio) {
- 		i2c->adap.algo = &i2c_pxa_pio_algorithm;
+ 	if (is_remount) {
++		if (!sbi->s_journal &&
++		    ctx_test_mount_opt(ctx, EXT4_MOUNT_DATA_ERR_ABORT)) {
++			ext4_msg(NULL, KERN_WARNING,
++				 "Remounting fs w/o journal so ignoring data_err option");
++			ctx_clear_mount_opt(ctx, EXT4_MOUNT_DATA_ERR_ABORT);
++		}
++
+ 		if (ctx_test_mount_opt(ctx, EXT4_MOUNT_DAX_ALWAYS) &&
+ 		    (test_opt(sb, DATA_FLAGS) == EXT4_MOUNT_JOURNAL_DATA)) {
+ 			ext4_msg(NULL, KERN_ERR, "can't mount with "
+@@ -5421,6 +5428,11 @@ static int __ext4_fill_super(struct fs_context *fc, struct super_block *sb)
+ 				 "data=, fs mounted w/o journal");
+ 			goto failed_mount3a;
+ 		}
++		if (test_opt(sb, DATA_ERR_ABORT)) {
++			ext4_msg(sb, KERN_ERR,
++				 "can't mount with data_err=abort, fs mounted w/o journal");
++			goto failed_mount3a;
++		}
+ 		sbi->s_def_mount_opt &= ~EXT4_MOUNT_JOURNAL_CHECKSUM;
+ 		clear_opt(sb, JOURNAL_CHECKSUM);
+ 		clear_opt(sb, DATA_FLAGS);
 -- 
 2.39.5
 
