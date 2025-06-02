@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C50AD1FBC8C;
-	Mon,  2 Jun 2025 14:05:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EC35227EA4;
+	Mon,  2 Jun 2025 14:06:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748873156; cv=none; b=sazU4zfjZmDmjdNfvVgNPsFCynPdsiwLRLWmOXuNROQzRersnlKRJxU6z3aOpGPTgWFO3sbokNYQahKU463Ul8nNtZ42Dku37V3XXKU+yIB+uhQ3tATtO7m4kCW6nc0f0u79dFUEBYWYQiZKFQFkimDM0LmquCFpdkzIQQ5fohA=
+	t=1748873160; cv=none; b=Als/CXfJGX1tRvhesvcOQCYBCC3pCDqAfNYNRt3XWbGePaFimh780AvRIyMjcPV+sv/5kpaVq3QcevgdXu56hzvQzd2wmJGzDSFALlX4dAkhFPYyfmwurn1krsanu00rm6CAbm3WT6FS6+iOv9a/sVrLzgrD/MLnD7gQK6rfzz8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748873156; c=relaxed/simple;
-	bh=SPkRKiXJhLA8fNo8fhO8Ipa3hJa0JYvO2SrAPKP5QQQ=;
+	s=arc-20240116; t=1748873160; c=relaxed/simple;
+	bh=JZzROz2SBIkkx8jPcidysB095MSeIjwXZAYmmgX5Qlw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qKpGhwxRu+rOK72jgQhE6kZXbIQgupOUDlQHp4qOtb6UqbceFvNKF7F5JpM32ptDbj74hjhU+ubTD4xeDtgqT8VYvQZ74q/+u+GFo+x5wPe0pYjBe5A2gWZNPF1R9qbCcey2A+afgKxszRHqkuyAWu/D0oVSJsn03lHRSYFDxvI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LvOINXe5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mkUFciIOqEr/vIciduGCdNjMi9QAik/KeZRSGEGJgfVCjoItKvmQ3GHJl8G0VOhX57MuJLPdbeVF3Todqphd/WeXdHIp6SS58ylrXl3mo3LQmkrk582L6dOFB5nJVwPXuIGirAw2QJ1m6hIhyprNRTnPop18w8a7rVi9u51kGI0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nx326gC8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LvOINXe5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C62CFC4CEF0;
-	Mon,  2 Jun 2025 14:05:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nx326gC8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3313C4CEEE;
+	Mon,  2 Jun 2025 14:05:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748873156;
-	bh=SPkRKiXJhLA8fNo8fhO8Ipa3hJa0JYvO2SrAPKP5QQQ=;
+	s=korg; t=1748873160;
+	bh=JZzROz2SBIkkx8jPcidysB095MSeIjwXZAYmmgX5Qlw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LvOINXe5qvwq7/eaOdatStZ+jtA0pJVvb/Bl0CsK/KgxpPVnn/IeJrAiTZ9Wzdl2s
-	 wo1TK9EjHgoO7/Kp40Iyug4spmYFvmd55THn63w2E9RmeFQ9VJK4rZhkczFXQ7P9KL
-	 DW8Wq4PfgHB5oBdDuT0SjgjKK7iRF0wVe8R6GbAs=
+	b=nx326gC81nKHMhO+46fBEMMgYeAO4gIfKKCWLYhqpI3/73T5DVKEinDyNHgPQ7tWZ
+	 QP+TUqhTNh966W1Gxl65S9MqqhtKyRPl194J2ffJ3weoxKQhbw6AvU8fTM05pySEP3
+	 ZLZNPVWeBI0vsYdcVmKfale8ZUaAU+UcDNNfKDdw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Benjamin Coddington <bcodding@redhat.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Luis de Arquer <luis.dearquer@inertim.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 056/444] SUNRPC: rpcbind should never reset the port to the value 0
-Date: Mon,  2 Jun 2025 15:42:00 +0200
-Message-ID: <20250602134343.199929464@linuxfoundation.org>
+Subject: [PATCH 6.6 057/444] spi-rockchip: Fix register out of bounds access
+Date: Mon,  2 Jun 2025 15:42:01 +0200
+Message-ID: <20250602134343.238825713@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -52,38 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Luis de Arquer <luis.dearquer@inertim.com>
 
-[ Upstream commit 214c13e380ad7636631279f426387f9c4e3c14d9 ]
+[ Upstream commit 7a874e8b54ea21094f7fd2d428b164394c6cb316 ]
 
-If we already had a valid port number for the RPC service, then we
-should not allow the rpcbind client to set it to the invalid value '0'.
+Do not write native chip select stuff for GPIO chip selects.
+GPIOs can be numbered much higher than native CS.
+Also, it makes no sense.
 
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Reviewed-by: Benjamin Coddington <bcodding@redhat.com>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Signed-off-by: Luis de Arquer <luis.dearquer@inertim.com>
+Link: https://patch.msgid.link/365ccddfba110549202b3520f4401a6a936e82a8.camel@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/rpcb_clnt.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/spi/spi-rockchip.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/sunrpc/rpcb_clnt.c b/net/sunrpc/rpcb_clnt.c
-index 102c3818bc54d..53bcca365fb1c 100644
---- a/net/sunrpc/rpcb_clnt.c
-+++ b/net/sunrpc/rpcb_clnt.c
-@@ -820,9 +820,10 @@ static void rpcb_getport_done(struct rpc_task *child, void *data)
- 	}
+diff --git a/drivers/spi/spi-rockchip.c b/drivers/spi/spi-rockchip.c
+index 1f374cf4d6f65..1615f935c8f03 100644
+--- a/drivers/spi/spi-rockchip.c
++++ b/drivers/spi/spi-rockchip.c
+@@ -542,7 +542,7 @@ static int rockchip_spi_config(struct rockchip_spi *rs,
+ 	cr0 |= (spi->mode & 0x3U) << CR0_SCPH_OFFSET;
+ 	if (spi->mode & SPI_LSB_FIRST)
+ 		cr0 |= CR0_FBM_LSB << CR0_FBM_OFFSET;
+-	if (spi->mode & SPI_CS_HIGH)
++	if ((spi->mode & SPI_CS_HIGH) && !(spi_get_csgpiod(spi, 0)))
+ 		cr0 |= BIT(spi_get_chipselect(spi, 0)) << CR0_SOI_OFFSET;
  
- 	trace_rpcb_setport(child, map->r_status, map->r_port);
--	xprt->ops->set_port(xprt, map->r_port);
--	if (map->r_port)
-+	if (map->r_port) {
-+		xprt->ops->set_port(xprt, map->r_port);
- 		xprt_set_bound(xprt);
-+	}
- }
- 
- /*
+ 	if (xfer->rx_buf && xfer->tx_buf)
 -- 
 2.39.5
 
