@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E96FE22257E;
-	Mon,  2 Jun 2025 14:43:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37C9721CA1E;
+	Mon,  2 Jun 2025 14:43:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748875403; cv=none; b=N2pEOsV2JAM3cqHJocqBBr8prftEC77gX/7htVgddSz7gvrMs7ieFG3Imh1Wd5VV9QBEuEWm1OqBthpBWC0GjL3RQsq5Jo+HxNJRtYI8lrQhePoNskk+JN9qKS1FJ3RJGCodp5uhSGJj3QQN70NbpqnxuitajCJUAkEI7mdu8vo=
+	t=1748875406; cv=none; b=LDSWNjOjm8j0z1iR/l7l42/qzRbCW0C5G+gSZxo3PsUOKQpOUm/UuGGUqdWBrAUmDtPlQ5wYnaZkpxR/QZp/XCnNNzQPDkmfQDU4ae/N2Zq0T/QGB7dA4Sv6HR0aBS49UuePQHaOuxzm35gr20qBn6K2iaRPBiAZX/Amxx+PaQ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748875403; c=relaxed/simple;
-	bh=nLK3/LsBYZyx7tic61g1ABHvjL7X4z1axn41rQ0nNmg=;
+	s=arc-20240116; t=1748875406; c=relaxed/simple;
+	bh=6Kzs0h3HkcDOAgWUUI9QkctC9G8hUqE8/qUXlSRAYis=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i4H3DEi+jqaGVMjNjq+1ZvOFY3bvs2DH1rkCpPwTZEIJ1VdosxnMkY6tWD/5Ow3z9IsQhL+kncC0HA9LWntnb13P3ekjiP+jiuzLY/9o7X2pSlpPncivxBZcXJuvlW2afJohV6kZZ3YVyOXo8lNWRPzIeWjisAcQ1PJlxkVrfUA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o7/So8GN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Xae9aA+8sXFV2wjzoHR0r+FFO6BGZmVSgZJIhT0XZ5M08pDSE018rqrbuuIyWriiEYzBLPRqw5XA829cUDwcuLOjsP+usOJyK9x0vYJP6+yd6ySpkTgpG0RoubYZfUv3xUujTHVQDWvJcBAAEDlhc2E3E/+NWBvlOkbQq4EhB18=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b8Lt7qPP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o7/So8GN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70451C4CEEB;
-	Mon,  2 Jun 2025 14:43:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b8Lt7qPP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AC8BC4CEEB;
+	Mon,  2 Jun 2025 14:43:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748875402;
-	bh=nLK3/LsBYZyx7tic61g1ABHvjL7X4z1axn41rQ0nNmg=;
+	s=korg; t=1748875406;
+	bh=6Kzs0h3HkcDOAgWUUI9QkctC9G8hUqE8/qUXlSRAYis=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o7/So8GNCTMitUt+X379LMRJRGw7VmIWP8jYJpSElqsVc9dll05vNN4eC52ZZ31Fh
-	 +LFDKPgQ2O0wkXp9bb8ec/j80juAplNSjef+jMYBZ+Jo48P1UZdU+gfHaRmIN7a9Jy
-	 R6FpEq/aOor8kFwCZxcKiOioRnICCwvLz1X6a6Uc=
+	b=b8Lt7qPPYx7uYEdnGCuOj2N/YlkMnFghVvA9COM7Kk3rx5sTWabzLcm6Sc4WxNUbO
+	 2C85wCJfWZt4xE38g6cinYQyFTGTbNbm/Cokioq5+t5TRIS1m4pIymxbqt8KDQy7Fd
+	 Hx8QlNWFgsR40UHlIxnwpxALVt5IqUA0h5cKEFpk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maximilian Heyne <mheyne@amazon.de>,
-	Yicong Yang <yangyicong@hisilicon.com>,
-	Jeremy Linton <jeremy.linton@arm.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 5.10 096/270] ACPI: PPTT: Fix processor subtable walk
-Date: Mon,  2 Jun 2025 15:46:21 +0200
-Message-ID: <20250602134311.099958704@linuxfoundation.org>
+	Zsolt Kajtar <soci@c64.rulez.org>,
+	Helge Deller <deller@gmx.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 123/270] fbcon: Use correct erase colour for clearing in fbcon
+Date: Mon,  2 Jun 2025 15:46:48 +0200
+Message-ID: <20250602134312.253219584@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134307.195171844@linuxfoundation.org>
 References: <20250602134307.195171844@linuxfoundation.org>
@@ -53,96 +51,242 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeremy Linton <jeremy.linton@arm.com>
+From: Zsolt Kajtar <soci@c64.rulez.org>
 
-commit adfab6b39202481bb43286fff94def4953793fdb upstream.
+[ Upstream commit 892c788d73fe4a94337ed092cb998c49fa8ecaf4 ]
 
-The original PPTT code had a bug where the processor subtable length
-was not correctly validated when encountering a truncated
-acpi_pptt_processor node.
+The erase colour calculation for fbcon clearing should use get_color instead
+of attr_col_ec, like everything else. The latter is similar but is not correct.
+For example it's missing the depth dependent remapping and doesn't care about
+blanking.
 
-Commit 7ab4f0e37a0f4 ("ACPI PPTT: Fix coding mistakes in a couple of
-sizeof() calls") attempted to fix this by validating the size is as
-large as the acpi_pptt_processor node structure. This introduced a
-regression where the last processor node in the PPTT table is ignored
-if it doesn't contain any private resources. That results errors like:
+The problem can be reproduced by setting up the background colour to grey
+(vt.color=0x70) and having an fbcon console set to 2bpp (4 shades of gray).
+Now the background attribute should be 1 (dark gray) on the console.
 
-  ACPI PPTT: PPTT table found, but unable to locate core XX (XX)
-  ACPI: SPE must be homogeneous
+If the screen is scrolled when pressing enter in a shell prompt at the bottom
+line then the new line is cleared using colour 7 instead of 1. That's not
+something fillrect likes (at 2bbp it expect 0-3) so the result is interesting.
 
-Furthermore, it fails in a common case where the node length isn't
-equal to the acpi_pptt_processor structure size, leaving the original
-bug in a modified form.
+This patch switches to get_color with vc_video_erase_char to determine the
+erase colour from attr_col_ec. That makes the latter function redundant as
+no other users were left.
 
-Correct the regression by adjusting the loop termination conditions as
-suggested by the bug reporters. An additional check performed after
-the subtable node type is detected, validates the acpi_pptt_processor
-node is fully contained in the PPTT table. Repeating the check in
-acpi_pptt_leaf_node() is largely redundant as the node is already
-known to be fully contained in the table.
+Use correct erase colour for clearing in fbcon
 
-The case where a final truncated node's parent property is accepted,
-but the node itself is rejected should not be considered a bug.
-
-Fixes: 7ab4f0e37a0f4 ("ACPI PPTT: Fix coding mistakes in a couple of sizeof() calls")
-Reported-by: Maximilian Heyne <mheyne@amazon.de>
-Closes: https://lore.kernel.org/linux-acpi/20250506-draco-taped-15f475cd@mheyne-amazon/
-Reported-by: Yicong Yang <yangyicong@hisilicon.com>
-Closes: https://lore.kernel.org/linux-acpi/20250507035124.28071-1-yangyicong@huawei.com/
-Signed-off-by: Jeremy Linton <jeremy.linton@arm.com>
-Tested-by: Yicong Yang <yangyicong@hisilicon.com>
-Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
-Tested-by: Maximilian Heyne <mheyne@amazon.de>
-Cc: All applicable <stable@vger.kernel.org> # 7ab4f0e37a0f4: ACPI PPTT: Fix coding mistakes ...
-Link: https://patch.msgid.link/20250508023025.1301030-1-jeremy.linton@arm.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Zsolt Kajtar <soci@c64.rulez.org>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/pptt.c |   11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ drivers/video/fbdev/core/bitblit.c   |  5 ++--
+ drivers/video/fbdev/core/fbcon.c     | 10 +++++---
+ drivers/video/fbdev/core/fbcon.h     | 38 +---------------------------
+ drivers/video/fbdev/core/fbcon_ccw.c |  5 ++--
+ drivers/video/fbdev/core/fbcon_cw.c  |  5 ++--
+ drivers/video/fbdev/core/fbcon_ud.c  |  5 ++--
+ drivers/video/fbdev/core/tileblit.c  |  8 +++---
+ 7 files changed, 18 insertions(+), 58 deletions(-)
 
---- a/drivers/acpi/pptt.c
-+++ b/drivers/acpi/pptt.c
-@@ -219,16 +219,18 @@ static int acpi_pptt_leaf_node(struct ac
- 			     sizeof(struct acpi_table_pptt));
- 	proc_sz = sizeof(struct acpi_pptt_processor);
- 
--	while ((unsigned long)entry + proc_sz < table_end) {
-+	/* ignore subtable types that are smaller than a processor node */
-+	while ((unsigned long)entry + proc_sz <= table_end) {
- 		cpu_node = (struct acpi_pptt_processor *)entry;
-+
- 		if (entry->type == ACPI_PPTT_TYPE_PROCESSOR &&
- 		    cpu_node->parent == node_entry)
- 			return 0;
- 		if (entry->length == 0)
- 			return 0;
-+
- 		entry = ACPI_ADD_PTR(struct acpi_subtable_header, entry,
- 				     entry->length);
--
- 	}
- 	return 1;
+diff --git a/drivers/video/fbdev/core/bitblit.c b/drivers/video/fbdev/core/bitblit.c
+index 8e095b0982db4..bb821b68f88c0 100644
+--- a/drivers/video/fbdev/core/bitblit.c
++++ b/drivers/video/fbdev/core/bitblit.c
+@@ -59,12 +59,11 @@ static void bit_bmove(struct vc_data *vc, struct fb_info *info, int sy,
  }
-@@ -261,15 +263,18 @@ static struct acpi_pptt_processor *acpi_
- 	proc_sz = sizeof(struct acpi_pptt_processor);
  
- 	/* find the processor structure associated with this cpuid */
--	while ((unsigned long)entry + proc_sz < table_end) {
-+	while ((unsigned long)entry + proc_sz <= table_end) {
- 		cpu_node = (struct acpi_pptt_processor *)entry;
+ static void bit_clear(struct vc_data *vc, struct fb_info *info, int sy,
+-		      int sx, int height, int width)
++		      int sx, int height, int width, int fg, int bg)
+ {
+-	int bgshift = (vc->vc_hi_font_mask) ? 13 : 12;
+ 	struct fb_fillrect region;
  
- 		if (entry->length == 0) {
- 			pr_warn("Invalid zero length subtable\n");
- 			break;
- 		}
-+		/* entry->length may not equal proc_sz, revalidate the processor structure length */
- 		if (entry->type == ACPI_PPTT_TYPE_PROCESSOR &&
- 		    acpi_cpu_id == cpu_node->acpi_processor_id &&
-+		    (unsigned long)entry + entry->length <= table_end &&
-+		    entry->length == proc_sz + cpu_node->number_of_priv_resources * sizeof(u32) &&
- 		     acpi_pptt_leaf_node(table_hdr, cpu_node)) {
- 			return (struct acpi_pptt_processor *)entry;
- 		}
+-	region.color = attr_bgcol_ec(bgshift, vc, info);
++	region.color = bg;
+ 	region.dx = sx * vc->vc_font.width;
+ 	region.dy = sy * vc->vc_font.height;
+ 	region.width = width * vc->vc_font.width;
+diff --git a/drivers/video/fbdev/core/fbcon.c b/drivers/video/fbdev/core/fbcon.c
+index 6d58c8a5cb446..080b615a55810 100644
+--- a/drivers/video/fbdev/core/fbcon.c
++++ b/drivers/video/fbdev/core/fbcon.c
+@@ -1266,7 +1266,7 @@ static void fbcon_clear(struct vc_data *vc, int sy, int sx, int height,
+ {
+ 	struct fb_info *info = registered_fb[con2fb_map[vc->vc_num]];
+ 	struct fbcon_ops *ops = info->fbcon_par;
+-
++	int fg, bg;
+ 	struct fbcon_display *p = &fb_display[vc->vc_num];
+ 	u_int y_break;
+ 
+@@ -1287,16 +1287,18 @@ static void fbcon_clear(struct vc_data *vc, int sy, int sx, int height,
+ 		fbcon_clear_margins(vc, 0);
+ 	}
+ 
++	fg = get_color(vc, info, vc->vc_video_erase_char, 1);
++	bg = get_color(vc, info, vc->vc_video_erase_char, 0);
+ 	/* Split blits that cross physical y_wrap boundary */
+ 
+ 	y_break = p->vrows - p->yscroll;
+ 	if (sy < y_break && sy + height - 1 >= y_break) {
+ 		u_int b = y_break - sy;
+-		ops->clear(vc, info, real_y(p, sy), sx, b, width);
++		ops->clear(vc, info, real_y(p, sy), sx, b, width, fg, bg);
+ 		ops->clear(vc, info, real_y(p, sy + b), sx, height - b,
+-				 width);
++				 width, fg, bg);
+ 	} else
+-		ops->clear(vc, info, real_y(p, sy), sx, height, width);
++		ops->clear(vc, info, real_y(p, sy), sx, height, width, fg, bg);
+ }
+ 
+ static void fbcon_putcs(struct vc_data *vc, const unsigned short *s,
+diff --git a/drivers/video/fbdev/core/fbcon.h b/drivers/video/fbdev/core/fbcon.h
+index 0f16cbc99e6a4..3e1ec454b8aa3 100644
+--- a/drivers/video/fbdev/core/fbcon.h
++++ b/drivers/video/fbdev/core/fbcon.h
+@@ -57,7 +57,7 @@ struct fbcon_ops {
+ 	void (*bmove)(struct vc_data *vc, struct fb_info *info, int sy,
+ 		      int sx, int dy, int dx, int height, int width);
+ 	void (*clear)(struct vc_data *vc, struct fb_info *info, int sy,
+-		      int sx, int height, int width);
++		      int sx, int height, int width, int fb, int bg);
+ 	void (*putcs)(struct vc_data *vc, struct fb_info *info,
+ 		      const unsigned short *s, int count, int yy, int xx,
+ 		      int fg, int bg);
+@@ -118,42 +118,6 @@ static inline int mono_col(const struct fb_info *info)
+ 	return (~(0xfff << max_len)) & 0xff;
+ }
+ 
+-static inline int attr_col_ec(int shift, struct vc_data *vc,
+-			      struct fb_info *info, int is_fg)
+-{
+-	int is_mono01;
+-	int col;
+-	int fg;
+-	int bg;
+-
+-	if (!vc)
+-		return 0;
+-
+-	if (vc->vc_can_do_color)
+-		return is_fg ? attr_fgcol(shift,vc->vc_video_erase_char)
+-			: attr_bgcol(shift,vc->vc_video_erase_char);
+-
+-	if (!info)
+-		return 0;
+-
+-	col = mono_col(info);
+-	is_mono01 = info->fix.visual == FB_VISUAL_MONO01;
+-
+-	if (attr_reverse(vc->vc_video_erase_char)) {
+-		fg = is_mono01 ? col : 0;
+-		bg = is_mono01 ? 0 : col;
+-	}
+-	else {
+-		fg = is_mono01 ? 0 : col;
+-		bg = is_mono01 ? col : 0;
+-	}
+-
+-	return is_fg ? fg : bg;
+-}
+-
+-#define attr_bgcol_ec(bgshift, vc, info) attr_col_ec(bgshift, vc, info, 0)
+-#define attr_fgcol_ec(fgshift, vc, info) attr_col_ec(fgshift, vc, info, 1)
+-
+     /*
+      *  Scroll Method
+      */
+diff --git a/drivers/video/fbdev/core/fbcon_ccw.c b/drivers/video/fbdev/core/fbcon_ccw.c
+index f75b24c32d497..40c7d5793ccfe 100644
+--- a/drivers/video/fbdev/core/fbcon_ccw.c
++++ b/drivers/video/fbdev/core/fbcon_ccw.c
+@@ -78,14 +78,13 @@ static void ccw_bmove(struct vc_data *vc, struct fb_info *info, int sy,
+ }
+ 
+ static void ccw_clear(struct vc_data *vc, struct fb_info *info, int sy,
+-		     int sx, int height, int width)
++		     int sx, int height, int width, int fg, int bg)
+ {
+ 	struct fbcon_ops *ops = info->fbcon_par;
+ 	struct fb_fillrect region;
+-	int bgshift = (vc->vc_hi_font_mask) ? 13 : 12;
+ 	u32 vyres = GETVYRES(ops->p, info);
+ 
+-	region.color = attr_bgcol_ec(bgshift,vc,info);
++	region.color = bg;
+ 	region.dx = sy * vc->vc_font.height;
+ 	region.dy = vyres - ((sx + width) * vc->vc_font.width);
+ 	region.height = width * vc->vc_font.width;
+diff --git a/drivers/video/fbdev/core/fbcon_cw.c b/drivers/video/fbdev/core/fbcon_cw.c
+index cf03dc62f35d3..933e4ed52d393 100644
+--- a/drivers/video/fbdev/core/fbcon_cw.c
++++ b/drivers/video/fbdev/core/fbcon_cw.c
+@@ -63,14 +63,13 @@ static void cw_bmove(struct vc_data *vc, struct fb_info *info, int sy,
+ }
+ 
+ static void cw_clear(struct vc_data *vc, struct fb_info *info, int sy,
+-		     int sx, int height, int width)
++		     int sx, int height, int width, int fg, int bg)
+ {
+ 	struct fbcon_ops *ops = info->fbcon_par;
+ 	struct fb_fillrect region;
+-	int bgshift = (vc->vc_hi_font_mask) ? 13 : 12;
+ 	u32 vxres = GETVXRES(ops->p, info);
+ 
+-	region.color = attr_bgcol_ec(bgshift,vc,info);
++	region.color = bg;
+ 	region.dx = vxres - ((sy + height) * vc->vc_font.height);
+ 	region.dy = sx *  vc->vc_font.width;
+ 	region.height = width * vc->vc_font.width;
+diff --git a/drivers/video/fbdev/core/fbcon_ud.c b/drivers/video/fbdev/core/fbcon_ud.c
+index c5d2da731d686..abd23f37815f5 100644
+--- a/drivers/video/fbdev/core/fbcon_ud.c
++++ b/drivers/video/fbdev/core/fbcon_ud.c
+@@ -64,15 +64,14 @@ static void ud_bmove(struct vc_data *vc, struct fb_info *info, int sy,
+ }
+ 
+ static void ud_clear(struct vc_data *vc, struct fb_info *info, int sy,
+-		     int sx, int height, int width)
++		     int sx, int height, int width, int fg, int bg)
+ {
+ 	struct fbcon_ops *ops = info->fbcon_par;
+ 	struct fb_fillrect region;
+-	int bgshift = (vc->vc_hi_font_mask) ? 13 : 12;
+ 	u32 vyres = GETVYRES(ops->p, info);
+ 	u32 vxres = GETVXRES(ops->p, info);
+ 
+-	region.color = attr_bgcol_ec(bgshift,vc,info);
++	region.color = bg;
+ 	region.dy = vyres - ((sy + height) * vc->vc_font.height);
+ 	region.dx = vxres - ((sx + width) *  vc->vc_font.width);
+ 	region.width = width * vc->vc_font.width;
+diff --git a/drivers/video/fbdev/core/tileblit.c b/drivers/video/fbdev/core/tileblit.c
+index 628fe5e010c08..82e43e82f488e 100644
+--- a/drivers/video/fbdev/core/tileblit.c
++++ b/drivers/video/fbdev/core/tileblit.c
+@@ -33,16 +33,14 @@ static void tile_bmove(struct vc_data *vc, struct fb_info *info, int sy,
+ }
+ 
+ static void tile_clear(struct vc_data *vc, struct fb_info *info, int sy,
+-		       int sx, int height, int width)
++		       int sx, int height, int width, int fg, int bg)
+ {
+ 	struct fb_tilerect rect;
+-	int bgshift = (vc->vc_hi_font_mask) ? 13 : 12;
+-	int fgshift = (vc->vc_hi_font_mask) ? 9 : 8;
+ 
+ 	rect.index = vc->vc_video_erase_char &
+ 		((vc->vc_hi_font_mask) ? 0x1ff : 0xff);
+-	rect.fg = attr_fgcol_ec(fgshift, vc, info);
+-	rect.bg = attr_bgcol_ec(bgshift, vc, info);
++	rect.fg = fg;
++	rect.bg = bg;
+ 	rect.sx = sx;
+ 	rect.sy = sy;
+ 	rect.width = width;
+-- 
+2.39.5
+
 
 
