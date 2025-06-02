@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92EC9224AE8;
-	Mon,  2 Jun 2025 14:23:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32EB92248BF;
+	Mon,  2 Jun 2025 14:23:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748874187; cv=none; b=QuF+EQmK5f5OXGfhRzLUD4rrI7+K5w7mXM/xEw0Jz8EW6uC08A2FGTJaJbUOkETi7QxT2G5u7Yhe7exhQC2FcwDCGmDTr/at3NvvG4A+hAEi8Ov8XCBaFEHRVVmqkAGGdCYuWwkN0XtEzfbzj+iOuze/dplFHlkiGdBwj40ofV8=
+	t=1748874190; cv=none; b=JswGrkmHD8Fss8GrJNm/f3Wkh/XC1+a95brlXyaIND/BUdX0SK35sK/Z8bLnVX9PiCyBd22GYgiOYrrcUh+6lHXYOv0UD6gwJL4RpQI3iap5EfS3nfkuRywSl9C7UgCb7aCJSz1fK5Cr6iZPt0pE2URD5zuy6xYwfaQBKZ7WQAE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748874187; c=relaxed/simple;
-	bh=T0YWtduzRksNYlm0vkrrGfonc03TrQBiPlFrQ1BTZjs=;
+	s=arc-20240116; t=1748874190; c=relaxed/simple;
+	bh=YDDY2OozsnRD1puk4lm86axl98AwVhtRmoRFMjRO2EI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rZsMcBahQak3ds10e5+olzy2rDuEDVaZq+xdhBr1gw0ccEaOKePj/mjU7LCZRoH45cYyeQBzN3nbArKQIc7XgrXMoZ9ASgpqJhrbyFsRJK6PviuV+pztC9NpT6NAq1JeoPyShbOqHUr5BDbRut2JrHSVtQiAaaL9gPmryXf+Ke0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u8Hi2iFU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lFpAcCAiWYCjzxkCjIWo3CGhVs70zBLRrK5UZ20Y4YgXXD/uIIvC2FQx7hthJT9L6VbwfVMnBEeOiaDFsUM+XjGpbtXtB7dmIUVn0gNK6VgxRW1e4zOD7DBMvNbL3BuGeXAEPhaPOxfOEjkqGNAnifSyohijp5M2uO1KvbcZNbk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MuccScZi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u8Hi2iFU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98235C4CEEB;
-	Mon,  2 Jun 2025 14:23:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MuccScZi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56279C4CEEB;
+	Mon,  2 Jun 2025 14:23:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748874187;
-	bh=T0YWtduzRksNYlm0vkrrGfonc03TrQBiPlFrQ1BTZjs=;
+	s=korg; t=1748874189;
+	bh=YDDY2OozsnRD1puk4lm86axl98AwVhtRmoRFMjRO2EI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u8Hi2iFUp6egjQMN0yDrAEarVri/bMknCe6YHC6X3KB08R7sW02MAlPBzMDQa2HEf
-	 3x4Ijv505ORmiPb9DQFE/Tm4z8PfZwt3aYjPhvsB2DRvfYcn4tkoFownZ0YqA9DsrV
-	 ofEA0PRM2Y0yZbE7sdi+qH4NCf+RyUeA0BQszPuU=
+	b=MuccScZi4LpEthB5JKCUD5sIk8GeTRY6JmKxQgWB7AURXtG3cC7CsrduCo6SkWPNN
+	 39GMFNWD5/S2LTABW+EillLKDtnmimOEIwTpNmqz4um8/dT71HLnnN1uMCkaSNy51R
+	 u2XnpZmjBfuuwTPW622OtDB3CzKFiR5rczc4r+HQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Wim Van Sebroeck <wim@linux-watchdog.org>
-Subject: [PATCH 6.6 387/444] watchdog: aspeed: fix 64-bit division
-Date: Mon,  2 Jun 2025 15:47:31 +0200
-Message-ID: <20250602134356.617283794@linuxfoundation.org>
+	"feijuan.li" <feijuan.li@samsung.com>,
+	Jani Nikula <jani.nikula@intel.com>
+Subject: [PATCH 6.6 370/444] drm/edid: fixed the bug that hdr metadata was not reset
+Date: Mon,  2 Jun 2025 15:47:14 +0200
+Message-ID: <20250602134355.936785348@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -51,38 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: feijuan.li <feijuan.li@samsung.com>
 
-commit 48a136639ec233614a61653e19f559977d5da2b5 upstream.
+commit 6692dbc15e5ed40a3aa037aced65d7b8826c58cd upstream.
 
-On 32-bit architectures, the new calculation causes a build failure:
+When DP connected to a device with HDR capability,
+the hdr structure was filled.Then connected to another
+sink device without hdr capability, but the hdr info
+still exist.
 
-ld.lld-21: error: undefined symbol: __aeabi_uldivmod
-
-Since neither value is ever larger than a register, cast both
-sides into a uintptr_t.
-
-Fixes: 5c03f9f4d362 ("watchdog: aspeed: Update bootstatus handling")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20250314160248.502324-1-arnd@kernel.org
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
+Fixes: e85959d6cbe0 ("drm: Parse HDR metadata info from EDID")
+Cc: <stable@vger.kernel.org> # v5.3+
+Signed-off-by: "feijuan.li" <feijuan.li@samsung.com>
+Reviewed-by: Jani Nikula <jani.nikula@intel.com>
+Link: https://lore.kernel.org/r/20250514063511.4151780-1-feijuan.li@samsung.com
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/watchdog/aspeed_wdt.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/drm_edid.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/watchdog/aspeed_wdt.c
-+++ b/drivers/watchdog/aspeed_wdt.c
-@@ -252,7 +252,7 @@ static void aspeed_wdt_update_bootstatus
+--- a/drivers/gpu/drm/drm_edid.c
++++ b/drivers/gpu/drm/drm_edid.c
+@@ -6471,6 +6471,7 @@ static void drm_reset_display_info(struc
+ 	info->has_hdmi_infoframe = false;
+ 	info->rgb_quant_range_selectable = false;
+ 	memset(&info->hdmi, 0, sizeof(info->hdmi));
++	memset(&connector->hdr_sink_metadata, 0, sizeof(connector->hdr_sink_metadata));
  
- 	if (!of_device_is_compatible(pdev->dev.of_node, "aspeed,ast2400-wdt")) {
- 		res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
--		idx = ((intptr_t)wdt->base & 0x00000fff) / resource_size(res);
-+		idx = ((intptr_t)wdt->base & 0x00000fff) / (uintptr_t)resource_size(res);
- 	}
- 
- 	scu_base = syscon_regmap_lookup_by_compatible(scu.compatible);
+ 	info->edid_hdmi_rgb444_dc_modes = 0;
+ 	info->edid_hdmi_ycbcr444_dc_modes = 0;
 
 
