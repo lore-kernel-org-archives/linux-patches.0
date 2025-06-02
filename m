@@ -1,37 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05F41224224;
-	Mon,  2 Jun 2025 15:16:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9813A221727;
+	Mon,  2 Jun 2025 15:16:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748877389; cv=none; b=Watc8zGAgFOcNOUKhibpwaOsApnZanT3H843Ab5Byp3Gf+8sYpG7aknw8+HVGjc0I9qjIqbjsE7iUofPndIALMIynf/kOSyZfWROMtz27RcqMd+yr7M1QkgachlflM07mx/ZZOUMfrlh+asD/7H+uVWLQTAPPaUK+ME4/l03KRE=
+	t=1748877392; cv=none; b=P9Hds1fjn15Iqi2Fdb6e/3IgBJLf5aA257LfZEknJRoigpK/cQKzM0yqHGooxOvtOqs78Bi2XAAHGxs83lFYz4f6zVLLyLa73Bvrn0kft2OM+OMj14kwetb48Xgece6GA1ggOQhFwZQnByecU01Y7nRYI5P4Wfzm3Qpmta2ad5k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748877389; c=relaxed/simple;
-	bh=moIp7wOLUdd9rtNpz/i8lVlkwo9LIlxNwCPjPJd+9CM=;
+	s=arc-20240116; t=1748877392; c=relaxed/simple;
+	bh=BMkAGXtS2FY0QeMOVsr6iU3W3EGtEpu1CNbu0HUhcec=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bp1CHWApGRVVhdrvfxrFPmmkZ4vX6noKNfwTsSBMcgslaDziNqU+K/pHEWVzySfSsC3RgxIkXlc/Df/dPj1ZaCgEuAIVJPUvALL6zJW3F+MYczHj5iAAxBHDeFYqMb08j9uGsXzU9ZTHm6ds/wOQ586/BwoPHw+mtFreQvQNTjQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YPsnmGik; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gDIO2Na3aNjSTy5aPxmBk1WZtHdIzVtefou/T3B0jzl03DoyZjif48NIARqIyTaqwty86jLxFOy8uKnf/WXrBJTBSLAAAkvv+jUW/VkUapgFdxkjVe20gewN8JPxnMnhdOEI4IWfBmuu3ddeI3nHdRoQBiAMktz9q0bU50jPQmw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XvQ8EYin; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YPsnmGik"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82BCDC4CEF2;
-	Mon,  2 Jun 2025 15:16:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XvQ8EYin"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DAF6C4CEEB;
+	Mon,  2 Jun 2025 15:16:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748877388;
-	bh=moIp7wOLUdd9rtNpz/i8lVlkwo9LIlxNwCPjPJd+9CM=;
+	s=korg; t=1748877392;
+	bh=BMkAGXtS2FY0QeMOVsr6iU3W3EGtEpu1CNbu0HUhcec=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YPsnmGik1lXounqTpjJCxkoZu8PnjV9XsRa8etulsv8stJi6aoYYbvo02WTjNpIbw
-	 jN8Ux4aGK6jMfPz0SXfatvNvdV+Mlz/ce/XIaK5hg/I9qgOpSyJ19j2qqyFpgaI0Fh
-	 JhEyiq6sPH2yF8skvBn4XMzCrdZgG/qQePNelKFU=
+	b=XvQ8EYinddkUk4GKda9T24eGuSbN9rIzgUUOLu8A/0CLphSsVur5sb0QdkheH04GY
+	 vQfyMvW1xnE/MyNaBms+PwpDuNwBHzGuSEUNYM3SesTjOd/mbi6uS/ASRxTL1BKcwb
+	 au+WmCDm7hdQ/qy96WD6JSHBfwcmb0sBR7s0CLs4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>
-Subject: [PATCH 6.1 262/325] Revert "drm/amd: Keep display off while going into S4"
-Date: Mon,  2 Jun 2025 15:48:58 +0200
-Message-ID: <20250602134330.420733077@linuxfoundation.org>
+	Breno Leitao <leitao@debian.org>,
+	Rik van Riel <riel@surriel.com>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Michael van der Westhuizen <rmikey@meta.com>,
+	Usama Arif <usamaarif642@gmail.com>,
+	Pavel Begunkov <asml.silence@gmail.com>,
+	Chen Ridong <chenridong@huawei.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Michal Hocko <mhocko@kernel.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Muchun Song <muchun.song@linux.dev>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 263/325] memcg: always call cond_resched() after fn()
+Date: Mon,  2 Jun 2025 15:48:59 +0200
+Message-ID: <20250602134330.458945652@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134319.723650984@linuxfoundation.org>
 References: <20250602134319.723650984@linuxfoundation.org>
@@ -50,41 +61,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Breno Leitao <leitao@debian.org>
 
-commit 7e7cb7a13c81073d38a10fa7b450d23712281ec4 upstream.
+commit 06717a7b6c86514dbd6ab322e8083ffaa4db5712 upstream.
 
-commit 68bfdc8dc0a1a ("drm/amd: Keep display off while going into S4")
-attempted to keep displays off during the S4 sequence by not resuming
-display IP.  This however leads to hangs because DRM clients such as the
-console can try to access registers and cause a hang.
+I am seeing soft lockup on certain machine types when a cgroup OOMs.  This
+is happening because killing the process in certain machine might be very
+slow, which causes the soft lockup and RCU stalls.  This happens usually
+when the cgroup has MANY processes and memory.oom.group is set.
 
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4155
-Fixes: 68bfdc8dc0a1a ("drm/amd: Keep display off while going into S4")
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Link: https://lore.kernel.org/r/20250522141328.115095-1-mario.limonciello@amd.com
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit e485502c37b097b0bd773baa7e2741bf7bd2909a)
-Cc: stable@vger.kernel.org
+Example I am seeing in real production:
+
+       [462012.244552] Memory cgroup out of memory: Killed process 3370438 (crosvm) ....
+       ....
+       [462037.318059] Memory cgroup out of memory: Killed process 4171372 (adb) ....
+       [462037.348314] watchdog: BUG: soft lockup - CPU#64 stuck for 26s! [stat_manager-ag:1618982]
+       ....
+
+Quick look at why this is so slow, it seems to be related to serial flush
+for certain machine types.  For all the crashes I saw, the target CPU was
+at console_flush_all().
+
+In the case above, there are thousands of processes in the cgroup, and it
+is soft locking up before it reaches the 1024 limit in the code (which
+would call the cond_resched()).  So, cond_resched() in 1024 blocks is not
+sufficient.
+
+Remove the counter-based conditional rescheduling logic and call
+cond_resched() unconditionally after each task iteration, after fn() is
+called.  This avoids the lockup independently of how slow fn() is.
+
+Link: https://lkml.kernel.org/r/20250523-memcg_fix-v1-1-ad3eafb60477@debian.org
+Fixes: ade81479c7dd ("memcg: fix soft lockup in the OOM process")
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Suggested-by: Rik van Riel <riel@surriel.com>
+Acked-by: Shakeel Butt <shakeel.butt@linux.dev>
+Cc: Michael van der Westhuizen <rmikey@meta.com>
+Cc: Usama Arif <usamaarif642@gmail.com>
+Cc: Pavel Begunkov <asml.silence@gmail.com>
+Cc: Chen Ridong <chenridong@huawei.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Michal Hocko <mhocko@kernel.org>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Muchun Song <muchun.song@linux.dev>
+Cc: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    5 -----
- 1 file changed, 5 deletions(-)
+ mm/memcontrol.c |    6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -2897,11 +2897,6 @@ static int dm_resume(void *handle)
+--- a/mm/memcontrol.c
++++ b/mm/memcontrol.c
+@@ -1242,7 +1242,6 @@ int mem_cgroup_scan_tasks(struct mem_cgr
+ {
+ 	struct mem_cgroup *iter;
+ 	int ret = 0;
+-	int i = 0;
  
- 		return 0;
- 	}
--
--	/* leave display off for S4 sequence */
--	if (adev->in_s4)
--		return 0;
--
- 	/* Recreate dc_state - DC invalidates it when setting power state to S3. */
- 	dc_release_state(dm_state->context);
- 	dm_state->context = dc_create_state(dm->dc);
+ 	BUG_ON(memcg == root_mem_cgroup);
+ 
+@@ -1252,10 +1251,9 @@ int mem_cgroup_scan_tasks(struct mem_cgr
+ 
+ 		css_task_iter_start(&iter->css, CSS_TASK_ITER_PROCS, &it);
+ 		while (!ret && (task = css_task_iter_next(&it))) {
+-			/* Avoid potential softlockup warning */
+-			if ((++i & 1023) == 0)
+-				cond_resched();
+ 			ret = fn(task, arg);
++			/* Avoid potential softlockup warning */
++			cond_resched();
+ 		}
+ 		css_task_iter_end(&it);
+ 		if (ret) {
 
 
