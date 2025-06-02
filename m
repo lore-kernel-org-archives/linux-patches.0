@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4343231845;
-	Mon,  2 Jun 2025 15:01:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EED801FC0EF;
+	Mon,  2 Jun 2025 15:01:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748876464; cv=none; b=TOXHL+HYzuJ88VvKZfNNFAZqI7rbb2paPK8HJLj3O425kYnv3xzz5Sc4iHYbCkIqRG426btn1UcSpXLLGxPzxysOA96Tk4r/DSIO3aUSdHriOk753haoa8EM5HD6TnQLSRFkXR46L51mAZ2ozM9n8naVHaa4m0+EwKSZFt3TSXQ=
+	t=1748876467; cv=none; b=n6uqUT05EF2JXcmtSog6LGOcSaeewJvMnPIod2QXOc5gmqBRIJCHyuCv3Dir3gjdx7jvs/PAXfcZDApR2VG7L2nfEOHR0hdEBxKWAKbgugOygoomIUh7WZ2eKuPmosg4Df1PFdMpLvUkVz91f+At6fqYOq8tFYU/TKSeEq15L8U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748876464; c=relaxed/simple;
-	bh=4q8WCn5EaCAFZwcKIYuFgoU55i7RLm3mXPZHTSVYSUs=;
+	s=arc-20240116; t=1748876467; c=relaxed/simple;
+	bh=O+HWmrK0e+Tr+3mHGspbTYzQKpeW/frh0vMUl3uVY7o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SqnLS+jzitOp5qNg6Bd8As6HXUXj68lxUwOCal2+60EAz4YVBTdlf/42W0wzo/Dz3XKBUsDAy+o/dM9ajM4fRNRMNghFawQSQWc7PtUFCbcCRaCr86OLYKg2nI700O8RrfHnIjphLbcyyV2wSeSdxrvv01MwVOVvmv4kvhia688=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hvxR/NEW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t3jd1CYbHms1KwkV7DO5aYjXe1fsMoyhHJhpo/su3eSNub5YRQJ6PcBbhT/n46+HmsUqdqByAyNHdpYMw28n0F7Dk+tz7xmJXawytkE47L99UJ6Hxe4UzoRlW4MrGupN0K4pp+vbZIJ+FYfnaRS4oULSUR8rj1odJmyjHRXU+mo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tp5RlzIc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hvxR/NEW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CF5EC4CEEB;
-	Mon,  2 Jun 2025 15:01:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tp5RlzIc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 753EDC4CEEB;
+	Mon,  2 Jun 2025 15:01:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748876463;
-	bh=4q8WCn5EaCAFZwcKIYuFgoU55i7RLm3mXPZHTSVYSUs=;
+	s=korg; t=1748876466;
+	bh=O+HWmrK0e+Tr+3mHGspbTYzQKpeW/frh0vMUl3uVY7o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hvxR/NEW/RInW+ZRqoitLMcLBYhs4dhCKyfwbJn6vGR8qs9I4cmEUTrccELNdbhr2
-	 cKtKEAj+WIsEHMshpYDRw8RlrQhBNfAvA1/1gyHscU6hoIddbuLQT3FNYmGR5Imdvi
-	 /vrzkAV911QDfWyBEGvL2gBDQDpBdxXPa5nAuA6c=
+	b=Tp5RlzIc9x4qdNHITHPN58pR0rCecCmD4nx3rquyrQUtpSXLhP9Ab8JbljdETcTo1
+	 HP7jfEvZ6pSyBBS7DbXi1JCMISNafH18p8lzpR95+xN9qQmz78i/VHDNNYCbmYBAUa
+	 ecPJZrGOIvHfqP1WrMYod9JaMLla1dQRAfZ8HA0w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Chen-Yu Tsai <wens@csie.org>,
+	Jessica Zhang <quic_jesszhan@quicinc.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 181/207] Revert "arm64: dts: allwinner: h6: Use RSB for AXP805 PMIC connection"
-Date: Mon,  2 Jun 2025 15:49:13 +0200
-Message-ID: <20250602134305.842535268@linuxfoundation.org>
+Subject: [PATCH 5.15 153/207] drm: Add valid clones check
+Date: Mon,  2 Jun 2025 15:48:45 +0200
+Message-ID: <20250602134304.715035952@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134258.769974467@linuxfoundation.org>
 References: <20250602134258.769974467@linuxfoundation.org>
@@ -51,165 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jernej Skrabec <jernej.skrabec@gmail.com>
+From: Jessica Zhang <quic_jesszhan@quicinc.com>
 
-[ Upstream commit 573f99c7585f597630f14596550c79e73ffaeef4 ]
+[ Upstream commit 41b4b11da02157c7474caf41d56baae0e941d01a ]
 
-This reverts commit 531fdbeedeb89bd32018a35c6e137765c9cc9e97.
+Check that all encoders attached to a given CRTC are valid
+possible_clones of each other.
 
-Hardware that uses I2C wasn't designed with high speeds in mind, so
-communication with PMIC via RSB can intermittently fail. Go back to I2C
-as higher speed and efficiency isn't worth the trouble.
-
-Fixes: 531fdbeedeb8 ("arm64: dts: allwinner: h6: Use RSB for AXP805 PMIC connection")
-Link: https://github.com/LibreELEC/LibreELEC.tv/issues/7731
-Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Link: https://patch.msgid.link/20250413135848.67283-1-jernej.skrabec@gmail.com
-Signed-off-by: Chen-Yu Tsai <wens@csie.org>
+Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+Reviewed-by: Maxime Ripard <mripard@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241216-concurrent-wb-v4-3-fe220297a7f0@quicinc.com
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../dts/allwinner/sun50i-h6-beelink-gs1.dts   | 38 +++++++++----------
- .../dts/allwinner/sun50i-h6-orangepi-3.dts    | 14 +++----
- .../dts/allwinner/sun50i-h6-orangepi.dtsi     | 22 +++++------
- 3 files changed, 37 insertions(+), 37 deletions(-)
+ drivers/gpu/drm/drm_atomic_helper.c | 28 ++++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/allwinner/sun50i-h6-beelink-gs1.dts b/arch/arm64/boot/dts/allwinner/sun50i-h6-beelink-gs1.dts
-index 6249e9e029286..f6efa69ce4b75 100644
---- a/arch/arm64/boot/dts/allwinner/sun50i-h6-beelink-gs1.dts
-+++ b/arch/arm64/boot/dts/allwinner/sun50i-h6-beelink-gs1.dts
-@@ -150,28 +150,12 @@
- 	vcc-pg-supply = <&reg_aldo1>;
- };
+diff --git a/drivers/gpu/drm/drm_atomic_helper.c b/drivers/gpu/drm/drm_atomic_helper.c
+index bd01d925769db..db3c58013c00d 100644
+--- a/drivers/gpu/drm/drm_atomic_helper.c
++++ b/drivers/gpu/drm/drm_atomic_helper.c
+@@ -563,6 +563,30 @@ mode_valid(struct drm_atomic_state *state)
+ 	return 0;
+ }
  
--&r_ir {
--	linux,rc-map-name = "rc-beelink-gs1";
--	status = "okay";
--};
--
--&r_pio {
--	/*
--	 * FIXME: We can't add that supply for now since it would
--	 * create a circular dependency between pinctrl, the regulator
--	 * and the RSB Bus.
--	 *
--	 * vcc-pl-supply = <&reg_aldo1>;
--	 */
--	vcc-pm-supply = <&reg_aldo1>;
--};
--
--&r_rsb {
-+&r_i2c {
- 	status = "okay";
- 
--	axp805: pmic@745 {
-+	axp805: pmic@36 {
- 		compatible = "x-powers,axp805", "x-powers,axp806";
--		reg = <0x745>;
-+		reg = <0x36>;
- 		interrupt-parent = <&r_intc>;
- 		interrupts = <GIC_SPI 96 IRQ_TYPE_LEVEL_LOW>;
- 		interrupt-controller;
-@@ -289,6 +273,22 @@
- 	};
- };
- 
-+&r_ir {
-+	linux,rc-map-name = "rc-beelink-gs1";
-+	status = "okay";
-+};
++static int drm_atomic_check_valid_clones(struct drm_atomic_state *state,
++					 struct drm_crtc *crtc)
++{
++	struct drm_encoder *drm_enc;
++	struct drm_crtc_state *crtc_state = drm_atomic_get_new_crtc_state(state,
++									  crtc);
 +
-+&r_pio {
-+	/*
-+	 * PL0 and PL1 are used for PMIC I2C
-+	 * don't enable the pl-supply else
-+	 * it will fail at boot
-+	 *
-+	 * vcc-pl-supply = <&reg_aldo1>;
-+	 */
-+	vcc-pm-supply = <&reg_aldo1>;
-+};
++	drm_for_each_encoder_mask(drm_enc, crtc->dev, crtc_state->encoder_mask) {
++		if (!drm_enc->possible_clones) {
++			DRM_DEBUG("enc%d possible_clones is 0\n", drm_enc->base.id);
++			continue;
++		}
 +
- &spdif {
- 	status = "okay";
- };
-diff --git a/arch/arm64/boot/dts/allwinner/sun50i-h6-orangepi-3.dts b/arch/arm64/boot/dts/allwinner/sun50i-h6-orangepi-3.dts
-index c45d7b7fb39a8..19339644a68a5 100644
---- a/arch/arm64/boot/dts/allwinner/sun50i-h6-orangepi-3.dts
-+++ b/arch/arm64/boot/dts/allwinner/sun50i-h6-orangepi-3.dts
-@@ -175,16 +175,12 @@
- 	vcc-pg-supply = <&reg_vcc_wifi_io>;
- };
- 
--&r_ir {
--	status = "okay";
--};
--
--&r_rsb {
-+&r_i2c {
- 	status = "okay";
- 
--	axp805: pmic@745 {
-+	axp805: pmic@36 {
- 		compatible = "x-powers,axp805", "x-powers,axp806";
--		reg = <0x745>;
-+		reg = <0x36>;
- 		interrupt-parent = <&r_intc>;
- 		interrupts = <GIC_SPI 96 IRQ_TYPE_LEVEL_LOW>;
- 		interrupt-controller;
-@@ -295,6 +291,10 @@
- 	};
- };
- 
-+&r_ir {
-+	status = "okay";
-+};
++		if ((crtc_state->encoder_mask & drm_enc->possible_clones) !=
++		    crtc_state->encoder_mask) {
++			DRM_DEBUG("crtc%d failed valid clone check for mask 0x%x\n",
++				  crtc->base.id, crtc_state->encoder_mask);
++			return -EINVAL;
++		}
++	}
 +
- &rtc {
- 	clocks = <&ext_osc32k>;
- };
-diff --git a/arch/arm64/boot/dts/allwinner/sun50i-h6-orangepi.dtsi b/arch/arm64/boot/dts/allwinner/sun50i-h6-orangepi.dtsi
-index 92745128fcfeb..4ec4996592bef 100644
---- a/arch/arm64/boot/dts/allwinner/sun50i-h6-orangepi.dtsi
-+++ b/arch/arm64/boot/dts/allwinner/sun50i-h6-orangepi.dtsi
-@@ -112,20 +112,12 @@
- 	vcc-pg-supply = <&reg_aldo1>;
- };
- 
--&r_ir {
--	status = "okay";
--};
--
--&r_pio {
--	vcc-pm-supply = <&reg_bldo3>;
--};
--
--&r_rsb {
-+&r_i2c {
- 	status = "okay";
- 
--	axp805: pmic@745 {
-+	axp805: pmic@36 {
- 		compatible = "x-powers,axp805", "x-powers,axp806";
--		reg = <0x745>;
-+		reg = <0x36>;
- 		interrupt-parent = <&r_intc>;
- 		interrupts = <GIC_SPI 96 IRQ_TYPE_LEVEL_LOW>;
- 		interrupt-controller;
-@@ -240,6 +232,14 @@
- 	};
- };
- 
-+&r_ir {
-+	status = "okay";
-+};
++	return 0;
++}
 +
-+&r_pio {
-+	vcc-pm-supply = <&reg_bldo3>;
-+};
+ /**
+  * drm_atomic_helper_check_modeset - validate state object for modeset changes
+  * @dev: DRM device
+@@ -729,6 +753,10 @@ drm_atomic_helper_check_modeset(struct drm_device *dev,
+ 		ret = drm_atomic_add_affected_planes(state, crtc);
+ 		if (ret != 0)
+ 			return ret;
 +
- &rtc {
- 	clocks = <&ext_osc32k>;
- };
++		ret = drm_atomic_check_valid_clones(state, crtc);
++		if (ret != 0)
++			return ret;
+ 	}
+ 
+ 	/*
 -- 
 2.39.5
 
