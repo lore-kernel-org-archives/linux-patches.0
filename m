@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EE191DED64;
-	Mon,  2 Jun 2025 14:15:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00E7A227BB5;
+	Mon,  2 Jun 2025 14:15:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748873743; cv=none; b=R/ZqlQD4b8oDV5GPETWOe5WN0TW1Nr/7JLyQwSxiUyBeIy7vi8WH9PN6pB0CIjjKMSDLMCijRc94KaHOVOeikUVfQHa5eeZRQeEmVwm/+p7X+1sZVNJbjMptlRwTOgwbA5bzkdysJm+EpVQ/BHk+HIF3GBI3Krg1HAOT17WyiiA=
+	t=1748873746; cv=none; b=rJAIWN+wLXv2GQ60m6eXJVyGxZXFYLrj9yc/L4NDxm8L1/D/j1ES+tV3N0Nj6oNHZ20np6dEj1PbZaYPUua050iHiCTF6vwT32/Qk8Rf8ocr38j++BuNHgdu/QwfJY54tFhS0AYzl6Koj14Ymao1d/Kl0/T4vwcg/A5978D2+uQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748873743; c=relaxed/simple;
-	bh=SBakNTplbwVsL9XzTrkAwDawCywIIE04l3iqrg5347I=;
+	s=arc-20240116; t=1748873746; c=relaxed/simple;
+	bh=ALy5IN4K0qlYM2q+gJqUBsdFFCovslCRcoSrxiDFnyw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MJqly1q+jyg1+iZmTAEbJRWYgBHgCbPfj8vjCU27nh+es9oT1GmeOe96zephyy1h3UGq0qgBCja1NDYY4+is/yaveRcC7U1XugsRCp/ETQ19PPWWcvEdx643ANld9+7zLvpsgXmPm/iye2J7LpzDdqT2R3cfBk0QvKpsft6xNAU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h1bb8+rX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hDnBqco/yywUYyobFMWt0eV+4qaZR8kKnbFp5DbyfDS0OqjidA9X0UPoLgEQS4MvGeLYUN4x8Z1eO9lSvW0w8JJ8hwezE4KqBex7uP0LWtmKKCP1CL6K92yJxDOO+/vvOgStiNw66OjQbESSUwy9kZJnxKb/sRfU1l+0ldNMq+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aU/wHRcL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h1bb8+rX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE648C4CEEB;
-	Mon,  2 Jun 2025 14:15:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aU/wHRcL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BF29C4CEEB;
+	Mon,  2 Jun 2025 14:15:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748873743;
-	bh=SBakNTplbwVsL9XzTrkAwDawCywIIE04l3iqrg5347I=;
+	s=korg; t=1748873745;
+	bh=ALy5IN4K0qlYM2q+gJqUBsdFFCovslCRcoSrxiDFnyw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h1bb8+rXWykuqZmU2LID5BfZ1S445fKb/XuJuKV3L+5SV9jmchtwmEZsVMtXcOQMH
-	 xpgH41tWdu6m8qs3TEgI9Uxer3kPH6bnHkpTjYTKktcHHl2OZD/a8idbpo02sokt7C
-	 5yCEobgPD4csW1NzO4z2PoWduZhRkkWRNvTxniYU=
+	b=aU/wHRcLNnuj8u+HJbjO5LXsbyy1Wk1y+4LFByOYQHyjF74A3m12xJ9CnI28hrQLc
+	 0fsfm4qENwX+zVHBTmbx7RYM+faFUfRo6T7tn1f5XQ23pKHRFJTFKTYMMHEDOYeVlJ
+	 cmXVr+FqPu3eU9mwhADAUUr5P2LojOPu+KUbYxRE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kees Cook <kees@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Karl Chan <exxxxkc@getgoogleoff.me>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 235/444] net/mlx4_core: Avoid impossible mlx4_db_alloc() order value
-Date: Mon,  2 Jun 2025 15:44:59 +0200
-Message-ID: <20250602134350.449253676@linuxfoundation.org>
+Subject: [PATCH 6.6 236/444] clk: qcom: ipq5018: allow it to be bulid on arm32
+Date: Mon,  2 Jun 2025 15:45:00 +0200
+Message-ID: <20250602134350.489402868@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -51,76 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kees Cook <kees@kernel.org>
+From: Karl Chan <exxxxkc@getgoogleoff.me>
 
-[ Upstream commit 4a6f18f28627e121bd1f74b5fcc9f945d6dbeb1e ]
+[ Upstream commit 5d02941c83997b58e8fc15390290c7c6975acaff ]
 
-GCC can see that the value range for "order" is capped, but this leads
-it to consider that it might be negative, leading to a false positive
-warning (with GCC 15 with -Warray-bounds -fdiagnostics-details):
+There are some ipq5018 based device's firmware only can able to boot
+arm32 but the clock driver dont allow it to be compiled on arm32.
+Therefore allow GCC for IPQ5018 to be selected when building ARM32
+kernel
 
-../drivers/net/ethernet/mellanox/mlx4/alloc.c:691:47: error: array subscript -1 is below array bounds of 'long unsigned int *[2]' [-Werror=array-bounds=]
-  691 |                 i = find_first_bit(pgdir->bits[o], MLX4_DB_PER_PAGE >> o);
-      |                                    ~~~~~~~~~~~^~~
-  'mlx4_alloc_db_from_pgdir': events 1-2
-  691 |                 i = find_first_bit(pgdir->bits[o], MLX4_DB_PER_PAGE >> o);                        |                     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-      |                     |                         |                                                   |                     |                         (2) out of array bounds here
-      |                     (1) when the condition is evaluated to true                             In file included from ../drivers/net/ethernet/mellanox/mlx4/mlx4.h:53,
-                 from ../drivers/net/ethernet/mellanox/mlx4/alloc.c:42:
-../include/linux/mlx4/device.h:664:33: note: while referencing 'bits'
-  664 |         unsigned long          *bits[2];
-      |                                 ^~~~
-
-Switch the argument to unsigned int, which removes the compiler needing
-to consider negative values.
-
-Signed-off-by: Kees Cook <kees@kernel.org>
-Link: https://patch.msgid.link/20250210174504.work.075-kees@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Karl Chan <exxxxkc@getgoogleoff.me>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20241007163414.32458-4-exxxxkc@getgoogleoff.me
+[bjorn: Updated commit message, per Dmitry's suggestion]
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx4/alloc.c | 6 +++---
- include/linux/mlx4/device.h                | 2 +-
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ drivers/clk/qcom/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx4/alloc.c b/drivers/net/ethernet/mellanox/mlx4/alloc.c
-index b330020dc0d67..f2bded847e61d 100644
---- a/drivers/net/ethernet/mellanox/mlx4/alloc.c
-+++ b/drivers/net/ethernet/mellanox/mlx4/alloc.c
-@@ -682,9 +682,9 @@ static struct mlx4_db_pgdir *mlx4_alloc_db_pgdir(struct device *dma_device)
- }
+diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
+index 1de1661037b1b..95cbea8d380c3 100644
+--- a/drivers/clk/qcom/Kconfig
++++ b/drivers/clk/qcom/Kconfig
+@@ -148,7 +148,7 @@ config IPQ_GCC_4019
  
- static int mlx4_alloc_db_from_pgdir(struct mlx4_db_pgdir *pgdir,
--				    struct mlx4_db *db, int order)
-+				    struct mlx4_db *db, unsigned int order)
- {
--	int o;
-+	unsigned int o;
- 	int i;
- 
- 	for (o = order; o <= 1; ++o) {
-@@ -712,7 +712,7 @@ static int mlx4_alloc_db_from_pgdir(struct mlx4_db_pgdir *pgdir,
- 	return 0;
- }
- 
--int mlx4_db_alloc(struct mlx4_dev *dev, struct mlx4_db *db, int order)
-+int mlx4_db_alloc(struct mlx4_dev *dev, struct mlx4_db *db, unsigned int order)
- {
- 	struct mlx4_priv *priv = mlx4_priv(dev);
- 	struct mlx4_db_pgdir *pgdir;
-diff --git a/include/linux/mlx4/device.h b/include/linux/mlx4/device.h
-index 27f42f713c891..86f0f2a25a3d6 100644
---- a/include/linux/mlx4/device.h
-+++ b/include/linux/mlx4/device.h
-@@ -1135,7 +1135,7 @@ int mlx4_write_mtt(struct mlx4_dev *dev, struct mlx4_mtt *mtt,
- int mlx4_buf_write_mtt(struct mlx4_dev *dev, struct mlx4_mtt *mtt,
- 		       struct mlx4_buf *buf);
- 
--int mlx4_db_alloc(struct mlx4_dev *dev, struct mlx4_db *db, int order);
-+int mlx4_db_alloc(struct mlx4_dev *dev, struct mlx4_db *db, unsigned int order);
- void mlx4_db_free(struct mlx4_dev *dev, struct mlx4_db *db);
- 
- int mlx4_alloc_hwq_res(struct mlx4_dev *dev, struct mlx4_hwq_resources *wqres,
+ config IPQ_GCC_5018
+ 	tristate "IPQ5018 Global Clock Controller"
+-	depends on ARM64 || COMPILE_TEST
++	depends on ARM || ARM64 || COMPILE_TEST
+ 	help
+ 	  Support for global clock controller on ipq5018 devices.
+ 	  Say Y if you want to use peripheral devices such as UART, SPI,
 -- 
 2.39.5
 
