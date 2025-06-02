@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85B4822F177;
-	Mon,  2 Jun 2025 14:46:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C6942248A4;
+	Mon,  2 Jun 2025 14:46:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748875611; cv=none; b=X3PbNCoWE9TS4kfG5vIHnA2P0JCUXP+gql0W0qkKrgL2RTMFbbwoaN4x9pFMEoyabiUE00Yi7Ad/YIUJV5j0udkz7zra9BTq3dGAQm6cdi8sJ306CZG+v6gmshUiA6hdBpDKWVmRChREsQsz1qQr8souu0yudZmYGLqYTgJ43kg=
+	t=1748875616; cv=none; b=T28fEKLj2Ghm3pCBZcSG6rGcw+DNtPerLI3CYqYRrvbdNAHY4ON30HX2ljgdVNwN3bRXyMUfIbBu9izuVNEJLufpkZYPY80JQFPZ+KbqkkbbRJUlP6RvW9cLvMM/+IGxyrVayoPGmTWX3CuXO8ZSHRVVbTub4OqTG2PIoLowGL8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748875611; c=relaxed/simple;
-	bh=XeBtnFKEf+7kNHrpGCZ7d0bcWxIze1+TqF5BV3rD1CE=;
+	s=arc-20240116; t=1748875616; c=relaxed/simple;
+	bh=IWMzXgeGjy6tpcpipW4xjnO8qo8jpkBq5JK0Rf34C8E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HO2FMrxkZQFFMRJByFOlMIFlSEhizcyaYgNgagHxzn5sFcBkZO0kKLC4Rb7PZOzz7jRV77rTMF/ZgbIMeVdUREVZlVaXP5gPlTEdKMPpNm9HOFrrO38GZlt3u4e6KK/NMBdUc7y5Hlpqem5ik7ISxmEJEy7xkhaWu15wVH+/lV8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uXejmyZ0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HA3lvt19Wrd7soqTs6DkVgwZwpu8zQKQl8eFvBhY77zZ4nn0HzB4mTTGnJpamIGFRS8Y2GhjNWgLwPYRVYEWoGj39cP23XOvTAVDRrKdqBAH0dnxr1oflpESnT4NOpoB75y3QfhAGIVBiTEYH3rXpDWyyqg2bu8aseH4dNfTuRc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PJhlEsv6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uXejmyZ0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E7A8C4CEEB;
-	Mon,  2 Jun 2025 14:46:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PJhlEsv6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23A3CC4CEF0;
+	Mon,  2 Jun 2025 14:46:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748875611;
-	bh=XeBtnFKEf+7kNHrpGCZ7d0bcWxIze1+TqF5BV3rD1CE=;
+	s=korg; t=1748875614;
+	bh=IWMzXgeGjy6tpcpipW4xjnO8qo8jpkBq5JK0Rf34C8E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uXejmyZ0d1tGf1+BbG3UwaQ1Cjea8zdp8jhmgUDr8bVaqPJnAwm0ydoVaRMSvcAxQ
-	 eyog1a/jFM1kfYdrWJ0QDwDq5unF4epbBsGXK63Wwus5pIgcM5d7rSusK8XzwwVBB1
-	 G+rE9Bhur2lJNyFtPZyDqAMLYPYr2CiHQPtQpDVY=
+	b=PJhlEsv6uwLs5un9xgmOUG0rgIoJqlSePi6zZiqZxmkMfIVFd35DEM0NqCgMtYC7f
+	 lEcj2hKY6bxD7cZYdmBh6ck3W1WZ0W14cK3JglUlFQzAB9DYwbZBeh5tWUeQSJhSqK
+	 9YxCfNGZ0CYUWxNGgjS+WNVA7byRBFMgLmpX+EhQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming-Hung Tsai <mtsai@redhat.com>,
-	Mikulas Patocka <mpatocka@redhat.com>,
+	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 161/270] dm cache: prevent BUG_ON by blocking retries on failed device resumes
-Date: Mon,  2 Jun 2025 15:47:26 +0200
-Message-ID: <20250602134313.799235225@linuxfoundation.org>
+Subject: [PATCH 5.10 188/270] wifi: rtw88: Fix rtw_init_vht_cap() for RTL8814AU
+Date: Mon,  2 Jun 2025 15:47:53 +0200
+Message-ID: <20250602134314.893705901@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134307.195171844@linuxfoundation.org>
 References: <20250602134307.195171844@linuxfoundation.org>
@@ -51,119 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming-Hung Tsai <mtsai@redhat.com>
+From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
 
-[ Upstream commit 5da692e2262b8f81993baa9592f57d12c2703dea ]
+[ Upstream commit 6be7544d19fcfcb729495e793bc6181f85bb8949 ]
 
-A cache device failing to resume due to mapping errors should not be
-retried, as the failure leaves a partially initialized policy object.
-Repeating the resume operation risks triggering BUG_ON when reloading
-cache mappings into the incomplete policy object.
+Set the MCS maps and the highest rates according to the number of
+spatial streams the chip has. For RTL8814AU that is 3.
 
-Reproduce steps:
-
-1. create a cache metadata consisting of 512 or more cache blocks,
-   with some mappings stored in the first array block of the mapping
-   array. Here we use cache_restore v1.0 to build the metadata.
-
-cat <<EOF >> cmeta.xml
-<superblock uuid="" block_size="128" nr_cache_blocks="512" \
-policy="smq" hint_width="4">
-  <mappings>
-    <mapping cache_block="0" origin_block="0" dirty="false"/>
-  </mappings>
-</superblock>
-EOF
-dmsetup create cmeta --table "0 8192 linear /dev/sdc 0"
-cache_restore -i cmeta.xml -o /dev/mapper/cmeta --metadata-version=2
-dmsetup remove cmeta
-
-2. wipe the second array block of the mapping array to simulate
-   data degradations.
-
-mapping_root=$(dd if=/dev/sdc bs=1c count=8 skip=192 \
-2>/dev/null | hexdump -e '1/8 "%u\n"')
-ablock=$(dd if=/dev/sdc bs=1c count=8 skip=$((4096*mapping_root+2056)) \
-2>/dev/null | hexdump -e '1/8 "%u\n"')
-dd if=/dev/zero of=/dev/sdc bs=4k count=1 seek=$ablock
-
-3. try bringing up the cache device. The resume is expected to fail
-   due to the broken array block.
-
-dmsetup create cmeta --table "0 8192 linear /dev/sdc 0"
-dmsetup create cdata --table "0 65536 linear /dev/sdc 8192"
-dmsetup create corig --table "0 524288 linear /dev/sdc 262144"
-dmsetup create cache --notable
-dmsetup load cache --table "0 524288 cache /dev/mapper/cmeta \
-/dev/mapper/cdata /dev/mapper/corig 128 2 metadata2 writethrough smq 0"
-dmsetup resume cache
-
-4. try resuming the cache again. An unexpected BUG_ON is triggered
-   while loading cache mappings.
-
-dmsetup resume cache
-
-Kernel logs:
-
-(snip)
-------------[ cut here ]------------
-kernel BUG at drivers/md/dm-cache-policy-smq.c:752!
-Oops: invalid opcode: 0000 [#1] PREEMPT SMP KASAN NOPTI
-CPU: 0 UID: 0 PID: 332 Comm: dmsetup Not tainted 6.13.4 #3
-RIP: 0010:smq_load_mapping+0x3e5/0x570
-
-Fix by disallowing resume operations for devices that failed the
-initial attempt.
-
-Signed-off-by: Ming-Hung Tsai <mtsai@redhat.com>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/e86aa009-b5bf-4b3a-8112-ea5e3cd49465@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-cache-target.c | 24 ++++++++++++++++++++++++
- 1 file changed, 24 insertions(+)
+ drivers/net/wireless/realtek/rtw88/main.c | 23 +++++++++--------------
+ 1 file changed, 9 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/md/dm-cache-target.c b/drivers/md/dm-cache-target.c
-index 8a03357f8c936..fc6ad47c08b58 100644
---- a/drivers/md/dm-cache-target.c
-+++ b/drivers/md/dm-cache-target.c
-@@ -2958,6 +2958,27 @@ static dm_cblock_t get_cache_dev_size(struct cache *cache)
- 	return to_cblock(size);
- }
- 
-+static bool can_resume(struct cache *cache)
-+{
-+	/*
-+	 * Disallow retrying the resume operation for devices that failed the
-+	 * first resume attempt, as the failure leaves the policy object partially
-+	 * initialized. Retrying could trigger BUG_ON when loading cache mappings
-+	 * into the incomplete policy object.
-+	 */
-+	if (cache->sized && !cache->loaded_mappings) {
-+		if (get_cache_mode(cache) != CM_WRITE)
-+			DMERR("%s: unable to resume a failed-loaded cache, please check metadata.",
-+			      cache_device_name(cache));
-+		else
-+			DMERR("%s: unable to resume cache due to missing proper cache table reload",
-+			      cache_device_name(cache));
-+		return false;
-+	}
-+
-+	return true;
-+}
-+
- static bool can_resize(struct cache *cache, dm_cblock_t new_size)
+diff --git a/drivers/net/wireless/realtek/rtw88/main.c b/drivers/net/wireless/realtek/rtw88/main.c
+index 91eea38f62cd3..ea70b55150388 100644
+--- a/drivers/net/wireless/realtek/rtw88/main.c
++++ b/drivers/net/wireless/realtek/rtw88/main.c
+@@ -1175,8 +1175,9 @@ static void rtw_init_vht_cap(struct rtw_dev *rtwdev,
+ 			     struct ieee80211_sta_vht_cap *vht_cap)
  {
- 	if (from_cblock(new_size) > from_cblock(cache->cache_size)) {
-@@ -3006,6 +3027,9 @@ static int cache_preresume(struct dm_target *ti)
- 	struct cache *cache = ti->private;
- 	dm_cblock_t csize = get_cache_dev_size(cache);
+ 	struct rtw_efuse *efuse = &rtwdev->efuse;
+-	u16 mcs_map;
++	u16 mcs_map = 0;
+ 	__le16 highest;
++	int i;
  
-+	if (!can_resume(cache))
-+		return -EINVAL;
+ 	if (efuse->hw_cap.ptcl != EFUSE_HW_CAP_IGNORE &&
+ 	    efuse->hw_cap.ptcl != EFUSE_HW_CAP_PTCL_VHT)
+@@ -1199,21 +1200,15 @@ static void rtw_init_vht_cap(struct rtw_dev *rtwdev,
+ 	if (rtw_chip_has_rx_ldpc(rtwdev))
+ 		vht_cap->cap |= IEEE80211_VHT_CAP_RXLDPC;
+ 
+-	mcs_map = IEEE80211_VHT_MCS_SUPPORT_0_9 << 0 |
+-		  IEEE80211_VHT_MCS_NOT_SUPPORTED << 4 |
+-		  IEEE80211_VHT_MCS_NOT_SUPPORTED << 6 |
+-		  IEEE80211_VHT_MCS_NOT_SUPPORTED << 8 |
+-		  IEEE80211_VHT_MCS_NOT_SUPPORTED << 10 |
+-		  IEEE80211_VHT_MCS_NOT_SUPPORTED << 12 |
+-		  IEEE80211_VHT_MCS_NOT_SUPPORTED << 14;
+-	if (efuse->hw_cap.nss > 1) {
+-		highest = cpu_to_le16(780);
+-		mcs_map |= IEEE80211_VHT_MCS_SUPPORT_0_9 << 2;
+-	} else {
+-		highest = cpu_to_le16(390);
+-		mcs_map |= IEEE80211_VHT_MCS_NOT_SUPPORTED << 2;
++	for (i = 0; i < 8; i++) {
++		if (i < efuse->hw_cap.nss)
++			mcs_map |= IEEE80211_VHT_MCS_SUPPORT_0_9 << (i * 2);
++		else
++			mcs_map |= IEEE80211_VHT_MCS_NOT_SUPPORTED << (i * 2);
+ 	}
+ 
++	highest = cpu_to_le16(390 * efuse->hw_cap.nss);
 +
- 	/*
- 	 * Check to see if the cache has resized.
- 	 */
+ 	vht_cap->vht_mcs.rx_mcs_map = cpu_to_le16(mcs_map);
+ 	vht_cap->vht_mcs.tx_mcs_map = cpu_to_le16(mcs_map);
+ 	vht_cap->vht_mcs.rx_highest = highest;
 -- 
 2.39.5
 
