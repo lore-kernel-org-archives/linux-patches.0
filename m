@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2577019EEBD;
-	Mon,  2 Jun 2025 14:36:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C835A221DB7;
+	Mon,  2 Jun 2025 14:36:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748875005; cv=none; b=W4d28W66tS5enAQH5aNj81OD1rFH+09qKF6qreQ3gxc/4PMa6dUDUVRI2zVf9YBrZbubfcdFe20lcmZIBoa9VUb+B/Mcqb5SBalZ5kHh19opnDKns3LotLGPpp7XN6tdZmZei5wpsqp+Z/mwqMZTOeNp3lSky9l17DWZ6aQP8sE=
+	t=1748875006; cv=none; b=UJFqS9fOcEYDqtYqXyhoknUQ6QHZe4qKBdf7XBjzIcbF1xVU//pVEyPoNtzmn1cdjHD1Xq1Y2m0yGC9DDJsN0H2xEq9LLWQFeTKyPX4sYJI9H5G+b30b4s4HbMzFROwb6XgR8kwM+pkUspUjyyQfL1i05PGSyNL48YVaJbe8mIg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748875005; c=relaxed/simple;
-	bh=kEimrVSgp59fLpjwoxM50erot04KMdjS0LrrhdirU3g=;
+	s=arc-20240116; t=1748875006; c=relaxed/simple;
+	bh=wdW2To7yemT9ga+/av8y71sBlEvmCZ+LLdst7XazjyM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eG0r6ZlVeFSqK2CJmYSmvw7UxSWhtCt65v7WkPAWR8ebJl54hQKcWNsSc2XlIdz5mFUxkicOFAnAEHdPaKD7NvgtxmhDQzu2yGV/VjbGwUskABIBUsSXuM5HfEzlyFwHhPnbUoa/pdnioqvsDdRMlZhHzTM7ddqzCTMczXCXCMY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=camztdWM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=C5Afk9tKbRzWVN2nQFHuvYYP2BymJSIVLpVCiI8V5TT7JtJdJZY+k7rEFzS+7w90XnQPjqZTgu4LBD+0TJOifKD35TFPFNPMald6mm9DqBR2eTO8yALJ8mLTMeeSYTE6jjQwEMJBL2z8BPlLY4WAblBvWNunHELhEbG02+qt52E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nAQrIMQm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="camztdWM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37BA6C4CEEB;
-	Mon,  2 Jun 2025 14:36:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nAQrIMQm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ADADC4CEEB;
+	Mon,  2 Jun 2025 14:36:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748875003;
-	bh=kEimrVSgp59fLpjwoxM50erot04KMdjS0LrrhdirU3g=;
+	s=korg; t=1748875006;
+	bh=wdW2To7yemT9ga+/av8y71sBlEvmCZ+LLdst7XazjyM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=camztdWMHlTWv8q/QJFizJoO+fUHg9oR82QcoEo1w+9nhl73ixH7G7K50F8Kd2RPP
-	 9FFrNliNtzDCbBMgi0o38aa4HseOBMs2afHdiN1CW87M5v78tlpIcJor+PeK7FpTFg
-	 DowpTNyMkBQnRfsQlBZQjgQN3yS7urmWG6VACsJc=
+	b=nAQrIMQmOZHV/oVgyUCd3a0fJ0u+OJ4AhYTw332jzbuB3JsQ5zkGlyfbQmFtlkQWc
+	 0VM/EGRc7rhIK//PUhLpVFYuRiwkcuNKxltaPw/lMT8z7bTXne/Ve3b1RBubkfGb1F
+	 VSr65g5/87bAIcAMVv3c/UbRxP9LSgJnCdd8T6jo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alessandro Grassi <alessandro.grassi@mailbox.org>,
-	Mark Brown <broonie@kernel.org>,
+	Valtteri Koskivuori <vkoskiv@gmail.com>,
+	Jonathan Woithe <jwoithe@just42.net>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 201/204] spi: spi-sun4i: fix early activation
-Date: Mon,  2 Jun 2025 15:48:54 +0200
-Message-ID: <20250602134303.570815318@linuxfoundation.org>
+Subject: [PATCH 5.4 202/204] platform/x86: fujitsu-laptop: Support Lifebook S2110 hotkeys
+Date: Mon,  2 Jun 2025 15:48:55 +0200
+Message-ID: <20250602134303.609085772@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134255.449974357@linuxfoundation.org>
 References: <20250602134255.449974357@linuxfoundation.org>
@@ -45,55 +46,112 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alessandro Grassi <alessandro.grassi@mailbox.org>
+From: Valtteri Koskivuori <vkoskiv@gmail.com>
 
-[ Upstream commit fb98bd0a13de2c9d96cb5c00c81b5ca118ac9d71 ]
+[ Upstream commit a7e255ff9fe4d9b8b902023aaf5b7a673786bb50 ]
 
-The SPI interface is activated before the CPOL setting is applied. In
-that moment, the clock idles high and CS goes low. After a short delay,
-CPOL and other settings are applied, which may cause the clock to change
-state and idle low. This transition is not part of a clock cycle, and it
-can confuse the receiving device.
+The S2110 has an additional set of media playback control keys enabled
+by a hardware toggle button that switches the keys between "Application"
+and "Player" modes. Toggling "Player" mode just shifts the scancode of
+each hotkey up by 4.
 
-To prevent this unexpected transition, activate the interface while CPOL
-and the other settings are being applied.
+Add defines for new scancodes, and a keymap and dmi id for the S2110.
 
-Signed-off-by: Alessandro Grassi <alessandro.grassi@mailbox.org>
-Link: https://patch.msgid.link/20250502095520.13825-1-alessandro.grassi@mailbox.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Tested on a Fujitsu Lifebook S2110.
+
+Signed-off-by: Valtteri Koskivuori <vkoskiv@gmail.com>
+Acked-by: Jonathan Woithe <jwoithe@just42.net>
+Link: https://lore.kernel.org/r/20250509184251.713003-1-vkoskiv@gmail.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-sun4i.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/platform/x86/fujitsu-laptop.c | 33 +++++++++++++++++++++++----
+ 1 file changed, 29 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/spi/spi-sun4i.c b/drivers/spi/spi-sun4i.c
-index cbfac6596fad5..2bdac65789b62 100644
---- a/drivers/spi/spi-sun4i.c
-+++ b/drivers/spi/spi-sun4i.c
-@@ -263,6 +263,9 @@ static int sun4i_spi_transfer_one(struct spi_master *master,
- 	else
- 		reg |= SUN4I_CTL_DHB;
+diff --git a/drivers/platform/x86/fujitsu-laptop.c b/drivers/platform/x86/fujitsu-laptop.c
+index 80929380ec7e3..04ccfdd99e277 100644
+--- a/drivers/platform/x86/fujitsu-laptop.c
++++ b/drivers/platform/x86/fujitsu-laptop.c
+@@ -17,13 +17,13 @@
+ /*
+  * fujitsu-laptop.c - Fujitsu laptop support, providing access to additional
+  * features made available on a range of Fujitsu laptops including the
+- * P2xxx/P5xxx/S6xxx/S7xxx series.
++ * P2xxx/P5xxx/S2xxx/S6xxx/S7xxx series.
+  *
+  * This driver implements a vendor-specific backlight control interface for
+  * Fujitsu laptops and provides support for hotkeys present on certain Fujitsu
+  * laptops.
+  *
+- * This driver has been tested on a Fujitsu Lifebook S6410, S7020 and
++ * This driver has been tested on a Fujitsu Lifebook S2110, S6410, S7020 and
+  * P8010.  It should work on most P-series and S-series Lifebooks, but
+  * YMMV.
+  *
+@@ -102,7 +102,11 @@
+ #define KEY2_CODE			0x411
+ #define KEY3_CODE			0x412
+ #define KEY4_CODE			0x413
+-#define KEY5_CODE			0x420
++#define KEY5_CODE			0x414
++#define KEY6_CODE			0x415
++#define KEY7_CODE			0x416
++#define KEY8_CODE			0x417
++#define KEY9_CODE			0x420
  
-+	/* Now that the settings are correct, enable the interface */
-+	reg |= SUN4I_CTL_ENABLE;
+ /* Hotkey ringbuffer limits */
+ #define MAX_HOTKEY_RINGBUFFER_SIZE	100
+@@ -450,7 +454,7 @@ static const struct key_entry keymap_default[] = {
+ 	{ KE_KEY, KEY2_CODE,            { KEY_PROG2 } },
+ 	{ KE_KEY, KEY3_CODE,            { KEY_PROG3 } },
+ 	{ KE_KEY, KEY4_CODE,            { KEY_PROG4 } },
+-	{ KE_KEY, KEY5_CODE,            { KEY_RFKILL } },
++	{ KE_KEY, KEY9_CODE,            { KEY_RFKILL } },
+ 	/* Soft keys read from status flags */
+ 	{ KE_KEY, FLAG_RFKILL,          { KEY_RFKILL } },
+ 	{ KE_KEY, FLAG_TOUCHPAD_TOGGLE, { KEY_TOUCHPAD_TOGGLE } },
+@@ -474,6 +478,18 @@ static const struct key_entry keymap_p8010[] = {
+ 	{ KE_END, 0 }
+ };
+ 
++static const struct key_entry keymap_s2110[] = {
++	{ KE_KEY, KEY1_CODE, { KEY_PROG1 } }, /* "A" */
++	{ KE_KEY, KEY2_CODE, { KEY_PROG2 } }, /* "B" */
++	{ KE_KEY, KEY3_CODE, { KEY_WWW } },   /* "Internet" */
++	{ KE_KEY, KEY4_CODE, { KEY_EMAIL } }, /* "E-mail" */
++	{ KE_KEY, KEY5_CODE, { KEY_STOPCD } },
++	{ KE_KEY, KEY6_CODE, { KEY_PLAYPAUSE } },
++	{ KE_KEY, KEY7_CODE, { KEY_PREVIOUSSONG } },
++	{ KE_KEY, KEY8_CODE, { KEY_NEXTSONG } },
++	{ KE_END, 0 }
++};
 +
- 	sun4i_spi_write(sspi, SUN4I_CTL_REG, reg);
+ static const struct key_entry *keymap = keymap_default;
  
- 	/* Ensure that we have a parent clock fast enough */
-@@ -403,7 +406,7 @@ static int sun4i_spi_runtime_resume(struct device *dev)
- 	}
- 
- 	sun4i_spi_write(sspi, SUN4I_CTL_REG,
--			SUN4I_CTL_ENABLE | SUN4I_CTL_MASTER | SUN4I_CTL_TP);
-+			SUN4I_CTL_MASTER | SUN4I_CTL_TP);
- 
- 	return 0;
+ static int fujitsu_laptop_dmi_keymap_override(const struct dmi_system_id *id)
+@@ -511,6 +527,15 @@ static const struct dmi_system_id fujitsu_laptop_dmi_table[] = {
+ 		},
+ 		.driver_data = (void *)keymap_p8010
+ 	},
++	{
++		.callback = fujitsu_laptop_dmi_keymap_override,
++		.ident = "Fujitsu LifeBook S2110",
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "FUJITSU SIEMENS"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "LIFEBOOK S2110"),
++		},
++		.driver_data = (void *)keymap_s2110
++	},
+ 	{}
+ };
  
 -- 
 2.39.5
