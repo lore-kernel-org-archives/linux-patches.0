@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D634B227BA4;
-	Mon,  2 Jun 2025 15:05:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4214A224AF3;
+	Mon,  2 Jun 2025 15:05:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748876701; cv=none; b=GYMCDcqcw5wtN/WQrfKS435iXF8/CBRLJjWGukm4q4Sx95NvQI08QSngeu0YPPel30Jfszjgd2DAbR/TZlYSLrXxvl7XVj+Y+iNYwvKup0f2Q4fXxSR+kdzMyp0GK5+RMqAuMCbhXqG06empqjD1aAqJbqz0OWJuHLmOaZBujMg=
+	t=1748876704; cv=none; b=im91VqRKKnKpk17t+DdXJagSpecp/OiS57mvXudDvkQMRr1BcuViCePlNAX8EObSOvM/X9eGKvWH/mryAYj6xwCPufxFFvEOL1GwvUoaFNR7nXx1iM9QyQwPAhWWetH5F5qVVyHyM3JFW+e+GwFFLNF141CnoOMyZqkYwStYP9s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748876701; c=relaxed/simple;
-	bh=c1OVkmJpfoIZ83pGESb2mqOmfKDGdwO1YRQgqKtlsx0=;
+	s=arc-20240116; t=1748876704; c=relaxed/simple;
+	bh=ogMsFBVYMcuRjv+Lfbd78Nyj2SYgvRF8YUX2zAb9Fbs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CB6xCIZuJfMbQOQtxtboQpt2CVeqnbilpCDLmSgSQ/ScslhiDqLh0Xhq0JILxR+NQ6vE5FxmE/FcpWjVkUk0J7tyBBJDcOVfw0lvGmjsfIfoM6bvhIjYiW0DRJjDskdJ4KMcvX9kqBenUWbtaugPyydOefpSzk8jd2ZSQJk8FJA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BrsY4wjU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qBIT+dUw1vQc8AR0r8V69Qe9HYfjofIxYg+F+WAPqSje2BKlSDH90T8yILtAZiKOLuWtaF16Hwp+XlKGC33WRSg+c6sjllCv87Gj4EZfeIqxasVq43UvGH8dmXl7iQ4xy7DQz+pRQL14nf+j7w5hjudJuhzih6P56gIWAdyl+Pc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AJvDGRV+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BrsY4wjU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61AA7C4CEEB;
-	Mon,  2 Jun 2025 15:05:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AJvDGRV+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5AC5C4CEEB;
+	Mon,  2 Jun 2025 15:05:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748876700;
-	bh=c1OVkmJpfoIZ83pGESb2mqOmfKDGdwO1YRQgqKtlsx0=;
+	s=korg; t=1748876704;
+	bh=ogMsFBVYMcuRjv+Lfbd78Nyj2SYgvRF8YUX2zAb9Fbs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BrsY4wjUEFLEgM4/rZI7BsDFwUama7WtTqeBy4iQMmQhaiK8nMwoixuu7uo4ES9hO
-	 No3CFpO372vZjJeilndi5eDkIxFDWU1lOwU+nSDGsC0FJKuc+v9uuKMlLPWXYFTrDc
-	 urANdVNLnwO1S7skhmWl3gv3fUWCwe/QP7VvRBu0=
+	b=AJvDGRV+6huIospzh8pklnqNrZcfoHUfGoqV/NiFgllxhwBI3O6EZsJLDIsMzr2uA
+	 2QBZ4XF0Jmmj/Yicmx8CeFg67V6v4ULlJVwbzp+2wrVwUv3Z/UX3nyOxhgZygGCX5E
+	 ndgEZnxw2gHaF8NKtI9U56Q+Za7IDLW8TyJNAVQY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Ryo Takakura <ryotkkr98@gmail.com>,
+	Boqun Feng <boqun.feng@gmail.com>,
+	Ingo Molnar <mingo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 006/325] phy: renesas: rcar-gen3-usb2: Move IRQ request in probe
-Date: Mon,  2 Jun 2025 15:44:42 +0200
-Message-ID: <20250602134319.990043249@linuxfoundation.org>
+Subject: [PATCH 6.1 040/325] lockdep: Fix wait context check on softirq for PREEMPT_RT
+Date: Mon,  2 Jun 2025 15:45:16 +0200
+Message-ID: <20250602134321.382204223@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134319.723650984@linuxfoundation.org>
 References: <20250602134319.723650984@linuxfoundation.org>
@@ -53,142 +52,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+From: Ryo Takakura <ryotkkr98@gmail.com>
 
-[ Upstream commit de76809f60cc938d3580bbbd5b04b7d12af6ce3a ]
+[ Upstream commit 61c39d8c83e2077f33e0a2c8980a76a7f323f0ce ]
 
-Commit 08b0ad375ca6 ("phy: renesas: rcar-gen3-usb2: move IRQ registration
-to init") moved the IRQ request operation from probe to
-struct phy_ops::phy_init API to avoid triggering interrupts (which lead to
-register accesses) while the PHY clocks (enabled through runtime PM APIs)
-are not active. If this happens, it results in a synchronous abort.
+Since:
 
-One way to reproduce this issue is by enabling CONFIG_DEBUG_SHIRQ, which
-calls free_irq() on driver removal.
+  0c1d7a2c2d32 ("lockdep: Remove softirq accounting on PREEMPT_RT.")
 
-Move the IRQ request and free operations back to probe, and take the
-runtime PM state into account in IRQ handler. This commit is preparatory
-for the subsequent fixes in this series.
+the wait context test for mutex usage within "in softirq context" fails
+as it references @softirq_context:
 
-Reviewed-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
-Tested-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
-Reviewed-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Link: https://lore.kernel.org/r/20250507125032.565017-3-claudiu.beznea.uj@bp.renesas.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Stable-dep-of: 9ce71e85b29e ("phy: renesas: rcar-gen3-usb2: Assert PLL reset on PHY power off")
+    | wait context tests |
+    --------------------------------------------------------------------------
+                                   | rcu  | raw  | spin |mutex |
+    --------------------------------------------------------------------------
+                 in hardirq context:  ok  |  ok  |  ok  |  ok  |
+  in hardirq context (not threaded):  ok  |  ok  |  ok  |  ok  |
+                 in softirq context:  ok  |  ok  |  ok  |FAILED|
+
+As a fix, add lockdep map for BH disabled section. This fixes the
+issue by letting us catch cases when local_bh_disable() gets called
+with preemption disabled where local_lock doesn't get acquired.
+In the case of "in softirq context" selftest, local_bh_disable() was
+being called with preemption disable as it's early in the boot.
+
+[ boqun: Move the lockdep annotations into __local_bh_*() to avoid false
+         positives because of unpaired local_bh_disable() reported by
+	 Borislav Petkov and Peter Zijlstra, and make bh_lock_map
+	 only exist for PREEMPT_RT. ]
+
+[ mingo: Restored authorship and improved the bh_lock_map definition. ]
+
+Signed-off-by: Ryo Takakura <ryotkkr98@gmail.com>
+Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Link: https://lore.kernel.org/r/20250321143322.79651-1-boqun.feng@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/renesas/phy-rcar-gen3-usb2.c | 46 +++++++++++++-----------
- 1 file changed, 26 insertions(+), 20 deletions(-)
+ kernel/softirq.c | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-diff --git a/drivers/phy/renesas/phy-rcar-gen3-usb2.c b/drivers/phy/renesas/phy-rcar-gen3-usb2.c
-index d13083f60d897..69cc99c60f58d 100644
---- a/drivers/phy/renesas/phy-rcar-gen3-usb2.c
-+++ b/drivers/phy/renesas/phy-rcar-gen3-usb2.c
-@@ -122,7 +122,6 @@ struct rcar_gen3_chan {
- 	struct work_struct work;
- 	struct mutex lock;	/* protects rphys[...].powered */
- 	enum usb_dr_mode dr_mode;
--	int irq;
- 	u32 obint_enable_bits;
- 	bool extcon_host;
- 	bool is_otg_channel;
-@@ -427,16 +426,25 @@ static irqreturn_t rcar_gen3_phy_usb2_irq(int irq, void *_ch)
+diff --git a/kernel/softirq.c b/kernel/softirq.c
+index 6665f5cd60cb0..9ab5ca399a990 100644
+--- a/kernel/softirq.c
++++ b/kernel/softirq.c
+@@ -140,6 +140,18 @@ static DEFINE_PER_CPU(struct softirq_ctrl, softirq_ctrl) = {
+ 	.lock	= INIT_LOCAL_LOCK(softirq_ctrl.lock),
+ };
+ 
++#ifdef CONFIG_DEBUG_LOCK_ALLOC
++static struct lock_class_key bh_lock_key;
++struct lockdep_map bh_lock_map = {
++	.name			= "local_bh",
++	.key			= &bh_lock_key,
++	.wait_type_outer	= LD_WAIT_FREE,
++	.wait_type_inner	= LD_WAIT_CONFIG, /* PREEMPT_RT makes BH preemptible. */
++	.lock_type		= LD_LOCK_PERCPU,
++};
++EXPORT_SYMBOL_GPL(bh_lock_map);
++#endif
++
+ /**
+  * local_bh_blocked() - Check for idle whether BH processing is blocked
+  *
+@@ -162,6 +174,8 @@ void __local_bh_disable_ip(unsigned long ip, unsigned int cnt)
+ 
+ 	WARN_ON_ONCE(in_hardirq());
+ 
++	lock_map_acquire_read(&bh_lock_map);
++
+ 	/* First entry of a task into a BH disabled section? */
+ 	if (!current->softirq_disable_cnt) {
+ 		if (preemptible()) {
+@@ -225,6 +239,8 @@ void __local_bh_enable_ip(unsigned long ip, unsigned int cnt)
+ 	WARN_ON_ONCE(in_hardirq());
+ 	lockdep_assert_irqs_enabled();
+ 
++	lock_map_release(&bh_lock_map);
++
+ 	local_irq_save(flags);
+ 	curcnt = __this_cpu_read(softirq_ctrl.cnt);
+ 
+@@ -275,6 +291,8 @@ static inline void ksoftirqd_run_begin(void)
+ /* Counterpart to ksoftirqd_run_begin() */
+ static inline void ksoftirqd_run_end(void)
  {
- 	struct rcar_gen3_chan *ch = _ch;
- 	void __iomem *usb2_base = ch->base;
--	u32 status = readl(usb2_base + USB2_OBINTSTA);
-+	struct device *dev = ch->dev;
- 	irqreturn_t ret = IRQ_NONE;
-+	u32 status;
- 
-+	pm_runtime_get_noresume(dev);
-+
-+	if (pm_runtime_suspended(dev))
-+		goto rpm_put;
-+
-+	status = readl(usb2_base + USB2_OBINTSTA);
- 	if (status & ch->obint_enable_bits) {
--		dev_vdbg(ch->dev, "%s: %08x\n", __func__, status);
-+		dev_vdbg(dev, "%s: %08x\n", __func__, status);
- 		writel(ch->obint_enable_bits, usb2_base + USB2_OBINTSTA);
- 		rcar_gen3_device_recognition(ch);
- 		ret = IRQ_HANDLED;
- 	}
- 
-+rpm_put:
-+	pm_runtime_put_noidle(dev);
- 	return ret;
- }
- 
-@@ -446,17 +454,6 @@ static int rcar_gen3_phy_usb2_init(struct phy *p)
- 	struct rcar_gen3_chan *channel = rphy->ch;
- 	void __iomem *usb2_base = channel->base;
- 	u32 val;
--	int ret;
--
--	if (!rcar_gen3_is_any_rphy_initialized(channel) && channel->irq >= 0) {
--		INIT_WORK(&channel->work, rcar_gen3_phy_usb2_work);
--		ret = request_irq(channel->irq, rcar_gen3_phy_usb2_irq,
--				  IRQF_SHARED, dev_name(channel->dev), channel);
--		if (ret < 0) {
--			dev_err(channel->dev, "No irq handler (%d)\n", channel->irq);
--			return ret;
--		}
--	}
- 
- 	/* Initialize USB2 part */
- 	val = readl(usb2_base + USB2_INT_ENABLE);
-@@ -492,9 +489,6 @@ static int rcar_gen3_phy_usb2_exit(struct phy *p)
- 		val &= ~USB2_INT_ENABLE_UCOM_INTEN;
- 	writel(val, usb2_base + USB2_INT_ENABLE);
- 
--	if (channel->irq >= 0 && !rcar_gen3_is_any_rphy_initialized(channel))
--		free_irq(channel->irq, channel);
--
- 	return 0;
- }
- 
-@@ -690,7 +684,7 @@ static int rcar_gen3_phy_usb2_probe(struct platform_device *pdev)
- 	struct device *dev = &pdev->dev;
- 	struct rcar_gen3_chan *channel;
- 	struct phy_provider *provider;
--	int ret = 0, i;
-+	int ret = 0, i, irq;
- 
- 	if (!dev->of_node) {
- 		dev_err(dev, "This driver needs device tree\n");
-@@ -706,8 +700,6 @@ static int rcar_gen3_phy_usb2_probe(struct platform_device *pdev)
- 		return PTR_ERR(channel->base);
- 
- 	channel->obint_enable_bits = USB2_OBINT_BITS;
--	/* get irq number here and request_irq for OTG in phy_init */
--	channel->irq = platform_get_irq_optional(pdev, 0);
- 	channel->dr_mode = rcar_gen3_get_dr_mode(dev->of_node);
- 	if (channel->dr_mode != USB_DR_MODE_UNKNOWN) {
- 		channel->is_otg_channel = true;
-@@ -773,6 +765,20 @@ static int rcar_gen3_phy_usb2_probe(struct platform_device *pdev)
- 		channel->vbus = NULL;
- 	}
- 
-+	irq = platform_get_irq_optional(pdev, 0);
-+	if (irq < 0 && irq != -ENXIO) {
-+		ret = irq;
-+		goto error;
-+	} else if (irq > 0) {
-+		INIT_WORK(&channel->work, rcar_gen3_phy_usb2_work);
-+		ret = devm_request_irq(dev, irq, rcar_gen3_phy_usb2_irq,
-+				       IRQF_SHARED, dev_name(dev), channel);
-+		if (ret < 0) {
-+			dev_err(dev, "Failed to request irq (%d)\n", irq);
-+			goto error;
-+		}
-+	}
-+
- 	provider = devm_of_phy_provider_register(dev, rcar_gen3_phy_usb2_xlate);
- 	if (IS_ERR(provider)) {
- 		dev_err(dev, "Failed to register PHY provider\n");
++	/* pairs with the lock_map_acquire_read() in ksoftirqd_run_begin() */
++	lock_map_release(&bh_lock_map);
+ 	__local_bh_enable(SOFTIRQ_OFFSET, true);
+ 	WARN_ON_ONCE(in_interrupt());
+ 	local_irq_enable();
 -- 
 2.39.5
 
