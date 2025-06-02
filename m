@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26E1E22F16E;
-	Mon,  2 Jun 2025 14:28:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3348922F15E;
+	Mon,  2 Jun 2025 14:28:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748874524; cv=none; b=re1QvhGyn7koC4Aj0ljR/FWBNxPiOuAqCrKQfyXkzrHvi6GkPqaGAy/JrR1bO5e/Gnn/aUY27/MjR7VxfQvuQgDsXpSVKS8+rIHfqCWZDHGQtQSmfa81P+9xbT1kYiTGs9caENAsXHbWM5rEUWLlzg9h5FDPTXsVD4PiJJCkZHY=
+	t=1748874527; cv=none; b=SMVBhw6bID3v/M8L1biw9peOIM0Zu2Ewm19eGWXo0qV+DZZhOuMxhP7Bl2UJtNzxVR+7urfWcy7BBgp9aAcITYw/In4A5dh8qvy3ynmUts/wAZpt7QHEtxGC0orNaF5CBANLWqW+Qp9ChGQd0gDXrQxn15CDDIFL2iZ1eQzFny4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748874524; c=relaxed/simple;
-	bh=FDGEkgaB3SeQZdx3SpuOqE00y5ELvvZnI9IhE8tR6I0=;
+	s=arc-20240116; t=1748874527; c=relaxed/simple;
+	bh=qKI0qulQqytaRgxYbPbLlsSRpqsyLfouXKax5kA2s78=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TwxpBvPVOFkHpnhtoIJc5jTKHHrfLx5X6KRwR/JnDKEc5UVPKAabts9NF1lxQQKcAulxrCOR9Vlkh5e7GCmDMmEPF7T9YC8019eNra3HOmqxOdSAgiOvkwbsswK96ppWeIVThOId5vbm3BYdoQrdKoU6AH6jso9DchdI0NatlZ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pbOrImIn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WyjJDBBPzmB09OaNB8ulZWiAtZyf4ln+PrLym/7rAj25TEUPUD7jWLbz49NWHYaWOSou6L31NN3QSQlmau9bJIqWHPyKsx8I8qq2cxRMzPzVdGjlaKQfSem094akCG82kCLpbLHTk2esEIR0wodPC5Vi3Z8jpP2mrEXOe5jEnn0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X+Dp5m0E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pbOrImIn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98A68C4CEEB;
-	Mon,  2 Jun 2025 14:28:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X+Dp5m0E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6D34C4CEEB;
+	Mon,  2 Jun 2025 14:28:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748874524;
-	bh=FDGEkgaB3SeQZdx3SpuOqE00y5ELvvZnI9IhE8tR6I0=;
+	s=korg; t=1748874527;
+	bh=qKI0qulQqytaRgxYbPbLlsSRpqsyLfouXKax5kA2s78=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pbOrImInQ12EsHPl9n8IOzjLQo7qbZoPMwGjxHLj0OE2O1QYsFiQua/4KuMXM0wsE
-	 +O/ogv6RKqCdQagwxiHMXyG+lcWloEVE5QUX1PrSLDIFh0q2uTH9lb1FscpOOJs/Ih
-	 H+ISQE5rTVcnlHRA81mpBCPg3ZSqhcwJmcnjMlAc=
+	b=X+Dp5m0EClx3VmEZ5W5mM7q0LpNGo8GoFpnfj7VbxOSUCj7ZFPW4PdavIaj9BgG3R
+	 NaxA7iBHJonpzCaLCWAg9DtF8yTXkZIyGbtJe4OnKADBbhLdBDAfYLUjwHyumC+V+0
+	 cYXnqMIj9ER5MGtx8BaTDj4JX//0MHABIahN2q2Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Andrei Kuchynski <akuchynski@chromium.org>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Benson Leung <bleung@chromium.org>
-Subject: [PATCH 5.4 052/204] usb: typec: ucsi: displayport: Fix NULL pointer access
-Date: Mon,  2 Jun 2025 15:46:25 +0200
-Message-ID: <20250602134257.729440986@linuxfoundation.org>
+	Oliver Neukum <oneukum@suse.com>
+Subject: [PATCH 5.4 053/204] USB: usbtmc: use interruptible sleep in usbtmc_read
+Date: Mon,  2 Jun 2025 15:46:26 +0200
+Message-ID: <20250602134257.768272326@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134255.449974357@linuxfoundation.org>
 References: <20250602134255.449974357@linuxfoundation.org>
@@ -52,35 +50,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrei Kuchynski <akuchynski@chromium.org>
+From: Oliver Neukum <oneukum@suse.com>
 
-commit 312d79669e71283d05c05cc49a1a31e59e3d9e0e upstream.
+commit 054c5145540e5ad5b80adf23a5e3e2fc281fb8aa upstream.
 
-This patch ensures that the UCSI driver waits for all pending tasks in the
-ucsi_displayport_work workqueue to finish executing before proceeding with
-the partner removal.
+usbtmc_read() calls usbtmc_generic_read()
+which uses interruptible sleep, but usbtmc_read()
+itself uses uninterruptble sleep for mutual exclusion
+between threads. That makes no sense.
+Both should use interruptible sleep.
 
+Fixes: 5b775f672cc99 ("USB: add USB test and measurement class driver")
 Cc: stable <stable@kernel.org>
-Fixes: af8622f6a585 ("usb: typec: ucsi: Support for DisplayPort alt mode")
-Signed-off-by: Andrei Kuchynski <akuchynski@chromium.org>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Reviewed-by: Benson Leung <bleung@chromium.org>
-Link: https://lore.kernel.org/r/20250424084429.3220757-3-akuchynski@chromium.org
+Signed-off-by: Oliver Neukum <oneukum@suse.com>
+Link: https://lore.kernel.org/r/20250430134810.226015-1-oneukum@suse.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/ucsi/displayport.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/usb/class/usbtmc.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/typec/ucsi/displayport.c
-+++ b/drivers/usb/typec/ucsi/displayport.c
-@@ -272,6 +272,8 @@ void ucsi_displayport_remove_partner(str
- 	if (!dp)
- 		return;
+--- a/drivers/usb/class/usbtmc.c
++++ b/drivers/usb/class/usbtmc.c
+@@ -1350,7 +1350,10 @@ static ssize_t usbtmc_read(struct file *
+ 	if (!buffer)
+ 		return -ENOMEM;
  
-+	cancel_work_sync(&dp->work);
+-	mutex_lock(&data->io_mutex);
++	retval = mutex_lock_interruptible(&data->io_mutex);
++	if (retval < 0)
++		goto exit_nolock;
 +
- 	dp->data.conf = 0;
- 	dp->data.status = 0;
- 	dp->initialized = false;
+ 	if (data->zombie) {
+ 		retval = -ENODEV;
+ 		goto exit;
+@@ -1473,6 +1476,7 @@ static ssize_t usbtmc_read(struct file *
+ 
+ exit:
+ 	mutex_unlock(&data->io_mutex);
++exit_nolock:
+ 	kfree(buffer);
+ 	return retval;
+ }
 
 
