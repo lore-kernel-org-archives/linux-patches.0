@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2AE220F07C;
-	Mon,  2 Jun 2025 14:15:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FE0E1C84DC;
+	Mon,  2 Jun 2025 14:15:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748873701; cv=none; b=d1YHaAcE9wlBEd/gvjdMBa+OAYoxIU6iMmon0NULos3zgwCn3PjuRXFEYiYatqPhpV8hlb+Tri7clKz9ptkoxbMG8xwqEM7/CviSoPV6zZxemmNLGdD+FdPKEdbrEzcpV2tXOrcwtmlMiQPPOGkmaBwv67uN5DC3ntlnZfwknhk=
+	t=1748873705; cv=none; b=PZ8qZJGnRk9Z+sC3Wo6FBeijDxfx2nhfKiaNKApcRpKJMu49KAlmFs815yh5ebgLpfU/WojV8LbBz9sEwUr2crDLzFrYgfuCWS5LwVa0ZT3OhGZPJM4AgXWFiJwo87LhXVrb0B5aWnbWlsEBcjRqv6mB4dLhff/wy4aHXksAGmI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748873701; c=relaxed/simple;
-	bh=0LtPjYdaK8BVHT57+FAhSH+uAASwLvzjtVVdE4J3dhY=;
+	s=arc-20240116; t=1748873705; c=relaxed/simple;
+	bh=jPjvah5qAnGJK8c45nNDrJwgzFxezu4RaDgsYBNeN4s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RIowSeZSwuZ4PmoWNzu+uepKFhI/+NDL5nG8LDhlVgRkoZ8mscnlv1ZQL5K1Qud0IHfQQg/VRCe3hWPdiRhzToIs0d+qsv+zvOFQFSRhWxBw+bpwbv6WTvdGgaMzKDn8rJahYn3adnvHZ+T0yFqMD9SLclQWiX8sMSvNhJCAkvU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gW1T5Fx+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=hLs8dG2x4iBVpN/ees3e6CQr0U1FMBvXvFj8CT7tvO1itPvSHFXrjHozluQKJeFGb1XEIN60t+JMmax8DBbPoXSeUg8/K0vILipCNkNFDq6yjWW49AtDjr29g4AngfLqzmizwkgQSGty79ALgOYY0SBhmyqe+TJC3axo0HO1ziQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X34qBB7F; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gW1T5Fx+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40871C4CEEB;
-	Mon,  2 Jun 2025 14:15:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X34qBB7F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84C4AC4CEEB;
+	Mon,  2 Jun 2025 14:15:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748873701;
-	bh=0LtPjYdaK8BVHT57+FAhSH+uAASwLvzjtVVdE4J3dhY=;
+	s=korg; t=1748873705;
+	bh=jPjvah5qAnGJK8c45nNDrJwgzFxezu4RaDgsYBNeN4s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gW1T5Fx+8w+JssgDj+zp1LorfLN9PYG7/5ReS3+37ey+IrXp+lUb11Ifa7fLWUS3/
-	 lWYRkdpmTVWh5RE7bT+VXFDFqTCmKGgJz7vsxzgwzI3dSQtTxVrsgtoEtA14Xl4uXx
-	 Oyi9in5/or5Px38cIbjUQGE4Mz2z8xanqD0EDmO4=
+	b=X34qBB7F5ULQi+HUWesEIfV9yzi8iGQ8HTJDfNk671Sym1EVHpv2jIQgHeQTiijBa
+	 qXIrfkdeWgAU5BffL2hgcPLK9z2ZObR1C19AccfpS+LlAR4/8QaKYH6Z16wO/VwWj/
+	 aCWJDfNewqODDKwzAeADFdNSRQfYW7kGhBsw7TaY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	=?UTF-8?q?Martin=20Povi=C5=A1er?= <povik+lin@cutebit.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 206/444] wifi: rtw89: fw: propagate error code from rtw89_h2c_tx()
-Date: Mon,  2 Jun 2025 15:44:30 +0200
-Message-ID: <20250602134349.265793272@linuxfoundation.org>
+Subject: [PATCH 6.6 224/444] ASoC: ops: Enforce platform maximum on initial value
+Date: Mon,  2 Jun 2025 15:44:48 +0200
+Message-ID: <20250602134350.007303686@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -44,46 +45,77 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ping-Ke Shih <pkshih@realtek.com>
+From: Martin Povišer <povik+lin@cutebit.org>
 
-[ Upstream commit 56e1acaa0f80620b8e2c3410db35b4b975782b0a ]
+[ Upstream commit 783db6851c1821d8b983ffb12b99c279ff64f2ee ]
 
-The error code should be propagated to callers during downloading firmware
-header and body. Remove unnecessary assignment of -1.
+Lower the volume if it is violating the platform maximum at its initial
+value (i.e. at the time of the 'snd_soc_limit_volume' call).
 
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20250217064308.43559-4-pkshih@realtek.com
+Signed-off-by: Martin Povišer <povik+lin@cutebit.org>
+[Cherry picked from the Asahi kernel with fixups -- broonie]
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://patch.msgid.link/20250208-asoc-volume-limit-v1-1-b98fcf4cdbad@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw89/fw.c | 2 --
- 1 file changed, 2 deletions(-)
+ sound/soc/soc-ops.c | 29 ++++++++++++++++++++++++++++-
+ 1 file changed, 28 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/fw.c b/drivers/net/wireless/realtek/rtw89/fw.c
-index a8e2efae6e526..89b0a7970508e 100644
---- a/drivers/net/wireless/realtek/rtw89/fw.c
-+++ b/drivers/net/wireless/realtek/rtw89/fw.c
-@@ -755,7 +755,6 @@ static int __rtw89_fw_download_hdr(struct rtw89_dev *rtwdev, const u8 *fw, u32 l
- 	ret = rtw89_h2c_tx(rtwdev, skb, false);
- 	if (ret) {
- 		rtw89_err(rtwdev, "failed to send h2c\n");
--		ret = -1;
- 		goto fail;
- 	}
+diff --git a/sound/soc/soc-ops.c b/sound/soc/soc-ops.c
+index b4cfc34d00ee6..eff1355cc3df0 100644
+--- a/sound/soc/soc-ops.c
++++ b/sound/soc/soc-ops.c
+@@ -638,6 +638,33 @@ int snd_soc_get_volsw_range(struct snd_kcontrol *kcontrol,
+ }
+ EXPORT_SYMBOL_GPL(snd_soc_get_volsw_range);
  
-@@ -816,7 +815,6 @@ static int __rtw89_fw_download_main(struct rtw89_dev *rtwdev,
- 		ret = rtw89_h2c_tx(rtwdev, skb, true);
- 		if (ret) {
- 			rtw89_err(rtwdev, "failed to send h2c\n");
--			ret = -1;
- 			goto fail;
++static int snd_soc_clip_to_platform_max(struct snd_kcontrol *kctl)
++{
++	struct soc_mixer_control *mc = (struct soc_mixer_control *)kctl->private_value;
++	struct snd_ctl_elem_value uctl;
++	int ret;
++
++	if (!mc->platform_max)
++		return 0;
++
++	ret = kctl->get(kctl, &uctl);
++	if (ret < 0)
++		return ret;
++
++	if (uctl.value.integer.value[0] > mc->platform_max)
++		uctl.value.integer.value[0] = mc->platform_max;
++
++	if (snd_soc_volsw_is_stereo(mc) &&
++	    uctl.value.integer.value[1] > mc->platform_max)
++		uctl.value.integer.value[1] = mc->platform_max;
++
++	ret = kctl->put(kctl, &uctl);
++	if (ret < 0)
++		return ret;
++
++	return 0;
++}
++
+ /**
+  * snd_soc_limit_volume - Set new limit to an existing volume control.
+  *
+@@ -662,7 +689,7 @@ int snd_soc_limit_volume(struct snd_soc_card *card,
+ 		struct soc_mixer_control *mc = (struct soc_mixer_control *)kctl->private_value;
+ 		if (max <= mc->max - mc->min) {
+ 			mc->platform_max = max;
+-			ret = 0;
++			ret = snd_soc_clip_to_platform_max(kctl);
  		}
- 
+ 	}
+ 	return ret;
 -- 
 2.39.5
 
