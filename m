@@ -1,39 +1,52 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C5F2226D00;
-	Mon,  2 Jun 2025 15:17:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FB2D227BA4;
+	Mon,  2 Jun 2025 15:17:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748877444; cv=none; b=MJ4tfTMsY1ZOuvXHb585NDqShfvu+Hd8s88ouMCt91nS1fdIxadstKYzfjyIyqMJcjhH9QZjc+OiEeJEB0q3FhqvtUajqhog+JYvJtTgojVbsObasqIRidbfRUPSw7HO2qKsIr7p/1WoDZKfanlmRFiBI302Tm69aHbT3eVgI/c=
+	t=1748877447; cv=none; b=D5wVfJa+6t0VTOngOHDC/FnKeeJI8IWF8rY6vT8UbFl+iwOkpiNqpcN9CnpY1uudJIG/XnNfqBfaSiS+BkDqbTLss9tHQQ/qizloWqn04LG7yLI5JTMhnewCta3AscswQ33LQRnvS2H6nUNvqAE/0btrhNRBhfF+HywsTgEVQwY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748877444; c=relaxed/simple;
-	bh=cETVBYpHKfmwIuvPqAfmo0VlQ00aHdMBKyZFQNkE5GI=;
+	s=arc-20240116; t=1748877447; c=relaxed/simple;
+	bh=FErq8caRDsGalfNF0DYdA9CIP38xryHF2uZADafN/2A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H/J3qTizlMkr8efOdrPpGokMmNecYy/jT3J8kNwN8e+wxD6eTgjP5FXgmIIV3dDeKKjML9F/UfR044N7Hsg5K11AOohks16e/r1G7Mqhwg3/wDyOmUSyxGQRD63Bt8zMnE50n5pf5B70VLYM5W16MK3sNAYnral3gpJIKp6LUjg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PNCgOQZT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jPcrRtn/ElzNzEXVW+iWOnUAkp5b//kU5llkokAgv1cpILn4v6Ntxbr2E61//5qdSh0u6AT3sTYOwh8uHJ+xVt5P8VHNL6eejYptitvXtYYjx/IlUynMXKeAvtlhyGUS5Sg4vWaND5DYQfIUJi0kx0R0lKB59T8OlXKUabxgyZ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ILApTVGk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PNCgOQZT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67EEEC4CEF2;
-	Mon,  2 Jun 2025 15:17:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ILApTVGk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79912C4CEEB;
+	Mon,  2 Jun 2025 15:17:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748877443;
-	bh=cETVBYpHKfmwIuvPqAfmo0VlQ00aHdMBKyZFQNkE5GI=;
+	s=korg; t=1748877447;
+	bh=FErq8caRDsGalfNF0DYdA9CIP38xryHF2uZADafN/2A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PNCgOQZT+aWP1W4Wiv1e8ByGqRT78fh+mjPSLYbSbx9QtLT/IEx+mwB94SdDMy+1z
-	 LmrYp/85MaDH+FGeKjTVseGSeBbaIv0jORmnMDs4YddPjmqbFRXX036TUYeYU7gNkp
-	 4zlFAvcQxM/RnhJonGoVqzBrvunN0yWz5x9Hof3Y=
+	b=ILApTVGkAiZN6TM/wQcKBxT5abitoepqMTZmyrBRSRSX8zSbfOzPgIb+NXg0FmJwF
+	 MMtFGC+aUCh+ABg+8wlL+DOLshDggQtA06qvOtD9Q4EZiJrA+1IFz2X4QhX4N2tIGz
+	 ouTSREd71pJQ3M5g8cojt2TaKpS0VdH/c5yusCLQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Boris Burkov <boris@bur.io>,
-	David Sterba <dsterba@suse.com>,
-	Zhaoyang Li <lizy04@hust.edu.cn>
-Subject: [PATCH 6.1 280/325] btrfs: check folio mapping after unlock in relocate_one_folio()
-Date: Mon,  2 Jun 2025 15:49:16 +0200
-Message-ID: <20250602134331.139215980@linuxfoundation.org>
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Leon Romanovsky <leon@kernel.org>,
+	David Ahern <dsahern@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Kees Cook <keescook@chromium.org>,
+	Christian Brauner <brauner@kernel.org>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Lennart Poettering <mzxreary@0pointer.de>,
+	Luca Boccassi <bluca@debian.org>,
+	linux-kernel@vger.kernel.org,
+	netdev@vger.kernel.org,
+	linux-arch@vger.kernel.org,
+	Alexander Mikhalitsyn <aleksandr.mikhalitsyn@canonical.com>,
+	Lee Jones <lee@kernel.org>
+Subject: [PATCH 6.1 281/325] af_unix: Kconfig: make CONFIG_UNIX bool
+Date: Mon,  2 Jun 2025 15:49:17 +0200
+Message-ID: <20250602134331.179674198@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134319.723650984@linuxfoundation.org>
 References: <20250602134319.723650984@linuxfoundation.org>
@@ -52,103 +65,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Boris Burkov <boris@bur.io>
+From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@canonical.com>
 
-commit 3e74859ee35edc33a022c3f3971df066ea0ca6b9 upstream.
+commit 97154bcf4d1b7cabefec8a72cff5fbb91d5afb7b upstream.
 
-When we call btrfs_read_folio() to bring a folio uptodate, we unlock the
-folio. The result of that is that a different thread can modify the
-mapping (like remove it with invalidate) before we call folio_lock().
-This results in an invalid page and we need to try again.
+Let's make CONFIG_UNIX a bool instead of a tristate.
+We've decided to do that during discussion about SCM_PIDFD patchset [1].
 
-In particular, if we are relocating concurrently with aborting a
-transaction, this can result in a crash like the following:
+[1] https://lore.kernel.org/lkml/20230524081933.44dc8bea@kernel.org/
 
-  BUG: kernel NULL pointer dereference, address: 0000000000000000
-  PGD 0 P4D 0
-  Oops: 0000 [#1] SMP
-  CPU: 76 PID: 1411631 Comm: kworker/u322:5
-  Workqueue: events_unbound btrfs_reclaim_bgs_work
-  RIP: 0010:set_page_extent_mapped+0x20/0xb0
-  RSP: 0018:ffffc900516a7be8 EFLAGS: 00010246
-  RAX: ffffea009e851d08 RBX: ffffea009e0b1880 RCX: 0000000000000000
-  RDX: 0000000000000000 RSI: ffffc900516a7b90 RDI: ffffea009e0b1880
-  RBP: 0000000003573000 R08: 0000000000000001 R09: ffff88c07fd2f3f0
-  R10: 0000000000000000 R11: 0000194754b575be R12: 0000000003572000
-  R13: 0000000003572fff R14: 0000000000100cca R15: 0000000005582fff
-  FS:  0000000000000000(0000) GS:ffff88c07fd00000(0000) knlGS:0000000000000000
-  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-  CR2: 0000000000000000 CR3: 000000407d00f002 CR4: 00000000007706f0
-  DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-  DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-  PKRU: 55555554
-  Call Trace:
-  <TASK>
-  ? __die+0x78/0xc0
-  ? page_fault_oops+0x2a8/0x3a0
-  ? __switch_to+0x133/0x530
-  ? wq_worker_running+0xa/0x40
-  ? exc_page_fault+0x63/0x130
-  ? asm_exc_page_fault+0x22/0x30
-  ? set_page_extent_mapped+0x20/0xb0
-  relocate_file_extent_cluster+0x1a7/0x940
-  relocate_data_extent+0xaf/0x120
-  relocate_block_group+0x20f/0x480
-  btrfs_relocate_block_group+0x152/0x320
-  btrfs_relocate_chunk+0x3d/0x120
-  btrfs_reclaim_bgs_work+0x2ae/0x4e0
-  process_scheduled_works+0x184/0x370
-  worker_thread+0xc6/0x3e0
-  ? blk_add_timer+0xb0/0xb0
-  kthread+0xae/0xe0
-  ? flush_tlb_kernel_range+0x90/0x90
-  ret_from_fork+0x2f/0x40
-  ? flush_tlb_kernel_range+0x90/0x90
-  ret_from_fork_asm+0x11/0x20
-  </TASK>
-
-This occurs because cleanup_one_transaction() calls
-destroy_delalloc_inodes() which calls invalidate_inode_pages2() which
-takes the folio_lock before setting mapping to NULL. We fail to check
-this, and subsequently call set_extent_mapping(), which assumes that
-mapping != NULL (in fact it asserts that in debug mode)
-
-Note that the "fixes" patch here is not the one that introduced the
-race (the very first iteration of this code from 2009) but a more recent
-change that made this particular crash happen in practice.
-
-Fixes: e7f1326cc24e ("btrfs: set page extent mapped after read_folio in relocate_one_page")
-CC: stable@vger.kernel.org # 6.1+
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Boris Burkov <boris@bur.io>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Signed-off-by: Zhaoyang Li <lizy04@hust.edu.cn>
+Cc: "David S. Miller" <davem@davemloft.net>
+Cc: Eric Dumazet <edumazet@google.com>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: Paolo Abeni <pabeni@redhat.com>
+Cc: Leon Romanovsky <leon@kernel.org>
+Cc: David Ahern <dsahern@kernel.org>
+Cc: Arnd Bergmann <arnd@arndb.de>
+Cc: Kees Cook <keescook@chromium.org>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: Kuniyuki Iwashima <kuniyu@amazon.com>
+Cc: Lennart Poettering <mzxreary@0pointer.de>
+Cc: Luca Boccassi <bluca@debian.org>
+Cc: linux-kernel@vger.kernel.org
+Cc: netdev@vger.kernel.org
+Cc: linux-arch@vger.kernel.org
+Suggested-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@canonical.com>
+Acked-by: Christian Brauner <brauner@kernel.org>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/relocation.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ net/unix/Kconfig |    6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
---- a/fs/btrfs/relocation.c
-+++ b/fs/btrfs/relocation.c
-@@ -2977,6 +2977,7 @@ static int relocate_one_page(struct inod
- 	int ret;
+--- a/net/unix/Kconfig
++++ b/net/unix/Kconfig
+@@ -4,7 +4,7 @@
+ #
  
- 	ASSERT(page_index <= last_index);
-+again:
- 	page = find_lock_page(inode->i_mapping, page_index);
- 	if (!page) {
- 		page_cache_sync_readahead(inode->i_mapping, ra, NULL,
-@@ -2998,6 +2999,11 @@ static int relocate_one_page(struct inod
- 			ret = -EIO;
- 			goto release_page;
- 		}
-+		if (page->mapping != inode->i_mapping) {
-+			unlock_page(page);
-+			put_page(page);
-+			goto again;
-+		}
- 	}
+ config UNIX
+-	tristate "Unix domain sockets"
++	bool "Unix domain sockets"
+ 	help
+ 	  If you say Y here, you will include support for Unix domain sockets;
+ 	  sockets are the standard Unix mechanism for establishing and
+@@ -14,10 +14,6 @@ config UNIX
+ 	  an embedded system or something similar, you therefore definitely
+ 	  want to say Y here.
  
- 	/*
+-	  To compile this driver as a module, choose M here: the module will be
+-	  called unix.  Note that several important services won't work
+-	  correctly if you say M here and then neglect to load the module.
+-
+ 	  Say Y unless you know what you are doing.
+ 
+ config UNIX_SCM
 
 
