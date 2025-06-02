@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B78FA22FE0A;
-	Mon,  2 Jun 2025 14:29:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 088B12248A4;
+	Mon,  2 Jun 2025 14:29:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748874549; cv=none; b=bKM72uoYzjDSJrJqeLVqMguN9AEL2fdlwjibChkZ5AFs8FD0EdMocCV3OfOOROu6Vb27Iz41NUE5k1bZI6gI+gOd9gKGOcOXoR7nAYJmmbsXzgguVsAtYPKLTCvzJe9Bn/Lolj8hliAJCM8nYvZZYSv31qK8YWVJFzgvP+LiRvM=
+	t=1748874553; cv=none; b=bkKOmQedEeAZllpHn6krUjGRTyYLJCb+Z0GaYkYyeyhfd5R/KguspHZvv1BEF8n2gDZ9nc8HQl7OAnlVrMem4CQaP8016/RyZr7O9LZQPzfqe0YrnK7V25ZknW1nv7dJ2jMPqHthAdCDQ+IaAj8UYOTPkZD65jJ7XG6XpiuO72M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748874549; c=relaxed/simple;
-	bh=w4FCF4+ZvXz8e6/JCTdLXJiIU/xccmKRhot1MsSs1nY=;
+	s=arc-20240116; t=1748874553; c=relaxed/simple;
+	bh=8Z+3Nrshv0q0xm2iZ5VysvLyHRxkR47hPCTEe89VeyY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qZls5ukT+R/sNf/gktZ1ubxYM98BJlw4qS45uJ8C4s38CtcZQZE1b763O29KpQXPd+nURkP6v840ee9/JdEVF8TSjrNISbgTAl3mfhji8xaLTGURhYNX/w4KN6oj6lpiUhGpCcgbYeGZ4fYeIGx/+gGBgbaboeBhywTi5GgDAiI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Io4EicAH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Xz00gpwYL0Fu4z5ErKy0ZV6trCqhBbFy9jV/D8PCSFF14HOtrUXIuDybG/dEqs6ZKnfoqJmLnC6yE5V9HKgYeRhkVuDfEkOdVlcpTsnUSze8KBuhVMIz6dMfAZG3o3AOVlKc45BG7r7vyiHy+AN7oP8gCM5PQGOtt0dxC6qfdC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dNip5sE5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Io4EicAH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24CF1C4CEF0;
-	Mon,  2 Jun 2025 14:29:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dNip5sE5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 685E7C4CEEE;
+	Mon,  2 Jun 2025 14:29:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748874549;
-	bh=w4FCF4+ZvXz8e6/JCTdLXJiIU/xccmKRhot1MsSs1nY=;
+	s=korg; t=1748874552;
+	bh=8Z+3Nrshv0q0xm2iZ5VysvLyHRxkR47hPCTEe89VeyY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Io4EicAHLNC5JqyME1dnPP+iVxXdayEF9/Fm2yTyJi4pGUFIZhwiIitIdikbcUlwX
-	 0TuYHXAmFmmMt60DJsZWR7WgastEcVgkHIux4C/X4VCec+qpxdXAc1HaFJhDWDgTAs
-	 b7x0na4nufaHryQYKZdNm/9wg4zZotEreUmZGXKE=
+	b=dNip5sE5JnEDqRu2cPqEXxPcsP82IL/pQWsa2W0eI7THr0KpNrKUWVVRd7ufNgW/F
+	 4KHqbjWCWBHF+h52uAD9A56/JeigMyR95otHwQIWMocGdnN1MFdH2IHfN44ba24rK1
+	 LvoDXBnkZlhOTiX/xVrEln+JDDXSGH2EF4+8m8xg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Maciej W. Rozycki" <macro@orcam.me.uk>,
-	Thorsten Blum <thorsten.blum@linux.dev>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Daniel Wagner <wagi@kernel.org>,
+	Keith Busch <kbusch@kernel.org>,
+	Sagi Grimberg <sagi@grimberg.me>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 059/204] MIPS: Fix MAX_REG_OFFSET
-Date: Mon,  2 Jun 2025 15:46:32 +0200
-Message-ID: <20250602134258.001180415@linuxfoundation.org>
+Subject: [PATCH 5.4 060/204] nvme: unblock ctrl state transition for firmware update
+Date: Mon,  2 Jun 2025 15:46:33 +0200
+Message-ID: <20250602134258.039042903@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134255.449974357@linuxfoundation.org>
 References: <20250602134255.449974357@linuxfoundation.org>
@@ -52,37 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: Daniel Wagner <wagi@kernel.org>
 
-[ Upstream commit c44572e0cc13c9afff83fd333135a0aa9b27ba26 ]
+[ Upstream commit 650415fca0a97472fdd79725e35152614d1aad76 ]
 
-Fix MAX_REG_OFFSET to point to the last register in 'pt_regs' and not to
-the marker itself, which could allow regs_get_register() to return an
-invalid offset.
+The original nvme subsystem design didn't have a CONNECTING state; the
+state machine allowed transitions from RESETTING to LIVE directly.
 
-Fixes: 40e084a506eb ("MIPS: Add uprobes support.")
-Suggested-by: Maciej W. Rozycki <macro@orcam.me.uk>
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+With the introduction of nvme fabrics the CONNECTING state was
+introduce. Over time the nvme-pci started to use the CONNECTING state as
+well.
+
+Eventually, a bug fix for the nvme-fc started to depend that the only
+valid transition to LIVE was from CONNECTING. Though this change didn't
+update the firmware update handler which was still depending on
+RESETTING to LIVE transition.
+
+The simplest way to address it for the time being is to switch into
+CONNECTING state before going to LIVE state.
+
+Fixes: d2fe192348f9 ("nvme: only allow entering LIVE from CONNECTING state")
+Reported-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Daniel Wagner <wagi@kernel.org>
+Closes: https://lore.kernel.org/all/0134ea15-8d5f-41f7-9e9a-d7e6d82accaa@roeck-us.net
+Reviewed-by: Keith Busch <kbusch@kernel.org>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/include/asm/ptrace.h | 3 ++-
+ drivers/nvme/host/core.c | 3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/mips/include/asm/ptrace.h b/arch/mips/include/asm/ptrace.h
-index ae578860f7295..4ec9b306556f6 100644
---- a/arch/mips/include/asm/ptrace.h
-+++ b/arch/mips/include/asm/ptrace.h
-@@ -65,7 +65,8 @@ static inline void instruction_pointer_set(struct pt_regs *regs,
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index 9816debe5cb51..94c8ef4a54d3f 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -3980,7 +3980,8 @@ static void nvme_fw_act_work(struct work_struct *work)
+ 		msleep(100);
+ 	}
  
- /* Query offset/name of register from its name/offset */
- extern int regs_query_register_offset(const char *name);
--#define MAX_REG_OFFSET (offsetof(struct pt_regs, __last))
-+#define MAX_REG_OFFSET \
-+	(offsetof(struct pt_regs, __last) - sizeof(unsigned long))
+-	if (!nvme_change_ctrl_state(ctrl, NVME_CTRL_LIVE))
++	if (!nvme_change_ctrl_state(ctrl, NVME_CTRL_CONNECTING) ||
++	    !nvme_change_ctrl_state(ctrl, NVME_CTRL_LIVE))
+ 		return;
  
- /**
-  * regs_get_register() - get register value from its offset
+ 	nvme_start_queues(ctrl);
 -- 
 2.39.5
 
