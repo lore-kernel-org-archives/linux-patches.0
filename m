@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1AAA22A7E5;
-	Mon,  2 Jun 2025 15:06:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CDA123185D;
+	Mon,  2 Jun 2025 15:06:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748876773; cv=none; b=umlC+PzDhWWHP58x4a0JaPhEbLnKXn6LGv7CkyIetflLk6kLB2j84iZZFQ+LVjlxQSPMy89WO6oG7jES4lKoWnZ6Gti+yuxj79VgrKRjNyc2fFfC7cQWekQlPhT5gCdLIKP4QGpzOK/HyTd8LtXQCy0zbU8HbISd6XykfooUVtk=
+	t=1748876780; cv=none; b=GXubEDihpMMN4cyQwesaA78i8nb5HXpRoIc3mdQzvg17BBzItTd97RLrWOKiGFn0TGsR0ZLaWXesZeAbjA/Srh5Y/lRjZqAEIKDQJ4avbiThA4q5uolywuBIitl/sEwfHFJjRTQOmtT4jsY0A6YNxYyoDegNRylk7RiuoifN9Bc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748876773; c=relaxed/simple;
-	bh=gCigCg7p8OAvWKrGxmq79QrN1or2qcOExuVYTOimGAE=;
+	s=arc-20240116; t=1748876780; c=relaxed/simple;
+	bh=GEetga6hoxUXdnQi89U2Cz21dK1SFeeDuptw4+BvaHI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HxiPhp2QEc6MX7O8oJ8Vrd7faSACzVgH33cldY5wm+sUjQoa8iQ/efEGRhQGd12/A0PyXbiik7L5Af8xd7EwPtdCU0hq6bqrxERqnesOmfNwQ/cjGKx4tAF2OXOygChM1Wtl8134jM4hjeCH8iR8mufIF5MJi4nInLjJAHPu9Ws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nwuz+qCn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=cvx+jaeQFHpza9LAxie1w/G/b9fiZWP+a+Pdl62tHrSs1/4X4bkWJsnPcKCgIT/ENKkO/lKDzPehltYRRMyUxOQhnVRdUFRzzIZhSUCzDnlSQD6AefgZvU9CDli1kOEnYFvOoTTgNLX/yqevDvlt3wamHJpmPO6Iua/LojS3Iz8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tEWhb56b; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nwuz+qCn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37C0EC4CEEB;
-	Mon,  2 Jun 2025 15:06:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tEWhb56b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 258DDC4CEEE;
+	Mon,  2 Jun 2025 15:06:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748876773;
-	bh=gCigCg7p8OAvWKrGxmq79QrN1or2qcOExuVYTOimGAE=;
+	s=korg; t=1748876779;
+	bh=GEetga6hoxUXdnQi89U2Cz21dK1SFeeDuptw4+BvaHI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nwuz+qCn5QgV83O/kXcDYDgRBprGNpUFM8LBkPQPJ15buLF41I/OvP4wqxbpnJyCM
-	 AhPzjUMKfFTqUm8NPlV6Ok7acwrPAjTxhySyGH2CDqg+BniUOpid6JnYimtqeIAPi5
-	 1HmPqmXv9yuEGTj7IOAmWLVeiXcOVwA7F11RjikA=
+	b=tEWhb56bQHUvgXXF7vY6mFRD8X9U1wAYSRgRwFj8nSz8SiBbLbXKzGmKQ2nOia9A8
+	 Uvy1eDvPm2Gx5hU37QMcaMjXCVV1u1IjlByIOQOFh7he+9Q80ZS+BJiZY5ZwiGAC1N
+	 3GSzATD0xEhXx3ATrCLl0JW7zlA5ZaF5dlFLowVs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 042/325] PCI: dwc: ep: Ensure proper iteration over outbound map windows
-Date: Mon,  2 Jun 2025 15:45:18 +0200
-Message-ID: <20250602134321.460841127@linuxfoundation.org>
+Subject: [PATCH 6.1 070/325] ASoC: mediatek: mt6359: Add stub for mt6359_accdet_enable_jack_detect
+Date: Mon,  2 Jun 2025 15:45:46 +0200
+Message-ID: <20250602134322.630686716@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134319.723650984@linuxfoundation.org>
 References: <20250602134319.723650984@linuxfoundation.org>
@@ -45,49 +46,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Frank Li <Frank.Li@nxp.com>
+From: Nícolas F. R. A. Prado <nfraprado@collabora.com>
 
-[ Upstream commit f3e1dccba0a0833fc9a05fb838ebeb6ea4ca0e1a ]
+[ Upstream commit 0116a7d84b32537a10d9bea1fd1bfc06577ef527 ]
 
-Most systems' PCIe outbound map windows have non-zero physical addresses,
-but the possibility of encountering zero increased after following commit
-("PCI: dwc: Use parent_bus_offset").
+Add a stub for mt6359_accdet_enable_jack_detect() to prevent linker
+failures in the machine sound drivers calling it when
+CONFIG_SND_SOC_MT6359_ACCDET is not enabled.
 
-'ep->outbound_addr[n]', representing 'parent_bus_address', might be 0 on
-some hardware, which trims high address bits through bus fabric before
-sending to the PCIe controller.
-
-Replace the iteration logic with 'for_each_set_bit()' to ensure only
-allocated map windows are iterated when determining the ATU index from a
-given address.
-
-Link: https://lore.kernel.org/r/20250315201548.858189-12-helgaas@kernel.org
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Suggested-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+Link: https://patch.msgid.link/20250306-mt8188-accdet-v3-3-7828e835ff4b@collabora.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pcie-designware-ep.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/codecs/mt6359-accdet.h | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/pci/controller/dwc/pcie-designware-ep.c b/drivers/pci/controller/dwc/pcie-designware-ep.c
-index 449ad709495d3..3b3f079d0d2dd 100644
---- a/drivers/pci/controller/dwc/pcie-designware-ep.c
-+++ b/drivers/pci/controller/dwc/pcie-designware-ep.c
-@@ -283,7 +283,7 @@ static int dw_pcie_find_index(struct dw_pcie_ep *ep, phys_addr_t addr,
- 	u32 index;
- 	struct dw_pcie *pci = to_dw_pcie_from_ep(ep);
+diff --git a/sound/soc/codecs/mt6359-accdet.h b/sound/soc/codecs/mt6359-accdet.h
+index c234f2f4276a1..78ada3a5bfae5 100644
+--- a/sound/soc/codecs/mt6359-accdet.h
++++ b/sound/soc/codecs/mt6359-accdet.h
+@@ -123,6 +123,15 @@ struct mt6359_accdet {
+ 	struct workqueue_struct *jd_workqueue;
+ };
  
--	for (index = 0; index < pci->num_ob_windows; index++) {
-+	for_each_set_bit(index, ep->ob_window_map, pci->num_ob_windows) {
- 		if (ep->outbound_addr[index] != addr)
- 			continue;
- 		*atu_index = index;
++#if IS_ENABLED(CONFIG_SND_SOC_MT6359_ACCDET)
+ int mt6359_accdet_enable_jack_detect(struct snd_soc_component *component,
+ 				     struct snd_soc_jack *jack);
++#else
++static inline int
++mt6359_accdet_enable_jack_detect(struct snd_soc_component *component,
++				 struct snd_soc_jack *jack)
++{
++	return -EOPNOTSUPP;
++}
++#endif
+ #endif
 -- 
 2.39.5
 
