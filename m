@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDC5B225775;
-	Mon,  2 Jun 2025 15:03:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4023B1DF73C;
+	Mon,  2 Jun 2025 15:03:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748876632; cv=none; b=fPXrqkt3N/exCkeZk+f8Gnjw0erPnNWCmNlVODAB2wm119u/8wE77YrnlmPIU/30x+5IcDBd1/qtcYNDLRP1olKS++aL1YROve8kBmGBpvxOGjvpMmnsF02TOV6Y2RWmKLHKhxNCPg1ehUh7XGndEhlYG5zVl7/b0iYL2zZhEk0=
+	t=1748876635; cv=none; b=c0RXuWeU3U7DcvSjdlTip72iCHJrMKRl0xLIurzZzn32R65hPeFozVkIG3jynhe0M9i5AS/JJFQX9hRmbgapPerybaKRI5caSulJMjG8P1npGJeuVKk8qLGDsYcbi2lMksX+Pz3XAdwynLgDcutUJU+gRYqxCFJ7GOpYh71+Qq8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748876632; c=relaxed/simple;
-	bh=r7+AlgxMmISwism3R5edUxm5qAWQCo1HptXooQssucQ=;
+	s=arc-20240116; t=1748876635; c=relaxed/simple;
+	bh=cpK3IXFm6UA+yYH1mOnn4T4ZLH5XANfJ/VA0x+BFG78=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Eco8maCvPhBx4bJIRCbn3+9908esFfMl++N1+cWDwV0nJIgn/Ik3+VILDuzs0DbQzQxl1V/R3dMZsZL/MXY4APt0Y283aXNSgJiXPdRscCncraIWeKijgDYFkhit07U9619KsZ4dHCCiicnJHwZlrZ+st9Iv/orf8jUX3O4/eCY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fp3bPxS9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XawodKh8fyUiqfJiWjoa+MDsaNg1IRxJ25puIzpip2RTPNsKd86I2EX5d9o8cChOsbeQxYTE/RKBJv/7HXIrXntaR+WEG25OiGuU+CnQZQpyEeHb5stO3N0wNycls8RI7YBbX+mdN8Ftv0lwbRCxHON9KjigUGXWhoUIj5OLJUQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c8nkcwzN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fp3bPxS9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C3B5C4CEEB;
-	Mon,  2 Jun 2025 15:03:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c8nkcwzN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A09F5C4CEEB;
+	Mon,  2 Jun 2025 15:03:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748876631;
-	bh=r7+AlgxMmISwism3R5edUxm5qAWQCo1HptXooQssucQ=;
+	s=korg; t=1748876635;
+	bh=cpK3IXFm6UA+yYH1mOnn4T4ZLH5XANfJ/VA0x+BFG78=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fp3bPxS9ssRCo1bdsOoblof6OC6WCwyep6pTm33DJtk1etFxySXyztqEslhnvAteR
-	 2SoAKMnAv6ZPr/9E0QIvrbIViF99wAiYM6YgrWtW2BRqCx2nuoe7C6fWwJpbg5zZlh
-	 dswXStpNunnZzklNZPiUD5df/7BJHqsXuO2NLjZE=
+	b=c8nkcwzNQM8t1zPy69uZrmqdRGWqSE3GggrTLCgWuQigA+TivUWKlAaiKubvpDNG3
+	 7r07Q0WCRvClHxr1xo2Q0nchYjZOjMXkVsA1a5yarQAQG/V4Pnbf08gWNxh7L9NpSZ
+	 KbsuNf5oNHEGtG2/UkW3IVH7Xmpg7YHABb4eEBnE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 025/325] NFSv4: Check for delegation validity in nfs_start_delegation_return_locked()
-Date: Mon,  2 Jun 2025 15:45:01 +0200
-Message-ID: <20250602134320.760318618@linuxfoundation.org>
+Subject: [PATCH 6.1 008/325] phy: renesas: rcar-gen3-usb2: Assert PLL reset on PHY power off
+Date: Mon,  2 Jun 2025 15:44:44 +0200
+Message-ID: <20250602134320.077519995@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134319.723650984@linuxfoundation.org>
 References: <20250602134319.723650984@linuxfoundation.org>
@@ -50,33 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 
-[ Upstream commit 9e8f324bd44c1fe026b582b75213de4eccfa1163 ]
+[ Upstream commit 9ce71e85b29eb63e48e294479742e670513f03a0 ]
 
-Check that the delegation is still attached after taking the spin lock
-in nfs_start_delegation_return_locked().
+Assert PLL reset on PHY power off. This saves power.
 
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Fixes: f3b5a8d9b50d ("phy: rcar-gen3-usb2: Add R-Car Gen3 USB2 PHY driver")
+Cc: stable@vger.kernel.org
+Reviewed-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+Tested-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+Reviewed-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Link: https://lore.kernel.org/r/20250507125032.565017-5-claudiu.beznea.uj@bp.renesas.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/delegation.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/phy/renesas/phy-rcar-gen3-usb2.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/fs/nfs/delegation.c b/fs/nfs/delegation.c
-index 6363bbc37f425..17b38da17288b 100644
---- a/fs/nfs/delegation.c
-+++ b/fs/nfs/delegation.c
-@@ -297,7 +297,8 @@ nfs_start_delegation_return_locked(struct nfs_inode *nfsi)
- 	if (delegation == NULL)
- 		goto out;
- 	spin_lock(&delegation->lock);
--	if (!test_and_set_bit(NFS_DELEGATION_RETURNING, &delegation->flags)) {
-+	if (delegation->inode &&
-+	    !test_and_set_bit(NFS_DELEGATION_RETURNING, &delegation->flags)) {
- 		clear_bit(NFS_DELEGATION_RETURN_DELAYED, &delegation->flags);
- 		/* Refcount matched in nfs_end_delegation_return() */
- 		ret = nfs_get_delegation(delegation);
+diff --git a/drivers/phy/renesas/phy-rcar-gen3-usb2.c b/drivers/phy/renesas/phy-rcar-gen3-usb2.c
+index 8b1280cdbcef8..024cc5ce68a37 100644
+--- a/drivers/phy/renesas/phy-rcar-gen3-usb2.c
++++ b/drivers/phy/renesas/phy-rcar-gen3-usb2.c
+@@ -539,9 +539,17 @@ static int rcar_gen3_phy_usb2_power_off(struct phy *p)
+ 	struct rcar_gen3_chan *channel = rphy->ch;
+ 	int ret = 0;
+ 
+-	scoped_guard(spinlock_irqsave, &channel->lock)
++	scoped_guard(spinlock_irqsave, &channel->lock) {
+ 		rphy->powered = false;
+ 
++		if (rcar_gen3_are_all_rphys_power_off(channel)) {
++			u32 val = readl(channel->base + USB2_USBCTR);
++
++			val |= USB2_USBCTR_PLL_RST;
++			writel(val, channel->base + USB2_USBCTR);
++		}
++	}
++
+ 	if (channel->vbus)
+ 		ret = regulator_disable(channel->vbus);
+ 
 -- 
 2.39.5
 
