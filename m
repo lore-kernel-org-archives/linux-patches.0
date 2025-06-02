@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AED9C22A1E6;
-	Mon,  2 Jun 2025 14:45:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A38822AE5E;
+	Mon,  2 Jun 2025 14:45:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748875533; cv=none; b=lV5neE4x9hQfGgqm09CVSwXRtEABFz6dOEAI4A6gKxeW/lod1vzP9qhjUebYm4LCL9x8+dzLMw43vOJ2JowG6QuX4fOiYkmFsJyxWiWRrdLNm00/S3Ec5CYdOSb2u7GGhcWJi9z5aNMbmANffOY146X68/1QAIeZX5flCuiOKto=
+	t=1748875537; cv=none; b=IWFcdXkm5oIgsVDv8gl6HE8hjXVWq+IKf++FmszSRlr1j/fN/PgCn/yD3Zy4LCJN2Ez3CSb1M6bmbQMZpQoPQX7EUYARec+4DUC0Y6ShtZUJlWWsVqeld/wQBayFfUNehZPocYx2A+jPhT2/fNiiiVJ8N9o/bKQ4k7n2UbKLNW0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748875533; c=relaxed/simple;
-	bh=Vpf2G4rdXMqpVRgW/MRfgUt37wX2xTpxXF305fNLVGY=;
+	s=arc-20240116; t=1748875537; c=relaxed/simple;
+	bh=yoLOrXsANhTBuIbzfPTk/coZ6iFTtewH6h2f1ED8u+U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VYEu10oLcbghWMrt04YszLvnPVktKxr1fviBPPwo8ZC71+TDrv5sQkYDoCvN24wXgECd/jz8sWC+srjg0QwKbJhEr6dwvDozw7yvQmIeryrU6pLtxounDA8LhJA6QR/68VLrqs4LPBrYEO9mUcJzqfPnvA9vIFLj1syU78SVHvQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kjvF3YKH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V5Y6E5+DJ8ohsYh/kW6ah3IXs7zNsgCZJ3HapuwednoEImQIdgSjzM8C9+QPMp7y7Tr2wwF/wyG7xwaL8vgyL4RBbI63Lpmhb3PCrJ+97f3b6OtnATmcGD/e7/zsrYPV6rmpmY9EByKRaOlhi0BMTueIvypjVdLwM6MLzVPbIKc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CIwrz8tg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kjvF3YKH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37D02C4CEEB;
-	Mon,  2 Jun 2025 14:45:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CIwrz8tg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6283AC4CEEB;
+	Mon,  2 Jun 2025 14:45:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748875533;
-	bh=Vpf2G4rdXMqpVRgW/MRfgUt37wX2xTpxXF305fNLVGY=;
+	s=korg; t=1748875536;
+	bh=yoLOrXsANhTBuIbzfPTk/coZ6iFTtewH6h2f1ED8u+U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kjvF3YKHvGDfaKvsh6Cy8VvBOZfdbWpqS6xbm0fC39k6+DCyZAxD8n0VfLkMGJ2qh
-	 qr2+onpqWoyNzdb7jXXndUXDda8/1B2kzdZvIa7K/fyIX+eRVTNWs3Gx6UyOLdcPeY
-	 0DA96+qvKGIEIrcAFbAazM8Bkhs0/zURS7BbxoG8=
+	b=CIwrz8tg3iqwJc7CGE5PEbqH7pY7M7agwPnK06RWI1NeAkQxmo2jPKtoT7NY34GJc
+	 HD6fSDLa5zlvZThipjzUMl0dSsX6HD4myM1SjchZnkUYc42ebTkBg6Gvq2Rdy0Fwtx
+	 0WieIfKGWD3tN9lSanZcRUxD9exkmfCqdI+82uW4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephan Gerhold <stephan.gerhold@kernkonzept.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
+	Jeff Layton <jlayton@kernel.org>,
+	Benjamin Coddington <bcodding@redhat.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 134/270] i2c: qup: Vote for interconnect bandwidth to DRAM
-Date: Mon,  2 Jun 2025 15:46:59 +0200
-Message-ID: <20250602134312.702521118@linuxfoundation.org>
+Subject: [PATCH 5.10 125/270] NFSv4: Treat ENETUNREACH errors as fatal for state recovery
+Date: Mon,  2 Jun 2025 15:46:50 +0200
+Message-ID: <20250602134312.341945970@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134307.195171844@linuxfoundation.org>
 References: <20250602134307.195171844@linuxfoundation.org>
@@ -51,137 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit d4f35233a6345f62637463ef6e0708f44ffaa583 ]
+[ Upstream commit 0af5fb5ed3d2fd9e110c6112271f022b744a849a ]
 
-When the I2C QUP controller is used together with a DMA engine it needs
-to vote for the interconnect path to the DRAM. Otherwise it may be
-unable to access the memory quickly enough.
+If a containerised process is killed and causes an ENETUNREACH or
+ENETDOWN error to be propagated to the state manager, then mark the
+nfs_client as being dead so that we don't loop in functions that are
+expecting recovery to succeed.
 
-The requested peak bandwidth is dependent on the I2C core clock.
-
-To avoid sending votes too often the bandwidth is always requested when
-a DMA transfer starts, but dropped only on runtime suspend. Runtime
-suspend should only happen if no transfer is active. After resumption we
-can defer the next vote until the first DMA transfer actually happens.
-
-The implementation is largely identical to the one introduced for
-spi-qup in commit ecdaa9473019 ("spi: qup: Vote for interconnect
-bandwidth to DRAM") since both drivers represent the same hardware
-block.
-
-Signed-off-by: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/20231128-i2c-qup-dvfs-v1-3-59a0e3039111@kernkonzept.com
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Reviewed-by: Benjamin Coddington <bcodding@redhat.com>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-qup.c | 36 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 36 insertions(+)
+ fs/nfs/nfs4state.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/i2c/busses/i2c-qup.c b/drivers/i2c/busses/i2c-qup.c
-index 576c12670bd88..8fd51de64d96b 100644
---- a/drivers/i2c/busses/i2c-qup.c
-+++ b/drivers/i2c/busses/i2c-qup.c
-@@ -14,6 +14,7 @@
- #include <linux/dma-mapping.h>
- #include <linux/err.h>
- #include <linux/i2c.h>
-+#include <linux/interconnect.h>
- #include <linux/interrupt.h>
- #include <linux/io.h>
- #include <linux/module.h>
-@@ -150,6 +151,8 @@
- /* TAG length for DATA READ in RX FIFO  */
- #define READ_RX_TAGS_LEN		2
- 
-+#define QUP_BUS_WIDTH			8
-+
- static unsigned int scl_freq;
- module_param_named(scl_freq, scl_freq, uint, 0444);
- MODULE_PARM_DESC(scl_freq, "SCL frequency override");
-@@ -227,6 +230,7 @@ struct qup_i2c_dev {
- 	int			irq;
- 	struct clk		*clk;
- 	struct clk		*pclk;
-+	struct icc_path		*icc_path;
- 	struct i2c_adapter	adap;
- 
- 	int			clk_ctl;
-@@ -255,6 +259,10 @@ struct qup_i2c_dev {
- 	/* To configure when bus is in run state */
- 	u32			config_run;
- 
-+	/* bandwidth votes */
-+	u32			src_clk_freq;
-+	u32			cur_bw_clk_freq;
-+
- 	/* dma parameters */
- 	bool			is_dma;
- 	/* To check if the current transfer is using DMA */
-@@ -453,6 +461,23 @@ static int qup_i2c_bus_active(struct qup_i2c_dev *qup, int len)
- 	return ret;
- }
- 
-+static int qup_i2c_vote_bw(struct qup_i2c_dev *qup, u32 clk_freq)
-+{
-+	u32 needed_peak_bw;
-+	int ret;
-+
-+	if (qup->cur_bw_clk_freq == clk_freq)
-+		return 0;
-+
-+	needed_peak_bw = Bps_to_icc(clk_freq * QUP_BUS_WIDTH);
-+	ret = icc_set_bw(qup->icc_path, 0, needed_peak_bw);
-+	if (ret)
-+		return ret;
-+
-+	qup->cur_bw_clk_freq = clk_freq;
-+	return 0;
-+}
-+
- static void qup_i2c_write_tx_fifo_v1(struct qup_i2c_dev *qup)
- {
- 	struct qup_i2c_block *blk = &qup->blk;
-@@ -840,6 +865,10 @@ static int qup_i2c_bam_xfer(struct i2c_adapter *adap, struct i2c_msg *msg,
- 	int ret = 0;
- 	int idx = 0;
- 
-+	ret = qup_i2c_vote_bw(qup, qup->src_clk_freq);
-+	if (ret)
-+		return ret;
-+
- 	enable_irq(qup->irq);
- 	ret = qup_i2c_req_dma(qup);
- 
-@@ -1645,6 +1674,7 @@ static void qup_i2c_disable_clocks(struct qup_i2c_dev *qup)
- 	config = readl(qup->base + QUP_CONFIG);
- 	config |= QUP_CLOCK_AUTO_GATE;
- 	writel(config, qup->base + QUP_CONFIG);
-+	qup_i2c_vote_bw(qup, 0);
- 	clk_disable_unprepare(qup->pclk);
- }
- 
-@@ -1745,6 +1775,11 @@ static int qup_i2c_probe(struct platform_device *pdev)
- 			goto fail_dma;
- 		}
- 		qup->is_dma = true;
-+
-+		qup->icc_path = devm_of_icc_get(&pdev->dev, NULL);
-+		if (IS_ERR(qup->icc_path))
-+			return dev_err_probe(&pdev->dev, PTR_ERR(qup->icc_path),
-+					     "failed to get interconnect path\n");
- 	}
- 
- nodma:
-@@ -1793,6 +1828,7 @@ static int qup_i2c_probe(struct platform_device *pdev)
- 		qup_i2c_enable_clocks(qup);
- 		src_clk_freq = clk_get_rate(qup->clk);
- 	}
-+	qup->src_clk_freq = src_clk_freq;
- 
- 	/*
- 	 * Bootloaders might leave a pending interrupt on certain QUP's,
+diff --git a/fs/nfs/nfs4state.c b/fs/nfs/nfs4state.c
+index 807dd6f17e1bd..e3cabced1aead 100644
+--- a/fs/nfs/nfs4state.c
++++ b/fs/nfs/nfs4state.c
+@@ -2719,7 +2719,15 @@ static void nfs4_state_manager(struct nfs_client *clp)
+ 	pr_warn_ratelimited("NFS: state manager%s%s failed on NFSv4 server %s"
+ 			" with error %d\n", section_sep, section,
+ 			clp->cl_hostname, -status);
+-	ssleep(1);
++	switch (status) {
++	case -ENETDOWN:
++	case -ENETUNREACH:
++		nfs_mark_client_ready(clp, -EIO);
++		break;
++	default:
++		ssleep(1);
++		break;
++	}
+ out_drain:
+ 	memalloc_nofs_restore(memflags);
+ 	nfs4_end_drain_session(clp);
 -- 
 2.39.5
 
