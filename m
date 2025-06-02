@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4275222F744;
-	Mon,  2 Jun 2025 14:52:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90FBB232368;
+	Mon,  2 Jun 2025 14:52:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748875954; cv=none; b=qNW6tm8f6RjJ4KUoNGEFRJB1cbilJCfiqutdYfNtS0/tcncqLDpJAiZvjuhRc1wRMxuHma6DHxmlBa+DZubylckbYrRSsjBQPLgSEvxfpDi8ci8F2IvMAUpS/AjN/d1QCLuy5mfznCpn5AAIoiosGJx7ECxYL7wpCOdrlWjSXdQ=
+	t=1748875957; cv=none; b=Ps2k6RcRxP/TqoflyvW9tboUNCDtE7hFGiU7zzmRNk94x8c3JETA18xqwgPN0q49+wCAJGC58BkEL9XgcmCbHZevrj0AxlQ/e0ZllQetBeXvymv8mz0YJEAI/oBWr1Pxu9w332ppx6viZys3Eu6sT9sqC9G7hPsFSrDb9vu55Ng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748875954; c=relaxed/simple;
-	bh=5LinlyfpFaGC0EBTYVQuDNHqcqB/CJlaMElXIAHxtsM=;
+	s=arc-20240116; t=1748875957; c=relaxed/simple;
+	bh=MmiQW32QBguyznkgPcieA+53rLTbWUJy1835+c2Cvyo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=duaAEmS7MSCV1zR5ZLdMdxlhYR7BEixmR6vVfmGrKXvgXBk3MskylM3hbFEzQZzpOAm9poxl7ta/wOHJWCBoHKn3En+Tb0q8tM8GkEBxqId1NprpOeq20M5m0qgrHn1hfVwQauR8Xb1M6b/+wL8+wQz6aIuQt9W+MKGxhpRyuaQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cG5xPtSo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iBv9VgnYdk1aXWowEU0F6jKuGVQH6SZqM/MnmY5VBSithDC15qAnOgJV5U4Ww6PzI9NAR0JXeKIhXTWnHTvEC4J5vTHAfWIIEVNaSF3IYLql7voAcO2t+81GQovTIlLpYlnDwwSpVdJe0dOLQsYr2VQhpFUrtfS+iOpXF5y8VIE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ffVMRq6S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cG5xPtSo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7831C4CEEB;
-	Mon,  2 Jun 2025 14:52:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ffVMRq6S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBCE6C4CEEB;
+	Mon,  2 Jun 2025 14:52:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748875954;
-	bh=5LinlyfpFaGC0EBTYVQuDNHqcqB/CJlaMElXIAHxtsM=;
+	s=korg; t=1748875957;
+	bh=MmiQW32QBguyznkgPcieA+53rLTbWUJy1835+c2Cvyo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cG5xPtSo8dsry6+70+rCakTJqDf8XvKbI3Z/IQM9AcAw2uAsh025n6h/QSo/LLLNb
-	 jeP6VD0AyExHBJ6R+b3MWebfYvyyWqsJKne+hOmPa21QDL87vl2AHhOm2QFar4rWqn
-	 HQl5oTz/wPnGZPeycWEJKa3v7lOh60JG6VHErmXg=
+	b=ffVMRq6SzT+miErxYJjKCzmbi2TQzusdd7WlQzHpeaJg7eyNSGwAidURuZTzgMsBQ
+	 KcBUaF13su+5CmfMsVttZTTSETTaOqi/pXVb98p5mBPons4JH1KR2lLIK1RA5laGSf
+	 +KmgypUB9FqSWeoufScG0tlIlBsRxDTdazgzrwIs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alice Guo <alice.guo@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 018/207] thermal/drivers/qoriq: Power down TMU on system suspend
-Date: Mon,  2 Jun 2025 15:46:30 +0200
-Message-ID: <20250602134259.484402418@linuxfoundation.org>
+Subject: [PATCH 5.15 027/207] wifi: mt76: only mark tx-status-failed frames as ACKed on mt76x0/2
+Date: Mon,  2 Jun 2025 15:46:39 +0200
+Message-ID: <20250602134259.833871418@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134258.769974467@linuxfoundation.org>
 References: <20250602134258.769974467@linuxfoundation.org>
@@ -52,61 +50,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alice Guo <alice.guo@nxp.com>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit 229f3feb4b0442835b27d519679168bea2de96c2 ]
+[ Upstream commit 0c5a89ceddc1728a40cb3313948401dd70e3c649 ]
 
-Enable power-down of TMU (Thermal Management Unit) for TMU version 2 during
-system suspend to save power. Save approximately 4.3mW on VDD_ANA_1P8 on
-i.MX93 platforms.
+The interrupt status polling is unreliable, which can cause status events
+to get lost. On all newer chips, txs-timeout is an indication that the
+packet was either never sent, or never acked.
+Fixes issues with inactivity polling.
 
-Signed-off-by: Alice Guo <alice.guo@nxp.com>
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
-Link: https://lore.kernel.org/r/20241209164859.3758906-2-Frank.Li@nxp.com
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+Link: https://patch.msgid.link/20250311103646.43346-6-nbd@nbd.name
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/qoriq_thermal.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/net/wireless/mediatek/mt76/mt76.h       | 1 +
+ drivers/net/wireless/mediatek/mt76/mt76x0/pci.c | 3 ++-
+ drivers/net/wireless/mediatek/mt76/mt76x0/usb.c | 3 ++-
+ drivers/net/wireless/mediatek/mt76/mt76x2/pci.c | 3 ++-
+ drivers/net/wireless/mediatek/mt76/mt76x2/usb.c | 3 ++-
+ drivers/net/wireless/mediatek/mt76/tx.c         | 3 ++-
+ 6 files changed, 11 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/thermal/qoriq_thermal.c b/drivers/thermal/qoriq_thermal.c
-index 73049f9bea252..34a5fbcc3d200 100644
---- a/drivers/thermal/qoriq_thermal.c
-+++ b/drivers/thermal/qoriq_thermal.c
-@@ -19,6 +19,7 @@
- #define SITES_MAX		16
- #define TMR_DISABLE		0x0
- #define TMR_ME			0x80000000
-+#define TMR_CMD			BIT(29)
- #define TMR_ALPF		0x0c000000
- #define TMR_ALPF_V2		0x03000000
- #define TMTMIR_DEFAULT	0x0000000f
-@@ -345,6 +346,12 @@ static int __maybe_unused qoriq_tmu_suspend(struct device *dev)
- 	if (ret)
- 		return ret;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt76.h b/drivers/net/wireless/mediatek/mt76/mt76.h
+index 27f04fb2796d7..5a90fa556203f 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt76.h
++++ b/drivers/net/wireless/mediatek/mt76/mt76.h
+@@ -345,6 +345,7 @@ struct mt76_hw_cap {
+ #define MT_DRV_RX_DMA_HDR		BIT(3)
+ #define MT_DRV_HW_MGMT_TXQ		BIT(4)
+ #define MT_DRV_AMSDU_OFFLOAD		BIT(5)
++#define MT_DRV_IGNORE_TXS_FAILED	BIT(6)
  
-+	if (data->ver > TMU_VER1) {
-+		ret = regmap_set_bits(data->regmap, REGS_TMR, TMR_CMD);
-+		if (ret)
-+			return ret;
-+	}
-+
- 	clk_disable_unprepare(data->clk);
+ struct mt76_driver_ops {
+ 	u32 drv_flags;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt76x0/pci.c b/drivers/net/wireless/mediatek/mt76/mt76x0/pci.c
+index b795e7245c075..3255f9c0ef71f 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt76x0/pci.c
++++ b/drivers/net/wireless/mediatek/mt76/mt76x0/pci.c
+@@ -151,7 +151,8 @@ mt76x0e_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ 	static const struct mt76_driver_ops drv_ops = {
+ 		.txwi_size = sizeof(struct mt76x02_txwi),
+ 		.drv_flags = MT_DRV_TX_ALIGNED4_SKBS |
+-			     MT_DRV_SW_RX_AIRTIME,
++			     MT_DRV_SW_RX_AIRTIME |
++			     MT_DRV_IGNORE_TXS_FAILED,
+ 		.survey_flags = SURVEY_INFO_TIME_TX,
+ 		.update_survey = mt76x02_update_channel,
+ 		.tx_prepare_skb = mt76x02_tx_prepare_skb,
+diff --git a/drivers/net/wireless/mediatek/mt76/mt76x0/usb.c b/drivers/net/wireless/mediatek/mt76/mt76x0/usb.c
+index f2b2fa7338457..7a4d62bff28ff 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt76x0/usb.c
++++ b/drivers/net/wireless/mediatek/mt76/mt76x0/usb.c
+@@ -209,7 +209,8 @@ static int mt76x0u_probe(struct usb_interface *usb_intf,
+ 			 const struct usb_device_id *id)
+ {
+ 	static const struct mt76_driver_ops drv_ops = {
+-		.drv_flags = MT_DRV_SW_RX_AIRTIME,
++		.drv_flags = MT_DRV_SW_RX_AIRTIME |
++			     MT_DRV_IGNORE_TXS_FAILED,
+ 		.survey_flags = SURVEY_INFO_TIME_TX,
+ 		.update_survey = mt76x02_update_channel,
+ 		.tx_prepare_skb = mt76x02u_tx_prepare_skb,
+diff --git a/drivers/net/wireless/mediatek/mt76/mt76x2/pci.c b/drivers/net/wireless/mediatek/mt76/mt76x2/pci.c
+index 5cd0379d86de8..4e369bd87c900 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt76x2/pci.c
++++ b/drivers/net/wireless/mediatek/mt76/mt76x2/pci.c
+@@ -22,7 +22,8 @@ mt76x2e_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ 	static const struct mt76_driver_ops drv_ops = {
+ 		.txwi_size = sizeof(struct mt76x02_txwi),
+ 		.drv_flags = MT_DRV_TX_ALIGNED4_SKBS |
+-			     MT_DRV_SW_RX_AIRTIME,
++			     MT_DRV_SW_RX_AIRTIME |
++			     MT_DRV_IGNORE_TXS_FAILED,
+ 		.survey_flags = SURVEY_INFO_TIME_TX,
+ 		.update_survey = mt76x02_update_channel,
+ 		.tx_prepare_skb = mt76x02_tx_prepare_skb,
+diff --git a/drivers/net/wireless/mediatek/mt76/mt76x2/usb.c b/drivers/net/wireless/mediatek/mt76/mt76x2/usb.c
+index 9369515f36a3a..09b01e09bcfe0 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt76x2/usb.c
++++ b/drivers/net/wireless/mediatek/mt76/mt76x2/usb.c
+@@ -29,7 +29,8 @@ static int mt76x2u_probe(struct usb_interface *intf,
+ 			 const struct usb_device_id *id)
+ {
+ 	static const struct mt76_driver_ops drv_ops = {
+-		.drv_flags = MT_DRV_SW_RX_AIRTIME,
++		.drv_flags = MT_DRV_SW_RX_AIRTIME |
++			     MT_DRV_IGNORE_TXS_FAILED,
+ 		.survey_flags = SURVEY_INFO_TIME_TX,
+ 		.update_survey = mt76x02_update_channel,
+ 		.tx_prepare_skb = mt76x02u_tx_prepare_skb,
+diff --git a/drivers/net/wireless/mediatek/mt76/tx.c b/drivers/net/wireless/mediatek/mt76/tx.c
+index 134a735a06329..3fbf0153d13ca 100644
+--- a/drivers/net/wireless/mediatek/mt76/tx.c
++++ b/drivers/net/wireless/mediatek/mt76/tx.c
+@@ -93,7 +93,8 @@ __mt76_tx_status_skb_done(struct mt76_dev *dev, struct sk_buff *skb, u8 flags,
+ 	__skb_unlink(skb, &dev->status_list);
  
- 	return 0;
-@@ -359,6 +366,12 @@ static int __maybe_unused qoriq_tmu_resume(struct device *dev)
- 	if (ret)
- 		return ret;
- 
-+	if (data->ver > TMU_VER1) {
-+		ret = regmap_clear_bits(data->regmap, REGS_TMR, TMR_CMD);
-+		if (ret)
-+			return ret;
-+	}
-+
- 	/* Enable monitoring */
- 	return regmap_update_bits(data->regmap, REGS_TMR, TMR_ME, TMR_ME);
- }
+ 	/* Tx status can be unreliable. if it fails, mark the frame as ACKed */
+-	if (flags & MT_TX_CB_TXS_FAILED) {
++	if (flags & MT_TX_CB_TXS_FAILED &&
++	    (dev->drv->drv_flags & MT_DRV_IGNORE_TXS_FAILED)) {
+ 		info->status.rates[0].count = 0;
+ 		info->status.rates[0].idx = -1;
+ 		info->flags |= IEEE80211_TX_STAT_ACK;
 -- 
 2.39.5
 
