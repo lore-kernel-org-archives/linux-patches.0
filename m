@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4705222A1FA;
-	Mon,  2 Jun 2025 14:02:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41A6C22C339;
+	Mon,  2 Jun 2025 14:02:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748872957; cv=none; b=jMMWXxBAiHTP8mpOU68gtb/ThI4aAQhMBgFWio11pQVt+zvLwcXcQjZlr6LHS1IfSMq9ThRneTdfMJTKB89JBJhRrvylDl/aaUVhk72Hl8WAm4UhWzR2/82BZYG6s6YJscPvrZRDA8qBRQuX8GwhV2Vns/uR3jCNJS1GY6jHyys=
+	t=1748872960; cv=none; b=qh4qkInZkBVIqsZXx3c3SfeXJ/ZgWQstY3J1OYoFSn9+LgeKdYgcJNV+ysLhS6lmY8muRTO3BZN6B2V4pp4E32xX/RgvvS9qjhQG7xcS0euX/CqDKeTCt7MdIFOqq+oLnqBR7bnZ87znwDyXD+2K5l+l6u1gRL+7OCnx8D4MVf4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748872957; c=relaxed/simple;
-	bh=vPXc9xDxvjYXDkaZRGacFv53luI/X1pz+8qIq1Mz2Ck=;
+	s=arc-20240116; t=1748872960; c=relaxed/simple;
+	bh=no6cJIbSEL2tcRVZ6Qmd6IgxNQmJ2Xh5IlzzVgj95RM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q+yqTEhRTAzAxnjBwGrb7E4y6DLsqShAuXXcoSDabrcU8AcRES6VY/bWwEF2pagP4s3bquLlyoA0JzVUNWhMrYWUG8U8XWQW1F/FWeN2am8GZ+vd+eJ5zQXC2SY5npsKZr5OKDoVkanq4C0HqrdM6zanpEGmm5hCTQPpIGJDTic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q7aFsHOB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HQR27WAdEdrrARG5kXycWgzQZs8JKu+6VgJYGld4V/if6q4Rd3Nfl9XhIuv+P6f05okasJiD3/CSUMvgs/Qjj3SXtFAdqh8qwLVeAfjduJgCMj5dsTdBibX14EjUqewk18QSL7+EGcAYZDtxbEwZMaJm3NNEorWM5gCEOQEwG60=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TrL84YVH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q7aFsHOB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92BF7C4CEEB;
-	Mon,  2 Jun 2025 14:02:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TrL84YVH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4DABC4CEF0;
+	Mon,  2 Jun 2025 14:02:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748872957;
-	bh=vPXc9xDxvjYXDkaZRGacFv53luI/X1pz+8qIq1Mz2Ck=;
+	s=korg; t=1748872960;
+	bh=no6cJIbSEL2tcRVZ6Qmd6IgxNQmJ2Xh5IlzzVgj95RM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q7aFsHOBO8Ary/OiNC40fbfjy+IBmb72LgzY7dSQnqsIYE0XWbY0+eEBbxsSv/bzn
-	 akzzRuf1uXVr0pSDeWfuVYuHwiSvpJJavwIou2WVZzvEZ9Rcc04Jgm0z8+QEZquSJf
-	 4Tr5AzraT+F6EiRavUaxcZw67EHcT+1B35/U/+YI=
+	b=TrL84YVHgq0m0YRMzohAu0rX0CNJC9y8STP88nS5+XCLkCgYMB8vtvk3qmlfQ9viZ
+	 7mNmSMiLz1VFonBhS6mwbsyQ6vSXvQl0Y/1QiuvAwr5oBrdfp6S27kQnkon2wyqqGF
+	 SyeQPKjTCl4mUF/ocntv+FJxfTTaV+5AJ4j/eLec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Purva Yeshi <purvayeshi550@gmail.com>,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Jeff Layton <jlayton@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 49/55] char: tpm: tpm-buf: Add sanity check fallback in read helpers
-Date: Mon,  2 Jun 2025 15:48:06 +0200
-Message-ID: <20250602134240.207828274@linuxfoundation.org>
+Subject: [PATCH 6.12 50/55] NFS: Avoid flushing data while holding directory locks in nfs_rename()
+Date: Mon,  2 Jun 2025 15:48:07 +0200
+Message-ID: <20250602134240.247985573@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134238.271281478@linuxfoundation.org>
 References: <20250602134238.271281478@linuxfoundation.org>
@@ -52,66 +51,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Purva Yeshi <purvayeshi550@gmail.com>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit 32d495b384a2db7d23c2295e03e6b6edb1c0db8d ]
+[ Upstream commit dcd21b609d4abc7303f8683bce4f35d78d7d6830 ]
 
-Fix Smatch-detected issue:
+The Linux client assumes that all filehandles are non-volatile for
+renames within the same directory (otherwise sillyrename cannot work).
+However, the existence of the Linux 'subtree_check' export option has
+meant that nfs_rename() has always assumed it needs to flush writes
+before attempting to rename.
 
-drivers/char/tpm/tpm-buf.c:208 tpm_buf_read_u8() error:
-uninitialized symbol 'value'.
-drivers/char/tpm/tpm-buf.c:225 tpm_buf_read_u16() error:
-uninitialized symbol 'value'.
-drivers/char/tpm/tpm-buf.c:242 tpm_buf_read_u32() error:
-uninitialized symbol 'value'.
+Since NFSv4 does allow the client to query whether or not the server
+exhibits this behaviour, and since knfsd does actually set the
+appropriate flag when 'subtree_check' is enabled on an export, it
+should be OK to optimise away the write flushing behaviour in the cases
+where it is clearly not needed.
 
-Zero-initialize the return values in tpm_buf_read_u8(), tpm_buf_read_u16(),
-and tpm_buf_read_u32() to guard against uninitialized data in case of a
-boundary overflow.
-
-Add defensive initialization ensures the return values are always defined,
-preventing undefined behavior if the unexpected happens.
-
-Signed-off-by: Purva Yeshi <purvayeshi550@gmail.com>
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/tpm/tpm-buf.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/nfs/client.c           |  2 ++
+ fs/nfs/dir.c              | 15 ++++++++++++++-
+ include/linux/nfs_fs_sb.h | 12 +++++++++---
+ 3 files changed, 25 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/char/tpm/tpm-buf.c b/drivers/char/tpm/tpm-buf.c
-index e49a19fea3bdf..dc882fc9fa9ef 100644
---- a/drivers/char/tpm/tpm-buf.c
-+++ b/drivers/char/tpm/tpm-buf.c
-@@ -201,7 +201,7 @@ static void tpm_buf_read(struct tpm_buf *buf, off_t *offset, size_t count, void
-  */
- u8 tpm_buf_read_u8(struct tpm_buf *buf, off_t *offset)
- {
--	u8 value;
-+	u8 value = 0;
+diff --git a/fs/nfs/client.c b/fs/nfs/client.c
+index 03ecc77656151..4503758e9594b 100644
+--- a/fs/nfs/client.c
++++ b/fs/nfs/client.c
+@@ -1096,6 +1096,8 @@ struct nfs_server *nfs_create_server(struct fs_context *fc)
+ 		if (server->namelen == 0 || server->namelen > NFS2_MAXNAMLEN)
+ 			server->namelen = NFS2_MAXNAMLEN;
+ 	}
++	/* Linux 'subtree_check' borkenness mandates this setting */
++	server->fh_expire_type = NFS_FH_VOL_RENAME;
  
- 	tpm_buf_read(buf, offset, sizeof(value), &value);
+ 	if (!(fattr->valid & NFS_ATTR_FATTR)) {
+ 		error = ctx->nfs_mod->rpc_ops->getattr(server, ctx->mntfh,
+diff --git a/fs/nfs/dir.c b/fs/nfs/dir.c
+index 492cffd9d3d84..f9f4a92f63e92 100644
+--- a/fs/nfs/dir.c
++++ b/fs/nfs/dir.c
+@@ -2690,6 +2690,18 @@ nfs_unblock_rename(struct rpc_task *task, struct nfs_renamedata *data)
+ 	unblock_revalidate(new_dentry);
+ }
  
-@@ -218,7 +218,7 @@ EXPORT_SYMBOL_GPL(tpm_buf_read_u8);
-  */
- u16 tpm_buf_read_u16(struct tpm_buf *buf, off_t *offset)
- {
--	u16 value;
-+	u16 value = 0;
++static bool nfs_rename_is_unsafe_cross_dir(struct dentry *old_dentry,
++					   struct dentry *new_dentry)
++{
++	struct nfs_server *server = NFS_SB(old_dentry->d_sb);
++
++	if (old_dentry->d_parent != new_dentry->d_parent)
++		return false;
++	if (server->fh_expire_type & NFS_FH_RENAME_UNSAFE)
++		return !(server->fh_expire_type & NFS_FH_NOEXPIRE_WITH_OPEN);
++	return true;
++}
++
+ /*
+  * RENAME
+  * FIXME: Some nfsds, like the Linux user space nfsd, may generate a
+@@ -2777,7 +2789,8 @@ int nfs_rename(struct mnt_idmap *idmap, struct inode *old_dir,
  
- 	tpm_buf_read(buf, offset, sizeof(value), &value);
+ 	}
  
-@@ -235,7 +235,7 @@ EXPORT_SYMBOL_GPL(tpm_buf_read_u16);
-  */
- u32 tpm_buf_read_u32(struct tpm_buf *buf, off_t *offset)
- {
--	u32 value;
-+	u32 value = 0;
+-	if (S_ISREG(old_inode->i_mode))
++	if (S_ISREG(old_inode->i_mode) &&
++	    nfs_rename_is_unsafe_cross_dir(old_dentry, new_dentry))
+ 		nfs_sync_inode(old_inode);
+ 	task = nfs_async_rename(old_dir, new_dir, old_dentry, new_dentry,
+ 				must_unblock ? nfs_unblock_rename : NULL);
+diff --git a/include/linux/nfs_fs_sb.h b/include/linux/nfs_fs_sb.h
+index 81ab18658d72d..2cff5cafbaa78 100644
+--- a/include/linux/nfs_fs_sb.h
++++ b/include/linux/nfs_fs_sb.h
+@@ -211,6 +211,15 @@ struct nfs_server {
+ 	char			*fscache_uniq;	/* Uniquifier (or NULL) */
+ #endif
  
- 	tpm_buf_read(buf, offset, sizeof(value), &value);
- 
++	/* The following #defines numerically match the NFSv4 equivalents */
++#define NFS_FH_NOEXPIRE_WITH_OPEN (0x1)
++#define NFS_FH_VOLATILE_ANY (0x2)
++#define NFS_FH_VOL_MIGRATION (0x4)
++#define NFS_FH_VOL_RENAME (0x8)
++#define NFS_FH_RENAME_UNSAFE (NFS_FH_VOLATILE_ANY | NFS_FH_VOL_RENAME)
++	u32			fh_expire_type;	/* V4 bitmask representing file
++						   handle volatility type for
++						   this filesystem */
+ 	u32			pnfs_blksize;	/* layout_blksize attr */
+ #if IS_ENABLED(CONFIG_NFS_V4)
+ 	u32			attr_bitmask[3];/* V4 bitmask representing the set
+@@ -234,9 +243,6 @@ struct nfs_server {
+ 	u32			acl_bitmask;	/* V4 bitmask representing the ACEs
+ 						   that are supported on this
+ 						   filesystem */
+-	u32			fh_expire_type;	/* V4 bitmask representing file
+-						   handle volatility type for
+-						   this filesystem */
+ 	struct pnfs_layoutdriver_type  *pnfs_curr_ld; /* Active layout driver */
+ 	struct rpc_wait_queue	roc_rpcwaitq;
+ 	void			*pnfs_ld_data;	/* per mount point data */
 -- 
 2.39.5
 
