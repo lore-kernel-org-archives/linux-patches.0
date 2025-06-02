@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1D9D221FDD;
-	Mon,  2 Jun 2025 14:24:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C044226CF0;
+	Mon,  2 Jun 2025 14:24:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748874253; cv=none; b=hUfDbL4tJobLrsZ+tZcsBE1o6UC28hrN0uHp74SuApUkPXpQ7QDtRho4HrEi0SOiC3vhdUNQ4THYJikZv8vg6ggxhyyk+JZFx9kzlG6lK49lItAu52i0ofM84jjvTeUmHVYBxEtwnHDgLJzCz7xDz7QjgaKtigWOqFRtt/+oWhs=
+	t=1748874259; cv=none; b=fb3dCa9++4aEhGzOF4h5CF5CCEI+fcJOZQtVFQFPJ5pXFb4A0/s/TAJ0OrXLvwL4+Q8vBq42/JJZNmZX3NDwDoahwoT7H72pTBROi7Z8HlDe+n2Rx3keJwyq3KVkaW3B0n0MwY2WvMrB21twGAaad4JD7pndEDKvWXpFEKyCw+k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748874253; c=relaxed/simple;
-	bh=Dyul4Z4CKD8qgeiJrVx7wY2unRWHYYD0C8qXG5mXEBc=;
+	s=arc-20240116; t=1748874259; c=relaxed/simple;
+	bh=9thmBb0HdXF/5srtVzF9ojyONfEz3nmct0lY4zIcKZY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bHlmFBTw+rsfH01+yG1cZRmoBZp9Pb/cFwCm8aF9HmbXGoTYo5o77aEUhOzjRl/nwDQsXEc9rQq2LXQw43H9jZor8xH2ZvfD/Bjx1lhNjsvLH9SqBNZNN7mRjd3qwJji2hu1g6R9s3ufT1CusesFbwo8k9lTmM2di+VwVRnQ2SU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qC48aoTh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jmngl2+ALJN+mlJCpQQE/7zoakdIZVx+O8mXe7oqlvDshndc8sAh1g4vVSzSm+eTmmeXAyEh0O+ReRA5+nsMuQZ0wLCYDTkxLycxejVAfe8/ju2imehgy9+y38TJVKKzYW/6IkcP+H6HNYY9FQGlYDjbxtdNS0vs1TVckLB+PzM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z8lNFEVD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qC48aoTh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 415ABC4CEF0;
-	Mon,  2 Jun 2025 14:24:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z8lNFEVD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 749DBC4CEEB;
+	Mon,  2 Jun 2025 14:24:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748874253;
-	bh=Dyul4Z4CKD8qgeiJrVx7wY2unRWHYYD0C8qXG5mXEBc=;
+	s=korg; t=1748874256;
+	bh=9thmBb0HdXF/5srtVzF9ojyONfEz3nmct0lY4zIcKZY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qC48aoTh5dhQbyUfhrozreoPsYzs8zMQSddGZ5Xtnj+NoK5lwn0Gjw83/A4ACflBw
-	 dr4T/JSIZAH/EsRlpyD0Tt4t5yCnFB91fD8xMkLKb2goIDtDni3uatPC9BpuDO19+3
-	 7eeBP/dHllMguCcanw+vJ+m+x3Yb/jos0xFi7HqY=
+	b=Z8lNFEVDc1eQtDOFwlNq+WkG0Q3oOvRJ4Qk9vZ+T/om5WGS/sagv7+fpZjvJObGCy
+	 8G0ti1/FLtScqeqykM+NRSyMC9Ktqg4E8ZTgU+PdgT2zhs3nHnDtWYUiL7fWpYGuiK
+	 xIKQWSLjfWlEtly+eYfhiznMWSUJG8ASpq1+EBa4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Lee Jones <lee@kernel.org>
-Subject: [PATCH 6.6 401/444] af_unix: Allocate struct unix_vertex for each inflight AF_UNIX fd.
-Date: Mon,  2 Jun 2025 15:47:45 +0200
-Message-ID: <20250602134357.191640006@linuxfoundation.org>
+Subject: [PATCH 6.6 410/444] af_unix: Skip GC if no cycle exists.
+Date: Mon,  2 Jun 2025 15:47:54 +0200
+Message-ID: <20250602134357.575465324@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -54,197 +54,152 @@ Content-Transfer-Encoding: 8bit
 
 From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-commit 1fbfdfaa590248c1d86407f578e40e5c65136330 upstream.
+commit 77e5593aebba823bcbcf2c4b58b07efcd63933b8 upstream.
 
-We will replace the garbage collection algorithm for AF_UNIX, where
-we will consider each inflight AF_UNIX socket as a vertex and its file
-descriptor as an edge in a directed graph.
+We do not need to run GC if there is no possible cyclic reference.
+We use unix_graph_maybe_cyclic to decide if we should run GC.
 
-This patch introduces a new struct unix_vertex representing a vertex
-in the graph and adds its pointer to struct unix_sock.
+If a fd of an AF_UNIX socket is passed to an already inflight AF_UNIX
+socket, they could form a cyclic reference.  Then, we set true to
+unix_graph_maybe_cyclic and later run Tarjan's algorithm to group
+them into SCC.
 
-When we send a fd using the SCM_RIGHTS message, we allocate struct
-scm_fp_list to struct scm_cookie in scm_fp_copy().  Then, we bump
-each refcount of the inflight fds' struct file and save them in
-scm_fp_list.fp.
+Once we run Tarjan's algorithm, we are 100% sure whether cyclic
+references exist or not.  If there is no cycle, we set false to
+unix_graph_maybe_cyclic and can skip the entire garbage collection
+next time.
 
-After that, unix_attach_fds() inexplicably clones scm_fp_list of
-scm_cookie and sets it to skb.  (We will remove this part after
-replacing GC.)
+When finalising SCC, we set true to unix_graph_maybe_cyclic if SCC
+consists of multiple vertices.
 
-Here, we add a new function call in unix_attach_fds() to preallocate
-struct unix_vertex per inflight AF_UNIX fd and link each vertex to
-skb's scm_fp_list.vertices.
+Even if SCC is a single vertex, a cycle might exist as self-fd passing.
+Given the corner case is rare, we detect it by checking all edges of
+the vertex and set true to unix_graph_maybe_cyclic.
 
-When sendmsg() succeeds later, if the socket of the inflight fd is
-still not inflight yet, we will set the preallocated vertex to struct
-unix_sock.vertex and link it to a global list unix_unvisited_vertices
-under spin_lock(&unix_gc_lock).
-
-If the socket is already inflight, we free the preallocated vertex.
-This is to avoid taking the lock unnecessarily when sendmsg() could
-fail later.
-
-In the following patch, we will similarly allocate another struct
-per edge, which will finally be linked to the inflight socket's
-unix_vertex.edges.
-
-And then, we will count the number of edges as unix_vertex.out_degree.
+With this change, __unix_gc() is just a spin_lock() dance in the normal
+usage.
 
 Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
 Acked-by: Paolo Abeni <pabeni@redhat.com>
-Link: https://lore.kernel.org/r/20240325202425.60930-2-kuniyu@amazon.com
+Link: https://lore.kernel.org/r/20240325202425.60930-11-kuniyu@amazon.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/af_unix.h |    9 +++++++++
- include/net/scm.h     |    3 +++
- net/core/scm.c        |    7 +++++++
- net/unix/af_unix.c    |    6 ++++++
- net/unix/garbage.c    |   38 ++++++++++++++++++++++++++++++++++++++
- 5 files changed, 63 insertions(+)
+ net/unix/garbage.c |   48 +++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 47 insertions(+), 1 deletion(-)
 
---- a/include/net/af_unix.h
-+++ b/include/net/af_unix.h
-@@ -22,9 +22,17 @@ extern unsigned int unix_tot_inflight;
- 
- void unix_inflight(struct user_struct *user, struct file *fp);
- void unix_notinflight(struct user_struct *user, struct file *fp);
-+int unix_prepare_fpl(struct scm_fp_list *fpl);
-+void unix_destroy_fpl(struct scm_fp_list *fpl);
- void unix_gc(void);
- void wait_for_unix_gc(struct scm_fp_list *fpl);
- 
-+struct unix_vertex {
-+	struct list_head edges;
-+	struct list_head entry;
-+	unsigned long out_degree;
-+};
-+
- struct sock *unix_peer_get(struct sock *sk);
- 
- #define UNIX_HASH_MOD	(256 - 1)
-@@ -62,6 +70,7 @@ struct unix_sock {
- 	struct path		path;
- 	struct mutex		iolock, bindlock;
- 	struct sock		*peer;
-+	struct unix_vertex	*vertex;
- 	struct list_head	link;
- 	unsigned long		inflight;
- 	spinlock_t		lock;
---- a/include/net/scm.h
-+++ b/include/net/scm.h
-@@ -26,6 +26,9 @@ struct scm_fp_list {
- 	short			count;
- 	short			count_unix;
- 	short			max;
-+#ifdef CONFIG_UNIX
-+	struct list_head	vertices;
-+#endif
- 	struct user_struct	*user;
- 	struct file		*fp[SCM_MAX_FD];
- };
---- a/net/core/scm.c
-+++ b/net/core/scm.c
-@@ -89,6 +89,9 @@ static int scm_fp_copy(struct cmsghdr *c
- 		fpl->count_unix = 0;
- 		fpl->max = SCM_MAX_FD;
- 		fpl->user = NULL;
-+#if IS_ENABLED(CONFIG_UNIX)
-+		INIT_LIST_HEAD(&fpl->vertices);
-+#endif
- 	}
- 	fpp = &fpl->fp[fpl->count];
- 
-@@ -376,8 +379,12 @@ struct scm_fp_list *scm_fp_dup(struct sc
- 	if (new_fpl) {
- 		for (i = 0; i < fpl->count; i++)
- 			get_file(fpl->fp[i]);
-+
- 		new_fpl->max = new_fpl->count;
- 		new_fpl->user = get_uid(fpl->user);
-+#if IS_ENABLED(CONFIG_UNIX)
-+		INIT_LIST_HEAD(&new_fpl->vertices);
-+#endif
- 	}
- 	return new_fpl;
- }
---- a/net/unix/af_unix.c
-+++ b/net/unix/af_unix.c
-@@ -979,6 +979,7 @@ static struct sock *unix_create1(struct
- 	sk->sk_destruct		= unix_sock_destructor;
- 	u = unix_sk(sk);
- 	u->inflight = 0;
-+	u->vertex = NULL;
- 	u->path.dentry = NULL;
- 	u->path.mnt = NULL;
- 	spin_lock_init(&u->lock);
-@@ -1782,6 +1783,9 @@ static int unix_attach_fds(struct scm_co
- 	for (i = scm->fp->count - 1; i >= 0; i--)
- 		unix_inflight(scm->fp->user, scm->fp->fp[i]);
- 
-+	if (unix_prepare_fpl(UNIXCB(skb).fp))
-+		return -ENOMEM;
-+
- 	return 0;
- }
- 
-@@ -1792,6 +1796,8 @@ static void unix_detach_fds(struct scm_c
- 	scm->fp = UNIXCB(skb).fp;
- 	UNIXCB(skb).fp = NULL;
- 
-+	unix_destroy_fpl(scm->fp);
-+
- 	for (i = scm->fp->count - 1; i >= 0; i--)
- 		unix_notinflight(scm->fp->user, scm->fp->fp[i]);
- }
 --- a/net/unix/garbage.c
 +++ b/net/unix/garbage.c
-@@ -101,6 +101,44 @@ struct unix_sock *unix_get_socket(struct
- 	return NULL;
+@@ -112,6 +112,19 @@ static struct unix_vertex *unix_edge_suc
+ 	return edge->successor->vertex;
  }
  
-+static void unix_free_vertices(struct scm_fp_list *fpl)
-+{
-+	struct unix_vertex *vertex, *next_vertex;
++static bool unix_graph_maybe_cyclic;
 +
-+	list_for_each_entry_safe(vertex, next_vertex, &fpl->vertices, entry) {
-+		list_del(&vertex->entry);
-+		kfree(vertex);
-+	}
++static void unix_update_graph(struct unix_vertex *vertex)
++{
++	/* If the receiver socket is not inflight, no cyclic
++	 * reference could be formed.
++	 */
++	if (!vertex)
++		return;
++
++	unix_graph_maybe_cyclic = true;
 +}
 +
-+int unix_prepare_fpl(struct scm_fp_list *fpl)
+ static LIST_HEAD(unix_unvisited_vertices);
+ 
+ enum unix_vertex_index {
+@@ -138,12 +151,16 @@ static void unix_add_edge(struct scm_fp_
+ 
+ 	vertex->out_degree++;
+ 	list_add_tail(&edge->vertex_entry, &vertex->edges);
++
++	unix_update_graph(unix_edge_successor(edge));
+ }
+ 
+ static void unix_del_edge(struct scm_fp_list *fpl, struct unix_edge *edge)
+ {
+ 	struct unix_vertex *vertex = edge->predecessor->vertex;
+ 
++	unix_update_graph(unix_edge_successor(edge));
++
+ 	list_del(&edge->vertex_entry);
+ 	vertex->out_degree--;
+ 
+@@ -227,6 +244,7 @@ out:
+ void unix_update_edges(struct unix_sock *receiver)
+ {
+ 	spin_lock(&unix_gc_lock);
++	unix_update_graph(unix_sk(receiver->listener)->vertex);
+ 	receiver->listener = NULL;
+ 	spin_unlock(&unix_gc_lock);
+ }
+@@ -268,6 +286,26 @@ void unix_destroy_fpl(struct scm_fp_list
+ 	unix_free_vertices(fpl);
+ }
+ 
++static bool unix_scc_cyclic(struct list_head *scc)
 +{
 +	struct unix_vertex *vertex;
-+	int i;
++	struct unix_edge *edge;
 +
-+	if (!fpl->count_unix)
-+		return 0;
++	/* SCC containing multiple vertices ? */
++	if (!list_is_singular(scc))
++		return true;
 +
-+	for (i = 0; i < fpl->count_unix; i++) {
-+		vertex = kmalloc(sizeof(*vertex), GFP_KERNEL);
-+		if (!vertex)
-+			goto err;
++	vertex = list_first_entry(scc, typeof(*vertex), scc_entry);
 +
-+		list_add(&vertex->entry, &fpl->vertices);
++	/* Self-reference or a embryo-listener circle ? */
++	list_for_each_entry(edge, &vertex->edges, vertex_entry) {
++		if (unix_edge_successor(edge) == vertex)
++			return true;
 +	}
 +
-+	return 0;
-+
-+err:
-+	unix_free_vertices(fpl);
-+	return -ENOMEM;
++	return false;
 +}
 +
-+void unix_destroy_fpl(struct scm_fp_list *fpl)
-+{
-+	unix_free_vertices(fpl);
-+}
+ static LIST_HEAD(unix_visited_vertices);
+ static unsigned long unix_vertex_grouped_index = UNIX_VERTEX_INDEX_MARK2;
+ 
+@@ -353,6 +391,9 @@ prev_vertex:
+ 			vertex->index = unix_vertex_grouped_index;
+ 		}
+ 
++		if (!unix_graph_maybe_cyclic)
++			unix_graph_maybe_cyclic = unix_scc_cyclic(&scc);
 +
- DEFINE_SPINLOCK(unix_gc_lock);
- unsigned int unix_tot_inflight;
- static LIST_HEAD(gc_candidates);
+ 		list_del(&scc);
+ 	}
+ 
+@@ -363,6 +404,8 @@ prev_vertex:
+ 
+ static void unix_walk_scc(void)
+ {
++	unix_graph_maybe_cyclic = false;
++
+ 	/* Visit every vertex exactly once.
+ 	 * __unix_walk_scc() moves visited vertices to unix_visited_vertices.
+ 	 */
+@@ -524,6 +567,9 @@ static void __unix_gc(struct work_struct
+ 
+ 	spin_lock(&unix_gc_lock);
+ 
++	if (!unix_graph_maybe_cyclic)
++		goto skip_gc;
++
+ 	unix_walk_scc();
+ 
+ 	/* First, select candidates for garbage collection.  Only
+@@ -633,7 +679,7 @@ static void __unix_gc(struct work_struct
+ 
+ 	/* All candidates should have been detached by now. */
+ 	WARN_ON_ONCE(!list_empty(&gc_candidates));
+-
++skip_gc:
+ 	/* Paired with READ_ONCE() in wait_for_unix_gc(). */
+ 	WRITE_ONCE(gc_in_progress, false);
+ 
 
 
