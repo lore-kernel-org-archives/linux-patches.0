@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2589A2236F4;
-	Mon,  2 Jun 2025 14:44:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62F4822576E;
+	Mon,  2 Jun 2025 14:44:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748875457; cv=none; b=ZtGaGGa+S768bSZNqI8+NC/paNoKF4bRhgaR6ispJWYrv3M6XLf5312G4/QfDEf++pd533BbNk3y4g0ik+wY6YlyE7IYwC2pT4lNAcZ58DxW0+pEBnLqi3Jm0oXgEKi19VwKl0oOJpNyJgQ5DMdVKbYFVR32z8SLxcOvnnvf1Dk=
+	t=1748875460; cv=none; b=IpFpJVpI++ltpuUzxjun0oEfhNdWCszSFiOlFoyQuCxqL14i7xp4rF227XeyBdyP4Qicdc3SYqYjpNk+75h+tmCG3Ue1C+8O5vzMP/zWK98p5tdw1l/HQzkkmv/XmZL0ic45vIXZHROSF+ZmysxGDS5m8Y22FWfGxIMk86bM6bc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748875457; c=relaxed/simple;
-	bh=7uwTWWAyD+Z0Nw9S75Bwp/g7/sKexDOPXRasxRQxyA8=;
+	s=arc-20240116; t=1748875460; c=relaxed/simple;
+	bh=71NVS0avkHOPcs41uTh6Xex65OwG/noOnhgQ2gSh5ak=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YAatD2itLdfR2YfkYRmzgthUC6GSn1rTNyH6kqIvnsF90eZUpoot8lMeBD02maRLG5gIVV3B+51M44IoDklTO0LIYkKa/JaMiGy44q4zLys0dOg/Wu534+qH3IKH0BPb1rbVc5iVPRMpR+ZH3vEn/mGRpRgwsucEVhkUfLCgtNo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G63UkiOY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=RZ4zxp16pCPGQ7XkWMKhcw+49DXESNZiudnu1xOjlgo15O4l9JMlX2lGb1k1+IupsCEUUZMsG/Qlns3paBD2CNK3cwMomYgmWq1xq/hwID2VcT3qhUjG0W0xDMizTpfvTirX+F2bQ4ZEYqIKKBGStZ1vZYtYS8e8+6AvupOqa9w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FswmgaH6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G63UkiOY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8131CC4CEEB;
-	Mon,  2 Jun 2025 14:44:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FswmgaH6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4880C4CEEB;
+	Mon,  2 Jun 2025 14:44:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748875457;
-	bh=7uwTWWAyD+Z0Nw9S75Bwp/g7/sKexDOPXRasxRQxyA8=;
+	s=korg; t=1748875460;
+	bh=71NVS0avkHOPcs41uTh6Xex65OwG/noOnhgQ2gSh5ak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G63UkiOYPb6TD/m6dHlzN7fbqoCU0NvK4Rs/DMMf1Zs3q1j6iTX+k2cibvEZUdDz7
-	 GIwyZMUMrQH91KXaHe5XbHlf5AF9ut6jivZZ4eNyrE84UuYU+zqlfrzkBiN1rOjpP7
-	 5x3STA9Jx/CmGhyFj72hxoDOWWJz94QUHHhgW2Z4=
+	b=FswmgaH6IHAFUFaso2ughe4tUa3brNZV6tNmU6yl/jmhCOaSJr6x0utbxd4hdXagz
+	 Mv8qAVtNSihB3l0RLumSxM/x5GRdVQguJNm06jO+OthsC9sHh3UnpJCSi3Drk2jqL8
+	 0v/4dNs+XSkRHRWFE2K8GSoqF1uGr+d0Pz/ntX4o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20G=C3=B6ttsche?= <cgzones@googlemail.com>,
-	Serge Hallyn <serge@hallyn.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	=?UTF-8?q?Kai=20M=C3=A4kisara?= <Kai.Makisara@kolumbus.fi>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 141/270] ext4: reorder capability check last
-Date: Mon,  2 Jun 2025 15:47:06 +0200
-Message-ID: <20250602134312.999013740@linuxfoundation.org>
+Subject: [PATCH 5.10 142/270] scsi: st: Tighten the page format heuristics with MODE SELECT
+Date: Mon,  2 Jun 2025 15:47:07 +0200
+Message-ID: <20250602134313.039477567@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134307.195171844@linuxfoundation.org>
 References: <20250602134307.195171844@linuxfoundation.org>
@@ -54,50 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Göttsche <cgzones@googlemail.com>
+From: Kai Mäkisara <Kai.Makisara@kolumbus.fi>
 
-[ Upstream commit 1b419c889c0767a5b66d0a6c566cae491f1cb0f7 ]
+[ Upstream commit 8db816c6f176321e42254badd5c1a8df8bfcfdb4 ]
 
-capable() calls refer to enabled LSMs whether to permit or deny the
-request.  This is relevant in connection with SELinux, where a
-capability check results in a policy decision and by default a denial
-message on insufficient permission is issued.
-It can lead to three undesired cases:
-  1. A denial message is generated, even in case the operation was an
-     unprivileged one and thus the syscall succeeded, creating noise.
-  2. To avoid the noise from 1. the policy writer adds a rule to ignore
-     those denial messages, hiding future syscalls, where the task
-     performs an actual privileged operation, leading to hidden limited
-     functionality of that task.
-  3. To avoid the noise from 1. the policy writer adds a rule to permit
-     the task the requested capability, while it does not need it,
-     violating the principle of least privilege.
+In the days when SCSI-2 was emerging, some drives did claim SCSI-2 but did
+not correctly implement it. The st driver first tries MODE SELECT with the
+page format bit set to set the block descriptor.  If not successful, the
+non-page format is tried.
 
-Signed-off-by: Christian Göttsche <cgzones@googlemail.com>
-Reviewed-by: Serge Hallyn <serge@hallyn.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20250302160657.127253-2-cgoettsche@seltendoof.de
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+The test only tests the sense code and this triggers also from illegal
+parameter in the parameter list. The test is limited to "old" devices and
+made more strict to remove false alarms.
+
+Signed-off-by: Kai Mäkisara <Kai.Makisara@kolumbus.fi>
+Link: https://lore.kernel.org/r/20250311112516.5548-4-Kai.Makisara@kolumbus.fi
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/balloc.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/scsi/st.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/ext4/balloc.c b/fs/ext4/balloc.c
-index bdbf130416c73..be267cd9dea75 100644
---- a/fs/ext4/balloc.c
-+++ b/fs/ext4/balloc.c
-@@ -637,8 +637,8 @@ static int ext4_has_free_clusters(struct ext4_sb_info *sbi,
- 	/* Hm, nope.  Are (enough) root reserved clusters available? */
- 	if (uid_eq(sbi->s_resuid, current_fsuid()) ||
- 	    (!gid_eq(sbi->s_resgid, GLOBAL_ROOT_GID) && in_group_p(sbi->s_resgid)) ||
--	    capable(CAP_SYS_RESOURCE) ||
--	    (flags & EXT4_MB_USE_ROOT_BLOCKS)) {
-+	    (flags & EXT4_MB_USE_ROOT_BLOCKS) ||
-+	    capable(CAP_SYS_RESOURCE)) {
- 
- 		if (free_clusters >= (nclusters + dirty_clusters +
- 				      resv_clusters))
+diff --git a/drivers/scsi/st.c b/drivers/scsi/st.c
+index 465fe83b49e98..47e59b74c09d2 100644
+--- a/drivers/scsi/st.c
++++ b/drivers/scsi/st.c
+@@ -3076,7 +3076,9 @@ static int st_int_ioctl(struct scsi_tape *STp, unsigned int cmd_in, unsigned lon
+ 			   cmd_in == MTSETDRVBUFFER ||
+ 			   cmd_in == SET_DENS_AND_BLK) {
+ 			if (cmdstatp->sense_hdr.sense_key == ILLEGAL_REQUEST &&
+-			    !(STp->use_pf & PF_TESTED)) {
++				cmdstatp->sense_hdr.asc == 0x24 &&
++				(STp->device)->scsi_level <= SCSI_2 &&
++				!(STp->use_pf & PF_TESTED)) {
+ 				/* Try the other possible state of Page Format if not
+ 				   already tried */
+ 				STp->use_pf = (STp->use_pf ^ USE_PF) | PF_TESTED;
 -- 
 2.39.5
 
