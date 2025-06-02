@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD386221739;
-	Mon,  2 Jun 2025 14:25:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93CC9222560;
+	Mon,  2 Jun 2025 14:25:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748874354; cv=none; b=WsJH0gH+20MR9nCf4KeDO1RwrNEMN2IjUzY3C9RVqd9PfarnYVNL44YRO81DmnVrQ6z7GHziIYSU3tkbUPAZKPlaXu7neaitdIGmeZtVbxPsVnDzK78spL59ip5OPCLNxfwkNngNuHuc3v4j+cUUHBupYB2FHW+zXqFgWFPcx8k=
+	t=1748874357; cv=none; b=NOGqxZfHkA+haM2kEqoVfZASp5SiF+wLQY587vAqSU5QJShMCigENuByTkurBUmMcj+yY/MuSTVrf/L+apVJhOfT5jLP91byrZMTJTGNGk7c4pwYA3F4kQYtWievm+WMBzuoLCzY655qORN+RNNIaI0gXbnKm60esQE7qs2sLKw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748874354; c=relaxed/simple;
-	bh=3QBikKu2d9pjcVheP8wwpe/2WIxPs3hC+2cjFHPrx0s=;
+	s=arc-20240116; t=1748874357; c=relaxed/simple;
+	bh=+t1JVm3AOBTRaOHgnhYUhKH2qPZ9IbPLWkDwI+CP5/w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Jj7xjyYtZjbVBfY+r42zPCLd9Wgg33W1m9Y6QeqON21Q5/ir8chwbdRo5ZBx2kLRe2j1UDWpv9rQ66CFGp2EC+d0fvFg+uZSQtDg9KK8LjbfIDwDVQCzYhjzhEbcwXsV1mUZV18oLoUebOlBFduGLmpA+SZciGNiyCUQmCSaoZQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jWk5p+27; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GEYXzmc8Vt4Jt8JKdBsFwn7G7vuPlvOAd6g55tnbBXg5trfazlM/EcxTj+eC36u9tyHtKVM1VLOjxqqdiPEOaGbQetelp/u8NDg6wYcB/ZUAFhJbK39PdYMt8/nCOV20V3KDyyT6fTt4HL38jmuJTKXouwZJsA2qCWAMFzGuF0U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sK6b6dbQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jWk5p+27"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F58FC4CEEB;
-	Mon,  2 Jun 2025 14:25:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sK6b6dbQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1838EC4CEEE;
+	Mon,  2 Jun 2025 14:25:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748874354;
-	bh=3QBikKu2d9pjcVheP8wwpe/2WIxPs3hC+2cjFHPrx0s=;
+	s=korg; t=1748874357;
+	bh=+t1JVm3AOBTRaOHgnhYUhKH2qPZ9IbPLWkDwI+CP5/w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jWk5p+27Pm5ImENQJnvouW9v/mTVbdLXF7OM4tMaBmKicJ30qxrGYAhVhQscW64xM
-	 hUoUNiH5pqR/k16jEgrKoFQvdXY6ulgbK5YlfYtZvO6D/H3BvdrkJfQJDLEFpdyjis
-	 BPofXNeXOpRzHoGW44x7uBX9/5Gw+Suo+gfbm92o=
+	b=sK6b6dbQ+XcEr9sGHTtIooQz71IkYZr18LM9p8Eft3QnNyuqNnTPCCM3afFgihRxS
+	 FI9G5hG+uhoSoCOyKw+7mYkgm6jyFXwOUx/NpD+ukrwU51SdAQz9uV0869+sME5JpX
+	 CzHdQMqpaLNXpKgcPiG11qW1IgUuDJsFjNyvZGBs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Chau <johnchau@0atlas.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Nishanth Menon <nm@ti.com>,
+	Simon Horman <horms@kernel.org>,
+	Roger Quadros <rogerq@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 434/444] platform/x86: thinkpad_acpi: Support also NEC Lavie X1475JAS
-Date: Mon,  2 Jun 2025 15:48:18 +0200
-Message-ID: <20250602134358.557404852@linuxfoundation.org>
+Subject: [PATCH 6.6 443/444] net: ethernet: ti: am65-cpsw: Lower random mac address error print to info
+Date: Mon,  2 Jun 2025 15:48:27 +0200
+Message-ID: <20250602134358.921448392@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -45,61 +47,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: John Chau <johnchau@0atlas.com>
+From: Nishanth Menon <nm@ti.com>
 
-[ Upstream commit a032f29a15412fab9f4352e0032836d51420a338 ]
+[ Upstream commit 50980d8da71a0c2e045e85bba93c0099ab73a209 ]
 
-Change get_thinkpad_model_data() to check for additional vendor name
-"NEC" in order to support NEC Lavie X1475JAS notebook (and perhaps
-more).
+Using random mac address is not an error since the driver continues to
+function, it should be informative that the system has not assigned
+a MAC address. This is inline with other drivers such as ax88796c,
+dm9051 etc. Drop the error level to info level.
 
-The reason of this works with minimal changes is because NEC Lavie
-X1475JAS is a Thinkpad inside. ACPI dumps reveals its OEM ID to be
-"LENOVO", BIOS version "R2PET30W" matches typical Lenovo BIOS version,
-the existence of HKEY of LEN0268, with DMI fw string is "R2PHT24W".
-
-I compiled and tested with my own machine, attached the dmesg
-below as proof of work:
-[    6.288932] thinkpad_acpi: ThinkPad ACPI Extras v0.26
-[    6.288937] thinkpad_acpi: http://ibm-acpi.sf.net/
-[    6.288938] thinkpad_acpi: ThinkPad BIOS R2PET30W (1.11 ), EC R2PHT24W
-[    6.307000] thinkpad_acpi: radio switch found; radios are enabled
-[    6.307030] thinkpad_acpi: This ThinkPad has standard ACPI backlight brightness control, supported by the ACPI video driver
-[    6.307033] thinkpad_acpi: Disabling thinkpad-acpi brightness events by default...
-[    6.320322] thinkpad_acpi: rfkill switch tpacpi_bluetooth_sw: radio is unblocked
-[    6.371963] thinkpad_acpi: secondary fan control detected & enabled
-[    6.391922] thinkpad_acpi: battery 1 registered (start 0, stop 85, behaviours: 0x7)
-[    6.398375] input: ThinkPad Extra Buttons as /devices/platform/thinkpad_acpi/input/input13
-
-Signed-off-by: John Chau <johnchau@0atlas.com>
-Link: https://lore.kernel.org/r/20250504165513.295135-1-johnchau@0atlas.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Nishanth Menon <nm@ti.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Roger Quadros <rogerq@kernel.org>
+Link: https://patch.msgid.link/20250516122655.442808-1-nm@ti.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/thinkpad_acpi.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/ti/am65-cpsw-nuss.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/thinkpad_acpi.c b/drivers/platform/x86/thinkpad_acpi.c
-index cde5f845cf255..bcb0689101e2b 100644
---- a/drivers/platform/x86/thinkpad_acpi.c
-+++ b/drivers/platform/x86/thinkpad_acpi.c
-@@ -11315,6 +11315,8 @@ static int __must_check __init get_thinkpad_model_data(
- 		tp->vendor = PCI_VENDOR_ID_IBM;
- 	else if (dmi_name_in_vendors("LENOVO"))
- 		tp->vendor = PCI_VENDOR_ID_LENOVO;
-+	else if (dmi_name_in_vendors("NEC"))
-+		tp->vendor = PCI_VENDOR_ID_LENOVO;
- 	else
- 		return 0;
- 
+diff --git a/drivers/net/ethernet/ti/am65-cpsw-nuss.c b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
+index 9c8376b271891..c379a958380ce 100644
+--- a/drivers/net/ethernet/ti/am65-cpsw-nuss.c
++++ b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
+@@ -2095,7 +2095,7 @@ static int am65_cpsw_nuss_init_slave_ports(struct am65_cpsw_common *common)
+ 							port->slave.mac_addr);
+ 			if (!is_valid_ether_addr(port->slave.mac_addr)) {
+ 				eth_random_addr(port->slave.mac_addr);
+-				dev_err(dev, "Use random MAC address\n");
++				dev_info(dev, "Use random MAC address\n");
+ 			}
+ 		}
+ 	}
 -- 
 2.39.5
 
