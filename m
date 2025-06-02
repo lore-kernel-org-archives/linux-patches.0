@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1A4E1FE45A;
-	Mon,  2 Jun 2025 14:49:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB67F225A24;
+	Mon,  2 Jun 2025 14:49:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748875748; cv=none; b=dvusZpxA5zVHYjEof7ID6U9Mmj8/gcnd2gIj4fjGkwbqesPCQDQjpPQI5oDtWSlZGyt0oPyQVLmmOGjQlkbJ5QeWQqbHVmPAPng1mXLvDZ8GvXJrbLB9nD2MtKNsRjSzkpm2TbWINFqXnRBGMc5bUG5NCkZHIr/iWn+1KMBtgTg=
+	t=1748875752; cv=none; b=LRyBE+g+BM4LIcqZo747YrWZ1e7jVVcMzVOmEMoInLBaMxma84HDxja2ZWKtmYGmUTsQ4Bi0QhFFcQ3jjhara2YvQq+r2zG76mF0GpC/tSgPXvYC8YnjFWJcRPjVX/XahMMY9ZK44sJHc2fc2jnFGzVTstYGuQGnoJOJ1Kijo40=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748875748; c=relaxed/simple;
-	bh=jQ7jTQcutNo1DPan2mIuth7S7d96ERcLgz3gxXLhKU4=;
+	s=arc-20240116; t=1748875752; c=relaxed/simple;
+	bh=o1pbjYg09laUioVBeGLlAD6Tb4FsYYxQbnXBlZ69KiA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cx31CqeBEiw0rFInomYAOwaA4/1dEeoRGJHbLKWBgqjmDzfs/lo9Rr1OREblz0vOI++WM1OxBGZuRPHMLu0yw3DKGn8gUNSO7+yoVnN7PnvgBwuDsFaETRyw1IY8UMtvvm4rDVcnSJ0Z5cuDPzJGMQ1sSLFC2QS9+7Hb33hNIgw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UodkYT76; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Legtiyk/2sqX9ELu7gT9YmJtnz1XQJivL673UUhS3o4j7/Tn8j9629fTx8zueoeKos5YnsKADvja+HmkGJslUHpI3SWH1z2a55THdZ1N5nXy61grgA2U0o24hbJTw4fCAxQArxRytEWFr1P+dXZPXIfE1j2FPL/1txJ0BRgxZHQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J+4DIDaC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UodkYT76"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 107AFC4CEEB;
-	Mon,  2 Jun 2025 14:49:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J+4DIDaC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5392CC4CEEB;
+	Mon,  2 Jun 2025 14:49:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748875748;
-	bh=jQ7jTQcutNo1DPan2mIuth7S7d96ERcLgz3gxXLhKU4=;
+	s=korg; t=1748875751;
+	bh=o1pbjYg09laUioVBeGLlAD6Tb4FsYYxQbnXBlZ69KiA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UodkYT76CpSuziHjf4C005MzZyXiXYbAeTv9kzabX2gou3W1rh1ji6VGPvNxMB+zP
-	 r4KTrVmsYbQwZhAckJHX8lkdYC3TvFWLVegWX1TZJynJvdNy8OkI6chQNlk5NLcRcL
-	 QYP2e16nMWXN01MnwIN4liRjnAcjCV1kix7larug=
+	b=J+4DIDaC2zJr6woWMbHl4U046sRAwF3WRf/bvbZKCk3Yv94AwpPzwn9gh+moFZaWX
+	 MmvOkE33mr4TBMoJwOTR7+an2kbw4GTGwUQJhBHqSDHuUlrYnsIoudwO1pwfpdFbVM
+	 kOzxv+gVwllmgCf6sSaYsU1YG2j/fmuDAjE9gvkU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Seiderer <ps.report@gmx.net>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Isaac Scott <isaac.scott@ideasonboard.com>,
+	Michael Hennerich <michael.hennerich@analog.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 191/270] net: pktgen: fix access outside of user given buffer in pktgen_thread_write()
-Date: Mon,  2 Jun 2025 15:47:56 +0200
-Message-ID: <20250602134315.012260147@linuxfoundation.org>
+Subject: [PATCH 5.10 225/270] regulator: ad5398: Add device tree support
+Date: Mon,  2 Jun 2025 15:48:30 +0200
+Message-ID: <20250602134316.517662223@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134307.195171844@linuxfoundation.org>
 References: <20250602134307.195171844@linuxfoundation.org>
@@ -52,47 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Seiderer <ps.report@gmx.net>
+From: Isaac Scott <isaac.scott@ideasonboard.com>
 
-[ Upstream commit 425e64440ad0a2f03bdaf04be0ae53dededbaa77 ]
+[ Upstream commit 5a6a461079decea452fdcae955bccecf92e07e97 ]
 
-Honour the user given buffer size for the strn_len() calls (otherwise
-strn_len() will access memory outside of the user given buffer).
+Previously, the ad5398 driver used only platform_data, which is
+deprecated in favour of device tree. This caused the AD5398 to fail to
+probe as it could not load its init_data. If the AD5398 has a device
+tree node, pull the init_data from there using
+of_get_regulator_init_data.
 
-Signed-off-by: Peter Seiderer <ps.report@gmx.net>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250219084527.20488-8-ps.report@gmx.net
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Isaac Scott <isaac.scott@ideasonboard.com>
+Acked-by: Michael Hennerich <michael.hennerich@analog.com>
+Link: https://patch.msgid.link/20250128173143.959600-4-isaac.scott@ideasonboard.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/pktgen.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/regulator/ad5398.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/net/core/pktgen.c b/net/core/pktgen.c
-index c2b3c454eddd9..57502e8628462 100644
---- a/net/core/pktgen.c
-+++ b/net/core/pktgen.c
-@@ -1770,8 +1770,8 @@ static ssize_t pktgen_thread_write(struct file *file,
- 	i = len;
+diff --git a/drivers/regulator/ad5398.c b/drivers/regulator/ad5398.c
+index 75f432f61e919..f4d6e62bd963e 100644
+--- a/drivers/regulator/ad5398.c
++++ b/drivers/regulator/ad5398.c
+@@ -14,6 +14,7 @@
+ #include <linux/platform_device.h>
+ #include <linux/regulator/driver.h>
+ #include <linux/regulator/machine.h>
++#include <linux/regulator/of_regulator.h>
  
- 	/* Read variable name */
+ #define AD5398_CURRENT_EN_MASK	0x8000
+ 
+@@ -221,15 +222,20 @@ static int ad5398_probe(struct i2c_client *client,
+ 	const struct ad5398_current_data_format *df =
+ 			(struct ad5398_current_data_format *)id->driver_data;
+ 
+-	if (!init_data)
+-		return -EINVAL;
 -
--	len = strn_len(&user_buffer[i], sizeof(name) - 1);
-+	max = min(sizeof(name) - 1, count - i);
-+	len = strn_len(&user_buffer[i], max);
- 	if (len < 0)
- 		return len;
+ 	chip = devm_kzalloc(&client->dev, sizeof(*chip), GFP_KERNEL);
+ 	if (!chip)
+ 		return -ENOMEM;
  
-@@ -1801,7 +1801,8 @@ static ssize_t pktgen_thread_write(struct file *file,
- 	if (!strcmp(name, "add_device")) {
- 		char f[32];
- 		memset(f, 0, 32);
--		len = strn_len(&user_buffer[i], sizeof(f) - 1);
-+		max = min(sizeof(f) - 1, count - i);
-+		len = strn_len(&user_buffer[i], max);
- 		if (len < 0) {
- 			ret = len;
- 			goto out;
+ 	config.dev = &client->dev;
++	if (client->dev.of_node)
++		init_data = of_get_regulator_init_data(&client->dev,
++						       client->dev.of_node,
++						       &ad5398_reg);
++	if (!init_data)
++		return -EINVAL;
++
+ 	config.init_data = init_data;
++	config.of_node = client->dev.of_node;
+ 	config.driver_data = chip;
+ 
+ 	chip->client = client;
 -- 
 2.39.5
 
