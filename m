@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 401C222A814;
-	Mon,  2 Jun 2025 14:51:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B44422A814;
+	Mon,  2 Jun 2025 14:51:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748875867; cv=none; b=G4DfA8KCMQ+IUi1A2Y4meyyY2yJ7jjc3Q5Kdv2z/tC/YadqnGq1blyw72xOm9k2lyVCN7lpeFejBMYD2kuaE1b2yy+TjOqz0+4jDwrZx6vhwonGb9+njirg+5BVLz5lmCfCG3mxyRyLxHEHiBkVKW0zVWpxHR4qipjgwguZDTDM=
+	t=1748875870; cv=none; b=MbDTFM0mGUABiqbxCWtWI27P6FNDMJ8zj3xL7g53o7Mz3JL21/WZDEYH/VLq+tXsc9J3LBPsMGQPL2PeAk168QZGp56PZ7L4YgrRMNxeuk5kJcIG26R7QXTFFOh582gv/d4IhgJvz5JNXXcNFVIZ7ihOiKXoYS/Rk55zEu3mc/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748875867; c=relaxed/simple;
-	bh=Jxiow02KoGX1/qBbPZN38c4c7a3iPLW2p0COstzJZWQ=;
+	s=arc-20240116; t=1748875870; c=relaxed/simple;
+	bh=zxBlhjDfJBf1BWDpcS70keSIxBJ7JdQrAE90zXDPXeE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WmaXOmbvmy35rii7tDlPYugF6ESF6U5Q0I2Fh8WBUJN9dvfhYCeG94MN2Ggt7qsa3jOLg2GvUJBG5NAd6Ztz6ax2GFbiLg+t/Xl3nd3XAyorA/7gG3w/em1dSdT9NlS2hJizuvYnmxBtrk8bJ7f3bt2qObT1zDGttsiMo3Qp2MU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HhWhhwyI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aOvUwZbJLcs+tyC5c22vWTrExma/VmnNZrX3nF0Y7W68P54fnY6fiwTJtQz0w93+EZ1CgsPbLQcb4ZADW2i9DMOMi8aSLPz/mfj8sfaG67Ai5/ONiHv/pkbMWt6ws+/nIOJsmhIdPcHcHPnjUKaQG3ajKR8yH5jvlgg1Z1UWQng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ao0AVxBV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HhWhhwyI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75C10C4CEEB;
-	Mon,  2 Jun 2025 14:51:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ao0AVxBV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CF0EC4CEEB;
+	Mon,  2 Jun 2025 14:51:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748875867;
-	bh=Jxiow02KoGX1/qBbPZN38c4c7a3iPLW2p0COstzJZWQ=;
+	s=korg; t=1748875870;
+	bh=zxBlhjDfJBf1BWDpcS70keSIxBJ7JdQrAE90zXDPXeE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HhWhhwyIz7GFEwXTb6XiWCA3VXNSjeRSHfRqynG2yJxuFeFtQSPoD0ctg/eMDOWzF
-	 m8X06+vS70KSSB1VTNi+nrVEZ2WetMusGxIk8tE+AdBqsEqC2TgidV5aK2TyqsTP43
-	 IQ8601OpZBVWoSEYcQuVPiciGhWwpy3Lv0WI66bM=
+	b=ao0AVxBV8+bSj+9d19gXomSCrad3E5qVgMkHAU/u6CEzuZAy/rezMy6h1yKwVqhxm
+	 RUUytf/Iy9ZLOroqktTUFUfUp/UyCQC4FL4dHsJEuqXkYP29hMVy91X25aSZ8Pov+0
+	 ktal7oCWUatVed1m0b4jW90fSDtRukjr0ys7emJo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Vejvalka <jan.vejvalka@lfmotol.cuni.cz>,
-	Juergen Gross <jgross@suse.com>,
-	Stefano Stabellini <sstabellini@kernel.org>,
-	Harshvardhan Jha <harshvardhan.j.jha@oracle.com>
-Subject: [PATCH 5.10 269/270] xen/swiotlb: relax alignment requirements
-Date: Mon,  2 Jun 2025 15:49:14 +0200
-Message-ID: <20250602134318.332879880@linuxfoundation.org>
+	Robin Murphy <robin.murphy@arm.com>,
+	Ilkka Koskinen <ilkka@os.amperecomputing.com>,
+	Will Deacon <will@kernel.org>
+Subject: [PATCH 5.10 270/270] perf/arm-cmn: Initialise cmn->cpu earlier
+Date: Mon,  2 Jun 2025 15:49:15 +0200
+Message-ID: <20250602134318.370595510@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134307.195171844@linuxfoundation.org>
 References: <20250602134307.195171844@linuxfoundation.org>
@@ -52,78 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Juergen Gross <jgross@suse.com>
+From: Robin Murphy <robin.murphy@arm.com>
 
-commit 85fcb57c983f423180ba6ec5d0034242da05cc54 upstream.
+commit 597704e201068db3d104de3c7a4d447ff8209127 upstream.
 
-When mapping a buffer for DMA via .map_page or .map_sg DMA operations,
-there is no need to check the machine frames to be aligned according
-to the mapped areas size. All what is needed in these cases is that the
-buffer is contiguous at machine level.
+For all the complexity of handling affinity for CPU hotplug, what we've
+apparently managed to overlook is that arm_cmn_init_irqs() has in fact
+always been setting the *initial* affinity of all IRQs to CPU 0, not the
+CPU we subsequently choose for event scheduling. Oh dear.
 
-So carve out the alignment check from range_straddles_page_boundary()
-and move it to a helper called by xen_swiotlb_alloc_coherent() and
-xen_swiotlb_free_coherent() directly.
-
-Fixes: 9f40ec84a797 ("xen/swiotlb: add alignment check for dma buffers")
-Reported-by: Jan Vejvalka <jan.vejvalka@lfmotol.cuni.cz>
-Tested-by: Jan Vejvalka <jan.vejvalka@lfmotol.cuni.cz>
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Signed-off-by: Harshvardhan Jha <harshvardhan.j.jha@oracle.com>
+Cc: stable@vger.kernel.org
+Fixes: 0ba64770a2f2 ("perf: Add Arm CMN-600 PMU driver")
+Signed-off-by: Robin Murphy <robin.murphy@arm.com>
+Reviewed-by: Ilkka Koskinen <ilkka@os.amperecomputing.com>
+Link: https://lore.kernel.org/r/b12fccba6b5b4d2674944f59e4daad91cd63420b.1747069914.git.robin.murphy@arm.com
+Signed-off-by: Will Deacon <will@kernel.org>
+[ backport past NUMA changes in 5.17 ]
+Signed-off-by: Robin Murphy <robin.murphy@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/xen/swiotlb-xen.c |   18 +++++++++++-------
- 1 file changed, 11 insertions(+), 7 deletions(-)
+ drivers/perf/arm-cmn.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/xen/swiotlb-xen.c
-+++ b/drivers/xen/swiotlb-xen.c
-@@ -87,19 +87,21 @@ static inline dma_addr_t xen_virt_to_bus
- 	return xen_phys_to_dma(dev, virt_to_phys(address));
- }
+--- a/drivers/perf/arm-cmn.c
++++ b/drivers/perf/arm-cmn.c
+@@ -1512,6 +1512,7 @@ static int arm_cmn_probe(struct platform
+ 		return -ENOMEM;
  
-+static inline bool range_requires_alignment(phys_addr_t p, size_t size)
-+{
-+	phys_addr_t algn = 1ULL << (get_order(size) + PAGE_SHIFT);
-+	phys_addr_t bus_addr = pfn_to_bfn(XEN_PFN_DOWN(p)) << XEN_PAGE_SHIFT;
-+
-+	return IS_ALIGNED(p, algn) && !IS_ALIGNED(bus_addr, algn);
-+}
-+
- static inline int range_straddles_page_boundary(phys_addr_t p, size_t size)
- {
- 	unsigned long next_bfn, xen_pfn = XEN_PFN_DOWN(p);
- 	unsigned int i, nr_pages = XEN_PFN_UP(xen_offset_in_page(p) + size);
--	phys_addr_t algn = 1ULL << (get_order(size) + PAGE_SHIFT);
+ 	cmn->dev = &pdev->dev;
++	cmn->cpu = raw_smp_processor_id();
+ 	platform_set_drvdata(pdev, cmn);
  
- 	next_bfn = pfn_to_bfn(xen_pfn);
+ 	if (has_acpi_companion(cmn->dev))
+@@ -1533,7 +1534,6 @@ static int arm_cmn_probe(struct platform
+ 	if (err)
+ 		return err;
  
--	/* If buffer is physically aligned, ensure DMA alignment. */
--	if (IS_ALIGNED(p, algn) &&
--	    !IS_ALIGNED((phys_addr_t)next_bfn << XEN_PAGE_SHIFT, algn))
--		return 1;
--
- 	for (i = 1; i < nr_pages; i++)
- 		if (pfn_to_bfn(++xen_pfn) != ++next_bfn)
- 			return 1;
-@@ -321,7 +323,8 @@ xen_swiotlb_alloc_coherent(struct device
- 	phys = dma_to_phys(hwdev, *dma_handle);
- 	dev_addr = xen_phys_to_dma(hwdev, phys);
- 	if (((dev_addr + size - 1 <= dma_mask)) &&
--	    !range_straddles_page_boundary(phys, size))
-+	    !range_straddles_page_boundary(phys, size) &&
-+	    !range_requires_alignment(phys, size))
- 		*dma_handle = dev_addr;
- 	else {
- 		if (xen_create_contiguous_region(phys, order,
-@@ -362,6 +365,7 @@ xen_swiotlb_free_coherent(struct device
- 
- 	if (!WARN_ON((dev_addr + size - 1 > dma_mask) ||
- 		     range_straddles_page_boundary(phys, size)) &&
-+	    !range_requires_alignment(phys, size) &&
- 	    TestClearPageXenRemapped(page))
- 		xen_destroy_contiguous_region(phys, order);
- 
+-	cmn->cpu = raw_smp_processor_id();
+ 	cmn->pmu = (struct pmu) {
+ 		.module = THIS_MODULE,
+ 		.attr_groups = arm_cmn_attr_groups,
 
 
