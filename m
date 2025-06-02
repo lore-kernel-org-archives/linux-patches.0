@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB67F225A24;
-	Mon,  2 Jun 2025 14:49:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B9E51FE45A;
+	Mon,  2 Jun 2025 14:49:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748875752; cv=none; b=LRyBE+g+BM4LIcqZo747YrWZ1e7jVVcMzVOmEMoInLBaMxma84HDxja2ZWKtmYGmUTsQ4Bi0QhFFcQ3jjhara2YvQq+r2zG76mF0GpC/tSgPXvYC8YnjFWJcRPjVX/XahMMY9ZK44sJHc2fc2jnFGzVTstYGuQGnoJOJ1Kijo40=
+	t=1748875755; cv=none; b=EuuXK0LLYwGC7kt+NxPa1fYELdmwBz6pAdxfJ3VJQ8QBLlARq4ost5AgJHgRDOENHwVFAwxTbvb+bTQkGcQqal291whVjeVAMG2C7jMGffAbGQx6GBQdwor+vcb71xScljC5NvLHMlCUa97ZcfxZax84DMD8e8q1wxQhzNyeDyo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748875752; c=relaxed/simple;
-	bh=o1pbjYg09laUioVBeGLlAD6Tb4FsYYxQbnXBlZ69KiA=;
+	s=arc-20240116; t=1748875755; c=relaxed/simple;
+	bh=tjTeeSlZ6O/5nmLGXNLHgZANQkXTetrW7kqhbsyNEf8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Legtiyk/2sqX9ELu7gT9YmJtnz1XQJivL673UUhS3o4j7/Tn8j9629fTx8zueoeKos5YnsKADvja+HmkGJslUHpI3SWH1z2a55THdZ1N5nXy61grgA2U0o24hbJTw4fCAxQArxRytEWFr1P+dXZPXIfE1j2FPL/1txJ0BRgxZHQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J+4DIDaC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sWd52rWjGeH5a98cdYWS++HXgVHpuUNI5WFBOZqV0sV6WcqUsVVn6K5i/0QohaYSDlrnYc9AkAgNbF249pBEoaBIEz30NEwpyP6Ohm/B0i9DcaWM+iYC8vxRDAKb8z+0rGHdniftBnfGmtHnZnzZe4jklxOH1AbJbttC3ko93YU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ShPiDQJQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J+4DIDaC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5392CC4CEEB;
-	Mon,  2 Jun 2025 14:49:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ShPiDQJQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E4A8C4CEF0;
+	Mon,  2 Jun 2025 14:49:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748875751;
-	bh=o1pbjYg09laUioVBeGLlAD6Tb4FsYYxQbnXBlZ69KiA=;
+	s=korg; t=1748875755;
+	bh=tjTeeSlZ6O/5nmLGXNLHgZANQkXTetrW7kqhbsyNEf8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J+4DIDaC2zJr6woWMbHl4U046sRAwF3WRf/bvbZKCk3Yv94AwpPzwn9gh+moFZaWX
-	 MmvOkE33mr4TBMoJwOTR7+an2kbw4GTGwUQJhBHqSDHuUlrYnsIoudwO1pwfpdFbVM
-	 kOzxv+gVwllmgCf6sSaYsU1YG2j/fmuDAjE9gvkU=
+	b=ShPiDQJQx447dsfgqthCRu2tAHC8bOY7xxa9LNQU68dqXKWeMH44XV3JwxcxqDOq5
+	 xlB1sZXCxBA9CMYx/EQA/SXD4c4gXWsUFtUcouBEz9HgVuSSK9XcLGcVyofFTR9tzS
+	 u072QIaRPzr9/2gEQCYPeBoquEHqhvi+/aAXxZUo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Isaac Scott <isaac.scott@ideasonboard.com>,
-	Michael Hennerich <michael.hennerich@analog.com>,
-	Mark Brown <broonie@kernel.org>,
+	Christian Brauner <brauner@kernel.org>,
+	Al Viro <viro@zeniv.linux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 225/270] regulator: ad5398: Add device tree support
-Date: Mon,  2 Jun 2025 15:48:30 +0200
-Message-ID: <20250602134316.517662223@linuxfoundation.org>
+Subject: [PATCH 5.10 234/270] __legitimize_mnt(): check for MNT_SYNC_UMOUNT should be under mount_lock
+Date: Mon,  2 Jun 2025 15:48:39 +0200
+Message-ID: <20250602134316.877556576@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134307.195171844@linuxfoundation.org>
 References: <20250602134307.195171844@linuxfoundation.org>
@@ -52,61 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Isaac Scott <isaac.scott@ideasonboard.com>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-[ Upstream commit 5a6a461079decea452fdcae955bccecf92e07e97 ]
+[ Upstream commit 250cf3693060a5f803c5f1ddc082bb06b16112a9 ]
 
-Previously, the ad5398 driver used only platform_data, which is
-deprecated in favour of device tree. This caused the AD5398 to fail to
-probe as it could not load its init_data. If the AD5398 has a device
-tree node, pull the init_data from there using
-of_get_regulator_init_data.
+... or we risk stealing final mntput from sync umount - raising mnt_count
+after umount(2) has verified that victim is not busy, but before it
+has set MNT_SYNC_UMOUNT; in that case __legitimize_mnt() doesn't see
+that it's safe to quietly undo mnt_count increment and leaves dropping
+the reference to caller, where it'll be a full-blown mntput().
 
-Signed-off-by: Isaac Scott <isaac.scott@ideasonboard.com>
-Acked-by: Michael Hennerich <michael.hennerich@analog.com>
-Link: https://patch.msgid.link/20250128173143.959600-4-isaac.scott@ideasonboard.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Check under mount_lock is needed; leaving the current one done before
+taking that makes no sense - it's nowhere near common enough to bother
+with.
+
+Reviewed-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/ad5398.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ fs/namespace.c | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/drivers/regulator/ad5398.c b/drivers/regulator/ad5398.c
-index 75f432f61e919..f4d6e62bd963e 100644
---- a/drivers/regulator/ad5398.c
-+++ b/drivers/regulator/ad5398.c
-@@ -14,6 +14,7 @@
- #include <linux/platform_device.h>
- #include <linux/regulator/driver.h>
- #include <linux/regulator/machine.h>
-+#include <linux/regulator/of_regulator.h>
- 
- #define AD5398_CURRENT_EN_MASK	0x8000
- 
-@@ -221,15 +222,20 @@ static int ad5398_probe(struct i2c_client *client,
- 	const struct ad5398_current_data_format *df =
- 			(struct ad5398_current_data_format *)id->driver_data;
- 
--	if (!init_data)
--		return -EINVAL;
--
- 	chip = devm_kzalloc(&client->dev, sizeof(*chip), GFP_KERNEL);
- 	if (!chip)
- 		return -ENOMEM;
- 
- 	config.dev = &client->dev;
-+	if (client->dev.of_node)
-+		init_data = of_get_regulator_init_data(&client->dev,
-+						       client->dev.of_node,
-+						       &ad5398_reg);
-+	if (!init_data)
-+		return -EINVAL;
-+
- 	config.init_data = init_data;
-+	config.of_node = client->dev.of_node;
- 	config.driver_data = chip;
- 
- 	chip->client = client;
+diff --git a/fs/namespace.c b/fs/namespace.c
+index e46267e7d29d1..869cc6e06d889 100644
+--- a/fs/namespace.c
++++ b/fs/namespace.c
+@@ -572,12 +572,8 @@ int __legitimize_mnt(struct vfsmount *bastard, unsigned seq)
+ 	smp_mb();		// see mntput_no_expire() and do_umount()
+ 	if (likely(!read_seqretry(&mount_lock, seq)))
+ 		return 0;
+-	if (bastard->mnt_flags & MNT_SYNC_UMOUNT) {
+-		mnt_add_count(mnt, -1);
+-		return 1;
+-	}
+ 	lock_mount_hash();
+-	if (unlikely(bastard->mnt_flags & MNT_DOOMED)) {
++	if (unlikely(bastard->mnt_flags & (MNT_SYNC_UMOUNT | MNT_DOOMED))) {
+ 		mnt_add_count(mnt, -1);
+ 		unlock_mount_hash();
+ 		return 1;
 -- 
 2.39.5
 
