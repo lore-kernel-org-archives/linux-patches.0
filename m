@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5989E22DF98;
-	Mon,  2 Jun 2025 15:08:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC95D188907;
+	Mon,  2 Jun 2025 15:08:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748876913; cv=none; b=ETsk5DhhjhvkyqVV6lpmJdlE2knUROk8Gr4FzMNjxhj3JtHnE4IBtz0keEqEmgPSAjm+4X1qBSmdfrfQxY3H/xs1DMDedbsFZPqMCn1xU7GqqJ7wl96zerOYeA9xnEUQG0cGlBdYQ39dj8RQ4n/EKHB7r3j1KaWdVuKWkN09sLw=
+	t=1748876916; cv=none; b=hlLnk0UlW0rTcLujAUnlj2lhvT4prbSIYQcyBrsNo2xmRFGQuX9Wr0c5pM2IgLB9SOuo5bWSiROwgpVrnXIhfOa5PGkcLINbt4yX3yAGqgTx6C0lsQuVPm7d/ntYxYoGbf+BjMpCSfYpVxrj+K/XjdOiktm/MrOUiXlwGKvBJxU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748876913; c=relaxed/simple;
-	bh=VoSDwwplAS+0AIYvfTfkiJUP2WSP81Cyaj3KmGVKQdA=;
+	s=arc-20240116; t=1748876916; c=relaxed/simple;
+	bh=7kjJRdOek0Wg21cqq4xfU0CnTw0zvjU85i/XjE/E8Ls=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BY/9m8ZxZV55ZhF/PL+7n/fgw9Cl6l5kVa1FWKfip0s19zE3Jl79kKkLg3nipHhCMmHp1tn+5iVOeceyiRlL33wzIvNUdIL0iLW3V6aWvrtl8zD45EbBidE25aCg2TsBWUsdWq/yIwq8KQ+Lz2OljK9TfSom19KELNkF6N/GOJE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CZWXNcdq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nb1N3AJldRwuyVFyd09EQa0rGWn9V6Bh8lSi5q1DnEKFi0B8bEfLE1nVza1x6glqdeM5stLnnfWx1YHFMYAl9iA6Drzoj5hHJ+jHPp3kjcP41bfMVnmqRv329N2MAyyI9cA3JUeEQ1/pot/tR11hdZXGOZVrbPFXdShPVy41Wdg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KPfprNLy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CZWXNcdq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF50BC4CEEB;
-	Mon,  2 Jun 2025 15:08:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KPfprNLy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E200C4CEEB;
+	Mon,  2 Jun 2025 15:08:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748876913;
-	bh=VoSDwwplAS+0AIYvfTfkiJUP2WSP81Cyaj3KmGVKQdA=;
+	s=korg; t=1748876916;
+	bh=7kjJRdOek0Wg21cqq4xfU0CnTw0zvjU85i/XjE/E8Ls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CZWXNcdq3+9SPoJ0yOzRpWkjcUnhj+2yTwDLmvtMRSPaiAzS+W6OmAqe3Kzvcm3Eu
-	 EOhLeitLT0xANRSw4CBR0dV8WwCo8hFEzuVrlL/nBqYERf/Z5zygp7JqUbTziYw8El
-	 23d+xKjoolZejJ7v1LFWgvkSv9EslXoF1aYiIYRA=
+	b=KPfprNLyP3eRI+w0Syvd4YQL+StXyQkoPkNw+8js2bEn3E1rBM/twVBjrRE1msJx8
+	 xjh4K5i0KhP8l3k/JbQ69tp6wKy0E5GZuyeKl8GcGGeSWYVMLh/DQCz5ngZNjypCxN
+	 KpIrIckjfRu2ys2YL0Kz/fOjqWjQ/tkuCJunCMdM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Matti=20Lehtim=C3=A4ki?= <matti.lehtimaki@gmail.com>,
-	Luca Weiss <luca@lucaweiss.eu>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 106/325] remoteproc: qcom_wcnss: Handle platforms with only single power domain
-Date: Mon,  2 Jun 2025 15:46:22 +0200
-Message-ID: <20250602134324.090902557@linuxfoundation.org>
+	Andy Yan <andy.yan@rock-chips.com>,
+	Detlev Casanova <detlev.casanova@collabora.com>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Sasha Levin <sashal@kernel.org>,
+	Michael Riesch <michael.riesch@wolfvision.net>
+Subject: [PATCH 6.1 115/325] drm/rockchip: vop2: Add uv swap for cluster window
+Date: Mon,  2 Jun 2025 15:46:31 +0200
+Message-ID: <20250602134324.452427860@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134319.723650984@linuxfoundation.org>
 References: <20250602134319.723650984@linuxfoundation.org>
@@ -46,114 +47,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Matti Lehtimäki <matti.lehtimaki@gmail.com>
+From: Andy Yan <andy.yan@rock-chips.com>
 
-[ Upstream commit 65991ea8a6d1e68effdc01d95ebe39f1653f7b71 ]
+[ Upstream commit e7aae9f6d762139f8d2b86db03793ae0ab3dd802 ]
 
-Both MSM8974 and MSM8226 have only CX as power domain with MX & PX being
-handled as regulators. Handle this case by reodering pd_names to have CX
-first, and handling that the driver core will already attach a single
-power domain internally.
+The Cluster windows of upcoming VOP on rk3576 also support
+linear YUV support, we need to set uv swap bit for it.
 
-Signed-off-by: Matti Lehtimäki <matti.lehtimaki@gmail.com>
-[luca: minor changes]
-Signed-off-by: Luca Weiss <luca@lucaweiss.eu>
-Link: https://lore.kernel.org/r/20250206-wcnss-singlepd-v2-2-9a53ee953dee@lucaweiss.eu
-[bjorn: Added missing braces to else after multi-statement if]
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+As the VOP2_WIN_UV_SWA register defined on rk3568/rk3588 is
+0xffffffff, so this register will not be touched on these
+two platforms.
+
+Signed-off-by: Andy Yan <andy.yan@rock-chips.com>
+Tested-by: Michael Riesch <michael.riesch@wolfvision.net> # on RK3568
+Tested-by: Detlev Casanova <detlev.casanova@collabora.com>
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250303034436.192400-4-andyshrk@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/qcom_wcnss.c | 33 ++++++++++++++++++++++++++-------
- 1 file changed, 26 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/rockchip/rockchip_drm_vop2.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/remoteproc/qcom_wcnss.c b/drivers/remoteproc/qcom_wcnss.c
-index 68f37296b1516..ce61e0e7cbeb8 100644
---- a/drivers/remoteproc/qcom_wcnss.c
-+++ b/drivers/remoteproc/qcom_wcnss.c
-@@ -117,10 +117,10 @@ static const struct wcnss_data pronto_v1_data = {
- 	.pmu_offset = 0x1004,
- 	.spare_offset = 0x1088,
+diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
+index 955ef2caac89f..6efa0a51b7d65 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
++++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
+@@ -1289,10 +1289,8 @@ static void vop2_plane_atomic_update(struct drm_plane *plane,
  
--	.pd_names = { "mx", "cx" },
-+	.pd_names = { "cx", "mx" },
- 	.vregs = (struct wcnss_vreg_info[]) {
--		{ "vddmx", 950000, 1150000, 0 },
- 		{ "vddcx", .super_turbo = true},
-+		{ "vddmx", 950000, 1150000, 0 },
- 		{ "vddpx", 1800000, 1800000, 0 },
- 	},
- 	.num_pd_vregs = 2,
-@@ -131,10 +131,10 @@ static const struct wcnss_data pronto_v2_data = {
- 	.pmu_offset = 0x1004,
- 	.spare_offset = 0x1088,
+ 	rb_swap = vop2_win_rb_swap(fb->format->format);
+ 	vop2_win_write(win, VOP2_WIN_RB_SWAP, rb_swap);
+-	if (!vop2_cluster_window(win)) {
+-		uv_swap = vop2_win_uv_swap(fb->format->format);
+-		vop2_win_write(win, VOP2_WIN_UV_SWAP, uv_swap);
+-	}
++	uv_swap = vop2_win_uv_swap(fb->format->format);
++	vop2_win_write(win, VOP2_WIN_UV_SWAP, uv_swap);
  
--	.pd_names = { "mx", "cx" },
-+	.pd_names = { "cx", "mx" },
- 	.vregs = (struct wcnss_vreg_info[]) {
--		{ "vddmx", 1287500, 1287500, 0 },
- 		{ "vddcx", .super_turbo = true },
-+		{ "vddmx", 1287500, 1287500, 0 },
- 		{ "vddpx", 1800000, 1800000, 0 },
- 	},
- 	.num_pd_vregs = 2,
-@@ -386,8 +386,17 @@ static irqreturn_t wcnss_stop_ack_interrupt(int irq, void *dev)
- static int wcnss_init_pds(struct qcom_wcnss *wcnss,
- 			  const char * const pd_names[WCNSS_MAX_PDS])
- {
-+	struct device *dev = wcnss->dev;
- 	int i, ret;
- 
-+	/* Handle single power domain */
-+	if (dev->pm_domain) {
-+		wcnss->pds[0] = dev;
-+		wcnss->num_pds = 1;
-+		pm_runtime_enable(dev);
-+		return 0;
-+	}
-+
- 	for (i = 0; i < WCNSS_MAX_PDS; i++) {
- 		if (!pd_names[i])
- 			break;
-@@ -407,8 +416,15 @@ static int wcnss_init_pds(struct qcom_wcnss *wcnss,
- 
- static void wcnss_release_pds(struct qcom_wcnss *wcnss)
- {
-+	struct device *dev = wcnss->dev;
- 	int i;
- 
-+	/* Handle single power domain */
-+	if (wcnss->num_pds == 1 && dev->pm_domain) {
-+		pm_runtime_disable(dev);
-+		return;
-+	}
-+
- 	for (i = 0; i < wcnss->num_pds; i++)
- 		dev_pm_domain_detach(wcnss->pds[i], false);
- }
-@@ -426,10 +442,13 @@ static int wcnss_init_regulators(struct qcom_wcnss *wcnss,
- 	 * the regulators for the power domains. For old device trees we need to
- 	 * reserve extra space to manage them through the regulator interface.
- 	 */
--	if (wcnss->num_pds)
--		info += num_pd_vregs;
--	else
-+	if (wcnss->num_pds) {
-+		info += wcnss->num_pds;
-+		/* Handle single power domain case */
-+		num_vregs += num_pd_vregs - wcnss->num_pds;
-+	} else {
- 		num_vregs += num_pd_vregs;
-+	}
- 
- 	bulk = devm_kcalloc(wcnss->dev,
- 			    num_vregs, sizeof(struct regulator_bulk_data),
+ 	if (fb->format->is_yuv) {
+ 		vop2_win_write(win, VOP2_WIN_UV_VIR, DIV_ROUND_UP(fb->pitches[1], 4));
 -- 
 2.39.5
 
