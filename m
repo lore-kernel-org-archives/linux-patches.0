@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 113592236E3;
-	Mon,  2 Jun 2025 14:11:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A43BF2236E3;
+	Mon,  2 Jun 2025 14:11:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748873512; cv=none; b=cy2A3MhrfszusgsgIxcFEdbduQSCpYKXZnwUlXE2CWqinPAWyK/+PvJndJcb9fYgoJ2dGCZLTy9eJ6cVanZO4r+PsuBPU6qmoOz3/0nGpXm6GS2LcJvbpdn7dHfLSzc+IIOR2C7piMmv33uW/hQ0mbmYyr5TjLqIiopRpIoQOs4=
+	t=1748873514; cv=none; b=WQR8sM5I6MO/mVNkM10OJtTw1D28UFljzROnzdDrE4k/NVuOIUTch8ESOfqK5PdLRQ/J2Zff/o3wLunTrZVSfbsXWA9NxmIfTytGh/s1JWtKIf3b3doR+tcHZIuuJthE3JSfF4hxRaPct+9C116kfo2aL9rpDxUCPd0WTRfBes8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748873512; c=relaxed/simple;
-	bh=BHMSIx5u4VCz1Mw9TNZLgQlCSFd1VvczD3aydP51T1A=;
+	s=arc-20240116; t=1748873514; c=relaxed/simple;
+	bh=W6Fx9aP4z0g1Mj3u8SjEmz8OI5S36P6g1vijxeDuIHg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sus2Nqwe+O+HPjYMXDQ1QNImqR7Ihwi8tl3a9eCJ03iOe96YbhPzyGkIfUsVvKBk2bA/wgDf59ltgc5WWuhNE3kbOzlPky+hny3r3Kt82pwvF4hz1M5qSczyPH1IKJO7+GjQaED1GM5qMl406xabKlQW/kJaHbIBsmHjaW+j6WM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XInMlLi+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U/3ecyXdqRMKqHLOU4tLfbyRRbi2Ub17H3rbVexc/wdeO9yA+2zVLurbzse+iAPNn1Ekk9E7pvl3fGnYssGt88xL0ilf7cHFIguMIsMoN/g/lrQbyfOuB7GXLLpphUy1DW9WggBUynT7hcZgJG4tPmWBtgSr0OISQMI7ImjibII=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E7iwDB9l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XInMlLi+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19C95C4CEEB;
-	Mon,  2 Jun 2025 14:11:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E7iwDB9l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12F62C4CEEB;
+	Mon,  2 Jun 2025 14:11:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748873511;
-	bh=BHMSIx5u4VCz1Mw9TNZLgQlCSFd1VvczD3aydP51T1A=;
+	s=korg; t=1748873514;
+	bh=W6Fx9aP4z0g1Mj3u8SjEmz8OI5S36P6g1vijxeDuIHg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XInMlLi+NMF2ZkNDhswRXpOiftyGgdgTZnBCy3AHQRdRHmprU8F+CM0Nfkm3mn2JS
-	 WJVpV3Pj39XWiQcncITrATAZb3+giE7pBuxo57d9aJjqB5BQs0RODx0+nUJU0NEWFV
-	 dpjUBrbu1wOzbgcZBvLGKzJnKhsTZc6Fgj2Ifsf0=
+	b=E7iwDB9lGvCRv7/SVPUQyu/xChr/uu4gRAgsDdQYHe4mSM+eWRr756P5q4MW7tTLj
+	 fBa084xai1GWO5hnAel0FgNOUXn9rLWT2mBXQJD+qJ2SwbKUytVDoT41wjkbpPrHZm
+	 wJXvBQrO6P1unlL6SpyCmwOcTjLB8uIx3tYkkgjo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ang Tien Sung <tien.sung.ang@intel.com>,
-	Kuhanh Murugasen Krishnan <kuhanh.murugasen.krishnan@intel.com>,
-	Xu Yilun <yilun.xu@intel.com>,
-	Xu Yilun <yilun.xu@linux.intel.com>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	James Clark <james.clark@linaro.org>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 164/444] fpga: altera-cvp: Increase credit timeout
-Date: Mon,  2 Jun 2025 15:43:48 +0200
-Message-ID: <20250602134347.564594556@linuxfoundation.org>
+Subject: [PATCH 6.6 165/444] perf: arm_pmuv3: Call kvm_vcpu_pmu_resync_el0() before enabling counters
+Date: Mon,  2 Jun 2025 15:43:49 +0200
+Message-ID: <20250602134347.601938768@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -53,41 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuhanh Murugasen Krishnan <kuhanh.murugasen.krishnan@intel.com>
+From: Rob Herring (Arm) <robh@kernel.org>
 
-[ Upstream commit 0f05886a40fdc55016ba4d9ae0a9c41f8312f15b ]
+[ Upstream commit 04bd15c4cbc3f7bd2399d1baab958c5e738dbfc9 ]
 
-Increase the timeout for SDM (Secure device manager) data credits from
-20ms to 40ms. Internal stress tests running at 500 loops failed with the
-current timeout of 20ms. At the start of a FPGA configuration, the CVP
-host driver reads the transmit credits from SDM. It then sends bitstream
-FPGA data to SDM based on the total credits. Each credit allows the
-CVP host driver to send 4kBytes of data. There are situations whereby,
-the SDM did not respond in time during testing.
+Counting events related to setup of the PMU is not desired, but
+kvm_vcpu_pmu_resync_el0() is called just after the PMU counters have
+been enabled. Move the call to before enabling the counters.
 
-Signed-off-by: Ang Tien Sung <tien.sung.ang@intel.com>
-Signed-off-by: Kuhanh Murugasen Krishnan <kuhanh.murugasen.krishnan@intel.com>
-Acked-by: Xu Yilun <yilun.xu@intel.com>
-Link: https://lore.kernel.org/r/20250212221249.2715929-1-tien.sung.ang@intel.com
-Signed-off-by: Xu Yilun <yilun.xu@linux.intel.com>
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
+Tested-by: James Clark <james.clark@linaro.org>
+Link: https://lore.kernel.org/r/20250218-arm-brbe-v19-v20-1-4e9922fc2e8e@kernel.org
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/fpga/altera-cvp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/perf/arm_pmuv3.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/fpga/altera-cvp.c b/drivers/fpga/altera-cvp.c
-index 4ffb9da537d82..5295ff90482bc 100644
---- a/drivers/fpga/altera-cvp.c
-+++ b/drivers/fpga/altera-cvp.c
-@@ -52,7 +52,7 @@
- /* V2 Defines */
- #define VSE_CVP_TX_CREDITS		0x49	/* 8bit */
+diff --git a/drivers/perf/arm_pmuv3.c b/drivers/perf/arm_pmuv3.c
+index 0e8f54168cb64..0858e6096453e 100644
+--- a/drivers/perf/arm_pmuv3.c
++++ b/drivers/perf/arm_pmuv3.c
+@@ -751,10 +751,10 @@ static void armv8pmu_start(struct arm_pmu *cpu_pmu)
+ 	else
+ 		armv8pmu_disable_user_access();
  
--#define V2_CREDIT_TIMEOUT_US		20000
-+#define V2_CREDIT_TIMEOUT_US		40000
- #define V2_CHECK_CREDIT_US		10
- #define V2_POLL_TIMEOUT_US		1000000
- #define V2_USER_TIMEOUT_US		500000
++	kvm_vcpu_pmu_resync_el0();
++
+ 	/* Enable all counters */
+ 	armv8pmu_pmcr_write(armv8pmu_pmcr_read() | ARMV8_PMU_PMCR_E);
+-
+-	kvm_vcpu_pmu_resync_el0();
+ }
+ 
+ static void armv8pmu_stop(struct arm_pmu *cpu_pmu)
 -- 
 2.39.5
 
