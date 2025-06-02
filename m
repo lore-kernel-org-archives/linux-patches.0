@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32EB92248BF;
-	Mon,  2 Jun 2025 14:23:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74476224B01;
+	Mon,  2 Jun 2025 14:23:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748874190; cv=none; b=JswGrkmHD8Fss8GrJNm/f3Wkh/XC1+a95brlXyaIND/BUdX0SK35sK/Z8bLnVX9PiCyBd22GYgiOYrrcUh+6lHXYOv0UD6gwJL4RpQI3iap5EfS3nfkuRywSl9C7UgCb7aCJSz1fK5Cr6iZPt0pE2URD5zuy6xYwfaQBKZ7WQAE=
+	t=1748874193; cv=none; b=KONSzLLLuutCbNWrsu3MJtMffNb/R7ngiB/x1LXrM3mrWptX3GDG9WXMD9TDFbfZkqcODTRaeGystQnRnPVbe+XQJtgP6jcvo9hl+eneQdxuc/UQShqjW5Rr1djOO3vuT4dtmFGGsD7fQP/Ebfnkalh0UNAX8IVXPB31aT20Ttk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748874190; c=relaxed/simple;
-	bh=YDDY2OozsnRD1puk4lm86axl98AwVhtRmoRFMjRO2EI=;
+	s=arc-20240116; t=1748874193; c=relaxed/simple;
+	bh=eWulnOs6ADPVkpPqxwtRlZAIsQL9qec8Wna97bKTmR8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lFpAcCAiWYCjzxkCjIWo3CGhVs70zBLRrK5UZ20Y4YgXXD/uIIvC2FQx7hthJT9L6VbwfVMnBEeOiaDFsUM+XjGpbtXtB7dmIUVn0gNK6VgxRW1e4zOD7DBMvNbL3BuGeXAEPhaPOxfOEjkqGNAnifSyohijp5M2uO1KvbcZNbk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MuccScZi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dWz5AYVJ1OYipS6MtOV0OCKosJWXtgi6JIz5sdB10w83sl9faKsbyNpSfChRb45bWNK2efC0a/ncGB7kho1AOC5hZBqrEETXCEhUpTW4M0+49ey+O/WrJZfcD1j7NNLYQEBw/aLlyIM3rb8ChXp+n2DCNbsho0LptTUSdAqoBaI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UAprGRBN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MuccScZi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56279C4CEEB;
-	Mon,  2 Jun 2025 14:23:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UAprGRBN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76CE1C4CEEB;
+	Mon,  2 Jun 2025 14:23:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748874189;
-	bh=YDDY2OozsnRD1puk4lm86axl98AwVhtRmoRFMjRO2EI=;
+	s=korg; t=1748874193;
+	bh=eWulnOs6ADPVkpPqxwtRlZAIsQL9qec8Wna97bKTmR8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MuccScZi4LpEthB5JKCUD5sIk8GeTRY6JmKxQgWB7AURXtG3cC7CsrduCo6SkWPNN
-	 39GMFNWD5/S2LTABW+EillLKDtnmimOEIwTpNmqz4um8/dT71HLnnN1uMCkaSNy51R
-	 u2XnpZmjBfuuwTPW622OtDB3CzKFiR5rczc4r+HQ=
+	b=UAprGRBNEGdItwblcT7ay3ok+PlX9QFMWq03YtjrQ5Bi6o7Qg5XEuUhh55YaTcuXS
+	 yJCcX8ZMhivIqiDN+cTRkYQGcG51WiaCh8M5xBLMOFim9KG9DJClmki01hikg2YzKT
+	 TtKDj0iMbalvesN2SzbfYqb/+a2ci42ppnduT3w8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"feijuan.li" <feijuan.li@samsung.com>,
-	Jani Nikula <jani.nikula@intel.com>
-Subject: [PATCH 6.6 370/444] drm/edid: fixed the bug that hdr metadata was not reset
-Date: Mon,  2 Jun 2025 15:47:14 +0200
-Message-ID: <20250602134355.936785348@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Kunwu Chan <kunwu.chan@linux.dev>,
+	Linus Walleij <linus.walleij@linaro.org>
+Subject: [PATCH 6.6 388/444] pinctrl: tegra: Fix off by one in tegra_pinctrl_get_group()
+Date: Mon,  2 Jun 2025 15:47:32 +0200
+Message-ID: <20250602134356.655281941@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -50,35 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: feijuan.li <feijuan.li@samsung.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit 6692dbc15e5ed40a3aa037aced65d7b8826c58cd upstream.
+commit 5a062c3c3b82004766bc3ece82b594d337076152 upstream.
 
-When DP connected to a device with HDR capability,
-the hdr structure was filled.Then connected to another
-sink device without hdr capability, but the hdr info
-still exist.
+This should be >= pmx->soc->ngroups instead of > to avoid an out of
+bounds access.  The pmx->soc->groups[] array is allocated in
+tegra_pinctrl_probe().
 
-Fixes: e85959d6cbe0 ("drm: Parse HDR metadata info from EDID")
-Cc: <stable@vger.kernel.org> # v5.3+
-Signed-off-by: "feijuan.li" <feijuan.li@samsung.com>
-Reviewed-by: Jani Nikula <jani.nikula@intel.com>
-Link: https://lore.kernel.org/r/20250514063511.4151780-1-feijuan.li@samsung.com
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Fixes: c12bfa0fee65 ("pinctrl-tegra: Restore SFSEL bit when freeing pins")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Kunwu Chan <kunwu.chan@linux.dev>
+Link: https://lore.kernel.org/82b40d9d-b437-42a9-9eb3-2328aa6877ac@stanley.mountain
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_edid.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/pinctrl/tegra/pinctrl-tegra.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/drm_edid.c
-+++ b/drivers/gpu/drm/drm_edid.c
-@@ -6471,6 +6471,7 @@ static void drm_reset_display_info(struc
- 	info->has_hdmi_infoframe = false;
- 	info->rgb_quant_range_selectable = false;
- 	memset(&info->hdmi, 0, sizeof(info->hdmi));
-+	memset(&connector->hdr_sink_metadata, 0, sizeof(connector->hdr_sink_metadata));
+--- a/drivers/pinctrl/tegra/pinctrl-tegra.c
++++ b/drivers/pinctrl/tegra/pinctrl-tegra.c
+@@ -307,7 +307,7 @@ static const struct tegra_pingroup *tegr
+ {
+ 	struct tegra_pmx *pmx = pinctrl_dev_get_drvdata(pctldev);
  
- 	info->edid_hdmi_rgb444_dc_modes = 0;
- 	info->edid_hdmi_ycbcr444_dc_modes = 0;
+-	if (group_index < 0 || group_index > pmx->soc->ngroups)
++	if (group_index < 0 || group_index >= pmx->soc->ngroups)
+ 		return NULL;
+ 
+ 	return &pmx->soc->groups[group_index];
 
 
