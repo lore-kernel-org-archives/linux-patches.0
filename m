@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80F611DED64;
-	Mon,  2 Jun 2025 14:31:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B542C1C5D72;
+	Mon,  2 Jun 2025 14:31:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748874668; cv=none; b=h5CXpUw12SWIrqrEBEUt+lhIDBZtsyzebKJXFqrntn9JuWxyIDpShgZeHHvdYHPzDu1xMK4aeKhU8t1BwUuQXrA8xEEaUY+ZGwJhep2LSVJUn6nFiQjvOBQ7Q/uNXGNKjzG32NC5VhVz+T+6e/TcM3Qfq0M0G6GtzSEg9o8uO2M=
+	t=1748874671; cv=none; b=QAJ7fZW/asuwmHB+AQ58RM0EXamnfP7ekDKGNMsz4BZAl/uI9DmspQIpWtQ5dMHI4xbp+Xeub0/sMgHgDqMIhQB9gXX6DczxNlgvX89BDfuXvVKDjn8sKoto5O5Em2Rk/JlB0kNEK/at4DDlMl9M1cJA3pacjSWNAj0S7cL2p0A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748874668; c=relaxed/simple;
-	bh=sErGg95l7uOJd5HiGM7Hue6/m5nhxDnCRkTnnJj+DFU=;
+	s=arc-20240116; t=1748874671; c=relaxed/simple;
+	bh=eR2qw3Ph+nNaX6W6CdWt7Qkgspo6/fNjx6SpLf5j9b4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hs2KO7klbYSk22BytXCg8mdNshW3gxFWO7j81EHf26L3cMMHAezbSMsvHg7O6f1oNv/VXBf/0iC8x8M2dQpYipYomsFi8OyKN1pAhd0aXwPxCotNX2ZE9kliN57nb3wUqho5GOp2o4YbUktnxWRwbNhEs2qlIsZk7ZHqprfaX5A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EUFS/y0D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MaU2hD+nHF15hAd25jaTtnD25kQaklPy6gXvrknCFQsks2T+BW21Pjs/4FLjil41hU7SFgEhxE19EzK9HfQUsawFOCIfmEBfgnFFHNxwUo0qBc/UZZ+uL0+x/bhwyurzNJaVGVxCuqzBmCx8sEn4LIat55f9X2jRslPJps6oC34=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pvFKaZp2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EUFS/y0D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08A43C4CEEB;
-	Mon,  2 Jun 2025 14:31:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pvFKaZp2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 286F6C4CEEB;
+	Mon,  2 Jun 2025 14:31:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748874668;
-	bh=sErGg95l7uOJd5HiGM7Hue6/m5nhxDnCRkTnnJj+DFU=;
+	s=korg; t=1748874671;
+	bh=eR2qw3Ph+nNaX6W6CdWt7Qkgspo6/fNjx6SpLf5j9b4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EUFS/y0DD4LRGLjIY/Ec/zcRkmSt2NhdwS1ZswHHeIb3j4Ues8gNu+9Q/aR7FjNTl
-	 7XTIpbm3ZfJ/vSH0sJvHoyIgWrVVDS+tT1z06eU52Ul6f7yHCvCcwPXoj1t15mEH7s
-	 DNg3xEDFvfqDGQ50+TM3BZnNwPvKfnozjShHC8sM=
+	b=pvFKaZp2fKZGWmkPAoV9dT7l+qMZcCSBZVzVvSvAbBJ6INwf6qIXJdID4MdEqKepe
+	 pFj23RWHs9ZGsGYBlFPQXEeuoFlVSBSMPu9uS+nBmEHLZm1ErnBB3CAHwGRz8KCUXl
+	 pNmAiByvDoxcqSGx11krvb1bkuIVPHe7IzMJYje8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Robert Richter <rrichter@amd.com>,
+	Pankaj Gupta <pankaj.gupta@amd.com>,
+	Ira Weiny <ira.weiny@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 097/204] pNFS/flexfiles: Report ENETDOWN as a connection error
-Date: Mon,  2 Jun 2025 15:47:10 +0200
-Message-ID: <20250602134259.475004290@linuxfoundation.org>
+Subject: [PATCH 5.4 098/204] libnvdimm/labels: Fix divide error in nd_label_data_init()
+Date: Mon,  2 Jun 2025 15:47:11 +0200
+Message-ID: <20250602134259.514176059@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134255.449974357@linuxfoundation.org>
 References: <20250602134255.449974357@linuxfoundation.org>
@@ -52,35 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Robert Richter <rrichter@amd.com>
 
-[ Upstream commit aa42add73ce9b9e3714723d385c254b75814e335 ]
+[ Upstream commit ef1d3455bbc1922f94a91ed58d3d7db440652959 ]
 
-If the client should see an ENETDOWN when trying to connect to the data
-server, it might still be able to talk to the metadata server through
-another NIC. If so, report the error.
+If a faulty CXL memory device returns a broken zero LSA size in its
+memory device information (Identify Memory Device (Opcode 4000h), CXL
+spec. 3.1, 8.2.9.9.1.1), a divide error occurs in the libnvdimm
+driver:
 
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Tested-by: Jeff Layton <jlayton@kernel.org>
-Acked-by: Chuck Lever <chuck.lever@oracle.com>
+ Oops: divide error: 0000 [#1] PREEMPT SMP NOPTI
+ RIP: 0010:nd_label_data_init+0x10e/0x800 [libnvdimm]
+
+Code and flow:
+
+1) CXL Command 4000h returns LSA size = 0
+2) config_size is assigned to zero LSA size (CXL pmem driver):
+
+drivers/cxl/pmem.c:             .config_size = mds->lsa_size,
+
+3) max_xfer is set to zero (nvdimm driver):
+
+drivers/nvdimm/label.c: max_xfer = min_t(size_t, ndd->nsarea.max_xfer, config_size);
+
+4) A subsequent DIV_ROUND_UP() causes a division by zero:
+
+drivers/nvdimm/label.c: /* Make our initial read size a multiple of max_xfer size */
+drivers/nvdimm/label.c: read_size = min(DIV_ROUND_UP(read_size, max_xfer) * max_xfer,
+drivers/nvdimm/label.c-                 config_size);
+
+Fix this by checking the config size parameter by extending an
+existing check.
+
+Signed-off-by: Robert Richter <rrichter@amd.com>
+Reviewed-by: Pankaj Gupta <pankaj.gupta@amd.com>
+Reviewed-by: Ira Weiny <ira.weiny@intel.com>
+Link: https://patch.msgid.link/20250320112223.608320-1-rrichter@amd.com
+Signed-off-by: Ira Weiny <ira.weiny@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/flexfilelayout/flexfilelayout.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/nvdimm/label.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/nfs/flexfilelayout/flexfilelayout.c b/fs/nfs/flexfilelayout/flexfilelayout.c
-index 1b88b78f40bea..3b4f93dcf3239 100644
---- a/fs/nfs/flexfilelayout/flexfilelayout.c
-+++ b/fs/nfs/flexfilelayout/flexfilelayout.c
-@@ -1285,6 +1285,7 @@ static void ff_layout_io_track_ds_error(struct pnfs_layout_segment *lseg,
- 		case -ECONNRESET:
- 		case -EHOSTDOWN:
- 		case -EHOSTUNREACH:
-+		case -ENETDOWN:
- 		case -ENETUNREACH:
- 		case -EADDRINUSE:
- 		case -ENOBUFS:
+diff --git a/drivers/nvdimm/label.c b/drivers/nvdimm/label.c
+index 9251441fd8a35..5251058adc4d1 100644
+--- a/drivers/nvdimm/label.c
++++ b/drivers/nvdimm/label.c
+@@ -421,7 +421,8 @@ int nd_label_data_init(struct nvdimm_drvdata *ndd)
+ 	if (ndd->data)
+ 		return 0;
+ 
+-	if (ndd->nsarea.status || ndd->nsarea.max_xfer == 0) {
++	if (ndd->nsarea.status || ndd->nsarea.max_xfer == 0 ||
++	    ndd->nsarea.config_size == 0) {
+ 		dev_dbg(ndd->dev, "failed to init config data area: (%u:%u)\n",
+ 			ndd->nsarea.max_xfer, ndd->nsarea.config_size);
+ 		return -ENXIO;
 -- 
 2.39.5
 
