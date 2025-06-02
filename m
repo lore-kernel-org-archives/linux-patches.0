@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E43052376FF;
-	Mon,  2 Jun 2025 14:10:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9CD12376FF;
+	Mon,  2 Jun 2025 14:10:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748873415; cv=none; b=Tag/fP1tsOYMRoYFiQU3nSvE80b2SCrPCC61eahEeYFCAsVD1yqc+5ap1igeg1R/2l/MEZNJKxD50bXgVcylLkupmuA+Oz9W36pqN2OAwbDFZ1zdG8Y3yJ4Hn6XiBh8OPEGLX2+FQ8O3c+CuZAPOU61tJMQqjt9RiEtC8tdxqPc=
+	t=1748873417; cv=none; b=SjxqU915p2udGXKYJ8kJCl8Pd0Hwkod9vBEYlJeTZcnCs3SSWMCwT/9XEdjEZtTFIz3l2+FUBPlvYfLL/Id+z7/wLtAzhYZ3uCHvMxg89B7XNzCb0IrFpEeIUuE9b22qdxjCGrVhRUKim2SMJIAJ6YNTymrCbHZS2mxcixEUXTM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748873415; c=relaxed/simple;
-	bh=8aOGPDjkPLPzXbn4Mx6blF143J8I5lpfkGkn6cxM66s=;
+	s=arc-20240116; t=1748873417; c=relaxed/simple;
+	bh=nICKpZJPTHin9FltlHRco/rXesNyg7NAMVtdm5ZWUE4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=np3v3LbqA+fJzduHUDFkq+U+NLrVy5vydnw5RYRJEZsURg9gspcMTHOKHlkxwNmtjAxZSYwyl5G19sR/B1u/uXS12A5nRe5hlhScQ2gwWy649YMik5OtzXTQ7K4keYVmxn9JsqO6RF481MewiP/AIOg6gixBMDYIC0bcrFCEFeM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xxA15OCJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q1UcnEWwU/IYHAJRRW7NXcLH8PPB46Tn4rFjiR43/Mxt4tN8bwsvuHjzOylYNDAt4noDhTfaqC/GPuYItxKpgWeTpM6t7DFXRYq4yOz/bTrGds57ffNtUL6kR0y93Vd7pTNVsGl0044IYa4R6bCRo2yRJwxiZbvh+GwuPLXn6eg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UcvieBaB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xxA15OCJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07511C4CEEB;
-	Mon,  2 Jun 2025 14:10:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UcvieBaB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 322C3C4CEEB;
+	Mon,  2 Jun 2025 14:10:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748873414;
-	bh=8aOGPDjkPLPzXbn4Mx6blF143J8I5lpfkGkn6cxM66s=;
+	s=korg; t=1748873417;
+	bh=nICKpZJPTHin9FltlHRco/rXesNyg7NAMVtdm5ZWUE4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xxA15OCJNQb5Bn09aoUceJDcYEkzn57T22gidyXCIp8ggsGWsz8+qqX60etwoe2+U
-	 bwcAcIGPRebP7bRuvdfbTA1Fbv08a3PD92qjwmyrnbQ8E2eHyMZXxZrsym0YCDailX
-	 6oDTxDCOYfENbY+rfhN1VK9tuYFsimbvTndMRyrY=
+	b=UcvieBaB3wMkJhX0IpGgj+VtNVnn2AlUTHmb50LjNZ69uS9881DsNCq/nyPDViWLi
+	 S3FTx/EAsqAL/AdBQ9UIYKfxiCwO1hdMVZjhr97UP58pTSTxIS2JlIAOpJz+Zge+MZ
+	 GPCCTZgRmgtqez7Vyd/c/QfvscIUiFNJC9yze/X0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>,
+	Jon Hunter <jonathanh@nvidia.com>,
 	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 133/444] arm64: tegra: p2597: Fix gpio for vdd-1v8-dis regulator
-Date: Mon,  2 Jun 2025 15:43:17 +0200
-Message-ID: <20250602134346.299060235@linuxfoundation.org>
+Subject: [PATCH 6.6 134/444] arm64: tegra: Resize aperture for the IGX PCIe C5 slot
+Date: Mon,  2 Jun 2025 15:43:18 +0200
+Message-ID: <20250602134346.338216464@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -51,35 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>
+From: Jon Hunter <jonathanh@nvidia.com>
 
-[ Upstream commit f34621f31e3be81456c903287f7e4c0609829e29 ]
+[ Upstream commit 6d4bfe6d86af1ef52bdb4592c9afb2037f24f2c4 ]
 
-According to the board schematics the enable pin of this regulator is
-connected to gpio line #9 of the first instance of the TCA9539
-GPIO expander, so adjust it.
+Some discrete graphics cards such as the NVIDIA RTX A6000 support
+resizable BARs. When connecting an A6000 card to the NVIDIA IGX Orin
+platform, resizing the BAR1 aperture to 8GB fails because the current
+device-tree configuration for the PCIe C5 slot cannot support this.
+Fix this by updating the device-tree 'reg' and 'ranges' properties for
+the PCIe C5 slot to support this.
 
-Signed-off-by: Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>
-Link: https://lore.kernel.org/r/20250224-diogo-gpio_exp-v1-1-80fb84ac48c6@tecnico.ulisboa.pt
+Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
+Link: https://lore.kernel.org/r/20250116151903.476047-1-jonathanh@nvidia.com
 Signed-off-by: Thierry Reding <treding@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/nvidia/tegra210-p2597.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../boot/dts/nvidia/tegra234-p3740-0002+p3701-0008.dts | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/nvidia/tegra210-p2597.dtsi b/arch/arm64/boot/dts/nvidia/tegra210-p2597.dtsi
-index b4a1108c2dd74..0639f5ce1bd9e 100644
---- a/arch/arm64/boot/dts/nvidia/tegra210-p2597.dtsi
-+++ b/arch/arm64/boot/dts/nvidia/tegra210-p2597.dtsi
-@@ -1635,7 +1635,7 @@ vdd_1v8_dis: regulator-vdd-1v8-dis {
- 		regulator-min-microvolt = <1800000>;
- 		regulator-max-microvolt = <1800000>;
- 		regulator-always-on;
--		gpio = <&exp1 14 GPIO_ACTIVE_HIGH>;
-+		gpio = <&exp1 9 GPIO_ACTIVE_HIGH>;
- 		enable-active-high;
- 		vin-supply = <&vdd_1v8>;
- 	};
+diff --git a/arch/arm64/boot/dts/nvidia/tegra234-p3740-0002+p3701-0008.dts b/arch/arm64/boot/dts/nvidia/tegra234-p3740-0002+p3701-0008.dts
+index bac611d735c58..2fa48972b2a91 100644
+--- a/arch/arm64/boot/dts/nvidia/tegra234-p3740-0002+p3701-0008.dts
++++ b/arch/arm64/boot/dts/nvidia/tegra234-p3740-0002+p3701-0008.dts
+@@ -102,6 +102,16 @@ pcie@14160000 {
+ 		};
+ 
+ 		pcie@141a0000 {
++			reg = <0x00 0x141a0000 0x0 0x00020000   /* appl registers (128K)      */
++			       0x00 0x3a000000 0x0 0x00040000   /* configuration space (256K) */
++			       0x00 0x3a040000 0x0 0x00040000   /* iATU_DMA reg space (256K)  */
++			       0x00 0x3a080000 0x0 0x00040000   /* DBI reg space (256K)       */
++			       0x2e 0x20000000 0x0 0x10000000>; /* ECAM (256MB)               */
++
++			ranges = <0x81000000 0x00 0x3a100000 0x00 0x3a100000 0x0 0x00100000      /* downstream I/O (1MB) */
++				  0x82000000 0x00 0x40000000 0x2e 0x30000000 0x0 0x08000000      /* non-prefetchable memory (128MB) */
++				  0xc3000000 0x28 0x00000000 0x28 0x00000000 0x6 0x20000000>;    /* prefetchable memory (25088MB) */
++
+ 			status = "okay";
+ 			vddio-pex-ctl-supply = <&vdd_1v8_ls>;
+ 			phys = <&p2u_nvhs_0>, <&p2u_nvhs_1>, <&p2u_nvhs_2>,
 -- 
 2.39.5
 
