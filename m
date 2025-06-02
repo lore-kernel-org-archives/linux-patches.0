@@ -1,50 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B36F01F4165;
-	Mon,  2 Jun 2025 15:14:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1A451F4165;
+	Mon,  2 Jun 2025 15:14:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748877244; cv=none; b=AK+bEI3ESaGSKhnQlXSHBZxxGQmjG2FmnuX8CjTGRJEsjJcQGVl1Oa9uJTGDeG84R8ZmnsgugXVMoWZCH4eFPHM0o9o457BTuuT8uydhXKfGvVTdCJFoH5dWBVHgrOQ11088fRnrCh0+OzooC80k9H462Iy4d2KQKvsoiNaDWvk=
+	t=1748877248; cv=none; b=pcUBiSIdkpowcvqGtJNTyjxoCuE1hkH7864msd68md1Dweb8iYD6YNqgKn40DVz7YNRgoXiajgSafe76vLc5xiGlANocsYPd/OPYmi6i9b8Zn0shHXZL/wGvsYI11x7Qvx09T176I+K7KrUt/O4TnHeK/SI/Wa75Rze908W6OQc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748877244; c=relaxed/simple;
-	bh=t5LgtCHZDaEV+tkkW0I9gb9mRctVk/6jCR4D0npwo+M=;
+	s=arc-20240116; t=1748877248; c=relaxed/simple;
+	bh=eRso0C3IfI3+Na2FSINWF60ZwuGE61jWbWjso7L020U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lMg7nkA2Mira05SiENCMCjfGSDiCrO8d1aPPp25fRY+AK6K9f69cLl8pest8w/A/BJbETHjAM6qIMXv2Xi3SMWAkRiZ+CA+9DCSjxFpfb9NoAWoaS6p1bGNpeK7GNzSTyL4Z378qHckz6TWNViWr+HBvLzOrUcUF4JO2QLwa+hY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FOHAkHpj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X/a2PAICza9VZjcOaiGJZqc/o5gsnE3uNdbHciw15y3/OgBvVf0hdLRPr5G4bOQWRfQdsJxLQ0bzt9w9imdofH0GggKBP2HfNzreRLEDMkwdOHovnrGPJKAB9/e1fCy3+uR9l9ZWpJevMNTv/jBeRV3i+5w8TMHmW1Q67IwA4/E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FtV31CiH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FOHAkHpj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BAFCC4CEEB;
-	Mon,  2 Jun 2025 15:14:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FtV31CiH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFA13C4CEEE;
+	Mon,  2 Jun 2025 15:14:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748877244;
-	bh=t5LgtCHZDaEV+tkkW0I9gb9mRctVk/6jCR4D0npwo+M=;
+	s=korg; t=1748877247;
+	bh=eRso0C3IfI3+Na2FSINWF60ZwuGE61jWbWjso7L020U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FOHAkHpjffEkfZDJkHgPGYtla2KNlaO0wLVwZoBbpdeB3DvpxEtPaRyq2RfZfeNmE
-	 4hvhXaz+rnjv4g+tB+4mx+50jtL04P2wNATgaioIan4NcXodd7KaxxcLR/BaA/WUTk
-	 K3YqoK9Z86ARKiJui0/uJ6+OGxEChoMLB/y55w7Y=
+	b=FtV31CiHHzGArq/zIN5sEfVciQqdUEI8hfI69KcHdqYnl7dw1+HCWvsFH70n1ndHw
+	 ggjCwjpAdVsPRXKUci/S2LKTZQA1o3D1lUBbD5eSuVlb5AdeuRmWyTG02tIG9E3a6U
+	 DyGCeNCC7rokdKt/zJxF1vxK+QeTn5TSEdedBkwg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pekka Paalanen <pekka.paalanen@collabora.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	David Airlie <airlied@gmail.com>,
-	Daniel Vetter <daniel@ffwll.ch>,
-	Rob Clark <robdclark@gmail.com>,
-	Simon Ser <contact@emersion.fr>,
-	Manasi Navare <navaremanasi@google.com>,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Simona Vetter <simona.vetter@intel.com>,
-	Simona Vetter <simona.vetter@ffwll.ch>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Douglas Anderson <dianders@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 217/325] drm/atomic: clarify the rules around drm_atomic_state->allow_modeset
-Date: Mon,  2 Jun 2025 15:48:13 +0200
-Message-ID: <20250602134328.609644194@linuxfoundation.org>
+Subject: [PATCH 6.1 218/325] drm/panel-edp: Add Starry 116KHD024006
+Date: Mon,  2 Jun 2025 15:48:14 +0200
+Message-ID: <20250602134328.649779425@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134319.723650984@linuxfoundation.org>
 References: <20250602134319.723650984@linuxfoundation.org>
@@ -57,92 +45,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Simona Vetter <simona.vetter@ffwll.ch>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit c5e3306a424b52e38ad2c28c7f3399fcd03e383d ]
+[ Upstream commit 749b5b279e5636cdcef51e15d67b77162cca6caa ]
 
-msm is automagically upgrading normal commits to full modesets, and
-that's a big no-no:
+We have a few reports of sc7180-trogdor-pompom devices that have a
+panel in them that IDs as STA 0x0004 and has the following raw EDID:
 
-- for one this results in full on->off->on transitions on all these
-  crtc, at least if you're using the usual helpers. Which seems to be
-  the case, and is breaking uapi
+  00 ff ff ff ff ff ff 00  4e 81 04 00 00 00 00 00
+  10 20 01 04 a5 1a 0e 78  0a dc dd 96 5b 5b 91 28
+  1f 52 54 00 00 00 01 01  01 01 01 01 01 01 01 01
+  01 01 01 01 01 01 8e 1c  56 a0 50 00 1e 30 28 20
+  55 00 00 90 10 00 00 18  00 00 00 00 00 00 00 00
+  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
+  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 fe
+  00 31 31 36 4b 48 44 30  32 34 30 30 36 0a 00 e6
 
-- further even if the ctm change itself would not result in flicker,
-  this can hide modesets for other reasons. Which again breaks the
-  uapi
+We've been unable to locate a datasheet for this panel and our partner
+has not been responsive, but all Starry eDP datasheets that we can
+find agree on the same timing (delay_100_500_e200) so it should be
+safe to use that here instead of the super conservative timings. We'll
+still go a little extra conservative and allow `hpd_absent` of 200
+instead of 100 because that won't add any real-world delay in most
+cases.
 
-v2: I forgot the case of adding unrelated crtc state. Add that case
-and link to the existing kerneldoc explainers. This has come up in an
-irc discussion with Manasi and Ville about intel's bigjoiner mode.
-Also cc everyone involved in the msm irc discussion, more people
-joined after I sent out v1.
+We'll associate the string from the EDID ("116KHD024006") with this
+panel. Given that the ID is the suspicious value of 0x0004 it seems
+likely that Starry doesn't always update their IDs but the string will
+still work to differentiate if we ever need to in the future.
 
-v3: Wording polish from Pekka and Thomas
-
-Acked-by: Pekka Paalanen <pekka.paalanen@collabora.com>
-Acked-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-Cc: Maxime Ripard <mripard@kernel.org>
-Cc: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: David Airlie <airlied@gmail.com>
-Cc: Daniel Vetter <daniel@ffwll.ch>
-Cc: Pekka Paalanen <pekka.paalanen@collabora.com>
-Cc: Rob Clark <robdclark@gmail.com>
-Cc: Simon Ser <contact@emersion.fr>
-Cc: Manasi Navare <navaremanasi@google.com>
-Cc: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Simona Vetter <simona.vetter@intel.com>
-Signed-off-by: Simona Vetter <simona.vetter@ffwll.ch>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250108172417.160831-1-simona.vetter@ffwll.ch
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250109142853.1.Ibcc3009933fd19507cc9c713ad0c99c7a9e4fe17@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/drm/drm_atomic.h | 23 +++++++++++++++++++++--
- 1 file changed, 21 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/panel/panel-edp.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/include/drm/drm_atomic.h b/include/drm/drm_atomic.h
-index 10b1990bc1f68..36225aedf6138 100644
---- a/include/drm/drm_atomic.h
-+++ b/include/drm/drm_atomic.h
-@@ -372,8 +372,27 @@ struct drm_atomic_state {
- 	 *
- 	 * Allow full modeset. This is used by the ATOMIC IOCTL handler to
- 	 * implement the DRM_MODE_ATOMIC_ALLOW_MODESET flag. Drivers should
--	 * never consult this flag, instead looking at the output of
--	 * drm_atomic_crtc_needs_modeset().
-+	 * generally not consult this flag, but instead look at the output of
-+	 * drm_atomic_crtc_needs_modeset(). The detailed rules are:
-+	 *
-+	 * - Drivers must not consult @allow_modeset in the atomic commit path.
-+	 *   Use drm_atomic_crtc_needs_modeset() instead.
-+	 *
-+	 * - Drivers must consult @allow_modeset before adding unrelated struct
-+	 *   drm_crtc_state to this commit by calling
-+	 *   drm_atomic_get_crtc_state(). See also the warning in the
-+	 *   documentation for that function.
-+	 *
-+	 * - Drivers must never change this flag, it is under the exclusive
-+	 *   control of userspace.
-+	 *
-+	 * - Drivers may consult @allow_modeset in the atomic check path, if
-+	 *   they have the choice between an optimal hardware configuration
-+	 *   which requires a modeset, and a less optimal configuration which
-+	 *   can be committed without a modeset. An example would be suboptimal
-+	 *   scanout FIFO allocation resulting in increased idle power
-+	 *   consumption. This allows userspace to avoid flickering and delays
-+	 *   for the normal composition loop at reasonable cost.
- 	 */
- 	bool allow_modeset : 1;
- 	/**
+diff --git a/drivers/gpu/drm/panel/panel-edp.c b/drivers/gpu/drm/panel/panel-edp.c
+index 2c14779a39e88..1ef1b4c966d2e 100644
+--- a/drivers/gpu/drm/panel/panel-edp.c
++++ b/drivers/gpu/drm/panel/panel-edp.c
+@@ -1944,6 +1944,7 @@ static const struct edp_panel_entry edp_panels[] = {
+ 	EDP_PANEL_ENTRY('S', 'H', 'P', 0x1523, &sharp_lq140m1jw46.delay, "LQ140M1JW46"),
+ 	EDP_PANEL_ENTRY('S', 'H', 'P', 0x154c, &delay_200_500_p2e100, "LQ116M1JW10"),
+ 
++	EDP_PANEL_ENTRY('S', 'T', 'A', 0x0004, &delay_200_500_e200, "116KHD024006"),
+ 	EDP_PANEL_ENTRY('S', 'T', 'A', 0x0100, &delay_100_500_e200, "2081116HHD028001-51D"),
+ 
+ 	{ /* sentinal */ }
 -- 
 2.39.5
 
