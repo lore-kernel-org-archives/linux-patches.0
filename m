@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28506223339;
-	Mon,  2 Jun 2025 14:12:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38045223339;
+	Mon,  2 Jun 2025 14:12:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748873531; cv=none; b=Rz/Fztqw5OiPABeGv9ybMKLl9J+/5rgfkTF+qIQyIzv8i2tzyBzIgbk3qqqwu93lc6/FEV46l3srV8l3UXSeY4yPoyOrpyW4RpTAUvVJ0TY4EjSTFhYpNkc8qaK7MyNFrrPZzf67qrG8FRGz4nmzBlhA59avhrlRx2HZn3qXM1c=
+	t=1748873534; cv=none; b=VnpX7+vHJIgdum7v4p74vwqjJNxwRlDrtRrJ06LHNOSfROjoRcr9sLVROvE/FlL7+3AH/rrB70qCO0kdGajiCS/uM7VCidntAeqi+7sUFSrS/yVb7GbrODGNcOCVQZ0ilaI851gwlWb+TH7CtK4eUJuGZ1zJw9vypum+4W0txZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748873531; c=relaxed/simple;
-	bh=kUSPb37/Yj21QU6HrtfFXlJ7M/VyjpsKwdfoGNaAvDc=;
+	s=arc-20240116; t=1748873534; c=relaxed/simple;
+	bh=FhMrIv/Oa0+Olqkqpoac/abfPVdf6QvTtinXEsyWcEw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=o5bAClG6t2or7iHLmLRQXzseNygLzFrACeSe8td7FKFo1rQL9qmNv5xXXOMNlD1avm1a8R4eXV3Za+dvfEPVsPPJFx6c9lusloqNJ5x5AOFcNkPUWg8WLww1ZU2OMZLQhQqRwfTFzCo8LgGPmVI4iQQLcurvZxfI00/Z3SGb4u8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XIviw2eT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=nPO6HTuG21OdF9ViVCUGQMHoBpUYw1RAGMYb5A+WA1SS0/MlCabxal0iEUs1XJgf9Nw+t3GbpSgB4Zh2ADIjIUpiSULQtHTY0tpJm6ErRObnxryPaG3xaoCnQzh5vtsnkQn+xBp520jz7+Q7tKTBY/gqN9T4URNZh1RYMS6hWNo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fa8dbe/N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XIviw2eT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7029CC4CEEB;
-	Mon,  2 Jun 2025 14:12:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fa8dbe/N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9EAEC4CEEB;
+	Mon,  2 Jun 2025 14:12:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748873531;
-	bh=kUSPb37/Yj21QU6HrtfFXlJ7M/VyjpsKwdfoGNaAvDc=;
+	s=korg; t=1748873534;
+	bh=FhMrIv/Oa0+Olqkqpoac/abfPVdf6QvTtinXEsyWcEw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XIviw2eTuXzOvC4cgkOeY7psTdMWQhv+1u+Jdg8TBJVpt34TSHkyRhrhQkG3FiMeu
-	 q/UqTt8uc4Dg0FFQvJQxb7ziIbWFI3OlvEA/yjanOsYkumok5paP5+asj3XQUedQ4I
-	 1HH0IHWwvbnWvbP/AsiWqlhUSzL0qGY7gB4xohOw=
+	b=fa8dbe/NGGpEwe319vxpzAr9FM3A/wn2QQJz9PzmI2NkeTrW4Ln6ihozZB3zh7KpF
+	 IbEx755ZFq0y9WSrbV9DBWPk2Lhd0CVC1vVzyXndHpqUiVqYRcTRS6xgSqpMZr/Nk/
+	 qwpkX9OTyuk57DxbmKcDeuu90GZIJmBrIIcmyWGg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Stanimir Varbanov <svarbanov@suse.de>,
 	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Jim Quinlan <james.quinlan@broadcom.com>,
 	"Ivan T. Ivanov" <iivanov@suse.de>,
 	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 169/444] PCI: brcmstb: Expand inbound window size up to 64GB
-Date: Mon,  2 Jun 2025 15:43:53 +0200
-Message-ID: <20250602134347.759707213@linuxfoundation.org>
+Subject: [PATCH 6.6 170/444] PCI: brcmstb: Add a softdep to MIP MSI-X driver
+Date: Mon,  2 Jun 2025 15:43:54 +0200
+Message-ID: <20250602134347.799570987@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -57,41 +56,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Stanimir Varbanov <svarbanov@suse.de>
 
-[ Upstream commit 25a98c727015638baffcfa236e3f37b70cedcf87 ]
+[ Upstream commit 2294059118c550464dd8906286324d90c33b152b ]
 
-The BCM2712 memory map can support up to 64GB of system memory, thus
-expand the inbound window size in calculation helper function.
+Then the brcmstb PCIe driver and MIP MSI-X interrupt controller
+drivers are built as modules there could be a race in probing.
 
-The change is safe for the currently supported SoCs that have smaller
-inbound window sizes.
+To avoid this, add a softdep to MIP driver to guarantee that
+MIP driver will be load first.
 
 Signed-off-by: Stanimir Varbanov <svarbanov@suse.de>
 Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Reviewed-by: Jim Quinlan <james.quinlan@broadcom.com>
 Tested-by: Ivan T. Ivanov <iivanov@suse.de>
-Link: https://lore.kernel.org/r/20250224083559.47645-7-svarbanov@suse.de
+Link: https://lore.kernel.org/r/20250224083559.47645-5-svarbanov@suse.de
 [kwilczynski: commit log]
 Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/pcie-brcmstb.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/pci/controller/pcie-brcmstb.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/drivers/pci/controller/pcie-brcmstb.c b/drivers/pci/controller/pcie-brcmstb.c
-index 940af934ce1bb..8b88e30db7447 100644
+index 8b88e30db7447..9bcf4c68058eb 100644
 --- a/drivers/pci/controller/pcie-brcmstb.c
 +++ b/drivers/pci/controller/pcie-brcmstb.c
-@@ -284,8 +284,8 @@ static int brcm_pcie_encode_ibar_size(u64 size)
- 	if (log2_in >= 12 && log2_in <= 15)
- 		/* Covers 4KB to 32KB (inclusive) */
- 		return (log2_in - 12) + 0x1c;
--	else if (log2_in >= 16 && log2_in <= 35)
--		/* Covers 64KB to 32GB, (inclusive) */
-+	else if (log2_in >= 16 && log2_in <= 36)
-+		/* Covers 64KB to 64GB, (inclusive) */
- 		return log2_in - 15;
- 	/* Something is awry so disable */
- 	return 0;
+@@ -1632,3 +1632,4 @@ module_platform_driver(brcm_pcie_driver);
+ MODULE_LICENSE("GPL");
+ MODULE_DESCRIPTION("Broadcom STB PCIe RC driver");
+ MODULE_AUTHOR("Broadcom");
++MODULE_SOFTDEP("pre: irq_bcm2712_mip");
 -- 
 2.39.5
 
