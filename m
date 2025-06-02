@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F612224247;
-	Mon,  2 Jun 2025 14:20:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C06FE238C06;
+	Mon,  2 Jun 2025 14:20:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748874009; cv=none; b=B0lQiO4k2vOYG5/v782S95dJJ5mMuZGKVRhlgP1V60xlw+eMyR4eDD0nWWCCdiqR6WrQHGMDuee7zTfjLnVBv8PhxzAjLXTmnxl1R2QVT+RXLH/9tbK4dFR7aXHmWozpXF/SFIBhwd0/bqq2Ud1nnkqOohXLFh3W3hNrALNlloI=
+	t=1748874012; cv=none; b=CgYLi9WmmHMlzE5RmMNbVSRA04hkS/gScyxww+bEcyh9zFFEDYooojrzwN4KvcY1t0LbMT3rQgKNZQ9N0S1DryYDp1jWXIO7nMWKJ/MaprhkSXjNCkffNhilc2zOsS8fylCGI+2CxKfJDW9x2Iy78J9DFyqCON8GPuWeT4cN//4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748874009; c=relaxed/simple;
-	bh=19+KWgiUUZl1m8g8K2MuP/aTW4OUPJIN2M5isG3XbCk=;
+	s=arc-20240116; t=1748874012; c=relaxed/simple;
+	bh=NJ5Id5A87l1Jiitzv0URgDPyMadpmLMlveAM2DMR/iU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=anzZZM4S67UG/6erQoIRgQlf0AqbEu37yhEQBpH9cmjizqULEMrjTkELpSowdL5/JHzu1iJgGsy+snXIY9grEL6gSRZu31SJgSUM/H1eKMGrNpOvHNUOe4ol17p3Rw34PdsWGhaUfSANnxFxMtAfUvAhENr6lkGYxhQ4QJLYEm0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1R+fphjo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aXd9NbNN13KZ3ocMexyX349yFJJHhHkZihoIzx2AwAAVIfQwuCDuu00CG5KmEKoluvKj95kp3MAwWfCbYNz7+diDQE3MmulKEO1RSvzaQNUGFXJdGYtyLQOYATQuLDQNAhv5tn4S5Uk/Vh6PeNyjLkzaFoxIYZEOKlAeacAS28w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h6fUssOU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1R+fphjo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C122EC4CEEB;
-	Mon,  2 Jun 2025 14:20:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h6fUssOU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E89A3C4CEEB;
+	Mon,  2 Jun 2025 14:20:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748874009;
-	bh=19+KWgiUUZl1m8g8K2MuP/aTW4OUPJIN2M5isG3XbCk=;
+	s=korg; t=1748874012;
+	bh=NJ5Id5A87l1Jiitzv0URgDPyMadpmLMlveAM2DMR/iU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1R+fphjomSRvSu584/AbYAJ30tJUnesbQder1ALFmf1oXndR8Uvp+d2i+8u/QKtA/
-	 wOndc0dx5tpeI34to8ZKu+GWS09bMlatxTwrI9aOPIxurKbzm9ubK3uLbVTuTOayCK
-	 XjCZomNXIlIVdvWrP6K7blkNOlN1G8ZMdge8tL7Y=
+	b=h6fUssOU1RNDgj+R/nMDANLOWM6sywGp+Ss0t6Ipb+gBZao/bfC33crNx1d8Lu8TE
+	 xXdDtV0r0Pm1dmJOJ6IRyagv3Jh2pdRuUxlD8Vruu9mUbtGlNtGJwORmPHiSWcvLBi
+	 ttowgM1NMoT6k17s5hgDIF7Xip8KiYomRKqVRi4U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Wei <dw@davidwei.uk>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 326/444] tools: ynl-gen: validate 0 len strings from kernel
-Date: Mon,  2 Jun 2025 15:46:30 +0200
-Message-ID: <20250602134354.175450977@linuxfoundation.org>
+Subject: [PATCH 6.6 327/444] wifi: iwlwifi: add support for Killer on MTL
+Date: Mon,  2 Jun 2025 15:46:31 +0200
+Message-ID: <20250602134354.215227591@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -51,36 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Wei <dw@davidwei.uk>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 4720f9707c783f642332dee3d56dccaefa850e42 ]
+[ Upstream commit ebedf8b7f05b9c886d68d63025db8d1b12343157 ]
 
-Strings from the kernel are guaranteed to be null terminated and
-ynl_attr_validate() checks for this. But it doesn't check if the string
-has a len of 0, which would cause problems when trying to access
-data[len - 1]. Fix this by checking that len is positive.
+For now, we need another entry for these devices, this
+will be changed completely for 6.16.
 
-Signed-off-by: David Wei <dw@davidwei.uk>
-Link: https://patch.msgid.link/20250503043050.861238-1-dw@davidwei.uk
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219926
+Link: https://patch.msgid.link/20250506214258.2efbdc9e9a82.I31915ec252bd1c74bd53b89a0e214e42a74b6f2e@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/net/ynl/lib/ynl.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/intel/iwlwifi/pcie/drv.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/tools/net/ynl/lib/ynl.c b/tools/net/ynl/lib/ynl.c
-index ae61ae5b02bf8..0871f86c6b666 100644
---- a/tools/net/ynl/lib/ynl.c
-+++ b/tools/net/ynl/lib/ynl.c
-@@ -368,7 +368,7 @@ int ynl_attr_validate(struct ynl_parse_arg *yarg, const struct nlattr *attr)
- 		     "Invalid attribute (binary %s)", policy->name);
- 		return -1;
- 	case YNL_PT_NUL_STR:
--		if ((!policy->len || len <= policy->len) && !data[len - 1])
-+		if (len && (!policy->len || len <= policy->len) && !data[len - 1])
- 			break;
- 		yerr(yarg->ys, YNL_ERROR_ATTR_INVALID,
- 		     "Invalid attribute (string %s)", policy->name);
+diff --git a/drivers/net/wireless/intel/iwlwifi/pcie/drv.c b/drivers/net/wireless/intel/iwlwifi/pcie/drv.c
+index 4a2de79f2e864..c01a9a6f06a4d 100644
+--- a/drivers/net/wireless/intel/iwlwifi/pcie/drv.c
++++ b/drivers/net/wireless/intel/iwlwifi/pcie/drv.c
+@@ -580,6 +580,8 @@ static const struct iwl_dev_info iwl_dev_info_table[] = {
+ 	IWL_DEV_INFO(0x7A70, 0x1692, iwlax411_2ax_cfg_so_gf4_a0, iwl_ax411_killer_1690i_name),
+ 	IWL_DEV_INFO(0x7AF0, 0x1691, iwlax411_2ax_cfg_so_gf4_a0, iwl_ax411_killer_1690s_name),
+ 	IWL_DEV_INFO(0x7AF0, 0x1692, iwlax411_2ax_cfg_so_gf4_a0, iwl_ax411_killer_1690i_name),
++	IWL_DEV_INFO(0x7F70, 0x1691, iwlax411_2ax_cfg_so_gf4_a0, iwl_ax411_killer_1690s_name),
++	IWL_DEV_INFO(0x7F70, 0x1692, iwlax411_2ax_cfg_so_gf4_a0, iwl_ax411_killer_1690i_name),
+ 
+ 	IWL_DEV_INFO(0x271C, 0x0214, iwl9260_2ac_cfg, iwl9260_1_name),
+ 	IWL_DEV_INFO(0x7E40, 0x1691, iwl_cfg_ma, iwl_ax411_killer_1690s_name),
 -- 
 2.39.5
 
