@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B27252248B5;
-	Mon,  2 Jun 2025 14:37:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F1B920E026;
+	Mon,  2 Jun 2025 14:37:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748875057; cv=none; b=Jx4PCcGK4cIleHhYfprRnODXA912NxqtEv+wKRZRTwo1SbnZs2/8vViRsHADUbjyiiYpHmV9hsB90teGfGOnj3Bp1ZGpF3p25vF+erG3gT0u3fCPuuB3Ug3ZJn29KkmPbaYkEYba9AXjxXG6/6pK3WVvsnZu15U4Pj5AFQdOSAo=
+	t=1748875060; cv=none; b=An/cv8Mug4Al3UENQNeMtvpZPkS9mx3ytO8Dkiz73m83JCbP/cFWQiUSdLrOKsrLjeqdLhGkfVWGU4VFQyufWv1JEzcGbsv2wIH0oGbRdYZMfiVEHHjzYiMgvq+asNvWaag5GraxzcL17Mqeo3xxFJ/lZSduYSNTkznDmxOx0ZI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748875057; c=relaxed/simple;
-	bh=JUhiKdmcN+kPguFhhCCX9OFbyYUKGdhk8tEeSkiL4Ig=;
+	s=arc-20240116; t=1748875060; c=relaxed/simple;
+	bh=czW8EEbx0j5wtnWLX4eof1IRwGaMCCHc1hgeHuGHzOo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GuSWxXHQu/swIyrp9X2BTlimuA/o0LokYeeFBPXSnlWppgGsRp2/UFgL/QaK0U07C6/tSHCoPAhxAulVUkYzoKWDQhfUwaDWswlld6dJGztgW9xOwdY20ZbBIADX4fH97w2lgt0OwVB4Qz1cN64Z2Srxanf4fpGt1h7SVwjsa2M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=05oW9UOC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=POgt317VYfq68toE6qYcjYaBf5dJdyC8hwI5HlWwdkbJUvjpJpS2hhZZlUr8FSoqzoknQqbPEO4LJpZQINCFsfp1parkhSspmpboyBJmbRqkbdoCi8hgGpeIHmRuEYdxJGWhJa/2OAUjUFZmJX0edyXuSdUDMJLqX+DgebVOR7o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VAVBuiPK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="05oW9UOC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D13B6C4CEEB;
-	Mon,  2 Jun 2025 14:37:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VAVBuiPK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2B60C4CEEB;
+	Mon,  2 Jun 2025 14:37:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748875057;
-	bh=JUhiKdmcN+kPguFhhCCX9OFbyYUKGdhk8tEeSkiL4Ig=;
+	s=korg; t=1748875060;
+	bh=czW8EEbx0j5wtnWLX4eof1IRwGaMCCHc1hgeHuGHzOo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=05oW9UOCFDPjczlHIjvCScZyH2MbHCiJd6+kRWXiwMYdDzQbtxV0FwAnD0tGYO/Eh
-	 l/XC3Yg+kXp7ySg7phI0CXE85JDv+ToEEJ35//iskkNbfdus/kyCPe8qpCZxBMltVd
-	 qy81NIl25rVKQYmmrZ4pcOkSm8mErD9+WWELKyu4=
+	b=VAVBuiPKdGELvEY4mPGhiBZNpqwoVuFPZYuBGGoccUvu6YHAtQSqdwqQK8lCd2Wbm
+	 avGBoLKePa/elVpbVAP65cIcJqJXyMuuk5KZnrxGwxawEBI2NkD/O0ffFJI2gPmwgE
+	 WHn6LX4chIywUJMmT6TyZsY0SNbbnwpoJaPcN9xY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Maor Gottlieb <maorg@nvidia.com>,
+	Mark Bloch <mbloch@nvidia.com>,
 	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Jianqi Ren <jianqi.ren.cn@windriver.com>,
-	He Zhe <zhe.he@windriver.com>
-Subject: [PATCH 5.10 015/270] net/sched: act_mirred: dont override retval if we already lost the skb
-Date: Mon,  2 Jun 2025 15:45:00 +0200
-Message-ID: <20250602134307.818246525@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 016/270] net/mlx5: E-Switch, Initialize MAC Address for Default GID
+Date: Mon,  2 Jun 2025 15:45:01 +0200
+Message-ID: <20250602134307.856953745@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134307.195171844@linuxfoundation.org>
 References: <20250602134307.195171844@linuxfoundation.org>
@@ -54,89 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Maor Gottlieb <maorg@nvidia.com>
 
-commit 166c2c8a6a4dc2e4ceba9e10cfe81c3e469e3210 upstream.
+[ Upstream commit 5d1a04f347e6cbf5ffe74da409a5d71fbe8c5f19 ]
 
-If we're redirecting the skb, and haven't called tcf_mirred_forward(),
-yet, we need to tell the core to drop the skb by setting the retcode
-to SHOT. If we have called tcf_mirred_forward(), however, the skb
-is out of our hands and returning SHOT will lead to UaF.
+Initialize the source MAC address when creating the default GID entry.
+Since this entry is used only for loopback traffic, it only needs to
+be a unicast address. A zeroed-out MAC address is sufficient for this
+purpose.
+Without this fix, random bits would be assigned as the source address.
+If these bits formed a multicast address, the firmware would return an
+error, preventing the user from switching to switchdev mode:
 
-Move the retval override to the error path which actually need it.
+Error: mlx5_core: Failed setting eswitch to offloads.
+kernel answers: Invalid argument
 
+Fixes: 80f09dfc237f ("net/mlx5: Eswitch, enable RoCE loopback traffic")
+Signed-off-by: Maor Gottlieb <maorg@nvidia.com>
+Signed-off-by: Mark Bloch <mbloch@nvidia.com>
 Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
-Fixes: e5cf1baf92cb ("act_mirred: use TC_ACT_REINSERT when possible")
+Link: https://patch.msgid.link/20250423083611.324567-3-mbloch@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-[Minor conflict resolved due to code context change.]
-Signed-off-by: Jianqi Ren <jianqi.ren.cn@windriver.com>
-Signed-off-by: He Zhe <zhe.he@windriver.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/act_mirred.c |   22 +++++++++++++---------
- 1 file changed, 13 insertions(+), 9 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/rdma.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/sched/act_mirred.c
-+++ b/net/sched/act_mirred.c
-@@ -256,31 +256,31 @@ static int tcf_mirred_act(struct sk_buff
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/rdma.c b/drivers/net/ethernet/mellanox/mlx5/core/rdma.c
+index 2389239acadc9..945d90844f0cb 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/rdma.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/rdma.c
+@@ -130,8 +130,8 @@ static void mlx5_rdma_make_default_gid(struct mlx5_core_dev *dev, union ib_gid *
  
- 	m_mac_header_xmit = READ_ONCE(m->tcfm_mac_header_xmit);
- 	m_eaction = READ_ONCE(m->tcfm_eaction);
-+	is_redirect = tcf_mirred_is_act_redirect(m_eaction);
- 	retval = READ_ONCE(m->tcf_action);
- 	dev = rcu_dereference_bh(m->tcfm_dev);
- 	if (unlikely(!dev)) {
- 		pr_notice_once("tc mirred: target device is gone\n");
--		goto out;
-+		goto err_cant_do;
- 	}
+ static int mlx5_rdma_add_roce_addr(struct mlx5_core_dev *dev)
+ {
++	u8 mac[ETH_ALEN] = {};
+ 	union ib_gid gid;
+-	u8 mac[ETH_ALEN];
  
- 	if (unlikely(!(dev->flags & IFF_UP)) || !netif_carrier_ok(dev)) {
- 		net_notice_ratelimited("tc mirred to Houston: device %s is down\n",
- 				       dev->name);
--		goto out;
-+		goto err_cant_do;
- 	}
- 
- 	/* we could easily avoid the clone only if called by ingress and clsact;
- 	 * since we can't easily detect the clsact caller, skip clone only for
- 	 * ingress - that covers the TC S/W datapath.
- 	 */
--	is_redirect = tcf_mirred_is_act_redirect(m_eaction);
- 	at_ingress = skb_at_tc_ingress(skb);
- 	use_reinsert = at_ingress && is_redirect &&
- 		       tcf_mirred_can_reinsert(retval);
- 	if (!use_reinsert) {
- 		skb2 = skb_clone(skb, GFP_ATOMIC);
- 		if (!skb2)
--			goto out;
-+			goto err_cant_do;
- 	}
- 
- 	want_ingress = tcf_mirred_act_wants_ingress(m_eaction);
-@@ -323,12 +323,16 @@ static int tcf_mirred_act(struct sk_buff
- 	}
- 
- 	err = tcf_mirred_forward(want_ingress, skb2);
--	if (err) {
--out:
-+	if (err)
- 		tcf_action_inc_overlimit_qstats(&m->common);
--		if (tcf_mirred_is_act_redirect(m_eaction))
--			retval = TC_ACT_SHOT;
--	}
-+	__this_cpu_dec(mirred_nest_level);
-+
-+	return retval;
-+
-+err_cant_do:
-+	if (is_redirect)
-+		retval = TC_ACT_SHOT;
-+	tcf_action_inc_overlimit_qstats(&m->common);
- 	__this_cpu_dec(mirred_nest_level);
- 
- 	return retval;
+ 	mlx5_rdma_make_default_gid(dev, &gid);
+ 	return mlx5_core_roce_gid_set(dev, 0,
+-- 
+2.39.5
+
 
 
