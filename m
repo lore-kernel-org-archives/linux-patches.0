@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBB5A188907;
-	Mon,  2 Jun 2025 15:09:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 848B022F74E;
+	Mon,  2 Jun 2025 15:09:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748876956; cv=none; b=Vnk0C6Uk9Qloi7ZzXHrTDNSVZ5B+nan5NDd3Cid9aaN92NZjE4BXu6wpHcHtEL8A1YdfA4RB14HLpJWSgHzofFblRh85DJhNqZMNEaGQOxlJdL5Wr0UEEUcUzMAkyXtfecykcVrwx3F/rmuyMvNTW5JeoDCwJ74oFSL6Ln9IV5c=
+	t=1748876960; cv=none; b=pHOCKt0r/ffDZLXmZFperrTGVHvs0SqxHpX8sgbw/87lGOmJQMG107tSl/HpkStsLDGATkRlq/uPoKbDwY7UaBLcOBGVtw9wlsGKeIIPzpSXfjcbUfslpaLZzZgfPRdz8LmHjTM4JnW9ZZXSZPTogyV8SQXwfFFeq+OBHtfx4EQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748876956; c=relaxed/simple;
-	bh=rI71B6lVWt8ye2NUpQbhMzpiURumJ6prBQV72gBWuGM=;
+	s=arc-20240116; t=1748876960; c=relaxed/simple;
+	bh=hqbYJ9eJpsAWNr6fNZXC8Cc2hR+tUqVYB6v3bfVmGto=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=fBJx2YjGQFEgiotjzYBg/Qj86izamA91RjXUT5Gjh+bxYO8YaL203L8F87v2cAd6yDyzoyXOzfhW7dX1XIJzmeidW14FzrWJSC7ULFqITnDXF3f0AjSPSabsPigBOEIihRAy7l+85o5CWSE9C7lJHrRTualPgj5WbsP3S2sz4BQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cBjK00/6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t+pKGRT+4MKGX2S8WNiYSxLWSc/MDu/C9cnSMxDdGIyZV5lVTD+HkJQSp6kpwX/upIsBmyoCg8QF+niw57sJJlFUx0Pt8FVu3zcG/ji91jaJR/NlcxNXTzzE/S42g2oKRBhXWYzYYlRktw3GD8iyZehpz3htGzVPh44HqNNOtCg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vuQfVIxr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cBjK00/6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C851C4CEF2;
-	Mon,  2 Jun 2025 15:09:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vuQfVIxr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 874EAC4CEEB;
+	Mon,  2 Jun 2025 15:09:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748876955;
-	bh=rI71B6lVWt8ye2NUpQbhMzpiURumJ6prBQV72gBWuGM=;
+	s=korg; t=1748876959;
+	bh=hqbYJ9eJpsAWNr6fNZXC8Cc2hR+tUqVYB6v3bfVmGto=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cBjK00/6UZFk0MojdbfkdWhDN27dg5RxiE7Pt6eJp1/WtO5iMGIOEhJzNaGY5itgb
-	 MJ02KuslwFRdyK+2vjJYTSy+FncEy9ILgba/yUCHlxZOQlroh0TGzp7L/0goeyRceK
-	 ubAHb/mnqxOeCoacM3hHmEeuPeW3eAE+8zMATu6E=
+	b=vuQfVIxrdXEoFmnyAQ65MQZyY2dkfHkdko9d491gumY+gEF3F5O/A8RIvkmf4s+en
+	 1ra86PZ3PrrKqr6x3wS2xan1OvzjXO/7V7Xmw0Xlx9/ZuDY/QVRNS6Fn6wDTomg1Js
+	 jHG2WMGAfVXneGXacPaZeU62WhvSYb2b8OMYsJzk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stanimir Varbanov <svarbanov@suse.de>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	"Ivan T. Ivanov" <iivanov@suse.de>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
+	Sudeep Holla <sudeep.holla@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 126/325] PCI: brcmstb: Add a softdep to MIP MSI-X driver
-Date: Mon,  2 Jun 2025 15:46:42 +0200
-Message-ID: <20250602134324.923831225@linuxfoundation.org>
+Subject: [PATCH 6.1 127/325] firmware: arm_ffa: Set dma_mask for ffa devices
+Date: Mon,  2 Jun 2025 15:46:43 +0200
+Message-ID: <20250602134324.963304962@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134319.723650984@linuxfoundation.org>
 References: <20250602134319.723650984@linuxfoundation.org>
@@ -47,43 +45,41 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stanimir Varbanov <svarbanov@suse.de>
+From: Viresh Kumar <viresh.kumar@linaro.org>
 
-[ Upstream commit 2294059118c550464dd8906286324d90c33b152b ]
+[ Upstream commit cc0aac7ca17e0ea3ca84b552fc79f3e86fd07f53 ]
 
-Then the brcmstb PCIe driver and MIP MSI-X interrupt controller
-drivers are built as modules there could be a race in probing.
+Set dma_mask for FFA devices, otherwise DMA allocation using the device pointer
+lead to following warning:
 
-To avoid this, add a softdep to MIP driver to guarantee that
-MIP driver will be load first.
+WARNING: CPU: 1 PID: 1 at kernel/dma/mapping.c:597 dma_alloc_attrs+0xe0/0x124
 
-Signed-off-by: Stanimir Varbanov <svarbanov@suse.de>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Tested-by: Ivan T. Ivanov <iivanov@suse.de>
-Link: https://lore.kernel.org/r/20250224083559.47645-5-svarbanov@suse.de
-[kwilczynski: commit log]
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Message-Id: <e3dd8042ac680bd74b6580c25df855d092079c18.1737107520.git.viresh.kumar@linaro.org>
+Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/pcie-brcmstb.c | 1 +
+ drivers/firmware/arm_ffa/bus.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/pci/controller/pcie-brcmstb.c b/drivers/pci/controller/pcie-brcmstb.c
-index fe37bd28761a8..c89ad1f92a07f 100644
---- a/drivers/pci/controller/pcie-brcmstb.c
-+++ b/drivers/pci/controller/pcie-brcmstb.c
-@@ -1619,3 +1619,4 @@ module_platform_driver(brcm_pcie_driver);
- MODULE_LICENSE("GPL");
- MODULE_DESCRIPTION("Broadcom STB PCIe RC driver");
- MODULE_AUTHOR("Broadcom");
-+MODULE_SOFTDEP("pre: irq_bcm2712_mip");
+diff --git a/drivers/firmware/arm_ffa/bus.c b/drivers/firmware/arm_ffa/bus.c
+index 248594b59c64d..5bda5d7ade42d 100644
+--- a/drivers/firmware/arm_ffa/bus.c
++++ b/drivers/firmware/arm_ffa/bus.c
+@@ -191,6 +191,7 @@ struct ffa_device *ffa_device_register(const uuid_t *uuid, int vm_id,
+ 	dev = &ffa_dev->dev;
+ 	dev->bus = &ffa_bus_type;
+ 	dev->release = ffa_release_device;
++	dev->dma_mask = &dev->coherent_dma_mask;
+ 	dev_set_name(&ffa_dev->dev, "arm-ffa-%d", id);
+ 
+ 	ffa_dev->id = id;
 -- 
 2.39.5
 
