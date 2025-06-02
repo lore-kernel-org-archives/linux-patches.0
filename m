@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5938023372E;
-	Mon,  2 Jun 2025 15:18:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81AA5235074;
+	Mon,  2 Jun 2025 15:18:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748877505; cv=none; b=OEEdX6fh7BAvA7mg39sIT/e5M6dWXw7HLuAFgzwVbJDqGtC/7ofnf9G97TlOJ20lkATHnfD4BMB7hlAGS2dTANIBfgd/yD7u3N8SJoF+zpYCJOS7479dcRX2PWJZM4Q06ebUSYC5zsfRanhD8kXpdSq3G2UbYBo8uwHVvEX1oj0=
+	t=1748877508; cv=none; b=oMUXJEE4zTFKeWZqtf+PT52fWTArgFde/z8ChLcxiFPE/M9NaIqSyvcDxoo2WphsgWknlcvlXRkP66lHlbICLqYrfRJRDHbosNLyPnFQqnf/XfxIQ+jnL4EwexHxcOiwNPaBifavvLNkoYo2c0h4eiuev4IEUuCPN44MRfzUhrQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748877505; c=relaxed/simple;
-	bh=tgcvdyLV0GAiyPg5FyrWFYCTQqnPrCAMKwYcF3pXnns=;
+	s=arc-20240116; t=1748877508; c=relaxed/simple;
+	bh=0VGV4HkgCQwyZs7xZoJLAB5XLW/8yrJA9pL9Dk2FawY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Tg/P21cg8kkBXk1MhRIgG1ML3+Va7+Wx6zfjui/pIxdtpqA0hjrStJ4jztOPIKVrpPN9Dj9k0eqixm0bFl/BKJ0jxAbmdfhQjCtY0nAbHu95IwwbktXnoHfnd1H6OkhvKFfNeaZblYRXMnQFbeydTJUn3c9Ey++/VtmzfApC7XM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Am3g96Kv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ACJFZlen5CP0AMoCd7SZZY78JzAbmLX92jCF8sagm2h+B5WS1fYSkvKSt4HF8WLgSa2MNmqxZKQvgQUFaeleC3mFHxkkitYIgMq+IAA47LPmKkGp1M+DpbT4gXsGsU73to31fIgemnZBSNIU0GVzqQNWtDDZPdbeujdAulnxeo0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jk4Fj3wP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Am3g96Kv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D323FC4CEEB;
-	Mon,  2 Jun 2025 15:18:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jk4Fj3wP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4F11C4CEEB;
+	Mon,  2 Jun 2025 15:18:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748877505;
-	bh=tgcvdyLV0GAiyPg5FyrWFYCTQqnPrCAMKwYcF3pXnns=;
+	s=korg; t=1748877508;
+	bh=0VGV4HkgCQwyZs7xZoJLAB5XLW/8yrJA9pL9Dk2FawY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Am3g96KvmOUa5RYYXPqem+Jb1uM2g8S1l6rXWhxe7V+ynlFRsOykfsbYN6CpcIH6Q
-	 F8Tbjz8C7wwMZv8r6dE6rEKmSWHZo7Cz+iVdAqS3RyCb01vGFXaFgQU5mqrSVPplk4
-	 eWnG9ZON187xUCdxmwKIYzBP6LSZCFvBlBuSWRJQ=
+	b=Jk4Fj3wPkRr4PVIU7FB+eI/HOxQ6gB9FYF0IWlqAsrqJLVFP67+DjjhSueKH9L5Si
+	 6jhCt4IcuasB4OHxKm6qCtYhwq5ITzgGS/BaFWv6rpLnrCPMH/uwqjmrQURvYZb2ag
+	 ERVGABpdJUTUlfcbSMAp6Id5IygZJgKsRPRTBqDY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Lee Jones <lee@kernel.org>
-Subject: [PATCH 6.1 298/325] af_unix: Avoid Tarjans algorithm if unnecessary.
-Date: Mon,  2 Jun 2025 15:49:34 +0200
-Message-ID: <20250602134332.017183505@linuxfoundation.org>
+Subject: [PATCH 6.1 299/325] af_unix: Assign a unique index to SCC.
+Date: Mon,  2 Jun 2025 15:49:35 +0200
+Message-ID: <20250602134332.059195531@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134319.723650984@linuxfoundation.org>
 References: <20250602134319.723650984@linuxfoundation.org>
@@ -54,101 +54,161 @@ Content-Transfer-Encoding: 8bit
 
 From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-commit ad081928a8b0f57f269df999a28087fce6f2b6ce upstream.
+commit bfdb01283ee8f2f3089656c3ff8f62bb072dabb2 upstream.
 
-Once a cyclic reference is formed, we need to run GC to check if
-there is dead SCC.
+The definition of the lowlink in Tarjan's algorithm is the
+smallest index of a vertex that is reachable with at most one
+back-edge in SCC.  This is not useful for a cross-edge.
 
-However, we do not need to run Tarjan's algorithm if we know that
-the shape of the inflight graph has not been changed.
+If we start traversing from A in the following graph, the final
+lowlink of D is 3.  The cross-edge here is one between D and C.
 
-If an edge is added/updated/deleted and the edge's successor is
-inflight, we set false to unix_graph_grouped, which means we need
-to re-classify SCC.
+  A -> B -> D   D = (4, 3)  (index, lowlink)
+  ^    |    |   C = (3, 1)
+  |    V    |   B = (2, 1)
+  `--- C <--'   A = (1, 1)
 
-Once we finalise SCC, we set true to unix_graph_grouped.
+This is because the lowlink of D is updated with the index of C.
 
-While unix_graph_grouped is true, we can iterate the grouped
-SCC using vertex->scc_entry in unix_walk_scc_fast().
+In the following patch, we detect a dead SCC by checking two
+conditions for each vertex.
 
-list_add() and list_for_each_entry_reverse() uses seem weird, but
-they are to keep the vertex order consistent and make writing test
-easier.
+  1) vertex has no edge directed to another SCC (no bridge)
+  2) vertex's out_degree is the same as the refcount of its file
+
+If 1) is false, there is a receiver of all fds of the SCC and
+its ancestor SCC.
+
+To evaluate 1), we need to assign a unique index to each SCC and
+assign it to all vertices in the SCC.
+
+This patch changes the lowlink update logic for cross-edge so
+that in the example above, the lowlink of D is updated with the
+lowlink of C.
+
+  A -> B -> D   D = (4, 1)  (index, lowlink)
+  ^    |    |   C = (3, 1)
+  |    V    |   B = (2, 1)
+  `--- C <--'   A = (1, 1)
+
+Then, all vertices in the same SCC have the same lowlink, and we
+can quickly find the bridge connecting to different SCC if exists.
+
+However, it is no longer called lowlink, so we rename it to
+scc_index.  (It's sometimes called lowpoint.)
+
+Also, we add a global variable to hold the last index used in DFS
+so that we do not reset the initial index in each DFS.
+
+This patch can be squashed to the SCC detection patch but is
+split deliberately for anyone wondering why lowlink is not used
+as used in the original Tarjan's algorithm and many reference
+implementations.
 
 Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
 Acked-by: Paolo Abeni <pabeni@redhat.com>
-Link: https://lore.kernel.org/r/20240325202425.60930-12-kuniyu@amazon.com
+Link: https://lore.kernel.org/r/20240325202425.60930-13-kuniyu@amazon.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/unix/garbage.c |   28 +++++++++++++++++++++++++++-
- 1 file changed, 27 insertions(+), 1 deletion(-)
+ include/net/af_unix.h |    2 +-
+ net/unix/garbage.c    |   29 +++++++++++++++--------------
+ 2 files changed, 16 insertions(+), 15 deletions(-)
 
+--- a/include/net/af_unix.h
++++ b/include/net/af_unix.h
+@@ -36,7 +36,7 @@ struct unix_vertex {
+ 	struct list_head scc_entry;
+ 	unsigned long out_degree;
+ 	unsigned long index;
+-	unsigned long lowlink;
++	unsigned long scc_index;
+ };
+ 
+ struct unix_edge {
 --- a/net/unix/garbage.c
 +++ b/net/unix/garbage.c
-@@ -113,6 +113,7 @@ static struct unix_vertex *unix_edge_suc
- }
+@@ -312,9 +312,8 @@ static bool unix_scc_cyclic(struct list_
+ static LIST_HEAD(unix_visited_vertices);
+ static unsigned long unix_vertex_grouped_index = UNIX_VERTEX_INDEX_MARK2;
  
- static bool unix_graph_maybe_cyclic;
-+static bool unix_graph_grouped;
- 
- static void unix_update_graph(struct unix_vertex *vertex)
+-static void __unix_walk_scc(struct unix_vertex *vertex)
++static void __unix_walk_scc(struct unix_vertex *vertex, unsigned long *last_index)
  {
-@@ -123,6 +124,7 @@ static void unix_update_graph(struct uni
- 		return;
+-	unsigned long index = UNIX_VERTEX_INDEX_START;
+ 	LIST_HEAD(vertex_stack);
+ 	struct unix_edge *edge;
+ 	LIST_HEAD(edge_stack);
+@@ -326,9 +325,9 @@ next_vertex:
+ 	 */
+ 	list_add(&vertex->scc_entry, &vertex_stack);
  
- 	unix_graph_maybe_cyclic = true;
-+	unix_graph_grouped = false;
- }
+-	vertex->index = index;
+-	vertex->lowlink = index;
+-	index++;
++	vertex->index = *last_index;
++	vertex->scc_index = *last_index;
++	(*last_index)++;
  
- static LIST_HEAD(unix_unvisited_vertices);
-@@ -144,6 +146,7 @@ static void unix_add_edge(struct scm_fp_
- 		vertex->index = unix_vertex_unvisited_index;
- 		vertex->out_degree = 0;
- 		INIT_LIST_HEAD(&vertex->edges);
-+		INIT_LIST_HEAD(&vertex->scc_entry);
+ 	/* Explore neighbour vertices (receivers of the current vertex's fd). */
+ 	list_for_each_entry(edge, &vertex->edges, vertex_entry) {
+@@ -358,30 +357,30 @@ prev_vertex:
+ 			next_vertex = vertex;
+ 			vertex = edge->predecessor->vertex;
  
- 		list_move_tail(&vertex->entry, &unix_unvisited_vertices);
- 		edge->predecessor->vertex = vertex;
-@@ -418,6 +421,26 @@ static void unix_walk_scc(void)
+-			/* If the successor has a smaller lowlink, two vertices
+-			 * are in the same SCC, so propagate the smaller lowlink
++			/* If the successor has a smaller scc_index, two vertices
++			 * are in the same SCC, so propagate the smaller scc_index
+ 			 * to skip SCC finalisation.
+ 			 */
+-			vertex->lowlink = min(vertex->lowlink, next_vertex->lowlink);
++			vertex->scc_index = min(vertex->scc_index, next_vertex->scc_index);
+ 		} else if (next_vertex->index != unix_vertex_grouped_index) {
+ 			/* Loop detected by a back/cross edge.
+ 			 *
+-			 * The successor is on vertex_stack, so two vertices are
+-			 * in the same SCC.  If the successor has a smaller index,
++			 * The successor is on vertex_stack, so two vertices are in
++			 * the same SCC.  If the successor has a smaller *scc_index*,
+ 			 * propagate it to skip SCC finalisation.
+ 			 */
+-			vertex->lowlink = min(vertex->lowlink, next_vertex->index);
++			vertex->scc_index = min(vertex->scc_index, next_vertex->scc_index);
+ 		} else {
+ 			/* The successor was already grouped as another SCC */
+ 		}
+ 	}
+ 
+-	if (vertex->index == vertex->lowlink) {
++	if (vertex->index == vertex->scc_index) {
+ 		struct list_head scc;
+ 
+ 		/* SCC finalised.
+ 		 *
+-		 * If the lowlink was not updated, all the vertices above on
++		 * If the scc_index was not updated, all the vertices above on
+ 		 * vertex_stack are in the same SCC.  Group them using scc_entry.
+ 		 */
+ 		__list_cut_position(&scc, &vertex_stack, &vertex->scc_entry);
+@@ -407,6 +406,8 @@ prev_vertex:
+ 
+ static void unix_walk_scc(void)
+ {
++	unsigned long last_index = UNIX_VERTEX_INDEX_START;
++
+ 	unix_graph_maybe_cyclic = false;
+ 
+ 	/* Visit every vertex exactly once.
+@@ -416,7 +417,7 @@ static void unix_walk_scc(void)
+ 		struct unix_vertex *vertex;
+ 
+ 		vertex = list_first_entry(&unix_unvisited_vertices, typeof(*vertex), entry);
+-		__unix_walk_scc(vertex);
++		__unix_walk_scc(vertex, &last_index);
+ 	}
  
  	list_replace_init(&unix_visited_vertices, &unix_unvisited_vertices);
- 	swap(unix_vertex_unvisited_index, unix_vertex_grouped_index);
-+
-+	unix_graph_grouped = true;
-+}
-+
-+static void unix_walk_scc_fast(void)
-+{
-+	while (!list_empty(&unix_unvisited_vertices)) {
-+		struct unix_vertex *vertex;
-+		struct list_head scc;
-+
-+		vertex = list_first_entry(&unix_unvisited_vertices, typeof(*vertex), entry);
-+		list_add(&scc, &vertex->scc_entry);
-+
-+		list_for_each_entry_reverse(vertex, &scc, scc_entry)
-+			list_move_tail(&vertex->entry, &unix_visited_vertices);
-+
-+		list_del(&scc);
-+	}
-+
-+	list_replace_init(&unix_visited_vertices, &unix_unvisited_vertices);
- }
- 
- static LIST_HEAD(gc_candidates);
-@@ -570,7 +593,10 @@ static void __unix_gc(struct work_struct
- 	if (!unix_graph_maybe_cyclic)
- 		goto skip_gc;
- 
--	unix_walk_scc();
-+	if (unix_graph_grouped)
-+		unix_walk_scc_fast();
-+	else
-+		unix_walk_scc();
- 
- 	/* First, select candidates for garbage collection.  Only
- 	 * in-flight sockets are considered, and from those only ones
 
 
