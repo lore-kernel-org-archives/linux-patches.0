@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05CF4221DA2;
-	Mon,  2 Jun 2025 13:50:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2675D2C3247;
+	Mon,  2 Jun 2025 13:50:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748872206; cv=none; b=gGvbHW6JJccjKsAbTfec23OxYJab5VmMMqSpiBqJHw/K4u+3RSEu78QGk2cphKqa5BjoGbKfhT0VGJPKMkQbnUu5Als6gRF/4/ITB/yDaK6B8eQ5NhmFk798wQ9jZ8zLeVPES0jdX5rHtYRRwqmlfidIuQWdGCc0v5vkCSaEcZQ=
+	t=1748872217; cv=none; b=OvIh2MBxG05EAs2pMSMVqQPxIYY7tJYzpSnmkR4My96sqgIfAJsuK+gmkpx5mK2Snw9SDf8hm/2ip5Z2ML8tkgtO5B184oN1+g6DP66Wfar8mk8CRmSSlXu5cUwixFFIUjPc7B/H3wf5Tv+GD0Ys/QTmsSooKEO3OsvQCQ9idJs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748872206; c=relaxed/simple;
-	bh=ZHPzj8Wf7Mz1AimGys67VEYkpYMnkbnoGZJdsPF/UAM=;
+	s=arc-20240116; t=1748872217; c=relaxed/simple;
+	bh=ahyxMrQaBjpzdq9DrdLlr0FspcPI5A6Chz+zdeIkCpQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YLeUTr3rv+mcCN0l3p5FywoVnvJVaQN3VyJ6ET99Jwuq8nTzAUxV+OcJvXOAm5DlwiR8uUH5XUk8fDWXr0tjrLCaod4FM6n/RsnAut0EfqEV9mUerrBUEENxeYAn3Eea+rXy9Lgg4FSO/uAdm7Dzsdiv8Lrq9T0hyMf5U8MmNnQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fYhaX9zH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rzH/14l+3n5MpGI/aGYY+sD9Rq5G2Qupd0XoB12M577+Ma677Fd5eNWiPRl8XbCRwSOqOcki1Vd08hrCG71zqK6dd51uNfj6N1+YWq1lpHJRb4yAGQ07vLWVsvkk1Ru90Hu/CVS4Tl9oIMMbauV6QNHN2GLNSB9jRem2qEc5EBU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AXh3XK2O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fYhaX9zH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D252C4CEEB;
-	Mon,  2 Jun 2025 13:50:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AXh3XK2O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1B29C4CEEB;
+	Mon,  2 Jun 2025 13:50:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748872205;
-	bh=ZHPzj8Wf7Mz1AimGys67VEYkpYMnkbnoGZJdsPF/UAM=;
+	s=korg; t=1748872214;
+	bh=ahyxMrQaBjpzdq9DrdLlr0FspcPI5A6Chz+zdeIkCpQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fYhaX9zHujLJuyT531X/7NukDxDerJZvjL8CeBUjQIcowxsdj3/NEsNsA5fSor+TT
-	 gkUk3rfAZHaP+DYE89XYFOMES8BhE3/AeXgziPcC9tuNBt3qeYlYlNm4aJxXztAbYj
-	 nte6QweV0Bf12SEa4W+vC1paLfXOJC1sBSqY89mo=
+	b=AXh3XK2ObgeENH/PErTFsTbQ2X2InwTwcZYJNfKGkMF+52gEV00rLo1cgTnMYrA2Z
+	 l0GJs8dUb1zv3MR5mvQAqqMebbdbTQvS11NEZ88doXlynwiaM7Q8RpLd7BE4eOMMTO
+	 XM2JgFLM/TSWo+xHHWtFiVyTTobeGhC0ezE2NGsQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Yemike Abhilash Chandra <y-abhilashchandra@ti.com>,
-	Neha Malcom Francis <n-francis@ti.com>,
 	Udit Kumar <u-kumar1@ti.com>,
 	Nishanth Menon <nm@ti.com>
-Subject: [PATCH 6.15 34/49] arm64: dts: ti: k3-am68-sk: Fix regulator hierarchy
-Date: Mon,  2 Jun 2025 15:47:26 +0200
-Message-ID: <20250602134239.281183164@linuxfoundation.org>
+Subject: [PATCH 6.15 35/49] arm64: dts: ti: k3-j721e-sk: Add DT nodes for power regulators
+Date: Mon,  2 Jun 2025 15:47:27 +0200
+Message-ID: <20250602134239.318608454@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134237.940995114@linuxfoundation.org>
 References: <20250602134237.940995114@linuxfoundation.org>
@@ -54,33 +53,32 @@ Content-Transfer-Encoding: 8bit
 
 From: Yemike Abhilash Chandra <y-abhilashchandra@ti.com>
 
-commit 7edf0a4d3bb7f5cd84f172b76c380c4259bb4ef8 upstream.
+commit 97b67cc102dc2cc8aa39a569c22a196e21af5a21 upstream.
 
-Update the vin-supply of the TLV71033 regulator from LM5141 (vsys_3v3)
-to LM61460 (vsys_5v0) to match the schematics. Add a fixed regulator
-node for the LM61460 5V supply to support this change.
+Add device tree nodes for two power regulators on the J721E SK board.
+vsys_5v0: A fixed regulator representing the 5V supply output from the
+LM61460 and vdd_sd_dv: A GPIO-controlled TLV71033 regulator.
 
-AM68-SK schematics: https://www.ti.com/lit/zip/sprr463
+J721E-SK schematics: https://www.ti.com/lit/zip/sprr438
 
-Fixes: a266c180b398 ("arm64: dts: ti: k3-am68-sk: Add support for AM68 SK base board")
+Fixes: 1bfda92a3a36 ("arm64: dts: ti: Add support for J721E SK")
 Cc: stable@vger.kernel.org
 Signed-off-by: Yemike Abhilash Chandra <y-abhilashchandra@ti.com>
-Reviewed-by: Neha Malcom Francis <n-francis@ti.com>
 Reviewed-by: Udit Kumar <u-kumar1@ti.com>
-Link: https://lore.kernel.org/r/20250415111328.3847502-3-y-abhilashchandra@ti.com
+Link: https://lore.kernel.org/r/20250415111328.3847502-2-y-abhilashchandra@ti.com
 Signed-off-by: Nishanth Menon <nm@ti.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/ti/k3-am68-sk-base-board.dts |   13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/ti/k3-j721e-sk.dts |   31 +++++++++++++++++++++++++++++++
+ 1 file changed, 31 insertions(+)
 
---- a/arch/arm64/boot/dts/ti/k3-am68-sk-base-board.dts
-+++ b/arch/arm64/boot/dts/ti/k3-am68-sk-base-board.dts
-@@ -44,6 +44,17 @@
+--- a/arch/arm64/boot/dts/ti/k3-j721e-sk.dts
++++ b/arch/arm64/boot/dts/ti/k3-j721e-sk.dts
+@@ -184,6 +184,17 @@
  		regulator-boot-on;
  	};
  
-+	vsys_5v0: regulator-vsys5v0 {
++	vsys_5v0: fixedregulator-vsys5v0 {
 +		/* Output of LM61460 */
 +		compatible = "regulator-fixed";
 +		regulator-name = "vsys_5v0";
@@ -91,17 +89,42 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 +		regulator-boot-on;
 +	};
 +
- 	vsys_3v3: regulator-vsys3v3 {
- 		/* Output of LM5141 */
+ 	vdd_mmc1: fixedregulator-sd {
  		compatible = "regulator-fixed";
-@@ -76,7 +87,7 @@
- 		regulator-min-microvolt = <1800000>;
- 		regulator-max-microvolt = <3300000>;
- 		regulator-boot-on;
--		vin-supply = <&vsys_3v3>;
-+		vin-supply = <&vsys_5v0>;
- 		gpios = <&main_gpio0 49 GPIO_ACTIVE_HIGH>;
- 		states = <1800000 0x0>,
+ 		pinctrl-names = "default";
+@@ -211,6 +222,20 @@
  			 <3300000 0x1>;
+ 	};
+ 
++	vdd_sd_dv: gpio-regulator-TLV71033 {
++		compatible = "regulator-gpio";
++		pinctrl-names = "default";
++		pinctrl-0 = <&vdd_sd_dv_pins_default>;
++		regulator-name = "tlv71033";
++		regulator-min-microvolt = <1800000>;
++		regulator-max-microvolt = <3300000>;
++		regulator-boot-on;
++		vin-supply = <&vsys_5v0>;
++		gpios = <&main_gpio0 118 GPIO_ACTIVE_HIGH>;
++		states = <1800000 0x0>,
++			 <3300000 0x1>;
++	};
++
+ 	transceiver1: can-phy1 {
+ 		compatible = "ti,tcan1042";
+ 		#phy-cells = <0>;
+@@ -613,6 +638,12 @@
+ 		>;
+ 	};
+ 
++	vdd_sd_dv_pins_default: vdd-sd-dv-default-pins {
++		pinctrl-single,pins = <
++			J721E_IOPAD(0x1dc, PIN_OUTPUT, 7) /* (Y1) SPI1_CLK.GPIO0_118 */
++		>;
++	};
++
+ 	wkup_uart0_pins_default: wkup-uart0-default-pins {
+ 		pinctrl-single,pins = <
+ 			J721E_WKUP_IOPAD(0xa0, PIN_INPUT, 0) /* (J29) WKUP_UART0_RXD */
 
 
