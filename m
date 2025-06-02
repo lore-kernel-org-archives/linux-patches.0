@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E66571EA65;
-	Mon,  2 Jun 2025 14:32:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 331EF1EA65;
+	Mon,  2 Jun 2025 14:32:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748874767; cv=none; b=svCihksyWXcyYBZKx2UBzODulguV9hnOdjGVWhjpqNk8m/+/C2sG+ZqV/i7cLwDjlqbEaMd4dOfxmLJyZvVubJceO89VFJMn3nxvN1NnBh/+GZZ6v10j0RsoZL6kxIoHPsMTR5GYHfXi3zzgqLvzYnLV3CnZeHdJJHmtZDlUzCQ=
+	t=1748874770; cv=none; b=nwuCmRRNpjT98GByLT95dWXvfFBdGnlFVPHurSLMq6tgPUDqekq58j29TBFF8H/vbVX6PgbTI4hIh9tn9iJwixOLO9wXxyN+Bis5F3NGYaOY1k2B2HtJc2ZGIc/f9m/Za/Twh5y0ghilGm1b8kUjUTdWlGrGWoZbt234An2vFCg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748874767; c=relaxed/simple;
-	bh=EU6Yj+QvGnd7t6yj4chXgb665ZAIOGl7IIRfwvY/2Ew=;
+	s=arc-20240116; t=1748874770; c=relaxed/simple;
+	bh=ryu+J81VTZEm5f2WixjsC7/MVVLCDwotR2M5buSLnKs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qH/H/R5GoqRcX36rBVYVIzSld/IvnQV1N2lXL28Tcyt+Z8XIdZQA5i69baVhuWKZIhOylKZubWgIXKz+oFyQiGyEvCuLjf/GB/LlbzD0vZ6a2PZSMWi0wTgyaCIWAzh2CLZPedIrVJi1bMjZ6zkdh6RBOAMjAZtSHx4NEkNLsxY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EMo5IoyR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HxOVX+2IwDxCSwEViu/nF8sNuUbGEaOWYO48k2Wa3Wl6OhUaJ8S0QR/ZGBwsURovbEk98P+EhXxM/vxz6APO6aR5JbiRVwR49FsnuXStAsdb0Q6yAuSTTkyPzsVy6Y4vlrIHba/CVSmWPsCtWV4C/Ni/OXGJzLNRj/k9t2H2sGc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OIz8qXAy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EMo5IoyR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 543A1C4CEEB;
-	Mon,  2 Jun 2025 14:32:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OIz8qXAy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 978B6C4CEEB;
+	Mon,  2 Jun 2025 14:32:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748874766;
-	bh=EU6Yj+QvGnd7t6yj4chXgb665ZAIOGl7IIRfwvY/2Ew=;
+	s=korg; t=1748874770;
+	bh=ryu+J81VTZEm5f2WixjsC7/MVVLCDwotR2M5buSLnKs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EMo5IoyRaqaOO8AeZZkyQ1CjSksBM7wdxTWxtZQWY4G4urtwovZVD4T6rjxMnq8ok
-	 7y+xzF/K20xP28sVlUBgQVBz9E/Upy/T9L2Vwl0pzFkneaT4cVBAhkrI3MkhsRLhCw
-	 19blRv0tqXq9S+ky7eqC4iOWbUHQPIpmJPQUgLic=
+	b=OIz8qXAyOEGeEVNHX6BuKKLdIY8WdzwCMWwknexl95woKKLOURyE6EskhJK4blAFq
+	 XGkzOCWuwQPmQ9JEzFuyQdcZuwjul5fmgGCYAokSn6kSp7ihdp1pnQxOOYK7XpdGoV
+	 2+NnQ2+tTGcDrxWhT9hKENtfQqSOTbx+CHV01Bgo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Philip Yang <Philip.Yang@amd.com>,
-	Felix Kuehling <felix.kuehling@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 129/204] drm/amdkfd: KFD release_work possible circular locking
-Date: Mon,  2 Jun 2025 15:47:42 +0200
-Message-ID: <20250602134300.714892944@linuxfoundation.org>
+Subject: [PATCH 5.4 130/204] net: xgene-v2: remove incorrect ACPI_PTR annotation
+Date: Mon,  2 Jun 2025 15:47:43 +0200
+Message-ID: <20250602134300.759096613@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134255.449974357@linuxfoundation.org>
 References: <20250602134255.449974357@linuxfoundation.org>
@@ -52,78 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Philip Yang <Philip.Yang@amd.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 1b9366c601039d60546794c63fbb83ce8e53b978 ]
+[ Upstream commit 01358e8fe922f716c05d7864ac2213b2440026e7 ]
 
-If waiting for gpu reset done in KFD release_work, thers is WARNING:
-possible circular locking dependency detected
+Building with W=1 shows a warning about xge_acpi_match being unused when
+CONFIG_ACPI is disabled:
 
-  #2  kfd_create_process
-        kfd_process_mutex
-          flush kfd release work
+drivers/net/ethernet/apm/xgene-v2/main.c:723:36: error: unused variable 'xge_acpi_match' [-Werror,-Wunused-const-variable]
 
-  #1  kfd release work
-        wait for amdgpu reset work
-
-  #0  amdgpu_device_gpu_reset
-        kgd2kfd_pre_reset
-          kfd_process_mutex
-
-  Possible unsafe locking scenario:
-
-        CPU0                    CPU1
-        ----                    ----
-   lock((work_completion)(&p->release_work));
-                  lock((wq_completion)kfd_process_wq);
-                  lock((work_completion)(&p->release_work));
-   lock((wq_completion)amdgpu-reset-dev);
-
-To fix this, KFD create process move flush release work outside
-kfd_process_mutex.
-
-Signed-off-by: Philip Yang <Philip.Yang@amd.com>
-Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://patch.msgid.link/20250225163341.4168238-2-arnd@kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_process.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/net/ethernet/apm/xgene-v2/main.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_process.c b/drivers/gpu/drm/amd/amdkfd/kfd_process.c
-index 662e4d973f13a..b07deeb987475 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_process.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_process.c
-@@ -277,6 +277,14 @@ struct kfd_process *kfd_create_process(struct file *filep)
- 	if (thread->group_leader->mm != thread->mm)
- 		return ERR_PTR(-EINVAL);
+diff --git a/drivers/net/ethernet/apm/xgene-v2/main.c b/drivers/net/ethernet/apm/xgene-v2/main.c
+index 848be6bf2fd1f..514a121d96aeb 100644
+--- a/drivers/net/ethernet/apm/xgene-v2/main.c
++++ b/drivers/net/ethernet/apm/xgene-v2/main.c
+@@ -9,8 +9,6 @@
  
-+	/* If the process just called exec(3), it is possible that the
-+	 * cleanup of the kfd_process (following the release of the mm
-+	 * of the old process image) is still in the cleanup work queue.
-+	 * Make sure to drain any job before trying to recreate any
-+	 * resource for this process.
-+	 */
-+	flush_workqueue(kfd_process_wq);
-+
- 	/*
- 	 * take kfd processes mutex before starting of process creation
- 	 * so there won't be a case where two threads of the same process
-@@ -289,14 +297,6 @@ struct kfd_process *kfd_create_process(struct file *filep)
- 	if (process) {
- 		pr_debug("Process already found\n");
- 	} else {
--		/* If the process just called exec(3), it is possible that the
--		 * cleanup of the kfd_process (following the release of the mm
--		 * of the old process image) is still in the cleanup work queue.
--		 * Make sure to drain any job before trying to recreate any
--		 * resource for this process.
--		 */
--		flush_workqueue(kfd_process_wq);
+ #include "main.h"
+ 
+-static const struct acpi_device_id xge_acpi_match[];
 -
- 		process = create_process(thread);
- 		if (IS_ERR(process))
- 			goto out;
+ static int xge_get_resources(struct xge_pdata *pdata)
+ {
+ 	struct platform_device *pdev;
+@@ -733,7 +731,7 @@ MODULE_DEVICE_TABLE(acpi, xge_acpi_match);
+ static struct platform_driver xge_driver = {
+ 	.driver = {
+ 		   .name = "xgene-enet-v2",
+-		   .acpi_match_table = ACPI_PTR(xge_acpi_match),
++		   .acpi_match_table = xge_acpi_match,
+ 	},
+ 	.probe = xge_probe,
+ 	.remove = xge_remove,
 -- 
 2.39.5
 
