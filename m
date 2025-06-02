@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D24B23536A;
-	Mon,  2 Jun 2025 14:09:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5645024466F;
+	Mon,  2 Jun 2025 14:09:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748873365; cv=none; b=IIww+s0PD+XxbGaO6xntbgXkQoAVC2d+x0yDez2Me5dP3+gefSM2uVYNGIiynp515WAK9JR+6EdZyDaBlYmjWMr042IQrMZn8uHzfOqnwbfSp3N8s0Os37Z2y7ZxLRX6XZPN+bvBAR4mCeJm8N90DzG5TfPUSLvNWUxeTyrDP/w=
+	t=1748873368; cv=none; b=lyhGN6lREUF5tJz3qYV+cSWm6s34Qf61S7qrg4qzZWt6n2hl7ppjsO8tDxizsl4xwYE4OsjeJrouD63TzZ5BU10lMg2lBEx2DdwZu7s0ZHbzHlsUijVDGJ/SZppzbOAVS/g6ja5ty7wnYOAf8yJXsg05oO66d4mSdCmRQHhOMoI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748873365; c=relaxed/simple;
-	bh=QvU3RxRpKx07xbkiypFENFITeO7ERSI4UrsPYEY7pEk=;
+	s=arc-20240116; t=1748873368; c=relaxed/simple;
+	bh=2+fQAcmj4lx8Z0XYgPTsy4XZB/MQbRyjGR3xYEDt0ZE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sQh7OeMUzoIcI9neubI3Vu679AyH9MC0v74OIMwG9x4Dq9kaEkDxT3B7mgxI+XgrOByZuLh3RbaguAFlYbskKMv9X92BEVonL0XlrButGYywVG2076dy55OYtZ+xXwr5WRN4JQ+Gd87aIyFs3jcZOiEPuf7uvN2YPsJiEXib9Lc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XXko0ZFV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pzXRh+S9udE/EDe6YoS7Z+Vc0icdZmwjJXYkMECH2Pl2iUCu4E570o804yGZc/dTazdc1wgAhVp/KtrTjisvLOePbDpEdfCIWGAnsCZn1IBM0AxHO5R67Aap0qBXuYnhH0nBKD+NwxEMziGTq1JebPKuxczyLZNWGWTqjDEcZlA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cWm8zZQb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XXko0ZFV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72441C4CEF2;
-	Mon,  2 Jun 2025 14:09:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cWm8zZQb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFF3AC4CEEE;
+	Mon,  2 Jun 2025 14:09:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748873365;
-	bh=QvU3RxRpKx07xbkiypFENFITeO7ERSI4UrsPYEY7pEk=;
+	s=korg; t=1748873368;
+	bh=2+fQAcmj4lx8Z0XYgPTsy4XZB/MQbRyjGR3xYEDt0ZE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XXko0ZFVOEn7NOdpeGxHLrj1GcXLK1S/1W60mse7GiQtmgPQ/EDy7MJaksEufV5Qr
-	 m9RimUE4YvBlvi+XZa+VTcNKLkasW95qQ5wl9zfIDWzNeWBUYrsL4x1SX3U7E2mfR6
-	 jKGQgZQFAJcoJ5LPxCKQwX33WDpwyVhF8PF/RJ5k=
+	b=cWm8zZQbYF3pjOJERFK8R4nm7AzLQ17Na4D4IWzP3k2hj6r6YS2Vn3U9ckMwHMGhg
+	 uNx8zqeDFFivEHNEY52dkJ/YmblODzkPdnpiO3bonqf7bao/qwTJ/aoYAM8LQ4TtGh
+	 WSLvqN2NnGATpYDbb/GcGDsiNfvYiwGdLn8bVjog=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marcos Paulo de Souza <mpdesouza@suse.com>,
-	Petr Mladek <pmladek@suse.com>,
-	John Ogness <john.ogness@linutronix.de>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 119/444] printk: Check CON_SUSPEND when unblanking a console
-Date: Mon,  2 Jun 2025 15:43:03 +0200
-Message-ID: <20250602134345.727204198@linuxfoundation.org>
+Subject: [PATCH 6.6 120/444] wifi: iwlwifi: fix debug actions order
+Date: Mon,  2 Jun 2025 15:43:04 +0200
+Message-ID: <20250602134345.767061201@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -52,57 +51,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marcos Paulo de Souza <mpdesouza@suse.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 72c96a2dacc0fb056d13a5f02b0845c4c910fe54 ]
+[ Upstream commit eb29b4ffafb20281624dcd2cbb768d6f30edf600 ]
 
-The commit 9e70a5e109a4 ("printk: Add per-console suspended state")
-introduced the CON_SUSPENDED flag for consoles. The suspended consoles
-will stop receiving messages, so don't unblank suspended consoles
-because it won't be showing anything either way.
+The order of actions taken for debug was implemented incorrectly.
+Now we implemented the dump split and do the FW reset only in the
+middle of the dump (rather than the FW killing itself on error.)
+As a result, some of the actions taken when applying the config
+will now crash the device, so we need to fix the order.
 
-Signed-off-by: Marcos Paulo de Souza <mpdesouza@suse.com>
-Reviewed-by: Petr Mladek <pmladek@suse.com>
-Reviewed-by: John Ogness <john.ogness@linutronix.de>
-Link: https://lore.kernel.org/r/20250226-printk-renaming-v1-5-0b878577f2e6@suse.com
-Signed-off-by: Petr Mladek <pmladek@suse.com>
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20250308231427.6de7fa8e63ed.I40632c48e2a67a8aca05def572a934b88ce7934b@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/printk/printk.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/kernel/printk/printk.c b/kernel/printk/printk.c
-index dcdf449615bda..51c43e0f9b29b 100644
---- a/kernel/printk/printk.c
-+++ b/kernel/printk/printk.c
-@@ -3119,7 +3119,12 @@ void console_unblank(void)
- 	 */
- 	cookie = console_srcu_read_lock();
- 	for_each_console_srcu(c) {
--		if ((console_srcu_read_flags(c) & CON_ENABLED) && c->unblank) {
-+		short flags = console_srcu_read_flags(c);
-+
-+		if (flags & CON_SUSPENDED)
-+			continue;
-+
-+		if ((flags & CON_ENABLED) && c->unblank) {
- 			found_unblank = true;
- 			break;
- 		}
-@@ -3156,7 +3161,12 @@ void console_unblank(void)
- 
- 	cookie = console_srcu_read_lock();
- 	for_each_console_srcu(c) {
--		if ((console_srcu_read_flags(c) & CON_ENABLED) && c->unblank)
-+		short flags = console_srcu_read_flags(c);
-+
-+		if (flags & CON_SUSPENDED)
-+			continue;
-+
-+		if ((flags & CON_ENABLED) && c->unblank)
- 			c->unblank();
+diff --git a/drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.c b/drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.c
+index a97ed7cbe4d14..d588e4cd808d8 100644
+--- a/drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.c
++++ b/drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.c
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause
+ /*
+- * Copyright (C) 2018-2024 Intel Corporation
++ * Copyright (C) 2018-2025 Intel Corporation
+  */
+ #include <linux/firmware.h>
+ #include "iwl-drv.h"
+@@ -1382,15 +1382,15 @@ void _iwl_dbg_tlv_time_point(struct iwl_fw_runtime *fwrt,
+ 	switch (tp_id) {
+ 	case IWL_FW_INI_TIME_POINT_EARLY:
+ 		iwl_dbg_tlv_init_cfg(fwrt);
+-		iwl_dbg_tlv_apply_config(fwrt, conf_list);
+ 		iwl_dbg_tlv_update_drams(fwrt);
+ 		iwl_dbg_tlv_tp_trigger(fwrt, sync, trig_list, tp_data, NULL);
++		iwl_dbg_tlv_apply_config(fwrt, conf_list);
+ 		break;
+ 	case IWL_FW_INI_TIME_POINT_AFTER_ALIVE:
+ 		iwl_dbg_tlv_apply_buffers(fwrt);
+ 		iwl_dbg_tlv_send_hcmds(fwrt, hcmd_list);
+-		iwl_dbg_tlv_apply_config(fwrt, conf_list);
+ 		iwl_dbg_tlv_tp_trigger(fwrt, sync, trig_list, tp_data, NULL);
++		iwl_dbg_tlv_apply_config(fwrt, conf_list);
+ 		break;
+ 	case IWL_FW_INI_TIME_POINT_PERIODIC:
+ 		iwl_dbg_tlv_set_periodic_trigs(fwrt);
+@@ -1400,14 +1400,14 @@ void _iwl_dbg_tlv_time_point(struct iwl_fw_runtime *fwrt,
+ 	case IWL_FW_INI_TIME_POINT_MISSED_BEACONS:
+ 	case IWL_FW_INI_TIME_POINT_FW_DHC_NOTIFICATION:
+ 		iwl_dbg_tlv_send_hcmds(fwrt, hcmd_list);
+-		iwl_dbg_tlv_apply_config(fwrt, conf_list);
+ 		iwl_dbg_tlv_tp_trigger(fwrt, sync, trig_list, tp_data,
+ 				       iwl_dbg_tlv_check_fw_pkt);
++		iwl_dbg_tlv_apply_config(fwrt, conf_list);
+ 		break;
+ 	default:
+ 		iwl_dbg_tlv_send_hcmds(fwrt, hcmd_list);
+-		iwl_dbg_tlv_apply_config(fwrt, conf_list);
+ 		iwl_dbg_tlv_tp_trigger(fwrt, sync, trig_list, tp_data, NULL);
++		iwl_dbg_tlv_apply_config(fwrt, conf_list);
+ 		break;
  	}
- 	console_srcu_read_unlock(cookie);
+ }
 -- 
 2.39.5
 
