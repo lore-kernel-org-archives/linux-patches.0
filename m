@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22F4623372E;
-	Mon,  2 Jun 2025 14:19:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7E5E23371E;
+	Mon,  2 Jun 2025 14:19:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748873951; cv=none; b=fqg+JAM1kGBYuVKjyFxCFjkyJGHUnUI2isBMS7sa07vjnw/IOBn45hOvZhWADpfPWYWg9mgPwkmxw9F0jsH6T/ycQAAmnkOoyYs1gAbg9qEh+R9wnnISYPQF4CBbanSGZGBCXp/QpPyfA6fDZMgBBycFisvpHl7trgfdk8MS6N8=
+	t=1748873953; cv=none; b=tDF4XB5jmfgsI0+4YrbgJAZ4n269Gd9ma/8E74X16nOfzH4exdY8uXXR1FFYFw7HXH8NX33GAMb36Jk+BwMNkCJyrCSQty2SSdvs6Rhxhv/RN1zrPuRTsqV4x4nVJ9INzkg8fttUyu9GH5vyV7+grxwIGI3x4wFIJDtzGN5vmRo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748873951; c=relaxed/simple;
-	bh=cpZ9dW+ngSL2DYsBbno5q2iMp5l6oujpiKcJ5k4pg+c=;
+	s=arc-20240116; t=1748873953; c=relaxed/simple;
+	bh=dXg8y76OE49JWn2dLHIdukgbNu3qj1Ln+OpBOE2CiDY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wn/JhRdlU7307ZVAddBXJFVpacT6SYVvw80JVpXx1QtVOIysl3TLbAkC0vgVuEgzGf6AHTz8Yi1+lfbK7dBzYgtVAOyBjUHIUduMG9zb52X25YT3esqe/9YT8tZunmr5TqScNgsRH9+PEsn6Vv02Ynbtuz8X8gv1zWV4zOwWc4g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ak2k5T9r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=caxQuTBzjTaw7xwsZbM9I6yalgDgbTovsWctkwV8O/fzAXEP9iwS1NKQZEt/FnqEEJM2dQOBLs159EvUpiI8DLhu4UMPQ9wJktaTtOh0mVR5K2Yw8Ss+zzo4ebMyWrrPDtJHgzAwW+CzHbOW5IwZck6IFO5x3tpdLk8sxVkl7wA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vo1MLZ+3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ak2k5T9r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B59EC4CEF0;
-	Mon,  2 Jun 2025 14:19:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vo1MLZ+3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A510C4CEEB;
+	Mon,  2 Jun 2025 14:19:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748873950;
-	bh=cpZ9dW+ngSL2DYsBbno5q2iMp5l6oujpiKcJ5k4pg+c=;
+	s=korg; t=1748873953;
+	bh=dXg8y76OE49JWn2dLHIdukgbNu3qj1Ln+OpBOE2CiDY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ak2k5T9rhfXcrCbF+etaiacf/PTQhqRne+Tc+91e4gP/FQT03uF7IAN4Kn7usqoU4
-	 cxh1hbDT/0eKOgKizbte3w+HJ7QKp6kLSy7NBX81pHwhH4KIntvxlmlPfnSst+0Ohc
-	 8WD7ffYS06aPR71gbD50NbG+QXUOad/iQIY1Pfm8=
+	b=vo1MLZ+3Lk4H46x87UrUAvI4N+G8nnfJX9rgH3Dm3ZsKTTCyUPw9Dtc8gd24FU2xV
+	 HOlE+AhfFnlGqsn9ctJ97j9/g1pHBTYxy41oKzt3Xa/LI7bPO77NS51JbWD6VIexlx
+	 PNsxuPXcwBCX6u2VhH328F5pC9vQL4461TAHpfDo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Andrew Lunn <andrew@lunn.ch>,
+	Petr Machata <petrm@nvidia.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 277/444] r8169: dont scan PHY addresses > 0
-Date: Mon,  2 Jun 2025 15:45:41 +0200
-Message-ID: <20250602134352.201727182@linuxfoundation.org>
+Subject: [PATCH 6.6 278/444] bridge: mdb: Allow replace of a host-joined group
+Date: Mon,  2 Jun 2025 15:45:42 +0200
+Message-ID: <20250602134352.241929592@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -52,34 +53,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiner Kallweit <hkallweit1@gmail.com>
+From: Petr Machata <petrm@nvidia.com>
 
-[ Upstream commit faac69a4ae5abb49e62c79c66b51bb905c9aa5ec ]
+[ Upstream commit d9e9f6d7b7d0c520bb87f19d2cbc57aeeb2091d5 ]
 
-The PHY address is a dummy, because r8169 PHY access registers
-don't support a PHY address. Therefore scan address 0 only.
+Attempts to replace an MDB group membership of the host itself are
+currently bounced:
 
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/830637dd-4016-4a68-92b3-618fcac6589d@gmail.com
+ # ip link add name br up type bridge vlan_filtering 1
+ # bridge mdb replace dev br port br grp 239.0.0.1 vid 2
+ # bridge mdb replace dev br port br grp 239.0.0.1 vid 2
+ Error: bridge: Group is already joined by host.
+
+A similar operation done on a member port would succeed. Ignore the check
+for replacement of host group memberships as well.
+
+The bit of code that this enables is br_multicast_host_join(), which, for
+already-joined groups only refreshes the MC group expiration timer, which
+is desirable; and a userspace notification, also desirable.
+
+Change a selftest that exercises this code path from expecting a rejection
+to expecting a pass. The rest of MDB selftests pass without modification.
+
+Signed-off-by: Petr Machata <petrm@nvidia.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://patch.msgid.link/e5c5188b9787ae806609e7ca3aa2a0a501b9b5c4.1738685648.git.petrm@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/realtek/r8169_main.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/bridge/br_mdb.c                                  | 2 +-
+ tools/testing/selftests/net/forwarding/bridge_mdb.sh | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/realtek/r8169_main.c b/drivers/net/ethernet/realtek/r8169_main.c
-index 7e5258b2c4290..5af932a5e70c4 100644
---- a/drivers/net/ethernet/realtek/r8169_main.c
-+++ b/drivers/net/ethernet/realtek/r8169_main.c
-@@ -5125,6 +5125,7 @@ static int r8169_mdio_register(struct rtl8169_private *tp)
- 	new_bus->priv = tp;
- 	new_bus->parent = &pdev->dev;
- 	new_bus->irq[0] = PHY_MAC_INTERRUPT;
-+	new_bus->phy_mask = GENMASK(31, 1);
- 	snprintf(new_bus->id, MII_BUS_ID_SIZE, "r8169-%x-%x",
- 		 pci_domain_nr(pdev->bus), pci_dev_id(pdev));
+diff --git a/net/bridge/br_mdb.c b/net/bridge/br_mdb.c
+index 7305f5f8215ca..96bea0c8408fe 100644
+--- a/net/bridge/br_mdb.c
++++ b/net/bridge/br_mdb.c
+@@ -1030,7 +1030,7 @@ static int br_mdb_add_group(const struct br_mdb_config *cfg,
  
+ 	/* host join */
+ 	if (!port) {
+-		if (mp->host_joined) {
++		if (mp->host_joined && !(cfg->nlflags & NLM_F_REPLACE)) {
+ 			NL_SET_ERR_MSG_MOD(extack, "Group is already joined by host");
+ 			return -EEXIST;
+ 		}
+diff --git a/tools/testing/selftests/net/forwarding/bridge_mdb.sh b/tools/testing/selftests/net/forwarding/bridge_mdb.sh
+index a3678dfe5848a..c151374ddf040 100755
+--- a/tools/testing/selftests/net/forwarding/bridge_mdb.sh
++++ b/tools/testing/selftests/net/forwarding/bridge_mdb.sh
+@@ -149,7 +149,7 @@ cfg_test_host_common()
+ 	check_err $? "Failed to add $name host entry"
+ 
+ 	bridge mdb replace dev br0 port br0 grp $grp $state vid 10 &> /dev/null
+-	check_fail $? "Managed to replace $name host entry"
++	check_err $? "Failed to replace $name host entry"
+ 
+ 	bridge mdb del dev br0 port br0 grp $grp $state vid 10
+ 	bridge mdb get dev br0 grp $grp vid 10 &> /dev/null
 -- 
 2.39.5
 
