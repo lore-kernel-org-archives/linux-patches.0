@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BC031FF61E;
-	Mon,  2 Jun 2025 14:43:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31AC8224AF1;
+	Mon,  2 Jun 2025 14:43:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748875425; cv=none; b=TNm+HU9v6BXLhWpSsi+mowEp6EBnoSMLcW4D4/j7TS6ifzx5FzLW15dS7EhF96LbuANj56Oq/ruwQmVTiBa1WXPUGlNV/j/iaOaiKCx8vcXHw7MOYT8iDgG69rJz6qqIA2WNMlU1nazOw9SvDmxalJJqVBplfzEIQezsDIwWqW8=
+	t=1748875428; cv=none; b=OArhnaPiyBnk9hEFqap0uW/u62Jp3Dab/bYQWRGl0kQg0tZ3IKzEuKAvGf5AW+Oc6x4BQiZMQWM8mGQ6dpYD4FmLOqx6aWI4fS1Bn8BnOusE3/5GdHs6t8UICaguamIhat/zSYT5IETmkNpB4JjSPHr6+nPGiucKKrVhBXzabEM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748875425; c=relaxed/simple;
-	bh=JJhRn51nr4PowM7oZYAY9C+InRZP60VrLLyEFAenbHM=;
+	s=arc-20240116; t=1748875428; c=relaxed/simple;
+	bh=yv+nl+HMoWGplbpFYJ2V8XCl5o25UfLHaMhs6WFA70w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OTIG08eqZbF0EZecfIr6HVqQpUhU+hGzkSXXF81IHe97IELCAJEipsQf3kUE900In1Ox3nG6VC5rOeoAWX4gQpiqGdauLPiflsDN7WzjctwolZ747nyh9IT8ezuW8+GV5PmMxeZvJrFPtSXOcnRINEutyoJQCuMR1CS1Ofh9WO8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uqRWw/HS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k/wNnskvAfml1fHnbggop0NL7sDpdSFQT/MxhXzCHiX4wFbbcvi5OWYERcQ7OFWn63XCGuuGmjnZV0yJFoktK72WWuVEEXPWHt0jFO7X6Pja7EkXQTf6JTmcP0q9s/kpLb8I4kFOXKlzWnNtoYCs7D2nJrUHBrE7LLCops1on5w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZhmTFWMM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uqRWw/HS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFBE1C4CEF0;
-	Mon,  2 Jun 2025 14:43:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZhmTFWMM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A90C9C4CEEB;
+	Mon,  2 Jun 2025 14:43:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748875425;
-	bh=JJhRn51nr4PowM7oZYAY9C+InRZP60VrLLyEFAenbHM=;
+	s=korg; t=1748875428;
+	bh=yv+nl+HMoWGplbpFYJ2V8XCl5o25UfLHaMhs6WFA70w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uqRWw/HSR+mziQLJ9ls93c9jjPgmMjPpCngCTIXZ8nWPl3VBM+5aEF/G+2t9jR9v6
-	 6OcIyGZxfM7424PxhBXIUGc+ReFG9mEobOuRGd9sOQKuruOSazs7Phnp9ax2EPE9Rg
-	 q01VahND72s5+E7fNqARc5LHxFd/1vipnPd4iv+U=
+	b=ZhmTFWMMMn/sCNwsUVZNUPUi5eVqFrRfh4GmZ1WqjUeRuADlTgT01YBI6+lsNF/J1
+	 VYtDUcu1SLoP4Zv4jDZZ0WBce5vRprqiSxOs1PDwddnuyfhxxLxtodslvBeSFbw3Sv
+	 qa26bPJvezjjOwQTpa+EKJP3iPLYjBOUNftZku5M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Ming Yen Hsieh <mingyen.hsieh@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>
-Subject: [PATCH 5.10 101/270] wifi: mt76: disable napi on driver removal
-Date: Mon,  2 Jun 2025 15:46:26 +0200
-Message-ID: <20250602134311.299512595@linuxfoundation.org>
+	Peter Ujfalusi <peter.ujfalusi@gmail.com>,
+	Vignesh Raghavendra <vigneshr@ti.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	dmaengine@vger.kernel.org,
+	Ronald Wahl <ronald.wahl@legrand.com>
+Subject: [PATCH 5.10 102/270] dmaengine: ti: k3-udma: Add missing locking
+Date: Mon,  2 Jun 2025 15:46:27 +0200
+Message-ID: <20250602134311.339187089@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134307.195171844@linuxfoundation.org>
 References: <20250602134307.195171844@linuxfoundation.org>
@@ -51,59 +53,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Ronald Wahl <ronald.wahl@legrand.com>
 
-commit 78ab4be549533432d97ea8989d2f00b508fa68d8 upstream.
+commit fca280992af8c2fbd511bc43f65abb4a17363f2f upstream.
 
-A warning on driver removal started occurring after commit 9dd05df8403b
-("net: warn if NAPI instance wasn't shut down"). Disable tx napi before
-deleting it in mt76_dma_cleanup().
+Recent kernels complain about a missing lock in k3-udma.c when the lock
+validator is enabled:
 
- WARNING: CPU: 4 PID: 18828 at net/core/dev.c:7288 __netif_napi_del_locked+0xf0/0x100
- CPU: 4 UID: 0 PID: 18828 Comm: modprobe Not tainted 6.15.0-rc4 #4 PREEMPT(lazy)
- Hardware name: ASUS System Product Name/PRIME X670E-PRO WIFI, BIOS 3035 09/05/2024
- RIP: 0010:__netif_napi_del_locked+0xf0/0x100
- Call Trace:
- <TASK>
- mt76_dma_cleanup+0x54/0x2f0 [mt76]
- mt7921_pci_remove+0xd5/0x190 [mt7921e]
- pci_device_remove+0x47/0xc0
- device_release_driver_internal+0x19e/0x200
- driver_detach+0x48/0x90
- bus_remove_driver+0x6d/0xf0
- pci_unregister_driver+0x2e/0xb0
- __do_sys_delete_module.isra.0+0x197/0x2e0
- do_syscall_64+0x7b/0x160
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
+[    4.128073] WARNING: CPU: 0 PID: 746 at drivers/dma/ti/../virt-dma.h:169 udma_start.isra.0+0x34/0x238
+[    4.137352] CPU: 0 UID: 0 PID: 746 Comm: kworker/0:3 Not tainted 6.12.9-arm64 #28
+[    4.144867] Hardware name: pp-v12 (DT)
+[    4.148648] Workqueue: events udma_check_tx_completion
+[    4.153841] pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[    4.160834] pc : udma_start.isra.0+0x34/0x238
+[    4.165227] lr : udma_start.isra.0+0x30/0x238
+[    4.169618] sp : ffffffc083cabcf0
+[    4.172963] x29: ffffffc083cabcf0 x28: 0000000000000000 x27: ffffff800001b005
+[    4.180167] x26: ffffffc0812f0000 x25: 0000000000000000 x24: 0000000000000000
+[    4.187370] x23: 0000000000000001 x22: 00000000e21eabe9 x21: ffffff8000fa0670
+[    4.194571] x20: ffffff8001b6bf00 x19: ffffff8000fa0430 x18: ffffffc083b95030
+[    4.201773] x17: 0000000000000000 x16: 00000000f0000000 x15: 0000000000000048
+[    4.208976] x14: 0000000000000048 x13: 0000000000000000 x12: 0000000000000001
+[    4.216179] x11: ffffffc08151a240 x10: 0000000000003ea1 x9 : ffffffc08046ab68
+[    4.223381] x8 : ffffffc083cabac0 x7 : ffffffc081df3718 x6 : 0000000000029fc8
+[    4.230583] x5 : ffffffc0817ee6d8 x4 : 0000000000000bc0 x3 : 0000000000000000
+[    4.237784] x2 : 0000000000000000 x1 : 00000000001fffff x0 : 0000000000000000
+[    4.244986] Call trace:
+[    4.247463]  udma_start.isra.0+0x34/0x238
+[    4.251509]  udma_check_tx_completion+0xd0/0xdc
+[    4.256076]  process_one_work+0x244/0x3fc
+[    4.260129]  process_scheduled_works+0x6c/0x74
+[    4.264610]  worker_thread+0x150/0x1dc
+[    4.268398]  kthread+0xd8/0xe8
+[    4.271492]  ret_from_fork+0x10/0x20
+[    4.275107] irq event stamp: 220
+[    4.278363] hardirqs last  enabled at (219): [<ffffffc080a27c7c>] _raw_spin_unlock_irq+0x38/0x50
+[    4.287183] hardirqs last disabled at (220): [<ffffffc080a1c154>] el1_dbg+0x24/0x50
+[    4.294879] softirqs last  enabled at (182): [<ffffffc080037e68>] handle_softirqs+0x1c0/0x3cc
+[    4.303437] softirqs last disabled at (177): [<ffffffc080010170>] __do_softirq+0x1c/0x28
+[    4.311559] ---[ end trace 0000000000000000 ]---
 
-Tested with mt7921e but the same pattern can be actually applied to other
-mt76 drivers calling mt76_dma_cleanup() during removal. Tx napi is enabled
-in their *_dma_init() functions and only toggled off and on again inside
-their suspend/resume/reset paths. So it should be okay to disable tx
-napi in such a generic way.
+This commit adds the missing locking.
 
-Found by Linux Verification Center (linuxtesting.org).
-
-Fixes: 2ac515a5d74f ("mt76: mt76x02: use napi polling for tx cleanup")
+Fixes: 25dcb5dd7b7c ("dmaengine: ti: New driver for K3 UDMA")
+Cc: Peter Ujfalusi <peter.ujfalusi@gmail.com>
+Cc: Vignesh Raghavendra <vigneshr@ti.com>
+Cc: Vinod Koul <vkoul@kernel.org>
+Cc: dmaengine@vger.kernel.org
 Cc: stable@vger.kernel.org
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Tested-by: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
-Link: https://patch.msgid.link/20250506115540.19045-1-pchelkin@ispras.ru
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Signed-off-by: Ronald Wahl <ronald.wahl@legrand.com>
+Acked-by: Peter Ujfalusi <peter.ujfalusi@gmail.com>
+Link: https://lore.kernel.org/r/20250414173113.80677-1-rwahl@gmx.de
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/mediatek/mt76/dma.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/dma/ti/k3-udma.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/net/wireless/mediatek/mt76/dma.c
-+++ b/drivers/net/wireless/mediatek/mt76/dma.c
-@@ -666,6 +666,7 @@ void mt76_dma_cleanup(struct mt76_dev *d
- 	int i;
+--- a/drivers/dma/ti/k3-udma.c
++++ b/drivers/dma/ti/k3-udma.c
+@@ -962,8 +962,11 @@ static void udma_check_tx_completion(str
+ 	u32 residue_diff;
+ 	ktime_t time_diff;
+ 	unsigned long delay;
++	unsigned long flags;
  
- 	mt76_worker_disable(&dev->tx_worker);
-+	napi_disable(&dev->tx_napi);
- 	netif_napi_del(&dev->tx_napi);
- 	for (i = 0; i < ARRAY_SIZE(dev->q_tx); i++)
- 		mt76_dma_tx_cleanup(dev, i, true);
+ 	while (1) {
++		spin_lock_irqsave(&uc->vc.lock, flags);
++
+ 		if (uc->desc) {
+ 			/* Get previous residue and time stamp */
+ 			residue_diff = uc->tx_drain.residue;
+@@ -998,6 +1001,8 @@ static void udma_check_tx_completion(str
+ 				break;
+ 			}
+ 
++			spin_unlock_irqrestore(&uc->vc.lock, flags);
++
+ 			usleep_range(ktime_to_us(delay),
+ 				     ktime_to_us(delay) + 10);
+ 			continue;
+@@ -1014,6 +1019,8 @@ static void udma_check_tx_completion(str
+ 
+ 		break;
+ 	}
++
++	spin_unlock_irqrestore(&uc->vc.lock, flags);
+ }
+ 
+ static irqreturn_t udma_ring_irq_handler(int irq, void *data)
 
 
