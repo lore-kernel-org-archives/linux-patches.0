@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C8F023184E;
-	Mon,  2 Jun 2025 14:45:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 575C222A7E3;
+	Mon,  2 Jun 2025 14:45:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748875505; cv=none; b=BInFD9TjG/FtQNyK6KNdWNgslBpdR1plAm4AY8K6GkLH+uPSDSrsr18KsBuq/syjO81EjoUrYomR2NW3Kuv4y3bHvcjWtuR6gZi9pqxyY+f71prQ6AWcYLVpqG22yba9Dfri3A3U7WKOm1uC6kBTI1mEXfe0b+uKaMuYVL1jWUQ=
+	t=1748875508; cv=none; b=PlKDcNKbQnduh3eFf4LLTQvQna16TygNo1FwYLnKmXbZuEpfzqCikA5K57LOm2tXoK+KVLs5aHfWsy5Hwh8cU9Pz285LdgHTtU5naTBFu0ZckLSs6cvGQmj2WchkRtBcXjFAKf4M/BYiGw9JkEVaOWzNxjadwCoR7FhAGZMGYEE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748875505; c=relaxed/simple;
-	bh=yAFbNqrzatFuxwSQ6fHBjfhV7PdoD5zc4uSc8GVhk8k=;
+	s=arc-20240116; t=1748875508; c=relaxed/simple;
+	bh=RxXHtSKbTZrj7SONCPB5stwR/ezJMP/NcQyulypr4G8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Woprs13RGUiCMjWddfXIIGXpyUr8/Uu7u2gkN71ZLDeojP3YYIja9OhZxaTNsW8wdvIoQha4tDASOH43RFCF4hwlkfY/+7BNdB4eKFnwvQvAon5qfueFTLQf7y+qo4P/8GGS+5kFjaptT1v87KioetID52Bp8QKU0ritXujfwl8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GVE0w6/0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YxYi3bwETlEhJP300SBRgJVfWdk40KUzc6bieCJZQKEyk4vSMjCl27qvj88tcCefbRhaHiRSV/IGygoXJpp4xDzUeS2KkPhB38CiVoHbJOdSdCY1Ps/Wby5gneodKa4+q68Jrx3zvKFk7rnxqU4v4edBqMwzAyMOg0ZlG0Za8GA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sVdX9Axv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GVE0w6/0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 875B8C4CEEB;
-	Mon,  2 Jun 2025 14:45:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sVdX9Axv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B235CC4CEEB;
+	Mon,  2 Jun 2025 14:45:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748875505;
-	bh=yAFbNqrzatFuxwSQ6fHBjfhV7PdoD5zc4uSc8GVhk8k=;
+	s=korg; t=1748875508;
+	bh=RxXHtSKbTZrj7SONCPB5stwR/ezJMP/NcQyulypr4G8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GVE0w6/0XwS4EDU3SGIqUXKlIXhzM2XLdcf1AeJuk0i2lL6dfn7gELukPDf4IDQlE
-	 PKp/ncqW0V/gzU3UeTtcuQwIVRl4ySlTsr+e21wwVxyzi+UzEZcup/XSPTljLJ30Pm
-	 N9CgMTK7R0g3ggZN+z0TcIcckTOKryMz/Bd9eR+4=
+	b=sVdX9AxvLYmrW6ISreWGkrimsd5yWFN691243mzY/LMhOHGQjSp5tDlYe1ZIExN3U
+	 h0PV/noDSRwLmjna5rV+YA6Xy28scUaoQ+P0SemiaAdOHwgvgY6kFOGR2cj4hstmu/
+	 Y9uWwuuFvvM6i12omD/ZamUUoZb4I+OWOrqXRGRA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alice Guo <alice.guo@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Andreas Schwab <schwab@linux-m68k.org>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 128/270] thermal/drivers/qoriq: Power down TMU on system suspend
-Date: Mon,  2 Jun 2025 15:46:53 +0200
-Message-ID: <20250602134312.461537027@linuxfoundation.org>
+Subject: [PATCH 5.10 155/270] powerpc/prom_init: Fixup missing #size-cells on PowerBook6,7
+Date: Mon,  2 Jun 2025 15:47:20 +0200
+Message-ID: <20250602134313.553765270@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134307.195171844@linuxfoundation.org>
 References: <20250602134307.195171844@linuxfoundation.org>
@@ -52,61 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alice Guo <alice.guo@nxp.com>
+From: Andreas Schwab <schwab@linux-m68k.org>
 
-[ Upstream commit 229f3feb4b0442835b27d519679168bea2de96c2 ]
+[ Upstream commit 7e67ef889c9ab7246547db73d524459f47403a77 ]
 
-Enable power-down of TMU (Thermal Management Unit) for TMU version 2 during
-system suspend to save power. Save approximately 4.3mW on VDD_ANA_1P8 on
-i.MX93 platforms.
+Similar to the PowerMac3,1, the PowerBook6,7 is missing the #size-cells
+property on the i2s node.
 
-Signed-off-by: Alice Guo <alice.guo@nxp.com>
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
-Link: https://lore.kernel.org/r/20241209164859.3758906-2-Frank.Li@nxp.com
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+Depends-on: commit 045b14ca5c36 ("of: WARN on deprecated #address-cells/#size-cells handling")
+Signed-off-by: Andreas Schwab <schwab@linux-m68k.org>
+Acked-by: Rob Herring (Arm) <robh@kernel.org>
+[maddy: added "commit" work in depends-on to avoid checkpatch error]
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/875xmizl6a.fsf@igel.home
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/qoriq_thermal.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ arch/powerpc/kernel/prom_init.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/thermal/qoriq_thermal.c b/drivers/thermal/qoriq_thermal.c
-index 73049f9bea252..34a5fbcc3d200 100644
---- a/drivers/thermal/qoriq_thermal.c
-+++ b/drivers/thermal/qoriq_thermal.c
-@@ -19,6 +19,7 @@
- #define SITES_MAX		16
- #define TMR_DISABLE		0x0
- #define TMR_ME			0x80000000
-+#define TMR_CMD			BIT(29)
- #define TMR_ALPF		0x0c000000
- #define TMR_ALPF_V2		0x03000000
- #define TMTMIR_DEFAULT	0x0000000f
-@@ -345,6 +346,12 @@ static int __maybe_unused qoriq_tmu_suspend(struct device *dev)
- 	if (ret)
- 		return ret;
+diff --git a/arch/powerpc/kernel/prom_init.c b/arch/powerpc/kernel/prom_init.c
+index 9a753c4dafab6..b29135dd73342 100644
+--- a/arch/powerpc/kernel/prom_init.c
++++ b/arch/powerpc/kernel/prom_init.c
+@@ -2944,11 +2944,11 @@ static void __init fixup_device_tree_pmac(void)
+ 	char type[8];
+ 	phandle node;
  
-+	if (data->ver > TMU_VER1) {
-+		ret = regmap_set_bits(data->regmap, REGS_TMR, TMR_CMD);
-+		if (ret)
-+			return ret;
-+	}
-+
- 	clk_disable_unprepare(data->clk);
+-	// Some pmacs are missing #size-cells on escc nodes
++	// Some pmacs are missing #size-cells on escc or i2s nodes
+ 	for (node = 0; prom_next_node(&node); ) {
+ 		type[0] = '\0';
+ 		prom_getprop(node, "device_type", type, sizeof(type));
+-		if (prom_strcmp(type, "escc"))
++		if (prom_strcmp(type, "escc") && prom_strcmp(type, "i2s"))
+ 			continue;
  
- 	return 0;
-@@ -359,6 +366,12 @@ static int __maybe_unused qoriq_tmu_resume(struct device *dev)
- 	if (ret)
- 		return ret;
- 
-+	if (data->ver > TMU_VER1) {
-+		ret = regmap_clear_bits(data->regmap, REGS_TMR, TMR_CMD);
-+		if (ret)
-+			return ret;
-+	}
-+
- 	/* Enable monitoring */
- 	return regmap_update_bits(data->regmap, REGS_TMR, TMR_ME, TMR_ME);
- }
+ 		if (prom_getproplen(node, "#size-cells") != PROM_ERROR)
 -- 
 2.39.5
 
