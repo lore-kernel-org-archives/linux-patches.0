@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCF7A225791;
-	Mon,  2 Jun 2025 15:17:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C5F2226D00;
+	Mon,  2 Jun 2025 15:17:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748877440; cv=none; b=F7LfsUx21PHfy3IF09WtFpns+g2RmSMMK2eNaaCb6HpK6qMopIh4nG1qo7aITaWsPxxgtH3CgfZocfxxYUZSeErhZbe2QhDz6li0HhO5jn3vKXPfxc/5hZsPrvwSUlFgkFy5Bp9qtOE9wm7mbMT4zRWOqlM/Yl5VM72/1mO5MpE=
+	t=1748877444; cv=none; b=MJ4tfTMsY1ZOuvXHb585NDqShfvu+Hd8s88ouMCt91nS1fdIxadstKYzfjyIyqMJcjhH9QZjc+OiEeJEB0q3FhqvtUajqhog+JYvJtTgojVbsObasqIRidbfRUPSw7HO2qKsIr7p/1WoDZKfanlmRFiBI302Tm69aHbT3eVgI/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748877440; c=relaxed/simple;
-	bh=C5ksXSwv5MPfaWaae51nX8Bd9kY7y+FvfgoCHjJY+f0=;
+	s=arc-20240116; t=1748877444; c=relaxed/simple;
+	bh=cETVBYpHKfmwIuvPqAfmo0VlQ00aHdMBKyZFQNkE5GI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uBiNzWH+f/RK7bJOGxlTRm7pTaBEAgdHJ50Onb6wGZGaIDuThQtJoO2dGoDH7PUFatYnRVW37KuM8Hny6ZrLaHXJ22vPB6WFAMtkQKG47tdrYPSlkNDm1dhGI6eApUnTAf3TwFX1o7Akq8aOgLRbZclpz8aEs43mToshdcrVrmA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OzsnqhyI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H/J3qTizlMkr8efOdrPpGokMmNecYy/jT3J8kNwN8e+wxD6eTgjP5FXgmIIV3dDeKKjML9F/UfR044N7Hsg5K11AOohks16e/r1G7Mqhwg3/wDyOmUSyxGQRD63Bt8zMnE50n5pf5B70VLYM5W16MK3sNAYnral3gpJIKp6LUjg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PNCgOQZT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OzsnqhyI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 349D6C4CEEB;
-	Mon,  2 Jun 2025 15:17:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PNCgOQZT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67EEEC4CEF2;
+	Mon,  2 Jun 2025 15:17:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748877440;
-	bh=C5ksXSwv5MPfaWaae51nX8Bd9kY7y+FvfgoCHjJY+f0=;
+	s=korg; t=1748877443;
+	bh=cETVBYpHKfmwIuvPqAfmo0VlQ00aHdMBKyZFQNkE5GI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OzsnqhyI84Ipdh0ETFtqxnz3HEYbNwRj0CfcdkVPAbtPwLDEc7hqqoOyiB00UZpGR
-	 vVPaWvFYnhUub7EmAmShltEorP75Ly93I4oK2xMj/NLsLmM68COPckXF8Ginc2ySol
-	 xVdcs6MoT9JHyS2N7pwWzApF5YBJodV2X3WvqRkg=
+	b=PNCgOQZT+aWP1W4Wiv1e8ByGqRT78fh+mjPSLYbSbx9QtLT/IEx+mwB94SdDMy+1z
+	 LmrYp/85MaDH+FGeKjTVseGSeBbaIv0jORmnMDs4YddPjmqbFRXX036TUYeYU7gNkp
+	 4zlFAvcQxM/RnhJonGoVqzBrvunN0yWz5x9Hof3Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Subject: [PATCH 6.1 271/325] serial: sh-sci: Save and restore more registers
-Date: Mon,  2 Jun 2025 15:49:07 +0200
-Message-ID: <20250602134330.780843002@linuxfoundation.org>
+	Qu Wenruo <wqu@suse.com>,
+	Boris Burkov <boris@bur.io>,
+	David Sterba <dsterba@suse.com>,
+	Zhaoyang Li <lizy04@hust.edu.cn>
+Subject: [PATCH 6.1 280/325] btrfs: check folio mapping after unlock in relocate_one_folio()
+Date: Mon,  2 Jun 2025 15:49:16 +0200
+Message-ID: <20250602134331.139215980@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134319.723650984@linuxfoundation.org>
 References: <20250602134319.723650984@linuxfoundation.org>
@@ -50,108 +52,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Boris Burkov <boris@bur.io>
 
-commit 81100b9a7b0515132996d62a7a676a77676cb6e3 upstream.
+commit 3e74859ee35edc33a022c3f3971df066ea0ca6b9 upstream.
 
-On (H)SCIF with a Baud Rate Generator for External Clock (BRG), there
-are multiple ways to configure the requested serial speed.  If firmware
-uses a different method than Linux, and if any debug info is printed
-after the Bit Rate Register (SCBRR) is restored, but before termios is
-reconfigured (which configures the alternative method), the system may
-lock-up during resume.
+When we call btrfs_read_folio() to bring a folio uptodate, we unlock the
+folio. The result of that is that a different thread can modify the
+mapping (like remove it with invalidate) before we call folio_lock().
+This results in an invalid page and we need to try again.
 
-Fix this by saving and restoring the contents of the BRG Frequency
-Division (SCDL) and Clock Select (SCCKS) registers as well.
+In particular, if we are relocating concurrently with aborting a
+transaction, this can result in a crash like the following:
 
-Also save and restore the HSCIF's Sampling Rate Register (HSSRR), which
-configures the sampling point, and the SCIFA/SCIFB's Serial Port Control
-and Data Registers (SCPCR/SCPDR), which configure the optional control
-flow signals.
+  BUG: kernel NULL pointer dereference, address: 0000000000000000
+  PGD 0 P4D 0
+  Oops: 0000 [#1] SMP
+  CPU: 76 PID: 1411631 Comm: kworker/u322:5
+  Workqueue: events_unbound btrfs_reclaim_bgs_work
+  RIP: 0010:set_page_extent_mapped+0x20/0xb0
+  RSP: 0018:ffffc900516a7be8 EFLAGS: 00010246
+  RAX: ffffea009e851d08 RBX: ffffea009e0b1880 RCX: 0000000000000000
+  RDX: 0000000000000000 RSI: ffffc900516a7b90 RDI: ffffea009e0b1880
+  RBP: 0000000003573000 R08: 0000000000000001 R09: ffff88c07fd2f3f0
+  R10: 0000000000000000 R11: 0000194754b575be R12: 0000000003572000
+  R13: 0000000003572fff R14: 0000000000100cca R15: 0000000005582fff
+  FS:  0000000000000000(0000) GS:ffff88c07fd00000(0000) knlGS:0000000000000000
+  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+  CR2: 0000000000000000 CR3: 000000407d00f002 CR4: 00000000007706f0
+  DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+  DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+  PKRU: 55555554
+  Call Trace:
+  <TASK>
+  ? __die+0x78/0xc0
+  ? page_fault_oops+0x2a8/0x3a0
+  ? __switch_to+0x133/0x530
+  ? wq_worker_running+0xa/0x40
+  ? exc_page_fault+0x63/0x130
+  ? asm_exc_page_fault+0x22/0x30
+  ? set_page_extent_mapped+0x20/0xb0
+  relocate_file_extent_cluster+0x1a7/0x940
+  relocate_data_extent+0xaf/0x120
+  relocate_block_group+0x20f/0x480
+  btrfs_relocate_block_group+0x152/0x320
+  btrfs_relocate_chunk+0x3d/0x120
+  btrfs_reclaim_bgs_work+0x2ae/0x4e0
+  process_scheduled_works+0x184/0x370
+  worker_thread+0xc6/0x3e0
+  ? blk_add_timer+0xb0/0xb0
+  kthread+0xae/0xe0
+  ? flush_tlb_kernel_range+0x90/0x90
+  ret_from_fork+0x2f/0x40
+  ? flush_tlb_kernel_range+0x90/0x90
+  ret_from_fork_asm+0x11/0x20
+  </TASK>
 
-After this, all registers that are not saved/restored are either:
-  - read-only,
-  - write-only,
-  - status registers containing flags with clear-after-set semantics,
-  - FIFO Data Count Trigger registers, which do not matter much for
-    the serial console.
+This occurs because cleanup_one_transaction() calls
+destroy_delalloc_inodes() which calls invalidate_inode_pages2() which
+takes the folio_lock before setting mapping to NULL. We fail to check
+this, and subsequently call set_extent_mapping(), which assumes that
+mapping != NULL (in fact it asserts that in debug mode)
 
-Fixes: 22a6984c5b5df8ea ("serial: sh-sci: Update the suspend/resume support")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Tested-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Reviewed-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Link: https://lore.kernel.org/r/11c2eab45d48211e75d8b8202cce60400880fe55.1741114989.git.geert+renesas@glider.be
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Note that the "fixes" patch here is not the one that introduced the
+race (the very first iteration of this code from 2009) but a more recent
+change that made this particular crash happen in practice.
+
+Fixes: e7f1326cc24e ("btrfs: set page extent mapped after read_folio in relocate_one_page")
+CC: stable@vger.kernel.org # 6.1+
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Boris Burkov <boris@bur.io>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Zhaoyang Li <lizy04@hust.edu.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/sh-sci.c |   25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+ fs/btrfs/relocation.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/tty/serial/sh-sci.c
-+++ b/drivers/tty/serial/sh-sci.c
-@@ -106,10 +106,15 @@ struct plat_sci_reg {
- };
+--- a/fs/btrfs/relocation.c
++++ b/fs/btrfs/relocation.c
+@@ -2977,6 +2977,7 @@ static int relocate_one_page(struct inod
+ 	int ret;
  
- struct sci_suspend_regs {
-+	u16 scdl;
-+	u16 sccks;
- 	u16 scsmr;
- 	u16 scscr;
- 	u16 scfcr;
- 	u16 scsptr;
-+	u16 hssrr;
-+	u16 scpcr;
-+	u16 scpdr;
- 	u8 scbrr;
- 	u8 semr;
- };
-@@ -3418,6 +3423,10 @@ static void sci_console_save(struct sci_
- 	struct sci_suspend_regs *regs = &s->suspend_regs;
- 	struct uart_port *port = &s->port;
+ 	ASSERT(page_index <= last_index);
++again:
+ 	page = find_lock_page(inode->i_mapping, page_index);
+ 	if (!page) {
+ 		page_cache_sync_readahead(inode->i_mapping, ra, NULL,
+@@ -2998,6 +2999,11 @@ static int relocate_one_page(struct inod
+ 			ret = -EIO;
+ 			goto release_page;
+ 		}
++		if (page->mapping != inode->i_mapping) {
++			unlock_page(page);
++			put_page(page);
++			goto again;
++		}
+ 	}
  
-+	if (sci_getreg(port, SCDL)->size)
-+		regs->scdl = sci_serial_in(port, SCDL);
-+	if (sci_getreg(port, SCCKS)->size)
-+		regs->sccks = sci_serial_in(port, SCCKS);
- 	if (sci_getreg(port, SCSMR)->size)
- 		regs->scsmr = sci_serial_in(port, SCSMR);
- 	if (sci_getreg(port, SCSCR)->size)
-@@ -3428,6 +3437,12 @@ static void sci_console_save(struct sci_
- 		regs->scsptr = sci_serial_in(port, SCSPTR);
- 	if (sci_getreg(port, SCBRR)->size)
- 		regs->scbrr = sci_serial_in(port, SCBRR);
-+	if (sci_getreg(port, HSSRR)->size)
-+		regs->hssrr = sci_serial_in(port, HSSRR);
-+	if (sci_getreg(port, SCPCR)->size)
-+		regs->scpcr = sci_serial_in(port, SCPCR);
-+	if (sci_getreg(port, SCPDR)->size)
-+		regs->scpdr = sci_serial_in(port, SCPDR);
- 	if (sci_getreg(port, SEMR)->size)
- 		regs->semr = sci_serial_in(port, SEMR);
- }
-@@ -3437,6 +3452,10 @@ static void sci_console_restore(struct s
- 	struct sci_suspend_regs *regs = &s->suspend_regs;
- 	struct uart_port *port = &s->port;
- 
-+	if (sci_getreg(port, SCDL)->size)
-+		sci_serial_out(port, SCDL, regs->scdl);
-+	if (sci_getreg(port, SCCKS)->size)
-+		sci_serial_out(port, SCCKS, regs->sccks);
- 	if (sci_getreg(port, SCSMR)->size)
- 		sci_serial_out(port, SCSMR, regs->scsmr);
- 	if (sci_getreg(port, SCSCR)->size)
-@@ -3447,6 +3466,12 @@ static void sci_console_restore(struct s
- 		sci_serial_out(port, SCSPTR, regs->scsptr);
- 	if (sci_getreg(port, SCBRR)->size)
- 		sci_serial_out(port, SCBRR, regs->scbrr);
-+	if (sci_getreg(port, HSSRR)->size)
-+		sci_serial_out(port, HSSRR, regs->hssrr);
-+	if (sci_getreg(port, SCPCR)->size)
-+		sci_serial_out(port, SCPCR, regs->scpcr);
-+	if (sci_getreg(port, SCPDR)->size)
-+		sci_serial_out(port, SCPDR, regs->scpdr);
- 	if (sci_getreg(port, SEMR)->size)
- 		sci_serial_out(port, SEMR, regs->semr);
- }
+ 	/*
 
 
