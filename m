@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0194821885A;
-	Mon,  2 Jun 2025 14:47:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8682221FA4;
+	Mon,  2 Jun 2025 14:47:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748875668; cv=none; b=EiOBdo5m+WSeDQHf5Lh+VhA+2eKaU8MyuTDZWD4FyLPo7UWr4nhsZiJBLC32ppci7S6sv8FyVSLO5R7bjTHtxUlZ34Ak3L3x2vBpMPs0q+DoguFUCxB0AXNlDd5mVyrNQgBU8YLmn0FMPs1eh2T1IbwjGmiZ+X6xP2kPamoWi+A=
+	t=1748875671; cv=none; b=l8F8Aj1RrkQ/xbxJtdIjkUxDw511NGbfl0utcsoPZMwzTaO3/oMKDyapxRzLYY/Rm/Huwa9ElyrnY7VghzJiC4Z5bwNIlg2vAvyK6RUp4s2WnnyLbM4b+k5imIfHb03UnlPfOxO2/gWqiBV2QHP9MQ6uf6GkOKyKP7VRWNsjoaM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748875668; c=relaxed/simple;
-	bh=fLxxHNzWssvnSE96LODGmVLFYaeJHCGNieZ5jCaEuKU=;
+	s=arc-20240116; t=1748875671; c=relaxed/simple;
+	bh=xEvs+y/AIssAU6j6iVeGJbelZ9dsgVknfH92mJrHYnY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bkWwJNEXmTxPmayfViZ2Je5y4IEQmPqDyN3cNyYbTyrUEIlv6UQgYb7YvwBdtJNmizhDZ6Jj7flUb6IsSjnLoeGflWh9wu66txSZfT7icydlt/LFklcVm1ZquL/o0EcbooLh0c7N9f2lLlnUVnjbQ8cSKNNaTRmgcnUIeqdXnzQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qxera9B4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VUVx3QDbAL3ChAlZ74osZmmsRnXwNrOfptygSsnxOrJgVXs35XEvAwUgQbahbcXzCIBa69TZP5k//zYwO0dVx1MJvoSph+NKIVGh7DpVuCuGGDnL12nc5ffiziWPz9rnhW9LWR53H2tnbTyt5uAqECLwC4qYxqOCaEDBIRE6EPI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kn2mCy45; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qxera9B4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B317C4CEEB;
-	Mon,  2 Jun 2025 14:47:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kn2mCy45"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5405AC4CEEB;
+	Mon,  2 Jun 2025 14:47:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748875667;
-	bh=fLxxHNzWssvnSE96LODGmVLFYaeJHCGNieZ5jCaEuKU=;
+	s=korg; t=1748875670;
+	bh=xEvs+y/AIssAU6j6iVeGJbelZ9dsgVknfH92mJrHYnY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qxera9B4RoEGtwpaCFRH0F4jcx05QYcsZy2aF5cNiwuoEHOIF3TtUKPkzHzfqdd40
-	 7RnlHt8yhggUH3aJL6ltCPK+1Ccc2+uFMp+CNotvusRXOmbHwVY3uRmTJKy7IElMRX
-	 d6TDb/YAnh/2+LFK+rY2wcduOVXLw9NhZeLvwBzE=
+	b=kn2mCy45nFZ2pcmdj0V1LKvRbFfdJR0umgxvi8KASZ38+268DcqykLNWQjmyb3CUH
+	 yGODQC49uAvGqeksI5kbRb0ThfqBLYs/dmH5In1dRr+1yjZOAp5UTqOfJrZpeJBQ6V
+	 G6M6UA1kR9HJCfqglUBDFkEEm/BiHg6RYSWWpeb4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roman Li <roman.li@amd.com>,
-	Tom Chung <chiahsuan.chung@amd.com>,
-	Zaeem Mohamed <zaeem.mohamed@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Alexei Lazar <alazar@nvidia.com>,
+	Dragos Tatulea <dtatulea@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 207/270] drm/amd/display: Initial psr_version with correct setting
-Date: Mon,  2 Jun 2025 15:48:12 +0200
-Message-ID: <20250602134315.655416155@linuxfoundation.org>
+Subject: [PATCH 5.10 208/270] net/mlx5: Extend Ethtool loopback selftest to support non-linear SKB
+Date: Mon,  2 Jun 2025 15:48:13 +0200
+Message-ID: <20250602134315.694746271@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134307.195171844@linuxfoundation.org>
 References: <20250602134307.195171844@linuxfoundation.org>
@@ -54,38 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tom Chung <chiahsuan.chung@amd.com>
+From: Alexei Lazar <alazar@nvidia.com>
 
-[ Upstream commit d8c782cac5007e68e7484d420168f12d3490def6 ]
+[ Upstream commit 95b9606b15bb3ce1198d28d2393dd0e1f0a5f3e9 ]
 
-[Why & How]
-The initial setting for psr_version is not correct while
-create a virtual link.
+Current loopback test validation ignores non-linear SKB case in
+the SKB access, which can lead to failures in scenarios such as
+when HW GRO is enabled.
+Linearize the SKB so both cases will be handled.
 
-The default psr_version should be DC_PSR_VERSION_UNSUPPORTED.
-
-Reviewed-by: Roman Li <roman.li@amd.com>
-Signed-off-by: Tom Chung <chiahsuan.chung@amd.com>
-Signed-off-by: Zaeem Mohamed <zaeem.mohamed@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alexei Lazar <alazar@nvidia.com>
+Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20250209101716.112774-15-tariqt@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/core/dc.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/mellanox/mlx5/core/en_selftest.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/core/dc.c b/drivers/gpu/drm/amd/display/dc/core/dc.c
-index 84fb1377ec934..88a9473ccf531 100644
---- a/drivers/gpu/drm/amd/display/dc/core/dc.c
-+++ b/drivers/gpu/drm/amd/display/dc/core/dc.c
-@@ -228,6 +228,7 @@ static bool create_links(
- 		link->link_id.type = OBJECT_TYPE_CONNECTOR;
- 		link->link_id.id = CONNECTOR_ID_VIRTUAL;
- 		link->link_id.enum_id = ENUM_ID_1;
-+		link->psr_settings.psr_version = DC_PSR_VERSION_UNSUPPORTED;
- 		link->link_enc = kzalloc(sizeof(*link->link_enc), GFP_KERNEL);
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_selftest.c b/drivers/net/ethernet/mellanox/mlx5/core/en_selftest.c
+index ce8ab1f018769..c380340b81665 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_selftest.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_selftest.c
+@@ -188,6 +188,9 @@ mlx5e_test_loopback_validate(struct sk_buff *skb,
+ 	struct udphdr *udph;
+ 	struct iphdr *iph;
  
- 		if (!link->link_enc) {
++	if (skb_linearize(skb))
++		goto out;
++
+ 	/* We are only going to peek, no need to clone the SKB */
+ 	if (MLX5E_TEST_PKT_SIZE - ETH_HLEN > skb_headlen(skb))
+ 		goto out;
 -- 
 2.39.5
 
