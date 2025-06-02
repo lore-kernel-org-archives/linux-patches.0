@@ -1,39 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F29C221CA07;
-	Mon,  2 Jun 2025 14:20:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B50FB22331C;
+	Mon,  2 Jun 2025 14:20:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748874032; cv=none; b=dMIWa+SP/JBF6WlqBG2bVD4ry0nMcLB0W89+cNu0GGRlUUtgv6uHikhDJqOCjh1JvWCgBaSVF8Pinp6SFGwReutgIxKLyjhgZZSUbnVg0pwy09wCpsW4rDzkswAONggl1FmP4CSStM7HmgELkXe0LyEAK60QRhq70o2gRt5wW6s=
+	t=1748874034; cv=none; b=h3HTGiHFOkc3H1OXJWqHb5V7TSq0ovJT5p7ngj8amYZNgtHGTrhJjLrYj4Q3JyaNKxmhMc+kok+PAHkNWyLGFVOA0hxjeAoTguhZuKL6dubvHJ07zfdSvQP02ZegCovT6WsL0N9Ye8Wt8H9mRNj0uSQmcduZd3VJ3lH6yT+91Zc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748874032; c=relaxed/simple;
-	bh=qQtNnzVCZrcXS0GmsUKQkEwAxzFsPggCoTWdcFKQgF8=;
+	s=arc-20240116; t=1748874034; c=relaxed/simple;
+	bh=JruDx9RcovfL17pguL4WtDBJyBUzf0Wl2Qs0LMOipoM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YIGvw7tvvq/qqoQftbX8LJEkUR+/mYw7iqYTJaOfcdgNLsO1f0QtfDGhYVRW70tr7/wZFJo3o9URJYwR/SiaRs8+62KO6wO+kjW+HBpGiX9UvDX+dSPcZ9rbjjNphhp0YBvmNO7IE2UtTHTtkexfYC7JW+FvkDsypB/D5CLMAvQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N5hD5pZF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Px6kqSXsHZZSS1dUtvLQzPo59xA7kL8iLDGOjMJOUnrNal3DwNHxNJOTJMPmM+UWxZoqg0bFXxCbdOx2CfRXtkyL/QY+P2nceZj/jRR3IQAF8fp4gnNaHk3n1CtrllzdbfjBWp+wJdptUoU31npoa1cGFpNxT1BAicantErvkoE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YmXXqUCn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N5hD5pZF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85745C4CEEB;
-	Mon,  2 Jun 2025 14:20:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YmXXqUCn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 125BBC4CEEB;
+	Mon,  2 Jun 2025 14:20:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748874031;
-	bh=qQtNnzVCZrcXS0GmsUKQkEwAxzFsPggCoTWdcFKQgF8=;
+	s=korg; t=1748874034;
+	bh=JruDx9RcovfL17pguL4WtDBJyBUzf0Wl2Qs0LMOipoM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N5hD5pZF5Ar7hHdaXmec4/GU2uHB96Frm+Ha6XDWhMCWP1to4FN4ZUCO3Rbyg7PH+
-	 ZQEuV1WnX7SNClm+KSLpEWqKBi+XgsuBXcu4Q2kJ4ztJeugn9hCKaXjtIEzXig8U3V
-	 R34mK6luZRjkGTpC5kvtzU73vpAHVgnBh5HBU4Kw=
+	b=YmXXqUCnzlv0Fh9/oIiGV8wldHjSeW0CYGsPSEvD7MMpwpEVwkfpK5FFcDWScjS3d
+	 HBwwouvfcggs6/yEb1egaYndk6WOC5RNODlnSjZNYVCdDxrNIaDxF+X5noqoss8NaD
+	 fzppGjbBb4JXcLInkJLEY/hL35Zjvtgvqwe9qt6g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	David Hildenbrand <david@redhat.com>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Andy Lutomirski <luto@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Borislav Petkov <bp@alien8.de>,
+	Rik van Riel <riel@surriel.com>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 333/444] dmaengine: idxd: Fix allowing write() from different address spaces
-Date: Mon,  2 Jun 2025 15:46:37 +0200
-Message-ID: <20250602134354.445861517@linuxfoundation.org>
+Subject: [PATCH 6.6 334/444] kernel/fork: only call untrack_pfn_clear() on VMAs duplicated for fork()
+Date: Mon,  2 Jun 2025 15:46:38 +0200
+Message-ID: <20250602134354.488071661@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -52,57 +61,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vinicius Costa Gomes <vinicius.gomes@intel.com>
+From: David Hildenbrand <david@redhat.com>
 
-[ Upstream commit 8dfa57aabff625bf445548257f7711ef294cd30e ]
+[ Upstream commit e9f180d7cfde23b9f8eebd60272465176373ab2c ]
 
-Check if the process submitting the descriptor belongs to the same
-address space as the one that opened the file, reject otherwise.
+Not intuitive, but vm_area_dup() located in kernel/fork.c is not only used
+for duplicating VMAs during fork(), but also for duplicating VMAs when
+splitting VMAs or when mremap()'ing them.
 
-Fixes: 6827738dc684 ("dmaengine: idxd: add a write() method for applications to submit work")
-Signed-off-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://lore.kernel.org/r/20250421170337.3008875-1-dave.jiang@intel.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+VM_PFNMAP mappings can at least get ordinarily mremap()'ed (no change in
+size) and apparently also shrunk during mremap(), which implies
+duplicating the VMA in __split_vma() first.
+
+In case of ordinary mremap() (no change in size), we first duplicate the
+VMA in copy_vma_and_data()->copy_vma() to then call untrack_pfn_clear() on
+the old VMA: we effectively move the VM_PAT reservation.  So the
+untrack_pfn_clear() call on the new VMA duplicating is wrong in that
+context.
+
+Splitting of VMAs seems problematic, because we don't duplicate/adjust the
+reservation when splitting the VMA.  Instead, in memtype_erase() -- called
+during zapping/munmap -- we shrink a reservation in case only the end
+address matches: Assume we split a VMA into A and B, both would share a
+reservation until B is unmapped.
+
+So when unmapping B, the reservation would be updated to cover only A.
+When unmapping A, we would properly remove the now-shrunk reservation.
+That scenario describes the mremap() shrinking (old_size > new_size),
+where we split + unmap B, and the untrack_pfn_clear() on the new VMA when
+is wrong.
+
+What if we manage to split a VM_PFNMAP VMA into A and B and unmap A first?
+It would be broken because we would never free the reservation.  Likely,
+there are ways to trigger such a VMA split outside of mremap().
+
+Affecting other VMA duplication was not intended, vm_area_dup() being used
+outside of kernel/fork.c was an oversight.  So let's fix that for; how to
+handle VMA splits better should be investigated separately.
+
+With a simple reproducer that uses mprotect() to split such a VMA I can
+trigger
+
+x86/PAT: pat_mremap:26448 freeing invalid memtype [mem 0x00000000-0x00000fff]
+
+Link: https://lkml.kernel.org/r/20250422144942.2871395-1-david@redhat.com
+Fixes: dc84bc2aba85 ("x86/mm/pat: Fix VM_PAT handling when fork() fails in copy_page_range()")
+Signed-off-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Cc: Ingo Molnar <mingo@kernel.org>
+Cc: Dave Hansen <dave.hansen@linux.intel.com>
+Cc: Andy Lutomirski <luto@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: Borislav Petkov <bp@alien8.de>
+Cc: Rik van Riel <riel@surriel.com>
+Cc: "H. Peter Anvin" <hpa@zytor.com>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/idxd/cdev.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ kernel/fork.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/dma/idxd/cdev.c b/drivers/dma/idxd/cdev.c
-index 7ddf5f933475d..ba53675ced55a 100644
---- a/drivers/dma/idxd/cdev.c
-+++ b/drivers/dma/idxd/cdev.c
-@@ -412,6 +412,9 @@ static int idxd_cdev_mmap(struct file *filp, struct vm_area_struct *vma)
- 	if (!idxd->user_submission_safe && !capable(CAP_SYS_RAWIO))
- 		return -EPERM;
+diff --git a/kernel/fork.c b/kernel/fork.c
+index 97f433fb4b5ef..7966c9a1c163d 100644
+--- a/kernel/fork.c
++++ b/kernel/fork.c
+@@ -518,10 +518,6 @@ struct vm_area_struct *vm_area_dup(struct vm_area_struct *orig)
+ 	vma_numab_state_init(new);
+ 	dup_anon_vma_name(orig, new);
  
-+	if (current->mm != ctx->mm)
-+		return -EPERM;
+-	/* track_pfn_copy() will later take care of copying internal state. */
+-	if (unlikely(new->vm_flags & VM_PFNMAP))
+-		untrack_pfn_clear(new);
+-
+ 	return new;
+ }
+ 
+@@ -715,6 +711,11 @@ static __latent_entropy int dup_mmap(struct mm_struct *mm,
+ 		tmp = vm_area_dup(mpnt);
+ 		if (!tmp)
+ 			goto fail_nomem;
 +
- 	rc = check_vma(wq, vma, __func__);
- 	if (rc < 0)
- 		return rc;
-@@ -478,6 +481,9 @@ static ssize_t idxd_cdev_write(struct file *filp, const char __user *buf, size_t
- 	ssize_t written = 0;
- 	int i;
- 
-+	if (current->mm != ctx->mm)
-+		return -EPERM;
++		/* track_pfn_copy() will later take care of copying internal state. */
++		if (unlikely(tmp->vm_flags & VM_PFNMAP))
++			untrack_pfn_clear(tmp);
 +
- 	for (i = 0; i < len/sizeof(struct dsa_hw_desc); i++) {
- 		int rc = idxd_submit_user_descriptor(ctx, udesc + i);
- 
-@@ -498,6 +504,9 @@ static __poll_t idxd_cdev_poll(struct file *filp,
- 	struct idxd_device *idxd = wq->idxd;
- 	__poll_t out = 0;
- 
-+	if (current->mm != ctx->mm)
-+		return -EPERM;
-+
- 	poll_wait(filp, &wq->err_queue, wait);
- 	spin_lock(&idxd->dev_lock);
- 	if (idxd->sw_err.valid)
+ 		retval = vma_dup_policy(mpnt, tmp);
+ 		if (retval)
+ 			goto fail_nomem_policy;
 -- 
 2.39.5
 
