@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7159F23D283;
-	Mon,  2 Jun 2025 14:12:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 600E22236FC;
+	Mon,  2 Jun 2025 14:12:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748873559; cv=none; b=Anwv4iPVycskjL62+lHSUKpKmLCudKbbHHYVV6lWQFNC2HzZVDxNiEhG4s6eTDMNgtggOcQ1Sx8YTAa9/pNv38FBBzXfWJ79GZj0nTFKFsEM6OArHkDxg5LAS13IJvJz+hmq+ezo6T91QXXe5U73iXkjrpkoXBXhk5lYLOARMDk=
+	t=1748873562; cv=none; b=WqKzz9WiRdHyeUhIZ6JSU45lo+Qwt868a347zd15aeFZvrvXnT6KNrAJNVpnWvV8TAiB853DuZx5i2EfvsM7vGKqFlAwja79qKXLokXZEBuLyF01dPArGFyyzlYTosoLHaI9HdGjnnYwPJKGg0s9f7n2th4uqEconveNQW9A6ik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748873559; c=relaxed/simple;
-	bh=KR4N7GhkcU+RqKmr30V744UQ7SL0KhNGNnzIwiQFJYE=;
+	s=arc-20240116; t=1748873562; c=relaxed/simple;
+	bh=CrnsF92GaWZd9jdxxHHt8TNVR3RfsUJg7uDqnFN/XoY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tvtUBFOocMLrWYeh3jTzcKR++pfSK4Gah0x32GmNrkYroWfkEXufrWK8/NuKVWhQFtDZX2sKGmxko4nAaW4qdgXim3586jZl9hWCDIZpPjEH7OGprMMM36nCBwvFX0V13HQJxxtxhxjMUXO9h0kpbbCfqVIL+epPQDReA+l5Lg0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0NzysJDH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OPvfEm5lLYcbHTZXYaP4uaIRfapyjW84Hwl/MXcaW5nsmQj3pFKUwGdC96Q9IiIxR18gWjMyN6kcoJXlVmPVyf7TzoZ6vfEVLHdxNP9NOvsdA7aupdV9EbdJi+LL4gsc1ttRuUf2bV5zADitqaX6ItgqtRq/DTw3wMuiGZmeKkU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=imjnklvO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0NzysJDH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E963C4CEF0;
-	Mon,  2 Jun 2025 14:12:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="imjnklvO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2689C4CEEB;
+	Mon,  2 Jun 2025 14:12:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748873559;
-	bh=KR4N7GhkcU+RqKmr30V744UQ7SL0KhNGNnzIwiQFJYE=;
+	s=korg; t=1748873562;
+	bh=CrnsF92GaWZd9jdxxHHt8TNVR3RfsUJg7uDqnFN/XoY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0NzysJDHfR9UiI1S0D3V4jGBjlGu0ZxH1tmfNwDtPR4xc833xub1LlHz0dKGahtX0
-	 PwQzMBLm5gHirQ2Gd4wK9vJbFm2M4InZhsqu1i/BVQ1x2Pzd30oGdQwpGKSL4kP0Op
-	 b2CaIMuaZBMt4nEJaqqXUvpS1A4Ojds5C92Ok3YI=
+	b=imjnklvOeJ/t4TS53Adv97ufcpVnDnPdwZ3EFRqSrqF0Ollq+lKbi+ABEw4GRHJOD
+	 Ihx+BoUC0uTX9vsw5pTNis2jAR4hY8JmH7//Vbz9UIGo270lDsoz7hLpiy7L2IABwW
+	 a0T1icVYHBShakgeCH/IB1qCOySeu8rJH1/8gu3E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Stefan Schmidt <stefan@datenfreihafen.org>,
+	Kevin Krakauer <krakauer@google.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 139/444] ieee802154: ca8210: Use proper setters and getters for bitwise types
-Date: Mon,  2 Jun 2025 15:43:23 +0200
-Message-ID: <20250602134346.533365512@linuxfoundation.org>
+Subject: [PATCH 6.6 173/444] selftests/net: have `gro.sh -t` return a correct exit code
+Date: Mon,  2 Jun 2025 15:43:57 +0200
+Message-ID: <20250602134347.920618815@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -53,75 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Kevin Krakauer <krakauer@google.com>
 
-[ Upstream commit 169b2262205836a5d1213ff44dca2962276bece1 ]
+[ Upstream commit 784e6abd99f24024a8998b5916795f0bec9d2fd9 ]
 
-Sparse complains that the driver doesn't respect the bitwise types:
+Modify gro.sh to return a useful exit code when the -t flag is used. It
+formerly returned 0 no matter what.
 
-drivers/net/ieee802154/ca8210.c:1796:27: warning: incorrect type in assignment (different base types)
-drivers/net/ieee802154/ca8210.c:1796:27:    expected restricted __le16 [addressable] [assigned] [usertype] pan_id
-drivers/net/ieee802154/ca8210.c:1796:27:    got unsigned short [usertype]
-drivers/net/ieee802154/ca8210.c:1801:25: warning: incorrect type in assignment (different base types)
-drivers/net/ieee802154/ca8210.c:1801:25:    expected restricted __le16 [addressable] [assigned] [usertype] pan_id
-drivers/net/ieee802154/ca8210.c:1801:25:    got unsigned short [usertype]
-drivers/net/ieee802154/ca8210.c:1928:28: warning: incorrect type in argument 3 (different base types)
-drivers/net/ieee802154/ca8210.c:1928:28:    expected unsigned short [usertype] dst_pan_id
-drivers/net/ieee802154/ca8210.c:1928:28:    got restricted __le16 [addressable] [usertype] pan_id
-
-Use proper setters and getters for bitwise types.
-
-Note, in accordance with [1] the protocol is little endian.
-
-Link: https://www.cascoda.com/wp-content/uploads/2018/11/CA-8210_datasheet_0418.pdf [1]
-Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/20250305105656.2133487-2-andriy.shevchenko@linux.intel.com
-Signed-off-by: Stefan Schmidt <stefan@datenfreihafen.org>
+Tested: Ran `gro.sh -t large` and verified that test failures return 1.
+Signed-off-by: Kevin Krakauer <krakauer@google.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20250226192725.621969-2-krakauer@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ieee802154/ca8210.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ tools/testing/selftests/net/gro.sh | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ieee802154/ca8210.c b/drivers/net/ieee802154/ca8210.c
-index 0a0ad3d77557f..587643a371de3 100644
---- a/drivers/net/ieee802154/ca8210.c
-+++ b/drivers/net/ieee802154/ca8210.c
-@@ -1446,8 +1446,7 @@ static u8 mcps_data_request(
- 	command.pdata.data_req.src_addr_mode = src_addr_mode;
- 	command.pdata.data_req.dst.mode = dst_address_mode;
- 	if (dst_address_mode != MAC_MODE_NO_ADDR) {
--		command.pdata.data_req.dst.pan_id[0] = LS_BYTE(dst_pan_id);
--		command.pdata.data_req.dst.pan_id[1] = MS_BYTE(dst_pan_id);
-+		put_unaligned_le16(dst_pan_id, command.pdata.data_req.dst.pan_id);
- 		if (dst_address_mode == MAC_MODE_SHORT_ADDR) {
- 			command.pdata.data_req.dst.address[0] = LS_BYTE(
- 				dst_addr->short_address
-@@ -1795,12 +1794,12 @@ static int ca8210_skb_rx(
- 	}
- 	hdr.source.mode = data_ind[0];
- 	dev_dbg(&priv->spi->dev, "srcAddrMode: %#03x\n", hdr.source.mode);
--	hdr.source.pan_id = *(u16 *)&data_ind[1];
-+	hdr.source.pan_id = cpu_to_le16(get_unaligned_le16(&data_ind[1]));
- 	dev_dbg(&priv->spi->dev, "srcPanId: %#06x\n", hdr.source.pan_id);
- 	memcpy(&hdr.source.extended_addr, &data_ind[3], 8);
- 	hdr.dest.mode = data_ind[11];
- 	dev_dbg(&priv->spi->dev, "dstAddrMode: %#03x\n", hdr.dest.mode);
--	hdr.dest.pan_id = *(u16 *)&data_ind[12];
-+	hdr.dest.pan_id = cpu_to_le16(get_unaligned_le16(&data_ind[12]));
- 	dev_dbg(&priv->spi->dev, "dstPanId: %#06x\n", hdr.dest.pan_id);
- 	memcpy(&hdr.dest.extended_addr, &data_ind[14], 8);
- 
-@@ -1927,7 +1926,7 @@ static int ca8210_skb_tx(
- 	status =  mcps_data_request(
- 		header.source.mode,
- 		header.dest.mode,
--		header.dest.pan_id,
-+		le16_to_cpu(header.dest.pan_id),
- 		(union macaddr *)&header.dest.extended_addr,
- 		skb->len - mac_len,
- 		&skb->data[mac_len],
+diff --git a/tools/testing/selftests/net/gro.sh b/tools/testing/selftests/net/gro.sh
+index 342ad27f631b1..e771f5f7faa26 100755
+--- a/tools/testing/selftests/net/gro.sh
++++ b/tools/testing/selftests/net/gro.sh
+@@ -95,5 +95,6 @@ trap cleanup EXIT
+ if [[ "${test}" == "all" ]]; then
+   run_all_tests
+ else
+-  run_test "${proto}" "${test}"
++  exit_code=$(run_test "${proto}" "${test}")
++  exit $exit_code
+ fi;
 -- 
 2.39.5
 
