@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26E9623BCFD;
-	Mon,  2 Jun 2025 14:22:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 432121C5D72;
+	Mon,  2 Jun 2025 14:22:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748874124; cv=none; b=ZoHCyDb1M976hRd+Zq2BUqlvLmOmdtH9sq6U55qLNDoY78QJpZ8+YsFkgyPXscCQoAfFvHi69Hx9AAbg1oC8zT5maEkqd2DC6dIJ44EnUoU+MlEsiq2f4Lw34AR09Qbq1W89gTV8a5jaQqqDAZ9fOUsrG7XDHhVFiRrABGh5U2o=
+	t=1748874127; cv=none; b=KPJXnxVlp0vw1K05sXoAUzLwC1K2bxaeH3yvdrTZuFQjcQ4nmSP7H6z6hLuE7jCx/KWy0tazfhR25SKStCnuSRsawcqN0UR+DXBY5EmsZfjhg+KV1y8LnAVZU5QBFLPFh+9uboCshrJmYtEBQGZwksCa/f4hLCCN65NcJTbcVKg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748874124; c=relaxed/simple;
-	bh=ARGdWd9W1MYoECJRfEHRq2DOlFj9E0fy0UoCyWZBRyU=;
+	s=arc-20240116; t=1748874127; c=relaxed/simple;
+	bh=3kwBJDBkWEhFiu4+lu6rA8BcR9Xg8vSAiAQ94DHPGhQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eF3hMf6Rl3Q2F1R0TD2SDsph1dXESUNcbBUKU5Aa01GYM8LY0j7SNXXiGPADyEYHx67jBvx8cJ1e/Ge3z8NfL8QAU+Utq+9JE/RW/XHkbtRl72KN5S0Gf8+h4FOJFLBBEEd1ZIhHQRaslH3pahGzfERSy+ea16f2wdtSN+5/pAw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DaWN2Hrz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A32RYKEkAGsmTpU/ODAgy4nZ9dY5V2FTQv3TpP+KwBLUPX1TQuQYmM6LLUowx2SfLzarOe6BZf5l8ac1HMVkHRzNPJZPA7ipmJvJwRf88z3dXZPgTIcXoAMiMBekX8KQLbAPYCrdY4FAxPDS8lsdN+i6e5jAZAg+TCa5AGUXxeU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x+Qir80r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DaWN2Hrz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9E2EC4CEF0;
-	Mon,  2 Jun 2025 14:22:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x+Qir80r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5A62C4CEEB;
+	Mon,  2 Jun 2025 14:22:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748874124;
-	bh=ARGdWd9W1MYoECJRfEHRq2DOlFj9E0fy0UoCyWZBRyU=;
+	s=korg; t=1748874127;
+	bh=3kwBJDBkWEhFiu4+lu6rA8BcR9Xg8vSAiAQ94DHPGhQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DaWN2HrzTgRjByIyHtBEK96IxSa+cwiUm3haKi4ejlMqgRkNdTlXF9X11yRzAP7fI
-	 r1mWd7ZRNf6LxvLAsjXWTxONhBQ3r+vVd6NJQYfGwp1pvAyCnzJ9Y1TYJNSb40B3KI
-	 8JetcgiQPx6f6u0qBvsdf50cNHCMPaOQb/NA+NGU=
+	b=x+Qir80rJdMlxKPpWjErtcpHfKZKE9Hv+jwFPhWj4O4PEUNBQmZTgaPvFvI6mGw1a
+	 kZ3K3UQNUNwbaHtD+o/ndY/FuL9ZImjYhZkv7ExQSizQS2oGgqyocxOSmi8+S5UKUV
+	 G0PXdrvSWGYzaUdAnadUCEqEK/PQJdLcE2yyHfCw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 338/444] dmaengine: idxd: Fix ->poll() return value
-Date: Mon,  2 Jun 2025 15:46:42 +0200
-Message-ID: <20250602134354.645512681@linuxfoundation.org>
+	Ed Burcher <git@edburcher.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.6 365/444] ALSA: hda/realtek: Add quirk for Lenovo Yoga Pro 7 14ASP10
+Date: Mon,  2 Jun 2025 15:47:09 +0200
+Message-ID: <20250602134355.727382129@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -52,41 +50,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Jiang <dave.jiang@intel.com>
+From: Ed Burcher <git@edburcher.com>
 
-[ Upstream commit ae74cd15ade833adc289279b5c6f12e78f64d4d7 ]
+commit 8d70503068510e6080c2c649cccb154f16de26c9 upstream.
 
-The fix to block access from different address space did not return a
-correct value for ->poll() change.  kernel test bot reported that a
-return value of type __poll_t is expected rather than int. Fix to return
-POLLNVAL to indicate invalid request.
+Lenovo Yoga Pro 7 (gen 10) with Realtek ALC3306 and combined CS35L56
+amplifiers need quirk ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN to
+enable bass
 
-Fixes: 8dfa57aabff6 ("dmaengine: idxd: Fix allowing write() from different address spaces")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202505081851.rwD7jVxg-lkp@intel.com/
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://lore.kernel.org/r/20250508170548.2747425-1-dave.jiang@intel.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Ed Burcher <git@edburcher.com>
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20250519224907.31265-2-git@edburcher.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/idxd/cdev.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/pci/hda/patch_realtek.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/dma/idxd/cdev.c b/drivers/dma/idxd/cdev.c
-index ba53675ced55a..6cfcef3cf4cd1 100644
---- a/drivers/dma/idxd/cdev.c
-+++ b/drivers/dma/idxd/cdev.c
-@@ -505,7 +505,7 @@ static __poll_t idxd_cdev_poll(struct file *filp,
- 	__poll_t out = 0;
- 
- 	if (current->mm != ctx->mm)
--		return -EPERM;
-+		return POLLNVAL;
- 
- 	poll_wait(filp, &wq->err_queue, wait);
- 	spin_lock(&idxd->dev_lock);
--- 
-2.39.5
-
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -10574,6 +10574,7 @@ static const struct hda_quirk alc269_fix
+ 	SND_PCI_QUIRK(0x17aa, 0x38f9, "Thinkbook 16P Gen5", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x17aa, 0x38fa, "Thinkbook 16P Gen5", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x17aa, 0x3902, "Lenovo E50-80", ALC269_FIXUP_DMIC_THINKPAD_ACPI),
++	SND_PCI_QUIRK(0x17aa, 0x390d, "Lenovo Yoga Pro 7 14ASP10", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
+ 	SND_PCI_QUIRK(0x17aa, 0x3913, "Lenovo 145", ALC236_FIXUP_LENOVO_INV_DMIC),
+ 	SND_PCI_QUIRK(0x17aa, 0x3977, "IdeaPad S210", ALC283_FIXUP_INT_MIC),
+ 	SND_PCI_QUIRK(0x17aa, 0x3978, "Lenovo B50-70", ALC269_FIXUP_DMIC_THINKPAD_ACPI),
 
 
