@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 271611C5D72;
-	Mon,  2 Jun 2025 14:22:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4359D23BD04;
+	Mon,  2 Jun 2025 14:22:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748874130; cv=none; b=RklkeJaiD67anPZO4T92235FDGkI1m9nTygwvbQhZz9jXe+SkP3t81H1xb9Dh3j2SGbX7oPEwQCKj3iMR6oN0ts7MaJn+BkS3i9naMRRkxWHMS2eOAWh5NMz3C8u1/OVRC/LnGHcWKWZGn3oEBH18eFIu5pwftmWpddQtSC4xBI=
+	t=1748874133; cv=none; b=ZhQ4GNynWKPU3V5L1FiYb3Uv11g37MQPV6ltMqMRi1NJzbk8sc4xjVZoZsVUjhRKJxxlyypFWoH5hGvhQllbeogsxMIzm8AhJ2pI34La4o4ylIddmZhMgYmk7YbSbRu0btGYis+TmGmCHmCxLoDdtCWTty/vMLeAzOxZL40MWYw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748874130; c=relaxed/simple;
-	bh=6V0OOaHSQVLwQd3Y+xfi0Ms2C8fkuSBCQKGOICl7M88=;
+	s=arc-20240116; t=1748874133; c=relaxed/simple;
+	bh=YNUEzpCWd1Mjf74kDdMcVLJVkFwfqO0rpxkBAYFGjEM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D7UDdJjURUAmMDHjfETrKotqYJJoOzL50x+diU02tNsCMbxowA7sT/jhbevAsrxaqfKWcsuGzhcuraaDN85nTckb9hzWNmvbNhz8OVK/oNhaazuDHdNAPaz+4HRrQYYIBLZa1Zxp5j8Xmkx/n3M8NCR5CmwZIzDPK3qge2OXQSo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SQf1AakB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ehrIIrvlpEAj+y0mizobJb1HkUtwmgubYlci9NK4JKrDp9uYEcdAFPmyQAPRP6SEC8CrCCO9KQqxMd2eZK8uILFQAzeCz1+F0yLpjFI0t4lNe44BqY66dngeZZWDD50fkr6jgpxzwfxn9ozlBcjVGypu21UmzeeVLItsR1p2I6Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RFB91P7G; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SQf1AakB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A515DC4CEEB;
-	Mon,  2 Jun 2025 14:22:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RFB91P7G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6A75C4CEEB;
+	Mon,  2 Jun 2025 14:22:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748874130;
-	bh=6V0OOaHSQVLwQd3Y+xfi0Ms2C8fkuSBCQKGOICl7M88=;
+	s=korg; t=1748874133;
+	bh=YNUEzpCWd1Mjf74kDdMcVLJVkFwfqO0rpxkBAYFGjEM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SQf1AakBQO7NRmJC/phNQPGwmKYHvwS5IXICuzaPssXkDKDVvUzP3ScZD1VdHekpE
-	 HOKyHlvSbaEIciZOmdY9IH20SEG1I2zbuLIL2rhiJFdvHZqoekuArirdx0V+tdPy9X
-	 dRZRKMw/pqw7Sih2dwNqtg0Chpzo5n27UBN0+Xl0=
+	b=RFB91P7GJzhG5merCh2/rnGyYsQMsH9IuRoxI8nn5K0Zhd+KVYHzARJW1n9t8VeDu
+	 Kgbkc9zgA8bC6osvCtn2eWl2TxHDX6Rc/pzGznEdzJpAC3CYfKzWLcR2sPo5GYkbYk
+	 P6GvLHdWx2WVrxvxt4N4ZedEVjZD9jlrHGrkLjZU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilia Gavrilov <Ilia.Gavrilov@infotecs.ru>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.6 366/444] llc: fix data loss when reading from a socket in llc_ui_recvmsg()
-Date: Mon,  2 Jun 2025 15:47:10 +0200
-Message-ID: <20250602134355.768082985@linuxfoundation.org>
+	Axel Forsman <axfo@kvaser.com>,
+	Jimmy Assarsson <extja@kvaser.com>,
+	Marc Kleine-Budde <mkl@pengutronix.de>
+Subject: [PATCH 6.6 367/444] can: kvaser_pciefd: Continue parsing DMA buf after dropped RX
+Date: Mon,  2 Jun 2025 15:47:11 +0200
+Message-ID: <20250602134355.812024067@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -50,49 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilia Gavrilov <Ilia.Gavrilov@infotecs.ru>
+From: Axel Forsman <axfo@kvaser.com>
 
-commit 239af1970bcb039a1551d2c438d113df0010c149 upstream.
+commit 6d820b81c4dc4a4023e45c3cd6707a07dd838649 upstream.
 
-For SOCK_STREAM sockets, if user buffer size (len) is less
-than skb size (skb->len), the remaining data from skb
-will be lost after calling kfree_skb().
+Going bus-off on a channel doing RX could result in dropped packets.
 
-To fix this, move the statement for partial reading
-above skb deletion.
+As netif_running() gets cleared before the channel abort procedure,
+the handling of any last RDATA packets would see netif_rx() return
+non-zero to signal a dropped packet. kvaser_pciefd_read_buffer() dealt
+with this "error" by breaking out of processing the remaining DMA RX
+buffer.
 
-Found by InfoTeCS on behalf of Linux Verification Center (linuxtesting.org)
+Only return an error from kvaser_pciefd_read_buffer() due to packet
+corruption, otherwise handle it internally.
 
-Fixes: 30a584d944fb ("[LLX]: SOCK_DGRAM interface fixes")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ilia Gavrilov <Ilia.Gavrilov@infotecs.ru>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Axel Forsman <axfo@kvaser.com>
+Tested-by: Jimmy Assarsson <extja@kvaser.com>
+Reviewed-by: Jimmy Assarsson <extja@kvaser.com>
+Link: https://patch.msgid.link/20250520114332.8961-4-axfo@kvaser.com
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/llc/af_llc.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/net/can/kvaser_pciefd.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/net/llc/af_llc.c
-+++ b/net/llc/af_llc.c
-@@ -888,15 +888,15 @@ static int llc_ui_recvmsg(struct socket
- 		if (sk->sk_type != SOCK_STREAM)
- 			goto copy_uaddr;
- 
-+		/* Partial read */
-+		if (used + offset < skb_len)
-+			continue;
-+
- 		if (!(flags & MSG_PEEK)) {
- 			skb_unlink(skb, &sk->sk_receive_queue);
- 			kfree_skb(skb);
- 			*seq = 0;
+--- a/drivers/net/can/kvaser_pciefd.c
++++ b/drivers/net/can/kvaser_pciefd.c
+@@ -1137,7 +1137,7 @@ static int kvaser_pciefd_handle_data_pac
+ 		skb = alloc_canfd_skb(priv->dev, &cf);
+ 		if (!skb) {
+ 			priv->dev->stats.rx_dropped++;
+-			return -ENOMEM;
++			return 0;
  		}
--
--		/* Partial read */
--		if (used + offset < skb_len)
--			continue;
- 	} while (len > 0);
  
- out:
+ 		cf->len = can_fd_dlc2len(dlc);
+@@ -1149,7 +1149,7 @@ static int kvaser_pciefd_handle_data_pac
+ 		skb = alloc_can_skb(priv->dev, (struct can_frame **)&cf);
+ 		if (!skb) {
+ 			priv->dev->stats.rx_dropped++;
+-			return -ENOMEM;
++			return 0;
+ 		}
+ 		can_frame_set_cc_len((struct can_frame *)cf, dlc, priv->ctrlmode);
+ 	}
+@@ -1167,7 +1167,9 @@ static int kvaser_pciefd_handle_data_pac
+ 	priv->dev->stats.rx_packets++;
+ 	kvaser_pciefd_set_skb_timestamp(pcie, skb, p->timestamp);
+ 
+-	return netif_rx(skb);
++	netif_rx(skb);
++
++	return 0;
+ }
+ 
+ static void kvaser_pciefd_change_state(struct kvaser_pciefd_can *can,
 
 
