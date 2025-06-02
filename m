@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B47B226863;
-	Mon,  2 Jun 2025 14:20:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B856F224B09;
+	Mon,  2 Jun 2025 14:20:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748874049; cv=none; b=nYNkahlNVHga1y4wX+6vLboIKbynNfdhxXSfB0QepdJD7JpNa3zI38G0PKwelbIuuQ1m35CRdLmBs2zVR7eM4SpihoN8TXyy/43flzRlWLaL4vKY8gL4SitKqAI1m6BBSwFWgVUzTXD0z2S3BJPSgk4YkrbgRnBKh6RrRw7SVJw=
+	t=1748874051; cv=none; b=sayzm1gYwrbw0r5hK0Fy7FUFLBYTV6Mjmif5nRVUyeQivhIUkXEqVjh58QtuhZo+y+vjC+N8S/UZ0OA2UjVhbMatjp9Rl4NwPJvfti+XwRFmMPuQNjK2sWSl8X+Dy6gW3kBRTAucx985D1gdHgTP+IEj2TTCdJ9Ee6PAwXJWtUE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748874049; c=relaxed/simple;
-	bh=7ULt6qXlfCx5WbDvymhoJ3ik1dMxBaGIC+PQlmshxio=;
+	s=arc-20240116; t=1748874051; c=relaxed/simple;
+	bh=dURlkI1fO5YqfzdPNMaadd/IQzsLBJlA0ONTRMR5ENE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a+NKnHPWijJaCblB8rWF3eKQRdIeuc6CYzBOYdVkrYQXYDLLmGPT1VX70mtMO62FgfxJe/YKDEO87ofbGffx+9rrtyUfDTsbhIwvEkU8228U5S1WXS2WPzlom55ZdkJ5terBvUIx0tSwxRPrhx13xE9hxgkoynNc4GIJes8p0XA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W3w0OxTp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fVT4pAdJSQy6X/jBScgRFZBmdmQoyiG8bti3A95NJcL43YJGRfKGft1+YnTo+qGvDsZ2RnyRzrrMjug61jhdyNxN4PuXOSidUHxktNWCE1sMASsjxvLpRxtYWjafju/LeIKweX9MIFNRz7oxIbAK8hBfAYtHJS9fG+O2nBL6Zso=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dYlO9Jo1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W3w0OxTp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E851C4CEEB;
-	Mon,  2 Jun 2025 14:20:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dYlO9Jo1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44499C4CEEB;
+	Mon,  2 Jun 2025 14:20:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748874049;
-	bh=7ULt6qXlfCx5WbDvymhoJ3ik1dMxBaGIC+PQlmshxio=;
+	s=korg; t=1748874051;
+	bh=dURlkI1fO5YqfzdPNMaadd/IQzsLBJlA0ONTRMR5ENE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W3w0OxTpEscQf15K5tDYlqPzi+sD46hVxArLO2xabRCDC+xOI0b0xbaCrQSTG12XU
-	 ITdX5h8/WdlH8KJ+eZUd6qeV5dUnbZhB9bjYb0fnxuAi5KYI0oEVyD0OpGToqiHtbm
-	 wV/+jA8zy7UoUCxy8Taq1u1BkdnXSZXP6Hr7D9mA=
+	b=dYlO9Jo1nkIPxFKRe8EW8ODyzJmp1+O0hQL0DO5+e6XeUNLdXm3YCcrF9ZoUscGMk
+	 cHcVPR3/vVN+BRDVCqArx0zehYsnPdXy4OpkQ03ZVeYg+DKRxe/kNX8/2AKkSK43cp
+	 2DzNG/7Sy8qGvn3UFke0fIlKIOCkQmMIORSg3b8k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jessica Zhang <quic_jesszhan@quicinc.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Chenyuan Yang <chenyuan0y@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 311/444] drm: Add valid clones check
-Date: Mon,  2 Jun 2025 15:46:15 +0200
-Message-ID: <20250602134353.553716581@linuxfoundation.org>
+Subject: [PATCH 6.6 312/444] ASoC: imx-card: Adjust over allocation of memory in imx_card_parse_of()
+Date: Mon,  2 Jun 2025 15:46:16 +0200
+Message-ID: <20250602134353.603939823@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -52,68 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jessica Zhang <quic_jesszhan@quicinc.com>
+From: Chenyuan Yang <chenyuan0y@gmail.com>
 
-[ Upstream commit 41b4b11da02157c7474caf41d56baae0e941d01a ]
+[ Upstream commit a9a69c3b38c89d7992fb53db4abb19104b531d32 ]
 
-Check that all encoders attached to a given CRTC are valid
-possible_clones of each other.
+Incorrect types are used as sizeof() arguments in devm_kcalloc().
+It should be sizeof(dai_link_data) for link_data instead of
+sizeof(snd_soc_dai_link).
 
-Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
-Reviewed-by: Maxime Ripard <mripard@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241216-concurrent-wb-v4-3-fe220297a7f0@quicinc.com
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+This is found by our static analysis tool.
+
+Signed-off-by: Chenyuan Yang <chenyuan0y@gmail.com>
+Link: https://patch.msgid.link/20250406210854.149316-1-chenyuan0y@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_atomic_helper.c | 28 ++++++++++++++++++++++++++++
- 1 file changed, 28 insertions(+)
+ sound/soc/fsl/imx-card.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/drm_atomic_helper.c b/drivers/gpu/drm/drm_atomic_helper.c
-index f3681970887cc..1aa59586c8f81 100644
---- a/drivers/gpu/drm/drm_atomic_helper.c
-+++ b/drivers/gpu/drm/drm_atomic_helper.c
-@@ -573,6 +573,30 @@ mode_valid(struct drm_atomic_state *state)
- 	return 0;
- }
+diff --git a/sound/soc/fsl/imx-card.c b/sound/soc/fsl/imx-card.c
+index 7128bcf3a743e..bb304de5cc38a 100644
+--- a/sound/soc/fsl/imx-card.c
++++ b/sound/soc/fsl/imx-card.c
+@@ -517,7 +517,7 @@ static int imx_card_parse_of(struct imx_card_data *data)
+ 	if (!card->dai_link)
+ 		return -ENOMEM;
  
-+static int drm_atomic_check_valid_clones(struct drm_atomic_state *state,
-+					 struct drm_crtc *crtc)
-+{
-+	struct drm_encoder *drm_enc;
-+	struct drm_crtc_state *crtc_state = drm_atomic_get_new_crtc_state(state,
-+									  crtc);
-+
-+	drm_for_each_encoder_mask(drm_enc, crtc->dev, crtc_state->encoder_mask) {
-+		if (!drm_enc->possible_clones) {
-+			DRM_DEBUG("enc%d possible_clones is 0\n", drm_enc->base.id);
-+			continue;
-+		}
-+
-+		if ((crtc_state->encoder_mask & drm_enc->possible_clones) !=
-+		    crtc_state->encoder_mask) {
-+			DRM_DEBUG("crtc%d failed valid clone check for mask 0x%x\n",
-+				  crtc->base.id, crtc_state->encoder_mask);
-+			return -EINVAL;
-+		}
-+	}
-+
-+	return 0;
-+}
-+
- /**
-  * drm_atomic_helper_check_modeset - validate state object for modeset changes
-  * @dev: DRM device
-@@ -744,6 +768,10 @@ drm_atomic_helper_check_modeset(struct drm_device *dev,
- 		ret = drm_atomic_add_affected_planes(state, crtc);
- 		if (ret != 0)
- 			return ret;
-+
-+		ret = drm_atomic_check_valid_clones(state, crtc);
-+		if (ret != 0)
-+			return ret;
- 	}
+-	data->link_data = devm_kcalloc(dev, num_links, sizeof(*link), GFP_KERNEL);
++	data->link_data = devm_kcalloc(dev, num_links, sizeof(*link_data), GFP_KERNEL);
+ 	if (!data->link_data)
+ 		return -ENOMEM;
  
- 	/*
 -- 
 2.39.5
 
