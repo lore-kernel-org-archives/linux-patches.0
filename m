@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97F31225768;
-	Mon,  2 Jun 2025 14:23:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B06A22222A9;
+	Mon,  2 Jun 2025 14:23:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748874229; cv=none; b=vGNXrQZ0IImy9HyuSmncAI+M3gkV10emTe24a60C+BX/qXeoRqGWv+ZARSnRJKyvNCYMIfMGqlb3wpXD60/CBIto9n31MIiLRmupUAXNirhLz8d0lpQC789FsN5SvH6sk5jqHWJnA1ZJkWDE5e+6//alF89OLhMN7xAw+wc5nyE=
+	t=1748874232; cv=none; b=pC/Bq/0fFceev+VdCEI6wU0efxC45BrwfkvS8Z6ekp4qzuKHZQxOzShSFatqlbKbt4Wc7scbTm8ImVI3j2/9amGTw1W0wAR0ys8TGGvgSQqvatCidaHL80SnpQ0F5FVCU/mNfH9DQ6o/qc90CFQhQHOj3M6gfKtbjdyxmj2E9lA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748874229; c=relaxed/simple;
-	bh=ZxSqaOGs15IzFn9hI/R+GsH8/p/Ug9DfswV3/vTvqt4=;
+	s=arc-20240116; t=1748874232; c=relaxed/simple;
+	bh=DRzqPZjq+NN5VXvSZygxNnhuFxQRQIpKaSUhXJNbd8M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iGc9uZxDMJft3cZdOXblY3VK9mTsyRkqJ38c+ubmZWFGswYqCDYrwwPF56H8A5IQ9139+sNDKZU5WtOOe6YZ598pKYiJDAG8jk0y4bcKs3eOpOg7ZteYeWLx4VCUTrZTvpPm+b40m47gDxtO554o9YJ/SBsFfQU6vQ+tKsBzJNo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RNtGwrma; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Aa7sWzuQAubwVpnDez9DyNzyl9Nc4xEyUILXW+4sNnTZY5CmUjQRloYWbu9m1Jh1F5WbfjHnOgls8hrfnOEHMYQtAX9KkMlbSluBgI4Y3/CIzuBc8BElRV+Jvg7gjQxnz7nk68R4kzoVeIR8VTgrX+cZ4E8gNOjQ3VN4qHEB6mY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lpl38iXn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RNtGwrma"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2391BC4CEEB;
-	Mon,  2 Jun 2025 14:23:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lpl38iXn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BAA3C4CEEB;
+	Mon,  2 Jun 2025 14:23:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748874229;
-	bh=ZxSqaOGs15IzFn9hI/R+GsH8/p/Ug9DfswV3/vTvqt4=;
+	s=korg; t=1748874232;
+	bh=DRzqPZjq+NN5VXvSZygxNnhuFxQRQIpKaSUhXJNbd8M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RNtGwrmaGafTGfiFMyyMgGzmTQLwwz0q8nLcnd4WJB6KLfnTe3SapcwGiw9Jeideq
-	 oW5WolfcSK/iAn+OjFLmDGmDsRhv+wT8HI6AOk6ZGojnP9ZT6nKrLJHlnMG4PK/7QL
-	 hRBmwi/GbEWuq7BWFH/NmHF5rAsKfRhRxh9XWeUY=
+	b=Lpl38iXnSeNWaFJPhxy7j6w56MudXE6NCQux1EO+jg/DdYZxeivSXsbsNXv+dhzUF
+	 lz934ZI9fq9BTcU1HoMUzRo5ookbfp4mokdHlNJYfF5/utiO5sdC4J/0yF3TrzbyH2
+	 zwPtCsmZag/FKgDILvLLNUxPw/FNQ4rpOF7qITQg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Lee Jones <lee@kernel.org>
-Subject: [PATCH 6.6 399/444] af_unix: Remove io_uring code for GC.
-Date: Mon,  2 Jun 2025 15:47:43 +0200
-Message-ID: <20250602134357.102793740@linuxfoundation.org>
+	Gabor Juhos <j4g8y7@gmail.com>,
+	Imre Kaloz <kaloz@openwrt.org>,
+	Gregory CLEMENT <gregory.clement@bootlin.com>
+Subject: [PATCH 6.6 372/444] arm64: dts: marvell: uDPU: define pinctrl state for alarm LEDs
+Date: Mon,  2 Jun 2025 15:47:16 +0200
+Message-ID: <20250602134356.014247542@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -52,103 +51,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Gabor Juhos <j4g8y7@gmail.com>
 
-commit 11498715f266a3fb4caabba9dd575636cbcaa8f1 upstream.
+commit b04f0d89e880bc2cca6a5c73cf287082c91878da upstream.
 
-Since commit 705318a99a13 ("io_uring/af_unix: disable sending
-io_uring over sockets"), io_uring's unix socket cannot be passed
-via SCM_RIGHTS, so it does not contribute to cyclic reference and
-no longer be candidate for garbage collection.
+The two alarm LEDs of on the uDPU board are stopped working since
+commit 78efa53e715e ("leds: Init leds class earlier").
 
-Also, commit 6e5e6d274956 ("io_uring: drop any code related to
-SCM_RIGHTS") cleaned up SCM_RIGHTS code in io_uring.
+The LEDs are driven by the GPIO{15,16} pins of the North Bridge
+GPIO controller. These pins are part of the 'spi_quad' pin group
+for which the 'spi' function is selected via the default pinctrl
+state of the 'spi' node. This is wrong however, since in order to
+allow controlling the LEDs, the pins should use the 'gpio' function.
 
-Let's do it in AF_UNIX as well by reverting commit 0091bfc81741
-("io_uring/af_unix: defer registered files gc to io_uring release")
-and commit 10369080454d ("net: reclaim skb->scm_io_uring bit").
+Before the commit mentined above, the 'spi' function is selected
+first by the pinctrl core before probing the spi driver, but then
+it gets overridden to 'gpio' implicitly via the
+devm_gpiod_get_index_optional() call from the 'leds-gpio' driver.
 
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Acked-by: Jens Axboe <axboe@kernel.dk>
-Link: https://lore.kernel.org/r/20240129190435.57228-3-kuniyu@amazon.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Lee Jones <lee@kernel.org>
+After the commit, the LED subsystem gets initialized before the
+SPI subsystem, so the function of the pin group remains 'spi'
+which in turn prevents controlling of the LEDs.
+
+Despite the change of the initialization order, the root cause is
+that the pinctrl state definition is wrong since its initial commit
+0d45062cfc89 ("arm64: dts: marvell: Add device tree for uDPU board"),
+
+To fix the problem, override the function in the 'spi_quad_pins'
+node to 'gpio' and move the pinctrl state definition from the
+'spi' node into the 'leds' node.
+
+Cc: stable@vger.kernel.org # needs adjustment for < 6.1
+Fixes: 0d45062cfc89 ("arm64: dts: marvell: Add device tree for uDPU board")
+Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+Signed-off-by: Imre Kaloz <kaloz@openwrt.org>
+Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/af_unix.h |    1 -
- net/unix/garbage.c    |   25 ++-----------------------
- net/unix/scm.c        |    6 ------
- 3 files changed, 2 insertions(+), 30 deletions(-)
+ arch/arm64/boot/dts/marvell/armada-3720-uDPU.dtsi |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/include/net/af_unix.h
-+++ b/include/net/af_unix.h
-@@ -20,7 +20,6 @@ static inline struct unix_sock *unix_get
- void unix_inflight(struct user_struct *user, struct file *fp);
- void unix_notinflight(struct user_struct *user, struct file *fp);
- void unix_destruct_scm(struct sk_buff *skb);
--void io_uring_destruct_scm(struct sk_buff *skb);
- void unix_gc(void);
- void wait_for_unix_gc(struct scm_fp_list *fpl);
- struct sock *unix_peer_get(struct sock *sk);
---- a/net/unix/garbage.c
-+++ b/net/unix/garbage.c
-@@ -184,12 +184,10 @@ static bool gc_in_progress;
+--- a/arch/arm64/boot/dts/marvell/armada-3720-uDPU.dtsi
++++ b/arch/arm64/boot/dts/marvell/armada-3720-uDPU.dtsi
+@@ -26,6 +26,8 @@
  
- static void __unix_gc(struct work_struct *work)
- {
--	struct sk_buff *next_skb, *skb;
--	struct unix_sock *u;
--	struct unix_sock *next;
- 	struct sk_buff_head hitlist;
--	struct list_head cursor;
-+	struct unix_sock *u, *next;
- 	LIST_HEAD(not_cycle_list);
-+	struct list_head cursor;
+ 	leds {
+ 		compatible = "gpio-leds";
++		pinctrl-names = "default";
++		pinctrl-0 = <&spi_quad_pins>;
  
- 	spin_lock(&unix_gc_lock);
+ 		led-power1 {
+ 			label = "udpu:green:power";
+@@ -82,8 +84,6 @@
  
-@@ -293,30 +291,11 @@ static void __unix_gc(struct work_struct
+ &spi0 {
+ 	status = "okay";
+-	pinctrl-names = "default";
+-	pinctrl-0 = <&spi_quad_pins>;
  
- 	spin_unlock(&unix_gc_lock);
+ 	flash@0 {
+ 		compatible = "jedec,spi-nor";
+@@ -108,6 +108,10 @@
+ 	};
+ };
  
--	/* We need io_uring to clean its registered files, ignore all io_uring
--	 * originated skbs. It's fine as io_uring doesn't keep references to
--	 * other io_uring instances and so killing all other files in the cycle
--	 * will put all io_uring references forcing it to go through normal
--	 * release.path eventually putting registered files.
--	 */
--	skb_queue_walk_safe(&hitlist, skb, next_skb) {
--		if (skb->destructor == io_uring_destruct_scm) {
--			__skb_unlink(skb, &hitlist);
--			skb_queue_tail(&skb->sk->sk_receive_queue, skb);
--		}
--	}
--
- 	/* Here we are. Hitlist is filled. Die. */
- 	__skb_queue_purge(&hitlist);
- 
- 	spin_lock(&unix_gc_lock);
- 
--	/* There could be io_uring registered files, just push them back to
--	 * the inflight list
--	 */
--	list_for_each_entry_safe(u, next, &gc_candidates, link)
--		list_move_tail(&u->link, &gc_inflight_list);
--
- 	/* All candidates should have been detached by now. */
- 	WARN_ON_ONCE(!list_empty(&gc_candidates));
- 
---- a/net/unix/scm.c
-+++ b/net/unix/scm.c
-@@ -148,9 +148,3 @@ void unix_destruct_scm(struct sk_buff *s
- 	sock_wfree(skb);
- }
- EXPORT_SYMBOL(unix_destruct_scm);
--
--void io_uring_destruct_scm(struct sk_buff *skb)
--{
--	unix_destruct_scm(skb);
--}
--EXPORT_SYMBOL(io_uring_destruct_scm);
++&spi_quad_pins {
++	function = "gpio";
++};
++
+ &pinctrl_nb {
+ 	i2c2_recovery_pins: i2c2-recovery-pins {
+ 		groups = "i2c2";
 
 
