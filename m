@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB03B23507C;
-	Mon,  2 Jun 2025 14:20:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B47B226863;
+	Mon,  2 Jun 2025 14:20:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748874046; cv=none; b=DFxgDAMoKGhxOQaez2jD9AtDs+1BAoLwPQ+uEn11ga3uqYTNvnw9gKqh2HvLcvBa7PJKC5w2S9WjVH94Moz6/rKZpSXrBUjQMkL67Hfa3Dcy1LsXy1sL1xYXwaxmiPbF7qGFMZNgmAmc2PQeHdwckpN1vn7PHm+0AZX6462AgyY=
+	t=1748874049; cv=none; b=nYNkahlNVHga1y4wX+6vLboIKbynNfdhxXSfB0QepdJD7JpNa3zI38G0PKwelbIuuQ1m35CRdLmBs2zVR7eM4SpihoN8TXyy/43flzRlWLaL4vKY8gL4SitKqAI1m6BBSwFWgVUzTXD0z2S3BJPSgk4YkrbgRnBKh6RrRw7SVJw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748874046; c=relaxed/simple;
-	bh=dVA8fH3+hfbQr0wyriWaQjHxI9G4vg05OOKPRu53G/Q=;
+	s=arc-20240116; t=1748874049; c=relaxed/simple;
+	bh=7ULt6qXlfCx5WbDvymhoJ3ik1dMxBaGIC+PQlmshxio=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sJpkcpZsDKytEK4vu1MsTNklpQk2rt5X6urvGmR6Ca1QP/uY37XQMI6KunZcms+jJub4X7YKuNEg63hk5uxSGp+9cOqLrOtz8NLGG/JCYM0loO8PTOiOApaPWWWHERtNfKa7/m7OaXmEEY0FM8eM+VdGalzcZFo3vOn/BpUXbrc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WL0EReSw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a+NKnHPWijJaCblB8rWF3eKQRdIeuc6CYzBOYdVkrYQXYDLLmGPT1VX70mtMO62FgfxJe/YKDEO87ofbGffx+9rrtyUfDTsbhIwvEkU8228U5S1WXS2WPzlom55ZdkJ5terBvUIx0tSwxRPrhx13xE9hxgkoynNc4GIJes8p0XA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W3w0OxTp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WL0EReSw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD301C4CEEB;
-	Mon,  2 Jun 2025 14:20:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W3w0OxTp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E851C4CEEB;
+	Mon,  2 Jun 2025 14:20:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748874046;
-	bh=dVA8fH3+hfbQr0wyriWaQjHxI9G4vg05OOKPRu53G/Q=;
+	s=korg; t=1748874049;
+	bh=7ULt6qXlfCx5WbDvymhoJ3ik1dMxBaGIC+PQlmshxio=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WL0EReSwxsBC9iH4Xc51DbsD6pQDKZPpcwG0bsS1pyTk/Nj7yNYmUeYxSbG+4796q
-	 SD7ma/+B/qZge65JIQOL3/YfaZjla0f2yFS9tl7+tgiuhc1RjSm3JX2aPtHML3+3cr
-	 SlM2qsZNJAO3P8PhsBzcbb8vH0Bk1ZxxM8E4SONQ=
+	b=W3w0OxTpEscQf15K5tDYlqPzi+sD46hVxArLO2xabRCDC+xOI0b0xbaCrQSTG12XU
+	 ITdX5h8/WdlH8KJ+eZUd6qeV5dUnbZhB9bjYb0fnxuAi5KYI0oEVyD0OpGToqiHtbm
+	 wV/+jA8zy7UoUCxy8Taq1u1BkdnXSZXP6Hr7D9mA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Douglas Anderson <dianders@chromium.org>,
+	Jessica Zhang <quic_jesszhan@quicinc.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 310/444] drm/panel-edp: Add Starry 116KHD024006
-Date: Mon,  2 Jun 2025 15:46:14 +0200
-Message-ID: <20250602134353.514200024@linuxfoundation.org>
+Subject: [PATCH 6.6 311/444] drm: Add valid clones check
+Date: Mon,  2 Jun 2025 15:46:15 +0200
+Message-ID: <20250602134353.553716581@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -51,55 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Douglas Anderson <dianders@chromium.org>
+From: Jessica Zhang <quic_jesszhan@quicinc.com>
 
-[ Upstream commit 749b5b279e5636cdcef51e15d67b77162cca6caa ]
+[ Upstream commit 41b4b11da02157c7474caf41d56baae0e941d01a ]
 
-We have a few reports of sc7180-trogdor-pompom devices that have a
-panel in them that IDs as STA 0x0004 and has the following raw EDID:
+Check that all encoders attached to a given CRTC are valid
+possible_clones of each other.
 
-  00 ff ff ff ff ff ff 00  4e 81 04 00 00 00 00 00
-  10 20 01 04 a5 1a 0e 78  0a dc dd 96 5b 5b 91 28
-  1f 52 54 00 00 00 01 01  01 01 01 01 01 01 01 01
-  01 01 01 01 01 01 8e 1c  56 a0 50 00 1e 30 28 20
-  55 00 00 90 10 00 00 18  00 00 00 00 00 00 00 00
-  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
-  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 fe
-  00 31 31 36 4b 48 44 30  32 34 30 30 36 0a 00 e6
-
-We've been unable to locate a datasheet for this panel and our partner
-has not been responsive, but all Starry eDP datasheets that we can
-find agree on the same timing (delay_100_500_e200) so it should be
-safe to use that here instead of the super conservative timings. We'll
-still go a little extra conservative and allow `hpd_absent` of 200
-instead of 100 because that won't add any real-world delay in most
-cases.
-
-We'll associate the string from the EDID ("116KHD024006") with this
-panel. Given that the ID is the suspicious value of 0x0004 it seems
-likely that Starry doesn't always update their IDs but the string will
-still work to differentiate if we ever need to in the future.
-
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250109142853.1.Ibcc3009933fd19507cc9c713ad0c99c7a9e4fe17@changeid
+Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+Reviewed-by: Maxime Ripard <mripard@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241216-concurrent-wb-v4-3-fe220297a7f0@quicinc.com
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panel/panel-edp.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/drm_atomic_helper.c | 28 ++++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
 
-diff --git a/drivers/gpu/drm/panel/panel-edp.c b/drivers/gpu/drm/panel/panel-edp.c
-index 94fe2f3836a9a..53b3b24d7d7c0 100644
---- a/drivers/gpu/drm/panel/panel-edp.c
-+++ b/drivers/gpu/drm/panel/panel-edp.c
-@@ -1923,6 +1923,7 @@ static const struct edp_panel_entry edp_panels[] = {
- 	EDP_PANEL_ENTRY('S', 'H', 'P', 0x1523, &sharp_lq140m1jw46.delay, "LQ140M1JW46"),
- 	EDP_PANEL_ENTRY('S', 'H', 'P', 0x154c, &delay_200_500_p2e100, "LQ116M1JW10"),
+diff --git a/drivers/gpu/drm/drm_atomic_helper.c b/drivers/gpu/drm/drm_atomic_helper.c
+index f3681970887cc..1aa59586c8f81 100644
+--- a/drivers/gpu/drm/drm_atomic_helper.c
++++ b/drivers/gpu/drm/drm_atomic_helper.c
+@@ -573,6 +573,30 @@ mode_valid(struct drm_atomic_state *state)
+ 	return 0;
+ }
  
-+	EDP_PANEL_ENTRY('S', 'T', 'A', 0x0004, &delay_200_500_e200, "116KHD024006"),
- 	EDP_PANEL_ENTRY('S', 'T', 'A', 0x0100, &delay_100_500_e200, "2081116HHD028001-51D"),
++static int drm_atomic_check_valid_clones(struct drm_atomic_state *state,
++					 struct drm_crtc *crtc)
++{
++	struct drm_encoder *drm_enc;
++	struct drm_crtc_state *crtc_state = drm_atomic_get_new_crtc_state(state,
++									  crtc);
++
++	drm_for_each_encoder_mask(drm_enc, crtc->dev, crtc_state->encoder_mask) {
++		if (!drm_enc->possible_clones) {
++			DRM_DEBUG("enc%d possible_clones is 0\n", drm_enc->base.id);
++			continue;
++		}
++
++		if ((crtc_state->encoder_mask & drm_enc->possible_clones) !=
++		    crtc_state->encoder_mask) {
++			DRM_DEBUG("crtc%d failed valid clone check for mask 0x%x\n",
++				  crtc->base.id, crtc_state->encoder_mask);
++			return -EINVAL;
++		}
++	}
++
++	return 0;
++}
++
+ /**
+  * drm_atomic_helper_check_modeset - validate state object for modeset changes
+  * @dev: DRM device
+@@ -744,6 +768,10 @@ drm_atomic_helper_check_modeset(struct drm_device *dev,
+ 		ret = drm_atomic_add_affected_planes(state, crtc);
+ 		if (ret != 0)
+ 			return ret;
++
++		ret = drm_atomic_check_valid_clones(state, crtc);
++		if (ret != 0)
++			return ret;
+ 	}
  
- 	{ /* sentinal */ }
+ 	/*
 -- 
 2.39.5
 
