@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EED2822331E;
-	Mon,  2 Jun 2025 14:11:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F5FE22331E;
+	Mon,  2 Jun 2025 14:11:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748873481; cv=none; b=VwDJkG5MhYK1Wi168Ul6xCvhw4Ksyt3ShaAH+sl47LdfAKrAP6UY9JDw8b5VdC+H2AXYyZr2gHFywPn8irZL+gbp5MITyl0qbi2znmoUOjQSx2QzAVYDGQ52Sw8yz1vetIPj0uOB4g7qNycsMkcuoX3adPRAjIUkngk8dOfeaTE=
+	t=1748873484; cv=none; b=Jy5FZUwy0t5XzFJYhgoz9bvE5JFz59m1Q5kv46GubJJwQwBZzGo9rWJ0hJv4QVhqJw103DfcuIMBB+BOcbYjQpGolj7j70nOKUwp/qpY8rbxKM49EEb9gtsm9PYChWBRiytvZidDnoetOfSyZTCIsE6GwIaTd5OLiRvcHnt0Mac=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748873481; c=relaxed/simple;
-	bh=s9eLS5UiUWxRE/s63Czfr8c+TGW4qWCfp93GRiw7yEQ=;
+	s=arc-20240116; t=1748873484; c=relaxed/simple;
+	bh=dfs12N+n6bwInfmDD6gFhuNkqampUNNst+LsWha6bWE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KZJI0oE5GcAHVRSbu7IHyf9JaYqMQs78Ic8n0dEYx27DTosumP9MB3aj8Zj7NAGe3HIQTNKLCOLMjfRZRDSc5U2eETF35xAlyJHsB5+FY6AGkHTs+VS0iRm6AJcyaBkW+3+LVfhr+AzJJD0xE56Tm9FsMUe0pdxr9lYroB+ZMc4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LQm/qf5d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OC4RkM3PZ2xmS3QWg1coHr7CsRbH4hkYd7ZyIO+gpJm76nCbkrroFR9WRcLaInImq/zBDz8PCILE66URbjeoDDaCbbi7zp8dKneNw9bDb/qbM3KkbAdx8aHMumtyaVDJYMY8drNcVcQhoVXhgpx9t0mrXBLYoPg2uOjr9JZVBMI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aeXgXIZX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LQm/qf5d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75A1EC4CEEB;
-	Mon,  2 Jun 2025 14:11:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aeXgXIZX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88790C4CEEB;
+	Mon,  2 Jun 2025 14:11:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748873480;
-	bh=s9eLS5UiUWxRE/s63Czfr8c+TGW4qWCfp93GRiw7yEQ=;
+	s=korg; t=1748873483;
+	bh=dfs12N+n6bwInfmDD6gFhuNkqampUNNst+LsWha6bWE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LQm/qf5dHsEquxmfLyHo92L4hU+AI4+BBv/YGbsqSG6cOfTooAwZgV1D4eDhfzECW
-	 DvWTvJqrJnakO1rUpU4MtEyXCLTTYR8O+O5SENdIFjCM3N+BIicgrNsSJUrALuyr8n
-	 iL67OHlTJyeaMoGs9AVUp1SNQlD8bKizRdo4tTdo=
+	b=aeXgXIZXGlCyLFmwauVsmQ78GL+B95+I/cpEv/3/7KO8JsxRB7/IbBRIVwblb9rxL
+	 f3CtftCSSdjCqnMyPBzbg0ZdYBTltJvXg0vHkGzEjKAVT6khlwxnoaJZo6xL1W4dj1
+	 QzkQFeScEsw0wHSFBUS0k4u1LjvF15L6AOaA0938=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Eric Dumazet <edumazet@google.com>,
-	David Ahern <dsahern@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 155/444] ipv4: fib: Move fib_valid_key_len() to rtm_to_fib_config().
-Date: Mon,  2 Jun 2025 15:43:39 +0200
-Message-ID: <20250602134347.197055335@linuxfoundation.org>
+	Andy Yan <andy.yan@rock-chips.com>,
+	Detlev Casanova <detlev.casanova@collabora.com>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Sasha Levin <sashal@kernel.org>,
+	Michael Riesch <michael.riesch@wolfvision.net>
+Subject: [PATCH 6.6 156/444] drm/rockchip: vop2: Add uv swap for cluster window
+Date: Mon,  2 Jun 2025 15:43:40 +0200
+Message-ID: <20250602134347.236800389@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -53,126 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Andy Yan <andy.yan@rock-chips.com>
 
-[ Upstream commit 254ba7e6032d3fc738050d500b0c1d8197af90ca ]
+[ Upstream commit e7aae9f6d762139f8d2b86db03793ae0ab3dd802 ]
 
-fib_valid_key_len() is called in the beginning of fib_table_insert()
-or fib_table_delete() to check if the prefix length is valid.
+The Cluster windows of upcoming VOP on rk3576 also support
+linear YUV support, we need to set uv swap bit for it.
 
-fib_table_insert() and fib_table_delete() are called from 3 paths
+As the VOP2_WIN_UV_SWA register defined on rk3568/rk3588 is
+0xffffffff, so this register will not be touched on these
+two platforms.
 
-  - ip_rt_ioctl()
-  - inet_rtm_newroute() / inet_rtm_delroute()
-  - fib_magic()
-
-In the first ioctl() path, rtentry_to_fib_config() checks the prefix
-length with bad_mask().  Also, fib_magic() always passes the correct
-prefix: 32 or ifa->ifa_prefixlen, which is already validated.
-
-Let's move fib_valid_key_len() to the rtnetlink path, rtm_to_fib_config().
-
-While at it, 2 direct returns in rtm_to_fib_config() are changed to
-goto to match other places in the same function
-
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://patch.msgid.link/20250228042328.96624-12-kuniyu@amazon.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Andy Yan <andy.yan@rock-chips.com>
+Tested-by: Michael Riesch <michael.riesch@wolfvision.net> # on RK3568
+Tested-by: Detlev Casanova <detlev.casanova@collabora.com>
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250303034436.192400-4-andyshrk@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/fib_frontend.c | 18 ++++++++++++++++--
- net/ipv4/fib_trie.c     | 22 ----------------------
- 2 files changed, 16 insertions(+), 24 deletions(-)
+ drivers/gpu/drm/rockchip/rockchip_drm_vop2.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/net/ipv4/fib_frontend.c b/net/ipv4/fib_frontend.c
-index 90ce87ffed461..7993ff46de23c 100644
---- a/net/ipv4/fib_frontend.c
-+++ b/net/ipv4/fib_frontend.c
-@@ -829,19 +829,33 @@ static int rtm_to_fib_config(struct net *net, struct sk_buff *skb,
- 		}
- 	}
+diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
+index d8f8c37c326c4..0193d10867dd2 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
++++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
+@@ -1290,10 +1290,8 @@ static void vop2_plane_atomic_update(struct drm_plane *plane,
  
-+	if (cfg->fc_dst_len > 32) {
-+		NL_SET_ERR_MSG(extack, "Invalid prefix length");
-+		err = -EINVAL;
-+		goto errout;
-+	}
-+
-+	if (cfg->fc_dst_len < 32 && (ntohl(cfg->fc_dst) << cfg->fc_dst_len)) {
-+		NL_SET_ERR_MSG(extack, "Invalid prefix for given prefix length");
-+		err = -EINVAL;
-+		goto errout;
-+	}
-+
- 	if (cfg->fc_nh_id) {
- 		if (cfg->fc_oif || cfg->fc_gw_family ||
- 		    cfg->fc_encap || cfg->fc_mp) {
- 			NL_SET_ERR_MSG(extack,
- 				       "Nexthop specification and nexthop id are mutually exclusive");
--			return -EINVAL;
-+			err = -EINVAL;
-+			goto errout;
- 		}
- 	}
- 
- 	if (has_gw && has_via) {
- 		NL_SET_ERR_MSG(extack,
- 			       "Nexthop configuration can not contain both GATEWAY and VIA");
--		return -EINVAL;
-+		err = -EINVAL;
-+		goto errout;
- 	}
- 
- 	if (!cfg->fc_table)
-diff --git a/net/ipv4/fib_trie.c b/net/ipv4/fib_trie.c
-index 77b97c48da5ea..fa54b36b241ac 100644
---- a/net/ipv4/fib_trie.c
-+++ b/net/ipv4/fib_trie.c
-@@ -1192,22 +1192,6 @@ static int fib_insert_alias(struct trie *t, struct key_vector *tp,
- 	return 0;
- }
- 
--static bool fib_valid_key_len(u32 key, u8 plen, struct netlink_ext_ack *extack)
--{
--	if (plen > KEYLENGTH) {
--		NL_SET_ERR_MSG(extack, "Invalid prefix length");
--		return false;
+ 	rb_swap = vop2_win_rb_swap(fb->format->format);
+ 	vop2_win_write(win, VOP2_WIN_RB_SWAP, rb_swap);
+-	if (!vop2_cluster_window(win)) {
+-		uv_swap = vop2_win_uv_swap(fb->format->format);
+-		vop2_win_write(win, VOP2_WIN_UV_SWAP, uv_swap);
 -	}
--
--	if ((plen < KEYLENGTH) && (key << plen)) {
--		NL_SET_ERR_MSG(extack,
--			       "Invalid prefix for given prefix length");
--		return false;
--	}
--
--	return true;
--}
--
- static void fib_remove_alias(struct trie *t, struct key_vector *tp,
- 			     struct key_vector *l, struct fib_alias *old);
++	uv_swap = vop2_win_uv_swap(fb->format->format);
++	vop2_win_write(win, VOP2_WIN_UV_SWAP, uv_swap);
  
-@@ -1228,9 +1212,6 @@ int fib_table_insert(struct net *net, struct fib_table *tb,
- 
- 	key = ntohl(cfg->fc_dst);
- 
--	if (!fib_valid_key_len(key, plen, extack))
--		return -EINVAL;
--
- 	pr_debug("Insert table=%u %08x/%d\n", tb->tb_id, key, plen);
- 
- 	fi = fib_create_info(cfg, extack);
-@@ -1723,9 +1704,6 @@ int fib_table_delete(struct net *net, struct fib_table *tb,
- 
- 	key = ntohl(cfg->fc_dst);
- 
--	if (!fib_valid_key_len(key, plen, extack))
--		return -EINVAL;
--
- 	l = fib_find_node(t, &tp, key);
- 	if (!l)
- 		return -ESRCH;
+ 	if (fb->format->is_yuv) {
+ 		vop2_win_write(win, VOP2_WIN_UV_VIR, DIV_ROUND_UP(fb->pitches[1], 4));
 -- 
 2.39.5
 
