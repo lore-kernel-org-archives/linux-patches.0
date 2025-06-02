@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 139A422A4DB;
-	Mon,  2 Jun 2025 14:57:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 688A522A7E3;
+	Mon,  2 Jun 2025 14:57:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748876243; cv=none; b=k5/hJrEDnyYP00dGz4x5OfF+M15Dm748CjBiwH/3DC0gpDhfyO6sKrbTHKtEnUTSXj7udaxW6zcyIGb/zkxx21miDEIPtsFTt6ByLmevpHgsY60MMJOBwviYjO05DmKiTmNyjewDDvndw/QC2iYCFEtccI/Z5xvwIz8hVKxc0jM=
+	t=1748876246; cv=none; b=ryKbJ7ALBbw0BYiXJvv0nywmPDFgHiSOZ2w6gsRpaWkOQXvf6Fwsmsym4ODplTSbiAzvRHVIycxsPE475u4WcN6byxmzqmH8aWKw7mVazXapKiiDy9KgSz3vmBSZk7Vx4WAqWE36OF6EMgyw5GnA0vMNXZAy6gQ+0CIZcugZN8U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748876243; c=relaxed/simple;
-	bh=Wy3JF6JH70jWoT3MN0ZyOmZKBo+87IZL16x7vUNcTPs=;
+	s=arc-20240116; t=1748876246; c=relaxed/simple;
+	bh=/K7TN5r393MA4OT8eq+ttH1VtCoUvi+ukjGN/30BRZw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=oDtXUFvVqXFlyPIFq8V+OOyZzrK2raZ+gEu3o86Df/xoPGqslGLCekAsLdlHHRiw6bG7NJ3eaTTvIDlSUljUEWWX4toboa5Px02MeYNOYPshsezdfmoGVKq+uQLP4qHE+t+aRWWT4qghV55Xyq2iaUgDirZRWXqwWVqtBt1RNyU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NQX2WmcT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TjHHE2DyWjUoZuWZcyiFheVj9SDUQTzF9zMH5TDkDNo5Ajpx+HUP1+NCJ2B0glVeoJ9OJ1+P1YX05ow1o4QFonHuk+jhLcE2/044UqE5giIKHCmU+C+46clxGbPhJKNrkpR+znDJPietXo4yLRZQbOjcsYRVeL1I66MuNZZ07B8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AtJJiH+l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NQX2WmcT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70E3DC4CEEB;
-	Mon,  2 Jun 2025 14:57:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AtJJiH+l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A96FC4CEEE;
+	Mon,  2 Jun 2025 14:57:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748876242;
-	bh=Wy3JF6JH70jWoT3MN0ZyOmZKBo+87IZL16x7vUNcTPs=;
+	s=korg; t=1748876246;
+	bh=/K7TN5r393MA4OT8eq+ttH1VtCoUvi+ukjGN/30BRZw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NQX2WmcT4SPXyYQYlUcGk7XcURiElhe3yLA0GQjNb7M3WXDBZnnqxV5/AwkDHWPo/
-	 hGeXa4rl7ROQ6k05FjeO/bNxfsVfxq7ojC/QYO9Y8VUbcT/TWl5tKS1sTaSeq70sGg
-	 Cokrf02EIh+J3qXGGnuSbXUtmp92Egt+Mu8DlsLE=
+	b=AtJJiH+lWY+PcNBYnW39oGtW5Bqmv65VvktNenAYDB3nT2InQmWI2wWsXXd0t/2vY
+	 yWOQNsAxIeYWEeyaulHCSFtXBK+GjLjRO1B9xGZ9dV+AEC4faqr1gMnc+bynh+fb6M
+	 hg+wXCN96bRlkNZgs4afa34pt7HWY4PJyMUuNg0Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Martin=20Povi=C5=A1er?= <povik+lin@cutebit.org>,
-	Mark Brown <broonie@kernel.org>,
+	Kevin Krakauer <krakauer@google.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 115/207] ASoC: ops: Enforce platform maximum on initial value
-Date: Mon,  2 Jun 2025 15:48:07 +0200
-Message-ID: <20250602134303.228648410@linuxfoundation.org>
+Subject: [PATCH 5.15 088/207] selftests/net: have `gro.sh -t` return a correct exit code
+Date: Mon,  2 Jun 2025 15:47:40 +0200
+Message-ID: <20250602134302.185624215@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134258.769974467@linuxfoundation.org>
 References: <20250602134258.769974467@linuxfoundation.org>
@@ -45,77 +46,41 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Martin Povišer <povik+lin@cutebit.org>
+From: Kevin Krakauer <krakauer@google.com>
 
-[ Upstream commit 783db6851c1821d8b983ffb12b99c279ff64f2ee ]
+[ Upstream commit 784e6abd99f24024a8998b5916795f0bec9d2fd9 ]
 
-Lower the volume if it is violating the platform maximum at its initial
-value (i.e. at the time of the 'snd_soc_limit_volume' call).
+Modify gro.sh to return a useful exit code when the -t flag is used. It
+formerly returned 0 no matter what.
 
-Signed-off-by: Martin Povišer <povik+lin@cutebit.org>
-[Cherry picked from the Asahi kernel with fixups -- broonie]
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Link: https://patch.msgid.link/20250208-asoc-volume-limit-v1-1-b98fcf4cdbad@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Tested: Ran `gro.sh -t large` and verified that test failures return 1.
+Signed-off-by: Kevin Krakauer <krakauer@google.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20250226192725.621969-2-krakauer@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/soc-ops.c | 29 ++++++++++++++++++++++++++++-
- 1 file changed, 28 insertions(+), 1 deletion(-)
+ tools/testing/selftests/net/gro.sh | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/soc-ops.c b/sound/soc/soc-ops.c
-index d8d0a26a554de..9eb4181c6697f 100644
---- a/sound/soc/soc-ops.c
-+++ b/sound/soc/soc-ops.c
-@@ -621,6 +621,33 @@ int snd_soc_get_volsw_range(struct snd_kcontrol *kcontrol,
- }
- EXPORT_SYMBOL_GPL(snd_soc_get_volsw_range);
- 
-+static int snd_soc_clip_to_platform_max(struct snd_kcontrol *kctl)
-+{
-+	struct soc_mixer_control *mc = (struct soc_mixer_control *)kctl->private_value;
-+	struct snd_ctl_elem_value uctl;
-+	int ret;
-+
-+	if (!mc->platform_max)
-+		return 0;
-+
-+	ret = kctl->get(kctl, &uctl);
-+	if (ret < 0)
-+		return ret;
-+
-+	if (uctl.value.integer.value[0] > mc->platform_max)
-+		uctl.value.integer.value[0] = mc->platform_max;
-+
-+	if (snd_soc_volsw_is_stereo(mc) &&
-+	    uctl.value.integer.value[1] > mc->platform_max)
-+		uctl.value.integer.value[1] = mc->platform_max;
-+
-+	ret = kctl->put(kctl, &uctl);
-+	if (ret < 0)
-+		return ret;
-+
-+	return 0;
-+}
-+
- /**
-  * snd_soc_limit_volume - Set new limit to an existing volume control.
-  *
-@@ -645,7 +672,7 @@ int snd_soc_limit_volume(struct snd_soc_card *card,
- 		struct soc_mixer_control *mc = (struct soc_mixer_control *)kctl->private_value;
- 		if (max <= mc->max - mc->min) {
- 			mc->platform_max = max;
--			ret = 0;
-+			ret = snd_soc_clip_to_platform_max(kctl);
- 		}
- 	}
- 	return ret;
+diff --git a/tools/testing/selftests/net/gro.sh b/tools/testing/selftests/net/gro.sh
+index 342ad27f631b1..e771f5f7faa26 100755
+--- a/tools/testing/selftests/net/gro.sh
++++ b/tools/testing/selftests/net/gro.sh
+@@ -95,5 +95,6 @@ trap cleanup EXIT
+ if [[ "${test}" == "all" ]]; then
+   run_all_tests
+ else
+-  run_test "${proto}" "${test}"
++  exit_code=$(run_test "${proto}" "${test}")
++  exit $exit_code
+ fi;
 -- 
 2.39.5
 
