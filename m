@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B6942253F2;
-	Mon,  2 Jun 2025 15:12:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFF9B2253F2;
+	Mon,  2 Jun 2025 15:12:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748877159; cv=none; b=ocsfyIZuWs4IUqU572f8Vl72jJGKxOU+HZjvvZhU1x1UECwUhlXdiqC+iAExu2lDrgbej5TpM4WICFanTTLjox3Q2bVtZrzUPvt2bVslUijkXJi6/qiM012xNNMQ97AXdZT9YUm2b3fKwNSFJFtxytYqR8SMZUzI1ILFpoLIAjI=
+	t=1748877162; cv=none; b=c+ajzWaxsQ8UguQRrswFyIC0MIo3bdICv12p7R6u7qa0pF+EcbfUYhCiQ7toP+UUMjR6dRDhWib/WedoupbwrwVmz0cC/lYEh4iIbV5f2dN1MuhdgbVsm6MdjuH9rHfBYYMiD4euOptqhYTwMpCXPzvzjChpI+21lXaf5CLqXmA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748877159; c=relaxed/simple;
-	bh=1CVYTQ/KAxjP7arXTbFQKsk/ux3QkN8E23c08REt/Zg=;
+	s=arc-20240116; t=1748877162; c=relaxed/simple;
+	bh=X4+6Nu9Ki3wqYglwS56/jms0+ZRwChlgR+Lb/1aJWpU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ahpq3MSO2quYrqt/yuIpvUJPU4MhXnwCsx6NrzGJGjTrFUnJVRqGP+7JGS73dFFKDy6rBNmvRu1Hksbm/DLFUoLyTIFgqWdcXohrpGKGwdDIL5cuPbPoDgQd+O8ohY/ES5ZHD83DP09dGGbKZ8t0RdAL8hJhK+jiWPM+0thnrPE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WvuFpQgM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I3SSqOwGcNKXVSk0TKrEAYyeEwmTQTERa/DornHwMSpPKG3d5eMG5gMxbduOh3Rcv4zUhc/Q4adGbpbbLjYmRXv093oEdbfQ+RxqrtRCJ74yNUQtDNJkpnsJI3atylrtPbdtT5ThDdLvOMj0ov3v/LJZnU6eCXpadkwJn+Yfaa4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lqsNRoPe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WvuFpQgM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1FE1C4CEEB;
-	Mon,  2 Jun 2025 15:12:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lqsNRoPe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1ECBAC4CEEB;
+	Mon,  2 Jun 2025 15:12:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748877159;
-	bh=1CVYTQ/KAxjP7arXTbFQKsk/ux3QkN8E23c08REt/Zg=;
+	s=korg; t=1748877162;
+	bh=X4+6Nu9Ki3wqYglwS56/jms0+ZRwChlgR+Lb/1aJWpU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WvuFpQgMzzVuY1nIFzGpEM8FdYON6XqioM9M0bl+apPBfJAgAPSlADfrIv788Wwfd
-	 T+fF4Rg/CdmmFwY2inls74CloHECP6HNgW2V+7Yh92o1OY6z57RbnVGq8aI0yP5lf0
-	 xEkSfX60euwgkngLwK8jdhXprltrsWwPaLVeweP4=
+	b=lqsNRoPeIA28XPHl30lvd8TWWUyNdnADQV3UNpOFFqQ4PWZTTEAzxHCYA7N43C9vR
+	 i1Q071PtJkEczO30GBLJIXudogOeSAe+1BJTse2c3GNkxTzi3a/ImIR8He7HNOomXS
+	 jSBdKYqIFVzxGV9Q8wegmyD2DZSkfe6Bc3yQbBVg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konstantin Andreev <andreev@swemel.ru>,
-	Casey Schaufler <casey@schaufler-ca.com>,
+	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 173/325] smack: recognize ipv4 CIPSO w/o categories
-Date: Mon,  2 Jun 2025 15:47:29 +0200
-Message-ID: <20250602134326.851030859@linuxfoundation.org>
+Subject: [PATCH 6.1 191/325] wifi: rtw88: Fix download_firmware_validate() for RTL8814AU
+Date: Mon,  2 Jun 2025 15:47:47 +0200
+Message-ID: <20250602134327.567540137@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134319.723650984@linuxfoundation.org>
 References: <20250602134319.723650984@linuxfoundation.org>
@@ -51,73 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konstantin Andreev <andreev@swemel.ru>
+From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
 
-[ Upstream commit a158a937d864d0034fea14913c1f09c6d5f574b8 ]
+[ Upstream commit 9e8243025cc06abc975c876dffda052073207ab3 ]
 
-If SMACK label has CIPSO representation w/o categories, e.g.:
+After the firmware is uploaded, download_firmware_validate() checks some
+bits in REG_MCUFW_CTRL to see if everything went okay. The
+RTL8814AU power on sequence sets bits 13 and 12 to 2, which this
+function does not expect, so it thinks the firmware upload failed.
 
-| # cat /smack/cipso2
-| foo  10
-| @ 250/2
-| ...
+Make download_firmware_validate() ignore bits 13 and 12.
 
-then SMACK does not recognize such CIPSO in input ipv4 packets
-and substitues '*' label instead. Audit records may look like
-
-| lsm=SMACK fn=smack_socket_sock_rcv_skb action=denied
-|   subject="*" object="_" requested=w pid=0 comm="swapper/1" ...
-
-This happens in two steps:
-
-1) security/smack/smackfs.c`smk_set_cipso
-   does not clear NETLBL_SECATTR_MLS_CAT
-   from (struct smack_known *)skp->smk_netlabel.flags
-   on assigning CIPSO w/o categories:
-
-| rcu_assign_pointer(skp->smk_netlabel.attr.mls.cat, ncats.attr.mls.cat);
-| skp->smk_netlabel.attr.mls.lvl = ncats.attr.mls.lvl;
-
-2) security/smack/smack_lsm.c`smack_from_secattr
-   can not match skp->smk_netlabel with input packet's
-   struct netlbl_lsm_secattr *sap
-   because sap->flags have not NETLBL_SECATTR_MLS_CAT (what is correct)
-   but skp->smk_netlabel.flags have (what is incorrect):
-
-| if ((sap->flags & NETLBL_SECATTR_MLS_CAT) == 0) {
-| 	if ((skp->smk_netlabel.flags &
-| 		 NETLBL_SECATTR_MLS_CAT) == 0)
-| 		found = 1;
-| 	break;
-| }
-
-This commit sets/clears NETLBL_SECATTR_MLS_CAT in
-skp->smk_netlabel.flags according to the presense of CIPSO categories.
-The update of smk_netlabel is not atomic, so input packets processing
-still may be incorrect during short time while update proceeds.
-
-Signed-off-by: Konstantin Andreev <andreev@swemel.ru>
-Signed-off-by: Casey Schaufler <casey@schaufler-ca.com>
+Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/049d2887-22fc-47b7-9e59-62627cb525f8@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/smack/smackfs.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/wireless/realtek/rtw88/reg.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/security/smack/smackfs.c b/security/smack/smackfs.c
-index d955f3dcb3a5e..9dca3672d82b4 100644
---- a/security/smack/smackfs.c
-+++ b/security/smack/smackfs.c
-@@ -922,6 +922,10 @@ static ssize_t smk_set_cipso(struct file *file, const char __user *buf,
- 	if (rc >= 0) {
- 		old_cat = skp->smk_netlabel.attr.mls.cat;
- 		rcu_assign_pointer(skp->smk_netlabel.attr.mls.cat, ncats.attr.mls.cat);
-+		if (ncats.attr.mls.cat)
-+			skp->smk_netlabel.flags |= NETLBL_SECATTR_MLS_CAT;
-+		else
-+			skp->smk_netlabel.flags &= ~(u32)NETLBL_SECATTR_MLS_CAT;
- 		skp->smk_netlabel.attr.mls.lvl = ncats.attr.mls.lvl;
- 		synchronize_rcu();
- 		netlbl_catmap_free(old_cat);
+diff --git a/drivers/net/wireless/realtek/rtw88/reg.h b/drivers/net/wireless/realtek/rtw88/reg.h
+index 03bd8dc53f72a..08628ba3419da 100644
+--- a/drivers/net/wireless/realtek/rtw88/reg.h
++++ b/drivers/net/wireless/realtek/rtw88/reg.h
+@@ -107,6 +107,7 @@
+ #define BIT_SHIFT_ROM_PGE	16
+ #define BIT_FW_INIT_RDY		BIT(15)
+ #define BIT_FW_DW_RDY		BIT(14)
++#define BIT_CPU_CLK_SEL		(BIT(12) | BIT(13))
+ #define BIT_RPWM_TOGGLE		BIT(7)
+ #define BIT_RAM_DL_SEL		BIT(7)	/* legacy only */
+ #define BIT_DMEM_CHKSUM_OK	BIT(6)
+@@ -124,7 +125,7 @@
+ 				 BIT_CHECK_SUM_OK)
+ #define FW_READY_LEGACY		(BIT_MCUFWDL_RDY | BIT_FWDL_CHK_RPT |	       \
+ 				 BIT_WINTINI_RDY | BIT_RAM_DL_SEL)
+-#define FW_READY_MASK		0xffff
++#define FW_READY_MASK		(0xffff & ~BIT_CPU_CLK_SEL)
+ 
+ #define REG_MCU_TST_CFG		0x84
+ #define VAL_FW_TRIGGER		0x1
 -- 
 2.39.5
 
