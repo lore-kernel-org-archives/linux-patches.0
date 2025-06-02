@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44AFF22259A;
-	Mon,  2 Jun 2025 14:27:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E1AC22D785;
+	Mon,  2 Jun 2025 14:27:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748874474; cv=none; b=eyiyjc/X8Stgxvr2tfz9KZx0IoG5Ou2qnMCdY24/31qD170CWHYbdUz8l5ckKZ8ZLmmimvQfLxLHR3GrIHg6BNhuyIyVhF0osbnqKZqBEpHObVzd7FWPigCpWCC+61C2sS4lr7SeCTVTQ+y/J461RuDdQw6lemGXVAcbaD0Oh/A=
+	t=1748874477; cv=none; b=WzJH+Gz+Y40n/hqJbFpYqLwm0CDLsdryncfJ5GRuPylO2jgtfKUu82PIXbadPDYWai79O8CNaHYef2Nh11HbhwpjsCGxfmQqoLDKm6y9S0cJYjCnaWC4UE9OW8QLHMLJXENcac/YPLQ6zTJbVYJiL+ifddukms6nWX4C/MazJ2U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748874474; c=relaxed/simple;
-	bh=cxF6jzlPc+/9ATTepx79oco4VnIl4Uc1KHAjSGnObYc=;
+	s=arc-20240116; t=1748874477; c=relaxed/simple;
+	bh=4s02/fWQYgWsYC6g4p8jqGehKB/LbdxxD+AYKLM0cwY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=APeUPteXOYd7id1GNo+tfOo/FnzCCnu2Uh5w4sbKe+N4K1+EMDfHoRbvbOXA+qpyatnwrhSCApxDjQj8Wl8yojbCZW5F4f+qPk3ThjZIfSf6OeMDzyxzmgu+masTTwcxIKffWKtwpZ6tb3NHl9Qg3DVaUlajXDY0ezk70kImaz8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZCd4gYRr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y67BQl5NoYdGHON5SIm7ok7QEm8pWNfNymWXUtHYeNtWEzbURLc9uEzrPjOjo6453/eKguMESRLIwxDxWWatNE+KJXA8xqGuuYbEPYPbwltx9uw5zShoo2C4Ru044PygtL8E+xkW4B0udmhZA3q8DhXmmWu3bLFwz9lYtKSunwo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pYNpu6B+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZCd4gYRr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A61AFC4CEEB;
-	Mon,  2 Jun 2025 14:27:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pYNpu6B+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E035CC4CEF0;
+	Mon,  2 Jun 2025 14:27:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748874474;
-	bh=cxF6jzlPc+/9ATTepx79oco4VnIl4Uc1KHAjSGnObYc=;
+	s=korg; t=1748874477;
+	bh=4s02/fWQYgWsYC6g4p8jqGehKB/LbdxxD+AYKLM0cwY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZCd4gYRrCKj6UQqZDV8miMAWeJOmzQgeZ1osYFC2KpalS3OuQIcgjIYpglxQigU4R
-	 KwXC3blzsAjUjS+60rDuqphfE4HjNEzTIfGB+9YxTRl1Gd8mIGbOC8tr231MXMmAOS
-	 /ugwQHCMg3EDm4mXqH7qOGf6pyRjuh5HDeDvArTU=
+	b=pYNpu6B+peNvjh+bQUsy1/jEkWJaMz96KoI0BnamrExgfo9ytdxNHPJqIok71Qpze
+	 dxpBpKAwMwX54VJFEkIneyOowevzjoMLz4uQG+fPUzKccCJNFkvk1+xx39slXRYyS2
+	 E4WoINtVHuzt2daMQOtydseexdOVVuiwuQ0YmOMY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Alan J. Wylie" <alan@wylie.me.uk>,
-	Cong Wang <xiyou.wangcong@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Kota Toda <kota.toda@gmo-cybersecurity.com>,
+	Jozsef Kadlecsik <kadlec@netfilter.org>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 034/204] sch_htb: make htb_deactivate() idempotent
-Date: Mon,  2 Jun 2025 15:46:07 +0200
-Message-ID: <20250602134257.019131293@linuxfoundation.org>
+Subject: [PATCH 5.4 035/204] netfilter: ipset: fix region locking in hash types
+Date: Mon,  2 Jun 2025 15:46:08 +0200
+Message-ID: <20250602134257.057815014@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134255.449974357@linuxfoundation.org>
 References: <20250602134255.449974357@linuxfoundation.org>
@@ -52,103 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cong Wang <xiyou.wangcong@gmail.com>
+From: Jozsef Kadlecsik <kadlec@netfilter.org>
 
-[ Upstream commit 3769478610135e82b262640252d90f6efb05be71 ]
+[ Upstream commit 8478a729c0462273188263136880480729e9efca ]
 
-Alan reported a NULL pointer dereference in htb_next_rb_node()
-after we made htb_qlen_notify() idempotent.
+Region locking introduced in v5.6-rc4 contained three macros to handle
+the region locks: ahash_bucket_start(), ahash_bucket_end() which gave
+back the start and end hash bucket values belonging to a given region
+lock and ahash_region() which should give back the region lock belonging
+to a given hash bucket. The latter was incorrect which can lead to a
+race condition between the garbage collector and adding new elements
+when a hash type of set is defined with timeouts.
 
-It turns out in the following case it introduced some regression:
-
-htb_dequeue_tree():
-  |-> fq_codel_dequeue()
-    |-> qdisc_tree_reduce_backlog()
-      |-> htb_qlen_notify()
-        |-> htb_deactivate()
-  |-> htb_next_rb_node()
-  |-> htb_deactivate()
-
-For htb_next_rb_node(), after calling the 1st htb_deactivate(), the
-clprio[prio]->ptr could be already set to  NULL, which means
-htb_next_rb_node() is vulnerable here.
-
-For htb_deactivate(), although we checked qlen before calling it, in
-case of qlen==0 after qdisc_tree_reduce_backlog(), we may call it again
-which triggers the warning inside.
-
-To fix the issues here, we need to:
-
-1) Make htb_deactivate() idempotent, that is, simply return if we
-   already call it before.
-2) Make htb_next_rb_node() safe against ptr==NULL.
-
-Many thanks to Alan for testing and for the reproducer.
-
-Fixes: 5ba8b837b522 ("sch_htb: make htb_qlen_notify() idempotent")
-Reported-by: Alan J. Wylie <alan@wylie.me.uk>
-Signed-off-by: Cong Wang <xiyou.wangcong@gmail.com>
-Link: https://patch.msgid.link/20250428232955.1740419-2-xiyou.wangcong@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: f66ee0410b1c ("netfilter: ipset: Fix "INFO: rcu detected stall in hash_xxx" reports")
+Reported-by: Kota Toda <kota.toda@gmo-cybersecurity.com>
+Signed-off-by: Jozsef Kadlecsik <kadlec@netfilter.org>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_htb.c | 15 ++++++---------
- 1 file changed, 6 insertions(+), 9 deletions(-)
+ net/netfilter/ipset/ip_set_hash_gen.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/sched/sch_htb.c b/net/sched/sch_htb.c
-index 9506bf87c66bc..c618aae25b099 100644
---- a/net/sched/sch_htb.c
-+++ b/net/sched/sch_htb.c
-@@ -331,7 +331,8 @@ static void htb_add_to_wait_tree(struct htb_sched *q,
-  */
- static inline void htb_next_rb_node(struct rb_node **n)
- {
--	*n = rb_next(*n);
-+	if (*n)
-+		*n = rb_next(*n);
- }
- 
- /**
-@@ -573,8 +574,8 @@ static inline void htb_activate(struct htb_sched *q, struct htb_class *cl)
-  */
- static inline void htb_deactivate(struct htb_sched *q, struct htb_class *cl)
- {
--	WARN_ON(!cl->prio_activity);
--
-+	if (!cl->prio_activity)
-+		return;
- 	htb_deactivate_prios(q, cl);
- 	cl->prio_activity = 0;
- }
-@@ -1173,8 +1174,6 @@ static void htb_qlen_notify(struct Qdisc *sch, unsigned long arg)
- {
- 	struct htb_class *cl = (struct htb_class *)arg;
- 
--	if (!cl->prio_activity)
--		return;
- 	htb_deactivate(qdisc_priv(sch), cl);
- }
- 
-@@ -1282,8 +1281,7 @@ static int htb_delete(struct Qdisc *sch, unsigned long arg)
- 	if (cl->parent)
- 		cl->parent->children--;
- 
--	if (cl->prio_activity)
--		htb_deactivate(q, cl);
-+	htb_deactivate(q, cl);
- 
- 	if (cl->cmode != HTB_CAN_SEND)
- 		htb_safe_rb_erase(&cl->pq_node,
-@@ -1408,8 +1406,7 @@ static int htb_change_class(struct Qdisc *sch, u32 classid,
- 			/* turn parent into inner node */
- 			qdisc_purge_queue(parent->leaf.q);
- 			parent_qdisc = parent->leaf.q;
--			if (parent->prio_activity)
--				htb_deactivate(q, parent);
-+			htb_deactivate(q, parent);
- 
- 			/* remove from evt list because of level change */
- 			if (parent->cmode != HTB_CAN_SEND) {
+diff --git a/net/netfilter/ipset/ip_set_hash_gen.h b/net/netfilter/ipset/ip_set_hash_gen.h
+index 30b8b3fad1500..297631f9717bc 100644
+--- a/net/netfilter/ipset/ip_set_hash_gen.h
++++ b/net/netfilter/ipset/ip_set_hash_gen.h
+@@ -88,7 +88,7 @@ struct hbucket {
+ #define ahash_sizeof_regions(htable_bits)		\
+ 	(ahash_numof_locks(htable_bits) * sizeof(struct ip_set_region))
+ #define ahash_region(n, htable_bits)		\
+-	((n) % ahash_numof_locks(htable_bits))
++	((n) / jhash_size(HTABLE_REGION_BITS))
+ #define ahash_bucket_start(h,  htable_bits)	\
+ 	((htable_bits) < HTABLE_REGION_BITS ? 0	\
+ 		: (h) * jhash_size(HTABLE_REGION_BITS))
 -- 
 2.39.5
 
