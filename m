@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 608CD229B2A;
-	Mon,  2 Jun 2025 14:39:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D6E022A1E6;
+	Mon,  2 Jun 2025 14:39:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748875196; cv=none; b=WC4sidN498vVx2xYpQWzNM/ufu37sEIY/sYCiS6xP84j/am+wwJ9rFCb+mR+7dNlIoTad9KcwUPPy7dCl6e/KhgpbFcnrjFRwt99nnWCAnPjQTCmia57TB6XSydCzaMqA6zFeOtDAPPzssfzJ9Sp3EpEKcSB5h5XQjKGvIgrmVw=
+	t=1748875199; cv=none; b=MgG8I0Gz9ElfUpXhOuy7sP7xI86kvgebeL4IFdLY4lsTAXjxBsn5mWUM+Cow/PzAU4CvQkZNLRJIhcoGpKYlGUUPOE5gBr8jUihiWECdogCZwej0cC09iITRB3s0nTYr+6ex/C8aW2jDKuNQJ/AuQxHUILyT7kyYUfD6udmJ6Cs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748875196; c=relaxed/simple;
-	bh=5DktoMCB4lNfNVoYb2UyHKH26os980VlbLsrw9XWz7U=;
+	s=arc-20240116; t=1748875199; c=relaxed/simple;
+	bh=ZYB2w0aSDo5F8mFP0O7bTpP8k4NBEZKm3iUuAP0Duxo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TCokJm2E5/Zrh28StKZl4tXFMIAzXqmGhNFK3a/qJsnw5lnXcTZfSOQ2axR4UAmLKzYf8yBg/23w6E8sJpBwvyGUj5QPwUkUXwdxWi4gLukPuFgRCsq09Lk1ujuBCB5Lbr3Vlm0ZV0aieAmhSUEh0MzOLL56m8zILcV0c620q2Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jiqenz4L; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qAuv/TIOanFNszxwljji85GmWV2wRpr2UsOQyZFzQsVKXmdEsX3pHv+0OhEP0hYUkaxFfXVlqg+J3C09Ln8XBHAAEBB7PALkjY4JcYKdnYWRe1kMn6vgGiIwjCyrUS/5A+S7qXGos1L3EWifVUwKxweDfTQlyO8nPKao5PyP0q8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kb4KGO24; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jiqenz4L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6857C4CEEB;
-	Mon,  2 Jun 2025 14:39:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kb4KGO24"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1273C4CEEB;
+	Mon,  2 Jun 2025 14:39:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748875196;
-	bh=5DktoMCB4lNfNVoYb2UyHKH26os980VlbLsrw9XWz7U=;
+	s=korg; t=1748875199;
+	bh=ZYB2w0aSDo5F8mFP0O7bTpP8k4NBEZKm3iUuAP0Duxo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jiqenz4LBSte+9xjoIMZn/p/HmxCrjrs1MjWQRToGh1+eTkv1B19beNbSDf9ZO3MQ
-	 GsmiFUFrUrpuYYGWLrEesE5I9WMXyBmGpyHsrwarT4fRiR2mKuFQWBgUk9mpesSMj/
-	 tfMkw8vYfjF0joae+dNrXwQddYtF8xdbk5z+v/4Q=
+	b=kb4KGO24/RL+af0UO4QOInTr1S0fBs0wBDv4x6Ym1UqH+341YeObzJQV14JkM/yLb
+	 lcAdZ17Di7v4eesG7nQJbcIN5psaUl5ncwCYDHsMiV7PPG1N62BW5bRI/reR3ZEoD6
+	 yiSO7FqI4ZzjJEiqKzli/p9WTKwdL0K6p+Nw5l3c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Gabriel Shahrouzi <gshahrouzi@gmail.com>
-Subject: [PATCH 5.10 057/270] staging: axis-fifo: Remove hardware resets for user errors
-Date: Mon,  2 Jun 2025 15:45:42 +0200
-Message-ID: <20250602134309.525680075@linuxfoundation.org>
+Subject: [PATCH 5.10 058/270] staging: axis-fifo: Correct handling of tx_fifo_depth for size validation
+Date: Mon,  2 Jun 2025 15:45:43 +0200
+Message-ID: <20250602134309.564767203@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134307.195171844@linuxfoundation.org>
 References: <20250602134307.195171844@linuxfoundation.org>
@@ -51,71 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Gabriel Shahrouzi <gshahrouzi@gmail.com>
 
-commit c6e8d85fafa7193613db37da29c0e8d6e2515b13 upstream.
+commit 2ca34b508774aaa590fc3698a54204706ecca4ba upstream.
 
-The axis-fifo driver performs a full hardware reset (via
-reset_ip_core()) in several error paths within the read and write
-functions. This reset flushes both TX and RX FIFOs and resets the
-AXI-Stream links.
+Remove erroneous subtraction of 4 from the total FIFO depth read from
+device tree. The stored depth is for checking against total capacity,
+not initial vacancy. This prevented writes near the FIFO's full size.
 
-Allow the user to handle the error without causing hardware disruption
-or data loss in other FIFO paths.
+The check performed just before data transfer, which uses live reads of
+the TDFV register to determine current vacancy, correctly handles the
+initial Depth - 4 hardware state and subsequent FIFO fullness.
 
 Fixes: 4a965c5f89de ("staging: add driver for Xilinx AXI-Stream FIFO v4.1 IP core")
 Cc: stable@vger.kernel.org
 Signed-off-by: Gabriel Shahrouzi <gshahrouzi@gmail.com>
-Link: https://lore.kernel.org/r/20250419004306.669605-1-gshahrouzi@gmail.com
+Link: https://lore.kernel.org/r/20250419012937.674924-1-gshahrouzi@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/axis-fifo/axis-fifo.c |   11 +++--------
- 1 file changed, 3 insertions(+), 8 deletions(-)
+ drivers/staging/axis-fifo/axis-fifo.c |    3 ---
+ 1 file changed, 3 deletions(-)
 
 --- a/drivers/staging/axis-fifo/axis-fifo.c
 +++ b/drivers/staging/axis-fifo/axis-fifo.c
-@@ -401,16 +401,14 @@ static ssize_t axis_fifo_read(struct fil
- 
- 	bytes_available = ioread32(fifo->base_addr + XLLF_RLR_OFFSET);
- 	if (!bytes_available) {
--		dev_err(fifo->dt_device, "received a packet of length 0 - fifo core will be reset\n");
--		reset_ip_core(fifo);
-+		dev_err(fifo->dt_device, "received a packet of length 0\n");
- 		ret = -EIO;
- 		goto end_unlock;
+@@ -780,9 +780,6 @@ static int axis_fifo_parse_dt(struct axi
+ 		goto end;
  	}
  
- 	if (bytes_available > len) {
--		dev_err(fifo->dt_device, "user read buffer too small (available bytes=%zu user buffer bytes=%zu) - fifo core will be reset\n",
-+		dev_err(fifo->dt_device, "user read buffer too small (available bytes=%zu user buffer bytes=%zu)\n",
- 			bytes_available, len);
--		reset_ip_core(fifo);
- 		ret = -EINVAL;
- 		goto end_unlock;
- 	}
-@@ -419,8 +417,7 @@ static ssize_t axis_fifo_read(struct fil
- 		/* this probably can't happen unless IP
- 		 * registers were previously mishandled
- 		 */
--		dev_err(fifo->dt_device, "received a packet that isn't word-aligned - fifo core will be reset\n");
--		reset_ip_core(fifo);
-+		dev_err(fifo->dt_device, "received a packet that isn't word-aligned\n");
- 		ret = -EIO;
- 		goto end_unlock;
- 	}
-@@ -441,7 +438,6 @@ static ssize_t axis_fifo_read(struct fil
- 
- 		if (copy_to_user(buf + copied * sizeof(u32), tmp_buf,
- 				 copy * sizeof(u32))) {
--			reset_ip_core(fifo);
- 			ret = -EFAULT;
- 			goto end_unlock;
- 		}
-@@ -552,7 +548,6 @@ static ssize_t axis_fifo_write(struct fi
- 
- 		if (copy_from_user(tmp_buf, buf + copied * sizeof(u32),
- 				   copy * sizeof(u32))) {
--			reset_ip_core(fifo);
- 			ret = -EFAULT;
- 			goto end_unlock;
- 		}
+-	/* IP sets TDFV to fifo depth - 4 so we will do the same */
+-	fifo->tx_fifo_depth -= 4;
+-
+ 	ret = get_dts_property(fifo, "xlnx,use-rx-data", &fifo->has_rx_fifo);
+ 	if (ret) {
+ 		dev_err(fifo->dt_device, "missing xlnx,use-rx-data property\n");
 
 
