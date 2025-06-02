@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB9AA23E235;
-	Mon,  2 Jun 2025 14:13:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB1FF23E330;
+	Mon,  2 Jun 2025 14:13:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748873592; cv=none; b=JMiYbwfitH3v5msF5s6KI1NMwWMUglogjQAm2knnJvVRlUdKUARsUhq6obD2Kl5ptaOmwj+X7mZByaLBHYFAMMrPRZuv1mE93CHAkc/vNEn4vfSsO6g1zwnM2rAcvX9Dr11x6JQZijHPX6W3RZkcp7RxjIynL42oaUP8n1QofgE=
+	t=1748873594; cv=none; b=uALfd288UXdKeJHZR9yZLbh8sy/yuuKMPRRPuo5gci6sB3Z1f1/LNNcZ7nNajVtoTer0hl3/uJqqjhjcUge9cv5KktJFAxLk4a7Pe5R/GYzDgALsW/gLMiLsHW5wUlV1QbBH8S3v38Tly5tVw+wgpUuCxLg8ZIvJQDd2WFEQY40=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748873592; c=relaxed/simple;
-	bh=n1A8jvB1hSgYaVX97nCNEgkmQaJZaJRPau1VhcKY7mc=;
+	s=arc-20240116; t=1748873594; c=relaxed/simple;
+	bh=Z01/UxO9Q5FHCkFQ3voeE0Kk+kxbjHknifOvpluuX64=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CAhFZQVoI15ZdoTyFTEVZ0kQO8z64QiXr4OBfgUWR1e9rj95RA8JRxlk8KgVAUx+djvxLk1SmIbkax4/Kfsb8xs4hAONc8BomrYb9XUZhhjIoEAGe6bD+MJyx3G4B4DdBU7sGNO0urUIXFII8+poLXNNipTvJJdUStJGAyvbc98=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zHIOsSSP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c+oAHDa0MSiXtHiGlnJS1BCzJJNDIn63q0gjOCBZPrnzTi/Q63q0MyHRn/4pejlv7kndj3CEfzX+cgP1uS2xRzJ3LoxDSr7WqxJhdCxBJFOujdiVJaoXmKB7hzBElIidTvDNnXFlTYfCWT4tz48ea/2oMYQsVkY7N+xsKDBqGkY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oN4Du00r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zHIOsSSP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5FE7C4CEEB;
-	Mon,  2 Jun 2025 14:13:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oN4Du00r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE0F1C4CEEB;
+	Mon,  2 Jun 2025 14:13:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748873591;
-	bh=n1A8jvB1hSgYaVX97nCNEgkmQaJZaJRPau1VhcKY7mc=;
+	s=korg; t=1748873594;
+	bh=Z01/UxO9Q5FHCkFQ3voeE0Kk+kxbjHknifOvpluuX64=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zHIOsSSP+Dnwz4P4H/XpChU+RwmGKYGmTg2c7GNbhCsnsf9ugwARjAuwFlXvUM5gC
-	 hvlbKLPwwZjFEUJrJU2G47xiqQzHMQdM1KSqBH1/ohZlkeoXg4EmP1oLeYBzYzrHvd
-	 qJesL2VPMQwPdGuC3u4JZAGON5Ow0shDSAAlHCtY=
+	b=oN4Du00rqwNt2AbynBx8Ve6M9ECJtjOz7Yk3HwaCLrukbfv2rfxoghjow5JOX63Dr
+	 3jmQmP8B7UE6Q0AKlwa+OXaMxcmdR3dLXh5vV6HMH6KbZ+VpLqokq0/evoXYwlPgub
+	 eLRw+vIxVvMQNHt5xJsR71WWOszzFWL2z7Z/I3Jg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
+	Matthias Fend <matthias.fend@emfend.at>,
+	Marco Felsch <m.felsch@pengutronix.de>,
 	Hans Verkuil <hverkuil@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 190/444] media: adv7180: Disable test-pattern control on adv7180
-Date: Mon,  2 Jun 2025 15:44:14 +0200
-Message-ID: <20250602134348.615729395@linuxfoundation.org>
+Subject: [PATCH 6.6 191/444] media: tc358746: improve calculation of the D-PHY timing registers
+Date: Mon,  2 Jun 2025 15:44:15 +0200
+Message-ID: <20250602134348.658300868@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -45,133 +46,84 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
+From: Matthias Fend <matthias.fend@emfend.at>
 
-[ Upstream commit a980bc5f56b0292336e408f657f79e574e8067c0 ]
+[ Upstream commit 78d7265e2e1ce349e7f3c6a085f2b66d7b73f4ca ]
 
-The register that enables selecting a test-pattern to be outputted in
-free-run mode (FREE_RUN_PAT_SEL[2:0]) is only available on adv7280 based
-devices, not the adv7180 based ones.
+When calculating D-PHY registers, using data rates that are not multiples
+of 16 can lead to precision loss in division operations. This can result in
+register values that produce timing violations against the MIPI standard.
 
-Add a flag to mark devices that are capable of generating test-patterns,
-and those that are not. And only register the control on supported
-devices.
+An example:
+cfg->hs_clk_rate = 294MHz
+hf_clk = 18
 
-Signed-off-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
+If the desired value in cfg->init is 100us, which is the minimum allowed
+value, then the LINEINITCNT register is calculated as 1799. But since the
+actual clock is 18.375MHz instead of 18MHz, this setting results in a time
+that is shorter than 100us and thus violates the standard. The correct
+value for LINEINITCNT would be 1837.
+
+Improve the precision of calculations by using Hz instead of MHz as unit.
+
+Signed-off-by: Matthias Fend <matthias.fend@emfend.at>
+Reviewed-by: Marco Felsch <m.felsch@pengutronix.de>
 Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/adv7180.c | 34 ++++++++++++++++++++++------------
- 1 file changed, 22 insertions(+), 12 deletions(-)
+ drivers/media/i2c/tc358746.c | 19 +++++++------------
+ 1 file changed, 7 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/media/i2c/adv7180.c b/drivers/media/i2c/adv7180.c
-index 99ba925e8ec8e..114ac0c263fb2 100644
---- a/drivers/media/i2c/adv7180.c
-+++ b/drivers/media/i2c/adv7180.c
-@@ -194,6 +194,7 @@ struct adv7180_state;
- #define ADV7180_FLAG_V2			BIT(1)
- #define ADV7180_FLAG_MIPI_CSI2		BIT(2)
- #define ADV7180_FLAG_I2P		BIT(3)
-+#define ADV7180_FLAG_TEST_PATTERN	BIT(4)
+diff --git a/drivers/media/i2c/tc358746.c b/drivers/media/i2c/tc358746.c
+index 566f5eaddd572..b12a6bd42102e 100644
+--- a/drivers/media/i2c/tc358746.c
++++ b/drivers/media/i2c/tc358746.c
+@@ -460,24 +460,20 @@ static int tc358746_apply_misc_config(struct tc358746 *tc358746)
+ 	return err;
+ }
  
- struct adv7180_chip_info {
- 	unsigned int flags;
-@@ -673,11 +674,15 @@ static int adv7180_init_controls(struct adv7180_state *state)
- 			  ADV7180_HUE_MAX, 1, ADV7180_HUE_DEF);
- 	v4l2_ctrl_new_custom(&state->ctrl_hdl, &adv7180_ctrl_fast_switch, NULL);
+-/* Use MHz as base so the div needs no u64 */
+-static u32 tc358746_cfg_to_cnt(unsigned int cfg_val,
+-			       unsigned int clk_mhz,
+-			       unsigned int time_base)
++static u32 tc358746_cfg_to_cnt(unsigned long cfg_val, unsigned long clk_hz,
++			       unsigned long long time_base)
+ {
+-	return DIV_ROUND_UP(cfg_val * clk_mhz, time_base);
++	return div64_u64((u64)cfg_val * clk_hz + time_base - 1, time_base);
+ }
  
--	v4l2_ctrl_new_std_menu_items(&state->ctrl_hdl, &adv7180_ctrl_ops,
--				      V4L2_CID_TEST_PATTERN,
--				      ARRAY_SIZE(test_pattern_menu) - 1,
--				      0, ARRAY_SIZE(test_pattern_menu) - 1,
--				      test_pattern_menu);
-+	if (state->chip_info->flags & ADV7180_FLAG_TEST_PATTERN) {
-+		v4l2_ctrl_new_std_menu_items(&state->ctrl_hdl,
-+					     &adv7180_ctrl_ops,
-+					     V4L2_CID_TEST_PATTERN,
-+					     ARRAY_SIZE(test_pattern_menu) - 1,
-+					     0,
-+					     ARRAY_SIZE(test_pattern_menu) - 1,
-+					     test_pattern_menu);
-+	}
+-static u32 tc358746_ps_to_cnt(unsigned int cfg_val,
+-			      unsigned int clk_mhz)
++static u32 tc358746_ps_to_cnt(unsigned long cfg_val, unsigned long clk_hz)
+ {
+-	return tc358746_cfg_to_cnt(cfg_val, clk_mhz, USEC_PER_SEC);
++	return tc358746_cfg_to_cnt(cfg_val, clk_hz, PSEC_PER_SEC);
+ }
  
- 	state->sd.ctrl_handler = &state->ctrl_hdl;
- 	if (state->ctrl_hdl.error) {
-@@ -1209,7 +1214,7 @@ static const struct adv7180_chip_info adv7182_info = {
- };
+-static u32 tc358746_us_to_cnt(unsigned int cfg_val,
+-			      unsigned int clk_mhz)
++static u32 tc358746_us_to_cnt(unsigned long cfg_val, unsigned long clk_hz)
+ {
+-	return tc358746_cfg_to_cnt(cfg_val, clk_mhz, 1);
++	return tc358746_cfg_to_cnt(cfg_val, clk_hz, USEC_PER_SEC);
+ }
  
- static const struct adv7180_chip_info adv7280_info = {
--	.flags = ADV7180_FLAG_V2 | ADV7180_FLAG_I2P,
-+	.flags = ADV7180_FLAG_V2 | ADV7180_FLAG_I2P | ADV7180_FLAG_TEST_PATTERN,
- 	.valid_input_mask = BIT(ADV7182_INPUT_CVBS_AIN1) |
- 		BIT(ADV7182_INPUT_CVBS_AIN2) |
- 		BIT(ADV7182_INPUT_CVBS_AIN3) |
-@@ -1223,7 +1228,8 @@ static const struct adv7180_chip_info adv7280_info = {
- };
+ static int tc358746_apply_dphy_config(struct tc358746 *tc358746)
+@@ -492,7 +488,6 @@ static int tc358746_apply_dphy_config(struct tc358746 *tc358746)
  
- static const struct adv7180_chip_info adv7280_m_info = {
--	.flags = ADV7180_FLAG_V2 | ADV7180_FLAG_MIPI_CSI2 | ADV7180_FLAG_I2P,
-+	.flags = ADV7180_FLAG_V2 | ADV7180_FLAG_MIPI_CSI2 | ADV7180_FLAG_I2P |
-+		ADV7180_FLAG_TEST_PATTERN,
- 	.valid_input_mask = BIT(ADV7182_INPUT_CVBS_AIN1) |
- 		BIT(ADV7182_INPUT_CVBS_AIN2) |
- 		BIT(ADV7182_INPUT_CVBS_AIN3) |
-@@ -1244,7 +1250,8 @@ static const struct adv7180_chip_info adv7280_m_info = {
- };
+ 	/* The hs_byte_clk is also called SYSCLK in the excel sheet */
+ 	hs_byte_clk = cfg->hs_clk_rate / 8;
+-	hs_byte_clk /= HZ_PER_MHZ;
+ 	hf_clk = hs_byte_clk / 2;
  
- static const struct adv7180_chip_info adv7281_info = {
--	.flags = ADV7180_FLAG_V2 | ADV7180_FLAG_MIPI_CSI2,
-+	.flags = ADV7180_FLAG_V2 | ADV7180_FLAG_MIPI_CSI2 |
-+		ADV7180_FLAG_TEST_PATTERN,
- 	.valid_input_mask = BIT(ADV7182_INPUT_CVBS_AIN1) |
- 		BIT(ADV7182_INPUT_CVBS_AIN2) |
- 		BIT(ADV7182_INPUT_CVBS_AIN7) |
-@@ -1259,7 +1266,8 @@ static const struct adv7180_chip_info adv7281_info = {
- };
- 
- static const struct adv7180_chip_info adv7281_m_info = {
--	.flags = ADV7180_FLAG_V2 | ADV7180_FLAG_MIPI_CSI2,
-+	.flags = ADV7180_FLAG_V2 | ADV7180_FLAG_MIPI_CSI2 |
-+		ADV7180_FLAG_TEST_PATTERN,
- 	.valid_input_mask = BIT(ADV7182_INPUT_CVBS_AIN1) |
- 		BIT(ADV7182_INPUT_CVBS_AIN2) |
- 		BIT(ADV7182_INPUT_CVBS_AIN3) |
-@@ -1279,7 +1287,8 @@ static const struct adv7180_chip_info adv7281_m_info = {
- };
- 
- static const struct adv7180_chip_info adv7281_ma_info = {
--	.flags = ADV7180_FLAG_V2 | ADV7180_FLAG_MIPI_CSI2,
-+	.flags = ADV7180_FLAG_V2 | ADV7180_FLAG_MIPI_CSI2 |
-+		ADV7180_FLAG_TEST_PATTERN,
- 	.valid_input_mask = BIT(ADV7182_INPUT_CVBS_AIN1) |
- 		BIT(ADV7182_INPUT_CVBS_AIN2) |
- 		BIT(ADV7182_INPUT_CVBS_AIN3) |
-@@ -1304,7 +1313,7 @@ static const struct adv7180_chip_info adv7281_ma_info = {
- };
- 
- static const struct adv7180_chip_info adv7282_info = {
--	.flags = ADV7180_FLAG_V2 | ADV7180_FLAG_I2P,
-+	.flags = ADV7180_FLAG_V2 | ADV7180_FLAG_I2P | ADV7180_FLAG_TEST_PATTERN,
- 	.valid_input_mask = BIT(ADV7182_INPUT_CVBS_AIN1) |
- 		BIT(ADV7182_INPUT_CVBS_AIN2) |
- 		BIT(ADV7182_INPUT_CVBS_AIN7) |
-@@ -1319,7 +1328,8 @@ static const struct adv7180_chip_info adv7282_info = {
- };
- 
- static const struct adv7180_chip_info adv7282_m_info = {
--	.flags = ADV7180_FLAG_V2 | ADV7180_FLAG_MIPI_CSI2 | ADV7180_FLAG_I2P,
-+	.flags = ADV7180_FLAG_V2 | ADV7180_FLAG_MIPI_CSI2 | ADV7180_FLAG_I2P |
-+		ADV7180_FLAG_TEST_PATTERN,
- 	.valid_input_mask = BIT(ADV7182_INPUT_CVBS_AIN1) |
- 		BIT(ADV7182_INPUT_CVBS_AIN2) |
- 		BIT(ADV7182_INPUT_CVBS_AIN3) |
+ 	val = tc358746_us_to_cnt(cfg->init, hf_clk) - 1;
 -- 
 2.39.5
 
