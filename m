@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 205ED1FCFE2;
-	Mon,  2 Jun 2025 15:01:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 227CB1FBC8C;
+	Mon,  2 Jun 2025 15:01:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748876508; cv=none; b=HajqlKIFr17PscRPdoUEdvYp6OQyEN7m8O6Ddi29/zVRPYr3S/yC1AWyFemDJ3euzho29RW/e3BEOGkXhMD5k8jYGEu000isMI5nWy75jUkCIfhnaiGpafqbgRplZM7Ygil84hBumM+4oQ5rdQ2natkzwhR/gu0hMFdhQQiJd1k=
+	t=1748876511; cv=none; b=U89kVAYEn8UMAkqR97IHCRMWM8PKuHacKfHUazr0B5fIa9PuYFrDo0aGHlygHBUsiuj9VudtcE+KO/6sDtdoVkrTFOBAyB0wd9df6qcno0YxfLabOkujGT+gYuUKnqw+/nNDiJLbWUV5ktnMxD27/HpXRZlpQWWjZCUuU6clmIU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748876508; c=relaxed/simple;
-	bh=kVmy/9iXLbg3J5Y3UH5Tbdqv7r1RvZ9HRVCFXUnQWLo=;
+	s=arc-20240116; t=1748876511; c=relaxed/simple;
+	bh=hJ4Ivg2gHF6M2xGPGDeiu1syUBTqxk2q3BhmdmyuDWk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BT/CWxGsBNEilqwO/T11lqbKXRUt/QkcetQjnw5t2075YYDCoIrh/bsMSDQ7I9Q0+eQSnfL669tAef/jjbT7I4bppYccqyof+N9/LIB2kDyZjAIAelKwNJ/u+OwAuO/dJeG3Vt6X/by+ZYL4xOIjTnGTBzLD2et+sOXoSOB4REI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ylUAK1Yb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uTo6rPkvCYOHEuqxiflffgFeF+zm6uScpnOdsCFDs/EElqUwRgclJwYymU5zn00Y3LeZVwwugbf0Db7WBj4WLdGS2XO4bJq7rv8XpIC814ErOsPag6lPbGURz4/MruZgv0m5DUl2zq6yeyzMV72wrS5mc1VJ89sU6W/gD9ZPjzc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HINQVssv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ylUAK1Yb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A837EC4CEEB;
-	Mon,  2 Jun 2025 15:01:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HINQVssv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91635C4CEEB;
+	Mon,  2 Jun 2025 15:01:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748876508;
-	bh=kVmy/9iXLbg3J5Y3UH5Tbdqv7r1RvZ9HRVCFXUnQWLo=;
+	s=korg; t=1748876511;
+	bh=hJ4Ivg2gHF6M2xGPGDeiu1syUBTqxk2q3BhmdmyuDWk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ylUAK1YbrfJMGAbStNvV/pV5pVsCiBwqaDekfU38LYjfF6YotOFy81c8/LEl1mMfY
-	 hF5w/7PvdQ05hGe3Z73nANfgdCx0/oIrb9gzISrhHxYiVi7xCfyeZiz1vVm2f6Km6d
-	 UcAcwHFI2N3gn0V1jfIupFH/DE8gDP0KipR57UVo=
+	b=HINQVssvNO9a3aKKcJLZzRu4SNLeh0YJ9j/eKG97tn17Vw91ic5BjkovfVd7g+Bkb
+	 IOaEeaHqVOpeu7TlK3K9HLPktz0DvuZcjKBGO8EfIOcFtdFxdHJHUnpXIFnR9hMSZb
+	 meiduMezJaApF2zbRJW0ZLGZxEgE6rLvUbUiW/nI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luca Boccassi <luca.boccassi@gmail.com>,
-	Oleg Nesterov <oleg@redhat.com>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 5.15 197/207] coredump: hand a pidfd to the usermode coredump helper
-Date: Mon,  2 Jun 2025 15:49:29 +0200
-Message-ID: <20250602134306.495328068@linuxfoundation.org>
+	Milton Barrera <miltonjosue2001@gmail.com>,
+	Jiri Kosina <jkosina@suse.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 198/207] HID: quirks: Add ADATA XPG alpha wireless mouse support
+Date: Mon,  2 Jun 2025 15:49:30 +0200
+Message-ID: <20250602134306.533363114@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134258.769974467@linuxfoundation.org>
 References: <20250602134258.769974467@linuxfoundation.org>
@@ -51,194 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Milton Barrera <miltonjosue2001@gmail.com>
 
-commit b5325b2a270fcaf7b2a9a0f23d422ca8a5a8bdea upstream.
+[ Upstream commit fa9fdeea1b7d6440c22efa6d59a769eae8bc89f1 ]
 
-Give userspace a way to instruct the kernel to install a pidfd into the
-usermode helper process. This makes coredump handling a lot more
-reliable for userspace. In parallel with this commit we already have
-systemd adding support for this in [1].
+This patch adds HID_QUIRK_ALWAYS_POLL for the ADATA XPG wireless gaming mouse (USB ID 125f:7505) and its USB dongle (USB ID 125f:7506). Without this quirk, the device does not generate input events properly.
 
-We create a pidfs file for the coredumping process when we process the
-corename pattern. When the usermode helper process is forked we then
-install the pidfs file as file descriptor three into the usermode
-helpers file descriptor table so it's available to the exec'd program.
-
-Since usermode helpers are either children of the system_unbound_wq
-workqueue or kthreadd we know that the file descriptor table is empty
-and can thus always use three as the file descriptor number.
-
-Note, that we'll install a pidfd for the thread-group leader even if a
-subthread is calling do_coredump(). We know that task linkage hasn't
-been removed due to delay_group_leader() and even if this @current isn't
-the actual thread-group leader we know that the thread-group leader
-cannot be reaped until @current has exited.
-
-[brauner: This is a backport for the v5.14 series. Upstream has
-significantly changed and backporting all that infra is a non-starter.
-So simply backport the pidfd_prepare() helper and waste the file
-descriptor we allocated. Then we minimally massage the umh coredump
-setup code.]
-
-Link: https://github.com/systemd/systemd/pull/37125 [1]
-Link: https://lore.kernel.org/20250414-work-coredump-v2-3-685bf231f828@kernel.org
-Tested-by: Luca Boccassi <luca.boccassi@gmail.com>
-Reviewed-by: Oleg Nesterov <oleg@redhat.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Milton Barrera <miltonjosue2001@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/coredump.c           |   77 +++++++++++++++++++++++++++++++++++++++++++-----
- include/linux/binfmts.h |    1 
- 2 files changed, 71 insertions(+), 7 deletions(-)
+ drivers/hid/hid-ids.h    | 4 ++++
+ drivers/hid/hid-quirks.c | 2 ++
+ 2 files changed, 6 insertions(+)
 
---- a/fs/coredump.c
-+++ b/fs/coredump.c
-@@ -56,6 +56,13 @@
- static bool dump_vma_snapshot(struct coredump_params *cprm);
- static void free_vma_snapshot(struct coredump_params *cprm);
+diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
+index 44825a916eeb2..08494eb652091 100644
+--- a/drivers/hid/hid-ids.h
++++ b/drivers/hid/hid-ids.h
+@@ -41,6 +41,10 @@
+ #define USB_VENDOR_ID_ACTIONSTAR	0x2101
+ #define USB_DEVICE_ID_ACTIONSTAR_1011	0x1011
  
-+/*
-+ * File descriptor number for the pidfd for the thread-group leader of
-+ * the coredumping task installed into the usermode helper's file
-+ * descriptor table.
-+ */
-+#define COREDUMP_PIDFD_NUMBER 3
++#define USB_VENDOR_ID_ADATA_XPG 0x125f
++#define USB_VENDOR_ID_ADATA_XPG_WL_GAMING_MOUSE 0x7505
++#define USB_VENDOR_ID_ADATA_XPG_WL_GAMING_MOUSE_DONGLE 0x7506
 +
- int core_uses_pid;
- unsigned int core_pipe_limit;
- char core_pattern[CORENAME_MAX_SIZE] = "core";
-@@ -327,6 +334,27 @@ static int format_corename(struct core_n
- 				err = cn_printf(cn, "%lu",
- 					      rlimit(RLIMIT_CORE));
- 				break;
-+			/* pidfd number */
-+			case 'F': {
-+				/*
-+				 * Installing a pidfd only makes sense if
-+				 * we actually spawn a usermode helper.
-+				 */
-+				if (!ispipe)
-+					break;
-+
-+				/*
-+				 * Note that we'll install a pidfd for the
-+				 * thread-group leader. We know that task
-+				 * linkage hasn't been removed yet and even if
-+				 * this @current isn't the actual thread-group
-+				 * leader we know that the thread-group leader
-+				 * cannot be reaped until @current has exited.
-+				 */
-+				cprm->pid = task_tgid(current);
-+				err = cn_printf(cn, "%d", COREDUMP_PIDFD_NUMBER);
-+				break;
-+			}
- 			default:
- 				break;
- 			}
-@@ -550,7 +578,7 @@ static void wait_for_dump_helpers(struct
- }
+ #define USB_VENDOR_ID_ADS_TECH		0x06e1
+ #define USB_DEVICE_ID_ADS_TECH_RADIO_SI470X	0xa155
  
- /*
-- * umh_pipe_setup
-+ * umh_coredump_setup
-  * helper function to customize the process used
-  * to collect the core in userspace.  Specifically
-  * it sets up a pipe and installs it as fd 0 (stdin)
-@@ -560,27 +588,62 @@ static void wait_for_dump_helpers(struct
-  * is a special value that we use to trap recursive
-  * core dumps
-  */
--static int umh_pipe_setup(struct subprocess_info *info, struct cred *new)
-+static int umh_coredump_setup(struct subprocess_info *info, struct cred *new)
- {
- 	struct file *files[2];
-+	struct file *pidfs_file = NULL;
- 	struct coredump_params *cp = (struct coredump_params *)info->data;
- 	int err;
- 
-+	if (cp->pid) {
-+		int fd;
-+
-+		fd = pidfd_prepare(cp->pid, 0, &pidfs_file);
-+		if (fd < 0)
-+			return fd;
-+
-+		/*
-+		 * We don't care about the fd. We also cannot simply
-+		 * replace it below because dup2() will refuse to close
-+		 * this file descriptor if its in a larval state. So
-+		 * close it!
-+		 */
-+		put_unused_fd(fd);
-+
-+		/*
-+		 * Usermode helpers are childen of either
-+		 * system_unbound_wq or of kthreadd. So we know that
-+		 * we're starting off with a clean file descriptor
-+		 * table. So we should always be able to use
-+		 * COREDUMP_PIDFD_NUMBER as our file descriptor value.
-+		 */
-+		err = replace_fd(COREDUMP_PIDFD_NUMBER, pidfs_file, 0);
-+		if (err < 0)
-+			goto out_fail;
-+
-+		pidfs_file = NULL;
-+	}
-+
- 	err = create_pipe_files(files, 0);
- 	if (err)
--		return err;
-+		goto out_fail;
- 
- 	cp->file = files[1];
- 
- 	err = replace_fd(0, files[0], 0);
- 	fput(files[0]);
- 	if (err < 0)
--		return err;
-+		goto out_fail;
- 
- 	/* and disallow core files too */
- 	current->signal->rlim[RLIMIT_CORE] = (struct rlimit){1, 1};
- 
--	return 0;
-+	err = 0;
-+
-+out_fail:
-+	if (pidfs_file)
-+		fput(pidfs_file);
-+	return err;
- }
- 
- void do_coredump(const kernel_siginfo_t *siginfo)
-@@ -656,7 +719,7 @@ void do_coredump(const kernel_siginfo_t
- 		}
- 
- 		if (cprm.limit == 1) {
--			/* See umh_pipe_setup() which sets RLIMIT_CORE = 1.
-+			/* See umh_coredump_setup() which sets RLIMIT_CORE = 1.
- 			 *
- 			 * Normally core limits are irrelevant to pipes, since
- 			 * we're not writing to the file system, but we use
-@@ -701,7 +764,7 @@ void do_coredump(const kernel_siginfo_t
- 		retval = -ENOMEM;
- 		sub_info = call_usermodehelper_setup(helper_argv[0],
- 						helper_argv, NULL, GFP_KERNEL,
--						umh_pipe_setup, NULL, &cprm);
-+						umh_coredump_setup, NULL, &cprm);
- 		if (sub_info)
- 			retval = call_usermodehelper_exec(sub_info,
- 							  UMH_WAIT_EXEC);
---- a/include/linux/binfmts.h
-+++ b/include/linux/binfmts.h
-@@ -90,6 +90,7 @@ struct coredump_params {
- 	int vma_count;
- 	size_t vma_data_size;
- 	struct core_vma_metadata *vma_meta;
-+	struct pid *pid;
- };
- 
- /*
+diff --git a/drivers/hid/hid-quirks.c b/drivers/hid/hid-quirks.c
+index b5ad4c87daacf..126cadb117fef 100644
+--- a/drivers/hid/hid-quirks.c
++++ b/drivers/hid/hid-quirks.c
+@@ -27,6 +27,8 @@
+ static const struct hid_device_id hid_quirks[] = {
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_AASHIMA, USB_DEVICE_ID_AASHIMA_GAMEPAD), HID_QUIRK_BADPAD },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_AASHIMA, USB_DEVICE_ID_AASHIMA_PREDATOR), HID_QUIRK_BADPAD },
++	{ HID_USB_DEVICE(USB_VENDOR_ID_ADATA_XPG, USB_VENDOR_ID_ADATA_XPG_WL_GAMING_MOUSE), HID_QUIRK_ALWAYS_POLL },
++	{ HID_USB_DEVICE(USB_VENDOR_ID_ADATA_XPG, USB_VENDOR_ID_ADATA_XPG_WL_GAMING_MOUSE_DONGLE), HID_QUIRK_ALWAYS_POLL },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_AFATECH, USB_DEVICE_ID_AFATECH_AF9016), HID_QUIRK_FULLSPEED_INTERVAL },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_AIREN, USB_DEVICE_ID_AIREN_SLIMPLUS), HID_QUIRK_NOGET },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_AKAI_09E8, USB_DEVICE_ID_AKAI_09E8_MIDIMIX), HID_QUIRK_NO_INIT_REPORTS },
+-- 
+2.39.5
+
 
 
