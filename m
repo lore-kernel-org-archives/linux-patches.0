@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08F7C223322;
-	Mon,  2 Jun 2025 14:02:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FDB7221DAE;
+	Mon,  2 Jun 2025 14:02:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748872925; cv=none; b=XMEsDIcunmFKtFZ2AZn5T6LYconZxq0MOnOAoye1zK2BSBRF0tSHJOUJyZrmINw9nO++37mKCVOZF5umz3rL8Xl3NuJMPm8OQGz1ZwDJvE+wnzi8RjlfibaVpmD/G9I2qbRlOzhCGRf6mXuzkgrzqQChcKn9rR8GwKTvwVIiQX0=
+	t=1748872928; cv=none; b=FW5uTthL+1pYBuNFipQLhrqznobZAKM5gjlKyab9qYdO6g1kLujb+s2qq7HDbxhbtU/GbGm9jAPlg4B1xGqfWokRfv/kJeG6TYxxo2mKMK7/w59bfX2riqbkY4VnoavwS6sRNZnbERFRkloYXYDY62NQrGerj9YuvHJ0EfRzv2w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748872925; c=relaxed/simple;
-	bh=JorqdC9NRfMJ1tlIqPH1bI40xnedU0sI9gfKXjRIZEo=;
+	s=arc-20240116; t=1748872928; c=relaxed/simple;
+	bh=jEa2Lkk6VXz4xAR6PYRE791rbEEyhLjf5vI7M5Mm57M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GwYEuEsXRQLUhkSJqrDQSfHQcElWTY5TB7TLJdH6g093VCwirS3Zs0LjMfpIeT0gvAr66b+3ZOoBLwxBDyISY2SFJ7Fy+2rnyHVUMNfwG0jZT2ReWpqHqC9OH2N4Smn2UKtA1lKWU5xWw3W1dZHtF+DTR7wkmRTXDWYTdOsH6Q8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j6Fe+ApT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Eu4H3c4ycukBnccCLmyF7q2D03yyLmSC2KOAv2cA9Rny4MQSfDlmZfiL1UlX73VNvu8tUluZwQFUha8LJ531F9omgGXSJ/obm9WNplYxIjM2UPLQmBoNYmpkJaznqfiqr2sR03poZUG+UremoemHYdlZ92Bx4kpasEriSOWKzgE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DbVHUYTy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j6Fe+ApT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87E13C4CEEB;
-	Mon,  2 Jun 2025 14:02:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DbVHUYTy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1471C4CEF2;
+	Mon,  2 Jun 2025 14:02:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748872924;
-	bh=JorqdC9NRfMJ1tlIqPH1bI40xnedU0sI9gfKXjRIZEo=;
+	s=korg; t=1748872928;
+	bh=jEa2Lkk6VXz4xAR6PYRE791rbEEyhLjf5vI7M5Mm57M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j6Fe+ApT7nS3LJecGWz6mUp5ccYgRAZy9+pCPdDQ5NvrNaiLP48whNrjIozuN9giq
-	 fWjv6Dso3eqPFyZ695DnNr505JhJPedgPzLLXk1G0JV9CpC8tk8E1kPlz185pojstj
-	 x/L2zb0LveyZkZmL3lV8G+Me3GgSRLRqB1tJDOmE=
+	b=DbVHUYTy5aYLz7EWpTf6w/6O8EtGOt3JXUvgdjh/5hrMZCottUEU9knn7Cut7JL+p
+	 3sRlgY7DIkRpiIYWtb/54LKjqt0/aodKbiXJ4c9j7EwINHN5/7mWFAMrr6BoNZVA/X
+	 B9p/FHY4n4OadF8DcpxM1PdTsX60c/YjVWi2GLSg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Markus Burri <markus.burri@mt.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Wenjing Liu <wenjing.liu@amd.com>,
+	George Shen <george.shen@amd.com>,
+	Ray Wu <ray.wu@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 40/55] gpio: virtuser: fix potential out-of-bound write
-Date: Mon,  2 Jun 2025 15:47:57 +0200
-Message-ID: <20250602134239.857486404@linuxfoundation.org>
+Subject: [PATCH 6.12 41/55] drm/amd/display: fix link_set_dpms_off multi-display MST corner case
+Date: Mon,  2 Jun 2025 15:47:58 +0200
+Message-ID: <20250602134239.899493470@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134238.271281478@linuxfoundation.org>
 References: <20250602134238.271281478@linuxfoundation.org>
@@ -52,63 +54,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Markus Burri <markus.burri@mt.com>
+From: George Shen <george.shen@amd.com>
 
-[ Upstream commit 7118be7c6072f40391923543fdd1563b8d56377c ]
+[ Upstream commit 3c1a467372e0c356b1d3c59f6d199ed5a6612dd1 ]
 
-If the caller wrote more characters, count is truncated to the max
-available space in "simple_write_to_buffer". Check that the input
-size does not exceed the buffer size. Write a zero termination
-afterwards.
+[Why & How]
+When MST config is unplugged/replugged too quickly, it can potentially
+result in a scenario where previous DC state has not been reset before
+the HPD link detection sequence begins. In this case, driver will
+disable the streams/link prior to re-enabling the link for link
+training.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202505091754.285hHbr2-lkp@intel.com/
-Signed-off-by: Markus Burri <markus.burri@mt.com>
-Link: https://lore.kernel.org/r/20250509150459.115489-1-markus.burri@mt.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+There is a bug in the current logic that does not account for the fact
+that current_state can be released and cleared prior to swapping to a
+new state (resulting in the pipe_ctx stream pointers to be cleared) in
+between disabling streams.
+
+To resolve this, cache the original streams prior to committing any
+stream updates.
+
+Reviewed-by: Wenjing Liu <wenjing.liu@amd.com>
+Signed-off-by: George Shen <george.shen@amd.com>
+Signed-off-by: Ray Wu <ray.wu@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 1561782686ccc36af844d55d31b44c938dd412dc)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-virtuser.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/display/dc/link/link_dpms.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpio/gpio-virtuser.c b/drivers/gpio/gpio-virtuser.c
-index e89f299f21400..dcecb7a259117 100644
---- a/drivers/gpio/gpio-virtuser.c
-+++ b/drivers/gpio/gpio-virtuser.c
-@@ -400,10 +400,15 @@ static ssize_t gpio_virtuser_direction_do_write(struct file *file,
- 	char buf[32], *trimmed;
- 	int ret, dir, val = 0;
+diff --git a/drivers/gpu/drm/amd/display/dc/link/link_dpms.c b/drivers/gpu/drm/amd/display/dc/link/link_dpms.c
+index c4e03482ba9ae..aa28001297675 100644
+--- a/drivers/gpu/drm/amd/display/dc/link/link_dpms.c
++++ b/drivers/gpu/drm/amd/display/dc/link/link_dpms.c
+@@ -148,6 +148,7 @@ void link_blank_dp_stream(struct dc_link *link, bool hw_init)
+ void link_set_all_streams_dpms_off_for_link(struct dc_link *link)
+ {
+ 	struct pipe_ctx *pipes[MAX_PIPES];
++	struct dc_stream_state *streams[MAX_PIPES];
+ 	struct dc_state *state = link->dc->current_state;
+ 	uint8_t count;
+ 	int i;
+@@ -160,10 +161,18 @@ void link_set_all_streams_dpms_off_for_link(struct dc_link *link)
  
--	ret = simple_write_to_buffer(buf, sizeof(buf), ppos, user_buf, count);
-+	if (count >= sizeof(buf))
-+		return -EINVAL;
+ 	link_get_master_pipes_with_dpms_on(link, state, &count, pipes);
+ 
++	/* The subsequent call to dc_commit_updates_for_stream for a full update
++	 * will release the current state and swap to a new state. Releasing the
++	 * current state results in the stream pointers in the pipe_ctx structs
++	 * to be zero'd. Hence, cache all streams prior to dc_commit_updates_for_stream.
++	 */
++	for (i = 0; i < count; i++)
++		streams[i] = pipes[i]->stream;
 +
-+	ret = simple_write_to_buffer(buf, sizeof(buf) - 1, ppos, user_buf, count);
- 	if (ret < 0)
- 		return ret;
+ 	for (i = 0; i < count; i++) {
+-		stream_update.stream = pipes[i]->stream;
++		stream_update.stream = streams[i];
+ 		dc_commit_updates_for_stream(link->ctx->dc, NULL, 0,
+-				pipes[i]->stream, &stream_update,
++				streams[i], &stream_update,
+ 				state);
+ 	}
  
-+	buf[ret] = '\0';
-+
- 	trimmed = strim(buf);
- 
- 	if (strcmp(trimmed, "input") == 0) {
-@@ -622,12 +627,15 @@ static ssize_t gpio_virtuser_consumer_write(struct file *file,
- 	char buf[GPIO_VIRTUSER_NAME_BUF_LEN + 2];
- 	int ret;
- 
-+	if (count >= sizeof(buf))
-+		return -EINVAL;
-+
- 	ret = simple_write_to_buffer(buf, GPIO_VIRTUSER_NAME_BUF_LEN, ppos,
- 				     user_buf, count);
- 	if (ret < 0)
- 		return ret;
- 
--	buf[strlen(buf) - 1] = '\0';
-+	buf[ret] = '\0';
- 
- 	ret = gpiod_set_consumer_name(data->ad.desc, buf);
- 	if (ret)
 -- 
 2.39.5
 
