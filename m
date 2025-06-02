@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15B6D221739;
-	Mon,  2 Jun 2025 13:58:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAD3821FF39;
+	Mon,  2 Jun 2025 13:58:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748872701; cv=none; b=BqpUajCKpEQsNdKt2vmM5AJMGEtxc7jUX+hLjUF2Ptzws1+4aD9DD17A2Pj1+58lSe8IYIYaewgJWGb8nk7s5zibyhwczSEPHwzicxBO/ViQ44FEImvP28vatGiAk2/m8NVWRVamgzRfmhLurS+JNXN01Ja+7w8y96E+5tw1M5I=
+	t=1748872704; cv=none; b=WH+9oYeKXoDReb+6O7FUWtWvKIK9fjys1iIlBZ/eXMG/l21qTfye4X9Cdu6FApkvx7/KblRDm7hwnmS9/ORZclfjVwYB5YJCnwV/DuhmUM/sN2JNYBqZhK4Zs0WGVr9kyBEUadiS/eMFD9blCIOFUaC7cLsC4Qj77ktNvdtEHu8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748872701; c=relaxed/simple;
-	bh=s4bpNvtPW2fxMjT7OYwu7prl27hua/sUYsgirlex09E=;
+	s=arc-20240116; t=1748872704; c=relaxed/simple;
+	bh=KzrxkstAbdz9twGFdLKFO3WKxV1/didhbdXSZ3C0l0A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bcXrLsyRx7USpZkoKriAomerhHj8qAxQmJ5ezfTusSRUzeu1RJ+FsF1/2Y/70leCv34sZPfLyXsqRIcdbyePntOlohEaPPGVC8c3URaB8E8Q0hQr5NY/dbxCaroO+6QrFkk67roG9ldjAxXkdeOSh4uKvePJ7lalTBBAYipPLi0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u9MNsgWV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TfUoFrzh8G/0GsS9s2UiXAM4D8l+x2WptEhfS7mCBk7zqDCX5OEv29cn81onEnk9o2zQtWjdz5CE6VX/3PHLIX5kkN3ir8VvXESUZWobMbRUZy+84K3hlJKlpSgOEwXaKuvGr/75+lXXJHNIDLmd2drvUeN+JFq2ZVowY5DRZXw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z3uNCpwy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u9MNsgWV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93627C4CEEB;
-	Mon,  2 Jun 2025 13:58:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z3uNCpwy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58D8BC4CEEB;
+	Mon,  2 Jun 2025 13:58:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748872701;
-	bh=s4bpNvtPW2fxMjT7OYwu7prl27hua/sUYsgirlex09E=;
+	s=korg; t=1748872703;
+	bh=KzrxkstAbdz9twGFdLKFO3WKxV1/didhbdXSZ3C0l0A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u9MNsgWVqL1fVEDLzyo9i2rq5q+M3giPlEIykTHE9gdEC4xG07QteQn+LJfFFlbe3
-	 HfJD7lh37Q8eJGxd9tMdEze5Ei6Rx2f/zgqB056jBkblQ098vIQh6VXN89R4jf4Kcb
-	 MfYRrLsdMao5MI+7yaExCJWwrnkCBBGNGa4HW728=
+	b=z3uNCpwyG8K7k0Y6MdlXhfFHcFloI+mPjoqVnKj+BPbUVXELHqnEEEJbT/mSoFC3T
+	 YCBusNxg3tFEiFdGYOBGmRmxtw4ljLjZUGJA8/+dn4yWq+ZR1MJfqcEi2YW85pXNKm
+	 XPenHkFUx96vwBBARInpzxfLX4H0vEnALCTHijq8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Johan Hovold <johan@kernel.org>,
 	Robin Murphy <robin.murphy@arm.com>,
-	Will Deacon <will@kernel.org>
-Subject: [PATCH 6.14 44/73] perf/arm-cmn: Add CMN S3 ACPI binding
-Date: Mon,  2 Jun 2025 15:47:30 +0200
-Message-ID: <20250602134243.425018518@linuxfoundation.org>
+	Joerg Roedel <jroedel@suse.de>
+Subject: [PATCH 6.14 45/73] iommu: Handle yet another race around registration
+Date: Mon,  2 Jun 2025 15:47:31 +0200
+Message-ID: <20250602134243.463962397@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134241.673490006@linuxfoundation.org>
 References: <20250602134241.673490006@linuxfoundation.org>
@@ -52,31 +53,117 @@ Content-Transfer-Encoding: 8bit
 
 From: Robin Murphy <robin.murphy@arm.com>
 
-commit 8c138a189f6db295ceb32258d46ac061df0823e5 upstream.
+commit da33e87bd2bfc63531cf7448a3cd7a3d42182f08 upstream.
 
-An ACPI binding for CMN S3 was not yet finalised when the driver support
-was originally written, but v1.2 of DEN0093 "ACPI for Arm Components"
-has at last been published; support ACPI systems using the proper HID.
+Next up on our list of race windows to close is another one during
+iommu_device_register() - it's now OK again for multiple instances to
+run their bus_iommu_probe() in parallel, but an iommu_probe_device() can
+still also race against a running bus_iommu_probe(). As Johan has
+managed to prove, this has now become a lot more visible on DT platforms
+wth driver_async_probe where a client driver is attempting to probe in
+parallel with its IOMMU driver - although commit b46064a18810 ("iommu:
+Handle race with default domain setup") resolves this from the client
+driver's point of view, this isn't before of_iommu_configure() has had
+the chance to attempt to "replay" a probe that the bus walk hasn't even
+tried yet, and so still cause the out-of-order group allocation
+behaviour that we're trying to clean up (and now warning about).
 
-Cc: stable@vger.kernel.org
-Fixes: 0dc2f4963f7e ("perf/arm-cmn: Support CMN S3")
+The most reliable thing to do here is to explicitly keep track of the
+"iommu_device_register() is still running" state, so we can then
+special-case the ops lookup for the replay path (based on dev->iommu
+again) to let that think it's still waiting for the IOMMU driver to
+appear at all. This still leaves the longstanding theoretical case of
+iommu_bus_notifier() being triggered during bus_iommu_probe(), but it's
+not so simple to defer a notifier, and nobody's ever reported that being
+a visible issue, so let's quietly kick that can down the road for now...
+
+Reported-by: Johan Hovold <johan@kernel.org>
+Fixes: bcb81ac6ae3c ("iommu: Get DT/ACPI parsing into the proper probe path")
 Signed-off-by: Robin Murphy <robin.murphy@arm.com>
-Link: https://lore.kernel.org/r/7dafe147f186423020af49d7037552ee59c60e97.1747652164.git.robin.murphy@arm.com
-Signed-off-by: Will Deacon <will@kernel.org>
+Link: https://lore.kernel.org/r/88d54c1b48fed8279aa47d30f3d75173685bb26a.1745516488.git.robin.murphy@arm.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/perf/arm-cmn.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/iommu/iommu.c |   26 ++++++++++++++++++--------
+ include/linux/iommu.h |    2 ++
+ 2 files changed, 20 insertions(+), 8 deletions(-)
 
---- a/drivers/perf/arm-cmn.c
-+++ b/drivers/perf/arm-cmn.c
-@@ -2650,6 +2650,7 @@ static const struct acpi_device_id arm_c
- 	{ "ARMHC600", PART_CMN600 },
- 	{ "ARMHC650" },
- 	{ "ARMHC700" },
-+	{ "ARMHC003" },
- 	{}
+--- a/drivers/iommu/iommu.c
++++ b/drivers/iommu/iommu.c
+@@ -273,6 +273,8 @@ int iommu_device_register(struct iommu_d
+ 		err = bus_iommu_probe(iommu_buses[i]);
+ 	if (err)
+ 		iommu_device_unregister(iommu);
++	else
++		WRITE_ONCE(iommu->ready, true);
+ 	return err;
+ }
+ EXPORT_SYMBOL_GPL(iommu_device_register);
+@@ -2801,31 +2803,39 @@ bool iommu_default_passthrough(void)
+ }
+ EXPORT_SYMBOL_GPL(iommu_default_passthrough);
+ 
+-const struct iommu_ops *iommu_ops_from_fwnode(const struct fwnode_handle *fwnode)
++static const struct iommu_device *iommu_from_fwnode(const struct fwnode_handle *fwnode)
+ {
+-	const struct iommu_ops *ops = NULL;
+-	struct iommu_device *iommu;
++	const struct iommu_device *iommu, *ret = NULL;
+ 
+ 	spin_lock(&iommu_device_lock);
+ 	list_for_each_entry(iommu, &iommu_device_list, list)
+ 		if (iommu->fwnode == fwnode) {
+-			ops = iommu->ops;
++			ret = iommu;
+ 			break;
+ 		}
+ 	spin_unlock(&iommu_device_lock);
+-	return ops;
++	return ret;
++}
++
++const struct iommu_ops *iommu_ops_from_fwnode(const struct fwnode_handle *fwnode)
++{
++	const struct iommu_device *iommu = iommu_from_fwnode(fwnode);
++
++	return iommu ? iommu->ops : NULL;
+ }
+ 
+ int iommu_fwspec_init(struct device *dev, struct fwnode_handle *iommu_fwnode)
+ {
+-	const struct iommu_ops *ops = iommu_ops_from_fwnode(iommu_fwnode);
++	const struct iommu_device *iommu = iommu_from_fwnode(iommu_fwnode);
+ 	struct iommu_fwspec *fwspec = dev_iommu_fwspec_get(dev);
+ 
+-	if (!ops)
++	if (!iommu)
+ 		return driver_deferred_probe_check_state(dev);
++	if (!dev->iommu && !READ_ONCE(iommu->ready))
++		return -EPROBE_DEFER;
+ 
+ 	if (fwspec)
+-		return ops == iommu_fwspec_ops(fwspec) ? 0 : -EINVAL;
++		return iommu->ops == iommu_fwspec_ops(fwspec) ? 0 : -EINVAL;
+ 
+ 	if (!dev_iommu_get(dev))
+ 		return -ENOMEM;
+--- a/include/linux/iommu.h
++++ b/include/linux/iommu.h
+@@ -735,6 +735,7 @@ struct iommu_domain_ops {
+  * @dev: struct device for sysfs handling
+  * @singleton_group: Used internally for drivers that have only one group
+  * @max_pasids: number of supported PASIDs
++ * @ready: set once iommu_device_register() has completed successfully
+  */
+ struct iommu_device {
+ 	struct list_head list;
+@@ -743,6 +744,7 @@ struct iommu_device {
+ 	struct device *dev;
+ 	struct iommu_group *singleton_group;
+ 	u32 max_pasids;
++	bool ready;
  };
- MODULE_DEVICE_TABLE(acpi, arm_cmn_acpi_match);
+ 
+ /**
 
 
