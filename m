@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B09DE224B02;
-	Mon,  2 Jun 2025 15:11:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1EBB224AFA;
+	Mon,  2 Jun 2025 15:11:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748877098; cv=none; b=ukHMtgFRnaEw3/HnnmjVBwB6M0wtemPXx+szBq3IUnlUFCaygPMFkuAOuviEwVoex7Hvjlg1hPRc6Xc65xPRW+9DU5AhmriS/YDXDpKl+tJNTeYV9JW8AoyRR5w12EYnmzPk0G7zWlEw7ms7wYe9YNein8yA3LhiPu26IHimF8s=
+	t=1748877102; cv=none; b=dGRjla6ncBqOah401DJYPsQ/WGQowgPx9JWuuWOfSNxbdfeUa3fHQCthP4L+DTiRt+1k0RSWOGrCIppRZ/GqivuvMlr86T5GzCMmxfK0JalkGsU2jTRI6GRGwk5+F1alHH/DDUCEOxLG6t27zhDO2BhIrnnYrFvrrwRbahBTEkU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748877098; c=relaxed/simple;
-	bh=AZyGj/ZFPg/YXj8TUQGOs6BGcaqmHrIyqmqjWh7o8MU=;
+	s=arc-20240116; t=1748877102; c=relaxed/simple;
+	bh=5EfPlRNHAjRiQJ89iVJVfM4qoJxb7aANlJdfKA3AymI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jm06PzoYa7sgeFHlLt4Qf7+0zglsC0jfFGbPu3oqqMCNc67Zg+mSQdbEqCY3vHjll6mg7EIYMQSnzcSGpo5fzlWF8KC1kVh6sHf5ihXj6TDInKLR0JayLTH6INn/NDveUTZVfRFOT8MDgvRpxYSr3HlLYviKYcmhmm4JiwxBr+0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xetjlbvh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k2ySrJCIsKD6O7dqU0O1XtgyTQsRxBjtA+9xogqF9GxgRZu+gO/cmdzAkDVubMzk2flSmscTXWcbgm7Pn3zRuntWSF0AooFeDb5rQAAngf0HEw7hmGCLPuVEiSGv49O4G3Rr3eD8A1kK6xktoW/YPoD9opTOxFxgORyXwUArmag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e6R6HiE4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xetjlbvh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37F3CC4CEEB;
-	Mon,  2 Jun 2025 15:11:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e6R6HiE4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 620FDC4CEEB;
+	Mon,  2 Jun 2025 15:11:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748877098;
-	bh=AZyGj/ZFPg/YXj8TUQGOs6BGcaqmHrIyqmqjWh7o8MU=;
+	s=korg; t=1748877101;
+	bh=5EfPlRNHAjRiQJ89iVJVfM4qoJxb7aANlJdfKA3AymI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xetjlbvhJIMrCINTwvjeMhH8686ipJmr5xSc2qS9gL37q2atOcBNYolPNPypsBK70
-	 NC+JRlfHtYdcP4d0m3k7tHsQaakXtI4g+rFnbJOarWuzQaRoZ/F9GqNJXjoNhcWIN/
-	 tAp8ldNGmFMw4QKza00Fi++v6lSXVNsLSXFHFCKc=
+	b=e6R6HiE495mQyQqni0vyF4nDtfP2GSXqatq/aW2xJMFryJPXKvfDFu7H91BDFVBz/
+	 KQFnvJxSNafupWbk9NfPFCOTI4NBVSbnYdIoqEiibqQZr4b7gYh2GPclVcOMWM2Whd
+	 DK45CC0ZRoRTy3gmfW+kauZeMXaAPNzjCgEU3Zzs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hector Martin <marcan@marcan.st>,
-	Mark Brown <broonie@kernel.org>,
+	Jinliang Zheng <alexjlzheng@tencent.com>,
+	Tianxiang Peng <txpeng@tencent.com>,
+	Hao Peng <flyingpeng@tencent.com>,
+	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 170/325] ASoC: tas2764: Power up/down amp on mute ops
-Date: Mon,  2 Jun 2025 15:47:26 +0200
-Message-ID: <20250602134326.724556594@linuxfoundation.org>
+Subject: [PATCH 6.1 142/325] dm: fix unconditional IO throttle caused by REQ_PREFLUSH
+Date: Mon,  2 Jun 2025 15:46:58 +0200
+Message-ID: <20250602134325.569223731@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134319.723650984@linuxfoundation.org>
 References: <20250602134319.723650984@linuxfoundation.org>
@@ -51,106 +53,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hector Martin <marcan@marcan.st>
+From: Jinliang Zheng <alexjlzheng@gmail.com>
 
-[ Upstream commit 1c3b5f37409682184669457a5bdf761268eafbe5 ]
+[ Upstream commit 88f7f56d16f568f19e1a695af34a7f4a6ce537a6 ]
 
-The ASoC convention is that clocks are removed after codec mute, and
-power up/down is more about top level power management. For these chips,
-the "mute" state still expects a TDM clock, and yanking the clock in
-this state will trigger clock errors. So, do the full
-shutdown<->mute<->active transition on the mute operation, so the amp is
-in software shutdown by the time the clocks are removed.
+When a bio with REQ_PREFLUSH is submitted to dm, __send_empty_flush()
+generates a flush_bio with REQ_OP_WRITE | REQ_PREFLUSH | REQ_SYNC,
+which causes the flush_bio to be throttled by wbt_wait().
 
-This fixes TDM clock errors when streams are stopped.
+An example from v5.4, similar problem also exists in upstream:
 
-Signed-off-by: Hector Martin <marcan@marcan.st>
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Link: https://patch.msgid.link/20250208-asoc-tas2764-v1-1-dbab892a69b5@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+    crash> bt 2091206
+    PID: 2091206  TASK: ffff2050df92a300  CPU: 109  COMMAND: "kworker/u260:0"
+     #0 [ffff800084a2f7f0] __switch_to at ffff80004008aeb8
+     #1 [ffff800084a2f820] __schedule at ffff800040bfa0c4
+     #2 [ffff800084a2f880] schedule at ffff800040bfa4b4
+     #3 [ffff800084a2f8a0] io_schedule at ffff800040bfa9c4
+     #4 [ffff800084a2f8c0] rq_qos_wait at ffff8000405925bc
+     #5 [ffff800084a2f940] wbt_wait at ffff8000405bb3a0
+     #6 [ffff800084a2f9a0] __rq_qos_throttle at ffff800040592254
+     #7 [ffff800084a2f9c0] blk_mq_make_request at ffff80004057cf38
+     #8 [ffff800084a2fa60] generic_make_request at ffff800040570138
+     #9 [ffff800084a2fae0] submit_bio at ffff8000405703b4
+    #10 [ffff800084a2fb50] xlog_write_iclog at ffff800001280834 [xfs]
+    #11 [ffff800084a2fbb0] xlog_sync at ffff800001280c3c [xfs]
+    #12 [ffff800084a2fbf0] xlog_state_release_iclog at ffff800001280df4 [xfs]
+    #13 [ffff800084a2fc10] xlog_write at ffff80000128203c [xfs]
+    #14 [ffff800084a2fcd0] xlog_cil_push at ffff8000012846dc [xfs]
+    #15 [ffff800084a2fda0] xlog_cil_push_work at ffff800001284a2c [xfs]
+    #16 [ffff800084a2fdb0] process_one_work at ffff800040111d08
+    #17 [ffff800084a2fe00] worker_thread at ffff8000401121cc
+    #18 [ffff800084a2fe70] kthread at ffff800040118de4
+
+After commit 2def2845cc33 ("xfs: don't allow log IO to be throttled"),
+the metadata submitted by xlog_write_iclog() should not be throttled.
+But due to the existence of the dm layer, throttling flush_bio indirectly
+causes the metadata bio to be throttled.
+
+Fix this by conditionally adding REQ_IDLE to flush_bio.bi_opf, which makes
+wbt_should_throttle() return false to avoid wbt_wait().
+
+Signed-off-by: Jinliang Zheng <alexjlzheng@tencent.com>
+Reviewed-by: Tianxiang Peng <txpeng@tencent.com>
+Reviewed-by: Hao Peng <flyingpeng@tencent.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/tas2764.c | 51 ++++++++++++++++----------------------
- 1 file changed, 21 insertions(+), 30 deletions(-)
+ drivers/md/dm.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/codecs/tas2764.c b/sound/soc/codecs/tas2764.c
-index 94428487a8855..10f0f07b90ff2 100644
---- a/sound/soc/codecs/tas2764.c
-+++ b/sound/soc/codecs/tas2764.c
-@@ -182,33 +182,6 @@ static SOC_ENUM_SINGLE_DECL(
- static const struct snd_kcontrol_new tas2764_asi1_mux =
- 	SOC_DAPM_ENUM("ASI1 Source", tas2764_ASI1_src_enum);
- 
--static int tas2764_dac_event(struct snd_soc_dapm_widget *w,
--			     struct snd_kcontrol *kcontrol, int event)
--{
--	struct snd_soc_component *component = snd_soc_dapm_to_component(w->dapm);
--	struct tas2764_priv *tas2764 = snd_soc_component_get_drvdata(component);
--	int ret;
--
--	switch (event) {
--	case SND_SOC_DAPM_POST_PMU:
--		tas2764->dac_powered = true;
--		ret = tas2764_update_pwr_ctrl(tas2764);
--		break;
--	case SND_SOC_DAPM_PRE_PMD:
--		tas2764->dac_powered = false;
--		ret = tas2764_update_pwr_ctrl(tas2764);
--		break;
--	default:
--		dev_err(tas2764->dev, "Unsupported event\n");
--		return -EINVAL;
--	}
--
--	if (ret < 0)
--		return ret;
--
--	return 0;
--}
--
- static const struct snd_kcontrol_new isense_switch =
- 	SOC_DAPM_SINGLE("Switch", TAS2764_PWR_CTRL, TAS2764_ISENSE_POWER_EN, 1, 1);
- static const struct snd_kcontrol_new vsense_switch =
-@@ -221,8 +194,7 @@ static const struct snd_soc_dapm_widget tas2764_dapm_widgets[] = {
- 			    1, &isense_switch),
- 	SND_SOC_DAPM_SWITCH("VSENSE", TAS2764_PWR_CTRL, TAS2764_VSENSE_POWER_EN,
- 			    1, &vsense_switch),
--	SND_SOC_DAPM_DAC_E("DAC", NULL, SND_SOC_NOPM, 0, 0, tas2764_dac_event,
--			   SND_SOC_DAPM_POST_PMU | SND_SOC_DAPM_PRE_PMD),
-+	SND_SOC_DAPM_DAC("DAC", NULL, SND_SOC_NOPM, 0, 0),
- 	SND_SOC_DAPM_OUTPUT("OUT"),
- 	SND_SOC_DAPM_SIGGEN("VMON"),
- 	SND_SOC_DAPM_SIGGEN("IMON")
-@@ -243,9 +215,28 @@ static int tas2764_mute(struct snd_soc_dai *dai, int mute, int direction)
+diff --git a/drivers/md/dm.c b/drivers/md/dm.c
+index f70129bc703b8..4767265793de7 100644
+--- a/drivers/md/dm.c
++++ b/drivers/md/dm.c
+@@ -1523,14 +1523,18 @@ static void __send_empty_flush(struct clone_info *ci)
  {
- 	struct tas2764_priv *tas2764 =
- 			snd_soc_component_get_drvdata(dai->component);
-+	int ret;
+ 	struct dm_table *t = ci->map;
+ 	struct bio flush_bio;
++	blk_opf_t opf = REQ_OP_WRITE | REQ_PREFLUSH | REQ_SYNC;
 +
-+	if (!mute) {
-+		tas2764->dac_powered = true;
-+		ret = tas2764_update_pwr_ctrl(tas2764);
-+		if (ret)
-+			return ret;
-+	}
++	if ((ci->io->orig_bio->bi_opf & (REQ_IDLE | REQ_SYNC)) ==
++	    (REQ_IDLE | REQ_SYNC))
++		opf |= REQ_IDLE;
  
- 	tas2764->unmuted = !mute;
--	return tas2764_update_pwr_ctrl(tas2764);
-+	ret = tas2764_update_pwr_ctrl(tas2764);
-+	if (ret)
-+		return ret;
-+
-+	if (mute) {
-+		tas2764->dac_powered = false;
-+		ret = tas2764_update_pwr_ctrl(tas2764);
-+		if (ret)
-+			return ret;
-+	}
-+
-+	return 0;
- }
+ 	/*
+ 	 * Use an on-stack bio for this, it's safe since we don't
+ 	 * need to reference it after submit. It's just used as
+ 	 * the basis for the clone(s).
+ 	 */
+-	bio_init(&flush_bio, ci->io->md->disk->part0, NULL, 0,
+-		 REQ_OP_WRITE | REQ_PREFLUSH | REQ_SYNC);
++	bio_init(&flush_bio, ci->io->md->disk->part0, NULL, 0, opf);
  
- static int tas2764_set_bitwidth(struct tas2764_priv *tas2764, int bitwidth)
+ 	ci->bio = &flush_bio;
+ 	ci->sector_count = 0;
 -- 
 2.39.5
 
