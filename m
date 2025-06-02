@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D09A220E6E3;
-	Mon,  2 Jun 2025 14:47:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 117C822F772;
+	Mon,  2 Jun 2025 14:47:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748875620; cv=none; b=ST2yBgZkYRW7aQcyOuuNSQ3SUlZ5ikC5YmHtdV3RwSulFh9lS47BrYAfAL8nhMQKz1cI8a1VTOtyRdAa5YTOYS2NaWuyAgvs7Nc4MaauG5eExVE7CqNUROjPZAq5BI1jUnB974ZapfBl59wBwAotUC/+NUwW3p7LApp+Fqwl98Y=
+	t=1748875624; cv=none; b=M1VFLYY6H+pF4Sl092Vrp4OkxgXFQXDj7nKrh3bEOpxyIG/5uTi1oSsT6zhrLROckuyAk0efo8VYC5sQFQkWavpCBSqljrenNxYw+SJ3KnA2AP/6U+NU38Rm5J6AdzsVZpHIKZ0A2/ocDzNiFWRpLbcPuNSLdKbZqaSG0P7L76k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748875620; c=relaxed/simple;
-	bh=cL+Gbcl432m5pxC9d0eW8BLNKzVtjEOeOzMkfy8w9Pw=;
+	s=arc-20240116; t=1748875624; c=relaxed/simple;
+	bh=c2hbu2NttbuIqryBT6sCalUHnTW+ccIFdJP1s016X7I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QoOZoVIuT4S8LX2lYqtx1o8zxMebaIS829TNHjWGci5yzTB4ZTNzEvBMqxxlJtlV7Uy7tfqdgCnV/aO/0QYibOjkPfNsuTVe6hFt307qRvU5oD5ZU9108a5ny6SmI2atJUaRn6WijHy2vaYHUwyi/biooD40chnYYeNOfp7oQfc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BWhCQRcE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uUHKa+WWXLB7BBdqwLYKUrpmu7cgVuXJo0Q2jbSXec9P35FJTBGf+zN04a/Q1j+vR3ZvZNi5umSTmSY8lxvynkXL4awNypcx/QCG7WdICIeo16Wx8m96Xnzk2FUiA9WS/okzpfBrv72o3GR0IOcMivD3JMoeZ/q/zDAYnZJiZZA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TOaQbKcS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BWhCQRcE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50B69C4CEEB;
-	Mon,  2 Jun 2025 14:47:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TOaQbKcS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C486C4CEEB;
+	Mon,  2 Jun 2025 14:47:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748875620;
-	bh=cL+Gbcl432m5pxC9d0eW8BLNKzVtjEOeOzMkfy8w9Pw=;
+	s=korg; t=1748875623;
+	bh=c2hbu2NttbuIqryBT6sCalUHnTW+ccIFdJP1s016X7I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BWhCQRcEJEOhf5HaxSJ189DXTt1CXLHcR6Dtw0jxuBvm60h5yCwzXYU4Ny6EJVD6F
-	 b2T78hxpyPi6FSpC9ve18AnhZKnCE1Ara8T44BbAGTDrDNWf0T2P8cvaK8+mm0v1SI
-	 eXR94FTHz/WExBAXwUMG0Q+u+T24Hrj+eNm/OxR0=
+	b=TOaQbKcSByhb0RpoIU0ETtPU5vLJ1JF/yqLsICOHGycRDFlBtrGjz5lev0sgNcoIh
+	 dm5qXb+zsZWhIOOBuHHmkYUILKFufYyPEWVCMcwi3Y5lVsDU1BVCv25ZeYXhcPeMkN
+	 gumQFoFOF8PCuwrNfocpZRh/djWITg2cCYMp53GE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Mike Marshall <hubcap@omnibond.com>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 190/270] wifi: rtw88: Fix rtw_desc_to_mcsrate() to handle MCS16-31
-Date: Mon,  2 Jun 2025 15:47:55 +0200
-Message-ID: <20250602134314.972355163@linuxfoundation.org>
+Subject: [PATCH 5.10 162/270] orangefs: Do not truncate file size
+Date: Mon,  2 Jun 2025 15:47:27 +0200
+Message-ID: <20250602134313.844143119@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134307.195171844@linuxfoundation.org>
 References: <20250602134307.195171844@linuxfoundation.org>
@@ -51,40 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+From: Matthew Wilcox (Oracle) <willy@infradead.org>
 
-[ Upstream commit 86d04f8f991a0509e318fe886d5a1cf795736c7d ]
+[ Upstream commit 062e8093592fb866b8e016641a8b27feb6ac509d ]
 
-This function translates the rate number reported by the hardware into
-something mac80211 can understand. It was ignoring the 3SS and 4SS HT
-rates. Translate them too.
+'len' is used to store the result of i_size_read(), so making 'len'
+a size_t results in truncation to 4GiB on 32-bit systems.
 
-Also set *nss to 0 for the HT rates, just to make sure it's
-initialised.
-
-Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/d0a5a86b-4869-47f6-a5a7-01c0f987cc7f@gmail.com
+Signed-off-by: "Matthew Wilcox (Oracle)" <willy@infradead.org>
+Link: https://lore.kernel.org/r/20250305204734.1475264-2-willy@infradead.org
+Tested-by: Mike Marshall <hubcap@omnibond.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw88/util.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/orangefs/inode.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw88/util.c b/drivers/net/wireless/realtek/rtw88/util.c
-index 2c515af214e76..bfd017d53fef8 100644
---- a/drivers/net/wireless/realtek/rtw88/util.c
-+++ b/drivers/net/wireless/realtek/rtw88/util.c
-@@ -101,7 +101,8 @@ void rtw_desc_to_mcsrate(u16 rate, u8 *mcs, u8 *nss)
- 		*nss = 4;
- 		*mcs = rate - DESC_RATEVHT4SS_MCS0;
- 	} else if (rate >= DESC_RATEMCS0 &&
--		   rate <= DESC_RATEMCS15) {
-+		   rate <= DESC_RATEMCS31) {
-+		*nss = 0;
- 		*mcs = rate - DESC_RATEMCS0;
- 	}
- }
+diff --git a/fs/orangefs/inode.c b/fs/orangefs/inode.c
+index 48f0547d4850e..cd70ded309e47 100644
+--- a/fs/orangefs/inode.c
++++ b/fs/orangefs/inode.c
+@@ -22,9 +22,9 @@ static int orangefs_writepage_locked(struct page *page,
+ 	struct orangefs_write_range *wr = NULL;
+ 	struct iov_iter iter;
+ 	struct bio_vec bv;
+-	size_t len, wlen;
++	size_t wlen;
+ 	ssize_t ret;
+-	loff_t off;
++	loff_t len, off;
+ 
+ 	set_page_writeback(page);
+ 
+@@ -93,8 +93,7 @@ static int orangefs_writepages_work(struct orangefs_writepages *ow,
+ 	struct orangefs_write_range *wrp, wr;
+ 	struct iov_iter iter;
+ 	ssize_t ret;
+-	size_t len;
+-	loff_t off;
++	loff_t len, off;
+ 	int i;
+ 
+ 	len = i_size_read(inode);
 -- 
 2.39.5
 
