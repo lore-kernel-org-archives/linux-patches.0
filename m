@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E962822D4DC;
-	Mon,  2 Jun 2025 14:51:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E324722D7B1;
+	Mon,  2 Jun 2025 14:51:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748875907; cv=none; b=Zql+EeXzDkO1BOvpugS28gW7zKn7Qi2+dYddK+LQaa/SgvjuL50PBPafoA6qdkOYs5gfTSR8UqF5wZmPBrUAu6zAPbah4jayJAvGrNdePTwlNkeYa+tMTkjN/eped433oqeSQAqUheJMRd1taOAw3VR+O7xa0i9ehnt+kHLgIxg=
+	t=1748875910; cv=none; b=oduanmNRPKpRASpI7/ouIkneO945BJ+LACMd6qdya4vnNib2IezjUJcIkIiYrm/kz8DL0Q8EcnORAF5PEBjfORvPcWNam/Y9WWNFA8d4OCzclj8lRuVpgxWA2u+EXW76OSMCsIvKym+1CFhOfQPgTwe+ObFwJ+iBrV2Z8q4gzlc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748875907; c=relaxed/simple;
-	bh=rhz4r/5nkX12wTng6NxwxrLKNSd04mSsYThJO223ex4=;
+	s=arc-20240116; t=1748875910; c=relaxed/simple;
+	bh=ZFBYgt01kfQNj03TI7oktYMairHo9giHeiCnI8e6a8U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lNHyAnVTdah369i2N5U5P7/ASFKR2eVX/FlwPg4Ds9pmfyvzsRwR9wKqEfHQ+jNVm0Nx+VgxDK1iUXgGdHpAjh/aK6UTfIuCgBGE0d6ov6rdiuo2T+XfDXiD9IMla5zmwr573N4eIoxIg7U8c5R+fnDwPhufR4Obl5EKZDJGVUg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bn0g4aS7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YRRjxYMFjwD5+IVACcnr5HYxX/sFxls86Bf+HJS9q44ucCOP6RaeEd2u07zTI8TUGqDVxwLqd55WaTNfkTkZL8ORjMBEc81BMccfivw1j21ErKkV9qQj3jXYaOk8VbGYip1a1js8lF1+S1ZCZlKZrMYsGjw1+U7+nHNrGYlOjo0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HP5c/C+D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bn0g4aS7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B9AFC4CEEB;
-	Mon,  2 Jun 2025 14:51:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HP5c/C+D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54990C4CEEB;
+	Mon,  2 Jun 2025 14:51:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748875906;
-	bh=rhz4r/5nkX12wTng6NxwxrLKNSd04mSsYThJO223ex4=;
+	s=korg; t=1748875909;
+	bh=ZFBYgt01kfQNj03TI7oktYMairHo9giHeiCnI8e6a8U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bn0g4aS7n+/M/CNjbtwih0DOE3f/Pn/LiqjVypSLrMATINa2z9sS8vSlWVSiFzw4Q
-	 d/JfAlBzSb7Df5HT6O4MEc3bTAuNkgEb9Yy1xL0o189ua09vhayz2R+XsPw9OCga3G
-	 9PNi/oaaxatpRXOmkkewcRrkN/HrGWkkkElhyLS4=
+	b=HP5c/C+DZFgBihk8ePoee02hpq3/P8a3uQo2ZK95/EAQLg9vwJvYhiSfrhii2RmvG
+	 PoyUtetfYNRKDJyAmsouyNun2NEeSWj1pboMCVzniVKwS/XC3F7gOiXoNOwVPpWxUN
+	 Yh14a/dO6P8RFrZdmQDxG9lvoJYqUSNBuLkVx5mA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tudor Ambarus <tudor.ambarus@linaro.org>,
-	Jassi Brar <jassisinghbrar@gmail.com>,
+	Shixiong Ou <oushixiong@kylinos.cn>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 011/207] mailbox: use error ret code of of_parse_phandle_with_args()
-Date: Mon,  2 Jun 2025 15:46:23 +0200
-Message-ID: <20250602134259.217705738@linuxfoundation.org>
+Subject: [PATCH 5.15 012/207] fbdev: fsl-diu-fb: add missing device_remove_file()
+Date: Mon,  2 Jun 2025 15:46:24 +0200
+Message-ID: <20250602134259.255178578@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134258.769974467@linuxfoundation.org>
 References: <20250602134258.769974467@linuxfoundation.org>
@@ -51,43 +51,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tudor Ambarus <tudor.ambarus@linaro.org>
+From: Shixiong Ou <oushixiong@kylinos.cn>
 
-[ Upstream commit 24fdd5074b205cfb0ef4cd0751a2d03031455929 ]
+[ Upstream commit 86d16cd12efa547ed43d16ba7a782c1251c80ea8 ]
 
-In case of error, of_parse_phandle_with_args() returns -EINVAL when the
-passed index is negative, or -ENOENT when the index is for an empty
-phandle. The mailbox core overwrote the error return code with a less
-precise -ENODEV. Use the error returned code from
-of_parse_phandle_with_args().
+Call device_remove_file() when driver remove.
 
-Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
-Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
+Signed-off-by: Shixiong Ou <oushixiong@kylinos.cn>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mailbox/mailbox.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/video/fbdev/fsl-diu-fb.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/mailbox/mailbox.c b/drivers/mailbox/mailbox.c
-index 4229b9b5da98f..6f54501dc7762 100644
---- a/drivers/mailbox/mailbox.c
-+++ b/drivers/mailbox/mailbox.c
-@@ -350,11 +350,12 @@ struct mbox_chan *mbox_request_channel(struct mbox_client *cl, int index)
+diff --git a/drivers/video/fbdev/fsl-diu-fb.c b/drivers/video/fbdev/fsl-diu-fb.c
+index ce3c5b0b8f4ef..53be4ab374cc3 100644
+--- a/drivers/video/fbdev/fsl-diu-fb.c
++++ b/drivers/video/fbdev/fsl-diu-fb.c
+@@ -1829,6 +1829,7 @@ static int fsl_diu_remove(struct platform_device *pdev)
+ 	int i;
  
- 	mutex_lock(&con_mutex);
+ 	data = dev_get_drvdata(&pdev->dev);
++	device_remove_file(&pdev->dev, &data->dev_attr);
+ 	disable_lcdc(&data->fsl_diu_info[0]);
  
--	if (of_parse_phandle_with_args(dev->of_node, "mboxes",
--				       "#mbox-cells", index, &spec)) {
-+	ret = of_parse_phandle_with_args(dev->of_node, "mboxes", "#mbox-cells",
-+					 index, &spec);
-+	if (ret) {
- 		dev_dbg(dev, "%s: can't parse \"mboxes\" property\n", __func__);
- 		mutex_unlock(&con_mutex);
--		return ERR_PTR(-ENODEV);
-+		return ERR_PTR(ret);
- 	}
- 
- 	chan = ERR_PTR(-EPROBE_DEFER);
+ 	free_irq(data->irq, data->diu_reg);
 -- 
 2.39.5
 
