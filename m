@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33D5C21B9C8;
-	Mon,  2 Jun 2025 14:12:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75EB223D2A2;
+	Mon,  2 Jun 2025 14:12:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748873572; cv=none; b=DIQSX+3GhAQzitamRRCHtEbLy8USbEFCrTpRDew0LGWpYp29CS5A3PJVfA/qqS+abtpvQnSN3QnL4IluYbwi5L5QNtjVCxeqV8gPP2SBj796K1Bkugxn+9VgocTqj8+QSGRVFBKUbgrmA1aT1fp/y6M5rUcxaJBWZps55IQIhlI=
+	t=1748873575; cv=none; b=ZDkafD8xVcZwygPqG+2lSHVEBq4PPTKbSDu0tzPqMQ8iDe2/t022b8NMdda05l/1bPLZP0+3Llvd3xbY5D2PybmBV1aQlK7dNP4G46hOtwBK1/uj1De/oQ2rVbJiDHwqXfvyrdkbnw5GBkQD41coGpH3MwvzQ9ie6anGL3yX1Wo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748873572; c=relaxed/simple;
-	bh=Qm+qjWDPs1elgpPYpdLe/l6RPdm4F492gIRp3wMeoc0=;
+	s=arc-20240116; t=1748873575; c=relaxed/simple;
+	bh=gYczD+Ufbk0MFCE3IrEpn4tuLRb8rFZLTpbmW9D+guM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BMjQSK6nrCnc1V2lyS9EfcYoTRGZqDZQ+eLhOotGfPRlbtx8cZt9b+0Ib3trb+t52Crl5DKcp9Nn6PzpsBxLQQbm0cNuJJ1kb4+/Axpkehc8wJG8cL//pwdIbI+UP9VI9URIpwCXoya7xZykmhbo3eqIcB8qgKEw2H40hOtYcjg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R/rdS7FE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=OWGLTwx+0jV9hERUAInyBOc3T05nVW5OIZba3fEmZdgroLD6eEikn/dFGpi3fRwyiTZ0kRV1iqJxN+aVGEGP4BN81ADoq70CDeD70wkOkoHTLbtCRCrSdbo33/uTaaG+Xqt+OZiG6CkzKi9eEFcLAT3ccEylCLW15ykxAWMsjVA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gYhjq2Ej; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R/rdS7FE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 990DBC4CEEB;
-	Mon,  2 Jun 2025 14:12:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gYhjq2Ej"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3CE0C4CEEB;
+	Mon,  2 Jun 2025 14:12:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748873572;
-	bh=Qm+qjWDPs1elgpPYpdLe/l6RPdm4F492gIRp3wMeoc0=;
+	s=korg; t=1748873575;
+	bh=gYczD+Ufbk0MFCE3IrEpn4tuLRb8rFZLTpbmW9D+guM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R/rdS7FECLDgLKamIKP6nVIcnJJ3rHe/MrUJzqedcU00KQiBqMaAF7cf7NS7PvrOP
-	 lJhocqSwTNm62gKl9RuE/ET9mlhk1Mvel/RcZJRyK5/jvnSW2Inu4/zU/gXY2zg79u
-	 G9IfKRsCIXNN+polfvqQr39geDmkkusZtxYk5Dec=
+	b=gYhjq2EjAb/rrUaIppnoYNq4ZepEvAVoUl+YAgTVnHG6ID65jM/n6a25cwH3fHaKd
+	 G2BbjOCBNVgUmA0x31gXgwbG92hGd/2CkdtVMgloejoYtbdV0I9zonk1bu5aig8Uv0
+	 ZNGsG4IZAAb8mqcETUAu/18Rr5wxXJbTTQY2HuRI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 184/444] ASoC: mediatek: mt8188: Treat DMIC_GAINx_CUR as non-volatile
-Date: Mon,  2 Jun 2025 15:44:08 +0200
-Message-ID: <20250602134348.360636499@linuxfoundation.org>
+Subject: [PATCH 6.6 185/444] ASoC: mediatek: mt8188: Add reference for dmic clocks
+Date: Mon,  2 Jun 2025 15:44:09 +0200
+Message-ID: <20250602134348.401544493@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -55,48 +55,61 @@ Content-Transfer-Encoding: 8bit
 
 From: Nícolas F. R. A. Prado <nfraprado@collabora.com>
 
-[ Upstream commit 7d87bde21c73731ddaf15e572020f80999c38ee3 ]
+[ Upstream commit bf1800073f4d55f08191b034c86b95881e99b6fd ]
 
-The DMIC_GAINx_CUR registers contain the current (as in present) gain of
-each DMIC. During capture, this gain will ramp up until a target value
-is reached, and therefore the register is volatile since it is updated
-automatically by hardware.
-
-However, after capture the register's value returns to the value that
-was written to it. So reading these registers returns the current gain,
-and writing configures the initial gain for every capture.
-
->From an audio configuration perspective, reading the instantaneous gain
-is not really useful. Instead, reading back the initial gain that was
-configured is the desired behavior. For that reason, consider the
-DMIC_GAINx_CUR registers as non-volatile, so the regmap's cache can be
-used to retrieve the values, rather than requiring pm runtime resuming
-the device.
+Add the names for the dmic clocks, aud_afe_dmic* and aud_dmic_hires*, so
+they can be acquired and enabled by the platform driver.
 
 Signed-off-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
 Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://patch.msgid.link/20250225-genio700-dmic-v2-3-3076f5b50ef7@collabora.com
+Link: https://patch.msgid.link/20250225-genio700-dmic-v2-2-3076f5b50ef7@collabora.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/mediatek/mt8188/mt8188-afe-pcm.c | 4 ----
- 1 file changed, 4 deletions(-)
+ sound/soc/mediatek/mt8188/mt8188-afe-clk.c | 8 ++++++++
+ sound/soc/mediatek/mt8188/mt8188-afe-clk.h | 8 ++++++++
+ 2 files changed, 16 insertions(+)
 
-diff --git a/sound/soc/mediatek/mt8188/mt8188-afe-pcm.c b/sound/soc/mediatek/mt8188/mt8188-afe-pcm.c
-index 11f30b183520f..4a304bffef8ba 100644
---- a/sound/soc/mediatek/mt8188/mt8188-afe-pcm.c
-+++ b/sound/soc/mediatek/mt8188/mt8188-afe-pcm.c
-@@ -2855,10 +2855,6 @@ static bool mt8188_is_volatile_reg(struct device *dev, unsigned int reg)
- 	case AFE_DMIC3_SRC_DEBUG_MON0:
- 	case AFE_DMIC3_UL_SRC_MON0:
- 	case AFE_DMIC3_UL_SRC_MON1:
--	case DMIC_GAIN1_CUR:
--	case DMIC_GAIN2_CUR:
--	case DMIC_GAIN3_CUR:
--	case DMIC_GAIN4_CUR:
- 	case ETDM_IN1_MONITOR:
- 	case ETDM_IN2_MONITOR:
- 	case ETDM_OUT1_MONITOR:
+diff --git a/sound/soc/mediatek/mt8188/mt8188-afe-clk.c b/sound/soc/mediatek/mt8188/mt8188-afe-clk.c
+index e69c1bb2cb239..7f411b8577823 100644
+--- a/sound/soc/mediatek/mt8188/mt8188-afe-clk.c
++++ b/sound/soc/mediatek/mt8188/mt8188-afe-clk.c
+@@ -58,7 +58,15 @@ static const char *aud_clks[MT8188_CLK_NUM] = {
+ 	[MT8188_CLK_AUD_ADC] = "aud_adc",
+ 	[MT8188_CLK_AUD_DAC_HIRES] = "aud_dac_hires",
+ 	[MT8188_CLK_AUD_A1SYS_HP] = "aud_a1sys_hp",
++	[MT8188_CLK_AUD_AFE_DMIC1] = "aud_afe_dmic1",
++	[MT8188_CLK_AUD_AFE_DMIC2] = "aud_afe_dmic2",
++	[MT8188_CLK_AUD_AFE_DMIC3] = "aud_afe_dmic3",
++	[MT8188_CLK_AUD_AFE_DMIC4] = "aud_afe_dmic4",
+ 	[MT8188_CLK_AUD_ADC_HIRES] = "aud_adc_hires",
++	[MT8188_CLK_AUD_DMIC_HIRES1] = "aud_dmic_hires1",
++	[MT8188_CLK_AUD_DMIC_HIRES2] = "aud_dmic_hires2",
++	[MT8188_CLK_AUD_DMIC_HIRES3] = "aud_dmic_hires3",
++	[MT8188_CLK_AUD_DMIC_HIRES4] = "aud_dmic_hires4",
+ 	[MT8188_CLK_AUD_I2SIN] = "aud_i2sin",
+ 	[MT8188_CLK_AUD_TDM_IN] = "aud_tdm_in",
+ 	[MT8188_CLK_AUD_I2S_OUT] = "aud_i2s_out",
+diff --git a/sound/soc/mediatek/mt8188/mt8188-afe-clk.h b/sound/soc/mediatek/mt8188/mt8188-afe-clk.h
+index ec53c171c170a..c6c78d684f3ee 100644
+--- a/sound/soc/mediatek/mt8188/mt8188-afe-clk.h
++++ b/sound/soc/mediatek/mt8188/mt8188-afe-clk.h
+@@ -54,7 +54,15 @@ enum {
+ 	MT8188_CLK_AUD_ADC,
+ 	MT8188_CLK_AUD_DAC_HIRES,
+ 	MT8188_CLK_AUD_A1SYS_HP,
++	MT8188_CLK_AUD_AFE_DMIC1,
++	MT8188_CLK_AUD_AFE_DMIC2,
++	MT8188_CLK_AUD_AFE_DMIC3,
++	MT8188_CLK_AUD_AFE_DMIC4,
+ 	MT8188_CLK_AUD_ADC_HIRES,
++	MT8188_CLK_AUD_DMIC_HIRES1,
++	MT8188_CLK_AUD_DMIC_HIRES2,
++	MT8188_CLK_AUD_DMIC_HIRES3,
++	MT8188_CLK_AUD_DMIC_HIRES4,
+ 	MT8188_CLK_AUD_I2SIN,
+ 	MT8188_CLK_AUD_TDM_IN,
+ 	MT8188_CLK_AUD_I2S_OUT,
 -- 
 2.39.5
 
