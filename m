@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45F1F1C5D72;
-	Mon,  2 Jun 2025 14:30:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CF30223DFD;
+	Mon,  2 Jun 2025 14:31:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748874659; cv=none; b=frpUusmpi26csT7bqSHJWYwu1vV7oAujkLgRrKKWDdNEnYei5aLqgs83B/grTfQqG33Wdq6H1tgw38dJzoRcWQqja1koTps++F4KU4r/k+VqhxnnkW4V9hTz0Rkucq3ReP8Q9TY1et5wB9CMGoGALeSgQKNEgCKqJOrMgNct2vA=
+	t=1748874662; cv=none; b=nrcRWzm9IothR19bZPk9mUSQuUZoFkeBRnYsB1VntSMVSHg46hoQ1j1iAYsjbmgmugKpx3gH8fMpJzq2Apql+H/bxTYz/Th7h8SLbiO3fZQHYjZPFLO2Eh/GNyMfAcbr1imZebtK3Ny7JRp9l2mSSciOdpymx5VxFU8xA+Tbxgo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748874659; c=relaxed/simple;
-	bh=GCpHXEOv6HedqR63cwiYRLgnhO/c5RxOfLKKb3OWSIg=;
+	s=arc-20240116; t=1748874662; c=relaxed/simple;
+	bh=56S1dU18OmZ5BOM3+ARh5SjyJ6ab2bbr3B1iq9Vtwto=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=krq/R2cYh1cFSu7MzmlNPChjUhadXAWCT+0YM21AGH2HtQiz1oxfyGPpq5pxjYAYE77/L9Ex7fl+2h6zffRDhkkCpi9wepXxbxwQkiV1dT//+gaCPbDbgrgklYfFHK2/PulHucNg6hFucdxWuzW4FyYO2JpAtdThjlvJrebX9uU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1gfncotJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=arSrfr5rFLr5rImkYLBkAzJ68g8/VzkjA8eUfAHeeskNjy7M66r5937/fgU0/a0wcZrYxoLUKrIr1pLToVCZYk2rDCTMfu4eUnaQ2O1QeAy/54VQ0WKZcyGxm/UX5pFpfC5Xligh+m+KSpIfxX/SklNOS4a3m0qT2sl3Lfc9Rpc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2ZHArqtv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1gfncotJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD89EC4CEEB;
-	Mon,  2 Jun 2025 14:30:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2ZHArqtv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D02C6C4CEEB;
+	Mon,  2 Jun 2025 14:31:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748874659;
-	bh=GCpHXEOv6HedqR63cwiYRLgnhO/c5RxOfLKKb3OWSIg=;
+	s=korg; t=1748874662;
+	bh=56S1dU18OmZ5BOM3+ARh5SjyJ6ab2bbr3B1iq9Vtwto=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1gfncotJT9dv18AbXA21+UKFnNv5sBoWwcPtgfJOrm/JSlbdWLExZyqDiupsqMCel
-	 mix++gihlb9ryn81opIYzTle8EsJOd2WxlQHqhkouQIMyuw+JOzoffmXExxqCqboa0
-	 4hMZGfmtAF5rvEMwe0c1T3J3c8RdK005rJi6W3Ls=
+	b=2ZHArqtv9/qx+G3i28Of8MeefbVEV5LK+QoW2Mi+Qq8R3uLoeMBaMdj0ywjNDKjB4
+	 uJZR5YMmKSAkyx+0z8z04U8GKKutli7b7w3VbrVzOo/KboZQsiGdA9OHty/ZudNCwS
+	 wZBgs/06sZyilACDQi6U6v+dkvrI2CFASEtnxs5w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Benjamin Coddington <bcodding@redhat.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Jing Su <jingsusu@didiglobal.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 094/204] SUNRPC: rpc_clnt_set_transport() must not change the autobind setting
-Date: Mon,  2 Jun 2025 15:47:07 +0200
-Message-ID: <20250602134259.353057312@linuxfoundation.org>
+Subject: [PATCH 5.4 095/204] dql: Fix dql->limit value when reset.
+Date: Mon,  2 Jun 2025 15:47:08 +0200
+Message-ID: <20250602134259.391392166@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134255.449974357@linuxfoundation.org>
 References: <20250602134255.449974357@linuxfoundation.org>
@@ -52,36 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Jing Su <jingsusu@didiglobal.com>
 
-[ Upstream commit bf9be373b830a3e48117da5d89bb6145a575f880 ]
+[ Upstream commit 3a17f23f7c36bac3a3584aaf97d3e3e0b2790396 ]
 
-The autobind setting was supposed to be determined in rpc_create(),
-since commit c2866763b402 ("SUNRPC: use sockaddr + size when creating
-remote transport endpoints").
+Executing dql_reset after setting a non-zero value for limit_min can
+lead to an unreasonable situation where dql->limit is less than
+dql->limit_min.
 
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Reviewed-by: Benjamin Coddington <bcodding@redhat.com>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+For instance, after setting
+/sys/class/net/eth*/queues/tx-0/byte_queue_limits/limit_min,
+an ifconfig down/up operation might cause the ethernet driver to call
+netdev_tx_reset_queue, which in turn invokes dql_reset.
+
+In this case, dql->limit is reset to 0 while dql->limit_min remains
+non-zero value, which is unexpected. The limit should always be
+greater than or equal to limit_min.
+
+Signed-off-by: Jing Su <jingsusu@didiglobal.com>
+Link: https://patch.msgid.link/Z9qHD1s/NEuQBdgH@pilot-ThinkCentre-M930t-N000
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/clnt.c | 3 ---
- 1 file changed, 3 deletions(-)
+ lib/dynamic_queue_limits.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/sunrpc/clnt.c b/net/sunrpc/clnt.c
-index f689c7b0c304d..d67cb10a11db6 100644
---- a/net/sunrpc/clnt.c
-+++ b/net/sunrpc/clnt.c
-@@ -277,9 +277,6 @@ static struct rpc_xprt *rpc_clnt_set_transport(struct rpc_clnt *clnt,
- 	old = rcu_dereference_protected(clnt->cl_xprt,
- 			lockdep_is_held(&clnt->cl_lock));
- 
--	if (!xprt_bound(xprt))
--		clnt->cl_autobind = 1;
--
- 	clnt->cl_timeout = timeout;
- 	rcu_assign_pointer(clnt->cl_xprt, xprt);
- 	spin_unlock(&clnt->cl_lock);
+diff --git a/lib/dynamic_queue_limits.c b/lib/dynamic_queue_limits.c
+index e659a027036ec..f6807062b32a3 100644
+--- a/lib/dynamic_queue_limits.c
++++ b/lib/dynamic_queue_limits.c
+@@ -116,7 +116,7 @@ EXPORT_SYMBOL(dql_completed);
+ void dql_reset(struct dql *dql)
+ {
+ 	/* Reset all dynamic values */
+-	dql->limit = 0;
++	dql->limit = dql->min_limit;
+ 	dql->num_queued = 0;
+ 	dql->num_completed = 0;
+ 	dql->last_obj_cnt = 0;
 -- 
 2.39.5
 
