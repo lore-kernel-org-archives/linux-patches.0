@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66AF121CA1E;
-	Mon,  2 Jun 2025 14:43:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05D082222CA;
+	Mon,  2 Jun 2025 14:43:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748875393; cv=none; b=olTxuMdsxF8Wvp0sibGSXgv0JZ4DAOaaQViRkQWU0TrkSbdaJS9ukNNKMg0USFUTAMMtHRwrMCjyN/9ZvqknCTBLBmKryVQWaicv6/DMyiUe4M49RtOBRLtxvQ3nrv++uLhsZDD6onqlA9k4v1n28RLXgVgpPGBw6+KF2oit4go=
+	t=1748875400; cv=none; b=D3lGTUHNg0W6gLFrrZ9pSYmtYQsnyrEBFxT0Wg/qyS4IXzwnn1sSzgzSHr++0yB7unZv8RVLtHAOzBmM8E16epcqI0poPcowXUxA4e7fuuaPSHw0GgJgpaVJD1ZCGB3ydvP2/FhvW44ee+fofjJ60yswDCKI8yTItYusL+mgLeA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748875393; c=relaxed/simple;
-	bh=TW7TLZC40qREbmmzIy+cR3dCqgGYMiKnmepVJXPgr2U=;
+	s=arc-20240116; t=1748875400; c=relaxed/simple;
+	bh=lOrVRUN5nXCnCknhC3ynTERNeAWgrfDBlW3MUEyRNM4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aOnivo1iLdezaGaULYWtBZLLlxjVqJHxD+WQ1ZG4xlKkJkWF1URkFsLY8txEFhcEGCQ/9AX1L3SzOBjUgd5pNGmxr69g7bt7L7GxUk3+UTyi/UM+tv/BVd1SwLSUQfVooQ9iSyycCHbpqWCZNRsKglTfOIu8/lbwYBTm/3TG0pc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zCnpk0s6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h9aJQfIRSDSvafplVOq6Hn5ZmKZoNixfkvbDfldzcH2SohmXnMEwPLx/F/ahAneUgdQqLDzSwEbDHE4+QsFZmP4Jq8+XN88tUatMPtC7bejUsfkS09wNSqWXVoa3/IhPlXXyyu4IwGPvmJ54S0pwb4atG5vXZLT55MRpUKMHzLA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l6AP7AVE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zCnpk0s6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD86AC4CEEB;
-	Mon,  2 Jun 2025 14:43:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l6AP7AVE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02726C4CEEE;
+	Mon,  2 Jun 2025 14:43:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748875393;
-	bh=TW7TLZC40qREbmmzIy+cR3dCqgGYMiKnmepVJXPgr2U=;
+	s=korg; t=1748875396;
+	bh=lOrVRUN5nXCnCknhC3ynTERNeAWgrfDBlW3MUEyRNM4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zCnpk0s6bkxY+9fZkMEO46i7UYD8N6SAg8czy9g+mk+LI1F3/lMfbwCxyxkzHo3Om
-	 qhxI46AnxHyUIlLAZfAZV4ntDBz78c5EDgHMBnRc3kCw/+zVFe8p4IIEuFRGvrhEbK
-	 ta568wwAD3VVMwq8zICRRu2eisOe1vRX781Lvdr4=
+	b=l6AP7AVEL/ujNUWwULb4waobsMI4L28Fo1gz8Yq6/fmQbTqVdrBx5Fd8GGhfcdI0J
+	 FYG/bLUqwj7T4r+hyFmX6rhUEVKLgxw3P29u96gjdeK9LM3I6GCI6XeTMQ+DkhSMnS
+	 wlDm9twLD4CX9q4VrRn28lQD93PuTuAYFRvS0Ev8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Tudor Ambarus <tudor.ambarus@linaro.org>,
+	Jassi Brar <jassisinghbrar@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 120/270] NFSv4: Check for delegation validity in nfs_start_delegation_return_locked()
-Date: Mon,  2 Jun 2025 15:46:45 +0200
-Message-ID: <20250602134312.130560932@linuxfoundation.org>
+Subject: [PATCH 5.10 121/270] mailbox: use error ret code of of_parse_phandle_with_args()
+Date: Mon,  2 Jun 2025 15:46:46 +0200
+Message-ID: <20250602134312.171959812@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134307.195171844@linuxfoundation.org>
 References: <20250602134307.195171844@linuxfoundation.org>
@@ -50,33 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Tudor Ambarus <tudor.ambarus@linaro.org>
 
-[ Upstream commit 9e8f324bd44c1fe026b582b75213de4eccfa1163 ]
+[ Upstream commit 24fdd5074b205cfb0ef4cd0751a2d03031455929 ]
 
-Check that the delegation is still attached after taking the spin lock
-in nfs_start_delegation_return_locked().
+In case of error, of_parse_phandle_with_args() returns -EINVAL when the
+passed index is negative, or -ENOENT when the index is for an empty
+phandle. The mailbox core overwrote the error return code with a less
+precise -ENODEV. Use the error returned code from
+of_parse_phandle_with_args().
 
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
+Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/delegation.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/mailbox/mailbox.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/fs/nfs/delegation.c b/fs/nfs/delegation.c
-index dbed8d44d8053..f3bb987e9dba7 100644
---- a/fs/nfs/delegation.c
-+++ b/fs/nfs/delegation.c
-@@ -297,7 +297,8 @@ nfs_start_delegation_return_locked(struct nfs_inode *nfsi)
- 	if (delegation == NULL)
- 		goto out;
- 	spin_lock(&delegation->lock);
--	if (!test_and_set_bit(NFS_DELEGATION_RETURNING, &delegation->flags)) {
-+	if (delegation->inode &&
-+	    !test_and_set_bit(NFS_DELEGATION_RETURNING, &delegation->flags)) {
- 		clear_bit(NFS_DELEGATION_RETURN_DELAYED, &delegation->flags);
- 		/* Refcount matched in nfs_end_delegation_return() */
- 		ret = nfs_get_delegation(delegation);
+diff --git a/drivers/mailbox/mailbox.c b/drivers/mailbox/mailbox.c
+index 4229b9b5da98f..6f54501dc7762 100644
+--- a/drivers/mailbox/mailbox.c
++++ b/drivers/mailbox/mailbox.c
+@@ -350,11 +350,12 @@ struct mbox_chan *mbox_request_channel(struct mbox_client *cl, int index)
+ 
+ 	mutex_lock(&con_mutex);
+ 
+-	if (of_parse_phandle_with_args(dev->of_node, "mboxes",
+-				       "#mbox-cells", index, &spec)) {
++	ret = of_parse_phandle_with_args(dev->of_node, "mboxes", "#mbox-cells",
++					 index, &spec);
++	if (ret) {
+ 		dev_dbg(dev, "%s: can't parse \"mboxes\" property\n", __func__);
+ 		mutex_unlock(&con_mutex);
+-		return ERR_PTR(-ENODEV);
++		return ERR_PTR(ret);
+ 	}
+ 
+ 	chan = ERR_PTR(-EPROBE_DEFER);
 -- 
 2.39.5
 
