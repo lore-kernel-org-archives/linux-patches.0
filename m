@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5D4422ACF2;
-	Mon,  2 Jun 2025 14:59:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BDF922B59D;
+	Mon,  2 Jun 2025 15:00:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748876397; cv=none; b=WHMEf4W9t3KCWu4dfhmdpjqOwMv06988dL3b3Xm357X/o85JLHLTpHJIX/0rJJ9RU9YiH/aqZOqompVmDkCyE0VDZR9S1YPP/U5E4Cf2J/c5fs6DOHOIqCGQbEwv/jsoOFHc3IR9yynGy4fQhbXG28Fh/WohagGuhISV6Z79lQw=
+	t=1748876400; cv=none; b=PCeNyum9tfafXOHfqcVLd3OUxJHCBCrN+TIal3CRUtmCiLZZP/DhHAUgkPPq/4j8ie0TspsQqcZjv9zeeo497zxor1fQpXCRde3MOX2DkaAe2kupYIc5xTgzPAijVkssAk7Q0iT6w3Bg0TRiwlZeb+8uyxXQ8xrwZlQGH16I3vI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748876397; c=relaxed/simple;
-	bh=hxaIGH6wy37JI6z/BZoC1FGlu8kC1pg/DeY6xnCmHV8=;
+	s=arc-20240116; t=1748876400; c=relaxed/simple;
+	bh=plaDdiL46Uw0E5D0FQL23qUrybTWNirw4/iBog/YZnQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KouTDBuI5c4e0oQ7lmr27s1Np5xdjGyVCXi+Hjo6+UPXcqB5XTdJn8IaURv6Kycfud2iWaSZuuf55ygE8GVmLmwosbbwkEOwpjo6e8XTBQYyx5zq5dMvX8nmMNR92mtAU/2g2SeAx/vuxvTsSvjJvLAu5ZHNCva+ZBesCZ1R7Eo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CmyVLX8O; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Sv/wDAm5HtwC4Cl1XastdFa9sZQZQgeYTU+hEGcyAgMqScr3pSo74QzP/hr66SJgpkJndFET5v5fRkd0RAEZsHODnsrBgb5Dv7MiEEE3tjgiBpzLrrYiIb1K642ZKjydnRy+MDPBNZ+GnCeTnc1WD/ExasQAckx4YajkAIdPuBA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yjQtn5jN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CmyVLX8O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CBB6C4CEEB;
-	Mon,  2 Jun 2025 14:59:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yjQtn5jN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9717C4CEEB;
+	Mon,  2 Jun 2025 14:59:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748876397;
-	bh=hxaIGH6wy37JI6z/BZoC1FGlu8kC1pg/DeY6xnCmHV8=;
+	s=korg; t=1748876400;
+	bh=plaDdiL46Uw0E5D0FQL23qUrybTWNirw4/iBog/YZnQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CmyVLX8O0bUiARxTn2dLv87oghWLhorsJnhUgJuodpEO12W44OnxBovuCbxGHteFc
-	 ypPA0c2J1jwhNncRhjVWxfI0Liih4SynYa8DZm0n3ed23yPo4+yCyClSx4yvrQzaAy
-	 ZbIl5XKet6nNDLEF1cGvEEp6oUQLI5X7QqZHwUmo=
+	b=yjQtn5jNEmxNZAu09vgoXmGrD7VDLoYZFNfqlUrnPQYFzhTAS+FdN76cj1+NH0hgt
+	 OBLq4dP5DP6u3RAzhxOtGbPBc1hdNO6omRB/1+2Y4XxWf5qlOaWrQQRdQyiXHi8jTF
+	 exxD2YnRBv2woxNGTTcGxScXrkrste/E3NeaZxok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Venkat Venkatsubra <venkat.x.venkatsubra@oracle.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
+	Paul Kocialkowski <paulk@sys-base.io>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Corentin LABBE <clabbe.montjoie@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 165/207] bridge: netfilter: Fix forwarding of fragmented packets
-Date: Mon,  2 Jun 2025 15:48:57 +0200
-Message-ID: <20250602134305.201021360@linuxfoundation.org>
+Subject: [PATCH 5.15 166/207] net: dwmac-sun8i: Use parsed internal PHY address instead of 1
+Date: Mon,  2 Jun 2025 15:48:58 +0200
+Message-ID: <20250602134305.240618064@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134258.769974467@linuxfoundation.org>
 References: <20250602134258.769974467@linuxfoundation.org>
@@ -53,93 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Paul Kocialkowski <paulk@sys-base.io>
 
-[ Upstream commit 91b6dbced0ef1d680afdd69b14fc83d50ebafaf3 ]
+[ Upstream commit 47653e4243f2b0a26372e481ca098936b51ec3a8 ]
 
-When netfilter defrag hooks are loaded (due to the presence of conntrack
-rules, for example), fragmented packets entering the bridge will be
-defragged by the bridge's pre-routing hook (br_nf_pre_routing() ->
-ipv4_conntrack_defrag()).
+While the MDIO address of the internal PHY on Allwinner sun8i chips is
+generally 1, of_mdio_parse_addr is used to cleanly parse the address
+from the device-tree instead of hardcoding it.
 
-Later on, in the bridge's post-routing hook, the defragged packet will
-be fragmented again. If the size of the largest fragment is larger than
-what the kernel has determined as the destination MTU (using
-ip_skb_dst_mtu()), the defragged packet will be dropped.
+A commit reworking the code ditched the parsed value and hardcoded the
+value 1 instead, which didn't really break anything but is more fragile
+and not future-proof.
 
-Before commit ac6627a28dbf ("net: ipv4: Consolidate ipv4_mtu and
-ip_dst_mtu_maybe_forward"), ip_skb_dst_mtu() would return dst_mtu() as
-the destination MTU. Assuming the dst entry attached to the packet is
-the bridge's fake rtable one, this would simply be the bridge's MTU (see
-fake_mtu()).
+Restore the initial behavior using the parsed address returned from the
+helper.
 
-However, after above mentioned commit, ip_skb_dst_mtu() ends up
-returning the route's MTU stored in the dst entry's metrics. Ideally, in
-case the dst entry is the bridge's fake rtable one, this should be the
-bridge's MTU as the bridge takes care of updating this metric when its
-MTU changes (see br_change_mtu()).
-
-Unfortunately, the last operation is a no-op given the metrics attached
-to the fake rtable entry are marked as read-only. Therefore,
-ip_skb_dst_mtu() ends up returning 1500 (the initial MTU value) and
-defragged packets are dropped during fragmentation when dealing with
-large fragments and high MTU (e.g., 9k).
-
-Fix by moving the fake rtable entry's metrics to be per-bridge (in a
-similar fashion to the fake rtable entry itself) and marking them as
-writable, thereby allowing MTU changes to be reflected.
-
-Fixes: 62fa8a846d7d ("net: Implement read-only protection and COW'ing of metrics.")
-Fixes: 33eb9873a283 ("bridge: initialize fake_rtable metrics")
-Reported-by: Venkat Venkatsubra <venkat.x.venkatsubra@oracle.com>
-Closes: https://lore.kernel.org/netdev/PH0PR10MB4504888284FF4CBA648197D0ACB82@PH0PR10MB4504.namprd10.prod.outlook.com/
-Tested-by: Venkat Venkatsubra <venkat.x.venkatsubra@oracle.com>
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://patch.msgid.link/20250515084848.727706-1-idosch@nvidia.com
+Fixes: 634db83b8265 ("net: stmmac: dwmac-sun8i: Handle integrated/external MDIOs")
+Signed-off-by: Paul Kocialkowski <paulk@sys-base.io>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Acked-by: Corentin LABBE <clabbe.montjoie@gmail.com>
+Tested-by: Corentin LABBE <clabbe.montjoie@gmail.com>
+Link: https://patch.msgid.link/20250519164936.4172658-1-paulk@sys-base.io
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/br_nf_core.c | 7 ++-----
- net/bridge/br_private.h | 1 +
- 2 files changed, 3 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/dwmac-sun8i.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/bridge/br_nf_core.c b/net/bridge/br_nf_core.c
-index 8c69f0c95a8ed..b8c8deb87407d 100644
---- a/net/bridge/br_nf_core.c
-+++ b/net/bridge/br_nf_core.c
-@@ -65,17 +65,14 @@ static struct dst_ops fake_dst_ops = {
-  * ipt_REJECT needs it.  Future netfilter modules might
-  * require us to fill additional fields.
-  */
--static const u32 br_dst_default_metrics[RTAX_MAX] = {
--	[RTAX_MTU - 1] = 1500,
--};
--
- void br_netfilter_rtable_init(struct net_bridge *br)
- {
- 	struct rtable *rt = &br->fake_rtable;
- 
- 	atomic_set(&rt->dst.__refcnt, 1);
- 	rt->dst.dev = br->dev;
--	dst_init_metrics(&rt->dst, br_dst_default_metrics, true);
-+	dst_init_metrics(&rt->dst, br->metrics, false);
-+	dst_metric_set(&rt->dst, RTAX_MTU, br->dev->mtu);
- 	rt->dst.flags	= DST_NOXFRM | DST_FAKE_RTABLE;
- 	rt->dst.ops = &fake_dst_ops;
- }
-diff --git a/net/bridge/br_private.h b/net/bridge/br_private.h
-index fe61d3b8d0cc2..1718168bd927e 100644
---- a/net/bridge/br_private.h
-+++ b/net/bridge/br_private.h
-@@ -466,6 +466,7 @@ struct net_bridge {
- 		struct rtable		fake_rtable;
- 		struct rt6_info		fake_rt6_info;
- 	};
-+	u32				metrics[RTAX_MAX];
- #endif
- 	u16				group_fwd_mask;
- 	u16				group_fwd_mask_required;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-sun8i.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-sun8i.c
+index fda53b4b9406f..b2ec44f84ff5b 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac-sun8i.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-sun8i.c
+@@ -957,7 +957,7 @@ static int sun8i_dwmac_set_syscon(struct device *dev,
+ 		/* of_mdio_parse_addr returns a valid (0 ~ 31) PHY
+ 		 * address. No need to mask it again.
+ 		 */
+-		reg |= 1 << H3_EPHY_ADDR_SHIFT;
++		reg |= ret << H3_EPHY_ADDR_SHIFT;
+ 	} else {
+ 		/* For SoCs without internal PHY the PHY selection bit should be
+ 		 * set to 0 (external PHY).
 -- 
 2.39.5
 
