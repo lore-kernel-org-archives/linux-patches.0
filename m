@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73FE617BBF;
-	Mon,  2 Jun 2025 14:54:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32C381EA65;
+	Mon,  2 Jun 2025 14:54:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748876082; cv=none; b=um0tg+90dgZx22Lw9Q+P+8QK3YV5bRE7muQYX0RtSns1Dyoed+ebqd9/J7yNeTIBhPovnRO/werDefeGAtycb2ntW2nYOvU1zhNHSHV7QXPNYwQMO9zChOYEWUGE9qdWDNoCMsJ6LB9UeQG/vV2lYsp4/Dd2mTlYEgXYoTm410A=
+	t=1748876085; cv=none; b=l3G2P24k6AVnPpz7Iw+Ml/OGFZQ5INmIAy/ENl93HwcyqLvxaOTDgWjjsNo6fEpFn6y6dfRR0i09MjHQvzshPGbCT37smu+Nh+hQivPHzp9WPbf3xpMtgOoiSqLk6zJ4267uUKFeOd68qy8PnsaMYoh8IEMet+DBpGN/7KGGkMw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748876082; c=relaxed/simple;
-	bh=cU6IiZyKiTDepseXrZGdgGjKmaAdOBWUwWjpBvX5Odw=;
+	s=arc-20240116; t=1748876085; c=relaxed/simple;
+	bh=DAPaaEYNpGOxvM2j6J39ZDSGB5ZWY6nMJdu3Ir9ngwg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jUN1gUn5Iznuk1ELSuhpd0YarectSEKvKzvz0z7OrMAIsA+c5N8gKLTmXwDGqm4bqicUlC2+cEtfaDQq7XNInQmVrN1F7iBsdXPvWr7JWvs2XeCL4VvGtODi1HWQ0bZv3mO/VtrXPZP8jgC7WSIA6kD36Kx3gqDmThUGKp5eghc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CMeSbft7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lMCzqePWvP1dnEsKzde4QqLpozcEU1VLa4X2RnfooabEROz0GSuU/CNElDBng4GkiSgVG26SD8bYucKJPEo2aI3nR+n0G0Kb6Ta1KEpyrQP0UT3ZImSQBnywd2Oj1o+okIywWjUYZgLA5qmjY1nGlW/tXIXziaENxnBbNbn5MIc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pyNhisC2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CMeSbft7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75ED1C4CEEB;
-	Mon,  2 Jun 2025 14:54:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pyNhisC2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0BE3C4CEEB;
+	Mon,  2 Jun 2025 14:54:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748876082;
-	bh=cU6IiZyKiTDepseXrZGdgGjKmaAdOBWUwWjpBvX5Odw=;
+	s=korg; t=1748876085;
+	bh=DAPaaEYNpGOxvM2j6J39ZDSGB5ZWY6nMJdu3Ir9ngwg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CMeSbft7lHSz8Zt9v6ImMmLyzPQ4dMXGIoduGzI6unsougiEvvxTH30mrRwvEq9QS
-	 1mUjO8qNZl20mO+xZRPWYYSl5jxblzWu61IeIDxs9I+m9wS6BNKHtT4OYx4fcG5ohN
-	 BhsHM9wQyv/1YavMe9JkkpzSjPehdY+XH7J3idoU=
+	b=pyNhisC2bQoKAyBs1u2Pt6NdS340oDGBME/4FgwR+0Qq+TOJfTIk89fUdsYu6/k4a
+	 XYiCOP6Ey/GBVbGPVm8SddUMfxdO2RGK+rvs/toto+YHI2hML4XPRFEmqnEBd8EedQ
+	 t3k/M5uZMXEn+N1pwgkFWk21CABzSpR36CS7Xfh4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Svyatoslav Ryhel <clamor95@gmail.com>,
-	Thierry Reding <treding@nvidia.com>,
+	Markus Elfring <elfring@users.sourceforge.net>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 066/207] ARM: tegra: Switch DSI-B clock parent to PLLD on Tegra114
-Date: Mon,  2 Jun 2025 15:47:18 +0200
-Message-ID: <20250602134301.327793970@linuxfoundation.org>
+Subject: [PATCH 5.15 067/207] media: c8sectpfe: Call of_node_put(i2c_bus) only once in c8sectpfe_probe()
+Date: Mon,  2 Jun 2025 15:47:19 +0200
+Message-ID: <20250602134301.365733937@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134258.769974467@linuxfoundation.org>
 References: <20250602134258.769974467@linuxfoundation.org>
@@ -51,34 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Svyatoslav Ryhel <clamor95@gmail.com>
+From: Markus Elfring <elfring@users.sourceforge.net>
 
-[ Upstream commit 2b3db788f2f614b875b257cdb079adadedc060f3 ]
+[ Upstream commit b773530a34df0687020520015057075f8b7b4ac4 ]
 
-PLLD is usually used as parent clock for internal video devices, like
-DSI for example, while PLLD2 is used as parent for HDMI.
+An of_node_put(i2c_bus) call was immediately used after a pointer check
+for an of_find_i2c_adapter_by_node() call in this function implementation.
+Thus call such a function only once instead directly before the check.
 
-Signed-off-by: Svyatoslav Ryhel <clamor95@gmail.com>
-Link: https://lore.kernel.org/r/20250226105615.61087-3-clamor95@gmail.com
-Signed-off-by: Thierry Reding <treding@nvidia.com>
+This issue was transformed by using the Coccinelle software.
+
+Signed-off-by: Markus Elfring <elfring@users.sourceforge.net>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/tegra114.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/platform/sti/c8sectpfe/c8sectpfe-core.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/arch/arm/boot/dts/tegra114.dtsi b/arch/arm/boot/dts/tegra114.dtsi
-index fb99b3e971c3b..c00097794dab1 100644
---- a/arch/arm/boot/dts/tegra114.dtsi
-+++ b/arch/arm/boot/dts/tegra114.dtsi
-@@ -126,7 +126,7 @@ dsi@54400000 {
- 			reg = <0x54400000 0x00040000>;
- 			clocks = <&tegra_car TEGRA114_CLK_DSIB>,
- 				 <&tegra_car TEGRA114_CLK_DSIBLP>,
--				 <&tegra_car TEGRA114_CLK_PLL_D2_OUT0>;
-+				 <&tegra_car TEGRA114_CLK_PLL_D_OUT0>;
- 			clock-names = "dsi", "lp", "parent";
- 			resets = <&tegra_car 82>;
- 			reset-names = "dsi";
+diff --git a/drivers/media/platform/sti/c8sectpfe/c8sectpfe-core.c b/drivers/media/platform/sti/c8sectpfe/c8sectpfe-core.c
+index 88d0188397e7b..28aab5a8336e0 100644
+--- a/drivers/media/platform/sti/c8sectpfe/c8sectpfe-core.c
++++ b/drivers/media/platform/sti/c8sectpfe/c8sectpfe-core.c
+@@ -811,13 +811,12 @@ static int c8sectpfe_probe(struct platform_device *pdev)
+ 		}
+ 		tsin->i2c_adapter =
+ 			of_find_i2c_adapter_by_node(i2c_bus);
++		of_node_put(i2c_bus);
+ 		if (!tsin->i2c_adapter) {
+ 			dev_err(&pdev->dev, "No i2c adapter found\n");
+-			of_node_put(i2c_bus);
+ 			ret = -ENODEV;
+ 			goto err_node_put;
+ 		}
+-		of_node_put(i2c_bus);
+ 
+ 		tsin->rst_gpio = of_get_named_gpio(child, "reset-gpios", 0);
+ 
 -- 
 2.39.5
 
