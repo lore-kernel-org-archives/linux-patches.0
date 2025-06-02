@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94C4D1EA65;
-	Mon,  2 Jun 2025 14:54:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 500622222B0;
+	Mon,  2 Jun 2025 14:54:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748876052; cv=none; b=Xz+5+7qTW5xSdYAngoz257DVr/0ZACnmQDTM/VGN/iBR/vv/BAjdjifOHce0XB1s0vlamODO40QelJnF5pKfZc6EL9DFFlKVD3D/1usHBPxuGCFF5RzF09X0OZjErUZAwO3t9QU8uCl+Ouyi6/dI6WYFenON1Izho37975wZqa0=
+	t=1748876053; cv=none; b=tIjRNfoyDt9UhkjIYGm90jQo89xhR1Ei6n8oJZadWjrMoMQL1IVOXLEG7CdhiWYKhiuxgmSBs5OslhJ5bcaC1BlUH61DGEnm4PRzg9DA6Cy6Y988yA+wmUYs9ij6QxrwdBRr4stedUAF3SShBc+0c6of+khaSfxie+VYXIeG+go=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748876052; c=relaxed/simple;
-	bh=Q4IkQdrjWsBivqZwbPn7fvxaeY17FoOcXe/ufM9xg2w=;
+	s=arc-20240116; t=1748876053; c=relaxed/simple;
+	bh=1fXhPbpv/aTsxA1t5fxUaKAgER7rdBMgCq7Hrl45eCw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kAjQcjBGC15+k1qK7mfDPrOhXyjEoRZm+a1BaWo8roTxKZ9pTG3f7YPNT2YsvUJ8xS3SG7oZ0W5CaKodw7x8fA5+ySAnkepC60kpVXIb6gAhXd1bGEGhA49DpTZbq61uEqxDh203PfcXq/uo8HvJtNigye4wIA2JSvGGS++UlVs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=znCNj+MD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pu8I+sAjySG9M5IlO4QS/OXyYO9dba5W9Tv8Mb9qB8IufLuCaFqKLKcpbJDbixgEW3OXXkKeCRSfmwAQUmaqeCFHydKvMj+FadGc9UD8En9Y5IJGqofe/VH5H+TlMPnKdeBWf590lckSJ+sqTJmWRZoTtdVdefAHqxx4bU59rds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nFWT9cct; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="znCNj+MD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC6AAC4CEEB;
-	Mon,  2 Jun 2025 14:54:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nFWT9cct"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6456C4CEEB;
+	Mon,  2 Jun 2025 14:54:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748876050;
-	bh=Q4IkQdrjWsBivqZwbPn7fvxaeY17FoOcXe/ufM9xg2w=;
+	s=korg; t=1748876053;
+	bh=1fXhPbpv/aTsxA1t5fxUaKAgER7rdBMgCq7Hrl45eCw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=znCNj+MDWqTQlhpvgY8dOu9kxtgoluyPpXVNkmlusMmTDPjHfBsPfP8Qc7C/lPw+0
-	 LVb8bJ9jrkwEuh2c+RgVA5b8Hge+qupvX+FfujC2tWAfs+7Xasmkm6jjQ7fpiUpV3p
-	 YgtpVYnQK5vFwro+PTAa0+zkbl3Q6AOF+ZmfTiyM=
+	b=nFWT9cctJCFzDsRTtaZnOqXBjPKZ6U3RMnI7wyPj+sTAKB7uTdLPo8QuQ8ukVCarP
+	 Tappp1Q8hExzoBpRLUSRpDhUDIVDceZty1c5gfd4egGPSHEsr/9kvlxy/UqWDATOxj
+	 zCKtrpJT4Gioke3uj0vjm/hrvvomo7dmLR0LRv/Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Roger=20Pau=20Monn=C3=A9?= <roger.pau@citrix.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Juergen Gross <jgross@suse.com>,
+	Robert Richter <rrichter@amd.com>,
+	Pankaj Gupta <pankaj.gupta@amd.com>,
+	Ira Weiny <ira.weiny@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 024/207] PCI: vmd: Disable MSI remapping bypass under Xen
-Date: Mon,  2 Jun 2025 15:46:36 +0200
-Message-ID: <20250602134259.719310894@linuxfoundation.org>
+Subject: [PATCH 5.15 025/207] libnvdimm/labels: Fix divide error in nd_label_data_init()
+Date: Mon,  2 Jun 2025 15:46:37 +0200
+Message-ID: <20250602134259.756948963@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134258.769974467@linuxfoundation.org>
 References: <20250602134258.769974467@linuxfoundation.org>
@@ -46,80 +46,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Roger Pau Monne <roger.pau@citrix.com>
+From: Robert Richter <rrichter@amd.com>
 
-[ Upstream commit 6c4d5aadf5df31ea0ac025980670eee9beaf466b ]
+[ Upstream commit ef1d3455bbc1922f94a91ed58d3d7db440652959 ]
 
-MSI remapping bypass (directly configuring MSI entries for devices on the
-VMD bus) won't work under Xen, as Xen is not aware of devices in such bus,
-and hence cannot configure the entries using the pIRQ interface in the PV
-case, and in the PVH case traps won't be setup for MSI entries for such
-devices.
+If a faulty CXL memory device returns a broken zero LSA size in its
+memory device information (Identify Memory Device (Opcode 4000h), CXL
+spec. 3.1, 8.2.9.9.1.1), a divide error occurs in the libnvdimm
+driver:
 
-Until Xen is aware of devices in the VMD bus prevent the
-VMD_FEAT_CAN_BYPASS_MSI_REMAP capability from being used when running as
-any kind of Xen guest.
+ Oops: divide error: 0000 [#1] PREEMPT SMP NOPTI
+ RIP: 0010:nd_label_data_init+0x10e/0x800 [libnvdimm]
 
-The MSI remapping bypass is an optional feature of VMD bridges, and hence
-when running under Xen it will be masked and devices will be forced to
-redirect its interrupts from the VMD bridge.  That mode of operation must
-always be supported by VMD bridges and works when Xen is not aware of
-devices behind the VMD bridge.
+Code and flow:
 
-Signed-off-by: Roger Pau Monné <roger.pau@citrix.com>
-Acked-by: Bjorn Helgaas <bhelgaas@google.com>
-Message-ID: <20250219092059.90850-3-roger.pau@citrix.com>
-Signed-off-by: Juergen Gross <jgross@suse.com>
+1) CXL Command 4000h returns LSA size = 0
+2) config_size is assigned to zero LSA size (CXL pmem driver):
+
+drivers/cxl/pmem.c:             .config_size = mds->lsa_size,
+
+3) max_xfer is set to zero (nvdimm driver):
+
+drivers/nvdimm/label.c: max_xfer = min_t(size_t, ndd->nsarea.max_xfer, config_size);
+
+4) A subsequent DIV_ROUND_UP() causes a division by zero:
+
+drivers/nvdimm/label.c: /* Make our initial read size a multiple of max_xfer size */
+drivers/nvdimm/label.c: read_size = min(DIV_ROUND_UP(read_size, max_xfer) * max_xfer,
+drivers/nvdimm/label.c-                 config_size);
+
+Fix this by checking the config size parameter by extending an
+existing check.
+
+Signed-off-by: Robert Richter <rrichter@amd.com>
+Reviewed-by: Pankaj Gupta <pankaj.gupta@amd.com>
+Reviewed-by: Ira Weiny <ira.weiny@intel.com>
+Link: https://patch.msgid.link/20250320112223.608320-1-rrichter@amd.com
+Signed-off-by: Ira Weiny <ira.weiny@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/vmd.c | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ drivers/nvdimm/label.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pci/controller/vmd.c b/drivers/pci/controller/vmd.c
-index 1195c570599c0..846590706a384 100644
---- a/drivers/pci/controller/vmd.c
-+++ b/drivers/pci/controller/vmd.c
-@@ -17,6 +17,8 @@
- #include <linux/rculist.h>
- #include <linux/rcupdate.h>
+diff --git a/drivers/nvdimm/label.c b/drivers/nvdimm/label.c
+index 7f473f9db300d..e1b511d09295f 100644
+--- a/drivers/nvdimm/label.c
++++ b/drivers/nvdimm/label.c
+@@ -437,7 +437,8 @@ int nd_label_data_init(struct nvdimm_drvdata *ndd)
+ 	if (ndd->data)
+ 		return 0;
  
-+#include <xen/xen.h>
-+
- #include <asm/irqdomain.h>
- #include <asm/device.h>
- #include <asm/msi.h>
-@@ -826,6 +828,24 @@ static int vmd_probe(struct pci_dev *dev, const struct pci_device_id *id)
- 	struct vmd_dev *vmd;
- 	int err;
- 
-+	if (xen_domain()) {
-+		/*
-+		 * Xen doesn't have knowledge about devices in the VMD bus
-+		 * because the config space of devices behind the VMD bridge is
-+		 * not known to Xen, and hence Xen cannot discover or configure
-+		 * them in any way.
-+		 *
-+		 * Bypass of MSI remapping won't work in that case as direct
-+		 * write by Linux to the MSI entries won't result in functional
-+		 * interrupts, as Xen is the entity that manages the host
-+		 * interrupt controller and must configure interrupts.  However
-+		 * multiplexing of interrupts by the VMD bridge will work under
-+		 * Xen, so force the usage of that mode which must always be
-+		 * supported by VMD bridges.
-+		 */
-+		features &= ~VMD_FEAT_CAN_BYPASS_MSI_REMAP;
-+	}
-+
- 	if (resource_size(&dev->resource[VMD_CFGBAR]) < (1 << 20))
- 		return -ENOMEM;
- 
+-	if (ndd->nsarea.status || ndd->nsarea.max_xfer == 0) {
++	if (ndd->nsarea.status || ndd->nsarea.max_xfer == 0 ||
++	    ndd->nsarea.config_size == 0) {
+ 		dev_dbg(ndd->dev, "failed to init config data area: (%u:%u)\n",
+ 			ndd->nsarea.max_xfer, ndd->nsarea.config_size);
+ 		return -ENXIO;
 -- 
 2.39.5
 
