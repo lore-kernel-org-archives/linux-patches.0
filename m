@@ -1,48 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B50FB22331C;
-	Mon,  2 Jun 2025 14:20:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6931B22331C;
+	Mon,  2 Jun 2025 14:20:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748874034; cv=none; b=h3HTGiHFOkc3H1OXJWqHb5V7TSq0ovJT5p7ngj8amYZNgtHGTrhJjLrYj4Q3JyaNKxmhMc+kok+PAHkNWyLGFVOA0hxjeAoTguhZuKL6dubvHJ07zfdSvQP02ZegCovT6WsL0N9Ye8Wt8H9mRNj0uSQmcduZd3VJ3lH6yT+91Zc=
+	t=1748874037; cv=none; b=YJnyGx1cwhgYHbFqvTIqHmVVdskd6qH//jIcIz9eOo2U2pZtkRI4kGlJYJ4St/cB4ZiYGnqkybzYJcy+LUdremnv1DmsfwwBg6jsdkx7KQIhz4OueKM5B21lDUpWkYWvdIdb7PHdZaYVOJHXbKwynSdT7yMbKO/Uc0yzExJo53M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748874034; c=relaxed/simple;
-	bh=JruDx9RcovfL17pguL4WtDBJyBUzf0Wl2Qs0LMOipoM=;
+	s=arc-20240116; t=1748874037; c=relaxed/simple;
+	bh=/JYOIh6B8BW9AYBY/SlC1pkFJpT5jJ+CwQIeO5TwTkY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Px6kqSXsHZZSS1dUtvLQzPo59xA7kL8iLDGOjMJOUnrNal3DwNHxNJOTJMPmM+UWxZoqg0bFXxCbdOx2CfRXtkyL/QY+P2nceZj/jRR3IQAF8fp4gnNaHk3n1CtrllzdbfjBWp+wJdptUoU31npoa1cGFpNxT1BAicantErvkoE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YmXXqUCn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ELllUCm45btn/6bs7l4hpJ+9CLyUYURBAZSjPpZ36Zwzl/roy+ckl9hIuXbNcdOYzRrPPbsQiZtibebLzlE7hx1OvDEapy9elsIUsMIH9bi5eR8largF3K9X8JDM7ju8AyxM9yFcyv4EzRpQ7yjtQm6j20J7NiC55LTH9PTc53o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yBdQD4VZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YmXXqUCn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 125BBC4CEEB;
-	Mon,  2 Jun 2025 14:20:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yBdQD4VZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0983C4CEEB;
+	Mon,  2 Jun 2025 14:20:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748874034;
-	bh=JruDx9RcovfL17pguL4WtDBJyBUzf0Wl2Qs0LMOipoM=;
+	s=korg; t=1748874037;
+	bh=/JYOIh6B8BW9AYBY/SlC1pkFJpT5jJ+CwQIeO5TwTkY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YmXXqUCnzlv0Fh9/oIiGV8wldHjSeW0CYGsPSEvD7MMpwpEVwkfpK5FFcDWScjS3d
-	 HBwwouvfcggs6/yEb1egaYndk6WOC5RNODlnSjZNYVCdDxrNIaDxF+X5noqoss8NaD
-	 fzppGjbBb4JXcLInkJLEY/hL35Zjvtgvqwe9qt6g=
+	b=yBdQD4VZ4UiqcZ83IP6kVZXlhVsutBdhBHyn6pBP8sKVlZy4H9oBDnr/qNxMYpiVP
+	 CnedQCb/fV78bNqWByfljG+gfxikOOYIBsHzFryAeECTITMeZNqElbKVkD+QKA0Ini
+	 MU6IA+ATnaK/wT+IUcUHTEl0y1c7LN0m1vsD78RY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Hildenbrand <david@redhat.com>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Andy Lutomirski <luto@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Borislav Petkov <bp@alien8.de>,
-	Rik van Riel <riel@surriel.com>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	P Praneesh <quic_ppranees@quicinc.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 334/444] kernel/fork: only call untrack_pfn_clear() on VMAs duplicated for fork()
-Date: Mon,  2 Jun 2025 15:46:38 +0200
-Message-ID: <20250602134354.488071661@linuxfoundation.org>
+Subject: [PATCH 6.6 307/444] wifi: ath12k: Fix end offset bit definition in monitor ring descriptor
+Date: Mon,  2 Jun 2025 15:46:11 +0200
+Message-ID: <20250602134353.393449043@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -61,95 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Hildenbrand <david@redhat.com>
+From: P Praneesh <quic_ppranees@quicinc.com>
 
-[ Upstream commit e9f180d7cfde23b9f8eebd60272465176373ab2c ]
+[ Upstream commit 6788a666000d600bd8f2e9f991cad9cc805e7f01 ]
 
-Not intuitive, but vm_area_dup() located in kernel/fork.c is not only used
-for duplicating VMAs during fork(), but also for duplicating VMAs when
-splitting VMAs or when mremap()'ing them.
+End offset for the monitor destination ring descriptor is defined as
+16 bits, while the firmware definition specifies only 12 bits.
+The remaining bits (bit 12 to bit 15) are reserved and may contain
+junk values, leading to invalid information retrieval. Fix this issue
+by updating the correct genmask values.
 
-VM_PFNMAP mappings can at least get ordinarily mremap()'ed (no change in
-size) and apparently also shrunk during mremap(), which implies
-duplicating the VMA in __split_vma() first.
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.3.1-00173-QCAHKSWPL_SILICONZ-1
+Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.0.c5-00481-QCAHMTSWPL_V1.0_V2.0_SILICONZ-3
 
-In case of ordinary mremap() (no change in size), we first duplicate the
-VMA in copy_vma_and_data()->copy_vma() to then call untrack_pfn_clear() on
-the old VMA: we effectively move the VM_PAT reservation.  So the
-untrack_pfn_clear() call on the new VMA duplicating is wrong in that
-context.
-
-Splitting of VMAs seems problematic, because we don't duplicate/adjust the
-reservation when splitting the VMA.  Instead, in memtype_erase() -- called
-during zapping/munmap -- we shrink a reservation in case only the end
-address matches: Assume we split a VMA into A and B, both would share a
-reservation until B is unmapped.
-
-So when unmapping B, the reservation would be updated to cover only A.
-When unmapping A, we would properly remove the now-shrunk reservation.
-That scenario describes the mremap() shrinking (old_size > new_size),
-where we split + unmap B, and the untrack_pfn_clear() on the new VMA when
-is wrong.
-
-What if we manage to split a VM_PFNMAP VMA into A and B and unmap A first?
-It would be broken because we would never free the reservation.  Likely,
-there are ways to trigger such a VMA split outside of mremap().
-
-Affecting other VMA duplication was not intended, vm_area_dup() being used
-outside of kernel/fork.c was an oversight.  So let's fix that for; how to
-handle VMA splits better should be investigated separately.
-
-With a simple reproducer that uses mprotect() to split such a VMA I can
-trigger
-
-x86/PAT: pat_mremap:26448 freeing invalid memtype [mem 0x00000000-0x00000fff]
-
-Link: https://lkml.kernel.org/r/20250422144942.2871395-1-david@redhat.com
-Fixes: dc84bc2aba85 ("x86/mm/pat: Fix VM_PAT handling when fork() fails in copy_page_range()")
-Signed-off-by: David Hildenbrand <david@redhat.com>
-Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Cc: Ingo Molnar <mingo@kernel.org>
-Cc: Dave Hansen <dave.hansen@linux.intel.com>
-Cc: Andy Lutomirski <luto@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Cc: Borislav Petkov <bp@alien8.de>
-Cc: Rik van Riel <riel@surriel.com>
-Cc: "H. Peter Anvin" <hpa@zytor.com>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: P Praneesh <quic_ppranees@quicinc.com>
+Link: https://patch.msgid.link/20241223060132.3506372-8-quic_ppranees@quicinc.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/fork.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/net/wireless/ath/ath12k/hal_desc.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/fork.c b/kernel/fork.c
-index 97f433fb4b5ef..7966c9a1c163d 100644
---- a/kernel/fork.c
-+++ b/kernel/fork.c
-@@ -518,10 +518,6 @@ struct vm_area_struct *vm_area_dup(struct vm_area_struct *orig)
- 	vma_numab_state_init(new);
- 	dup_anon_vma_name(orig, new);
+diff --git a/drivers/net/wireless/ath/ath12k/hal_desc.h b/drivers/net/wireless/ath/ath12k/hal_desc.h
+index 6c17adc6d60b5..1bb840c2bef57 100644
+--- a/drivers/net/wireless/ath/ath12k/hal_desc.h
++++ b/drivers/net/wireless/ath/ath12k/hal_desc.h
+@@ -2918,7 +2918,7 @@ struct hal_mon_buf_ring {
  
--	/* track_pfn_copy() will later take care of copying internal state. */
--	if (unlikely(new->vm_flags & VM_PFNMAP))
--		untrack_pfn_clear(new);
--
- 	return new;
- }
+ #define HAL_MON_DEST_COOKIE_BUF_ID      GENMASK(17, 0)
  
-@@ -715,6 +711,11 @@ static __latent_entropy int dup_mmap(struct mm_struct *mm,
- 		tmp = vm_area_dup(mpnt);
- 		if (!tmp)
- 			goto fail_nomem;
-+
-+		/* track_pfn_copy() will later take care of copying internal state. */
-+		if (unlikely(tmp->vm_flags & VM_PFNMAP))
-+			untrack_pfn_clear(tmp);
-+
- 		retval = vma_dup_policy(mpnt, tmp);
- 		if (retval)
- 			goto fail_nomem_policy;
+-#define HAL_MON_DEST_INFO0_END_OFFSET		GENMASK(15, 0)
++#define HAL_MON_DEST_INFO0_END_OFFSET		GENMASK(11, 0)
+ #define HAL_MON_DEST_INFO0_FLUSH_DETECTED	BIT(16)
+ #define HAL_MON_DEST_INFO0_END_OF_PPDU		BIT(17)
+ #define HAL_MON_DEST_INFO0_INITIATOR		BIT(18)
 -- 
 2.39.5
 
