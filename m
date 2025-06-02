@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E3192253AE;
-	Mon,  2 Jun 2025 14:14:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D6692253E9;
+	Mon,  2 Jun 2025 14:14:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748873652; cv=none; b=kiLZw0lbWHTdXb62ZyHv1BcdfqQz5edGjeCWg3RBoU4gQMzeLvFwiRoiicAp4adM3X7BLKBNnHPCzRRSkHhe2Y7BBEu8+OGg+mIBqtW1v5ls202Q3lbMS4jC8quRd8MvJ0Cmx7Zsi8PJsLcwt/wiP08v+sHNEYVmxlhEQ+2BM8k=
+	t=1748873655; cv=none; b=B33XF6y9S2r8i8lUsjnBJAhOGKLyhwlqq2s9o1oV66LV06O5Stq91/N4ndPemn14nVTMWP9ObGnrq3MvNbLmD+9MRD5bIoSPMIk4ysjbGjZBb1aVHd49rjK+aS565dhGWWIjpAAeQ95YZtCIHifJNGP44st8PFMpRIUSqybXHk4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748873652; c=relaxed/simple;
-	bh=CfG3ucng+LhrqfneJ4ajBsslR5e5u9fMjuPkhPEgQjk=;
+	s=arc-20240116; t=1748873655; c=relaxed/simple;
+	bh=4RNgXCNqe7dn9Wk0SQSsD0nouD6uq61NmT2r3JExgj0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OAF10rpf1MgjAJLZfoZNcvpjZMaytGfo03QkNpdW6EvvKK7os2pf+5/nHWEys3Da0XnIzqiDki7vMSXqW80Zme5Uz06xXNkSve4mbEMBVkWvsC9zwoycW/N3v29iPASj73JzMoiL5TDbM69UgCXh+OeSPREDiqP++FIa2oBGjv4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wYtd4kwc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TumF4uaM8vOCgTm7LrfKJJTystbsiQuSMhYspk1KafkCqfHLAJz1ULXHyK3ccf3b4nbXv8mioX4Kxshey48xcOmBiTQdWkj8qF8BDiqjAVgw5hg0KvVDTSymorceSnXBgssyEOdb+Sq3kArRKNrnV4YTj+2uNdPpHOaTEWoq0dM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a1B2SLtM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wYtd4kwc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1CAAC4CEEB;
-	Mon,  2 Jun 2025 14:14:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a1B2SLtM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B365EC4CEEB;
+	Mon,  2 Jun 2025 14:14:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748873652;
-	bh=CfG3ucng+LhrqfneJ4ajBsslR5e5u9fMjuPkhPEgQjk=;
+	s=korg; t=1748873655;
+	bh=4RNgXCNqe7dn9Wk0SQSsD0nouD6uq61NmT2r3JExgj0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wYtd4kwcVRKmcbP9DDaa7QnKjH9J3ljdCSAjy2he0VtG0g21GAyWrLozACn5+z9YX
-	 sE2+DvTu8ET/NRMeL+9fZUuHcKM+7ThBd2ia84OpUxxymHwRPp0YFK2or6OmY+9+6N
-	 cSnU7oQ1c0wL4vNFIXFaNOrQGles0NG3uqky72OM=
+	b=a1B2SLtMZoHY+YyBTuPffQtI13yBpvbcWoWBw3wD5KjvQvnAhEVox+YvZrMJI3+Dg
+	 YWpSzOfdXlh9S56XqMocA+MB9ZSfrnDPe2k8ElkHb1/m3MBtLdnVKz+N8jSt6wwLuv
+	 8PFMud74ZGywGtttMjToka/b0+7ng4/oYiiI1LAQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ramasamy Kaliappan <quic_rkaliapp@quicinc.com>,
-	Roopni Devanathan <quic_rdevanat@quicinc.com>,
-	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Andrew Davis <afd@ti.com>,
+	Nishanth Menon <nm@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 179/444] wifi: ath12k: Improve BSS discovery with hidden SSID in 6 GHz band
-Date: Mon,  2 Jun 2025 15:44:03 +0200
-Message-ID: <20250602134348.159593375@linuxfoundation.org>
+Subject: [PATCH 6.6 180/444] soc: ti: k3-socinfo: Do not use syscon helper to build regmap
+Date: Mon,  2 Jun 2025 15:44:04 +0200
+Message-ID: <20250602134348.200062694@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -53,57 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ramasamy Kaliappan <quic_rkaliapp@quicinc.com>
+From: Andrew Davis <afd@ti.com>
 
-[ Upstream commit 27d38bdfd416f4db70e09c3bef3b030c86fd235a ]
+[ Upstream commit a5caf03188e44388e8c618dcbe5fffad1a249385 ]
 
-Currently, sometimes, the station is unable to identify the configured
-AP SSID in its scan results when the AP is not broadcasting its name
-publicly and has a hidden SSID.
+The syscon helper device_node_to_regmap() is used to fetch a regmap
+registered to a device node. It also currently creates this regmap
+if the node did not already have a regmap associated with it. This
+should only be used on "syscon" nodes. This driver is not such a
+device and instead uses device_node_to_regmap() on its own node as
+a hacky way to create a regmap for itself.
 
-Currently, channel dwell time for an ath12k station is 30 ms. Sometimes,
-station can send broadcast probe request to AP close to the end of dwell
-time. In some of these cases, before AP sends a response to the received
-probe request, the dwell time on the station side would come to an end.
-So, the station will move to scan next channel and will not be able to
-acknowledge the unicast probe response.
+This will not work going forward and so we should create our regmap
+the normal way by defining our regmap_config, fetching our memory
+resource, then using the normal regmap_init_mmio() function.
 
-Resolve this issue by increasing station's channel dwell time to 70 ms,
-so that the it remains on the same channel for a longer period. This
-would increase the station's chance of receiving probe response from the
-AP. The station will then send a response acknowledgment back to the AP,
-thus leading to successful scan and BSS discovery.
-
-With an increased dwell time, scan would take longer than it takes now.
-But, this fix is an improvement for hidden SSID scan issue.
-
-Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.4.1-00199-QCAHKSWPL_SILICONZ-1
-
-Signed-off-by: Ramasamy Kaliappan <quic_rkaliapp@quicinc.com>
-Signed-off-by: Roopni Devanathan <quic_rdevanat@quicinc.com>
-Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250207060005.153835-1-quic_rdevanat@quicinc.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Signed-off-by: Andrew Davis <afd@ti.com>
+Link: https://lore.kernel.org/r/20250123181726.597144-1-afd@ti.com
+Signed-off-by: Nishanth Menon <nm@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/wmi.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/soc/ti/k3-socinfo.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/wmi.c b/drivers/net/wireless/ath/ath12k/wmi.c
-index c977dfbae0a46..d87d5980325e8 100644
---- a/drivers/net/wireless/ath/ath12k/wmi.c
-+++ b/drivers/net/wireless/ath/ath12k/wmi.c
-@@ -2115,8 +2115,8 @@ void ath12k_wmi_start_scan_init(struct ath12k *ar,
- 	arg->dwell_time_active = 50;
- 	arg->dwell_time_active_2g = 0;
- 	arg->dwell_time_passive = 150;
--	arg->dwell_time_active_6g = 40;
--	arg->dwell_time_passive_6g = 30;
-+	arg->dwell_time_active_6g = 70;
-+	arg->dwell_time_passive_6g = 70;
- 	arg->min_rest_time = 50;
- 	arg->max_rest_time = 500;
- 	arg->repeat_probe_time = 0;
+diff --git a/drivers/soc/ti/k3-socinfo.c b/drivers/soc/ti/k3-socinfo.c
+index 6ea9b8c7d335c..7a3bdef5a7c0d 100644
+--- a/drivers/soc/ti/k3-socinfo.c
++++ b/drivers/soc/ti/k3-socinfo.c
+@@ -63,6 +63,12 @@ k3_chipinfo_partno_to_names(unsigned int partno,
+ 	return -EINVAL;
+ }
+ 
++static const struct regmap_config k3_chipinfo_regmap_cfg = {
++	.reg_bits = 32,
++	.val_bits = 32,
++	.reg_stride = 4,
++};
++
+ static int k3_chipinfo_probe(struct platform_device *pdev)
+ {
+ 	struct device_node *node = pdev->dev.of_node;
+@@ -70,13 +76,18 @@ static int k3_chipinfo_probe(struct platform_device *pdev)
+ 	struct device *dev = &pdev->dev;
+ 	struct soc_device *soc_dev;
+ 	struct regmap *regmap;
++	void __iomem *base;
+ 	u32 partno_id;
+ 	u32 variant;
+ 	u32 jtag_id;
+ 	u32 mfg;
+ 	int ret;
+ 
+-	regmap = device_node_to_regmap(node);
++	base = devm_platform_ioremap_resource(pdev, 0);
++	if (IS_ERR(base))
++		return PTR_ERR(base);
++
++	regmap = regmap_init_mmio(dev, base, &k3_chipinfo_regmap_cfg);
+ 	if (IS_ERR(regmap))
+ 		return PTR_ERR(regmap);
+ 
 -- 
 2.39.5
 
