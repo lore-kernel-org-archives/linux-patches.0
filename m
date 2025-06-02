@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A806B239E6B;
-	Mon,  2 Jun 2025 14:59:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74F022397AA;
+	Mon,  2 Jun 2025 14:59:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748876356; cv=none; b=BX/aN5ZZvmMiCo2zSRmG0cdQStv5rZGeCPLDF7iO/4czWK17mYpwBePTQ1MdwHexHARFx8cfJC/MFpsbXDt/KVL1m2gaqwBi2kOo1HFwDtfLZn8uXytKBYY/4rPf7V5g0b4zN9aEU++xYcADmKtM8GHACAsNTtxnOkacLC9C/5Q=
+	t=1748876357; cv=none; b=j7mVQ2MRJjA7ieAPxInBmh8Xk9cS/slDbVgQKHGTflWMgeTUryyjoHYpcZN9MM8UrXDr5D5pOid8eXb5B018Su/QSPTtsIm/YhcnggltINN8g47CIlK/ajgGDITsCJYxaWFY/oGrwsgwDwqrVuYlUr1Ko96UHirabPbDiB85vF4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748876356; c=relaxed/simple;
-	bh=cnTpDVKZfSSjS5P5BzGwJMnWy0Fy4HJbpd9+Tz8BtTo=;
+	s=arc-20240116; t=1748876357; c=relaxed/simple;
+	bh=wrcbafhR1VSj15sro2uSDSndhgsVMzGxF0lAU/XwMh4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ktwCpUCm+0CYUTBsMySRRJ49zILhnFQjH5ibEmmCIUXspkTln7+8jpCN6inXTNu6+wzSZCX13KO42qWoTsSR+lZyubAAYg4BVHWncUyUSXBllERRq7zmxh2lwxp0aYkotiQvJ6w4heTh9FwE842KjLgC17OPiP8kF2ZnnA6Pe+0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jHdcEqcf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hi2BfHO2BbekSr9JExLWMazgYedAZD0eQpyrClqdPYcHvDTxKNG9sf0rRTqcsDKtI9CL7Rgs8iQVjwfoHlVAfo3jsdP44c3esbLwysWQq3edP6LYqMPH6KVEpgykOZ0aAV08Dg4Lb+ymkc2fNvvChVw67OcsrgZ0tl/DZ/kZlLE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ydp1qzvt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jHdcEqcf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A332EC4CEEB;
-	Mon,  2 Jun 2025 14:59:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ydp1qzvt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDDD4C4CEEB;
+	Mon,  2 Jun 2025 14:59:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748876354;
-	bh=cnTpDVKZfSSjS5P5BzGwJMnWy0Fy4HJbpd9+Tz8BtTo=;
+	s=korg; t=1748876357;
+	bh=wrcbafhR1VSj15sro2uSDSndhgsVMzGxF0lAU/XwMh4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jHdcEqcfWTzmzsBgQDDWOEx0WjedEx2BxlaTH8xZd3KkZOwErQ85PIE06EdXsD/XM
-	 wbJyRyXHUPyCKGNhLOGwclDfI7N0XJDAyOB1CX5gkF30KtSIG7L7uqxEqd+6bl66DK
-	 MSyS7I7Nybeid6YhBZciP/ROYcZ7+iI2EyqdvlcM=
+	b=ydp1qzvtmfTDp+yZghjk4BgQ1TyVO9244pOM/y1SvOHweLjTwh+d1PPefDQv8eteS
+	 gsvtf+AwuK+0Wrp3a21oBZ8jEfEJil2L63eOfCDf/xB+iVNrnaxFhv0PF644t7cRGm
+	 eF9hbpFY0I64yD1tOg0o1hSYyhogkap2wLll3rHc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>,
+	Kees Cook <kees@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 120/207] media: v4l: Memset argument to 0 before calling get_mbus_config pad op
-Date: Mon,  2 Jun 2025 15:48:12 +0200
-Message-ID: <20250602134303.419675295@linuxfoundation.org>
+Subject: [PATCH 5.15 121/207] net/mlx4_core: Avoid impossible mlx4_db_alloc() order value
+Date: Mon,  2 Jun 2025 15:48:13 +0200
+Message-ID: <20250602134303.456510170@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134258.769974467@linuxfoundation.org>
 References: <20250602134258.769974467@linuxfoundation.org>
@@ -52,52 +51,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sakari Ailus <sakari.ailus@linux.intel.com>
+From: Kees Cook <kees@kernel.org>
 
-[ Upstream commit 91d6a99acfa5ce9f95ede775074b80f7193bd717 ]
+[ Upstream commit 4a6f18f28627e121bd1f74b5fcc9f945d6dbeb1e ]
 
-Memset the config argument to get_mbus_config V4L2 sub-device pad
-operation to zero before calling the operation. This ensures the callers
-don't need to bother with it nor the implementations need to set all
-fields that may not be relevant to them.
+GCC can see that the value range for "order" is capped, but this leads
+it to consider that it might be negative, leading to a false positive
+warning (with GCC 15 with -Warray-bounds -fdiagnostics-details):
 
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Reviewed-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+../drivers/net/ethernet/mellanox/mlx4/alloc.c:691:47: error: array subscript -1 is below array bounds of 'long unsigned int *[2]' [-Werror=array-bounds=]
+  691 |                 i = find_first_bit(pgdir->bits[o], MLX4_DB_PER_PAGE >> o);
+      |                                    ~~~~~~~~~~~^~~
+  'mlx4_alloc_db_from_pgdir': events 1-2
+  691 |                 i = find_first_bit(pgdir->bits[o], MLX4_DB_PER_PAGE >> o);                        |                     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                     |                         |                                                   |                     |                         (2) out of array bounds here
+      |                     (1) when the condition is evaluated to true                             In file included from ../drivers/net/ethernet/mellanox/mlx4/mlx4.h:53,
+                 from ../drivers/net/ethernet/mellanox/mlx4/alloc.c:42:
+../include/linux/mlx4/device.h:664:33: note: while referencing 'bits'
+  664 |         unsigned long          *bits[2];
+      |                                 ^~~~
+
+Switch the argument to unsigned int, which removes the compiler needing
+to consider negative values.
+
+Signed-off-by: Kees Cook <kees@kernel.org>
+Link: https://patch.msgid.link/20250210174504.work.075-kees@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/v4l2-core/v4l2-subdev.c | 2 ++
- include/media/v4l2-subdev.h           | 4 +++-
- 2 files changed, 5 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx4/alloc.c | 6 +++---
+ include/linux/mlx4/device.h                | 2 +-
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/media/v4l2-core/v4l2-subdev.c b/drivers/media/v4l2-core/v4l2-subdev.c
-index 5d27a27cc2f24..6f2267625c7ea 100644
---- a/drivers/media/v4l2-core/v4l2-subdev.c
-+++ b/drivers/media/v4l2-core/v4l2-subdev.c
-@@ -314,6 +314,8 @@ static int call_enum_dv_timings(struct v4l2_subdev *sd,
- static int call_get_mbus_config(struct v4l2_subdev *sd, unsigned int pad,
- 				struct v4l2_mbus_config *config)
- {
-+	memset(config, 0, sizeof(*config));
-+
- 	return check_pad(sd, pad) ? :
- 	       sd->ops->pad->get_mbus_config(sd, pad, config);
+diff --git a/drivers/net/ethernet/mellanox/mlx4/alloc.c b/drivers/net/ethernet/mellanox/mlx4/alloc.c
+index b330020dc0d67..f2bded847e61d 100644
+--- a/drivers/net/ethernet/mellanox/mlx4/alloc.c
++++ b/drivers/net/ethernet/mellanox/mlx4/alloc.c
+@@ -682,9 +682,9 @@ static struct mlx4_db_pgdir *mlx4_alloc_db_pgdir(struct device *dma_device)
  }
-diff --git a/include/media/v4l2-subdev.h b/include/media/v4l2-subdev.h
-index 9a476f902c425..262b5e5cebc4c 100644
---- a/include/media/v4l2-subdev.h
-+++ b/include/media/v4l2-subdev.h
-@@ -714,7 +714,9 @@ struct v4l2_subdev_state {
-  *		     possible configuration from the remote end, likely calling
-  *		     this operation as close as possible to stream on time. The
-  *		     operation shall fail if the pad index it has been called on
-- *		     is not valid or in case of unrecoverable failures.
-+ *		     is not valid or in case of unrecoverable failures. The
-+ *		     config argument has been memset to 0 just before calling
-+ *		     the op.
-  *
-  * @set_mbus_config: set the media bus configuration of a remote sub-device.
-  *		     This operations is intended to allow, in combination with
+ 
+ static int mlx4_alloc_db_from_pgdir(struct mlx4_db_pgdir *pgdir,
+-				    struct mlx4_db *db, int order)
++				    struct mlx4_db *db, unsigned int order)
+ {
+-	int o;
++	unsigned int o;
+ 	int i;
+ 
+ 	for (o = order; o <= 1; ++o) {
+@@ -712,7 +712,7 @@ static int mlx4_alloc_db_from_pgdir(struct mlx4_db_pgdir *pgdir,
+ 	return 0;
+ }
+ 
+-int mlx4_db_alloc(struct mlx4_dev *dev, struct mlx4_db *db, int order)
++int mlx4_db_alloc(struct mlx4_dev *dev, struct mlx4_db *db, unsigned int order)
+ {
+ 	struct mlx4_priv *priv = mlx4_priv(dev);
+ 	struct mlx4_db_pgdir *pgdir;
+diff --git a/include/linux/mlx4/device.h b/include/linux/mlx4/device.h
+index 30bb59fe970cb..40ebf0502f427 100644
+--- a/include/linux/mlx4/device.h
++++ b/include/linux/mlx4/device.h
+@@ -1115,7 +1115,7 @@ int mlx4_write_mtt(struct mlx4_dev *dev, struct mlx4_mtt *mtt,
+ int mlx4_buf_write_mtt(struct mlx4_dev *dev, struct mlx4_mtt *mtt,
+ 		       struct mlx4_buf *buf);
+ 
+-int mlx4_db_alloc(struct mlx4_dev *dev, struct mlx4_db *db, int order);
++int mlx4_db_alloc(struct mlx4_dev *dev, struct mlx4_db *db, unsigned int order);
+ void mlx4_db_free(struct mlx4_dev *dev, struct mlx4_db *db);
+ 
+ int mlx4_alloc_hwq_res(struct mlx4_dev *dev, struct mlx4_hwq_resources *wqres,
 -- 
 2.39.5
 
