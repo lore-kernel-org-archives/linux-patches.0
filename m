@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B0EC22330F;
-	Mon,  2 Jun 2025 15:08:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C851A22DA0B;
+	Mon,  2 Jun 2025 15:08:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748876890; cv=none; b=HPLmxbNY61gZaNJ0j59W6Us2r+mF7CFX6nU/V6HO4nz/tTbkgoSH2fTqVJ/uwBCHorG9ZxvANJnBwYi6F9751GEYMglHmVHG8MTUy6SiZCLq6vCkoMpxe1YQnWHZVP3RNNzQFHxk0cEhhfB+qaie1r9MqufakbwQpwMwKgHGrQw=
+	t=1748876893; cv=none; b=tk55HDjd5x+TcGpb+98Ui5oF5ToWPdgqj3VwNf22D/jikSvkOv4HF/H9kjneXfDPknMkUq/v6T9UHh5c6PK/5+mg5mHC/ghz/KiAWPsJSQLObnWfApsDACqByxWnhhr8Ggt9HzSCxfeklZqbxmpjFDjqLvZyBF6VnfVysLOWFLk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748876890; c=relaxed/simple;
-	bh=hA1aulh+sPykBBLESP9EiegOSglNQva+hl3dwoNkpsY=;
+	s=arc-20240116; t=1748876893; c=relaxed/simple;
+	bh=jMQjbn849OQZJDRNKEJJx1O+Z56t5ZWUv/+3a4mgtKo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pC9ytYZ+8AOroeaSiLs05NoiI2qRrrqdCtDmbneh6PBQBMkVI/2MH+mlZ1cMc3JZg3UL4/aLbPmnUc5N/3Gj5XuEqeExzJ23/shXzXonHpp02bKACIo1f1FwHzhRBO+sCGNugxvPHLuEqpK5YNO9QCRYUMGhr8Ocu9bxoBgrzKY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EdJSEI+N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jwLpb7emZsqwrRpm7lloSS3yIFHhrEX7xRBhx9YQNrahOQojWosE2exkhXGoQ83qEHdFyTqdH4PUfutrVeiWGTyyPRa01xwlncRwaPbMvVVgZq/1C7d91Xx8m1KKikpwcRxbTkcygIxxiSllWhfWX2ppL5utGkQvSigtgQAAROc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iePOxZlb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EdJSEI+N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B1F2C4CEEB;
-	Mon,  2 Jun 2025 15:08:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iePOxZlb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36253C4CEEB;
+	Mon,  2 Jun 2025 15:08:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748876890;
-	bh=hA1aulh+sPykBBLESP9EiegOSglNQva+hl3dwoNkpsY=;
+	s=korg; t=1748876893;
+	bh=jMQjbn849OQZJDRNKEJJx1O+Z56t5ZWUv/+3a4mgtKo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EdJSEI+NorRAum3jFE7RgLIyRxF/Wi7LmDntCFnLWWI0pNEtxSdIoTQID1+cwDL2p
-	 mHTxJFYCDOXikZgeupXebXysessn4NGO0WpllmGPlazgrZXLquwtf8c9oSNQbaYIzN
-	 PVD53YkO8mfZqYa8CIaWMxclPRR8fflFKC70Y0JM=
+	b=iePOxZlbNAEn1ohOUuKux0FuzcSFlvn9MpRK38vB8oEzgmM/mD6WS5T2cvt0tJRrD
+	 vv/y67IabSyZDxGOQDXkghgRlT+YCSEEexhB323OfgJ94k2hq+K7qgqVhQod8GuD2y
+	 SofMoYGziWfaM3W7RGncTTNcYplSCYmB0MFaslKA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prathamesh Shete <pshete@nvidia.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Chris Morgan <macromorgan@hotmail.com>,
+	Ryan Walklin <ryan@testtoast.com>,
+	Philippe Simons <simons.philippe@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 076/325] pinctrl-tegra: Restore SFSEL bit when freeing pins
-Date: Mon,  2 Jun 2025 15:45:52 +0200
-Message-ID: <20250602134322.870423397@linuxfoundation.org>
+Subject: [PATCH 6.1 077/325] ASoC: sun4i-codec: support hp-det-gpios property
+Date: Mon,  2 Jun 2025 15:45:53 +0200
+Message-ID: <20250602134322.909013510@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134319.723650984@linuxfoundation.org>
 References: <20250602134319.723650984@linuxfoundation.org>
@@ -51,181 +53,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Prathamesh Shete <pshete@nvidia.com>
+From: Ryan Walklin <ryan@testtoast.com>
 
-[ Upstream commit c12bfa0fee65940b10ff5187349f76c6f6b1df9c ]
+[ Upstream commit a149377c033afe6557c50892ebbfc0e8b7e2e253 ]
 
-Each pin can be configured as a Special Function IO (SFIO) or GPIO,
-where the SFIO enables the pin to operate in alternative modes such as
-I2C, SPI, etc.
+Add support for GPIO headphone detection with the hp-det-gpios
+property. In order for this to properly disable the path upon
+removal of headphones, the output must be labelled Headphone which
+is a common sink in the driver.
 
-The current implementation sets all the pins back to SFIO mode
-even if they were initially in GPIO mode. This can cause glitches
-on the pins when pinctrl_gpio_free() is called.
+Describe a headphone jack and detection GPIO in the driver, check for
+a corresponding device tree node, and enable jack detection in a new
+machine init function if described.
 
-Avoid these undesired glitches by storing the pin's SFIO/GPIO
-state on GPIO request and restoring it on GPIO free.
+Signed-off-by: Chris Morgan <macromorgan@hotmail.com>
+Signed-off-by: Ryan Walklin <ryan@testtoast.com>
 
-Signed-off-by: Prathamesh Shete <pshete@nvidia.com>
-Link: https://lore.kernel.org/20250305104939.15168-2-pshete@nvidia.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+--
+Changelog v1..v2:
+- Separate DAPM changes into separate patch and add rationale.
+
+Tested-by: Philippe Simons <simons.philippe@gmail.com>
+Link: https://patch.msgid.link/20250214220247.10810-4-ryan@testtoast.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/tegra/pinctrl-tegra.c | 59 +++++++++++++++++++++++----
- drivers/pinctrl/tegra/pinctrl-tegra.h |  6 +++
- 2 files changed, 57 insertions(+), 8 deletions(-)
+ sound/soc/sunxi/sun4i-codec.c | 53 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 53 insertions(+)
 
-diff --git a/drivers/pinctrl/tegra/pinctrl-tegra.c b/drivers/pinctrl/tegra/pinctrl-tegra.c
-index 30341c43da59a..ba7bcc876e304 100644
---- a/drivers/pinctrl/tegra/pinctrl-tegra.c
-+++ b/drivers/pinctrl/tegra/pinctrl-tegra.c
-@@ -278,8 +278,8 @@ static int tegra_pinctrl_set_mux(struct pinctrl_dev *pctldev,
- 	return 0;
- }
+diff --git a/sound/soc/sunxi/sun4i-codec.c b/sound/soc/sunxi/sun4i-codec.c
+index 835dc34043670..1e310958f8c08 100644
+--- a/sound/soc/sunxi/sun4i-codec.c
++++ b/sound/soc/sunxi/sun4i-codec.c
+@@ -25,6 +25,7 @@
+ #include <linux/gpio/consumer.h>
  
--static const struct tegra_pingroup *tegra_pinctrl_get_group(struct pinctrl_dev *pctldev,
--					unsigned int offset)
-+static int tegra_pinctrl_get_group_index(struct pinctrl_dev *pctldev,
-+					 unsigned int offset)
- {
- 	struct tegra_pmx *pmx = pinctrl_dev_get_drvdata(pctldev);
- 	unsigned int group, num_pins, j;
-@@ -292,12 +292,35 @@ static const struct tegra_pingroup *tegra_pinctrl_get_group(struct pinctrl_dev *
- 			continue;
- 		for (j = 0; j < num_pins; j++) {
- 			if (offset == pins[j])
--				return &pmx->soc->groups[group];
-+				return group;
- 		}
- 	}
+ #include <sound/core.h>
++#include <sound/jack.h>
+ #include <sound/pcm.h>
+ #include <sound/pcm_params.h>
+ #include <sound/soc.h>
+@@ -239,6 +240,7 @@ struct sun4i_codec {
+ 	struct clk	*clk_module;
+ 	struct reset_control *rst;
+ 	struct gpio_desc *gpio_pa;
++	struct gpio_desc *gpio_hp;
  
--	dev_err(pctldev->dev, "Pingroup not found for pin %u\n", offset);
--	return NULL;
-+	return -EINVAL;
-+}
-+
-+static const struct tegra_pingroup *tegra_pinctrl_get_group(struct pinctrl_dev *pctldev,
-+							    unsigned int offset,
-+							    int group_index)
-+{
-+	struct tegra_pmx *pmx = pinctrl_dev_get_drvdata(pctldev);
-+
-+	if (group_index < 0 || group_index > pmx->soc->ngroups)
-+		return NULL;
-+
-+	return &pmx->soc->groups[group_index];
-+}
-+
-+static struct tegra_pingroup_config *tegra_pinctrl_get_group_config(struct pinctrl_dev *pctldev,
-+								    unsigned int offset,
-+								    int group_index)
-+{
-+	struct tegra_pmx *pmx = pinctrl_dev_get_drvdata(pctldev);
-+
-+	if (group_index < 0)
-+		return NULL;
-+
-+	return &pmx->pingroup_configs[group_index];
- }
- 
- static int tegra_pinctrl_gpio_request_enable(struct pinctrl_dev *pctldev,
-@@ -306,12 +329,15 @@ static int tegra_pinctrl_gpio_request_enable(struct pinctrl_dev *pctldev,
- {
- 	struct tegra_pmx *pmx = pinctrl_dev_get_drvdata(pctldev);
- 	const struct tegra_pingroup *group;
-+	struct tegra_pingroup_config *config;
-+	int group_index;
- 	u32 value;
- 
- 	if (!pmx->soc->sfsel_in_mux)
- 		return 0;
- 
--	group = tegra_pinctrl_get_group(pctldev, offset);
-+	group_index = tegra_pinctrl_get_group_index(pctldev, offset);
-+	group = tegra_pinctrl_get_group(pctldev, offset, group_index);
- 
- 	if (!group)
- 		return -EINVAL;
-@@ -319,7 +345,11 @@ static int tegra_pinctrl_gpio_request_enable(struct pinctrl_dev *pctldev,
- 	if (group->mux_reg < 0 || group->sfsel_bit < 0)
- 		return -EINVAL;
- 
-+	config = tegra_pinctrl_get_group_config(pctldev, offset, group_index);
-+	if (!config)
-+		return -EINVAL;
- 	value = pmx_readl(pmx, group->mux_bank, group->mux_reg);
-+	config->is_sfsel = (value & BIT(group->sfsel_bit)) != 0;
- 	value &= ~BIT(group->sfsel_bit);
- 	pmx_writel(pmx, value, group->mux_bank, group->mux_reg);
- 
-@@ -332,12 +362,15 @@ static void tegra_pinctrl_gpio_disable_free(struct pinctrl_dev *pctldev,
- {
- 	struct tegra_pmx *pmx = pinctrl_dev_get_drvdata(pctldev);
- 	const struct tegra_pingroup *group;
-+	struct tegra_pingroup_config *config;
-+	int group_index;
- 	u32 value;
- 
- 	if (!pmx->soc->sfsel_in_mux)
- 		return;
- 
--	group = tegra_pinctrl_get_group(pctldev, offset);
-+	group_index = tegra_pinctrl_get_group_index(pctldev, offset);
-+	group = tegra_pinctrl_get_group(pctldev, offset, group_index);
- 
- 	if (!group)
- 		return;
-@@ -345,8 +378,12 @@ static void tegra_pinctrl_gpio_disable_free(struct pinctrl_dev *pctldev,
- 	if (group->mux_reg < 0 || group->sfsel_bit < 0)
- 		return;
- 
-+	config = tegra_pinctrl_get_group_config(pctldev, offset, group_index);
-+	if (!config)
-+		return;
- 	value = pmx_readl(pmx, group->mux_bank, group->mux_reg);
--	value |= BIT(group->sfsel_bit);
-+	if (config->is_sfsel)
-+		value |= BIT(group->sfsel_bit);
- 	pmx_writel(pmx, value, group->mux_bank, group->mux_reg);
- }
- 
-@@ -799,6 +836,12 @@ int tegra_pinctrl_probe(struct platform_device *pdev,
- 	pmx->dev = &pdev->dev;
- 	pmx->soc = soc_data;
- 
-+	pmx->pingroup_configs = devm_kcalloc(&pdev->dev,
-+					     pmx->soc->ngroups, sizeof(*pmx->pingroup_configs),
-+					     GFP_KERNEL);
-+	if (!pmx->pingroup_configs)
-+		return -ENOMEM;
-+
- 	/*
- 	 * Each mux group will appear in 4 functions' list of groups.
- 	 * This over-allocates slightly, since not all groups are mux groups.
-diff --git a/drivers/pinctrl/tegra/pinctrl-tegra.h b/drivers/pinctrl/tegra/pinctrl-tegra.h
-index f8269858eb78a..ec5198d391ea5 100644
---- a/drivers/pinctrl/tegra/pinctrl-tegra.h
-+++ b/drivers/pinctrl/tegra/pinctrl-tegra.h
-@@ -8,6 +8,10 @@
- #ifndef __PINMUX_TEGRA_H__
- #define __PINMUX_TEGRA_H__
- 
-+struct tegra_pingroup_config {
-+	bool is_sfsel;
-+};
-+
- struct tegra_pmx {
- 	struct device *dev;
- 	struct pinctrl_dev *pctl;
-@@ -18,6 +22,8 @@ struct tegra_pmx {
- 	int nbanks;
- 	void __iomem **regs;
- 	u32 *backup_regs;
-+	/* Array of size soc->ngroups */
-+	struct tegra_pingroup_config *pingroup_configs;
+ 	/* ADC_FIFOC register is at different offset on different SoCs */
+ 	struct regmap_field *reg_adc_fifoc;
+@@ -1273,6 +1275,49 @@ static struct snd_soc_dai_driver dummy_cpu_dai = {
+ 	 },
  };
  
- enum tegra_pinconf_param {
++static struct snd_soc_jack sun4i_headphone_jack;
++
++static struct snd_soc_jack_pin sun4i_headphone_jack_pins[] = {
++	{ .pin = "Headphone", .mask = SND_JACK_HEADPHONE },
++};
++
++static struct snd_soc_jack_gpio sun4i_headphone_jack_gpio = {
++	.name = "hp-det",
++	.report = SND_JACK_HEADPHONE,
++	.debounce_time = 150,
++};
++
++static int sun4i_codec_machine_init(struct snd_soc_pcm_runtime *rtd)
++{
++	struct snd_soc_card *card = rtd->card;
++	struct sun4i_codec *scodec = snd_soc_card_get_drvdata(card);
++	int ret;
++
++	if (scodec->gpio_hp) {
++		ret = snd_soc_card_jack_new_pins(card, "Headphone Jack",
++						 SND_JACK_HEADPHONE,
++						 &sun4i_headphone_jack,
++						 sun4i_headphone_jack_pins,
++						 ARRAY_SIZE(sun4i_headphone_jack_pins));
++		if (ret) {
++			dev_err(rtd->dev,
++				"Headphone jack creation failed: %d\n", ret);
++			return ret;
++		}
++
++		sun4i_headphone_jack_gpio.desc = scodec->gpio_hp;
++		ret = snd_soc_jack_add_gpios(&sun4i_headphone_jack, 1,
++					     &sun4i_headphone_jack_gpio);
++
++		if (ret) {
++			dev_err(rtd->dev, "Headphone GPIO not added: %d\n", ret);
++			return ret;
++		}
++	}
++
++	return 0;
++}
++
+ static struct snd_soc_dai_link *sun4i_codec_create_link(struct device *dev,
+ 							int *num_links)
+ {
+@@ -1298,6 +1343,7 @@ static struct snd_soc_dai_link *sun4i_codec_create_link(struct device *dev,
+ 	link->codecs->name	= dev_name(dev);
+ 	link->platforms->name	= dev_name(dev);
+ 	link->dai_fmt		= SND_SOC_DAIFMT_I2S;
++	link->init		= sun4i_codec_machine_init;
+ 
+ 	*num_links = 1;
+ 
+@@ -1738,6 +1784,13 @@ static int sun4i_codec_probe(struct platform_device *pdev)
+ 		return ret;
+ 	}
+ 
++	scodec->gpio_hp = devm_gpiod_get_optional(&pdev->dev, "hp-det", GPIOD_IN);
++	if (IS_ERR(scodec->gpio_hp)) {
++		ret = PTR_ERR(scodec->gpio_hp);
++		dev_err_probe(&pdev->dev, ret, "Failed to get hp-det gpio\n");
++		return ret;
++	}
++
+ 	/* reg_field setup */
+ 	scodec->reg_adc_fifoc = devm_regmap_field_alloc(&pdev->dev,
+ 							scodec->regmap,
 -- 
 2.39.5
 
