@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81AA5235074;
-	Mon,  2 Jun 2025 15:18:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C56A2356DB;
+	Mon,  2 Jun 2025 15:18:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748877508; cv=none; b=oMUXJEE4zTFKeWZqtf+PT52fWTArgFde/z8ChLcxiFPE/M9NaIqSyvcDxoo2WphsgWknlcvlXRkP66lHlbICLqYrfRJRDHbosNLyPnFQqnf/XfxIQ+jnL4EwexHxcOiwNPaBifavvLNkoYo2c0h4eiuev4IEUuCPN44MRfzUhrQ=
+	t=1748877512; cv=none; b=Ua+pnr9ulCHcaeWuqUOIr+r8YN38jH5eAmgiJLzGmUBQ0Yv4yNHRLgRgoz7WDiz1OfBOQPenybhIhJvQj8zoNYHRc8JUXE9LFOcH6/9mtBLyRGwfklMwDFM5+p3oQ7JtQQfXUvTYVCAa9PRDjdLc6t1yoqJf7OYg3IUBiSdiYkY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748877508; c=relaxed/simple;
-	bh=0VGV4HkgCQwyZs7xZoJLAB5XLW/8yrJA9pL9Dk2FawY=;
+	s=arc-20240116; t=1748877512; c=relaxed/simple;
+	bh=HrLE0deh4e7SdE1LIHx5vT39nnNVNUbf9MneQ00Thcs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ACJFZlen5CP0AMoCd7SZZY78JzAbmLX92jCF8sagm2h+B5WS1fYSkvKSt4HF8WLgSa2MNmqxZKQvgQUFaeleC3mFHxkkitYIgMq+IAA47LPmKkGp1M+DpbT4gXsGsU73to31fIgemnZBSNIU0GVzqQNWtDDZPdbeujdAulnxeo0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jk4Fj3wP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NQXouAflBgEQpFy5DogLChV4H+v7radup0+iqZ6E4ob1xTIhwQ2V2jwKhHGKKjRF3eV4LmdG0YYXMK9B+ZIqWQwnk8EBHQz+A3dgRscm9D2nejwSTm98ET3BxS8E6SbinShAD4QHS1TfWvRETvqry31lKcHlTlgROl+Z3xK/5qM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FdKzSNAQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jk4Fj3wP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4F11C4CEEB;
-	Mon,  2 Jun 2025 15:18:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FdKzSNAQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33CF5C4CEEB;
+	Mon,  2 Jun 2025 15:18:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748877508;
-	bh=0VGV4HkgCQwyZs7xZoJLAB5XLW/8yrJA9pL9Dk2FawY=;
+	s=korg; t=1748877511;
+	bh=HrLE0deh4e7SdE1LIHx5vT39nnNVNUbf9MneQ00Thcs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Jk4Fj3wPkRr4PVIU7FB+eI/HOxQ6gB9FYF0IWlqAsrqJLVFP67+DjjhSueKH9L5Si
-	 6jhCt4IcuasB4OHxKm6qCtYhwq5ITzgGS/BaFWv6rpLnrCPMH/uwqjmrQURvYZb2ag
-	 ERVGABpdJUTUlfcbSMAp6Id5IygZJgKsRPRTBqDY=
+	b=FdKzSNAQtZRP3TBBNCqHfJ/2Fj+QAYbwrgl6FaV7nlk2vxhx23yEYEo/jJyICxKkW
+	 XosNw/yr/3PrvyhfAQpYXRQ55vZ3ig7/VYettRLzdYRM6qNfIXwZkqdVCGGRb8iHv4
+	 l7G7plfDpm3X7tRermk/Gpxw413FCx+7nGLgqyQI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Lee Jones <lee@kernel.org>
-Subject: [PATCH 6.1 299/325] af_unix: Assign a unique index to SCC.
-Date: Mon,  2 Jun 2025 15:49:35 +0200
-Message-ID: <20250602134332.059195531@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>
+Subject: [PATCH 6.1 273/325] i3c: master: svc: Fix implicit fallthrough in svc_i3c_master_ibi_work()
+Date: Mon,  2 Jun 2025 15:49:09 +0200
+Message-ID: <20250602134330.857876058@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134319.723650984@linuxfoundation.org>
 References: <20250602134319.723650984@linuxfoundation.org>
@@ -52,163 +50,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit bfdb01283ee8f2f3089656c3ff8f62bb072dabb2 upstream.
+commit e8d2d287e26d9bd9114cf258a123a6b70812442e upstream.
 
-The definition of the lowlink in Tarjan's algorithm is the
-smallest index of a vertex that is reachable with at most one
-back-edge in SCC.  This is not useful for a cross-edge.
+Clang warns (or errors with CONFIG_WERROR=y):
 
-If we start traversing from A in the following graph, the final
-lowlink of D is 3.  The cross-edge here is one between D and C.
+  drivers/i3c/master/svc-i3c-master.c:596:2: error: unannotated fall-through between switch labels [-Werror,-Wimplicit-fallthrough]
+    596 |         default:
+        |         ^
+  drivers/i3c/master/svc-i3c-master.c:596:2: note: insert 'break;' to avoid fall-through
+    596 |         default:
+        |         ^
+        |         break;
+  1 error generated.
 
-  A -> B -> D   D = (4, 3)  (index, lowlink)
-  ^    |    |   C = (3, 1)
-  |    V    |   B = (2, 1)
-  `--- C <--'   A = (1, 1)
+Clang is a little more pedantic than GCC, which does not warn when
+falling through to a case that is just break or return. Clang's version
+is more in line with the kernel's own stance in deprecated.rst, which
+states that all switch/case blocks must end in either break,
+fallthrough, continue, goto, or return. Add the missing break to silence
+the warning.
 
-This is because the lowlink of D is updated with the index of C.
-
-In the following patch, we detect a dead SCC by checking two
-conditions for each vertex.
-
-  1) vertex has no edge directed to another SCC (no bridge)
-  2) vertex's out_degree is the same as the refcount of its file
-
-If 1) is false, there is a receiver of all fds of the SCC and
-its ancestor SCC.
-
-To evaluate 1), we need to assign a unique index to each SCC and
-assign it to all vertices in the SCC.
-
-This patch changes the lowlink update logic for cross-edge so
-that in the example above, the lowlink of D is updated with the
-lowlink of C.
-
-  A -> B -> D   D = (4, 1)  (index, lowlink)
-  ^    |    |   C = (3, 1)
-  |    V    |   B = (2, 1)
-  `--- C <--'   A = (1, 1)
-
-Then, all vertices in the same SCC have the same lowlink, and we
-can quickly find the bridge connecting to different SCC if exists.
-
-However, it is no longer called lowlink, so we rename it to
-scc_index.  (It's sometimes called lowpoint.)
-
-Also, we add a global variable to hold the last index used in DFS
-so that we do not reset the initial index in each DFS.
-
-This patch can be squashed to the SCC detection patch but is
-split deliberately for anyone wondering why lowlink is not used
-as used in the original Tarjan's algorithm and many reference
-implementations.
-
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Acked-by: Paolo Abeni <pabeni@redhat.com>
-Link: https://lore.kernel.org/r/20240325202425.60930-13-kuniyu@amazon.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Lee Jones <lee@kernel.org>
+Fixes: 0430bf9bc1ac ("i3c: master: svc: Fix missing STOP for master request")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://lore.kernel.org/r/20250319-i3c-fix-clang-fallthrough-v1-1-d8e02be1ef5c@kernel.org
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/af_unix.h |    2 +-
- net/unix/garbage.c    |   29 +++++++++++++++--------------
- 2 files changed, 16 insertions(+), 15 deletions(-)
+ drivers/i3c/master/svc-i3c-master.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/include/net/af_unix.h
-+++ b/include/net/af_unix.h
-@@ -36,7 +36,7 @@ struct unix_vertex {
- 	struct list_head scc_entry;
- 	unsigned long out_degree;
- 	unsigned long index;
--	unsigned long lowlink;
-+	unsigned long scc_index;
- };
- 
- struct unix_edge {
---- a/net/unix/garbage.c
-+++ b/net/unix/garbage.c
-@@ -312,9 +312,8 @@ static bool unix_scc_cyclic(struct list_
- static LIST_HEAD(unix_visited_vertices);
- static unsigned long unix_vertex_grouped_index = UNIX_VERTEX_INDEX_MARK2;
- 
--static void __unix_walk_scc(struct unix_vertex *vertex)
-+static void __unix_walk_scc(struct unix_vertex *vertex, unsigned long *last_index)
- {
--	unsigned long index = UNIX_VERTEX_INDEX_START;
- 	LIST_HEAD(vertex_stack);
- 	struct unix_edge *edge;
- 	LIST_HEAD(edge_stack);
-@@ -326,9 +325,9 @@ next_vertex:
- 	 */
- 	list_add(&vertex->scc_entry, &vertex_stack);
- 
--	vertex->index = index;
--	vertex->lowlink = index;
--	index++;
-+	vertex->index = *last_index;
-+	vertex->scc_index = *last_index;
-+	(*last_index)++;
- 
- 	/* Explore neighbour vertices (receivers of the current vertex's fd). */
- 	list_for_each_entry(edge, &vertex->edges, vertex_entry) {
-@@ -358,30 +357,30 @@ prev_vertex:
- 			next_vertex = vertex;
- 			vertex = edge->predecessor->vertex;
- 
--			/* If the successor has a smaller lowlink, two vertices
--			 * are in the same SCC, so propagate the smaller lowlink
-+			/* If the successor has a smaller scc_index, two vertices
-+			 * are in the same SCC, so propagate the smaller scc_index
- 			 * to skip SCC finalisation.
- 			 */
--			vertex->lowlink = min(vertex->lowlink, next_vertex->lowlink);
-+			vertex->scc_index = min(vertex->scc_index, next_vertex->scc_index);
- 		} else if (next_vertex->index != unix_vertex_grouped_index) {
- 			/* Loop detected by a back/cross edge.
- 			 *
--			 * The successor is on vertex_stack, so two vertices are
--			 * in the same SCC.  If the successor has a smaller index,
-+			 * The successor is on vertex_stack, so two vertices are in
-+			 * the same SCC.  If the successor has a smaller *scc_index*,
- 			 * propagate it to skip SCC finalisation.
- 			 */
--			vertex->lowlink = min(vertex->lowlink, next_vertex->index);
-+			vertex->scc_index = min(vertex->scc_index, next_vertex->scc_index);
- 		} else {
- 			/* The successor was already grouped as another SCC */
- 		}
+--- a/drivers/i3c/master/svc-i3c-master.c
++++ b/drivers/i3c/master/svc-i3c-master.c
+@@ -496,6 +496,7 @@ static void svc_i3c_master_ibi_work(stru
+ 		break;
+ 	case SVC_I3C_MSTATUS_IBITYPE_MASTER_REQUEST:
+ 		svc_i3c_master_emit_stop(master);
++		break;
+ 	default:
+ 		break;
  	}
- 
--	if (vertex->index == vertex->lowlink) {
-+	if (vertex->index == vertex->scc_index) {
- 		struct list_head scc;
- 
- 		/* SCC finalised.
- 		 *
--		 * If the lowlink was not updated, all the vertices above on
-+		 * If the scc_index was not updated, all the vertices above on
- 		 * vertex_stack are in the same SCC.  Group them using scc_entry.
- 		 */
- 		__list_cut_position(&scc, &vertex_stack, &vertex->scc_entry);
-@@ -407,6 +406,8 @@ prev_vertex:
- 
- static void unix_walk_scc(void)
- {
-+	unsigned long last_index = UNIX_VERTEX_INDEX_START;
-+
- 	unix_graph_maybe_cyclic = false;
- 
- 	/* Visit every vertex exactly once.
-@@ -416,7 +417,7 @@ static void unix_walk_scc(void)
- 		struct unix_vertex *vertex;
- 
- 		vertex = list_first_entry(&unix_unvisited_vertices, typeof(*vertex), entry);
--		__unix_walk_scc(vertex);
-+		__unix_walk_scc(vertex, &last_index);
- 	}
- 
- 	list_replace_init(&unix_visited_vertices, &unix_unvisited_vertices);
 
 
