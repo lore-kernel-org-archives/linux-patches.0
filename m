@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06DD11B81DC;
-	Mon,  2 Jun 2025 14:38:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 227721B81DC;
+	Mon,  2 Jun 2025 14:38:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748875089; cv=none; b=pL8bgbWdAlGIzlekbJ+r0fXCgiq+hna1W+ynAQfo/57Er9bxcPeKPPHmCeRvuhtI90Cw/+GQ5tnD+ba+3mWdsOEoSVnzJ6vVm6Pe5302Zq0OzMJfdKlsOEGFMmgvW6YDDFj7vfthJupOaB8i3LYaVfa2mfGjysFY7p8VjULmE/k=
+	t=1748875092; cv=none; b=WRCUs18zI2oMU97yc2eBcmZfTRLAJQNcyV4XOAiPAFMn6i6EuyVz8J//4HyFnw81e1iv3/W1eRuaQ5u/mIwf52yG+f+tzcZAAWoETRuDEZy1rTf0wjPlSYZUDoOzVJVxxNbpkhL/OsHRXyBsQc5eTCP7/KN9s167duY4e2Vjarw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748875089; c=relaxed/simple;
-	bh=qeHGn7k4T3Fw+GU2J73t1Ycrl0v3Srj5cm0E4K2ivzQ=;
+	s=arc-20240116; t=1748875092; c=relaxed/simple;
+	bh=3McPEy8KOvNmN4PWMaJofUOE41t1Ho9iY/OM4TGGATU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UR6IUd+kiKI8GcgtlysTLShBhI8OcwpM+gpwx2NijIhPfBRgyIsLrK3LFPnNw3FqqBg1faMtLKCUOgW9FnWae5tfGFBhKn8RHSOPIchUh3k9I4DVDW5n0ueu2EhWQVHPPr0Z89R5NpLtnr9ADU8aYY6SyDxU0+oqKFvZFe1q0Qw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MoNvlkSh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nwQLpCC19sffaGM+BZ3HVEAf5MYj4EDBWkfsjEYKJgi7+Z17S1EKkkMkBbh0U1FE7MQQdTPotLtzEMngvTIghCGdjvIa/wRM4btdDebFXQCTQh3+YOe0yVcBkttov/HcsfGqPoFsUC22q7pAWnnX1kST/EcP6tgj0hBdaVckk+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X7FAcwFv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MoNvlkSh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6014CC4CEEB;
-	Mon,  2 Jun 2025 14:38:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X7FAcwFv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3E26C4CEEB;
+	Mon,  2 Jun 2025 14:38:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748875088;
-	bh=qeHGn7k4T3Fw+GU2J73t1Ycrl0v3Srj5cm0E4K2ivzQ=;
+	s=korg; t=1748875092;
+	bh=3McPEy8KOvNmN4PWMaJofUOE41t1Ho9iY/OM4TGGATU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MoNvlkShs3vPR3MaUC8+MzYccPaDccHhkbq2CurPO5K3+O/SQfBuPRx2gyGKQP8FG
-	 myzpn3YOWl3TVGR8p48BN9H17+sSTLPoH2fpc+tQfHuwItd+QTyIP9TajK0i6EerDj
-	 gp6erv59yR/u+dcKQp7Yh8VUl2sHNyWFtDw5UPzk=
+	b=X7FAcwFvQqV4yg8kSxGM9vzzsJHzbhVQzp1zONDLjXMo8nQQYeRX3DxV53abhjzP5
+	 Dr5EKiTmrejBufBgeda5IvDe31GHUYrCfi9Tc9c9HGmX0OPtc+7m1pc2BOKoIZkiyO
+	 up+d26tNqGc+Y6tBxvOCKTzP7DujOUYnsKZTcCbk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Fietkau <nbd@nbd.name>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Shruti Parab <shruti.parab@broadcom.com>,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
+	Andy Gospodarek <andrew.gospodarek@broadcom.com>,
+	Michael Chan <michael.chan@broadcom.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 024/270] net: ipv6: fix UDPv6 GSO segmentation with NAT
-Date: Mon,  2 Jun 2025 15:45:09 +0200
-Message-ID: <20250602134308.187284265@linuxfoundation.org>
+Subject: [PATCH 5.10 025/270] bnxt_en: Fix ethtool -d byte order for 32-bit values
+Date: Mon,  2 Jun 2025 15:45:10 +0200
+Message-ID: <20250602134308.230069075@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134307.195171844@linuxfoundation.org>
 References: <20250602134307.195171844@linuxfoundation.org>
@@ -52,102 +54,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Michael Chan <michael.chan@broadcom.com>
 
-[ Upstream commit b936a9b8d4a585ccb6d454921c36286bfe63e01d ]
+[ Upstream commit 02e8be5a032cae0f4ca33c6053c44d83cf4acc93 ]
 
-If any address or port is changed, update it in all packets and recalculate
-checksum.
+For version 1 register dump that includes the PCIe stats, the existing
+code incorrectly assumes that all PCIe stats are 64-bit values.  Fix it
+by using an array containing the starting and ending index of the 32-bit
+values.  The loop in bnxt_get_regs() will use the array to do proper
+endian swap for the 32-bit values.
 
-Fixes: 9fd1ff5d2ac7 ("udp: Support UDP fraglist GRO/GSO.")
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20250426153210.14044-1-nbd@nbd.name
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: b5d600b027eb ("bnxt_en: Add support for 'ethtool -d'")
+Reviewed-by: Shruti Parab <shruti.parab@broadcom.com>
+Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Reviewed-by: Andy Gospodarek <andrew.gospodarek@broadcom.com>
+Signed-off-by: Michael Chan <michael.chan@broadcom.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/udp_offload.c | 61 +++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 60 insertions(+), 1 deletion(-)
+ .../net/ethernet/broadcom/bnxt/bnxt_ethtool.c | 36 ++++++++++++++++---
+ 1 file changed, 31 insertions(+), 5 deletions(-)
 
-diff --git a/net/ipv4/udp_offload.c b/net/ipv4/udp_offload.c
-index b6952b88b5051..73beaa7e2d703 100644
---- a/net/ipv4/udp_offload.c
-+++ b/net/ipv4/udp_offload.c
-@@ -242,6 +242,62 @@ static struct sk_buff *__udpv4_gso_segment_list_csum(struct sk_buff *segs)
- 	return segs;
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
+index 2984234df67eb..4dfb65b0bf1c6 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
+@@ -1344,6 +1344,17 @@ static int bnxt_get_regs_len(struct net_device *dev)
+ 	return reg_len;
  }
  
-+static void __udpv6_gso_segment_csum(struct sk_buff *seg,
-+				     struct in6_addr *oldip,
-+				     const struct in6_addr *newip,
-+				     __be16 *oldport, __be16 newport)
-+{
-+	struct udphdr *uh = udp_hdr(seg);
++#define BNXT_PCIE_32B_ENTRY(start, end)			\
++	 { offsetof(struct pcie_ctx_hw_stats, start),	\
++	   offsetof(struct pcie_ctx_hw_stats, end) }
 +
-+	if (ipv6_addr_equal(oldip, newip) && *oldport == newport)
-+		return;
++static const struct {
++	u16 start;
++	u16 end;
++} bnxt_pcie_32b_entries[] = {
++	BNXT_PCIE_32B_ENTRY(pcie_ltssm_histogram[0], pcie_ltssm_histogram[3]),
++};
 +
-+	if (uh->check) {
-+		inet_proto_csum_replace16(&uh->check, seg, oldip->s6_addr32,
-+					  newip->s6_addr32, true);
+ static void bnxt_get_regs(struct net_device *dev, struct ethtool_regs *regs,
+ 			  void *_p)
+ {
+@@ -1372,12 +1383,27 @@ static void bnxt_get_regs(struct net_device *dev, struct ethtool_regs *regs,
+ 	mutex_lock(&bp->hwrm_cmd_lock);
+ 	rc = _hwrm_send_message(bp, &req, sizeof(req), HWRM_CMD_TIMEOUT);
+ 	if (!rc) {
+-		__le64 *src = (__le64 *)hw_pcie_stats;
+-		u64 *dst = (u64 *)(_p + BNXT_PXP_REG_LEN);
+-		int i;
++		u8 *dst = (u8 *)(_p + BNXT_PXP_REG_LEN);
++		u8 *src = (u8 *)hw_pcie_stats;
++		int i, j;
 +
-+		inet_proto_csum_replace2(&uh->check, seg, *oldport, newport,
-+					 false);
-+		if (!uh->check)
-+			uh->check = CSUM_MANGLED_0;
-+	}
++		for (i = 0, j = 0; i < sizeof(*hw_pcie_stats); ) {
++			if (i >= bnxt_pcie_32b_entries[j].start &&
++			    i <= bnxt_pcie_32b_entries[j].end) {
++				u32 *dst32 = (u32 *)(dst + i);
 +
-+	*oldip = *newip;
-+	*oldport = newport;
-+}
-+
-+static struct sk_buff *__udpv6_gso_segment_list_csum(struct sk_buff *segs)
-+{
-+	const struct ipv6hdr *iph;
-+	const struct udphdr *uh;
-+	struct ipv6hdr *iph2;
-+	struct sk_buff *seg;
-+	struct udphdr *uh2;
-+
-+	seg = segs;
-+	uh = udp_hdr(seg);
-+	iph = ipv6_hdr(seg);
-+	uh2 = udp_hdr(seg->next);
-+	iph2 = ipv6_hdr(seg->next);
-+
-+	if (!(*(const u32 *)&uh->source ^ *(const u32 *)&uh2->source) &&
-+	    ipv6_addr_equal(&iph->saddr, &iph2->saddr) &&
-+	    ipv6_addr_equal(&iph->daddr, &iph2->daddr))
-+		return segs;
-+
-+	while ((seg = seg->next)) {
-+		uh2 = udp_hdr(seg);
-+		iph2 = ipv6_hdr(seg);
-+
-+		__udpv6_gso_segment_csum(seg, &iph2->saddr, &iph->saddr,
-+					 &uh2->source, uh->source);
-+		__udpv6_gso_segment_csum(seg, &iph2->daddr, &iph->daddr,
-+					 &uh2->dest, uh->dest);
-+	}
-+
-+	return segs;
-+}
-+
- static struct sk_buff *__udp_gso_segment_list(struct sk_buff *skb,
- 					      netdev_features_t features,
- 					      bool is_ipv6)
-@@ -254,7 +310,10 @@ static struct sk_buff *__udp_gso_segment_list(struct sk_buff *skb,
++				*dst32 = le32_to_cpu(*(__le32 *)(src + i));
++				i += 4;
++				if (i > bnxt_pcie_32b_entries[j].end &&
++				    j < ARRAY_SIZE(bnxt_pcie_32b_entries) - 1)
++					j++;
++			} else {
++				u64 *dst64 = (u64 *)(dst + i);
  
- 	udp_hdr(skb)->len = htons(sizeof(struct udphdr) + mss);
- 
--	return is_ipv6 ? skb : __udpv4_gso_segment_list_csum(skb);
-+	if (is_ipv6)
-+		return __udpv6_gso_segment_list_csum(skb);
-+	else
-+		return __udpv4_gso_segment_list_csum(skb);
- }
- 
- struct sk_buff *__udp_gso_segment(struct sk_buff *gso_skb,
+-		for (i = 0; i < sizeof(*hw_pcie_stats) / sizeof(__le64); i++)
+-			dst[i] = le64_to_cpu(src[i]);
++				*dst64 = le64_to_cpu(*(__le64 *)(src + i));
++				i += 8;
++			}
++		}
+ 	}
+ 	mutex_unlock(&bp->hwrm_cmd_lock);
+ 	dma_free_coherent(&bp->pdev->dev, sizeof(*hw_pcie_stats), hw_pcie_stats,
 -- 
 2.39.5
 
