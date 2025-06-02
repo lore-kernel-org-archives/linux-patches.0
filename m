@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DE9E1EDA02;
-	Mon,  2 Jun 2025 14:31:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB2C421CC59;
+	Mon,  2 Jun 2025 14:31:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748874708; cv=none; b=ChUDP8hf9HI+Y+PpXQVxJbrV34fy00LCj3tO4M4IOtGqcJ+ZMHWG7BHsAt3aRpmW/Hius785Bz9HbZSS46suRVNFdnF431RtuYqzaOZa/d854rDkF/8ni3U7v26tqLNWj0bTX9dHAdFuh5RZPwEiEM/zCboz4C8PDEzSSLwl5b0=
+	t=1748874710; cv=none; b=PPUb1pumDtYOqSn9c4+qqYndrIjFvtO+F61vVlCt3lgbx0kgpeKHwuqG0lI9gMpt56tQk8DrrJcf58uQeqZaDjw4Jg2jP3UMxcWXMN0/QxWhilZ6sOybLmosLyd3aSZdc58ppxQQWs+T4tn6eXb7h8vOB0iDjRJHoHGC2kiqlAA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748874708; c=relaxed/simple;
-	bh=83IlbeoAHsUtQ2/vNtks+VbFOHcmRtYWsm7ch2WE67c=;
+	s=arc-20240116; t=1748874710; c=relaxed/simple;
+	bh=X8jfRptw65ooNGjpeNaFWp0FQAbDG0qdRU7VS1QjU8M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KvIXZuKIs1DsPyXhYCljkOkThOu36XPkexV4crkVLOKDKWxtwA16bDUgszojGinFbV3xC7EH9RDW6qXOKDnts8QNpKDgl8BAvjJtWtqdw9TKaTtId/RPIKKck6MarAshJlyqhbFhDffpf4KAt3BqGA+kO3VLd4ExbweWh5qHxSA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BnqLWOfj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ntVbjnd1lgMZ8Rnhx+hg27d++v6BdsrybkbB4CFbFQsHp3rYgr0+HxJuuAD385t2/GPtZIQxcLr41+v4Y7mCJGGauO9y9/2pWQYj6Unahu276+0iOLlOwWId3tAMkRFdcBO3+soxiHLvxUS/sb1q0J3IKUbvZxWQqCS3h5wwOt8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PvLMz2T8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BnqLWOfj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FD73C4CEEB;
-	Mon,  2 Jun 2025 14:31:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PvLMz2T8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E33F2C4CEEB;
+	Mon,  2 Jun 2025 14:31:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748874707;
-	bh=83IlbeoAHsUtQ2/vNtks+VbFOHcmRtYWsm7ch2WE67c=;
+	s=korg; t=1748874710;
+	bh=X8jfRptw65ooNGjpeNaFWp0FQAbDG0qdRU7VS1QjU8M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BnqLWOfjVmBkdAfgM6f0uK77f3YqosRl+5L/hypnwPd4nz9myp38/mubO9jTebOWa
-	 TKPfbUSh0JwuFwmPjXa5DTL2KTeOIxvPDkp5++bNzZ6oQ0rRephwsMXXmHekbAMIzB
-	 EnELHwU3bPZDuodzpp6JPiQMiSSs7qWj8oiW/T7I=
+	b=PvLMz2T8/Hcfulj6Tm8XS7Rc0zQ/BdjB51npTUamRiF0dwmxToA7AenhEgyNCAxKW
+	 Rzl0BshWj776fot2mGvsLmGMRNzJde/HxeLXDQXNCC3AtSXrHh3az9Gu5pweNBIgPf
+	 5NF/KbtTrE4HIy7G8xs0YpCNhD2YyztEjKaBqJeg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Lingfeng <lilingfeng3@huawei.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Tiwei Bie <tiwei.btw@antgroup.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 070/204] nfs: handle failure of nfs_get_lock_context in unlock path
-Date: Mon,  2 Jun 2025 15:46:43 +0200
-Message-ID: <20250602134258.431245473@linuxfoundation.org>
+Subject: [PATCH 5.4 104/204] um: Update min_low_pfn to match changes in uml_reserved
+Date: Mon,  2 Jun 2025 15:47:17 +0200
+Message-ID: <20250602134259.746541703@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134255.449974357@linuxfoundation.org>
 References: <20250602134255.449974357@linuxfoundation.org>
@@ -52,95 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Lingfeng <lilingfeng3@huawei.com>
+From: Tiwei Bie <tiwei.btw@antgroup.com>
 
-[ Upstream commit c457dc1ec770a22636b473ce5d35614adfe97636 ]
+[ Upstream commit e82cf3051e6193f61e03898f8dba035199064d36 ]
 
-When memory is insufficient, the allocation of nfs_lock_context in
-nfs_get_lock_context() fails and returns -ENOMEM. If we mistakenly treat
-an nfs4_unlockdata structure (whose l_ctx member has been set to -ENOMEM)
-as valid and proceed to execute rpc_run_task(), this will trigger a NULL
-pointer dereference in nfs4_locku_prepare. For example:
+When uml_reserved is updated, min_low_pfn must also be updated
+accordingly. Otherwise, min_low_pfn will not accurately reflect
+the lowest available PFN.
 
-BUG: kernel NULL pointer dereference, address: 000000000000000c
-PGD 0 P4D 0
-Oops: Oops: 0000 [#1] SMP PTI
-CPU: 15 UID: 0 PID: 12 Comm: kworker/u64:0 Not tainted 6.15.0-rc2-dirty #60
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-2.fc40
-Workqueue: rpciod rpc_async_schedule
-RIP: 0010:nfs4_locku_prepare+0x35/0xc2
-Code: 89 f2 48 89 fd 48 c7 c7 68 69 ef b5 53 48 8b 8e 90 00 00 00 48 89 f3
-RSP: 0018:ffffbbafc006bdb8 EFLAGS: 00010246
-RAX: 000000000000004b RBX: ffff9b964fc1fa00 RCX: 0000000000000000
-RDX: 0000000000000000 RSI: fffffffffffffff4 RDI: ffff9ba53fddbf40
-RBP: ffff9ba539934000 R08: 0000000000000000 R09: ffffbbafc006bc38
-R10: ffffffffb6b689c8 R11: 0000000000000003 R12: ffff9ba539934030
-R13: 0000000000000001 R14: 0000000004248060 R15: ffffffffb56d1c30
-FS: 0000000000000000(0000) GS:ffff9ba5881f0000(0000) knlGS:00000000
-CS: 0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 000000000000000c CR3: 000000093f244000 CR4: 00000000000006f0
-Call Trace:
- <TASK>
- __rpc_execute+0xbc/0x480
- rpc_async_schedule+0x2f/0x40
- process_one_work+0x232/0x5d0
- worker_thread+0x1da/0x3d0
- ? __pfx_worker_thread+0x10/0x10
- kthread+0x10d/0x240
- ? __pfx_kthread+0x10/0x10
- ret_from_fork+0x34/0x50
- ? __pfx_kthread+0x10/0x10
- ret_from_fork_asm+0x1a/0x30
- </TASK>
-Modules linked in:
-CR2: 000000000000000c
----[ end trace 0000000000000000 ]---
-
-Free the allocated nfs4_unlockdata when nfs_get_lock_context() fails and
-return NULL to terminate subsequent rpc_run_task, preventing NULL pointer
-dereference.
-
-Fixes: f30cb757f680 ("NFS: Always wait for I/O completion before unlock")
-Signed-off-by: Li Lingfeng <lilingfeng3@huawei.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Link: https://lore.kernel.org/r/20250417072508.3850532-1-lilingfeng3@huawei.com
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Signed-off-by: Tiwei Bie <tiwei.btw@antgroup.com>
+Link: https://patch.msgid.link/20250221041855.1156109-1-tiwei.btw@antgroup.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/nfs4proc.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ arch/um/kernel/mem.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
-index 632cea3fb91da..3477da3c2190e 100644
---- a/fs/nfs/nfs4proc.c
-+++ b/fs/nfs/nfs4proc.c
-@@ -6573,10 +6573,18 @@ static struct nfs4_unlockdata *nfs4_alloc_unlockdata(struct file_lock *fl,
- 	struct nfs4_unlockdata *p;
- 	struct nfs4_state *state = lsp->ls_state;
- 	struct inode *inode = state->inode;
-+	struct nfs_lock_context *l_ctx;
+diff --git a/arch/um/kernel/mem.c b/arch/um/kernel/mem.c
+index 417ff647fb377..06fb50218136d 100644
+--- a/arch/um/kernel/mem.c
++++ b/arch/um/kernel/mem.c
+@@ -49,6 +49,7 @@ void __init mem_init(void)
+ 	map_memory(brk_end, __pa(brk_end), uml_reserved - brk_end, 1, 1, 0);
+ 	memblock_free(__pa(brk_end), uml_reserved - brk_end);
+ 	uml_reserved = brk_end;
++	min_low_pfn = PFN_UP(__pa(uml_reserved));
  
- 	p = kzalloc(sizeof(*p), GFP_NOFS);
- 	if (p == NULL)
- 		return NULL;
-+	l_ctx = nfs_get_lock_context(ctx);
-+	if (!IS_ERR(l_ctx)) {
-+		p->l_ctx = l_ctx;
-+	} else {
-+		kfree(p);
-+		return NULL;
-+	}
- 	p->arg.fh = NFS_FH(inode);
- 	p->arg.fl = &p->fl;
- 	p->arg.seqid = seqid;
-@@ -6584,7 +6592,6 @@ static struct nfs4_unlockdata *nfs4_alloc_unlockdata(struct file_lock *fl,
- 	p->lsp = lsp;
- 	/* Ensure we don't close file until we're done freeing locks! */
- 	p->ctx = get_nfs_open_context(ctx);
--	p->l_ctx = nfs_get_lock_context(ctx);
- 	locks_init_lock(&p->fl);
- 	locks_copy_lock(&p->fl, fl);
- 	p->server = NFS_SERVER(inode);
+ 	/* this will put all low memory onto the freelists */
+ 	memblock_free_all();
 -- 
 2.39.5
 
