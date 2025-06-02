@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88B6A223324;
-	Mon,  2 Jun 2025 14:42:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EA35221F3E;
+	Mon,  2 Jun 2025 14:42:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748875328; cv=none; b=FNOgtJFNtVQPyygzH8P5h9z1SrOF68KLfBXhtGRaEtdhuOj2konnUf2ANVLgL4Lc2ijwYiGUR2QRZb/K2nGOqKNmZbzQCNB6MsSIjPuDg4WDi811TE6H7ekd6mDPxIbC37YdTyfM+MDsMOF4K5x0YWtL6+Ty5mLKLYzwAOwIsQk=
+	t=1748875331; cv=none; b=LExL1MSG3aQDnJd5u9bcFpkCWH4HDv/qAaS0tItRvyYnJze833edFUFDFby5pMnu/nUCN/iwu/aOILWGrtC69698J51vZMTyu/vYhtpDD9KzBzQmuaNL1cd2PQk7CuODJp5k0DYMC2IuJGQ2MrB+8hG6dW+MW++47FvD3SguEl4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748875328; c=relaxed/simple;
-	bh=R3NXbNmEUTlz4eA2XkhfwLwBGoGWaqWQ4IRQ4ompFDo=;
+	s=arc-20240116; t=1748875331; c=relaxed/simple;
+	bh=qD2XnlQ7dglrMQ1VRaZ5DSUlMQWaghBCTpkF6YHwttw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uPeOQqBzWKrzbP2q99Ceja2BEELZRbUwmmhppzzORjtvtGkYGlzQg0kQwc6rby1/8VIw38Bl19lmVQZFeTlRwqRz7m6gzJeHQZLD12eqGY1c/yccMOQTgx9+1PnCyYP73ca85shtbBc8+72R3vP7tB+S0VM07a7xT4yJe5P5Ac8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b6YziXzA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Bv4f74vr520Uqljib5pIqGNPETOPBgLbce8BBsZHiHXMjHbg68/Jt0yEFoE0oENnsyGEYwEq6QrvuEwNOdcCJux/KqpqEcXsIr09tw+5/GfXCd4NTv4OKSJ55fpq9zibjA52ow8mTnFVRg08XSyKz7TR9hvTpOs3t+5A84/ywTE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eAqeTLTY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b6YziXzA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D94DC4CEEB;
-	Mon,  2 Jun 2025 14:42:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eAqeTLTY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D151C4CEEB;
+	Mon,  2 Jun 2025 14:42:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748875328;
-	bh=R3NXbNmEUTlz4eA2XkhfwLwBGoGWaqWQ4IRQ4ompFDo=;
+	s=korg; t=1748875330;
+	bh=qD2XnlQ7dglrMQ1VRaZ5DSUlMQWaghBCTpkF6YHwttw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b6YziXzAB5fUTIaU3iRxic67fv1nYAJdlquRelwF3/hPtzlu357OHUbZ4N4nw7d8J
-	 qhHKYpIH3t3hAW6ARsvqQ86kUKyLTEI2+U8Lln9rFxA1GSBC6AIB4aG6FxPltkvIAn
-	 jaEeRr+uItpbtvZevyoyEYJOnTyE7ELKNSMyeLKQ=
+	b=eAqeTLTYQhoMYTUr189YsGi8AP79fo0FHCZkWG4RxhRCuzw2EoX0dm65vjFh6cCvN
+	 puwFEFCCo7mgDCjNYyCmxq58wHY6KhhcXDTfh6h22OQ1HT72fRqP9anjLQfogI+VwC
+	 lS7QE2itQRhnhqPae8QUeT0NuryvvrIwHtAyOz0I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Wayne Chang <waynec@nvidia.com>
-Subject: [PATCH 5.10 069/270] usb: gadget: tegra-xudc: ACK ST_RC after clearing CTRL_RUN
-Date: Mon,  2 Jun 2025 15:45:54 +0200
-Message-ID: <20250602134310.008542528@linuxfoundation.org>
+	Gabriel Shahrouzi <gshahrouzi@gmail.com>,
+	Marcelo Schmitt <marcelo.schmitt1@gmail.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 5.10 060/270] iio: adis16201: Correct inclinometer channel resolution
+Date: Mon,  2 Jun 2025 15:45:45 +0200
+Message-ID: <20250602134309.646133565@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134307.195171844@linuxfoundation.org>
 References: <20250602134307.195171844@linuxfoundation.org>
@@ -50,40 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wayne Chang <waynec@nvidia.com>
+From: Gabriel Shahrouzi <gshahrouzi@gmail.com>
 
-commit 59820fde001500c167342257650541280c622b73 upstream.
+commit 609bc31eca06c7408e6860d8b46311ebe45c1fef upstream.
 
-We identified a bug where the ST_RC bit in the status register was not
-being acknowledged after clearing the CTRL_RUN bit in the control
-register. This could lead to unexpected behavior in the USB gadget
-drivers.
+The inclinometer channels were previously defined with 14 realbits.
+However, the ADIS16201 datasheet states the resolution for these output
+channels is 12 bits (Page 14, text description; Page 15, table 7).
 
-This patch resolves the issue by adding the necessary code to explicitly
-acknowledge ST_RC after clearing CTRL_RUN based on the programming
-sequence, ensuring proper state transition.
+Correct the realbits value to 12 to accurately reflect the hardware.
 
-Fixes: 49db427232fe ("usb: gadget: Add UDC driver for tegra XUSB device mode controller")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Wayne Chang <waynec@nvidia.com>
-Link: https://lore.kernel.org/r/20250418081228.1194779-1-waynec@nvidia.com
+Fixes: f7fe1d1dd5a5 ("staging: iio: new adis16201 driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Gabriel Shahrouzi <gshahrouzi@gmail.com>
+Reviewed-by: Marcelo Schmitt <marcelo.schmitt1@gmail.com>
+Link: https://patch.msgid.link/20250421131539.912966-1-gshahrouzi@gmail.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/udc/tegra-xudc.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/iio/accel/adis16201.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/gadget/udc/tegra-xudc.c
-+++ b/drivers/usb/gadget/udc/tegra-xudc.c
-@@ -1737,6 +1737,10 @@ static int __tegra_xudc_ep_disable(struc
- 		val = xudc_readl(xudc, CTRL);
- 		val &= ~CTRL_RUN;
- 		xudc_writel(xudc, val, CTRL);
-+
-+		val = xudc_readl(xudc, ST);
-+		if (val & ST_RC)
-+			xudc_writel(xudc, ST_RC, ST);
- 	}
+--- a/drivers/iio/accel/adis16201.c
++++ b/drivers/iio/accel/adis16201.c
+@@ -214,9 +214,9 @@ static const struct iio_chan_spec adis16
+ 			BIT(IIO_CHAN_INFO_CALIBBIAS), 0, 14),
+ 	ADIS_AUX_ADC_CHAN(ADIS16201_AUX_ADC_REG, ADIS16201_SCAN_AUX_ADC, 0, 12),
+ 	ADIS_INCLI_CHAN(X, ADIS16201_XINCL_OUT_REG, ADIS16201_SCAN_INCLI_X,
+-			BIT(IIO_CHAN_INFO_CALIBBIAS), 0, 14),
++			BIT(IIO_CHAN_INFO_CALIBBIAS), 0, 12),
+ 	ADIS_INCLI_CHAN(Y, ADIS16201_YINCL_OUT_REG, ADIS16201_SCAN_INCLI_Y,
+-			BIT(IIO_CHAN_INFO_CALIBBIAS), 0, 14),
++			BIT(IIO_CHAN_INFO_CALIBBIAS), 0, 12),
+ 	IIO_CHAN_SOFT_TIMESTAMP(7)
+ };
  
- 	dev_info(xudc->dev, "ep %u disabled\n", ep->index);
 
 
