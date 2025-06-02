@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F5D721CA07;
-	Mon,  2 Jun 2025 15:14:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0432122A4EA;
+	Mon,  2 Jun 2025 15:14:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748877273; cv=none; b=FewyxpAPJDgJmLU6lcwwVzfQ672hNRivW2YIfCko5ZRUS//Q40qJ+xbow7m8PoErd0rev+S0mRExg2ALn2tY2eUuuMVqsUe7CIDbnSrO0ZK+xYMa5Kabo/kqMJYLTxYBir572ar11zQ+UvyiSCovGGq5KO8E6vED5w4KktannKk=
+	t=1748877277; cv=none; b=lUAwbLaBBMY5OQrHZSkk/u49uklSUkrvAhqAbqUYIADVRFlR8ZdlYaZTFnzXcQaanENxYAenqeS2FygecRd2wd3G31RlSPEm+k9KePoZAAo55GRrT6ePtloLOxwPSreH6GZZZwld/EoiG7304sw5ap9kxXMkPmWHUdW4s3ZLqlA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748877273; c=relaxed/simple;
-	bh=nLPQUnU5NmFjkZZtNSxECxusbR2mFFdFfQQqIz65jzM=;
+	s=arc-20240116; t=1748877277; c=relaxed/simple;
+	bh=0+2LinNPIkpe6PqGOkkXlHBCxTfAD9N48Cjup16C8yo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mpg9EUiy355pcwyh4U95uuZ7yILD/YUvCHV3HDUt0jYM0nEYKet+G9dAPlNxV0FjrZWjc5vNWMQGsX1fVfRRoWgKVqErwRDRgdB95hGZzKBlDDA1KaUcxMoqiyf3Y7vt7Wxt5kz1q8RyKkJZ21rBT1SHUQY/e1+JdBiaEotmJBU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zcnw5Mjm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aZ873Hn7MK9A5ZycVf0dAO7C77tXA2BVn0eRBljkrA90mK/0SY1A9iV1JawjLz4mVnb2lPXVgvsd0iFWI63D8+XO1p2a3CZ+y8ewAef5lur7P0wgyZAqB9JIk7HxTwBD6IUv3hF5yjhRLtISWm4VO6nQe1e3TQUhLIsF+Jn60NE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ARkUMSWR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zcnw5Mjm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6B8DC4CEEB;
-	Mon,  2 Jun 2025 15:14:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ARkUMSWR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 042ACC4CEEB;
+	Mon,  2 Jun 2025 15:14:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748877273;
-	bh=nLPQUnU5NmFjkZZtNSxECxusbR2mFFdFfQQqIz65jzM=;
+	s=korg; t=1748877276;
+	bh=0+2LinNPIkpe6PqGOkkXlHBCxTfAD9N48Cjup16C8yo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zcnw5Mjm9ni7bVL/s395UNOX2qPKZubL3loO8Gkuo1m2i0YRxZqq2LS8wjeZqSZJu
-	 dANkoiEDmS4B4fWL71GMF+zTxVUk3s6/ugt0/06b4+TtYTwmd8ocL1Zbf+E2lXPuV9
-	 pMZ41AcecV4UMZL6F7/PF4uIsHpi2H7o0fjI/N5I=
+	b=ARkUMSWRPjVJG1uwdFoMpfMbDppiM0GFYIQu1hP+1E9RQxCpsLK+ikeIxEh5kNYwU
+	 Q6R/N102itpX+pzAY4Aa+wkrRT4tobOW7be+1N0pWizSMkHaVyXwxbUw4nq6Yx5rKz
+	 nshMHgka3RjgR48Bn3H1vFI7yAyn/HQJ2tnFxBQ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+3e77fd302e99f5af9394@syzkaller.appspotmail.com,
-	Jens Axboe <axboe@kernel.dk>,
+	Goldwyn Rodrigues <rgoldwyn@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 225/325] io_uring/fdinfo: annotate racy sq/cq head/tail reads
-Date: Mon,  2 Jun 2025 15:48:21 +0200
-Message-ID: <20250602134328.927759313@linuxfoundation.org>
+Subject: [PATCH 6.1 226/325] btrfs: correct the order of prelim_ref arguments in btrfs__prelim_ref
+Date: Mon,  2 Jun 2025 15:48:22 +0200
+Message-ID: <20250602134328.966034057@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134319.723650984@linuxfoundation.org>
 References: <20250602134319.723650984@linuxfoundation.org>
@@ -51,45 +51,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Goldwyn Rodrigues <rgoldwyn@suse.de>
 
-[ Upstream commit f024d3a8ded0d8d2129ae123d7a5305c29ca44ce ]
+[ Upstream commit bc7e0975093567f51be8e1bdf4aa5900a3cf0b1e ]
 
-syzbot complains about the cached sq head read, and it's totally right.
-But we don't need to care, it's just reading fdinfo, and reading the
-CQ or SQ tail/head entries are known racy in that they are just a view
-into that very instant and may of course be outdated by the time they
-are reported.
+btrfs_prelim_ref() calls the old and new reference variables in the
+incorrect order. This causes a NULL pointer dereference because oldref
+is passed as NULL to trace_btrfs_prelim_ref_insert().
 
-Annotate both the SQ head and CQ tail read with data_race() to avoid
-this syzbot complaint.
+Note, trace_btrfs_prelim_ref_insert() is being called with newref as
+oldref (and oldref as NULL) on purpose in order to print out
+the values of newref.
 
-Link: https://lore.kernel.org/io-uring/6811f6dc.050a0220.39e3a1.0d0e.GAE@google.com/
-Reported-by: syzbot+3e77fd302e99f5af9394@syzkaller.appspotmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+To reproduce:
+echo 1 > /sys/kernel/debug/tracing/events/btrfs/btrfs_prelim_ref_insert/enable
+
+Perform some writeback operations.
+
+Backtrace:
+BUG: kernel NULL pointer dereference, address: 0000000000000018
+ #PF: supervisor read access in kernel mode
+ #PF: error_code(0x0000) - not-present page
+ PGD 115949067 P4D 115949067 PUD 11594a067 PMD 0
+ Oops: Oops: 0000 [#1] SMP NOPTI
+ CPU: 1 UID: 0 PID: 1188 Comm: fsstress Not tainted 6.15.0-rc2-tester+ #47 PREEMPT(voluntary)  7ca2cef72d5e9c600f0c7718adb6462de8149622
+ Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.16.3-2-gc13ff2cd-prebuilt.qemu.org 04/01/2014
+ RIP: 0010:trace_event_raw_event_btrfs__prelim_ref+0x72/0x130
+ Code: e8 43 81 9f ff 48 85 c0 74 78 4d 85 e4 0f 84 8f 00 00 00 49 8b 94 24 c0 06 00 00 48 8b 0a 48 89 48 08 48 8b 52 08 48 89 50 10 <49> 8b 55 18 48 89 50 18 49 8b 55 20 48 89 50 20 41 0f b6 55 28 88
+ RSP: 0018:ffffce44820077a0 EFLAGS: 00010286
+ RAX: ffff8c6b403f9014 RBX: ffff8c6b55825730 RCX: 304994edf9cf506b
+ RDX: d8b11eb7f0fdb699 RSI: ffff8c6b403f9010 RDI: ffff8c6b403f9010
+ RBP: 0000000000000001 R08: 0000000000000001 R09: 0000000000000010
+ R10: 00000000ffffffff R11: 0000000000000000 R12: ffff8c6b4e8fb000
+ R13: 0000000000000000 R14: ffffce44820077a8 R15: ffff8c6b4abd1540
+ FS:  00007f4dc6813740(0000) GS:ffff8c6c1d378000(0000) knlGS:0000000000000000
+ CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+ CR2: 0000000000000018 CR3: 000000010eb42000 CR4: 0000000000750ef0
+ PKRU: 55555554
+ Call Trace:
+  <TASK>
+  prelim_ref_insert+0x1c1/0x270
+  find_parent_nodes+0x12a6/0x1ee0
+  ? __entry_text_end+0x101f06/0x101f09
+  ? srso_alias_return_thunk+0x5/0xfbef5
+  ? srso_alias_return_thunk+0x5/0xfbef5
+  ? srso_alias_return_thunk+0x5/0xfbef5
+  ? srso_alias_return_thunk+0x5/0xfbef5
+  btrfs_is_data_extent_shared+0x167/0x640
+  ? fiemap_process_hole+0xd0/0x2c0
+  extent_fiemap+0xa5c/0xbc0
+  ? __entry_text_end+0x101f05/0x101f09
+  btrfs_fiemap+0x7e/0xd0
+  do_vfs_ioctl+0x425/0x9d0
+  __x64_sys_ioctl+0x75/0xc0
+
+Signed-off-by: Goldwyn Rodrigues <rgoldwyn@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/fdinfo.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/trace/events/btrfs.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/io_uring/fdinfo.c b/io_uring/fdinfo.c
-index ea2c2ded4e412..4a50531699777 100644
---- a/io_uring/fdinfo.c
-+++ b/io_uring/fdinfo.c
-@@ -79,11 +79,11 @@ static __cold void __io_uring_show_fdinfo(struct io_ring_ctx *ctx,
- 	seq_printf(m, "SqMask:\t0x%x\n", sq_mask);
- 	seq_printf(m, "SqHead:\t%u\n", sq_head);
- 	seq_printf(m, "SqTail:\t%u\n", sq_tail);
--	seq_printf(m, "CachedSqHead:\t%u\n", ctx->cached_sq_head);
-+	seq_printf(m, "CachedSqHead:\t%u\n", data_race(ctx->cached_sq_head));
- 	seq_printf(m, "CqMask:\t0x%x\n", cq_mask);
- 	seq_printf(m, "CqHead:\t%u\n", cq_head);
- 	seq_printf(m, "CqTail:\t%u\n", cq_tail);
--	seq_printf(m, "CachedCqTail:\t%u\n", ctx->cached_cq_tail);
-+	seq_printf(m, "CachedCqTail:\t%u\n", data_race(ctx->cached_cq_tail));
- 	seq_printf(m, "SQEs:\t%u\n", sq_tail - sq_head);
- 	sq_entries = min(sq_tail - sq_head, ctx->sq_entries);
- 	for (i = 0; i < sq_entries; i++) {
+diff --git a/include/trace/events/btrfs.h b/include/trace/events/btrfs.h
+index 7a6c5a870d33c..31847ccae4936 100644
+--- a/include/trace/events/btrfs.h
++++ b/include/trace/events/btrfs.h
+@@ -1847,7 +1847,7 @@ DECLARE_EVENT_CLASS(btrfs__prelim_ref,
+ 	TP_PROTO(const struct btrfs_fs_info *fs_info,
+ 		 const struct prelim_ref *oldref,
+ 		 const struct prelim_ref *newref, u64 tree_size),
+-	TP_ARGS(fs_info, newref, oldref, tree_size),
++	TP_ARGS(fs_info, oldref, newref, tree_size),
+ 
+ 	TP_STRUCT__entry_btrfs(
+ 		__field(	u64,  root_id		)
 -- 
 2.39.5
 
