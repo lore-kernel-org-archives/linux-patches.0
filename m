@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A37E01C5D72;
-	Mon,  2 Jun 2025 14:31:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B88941C5D72;
+	Mon,  2 Jun 2025 14:31:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748874674; cv=none; b=BMW943wxpTc5D0wQoXvnS6c44BjZ9XUxoaMp/vtSameUaGiegx86MHZZCgixqZv/+ZycUnLtnB0fsSnqkIZczvfpee68lA5aRtf2HfWoLQ7PbmbWVHwSQDEhRW802A4t4tg8/zI5xtBXQQhaBpwZ7H0LyZuR7YZanmHBKCHwWQg=
+	t=1748874677; cv=none; b=raXTA3mxSp6Qyy4dkWsXSiW2JcTYKQHNjSzwTxbLDi6nnQZ/7s75UBtZkITxCrZlyx+uFVErR1m3CYYAeAFL6LFE77BhDy2P2GwUVl1GqKcBOmf0gfI2BJvfHRHdIdmf4mwEuwWFUWsp07hNubfy63SECjSLqWja6iWiLsCKT8M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748874674; c=relaxed/simple;
-	bh=Jx99gOmDCBkOIF91tVVk6tJAAWwG4cOylcOeJZfII98=;
+	s=arc-20240116; t=1748874677; c=relaxed/simple;
+	bh=wzVDEEWGkoeyVMetQqPYKrUu5q08gDEr25xz5XZpHb0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nJLIXT5vnjnR9WjrspwCiUjZ3vvyjyqNgaRE65HtvK3VuXFUg2qi8BxKHmmzAtnTCAsudvb6r6UjDLusIz7crGahcO4R7a8ayk9TCktv9jjPOEVZJ7E2gEcQhO4J6j+WAL2a4VoErWyFgqy83AAG2dbv6DBvnmQ8gZjLiCJVQWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sEyW1j6L; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GSXfD6CzsJyl2PY6B3EYv1LSBaWy2K59D88Mx8OYatm51GlJtwDylzu+y0KN9sN822kx/a7NQCDo40tP+nYcz30dN+tKZyu0KFxfpKE32xZoRj+NmaHc2Qw2cIDtzx0fKv6LMABaWvPuBu/2bKUtj7sMV8ZwDKCgLn87gE6dxf4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NxkGneZP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sEyW1j6L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13D0DC4CEEB;
-	Mon,  2 Jun 2025 14:31:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NxkGneZP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26139C4CEEB;
+	Mon,  2 Jun 2025 14:31:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748874674;
-	bh=Jx99gOmDCBkOIF91tVVk6tJAAWwG4cOylcOeJZfII98=;
+	s=korg; t=1748874677;
+	bh=wzVDEEWGkoeyVMetQqPYKrUu5q08gDEr25xz5XZpHb0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sEyW1j6LKl0O+1VT5Ac/wQsfzzTh2HgHwM2nady66Z+aTKGIstS3DJF4ErzLXRySK
-	 3uY9c4W1Po8Larfr3Xnte9fD2cdHIqpsIy/x36TITF30cJN9Pfr9GEgWdeV3JO+YS0
-	 M1AtIWsEWN4Nks+Ylv5CkSBNprz9SZYYZQ0K/xdw=
+	b=NxkGneZPOV/lUAQxZqnQcU5fKDB/HNZxo0WlE1aKYfakspdltpdoPsmElK2MSCKGR
+	 fypB8IERAXx6MIcOLlUkla5L2X0jixIW+aJM6XHZkf+8dcPRNwu0bWKyPG6TDpCNUv
+	 huWJkTIUqXMJOIHt74mGvdfVRDtvTA+64H4s5dZw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Erick Shepherd <erick.shepherd@ni.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	kernel test robot <lkp@intel.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 099/204] mmc: host: Wait for Vdd to settle on card power off
-Date: Mon,  2 Jun 2025 15:47:12 +0200
-Message-ID: <20250602134259.552961649@linuxfoundation.org>
+Subject: [PATCH 5.4 073/204] ALSA: sh: SND_AICA should depend on SH_DMA_API
+Date: Mon,  2 Jun 2025 15:46:46 +0200
+Message-ID: <20250602134258.549991807@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134255.449974357@linuxfoundation.org>
 References: <20250602134255.449974357@linuxfoundation.org>
@@ -52,44 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Erick Shepherd <erick.shepherd@ni.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit 31e75ed964582257f59156ce6a42860e1ae4cc39 ]
+[ Upstream commit 66e48ef6ef506c89ec1b3851c6f9f5f80b5835ff ]
 
-The SD spec version 6.0 section 6.4.1.5 requires that Vdd must be
-lowered to less than 0.5V for a minimum of 1 ms when powering off a
-card. Increase wait to 15 ms so that voltage has time to drain down
-to 0.5V and cards can power off correctly. Issues with voltage drain
-time were only observed on Apollo Lake and Bay Trail host controllers
-so this fix is limited to those devices.
+If CONFIG_SH_DMA_API=n:
 
-Signed-off-by: Erick Shepherd <erick.shepherd@ni.com>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Link: https://lore.kernel.org/r/20250314195021.1588090-1-erick.shepherd@ni.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+    WARNING: unmet direct dependencies detected for G2_DMA
+      Depends on [n]: SH_DREAMCAST [=y] && SH_DMA_API [=n]
+      Selected by [y]:
+      - SND_AICA [=y] && SOUND [=y] && SND [=y] && SND_SUPERH [=y] && SH_DREAMCAST [=y]
+
+SND_AICA selects G2_DMA.  As the latter depends on SH_DMA_API, the
+former should depend on SH_DMA_API, too.
+
+Fixes: f477a538c14d07f8 ("sh: dma: fix kconfig dependency for G2_DMA")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202505131320.PzgTtl9H-lkp@intel.com/
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://patch.msgid.link/b90625f8a9078d0d304bafe862cbe3a3fab40082.1747121335.git.geert+renesas@glider.be
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/sdhci-pci-core.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ sound/sh/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mmc/host/sdhci-pci-core.c b/drivers/mmc/host/sdhci-pci-core.c
-index 390caef1bdabc..22978057b94a1 100644
---- a/drivers/mmc/host/sdhci-pci-core.c
-+++ b/drivers/mmc/host/sdhci-pci-core.c
-@@ -669,8 +669,12 @@ static void sdhci_intel_set_power(struct sdhci_host *host, unsigned char mode,
+diff --git a/sound/sh/Kconfig b/sound/sh/Kconfig
+index b75fbb3236a7b..f5fa09d740b4c 100644
+--- a/sound/sh/Kconfig
++++ b/sound/sh/Kconfig
+@@ -14,7 +14,7 @@ if SND_SUPERH
  
- 	sdhci_set_power(host, mode, vdd);
- 
--	if (mode == MMC_POWER_OFF)
-+	if (mode == MMC_POWER_OFF) {
-+		if (slot->chip->pdev->device == PCI_DEVICE_ID_INTEL_APL_SD ||
-+		    slot->chip->pdev->device == PCI_DEVICE_ID_INTEL_BYT_SD)
-+			usleep_range(15000, 17500);
- 		return;
-+	}
- 
- 	/*
- 	 * Bus power might not enable after D3 -> D0 transition due to the
+ config SND_AICA
+ 	tristate "Dreamcast Yamaha AICA sound"
+-	depends on SH_DREAMCAST
++	depends on SH_DREAMCAST && SH_DMA_API
+ 	select SND_PCM
+ 	select G2_DMA
+ 	help
 -- 
 2.39.5
 
