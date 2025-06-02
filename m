@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96FB7223339;
-	Mon,  2 Jun 2025 14:12:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8028223708;
+	Mon,  2 Jun 2025 14:12:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748873546; cv=none; b=FoIxYf6zf4ZvaykQvbli+Hma3Ey0s1siY6f6Cqpj8HBwL5y3AZjI7xGvwSrNmFffmNevVW34ee4lsNtGrQi7He8xxDfN0RQpqffQa8IXJkHAaIKGOi+KD6mkbIt6Tvim/RQi4Y71obiXXLNUFY5kmmUx2a4hPDC9AzGCq/LTAPw=
+	t=1748873549; cv=none; b=YB1+jyED5BP3erkM7JuiY+O4znZVaYkAH0T9UiKURyx6kOt2+L90kx03qglI+AUZUIVO0dxggYcritE1nBHWD+h3bKrbiH4oR0xrDIwGdeddy+iDHReAPVZHhLa0ulmq6I/ge8WPsT72SDWaCNPPuSKnAwg4t5758B8nXnKeGbc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748873546; c=relaxed/simple;
-	bh=GtvYb46f/QSxv1GsVRzUulmLWtuUqitocoqEelJz3aU=;
+	s=arc-20240116; t=1748873549; c=relaxed/simple;
+	bh=HrhC5q8o1G9hFIEeA1m+Vkttr9/ov73oXonoe1jEzh8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dJxwcB8D0yjf8h8n7UaY+RRyB3lGxz8i8Esxwjg3SKl+WRbqlzAtacrzItsd8OwEeGvqpV7uirtvp7x1noLkCTO9dz21WSaZOqBvsLHmX70C7JhYE22lwKxS5lVvlHv2Svjtl6wKWFrdGnUc6LyjU0+xIgIkRVlq5IWx9d19cLg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X27/Lj4h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Seh64bWx4prUlwEjgg8cvRXWG4zFQmMz6I+SDJQX6YySWiENiaZnNjlHQULcDT5mMTDFmIhntPA+TBMHLKlmeTvqY3UrLJ2kLDV0RNYPzLL37K7dUbylT0vVEDqI2FmzpZ7OgATJIPkFpa/HnxWeiccHb4lh/8izsxLknRVn5Ao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0OQxh3mT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X27/Lj4h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EC44C4CEEB;
-	Mon,  2 Jun 2025 14:12:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0OQxh3mT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19876C4CEEB;
+	Mon,  2 Jun 2025 14:12:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748873546;
-	bh=GtvYb46f/QSxv1GsVRzUulmLWtuUqitocoqEelJz3aU=;
+	s=korg; t=1748873549;
+	bh=HrhC5q8o1G9hFIEeA1m+Vkttr9/ov73oXonoe1jEzh8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X27/Lj4hC12I0Jn5eWLnPD+ZjrJv+xUR3g5cIuiuHeT2Z8jUYZqWwwBSGNkQjH5S7
-	 RLnrBtuVJ5ecXsYSPCJrFGhmxWOOkgkEExEqtpk00oY+DkjcGL2WTqY+O3tndszVwr
-	 FwjMCvb0L9qd0ANaxfXQnL2SY/THTEbHllSxS7Uc=
+	b=0OQxh3mTbQBlZq2trOAZqcnCSRjtB3goyLqKSPHfVlReBqr969XM2/nSekjFOqYkF
+	 E6tRnBPqkr+m1eLHVYoLG9hiszo0WTB+mNeJVUuKYVWyB4Bq0AuXU1HuQgqVDvdQuy
+	 w+fAT3EWQa5BG3kF0xeQHZRNPMyYnw9uG0T9VBCs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	Choong Yong Liang <yong.liang.choong@linux.intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	=?UTF-8?q?Matti=20Lehtim=C3=A4ki?= <matti.lehtimaki@gmail.com>,
+	Luca Weiss <luca@lucaweiss.eu>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 145/444] net: phylink: use pl->link_interface in phylink_expects_phy()
-Date: Mon,  2 Jun 2025 15:43:29 +0200
-Message-ID: <20250602134346.796448818@linuxfoundation.org>
+Subject: [PATCH 6.6 146/444] remoteproc: qcom_wcnss: Handle platforms with only single power domain
+Date: Mon,  2 Jun 2025 15:43:30 +0200
+Message-ID: <20250602134346.835797004@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -46,63 +46,114 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Choong Yong Liang <yong.liang.choong@linux.intel.com>
+From: Matti Lehtimäki <matti.lehtimaki@gmail.com>
 
-[ Upstream commit b63263555eaafbf9ab1a82f2020bbee872d83759 ]
+[ Upstream commit 65991ea8a6d1e68effdc01d95ebe39f1653f7b71 ]
 
-The phylink_expects_phy() function allows MAC drivers to check if they are
-expecting a PHY to attach. The checking condition in phylink_expects_phy()
-aims to achieve the same result as the checking condition in
-phylink_attach_phy().
+Both MSM8974 and MSM8226 have only CX as power domain with MX & PX being
+handled as regulators. Handle this case by reodering pd_names to have CX
+first, and handling that the driver core will already attach a single
+power domain internally.
 
-However, the checking condition in phylink_expects_phy() uses
-pl->link_config.interface, while phylink_attach_phy() uses
-pl->link_interface.
-
-Initially, both pl->link_interface and pl->link_config.interface are set
-to SGMII, and pl->cfg_link_an_mode is set to MLO_AN_INBAND.
-
-When the interface switches from SGMII to 2500BASE-X,
-pl->link_config.interface is updated by phylink_major_config().
-At this point, pl->cfg_link_an_mode remains MLO_AN_INBAND, and
-pl->link_config.interface is set to 2500BASE-X.
-Subsequently, when the STMMAC interface is taken down
-administratively and brought back up, it is blocked by
-phylink_expects_phy().
-
-Since phylink_expects_phy() and phylink_attach_phy() aim to achieve the
-same result, phylink_expects_phy() should check pl->link_interface,
-which never changes, instead of pl->link_config.interface, which is
-updated by phylink_major_config().
-
-Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Signed-off-by: Choong Yong Liang <yong.liang.choong@linux.intel.com>
-Link: https://patch.msgid.link/20250227121522.1802832-2-yong.liang.choong@linux.intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Matti Lehtimäki <matti.lehtimaki@gmail.com>
+[luca: minor changes]
+Signed-off-by: Luca Weiss <luca@lucaweiss.eu>
+Link: https://lore.kernel.org/r/20250206-wcnss-singlepd-v2-2-9a53ee953dee@lucaweiss.eu
+[bjorn: Added missing braces to else after multi-statement if]
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/phylink.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/remoteproc/qcom_wcnss.c | 33 ++++++++++++++++++++++++++-------
+ 1 file changed, 26 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/phy/phylink.c b/drivers/net/phy/phylink.c
-index b5f012619e42d..800e8b9eb4532 100644
---- a/drivers/net/phy/phylink.c
-+++ b/drivers/net/phy/phylink.c
-@@ -1718,7 +1718,7 @@ bool phylink_expects_phy(struct phylink *pl)
+diff --git a/drivers/remoteproc/qcom_wcnss.c b/drivers/remoteproc/qcom_wcnss.c
+index 90de22c81da97..153260b4e2eb4 100644
+--- a/drivers/remoteproc/qcom_wcnss.c
++++ b/drivers/remoteproc/qcom_wcnss.c
+@@ -117,10 +117,10 @@ static const struct wcnss_data pronto_v1_data = {
+ 	.pmu_offset = 0x1004,
+ 	.spare_offset = 0x1088,
+ 
+-	.pd_names = { "mx", "cx" },
++	.pd_names = { "cx", "mx" },
+ 	.vregs = (struct wcnss_vreg_info[]) {
+-		{ "vddmx", 950000, 1150000, 0 },
+ 		{ "vddcx", .super_turbo = true},
++		{ "vddmx", 950000, 1150000, 0 },
+ 		{ "vddpx", 1800000, 1800000, 0 },
+ 	},
+ 	.num_pd_vregs = 2,
+@@ -131,10 +131,10 @@ static const struct wcnss_data pronto_v2_data = {
+ 	.pmu_offset = 0x1004,
+ 	.spare_offset = 0x1088,
+ 
+-	.pd_names = { "mx", "cx" },
++	.pd_names = { "cx", "mx" },
+ 	.vregs = (struct wcnss_vreg_info[]) {
+-		{ "vddmx", 1287500, 1287500, 0 },
+ 		{ "vddcx", .super_turbo = true },
++		{ "vddmx", 1287500, 1287500, 0 },
+ 		{ "vddpx", 1800000, 1800000, 0 },
+ 	},
+ 	.num_pd_vregs = 2,
+@@ -397,8 +397,17 @@ static irqreturn_t wcnss_stop_ack_interrupt(int irq, void *dev)
+ static int wcnss_init_pds(struct qcom_wcnss *wcnss,
+ 			  const char * const pd_names[WCNSS_MAX_PDS])
  {
- 	if (pl->cfg_link_an_mode == MLO_AN_FIXED ||
- 	    (pl->cfg_link_an_mode == MLO_AN_INBAND &&
--	     phy_interface_mode_is_8023z(pl->link_config.interface)))
-+	     phy_interface_mode_is_8023z(pl->link_interface)))
- 		return false;
- 	return true;
++	struct device *dev = wcnss->dev;
+ 	int i, ret;
+ 
++	/* Handle single power domain */
++	if (dev->pm_domain) {
++		wcnss->pds[0] = dev;
++		wcnss->num_pds = 1;
++		pm_runtime_enable(dev);
++		return 0;
++	}
++
+ 	for (i = 0; i < WCNSS_MAX_PDS; i++) {
+ 		if (!pd_names[i])
+ 			break;
+@@ -418,8 +427,15 @@ static int wcnss_init_pds(struct qcom_wcnss *wcnss,
+ 
+ static void wcnss_release_pds(struct qcom_wcnss *wcnss)
+ {
++	struct device *dev = wcnss->dev;
+ 	int i;
+ 
++	/* Handle single power domain */
++	if (wcnss->num_pds == 1 && dev->pm_domain) {
++		pm_runtime_disable(dev);
++		return;
++	}
++
+ 	for (i = 0; i < wcnss->num_pds; i++)
+ 		dev_pm_domain_detach(wcnss->pds[i], false);
  }
+@@ -437,10 +453,13 @@ static int wcnss_init_regulators(struct qcom_wcnss *wcnss,
+ 	 * the regulators for the power domains. For old device trees we need to
+ 	 * reserve extra space to manage them through the regulator interface.
+ 	 */
+-	if (wcnss->num_pds)
+-		info += num_pd_vregs;
+-	else
++	if (wcnss->num_pds) {
++		info += wcnss->num_pds;
++		/* Handle single power domain case */
++		num_vregs += num_pd_vregs - wcnss->num_pds;
++	} else {
+ 		num_vregs += num_pd_vregs;
++	}
+ 
+ 	bulk = devm_kcalloc(wcnss->dev,
+ 			    num_vregs, sizeof(struct regulator_bulk_data),
 -- 
 2.39.5
 
