@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2E4C227E97;
-	Mon,  2 Jun 2025 14:39:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C44E9227E97;
+	Mon,  2 Jun 2025 14:39:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748875171; cv=none; b=YdVOPKd/kovkQZ1H6FVjZHMC8iE+G3EVMmYZU8yywWSx76ZHtsiSUJrUt90I8Edl/nSjRdfc+URWWd6+rwWceFu/C5ANJierp6ZCT5cqp0NGK8icw3OldbQUB2mdjK0fFUuNR6GdLoZUvRIEsSK8XLzjdFQn5HT0Fq/SDJnbWtY=
+	t=1748875174; cv=none; b=Pn1GwHfj5P9PsrDhnJpArMNxRNzta9bTabee4nLnJ2LE3DK6I4pnqs9bmnZ0P41398s1bQX7QXdbgAhGD0BCAka/ydPER4LRr77mKMdY7+dYDI7jmTBdYLGYapj4+pMr+yyWwnmxiQy0/N24fuLvROMr6Y6M0QZcqJy0OvcFf00=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748875171; c=relaxed/simple;
-	bh=zNg8NsBxzUrNiL81PTeKYeZD/ovLIfj5NQk3xUCF8p8=;
+	s=arc-20240116; t=1748875174; c=relaxed/simple;
+	bh=0M6R8rRLLTKFziTfEL7XEidqaJHT6EiJGso7lEdRxJQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FhnXJuSf3ZcLUIdtbdHH2BC53cPDWw+CKRNmek8DFrGi6SFbkqTKTG/1BG19VVPVoHdMJU4vfVNZeIs/Ycwi6JEnhen8HBzjKEn5LktEGKzJ+ydM7k7v4DsOhUlvF1xT3R5wIQAwDs2NUT/sflW6qOHP0zp2+9y14ERIT3cYPXQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2jFQaGb6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lbMxxRt2myPDCss3r2bbsiqQHNDbUf5GaNa8oAsXYNIh6s3qLB8ML73cn0r06Q9+yQ190mUQxaXzwsbl5NSJb3OLvox6s7Y8Y0c8pNzEzztSdgmWe/iO6AdQbjCiFbQ/GK92jB1OvXYddVD1Y492zBmuUHSwqFU/RG/e7IUednY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0LavqCHl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2jFQaGb6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2916C4CEEB;
-	Mon,  2 Jun 2025 14:39:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0LavqCHl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33220C4CEEB;
+	Mon,  2 Jun 2025 14:39:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748875171;
-	bh=zNg8NsBxzUrNiL81PTeKYeZD/ovLIfj5NQk3xUCF8p8=;
+	s=korg; t=1748875174;
+	bh=0M6R8rRLLTKFziTfEL7XEidqaJHT6EiJGso7lEdRxJQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2jFQaGb6h+w1B8GcUC4nQI9Z0DRB0DOLFzkeKM/+Cem9lo/WbfnpZYLceNKFiz5Dn
-	 MwVbFqANKMhXX3W7eSpTGAhLPsc4eU1aqAoU/vkjijWDegn7ceZlKsm+2/yVvtMbSJ
-	 lgNXwUkK/nsWI8KJZjLozYrcUNCTXpLpyP+LWI2I=
+	b=0LavqCHlvp3hsdSp4JJEI4GV/HrSdafoHAQ1J0IvHTLLGtxwegUwZWoT4qEzLQSCX
+	 w3azpvev/JhydrrUDxXqUX3w8KsmF9Mlhta5bEKcRb6t2CPlvIZ19o7WRsbHZez9KJ
+	 VYfhAJPHyREKw++bqgMHocuaVzSwtWJAda/2pzVU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonas Gorski <jonas.gorski@gmail.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 050/270] net: dsa: b53: fix learning on VLAN unaware bridges
-Date: Mon,  2 Jun 2025 15:45:35 +0200
-Message-ID: <20250602134309.243541732@linuxfoundation.org>
+	Manuel Fombuena <fombuena@outlook.com>,
+	Aditya Garg <gargaditya08@live.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 5.10 051/270] Input: synaptics - enable InterTouch on Dynabook Portege X30-D
+Date: Mon,  2 Jun 2025 15:45:36 +0200
+Message-ID: <20250602134309.282564881@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134307.195171844@linuxfoundation.org>
 References: <20250602134307.195171844@linuxfoundation.org>
@@ -52,43 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonas Gorski <jonas.gorski@gmail.com>
+From: Manuel Fombuena <fombuena@outlook.com>
 
-[ Upstream commit 9f34ad89bcf0e6df6f8b01f1bdab211493fc66d1 ]
+commit 6d7ea0881000966607772451b789b5fb5766f11d upstream.
 
-When VLAN filtering is off, we configure the switch to forward, but not
-learn on VLAN table misses. This effectively disables learning while not
-filtering.
+[    5.989588] psmouse serio1: synaptics: Your touchpad (PNP: TOS0213 PNP0f03) says it can support a different bus. If i2c-hid and hid-rmi are not used, you might want to try setting psmouse.synaptics_intertouch to 1 and report this to linux-input@vger.kernel.org.
+[    6.039923] psmouse serio1: synaptics: Touchpad model: 1, fw: 9.32, id: 0x1e2a1, caps: 0xf00223/0x840300/0x12e800/0x52d884, board id: 3322, fw id: 2658004
 
-Fix this by switching to forward and learn. Setting the learning disable
-register will still control whether learning actually happens.
+The board is labelled TM3322.
 
-Fixes: dad8d7c6452b ("net: dsa: b53: Properly account for VLAN filtering")
-Signed-off-by: Jonas Gorski <jonas.gorski@gmail.com>
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20250429201710.330937-11-jonas.gorski@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Present on the Toshiba / Dynabook Portege X30-D and possibly others.
+
+Confirmed working well with psmouse.synaptics_intertouch=1 and local build.
+
+Signed-off-by: Manuel Fombuena <fombuena@outlook.com>
+Signed-off-by: Aditya Garg <gargaditya08@live.com>
+Link: https://lore.kernel.org/r/PN3PR01MB9597711E7933A08389FEC31DB888A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
+Cc: stable@vger.kernel.org
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/dsa/b53/b53_common.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/input/mouse/synaptics.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/dsa/b53/b53_common.c b/drivers/net/dsa/b53/b53_common.c
-index 0914982a80c11..39a56cedbc1f4 100644
---- a/drivers/net/dsa/b53/b53_common.c
-+++ b/drivers/net/dsa/b53/b53_common.c
-@@ -383,7 +383,7 @@ static void b53_enable_vlan(struct b53_device *dev, bool enable,
- 			vc4 |= VC4_ING_VID_VIO_DROP << VC4_ING_VID_CHECK_S;
- 			vc5 |= VC5_DROP_VTABLE_MISS;
- 		} else {
--			vc4 |= VC4_ING_VID_VIO_FWD << VC4_ING_VID_CHECK_S;
-+			vc4 |= VC4_NO_ING_VID_CHK << VC4_ING_VID_CHECK_S;
- 			vc5 &= ~VC5_DROP_VTABLE_MISS;
- 		}
+--- a/drivers/input/mouse/synaptics.c
++++ b/drivers/input/mouse/synaptics.c
+@@ -192,6 +192,7 @@ static const char * const smbus_pnp_ids[
+ 	"SYN3221", /* HP 15-ay000 */
+ 	"SYN323d", /* HP Spectre X360 13-w013dx */
+ 	"SYN3257", /* HP Envy 13-ad105ng */
++	"TOS0213", /* Dynabook Portege X30-D */
+ 	NULL
+ };
  
--- 
-2.39.5
-
 
 
