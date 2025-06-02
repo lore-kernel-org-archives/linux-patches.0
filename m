@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66922229B26;
-	Mon,  2 Jun 2025 14:06:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E94122A4ED;
+	Mon,  2 Jun 2025 14:06:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748873194; cv=none; b=RPqgOs63G38vlOOTK5FG03uhirdGFVic/eVkNtmv83wAMQuDGaM6lXqp3JFXHvqsBQClhbHvK5Ko4ripZuOk+3e7J6fgk27bFvZf//wnpOu9h9snhkD23629W5xh6BONbIQLn1dgZ+LRR/ljLol2+A9gN0qP7ov+5fZb1DR5xvI=
+	t=1748873198; cv=none; b=tXqMHWtMwKuFWnX8ghosKFvoYoQuu+jU8Q/7GASo5ZmK0lfWnGsIBGOVbDLX3w6nKYpHd87LFIT+KhcRysZTs3pI7+Z3KIjKTN2Pp1drM4fDIM5/9GMvPbmpHFjHVObIZ4NvdFPN2XlkNfQnryl93IQ3PlD9/T249/x/iOhxbqc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748873194; c=relaxed/simple;
-	bh=WfxRRMSHwS6Bcf0jlVIaybV7LPhMuHWo/qOYdJDj6vQ=;
+	s=arc-20240116; t=1748873198; c=relaxed/simple;
+	bh=vZ2EMmDDIfzfoYHhFdnVDRQqOOwnXg9L5KGDwIdCv3g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xu8Fb0WZMryWyoP1qyoFm7Zq8tBI4lZAihuhOFuIfOlAEkgFKXMFJ1pv9hz+BsdlGEDLEzcvl8XOvZlrGcz+2dkjvOXOXaFqC3wDk84XDebH804R0npAaepk/TL4c/XnmwSinLr6CdvXbeuIXiTh9d8Pqbh90/fOnbTuifxVgxY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C+PBIjhN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CrAS0ERheeMz0qnoBHvHvdpjcZYkjn58eRkWBPC+P8E3V/WayMIL+UOSNXtCs7YYcSNDJ04+XS2duJaT68Hl/Kj94skrVJxoN9xvjZwnpvjDgoBrwo9hiUwl8xwGaEhLAiLcEmXpOsVX4Y3f1SMeDkW89YJ1782SQk95859NCPI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EC1aOflQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C+PBIjhN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED95CC4CEEB;
-	Mon,  2 Jun 2025 14:06:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EC1aOflQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22CA7C4CEEB;
+	Mon,  2 Jun 2025 14:06:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748873194;
-	bh=WfxRRMSHwS6Bcf0jlVIaybV7LPhMuHWo/qOYdJDj6vQ=;
+	s=korg; t=1748873197;
+	bh=vZ2EMmDDIfzfoYHhFdnVDRQqOOwnXg9L5KGDwIdCv3g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C+PBIjhNpN9U48/Sq3+3XWyn3MPJuLnANJNXa6oriHtXFvOQymyNnXHsXn4JRbTXE
-	 dcZxmh8+u726ScgB+DO5n7zvnKsBNIsMktEhatBKLHn66m1hpOAbAyAay2UuSclrzL
-	 OhUi7FpvN3HYo4jgkzXk4ntqEivXiCGgGwJv/dO8=
+	b=EC1aOflQb9eb9wNPhnQmbds2NyxAybTM6GZhM+foTSBz5AJmvzGiXve/94lqRPVYq
+	 iq8Jr8cJI0JSs7dSdxCDC8vn0xdS67DZzP7jCMNIAT8Wb3mpqMjFmAhY9SgjG5mn4C
+	 Li9D/QYJk+9Z/nkwkZu0hW5U/vYkdWMSXFPkCD8U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robert Richter <rrichter@amd.com>,
-	Pankaj Gupta <pankaj.gupta@amd.com>,
-	Ira Weiny <ira.weiny@intel.com>,
+	Erick Shepherd <erick.shepherd@ni.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 067/444] libnvdimm/labels: Fix divide error in nd_label_data_init()
-Date: Mon,  2 Jun 2025 15:42:11 +0200
-Message-ID: <20250602134343.636599481@linuxfoundation.org>
+Subject: [PATCH 6.6 068/444] mmc: host: Wait for Vdd to settle on card power off
+Date: Mon,  2 Jun 2025 15:42:12 +0200
+Message-ID: <20250602134343.675867399@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -52,62 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Robert Richter <rrichter@amd.com>
+From: Erick Shepherd <erick.shepherd@ni.com>
 
-[ Upstream commit ef1d3455bbc1922f94a91ed58d3d7db440652959 ]
+[ Upstream commit 31e75ed964582257f59156ce6a42860e1ae4cc39 ]
 
-If a faulty CXL memory device returns a broken zero LSA size in its
-memory device information (Identify Memory Device (Opcode 4000h), CXL
-spec. 3.1, 8.2.9.9.1.1), a divide error occurs in the libnvdimm
-driver:
+The SD spec version 6.0 section 6.4.1.5 requires that Vdd must be
+lowered to less than 0.5V for a minimum of 1 ms when powering off a
+card. Increase wait to 15 ms so that voltage has time to drain down
+to 0.5V and cards can power off correctly. Issues with voltage drain
+time were only observed on Apollo Lake and Bay Trail host controllers
+so this fix is limited to those devices.
 
- Oops: divide error: 0000 [#1] PREEMPT SMP NOPTI
- RIP: 0010:nd_label_data_init+0x10e/0x800 [libnvdimm]
-
-Code and flow:
-
-1) CXL Command 4000h returns LSA size = 0
-2) config_size is assigned to zero LSA size (CXL pmem driver):
-
-drivers/cxl/pmem.c:             .config_size = mds->lsa_size,
-
-3) max_xfer is set to zero (nvdimm driver):
-
-drivers/nvdimm/label.c: max_xfer = min_t(size_t, ndd->nsarea.max_xfer, config_size);
-
-4) A subsequent DIV_ROUND_UP() causes a division by zero:
-
-drivers/nvdimm/label.c: /* Make our initial read size a multiple of max_xfer size */
-drivers/nvdimm/label.c: read_size = min(DIV_ROUND_UP(read_size, max_xfer) * max_xfer,
-drivers/nvdimm/label.c-                 config_size);
-
-Fix this by checking the config size parameter by extending an
-existing check.
-
-Signed-off-by: Robert Richter <rrichter@amd.com>
-Reviewed-by: Pankaj Gupta <pankaj.gupta@amd.com>
-Reviewed-by: Ira Weiny <ira.weiny@intel.com>
-Link: https://patch.msgid.link/20250320112223.608320-1-rrichter@amd.com
-Signed-off-by: Ira Weiny <ira.weiny@intel.com>
+Signed-off-by: Erick Shepherd <erick.shepherd@ni.com>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Link: https://lore.kernel.org/r/20250314195021.1588090-1-erick.shepherd@ni.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvdimm/label.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/mmc/host/sdhci-pci-core.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/nvdimm/label.c b/drivers/nvdimm/label.c
-index 082253a3a9560..04f4a049599a1 100644
---- a/drivers/nvdimm/label.c
-+++ b/drivers/nvdimm/label.c
-@@ -442,7 +442,8 @@ int nd_label_data_init(struct nvdimm_drvdata *ndd)
- 	if (ndd->data)
- 		return 0;
+diff --git a/drivers/mmc/host/sdhci-pci-core.c b/drivers/mmc/host/sdhci-pci-core.c
+index 6b351810a301c..dbfe0a5324eaf 100644
+--- a/drivers/mmc/host/sdhci-pci-core.c
++++ b/drivers/mmc/host/sdhci-pci-core.c
+@@ -608,8 +608,12 @@ static void sdhci_intel_set_power(struct sdhci_host *host, unsigned char mode,
  
--	if (ndd->nsarea.status || ndd->nsarea.max_xfer == 0) {
-+	if (ndd->nsarea.status || ndd->nsarea.max_xfer == 0 ||
-+	    ndd->nsarea.config_size == 0) {
- 		dev_dbg(ndd->dev, "failed to init config data area: (%u:%u)\n",
- 			ndd->nsarea.max_xfer, ndd->nsarea.config_size);
- 		return -ENXIO;
+ 	sdhci_set_power(host, mode, vdd);
+ 
+-	if (mode == MMC_POWER_OFF)
++	if (mode == MMC_POWER_OFF) {
++		if (slot->chip->pdev->device == PCI_DEVICE_ID_INTEL_APL_SD ||
++		    slot->chip->pdev->device == PCI_DEVICE_ID_INTEL_BYT_SD)
++			usleep_range(15000, 17500);
+ 		return;
++	}
+ 
+ 	/*
+ 	 * Bus power might not enable after D3 -> D0 transition due to the
 -- 
 2.39.5
 
