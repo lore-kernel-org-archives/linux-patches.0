@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 227CB1FBC8C;
-	Mon,  2 Jun 2025 15:01:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 331324A1E;
+	Mon,  2 Jun 2025 15:01:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748876511; cv=none; b=U89kVAYEn8UMAkqR97IHCRMWM8PKuHacKfHUazr0B5fIa9PuYFrDo0aGHlygHBUsiuj9VudtcE+KO/6sDtdoVkrTFOBAyB0wd9df6qcno0YxfLabOkujGT+gYuUKnqw+/nNDiJLbWUV5ktnMxD27/HpXRZlpQWWjZCUuU6clmIU=
+	t=1748876514; cv=none; b=uTTR2biJKeL54uHjK/qzV1ahBknp5dssG8Xs2XqHhwclonH1Z+x+YEiGcKnzwlyg4zXoVt5kk0MT9xH/FaHmM0tHC4TlEpGXYPprlwH+iLoLrSu1HwfbXGa9U/sPtRkQpbNuhgz9V02xcOXg2DuLkkH9XU02JOxYW2r56iNJXrs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748876511; c=relaxed/simple;
-	bh=hJ4Ivg2gHF6M2xGPGDeiu1syUBTqxk2q3BhmdmyuDWk=;
+	s=arc-20240116; t=1748876514; c=relaxed/simple;
+	bh=hAGO2AXLNUuoQxHpZvNj20yY8LtS7pAm805c3SWBYHs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uTo6rPkvCYOHEuqxiflffgFeF+zm6uScpnOdsCFDs/EElqUwRgclJwYymU5zn00Y3LeZVwwugbf0Db7WBj4WLdGS2XO4bJq7rv8XpIC814ErOsPag6lPbGURz4/MruZgv0m5DUl2zq6yeyzMV72wrS5mc1VJ89sU6W/gD9ZPjzc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HINQVssv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YsuO/b1MIPAvPgUm8I9ScNqmloZjUrBxhYPaGQkdzvvfVsTcc9hgOxinQ2ouZ+bJBTWZ13M63oVl9ouVsUMcXabJRmVkFiWDu290F1v4QbHFnUf2BBYNLlSu+3lF9Mxwg9PpqwiaaEoAfZG/hBPM3nMQXLOuygW5+ZgcQGS+Vpk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U9fKz6Fc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HINQVssv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91635C4CEEB;
-	Mon,  2 Jun 2025 15:01:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U9fKz6Fc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1661C4CEEB;
+	Mon,  2 Jun 2025 15:01:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748876511;
-	bh=hJ4Ivg2gHF6M2xGPGDeiu1syUBTqxk2q3BhmdmyuDWk=;
+	s=korg; t=1748876514;
+	bh=hAGO2AXLNUuoQxHpZvNj20yY8LtS7pAm805c3SWBYHs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HINQVssvNO9a3aKKcJLZzRu4SNLeh0YJ9j/eKG97tn17Vw91ic5BjkovfVd7g+Bkb
-	 IOaEeaHqVOpeu7TlK3K9HLPktz0DvuZcjKBGO8EfIOcFtdFxdHJHUnpXIFnR9hMSZb
-	 meiduMezJaApF2zbRJW0ZLGZxEgE6rLvUbUiW/nI=
+	b=U9fKz6Fc5L1mFAl+TPixqii940hpyJcPOh/0klq+h6j5RMeJ91DJdkZl44/cbvSec
+	 lqWt7POcMRwM3/2jQTO2e0L0qwBrqKeg34EZnpZ6bbsbAXxBHKurePr6FRjGE6SudQ
+	 Ad/qCoDiAlG+S3LLL1AhbAy2kXYq5zB6q2hTtxwU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Milton Barrera <miltonjosue2001@gmail.com>,
-	Jiri Kosina <jkosina@suse.com>,
+	Omar Sandoval <osandov@osandov.com>,
+	Sargun Dillon <sargun@sargun.me>,
+	Jeff Layton <jlayton@kernel.org>,
+	Benjamin Coddington <bcodding@redhat.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 198/207] HID: quirks: Add ADATA XPG alpha wireless mouse support
-Date: Mon,  2 Jun 2025 15:49:30 +0200
-Message-ID: <20250602134306.533363114@linuxfoundation.org>
+Subject: [PATCH 5.15 199/207] nfs: dont share pNFS DS connections between net namespaces
+Date: Mon,  2 Jun 2025 15:49:31 +0200
+Message-ID: <20250602134306.571541728@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134258.769974467@linuxfoundation.org>
 References: <20250602134258.769974467@linuxfoundation.org>
@@ -51,48 +54,164 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Milton Barrera <miltonjosue2001@gmail.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit fa9fdeea1b7d6440c22efa6d59a769eae8bc89f1 ]
+[ Upstream commit 6b9785dc8b13d9fb75ceec8cf4ea7ec3f3b1edbc ]
 
-This patch adds HID_QUIRK_ALWAYS_POLL for the ADATA XPG wireless gaming mouse (USB ID 125f:7505) and its USB dongle (USB ID 125f:7506). Without this quirk, the device does not generate input events properly.
+Currently, different NFS clients can share the same DS connections, even
+when they are in different net namespaces. If a containerized client
+creates a DS connection, another container can find and use it. When the
+first client exits, the connection will close which can lead to stalls
+in other clients.
 
-Signed-off-by: Milton Barrera <miltonjosue2001@gmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Add a net namespace pointer to struct nfs4_pnfs_ds, and compare those
+value to the caller's netns in _data_server_lookup_locked() when
+searching for a nfs4_pnfs_ds to match.
+
+Reported-by: Omar Sandoval <osandov@osandov.com>
+Reported-by: Sargun Dillon <sargun@sargun.me>
+Closes: https://lore.kernel.org/linux-nfs/Z_ArpQC_vREh_hEA@telecaster/
+Tested-by: Sargun Dillon <sargun@sargun.me>
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Reviewed-by: Benjamin Coddington <bcodding@redhat.com>
+Link: https://lore.kernel.org/r/20250410-nfs-ds-netns-v2-1-f80b7979ba80@kernel.org
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-ids.h    | 4 ++++
- drivers/hid/hid-quirks.c | 2 ++
- 2 files changed, 6 insertions(+)
+ fs/nfs/filelayout/filelayoutdev.c         | 6 +++---
+ fs/nfs/flexfilelayout/flexfilelayoutdev.c | 6 +++---
+ fs/nfs/pnfs.h                             | 4 +++-
+ fs/nfs/pnfs_nfs.c                         | 9 +++++----
+ 4 files changed, 14 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
-index 44825a916eeb2..08494eb652091 100644
---- a/drivers/hid/hid-ids.h
-+++ b/drivers/hid/hid-ids.h
-@@ -41,6 +41,10 @@
- #define USB_VENDOR_ID_ACTIONSTAR	0x2101
- #define USB_DEVICE_ID_ACTIONSTAR_1011	0x1011
+diff --git a/fs/nfs/filelayout/filelayoutdev.c b/fs/nfs/filelayout/filelayoutdev.c
+index 86c3f7e69ec42..e6bf55e37521f 100644
+--- a/fs/nfs/filelayout/filelayoutdev.c
++++ b/fs/nfs/filelayout/filelayoutdev.c
+@@ -75,6 +75,7 @@ nfs4_fl_alloc_deviceid_node(struct nfs_server *server, struct pnfs_device *pdev,
+ 	struct page *scratch;
+ 	struct list_head dsaddrs;
+ 	struct nfs4_pnfs_ds_addr *da;
++	struct net *net = server->nfs_client->cl_net;
  
-+#define USB_VENDOR_ID_ADATA_XPG 0x125f
-+#define USB_VENDOR_ID_ADATA_XPG_WL_GAMING_MOUSE 0x7505
-+#define USB_VENDOR_ID_ADATA_XPG_WL_GAMING_MOUSE_DONGLE 0x7506
-+
- #define USB_VENDOR_ID_ADS_TECH		0x06e1
- #define USB_DEVICE_ID_ADS_TECH_RADIO_SI470X	0xa155
+ 	/* set up xdr stream */
+ 	scratch = alloc_page(gfp_flags);
+@@ -160,8 +161,7 @@ nfs4_fl_alloc_deviceid_node(struct nfs_server *server, struct pnfs_device *pdev,
  
-diff --git a/drivers/hid/hid-quirks.c b/drivers/hid/hid-quirks.c
-index b5ad4c87daacf..126cadb117fef 100644
---- a/drivers/hid/hid-quirks.c
-+++ b/drivers/hid/hid-quirks.c
-@@ -27,6 +27,8 @@
- static const struct hid_device_id hid_quirks[] = {
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_AASHIMA, USB_DEVICE_ID_AASHIMA_GAMEPAD), HID_QUIRK_BADPAD },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_AASHIMA, USB_DEVICE_ID_AASHIMA_PREDATOR), HID_QUIRK_BADPAD },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_ADATA_XPG, USB_VENDOR_ID_ADATA_XPG_WL_GAMING_MOUSE), HID_QUIRK_ALWAYS_POLL },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_ADATA_XPG, USB_VENDOR_ID_ADATA_XPG_WL_GAMING_MOUSE_DONGLE), HID_QUIRK_ALWAYS_POLL },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_AFATECH, USB_DEVICE_ID_AFATECH_AF9016), HID_QUIRK_FULLSPEED_INTERVAL },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_AIREN, USB_DEVICE_ID_AIREN_SLIMPLUS), HID_QUIRK_NOGET },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_AKAI_09E8, USB_DEVICE_ID_AKAI_09E8_MIDIMIX), HID_QUIRK_NO_INIT_REPORTS },
+ 		mp_count = be32_to_cpup(p); /* multipath count */
+ 		for (j = 0; j < mp_count; j++) {
+-			da = nfs4_decode_mp_ds_addr(server->nfs_client->cl_net,
+-						    &stream, gfp_flags);
++			da = nfs4_decode_mp_ds_addr(net, &stream, gfp_flags);
+ 			if (da)
+ 				list_add_tail(&da->da_node, &dsaddrs);
+ 		}
+@@ -171,7 +171,7 @@ nfs4_fl_alloc_deviceid_node(struct nfs_server *server, struct pnfs_device *pdev,
+ 			goto out_err_free_deviceid;
+ 		}
+ 
+-		dsaddr->ds_list[i] = nfs4_pnfs_ds_add(&dsaddrs, gfp_flags);
++		dsaddr->ds_list[i] = nfs4_pnfs_ds_add(net, &dsaddrs, gfp_flags);
+ 		if (!dsaddr->ds_list[i])
+ 			goto out_err_drain_dsaddrs;
+ 
+diff --git a/fs/nfs/flexfilelayout/flexfilelayoutdev.c b/fs/nfs/flexfilelayout/flexfilelayoutdev.c
+index bfa7202ca7be1..4b0cdddce6eb3 100644
+--- a/fs/nfs/flexfilelayout/flexfilelayoutdev.c
++++ b/fs/nfs/flexfilelayout/flexfilelayoutdev.c
+@@ -49,6 +49,7 @@ nfs4_ff_alloc_deviceid_node(struct nfs_server *server, struct pnfs_device *pdev,
+ 	struct nfs4_pnfs_ds_addr *da;
+ 	struct nfs4_ff_layout_ds *new_ds = NULL;
+ 	struct nfs4_ff_ds_version *ds_versions = NULL;
++	struct net *net = server->nfs_client->cl_net;
+ 	u32 mp_count;
+ 	u32 version_count;
+ 	__be32 *p;
+@@ -80,8 +81,7 @@ nfs4_ff_alloc_deviceid_node(struct nfs_server *server, struct pnfs_device *pdev,
+ 
+ 	for (i = 0; i < mp_count; i++) {
+ 		/* multipath ds */
+-		da = nfs4_decode_mp_ds_addr(server->nfs_client->cl_net,
+-					    &stream, gfp_flags);
++		da = nfs4_decode_mp_ds_addr(net, &stream, gfp_flags);
+ 		if (da)
+ 			list_add_tail(&da->da_node, &dsaddrs);
+ 	}
+@@ -147,7 +147,7 @@ nfs4_ff_alloc_deviceid_node(struct nfs_server *server, struct pnfs_device *pdev,
+ 	new_ds->ds_versions = ds_versions;
+ 	new_ds->ds_versions_cnt = version_count;
+ 
+-	new_ds->ds = nfs4_pnfs_ds_add(&dsaddrs, gfp_flags);
++	new_ds->ds = nfs4_pnfs_ds_add(net, &dsaddrs, gfp_flags);
+ 	if (!new_ds->ds)
+ 		goto out_err_drain_dsaddrs;
+ 
+diff --git a/fs/nfs/pnfs.h b/fs/nfs/pnfs.h
+index f331f067691b0..dcc01a06d39f1 100644
+--- a/fs/nfs/pnfs.h
++++ b/fs/nfs/pnfs.h
+@@ -59,6 +59,7 @@ struct nfs4_pnfs_ds {
+ 	struct list_head	ds_node;  /* nfs4_pnfs_dev_hlist dev_dslist */
+ 	char			*ds_remotestr;	/* comma sep list of addrs */
+ 	struct list_head	ds_addrs;
++	const struct net	*ds_net;
+ 	struct nfs_client	*ds_clp;
+ 	refcount_t		ds_count;
+ 	unsigned long		ds_state;
+@@ -403,7 +404,8 @@ int pnfs_generic_commit_pagelist(struct inode *inode,
+ int pnfs_generic_scan_commit_lists(struct nfs_commit_info *cinfo, int max);
+ void pnfs_generic_write_commit_done(struct rpc_task *task, void *data);
+ void nfs4_pnfs_ds_put(struct nfs4_pnfs_ds *ds);
+-struct nfs4_pnfs_ds *nfs4_pnfs_ds_add(struct list_head *dsaddrs,
++struct nfs4_pnfs_ds *nfs4_pnfs_ds_add(const struct net *net,
++				      struct list_head *dsaddrs,
+ 				      gfp_t gfp_flags);
+ void nfs4_pnfs_v3_ds_connect_unload(void);
+ int nfs4_pnfs_ds_connect(struct nfs_server *mds_srv, struct nfs4_pnfs_ds *ds,
+diff --git a/fs/nfs/pnfs_nfs.c b/fs/nfs/pnfs_nfs.c
+index 6b681f0c5df0d..29c1c7f80b1d8 100644
+--- a/fs/nfs/pnfs_nfs.c
++++ b/fs/nfs/pnfs_nfs.c
+@@ -651,12 +651,12 @@ _same_data_server_addrs_locked(const struct list_head *dsaddrs1,
+  * Lookup DS by addresses.  nfs4_ds_cache_lock is held
+  */
+ static struct nfs4_pnfs_ds *
+-_data_server_lookup_locked(const struct list_head *dsaddrs)
++_data_server_lookup_locked(const struct net *net, const struct list_head *dsaddrs)
+ {
+ 	struct nfs4_pnfs_ds *ds;
+ 
+ 	list_for_each_entry(ds, &nfs4_data_server_cache, ds_node)
+-		if (_same_data_server_addrs_locked(&ds->ds_addrs, dsaddrs))
++		if (ds->ds_net == net && _same_data_server_addrs_locked(&ds->ds_addrs, dsaddrs))
+ 			return ds;
+ 	return NULL;
+ }
+@@ -763,7 +763,7 @@ nfs4_pnfs_remotestr(struct list_head *dsaddrs, gfp_t gfp_flags)
+  * uncached and return cached struct nfs4_pnfs_ds.
+  */
+ struct nfs4_pnfs_ds *
+-nfs4_pnfs_ds_add(struct list_head *dsaddrs, gfp_t gfp_flags)
++nfs4_pnfs_ds_add(const struct net *net, struct list_head *dsaddrs, gfp_t gfp_flags)
+ {
+ 	struct nfs4_pnfs_ds *tmp_ds, *ds = NULL;
+ 	char *remotestr;
+@@ -781,13 +781,14 @@ nfs4_pnfs_ds_add(struct list_head *dsaddrs, gfp_t gfp_flags)
+ 	remotestr = nfs4_pnfs_remotestr(dsaddrs, gfp_flags);
+ 
+ 	spin_lock(&nfs4_ds_cache_lock);
+-	tmp_ds = _data_server_lookup_locked(dsaddrs);
++	tmp_ds = _data_server_lookup_locked(net, dsaddrs);
+ 	if (tmp_ds == NULL) {
+ 		INIT_LIST_HEAD(&ds->ds_addrs);
+ 		list_splice_init(dsaddrs, &ds->ds_addrs);
+ 		ds->ds_remotestr = remotestr;
+ 		refcount_set(&ds->ds_count, 1);
+ 		INIT_LIST_HEAD(&ds->ds_node);
++		ds->ds_net = net;
+ 		ds->ds_clp = NULL;
+ 		list_add(&ds->ds_node, &nfs4_data_server_cache);
+ 		dprintk("%s add new data server %s\n", __func__,
 -- 
 2.39.5
 
