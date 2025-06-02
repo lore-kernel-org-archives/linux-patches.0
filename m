@@ -1,65 +1,65 @@
-Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
+Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7179B18FDD5
-	for <patches@lists.linux.dev>; Mon,  2 Jun 2025 16:50:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 381DF3AC1C
+	for <patches@lists.linux.dev>; Mon,  2 Jun 2025 17:03:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748883029; cv=none; b=RkapKd3VHtcMf0K/7aiPsIscrejLpy6N8s9ltle3wtSkGWZqd5/ueZAyEbaxonW8UV035yvtoGtWJWbwQqGhg2yVYM42K3RGyel1Kb3b2lT1anwgGDh/GatEaTZpBdfTo1ER1hu2DgXJVz3l79T65FlC4lKKGOIrKqeAEHMcUjI=
+	t=1748883820; cv=none; b=g0U8OaxF5M2aOToklhASEfgOoEOl+nn2mFP617J13YphKBaOatQLWoqNPl5mKxbqIWWxV91Y5noS7QLEPRg69vXkxgF8TjJkyTxh1qKM06soBUbU5XOlUNgRzKdtqpjrqmlvDc/B3UVH0jwkdwBE+xBMUt/k7ROvZ76jDcp78M4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748883029; c=relaxed/simple;
-	bh=ZIwZgPHNcQ18TGkQe8WeINE1XIXHcXzAPb10jgUSEeA=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=j7SW7/q7GjjjctrQjQtQ/1hVZ4Qr6oDjTOHm0yxnN0P8fyvbgidSl69xORwhLdYHi1Vi2FltQZ6bzn/cYE3un3zOAdHu1bIFbmfkLCjCi92350AxBCJfrkmbuCxOgLKQzSRqc/sRg9lNfzv6GawoSKRFQiiLKsx90r+BJE3RcFc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=G5dMDwoP; arc=none smtp.client-ip=209.85.214.178
+	s=arc-20240116; t=1748883820; c=relaxed/simple;
+	bh=VMaer+x2LjRkIyNhCPgGhMCgkxjOf58plLCkqARWbt8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=U90tW7FjXllosUO5JhBWIyT5P8EjNa9SAKov0J2DPPSWg3V8K3rV9hcjvcttz2MTzroN1XnX9Nu/Ce74zKrWzWrqDBwk9sD0WCUl01+gxbHeP1UB8q9E4e7dLeCUL0MXINypm6IC/RzxtROHkyOfYdq1MnBqGKebXmRYou+ZZwc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mGWokUwO; arc=none smtp.client-ip=209.85.210.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="G5dMDwoP"
-Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-23035b3edf1so41621265ad.3
-        for <patches@lists.linux.dev>; Mon, 02 Jun 2025 09:50:27 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mGWokUwO"
+Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-742c9563fd9so3854111b3a.3
+        for <patches@lists.linux.dev>; Mon, 02 Jun 2025 10:03:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1748883027; x=1749487827; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :references:cc:to:from:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=EDoZvXIVFg1ip/4QjVxd1zFeSBPY4719u7+jKFjyKxY=;
-        b=G5dMDwoPFFSwW+GavQvMrp99F4DW6iwfZf0H/25EZ+R/Wb3gxkVYS7DHERu1RTtFVa
-         m7/8gO+qnVZZBqKsJz60meBGvU8hMBk62pAWfKz5EVpG9YvflpaUrXSe+ZE5uvHAX7th
-         3dNfMPTjUBuoZ6/lZaMTIwNzZL+DT03pRf5GbL2dT2xfYg7rqPBm2xzzMXOQ9T3bhD9N
-         +j8n7U76byfqU5/H1xpSi3tQphIyv5Ui7TS81P3BOb8kOFCeVNKXyJ0gkpNcFFs8BtCi
-         0ZmZ4YlmkllJg00MiFo1mItpW2rEYkJfGE6phE5PHBID01P9zfgOPnBnDzTLcLbWPIHD
-         OtIg==
+        d=gmail.com; s=20230601; t=1748883818; x=1749488618; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=fll3hWF4pol/LM2L7XdwKp07jcPy9V6QGOSoLodOnKA=;
+        b=mGWokUwO74F5Imfi5JmrH4/6KsN00DKkW4YcQswfxbRn2gecaoCiVTeLnxt4CFXHkP
+         9Kn2eL0FxkcdRD9S4SgWTPwUuEnWywcQ2f3sSFXcq7J9SlY3EcfDYzpg960oVJTx1GNJ
+         zl/ggJzOCeq+NDvgQymwQJ5f1CydORDD0JYIZSVGwaSbsaDtsNO8jqLhVCE9oR6vY1i2
+         2MqHqmF4hnDkNIV4vtL66zVVFhg792M0VoBjHNyddQs4YC8tFgXuyWtBuTT2/kBEQd9i
+         +pG3sp6eHl19HIg2w0g+ualhgOY8LYUhsheVh/SDXcQcBRX883YAeY6OZ23c6H2pmAf9
+         iddg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748883027; x=1749487827;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :references:cc:to:from:subject:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=EDoZvXIVFg1ip/4QjVxd1zFeSBPY4719u7+jKFjyKxY=;
-        b=j4pJI+4obADLnBw/ZKOHErq8yhK7keJ6SCB9ACyM5LRQda5hqLAvqFEG8OIz6VjdzM
-         L/NPRA2fDaRklkUHhgNh/ltB7r43L2Xq5D0j0Vxahma9VVhxD5jwM94bcHWeY7vyxx8l
-         qI7xanKB2tPmkV5Qh4UiKQWMaqDw7XuWvPu6o9Kw+1zClXIhNHdqGTEc3bUZv7+6lVIk
-         MFKvz9TM5HrBa0fdW48xFmLDMBxQTOIXrYl88la7x9Vngl9DeF+z/4wXI69HFEcmE5/B
-         R+4sn6eqJ6E6fd32tN7YUxQk6XlxtN9LqcmYrqM2eiBSzfEX3qlGYEbSL3ml18AJj4Xx
-         +hRg==
-X-Gm-Message-State: AOJu0Yyhe7OkXfJLnPAfmwwDWY/uSoHL0hgeD1LBLJzTGnKA1p54d2cK
-	aYjJlrslpWNXUcRdcgicXUed8sCi07UpGKQJFtfVOup5WD+iGfu4UgBb
-X-Gm-Gg: ASbGncs71f0fE4B+lLNRpeiZvCd0MV5Gy3p1BumRtJFmHpjhs33JchxER6t83pmCgBU
-	6FsOVmtjmgw1s4F9xm9UTuQAp0wSlmOiQytpJYObhXvya9KyEDCNYAh50Zm6lp0kiHRTv7+7zt8
-	/QN/Y7D4YVGp4HR22j6JsBzvyhDb+10zi93GWq1KqKADMG2esis7H8iuHz+wy6BlrxAu9rHhBat
-	cQbB4lBNyCt00WNnYeD0QWavCMKKbRtEsX4RvQyVNZTyfLjZzeb2j8/puNIzll6DzlZylkLo/nl
-	3iDLv0cGxgAHH47XBbFOqWPPn4DJ/kQlqPvlQlC7WJZWX1i78fnTNUodB+SlivakjyexfN855Em
-	tbDRQWznK9TR9NQ==
-X-Google-Smtp-Source: AGHT+IGNxiRDe4Ud/5BHEt0ATTLDAtxMlUa3cyZcjVWxv+ZVbNDDtpY239lMj23catSMWAOUQW65KQ==
-X-Received: by 2002:a17:902:f690:b0:234:c8f6:1afb with SMTP id d9443c01a7336-23527bcfd20mr221813195ad.0.1748883026573;
-        Mon, 02 Jun 2025 09:50:26 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1748883818; x=1749488618;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=fll3hWF4pol/LM2L7XdwKp07jcPy9V6QGOSoLodOnKA=;
+        b=qbdAyuA12efeJ8XQK/3EslNv7fhJE1D4Z6TcihJYwfvmam0PfaxUrCANYpdLwYUbTk
+         CFuF8D4HcpliVQfm0SFC9awYe5LPeU0in9qf6w8zoqYIYvgqJYerp2qk8QudV7fU5CX1
+         4YvXEdhNw0OPCb+LyVJU7npPe5XWxTSry3nINNMpCesTr49GRqvJImTEpK053arjl0za
+         GgAXMDDym3ShAjXQEAj6+ddARGLVVR9sfgmgfbeKEGx77DIQu1QmVoUGNyXzba0x6VAF
+         u5a0IkMvhxXZyrYd/XwAKtoecZMOpOIcur4fRIsN9JbEhTvtYsGYzm7v0bCDdhtmQGNG
+         KyuA==
+X-Gm-Message-State: AOJu0YyEiFZjBiWMeBzfi1EROLBowpd8N6hVG4B2Cv9kQF4E2IFDkUee
+	cQGHffl3bl+44koChNrRrNrjydqvfdRIYxNbGN7+4RVHohZTIu6kyy+B
+X-Gm-Gg: ASbGncvdqlESdMYTajy1R091eeYEwGmC/aI5y68hZBcl8v0MNVFeT9ALDlmfFvx0Sqs
+	qtjBCQ5jXGAHYCqhJ61nxRwXuQisX1t5Pu2Kq+iGBWBMqb9gTTk4xEuEWzrwKzsa3osPVf3UEQT
+	9IafpOE1NsQs7xMfVGgA7qJNYzaNaIm3fAE5oEWhFQpAS4ZstiYYZCL9799Ny9b4nhuG6aZXEVF
+	0kA2fZNhcu6vK5jJAF7x32PNafkSj+My0c3OQN/fZ1x//zGzRpe1lcwK6Hu35dtKVoCE7r31zgs
+	jQdIS/tAMlmGckX+YI3cUFx34ZI+2B6scLeP0NbSdN90DYXrarGes21iPtQ5KHhhg7n9e1K0s1Z
+	IYFw=
+X-Google-Smtp-Source: AGHT+IHFSNHnyO+CDl/RuvZSWW0apRaWa2HraPjvF6RPXFQovk1bTYvNCry87zOPF++XkqEjDNbdxQ==
+X-Received: by 2002:a05:6a21:9998:b0:215:e9aa:7fff with SMTP id adf61e73a8af0-21ae00b198cmr22928496637.31.1748883818354;
+        Mon, 02 Jun 2025 10:03:38 -0700 (PDT)
 Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-23506cd3438sm72742015ad.136.2025.06.02.09.50.24
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-747afeb2bc1sm7874247b3a.47.2025.06.02.10.03.36
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 02 Jun 2025 09:50:26 -0700 (PDT)
-Message-ID: <52e321d9-2695-4677-b8bf-4be99fc0d681@gmail.com>
-Date: Mon, 2 Jun 2025 09:50:24 -0700
+        Mon, 02 Jun 2025 10:03:37 -0700 (PDT)
+Message-ID: <50d6ee44-f7c7-4fe7-848d-dc31cddc19f9@gmail.com>
+Date: Mon, 2 Jun 2025 10:03:35 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -67,8 +67,7 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5.10 000/270] 5.10.238-rc1 review
-From: Florian Fainelli <f.fainelli@gmail.com>
+Subject: Re: [PATCH 5.15 000/207] 5.15.185-rc1 review
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
 Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  torvalds@linux-foundation.org, akpm@linux-foundation.org,
@@ -76,9 +75,9 @@ Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
  sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
  conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
-References: <20250602134307.195171844@linuxfoundation.org>
- <4c608184-5a64-4814-a70a-d2395662d437@gmail.com>
+References: <20250602134258.769974467@linuxfoundation.org>
 Content-Language: en-US
+From: Florian Fainelli <f.fainelli@gmail.com>
 Autocrypt: addr=f.fainelli@gmail.com; keydata=
  xsDiBEjPuBIRBACW9MxSJU9fvEOCTnRNqG/13rAGsj+vJqontvoDSNxRgmafP8d3nesnqPyR
  xGlkaOSDuu09rxuW+69Y2f1TzjFuGpBk4ysWOR85O2Nx8AJ6fYGCoeTbovrNlGT1M9obSFGQ
@@ -112,110 +111,32 @@ Autocrypt: addr=f.fainelli@gmail.com; keydata=
  y5arMQorqTFWlEOgRA8OP47L9knl9i4xuR0euV6DChDrguup2aJVU8JPBBgRAgAPAhsMBQJn
  uAtCBQkxtc7uAAoJEGFXmRW1Y3YOJHUAoLuIJDcJtl7ZksBQa+n2T7T5zXoZAJ9EnFa2JZh7
  WlfRzlpjIPmdjgoicA==
-In-Reply-To: <4c608184-5a64-4814-a70a-d2395662d437@gmail.com>
+In-Reply-To: <20250602134258.769974467@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On 6/2/25 09:49, Florian Fainelli wrote:
-> On 6/2/25 06:44, Greg Kroah-Hartman wrote:
->> This is the start of the stable review cycle for the 5.10.238 release.
->> There are 270 patches in this series, all will be posted as a response
->> to this one.  If anyone has any issues with these being applied, please
->> let me know.
->>
->> Responses should be made by Wed, 04 Jun 2025 13:42:20 +0000.
->> Anything received after that time might be too late.
->>
->> The whole patch series can be found in one patch at:
->>     https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/ 
->> patch-5.10.238-rc1.gz
->> or in the git tree and branch at:
->>     git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable- 
->> rc.git linux-5.10.y
->> and the diffstat can be found below.
->>
->> thanks,
->>
->> greg k-h
+On 6/2/25 06:46, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.15.185 release.
+> There are 207 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-> BMIPS_GENERIC:
+> Responses should be made by Wed, 04 Jun 2025 13:42:20 +0000.
+> Anything received after that time might be too late.
 > 
-> Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.185-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> and the diffstat can be found below.
 > 
-> Similar build warning as reported for 5.4, due to the same commit:
+> thanks,
 > 
-> commit b47e6abc7dc5772ecb45383d9956f9fcb7fdf33c
-> Author: Jeongjun Park <aha310510@gmail.com>
-> Date:   Tue Apr 22 20:30:25 2025 +0900
-> 
->      tracing: Fix oob write in trace_seq_to_buffer()
-> 
->      commit f5178c41bb43444a6008150fe6094497135d07cb upstream.
-> 
-> In file included from ./include/linux/kernel.h:15,
->                   from ./include/asm-generic/bug.h:20,
->                   from ./arch/arm/include/asm/bug.h:60,
->                   from ./include/linux/bug.h:5,
->                   from ./include/linux/mmdebug.h:5,
->                   from ./include/linux/mm.h:9,
->                   from ./include/linux/ring_buffer.h:5,
->                   from kernel/trace/trace.c:15:
-> kernel/trace/trace.c: In function 'tracing_splice_read_pipe':
-> ./include/linux/minmax.h:20:35: warning: comparison of distinct pointer 
-> types lacks a cast
->     20 |         (!!(sizeof((typeof(x) *)1 == (typeof(y) *)1)))
->        |                                   ^~
-> ./include/linux/minmax.h:26:18: note: in expansion of macro '__typecheck'
->     26 |                 (__typecheck(x, y) && __no_side_effects(x, y))
->        |                  ^~~~~~~~~~~
-> ./include/linux/minmax.h:36:31: note: in expansion of macro '__safe_cmp'
->     36 |         __builtin_choose_expr(__safe_cmp(x, y), \
->        |                               ^~~~~~~~~~
-> ./include/linux/minmax.h:45:25: note: in expansion of macro '__careful_cmp'
->     45 | #define min(x, y)       __careful_cmp(x, y, <)
->        |                         ^~~~~~~~~~~~~
-> kernel/trace/trace.c:6688:43: note: in expansion of macro 'min'
->   6688 | min((size_t)trace_seq_used(&iter->seq),
->        |                                           ^~~
-> 
+> greg k-h
 
-And also this one:
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
+BMIPS_GENERIC:
 
-commit e0a3a33cecd3ce2fde1de4ff0e223dc1db484a8d
-Author: Eric Dumazet <edumazet@google.com>
-Date:   Wed Mar 5 13:05:50 2025 +0000
-
-     tcp: bring back NUMA dispersion in inet_ehash_locks_alloc()
-
-     [ Upstream commit f8ece40786c9342249aa0a1b55e148ee23b2a746 ]
-
-
-on ARM64:
-
-In file included from ./include/linux/kernel.h:15,
-                  from ./include/linux/list.h:9,
-                  from ./include/linux/module.h:12,
-                  from net/ipv4/inet_hashtables.c:12:
-net/ipv4/inet_hashtables.c: In function 'inet_ehash_locks_alloc':
-./include/linux/minmax.h:20:35: warning: comparison of distinct pointer 
-types lacks a cast
-    20 |         (!!(sizeof((typeof(x) *)1 == (typeof(y) *)1)))
-       |                                   ^~
-./include/linux/minmax.h:26:18: note: in expansion of macro '__typecheck'
-    26 |                 (__typecheck(x, y) && __no_side_effects(x, y))
-       |                  ^~~~~~~~~~~
-./include/linux/minmax.h:36:31: note: in expansion of macro '__safe_cmp'
-    36 |         __builtin_choose_expr(__safe_cmp(x, y), \
-       |                               ^~~~~~~~~~
-./include/linux/minmax.h:52:25: note: in expansion of macro '__careful_cmp'
-    52 | #define max(x, y)       __careful_cmp(x, y, >)
-       |                         ^~~~~~~~~~~~~
-net/ipv4/inet_hashtables.c:946:19: note: in expansion of macro 'max'
-   946 |         nblocks = max(nblocks, num_online_nodes() * PAGE_SIZE / 
-locksz);
-       |                   ^~~
-
-
+Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
 -- 
 Florian
