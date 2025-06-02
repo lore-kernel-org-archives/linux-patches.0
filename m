@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43093223DDF;
-	Mon,  2 Jun 2025 14:22:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99007221D92;
+	Mon,  2 Jun 2025 14:22:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748874154; cv=none; b=RvqmDLxmz+hVCK4GJI+1ASynOrRLThpb08fD2g9j+YjTEp0IFG+rrWoM6ZCTxomx0pmjaV8JiCNPn+fstxTYyOFWiiHyxaaNLqBCMYC904soySH9PN+th6ViziBKslEgez+jh8bxLPAyYAlcW3KAiQoVfPCcnuOgSfinMOs7glo=
+	t=1748874157; cv=none; b=f9hEPnj9cXf8nP93tJjOzVop+Ip5NJzCDzh+sIFVzZz7HzOAyYVGQCiIjmTZ1mzrY98N7x762dfg9JPcnAVCl0XPJS+SJsQSSD2tZ/04i0rEtQ1If1q8eSQyiaebqABbsjV5ihamhRmCJCtTEaB7WZZBRCm42aIQz1simmW0ZLY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748874154; c=relaxed/simple;
-	bh=WRpdCB97+5nLzpW415M0DMqkXUZcvjZ7MtvdtxagAyg=;
+	s=arc-20240116; t=1748874157; c=relaxed/simple;
+	bh=G/pfVWXN0n5gH6NOSqfr+mXc26ga0G6m1JVIStRnGbg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tLJUOGZ+7NBj9Xt+63LLNScqfHNotW7jrbCXQdqjJGos6MOql08VpLUmEAMUylk+lj5wmAtXB7inI0BnB2Mf0V32gp5y6/p8fezUank25R99mMRYGK0d6FD7N4T6MkwWeQo/CWdaVCmzM6ZRVZR+LwoNNHH4xbmEQIVIUNxzm/E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RnxM+FI9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RugESR9B/d6cqHaExkXHJnOrVNH0bYQf7qJhUhLKs+ZwbdnbOmXiDOU5qkb+cHaeqlnd+WCR+4ZZ2y/S1ZYcJEuOQ14bFjI6GByOehd/PMVsxkG5OvnbaN14typTIlpU6h+zK25WpBbvR5nH+bqFtSKKN/Adbrhjo1en+xLs1jc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NmhTQ5N/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RnxM+FI9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5935C4CEEB;
-	Mon,  2 Jun 2025 14:22:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NmhTQ5N/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5275C4CEEB;
+	Mon,  2 Jun 2025 14:22:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748874154;
-	bh=WRpdCB97+5nLzpW415M0DMqkXUZcvjZ7MtvdtxagAyg=;
+	s=korg; t=1748874157;
+	bh=G/pfVWXN0n5gH6NOSqfr+mXc26ga0G6m1JVIStRnGbg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RnxM+FI9+PcLxNn6uScnzUG+ZwaIMUjPkOyYq8OC/E146lRWt6elMJo0a7uMSrKE2
-	 u7gYXmVhF/6l0cbeXYGTCN+s1XU1uIGUNL5Owi47uw6sC5T4BMueG7I8kfRjDSLr4k
-	 vcLGyi6GfHzGA/Jz5SjRzmaqfb6aAGaeJG4U12DA=
+	b=NmhTQ5N/1J1uKVXT5/Mbi+KOiU4oO5aDbCrXU4NqwW9NW9NMmo3bV/bo/SZvxiG4U
+	 KIKyF/YNUAw0K3Fz/RaQ+rgzOEkDUlswuLCmOkZBA3KVnrlBreWW2dhXTkq80VvJnS
+	 mjdXGAeFKKGPLO40Q3dTS2QcxK9qw15uArrOG4Sc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Matti=20Lehtim=C3=A4ki?= <matti.lehtimaki@gmail.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Luca Weiss <luca.weiss@fairphone.com>
-Subject: [PATCH 6.6 335/444] remoteproc: qcom_wcnss: Fix on platforms without fallback regulators
-Date: Mon,  2 Jun 2025 15:46:39 +0200
-Message-ID: <20250602134354.526383757@linuxfoundation.org>
+	Zhang Rui <rui.zhang@intel.com>,
+	zhang ning <zhangn1985@outlook.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.6 369/444] thermal: intel: x86_pkg_temp_thermal: Fix bogus trip temperature
+Date: Mon,  2 Jun 2025 15:47:13 +0200
+Message-ID: <20250602134355.896454348@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -46,49 +45,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Matti Lehtimäki <matti.lehtimaki@gmail.com>
+From: Zhang Rui <rui.zhang@intel.com>
 
-[ Upstream commit 4ca45af0a56d00b86285d6fdd720dca3215059a7 ]
+commit cf948c8e274e8b406e846cdf6cc48fe47f98cf57 upstream.
 
-Recent change to handle platforms with only single power domain broke
-pronto-v3 which requires power domains and doesn't have fallback voltage
-regulators in case power domains are missing. Add a check to verify
-the number of fallback voltage regulators before using the code which
-handles single power domain situation.
+The tj_max value obtained from the Intel TCC library are in Celsius,
+whereas the thermal subsystem operates in milli-Celsius.
 
-Fixes: 65991ea8a6d1 ("remoteproc: qcom_wcnss: Handle platforms with only single power domain")
-Signed-off-by: Matti Lehtimäki <matti.lehtimaki@gmail.com>
-Tested-by: Luca Weiss <luca.weiss@fairphone.com> # sdm632-fairphone-fp3
-Link: https://lore.kernel.org/r/20250511234026.94735-1-matti.lehtimaki@gmail.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This discrepancy leads to incorrect trip temperature calculations.
+
+Fix bogus trip temperature by converting tj_max to milli-Celsius Unit.
+
+Fixes: 8ef0ca4a177d ("Merge back other thermal control material for 6.3.")
+Signed-off-by: Zhang Rui <rui.zhang@intel.com>
+Reported-by: zhang ning <zhangn1985@outlook.com>
+Closes: https://lore.kernel.org/all/TY2PR01MB3786EF0FE24353026293F5ACCD97A@TY2PR01MB3786.jpnprd01.prod.outlook.com/
+Tested-by: zhang ning <zhangn1985@outlook.com>
+Cc: 6.3+ <stable@vger.kernel.org> # 6.3+
+Link: https://patch.msgid.link/20250519070901.1031233-1-rui.zhang@intel.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/remoteproc/qcom_wcnss.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/thermal/intel/x86_pkg_temp_thermal.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/remoteproc/qcom_wcnss.c b/drivers/remoteproc/qcom_wcnss.c
-index 153260b4e2eb4..37174b544113f 100644
---- a/drivers/remoteproc/qcom_wcnss.c
-+++ b/drivers/remoteproc/qcom_wcnss.c
-@@ -456,7 +456,8 @@ static int wcnss_init_regulators(struct qcom_wcnss *wcnss,
- 	if (wcnss->num_pds) {
- 		info += wcnss->num_pds;
- 		/* Handle single power domain case */
--		num_vregs += num_pd_vregs - wcnss->num_pds;
-+		if (wcnss->num_pds < num_pd_vregs)
-+			num_vregs += num_pd_vregs - wcnss->num_pds;
- 	} else {
- 		num_vregs += num_pd_vregs;
- 	}
--- 
-2.39.5
-
+--- a/drivers/thermal/intel/x86_pkg_temp_thermal.c
++++ b/drivers/thermal/intel/x86_pkg_temp_thermal.c
+@@ -331,6 +331,7 @@ static int pkg_temp_thermal_device_add(u
+ 	tj_max = intel_tcc_get_tjmax(cpu);
+ 	if (tj_max < 0)
+ 		return tj_max;
++	tj_max *= 1000;
+ 
+ 	zonedev = kzalloc(sizeof(*zonedev), GFP_KERNEL);
+ 	if (!zonedev)
 
 
