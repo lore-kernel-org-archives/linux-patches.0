@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAF97221F3E;
-	Mon,  2 Jun 2025 14:42:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2113221D92;
+	Mon,  2 Jun 2025 14:42:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748875336; cv=none; b=uKbuRLQD4CoSdo9PvdM9/0VE9vCqioU2QZST7GH8B2cwRxCO3TlhyGYHOpDoFNbNmm4T9cKgvkVxQ1MctdtIvLeZMOmG0Iq13onmjPz+YGXpGFiHs3XDs0Sl6Rg/zrw8RG6SKWaYFI9SGGHUOHkn+t7wBdZTA7AcRJaW5+3wghE=
+	t=1748875339; cv=none; b=JOlQuuNO8KyzW+B17rYHIPZ4FjoUkizSpmXR+O6i37m4E6MoFuYzM3AgupEactkaJx+KXjGgg/aHtO4aiucGvRmpXeJ2rR4sCVvaMQhX0yxCv70/2yLGA4aLbUzGESECj11Y0R69F5RRmxLXTWNJFLC+xBJqq0YBJodbHd0kO9w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748875336; c=relaxed/simple;
-	bh=lZTwK7Gs7NmzzHGA1xN8NLtgl2hvZtnpyRT0tu1apcQ=;
+	s=arc-20240116; t=1748875339; c=relaxed/simple;
+	bh=uwNh3ww4EwZZJta/nZf+iwbi0N44twmsjJIcOw1H3YU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eoN/+sCNL4HCRkQcDwoSkl9T4ViGS+sOE32ozCKPkKzdq+SxQPGO9/SSakSFL1HRK7Y2MhDOkvB66McU/hMCoTLWDyq7/cfnhRVQGqIieXkARSpUNgToW+FzA+LkGi7UO+ucMWa6F9rPykwZM/QHmUSDd324CU9gAyzmoJvE3bg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QBkJSBdV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FTiPuhWvRYo4niyvcsO1lR9IQXGnUMV4Q3H7TJlqVOnwDqbhIjPLfYjtXZPwPaX7975kwxZKFwNlFuzR8GBJrgIDMaacvRjrQqgEra/c1hHUdXU8gHZTAARSDeArZpLC0oRMOPOUVgprGuT2dEfmlieNhgOyoivNAWbvd/S/5AE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cOX4ENAw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QBkJSBdV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B604C4CEEB;
-	Mon,  2 Jun 2025 14:42:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cOX4ENAw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44C5FC4CEEB;
+	Mon,  2 Jun 2025 14:42:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748875336;
-	bh=lZTwK7Gs7NmzzHGA1xN8NLtgl2hvZtnpyRT0tu1apcQ=;
+	s=korg; t=1748875339;
+	bh=uwNh3ww4EwZZJta/nZf+iwbi0N44twmsjJIcOw1H3YU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QBkJSBdVHyekMmEEIYIO4bilJ+LYhbKm66Uf3CnB+q/bRKMYQllf/SZxOpsz4ERHI
-	 0wAlUOEOFo7YWFDnZXbJVmIDd3/Fwb/NsunrxZJ8CwPUjwFHRz4cksGg+1FHIZnMZL
-	 BPpKFfOT4Cw59PIYMHJ73cx5kNTWFVQTpG1vWE2s=
+	b=cOX4ENAwh11B8PYRtovXwW/usZfi/WQBJ766ZjgbUMti4gnSaEgHGITWxyLDQuu4K
+	 5GI6NhN6gxg61upmnQviax7GdjoXAa/hM8dOnY0EpUKcOUdt6cj/H+Hmqil4HOCASC
+	 mtFxqqvnF/oRLInW1XTVeRl1hjCJaHdcst4ev9OI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vaishnav Achath <vaishnav.a@ti.com>,
-	Peter Ujfalusi <peter.ujfalusi@gmail.com>,
-	Udit Kumar <u-kumar1@ti.com>,
-	Yemike Abhilash Chandra <y-abhilashchandra@ti.com>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 5.10 103/270] dmaengine: ti: k3-udma: Use cap_mask directly from dma_device structure instead of a local copy
-Date: Mon,  2 Jun 2025 15:46:28 +0200
-Message-ID: <20250602134311.442978267@linuxfoundation.org>
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Thomas Gleixner <tglx@linutronix.de>
+Subject: [PATCH 5.10 104/270] clocksource/i8253: Use raw_spinlock_irqsave() in clockevent_i8253_disable()
+Date: Mon,  2 Jun 2025 15:46:29 +0200
+Message-ID: <20250602134311.487265686@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134307.195171844@linuxfoundation.org>
 References: <20250602134307.195171844@linuxfoundation.org>
@@ -53,49 +50,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yemike Abhilash Chandra <y-abhilashchandra@ti.com>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-commit 8ca9590c39b69b55a8de63d2b21b0d44f523b43a upstream.
+commit 94cff94634e506a4a44684bee1875d2dbf782722 upstream.
 
-Currently, a local dma_cap_mask_t variable is used to store device
-cap_mask within udma_of_xlate(). However, the DMA_PRIVATE flag in
-the device cap_mask can get cleared when the last channel is released.
-This can happen right after storing the cap_mask locally in
-udma_of_xlate(), and subsequent dma_request_channel() can fail due to
-mismatch in the cap_mask. Fix this by removing the local dma_cap_mask_t
-variable and directly using the one from the dma_device structure.
+On x86 during boot, clockevent_i8253_disable() can be invoked via
+x86_late_time_init -> hpet_time_init() -> pit_timer_init() which happens
+with enabled interrupts.
 
-Fixes: 25dcb5dd7b7c ("dmaengine: ti: New driver for K3 UDMA")
+If some of the old i8253 hardware is actually used then lockdep will notice
+that i8253_lock is used in hard interrupt context. This causes lockdep to
+complain because it observed the lock being acquired with interrupts
+enabled and in hard interrupt context.
+
+Make clockevent_i8253_disable() acquire the lock with
+raw_spinlock_irqsave() to cure this.
+
+[ tglx: Massage change log and use guard() ]
+
+Fixes: c8c4076723dac ("x86/timer: Skip PIT initialization on modern chipsets")
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
 Cc: stable@vger.kernel.org
-Signed-off-by: Vaishnav Achath <vaishnav.a@ti.com>
-Acked-by: Peter Ujfalusi <peter.ujfalusi@gmail.com>
-Reviewed-by: Udit Kumar <u-kumar1@ti.com>
-Signed-off-by: Yemike Abhilash Chandra <y-abhilashchandra@ti.com>
-Link: https://lore.kernel.org/r/20250417075521.623651-1-y-abhilashchandra@ti.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Link: https://lore.kernel.org/all/20250404133116.p-XRWJXf@linutronix.de
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/ti/k3-udma.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/clocksource/i8253.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/dma/ti/k3-udma.c
-+++ b/drivers/dma/ti/k3-udma.c
-@@ -3082,7 +3082,6 @@ static struct dma_chan *udma_of_xlate(st
- 				      struct of_dma *ofdma)
+--- a/drivers/clocksource/i8253.c
++++ b/drivers/clocksource/i8253.c
+@@ -103,7 +103,9 @@ int __init clocksource_i8253_init(void)
+ #ifdef CONFIG_CLKEVT_I8253
+ void clockevent_i8253_disable(void)
  {
- 	struct udma_dev *ud = ofdma->of_dma_data;
--	dma_cap_mask_t mask = ud->ddev.cap_mask;
- 	struct udma_filter_param filter_param;
- 	struct dma_chan *chan;
+-	raw_spin_lock(&i8253_lock);
++	unsigned long flags;
++
++	raw_spin_lock_irqsave(&i8253_lock, flags);
  
-@@ -3095,7 +3094,7 @@ static struct dma_chan *udma_of_xlate(st
- 	else
- 		filter_param.atype = 0;
+ 	/*
+ 	 * Writing the MODE register should stop the counter, according to
+@@ -133,7 +135,7 @@ void clockevent_i8253_disable(void)
  
--	chan = __dma_request_channel(&mask, udma_dma_filter_fn, &filter_param,
-+	chan = __dma_request_channel(&ud->ddev.cap_mask, udma_dma_filter_fn, &filter_param,
- 				     ofdma->of_node);
- 	if (!chan) {
- 		dev_err(ud->dev, "get channel fail in %s.\n", __func__);
+ 	outb_p(0x30, PIT_MODE);
+ 
+-	raw_spin_unlock(&i8253_lock);
++	raw_spin_unlock_irqrestore(&i8253_lock, flags);
+ }
+ 
+ static int pit_shutdown(struct clock_event_device *evt)
 
 
