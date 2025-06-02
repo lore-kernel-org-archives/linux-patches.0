@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E27821516E;
-	Mon,  2 Jun 2025 14:44:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37BC31E3772;
+	Mon,  2 Jun 2025 14:44:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748875470; cv=none; b=ZSr8pznP3pbdRDmDoLXzK+LAGoG/ppU4yYZO7qG8hqP8ydAsCUq9w3+HYbku5BaslKjVr0BB9bmqR1DQ9RXpkownjnO6OzPXSa7FUXYcV17ZQa/X6PJbDrx6CsGvQ9i7qTsxqkMiDxVxslHNlksHebE+Ha5yDAnTJCFdlmRgLU4=
+	t=1748875474; cv=none; b=iDFvO08tEP9Ni7Dr0SX+xcA4lA2ONOK+vXn3SAYxEm4KdSiw1TTEA0oeln09o/96zuOFJgax6J0LTiLWpdLrrpsoPhSomFAicjH02PCY7nM1XBi2f8cUd+bflmhW81FMRmrdWTnsPsf/BIvt8GRPGRMaB+LFw1xlwTTSx+KGN1I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748875470; c=relaxed/simple;
-	bh=c+cYTeMDis26MORFk2tcc5264TUUgLRXR2KSL0pp4q4=;
+	s=arc-20240116; t=1748875474; c=relaxed/simple;
+	bh=+PDqGsAoEVEP5sZbIm9iJwO4tTLnmRbxBPa5rS5UMsU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oRr+GNUwxfJR+jVx/II7ASTB/f3Is+V7RPgAnbW74JeXvLBrYBvPXxj6VrurBlYjchr+WYp/yEiOpH6J59zmD/Ut9EpeeEXdVGg1iE8MCrxvu+j2hV5mEuXWLleSWT3pqC5wHEDzhy1W4UVuFSPzu1YstzomaXahvWbFKbRlty4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zrSPql8J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bwnKVD5FyUwJqmWk6iw86U7WVLw64LyxXrcnzI5Ic3vkG1yDwtLHYSMjVpLw6Htf/tzRWzjdwmOQ1SP6k+3jeolcLLMCsO3f7E9lB22Fvr579ebqEzTV56sJnRXVYsJ+GfL1Fb577k9W3WE5jaqbC9kQigoW/rtpBRBKrTk8N0w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oRGIQHM6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zrSPql8J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BB3FC4CEEB;
-	Mon,  2 Jun 2025 14:44:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oRGIQHM6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 369A8C4CEEB;
+	Mon,  2 Jun 2025 14:44:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748875470;
-	bh=c+cYTeMDis26MORFk2tcc5264TUUgLRXR2KSL0pp4q4=;
+	s=korg; t=1748875473;
+	bh=+PDqGsAoEVEP5sZbIm9iJwO4tTLnmRbxBPa5rS5UMsU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zrSPql8J+MajeQW0wQ1bWtb/MMIqLPJ9XM3FqAJRcTJCv31og2GA50KECtaGbGrz7
-	 jWYiXJwcKEwAVsijV/NFntfxAPG9FJmZU4xPee4pt8Q7QslROiP3Q1EcI0Wz3vqd5v
-	 DvG/iFsCOPxBVsLwFGc0Dg2JL1ydhXNSTFIMLa3g=
+	b=oRGIQHM6I8sWeEIvvBd7qys450mrRtDeGXD0A7sd+2qOJHQGvv+5CHvkeptgNkQTS
+	 14l4NQpbpO4MzHMckawK5dBSlKLz0Y6fweD4yeWdnYna7MZ52UcR3hYYAvY9VleBAz
+	 eJvoqQZFkmKDpcwErwXrGln+eWu/lSsZzFFQjeyU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Benjamin Coddington <bcodding@redhat.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 127/270] SUNRPC: rpcbind should never reset the port to the value 0
-Date: Mon,  2 Jun 2025 15:46:52 +0200
-Message-ID: <20250602134312.419448172@linuxfoundation.org>
+Subject: [PATCH 5.10 145/270] rtc: rv3032: fix EERD location
+Date: Mon,  2 Jun 2025 15:47:10 +0200
+Message-ID: <20250602134313.155889539@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134307.195171844@linuxfoundation.org>
 References: <20250602134307.195171844@linuxfoundation.org>
@@ -52,38 +50,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Alexandre Belloni <alexandre.belloni@bootlin.com>
 
-[ Upstream commit 214c13e380ad7636631279f426387f9c4e3c14d9 ]
+[ Upstream commit b0f9cb4a0706b0356e84d67e48500b77b343debe ]
 
-If we already had a valid port number for the RPC service, then we
-should not allow the rpcbind client to set it to the invalid value '0'.
+EERD is bit 2 in CTRL1
 
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Reviewed-by: Benjamin Coddington <bcodding@redhat.com>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Link: https://lore.kernel.org/r/20250306214243.1167692-1-alexandre.belloni@bootlin.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/rpcb_clnt.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/rtc/rtc-rv3032.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/sunrpc/rpcb_clnt.c b/net/sunrpc/rpcb_clnt.c
-index 8fad45320e1b9..f1bb4fd2a2707 100644
---- a/net/sunrpc/rpcb_clnt.c
-+++ b/net/sunrpc/rpcb_clnt.c
-@@ -794,9 +794,10 @@ static void rpcb_getport_done(struct rpc_task *child, void *data)
- 	}
+diff --git a/drivers/rtc/rtc-rv3032.c b/drivers/rtc/rtc-rv3032.c
+index 9e6166864bd73..acae15c34d128 100644
+--- a/drivers/rtc/rtc-rv3032.c
++++ b/drivers/rtc/rtc-rv3032.c
+@@ -69,7 +69,7 @@
+ #define RV3032_CLKOUT2_FD_MSK		GENMASK(6, 5)
+ #define RV3032_CLKOUT2_OS		BIT(7)
  
- 	trace_rpcb_setport(child, map->r_status, map->r_port);
--	xprt->ops->set_port(xprt, map->r_port);
--	if (map->r_port)
-+	if (map->r_port) {
-+		xprt->ops->set_port(xprt, map->r_port);
- 		xprt_set_bound(xprt);
-+	}
- }
+-#define RV3032_CTRL1_EERD		BIT(3)
++#define RV3032_CTRL1_EERD		BIT(2)
+ #define RV3032_CTRL1_WADA		BIT(5)
  
- /*
+ #define RV3032_CTRL2_STOP		BIT(0)
 -- 
 2.39.5
 
