@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77E7221C177;
-	Mon,  2 Jun 2025 14:14:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D2CD221FC7;
+	Mon,  2 Jun 2025 14:14:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748873642; cv=none; b=Lcr/pA0LTvWmtstSwnp4Ir1st8kGexiqacwvCbHTM+Xpi2ZbkFBkycb20tKfh5IzrezuPTa1ceERs/1Ra3sSqQNcBvR1zW1PPetSl5SLvDwJamN9mthi5TMM74dJQD0H+T2X9X02LpboQNZeOwSphNsBhg2fhEeDxzg6rhPQGLY=
+	t=1748873645; cv=none; b=gekZ+u4DBa6Kz6AXPgfW2APc3vj5JZ7uxJ17/kZKqmqoLOvT7a41o8MzFvUq5Rpv+mVggPRepCwMrBMT73oSQVPyBMkOb+RESQF3P5yAO7nSH9CieoQ6lDydKZ3+3HO6n5OUlWYLQoBe5QzQYKdt4Sn6r7ffMfKxAbq52ra5ojU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748873642; c=relaxed/simple;
-	bh=xjZ8dFPf9veZOSjrE/RMnrHT4O6B88CnMYw5qRYKOhg=;
+	s=arc-20240116; t=1748873645; c=relaxed/simple;
+	bh=u5MiJCPfjADrMXgYA+yI7GuxO+1kwL0c/Ww75mU8408=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OO3goMh3cRlodHLYsDYlRkMUhUDAXD5Idgk9wByZNj2pD8PPNfcaTno9gIZXnZ/tQSRvMa1U1hvQpLZBX7HK5aSKI6J1mMazoU+CraCvDXut64Dx3T8L35gy25SoE1fOmJ6evcToVxDTcqRjlodTz6Ytjjy12NLvt0gi0iLNY1o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jbW2gkDn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Vb5vVwLjxeeoqwM+0U83TEHpHnQfTh8/fe7wrCN+AXecxAC1rnfDocvRNXa4w7dmi9Ii8QhMka/jHb2jUijbfkbp0H48y22mOgOma1NgFtXaNJ6NyQOfWEBD1dgA8sV/2MMexCO5Eg1vbm7VHAgTkSRUxelNqyIqotZ0AI7K40I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rT+8+oV8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jbW2gkDn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4746C4CEEB;
-	Mon,  2 Jun 2025 14:14:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rT+8+oV8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C7C5C4CEEB;
+	Mon,  2 Jun 2025 14:14:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748873642;
-	bh=xjZ8dFPf9veZOSjrE/RMnrHT4O6B88CnMYw5qRYKOhg=;
+	s=korg; t=1748873645;
+	bh=u5MiJCPfjADrMXgYA+yI7GuxO+1kwL0c/Ww75mU8408=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jbW2gkDnVq8Xa7sAPCN4jXsYMjCutzTZgpbeFH+CeBg6veWoOELLzQ+g/Xq2lQTaO
-	 XDDLv0n117uK5iX7ojEFKi6vbXsSvcYu8fCpusa2j+8Je8ceHGYlLCrkxiZj+7jEgB
-	 yA3vM6FqEtb7dOQ4g8v40OsVJbFr35SDc7vRq460=
+	b=rT+8+oV8NEA58zm8LgIVZE5ql2aU7KttCqpLzZ0lXIJXMxMnjQpo1KD0PAETsUO60
+	 5geBnrLXofdLBVsc6zsflj+IIRoqWu6EsBR9seS9xxUIEBlVWUTwDMGdHeeUCFlcsq
+	 M2TwdUyNJMVbq0rckvq3S4eEaZUaw2cgNIrtekbQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Woudstra <ericwouds@gmail.com>,
+	Arnd Bergmann <arnd@arndb.de>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 176/444] net: ethernet: mtk_ppe_offload: Allow QinQ, double ETH_P_8021Q only
-Date: Mon,  2 Jun 2025 15:44:00 +0200
-Message-ID: <20250602134348.037202848@linuxfoundation.org>
+Subject: [PATCH 6.6 177/444] net: xgene-v2: remove incorrect ACPI_PTR annotation
+Date: Mon,  2 Jun 2025 15:44:01 +0200
+Message-ID: <20250602134348.076753054@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -51,86 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Woudstra <ericwouds@gmail.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 7fe0353606d77a32c4c7f2814833dd1c043ebdd2 ]
+[ Upstream commit 01358e8fe922f716c05d7864ac2213b2440026e7 ]
 
-mtk_foe_entry_set_vlan() in mtk_ppe.c already supports double vlan
-tagging, but mtk_flow_offload_replace() in mtk_ppe_offload.c only allows
-for 1 vlan tag, optionally in combination with pppoe and dsa tags.
+Building with W=1 shows a warning about xge_acpi_match being unused when
+CONFIG_ACPI is disabled:
 
-However, mtk_foe_entry_set_vlan() only allows for setting the vlan id.
-The protocol cannot be set, it is always ETH_P_8021Q, for inner and outer
-tag. This patch adds QinQ support to mtk_flow_offload_replace(), only in
-the case that both inner and outer tags are ETH_P_8021Q.
+drivers/net/ethernet/apm/xgene-v2/main.c:723:36: error: unused variable 'xge_acpi_match' [-Werror,-Wunused-const-variable]
 
-Only PPPoE-in-Q (as before) and Q-in-Q are allowed. A combination
-of PPPoE and Q-in-Q is not allowed.
-
-Signed-off-by: Eric Woudstra <ericwouds@gmail.com>
-Link: https://patch.msgid.link/20250225201509.20843-1-ericwouds@gmail.com
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://patch.msgid.link/20250225163341.4168238-2-arnd@kernel.org
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/mediatek/mtk_ppe_offload.c   | 22 +++++++++----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
+ drivers/net/ethernet/apm/xgene-v2/main.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/mediatek/mtk_ppe_offload.c b/drivers/net/ethernet/mediatek/mtk_ppe_offload.c
-index a4efbeb162084..889fd26843e60 100644
---- a/drivers/net/ethernet/mediatek/mtk_ppe_offload.c
-+++ b/drivers/net/ethernet/mediatek/mtk_ppe_offload.c
-@@ -34,8 +34,10 @@ struct mtk_flow_data {
- 	u16 vlan_in;
+diff --git a/drivers/net/ethernet/apm/xgene-v2/main.c b/drivers/net/ethernet/apm/xgene-v2/main.c
+index 379d19d18dbed..5808e3c73a8f4 100644
+--- a/drivers/net/ethernet/apm/xgene-v2/main.c
++++ b/drivers/net/ethernet/apm/xgene-v2/main.c
+@@ -9,8 +9,6 @@
  
- 	struct {
--		u16 id;
--		__be16 proto;
-+		struct {
-+			u16 id;
-+			__be16 proto;
-+		} vlans[2];
- 		u8 num;
- 	} vlan;
- 	struct {
-@@ -330,18 +332,19 @@ mtk_flow_offload_replace(struct mtk_eth *eth, struct flow_cls_offload *f,
- 		case FLOW_ACTION_CSUM:
- 			break;
- 		case FLOW_ACTION_VLAN_PUSH:
--			if (data.vlan.num == 1 ||
-+			if (data.vlan.num + data.pppoe.num == 2 ||
- 			    act->vlan.proto != htons(ETH_P_8021Q))
- 				return -EOPNOTSUPP;
+ #include "main.h"
  
--			data.vlan.id = act->vlan.vid;
--			data.vlan.proto = act->vlan.proto;
-+			data.vlan.vlans[data.vlan.num].id = act->vlan.vid;
-+			data.vlan.vlans[data.vlan.num].proto = act->vlan.proto;
- 			data.vlan.num++;
- 			break;
- 		case FLOW_ACTION_VLAN_POP:
- 			break;
- 		case FLOW_ACTION_PPPOE_PUSH:
--			if (data.pppoe.num == 1)
-+			if (data.pppoe.num == 1 ||
-+			    data.vlan.num == 2)
- 				return -EOPNOTSUPP;
- 
- 			data.pppoe.sid = act->pppoe.sid;
-@@ -431,12 +434,9 @@ mtk_flow_offload_replace(struct mtk_eth *eth, struct flow_cls_offload *f,
- 	if (offload_type == MTK_PPE_PKT_TYPE_BRIDGE)
- 		foe.bridge.vlan = data.vlan_in;
- 
--	if (data.vlan.num == 1) {
--		if (data.vlan.proto != htons(ETH_P_8021Q))
--			return -EOPNOTSUPP;
-+	for (i = 0; i < data.vlan.num; i++)
-+		mtk_foe_entry_set_vlan(eth, &foe, data.vlan.vlans[i].id);
- 
--		mtk_foe_entry_set_vlan(eth, &foe, data.vlan.id);
--	}
- 	if (data.pppoe.num == 1)
- 		mtk_foe_entry_set_pppoe(eth, &foe, data.pppoe.sid);
- 
+-static const struct acpi_device_id xge_acpi_match[];
+-
+ static int xge_get_resources(struct xge_pdata *pdata)
+ {
+ 	struct platform_device *pdev;
+@@ -733,7 +731,7 @@ MODULE_DEVICE_TABLE(acpi, xge_acpi_match);
+ static struct platform_driver xge_driver = {
+ 	.driver = {
+ 		   .name = "xgene-enet-v2",
+-		   .acpi_match_table = ACPI_PTR(xge_acpi_match),
++		   .acpi_match_table = xge_acpi_match,
+ 	},
+ 	.probe = xge_probe,
+ 	.remove = xge_remove,
 -- 
 2.39.5
 
