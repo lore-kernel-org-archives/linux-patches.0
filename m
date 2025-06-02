@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B33723C4F8;
-	Mon,  2 Jun 2025 14:11:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 113592236E3;
+	Mon,  2 Jun 2025 14:11:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748873509; cv=none; b=pbK/bjE69Oj2z3/ExV0KG2Lu0mAbkTg0dq3aXwCvDBNtWKGqZwp8wWp6Tb4cJthD+62pxrKQbrBrbtU+JJqVwzFTrroEEAOAaqMVytirVkEp6E/BUpCUW/P1BbeR89UnB3JEcUdnVeNyFnHjjvYFfHgNYW0mmoOD5iFaO/SW/RM=
+	t=1748873512; cv=none; b=cy2A3MhrfszusgsgIxcFEdbduQSCpYKXZnwUlXE2CWqinPAWyK/+PvJndJcb9fYgoJ2dGCZLTy9eJ6cVanZO4r+PsuBPU6qmoOz3/0nGpXm6GS2LcJvbpdn7dHfLSzc+IIOR2C7piMmv33uW/hQ0mbmYyr5TjLqIiopRpIoQOs4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748873509; c=relaxed/simple;
-	bh=oEOQ15XYFH3e49Hx8hY6EGu1XEAA7FA0j1e1AJ6kBE8=;
+	s=arc-20240116; t=1748873512; c=relaxed/simple;
+	bh=BHMSIx5u4VCz1Mw9TNZLgQlCSFd1VvczD3aydP51T1A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qrWgERvs7DQ+UQ/dVrsVZV2OkgPtUwrUzr1IshzhOi068GPn0Wl8DMhFlA+s+4mo+j3JW1vkOu7BfXC6Rhaaz3kSKGC3barw1SDlOXdt/0KcHEYaZ4Qx9f/ln1d6hpYSLxfngoHHE4ionjcGbruPNMLU+lLF4M+4c8pHiBq+aFM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0nWnGPQx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sus2Nqwe+O+HPjYMXDQ1QNImqR7Ihwi8tl3a9eCJ03iOe96YbhPzyGkIfUsVvKBk2bA/wgDf59ltgc5WWuhNE3kbOzlPky+hny3r3Kt82pwvF4hz1M5qSczyPH1IKJO7+GjQaED1GM5qMl406xabKlQW/kJaHbIBsmHjaW+j6WM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XInMlLi+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0nWnGPQx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C7ECC4CEEB;
-	Mon,  2 Jun 2025 14:11:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XInMlLi+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19C95C4CEEB;
+	Mon,  2 Jun 2025 14:11:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748873508;
-	bh=oEOQ15XYFH3e49Hx8hY6EGu1XEAA7FA0j1e1AJ6kBE8=;
+	s=korg; t=1748873511;
+	bh=BHMSIx5u4VCz1Mw9TNZLgQlCSFd1VvczD3aydP51T1A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0nWnGPQxWtTV6XL+9Q8UrNGUo8zrd6F+Q3wg6hql8UBDsTMwww32t14MxBRIJ5ZXk
-	 G99xxU+TCITid7pyZbisC/7QGupFKJgDkuMDVbqkOoPC3p85iX3QTYWJO5PoE5EY37
-	 F+cOll6tz1Cl5WzM2ZAnJHowv0ReYyijB1/4OojU=
+	b=XInMlLi+NMF2ZkNDhswRXpOiftyGgdgTZnBCy3AHQRdRHmprU8F+CM0Nfkm3mn2JS
+	 WJVpV3Pj39XWiQcncITrATAZb3+giE7pBuxo57d9aJjqB5BQs0RODx0+nUJU0NEWFV
+	 dpjUBrbu1wOzbgcZBvLGKzJnKhsTZc6Fgj2Ifsf0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	CK Hu <ck.hu@mediatek.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+	Ang Tien Sung <tien.sung.ang@intel.com>,
+	Kuhanh Murugasen Krishnan <kuhanh.murugasen.krishnan@intel.com>,
+	Xu Yilun <yilun.xu@intel.com>,
+	Xu Yilun <yilun.xu@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 163/444] drm/mediatek: mtk_dpi: Add checks for reg_h_fre_con existence
-Date: Mon,  2 Jun 2025 15:43:47 +0200
-Message-ID: <20250602134347.524992590@linuxfoundation.org>
+Subject: [PATCH 6.6 164/444] fpga: altera-cvp: Increase credit timeout
+Date: Mon,  2 Jun 2025 15:43:48 +0200
+Message-ID: <20250602134347.564594556@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -52,49 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+From: Kuhanh Murugasen Krishnan <kuhanh.murugasen.krishnan@intel.com>
 
-[ Upstream commit 8c9da7cd0bbcc90ab444454fecf535320456a312 ]
+[ Upstream commit 0f05886a40fdc55016ba4d9ae0a9c41f8312f15b ]
 
-In preparation for adding support for newer DPI instances which
-do support direct-pin but do not have any H_FRE_CON register,
-like the one found in MT8195 and MT8188, add a branch to check
-if the reg_h_fre_con variable was declared in the mtk_dpi_conf
-structure for the probed SoC DPI version.
+Increase the timeout for SDM (Secure device manager) data credits from
+20ms to 40ms. Internal stress tests running at 500 loops failed with the
+current timeout of 20ms. At the start of a FPGA configuration, the CVP
+host driver reads the transmit credits from SDM. It then sends bitstream
+FPGA data to SDM based on the total credits. Each credit allows the
+CVP host driver to send 4kBytes of data. There are situations whereby,
+the SDM did not respond in time during testing.
 
-As a note, this is useful specifically only for cases in which
-the support_direct_pin variable is true, so mt8195-dpintf is
-not affected by any issue.
-
-Reviewed-by: CK Hu <ck.hu@mediatek.com>
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://patchwork.kernel.org/project/dri-devel/patch/20250217154836.108895-6-angelogioacchino.delregno@collabora.com/
-Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Signed-off-by: Ang Tien Sung <tien.sung.ang@intel.com>
+Signed-off-by: Kuhanh Murugasen Krishnan <kuhanh.murugasen.krishnan@intel.com>
+Acked-by: Xu Yilun <yilun.xu@intel.com>
+Link: https://lore.kernel.org/r/20250212221249.2715929-1-tien.sung.ang@intel.com
+Signed-off-by: Xu Yilun <yilun.xu@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/mediatek/mtk_dpi.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/fpga/altera-cvp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/mediatek/mtk_dpi.c b/drivers/gpu/drm/mediatek/mtk_dpi.c
-index 54fc3f819577e..6391afdf202e2 100644
---- a/drivers/gpu/drm/mediatek/mtk_dpi.c
-+++ b/drivers/gpu/drm/mediatek/mtk_dpi.c
-@@ -410,12 +410,13 @@ static void mtk_dpi_config_swap_input(struct mtk_dpi *dpi, bool enable)
+diff --git a/drivers/fpga/altera-cvp.c b/drivers/fpga/altera-cvp.c
+index 4ffb9da537d82..5295ff90482bc 100644
+--- a/drivers/fpga/altera-cvp.c
++++ b/drivers/fpga/altera-cvp.c
+@@ -52,7 +52,7 @@
+ /* V2 Defines */
+ #define VSE_CVP_TX_CREDITS		0x49	/* 8bit */
  
- static void mtk_dpi_config_2n_h_fre(struct mtk_dpi *dpi)
- {
--	mtk_dpi_mask(dpi, dpi->conf->reg_h_fre_con, H_FRE_2N, H_FRE_2N);
-+	if (dpi->conf->reg_h_fre_con)
-+		mtk_dpi_mask(dpi, dpi->conf->reg_h_fre_con, H_FRE_2N, H_FRE_2N);
- }
- 
- static void mtk_dpi_config_disable_edge(struct mtk_dpi *dpi)
- {
--	if (dpi->conf->edge_sel_en)
-+	if (dpi->conf->edge_sel_en && dpi->conf->reg_h_fre_con)
- 		mtk_dpi_mask(dpi, dpi->conf->reg_h_fre_con, 0, EDGE_SEL_EN);
- }
- 
+-#define V2_CREDIT_TIMEOUT_US		20000
++#define V2_CREDIT_TIMEOUT_US		40000
+ #define V2_CHECK_CREDIT_US		10
+ #define V2_POLL_TIMEOUT_US		1000000
+ #define V2_USER_TIMEOUT_US		500000
 -- 
 2.39.5
 
