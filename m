@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26F91221299;
-	Mon,  2 Jun 2025 13:48:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78C03221299;
+	Mon,  2 Jun 2025 13:48:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748872088; cv=none; b=NBk9ROnOto1YD3V60TNlA3qzyB5aGysrXwlSUf0w4HVLI1bUHG8Is+rPzjeZfz9GhT+Py6ZUr+QkW+gSBLZ5pSiPHerjhoVWbQdUihLg43JHP2hzC5LPyyNGl2i8IPzMrku4PUdy9cmLN0IHF03wTGnODZ2S2OmQEjuI+PHqyPk=
+	t=1748872090; cv=none; b=OknZZWzE41zgHG8Sye57FGzKYYNi8Fzdd070OIcievYnv793BNH/SEDoOf/KeJcC7ace83c6pPOiw8h45W5lXaXYoZixNR1hJo2Gwj6S7NUweRnF+wwP9GniwlwXXFi5XSHH2ICAgJbsHmMP+Q7pkozbWvuy4v57zJPFii3Kh7Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748872088; c=relaxed/simple;
-	bh=Om4waz9xiyIYu9VCwG+611r92bxyxxzEcrH1UJv375E=;
+	s=arc-20240116; t=1748872090; c=relaxed/simple;
+	bh=FJ4ma42pt3PqDZX2mj7HKngjWt1XaP6B44eZ9Sm8n38=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O7BuIAluU8dYDF9FlJkarbhYyNEbJngzw7uIABgYUS3xZhCdnyyE4V4tQ1oNBSjUFl0Ta6qispn0erzuOwA7AQ0ofKVxeRRz5c63NSnHCnFJBoii+SXWqXjoxZ+4ndTAcSh4hWG30268Ye+qco9WWRV8INl1AjTD0j+WJjE7Lpw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IMzJXmZU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WqDIYjXf1zc1nfJi0DEkb0HzafvDy1UBsy97zu3NQ/k1UPDUyvnn4dB+ArN1AX0T4fwR9je4iJgxEtA2NkDTjUN39KerJVgk9+DCLPXl5ZNsI/++MIrginSHDhsf6rQ6kXbRmug36Rqi3GnkyqfUxZXiGxoRa8H1rBC9BOjvwSk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pgJFPNqg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IMzJXmZU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 484A5C4CEEB;
-	Mon,  2 Jun 2025 13:48:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pgJFPNqg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59739C4CEEB;
+	Mon,  2 Jun 2025 13:48:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748872086;
-	bh=Om4waz9xiyIYu9VCwG+611r92bxyxxzEcrH1UJv375E=;
+	s=korg; t=1748872089;
+	bh=FJ4ma42pt3PqDZX2mj7HKngjWt1XaP6B44eZ9Sm8n38=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IMzJXmZUqaUkfqyq03/YAZx9anRp1xGAvGz4zgohbZ+Wx3DSM9mFKerew+EuebtX/
-	 C9ygZwgFnB1Lokce+Km6vIIvqCv/Ci/7n/XmgF6lA76R34PoBrncb35wK3o8SVV3HL
-	 bLMNyr7pMBNwPUWpTWHYKzhN0GOifvQPADv3w4PI=
+	b=pgJFPNqgVW7oh+NkU0LOiv1EjJKZE3FWa8E6AzXaY6jXETE+X84SlNwseJcn+g3WN
+	 40Qe1PCFcDz8tCmA9jb+7LbW4a/XqVa5E4uWD6Sb22GlDFVHGGQIQtuCHP9NKs+HdT
+	 W19IgNXM250RtDCqlCZyAm9RXAsPi2axevYtzSF4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephan Gerhold <stephan.gerhold@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Abel Vesa <abel.vesa@linaro.org>,
+	Aleksandrs Vinarskis <alex.vinarskis@gmail.com>,
 	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Johan Hovold <johan+linaro@kernel.org>,
 	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.15 14/49] arm64: dts: qcom: x1e80100-asus-vivobook-s15: Fix vreg_l2j_1p2 voltage
-Date: Mon,  2 Jun 2025 15:47:06 +0200
-Message-ID: <20250602134238.498139493@linuxfoundation.org>
+Subject: [PATCH 6.15 15/49] arm64: dts: qcom: x1e80100-dell-xps13-9345: mark l12b and l15b always-on
+Date: Mon,  2 Jun 2025 15:47:07 +0200
+Message-ID: <20250602134238.546056391@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134237.940995114@linuxfoundation.org>
 References: <20250602134237.940995114@linuxfoundation.org>
@@ -53,39 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit 0fb9ecf8713a7a458f7378c86e0703467db2ad22 upstream.
+commit 63169c07d74031c5e10a9f91229dabade880cf0f upstream.
 
-In the ACPI DSDT table, PPP_RESOURCE_ID_LDO2_J is configured with 1256000
-uV instead of the 1200000 uV we have currently in the device tree. Use the
-same for consistency and correctness.
+The l12b and l15b supplies are used by components that are not (fully)
+described (and some never will be) and must never be disabled.
 
-Cc: stable@vger.kernel.org
-Fixes: d0e2f8f62dff ("arm64: dts: qcom: Add device tree for ASUS Vivobook S 15")
-Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
+Mark the regulators as always-on to prevent them from being disabled,
+for example, when consumers probe defer or suspend.
+
+Note that these supplies currently have no consumers described in
+mainline.
+
+Fixes: f5b788d0e8cd ("arm64: dts: qcom: Add support for X1-based Dell XPS 13 9345")
+Cc: stable@vger.kernel.org	# 6.13
+Reviewed-by: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
+Tested-by: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
 Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250423-x1e-vreg-l2j-voltage-v1-3-24b6a2043025@linaro.org
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Link: https://lore.kernel.org/r/20250314145440.11371-5-johan+linaro@kernel.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/qcom/x1e80100-dell-xps13-9345.dts |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
-+++ b/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
-@@ -330,8 +330,8 @@
- 
- 		vreg_l2j_1p2: ldo2 {
- 			regulator-name = "vreg_l2j_1p2";
--			regulator-min-microvolt = <1200000>;
--			regulator-max-microvolt = <1200000>;
-+			regulator-min-microvolt = <1256000>;
-+			regulator-max-microvolt = <1256000>;
+--- a/arch/arm64/boot/dts/qcom/x1e80100-dell-xps13-9345.dts
++++ b/arch/arm64/boot/dts/qcom/x1e80100-dell-xps13-9345.dts
+@@ -359,6 +359,7 @@
+ 			regulator-min-microvolt = <1200000>;
+ 			regulator-max-microvolt = <1200000>;
  			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++			regulator-always-on;
  		};
  
+ 		vreg_l13b_3p0: ldo13 {
+@@ -380,6 +381,7 @@
+ 			regulator-min-microvolt = <1800000>;
+ 			regulator-max-microvolt = <1800000>;
+ 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++			regulator-always-on;
+ 		};
+ 
+ 		vreg_l17b_2p5: ldo17 {
 
 
