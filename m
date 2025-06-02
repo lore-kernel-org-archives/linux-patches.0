@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81AB6221558;
-	Mon,  2 Jun 2025 14:33:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3A1B21882B;
+	Mon,  2 Jun 2025 14:33:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748874783; cv=none; b=rE+k3jzLSzA1cfmEJ9srdgke5Q96JWnO8I+b8sOSO/wjCgpZKObJXzL2Q6kOnc8nEBr2XT1Pk60MvKv9+Zd+2jd/4xtq5Qka9qkO0DEc3qQmmL2SF8mm1ODvImefp3AGBTmmKwECo3K/FI0FT0DlaIsIs//1QzF4PXoMXQjKHhI=
+	t=1748874786; cv=none; b=Q3jsInj86rCy7xSBicDqHtJxXi9/KIOHEW24EoQtdbVCBu/kTvtXufcAOwS3yEWMCSgEe4Wz6GIQDtC0SdflzZQFixwcUeokJ7PvqR/ecmdLYdprt+zHD0cMPDjY81hdihe4+vwCM9nrt6J7ckTZoRfxmGvrsFOASadyZTVTYhg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748874783; c=relaxed/simple;
-	bh=U1/zH4LKtcvupLFMSM6tme45y/mYSyUsCmedwBemPs8=;
+	s=arc-20240116; t=1748874786; c=relaxed/simple;
+	bh=X3DpabZUBYCDUTKpb+EqQqu4PLQBDMnG1aPfAEsdhMY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FVNZuIxWjjfQr8G2T+SgOk1pk4ZKX9xqGvstZMJYERVy9jf0uXYnS7SRk1HtUovnRxtEtuZ0flbPS5Fik680VVlhhJOaqnjU/m5AQtKJaKuxfHgemhF5MSNcZAjzRYrkFpQ+/8wzEADLvk+6MUJDrJ/gX7RGvUFcUfnszdfSgrM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kwcsckds; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hbuWYm4esN6YPX0qOysZIHuSSIYVX6BIDC7yJy4wY8B1Erbi9hF79IL9O+l4lRcLaJ80SQOLIndI6K7UI5lAbg3ALied1IO4Fyj1hUjtIJUVQ59pws1c3nIoYfvOyFdF4YK4gsZ79/wy0i79SLX8XcFMciTC66OCY60FNOLX5CU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V6XXGaJy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kwcsckds"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3E6BC4CEEB;
-	Mon,  2 Jun 2025 14:33:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V6XXGaJy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32AABC4CEEB;
+	Mon,  2 Jun 2025 14:33:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748874783;
-	bh=U1/zH4LKtcvupLFMSM6tme45y/mYSyUsCmedwBemPs8=;
+	s=korg; t=1748874786;
+	bh=X3DpabZUBYCDUTKpb+EqQqu4PLQBDMnG1aPfAEsdhMY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KwcsckdssgDAyAzZxV/SkijpBCIlnN3IO3CpN7CGfgGFOXj0DyV9Q2d2qAT6Sg7vx
-	 nnCMVYWN6EyeWnan/TK9gJ73h8kX+wjJWgQdlNFzmfMMS0/Xe01LqnB1PNk14Dk6Hk
-	 z1C+CRCtZYtepfoByJrc3MgyaH/U5GMaG6TM+K0Y=
+	b=V6XXGaJyYiACzdK/TqHUneyNvsZXJ/raF/sLyhhm5d4nOWsaZaEhL3AKYZ51IJpB/
+	 DBB/A1wDcWNxojK2cLJu9BG3Q8eZnKBy2i7WuUEq+V1ut/o/OUOdAHboPDYb3bKB31
+	 /WV63jysP1puehx6yc0egU/6bx6Fh4aCTf12xJWQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Artem Bityutskiy <artem.bityutskiy@linux.intel.com>,
-	Christian Loehle <christian.loehle@arm.com>,
-	Aboorva Devarajan <aboorvad@linux.ibm.com>,
+	Bibo Mao <maobibo@loongson.cn>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 133/204] cpuidle: menu: Avoid discarding useful information
-Date: Mon,  2 Jun 2025 15:47:46 +0200
-Message-ID: <20250602134300.878922057@linuxfoundation.org>
+Subject: [PATCH 5.4 134/204] MIPS: Use arch specific syscall name match function
+Date: Mon,  2 Jun 2025 15:47:47 +0200
+Message-ID: <20250602134300.919378994@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134255.449974357@linuxfoundation.org>
 References: <20250602134255.449974357@linuxfoundation.org>
@@ -53,63 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Bibo Mao <maobibo@loongson.cn>
 
-[ Upstream commit 85975daeaa4d6ec560bfcd354fc9c08ad7f38888 ]
+[ Upstream commit 756276ce78d5624dc814f9d99f7d16c8fd51076e ]
 
-When giving up on making a high-confidence prediction,
-get_typical_interval() always returns UINT_MAX which means that the
-next idle interval prediction will be based entirely on the time till
-the next timer.  However, the information represented by the most
-recent intervals may not be completely useless in those cases.
+On MIPS system, most of the syscall function name begin with prefix
+sys_. Some syscalls are special such as clone/fork, function name of
+these begin with __sys_. Since scratch registers need be saved in
+stack when these system calls happens.
 
-Namely, the largest recent idle interval is an upper bound on the
-recently observed idle duration, so it is reasonable to assume that
-the next idle duration is unlikely to exceed it.  Moreover, this is
-still true after eliminating the suspected outliers if the sample
-set still under consideration is at least as large as 50% of the
-maximum sample set size.
+With ftrace system call method, system call functions are declared with
+SYSCALL_DEFINEx, metadata of the system call symbol name begins with
+sys_. Here mips specific function arch_syscall_match_sym_name is used to
+compare function name between sys_call_table[] and metadata of syscall
+symbol.
 
-Accordingly, make get_typical_interval() return the current maximum
-recent interval value in that case instead of UINT_MAX.
-
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reported-by: Artem Bityutskiy <artem.bityutskiy@linux.intel.com>
-Tested-by: Artem Bityutskiy <artem.bityutskiy@linux.intel.com>
-Reviewed-by: Christian Loehle <christian.loehle@arm.com>
-Tested-by: Christian Loehle <christian.loehle@arm.com>
-Tested-by: Aboorva Devarajan <aboorvad@linux.ibm.com>
-Link: https://patch.msgid.link/7770672.EvYhyI6sBW@rjwysocki.net
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpuidle/governors/menu.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ arch/mips/include/asm/ftrace.h | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/drivers/cpuidle/governors/menu.c b/drivers/cpuidle/governors/menu.c
-index e5a5d0c8d66b1..bb7288f6adbf6 100644
---- a/drivers/cpuidle/governors/menu.c
-+++ b/drivers/cpuidle/governors/menu.c
-@@ -259,8 +259,19 @@ static unsigned int get_typical_interval(struct menu_device *data,
- 	 * This can deal with workloads that have long pauses interspersed
- 	 * with sporadic activity with a bunch of short pauses.
- 	 */
--	if ((divisor * 4) <= INTERVALS * 3)
-+	if (divisor * 4 <= INTERVALS * 3) {
-+		/*
-+		 * If there are sufficiently many data points still under
-+		 * consideration after the outliers have been eliminated,
-+		 * returning without a prediction would be a mistake because it
-+		 * is likely that the next interval will not exceed the current
-+		 * maximum, so return the latter in that case.
-+		 */
-+		if (divisor >= INTERVALS / 2)
-+			return max;
+diff --git a/arch/mips/include/asm/ftrace.h b/arch/mips/include/asm/ftrace.h
+index b463f2aa5a613..7acbe701afd69 100644
+--- a/arch/mips/include/asm/ftrace.h
++++ b/arch/mips/include/asm/ftrace.h
+@@ -87,4 +87,20 @@ struct dyn_arch_ftrace {
+ #endif /*  CONFIG_DYNAMIC_FTRACE */
+ #endif /* __ASSEMBLY__ */
+ #endif /* CONFIG_FUNCTION_TRACER */
 +
- 		return UINT_MAX;
-+	}
- 
- 	thresh = max - 1;
- 	goto again;
++#ifdef CONFIG_FTRACE_SYSCALLS
++#ifndef __ASSEMBLY__
++/*
++ * Some syscall entry functions on mips start with "__sys_" (fork and clone,
++ * for instance). We should also match the sys_ variant with those.
++ */
++#define ARCH_HAS_SYSCALL_MATCH_SYM_NAME
++static inline bool arch_syscall_match_sym_name(const char *sym,
++					       const char *name)
++{
++	return !strcmp(sym, name) ||
++		(!strncmp(sym, "__sys_", 6) && !strcmp(sym + 6, name + 4));
++}
++#endif /* __ASSEMBLY__ */
++#endif /* CONFIG_FTRACE_SYSCALLS */
+ #endif /* _ASM_MIPS_FTRACE_H */
 -- 
 2.39.5
 
