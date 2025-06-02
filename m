@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D6DB22FE18;
-	Mon,  2 Jun 2025 14:18:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2B8422FE18;
+	Mon,  2 Jun 2025 14:18:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748873936; cv=none; b=LdgGvnU99rM8sUNkQw/Ll6s4mopyHEbBklS7mmvG57RCndnt1jSqc2v/A6e5RPQ5n2vmtd7A9y3DVvEEm2nMvItJa0Kz8+H9Aj5Wj/15E4EZHMiyxnf1oyDFTELPAtzHUJdtvUQtT2Ltt8MfpnnUvDDZNrLdyXvHxpJjp6ddys0=
+	t=1748873939; cv=none; b=XaNWgiLB0kMH5mRK3YuyHrFKIavnbj/xIiXRyvltqUZh05os6BhiexO95ZeB0t7UBpnSl9tdUBY+V76etu0DF3YvB3PNR+6fm695mZs+dHzkrZ/g9jYzQ7Z/wwZ3yvZAi+UMg5RYRxdqjGQTQIWF9EbuGXTxU5gDObASE52kw7k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748873936; c=relaxed/simple;
-	bh=OmL3dStt52ykJAybcyxroLCHavHbI5W3ZC6z4/wXzrA=;
+	s=arc-20240116; t=1748873939; c=relaxed/simple;
+	bh=vlsLGK3C+Ap8FFKJ83PAvcxKXKOqkRHypu0r0zBPItQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gbch4dmV0UGmizZR+STTT5lqOsZNuCUSmDVcZiLAgCDVtMShKeX4x1JdB30mjsHvMLmyDRoGvUeayOj7Yz98bZCC0DhEqX8LDt1ool+j+vc4jfnixBIKricQg8sacU8vAx6E2dH5wIxoBREWcgxLMC9iDOf+qHaH4F5Upf0DPok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W4DeK88T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SgrptFAINOnCGM/SgkjkoOgTot6Z4bNf/UM+XahvMYHxDBPeYYDXIQTUPCw7T3tS3dRbo1xiVWoGHyPBVfcbTsx28YQvyh5/tMB2w+BfgRklov6nmzfgOasDz0weA+KO/j95P6ddac8fsR4odw5qZkXg1V/2TKfx+lCDIsqOb4g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OoBJHKTa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W4DeK88T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2122C4CEEB;
-	Mon,  2 Jun 2025 14:18:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OoBJHKTa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8399FC4CEEB;
+	Mon,  2 Jun 2025 14:18:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748873936;
-	bh=OmL3dStt52ykJAybcyxroLCHavHbI5W3ZC6z4/wXzrA=;
+	s=korg; t=1748873938;
+	bh=vlsLGK3C+Ap8FFKJ83PAvcxKXKOqkRHypu0r0zBPItQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W4DeK88TJB57EnxuWXZ5TT+Mt6trh3HxG1NYiVzqYwEPpAwCUVjqtIhv5abfgtwbt
-	 mAVwB9V8vrTOjLuEIkkqP/FUQXb3ku9aN8IPoU2NYmp5vZF4eAmKKj7uK0EHbkVeEH
-	 NJfsp7WwyYzJNQiZEXijcs/hO2D2yQQhHrGXaCNk=
+	b=OoBJHKTah00o5BsDfLPaxIQ0FEIw0k1HZ63BrzH8eClLytm+olnYxwSyDdQjUvJNQ
+	 CquAl5anE5FgFaly4WMZzsNomeQDPp1QrUiXg3KOW7/1WX+BY+zTNrOLvapDrmly2H
+	 BbwHU77O79CDhj0kY+x/cCc6e+UYoaf2bZReYh7A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Sean Anderson <sean.anderson@linux.dev>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 301/444] wifi: rtw89: add wiphy_lock() to work that isnt held wiphy_lock() yet
-Date: Mon,  2 Jun 2025 15:46:05 +0200
-Message-ID: <20250602134353.159959929@linuxfoundation.org>
+Subject: [PATCH 6.6 302/444] spi: zynqmp-gqspi: Always acknowledge interrupts
+Date: Mon,  2 Jun 2025 15:46:06 +0200
+Message-ID: <20250602134353.198953439@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -50,69 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ping-Ke Shih <pkshih@realtek.com>
+From: Sean Anderson <sean.anderson@linux.dev>
 
-[ Upstream commit ebfc9199df05d37b67f4d1b7ee997193f3d2e7c8 ]
+[ Upstream commit 89785306453ce6d949e783f6936821a0b7649ee2 ]
 
-To ensure where are protected by driver mutex can also be protected by
-wiphy_lock(), so afterward we can remove driver mutex safely.
+RXEMPTY can cause an IRQ, even though we may not do anything about it
+(such as if we are waiting for more received data). We must still handle
+these IRQs because we can tell they were caused by the device.
 
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20250122060310.31976-2-pkshih@realtek.com
+Signed-off-by: Sean Anderson <sean.anderson@linux.dev>
+Link: https://patch.msgid.link/20250116224130.2684544-6-sean.anderson@linux.dev
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw89/regd.c | 2 ++
- drivers/net/wireless/realtek/rtw89/ser.c  | 4 ++++
- 2 files changed, 6 insertions(+)
+ drivers/spi/spi-zynqmp-gqspi.c | 20 ++++++++------------
+ 1 file changed, 8 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/regd.c b/drivers/net/wireless/realtek/rtw89/regd.c
-index 9e2328db18656..91f0895d9f540 100644
---- a/drivers/net/wireless/realtek/rtw89/regd.c
-+++ b/drivers/net/wireless/realtek/rtw89/regd.c
-@@ -451,6 +451,7 @@ void rtw89_regd_notifier(struct wiphy *wiphy, struct regulatory_request *request
- 	struct ieee80211_hw *hw = wiphy_to_ieee80211_hw(wiphy);
- 	struct rtw89_dev *rtwdev = hw->priv;
+diff --git a/drivers/spi/spi-zynqmp-gqspi.c b/drivers/spi/spi-zynqmp-gqspi.c
+index 3503e6c0a5c98..b5deb4fe3b832 100644
+--- a/drivers/spi/spi-zynqmp-gqspi.c
++++ b/drivers/spi/spi-zynqmp-gqspi.c
+@@ -799,7 +799,6 @@ static void zynqmp_process_dma_irq(struct zynqmp_qspi *xqspi)
+ static irqreturn_t zynqmp_qspi_irq(int irq, void *dev_id)
+ {
+ 	struct zynqmp_qspi *xqspi = (struct zynqmp_qspi *)dev_id;
+-	irqreturn_t ret = IRQ_NONE;
+ 	u32 status, mask, dma_status = 0;
  
-+	wiphy_lock(wiphy);
- 	mutex_lock(&rtwdev->mutex);
- 	rtw89_leave_ps_mode(rtwdev);
+ 	status = zynqmp_gqspi_read(xqspi, GQSPI_ISR_OFST);
+@@ -814,27 +813,24 @@ static irqreturn_t zynqmp_qspi_irq(int irq, void *dev_id)
+ 				   dma_status);
+ 	}
  
-@@ -468,6 +469,7 @@ void rtw89_regd_notifier(struct wiphy *wiphy, struct regulatory_request *request
+-	if (mask & GQSPI_ISR_TXNOT_FULL_MASK) {
++	if (!mask && !dma_status)
++		return IRQ_NONE;
++
++	if (mask & GQSPI_ISR_TXNOT_FULL_MASK)
+ 		zynqmp_qspi_filltxfifo(xqspi, GQSPI_TX_FIFO_FILL);
+-		ret = IRQ_HANDLED;
+-	}
  
- exit:
- 	mutex_unlock(&rtwdev->mutex);
-+	wiphy_unlock(wiphy);
+-	if (dma_status & GQSPI_QSPIDMA_DST_I_STS_DONE_MASK) {
++	if (dma_status & GQSPI_QSPIDMA_DST_I_STS_DONE_MASK)
+ 		zynqmp_process_dma_irq(xqspi);
+-		ret = IRQ_HANDLED;
+-	} else if (!(mask & GQSPI_IER_RXEMPTY_MASK) &&
+-			(mask & GQSPI_IER_GENFIFOEMPTY_MASK)) {
++	else if (!(mask & GQSPI_IER_RXEMPTY_MASK) &&
++			(mask & GQSPI_IER_GENFIFOEMPTY_MASK))
+ 		zynqmp_qspi_readrxfifo(xqspi, GQSPI_RX_FIFO_FILL);
+-		ret = IRQ_HANDLED;
+-	}
+ 
+ 	if (xqspi->bytes_to_receive == 0 && xqspi->bytes_to_transfer == 0 &&
+ 	    ((status & GQSPI_IRQ_MASK) == GQSPI_IRQ_MASK)) {
+ 		zynqmp_gqspi_write(xqspi, GQSPI_IDR_OFST, GQSPI_ISR_IDR_MASK);
+ 		complete(&xqspi->data_completion);
+-		ret = IRQ_HANDLED;
+ 	}
+-	return ret;
++	return IRQ_HANDLED;
  }
  
- static void __rtw89_reg_6ghz_power_recalc(struct rtw89_dev *rtwdev)
-diff --git a/drivers/net/wireless/realtek/rtw89/ser.c b/drivers/net/wireless/realtek/rtw89/ser.c
-index 01b17b8f4ff9d..45165cf3e824e 100644
---- a/drivers/net/wireless/realtek/rtw89/ser.c
-+++ b/drivers/net/wireless/realtek/rtw89/ser.c
-@@ -156,9 +156,11 @@ static void ser_state_run(struct rtw89_ser *ser, u8 evt)
- 	rtw89_debug(rtwdev, RTW89_DBG_SER, "ser: %s receive %s\n",
- 		    ser_st_name(ser), ser_ev_name(ser, evt));
- 
-+	wiphy_lock(rtwdev->hw->wiphy);
- 	mutex_lock(&rtwdev->mutex);
- 	rtw89_leave_lps(rtwdev);
- 	mutex_unlock(&rtwdev->mutex);
-+	wiphy_unlock(rtwdev->hw->wiphy);
- 
- 	ser->st_tbl[ser->state].st_func(ser, evt);
- }
-@@ -676,9 +678,11 @@ static void ser_l2_reset_st_hdl(struct rtw89_ser *ser, u8 evt)
- 
- 	switch (evt) {
- 	case SER_EV_STATE_IN:
-+		wiphy_lock(rtwdev->hw->wiphy);
- 		mutex_lock(&rtwdev->mutex);
- 		ser_l2_reset_st_pre_hdl(ser);
- 		mutex_unlock(&rtwdev->mutex);
-+		wiphy_unlock(rtwdev->hw->wiphy);
- 
- 		ieee80211_restart_hw(rtwdev->hw);
- 		ser_set_alarm(ser, SER_RECFG_TIMEOUT, SER_EV_L2_RECFG_TIMEOUT);
+ /**
 -- 
 2.39.5
 
