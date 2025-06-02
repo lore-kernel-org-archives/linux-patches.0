@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D0CD223DC0;
-	Mon,  2 Jun 2025 15:16:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8DED223DC0;
+	Mon,  2 Jun 2025 15:16:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748877398; cv=none; b=oAuZYO7uHsyN/k9Zb4cWFWr/8k2gBZDKdZNpZrrpIqpjmV9fgSSDfCmyBxvZan4owreMBk0z3rx43dKV7Imo0dLPhXWfLLZ+aUQSpCrByNRWkg6x9Xn7DuwMyud1oPp06cMnZm4KPfm59fiZ5q1vENuOTKd9v1qGQnXJGqex1So=
+	t=1748877402; cv=none; b=CHSB1MlHpkaXVYX44MBmti7WzWYyEqqEWGYKCTNVxB3l13bAGc1LDZJw3jPL1wb7cguNOo558uInOcnkvxMb9JMScwmkvMKowUm8wxhR/T6V2YCGZPiZdCxR8AV3L0hdP04IjgahS08VifEM5Ju7DoTbS2QBBM+pmjclvJl2fKM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748877398; c=relaxed/simple;
-	bh=qbexh9BaOn1zFGKfAzFm7DkzIDbsKOuQMk3I8I4hRPw=;
+	s=arc-20240116; t=1748877402; c=relaxed/simple;
+	bh=wjKW0aKeiGT0Hf9ErfxOK7KIxrdbCRtoBzIl674UZeI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jswlcf5E9JzMTe4BzAWpI0hK+FbVnvbPaI7sv7Z0hH/LAa9xW4Z1UJ3cCvgk6rbBEs/vszWTrH98QCo1f28+Rth9m5JF1uvH5J+gS63CSWlYqu9xzEYWD/qtZ79L4w3IINyEn21wYtfb2gAG/BjjbZbiWvanlg9QiayYuiEEzxM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xV7tTTFU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s3KH1G5UmNwDdFBifflvEfAm5pgC57nO8XrcFmtbFccRKMKSZTHw+6hPgsswGoM3iktSK8fXZ7gbPtjsDB16p8X0UUnUcqKxfmj27BjLWuSXybePgq1CiweFKWG+Kbi0R65QrvOUJauSevbcxJASpSscczy67WyvoBPQGMZr9yQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h36evT7u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xV7tTTFU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9CC7C4CEEB;
-	Mon,  2 Jun 2025 15:16:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h36evT7u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06E9CC4CEEB;
+	Mon,  2 Jun 2025 15:16:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748877398;
-	bh=qbexh9BaOn1zFGKfAzFm7DkzIDbsKOuQMk3I8I4hRPw=;
+	s=korg; t=1748877401;
+	bh=wjKW0aKeiGT0Hf9ErfxOK7KIxrdbCRtoBzIl674UZeI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xV7tTTFUKUdn648R+Uznwplca5+HCaFzC8j/chLi4iAWsL+297f4YPO1OIUxZcxSd
-	 TOhleo6jxIyxijox050nZjYy4s6j1mVGsz3aBpPAbZmNKAqUXmQiaCJ0JWDtsA0oOx
-	 O+SaMxMpBzLeaQKuRw8HFcInDnFRTpYd5AmIR3uQ=
+	b=h36evT7u4H8Ij6EkzX7v8o5R0ffQ8Vg1b4AcUviqeWbHhWjWii5i7Sj/BHqHa5dRr
+	 okYF5leXLkV3CyS8e2fMe9UmlmmklVcA6AYyavlb+05TrvYEs3yP9KwWHfkTCkhyoQ
+	 Fpe7TXZB9umDdEkUpacf8JvIfxk6T2WoYLbqXIPE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Chen-Yu Tsai <wens@csie.org>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 265/325] Revert "arm64: dts: allwinner: h6: Use RSB for AXP805 PMIC connection"
-Date: Mon,  2 Jun 2025 15:49:01 +0200
-Message-ID: <20250602134330.544379504@linuxfoundation.org>
+Subject: [PATCH 6.1 266/325] ksmbd: fix stream write failure
+Date: Mon,  2 Jun 2025 15:49:02 +0200
+Message-ID: <20250602134330.583712381@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134319.723650984@linuxfoundation.org>
 References: <20250602134319.723650984@linuxfoundation.org>
@@ -51,165 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jernej Skrabec <jernej.skrabec@gmail.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 573f99c7585f597630f14596550c79e73ffaeef4 ]
+[ Upstream commit 1f4bbedd4e5a69b01cde2cc21d01151ab2d0884f ]
 
-This reverts commit 531fdbeedeb89bd32018a35c6e137765c9cc9e97.
+If there is no stream data in file, v_len is zero.
+So, If position(*pos) is zero, stream write will fail
+due to stream write position validation check.
+This patch reorganize stream write position validation.
 
-Hardware that uses I2C wasn't designed with high speeds in mind, so
-communication with PMIC via RSB can intermittently fail. Go back to I2C
-as higher speed and efficiency isn't worth the trouble.
-
-Fixes: 531fdbeedeb8 ("arm64: dts: allwinner: h6: Use RSB for AXP805 PMIC connection")
-Link: https://github.com/LibreELEC/LibreELEC.tv/issues/7731
-Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Link: https://patch.msgid.link/20250413135848.67283-1-jernej.skrabec@gmail.com
-Signed-off-by: Chen-Yu Tsai <wens@csie.org>
+Fixes: 0ca6df4f40cf ("ksmbd: prevent out-of-bounds stream writes by validating *pos")
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../dts/allwinner/sun50i-h6-beelink-gs1.dts   | 38 +++++++++----------
- .../dts/allwinner/sun50i-h6-orangepi-3.dts    | 14 +++----
- .../dts/allwinner/sun50i-h6-orangepi.dtsi     | 22 +++++------
- 3 files changed, 37 insertions(+), 37 deletions(-)
+ fs/smb/server/vfs.c | 14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/allwinner/sun50i-h6-beelink-gs1.dts b/arch/arm64/boot/dts/allwinner/sun50i-h6-beelink-gs1.dts
-index 381d58cea092d..c854c7e310519 100644
---- a/arch/arm64/boot/dts/allwinner/sun50i-h6-beelink-gs1.dts
-+++ b/arch/arm64/boot/dts/allwinner/sun50i-h6-beelink-gs1.dts
-@@ -151,28 +151,12 @@
- 	vcc-pg-supply = <&reg_aldo1>;
- };
+diff --git a/fs/smb/server/vfs.c b/fs/smb/server/vfs.c
+index cf1b241a15789..fa647b75fba8a 100644
+--- a/fs/smb/server/vfs.c
++++ b/fs/smb/server/vfs.c
+@@ -423,10 +423,15 @@ static int ksmbd_vfs_stream_write(struct ksmbd_file *fp, char *buf, loff_t *pos,
+ 	ksmbd_debug(VFS, "write stream data pos : %llu, count : %zd\n",
+ 		    *pos, count);
  
--&r_ir {
--	linux,rc-map-name = "rc-beelink-gs1";
--	status = "okay";
--};
--
--&r_pio {
--	/*
--	 * FIXME: We can't add that supply for now since it would
--	 * create a circular dependency between pinctrl, the regulator
--	 * and the RSB Bus.
--	 *
--	 * vcc-pl-supply = <&reg_aldo1>;
--	 */
--	vcc-pm-supply = <&reg_aldo1>;
--};
--
--&r_rsb {
-+&r_i2c {
- 	status = "okay";
- 
--	axp805: pmic@745 {
-+	axp805: pmic@36 {
- 		compatible = "x-powers,axp805", "x-powers,axp806";
--		reg = <0x745>;
-+		reg = <0x36>;
- 		interrupt-parent = <&r_intc>;
- 		interrupts = <GIC_SPI 96 IRQ_TYPE_LEVEL_LOW>;
- 		interrupt-controller;
-@@ -290,6 +274,22 @@
- 	};
- };
- 
-+&r_ir {
-+	linux,rc-map-name = "rc-beelink-gs1";
-+	status = "okay";
-+};
++	if (*pos >= XATTR_SIZE_MAX) {
++		pr_err("stream write position %lld is out of bounds\n",	*pos);
++		return -EINVAL;
++	}
 +
-+&r_pio {
-+	/*
-+	 * PL0 and PL1 are used for PMIC I2C
-+	 * don't enable the pl-supply else
-+	 * it will fail at boot
-+	 *
-+	 * vcc-pl-supply = <&reg_aldo1>;
-+	 */
-+	vcc-pm-supply = <&reg_aldo1>;
-+};
-+
- &spdif {
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&spdif_tx_pin>;
-diff --git a/arch/arm64/boot/dts/allwinner/sun50i-h6-orangepi-3.dts b/arch/arm64/boot/dts/allwinner/sun50i-h6-orangepi-3.dts
-index 6fc65e8db2206..8c476e089185b 100644
---- a/arch/arm64/boot/dts/allwinner/sun50i-h6-orangepi-3.dts
-+++ b/arch/arm64/boot/dts/allwinner/sun50i-h6-orangepi-3.dts
-@@ -175,16 +175,12 @@
- 	vcc-pg-supply = <&reg_vcc_wifi_io>;
- };
+ 	size = *pos + count;
+ 	if (size > XATTR_SIZE_MAX) {
+ 		size = XATTR_SIZE_MAX;
+-		count = (*pos + count) - XATTR_SIZE_MAX;
++		count = XATTR_SIZE_MAX - *pos;
+ 	}
  
--&r_ir {
--	status = "okay";
--};
+ 	v_len = ksmbd_vfs_getcasexattr(user_ns,
+@@ -440,13 +445,6 @@ static int ksmbd_vfs_stream_write(struct ksmbd_file *fp, char *buf, loff_t *pos,
+ 		goto out;
+ 	}
+ 
+-	if (v_len <= *pos) {
+-		pr_err("stream write position %lld is out of bounds (stream length: %zd)\n",
+-				*pos, v_len);
+-		err = -EINVAL;
+-		goto out;
+-	}
 -
--&r_rsb {
-+&r_i2c {
- 	status = "okay";
- 
--	axp805: pmic@745 {
-+	axp805: pmic@36 {
- 		compatible = "x-powers,axp805", "x-powers,axp806";
--		reg = <0x745>;
-+		reg = <0x36>;
- 		interrupt-parent = <&r_intc>;
- 		interrupts = <GIC_SPI 96 IRQ_TYPE_LEVEL_LOW>;
- 		interrupt-controller;
-@@ -295,6 +291,10 @@
- 	};
- };
- 
-+&r_ir {
-+	status = "okay";
-+};
-+
- &rtc {
- 	clocks = <&ext_osc32k>;
- };
-diff --git a/arch/arm64/boot/dts/allwinner/sun50i-h6-orangepi.dtsi b/arch/arm64/boot/dts/allwinner/sun50i-h6-orangepi.dtsi
-index 92745128fcfeb..4ec4996592bef 100644
---- a/arch/arm64/boot/dts/allwinner/sun50i-h6-orangepi.dtsi
-+++ b/arch/arm64/boot/dts/allwinner/sun50i-h6-orangepi.dtsi
-@@ -112,20 +112,12 @@
- 	vcc-pg-supply = <&reg_aldo1>;
- };
- 
--&r_ir {
--	status = "okay";
--};
--
--&r_pio {
--	vcc-pm-supply = <&reg_bldo3>;
--};
--
--&r_rsb {
-+&r_i2c {
- 	status = "okay";
- 
--	axp805: pmic@745 {
-+	axp805: pmic@36 {
- 		compatible = "x-powers,axp805", "x-powers,axp806";
--		reg = <0x745>;
-+		reg = <0x36>;
- 		interrupt-parent = <&r_intc>;
- 		interrupts = <GIC_SPI 96 IRQ_TYPE_LEVEL_LOW>;
- 		interrupt-controller;
-@@ -240,6 +232,14 @@
- 	};
- };
- 
-+&r_ir {
-+	status = "okay";
-+};
-+
-+&r_pio {
-+	vcc-pm-supply = <&reg_bldo3>;
-+};
-+
- &rtc {
- 	clocks = <&ext_osc32k>;
- };
+ 	if (v_len < size) {
+ 		wbuf = kvzalloc(size, GFP_KERNEL);
+ 		if (!wbuf) {
 -- 
 2.39.5
 
