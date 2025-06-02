@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3BA9228CB7;
-	Mon,  2 Jun 2025 15:18:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D27A22FAE1;
+	Mon,  2 Jun 2025 15:18:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748877495; cv=none; b=U9OpicJlHxNxUl76OkzwEGe0aWaCsBAqRkM5IsqUWnVCGZ7ekudtxHIIS80l8ZerbE8N0JGp8BRtonJ4xj/q8A1rRMfbpKv795EVTjjaa64hNTQUNoxTO5z641MDzuetyKrm9IiyG1SePIH11yTF/SAABP9CEDcf0GVLU3JKlw0=
+	t=1748877499; cv=none; b=ISlRcnHJsh6OGcv19VwDiIAIP8rRfvzABAv1GXBnSw0X0GcaE/QcDioIC7/6DUqoMZLNWSB70Tp56sqTnji4h/Iio8Y900hKWIEgafM7adRA+HBRZnBphm67Qh/WStOsPyw661gdrC9YSRfKXDgYE/ue0bFzI8H+sVVn6nMPmSw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748877495; c=relaxed/simple;
-	bh=GfgeLsJ/Y86GduPHRb8gjDC+vqwVC8M6LWnxue8k3YA=;
+	s=arc-20240116; t=1748877499; c=relaxed/simple;
+	bh=OpmdVt2bOQ4zqM08YThd2sY25MGfSDGjh41oPThm4oQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J9cFRX9kZyrjyzosZAMvJPyW+EsWASr2aPt8LSY70AeLOX2JVghed+HzIlBo6/Zr08H0YeZhjEApM5ZtGGeskZCG4UclBA6XDFng2+thWuXbMJS08brLJhPidcXezrgYul+KWzE0Bs1u5uZgGWGKmk8N3zYWlv7GvpaJLUH/Qxg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0iwQxcZ6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hLshCHIF7nnw+hUaHoVLX2N/WACkD+BV84SUvfD4teNhCxyonuzEV14TKPwNrYU6WCmYlWzDYH7laYyIm6rXJC38YhY2T8lGf+6ldES4cozOkmESC5wDQGtLNBJYKuHuopV0f2PujApYf9R27nl16hxC0+NX9ptVjK+cOAhVnwg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A+15uNU1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0iwQxcZ6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21322C4CEEB;
-	Mon,  2 Jun 2025 15:18:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A+15uNU1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66511C4CEEB;
+	Mon,  2 Jun 2025 15:18:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748877495;
-	bh=GfgeLsJ/Y86GduPHRb8gjDC+vqwVC8M6LWnxue8k3YA=;
+	s=korg; t=1748877499;
+	bh=OpmdVt2bOQ4zqM08YThd2sY25MGfSDGjh41oPThm4oQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0iwQxcZ6GO2eyb8yx20jj1XeN22nYRS/Th0aPPS8atfjymoukKel6djL1PkAQFE52
-	 c+kHu+H3SWdBMCGV58lraW9M91t4vFRQpOzqowLD67pBvXFApR4+htDc1iGrAPiH+n
-	 k/QSPCwULH/1G7KIOHi+hp7Siap4KMfo2QFeX+l0=
+	b=A+15uNU1Q7CBoyJw+ssqDvMRcAKgRqLG0KvflAnvqbJ/84rq+EsxL+2G0WlvUxhpw
+	 fmgzGO90d23JDGxr4yRZ2yR/qQSH2zqmAi3V/6msNezuv481lWBLKskgheDBOW3oQj
+	 QFQ79nfO377dDgYi0JI6Y/7Xhub9QBlsb/nldqh4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Lee Jones <lee@kernel.org>
-Subject: [PATCH 6.1 295/325] af_unix: Fix up unix_edge.successor for embryo socket.
-Date: Mon,  2 Jun 2025 15:49:31 +0200
-Message-ID: <20250602134331.889501109@linuxfoundation.org>
+Subject: [PATCH 6.1 296/325] af_unix: Save O(n) setup of Tarjans algo.
+Date: Mon,  2 Jun 2025 15:49:32 +0200
+Message-ID: <20250602134331.930004627@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134319.723650984@linuxfoundation.org>
 References: <20250602134319.723650984@linuxfoundation.org>
@@ -54,129 +54,153 @@ Content-Transfer-Encoding: 8bit
 
 From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-commit dcf70df2048d27c5d186f013f101a4aefd63aa41 upstream.
+commit ba31b4a4e1018f5844c6eb31734976e2184f2f9a upstream.
 
-To garbage collect inflight AF_UNIX sockets, we must define the
-cyclic reference appropriately.  This is a bit tricky if the loop
-consists of embryo sockets.
+Before starting Tarjan's algorithm, we need to mark all vertices
+as unvisited.  We can save this O(n) setup by reserving two special
+indices (0, 1) and using two variables.
 
-Suppose that the fd of AF_UNIX socket A is passed to D and the fd B
-to C and that C and D are embryo sockets of A and B, respectively.
-It may appear that there are two separate graphs, A (-> D) and
-B (-> C), but this is not correct.
+The first time we link a vertex to unix_unvisited_vertices, we set
+unix_vertex_unvisited_index to index.
 
-     A --. .-- B
-          X
-     C <-' `-> D
+During DFS, we can see that the index of unvisited vertices is the
+same as unix_vertex_unvisited_index.
 
-Now, D holds A's refcount, and C has B's refcount, so unix_release()
-will never be called for A and B when we close() them.  However, no
-one can call close() for D and C to free skbs holding refcounts of A
-and B because C/D is in A/B's receive queue, which should have been
-purged by unix_release() for A and B.
+When we finalise SCC later, we set unix_vertex_grouped_index to each
+vertex's index.
 
-So, here's another type of cyclic reference.  When a fd of an AF_UNIX
-socket is passed to an embryo socket, the reference is indirectly held
-by its parent listening socket.
+Then, we can know (i) that the vertex is on the stack if the index
+of a visited vertex is >= 2 and (ii) that it is not on the stack and
+belongs to a different SCC if the index is unix_vertex_grouped_index.
 
-  .-> A                            .-> B
-  |   `- sk_receive_queue          |   `- sk_receive_queue
-  |      `- skb                    |      `- skb
-  |         `- sk == C             |         `- sk == D
-  |            `- sk_receive_queue |           `- sk_receive_queue
-  |               `- skb +---------'               `- skb +-.
-  |                                                         |
-  `---------------------------------------------------------'
+After the whole algorithm, all indices of vertices are set as
+unix_vertex_grouped_index.
 
-Technically, the graph must be denoted as A <-> B instead of A (-> D)
-and B (-> C) to find such a cyclic reference without touching each
-socket's receive queue.
+Next time we start DFS, we know that all unvisited vertices have
+unix_vertex_grouped_index, and we can use unix_vertex_unvisited_index
+as the not-on-stack marker.
 
-  .-> A --. .-- B <-.
-  |        X        |  ==  A <-> B
-  `-- C <-' `-> D --'
-
-We apply this fixup during GC by fetching the real successor by
-unix_edge_successor().
-
-When we call accept(), we clear unix_sock.listener under unix_gc_lock
-not to confuse GC.
+To use the same variable in __unix_walk_scc(), we can swap
+unix_vertex_(grouped|unvisited)_index at the end of Tarjan's
+algorithm.
 
 Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
 Acked-by: Paolo Abeni <pabeni@redhat.com>
-Link: https://lore.kernel.org/r/20240325202425.60930-9-kuniyu@amazon.com
+Link: https://lore.kernel.org/r/20240325202425.60930-10-kuniyu@amazon.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/af_unix.h |    1 +
- net/unix/af_unix.c    |    2 +-
- net/unix/garbage.c    |   20 +++++++++++++++++++-
- 3 files changed, 21 insertions(+), 2 deletions(-)
+ include/net/af_unix.h |    1 -
+ net/unix/garbage.c    |   26 +++++++++++++++-----------
+ 2 files changed, 15 insertions(+), 12 deletions(-)
 
 --- a/include/net/af_unix.h
 +++ b/include/net/af_unix.h
-@@ -24,6 +24,7 @@ void unix_inflight(struct user_struct *u
- void unix_notinflight(struct user_struct *user, struct file *fp);
- void unix_add_edges(struct scm_fp_list *fpl, struct unix_sock *receiver);
- void unix_del_edges(struct scm_fp_list *fpl);
-+void unix_update_edges(struct unix_sock *receiver);
- int unix_prepare_fpl(struct scm_fp_list *fpl);
- void unix_destroy_fpl(struct scm_fp_list *fpl);
- void unix_gc(void);
---- a/net/unix/af_unix.c
-+++ b/net/unix/af_unix.c
-@@ -1679,7 +1679,7 @@ static int unix_accept(struct socket *so
- 	}
+@@ -37,7 +37,6 @@ struct unix_vertex {
+ 	unsigned long out_degree;
+ 	unsigned long index;
+ 	unsigned long lowlink;
+-	bool on_stack;
+ };
  
- 	tsk = skb->sk;
--	unix_sk(tsk)->listener = NULL;
-+	unix_update_edges(unix_sk(tsk));
- 	skb_free_datagram(sk, skb);
- 	wake_up_interruptible(&unix_sk(sk)->peer_wait);
- 
+ struct unix_edge {
 --- a/net/unix/garbage.c
 +++ b/net/unix/garbage.c
-@@ -101,6 +101,17 @@ struct unix_sock *unix_get_socket(struct
- 	return NULL;
- }
- 
-+static struct unix_vertex *unix_edge_successor(struct unix_edge *edge)
-+{
-+	/* If an embryo socket has a fd,
-+	 * the listener indirectly holds the fd's refcnt.
-+	 */
-+	if (edge->successor->listener)
-+		return unix_sk(edge->successor->listener)->vertex;
-+
-+	return edge->successor->vertex;
-+}
-+
+@@ -115,16 +115,20 @@ static struct unix_vertex *unix_edge_suc
  static LIST_HEAD(unix_unvisited_vertices);
  
  enum unix_vertex_index {
-@@ -209,6 +220,13 @@ out:
- 	fpl->inflight = false;
+-	UNIX_VERTEX_INDEX_UNVISITED,
++	UNIX_VERTEX_INDEX_MARK1,
++	UNIX_VERTEX_INDEX_MARK2,
+ 	UNIX_VERTEX_INDEX_START,
+ };
+ 
++static unsigned long unix_vertex_unvisited_index = UNIX_VERTEX_INDEX_MARK1;
++
+ static void unix_add_edge(struct scm_fp_list *fpl, struct unix_edge *edge)
+ {
+ 	struct unix_vertex *vertex = edge->predecessor->vertex;
+ 
+ 	if (!vertex) {
+ 		vertex = list_first_entry(&fpl->vertices, typeof(*vertex), entry);
++		vertex->index = unix_vertex_unvisited_index;
+ 		vertex->out_degree = 0;
+ 		INIT_LIST_HEAD(&vertex->edges);
+ 
+@@ -265,6 +269,7 @@ void unix_destroy_fpl(struct scm_fp_list
  }
  
-+void unix_update_edges(struct unix_sock *receiver)
-+{
-+	spin_lock(&unix_gc_lock);
-+	receiver->listener = NULL;
-+	spin_unlock(&unix_gc_lock);
-+}
-+
- int unix_prepare_fpl(struct scm_fp_list *fpl)
+ static LIST_HEAD(unix_visited_vertices);
++static unsigned long unix_vertex_grouped_index = UNIX_VERTEX_INDEX_MARK2;
+ 
+ static void __unix_walk_scc(struct unix_vertex *vertex)
  {
- 	struct unix_vertex *vertex;
-@@ -268,7 +286,7 @@ next_vertex:
+@@ -274,10 +279,10 @@ static void __unix_walk_scc(struct unix_
+ 	LIST_HEAD(edge_stack);
  
- 	/* Explore neighbour vertices (receivers of the current vertex's fd). */
- 	list_for_each_entry(edge, &vertex->edges, vertex_entry) {
--		struct unix_vertex *next_vertex = edge->successor->vertex;
-+		struct unix_vertex *next_vertex = unix_edge_successor(edge);
+ next_vertex:
+-	/* Push vertex to vertex_stack.
++	/* Push vertex to vertex_stack and mark it as on-stack
++	 * (index >= UNIX_VERTEX_INDEX_START).
+ 	 * The vertex will be popped when finalising SCC later.
+ 	 */
+-	vertex->on_stack = true;
+ 	list_add(&vertex->scc_entry, &vertex_stack);
  
+ 	vertex->index = index;
+@@ -291,7 +296,7 @@ next_vertex:
  		if (!next_vertex)
  			continue;
+ 
+-		if (next_vertex->index == UNIX_VERTEX_INDEX_UNVISITED) {
++		if (next_vertex->index == unix_vertex_unvisited_index) {
+ 			/* Iterative deepening depth first search
+ 			 *
+ 			 *   1. Push a forward edge to edge_stack and set
+@@ -317,7 +322,7 @@ prev_vertex:
+ 			 * to skip SCC finalisation.
+ 			 */
+ 			vertex->lowlink = min(vertex->lowlink, next_vertex->lowlink);
+-		} else if (next_vertex->on_stack) {
++		} else if (next_vertex->index != unix_vertex_grouped_index) {
+ 			/* Loop detected by a back/cross edge.
+ 			 *
+ 			 * The successor is on vertex_stack, so two vertices are
+@@ -344,7 +349,8 @@ prev_vertex:
+ 			/* Don't restart DFS from this vertex in unix_walk_scc(). */
+ 			list_move_tail(&vertex->entry, &unix_visited_vertices);
+ 
+-			vertex->on_stack = false;
++			/* Mark vertex as off-stack. */
++			vertex->index = unix_vertex_grouped_index;
+ 		}
+ 
+ 		list_del(&scc);
+@@ -357,20 +363,18 @@ prev_vertex:
+ 
+ static void unix_walk_scc(void)
+ {
+-	struct unix_vertex *vertex;
+-
+-	list_for_each_entry(vertex, &unix_unvisited_vertices, entry)
+-		vertex->index = UNIX_VERTEX_INDEX_UNVISITED;
+-
+ 	/* Visit every vertex exactly once.
+ 	 * __unix_walk_scc() moves visited vertices to unix_visited_vertices.
+ 	 */
+ 	while (!list_empty(&unix_unvisited_vertices)) {
++		struct unix_vertex *vertex;
++
+ 		vertex = list_first_entry(&unix_unvisited_vertices, typeof(*vertex), entry);
+ 		__unix_walk_scc(vertex);
+ 	}
+ 
+ 	list_replace_init(&unix_visited_vertices, &unix_unvisited_vertices);
++	swap(unix_vertex_unvisited_index, unix_vertex_grouped_index);
+ }
+ 
+ static LIST_HEAD(gc_candidates);
 
 
