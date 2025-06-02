@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91AF61DE881;
-	Mon,  2 Jun 2025 14:08:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 428E6221FAA;
+	Mon,  2 Jun 2025 14:08:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748873319; cv=none; b=lpMb10uFbVPT9FGjPGVAtmNloWaMnNV9+Q3+Fm/KOKZlmoLgE/Sho77VWYChW128iQgmBU+wJbGrAebTP6fqZFL0nfpd8RBwLm5iQNT+gwUj6oOU1AsnQzQwXHvFRGJQw4DqKzMHgv5Ka4To9OcLHviwaWnd7GVHWQiK2cKefVw=
+	t=1748873323; cv=none; b=kk1GS97oo8utIYPbOWxpu3nvfNF5iG6lfrDtOhucRRBbLo4XBppUv/qAiwe3bEkDbPqLl6r7upfLtm/OAGMmDLKocFMCgttcnkN5wga5V8oV7tZwLboRGlMKQZUfT6YhbMWj2MGxjEpPvkgyquJVPrMbL35a1MziCDqoKbwjQyI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748873319; c=relaxed/simple;
-	bh=NOHgCKLVj275M3cK9n+osij5ubizLf6HXIVjtMookTs=;
+	s=arc-20240116; t=1748873323; c=relaxed/simple;
+	bh=XDySgHBAhOLz/7KBefjgYr+VxTJWOzcpxje6cHedfZ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TIb11UggcTlIpVFSToX44hgZualjXCMXXBu3P4xjq2VaaSRpT+UegOqHmgEjIfiWrRbgnseYeAUxyZYGgbm+GkSf56kDsod3634JdDRokxSlbbfZJZoW55lvyrpA2ioRNogxUQBOCDSEM+CfGpxjQ4hW7JDrgvtqzXb6W9yRoUs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RBN74QTF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BJCW5pK0g/8AWi89n7uq1+EIOpB34FkBxwFXOfjpKUti7bt7DHUDXum7PeMBaJnN9+8ycXyFprc/Y/V46uax/uexUkMpCAMVTfJ3+r/etWlGYLqPXrec7/005ad7o7Ajy9uHJgKoDfnzq49TMreJQ2zqu9CR1+Vaf27bNGumcLY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XZVUvq3d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RBN74QTF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00D73C4CEEB;
-	Mon,  2 Jun 2025 14:08:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XZVUvq3d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 437EEC4CEEB;
+	Mon,  2 Jun 2025 14:08:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748873319;
-	bh=NOHgCKLVj275M3cK9n+osij5ubizLf6HXIVjtMookTs=;
+	s=korg; t=1748873322;
+	bh=XDySgHBAhOLz/7KBefjgYr+VxTJWOzcpxje6cHedfZ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RBN74QTFJSrlH+SC4zhkzJHMn5dDmGoTzCu7aKsEvA5+ZnmcpFeaYykY2fEgOdxrY
-	 6jsWgNzl9nx6uOoAMuTJRiJLDp8jtmycXvNPClPbnHnTpWwmcc/OZR9COMZW1AvAYG
-	 qGXU4C4Il/1CcMaEREJ9CWpsMMs1bdbCgGszoIN4=
+	b=XZVUvq3dYVpdkWM6n+CzJ6ZBryNccGPhifiA1Hsg6l5blyCnoB6xNyQWt14dgRGK3
+	 kfTXkioAESPjtM7iFs+ASn159STB+ibMxiAMUGprDB4sDETbX/BORniH9Whyc9qek+
+	 SP4rEivgfYre7Q8KKgqOvQAYr5GeTsC9MEe3JMP0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Prathamesh Shete <pshete@nvidia.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 077/444] btrfs: run btrfs_error_commit_super() early
-Date: Mon,  2 Jun 2025 15:42:21 +0200
-Message-ID: <20250602134344.034534588@linuxfoundation.org>
+Subject: [PATCH 6.6 104/444] pinctrl-tegra: Restore SFSEL bit when freeing pins
+Date: Mon,  2 Jun 2025 15:42:48 +0200
+Message-ID: <20250602134345.124885855@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -52,96 +51,181 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Prathamesh Shete <pshete@nvidia.com>
 
-[ Upstream commit df94a342efb451deb0e32b495d1d6cd4bb3a1648 ]
+[ Upstream commit c12bfa0fee65940b10ff5187349f76c6f6b1df9c ]
 
-[BUG]
-Even after all the error fixes related the
-"ASSERT(list_empty(&fs_info->delayed_iputs));" in close_ctree(), I can
-still hit it reliably with my experimental 2K block size.
+Each pin can be configured as a Special Function IO (SFIO) or GPIO,
+where the SFIO enables the pin to operate in alternative modes such as
+I2C, SPI, etc.
 
-[CAUSE]
-In my case, all the error is triggered after the fs is already in error
-status.
+The current implementation sets all the pins back to SFIO mode
+even if they were initially in GPIO mode. This can cause glitches
+on the pins when pinctrl_gpio_free() is called.
 
-I find the following call trace to be the cause of race:
+Avoid these undesired glitches by storing the pin's SFIO/GPIO
+state on GPIO request and restoring it on GPIO free.
 
-           Main thread                       |     endio_write_workers
----------------------------------------------+---------------------------
-close_ctree()                                |
-|- btrfs_error_commit_super()                |
-|  |- btrfs_cleanup_transaction()            |
-|  |  |- btrfs_destroy_all_ordered_extents() |
-|  |     |- btrfs_wait_ordered_roots()       |
-|  |- btrfs_run_delayed_iputs()              |
-|                                            | btrfs_finish_ordered_io()
-|                                            | |- btrfs_put_ordered_extent()
-|                                            |    |- btrfs_add_delayed_iput()
-|- ASSERT(list_empty(delayed_iputs))         |
-   !!! Triggered !!!
-
-The root cause is that, btrfs_wait_ordered_roots() only wait for
-ordered extents to finish their IOs, not to wait for them to finish and
-removed.
-
-[FIX]
-Since btrfs_error_commit_super() will flush and wait for all ordered
-extents, it should be executed early, before we start flushing the
-workqueues.
-
-And since btrfs_error_commit_super() now runs early, there is no need to
-run btrfs_run_delayed_iputs() inside it, so just remove the
-btrfs_run_delayed_iputs() call from btrfs_error_commit_super().
-
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Prathamesh Shete <pshete@nvidia.com>
+Link: https://lore.kernel.org/20250305104939.15168-2-pshete@nvidia.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/disk-io.c | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ drivers/pinctrl/tegra/pinctrl-tegra.c | 59 +++++++++++++++++++++++----
+ drivers/pinctrl/tegra/pinctrl-tegra.h |  6 +++
+ 2 files changed, 57 insertions(+), 8 deletions(-)
 
-diff --git a/fs/btrfs/disk-io.c b/fs/btrfs/disk-io.c
-index 2387210231f23..1e1650012606e 100644
---- a/fs/btrfs/disk-io.c
-+++ b/fs/btrfs/disk-io.c
-@@ -4313,6 +4313,14 @@ void __cold close_ctree(struct btrfs_fs_info *fs_info)
- 	/* clear out the rbtree of defraggable inodes */
- 	btrfs_cleanup_defrag_inodes(fs_info);
+diff --git a/drivers/pinctrl/tegra/pinctrl-tegra.c b/drivers/pinctrl/tegra/pinctrl-tegra.c
+index 7c12a3470642c..1350ab56fbc03 100644
+--- a/drivers/pinctrl/tegra/pinctrl-tegra.c
++++ b/drivers/pinctrl/tegra/pinctrl-tegra.c
+@@ -280,8 +280,8 @@ static int tegra_pinctrl_set_mux(struct pinctrl_dev *pctldev,
+ 	return 0;
+ }
  
-+	/*
-+	 * Handle the error fs first, as it will flush and wait for all ordered
-+	 * extents.  This will generate delayed iputs, thus we want to handle
-+	 * it first.
-+	 */
-+	if (unlikely(BTRFS_FS_ERROR(fs_info)))
-+		btrfs_error_commit_super(fs_info);
-+
- 	/*
- 	 * Wait for any fixup workers to complete.
- 	 * If we don't wait for them here and they are still running by the time
-@@ -4402,9 +4410,6 @@ void __cold close_ctree(struct btrfs_fs_info *fs_info)
- 			btrfs_err(fs_info, "commit super ret %d", ret);
+-static const struct tegra_pingroup *tegra_pinctrl_get_group(struct pinctrl_dev *pctldev,
+-					unsigned int offset)
++static int tegra_pinctrl_get_group_index(struct pinctrl_dev *pctldev,
++					 unsigned int offset)
+ {
+ 	struct tegra_pmx *pmx = pinctrl_dev_get_drvdata(pctldev);
+ 	unsigned int group, num_pins, j;
+@@ -294,12 +294,35 @@ static const struct tegra_pingroup *tegra_pinctrl_get_group(struct pinctrl_dev *
+ 			continue;
+ 		for (j = 0; j < num_pins; j++) {
+ 			if (offset == pins[j])
+-				return &pmx->soc->groups[group];
++				return group;
+ 		}
  	}
  
--	if (BTRFS_FS_ERROR(fs_info))
--		btrfs_error_commit_super(fs_info);
--
- 	kthread_stop(fs_info->transaction_kthread);
- 	kthread_stop(fs_info->cleaner_kthread);
- 
-@@ -4541,10 +4546,6 @@ static void btrfs_error_commit_super(struct btrfs_fs_info *fs_info)
- 	/* cleanup FS via transaction */
- 	btrfs_cleanup_transaction(fs_info);
- 
--	mutex_lock(&fs_info->cleaner_mutex);
--	btrfs_run_delayed_iputs(fs_info);
--	mutex_unlock(&fs_info->cleaner_mutex);
--
- 	down_write(&fs_info->cleanup_work_sem);
- 	up_write(&fs_info->cleanup_work_sem);
+-	dev_err(pctldev->dev, "Pingroup not found for pin %u\n", offset);
+-	return NULL;
++	return -EINVAL;
++}
++
++static const struct tegra_pingroup *tegra_pinctrl_get_group(struct pinctrl_dev *pctldev,
++							    unsigned int offset,
++							    int group_index)
++{
++	struct tegra_pmx *pmx = pinctrl_dev_get_drvdata(pctldev);
++
++	if (group_index < 0 || group_index > pmx->soc->ngroups)
++		return NULL;
++
++	return &pmx->soc->groups[group_index];
++}
++
++static struct tegra_pingroup_config *tegra_pinctrl_get_group_config(struct pinctrl_dev *pctldev,
++								    unsigned int offset,
++								    int group_index)
++{
++	struct tegra_pmx *pmx = pinctrl_dev_get_drvdata(pctldev);
++
++	if (group_index < 0)
++		return NULL;
++
++	return &pmx->pingroup_configs[group_index];
  }
+ 
+ static int tegra_pinctrl_gpio_request_enable(struct pinctrl_dev *pctldev,
+@@ -308,12 +331,15 @@ static int tegra_pinctrl_gpio_request_enable(struct pinctrl_dev *pctldev,
+ {
+ 	struct tegra_pmx *pmx = pinctrl_dev_get_drvdata(pctldev);
+ 	const struct tegra_pingroup *group;
++	struct tegra_pingroup_config *config;
++	int group_index;
+ 	u32 value;
+ 
+ 	if (!pmx->soc->sfsel_in_mux)
+ 		return 0;
+ 
+-	group = tegra_pinctrl_get_group(pctldev, offset);
++	group_index = tegra_pinctrl_get_group_index(pctldev, offset);
++	group = tegra_pinctrl_get_group(pctldev, offset, group_index);
+ 
+ 	if (!group)
+ 		return -EINVAL;
+@@ -321,7 +347,11 @@ static int tegra_pinctrl_gpio_request_enable(struct pinctrl_dev *pctldev,
+ 	if (group->mux_reg < 0 || group->sfsel_bit < 0)
+ 		return -EINVAL;
+ 
++	config = tegra_pinctrl_get_group_config(pctldev, offset, group_index);
++	if (!config)
++		return -EINVAL;
+ 	value = pmx_readl(pmx, group->mux_bank, group->mux_reg);
++	config->is_sfsel = (value & BIT(group->sfsel_bit)) != 0;
+ 	value &= ~BIT(group->sfsel_bit);
+ 	pmx_writel(pmx, value, group->mux_bank, group->mux_reg);
+ 
+@@ -334,12 +364,15 @@ static void tegra_pinctrl_gpio_disable_free(struct pinctrl_dev *pctldev,
+ {
+ 	struct tegra_pmx *pmx = pinctrl_dev_get_drvdata(pctldev);
+ 	const struct tegra_pingroup *group;
++	struct tegra_pingroup_config *config;
++	int group_index;
+ 	u32 value;
+ 
+ 	if (!pmx->soc->sfsel_in_mux)
+ 		return;
+ 
+-	group = tegra_pinctrl_get_group(pctldev, offset);
++	group_index = tegra_pinctrl_get_group_index(pctldev, offset);
++	group = tegra_pinctrl_get_group(pctldev, offset, group_index);
+ 
+ 	if (!group)
+ 		return;
+@@ -347,8 +380,12 @@ static void tegra_pinctrl_gpio_disable_free(struct pinctrl_dev *pctldev,
+ 	if (group->mux_reg < 0 || group->sfsel_bit < 0)
+ 		return;
+ 
++	config = tegra_pinctrl_get_group_config(pctldev, offset, group_index);
++	if (!config)
++		return;
+ 	value = pmx_readl(pmx, group->mux_bank, group->mux_reg);
+-	value |= BIT(group->sfsel_bit);
++	if (config->is_sfsel)
++		value |= BIT(group->sfsel_bit);
+ 	pmx_writel(pmx, value, group->mux_bank, group->mux_reg);
+ }
+ 
+@@ -785,6 +822,12 @@ int tegra_pinctrl_probe(struct platform_device *pdev,
+ 	pmx->dev = &pdev->dev;
+ 	pmx->soc = soc_data;
+ 
++	pmx->pingroup_configs = devm_kcalloc(&pdev->dev,
++					     pmx->soc->ngroups, sizeof(*pmx->pingroup_configs),
++					     GFP_KERNEL);
++	if (!pmx->pingroup_configs)
++		return -ENOMEM;
++
+ 	/*
+ 	 * Each mux group will appear in 4 functions' list of groups.
+ 	 * This over-allocates slightly, since not all groups are mux groups.
+diff --git a/drivers/pinctrl/tegra/pinctrl-tegra.h b/drivers/pinctrl/tegra/pinctrl-tegra.h
+index b3289bdf727d8..b97136685f7a8 100644
+--- a/drivers/pinctrl/tegra/pinctrl-tegra.h
++++ b/drivers/pinctrl/tegra/pinctrl-tegra.h
+@@ -8,6 +8,10 @@
+ #ifndef __PINMUX_TEGRA_H__
+ #define __PINMUX_TEGRA_H__
+ 
++struct tegra_pingroup_config {
++	bool is_sfsel;
++};
++
+ struct tegra_pmx {
+ 	struct device *dev;
+ 	struct pinctrl_dev *pctl;
+@@ -21,6 +25,8 @@ struct tegra_pmx {
+ 	int nbanks;
+ 	void __iomem **regs;
+ 	u32 *backup_regs;
++	/* Array of size soc->ngroups */
++	struct tegra_pingroup_config *pingroup_configs;
+ };
+ 
+ enum tegra_pinconf_param {
 -- 
 2.39.5
 
