@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 528AC225A40;
-	Mon,  2 Jun 2025 14:28:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94BD322330F;
+	Mon,  2 Jun 2025 14:28:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748874502; cv=none; b=DZxz/B/JhuCwtK1fmsFv4YAAYBAH69CYD4kU0tTX+tKM5Pdco9c9rNPQN4zdPqwVGwry/2Kjd/QyWmxIksXveaZRWjCf11ftBGGP/GvCfUD+vUzvqO3drOqtai4PvkpiknJ5l/hA4pafgA2avh9Ip6/DhtmAVkIAEWBSFm5hTO8=
+	t=1748874505; cv=none; b=nrsSXzbs1e0ifSfm8vMfKSDpj9MhduKsFpSpd4HV/cMB2Uiwk0UbVEZev0jeVwMj62qkbLU+Np92vYi8SP4cm59IqQ85CN7/qe5ZiilbGF79jxjs5FsBFLCPDbj9/+yTPpbP0j31BfVbaEBxioYYPmMUoQE0Th8zoL7pE8S2qHQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748874502; c=relaxed/simple;
-	bh=Ysp4nXXfqm2amGwjDfEZATrVBKueMUxZRX8U6wuC6Cw=;
+	s=arc-20240116; t=1748874505; c=relaxed/simple;
+	bh=veFrhGgbtKcj03KIX/feQUx1EuMmKO95VLnAgmssvtc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qy6LrRTjDMcYVG48OqTN3Z6C8jA9nvHhfdwF/eqGTh2MDquhhDT/MlFlcc9oTzrmX4NzdPACkYdKz2HF4LbxPPesJoK+j+hdho9SX0iJ7HPC4GDssmg94+kEyDUHuPxtpLtpQnsmKCnSBqk06FCZ/eIeL19IHyJfhZJGCMT7aUw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h5JgGEB5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WPoFmnxJoqHJMf5wCEWfQmClARpbSoyM6pHqi55w0p8g7ys/2Xj+7FnIgsYyqjcXsIENYipcpeAea3bspanx9zvY8DqUsiweTY6IZtDoxIff7OBH2o5q2+Tj8LkhP79gNou+ybZiQbHkVJDY5EeWAvsAm/2qfAFMla0pg0ytftg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zAe9kCz3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h5JgGEB5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1695C4CEEB;
-	Mon,  2 Jun 2025 14:28:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zAe9kCz3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE85BC4CEEB;
+	Mon,  2 Jun 2025 14:28:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748874502;
-	bh=Ysp4nXXfqm2amGwjDfEZATrVBKueMUxZRX8U6wuC6Cw=;
+	s=korg; t=1748874505;
+	bh=veFrhGgbtKcj03KIX/feQUx1EuMmKO95VLnAgmssvtc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h5JgGEB51kTGF9pHmgJs8MS8lb2xRuGeDwrV6RTSqQgaGZ05LiExNdiwMgUYru0iN
-	 Kk3ij1db1t1J5CfK9hn03iqjgIbWJTTnSdpNbZg/BSYvH1zCs37dJU5OEFVotcyAS1
-	 MMh1emm6xCu0hdeN08T800H20Ixqm/Km/B5+bELM=
+	b=zAe9kCz3Y8SsfnnaxdC7ClQwXMHPQxV0NjfvOJTLUuZIkytvdGZrU1NGm5xAZ1KBe
+	 xDn/T4vq4p+PhRwkdYsdZt4xFXiv2VjhHflVldDywdR2EWXOfHRW2/f3DJcx+u16s0
+	 wps3sWpPvP2RC6rhO9p22CRHctEOt5/OFPT+Le/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Victor Nogueira <victor@mojatatu.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 013/204] net_sched: qfq: Fix double list add in class with netem as child qdisc
-Date: Mon,  2 Jun 2025 15:45:46 +0200
-Message-ID: <20250602134256.012806339@linuxfoundation.org>
+	Helge Deller <deller@gmx.de>,
+	John David Anglin <dave.anglin@bell.net>,
+	Camm Maguire <camm@maguirefamily.org>
+Subject: [PATCH 5.4 004/204] parisc: Fix double SIGFPE crash
+Date: Mon,  2 Jun 2025 15:45:37 +0200
+Message-ID: <20250602134255.638930986@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134255.449974357@linuxfoundation.org>
 References: <20250602134255.449974357@linuxfoundation.org>
@@ -52,76 +51,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Victor Nogueira <victor@mojatatu.com>
+From: Helge Deller <deller@gmx.de>
 
-[ Upstream commit f139f37dcdf34b67f5bf92bc8e0f7f6b3ac63aa4 ]
+commit de3629baf5a33af1919dec7136d643b0662e85ef upstream.
 
-As described in Gerrard's report [1], there are use cases where a netem
-child qdisc will make the parent qdisc's enqueue callback reentrant.
-In the case of qfq, there won't be a UAF, but the code will add the same
-classifier to the list twice, which will cause memory corruption.
+Camm noticed that on parisc a SIGFPE exception will crash an application with
+a second SIGFPE in the signal handler.  Dave analyzed it, and it happens
+because glibc uses a double-word floating-point store to atomically update
+function descriptors. As a result of lazy binding, we hit a floating-point
+store in fpe_func almost immediately.
 
-This patch checks whether the class was already added to the agg->active
-list (cl_is_active) before doing the addition to cater for the reentrant
-case.
+When the T bit is set, an assist exception trap occurs when when the
+co-processor encounters *any* floating-point instruction except for a double
+store of register %fr0.  The latter cancels all pending traps.  Let's fix this
+by clearing the Trap (T) bit in the FP status register before returning to the
+signal handler in userspace.
 
-[1] https://lore.kernel.org/netdev/CAHcdcOm+03OD2j6R0=YHKqmy=VgJ8xEOKuP6c7mSgnp-TEJJbw@mail.gmail.com/
+The issue can be reproduced with this test program:
 
-Fixes: 37d9cf1a3ce3 ("sched: Fix detection of empty queues in child qdiscs")
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Signed-off-by: Victor Nogueira <victor@mojatatu.com>
-Link: https://patch.msgid.link/20250425220710.3964791-5-victor@mojatatu.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+root@parisc:~# cat fpe.c
+
+static void fpe_func(int sig, siginfo_t *i, void *v) {
+        sigset_t set;
+        sigemptyset(&set);
+        sigaddset(&set, SIGFPE);
+        sigprocmask(SIG_UNBLOCK, &set, NULL);
+        printf("GOT signal %d with si_code %ld\n", sig, i->si_code);
+}
+
+int main() {
+        struct sigaction action = {
+                .sa_sigaction = fpe_func,
+                .sa_flags = SA_RESTART|SA_SIGINFO };
+        sigaction(SIGFPE, &action, 0);
+        feenableexcept(FE_OVERFLOW);
+        return printf("%lf\n",1.7976931348623158E308*1.7976931348623158E308);
+}
+
+root@parisc:~# gcc fpe.c -lm
+root@parisc:~# ./a.out
+ Floating point exception
+
+root@parisc:~# strace -f ./a.out
+ execve("./a.out", ["./a.out"], 0xf9ac7034 /* 20 vars */) = 0
+ getrlimit(RLIMIT_STACK, {rlim_cur=8192*1024, rlim_max=RLIM_INFINITY}) = 0
+ ...
+ rt_sigaction(SIGFPE, {sa_handler=0x1110a, sa_mask=[], sa_flags=SA_RESTART|SA_SIGINFO}, NULL, 8) = 0
+ --- SIGFPE {si_signo=SIGFPE, si_code=FPE_FLTOVF, si_addr=0x1078f} ---
+ --- SIGFPE {si_signo=SIGFPE, si_code=FPE_FLTOVF, si_addr=0xf8f21237} ---
+ +++ killed by SIGFPE +++
+ Floating point exception
+
+Signed-off-by: Helge Deller <deller@gmx.de>
+Suggested-by: John David Anglin <dave.anglin@bell.net>
+Reported-by: Camm Maguire <camm@maguirefamily.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/sch_qfq.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ arch/parisc/math-emu/driver.c |   16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
 
-diff --git a/net/sched/sch_qfq.c b/net/sched/sch_qfq.c
-index 6e9e3405f26b9..c466d255f7865 100644
---- a/net/sched/sch_qfq.c
-+++ b/net/sched/sch_qfq.c
-@@ -203,6 +203,11 @@ struct qfq_sched {
-  */
- enum update_reason {enqueue, requeue};
+--- a/arch/parisc/math-emu/driver.c
++++ b/arch/parisc/math-emu/driver.c
+@@ -103,9 +103,19 @@ handle_fpe(struct pt_regs *regs)
  
-+static bool cl_is_active(struct qfq_class *cl)
-+{
-+	return !list_empty(&cl->alist);
-+}
+ 	memcpy(regs->fr, frcopy, sizeof regs->fr);
+ 	if (signalcode != 0) {
+-	    force_sig_fault(signalcode >> 24, signalcode & 0xffffff,
+-			    (void __user *) regs->iaoq[0]);
+-	    return -1;
++		int sig = signalcode >> 24;
 +
- static struct qfq_class *qfq_find_class(struct Qdisc *sch, u32 classid)
- {
- 	struct qfq_sched *q = qdisc_priv(sch);
-@@ -1218,7 +1223,6 @@ static int qfq_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 	struct qfq_class *cl;
- 	struct qfq_aggregate *agg;
- 	int err = 0;
--	bool first;
- 
- 	cl = qfq_classify(skb, sch, &err);
- 	if (cl == NULL) {
-@@ -1240,7 +1244,6 @@ static int qfq_enqueue(struct sk_buff *skb, struct Qdisc *sch,
++		if (sig == SIGFPE) {
++			/*
++			 * Clear floating point trap bit to avoid trapping
++			 * again on the first floating-point instruction in
++			 * the userspace signal handler.
++			 */
++			regs->fr[0] &= ~(1ULL << 38);
++		}
++		force_sig_fault(sig, signalcode & 0xffffff,
++				(void __user *) regs->iaoq[0]);
++		return -1;
  	}
  
- 	gso_segs = skb_is_gso(skb) ? skb_shinfo(skb)->gso_segs : 1;
--	first = !cl->qdisc->q.qlen;
- 	err = qdisc_enqueue(skb, cl->qdisc, to_free);
- 	if (unlikely(err != NET_XMIT_SUCCESS)) {
- 		pr_debug("qfq_enqueue: enqueue failed %d\n", err);
-@@ -1257,8 +1260,8 @@ static int qfq_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 	++sch->q.qlen;
- 
- 	agg = cl->agg;
--	/* if the queue was not empty, then done here */
--	if (!first) {
-+	/* if the class is active, then done here */
-+	if (cl_is_active(cl)) {
- 		if (unlikely(skb == cl->qdisc->ops->peek(cl->qdisc)) &&
- 		    list_first_entry(&agg->active, struct qfq_class, alist)
- 		    == cl && cl->deficit < len)
--- 
-2.39.5
-
+ 	return signalcode ? -1 : 0;
 
 
