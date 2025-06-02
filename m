@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A5C5223DCD;
-	Mon,  2 Jun 2025 14:13:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B74AA221540;
+	Mon,  2 Jun 2025 14:13:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748873604; cv=none; b=JmA+AKV+rbpY7L6rg61R8cr0nVCStisKaGCLLT+ZagFgR4JEqijr4gRqFjjCHBcPRq6NIPXTxGMyxaMf6U+YHUAaNt/UFzSa7m+XoIu0oLjdJEoNYV9B0rjuI/kFCt7rq2BKb6UNyZP38AOyxdYj0e2+iO0E6KG0pmMyH4/IIT8=
+	t=1748873607; cv=none; b=WsYjSBP2Kcp5AGlZBl4uZ48Ne7AwuLhRNlfidCzDSgeYunLbTCTVQ72c1kwTJBkqWse7i5kuAV5uMwLYWfBcZF/1zlcvi0DMLRXA1tMUBZuELqzqbMru0QseGYbku9EsOputnYcfOAMQSee3RA/ZJqifywlGIv+nysbV5B5UrwU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748873604; c=relaxed/simple;
-	bh=+EudsxkFTmGmalO394TS5auymGYP+mhG/4rjZh0Jl2M=;
+	s=arc-20240116; t=1748873607; c=relaxed/simple;
+	bh=jZOU76eMjB3xociib8tmLf9M1x5qFXpJ+23E+g+aOTk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g47c9+rIMoAycEdPwQqlNxWhDSqzX/ylYegZItbhFadaGWGA+5+x5UKJEJl4WyNmhurLNtp0cHw0EfJWF3iuvkk6K0Re+h3VLC4hbThMr5gjtsB/ohKlRzriL27X9Buzi96m/4UtW1DztAQERAzIRVcDUFWk42wZVoTP70OaekQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bTP6bTQm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gm7RHLcbG/26AsghKTJNUVWuPRXtHUoGbJ7wDQvKYL5WtOWyB2dcUVEnZDNT6ESDRmK0+n1WaBdvIUq8Orx6Ub5zxqs5Bptb3XwZ3VuWUB9mr92sbqS1oNV3RCerNNuMDP5/p7HbxtiJIaVVykh2AM8pRL0NrBadsVfdDabtCMY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LOQroYKM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bTP6bTQm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D793BC4CEEB;
-	Mon,  2 Jun 2025 14:13:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LOQroYKM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 272D4C4CEEB;
+	Mon,  2 Jun 2025 14:13:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748873604;
-	bh=+EudsxkFTmGmalO394TS5auymGYP+mhG/4rjZh0Jl2M=;
+	s=korg; t=1748873607;
+	bh=jZOU76eMjB3xociib8tmLf9M1x5qFXpJ+23E+g+aOTk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bTP6bTQmRJHD2PZ6S2HYYvnqOsPweWkADDcU8dRx3EPTvoJXIq5VXa/fEFNczA/ZD
-	 Nmi4mm6nL/amxsEUOS3oWpAy61yuHFbc/TqVMSVZZEy6W7RWLTrlVsAmR8cqMzt+PQ
-	 2Ea3ef2MeN2fKIxsr/5Zfs2OUFMoiBzJvCly7giU=
+	b=LOQroYKMgSpkgxdXtVYJbm/+thXjwJXgMIR78as/W3nypURBMWJ5xQrvs/JWAInkl
+	 QxS1CVH8evTGksbtevsEzfTyQeRC6kZBw+DIUgWTaTvTF/qF9iMPn1myW2ToIgI18P
+	 Q6GwMmEWfSNI2NLcJso4HBybvtBezH1U/dbhKue8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinliang Zheng <alexjlzheng@tencent.com>,
-	Tianxiang Peng <txpeng@tencent.com>,
-	Hao Peng <flyingpeng@tencent.com>,
-	Mikulas Patocka <mpatocka@redhat.com>,
+	Patrisious Haddad <phaddad@nvidia.com>,
+	Maor Gottlieb <maorg@nvidia.com>,
+	Mark Bloch <mbloch@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 193/444] dm: fix unconditional IO throttle caused by REQ_PREFLUSH
-Date: Mon,  2 Jun 2025 15:44:17 +0200
-Message-ID: <20250602134348.739688512@linuxfoundation.org>
+Subject: [PATCH 6.6 194/444] net/mlx5: Change POOL_NEXT_SIZE define value and make it global
+Date: Mon,  2 Jun 2025 15:44:18 +0200
+Message-ID: <20250602134348.781073733@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -53,80 +54,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinliang Zheng <alexjlzheng@gmail.com>
+From: Patrisious Haddad <phaddad@nvidia.com>
 
-[ Upstream commit 88f7f56d16f568f19e1a695af34a7f4a6ce537a6 ]
+[ Upstream commit 80df31f384b4146a62a01b3d4beb376cc7b9a89e ]
 
-When a bio with REQ_PREFLUSH is submitted to dm, __send_empty_flush()
-generates a flush_bio with REQ_OP_WRITE | REQ_PREFLUSH | REQ_SYNC,
-which causes the flush_bio to be throttled by wbt_wait().
+Change POOL_NEXT_SIZE define value from 0 to BIT(30), since this define
+is used to request the available maximum sized flow table, and zero doesn't
+make sense for it, whereas some places in the driver use zero explicitly
+expecting the smallest table size possible but instead due to this
+define they end up allocating the biggest table size unawarely.
 
-An example from v5.4, similar problem also exists in upstream:
+In addition move the definition to "include/linux/mlx5/fs.h" to expose the
+define to IB driver as well, while appropriately renaming it.
 
-    crash> bt 2091206
-    PID: 2091206  TASK: ffff2050df92a300  CPU: 109  COMMAND: "kworker/u260:0"
-     #0 [ffff800084a2f7f0] __switch_to at ffff80004008aeb8
-     #1 [ffff800084a2f820] __schedule at ffff800040bfa0c4
-     #2 [ffff800084a2f880] schedule at ffff800040bfa4b4
-     #3 [ffff800084a2f8a0] io_schedule at ffff800040bfa9c4
-     #4 [ffff800084a2f8c0] rq_qos_wait at ffff8000405925bc
-     #5 [ffff800084a2f940] wbt_wait at ffff8000405bb3a0
-     #6 [ffff800084a2f9a0] __rq_qos_throttle at ffff800040592254
-     #7 [ffff800084a2f9c0] blk_mq_make_request at ffff80004057cf38
-     #8 [ffff800084a2fa60] generic_make_request at ffff800040570138
-     #9 [ffff800084a2fae0] submit_bio at ffff8000405703b4
-    #10 [ffff800084a2fb50] xlog_write_iclog at ffff800001280834 [xfs]
-    #11 [ffff800084a2fbb0] xlog_sync at ffff800001280c3c [xfs]
-    #12 [ffff800084a2fbf0] xlog_state_release_iclog at ffff800001280df4 [xfs]
-    #13 [ffff800084a2fc10] xlog_write at ffff80000128203c [xfs]
-    #14 [ffff800084a2fcd0] xlog_cil_push at ffff8000012846dc [xfs]
-    #15 [ffff800084a2fda0] xlog_cil_push_work at ffff800001284a2c [xfs]
-    #16 [ffff800084a2fdb0] process_one_work at ffff800040111d08
-    #17 [ffff800084a2fe00] worker_thread at ffff8000401121cc
-    #18 [ffff800084a2fe70] kthread at ffff800040118de4
-
-After commit 2def2845cc33 ("xfs: don't allow log IO to be throttled"),
-the metadata submitted by xlog_write_iclog() should not be throttled.
-But due to the existence of the dm layer, throttling flush_bio indirectly
-causes the metadata bio to be throttled.
-
-Fix this by conditionally adding REQ_IDLE to flush_bio.bi_opf, which makes
-wbt_should_throttle() return false to avoid wbt_wait().
-
-Signed-off-by: Jinliang Zheng <alexjlzheng@tencent.com>
-Reviewed-by: Tianxiang Peng <txpeng@tencent.com>
-Reviewed-by: Hao Peng <flyingpeng@tencent.com>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Signed-off-by: Patrisious Haddad <phaddad@nvidia.com>
+Reviewed-by: Maor Gottlieb <maorg@nvidia.com>
+Reviewed-by: Mark Bloch <mbloch@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20250219085808.349923-3-tariqt@nvidia.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/esw/legacy.c    | 2 +-
+ drivers/net/ethernet/mellanox/mlx5/core/fs_ft_pool.c    | 6 ++++--
+ drivers/net/ethernet/mellanox/mlx5/core/fs_ft_pool.h    | 2 --
+ drivers/net/ethernet/mellanox/mlx5/core/lib/fs_chains.c | 3 ++-
+ include/linux/mlx5/fs.h                                 | 2 ++
+ 5 files changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/md/dm.c b/drivers/md/dm.c
-index 5dd0a42463a2b..9ea868bd0d129 100644
---- a/drivers/md/dm.c
-+++ b/drivers/md/dm.c
-@@ -1536,14 +1536,18 @@ static void __send_empty_flush(struct clone_info *ci)
- {
- 	struct dm_table *t = ci->map;
- 	struct bio flush_bio;
-+	blk_opf_t opf = REQ_OP_WRITE | REQ_PREFLUSH | REQ_SYNC;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/esw/legacy.c b/drivers/net/ethernet/mellanox/mlx5/core/esw/legacy.c
+index 8587cd572da53..bdb825aa87268 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/esw/legacy.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/esw/legacy.c
+@@ -96,7 +96,7 @@ static int esw_create_legacy_fdb_table(struct mlx5_eswitch *esw)
+ 	if (!flow_group_in)
+ 		return -ENOMEM;
+ 
+-	ft_attr.max_fte = POOL_NEXT_SIZE;
++	ft_attr.max_fte = MLX5_FS_MAX_POOL_SIZE;
+ 	ft_attr.prio = LEGACY_FDB_PRIO;
+ 	fdb = mlx5_create_flow_table(root_ns, &ft_attr);
+ 	if (IS_ERR(fdb)) {
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/fs_ft_pool.c b/drivers/net/ethernet/mellanox/mlx5/core/fs_ft_pool.c
+index c14590acc7726..f6abfd00d7e68 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/fs_ft_pool.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/fs_ft_pool.c
+@@ -50,10 +50,12 @@ mlx5_ft_pool_get_avail_sz(struct mlx5_core_dev *dev, enum fs_flow_table_type tab
+ 	int i, found_i = -1;
+ 
+ 	for (i = ARRAY_SIZE(FT_POOLS) - 1; i >= 0; i--) {
+-		if (dev->priv.ft_pool->ft_left[i] && FT_POOLS[i] >= desired_size &&
++		if (dev->priv.ft_pool->ft_left[i] &&
++		    (FT_POOLS[i] >= desired_size ||
++		     desired_size == MLX5_FS_MAX_POOL_SIZE) &&
+ 		    FT_POOLS[i] <= max_ft_size) {
+ 			found_i = i;
+-			if (desired_size != POOL_NEXT_SIZE)
++			if (desired_size != MLX5_FS_MAX_POOL_SIZE)
+ 				break;
+ 		}
+ 	}
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/fs_ft_pool.h b/drivers/net/ethernet/mellanox/mlx5/core/fs_ft_pool.h
+index 25f4274b372b5..173e312db7204 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/fs_ft_pool.h
++++ b/drivers/net/ethernet/mellanox/mlx5/core/fs_ft_pool.h
+@@ -7,8 +7,6 @@
+ #include <linux/mlx5/driver.h>
+ #include "fs_core.h"
+ 
+-#define POOL_NEXT_SIZE 0
+-
+ int mlx5_ft_pool_init(struct mlx5_core_dev *dev);
+ void mlx5_ft_pool_destroy(struct mlx5_core_dev *dev);
+ 
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lib/fs_chains.c b/drivers/net/ethernet/mellanox/mlx5/core/lib/fs_chains.c
+index 711d14dea2485..d313cb7f0ed88 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/lib/fs_chains.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/lib/fs_chains.c
+@@ -161,7 +161,8 @@ mlx5_chains_create_table(struct mlx5_fs_chains *chains,
+ 		ft_attr.flags |= (MLX5_FLOW_TABLE_TUNNEL_EN_REFORMAT |
+ 				  MLX5_FLOW_TABLE_TUNNEL_EN_DECAP);
+ 
+-	sz = (chain == mlx5_chains_get_nf_ft_chain(chains)) ? FT_TBL_SZ : POOL_NEXT_SIZE;
++	sz = (chain == mlx5_chains_get_nf_ft_chain(chains)) ?
++		FT_TBL_SZ : MLX5_FS_MAX_POOL_SIZE;
+ 	ft_attr.max_fte = sz;
+ 
+ 	/* We use chains_default_ft(chains) as the table's next_ft till
+diff --git a/include/linux/mlx5/fs.h b/include/linux/mlx5/fs.h
+index 3fb428ce7d1c7..b6b9a4dfa4fb9 100644
+--- a/include/linux/mlx5/fs.h
++++ b/include/linux/mlx5/fs.h
+@@ -40,6 +40,8 @@
+ 
+ #define MLX5_SET_CFG(p, f, v) MLX5_SET(create_flow_group_in, p, f, v)
+ 
++#define MLX5_FS_MAX_POOL_SIZE BIT(30)
 +
-+	if ((ci->io->orig_bio->bi_opf & (REQ_IDLE | REQ_SYNC)) ==
-+	    (REQ_IDLE | REQ_SYNC))
-+		opf |= REQ_IDLE;
- 
- 	/*
- 	 * Use an on-stack bio for this, it's safe since we don't
- 	 * need to reference it after submit. It's just used as
- 	 * the basis for the clone(s).
- 	 */
--	bio_init(&flush_bio, ci->io->md->disk->part0, NULL, 0,
--		 REQ_OP_WRITE | REQ_PREFLUSH | REQ_SYNC);
-+	bio_init(&flush_bio, ci->io->md->disk->part0, NULL, 0, opf);
- 
- 	ci->bio = &flush_bio;
- 	ci->sector_count = 0;
+ enum mlx5_flow_destination_type {
+ 	MLX5_FLOW_DESTINATION_TYPE_NONE,
+ 	MLX5_FLOW_DESTINATION_TYPE_VPORT,
 -- 
 2.39.5
 
