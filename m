@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9432A2288F4;
-	Mon,  2 Jun 2025 15:13:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C055B22A4E5;
+	Mon,  2 Jun 2025 15:13:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748877225; cv=none; b=TIRoCDSj3ML5zg9FH+HrZUy+rorvuhrxE5udw9Jbi7xP/GiUvtCca2gy7PVSD5eBP9XuVi9tw66AqIQghWcJDRIRCO5qP3CNty1xR1TXooV0D4YqD7FmvD5dVekxyuAZxFrY6b9ct9e7jDjaP5N4bRvX4q/BNsb231a02s6kN/E=
+	t=1748877228; cv=none; b=aqpJMLoJeLMO8ga8nQwXp2f+hKw3eN7xivZGS9aaT3xoNiEPy8McCPQP4Z2ga4yXypgpSJffAK8Sm/3LgryCV/fb14bNiP7vBSPKBHD+ureGhF/d25bo5MMcd66tJIZM5rvNXWZeBA5SQDtbWAS9xRDo8M4eln6iWb5EErfMOdQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748877225; c=relaxed/simple;
-	bh=HVb9JudTXiu9mZ0rU0sTg6+EYs9JOmQlsumEGVx2zAc=;
+	s=arc-20240116; t=1748877228; c=relaxed/simple;
+	bh=BJMVxnrfcKeUn/XuxeMtnCnxF+X/vMlUhIuIwen+K6A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TRS3e6uWA1b2l/Nr8jSq3XWUbsFQM0ZBJ5sIYAZnYF8ogFHgvAGu0xHrO59sU+p1rDfjAy1v2Bf4BxJkvUmjHhDQL8h8CWUWU12n2OxBF/2JwSR/vSiQqWn6wp8zLvt62STyZVZsD+Okcq7sF7bt9VYgMltlmImy+GdC5sFC5AA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qpM9o3ER; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u8GGE7qaCGCX8WM038Mw6nj8ApiUchIXXqi10p4YzgSVaaX9lFk1n0x85CIlQ3D509+TW4BKUtNzMg0c8xD5L54ARgJCTwx/HyT8jSM/O0Lqag//VyiLJoVxG6Sa17RZTixUxKs0kK7gmaYx60zZmLKUkYZmFM75Yld11wdT+so=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j0mt5fvw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qpM9o3ER"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBEDAC4CEEB;
-	Mon,  2 Jun 2025 15:13:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j0mt5fvw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9C24C4CEEB;
+	Mon,  2 Jun 2025 15:13:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748877225;
-	bh=HVb9JudTXiu9mZ0rU0sTg6+EYs9JOmQlsumEGVx2zAc=;
+	s=korg; t=1748877228;
+	bh=BJMVxnrfcKeUn/XuxeMtnCnxF+X/vMlUhIuIwen+K6A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qpM9o3ER8sgOMCxdGxgjjOY0jwN7SLLsN/+vLBar+H/AyBKOJU8YJ95TL+Zf84QwW
-	 yE8tgZLPsEg8mkZCJZekBhkM7lwYlDJck/d7ua07ICigzevJAn9POyU2nRYJG3W4BM
-	 /0AUGgKWDodPDKozm40+s10sx55+ZX1y0HiIH31Q=
+	b=j0mt5fvwWxNw4TBqBRNovd1ravm7zsTxqUDyXn/7obIoDaY7u4C6DJ5YAiRcN7UaK
+	 RRfIUP+b3VuVnW6N9jLQchxiNdAt/knNV4Nw4HPOZKhSGJgIWB/obNJt+ddnQG125y
+	 7Lu2004em96XygI06URZQO0vBeUB6D5lRRQ1sTmM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roman Li <roman.li@amd.com>,
-	Tom Chung <chiahsuan.chung@amd.com>,
-	Zaeem Mohamed <zaeem.mohamed@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 180/325] drm/amd/display: Initial psr_version with correct setting
-Date: Mon,  2 Jun 2025 15:47:36 +0200
-Message-ID: <20250602134327.128202373@linuxfoundation.org>
+Subject: [PATCH 6.1 171/325] ASoC: soc-dai: check return value at snd_soc_dai_set_tdm_slot()
+Date: Mon,  2 Jun 2025 15:47:27 +0200
+Message-ID: <20250602134326.765092042@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134319.723650984@linuxfoundation.org>
 References: <20250602134319.723650984@linuxfoundation.org>
@@ -54,38 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tom Chung <chiahsuan.chung@amd.com>
+From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
 
-[ Upstream commit d8c782cac5007e68e7484d420168f12d3490def6 ]
+[ Upstream commit 7f1186a8d738661b941b298fd6d1d5725ed71428 ]
 
-[Why & How]
-The initial setting for psr_version is not correct while
-create a virtual link.
+snd_soc_dai_set_tdm_slot() calls .xlate_tdm_slot_mask() or
+snd_soc_xlate_tdm_slot_mask(), but didn't check its return value.
+Let's check it.
 
-The default psr_version should be DC_PSR_VERSION_UNSUPPORTED.
+This patch might break existing driver. In such case, let's makes
+each func to void instead of int.
 
-Reviewed-by: Roman Li <roman.li@amd.com>
-Signed-off-by: Tom Chung <chiahsuan.chung@amd.com>
-Signed-off-by: Zaeem Mohamed <zaeem.mohamed@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+Link: https://patch.msgid.link/87o6z7yk61.wl-kuninori.morimoto.gx@renesas.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/core/dc.c | 1 +
- 1 file changed, 1 insertion(+)
+ sound/soc/soc-dai.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/core/dc.c b/drivers/gpu/drm/amd/display/dc/core/dc.c
-index 2721842af8067..10672bb90a029 100644
---- a/drivers/gpu/drm/amd/display/dc/core/dc.c
-+++ b/drivers/gpu/drm/amd/display/dc/core/dc.c
-@@ -267,6 +267,7 @@ static bool create_links(
- 		link->link_id.type = OBJECT_TYPE_CONNECTOR;
- 		link->link_id.id = CONNECTOR_ID_VIRTUAL;
- 		link->link_id.enum_id = ENUM_ID_1;
-+		link->psr_settings.psr_version = DC_PSR_VERSION_UNSUPPORTED;
- 		link->link_enc = kzalloc(sizeof(*link->link_enc), GFP_KERNEL);
+diff --git a/sound/soc/soc-dai.c b/sound/soc/soc-dai.c
+index 49752af0e205d..ba38b6e6b2649 100644
+--- a/sound/soc/soc-dai.c
++++ b/sound/soc/soc-dai.c
+@@ -270,10 +270,11 @@ int snd_soc_dai_set_tdm_slot(struct snd_soc_dai *dai,
  
- 		if (!link->link_enc) {
+ 	if (dai->driver->ops &&
+ 	    dai->driver->ops->xlate_tdm_slot_mask)
+-		dai->driver->ops->xlate_tdm_slot_mask(slots,
+-						      &tx_mask, &rx_mask);
++		ret = dai->driver->ops->xlate_tdm_slot_mask(slots, &tx_mask, &rx_mask);
+ 	else
+-		snd_soc_xlate_tdm_slot_mask(slots, &tx_mask, &rx_mask);
++		ret = snd_soc_xlate_tdm_slot_mask(slots, &tx_mask, &rx_mask);
++	if (ret)
++		goto err;
+ 
+ 	dai->tx_mask = tx_mask;
+ 	dai->rx_mask = rx_mask;
+@@ -282,6 +283,7 @@ int snd_soc_dai_set_tdm_slot(struct snd_soc_dai *dai,
+ 	    dai->driver->ops->set_tdm_slot)
+ 		ret = dai->driver->ops->set_tdm_slot(dai, tx_mask, rx_mask,
+ 						      slots, slot_width);
++err:
+ 	return soc_dai_ret(dai, ret);
+ }
+ EXPORT_SYMBOL_GPL(snd_soc_dai_set_tdm_slot);
 -- 
 2.39.5
 
