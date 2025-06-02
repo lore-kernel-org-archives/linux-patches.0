@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15EB7227BA4;
-	Mon,  2 Jun 2025 15:12:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 547CF1C84DC;
+	Mon,  2 Jun 2025 15:12:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748877140; cv=none; b=ZY9GIfLBFAQazxoZD/DdgucrXTmSh0Z2aYJ8MuiIfHLt26f8tPlN1t2E+5H31W4tCy0jDk+LVfw7+f5tjSs2A9g8UdbI24zXSXiHGciVLjk/2SinRhnO22ImPmqQojBtxJqUarIWXFONG49RrN5J0d+RyQ1uRfo49qNGwvAPZmo=
+	t=1748877143; cv=none; b=IsKGCK7qeOpTaS8tkTUl+BySOZiaZ+bMYZxzHjIZZ6JXR+kdJPkvZCc1vBlninOfNozNGv0fUsCOz4AqHeSstS1W+4k5Jk65vm8odl9w1Jlaa6Wd2Ud+U4B3KQjc9SKXhXyr82+DpjKEYwft54/uezNHHlWWizN3OKckUQP6kK4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748877140; c=relaxed/simple;
-	bh=IDr6ImD3oKExO9Y99QIi4j7SbYyawgkQyv/lvvjNDzI=;
+	s=arc-20240116; t=1748877143; c=relaxed/simple;
+	bh=8hdhj9sOibrqLjRmG2S/wNVbk3hm4ZKJeDhwRqZMY6U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gqcOPmEIwKSqnTebYzgVtB2GWxTnajL7bJS7hUikkz45K9/5X2J/SRzdTqhvPDjqPTR4e9y6JKL+0LN19VAqd5HkulGBZ1Lqtxkur29lOQxZyVzKbVvxcptmhArS6NNnP/T1JzZON2ktqv5EKdBZ07qu6O0Lo37w+TnTafpWsME=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZhYcA3q6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eoipIRl7bqtcWKVcD8ujeK7e8oy+RvXm40JwXOZDAiPbT6StFumjQmr18VCu5hkxtiR2Eeec43UuQlfJJ/RTGiUpxv7sHB6LtbBKIO52X9gcJXxs5bQP02CMsf77JvpLlNb8b7bOkx3/bPENo+AdJLViYK8ijqZj1ztGBoSUdUY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PmwMtcTb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZhYcA3q6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14F65C4CEEB;
-	Mon,  2 Jun 2025 15:12:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PmwMtcTb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88694C4CEEE;
+	Mon,  2 Jun 2025 15:12:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748877139;
-	bh=IDr6ImD3oKExO9Y99QIi4j7SbYyawgkQyv/lvvjNDzI=;
+	s=korg; t=1748877143;
+	bh=8hdhj9sOibrqLjRmG2S/wNVbk3hm4ZKJeDhwRqZMY6U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZhYcA3q6lPcxmzQx4gx3d6857iNz2rfBe60xGnGy3Bb47MBbMKNsSpVKmfbaRlTmN
-	 V66tDYNhO+w6/QZxbVWiDjqLlIlQ0oMz6NvYVca93/BvxbLrdGQSvntvtOIRq9BbT5
-	 WxJWci66zAvDpOpUC+C6E9fFtQAGmm/AAyCzuFfI=
+	b=PmwMtcTbVqfwSHfAIbY36PUi0IUVcX8flrEunYciRV5nWMRZb59HOjlgC2pk43giA
+	 5kfIB5r/N/qfl8P7rmd8E/cd/1JZUyjGQFPtF9TST/+fJ8pZsgVwaduc49ZgSGJ+d2
+	 1u8LBpV2A7/6Tcq17fJmUL0BbkvBLXsD2Sxnfi+A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	William Tu <witu@nvidia.com>,
-	Bodong Wang <bodong@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 185/325] net/mlx5e: reduce rep rxq depth to 256 for ECPF
-Date: Mon,  2 Jun 2025 15:47:41 +0200
-Message-ID: <20250602134327.324304771@linuxfoundation.org>
+Subject: [PATCH 6.1 186/325] wifi: mac80211: dont unconditionally call drv_mgd_complete_tx()
+Date: Mon,  2 Jun 2025 15:47:42 +0200
+Message-ID: <20250602134327.365177546@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134319.723650984@linuxfoundation.org>
 References: <20250602134319.723650984@linuxfoundation.org>
@@ -55,73 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: William Tu <witu@nvidia.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit b9cc8f9d700867aaa77aedddfea85e53d5e5d584 ]
+[ Upstream commit 1798271b3604b902d45033ec569f2bf77e94ecc2 ]
 
-By experiments, a single queue representor netdev consumes kernel
-memory around 2.8MB, and 1.8MB out of the 2.8MB is due to page
-pool for the RXQ. Scaling to a thousand representors consumes 2.8GB,
-which becomes a memory pressure issue for embedded devices such as
-BlueField-2 16GB / BlueField-3 32GB memory.
+We might not have called drv_mgd_prepare_tx(), so only call
+drv_mgd_complete_tx() under the same conditions.
 
-Since representor netdevs mostly handles miss traffic, and ideally,
-most of the traffic will be offloaded, reduce the default non-uplink
-rep netdev's RXQ default depth from 1024 to 256 if mdev is ecpf eswitch
-manager. This saves around 1MB of memory per regular RQ,
-(1024 - 256) * 2KB, allocated from page pool.
-
-With rxq depth of 256, the netlink page pool tool reports
-$./tools/net/ynl/cli.py --spec Documentation/netlink/specs/netdev.yaml \
-	 --dump page-pool-get
- {'id': 277,
-  'ifindex': 9,
-  'inflight': 128,
-  'inflight-mem': 786432,
-  'napi-id': 775}]
-
-This is due to mtu 1500 + headroom consumes half pages, so 256 rxq
-entries consumes around 128 pages (thus create a page pool with
-size 128), shown above at inflight.
-
-Note that each netdev has multiple types of RQs, including
-Regular RQ, XSK, PTP, Drop, Trap RQ. Since non-uplink representor
-only supports regular rq, this patch only changes the regular RQ's
-default depth.
-
-Signed-off-by: William Tu <witu@nvidia.com>
-Reviewed-by: Bodong Wang <bodong@nvidia.com>
-Reviewed-by: Saeed Mahameed <saeedm@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
-Link: https://patch.msgid.link/20250209101716.112774-8-tariqt@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Reviewed-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20250205110958.e091fc39a351.Ie6a3cdca070612a0aa4b3c6914ab9ed602d1f456@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_rep.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/mac80211/mlme.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c b/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
-index 837524d1d2258..b4980245b50b2 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
-@@ -61,6 +61,7 @@
- #define MLX5E_REP_PARAMS_DEF_LOG_SQ_SIZE \
- 	max(0x7, MLX5E_PARAMS_MINIMUM_LOG_SQ_SIZE)
- #define MLX5E_REP_PARAMS_DEF_NUM_CHANNELS 1
-+#define MLX5E_REP_PARAMS_DEF_LOG_RQ_SIZE 0x8
+diff --git a/net/mac80211/mlme.c b/net/mac80211/mlme.c
+index 9a5530ca2f6b2..8f0e6d7fe7167 100644
+--- a/net/mac80211/mlme.c
++++ b/net/mac80211/mlme.c
+@@ -2896,7 +2896,8 @@ static void ieee80211_set_disassoc(struct ieee80211_sub_if_data *sdata,
+ 	if (tx)
+ 		ieee80211_flush_queues(local, sdata, false);
  
- static const char mlx5e_rep_driver_name[] = "mlx5e_rep";
+-	drv_mgd_complete_tx(sdata->local, sdata, &info);
++	if (tx || frame_buf)
++		drv_mgd_complete_tx(sdata->local, sdata, &info);
  
-@@ -705,6 +706,8 @@ static void mlx5e_build_rep_params(struct net_device *netdev)
- 
- 	/* RQ */
- 	mlx5e_build_rq_params(mdev, params);
-+	if (!mlx5e_is_uplink_rep(priv) && mlx5_core_is_ecpf(mdev))
-+		params->log_rq_mtu_frames = MLX5E_REP_PARAMS_DEF_LOG_RQ_SIZE;
- 
- 	/* CQ moderation params */
- 	params->rx_dim_enabled = MLX5_CAP_GEN(mdev, cq_moderation);
+ 	/* clear AP addr only after building the needed mgmt frames */
+ 	eth_zero_addr(sdata->deflink.u.mgd.bssid);
 -- 
 2.39.5
 
