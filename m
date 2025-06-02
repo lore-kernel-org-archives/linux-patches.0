@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67ABC2C324D;
-	Mon,  2 Jun 2025 14:27:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25EFA22B5A1;
+	Mon,  2 Jun 2025 14:27:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748874435; cv=none; b=WdZRtx4NxrLsW193NIlx8+EC/l3GpUMWtWO6z6UxG0anrfWlw9G9NHfMH6hG1iMcDRAnXcvrbCqkpINjzBbb00TX2Hzm3uyouBhz/iw1XerwV97KfT3DOMwXl14qOUC7UcbtPIKqA3eBZjqICCQz+m7CAM4ru+FgGBQ4T2BSpqM=
+	t=1748874438; cv=none; b=fBVVpFIVytX1Dqnoi8ZXClhUXP2m/JCpiactZiggC9NeHwiTnDdvmyxWfkGOS3Pqbz3JPj75qnbTC0eSKGhKZMx8bt1b4MB5nIzJF5HPV6KK5mR+z6OjYw9FNL0FdhjzKaFV0INY0/mzwFZWK2Gld9r0JagT0GiDA65SEnsTGS4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748874435; c=relaxed/simple;
-	bh=Khvk0eMXm4Wnufusi8aIzflQ3X+WVu8zOevrHCWlzIM=;
+	s=arc-20240116; t=1748874438; c=relaxed/simple;
+	bh=LMcCvw2i3ZaO2ZpcCgyLKCmA+8C33EGAR7A/y282QhQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KC2AyJfMaqtGXxcmR59ir1cHxIV3iASwcNC0g4Dwkct9FmU83cujw6eZe/41xlSv8qViiDfFx3oLQTyb22UIO77j0zoj8unbEJzm8TnsssQZivtglgY45wOcx09LKBKdyd79QmRkpXLGCWi2ZuvClY9xzzzL8cp4yjnNFVS4i8c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Flbe/Amm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EmdChI+5KJCXN0GxhUpk9W5GN8BA5jGIU0kO3R112p9UnmJ7z2TXldyH65yCXo9Q1/OjDm7ZTay542AcYYIosPfJ49UiajD1+Ft3ISOcidjAmDfajdPYHzw7ip2CxMnmfBouaIH3lToRWqwcXCY//NNP/y0TAJ2pLeTf0mNRcKw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qDcFpRUx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Flbe/Amm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57763C4CEEB;
-	Mon,  2 Jun 2025 14:27:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qDcFpRUx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82584C4CEEE;
+	Mon,  2 Jun 2025 14:27:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748874434;
-	bh=Khvk0eMXm4Wnufusi8aIzflQ3X+WVu8zOevrHCWlzIM=;
+	s=korg; t=1748874438;
+	bh=LMcCvw2i3ZaO2ZpcCgyLKCmA+8C33EGAR7A/y282QhQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Flbe/AmmVkyBBhORJeqlheOr5ChASkhBlQhNwYn+vb78R+QljFw2MS5J20xkS+Izu
-	 BsFMoWVb3umS69dWKAqe6N+qRQLqa5/BectArODTUyWObA/+atR7PyrNJcWqeNU4O9
-	 WRd+wV7U0xOzjw24vO+Gd8jVIo4DCvwzGZyKwC28=
+	b=qDcFpRUxccqOzc4EYaN346dTgOxWR+jDcwpb+PTnT5KdamNrMu/FxTmQsFXLYhudr
+	 rdGpS7AlTm17NNkwAPIsHuKTeFcJwln0untIa5HzdGOs3hFlmqvSC42skyIRNoiUTR
+	 MnLL0j6IPTCcR8Na+pso5/GFANTiXzMn2+bgNphg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang wangx <wangxiang@cdjrlc.com>,
-	Marc Zyngier <maz@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 023/204] irqchip/gic-v2m: Add const to of_device_id
-Date: Mon,  2 Jun 2025 15:45:56 +0200
-Message-ID: <20250602134256.596591818@linuxfoundation.org>
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 5.4 006/204] wifi: brcm80211: fmac: Add error handling for brcmf_usb_dl_writeimage()
+Date: Mon,  2 Jun 2025 15:45:39 +0200
+Message-ID: <20250602134255.717395050@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134255.449974357@linuxfoundation.org>
 References: <20250602134255.449974357@linuxfoundation.org>
@@ -51,36 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang wangx <wangxiang@cdjrlc.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit c10f2f8b5d8027c1ea77f777f2d16cb9043a6c09 ]
+commit 8e089e7b585d95122c8122d732d1d5ef8f879396 upstream.
 
-struct of_device_id should normally be const.
+The function brcmf_usb_dl_writeimage() calls the function
+brcmf_usb_dl_cmd() but dose not check its return value. The
+'state.state' and the 'state.bytes' are uninitialized if the
+function brcmf_usb_dl_cmd() fails. It is dangerous to use
+uninitialized variables in the conditions.
 
-Signed-off-by: Xiang wangx <wangxiang@cdjrlc.com>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20211209132453.25623-1-wangxiang@cdjrlc.com
-Stable-dep-of: 3318dc299b07 ("irqchip/gic-v2m: Prevent use after free of gicv2m_get_fwnode()")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Add error handling for brcmf_usb_dl_cmd() to jump to error
+handling path if the brcmf_usb_dl_cmd() fails and the
+'state.state' and the 'state.bytes' are uninitialized.
+
+Improve the error message to report more detailed error
+information.
+
+Fixes: 71bb244ba2fd ("brcm80211: fmac: add USB support for bcm43235/6/8 chipsets")
+Cc: stable@vger.kernel.org # v3.4+
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+Link: https://patch.msgid.link/20250422042203.2259-1-vulab@iscas.ac.cn
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/irqchip/irq-gic-v2m.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/irqchip/irq-gic-v2m.c b/drivers/irqchip/irq-gic-v2m.c
-index 11efd6c6b111b..5cb9539111d7a 100644
---- a/drivers/irqchip/irq-gic-v2m.c
-+++ b/drivers/irqchip/irq-gic-v2m.c
-@@ -407,7 +407,7 @@ static int __init gicv2m_init_one(struct fwnode_handle *fwnode,
- 	return ret;
- }
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c
+@@ -866,14 +866,16 @@ brcmf_usb_dl_writeimage(struct brcmf_usb
+ 	}
  
--static struct of_device_id gicv2m_device_id[] = {
-+static const struct of_device_id gicv2m_device_id[] = {
- 	{	.compatible	= "arm,gic-v2m-frame",	},
- 	{},
- };
--- 
-2.39.5
-
+ 	/* 1) Prepare USB boot loader for runtime image */
+-	brcmf_usb_dl_cmd(devinfo, DL_START, &state, sizeof(state));
++	err = brcmf_usb_dl_cmd(devinfo, DL_START, &state, sizeof(state));
++	if (err)
++		goto fail;
+ 
+ 	rdlstate = le32_to_cpu(state.state);
+ 	rdlbytes = le32_to_cpu(state.bytes);
+ 
+ 	/* 2) Check we are in the Waiting state */
+ 	if (rdlstate != DL_WAITING) {
+-		brcmf_err("Failed to DL_START\n");
++		brcmf_err("Invalid DL state: %u\n", rdlstate);
+ 		err = -EINVAL;
+ 		goto fail;
+ 	}
 
 
