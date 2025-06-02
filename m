@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48C391FF61E;
-	Mon,  2 Jun 2025 15:17:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FA28225791;
+	Mon,  2 Jun 2025 15:17:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748877421; cv=none; b=Db3D5LCE4DbxOufBgZgKe4ZOzuZUoCDkF9K1grNXV9kk6cBg5awNJRm7zUrWZsdTUNJjTaEnx/9jyEiACJKj/2vxbedP2XBW6a789YQw3gPsjLNtHsL4DK2NtgR5Y58FdRwwzxD2F7TFGze6cN8pTdgKJxGese2GwoJatVcj4TE=
+	t=1748877424; cv=none; b=dR4qv1yPW5F2uadoBy67vfu94r8qO4mTsOiMpW1zZ3kyCKmSiniK6zYfsjt8Zdz6Fk+F35AqxyqnddqM/RR9foT3HrR0lFRrRmDeG4mOdfjxfhTtFSOC4AlpNPVFMDnw1DkMPpvfw7jPfDoDezdHTlktpNqoCE8BfBgKYG0xmgI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748877421; c=relaxed/simple;
-	bh=YLvi/2M7ikLuI/t1wI+7/3ObHHdvJmijlWCgIkqC5y4=;
+	s=arc-20240116; t=1748877424; c=relaxed/simple;
+	bh=qSJGXFMUGNMHDtr5LowcuFcW57ruJiTGxNlaQQadoPo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lDi9DvSBQwMiDJW9brAHWiXKOFpU5vD1P4lJeWmsOVjvbGVNw0t9qYQaUkaefacOS2bF1QbpTv9EkZ8thVNHvuVhV+gqVAB4U7FwRPVb8LByCkoT7dCLyceXPu2cH2ShChr/kYpvloE2EZLf1mKQe1Dy+4SIsb9flKOY0UcMt84=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eMvDW7RJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pXVxtvnztYJNjADlRAMxFPw2aue9BUpuPp5MMFosNpcCP1qa4sw9oTpv2882GJe+Jcm+semZO78dFpiGD8FzvXY+SxTfMs1GFzcbK73rox9PY6rd0tZFSBaYVPye1qy8TdSoKWiKuHN/TRaMEwo3HIdp+DXdLx+qR4EjiPh4bg4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LCbpbpzQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eMvDW7RJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FB1DC4CEEB;
-	Mon,  2 Jun 2025 15:17:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LCbpbpzQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3092C4CEEB;
+	Mon,  2 Jun 2025 15:17:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748877421;
-	bh=YLvi/2M7ikLuI/t1wI+7/3ObHHdvJmijlWCgIkqC5y4=;
+	s=korg; t=1748877424;
+	bh=qSJGXFMUGNMHDtr5LowcuFcW57ruJiTGxNlaQQadoPo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eMvDW7RJC49AZ1XuSE96jJXwoQIceRTzWFWIjBqwKf47RHCD1HebAs5rwvPygA80V
-	 Bl7adcznjx9e5z8Eb6q6Tv8UA2ODPtv0BU2U1YH3Z3WHQBDBfDjJYbEkyxEziGYMhu
-	 Wam4C0gNxzdj6PD/S/PfHLQm3yAodLwiv9fHOM0o=
+	b=LCbpbpzQdKMpLQ3kmytEVuyHzzFa53R8vn9Lpoqsotwt8llafdRyZO2WHCWxlu/N8
+	 0J4ZEdZRFh+F6hsIG9SREjF5G7QSgnLSNqeWdOnhB8VnHzDDyjYz1nlDjl4iLQGK7e
+	 HGIKykh05XIrnQAD4rhkK4pm2qSblJoshttv1Bwc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thangaraj Samynathan <thangaraj.s@microchip.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Pavel Begunkov <asml.silence@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 242/325] net: lan743x: Restore SGMII CTRL register on resume
-Date: Mon,  2 Jun 2025 15:48:38 +0200
-Message-ID: <20250602134329.619370093@linuxfoundation.org>
+Subject: [PATCH 6.1 243/325] io_uring: fix overflow resched cqe reordering
+Date: Mon,  2 Jun 2025 15:48:39 +0200
+Message-ID: <20250602134329.658617640@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134319.723650984@linuxfoundation.org>
 References: <20250602134319.723650984@linuxfoundation.org>
@@ -51,90 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thangaraj Samynathan <thangaraj.s@microchip.com>
+From: Pavel Begunkov <asml.silence@gmail.com>
 
-[ Upstream commit 293e38ff4e4c2ba53f3fd47d8a4a9f0f0414a7a6 ]
+[ Upstream commit a7d755ed9ce9738af3db602eb29d32774a180bc7 ]
 
-SGMII_CTRL register, which specifies the active interface, was not
-properly restored when resuming from suspend. This led to incorrect
-interface selection after resume particularly in scenarios involving
-the FPGA.
+Leaving the CQ critical section in the middle of a overflow flushing
+can cause cqe reordering since the cache cq pointers are reset and any
+new cqe emitters that might get called in between are not going to be
+forced into io_cqe_cache_refill().
 
-To fix this:
-- Move the SGMII_CTRL setup out of the probe function.
-- Initialize the register in the hardware initialization helper function,
-which is called during both device initialization and resume.
-
-This ensures the interface configuration is consistently restored after
-suspend/resume cycles.
-
-Fixes: a46d9d37c4f4f ("net: lan743x: Add support for SGMII interface")
-Signed-off-by: Thangaraj Samynathan <thangaraj.s@microchip.com>
-Link: https://patch.msgid.link/20250516035719.117960-1-thangaraj.s@microchip.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: eac2ca2d682f9 ("io_uring: check if we need to reschedule during overflow flush")
+Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
+Link: https://lore.kernel.org/r/90ba817f1a458f091f355f407de1c911d2b93bbf.1747483784.git.asml.silence@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/microchip/lan743x_main.c | 19 ++++++++++---------
- 1 file changed, 10 insertions(+), 9 deletions(-)
+ io_uring/io_uring.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/microchip/lan743x_main.c b/drivers/net/ethernet/microchip/lan743x_main.c
-index 2e69ba0143b15..fd35554191793 100644
---- a/drivers/net/ethernet/microchip/lan743x_main.c
-+++ b/drivers/net/ethernet/microchip/lan743x_main.c
-@@ -3253,6 +3253,7 @@ static int lan743x_hardware_init(struct lan743x_adapter *adapter,
- 				 struct pci_dev *pdev)
- {
- 	struct lan743x_tx *tx;
-+	u32 sgmii_ctl;
- 	int index;
- 	int ret;
- 
-@@ -3265,6 +3266,15 @@ static int lan743x_hardware_init(struct lan743x_adapter *adapter,
- 		spin_lock_init(&adapter->eth_syslock_spinlock);
- 		mutex_init(&adapter->sgmii_rw_lock);
- 		pci11x1x_set_rfe_rd_fifo_threshold(adapter);
-+		sgmii_ctl = lan743x_csr_read(adapter, SGMII_CTL);
-+		if (adapter->is_sgmii_en) {
-+			sgmii_ctl |= SGMII_CTL_SGMII_ENABLE_;
-+			sgmii_ctl &= ~SGMII_CTL_SGMII_POWER_DN_;
-+		} else {
-+			sgmii_ctl &= ~SGMII_CTL_SGMII_ENABLE_;
-+			sgmii_ctl |= SGMII_CTL_SGMII_POWER_DN_;
-+		}
-+		lan743x_csr_write(adapter, SGMII_CTL, sgmii_ctl);
- 	} else {
- 		adapter->max_tx_channels = LAN743X_MAX_TX_CHANNELS;
- 		adapter->used_tx_channels = LAN743X_USED_TX_CHANNELS;
-@@ -3313,7 +3323,6 @@ static int lan743x_hardware_init(struct lan743x_adapter *adapter,
- 
- static int lan743x_mdiobus_init(struct lan743x_adapter *adapter)
- {
--	u32 sgmii_ctl;
- 	int ret;
- 
- 	adapter->mdiobus = devm_mdiobus_alloc(&adapter->pdev->dev);
-@@ -3325,10 +3334,6 @@ static int lan743x_mdiobus_init(struct lan743x_adapter *adapter)
- 	adapter->mdiobus->priv = (void *)adapter;
- 	if (adapter->is_pci11x1x) {
- 		if (adapter->is_sgmii_en) {
--			sgmii_ctl = lan743x_csr_read(adapter, SGMII_CTL);
--			sgmii_ctl |= SGMII_CTL_SGMII_ENABLE_;
--			sgmii_ctl &= ~SGMII_CTL_SGMII_POWER_DN_;
--			lan743x_csr_write(adapter, SGMII_CTL, sgmii_ctl);
- 			netif_dbg(adapter, drv, adapter->netdev,
- 				  "SGMII operation\n");
- 			adapter->mdiobus->probe_capabilities = MDIOBUS_C22_C45;
-@@ -3338,10 +3343,6 @@ static int lan743x_mdiobus_init(struct lan743x_adapter *adapter)
- 			netif_dbg(adapter, drv, adapter->netdev,
- 				  "lan743x-mdiobus-c45\n");
- 		} else {
--			sgmii_ctl = lan743x_csr_read(adapter, SGMII_CTL);
--			sgmii_ctl &= ~SGMII_CTL_SGMII_ENABLE_;
--			sgmii_ctl |= SGMII_CTL_SGMII_POWER_DN_;
--			lan743x_csr_write(adapter, SGMII_CTL, sgmii_ctl);
- 			netif_dbg(adapter, drv, adapter->netdev,
- 				  "RGMII operation\n");
- 			// Only C22 support when RGMII I/F
+diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
+index f39d66589180e..ad462724246a7 100644
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -627,6 +627,7 @@ static bool __io_cqring_overflow_flush(struct io_ring_ctx *ctx, bool force)
+ 		 * to care for a non-real case.
+ 		 */
+ 		if (need_resched()) {
++			ctx->cqe_sentinel = ctx->cqe_cached;
+ 			io_cq_unlock_post(ctx);
+ 			mutex_unlock(&ctx->uring_lock);
+ 			cond_resched();
 -- 
 2.39.5
 
