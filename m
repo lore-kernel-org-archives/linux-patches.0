@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CF8A1E1A3F;
-	Mon,  2 Jun 2025 13:59:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF2262C327B;
+	Mon,  2 Jun 2025 13:59:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748872796; cv=none; b=SzGEUUXAbPIfh36JTY044Aqzqs1sBeO88uxLhaRSEw7kYHR/hw7aYmoQCd6TlKzWhWbkOTAIGjhdWfzsoUN2zf+LS1AKLIgADdATLCsZgFwImqv4V6GnorP4kDulGk8wCfj8HBOEA/CJNTiEMAYUiiFnDCscs2dJj9RpHKlXvUA=
+	t=1748872799; cv=none; b=DiaOtxTvcADTJ8DVTmPHC1yqgag/MuuR5DF3L3jYeqG/euQiidSNipUCyHhqSBMVV+b2sU/lNFgf0BUCy5sJGbgFtiz3HRM248wwoZel6hB2HTvtFsBEGRF1TANBJEHjeqezY7BZHPLMJTgAZGDIpKeK+PRhAxAUXsfqazgZrEc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748872796; c=relaxed/simple;
-	bh=43gqaduqZxu5XcW6e7kHVDW0W+vZRspNrXU2EH9PSDU=;
+	s=arc-20240116; t=1748872799; c=relaxed/simple;
+	bh=k709R8cXb3LckEk2r9eBGO8sOClFJpGGAPZRwYZMuOc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oMFPkjAySnSuHsaBYt3YYxKuiQ/GaXm5EmsIs/rd+W4tHMQXWh49wHlqOQv2nvkn8SUQpH6E+Na4IDiN47gSnt7kuPGxF/Z1R/enzfBxUtdAsuP/F4J7eXT9zgEJvenYBb/Z/dwYnX8hYAQfKZ2j6WDK3jL5RFAihlBZRXb15B8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e6yoiX3H; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AsWTlwaumtOLvtHxla1tbgs/bgAkovTFzLSdUYl+p+uooJGYZFxoBEMPzCGV/0UV/b74hS9cRFp8CpaDXQNrRWR9kms78OJ0UocHxfRZLlRBHemZ7k4WXrFaZNd5QNAZAp7gZDqrv9ZxOU6dEGPye1D8ogtlYDJ7TBsm6npEB6k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HyMvdaJe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e6yoiX3H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98A12C4CEEE;
-	Mon,  2 Jun 2025 13:59:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HyMvdaJe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4D33C4CEEB;
+	Mon,  2 Jun 2025 13:59:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748872796;
-	bh=43gqaduqZxu5XcW6e7kHVDW0W+vZRspNrXU2EH9PSDU=;
+	s=korg; t=1748872799;
+	bh=k709R8cXb3LckEk2r9eBGO8sOClFJpGGAPZRwYZMuOc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e6yoiX3H2xt8PFtoA1QjI1jOuay+/jMkbJmE+LQEqXBRbRUOShxyT/vHkGTjvq/Ai
-	 12+AkFbrtot9ji7fuHP1IOw6d+y4Beh2g7lZ/nBs/ZwLMBCcaRHbh4tM2wLrsjMD4d
-	 rCcrhM7jiXgu/5vNM2FJLeyf8ETFi1TEIVK7nai0=
+	b=HyMvdaJeR7+1LotioIY1QOjK2vBXOYj/X6sY5Yk/iX32vCFR+WPuoeemEqu82C1xU
+	 NNOc9cnYTpgKUmg1kQlTwasGpxsaV27KCHe2KcUzFcodGF27bimXFj4D8FTt0Np62s
+	 VonUPaBrXkNW4nIk5ZFGqZC5XGOdW//Y3ZVMxZ5s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Savino Dicanosa <savy@syst3mfailure.io>,
-	William Liu <will@willsroot.io>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Victor Nogueira <victor@mojatatu.com>,
-	Pedro Tammela <pctammela@mojatatu.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.14 41/73] net_sched: hfsc: Address reentrant enqueue adding class to eltree twice
-Date: Mon,  2 Jun 2025 15:47:27 +0200
-Message-ID: <20250602134243.310141116@linuxfoundation.org>
+	Yemike Abhilash Chandra <y-abhilashchandra@ti.com>,
+	Neha Malcom Francis <n-francis@ti.com>,
+	Jai Luthra <jai.luthra@linux.dev>,
+	Nishanth Menon <nm@ti.com>
+Subject: [PATCH 6.14 32/73] arm64: dts: ti: k3-am62x: Rename I2C switch to I2C mux in OV5640 overlay
+Date: Mon,  2 Jun 2025 15:47:18 +0200
+Message-ID: <20250602134242.965181594@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134241.673490006@linuxfoundation.org>
 References: <20250602134241.673490006@linuxfoundation.org>
@@ -54,85 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pedro Tammela <pctammela@mojatatu.com>
+From: Yemike Abhilash Chandra <y-abhilashchandra@ti.com>
 
-commit ac9fe7dd8e730a103ae4481147395cc73492d786 upstream.
+commit b22cc402d38774ccc552d18e762c25dde02f7be0 upstream.
 
-Savino says:
-    "We are writing to report that this recent patch
-    (141d34391abbb315d68556b7c67ad97885407547) [1]
-    can be bypassed, and a UAF can still occur when HFSC is utilized with
-    NETEM.
+The OV5640 device tree overlay incorrectly defined an I2C switch
+instead of an I2C mux. According to the DT bindings, the correct
+terminology and node definition should use "i2c-mux" instead of
+"i2c-switch". Hence, update the same to avoid dtbs_check warnings.
 
-    The patch only checks the cl->cl_nactive field to determine whether
-    it is the first insertion or not [2], but this field is only
-    incremented by init_vf [3].
-
-    By using HFSC_RSC (which uses init_ed) [4], it is possible to bypass the
-    check and insert the class twice in the eltree.
-    Under normal conditions, this would lead to an infinite loop in
-    hfsc_dequeue for the reasons we already explained in this report [5].
-
-    However, if TBF is added as root qdisc and it is configured with a
-    very low rate,
-    it can be utilized to prevent packets from being dequeued.
-    This behavior can be exploited to perform subsequent insertions in the
-    HFSC eltree and cause a UAF."
-
-To fix both the UAF and the infinite loop, with netem as an hfsc child,
-check explicitly in hfsc_enqueue whether the class is already in the eltree
-whenever the HFSC_RSC flag is set.
-
-[1] https://web.git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=141d34391abbb315d68556b7c67ad97885407547
-[2] https://elixir.bootlin.com/linux/v6.15-rc5/source/net/sched/sch_hfsc.c#L1572
-[3] https://elixir.bootlin.com/linux/v6.15-rc5/source/net/sched/sch_hfsc.c#L677
-[4] https://elixir.bootlin.com/linux/v6.15-rc5/source/net/sched/sch_hfsc.c#L1574
-[5] https://lore.kernel.org/netdev/8DuRWwfqjoRDLDmBMlIfbrsZg9Gx50DHJc1ilxsEBNe2D6NMoigR_eIRIG0LOjMc3r10nUUZtArXx4oZBIdUfZQrwjcQhdinnMis_0G7VEk=@willsroot.io/T/#u
-
-Fixes: 37d9cf1a3ce3 ("sched: Fix detection of empty queues in child qdiscs")
-Reported-by: Savino Dicanosa <savy@syst3mfailure.io>
-Reported-by: William Liu <will@willsroot.io>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Tested-by: Victor Nogueira <victor@mojatatu.com>
-Signed-off-by: Pedro Tammela <pctammela@mojatatu.com>
-Link: https://patch.msgid.link/20250522181448.1439717-2-pctammela@mojatatu.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 635ed9715194 ("arm64: dts: ti: k3-am62x: Add overlays for OV5640")
+Cc: stable@vger.kernel.org
+Signed-off-by: Yemike Abhilash Chandra <y-abhilashchandra@ti.com>
+Reviewed-by: Neha Malcom Francis <n-francis@ti.com>
+Reviewed-by: Jai Luthra <jai.luthra@linux.dev>
+Link: https://lore.kernel.org/r/20250415111328.3847502-8-y-abhilashchandra@ti.com
+Signed-off-by: Nishanth Menon <nm@ti.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/sch_hfsc.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/ti/k3-am62x-sk-csi2-ov5640.dtso      |    2 +-
+ arch/arm64/boot/dts/ti/k3-am62x-sk-csi2-tevi-ov5640.dtso |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/net/sched/sch_hfsc.c
-+++ b/net/sched/sch_hfsc.c
-@@ -175,6 +175,11 @@ struct hfsc_sched {
+--- a/arch/arm64/boot/dts/ti/k3-am62x-sk-csi2-ov5640.dtso
++++ b/arch/arm64/boot/dts/ti/k3-am62x-sk-csi2-ov5640.dtso
+@@ -22,7 +22,7 @@
+ 	#size-cells = <0>;
+ 	status = "okay";
  
- #define	HT_INFINITY	0xffffffffffffffffULL	/* infinite time value */
+-	i2c-switch@71 {
++	i2c-mux@71 {
+ 		compatible = "nxp,pca9543";
+ 		#address-cells = <1>;
+ 		#size-cells = <0>;
+--- a/arch/arm64/boot/dts/ti/k3-am62x-sk-csi2-tevi-ov5640.dtso
++++ b/arch/arm64/boot/dts/ti/k3-am62x-sk-csi2-tevi-ov5640.dtso
+@@ -22,7 +22,7 @@
+ 	#size-cells = <0>;
+ 	status = "okay";
  
-+static bool cl_in_el_or_vttree(struct hfsc_class *cl)
-+{
-+	return ((cl->cl_flags & HFSC_FSC) && cl->cl_nactive) ||
-+		((cl->cl_flags & HFSC_RSC) && !RB_EMPTY_NODE(&cl->el_node));
-+}
- 
- /*
-  * eligible tree holds backlogged classes being sorted by their eligible times.
-@@ -1040,6 +1045,8 @@ hfsc_change_class(struct Qdisc *sch, u32
- 	if (cl == NULL)
- 		return -ENOBUFS;
- 
-+	RB_CLEAR_NODE(&cl->el_node);
-+
- 	err = tcf_block_get(&cl->block, &cl->filter_list, sch, extack);
- 	if (err) {
- 		kfree(cl);
-@@ -1572,7 +1579,7 @@ hfsc_enqueue(struct sk_buff *skb, struct
- 	sch->qstats.backlog += len;
- 	sch->q.qlen++;
- 
--	if (first && !cl->cl_nactive) {
-+	if (first && !cl_in_el_or_vttree(cl)) {
- 		if (cl->cl_flags & HFSC_RSC)
- 			init_ed(cl, len);
- 		if (cl->cl_flags & HFSC_FSC)
+-	i2c-switch@71 {
++	i2c-mux@71 {
+ 		compatible = "nxp,pca9543";
+ 		#address-cells = <1>;
+ 		#size-cells = <0>;
 
 
