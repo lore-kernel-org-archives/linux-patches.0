@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D809E227EBB;
-	Mon,  2 Jun 2025 15:04:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97B491C84DC;
+	Mon,  2 Jun 2025 15:04:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748876672; cv=none; b=Aj0UlcMPVxKzdc6HH++wc6sOVfZvHY+Rl28Z/uQK94zuveQA78kga5AmArRVb9aGed4blK4i+hLRB6P+b3nxM9dPqaavPNt7XVj0wexb+GjAIkBs0Br4SvOXtIbklUNMGRdXfVeFQaGatiSJ4yiHCZRXHYx+/5MBjZBgYh5Yo4Y=
+	t=1748876675; cv=none; b=B3YyxpdN7ACj8hfieF7YhIh5mKH0fSd1GI7aNnENSavwi3+ZD33sXcpdG1mQmb7YXSOduibUykpHpOOQGpkXOTZkNhnnxrBN54ivAwoE9eXkd2geD5wzq8NjpTtWGAjrVG/xrShxYguVUGp0U3nLwbdn88ME5mtccLAeoJ9Lgmo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748876672; c=relaxed/simple;
-	bh=klRjDvD2FqsMOwMlbw0V/OlTbIl87XStf46HI7fiU1M=;
+	s=arc-20240116; t=1748876675; c=relaxed/simple;
+	bh=lyJR2MCoFbjRabnQtuFHa7CZD8YbIGt6XAWt2EW3818=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f+nGkMV6ZisRaFwycE52whsUxFYRi3/u+E8x4H0HVDAFYGTNHNJHFO2/7F0bFhP/nFPe7rfqVOjlOmWCJ7V053LRYO7UmdJ/ZygURv74aClzmcMW+ijWztTbRH1AgJspReQ8xo4mLGQVsFTxldx0zO1f5ToGe+q+VO8Kq15qMJc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a5jvrGFi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LdmOH4F7k2uJ6Gd+8Wh3XZmgOdYYYTO3FgqYNmTz+gKKNo6HBLHr04icsRECpqjq/saBUwgZHlGD2RCGY2nXmGd5gmnP3ZOoK0x+EbuGq38//r3nb87sljPPdEeQXprwsiSAr01OJBJhyFiFPUvkGYeNAhFResTL85IL3KUn2Ew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XWx13I2U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a5jvrGFi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A6CCC4CEEB;
-	Mon,  2 Jun 2025 15:04:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XWx13I2U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 296EBC4CEEB;
+	Mon,  2 Jun 2025 15:04:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748876672;
-	bh=klRjDvD2FqsMOwMlbw0V/OlTbIl87XStf46HI7fiU1M=;
+	s=korg; t=1748876675;
+	bh=lyJR2MCoFbjRabnQtuFHa7CZD8YbIGt6XAWt2EW3818=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a5jvrGFixlyHFcbteFe5R/CNoD2C1ESgoS4NDdW/7xPlElaqdZbWfaPs/eD0Csyjy
-	 W/PgAOo9VoS9FYGm4N8cnAx/TU27gevkDb7iTrDnOHUwlu6nWacT6u+e+KKPydNB6u
-	 1AkH28UUsvwQ8+94pO4096v9m6b5NDPfNl1WUHZk=
+	b=XWx13I2U9SXa5RiF+bal54E1EdCR+l4xOlMcfEPjqoJ4B6Q1wSmhg2VqSfuK3HVsX
+	 QP4MUChxBmN4V1xnIwq4XuzZRorz5Bbzsp7bxNKHKmAp129Qm+fI+BFn0wT/Hsa/Lu
+	 sQbxNah5FaCSH2pUHVyV1FjHq8x2ybxUm1tslwSU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Benjamin Coddington <bcodding@redhat.com>,
 	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 036/325] SUNRPC: rpc_clnt_set_transport() must not change the autobind setting
-Date: Mon,  2 Jun 2025 15:45:12 +0200
-Message-ID: <20250602134321.222155827@linuxfoundation.org>
+Subject: [PATCH 6.1 037/325] SUNRPC: rpcbind should never reset the port to the value 0
+Date: Mon,  2 Jun 2025 15:45:13 +0200
+Message-ID: <20250602134321.264981747@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134319.723650984@linuxfoundation.org>
 References: <20250602134319.723650984@linuxfoundation.org>
@@ -54,34 +54,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit bf9be373b830a3e48117da5d89bb6145a575f880 ]
+[ Upstream commit 214c13e380ad7636631279f426387f9c4e3c14d9 ]
 
-The autobind setting was supposed to be determined in rpc_create(),
-since commit c2866763b402 ("SUNRPC: use sockaddr + size when creating
-remote transport endpoints").
+If we already had a valid port number for the RPC service, then we
+should not allow the rpcbind client to set it to the invalid value '0'.
 
 Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Reviewed-by: Benjamin Coddington <bcodding@redhat.com>
 Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/clnt.c | 3 ---
- 1 file changed, 3 deletions(-)
+ net/sunrpc/rpcb_clnt.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/net/sunrpc/clnt.c b/net/sunrpc/clnt.c
-index b6529a9d37d37..a390a4e5592f2 100644
---- a/net/sunrpc/clnt.c
-+++ b/net/sunrpc/clnt.c
-@@ -275,9 +275,6 @@ static struct rpc_xprt *rpc_clnt_set_transport(struct rpc_clnt *clnt,
- 	old = rcu_dereference_protected(clnt->cl_xprt,
- 			lockdep_is_held(&clnt->cl_lock));
+diff --git a/net/sunrpc/rpcb_clnt.c b/net/sunrpc/rpcb_clnt.c
+index 82afb56695f8d..1ec20163a0b7d 100644
+--- a/net/sunrpc/rpcb_clnt.c
++++ b/net/sunrpc/rpcb_clnt.c
+@@ -797,9 +797,10 @@ static void rpcb_getport_done(struct rpc_task *child, void *data)
+ 	}
  
--	if (!xprt_bound(xprt))
--		clnt->cl_autobind = 1;
--
- 	clnt->cl_timeout = timeout;
- 	rcu_assign_pointer(clnt->cl_xprt, xprt);
- 	spin_unlock(&clnt->cl_lock);
+ 	trace_rpcb_setport(child, map->r_status, map->r_port);
+-	xprt->ops->set_port(xprt, map->r_port);
+-	if (map->r_port)
++	if (map->r_port) {
++		xprt->ops->set_port(xprt, map->r_port);
+ 		xprt_set_bound(xprt);
++	}
+ }
+ 
+ /*
 -- 
 2.39.5
 
