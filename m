@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E16E2C3247;
-	Mon,  2 Jun 2025 13:49:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E98E221729;
+	Mon,  2 Jun 2025 13:49:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748872160; cv=none; b=hJ7jf6fxS8s5i60UJclusp23YvdhtXNW6qm/7xmaJql6ZgFj1sYmWkMu08cX7/AotTZeOXyQ2WHug3oEEvRlr5+4aBiB6TWW37/kf+9R7OuvDX7JuE9K1QILTTR1OTVf/86HOqZMwGHa8dP5qvcNxeCdY7N0iyGiWp/7rU+a0LM=
+	t=1748872162; cv=none; b=W5FHQ78Uzet3MCrUgZP7lcnNA54H6vr0jQt+B2g5ZEeRfOSmP/HQl9XoPh1dDsSPPOBpC6M43ghbBoinTyqXc6HqXBJAMJtDtTazpbc1mwY9zo1PjItZYyg4N5ZgJERph+a1yDvHgRf1fsGeltfiOyFRt/PiXach0C5CZlCfimI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748872160; c=relaxed/simple;
-	bh=Bg/TzFxg+k3NNiAbFRHVRS/gD7AePoDhKk9VQjrGTZA=;
+	s=arc-20240116; t=1748872162; c=relaxed/simple;
+	bh=BExlBKhPciHkjBukf/UJ5FYeh1g0KzTm4374Z2Tyf4c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DEj3FibReTDGx+A6efqHR9w+0ZqpaDWL4DrjJwhppER+KBVDUnGS6jn6YAL56ywTGZs6LERhSyV/7IkE3BVrhH3bsw0Q5RnpoF6JmVJfBO2ibgJQ7LZLOh/MkvoyZGCZUDe80UgtDX2iFq02hjpULqqn/dyd1NmGmPRlXHpghUI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MGZ1f4fx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hRxhT2dszleY1bRddfPJRitF7Ezl8MnX5g22rhzptHcQYxrO2e8yTCbNlVIVBap51xvAy67I5R01isjnrdKYqQyhGb+zKvyQD4K+n6ljPB5mny65GeAHL1MeAiG6KJhwyDPEivWfO3Qiv+f67mbQoYke9kHGcBLt51ilzF4K1ec=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z8PBM+zr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MGZ1f4fx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 836E0C4CEEB;
-	Mon,  2 Jun 2025 13:49:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z8PBM+zr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2CB1C4CEEB;
+	Mon,  2 Jun 2025 13:49:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748872156;
-	bh=Bg/TzFxg+k3NNiAbFRHVRS/gD7AePoDhKk9VQjrGTZA=;
+	s=korg; t=1748872162;
+	bh=BExlBKhPciHkjBukf/UJ5FYeh1g0KzTm4374Z2Tyf4c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MGZ1f4fxf/NMYbzTflIx4/y9s1UHvybSKEUiCoP6Up9pp8mlGDGs+wEf86+8Bm77f
-	 RL3okz/sfCvUMk3CSItNTPJJQqZguVFyOUdQW/qmnEcdbMNHiH/kWUt5jbBJrT+jTS
-	 B/SG8jVvCSwxVF68gHF2tuLJ6NxvUM9K6Vd0YbPE=
+	b=z8PBM+zrbz4XH06sZwbFwVkvEogRcpDztzasQLK4LyrdD08WeMevFM8KYcTIr2Y2I
+	 nDKBMf7+xULZu2RfpmLU67ufixkU/9bxjbhWCKNRkR8cyBd3x0DR7D9+mxIxcOEmV6
+	 wYwPu/7axbGDEAhTrf3P6NKVea1+lkamsUEbZlzA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Karthik Sanagavarapu <quic_kartsana@quicinc.com>,
-	Ling Xu <quic_lxu5@quicinc.com>,
+	Stephan Gerhold <stephan.gerhold@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.15 07/49] arm64: dts: qcom: sa8775p: Remove cdsp compute-cb@10
-Date: Mon,  2 Jun 2025 15:46:59 +0200
-Message-ID: <20250602134238.232289649@linuxfoundation.org>
+Subject: [PATCH 6.15 09/49] arm64: dts: qcom: sm8450: Add missing properties for cryptobam
+Date: Mon,  2 Jun 2025 15:47:01 +0200
+Message-ID: <20250602134238.308007334@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134237.940995114@linuxfoundation.org>
 References: <20250602134237.940995114@linuxfoundation.org>
@@ -52,40 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karthik Sanagavarapu <quic_kartsana@quicinc.com>
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
 
-commit d180c2bd3b43d55f30c9b99de68bc6bb8420d1c1 upstream.
+commit 0fe6357229cb15a64b6413c62f1c3d4de68ce55f upstream.
 
-Remove the context bank compute-cb@10 because these SMMU ids are S2-only
-which is not used for S1 transaction.
+num-channels and qcom,num-ees are required for BAM nodes without clock,
+because the driver cannot ensure the hardware is powered on when trying to
+obtain the information from the hardware registers. Specifying the node
+without these properties is unsafe and has caused early boot crashes for
+other SoCs before [1, 2].
 
-Fixes: f7b01bfb4b47 ("arm64: qcom: sa8775p: Add ADSP and CDSP0 fastrpc nodes")
-Cc: stable@kernel.org
-Signed-off-by: Karthik Sanagavarapu <quic_kartsana@quicinc.com>
-Signed-off-by: Ling Xu <quic_lxu5@quicinc.com>
-Link: https://lore.kernel.org/r/4c9de858fda7848b77ea8c528c9b9d53600ad21a.1739260973.git.quic_lxu5@quicinc.com
+Add the missing information from the hardware registers to ensure the
+driver can probe successfully without causing crashes.
+
+[1]: https://lore.kernel.org/r/CY01EKQVWE36.B9X5TDXAREPF@fairphone.com/
+[2]: https://lore.kernel.org/r/20230626145959.646747-1-krzysztof.kozlowski@linaro.org/
+
+Cc: stable@vger.kernel.org
+Fixes: b92b0d2f7582 ("arm64: dts: qcom: sm8450: add crypto nodes")
+Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+Link: https://lore.kernel.org/r/20250212-bam-dma-fixes-v1-2-f560889e65d8@linaro.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/qcom/sa8775p.dtsi |    8 --------
- 1 file changed, 8 deletions(-)
+ arch/arm64/boot/dts/qcom/sm8450.dtsi |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-@@ -4973,14 +4973,6 @@
- 						dma-coherent;
- 					};
- 
--					compute-cb@10 {
--						compatible = "qcom,fastrpc-compute-cb";
--						reg = <10>;
--						iommus = <&apps_smmu 0x214a 0x04a0>,
--							 <&apps_smmu 0x218a 0x0400>;
--						dma-coherent;
--					};
--
- 					compute-cb@11 {
- 						compatible = "qcom,fastrpc-compute-cb";
- 						reg = <11>;
+--- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+@@ -5283,6 +5283,8 @@
+ 			interrupts = <GIC_SPI 272 IRQ_TYPE_LEVEL_HIGH>;
+ 			#dma-cells = <1>;
+ 			qcom,ee = <0>;
++			qcom,num-ees = <4>;
++			num-channels = <16>;
+ 			qcom,controlled-remotely;
+ 			iommus = <&apps_smmu 0x584 0x11>,
+ 				 <&apps_smmu 0x588 0x0>,
 
 
