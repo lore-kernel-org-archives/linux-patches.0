@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3EF0188907;
-	Mon,  2 Jun 2025 15:08:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C78B188907;
+	Mon,  2 Jun 2025 15:08:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748876926; cv=none; b=AOIcfGRs7U8EMdAgpCDqWfv9i+EOeUtHVPmd6lH4fftvwJf1p92ZZ4U+6LqoPCzTNN4mudkrFByq/gfFsOf3Q+v6YaYksV4C6UD3OtFpLUdGUpYQlViD0wSNkNa90v50WaxHO4HGIfSgbRRbBsbirwiYW/9T8kPgsEEXbUYV5uk=
+	t=1748876930; cv=none; b=laHjfrmhYjw3yrA0lJDlV4g2lkR2BHtCEuo/G5/2h+hTAy+JHpdhpv+8NUfXPTC4S0RDUcf/GWYeUAy1BP/3aNtGeNqA49UAILE5CM9c8KQY5iTe5X86rNKVj3FoTAilax9S8wFaZgTQ9NhZa/8c3oNcTyhWF7DyrOsoWPjxTyg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748876926; c=relaxed/simple;
-	bh=WPkxpTgKmvn9jQ6lW4V2iqddcvNZY+4+ddOIidcJh5M=;
+	s=arc-20240116; t=1748876930; c=relaxed/simple;
+	bh=1zEzaeN6JnXUnJg0KEJMqT2VemRf6cVccOMg5PuULNo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SLSZaz95mv6yFYHHuRhHbB9mJ4/M6SrJK+bmuPmZtapIqRrG76/aznZCorXzpZJL0Y/088ERStsoYlUzTsZYPAgq/YKiyhZkNPRrl6eOfJHzyUkOv2e8ONnekVqG8zkOdg8klDhJRbLn2RJS66fRN21kFMxQaBmkcpi9Tr9/nR4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MNmawUED; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Dnjn0FOhQGVqDF6P+G1hMEm4cC4/SJaV60p3A1YIW5d3B8eDh0ci04wPdv/gZY+ZfWl4qQusOkk+7mtTTURTRweQctD1SZdVBieEsdnJ0GAUbtWcwKkoTgAn+Ud4BhfGzwlbiP4jnIBrINzeZCV7+pSJNJBKmMeUtBkPi88Etw0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FzZ+W+6N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MNmawUED"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16609C4CEEB;
-	Mon,  2 Jun 2025 15:08:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FzZ+W+6N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A3E0C4CEEB;
+	Mon,  2 Jun 2025 15:08:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748876926;
-	bh=WPkxpTgKmvn9jQ6lW4V2iqddcvNZY+4+ddOIidcJh5M=;
+	s=korg; t=1748876930;
+	bh=1zEzaeN6JnXUnJg0KEJMqT2VemRf6cVccOMg5PuULNo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MNmawUEDCAWr9JMZ62lXH/G2EiUwFOSLrFFjYwgl+tGeqULsR1W40E2xeRv7RGRFp
-	 rcXrLDUVbARdFISwAc/lFLnP8ZjEZAuOsV92u+0so6ArrYHKnQOtDnquDjkh5143Wr
-	 XARjOltL74XLraCIbv5mjwgq3xHCzeOEHglaiNe4=
+	b=FzZ+W+6NUqk1pE0DgKBcXeuxtdbE8m0nC3ky2IXy21rj9w4LpBtVGMLuxLr2wBgVH
+	 QwZ/zeZNJL1kcN0VJrOQCpXVcV0TGujlPJhOa/LfHTS6anXHyYmdUBKAMTMBCoQ+q5
+	 +x12qGRXmT8gSmgMcsTDYwehxgLGw3X82wgSmAMU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	Ingo Molnar <mingo@kernel.org>,
-	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	David Kaplan <David.Kaplan@amd.com>,
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 118/325] x86/bugs: Make spectre user default depend on MITIGATION_SPECTRE_V2
-Date: Mon,  2 Jun 2025 15:46:34 +0200
-Message-ID: <20250602134324.576054077@linuxfoundation.org>
+Subject: [PATCH 6.1 119/325] hwmon: (gpio-fan) Add missing mutex locks
+Date: Mon,  2 Jun 2025 15:46:35 +0200
+Message-ID: <20250602134324.618391261@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134319.723650984@linuxfoundation.org>
 References: <20250602134319.723650984@linuxfoundation.org>
@@ -55,94 +51,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Alexander Stein <alexander.stein@ew.tq-group.com>
 
-[ Upstream commit 98fdaeb296f51ef08e727a7cc72e5b5c864c4f4d ]
+[ Upstream commit 9fee7d19bab635f89223cc40dfd2c8797fdc4988 ]
 
-Change the default value of spectre v2 in user mode to respect the
-CONFIG_MITIGATION_SPECTRE_V2 config option.
+set_fan_speed() is expected to be called with fan_data->lock being locked.
+Add locking for proper synchronization.
 
-Currently, user mode spectre v2 is set to auto
-(SPECTRE_V2_USER_CMD_AUTO) by default, even if
-CONFIG_MITIGATION_SPECTRE_V2 is disabled.
-
-Set the spectre_v2 value to auto (SPECTRE_V2_USER_CMD_AUTO) if the
-Spectre v2 config (CONFIG_MITIGATION_SPECTRE_V2) is enabled, otherwise
-set the value to none (SPECTRE_V2_USER_CMD_NONE).
-
-Important to say the command line argument "spectre_v2_user" overwrites
-the default value in both cases.
-
-When CONFIG_MITIGATION_SPECTRE_V2 is not set, users have the flexibility
-to opt-in for specific mitigations independently. In this scenario,
-setting spectre_v2= will not enable spectre_v2_user=, and command line
-options spectre_v2_user and spectre_v2 are independent when
-CONFIG_MITIGATION_SPECTRE_V2=n.
-
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-Acked-by: Josh Poimboeuf <jpoimboe@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: David Kaplan <David.Kaplan@amd.com>
-Link: https://lore.kernel.org/r/20241031-x86_bugs_last_v2-v2-2-b7ff1dab840e@debian.org
+Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Link: https://lore.kernel.org/r/20250210145934.761280-3-alexander.stein@ew.tq-group.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/admin-guide/kernel-parameters.txt |  2 ++
- arch/x86/kernel/cpu/bugs.c                      | 10 +++++++---
- 2 files changed, 9 insertions(+), 3 deletions(-)
+ drivers/hwmon/gpio-fan.c | 16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
-index 6938c8cd7a6f6..15e40774e9bc9 100644
---- a/Documentation/admin-guide/kernel-parameters.txt
-+++ b/Documentation/admin-guide/kernel-parameters.txt
-@@ -5780,6 +5780,8 @@
+diff --git a/drivers/hwmon/gpio-fan.c b/drivers/hwmon/gpio-fan.c
+index ba408942dbe73..f1926b9171e0c 100644
+--- a/drivers/hwmon/gpio-fan.c
++++ b/drivers/hwmon/gpio-fan.c
+@@ -392,7 +392,12 @@ static int gpio_fan_set_cur_state(struct thermal_cooling_device *cdev,
+ 	if (state >= fan_data->num_speed)
+ 		return -EINVAL;
  
- 			Selecting 'on' will also enable the mitigation
- 			against user space to user space task attacks.
-+			Selecting specific mitigation does not force enable
-+			user mitigations.
- 
- 			Selecting 'off' will disable both the kernel and
- 			the user space protections.
-diff --git a/arch/x86/kernel/cpu/bugs.c b/arch/x86/kernel/cpu/bugs.c
-index 766cee7fa9056..7233474c798f7 100644
---- a/arch/x86/kernel/cpu/bugs.c
-+++ b/arch/x86/kernel/cpu/bugs.c
-@@ -1382,9 +1382,13 @@ static __ro_after_init enum spectre_v2_mitigation_cmd spectre_v2_cmd;
- static enum spectre_v2_user_cmd __init
- spectre_v2_parse_user_cmdline(void)
- {
-+	enum spectre_v2_user_cmd mode;
- 	char arg[20];
- 	int ret, i;
- 
-+	mode = IS_ENABLED(CONFIG_MITIGATION_SPECTRE_V2) ?
-+		SPECTRE_V2_USER_CMD_AUTO : SPECTRE_V2_USER_CMD_NONE;
++	mutex_lock(&fan_data->lock);
 +
- 	switch (spectre_v2_cmd) {
- 	case SPECTRE_V2_CMD_NONE:
- 		return SPECTRE_V2_USER_CMD_NONE;
-@@ -1397,7 +1401,7 @@ spectre_v2_parse_user_cmdline(void)
- 	ret = cmdline_find_option(boot_command_line, "spectre_v2_user",
- 				  arg, sizeof(arg));
- 	if (ret < 0)
--		return SPECTRE_V2_USER_CMD_AUTO;
-+		return mode;
- 
- 	for (i = 0; i < ARRAY_SIZE(v2_user_options); i++) {
- 		if (match_option(arg, ret, v2_user_options[i].option)) {
-@@ -1407,8 +1411,8 @@ spectre_v2_parse_user_cmdline(void)
- 		}
- 	}
- 
--	pr_err("Unknown user space protection option (%s). Switching to AUTO select\n", arg);
--	return SPECTRE_V2_USER_CMD_AUTO;
-+	pr_err("Unknown user space protection option (%s). Switching to default\n", arg);
-+	return mode;
+ 	set_fan_speed(fan_data, state);
++
++	mutex_unlock(&fan_data->lock);
++
+ 	return 0;
  }
  
- static inline bool spectre_v2_in_eibrs_mode(enum spectre_v2_mitigation mode)
+@@ -488,7 +493,11 @@ MODULE_DEVICE_TABLE(of, of_gpio_fan_match);
+ 
+ static void gpio_fan_stop(void *data)
+ {
++	struct gpio_fan_data *fan_data = data;
++
++	mutex_lock(&fan_data->lock);
+ 	set_fan_speed(data, 0);
++	mutex_unlock(&fan_data->lock);
+ }
+ 
+ static int gpio_fan_probe(struct platform_device *pdev)
+@@ -561,7 +570,9 @@ static int gpio_fan_suspend(struct device *dev)
+ 
+ 	if (fan_data->gpios) {
+ 		fan_data->resume_speed = fan_data->speed_index;
++		mutex_lock(&fan_data->lock);
+ 		set_fan_speed(fan_data, 0);
++		mutex_unlock(&fan_data->lock);
+ 	}
+ 
+ 	return 0;
+@@ -571,8 +582,11 @@ static int gpio_fan_resume(struct device *dev)
+ {
+ 	struct gpio_fan_data *fan_data = dev_get_drvdata(dev);
+ 
+-	if (fan_data->gpios)
++	if (fan_data->gpios) {
++		mutex_lock(&fan_data->lock);
+ 		set_fan_speed(fan_data, fan_data->resume_speed);
++		mutex_unlock(&fan_data->lock);
++	}
+ 
+ 	return 0;
+ }
 -- 
 2.39.5
 
