@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 464792C327E;
-	Mon,  2 Jun 2025 14:37:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B27252248B5;
+	Mon,  2 Jun 2025 14:37:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748875054; cv=none; b=JujeUDBSxQ4E6swhcxqbeogIvNrCvXblNS0QwSxBs/Jaol1RbFlKuZa6kvR0mb4hDaTAQvZ5TcCx4x2k+ictJnKFMiSlmN5tc5OmkcR/B1c3xtuh9MR7ag/Wy4rGsRoEA98OZ+ehGep1b2PhyMZC4GrXgXXcH+NpoFq9Npwh8s0=
+	t=1748875057; cv=none; b=Jx4PCcGK4cIleHhYfprRnODXA912NxqtEv+wKRZRTwo1SbnZs2/8vViRsHADUbjyiiYpHmV9hsB90teGfGOnj3Bp1ZGpF3p25vF+erG3gT0u3fCPuuB3Ug3ZJn29KkmPbaYkEYba9AXjxXG6/6pK3WVvsnZu15U4Pj5AFQdOSAo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748875054; c=relaxed/simple;
-	bh=Nh7ihVqUm7Mpr/imBPiNuJ2WjuzWr0yuO7vvreGalA8=;
+	s=arc-20240116; t=1748875057; c=relaxed/simple;
+	bh=JUhiKdmcN+kPguFhhCCX9OFbyYUKGdhk8tEeSkiL4Ig=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ddaTyddU097nZa1naKp5RwC5M9J2d4Tvd5RJG3oJwKzO6L44YY7ASwEsVVXs/2IrlQ5DU9bn6aPK6uHnTkZnXkUSgwMOReR6GS/HKiM9xMmAipcik6XpzA4r5LZ8LTYl19oPQLIA0+FPENJAcG5YClpuByAVq0jgT6pCGBV/4iY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P4AAVN2g; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GuSWxXHQu/swIyrp9X2BTlimuA/o0LokYeeFBPXSnlWppgGsRp2/UFgL/QaK0U07C6/tSHCoPAhxAulVUkYzoKWDQhfUwaDWswlld6dJGztgW9xOwdY20ZbBIADX4fH97w2lgt0OwVB4Qz1cN64Z2Srxanf4fpGt1h7SVwjsa2M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=05oW9UOC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P4AAVN2g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCC2DC4CEEB;
-	Mon,  2 Jun 2025 14:37:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="05oW9UOC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D13B6C4CEEB;
+	Mon,  2 Jun 2025 14:37:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748875054;
-	bh=Nh7ihVqUm7Mpr/imBPiNuJ2WjuzWr0yuO7vvreGalA8=;
+	s=korg; t=1748875057;
+	bh=JUhiKdmcN+kPguFhhCCX9OFbyYUKGdhk8tEeSkiL4Ig=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P4AAVN2gxUXzTn+mW+e08THale6XDYXXbD1O+4cDXMNA/wjN4SjRjWy4yuhCfknH9
-	 LOdhcfjwhZ05Q2RL6ZBYAxlUYa2djER1nx8l6tDNpiUBtIBVac5qupBYDXySc6rGe5
-	 5phuSKx+sjfV8u4xJ+2bSqlbi6KJRSrsm/CUHJB4=
+	b=05oW9UOCFDPjczlHIjvCScZyH2MbHCiJd6+kRWXiwMYdDzQbtxV0FwAnD0tGYO/Eh
+	 l/XC3Yg+kXp7ySg7phI0CXE85JDv+ToEEJ35//iskkNbfdus/kyCPe8qpCZxBMltVd
+	 qy81NIl25rVKQYmmrZ4pcOkSm8mErD9+WWELKyu4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+c8cd2d2c412b868263fb@syzkaller.appspotmail.com,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Jeongjun Park <aha310510@gmail.com>
-Subject: [PATCH 5.10 014/270] tracing: Fix oob write in trace_seq_to_buffer()
-Date: Mon,  2 Jun 2025 15:44:59 +0200
-Message-ID: <20250602134307.776619126@linuxfoundation.org>
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Jianqi Ren <jianqi.ren.cn@windriver.com>,
+	He Zhe <zhe.he@windriver.com>
+Subject: [PATCH 5.10 015/270] net/sched: act_mirred: dont override retval if we already lost the skb
+Date: Mon,  2 Jun 2025 15:45:00 +0200
+Message-ID: <20250602134307.818246525@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134307.195171844@linuxfoundation.org>
 References: <20250602134307.195171844@linuxfoundation.org>
@@ -51,66 +54,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeongjun Park <aha310510@gmail.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-commit f5178c41bb43444a6008150fe6094497135d07cb upstream.
+commit 166c2c8a6a4dc2e4ceba9e10cfe81c3e469e3210 upstream.
 
-syzbot reported this bug:
-==================================================================
-BUG: KASAN: slab-out-of-bounds in trace_seq_to_buffer kernel/trace/trace.c:1830 [inline]
-BUG: KASAN: slab-out-of-bounds in tracing_splice_read_pipe+0x6be/0xdd0 kernel/trace/trace.c:6822
-Write of size 4507 at addr ffff888032b6b000 by task syz.2.320/7260
+If we're redirecting the skb, and haven't called tcf_mirred_forward(),
+yet, we need to tell the core to drop the skb by setting the retcode
+to SHOT. If we have called tcf_mirred_forward(), however, the skb
+is out of our hands and returning SHOT will lead to UaF.
 
-CPU: 1 UID: 0 PID: 7260 Comm: syz.2.320 Not tainted 6.15.0-rc1-syzkaller-00301-g3bde70a2c827 #0 PREEMPT(full)
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 02/12/2025
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:94 [inline]
- dump_stack_lvl+0x116/0x1f0 lib/dump_stack.c:120
- print_address_description mm/kasan/report.c:408 [inline]
- print_report+0xc3/0x670 mm/kasan/report.c:521
- kasan_report+0xe0/0x110 mm/kasan/report.c:634
- check_region_inline mm/kasan/generic.c:183 [inline]
- kasan_check_range+0xef/0x1a0 mm/kasan/generic.c:189
- __asan_memcpy+0x3c/0x60 mm/kasan/shadow.c:106
- trace_seq_to_buffer kernel/trace/trace.c:1830 [inline]
- tracing_splice_read_pipe+0x6be/0xdd0 kernel/trace/trace.c:6822
- ....
-==================================================================
+Move the retval override to the error path which actually need it.
 
-It has been reported that trace_seq_to_buffer() tries to copy more data
-than PAGE_SIZE to buf. Therefore, to prevent this, we should use the
-smaller of trace_seq_used(&iter->seq) and PAGE_SIZE as an argument.
-
-Link: https://lore.kernel.org/20250422113026.13308-1-aha310510@gmail.com
-Reported-by: syzbot+c8cd2d2c412b868263fb@syzkaller.appspotmail.com
-Fixes: 3c56819b14b0 ("tracing: splice support for tracing_pipe")
-Suggested-by: Steven Rostedt <rostedt@goodmis.org>
-Signed-off-by: Jeongjun Park <aha310510@gmail.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+Fixes: e5cf1baf92cb ("act_mirred: use TC_ACT_REINSERT when possible")
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+[Minor conflict resolved due to code context change.]
+Signed-off-by: Jianqi Ren <jianqi.ren.cn@windriver.com>
+Signed-off-by: He Zhe <zhe.he@windriver.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ net/sched/act_mirred.c |   22 +++++++++++++---------
+ 1 file changed, 13 insertions(+), 9 deletions(-)
 
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -6685,13 +6685,14 @@ static ssize_t tracing_splice_read_pipe(
- 		/* Copy the data into the page, so we can start over. */
- 		ret = trace_seq_to_buffer(&iter->seq,
- 					  page_address(spd.pages[i]),
--					  trace_seq_used(&iter->seq));
-+					  min((size_t)trace_seq_used(&iter->seq),
-+						  PAGE_SIZE));
- 		if (ret < 0) {
- 			__free_page(spd.pages[i]);
- 			break;
- 		}
- 		spd.partial[i].offset = 0;
--		spd.partial[i].len = trace_seq_used(&iter->seq);
-+		spd.partial[i].len = ret;
+--- a/net/sched/act_mirred.c
++++ b/net/sched/act_mirred.c
+@@ -256,31 +256,31 @@ static int tcf_mirred_act(struct sk_buff
  
- 		trace_seq_init(&iter->seq);
+ 	m_mac_header_xmit = READ_ONCE(m->tcfm_mac_header_xmit);
+ 	m_eaction = READ_ONCE(m->tcfm_eaction);
++	is_redirect = tcf_mirred_is_act_redirect(m_eaction);
+ 	retval = READ_ONCE(m->tcf_action);
+ 	dev = rcu_dereference_bh(m->tcfm_dev);
+ 	if (unlikely(!dev)) {
+ 		pr_notice_once("tc mirred: target device is gone\n");
+-		goto out;
++		goto err_cant_do;
  	}
+ 
+ 	if (unlikely(!(dev->flags & IFF_UP)) || !netif_carrier_ok(dev)) {
+ 		net_notice_ratelimited("tc mirred to Houston: device %s is down\n",
+ 				       dev->name);
+-		goto out;
++		goto err_cant_do;
+ 	}
+ 
+ 	/* we could easily avoid the clone only if called by ingress and clsact;
+ 	 * since we can't easily detect the clsact caller, skip clone only for
+ 	 * ingress - that covers the TC S/W datapath.
+ 	 */
+-	is_redirect = tcf_mirred_is_act_redirect(m_eaction);
+ 	at_ingress = skb_at_tc_ingress(skb);
+ 	use_reinsert = at_ingress && is_redirect &&
+ 		       tcf_mirred_can_reinsert(retval);
+ 	if (!use_reinsert) {
+ 		skb2 = skb_clone(skb, GFP_ATOMIC);
+ 		if (!skb2)
+-			goto out;
++			goto err_cant_do;
+ 	}
+ 
+ 	want_ingress = tcf_mirred_act_wants_ingress(m_eaction);
+@@ -323,12 +323,16 @@ static int tcf_mirred_act(struct sk_buff
+ 	}
+ 
+ 	err = tcf_mirred_forward(want_ingress, skb2);
+-	if (err) {
+-out:
++	if (err)
+ 		tcf_action_inc_overlimit_qstats(&m->common);
+-		if (tcf_mirred_is_act_redirect(m_eaction))
+-			retval = TC_ACT_SHOT;
+-	}
++	__this_cpu_dec(mirred_nest_level);
++
++	return retval;
++
++err_cant_do:
++	if (is_redirect)
++		retval = TC_ACT_SHOT;
++	tcf_action_inc_overlimit_qstats(&m->common);
+ 	__this_cpu_dec(mirred_nest_level);
+ 
+ 	return retval;
 
 
