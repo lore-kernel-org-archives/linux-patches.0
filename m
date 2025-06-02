@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9295A2C3247;
-	Mon,  2 Jun 2025 14:36:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8675A2C3247;
+	Mon,  2 Jun 2025 14:36:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748874960; cv=none; b=eCbfM3+yAsv1z/95cAPtVXQufCeHKR5iUIDjACoNapiaUUxdSNRCXipjNtfvMZWyzdvQEoDN5pKDTyMnOsTrkXyi0AqCn1R3OpLqIcm6ntBhZCgwkFIfabNQ/jcKNB809yktw9GFhGWXYVEwqK0F/xJgMHZRZkezW8mXeqNmcy8=
+	t=1748874963; cv=none; b=OQSgvsfPURyr2ek+b9pqt3FlKMAPhjOpljo3H0ikAvBSwmz62YqUTx8w9/baptwnMQIuX5jZK533HP1aIBsvWNPzyo4rACvfBJtRCtCAR9rIlXIfsVXq97xnAVTrvWjj2Hiyo8tOB9hse0r48J2JEcxzzfrxBBiMiiIkSPwE2/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748874960; c=relaxed/simple;
-	bh=PaNrrF8FMjmX/iXLTpaXxrFy5zV9ZY6H3+/Kkfp4Z2s=;
+	s=arc-20240116; t=1748874963; c=relaxed/simple;
+	bh=duyDz5X9r5wY+tR6A0fD/F3LU/NXShYOuAvZMnoUiDc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TnbUDwklCcCMsj8ZA2LGfNmy/RMMEarNX34H15v5eqmTcVr8BEvvn6A6lRsX7Wu0I2qk4Hky/6J+mRHT8KWlYvPJIvOBBNbgfZloMKaYa9vCaIw3qDG02PfpZ/JXoMoIrMp7uWaytZkMgE1XYvGkXg0XbXm6PSBvrGav31MvgIc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hVTniibX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oZ77BnF7MhwY8xMZRUFmT1t2ggiA+navRCWaY7g1/XyhqXuottBNmdWPv+/Sct6QsgLBbfBuPyk1INyRXUzVF3haygY5oZa7pLmvp4RAkiq4ZMZfpMfe+zbiNRuaJTuj7x2V8eJTVzIZxXKra9pW+TdF4nxj+e62naWbOwu97a4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X0Sb5W7c; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hVTniibX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEE6EC4CEEB;
-	Mon,  2 Jun 2025 14:35:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X0Sb5W7c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E21FC4CEEB;
+	Mon,  2 Jun 2025 14:36:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748874960;
-	bh=PaNrrF8FMjmX/iXLTpaXxrFy5zV9ZY6H3+/Kkfp4Z2s=;
+	s=korg; t=1748874963;
+	bh=duyDz5X9r5wY+tR6A0fD/F3LU/NXShYOuAvZMnoUiDc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hVTniibXhg4wM9zwFr5SULSbidckcfsAcUE8W9V3PyDN0lJiNZDdwCYvVIg7z46XT
-	 HckruWIp0Y3G79pdSNs1eQraVYrflVI8svKQkj0dO0VD7uU4NNjk3rkzGfQYDN3l9k
-	 Mvvf9ZDVFr3pMPxdyatmeJDt0Q0wz/eOqSQO1YCs=
+	b=X0Sb5W7c6LdGTKFuX3n4wz5a2yYFudmG60OMlH+M9o8Y48u74tmA7Acf8WvfmxG4Y
+	 5FiGlfrYtCFE8sBb4u5Cj/aA7HLELoSVl4Oly5EWMHhxVmMStFuQAiP51PhZ1Mk6Mb
+	 9aMtAwlIgNI/xgk2AB0JBRRlxmvxisrXjREeYI/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
-	Wang Zhaolong <wangzhaolong1@huawei.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 5.4 189/204] smb: client: Fix use-after-free in cifs_fill_dirent
-Date: Mon,  2 Jun 2025 15:48:42 +0200
-Message-ID: <20250602134303.106620352@linuxfoundation.org>
+	Venkat Venkatsubra <venkat.x.venkatsubra@oracle.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 172/204] bridge: netfilter: Fix forwarding of fragmented packets
+Date: Mon,  2 Jun 2025 15:48:25 +0200
+Message-ID: <20250602134302.410297799@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134255.449974357@linuxfoundation.org>
 References: <20250602134255.449974357@linuxfoundation.org>
@@ -51,170 +53,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wang Zhaolong <wangzhaolong1@huawei.com>
+From: Ido Schimmel <idosch@nvidia.com>
 
-commit a7a8fe56e932a36f43e031b398aef92341bf5ea0 upstream.
+[ Upstream commit 91b6dbced0ef1d680afdd69b14fc83d50ebafaf3 ]
 
-There is a race condition in the readdir concurrency process, which may
-access the rsp buffer after it has been released, triggering the
-following KASAN warning.
+When netfilter defrag hooks are loaded (due to the presence of conntrack
+rules, for example), fragmented packets entering the bridge will be
+defragged by the bridge's pre-routing hook (br_nf_pre_routing() ->
+ipv4_conntrack_defrag()).
 
- ==================================================================
- BUG: KASAN: slab-use-after-free in cifs_fill_dirent+0xb03/0xb60 [cifs]
- Read of size 4 at addr ffff8880099b819c by task a.out/342975
+Later on, in the bridge's post-routing hook, the defragged packet will
+be fragmented again. If the size of the largest fragment is larger than
+what the kernel has determined as the destination MTU (using
+ip_skb_dst_mtu()), the defragged packet will be dropped.
 
- CPU: 2 UID: 0 PID: 342975 Comm: a.out Not tainted 6.15.0-rc6+ #240 PREEMPT(full)
- Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.1-2.fc37 04/01/2014
- Call Trace:
-  <TASK>
-  dump_stack_lvl+0x53/0x70
-  print_report+0xce/0x640
-  kasan_report+0xb8/0xf0
-  cifs_fill_dirent+0xb03/0xb60 [cifs]
-  cifs_readdir+0x12cb/0x3190 [cifs]
-  iterate_dir+0x1a1/0x520
-  __x64_sys_getdents+0x134/0x220
-  do_syscall_64+0x4b/0x110
-  entry_SYSCALL_64_after_hwframe+0x76/0x7e
- RIP: 0033:0x7f996f64b9f9
- Code: ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 48 89 f8 48 89
- f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01
- f0 ff ff  0d f7 c3 0c 00 f7 d8 64 89 8
- RSP: 002b:00007f996f53de78 EFLAGS: 00000207 ORIG_RAX: 000000000000004e
- RAX: ffffffffffffffda RBX: 00007f996f53ecdc RCX: 00007f996f64b9f9
- RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000003
- RBP: 00007f996f53dea0 R08: 0000000000000000 R09: 0000000000000000
- R10: 0000000000000000 R11: 0000000000000207 R12: ffffffffffffff88
- R13: 0000000000000000 R14: 00007ffc8cd9a500 R15: 00007f996f51e000
-  </TASK>
+Before commit ac6627a28dbf ("net: ipv4: Consolidate ipv4_mtu and
+ip_dst_mtu_maybe_forward"), ip_skb_dst_mtu() would return dst_mtu() as
+the destination MTU. Assuming the dst entry attached to the packet is
+the bridge's fake rtable one, this would simply be the bridge's MTU (see
+fake_mtu()).
 
- Allocated by task 408:
-  kasan_save_stack+0x20/0x40
-  kasan_save_track+0x14/0x30
-  __kasan_slab_alloc+0x6e/0x70
-  kmem_cache_alloc_noprof+0x117/0x3d0
-  mempool_alloc_noprof+0xf2/0x2c0
-  cifs_buf_get+0x36/0x80 [cifs]
-  allocate_buffers+0x1d2/0x330 [cifs]
-  cifs_demultiplex_thread+0x22b/0x2690 [cifs]
-  kthread+0x394/0x720
-  ret_from_fork+0x34/0x70
-  ret_from_fork_asm+0x1a/0x30
+However, after above mentioned commit, ip_skb_dst_mtu() ends up
+returning the route's MTU stored in the dst entry's metrics. Ideally, in
+case the dst entry is the bridge's fake rtable one, this should be the
+bridge's MTU as the bridge takes care of updating this metric when its
+MTU changes (see br_change_mtu()).
 
- Freed by task 342979:
-  kasan_save_stack+0x20/0x40
-  kasan_save_track+0x14/0x30
-  kasan_save_free_info+0x3b/0x60
-  __kasan_slab_free+0x37/0x50
-  kmem_cache_free+0x2b8/0x500
-  cifs_buf_release+0x3c/0x70 [cifs]
-  cifs_readdir+0x1c97/0x3190 [cifs]
-  iterate_dir+0x1a1/0x520
-  __x64_sys_getdents64+0x134/0x220
-  do_syscall_64+0x4b/0x110
-  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+Unfortunately, the last operation is a no-op given the metrics attached
+to the fake rtable entry are marked as read-only. Therefore,
+ip_skb_dst_mtu() ends up returning 1500 (the initial MTU value) and
+defragged packets are dropped during fragmentation when dealing with
+large fragments and high MTU (e.g., 9k).
 
- The buggy address belongs to the object at ffff8880099b8000
-  which belongs to the cache cifs_request of size 16588
- The buggy address is located 412 bytes inside of
-  freed 16588-byte region [ffff8880099b8000, ffff8880099bc0cc)
+Fix by moving the fake rtable entry's metrics to be per-bridge (in a
+similar fashion to the fake rtable entry itself) and marking them as
+writable, thereby allowing MTU changes to be reflected.
 
- The buggy address belongs to the physical page:
- page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x99b8
- head: order:3 mapcount:0 entire_mapcount:0 nr_pages_mapped:0 pincount:0
- anon flags: 0x80000000000040(head|node=0|zone=1)
- page_type: f5(slab)
- raw: 0080000000000040 ffff888001e03400 0000000000000000 dead000000000001
- raw: 0000000000000000 0000000000010001 00000000f5000000 0000000000000000
- head: 0080000000000040 ffff888001e03400 0000000000000000 dead000000000001
- head: 0000000000000000 0000000000010001 00000000f5000000 0000000000000000
- head: 0080000000000003 ffffea0000266e01 00000000ffffffff 00000000ffffffff
- head: ffffffffffffffff 0000000000000000 00000000ffffffff 0000000000000008
- page dumped because: kasan: bad access detected
-
- Memory state around the buggy address:
-  ffff8880099b8080: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-  ffff8880099b8100: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
- >ffff8880099b8180: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-                             ^
-  ffff8880099b8200: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-  ffff8880099b8280: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
- ==================================================================
-
-POC is available in the link [1].
-
-The problem triggering process is as follows:
-
-Process 1                       Process 2
------------------------------------------------------------------
-cifs_readdir
-  /* file->private_data == NULL */
-  initiate_cifs_search
-    cifsFile = kzalloc(sizeof(struct cifsFileInfo), GFP_KERNEL);
-    smb2_query_dir_first ->query_dir_first()
-      SMB2_query_directory
-        SMB2_query_directory_init
-        cifs_send_recv
-        smb2_parse_query_directory
-          srch_inf->ntwrk_buf_start = (char *)rsp;
-          srch_inf->srch_entries_start = (char *)rsp + ...
-          srch_inf->last_entry = (char *)rsp + ...
-          srch_inf->smallBuf = true;
-  find_cifs_entry
-    /* if (cfile->srch_inf.ntwrk_buf_start) */
-    cifs_small_buf_release(cfile->srch_inf // free
-
-                        cifs_readdir  ->iterate_shared()
-                          /* file->private_data != NULL */
-                          find_cifs_entry
-                            /* in while (...) loop */
-                            smb2_query_dir_next  ->query_dir_next()
-                              SMB2_query_directory
-                                SMB2_query_directory_init
-                                cifs_send_recv
-                                  compound_send_recv
-                                    smb_send_rqst
-                                    __smb_send_rqst
-                                      rc = -ERESTARTSYS;
-                                      /* if (fatal_signal_pending()) */
-                                      goto out;
-                                      return rc
-                            /* if (cfile->srch_inf.last_entry) */
-                            cifs_save_resume_key()
-                              cifs_fill_dirent // UAF
-                            /* if (rc) */
-                            return -ENOENT;
-
-Fix this by ensuring the return code is checked before using pointers
-from the srch_inf.
-
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=220131 [1]
-Fixes: a364bc0b37f1 ("[CIFS] fix saving of resume key before CIFSFindNext")
-Cc: stable@vger.kernel.org
-Reviewed-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
-Signed-off-by: Wang Zhaolong <wangzhaolong1@huawei.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Wang Zhaolong <wangzhaolong1@huawei.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 62fa8a846d7d ("net: Implement read-only protection and COW'ing of metrics.")
+Fixes: 33eb9873a283 ("bridge: initialize fake_rtable metrics")
+Reported-by: Venkat Venkatsubra <venkat.x.venkatsubra@oracle.com>
+Closes: https://lore.kernel.org/netdev/PH0PR10MB4504888284FF4CBA648197D0ACB82@PH0PR10MB4504.namprd10.prod.outlook.com/
+Tested-by: Venkat Venkatsubra <venkat.x.venkatsubra@oracle.com>
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://patch.msgid.link/20250515084848.727706-1-idosch@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cifs/readdir.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/bridge/br_nf_core.c | 7 ++-----
+ net/bridge/br_private.h | 1 +
+ 2 files changed, 3 insertions(+), 5 deletions(-)
 
---- a/fs/cifs/readdir.c
-+++ b/fs/cifs/readdir.c
-@@ -644,11 +644,11 @@ find_cifs_entry(const unsigned int xid,
- 		rc = server->ops->query_dir_next(xid, tcon, &cfile->fid,
- 						 search_flags,
- 						 &cfile->srch_inf);
-+		if (rc)
-+			return -ENOENT;
- 		/* FindFirst/Next set last_entry to NULL on malformed reply */
- 		if (cfile->srch_inf.last_entry)
- 			cifs_save_resume_key(cfile->srch_inf.last_entry, cfile);
--		if (rc)
--			return -ENOENT;
- 	}
- 	if (index_to_find < cfile->srch_inf.index_of_last_entry) {
- 		/* we found the buffer that contains the entry */
+diff --git a/net/bridge/br_nf_core.c b/net/bridge/br_nf_core.c
+index 8c69f0c95a8ed..b8c8deb87407d 100644
+--- a/net/bridge/br_nf_core.c
++++ b/net/bridge/br_nf_core.c
+@@ -65,17 +65,14 @@ static struct dst_ops fake_dst_ops = {
+  * ipt_REJECT needs it.  Future netfilter modules might
+  * require us to fill additional fields.
+  */
+-static const u32 br_dst_default_metrics[RTAX_MAX] = {
+-	[RTAX_MTU - 1] = 1500,
+-};
+-
+ void br_netfilter_rtable_init(struct net_bridge *br)
+ {
+ 	struct rtable *rt = &br->fake_rtable;
+ 
+ 	atomic_set(&rt->dst.__refcnt, 1);
+ 	rt->dst.dev = br->dev;
+-	dst_init_metrics(&rt->dst, br_dst_default_metrics, true);
++	dst_init_metrics(&rt->dst, br->metrics, false);
++	dst_metric_set(&rt->dst, RTAX_MTU, br->dev->mtu);
+ 	rt->dst.flags	= DST_NOXFRM | DST_FAKE_RTABLE;
+ 	rt->dst.ops = &fake_dst_ops;
+ }
+diff --git a/net/bridge/br_private.h b/net/bridge/br_private.h
+index 5ba4620727a7e..eb0b1b513feb3 100644
+--- a/net/bridge/br_private.h
++++ b/net/bridge/br_private.h
+@@ -346,6 +346,7 @@ struct net_bridge {
+ 		struct rtable		fake_rtable;
+ 		struct rt6_info		fake_rt6_info;
+ 	};
++	u32				metrics[RTAX_MAX];
+ #endif
+ 	u16				group_fwd_mask;
+ 	u16				group_fwd_mask_required;
+-- 
+2.39.5
+
 
 
