@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A815229D05;
-	Mon,  2 Jun 2025 14:14:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2AE220F07C;
+	Mon,  2 Jun 2025 14:15:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748873698; cv=none; b=FylsPrPKWOQdLDBQcWQBt/lkUC26OBa/hBAKRuT5Craij8wHN9NqV/Dr9G2hFoc3lTr3fsIkVBu5klzq/1JyQyR0+ixyOdIdRtdbM+7rSo0B43uD3zz4HpLtPrVSl1iwITGGvxJugvxYvnrHVt0GZ3axFQORLi0w/aOVvR3r1fs=
+	t=1748873701; cv=none; b=d1YHaAcE9wlBEd/gvjdMBa+OAYoxIU6iMmon0NULos3zgwCn3PjuRXFEYiYatqPhpV8hlb+Tri7clKz9ptkoxbMG8xwqEM7/CviSoPV6zZxemmNLGdD+FdPKEdbrEzcpV2tXOrcwtmlMiQPPOGkmaBwv67uN5DC3ntlnZfwknhk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748873698; c=relaxed/simple;
-	bh=gFRkaLDbw1vWERFzOwJIGp6pIx+GDPKBCKlezHFQzWU=;
+	s=arc-20240116; t=1748873701; c=relaxed/simple;
+	bh=0LtPjYdaK8BVHT57+FAhSH+uAASwLvzjtVVdE4J3dhY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jKqQh/FOllJv2J9RE1AhSqNA6g4ZkiXpULBYjGRlm7dWFl2RtQUe8/2v7lrZOJKA1UAR6vbcZY80ivZcQALvzyiBDPf9c5A5DzRrhR09XnFHwot1vaduYPs9LSXraHAOQaQgTuxS1tEBfJIABA+ebKvF5wGD47ELzHGkKX+tMSY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ogje7oEs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RIowSeZSwuZ4PmoWNzu+uepKFhI/+NDL5nG8LDhlVgRkoZ8mscnlv1ZQL5K1Qud0IHfQQg/VRCe3hWPdiRhzToIs0d+qsv+zvOFQFSRhWxBw+bpwbv6WTvdGgaMzKDn8rJahYn3adnvHZ+T0yFqMD9SLclQWiX8sMSvNhJCAkvU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gW1T5Fx+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ogje7oEs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 226F9C4CEEB;
-	Mon,  2 Jun 2025 14:14:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gW1T5Fx+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40871C4CEEB;
+	Mon,  2 Jun 2025 14:15:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748873698;
-	bh=gFRkaLDbw1vWERFzOwJIGp6pIx+GDPKBCKlezHFQzWU=;
+	s=korg; t=1748873701;
+	bh=0LtPjYdaK8BVHT57+FAhSH+uAASwLvzjtVVdE4J3dhY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ogje7oEsLwwlIPm7GVZ/nf3BowEtUDj3Lzz3nZpUG2B2AUhStZJKk8nG2f8DGmgRZ
-	 zL2l6jJDJw+eqi4bjQ1Qq8kapniIqyajy5q9QqZ/Gb8MeJqMwkq0ttszF4URPmJH0R
-	 gmQzYbKB0NClOVgarvgC2oaRuM9Pb7s1F+3Py2SQ=
+	b=gW1T5Fx+8w+JssgDj+zp1LorfLN9PYG7/5ReS3+37ey+IrXp+lUb11Ifa7fLWUS3/
+	 lWYRkdpmTVWh5RE7bT+VXFDFqTCmKGgJz7vsxzgwzI3dSQtTxVrsgtoEtA14Xl4uXx
+	 Oyi9in5/or5Px38cIbjUQGE4Mz2z8xanqD0EDmO4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Viresh Kumar <viresh.kumar@linaro.org>,
-	Sudeep Holla <sudeep.holla@arm.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 223/444] firmware: arm_ffa: Reject higher major version as incompatible
-Date: Mon,  2 Jun 2025 15:44:47 +0200
-Message-ID: <20250602134349.958114306@linuxfoundation.org>
+Subject: [PATCH 6.6 206/444] wifi: rtw89: fw: propagate error code from rtw89_h2c_tx()
+Date: Mon,  2 Jun 2025 15:44:30 +0200
+Message-ID: <20250602134349.265793272@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -51,48 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sudeep Holla <sudeep.holla@arm.com>
+From: Ping-Ke Shih <pkshih@realtek.com>
 
-[ Upstream commit efff6a7f16b34fd902f342b58bd8bafc2d6f2fd1 ]
+[ Upstream commit 56e1acaa0f80620b8e2c3410db35b4b975782b0a ]
 
-When the firmware compatibility was handled previously in the commit
-8e3f9da608f1 ("firmware: arm_ffa: Handle compatibility with different firmware versions"),
-we only addressed firmware versions that have higher minor versions
-compared to the driver version which is should be considered compatible
-unless the firmware returns NOT_SUPPORTED.
+The error code should be propagated to callers during downloading firmware
+header and body. Remove unnecessary assignment of -1.
 
-However, if the firmware reports higher major version than the driver
-supported, we need to reject it. If the firmware can work in a compatible
-mode with the driver requested version, it must return the same major
-version as requested.
-
-Tested-by: Viresh Kumar <viresh.kumar@linaro.org>
-Message-Id: <20250217-ffa_updates-v3-12-bd1d9de615e7@arm.com>
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20250217064308.43559-4-pkshih@realtek.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_ffa/driver.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/net/wireless/realtek/rtw89/fw.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/firmware/arm_ffa/driver.c b/drivers/firmware/arm_ffa/driver.c
-index 7c2db3f017651..488f8345dd1b6 100644
---- a/drivers/firmware/arm_ffa/driver.c
-+++ b/drivers/firmware/arm_ffa/driver.c
-@@ -121,6 +121,14 @@ static int ffa_version_check(u32 *version)
- 		return -EOPNOTSUPP;
+diff --git a/drivers/net/wireless/realtek/rtw89/fw.c b/drivers/net/wireless/realtek/rtw89/fw.c
+index a8e2efae6e526..89b0a7970508e 100644
+--- a/drivers/net/wireless/realtek/rtw89/fw.c
++++ b/drivers/net/wireless/realtek/rtw89/fw.c
+@@ -755,7 +755,6 @@ static int __rtw89_fw_download_hdr(struct rtw89_dev *rtwdev, const u8 *fw, u32 l
+ 	ret = rtw89_h2c_tx(rtwdev, skb, false);
+ 	if (ret) {
+ 		rtw89_err(rtwdev, "failed to send h2c\n");
+-		ret = -1;
+ 		goto fail;
  	}
  
-+	if (FFA_MAJOR_VERSION(ver.a0) > FFA_MAJOR_VERSION(FFA_DRIVER_VERSION)) {
-+		pr_err("Incompatible v%d.%d! Latest supported v%d.%d\n",
-+		       FFA_MAJOR_VERSION(ver.a0), FFA_MINOR_VERSION(ver.a0),
-+		       FFA_MAJOR_VERSION(FFA_DRIVER_VERSION),
-+		       FFA_MINOR_VERSION(FFA_DRIVER_VERSION));
-+		return -EINVAL;
-+	}
-+
- 	if (ver.a0 < FFA_MIN_VERSION) {
- 		pr_err("Incompatible v%d.%d! Earliest supported v%d.%d\n",
- 		       FFA_MAJOR_VERSION(ver.a0), FFA_MINOR_VERSION(ver.a0),
+@@ -816,7 +815,6 @@ static int __rtw89_fw_download_main(struct rtw89_dev *rtwdev,
+ 		ret = rtw89_h2c_tx(rtwdev, skb, true);
+ 		if (ret) {
+ 			rtw89_err(rtwdev, "failed to send h2c\n");
+-			ret = -1;
+ 			goto fail;
+ 		}
+ 
 -- 
 2.39.5
 
