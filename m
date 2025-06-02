@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA1A022259F;
-	Mon,  2 Jun 2025 14:09:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53791226888;
+	Mon,  2 Jun 2025 14:09:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748873378; cv=none; b=l1iAxfJmofeAlCAOn+RT1GINPk/A1e3YPsSIs86x6Zk7XexvqjZkoBlVT0mB/MUFGX2jD75es36+FXQD+WsxMEmYntia8mAg0oo6Wtn/QniIhN8Ukz/AbnINoBK1e83c+mkyHg3sIZ24yPrp25aPZSOpypxfw5a3mPD6mq4TbWE=
+	t=1748873381; cv=none; b=ivECZY6OyPLMM+wv2ReWBsxwwaUhq8chocYq6FJGCsp8WghTpqo7P8QOmAqM+P1NBXpiFtxVcGNnnB9UC9/hQoC6mTsJAb0KJ4qpJwwl1kmalL+vz2I5nrKH0Z4xissXpSV8ID1kENpDtCYYSmn9FQpsPvobxYSnfCygvXN5Wco=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748873378; c=relaxed/simple;
-	bh=f4oz3B6ZdJerrxirXA/fVC/X0lTGCHVbGpcNq8yar80=;
+	s=arc-20240116; t=1748873381; c=relaxed/simple;
+	bh=NV53Rs0EjfEP5uZYDPtayKqBfm2mhzo1EfI8UXKwbMM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RpFEUinpCMKRbo94q9AX0+QP75iqum3c7S3Oj7WRGA46Fz6c5wwuUU4szc1sTyEnpfszMElm7QEFexeYDRYb44M8w5Qh5+Q77i8yxn7YSN9OVAtsLOL5BgAL1+JS3aEraH4+sNB4BaRYRGtSjoTTk1oVO7y4gtpmSgEP7N/oWbY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ay7qxmMN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=edEUv9YhFoQ/B/5euz4Qb0e7E1NQ512epGsZokAi0Yc1SBcC7rLz+BXAiwDA6lV23Zs1JFiTd/zJVjFWMJg8yeyACBfxSMp8EEcGRjut9qBUQsFnpbMVyoMK/LqHboYxbg1fM41eq0o4PbqPlgfyRpLGfui3aLQplk5yhTPqP0Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OuxVv81r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ay7qxmMN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73863C4CEEB;
-	Mon,  2 Jun 2025 14:09:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OuxVv81r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7103C4CEEB;
+	Mon,  2 Jun 2025 14:09:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748873377;
-	bh=f4oz3B6ZdJerrxirXA/fVC/X0lTGCHVbGpcNq8yar80=;
+	s=korg; t=1748873381;
+	bh=NV53Rs0EjfEP5uZYDPtayKqBfm2mhzo1EfI8UXKwbMM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ay7qxmMN+IJk6D+c+vRxGng866O3odKgp5BVbxx0pmpLXV7McTF1DxD9pyWMRfv8L
-	 jZlKuikxTsrBzWe5zRQmC/3xZWNdsZsRARhhN5B+hYWXxDB7xOPlkTeVeVUzEFMKt1
-	 t7wW5TddW+bau0umBy1R+sPI8Mk+e+06gbaQitG8=
+	b=OuxVv81reByx/X2DMNVv8SrTFP6EwyTLp7jWwvJLwUvt1zKjoYPI+87J2lZGBL+EU
+	 CLYfeVTIeCrWIXIuAfGF44qKOuBoTlo+oRXI6qo8kCM0vJ1pkB7fC79AIwTQpNAW8r
+	 KJrKBKda6JAhoUGv+BGZJejkhlELWpDIbvbTcI6o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charlene Liu <charlene.liu@amd.com>,
-	Zhikai Zhai <zhikai.zhai@amd.com>,
+	Robin Chen <robin.chen@amd.com>,
+	Leon Huang <Leon.Huang1@amd.com>,
 	Tom Chung <chiahsuan.chung@amd.com>,
 	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 123/444] drm/amd/display: calculate the remain segments for all pipes
-Date: Mon,  2 Jun 2025 15:43:07 +0200
-Message-ID: <20250602134345.886817780@linuxfoundation.org>
+Subject: [PATCH 6.6 124/444] drm/amd/display: Fix incorrect DPCD configs while Replay/PSR switch
+Date: Mon,  2 Jun 2025 15:43:08 +0200
+Message-ID: <20250602134345.927439886@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -54,93 +54,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhikai Zhai <zhikai.zhai@amd.com>
+From: Leon Huang <Leon.Huang1@amd.com>
 
-[ Upstream commit d3069feecdb5542604d29b59acfd1fd213bad95b ]
+[ Upstream commit 0d9cabc8f591ea1cd97c071b853b75b155c13259 ]
 
-[WHY]
-In some cases the remain de-tile buffer segments will be greater
-than zero if we don't add the non-top pipe to calculate, at
-this time the override de-tile buffer size will be valid and used.
-But it makes the de-tile buffer segments used finally for all of pipes
-exceed the maximum.
+[Why]
+When switching between PSR/Replay,
+the DPCD config of previous mode is not cleared,
+resulting in unexpected behavior in TCON.
 
-[HOW]
-Add the non-top pipe to calculate the remain de-tile buffer segments.
-Don't set override size to use the average according to pipe count
-if the value exceed the maximum.
+[How]
+Initialize the DPCD in setup function
 
-Reviewed-by: Charlene Liu <charlene.liu@amd.com>
-Signed-off-by: Zhikai Zhai <zhikai.zhai@amd.com>
+Reviewed-by: Robin Chen <robin.chen@amd.com>
+Signed-off-by: Leon Huang <Leon.Huang1@amd.com>
 Signed-off-by: Tom Chung <chiahsuan.chung@amd.com>
 Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../amd/display/dc/dcn315/dcn315_resource.c   | 42 +++++++++----------
- 1 file changed, 20 insertions(+), 22 deletions(-)
+ .../link/protocols/link_edp_panel_control.c   | 25 ++++++++++++++++---
+ 1 file changed, 22 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dcn315/dcn315_resource.c b/drivers/gpu/drm/amd/display/dc/dcn315/dcn315_resource.c
-index 597fa0364a3a9..d1601d61f05ad 100644
---- a/drivers/gpu/drm/amd/display/dc/dcn315/dcn315_resource.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn315/dcn315_resource.c
-@@ -1692,7 +1692,7 @@ static int dcn315_populate_dml_pipes_from_context(
- 		pipes[pipe_cnt].dout.dsc_input_bpc = 0;
- 		DC_FP_START();
- 		dcn31_zero_pipe_dcc_fraction(pipes, pipe_cnt);
--		if (pixel_rate_crb && !pipe->top_pipe && !pipe->prev_odm_pipe) {
-+		if (pixel_rate_crb) {
- 			int bpp = source_format_to_bpp(pipes[pipe_cnt].pipe.src.source_format);
- 			/* Ceil to crb segment size */
- 			int approx_det_segs_required_for_pstate = dcn_get_approx_det_segs_required_for_pstate(
-@@ -1749,28 +1749,26 @@ static int dcn315_populate_dml_pipes_from_context(
- 				continue;
- 			}
+diff --git a/drivers/gpu/drm/amd/display/dc/link/protocols/link_edp_panel_control.c b/drivers/gpu/drm/amd/display/dc/link/protocols/link_edp_panel_control.c
+index 13104d000b9e0..d4d92da153ece 100644
+--- a/drivers/gpu/drm/amd/display/dc/link/protocols/link_edp_panel_control.c
++++ b/drivers/gpu/drm/amd/display/dc/link/protocols/link_edp_panel_control.c
+@@ -662,6 +662,18 @@ bool edp_setup_psr(struct dc_link *link,
+ 	if (!link)
+ 		return false;
  
--			if (!pipe->top_pipe && !pipe->prev_odm_pipe) {
--				bool split_required = pipe->stream->timing.pix_clk_100hz >= dcn_get_max_non_odm_pix_rate_100hz(&dc->dml.soc)
--						|| (pipe->plane_state && pipe->plane_state->src_rect.width > 5120);
--
--				if (remaining_det_segs > MIN_RESERVED_DET_SEGS && crb_pipes != 0)
--					pipes[pipe_cnt].pipe.src.det_size_override += (remaining_det_segs - MIN_RESERVED_DET_SEGS) / crb_pipes +
--							(crb_idx < (remaining_det_segs - MIN_RESERVED_DET_SEGS) % crb_pipes ? 1 : 0);
--				if (pipes[pipe_cnt].pipe.src.det_size_override > 2 * DCN3_15_MAX_DET_SEGS) {
--					/* Clamp to 2 pipe split max det segments */
--					remaining_det_segs += pipes[pipe_cnt].pipe.src.det_size_override - 2 * (DCN3_15_MAX_DET_SEGS);
--					pipes[pipe_cnt].pipe.src.det_size_override = 2 * DCN3_15_MAX_DET_SEGS;
--				}
--				if (pipes[pipe_cnt].pipe.src.det_size_override > DCN3_15_MAX_DET_SEGS || split_required) {
--					/* If we are splitting we must have an even number of segments */
--					remaining_det_segs += pipes[pipe_cnt].pipe.src.det_size_override % 2;
--					pipes[pipe_cnt].pipe.src.det_size_override -= pipes[pipe_cnt].pipe.src.det_size_override % 2;
--				}
--				/* Convert segments into size for DML use */
--				pipes[pipe_cnt].pipe.src.det_size_override *= DCN3_15_CRB_SEGMENT_SIZE_KB;
--
--				crb_idx++;
-+			bool split_required = pipe->stream->timing.pix_clk_100hz >= dcn_get_max_non_odm_pix_rate_100hz(&dc->dml.soc)
-+					|| (pipe->plane_state && pipe->plane_state->src_rect.width > 5120);
++	//Clear PSR cfg
++	memset(&psr_configuration, 0, sizeof(psr_configuration));
++	dm_helpers_dp_write_dpcd(
++		link->ctx,
++		link,
++		DP_PSR_EN_CFG,
++		&psr_configuration.raw,
++		sizeof(psr_configuration.raw));
 +
-+			if (remaining_det_segs > MIN_RESERVED_DET_SEGS && crb_pipes != 0)
-+				pipes[pipe_cnt].pipe.src.det_size_override += (remaining_det_segs - MIN_RESERVED_DET_SEGS) / crb_pipes +
-+						(crb_idx < (remaining_det_segs - MIN_RESERVED_DET_SEGS) % crb_pipes ? 1 : 0);
-+			if (pipes[pipe_cnt].pipe.src.det_size_override > 2 * DCN3_15_MAX_DET_SEGS) {
-+				/* Clamp to 2 pipe split max det segments */
-+				remaining_det_segs += pipes[pipe_cnt].pipe.src.det_size_override - 2 * (DCN3_15_MAX_DET_SEGS);
-+				pipes[pipe_cnt].pipe.src.det_size_override = 2 * DCN3_15_MAX_DET_SEGS;
-+			}
-+			if (pipes[pipe_cnt].pipe.src.det_size_override > DCN3_15_MAX_DET_SEGS || split_required) {
-+				/* If we are splitting we must have an even number of segments */
-+				remaining_det_segs += pipes[pipe_cnt].pipe.src.det_size_override % 2;
-+				pipes[pipe_cnt].pipe.src.det_size_override -= pipes[pipe_cnt].pipe.src.det_size_override % 2;
- 			}
-+			/* Convert segments into size for DML use */
-+			pipes[pipe_cnt].pipe.src.det_size_override *= DCN3_15_CRB_SEGMENT_SIZE_KB;
++	if (link->psr_settings.psr_version == DC_PSR_VERSION_UNSUPPORTED)
++		return false;
 +
-+			crb_idx++;
- 			pipe_cnt++;
- 		}
- 	}
+ 	dc = link->ctx->dc;
+ 	dmcu = dc->res_pool->dmcu;
+ 	psr = dc->res_pool->psr;
+@@ -672,9 +684,6 @@ bool edp_setup_psr(struct dc_link *link,
+ 	if (!dc_get_edp_link_panel_inst(dc, link, &panel_inst))
+ 		return false;
+ 
+-
+-	memset(&psr_configuration, 0, sizeof(psr_configuration));
+-
+ 	psr_configuration.bits.ENABLE                    = 1;
+ 	psr_configuration.bits.CRC_VERIFICATION          = 1;
+ 	psr_configuration.bits.FRAME_CAPTURE_INDICATION  =
+@@ -938,6 +947,16 @@ bool edp_setup_replay(struct dc_link *link, const struct dc_stream_state *stream
+ 	if (!link)
+ 		return false;
+ 
++	//Clear Replay config
++	dm_helpers_dp_write_dpcd(link->ctx, link,
++		DP_SINK_PR_ENABLE_AND_CONFIGURATION,
++		(uint8_t *)&(replay_config.raw), sizeof(uint8_t));
++
++	if (!(link->replay_settings.config.replay_supported))
++		return false;
++
++	link->replay_settings.config.replay_error_status.raw = 0;
++
+ 	dc = link->ctx->dc;
+ 
+ 	replay = dc->res_pool->replay;
 -- 
 2.39.5
 
