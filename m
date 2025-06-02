@@ -1,39 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EEF21A83E8;
-	Mon,  2 Jun 2025 15:18:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50C1423645F;
+	Mon,  2 Jun 2025 15:18:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748877518; cv=none; b=f+eKTP4yrVkuQMRV7DpeIMW98klr0F0gOY8MlUTopx4Wp+WBr/gA5NsTxFey5rStdIdrM4SQ5f3PBGUw8hdxp0pECShVQtu2Z/UnWCt+0e25aUwtTjPPZlXw+yPDXR5qo51oIzuICsolcqqw9Q0IU8R+PtDO7k+WcLLNdJPNgow=
+	t=1748877521; cv=none; b=pSc685W1kcLhs46xGkwdH8Y/Hj/1XdfNCn2OSut17WTaQte/GT1h/oxahW8JcsvKKfybFGrXHndhIDBkfPgrfSdtD/98qV6Rmgdg4yUR8hL3bOmmJf8NOtG2ADqsPOfkMkZwJrIgOsmf3bflXfo31d3nCm1Q4jsK8yDLizSzbnU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748877518; c=relaxed/simple;
-	bh=xSuiGaZS3aaADsjdutROqyFuyP/Vr1cg2jXgAqE7cG8=;
+	s=arc-20240116; t=1748877521; c=relaxed/simple;
+	bh=xyb8a7VBaR+kJL69E5DxKNbWVOzbl/VPL1rvwifDYR8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JnAoagjuGLbbz6kvNmx3QN2qVIGBuX4Xq3Wu8EwWoi/W8of390ckjuD0HbaNK+hJ3ov4yY+84uGk7/lG/Ix/UXZKqMVoutLm6KRJrGmFfipzaLJvAb9vJqMoQYdp+5IC5H/j6af1MmknU/i1paIdSRWdNIlpPtcRlpk+MlMdm9w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WbV7We+o; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=V26olgmavOeASMKlOivbcSmw0xDVaoLGUv3K7bivJvcBn6i1kAydlJgdTVJOFcMF3Srjg2eMOHLBKblRXzpsNGt+k919xkwceOHCd8lcPWh2b7k5HDyHdZuKyoi26D5tOrAucFVFcXafTixQY8OkLnvYqkOwpwQqzhZcnuBSLgw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DZdG4Idw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WbV7We+o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89291C4CEEB;
-	Mon,  2 Jun 2025 15:18:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DZdG4Idw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B479C4CEEE;
+	Mon,  2 Jun 2025 15:18:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748877518;
-	bh=xSuiGaZS3aaADsjdutROqyFuyP/Vr1cg2jXgAqE7cG8=;
+	s=korg; t=1748877521;
+	bh=xyb8a7VBaR+kJL69E5DxKNbWVOzbl/VPL1rvwifDYR8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WbV7We+ocJ09Rl1TeRbvfpk/Zr4FjoQUb+pFClDqNq/zd5r28018AaPDI9/lp3CYp
-	 KgvE0kKD+L/HqmO5ayDuC8HyBi+l+7+1OpnN34onJuqV2dL6g0M/fTpkZuAP0p8cSE
-	 4GBDS73j44pgozg4RJ5WBMuUUZdz5mrmiGhwWuYU=
+	b=DZdG4IdwkdZnGRRn+ClrWukOsL1lbc5a1rlwh8BAC/O8oEtQLryEirqzBzeDBP/14
+	 4AXgpZtsKdtfs0waksp21bi1pbObwIMJjO+j1qRSHPwbwwFMIr9oG2ieQfD9h0Q5hN
+	 iMKbxebO8EkDtHIPwLfQCiQ4Lq+03M6vYpTTeFYA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Lee Jones <lee@kernel.org>
-Subject: [PATCH 6.1 301/325] af_unix: Replace garbage collection algorithm.
-Date: Mon,  2 Jun 2025 15:49:37 +0200
-Message-ID: <20250602134332.147479461@linuxfoundation.org>
+	Bert Karwatzki <spasswolf@web.de>,
+	Balbir Singh <balbirs@nvidia.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Brian Gerst <brgerst@gmail.com>,
+	Juergen Gross <jgross@suse.com>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	David Airlie <airlied@gmail.com>,
+	Simona Vetter <simona@ffwll.ch>
+Subject: [PATCH 6.1 274/325] x86/mm/init: Handle the special case of device private pages in add_pages(), to not increase max_pfn and trigger dma_addressing_limited() bounce buffers bounce buffers
+Date: Mon,  2 Jun 2025 15:49:10 +0200
+Message-ID: <20250602134330.898123708@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134319.723650984@linuxfoundation.org>
 References: <20250602134319.723650984@linuxfoundation.org>
@@ -46,500 +56,109 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Balbir Singh <balbirs@nvidia.com>
 
-commit 4090fa373f0e763c43610853d2774b5979915959 upstream.
+commit 7170130e4c72ce0caa0cb42a1627c635cc262821 upstream.
 
-If we find a dead SCC during iteration, we call unix_collect_skb()
-to splice all skb in the SCC to the global sk_buff_head, hitlist.
+As Bert Karwatzki reported, the following recent commit causes a
+performance regression on AMD iGPU and dGPU systems:
 
-After iterating all SCC, we unlock unix_gc_lock and purge the queue.
+  7ffb791423c7 ("x86/kaslr: Reduce KASLR entropy on most x86 systems")
 
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Acked-by: Paolo Abeni <pabeni@redhat.com>
-Link: https://lore.kernel.org/r/20240325202425.60930-15-kuniyu@amazon.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Lee Jones <lee@kernel.org>
+It exposed a bug with nokaslr and zone device interaction.
+
+The root cause of the bug is that, the GPU driver registers a zone
+device private memory region. When KASLR is disabled or the above commit
+is applied, the direct_map_physmem_end is set to much higher than 10 TiB
+typically to the 64TiB address. When zone device private memory is added
+to the system via add_pages(), it bumps up the max_pfn to the same
+value. This causes dma_addressing_limited() to return true, since the
+device cannot address memory all the way up to max_pfn.
+
+This caused a regression for games played on the iGPU, as it resulted in
+the DMA32 zone being used for GPU allocations.
+
+Fix this by not bumping up max_pfn on x86 systems, when pgmap is passed
+into add_pages(). The presence of pgmap is used to determine if device
+private memory is being added via add_pages().
+
+More details:
+
+devm_request_mem_region() and request_free_mem_region() request for
+device private memory. iomem_resource is passed as the base resource
+with start and end parameters. iomem_resource's end depends on several
+factors, including the platform and virtualization. On x86 for example
+on bare metal, this value is set to boot_cpu_data.x86_phys_bits.
+boot_cpu_data.x86_phys_bits can change depending on support for MKTME.
+By default it is set to the same as log2(direct_map_physmem_end) which
+is 46 to 52 bits depending on the number of levels in the page table.
+The allocation routines used iomem_resource's end and
+direct_map_physmem_end to figure out where to allocate the region.
+
+[ arch/powerpc is also impacted by this problem, but this patch does not fix
+  the issue for PowerPC. ]
+
+Testing:
+
+ 1. Tested on a virtual machine with test_hmm for zone device inseration
+
+ 2. A previous version of this patch was tested by Bert, please see:
+    https://lore.kernel.org/lkml/d87680bab997fdc9fb4e638983132af235d9a03a.camel@web.de/
+
+[ mingo: Clarified the comments and the changelog. ]
+
+Reported-by: Bert Karwatzki <spasswolf@web.de>
+Tested-by: Bert Karwatzki <spasswolf@web.de>
+Fixes: 7ffb791423c7 ("x86/kaslr: Reduce KASLR entropy on most x86 systems")
+Signed-off-by: Balbir Singh <balbirs@nvidia.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: Brian Gerst <brgerst@gmail.com>
+Cc: Juergen Gross <jgross@suse.com>
+Cc: H. Peter Anvin <hpa@zytor.com>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Cc: Christoph Hellwig <hch@lst.de>
+Cc: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Cc: Christian König <christian.koenig@amd.com>
+Cc: David Airlie <airlied@gmail.com>
+Cc: Simona Vetter <simona@ffwll.ch>
+Link: https://lore.kernel.org/r/20250401000752.249348-1-balbirs@nvidia.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/af_unix.h |    8 -
- net/unix/af_unix.c    |   12 -
- net/unix/garbage.c    |  318 ++++++++++----------------------------------------
- 3 files changed, 64 insertions(+), 274 deletions(-)
+ arch/x86/mm/init_64.c |   15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
---- a/include/net/af_unix.h
-+++ b/include/net/af_unix.h
-@@ -19,9 +19,6 @@ static inline struct unix_sock *unix_get
+--- a/arch/x86/mm/init_64.c
++++ b/arch/x86/mm/init_64.c
+@@ -959,9 +959,18 @@ int add_pages(int nid, unsigned long sta
+ 	ret = __add_pages(nid, start_pfn, nr_pages, params);
+ 	WARN_ON_ONCE(ret);
  
- extern spinlock_t unix_gc_lock;
- extern unsigned int unix_tot_inflight;
--
--void unix_inflight(struct user_struct *user, struct file *fp);
--void unix_notinflight(struct user_struct *user, struct file *fp);
- void unix_add_edges(struct scm_fp_list *fpl, struct unix_sock *receiver);
- void unix_del_edges(struct scm_fp_list *fpl);
- void unix_update_edges(struct unix_sock *receiver);
-@@ -85,12 +82,7 @@ struct unix_sock {
- 	struct sock		*peer;
- 	struct sock		*listener;
- 	struct unix_vertex	*vertex;
--	struct list_head	link;
--	unsigned long		inflight;
- 	spinlock_t		lock;
--	unsigned long		gc_flags;
--#define UNIX_GC_CANDIDATE	0
--#define UNIX_GC_MAYBE_CYCLE	1
- 	struct socket_wq	peer_wq;
- 	wait_queue_entry_t	peer_wake;
- 	struct scm_stat		scm_stat;
---- a/net/unix/af_unix.c
-+++ b/net/unix/af_unix.c
-@@ -955,12 +955,10 @@ static struct sock *unix_create1(struct
- 	sk->sk_destruct		= unix_sock_destructor;
- 	u = unix_sk(sk);
- 	u->listener = NULL;
--	u->inflight = 0;
- 	u->vertex = NULL;
- 	u->path.dentry = NULL;
- 	u->path.mnt = NULL;
- 	spin_lock_init(&u->lock);
--	INIT_LIST_HEAD(&u->link);
- 	mutex_init(&u->iolock); /* single task reading lock */
- 	mutex_init(&u->bindlock); /* single task binding lock */
- 	init_waitqueue_head(&u->peer_wait);
-@@ -1744,8 +1742,6 @@ static inline bool too_many_unix_fds(str
+-	/* update max_pfn, max_low_pfn and high_memory */
+-	update_end_of_memory_vars(start_pfn << PAGE_SHIFT,
+-				  nr_pages << PAGE_SHIFT);
++	/*
++	 * Special case: add_pages() is called by memremap_pages() for adding device
++	 * private pages. Do not bump up max_pfn in the device private path,
++	 * because max_pfn changes affect dma_addressing_limited().
++	 *
++	 * dma_addressing_limited() returning true when max_pfn is the device's
++	 * addressable memory can force device drivers to use bounce buffers
++	 * and impact their performance negatively:
++	 */
++	if (!params->pgmap)
++		/* update max_pfn, max_low_pfn and high_memory */
++		update_end_of_memory_vars(start_pfn << PAGE_SHIFT, nr_pages << PAGE_SHIFT);
  
- static int unix_attach_fds(struct scm_cookie *scm, struct sk_buff *skb)
- {
--	int i;
--
- 	if (too_many_unix_fds(current))
- 		return -ETOOMANYREFS;
- 
-@@ -1757,9 +1753,6 @@ static int unix_attach_fds(struct scm_co
- 	if (!UNIXCB(skb).fp)
- 		return -ENOMEM;
- 
--	for (i = scm->fp->count - 1; i >= 0; i--)
--		unix_inflight(scm->fp->user, scm->fp->fp[i]);
--
- 	if (unix_prepare_fpl(UNIXCB(skb).fp))
- 		return -ENOMEM;
- 
-@@ -1768,15 +1761,10 @@ static int unix_attach_fds(struct scm_co
- 
- static void unix_detach_fds(struct scm_cookie *scm, struct sk_buff *skb)
- {
--	int i;
--
- 	scm->fp = UNIXCB(skb).fp;
- 	UNIXCB(skb).fp = NULL;
- 
- 	unix_destroy_fpl(scm->fp);
--
--	for (i = scm->fp->count - 1; i >= 0; i--)
--		unix_notinflight(scm->fp->user, scm->fp->fp[i]);
+ 	return ret;
  }
- 
- static void unix_peek_fds(struct scm_cookie *scm, struct sk_buff *skb)
---- a/net/unix/garbage.c
-+++ b/net/unix/garbage.c
-@@ -322,6 +322,52 @@ static bool unix_vertex_dead(struct unix
- 	return true;
- }
- 
-+enum unix_recv_queue_lock_class {
-+	U_RECVQ_LOCK_NORMAL,
-+	U_RECVQ_LOCK_EMBRYO,
-+};
-+
-+static void unix_collect_skb(struct list_head *scc, struct sk_buff_head *hitlist)
-+{
-+	struct unix_vertex *vertex;
-+
-+	list_for_each_entry_reverse(vertex, scc, scc_entry) {
-+		struct sk_buff_head *queue;
-+		struct unix_edge *edge;
-+		struct unix_sock *u;
-+
-+		edge = list_first_entry(&vertex->edges, typeof(*edge), vertex_entry);
-+		u = edge->predecessor;
-+		queue = &u->sk.sk_receive_queue;
-+
-+		spin_lock(&queue->lock);
-+
-+		if (u->sk.sk_state == TCP_LISTEN) {
-+			struct sk_buff *skb;
-+
-+			skb_queue_walk(queue, skb) {
-+				struct sk_buff_head *embryo_queue = &skb->sk->sk_receive_queue;
-+
-+				/* listener -> embryo order, the inversion never happens. */
-+				spin_lock_nested(&embryo_queue->lock, U_RECVQ_LOCK_EMBRYO);
-+				skb_queue_splice_init(embryo_queue, hitlist);
-+				spin_unlock(&embryo_queue->lock);
-+			}
-+		} else {
-+			skb_queue_splice_init(queue, hitlist);
-+
-+#if IS_ENABLED(CONFIG_AF_UNIX_OOB)
-+			if (u->oob_skb) {
-+				kfree_skb(u->oob_skb);
-+				u->oob_skb = NULL;
-+			}
-+#endif
-+		}
-+
-+		spin_unlock(&queue->lock);
-+	}
-+}
-+
- static bool unix_scc_cyclic(struct list_head *scc)
- {
- 	struct unix_vertex *vertex;
-@@ -345,7 +391,8 @@ static bool unix_scc_cyclic(struct list_
- static LIST_HEAD(unix_visited_vertices);
- static unsigned long unix_vertex_grouped_index = UNIX_VERTEX_INDEX_MARK2;
- 
--static void __unix_walk_scc(struct unix_vertex *vertex, unsigned long *last_index)
-+static void __unix_walk_scc(struct unix_vertex *vertex, unsigned long *last_index,
-+			    struct sk_buff_head *hitlist)
- {
- 	LIST_HEAD(vertex_stack);
- 	struct unix_edge *edge;
-@@ -430,7 +477,9 @@ prev_vertex:
- 				scc_dead = unix_vertex_dead(vertex);
- 		}
- 
--		if (!unix_graph_maybe_cyclic)
-+		if (scc_dead)
-+			unix_collect_skb(&scc, hitlist);
-+		else if (!unix_graph_maybe_cyclic)
- 			unix_graph_maybe_cyclic = unix_scc_cyclic(&scc);
- 
- 		list_del(&scc);
-@@ -441,7 +490,7 @@ prev_vertex:
- 		goto prev_vertex;
- }
- 
--static void unix_walk_scc(void)
-+static void unix_walk_scc(struct sk_buff_head *hitlist)
- {
- 	unsigned long last_index = UNIX_VERTEX_INDEX_START;
- 
-@@ -454,7 +503,7 @@ static void unix_walk_scc(void)
- 		struct unix_vertex *vertex;
- 
- 		vertex = list_first_entry(&unix_unvisited_vertices, typeof(*vertex), entry);
--		__unix_walk_scc(vertex, &last_index);
-+		__unix_walk_scc(vertex, &last_index, hitlist);
- 	}
- 
- 	list_replace_init(&unix_visited_vertices, &unix_unvisited_vertices);
-@@ -463,7 +512,7 @@ static void unix_walk_scc(void)
- 	unix_graph_grouped = true;
- }
- 
--static void unix_walk_scc_fast(void)
-+static void unix_walk_scc_fast(struct sk_buff_head *hitlist)
- {
- 	while (!list_empty(&unix_unvisited_vertices)) {
- 		struct unix_vertex *vertex;
-@@ -480,279 +529,40 @@ static void unix_walk_scc_fast(void)
- 				scc_dead = unix_vertex_dead(vertex);
- 		}
- 
-+		if (scc_dead)
-+			unix_collect_skb(&scc, hitlist);
-+
- 		list_del(&scc);
- 	}
- 
- 	list_replace_init(&unix_visited_vertices, &unix_unvisited_vertices);
- }
- 
--static LIST_HEAD(gc_candidates);
--static LIST_HEAD(gc_inflight_list);
--
--/* Keep the number of times in flight count for the file
-- * descriptor if it is for an AF_UNIX socket.
-- */
--void unix_inflight(struct user_struct *user, struct file *filp)
--{
--	struct unix_sock *u = unix_get_socket(filp);
--
--	spin_lock(&unix_gc_lock);
--
--	if (u) {
--		if (!u->inflight) {
--			WARN_ON_ONCE(!list_empty(&u->link));
--			list_add_tail(&u->link, &gc_inflight_list);
--		} else {
--			WARN_ON_ONCE(list_empty(&u->link));
--		}
--		u->inflight++;
--	}
--
--	spin_unlock(&unix_gc_lock);
--}
--
--void unix_notinflight(struct user_struct *user, struct file *filp)
--{
--	struct unix_sock *u = unix_get_socket(filp);
--
--	spin_lock(&unix_gc_lock);
--
--	if (u) {
--		WARN_ON_ONCE(!u->inflight);
--		WARN_ON_ONCE(list_empty(&u->link));
--
--		u->inflight--;
--		if (!u->inflight)
--			list_del_init(&u->link);
--	}
--
--	spin_unlock(&unix_gc_lock);
--}
--
--static void scan_inflight(struct sock *x, void (*func)(struct unix_sock *),
--			  struct sk_buff_head *hitlist)
--{
--	struct sk_buff *skb;
--	struct sk_buff *next;
--
--	spin_lock(&x->sk_receive_queue.lock);
--	skb_queue_walk_safe(&x->sk_receive_queue, skb, next) {
--		/* Do we have file descriptors ? */
--		if (UNIXCB(skb).fp) {
--			bool hit = false;
--			/* Process the descriptors of this socket */
--			int nfd = UNIXCB(skb).fp->count;
--			struct file **fp = UNIXCB(skb).fp->fp;
--
--			while (nfd--) {
--				/* Get the socket the fd matches if it indeed does so */
--				struct unix_sock *u = unix_get_socket(*fp++);
--
--				/* Ignore non-candidates, they could have been added
--				 * to the queues after starting the garbage collection
--				 */
--				if (u && test_bit(UNIX_GC_CANDIDATE, &u->gc_flags)) {
--					hit = true;
--
--					func(u);
--				}
--			}
--			if (hit && hitlist != NULL) {
--				__skb_unlink(skb, &x->sk_receive_queue);
--				__skb_queue_tail(hitlist, skb);
--			}
--		}
--	}
--	spin_unlock(&x->sk_receive_queue.lock);
--}
--
--static void scan_children(struct sock *x, void (*func)(struct unix_sock *),
--			  struct sk_buff_head *hitlist)
--{
--	if (x->sk_state != TCP_LISTEN) {
--		scan_inflight(x, func, hitlist);
--	} else {
--		struct sk_buff *skb;
--		struct sk_buff *next;
--		struct unix_sock *u;
--		LIST_HEAD(embryos);
--
--		/* For a listening socket collect the queued embryos
--		 * and perform a scan on them as well.
--		 */
--		spin_lock(&x->sk_receive_queue.lock);
--		skb_queue_walk_safe(&x->sk_receive_queue, skb, next) {
--			u = unix_sk(skb->sk);
--
--			/* An embryo cannot be in-flight, so it's safe
--			 * to use the list link.
--			 */
--			WARN_ON_ONCE(!list_empty(&u->link));
--			list_add_tail(&u->link, &embryos);
--		}
--		spin_unlock(&x->sk_receive_queue.lock);
--
--		while (!list_empty(&embryos)) {
--			u = list_entry(embryos.next, struct unix_sock, link);
--			scan_inflight(&u->sk, func, hitlist);
--			list_del_init(&u->link);
--		}
--	}
--}
--
--static void dec_inflight(struct unix_sock *usk)
--{
--	usk->inflight--;
--}
--
--static void inc_inflight(struct unix_sock *usk)
--{
--	usk->inflight++;
--}
--
--static void inc_inflight_move_tail(struct unix_sock *u)
--{
--	u->inflight++;
--
--	/* If this still might be part of a cycle, move it to the end
--	 * of the list, so that it's checked even if it was already
--	 * passed over
--	 */
--	if (test_bit(UNIX_GC_MAYBE_CYCLE, &u->gc_flags))
--		list_move_tail(&u->link, &gc_candidates);
--}
--
- static bool gc_in_progress;
- 
- static void __unix_gc(struct work_struct *work)
- {
- 	struct sk_buff_head hitlist;
--	struct unix_sock *u, *next;
--	LIST_HEAD(not_cycle_list);
--	struct list_head cursor;
- 
- 	spin_lock(&unix_gc_lock);
- 
--	if (!unix_graph_maybe_cyclic)
-+	if (!unix_graph_maybe_cyclic) {
-+		spin_unlock(&unix_gc_lock);
- 		goto skip_gc;
--
--	if (unix_graph_grouped)
--		unix_walk_scc_fast();
--	else
--		unix_walk_scc();
--
--	/* First, select candidates for garbage collection.  Only
--	 * in-flight sockets are considered, and from those only ones
--	 * which don't have any external reference.
--	 *
--	 * Holding unix_gc_lock will protect these candidates from
--	 * being detached, and hence from gaining an external
--	 * reference.  Since there are no possible receivers, all
--	 * buffers currently on the candidates' queues stay there
--	 * during the garbage collection.
--	 *
--	 * We also know that no new candidate can be added onto the
--	 * receive queues.  Other, non candidate sockets _can_ be
--	 * added to queue, so we must make sure only to touch
--	 * candidates.
--	 *
--	 * Embryos, though never candidates themselves, affect which
--	 * candidates are reachable by the garbage collector.  Before
--	 * being added to a listener's queue, an embryo may already
--	 * receive data carrying SCM_RIGHTS, potentially making the
--	 * passed socket a candidate that is not yet reachable by the
--	 * collector.  It becomes reachable once the embryo is
--	 * enqueued.  Therefore, we must ensure that no SCM-laden
--	 * embryo appears in a (candidate) listener's queue between
--	 * consecutive scan_children() calls.
--	 */
--	list_for_each_entry_safe(u, next, &gc_inflight_list, link) {
--		struct sock *sk = &u->sk;
--		long total_refs;
--
--		total_refs = file_count(sk->sk_socket->file);
--
--		WARN_ON_ONCE(!u->inflight);
--		WARN_ON_ONCE(total_refs < u->inflight);
--		if (total_refs == u->inflight) {
--			list_move_tail(&u->link, &gc_candidates);
--			__set_bit(UNIX_GC_CANDIDATE, &u->gc_flags);
--			__set_bit(UNIX_GC_MAYBE_CYCLE, &u->gc_flags);
--
--			if (sk->sk_state == TCP_LISTEN) {
--				unix_state_lock_nested(sk, U_LOCK_GC_LISTENER);
--				unix_state_unlock(sk);
--			}
--		}
--	}
--
--	/* Now remove all internal in-flight reference to children of
--	 * the candidates.
--	 */
--	list_for_each_entry(u, &gc_candidates, link)
--		scan_children(&u->sk, dec_inflight, NULL);
--
--	/* Restore the references for children of all candidates,
--	 * which have remaining references.  Do this recursively, so
--	 * only those remain, which form cyclic references.
--	 *
--	 * Use a "cursor" link, to make the list traversal safe, even
--	 * though elements might be moved about.
--	 */
--	list_add(&cursor, &gc_candidates);
--	while (cursor.next != &gc_candidates) {
--		u = list_entry(cursor.next, struct unix_sock, link);
--
--		/* Move cursor to after the current position. */
--		list_move(&cursor, &u->link);
--
--		if (u->inflight) {
--			list_move_tail(&u->link, &not_cycle_list);
--			__clear_bit(UNIX_GC_MAYBE_CYCLE, &u->gc_flags);
--			scan_children(&u->sk, inc_inflight_move_tail, NULL);
--		}
- 	}
--	list_del(&cursor);
- 
--	/* Now gc_candidates contains only garbage.  Restore original
--	 * inflight counters for these as well, and remove the skbuffs
--	 * which are creating the cycle(s).
--	 */
--	skb_queue_head_init(&hitlist);
--	list_for_each_entry(u, &gc_candidates, link) {
--		scan_children(&u->sk, inc_inflight, &hitlist);
--
--#if IS_ENABLED(CONFIG_AF_UNIX_OOB)
--		if (u->oob_skb) {
--			kfree_skb(u->oob_skb);
--			u->oob_skb = NULL;
--		}
--#endif
--	}
-+	__skb_queue_head_init(&hitlist);
- 
--	/* not_cycle_list contains those sockets which do not make up a
--	 * cycle.  Restore these to the inflight list.
--	 */
--	while (!list_empty(&not_cycle_list)) {
--		u = list_entry(not_cycle_list.next, struct unix_sock, link);
--		__clear_bit(UNIX_GC_CANDIDATE, &u->gc_flags);
--		list_move_tail(&u->link, &gc_inflight_list);
--	}
-+	if (unix_graph_grouped)
-+		unix_walk_scc_fast(&hitlist);
-+	else
-+		unix_walk_scc(&hitlist);
- 
- 	spin_unlock(&unix_gc_lock);
- 
--	/* Here we are. Hitlist is filled. Die. */
- 	__skb_queue_purge(&hitlist);
--
--	spin_lock(&unix_gc_lock);
--
--	/* All candidates should have been detached by now. */
--	WARN_ON_ONCE(!list_empty(&gc_candidates));
- skip_gc:
--	/* Paired with READ_ONCE() in wait_for_unix_gc(). */
- 	WRITE_ONCE(gc_in_progress, false);
--
--	spin_unlock(&unix_gc_lock);
- }
- 
- static DECLARE_WORK(unix_gc_work, __unix_gc);
 
 
