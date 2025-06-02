@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12A6C23184A;
-	Mon,  2 Jun 2025 14:45:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C8F023184E;
+	Mon,  2 Jun 2025 14:45:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748875502; cv=none; b=Kh1RrsVMttUvnhpOOFlxfq016+E34/S5r1YhuDx5GhGuA/Cad59zPgqqy1kMHO00ihsPpwv9rnv8xsgaacAmjn6q1LOSvaGBSJpR5BtOjJ8eTXPmB/7KLTRKJN4d+IoaI+g1yvt1VU2x8DiUPAUq5kAsidjfudOGrPKGE/R+Np8=
+	t=1748875505; cv=none; b=BInFD9TjG/FtQNyK6KNdWNgslBpdR1plAm4AY8K6GkLH+uPSDSrsr18KsBuq/syjO81EjoUrYomR2NW3Kuv4y3bHvcjWtuR6gZi9pqxyY+f71prQ6AWcYLVpqG22yba9Dfri3A3U7WKOm1uC6kBTI1mEXfe0b+uKaMuYVL1jWUQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748875502; c=relaxed/simple;
-	bh=K0hwO6lk8IsvL+qrfjJrQJhaesRUy8W4bEP7/0N0rX8=;
+	s=arc-20240116; t=1748875505; c=relaxed/simple;
+	bh=yAFbNqrzatFuxwSQ6fHBjfhV7PdoD5zc4uSc8GVhk8k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sLBCX7qP3lyPaHzACmK/sRlARYzNobq3DgGjjqYOPE1FWmzwCwYVzUuFS5kEINKyI1VJ3tAkjFBtmk2UnO3xEwE/5IO4G0EWtUfqOiTB6gphJGprYGRjJchUfTmXeJAk2tgsIUuGYlS4be9NmG2bahhIdMF6oi+IlxF8GjP/+X0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eBuG3cAP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Woprs13RGUiCMjWddfXIIGXpyUr8/Uu7u2gkN71ZLDeojP3YYIja9OhZxaTNsW8wdvIoQha4tDASOH43RFCF4hwlkfY/+7BNdB4eKFnwvQvAon5qfueFTLQf7y+qo4P/8GGS+5kFjaptT1v87KioetID52Bp8QKU0ritXujfwl8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GVE0w6/0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eBuG3cAP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EB69C4CEEB;
-	Mon,  2 Jun 2025 14:45:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GVE0w6/0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 875B8C4CEEB;
+	Mon,  2 Jun 2025 14:45:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748875501;
-	bh=K0hwO6lk8IsvL+qrfjJrQJhaesRUy8W4bEP7/0N0rX8=;
+	s=korg; t=1748875505;
+	bh=yAFbNqrzatFuxwSQ6fHBjfhV7PdoD5zc4uSc8GVhk8k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eBuG3cAP10j/2+HANHbgOO/wmu1OpzETkfJ499baJqPTEDODeKgvn2tWjjvzlC4fs
-	 7rZ0hf0gORwl9Zy3UGI8Xh2t4RbpyT0DDI6pnlL3nm82V8WRKhX0/LvvbEFay/0Hf0
-	 N0IIhWc/RyYlYK2LA+KsmhTXy67QtWSCwU+9PT3s=
+	b=GVE0w6/0XwS4EDU3SGIqUXKlIXhzM2XLdcf1AeJuk0i2lL6dfn7gELukPDf4IDQlE
+	 PKp/ncqW0V/gzU3UeTtcuQwIVRl4ySlTsr+e21wwVxyzi+UzEZcup/XSPTljLJ30Pm
+	 N9CgMTK7R0g3ggZN+z0TcIcckTOKryMz/Bd9eR+4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>,
-	Thierry Reding <treding@nvidia.com>,
+	Alice Guo <alice.guo@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 154/270] arm64: tegra: p2597: Fix gpio for vdd-1v8-dis regulator
-Date: Mon,  2 Jun 2025 15:47:19 +0200
-Message-ID: <20250602134313.513745188@linuxfoundation.org>
+Subject: [PATCH 5.10 128/270] thermal/drivers/qoriq: Power down TMU on system suspend
+Date: Mon,  2 Jun 2025 15:46:53 +0200
+Message-ID: <20250602134312.461537027@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134307.195171844@linuxfoundation.org>
 References: <20250602134307.195171844@linuxfoundation.org>
@@ -51,35 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>
+From: Alice Guo <alice.guo@nxp.com>
 
-[ Upstream commit f34621f31e3be81456c903287f7e4c0609829e29 ]
+[ Upstream commit 229f3feb4b0442835b27d519679168bea2de96c2 ]
 
-According to the board schematics the enable pin of this regulator is
-connected to gpio line #9 of the first instance of the TCA9539
-GPIO expander, so adjust it.
+Enable power-down of TMU (Thermal Management Unit) for TMU version 2 during
+system suspend to save power. Save approximately 4.3mW on VDD_ANA_1P8 on
+i.MX93 platforms.
 
-Signed-off-by: Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>
-Link: https://lore.kernel.org/r/20250224-diogo-gpio_exp-v1-1-80fb84ac48c6@tecnico.ulisboa.pt
-Signed-off-by: Thierry Reding <treding@nvidia.com>
+Signed-off-by: Alice Guo <alice.guo@nxp.com>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Link: https://lore.kernel.org/r/20241209164859.3758906-2-Frank.Li@nxp.com
+Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/nvidia/tegra210-p2597.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/thermal/qoriq_thermal.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/nvidia/tegra210-p2597.dtsi b/arch/arm64/boot/dts/nvidia/tegra210-p2597.dtsi
-index a9caaf7c0d67e..c04772a9740ec 100644
---- a/arch/arm64/boot/dts/nvidia/tegra210-p2597.dtsi
-+++ b/arch/arm64/boot/dts/nvidia/tegra210-p2597.dtsi
-@@ -1638,7 +1638,7 @@ vdd_1v8_dis: regulator@7 {
- 		regulator-min-microvolt = <1800000>;
- 		regulator-max-microvolt = <1800000>;
- 		regulator-always-on;
--		gpio = <&exp1 14 GPIO_ACTIVE_HIGH>;
-+		gpio = <&exp1 9 GPIO_ACTIVE_HIGH>;
- 		enable-active-high;
- 		vin-supply = <&vdd_1v8>;
- 	};
+diff --git a/drivers/thermal/qoriq_thermal.c b/drivers/thermal/qoriq_thermal.c
+index 73049f9bea252..34a5fbcc3d200 100644
+--- a/drivers/thermal/qoriq_thermal.c
++++ b/drivers/thermal/qoriq_thermal.c
+@@ -19,6 +19,7 @@
+ #define SITES_MAX		16
+ #define TMR_DISABLE		0x0
+ #define TMR_ME			0x80000000
++#define TMR_CMD			BIT(29)
+ #define TMR_ALPF		0x0c000000
+ #define TMR_ALPF_V2		0x03000000
+ #define TMTMIR_DEFAULT	0x0000000f
+@@ -345,6 +346,12 @@ static int __maybe_unused qoriq_tmu_suspend(struct device *dev)
+ 	if (ret)
+ 		return ret;
+ 
++	if (data->ver > TMU_VER1) {
++		ret = regmap_set_bits(data->regmap, REGS_TMR, TMR_CMD);
++		if (ret)
++			return ret;
++	}
++
+ 	clk_disable_unprepare(data->clk);
+ 
+ 	return 0;
+@@ -359,6 +366,12 @@ static int __maybe_unused qoriq_tmu_resume(struct device *dev)
+ 	if (ret)
+ 		return ret;
+ 
++	if (data->ver > TMU_VER1) {
++		ret = regmap_clear_bits(data->regmap, REGS_TMR, TMR_CMD);
++		if (ret)
++			return ret;
++	}
++
+ 	/* Enable monitoring */
+ 	return regmap_update_bits(data->regmap, REGS_TMR, TMR_ME, TMR_ME);
+ }
 -- 
 2.39.5
 
