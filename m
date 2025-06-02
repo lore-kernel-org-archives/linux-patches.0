@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCD62221F29;
-	Mon,  2 Jun 2025 14:42:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7832619EEBD;
+	Mon,  2 Jun 2025 14:42:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748875361; cv=none; b=Za75pCjaQkzeDJuRSvlUSAwIFjnRjDNVD717DjKeAePKgnzuN24MomXRvc2E7bTw8kxcx+Uj14o/49nNYiRaHqd8VHt32GSPGgU6qw8LwJUBUBwwnO8sAFaZb+WDY1SNcTf+bkHOSuvX2EPagISOg5HRzEY1QEUkPLlsEuNLKFA=
+	t=1748875365; cv=none; b=RERfTGK1k4hQUWrg1Iv8vj75ri1SLr0TPSfIlWOQ08KXl3Moig+n5Ta5/66/PqRSMiY1zaTbWM6IPcQDQfB4wuwMaK8Vp7Yq94F/C0+Yp0nPG9OkZ5cumVUHbkdiD5/R6jyTXQgy4X5CA1O6KHqMZNNMa5p4vRheSUA+s/QHrqk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748875361; c=relaxed/simple;
-	bh=gam3nf8fhoKkyz8dEycfFVDMMf0JSGoGLg4nDdlOzVI=;
+	s=arc-20240116; t=1748875365; c=relaxed/simple;
+	bh=wt0UFp8oqSRy9+00gXPjK15Qu6RLJ0ZPmyuZ/CDOjg8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V1UDQJc31XFhqMfh3PW5RjjqTH2xGVWEoHmuPLWVA7vGMuE7EczJ+qlNmrwsy8U2MELiZdg/uXuDGDqnyy88FWJ2m3SszG/gCQ7fH29cL19gNCp7Kb0L91JEZCrjMpBByNZsE+xcK6Pa2m30wSvBlcVgi5mPyx9iGXQffcuwMoo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pvLVrjku; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kBAWMcHjVeMULJFVUDXOlP08IDPcpKQ+ICaopsIuvlY8KJYsWZ8Lgu2PSdHdWs7eKNQit6cqt8B19cNsd2xsBgbDWy/8CmF/AE51EyaRFyqsw88B1jQ7nKb6Yp43wIDO8dcaaNCs0YeGGcSuZ9CQLKTPsHgR9ZEwX0VtMyH8bdw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZmFrltEW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pvLVrjku"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 484E9C4CEEE;
-	Mon,  2 Jun 2025 14:42:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZmFrltEW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 407E7C4CEEB;
+	Mon,  2 Jun 2025 14:42:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748875361;
-	bh=gam3nf8fhoKkyz8dEycfFVDMMf0JSGoGLg4nDdlOzVI=;
+	s=korg; t=1748875364;
+	bh=wt0UFp8oqSRy9+00gXPjK15Qu6RLJ0ZPmyuZ/CDOjg8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pvLVrjkuHMYunWK2mYLmneAEm4WVBbkSONCCgbi0rVGBDQm6HG6+NTCNVVGzwBIhY
-	 8RIvYKeMLWcc74hO95kxh2JBKevmqA2Z6BIfGNLaWdviEC1SplMD0DfmpEguv8efhq
-	 trmAqJpCQDRJeAip/0hu3gAk4si1umI6rO2haJpA=
+	b=ZmFrltEWkH6YQkzSf1fg/bbR4f5Y0UVjhGj1bhmsh8ll0iHmG/US77ZyyEpHZSoOG
+	 cP9as/IefvEmTTb/Fq/Ks+OfYJ+4FHnVSO3gcRLEsqxCYY+9O5zMRMLe/IDhW59Fe3
+	 2r7SDBdu8NVf1S5a3pVYXPTUHyOSRGtIn8yYBoTI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
+To: stable@vger.kernel.org,
+	netfilter-devel@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
-	Jianqi Ren <jianqi.ren.cn@windriver.com>,
-	He Zhe <zhe.he@windriver.com>
-Subject: [PATCH 5.10 111/270] btrfs: dont BUG_ON() when 0 reference count at btrfs_lookup_extent_info()
-Date: Mon,  2 Jun 2025 15:46:36 +0200
-Message-ID: <20250602134311.771231334@linuxfoundation.org>
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 5.10 112/270] netfilter: nf_tables: pass nft_chain to destroy function, not nft_ctx
+Date: Mon,  2 Jun 2025 15:46:37 +0200
+Message-ID: <20250602134311.809717208@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134307.195171844@linuxfoundation.org>
 References: <20250602134307.195171844@linuxfoundation.org>
@@ -53,72 +51,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Florian Westphal <fw@strlen.de>
 
-commit 28cb13f29faf6290597b24b728dc3100c019356f upstream.
+commit 8965d42bcf54d42cbc72fe34a9d0ec3f8527debd upstream.
 
-Instead of doing a BUG_ON() handle the error by returning -EUCLEAN,
-aborting the transaction and logging an error message.
+It would be better to not store nft_ctx inside nft_trans object,
+the netlink ctx strucutre is huge and most of its information is
+never needed in places that use trans->ctx.
 
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-[Minor conflict resolved due to code context change.]
-Signed-off-by: Jianqi Ren <jianqi.ren.cn@windriver.com>
-Signed-off-by: He Zhe <zhe.he@windriver.com>
+Avoid/reduce its usage if possible, no runtime behaviour change
+intended.
+
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/extent-tree.c |   25 ++++++++++++++++++++-----
- 1 file changed, 20 insertions(+), 5 deletions(-)
+ include/net/netfilter/nf_tables.h |    2 +-
+ net/netfilter/nf_tables_api.c     |   17 ++++++++---------
+ net/netfilter/nft_immediate.c     |    2 +-
+ 3 files changed, 10 insertions(+), 11 deletions(-)
 
---- a/fs/btrfs/extent-tree.c
-+++ b/fs/btrfs/extent-tree.c
-@@ -174,6 +174,14 @@ search_again:
- 			ei = btrfs_item_ptr(leaf, path->slots[0],
- 					    struct btrfs_extent_item);
- 			num_refs = btrfs_extent_refs(leaf, ei);
-+			if (unlikely(num_refs == 0)) {
-+				ret = -EUCLEAN;
-+				btrfs_err(fs_info,
-+			"unexpected zero reference count for extent item (%llu %u %llu)",
-+					  key.objectid, key.type, key.offset);
-+				btrfs_abort_transaction(trans, ret);
-+				goto out_free;
-+			}
- 			extent_flags = btrfs_extent_flags(leaf, ei);
- 		} else {
- 			ret = -EINVAL;
-@@ -185,8 +193,6 @@ search_again:
+--- a/include/net/netfilter/nf_tables.h
++++ b/include/net/netfilter/nf_tables.h
+@@ -1018,7 +1018,7 @@ static inline bool nft_chain_is_bound(st
  
- 			goto out_free;
- 		}
--
--		BUG_ON(num_refs == 0);
- 	} else {
- 		num_refs = 0;
- 		extent_flags = 0;
-@@ -216,10 +222,19 @@ search_again:
- 			goto search_again;
- 		}
- 		spin_lock(&head->lock);
--		if (head->extent_op && head->extent_op->update_flags)
-+		if (head->extent_op && head->extent_op->update_flags) {
- 			extent_flags |= head->extent_op->flags_to_set;
--		else
--			BUG_ON(num_refs == 0);
-+		} else if (unlikely(num_refs == 0)) {
-+			spin_unlock(&head->lock);
-+			mutex_unlock(&head->mutex);
-+			spin_unlock(&delayed_refs->lock);
-+			ret = -EUCLEAN;
-+			btrfs_err(fs_info,
-+			  "unexpected zero reference count for extent %llu (%s)",
-+				  bytenr, metadata ? "metadata" : "data");
-+			btrfs_abort_transaction(trans, ret);
-+			goto out_free;
-+		}
+ int nft_chain_add(struct nft_table *table, struct nft_chain *chain);
+ void nft_chain_del(struct nft_chain *chain);
+-void nf_tables_chain_destroy(struct nft_ctx *ctx);
++void nf_tables_chain_destroy(struct nft_chain *chain);
  
- 		num_refs += head->ref_mod;
- 		spin_unlock(&head->lock);
+ struct nft_stats {
+ 	u64			bytes;
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -1911,9 +1911,9 @@ static void nf_tables_chain_free_chain_r
+ 	kvfree(chain->rules_next);
+ }
+ 
+-void nf_tables_chain_destroy(struct nft_ctx *ctx)
++void nf_tables_chain_destroy(struct nft_chain *chain)
+ {
+-	struct nft_chain *chain = ctx->chain;
++	const struct nft_table *table = chain->table;
+ 	struct nft_hook *hook, *next;
+ 
+ 	if (WARN_ON(chain->use > 0))
+@@ -1925,7 +1925,7 @@ void nf_tables_chain_destroy(struct nft_
+ 	if (nft_is_base_chain(chain)) {
+ 		struct nft_base_chain *basechain = nft_base_chain(chain);
+ 
+-		if (nft_base_chain_netdev(ctx->family, basechain->ops.hooknum)) {
++		if (nft_base_chain_netdev(table->family, basechain->ops.hooknum)) {
+ 			list_for_each_entry_safe(hook, next,
+ 						 &basechain->hook_list, list) {
+ 				list_del_rcu(&hook->list);
+@@ -2367,7 +2367,7 @@ err_unregister_hook:
+ err_use:
+ 	nf_tables_unregister_hook(net, table, chain);
+ err_destroy_chain:
+-	nf_tables_chain_destroy(ctx);
++	nf_tables_chain_destroy(chain);
+ 
+ 	return err;
+ }
+@@ -7999,7 +7999,7 @@ static void nft_commit_release(struct nf
+ 		kfree(nft_trans_chain_name(trans));
+ 		break;
+ 	case NFT_MSG_DELCHAIN:
+-		nf_tables_chain_destroy(&trans->ctx);
++		nf_tables_chain_destroy(nft_trans_chain(trans));
+ 		break;
+ 	case NFT_MSG_DELRULE:
+ 		nf_tables_rule_destroy(&trans->ctx, nft_trans_rule(trans));
+@@ -8840,7 +8840,7 @@ static void nf_tables_abort_release(stru
+ 		nf_tables_table_destroy(&trans->ctx);
+ 		break;
+ 	case NFT_MSG_NEWCHAIN:
+-		nf_tables_chain_destroy(&trans->ctx);
++		nf_tables_chain_destroy(nft_trans_chain(trans));
+ 		break;
+ 	case NFT_MSG_NEWRULE:
+ 		nf_tables_rule_destroy(&trans->ctx, nft_trans_rule(trans));
+@@ -9574,7 +9574,7 @@ int __nft_release_basechain(struct nft_c
+ 	}
+ 	nft_chain_del(ctx->chain);
+ 	nft_use_dec(&ctx->table->use);
+-	nf_tables_chain_destroy(ctx);
++	nf_tables_chain_destroy(ctx->chain);
+ 
+ 	return 0;
+ }
+@@ -9646,10 +9646,9 @@ static void __nft_release_table(struct n
+ 		nft_obj_destroy(&ctx, obj);
+ 	}
+ 	list_for_each_entry_safe(chain, nc, &table->chains, list) {
+-		ctx.chain = chain;
+ 		nft_chain_del(chain);
+ 		nft_use_dec(&table->use);
+-		nf_tables_chain_destroy(&ctx);
++		nf_tables_chain_destroy(chain);
+ 	}
+ 	list_del(&table->list);
+ 	nf_tables_table_destroy(&ctx);
+--- a/net/netfilter/nft_immediate.c
++++ b/net/netfilter/nft_immediate.c
+@@ -221,7 +221,7 @@ static void nft_immediate_destroy(const
+ 			list_del(&rule->list);
+ 			nf_tables_rule_destroy(&chain_ctx, rule);
+ 		}
+-		nf_tables_chain_destroy(&chain_ctx);
++		nf_tables_chain_destroy(chain);
+ 		break;
+ 	default:
+ 		break;
 
 
