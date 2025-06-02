@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A2D6227EBB;
-	Mon,  2 Jun 2025 14:56:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 076B3227BA4;
+	Mon,  2 Jun 2025 14:56:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748876170; cv=none; b=bHOOq+V2LG6xkAuaDJd9XL4cmmN6yzKUuAaV+9o0KGV6usGxLa1Jhr/7t176LuDyeh+6YCUPEhQNx2e5T6ZTXgpTTkeFfA8dQZ3KiGnE/fvnjg9D1Vx/fLjW2VdrPXj5PeKoHMw6D+lMNK3MKijN6RPhX0VvNP7KbjXxdP34St0=
+	t=1748876174; cv=none; b=eYGrRtI8U2VfEi38h65+2mTg90yCDY85Ipu5iulY8ocTH4/aRWoOm6cunMPprUbZEu/y7kOU/Lqey+HVMah1P0vMm6ZyK/FNZY9xY7ed81BxwmNLzW8ORhPMdsjZk90Q7mc/n4ssFQNUVbWDBzFdeIeTb+fclbWRUBLWg4ZMxyk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748876170; c=relaxed/simple;
-	bh=gYH48MTMQ895llNpciwbE33g0PyBEQ1PV+wLTwhTwOs=;
+	s=arc-20240116; t=1748876174; c=relaxed/simple;
+	bh=euCPJDx0+7mJkK+bJ5+ML412+slnMNwWEw8n/7VDFkQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aYf9vzJVDzbaIVRdjiWyDKh9AjWIyefezRi2jBTeyLau3qS3NnloW1Sdf833UIcYYlnyQ+Coex9VG0/rl6rwOxJHz3z9B4/XavM8m1JAdd9+HLzAJ5FIgxGo9/w22l9eU0WrgFe6Y1WZmGM3ChR1NH0xmHIiJGIg5CRPvDddfdE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iqVvNabP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZEqjPr/7wg89NjMrO8LfFEbcj+Hcadyf4jVjFAId3liD5JKlJ66/H/j6Qg1mBYF479UibmeWsLwuLpDJbRUtKyTziB0UdiftqPVDvEhy3TKRl1ef1YkIZHyofD6jX9GsDLJnDs0+e9f2IH0KPiF3AgMF5DjQ72TnOgfF1E/Cnk4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G08PgdPk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iqVvNabP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CAB8C4CEEB;
-	Mon,  2 Jun 2025 14:56:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G08PgdPk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39D15C4CEEB;
+	Mon,  2 Jun 2025 14:56:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748876170;
-	bh=gYH48MTMQ895llNpciwbE33g0PyBEQ1PV+wLTwhTwOs=;
+	s=korg; t=1748876173;
+	bh=euCPJDx0+7mJkK+bJ5+ML412+slnMNwWEw8n/7VDFkQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iqVvNabPKsSz1ssOzN0od9f0dAhUd7XghVtnqERr0BDgG8h3ZjLkH0V8QLvx0Zw/K
-	 1fm4Jn4zPgHCmps/kLLhyysuI0/yTRbHDIpvM9OqwX3OD4NnKQcPlBoDs/0Z9x1/a/
-	 I2csgFkhOdiqmvQTPokdcqAusPifDKdQMj7bsUsU=
+	b=G08PgdPkhFXpUUwWNFH9em/p/SaRzffkf/ulQCXCpxCPo0+Riu9609bAgINZI4FWc
+	 4Cgxo+BAKFirWVNhA9KcF0biZpCo+HyAiv26ybQZCFWR/MpVtSKeY6lHegVdxp65o8
+	 le4hDPBcm2wUJbpQJcIpHS9nBSqNhjpIB5TZogsU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samson Tam <samson.tam@amd.com>,
-	Yihan Zhu <Yihan.Zhu@amd.com>,
-	Zaeem Mohamed <zaeem.mohamed@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Waiman Long <longman@redhat.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Rik van Riel <riel@surriel.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 094/207] drm/amd/display: handle max_downscale_src_width fail check
-Date: Mon,  2 Jun 2025 15:47:46 +0200
-Message-ID: <20250602134302.421731902@linuxfoundation.org>
+Subject: [PATCH 5.15 095/207] x86/nmi: Add an emergency handler in nmi_desc & use it in nmi_shootdown_cpus()
+Date: Mon,  2 Jun 2025 15:47:47 +0200
+Message-ID: <20250602134302.460133255@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134258.769974467@linuxfoundation.org>
 References: <20250602134258.769974467@linuxfoundation.org>
@@ -54,57 +53,170 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yihan Zhu <Yihan.Zhu@amd.com>
+From: Waiman Long <longman@redhat.com>
 
-[ Upstream commit 02a940da2ccc0cc0299811379580852b405a0ea2 ]
+[ Upstream commit fe37c699ae3eed6e02ee55fbf5cb9ceb7fcfd76c ]
 
-[WHY]
-If max_downscale_src_width check fails, we exit early from TAP calculation and left a NULL
-value to the scaling data structure to cause the zero divide in the DML validation.
+Depending on the type of panics, it was found that the
+__register_nmi_handler() function can be called in NMI context from
+nmi_shootdown_cpus() leading to a lockdep splat:
 
-[HOW]
-Call set default TAP calculation before early exit in get_optimal_number_of_taps due to
-max downscale limit exceed.
+  WARNING: inconsistent lock state
+  inconsistent {INITIAL USE} -> {IN-NMI} usage.
 
-Reviewed-by: Samson Tam <samson.tam@amd.com>
-Signed-off-by: Yihan Zhu <Yihan.Zhu@amd.com>
-Signed-off-by: Zaeem Mohamed <zaeem.mohamed@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+   lock(&nmi_desc[0].lock);
+   <Interrupt>
+     lock(&nmi_desc[0].lock);
+
+  Call Trace:
+    _raw_spin_lock_irqsave
+    __register_nmi_handler
+    nmi_shootdown_cpus
+    kdump_nmi_shootdown_cpus
+    native_machine_crash_shutdown
+    __crash_kexec
+
+In this particular case, the following panic message was printed before:
+
+  Kernel panic - not syncing: Fatal hardware error!
+
+This message seemed to be given out from __ghes_panic() running in
+NMI context.
+
+The __register_nmi_handler() function which takes the nmi_desc lock
+with irq disabled shouldn't be called from NMI context as this can
+lead to deadlock.
+
+The nmi_shootdown_cpus() function can only be invoked once. After the
+first invocation, all other CPUs should be stuck in the newly added
+crash_nmi_callback() and cannot respond to a second NMI.
+
+Fix it by adding a new emergency NMI handler to the nmi_desc
+structure and provide a new set_emergency_nmi_handler() helper to set
+crash_nmi_callback() in any context. The new emergency handler will
+preempt other handlers in the linked list. That will eliminate the need
+to take any lock and serve the panic in NMI use case.
+
+Signed-off-by: Waiman Long <longman@redhat.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Acked-by: Rik van Riel <riel@surriel.com>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/r/20250206191844.131700-1-longman@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dcn30/dcn30_dpp.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ arch/x86/include/asm/nmi.h |  2 ++
+ arch/x86/kernel/nmi.c      | 42 ++++++++++++++++++++++++++++++++++++++
+ arch/x86/kernel/reboot.c   | 10 +++------
+ 3 files changed, 47 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_dpp.c b/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_dpp.c
-index 0601c17426af2..27932a32057e3 100644
---- a/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_dpp.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_dpp.c
-@@ -386,11 +386,6 @@ bool dpp3_get_optimal_number_of_taps(
- 	int min_taps_y, min_taps_c;
- 	enum lb_memory_config lb_config;
+diff --git a/arch/x86/include/asm/nmi.h b/arch/x86/include/asm/nmi.h
+index 1cb9c17a4cb4b..affe5522961ae 100644
+--- a/arch/x86/include/asm/nmi.h
++++ b/arch/x86/include/asm/nmi.h
+@@ -58,6 +58,8 @@ int __register_nmi_handler(unsigned int, struct nmiaction *);
  
--	if (scl_data->viewport.width > scl_data->h_active &&
--		dpp->ctx->dc->debug.max_downscale_src_width != 0 &&
--		scl_data->viewport.width > dpp->ctx->dc->debug.max_downscale_src_width)
--		return false;
--
- 	/*
- 	 * Set default taps if none are provided
- 	 * From programming guide: taps = min{ ceil(2*H_RATIO,1), 8} for downscaling
-@@ -428,6 +423,12 @@ bool dpp3_get_optimal_number_of_taps(
- 	else
- 		scl_data->taps.h_taps_c = in_taps->h_taps_c;
+ void unregister_nmi_handler(unsigned int, const char *);
  
-+	// Avoid null data in the scl data with this early return, proceed non-adaptive calcualtion first
-+	if (scl_data->viewport.width > scl_data->h_active &&
-+		dpp->ctx->dc->debug.max_downscale_src_width != 0 &&
-+		scl_data->viewport.width > dpp->ctx->dc->debug.max_downscale_src_width)
-+		return false;
++void set_emergency_nmi_handler(unsigned int type, nmi_handler_t handler);
 +
- 	/*Ensure we can support the requested number of vtaps*/
- 	min_taps_y = dc_fixpt_ceil(scl_data->ratios.vert);
- 	min_taps_c = dc_fixpt_ceil(scl_data->ratios.vert_c);
+ void stop_nmi(void);
+ void restart_nmi(void);
+ void local_touch_nmi(void);
+diff --git a/arch/x86/kernel/nmi.c b/arch/x86/kernel/nmi.c
+index b892fe7035db5..a858d8e5d6104 100644
+--- a/arch/x86/kernel/nmi.c
++++ b/arch/x86/kernel/nmi.c
+@@ -38,8 +38,12 @@
+ #define CREATE_TRACE_POINTS
+ #include <trace/events/nmi.h>
+ 
++/*
++ * An emergency handler can be set in any context including NMI
++ */
+ struct nmi_desc {
+ 	raw_spinlock_t lock;
++	nmi_handler_t emerg_handler;
+ 	struct list_head head;
+ };
+ 
+@@ -121,9 +125,22 @@ static void nmi_check_duration(struct nmiaction *action, u64 duration)
+ static int nmi_handle(unsigned int type, struct pt_regs *regs)
+ {
+ 	struct nmi_desc *desc = nmi_to_desc(type);
++	nmi_handler_t ehandler;
+ 	struct nmiaction *a;
+ 	int handled=0;
+ 
++	/*
++	 * Call the emergency handler, if set
++	 *
++	 * In the case of crash_nmi_callback() emergency handler, it will
++	 * return in the case of the crashing CPU to enable it to complete
++	 * other necessary crashing actions ASAP. Other handlers in the
++	 * linked list won't need to be run.
++	 */
++	ehandler = desc->emerg_handler;
++	if (ehandler)
++		return ehandler(type, regs);
++
+ 	rcu_read_lock();
+ 
+ 	/*
+@@ -209,6 +226,31 @@ void unregister_nmi_handler(unsigned int type, const char *name)
+ }
+ EXPORT_SYMBOL_GPL(unregister_nmi_handler);
+ 
++/**
++ * set_emergency_nmi_handler - Set emergency handler
++ * @type:    NMI type
++ * @handler: the emergency handler to be stored
++ *
++ * Set an emergency NMI handler which, if set, will preempt all the other
++ * handlers in the linked list. If a NULL handler is passed in, it will clear
++ * it. It is expected that concurrent calls to this function will not happen
++ * or the system is screwed beyond repair.
++ */
++void set_emergency_nmi_handler(unsigned int type, nmi_handler_t handler)
++{
++	struct nmi_desc *desc = nmi_to_desc(type);
++
++	if (WARN_ON_ONCE(desc->emerg_handler == handler))
++		return;
++	desc->emerg_handler = handler;
++
++	/*
++	 * Ensure the emergency handler is visible to other CPUs before
++	 * function return
++	 */
++	smp_wmb();
++}
++
+ static void
+ pci_serr_error(unsigned char reason, struct pt_regs *regs)
+ {
+diff --git a/arch/x86/kernel/reboot.c b/arch/x86/kernel/reboot.c
+index deedd77c7593f..d8f7f8e43e199 100644
+--- a/arch/x86/kernel/reboot.c
++++ b/arch/x86/kernel/reboot.c
+@@ -874,15 +874,11 @@ void nmi_shootdown_cpus(nmi_shootdown_cb callback)
+ 	shootdown_callback = callback;
+ 
+ 	atomic_set(&waiting_for_crash_ipi, num_online_cpus() - 1);
+-	/* Would it be better to replace the trap vector here? */
+-	if (register_nmi_handler(NMI_LOCAL, crash_nmi_callback,
+-				 NMI_FLAG_FIRST, "crash"))
+-		return;		/* Return what? */
++
+ 	/*
+-	 * Ensure the new callback function is set before sending
+-	 * out the NMI
++	 * Set emergency handler to preempt other handlers.
+ 	 */
+-	wmb();
++	set_emergency_nmi_handler(NMI_LOCAL, crash_nmi_callback);
+ 
+ 	apic_send_IPI_allbutself(NMI_VECTOR);
+ 
 -- 
 2.39.5
 
