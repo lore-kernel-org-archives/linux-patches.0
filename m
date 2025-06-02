@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0ABC2222BB;
-	Mon,  2 Jun 2025 14:08:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43C5522F14C;
+	Mon,  2 Jun 2025 14:08:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748873290; cv=none; b=uAzM8s6T9OHonr3jCmtVW9p471D6OebOWniZWvo2638QGOlvoy4dehseAE2OIzqqwE5cYVAxyjV5vBvoL75F2R4nqWSH9ncS4HR/hWfGbQhmrwsNUSUVpxqsEmL25dE7aJYkPuUbou47yNkaMxRMKANSOYE/ZNlq7x0eG2rqeVM=
+	t=1748873293; cv=none; b=nelS4GhV2VmDVS5hh/yq3sRMI+s9derhUZNuCY3N5GKEEaEuGDqkl3kNKFXLRg9/G7neKXKhqsSU1z1l1a+YfG1emqx9S404PpPgFTnLF6izFQIzBWGftKHxns2TPlJi9nkCL8ytTLbHbAfcwYEufQQsfjD+yeTpStVIdJOo5iw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748873290; c=relaxed/simple;
-	bh=y+qBLju3u5BF6KrAWaH2c3w/wrdacvRFTA6nxZbtK8I=;
+	s=arc-20240116; t=1748873293; c=relaxed/simple;
+	bh=JvfS+qMOkHRLfFIEemJibIZ+b9bK6E+gKPN1xEGNvUM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RE7UclshX07W3H3CsO4Vy7409eowZZ4DtLvoR/tBFw4F13mWFC+jdRWVbH2ByOjX95siPO4pqbEn38pSsXt1ZcNm6WtXCiqd5XZ6xIKSgYCOXUrAvnHFVAJSwCoYDkF064Wl/FS5CXMiLufkQEzbRE5GZrAdijppkTznvUki+s0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YQwgGria; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z0Wf/VJUB9BRmjxO8FJz2XcoHVNKvIJlakpYNRKLx5+SuOSWjS9ZsiidUoe3R9aX0UO5CsLMybELJJnpjG1aVWwUwvUkZODCZ5kN8t0H0jPeP95Ft2MW8xthp/4wUkO1O/z/U9yQXtnTm3/JWCi74edWvNtTNZlAzraWln6nsLw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZIi/hq6f; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YQwgGria"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D081BC4CEF0;
-	Mon,  2 Jun 2025 14:08:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZIi/hq6f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA37AC4CEEE;
+	Mon,  2 Jun 2025 14:08:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748873290;
-	bh=y+qBLju3u5BF6KrAWaH2c3w/wrdacvRFTA6nxZbtK8I=;
+	s=korg; t=1748873293;
+	bh=JvfS+qMOkHRLfFIEemJibIZ+b9bK6E+gKPN1xEGNvUM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YQwgGria/bJ4kGHPnPRTBPGqp4b1riJia9arxpkTgRaufBf9MUBURtCoOMcE9Q18U
-	 RqFtSeXNHZP0VfNasWG0Ov9EprHVBXMz1JWCvc7bv5wM0fKhREAdMq9F/1M8Y0092I
-	 w8+2cJPkbKdJIXcxCGXpHQtJ7X86xtPfRh+YwEBo=
+	b=ZIi/hq6f9EKAqm2ul37gvFxbt/8tN/9vYQjPUhBJ6DZ4UdXriFqV9ylhNYx463XgI
+	 E599+/X6rqXfs2TofjJrXxiaVBTmcYA14t9XNCfebG/t2k/1+DzdN/vH3VecqZHxtv
+	 CuZhD50fC8ckgT3yzmtORI7fQv5zqPsVeVF5UQZU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Brendan Jackman <jackmanb@google.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 095/444] objtool: Fix error handling inconsistencies in check()
-Date: Mon,  2 Jun 2025 15:42:39 +0200
-Message-ID: <20250602134344.758194527@linuxfoundation.org>
+Subject: [PATCH 6.6 096/444] thunderbolt: Do not add non-active NVM if NVM upgrade is disabled for retimer
+Date: Mon,  2 Jun 2025 15:42:40 +0200
+Message-ID: <20250602134344.796950689@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -52,65 +50,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josh Poimboeuf <jpoimboe@kernel.org>
+From: Mika Westerberg <mika.westerberg@linux.intel.com>
 
-[ Upstream commit b745962cb97569aad026806bb0740663cf813147 ]
+[ Upstream commit ad79c278e478ca8c1a3bf8e7a0afba8f862a48a1 ]
 
-Make sure all fatal errors are funneled through the 'out' label with a
-negative ret.
+This is only used to write a new NVM in order to upgrade the retimer
+firmware. It does not make sense to expose it if upgrade is disabled.
+This also makes it consistent with the router NVM upgrade.
 
-Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Brendan Jackman <jackmanb@google.com>
-Link: https://lore.kernel.org/r/0f49d6a27a080b4012e84e6df1e23097f44cc082.1741975349.git.jpoimboe@kernel.org
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/objtool/check.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/thunderbolt/retimer.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/tools/objtool/check.c b/tools/objtool/check.c
-index f5af48502c9c8..f8e676a6e6f8e 100644
---- a/tools/objtool/check.c
-+++ b/tools/objtool/check.c
-@@ -4692,8 +4692,10 @@ int check(struct objtool_file *file)
- 	init_cfi_state(&force_undefined_cfi);
- 	force_undefined_cfi.force_undefined = true;
+diff --git a/drivers/thunderbolt/retimer.c b/drivers/thunderbolt/retimer.c
+index 2ee8c5ebca7c3..43146c0685dfa 100644
+--- a/drivers/thunderbolt/retimer.c
++++ b/drivers/thunderbolt/retimer.c
+@@ -89,9 +89,11 @@ static int tb_retimer_nvm_add(struct tb_retimer *rt)
+ 	if (ret)
+ 		goto err_nvm;
  
--	if (!cfi_hash_alloc(1UL << (file->elf->symbol_bits - 3)))
-+	if (!cfi_hash_alloc(1UL << (file->elf->symbol_bits - 3))) {
-+		ret = -1;
- 		goto out;
+-	ret = tb_nvm_add_non_active(nvm, nvm_write);
+-	if (ret)
+-		goto err_nvm;
++	if (!rt->no_nvm_upgrade) {
++		ret = tb_nvm_add_non_active(nvm, nvm_write);
++		if (ret)
++			goto err_nvm;
 +	}
  
- 	cfi_hash_add(&init_cfi);
- 	cfi_hash_add(&func_cfi);
-@@ -4710,7 +4712,7 @@ int check(struct objtool_file *file)
- 	if (opts.retpoline) {
- 		ret = validate_retpoline(file);
- 		if (ret < 0)
--			return ret;
-+			goto out;
- 		warnings += ret;
- 	}
- 
-@@ -4746,7 +4748,7 @@ int check(struct objtool_file *file)
- 		 */
- 		ret = validate_unrets(file);
- 		if (ret < 0)
--			return ret;
-+			goto out;
- 		warnings += ret;
- 	}
- 
-@@ -4809,7 +4811,7 @@ int check(struct objtool_file *file)
- 	if (opts.prefix) {
- 		ret = add_prefix_symbols(file);
- 		if (ret < 0)
--			return ret;
-+			goto out;
- 		warnings += ret;
- 	}
- 
+ 	rt->nvm = nvm;
+ 	return 0;
 -- 
 2.39.5
 
