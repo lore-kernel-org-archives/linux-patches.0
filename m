@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37055225416;
-	Mon,  2 Jun 2025 14:32:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A4851B81DC;
+	Mon,  2 Jun 2025 14:32:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748874735; cv=none; b=cKlzXGeqv3KFbJHjZYmTYEudmOwGxSFyFlgAHRV8TtbAFP6YNLnw41oCforzI/nB9UIG8n03k4vZVyqWleZakS5VEX9ROKX5jwITg4dEXiMpjGYjiEBF/Tgd76Z4zKdb2BvmBAaze2bDptCFr0JUFU9vrb2PalrBDEUoWqnSVbg=
+	t=1748874738; cv=none; b=K9sUdP8zIymfenEU5KjD38nNDKRIjxOq4bCG99fPpqfsSVWJpWnWSes8u63nlNEgJg47JhXV/Wy64ZsrPLKIeTct7ZgX0yId/JPA1ES7Cna/4VHPuh79sI2MFIs91lhlUu7ueg+IDag/4YXmlAU+XNkd9Nojk8u5NoCJr4xN9Cc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748874735; c=relaxed/simple;
-	bh=f7AzeLY2JigMbDLREMYcQt/pkpicRVZ6DV1Y42OZqAY=;
+	s=arc-20240116; t=1748874738; c=relaxed/simple;
+	bh=249J1jcHF/fJtX+Ux+0ceH+jpeimQBGcW7vvLhDgog8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=joyeShSi18PUOJlLgLoQStOr5a4XQRpjdFEanN4NP2r9PWfLZawBFAVPF8SDsdbnnmLGanJ1wkUBvhas051rOZVGlhT2m4i1jOvLzg6btIlnN0FBcvCiwwjLnjyxjNjkPqdak/cG0vKgi81xaIVRhmlrS6Dss6K73IxOIEhewkM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P1lOoCtf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Zt34l3TtSINK4WlJ441X1LS3nsRFhymBCA3PEwgfA1I07tCZTzygmoZhrmQi1VOmjwOu6HI1CgIcYuuu5PXal92E23Fgko/A1P7kYpu3QIr12ObCR9kpTPvbcGABaZI8YJ8pQ2fyrsQNigQs8lnKeOAGypz6zvEvcPrWc4KAe1g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zY802UL1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P1lOoCtf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92453C4CEEB;
-	Mon,  2 Jun 2025 14:32:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zY802UL1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC9CDC4CEEB;
+	Mon,  2 Jun 2025 14:32:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748874735;
-	bh=f7AzeLY2JigMbDLREMYcQt/pkpicRVZ6DV1Y42OZqAY=;
+	s=korg; t=1748874738;
+	bh=249J1jcHF/fJtX+Ux+0ceH+jpeimQBGcW7vvLhDgog8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P1lOoCtf4se9+kQgVurnNv+b0Jh0eaD5JJtLZ4p3GKNvugXANE5QG7wb+xgISc8Ak
-	 TjMuY7Ut9Ei1RXAbAt7F5yIywoZ01zuXneqiSslW9+MwTRDu1dzip8sL+etI3CQ4CK
-	 CvZzpYWoC0D9zb5pztzfeNYFnBchFTGbiQnxctXw=
+	b=zY802UL1Odcfbp/V06F1PAKYZRqHHzkYA3NNaxBdWhPINOq/cXj5XRthu+qD/ODwS
+	 ip/nvQ9NqeBWeTsE5UucJ0Lb79qnVpFTFZ5Ta2Z5X90sU+yE7GixDnhLovEZ6ccQrb
+	 usP5IB9wHxeqPxmtbGHq80x0yuktRy1syrkFoleY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Mike Marshall <hubcap@omnibond.com>,
-	Christian Brauner <brauner@kernel.org>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 120/204] orangefs: Do not truncate file size
-Date: Mon,  2 Jun 2025 15:47:33 +0200
-Message-ID: <20250602134300.368710837@linuxfoundation.org>
+Subject: [PATCH 5.4 121/204] media: cx231xx: set device_caps for 417
+Date: Mon,  2 Jun 2025 15:47:34 +0200
+Message-ID: <20250602134300.406331027@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134255.449974357@linuxfoundation.org>
 References: <20250602134255.449974357@linuxfoundation.org>
@@ -52,48 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Wilcox (Oracle) <willy@infradead.org>
+From: Hans Verkuil <hverkuil@xs4all.nl>
 
-[ Upstream commit 062e8093592fb866b8e016641a8b27feb6ac509d ]
+[ Upstream commit a79efc44b51432490538a55b9753a721f7d3ea42 ]
 
-'len' is used to store the result of i_size_read(), so making 'len'
-a size_t results in truncation to 4GiB on 32-bit systems.
+The video_device for the MPEG encoder did not set device_caps.
 
-Signed-off-by: "Matthew Wilcox (Oracle)" <willy@infradead.org>
-Link: https://lore.kernel.org/r/20250305204734.1475264-2-willy@infradead.org
-Tested-by: Mike Marshall <hubcap@omnibond.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Add this, otherwise the video device can't be registered (you get a
+WARN_ON instead).
+
+Not seen before since currently 417 support is disabled, but I found
+this while experimenting with it.
+
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/orangefs/inode.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/media/usb/cx231xx/cx231xx-417.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/orangefs/inode.c b/fs/orangefs/inode.c
-index 636892ffec0ba..238773a508bac 100644
---- a/fs/orangefs/inode.c
-+++ b/fs/orangefs/inode.c
-@@ -22,9 +22,9 @@ static int orangefs_writepage_locked(struct page *page,
- 	struct orangefs_write_range *wr = NULL;
- 	struct iov_iter iter;
- 	struct bio_vec bv;
--	size_t len, wlen;
-+	size_t wlen;
- 	ssize_t ret;
--	loff_t off;
-+	loff_t len, off;
- 
- 	set_page_writeback(page);
- 
-@@ -98,8 +98,7 @@ static int orangefs_writepages_work(struct orangefs_writepages *ow,
- 	struct orangefs_write_range *wrp, wr;
- 	struct iov_iter iter;
- 	ssize_t ret;
--	size_t len;
--	loff_t off;
-+	loff_t len, off;
- 	int i;
- 
- 	len = i_size_read(inode);
+diff --git a/drivers/media/usb/cx231xx/cx231xx-417.c b/drivers/media/usb/cx231xx/cx231xx-417.c
+index 6d218a0369661..a9d080823f10a 100644
+--- a/drivers/media/usb/cx231xx/cx231xx-417.c
++++ b/drivers/media/usb/cx231xx/cx231xx-417.c
+@@ -1966,6 +1966,8 @@ static void cx231xx_video_dev_init(
+ 	vfd->lock = &dev->lock;
+ 	vfd->release = video_device_release_empty;
+ 	vfd->ctrl_handler = &dev->mpeg_ctrl_handler.hdl;
++	vfd->device_caps = V4L2_CAP_READWRITE | V4L2_CAP_STREAMING |
++			   V4L2_CAP_VIDEO_CAPTURE;
+ 	video_set_drvdata(vfd, dev);
+ 	if (dev->tuner_type == TUNER_ABSENT) {
+ 		v4l2_disable_ioctl(vfd, VIDIOC_G_FREQUENCY);
 -- 
 2.39.5
 
