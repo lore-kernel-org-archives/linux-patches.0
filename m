@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E49E923D285;
-	Mon,  2 Jun 2025 14:12:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7159F23D283;
+	Mon,  2 Jun 2025 14:12:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748873556; cv=none; b=tN/PeOZMofIJHvZgA5mM6jknjORqszo/za67zzeL+RtbaCCrW538Az6a7sn0jfKWspiTl03AedtB8tUe/5YRGnlsyrfnNc4W7lHxWYK+/XH6CQ4GBPD8Dqkm7ISnyh+13iQYCSsBAzEjjlzYaVxcm4cUguLR7FTVViOfDdm8pgs=
+	t=1748873559; cv=none; b=Anwv4iPVycskjL62+lHSUKpKmLCudKbbHHYVV6lWQFNC2HzZVDxNiEhG4s6eTDMNgtggOcQ1Sx8YTAa9/pNv38FBBzXfWJ79GZj0nTFKFsEM6OArHkDxg5LAS13IJvJz+hmq+ezo6T91QXXe5U73iXkjrpkoXBXhk5lYLOARMDk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748873556; c=relaxed/simple;
-	bh=dcJ6JOGfzshpmdgawHw88GS6d/VoHwmVfGAJ7+weGfU=;
+	s=arc-20240116; t=1748873559; c=relaxed/simple;
+	bh=KR4N7GhkcU+RqKmr30V744UQ7SL0KhNGNnzIwiQFJYE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h7AJYzsxIbcgfDyGqNzRPeWeXzN0HQVNTEkX5+VnCnWLppfQechEfuzvjXs9sWQANnLkW21xm1tbkML7NJ9/LnsKyyAYoTve2BgwO6lskAJVCaOyNRDZvDJjeWbXEZWngTOmRlL05EbxKtKhmJmYAlzpVOKIVWStklT1ldsybok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L7o7+3mK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tvtUBFOocMLrWYeh3jTzcKR++pfSK4Gah0x32GmNrkYroWfkEXufrWK8/NuKVWhQFtDZX2sKGmxko4nAaW4qdgXim3586jZl9hWCDIZpPjEH7OGprMMM36nCBwvFX0V13HQJxxtxhxjMUXO9h0kpbbCfqVIL+epPQDReA+l5Lg0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0NzysJDH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L7o7+3mK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53AEAC4CEEB;
-	Mon,  2 Jun 2025 14:12:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0NzysJDH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E963C4CEF0;
+	Mon,  2 Jun 2025 14:12:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748873555;
-	bh=dcJ6JOGfzshpmdgawHw88GS6d/VoHwmVfGAJ7+weGfU=;
+	s=korg; t=1748873559;
+	bh=KR4N7GhkcU+RqKmr30V744UQ7SL0KhNGNnzIwiQFJYE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L7o7+3mK5Aah8MZorzu1Cyg0MMNPoBcEGeoaX2DDFcP0S+gL2vBUdMgVj2TAlrf+B
-	 CIfl6JmCAMo6Vl8LHl6IoBxsIXB/kZ0Tab4WycIr9Z5/MBlklHHjpiX7pis7ucAhJe
-	 3kc6GBhTGvqdzQGsGXMBj2OEomJyKXE8N0Sgwq74=
+	b=0NzysJDHfR9UiI1S0D3V4jGBjlGu0ZxH1tmfNwDtPR4xc833xub1LlHz0dKGahtX0
+	 PwQzMBLm5gHirQ2Gd4wK9vJbFm2M4InZhsqu1i/BVQ1x2Pzd30oGdQwpGKSL4kP0Op
+	 b2CaIMuaZBMt4nEJaqqXUvpS1A4Ojds5C92Ok3YI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenjing Liu <wenjing.liu@amd.com>,
-	George Shen <george.shen@amd.com>,
-	Wayne Lin <wayne.lin@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Stefan Schmidt <stefan@datenfreihafen.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 148/444] drm/amd/display: Skip checking FRL_MODE bit for PCON BW determination
-Date: Mon,  2 Jun 2025 15:43:32 +0200
-Message-ID: <20250602134346.916156006@linuxfoundation.org>
+Subject: [PATCH 6.6 139/444] ieee802154: ca8210: Use proper setters and getters for bitwise types
+Date: Mon,  2 Jun 2025 15:43:23 +0200
+Message-ID: <20250602134346.533365512@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -54,68 +53,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: George Shen <george.shen@amd.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit 0584bbcf0c53c133081100e4f4c9fe41e598d045 ]
+[ Upstream commit 169b2262205836a5d1213ff44dca2962276bece1 ]
 
-[Why/How]
-Certain PCON will clear the FRL_MODE bit despite supporting the link BW
-indicated in the other bits.
+Sparse complains that the driver doesn't respect the bitwise types:
 
-Thus, skip checking the FRL_MODE bit when interpreting the
-hdmi_encoded_link_bw struct.
+drivers/net/ieee802154/ca8210.c:1796:27: warning: incorrect type in assignment (different base types)
+drivers/net/ieee802154/ca8210.c:1796:27:    expected restricted __le16 [addressable] [assigned] [usertype] pan_id
+drivers/net/ieee802154/ca8210.c:1796:27:    got unsigned short [usertype]
+drivers/net/ieee802154/ca8210.c:1801:25: warning: incorrect type in assignment (different base types)
+drivers/net/ieee802154/ca8210.c:1801:25:    expected restricted __le16 [addressable] [assigned] [usertype] pan_id
+drivers/net/ieee802154/ca8210.c:1801:25:    got unsigned short [usertype]
+drivers/net/ieee802154/ca8210.c:1928:28: warning: incorrect type in argument 3 (different base types)
+drivers/net/ieee802154/ca8210.c:1928:28:    expected unsigned short [usertype] dst_pan_id
+drivers/net/ieee802154/ca8210.c:1928:28:    got restricted __le16 [addressable] [usertype] pan_id
 
-Reviewed-by: Wenjing Liu <wenjing.liu@amd.com>
-Signed-off-by: George Shen <george.shen@amd.com>
-Signed-off-by: Wayne Lin <wayne.lin@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Use proper setters and getters for bitwise types.
+
+Note, in accordance with [1] the protocol is little endian.
+
+Link: https://www.cascoda.com/wp-content/uploads/2018/11/CA-8210_datasheet_0418.pdf [1]
+Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/20250305105656.2133487-2-andriy.shevchenko@linux.intel.com
+Signed-off-by: Stefan Schmidt <stefan@datenfreihafen.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../dc/link/protocols/link_dp_capability.c    | 30 +++++++++----------
- 1 file changed, 15 insertions(+), 15 deletions(-)
+ drivers/net/ieee802154/ca8210.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c
-index 3d589072fe307..1e621eae9b7da 100644
---- a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c
-+++ b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c
-@@ -239,21 +239,21 @@ static uint32_t intersect_frl_link_bw_support(
- {
- 	uint32_t supported_bw_in_kbps = max_supported_frl_bw_in_kbps;
+diff --git a/drivers/net/ieee802154/ca8210.c b/drivers/net/ieee802154/ca8210.c
+index 0a0ad3d77557f..587643a371de3 100644
+--- a/drivers/net/ieee802154/ca8210.c
++++ b/drivers/net/ieee802154/ca8210.c
+@@ -1446,8 +1446,7 @@ static u8 mcps_data_request(
+ 	command.pdata.data_req.src_addr_mode = src_addr_mode;
+ 	command.pdata.data_req.dst.mode = dst_address_mode;
+ 	if (dst_address_mode != MAC_MODE_NO_ADDR) {
+-		command.pdata.data_req.dst.pan_id[0] = LS_BYTE(dst_pan_id);
+-		command.pdata.data_req.dst.pan_id[1] = MS_BYTE(dst_pan_id);
++		put_unaligned_le16(dst_pan_id, command.pdata.data_req.dst.pan_id);
+ 		if (dst_address_mode == MAC_MODE_SHORT_ADDR) {
+ 			command.pdata.data_req.dst.address[0] = LS_BYTE(
+ 				dst_addr->short_address
+@@ -1795,12 +1794,12 @@ static int ca8210_skb_rx(
+ 	}
+ 	hdr.source.mode = data_ind[0];
+ 	dev_dbg(&priv->spi->dev, "srcAddrMode: %#03x\n", hdr.source.mode);
+-	hdr.source.pan_id = *(u16 *)&data_ind[1];
++	hdr.source.pan_id = cpu_to_le16(get_unaligned_le16(&data_ind[1]));
+ 	dev_dbg(&priv->spi->dev, "srcPanId: %#06x\n", hdr.source.pan_id);
+ 	memcpy(&hdr.source.extended_addr, &data_ind[3], 8);
+ 	hdr.dest.mode = data_ind[11];
+ 	dev_dbg(&priv->spi->dev, "dstAddrMode: %#03x\n", hdr.dest.mode);
+-	hdr.dest.pan_id = *(u16 *)&data_ind[12];
++	hdr.dest.pan_id = cpu_to_le16(get_unaligned_le16(&data_ind[12]));
+ 	dev_dbg(&priv->spi->dev, "dstPanId: %#06x\n", hdr.dest.pan_id);
+ 	memcpy(&hdr.dest.extended_addr, &data_ind[14], 8);
  
--	// HDMI_ENCODED_LINK_BW bits are only valid if HDMI Link Configuration bit is 1 (FRL mode)
--	if (hdmi_encoded_link_bw.bits.FRL_MODE) {
--		if (hdmi_encoded_link_bw.bits.BW_48Gbps)
--			supported_bw_in_kbps = 48000000;
--		else if (hdmi_encoded_link_bw.bits.BW_40Gbps)
--			supported_bw_in_kbps = 40000000;
--		else if (hdmi_encoded_link_bw.bits.BW_32Gbps)
--			supported_bw_in_kbps = 32000000;
--		else if (hdmi_encoded_link_bw.bits.BW_24Gbps)
--			supported_bw_in_kbps = 24000000;
--		else if (hdmi_encoded_link_bw.bits.BW_18Gbps)
--			supported_bw_in_kbps = 18000000;
--		else if (hdmi_encoded_link_bw.bits.BW_9Gbps)
--			supported_bw_in_kbps = 9000000;
--	}
-+	/* Skip checking FRL_MODE bit, as certain PCON will clear
-+	 * it despite supporting the link BW indicated in the other bits.
-+	 */
-+	if (hdmi_encoded_link_bw.bits.BW_48Gbps)
-+		supported_bw_in_kbps = 48000000;
-+	else if (hdmi_encoded_link_bw.bits.BW_40Gbps)
-+		supported_bw_in_kbps = 40000000;
-+	else if (hdmi_encoded_link_bw.bits.BW_32Gbps)
-+		supported_bw_in_kbps = 32000000;
-+	else if (hdmi_encoded_link_bw.bits.BW_24Gbps)
-+		supported_bw_in_kbps = 24000000;
-+	else if (hdmi_encoded_link_bw.bits.BW_18Gbps)
-+		supported_bw_in_kbps = 18000000;
-+	else if (hdmi_encoded_link_bw.bits.BW_9Gbps)
-+		supported_bw_in_kbps = 9000000;
- 
- 	return supported_bw_in_kbps;
- }
+@@ -1927,7 +1926,7 @@ static int ca8210_skb_tx(
+ 	status =  mcps_data_request(
+ 		header.source.mode,
+ 		header.dest.mode,
+-		header.dest.pan_id,
++		le16_to_cpu(header.dest.pan_id),
+ 		(union macaddr *)&header.dest.extended_addr,
+ 		skb->len - mac_len,
+ 		&skb->data[mac_len],
 -- 
 2.39.5
 
