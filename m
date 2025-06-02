@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC05C221DB6;
-	Mon,  2 Jun 2025 13:50:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA5AC2C3247;
+	Mon,  2 Jun 2025 13:50:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748872221; cv=none; b=WpjoKqHMgO6IIM+pecjx4CbG5YPqTtCU1vrB0uQFEy5Rge6Q5czQM8giAUf8MSqDYYYRqY4o4g53rM0Cke3PYLyw3Pu/y+QpZW7hOx2vIg9bZFJB/zC/1p1vD9CkYbb3dk74MBdewDyUGaF3rM7yZK4wPB64PXZhXfw5cZQzb2I=
+	t=1748872224; cv=none; b=HP0D3D/r5nhaDYKQH/Jxv2yzYW59RXnwaxe3OXs3i23QShuQKxR+N+vWzxwZBELMB3P3cXk7dW92f+yxK/xa5uYXDxC5F65fG3dU6w7m5l/KfoJbu07agpX/o9aG8bTLr7C25Cod8tyQuiDnKfWT7SrxQ+U6NtiytE85AB8tBZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748872221; c=relaxed/simple;
-	bh=EIVofoz7x0vOAwfFGo9BH4wU6logjK88mYfdN8Q6j98=;
+	s=arc-20240116; t=1748872224; c=relaxed/simple;
+	bh=lo+r2+tBB3UzWAeQz+Z8YtBOgFs990CUhv/Q8ryex5Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UikHlzpXZ4neRyKhqHuGbxIRf1NeBrsw9VlXDFPdfnucrgYNYarNzb+V8rjG+FbBn8ZaciiGFD8g0dSHsG7R1S0wAPMCROSmMSdeksgSBzIcYYRaBTCS2teyryHzXoJay1PWCoRJh87C/lUvqlGHbblMycKOaaQuoBmAgcuG4KU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GZ8JCh/Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cSg+p3gPK9qlU5L1FtsAkz2FmYIJTwk6KT+RlWFUrdKNpUQEmBrag9JR7iiqJFEqri2PRy7BC81ut7sW7Ck49KwWkrZS3SRiOAjnGmVw5wD8A0TTipdN5eP6Kn7sTYEocK5hmh5wQqXajdOXj9ZD9SZtmqJ3PhxYAPrTknZCIxk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TMfoAQmD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GZ8JCh/Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B7D1C4CEEB;
-	Mon,  2 Jun 2025 13:50:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TMfoAQmD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8DE4C4CEEB;
+	Mon,  2 Jun 2025 13:50:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748872221;
-	bh=EIVofoz7x0vOAwfFGo9BH4wU6logjK88mYfdN8Q6j98=;
+	s=korg; t=1748872224;
+	bh=lo+r2+tBB3UzWAeQz+Z8YtBOgFs990CUhv/Q8ryex5Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GZ8JCh/Qe69+sqGDpiX16wCdCrlhSJzT2cg+uloRdZCPgozRoif06nVabZKH+xppl
-	 tqKCCSYwrnqEpIiy3uAG+nH3aUxtFlu8+8kkOkR3Dl/OUoe8n6WMrdaxutotjcnMN8
-	 AyEBvcjQqy3ySTfSZCHz6zlUpV+pdGscJ+qEuJ7g=
+	b=TMfoAQmDRyOzRTP5lcd/wIDKahBtfKL1/wDTYX3lZDexzAAVS4np4OnQZR+ZVepUW
+	 bgAOyMQIjwyoQFnbgOKCJZjvZADGsDnlmze/K6SwEA2futsTTo221cYIu4Xp4TM77X
+	 StYEgt8if/kjI0TSuj4MHo54NN6MtBltjqj0YEZA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yemike Abhilash Chandra <y-abhilashchandra@ti.com>,
+	Siddharth Vadapalli <s-vadapalli@ti.com>,
+	Udit Kumar <u-kumar1@ti.com>,
 	Nishanth Menon <nm@ti.com>
-Subject: [PATCH 6.15 37/49] arm64: dts: ti: k3-j721e-sk: Add requiried voltage supplies for IMX219
-Date: Mon,  2 Jun 2025 15:47:29 +0200
-Message-ID: <20250602134239.395867866@linuxfoundation.org>
+Subject: [PATCH 6.15 38/49] arm64: dts: ti: k3-j722s-evm: Enable "serdes_wiz0" and "serdes_wiz1"
+Date: Mon,  2 Jun 2025 15:47:30 +0200
+Message-ID: <20250602134239.436832019@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134237.940995114@linuxfoundation.org>
 References: <20250602134237.940995114@linuxfoundation.org>
@@ -50,80 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yemike Abhilash Chandra <y-abhilashchandra@ti.com>
+From: Siddharth Vadapalli <s-vadapalli@ti.com>
 
-commit c6a20a250200da6fcaf80fe945b7b92cba8cfe0f upstream.
+commit 9d76be5828be44ed7a104cc21b4f875be4a63322 upstream.
 
-The device tree overlay for the IMX219 sensor requires three voltage
-supplies to be defined: VANA (analog), VDIG (digital core), and VDDL
-(digital I/O). Add the corresponding voltage supply definitions to
-avoid dtbs_check warnings.
+In preparation for disabling "serdes_wiz0" and "serdes_wiz1" device-tree
+nodes in the SoC file, enable them in the board file. The motivation for
+this change is that of following the existing convention of disabling
+nodes in the SoC file and only enabling the required ones in the board
+file.
 
-Fixes: f767eb918096 ("arm64: dts: ti: k3-j721e-sk: Add overlay for IMX219")
+Fixes: 485705df5d5f ("arm64: dts: ti: k3-j722s: Enable PCIe and USB support on J722S-EVM")
 Cc: stable@vger.kernel.org
-Signed-off-by: Yemike Abhilash Chandra <y-abhilashchandra@ti.com>
-Link: https://lore.kernel.org/r/20250415111328.3847502-5-y-abhilashchandra@ti.com
+Signed-off-by: Siddharth Vadapalli <s-vadapalli@ti.com>
+Reviewed-by: Udit Kumar <u-kumar1@ti.com>
+Link: https://lore.kernel.org/r/20250417123246.2733923-2-s-vadapalli@ti.com
 Signed-off-by: Nishanth Menon <nm@ti.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/ti/k3-j721e-sk-csi2-dual-imx219.dtso |   33 +++++++++++++++
- 1 file changed, 33 insertions(+)
+ arch/arm64/boot/dts/ti/k3-j722s-evm.dts |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/arch/arm64/boot/dts/ti/k3-j721e-sk-csi2-dual-imx219.dtso
-+++ b/arch/arm64/boot/dts/ti/k3-j721e-sk-csi2-dual-imx219.dtso
-@@ -19,6 +19,33 @@
- 		#clock-cells = <0>;
- 		clock-frequency = <24000000>;
- 	};
-+
-+	reg_2p8v: regulator-2p8v {
-+		compatible = "regulator-fixed";
-+		regulator-name = "2P8V";
-+		regulator-min-microvolt = <2800000>;
-+		regulator-max-microvolt = <2800000>;
-+		vin-supply = <&vdd_sd_dv>;
-+		regulator-always-on;
-+	};
-+
-+	reg_1p8v: regulator-1p8v {
-+		compatible = "regulator-fixed";
-+		regulator-name = "1P8V";
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <1800000>;
-+		vin-supply = <&vdd_sd_dv>;
-+		regulator-always-on;
-+	};
-+
-+	reg_1p2v: regulator-1p2v {
-+		compatible = "regulator-fixed";
-+		regulator-name = "1P2V";
-+		regulator-min-microvolt = <1200000>;
-+		regulator-max-microvolt = <1200000>;
-+		vin-supply = <&vdd_sd_dv>;
-+		regulator-always-on;
-+	};
+--- a/arch/arm64/boot/dts/ti/k3-j722s-evm.dts
++++ b/arch/arm64/boot/dts/ti/k3-j722s-evm.dts
+@@ -843,6 +843,10 @@
+ 		      <J722S_SERDES1_LANE0_PCIE0_LANE0>;
  };
  
- &csi_mux {
-@@ -34,6 +61,9 @@
- 		reg = <0x10>;
++&serdes_wiz0 {
++	status = "okay";
++};
++
+ &serdes0 {
+ 	status = "okay";
+ 	serdes0_usb_link: phy@0 {
+@@ -854,6 +858,10 @@
+ 	};
+ };
  
- 		clocks = <&clk_imx219_fixed>;
-+		VANA-supply = <&reg_2p8v>;
-+		VDIG-supply = <&reg_1p8v>;
-+		VDDL-supply = <&reg_1p2v>;
- 
- 		port {
- 			csi2_cam0: endpoint {
-@@ -55,6 +85,9 @@
- 		reg = <0x10>;
- 
- 		clocks = <&clk_imx219_fixed>;
-+		VANA-supply = <&reg_2p8v>;
-+		VDIG-supply = <&reg_1p8v>;
-+		VDDL-supply = <&reg_1p2v>;
- 
- 		port {
- 			csi2_cam1: endpoint {
++&serdes_wiz1 {
++	status = "okay";
++};
++
+ &serdes1 {
+ 	status = "okay";
+ 	serdes1_pcie_link: phy@0 {
 
 
