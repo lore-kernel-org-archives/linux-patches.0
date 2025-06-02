@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F00DA2576;
-	Mon,  2 Jun 2025 15:19:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26AE42576;
+	Mon,  2 Jun 2025 15:19:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748877592; cv=none; b=fJ1JtOYpbr1N2zETMtSB/5TrQQHBd4nXkHdlcdgunrzDkM0mzFgqcdpgrPgRj0fOlrMQjALkXyiiPZLo3mho8s9MHhJY28SMghgHeJALY+eaEA+MtqDFVtjNwrFjvKgbBRxdViro4Sy9d1kHZO9pBykyUGijauIZKrA7htDU7/4=
+	t=1748877595; cv=none; b=XMTnbQI7dqo5+SnzCEjrtYYPkyM6+oDoBxYV6IgMsyqCamg4mHcA/K4mJ3cpPQ5oPzXpVEHZ4EIRZ1AgAZlVNBbU1gMiLPi4w+WyYOJcbuwOw2ti/ofrVouza0oM+HhaPJMWzx+j6D078aDrGZAfGJD5RViFvf3P+if0exy3q8Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748877592; c=relaxed/simple;
-	bh=hwh/NkDhypaV0bOqljlQSffYOHy4Ih5AYdFgmnMmxXI=;
+	s=arc-20240116; t=1748877595; c=relaxed/simple;
+	bh=xp2caFPQs2p26Z4iy/QNUAPt+VZNPn3nCoyn1k4lCH8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ct2jAnrt+/o7FLFqqnjdzNhNTctmJtekb04+Ud1Cp3kdcUzS3sCMWqDHdqPiFUrUysKNfR64l7HC0xK7Ig7rb8sb4W0DNohgrW/000jCwa/QqbSN/8O6XAySNlbt8avT8L2Oj/44+xTOlz5KWQjwKDfWcSlGFKB2BTZRxd4P2uw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vTJMb1w7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LYxoGn+2FZw/mPo328P/g6Ew2ZvGkTMZs1wH9m3QH7CDIgmZUyMPBnDlBNYv/vplDmgKmM4EVmtCNGGLuBAUCui/27EWPu4D3Mg6Yk3SKPRCjWMIUhqAnFW9kQDk4u2/ApXvarSaY7mb4Glg39NZA57pnAbiSh9NQZeuJXFAuJI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pIYG+/L5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vTJMb1w7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FF56C4CEEB;
-	Mon,  2 Jun 2025 15:19:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pIYG+/L5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B8DFC4CEEB;
+	Mon,  2 Jun 2025 15:19:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748877591;
-	bh=hwh/NkDhypaV0bOqljlQSffYOHy4Ih5AYdFgmnMmxXI=;
+	s=korg; t=1748877595;
+	bh=xp2caFPQs2p26Z4iy/QNUAPt+VZNPn3nCoyn1k4lCH8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vTJMb1w79gRkls//Rlqi2Xu0U7lqbcZQZxjqw4cbWbt4kyBuQW6CNc263I4p9w7GC
-	 y7zSd+7MJDYhq0lfJhrJa3fcil8yJgfCZh56PjxWQpGD2hV10Z7iDpMeSQaRsn5sH9
-	 051IkvYygi7lJhMNRLRjJBKU+q72WC5OenjQOjyw=
+	b=pIYG+/L5jVJ7ACmg1dZKo1i1JUU64acIIhLL7rAkumqvgA5MImMiT4miCqRx8zA2C
+	 Z4nr8P2amaUACU6xK8dRMkMwjmGnQiBJJSKMSOy+dJT+ja08dZLTmfKi3IziCP8YP4
+	 sK35kmwLgDauFS3oJF61mtw5grsAW+YFq9c+agqM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nishanth Menon <nm@ti.com>,
-	Simon Horman <horms@kernel.org>,
-	Roger Quadros <rogerq@kernel.org>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 325/325] net: ethernet: ti: am65-cpsw: Lower random mac address error print to info
-Date: Mon,  2 Jun 2025 15:50:01 +0200
-Message-ID: <20250602134333.145555321@linuxfoundation.org>
+	Lee Jones <lee@kernel.org>
+Subject: [PATCH 6.1 305/325] af_unix: Add dead flag to struct scm_fp_list.
+Date: Mon,  2 Jun 2025 15:49:41 +0200
+Message-ID: <20250602134332.307451719@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134319.723650984@linuxfoundation.org>
 References: <20250602134319.723650984@linuxfoundation.org>
@@ -53,40 +52,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nishanth Menon <nm@ti.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit 50980d8da71a0c2e045e85bba93c0099ab73a209 ]
+commit 7172dc93d621d5dc302d007e95ddd1311ec64283 upstream.
 
-Using random mac address is not an error since the driver continues to
-function, it should be informative that the system has not assigned
-a MAC address. This is inline with other drivers such as ax88796c,
-dm9051 etc. Drop the error level to info level.
+Commit 1af2dface5d2 ("af_unix: Don't access successor in unix_del_edges()
+during GC.") fixed use-after-free by avoid accessing edge->successor while
+GC is in progress.
 
-Signed-off-by: Nishanth Menon <nm@ti.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Roger Quadros <rogerq@kernel.org>
-Link: https://patch.msgid.link/20250516122655.442808-1-nm@ti.com
+However, there could be a small race window where another process could
+call unix_del_edges() while gc_in_progress is true and __skb_queue_purge()
+is on the way.
+
+So, we need another marker for struct scm_fp_list which indicates if the
+skb is garbage-collected.
+
+This patch adds dead flag in struct scm_fp_list and set it true before
+calling __skb_queue_purge().
+
+Fixes: 1af2dface5d2 ("af_unix: Don't access successor in unix_del_edges() during GC.")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Acked-by: Paolo Abeni <pabeni@redhat.com>
+Link: https://lore.kernel.org/r/20240508171150.50601-1-kuniyu@amazon.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/ti/am65-cpsw-nuss.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/net/scm.h  |    1 +
+ net/core/scm.c     |    1 +
+ net/unix/garbage.c |   14 ++++++++++----
+ 3 files changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/ti/am65-cpsw-nuss.c b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-index 32828d4ac64ce..a0a9e4e13e77b 100644
---- a/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-+++ b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-@@ -1918,7 +1918,7 @@ static int am65_cpsw_nuss_init_slave_ports(struct am65_cpsw_common *common)
- 							port->slave.mac_addr);
- 			if (!is_valid_ether_addr(port->slave.mac_addr)) {
- 				eth_random_addr(port->slave.mac_addr);
--				dev_err(dev, "Use random MAC address\n");
-+				dev_info(dev, "Use random MAC address\n");
- 			}
- 		}
+--- a/include/net/scm.h
++++ b/include/net/scm.h
+@@ -31,6 +31,7 @@ struct scm_fp_list {
+ 	short			max;
+ #ifdef CONFIG_UNIX
+ 	bool			inflight;
++	bool			dead;
+ 	struct list_head	vertices;
+ 	struct unix_edge	*edges;
+ #endif
+--- a/net/core/scm.c
++++ b/net/core/scm.c
+@@ -91,6 +91,7 @@ static int scm_fp_copy(struct cmsghdr *c
+ 		fpl->user = NULL;
+ #if IS_ENABLED(CONFIG_UNIX)
+ 		fpl->inflight = false;
++		fpl->dead = false;
+ 		fpl->edges = NULL;
+ 		INIT_LIST_HEAD(&fpl->vertices);
+ #endif
+--- a/net/unix/garbage.c
++++ b/net/unix/garbage.c
+@@ -158,13 +158,11 @@ static void unix_add_edge(struct scm_fp_
+ 	unix_update_graph(unix_edge_successor(edge));
+ }
+ 
+-static bool gc_in_progress;
+-
+ static void unix_del_edge(struct scm_fp_list *fpl, struct unix_edge *edge)
+ {
+ 	struct unix_vertex *vertex = edge->predecessor->vertex;
+ 
+-	if (!gc_in_progress)
++	if (!fpl->dead)
+ 		unix_update_graph(unix_edge_successor(edge));
+ 
+ 	list_del(&edge->vertex_entry);
+@@ -240,7 +238,7 @@ void unix_del_edges(struct scm_fp_list *
+ 		unix_del_edge(fpl, edge);
+ 	} while (i < fpl->count_unix);
+ 
+-	if (!gc_in_progress) {
++	if (!fpl->dead) {
+ 		receiver = fpl->edges[0].successor;
+ 		receiver->scm_stat.nr_unix_fds -= fpl->count_unix;
  	}
--- 
-2.39.5
-
+@@ -559,9 +557,12 @@ static void unix_walk_scc_fast(struct sk
+ 	list_replace_init(&unix_visited_vertices, &unix_unvisited_vertices);
+ }
+ 
++static bool gc_in_progress;
++
+ static void __unix_gc(struct work_struct *work)
+ {
+ 	struct sk_buff_head hitlist;
++	struct sk_buff *skb;
+ 
+ 	spin_lock(&unix_gc_lock);
+ 
+@@ -579,6 +580,11 @@ static void __unix_gc(struct work_struct
+ 
+ 	spin_unlock(&unix_gc_lock);
+ 
++	skb_queue_walk(&hitlist, skb) {
++		if (UNIXCB(skb).fp)
++			UNIXCB(skb).fp->dead = true;
++	}
++
+ 	__skb_queue_purge(&hitlist);
+ skip_gc:
+ 	WRITE_ONCE(gc_in_progress, false);
 
 
