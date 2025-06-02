@@ -1,38 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C74292288F9;
-	Mon,  2 Jun 2025 14:49:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34C33227EA4;
+	Mon,  2 Jun 2025 14:49:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748875783; cv=none; b=ZJ/LPrq07sWDvW1FUk1M+MMUal+9hG7EzziLOOQNa5lc7qeYQySZLSqVdcRLAnGfYgBgOZkmqOL5c2SOkZeay0MsROzNvUiZA4HIm6EixPJdNcNm9ISU5LKNgBq/cGeSmk79INmeGue3PpbiutWxz1gr60Ta4cqCpk7zBDbXM/M=
+	t=1748875787; cv=none; b=MfZu3UkNLt0RwDfDO2rajjzKTgJQlATIy32OWDPF92HibIM1QthWOhorpi5yGoI0KWRImasZFFurjzY2YJk5nbh7kd+d2J8aMsFlE9R1Ez9DT1818hzqjCc4g8DGhCGXAHdq1+TG0YnXxE0r8pxfiJOcP+uiJgpGUa+qC2tYUc8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748875783; c=relaxed/simple;
-	bh=FLSQEfmvSlAlzXMNQLUxSSouJzxi4PUAKhaYSMFIusU=;
+	s=arc-20240116; t=1748875787; c=relaxed/simple;
+	bh=AMFicE3E/AjjgkTLG9Osslf17syjGGHVaZCyGfjkz3o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fMPWFrsln9UicC348udqm6EIy7zkYSn+VQwoOq5AMDrYJhtS6oSTDFFiN6pJpggdALvB4sLuA7MgEcHPYqgYNvrDU+Y4FYxo+61bD8wCCWyL3Z1qjUYwdFeew6DKC4DIJ9yS4iRAqHTbGM5dDY0ESWeCKQ6Y3JqFPWRyHp4j8zc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ly4QPLED; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=hhYATns2bb3NT6soesgTteOUfGLsWrmF85vvjsrImn5AkKFrYKeajlv45oHv2JezoTHo34xZsLhjZy+iW6zPfkaTClYeDpSGmJfu236FFYZ8HiJhz2D2uo3v8iKlt0FVFzKZejmaSsb/0S/9dmlgEKvC9W0dy70phndM0SLT6Z0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RbSwjh/n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ly4QPLED"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E50BC4CEEB;
-	Mon,  2 Jun 2025 14:49:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RbSwjh/n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26F29C4CEEB;
+	Mon,  2 Jun 2025 14:49:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748875783;
-	bh=FLSQEfmvSlAlzXMNQLUxSSouJzxi4PUAKhaYSMFIusU=;
+	s=korg; t=1748875786;
+	bh=AMFicE3E/AjjgkTLG9Osslf17syjGGHVaZCyGfjkz3o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ly4QPLEDRSGnslQ7mAvTv5yW4C0VXT5B85VVIptLLKZ5CEc2/Nm3mFDtZbMfsDVyk
-	 C4nJYkjWLLi6agPRg5e/dYD8yqcTXEAbDuDo5fkI9qzS6hdodWiLZcypt6Unl2LMX0
-	 ctYrucWU5BxL/xaqNbAPBO1XspEltXDUlGFhDClU=
+	b=RbSwjh/nzwdi2weYHWAnDLWS+JcL9W62T9OMF2AvsTNlodAWgRrIzoDYM9PbF/Aa+
+	 MVCSNElBW9090ZMpH9EDj+EAPil0hdGRNwnKkF1jNQ8UP74CB57hH4MbT9oi3b8SnS
+	 KFx+KKBaxYHL6vTwsOa0XK59yoXN37/LwL/mRuyE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anderson Nascimento <anderson@allelesecurity.com>,
-	Oliver Hartkopp <socketcan@hartkopp.net>,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 5.10 243/270] can: bcm: add missing rcu read protection for procfs content
-Date: Mon,  2 Jun 2025 15:48:48 +0200
-Message-ID: <20250602134317.265100787@linuxfoundation.org>
+	Pekka Paalanen <pekka.paalanen@collabora.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	David Airlie <airlied@gmail.com>,
+	Daniel Vetter <daniel@ffwll.ch>,
+	Rob Clark <robdclark@gmail.com>,
+	Simon Ser <contact@emersion.fr>,
+	Manasi Navare <navaremanasi@google.com>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Simona Vetter <simona.vetter@intel.com>,
+	Simona Vetter <simona.vetter@ffwll.ch>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 226/270] drm/atomic: clarify the rules around drm_atomic_state->allow_modeset
+Date: Mon,  2 Jun 2025 15:48:31 +0200
+Message-ID: <20250602134316.556223685@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134307.195171844@linuxfoundation.org>
 References: <20250602134307.195171844@linuxfoundation.org>
@@ -45,85 +57,94 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Oliver Hartkopp <socketcan@hartkopp.net>
+From: Simona Vetter <simona.vetter@ffwll.ch>
 
-commit dac5e6249159ac255dad9781793dbe5908ac9ddb upstream.
+[ Upstream commit c5e3306a424b52e38ad2c28c7f3399fcd03e383d ]
 
-When the procfs content is generated for a bcm_op which is in the process
-to be removed the procfs output might show unreliable data (UAF).
+msm is automagically upgrading normal commits to full modesets, and
+that's a big no-no:
 
-As the removal of bcm_op's is already implemented with rcu handling this
-patch adds the missing rcu_read_lock() and makes sure the list entries
-are properly removed under rcu protection.
+- for one this results in full on->off->on transitions on all these
+  crtc, at least if you're using the usual helpers. Which seems to be
+  the case, and is breaking uapi
 
-Fixes: f1b4e32aca08 ("can: bcm: use call_rcu() instead of costly synchronize_rcu()")
-Reported-by: Anderson Nascimento <anderson@allelesecurity.com>
-Suggested-by: Anderson Nascimento <anderson@allelesecurity.com>
-Tested-by: Anderson Nascimento <anderson@allelesecurity.com>
-Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Link: https://patch.msgid.link/20250519125027.11900-2-socketcan@hartkopp.net
-Cc: stable@vger.kernel.org # >= 5.4
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+- further even if the ctm change itself would not result in flicker,
+  this can hide modesets for other reasons. Which again breaks the
+  uapi
+
+v2: I forgot the case of adding unrelated crtc state. Add that case
+and link to the existing kerneldoc explainers. This has come up in an
+irc discussion with Manasi and Ville about intel's bigjoiner mode.
+Also cc everyone involved in the msm irc discussion, more people
+joined after I sent out v1.
+
+v3: Wording polish from Pekka and Thomas
+
+Acked-by: Pekka Paalanen <pekka.paalanen@collabora.com>
+Acked-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Cc: Maxime Ripard <mripard@kernel.org>
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: David Airlie <airlied@gmail.com>
+Cc: Daniel Vetter <daniel@ffwll.ch>
+Cc: Pekka Paalanen <pekka.paalanen@collabora.com>
+Cc: Rob Clark <robdclark@gmail.com>
+Cc: Simon Ser <contact@emersion.fr>
+Cc: Manasi Navare <navaremanasi@google.com>
+Cc: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Simona Vetter <simona.vetter@intel.com>
+Signed-off-by: Simona Vetter <simona.vetter@ffwll.ch>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250108172417.160831-1-simona.vetter@ffwll.ch
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/can/bcm.c |   13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ include/drm/drm_atomic.h | 23 +++++++++++++++++++++--
+ 1 file changed, 21 insertions(+), 2 deletions(-)
 
---- a/net/can/bcm.c
-+++ b/net/can/bcm.c
-@@ -207,7 +207,9 @@ static int bcm_proc_show(struct seq_file
- 	seq_printf(m, " / bound %s", bcm_proc_getifname(net, ifname, bo->ifindex));
- 	seq_printf(m, " <<<\n");
- 
--	list_for_each_entry(op, &bo->rx_ops, list) {
-+	rcu_read_lock();
-+
-+	list_for_each_entry_rcu(op, &bo->rx_ops, list) {
- 
- 		unsigned long reduction;
- 
-@@ -263,6 +265,9 @@ static int bcm_proc_show(struct seq_file
- 		seq_printf(m, "# sent %ld\n", op->frames_abs);
- 	}
- 	seq_putc(m, '\n');
-+
-+	rcu_read_unlock();
-+
- 	return 0;
- }
- #endif /* CONFIG_PROC_FS */
-@@ -811,7 +816,7 @@ static int bcm_delete_rx_op(struct list_
- 						  REGMASK(op->can_id),
- 						  bcm_rx_handler, op);
- 
--			list_del(&op->list);
-+			list_del_rcu(&op->list);
- 			bcm_remove_op(op);
- 			return 1; /* done */
- 		}
-@@ -831,7 +836,7 @@ static int bcm_delete_tx_op(struct list_
- 	list_for_each_entry_safe(op, n, ops, list) {
- 		if ((op->can_id == mh->can_id) && (op->ifindex == ifindex) &&
- 		    (op->flags & CAN_FD_FRAME) == (mh->flags & CAN_FD_FRAME)) {
--			list_del(&op->list);
-+			list_del_rcu(&op->list);
- 			bcm_remove_op(op);
- 			return 1; /* done */
- 		}
-@@ -1253,7 +1258,7 @@ static int bcm_rx_setup(struct bcm_msg_h
- 					      bcm_rx_handler, op, "bcm", sk);
- 		if (err) {
- 			/* this bcm rx op is broken -> remove it */
--			list_del(&op->list);
-+			list_del_rcu(&op->list);
- 			bcm_remove_op(op);
- 			return err;
- 		}
+diff --git a/include/drm/drm_atomic.h b/include/drm/drm_atomic.h
+index d07c851d255b5..4a245d79ba6b4 100644
+--- a/include/drm/drm_atomic.h
++++ b/include/drm/drm_atomic.h
+@@ -332,8 +332,27 @@ struct drm_atomic_state {
+ 	 *
+ 	 * Allow full modeset. This is used by the ATOMIC IOCTL handler to
+ 	 * implement the DRM_MODE_ATOMIC_ALLOW_MODESET flag. Drivers should
+-	 * never consult this flag, instead looking at the output of
+-	 * drm_atomic_crtc_needs_modeset().
++	 * generally not consult this flag, but instead look at the output of
++	 * drm_atomic_crtc_needs_modeset(). The detailed rules are:
++	 *
++	 * - Drivers must not consult @allow_modeset in the atomic commit path.
++	 *   Use drm_atomic_crtc_needs_modeset() instead.
++	 *
++	 * - Drivers must consult @allow_modeset before adding unrelated struct
++	 *   drm_crtc_state to this commit by calling
++	 *   drm_atomic_get_crtc_state(). See also the warning in the
++	 *   documentation for that function.
++	 *
++	 * - Drivers must never change this flag, it is under the exclusive
++	 *   control of userspace.
++	 *
++	 * - Drivers may consult @allow_modeset in the atomic check path, if
++	 *   they have the choice between an optimal hardware configuration
++	 *   which requires a modeset, and a less optimal configuration which
++	 *   can be committed without a modeset. An example would be suboptimal
++	 *   scanout FIFO allocation resulting in increased idle power
++	 *   consumption. This allows userspace to avoid flickering and delays
++	 *   for the normal composition loop at reasonable cost.
+ 	 */
+ 	bool allow_modeset : 1;
+ 	bool legacy_cursor_update : 1;
+-- 
+2.39.5
+
 
 
