@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CDA123185D;
-	Mon,  2 Jun 2025 15:06:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CE05235362;
+	Mon,  2 Jun 2025 15:06:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748876780; cv=none; b=GXubEDihpMMN4cyQwesaA78i8nb5HXpRoIc3mdQzvg17BBzItTd97RLrWOKiGFn0TGsR0ZLaWXesZeAbjA/Srh5Y/lRjZqAEIKDQJ4avbiThA4q5uolywuBIitl/sEwfHFJjRTQOmtT4jsY0A6YNxYyoDegNRylk7RiuoifN9Bc=
+	t=1748876780; cv=none; b=LQY325XrLR+asEPIC5hj5f4eOzhwI52DwOrsGsdhMuw/VLz1r587srBceAehm6tLVMtWIk856lJ/fdimDERLYpS8EQVKJLtjVWIKKjhkepkKcuaaX9bIByoCqzmwxz1H9KKKjogwWmJz9fVAOTtAzk7xJOO2Nh8CtM0DliTdfwc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1748876780; c=relaxed/simple;
-	bh=GEetga6hoxUXdnQi89U2Cz21dK1SFeeDuptw4+BvaHI=;
+	bh=OiqZ19h9Ty7yW+bXGV3cqO3rVPXaKg4vfT9mRg80lAA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=cvx+jaeQFHpza9LAxie1w/G/b9fiZWP+a+Pdl62tHrSs1/4X4bkWJsnPcKCgIT/ENKkO/lKDzPehltYRRMyUxOQhnVRdUFRzzIZhSUCzDnlSQD6AefgZvU9CDli1kOEnYFvOoTTgNLX/yqevDvlt3wamHJpmPO6Iua/LojS3Iz8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tEWhb56b; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k8uLPvAM8Nyn/uWyDRYOo7u8j/4198dc8jM2A1pzrmmyKSzakIuQGowR9CMYbpZzBobePSfd7k5yCVApJfRzLBvhXC6ix7fuJtnGb5Xs5RRSbILIHE69MQmNLBjE8QuvkUAXhXEKtgAWNo2QkIUI8+PI0MHxN+mLrtKi57u3hfc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ijmaRqJL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tEWhb56b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 258DDC4CEEE;
-	Mon,  2 Jun 2025 15:06:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ijmaRqJL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32CB3C4CEEB;
+	Mon,  2 Jun 2025 15:06:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748876779;
-	bh=GEetga6hoxUXdnQi89U2Cz21dK1SFeeDuptw4+BvaHI=;
+	s=korg; t=1748876776;
+	bh=OiqZ19h9Ty7yW+bXGV3cqO3rVPXaKg4vfT9mRg80lAA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tEWhb56bQHUvgXXF7vY6mFRD8X9U1wAYSRgRwFj8nSz8SiBbLbXKzGmKQ2nOia9A8
-	 Uvy1eDvPm2Gx5hU37QMcaMjXCVV1u1IjlByIOQOFh7he+9Q80ZS+BJiZY5ZwiGAC1N
-	 3GSzATD0xEhXx3ATrCLl0JW7zlA5ZaF5dlFLowVs=
+	b=ijmaRqJLO9MLnsVorhrEnVpOI4zAzztjI5DzKfsErh7UWiqn+9JTXsk0H71WadEKU
+	 /TkoIUoariEJ87u0zxJ/d98WxMRJoOManxXBp6IZpjNIezgdlJ41oKz1b5/nlp2w5T
+	 iVNexxRucQPH3wlmYeLkra+9iHEjI03AfiR4xoe0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
-	Mark Brown <broonie@kernel.org>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 070/325] ASoC: mediatek: mt6359: Add stub for mt6359_accdet_enable_jack_detect
-Date: Mon,  2 Jun 2025 15:45:46 +0200
-Message-ID: <20250602134322.630686716@linuxfoundation.org>
+Subject: [PATCH 6.1 069/325] thunderbolt: Do not add non-active NVM if NVM upgrade is disabled for retimer
+Date: Mon,  2 Jun 2025 15:45:45 +0200
+Message-ID: <20250602134322.590033999@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134319.723650984@linuxfoundation.org>
 References: <20250602134319.723650984@linuxfoundation.org>
@@ -46,50 +44,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+From: Mika Westerberg <mika.westerberg@linux.intel.com>
 
-[ Upstream commit 0116a7d84b32537a10d9bea1fd1bfc06577ef527 ]
+[ Upstream commit ad79c278e478ca8c1a3bf8e7a0afba8f862a48a1 ]
 
-Add a stub for mt6359_accdet_enable_jack_detect() to prevent linker
-failures in the machine sound drivers calling it when
-CONFIG_SND_SOC_MT6359_ACCDET is not enabled.
+This is only used to write a new NVM in order to upgrade the retimer
+firmware. It does not make sense to expose it if upgrade is disabled.
+This also makes it consistent with the router NVM upgrade.
 
-Suggested-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
-Link: https://patch.msgid.link/20250306-mt8188-accdet-v3-3-7828e835ff4b@collabora.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/mt6359-accdet.h | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/thunderbolt/retimer.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/codecs/mt6359-accdet.h b/sound/soc/codecs/mt6359-accdet.h
-index c234f2f4276a1..78ada3a5bfae5 100644
---- a/sound/soc/codecs/mt6359-accdet.h
-+++ b/sound/soc/codecs/mt6359-accdet.h
-@@ -123,6 +123,15 @@ struct mt6359_accdet {
- 	struct workqueue_struct *jd_workqueue;
- };
+diff --git a/drivers/thunderbolt/retimer.c b/drivers/thunderbolt/retimer.c
+index 5bd5c22a5085d..d2038337ea03b 100644
+--- a/drivers/thunderbolt/retimer.c
++++ b/drivers/thunderbolt/retimer.c
+@@ -89,9 +89,11 @@ static int tb_retimer_nvm_add(struct tb_retimer *rt)
+ 	if (ret)
+ 		goto err_nvm;
  
-+#if IS_ENABLED(CONFIG_SND_SOC_MT6359_ACCDET)
- int mt6359_accdet_enable_jack_detect(struct snd_soc_component *component,
- 				     struct snd_soc_jack *jack);
-+#else
-+static inline int
-+mt6359_accdet_enable_jack_detect(struct snd_soc_component *component,
-+				 struct snd_soc_jack *jack)
-+{
-+	return -EOPNOTSUPP;
-+}
-+#endif
- #endif
+-	ret = tb_nvm_add_non_active(nvm, nvm_write);
+-	if (ret)
+-		goto err_nvm;
++	if (!rt->no_nvm_upgrade) {
++		ret = tb_nvm_add_non_active(nvm, nvm_write);
++		if (ret)
++			goto err_nvm;
++	}
+ 
+ 	rt->nvm = nvm;
+ 	return 0;
 -- 
 2.39.5
 
