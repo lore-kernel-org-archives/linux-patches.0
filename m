@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 349932253F3;
-	Mon,  2 Jun 2025 14:38:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5E8E225A3E;
+	Mon,  2 Jun 2025 14:38:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748875124; cv=none; b=n4P6pkuYPq+1eEu6v8kqofjf4NdJ5ftVvaZ/eAcsOMcVy02LyGPnhaS891JtT6waMX0J27FN0sUcTrIl4OZ/JYxpYVkgjyu5qO6S7ApKcjK2aPx/bceRiqh0CXlGJXvPg2gygcgH/Cw6Fk8tmNajX1uqBLFEnE/AXJwNO3aHdJ8=
+	t=1748875127; cv=none; b=syQ+VCj5NDw2UfDzYBaA33wMGRPcytYAy8DSeiDTXY0mZmfzsliqwTaZCHyRUze8s/ovzaib+jOfca/s9I99NlCzSWa9Y6+SSIa5uOJtkj2w23FkdENBgXnYBnUhaBl1wd6LnPsMxKv1L3hQ4ahJL8+QigbePBgkcSKgZRStkL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748875124; c=relaxed/simple;
-	bh=b3V3kuJzZPTtEv3u9ZYzjdEi1Ha9mzti05lQM8jPhoY=;
+	s=arc-20240116; t=1748875127; c=relaxed/simple;
+	bh=vWuhXWNW3C25OP5HVLYOgHNulUCkv0PHrp6whIGhsbc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EaS8iJ/P0fbri6+AgyzxuGlMiLP8D3dvgmbGtVbvokneIxyx0DLmNK9P7+7g9ftvkVF2FP1rAe48zf6dxcMCdC0tbpPqqcZQKFXXiHjRntM70BcvV4HfvJ0eS9/syBVzS0YSCH7nUHpST0Ta9zTq/SOe4b+9k2yydxSnwTqOekU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I5rIm6NI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UgoFKdTO33BgENAPPU7PDw8GSYWsdAEKixEwsQgV/2RLkFkKiWIuHrz9FPs2L9WzAfurSdSasFI0ZxL9FERYatyc+A22gkzZy+jgJfhrQiE88O9URMPdvlvCAqz2gYuZMD2fh3rdJhNqdNxVULsS5vMoDVSunqJ+KXHcybP3DUc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jRGbkpdt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I5rIm6NI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97BFCC4CEEE;
-	Mon,  2 Jun 2025 14:38:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jRGbkpdt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8603C4CEF0;
+	Mon,  2 Jun 2025 14:38:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748875124;
-	bh=b3V3kuJzZPTtEv3u9ZYzjdEi1Ha9mzti05lQM8jPhoY=;
+	s=korg; t=1748875127;
+	bh=vWuhXWNW3C25OP5HVLYOgHNulUCkv0PHrp6whIGhsbc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I5rIm6NIcY6ORiPl2L0AVgoHyAhLvy3cwQtpgu9KLedkFe+s+/7hnAE6Bxug/lQuY
-	 jLRjk7X8YW4Tb78gsb9b4l/FLdveZmdzjjW8jilCcR18pHeTZt184t6xLAN4fxkdJ1
-	 AWFIwJ30NXlrASQ9kwZvDIXaYA4VEbkwc+vtiXWQ=
+	b=jRGbkpdtU2uVNGmdYRxRWuZDBuFB3bJC5O5b2ySBAIwV+atkwBLuYX+P9dCAnwx9x
+	 BIPOMDHH10lc7YosRRs9INOXE3CnuP+BX8q4H1+4nrjorHcngxHLXjch1bGV89wcKR
+	 k76BqAYDmqoPzEjmllCZwYr0gTdL3cyMez106y7w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mattias Barthel <mattias.barthel@atlascopco.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Ingo Molnar <mingo@kernel.org>,
+	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 028/270] net: fec: ERR007885 Workaround for conventional TX
-Date: Mon,  2 Jun 2025 15:45:13 +0200
-Message-ID: <20250602134308.353800761@linuxfoundation.org>
+Subject: [PATCH 5.10 037/270] irqchip/gic-v2m: Prevent use after free of gicv2m_get_fwnode()
+Date: Mon,  2 Jun 2025 15:45:22 +0200
+Message-ID: <20250602134308.708333024@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134307.195171844@linuxfoundation.org>
 References: <20250602134307.195171844@linuxfoundation.org>
@@ -52,53 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mattias Barthel <mattias.barthel@atlascopco.com>
+From: Suzuki K Poulose <suzuki.poulose@arm.com>
 
-[ Upstream commit a179aad12badc43201cbf45d1e8ed2c1383c76b9 ]
+[ Upstream commit 3318dc299b072a0511d6dfd8367f3304fb6d9827 ]
 
-Activate TX hang workaround also in
-fec_enet_txq_submit_skb() when TSO is not enabled.
+With ACPI in place, gicv2m_get_fwnode() is registered with the pci
+subsystem as pci_msi_get_fwnode_cb(), which may get invoked at runtime
+during a PCI host bridge probe. But, the call back is wrongly marked as
+__init, causing it to be freed, while being registered with the PCI
+subsystem and could trigger:
 
-Errata: ERR007885
+ Unable to handle kernel paging request at virtual address ffff8000816c0400
+  gicv2m_get_fwnode+0x0/0x58 (P)
+  pci_set_bus_msi_domain+0x74/0x88
+  pci_register_host_bridge+0x194/0x548
 
-Symptoms: NETDEV WATCHDOG: eth0 (fec): transmit queue 0 timed out
+This is easily reproducible on a Juno board with ACPI boot.
 
-commit 37d6017b84f7 ("net: fec: Workaround for imx6sx enet tx hang when enable three queues")
-There is a TDAR race condition for mutliQ when the software sets TDAR
-and the UDMA clears TDAR simultaneously or in a small window (2-4 cycles).
-This will cause the udma_tx and udma_tx_arbiter state machines to hang.
+Retain the function for later use.
 
-So, the Workaround is checking TDAR status four time, if TDAR cleared by
-    hardware and then write TDAR, otherwise don't set TDAR.
-
-Fixes: 53bb20d1faba ("net: fec: add variable reg_desc_active to speed things up")
-Signed-off-by: Mattias Barthel <mattias.barthel@atlascopco.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20250429090826.3101258-1-mattiasbarthel@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 0644b3daca28 ("irqchip/gic-v2m: acpi: Introducing GICv2m ACPI support")
+Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Reviewed-by: Marc Zyngier <maz@kernel.org>
+Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/fec_main.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/irqchip/irq-gic-v2m.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/freescale/fec_main.c b/drivers/net/ethernet/freescale/fec_main.c
-index 8e30e999456d4..805434ba3035b 100644
---- a/drivers/net/ethernet/freescale/fec_main.c
-+++ b/drivers/net/ethernet/freescale/fec_main.c
-@@ -602,7 +602,12 @@ static int fec_enet_txq_submit_skb(struct fec_enet_priv_tx_q *txq,
- 	txq->bd.cur = bdp;
+diff --git a/drivers/irqchip/irq-gic-v2m.c b/drivers/irqchip/irq-gic-v2m.c
+index 0b57ac48e18b6..b17deec1c5d4d 100644
+--- a/drivers/irqchip/irq-gic-v2m.c
++++ b/drivers/irqchip/irq-gic-v2m.c
+@@ -458,7 +458,7 @@ static int __init gicv2m_of_init(struct fwnode_handle *parent_handle,
+ #ifdef CONFIG_ACPI
+ static int acpi_num_msi;
  
- 	/* Trigger transmission start */
--	writel(0, txq->bd.reg_desc_active);
-+	if (!(fep->quirks & FEC_QUIRK_ERR007885) ||
-+	    !readl(txq->bd.reg_desc_active) ||
-+	    !readl(txq->bd.reg_desc_active) ||
-+	    !readl(txq->bd.reg_desc_active) ||
-+	    !readl(txq->bd.reg_desc_active))
-+		writel(0, txq->bd.reg_desc_active);
+-static __init struct fwnode_handle *gicv2m_get_fwnode(struct device *dev)
++static struct fwnode_handle *gicv2m_get_fwnode(struct device *dev)
+ {
+ 	struct v2m_data *data;
  
- 	return 0;
- }
 -- 
 2.39.5
 
