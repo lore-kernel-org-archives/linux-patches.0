@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CAF61FF61E;
-	Mon,  2 Jun 2025 14:17:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0F54222590;
+	Mon,  2 Jun 2025 14:17:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748873841; cv=none; b=Gfa/kdqjcjzziW+eTu4xEFkdyTNiB5NzAaXolOiHn+tzZfYR3xnL+wbnUdZltRGRZpGq0xyL7RJooxgyptl7Oz+0k4TxUyVhIhn96yNMESny53rHdLtuSJPBiqhtskYCNN1NFUILYSvnj25RwcN5qUvKEzaBrWkAI4k1pj9ZCLU=
+	t=1748873844; cv=none; b=RgHqoBHPK91A13cBcEALubP768Lcd7iOnqm1dSC7HKpzG/frj8GsPGFBfLSYQO7T7H8A2QsqqWhZ/+non7QuMEdcR0UX4t4YC0XZkAXywodhXTtYFGdbH40yeCWqaxRVKYGOAvqBR+WfSgK5Ne8IVAOO1mLb2R3KVEZob2wBb24=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748873841; c=relaxed/simple;
-	bh=iQUoBpREXMbog13ZMJBTwuVpSTKfYtvLBDqZizMhcBo=;
+	s=arc-20240116; t=1748873844; c=relaxed/simple;
+	bh=QC2UVfSPRXwE+qliqaKmF8F5JrwljPvi5FrqkXolN28=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GTBoIGqAXSbDueN3dYggIiid6SnZ0zVL+XoD3ZNnN5JWvYHzsTIuJGC66Cksitw5gL+kdZNeLf8kpMYSD/1eBsx88phT1mwIggRQrdHR3IRpLO28gBBHgBh55tZB5B1I8eZA67lgPiQnot9auW0yhk8GjC7Dhy+JoID8ZwK9CVg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uko1wpdg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J/TNzNaoucpm1+mI+OTwRPKNT8HwJqwJJDUUPO8Hes0O6qmDF6F8Iwo0fkdZl3vzGTUH8Srb1FH9fVfp6eBEEGR5F5UopIMTuTpsmxQHSikHXd3qZDmAw1BcwY1Wpf8NfqMMWXAiZ8mcjEhwNhlnlwfd5+ydz/8Uo1NAwTTplZU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZOKzQ2G2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uko1wpdg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 710F2C4CEEE;
-	Mon,  2 Jun 2025 14:17:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZOKzQ2G2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62A92C4CEEE;
+	Mon,  2 Jun 2025 14:17:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748873840;
-	bh=iQUoBpREXMbog13ZMJBTwuVpSTKfYtvLBDqZizMhcBo=;
+	s=korg; t=1748873843;
+	bh=QC2UVfSPRXwE+qliqaKmF8F5JrwljPvi5FrqkXolN28=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uko1wpdgYki+1HklAqf8CfY2SQ7ZgZypWZODyXyHFXh6pwc9WQHupMCzboKk/aJxr
-	 d8Hqh94Te8xJd50zNG/xTpKTzLbibCBvxjMa51KF5rgKRgUQnk1E1DTCbZ8wBmBP9F
-	 Xxu3gm9+o3OA3iIffO10/f0NIM8lE8O9txfO/nx0=
+	b=ZOKzQ2G2yrcaom1X8sD6yxMrW+6MZ8gmFKeFbfmLckKYMEEDPrXgeeOKyaGCf8LfW
+	 LXicPxnFyuXazL4Rl+M8FKJ76YSbW4gTdMKSwU3apHInM9K8Rafc5Q7dLSkUlfmnjD
+	 A/f2ObLp7VA5VAZZ7KuaDnY/YQFy6M2f44WD/ytg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Damon Ding <damon.ding@rock-chips.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 269/444] wifi: rtw88: Fix __rtw_download_firmware() for RTL8814AU
-Date: Mon,  2 Jun 2025 15:45:33 +0200
-Message-ID: <20250602134351.877661976@linuxfoundation.org>
+Subject: [PATCH 6.6 241/444] phy: core: dont require set_mode() callback for phy_get_mode() to work
+Date: Mon,  2 Jun 2025 15:45:05 +0200
+Message-ID: <20250602134350.695888039@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -51,47 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 8425f5c8f04dbcf11ade78f984a494fc0b90e7a0 ]
+[ Upstream commit d58c04e305afbaa9dda7969151f06c4efe2c98b0 ]
 
-Don't call ltecoex_read_reg() and ltecoex_reg_write() when the
-ltecoex_addr member of struct rtw_chip_info is NULL. The RTL8814AU
-doesn't have this feature.
+As reported by Damon Ding, the phy_get_mode() call doesn't work as
+expected unless the PHY driver has a .set_mode() call. This prompts PHY
+drivers to have empty stubs for .set_mode() for the sake of being able
+to get the mode.
 
-Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/55b5641f-094e-4f94-9f79-ac053733f2cf@gmail.com
+Make .set_mode() callback truly optional and update PHY's mode even if
+it there is none.
+
+Cc: Damon Ding <damon.ding@rock-chips.com>
+Link: https://lore.kernel.org/r/96f8310f-93f1-4bcb-8637-137e1159ff83@rock-chips.com
+Tested-by: Damon Ding <damon.ding@rock-chips.com>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20250209-phy-fix-set-moe-v2-1-76e248503856@linaro.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw88/mac.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/phy/phy-core.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw88/mac.c b/drivers/net/wireless/realtek/rtw88/mac.c
-index 0c1c1ff31085c..929182424b8b8 100644
---- a/drivers/net/wireless/realtek/rtw88/mac.c
-+++ b/drivers/net/wireless/realtek/rtw88/mac.c
-@@ -783,7 +783,8 @@ static int __rtw_download_firmware(struct rtw_dev *rtwdev,
- 	if (!check_firmware_size(data, size))
- 		return -EINVAL;
+diff --git a/drivers/phy/phy-core.c b/drivers/phy/phy-core.c
+index a892e1d7e2d02..9417372a01554 100644
+--- a/drivers/phy/phy-core.c
++++ b/drivers/phy/phy-core.c
+@@ -400,13 +400,14 @@ EXPORT_SYMBOL_GPL(phy_power_off);
  
--	if (!ltecoex_read_reg(rtwdev, 0x38, &ltecoex_bckp))
-+	if (rtwdev->chip->ltecoex_addr &&
-+	    !ltecoex_read_reg(rtwdev, 0x38, &ltecoex_bckp))
- 		return -EBUSY;
+ int phy_set_mode_ext(struct phy *phy, enum phy_mode mode, int submode)
+ {
+-	int ret;
++	int ret = 0;
  
- 	wlan_cpu_enable(rtwdev, false);
-@@ -801,7 +802,8 @@ static int __rtw_download_firmware(struct rtw_dev *rtwdev,
+-	if (!phy || !phy->ops->set_mode)
++	if (!phy)
+ 		return 0;
  
- 	wlan_cpu_enable(rtwdev, true);
- 
--	if (!ltecoex_reg_write(rtwdev, 0x38, ltecoex_bckp)) {
-+	if (rtwdev->chip->ltecoex_addr &&
-+	    !ltecoex_reg_write(rtwdev, 0x38, ltecoex_bckp)) {
- 		ret = -EBUSY;
- 		goto dlfw_fail;
- 	}
+ 	mutex_lock(&phy->mutex);
+-	ret = phy->ops->set_mode(phy, mode, submode);
++	if (phy->ops->set_mode)
++		ret = phy->ops->set_mode(phy, mode, submode);
+ 	if (!ret)
+ 		phy->attrs.mode = mode;
+ 	mutex_unlock(&phy->mutex);
 -- 
 2.39.5
 
