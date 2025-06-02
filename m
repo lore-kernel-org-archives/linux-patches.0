@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DC72245006;
-	Mon,  2 Jun 2025 14:10:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54CF02376FF;
+	Mon,  2 Jun 2025 14:10:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748873408; cv=none; b=aaqYUSQ+NvsqaM6uQYIzbBiIci9wfiUr6fgioDmdQiXH0ZewoPXXjqFJrGsLtPd0m20LQA+tXsQpOcWOPtEn78ttjuuFb9E6s4y646WM3zcAgqYxy1xJX37MwFHAjGmkPUPbDAS4Asx8DeS0dMszXNInE2SW9VdPLKxB35iLyEM=
+	t=1748873411; cv=none; b=r5ytnABJNTEMm5rG1+ggIO0Y9Eo4zTegzNcfOew3+TnLQcedr7otr5Z21QwbVOZ7tWbPaBJdl1307O7luqWiVfMbEXRkhkClF9T5cF7uoU2cTzEu+JqB7ZvjvP/13RybVCmJus2CF2g8+pdzFu4oPb6b3LhtVbQ97CRfNMp3pcQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748873408; c=relaxed/simple;
-	bh=sZg+dbWoQ5Z1h1bR/tq7VdxUoyvUQej7L/V1V3ZatDs=;
+	s=arc-20240116; t=1748873411; c=relaxed/simple;
+	bh=vDDImfvBoGfmGz01C2hCWfR6G/VqEYMqidskNksTU+0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eR0XA/xG6Xc+r0clHkplAVhgaXrnCTk5y34uplxry8raG44DH/5AXTitP7JDz1jl9LUxLuVAOFtcKPBrr4c4pm9tjvjG70zTQ68siVieEHHE+Rwrkf5R8RLSadi1QMJBHipUbnf44wewah3xzeRxRY31hqEzTJD9t/prRbJMblg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WvYRU5NQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RUKMCxqhS/4ObRYNCjFT5uPwmFEnKI6zRgvlyJh/7mWu4i5mAM6FmMYfIy8MbQ/N8ICpo2f5bl1Jh1N2xxl2haezJshSgAjLhtHiJtornU9TJ9A3d4LnNCpL+2hVGskvqV4koRrCiHvPabTgObc4nrcangNG/W+Al8S/ORzniYo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NwCOIiVf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WvYRU5NQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82554C4CEEB;
-	Mon,  2 Jun 2025 14:10:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NwCOIiVf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B79E2C4CEEB;
+	Mon,  2 Jun 2025 14:10:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748873407;
-	bh=sZg+dbWoQ5Z1h1bR/tq7VdxUoyvUQej7L/V1V3ZatDs=;
+	s=korg; t=1748873411;
+	bh=vDDImfvBoGfmGz01C2hCWfR6G/VqEYMqidskNksTU+0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WvYRU5NQbShpmOKpBadzvlqz0h4cS0CusSpSuagje1xGCzE0ZV0gmWBRnPwkHuEkV
-	 1UM8xfcrwjsszjD6UU9xy48GYwPN8yg5ujrexBS/O0cX2/cbR8OsHV2J8nTn/Q3URW
-	 PQgpWa8R16DCnpd6WUPpHich/6JkuFcwzCgQHjd4=
+	b=NwCOIiVflw/73cDOYGlL+YGwx51fISi40xIF0nodxSFI00G5zY8bYIFRt6ncnkvxu
+	 KhL5Is4mecUhVHSZ2gRbi9Tu15u2ZdOXQSl2niKoLAJD7fW8NLRRBehfy7+ES/t9p+
+	 uRAYnRYEN0KCJ+cpB1n8k3PfNluNIqn83UzkE+wo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	David Sterba <dsterba@suse.com>,
+	Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>,
+	Amber Lin <Amber.Lin@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 131/444] crypto: lzo - Fix compression buffer overrun
-Date: Mon,  2 Jun 2025 15:43:15 +0200
-Message-ID: <20250602134346.209066129@linuxfoundation.org>
+Subject: [PATCH 6.6 132/444] drm/amdkfd: Set per-process flags only once cik/vi
+Date: Mon,  2 Jun 2025 15:43:16 +0200
+Message-ID: <20250602134346.251888319@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -51,372 +52,299 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>
 
-[ Upstream commit cc47f07234f72cbd8e2c973cdbf2a6730660a463 ]
+[ Upstream commit 289e68503a4533b014f8447e2af28ad44c92c221 ]
 
-Unlike the decompression code, the compression code in LZO never
-checked for output overruns.  It instead assumes that the caller
-always provides enough buffer space, disregarding the buffer length
-provided by the caller.
+Set per-process static sh_mem config only once during process
+initialization. Move all static changes from update_qpd() which is
+called each time a queue is created to set_cache_memory_policy() which
+is called once during process initialization.
 
-Add a safe compression interface that checks for the end of buffer
-before each write.  Use the safe interface in crypto/lzo.
+set_cache_memory_policy() is currently defined only for cik and vi
+family. So this commit only focuses on these two. A separate commit will
+address other asics.
 
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>
+Reviewed-by: Amber Lin <Amber.Lin@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/lzo-rle.c              |   2 +-
- crypto/lzo.c                  |   2 +-
- include/linux/lzo.h           |   8 +++
- lib/lzo/Makefile              |   2 +-
- lib/lzo/lzo1x_compress.c      | 102 +++++++++++++++++++++++++---------
- lib/lzo/lzo1x_compress_safe.c |  18 ++++++
- 6 files changed, 106 insertions(+), 28 deletions(-)
- create mode 100644 lib/lzo/lzo1x_compress_safe.c
+ .../drm/amd/amdkfd/kfd_device_queue_manager.c | 39 +---------
+ .../amd/amdkfd/kfd_device_queue_manager_cik.c | 69 ++++++++++++------
+ .../amd/amdkfd/kfd_device_queue_manager_vi.c  | 71 ++++++++++++-------
+ 3 files changed, 94 insertions(+), 85 deletions(-)
 
-diff --git a/crypto/lzo-rle.c b/crypto/lzo-rle.c
-index 0631d975bfac1..0abc2d87f0420 100644
---- a/crypto/lzo-rle.c
-+++ b/crypto/lzo-rle.c
-@@ -55,7 +55,7 @@ static int __lzorle_compress(const u8 *src, unsigned int slen,
- 	size_t tmp_len = *dlen; /* size_t(ulong) <-> uint on 64 bit */
- 	int err;
- 
--	err = lzorle1x_1_compress(src, slen, dst, &tmp_len, ctx);
-+	err = lzorle1x_1_compress_safe(src, slen, dst, &tmp_len, ctx);
- 
- 	if (err != LZO_E_OK)
- 		return -EINVAL;
-diff --git a/crypto/lzo.c b/crypto/lzo.c
-index ebda132dd22bf..8338851c7406a 100644
---- a/crypto/lzo.c
-+++ b/crypto/lzo.c
-@@ -55,7 +55,7 @@ static int __lzo_compress(const u8 *src, unsigned int slen,
- 	size_t tmp_len = *dlen; /* size_t(ulong) <-> uint on 64 bit */
- 	int err;
- 
--	err = lzo1x_1_compress(src, slen, dst, &tmp_len, ctx);
-+	err = lzo1x_1_compress_safe(src, slen, dst, &tmp_len, ctx);
- 
- 	if (err != LZO_E_OK)
- 		return -EINVAL;
-diff --git a/include/linux/lzo.h b/include/linux/lzo.h
-index e95c7d1092b28..4d30e3624acd2 100644
---- a/include/linux/lzo.h
-+++ b/include/linux/lzo.h
-@@ -24,10 +24,18 @@
- int lzo1x_1_compress(const unsigned char *src, size_t src_len,
- 		     unsigned char *dst, size_t *dst_len, void *wrkmem);
- 
-+/* Same as above but does not write more than dst_len to dst. */
-+int lzo1x_1_compress_safe(const unsigned char *src, size_t src_len,
-+			  unsigned char *dst, size_t *dst_len, void *wrkmem);
-+
- /* This requires 'wrkmem' of size LZO1X_1_MEM_COMPRESS */
- int lzorle1x_1_compress(const unsigned char *src, size_t src_len,
- 		     unsigned char *dst, size_t *dst_len, void *wrkmem);
- 
-+/* Same as above but does not write more than dst_len to dst. */
-+int lzorle1x_1_compress_safe(const unsigned char *src, size_t src_len,
-+			     unsigned char *dst, size_t *dst_len, void *wrkmem);
-+
- /* safe decompression with overrun testing */
- int lzo1x_decompress_safe(const unsigned char *src, size_t src_len,
- 			  unsigned char *dst, size_t *dst_len);
-diff --git a/lib/lzo/Makefile b/lib/lzo/Makefile
-index 2f58fafbbdddc..fc7b2b7ef4b20 100644
---- a/lib/lzo/Makefile
-+++ b/lib/lzo/Makefile
-@@ -1,5 +1,5 @@
- # SPDX-License-Identifier: GPL-2.0-only
--lzo_compress-objs := lzo1x_compress.o
-+lzo_compress-objs := lzo1x_compress.o lzo1x_compress_safe.o
- lzo_decompress-objs := lzo1x_decompress_safe.o
- 
- obj-$(CONFIG_LZO_COMPRESS) += lzo_compress.o
-diff --git a/lib/lzo/lzo1x_compress.c b/lib/lzo/lzo1x_compress.c
-index 9d31e7126606a..f00dff9b9d4e1 100644
---- a/lib/lzo/lzo1x_compress.c
-+++ b/lib/lzo/lzo1x_compress.c
-@@ -18,11 +18,22 @@
- #include <linux/lzo.h>
- #include "lzodefs.h"
- 
--static noinline size_t
--lzo1x_1_do_compress(const unsigned char *in, size_t in_len,
--		    unsigned char *out, size_t *out_len,
--		    size_t ti, void *wrkmem, signed char *state_offset,
--		    const unsigned char bitstream_version)
-+#undef LZO_UNSAFE
-+
-+#ifndef LZO_SAFE
-+#define LZO_UNSAFE 1
-+#define LZO_SAFE(name) name
-+#define HAVE_OP(x) 1
-+#endif
-+
-+#define NEED_OP(x) if (!HAVE_OP(x)) goto output_overrun
-+
-+static noinline int
-+LZO_SAFE(lzo1x_1_do_compress)(const unsigned char *in, size_t in_len,
-+			      unsigned char **out, unsigned char *op_end,
-+			      size_t *tp, void *wrkmem,
-+			      signed char *state_offset,
-+			      const unsigned char bitstream_version)
- {
- 	const unsigned char *ip;
- 	unsigned char *op;
-@@ -30,8 +41,9 @@ lzo1x_1_do_compress(const unsigned char *in, size_t in_len,
- 	const unsigned char * const ip_end = in + in_len - 20;
- 	const unsigned char *ii;
- 	lzo_dict_t * const dict = (lzo_dict_t *) wrkmem;
-+	size_t ti = *tp;
- 
--	op = out;
-+	op = *out;
- 	ip = in;
- 	ii = ip;
- 	ip += ti < 4 ? 4 - ti : 0;
-@@ -116,25 +128,32 @@ lzo1x_1_do_compress(const unsigned char *in, size_t in_len,
- 		if (t != 0) {
- 			if (t <= 3) {
- 				op[*state_offset] |= t;
-+				NEED_OP(4);
- 				COPY4(op, ii);
- 				op += t;
- 			} else if (t <= 16) {
-+				NEED_OP(17);
- 				*op++ = (t - 3);
- 				COPY8(op, ii);
- 				COPY8(op + 8, ii + 8);
- 				op += t;
- 			} else {
- 				if (t <= 18) {
-+					NEED_OP(1);
- 					*op++ = (t - 3);
- 				} else {
- 					size_t tt = t - 18;
-+					NEED_OP(1);
- 					*op++ = 0;
- 					while (unlikely(tt > 255)) {
- 						tt -= 255;
-+						NEED_OP(1);
- 						*op++ = 0;
- 					}
-+					NEED_OP(1);
- 					*op++ = tt;
- 				}
-+				NEED_OP(t);
- 				do {
- 					COPY8(op, ii);
- 					COPY8(op + 8, ii + 8);
-@@ -151,6 +170,7 @@ lzo1x_1_do_compress(const unsigned char *in, size_t in_len,
- 		if (unlikely(run_length)) {
- 			ip += run_length;
- 			run_length -= MIN_ZERO_RUN_LENGTH;
-+			NEED_OP(4);
- 			put_unaligned_le32((run_length << 21) | 0xfffc18
- 					   | (run_length & 0x7), op);
- 			op += 4;
-@@ -243,10 +263,12 @@ lzo1x_1_do_compress(const unsigned char *in, size_t in_len,
- 		ip += m_len;
- 		if (m_len <= M2_MAX_LEN && m_off <= M2_MAX_OFFSET) {
- 			m_off -= 1;
-+			NEED_OP(2);
- 			*op++ = (((m_len - 1) << 5) | ((m_off & 7) << 2));
- 			*op++ = (m_off >> 3);
- 		} else if (m_off <= M3_MAX_OFFSET) {
- 			m_off -= 1;
-+			NEED_OP(1);
- 			if (m_len <= M3_MAX_LEN)
- 				*op++ = (M3_MARKER | (m_len - 2));
- 			else {
-@@ -254,14 +276,18 @@ lzo1x_1_do_compress(const unsigned char *in, size_t in_len,
- 				*op++ = M3_MARKER | 0;
- 				while (unlikely(m_len > 255)) {
- 					m_len -= 255;
-+					NEED_OP(1);
- 					*op++ = 0;
- 				}
-+				NEED_OP(1);
- 				*op++ = (m_len);
- 			}
-+			NEED_OP(2);
- 			*op++ = (m_off << 2);
- 			*op++ = (m_off >> 6);
- 		} else {
- 			m_off -= 0x4000;
-+			NEED_OP(1);
- 			if (m_len <= M4_MAX_LEN)
- 				*op++ = (M4_MARKER | ((m_off >> 11) & 8)
- 						| (m_len - 2));
-@@ -282,11 +308,14 @@ lzo1x_1_do_compress(const unsigned char *in, size_t in_len,
- 				m_len -= M4_MAX_LEN;
- 				*op++ = (M4_MARKER | ((m_off >> 11) & 8));
- 				while (unlikely(m_len > 255)) {
-+					NEED_OP(1);
- 					m_len -= 255;
- 					*op++ = 0;
- 				}
-+				NEED_OP(1);
- 				*op++ = (m_len);
- 			}
-+			NEED_OP(2);
- 			*op++ = (m_off << 2);
- 			*op++ = (m_off >> 6);
- 		}
-@@ -295,14 +324,20 @@ lzo1x_1_do_compress(const unsigned char *in, size_t in_len,
- 		ii = ip;
- 		goto next;
- 	}
--	*out_len = op - out;
--	return in_end - (ii - ti);
-+	*out = op;
-+	*tp = in_end - (ii - ti);
-+	return LZO_E_OK;
-+
-+output_overrun:
-+	return LZO_E_OUTPUT_OVERRUN;
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
+index 4d9a406925e18..fd4a75073364c 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
+@@ -2147,14 +2147,6 @@ static int destroy_queue_cpsch(struct device_queue_manager *dqm,
+ 	return retval;
  }
  
--static int lzogeneric1x_1_compress(const unsigned char *in, size_t in_len,
--		     unsigned char *out, size_t *out_len,
--		     void *wrkmem, const unsigned char bitstream_version)
-+static int LZO_SAFE(lzogeneric1x_1_compress)(
-+	const unsigned char *in, size_t in_len,
-+	unsigned char *out, size_t *out_len,
-+	void *wrkmem, const unsigned char bitstream_version)
- {
-+	unsigned char * const op_end = out + *out_len;
- 	const unsigned char *ip = in;
- 	unsigned char *op = out;
- 	unsigned char *data_start;
-@@ -326,14 +361,18 @@ static int lzogeneric1x_1_compress(const unsigned char *in, size_t in_len,
- 	while (l > 20) {
- 		size_t ll = min_t(size_t, l, m4_max_offset + 1);
- 		uintptr_t ll_end = (uintptr_t) ip + ll;
-+		int err;
+-/*
+- * Low bits must be 0000/FFFF as required by HW, high bits must be 0 to
+- * stay in user mode.
+- */
+-#define APE1_FIXED_BITS_MASK 0xFFFF80000000FFFFULL
+-/* APE1 limit is inclusive and 64K aligned. */
+-#define APE1_LIMIT_ALIGNMENT 0xFFFF
+-
+ static bool set_cache_memory_policy(struct device_queue_manager *dqm,
+ 				   struct qcm_process_device *qpd,
+ 				   enum cache_policy default_policy,
+@@ -2169,34 +2161,6 @@ static bool set_cache_memory_policy(struct device_queue_manager *dqm,
+ 
+ 	dqm_lock(dqm);
+ 
+-	if (alternate_aperture_size == 0) {
+-		/* base > limit disables APE1 */
+-		qpd->sh_mem_ape1_base = 1;
+-		qpd->sh_mem_ape1_limit = 0;
+-	} else {
+-		/*
+-		 * In FSA64, APE1_Base[63:0] = { 16{SH_MEM_APE1_BASE[31]},
+-		 *			SH_MEM_APE1_BASE[31:0], 0x0000 }
+-		 * APE1_Limit[63:0] = { 16{SH_MEM_APE1_LIMIT[31]},
+-		 *			SH_MEM_APE1_LIMIT[31:0], 0xFFFF }
+-		 * Verify that the base and size parameters can be
+-		 * represented in this format and convert them.
+-		 * Additionally restrict APE1 to user-mode addresses.
+-		 */
+-
+-		uint64_t base = (uintptr_t)alternate_aperture_base;
+-		uint64_t limit = base + alternate_aperture_size - 1;
+-
+-		if (limit <= base || (base & APE1_FIXED_BITS_MASK) != 0 ||
+-		   (limit & APE1_FIXED_BITS_MASK) != APE1_LIMIT_ALIGNMENT) {
+-			retval = false;
+-			goto out;
+-		}
+-
+-		qpd->sh_mem_ape1_base = base >> 16;
+-		qpd->sh_mem_ape1_limit = limit >> 16;
+-	}
+-
+ 	retval = dqm->asic_ops.set_cache_memory_policy(
+ 			dqm,
+ 			qpd,
+@@ -2205,6 +2169,9 @@ static bool set_cache_memory_policy(struct device_queue_manager *dqm,
+ 			alternate_aperture_base,
+ 			alternate_aperture_size);
+ 
++	if (retval)
++		goto out;
 +
- 		if ((ll_end + ((t + ll) >> 5)) <= ll_end)
- 			break;
- 		BUILD_BUG_ON(D_SIZE * sizeof(lzo_dict_t) > LZO1X_1_MEM_COMPRESS);
- 		memset(wrkmem, 0, D_SIZE * sizeof(lzo_dict_t));
--		t = lzo1x_1_do_compress(ip, ll, op, out_len, t, wrkmem,
--					&state_offset, bitstream_version);
-+		err = LZO_SAFE(lzo1x_1_do_compress)(
-+			ip, ll, &op, op_end, &t, wrkmem,
-+			&state_offset, bitstream_version);
-+		if (err != LZO_E_OK)
-+			return err;
- 		ip += ll;
--		op += *out_len;
- 		l  -= ll;
- 	}
- 	t += l;
-@@ -342,20 +381,26 @@ static int lzogeneric1x_1_compress(const unsigned char *in, size_t in_len,
- 		const unsigned char *ii = in + in_len - t;
+ 	if ((dqm->sched_policy == KFD_SCHED_POLICY_NO_HWS) && (qpd->vmid != 0))
+ 		program_sh_mem_settings(dqm, qpd);
  
- 		if (op == data_start && t <= 238) {
-+			NEED_OP(1);
- 			*op++ = (17 + t);
- 		} else if (t <= 3) {
- 			op[state_offset] |= t;
- 		} else if (t <= 18) {
-+			NEED_OP(1);
- 			*op++ = (t - 3);
- 		} else {
- 			size_t tt = t - 18;
-+			NEED_OP(1);
- 			*op++ = 0;
- 			while (tt > 255) {
- 				tt -= 255;
-+				NEED_OP(1);
- 				*op++ = 0;
- 			}
-+			NEED_OP(1);
- 			*op++ = tt;
- 		}
-+		NEED_OP(t);
- 		if (t >= 16) do {
- 			COPY8(op, ii);
- 			COPY8(op + 8, ii + 8);
-@@ -368,31 +413,38 @@ static int lzogeneric1x_1_compress(const unsigned char *in, size_t in_len,
- 		} while (--t > 0);
- 	}
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager_cik.c b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager_cik.c
+index d4d95c7f2e5d4..32bedef912b3b 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager_cik.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager_cik.c
+@@ -27,6 +27,14 @@
+ #include "oss/oss_2_4_sh_mask.h"
+ #include "gca/gfx_7_2_sh_mask.h"
  
-+	NEED_OP(3);
- 	*op++ = M4_MARKER | 1;
- 	*op++ = 0;
- 	*op++ = 0;
- 
- 	*out_len = op - out;
- 	return LZO_E_OK;
-+
-+output_overrun:
-+	return LZO_E_OUTPUT_OVERRUN;
- }
- 
--int lzo1x_1_compress(const unsigned char *in, size_t in_len,
--		     unsigned char *out, size_t *out_len,
--		     void *wrkmem)
-+int LZO_SAFE(lzo1x_1_compress)(const unsigned char *in, size_t in_len,
-+			       unsigned char *out, size_t *out_len,
-+			       void *wrkmem)
- {
--	return lzogeneric1x_1_compress(in, in_len, out, out_len, wrkmem, 0);
-+	return LZO_SAFE(lzogeneric1x_1_compress)(
-+		in, in_len, out, out_len, wrkmem, 0);
- }
- 
--int lzorle1x_1_compress(const unsigned char *in, size_t in_len,
--		     unsigned char *out, size_t *out_len,
--		     void *wrkmem)
-+int LZO_SAFE(lzorle1x_1_compress)(const unsigned char *in, size_t in_len,
-+				  unsigned char *out, size_t *out_len,
-+				  void *wrkmem)
- {
--	return lzogeneric1x_1_compress(in, in_len, out, out_len,
--				       wrkmem, LZO_VERSION);
-+	return LZO_SAFE(lzogeneric1x_1_compress)(
-+		in, in_len, out, out_len, wrkmem, LZO_VERSION);
- }
- 
--EXPORT_SYMBOL_GPL(lzo1x_1_compress);
--EXPORT_SYMBOL_GPL(lzorle1x_1_compress);
-+EXPORT_SYMBOL_GPL(LZO_SAFE(lzo1x_1_compress));
-+EXPORT_SYMBOL_GPL(LZO_SAFE(lzorle1x_1_compress));
- 
-+#ifndef LZO_UNSAFE
- MODULE_LICENSE("GPL");
- MODULE_DESCRIPTION("LZO1X-1 Compressor");
-+#endif
-diff --git a/lib/lzo/lzo1x_compress_safe.c b/lib/lzo/lzo1x_compress_safe.c
-new file mode 100644
-index 0000000000000..371c9f8494928
---- /dev/null
-+++ b/lib/lzo/lzo1x_compress_safe.c
-@@ -0,0 +1,18 @@
-+// SPDX-License-Identifier: GPL-2.0-only
 +/*
-+ *  LZO1X Compressor from LZO
-+ *
-+ *  Copyright (C) 1996-2012 Markus F.X.J. Oberhumer <markus@oberhumer.com>
-+ *
-+ *  The full LZO package can be found at:
-+ *  http://www.oberhumer.com/opensource/lzo/
-+ *
-+ *  Changed for Linux kernel use by:
-+ *  Nitin Gupta <nitingupta910@gmail.com>
-+ *  Richard Purdie <rpurdie@openedhand.com>
++ * Low bits must be 0000/FFFF as required by HW, high bits must be 0 to
++ * stay in user mode.
 + */
++#define APE1_FIXED_BITS_MASK 0xFFFF80000000FFFFULL
++/* APE1 limit is inclusive and 64K aligned. */
++#define APE1_LIMIT_ALIGNMENT 0xFFFF
 +
-+#define LZO_SAFE(name) name##_safe
-+#define HAVE_OP(x) ((size_t)(op_end - op) >= (size_t)(x))
+ static bool set_cache_memory_policy_cik(struct device_queue_manager *dqm,
+ 				   struct qcm_process_device *qpd,
+ 				   enum cache_policy default_policy,
+@@ -84,6 +92,36 @@ static bool set_cache_memory_policy_cik(struct device_queue_manager *dqm,
+ {
+ 	uint32_t default_mtype;
+ 	uint32_t ape1_mtype;
++	unsigned int temp;
++	bool retval = true;
 +
-+#include "lzo1x_compress.c"
++	if (alternate_aperture_size == 0) {
++		/* base > limit disables APE1 */
++		qpd->sh_mem_ape1_base = 1;
++		qpd->sh_mem_ape1_limit = 0;
++	} else {
++		/*
++		 * In FSA64, APE1_Base[63:0] = { 16{SH_MEM_APE1_BASE[31]},
++		 *			SH_MEM_APE1_BASE[31:0], 0x0000 }
++		 * APE1_Limit[63:0] = { 16{SH_MEM_APE1_LIMIT[31]},
++		 *			SH_MEM_APE1_LIMIT[31:0], 0xFFFF }
++		 * Verify that the base and size parameters can be
++		 * represented in this format and convert them.
++		 * Additionally restrict APE1 to user-mode addresses.
++		 */
++
++		uint64_t base = (uintptr_t)alternate_aperture_base;
++		uint64_t limit = base + alternate_aperture_size - 1;
++
++		if (limit <= base || (base & APE1_FIXED_BITS_MASK) != 0 ||
++		   (limit & APE1_FIXED_BITS_MASK) != APE1_LIMIT_ALIGNMENT) {
++			retval = false;
++			goto out;
++		}
++
++		qpd->sh_mem_ape1_base = base >> 16;
++		qpd->sh_mem_ape1_limit = limit >> 16;
++	}
+ 
+ 	default_mtype = (default_policy == cache_policy_coherent) ?
+ 			MTYPE_NONCACHED :
+@@ -97,37 +135,22 @@ static bool set_cache_memory_policy_cik(struct device_queue_manager *dqm,
+ 			| ALIGNMENT_MODE(SH_MEM_ALIGNMENT_MODE_UNALIGNED)
+ 			| DEFAULT_MTYPE(default_mtype)
+ 			| APE1_MTYPE(ape1_mtype);
+-
+-	return true;
+-}
+-
+-static int update_qpd_cik(struct device_queue_manager *dqm,
+-			  struct qcm_process_device *qpd)
+-{
+-	struct kfd_process_device *pdd;
+-	unsigned int temp;
+-
+-	pdd = qpd_to_pdd(qpd);
+-
+-	/* check if sh_mem_config register already configured */
+-	if (qpd->sh_mem_config == 0) {
+-		qpd->sh_mem_config =
+-			ALIGNMENT_MODE(SH_MEM_ALIGNMENT_MODE_UNALIGNED) |
+-			DEFAULT_MTYPE(MTYPE_NONCACHED) |
+-			APE1_MTYPE(MTYPE_NONCACHED);
+-		qpd->sh_mem_ape1_limit = 0;
+-		qpd->sh_mem_ape1_base = 0;
+-	}
+-
+ 	/* On dGPU we're always in GPUVM64 addressing mode with 64-bit
+ 	 * aperture addresses.
+ 	 */
+-	temp = get_sh_mem_bases_nybble_64(pdd);
++	temp = get_sh_mem_bases_nybble_64(qpd_to_pdd(qpd));
+ 	qpd->sh_mem_bases = compute_sh_mem_bases_64bit(temp);
+ 
+ 	pr_debug("is32bit process: %d sh_mem_bases nybble: 0x%X and register 0x%X\n",
+ 		qpd->pqm->process->is_32bit_user_mode, temp, qpd->sh_mem_bases);
+ 
++out:
++	return retval;
++}
++
++static int update_qpd_cik(struct device_queue_manager *dqm,
++			  struct qcm_process_device *qpd)
++{
+ 	return 0;
+ }
+ 
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager_vi.c b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager_vi.c
+index b291ee0fab943..320518f418903 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager_vi.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager_vi.c
+@@ -27,6 +27,14 @@
+ #include "gca/gfx_8_0_sh_mask.h"
+ #include "oss/oss_3_0_sh_mask.h"
+ 
++/*
++ * Low bits must be 0000/FFFF as required by HW, high bits must be 0 to
++ * stay in user mode.
++ */
++#define APE1_FIXED_BITS_MASK 0xFFFF80000000FFFFULL
++/* APE1 limit is inclusive and 64K aligned. */
++#define APE1_LIMIT_ALIGNMENT 0xFFFF
++
+ static bool set_cache_memory_policy_vi(struct device_queue_manager *dqm,
+ 				       struct qcm_process_device *qpd,
+ 				       enum cache_policy default_policy,
+@@ -85,6 +93,36 @@ static bool set_cache_memory_policy_vi(struct device_queue_manager *dqm,
+ {
+ 	uint32_t default_mtype;
+ 	uint32_t ape1_mtype;
++	unsigned int temp;
++	bool retval = true;
++
++	if (alternate_aperture_size == 0) {
++		/* base > limit disables APE1 */
++		qpd->sh_mem_ape1_base = 1;
++		qpd->sh_mem_ape1_limit = 0;
++	} else {
++		/*
++		 * In FSA64, APE1_Base[63:0] = { 16{SH_MEM_APE1_BASE[31]},
++		 *			SH_MEM_APE1_BASE[31:0], 0x0000 }
++		 * APE1_Limit[63:0] = { 16{SH_MEM_APE1_LIMIT[31]},
++		 *			SH_MEM_APE1_LIMIT[31:0], 0xFFFF }
++		 * Verify that the base and size parameters can be
++		 * represented in this format and convert them.
++		 * Additionally restrict APE1 to user-mode addresses.
++		 */
++
++		uint64_t base = (uintptr_t)alternate_aperture_base;
++		uint64_t limit = base + alternate_aperture_size - 1;
++
++		if (limit <= base || (base & APE1_FIXED_BITS_MASK) != 0 ||
++		   (limit & APE1_FIXED_BITS_MASK) != APE1_LIMIT_ALIGNMENT) {
++			retval = false;
++			goto out;
++		}
++
++		qpd->sh_mem_ape1_base = base >> 16;
++		qpd->sh_mem_ape1_limit = limit >> 16;
++	}
+ 
+ 	default_mtype = (default_policy == cache_policy_coherent) ?
+ 			MTYPE_UC :
+@@ -100,40 +138,21 @@ static bool set_cache_memory_policy_vi(struct device_queue_manager *dqm,
+ 			default_mtype << SH_MEM_CONFIG__DEFAULT_MTYPE__SHIFT |
+ 			ape1_mtype << SH_MEM_CONFIG__APE1_MTYPE__SHIFT;
+ 
+-	return true;
+-}
+-
+-static int update_qpd_vi(struct device_queue_manager *dqm,
+-			 struct qcm_process_device *qpd)
+-{
+-	struct kfd_process_device *pdd;
+-	unsigned int temp;
+-
+-	pdd = qpd_to_pdd(qpd);
+-
+-	/* check if sh_mem_config register already configured */
+-	if (qpd->sh_mem_config == 0) {
+-		qpd->sh_mem_config =
+-				SH_MEM_ALIGNMENT_MODE_UNALIGNED <<
+-					SH_MEM_CONFIG__ALIGNMENT_MODE__SHIFT |
+-				MTYPE_UC <<
+-					SH_MEM_CONFIG__DEFAULT_MTYPE__SHIFT |
+-				MTYPE_UC <<
+-					SH_MEM_CONFIG__APE1_MTYPE__SHIFT;
+-
+-		qpd->sh_mem_ape1_limit = 0;
+-		qpd->sh_mem_ape1_base = 0;
+-	}
+-
+ 	/* On dGPU we're always in GPUVM64 addressing mode with 64-bit
+ 	 * aperture addresses.
+ 	 */
+-	temp = get_sh_mem_bases_nybble_64(pdd);
++	temp = get_sh_mem_bases_nybble_64(qpd_to_pdd(qpd));
+ 	qpd->sh_mem_bases = compute_sh_mem_bases_64bit(temp);
+ 
+ 	pr_debug("sh_mem_bases nybble: 0x%X and register 0x%X\n",
+ 		temp, qpd->sh_mem_bases);
++out:
++	return retval;
++}
+ 
++static int update_qpd_vi(struct device_queue_manager *dqm,
++			 struct qcm_process_device *qpd)
++{
+ 	return 0;
+ }
+ 
 -- 
 2.39.5
 
