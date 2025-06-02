@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D52EA22ACEE;
-	Mon,  2 Jun 2025 14:45:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF7B722A804;
+	Mon,  2 Jun 2025 14:45:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748875552; cv=none; b=j4QYfdgMlvZhMVTsxywbnoXDkI+nySUYu2l2R9vQhf3V4rZUlC2ejYolReJq+/5LtI9RvJM1hOaqA9qABkSfocZnXIw4YCpVqcGzTH2fNcZNHMRYNnajw9KLUjnqGQLhOGUwr+mywXlC0IyKAFAAGY5r8ETbfcYs7FwoZwO3bFg=
+	t=1748875555; cv=none; b=fHlNh9xCmIjyuyqNLosiaJa+Gr6Pqiu4E7Am5ng9a/H4aXHz2q66lMry2/4Gxg22Rws5NCxxJzqU4PygEt+SlkBGEvpCXsX2mC9RCdLIuVyTu+KZVUxEPR0BYuN3SwMfGCMNeczs5unFetzecDC9+a+XTIyT66BSEy48vRpA3As=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748875552; c=relaxed/simple;
-	bh=fjuim3I1INRvrwnzTFqXre0xE719oPiJqApIY+B9gYU=;
+	s=arc-20240116; t=1748875555; c=relaxed/simple;
+	bh=eZSrehT6+kcw6vRLjHmpLKU+XB3I56Xp7jQBcAsbNVk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UgKcL7vVd+fpyHr7E8+nPXWNXPtwjbWhASQrLD3zgFiptnLC302WGvmaG2Q4h2VSV0MZ5aVZ+xSDmhJ5PHFDEv4A9dtIiZO+NvFpmUQY5i8aX5VGTcqP/0xGd3i1I5idJDM8vMeZFeR5Xqxl7LAqWAun6BcNAnlI6q9hX7L2ocU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NdMGq1DN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sQX5UfdrBpOiWrczocREHh2ULIct7a03crL4Z53rZsjjMhSSZ/y9Tk5hh8tjpgcjTIU//efYiYEz9cJdb1fS6CoUnTaTPp+AA1nFtYTyyk1IcgOi/v/BP+fxndkt+GaA/huR9DJGyn+1V2uceqwTgpSshQlHtFSowZPFHQw76dI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PurdLmeI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NdMGq1DN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 632E8C4CEEB;
-	Mon,  2 Jun 2025 14:45:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PurdLmeI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 432A9C4CEEB;
+	Mon,  2 Jun 2025 14:45:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748875552;
-	bh=fjuim3I1INRvrwnzTFqXre0xE719oPiJqApIY+B9gYU=;
+	s=korg; t=1748875555;
+	bh=eZSrehT6+kcw6vRLjHmpLKU+XB3I56Xp7jQBcAsbNVk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NdMGq1DNARag/apWIUp2atS7F0xskIQ7x8pTUSoLn8CMpbRwjBWSFg5kWvP1Usipe
-	 hJSZB4etfyFJKFvSwdMbnbKh/tFWU1FhIs9PeDj0aqn4+1BBbciGujHK6p2+X3swYx
-	 UQhMeILBCIf3/E+fPoqH2LwC6BT6qGQgcQAUFOxs=
+	b=PurdLmeIhh+TYTdLgJ8480cXbwpFl4ZzYNpnp+oZuSgXyUUd45SaygSAugnzED2Vs
+	 Dol9TcvMZPKinGtgwz9lagVz6bF3KPAysiOl26H6Oq6P9nUE4fw0IrQLDFUsd5y6A1
+	 xm8dAdP02ZgWSSXIKP6v4cAHj1nBy4qiw8K7tPgY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Stein <alexander.stein@ew.tq-group.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	CK Hu <ck.hu@mediatek.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 171/270] hwmon: (gpio-fan) Add missing mutex locks
-Date: Mon,  2 Jun 2025 15:47:36 +0200
-Message-ID: <20250602134314.210143135@linuxfoundation.org>
+Subject: [PATCH 5.10 172/270] drm/mediatek: mtk_dpi: Add checks for reg_h_fre_con existence
+Date: Mon,  2 Jun 2025 15:47:37 +0200
+Message-ID: <20250602134314.249868418@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134307.195171844@linuxfoundation.org>
 References: <20250602134307.195171844@linuxfoundation.org>
@@ -51,73 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Stein <alexander.stein@ew.tq-group.com>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-[ Upstream commit 9fee7d19bab635f89223cc40dfd2c8797fdc4988 ]
+[ Upstream commit 8c9da7cd0bbcc90ab444454fecf535320456a312 ]
 
-set_fan_speed() is expected to be called with fan_data->lock being locked.
-Add locking for proper synchronization.
+In preparation for adding support for newer DPI instances which
+do support direct-pin but do not have any H_FRE_CON register,
+like the one found in MT8195 and MT8188, add a branch to check
+if the reg_h_fre_con variable was declared in the mtk_dpi_conf
+structure for the probed SoC DPI version.
 
-Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
-Link: https://lore.kernel.org/r/20250210145934.761280-3-alexander.stein@ew.tq-group.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+As a note, this is useful specifically only for cases in which
+the support_direct_pin variable is true, so mt8195-dpintf is
+not affected by any issue.
+
+Reviewed-by: CK Hu <ck.hu@mediatek.com>
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://patchwork.kernel.org/project/dri-devel/patch/20250217154836.108895-6-angelogioacchino.delregno@collabora.com/
+Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/gpio-fan.c | 16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/mediatek/mtk_dpi.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hwmon/gpio-fan.c b/drivers/hwmon/gpio-fan.c
-index d96e435cc42b1..e0b3917dfe6f9 100644
---- a/drivers/hwmon/gpio-fan.c
-+++ b/drivers/hwmon/gpio-fan.c
-@@ -394,7 +394,12 @@ static int gpio_fan_set_cur_state(struct thermal_cooling_device *cdev,
- 	if (state >= fan_data->num_speed)
- 		return -EINVAL;
+diff --git a/drivers/gpu/drm/mediatek/mtk_dpi.c b/drivers/gpu/drm/mediatek/mtk_dpi.c
+index ac75c10aed2f6..3a58d3dfd558f 100644
+--- a/drivers/gpu/drm/mediatek/mtk_dpi.c
++++ b/drivers/gpu/drm/mediatek/mtk_dpi.c
+@@ -340,12 +340,13 @@ static void mtk_dpi_config_swap_input(struct mtk_dpi *dpi, bool enable)
  
-+	mutex_lock(&fan_data->lock);
-+
- 	set_fan_speed(fan_data, state);
-+
-+	mutex_unlock(&fan_data->lock);
-+
- 	return 0;
- }
- 
-@@ -490,7 +495,11 @@ MODULE_DEVICE_TABLE(of, of_gpio_fan_match);
- 
- static void gpio_fan_stop(void *data)
+ static void mtk_dpi_config_2n_h_fre(struct mtk_dpi *dpi)
  {
-+	struct gpio_fan_data *fan_data = data;
-+
-+	mutex_lock(&fan_data->lock);
- 	set_fan_speed(data, 0);
-+	mutex_unlock(&fan_data->lock);
+-	mtk_dpi_mask(dpi, dpi->conf->reg_h_fre_con, H_FRE_2N, H_FRE_2N);
++	if (dpi->conf->reg_h_fre_con)
++		mtk_dpi_mask(dpi, dpi->conf->reg_h_fre_con, H_FRE_2N, H_FRE_2N);
  }
  
- static int gpio_fan_probe(struct platform_device *pdev)
-@@ -564,7 +573,9 @@ static int gpio_fan_suspend(struct device *dev)
- 
- 	if (fan_data->gpios) {
- 		fan_data->resume_speed = fan_data->speed_index;
-+		mutex_lock(&fan_data->lock);
- 		set_fan_speed(fan_data, 0);
-+		mutex_unlock(&fan_data->lock);
- 	}
- 
- 	return 0;
-@@ -574,8 +585,11 @@ static int gpio_fan_resume(struct device *dev)
+ static void mtk_dpi_config_disable_edge(struct mtk_dpi *dpi)
  {
- 	struct gpio_fan_data *fan_data = dev_get_drvdata(dev);
- 
--	if (fan_data->gpios)
-+	if (fan_data->gpios) {
-+		mutex_lock(&fan_data->lock);
- 		set_fan_speed(fan_data, fan_data->resume_speed);
-+		mutex_unlock(&fan_data->lock);
-+	}
- 
- 	return 0;
+-	if (dpi->conf->edge_sel_en)
++	if (dpi->conf->edge_sel_en && dpi->conf->reg_h_fre_con)
+ 		mtk_dpi_mask(dpi, dpi->conf->reg_h_fre_con, 0, EDGE_SEL_EN);
  }
+ 
 -- 
 2.39.5
 
