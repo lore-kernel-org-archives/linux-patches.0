@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43977225A31;
-	Mon,  2 Jun 2025 14:30:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63DFF233155;
+	Mon,  2 Jun 2025 14:30:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748874609; cv=none; b=D3yVCMW9aIQiAhWL2Q1FJU769YMgjUsJMA764QX0U/OdLBqFDBohdJIvcj+0e8pH3FIczH8ht+iZ3Zq4ZdB4WWvDOfol1dWUhhDln+mqAVUlZOVGDytdcYdhoq63d0wKzy1MiyTN4qseF7WIxxJTZt9pffj0qv2zaZk0cpgdsB8=
+	t=1748874612; cv=none; b=Ps0CkEMzNjJ1KGShkZ13jcu3o6ci8h0D99biseB1W/pFwOh6briNMB9Rbdu82waMNqKfWxfIzfRhy5BiT1n1IF0Er4tJ5DHBi1hfrpDMm7MRKIDQtytdjNCimjdL2lzhsGS3/XiCRlzSWAUbxRMnvkoUqjkI12nRshrEdIAhw4I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748874609; c=relaxed/simple;
-	bh=UbOOaz+ZVTQkkwVI+fEdfhYEGwIRb/qNuy3NvHAZ4KU=;
+	s=arc-20240116; t=1748874612; c=relaxed/simple;
+	bh=J8DEBbmqgVqHx9zekQbbW8vM7wCFBNCGjVwQ5NtjHQE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tO9qsp4Ts3pTDQ+i+k6BVWXKZqtQ4WGm6MTA1QfjUGWgq5rKLHLzi7GALvJ82XmmmY5Dt/Pyj3Kvl/SIVghBa7zop5KdCVP39CHkV8+OzmHkzdSOSc9USpONTxY6Szgwi0+KNQnAXmfXUuLg3Wciv9LScE2YhyBbDyKH+NfuWW8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aN+HZjed; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WlsnkX3heLLu3NHjpJd0RpuSJWCXUTIQn5bLM+dOGxOacJmf2XJXb8Dctc1vFQSytpYRPCkVdMo/mqdAkxuKIifJKTziz4fDA8X7KV3qEJrW+/16h4IL6KvziZ+ZC/30ne3rdGorre4OJ8s0XUSuQXyBG2wURnwIxZMbQmmYKyk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VrIVXqSx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aN+HZjed"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DD22C4CEEE;
-	Mon,  2 Jun 2025 14:30:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VrIVXqSx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C825EC4CEEB;
+	Mon,  2 Jun 2025 14:30:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748874609;
-	bh=UbOOaz+ZVTQkkwVI+fEdfhYEGwIRb/qNuy3NvHAZ4KU=;
+	s=korg; t=1748874612;
+	bh=J8DEBbmqgVqHx9zekQbbW8vM7wCFBNCGjVwQ5NtjHQE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aN+HZjedHsep5szWQ0jhbSn8SEN926oP3SF0ecE4buzB+kuby42SBYk+AzL+f6ePY
-	 FJOz5rQSDZov3qAr0/DL8ERtv3qPKmBQXOXC0OQnhOY8bIoLesASn6JV/7RfLkmOZz
-	 mQyfOvy2n6ipVx0ZImlijKrVnmffePC0dsVQUowg=
+	b=VrIVXqSx4DT6jQfOqUgDYc3XCnYQPocqvWr/DiD68UBiX8+03o+jI7N9lsr+qetP0
+	 10HHH64SPovUl+vPVMRLURVQvERH2M8CToP5WZZzk1RCCVYsBzgdtS3j/h4RQVfQIB
+	 5PByWXmYX7dMyd7bWTzvMbIgXvViTxI/Oj9Ki/q0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 071/204] spi: loopback-test: Do not split 1024-byte hexdumps
-Date: Mon,  2 Jun 2025 15:46:44 +0200
-Message-ID: <20250602134258.472359645@linuxfoundation.org>
+	Ma Ke <make24@iscas.ac.cn>,
+	Thierry Reding <treding@nvidia.com>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 5.4 080/204] phy: Fix error handling in tegra_xusb_port_init
+Date: Mon,  2 Jun 2025 15:46:53 +0200
+Message-ID: <20250602134258.817230721@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134255.449974357@linuxfoundation.org>
 References: <20250602134255.449974357@linuxfoundation.org>
@@ -51,43 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Ma Ke <make24@iscas.ac.cn>
 
-[ Upstream commit a73fa3690a1f3014d6677e368dce4e70767a6ba2 ]
+commit b2ea5f49580c0762d17d80d8083cb89bc3acf74f upstream.
 
-spi_test_print_hex_dump() prints buffers holding less than 1024 bytes in
-full.  Larger buffers are truncated: only the first 512 and the last 512
-bytes are printed, separated by a truncation message.  The latter is
-confusing in case the buffer holds exactly 1024 bytes, as all data is
-printed anyway.
+If device_add() fails, do not use device_unregister() for error
+handling. device_unregister() consists two functions: device_del() and
+put_device(). device_unregister() should only be called after
+device_add() succeeded because device_del() undoes what device_add()
+does if successful. Change device_unregister() to put_device() call
+before returning from the function.
 
-Fix this by printing buffers holding up to and including 1024 bytes in
-full.
+As comment of device_add() says, 'if device_add() succeeds, you should
+call device_del() when you want to get rid of it. If device_add() has
+not succeeded, use only put_device() to drop the reference count'.
 
-Fixes: 84e0c4e5e2c4ef42 ("spi: add loopback test driver to allow for spi_master regression tests")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://patch.msgid.link/37ee1bc90c6554c9347040adabf04188c8f704aa.1746184171.git.geert+renesas@glider.be
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Found by code review.
+
+Cc: stable@vger.kernel.org
+Fixes: 53d2a715c240 ("phy: Add Tegra XUSB pad controller support")
+Signed-off-by: Ma Ke <make24@iscas.ac.cn>
+Acked-by: Thierry Reding <treding@nvidia.com>
+Link: https://lore.kernel.org/r/20250303072739.3874987-1-make24@iscas.ac.cn
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-loopback-test.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/phy/tegra/xusb.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/spi/spi-loopback-test.c b/drivers/spi/spi-loopback-test.c
-index 69a9df2cbbcf2..0f571ff132377 100644
---- a/drivers/spi/spi-loopback-test.c
-+++ b/drivers/spi/spi-loopback-test.c
-@@ -377,7 +377,7 @@ MODULE_LICENSE("GPL");
- static void spi_test_print_hex_dump(char *pre, const void *ptr, size_t len)
- {
- 	/* limit the hex_dump */
--	if (len < 1024) {
-+	if (len <= 1024) {
- 		print_hex_dump(KERN_INFO, pre,
- 			       DUMP_PREFIX_OFFSET, 16, 1,
- 			       ptr, len, 0);
--- 
-2.39.5
-
+--- a/drivers/phy/tegra/xusb.c
++++ b/drivers/phy/tegra/xusb.c
+@@ -526,16 +526,16 @@ static int tegra_xusb_port_init(struct t
+ 
+ 	err = dev_set_name(&port->dev, "%s-%u", name, index);
+ 	if (err < 0)
+-		goto unregister;
++		goto put_device;
+ 
+ 	err = device_add(&port->dev);
+ 	if (err < 0)
+-		goto unregister;
++		goto put_device;
+ 
+ 	return 0;
+ 
+-unregister:
+-	device_unregister(&port->dev);
++put_device:
++	put_device(&port->dev);
+ 	return err;
+ }
+ 
 
 
