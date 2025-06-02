@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39777224224;
-	Mon,  2 Jun 2025 14:13:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ED43221540;
+	Mon,  2 Jun 2025 14:13:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748873614; cv=none; b=VTauJQrUs0tZ1GMWuwehNOjgDfM9vYBkvn6IW5IPTLM1mhcMUJJLkRRpyZYYHGKNTZ7DvJea2nIjnCzAt5hPmrtdZV5RMpvadpuvatSvqiCVDC+P6NoSxInwoQt72xXFBbFb1JY4jaTeudc1k97FKCQVZd8aZijePoYy7j0uAig=
+	t=1748873617; cv=none; b=ERW67o9cu9h9EdcQ+gDIVFoTzcrvd9n3USB2hXBt5mAu5fLvJn+sGXwwDIxhSfMYqVnkFK3deAE/J/Ed07zsftg3NxmyERYICbYrOJ2fdDjF4ZAwAkfV8qaWCCEDVR+aSYBE1yhiYdI56wxx9m8FW1A4Ro9KPm0jaw9CuhIug8I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748873614; c=relaxed/simple;
-	bh=2gxgZM+QAHTTb9GIz+yLMN07epCnNIqlqS4Yaeh+5fs=;
+	s=arc-20240116; t=1748873617; c=relaxed/simple;
+	bh=dTIzzPXXO0QVJIb71YtymwdMd2wIwKg2AZwbsKt2egY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=On+oqkI+iKxzem2RIAj+N1fVolA5EIBCpZsPJlEmDaP/qAQBV8/AcI27dd4khWmKuZqS6NhC4ZoO7IitiIBQaWFJWMVqVRPisrPVsUAPyvMPIwQNPADyuz+aDhkKBGd6iiId+cleJ7nCirFlNVIP45x7LNjxNXY+XipU5a0dm/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2aOhyong; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pbQ4DiVrPYP3rgTOxfze/bSampqyoDXYdeXdh5kva+baOFPt2sYiTRQZsHa3L2XJn7bjxbcOMcG72NaqP4yUa21PugikwplahngJi293VuhUbBzdWCxV0yunWf23l09Lejenogn6AvGRHMJJM78YJ1hD3lmwSngDJVcm/nHtBfk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gb1ty9sw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2aOhyong"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A551C4CEEB;
-	Mon,  2 Jun 2025 14:13:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gb1ty9sw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74BE5C4CEEB;
+	Mon,  2 Jun 2025 14:13:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748873613;
-	bh=2gxgZM+QAHTTb9GIz+yLMN07epCnNIqlqS4Yaeh+5fs=;
+	s=korg; t=1748873616;
+	bh=dTIzzPXXO0QVJIb71YtymwdMd2wIwKg2AZwbsKt2egY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2aOhyongMW0/OJHHI2RFM2Nt4pMoJvBa0tFilNYz2sE9Oy4X+zFo05ne4nMFz+97u
-	 aMAN+f9kqgawyxZzjT9lpkDKOP0T03pFxkkdng1gGsl4BxVY5v6pGEmMQGmrmOa32Y
-	 jv2B4LMZO3Ikuyl1CBR4u+uzw8VufwFJrlY0weFQ=
+	b=Gb1ty9sw7pv2khUnhkHG4fYlqGVjcMx/Orth8xMWBrNnyGMzXX7ynEaG5c/fd/b9S
+	 2cadf3HQqWKMKT1ywvS5CJsLZqh4tCu2YtyhskHUgh4r7egFxUo/ar4MlAe/L8oUiv
+	 boHYK/h4b4OWEWXYMZTZHjf21bJrEV3Vfqfu/xyo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 196/444] crypto: ahash - Set default reqsize from ahash_alg
-Date: Mon,  2 Jun 2025 15:44:20 +0200
-Message-ID: <20250602134348.861372645@linuxfoundation.org>
+Subject: [PATCH 6.6 197/444] crypto: skcipher - Zap type in crypto_alloc_sync_skcipher
+Date: Mon,  2 Jun 2025 15:44:21 +0200
+Message-ID: <20250602134348.903270863@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -52,61 +52,28 @@ Content-Transfer-Encoding: 8bit
 
 From: Herbert Xu <herbert@gondor.apana.org.au>
 
-[ Upstream commit 9e01aaa1033d6e40f8d7cf4f20931a61ce9e3f04 ]
+[ Upstream commit ee509efc74ddbc59bb5d6fd6e050f9ef25f74bff ]
 
-Add a reqsize field to struct ahash_alg and use it to set the
-default reqsize so that algorithms with a static reqsize are
-not forced to create an init_tfm function.
+The type needs to be zeroed as otherwise the user could use it to
+allocate an asynchronous sync skcipher.
 
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/ahash.c        | 4 ++++
- include/crypto/hash.h | 3 +++
- 2 files changed, 7 insertions(+)
+ crypto/skcipher.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/crypto/ahash.c b/crypto/ahash.c
-index 709ef09407991..6168f3532f552 100644
---- a/crypto/ahash.c
-+++ b/crypto/ahash.c
-@@ -427,6 +427,7 @@ static int crypto_ahash_init_tfm(struct crypto_tfm *tfm)
- 	hash->setkey = ahash_nosetkey;
+diff --git a/crypto/skcipher.c b/crypto/skcipher.c
+index 7b275716cf4e3..acc879ed6031a 100644
+--- a/crypto/skcipher.c
++++ b/crypto/skcipher.c
+@@ -811,6 +811,7 @@ struct crypto_sync_skcipher *crypto_alloc_sync_skcipher(
  
- 	crypto_ahash_set_statesize(hash, alg->halg.statesize);
-+	crypto_ahash_set_reqsize(hash, alg->reqsize);
+ 	/* Only sync algorithms allowed. */
+ 	mask |= CRYPTO_ALG_ASYNC | CRYPTO_ALG_SKCIPHER_REQSIZE_LARGE;
++	type &= ~(CRYPTO_ALG_ASYNC | CRYPTO_ALG_SKCIPHER_REQSIZE_LARGE);
  
- 	if (tfm->__crt_alg->cra_type != &crypto_ahash_type)
- 		return crypto_init_shash_ops_async(tfm);
-@@ -599,6 +600,9 @@ static int ahash_prepare_alg(struct ahash_alg *alg)
- 	if (alg->halg.statesize == 0)
- 		return -EINVAL;
- 
-+	if (alg->reqsize && alg->reqsize < alg->halg.statesize)
-+		return -EINVAL;
-+
- 	err = hash_prepare_alg(&alg->halg);
- 	if (err)
- 		return err;
-diff --git a/include/crypto/hash.h b/include/crypto/hash.h
-index f7c2a22cd776d..c0d472fdc82e6 100644
---- a/include/crypto/hash.h
-+++ b/include/crypto/hash.h
-@@ -153,6 +153,7 @@ struct ahash_request {
-  *	      This is a counterpart to @init_tfm, used to remove
-  *	      various changes set in @init_tfm.
-  * @clone_tfm: Copy transform into new object, may allocate memory.
-+ * @reqsize: Size of the request context.
-  * @halg: see struct hash_alg_common
-  */
- struct ahash_alg {
-@@ -169,6 +170,8 @@ struct ahash_alg {
- 	void (*exit_tfm)(struct crypto_ahash *tfm);
- 	int (*clone_tfm)(struct crypto_ahash *dst, struct crypto_ahash *src);
- 
-+	unsigned int reqsize;
-+
- 	struct hash_alg_common halg;
- };
+ 	tfm = crypto_alloc_tfm(alg_name, &crypto_skcipher_type, type, mask);
  
 -- 
 2.39.5
