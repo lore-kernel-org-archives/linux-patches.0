@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E1AC22D785;
-	Mon,  2 Jun 2025 14:27:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6545522D793;
+	Mon,  2 Jun 2025 14:28:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748874477; cv=none; b=WzJH+Gz+Y40n/hqJbFpYqLwm0CDLsdryncfJ5GRuPylO2jgtfKUu82PIXbadPDYWai79O8CNaHYef2Nh11HbhwpjsCGxfmQqoLDKm6y9S0cJYjCnaWC4UE9OW8QLHMLJXENcac/YPLQ6zTJbVYJiL+ifddukms6nWX4C/MazJ2U=
+	t=1748874480; cv=none; b=q8XgIi/TEVcH1p6FrUQKmtrBwDyhXuQ9QqVd6ty3HtSCtl6wb0sCABjJLJnLpCDTfvIJuX0eGLCI7DCP7dUrKUNqcDSz9Ba+pamLQi7Aa+nS7C64T3kf7j9wpdwwXQ+DFt7MvblVMnBdQOOaD3dSW18TuNJo6AuuKoYWkU7zLgo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748874477; c=relaxed/simple;
-	bh=4s02/fWQYgWsYC6g4p8jqGehKB/LbdxxD+AYKLM0cwY=;
+	s=arc-20240116; t=1748874480; c=relaxed/simple;
+	bh=LQkt0oPZBotWs49ZOcwQJ45MGu+utPn7hYzzu48bQhk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y67BQl5NoYdGHON5SIm7ok7QEm8pWNfNymWXUtHYeNtWEzbURLc9uEzrPjOjo6453/eKguMESRLIwxDxWWatNE+KJXA8xqGuuYbEPYPbwltx9uw5zShoo2C4Ru044PygtL8E+xkW4B0udmhZA3q8DhXmmWu3bLFwz9lYtKSunwo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pYNpu6B+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QTd2rf0TqGlicrhTO8pkcDp9os9GUnDfEiEfjXd3CdFhsWQiVKB5J/WgfCZ9PrFIEH5XghQG0B9Q1xOWPhNToOsyNoBG1xlZlIVWM4XNoxsvTdYOvuZnxqji9+MR/xwMIEqMoqE63iobaOngOS88OsC/CEMMZEOtGKMHlpfLXfA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wFkG/IXK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pYNpu6B+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E035CC4CEF0;
-	Mon,  2 Jun 2025 14:27:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wFkG/IXK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5937C4CEEB;
+	Mon,  2 Jun 2025 14:27:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748874477;
-	bh=4s02/fWQYgWsYC6g4p8jqGehKB/LbdxxD+AYKLM0cwY=;
+	s=korg; t=1748874480;
+	bh=LQkt0oPZBotWs49ZOcwQJ45MGu+utPn7hYzzu48bQhk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pYNpu6B+peNvjh+bQUsy1/jEkWJaMz96KoI0BnamrExgfo9ytdxNHPJqIok71Qpze
-	 dxpBpKAwMwX54VJFEkIneyOowevzjoMLz4uQG+fPUzKccCJNFkvk1+xx39slXRYyS2
-	 E4WoINtVHuzt2daMQOtydseexdOVVuiwuQ0YmOMY=
+	b=wFkG/IXKxEoCjEFvsXS9AGoXliJLsrucTx8NnCO97ZoeKhTt/0GdbhpJSSRm+fnE+
+	 ZItNHQSmZFTRd4RG7FLJxMyrTwvmJsw61T1aOah5tPZDSmzq1k5KH7mQqe3603vuGr
+	 MeIrKWltbPH4PrYBDPCGA9BM0YhpoIOP0vigeygY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kota Toda <kota.toda@gmo-cybersecurity.com>,
-	Jozsef Kadlecsik <kadlec@netfilter.org>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Jonas Gorski <jonas.gorski@gmail.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 035/204] netfilter: ipset: fix region locking in hash types
-Date: Mon,  2 Jun 2025 15:46:08 +0200
-Message-ID: <20250602134257.057815014@linuxfoundation.org>
+Subject: [PATCH 5.4 036/204] net: dsa: b53: fix learning on VLAN unaware bridges
+Date: Mon,  2 Jun 2025 15:46:09 +0200
+Message-ID: <20250602134257.098320341@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134255.449974357@linuxfoundation.org>
 References: <20250602134255.449974357@linuxfoundation.org>
@@ -52,40 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jozsef Kadlecsik <kadlec@netfilter.org>
+From: Jonas Gorski <jonas.gorski@gmail.com>
 
-[ Upstream commit 8478a729c0462273188263136880480729e9efca ]
+[ Upstream commit 9f34ad89bcf0e6df6f8b01f1bdab211493fc66d1 ]
 
-Region locking introduced in v5.6-rc4 contained three macros to handle
-the region locks: ahash_bucket_start(), ahash_bucket_end() which gave
-back the start and end hash bucket values belonging to a given region
-lock and ahash_region() which should give back the region lock belonging
-to a given hash bucket. The latter was incorrect which can lead to a
-race condition between the garbage collector and adding new elements
-when a hash type of set is defined with timeouts.
+When VLAN filtering is off, we configure the switch to forward, but not
+learn on VLAN table misses. This effectively disables learning while not
+filtering.
 
-Fixes: f66ee0410b1c ("netfilter: ipset: Fix "INFO: rcu detected stall in hash_xxx" reports")
-Reported-by: Kota Toda <kota.toda@gmo-cybersecurity.com>
-Signed-off-by: Jozsef Kadlecsik <kadlec@netfilter.org>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fix this by switching to forward and learn. Setting the learning disable
+register will still control whether learning actually happens.
+
+Fixes: dad8d7c6452b ("net: dsa: b53: Properly account for VLAN filtering")
+Signed-off-by: Jonas Gorski <jonas.gorski@gmail.com>
+Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://patch.msgid.link/20250429201710.330937-11-jonas.gorski@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/ipset/ip_set_hash_gen.h | 2 +-
+ drivers/net/dsa/b53/b53_common.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/netfilter/ipset/ip_set_hash_gen.h b/net/netfilter/ipset/ip_set_hash_gen.h
-index 30b8b3fad1500..297631f9717bc 100644
---- a/net/netfilter/ipset/ip_set_hash_gen.h
-+++ b/net/netfilter/ipset/ip_set_hash_gen.h
-@@ -88,7 +88,7 @@ struct hbucket {
- #define ahash_sizeof_regions(htable_bits)		\
- 	(ahash_numof_locks(htable_bits) * sizeof(struct ip_set_region))
- #define ahash_region(n, htable_bits)		\
--	((n) % ahash_numof_locks(htable_bits))
-+	((n) / jhash_size(HTABLE_REGION_BITS))
- #define ahash_bucket_start(h,  htable_bits)	\
- 	((htable_bits) < HTABLE_REGION_BITS ? 0	\
- 		: (h) * jhash_size(HTABLE_REGION_BITS))
+diff --git a/drivers/net/dsa/b53/b53_common.c b/drivers/net/dsa/b53/b53_common.c
+index 9f5852657852a..d41c9006a0281 100644
+--- a/drivers/net/dsa/b53/b53_common.c
++++ b/drivers/net/dsa/b53/b53_common.c
+@@ -381,7 +381,7 @@ static void b53_enable_vlan(struct b53_device *dev, bool enable,
+ 			vc4 |= VC4_ING_VID_VIO_DROP << VC4_ING_VID_CHECK_S;
+ 			vc5 |= VC5_DROP_VTABLE_MISS;
+ 		} else {
+-			vc4 |= VC4_ING_VID_VIO_FWD << VC4_ING_VID_CHECK_S;
++			vc4 |= VC4_NO_ING_VID_CHK << VC4_ING_VID_CHECK_S;
+ 			vc5 &= ~VC5_DROP_VTABLE_MISS;
+ 		}
+ 
 -- 
 2.39.5
 
