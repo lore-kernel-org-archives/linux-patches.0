@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD9231FBC90;
-	Mon,  2 Jun 2025 14:38:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06DD11B81DC;
+	Mon,  2 Jun 2025 14:38:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748875085; cv=none; b=Bsvw91Fvw3ZRKJIem2VJxWVY/d7CxbX1evt38+GWkaaGm9AvI3hlE2Lg0RqPsDRmUlwbuqN8HMe+cBp8HmJkAUqLQR9p4VH9i4+kDJZlHt3Uhg7xswUTrMsTjmk94km8tnaGBpVPpZKs7KtmAZ3LcCgUv/hI+sCha/rbp84Fkzo=
+	t=1748875089; cv=none; b=pL8bgbWdAlGIzlekbJ+r0fXCgiq+hna1W+ynAQfo/57Er9bxcPeKPPHmCeRvuhtI90Cw/+GQ5tnD+ba+3mWdsOEoSVnzJ6vVm6Pe5302Zq0OzMJfdKlsOEGFMmgvW6YDDFj7vfthJupOaB8i3LYaVfa2mfGjysFY7p8VjULmE/k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748875085; c=relaxed/simple;
-	bh=qkU8igCtSkqBrbNHOIZ09hl6t1RDzexLYZQzovfE+K0=;
+	s=arc-20240116; t=1748875089; c=relaxed/simple;
+	bh=qeHGn7k4T3Fw+GU2J73t1Ycrl0v3Srj5cm0E4K2ivzQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l5PSbL7NNxuNd5YWnpbiAy3F8xBilLC3MihJz0nr3kXdmrWOpJdYnrmz4gBgfs8CXoldTFG8ztoyJdaJTiV7O03Oj+fe1V+pkSso653Q6rOB1UwCrxB0DWSfZhUR+lovjvJqfTDifaPIRJi78Hjha4/+IY0kKy2Btiuw9WoEhRg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KiUvoUSC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UR6IUd+kiKI8GcgtlysTLShBhI8OcwpM+gpwx2NijIhPfBRgyIsLrK3LFPnNw3FqqBg1faMtLKCUOgW9FnWae5tfGFBhKn8RHSOPIchUh3k9I4DVDW5n0ueu2EhWQVHPPr0Z89R5NpLtnr9ADU8aYY6SyDxU0+oqKFvZFe1q0Qw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MoNvlkSh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KiUvoUSC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BF2DC4CEEE;
-	Mon,  2 Jun 2025 14:38:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MoNvlkSh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6014CC4CEEB;
+	Mon,  2 Jun 2025 14:38:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748875085;
-	bh=qkU8igCtSkqBrbNHOIZ09hl6t1RDzexLYZQzovfE+K0=;
+	s=korg; t=1748875088;
+	bh=qeHGn7k4T3Fw+GU2J73t1Ycrl0v3Srj5cm0E4K2ivzQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KiUvoUSCCINfxaTs+Edd2/e3qKHssi0eiBXWS4mJ7Ibzwt5J+Q1VbiCbiL6YEuvZP
-	 PcQnYOAuOGj6rf+CZUub/d5kzlxApSrlSDF9SALls86N3fYpJSRkaENai0Dn4v2z1Y
-	 2itInN+jwJsBR3vhJXYT8Rri6jEqE4wJF4iAa2sQ=
+	b=MoNvlkShs3vPR3MaUC8+MzYccPaDccHhkbq2CurPO5K3+O/SQfBuPRx2gyGKQP8FG
+	 myzpn3YOWl3TVGR8p48BN9H17+sSTLPoH2fpc+tQfHuwItd+QTyIP9TajK0i6EerDj
+	 gp6erv59yR/u+dcKQp7Yh8VUl2sHNyWFtDw5UPzk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <horms@kernel.org>,
+	Felix Fietkau <nbd@nbd.name>,
+	Willem de Bruijn <willemb@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 023/270] net: dlink: Correct endianness handling of led_mode
-Date: Mon,  2 Jun 2025 15:45:08 +0200
-Message-ID: <20250602134308.146711599@linuxfoundation.org>
+Subject: [PATCH 5.10 024/270] net: ipv6: fix UDPv6 GSO segmentation with NAT
+Date: Mon,  2 Jun 2025 15:45:09 +0200
+Message-ID: <20250602134308.187284265@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134307.195171844@linuxfoundation.org>
 References: <20250602134307.195171844@linuxfoundation.org>
@@ -51,78 +52,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Simon Horman <horms@kernel.org>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit e7e5ae71831c44d58627a991e603845a2fed2cab ]
+[ Upstream commit b936a9b8d4a585ccb6d454921c36286bfe63e01d ]
 
-As it's name suggests, parse_eeprom() parses EEPROM data.
+If any address or port is changed, update it in all packets and recalculate
+checksum.
 
-This is done by reading data, 16 bits at a time as follows:
-
-	for (i = 0; i < 128; i++)
-                ((__le16 *) sromdata)[i] = cpu_to_le16(read_eeprom(np, i));
-
-sromdata is at the same memory location as psrom.
-And the type of psrom is a pointer to struct t_SROM.
-
-As can be seen in the loop above, data is stored in sromdata, and thus psrom,
-as 16-bit little-endian values.
-
-However, the integer fields of t_SROM are host byte order integers.
-And in the case of led_mode this leads to a little endian value
-being incorrectly treated as host byte order.
-
-Looking at rio_set_led_mode, this does appear to be a bug as that code
-masks led_mode with 0x1, 0x2 and 0x8. Logic that would be effected by a
-reversed byte order.
-
-This problem would only manifest on big endian hosts.
-
-Found by inspection while investigating a sparse warning
-regarding the crc field of t_SROM.
-
-I believe that warning is a false positive. And although I plan
-to send a follow-up to use little-endian types for other the integer
-fields of PSROM_t I do not believe that will involve any bug fixes.
-
-Compile tested only.
-
-Fixes: c3f45d322cbd ("dl2k: Add support for IP1000A-based cards")
-Signed-off-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250425-dlink-led-mode-v1-1-6bae3c36e736@kernel.org
+Fixes: 9fd1ff5d2ac7 ("udp: Support UDP fraglist GRO/GSO.")
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20250426153210.14044-1-nbd@nbd.name
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/dlink/dl2k.c | 2 +-
- drivers/net/ethernet/dlink/dl2k.h | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ net/ipv4/udp_offload.c | 61 +++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 60 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/dlink/dl2k.c b/drivers/net/ethernet/dlink/dl2k.c
-index 734acb834c986..66e0fbdcef220 100644
---- a/drivers/net/ethernet/dlink/dl2k.c
-+++ b/drivers/net/ethernet/dlink/dl2k.c
-@@ -353,7 +353,7 @@ parse_eeprom (struct net_device *dev)
- 		dev->dev_addr[i] = psrom->mac_addr[i];
+diff --git a/net/ipv4/udp_offload.c b/net/ipv4/udp_offload.c
+index b6952b88b5051..73beaa7e2d703 100644
+--- a/net/ipv4/udp_offload.c
++++ b/net/ipv4/udp_offload.c
+@@ -242,6 +242,62 @@ static struct sk_buff *__udpv4_gso_segment_list_csum(struct sk_buff *segs)
+ 	return segs;
+ }
  
- 	if (np->chip_id == CHIP_IP1000A) {
--		np->led_mode = psrom->led_mode;
-+		np->led_mode = le16_to_cpu(psrom->led_mode);
- 		return 0;
- 	}
++static void __udpv6_gso_segment_csum(struct sk_buff *seg,
++				     struct in6_addr *oldip,
++				     const struct in6_addr *newip,
++				     __be16 *oldport, __be16 newport)
++{
++	struct udphdr *uh = udp_hdr(seg);
++
++	if (ipv6_addr_equal(oldip, newip) && *oldport == newport)
++		return;
++
++	if (uh->check) {
++		inet_proto_csum_replace16(&uh->check, seg, oldip->s6_addr32,
++					  newip->s6_addr32, true);
++
++		inet_proto_csum_replace2(&uh->check, seg, *oldport, newport,
++					 false);
++		if (!uh->check)
++			uh->check = CSUM_MANGLED_0;
++	}
++
++	*oldip = *newip;
++	*oldport = newport;
++}
++
++static struct sk_buff *__udpv6_gso_segment_list_csum(struct sk_buff *segs)
++{
++	const struct ipv6hdr *iph;
++	const struct udphdr *uh;
++	struct ipv6hdr *iph2;
++	struct sk_buff *seg;
++	struct udphdr *uh2;
++
++	seg = segs;
++	uh = udp_hdr(seg);
++	iph = ipv6_hdr(seg);
++	uh2 = udp_hdr(seg->next);
++	iph2 = ipv6_hdr(seg->next);
++
++	if (!(*(const u32 *)&uh->source ^ *(const u32 *)&uh2->source) &&
++	    ipv6_addr_equal(&iph->saddr, &iph2->saddr) &&
++	    ipv6_addr_equal(&iph->daddr, &iph2->daddr))
++		return segs;
++
++	while ((seg = seg->next)) {
++		uh2 = udp_hdr(seg);
++		iph2 = ipv6_hdr(seg);
++
++		__udpv6_gso_segment_csum(seg, &iph2->saddr, &iph->saddr,
++					 &uh2->source, uh->source);
++		__udpv6_gso_segment_csum(seg, &iph2->daddr, &iph->daddr,
++					 &uh2->dest, uh->dest);
++	}
++
++	return segs;
++}
++
+ static struct sk_buff *__udp_gso_segment_list(struct sk_buff *skb,
+ 					      netdev_features_t features,
+ 					      bool is_ipv6)
+@@ -254,7 +310,10 @@ static struct sk_buff *__udp_gso_segment_list(struct sk_buff *skb,
  
-diff --git a/drivers/net/ethernet/dlink/dl2k.h b/drivers/net/ethernet/dlink/dl2k.h
-index 195dc6cfd8955..0e33e2eaae960 100644
---- a/drivers/net/ethernet/dlink/dl2k.h
-+++ b/drivers/net/ethernet/dlink/dl2k.h
-@@ -335,7 +335,7 @@ typedef struct t_SROM {
- 	u16 sub_system_id;	/* 0x06 */
- 	u16 pci_base_1;		/* 0x08 (IP1000A only) */
- 	u16 pci_base_2;		/* 0x0a (IP1000A only) */
--	u16 led_mode;		/* 0x0c (IP1000A only) */
-+	__le16 led_mode;	/* 0x0c (IP1000A only) */
- 	u16 reserved1[9];	/* 0x0e-0x1f */
- 	u8 mac_addr[6];		/* 0x20-0x25 */
- 	u8 reserved2[10];	/* 0x26-0x2f */
+ 	udp_hdr(skb)->len = htons(sizeof(struct udphdr) + mss);
+ 
+-	return is_ipv6 ? skb : __udpv4_gso_segment_list_csum(skb);
++	if (is_ipv6)
++		return __udpv6_gso_segment_list_csum(skb);
++	else
++		return __udpv4_gso_segment_list_csum(skb);
+ }
+ 
+ struct sk_buff *__udp_gso_segment(struct sk_buff *gso_skb,
 -- 
 2.39.5
 
