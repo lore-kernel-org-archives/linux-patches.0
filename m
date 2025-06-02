@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 497F61CBA18;
-	Mon,  2 Jun 2025 14:09:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4405222596;
+	Mon,  2 Jun 2025 14:09:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748873345; cv=none; b=OtMvy82h6xBWzTz27yVqKLxmopgNYXUOQ0pubitJF+5FiWpNZ5wKQe9DJOuzOMaURIO5ZcU880wy8f4sCFgHugSyPSatKLiurOkQojFwi5AohFpYaZ7PrnskSY6xl0Te6Qs6dxosj5SIqza+m+pF+P91kSJGFkRyMKUk81QaX3I=
+	t=1748873348; cv=none; b=fuQYWaTMHbrN4n7gBOwkMjIqs3lAzMZ50BjhDwaQIOlDd1hCE2ncJVLZC5LGWsZ7pVOP11hHAjjcGJK7wwnkxWaglPNsA+93UEIjUgxaKn5AKDynhQeFgOfkpvbMEtLoK5u7aHaPf+B5vx8wecvVZT4PHw7XpID0XVzZujCkk9I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748873345; c=relaxed/simple;
-	bh=TXUwPfffJMpuzrlP57twLveVm6p0Kq/Gz/s5aDrt8PM=;
+	s=arc-20240116; t=1748873348; c=relaxed/simple;
+	bh=OuNx40xk6IOFFBFr/k0X5i95gnBWnPbWaWcHdrQwqGU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iZMoHk+OcaHIAQINwhjvLKesTH4KwUWuH9SjXbo2xMQBdJRgihQY/MxmxaYxw36BK/rONxBPvNVhVFNt1MTrxMkSnQSEaEnb5wr8ziKLWxpoZsO/ou8wjEnMxIt3P8khhovwOPuSwhz8a5PeJzVfrsK4mo/IIjV085k/DDjJnIM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=phMZjAyM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nuzeJSyz/9JgplINtcD7fNbjbyUrdIwkfYYJ49cnSwmOdT80NtkDOqoVxO/iBBFHO/iufMVFU1T9y8LjqIb0oIxK3Yikt3udu1gmbDjQGzCjTuUW0qwqdlthY5/QmZUM4rkhWcD+/4qkwcrOa1BGrVSX6XYpDabFcPXHgp0o+mM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CScismlo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="phMZjAyM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC058C4CEEB;
-	Mon,  2 Jun 2025 14:09:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CScismlo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D69E6C4CEEB;
+	Mon,  2 Jun 2025 14:09:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748873345;
-	bh=TXUwPfffJMpuzrlP57twLveVm6p0Kq/Gz/s5aDrt8PM=;
+	s=korg; t=1748873348;
+	bh=OuNx40xk6IOFFBFr/k0X5i95gnBWnPbWaWcHdrQwqGU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=phMZjAyMdyLgqB1hWqw3ybP/WdPNTbiz45UIF45lIkRNDVDdznyCGXneE0SolmOpr
-	 Z8JymFO0ULyYU9Yr7n/65/jwrGGd2yeIzZ55PtrjM7SkNbJ3rLBaIp2lyVBRmdgvnP
-	 OoPNi7G9WkQ5/wnHI6yN4XSFMlXfDsO9nBcrZZP8=
+	b=CScismlovt6ezizwdbZkVQHnmSQSEdqZ8PH2TSPOy91UGrkTKTf7Vpo/rJRyxD2jv
+	 7HraCP16AcIra+n03TNVo+3mUcbjZsw3JIWPK4OHb8xaaDftdWMcsDZmIdUw6scneg
+	 GIGcwbIFZSAhDwUE6Trtlz0AazC0doIyelIhQzrc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stanley Chu <yschu@nuvoton.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Heming Zhao <heming.zhao@suse.com>,
+	David Teigland <teigland@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 082/444] i3c: master: svc: Fix missing STOP for master request
-Date: Mon,  2 Jun 2025 15:42:26 +0200
-Message-ID: <20250602134344.232694943@linuxfoundation.org>
+Subject: [PATCH 6.6 083/444] dlm: make tcp still work in multi-link env
+Date: Mon,  2 Jun 2025 15:42:27 +0200
+Message-ID: <20250602134344.270451672@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -52,35 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stanley Chu <yschu@nuvoton.com>
+From: Heming Zhao <heming.zhao@suse.com>
 
-[ Upstream commit 0430bf9bc1ac068c8b8c540eb93e5751872efc51 ]
+[ Upstream commit 03d2b62208a336a3bb984b9465ef6d89a046ea22 ]
 
-The controller driver nacked the master request but didn't emit a
-STOP to end the transaction. The driver shall refuse the unsupported
-requests and return the controller state to IDLE by emitting a STOP.
+This patch bypasses multi-link errors in TCP mode, allowing dlm
+to operate on the first tcp link.
 
-Signed-off-by: Stanley Chu <yschu@nuvoton.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://lore.kernel.org/r/20250318053606.3087121-4-yschu@nuvoton.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Signed-off-by: Heming Zhao <heming.zhao@suse.com>
+Signed-off-by: David Teigland <teigland@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master/svc-i3c-master.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/dlm/lowcomms.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/i3c/master/svc-i3c-master.c b/drivers/i3c/master/svc-i3c-master.c
-index fa1f12a89158c..3cef3794f10d3 100644
---- a/drivers/i3c/master/svc-i3c-master.c
-+++ b/drivers/i3c/master/svc-i3c-master.c
-@@ -503,6 +503,7 @@ static void svc_i3c_master_ibi_work(struct work_struct *work)
- 			queue_work(master->base.wq, &master->hj_work);
- 		break;
- 	case SVC_I3C_MSTATUS_IBITYPE_MASTER_REQUEST:
-+		svc_i3c_master_emit_stop(master);
- 	default:
- 		break;
+diff --git a/fs/dlm/lowcomms.c b/fs/dlm/lowcomms.c
+index 0618af36f5506..3c9ab6461579c 100644
+--- a/fs/dlm/lowcomms.c
++++ b/fs/dlm/lowcomms.c
+@@ -1826,8 +1826,8 @@ static int dlm_tcp_listen_validate(void)
+ {
+ 	/* We don't support multi-homed hosts */
+ 	if (dlm_local_count > 1) {
+-		log_print("TCP protocol can't handle multi-homed hosts, try SCTP");
+-		return -EINVAL;
++		log_print("Detect multi-homed hosts but use only the first IP address.");
++		log_print("Try SCTP, if you want to enable multi-link.");
  	}
+ 
+ 	return 0;
 -- 
 2.39.5
 
