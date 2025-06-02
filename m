@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42A494A1E;
-	Mon,  2 Jun 2025 15:00:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B62518DF89;
+	Mon,  2 Jun 2025 15:00:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748876409; cv=none; b=c7d6RjUrpVE4+lsRn13v2mpCyeZs8vEEc7MTNts7Da57ijzopOYQAH4OcVxNkb6EsjlkS3mGeto994wjGDhnXy4UgkCJpYvu8gbsKDnV7hD64hwXZzULPPVrTRts7gm9IWpNJl1e9CL42i9vlnD2uspymOBRkRRVYGbXjwnUyHY=
+	t=1748876413; cv=none; b=HGhMjfXGFf5Frkyrx69GZPlrNX5U9ob3ls8MPHpGVxbQ5ivT31JSqd3GQ+dNcEtGoMbSGWcZvecd2am+2JV7/OdVpxe4sYoAylIScNDo3EBW0AwucHAi/WWgUOr9fj8rOK8LpkvfasbUBufik9sahVh0zqrOTQWiKHZSPXVV4iY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748876409; c=relaxed/simple;
-	bh=ITfOYycW1RfcJdeauSEHePcCgDUBNsGls00waJw8ozg=;
+	s=arc-20240116; t=1748876413; c=relaxed/simple;
+	bh=W/hAHOJTPWllvlMJ/AIcYoQRbhTiPe2X5Lll5GWbu6Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OZvG+ZFIpkRwQHQdfB20n5/Fd+YcZiyncbkX1k4TQ2RioklNw87XmPkPuhegh45fW1ARrRqX1nFvGgwdYczlNr6SveRZtbuVhc3VLUUUYTAoZeg0w/BNG+9MQb739OJIApU2BUnqTpELfOrfZ/IBQBy9N6/lOlkDpgmhIj+FQ8A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lSLZ+d/1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QCkyYWjd3/rq6CKTdz3K5BvfgzuZ9K+6CeUnBTX7Kb1FKAMiudwMwnhWvXHaaxN6usvthVh+Yz64oOXztyR7+o3so6dIW31z2yt9JQ9oIvMuc71ATvbnie11RsYbUw+6B2H2Uelq9Wt1csl3yIMmjs1MUvp6BPnsH9a3nuD6D7Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EBVGKjbE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lSLZ+d/1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48954C4CEEB;
-	Mon,  2 Jun 2025 15:00:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EBVGKjbE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7E94C4CEEB;
+	Mon,  2 Jun 2025 15:00:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748876409;
-	bh=ITfOYycW1RfcJdeauSEHePcCgDUBNsGls00waJw8ozg=;
+	s=korg; t=1748876413;
+	bh=W/hAHOJTPWllvlMJ/AIcYoQRbhTiPe2X5Lll5GWbu6Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lSLZ+d/1gjaA30uMuQVVDXp0gu9MtuXRiLu5T/cHuK5mATWzOTjrEZskSk5tsrw1P
-	 QusVsZoz2eJrXDFd7TWE+kMvLyeg48sQEc9xTP9bptbj2aFW+LHjjOxDKheyuW0mfv
-	 PRo45RvvVj4S8duWm+jKyNIe2feHseAuJH9hw2JM=
+	b=EBVGKjbEnGqu8+Ncl1Yx/vwOAfbGHEBlCbjoHYgmI4nqLl+Mi5bx/Wyw0vKcz2k12
+	 oabYoBbXK8QhrG1BexhotUkqBKNK7oTmwB7aZfgX4D7CVs69LvfJKnNBDQSs+a9weo
+	 D4JRMSznHfLqDYEKAH+QfV2QjwbRuc8JCM7jGvTA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rosen Penev <rosenp@gmail.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Subbaraya Sundeep <sbhatta@marvell.com>,
+	Geetha sowjanya <gakula@marvell.com>,
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 151/207] wifi: ath9k: return by of_get_mac_address
-Date: Mon,  2 Jun 2025 15:48:43 +0200
-Message-ID: <20250602134304.635093009@linuxfoundation.org>
+Subject: [PATCH 5.15 169/207] octeontx2-af: Set LMT_ENA bit for APR table entries
+Date: Mon,  2 Jun 2025 15:49:01 +0200
+Message-ID: <20250602134305.364782226@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134258.769974467@linuxfoundation.org>
 References: <20250602134258.769974467@linuxfoundation.org>
@@ -46,48 +47,80 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Subbaraya Sundeep <sbhatta@marvell.com>
 
-[ Upstream commit dfffb317519f88534bb82797f055f0a2fd867e7b ]
+[ Upstream commit 0eefa27b493306928d88af6368193b134c98fd64 ]
 
-When using nvmem, ath9k could potentially be loaded before nvmem, which
-loads after mtd. This is an issue if DT contains an nvmem mac address.
+This patch enables the LMT line for a PF/VF by setting the
+LMT_ENA bit in the APR_LMT_MAP_ENTRY_S structure.
 
-If nvmem is not ready in time for ath9k, -EPROBE_DEFER is returned. Pass
-it to _probe so that ath9k can properly grab a potentially present MAC
-address.
+Additionally, it simplifies the logic for calculating the
+LMTST table index by consistently using the maximum
+number of hw supported VFs (i.e., 256).
 
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
-Link: https://patch.msgid.link/20241105222326.194417-1-rosenp@gmail.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Fixes: 873a1e3d207a ("octeontx2-af: cn10k: Setting up lmtst map table").
+Signed-off-by: Subbaraya Sundeep <sbhatta@marvell.com>
+Signed-off-by: Geetha sowjanya <gakula@marvell.com>
+Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+Link: https://patch.msgid.link/20250521060834.19780-2-gakula@marvell.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath9k/init.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ .../net/ethernet/marvell/octeontx2/af/rvu_cn10k.c | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath9k/init.c b/drivers/net/wireless/ath/ath9k/init.c
-index e9a36dd7144f1..bbc9d570c4e3d 100644
---- a/drivers/net/wireless/ath/ath9k/init.c
-+++ b/drivers/net/wireless/ath/ath9k/init.c
-@@ -639,7 +639,9 @@ static int ath9k_of_init(struct ath_softc *sc)
- 		ah->ah_flags |= AH_NO_EEP_SWAP;
- 	}
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_cn10k.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_cn10k.c
+index 25713287a288f..39870e419ccb0 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_cn10k.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_cn10k.c
+@@ -15,13 +15,17 @@
+ #define LMT_TBL_OP_WRITE	1
+ #define LMT_MAP_TABLE_SIZE	(128 * 1024)
+ #define LMT_MAPTBL_ENTRY_SIZE	16
++#define LMT_MAX_VFS		256
++
++#define LMT_MAP_ENTRY_ENA      BIT_ULL(20)
++#define LMT_MAP_ENTRY_LINES    GENMASK_ULL(18, 16)
  
--	of_get_mac_address(np, common->macaddr);
-+	ret = of_get_mac_address(np, common->macaddr);
-+	if (ret == -EPROBE_DEFER)
-+		return ret;
+ /* Function to perform operations (read/write) on lmtst map table */
+ static int lmtst_map_table_ops(struct rvu *rvu, u32 index, u64 *val,
+ 			       int lmt_tbl_op)
+ {
+ 	void __iomem *lmt_map_base;
+-	u64 tbl_base;
++	u64 tbl_base, cfg;
  
- 	return 0;
+ 	tbl_base = rvu_read64(rvu, BLKADDR_APR, APR_AF_LMT_MAP_BASE);
+ 
+@@ -35,6 +39,13 @@ static int lmtst_map_table_ops(struct rvu *rvu, u32 index, u64 *val,
+ 		*val = readq(lmt_map_base + index);
+ 	} else {
+ 		writeq((*val), (lmt_map_base + index));
++
++		cfg = FIELD_PREP(LMT_MAP_ENTRY_ENA, 0x1);
++		/* 2048 LMTLINES */
++		cfg |= FIELD_PREP(LMT_MAP_ENTRY_LINES, 0x6);
++
++		writeq(cfg, (lmt_map_base + (index + 8)));
++
+ 		/* Flushing the AP interceptor cache to make APR_LMT_MAP_ENTRY_S
+ 		 * changes effective. Write 1 for flush and read is being used as a
+ 		 * barrier and sets up a data dependency. Write to 0 after a write
+@@ -52,7 +63,7 @@ static int lmtst_map_table_ops(struct rvu *rvu, u32 index, u64 *val,
+ #define LMT_MAP_TBL_W1_OFF  8
+ static u32 rvu_get_lmtst_tbl_index(struct rvu *rvu, u16 pcifunc)
+ {
+-	return ((rvu_get_pf(pcifunc) * rvu->hw->total_vfs) +
++	return ((rvu_get_pf(pcifunc) * LMT_MAX_VFS) +
+ 		(pcifunc & RVU_PFVF_FUNC_MASK)) * LMT_MAPTBL_ENTRY_SIZE;
  }
+ 
 -- 
 2.39.5
 
