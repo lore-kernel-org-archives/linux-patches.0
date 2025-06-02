@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5707A221734;
-	Mon,  2 Jun 2025 14:36:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 677962153CB;
+	Mon,  2 Jun 2025 14:37:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748875019; cv=none; b=d4gJPGr2qlCd8/6hYl2qKHj+GyHZZPJbosZF8X6IxtdUNLws+Y+VBgLwNa39HJteUt1Jm1LXi5v8/tTYrUJ0MI28qeyLScUDCJxN39TqzNVTpZPI2WR4uS4sbXfUQNB+GaEFAOeBVdsRCusPokyibZJYiLgWbOOIEe4WOtbBGT0=
+	t=1748875022; cv=none; b=LO8+2O3I8ejuk2LNE70gHgSQd9NG8xOiUitsUGdnSsEfluEVxrIYM87irFa+BRHOLGVjqNnP08UXyPQdADGDplqr2CCjpkva4PA40m5eLvO2Mf3D0lKadGV0nBflAXmfp2gW+3eX/6OjVVTpxtZ08i8dOUbxm5HNwG27xqe0J28=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748875019; c=relaxed/simple;
-	bh=Zw6YepdzPPm/nJt/xTb43c1szJvelKQLSLYOpWfBCEI=;
+	s=arc-20240116; t=1748875022; c=relaxed/simple;
+	bh=RbBeM3mmrbCJJ2Rx5Dq2I8qgQgfDsr4wJjjEDoHvR4s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZTlkbEmA086t4sWUzraRSWtoKCj5dnCEfgKb+F8Rl3cau/8VGleUZ3z+6hIYeGck6lj846oAfk/Z6JA9759S7PBbEFq58CIeFNYVlebqu0RAcqoX6wzhVCnkrv3H6mpqBWcYNnfN7SItya1WJpalJB+4u/Lt+Usm9SYSwpL5Yl8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=10crENiE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Uo158a09Dl0bPeYODy8stJ0ZuqHwuvA9/IX70WWcgfUPGUzvsp5ZxRFdq4TzZl266pI/cAAMZVIqHgEq6B9Tu+WwTP4EuieqjLa0aVjobDK6p3HtOcEhCGtfBcTpAdgkVZuUbtHlA09bcpePHqMdXh0+rIoiv4OwNwsKFXeJQ+c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dpqa4z7p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="10crENiE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA7ADC4CEEB;
-	Mon,  2 Jun 2025 14:36:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dpqa4z7p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBB9AC4CEEB;
+	Mon,  2 Jun 2025 14:37:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748875019;
-	bh=Zw6YepdzPPm/nJt/xTb43c1szJvelKQLSLYOpWfBCEI=;
+	s=korg; t=1748875022;
+	bh=RbBeM3mmrbCJJ2Rx5Dq2I8qgQgfDsr4wJjjEDoHvR4s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=10crENiEovyYAQe2BglrJF8FuJjr8BjHEg/zVs9DNqT55OvFheDyp2pgZzZtYUoBx
-	 08kYw5Pnt2Ao5blC97l0h73oqefTYrBhyyirFjW8nfUiTLCka/hBzKSf88TAWl2WM8
-	 89a9K5uEspfQxMytcL14C+2BVUR4dHbjCdQSNnDw=
+	b=Dpqa4z7pT/KF7mVzXFqvYH8yoN1v2tPLp2DpvgMaOf/vn2HA4HJ/RIavq+GbSF6mo
+	 rFgmMLIpTAWYN1/zUraYj7t4j7Sw3FFtdENiOm6mrz4UGTmHoAdpLFB2kFI+hW3jNz
+	 gyn/ayyvqVAECiLcFOkirGPggJr294xCiGECk+3A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anderson Nascimento <anderson@allelesecurity.com>,
-	Oliver Hartkopp <socketcan@hartkopp.net>,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 5.4 177/204] can: bcm: add missing rcu read protection for procfs content
-Date: Mon,  2 Jun 2025 15:48:30 +0200
-Message-ID: <20250602134302.604819647@linuxfoundation.org>
+	syzbot+32d4647f551007595173@syzkaller.appspotmail.com,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.4 178/204] ALSA: pcm: Fix race of buffer access at PCM OSS layer
+Date: Mon,  2 Jun 2025 15:48:31 +0200
+Message-ID: <20250602134302.645736241@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134255.449974357@linuxfoundation.org>
 References: <20250602134255.449974357@linuxfoundation.org>
@@ -51,79 +50,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Hartkopp <socketcan@hartkopp.net>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit dac5e6249159ac255dad9781793dbe5908ac9ddb upstream.
+commit 93a81ca0657758b607c3f4ba889ae806be9beb73 upstream.
 
-When the procfs content is generated for a bcm_op which is in the process
-to be removed the procfs output might show unreliable data (UAF).
+The PCM OSS layer tries to clear the buffer with the silence data at
+initialization (or reconfiguration) of a stream with the explicit call
+of snd_pcm_format_set_silence() with runtime->dma_area.  But this may
+lead to a UAF because the accessed runtime->dma_area might be freed
+concurrently, as it's performed outside the PCM ops.
 
-As the removal of bcm_op's is already implemented with rcu handling this
-patch adds the missing rcu_read_lock() and makes sure the list entries
-are properly removed under rcu protection.
+For avoiding it, move the code into the PCM core and perform it inside
+the buffer access lock, so that it won't be changed during the
+operation.
 
-Fixes: f1b4e32aca08 ("can: bcm: use call_rcu() instead of costly synchronize_rcu()")
-Reported-by: Anderson Nascimento <anderson@allelesecurity.com>
-Suggested-by: Anderson Nascimento <anderson@allelesecurity.com>
-Tested-by: Anderson Nascimento <anderson@allelesecurity.com>
-Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Link: https://patch.msgid.link/20250519125027.11900-2-socketcan@hartkopp.net
-Cc: stable@vger.kernel.org # >= 5.4
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Reported-by: syzbot+32d4647f551007595173@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/68164d8e.050a0220.11da1b.0019.GAE@google.com
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20250516080817.20068-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/can/bcm.c |   13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ include/sound/pcm.h      |    2 ++
+ sound/core/oss/pcm_oss.c |    3 +--
+ sound/core/pcm_native.c  |   11 +++++++++++
+ 3 files changed, 14 insertions(+), 2 deletions(-)
 
---- a/net/can/bcm.c
-+++ b/net/can/bcm.c
-@@ -209,7 +209,9 @@ static int bcm_proc_show(struct seq_file
- 	seq_printf(m, " / bound %s", bcm_proc_getifname(net, ifname, bo->ifindex));
- 	seq_printf(m, " <<<\n");
+--- a/include/sound/pcm.h
++++ b/include/sound/pcm.h
+@@ -1319,6 +1319,8 @@ int snd_pcm_lib_mmap_iomem(struct snd_pc
+ #define snd_pcm_lib_mmap_iomem	NULL
+ #endif
  
--	list_for_each_entry(op, &bo->rx_ops, list) {
-+	rcu_read_lock();
++void snd_pcm_runtime_buffer_set_silence(struct snd_pcm_runtime *runtime);
 +
-+	list_for_each_entry_rcu(op, &bo->rx_ops, list) {
+ /**
+  * snd_pcm_limit_isa_dma_size - Get the max size fitting with ISA DMA transfer
+  * @dma: DMA number
+--- a/sound/core/oss/pcm_oss.c
++++ b/sound/core/oss/pcm_oss.c
+@@ -1081,8 +1081,7 @@ static int snd_pcm_oss_change_params_loc
+ 	runtime->oss.params = 0;
+ 	runtime->oss.prepare = 1;
+ 	runtime->oss.buffer_used = 0;
+-	if (runtime->dma_area)
+-		snd_pcm_format_set_silence(runtime->format, runtime->dma_area, bytes_to_samples(runtime, runtime->dma_bytes));
++	snd_pcm_runtime_buffer_set_silence(runtime);
  
- 		unsigned long reduction;
+ 	runtime->oss.period_frames = snd_pcm_alsa_frames(substream, oss_period_size);
  
-@@ -265,6 +267,9 @@ static int bcm_proc_show(struct seq_file
- 		seq_printf(m, "# sent %ld\n", op->frames_abs);
- 	}
- 	seq_putc(m, '\n');
-+
-+	rcu_read_unlock();
-+
- 	return 0;
+--- a/sound/core/pcm_native.c
++++ b/sound/core/pcm_native.c
+@@ -648,6 +648,17 @@ static void snd_pcm_buffer_access_unlock
+ 	atomic_inc(&runtime->buffer_accessing);
  }
- #endif /* CONFIG_PROC_FS */
-@@ -813,7 +818,7 @@ static int bcm_delete_rx_op(struct list_
- 						  REGMASK(op->can_id),
- 						  bcm_rx_handler, op);
  
--			list_del(&op->list);
-+			list_del_rcu(&op->list);
- 			bcm_remove_op(op);
- 			return 1; /* done */
- 		}
-@@ -833,7 +838,7 @@ static int bcm_delete_tx_op(struct list_
- 	list_for_each_entry_safe(op, n, ops, list) {
- 		if ((op->can_id == mh->can_id) && (op->ifindex == ifindex) &&
- 		    (op->flags & CAN_FD_FRAME) == (mh->flags & CAN_FD_FRAME)) {
--			list_del(&op->list);
-+			list_del_rcu(&op->list);
- 			bcm_remove_op(op);
- 			return 1; /* done */
- 		}
-@@ -1255,7 +1260,7 @@ static int bcm_rx_setup(struct bcm_msg_h
- 					      bcm_rx_handler, op, "bcm", sk);
- 		if (err) {
- 			/* this bcm rx op is broken -> remove it */
--			list_del(&op->list);
-+			list_del_rcu(&op->list);
- 			bcm_remove_op(op);
- 			return err;
- 		}
++/* fill the PCM buffer with the current silence format; called from pcm_oss.c */
++void snd_pcm_runtime_buffer_set_silence(struct snd_pcm_runtime *runtime)
++{
++	snd_pcm_buffer_access_lock(runtime);
++	if (runtime->dma_area)
++		snd_pcm_format_set_silence(runtime->format, runtime->dma_area,
++					   bytes_to_samples(runtime, runtime->dma_bytes));
++	snd_pcm_buffer_access_unlock(runtime);
++}
++EXPORT_SYMBOL_GPL(snd_pcm_runtime_buffer_set_silence);
++
+ #if IS_ENABLED(CONFIG_SND_PCM_OSS)
+ #define is_oss_stream(substream)	((substream)->oss.oss)
+ #else
 
 
