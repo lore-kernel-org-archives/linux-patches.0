@@ -1,52 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FB2D227BA4;
-	Mon,  2 Jun 2025 15:17:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8479D227E95;
+	Mon,  2 Jun 2025 15:17:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748877447; cv=none; b=D5wVfJa+6t0VTOngOHDC/FnKeeJI8IWF8rY6vT8UbFl+iwOkpiNqpcN9CnpY1uudJIG/XnNfqBfaSiS+BkDqbTLss9tHQQ/qizloWqn04LG7yLI5JTMhnewCta3AscswQ33LQRnvS2H6nUNvqAE/0btrhNRBhfF+HywsTgEVQwY=
+	t=1748877450; cv=none; b=RnU9YCnMP95feqRqgv+1GSQm8fSleOpBa6QCpQACQdwM1bb9mZkf77ExITl1wK9MWZ7u7N6ymR28CP4wE98NF56TwInWTg5Jsf+UuhsQJbUhoVmqAMo4JuIahQybSmZOE3vJqVdqxMqoujo6F25AskygmEABos9WyGisIGl4DtQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748877447; c=relaxed/simple;
-	bh=FErq8caRDsGalfNF0DYdA9CIP38xryHF2uZADafN/2A=;
+	s=arc-20240116; t=1748877450; c=relaxed/simple;
+	bh=lSAL+1ANzt8B6ViQzD5EGFcWGnatSKjwwOOzsGdhHKM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jPcrRtn/ElzNzEXVW+iWOnUAkp5b//kU5llkokAgv1cpILn4v6Ntxbr2E61//5qdSh0u6AT3sTYOwh8uHJ+xVt5P8VHNL6eejYptitvXtYYjx/IlUynMXKeAvtlhyGUS5Sg4vWaND5DYQfIUJi0kx0R0lKB59T8OlXKUabxgyZ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ILApTVGk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A+0X2l6hPXzfNGHvyrWbJdFZp1CCwtNzvk4eMYQoUZDULDaaqr/ikD6XH1EMKfCiffEq5D32cfxl7CobotBVJo3DO+nPGHaKt1FEGnlfPPSGR4x3LYxg37SB3yugDDJnRQsqOV/Wrz05QriVUZg4KU2Dk4GcKEi6VTS0rGTNXJs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hcSCkXy0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ILApTVGk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79912C4CEEB;
-	Mon,  2 Jun 2025 15:17:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hcSCkXy0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEC11C4CEEB;
+	Mon,  2 Jun 2025 15:17:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748877447;
-	bh=FErq8caRDsGalfNF0DYdA9CIP38xryHF2uZADafN/2A=;
+	s=korg; t=1748877450;
+	bh=lSAL+1ANzt8B6ViQzD5EGFcWGnatSKjwwOOzsGdhHKM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ILApTVGkAiZN6TM/wQcKBxT5abitoepqMTZmyrBRSRSX8zSbfOzPgIb+NXg0FmJwF
-	 MMtFGC+aUCh+ABg+8wlL+DOLshDggQtA06qvOtD9Q4EZiJrA+1IFz2X4QhX4N2tIGz
-	 ouTSREd71pJQ3M5g8cojt2TaKpS0VdH/c5yusCLQ=
+	b=hcSCkXy04wBE0cn35xppgShZKnlnwdpfGaRENicqx5tzig5ICy5444JVjvVLkpfF1
+	 3QwpEMZ896Hdj/fo5ePXpSVvudTObM7FEen0t/yPSbOi3kgIzgO9WEf7JsgQgS38Uu
+	 aS1NcsknUJl7bwW3dFguhTLloKMpVDe3OnVdqpdc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Leon Romanovsky <leon@kernel.org>,
-	David Ahern <dsahern@kernel.org>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Kees Cook <keescook@chromium.org>,
-	Christian Brauner <brauner@kernel.org>,
+	"stable@vger.kernel.org, Simon Horman" <horms@kernel.org>,
 	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Lennart Poettering <mzxreary@0pointer.de>,
-	Luca Boccassi <bluca@debian.org>,
-	linux-kernel@vger.kernel.org,
-	netdev@vger.kernel.org,
-	linux-arch@vger.kernel.org,
-	Alexander Mikhalitsyn <aleksandr.mikhalitsyn@canonical.com>,
-	Lee Jones <lee@kernel.org>
-Subject: [PATCH 6.1 281/325] af_unix: Kconfig: make CONFIG_UNIX bool
-Date: Mon,  2 Jun 2025 15:49:17 +0200
-Message-ID: <20250602134331.179674198@linuxfoundation.org>
+	Pavel Begunkov <asml.silence@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Lee Jones <lee@kernel.org>,
+	Simon Horman <horms@kernel.org>
+Subject: [PATCH 6.1 282/325] af_unix: Return struct unix_sock from unix_get_socket().
+Date: Mon,  2 Jun 2025 15:49:18 +0200
+Message-ID: <20250602134331.219556431@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134319.723650984@linuxfoundation.org>
 References: <20250602134319.723650984@linuxfoundation.org>
@@ -65,62 +54,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@canonical.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-commit 97154bcf4d1b7cabefec8a72cff5fbb91d5afb7b upstream.
+commit 5b17307bd0789edea0675d524a2b277b93bbde62 upstream.
 
-Let's make CONFIG_UNIX a bool instead of a tristate.
-We've decided to do that during discussion about SCM_PIDFD patchset [1].
+Currently, unix_get_socket() returns struct sock, but after calling
+it, we always cast it to unix_sk().
 
-[1] https://lore.kernel.org/lkml/20230524081933.44dc8bea@kernel.org/
+Let's return struct unix_sock from unix_get_socket().
 
-Cc: "David S. Miller" <davem@davemloft.net>
-Cc: Eric Dumazet <edumazet@google.com>
-Cc: Jakub Kicinski <kuba@kernel.org>
-Cc: Paolo Abeni <pabeni@redhat.com>
-Cc: Leon Romanovsky <leon@kernel.org>
-Cc: David Ahern <dsahern@kernel.org>
-Cc: Arnd Bergmann <arnd@arndb.de>
-Cc: Kees Cook <keescook@chromium.org>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Kuniyuki Iwashima <kuniyu@amazon.com>
-Cc: Lennart Poettering <mzxreary@0pointer.de>
-Cc: Luca Boccassi <bluca@debian.org>
-Cc: linux-kernel@vger.kernel.org
-Cc: netdev@vger.kernel.org
-Cc: linux-arch@vger.kernel.org
-Suggested-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@canonical.com>
-Acked-by: Christian Brauner <brauner@kernel.org>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Acked-by: Pavel Begunkov <asml.silence@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20240123170856.41348-4-kuniyu@amazon.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/unix/Kconfig |    6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ include/net/af_unix.h |    2 +-
+ net/unix/garbage.c    |   19 +++++++------------
+ net/unix/scm.c        |   19 +++++++------------
+ 3 files changed, 15 insertions(+), 25 deletions(-)
 
---- a/net/unix/Kconfig
-+++ b/net/unix/Kconfig
-@@ -4,7 +4,7 @@
- #
+--- a/include/net/af_unix.h
++++ b/include/net/af_unix.h
+@@ -13,7 +13,7 @@ void unix_notinflight(struct user_struct
+ void unix_destruct_scm(struct sk_buff *skb);
+ void unix_gc(void);
+ void wait_for_unix_gc(void);
+-struct sock *unix_get_socket(struct file *filp);
++struct unix_sock *unix_get_socket(struct file *filp);
+ struct sock *unix_peer_get(struct sock *sk);
  
- config UNIX
--	tristate "Unix domain sockets"
-+	bool "Unix domain sockets"
- 	help
- 	  If you say Y here, you will include support for Unix domain sockets;
- 	  sockets are the standard Unix mechanism for establishing and
-@@ -14,10 +14,6 @@ config UNIX
- 	  an embedded system or something similar, you therefore definitely
- 	  want to say Y here.
+ #define UNIX_HASH_MOD	(256 - 1)
+--- a/net/unix/garbage.c
++++ b/net/unix/garbage.c
+@@ -105,20 +105,15 @@ static void scan_inflight(struct sock *x
  
--	  To compile this driver as a module, choose M here: the module will be
--	  called unix.  Note that several important services won't work
--	  correctly if you say M here and then neglect to load the module.
+ 			while (nfd--) {
+ 				/* Get the socket the fd matches if it indeed does so */
+-				struct sock *sk = unix_get_socket(*fp++);
++				struct unix_sock *u = unix_get_socket(*fp++);
+ 
+-				if (sk) {
+-					struct unix_sock *u = unix_sk(sk);
++				/* Ignore non-candidates, they could have been added
++				 * to the queues after starting the garbage collection
++				 */
++				if (u && test_bit(UNIX_GC_CANDIDATE, &u->gc_flags)) {
++					hit = true;
+ 
+-					/* Ignore non-candidates, they could
+-					 * have been added to the queues after
+-					 * starting the garbage collection
+-					 */
+-					if (test_bit(UNIX_GC_CANDIDATE, &u->gc_flags)) {
+-						hit = true;
 -
- 	  Say Y unless you know what you are doing.
+-						func(u);
+-					}
++					func(u);
+ 				}
+ 			}
+ 			if (hit && hitlist != NULL) {
+--- a/net/unix/scm.c
++++ b/net/unix/scm.c
+@@ -21,9 +21,8 @@ EXPORT_SYMBOL(gc_inflight_list);
+ DEFINE_SPINLOCK(unix_gc_lock);
+ EXPORT_SYMBOL(unix_gc_lock);
  
- config UNIX_SCM
+-struct sock *unix_get_socket(struct file *filp)
++struct unix_sock *unix_get_socket(struct file *filp)
+ {
+-	struct sock *u_sock = NULL;
+ 	struct inode *inode = file_inode(filp);
+ 
+ 	/* Socket ? */
+@@ -33,10 +32,10 @@ struct sock *unix_get_socket(struct file
+ 
+ 		/* PF_UNIX ? */
+ 		if (s && sock->ops && sock->ops->family == PF_UNIX)
+-			u_sock = s;
++			return unix_sk(s);
+ 	}
+ 
+-	return u_sock;
++	return NULL;
+ }
+ EXPORT_SYMBOL(unix_get_socket);
+ 
+@@ -45,13 +44,11 @@ EXPORT_SYMBOL(unix_get_socket);
+  */
+ void unix_inflight(struct user_struct *user, struct file *fp)
+ {
+-	struct sock *s = unix_get_socket(fp);
++	struct unix_sock *u = unix_get_socket(fp);
+ 
+ 	spin_lock(&unix_gc_lock);
+ 
+-	if (s) {
+-		struct unix_sock *u = unix_sk(s);
+-
++	if (u) {
+ 		if (!u->inflight) {
+ 			BUG_ON(!list_empty(&u->link));
+ 			list_add_tail(&u->link, &gc_inflight_list);
+@@ -68,13 +65,11 @@ void unix_inflight(struct user_struct *u
+ 
+ void unix_notinflight(struct user_struct *user, struct file *fp)
+ {
+-	struct sock *s = unix_get_socket(fp);
++	struct unix_sock *u = unix_get_socket(fp);
+ 
+ 	spin_lock(&unix_gc_lock);
+ 
+-	if (s) {
+-		struct unix_sock *u = unix_sk(s);
+-
++	if (u) {
+ 		BUG_ON(!u->inflight);
+ 		BUG_ON(list_empty(&u->link));
+ 
 
 
