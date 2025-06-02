@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E02F420E026;
-	Mon,  2 Jun 2025 14:37:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECFDB224AF3;
+	Mon,  2 Jun 2025 14:37:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748875070; cv=none; b=mBGl8hvp9lWsDI9qlzMDs9IABoRcWSmXeEMhU6HSp5ZokpbYTBoDm5fg6tIyk5msB0CWso2lePFjUr0tdd8wps1lb9vVdvptHDdU+PsmwBJy3k8l2SyX47S9Ow9C0CaS6eJmsmjVejFlsYQOy+5tU6/esdRlPDewN16XzqJKDFw=
+	t=1748875073; cv=none; b=RRFJWFURaAeHgQiB69wDFXs5wjPlYSh9tjzNomqX8NNqV+kQ5wBET+B73oc+KjqqQyVQw1USyeIXWW6GTod8og+AOJUkbMQdqQXmt1EAe8m3q35qoTAXXXFE1+7m2+ba+jneThJHnHcYroV2QUCKeAE1r7iMA7dvDV15Nyhgys0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748875070; c=relaxed/simple;
-	bh=A2t/7o1WSY2JH3LgIu/raTZ1M441GTA8nKAWmzWOrqM=;
+	s=arc-20240116; t=1748875073; c=relaxed/simple;
+	bh=qyRzSzGrZ2U0xLt9B+baHqwi0yrVUvkNE178RgcaHDE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CSRNbxJUDh4Hj8YZVeh8ScdgEnIePlrW1lPktgmW344YIisH3b3Ae/luyho2e3oaxi7V7dXvlCtrj8MU49AA0HyZ91tMLM2BM0yKWS7S9OTYFjHle/bkx4WBH4vcKXlDJbOCzepHjM21xZxkGMKhfPMscxU3UvDrzxNvxtZM9Po=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pIb+lDy1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=a4oAH2Ds6gMNtPXWTCIeeJq+w8U/o/y0JnX6A+2fU17R/ob9rzBWoEkjlR3hu9nXDWLESI/VzDl0J3v7Z0B8+p32jyNu5m2aCPJwR7ph5Vl51Jl8MkPTS8sQNgrR1SJL9xeHNK7bqKRmxEb7ETScJ38lgibTQ3HCIJSe/tfChIM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0le6U5sz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pIb+lDy1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AD2EC4CEEB;
-	Mon,  2 Jun 2025 14:37:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0le6U5sz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D7D0C4CEEB;
+	Mon,  2 Jun 2025 14:37:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748875069;
-	bh=A2t/7o1WSY2JH3LgIu/raTZ1M441GTA8nKAWmzWOrqM=;
+	s=korg; t=1748875072;
+	bh=qyRzSzGrZ2U0xLt9B+baHqwi0yrVUvkNE178RgcaHDE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pIb+lDy1KQGhGw9cS0ZWEglypYMZC0exR+ewYtXOy/mkaJeDqyBV8eexLsKgfaV4Y
-	 ycjlqiI9xQ6KYq8etJ0tPqIj71Za2yqMOeAeGyr97qN2+8jHyRHZN1wATNPOSFDp17
-	 w5tyvIZybontZrPhTkBwimY4/bxChzcmr9ahZs2k=
+	b=0le6U5szvSUerkcxyP+n/9Z42MTdVFxs5H+pfuzXuBsNk1QfGoDxjT7xng2+EpuGW
+	 gLiS7eZvT0yMdkRusQoaBPzF1rSW3cRhCW0+oL2jdSwWVSD0AhtyJ289cQMoBH5hoP
+	 dlKqjIXpQ4C0Eb04ihlvS1mVAjweOrOMH9kFYuVQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Victor Nogueira <victor@mojatatu.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 019/270] net_sched: drr: Fix double list add in class with netem as child qdisc
-Date: Mon,  2 Jun 2025 15:45:04 +0200
-Message-ID: <20250602134307.984697029@linuxfoundation.org>
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Philipp Stanner <phasta@kernel.org>,
+	Danilo Krummrich <dakr@kernel.org>
+Subject: [PATCH 5.10 002/270] drm/nouveau: Fix WARN_ON in nouveau_fence_context_kill()
+Date: Mon,  2 Jun 2025 15:44:47 +0200
+Message-ID: <20250602134307.297453124@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134307.195171844@linuxfoundation.org>
 References: <20250602134307.195171844@linuxfoundation.org>
@@ -46,80 +45,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Victor Nogueira <victor@mojatatu.com>
+From: Philipp Stanner <phasta@kernel.org>
 
-[ Upstream commit f99a3fbf023e20b626be4b0f042463d598050c9a ]
+commit bbe5679f30d7690a9b6838a583b9690ea73fe0e9 upstream.
 
-As described in Gerrard's report [1], there are use cases where a netem
-child qdisc will make the parent qdisc's enqueue callback reentrant.
-In the case of drr, there won't be a UAF, but the code will add the same
-classifier to the list twice, which will cause memory corruption.
+Nouveau is mostly designed in a way that it's expected that fences only
+ever get signaled through nouveau_fence_signal(). However, in at least
+one other place, nouveau_fence_done(), can signal fences, too. If that
+happens (race) a signaled fence remains in the pending list for a while,
+until it gets removed by nouveau_fence_update().
 
-In addition to checking for qlen being zero, this patch checks whether the
-class was already added to the active_list (cl_is_active) before adding
-to the list to cover for the reentrant case.
+Should nouveau_fence_context_kill() run in the meantime, this would be
+a bug because the function would attempt to set an error code on an
+already signaled fence.
 
-[1] https://lore.kernel.org/netdev/CAHcdcOm+03OD2j6R0=YHKqmy=VgJ8xEOKuP6c7mSgnp-TEJJbw@mail.gmail.com/
+Have nouveau_fence_context_kill() check for a fence being signaled.
 
-Fixes: 37d9cf1a3ce3 ("sched: Fix detection of empty queues in child qdiscs")
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Signed-off-by: Victor Nogueira <victor@mojatatu.com>
-Link: https://patch.msgid.link/20250425220710.3964791-2-victor@mojatatu.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org # v5.10+
+Fixes: ea13e5abf807 ("drm/nouveau: signal pending fences when channel has been killed")
+Suggested-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Philipp Stanner <phasta@kernel.org>
+Link: https://lore.kernel.org/r/20250415121900.55719-3-phasta@kernel.org
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/sch_drr.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/nouveau/nouveau_fence.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/sched/sch_drr.c b/net/sched/sch_drr.c
-index 08424aac6da82..7ddf73f5a4181 100644
---- a/net/sched/sch_drr.c
-+++ b/net/sched/sch_drr.c
-@@ -36,6 +36,11 @@ struct drr_sched {
- 	struct Qdisc_class_hash		clhash;
- };
+--- a/drivers/gpu/drm/nouveau/nouveau_fence.c
++++ b/drivers/gpu/drm/nouveau/nouveau_fence.c
+@@ -95,7 +95,7 @@ nouveau_fence_context_kill(struct nouvea
+ 	while (!list_empty(&fctx->pending)) {
+ 		fence = list_entry(fctx->pending.next, typeof(*fence), head);
  
-+static bool cl_is_active(struct drr_class *cl)
-+{
-+	return !list_empty(&cl->alist);
-+}
-+
- static struct drr_class *drr_find_class(struct Qdisc *sch, u32 classid)
- {
- 	struct drr_sched *q = qdisc_priv(sch);
-@@ -344,7 +349,6 @@ static int drr_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 	struct drr_sched *q = qdisc_priv(sch);
- 	struct drr_class *cl;
- 	int err = 0;
--	bool first;
+-		if (error)
++		if (error && !dma_fence_is_signaled_locked(&fence->base))
+ 			dma_fence_set_error(&fence->base, error);
  
- 	cl = drr_classify(skb, sch, &err);
- 	if (cl == NULL) {
-@@ -354,7 +358,6 @@ static int drr_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 		return err;
- 	}
- 
--	first = !cl->qdisc->q.qlen;
- 	err = qdisc_enqueue(skb, cl->qdisc, to_free);
- 	if (unlikely(err != NET_XMIT_SUCCESS)) {
- 		if (net_xmit_drop_count(err)) {
-@@ -364,7 +367,7 @@ static int drr_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 		return err;
- 	}
- 
--	if (first) {
-+	if (!cl_is_active(cl)) {
- 		list_add_tail(&cl->alist, &q->active);
- 		cl->deficit = cl->quantum;
- 	}
--- 
-2.39.5
-
+ 		if (nouveau_fence_signal(fence))
 
 
