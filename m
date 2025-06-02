@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD3DE221F10;
-	Mon,  2 Jun 2025 14:47:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 245831DED64;
+	Mon,  2 Jun 2025 14:47:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748875661; cv=none; b=iBgxa5g6O0r+BsVlJG4RuMzBGO5QnYoMrPAGc8fgHBIqs3MnXLe4Avjca5lsnhqCBHvCNyI5TUp4aD8xDhpeCIsN2O7Xvtrenk4/R0gtimCZ4jgj94+rvwQzO82X4lPfQ3vam2Sx37q7tRseg1kCdrZe6dsMzoYEGNXW/zulVFU=
+	t=1748875665; cv=none; b=jnqSm5IDu1HH9WpT4qNU4G7CpCkzsEj4u+V1nS+MFTWqRVXr6QiNIwQvc6TVAcouOLfchBQ162rBElakpsI4Owau2vRt6AHde6ORQ28+3EAjq6b1YDKt42TNKB4eUjbGJEUDkAHnNsDccL6RVOndRZKI7PMK7BttztNVQkvDCRY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748875661; c=relaxed/simple;
-	bh=wApQMAX+DG3i3nG5+EomnPZ1V92gsrasZwO++5GRuwo=;
+	s=arc-20240116; t=1748875665; c=relaxed/simple;
+	bh=5JdIpDXYLgWeMD3mAKGiUO2UOfTKf1gFhX/GBkhmm5g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=crWPAbQXx+QHUP3vLxaiH5aNpXD1cbhME8MEohk9ihjgd+8AloMElQz04A2Urq0HoQjGQr7WU21yzthy6cUSJbVjp8aI5zr/8M1pWPlqW97u1IMrlNxopLF8VmYCbq4fLrU72vU11C23V0UTLpJPf1M2VaPx+ujG0h4//gv2mcg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pxS1aa3m; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YYd2VgR3NgNGBAH8QnwaWL5EwXhK8sd/18kRqK2HNN4ZGeoq2aHw+xAe7pv5kSPU6WQu12+6+3bz+h/ajxMHWKqv8Ahk7jlvMB04ZHPaQygBMt7CDCGmv1oCL5Lp1HwAz8FwlykQMSXB7diZGXhOGWy2lHSgfloXKyOCOUtbPxw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hdp+54Iq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pxS1aa3m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38221C4CEEB;
-	Mon,  2 Jun 2025 14:47:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hdp+54Iq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C63BC4CEEB;
+	Mon,  2 Jun 2025 14:47:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748875661;
-	bh=wApQMAX+DG3i3nG5+EomnPZ1V92gsrasZwO++5GRuwo=;
+	s=korg; t=1748875665;
+	bh=5JdIpDXYLgWeMD3mAKGiUO2UOfTKf1gFhX/GBkhmm5g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pxS1aa3m2vWAujrxInXaQP8ID+3ZHvt0uY04T0DeV4FDR6qHnlNOyQNYekqEZw+lj
-	 3i7/Qk4KTxijuFGr4DW5Zd/lbaUL89Noiw1xeE7x2UhJN5BUbIDDP4UwKJqAsJwpvv
-	 kidvbGQ9Xx9DHFiCYqH9GGscBcBQFGwPTrteHYao=
+	b=Hdp+54IqSnttMdMvxpnn+tGtnyMOZqg5k3K/DqBQVaD13TTCdZYyHVwODFuBX3VtJ
+	 7yHKzOMSAT3BwqZlLuYaLshy4G4E81u/jQbaQIVd3H7ML1fydowV+sdHqr7roc/225
+	 qzXQ6Qs3FznuzFmgor3DDGE1zZonC4si2M0OvsK4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kees Cook <kees@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Damon Ding <damon.ding@rock-chips.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 205/270] net/mlx4_core: Avoid impossible mlx4_db_alloc() order value
-Date: Mon,  2 Jun 2025 15:48:10 +0200
-Message-ID: <20250602134315.577467336@linuxfoundation.org>
+Subject: [PATCH 5.10 206/270] phy: core: dont require set_mode() callback for phy_get_mode() to work
+Date: Mon,  2 Jun 2025 15:48:11 +0200
+Message-ID: <20250602134315.615999758@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134307.195171844@linuxfoundation.org>
 References: <20250602134307.195171844@linuxfoundation.org>
@@ -51,76 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kees Cook <kees@kernel.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 4a6f18f28627e121bd1f74b5fcc9f945d6dbeb1e ]
+[ Upstream commit d58c04e305afbaa9dda7969151f06c4efe2c98b0 ]
 
-GCC can see that the value range for "order" is capped, but this leads
-it to consider that it might be negative, leading to a false positive
-warning (with GCC 15 with -Warray-bounds -fdiagnostics-details):
+As reported by Damon Ding, the phy_get_mode() call doesn't work as
+expected unless the PHY driver has a .set_mode() call. This prompts PHY
+drivers to have empty stubs for .set_mode() for the sake of being able
+to get the mode.
 
-../drivers/net/ethernet/mellanox/mlx4/alloc.c:691:47: error: array subscript -1 is below array bounds of 'long unsigned int *[2]' [-Werror=array-bounds=]
-  691 |                 i = find_first_bit(pgdir->bits[o], MLX4_DB_PER_PAGE >> o);
-      |                                    ~~~~~~~~~~~^~~
-  'mlx4_alloc_db_from_pgdir': events 1-2
-  691 |                 i = find_first_bit(pgdir->bits[o], MLX4_DB_PER_PAGE >> o);                        |                     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-      |                     |                         |                                                   |                     |                         (2) out of array bounds here
-      |                     (1) when the condition is evaluated to true                             In file included from ../drivers/net/ethernet/mellanox/mlx4/mlx4.h:53,
-                 from ../drivers/net/ethernet/mellanox/mlx4/alloc.c:42:
-../include/linux/mlx4/device.h:664:33: note: while referencing 'bits'
-  664 |         unsigned long          *bits[2];
-      |                                 ^~~~
+Make .set_mode() callback truly optional and update PHY's mode even if
+it there is none.
 
-Switch the argument to unsigned int, which removes the compiler needing
-to consider negative values.
-
-Signed-off-by: Kees Cook <kees@kernel.org>
-Link: https://patch.msgid.link/20250210174504.work.075-kees@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: Damon Ding <damon.ding@rock-chips.com>
+Link: https://lore.kernel.org/r/96f8310f-93f1-4bcb-8637-137e1159ff83@rock-chips.com
+Tested-by: Damon Ding <damon.ding@rock-chips.com>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20250209-phy-fix-set-moe-v2-1-76e248503856@linaro.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx4/alloc.c | 6 +++---
- include/linux/mlx4/device.h                | 2 +-
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ drivers/phy/phy-core.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx4/alloc.c b/drivers/net/ethernet/mellanox/mlx4/alloc.c
-index b330020dc0d67..f2bded847e61d 100644
---- a/drivers/net/ethernet/mellanox/mlx4/alloc.c
-+++ b/drivers/net/ethernet/mellanox/mlx4/alloc.c
-@@ -682,9 +682,9 @@ static struct mlx4_db_pgdir *mlx4_alloc_db_pgdir(struct device *dma_device)
- }
+diff --git a/drivers/phy/phy-core.c b/drivers/phy/phy-core.c
+index 1bcdef37e8aa2..dac0f7f4f3d3d 100644
+--- a/drivers/phy/phy-core.c
++++ b/drivers/phy/phy-core.c
+@@ -360,13 +360,14 @@ EXPORT_SYMBOL_GPL(phy_power_off);
  
- static int mlx4_alloc_db_from_pgdir(struct mlx4_db_pgdir *pgdir,
--				    struct mlx4_db *db, int order)
-+				    struct mlx4_db *db, unsigned int order)
+ int phy_set_mode_ext(struct phy *phy, enum phy_mode mode, int submode)
  {
--	int o;
-+	unsigned int o;
- 	int i;
+-	int ret;
++	int ret = 0;
  
- 	for (o = order; o <= 1; ++o) {
-@@ -712,7 +712,7 @@ static int mlx4_alloc_db_from_pgdir(struct mlx4_db_pgdir *pgdir,
- 	return 0;
- }
+-	if (!phy || !phy->ops->set_mode)
++	if (!phy)
+ 		return 0;
  
--int mlx4_db_alloc(struct mlx4_dev *dev, struct mlx4_db *db, int order)
-+int mlx4_db_alloc(struct mlx4_dev *dev, struct mlx4_db *db, unsigned int order)
- {
- 	struct mlx4_priv *priv = mlx4_priv(dev);
- 	struct mlx4_db_pgdir *pgdir;
-diff --git a/include/linux/mlx4/device.h b/include/linux/mlx4/device.h
-index eb8169c03d899..0eb04d537038c 100644
---- a/include/linux/mlx4/device.h
-+++ b/include/linux/mlx4/device.h
-@@ -1116,7 +1116,7 @@ int mlx4_write_mtt(struct mlx4_dev *dev, struct mlx4_mtt *mtt,
- int mlx4_buf_write_mtt(struct mlx4_dev *dev, struct mlx4_mtt *mtt,
- 		       struct mlx4_buf *buf);
- 
--int mlx4_db_alloc(struct mlx4_dev *dev, struct mlx4_db *db, int order);
-+int mlx4_db_alloc(struct mlx4_dev *dev, struct mlx4_db *db, unsigned int order);
- void mlx4_db_free(struct mlx4_dev *dev, struct mlx4_db *db);
- 
- int mlx4_alloc_hwq_res(struct mlx4_dev *dev, struct mlx4_hwq_resources *wqres,
+ 	mutex_lock(&phy->mutex);
+-	ret = phy->ops->set_mode(phy, mode, submode);
++	if (phy->ops->set_mode)
++		ret = phy->ops->set_mode(phy, mode, submode);
+ 	if (!ret)
+ 		phy->attrs.mode = mode;
+ 	mutex_unlock(&phy->mutex);
 -- 
 2.39.5
 
