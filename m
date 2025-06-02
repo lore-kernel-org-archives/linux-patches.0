@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA55A21C177;
-	Mon,  2 Jun 2025 14:22:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17BC9221FC7;
+	Mon,  2 Jun 2025 14:23:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748874178; cv=none; b=SWJoJropscwgogiYirLPmYbahxgCeAXMKKMxwJZcTm4gJCyyzPw/4OyYZgtbs2rDHy9b/d5kbDKdFnXAr2d6yjogv9njgzrooC2LKMPBAAGvsupOBgf8YIq13MnOZ3Ecu8T5VPwI7D2kIcKvZVYYuX/9IPVPMG1XrK8gLq8Ab3E=
+	t=1748874181; cv=none; b=r4w7uIJG+UcUmOZXRGYaaiha1ZL20HBIgowxl5gfcnHgXvxV8Q9RGauH8SFbbGeCZZZBtS9PpXhmbdGNG6W/xW+B5AUZu9dzSQTc/8H8lTav1UAnZ8qOzrAIav3umbBaJs/WBT/lvvXSrqQqnfdsToWBgCmW4c0kNQZg2eoohes=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748874178; c=relaxed/simple;
-	bh=wNVovduaz+cgykLDvui4Ne0zK6CNI54+QiukPmarwNA=;
+	s=arc-20240116; t=1748874181; c=relaxed/simple;
+	bh=ZdufpQUZnZwWKicjU8I9rBlwFKWahFO6cZrMYgFbqOs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gW+mZUXSxDq1+oW75RC85LoT1zMS6CJoM+Mjxvm6EdBWrXNS23En/8i7Y+fOwMpm5Guc2hYMwDYmSd09q8egloCNyuvD2ryN6mnWbR7o83Q2hVv5rjCHibR813altd3hA23A9u2lFy9VRyl/tpM/Vgy1k3nKU841OJOi2gLvY7k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HFPATlKc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OOKrW1MuKCby/6OogxgydW/Q4DgFoQcMTFu3aDfkJJMz1oAmdcukT7eFUgUZrJZ9uFFUu4PjSgYAj0+mstWnH5VH/AsJDaM28uwOEgdgWP6NpLAIdx241EGIDKft9uc9YtLFTK7Dgchi+JolkjQO0S6cQLvt19lA2InwCF39iT4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZJEXGgE8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HFPATlKc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD6FEC4CEEB;
-	Mon,  2 Jun 2025 14:22:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZJEXGgE8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E683C4CEEB;
+	Mon,  2 Jun 2025 14:23:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748874178;
-	bh=wNVovduaz+cgykLDvui4Ne0zK6CNI54+QiukPmarwNA=;
+	s=korg; t=1748874181;
+	bh=ZdufpQUZnZwWKicjU8I9rBlwFKWahFO6cZrMYgFbqOs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HFPATlKcGeN4LHoU95PPOAg3FlQIg8dALmXPU9c7r10X+dsAfMT9c44xeSp32KJjX
-	 pdse2x1zOsLZDjpefC7b26bEbat06bECB5AtFIWPB2H+LI6i8i6eSy0WIA1tiaqZqq
-	 dlBMaMAnI5vGrTzS7+UsoGiI1H5wYUQAK30cBSjk=
+	b=ZJEXGgE8tRWubUDk9R/6Fei2WOwSy13eXfLXYYwe7jqMHVVPb/EjY4EWIUPkWl7EK
+	 LkuuWgTlOiMo9HeRjE+hA0h/u55h4cMCc6FRUgWvYh8/iXqfZY4FmpiHGBt1fiIOEy
+	 fqTUtEvnz/wAl5BJtEHQpWq4yjbhxVU0NehvudDQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Hugh Dickins <hughd@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 384/444] highmem: add folio_test_partial_kmap()
-Date: Mon,  2 Jun 2025 15:47:28 +0200
-Message-ID: <20250602134356.497829352@linuxfoundation.org>
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Brett Creeley <brett.creeley@amd.com>,
+	Shannon Nelson <shannon.nelson@amd.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Alper Ak <alperyasinak1@gmail.com>
+Subject: [PATCH 6.6 385/444] pds_core: Prevent possible adminq overflow/stuck condition
+Date: Mon,  2 Jun 2025 15:47:29 +0200
+Message-ID: <20250602134356.537124170@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -52,76 +55,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Wilcox (Oracle) <willy@infradead.org>
+From: Brett Creeley <brett.creeley@amd.com>
 
-commit 97dfbbd135cb5e4426f37ca53a8fa87eaaa4e376 upstream.
+commit d9e2f070d8af60f2c8c02b2ddf0a9e90b4e9220c upstream.
 
-In commit c749d9b7ebbc ("iov_iter: fix copy_page_from_iter_atomic() if
-KMAP_LOCAL_FORCE_MAP"), Hugh correctly noted that if KMAP_LOCAL_FORCE_MAP
-is enabled, we must limit ourselves to PAGE_SIZE bytes per call to
-kmap_local().  The same problem exists in memcpy_from_folio(),
-memcpy_to_folio(), folio_zero_tail(), folio_fill_tail() and
-memcpy_from_file_folio(), so add folio_test_partial_kmap() to do this more
-succinctly.
+The pds_core's adminq is protected by the adminq_lock, which prevents
+more than 1 command to be posted onto it at any one time. This makes it
+so the client drivers cannot simultaneously post adminq commands.
+However, the completions happen in a different context, which means
+multiple adminq commands can be posted sequentially and all waiting
+on completion.
 
-Link: https://lkml.kernel.org/r/20250514170607.3000994-2-willy@infradead.org
-Fixes: 00cdf76012ab ("mm: add memcpy_from_file_folio()")
-Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Al Viro <viro@zeniv.linux.org.uk>
-Cc: Hugh Dickins <hughd@google.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+On the FW side, the backing adminq request queue is only 16 entries
+long and the retry mechanism and/or overflow/stuck prevention is
+lacking. This can cause the adminq to get stuck, so commands are no
+longer processed and completions are no longer sent by the FW.
+
+As an initial fix, prevent more than 16 outstanding adminq commands so
+there's no way to cause the adminq from getting stuck. This works
+because the backing adminq request queue will never have more than 16
+pending adminq commands, so it will never overflow. This is done by
+reducing the adminq depth to 16.
+
+Fixes: 45d76f492938 ("pds_core: set up device and adminq")
+Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Brett Creeley <brett.creeley@amd.com>
+Signed-off-by: Shannon Nelson <shannon.nelson@amd.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://patch.msgid.link/20250421174606.3892-2-shannon.nelson@amd.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Alper Ak <alperyasinak1@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/highmem.h    |    6 +++---
- include/linux/page-flags.h |    7 +++++++
- 2 files changed, 10 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/amd/pds_core/core.c |    5 +----
+ drivers/net/ethernet/amd/pds_core/core.h |    2 +-
+ 2 files changed, 2 insertions(+), 5 deletions(-)
 
---- a/include/linux/highmem.h
-+++ b/include/linux/highmem.h
-@@ -448,7 +448,7 @@ static inline void memcpy_from_folio(cha
- 		const char *from = kmap_local_folio(folio, offset);
- 		size_t chunk = len;
+--- a/drivers/net/ethernet/amd/pds_core/core.c
++++ b/drivers/net/ethernet/amd/pds_core/core.c
+@@ -413,10 +413,7 @@ int pdsc_setup(struct pdsc *pdsc, bool i
+ 	if (err)
+ 		return err;
  
--		if (folio_test_highmem(folio) &&
-+		if (folio_test_partial_kmap(folio) &&
- 		    chunk > PAGE_SIZE - offset_in_page(offset))
- 			chunk = PAGE_SIZE - offset_in_page(offset);
- 		memcpy(to, from, chunk);
-@@ -469,7 +469,7 @@ static inline void memcpy_to_folio(struc
- 		char *to = kmap_local_folio(folio, offset);
- 		size_t chunk = len;
+-	/* Scale the descriptor ring length based on number of CPUs and VFs */
+-	numdescs = max_t(int, PDSC_ADMINQ_MIN_LENGTH, num_online_cpus());
+-	numdescs += 2 * pci_sriov_get_totalvfs(pdsc->pdev);
+-	numdescs = roundup_pow_of_two(numdescs);
++	numdescs = PDSC_ADMINQ_MAX_LENGTH;
+ 	err = pdsc_qcq_alloc(pdsc, PDS_CORE_QTYPE_ADMINQ, 0, "adminq",
+ 			     PDS_CORE_QCQ_F_CORE | PDS_CORE_QCQ_F_INTR,
+ 			     numdescs,
+--- a/drivers/net/ethernet/amd/pds_core/core.h
++++ b/drivers/net/ethernet/amd/pds_core/core.h
+@@ -16,7 +16,7 @@
  
--		if (folio_test_highmem(folio) &&
-+		if (folio_test_partial_kmap(folio) &&
- 		    chunk > PAGE_SIZE - offset_in_page(offset))
- 			chunk = PAGE_SIZE - offset_in_page(offset);
- 		memcpy(to, from, chunk);
-@@ -501,7 +501,7 @@ static inline size_t memcpy_from_file_fo
- 	size_t offset = offset_in_folio(folio, pos);
- 	char *from = kmap_local_folio(folio, offset);
- 
--	if (folio_test_highmem(folio)) {
-+	if (folio_test_partial_kmap(folio)) {
- 		offset = offset_in_page(offset);
- 		len = min_t(size_t, len, PAGE_SIZE - offset);
- 	} else
---- a/include/linux/page-flags.h
-+++ b/include/linux/page-flags.h
-@@ -551,6 +551,13 @@ PAGEFLAG(Readahead, readahead, PF_NO_COM
- PAGEFLAG_FALSE(HighMem, highmem)
- #endif
- 
-+/* Does kmap_local_folio() only allow access to one page of the folio? */
-+#ifdef CONFIG_DEBUG_KMAP_LOCAL_FORCE_MAP
-+#define folio_test_partial_kmap(f)	true
-+#else
-+#define folio_test_partial_kmap(f)	folio_test_highmem(f)
-+#endif
-+
- #ifdef CONFIG_SWAP
- static __always_inline bool folio_test_swapcache(struct folio *folio)
- {
+ #define PDSC_WATCHDOG_SECS	5
+ #define PDSC_QUEUE_NAME_MAX_SZ  16
+-#define PDSC_ADMINQ_MIN_LENGTH	16	/* must be a power of two */
++#define PDSC_ADMINQ_MAX_LENGTH	16	/* must be a power of two */
+ #define PDSC_NOTIFYQ_LENGTH	64	/* must be a power of two */
+ #define PDSC_TEARDOWN_RECOVERY	false
+ #define PDSC_TEARDOWN_REMOVING	true
 
 
