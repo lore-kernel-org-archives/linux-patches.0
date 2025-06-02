@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95F5021882B;
-	Mon,  2 Jun 2025 14:33:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B85FB1FF61E;
+	Mon,  2 Jun 2025 14:33:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748874808; cv=none; b=iHViqArRnlURm5ZbZOtPkd0Kjp4kAtsEkqinDnN0lLfd8s+Go679Ai5jR4iLv5+LpIMW4RJL8nv+nMg22Ahx7ktR7yV1sgLJyGLQqosTt2ZVsEGMQ3+cIgf0aXbmkxehbJFt2oMsqUdHNsidfF2qlc7wWj0YbLmg6Al0m4DQ59E=
+	t=1748874811; cv=none; b=KnENASQ9mvfMzDqUzEWDRZGsdSyubjZsa5tYjl3liZk2fr/EuFLfAo6pzAQBEtmj9ranfy6SB72pm+/NtiVbQm71HX1dwL3yD5nJck7K6rVFIAAyevW1gCdiY0F1/jwICJrIpwQNcR+fLvyq9PXdeWpTSqg1u9pCjYrKLAN1DSY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748874808; c=relaxed/simple;
-	bh=zE74Qtg+P3cPP5ujGmmZGKKVfq7G8zKruiFCN53DPIk=;
+	s=arc-20240116; t=1748874811; c=relaxed/simple;
+	bh=SpRFl/g0d8a0jpKqNn5rZ8pntFlTuJLubCYyTvh3/yE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YBe2dUxYg88uJSaO9ywV7Wn9AAQSRxa8r4EhLoTE97rIDTsGLoJBDxUDmFogjXy9K4z3G192bSuD/1mS8ydWb0cAR7YZYiEmpJkNvbUmEunVPiZvgn+lF/rbGjUyy9nBI73nRim2PrgKkHO7U8En0G1ln/SJrLgGWjXoDcIFOPc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w+2V6vPW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VTqkYs/Ha+5D0dPFfooqo8ROYzMGDRKJc8NPKIM2K8U3W+8+CH1acy2ev4+zFAZhM+1EmCfTQpRdU/QHL7Cuxe5xB2b+cd4xNCv39saQ2/Jecj1GabiWdY5pg8Jh+bnQCSSf7YowMwjQkCZYIG5hsOxRVJu9MwtPGtwLxFFPq04=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tL+Qbbel; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w+2V6vPW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D804C4CEEB;
-	Mon,  2 Jun 2025 14:33:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tL+Qbbel"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BBFFC4CEEB;
+	Mon,  2 Jun 2025 14:33:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748874808;
-	bh=zE74Qtg+P3cPP5ujGmmZGKKVfq7G8zKruiFCN53DPIk=;
+	s=korg; t=1748874811;
+	bh=SpRFl/g0d8a0jpKqNn5rZ8pntFlTuJLubCYyTvh3/yE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w+2V6vPWHpCQrQLkVhO7KGit/YTWl/rXTvEUGb5xcKQITJCciqxUnVhQdaF4mlIyl
-	 8PWIKfQ/Q6j17xp/woKVnBCqkMSxl0ITSYJWZDPFw3VO+sVMuiiG1ujp4OtjivCsDG
-	 C2Fl190rOmb3na6c7Zghwq5UG5W9Ngyw33pUAq8g=
+	b=tL+QbbeldbZfVX8b8Ao9DiBBgNXdgtQgKsAa9Ihk2OgYG/jCibRtdOShZ+rMkOjM5
+	 mk6RhVEiAAUh8DjLPWI06uGrYYrWvGW3ZqONxQvnaOv94A1agMZWHPRd0AP0e74L/p
+	 2RnqMs66/6Xufxu8zfGPrh1430uRvI0VytDnD5ss=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Frederic Weisbecker <frederic@kernel.org>,
+	Nicolas Bouchinet <nicolas.bouchinet@ssi.gouv.fr>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 111/204] posix-timers: Add cond_resched() to posix_timer_add() search loop
-Date: Mon,  2 Jun 2025 15:47:24 +0200
-Message-ID: <20250602134300.023325185@linuxfoundation.org>
+Subject: [PATCH 5.4 112/204] netfilter: conntrack: Bound nf_conntrack sysctl writes
+Date: Mon,  2 Jun 2025 15:47:25 +0200
+Message-ID: <20250602134300.061905517@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134255.449974357@linuxfoundation.org>
 References: <20250602134255.449974357@linuxfoundation.org>
@@ -52,39 +51,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Nicolas Bouchinet <nicolas.bouchinet@ssi.gouv.fr>
 
-[ Upstream commit 5f2909c6cd13564a07ae692a95457f52295c4f22 ]
+[ Upstream commit 8b6861390ffee6b8ed78b9395e3776c16fec6579 ]
 
-With a large number of POSIX timers the search for a valid ID might cause a
-soft lockup on PREEMPT_NONE/VOLUNTARY kernels.
+nf_conntrack_max and nf_conntrack_expect_max sysctls were authorized to
+be written any negative value, which would then be stored in the
+unsigned int variables nf_conntrack_max and nf_ct_expect_max variables.
 
-Add cond_resched() to the loop to prevent that.
+While the do_proc_dointvec_conv function is supposed to limit writing
+handled by proc_dointvec proc_handler to INT_MAX. Such a negative value
+being written in an unsigned int leads to a very high value, exceeding
+this limit.
 
-[ tglx: Split out from Eric's series ]
+Moreover, the nf_conntrack_expect_max sysctl documentation specifies the
+minimum value is 1.
 
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Frederic Weisbecker <frederic@kernel.org>
-Link: https://lore.kernel.org/all/20250214135911.2037402-2-edumazet@google.com
-Link: https://lore.kernel.org/all/20250308155623.635612865@linutronix.de
+The proc_handlers have thus been updated to proc_dointvec_minmax in
+order to specify the following write bounds :
+
+* Bound nf_conntrack_max sysctl writings between SYSCTL_ZERO
+  and SYSCTL_INT_MAX.
+
+* Bound nf_conntrack_expect_max sysctl writings between SYSCTL_ONE
+  and SYSCTL_INT_MAX as defined in the sysctl documentation.
+
+With this patch applied, sysctl writes outside the defined in the bound
+will thus lead to a write error :
+
+```
+sysctl -w net.netfilter.nf_conntrack_expect_max=-1
+sysctl: setting key "net.netfilter.nf_conntrack_expect_max": Invalid argument
+```
+
+Signed-off-by: Nicolas Bouchinet <nicolas.bouchinet@ssi.gouv.fr>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/time/posix-timers.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/netfilter/nf_conntrack_standalone.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/kernel/time/posix-timers.c b/kernel/time/posix-timers.c
-index f3b8313475acd..2a2e4f6622ae7 100644
---- a/kernel/time/posix-timers.c
-+++ b/kernel/time/posix-timers.c
-@@ -159,6 +159,7 @@ static int posix_timer_add(struct k_itimer *timer)
- 			return id;
- 		}
- 		spin_unlock(&hash_lock);
-+		cond_resched();
- 	}
- 	/* POSIX return code when no timer ID could be allocated */
- 	return -EAGAIN;
+diff --git a/net/netfilter/nf_conntrack_standalone.c b/net/netfilter/nf_conntrack_standalone.c
+index 1e3dbed9d7840..de330dffa0a28 100644
+--- a/net/netfilter/nf_conntrack_standalone.c
++++ b/net/netfilter/nf_conntrack_standalone.c
+@@ -608,7 +608,9 @@ static struct ctl_table nf_ct_sysctl_table[] = {
+ 		.data		= &nf_conntrack_max,
+ 		.maxlen		= sizeof(int),
+ 		.mode		= 0644,
+-		.proc_handler	= proc_dointvec,
++		.proc_handler	= proc_dointvec_minmax,
++		.extra1		= SYSCTL_ZERO,
++		.extra2		= SYSCTL_INT_MAX,
+ 	},
+ 	[NF_SYSCTL_CT_COUNT] = {
+ 		.procname	= "nf_conntrack_count",
+@@ -647,7 +649,9 @@ static struct ctl_table nf_ct_sysctl_table[] = {
+ 		.data		= &nf_ct_expect_max,
+ 		.maxlen		= sizeof(int),
+ 		.mode		= 0644,
+-		.proc_handler	= proc_dointvec,
++		.proc_handler	= proc_dointvec_minmax,
++		.extra1		= SYSCTL_ONE,
++		.extra2		= SYSCTL_INT_MAX,
+ 	},
+ 	[NF_SYSCTL_CT_ACCT] = {
+ 		.procname	= "nf_conntrack_acct",
+@@ -926,7 +930,9 @@ static struct ctl_table nf_ct_netfilter_table[] = {
+ 		.data		= &nf_conntrack_max,
+ 		.maxlen		= sizeof(int),
+ 		.mode		= 0644,
+-		.proc_handler	= proc_dointvec,
++		.proc_handler	= proc_dointvec_minmax,
++		.extra1		= SYSCTL_ZERO,
++		.extra2		= SYSCTL_INT_MAX,
+ 	},
+ 	{ }
+ };
 -- 
 2.39.5
 
