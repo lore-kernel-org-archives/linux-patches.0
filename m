@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E078221DAE;
-	Mon,  2 Jun 2025 14:00:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5FE822068B;
+	Mon,  2 Jun 2025 14:00:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748872809; cv=none; b=TcSMUYVEp/m0K2MzNuRaIdLRv9pR4vIDiMKY1CQSbzLYD7uO8wg4WScoMeF5SS20ZKEBj1Q2McntwpWmdaHXd3mXGp7xIuNJZYSZob2pi7cLd8Zqw7i7/Kd080j2OtlQYlwoXiHYW5VyLyjbmxzq4d+NX7nZeMXcQnjtxesRBTM=
+	t=1748872811; cv=none; b=LbGQ2i+lfhe7vhy496q89jYE6i5IOznKTYlQkN9hJYaj2MVo5+I1rdlJm9QLn4S5SsoEyCsFgz599U2j6DA5vG1EwOnbb8ASnmZx+jkqZab60dL/XsKy1aw8R4eNY1SYhUW8+pcd/dcUv3DV3FoOGIATskIhJLBdxgJ5MW9jeHo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748872809; c=relaxed/simple;
-	bh=XzhOBfVsvnzw7DskXyIOCDWgtvWq3MFHXmJd6iltA4M=;
+	s=arc-20240116; t=1748872811; c=relaxed/simple;
+	bh=eOARE1a5xLLxGOz8zSldT4f6tfVMQa4wiOZFN5dn7nY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N23MYf1jMS9GoTheniKsaefHBSHRsPVdnObZmhXkodratuIbX6SWbwwmf3oaWLqpIFtHPtXRq/fdJw+wruiH5JgqegbPmQwFgi9qeFEsAuVc8b13QtP5U+65/kGunjrnZtCDXBLXmzoHXGJ0lCP8rUVBLV5401MDFJD6TJfILFg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=njFuSIkd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=EKzPfv5bproevr2H0+1TqSB0aU6GGJipSggb6GwTKPp3hEZd9OIo1F8yMW9u9Tjd6osbKaR76nyNlIuPp+luouz5CDcaGNpv3G38Du+tzUaAcZHwfA+TvTl1BlPIURfykqNNMtR/jjkKVbGDmolKHgsl5WfRYUQInUCDTkCjOKo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=no6HVAvp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="njFuSIkd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EB06C4CEEB;
-	Mon,  2 Jun 2025 14:00:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="no6HVAvp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 481F9C4CEEE;
+	Mon,  2 Jun 2025 14:00:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748872808;
-	bh=XzhOBfVsvnzw7DskXyIOCDWgtvWq3MFHXmJd6iltA4M=;
+	s=korg; t=1748872811;
+	bh=eOARE1a5xLLxGOz8zSldT4f6tfVMQa4wiOZFN5dn7nY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=njFuSIkdgpRf+4fNR7/zCwZD6CxyTyynahw+vHPi2FHmZ3p/r6ZFcv9n3A5q7dVcF
-	 djRs5WJu+XCONZHbYXn4kEFnOiimMsiPiASRyZpuXlStLswcASHa+mn5kPON5RTdza
-	 4HSSJq7NLDahxBnFmY3a9VhqFvBIIrh44cNCvAMU=
+	b=no6HVAvpBZzPTr9b7QCsS/JC3gmw+C4d01MOW324a47rO5ku9hlHJ/v9UFNp3BkPZ
+	 CXQrtFrU+RhXrvEU+WR+QRBfCUeEzwo5jvdOQDTDnlK7+JjewGtCgq2q0O1cJpt/Al
+	 Cg8iVy9F6HI9pggqHHEU5cRYbqffuNVyUaUgzLYk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	Jeff Layton <jlayton@kernel.org>,
+	Valtteri Koskivuori <vkoskiv@gmail.com>,
+	Jonathan Woithe <jwoithe@just42.net>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 68/73] NFS: Avoid flushing data while holding directory locks in nfs_rename()
-Date: Mon,  2 Jun 2025 15:47:54 +0200
-Message-ID: <20250602134244.365790922@linuxfoundation.org>
+Subject: [PATCH 6.14 69/73] platform/x86: fujitsu-laptop: Support Lifebook S2110 hotkeys
+Date: Mon,  2 Jun 2025 15:47:55 +0200
+Message-ID: <20250602134244.404465593@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134241.673490006@linuxfoundation.org>
 References: <20250602134241.673490006@linuxfoundation.org>
@@ -45,113 +46,113 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Valtteri Koskivuori <vkoskiv@gmail.com>
 
-[ Upstream commit dcd21b609d4abc7303f8683bce4f35d78d7d6830 ]
+[ Upstream commit a7e255ff9fe4d9b8b902023aaf5b7a673786bb50 ]
 
-The Linux client assumes that all filehandles are non-volatile for
-renames within the same directory (otherwise sillyrename cannot work).
-However, the existence of the Linux 'subtree_check' export option has
-meant that nfs_rename() has always assumed it needs to flush writes
-before attempting to rename.
+The S2110 has an additional set of media playback control keys enabled
+by a hardware toggle button that switches the keys between "Application"
+and "Player" modes. Toggling "Player" mode just shifts the scancode of
+each hotkey up by 4.
 
-Since NFSv4 does allow the client to query whether or not the server
-exhibits this behaviour, and since knfsd does actually set the
-appropriate flag when 'subtree_check' is enabled on an export, it
-should be OK to optimise away the write flushing behaviour in the cases
-where it is clearly not needed.
+Add defines for new scancodes, and a keymap and dmi id for the S2110.
 
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Tested on a Fujitsu Lifebook S2110.
+
+Signed-off-by: Valtteri Koskivuori <vkoskiv@gmail.com>
+Acked-by: Jonathan Woithe <jwoithe@just42.net>
+Link: https://lore.kernel.org/r/20250509184251.713003-1-vkoskiv@gmail.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/client.c           |  2 ++
- fs/nfs/dir.c              | 15 ++++++++++++++-
- include/linux/nfs_fs_sb.h | 12 +++++++++---
- 3 files changed, 25 insertions(+), 4 deletions(-)
+ drivers/platform/x86/fujitsu-laptop.c | 33 +++++++++++++++++++++++----
+ 1 file changed, 29 insertions(+), 4 deletions(-)
 
-diff --git a/fs/nfs/client.c b/fs/nfs/client.c
-index 3b0918ade53cd..a10d39150abc8 100644
---- a/fs/nfs/client.c
-+++ b/fs/nfs/client.c
-@@ -1100,6 +1100,8 @@ struct nfs_server *nfs_create_server(struct fs_context *fc)
- 		if (server->namelen == 0 || server->namelen > NFS2_MAXNAMLEN)
- 			server->namelen = NFS2_MAXNAMLEN;
- 	}
-+	/* Linux 'subtree_check' borkenness mandates this setting */
-+	server->fh_expire_type = NFS_FH_VOL_RENAME;
- 
- 	if (!(fattr->valid & NFS_ATTR_FATTR)) {
- 		error = ctx->nfs_mod->rpc_ops->getattr(server, ctx->mntfh,
-diff --git a/fs/nfs/dir.c b/fs/nfs/dir.c
-index 2b04038b0e405..34f3471ce813b 100644
---- a/fs/nfs/dir.c
-+++ b/fs/nfs/dir.c
-@@ -2678,6 +2678,18 @@ nfs_unblock_rename(struct rpc_task *task, struct nfs_renamedata *data)
- 	unblock_revalidate(new_dentry);
- }
- 
-+static bool nfs_rename_is_unsafe_cross_dir(struct dentry *old_dentry,
-+					   struct dentry *new_dentry)
-+{
-+	struct nfs_server *server = NFS_SB(old_dentry->d_sb);
-+
-+	if (old_dentry->d_parent != new_dentry->d_parent)
-+		return false;
-+	if (server->fh_expire_type & NFS_FH_RENAME_UNSAFE)
-+		return !(server->fh_expire_type & NFS_FH_NOEXPIRE_WITH_OPEN);
-+	return true;
-+}
-+
+diff --git a/drivers/platform/x86/fujitsu-laptop.c b/drivers/platform/x86/fujitsu-laptop.c
+index a0eae24ca9e60..162809140f68a 100644
+--- a/drivers/platform/x86/fujitsu-laptop.c
++++ b/drivers/platform/x86/fujitsu-laptop.c
+@@ -17,13 +17,13 @@
  /*
-  * RENAME
-  * FIXME: Some nfsds, like the Linux user space nfsd, may generate a
-@@ -2765,7 +2777,8 @@ int nfs_rename(struct mnt_idmap *idmap, struct inode *old_dir,
+  * fujitsu-laptop.c - Fujitsu laptop support, providing access to additional
+  * features made available on a range of Fujitsu laptops including the
+- * P2xxx/P5xxx/S6xxx/S7xxx series.
++ * P2xxx/P5xxx/S2xxx/S6xxx/S7xxx series.
+  *
+  * This driver implements a vendor-specific backlight control interface for
+  * Fujitsu laptops and provides support for hotkeys present on certain Fujitsu
+  * laptops.
+  *
+- * This driver has been tested on a Fujitsu Lifebook S6410, S7020 and
++ * This driver has been tested on a Fujitsu Lifebook S2110, S6410, S7020 and
+  * P8010.  It should work on most P-series and S-series Lifebooks, but
+  * YMMV.
+  *
+@@ -107,7 +107,11 @@
+ #define KEY2_CODE			0x411
+ #define KEY3_CODE			0x412
+ #define KEY4_CODE			0x413
+-#define KEY5_CODE			0x420
++#define KEY5_CODE			0x414
++#define KEY6_CODE			0x415
++#define KEY7_CODE			0x416
++#define KEY8_CODE			0x417
++#define KEY9_CODE			0x420
  
- 	}
+ /* Hotkey ringbuffer limits */
+ #define MAX_HOTKEY_RINGBUFFER_SIZE	100
+@@ -560,7 +564,7 @@ static const struct key_entry keymap_default[] = {
+ 	{ KE_KEY, KEY2_CODE,            { KEY_PROG2 } },
+ 	{ KE_KEY, KEY3_CODE,            { KEY_PROG3 } },
+ 	{ KE_KEY, KEY4_CODE,            { KEY_PROG4 } },
+-	{ KE_KEY, KEY5_CODE,            { KEY_RFKILL } },
++	{ KE_KEY, KEY9_CODE,            { KEY_RFKILL } },
+ 	/* Soft keys read from status flags */
+ 	{ KE_KEY, FLAG_RFKILL,          { KEY_RFKILL } },
+ 	{ KE_KEY, FLAG_TOUCHPAD_TOGGLE, { KEY_TOUCHPAD_TOGGLE } },
+@@ -584,6 +588,18 @@ static const struct key_entry keymap_p8010[] = {
+ 	{ KE_END, 0 }
+ };
  
--	if (S_ISREG(old_inode->i_mode))
-+	if (S_ISREG(old_inode->i_mode) &&
-+	    nfs_rename_is_unsafe_cross_dir(old_dentry, new_dentry))
- 		nfs_sync_inode(old_inode);
- 	task = nfs_async_rename(old_dir, new_dir, old_dentry, new_dentry,
- 				must_unblock ? nfs_unblock_rename : NULL);
-diff --git a/include/linux/nfs_fs_sb.h b/include/linux/nfs_fs_sb.h
-index 108862d81b579..8baaad2dfbe40 100644
---- a/include/linux/nfs_fs_sb.h
-+++ b/include/linux/nfs_fs_sb.h
-@@ -210,6 +210,15 @@ struct nfs_server {
- 	char			*fscache_uniq;	/* Uniquifier (or NULL) */
- #endif
++static const struct key_entry keymap_s2110[] = {
++	{ KE_KEY, KEY1_CODE, { KEY_PROG1 } }, /* "A" */
++	{ KE_KEY, KEY2_CODE, { KEY_PROG2 } }, /* "B" */
++	{ KE_KEY, KEY3_CODE, { KEY_WWW } },   /* "Internet" */
++	{ KE_KEY, KEY4_CODE, { KEY_EMAIL } }, /* "E-mail" */
++	{ KE_KEY, KEY5_CODE, { KEY_STOPCD } },
++	{ KE_KEY, KEY6_CODE, { KEY_PLAYPAUSE } },
++	{ KE_KEY, KEY7_CODE, { KEY_PREVIOUSSONG } },
++	{ KE_KEY, KEY8_CODE, { KEY_NEXTSONG } },
++	{ KE_END, 0 }
++};
++
+ static const struct key_entry *keymap = keymap_default;
  
-+	/* The following #defines numerically match the NFSv4 equivalents */
-+#define NFS_FH_NOEXPIRE_WITH_OPEN (0x1)
-+#define NFS_FH_VOLATILE_ANY (0x2)
-+#define NFS_FH_VOL_MIGRATION (0x4)
-+#define NFS_FH_VOL_RENAME (0x8)
-+#define NFS_FH_RENAME_UNSAFE (NFS_FH_VOLATILE_ANY | NFS_FH_VOL_RENAME)
-+	u32			fh_expire_type;	/* V4 bitmask representing file
-+						   handle volatility type for
-+						   this filesystem */
- 	u32			pnfs_blksize;	/* layout_blksize attr */
- #if IS_ENABLED(CONFIG_NFS_V4)
- 	u32			attr_bitmask[3];/* V4 bitmask representing the set
-@@ -233,9 +242,6 @@ struct nfs_server {
- 	u32			acl_bitmask;	/* V4 bitmask representing the ACEs
- 						   that are supported on this
- 						   filesystem */
--	u32			fh_expire_type;	/* V4 bitmask representing file
--						   handle volatility type for
--						   this filesystem */
- 	struct pnfs_layoutdriver_type  *pnfs_curr_ld; /* Active layout driver */
- 	struct rpc_wait_queue	roc_rpcwaitq;
- 	void			*pnfs_ld_data;	/* per mount point data */
+ static int fujitsu_laptop_dmi_keymap_override(const struct dmi_system_id *id)
+@@ -621,6 +637,15 @@ static const struct dmi_system_id fujitsu_laptop_dmi_table[] = {
+ 		},
+ 		.driver_data = (void *)keymap_p8010
+ 	},
++	{
++		.callback = fujitsu_laptop_dmi_keymap_override,
++		.ident = "Fujitsu LifeBook S2110",
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "FUJITSU SIEMENS"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "LIFEBOOK S2110"),
++		},
++		.driver_data = (void *)keymap_s2110
++	},
+ 	{}
+ };
+ 
 -- 
 2.39.5
 
