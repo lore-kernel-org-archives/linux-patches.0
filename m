@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A209C229B2E;
-	Mon,  2 Jun 2025 15:13:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70C6D229B2E;
+	Mon,  2 Jun 2025 15:13:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748877212; cv=none; b=LFpLaI7ZFWiR+fgO9icx9KtVlek8Afd7zkAut+YY4kre22QI4q/ULpJUds3k2qfrmEGuLIDGJy3ixD+BmOacjyJAZKyQiqq+ZPbcHLkYB74kxbwnCT6IlIPgnTfplq3XYcudPfPCPMaFzH0jiTlJukI+Uoa3N31u4NQhyGSb7DI=
+	t=1748877215; cv=none; b=k7oHpKzyX2Ip9K1W64/73xwAzRq/RE58aIwqtpZ16icT8TZS270YuOoK3NpStH+AkLQoOW/cn4YgsFSgxzsrx93ZvENrzo2g7yj/4LXsKX90cqMJShDp+wCWZBpyAnrNQ/4DsWm30dNnh8gz/cTgFyQNxuYzp/C0hEMfVIXSPQ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748877212; c=relaxed/simple;
-	bh=3j+Oj6ApoEeJZYNCCS0LX9JwLbm9O7DGX0t3tjhAxr4=;
+	s=arc-20240116; t=1748877215; c=relaxed/simple;
+	bh=IUfL50uRCxsCxnpCQFu30hUskGaD1mRlWI6bU4EKXJE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Co8yVNhhuv8hDwawzy+UPAfsgum30TCwdMhQ8HECFLUdwUB4RzBnLScyeA2kensbxBx5L8K1bPL3CnSNdxQRjfMW8jM/gEn5LpdMM4It8lrifgBhGp35dkLQfFgGB3MUmxSwnGiXND3LDf1jvZbKc0OGM6YVGUEyd807WjVnbFw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rV5IekKd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dFmOUPNGmbdn68lZ9p0o3jKz9bjTOUWWzD3E1EpMj6ZKB2E/D0FCYy9WOxAxiUezKb5zfKy/DHjVtfOWJCD2oyUOK+tqB8A7KeD+LjpQ3rN3cZh+UpOR/DibKPKXoKaKj3OCxIKxVybXL/vnFEYSMoD4fHwHbaPCy+ECHnsQHeY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e9hzOW2M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rV5IekKd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B59B7C4CEEB;
-	Mon,  2 Jun 2025 15:13:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e9hzOW2M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1D95C4CEEB;
+	Mon,  2 Jun 2025 15:13:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748877212;
-	bh=3j+Oj6ApoEeJZYNCCS0LX9JwLbm9O7DGX0t3tjhAxr4=;
+	s=korg; t=1748877215;
+	bh=IUfL50uRCxsCxnpCQFu30hUskGaD1mRlWI6bU4EKXJE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rV5IekKdCHmOd5PrwJzsQuoH6jKqxM5aw3Gcs9A5+PqTF2OBYeSlK2KMm838+Nb++
-	 rLJhLjnTdxdqAFl+p5oD+lYooOAIUrQw+OiantMxE5CTWtY5Q/c9BGRfTAjrdCzbVP
-	 DqbJTGjhZeAv5tLdfFSw1p0VWq8SuaE54el5JHms=
+	b=e9hzOW2M8hUmWn+LWzO8wQ79kWxEckaGsFfZtRlo3Eq1xryoRRu9PAhF5sm5U4JNY
+	 qx5mT4+H3vfTTSplMnPX5s870Vq4w5+3WW9pVlST/G3krGwtKhURnydwa43aJhnd6g
+	 oua/qJPzLnfmQslxRpmKln1ZPxFHl+rEvOX4HB2k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 176/325] clk: qcom: clk-alpha-pll: Do not use random stack value for recalc rate
-Date: Mon,  2 Jun 2025 15:47:32 +0200
-Message-ID: <20250602134326.973203138@linuxfoundation.org>
+Subject: [PATCH 6.1 177/325] serial: sh-sci: Update the suspend/resume support
+Date: Mon,  2 Jun 2025 15:47:33 +0200
+Message-ID: <20250602134327.013704995@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134319.723650984@linuxfoundation.org>
 References: <20250602134319.723650984@linuxfoundation.org>
@@ -51,139 +51,161 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 
-[ Upstream commit 7a243e1b814a02ab40793026ef64223155d86395 ]
+[ Upstream commit 22a6984c5b5df8eab864d7f3e8b94d5a554d31ab ]
 
-If regmap_read() fails, random stack value was used in calculating new
-frequency in recalc_rate() callbacks.  Such failure is really not
-expected as these are all MMIO reads, however code should be here
-correct and bail out.  This also avoids possible warning on
-uninitialized value.
+The Renesas RZ/G3S supports a power saving mode where power to most of the
+SoC components is turned off. When returning from this power saving mode,
+SoC components need to be re-configured.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20250212-b4-clk-qcom-clean-v3-1-499f37444f5d@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+The SCIFs on the Renesas RZ/G3S need to be re-configured as well when
+returning from this power saving mode. The sh-sci code already configures
+the SCIF clocks, power domain and registers by calling uart_resume_port()
+in sci_resume(). On suspend path the SCIF UART ports are suspended
+accordingly (by calling uart_suspend_port() in sci_suspend()). The only
+missing setting is the reset signal. For this assert/de-assert the reset
+signal on driver suspend/resume.
+
+In case the no_console_suspend is specified by the user, the registers need
+to be saved on suspend path and restore on resume path. To do this the
+sci_console_save()/sci_console_restore() functions were added. There is no
+need to cache/restore the status or FIFO registers. Only the control
+registers. The registers that will be saved/restored on suspend/resume are
+specified by the struct sci_suspend_regs data structure.
+
+Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/r/20250207113313.545432-1-claudiu.beznea.uj@bp.renesas.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/clk-alpha-pll.c | 52 ++++++++++++++++++++++----------
- 1 file changed, 36 insertions(+), 16 deletions(-)
+ drivers/tty/serial/sh-sci.c | 71 +++++++++++++++++++++++++++++++++++--
+ 1 file changed, 69 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
-index e63a90db1505a..c591fa1ad802d 100644
---- a/drivers/clk/qcom/clk-alpha-pll.c
-+++ b/drivers/clk/qcom/clk-alpha-pll.c
-@@ -561,14 +561,19 @@ clk_alpha_pll_recalc_rate(struct clk_hw *hw, unsigned long parent_rate)
- 	struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
- 	u32 alpha_width = pll_alpha_width(pll);
+diff --git a/drivers/tty/serial/sh-sci.c b/drivers/tty/serial/sh-sci.c
+index e2dfca4c2eff8..191136dcb94d0 100644
+--- a/drivers/tty/serial/sh-sci.c
++++ b/drivers/tty/serial/sh-sci.c
+@@ -105,6 +105,15 @@ struct plat_sci_reg {
+ 	u8 offset, size;
+ };
  
--	regmap_read(pll->clkr.regmap, PLL_L_VAL(pll), &l);
-+	if (regmap_read(pll->clkr.regmap, PLL_L_VAL(pll), &l))
-+		return 0;
++struct sci_suspend_regs {
++	u16 scsmr;
++	u16 scscr;
++	u16 scfcr;
++	u16 scsptr;
++	u8 scbrr;
++	u8 semr;
++};
 +
-+	if (regmap_read(pll->clkr.regmap, PLL_USER_CTL(pll), &ctl))
-+		return 0;
+ struct sci_port_params {
+ 	const struct plat_sci_reg regs[SCIx_NR_REGS];
+ 	unsigned int fifosize;
+@@ -135,6 +144,8 @@ struct sci_port {
+ 	struct dma_chan			*chan_tx;
+ 	struct dma_chan			*chan_rx;
  
--	regmap_read(pll->clkr.regmap, PLL_USER_CTL(pll), &ctl);
- 	if (ctl & PLL_ALPHA_EN) {
--		regmap_read(pll->clkr.regmap, PLL_ALPHA_VAL(pll), &low);
-+		if (regmap_read(pll->clkr.regmap, PLL_ALPHA_VAL(pll), &low))
-+			return 0;
- 		if (alpha_width > 32) {
--			regmap_read(pll->clkr.regmap, PLL_ALPHA_VAL_U(pll),
--				    &high);
-+			if (regmap_read(pll->clkr.regmap, PLL_ALPHA_VAL_U(pll),
-+					&high))
-+				return 0;
- 			a = (u64)high << 32 | low;
- 		} else {
- 			a = low & GENMASK(alpha_width - 1, 0);
-@@ -760,8 +765,11 @@ alpha_pll_huayra_recalc_rate(struct clk_hw *hw, unsigned long parent_rate)
- 	struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
- 	u32 l, alpha = 0, ctl, alpha_m, alpha_n;
- 
--	regmap_read(pll->clkr.regmap, PLL_L_VAL(pll), &l);
--	regmap_read(pll->clkr.regmap, PLL_USER_CTL(pll), &ctl);
-+	if (regmap_read(pll->clkr.regmap, PLL_L_VAL(pll), &l))
-+		return 0;
++	struct reset_control		*rstc;
 +
-+	if (regmap_read(pll->clkr.regmap, PLL_USER_CTL(pll), &ctl))
-+		return 0;
+ #ifdef CONFIG_SERIAL_SH_SCI_DMA
+ 	struct dma_chan			*chan_tx_saved;
+ 	struct dma_chan			*chan_rx_saved;
+@@ -154,6 +165,7 @@ struct sci_port {
+ 	int				rx_trigger;
+ 	struct timer_list		rx_fifo_timer;
+ 	int				rx_fifo_timeout;
++	struct sci_suspend_regs		suspend_regs;
+ 	u16				hscif_tot;
  
- 	if (ctl & PLL_ALPHA_EN) {
- 		regmap_read(pll->clkr.regmap, PLL_ALPHA_VAL(pll), &alpha);
-@@ -955,8 +963,11 @@ clk_trion_pll_recalc_rate(struct clk_hw *hw, unsigned long parent_rate)
- 	struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
- 	u32 l, frac, alpha_width = pll_alpha_width(pll);
+ 	bool has_rtscts;
+@@ -3252,6 +3264,7 @@ static struct plat_sci_port *sci_parse_dt(struct platform_device *pdev,
+ 	}
  
--	regmap_read(pll->clkr.regmap, PLL_L_VAL(pll), &l);
--	regmap_read(pll->clkr.regmap, PLL_ALPHA_VAL(pll), &frac);
-+	if (regmap_read(pll->clkr.regmap, PLL_L_VAL(pll), &l))
-+		return 0;
-+
-+	if (regmap_read(pll->clkr.regmap, PLL_ALPHA_VAL(pll), &frac))
-+		return 0;
+ 	sp = &sci_ports[id];
++	sp->rstc = rstc;
+ 	*dev_id = id;
  
- 	return alpha_pll_calc_rate(parent_rate, l, frac, alpha_width);
+ 	p->type = SCI_OF_TYPE(data);
+@@ -3400,13 +3413,57 @@ static int sci_probe(struct platform_device *dev)
+ 	return 0;
  }
-@@ -1014,7 +1025,8 @@ clk_alpha_pll_postdiv_recalc_rate(struct clk_hw *hw, unsigned long parent_rate)
- 	struct clk_alpha_pll_postdiv *pll = to_clk_alpha_pll_postdiv(hw);
- 	u32 ctl;
  
--	regmap_read(pll->clkr.regmap, PLL_USER_CTL(pll), &ctl);
-+	if (regmap_read(pll->clkr.regmap, PLL_USER_CTL(pll), &ctl))
-+		return 0;
- 
- 	ctl >>= PLL_POST_DIV_SHIFT;
- 	ctl &= PLL_POST_DIV_MASK(pll);
-@@ -1230,8 +1242,11 @@ static unsigned long alpha_pll_fabia_recalc_rate(struct clk_hw *hw,
- 	struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
- 	u32 l, frac, alpha_width = pll_alpha_width(pll);
- 
--	regmap_read(pll->clkr.regmap, PLL_L_VAL(pll), &l);
--	regmap_read(pll->clkr.regmap, PLL_FRAC(pll), &frac);
-+	if (regmap_read(pll->clkr.regmap, PLL_L_VAL(pll), &l))
-+		return 0;
++static void sci_console_save(struct sci_port *s)
++{
++	struct sci_suspend_regs *regs = &s->suspend_regs;
++	struct uart_port *port = &s->port;
 +
-+	if (regmap_read(pll->clkr.regmap, PLL_FRAC(pll), &frac))
-+		return 0;
- 
- 	return alpha_pll_calc_rate(parent_rate, l, frac, alpha_width);
- }
-@@ -1381,7 +1396,8 @@ clk_trion_pll_postdiv_recalc_rate(struct clk_hw *hw, unsigned long parent_rate)
- 	struct regmap *regmap = pll->clkr.regmap;
- 	u32 i, div = 1, val;
- 
--	regmap_read(regmap, PLL_USER_CTL(pll), &val);
-+	if (regmap_read(regmap, PLL_USER_CTL(pll), &val))
-+		return 0;
- 
- 	val >>= pll->post_div_shift;
- 	val &= PLL_POST_DIV_MASK(pll);
-@@ -2254,9 +2270,12 @@ static unsigned long alpha_pll_lucid_evo_recalc_rate(struct clk_hw *hw,
- 	struct regmap *regmap = pll->clkr.regmap;
- 	u32 l, frac;
- 
--	regmap_read(regmap, PLL_L_VAL(pll), &l);
-+	if (regmap_read(regmap, PLL_L_VAL(pll), &l))
-+		return 0;
- 	l &= LUCID_EVO_PLL_L_VAL_MASK;
--	regmap_read(regmap, PLL_ALPHA_VAL(pll), &frac);
++	if (sci_getreg(port, SCSMR)->size)
++		regs->scsmr = sci_serial_in(port, SCSMR);
++	if (sci_getreg(port, SCSCR)->size)
++		regs->scscr = sci_serial_in(port, SCSCR);
++	if (sci_getreg(port, SCFCR)->size)
++		regs->scfcr = sci_serial_in(port, SCFCR);
++	if (sci_getreg(port, SCSPTR)->size)
++		regs->scsptr = sci_serial_in(port, SCSPTR);
++	if (sci_getreg(port, SCBRR)->size)
++		regs->scbrr = sci_serial_in(port, SCBRR);
++	if (sci_getreg(port, SEMR)->size)
++		regs->semr = sci_serial_in(port, SEMR);
++}
 +
-+	if (regmap_read(regmap, PLL_ALPHA_VAL(pll), &frac))
-+		return 0;
++static void sci_console_restore(struct sci_port *s)
++{
++	struct sci_suspend_regs *regs = &s->suspend_regs;
++	struct uart_port *port = &s->port;
++
++	if (sci_getreg(port, SCSMR)->size)
++		sci_serial_out(port, SCSMR, regs->scsmr);
++	if (sci_getreg(port, SCSCR)->size)
++		sci_serial_out(port, SCSCR, regs->scscr);
++	if (sci_getreg(port, SCFCR)->size)
++		sci_serial_out(port, SCFCR, regs->scfcr);
++	if (sci_getreg(port, SCSPTR)->size)
++		sci_serial_out(port, SCSPTR, regs->scsptr);
++	if (sci_getreg(port, SCBRR)->size)
++		sci_serial_out(port, SCBRR, regs->scbrr);
++	if (sci_getreg(port, SEMR)->size)
++		sci_serial_out(port, SEMR, regs->semr);
++}
++
+ static __maybe_unused int sci_suspend(struct device *dev)
+ {
+ 	struct sci_port *sport = dev_get_drvdata(dev);
  
- 	return alpha_pll_calc_rate(parent_rate, l, frac, pll_alpha_width(pll));
+-	if (sport)
++	if (sport) {
+ 		uart_suspend_port(&sci_uart_driver, &sport->port);
+ 
++		if (!console_suspend_enabled && uart_console(&sport->port))
++			sci_console_save(sport);
++		else
++			return reset_control_assert(sport->rstc);
++	}
++
+ 	return 0;
  }
-@@ -2331,7 +2350,8 @@ static unsigned long clk_rivian_evo_pll_recalc_rate(struct clk_hw *hw,
- 	struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
- 	u32 l;
  
--	regmap_read(pll->clkr.regmap, PLL_L_VAL(pll), &l);
-+	if (regmap_read(pll->clkr.regmap, PLL_L_VAL(pll), &l))
-+		return 0;
+@@ -3414,8 +3471,18 @@ static __maybe_unused int sci_resume(struct device *dev)
+ {
+ 	struct sci_port *sport = dev_get_drvdata(dev);
  
- 	return parent_rate * l;
+-	if (sport)
++	if (sport) {
++		if (!console_suspend_enabled && uart_console(&sport->port)) {
++			sci_console_restore(sport);
++		} else {
++			int ret = reset_control_deassert(sport->rstc);
++
++			if (ret)
++				return ret;
++		}
++
+ 		uart_resume_port(&sci_uart_driver, &sport->port);
++	}
+ 
+ 	return 0;
  }
 -- 
 2.39.5
