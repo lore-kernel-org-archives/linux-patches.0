@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 784E5229B0D;
-	Mon,  2 Jun 2025 14:25:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 938EC227E94;
+	Mon,  2 Jun 2025 14:25:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748874327; cv=none; b=eb+rFgEm55lT5VYxGWJYS9CLBmkxX9Ao5aBlEWGoMU8C1r6ONYB87084edcKCldHJh8aN5xXF0OrRW9o+PK+2JCJP32lycv3cv6BsM36ammIQevCwfHSSdX3sxzWXfENAI/0Nsux17WwZKUgFiLBjUU3SzBX7HhXynIjB9iWqp4=
+	t=1748874330; cv=none; b=ScOpkkts9DgifL5hIQulFPHrXrZDR4kgwMwqDlqXoE7EIMbBZwvoSW7OaT7+ulZg0DcFK/Dp1pFRSyjrzYjyzJYvRO4f5+WjDXNF2ItIY7ZTspGjCT0UTO3q0RFUrmY8J+Ln2rpeRZS1VKaATewNvD2wQPw13zhLRstkKNjTudY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748874327; c=relaxed/simple;
-	bh=eZ/pwY6gpzvWdnHziga8tsy0rY0ZSrz5t1+WYb7pE3I=;
+	s=arc-20240116; t=1748874330; c=relaxed/simple;
+	bh=eDG/1NSreFu71Q3xl63iQ3YkauXaAXlgS6w8hX2NnL4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qzlDDVSvrxEHX8m8HVitxnMf+tkXsxWg7S5QB7GDPm1bjzuFBDId7Bi+jFr/UY44ype6WLodPbrApJhpOkxvX+wb92Pni7+aWBrnQvyxgQkm7+3ipEm7lQVgTZDKEEejqHABhs//n7zGWy33JEX/eY9JM9o3pDGRx9//mjcr6Cg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=th3UW3Qs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b2QAhTr36676st1LaauyNVz8lcwVRlEmw+saMtUJ/LhttQ/GQb4WdqF+PDeeJwTBn5wvqXb2DpdNypoUGBuSUxq6dQTZ/o4AYUHoo0fvRKmzYNz2xSKdu5k/KxJsxMOMQwjF5E3vwZVBsIMhPpK7jqXs0X6qUA2O2dvtMbIIrQ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1+HALFmO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="th3UW3Qs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F36D2C4CEEB;
-	Mon,  2 Jun 2025 14:25:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1+HALFmO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20413C4CEEB;
+	Mon,  2 Jun 2025 14:25:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748874327;
-	bh=eZ/pwY6gpzvWdnHziga8tsy0rY0ZSrz5t1+WYb7pE3I=;
+	s=korg; t=1748874330;
+	bh=eDG/1NSreFu71Q3xl63iQ3YkauXaAXlgS6w8hX2NnL4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=th3UW3Qs78aNw+Ihn7v1O2mTGHff6qqFmvGQgHQCMIBInpvDMqqON3sHleATkykvI
-	 hmXG7VbbZI9A76HpDLxNpPTcP7VNqqZ+xMDd1cM3SYd63nQWbVsTkAYmnD119KGPgU
-	 XBFknZO9U2Oye70hgD96HtCEvAoombH5NemD73iI=
+	b=1+HALFmO1MHsUK+g6WSiO1dkKmiMP71iZhqginiTnkHx9kFNbgXlEa0wWexL6jQzE
+	 8Ad1oxoS6lklwKZ888JVz38Z4dZdnIGrwN6zE1kW9MLFVEOlDplxI2Tuz27nnp5oe3
+	 uH+mH4iveh3eS+Jo9ho1jFUHS6mKkizUdEuH+gXw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Milton Barrera <miltonjosue2001@gmail.com>,
-	Jiri Kosina <jkosina@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 432/444] HID: quirks: Add ADATA XPG alpha wireless mouse support
-Date: Mon,  2 Jun 2025 15:48:16 +0200
-Message-ID: <20250602134358.475108766@linuxfoundation.org>
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Lee Jones <lee@kernel.org>
+Subject: [PATCH 6.6 404/444] af_unix: Bulk update unix_tot_inflight/unix_inflight when queuing skb.
+Date: Mon,  2 Jun 2025 15:47:48 +0200
+Message-ID: <20250602134357.318497881@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -51,50 +52,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Milton Barrera <miltonjosue2001@gmail.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit fa9fdeea1b7d6440c22efa6d59a769eae8bc89f1 ]
+commit 22c3c0c52d32f41cc38cd936ea0c93f22ced3315 upstream.
 
-This patch adds HID_QUIRK_ALWAYS_POLL for the ADATA XPG wireless gaming mouse (USB ID 125f:7505) and its USB dongle (USB ID 125f:7506). Without this quirk, the device does not generate input events properly.
+Currently, we track the number of inflight sockets in two variables.
+unix_tot_inflight is the total number of inflight AF_UNIX sockets on
+the host, and user->unix_inflight is the number of inflight fds per
+user.
 
-Signed-off-by: Milton Barrera <miltonjosue2001@gmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+We update them one by one in unix_inflight(), which can be done once
+in batch.  Also, sendmsg() could fail even after unix_inflight(), then
+we need to acquire unix_gc_lock only to decrement the counters.
+
+Let's bulk update the counters in unix_add_edges() and unix_del_edges(),
+which is called only for successfully passed fds.
+
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Acked-by: Paolo Abeni <pabeni@redhat.com>
+Link: https://lore.kernel.org/r/20240325202425.60930-5-kuniyu@amazon.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-ids.h    | 4 ++++
- drivers/hid/hid-quirks.c | 2 ++
- 2 files changed, 6 insertions(+)
+ net/unix/garbage.c |   18 +++++++-----------
+ 1 file changed, 7 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
-index 8e721ec3faaff..a8665d57094b2 100644
---- a/drivers/hid/hid-ids.h
-+++ b/drivers/hid/hid-ids.h
-@@ -41,6 +41,10 @@
- #define USB_VENDOR_ID_ACTIONSTAR	0x2101
- #define USB_DEVICE_ID_ACTIONSTAR_1011	0x1011
+--- a/net/unix/garbage.c
++++ b/net/unix/garbage.c
+@@ -144,6 +144,7 @@ static void unix_free_vertices(struct sc
+ }
  
-+#define USB_VENDOR_ID_ADATA_XPG 0x125f
-+#define USB_VENDOR_ID_ADATA_XPG_WL_GAMING_MOUSE 0x7505
-+#define USB_VENDOR_ID_ADATA_XPG_WL_GAMING_MOUSE_DONGLE 0x7506
+ DEFINE_SPINLOCK(unix_gc_lock);
++unsigned int unix_tot_inflight;
+ 
+ void unix_add_edges(struct scm_fp_list *fpl, struct unix_sock *receiver)
+ {
+@@ -168,7 +169,10 @@ void unix_add_edges(struct scm_fp_list *
+ 		unix_add_edge(fpl, edge);
+ 	} while (i < fpl->count_unix);
+ 
++	WRITE_ONCE(unix_tot_inflight, unix_tot_inflight + fpl->count_unix);
+ out:
++	WRITE_ONCE(fpl->user->unix_inflight, fpl->user->unix_inflight + fpl->count);
 +
- #define USB_VENDOR_ID_ADS_TECH		0x06e1
- #define USB_DEVICE_ID_ADS_TECH_RADIO_SI470X	0xa155
+ 	spin_unlock(&unix_gc_lock);
  
-diff --git a/drivers/hid/hid-quirks.c b/drivers/hid/hid-quirks.c
-index 5d7a418ccdbec..73979643315bf 100644
---- a/drivers/hid/hid-quirks.c
-+++ b/drivers/hid/hid-quirks.c
-@@ -27,6 +27,8 @@
- static const struct hid_device_id hid_quirks[] = {
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_AASHIMA, USB_DEVICE_ID_AASHIMA_GAMEPAD), HID_QUIRK_BADPAD },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_AASHIMA, USB_DEVICE_ID_AASHIMA_PREDATOR), HID_QUIRK_BADPAD },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_ADATA_XPG, USB_VENDOR_ID_ADATA_XPG_WL_GAMING_MOUSE), HID_QUIRK_ALWAYS_POLL },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_ADATA_XPG, USB_VENDOR_ID_ADATA_XPG_WL_GAMING_MOUSE_DONGLE), HID_QUIRK_ALWAYS_POLL },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_AFATECH, USB_DEVICE_ID_AFATECH_AF9016), HID_QUIRK_FULLSPEED_INTERVAL },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_AIREN, USB_DEVICE_ID_AIREN_SLIMPLUS), HID_QUIRK_NOGET },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_AKAI_09E8, USB_DEVICE_ID_AKAI_09E8_MIDIMIX), HID_QUIRK_NO_INIT_REPORTS },
--- 
-2.39.5
-
+ 	fpl->inflight = true;
+@@ -191,7 +195,10 @@ void unix_del_edges(struct scm_fp_list *
+ 		unix_del_edge(fpl, edge);
+ 	} while (i < fpl->count_unix);
+ 
++	WRITE_ONCE(unix_tot_inflight, unix_tot_inflight - fpl->count_unix);
+ out:
++	WRITE_ONCE(fpl->user->unix_inflight, fpl->user->unix_inflight - fpl->count);
++
+ 	spin_unlock(&unix_gc_lock);
+ 
+ 	fpl->inflight = false;
+@@ -234,7 +241,6 @@ void unix_destroy_fpl(struct scm_fp_list
+ 	unix_free_vertices(fpl);
+ }
+ 
+-unsigned int unix_tot_inflight;
+ static LIST_HEAD(gc_candidates);
+ static LIST_HEAD(gc_inflight_list);
+ 
+@@ -255,13 +261,8 @@ void unix_inflight(struct user_struct *u
+ 			WARN_ON_ONCE(list_empty(&u->link));
+ 		}
+ 		u->inflight++;
+-
+-		/* Paired with READ_ONCE() in wait_for_unix_gc() */
+-		WRITE_ONCE(unix_tot_inflight, unix_tot_inflight + 1);
+ 	}
+ 
+-	WRITE_ONCE(user->unix_inflight, user->unix_inflight + 1);
+-
+ 	spin_unlock(&unix_gc_lock);
+ }
+ 
+@@ -278,13 +279,8 @@ void unix_notinflight(struct user_struct
+ 		u->inflight--;
+ 		if (!u->inflight)
+ 			list_del_init(&u->link);
+-
+-		/* Paired with READ_ONCE() in wait_for_unix_gc() */
+-		WRITE_ONCE(unix_tot_inflight, unix_tot_inflight - 1);
+ 	}
+ 
+-	WRITE_ONCE(user->unix_inflight, user->unix_inflight - 1);
+-
+ 	spin_unlock(&unix_gc_lock);
+ }
+ 
 
 
