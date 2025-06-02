@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D979229B16;
-	Mon,  2 Jun 2025 14:25:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3F1B221299;
+	Mon,  2 Jun 2025 14:25:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748874334; cv=none; b=HuHg3N2kvCb6T0tjsQ+qhuL+4JxRtBdv8OvironDktsjsr030gvDff+QvKLYJjt/TUycc3QrBXAlgZZfiwC26dkyYBG3q7D7febIa3bBHGvBW3AmkqSynKmIoTfFammcIwfW+S5SaMn0bH7XXtlNgLiwSL4E+b9nvPnHsPD2S7s=
+	t=1748874340; cv=none; b=d4pY22+6yYEZZ0UPOGiflVK15PIkM00biQgFKfEyFCPdYDA+UHCACKg+m85qekrOhKn9exz+Wm1C0PSl4aI8iOglxtWVRly9ZybVznyIlrk1GEasIt8UD8Kkn8AQKWcgjWPRxb5GC59HFJvNQWzuJQprmrWYY/gqq9yrSb3R/hM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748874334; c=relaxed/simple;
-	bh=kcT09OZUbJn7r7Jo/y5OVKKGuM3vmeFNI4DtQDTevGg=;
+	s=arc-20240116; t=1748874340; c=relaxed/simple;
+	bh=6Y3L89GqaJNuDcgU5G6jPWt0hmRIYlgmJJi4Ec/aGzY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h8LB7BggaT7jBF+OCnvfbX3s6iW6+kNQFLnDp+flaTQSQMD3riEfhVf6t4l4u/ANUnggZMOdqKXAxG5O0NdtgHVxgvQUtVjcWfYVQIEjy7Dba9yg/yVN6JzOhUlG5NCoH5O6gUnRut/D4ZenJvFXCjUU7lijiE/4ezBRFLSxCWo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DErYP6Hh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=epVUlG7T9jI5pTCOq8wZFuFfyPKfnacqvL9UQL5WH6tOnfboZgF7u2JahrrfAlP7H7xDkpKZ58bjtRtMvsX1KWGl7tFxiNvFcjZySYkYUuD0E0N3Esgwkibahl1mHkHLLJMipCsnV/V223ZytqMTh6dZGj1U7Xu14tDqWJfZF8g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yqx0gSsA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DErYP6Hh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9104AC4CEEB;
-	Mon,  2 Jun 2025 14:25:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yqx0gSsA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47E79C4CEEB;
+	Mon,  2 Jun 2025 14:25:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748874334;
-	bh=kcT09OZUbJn7r7Jo/y5OVKKGuM3vmeFNI4DtQDTevGg=;
+	s=korg; t=1748874340;
+	bh=6Y3L89GqaJNuDcgU5G6jPWt0hmRIYlgmJJi4Ec/aGzY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DErYP6HhHS0Adof6exm5Lkv7TO61b5uBnlQ9paB0vHmC0kH+RJwMN07hDYLQrKhTb
-	 KySr5czKOVX2uJDXIEP9jyrD3CFyjGrYXtPNWCmH9GhR6gE+ahsbfNq/7QrnvmPJXI
-	 fXD0JFVTddzhWc+sUxG5fisyeeiAMzkg0XVrf9f8=
+	b=Yqx0gSsACc6naOWcxVFrNFuTfw/2qVqSBTjzL3Nzn9ybWOlIkX3Z7uaY8ytpikhwN
+	 Mrl2Vk6G/8/r3f29PC7X9CMXvfSiOQBE4DomVFzJuHLhuMtU/OyC72kD2ISq/ntaZt
+	 +MFmot6RlFI/DINowiOZdH0ec5jddeDc+X4XWP0I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Lee Jones <lee@kernel.org>
-Subject: [PATCH 6.6 405/444] af_unix: Iterate all vertices by DFS.
-Date: Mon,  2 Jun 2025 15:47:49 +0200
-Message-ID: <20250602134357.361786538@linuxfoundation.org>
+Subject: [PATCH 6.6 406/444] af_unix: Detect Strongly Connected Components.
+Date: Mon,  2 Jun 2025 15:47:50 +0200
+Message-ID: <20250602134357.407345608@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -54,150 +54,193 @@ Content-Transfer-Encoding: 8bit
 
 From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-commit 6ba76fd2848e107594ea4f03b737230f74bc23ea upstream.
+commit 3484f063172dd88776b062046d721d7c2ae1af7c upstream.
 
-The new GC will use a depth first search graph algorithm to find
-cyclic references.  The algorithm visits every vertex exactly once.
+In the new GC, we use a simple graph algorithm, Tarjan's Strongly
+Connected Components (SCC) algorithm, to find cyclic references.
 
-Here, we implement the DFS part without recursion so that no one
-can abuse it.
+The algorithm visits every vertex exactly once using depth-first
+search (DFS).
 
-unix_walk_scc() marks every vertex unvisited by initialising index
-as UNIX_VERTEX_INDEX_UNVISITED and iterates inflight vertices in
-unix_unvisited_vertices and call __unix_walk_scc() to start DFS from
-an arbitrary vertex.
+DFS starts by pushing an input vertex to a stack and assigning it
+a unique number.  Two fields, index and lowlink, are initialised
+with the number, but lowlink could be updated later during DFS.
 
-__unix_walk_scc() iterates all edges starting from the vertex and
-explores the neighbour vertices with DFS using edge_stack.
+If a vertex has an edge to an unvisited inflight vertex, we visit
+it and do the same processing.  So, we will have vertices in the
+stack in the order they appear and number them consecutively in
+the same order.
 
-After visiting all neighbours, __unix_walk_scc() moves the visited
-vertex to unix_visited_vertices so that unix_walk_scc() will not
-restart DFS from the visited vertex.
+If a vertex has a back-edge to a visited vertex in the stack,
+we update the predecessor's lowlink with the successor's index.
+
+After iterating edges from the vertex, we check if its index
+equals its lowlink.
+
+If the lowlink is different from the index, it shows there was a
+back-edge.  Then, we go backtracking and propagate the lowlink to
+its predecessor and resume the previous edge iteration from the
+next edge.
+
+If the lowlink is the same as the index, we pop vertices before
+and including the vertex from the stack.  Then, the set of vertices
+is SCC, possibly forming a cycle.  At the same time, we move the
+vertices to unix_visited_vertices.
+
+When we finish the algorithm, all vertices in each SCC will be
+linked via unix_vertex.scc_entry.
+
+Let's take an example.  We have a graph including five inflight
+vertices (F is not inflight):
+
+  A -> B -> C -> D -> E (-> F)
+       ^         |
+       `---------'
+
+Suppose that we start DFS from C.  We will visit C, D, and B first
+and initialise their index and lowlink.  Then, the stack looks like
+this:
+
+  > B = (3, 3)  (index, lowlink)
+    D = (2, 2)
+    C = (1, 1)
+
+When checking B's edge to C, we update B's lowlink with C's index
+and propagate it to D.
+
+    B = (3, 1)  (index, lowlink)
+  > D = (2, 1)
+    C = (1, 1)
+
+Next, we visit E, which has no edge to an inflight vertex.
+
+  > E = (4, 4)  (index, lowlink)
+    B = (3, 1)
+    D = (2, 1)
+    C = (1, 1)
+
+When we leave from E, its index and lowlink are the same, so we
+pop E from the stack as single-vertex SCC.  Next, we leave from
+B and D but do nothing because their lowlink are different from
+their index.
+
+    B = (3, 1)  (index, lowlink)
+    D = (2, 1)
+  > C = (1, 1)
+
+Then, we leave from C, whose index and lowlink are the same, so
+we pop B, D and C as SCC.
+
+Last, we do DFS for the rest of vertices, A, which is also a
+single-vertex SCC.
+
+Finally, each unix_vertex.scc_entry is linked as follows:
+
+  A -.  B -> C -> D  E -.
+  ^  |  ^         |  ^  |
+  `--'  `---------'  `--'
+
+We use SCC later to decide whether we can garbage-collect the
+sockets.
+
+Note that we still cannot detect SCC properly if an edge points
+to an embryo socket.  The following two patches will sort it out.
 
 Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
 Acked-by: Paolo Abeni <pabeni@redhat.com>
-Link: https://lore.kernel.org/r/20240325202425.60930-6-kuniyu@amazon.com
+Link: https://lore.kernel.org/r/20240325202425.60930-7-kuniyu@amazon.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/af_unix.h |    2 +
- net/unix/garbage.c    |   74 ++++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 76 insertions(+)
+ include/net/af_unix.h |    3 +++
+ net/unix/garbage.c    |   46 ++++++++++++++++++++++++++++++++++++++++++++--
+ 2 files changed, 47 insertions(+), 2 deletions(-)
 
 --- a/include/net/af_unix.h
 +++ b/include/net/af_unix.h
-@@ -33,12 +33,14 @@ struct unix_vertex {
+@@ -32,8 +32,11 @@ void wait_for_unix_gc(struct scm_fp_list
+ struct unix_vertex {
  	struct list_head edges;
  	struct list_head entry;
++	struct list_head scc_entry;
  	unsigned long out_degree;
-+	unsigned long index;
+ 	unsigned long index;
++	unsigned long lowlink;
++	bool on_stack;
  };
  
  struct unix_edge {
- 	struct unix_sock *predecessor;
- 	struct unix_sock *successor;
- 	struct list_head vertex_entry;
-+	struct list_head stack_entry;
- };
- 
- struct sock *unix_peer_get(struct sock *sk);
 --- a/net/unix/garbage.c
 +++ b/net/unix/garbage.c
-@@ -103,6 +103,11 @@ struct unix_sock *unix_get_socket(struct
- 
- static LIST_HEAD(unix_unvisited_vertices);
- 
-+enum unix_vertex_index {
-+	UNIX_VERTEX_INDEX_UNVISITED,
-+	UNIX_VERTEX_INDEX_START,
-+};
-+
- static void unix_add_edge(struct scm_fp_list *fpl, struct unix_edge *edge)
+@@ -251,11 +251,19 @@ static LIST_HEAD(unix_visited_vertices);
+ static void __unix_walk_scc(struct unix_vertex *vertex)
  {
- 	struct unix_vertex *vertex = edge->predecessor->vertex;
-@@ -241,6 +246,73 @@ void unix_destroy_fpl(struct scm_fp_list
- 	unix_free_vertices(fpl);
- }
+ 	unsigned long index = UNIX_VERTEX_INDEX_START;
++	LIST_HEAD(vertex_stack);
+ 	struct unix_edge *edge;
+ 	LIST_HEAD(edge_stack);
  
-+static LIST_HEAD(unix_visited_vertices);
-+
-+static void __unix_walk_scc(struct unix_vertex *vertex)
-+{
-+	unsigned long index = UNIX_VERTEX_INDEX_START;
-+	struct unix_edge *edge;
-+	LIST_HEAD(edge_stack);
-+
-+next_vertex:
-+	vertex->index = index;
-+	index++;
-+
-+	/* Explore neighbour vertices (receivers of the current vertex's fd). */
-+	list_for_each_entry(edge, &vertex->edges, vertex_entry) {
-+		struct unix_vertex *next_vertex = edge->successor->vertex;
-+
-+		if (!next_vertex)
-+			continue;
-+
-+		if (next_vertex->index == UNIX_VERTEX_INDEX_UNVISITED) {
-+			/* Iterative deepening depth first search
-+			 *
-+			 *   1. Push a forward edge to edge_stack and set
-+			 *      the successor to vertex for the next iteration.
-+			 */
-+			list_add(&edge->stack_entry, &edge_stack);
-+
-+			vertex = next_vertex;
-+			goto next_vertex;
-+
-+			/*   2. Pop the edge directed to the current vertex
-+			 *      and restore the ancestor for backtracking.
-+			 */
-+prev_vertex:
-+			edge = list_first_entry(&edge_stack, typeof(*edge), stack_entry);
-+			list_del_init(&edge->stack_entry);
-+
-+			vertex = edge->predecessor->vertex;
-+		}
-+	}
-+
-+	/* Don't restart DFS from this vertex in unix_walk_scc(). */
-+	list_move_tail(&vertex->entry, &unix_visited_vertices);
-+
-+	/* Need backtracking ? */
-+	if (!list_empty(&edge_stack))
-+		goto prev_vertex;
-+}
-+
-+static void unix_walk_scc(void)
-+{
-+	struct unix_vertex *vertex;
-+
-+	list_for_each_entry(vertex, &unix_unvisited_vertices, entry)
-+		vertex->index = UNIX_VERTEX_INDEX_UNVISITED;
-+
-+	/* Visit every vertex exactly once.
-+	 * __unix_walk_scc() moves visited vertices to unix_visited_vertices.
+ next_vertex:
++	/* Push vertex to vertex_stack.
++	 * The vertex will be popped when finalising SCC later.
 +	 */
-+	while (!list_empty(&unix_unvisited_vertices)) {
-+		vertex = list_first_entry(&unix_unvisited_vertices, typeof(*vertex), entry);
-+		__unix_walk_scc(vertex);
++	vertex->on_stack = true;
++	list_add(&vertex->scc_entry, &vertex_stack);
++
+ 	vertex->index = index;
++	vertex->lowlink = index;
+ 	index++;
+ 
+ 	/* Explore neighbour vertices (receivers of the current vertex's fd). */
+@@ -283,12 +291,46 @@ prev_vertex:
+ 			edge = list_first_entry(&edge_stack, typeof(*edge), stack_entry);
+ 			list_del_init(&edge->stack_entry);
+ 
++			next_vertex = vertex;
+ 			vertex = edge->predecessor->vertex;
++
++			/* If the successor has a smaller lowlink, two vertices
++			 * are in the same SCC, so propagate the smaller lowlink
++			 * to skip SCC finalisation.
++			 */
++			vertex->lowlink = min(vertex->lowlink, next_vertex->lowlink);
++		} else if (next_vertex->on_stack) {
++			/* Loop detected by a back/cross edge.
++			 *
++			 * The successor is on vertex_stack, so two vertices are
++			 * in the same SCC.  If the successor has a smaller index,
++			 * propagate it to skip SCC finalisation.
++			 */
++			vertex->lowlink = min(vertex->lowlink, next_vertex->index);
++		} else {
++			/* The successor was already grouped as another SCC */
+ 		}
+ 	}
+ 
+-	/* Don't restart DFS from this vertex in unix_walk_scc(). */
+-	list_move_tail(&vertex->entry, &unix_visited_vertices);
++	if (vertex->index == vertex->lowlink) {
++		struct list_head scc;
++
++		/* SCC finalised.
++		 *
++		 * If the lowlink was not updated, all the vertices above on
++		 * vertex_stack are in the same SCC.  Group them using scc_entry.
++		 */
++		__list_cut_position(&scc, &vertex_stack, &vertex->scc_entry);
++
++		list_for_each_entry_reverse(vertex, &scc, scc_entry) {
++			/* Don't restart DFS from this vertex in unix_walk_scc(). */
++			list_move_tail(&vertex->entry, &unix_visited_vertices);
++
++			vertex->on_stack = false;
++		}
++
++		list_del(&scc);
 +	}
-+
-+	list_replace_init(&unix_visited_vertices, &unix_unvisited_vertices);
-+}
-+
- static LIST_HEAD(gc_candidates);
- static LIST_HEAD(gc_inflight_list);
  
-@@ -388,6 +460,8 @@ static void __unix_gc(struct work_struct
- 
- 	spin_lock(&unix_gc_lock);
- 
-+	unix_walk_scc();
-+
- 	/* First, select candidates for garbage collection.  Only
- 	 * in-flight sockets are considered, and from those only ones
- 	 * which don't have any external reference.
+ 	/* Need backtracking ? */
+ 	if (!list_empty(&edge_stack))
 
 
