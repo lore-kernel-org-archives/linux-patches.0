@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F54622068E;
-	Mon,  2 Jun 2025 13:48:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6180E22068E;
+	Mon,  2 Jun 2025 13:48:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748872114; cv=none; b=Mjfg9C9Bdfei2Di/doJ/lLyIcW/3scOFirPiX00FYk+ydTIuYs4SSSg+s49ZRSmr7XlQrSr+6cJRla0NLLPNx/yYvaKBFOfngET4dqxF5CxDvzMlf9JUcbfGoRvf2RzsmsEQ7IqNKGh6iPY9YLtHQK57I4EVi71jMOW89SNSSys=
+	t=1748872117; cv=none; b=ab4E7Yb8FFw/nwj8AmfnBJ9mkNYLKSFMmKKqW3nYvC8lIumyTF1KZ/Qe1ysarNDpAEm41Dqap+nhyVqrzVTYEGD7GGQMLVBtInVziepyEFGKbORA7oe8gOJRW6imuNdSVsPsXd0RxwycaZ0N7rdbBlhmIZjc+JyyHtVVdP8rSQc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748872114; c=relaxed/simple;
-	bh=fVNVeCMDFVNCCYxHMBVADRrz8MFnKIVkJbFsjzKzd2M=;
+	s=arc-20240116; t=1748872117; c=relaxed/simple;
+	bh=24L9EPcppk+8QV2eF+kgb6M1IbeXqCrjgCegm6xT+R0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dL+5jEE+RBwQd2bfh8cAOBGIYM2IDw5f/neJJJT/gPVnS29QlpVo1GOz4OQOL/Yd1tnBQbUZI4gn162E15KLy+3OUCiO/wn3ug8rgm6CjnIUtiF0DQ+fAAWtJtM5V1NZdT244VHzF8khvBzFvTxae5GSMUDzH5ywSPN/C83Rqe4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dJk/MOoX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=eZV5Dr9GS/QxJ2W842oLn8gnDYPSPz5Hic2qaXh7O1iC9DsAk/yTY7KdxDq8tKU5pBKosPh4bort6VOP8o0OB3aXPXFSXm3zn7dQpKfDOPwKAtHHv0/YD9MMjOME/uo+NTP04cCQNLvNiK3r7k0SfCu7sW/aC7TFbWB1OgEOEMg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ueJB0Jp5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dJk/MOoX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AE69C4CEEB;
-	Mon,  2 Jun 2025 13:48:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ueJB0Jp5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5019C4CEEB;
+	Mon,  2 Jun 2025 13:48:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748872114;
-	bh=fVNVeCMDFVNCCYxHMBVADRrz8MFnKIVkJbFsjzKzd2M=;
+	s=korg; t=1748872117;
+	bh=24L9EPcppk+8QV2eF+kgb6M1IbeXqCrjgCegm6xT+R0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dJk/MOoXAtEiszXzA2BI5Ut4C48Q558maC5TjV/Hj7lmG+WBxD6Vzr0reHj+vVIqt
-	 bZHiOvGI6EXCJVir8PeqjDzZjCwhjmQJ5YRXLUJU0HxZACpmTyB8ecmzna+FtGYg++
-	 hcXNukBmTcCa6+KwHakEtucjdVnlgOIL06Kq/h2k=
+	b=ueJB0Jp5tds9vDgc6QQdVivCIazEjj9kp3gjevC+z43qLqHYvooiG7Sn94311FD+d
+	 cOH5StmLv2tJNf2UuskGs6w0NM/JJBhcX1f7+p9wBUh3Ehs7LLImhf3cxVpMH06g0s
+	 Ky1xohM+iRg0qaHGQtdnrLkfQKPANoYzmr+0EdsI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Stephan Gerhold <stephan.gerhold@linaro.org>,
 	Johan Hovold <johan+linaro@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.15 22/49] arm64: dts: qcom: x1e80100-yoga-slim7x: mark l12b and l15b always-on
-Date: Mon,  2 Jun 2025 15:47:14 +0200
-Message-ID: <20250602134238.815251149@linuxfoundation.org>
+Subject: [PATCH 6.15 23/49] arm64: dts: qcom: x1e80100: Fix video thermal zone
+Date: Mon,  2 Jun 2025 15:47:15 +0200
+Message-ID: <20250602134238.854242976@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134237.940995114@linuxfoundation.org>
 References: <20250602134237.940995114@linuxfoundation.org>
@@ -46,53 +46,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
 
-commit f43a71dc6d8d8378af587675eec77c06e0298c79 upstream.
+commit 801befff4c827aa72e3698367c5afc18987a6a3f upstream.
 
-The l12b and l15b supplies are used by components that are not (fully)
-described (and some never will be) and must never be disabled.
+A passive trip point at 125°C is pretty high, this is usually the
+temperature for the critical shutdown trip point. Also, we don't have any
+passive cooling devices attached to the video thermal zone.
 
-Mark the regulators as always-on to prevent them from being disabled,
-for example, when consumers probe defer or suspend.
+Change this to be a critical trip point, and add a "hot" trip point at
+90°C for consistency with the other thermal zones.
 
-Fixes: 45247fe17db2 ("arm64: dts: qcom: x1e80100: add Lenovo Thinkpad Yoga slim 7x devicetree")
-Cc: stable@vger.kernel.org	# 6.11
-Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc: stable@vger.kernel.org
+Fixes: 4e915987ff5b ("arm64: dts: qcom: x1e80100: Enable tsens and thermal zone nodes")
+Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
 Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20250314145440.11371-7-johan+linaro@kernel.org
+Link: https://lore.kernel.org/r/20250219-x1e80100-thermal-fixes-v1-1-d110e44ac3f9@linaro.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/x1e80100.dtsi |   10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
---- a/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
-+++ b/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
-@@ -290,6 +290,7 @@
- 			regulator-min-microvolt = <1200000>;
- 			regulator-max-microvolt = <1200000>;
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-always-on;
+--- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
++++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+@@ -8727,15 +8727,19 @@
  		};
  
- 		vreg_l14b_3p0: ldo14 {
-@@ -304,8 +305,8 @@
- 			regulator-min-microvolt = <1800000>;
- 			regulator-max-microvolt = <1800000>;
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-always-on;
- 		};
+ 		video-thermal {
+-			polling-delay-passive = <250>;
 -
- 	};
+ 			thermal-sensors = <&tsens0 12>;
  
- 	regulators-1 {
+ 			trips {
+ 				trip-point0 {
++					temperature = <90000>;
++					hysteresis = <2000>;
++					type = "hot";
++				};
++
++				video-critical {
+ 					temperature = <125000>;
+ 					hysteresis = <1000>;
+-					type = "passive";
++					type = "critical";
+ 				};
+ 			};
+ 		};
 
 
