@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AF9CEEBD;
-	Mon,  2 Jun 2025 15:07:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29E39EEBD;
+	Mon,  2 Jun 2025 15:07:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748876859; cv=none; b=HckdzqNELalx9ZYSS3yJT8cHunQG3sNF8JmUyclD7PUg6FpceR9v/XAEQXCPe6uV6+hDYPosQbNUO6hOHEYgzjdU6w5XNHxH6ozs2g5+57aDiZ/AvvE2RtakRAyi+UIzRmXpkQdVy2Jz3PHp0sGXAxlrsV491PBkA7+9JgQ7S6c=
+	t=1748876862; cv=none; b=g/AAqm+mog68g9WLLXNWSK6Bnsihnh4SK4mm8mECSDut9nWNqwKpjVXfGx8pfKQpWkJOfAnn8LP8B05lPg/kQed6M4S2myP1pAT/WoyE6oA5zcb9IY44+qxDpdrcS3y5PsX3urt4J8jx9x7TzstRYrfchFkQjaQdZsgkcFUdhyY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748876859; c=relaxed/simple;
-	bh=dkMCt2fkf1aUEPg9rhuKbqot2vBRLyCrlqF8IA5STGY=;
+	s=arc-20240116; t=1748876862; c=relaxed/simple;
+	bh=x6mDlcZRB4OEYSIh5rDBKL8weRrP06TNUWRwHSNTlSg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ji+juW3eXMf4gXS3zBznOdb9WjaGh78K0EU1m079PptXT9Dkpo8J/8eh351RsrZTVx55/MfQ2BVBr0UOrevtkHgKe1rV4jdHNu7kkt1SByUBgh4uXqCleZPRWGY1kMZPxXoMBmrDr7hjkVYwSVMh3OJ42StAAdSDzGny6LP1vEI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DUMIGNgI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BmeMFQcYuzpmfV4HSPiEw2VrpLYEhYSdVdqDdMCBvK08MsPfQs3HcJIekTJOrn7gGts2QRyZSDVZwNnHtL5ySww0meGlYIU+ng/93ix4BckOFVVwQh92fXwh+KNfGATeEforWKwP9qqgC1stTXaJGobID+guLQQM/gfi3UpRPdk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FIh6zgDt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DUMIGNgI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BE6FC4CEEB;
-	Mon,  2 Jun 2025 15:07:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FIh6zgDt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A06D6C4CEEB;
+	Mon,  2 Jun 2025 15:07:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748876859;
-	bh=dkMCt2fkf1aUEPg9rhuKbqot2vBRLyCrlqF8IA5STGY=;
+	s=korg; t=1748876862;
+	bh=x6mDlcZRB4OEYSIh5rDBKL8weRrP06TNUWRwHSNTlSg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DUMIGNgIBPaU4aTGiW69AAKctW6ePC8ESFtE+RZ/ErgUnGuH4EiiDG8mukFK7vVC1
-	 WZ6GIOtKUZOL6KGUNzLHf83jFMdhCW7MB//QNlj0a4XgvNBLCVMi8yNeId1fd8ki4M
-	 sEs+lD9OxsqG8pUtacKqZWu2DVM2Z4gm4XpA8a64=
+	b=FIh6zgDtyR9tmTpPShBHwGavu0F6aB60rTp1YjgL3laT6cETHwG09iA0qxxA1ZU0n
+	 GgXitSvJidQjalI3KGSLBIGwWnmYFPAf4Ra2KH8gdjYsGWCUh6kdNaUeArSn5+sL3p
+	 S/ROUT0IIOKtqoEdLsIf6IT1X3f7Fw9Gsd98yudY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Schwab <schwab@linux-m68k.org>,
-	"Rob Herring (Arm)" <robh@kernel.org>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	syzbot+2d373c9936c00d7e120c@syzkaller.appspotmail.com,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 096/325] powerpc/prom_init: Fixup missing #size-cells on PowerBook6,7
-Date: Mon,  2 Jun 2025 15:46:12 +0200
-Message-ID: <20250602134323.688782938@linuxfoundation.org>
+Subject: [PATCH 6.1 097/325] ALSA: seq: Improve data consistency at polling
+Date: Mon,  2 Jun 2025 15:46:13 +0200
+Message-ID: <20250602134323.726743145@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134319.723650984@linuxfoundation.org>
 References: <20250602134319.723650984@linuxfoundation.org>
@@ -52,42 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andreas Schwab <schwab@linux-m68k.org>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 7e67ef889c9ab7246547db73d524459f47403a77 ]
+[ Upstream commit e3cd33ab17c33bd8f1a9df66ec83a15dd8f7afbb ]
 
-Similar to the PowerMac3,1, the PowerBook6,7 is missing the #size-cells
-property on the i2s node.
+snd_seq_poll() calls snd_seq_write_pool_allocated() that reads out a
+field in client->pool object, while it can be updated concurrently via
+ioctls, as reported by syzbot.  The data race itself is harmless, as
+it's merely a poll() call, and the state is volatile.  OTOH, the read
+out of poll object info from the caller side is fragile, and we can
+leave it better in snd_seq_pool_poll_wait() alone.
 
-Depends-on: commit 045b14ca5c36 ("of: WARN on deprecated #address-cells/#size-cells handling")
-Signed-off-by: Andreas Schwab <schwab@linux-m68k.org>
-Acked-by: Rob Herring (Arm) <robh@kernel.org>
-[maddy: added "commit" work in depends-on to avoid checkpatch error]
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/875xmizl6a.fsf@igel.home
+A similar pattern is seen in snd_seq_kernel_client_write_poll(), too,
+which is called from the OSS sequencer.
+
+This patch drops the pool checks from the caller side and add the
+pool->lock in snd_seq_pool_poll_wait() for better data consistency.
+
+Reported-by: syzbot+2d373c9936c00d7e120c@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/67c88903.050a0220.15b4b9.0028.GAE@google.com
+Link: https://patch.msgid.link/20250307084246.29271-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kernel/prom_init.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/core/seq/seq_clientmgr.c | 5 +----
+ sound/core/seq/seq_memory.c    | 1 +
+ 2 files changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/arch/powerpc/kernel/prom_init.c b/arch/powerpc/kernel/prom_init.c
-index a6090896f7497..ac669e58e2023 100644
---- a/arch/powerpc/kernel/prom_init.c
-+++ b/arch/powerpc/kernel/prom_init.c
-@@ -2974,11 +2974,11 @@ static void __init fixup_device_tree_pmac(void)
- 	char type[8];
- 	phandle node;
+diff --git a/sound/core/seq/seq_clientmgr.c b/sound/core/seq/seq_clientmgr.c
+index 2d707afa1ef1c..1252ea7ad55ea 100644
+--- a/sound/core/seq/seq_clientmgr.c
++++ b/sound/core/seq/seq_clientmgr.c
+@@ -1140,8 +1140,7 @@ static __poll_t snd_seq_poll(struct file *file, poll_table * wait)
+ 	if (snd_seq_file_flags(file) & SNDRV_SEQ_LFLG_OUTPUT) {
  
--	// Some pmacs are missing #size-cells on escc nodes
-+	// Some pmacs are missing #size-cells on escc or i2s nodes
- 	for (node = 0; prom_next_node(&node); ) {
- 		type[0] = '\0';
- 		prom_getprop(node, "device_type", type, sizeof(type));
--		if (prom_strcmp(type, "escc"))
-+		if (prom_strcmp(type, "escc") && prom_strcmp(type, "i2s"))
- 			continue;
+ 		/* check if data is available in the pool */
+-		if (!snd_seq_write_pool_allocated(client) ||
+-		    snd_seq_pool_poll_wait(client->pool, file, wait))
++		if (snd_seq_pool_poll_wait(client->pool, file, wait))
+ 			mask |= EPOLLOUT | EPOLLWRNORM;
+ 	}
  
- 		if (prom_getproplen(node, "#size-cells") != PROM_ERROR)
+@@ -2382,8 +2381,6 @@ int snd_seq_kernel_client_write_poll(int clientid, struct file *file, poll_table
+ 	if (client == NULL)
+ 		return -ENXIO;
+ 
+-	if (! snd_seq_write_pool_allocated(client))
+-		return 1;
+ 	if (snd_seq_pool_poll_wait(client->pool, file, wait))
+ 		return 1;
+ 	return 0;
+diff --git a/sound/core/seq/seq_memory.c b/sound/core/seq/seq_memory.c
+index 47ef6bc30c0ee..e30b92d85079b 100644
+--- a/sound/core/seq/seq_memory.c
++++ b/sound/core/seq/seq_memory.c
+@@ -366,6 +366,7 @@ int snd_seq_pool_poll_wait(struct snd_seq_pool *pool, struct file *file,
+ 			   poll_table *wait)
+ {
+ 	poll_wait(file, &pool->output_sleep, wait);
++	guard(spinlock_irq)(&pool->lock);
+ 	return snd_seq_output_ok(pool);
+ }
+ 
 -- 
 2.39.5
 
