@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 252582222AF;
-	Mon,  2 Jun 2025 14:15:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23E7D221FDD;
+	Mon,  2 Jun 2025 14:15:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748873755; cv=none; b=k5IL+HC3aNPVzWAEBd7rROzMOIXXCNIQJyjc5bKpJ3CkP42r11+0O50AMEMJCslzXcYXKvGJ9uPrqk6lrPEIASb9EZOwbuRkPuDI/omEjgcB2XD0OSkhYMKSZ/S1tRpZAjq4uyWm7byBMvtT6NgkpZrIzug5Om764LYVH211r4Y=
+	t=1748873758; cv=none; b=UG+upqETrhbvjh1Wqt3Msu4L0jAlCuMHOic0keJvmqMrKWCQB7w7nyKXCjE1rbFkiAfeg+G9A8nwcam9ByNTPUA3X49/0CbpMj366pXp5n9LL7sjyqLcUlbPm+c/YqGmkAyvBUFmMh41X3jF0CVFxBpmKUKEynMpySWSo/WFntU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748873755; c=relaxed/simple;
-	bh=6L+777jYcEcXxJ24JEk4HnBaSL1GC4JfM+aKmid5JrU=;
+	s=arc-20240116; t=1748873758; c=relaxed/simple;
+	bh=qED+stbDnGFZ3sa2VlMx5tIvdAKcOqTe3myvPRooVtw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hBQmok0Vy5dm8IXU/RvaD3k8d3I+U98Pmui2azjm6QwL7ol6Ty77MDlsSbdbLsLa4Dd5Nw+qVc+npFV426vDNLTkqiiVaTAZUATopQpfaZDxy3cbqfvO92prRLvu/Zzaxd45rVpnBoKLjMsRuL3SCtBiAGEScolroj0fR9mhVFQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kx7lE4FJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=bMDikGoFjWotG6qAonfphKUrXas52mB55XFy3bbhefPz788IsVE4a3eAnnwwyMySDBuBgu328/YGKsBLMhWdR+aEyJd+t24wUC17wHqS9WvpAKvPira8ipw4CLz+lwXgmEOawjflEtwrJjl/9rYlbS7IfcN/6jF/K/EkrkrcQIQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GgVVL4jR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kx7lE4FJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA9DEC4CEEB;
-	Mon,  2 Jun 2025 14:15:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GgVVL4jR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75CECC4CEEB;
+	Mon,  2 Jun 2025 14:15:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748873755;
-	bh=6L+777jYcEcXxJ24JEk4HnBaSL1GC4JfM+aKmid5JrU=;
+	s=korg; t=1748873758;
+	bh=qED+stbDnGFZ3sa2VlMx5tIvdAKcOqTe3myvPRooVtw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kx7lE4FJ1Ssmn8AYeqFdBn3CbnAsFOxLNtY1oV815a7tRdwvtl9+cLedkK8WUpcDV
-	 bG778IKxDNLszJLBzJhq7JSNkxoV3bA3madCFLPyozx/lmODGPJvpT1+lwoCbMDFrc
-	 16DMvYLsip51ixZwluSVtvoY+mf5wG2Qkr5sJ+bw=
+	b=GgVVL4jRX6m8sV9CF4LGGT6449ZZlIi+rQEqkUMY8bDjnB3xYT+LxfE5uLdOmFiYb
+	 LHZGYKi9JlqMspPMj69HNS55TkkuLO3ELyMNwtU6xALZlNfLkIRqC323uajRHSXlsR
+	 it2DbZZYmTUgad7bxTJoKNUt96JJqg0a96sj20/c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenjing Liu <wenjing.liu@amd.com>,
-	Harry VanZyllDeJong <hvanzyll@amd.com>,
-	Roman Li <roman.li@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Jiri Slaby <jirislaby@kernel.org>,
+	=?UTF-8?q?Alexis=20Lothor=C3=A9?= <alexis.lothore@bootlin.com>,
+	Richard Genoud <richard.genoud@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 210/444] drm/amd/display: Add support for disconnected eDP streams
-Date: Mon,  2 Jun 2025 15:44:34 +0200
-Message-ID: <20250602134349.431723436@linuxfoundation.org>
+Subject: [PATCH 6.6 211/444] serial: mctrl_gpio: split disable_ms into sync and no_sync APIs
+Date: Mon,  2 Jun 2025 15:44:35 +0200
+Message-ID: <20250602134349.474164589@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -48,48 +46,249 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Harry VanZyllDeJong <hvanzyll@amd.com>
+From: Alexis Lothoré <alexis.lothore@bootlin.com>
 
-[ Upstream commit 6571bef25fe48c642f7a69ccf7c3198b317c136a ]
+[ Upstream commit 1bd2aad57da95f7f2d2bb52f7ad15c0f4993a685 ]
 
-[Why]
-eDP may not be connected to the GPU on driver start causing
-fail enumeration.
+The following splat has been observed on a SAMA5D27 platform using
+atmel_serial:
 
-[How]
-Move the virtual signal type check before the eDP connector
-signal check.
+BUG: sleeping function called from invalid context at kernel/irq/manage.c:738
+in_atomic(): 1, irqs_disabled(): 128, non_block: 0, pid: 27, name: kworker/u5:0
+preempt_count: 1, expected: 0
+INFO: lockdep is turned off.
+irq event stamp: 0
+hardirqs last  enabled at (0): [<00000000>] 0x0
+hardirqs last disabled at (0): [<c01588f0>] copy_process+0x1c4c/0x7bec
+softirqs last  enabled at (0): [<c0158944>] copy_process+0x1ca0/0x7bec
+softirqs last disabled at (0): [<00000000>] 0x0
+CPU: 0 UID: 0 PID: 27 Comm: kworker/u5:0 Not tainted 6.13.0-rc7+ #74
+Hardware name: Atmel SAMA5
+Workqueue: hci0 hci_power_on [bluetooth]
+Call trace:
+  unwind_backtrace from show_stack+0x18/0x1c
+  show_stack from dump_stack_lvl+0x44/0x70
+  dump_stack_lvl from __might_resched+0x38c/0x598
+  __might_resched from disable_irq+0x1c/0x48
+  disable_irq from mctrl_gpio_disable_ms+0x74/0xc0
+  mctrl_gpio_disable_ms from atmel_disable_ms.part.0+0x80/0x1f4
+  atmel_disable_ms.part.0 from atmel_set_termios+0x764/0x11e8
+  atmel_set_termios from uart_change_line_settings+0x15c/0x994
+  uart_change_line_settings from uart_set_termios+0x2b0/0x668
+  uart_set_termios from tty_set_termios+0x600/0x8ec
+  tty_set_termios from ttyport_set_flow_control+0x188/0x1e0
+  ttyport_set_flow_control from wilc_setup+0xd0/0x524 [hci_wilc]
+  wilc_setup [hci_wilc] from hci_dev_open_sync+0x330/0x203c [bluetooth]
+  hci_dev_open_sync [bluetooth] from hci_dev_do_open+0x40/0xb0 [bluetooth]
+  hci_dev_do_open [bluetooth] from hci_power_on+0x12c/0x664 [bluetooth]
+  hci_power_on [bluetooth] from process_one_work+0x998/0x1a38
+  process_one_work from worker_thread+0x6e0/0xfb4
+  worker_thread from kthread+0x3d4/0x484
+  kthread from ret_from_fork+0x14/0x28
 
-Reviewed-by: Wenjing Liu <wenjing.liu@amd.com>
-Signed-off-by: Harry VanZyllDeJong <hvanzyll@amd.com>
-Signed-off-by: Roman Li <roman.li@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+This warning is emitted when trying to toggle, at the highest level,
+some flow control (with serdev_device_set_flow_control) in a device
+driver. At the lowest level, the atmel_serial driver is using
+serial_mctrl_gpio lib to enable/disable the corresponding IRQs
+accordingly.  The warning emitted by CONFIG_DEBUG_ATOMIC_SLEEP is due to
+disable_irq (called in mctrl_gpio_disable_ms) being possibly called in
+some atomic context (some tty drivers perform modem lines configuration
+in regions protected by port lock).
+
+Split mctrl_gpio_disable_ms into two differents APIs, a non-blocking one
+and a blocking one. Replace mctrl_gpio_disable_ms calls with the
+relevant version depending on whether the call is protected by some port
+lock.
+
+Suggested-by: Jiri Slaby <jirislaby@kernel.org>
+Signed-off-by: Alexis Lothoré <alexis.lothore@bootlin.com>
+Acked-by: Richard Genoud <richard.genoud@bootlin.com>
+Link: https://lore.kernel.org/r/20250217-atomic_sleep_mctrl_serial_gpio-v3-1-59324b313eef@bootlin.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c | 3 +++
- 1 file changed, 3 insertions(+)
+ Documentation/driver-api/serial/driver.rst |  2 +-
+ drivers/tty/serial/8250/8250_port.c        |  2 +-
+ drivers/tty/serial/atmel_serial.c          |  2 +-
+ drivers/tty/serial/imx.c                   |  2 +-
+ drivers/tty/serial/serial_mctrl_gpio.c     | 34 +++++++++++++++++-----
+ drivers/tty/serial/serial_mctrl_gpio.h     | 17 +++++++++--
+ drivers/tty/serial/sh-sci.c                |  2 +-
+ drivers/tty/serial/stm32-usart.c           |  2 +-
+ 8 files changed, 47 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c
-index 1e621eae9b7da..adf0ef8b70e4b 100644
---- a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c
-+++ b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c
-@@ -920,6 +920,9 @@ bool link_decide_link_settings(struct dc_stream_state *stream,
- 		 * TODO: add MST specific link training routine
- 		 */
- 		decide_mst_link_settings(link, link_setting);
-+	} else if (stream->signal == SIGNAL_TYPE_VIRTUAL) {
-+		link_setting->lane_count = LANE_COUNT_FOUR;
-+		link_setting->link_rate = LINK_RATE_HIGH3;
- 	} else if (link->connector_signal == SIGNAL_TYPE_EDP) {
- 		/* enable edp link optimization for DSC eDP case */
- 		if (stream->timing.flags.DSC) {
+diff --git a/Documentation/driver-api/serial/driver.rst b/Documentation/driver-api/serial/driver.rst
+index 84b43061c11be..60434f2b02863 100644
+--- a/Documentation/driver-api/serial/driver.rst
++++ b/Documentation/driver-api/serial/driver.rst
+@@ -103,4 +103,4 @@ Some helpers are provided in order to set/get modem control lines via GPIO.
+ .. kernel-doc:: drivers/tty/serial/serial_mctrl_gpio.c
+    :identifiers: mctrl_gpio_init mctrl_gpio_free mctrl_gpio_to_gpiod
+            mctrl_gpio_set mctrl_gpio_get mctrl_gpio_enable_ms
+-           mctrl_gpio_disable_ms
++           mctrl_gpio_disable_ms_sync mctrl_gpio_disable_ms_no_sync
+diff --git a/drivers/tty/serial/8250/8250_port.c b/drivers/tty/serial/8250/8250_port.c
+index c2778300e1510..d5ad6cae6b652 100644
+--- a/drivers/tty/serial/8250/8250_port.c
++++ b/drivers/tty/serial/8250/8250_port.c
+@@ -1676,7 +1676,7 @@ static void serial8250_disable_ms(struct uart_port *port)
+ 	if (up->bugs & UART_BUG_NOMSR)
+ 		return;
+ 
+-	mctrl_gpio_disable_ms(up->gpios);
++	mctrl_gpio_disable_ms_no_sync(up->gpios);
+ 
+ 	up->ier &= ~UART_IER_MSI;
+ 	serial_port_out(port, UART_IER, up->ier);
+diff --git a/drivers/tty/serial/atmel_serial.c b/drivers/tty/serial/atmel_serial.c
+index bcca5627afaca..85559d9b35d83 100644
+--- a/drivers/tty/serial/atmel_serial.c
++++ b/drivers/tty/serial/atmel_serial.c
+@@ -698,7 +698,7 @@ static void atmel_disable_ms(struct uart_port *port)
+ 
+ 	atmel_port->ms_irq_enabled = false;
+ 
+-	mctrl_gpio_disable_ms(atmel_port->gpios);
++	mctrl_gpio_disable_ms_no_sync(atmel_port->gpios);
+ 
+ 	if (!mctrl_gpio_to_gpiod(atmel_port->gpios, UART_GPIO_CTS))
+ 		idr |= ATMEL_US_CTSIC;
+diff --git a/drivers/tty/serial/imx.c b/drivers/tty/serial/imx.c
+index 349d4849ba5e3..04809b781f45b 100644
+--- a/drivers/tty/serial/imx.c
++++ b/drivers/tty/serial/imx.c
+@@ -1597,7 +1597,7 @@ static void imx_uart_shutdown(struct uart_port *port)
+ 		imx_uart_dma_exit(sport);
+ 	}
+ 
+-	mctrl_gpio_disable_ms(sport->gpios);
++	mctrl_gpio_disable_ms_sync(sport->gpios);
+ 
+ 	spin_lock_irqsave(&sport->port.lock, flags);
+ 	ucr2 = imx_uart_readl(sport, UCR2);
+diff --git a/drivers/tty/serial/serial_mctrl_gpio.c b/drivers/tty/serial/serial_mctrl_gpio.c
+index 7d5aaa8d422b1..d5fb293dd5a93 100644
+--- a/drivers/tty/serial/serial_mctrl_gpio.c
++++ b/drivers/tty/serial/serial_mctrl_gpio.c
+@@ -322,11 +322,7 @@ void mctrl_gpio_enable_ms(struct mctrl_gpios *gpios)
+ }
+ EXPORT_SYMBOL_GPL(mctrl_gpio_enable_ms);
+ 
+-/**
+- * mctrl_gpio_disable_ms - disable irqs and handling of changes to the ms lines
+- * @gpios: gpios to disable
+- */
+-void mctrl_gpio_disable_ms(struct mctrl_gpios *gpios)
++static void mctrl_gpio_disable_ms(struct mctrl_gpios *gpios, bool sync)
+ {
+ 	enum mctrl_gpio_idx i;
+ 
+@@ -342,10 +338,34 @@ void mctrl_gpio_disable_ms(struct mctrl_gpios *gpios)
+ 		if (!gpios->irq[i])
+ 			continue;
+ 
+-		disable_irq(gpios->irq[i]);
++		if (sync)
++			disable_irq(gpios->irq[i]);
++		else
++			disable_irq_nosync(gpios->irq[i]);
+ 	}
+ }
+-EXPORT_SYMBOL_GPL(mctrl_gpio_disable_ms);
++
++/**
++ * mctrl_gpio_disable_ms_sync - disable irqs and handling of changes to the ms
++ * lines, and wait for any pending IRQ to be processed
++ * @gpios: gpios to disable
++ */
++void mctrl_gpio_disable_ms_sync(struct mctrl_gpios *gpios)
++{
++	mctrl_gpio_disable_ms(gpios, true);
++}
++EXPORT_SYMBOL_GPL(mctrl_gpio_disable_ms_sync);
++
++/**
++ * mctrl_gpio_disable_ms_no_sync - disable irqs and handling of changes to the
++ * ms lines, and return immediately
++ * @gpios: gpios to disable
++ */
++void mctrl_gpio_disable_ms_no_sync(struct mctrl_gpios *gpios)
++{
++	mctrl_gpio_disable_ms(gpios, false);
++}
++EXPORT_SYMBOL_GPL(mctrl_gpio_disable_ms_no_sync);
+ 
+ void mctrl_gpio_enable_irq_wake(struct mctrl_gpios *gpios)
+ {
+diff --git a/drivers/tty/serial/serial_mctrl_gpio.h b/drivers/tty/serial/serial_mctrl_gpio.h
+index fc76910fb105a..79e97838ebe56 100644
+--- a/drivers/tty/serial/serial_mctrl_gpio.h
++++ b/drivers/tty/serial/serial_mctrl_gpio.h
+@@ -87,9 +87,16 @@ void mctrl_gpio_free(struct device *dev, struct mctrl_gpios *gpios);
+ void mctrl_gpio_enable_ms(struct mctrl_gpios *gpios);
+ 
+ /*
+- * Disable gpio interrupts to report status line changes.
++ * Disable gpio interrupts to report status line changes, and block until
++ * any corresponding IRQ is processed
+  */
+-void mctrl_gpio_disable_ms(struct mctrl_gpios *gpios);
++void mctrl_gpio_disable_ms_sync(struct mctrl_gpios *gpios);
++
++/*
++ * Disable gpio interrupts to report status line changes, and return
++ * immediately
++ */
++void mctrl_gpio_disable_ms_no_sync(struct mctrl_gpios *gpios);
+ 
+ /*
+  * Enable gpio wakeup interrupts to enable wake up source.
+@@ -148,7 +155,11 @@ static inline void mctrl_gpio_enable_ms(struct mctrl_gpios *gpios)
+ {
+ }
+ 
+-static inline void mctrl_gpio_disable_ms(struct mctrl_gpios *gpios)
++static inline void mctrl_gpio_disable_ms_sync(struct mctrl_gpios *gpios)
++{
++}
++
++static inline void mctrl_gpio_disable_ms_no_sync(struct mctrl_gpios *gpios)
+ {
+ }
+ 
+diff --git a/drivers/tty/serial/sh-sci.c b/drivers/tty/serial/sh-sci.c
+index 4350a69d97d7a..2434eb6e6847d 100644
+--- a/drivers/tty/serial/sh-sci.c
++++ b/drivers/tty/serial/sh-sci.c
+@@ -2237,7 +2237,7 @@ static void sci_shutdown(struct uart_port *port)
+ 	dev_dbg(port->dev, "%s(%d)\n", __func__, port->line);
+ 
+ 	s->autorts = false;
+-	mctrl_gpio_disable_ms(to_sci_port(port)->gpios);
++	mctrl_gpio_disable_ms_sync(to_sci_port(port)->gpios);
+ 
+ 	spin_lock_irqsave(&port->lock, flags);
+ 	sci_stop_rx(port);
+diff --git a/drivers/tty/serial/stm32-usart.c b/drivers/tty/serial/stm32-usart.c
+index 9ef90bb30a47e..b58422ae156c9 100644
+--- a/drivers/tty/serial/stm32-usart.c
++++ b/drivers/tty/serial/stm32-usart.c
+@@ -952,7 +952,7 @@ static void stm32_usart_enable_ms(struct uart_port *port)
+ 
+ static void stm32_usart_disable_ms(struct uart_port *port)
+ {
+-	mctrl_gpio_disable_ms(to_stm32_port(port)->gpios);
++	mctrl_gpio_disable_ms_sync(to_stm32_port(port)->gpios);
+ }
+ 
+ /* Transmit stop */
 -- 
 2.39.5
 
