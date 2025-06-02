@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 389DF2248A4;
-	Mon,  2 Jun 2025 14:10:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C66C23313E;
+	Mon,  2 Jun 2025 14:10:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748873424; cv=none; b=cC9Bop5kxQg7aLLFPnLooQ9ibS+5MPS4mfbvD6FZOdIjsJJqqQNXzzFBjTTpJu0gvI26ZTw48qq61NRFeXhPqC0ejhga4n7a6KxokKE0+oEyKwE5uyB+qLOQriteE3zoi8FLuTGvJPoGeULAhjnKNADcqvm/xxh3i1syN31XFxw=
+	t=1748873427; cv=none; b=SMCqf0Z81j8QGCOOtaaoloY3wQvIPhHSC+iJ+lhfIQT0yfHo/y+ZFsHXE+ihdjSjORpgTP1A6CxRRadNbYIHq8PMjE6tUpXScfEbW1RyT1YpRvN14iHhSJ36iDG6C8T2/XYqKnKy0PI+oDUd+wuGdOsB6Cpuyw77fjwZs1SYmQ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748873424; c=relaxed/simple;
-	bh=WOps2QQHbq1K+QNZiImYWTKm6N0OfxfXS3ogy5XfyQE=;
+	s=arc-20240116; t=1748873427; c=relaxed/simple;
+	bh=psHaENzI2HEXWYKO/MBGfEMVthBYMU9o8MxGe8ZLxKw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YRglflsjFLVl2Kzjtx9dXG7vgUdeTkyqyLxgNsRKkwcOUsOVBdbf5Tm1eSkLkqp5FsqZ8gVLFCuMBQWScoq93LPDQ6zgOCEXOIhb8g1au1EygiML47z0WVqIU1jtsDziSnmKk7U0eJDozXgioy4e+S1p8yT1OF9mxEZHDAgQxJw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OEV8piRF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LF4r57BM5rK+A+u0aQ5FCsGJF1KG25bkuQGCUExaQvd1KVUi3rsh3IzwyP/C32Zj12FXsU0v092lxVpo4RQCMg2GWwtFEyC95LgBbbsKf9ucWeCuBV4YII7I5Fo6xqXRWOAQfK9IW9JVzxL52Qo0CkGAD1m6KriW/FDY4J1PtYE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LJwHWsdU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OEV8piRF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B942C4CEEB;
-	Mon,  2 Jun 2025 14:10:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LJwHWsdU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80C13C4CEF0;
+	Mon,  2 Jun 2025 14:10:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748873423;
-	bh=WOps2QQHbq1K+QNZiImYWTKm6N0OfxfXS3ogy5XfyQE=;
+	s=korg; t=1748873426;
+	bh=psHaENzI2HEXWYKO/MBGfEMVthBYMU9o8MxGe8ZLxKw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OEV8piRFyj3QjuKo6T3pcI5XxnyD+KH4qsor8ekiufMsKNNtMDU2HpTyxSDhqBacY
-	 RnLoG0rHICrxQRvU10lVzaZ1vyJzLaPPTRNsFMx7qZCtswYTv8XR/i9uJHtdG/ZKQA
-	 HOc6CVv6KcbRF/k0cQCOYdIl/d9q63S04daUTMJc=
+	b=LJwHWsdU8cf0uqnNTcHeERgPb0PKisU9LhUVTF+lwFm0dO0WPb3i3LAnPiHTS+Wqp
+	 zz8YVPSaanZA6r+Wq1sIqLmE0DZQtOW3a/QAkaUvo9N3RoURwwpiUY2yZhv6qFA2BY
+	 et2TWsXY8NLvSfE9KTdD+w3Co8XOixEjPxXIFmKk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+2d373c9936c00d7e120c@syzkaller.appspotmail.com,
-	Takashi Iwai <tiwai@suse.de>,
+	Maher Sanalla <msanalla@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 136/444] ALSA: seq: Improve data consistency at polling
-Date: Mon,  2 Jun 2025 15:43:20 +0200
-Message-ID: <20250602134346.415657829@linuxfoundation.org>
+Subject: [PATCH 6.6 110/444] RDMA/uverbs: Propagate errors from rdma_lookup_get_uobject()
+Date: Mon,  2 Jun 2025 15:42:54 +0200
+Message-ID: <20250602134345.364237501@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -51,68 +51,430 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Maher Sanalla <msanalla@nvidia.com>
 
-[ Upstream commit e3cd33ab17c33bd8f1a9df66ec83a15dd8f7afbb ]
+[ Upstream commit 81f8f7454ad9e0bf95efdec6542afdc9a6ab1e24 ]
 
-snd_seq_poll() calls snd_seq_write_pool_allocated() that reads out a
-field in client->pool object, while it can be updated concurrently via
-ioctls, as reported by syzbot.  The data race itself is harmless, as
-it's merely a poll() call, and the state is volatile.  OTOH, the read
-out of poll object info from the caller side is fragile, and we can
-leave it better in snd_seq_pool_poll_wait() alone.
+Currently, the IB uverbs API calls uobj_get_uobj_read(), which in turn
+uses the rdma_lookup_get_uobject() helper to retrieve user objects.
+In case of failure, uobj_get_uobj_read() returns NULL, overriding the
+error code from rdma_lookup_get_uobject(). The IB uverbs API then
+translates this NULL to -EINVAL, masking the actual error and
+complicating debugging. For example, applications calling ibv_modify_qp
+that fails with EBUSY when retrieving the QP uobject will see the
+overridden error code EINVAL instead, masking the actual error.
 
-A similar pattern is seen in snd_seq_kernel_client_write_poll(), too,
-which is called from the OSS sequencer.
+Furthermore, based on rdma-core commit:
+"2a22f1ced5f3 ("Merge pull request #1568 from jakemoroni/master")"
+Kernel's IB uverbs return values are either ignored and passed on as is
+to application or overridden with other errnos in a few cases.
 
-This patch drops the pool checks from the caller side and add the
-pool->lock in snd_seq_pool_poll_wait() for better data consistency.
+Thus, to improve error reporting and debuggability, propagate the
+original error from rdma_lookup_get_uobject() instead of replacing it
+with EINVAL.
 
-Reported-by: syzbot+2d373c9936c00d7e120c@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/67c88903.050a0220.15b4b9.0028.GAE@google.com
-Link: https://patch.msgid.link/20250307084246.29271-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Maher Sanalla <msanalla@nvidia.com>
+Link: https://patch.msgid.link/64f9d3711b183984e939962c2f83383904f97dfb.1740577869.git.leon@kernel.org
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/seq/seq_clientmgr.c | 5 +----
- sound/core/seq/seq_memory.c    | 1 +
- 2 files changed, 2 insertions(+), 4 deletions(-)
+ drivers/infiniband/core/uverbs_cmd.c | 144 ++++++++++++++-------------
+ include/rdma/uverbs_std_types.h      |   2 +-
+ 2 files changed, 77 insertions(+), 69 deletions(-)
 
-diff --git a/sound/core/seq/seq_clientmgr.c b/sound/core/seq/seq_clientmgr.c
-index 49f6763c3250d..31428cdc0f63d 100644
---- a/sound/core/seq/seq_clientmgr.c
-+++ b/sound/core/seq/seq_clientmgr.c
-@@ -1169,8 +1169,7 @@ static __poll_t snd_seq_poll(struct file *file, poll_table * wait)
- 	if (snd_seq_file_flags(file) & SNDRV_SEQ_LFLG_OUTPUT) {
+diff --git a/drivers/infiniband/core/uverbs_cmd.c b/drivers/infiniband/core/uverbs_cmd.c
+index c6053e82ecf6f..33e2fe0facd52 100644
+--- a/drivers/infiniband/core/uverbs_cmd.c
++++ b/drivers/infiniband/core/uverbs_cmd.c
+@@ -718,8 +718,8 @@ static int ib_uverbs_reg_mr(struct uverbs_attr_bundle *attrs)
+ 		goto err_free;
  
- 		/* check if data is available in the pool */
--		if (!snd_seq_write_pool_allocated(client) ||
--		    snd_seq_pool_poll_wait(client->pool, file, wait))
-+		if (snd_seq_pool_poll_wait(client->pool, file, wait))
- 			mask |= EPOLLOUT | EPOLLWRNORM;
+ 	pd = uobj_get_obj_read(pd, UVERBS_OBJECT_PD, cmd.pd_handle, attrs);
+-	if (!pd) {
+-		ret = -EINVAL;
++	if (IS_ERR(pd)) {
++		ret = PTR_ERR(pd);
+ 		goto err_free;
  	}
  
-@@ -2584,8 +2583,6 @@ int snd_seq_kernel_client_write_poll(int clientid, struct file *file, poll_table
- 	if (client == NULL)
- 		return -ENXIO;
+@@ -809,8 +809,8 @@ static int ib_uverbs_rereg_mr(struct uverbs_attr_bundle *attrs)
+ 	if (cmd.flags & IB_MR_REREG_PD) {
+ 		new_pd = uobj_get_obj_read(pd, UVERBS_OBJECT_PD, cmd.pd_handle,
+ 					   attrs);
+-		if (!new_pd) {
+-			ret = -EINVAL;
++		if (IS_ERR(new_pd)) {
++			ret = PTR_ERR(new_pd);
+ 			goto put_uobjs;
+ 		}
+ 	} else {
+@@ -919,8 +919,8 @@ static int ib_uverbs_alloc_mw(struct uverbs_attr_bundle *attrs)
+ 		return PTR_ERR(uobj);
  
--	if (! snd_seq_write_pool_allocated(client))
--		return 1;
- 	if (snd_seq_pool_poll_wait(client->pool, file, wait))
- 		return 1;
- 	return 0;
-diff --git a/sound/core/seq/seq_memory.c b/sound/core/seq/seq_memory.c
-index b603bb93f8960..692860deec0c3 100644
---- a/sound/core/seq/seq_memory.c
-+++ b/sound/core/seq/seq_memory.c
-@@ -429,6 +429,7 @@ int snd_seq_pool_poll_wait(struct snd_seq_pool *pool, struct file *file,
- 			   poll_table *wait)
+ 	pd = uobj_get_obj_read(pd, UVERBS_OBJECT_PD, cmd.pd_handle, attrs);
+-	if (!pd) {
+-		ret = -EINVAL;
++	if (IS_ERR(pd)) {
++		ret = PTR_ERR(pd);
+ 		goto err_free;
+ 	}
+ 
+@@ -1127,8 +1127,8 @@ static int ib_uverbs_resize_cq(struct uverbs_attr_bundle *attrs)
+ 		return ret;
+ 
+ 	cq = uobj_get_obj_read(cq, UVERBS_OBJECT_CQ, cmd.cq_handle, attrs);
+-	if (!cq)
+-		return -EINVAL;
++	if (IS_ERR(cq))
++		return PTR_ERR(cq);
+ 
+ 	ret = cq->device->ops.resize_cq(cq, cmd.cqe, &attrs->driver_udata);
+ 	if (ret)
+@@ -1189,8 +1189,8 @@ static int ib_uverbs_poll_cq(struct uverbs_attr_bundle *attrs)
+ 		return ret;
+ 
+ 	cq = uobj_get_obj_read(cq, UVERBS_OBJECT_CQ, cmd.cq_handle, attrs);
+-	if (!cq)
+-		return -EINVAL;
++	if (IS_ERR(cq))
++		return PTR_ERR(cq);
+ 
+ 	/* we copy a struct ib_uverbs_poll_cq_resp to user space */
+ 	header_ptr = attrs->ucore.outbuf;
+@@ -1238,8 +1238,8 @@ static int ib_uverbs_req_notify_cq(struct uverbs_attr_bundle *attrs)
+ 		return ret;
+ 
+ 	cq = uobj_get_obj_read(cq, UVERBS_OBJECT_CQ, cmd.cq_handle, attrs);
+-	if (!cq)
+-		return -EINVAL;
++	if (IS_ERR(cq))
++		return PTR_ERR(cq);
+ 
+ 	ib_req_notify_cq(cq, cmd.solicited_only ?
+ 			 IB_CQ_SOLICITED : IB_CQ_NEXT_COMP);
+@@ -1321,8 +1321,8 @@ static int create_qp(struct uverbs_attr_bundle *attrs,
+ 		ind_tbl = uobj_get_obj_read(rwq_ind_table,
+ 					    UVERBS_OBJECT_RWQ_IND_TBL,
+ 					    cmd->rwq_ind_tbl_handle, attrs);
+-		if (!ind_tbl) {
+-			ret = -EINVAL;
++		if (IS_ERR(ind_tbl)) {
++			ret = PTR_ERR(ind_tbl);
+ 			goto err_put;
+ 		}
+ 
+@@ -1360,8 +1360,10 @@ static int create_qp(struct uverbs_attr_bundle *attrs,
+ 			if (cmd->is_srq) {
+ 				srq = uobj_get_obj_read(srq, UVERBS_OBJECT_SRQ,
+ 							cmd->srq_handle, attrs);
+-				if (!srq || srq->srq_type == IB_SRQT_XRC) {
+-					ret = -EINVAL;
++				if (IS_ERR(srq) ||
++				    srq->srq_type == IB_SRQT_XRC) {
++					ret = IS_ERR(srq) ? PTR_ERR(srq) :
++								  -EINVAL;
+ 					goto err_put;
+ 				}
+ 			}
+@@ -1371,23 +1373,29 @@ static int create_qp(struct uverbs_attr_bundle *attrs,
+ 					rcq = uobj_get_obj_read(
+ 						cq, UVERBS_OBJECT_CQ,
+ 						cmd->recv_cq_handle, attrs);
+-					if (!rcq) {
+-						ret = -EINVAL;
++					if (IS_ERR(rcq)) {
++						ret = PTR_ERR(rcq);
+ 						goto err_put;
+ 					}
+ 				}
+ 			}
+ 		}
+ 
+-		if (has_sq)
++		if (has_sq) {
+ 			scq = uobj_get_obj_read(cq, UVERBS_OBJECT_CQ,
+ 						cmd->send_cq_handle, attrs);
++			if (IS_ERR(scq)) {
++				ret = PTR_ERR(scq);
++				goto err_put;
++			}
++		}
++
+ 		if (!ind_tbl && cmd->qp_type != IB_QPT_XRC_INI)
+ 			rcq = rcq ?: scq;
+ 		pd = uobj_get_obj_read(pd, UVERBS_OBJECT_PD, cmd->pd_handle,
+ 				       attrs);
+-		if (!pd || (!scq && has_sq)) {
+-			ret = -EINVAL;
++		if (IS_ERR(pd)) {
++			ret = PTR_ERR(pd);
+ 			goto err_put;
+ 		}
+ 
+@@ -1482,18 +1490,18 @@ static int create_qp(struct uverbs_attr_bundle *attrs,
+ err_put:
+ 	if (!IS_ERR(xrcd_uobj))
+ 		uobj_put_read(xrcd_uobj);
+-	if (pd)
++	if (!IS_ERR_OR_NULL(pd))
+ 		uobj_put_obj_read(pd);
+-	if (scq)
++	if (!IS_ERR_OR_NULL(scq))
+ 		rdma_lookup_put_uobject(&scq->uobject->uevent.uobject,
+ 					UVERBS_LOOKUP_READ);
+-	if (rcq && rcq != scq)
++	if (!IS_ERR_OR_NULL(rcq) && rcq != scq)
+ 		rdma_lookup_put_uobject(&rcq->uobject->uevent.uobject,
+ 					UVERBS_LOOKUP_READ);
+-	if (srq)
++	if (!IS_ERR_OR_NULL(srq))
+ 		rdma_lookup_put_uobject(&srq->uobject->uevent.uobject,
+ 					UVERBS_LOOKUP_READ);
+-	if (ind_tbl)
++	if (!IS_ERR_OR_NULL(ind_tbl))
+ 		uobj_put_obj_read(ind_tbl);
+ 
+ 	uobj_alloc_abort(&obj->uevent.uobject, attrs);
+@@ -1655,8 +1663,8 @@ static int ib_uverbs_query_qp(struct uverbs_attr_bundle *attrs)
+ 	}
+ 
+ 	qp = uobj_get_obj_read(qp, UVERBS_OBJECT_QP, cmd.qp_handle, attrs);
+-	if (!qp) {
+-		ret = -EINVAL;
++	if (IS_ERR(qp)) {
++		ret = PTR_ERR(qp);
+ 		goto out;
+ 	}
+ 
+@@ -1761,8 +1769,8 @@ static int modify_qp(struct uverbs_attr_bundle *attrs,
+ 
+ 	qp = uobj_get_obj_read(qp, UVERBS_OBJECT_QP, cmd->base.qp_handle,
+ 			       attrs);
+-	if (!qp) {
+-		ret = -EINVAL;
++	if (IS_ERR(qp)) {
++		ret = PTR_ERR(qp);
+ 		goto out;
+ 	}
+ 
+@@ -2027,8 +2035,8 @@ static int ib_uverbs_post_send(struct uverbs_attr_bundle *attrs)
+ 		return -ENOMEM;
+ 
+ 	qp = uobj_get_obj_read(qp, UVERBS_OBJECT_QP, cmd.qp_handle, attrs);
+-	if (!qp) {
+-		ret = -EINVAL;
++	if (IS_ERR(qp)) {
++		ret = PTR_ERR(qp);
+ 		goto out;
+ 	}
+ 
+@@ -2065,9 +2073,9 @@ static int ib_uverbs_post_send(struct uverbs_attr_bundle *attrs)
+ 
+ 			ud->ah = uobj_get_obj_read(ah, UVERBS_OBJECT_AH,
+ 						   user_wr->wr.ud.ah, attrs);
+-			if (!ud->ah) {
++			if (IS_ERR(ud->ah)) {
++				ret = PTR_ERR(ud->ah);
+ 				kfree(ud);
+-				ret = -EINVAL;
+ 				goto out_put;
+ 			}
+ 			ud->remote_qpn = user_wr->wr.ud.remote_qpn;
+@@ -2304,8 +2312,8 @@ static int ib_uverbs_post_recv(struct uverbs_attr_bundle *attrs)
+ 		return PTR_ERR(wr);
+ 
+ 	qp = uobj_get_obj_read(qp, UVERBS_OBJECT_QP, cmd.qp_handle, attrs);
+-	if (!qp) {
+-		ret = -EINVAL;
++	if (IS_ERR(qp)) {
++		ret = PTR_ERR(qp);
+ 		goto out;
+ 	}
+ 
+@@ -2355,8 +2363,8 @@ static int ib_uverbs_post_srq_recv(struct uverbs_attr_bundle *attrs)
+ 		return PTR_ERR(wr);
+ 
+ 	srq = uobj_get_obj_read(srq, UVERBS_OBJECT_SRQ, cmd.srq_handle, attrs);
+-	if (!srq) {
+-		ret = -EINVAL;
++	if (IS_ERR(srq)) {
++		ret = PTR_ERR(srq);
+ 		goto out;
+ 	}
+ 
+@@ -2412,8 +2420,8 @@ static int ib_uverbs_create_ah(struct uverbs_attr_bundle *attrs)
+ 	}
+ 
+ 	pd = uobj_get_obj_read(pd, UVERBS_OBJECT_PD, cmd.pd_handle, attrs);
+-	if (!pd) {
+-		ret = -EINVAL;
++	if (IS_ERR(pd)) {
++		ret = PTR_ERR(pd);
+ 		goto err;
+ 	}
+ 
+@@ -2482,8 +2490,8 @@ static int ib_uverbs_attach_mcast(struct uverbs_attr_bundle *attrs)
+ 		return ret;
+ 
+ 	qp = uobj_get_obj_read(qp, UVERBS_OBJECT_QP, cmd.qp_handle, attrs);
+-	if (!qp)
+-		return -EINVAL;
++	if (IS_ERR(qp))
++		return PTR_ERR(qp);
+ 
+ 	obj = qp->uobject;
+ 
+@@ -2532,8 +2540,8 @@ static int ib_uverbs_detach_mcast(struct uverbs_attr_bundle *attrs)
+ 		return ret;
+ 
+ 	qp = uobj_get_obj_read(qp, UVERBS_OBJECT_QP, cmd.qp_handle, attrs);
+-	if (!qp)
+-		return -EINVAL;
++	if (IS_ERR(qp))
++		return PTR_ERR(qp);
+ 
+ 	obj = qp->uobject;
+ 	mutex_lock(&obj->mcast_lock);
+@@ -2667,8 +2675,8 @@ static int kern_spec_to_ib_spec_action(struct uverbs_attr_bundle *attrs,
+ 							UVERBS_OBJECT_FLOW_ACTION,
+ 							kern_spec->action.handle,
+ 							attrs);
+-		if (!ib_spec->action.act)
+-			return -EINVAL;
++		if (IS_ERR(ib_spec->action.act))
++			return PTR_ERR(ib_spec->action.act);
+ 		ib_spec->action.size =
+ 			sizeof(struct ib_flow_spec_action_handle);
+ 		flow_resources_add(uflow_res,
+@@ -2685,8 +2693,8 @@ static int kern_spec_to_ib_spec_action(struct uverbs_attr_bundle *attrs,
+ 					  UVERBS_OBJECT_COUNTERS,
+ 					  kern_spec->flow_count.handle,
+ 					  attrs);
+-		if (!ib_spec->flow_count.counters)
+-			return -EINVAL;
++		if (IS_ERR(ib_spec->flow_count.counters))
++			return PTR_ERR(ib_spec->flow_count.counters);
+ 		ib_spec->flow_count.size =
+ 				sizeof(struct ib_flow_spec_action_count);
+ 		flow_resources_add(uflow_res,
+@@ -2904,14 +2912,14 @@ static int ib_uverbs_ex_create_wq(struct uverbs_attr_bundle *attrs)
+ 		return PTR_ERR(obj);
+ 
+ 	pd = uobj_get_obj_read(pd, UVERBS_OBJECT_PD, cmd.pd_handle, attrs);
+-	if (!pd) {
+-		err = -EINVAL;
++	if (IS_ERR(pd)) {
++		err = PTR_ERR(pd);
+ 		goto err_uobj;
+ 	}
+ 
+ 	cq = uobj_get_obj_read(cq, UVERBS_OBJECT_CQ, cmd.cq_handle, attrs);
+-	if (!cq) {
+-		err = -EINVAL;
++	if (IS_ERR(cq)) {
++		err = PTR_ERR(cq);
+ 		goto err_put_pd;
+ 	}
+ 
+@@ -3012,8 +3020,8 @@ static int ib_uverbs_ex_modify_wq(struct uverbs_attr_bundle *attrs)
+ 		return -EINVAL;
+ 
+ 	wq = uobj_get_obj_read(wq, UVERBS_OBJECT_WQ, cmd.wq_handle, attrs);
+-	if (!wq)
+-		return -EINVAL;
++	if (IS_ERR(wq))
++		return PTR_ERR(wq);
+ 
+ 	if (cmd.attr_mask & IB_WQ_FLAGS) {
+ 		wq_attr.flags = cmd.flags;
+@@ -3096,8 +3104,8 @@ static int ib_uverbs_ex_create_rwq_ind_table(struct uverbs_attr_bundle *attrs)
+ 			num_read_wqs++) {
+ 		wq = uobj_get_obj_read(wq, UVERBS_OBJECT_WQ,
+ 				       wqs_handles[num_read_wqs], attrs);
+-		if (!wq) {
+-			err = -EINVAL;
++		if (IS_ERR(wq)) {
++			err = PTR_ERR(wq);
+ 			goto put_wqs;
+ 		}
+ 
+@@ -3252,8 +3260,8 @@ static int ib_uverbs_ex_create_flow(struct uverbs_attr_bundle *attrs)
+ 	}
+ 
+ 	qp = uobj_get_obj_read(qp, UVERBS_OBJECT_QP, cmd.qp_handle, attrs);
+-	if (!qp) {
+-		err = -EINVAL;
++	if (IS_ERR(qp)) {
++		err = PTR_ERR(qp);
+ 		goto err_uobj;
+ 	}
+ 
+@@ -3399,15 +3407,15 @@ static int __uverbs_create_xsrq(struct uverbs_attr_bundle *attrs,
+ 	if (ib_srq_has_cq(cmd->srq_type)) {
+ 		attr.ext.cq = uobj_get_obj_read(cq, UVERBS_OBJECT_CQ,
+ 						cmd->cq_handle, attrs);
+-		if (!attr.ext.cq) {
+-			ret = -EINVAL;
++		if (IS_ERR(attr.ext.cq)) {
++			ret = PTR_ERR(attr.ext.cq);
+ 			goto err_put_xrcd;
+ 		}
+ 	}
+ 
+ 	pd = uobj_get_obj_read(pd, UVERBS_OBJECT_PD, cmd->pd_handle, attrs);
+-	if (!pd) {
+-		ret = -EINVAL;
++	if (IS_ERR(pd)) {
++		ret = PTR_ERR(pd);
+ 		goto err_put_cq;
+ 	}
+ 
+@@ -3514,8 +3522,8 @@ static int ib_uverbs_modify_srq(struct uverbs_attr_bundle *attrs)
+ 		return ret;
+ 
+ 	srq = uobj_get_obj_read(srq, UVERBS_OBJECT_SRQ, cmd.srq_handle, attrs);
+-	if (!srq)
+-		return -EINVAL;
++	if (IS_ERR(srq))
++		return PTR_ERR(srq);
+ 
+ 	attr.max_wr    = cmd.max_wr;
+ 	attr.srq_limit = cmd.srq_limit;
+@@ -3542,8 +3550,8 @@ static int ib_uverbs_query_srq(struct uverbs_attr_bundle *attrs)
+ 		return ret;
+ 
+ 	srq = uobj_get_obj_read(srq, UVERBS_OBJECT_SRQ, cmd.srq_handle, attrs);
+-	if (!srq)
+-		return -EINVAL;
++	if (IS_ERR(srq))
++		return PTR_ERR(srq);
+ 
+ 	ret = ib_query_srq(srq, &attr);
+ 
+@@ -3668,8 +3676,8 @@ static int ib_uverbs_ex_modify_cq(struct uverbs_attr_bundle *attrs)
+ 		return -EOPNOTSUPP;
+ 
+ 	cq = uobj_get_obj_read(cq, UVERBS_OBJECT_CQ, cmd.cq_handle, attrs);
+-	if (!cq)
+-		return -EINVAL;
++	if (IS_ERR(cq))
++		return PTR_ERR(cq);
+ 
+ 	ret = rdma_set_cq_moderation(cq, cmd.attr.cq_count, cmd.attr.cq_period);
+ 
+diff --git a/include/rdma/uverbs_std_types.h b/include/rdma/uverbs_std_types.h
+index fe05121169589..555ea3d142a46 100644
+--- a/include/rdma/uverbs_std_types.h
++++ b/include/rdma/uverbs_std_types.h
+@@ -34,7 +34,7 @@
+ static inline void *_uobj_get_obj_read(struct ib_uobject *uobj)
  {
- 	poll_wait(file, &pool->output_sleep, wait);
-+	guard(spinlock_irq)(&pool->lock);
- 	return snd_seq_output_ok(pool);
+ 	if (IS_ERR(uobj))
+-		return NULL;
++		return ERR_CAST(uobj);
+ 	return uobj->object;
  }
- 
+ #define uobj_get_obj_read(_object, _type, _id, _attrs)                         \
 -- 
 2.39.5
 
