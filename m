@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2B8422FE18;
-	Mon,  2 Jun 2025 14:18:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18AB923236D;
+	Mon,  2 Jun 2025 14:19:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748873939; cv=none; b=XaNWgiLB0kMH5mRK3YuyHrFKIavnbj/xIiXRyvltqUZh05os6BhiexO95ZeB0t7UBpnSl9tdUBY+V76etu0DF3YvB3PNR+6fm695mZs+dHzkrZ/g9jYzQ7Z/wwZ3yvZAi+UMg5RYRxdqjGQTQIWF9EbuGXTxU5gDObASE52kw7k=
+	t=1748873942; cv=none; b=Xnl7PAdR7YcsqkIFv2ddbZmY6pqPjWuKDugoctQPGHtVjlUKeGohE9R1WIcrL/0kHNSge6gMpJFib5uz9znVZVAXpDEKCxqoD8RXbYwvfSc5HJOnrTZZsqIpzrPpsgUq8qA95rgSD+WzwMyxDdsURF7/yM6IH3Bn5IlBKa4dp7I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748873939; c=relaxed/simple;
-	bh=vlsLGK3C+Ap8FFKJ83PAvcxKXKOqkRHypu0r0zBPItQ=;
+	s=arc-20240116; t=1748873942; c=relaxed/simple;
+	bh=MlK5s+6xIjbxuohX8OmbwyFSjzqODQ8oQvASlX/9Ps4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SgrptFAINOnCGM/SgkjkoOgTot6Z4bNf/UM+XahvMYHxDBPeYYDXIQTUPCw7T3tS3dRbo1xiVWoGHyPBVfcbTsx28YQvyh5/tMB2w+BfgRklov6nmzfgOasDz0weA+KO/j95P6ddac8fsR4odw5qZkXg1V/2TKfx+lCDIsqOb4g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OoBJHKTa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O8hdLM9k2WJcjVES5otqHilHVf0Y7cZqYqHNEIOLLSBtNHhEXy1Mk0SzGADbiuKHBctURj+au41FqX1XgpXqnS8jyfMEB1kg6Qhxia+Vw6OPx32BoACG2y/00MCE4n6uSJ0CpdBt+ju+cHkIXkIQt9XlHz1GX/mkiin4EIAlsnQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=15DvqWBJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OoBJHKTa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8399FC4CEEB;
-	Mon,  2 Jun 2025 14:18:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="15DvqWBJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AADCC4CEEB;
+	Mon,  2 Jun 2025 14:19:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748873938;
-	bh=vlsLGK3C+Ap8FFKJ83PAvcxKXKOqkRHypu0r0zBPItQ=;
+	s=korg; t=1748873942;
+	bh=MlK5s+6xIjbxuohX8OmbwyFSjzqODQ8oQvASlX/9Ps4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OoBJHKTah00o5BsDfLPaxIQ0FEIw0k1HZ63BrzH8eClLytm+olnYxwSyDdQjUvJNQ
-	 CquAl5anE5FgFaly4WMZzsNomeQDPp1QrUiXg3KOW7/1WX+BY+zTNrOLvapDrmly2H
-	 BbwHU77O79CDhj0kY+x/cCc6e+UYoaf2bZReYh7A=
+	b=15DvqWBJNrfQKUmqM+usSMAerFHln2pMIgDrfifH8mm9KgdWyfmB+WiRt7hho3FLe
+	 s49QRx26DwlDR/Okm6DHwyP+/EYTBw0/zpUhBxiIZY0q7alcMUzn1mSM+rmxpNaFXk
+	 sUeyrM+APIC/K0cYpvdwZLN9zU4UbevJ5b4+GUQE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Anderson <sean.anderson@linux.dev>,
-	Mark Brown <broonie@kernel.org>,
+	Carolina Jubran <cjubran@nvidia.com>,
+	Yael Chemla <ychemla@nvidia.com>,
+	Cosmin Ratiu <cratiu@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 302/444] spi: zynqmp-gqspi: Always acknowledge interrupts
-Date: Mon,  2 Jun 2025 15:46:06 +0200
-Message-ID: <20250602134353.198953439@linuxfoundation.org>
+Subject: [PATCH 6.6 274/444] net/mlx5e: Avoid WARN_ON when configuring MQPRIO with HTB offload enabled
+Date: Mon,  2 Jun 2025 15:45:38 +0200
+Message-ID: <20250602134352.081259329@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -51,70 +55,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Anderson <sean.anderson@linux.dev>
+From: Carolina Jubran <cjubran@nvidia.com>
 
-[ Upstream commit 89785306453ce6d949e783f6936821a0b7649ee2 ]
+[ Upstream commit 689805dcc474c2accb5cffbbcea1c06ee4a54570 ]
 
-RXEMPTY can cause an IRQ, even though we may not do anything about it
-(such as if we are waiting for more received data). We must still handle
-these IRQs because we can tell they were caused by the device.
+When attempting to enable MQPRIO while HTB offload is already
+configured, the driver currently returns `-EINVAL` and triggers a
+`WARN_ON`, leading to an unnecessary call trace.
 
-Signed-off-by: Sean Anderson <sean.anderson@linux.dev>
-Link: https://patch.msgid.link/20250116224130.2684544-6-sean.anderson@linux.dev
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Update the code to handle this case more gracefully by returning
+`-EOPNOTSUPP` instead, while also providing a helpful user message.
+
+Signed-off-by: Carolina Jubran <cjubran@nvidia.com>
+Reviewed-by: Yael Chemla <ychemla@nvidia.com>
+Reviewed-by: Cosmin Ratiu <cratiu@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-zynqmp-gqspi.c | 20 ++++++++------------
- 1 file changed, 8 insertions(+), 12 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en_main.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/spi/spi-zynqmp-gqspi.c b/drivers/spi/spi-zynqmp-gqspi.c
-index 3503e6c0a5c98..b5deb4fe3b832 100644
---- a/drivers/spi/spi-zynqmp-gqspi.c
-+++ b/drivers/spi/spi-zynqmp-gqspi.c
-@@ -799,7 +799,6 @@ static void zynqmp_process_dma_irq(struct zynqmp_qspi *xqspi)
- static irqreturn_t zynqmp_qspi_irq(int irq, void *dev_id)
- {
- 	struct zynqmp_qspi *xqspi = (struct zynqmp_qspi *)dev_id;
--	irqreturn_t ret = IRQ_NONE;
- 	u32 status, mask, dma_status = 0;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+index d9dc7280302eb..5c6f01abdcb91 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+@@ -3627,8 +3627,11 @@ static int mlx5e_setup_tc_mqprio(struct mlx5e_priv *priv,
+ 	/* MQPRIO is another toplevel qdisc that can't be attached
+ 	 * simultaneously with the offloaded HTB.
+ 	 */
+-	if (WARN_ON(mlx5e_selq_is_htb_enabled(&priv->selq)))
+-		return -EINVAL;
++	if (mlx5e_selq_is_htb_enabled(&priv->selq)) {
++		NL_SET_ERR_MSG_MOD(mqprio->extack,
++				   "MQPRIO cannot be configured when HTB offload is enabled.");
++		return -EOPNOTSUPP;
++	}
  
- 	status = zynqmp_gqspi_read(xqspi, GQSPI_ISR_OFST);
-@@ -814,27 +813,24 @@ static irqreturn_t zynqmp_qspi_irq(int irq, void *dev_id)
- 				   dma_status);
- 	}
- 
--	if (mask & GQSPI_ISR_TXNOT_FULL_MASK) {
-+	if (!mask && !dma_status)
-+		return IRQ_NONE;
-+
-+	if (mask & GQSPI_ISR_TXNOT_FULL_MASK)
- 		zynqmp_qspi_filltxfifo(xqspi, GQSPI_TX_FIFO_FILL);
--		ret = IRQ_HANDLED;
--	}
- 
--	if (dma_status & GQSPI_QSPIDMA_DST_I_STS_DONE_MASK) {
-+	if (dma_status & GQSPI_QSPIDMA_DST_I_STS_DONE_MASK)
- 		zynqmp_process_dma_irq(xqspi);
--		ret = IRQ_HANDLED;
--	} else if (!(mask & GQSPI_IER_RXEMPTY_MASK) &&
--			(mask & GQSPI_IER_GENFIFOEMPTY_MASK)) {
-+	else if (!(mask & GQSPI_IER_RXEMPTY_MASK) &&
-+			(mask & GQSPI_IER_GENFIFOEMPTY_MASK))
- 		zynqmp_qspi_readrxfifo(xqspi, GQSPI_RX_FIFO_FILL);
--		ret = IRQ_HANDLED;
--	}
- 
- 	if (xqspi->bytes_to_receive == 0 && xqspi->bytes_to_transfer == 0 &&
- 	    ((status & GQSPI_IRQ_MASK) == GQSPI_IRQ_MASK)) {
- 		zynqmp_gqspi_write(xqspi, GQSPI_IDR_OFST, GQSPI_ISR_IDR_MASK);
- 		complete(&xqspi->data_completion);
--		ret = IRQ_HANDLED;
- 	}
--	return ret;
-+	return IRQ_HANDLED;
- }
- 
- /**
+ 	switch (mqprio->mode) {
+ 	case TC_MQPRIO_MODE_DCB:
 -- 
 2.39.5
 
