@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31D50225A3E;
-	Mon,  2 Jun 2025 14:48:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6181F22FDEA;
+	Mon,  2 Jun 2025 14:49:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748875739; cv=none; b=L+qLlPFL/PunAigNF0NpIQs4LX8of0f5ngzPlfXs84qscF6AKhOQv4qPb9Z8jqjGvWSIogZ4WNfv2ouFVjQzXEgsqAzfZnY5QmOPqdmVrgJjUhrg/b+I8EXBSE1RCVBDIiUPCDLK8hbxbFt1/lyM9a87Tehlrdd8khj6GVG9V8Y=
+	t=1748875742; cv=none; b=Z7MEivVdygxMNl0oIRnAo1riryk7U8gNjsrSzLySie4TCpL3RoZEuSFiN7nbPQira9lc1PgFnYqJeiV/fSxboe07JJtDUbpnWsCLEYusAwTU+euE6BwXU6GA9TuIEKgVBBAKmVitCmw5cQc0a4p3tfTJf3nkkm+5+O1XoRZl8zM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748875739; c=relaxed/simple;
-	bh=KTPWBbQYdlhcdNRtvFEy+zLc/djpTWAz5Y5gEm+gosc=;
+	s=arc-20240116; t=1748875742; c=relaxed/simple;
+	bh=TvWWSEWlAfBbHQS3BpHoh7E60OmeLnJ37yqcGSoqjfs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bSiQgJUkeA4yzDjoMU9L/ND4KJusAat9WHEshq9dIXnev1fDP6OkVmHmTD26Qc7DlF76RJ4kgOgjiRWLFoUiy5IRfGMyKt/5eMCCQRZa+KJFmLPWFxS/2lyGLbomuEXHfQR6B9p9PutfFKd38w7fmIBkJw0V9xNuDLI8Fr65xIU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zVAlONPX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=RhieU+GjBrTQ3IG2G5UqcSvEw42KswwkFnHblr1s/vVlQ+3AjDreqyIlWfby0Z4h39jzJRtO/V7Hm6utnclvRYbK9Pq14Bsw+hcEv/WTpxmF2Li1c+PR/2BPvvaMMcxxPGmhcGwW7HbER+g2fT8KQpDH2gEnoW4SgZ/ikYe+g5w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xfIoJhrL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zVAlONPX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 398A5C4CEEE;
-	Mon,  2 Jun 2025 14:48:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xfIoJhrL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63EEEC4CEEE;
+	Mon,  2 Jun 2025 14:49:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748875738;
-	bh=KTPWBbQYdlhcdNRtvFEy+zLc/djpTWAz5Y5gEm+gosc=;
+	s=korg; t=1748875741;
+	bh=TvWWSEWlAfBbHQS3BpHoh7E60OmeLnJ37yqcGSoqjfs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zVAlONPXDWeAF9pP8iZXqHVKpVi333xQizAEEFXVS7qYyL8x92SWSZoAc3+j3fhgY
-	 XIouvApgLZ13rKLJf1Cuhzznr774t/oMAsYhIxcfxoQQbQS4JqK7yR4M3jixnLy8Ut
-	 qSpXTikPs7E8W/vfRZi+H6aN16g4PVDTkT0jnjqU=
+	b=xfIoJhrLOy4j58fZ0EbJnJBa//mx0iZ6bnOnlt+tw7MvjNWWQeHVxHHrew6OBdwIm
+	 M2M/qceQ+sdaVYOnuuRwxw+iuEFItS6Im4t0hNylLRDUaxPFMeOgIDJQy9HhBqsLjI
+	 sL7cM6SESHRyFodzSbMwVSOnkZs0+EOnWCKi//kI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shahar Shitrit <shshitrit@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Mateusz Polchlopek <mateusz.polchlopek@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	=?UTF-8?q?Martin=20Povi=C5=A1er?= <povik+lin@cutebit.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 198/270] net/mlx5: Apply rate-limiting to high temperature warning
-Date: Mon,  2 Jun 2025 15:48:03 +0200
-Message-ID: <20250602134315.288430235@linuxfoundation.org>
+Subject: [PATCH 5.10 199/270] ASoC: ops: Enforce platform maximum on initial value
+Date: Mon,  2 Jun 2025 15:48:04 +0200
+Message-ID: <20250602134315.326961019@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134307.195171844@linuxfoundation.org>
 References: <20250602134307.195171844@linuxfoundation.org>
@@ -47,49 +45,77 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shahar Shitrit <shshitrit@nvidia.com>
+From: Martin Povišer <povik+lin@cutebit.org>
 
-[ Upstream commit 9dd3d5d258aceb37bdf09c8b91fa448f58ea81f0 ]
+[ Upstream commit 783db6851c1821d8b983ffb12b99c279ff64f2ee ]
 
-Wrap the high temperature warning in a temperature event with
-a call to net_ratelimit() to prevent flooding the kernel log
-with repeated warning messages when temperature exceeds the
-threshold multiple times within a short duration.
+Lower the volume if it is violating the platform maximum at its initial
+value (i.e. at the time of the 'snd_soc_limit_volume' call).
 
-Signed-off-by: Shahar Shitrit <shshitrit@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Reviewed-by: Mateusz Polchlopek <mateusz.polchlopek@intel.com>
-Link: https://patch.msgid.link/20250213094641.226501-2-tariqt@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Martin Povišer <povik+lin@cutebit.org>
+[Cherry picked from the Asahi kernel with fixups -- broonie]
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://patch.msgid.link/20250208-asoc-volume-limit-v1-1-b98fcf4cdbad@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/events.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ sound/soc/soc-ops.c | 29 ++++++++++++++++++++++++++++-
+ 1 file changed, 28 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/events.c b/drivers/net/ethernet/mellanox/mlx5/core/events.c
-index 9d7b0a4cc48a9..5e8db7a6185a4 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/events.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/events.c
-@@ -162,9 +162,10 @@ static int temp_warn(struct notifier_block *nb, unsigned long type, void *data)
- 	value_lsb &= 0x1;
- 	value_msb = be64_to_cpu(eqe->data.temp_warning.sensor_warning_msb);
- 
--	mlx5_core_warn(events->dev,
--		       "High temperature on sensors with bit set %llx %llx",
--		       value_msb, value_lsb);
-+	if (net_ratelimit())
-+		mlx5_core_warn(events->dev,
-+			       "High temperature on sensors with bit set %llx %llx",
-+			       value_msb, value_lsb);
- 
- 	return NOTIFY_OK;
+diff --git a/sound/soc/soc-ops.c b/sound/soc/soc-ops.c
+index a83cd8d8a9633..55f7c7999330a 100644
+--- a/sound/soc/soc-ops.c
++++ b/sound/soc/soc-ops.c
+@@ -615,6 +615,33 @@ int snd_soc_get_volsw_range(struct snd_kcontrol *kcontrol,
  }
+ EXPORT_SYMBOL_GPL(snd_soc_get_volsw_range);
+ 
++static int snd_soc_clip_to_platform_max(struct snd_kcontrol *kctl)
++{
++	struct soc_mixer_control *mc = (struct soc_mixer_control *)kctl->private_value;
++	struct snd_ctl_elem_value uctl;
++	int ret;
++
++	if (!mc->platform_max)
++		return 0;
++
++	ret = kctl->get(kctl, &uctl);
++	if (ret < 0)
++		return ret;
++
++	if (uctl.value.integer.value[0] > mc->platform_max)
++		uctl.value.integer.value[0] = mc->platform_max;
++
++	if (snd_soc_volsw_is_stereo(mc) &&
++	    uctl.value.integer.value[1] > mc->platform_max)
++		uctl.value.integer.value[1] = mc->platform_max;
++
++	ret = kctl->put(kctl, &uctl);
++	if (ret < 0)
++		return ret;
++
++	return 0;
++}
++
+ /**
+  * snd_soc_limit_volume - Set new limit to an existing volume control.
+  *
+@@ -640,7 +667,7 @@ int snd_soc_limit_volume(struct snd_soc_card *card,
+ 		mc = (struct soc_mixer_control *)kctl->private_value;
+ 		if (max <= mc->max) {
+ 			mc->platform_max = max;
+-			ret = 0;
++			ret = snd_soc_clip_to_platform_max(kctl);
+ 		}
+ 	}
+ 	return ret;
 -- 
 2.39.5
 
