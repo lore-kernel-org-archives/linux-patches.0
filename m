@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E400023D2AE;
-	Mon,  2 Jun 2025 14:13:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 954AA223DCD;
+	Mon,  2 Jun 2025 14:13:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748873598; cv=none; b=Sx/fZ0gAEoOmMQb/9BzkrregNyhDpAl5NHr2JWPPDiVkm9MLTqzyGE0x6lWKROe21Q63aMJHaQNBzfX3CmrHtuV5gcap6kyUiE1D0Tmik7Zy6kRV0J5yL72mw8daGsj7x4wHOD59P1vFfwfo+CmyNL1ei13HxVaEgeItXRs2qZk=
+	t=1748873601; cv=none; b=B0/x5rx8kCK4TSzzcz794bxelJQRq9VjI0AzH33F1j4npdKzyQyJj6Ov4E6rK55aXdEq5BZu6Rr9KMT/KkPMVaZ2RIZC6KrwLadMWUVRLre/dd39u1dgc3WFrVa5ByunO/AHWWdgp19yEYnrJYURp5YRSC+zn2il6qcBQb9Ngxg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748873598; c=relaxed/simple;
-	bh=vCbI+cjAV40fLqr/0YITuKS1NjAnwhUX/IZZ40MX6ec=;
+	s=arc-20240116; t=1748873601; c=relaxed/simple;
+	bh=GIm50p4n/Eyw2Us4kyZ3yaLejCKRchxCC7YvgKmeq18=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P8A4peTIemdITLMNKtxvAhzxDyEx72T/1iPTaAckEVbnPiJhVOCpS4s3aXJi9+dBFQHvrVJy+RhzEvnZTsh0eHOPclZDBLGDQKZ+UvsVnXoQtI8wHDMnnp4d/svEDlJqGLStA0hcYCSEX/IGy5lpJs0Ac+GpHE/YI4pZkPx6raw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qEnOyCnA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Dch6arq14a8LkPFMtBYEzG2bKZLfE9ANTYIuy+nnLFG4JADUN0htxkKdj4eJikrwHLAlYhjkTeBBSvR9zj/8lJ5m1BK1OqPCaS5fl+HgQfWmk1w/50qqjCcwjB6eY1xf+W99h51ZfPbOy6UXqVUn7vMt3JvYHmwQdHlKOjuJcpg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jVXe+Via; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qEnOyCnA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50A97C4CEEB;
-	Mon,  2 Jun 2025 14:13:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jVXe+Via"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9374BC4CEEB;
+	Mon,  2 Jun 2025 14:13:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748873597;
-	bh=vCbI+cjAV40fLqr/0YITuKS1NjAnwhUX/IZZ40MX6ec=;
+	s=korg; t=1748873601;
+	bh=GIm50p4n/Eyw2Us4kyZ3yaLejCKRchxCC7YvgKmeq18=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qEnOyCnAfS8Dh30jQTdaO+ra1kzMxcprH2qmL8MwIUvldqT5J5ZjN5WX00/eyysi1
-	 xmA+7xO+INVHJdjxyBnKteAbr2ndvhsQbPOjJo2H9VcmGmdvbSqcnfxDBaOLn3mMPc
-	 fjCl8sUHqwEMbmEhbc4ZDzbzMXQUI9OyyDOu3qOE=
+	b=jVXe+ViaOJnUuwZ02vPY5kLcnRBLr6kVK85rd0a8+v3IzFTObfz6nVqYwCmV1WJin
+	 fYx9HNSzyMKVMbYr45fyXNMe2P0fN6V7ODgYWF7ATuq9id2Juc3t3RdAqS9bbEYjQs
+	 AWpRpcEQpToBlZgvrw9kj8qHX4xiTVoeLQ+hOqiA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Philip Yang <Philip.Yang@amd.com>,
-	Felix Kuehling <felix.kuehling@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Nandakumar Edamana <nandakumar@nandakumar.co.in>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 174/444] drm/amdkfd: KFD release_work possible circular locking
-Date: Mon,  2 Jun 2025 15:43:58 +0200
-Message-ID: <20250602134347.958260835@linuxfoundation.org>
+Subject: [PATCH 6.6 192/444] libbpf: Fix out-of-bound read
+Date: Mon,  2 Jun 2025 15:44:16 +0200
+Message-ID: <20250602134348.699013555@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -52,78 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Philip Yang <Philip.Yang@amd.com>
+From: Nandakumar Edamana <nandakumar@nandakumar.co.in>
 
-[ Upstream commit 1b9366c601039d60546794c63fbb83ce8e53b978 ]
+[ Upstream commit 236d3910117e9f97ebf75e511d8bcc950f1a4e5f ]
 
-If waiting for gpu reset done in KFD release_work, thers is WARNING:
-possible circular locking dependency detected
+In `set_kcfg_value_str`, an untrusted string is accessed with the assumption
+that it will be at least two characters long due to the presence of checks for
+opening and closing quotes. But the check for the closing quote
+(value[len - 1] != '"') misses the fact that it could be checking the opening
+quote itself in case of an invalid input that consists of just the opening
+quote.
 
-  #2  kfd_create_process
-        kfd_process_mutex
-          flush kfd release work
+This commit adds an explicit check to make sure the string is at least two
+characters long.
 
-  #1  kfd release work
-        wait for amdgpu reset work
-
-  #0  amdgpu_device_gpu_reset
-        kgd2kfd_pre_reset
-          kfd_process_mutex
-
-  Possible unsafe locking scenario:
-
-        CPU0                    CPU1
-        ----                    ----
-   lock((work_completion)(&p->release_work));
-                  lock((wq_completion)kfd_process_wq);
-                  lock((work_completion)(&p->release_work));
-   lock((wq_completion)amdgpu-reset-dev);
-
-To fix this, KFD create process move flush release work outside
-kfd_process_mutex.
-
-Signed-off-by: Philip Yang <Philip.Yang@amd.com>
-Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Nandakumar Edamana <nandakumar@nandakumar.co.in>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20250221210110.3182084-1-nandakumar@nandakumar.co.in
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_process.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ tools/lib/bpf/libbpf.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_process.c b/drivers/gpu/drm/amd/amdkfd/kfd_process.c
-index a6d08dee74f6e..93740b8fc3f44 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_process.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_process.c
-@@ -812,6 +812,14 @@ struct kfd_process *kfd_create_process(struct task_struct *thread)
- 		return ERR_PTR(-EINVAL);
+diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
+index 2fad178949efe..fa2abe56e845d 100644
+--- a/tools/lib/bpf/libbpf.c
++++ b/tools/lib/bpf/libbpf.c
+@@ -1802,7 +1802,7 @@ static int set_kcfg_value_str(struct extern_desc *ext, char *ext_val,
  	}
  
-+	/* If the process just called exec(3), it is possible that the
-+	 * cleanup of the kfd_process (following the release of the mm
-+	 * of the old process image) is still in the cleanup work queue.
-+	 * Make sure to drain any job before trying to recreate any
-+	 * resource for this process.
-+	 */
-+	flush_workqueue(kfd_process_wq);
-+
- 	/*
- 	 * take kfd processes mutex before starting of process creation
- 	 * so there won't be a case where two threads of the same process
-@@ -830,14 +838,6 @@ struct kfd_process *kfd_create_process(struct task_struct *thread)
- 	if (process) {
- 		pr_debug("Process already found\n");
- 	} else {
--		/* If the process just called exec(3), it is possible that the
--		 * cleanup of the kfd_process (following the release of the mm
--		 * of the old process image) is still in the cleanup work queue.
--		 * Make sure to drain any job before trying to recreate any
--		 * resource for this process.
--		 */
--		flush_workqueue(kfd_process_wq);
--
- 		process = create_process(thread);
- 		if (IS_ERR(process))
- 			goto out;
+ 	len = strlen(value);
+-	if (value[len - 1] != '"') {
++	if (len < 2 || value[len - 1] != '"') {
+ 		pr_warn("extern (kcfg) '%s': invalid string config '%s'\n",
+ 			ext->name, value);
+ 		return -EINVAL;
 -- 
 2.39.5
 
