@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDC492367D7;
-	Mon,  2 Jun 2025 15:06:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C19F923717C;
+	Mon,  2 Jun 2025 15:06:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748876804; cv=none; b=TUagJ/smlLlUGnRQ0ct6SqFzcXtg+5/6sf6OCB3v+9gAj+5xlXr+rwWR65ZGsuvTTMMMDsKiOKHcAo+yWYBhbB4R9RfNo4ZpaMmp6TPzEw4zo5PBP0VDZEbKNKhRTL612uY19hVuL3Q3uCqeVxWcLTbSWLLV5M3FASTeoi62MJw=
+	t=1748876807; cv=none; b=QBXqLZRLixNGoRjD93SH74QByofuKTuKHAkXe2mB9qwgpob2ypi+u2bDPgAtHSYlqiMtyjcXgOlp+JFGwGVPCoHDXTjUdefXAgBTU1r35Zb9lmI1+VIfvueohHZmddAf4Vn3y/NLn8JPL2Ee5SXYvaLVe3SFwXDnl0qXqV53Bfs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748876804; c=relaxed/simple;
-	bh=2UIZO8Fe2jHMw4L7LRbhwPBOP186wahZCjQ9p+dpdXs=;
+	s=arc-20240116; t=1748876807; c=relaxed/simple;
+	bh=gGdSpHXTYTyn9dpB70LlQMpp7dJ5a8x7lOTZyuGpejw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dC4OZDBSJZZD8jtN0mXc8/EbMR6RklucmhM0OwNUWG2jKR9A40JiQMufWmUBft0mGMSyJamnv8kaHrSZsdDY8N2hTNrz/DPrSJ95NvHryDjNtneoM2qXc6cZ/8M2MPIOJUvNn/ADOvdL7LI4DvC1xL/hzYrkgulBxR69JkbxHb4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xO/jo3gg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R1UO2KmFP3ZDWa716HzRwxKl3NHbEaqhjSqP5nLmeA/RBGIL6Nx/MyTlyckfzBbFIzSqRDXhRxrc9o20PcywIBgyTA+iEamZWSOaRoAJ/dzQ1sa8n2C+7kOCw7OgnP7bmbX8JkZPfe2JksGwuHOQIe4KTA3dRPepvGGO7b3thhM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WxhjH+j4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xO/jo3gg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E63EC4CEEB;
-	Mon,  2 Jun 2025 15:06:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WxhjH+j4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AE84C4CEEB;
+	Mon,  2 Jun 2025 15:06:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748876804;
-	bh=2UIZO8Fe2jHMw4L7LRbhwPBOP186wahZCjQ9p+dpdXs=;
+	s=korg; t=1748876807;
+	bh=gGdSpHXTYTyn9dpB70LlQMpp7dJ5a8x7lOTZyuGpejw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xO/jo3ggD1besv0Z3QMohA4ipmzB/EKjNkhh6o+L97advSaMd4lR69dVyvlmEI1x7
-	 +E7OPcMCXhiSDHnKU5a3ZC7rwZ11yCkLmpEX4Szh87x/00fKamlDR1nFtlQp8ykpFb
-	 EDoD5g3S6YXBfAX2+IZr6p3hDXco61iMxlYXoXsE=
+	b=WxhjH+j4T4q2o4Nte6lFn4fBGwXKpnFS0WUKlUN1Aslljg7rre61KkjxyA7P5ztIK
+	 +SKYto8WFCJkkTgllcXa2K4XWWg0wNcDWUG9BNAeUOE9u+VkljF4WkkmeXicVeyvlo
+	 SkkNHnMIXSRYEUluafc4tOzplx9GuCnhe144BqyA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jing Su <jingsusu@didiglobal.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 039/325] dql: Fix dql->limit value when reset.
-Date: Mon,  2 Jun 2025 15:45:15 +0200
-Message-ID: <20250602134321.342947345@linuxfoundation.org>
+Subject: [PATCH 6.1 073/325] dm: restrict dm device size to 2^63-512 bytes
+Date: Mon,  2 Jun 2025 15:45:49 +0200
+Message-ID: <20250602134322.753336680@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134319.723650984@linuxfoundation.org>
 References: <20250602134319.723650984@linuxfoundation.org>
@@ -51,44 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jing Su <jingsusu@didiglobal.com>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-[ Upstream commit 3a17f23f7c36bac3a3584aaf97d3e3e0b2790396 ]
+[ Upstream commit 45fc728515c14f53f6205789de5bfd72a95af3b8 ]
 
-Executing dql_reset after setting a non-zero value for limit_min can
-lead to an unreasonable situation where dql->limit is less than
-dql->limit_min.
+The devices with size >= 2^63 bytes can't be used reliably by userspace
+because the type off_t is a signed 64-bit integer.
 
-For instance, after setting
-/sys/class/net/eth*/queues/tx-0/byte_queue_limits/limit_min,
-an ifconfig down/up operation might cause the ethernet driver to call
-netdev_tx_reset_queue, which in turn invokes dql_reset.
+Therefore, we limit the maximum size of a device mapper device to
+2^63-512 bytes.
 
-In this case, dql->limit is reset to 0 while dql->limit_min remains
-non-zero value, which is unexpected. The limit should always be
-greater than or equal to limit_min.
-
-Signed-off-by: Jing Su <jingsusu@didiglobal.com>
-Link: https://patch.msgid.link/Z9qHD1s/NEuQBdgH@pilot-ThinkCentre-M930t-N000
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/dynamic_queue_limits.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/md/dm-table.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/lib/dynamic_queue_limits.c b/lib/dynamic_queue_limits.c
-index fde0aa2441480..a75a9ca46b594 100644
---- a/lib/dynamic_queue_limits.c
-+++ b/lib/dynamic_queue_limits.c
-@@ -116,7 +116,7 @@ EXPORT_SYMBOL(dql_completed);
- void dql_reset(struct dql *dql)
- {
- 	/* Reset all dynamic values */
--	dql->limit = 0;
-+	dql->limit = dql->min_limit;
- 	dql->num_queued = 0;
- 	dql->num_completed = 0;
- 	dql->last_obj_cnt = 0;
+diff --git a/drivers/md/dm-table.c b/drivers/md/dm-table.c
+index a20cf54d12dca..8b23b8bc5a036 100644
+--- a/drivers/md/dm-table.c
++++ b/drivers/md/dm-table.c
+@@ -671,6 +671,10 @@ int dm_table_add_target(struct dm_table *t, const char *type,
+ 		DMERR("%s: zero-length target", dm_device_name(t->md));
+ 		return -EINVAL;
+ 	}
++	if (start + len < start || start + len > LLONG_MAX >> SECTOR_SHIFT) {
++		DMERR("%s: too large device", dm_device_name(t->md));
++		return -EINVAL;
++	}
+ 
+ 	ti->type = dm_get_target_type(type);
+ 	if (!ti->type) {
 -- 
 2.39.5
 
