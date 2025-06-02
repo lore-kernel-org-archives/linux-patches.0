@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8959823644F;
-	Mon,  2 Jun 2025 14:59:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3E87238174;
+	Mon,  2 Jun 2025 14:59:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748876341; cv=none; b=cPPJr9e893F/3AZaDYPd9tgA+NorZpsVg4XOFtC3U4Vz0V9CWC+jQCGiTeDLngJ59jHSsirkWxTLK+GNY+uoMC+CFn+NnvtEeJlijXQ5E7r31kp+snd06/7X90i3jO/XLCu0yr+5CiMCfNWeS24hISWiq+uaMnMiraR+KBaawWM=
+	t=1748876344; cv=none; b=po9j6WePh8x2wAr2CMdhBX6sCnpBMdyiiwmZgNOTV2Vn8MB12A+WN+BawN+LdeqebV8g3n1FDx1w/Cnsv086hAdhjXT87CKC5u4TudfXNocsD5CEqoeWq4UJsEACQIJIs3jY+GymYv7N3WeVt9khzrvSvmsNkT1Fkcc28+HZx/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748876341; c=relaxed/simple;
-	bh=6NllfDimlhC3DGdzoDaqah3uZ5xNszKGgEolTOBiveM=;
+	s=arc-20240116; t=1748876344; c=relaxed/simple;
+	bh=hDkUA4cEEsZwHHY7uXz5q4lIw80E8U7zX/KILu7/B1c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EfWWs52xzvGJDtE0DnqrhAdO9PanAuOZVZj3nNUXlS4y23tn4e7QtdLjxwtiHKJy+Ggv1l1gawOQpwPRIMW9osXQZQFGAh2qT1kH3eiTq/wli60D2Zu8JeqpqNWxXardhgs5q4Si07ih62/Tuw7yF/wKNsM0e6D4N7ih9dEHA8Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pyx9q0Xr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oqvI0cpPWop6NtNByprqL5dL+fwVy3zf23zelPzc+LPToWou80SYagEgWurJOi688GXLVmLkzijJC0GlS0RH5Uise2BcgaDehnw3DQL2wRWIRq/mak0KVZieM9z03RLtM7ibidKEZgOTcbSl+LGFtOHfgndNgmkkVmqJKYdOpb4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HMbxh8aU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pyx9q0Xr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC5FDC4CEEB;
-	Mon,  2 Jun 2025 14:59:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HMbxh8aU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22EF5C4CEF0;
+	Mon,  2 Jun 2025 14:59:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748876341;
-	bh=6NllfDimlhC3DGdzoDaqah3uZ5xNszKGgEolTOBiveM=;
+	s=korg; t=1748876344;
+	bh=hDkUA4cEEsZwHHY7uXz5q4lIw80E8U7zX/KILu7/B1c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Pyx9q0Xrj+JoXLaolyl9QxEzQOwYh3jTjjsKpxNnYTuPKCOro0S4qmoyGMsA+RtjP
-	 W2r5wl25xs7ECyAveZeUsCTQhl7CIRk1pLxDCQEhdJGMUwVmPElw0gjiDEBH+L//iw
-	 5/U984pf2T1QPRTj1Do1O4WZ+JU0MwulCAWh+5JA=
+	b=HMbxh8aUZ4O+nY2Me0jYpyIO6cKBT3SSP4xrXrxijWhlnT0uRaGwXqqzfUdZ6dRKz
+	 IEQUK/NxzlP2SKnckV1zUujuBze/O/RHgM4HG1HT3gTOF5pBeKxEjvwcqG6DruccOg
+	 l+ghCTQQW/rgewZjalL/HwiYebUjY9RgQ+oYNmZg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konstantin Andreev <andreev@swemel.ru>,
-	Casey Schaufler <casey@schaufler-ca.com>,
+	Viktor Malik <vmalik@redhat.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Quentin Monnet <qmo@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 119/207] smack: recognize ipv4 CIPSO w/o categories
-Date: Mon,  2 Jun 2025 15:48:11 +0200
-Message-ID: <20250602134303.381785207@linuxfoundation.org>
+Subject: [PATCH 5.15 146/207] bpftool: Fix readlink usage in get_fd_type
+Date: Mon,  2 Jun 2025 15:48:38 +0200
+Message-ID: <20250602134304.440729650@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134258.769974467@linuxfoundation.org>
 References: <20250602134258.769974467@linuxfoundation.org>
@@ -51,73 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konstantin Andreev <andreev@swemel.ru>
+From: Viktor Malik <vmalik@redhat.com>
 
-[ Upstream commit a158a937d864d0034fea14913c1f09c6d5f574b8 ]
+[ Upstream commit 0053f7d39d491b6138d7c526876d13885cbb65f1 ]
 
-If SMACK label has CIPSO representation w/o categories, e.g.:
+The `readlink(path, buf, sizeof(buf))` call reads at most sizeof(buf)
+bytes and *does not* append null-terminator to buf. With respect to
+that, fix two pieces in get_fd_type:
 
-| # cat /smack/cipso2
-| foo  10
-| @ 250/2
-| ...
+1. Change the truncation check to contain sizeof(buf) rather than
+   sizeof(path).
+2. Append null-terminator to buf.
 
-then SMACK does not recognize such CIPSO in input ipv4 packets
-and substitues '*' label instead. Audit records may look like
+Reported by Coverity.
 
-| lsm=SMACK fn=smack_socket_sock_rcv_skb action=denied
-|   subject="*" object="_" requested=w pid=0 comm="swapper/1" ...
-
-This happens in two steps:
-
-1) security/smack/smackfs.c`smk_set_cipso
-   does not clear NETLBL_SECATTR_MLS_CAT
-   from (struct smack_known *)skp->smk_netlabel.flags
-   on assigning CIPSO w/o categories:
-
-| rcu_assign_pointer(skp->smk_netlabel.attr.mls.cat, ncats.attr.mls.cat);
-| skp->smk_netlabel.attr.mls.lvl = ncats.attr.mls.lvl;
-
-2) security/smack/smack_lsm.c`smack_from_secattr
-   can not match skp->smk_netlabel with input packet's
-   struct netlbl_lsm_secattr *sap
-   because sap->flags have not NETLBL_SECATTR_MLS_CAT (what is correct)
-   but skp->smk_netlabel.flags have (what is incorrect):
-
-| if ((sap->flags & NETLBL_SECATTR_MLS_CAT) == 0) {
-| 	if ((skp->smk_netlabel.flags &
-| 		 NETLBL_SECATTR_MLS_CAT) == 0)
-| 		found = 1;
-| 	break;
-| }
-
-This commit sets/clears NETLBL_SECATTR_MLS_CAT in
-skp->smk_netlabel.flags according to the presense of CIPSO categories.
-The update of smk_netlabel is not atomic, so input packets processing
-still may be incorrect during short time while update proceeds.
-
-Signed-off-by: Konstantin Andreev <andreev@swemel.ru>
-Signed-off-by: Casey Schaufler <casey@schaufler-ca.com>
+Signed-off-by: Viktor Malik <vmalik@redhat.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Reviewed-by: Quentin Monnet <qmo@kernel.org>
+Link: https://lore.kernel.org/bpf/20250129071857.75182-1-vmalik@redhat.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/smack/smackfs.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ tools/bpf/bpftool/common.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/security/smack/smackfs.c b/security/smack/smackfs.c
-index f6961a8895296..0feaa29cc0243 100644
---- a/security/smack/smackfs.c
-+++ b/security/smack/smackfs.c
-@@ -921,6 +921,10 @@ static ssize_t smk_set_cipso(struct file *file, const char __user *buf,
- 	if (rc >= 0) {
- 		old_cat = skp->smk_netlabel.attr.mls.cat;
- 		rcu_assign_pointer(skp->smk_netlabel.attr.mls.cat, ncats.attr.mls.cat);
-+		if (ncats.attr.mls.cat)
-+			skp->smk_netlabel.flags |= NETLBL_SECATTR_MLS_CAT;
-+		else
-+			skp->smk_netlabel.flags &= ~(u32)NETLBL_SECATTR_MLS_CAT;
- 		skp->smk_netlabel.attr.mls.lvl = ncats.attr.mls.lvl;
- 		synchronize_rcu();
- 		netlbl_catmap_free(old_cat);
+diff --git a/tools/bpf/bpftool/common.c b/tools/bpf/bpftool/common.c
+index e4c65d34fe74f..2b4773e00ab68 100644
+--- a/tools/bpf/bpftool/common.c
++++ b/tools/bpf/bpftool/common.c
+@@ -318,10 +318,11 @@ int get_fd_type(int fd)
+ 		p_err("can't read link type: %s", strerror(errno));
+ 		return -1;
+ 	}
+-	if (n == sizeof(path)) {
++	if (n == sizeof(buf)) {
+ 		p_err("can't read link type: path too long!");
+ 		return -1;
+ 	}
++	buf[n] = '\0';
+ 
+ 	if (strstr(buf, "bpf-map"))
+ 		return BPF_OBJ_MAP;
 -- 
 2.39.5
 
