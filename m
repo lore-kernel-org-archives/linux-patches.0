@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1C40226D02;
-	Mon,  2 Jun 2025 15:12:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A197226D1D;
+	Mon,  2 Jun 2025 15:12:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748877130; cv=none; b=bwtxxm7kdziTSmUiNz5Ik8PlNI2CDnse/0AA6L+9cmSCwFUQih/9qRpSm1/VbL2/TebuG6SRsZvOpR99Oa/TqrIuzACLX0uOmf0PzKQPCmHb2NorB8jt8N6uS4NGOh8B+jrn5n9Zw+ZYd4vBva7FCd7RiwwjJpdZnUW0dvk4Jd8=
+	t=1748877133; cv=none; b=dpszgfFJs4J8xfv1x3uJ0EeOs4HimikhWSK/uMxeuPIBoz8/dLzBU1ZzxkIKBmZoQp1etNdLScQ36aFQviXfUQq3oUmmbjlp2u9YVtSpgGFdmmLGQCtoA0YzOH2deoaJgEGbfJb/OCoVE3ej5c/iglAgzrNlngy2qrIRqa0UJyQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748877130; c=relaxed/simple;
-	bh=mdxvWaKEyj0mWhZN4iF03Oc6ApABz5m4Pn8IBKF2m5M=;
+	s=arc-20240116; t=1748877133; c=relaxed/simple;
+	bh=HtVIZBYqu/aS1XkNp9KVS0eJQb/nNtlpzjFmIzt1hCE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=If1b07yYpsMbljNLUsoga7Y0GbGEzRnEjkbeXoiQZKtNmUYfFroEWfo4QKLRvnyQO0fQUfF64oXqdLnhgvqp+JCW0Jo1YkXjXeeinYWwDwATEPi08KHpLj/N11v8PPQ+BVVRv53BZEi2FiPo3SHJPPTFgKd7Pr66u9lec3PA6J0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NOHNZC6E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p8BCxFSEP1hi7zU8wqQaeiCvAZen035wXjZjRN4o2OKYGBgKftOfiKIL8W+hMNAhgFDMGZTsuuCDgr0tAJ92tS/gU6W1bixF3Snn299C7rzH+GGKcAyswZR9RY+A8+vH6CSGnVCEKb0c/oVwr3dF4S/TPk5ZDApaYQtTWTpbyjM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kkf+2fVu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NOHNZC6E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70B5AC4CEEB;
-	Mon,  2 Jun 2025 15:12:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kkf+2fVu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4974C4CEEB;
+	Mon,  2 Jun 2025 15:12:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748877129;
-	bh=mdxvWaKEyj0mWhZN4iF03Oc6ApABz5m4Pn8IBKF2m5M=;
+	s=korg; t=1748877133;
+	bh=HtVIZBYqu/aS1XkNp9KVS0eJQb/nNtlpzjFmIzt1hCE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NOHNZC6EmdjTXT3V+n1iD//18z2LbTfBeb/upU3W389RYE769XRhiFrDPOG47hy6G
-	 GKFLbgoiqslLAZ3ZchyUvmrzp/H8XLR/HTXvvfwhMfN5qgXoFNv17P8p6lv0jUO/Rx
-	 SH9GXSPOuZ08PlOMDm73MPQrtHSOwdzJ41VLkMms=
+	b=kkf+2fVu+VGw5A4DDMr5TKkD5n54NPK0Ff4UNk3wTta3pjLe5aYPGcW1v0n8userm
+	 mzQ5Xe/8Otz3ew/kFdVi1mxksrpGJvSNkTuVU3xxVL3FR3h5adHaFsOHIe6AOxBk8Y
+	 WaH0XZloyOh3b6WzKzLOGLCk97x8kiZtQB4F0Svc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harry Wentland <harry.wentland@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Alexei Lazar <alazar@nvidia.com>,
+	Dragos Tatulea <dtatulea@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 182/325] drm/amd/display/dm: drop hw_support check in amdgpu_dm_i2c_xfer()
-Date: Mon,  2 Jun 2025 15:47:38 +0200
-Message-ID: <20250602134327.207663100@linuxfoundation.org>
+Subject: [PATCH 6.1 183/325] net/mlx5: Extend Ethtool loopback selftest to support non-linear SKB
+Date: Mon,  2 Jun 2025 15:47:39 +0200
+Message-ID: <20250602134327.247331715@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134319.723650984@linuxfoundation.org>
 References: <20250602134319.723650984@linuxfoundation.org>
@@ -51,32 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Alexei Lazar <alazar@nvidia.com>
 
-[ Upstream commit 33da70bd1e115d7d73f45fb1c09f5ecc448f3f13 ]
+[ Upstream commit 95b9606b15bb3ce1198d28d2393dd0e1f0a5f3e9 ]
 
-DC supports SW i2c as well.  Drop the check.
+Current loopback test validation ignores non-linear SKB case in
+the SKB access, which can lead to failures in scenarios such as
+when HW GRO is enabled.
+Linearize the SKB so both cases will be handled.
 
-Reviewed-by: Harry Wentland <harry.wentland@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alexei Lazar <alazar@nvidia.com>
+Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20250209101716.112774-15-tariqt@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en_selftest.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-index 0d8c020cd1216..998dde73ecc67 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -7281,7 +7281,7 @@ static int amdgpu_dm_i2c_xfer(struct i2c_adapter *i2c_adap,
- 	int i;
- 	int result = -EIO;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_selftest.c b/drivers/net/ethernet/mellanox/mlx5/core/en_selftest.c
+index 08a75654f5f18..c170503b3aace 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_selftest.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_selftest.c
+@@ -165,6 +165,9 @@ mlx5e_test_loopback_validate(struct sk_buff *skb,
+ 	struct udphdr *udph;
+ 	struct iphdr *iph;
  
--	if (!ddc_service->ddc_pin || !ddc_service->ddc_pin->hw_info.hw_supported)
-+	if (!ddc_service->ddc_pin)
- 		return result;
- 
- 	cmd.payloads = kcalloc(num, sizeof(struct i2c_payload), GFP_KERNEL);
++	if (skb_linearize(skb))
++		goto out;
++
+ 	/* We are only going to peek, no need to clone the SKB */
+ 	if (MLX5E_TEST_PKT_SIZE - ETH_HLEN > skb_headlen(skb))
+ 		goto out;
 -- 
 2.39.5
 
