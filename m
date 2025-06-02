@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4074D2C327E;
-	Mon,  2 Jun 2025 14:23:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 357C82C327E;
+	Mon,  2 Jun 2025 14:23:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748874205; cv=none; b=gaFh8xZx1rUBSuQrcrCL7KFqQH5QIrnIRmCpdtLKiOUnGQTlEIuifVPJrjvaC4v4iN016RDF3P2v1ZxIg+mVTQEQm3cA9IE0a70AIVcbuHGCE259Y3p2LGbruE6nGD0jpZT7O/HfME6B5m9K86HI5wsKKYReHc2BjH7s2RGZzuw=
+	t=1748874208; cv=none; b=S4L2c281GAZelCjuobUyqsU5ljZcydf7zYLJw0ASaMo6JDQFn2C3GWdTclj0igbSHdWgwMuAAqvudNqwQWzWAmqfT2e8VxOlQ18anOEwrQdJDbiODZy0KsKNr5m/lACUG91lRQGw/2xJvCGt2WWzAXYo8OyH+cfwQvNfTEZfddU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748874205; c=relaxed/simple;
-	bh=f0QQHMue4QrXg+7CEXbnPTWF9cvjJvHRHrh8rxYP2Rs=;
+	s=arc-20240116; t=1748874208; c=relaxed/simple;
+	bh=7oqsfw1Xo616iOuYeOxP9lKH2Z6HKjo1q+obG+aBEsc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jQvMKk2eW1SFXSsMpsNV/oAkEjMVKm2xf8y971zobpctAjNj/TIJPY3Dpl7qDeVdHsBqItRBvYB1P6b7xOemmJS501OPqw2GX6e2iksGwpv4JXz5D+mzDb1j18eQIqcTK7pP1syXiC4xdUmHSb1M2qm3WybPNf8sP+AzRgk2c2Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y19bRA/R; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N1HzP5Z9APhXa9B5oLUiB3um4QsdS/MGSMzxfUthprCz+fWxIqtSWk+QoRSZcDKQVIb/c3b/38hGDsV3igDC5sXM4pWAxbqgGxKTzp0IrayBPrCUiIsIz9WwT9883o+8iaeVEaQr86t/pEegdbVf4kK91QemhSht/eqmS8mHuP4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qNHD5/Eb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y19bRA/R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4111C4CEEB;
-	Mon,  2 Jun 2025 14:23:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qNHD5/Eb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B60EBC4CEEB;
+	Mon,  2 Jun 2025 14:23:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748874205;
-	bh=f0QQHMue4QrXg+7CEXbnPTWF9cvjJvHRHrh8rxYP2Rs=;
+	s=korg; t=1748874208;
+	bh=7oqsfw1Xo616iOuYeOxP9lKH2Z6HKjo1q+obG+aBEsc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y19bRA/RJXwS4sHTT9kEVDJ60glkCBX9579zc24VAu6667q0LNJR74ACGL2TZ9/6H
-	 6HJ7E+HsaNCncWBfjxsT3iNcGKnHfNkzLgTaAfXc8ElV0Au1s9IdA1KltFtZWy+b56
-	 Gekt7JBbCAbQVP2igMJ1xDhsLHvHxr/O0r51QpIs=
+	b=qNHD5/EbnGbP3MpEO8Q6Qe9GdyKKfCka+8a4G//XVw2/bmyfnjyopqAnV18COPO4x
+	 DNmH0EaGn+HgVRUmba5/AH5VUINEooDie3NWdbyYO17evew8DdbUDY45mJBlxA22PL
+	 J7V519ktMZ1q2bchkEaDBYIWI1jLqHKmG3gAeVIo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Axel Forsman <axfo@kvaser.com>,
-	Jimmy Assarsson <extja@kvaser.com>,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 6.6 392/444] can: kvaser_pciefd: Force IRQ edge in case of nested IRQ
-Date: Mon,  2 Jun 2025 15:47:36 +0200
-Message-ID: <20250602134356.818733305@linuxfoundation.org>
+	Vlad Poenaru <vlad.wing@gmail.com>,
+	Usama Arif <usamaarif642@gmail.com>,
+	Frederic Weisbecker <frederic@kernel.org>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Zhaoyang Li <lizy04@hust.edu.cn>
+Subject: [PATCH 6.6 393/444] hrtimers: Force migrate away hrtimers queued after CPUHP_AP_HRTIMERS_DYING
+Date: Mon,  2 Jun 2025 15:47:37 +0200
+Message-ID: <20250602134356.858044862@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -51,187 +54,270 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Axel Forsman <axfo@kvaser.com>
+From: Frederic Weisbecker <frederic@kernel.org>
 
-commit 9176bd205ee0b2cd35073a9973c2a0936bcb579e upstream.
+commit 53dac345395c0d2493cbc2f4c85fe38aef5b63f5 upstream.
 
-Avoid the driver missing IRQs by temporarily masking IRQs in the ISR
-to enforce an edge even if a different IRQ is signalled before handled
-IRQs are cleared.
+hrtimers are migrated away from the dying CPU to any online target at
+the CPUHP_AP_HRTIMERS_DYING stage in order not to delay bandwidth timers
+handling tasks involved in the CPU hotplug forward progress.
 
-Fixes: 48f827d4f48f ("can: kvaser_pciefd: Move reset of DMA RX buffers to the end of the ISR")
+However wakeups can still be performed by the outgoing CPU after
+CPUHP_AP_HRTIMERS_DYING. Those can result again in bandwidth timers being
+armed. Depending on several considerations (crystal ball power management
+based election, earliest timer already enqueued, timer migration enabled or
+not), the target may eventually be the current CPU even if offline. If that
+happens, the timer is eventually ignored.
+
+The most notable example is RCU which had to deal with each and every of
+those wake-ups by deferring them to an online CPU, along with related
+workarounds:
+
+_ e787644caf76 (rcu: Defer RCU kthreads wakeup when CPU is dying)
+_ 9139f93209d1 (rcu/nocb: Fix RT throttling hrtimer armed from offline CPU)
+_ f7345ccc62a4 (rcu/nocb: Fix rcuog wake-up from offline softirq)
+
+The problem isn't confined to RCU though as the stop machine kthread
+(which runs CPUHP_AP_HRTIMERS_DYING) reports its completion at the end
+of its work through cpu_stop_signal_done() and performs a wake up that
+eventually arms the deadline server timer:
+
+   WARNING: CPU: 94 PID: 588 at kernel/time/hrtimer.c:1086 hrtimer_start_range_ns+0x289/0x2d0
+   CPU: 94 UID: 0 PID: 588 Comm: migration/94 Not tainted
+   Stopper: multi_cpu_stop+0x0/0x120 <- stop_machine_cpuslocked+0x66/0xc0
+   RIP: 0010:hrtimer_start_range_ns+0x289/0x2d0
+   Call Trace:
+   <TASK>
+     start_dl_timer
+     enqueue_dl_entity
+     dl_server_start
+     enqueue_task_fair
+     enqueue_task
+     ttwu_do_activate
+     try_to_wake_up
+     complete
+     cpu_stopper_thread
+
+Instead of providing yet another bandaid to work around the situation, fix
+it in the hrtimers infrastructure instead: always migrate away a timer to
+an online target whenever it is enqueued from an offline CPU.
+
+This will also allow to revert all the above RCU disgraceful hacks.
+
+Fixes: 5c0930ccaad5 ("hrtimers: Push pending hrtimers away from outgoing CPU earlier")
+Reported-by: Vlad Poenaru <vlad.wing@gmail.com>
+Reported-by: Usama Arif <usamaarif642@gmail.com>
+Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
 Cc: stable@vger.kernel.org
-Signed-off-by: Axel Forsman <axfo@kvaser.com>
-Tested-by: Jimmy Assarsson <extja@kvaser.com>
-Reviewed-by: Jimmy Assarsson <extja@kvaser.com>
-Link: https://patch.msgid.link/20250520114332.8961-2-axfo@kvaser.com
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Tested-by: Paul E. McKenney <paulmck@kernel.org>
+Link: https://lore.kernel.org/all/20250117232433.24027-1-frederic@kernel.org
+Closes: 20241213203739.1519801-1-usamaarif642@gmail.com
+Signed-off-by: Zhaoyang Li <lizy04@hust.edu.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/kvaser_pciefd.c |   80 ++++++++++++++++++----------------------
- 1 file changed, 37 insertions(+), 43 deletions(-)
+ include/linux/hrtimer.h |    1 
+ kernel/time/hrtimer.c   |  103 ++++++++++++++++++++++++++++++++++++++----------
+ 2 files changed, 83 insertions(+), 21 deletions(-)
 
---- a/drivers/net/can/kvaser_pciefd.c
-+++ b/drivers/net/can/kvaser_pciefd.c
-@@ -1582,24 +1582,28 @@ static int kvaser_pciefd_read_buffer(str
- 	return res;
- }
+--- a/include/linux/hrtimer.h
++++ b/include/linux/hrtimer.h
+@@ -237,6 +237,7 @@ struct hrtimer_cpu_base {
+ 	ktime_t				softirq_expires_next;
+ 	struct hrtimer			*softirq_next_timer;
+ 	struct hrtimer_clock_base	clock_base[HRTIMER_MAX_CLOCK_BASES];
++	call_single_data_t		csd;
+ } ____cacheline_aligned;
  
--static u32 kvaser_pciefd_receive_irq(struct kvaser_pciefd *pcie)
-+static void kvaser_pciefd_receive_irq(struct kvaser_pciefd *pcie)
- {
-+	void __iomem *srb_cmd_reg = KVASER_PCIEFD_SRB_ADDR(pcie) + KVASER_PCIEFD_SRB_CMD_REG;
- 	u32 irq = ioread32(KVASER_PCIEFD_SRB_ADDR(pcie) + KVASER_PCIEFD_SRB_IRQ_REG);
+ static inline void hrtimer_set_expires(struct hrtimer *timer, ktime_t time)
+--- a/kernel/time/hrtimer.c
++++ b/kernel/time/hrtimer.c
+@@ -58,6 +58,8 @@
+ #define HRTIMER_ACTIVE_SOFT	(HRTIMER_ACTIVE_HARD << MASK_SHIFT)
+ #define HRTIMER_ACTIVE_ALL	(HRTIMER_ACTIVE_SOFT | HRTIMER_ACTIVE_HARD)
  
--	if (irq & KVASER_PCIEFD_SRB_IRQ_DPD0)
-+	iowrite32(irq, KVASER_PCIEFD_SRB_ADDR(pcie) + KVASER_PCIEFD_SRB_IRQ_REG);
++static void retrigger_next_event(void *arg);
 +
-+	if (irq & KVASER_PCIEFD_SRB_IRQ_DPD0) {
- 		kvaser_pciefd_read_buffer(pcie, 0);
-+		iowrite32(KVASER_PCIEFD_SRB_CMD_RDB0, srb_cmd_reg); /* Rearm buffer */
-+	}
+ /*
+  * The timer bases:
+  *
+@@ -111,7 +113,8 @@ DEFINE_PER_CPU(struct hrtimer_cpu_base,
+ 			.clockid = CLOCK_TAI,
+ 			.get_time = &ktime_get_clocktai,
+ 		},
+-	}
++	},
++	.csd = CSD_INIT(retrigger_next_event, NULL)
+ };
  
--	if (irq & KVASER_PCIEFD_SRB_IRQ_DPD1)
-+	if (irq & KVASER_PCIEFD_SRB_IRQ_DPD1) {
- 		kvaser_pciefd_read_buffer(pcie, 1);
-+		iowrite32(KVASER_PCIEFD_SRB_CMD_RDB1, srb_cmd_reg); /* Rearm buffer */
-+	}
+ static const int hrtimer_clock_to_base_table[MAX_CLOCKS] = {
+@@ -124,6 +127,14 @@ static const int hrtimer_clock_to_base_t
+ 	[CLOCK_TAI]		= HRTIMER_BASE_TAI,
+ };
  
- 	if (irq & KVASER_PCIEFD_SRB_IRQ_DOF0 ||
- 	    irq & KVASER_PCIEFD_SRB_IRQ_DOF1 ||
- 	    irq & KVASER_PCIEFD_SRB_IRQ_DUF0 ||
- 	    irq & KVASER_PCIEFD_SRB_IRQ_DUF1)
- 		dev_err(&pcie->pci->dev, "DMA IRQ error 0x%08X\n", irq);
--
--	iowrite32(irq, KVASER_PCIEFD_SRB_ADDR(pcie) + KVASER_PCIEFD_SRB_IRQ_REG);
--	return irq;
- }
- 
- static void kvaser_pciefd_transmit_irq(struct kvaser_pciefd_can *can)
-@@ -1627,29 +1631,22 @@ static irqreturn_t kvaser_pciefd_irq_han
- 	struct kvaser_pciefd *pcie = (struct kvaser_pciefd *)dev;
- 	const struct kvaser_pciefd_irq_mask *irq_mask = pcie->driver_data->irq_mask;
- 	u32 pci_irq = ioread32(KVASER_PCIEFD_PCI_IRQ_ADDR(pcie));
--	u32 srb_irq = 0;
--	u32 srb_release = 0;
- 	int i;
- 
- 	if (!(pci_irq & irq_mask->all))
- 		return IRQ_NONE;
- 
-+	iowrite32(0, KVASER_PCIEFD_PCI_IEN_ADDR(pcie));
-+
- 	if (pci_irq & irq_mask->kcan_rx0)
--		srb_irq = kvaser_pciefd_receive_irq(pcie);
-+		kvaser_pciefd_receive_irq(pcie);
- 
- 	for (i = 0; i < pcie->nr_channels; i++) {
- 		if (pci_irq & irq_mask->kcan_tx[i])
- 			kvaser_pciefd_transmit_irq(pcie->can[i]);
- 	}
- 
--	if (srb_irq & KVASER_PCIEFD_SRB_IRQ_DPD0)
--		srb_release |= KVASER_PCIEFD_SRB_CMD_RDB0;
--
--	if (srb_irq & KVASER_PCIEFD_SRB_IRQ_DPD1)
--		srb_release |= KVASER_PCIEFD_SRB_CMD_RDB1;
--
--	if (srb_release)
--		iowrite32(srb_release, KVASER_PCIEFD_SRB_ADDR(pcie) + KVASER_PCIEFD_SRB_CMD_REG);
-+	iowrite32(irq_mask->all, KVASER_PCIEFD_PCI_IEN_ADDR(pcie));
- 
- 	return IRQ_HANDLED;
- }
-@@ -1669,13 +1666,22 @@ static void kvaser_pciefd_teardown_can_c
- 	}
- }
- 
-+static void kvaser_pciefd_disable_irq_srcs(struct kvaser_pciefd *pcie)
++static inline bool hrtimer_base_is_online(struct hrtimer_cpu_base *base)
 +{
-+	unsigned int i;
-+
-+	/* Masking PCI_IRQ is insufficient as running ISR will unmask it */
-+	iowrite32(0, KVASER_PCIEFD_SRB_ADDR(pcie) + KVASER_PCIEFD_SRB_IEN_REG);
-+	for (i = 0; i < pcie->nr_channels; ++i)
-+		iowrite32(0, pcie->can[i]->reg_base + KVASER_PCIEFD_KCAN_IEN_REG);
++	if (!IS_ENABLED(CONFIG_HOTPLUG_CPU))
++		return true;
++	else
++		return likely(base->online);
 +}
 +
- static int kvaser_pciefd_probe(struct pci_dev *pdev,
- 			       const struct pci_device_id *id)
- {
- 	int err;
- 	struct kvaser_pciefd *pcie;
- 	const struct kvaser_pciefd_irq_mask *irq_mask;
--	void __iomem *irq_en_base;
- 
- 	pcie = devm_kzalloc(&pdev->dev, sizeof(*pcie), GFP_KERNEL);
- 	if (!pcie)
-@@ -1728,8 +1734,7 @@ static int kvaser_pciefd_probe(struct pc
- 		  KVASER_PCIEFD_SRB_ADDR(pcie) + KVASER_PCIEFD_SRB_IEN_REG);
- 
- 	/* Enable PCI interrupts */
--	irq_en_base = KVASER_PCIEFD_PCI_IEN_ADDR(pcie);
--	iowrite32(irq_mask->all, irq_en_base);
-+	iowrite32(irq_mask->all, KVASER_PCIEFD_PCI_IEN_ADDR(pcie));
- 	/* Ready the DMA buffers */
- 	iowrite32(KVASER_PCIEFD_SRB_CMD_RDB0,
- 		  KVASER_PCIEFD_SRB_ADDR(pcie) + KVASER_PCIEFD_SRB_CMD_REG);
-@@ -1743,8 +1748,7 @@ static int kvaser_pciefd_probe(struct pc
- 	return 0;
- 
- err_free_irq:
--	/* Disable PCI interrupts */
--	iowrite32(0, irq_en_base);
-+	kvaser_pciefd_disable_irq_srcs(pcie);
- 	free_irq(pcie->pci->irq, pcie);
- 
- err_teardown_can_ctrls:
-@@ -1764,35 +1768,25 @@ err_disable_pci:
- 	return err;
+ /*
+  * Functions and macros which are different for UP/SMP systems are kept in a
+  * single place
+@@ -178,27 +189,54 @@ struct hrtimer_clock_base *lock_hrtimer_
  }
  
--static void kvaser_pciefd_remove_all_ctrls(struct kvaser_pciefd *pcie)
--{
--	int i;
--
--	for (i = 0; i < pcie->nr_channels; i++) {
--		struct kvaser_pciefd_can *can = pcie->can[i];
--
--		if (can) {
--			iowrite32(0, can->reg_base + KVASER_PCIEFD_KCAN_IEN_REG);
--			unregister_candev(can->can.dev);
--			del_timer(&can->bec_poll_timer);
--			kvaser_pciefd_pwm_stop(can);
--			free_candev(can->can.dev);
--		}
--	}
--}
--
- static void kvaser_pciefd_remove(struct pci_dev *pdev)
+ /*
+- * We do not migrate the timer when it is expiring before the next
+- * event on the target cpu. When high resolution is enabled, we cannot
+- * reprogram the target cpu hardware and we would cause it to fire
+- * late. To keep it simple, we handle the high resolution enabled and
+- * disabled case similar.
++ * Check if the elected target is suitable considering its next
++ * event and the hotplug state of the current CPU.
++ *
++ * If the elected target is remote and its next event is after the timer
++ * to queue, then a remote reprogram is necessary. However there is no
++ * guarantee the IPI handling the operation would arrive in time to meet
++ * the high resolution deadline. In this case the local CPU becomes a
++ * preferred target, unless it is offline.
++ *
++ * High and low resolution modes are handled the same way for simplicity.
+  *
+  * Called with cpu_base->lock of target cpu held.
+  */
+-static int
+-hrtimer_check_target(struct hrtimer *timer, struct hrtimer_clock_base *new_base)
++static bool hrtimer_suitable_target(struct hrtimer *timer, struct hrtimer_clock_base *new_base,
++				    struct hrtimer_cpu_base *new_cpu_base,
++				    struct hrtimer_cpu_base *this_cpu_base)
  {
- 	struct kvaser_pciefd *pcie = pci_get_drvdata(pdev);
-+	unsigned int i;
+ 	ktime_t expires;
  
--	kvaser_pciefd_remove_all_ctrls(pcie);
-+	for (i = 0; i < pcie->nr_channels; ++i) {
-+		struct kvaser_pciefd_can *can = pcie->can[i];
++	/*
++	 * The local CPU clockevent can be reprogrammed. Also get_target_base()
++	 * guarantees it is online.
++	 */
++	if (new_cpu_base == this_cpu_base)
++		return true;
++
++	/*
++	 * The offline local CPU can't be the default target if the
++	 * next remote target event is after this timer. Keep the
++	 * elected new base. An IPI will we issued to reprogram
++	 * it as a last resort.
++	 */
++	if (!hrtimer_base_is_online(this_cpu_base))
++		return true;
++
+ 	expires = ktime_sub(hrtimer_get_expires(timer), new_base->offset);
+-	return expires < new_base->cpu_base->expires_next;
++
++	return expires >= new_base->cpu_base->expires_next;
+ }
  
--	/* Disable interrupts */
--	iowrite32(0, KVASER_PCIEFD_SRB_ADDR(pcie) + KVASER_PCIEFD_SRB_CTRL_REG);
--	iowrite32(0, KVASER_PCIEFD_PCI_IEN_ADDR(pcie));
-+		unregister_candev(can->can.dev);
-+		del_timer(&can->bec_poll_timer);
-+		kvaser_pciefd_pwm_stop(can);
+-static inline
+-struct hrtimer_cpu_base *get_target_base(struct hrtimer_cpu_base *base,
+-					 int pinned)
++static inline struct hrtimer_cpu_base *get_target_base(struct hrtimer_cpu_base *base, int pinned)
+ {
++	if (!hrtimer_base_is_online(base)) {
++		int cpu = cpumask_any_and(cpu_online_mask, housekeeping_cpumask(HK_TYPE_TIMER));
++
++		return &per_cpu(hrtimer_bases, cpu);
++	}
++
+ #if defined(CONFIG_SMP) && defined(CONFIG_NO_HZ_COMMON)
+ 	if (static_branch_likely(&timers_migration_enabled) && !pinned)
+ 		return &per_cpu(hrtimer_bases, get_nohz_timer_target());
+@@ -249,8 +287,8 @@ again:
+ 		raw_spin_unlock(&base->cpu_base->lock);
+ 		raw_spin_lock(&new_base->cpu_base->lock);
+ 
+-		if (new_cpu_base != this_cpu_base &&
+-		    hrtimer_check_target(timer, new_base)) {
++		if (!hrtimer_suitable_target(timer, new_base, new_cpu_base,
++					     this_cpu_base)) {
+ 			raw_spin_unlock(&new_base->cpu_base->lock);
+ 			raw_spin_lock(&base->cpu_base->lock);
+ 			new_cpu_base = this_cpu_base;
+@@ -259,8 +297,7 @@ again:
+ 		}
+ 		WRITE_ONCE(timer->base, new_base);
+ 	} else {
+-		if (new_cpu_base != this_cpu_base &&
+-		    hrtimer_check_target(timer, new_base)) {
++		if (!hrtimer_suitable_target(timer, new_base,  new_cpu_base, this_cpu_base)) {
+ 			new_cpu_base = this_cpu_base;
+ 			goto again;
+ 		}
+@@ -720,8 +757,6 @@ static inline int hrtimer_is_hres_enable
+ 	return hrtimer_hres_enabled;
+ }
+ 
+-static void retrigger_next_event(void *arg);
+-
+ /*
+  * Switch to high resolution mode
+  */
+@@ -1208,6 +1243,7 @@ static int __hrtimer_start_range_ns(stru
+ 				    u64 delta_ns, const enum hrtimer_mode mode,
+ 				    struct hrtimer_clock_base *base)
+ {
++	struct hrtimer_cpu_base *this_cpu_base = this_cpu_ptr(&hrtimer_bases);
+ 	struct hrtimer_clock_base *new_base;
+ 	bool force_local, first;
+ 
+@@ -1219,10 +1255,16 @@ static int __hrtimer_start_range_ns(stru
+ 	 * and enforce reprogramming after it is queued no matter whether
+ 	 * it is the new first expiring timer again or not.
+ 	 */
+-	force_local = base->cpu_base == this_cpu_ptr(&hrtimer_bases);
++	force_local = base->cpu_base == this_cpu_base;
+ 	force_local &= base->cpu_base->next_timer == timer;
+ 
+ 	/*
++	 * Don't force local queuing if this enqueue happens on a unplugged
++	 * CPU after hrtimer_cpu_dying() has been invoked.
++	 */
++	force_local &= this_cpu_base->online;
++
++	/*
+ 	 * Remove an active timer from the queue. In case it is not queued
+ 	 * on the current CPU, make sure that remove_hrtimer() updates the
+ 	 * remote data correctly.
+@@ -1251,8 +1293,27 @@ static int __hrtimer_start_range_ns(stru
+ 	}
+ 
+ 	first = enqueue_hrtimer(timer, new_base, mode);
+-	if (!force_local)
+-		return first;
++	if (!force_local) {
++		/*
++		 * If the current CPU base is online, then the timer is
++		 * never queued on a remote CPU if it would be the first
++		 * expiring timer there.
++		 */
++		if (hrtimer_base_is_online(this_cpu_base))
++			return first;
++
++		/*
++		 * Timer was enqueued remote because the current base is
++		 * already offline. If the timer is the first to expire,
++		 * kick the remote CPU to reprogram the clock event.
++		 */
++		if (first) {
++			struct hrtimer_cpu_base *new_cpu_base = new_base->cpu_base;
++
++			smp_call_function_single_async(new_cpu_base->cpu, &new_cpu_base->csd);
++		}
++		return 0;
 +	}
  
-+	kvaser_pciefd_disable_irq_srcs(pcie);
- 	free_irq(pcie->pci->irq, pcie);
- 
-+	for (i = 0; i < pcie->nr_channels; ++i)
-+		free_candev(pcie->can[i]->can.dev);
-+
- 	pci_iounmap(pdev, pcie->reg_base);
- 	pci_release_regions(pdev);
- 	pci_disable_device(pdev);
+ 	/*
+ 	 * Timer was forced to stay on the current CPU to avoid
 
 
