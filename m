@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8398220F07C;
-	Mon,  2 Jun 2025 14:46:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16CD0221D94;
+	Mon,  2 Jun 2025 14:46:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748875564; cv=none; b=NDNhurqjQ/nRDMLpaSeDQAiG6eBI3kuORpiRukU7it5tfQyveCMbiancvLW0KaBC41XZguSs+PXHXO0C1F6DdW9WzfaMsPZm8Xmtmg7hQn6564/uBAIcsaij5ZgtZRIcdKIZpIOtB6azGzko9ny0sVeBbsHn3cx4N23StLuxYhs=
+	t=1748875568; cv=none; b=MDmRI4P5JO7t6IexB1Jns1B1UIaPtcyJiFQ8vsA3YmL7n1tg5BgQzeL4ghdoVUW4ocAwN2b0ZhJe4SXXRgI+XuoxrWTarxAE6BcCV95GXr5beFyvG+QJ4x3guwz196JXDw7C0KM4TpOGlIR3ihsQ+Jfy7DlKzqvmw7bO5esWQYY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748875564; c=relaxed/simple;
-	bh=3sEHSVKNLM21dAS0waLbeV/TYn/m1O/4GXHTGQn5iKg=;
+	s=arc-20240116; t=1748875568; c=relaxed/simple;
+	bh=G5dZ8eVWadFBNb5HJnHBKAE8vDm24XNCQLyfIgHUkPY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hilSkDwmpcdqheBKYe39cr+GS//fZjG0RRg5vxRlIIbVi/mCOPfy+D9EptAoEQCX6B+6g2/WKUDm/7EgvCFBtMvqd6Aartz/kzr2z40N5iFy7wmOAqffoJgi9MuruRj0IrU2jlIgDQ1INGBoiyibOMBDkSn7RV7kp04tPkWWaQw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SXU9DxvQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L8WQNj4nnoLRaTZ+598WsN6TeceBQjcOrNZsr8WMQVibCtOuPXh9+mZByIM1ZmUOx9it+WtcPuCkVIo7o7OR86ecQGGWSkkXYDOgyzXc+CNzhvQi2d9koKtj8PIWr60hXmNbhbJc6dOPFtcpxEeOIxJUYcz7zwf17mn3RJIXIw4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ya+L7zcQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SXU9DxvQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C974C4CEEB;
-	Mon,  2 Jun 2025 14:46:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ya+L7zcQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 825C7C4CEF0;
+	Mon,  2 Jun 2025 14:46:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748875564;
-	bh=3sEHSVKNLM21dAS0waLbeV/TYn/m1O/4GXHTGQn5iKg=;
+	s=korg; t=1748875568;
+	bh=G5dZ8eVWadFBNb5HJnHBKAE8vDm24XNCQLyfIgHUkPY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SXU9DxvQHuJ8s5b0T1m3lr6Kfo+YBh44UuIidYoAt1q4/az96lVk6Y5TKfw0vHCEZ
-	 1UnfsSVpjHk/zShgHiRdwc5yOh/vsfXubnP+j3M0ktcmYvoc26S7IXd0L+jkvEI3jN
-	 ZmBvqvc1EeL1cQezqZ+a46DVcrEOXj7DHpF1nRPg=
+	b=ya+L7zcQ5HkL9qaGpiX2U6DrphLBD2qWLX5cwwZe9N8stop0KSMMvOZCks8g+dTff
+	 1vs4v1hwNZ5qI+o+2OuEV9KBO2ewu7UGmyAGDiUK3/s7c/Iu+e2v5E6wi5Thi3Eta/
+	 RzWy1PG3mZo7JSMb+bAkLIYP/FwlrBvxZ22H+dhw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stanimir Varbanov <svarbanov@suse.de>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	"Ivan T. Ivanov" <iivanov@suse.de>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Moshe Shemesh <moshe@nvidia.com>,
+	Shahar Shitrit <shshitrit@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 175/270] PCI: brcmstb: Add a softdep to MIP MSI-X driver
-Date: Mon,  2 Jun 2025 15:47:40 +0200
-Message-ID: <20250602134314.370531498@linuxfoundation.org>
+Subject: [PATCH 5.10 176/270] net/mlx5: Avoid report two health errors on same syndrome
+Date: Mon,  2 Jun 2025 15:47:41 +0200
+Message-ID: <20250602134314.411621320@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134307.195171844@linuxfoundation.org>
 References: <20250602134307.195171844@linuxfoundation.org>
@@ -47,43 +48,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stanimir Varbanov <svarbanov@suse.de>
+From: Moshe Shemesh <moshe@nvidia.com>
 
-[ Upstream commit 2294059118c550464dd8906286324d90c33b152b ]
+[ Upstream commit b5d7b2f04ebcff740f44ef4d295b3401aeb029f4 ]
 
-Then the brcmstb PCIe driver and MIP MSI-X interrupt controller
-drivers are built as modules there could be a race in probing.
+In case health counter has not increased for few polling intervals, miss
+counter will reach max misses threshold and health report will be
+triggered for FW health reporter. In case syndrome found on same health
+poll another health report will be triggered.
 
-To avoid this, add a softdep to MIP driver to guarantee that
-MIP driver will be load first.
+Avoid two health reports on same syndrome by marking this syndrome as
+already known.
 
-Signed-off-by: Stanimir Varbanov <svarbanov@suse.de>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Tested-by: Ivan T. Ivanov <iivanov@suse.de>
-Link: https://lore.kernel.org/r/20250224083559.47645-5-svarbanov@suse.de
-[kwilczynski: commit log]
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Signed-off-by: Moshe Shemesh <moshe@nvidia.com>
+Reviewed-by: Shahar Shitrit <shshitrit@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/pcie-brcmstb.c | 1 +
+ drivers/net/ethernet/mellanox/mlx5/core/health.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/pci/controller/pcie-brcmstb.c b/drivers/pci/controller/pcie-brcmstb.c
-index 2fc4fe23e6bbf..85be07e8b418a 100644
---- a/drivers/pci/controller/pcie-brcmstb.c
-+++ b/drivers/pci/controller/pcie-brcmstb.c
-@@ -1326,3 +1326,4 @@ module_platform_driver(brcm_pcie_driver);
- MODULE_LICENSE("GPL");
- MODULE_DESCRIPTION("Broadcom STB PCIe RC driver");
- MODULE_AUTHOR("Broadcom");
-+MODULE_SOFTDEP("pre: irq_bcm2712_mip");
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/health.c b/drivers/net/ethernet/mellanox/mlx5/core/health.c
+index f42e118f32901..d48912d7afe54 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/health.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/health.c
+@@ -733,6 +733,7 @@ static void poll_health(struct timer_list *t)
+ 	health->prev = count;
+ 	if (health->miss_counter == MAX_MISSES) {
+ 		mlx5_core_err(dev, "device's health compromised - reached miss count\n");
++		health->synd = ioread8(&h->synd);
+ 		print_health_info(dev);
+ 		queue_work(health->wq, &health->report_work);
+ 	}
 -- 
 2.39.5
 
