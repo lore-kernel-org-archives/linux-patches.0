@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34CF41FBC90;
-	Mon,  2 Jun 2025 14:24:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF3FD1EA65;
+	Mon,  2 Jun 2025 14:24:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748874286; cv=none; b=UQc/GulMSMfx1YgbQhwcKbkQquXt09nVX7dDQfulaofnZOMeUX/AJwFDc4rojCa4PK3XB36k7BgQ5bdijtGYSz+M2DkfJ7qRMNhbbG/kYCK9tdDTw5LGtEXSvldI6ilvKZSKdYEkuS7t0oCxxjtObCu2ldMXPzj3u3vE9xFrt6M=
+	t=1748874289; cv=none; b=XOO7i9JRIxqK/3h438bQeHk6D388W9upcBQN42PseFVOpneFVXqZucTcH+BiHMgSpaiAHco0q/oU1iYFk4W3UPq/qzNp1FKIRB93tRWdfSEIR89G9KquHpJW6a0zxm+VotHntcVuJ9Uu1PrXbylI2o+Qs4QBm/vXXGVGJgWWRU4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748874286; c=relaxed/simple;
-	bh=NqHHVjh0DPeFcKI6TfJBU3/N0agNJZ5cdEmBoPk5vGM=;
+	s=arc-20240116; t=1748874289; c=relaxed/simple;
+	bh=UcdXwakM+9H5HUA572cYYg7q0sb3NdoA2PSBvdsBXeo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mEbn/D5RSSMxCK2lA6Rch+8h8Tjjtp/48OgAP4i7hekA4G1cfAaDsTMzh6RnHnwOCPRMdmgwymnXhukT1/gG6/n71rXIhe2xIvmLXw6oGU1fibdm8ehyOi79wpGb6guyL1Pf8+zIhx+aIUbuRAlMvEix3Zk122YnAMWKm7iyZOo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZVqs/kyg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hCfSw3p+2eKKlxRO7Aa52ro5znJNzR5NqGixmhfmI6/gMUUJK3qaAL4lOZCh8esdghwA09AJ+bkL+2loVZRlu38BVx6QOnJUuCeksWimxB0Q7XNvHMMonsyv4hmSk4aqtN8qohjejmpxaTmnuSMgfpxZGft66iG6Kgal4UgZw8E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WQjIiiYi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZVqs/kyg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAB2CC4CEEB;
-	Mon,  2 Jun 2025 14:24:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WQjIiiYi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A501C4CEEB;
+	Mon,  2 Jun 2025 14:24:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748874286;
-	bh=NqHHVjh0DPeFcKI6TfJBU3/N0agNJZ5cdEmBoPk5vGM=;
+	s=korg; t=1748874288;
+	bh=UcdXwakM+9H5HUA572cYYg7q0sb3NdoA2PSBvdsBXeo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZVqs/kygGH5MzfJxt2xL/1Cw7xSB0dGqqtD6tAUU+NnpzUOV+5hGwX9rUehH+MW2c
-	 yXaPMJaAXVpG2y9r5oMMNb5b3Qf4GHHQZzGMX3Kz8q6m78QsmvSk7wjennqYSydfOM
-	 n/xCFHjSOvR3BD5vxcuqcbhpcJHb2VWYzLKTrbLI=
+	b=WQjIiiYibqvHxBI0FEAMCD/UUPXha9N6s3HHfjCUm/hfG/S0RaJOH12DCjwKTtTld
+	 VGLgR7jGpFPgPZGijrxtZ8olzNzCIy8LL6/MaE1b5n95vfiy0xHYi6JeuuDsth88W4
+	 NFfW5FaTvw307nLmRf4U/lKdMOVsQ2GIJFWmLlZY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	syzkaller <syzkaller@googlegroups.com>,
+	Shigeru Yoshida <syoshida@redhat.com>,
 	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Paolo Abeni <pabeni@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Lee Jones <lee@kernel.org>
-Subject: [PATCH 6.6 402/444] af_unix: Allocate struct unix_edge for each inflight AF_UNIX fd.
-Date: Mon,  2 Jun 2025 15:47:46 +0200
-Message-ID: <20250602134357.232336393@linuxfoundation.org>
+Subject: [PATCH 6.6 420/444] af_unix: Fix uninit-value in __unix_walk_scc()
+Date: Mon,  2 Jun 2025 15:48:04 +0200
+Message-ID: <20250602134357.993787797@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -52,112 +53,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Shigeru Yoshida <syoshida@redhat.com>
 
-commit 29b64e354029cfcf1eea4d91b146c7b769305930 upstream.
+commit 927fa5b3e4f52e0967bfc859afc98ad1c523d2d5 upstream.
 
-As with the previous patch, we preallocate to skb's scm_fp_list an
-array of struct unix_edge in the number of inflight AF_UNIX fds.
+KMSAN reported uninit-value access in __unix_walk_scc() [1].
 
-There we just preallocate memory and do not use immediately because
-sendmsg() could fail after this point.  The actual use will be in
-the next patch.
+In the list_for_each_entry_reverse() loop, when the vertex's index
+equals it's scc_index, the loop uses the variable vertex as a
+temporary variable that points to a vertex in scc. And when the loop
+is finished, the variable vertex points to the list head, in this case
+scc, which is a local variable on the stack (more precisely, it's not
+even scc and might underflow the call stack of __unix_walk_scc():
+container_of(&scc, struct unix_vertex, scc_entry)).
 
-When we queue skb with inflight edges, we will set the inflight
-socket's unix_sock as unix_edge->predecessor and the receiver's
-unix_sock as successor, and then we will link the edge to the
-inflight socket's unix_vertex.edges.
+However, the variable vertex is used under the label prev_vertex. So
+if the edge_stack is not empty and the function jumps to the
+prev_vertex label, the function will access invalid data on the
+stack. This causes the uninit-value access issue.
 
-Note that we set NULL to cloned scm_fp_list.edges in scm_fp_dup()
-so that MSG_PEEK does not change the shape of the directed graph.
+Fix this by introducing a new temporary variable for the loop.
 
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Acked-by: Paolo Abeni <pabeni@redhat.com>
-Link: https://lore.kernel.org/r/20240325202425.60930-3-kuniyu@amazon.com
+[1]
+BUG: KMSAN: uninit-value in __unix_walk_scc net/unix/garbage.c:478 [inline]
+BUG: KMSAN: uninit-value in unix_walk_scc net/unix/garbage.c:526 [inline]
+BUG: KMSAN: uninit-value in __unix_gc+0x2589/0x3c20 net/unix/garbage.c:584
+ __unix_walk_scc net/unix/garbage.c:478 [inline]
+ unix_walk_scc net/unix/garbage.c:526 [inline]
+ __unix_gc+0x2589/0x3c20 net/unix/garbage.c:584
+ process_one_work kernel/workqueue.c:3231 [inline]
+ process_scheduled_works+0xade/0x1bf0 kernel/workqueue.c:3312
+ worker_thread+0xeb6/0x15b0 kernel/workqueue.c:3393
+ kthread+0x3c4/0x530 kernel/kthread.c:389
+ ret_from_fork+0x6e/0x90 arch/x86/kernel/process.c:147
+ ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
+
+Uninit was stored to memory at:
+ unix_walk_scc net/unix/garbage.c:526 [inline]
+ __unix_gc+0x2adf/0x3c20 net/unix/garbage.c:584
+ process_one_work kernel/workqueue.c:3231 [inline]
+ process_scheduled_works+0xade/0x1bf0 kernel/workqueue.c:3312
+ worker_thread+0xeb6/0x15b0 kernel/workqueue.c:3393
+ kthread+0x3c4/0x530 kernel/kthread.c:389
+ ret_from_fork+0x6e/0x90 arch/x86/kernel/process.c:147
+ ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
+
+Local variable entries created at:
+ ref_tracker_free+0x48/0xf30 lib/ref_tracker.c:222
+ netdev_tracker_free include/linux/netdevice.h:4058 [inline]
+ netdev_put include/linux/netdevice.h:4075 [inline]
+ dev_put include/linux/netdevice.h:4101 [inline]
+ update_gid_event_work_handler+0xaa/0x1b0 drivers/infiniband/core/roce_gid_mgmt.c:813
+
+CPU: 1 PID: 12763 Comm: kworker/u8:31 Not tainted 6.10.0-rc4-00217-g35bb670d65fc #32
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-2.fc40 04/01/2014
+Workqueue: events_unbound __unix_gc
+
+Fixes: 3484f063172d ("af_unix: Detect Strongly Connected Components.")
+Reported-by: syzkaller <syzkaller@googlegroups.com>
+Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://patch.msgid.link/20240702160428.10153-1-syoshida@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/af_unix.h |    6 ++++++
- include/net/scm.h     |    5 +++++
- net/core/scm.c        |    2 ++
- net/unix/garbage.c    |    6 ++++++
- 4 files changed, 19 insertions(+)
+ net/unix/garbage.c |    9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
---- a/include/net/af_unix.h
-+++ b/include/net/af_unix.h
-@@ -33,6 +33,12 @@ struct unix_vertex {
- 	unsigned long out_degree;
- };
- 
-+struct unix_edge {
-+	struct unix_sock *predecessor;
-+	struct unix_sock *successor;
-+	struct list_head vertex_entry;
-+};
-+
- struct sock *unix_peer_get(struct sock *sk);
- 
- #define UNIX_HASH_MOD	(256 - 1)
---- a/include/net/scm.h
-+++ b/include/net/scm.h
-@@ -22,12 +22,17 @@ struct scm_creds {
- 	kgid_t	gid;
- };
- 
-+#ifdef CONFIG_UNIX
-+struct unix_edge;
-+#endif
-+
- struct scm_fp_list {
- 	short			count;
- 	short			count_unix;
- 	short			max;
- #ifdef CONFIG_UNIX
- 	struct list_head	vertices;
-+	struct unix_edge	*edges;
- #endif
- 	struct user_struct	*user;
- 	struct file		*fp[SCM_MAX_FD];
---- a/net/core/scm.c
-+++ b/net/core/scm.c
-@@ -90,6 +90,7 @@ static int scm_fp_copy(struct cmsghdr *c
- 		fpl->max = SCM_MAX_FD;
- 		fpl->user = NULL;
- #if IS_ENABLED(CONFIG_UNIX)
-+		fpl->edges = NULL;
- 		INIT_LIST_HEAD(&fpl->vertices);
- #endif
- 	}
-@@ -383,6 +384,7 @@ struct scm_fp_list *scm_fp_dup(struct sc
- 		new_fpl->max = new_fpl->count;
- 		new_fpl->user = get_uid(fpl->user);
- #if IS_ENABLED(CONFIG_UNIX)
-+		new_fpl->edges = NULL;
- 		INIT_LIST_HEAD(&new_fpl->vertices);
- #endif
- 	}
 --- a/net/unix/garbage.c
 +++ b/net/unix/garbage.c
-@@ -127,6 +127,11 @@ int unix_prepare_fpl(struct scm_fp_list
- 		list_add(&vertex->entry, &fpl->vertices);
+@@ -476,6 +476,7 @@ prev_vertex:
  	}
  
-+	fpl->edges = kvmalloc_array(fpl->count_unix, sizeof(*fpl->edges),
-+				    GFP_KERNEL_ACCOUNT);
-+	if (!fpl->edges)
-+		goto err;
-+
- 	return 0;
+ 	if (vertex->index == vertex->scc_index) {
++		struct unix_vertex *v;
+ 		struct list_head scc;
+ 		bool scc_dead = true;
  
- err:
-@@ -136,6 +141,7 @@ err:
+@@ -486,15 +487,15 @@ prev_vertex:
+ 		 */
+ 		__list_cut_position(&scc, &vertex_stack, &vertex->scc_entry);
  
- void unix_destroy_fpl(struct scm_fp_list *fpl)
- {
-+	kvfree(fpl->edges);
- 	unix_free_vertices(fpl);
- }
+-		list_for_each_entry_reverse(vertex, &scc, scc_entry) {
++		list_for_each_entry_reverse(v, &scc, scc_entry) {
+ 			/* Don't restart DFS from this vertex in unix_walk_scc(). */
+-			list_move_tail(&vertex->entry, &unix_visited_vertices);
++			list_move_tail(&v->entry, &unix_visited_vertices);
  
+ 			/* Mark vertex as off-stack. */
+-			vertex->index = unix_vertex_grouped_index;
++			v->index = unix_vertex_grouped_index;
+ 
+ 			if (scc_dead)
+-				scc_dead = unix_vertex_dead(vertex);
++				scc_dead = unix_vertex_dead(v);
+ 		}
+ 
+ 		if (scc_dead)
 
 
