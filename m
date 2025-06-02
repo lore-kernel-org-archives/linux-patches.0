@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5566222D4E9;
-	Mon,  2 Jun 2025 15:19:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AA022376E6;
+	Mon,  2 Jun 2025 15:19:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748877541; cv=none; b=ZofVZYTqKY5PSYRM6RzurT4+g0URVjqG7D+ppFgFouxvhvy/nDXACYYMGJ+pf8Bmnov8elU2dUrToMp9GE+gVBjKE6o4lGf7JY19J985cGmUPw2J3cv+eYANzPsoU2zwGUWUn4wzQJECX8Sh41VF4qsY4zq50YMvJy3QFucArwI=
+	t=1748877544; cv=none; b=r95mRArkp1NzT6+dV240ZlUP26CAHA1tGCyrz9t8wCKq7i3gmooHZspAt8vCR8xT1L4a2NYBzH8e2z/1u7ncM9o5+K6oS3Zw4agD+rqZJMvgPg4Mp1T7PdKxVC4WTv/PBKajVjM72ivU9Gzoy+WT4evYYXBkujCuRzkWnz5imyo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748877541; c=relaxed/simple;
-	bh=FAa3JnQAl7HTHGA20oqhpZxElEUPKJRE6tYXp+9RaPo=;
+	s=arc-20240116; t=1748877544; c=relaxed/simple;
+	bh=O9tX8Czi2xIm620S7XasWT+4HF+OmK3vQ0SHdYO7Ud4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lPQeFK1cpwldJtcV74tuPlqkBUZcn6Ly36Z+QGb2vK7stDihNeoZTj2nUnxXot898ttw8MQ/ORszRQCm6Oa2a6VTGsCqzeIpE7CSg/aHnUZKpfkf3rWANIi8nugUlCjNRnogtdZtQ/AVKIbzMBZRyeJAj7cDnaMQuUmeK8Lpj7A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qPuQkGXK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JUTWWCYkedtR0R6IKPv9tsVHZD04e1ZiiNHvgAu0xx8lnVtrhtGkURwWiYILK+qo5zhZvpos7kWL6i12oUEhqnPAypI/vf/uJC625lyOAPGze87mzQadqDR0V1W/WJc38XeF3oH6lWIro6B2ahcYl6GCBM+E+9+cukwVd2OMET8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nlWQWfIA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qPuQkGXK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48672C4CEEB;
-	Mon,  2 Jun 2025 15:19:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nlWQWfIA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D240C4CEEB;
+	Mon,  2 Jun 2025 15:19:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748877540;
-	bh=FAa3JnQAl7HTHGA20oqhpZxElEUPKJRE6tYXp+9RaPo=;
+	s=korg; t=1748877544;
+	bh=O9tX8Czi2xIm620S7XasWT+4HF+OmK3vQ0SHdYO7Ud4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qPuQkGXKJZvPPHtepjqjWdoAtnpG4EgS0cSvHyFmac7SqR5HMa1B7cksJ0SxBtpha
-	 H4mICSEocPHD4SRnQdB4a9aFm+DCuunDDdvKD8lFKpqMs/vUzD6srGYKwJh6IBt3YO
-	 6xZ0B7wRVKWUSR+M8Dc4JAfpJBsLj+xejn4/KTM8=
+	b=nlWQWfIAdRS6ngdyKA+oThMjwAgmD8UpXvvOUCsqFNmMlAeDJUG+O5+PXJ+/Bwu2t
+	 P1ZBViSC5BwyNNyqAn3IytP7nW4bf2ip+1DzuVx9bRnP0axvrB01R89O5L1c8o/p4X
+	 +xg9V1B2Su9N83fjrWRqs4Tyva7wz+QrSUGjzfDU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linux Kernel Functional Testing <lkft@linaro.org>,
-	Marcus Seyfarth <m.seyfarth@gmail.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Masahiro Yamada <masahiroy@kernel.org>
-Subject: [PATCH 6.1 270/325] kbuild: Disable -Wdefault-const-init-unsafe
-Date: Mon,  2 Jun 2025 15:49:06 +0200
-Message-ID: <20250602134330.741551734@linuxfoundation.org>
+	"stable@vger.kernel.org, kernel test robot" <oliver.sang@intel.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Lee Jones <lee@kernel.org>,
+	kernel test robot <oliver.sang@intel.com>
+Subject: [PATCH 6.1 303/325] af_unix: Try not to hold unix_gc_lock during accept().
+Date: Mon,  2 Jun 2025 15:49:39 +0200
+Message-ID: <20250602134332.227570414@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134319.723650984@linuxfoundation.org>
 References: <20250602134319.723650984@linuxfoundation.org>
@@ -52,112 +53,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-commit d0afcfeb9e3810ec89d1ffde1a0e36621bb75dca upstream.
+commit fd86344823b521149bb31d91eba900ba3525efa6 upstream.
 
-A new on by default warning in clang [1] aims to flags instances where
-const variables without static or thread local storage or const members
-in aggregate types are not initialized because it can lead to an
-indeterminate value. This is quite noisy for the kernel due to
-instances originating from header files such as:
+Commit dcf70df2048d ("af_unix: Fix up unix_edge.successor for embryo
+socket.") added spin_lock(&unix_gc_lock) in accept() path, and it
+caused regression in a stress test as reported by kernel test robot.
 
-  drivers/gpu/drm/i915/gt/intel_ring.h:62:2: error: default initialization of an object of type 'typeof (ring->size)' (aka 'const unsigned int') leaves the object uninitialized [-Werror,-Wdefault-const-init-var-unsafe]
-     62 |         typecheck(typeof(ring->size), next);
-        |         ^
-  include/linux/typecheck.h:10:9: note: expanded from macro 'typecheck'
-     10 | ({      type __dummy; \
-        |              ^
+If the embryo socket is not part of the inflight graph, we need not
+hold the lock.
 
-  include/net/ip.h:478:14: error: default initialization of an object of type 'typeof (rt->dst.expires)' (aka 'const unsigned long') leaves the object uninitialized [-Werror,-Wdefault-const-init-var-unsafe]
-    478 |                 if (mtu && time_before(jiffies, rt->dst.expires))
-        |                            ^
-  include/linux/jiffies.h:138:26: note: expanded from macro 'time_before'
-    138 | #define time_before(a,b)        time_after(b,a)
-        |                                 ^
-  include/linux/jiffies.h:128:3: note: expanded from macro 'time_after'
-    128 |         (typecheck(unsigned long, a) && \
-        |          ^
-  include/linux/typecheck.h:11:12: note: expanded from macro 'typecheck'
-     11 |         typeof(x) __dummy2; \
-        |                   ^
+To decide that in O(1) time and avoid the regression in the normal
+use case,
 
-  include/linux/list.h:409:27: warning: default initialization of an object of type 'union (unnamed union at include/linux/list.h:409:27)' with const member leaves the object uninitialized [-Wdefault-const-init-field-unsafe]
-    409 |         struct list_head *next = smp_load_acquire(&head->next);
-        |                                  ^
-  include/asm-generic/barrier.h:176:29: note: expanded from macro 'smp_load_acquire'
-    176 | #define smp_load_acquire(p) __smp_load_acquire(p)
-        |                             ^
-  arch/arm64/include/asm/barrier.h:164:59: note: expanded from macro '__smp_load_acquire'
-    164 |         union { __unqual_scalar_typeof(*p) __val; char __c[1]; } __u;   \
-        |                                                                  ^
-  include/linux/list.h:409:27: note: member '__val' declared 'const' here
+  1. add a new stat unix_sk(sk)->scm_stat.nr_unix_fds
 
-  crypto/scatterwalk.c:66:22: error: default initialization of an object of type 'struct scatter_walk' with const member leaves the object uninitialized [-Werror,-Wdefault-const-init-field-unsafe]
-     66 |         struct scatter_walk walk;
-        |                             ^
-  include/crypto/algapi.h:112:15: note: member 'addr' declared 'const' here
-    112 |                 void *const addr;
-        |                             ^
+  2. count the number of inflight AF_UNIX sockets in the receive
+     queue under unix_state_lock()
 
-  fs/hugetlbfs/inode.c:733:24: error: default initialization of an object of type 'struct vm_area_struct' with const member leaves the object uninitialized [-Werror,-Wdefault-const-init-field-unsafe]
-    733 |         struct vm_area_struct pseudo_vma;
-        |                               ^
-  include/linux/mm_types.h:803:20: note: member 'vm_flags' declared 'const' here
-    803 |                 const vm_flags_t vm_flags;
-        |                                  ^
+  3. move unix_update_edges() call under unix_state_lock()
 
-Silencing the instances from typecheck.h is difficult because '= {}' is
-not available in older but supported compilers and '= {0}' would cause
-warnings about a literal 0 being treated as NULL. While it might be
-possible to come up with a local hack to silence the warning for
-clang-21+, it may not be worth it since -Wuninitialized will still
-trigger if an uninitialized const variable is actually used.
+  4. avoid locking if nr_unix_fds is 0 in unix_update_edges()
 
-In all audited cases of the "field" variant of the warning, the members
-are either not used in the particular call path, modified through other
-means such as memset() / memcpy() because the containing object is not
-const, or are within a union with other non-const members.
-
-Since this warning does not appear to have a high signal to noise ratio,
-just disable it.
-
-Cc: stable@vger.kernel.org
-Link: https://github.com/llvm/llvm-project/commit/576161cb6069e2c7656a8ef530727a0f4aefff30 [1]
-Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-Closes: https://lore.kernel.org/CA+G9fYuNjKcxFKS_MKPRuga32XbndkLGcY-PVuoSwzv6VWbY=w@mail.gmail.com/
-Reported-by: Marcus Seyfarth <m.seyfarth@gmail.com>
-Closes: https://github.com/ClangBuiltLinux/linux/issues/2088
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-[nathan: Apply change to Makefile instead of scripts/Makefile.extrawarn
-         due to lack of e88ca24319e4 in older stable branches]
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Reported-by: kernel test robot <oliver.sang@intel.com>
+Closes: https://lore.kernel.org/oe-lkp/202404101427.92a08551-oliver.sang@intel.com
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://lore.kernel.org/r/20240413021928.20946-1-kuniyu@amazon.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Makefile |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ include/net/af_unix.h |    1 +
+ net/unix/af_unix.c    |    2 +-
+ net/unix/garbage.c    |   20 ++++++++++++++++----
+ 3 files changed, 18 insertions(+), 5 deletions(-)
 
---- a/Makefile
-+++ b/Makefile
-@@ -875,6 +875,18 @@ ifdef CONFIG_CC_IS_CLANG
- KBUILD_CPPFLAGS += -Qunused-arguments
- # The kernel builds with '-std=gnu11' so use of GNU extensions is acceptable.
- KBUILD_CFLAGS += -Wno-gnu
-+
-+# Clang may emit a warning when a const variable, such as the dummy variables
-+# in typecheck(), or const member of an aggregate type are not initialized,
-+# which can result in unexpected behavior. However, in many audited cases of
-+# the "field" variant of the warning, this is intentional because the field is
-+# never used within a particular call path, the field is within a union with
-+# other non-const members, or the containing object is not const so the field
-+# can be modified via memcpy() / memset(). While the variable warning also gets
-+# disabled with this same switch, there should not be too much coverage lost
-+# because -Wuninitialized will still flag when an uninitialized const variable
-+# is used.
-+KBUILD_CFLAGS += $(call cc-disable-warning, default-const-init-unsafe)
- else
+--- a/include/net/af_unix.h
++++ b/include/net/af_unix.h
+@@ -67,6 +67,7 @@ struct unix_skb_parms {
  
- # gcc inanely warns about local variables called 'main'
+ struct scm_stat {
+ 	atomic_t nr_fds;
++	unsigned long nr_unix_fds;
+ };
+ 
+ #define UNIXCB(skb)	(*(struct unix_skb_parms *)&((skb)->cb))
+--- a/net/unix/af_unix.c
++++ b/net/unix/af_unix.c
+@@ -1677,12 +1677,12 @@ static int unix_accept(struct socket *so
+ 	}
+ 
+ 	tsk = skb->sk;
+-	unix_update_edges(unix_sk(tsk));
+ 	skb_free_datagram(sk, skb);
+ 	wake_up_interruptible(&unix_sk(sk)->peer_wait);
+ 
+ 	/* attach accepted sock to socket */
+ 	unix_state_lock(tsk);
++	unix_update_edges(unix_sk(tsk));
+ 	newsock->state = SS_CONNECTED;
+ 	unix_sock_inherit_flags(sock, newsock);
+ 	sock_graft(tsk, newsock);
+--- a/net/unix/garbage.c
++++ b/net/unix/garbage.c
+@@ -209,6 +209,7 @@ void unix_add_edges(struct scm_fp_list *
+ 		unix_add_edge(fpl, edge);
+ 	} while (i < fpl->count_unix);
+ 
++	receiver->scm_stat.nr_unix_fds += fpl->count_unix;
+ 	WRITE_ONCE(unix_tot_inflight, unix_tot_inflight + fpl->count_unix);
+ out:
+ 	WRITE_ONCE(fpl->user->unix_inflight, fpl->user->unix_inflight + fpl->count);
+@@ -222,6 +223,7 @@ out:
+ 
+ void unix_del_edges(struct scm_fp_list *fpl)
+ {
++	struct unix_sock *receiver;
+ 	int i = 0;
+ 
+ 	spin_lock(&unix_gc_lock);
+@@ -235,6 +237,8 @@ void unix_del_edges(struct scm_fp_list *
+ 		unix_del_edge(fpl, edge);
+ 	} while (i < fpl->count_unix);
+ 
++	receiver = fpl->edges[0].successor;
++	receiver->scm_stat.nr_unix_fds -= fpl->count_unix;
+ 	WRITE_ONCE(unix_tot_inflight, unix_tot_inflight - fpl->count_unix);
+ out:
+ 	WRITE_ONCE(fpl->user->unix_inflight, fpl->user->unix_inflight - fpl->count);
+@@ -246,10 +250,18 @@ out:
+ 
+ void unix_update_edges(struct unix_sock *receiver)
+ {
+-	spin_lock(&unix_gc_lock);
+-	unix_update_graph(unix_sk(receiver->listener)->vertex);
+-	receiver->listener = NULL;
+-	spin_unlock(&unix_gc_lock);
++	/* nr_unix_fds is only updated under unix_state_lock().
++	 * If it's 0 here, the embryo socket is not part of the
++	 * inflight graph, and GC will not see it, so no lock needed.
++	 */
++	if (!receiver->scm_stat.nr_unix_fds) {
++		receiver->listener = NULL;
++	} else {
++		spin_lock(&unix_gc_lock);
++		unix_update_graph(unix_sk(receiver->listener)->vertex);
++		receiver->listener = NULL;
++		spin_unlock(&unix_gc_lock);
++	}
+ }
+ 
+ int unix_prepare_fpl(struct scm_fp_list *fpl)
 
 
