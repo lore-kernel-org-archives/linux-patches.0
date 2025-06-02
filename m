@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A3A1238C19;
-	Mon,  2 Jun 2025 14:20:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3D0821CA07;
+	Mon,  2 Jun 2025 14:20:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748874026; cv=none; b=oLkDHaFmU1zF2qczasCprajw36kI9/MmHsSZZ2MOsfUJIo2J+IUiu76DSwB+bI2VHO6ec0crLNZmTuIGLlgEq/tuim+o27hoeajds7pelhmGj39V0a3fq4AH8E1gUrJ0+2JsjF4qgkoGY3Al/+f1SPSlxQzsVNHNbz2AoSvCmG8=
+	t=1748874029; cv=none; b=o06dUkeGG9oNf5feokQvt1rP+L9rSxUvGynzOvLaBskhVKZh6LpPYduYY9DwfcDc8TboAyz9vYQnP52SVKtOjtrdFtYUpb6o8EOrAvBs+YUiclLLNr925afI3n3Iwl9y3lK8Pga+cSR+7nwS39TIYzv+p9x6PKdAFAxYLUXyXAw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748874026; c=relaxed/simple;
-	bh=iWa8X9JJob96vUF8zTPt2U9wVjYti/GbCRadAoklaYg=;
+	s=arc-20240116; t=1748874029; c=relaxed/simple;
+	bh=WxU90/t7yUpxErsV4V6dEJWhngb5RXzCvlFP/fImx3s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VSYyimMcs+TsDNTmjquEEVrl9NOFiIIk1xoi+c3OH0tq+hsmQcJ1DRCLe8BsyzOjAhtRPaAX06ku/XUBSfq5zuREkJoMK6orineWwrKZu38S1jWuTOsd5qdxD8CQYNhSgCBgPjbDDgxi8ZwDnyy0t1dinUllgC0eGxmyzL6amTA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CSXshH6J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=uGBWvfbD29AE4w8JeGbIvYnrmqc4NqYT2v1JZNFGGutlsH2dBZpWPbLYAxBgYKu4ZhQiTkzbrEibpCHAV2nzDtYkiiFKGBdrsxIouLW9G2yM9cQ/LOXGR+aEou4EDfDF5djvq7hyffRFRk6PJygnEj5S0kNALnTKeLZBOoALmiE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uyh0RBIC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CSXshH6J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB8ECC4CEF3;
-	Mon,  2 Jun 2025 14:20:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uyh0RBIC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5F9BC4CEEB;
+	Mon,  2 Jun 2025 14:20:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748874026;
-	bh=iWa8X9JJob96vUF8zTPt2U9wVjYti/GbCRadAoklaYg=;
+	s=korg; t=1748874029;
+	bh=WxU90/t7yUpxErsV4V6dEJWhngb5RXzCvlFP/fImx3s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CSXshH6JlMr06vdIKsIuKBl5UE3kBpDnhzFqx4V08BlJF6MWZRIYfcSXGd7bMg3ha
-	 5ImbPaIs08kxlp6chgvWmUePAIk3SdfvMypTNOHszkYd/23kK0KaWQg59D7ZIuO5dq
-	 xx/oPkBkWU9r8UpVvpmg2F38S/wCsRgBMFHNOcgc=
+	b=Uyh0RBIC9hi8+Hpcg0MAWbExkOI2BObDx7DlhLFhYaIqZJX/BlVLvWulZulgOxGrC
+	 Nxu8WYebvygf1Su1Od2e6VGCLPiowLOmJscUmitTnqlIKLOoPAPi63Ov0witC/yCUd
+	 AkjQ/VYgmfd4LkA8LgSmaB+T85kQjkKF6zJlCnS4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Jiang <dave.jiang@intel.com>,
-	Tom Zanussi <tom.zanussi@linux.intel.com>,
-	Fenghua Yu <fenghua.yu@intel.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Rosen Penev <rosenp@gmail.com>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 332/444] dmaengine: idxd: add wq driver name support for accel-config user tool
-Date: Mon,  2 Jun 2025 15:46:36 +0200
-Message-ID: <20250602134354.407619362@linuxfoundation.org>
+Subject: [PATCH 6.6 306/444] wifi: ath9k: return by of_get_mac_address
+Date: Mon,  2 Jun 2025 15:46:10 +0200
+Message-ID: <20250602134353.353436711@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -47,196 +46,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dave Jiang <dave.jiang@intel.com>
+From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit 7af1e0aceeb321cbc90fcf6fa0bec8870290377f ]
+[ Upstream commit dfffb317519f88534bb82797f055f0a2fd867e7b ]
 
-With the possibility of multiple wq drivers that can be bound to the wq,
-the user config tool accel-config needs a way to know which wq driver to
-bind to the wq. Introduce per wq driver_name sysfs attribute where the user
-can indicate the driver to be bound to the wq. This allows accel-config to
-just bind to the driver using wq->driver_name.
+When using nvmem, ath9k could potentially be loaded before nvmem, which
+loads after mtd. This is an issue if DT contains an nvmem mac address.
 
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
-Signed-off-by: Tom Zanussi <tom.zanussi@linux.intel.com>
-Reviewed-by: Fenghua Yu <fenghua.yu@intel.com>
-Acked-by: Vinod Koul <vkoul@kernel.org>
-Link: https://lore.kernel.org/r/20230908201045.4115614-1-fenghua.yu@intel.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Stable-dep-of: 8dfa57aabff6 ("dmaengine: idxd: Fix allowing write() from different address spaces")
+If nvmem is not ready in time for ath9k, -EPROBE_DEFER is returned. Pass
+it to _probe so that ath9k can properly grab a potentially present MAC
+address.
+
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
+Link: https://patch.msgid.link/20241105222326.194417-1-rosenp@gmail.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ABI/stable/sysfs-driver-dma-idxd          |  6 ++++
- drivers/dma/idxd/cdev.c                       |  7 ++++
- drivers/dma/idxd/dma.c                        |  6 ++++
- drivers/dma/idxd/idxd.h                       |  9 +++++
- drivers/dma/idxd/sysfs.c                      | 34 +++++++++++++++++++
- include/uapi/linux/idxd.h                     |  1 +
- 6 files changed, 63 insertions(+)
+ drivers/net/wireless/ath/ath9k/init.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/ABI/stable/sysfs-driver-dma-idxd b/Documentation/ABI/stable/sysfs-driver-dma-idxd
-index 825e619250bf2..f2ec42949a54d 100644
---- a/Documentation/ABI/stable/sysfs-driver-dma-idxd
-+++ b/Documentation/ABI/stable/sysfs-driver-dma-idxd
-@@ -270,6 +270,12 @@ Description:	Shows the operation capability bits displayed in bitmap format
- 		correlates to the operations allowed. It's visible only
- 		on platforms that support the capability.
+diff --git a/drivers/net/wireless/ath/ath9k/init.c b/drivers/net/wireless/ath/ath9k/init.c
+index 4f00400c7ffb8..58386906598a7 100644
+--- a/drivers/net/wireless/ath/ath9k/init.c
++++ b/drivers/net/wireless/ath/ath9k/init.c
+@@ -691,7 +691,9 @@ static int ath9k_of_init(struct ath_softc *sc)
+ 		ah->ah_flags |= AH_NO_EEP_SWAP;
+ 	}
  
-+What:		/sys/bus/dsa/devices/wq<m>.<n>/driver_name
-+Date:		Sept 8, 2023
-+KernelVersion:	6.7.0
-+Contact:	dmaengine@vger.kernel.org
-+Description:	Name of driver to be bounded to the wq.
-+
- What:           /sys/bus/dsa/devices/engine<m>.<n>/group_id
- Date:           Oct 25, 2019
- KernelVersion:  5.6.0
-diff --git a/drivers/dma/idxd/cdev.c b/drivers/dma/idxd/cdev.c
-index c18633ad8455f..7ddf5f933475d 100644
---- a/drivers/dma/idxd/cdev.c
-+++ b/drivers/dma/idxd/cdev.c
-@@ -584,6 +584,7 @@ void idxd_wq_del_cdev(struct idxd_wq *wq)
+-	of_get_mac_address(np, common->macaddr);
++	ret = of_get_mac_address(np, common->macaddr);
++	if (ret == -EPROBE_DEFER)
++		return ret;
  
- static int idxd_user_drv_probe(struct idxd_dev *idxd_dev)
- {
-+	struct device *dev = &idxd_dev->conf_dev;
- 	struct idxd_wq *wq = idxd_dev_to_wq(idxd_dev);
- 	struct idxd_device *idxd = wq->idxd;
- 	int rc;
-@@ -611,6 +612,12 @@ static int idxd_user_drv_probe(struct idxd_dev *idxd_dev)
- 
- 	mutex_lock(&wq->wq_lock);
- 
-+	if (!idxd_wq_driver_name_match(wq, dev)) {
-+		idxd->cmd_status = IDXD_SCMD_WQ_NO_DRV_NAME;
-+		rc = -ENODEV;
-+		goto wq_err;
-+	}
-+
- 	wq->wq = create_workqueue(dev_name(wq_confdev(wq)));
- 	if (!wq->wq) {
- 		rc = -ENOMEM;
-diff --git a/drivers/dma/idxd/dma.c b/drivers/dma/idxd/dma.c
-index 07623fb0f52fc..47a01893cfdbf 100644
---- a/drivers/dma/idxd/dma.c
-+++ b/drivers/dma/idxd/dma.c
-@@ -306,6 +306,12 @@ static int idxd_dmaengine_drv_probe(struct idxd_dev *idxd_dev)
- 		return -ENXIO;
- 
- 	mutex_lock(&wq->wq_lock);
-+	if (!idxd_wq_driver_name_match(wq, dev)) {
-+		idxd->cmd_status = IDXD_SCMD_WQ_NO_DRV_NAME;
-+		rc = -ENODEV;
-+		goto err;
-+	}
-+
- 	wq->type = IDXD_WQT_KERNEL;
- 
- 	rc = drv_enable_wq(wq);
-diff --git a/drivers/dma/idxd/idxd.h b/drivers/dma/idxd/idxd.h
-index bea10c5cdb76b..fcbb8caea8995 100644
---- a/drivers/dma/idxd/idxd.h
-+++ b/drivers/dma/idxd/idxd.h
-@@ -159,6 +159,8 @@ struct idxd_cdev {
- 	int minor;
- };
- 
-+#define DRIVER_NAME_SIZE		128
-+
- #define IDXD_ALLOCATED_BATCH_SIZE	128U
- #define WQ_NAME_SIZE   1024
- #define WQ_TYPE_SIZE   10
-@@ -227,6 +229,8 @@ struct idxd_wq {
- 	/* Lock to protect upasid_xa access. */
- 	struct mutex uc_lock;
- 	struct xarray upasid_xa;
-+
-+	char driver_name[DRIVER_NAME_SIZE + 1];
- };
- 
- struct idxd_engine {
-@@ -648,6 +652,11 @@ static inline void idxd_wqcfg_set_max_batch_shift(int idxd_type, union wqcfg *wq
- 		wqcfg->max_batch_shift = max_batch_shift;
+ 	return 0;
  }
- 
-+static inline int idxd_wq_driver_name_match(struct idxd_wq *wq, struct device *dev)
-+{
-+	return (strncmp(wq->driver_name, dev->driver->name, strlen(dev->driver->name)) == 0);
-+}
-+
- int __must_check __idxd_driver_register(struct idxd_device_driver *idxd_drv,
- 					struct module *module, const char *mod_name);
- #define idxd_driver_register(driver) \
-diff --git a/drivers/dma/idxd/sysfs.c b/drivers/dma/idxd/sysfs.c
-index 1fd5a93045f79..3a5ce477a81ad 100644
---- a/drivers/dma/idxd/sysfs.c
-+++ b/drivers/dma/idxd/sysfs.c
-@@ -1282,6 +1282,39 @@ static ssize_t wq_op_config_store(struct device *dev, struct device_attribute *a
- static struct device_attribute dev_attr_wq_op_config =
- 		__ATTR(op_config, 0644, wq_op_config_show, wq_op_config_store);
- 
-+static ssize_t wq_driver_name_show(struct device *dev, struct device_attribute *attr, char *buf)
-+{
-+	struct idxd_wq *wq = confdev_to_wq(dev);
-+
-+	return sysfs_emit(buf, "%s\n", wq->driver_name);
-+}
-+
-+static ssize_t wq_driver_name_store(struct device *dev, struct device_attribute *attr,
-+				    const char *buf, size_t count)
-+{
-+	struct idxd_wq *wq = confdev_to_wq(dev);
-+	char *input, *pos;
-+
-+	if (wq->state != IDXD_WQ_DISABLED)
-+		return -EPERM;
-+
-+	if (strlen(buf) > DRIVER_NAME_SIZE || strlen(buf) == 0)
-+		return -EINVAL;
-+
-+	input = kstrndup(buf, count, GFP_KERNEL);
-+	if (!input)
-+		return -ENOMEM;
-+
-+	pos = strim(input);
-+	memset(wq->driver_name, 0, DRIVER_NAME_SIZE + 1);
-+	sprintf(wq->driver_name, "%s", pos);
-+	kfree(input);
-+	return count;
-+}
-+
-+static struct device_attribute dev_attr_wq_driver_name =
-+		__ATTR(driver_name, 0644, wq_driver_name_show, wq_driver_name_store);
-+
- static struct attribute *idxd_wq_attributes[] = {
- 	&dev_attr_wq_clients.attr,
- 	&dev_attr_wq_state.attr,
-@@ -1301,6 +1334,7 @@ static struct attribute *idxd_wq_attributes[] = {
- 	&dev_attr_wq_occupancy.attr,
- 	&dev_attr_wq_enqcmds_retries.attr,
- 	&dev_attr_wq_op_config.attr,
-+	&dev_attr_wq_driver_name.attr,
- 	NULL,
- };
- 
-diff --git a/include/uapi/linux/idxd.h b/include/uapi/linux/idxd.h
-index 606b52e88ce33..3d1987e1bb2dd 100644
---- a/include/uapi/linux/idxd.h
-+++ b/include/uapi/linux/idxd.h
-@@ -31,6 +31,7 @@ enum idxd_scmd_stat {
- 	IDXD_SCMD_WQ_IRQ_ERR = 0x80100000,
- 	IDXD_SCMD_WQ_USER_NO_IOMMU = 0x80110000,
- 	IDXD_SCMD_DEV_EVL_ERR = 0x80120000,
-+	IDXD_SCMD_WQ_NO_DRV_NAME = 0x80200000,
- };
- 
- #define IDXD_SCMD_SOFTERR_MASK	0x80000000
 -- 
 2.39.5
 
