@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B704B1B81DC;
-	Mon,  2 Jun 2025 14:48:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04F992576;
+	Mon,  2 Jun 2025 14:48:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748875683; cv=none; b=eKEomRSSRQ5i9nVINIOjoAzvgw+LP37E4Mpe1/fF4o6SeSUJF4TaTg1ZIbOn7k/asKWGOQY45fb71gOHZbnv+Ii8j0J0lcjYPknZ347GpF6R45rZDdTxj5KMOPW1ptu2reXFuNSLqBMiuU1iYj/NOPZdewHs18jL1+f6BlowwAE=
+	t=1748875687; cv=none; b=dqgnoM3Y0nRoG4gCcu+eXK5QXQtupd2tYX055u27DaTht1USH/PHAz5EVV6dC+nAsT45NQKlbdonlPLVu1kxZbiVnU56M3Zl8m+RoDDoeXsDqgbHkZDjG4IW5E8yqvr6hFPitxD7tOcGlWjmifN/HHStwSqJFeTT3PfqZzwROIY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748875683; c=relaxed/simple;
-	bh=8dlGyb376UFbDzzD24rFbWhJyAqnzY3oaLu44H4mfRg=;
+	s=arc-20240116; t=1748875687; c=relaxed/simple;
+	bh=YXb4IKW4lKuxWy9SPvCV2d/N5BepA67gP9GJqJcN3rs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gzbc5/52XsXaC5A71bnF0H1PBoxefVtcquCLv4/vbfGX9JrUYmbLO4kM5ktKbdHQ8sEnuYk//ufe2ieInPen0gWnb3/jlsvyizxKZGZ02nET5JnxAlYbRiEgcsQbvc8tRs5r9Ahvifo95JPc2GZZiY00oUii5znfNSynLWlg4JI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yz2SH/YI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QyNjCcsQMJiRheQSXSV92ANs2uLQrnYbgixhF1R+ZcolL3tTwSzs0v6/G6VGv/687jwL/F2CMxh6CowVsSQm1DZjJdRGcn61Q5+b9gL3Iw+HB9R7CXABgB4lV0HbeaYBFHRUdbPZkuJXc1L3vxfdDjrGhICBAkdxCGtpJye8oPE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nYCW61fu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yz2SH/YI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22B0AC4CEEB;
-	Mon,  2 Jun 2025 14:48:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nYCW61fu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6629FC4CEEE;
+	Mon,  2 Jun 2025 14:48:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748875683;
-	bh=8dlGyb376UFbDzzD24rFbWhJyAqnzY3oaLu44H4mfRg=;
+	s=korg; t=1748875686;
+	bh=YXb4IKW4lKuxWy9SPvCV2d/N5BepA67gP9GJqJcN3rs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yz2SH/YI5VsUZch/sljy32JTI1TOQL9DOsh+OqEvt065mp/BFPC//4+4bDrL7ly0l
-	 WwiiJraBykSAoz2F5hMNUHCO3VjtbwXk7Kp2TAMAS/xG09Zv10FE/IREQHrCUlw0zP
-	 vS6Y6kRNyA0LSc0/wnXCTxs8pT0T+NtgXSQN2DSk=
+	b=nYCW61fuQIaXUH0BQE9JsxX7lOGxzzjDRUnJjJbWRCmzABG7+dzXyi9+G4uqD1D1j
+	 8aK8ZuJ3UFqumlRBTqr9yrxKtxND4EVs3kAbLjEYozV0+u7KfEj7GP6mZpngYxT5ZI
+	 fle0iVG3PGvfprfMQIJISPT3cqUBaiqvja1rOcR8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 211/270] ip: fib_rules: Fetch net from fib_rule in fib[46]_rule_configure().
-Date: Mon,  2 Jun 2025 15:48:16 +0200
-Message-ID: <20250602134315.810785605@linuxfoundation.org>
+Subject: [PATCH 5.10 212/270] wifi: rtw88: Fix download_firmware_validate() for RTL8814AU
+Date: Mon,  2 Jun 2025 15:48:17 +0200
+Message-ID: <20250602134315.849723766@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134307.195171844@linuxfoundation.org>
 References: <20250602134307.195171844@linuxfoundation.org>
@@ -53,59 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
 
-[ Upstream commit 5a1ccffd30a08f5a2428cd5fbb3ab03e8eb6c66d ]
+[ Upstream commit 9e8243025cc06abc975c876dffda052073207ab3 ]
 
-The following patch will not set skb->sk from VRF path.
+After the firmware is uploaded, download_firmware_validate() checks some
+bits in REG_MCUFW_CTRL to see if everything went okay. The
+RTL8814AU power on sequence sets bits 13 and 12 to 2, which this
+function does not expect, so it thinks the firmware upload failed.
 
-Let's fetch net from fib_rule->fr_net instead of sock_net(skb->sk)
-in fib[46]_rule_configure().
+Make download_firmware_validate() ignore bits 13 and 12.
 
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Tested-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20250207072502.87775-5-kuniyu@amazon.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/049d2887-22fc-47b7-9e59-62627cb525f8@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/fib_rules.c  | 4 ++--
- net/ipv6/fib6_rules.c | 4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ drivers/net/wireless/realtek/rtw88/reg.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/ipv4/fib_rules.c b/net/ipv4/fib_rules.c
-index d279cb8ac1584..a270951386e19 100644
---- a/net/ipv4/fib_rules.c
-+++ b/net/ipv4/fib_rules.c
-@@ -226,9 +226,9 @@ static int fib4_rule_configure(struct fib_rule *rule, struct sk_buff *skb,
- 			       struct nlattr **tb,
- 			       struct netlink_ext_ack *extack)
- {
--	struct net *net = sock_net(skb->sk);
-+	struct fib4_rule *rule4 = (struct fib4_rule *)rule;
-+	struct net *net = rule->fr_net;
- 	int err = -EINVAL;
--	struct fib4_rule *rule4 = (struct fib4_rule *) rule;
+diff --git a/drivers/net/wireless/realtek/rtw88/reg.h b/drivers/net/wireless/realtek/rtw88/reg.h
+index 9088bfb2a3157..27de6eeb4ad68 100644
+--- a/drivers/net/wireless/realtek/rtw88/reg.h
++++ b/drivers/net/wireless/realtek/rtw88/reg.h
+@@ -107,6 +107,7 @@
+ #define BIT_SHIFT_ROM_PGE	16
+ #define BIT_FW_INIT_RDY		BIT(15)
+ #define BIT_FW_DW_RDY		BIT(14)
++#define BIT_CPU_CLK_SEL		(BIT(12) | BIT(13))
+ #define BIT_RPWM_TOGGLE		BIT(7)
+ #define BIT_RAM_DL_SEL		BIT(7)	/* legacy only */
+ #define BIT_DMEM_CHKSUM_OK	BIT(6)
+@@ -124,7 +125,7 @@
+ 				 BIT_CHECK_SUM_OK)
+ #define FW_READY_LEGACY		(BIT_MCUFWDL_RDY | BIT_FWDL_CHK_RPT |	       \
+ 				 BIT_WINTINI_RDY | BIT_RAM_DL_SEL)
+-#define FW_READY_MASK		0xffff
++#define FW_READY_MASK		(0xffff & ~BIT_CPU_CLK_SEL)
  
- 	if (frh->tos & ~IPTOS_TOS_MASK) {
- 		NL_SET_ERR_MSG(extack, "Invalid tos");
-diff --git a/net/ipv6/fib6_rules.c b/net/ipv6/fib6_rules.c
-index cf9a44fb8243d..0d4e82744921f 100644
---- a/net/ipv6/fib6_rules.c
-+++ b/net/ipv6/fib6_rules.c
-@@ -353,9 +353,9 @@ static int fib6_rule_configure(struct fib_rule *rule, struct sk_buff *skb,
- 			       struct nlattr **tb,
- 			       struct netlink_ext_ack *extack)
- {
-+	struct fib6_rule *rule6 = (struct fib6_rule *)rule;
-+	struct net *net = rule->fr_net;
- 	int err = -EINVAL;
--	struct net *net = sock_net(skb->sk);
--	struct fib6_rule *rule6 = (struct fib6_rule *) rule;
- 
- 	if (rule->action == FR_ACT_TO_TBL && !rule->l3mdev) {
- 		if (rule->table == RT6_TABLE_UNSPEC) {
+ #define REG_MCU_TST_CFG		0x84
+ #define VAL_FW_TRIGGER		0x1
 -- 
 2.39.5
 
