@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2142923875D;
-	Mon,  2 Jun 2025 14:20:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A3A1238C19;
+	Mon,  2 Jun 2025 14:20:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748874024; cv=none; b=s9GLPU0IJd2/YD0vqdu1KcDOZwB4gFIAKU+wFDYUQWD0sGNinP/ZUD1WnHfApg0WYPZnqPod1jO7+x7HVVp5lare5RFZLvfij9VHPPD/JUC8rshwY09SzjYD9Z8sC/s5royfpbMaVWNEvd/nMrO0bP0wALBOFUV1GyaJmJBp/ts=
+	t=1748874026; cv=none; b=oLkDHaFmU1zF2qczasCprajw36kI9/MmHsSZZ2MOsfUJIo2J+IUiu76DSwB+bI2VHO6ec0crLNZmTuIGLlgEq/tuim+o27hoeajds7pelhmGj39V0a3fq4AH8E1gUrJ0+2JsjF4qgkoGY3Al/+f1SPSlxQzsVNHNbz2AoSvCmG8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748874024; c=relaxed/simple;
-	bh=5SnHh0MDSTZxJWA0/RpKN8Dom1lpsNVhnN28p1jg/Xo=;
+	s=arc-20240116; t=1748874026; c=relaxed/simple;
+	bh=iWa8X9JJob96vUF8zTPt2U9wVjYti/GbCRadAoklaYg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yfs0/kX1amvNhAXDxRUUNkSdOrIGCFv213MYov1pk0zooKy+hFu6mwMm3bq0R648suLXSSbIPlZuRG9YH831L/K76C6Sm4nELSAYP9wlgUtVNpzzCB1PTCErxUhdK5WbZ20hL4TYkbVCmDc1kxFcnfBjtU52M3jZU0mTp0Fajic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wXi0Wkdk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VSYyimMcs+TsDNTmjquEEVrl9NOFiIIk1xoi+c3OH0tq+hsmQcJ1DRCLe8BsyzOjAhtRPaAX06ku/XUBSfq5zuREkJoMK6orineWwrKZu38S1jWuTOsd5qdxD8CQYNhSgCBgPjbDDgxi8ZwDnyy0t1dinUllgC0eGxmyzL6amTA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CSXshH6J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wXi0Wkdk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D8FBC4CEEB;
-	Mon,  2 Jun 2025 14:20:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CSXshH6J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB8ECC4CEF3;
+	Mon,  2 Jun 2025 14:20:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748874023;
-	bh=5SnHh0MDSTZxJWA0/RpKN8Dom1lpsNVhnN28p1jg/Xo=;
+	s=korg; t=1748874026;
+	bh=iWa8X9JJob96vUF8zTPt2U9wVjYti/GbCRadAoklaYg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wXi0Wkdk+7e/kfXxpwpOuVKrr/RJRB4FnDjtEF3oEGHkJ+Vw4G3abkwMLsBdGsU5I
-	 crkV8DVEqPUvnOeOodZCNBjjep036lVzM1jVieXXGHdczrCMF5ddTxSdSjYOmmbH21
-	 CCiwcdjQLmPR/Cch091CxjIeyFgf7R3sZqSyfBOg=
+	b=CSXshH6JlMr06vdIKsIuKBl5UE3kBpDnhzFqx4V08BlJF6MWZRIYfcSXGd7bMg3ha
+	 5ImbPaIs08kxlp6chgvWmUePAIk3SdfvMypTNOHszkYd/23kK0KaWQg59D7ZIuO5dq
+	 xx/oPkBkWU9r8UpVvpmg2F38S/wCsRgBMFHNOcgc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Simon Horman <horms@kernel.org>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Tom Zanussi <tom.zanussi@linux.intel.com>,
+	Fenghua Yu <fenghua.yu@intel.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 331/444] espintcp: remove encap socket caching to avoid reference leak
-Date: Mon,  2 Jun 2025 15:46:35 +0200
-Message-ID: <20250602134354.368205025@linuxfoundation.org>
+Subject: [PATCH 6.6 332/444] dmaengine: idxd: add wq driver name support for accel-config user tool
+Date: Mon,  2 Jun 2025 15:46:36 +0200
+Message-ID: <20250602134354.407619362@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -52,250 +53,190 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sabrina Dubroca <sd@queasysnail.net>
+From: Dave Jiang <dave.jiang@intel.com>
 
-[ Upstream commit 028363685bd0b7a19b4a820f82dd905b1dc83999 ]
+[ Upstream commit 7af1e0aceeb321cbc90fcf6fa0bec8870290377f ]
 
-The current scheme for caching the encap socket can lead to reference
-leaks when we try to delete the netns.
+With the possibility of multiple wq drivers that can be bound to the wq,
+the user config tool accel-config needs a way to know which wq driver to
+bind to the wq. Introduce per wq driver_name sysfs attribute where the user
+can indicate the driver to be bound to the wq. This allows accel-config to
+just bind to the driver using wq->driver_name.
 
-The reference chain is: xfrm_state -> enacp_sk -> netns
-
-Since the encap socket is a userspace socket, it holds a reference on
-the netns. If we delete the espintcp state (through flush or
-individual delete) before removing the netns, the reference on the
-socket is dropped and the netns is correctly deleted. Otherwise, the
-netns may not be reachable anymore (if all processes within the ns
-have terminated), so we cannot delete the xfrm state to drop its
-reference on the socket.
-
-This patch results in a small (~2% in my tests) performance
-regression.
-
-A GC-type mechanism could be added for the socket cache, to clear
-references if the state hasn't been used "recently", but it's a lot
-more complex than just not caching the socket.
-
-Fixes: e27cca96cd68 ("xfrm: add espintcp (RFC 8229)")
-Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Signed-off-by: Tom Zanussi <tom.zanussi@linux.intel.com>
+Reviewed-by: Fenghua Yu <fenghua.yu@intel.com>
+Acked-by: Vinod Koul <vkoul@kernel.org>
+Link: https://lore.kernel.org/r/20230908201045.4115614-1-fenghua.yu@intel.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Stable-dep-of: 8dfa57aabff6 ("dmaengine: idxd: Fix allowing write() from different address spaces")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/xfrm.h    |  1 -
- net/ipv4/esp4.c       | 49 ++++---------------------------------------
- net/ipv6/esp6.c       | 49 ++++---------------------------------------
- net/xfrm/xfrm_state.c |  3 ---
- 4 files changed, 8 insertions(+), 94 deletions(-)
+ .../ABI/stable/sysfs-driver-dma-idxd          |  6 ++++
+ drivers/dma/idxd/cdev.c                       |  7 ++++
+ drivers/dma/idxd/dma.c                        |  6 ++++
+ drivers/dma/idxd/idxd.h                       |  9 +++++
+ drivers/dma/idxd/sysfs.c                      | 34 +++++++++++++++++++
+ include/uapi/linux/idxd.h                     |  1 +
+ 6 files changed, 63 insertions(+)
 
-diff --git a/include/net/xfrm.h b/include/net/xfrm.h
-index b33d27e42cff3..fd550c0b56345 100644
---- a/include/net/xfrm.h
-+++ b/include/net/xfrm.h
-@@ -228,7 +228,6 @@ struct xfrm_state {
+diff --git a/Documentation/ABI/stable/sysfs-driver-dma-idxd b/Documentation/ABI/stable/sysfs-driver-dma-idxd
+index 825e619250bf2..f2ec42949a54d 100644
+--- a/Documentation/ABI/stable/sysfs-driver-dma-idxd
++++ b/Documentation/ABI/stable/sysfs-driver-dma-idxd
+@@ -270,6 +270,12 @@ Description:	Shows the operation capability bits displayed in bitmap format
+ 		correlates to the operations allowed. It's visible only
+ 		on platforms that support the capability.
  
- 	/* Data for encapsulator */
- 	struct xfrm_encap_tmpl	*encap;
--	struct sock __rcu	*encap_sk;
++What:		/sys/bus/dsa/devices/wq<m>.<n>/driver_name
++Date:		Sept 8, 2023
++KernelVersion:	6.7.0
++Contact:	dmaengine@vger.kernel.org
++Description:	Name of driver to be bounded to the wq.
++
+ What:           /sys/bus/dsa/devices/engine<m>.<n>/group_id
+ Date:           Oct 25, 2019
+ KernelVersion:  5.6.0
+diff --git a/drivers/dma/idxd/cdev.c b/drivers/dma/idxd/cdev.c
+index c18633ad8455f..7ddf5f933475d 100644
+--- a/drivers/dma/idxd/cdev.c
++++ b/drivers/dma/idxd/cdev.c
+@@ -584,6 +584,7 @@ void idxd_wq_del_cdev(struct idxd_wq *wq)
  
- 	/* Data for care-of address */
- 	xfrm_address_t	*coaddr;
-diff --git a/net/ipv4/esp4.c b/net/ipv4/esp4.c
-index eeace9b509cec..49fd664f50fc0 100644
---- a/net/ipv4/esp4.c
-+++ b/net/ipv4/esp4.c
-@@ -118,47 +118,16 @@ static void esp_ssg_unref(struct xfrm_state *x, void *tmp, struct sk_buff *skb)
- }
- 
- #ifdef CONFIG_INET_ESPINTCP
--struct esp_tcp_sk {
--	struct sock *sk;
--	struct rcu_head rcu;
--};
--
--static void esp_free_tcp_sk(struct rcu_head *head)
--{
--	struct esp_tcp_sk *esk = container_of(head, struct esp_tcp_sk, rcu);
--
--	sock_put(esk->sk);
--	kfree(esk);
--}
--
- static struct sock *esp_find_tcp_sk(struct xfrm_state *x)
+ static int idxd_user_drv_probe(struct idxd_dev *idxd_dev)
  {
- 	struct xfrm_encap_tmpl *encap = x->encap;
- 	struct net *net = xs_net(x);
--	struct esp_tcp_sk *esk;
- 	__be16 sport, dport;
--	struct sock *nsk;
- 	struct sock *sk;
++	struct device *dev = &idxd_dev->conf_dev;
+ 	struct idxd_wq *wq = idxd_dev_to_wq(idxd_dev);
+ 	struct idxd_device *idxd = wq->idxd;
+ 	int rc;
+@@ -611,6 +612,12 @@ static int idxd_user_drv_probe(struct idxd_dev *idxd_dev)
  
--	sk = rcu_dereference(x->encap_sk);
--	if (sk && sk->sk_state == TCP_ESTABLISHED)
--		return sk;
--
- 	spin_lock_bh(&x->lock);
- 	sport = encap->encap_sport;
- 	dport = encap->encap_dport;
--	nsk = rcu_dereference_protected(x->encap_sk,
--					lockdep_is_held(&x->lock));
--	if (sk && sk == nsk) {
--		esk = kmalloc(sizeof(*esk), GFP_ATOMIC);
--		if (!esk) {
--			spin_unlock_bh(&x->lock);
--			return ERR_PTR(-ENOMEM);
--		}
--		RCU_INIT_POINTER(x->encap_sk, NULL);
--		esk->sk = sk;
--		call_rcu(&esk->rcu, esp_free_tcp_sk);
--	}
- 	spin_unlock_bh(&x->lock);
+ 	mutex_lock(&wq->wq_lock);
  
- 	sk = inet_lookup_established(net, net->ipv4.tcp_death_row.hashinfo, x->id.daddr.a4,
-@@ -171,20 +140,6 @@ static struct sock *esp_find_tcp_sk(struct xfrm_state *x)
- 		return ERR_PTR(-EINVAL);
- 	}
++	if (!idxd_wq_driver_name_match(wq, dev)) {
++		idxd->cmd_status = IDXD_SCMD_WQ_NO_DRV_NAME;
++		rc = -ENODEV;
++		goto wq_err;
++	}
++
+ 	wq->wq = create_workqueue(dev_name(wq_confdev(wq)));
+ 	if (!wq->wq) {
+ 		rc = -ENOMEM;
+diff --git a/drivers/dma/idxd/dma.c b/drivers/dma/idxd/dma.c
+index 07623fb0f52fc..47a01893cfdbf 100644
+--- a/drivers/dma/idxd/dma.c
++++ b/drivers/dma/idxd/dma.c
+@@ -306,6 +306,12 @@ static int idxd_dmaengine_drv_probe(struct idxd_dev *idxd_dev)
+ 		return -ENXIO;
  
--	spin_lock_bh(&x->lock);
--	nsk = rcu_dereference_protected(x->encap_sk,
--					lockdep_is_held(&x->lock));
--	if (encap->encap_sport != sport ||
--	    encap->encap_dport != dport) {
--		sock_put(sk);
--		sk = nsk ?: ERR_PTR(-EREMCHG);
--	} else if (sk == nsk) {
--		sock_put(sk);
--	} else {
--		rcu_assign_pointer(x->encap_sk, sk);
--	}
--	spin_unlock_bh(&x->lock);
--
- 	return sk;
+ 	mutex_lock(&wq->wq_lock);
++	if (!idxd_wq_driver_name_match(wq, dev)) {
++		idxd->cmd_status = IDXD_SCMD_WQ_NO_DRV_NAME;
++		rc = -ENODEV;
++		goto err;
++	}
++
+ 	wq->type = IDXD_WQT_KERNEL;
+ 
+ 	rc = drv_enable_wq(wq);
+diff --git a/drivers/dma/idxd/idxd.h b/drivers/dma/idxd/idxd.h
+index bea10c5cdb76b..fcbb8caea8995 100644
+--- a/drivers/dma/idxd/idxd.h
++++ b/drivers/dma/idxd/idxd.h
+@@ -159,6 +159,8 @@ struct idxd_cdev {
+ 	int minor;
+ };
+ 
++#define DRIVER_NAME_SIZE		128
++
+ #define IDXD_ALLOCATED_BATCH_SIZE	128U
+ #define WQ_NAME_SIZE   1024
+ #define WQ_TYPE_SIZE   10
+@@ -227,6 +229,8 @@ struct idxd_wq {
+ 	/* Lock to protect upasid_xa access. */
+ 	struct mutex uc_lock;
+ 	struct xarray upasid_xa;
++
++	char driver_name[DRIVER_NAME_SIZE + 1];
+ };
+ 
+ struct idxd_engine {
+@@ -648,6 +652,11 @@ static inline void idxd_wqcfg_set_max_batch_shift(int idxd_type, union wqcfg *wq
+ 		wqcfg->max_batch_shift = max_batch_shift;
  }
  
-@@ -207,6 +162,8 @@ static int esp_output_tcp_finish(struct xfrm_state *x, struct sk_buff *skb)
- 		err = espintcp_push_skb(sk, skb);
- 	bh_unlock_sock(sk);
- 
-+	sock_put(sk);
++static inline int idxd_wq_driver_name_match(struct idxd_wq *wq, struct device *dev)
++{
++	return (strncmp(wq->driver_name, dev->driver->name, strlen(dev->driver->name)) == 0);
++}
 +
- out:
- 	rcu_read_unlock();
- 	return err;
-@@ -391,6 +348,8 @@ static struct ip_esp_hdr *esp_output_tcp_encap(struct xfrm_state *x,
- 	if (IS_ERR(sk))
- 		return ERR_CAST(sk);
+ int __must_check __idxd_driver_register(struct idxd_device_driver *idxd_drv,
+ 					struct module *module, const char *mod_name);
+ #define idxd_driver_register(driver) \
+diff --git a/drivers/dma/idxd/sysfs.c b/drivers/dma/idxd/sysfs.c
+index 1fd5a93045f79..3a5ce477a81ad 100644
+--- a/drivers/dma/idxd/sysfs.c
++++ b/drivers/dma/idxd/sysfs.c
+@@ -1282,6 +1282,39 @@ static ssize_t wq_op_config_store(struct device *dev, struct device_attribute *a
+ static struct device_attribute dev_attr_wq_op_config =
+ 		__ATTR(op_config, 0644, wq_op_config_show, wq_op_config_store);
  
-+	sock_put(sk);
++static ssize_t wq_driver_name_show(struct device *dev, struct device_attribute *attr, char *buf)
++{
++	struct idxd_wq *wq = confdev_to_wq(dev);
 +
- 	*lenp = htons(len);
- 	esph = (struct ip_esp_hdr *)(lenp + 1);
- 
-diff --git a/net/ipv6/esp6.c b/net/ipv6/esp6.c
-index 62bb9651133c4..7e4c8628cf983 100644
---- a/net/ipv6/esp6.c
-+++ b/net/ipv6/esp6.c
-@@ -135,47 +135,16 @@ static void esp_ssg_unref(struct xfrm_state *x, void *tmp, struct sk_buff *skb)
- }
- 
- #ifdef CONFIG_INET6_ESPINTCP
--struct esp_tcp_sk {
--	struct sock *sk;
--	struct rcu_head rcu;
--};
--
--static void esp_free_tcp_sk(struct rcu_head *head)
--{
--	struct esp_tcp_sk *esk = container_of(head, struct esp_tcp_sk, rcu);
--
--	sock_put(esk->sk);
--	kfree(esk);
--}
--
- static struct sock *esp6_find_tcp_sk(struct xfrm_state *x)
- {
- 	struct xfrm_encap_tmpl *encap = x->encap;
- 	struct net *net = xs_net(x);
--	struct esp_tcp_sk *esk;
- 	__be16 sport, dport;
--	struct sock *nsk;
- 	struct sock *sk;
- 
--	sk = rcu_dereference(x->encap_sk);
--	if (sk && sk->sk_state == TCP_ESTABLISHED)
--		return sk;
--
- 	spin_lock_bh(&x->lock);
- 	sport = encap->encap_sport;
- 	dport = encap->encap_dport;
--	nsk = rcu_dereference_protected(x->encap_sk,
--					lockdep_is_held(&x->lock));
--	if (sk && sk == nsk) {
--		esk = kmalloc(sizeof(*esk), GFP_ATOMIC);
--		if (!esk) {
--			spin_unlock_bh(&x->lock);
--			return ERR_PTR(-ENOMEM);
--		}
--		RCU_INIT_POINTER(x->encap_sk, NULL);
--		esk->sk = sk;
--		call_rcu(&esk->rcu, esp_free_tcp_sk);
--	}
- 	spin_unlock_bh(&x->lock);
- 
- 	sk = __inet6_lookup_established(net, net->ipv4.tcp_death_row.hashinfo, &x->id.daddr.in6,
-@@ -188,20 +157,6 @@ static struct sock *esp6_find_tcp_sk(struct xfrm_state *x)
- 		return ERR_PTR(-EINVAL);
- 	}
- 
--	spin_lock_bh(&x->lock);
--	nsk = rcu_dereference_protected(x->encap_sk,
--					lockdep_is_held(&x->lock));
--	if (encap->encap_sport != sport ||
--	    encap->encap_dport != dport) {
--		sock_put(sk);
--		sk = nsk ?: ERR_PTR(-EREMCHG);
--	} else if (sk == nsk) {
--		sock_put(sk);
--	} else {
--		rcu_assign_pointer(x->encap_sk, sk);
--	}
--	spin_unlock_bh(&x->lock);
--
- 	return sk;
- }
- 
-@@ -224,6 +179,8 @@ static int esp_output_tcp_finish(struct xfrm_state *x, struct sk_buff *skb)
- 		err = espintcp_push_skb(sk, skb);
- 	bh_unlock_sock(sk);
- 
-+	sock_put(sk);
++	return sysfs_emit(buf, "%s\n", wq->driver_name);
++}
 +
- out:
- 	rcu_read_unlock();
- 	return err;
-@@ -427,6 +384,8 @@ static struct ip_esp_hdr *esp6_output_tcp_encap(struct xfrm_state *x,
- 	if (IS_ERR(sk))
- 		return ERR_CAST(sk);
- 
-+	sock_put(sk);
++static ssize_t wq_driver_name_store(struct device *dev, struct device_attribute *attr,
++				    const char *buf, size_t count)
++{
++	struct idxd_wq *wq = confdev_to_wq(dev);
++	char *input, *pos;
 +
- 	*lenp = htons(len);
- 	esph = (struct ip_esp_hdr *)(lenp + 1);
++	if (wq->state != IDXD_WQ_DISABLED)
++		return -EPERM;
++
++	if (strlen(buf) > DRIVER_NAME_SIZE || strlen(buf) == 0)
++		return -EINVAL;
++
++	input = kstrndup(buf, count, GFP_KERNEL);
++	if (!input)
++		return -ENOMEM;
++
++	pos = strim(input);
++	memset(wq->driver_name, 0, DRIVER_NAME_SIZE + 1);
++	sprintf(wq->driver_name, "%s", pos);
++	kfree(input);
++	return count;
++}
++
++static struct device_attribute dev_attr_wq_driver_name =
++		__ATTR(driver_name, 0644, wq_driver_name_show, wq_driver_name_store);
++
+ static struct attribute *idxd_wq_attributes[] = {
+ 	&dev_attr_wq_clients.attr,
+ 	&dev_attr_wq_state.attr,
+@@ -1301,6 +1334,7 @@ static struct attribute *idxd_wq_attributes[] = {
+ 	&dev_attr_wq_occupancy.attr,
+ 	&dev_attr_wq_enqcmds_retries.attr,
+ 	&dev_attr_wq_op_config.attr,
++	&dev_attr_wq_driver_name.attr,
+ 	NULL,
+ };
  
-diff --git a/net/xfrm/xfrm_state.c b/net/xfrm/xfrm_state.c
-index 8a6e8656d014f..7222ba50390d6 100644
---- a/net/xfrm/xfrm_state.c
-+++ b/net/xfrm/xfrm_state.c
-@@ -754,9 +754,6 @@ int __xfrm_state_delete(struct xfrm_state *x)
- 		net->xfrm.state_num--;
- 		spin_unlock(&net->xfrm.xfrm_state_lock);
+diff --git a/include/uapi/linux/idxd.h b/include/uapi/linux/idxd.h
+index 606b52e88ce33..3d1987e1bb2dd 100644
+--- a/include/uapi/linux/idxd.h
++++ b/include/uapi/linux/idxd.h
+@@ -31,6 +31,7 @@ enum idxd_scmd_stat {
+ 	IDXD_SCMD_WQ_IRQ_ERR = 0x80100000,
+ 	IDXD_SCMD_WQ_USER_NO_IOMMU = 0x80110000,
+ 	IDXD_SCMD_DEV_EVL_ERR = 0x80120000,
++	IDXD_SCMD_WQ_NO_DRV_NAME = 0x80200000,
+ };
  
--		if (x->encap_sk)
--			sock_put(rcu_dereference_raw(x->encap_sk));
--
- 		xfrm_dev_state_delete(x);
- 
- 		/* All xfrm_state objects are created by xfrm_state_alloc.
+ #define IDXD_SCMD_SOFTERR_MASK	0x80000000
 -- 
 2.39.5
 
