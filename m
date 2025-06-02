@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC95D188907;
-	Mon,  2 Jun 2025 15:08:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8FD322ACF3;
+	Mon,  2 Jun 2025 15:08:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748876916; cv=none; b=hlLnk0UlW0rTcLujAUnlj2lhvT4prbSIYQcyBrsNo2xmRFGQuX9Wr0c5pM2IgLB9SOuo5bWSiROwgpVrnXIhfOa5PGkcLINbt4yX3yAGqgTx6C0lsQuVPm7d/ntYxYoGbf+BjMpCSfYpVxrj+K/XjdOiktm/MrOUiXlwGKvBJxU=
+	t=1748876919; cv=none; b=QzRcHs0xIZRYIfgxUjgp/AKuTku/uZ2PtzouIHSnNwXXfouShyix/GYjlnkjyoxQI5dGodOm0wVB//kJDVjeexw0/yWk5XV5umpX5OOoA3f8KZORnKPuEggdev7YW6tle02xR6Gc1Gabo48QDWTa0gqApFwl/KwhGVKQBB52sSM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748876916; c=relaxed/simple;
-	bh=7kjJRdOek0Wg21cqq4xfU0CnTw0zvjU85i/XjE/E8Ls=;
+	s=arc-20240116; t=1748876919; c=relaxed/simple;
+	bh=eSF4lt1PP65E0Xfqo0+tpxS6lLwWt4sgzq8E0QfnSDI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nb1N3AJldRwuyVFyd09EQa0rGWn9V6Bh8lSi5q1DnEKFi0B8bEfLE1nVza1x6glqdeM5stLnnfWx1YHFMYAl9iA6Drzoj5hHJ+jHPp3kjcP41bfMVnmqRv329N2MAyyI9cA3JUeEQ1/pot/tR11hdZXGOZVrbPFXdShPVy41Wdg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KPfprNLy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CkRC1CTL8ylq2L474X1eF5jIBPOhV/GknzJqnZ7JR3oxoTGuuJ2hApQOQQSNE7E/qp2os8VKxkxkFFJjWUM1Xv+TyCy2EaIvn8gAELIpcx0IIjDZbGR3b7ejgOlVD+8YCQMW3dIZQXO06qiyH27ydYgOrdXzfjfp3zawUe6QKqQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DSFNVNSW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KPfprNLy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E200C4CEEB;
-	Mon,  2 Jun 2025 15:08:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DSFNVNSW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37FB2C4CEEB;
+	Mon,  2 Jun 2025 15:08:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748876916;
-	bh=7kjJRdOek0Wg21cqq4xfU0CnTw0zvjU85i/XjE/E8Ls=;
+	s=korg; t=1748876919;
+	bh=eSF4lt1PP65E0Xfqo0+tpxS6lLwWt4sgzq8E0QfnSDI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KPfprNLyP3eRI+w0Syvd4YQL+StXyQkoPkNw+8js2bEn3E1rBM/twVBjrRE1msJx8
-	 xjh4K5i0KhP8l3k/JbQ69tp6wKy0E5GZuyeKl8GcGGeSWYVMLh/DQCz5ngZNjypCxN
-	 KpIrIckjfRu2ys2YL0Kz/fOjqWjQ/tkuCJunCMdM=
+	b=DSFNVNSWErPs9M8i+F9XFRA6d0NvY3OEFBQGri0IJhqXC0tUZFR+sO0i/GIZtgql6
+	 I4puyq4XmDuPgyVZe7G9tZz6hBUhIsmjeos5GlE0qWTGqd8o42bOGfGxq19x7rb7FR
+	 ZCYYjqk/D4MoTZ59Wata8q9Nt+wC5z28Rnve0ZoY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Yan <andy.yan@rock-chips.com>,
-	Detlev Casanova <detlev.casanova@collabora.com>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Sasha Levin <sashal@kernel.org>,
-	Michael Riesch <michael.riesch@wolfvision.net>
-Subject: [PATCH 6.1 115/325] drm/rockchip: vop2: Add uv swap for cluster window
-Date: Mon,  2 Jun 2025 15:46:31 +0200
-Message-ID: <20250602134324.452427860@linuxfoundation.org>
+	Yunke Cao <yunkec@google.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 116/325] media: uvcvideo: Add sanity check to uvc_ioctl_xu_ctrl_map
+Date: Mon,  2 Jun 2025 15:46:32 +0200
+Message-ID: <20250602134324.493049547@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134319.723650984@linuxfoundation.org>
 References: <20250602134319.723650984@linuxfoundation.org>
@@ -53,44 +53,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Yan <andy.yan@rock-chips.com>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-[ Upstream commit e7aae9f6d762139f8d2b86db03793ae0ab3dd802 ]
+[ Upstream commit 990262fdfce24d6055df9711424343d94d829e6a ]
 
-The Cluster windows of upcoming VOP on rk3576 also support
-linear YUV support, we need to set uv swap bit for it.
+Do not process unknown data types.
 
-As the VOP2_WIN_UV_SWA register defined on rk3568/rk3588 is
-0xffffffff, so this register will not be touched on these
-two platforms.
-
-Signed-off-by: Andy Yan <andy.yan@rock-chips.com>
-Tested-by: Michael Riesch <michael.riesch@wolfvision.net> # on RK3568
-Tested-by: Detlev Casanova <detlev.casanova@collabora.com>
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250303034436.192400-4-andyshrk@163.com
+Tested-by: Yunke Cao <yunkec@google.com>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Link: https://lore.kernel.org/r/20250203-uvc-roi-v17-15-5900a9fed613@chromium.org
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/rockchip/rockchip_drm_vop2.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/media/usb/uvc/uvc_v4l2.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
-index 955ef2caac89f..6efa0a51b7d65 100644
---- a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
-+++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
-@@ -1289,10 +1289,8 @@ static void vop2_plane_atomic_update(struct drm_plane *plane,
+diff --git a/drivers/media/usb/uvc/uvc_v4l2.c b/drivers/media/usb/uvc/uvc_v4l2.c
+index bd4677a6e653a..0aaa4fce61dae 100644
+--- a/drivers/media/usb/uvc/uvc_v4l2.c
++++ b/drivers/media/usb/uvc/uvc_v4l2.c
+@@ -36,6 +36,12 @@ static int uvc_ioctl_ctrl_map(struct uvc_video_chain *chain,
+ 	unsigned int size;
+ 	int ret;
  
- 	rb_swap = vop2_win_rb_swap(fb->format->format);
- 	vop2_win_write(win, VOP2_WIN_RB_SWAP, rb_swap);
--	if (!vop2_cluster_window(win)) {
--		uv_swap = vop2_win_uv_swap(fb->format->format);
--		vop2_win_write(win, VOP2_WIN_UV_SWAP, uv_swap);
--	}
-+	uv_swap = vop2_win_uv_swap(fb->format->format);
-+	vop2_win_write(win, VOP2_WIN_UV_SWAP, uv_swap);
- 
- 	if (fb->format->is_yuv) {
- 		vop2_win_write(win, VOP2_WIN_UV_VIR, DIV_ROUND_UP(fb->pitches[1], 4));
++	if (xmap->data_type > UVC_CTRL_DATA_TYPE_BITMASK) {
++		uvc_dbg(chain->dev, CONTROL,
++			"Unsupported UVC data type %u\n", xmap->data_type);
++		return -EINVAL;
++	}
++
+ 	map = kzalloc(sizeof(*map), GFP_KERNEL);
+ 	if (map == NULL)
+ 		return -ENOMEM;
 -- 
 2.39.5
 
