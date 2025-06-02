@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8002C290F;
-	Mon,  2 Jun 2025 14:42:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A86A52C324F;
+	Mon,  2 Jun 2025 14:42:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748875349; cv=none; b=n9iDkvDnOxRsVtc2VkPQUo4orOohb0dEueFP/eMN0JP6vNsK17GCS2QNw+If4WJTlSbVQK3OidA4TWH5dL5mh64vtD5Xv60NNfd7U0Zy+LeBezxX1wp4u7JCDyo/5jfWwQ4cbu5RmTT58zUWtSJSyU0hCFefwBfXoRaqHfvQYg0=
+	t=1748875352; cv=none; b=kFMXYD+ST86tiJc79B/fHBVBT81ByH4hOXxGReCoVLx/sF99lA2pSKlOlp5PjfjcQ51I1Mu7K91sDoBo6ARinIIjihhAo4Y1MwecAwufTRlecEu9hXbb9MzC0MjNniMTfAVTw+XZIIG9+pVlEobR8YNAoUMCOg2QxSkb+6FHznQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748875349; c=relaxed/simple;
-	bh=nnIjt+JqNQvrerXqJPb2N0yI/djW8RwuwIZknJa8Rn8=;
+	s=arc-20240116; t=1748875352; c=relaxed/simple;
+	bh=v4F2fbw99f765ZhLoGIQxbkGYx25eYUQkLdFXYFXBiw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LfszwNxZezYu23I628WljJqov5W7r+YQoHUsTboQ05m+WN5orehak2rNhONfm9uTY92Fnnv+mEboifluqcQ/jIHcIqFg/V0BTaReYkwIzuZjtc1ob7bsbj9ht6Tsc+67VTj5GydqihmKybLViHqDHvcCFw3WShJ3UDWDlb8SU7w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZoSPBY8K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bEppAdS6elO0wFIg66SxcLwLJI6IwZt7dqN7plpLtBBEuOzLEYZn9HvEgcVhGfa1DHX8+jcCVr5vl28thZ4Tk2YQ0q0hnSf5MZEjihU9RbKQc04oKifkeFe+i2AjuTdQVXOYoVvGC4cmg5v0U5NTYHizq4tLNOdGMLmjcM8N0uc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UUWmM6Jh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZoSPBY8K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 790E6C4CEEB;
-	Mon,  2 Jun 2025 14:42:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UUWmM6Jh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A349DC4CEEB;
+	Mon,  2 Jun 2025 14:42:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748875349;
-	bh=nnIjt+JqNQvrerXqJPb2N0yI/djW8RwuwIZknJa8Rn8=;
+	s=korg; t=1748875352;
+	bh=v4F2fbw99f765ZhLoGIQxbkGYx25eYUQkLdFXYFXBiw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZoSPBY8KlSR90rW43Um1QjH6N8KPJQLweGPq0Z4t0dJ5qFJ6Em8YoJkQv2Sg/FRF3
-	 C/bfNY7yofL9nn2K55UbKcNgcvh+KLQPUqQlkq+HarINO3LdUeckujBhuMx7aF7+kx
-	 9WNizsW8oJYQu0TWXaURHEqr5y76uMWwgiH1KiLw=
+	b=UUWmM6JhASoazrIk1MB/6AncR85ZnOiGDjZCj2AFe7GVH8wNYcPOp3JZKKRllnk5c
+	 eTBt6brjsntq+GgxVB3c5WkOO+1uZqDQvR1dCOnglfUadabKVZ/GKrzN0PX86YCc7j
+	 qEXKgJptkaDSlFQFyKtd/v7aStAIDdYyeqzAp7ds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	RD Babiera <rdbabiera@google.com>,
-	Jianqi Ren <jianqi.ren.cn@windriver.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Bin Lan <bin.lan.cn@windriver.com>,
 	He Zhe <zhe.he@windriver.com>
-Subject: [PATCH 5.10 107/270] usb: typec: altmodes/displayport: create sysfs nodes as drivers default device attribute group
-Date: Mon,  2 Jun 2025 15:46:32 +0200
-Message-ID: <20250602134311.604737229@linuxfoundation.org>
+Subject: [PATCH 5.10 108/270] usb: typec: fix potential array underflow in ucsi_ccg_sync_control()
+Date: Mon,  2 Jun 2025 15:46:33 +0200
+Message-ID: <20250602134311.651310179@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134307.195171844@linuxfoundation.org>
 References: <20250602134307.195171844@linuxfoundation.org>
@@ -51,93 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: RD Babiera <rdbabiera@google.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit 165376f6b23e9a779850e750fb2eb06622e5a531 upstream.
+commit e56aac6e5a25630645607b6856d4b2a17b2311a5 upstream.
 
-The DisplayPort driver's sysfs nodes may be present to the userspace before
-typec_altmode_set_drvdata() completes in dp_altmode_probe. This means that
-a sysfs read can trigger a NULL pointer error by deferencing dp->hpd in
-hpd_show or dp->lock in pin_assignment_show, as dev_get_drvdata() returns
-NULL in those cases.
+The "command" variable can be controlled by the user via debugfs.  The
+worry is that if con_index is zero then "&uc->ucsi->connector[con_index
+- 1]" would be an array underflow.
 
-Remove manual sysfs node creation in favor of adding attribute group as
-default for devices bound to the driver. The ATTRIBUTE_GROUPS() macro is
-not used here otherwise the path to the sysfs nodes is no longer compliant
-with the ABI.
-
-Fixes: 0e3bb7d6894d ("usb: typec: Add driver for DisplayPort alternate mode")
-Cc: stable@vger.kernel.org
-Signed-off-by: RD Babiera <rdbabiera@google.com>
-Link: https://lore.kernel.org/r/20240229001101.3889432-2-rdbabiera@google.com
-[Minor conflict resolved due to code context change.]
-Signed-off-by: Jianqi Ren <jianqi.ren.cn@windriver.com>
+Fixes: 170a6726d0e2 ("usb: typec: ucsi: add support for separate DP altmode devices")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/c69ef0b3-61b0-4dde-98dd-97b97f81d912@stanley.mountain
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[ The function ucsi_ccg_sync_write() is renamed to ucsi_ccg_sync_control()
+  in commit 13f2ec3115c8 ("usb: typec: ucsi:simplify command sending API").
+  Apply this patch to ucsi_ccg_sync_write() in 6.1.y accordingly. ]
+Signed-off-by: Bin Lan <bin.lan.cn@windriver.com>
 Signed-off-by: He Zhe <zhe.he@windriver.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/altmodes/displayport.c |   18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ drivers/usb/typec/ucsi/ucsi_ccg.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/usb/typec/altmodes/displayport.c
-+++ b/drivers/usb/typec/altmodes/displayport.c
-@@ -527,15 +527,20 @@ static ssize_t pin_assignment_show(struc
- }
- static DEVICE_ATTR_RW(pin_assignment);
+--- a/drivers/usb/typec/ucsi/ucsi_ccg.c
++++ b/drivers/usb/typec/ucsi/ucsi_ccg.c
+@@ -573,6 +573,10 @@ static int ucsi_ccg_sync_write(struct uc
+ 		    uc->has_multiple_dp) {
+ 			con_index = (uc->last_cmd_sent >> 16) &
+ 				    UCSI_CMD_CONNECTOR_MASK;
++			if (con_index == 0) {
++				ret = -EINVAL;
++				goto unlock;
++			}
+ 			con = &uc->ucsi->connector[con_index - 1];
+ 			ucsi_ccg_update_set_new_cam_cmd(uc, con, (u64 *)val);
+ 		}
+@@ -588,6 +592,7 @@ static int ucsi_ccg_sync_write(struct uc
+ err_clear_bit:
+ 	clear_bit(DEV_CMD_PENDING, &uc->flags);
+ 	pm_runtime_put_sync(uc->dev);
++unlock:
+ 	mutex_unlock(&uc->lock);
  
--static struct attribute *dp_altmode_attrs[] = {
-+static struct attribute *displayport_attrs[] = {
- 	&dev_attr_configuration.attr,
- 	&dev_attr_pin_assignment.attr,
- 	NULL
- };
- 
--static const struct attribute_group dp_altmode_group = {
-+static const struct attribute_group displayport_group = {
- 	.name = "displayport",
--	.attrs = dp_altmode_attrs,
-+	.attrs = displayport_attrs,
-+};
-+
-+static const struct attribute_group *displayport_groups[] = {
-+	&displayport_group,
-+	NULL,
- };
- 
- int dp_altmode_probe(struct typec_altmode *alt)
-@@ -543,7 +548,6 @@ int dp_altmode_probe(struct typec_altmod
- 	const struct typec_altmode *port = typec_altmode_get_partner(alt);
- 	struct fwnode_handle *fwnode;
- 	struct dp_altmode *dp;
--	int ret;
- 
- 	/* FIXME: Port can only be DFP_U. */
- 
-@@ -554,10 +558,6 @@ int dp_altmode_probe(struct typec_altmod
- 	      DP_CAP_PIN_ASSIGN_DFP_D(alt->vdo)))
- 		return -ENODEV;
- 
--	ret = sysfs_create_group(&alt->dev.kobj, &dp_altmode_group);
--	if (ret)
--		return ret;
--
- 	dp = devm_kzalloc(&alt->dev, sizeof(*dp), GFP_KERNEL);
- 	if (!dp)
- 		return -ENOMEM;
-@@ -588,7 +588,6 @@ void dp_altmode_remove(struct typec_altm
- {
- 	struct dp_altmode *dp = typec_altmode_get_drvdata(alt);
- 
--	sysfs_remove_group(&alt->dev.kobj, &dp_altmode_group);
- 	cancel_work_sync(&dp->work);
- 
- 	if (dp->connector_fwnode) {
-@@ -613,6 +612,7 @@ static struct typec_altmode_driver dp_al
- 	.driver = {
- 		.name = "typec_displayport",
- 		.owner = THIS_MODULE,
-+		.dev_groups = displayport_groups,
- 	},
- };
- module_typec_altmode_driver(dp_altmode_driver);
+ 	return ret;
 
 
