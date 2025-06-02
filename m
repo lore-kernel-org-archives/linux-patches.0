@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1419E222561;
-	Mon,  2 Jun 2025 14:07:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 376C221882B;
+	Mon,  2 Jun 2025 14:07:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748873276; cv=none; b=b5qdG7pGBdcDxpg3t3f4OLbU1TS/rWYWTHxu7J80gb+geENDqQxfd6IgfLiyi0Sb1al6ZvtQ9g4B/p9iotaf2VWd/O6iGR7A08UbnyqnP0RgjOoPazo+zBNaJAg4js9cj8IwrQNdiTB/kY74kT7gwrVqCGObr5+JbfJl7nu7sdA=
+	t=1748873279; cv=none; b=Fw7HRFoljvmON1KcyS+h49rQ9wJ/F/jtttOZt7HB32ufFYCbpcf277oG54hBnbvrFCo7WdyEZYw9m3hIevgMLW4bQjZTlupMlFvfRp+7ue3C/5Sci2auNXaMwN99lJZLXIZugKGrKZfnMYbDVef3ZY8o7RNWnoN8QvxNp1i/Ij0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748873276; c=relaxed/simple;
-	bh=3ukin6vij1BsPtuGkUHtLWfn4BWC3Hxh4OsAIA77zpM=;
+	s=arc-20240116; t=1748873279; c=relaxed/simple;
+	bh=FhoLs1Mjm8Susk7TrSrpYDyhdOBGacTo6S3X0mtAj58=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K1iSLGcgi0gt0SLZazVmYI+nQxpA2UwGE8hPAdnBuoDYEmi+8TFzWYw08ZFUaxRz1+6n4CrfttgTdSkPsR9fWUNil75qjOrofjYyTYwxl0lEDBpVqqbeT+qIvK4THlsVHwJfavgpQCQZYIo2sER+mt2xuaWbwucE2t7W1FN1Vc8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1brvMk3I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Uw0/h3Of3PoVrWxgTpyPd8aFGuDeERQNuoNAHDM1w0/zIrb1tZVw/bwJ5FZVu8PSX1dQ69kp6N9A/Lv+OCCWzWhd5RCVCj6HRUA2iVNm7qmFDqanGWwCX8s2rgnH/R2z5P+OYlXNqIJlDUXOsfLmUHrV7hS0A6h0HOP4ztA79RA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g1mKHUIE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1brvMk3I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2608DC4CEEB;
-	Mon,  2 Jun 2025 14:07:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g1mKHUIE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36380C4CEEB;
+	Mon,  2 Jun 2025 14:07:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748873274;
-	bh=3ukin6vij1BsPtuGkUHtLWfn4BWC3Hxh4OsAIA77zpM=;
+	s=korg; t=1748873277;
+	bh=FhoLs1Mjm8Susk7TrSrpYDyhdOBGacTo6S3X0mtAj58=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1brvMk3IpA3FUSm1/OU346+aNHHVy3/BKDHc8B5QrBIiIGL4lqNFRwXSGWaKRTh99
-	 dhwNHbJGIjcwjYe94zP72jOk+FsPg2kT51hjDmhAPiKCG+zFKWbCiUwaglxD7HvK/m
-	 +3ZxWBFAXW5ZqsbHeDrOFy94Q1RpIXwK4GVHgCHo=
+	b=g1mKHUIEe//jwEkL94afqz5fM/1YBb2jSGm3ncdS0irB6t9EkefM0jviP1n9zDTdE
+	 Sdy7RWRo6+4yn7zICf20wPGM9APdGmb+nv+8ATsWSqD1omJcFkp80/HWm8BAB/y1FT
+	 zl5ijqxLa0ahF5GG6Z1o/CVlVR5vXv8U5NG72oH8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mykyta Yatsenko <yatsenko@meta.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Yonghong Song <yonghong.song@linux.dev>,
+	Jan Kara <jack@suse.cz>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 091/444] bpf: Return prog btf_id without capable check
-Date: Mon,  2 Jun 2025 15:42:35 +0200
-Message-ID: <20250602134344.584642053@linuxfoundation.org>
+Subject: [PATCH 6.6 092/444] jbd2: do not try to recover wiped journal
+Date: Mon,  2 Jun 2025 15:42:36 +0200
+Message-ID: <20250602134344.624518836@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -52,45 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mykyta Yatsenko <yatsenko@meta.com>
+From: Jan Kara <jack@suse.cz>
 
-[ Upstream commit 07651ccda9ff10a8ca427670cdd06ce2c8e4269c ]
+[ Upstream commit a662f3c03b754e1f97a2781fa242e95bdb139798 ]
 
-Return prog's btf_id from bpf_prog_get_info_by_fd regardless of capable
-check. This patch enables scenario, when freplace program, running
-from user namespace, requires to query target prog's btf.
+If a journal is wiped, we will set journal->j_tail to 0. However if
+'write' argument is not set (as it happens for read-only device or for
+ocfs2), the on-disk superblock is not updated accordingly and thus
+jbd2_journal_recover() cat try to recover the wiped journal. Fix the
+check in jbd2_journal_recover() to use journal->j_tail for checking
+empty journal instead.
 
-Signed-off-by: Mykyta Yatsenko <yatsenko@meta.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Acked-by: Yonghong Song <yonghong.song@linux.dev>
-Link: https://lore.kernel.org/bpf/20250317174039.161275-3-mykyta.yatsenko5@gmail.com
+Signed-off-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
+Link: https://patch.msgid.link/20250206094657.20865-4-jack@suse.cz
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/syscall.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/jbd2/recovery.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
-index f089a61630111..5a8c5a4ef1134 100644
---- a/kernel/bpf/syscall.c
-+++ b/kernel/bpf/syscall.c
-@@ -4442,6 +4442,8 @@ static int bpf_prog_get_info_by_fd(struct file *file,
- 	info.recursion_misses = stats.misses;
+diff --git a/fs/jbd2/recovery.c b/fs/jbd2/recovery.c
+index 421c0d360836e..19ec325374833 100644
+--- a/fs/jbd2/recovery.c
++++ b/fs/jbd2/recovery.c
+@@ -286,21 +286,22 @@ static int fc_do_one_pass(journal_t *journal,
+ int jbd2_journal_recover(journal_t *journal)
+ {
+ 	int			err, err2;
+-	journal_superblock_t *	sb;
+-
+ 	struct recovery_info	info;
+ 	errseq_t		wb_err;
+ 	struct address_space	*mapping;
  
- 	info.verified_insns = prog->aux->verified_insns;
-+	if (prog->aux->btf)
-+		info.btf_id = btf_obj_id(prog->aux->btf);
+ 	memset(&info, 0, sizeof(info));
+-	sb = journal->j_superblock;
  
- 	if (!bpf_capable()) {
- 		info.jited_prog_len = 0;
-@@ -4588,8 +4590,6 @@ static int bpf_prog_get_info_by_fd(struct file *file,
- 		}
- 	}
- 
--	if (prog->aux->btf)
--		info.btf_id = btf_obj_id(prog->aux->btf);
- 	info.attach_btf_id = prog->aux->attach_btf_id;
- 	if (attach_btf)
- 		info.attach_btf_obj_id = btf_obj_id(attach_btf);
+ 	/*
+ 	 * The journal superblock's s_start field (the current log head)
+ 	 * is always zero if, and only if, the journal was cleanly
+-	 * unmounted.
++	 * unmounted. We use its in-memory version j_tail here because
++	 * jbd2_journal_wipe() could have updated it without updating journal
++	 * superblock.
+ 	 */
+-	if (!sb->s_start) {
++	if (!journal->j_tail) {
++		journal_superblock_t *sb = journal->j_superblock;
++
+ 		jbd2_debug(1, "No recovery required, last transaction %d, head block %u\n",
+ 			  be32_to_cpu(sb->s_sequence), be32_to_cpu(sb->s_head));
+ 		journal->j_transaction_sequence = be32_to_cpu(sb->s_sequence) + 1;
 -- 
 2.39.5
 
