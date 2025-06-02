@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CE05235362;
-	Mon,  2 Jun 2025 15:06:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A41722A4EB;
+	Mon,  2 Jun 2025 15:06:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748876780; cv=none; b=LQY325XrLR+asEPIC5hj5f4eOzhwI52DwOrsGsdhMuw/VLz1r587srBceAehm6tLVMtWIk856lJ/fdimDERLYpS8EQVKJLtjVWIKKjhkepkKcuaaX9bIByoCqzmwxz1H9KKKjogwWmJz9fVAOTtAzk7xJOO2Nh8CtM0DliTdfwc=
+	t=1748876783; cv=none; b=dJYLP6s0cHkE6080aiLKsFC3mgVxjFnW8rnl6jVaMDSRm69h7Y1nJNR6Jz7JGnRhpv48oolSA6Xm8A1i07stsCyUqEAAb5pvPmF3em0+8E3hIfnZ9TQeFHgFbsgOvoD1+cQIM0q6bo8uAX/l8M9DXerjPdwJmTnpamN/UO/wTio=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748876780; c=relaxed/simple;
-	bh=OiqZ19h9Ty7yW+bXGV3cqO3rVPXaKg4vfT9mRg80lAA=;
+	s=arc-20240116; t=1748876783; c=relaxed/simple;
+	bh=DKkS6wzmbjHIEtwOJOaNC4eBWYmoSAmBM9uwjjdCNQc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k8uLPvAM8Nyn/uWyDRYOo7u8j/4198dc8jM2A1pzrmmyKSzakIuQGowR9CMYbpZzBobePSfd7k5yCVApJfRzLBvhXC6ix7fuJtnGb5Xs5RRSbILIHE69MQmNLBjE8QuvkUAXhXEKtgAWNo2QkIUI8+PI0MHxN+mLrtKi57u3hfc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ijmaRqJL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VqeVpFjtY7rAYeJNopIpHBykXRAEPPOt6xEGYTV1owbxDdzB7x6fO24o0zWxgDTEMhHoqv6myteYTKcjFjo5GgnyreW4uh5KQVZKnBtVULts9EUV4HDwGkFO57ZGWfVBhc3IWC7kmdRl/oA19SvpXVIpWDIsFMnMOzprIZrA4EI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BQStf+u3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ijmaRqJL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32CB3C4CEEB;
-	Mon,  2 Jun 2025 15:06:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BQStf+u3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34C82C4CEEB;
+	Mon,  2 Jun 2025 15:06:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748876776;
-	bh=OiqZ19h9Ty7yW+bXGV3cqO3rVPXaKg4vfT9mRg80lAA=;
+	s=korg; t=1748876782;
+	bh=DKkS6wzmbjHIEtwOJOaNC4eBWYmoSAmBM9uwjjdCNQc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ijmaRqJLO9MLnsVorhrEnVpOI4zAzztjI5DzKfsErh7UWiqn+9JTXsk0H71WadEKU
-	 /TkoIUoariEJ87u0zxJ/d98WxMRJoOManxXBp6IZpjNIezgdlJ41oKz1b5/nlp2w5T
-	 iVNexxRucQPH3wlmYeLkra+9iHEjI03AfiR4xoe0=
+	b=BQStf+u3Zbo8qZyqYoeY1M7zCxOGcdU5VeiOGsr+oW1aYb/QXWG4p1xkNavITgcb2
+	 F0JNvQRV+kZ8MT8opIwrn9FhLQH8jrOmi5XGBRlzQ5ZRdjCSFsjltj4WFGQhwm0UOl
+	 4JAh/hUZmBRYCcajLF6dLcztQYa80/fzZEZ/sRWQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Seyediman Seyedarab <imandevel@gmail.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 069/325] thunderbolt: Do not add non-active NVM if NVM upgrade is disabled for retimer
-Date: Mon,  2 Jun 2025 15:45:45 +0200
-Message-ID: <20250602134322.590033999@linuxfoundation.org>
+Subject: [PATCH 6.1 071/325] kbuild: fix argument parsing in scripts/config
+Date: Mon,  2 Jun 2025 15:45:47 +0200
+Message-ID: <20250602134322.671888778@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134319.723650984@linuxfoundation.org>
 References: <20250602134319.723650984@linuxfoundation.org>
@@ -50,39 +51,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mika Westerberg <mika.westerberg@linux.intel.com>
+From: Seyediman Seyedarab <imandevel@gmail.com>
 
-[ Upstream commit ad79c278e478ca8c1a3bf8e7a0afba8f862a48a1 ]
+[ Upstream commit f757f6011c92b5a01db742c39149bed9e526478f ]
 
-This is only used to write a new NVM in order to upgrade the retimer
-firmware. It does not make sense to expose it if upgrade is disabled.
-This also makes it consistent with the router NVM upgrade.
+The script previously assumed --file was always the first argument,
+which caused issues when it appeared later. This patch updates the
+parsing logic to scan all arguments to find --file, sets the config
+file correctly, and resets the argument list with the remaining
+commands.
 
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+It also fixes --refresh to respect --file by passing KCONFIG_CONFIG=$FN
+to make oldconfig.
+
+Signed-off-by: Seyediman Seyedarab <imandevel@gmail.com>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thunderbolt/retimer.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ scripts/config | 26 ++++++++++++++++----------
+ 1 file changed, 16 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/thunderbolt/retimer.c b/drivers/thunderbolt/retimer.c
-index 5bd5c22a5085d..d2038337ea03b 100644
---- a/drivers/thunderbolt/retimer.c
-+++ b/drivers/thunderbolt/retimer.c
-@@ -89,9 +89,11 @@ static int tb_retimer_nvm_add(struct tb_retimer *rt)
- 	if (ret)
- 		goto err_nvm;
+diff --git a/scripts/config b/scripts/config
+index ff88e2faefd35..ea475c07de283 100755
+--- a/scripts/config
++++ b/scripts/config
+@@ -32,6 +32,7 @@ commands:
+                              Disable option directly after other option
+ 	--module-after|-M beforeopt option
+                              Turn option into module directly after other option
++	--refresh            Refresh the config using old settings
  
--	ret = tb_nvm_add_non_active(nvm, nvm_write);
--	if (ret)
--		goto err_nvm;
-+	if (!rt->no_nvm_upgrade) {
-+		ret = tb_nvm_add_non_active(nvm, nvm_write);
-+		if (ret)
-+			goto err_nvm;
-+	}
+ 	commands can be repeated multiple times
  
- 	rt->nvm = nvm;
- 	return 0;
+@@ -124,16 +125,22 @@ undef_var() {
+ 	txt_delete "^# $name is not set" "$FN"
+ }
+ 
+-if [ "$1" = "--file" ]; then
+-	FN="$2"
+-	if [ "$FN" = "" ] ; then
+-		usage
++FN=.config
++CMDS=()
++while [[ $# -gt 0 ]]; do
++	if [ "$1" = "--file" ]; then
++		if [ "$2" = "" ]; then
++			usage
++		fi
++		FN="$2"
++		shift 2
++	else
++		CMDS+=("$1")
++		shift
+ 	fi
+-	shift 2
+-else
+-	FN=.config
+-fi
++done
+ 
++set -- "${CMDS[@]}"
+ if [ "$1" = "" ] ; then
+ 	usage
+ fi
+@@ -217,9 +224,8 @@ while [ "$1" != "" ] ; do
+ 		set_var "${CONFIG_}$B" "${CONFIG_}$B=m" "${CONFIG_}$A"
+ 		;;
+ 
+-	# undocumented because it ignores --file (fixme)
+ 	--refresh)
+-		yes "" | make oldconfig
++		yes "" | make oldconfig KCONFIG_CONFIG=$FN
+ 		;;
+ 
+ 	*)
 -- 
 2.39.5
 
