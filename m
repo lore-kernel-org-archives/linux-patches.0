@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C25317BBF;
-	Mon,  2 Jun 2025 14:54:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2B9022257E;
+	Mon,  2 Jun 2025 14:54:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748876056; cv=none; b=XMozXRiYfKu8h2La8U9XqEhOGT3ipXguWQqHHHYmZxyKabzE2sEyyJ+kczg0B3XLxxlvtRTJt8xjCdpZTPCv2SspdHYQur0EvArxnhTxtsQ4j+M2GONxJlN18ch3TAAhrhgP+9wKjeu1p2qO0T9zygUxF4DbMtGbx4zQl2NJNok=
+	t=1748876059; cv=none; b=B+h/WZTiyX4A2UXFHwBbUV3Tr3COUWkdFVN4QaIC8Qwb75A1YURBzGyLaT9vsqlNM8WYqtnig0XuC7Y2P6IqVaPDa8Jn+ONt5BEDiKLv9L3Q+2ATw45vnD60CF5sGd/yjgfFKq/2on9w0DPDZFCUpuf6z3cWgt9LkRut5Umz3Uk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748876056; c=relaxed/simple;
-	bh=2D6zxXE3m1vOxHG2B/jm4vLkneQXyuRahdx+HaDvLXg=;
+	s=arc-20240116; t=1748876059; c=relaxed/simple;
+	bh=75/t4yMqF2z+Bl9fFKfo11mHPf+WE6toyESZlhZk/gs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tv62FS4L8WXUeSsXGzzodn/Ru4xhdlL07m1jZ9Z1PZf23E+sRx2JMErmauH00LAuIIaHEh0sou4qChmbmJQE55LPbwNJbrdcEOrRgD9jo30ZV2MTHzikMJanu04+7z4eq8cH00tg0DuGRxmQG8ZzkK0fATc1OPtBIrElf8iXV5M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=axywkFu2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JIXrH7mZo6Nn4vhb0Xag9s5bxusIgYJjw+/PPga42S4eQP6dL8wajAP9KGpcx/9T87uAoUHLdR1XELOai/eCmE1d/V4TIYkD3uuEOk31hA8ecKjabjz0puBK+1nGOWTWBIT0EVjjETTivN0m4sIdv5YVVSYbqG8+3YvMtHCx7Ko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=foqmrlHs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="axywkFu2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15A30C4CEEB;
-	Mon,  2 Jun 2025 14:54:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="foqmrlHs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59FA3C4CEEB;
+	Mon,  2 Jun 2025 14:54:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748876056;
-	bh=2D6zxXE3m1vOxHG2B/jm4vLkneQXyuRahdx+HaDvLXg=;
+	s=korg; t=1748876059;
+	bh=75/t4yMqF2z+Bl9fFKfo11mHPf+WE6toyESZlhZk/gs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=axywkFu2mVKi7dKgSY9EU/0jePhMVhTTWMYiFXjuDyGg1k4qhPYjuUYBixouLEXUc
-	 b0gm2QsFKvnUCAYKhJq7cRT00UTrIP4D8umR2sRrY2k+zvCopXT1ISMM5TEhw6o6Rs
-	 f7Q0ZhtOLpG1EMOeHiIbmi7Im8Qs3y5aJiWKMtWU=
+	b=foqmrlHsUf5MelSRnXysHcBPK7zHBt2pckoyK3Ed1UER7/lVmOvqxPJ9FhCPYfED+
+	 oLnV+GNFZV3eDuFFUVi6zD0rpQCQiGoh6voryqgxcoGGrnzkSv1IwILQae8fi0Sw6l
+	 4rMLmS490TQ6IDo2G9/tSdwRxpCcguVtNiWNk1Is=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Erick Shepherd <erick.shepherd@ni.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Jeff Layton <jlayton@kernel.org>,
+	Benjamin Coddington <bcodding@redhat.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 026/207] mmc: host: Wait for Vdd to settle on card power off
-Date: Mon,  2 Jun 2025 15:46:38 +0200
-Message-ID: <20250602134259.794910230@linuxfoundation.org>
+Subject: [PATCH 5.15 017/207] SUNRPC: rpcbind should never reset the port to the value 0
+Date: Mon,  2 Jun 2025 15:46:29 +0200
+Message-ID: <20250602134259.447365894@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134258.769974467@linuxfoundation.org>
 References: <20250602134258.769974467@linuxfoundation.org>
@@ -52,44 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Erick Shepherd <erick.shepherd@ni.com>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit 31e75ed964582257f59156ce6a42860e1ae4cc39 ]
+[ Upstream commit 214c13e380ad7636631279f426387f9c4e3c14d9 ]
 
-The SD spec version 6.0 section 6.4.1.5 requires that Vdd must be
-lowered to less than 0.5V for a minimum of 1 ms when powering off a
-card. Increase wait to 15 ms so that voltage has time to drain down
-to 0.5V and cards can power off correctly. Issues with voltage drain
-time were only observed on Apollo Lake and Bay Trail host controllers
-so this fix is limited to those devices.
+If we already had a valid port number for the RPC service, then we
+should not allow the rpcbind client to set it to the invalid value '0'.
 
-Signed-off-by: Erick Shepherd <erick.shepherd@ni.com>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Link: https://lore.kernel.org/r/20250314195021.1588090-1-erick.shepherd@ni.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Reviewed-by: Benjamin Coddington <bcodding@redhat.com>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/sdhci-pci-core.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ net/sunrpc/rpcb_clnt.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/mmc/host/sdhci-pci-core.c b/drivers/mmc/host/sdhci-pci-core.c
-index bdb82c1265edc..b4226ba1a1b33 100644
---- a/drivers/mmc/host/sdhci-pci-core.c
-+++ b/drivers/mmc/host/sdhci-pci-core.c
-@@ -677,8 +677,12 @@ static void sdhci_intel_set_power(struct sdhci_host *host, unsigned char mode,
+diff --git a/net/sunrpc/rpcb_clnt.c b/net/sunrpc/rpcb_clnt.c
+index 638b14f28101e..c49f9295fce97 100644
+--- a/net/sunrpc/rpcb_clnt.c
++++ b/net/sunrpc/rpcb_clnt.c
+@@ -797,9 +797,10 @@ static void rpcb_getport_done(struct rpc_task *child, void *data)
+ 	}
  
- 	sdhci_set_power(host, mode, vdd);
- 
--	if (mode == MMC_POWER_OFF)
-+	if (mode == MMC_POWER_OFF) {
-+		if (slot->chip->pdev->device == PCI_DEVICE_ID_INTEL_APL_SD ||
-+		    slot->chip->pdev->device == PCI_DEVICE_ID_INTEL_BYT_SD)
-+			usleep_range(15000, 17500);
- 		return;
+ 	trace_rpcb_setport(child, map->r_status, map->r_port);
+-	xprt->ops->set_port(xprt, map->r_port);
+-	if (map->r_port)
++	if (map->r_port) {
++		xprt->ops->set_port(xprt, map->r_port);
+ 		xprt_set_bound(xprt);
 +	}
+ }
  
- 	/*
- 	 * Bus power might not enable after D3 -> D0 transition due to the
+ /*
 -- 
 2.39.5
 
