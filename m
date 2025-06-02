@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47A5922A4EF;
-	Mon,  2 Jun 2025 14:06:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B95FD22A4EF;
+	Mon,  2 Jun 2025 14:06:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748873204; cv=none; b=lHyK+WXcGWtPpIjsdEc62v+MW6vWcgRLtN6jnJbKkpLY9eRdAZnXUerV55AyA9DJHQBrmtAG7k7X2acMoa58CXfKaa+Gzpo27SdnEyZeV+kAhdiEhG8JSZpQlLznFAdnoEG2VdP8YKPxy8n+TiqskvELPNjP9SH0sEZdqnbOOoI=
+	t=1748873206; cv=none; b=SWZwl7ASCqNeySRG81u1TzgPR1kElopNfWHnJ+e5kJ0AjIhZlsnY5b4MDVCvHaF2fg/gEGHQa/+lrT69+oFeQs41LNxRPh9/t+ubB3h0Mc/5Rdaa0UO5g8eEwUtxHb6xqXO1gFoqa7FHnuCH26M7iXLFYcH4LPGh37ncjHC3ieU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748873204; c=relaxed/simple;
-	bh=LFz/Cghl5Ca2pTIfLpYp3bBDXKYrRzFQ6DAkcD7W/Gw=;
+	s=arc-20240116; t=1748873206; c=relaxed/simple;
+	bh=PR0i8zB1YWfNffpnoEA/0lUDn10Tdqy1XrEXl067HWE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UtnjHTba6CtDMEbC2dr0MfsKei7MAnBmNQZz4BQyd/COQbeOMMMKt/yJBm8o1q/upo/NaqmheEK4wzetVcEb/kGSkuNReCO6k8/tuXQw/GulnecoEobhH1OTNl9V3dKIxBu+JpVm6MYKfuPia5unLVm7iIG7oi331nBFJOUCLUg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aF87I2Kn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=aCEy6eNSWUaXWicFGv7T+SDA7QxnYR+ATYaiNGTA8aR6YnCWUn2MEPi3Gb4XMM8r9KzUKwpG/EN9dEYCZnAFL8for84ztzKMG8LQDJ5BCBvm0XsfrBx/slcr1048cuUbzCZoQGoaIpV4r+6RofGSV+uS1piZdksDA0Ty5mpTrnw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NuX2k3Ka; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aF87I2Kn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4662CC4CEEB;
-	Mon,  2 Jun 2025 14:06:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NuX2k3Ka"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 405F0C4CEEB;
+	Mon,  2 Jun 2025 14:06:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748873203;
-	bh=LFz/Cghl5Ca2pTIfLpYp3bBDXKYrRzFQ6DAkcD7W/Gw=;
+	s=korg; t=1748873206;
+	bh=PR0i8zB1YWfNffpnoEA/0lUDn10Tdqy1XrEXl067HWE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aF87I2KnP+ZBhwuPiVGGAmxOKgsQt9fogq8ITNivO3JqUuRVEVTp7INT/qMCyBeVx
-	 EHsWRod3P3a5qLdhEcxxbrfB+RHljOOHPLaPz8CR+h4hJ85UvXTaNl76lN5dWHbC5J
-	 YMtRS7u6mR5y1uVG92MJ7E7apWbyP5mvq4idTsNE=
+	b=NuX2k3KakCYMvrdipkQVDB3QiQ6qWc9xah7wwSQW4VgmwMbFzd1bSKJdsUozo2jgG
+	 1NMj6X+V27NB+0YH7cabXJ7vDWjfl4UR47vGWtr+CUKvNiTvHeDo84ffC2ROwWHe6B
+	 OBI8ZqeZYmoscGbyXf94Pf+398wnNdFNaCiO4ojc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Lin <benjamin-jw.lin@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Kees Cook <kees@kernel.org>,
+	Petr Mladek <pmladek@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 070/444] wifi: mt76: mt7996: revise TXS size
-Date: Mon,  2 Jun 2025 15:42:14 +0200
-Message-ID: <20250602134343.754163287@linuxfoundation.org>
+Subject: [PATCH 6.6 044/444] tracing: Mark binary printing functions with __printf() attribute
+Date: Mon,  2 Jun 2025 15:41:48 +0200
+Message-ID: <20250602134342.716687814@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -45,65 +46,160 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Benjamin Lin <benjamin-jw.lin@mediatek.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit 593c829b4326f7b3b15a69e97c9044ecbad3c319 ]
+[ Upstream commit 196a062641fe68d9bfe0ad36b6cd7628c99ad22c ]
 
-Size of MPDU/PPDU TXS is 12 DWs.
-In mt7996/mt7992, last 4 DWs are reserved, so TXS size was mistakenly
-considered to be 8 DWs. However, in mt7990, 9th DW of TXS starts to be used.
+Binary printing functions are using printf() type of format, and compiler
+is not happy about them as is:
 
-Signed-off-by: Benjamin Lin <benjamin-jw.lin@mediatek.com>
-Link: https://patch.msgid.link/20250311103646.43346-1-nbd@nbd.name
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+kernel/trace/trace.c:3292:9: error: function ‘trace_vbprintk’ might be a candidate for ‘gnu_printf’ format attribute [-Werror=suggest-attribute=format]
+kernel/trace/trace_seq.c:182:9: error: function ‘trace_seq_bprintf’ might be a candidate for ‘gnu_printf’ format attribute [-Werror=suggest-attribute=format]
+
+Fix the compilation errors by adding __printf() attribute.
+
+While at it, move existing __printf() attributes from the implementations
+to the declarations. IT also fixes incorrect attribute parameters that are
+used for trace_array_printk().
+
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Reviewed-by: Kees Cook <kees@kernel.org>
+Reviewed-by: Petr Mladek <pmladek@suse.com>
+Link: https://lore.kernel.org/r/20250321144822.324050-4-andriy.shevchenko@linux.intel.com
+Signed-off-by: Petr Mladek <pmladek@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt76_connac3_mac.h | 3 +++
- drivers/net/wireless/mediatek/mt76/mt7996/mac.c       | 4 ++--
- 2 files changed, 5 insertions(+), 2 deletions(-)
+ include/linux/trace.h     |  4 ++--
+ include/linux/trace_seq.h |  8 ++++----
+ kernel/trace/trace.c      | 11 +++--------
+ kernel/trace/trace.h      | 16 +++++++++-------
+ 4 files changed, 18 insertions(+), 21 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt76_connac3_mac.h b/drivers/net/wireless/mediatek/mt76/mt76_connac3_mac.h
-index 87bfa441a9374..4979012d5abfa 100644
---- a/drivers/net/wireless/mediatek/mt76/mt76_connac3_mac.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt76_connac3_mac.h
-@@ -280,6 +280,9 @@ enum tx_mgnt_type {
- #define MT_TXFREE_INFO_COUNT		GENMASK(27, 24)
- #define MT_TXFREE_INFO_STAT		GENMASK(29, 28)
+diff --git a/include/linux/trace.h b/include/linux/trace.h
+index fdcd76b7be83d..7eaad857dee04 100644
+--- a/include/linux/trace.h
++++ b/include/linux/trace.h
+@@ -72,8 +72,8 @@ static inline int unregister_ftrace_export(struct trace_export *export)
+ static inline void trace_printk_init_buffers(void)
+ {
+ }
+-static inline int trace_array_printk(struct trace_array *tr, unsigned long ip,
+-				     const char *fmt, ...)
++static inline __printf(3, 4)
++int trace_array_printk(struct trace_array *tr, unsigned long ip, const char *fmt, ...)
+ {
+ 	return 0;
+ }
+diff --git a/include/linux/trace_seq.h b/include/linux/trace_seq.h
+index 3691e0e76a1a2..62147eecf931d 100644
+--- a/include/linux/trace_seq.h
++++ b/include/linux/trace_seq.h
+@@ -79,8 +79,8 @@ extern __printf(2, 3)
+ void trace_seq_printf(struct trace_seq *s, const char *fmt, ...);
+ extern __printf(2, 0)
+ void trace_seq_vprintf(struct trace_seq *s, const char *fmt, va_list args);
+-extern void
+-trace_seq_bprintf(struct trace_seq *s, const char *fmt, const u32 *binary);
++extern __printf(2, 0)
++void trace_seq_bprintf(struct trace_seq *s, const char *fmt, const u32 *binary);
+ extern int trace_print_seq(struct seq_file *m, struct trace_seq *s);
+ extern int trace_seq_to_user(struct trace_seq *s, char __user *ubuf,
+ 			     int cnt);
+@@ -104,8 +104,8 @@ static inline __printf(2, 3)
+ void trace_seq_printf(struct trace_seq *s, const char *fmt, ...)
+ {
+ }
+-static inline void
+-trace_seq_bprintf(struct trace_seq *s, const char *fmt, const u32 *binary)
++static inline __printf(2, 0)
++void trace_seq_bprintf(struct trace_seq *s, const char *fmt, const u32 *binary)
+ {
+ }
  
-+#define MT_TXS_HDR_SIZE			4 /* Unit: DW */
-+#define MT_TXS_SIZE			12 /* Unit: DW */
+diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
+index 95868c3157300..43d19b69c635b 100644
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -3487,10 +3487,9 @@ int trace_vbprintk(unsigned long ip, const char *fmt, va_list args)
+ }
+ EXPORT_SYMBOL_GPL(trace_vbprintk);
+ 
+-__printf(3, 0)
+-static int
+-__trace_array_vprintk(struct trace_buffer *buffer,
+-		      unsigned long ip, const char *fmt, va_list args)
++static __printf(3, 0)
++int __trace_array_vprintk(struct trace_buffer *buffer,
++			  unsigned long ip, const char *fmt, va_list args)
+ {
+ 	struct trace_event_call *call = &event_print;
+ 	struct ring_buffer_event *event;
+@@ -3543,7 +3542,6 @@ __trace_array_vprintk(struct trace_buffer *buffer,
+ 	return len;
+ }
+ 
+-__printf(3, 0)
+ int trace_array_vprintk(struct trace_array *tr,
+ 			unsigned long ip, const char *fmt, va_list args)
+ {
+@@ -3573,7 +3571,6 @@ int trace_array_vprintk(struct trace_array *tr,
+  * Note, trace_array_init_printk() must be called on @tr before this
+  * can be used.
+  */
+-__printf(3, 0)
+ int trace_array_printk(struct trace_array *tr,
+ 		       unsigned long ip, const char *fmt, ...)
+ {
+@@ -3618,7 +3615,6 @@ int trace_array_init_printk(struct trace_array *tr)
+ }
+ EXPORT_SYMBOL_GPL(trace_array_init_printk);
+ 
+-__printf(3, 4)
+ int trace_array_printk_buf(struct trace_buffer *buffer,
+ 			   unsigned long ip, const char *fmt, ...)
+ {
+@@ -3634,7 +3630,6 @@ int trace_array_printk_buf(struct trace_buffer *buffer,
+ 	return ret;
+ }
+ 
+-__printf(2, 0)
+ int trace_vprintk(unsigned long ip, const char *fmt, va_list args)
+ {
+ 	return trace_array_vprintk(&global_trace, ip, fmt, args);
+diff --git a/kernel/trace/trace.h b/kernel/trace/trace.h
+index db0d2641125e7..faf892aecdf49 100644
+--- a/kernel/trace/trace.h
++++ b/kernel/trace/trace.h
+@@ -800,13 +800,15 @@ static inline void __init disable_tracing_selftest(const char *reason)
+ 
+ extern void *head_page(struct trace_array_cpu *data);
+ extern unsigned long long ns2usecs(u64 nsec);
+-extern int
+-trace_vbprintk(unsigned long ip, const char *fmt, va_list args);
+-extern int
+-trace_vprintk(unsigned long ip, const char *fmt, va_list args);
+-extern int
+-trace_array_vprintk(struct trace_array *tr,
+-		    unsigned long ip, const char *fmt, va_list args);
 +
- #define MT_TXS0_BW			GENMASK(31, 29)
- #define MT_TXS0_TID			GENMASK(28, 26)
- #define MT_TXS0_AMPDU			BIT(25)
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
-index 73d46ec1181ae..35d9673ec0d8f 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
-@@ -1354,7 +1354,7 @@ bool mt7996_rx_check(struct mt76_dev *mdev, void *data, int len)
- 		mt7996_mac_tx_free(dev, data, len);
- 		return false;
- 	case PKT_TYPE_TXS:
--		for (rxd += 4; rxd + 8 <= end; rxd += 8)
-+		for (rxd += MT_TXS_HDR_SIZE; rxd + MT_TXS_SIZE <= end; rxd += MT_TXS_SIZE)
- 			mt7996_mac_add_txs(dev, rxd);
- 		return false;
- 	case PKT_TYPE_RX_FW_MONITOR:
-@@ -1391,7 +1391,7 @@ void mt7996_queue_rx_skb(struct mt76_dev *mdev, enum mt76_rxq_id q,
- 		mt7996_mcu_rx_event(dev, skb);
- 		break;
- 	case PKT_TYPE_TXS:
--		for (rxd += 4; rxd + 8 <= end; rxd += 8)
-+		for (rxd += MT_TXS_HDR_SIZE; rxd + MT_TXS_SIZE <= end; rxd += MT_TXS_SIZE)
- 			mt7996_mac_add_txs(dev, rxd);
- 		dev_kfree_skb(skb);
- 		break;
++__printf(2, 0)
++int trace_vbprintk(unsigned long ip, const char *fmt, va_list args);
++__printf(2, 0)
++int trace_vprintk(unsigned long ip, const char *fmt, va_list args);
++__printf(3, 0)
++int trace_array_vprintk(struct trace_array *tr,
++			unsigned long ip, const char *fmt, va_list args);
++__printf(3, 4)
+ int trace_array_printk_buf(struct trace_buffer *buffer,
+ 			   unsigned long ip, const char *fmt, ...);
+ void trace_printk_seq(struct trace_seq *s);
 -- 
 2.39.5
 
