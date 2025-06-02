@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB857239567;
-	Mon,  2 Jun 2025 14:11:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C7A722539F;
+	Mon,  2 Jun 2025 14:11:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748873472; cv=none; b=Mrz8F2aaePKxlIOPT9XRDrUpZXmA+LV0jE013M4uo5+XO9s2iRgXNMzwraKwBpx184BlqhVXP0xiH61OBNOQihmdqGstpcXyfgZUcn2VosXEVXK+FsKDJKBtbFbd/SrCnvsaVMxY8+gMcInJ31jITaAgp5sRx5kSIXsSY+tXo1Q=
+	t=1748873476; cv=none; b=u9SdlnZMKC4V6156TZRcmjK8arYokBsxXLUdcZji40Y+BcNKw4o/eGzlujGIH6T/jzVyfIBOPNfd603lEic2Ll45iI9+ObYNFuPGQmfOkg9bErcblahmpe5AwVCI60V4SaVsKeyvnpQ/4IYs4Mg4ZwYX52+wMwWzR79vNjZNAIg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748873472; c=relaxed/simple;
-	bh=MhM1MJw85gqixzk9gCuOd87L2l03EfqBWjLG4VF2zAc=;
+	s=arc-20240116; t=1748873476; c=relaxed/simple;
+	bh=HUBPuTYdz86RYGiqkHq3Y0rQsbfADyeYr2zFNsSc6WY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NmKtbBWJxf13LXkir5LdrVOg1uA9ytiSLAFt4tEtGZwWpZ4eGUOn+Px+AwmMHVkPagLPQZ5FrcdzzR8Hq0TmSr4X+y4bPC7kTL3rAeOq8kPq3hy+WJ8cRGFWU/46xcx5ID6SUpBFNngGeuvXO/AVW7mainJWaQONQ9c7WK0NCvk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fpw3K1Wp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t4U2TIEdZeMMYI93CVkv/4lRylZWyrvkZWU04j9fQ+gVcQsV0lUtKgSbHA+p335GLi8ylp4qxT2k9Z5EUnY9okEKiLhccfNr9N3q4rGdN9L9XE7t6/lQSwdGIz7bb5wy87axEKZ+WcPD/DweYXzdqmzsh1LEVUrsVyc3If2m/JA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=czgiTahH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fpw3K1Wp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C270C4CEEE;
-	Mon,  2 Jun 2025 14:11:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="czgiTahH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D360C4CEEB;
+	Mon,  2 Jun 2025 14:11:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748873471;
-	bh=MhM1MJw85gqixzk9gCuOd87L2l03EfqBWjLG4VF2zAc=;
+	s=korg; t=1748873474;
+	bh=HUBPuTYdz86RYGiqkHq3Y0rQsbfADyeYr2zFNsSc6WY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fpw3K1WpuqK7EpYEwlavXRdGDOthwh8n6EMGXQrdPmoNPZd5/nQ4rzvrR4HL3lnht
-	 zC96uEjWh6dnKMZ0I9rUl4CQOhGraZwPzCzGsOjvIZaCu8sZSQtyyGl30nsj1eJoYL
-	 wvmJ7QPmHTerCLrslUdmYi2Bl6Itb81BfLG62LJc=
+	b=czgiTahH88uSnSwyrALse4vE3cGij9AbSPD6rTvhZ9XUE7Fw2Cz/dvBBZmgpvzXva
+	 MyA6NaT+0DFVLtKFeBV5yqc7GkFudk+4Zo2uU5l5VlGQOLn0bFHCp8vi1IQLM8uwaA
+	 js/AhC6MYwXPiVyv2GeUaUwNmffmJtrNxstPytl8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Seiderer <ps.report@gmx.net>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Saket Kumar Bhaskar <skb99@linux.ibm.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Marco Elver <elver@google.com>,
+	Dmitry Vyukov <dvyukov@google.com>,
+	Ian Rogers <irogers@google.com>,
+	Frederic Weisbecker <fweisbec@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 152/444] net: pktgen: fix mpls maximum labels list parsing
-Date: Mon,  2 Jun 2025 15:43:36 +0200
-Message-ID: <20250602134347.079392900@linuxfoundation.org>
+Subject: [PATCH 6.6 153/444] perf/hw_breakpoint: Return EOPNOTSUPP for unsupported breakpoint type
+Date: Mon,  2 Jun 2025 15:43:37 +0200
+Message-ID: <20250602134347.118565538@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -52,50 +55,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Seiderer <ps.report@gmx.net>
+From: Saket Kumar Bhaskar <skb99@linux.ibm.com>
 
-[ Upstream commit 2b15a0693f70d1e8119743ee89edbfb1271b3ea8 ]
+[ Upstream commit 061c991697062f3bf87b72ed553d1d33a0e370dd ]
 
-Fix mpls maximum labels list parsing up to MAX_MPLS_LABELS entries (instead
-of up to MAX_MPLS_LABELS - 1).
+Currently, __reserve_bp_slot() returns -ENOSPC for unsupported
+breakpoint types on the architecture. For example, powerpc
+does not support hardware instruction breakpoints. This causes
+the perf_skip BPF selftest to fail, as neither ENOENT nor
+EOPNOTSUPP is returned by perf_event_open for unsupported
+breakpoint types. As a result, the test that should be skipped
+for this arch is not correctly identified.
 
-Addresses the following:
+To resolve this, hw_breakpoint_event_init() should exit early by
+checking for unsupported breakpoint types using
+hw_breakpoint_slots_cached() and return the appropriate error
+(-EOPNOTSUPP).
 
-	$ echo "mpls 00000f00,00000f01,00000f02,00000f03,00000f04,00000f05,00000f06,00000f07,00000f08,00000f09,00000f0a,00000f0b,00000f0c,00000f0d,00000f0e,00000f0f" > /proc/net/pktgen/lo\@0
-	-bash: echo: write error: Argument list too long
-
-Signed-off-by: Peter Seiderer <ps.report@gmx.net>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Saket Kumar Bhaskar <skb99@linux.ibm.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: Marco Elver <elver@google.com>
+Cc: Dmitry Vyukov <dvyukov@google.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Frederic Weisbecker <fweisbec@gmail.com>
+Link: https://lore.kernel.org/r/20250303092451.1862862-1-skb99@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/pktgen.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ kernel/events/hw_breakpoint.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/net/core/pktgen.c b/net/core/pktgen.c
-index 359e24c3f22ca..1decd6300f34c 100644
---- a/net/core/pktgen.c
-+++ b/net/core/pktgen.c
-@@ -897,6 +897,10 @@ static ssize_t get_labels(const char __user *buffer, struct pktgen_dev *pkt_dev)
- 	pkt_dev->nr_labels = 0;
- 	do {
- 		__u32 tmp;
-+
-+		if (n >= MAX_MPLS_LABELS)
-+			return -E2BIG;
-+
- 		len = hex32_arg(&buffer[i], 8, &tmp);
- 		if (len <= 0)
- 			return len;
-@@ -908,8 +912,6 @@ static ssize_t get_labels(const char __user *buffer, struct pktgen_dev *pkt_dev)
- 			return -EFAULT;
- 		i++;
- 		n++;
--		if (n >= MAX_MPLS_LABELS)
--			return -E2BIG;
- 	} while (c == ',');
+diff --git a/kernel/events/hw_breakpoint.c b/kernel/events/hw_breakpoint.c
+index 6c2cb4e4f48da..8f3f624419aa9 100644
+--- a/kernel/events/hw_breakpoint.c
++++ b/kernel/events/hw_breakpoint.c
+@@ -950,9 +950,10 @@ static int hw_breakpoint_event_init(struct perf_event *bp)
+ 		return -ENOENT;
  
- 	pkt_dev->nr_labels = n;
+ 	/*
+-	 * no branch sampling for breakpoint events
++	 * Check if breakpoint type is supported before proceeding.
++	 * Also, no branch sampling for breakpoint events.
+ 	 */
+-	if (has_branch_stack(bp))
++	if (!hw_breakpoint_slots_cached(find_slot_idx(bp->attr.bp_type)) || has_branch_stack(bp))
+ 		return -EOPNOTSUPP;
+ 
+ 	err = register_perf_hw_breakpoint(bp);
 -- 
 2.39.5
 
