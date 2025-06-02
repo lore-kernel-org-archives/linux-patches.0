@@ -1,45 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E610322F745;
-	Mon,  2 Jun 2025 14:46:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D79AF22F177;
+	Mon,  2 Jun 2025 14:46:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748875606; cv=none; b=EOhihgSKvCqJEy/tb0L5PM+/EE/JklYp8Iuug/lQD685oHacsyHU2WM/1f8ieAEJXRL3B1zAbCQfpZ3ED5hfQB/yiZTBEWDX4AwB7o98S4QIBbuS7dKg4z2y6uyHJzEsmgmNkXGpRRDbdXpmVOuJEwpgysfFw5br3h6711j8TsM=
+	t=1748875608; cv=none; b=YqR6i2RDKzYPhZzaj+oYDhasPPyrXOJTg3he8Y2Jk8fqNc27L13cipiR/OZezK5FGUUBbVgqp51ZO0gAy5GVi7/XBslMLYm1eAb63jQ6hyWwGncdO2LFPN1FQwETSUe6hJe+MoY1S3OcfUhHaHX2DsW9/AJnlQ77pFTfGzF2p6w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748875606; c=relaxed/simple;
-	bh=6HuNxxs3sHoOAlEONAfSfCPFLkS8wsFIHCsdTmtgBDc=;
+	s=arc-20240116; t=1748875608; c=relaxed/simple;
+	bh=Cg+p8wJF+lGw3k1I0GPnsaOChf6t3ojS7oLlg7IMl0o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ho/VyceiyZId0xCni8aD/JQpdhg5sHXXtsiIulKH0a6ji+nP8f79YYLxkWq8bKlm6Q/g/aANyXzd0VNJij2h6LWFc7JSm3MAXIBI+oebGjrrKugInkj7Wq2iuW12oDo+bP4v9U82E97EwDOCLLf82QhWfaNVDVm1ucEHYNkt62o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zdnFOCjt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VtblUmJJe62J4J2QNolNIkYmUKeiYgWPIOMG//2QoKwBpHMDUaom8hVBhyMAOJWRCk9YDY9DZFKqSKmAN5zfveAQfut6L2Dhm/8W/rvZPOMr2L7LNHHs2iMIJiRIGcMeX1a3iNqRj6RnJ8mi+sXauWTi1mMfmScbl0vvPYUwbYM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q5jsXaaD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zdnFOCjt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF560C4CEEB;
-	Mon,  2 Jun 2025 14:46:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q5jsXaaD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF127C4CEEB;
+	Mon,  2 Jun 2025 14:46:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748875605;
-	bh=6HuNxxs3sHoOAlEONAfSfCPFLkS8wsFIHCsdTmtgBDc=;
+	s=korg; t=1748875608;
+	bh=Cg+p8wJF+lGw3k1I0GPnsaOChf6t3ojS7oLlg7IMl0o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zdnFOCjth7NfDfZpErQXG1PpDg4BhPSMd+iREaZHsyEP4SXlfL3vf1OlSJzAuo4qF
-	 Zy5oQzGUICAVAO6mtkzgv1NC2ooaDHhAnlzH5twWyF3Sx76cdhRTETBy1EAVEO0Oif
-	 yCOmTBeU4DZjDVwSocvDDX542ef7znoAqo98Ltio=
+	b=Q5jsXaaDkxJ+ER3Io9/mMp+e+xbJ2A7Ynv/fETKiv9QwJEOy0r0U5EeEGwU6AhvgP
+	 4aOcQrw+Y85agfHY9l+i6q3GNI9ojh8rq1ovhUUho7oJwcpkkbsR2LdGe9RiLluTDk
+	 yWe+8rcd6STDEImZ0Eh2ND9V75gngcqHZDOtdB+g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Burton <paulburton@kernel.org>,
-	Chao-ying Fu <cfu@wavecomp.com>,
-	Dragan Mladjenovic <dragan.mladjenovic@syrmia.com>,
-	Aleksandar Rikalo <arikalo@gmail.com>,
-	=?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
-	Serge Semin <fancer.lancer@gmail.com>,
-	Gregory CLEMENT <gregory.clement@bootlin.com>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Shivasharan S <shivasharan.srikanteshwara@broadcom.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 186/270] clocksource: mips-gic-timer: Enable counter when CPUs start
-Date: Mon,  2 Jun 2025 15:47:51 +0200
-Message-ID: <20250602134314.812203799@linuxfoundation.org>
+Subject: [PATCH 5.10 187/270] scsi: mpt3sas: Send a diag reset if target reset fails
+Date: Mon,  2 Jun 2025 15:47:52 +0200
+Message-ID: <20250602134314.852092292@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134307.195171844@linuxfoundation.org>
 References: <20250602134307.195171844@linuxfoundation.org>
@@ -52,70 +45,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Paul Burton <paulburton@kernel.org>
+From: Shivasharan S <shivasharan.srikanteshwara@broadcom.com>
 
-[ Upstream commit 3128b0a2e0cf6e07aa78e5f8cf7dd9cd59dc8174 ]
+[ Upstream commit 5612d6d51ed2634a033c95de2edec7449409cbb9 ]
 
-In multi-cluster MIPS I6500 systems there is a GIC in each cluster,
-each with its own counter. When a cluster powers up the counter will
-be stopped, with the COUNTSTOP bit set in the GIC_CONFIG register.
+When an IOCTL times out and driver issues a target reset, if firmware
+fails the task management elevate the recovery by issuing a diag reset to
+controller.
 
-In single cluster systems, it has been fine to clear COUNTSTOP once
-in gic_clocksource_of_init() to start the counter. In multi-cluster
-systems, this will only have started the counter in the boot cluster,
-and any CPUs in other clusters will find their counter stopped which
-will break the GIC clock_event_device.
-
-Resolve this by having CPUs clear the COUNTSTOP bit when they come
-online, using the existing gic_starting_cpu() CPU hotplug callback. This
-will allow CPUs in secondary clusters to ensure that the cluster's GIC
-counter is running as expected.
-
-Signed-off-by: Paul Burton <paulburton@kernel.org>
-Signed-off-by: Chao-ying Fu <cfu@wavecomp.com>
-Signed-off-by: Dragan Mladjenovic <dragan.mladjenovic@syrmia.com>
-Signed-off-by: Aleksandar Rikalo <arikalo@gmail.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Tested-by: Serge Semin <fancer.lancer@gmail.com>
-Tested-by: Gregory CLEMENT <gregory.clement@bootlin.com>
-Acked-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Signed-off-by: Shivasharan S <shivasharan.srikanteshwara@broadcom.com>
+Link: https://lore.kernel.org/r/1739410016-27503-5-git-send-email-shivasharan.srikanteshwara@broadcom.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clocksource/mips-gic-timer.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/scsi/mpt3sas/mpt3sas_ctl.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clocksource/mips-gic-timer.c b/drivers/clocksource/mips-gic-timer.c
-index be4175f415ba5..1946691f6b322 100644
---- a/drivers/clocksource/mips-gic-timer.c
-+++ b/drivers/clocksource/mips-gic-timer.c
-@@ -119,6 +119,9 @@ static void gic_update_frequency(void *data)
+diff --git a/drivers/scsi/mpt3sas/mpt3sas_ctl.c b/drivers/scsi/mpt3sas/mpt3sas_ctl.c
+index edd26a2570fa8..8ce77fbe4e3fc 100644
+--- a/drivers/scsi/mpt3sas/mpt3sas_ctl.c
++++ b/drivers/scsi/mpt3sas/mpt3sas_ctl.c
+@@ -676,6 +676,7 @@ _ctl_do_mpt_command(struct MPT3SAS_ADAPTER *ioc, struct mpt3_ioctl_command karg,
+ 	size_t data_in_sz = 0;
+ 	long ret;
+ 	u16 device_handle = MPT3SAS_INVALID_DEVICE_HANDLE;
++	int tm_ret;
  
- static int gic_starting_cpu(unsigned int cpu)
- {
-+	/* Ensure the GIC counter is running */
-+	clear_gic_config(GIC_CONFIG_COUNTSTOP);
+ 	issue_reset = 0;
+ 
+@@ -1107,18 +1108,25 @@ _ctl_do_mpt_command(struct MPT3SAS_ADAPTER *ioc, struct mpt3_ioctl_command karg,
+ 			if (pcie_device && (!ioc->tm_custom_handling) &&
+ 			    (!(mpt3sas_scsih_is_pcie_scsi_device(
+ 			    pcie_device->device_info))))
+-				mpt3sas_scsih_issue_locked_tm(ioc,
++				tm_ret = mpt3sas_scsih_issue_locked_tm(ioc,
+ 				  le16_to_cpu(mpi_request->FunctionDependent1),
+ 				  0, 0, 0,
+ 				  MPI2_SCSITASKMGMT_TASKTYPE_TARGET_RESET, 0,
+ 				  0, pcie_device->reset_timeout,
+ 			MPI26_SCSITASKMGMT_MSGFLAGS_PROTOCOL_LVL_RST_PCIE);
+ 			else
+-				mpt3sas_scsih_issue_locked_tm(ioc,
++				tm_ret = mpt3sas_scsih_issue_locked_tm(ioc,
+ 				  le16_to_cpu(mpi_request->FunctionDependent1),
+ 				  0, 0, 0,
+ 				  MPI2_SCSITASKMGMT_TASKTYPE_TARGET_RESET, 0,
+ 				  0, 30, MPI2_SCSITASKMGMT_MSGFLAGS_LINK_RESET);
 +
- 	gic_clockevent_cpu_init(cpu, this_cpu_ptr(&gic_clockevent_device));
- 	return 0;
- }
-@@ -253,9 +256,6 @@ static int __init gic_clocksource_of_init(struct device_node *node)
- 			pr_warn("Unable to register clock notifier\n");
++			if (tm_ret != SUCCESS) {
++				ioc_info(ioc,
++					 "target reset failed, issue hard reset: handle (0x%04x)\n",
++					 le16_to_cpu(mpi_request->FunctionDependent1));
++				mpt3sas_base_hard_reset_handler(ioc, FORCE_BIG_HAMMER);
++			}
+ 		} else
+ 			mpt3sas_base_hard_reset_handler(ioc, FORCE_BIG_HAMMER);
  	}
- 
--	/* And finally start the counter */
--	clear_gic_config(GIC_CONFIG_COUNTSTOP);
--
- 	/*
- 	 * It's safe to use the MIPS GIC timer as a sched clock source only if
- 	 * its ticks are stable, which is true on either the platforms with
 -- 
 2.39.5
 
