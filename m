@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 819992288E3;
-	Mon,  2 Jun 2025 14:49:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31153227BA4;
+	Mon,  2 Jun 2025 14:49:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748875790; cv=none; b=ADutc4DAdpkXCikQoUItYqb4ZPkumFlRBRu0UkUxz0zh89F0ueXprBqC2rPExUybWKyLQmY5bTDM2hgJKki24TDKeDNFgG1XGj3iE6bDFYpe8LhMxMMbOXRAl2G44uCpdihp1NXILiH8NmY2f1vrQ55oBfnmecNrdUTfH5Q26AU=
+	t=1748875793; cv=none; b=CLuo8h21BhSdSv7kHPxF3ej9f9wnPv5526eomDz6ZgGRcKChhECU9+G1LbEYZrEqxNDSeplp7joMTZEBlY6M7b/BLbPxjoGhBYA/TWk+ilLiSghwKw5vrEUiATS64YXzOe+SyCcqnLGWF4dtWR22GHalIvkh90xNapf3dZkrVWA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748875790; c=relaxed/simple;
-	bh=9xDnyjg4kS8N60atJtIHl/VZWSCbf8sTuttiopGaBjc=;
+	s=arc-20240116; t=1748875793; c=relaxed/simple;
+	bh=/yJkE7PoAHPSgI9cxxDunh3p3yDVskEOmTvhPgy+8EU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XE0xWcT3eW8Bn0FSE8cvqp9rk4Eh9mU//xm/Nybs5RrpY88C7dMxgX4u1K7uFWybo/lJ1ETJoNvCfAe/2hO1GcZwrwD3nZmw0W4cbXGJ7HWwgcxuN3nHN+NISZJO0kGkx459sXQaK3Cyebq4bCgrqmzNJ9dqsEIoZu28DhsdPgs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zn3ImAK7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WktQwKNVyHmjR2IZbS5vx8syA9DR5Ty8bTQJiDuIyQrfCvXqv6mGWF/j76f9WtyrQ27dKyMa/6pl2JuSUzymS/Awpvqe8DotFP9w99Oiu2bxOqpi6umgpzBp2je75a2xU/sdv24xkYrMiPq/EdOFNAd66sUhPDfQ85U2654mvqo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T5asv/R7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zn3ImAK7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 839ABC4CEEB;
-	Mon,  2 Jun 2025 14:49:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T5asv/R7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE68EC4CEEB;
+	Mon,  2 Jun 2025 14:49:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748875790;
-	bh=9xDnyjg4kS8N60atJtIHl/VZWSCbf8sTuttiopGaBjc=;
+	s=korg; t=1748875793;
+	bh=/yJkE7PoAHPSgI9cxxDunh3p3yDVskEOmTvhPgy+8EU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zn3ImAK7eD9g3mfhMYC6nbYzmwTVugQ0kq0bfsWd06t/T8u/1O/NZM18a0SoXj+8w
-	 Xau8ka3W0+RVgQj0hrZGuk1JJThhxwFVlMa1dFDxDIoC5NtypkzDV8aSV84BvO4ELC
-	 3/T0PxfVUS5zVqsS7Hcsidv4cVHs2m1jKFS7dPMQ=
+	b=T5asv/R73NRsDAFxmNZmr25xlB80F6SrUqs567BIjqxWIEaZNER3UW2zj65d7Pd+P
+	 Uuoy212KT+5qhlnzA8HyfaHnNgXNqhChmCsTsv2r/HOSE4LQgJ8GskRopMexCdlJr0
+	 1MbzfLVeVPpam4S/8HPQ6tAefCP8YEGVACZU6ZwE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+32d4647f551007595173@syzkaller.appspotmail.com,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.10 244/270] ALSA: pcm: Fix race of buffer access at PCM OSS layer
-Date: Mon,  2 Jun 2025 15:48:49 +0200
-Message-ID: <20250602134317.305561094@linuxfoundation.org>
+	Ilia Gavrilov <Ilia.Gavrilov@infotecs.ru>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 5.10 245/270] llc: fix data loss when reading from a socket in llc_ui_recvmsg()
+Date: Mon,  2 Jun 2025 15:48:50 +0200
+Message-ID: <20250602134317.344947991@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134307.195171844@linuxfoundation.org>
 References: <20250602134307.195171844@linuxfoundation.org>
@@ -50,74 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Ilia Gavrilov <Ilia.Gavrilov@infotecs.ru>
 
-commit 93a81ca0657758b607c3f4ba889ae806be9beb73 upstream.
+commit 239af1970bcb039a1551d2c438d113df0010c149 upstream.
 
-The PCM OSS layer tries to clear the buffer with the silence data at
-initialization (or reconfiguration) of a stream with the explicit call
-of snd_pcm_format_set_silence() with runtime->dma_area.  But this may
-lead to a UAF because the accessed runtime->dma_area might be freed
-concurrently, as it's performed outside the PCM ops.
+For SOCK_STREAM sockets, if user buffer size (len) is less
+than skb size (skb->len), the remaining data from skb
+will be lost after calling kfree_skb().
 
-For avoiding it, move the code into the PCM core and perform it inside
-the buffer access lock, so that it won't be changed during the
-operation.
+To fix this, move the statement for partial reading
+above skb deletion.
 
-Reported-by: syzbot+32d4647f551007595173@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/68164d8e.050a0220.11da1b.0019.GAE@google.com
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20250516080817.20068-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Found by InfoTeCS on behalf of Linux Verification Center (linuxtesting.org)
+
+Fixes: 30a584d944fb ("[LLX]: SOCK_DGRAM interface fixes")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ilia Gavrilov <Ilia.Gavrilov@infotecs.ru>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/sound/pcm.h      |    2 ++
- sound/core/oss/pcm_oss.c |    3 +--
- sound/core/pcm_native.c  |   11 +++++++++++
- 3 files changed, 14 insertions(+), 2 deletions(-)
+ net/llc/af_llc.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/include/sound/pcm.h
-+++ b/include/sound/pcm.h
-@@ -1334,6 +1334,8 @@ int snd_pcm_lib_mmap_iomem(struct snd_pc
- #define snd_pcm_lib_mmap_iomem	NULL
- #endif
+--- a/net/llc/af_llc.c
++++ b/net/llc/af_llc.c
+@@ -887,15 +887,15 @@ static int llc_ui_recvmsg(struct socket
+ 		if (sk->sk_type != SOCK_STREAM)
+ 			goto copy_uaddr;
  
-+void snd_pcm_runtime_buffer_set_silence(struct snd_pcm_runtime *runtime);
++		/* Partial read */
++		if (used + offset < skb_len)
++			continue;
 +
- /**
-  * snd_pcm_limit_isa_dma_size - Get the max size fitting with ISA DMA transfer
-  * @dma: DMA number
---- a/sound/core/oss/pcm_oss.c
-+++ b/sound/core/oss/pcm_oss.c
-@@ -1078,8 +1078,7 @@ static int snd_pcm_oss_change_params_loc
- 	runtime->oss.params = 0;
- 	runtime->oss.prepare = 1;
- 	runtime->oss.buffer_used = 0;
--	if (runtime->dma_area)
--		snd_pcm_format_set_silence(runtime->format, runtime->dma_area, bytes_to_samples(runtime, runtime->dma_bytes));
-+	snd_pcm_runtime_buffer_set_silence(runtime);
+ 		if (!(flags & MSG_PEEK)) {
+ 			skb_unlink(skb, &sk->sk_receive_queue);
+ 			kfree_skb(skb);
+ 			*seq = 0;
+ 		}
+-
+-		/* Partial read */
+-		if (used + offset < skb_len)
+-			continue;
+ 	} while (len > 0);
  
- 	runtime->oss.period_frames = snd_pcm_alsa_frames(substream, oss_period_size);
- 
---- a/sound/core/pcm_native.c
-+++ b/sound/core/pcm_native.c
-@@ -685,6 +685,17 @@ static void snd_pcm_buffer_access_unlock
- 	atomic_inc(&runtime->buffer_accessing);
- }
- 
-+/* fill the PCM buffer with the current silence format; called from pcm_oss.c */
-+void snd_pcm_runtime_buffer_set_silence(struct snd_pcm_runtime *runtime)
-+{
-+	snd_pcm_buffer_access_lock(runtime);
-+	if (runtime->dma_area)
-+		snd_pcm_format_set_silence(runtime->format, runtime->dma_area,
-+					   bytes_to_samples(runtime, runtime->dma_bytes));
-+	snd_pcm_buffer_access_unlock(runtime);
-+}
-+EXPORT_SYMBOL_GPL(snd_pcm_runtime_buffer_set_silence);
-+
- #if IS_ENABLED(CONFIG_SND_PCM_OSS)
- #define is_oss_stream(substream)	((substream)->oss.oss)
- #else
+ out:
 
 
