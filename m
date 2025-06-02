@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E8EB228C92;
-	Mon,  2 Jun 2025 15:04:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F484227EBB;
+	Mon,  2 Jun 2025 15:04:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748876666; cv=none; b=lb7KqUe2FDKzdzBznQAhEPSFPrVZX0eFKPEZO5yk5Ff/jNux+Wp5wCYbTB/+VK6ZPF87bIeZv6Wi6BLMjZHb/jvRx3XS7HXJUoVCf+mwusB9gRZwE47OSBCdMFsC2rZPIgALkR9eaW9k85wKwNmJb364oJRMuGViF/7aTilIzlw=
+	t=1748876669; cv=none; b=eSRAANch1zlbdb0e49lAEvrEARaWc0thV3z6TkaFktVdTElZgo+IEt080pCMJD5nFdtp1pO733FUGomkjWIBfsAtnEflCZD253cFT5VknzNMvZyIGhBksVkDnIX5ilUQI9CpNq7EhyEgRTFXsJ5H6yfuhKK+ghlmVV40GLkPqkU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748876666; c=relaxed/simple;
-	bh=KNLlNJIXqvvWVV3mct2g1P18vFr0H0uomn5ToVVkRZ8=;
+	s=arc-20240116; t=1748876669; c=relaxed/simple;
+	bh=F43exw/KEgWdTph2C8NcveKrkRWoqzTQyhARJKdomJA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QO0/0igs69J7+7y707UkdlQ2SOOyqx1E/ZwobdIa0vjRAA4WfZA+NWs1yyhHdigdw8TQwUHeIlqStgnmhQPvEsNkYrLcvvqh/9H4w8VgvB6Fa5rA6W4r64x18ZV9UyyFDn+IV30FIn3cumYdCRhyCu528k8GXEk6RqedTAdxDso=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tjwKvbGH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l1IjsbiBoZhhK9EHiWDNoS3f5Vgqy1hQBf/tu7Yj8MMv77PyGVVYVdOSSs5o2GaVqYQhI0x4ZEJ9dat2Ntg6Y4w9U/wTxQaQJBGYbwYtj1qP0nWAdY+cxfoQPjE7PMCl8xjGzG/iAD+LvzvOPBSoZlly4o/v5juI8v2Xo3nn6pM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OxTE2m41; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tjwKvbGH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7435C4CEF0;
-	Mon,  2 Jun 2025 15:04:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OxTE2m41"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4C5DC4CEEB;
+	Mon,  2 Jun 2025 15:04:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748876666;
-	bh=KNLlNJIXqvvWVV3mct2g1P18vFr0H0uomn5ToVVkRZ8=;
+	s=korg; t=1748876669;
+	bh=F43exw/KEgWdTph2C8NcveKrkRWoqzTQyhARJKdomJA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tjwKvbGHch6RPtVSWetkWG+gQ9FZDsPynyWoHbWP+yNgPBQLKi2d13m7eONEVt73I
-	 X5uOyP58jlOjuuzOA31ZlEreD6SP+M8mHIlPzjaXc7FoKJJligPlW8B2QPPlXuZS79
-	 gkjZ8Amdbqdvu1+eyCM87A1VPzjefZlQIRKCfDfg=
+	b=OxTE2m414zOhG52YoGlutp4KaVHc63l5kxZn0lUdndoTDnqYUypfdC4MUPebZExGI
+	 E80Mw19mYMw0lmk3IKQvWl44SujHhZOFmbEvya5peTITyy3llK1YZYdNmSjhbDk6RE
+	 ZcttjSMNPigJhEjftddIbMbdsrjTu3N2x9n65Q7g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Benjamin Coddington <bcodding@redhat.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Dmitry Bogdanov <d.bogdanov@yadro.com>,
+	Maurizio Lombardi <mlombard@redhat.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 035/325] NFSv4: Treat ENETUNREACH errors as fatal for state recovery
-Date: Mon,  2 Jun 2025 15:45:11 +0200
-Message-ID: <20250602134321.179104159@linuxfoundation.org>
+Subject: [PATCH 6.1 009/325] scsi: target: iscsi: Fix timeout on deleted connection
+Date: Mon,  2 Jun 2025 15:44:45 +0200
+Message-ID: <20250602134320.117854343@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134319.723650984@linuxfoundation.org>
 References: <20250602134319.723650984@linuxfoundation.org>
@@ -52,44 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Dmitry Bogdanov <d.bogdanov@yadro.com>
 
-[ Upstream commit 0af5fb5ed3d2fd9e110c6112271f022b744a849a ]
+[ Upstream commit 7f533cc5ee4c4436cee51dc58e81dfd9c3384418 ]
 
-If a containerised process is killed and causes an ENETUNREACH or
-ENETDOWN error to be propagated to the state manager, then mark the
-nfs_client as being dead so that we don't loop in functions that are
-expecting recovery to succeed.
+NOPIN response timer may expire on a deleted connection and crash with
+such logs:
 
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Reviewed-by: Benjamin Coddington <bcodding@redhat.com>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Did not receive response to NOPIN on CID: 0, failing connection for I_T Nexus (null),i,0x00023d000125,iqn.2017-01.com.iscsi.target,t,0x3d
+
+BUG: Kernel NULL pointer dereference on read at 0x00000000
+NIP  strlcpy+0x8/0xb0
+LR iscsit_fill_cxn_timeout_err_stats+0x5c/0xc0 [iscsi_target_mod]
+Call Trace:
+ iscsit_handle_nopin_response_timeout+0xfc/0x120 [iscsi_target_mod]
+ call_timer_fn+0x58/0x1f0
+ run_timer_softirq+0x740/0x860
+ __do_softirq+0x16c/0x420
+ irq_exit+0x188/0x1c0
+ timer_interrupt+0x184/0x410
+
+That is because nopin response timer may be re-started on nopin timer
+expiration.
+
+Stop nopin timer before stopping the nopin response timer to be sure
+that no one of them will be re-started.
+
+Signed-off-by: Dmitry Bogdanov <d.bogdanov@yadro.com>
+Link: https://lore.kernel.org/r/20241224101757.32300-1-d.bogdanov@yadro.com
+Reviewed-by: Maurizio Lombardi <mlombard@redhat.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/nfs4state.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/target/iscsi/iscsi_target.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/nfs/nfs4state.c b/fs/nfs/nfs4state.c
-index 48ea406604229..80a7c5bd7a476 100644
---- a/fs/nfs/nfs4state.c
-+++ b/fs/nfs/nfs4state.c
-@@ -2737,7 +2737,15 @@ static void nfs4_state_manager(struct nfs_client *clp)
- 	pr_warn_ratelimited("NFS: state manager%s%s failed on NFSv4 server %s"
- 			" with error %d\n", section_sep, section,
- 			clp->cl_hostname, -status);
--	ssleep(1);
-+	switch (status) {
-+	case -ENETDOWN:
-+	case -ENETUNREACH:
-+		nfs_mark_client_ready(clp, -EIO);
-+		break;
-+	default:
-+		ssleep(1);
-+		break;
-+	}
- out_drain:
- 	memalloc_nofs_restore(memflags);
- 	nfs4_end_drain_session(clp);
+diff --git a/drivers/target/iscsi/iscsi_target.c b/drivers/target/iscsi/iscsi_target.c
+index 07e196b44b91d..04d40e76772b3 100644
+--- a/drivers/target/iscsi/iscsi_target.c
++++ b/drivers/target/iscsi/iscsi_target.c
+@@ -4314,8 +4314,8 @@ int iscsit_close_connection(
+ 	spin_unlock(&iscsit_global->ts_bitmap_lock);
+ 
+ 	iscsit_stop_timers_for_cmds(conn);
+-	iscsit_stop_nopin_response_timer(conn);
+ 	iscsit_stop_nopin_timer(conn);
++	iscsit_stop_nopin_response_timer(conn);
+ 
+ 	if (conn->conn_transport->iscsit_wait_conn)
+ 		conn->conn_transport->iscsit_wait_conn(conn);
 -- 
 2.39.5
 
