@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB15822B586;
-	Mon,  2 Jun 2025 14:27:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 620A81DD543;
+	Mon,  2 Jun 2025 14:27:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748874422; cv=none; b=rSKYBFEjgE0xaL/FCzHpztn4PXNBHJ3C6I/NMfVxyAz2MyUDsMfJ04yHi9wnnMjXzVMALFCC4n+7vi+3uzgiUi6XPJtiTK/vW7Tnv5/ZPq6h/a86B7HnqzwOszC7j2jiKnUVNG2NVqh8OjYqrbx8gAeZ9VuPIBBRmRexHrIKlrA=
+	t=1748874425; cv=none; b=icw298CAvf2lxkUcW1aG3zRVR7HKT/wbtVgmqek4e4/1/vpjgg8Vq5QRLwEk5A2XHpTqiz7zwF/qDf318dNzsz9na86ddve5V60ruoScB8TATXV8dsXG2aL8Bheh1dPXBIYjv0LufWG5mF4yiB7RHgzSE+nEz8gQDxM0zNDMEE4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748874422; c=relaxed/simple;
-	bh=hb9NRIHHihtPHUGKzqQLUIs9hqR1sxmK9qAcHkBSd2g=;
+	s=arc-20240116; t=1748874425; c=relaxed/simple;
+	bh=+Xiuu+guafYM2m2/Fw0Bv+8JCxcRGqwZVbNHS7Q0vQA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rZC8TrpM6sV6MNp6I/t5DW/kUTGb9toSMmZc8K5ysHKrRazdTfclcDC8HIDzMHP4kgrus1ivY6KoXT5cYAWPRGe47p4o1HDT6KnTv3LbsDRlFZGg536ve0455Mm/GSg+5gaLeXx20dNwTW7EEbTJ0tGqZwlsS6qKNTEJIG2PS4M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cZO7BFV3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=SzmbUOprsFpk6lppA5U45ZlnioeOXqf7oFkD2hR3vMWVBxYbtLVUs1utj7hHXniWiHwRL5nP5AX3+OO8XPOfSXvRZkrFIHcQbICt8LQc11GyELCY9mFr9DtzEE0ZiroojX230+7J5XGJZgxgtxSAny7y9CjFOA4qx/LZYit/yo0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p1KCTCmj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cZO7BFV3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA55BC4CEEE;
-	Mon,  2 Jun 2025 14:27:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p1KCTCmj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C59BC4CEEB;
+	Mon,  2 Jun 2025 14:27:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748874422;
-	bh=hb9NRIHHihtPHUGKzqQLUIs9hqR1sxmK9qAcHkBSd2g=;
+	s=korg; t=1748874425;
+	bh=+Xiuu+guafYM2m2/Fw0Bv+8JCxcRGqwZVbNHS7Q0vQA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cZO7BFV3nEzITCXqsJq7k9etz/+f0CczBDtjNslmImDawIzEs//JzNtFOlgmEQIJU
-	 YdFLhm7HSrZ4Iwalp3kH4+LWJB63V6I/Ls/4M0lXGjzVvE9vIX+hCaOsAgPukUqL9b
-	 l4uBmFxGGfl4a0go5VjL6GCOQtzXVHfAc2pQupiE=
+	b=p1KCTCmjuFN+rikxziWnQ0jYR8M0BTFhBnhTOIVAC4NaH69LnNIQBrRDquSfUefqS
+	 D9G50HhQ3ECV/4oEn7VzxYGIxyN+XJq0lGQJ8vC+ftvZdG+bmhZgPCNlBoteLHtRRP
+	 Y2xLxIjW7QmongP9c4M46ztr09YzuJcJG+vFm+ec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mattias Barthel <mattias.barthel@atlascopco.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 019/204] net: fec: ERR007885 Workaround for conventional TX
-Date: Mon,  2 Jun 2025 15:45:52 +0200
-Message-ID: <20250602134256.256222608@linuxfoundation.org>
+	Richard Zhu <hongxing.zhu@nxp.com>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Frank Li <Frank.Li@nxp.com>,
+	Ryan Matthews <ryanmatthews@fastmail.com>
+Subject: [PATCH 5.4 020/204] PCI: imx6: Skip controller_id generation logic for i.MX7D
+Date: Mon,  2 Jun 2025 15:45:53 +0200
+Message-ID: <20250602134256.294885139@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134255.449974357@linuxfoundation.org>
 References: <20250602134255.449974357@linuxfoundation.org>
@@ -46,61 +48,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mattias Barthel <mattias.barthel@atlascopco.com>
+From: Richard Zhu <hongxing.zhu@nxp.com>
 
-[ Upstream commit a179aad12badc43201cbf45d1e8ed2c1383c76b9 ]
+commit f068ffdd034c93f0c768acdc87d4d2d7023c1379 upstream.
 
-Activate TX hang workaround also in
-fec_enet_txq_submit_skb() when TSO is not enabled.
+The i.MX7D only has one PCIe controller, so controller_id should always be
+0. The previous code is incorrect although yielding the correct result.
 
-Errata: ERR007885
+Fix by removing "IMX7D" from the switch case branch.
 
-Symptoms: NETDEV WATCHDOG: eth0 (fec): transmit queue 0 timed out
-
-commit 37d6017b84f7 ("net: fec: Workaround for imx6sx enet tx hang when enable three queues")
-There is a TDAR race condition for mutliQ when the software sets TDAR
-and the UDMA clears TDAR simultaneously or in a small window (2-4 cycles).
-This will cause the udma_tx and udma_tx_arbiter state machines to hang.
-
-So, the Workaround is checking TDAR status four time, if TDAR cleared by
-    hardware and then write TDAR, otherwise don't set TDAR.
-
-Fixes: 53bb20d1faba ("net: fec: add variable reg_desc_active to speed things up")
-Signed-off-by: Mattias Barthel <mattias.barthel@atlascopco.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20250429090826.3101258-1-mattiasbarthel@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 2d8ed461dbc9 ("PCI: imx6: Add support for i.MX8MQ")
+Link: https://lore.kernel.org/r/20241126075702.4099164-5-hongxing.zhu@nxp.com
+Signed-off-by: Richard Zhu <hongxing.zhu@nxp.com>
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+[Because this switch case does more than just controller_id
+ logic, move the "IMX7D" case label instead of removing it entirely.]
+Signed-off-by: Ryan Matthews <ryanmatthews@fastmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/freescale/fec_main.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/pci/controller/dwc/pci-imx6.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/freescale/fec_main.c b/drivers/net/ethernet/freescale/fec_main.c
-index 5660a83356eb0..fd7c504b44f2e 100644
---- a/drivers/net/ethernet/freescale/fec_main.c
-+++ b/drivers/net/ethernet/freescale/fec_main.c
-@@ -605,7 +605,12 @@ static int fec_enet_txq_submit_skb(struct fec_enet_priv_tx_q *txq,
- 	txq->bd.cur = bdp;
- 
- 	/* Trigger transmission start */
--	writel(0, txq->bd.reg_desc_active);
-+	if (!(fep->quirks & FEC_QUIRK_ERR007885) ||
-+	    !readl(txq->bd.reg_desc_active) ||
-+	    !readl(txq->bd.reg_desc_active) ||
-+	    !readl(txq->bd.reg_desc_active) ||
-+	    !readl(txq->bd.reg_desc_active))
-+		writel(0, txq->bd.reg_desc_active);
- 
- 	return 0;
- }
--- 
-2.39.5
-
+--- a/drivers/pci/controller/dwc/pci-imx6.c
++++ b/drivers/pci/controller/dwc/pci-imx6.c
+@@ -1112,11 +1112,10 @@ static int imx6_pcie_probe(struct platfo
+ 			dev_err(dev, "pcie_aux clock source missing or invalid\n");
+ 			return PTR_ERR(imx6_pcie->pcie_aux);
+ 		}
+-		/* fall through */
+-	case IMX7D:
+ 		if (dbi_base->start == IMX8MQ_PCIE2_BASE_ADDR)
+ 			imx6_pcie->controller_id = 1;
+-
++		/* fall through */
++	case IMX7D:
+ 		imx6_pcie->pciephy_reset = devm_reset_control_get_exclusive(dev,
+ 									    "pciephy");
+ 		if (IS_ERR(imx6_pcie->pciephy_reset)) {
 
 
