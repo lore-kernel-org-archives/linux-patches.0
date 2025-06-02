@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EACA21C5D72;
-	Mon,  2 Jun 2025 13:58:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 079A71C5D72;
+	Mon,  2 Jun 2025 13:58:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748872717; cv=none; b=joalpuNzTzd1JEb8/fcxg5ZFERy5FW/WvyvMb0dzT3fbqVkpHZId2buCAO5oii31fDE6b4UiL2OApP2xVNhN3j0UQAbISrI+JJ+DISobpJHNSiSvtaui9LfsmUVtJWNe6YdqD6dCY5wWPOiErlFyNBZzTdfWUTfQe60iv/zB7RE=
+	t=1748872720; cv=none; b=I/Qv2GoJqY43E3AmARNZsW7jSz+iJ6E2kQtyi5XrOqGAz/jTrF1VKakb8YVNdIkdBnxDTXEQEA+CTpQ0dTJWMHQWWVbzyydPtYnqPt60pPzWVKfGbi0d65aQ8QnnXHoMYcFgHQkrqOUmi9Psog1hEXIw+G2Wk7DK2ri2DJbRETQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748872717; c=relaxed/simple;
-	bh=j8wiUhxWzwfLWFU1Pfb6sfw8Ok8+D55LjpL30L2kA+A=;
+	s=arc-20240116; t=1748872720; c=relaxed/simple;
+	bh=UfyqKNbEHX+anR0Xgp6MhWA/QS6OUGgt/5XvV0zBH3w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M8BpZOwF077XvdA5WB+ZC3qBAZ0UDFtwkwNiLQG2+Fp4at3Kptx3uASW1hatrXzcWj5Uy8gNnQpCDjHxjmO9ocI/WxYQcTJdbd5bx5sLWzuZ39jh4Zlz54fk8e0dtXFapWITOq7IvpjRWhlztML92/jN6SwGVy9ebXbEiw5jwPQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dxRG1Art; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j66zTUYEenR7A2rJjdeEH1dO5kwv4KPAUbdejYmG9XA8O6+0+FbayqR5sx5jGQ77sX6izYDFsCW5TrEebbzr8g85YSApdFK0lEc//BaPx8vDApvaa13KfZi8UsaAPzwFlU/Jp9WuHgfRbUGF4PyAPd0MnTffaoW2cFWP6H7c4MA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ujw5vk4R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dxRG1Art"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 660C2C4CEEB;
-	Mon,  2 Jun 2025 13:58:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ujw5vk4R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C135C4CEF0;
+	Mon,  2 Jun 2025 13:58:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748872716;
-	bh=j8wiUhxWzwfLWFU1Pfb6sfw8Ok8+D55LjpL30L2kA+A=;
+	s=korg; t=1748872719;
+	bh=UfyqKNbEHX+anR0Xgp6MhWA/QS6OUGgt/5XvV0zBH3w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dxRG1Artb47IEWeRhywhL0GupFZ9nQ1FHsBwXkp96oAqVEDQAOLh9qweZ4kHbwVx0
-	 eyn/IUpdo+44oNtzaYgGlG/SyI/hB5mCbtDqTHTSFr87O+bvaqgKRuOnxQtE6E/Y6X
-	 SUEI3MMCnAGY6zTixf4sXOrgRKyNgVNdF5cFtu+s=
+	b=Ujw5vk4Ros1gFfcoGQmLOhkwE39lAr3Vz+Z+/7kpTRSI1jZTGeMsCAMjE1NnSJ/RL
+	 KpJ3sZe0YbYCW1HnuhWdONDISkB/Z6Z0Xwd3bGTp1ULYypwMGeKWjO+ewBqwGYpqZn
+	 S3Z72xxvYD6WW2+p1Q+DayGWg8SZeOo8FmwD1O80=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luca Boccassi <luca.boccassi@gmail.com>,
-	Oleg Nesterov <oleg@redhat.com>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 6.14 47/73] coredump: hand a pidfd to the usermode coredump helper
-Date: Mon,  2 Jun 2025 15:47:33 +0200
-Message-ID: <20250602134243.556436871@linuxfoundation.org>
+	Purva Yeshi <purvayeshi550@gmail.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.14 48/73] dmaengine: idxd: cdev: Fix uninitialized use of sva in idxd_cdev_open
+Date: Mon,  2 Jun 2025 15:47:34 +0200
+Message-ID: <20250602134243.593811922@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134241.673490006@linuxfoundation.org>
 References: <20250602134241.673490006@linuxfoundation.org>
@@ -51,167 +53,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Purva Yeshi <purvayeshi550@gmail.com>
 
-commit b5325b2a270fcaf7b2a9a0f23d422ca8a5a8bdea upstream.
+[ Upstream commit 97994333de2b8062d2df4e6ce0dc65c2dc0f40dc ]
 
-Give userspace a way to instruct the kernel to install a pidfd into the
-usermode helper process. This makes coredump handling a lot more
-reliable for userspace. In parallel with this commit we already have
-systemd adding support for this in [1].
+Fix Smatch-detected issue:
+drivers/dma/idxd/cdev.c:321 idxd_cdev_open() error:
+uninitialized symbol 'sva'.
 
-We create a pidfs file for the coredumping process when we process the
-corename pattern. When the usermode helper process is forked we then
-install the pidfs file as file descriptor three into the usermode
-helpers file descriptor table so it's available to the exec'd program.
+'sva' pointer may be used uninitialized in error handling paths.
+Specifically, if PASID support is enabled and iommu_sva_bind_device()
+returns an error, the code jumps to the cleanup label and attempts to
+call iommu_sva_unbind_device(sva) without ensuring that sva was
+successfully assigned. This triggers a Smatch warning about an
+uninitialized symbol.
 
-Since usermode helpers are either children of the system_unbound_wq
-workqueue or kthreadd we know that the file descriptor table is empty
-and can thus always use three as the file descriptor number.
+Initialize sva to NULL at declaration and add a check using
+IS_ERR_OR_NULL() before unbinding the device. This ensures the
+function does not use an invalid or uninitialized pointer during
+cleanup.
 
-Note, that we'll install a pidfd for the thread-group leader even if a
-subthread is calling do_coredump(). We know that task linkage hasn't
-been removed due to delay_group_leader() and even if this @current isn't
-the actual thread-group leader we know that the thread-group leader
-cannot be reaped until @current has exited.
-
-[brauner: This is a backport for the v6.12 series. The upstream kernel
-has changed pidfs_alloc_file() to set O_RDWR implicitly instead of
-forcing callers to set it. Let's minimize the churn and just let the
-coredump umh handler raise O_RDWR.]
-
-Link: https://github.com/systemd/systemd/pull/37125 [1]
-Link: https://lore.kernel.org/20250414-work-coredump-v2-3-685bf231f828@kernel.org
-Tested-by: Luca Boccassi <luca.boccassi@gmail.com>
-Reviewed-by: Oleg Nesterov <oleg@redhat.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Purva Yeshi <purvayeshi550@gmail.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Acked-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
+Link: https://lore.kernel.org/r/20250410110216.21592-1-purvayeshi550@gmail.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/coredump.c            |   56 +++++++++++++++++++++++++++++++++++++++++++----
- include/linux/coredump.h |    1 
- 2 files changed, 53 insertions(+), 4 deletions(-)
+ drivers/dma/idxd/cdev.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/coredump.c
-+++ b/fs/coredump.c
-@@ -43,6 +43,8 @@
- #include <linux/timekeeping.h>
- #include <linux/sysctl.h>
- #include <linux/elf.h>
-+#include <linux/pidfs.h>
-+#include <uapi/linux/pidfd.h>
+diff --git a/drivers/dma/idxd/cdev.c b/drivers/dma/idxd/cdev.c
+index cd57067e82180..6d12033649f81 100644
+--- a/drivers/dma/idxd/cdev.c
++++ b/drivers/dma/idxd/cdev.c
+@@ -222,7 +222,7 @@ static int idxd_cdev_open(struct inode *inode, struct file *filp)
+ 	struct idxd_wq *wq;
+ 	struct device *dev, *fdev;
+ 	int rc = 0;
+-	struct iommu_sva *sva;
++	struct iommu_sva *sva = NULL;
+ 	unsigned int pasid;
+ 	struct idxd_cdev *idxd_cdev;
  
- #include <linux/uaccess.h>
- #include <asm/mmu_context.h>
-@@ -60,6 +62,12 @@ static void free_vma_snapshot(struct cor
- #define CORE_FILE_NOTE_SIZE_DEFAULT (4*1024*1024)
- /* Define a reasonable max cap */
- #define CORE_FILE_NOTE_SIZE_MAX (16*1024*1024)
-+/*
-+ * File descriptor number for the pidfd for the thread-group leader of
-+ * the coredumping task installed into the usermode helper's file
-+ * descriptor table.
-+ */
-+#define COREDUMP_PIDFD_NUMBER 3
- 
- static int core_uses_pid;
- static unsigned int core_pipe_limit;
-@@ -339,6 +347,27 @@ static int format_corename(struct core_n
- 			case 'C':
- 				err = cn_printf(cn, "%d", cprm->cpu);
- 				break;
-+			/* pidfd number */
-+			case 'F': {
-+				/*
-+				 * Installing a pidfd only makes sense if
-+				 * we actually spawn a usermode helper.
-+				 */
-+				if (!ispipe)
-+					break;
-+
-+				/*
-+				 * Note that we'll install a pidfd for the
-+				 * thread-group leader. We know that task
-+				 * linkage hasn't been removed yet and even if
-+				 * this @current isn't the actual thread-group
-+				 * leader we know that the thread-group leader
-+				 * cannot be reaped until @current has exited.
-+				 */
-+				cprm->pid = task_tgid(current);
-+				err = cn_printf(cn, "%d", COREDUMP_PIDFD_NUMBER);
-+				break;
-+			}
- 			default:
- 				break;
- 			}
-@@ -493,7 +522,7 @@ static void wait_for_dump_helpers(struct
- }
- 
- /*
-- * umh_pipe_setup
-+ * umh_coredump_setup
-  * helper function to customize the process used
-  * to collect the core in userspace.  Specifically
-  * it sets up a pipe and installs it as fd 0 (stdin)
-@@ -503,12 +532,31 @@ static void wait_for_dump_helpers(struct
-  * is a special value that we use to trap recursive
-  * core dumps
-  */
--static int umh_pipe_setup(struct subprocess_info *info, struct cred *new)
-+static int umh_coredump_setup(struct subprocess_info *info, struct cred *new)
- {
- 	struct file *files[2];
- 	struct coredump_params *cp = (struct coredump_params *)info->data;
- 	int err;
- 
-+	if (cp->pid) {
-+		struct file *pidfs_file __free(fput) = NULL;
-+
-+		pidfs_file = pidfs_alloc_file(cp->pid, O_RDWR);
-+		if (IS_ERR(pidfs_file))
-+			return PTR_ERR(pidfs_file);
-+
-+		/*
-+		 * Usermode helpers are childen of either
-+		 * system_unbound_wq or of kthreadd. So we know that
-+		 * we're starting off with a clean file descriptor
-+		 * table. So we should always be able to use
-+		 * COREDUMP_PIDFD_NUMBER as our file descriptor value.
-+		 */
-+		err = replace_fd(COREDUMP_PIDFD_NUMBER, pidfs_file, 0);
-+		if (err < 0)
-+			return err;
-+	}
-+
- 	err = create_pipe_files(files, 0);
- 	if (err)
- 		return err;
-@@ -598,7 +646,7 @@ void do_coredump(const kernel_siginfo_t
- 		}
- 
- 		if (cprm.limit == 1) {
--			/* See umh_pipe_setup() which sets RLIMIT_CORE = 1.
-+			/* See umh_coredump_setup() which sets RLIMIT_CORE = 1.
- 			 *
- 			 * Normally core limits are irrelevant to pipes, since
- 			 * we're not writing to the file system, but we use
-@@ -637,7 +685,7 @@ void do_coredump(const kernel_siginfo_t
- 		retval = -ENOMEM;
- 		sub_info = call_usermodehelper_setup(helper_argv[0],
- 						helper_argv, NULL, GFP_KERNEL,
--						umh_pipe_setup, NULL, &cprm);
-+						umh_coredump_setup, NULL, &cprm);
- 		if (sub_info)
- 			retval = call_usermodehelper_exec(sub_info,
- 							  UMH_WAIT_EXEC);
---- a/include/linux/coredump.h
-+++ b/include/linux/coredump.h
-@@ -28,6 +28,7 @@ struct coredump_params {
- 	int vma_count;
- 	size_t vma_data_size;
- 	struct core_vma_metadata *vma_meta;
-+	struct pid *pid;
- };
- 
- extern unsigned int core_file_note_size_limit;
+@@ -317,7 +317,7 @@ static int idxd_cdev_open(struct inode *inode, struct file *filp)
+ 	if (device_user_pasid_enabled(idxd))
+ 		idxd_xa_pasid_remove(ctx);
+ failed_get_pasid:
+-	if (device_user_pasid_enabled(idxd))
++	if (device_user_pasid_enabled(idxd) && !IS_ERR_OR_NULL(sva))
+ 		iommu_sva_unbind_device(sva);
+ failed:
+ 	mutex_unlock(&wq->wq_lock);
+-- 
+2.39.5
+
 
 
