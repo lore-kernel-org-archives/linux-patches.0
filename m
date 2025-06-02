@@ -1,37 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1F8520E026;
-	Mon,  2 Jun 2025 14:24:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA1212222AF;
+	Mon,  2 Jun 2025 14:24:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748874242; cv=none; b=ZdigSF+2zIq8wIejxhiPbFutI59QcYHEeZyVn5g38zvfiXdgo08MXjUYwr3CxYJwJ/nieAlPYmWdakrMYFXSAV/oDWi32tq2XMS/ZjC2ODO6b2B4V/RmutmQTq/v9uYMpY642OBiGHHBHLwmNHx//OBFw+H+rbANOaZ2oay/QJQ=
+	t=1748874244; cv=none; b=jf9eMY/YDdwsaRPuw/tjXmJ80r9Jr/JiUVdMBuRYijMh7ZGNUinrc+uGJtkZtIKHsV/4ILQZwgkCmEvt4X428JnCqHukLjwVslHHS4GDTxOxIQNiomIW4lIZlLhFA0y4Qbf+DXpiagH8t6gHlZwc+vXpHbQS0VRucRbTqoO9ioE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748874242; c=relaxed/simple;
-	bh=rvXUQ5vLsf1qvrUxheIRPxnZgurkpwpM5U8NtswBgPw=;
+	s=arc-20240116; t=1748874244; c=relaxed/simple;
+	bh=3H7ZJhd6MI5anA1GR7tJdEfArwEeR0SlCLCM1qehG9w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t24O5fRpnQA6Koxekv0B1lbHt06AABI0xj3O1AFAzA/CZo5NDarELG7j55UQxOg5smYtRmUMu4AleSQD4R8eC2cyKnLCxygT4g+6/E00DjTk7ACmwavpwynHqaNVilOGFc9BRZ3d4X2IAT1U1hQTuS3vPk5BGyKl/+LrG7vDzZY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uxvD5UDH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jCvvJ+Ym6ImzFZD/1gSXSc/5c6ATo2+8ogD5vHkLPuv7jFRsbEqSCo2BYiwaI50am6j45sZKx0Uy+uWLiJXrS1bUfatec/K2g1nEgC+lwKS9a/6uJ1XXJ1DIzH/06i7x6ANPa9nClArEuN80LDx/7cFy20e47xYqhav7+fv15FA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MwkVrHn9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uxvD5UDH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 696E3C4CEEB;
-	Mon,  2 Jun 2025 14:24:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MwkVrHn9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30254C4CEEB;
+	Mon,  2 Jun 2025 14:24:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748874241;
-	bh=rvXUQ5vLsf1qvrUxheIRPxnZgurkpwpM5U8NtswBgPw=;
+	s=korg; t=1748874244;
+	bh=3H7ZJhd6MI5anA1GR7tJdEfArwEeR0SlCLCM1qehG9w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uxvD5UDHSdVHD3rTi1Me1MPs9Be1gsxYd3xmP8TdtmFCA7wLWmSLJ5d5criVQ916U
-	 0Smk8X/TdPXVWafMV+2YkXzsza5vnAh1MlSECi9u1SJv8gECIn9pDopD9VQeAylgdd
-	 8A/Fl20uTZHYhODVVDDQh1Xz4JwKse4oofgS6C5A=
+	b=MwkVrHn9eQEz0RexYYGCBFO8t2Z9HbdRcKGPAP+8ysYGfNjzdL5H56rY6ddlG+CtW
+	 CxepikWR6Ll4mo4oF6q/twPlwiLqUMATb+/cf+Ipeztq0oxWq3A/qoe9w5f53x+iCs
+	 Oub5PiYv4oPJNtd/IdZ77kG0zor48FF6F7wq8Wu4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vicki Pfau <vi@endrift.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.6 375/444] Input: xpad - add more controllers
-Date: Mon,  2 Jun 2025 15:47:19 +0200
-Message-ID: <20250602134356.137567724@linuxfoundation.org>
+	Breno Leitao <leitao@debian.org>,
+	Rik van Riel <riel@surriel.com>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Michael van der Westhuizen <rmikey@meta.com>,
+	Usama Arif <usamaarif642@gmail.com>,
+	Pavel Begunkov <asml.silence@gmail.com>,
+	Chen Ridong <chenridong@huawei.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Michal Hocko <mhocko@kernel.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Muchun Song <muchun.song@linux.dev>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 376/444] memcg: always call cond_resched() after fn()
+Date: Mon,  2 Jun 2025 15:47:20 +0200
+Message-ID: <20250602134356.178851847@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -50,40 +61,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vicki Pfau <vi@endrift.com>
+From: Breno Leitao <leitao@debian.org>
 
-commit f0d17942ea3edec191f1c0fc0d2cd7feca8de2f0 upstream.
+commit 06717a7b6c86514dbd6ab322e8083ffaa4db5712 upstream.
 
-Adds support for a revision of the Turtle Beach Recon Wired Controller,
-the Turtle Beach Stealth Ultra, and the PowerA Wired Controller.
+I am seeing soft lockup on certain machine types when a cgroup OOMs.  This
+is happening because killing the process in certain machine might be very
+slow, which causes the soft lockup and RCU stalls.  This happens usually
+when the cgroup has MANY processes and memory.oom.group is set.
 
-Signed-off-by: Vicki Pfau <vi@endrift.com>
-Link: https://lore.kernel.org/r/20250513225950.2719387-1-vi@endrift.com
-Cc: stable@vger.kernel.org
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Example I am seeing in real production:
+
+       [462012.244552] Memory cgroup out of memory: Killed process 3370438 (crosvm) ....
+       ....
+       [462037.318059] Memory cgroup out of memory: Killed process 4171372 (adb) ....
+       [462037.348314] watchdog: BUG: soft lockup - CPU#64 stuck for 26s! [stat_manager-ag:1618982]
+       ....
+
+Quick look at why this is so slow, it seems to be related to serial flush
+for certain machine types.  For all the crashes I saw, the target CPU was
+at console_flush_all().
+
+In the case above, there are thousands of processes in the cgroup, and it
+is soft locking up before it reaches the 1024 limit in the code (which
+would call the cond_resched()).  So, cond_resched() in 1024 blocks is not
+sufficient.
+
+Remove the counter-based conditional rescheduling logic and call
+cond_resched() unconditionally after each task iteration, after fn() is
+called.  This avoids the lockup independently of how slow fn() is.
+
+Link: https://lkml.kernel.org/r/20250523-memcg_fix-v1-1-ad3eafb60477@debian.org
+Fixes: ade81479c7dd ("memcg: fix soft lockup in the OOM process")
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Suggested-by: Rik van Riel <riel@surriel.com>
+Acked-by: Shakeel Butt <shakeel.butt@linux.dev>
+Cc: Michael van der Westhuizen <rmikey@meta.com>
+Cc: Usama Arif <usamaarif642@gmail.com>
+Cc: Pavel Begunkov <asml.silence@gmail.com>
+Cc: Chen Ridong <chenridong@huawei.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Michal Hocko <mhocko@kernel.org>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Muchun Song <muchun.song@linux.dev>
+Cc: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/joystick/xpad.c |    3 +++
- 1 file changed, 3 insertions(+)
+ mm/memcontrol.c |    6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
---- a/drivers/input/joystick/xpad.c
-+++ b/drivers/input/joystick/xpad.c
-@@ -289,6 +289,8 @@ static const struct xpad_device {
- 	{ 0x1038, 0x1430, "SteelSeries Stratus Duo", 0, XTYPE_XBOX360 },
- 	{ 0x1038, 0x1431, "SteelSeries Stratus Duo", 0, XTYPE_XBOX360 },
- 	{ 0x10f5, 0x7005, "Turtle Beach Recon Controller", 0, XTYPE_XBOXONE },
-+	{ 0x10f5, 0x7008, "Turtle Beach Recon Controller", MAP_SHARE_BUTTON, XTYPE_XBOXONE },
-+	{ 0x10f5, 0x7073, "Turtle Beach Stealth Ultra Controller", MAP_SHARE_BUTTON, XTYPE_XBOXONE },
- 	{ 0x11c9, 0x55f0, "Nacon GC-100XF", 0, XTYPE_XBOX360 },
- 	{ 0x11ff, 0x0511, "PXN V900", 0, XTYPE_XBOX360 },
- 	{ 0x1209, 0x2882, "Ardwiino Controller", 0, XTYPE_XBOX360 },
-@@ -353,6 +355,7 @@ static const struct xpad_device {
- 	{ 0x1ee9, 0x1590, "ZOTAC Gaming Zone", 0, XTYPE_XBOX360 },
- 	{ 0x20d6, 0x2001, "BDA Xbox Series X Wired Controller", 0, XTYPE_XBOXONE },
- 	{ 0x20d6, 0x2009, "PowerA Enhanced Wired Controller for Xbox Series X|S", 0, XTYPE_XBOXONE },
-+	{ 0x20d6, 0x2064, "PowerA Wired Controller for Xbox", MAP_SHARE_BUTTON, XTYPE_XBOXONE },
- 	{ 0x20d6, 0x281f, "PowerA Wired Controller For Xbox 360", 0, XTYPE_XBOX360 },
- 	{ 0x24c6, 0x5000, "Razer Atrox Arcade Stick", MAP_TRIGGERS_TO_BUTTONS, XTYPE_XBOX360 },
- 	{ 0x24c6, 0x5300, "PowerA MINI PROEX Controller", 0, XTYPE_XBOX360 },
+--- a/mm/memcontrol.c
++++ b/mm/memcontrol.c
+@@ -1266,7 +1266,6 @@ void mem_cgroup_scan_tasks(struct mem_cg
+ {
+ 	struct mem_cgroup *iter;
+ 	int ret = 0;
+-	int i = 0;
+ 
+ 	BUG_ON(mem_cgroup_is_root(memcg));
+ 
+@@ -1276,10 +1275,9 @@ void mem_cgroup_scan_tasks(struct mem_cg
+ 
+ 		css_task_iter_start(&iter->css, CSS_TASK_ITER_PROCS, &it);
+ 		while (!ret && (task = css_task_iter_next(&it))) {
+-			/* Avoid potential softlockup warning */
+-			if ((++i & 1023) == 0)
+-				cond_resched();
+ 			ret = fn(task, arg);
++			/* Avoid potential softlockup warning */
++			cond_resched();
+ 		}
+ 		css_task_iter_end(&it);
+ 		if (ret) {
 
 
