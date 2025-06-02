@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E424A2288F4;
-	Mon,  2 Jun 2025 15:13:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 332FE22A4E3;
+	Mon,  2 Jun 2025 15:13:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748877206; cv=none; b=bMqh1Dv9cTkkITvT0u1h2tilGUcUHdOaF/xxoV7p6OTlH0ifJQfeU6qAEro2nVHla2+YJQ1Vd/IjHlGSOiC5j9gXW331JdJcxqOnWfQE98d9Z2ZTyb9bqoAGO+uMJOs2Y0Af7Jo4S7RTTtldlQaG4SI6kyB3c2QH58Ap5TSmhO4=
+	t=1748877209; cv=none; b=m2/kClg2Uc0Oq8ziX6lyHa8kPvDbITUhBqodEYMOIqZOU/XRfcOtwBR70Qv7V+96Eecal/X7XB8iFuLphqYuAGdGGigbocbE6quQD9BEp0HskJM/kB1PA8LJwfoT698EKeghyGL4pjOnpZIgNTewMIduCy2cvK8tVmVZWBHEOvw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748877206; c=relaxed/simple;
-	bh=74hgtF2o6LSbFAR90cBHxR3UFc1nLS7p6Up0oejcsVQ=;
+	s=arc-20240116; t=1748877209; c=relaxed/simple;
+	bh=ED9G0rxOx53OUY8Mbrde1Y3KXVDqegEollvd1Qdy8D4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uEj+TD5vZkFc72mxFojGBCHQJZdG+N0n3W7JIB6UDuQnNbm2QxbqK+Nwim5UNmXTiV3c2cj9pUA006J10YLJ9tcGqEpN4cWilZNKQwRaRwvZOE4+TQwrxl70GPOVmk4u+xpnYwtmP3fbgLGCtS5rdRSQMIqkwSZRFbmXcgMTsz4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d6TiTDsE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G5Qm8Y7uz+/9pkYbQ1wO4y57L02wtIRaSGMkGH3sLcph4XMw4IrO6zctHRniM8gDFJXvpSxcECv5d5xo9sz/GfXBz5IrJR5fLW8gdnj9UyktgBy9vZ1ysVOUpf6A4tSzdJybTURSFx5c7+9oVeV+9Y5+IHNqvrILpxu6x9aHfkk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2XfkxhUj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d6TiTDsE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 632E9C4CEEB;
-	Mon,  2 Jun 2025 15:13:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2XfkxhUj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 967AAC4CEEB;
+	Mon,  2 Jun 2025 15:13:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748877205;
-	bh=74hgtF2o6LSbFAR90cBHxR3UFc1nLS7p6Up0oejcsVQ=;
+	s=korg; t=1748877209;
+	bh=ED9G0rxOx53OUY8Mbrde1Y3KXVDqegEollvd1Qdy8D4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d6TiTDsENct+GrHKlvv8ZISQ8hlpBtHLTlvWwdAnh16zUWp9cGspaIqYmw/OXb6Ol
-	 SgEjixe7NWNR3H9kkDGj1e1jZ/NAiU6SuDPOPvt/g4mgTH1uTacsQ/4lnZ3Ozok4LN
-	 WZvIgbz+S78vwVqMkAoLr+AdRVANL9/TdPQNoT48=
+	b=2XfkxhUjKsbJLsNXMKUrpU/yfDyyx6POvUawyzst5LS8xyVvZUhyo6Rmn1KTivzuF
+	 ipOcxcIitjnCCn3k9ClCjJZteAwL6CAgTMfqtcZHm34cMCPqZ59g9BJJYc4BvrujxW
+	 7PqtzU61vIlfOFObvAlp0RgmtqlkibjbmhStrgfc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Tee <justin.tee@broadcom.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Kees Cook <kees@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 203/325] scsi: lpfc: Handle duplicate D_IDs in ndlp search-by D_ID routine
-Date: Mon,  2 Jun 2025 15:47:59 +0200
-Message-ID: <20250602134328.042991931@linuxfoundation.org>
+Subject: [PATCH 6.1 175/325] net/mlx4_core: Avoid impossible mlx4_db_alloc() order value
+Date: Mon,  2 Jun 2025 15:47:31 +0200
+Message-ID: <20250602134326.933382614@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134319.723650984@linuxfoundation.org>
 References: <20250602134319.723650984@linuxfoundation.org>
@@ -51,64 +51,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Justin Tee <justin.tee@broadcom.com>
+From: Kees Cook <kees@kernel.org>
 
-[ Upstream commit 56c3d809b7b450379162d0b8a70bbe71ab8db706 ]
+[ Upstream commit 4a6f18f28627e121bd1f74b5fcc9f945d6dbeb1e ]
 
-After a port swap between separate fabrics, there may be multiple nodes in
-the vport's fc_nodes list with the same fabric well known address.
-Duplication is temporary and eventually resolves itself after dev_loss_tmo
-expires, but nameserver queries may still occur before dev_loss_tmo.  This
-possibly results in returning stale fabric ndlp objects.  Fix by adding an
-nlp_state check to ensure the ndlp search routine returns the correct newer
-allocated ndlp fabric object.
+GCC can see that the value range for "order" is capped, but this leads
+it to consider that it might be negative, leading to a false positive
+warning (with GCC 15 with -Warray-bounds -fdiagnostics-details):
 
-Signed-off-by: Justin Tee <justin.tee@broadcom.com>
-Link: https://lore.kernel.org/r/20250131000524.163662-5-justintee8345@gmail.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+../drivers/net/ethernet/mellanox/mlx4/alloc.c:691:47: error: array subscript -1 is below array bounds of 'long unsigned int *[2]' [-Werror=array-bounds=]
+  691 |                 i = find_first_bit(pgdir->bits[o], MLX4_DB_PER_PAGE >> o);
+      |                                    ~~~~~~~~~~~^~~
+  'mlx4_alloc_db_from_pgdir': events 1-2
+  691 |                 i = find_first_bit(pgdir->bits[o], MLX4_DB_PER_PAGE >> o);                        |                     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                     |                         |                                                   |                     |                         (2) out of array bounds here
+      |                     (1) when the condition is evaluated to true                             In file included from ../drivers/net/ethernet/mellanox/mlx4/mlx4.h:53,
+                 from ../drivers/net/ethernet/mellanox/mlx4/alloc.c:42:
+../include/linux/mlx4/device.h:664:33: note: while referencing 'bits'
+  664 |         unsigned long          *bits[2];
+      |                                 ^~~~
+
+Switch the argument to unsigned int, which removes the compiler needing
+to consider negative values.
+
+Signed-off-by: Kees Cook <kees@kernel.org>
+Link: https://patch.msgid.link/20250210174504.work.075-kees@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/lpfc/lpfc_hbadisc.c | 17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/mellanox/mlx4/alloc.c | 6 +++---
+ include/linux/mlx4/device.h                | 2 +-
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/scsi/lpfc/lpfc_hbadisc.c b/drivers/scsi/lpfc/lpfc_hbadisc.c
-index 57be02f8d5c18..b04112c77fcd1 100644
---- a/drivers/scsi/lpfc/lpfc_hbadisc.c
-+++ b/drivers/scsi/lpfc/lpfc_hbadisc.c
-@@ -5619,6 +5619,7 @@ static struct lpfc_nodelist *
- __lpfc_findnode_did(struct lpfc_vport *vport, uint32_t did)
- {
- 	struct lpfc_nodelist *ndlp;
-+	struct lpfc_nodelist *np = NULL;
- 	uint32_t data1;
- 
- 	list_for_each_entry(ndlp, &vport->fc_nodes, nlp_listp) {
-@@ -5633,14 +5634,20 @@ __lpfc_findnode_did(struct lpfc_vport *vport, uint32_t did)
- 					 ndlp, ndlp->nlp_DID,
- 					 ndlp->nlp_flag, data1, ndlp->nlp_rpi,
- 					 ndlp->active_rrqs_xri_bitmap);
--			return ndlp;
-+
-+			/* Check for new or potentially stale node */
-+			if (ndlp->nlp_state != NLP_STE_UNUSED_NODE)
-+				return ndlp;
-+			np = ndlp;
- 		}
- 	}
- 
--	/* FIND node did <did> NOT FOUND */
--	lpfc_printf_vlog(vport, KERN_INFO, LOG_NODE,
--			 "0932 FIND node did x%x NOT FOUND.\n", did);
--	return NULL;
-+	if (!np)
-+		/* FIND node did <did> NOT FOUND */
-+		lpfc_printf_vlog(vport, KERN_INFO, LOG_NODE,
-+				 "0932 FIND node did x%x NOT FOUND.\n", did);
-+
-+	return np;
+diff --git a/drivers/net/ethernet/mellanox/mlx4/alloc.c b/drivers/net/ethernet/mellanox/mlx4/alloc.c
+index b330020dc0d67..f2bded847e61d 100644
+--- a/drivers/net/ethernet/mellanox/mlx4/alloc.c
++++ b/drivers/net/ethernet/mellanox/mlx4/alloc.c
+@@ -682,9 +682,9 @@ static struct mlx4_db_pgdir *mlx4_alloc_db_pgdir(struct device *dma_device)
  }
  
- struct lpfc_nodelist *
+ static int mlx4_alloc_db_from_pgdir(struct mlx4_db_pgdir *pgdir,
+-				    struct mlx4_db *db, int order)
++				    struct mlx4_db *db, unsigned int order)
+ {
+-	int o;
++	unsigned int o;
+ 	int i;
+ 
+ 	for (o = order; o <= 1; ++o) {
+@@ -712,7 +712,7 @@ static int mlx4_alloc_db_from_pgdir(struct mlx4_db_pgdir *pgdir,
+ 	return 0;
+ }
+ 
+-int mlx4_db_alloc(struct mlx4_dev *dev, struct mlx4_db *db, int order)
++int mlx4_db_alloc(struct mlx4_dev *dev, struct mlx4_db *db, unsigned int order)
+ {
+ 	struct mlx4_priv *priv = mlx4_priv(dev);
+ 	struct mlx4_db_pgdir *pgdir;
+diff --git a/include/linux/mlx4/device.h b/include/linux/mlx4/device.h
+index 6646634a0b9d4..0cb296f0f8d1d 100644
+--- a/include/linux/mlx4/device.h
++++ b/include/linux/mlx4/device.h
+@@ -1115,7 +1115,7 @@ int mlx4_write_mtt(struct mlx4_dev *dev, struct mlx4_mtt *mtt,
+ int mlx4_buf_write_mtt(struct mlx4_dev *dev, struct mlx4_mtt *mtt,
+ 		       struct mlx4_buf *buf);
+ 
+-int mlx4_db_alloc(struct mlx4_dev *dev, struct mlx4_db *db, int order);
++int mlx4_db_alloc(struct mlx4_dev *dev, struct mlx4_db *db, unsigned int order);
+ void mlx4_db_free(struct mlx4_dev *dev, struct mlx4_db *db);
+ 
+ int mlx4_alloc_hwq_res(struct mlx4_dev *dev, struct mlx4_hwq_resources *wqres,
 -- 
 2.39.5
 
