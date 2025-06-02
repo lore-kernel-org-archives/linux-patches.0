@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFC7F21885A;
-	Mon,  2 Jun 2025 14:23:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED39D21885A;
+	Mon,  2 Jun 2025 14:23:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748874236; cv=none; b=lZXBD2/3H1F4dWWEHaeLhv1VZ0aAw9jSoc4WdsMEPAS9SrprkJ6zGrGvanI9KNr9jFs43tY7X1V7bAXuKZj4KtyEYWbSzH0HR1/j8P2YGKkGpk1MZSvwal+OtFDacjiw7f3erf7oU/GpqppCJaQndR3ahaAEnE6GJcE5V/BP634=
+	t=1748874239; cv=none; b=nBrA7XRf6f5T+mcfUqixg9yFb2kp5UPCeRB95cTDla1ZwzbK9h+rfTN26yqmlKRHm6HDugdDq1140K8DAKfKGA2l7haLh4eCTh7tuTN680cJjZj9TQZXGABYUhy9Gh4mU3tSvfs+wFApsE6B+uKzKBqHNs8kA5PQnl8m5QRnfRE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748874236; c=relaxed/simple;
-	bh=7I8aIwNNmAb1ZkRXY3m8UrG//s+YGm1vyxFopSZFjZI=;
+	s=arc-20240116; t=1748874239; c=relaxed/simple;
+	bh=VSGw4N0Ts4uDetnSFA3kTDzhqU/fux07fywHlVBWvV8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RGDPJlcZgW0juJz76Hg6jxW7YgTCRigRWpIOEFMk687hl1CPYujiMGBX2erpfc4aAPuISDpT9xarfTYJEwB3gY1Dt3J8UUO/tiY4I+9uttFguTr3bmHwLFUj2CQDoO82rDlV+7QNMhpX+yYQEjs8F4YKR/FVT0P0ldc0+Q9k4/o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BP2bUqT+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LphTVeRyzqUejwHF9ZbsWQS/il2d/Yi+1YBDRUCLvMPsPboXGZUFD3eh7ow4BxZrjXK3Pk3ON9QikZy4L6Noq+d9K7GZ2S3f4ZHvaszEHDk1lP/73c/nx7nW9nnmgQ6AcN7AHKTRdAdKzs4mnY+PFfezWo2HHjK9Z6RToX6Qw4w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P1GKJUZZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BP2bUqT+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FD53C4CEEB;
-	Mon,  2 Jun 2025 14:23:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P1GKJUZZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67C58C4CEEB;
+	Mon,  2 Jun 2025 14:23:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748874235;
-	bh=7I8aIwNNmAb1ZkRXY3m8UrG//s+YGm1vyxFopSZFjZI=;
+	s=korg; t=1748874238;
+	bh=VSGw4N0Ts4uDetnSFA3kTDzhqU/fux07fywHlVBWvV8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BP2bUqT+yfUST5V0V6sAPSWCPAvYwXo8C9P9AfU6FOWLxCvUYwYADXpBTfpjH9tNf
-	 NINZbS5JVT+KG+qW8wXxY2uk3dou3pv4v6OmGcOH0UtAQbeFQp/66QxgKbabrC0i9r
-	 iH9VwvfC9B3JL7HCj3grlqRbWG+jGBZBpPiO70tI=
+	b=P1GKJUZZdMycNDtvm4k3qOxwOsxihQnY5YqKfe23jOLEg/iXC+hHZj+HWLRLE9C9s
+	 0dviSEvTQnr8cHacfj0ueJynkH5OXOa7j3y6XSx8yNScpLbMBDXafkWFP0al5Swl+X
+	 bmAa5i72Yvv2Yb/JYbR84HJfdw0IDCaKrHpBwNd8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Zhaolong <wangzhaolong1@huawei.com>,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.6 373/444] smb: client: Reset all search buffer pointers when releasing buffer
-Date: Mon,  2 Jun 2025 15:47:17 +0200
-Message-ID: <20250602134356.054231155@linuxfoundation.org>
+	Alex Deucher <alexander.deucher@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>
+Subject: [PATCH 6.6 374/444] Revert "drm/amd: Keep display off while going into S4"
+Date: Mon,  2 Jun 2025 15:47:18 +0200
+Message-ID: <20250602134356.096885647@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -51,41 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wang Zhaolong <wangzhaolong1@huawei.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit e48f9d849bfdec276eebf782a84fd4dfbe1c14c0 upstream.
+commit 7e7cb7a13c81073d38a10fa7b450d23712281ec4 upstream.
 
-Multiple pointers in struct cifs_search_info (ntwrk_buf_start,
-srch_entries_start, and last_entry) point to the same allocated buffer.
-However, when freeing this buffer, only ntwrk_buf_start was set to NULL,
-while the other pointers remained pointing to freed memory.
+commit 68bfdc8dc0a1a ("drm/amd: Keep display off while going into S4")
+attempted to keep displays off during the S4 sequence by not resuming
+display IP.  This however leads to hangs because DRM clients such as the
+console can try to access registers and cause a hang.
 
-This is defensive programming to prevent potential issues with stale
-pointers. While the active UAF vulnerability is fixed by the previous
-patch, this change ensures consistent pointer state and more robust error
-handling.
-
-Signed-off-by: Wang Zhaolong <wangzhaolong1@huawei.com>
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4155
+Fixes: 68bfdc8dc0a1a ("drm/amd: Keep display off while going into S4")
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Link: https://lore.kernel.org/r/20250522141328.115095-1-mario.limonciello@amd.com
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit e485502c37b097b0bd773baa7e2741bf7bd2909a)
 Cc: stable@vger.kernel.org
-Reviewed-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/readdir.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    5 -----
+ 1 file changed, 5 deletions(-)
 
---- a/fs/smb/client/readdir.c
-+++ b/fs/smb/client/readdir.c
-@@ -733,7 +733,10 @@ find_cifs_entry(const unsigned int xid,
- 			else
- 				cifs_buf_release(cfile->srch_inf.
- 						ntwrk_buf_start);
-+			/* Reset all pointers to the network buffer to prevent stale references */
- 			cfile->srch_inf.ntwrk_buf_start = NULL;
-+			cfile->srch_inf.srch_entries_start = NULL;
-+			cfile->srch_inf.last_entry = NULL;
- 		}
- 		rc = initiate_cifs_search(xid, file, full_path);
- 		if (rc) {
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -2896,11 +2896,6 @@ static int dm_resume(void *handle)
+ 
+ 		return 0;
+ 	}
+-
+-	/* leave display off for S4 sequence */
+-	if (adev->in_s4)
+-		return 0;
+-
+ 	/* Recreate dc_state - DC invalidates it when setting power state to S3. */
+ 	dc_release_state(dm_state->context);
+ 	dm_state->context = dc_create_state(dm->dc);
 
 
