@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CC1B230BE2;
-	Mon,  2 Jun 2025 14:56:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D0A1230BD9;
+	Mon,  2 Jun 2025 14:56:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748876198; cv=none; b=oUODM2weyxQ+JRo3Rmuq2fvS3dTH+Ct/OvT8/qSFGvndAhR33mXI/i52u2Nv99LTBzPCk+Dsu3YvFaMI2HVci+Dyi0FUAyuiDI21L7YSr2CEJuv6+DSXAsnFqAGpJxqnqCd9DectfQWc1HJ4GSfG7Wd5qQeMbaij4msnMFthM24=
+	t=1748876201; cv=none; b=ETSRpD+211MuCqFLoPKAffNnQSqGyXjRcrYzDZ9jttfX5MV9X4/W75bkTjyf6AJkoK8N4WugC7WFCr/QsM+WKiiLEka69j7k460+zRPu63Wom8DhyfVL2XX7i56WOKZJuJt4WzDxKhFDWuyCyxG2rYOhFb8w4ufUU4MBc1zsGLM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748876198; c=relaxed/simple;
-	bh=5wtDVddmzeYKp74i4XGXqk7f2AQ+LU07qCoPvBhtAt8=;
+	s=arc-20240116; t=1748876201; c=relaxed/simple;
+	bh=b3bqMtt9jWyiyoPaZQqZv3RBGSbe9VljxicAH7xe9Dw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oEaab4NhxdaRVx8EhbDlLSsIzjSf4ruD+YgK0U3r4ABUi6T97kZtJbWMygckVWkrBNpeMskVmNBva1BkQBwXjnk7jIZxRwWs8pfdWLld3iVDNrSjV4lFak+Lo4GZwV6pEEUZtzb/due/6YeNSZHoU2MHm+GCJX2ehfKHQkBLetc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gbt4E8Ip; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ntxQMJkQJF3YJ84H18w1oMAtgo3l9LAq9HAXqF3pn395U/6NCqH7OQFQodvPX0bcLFqxX5RjD9FI4mzjawphC1VUN3mDZZvT/rquSY6WHlSvuORDoQnEsMIIar3L1lu7GD9VIwUUW7+UvJwXvCG7YKLtmQNgpEzHvF9CYjq21X8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eg483RmH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gbt4E8Ip"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD51CC4CEEE;
-	Mon,  2 Jun 2025 14:56:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eg483RmH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05173C4CEEB;
+	Mon,  2 Jun 2025 14:56:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748876198;
-	bh=5wtDVddmzeYKp74i4XGXqk7f2AQ+LU07qCoPvBhtAt8=;
+	s=korg; t=1748876201;
+	bh=b3bqMtt9jWyiyoPaZQqZv3RBGSbe9VljxicAH7xe9Dw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gbt4E8IpUwdPaLNhBdP4Pv3Vpz0qA7lYf6dbQH5dbYJ4118dnSGWm4zXIMmUTPIAn
-	 aFCY8E5HRqkKRVYt2ZSZFQrwnp4vicj+j8sPPSuo5GUYwCCowJaGQ1pp79vQKPGdtd
-	 5p8hKO8eZwgiOT0fwuxuA2i2IMM1saUEeRQCnL00=
+	b=eg483RmHN/FXRUW4Fydee0nq51Aly1oH3+OIagezGe2GO7ZHqvVT5janqIx4WMNZC
+	 ydRiopMt9WXWju6YN206YWCpdjaiu2zCONfWP04OXif40zcduozdZ+0aXHjgeS06Cl
+	 G4GsOoQBzKOSJfo7+1vamydtOUQdf1xIEZ1f52cc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
+	Sudeep Holla <sudeep.holla@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 103/207] wifi: rtw88: Fix rtw_init_vht_cap() for RTL8814AU
-Date: Mon,  2 Jun 2025 15:47:55 +0200
-Message-ID: <20250602134302.773057708@linuxfoundation.org>
+Subject: [PATCH 5.15 086/207] firmware: arm_ffa: Set dma_mask for ffa devices
+Date: Mon,  2 Jun 2025 15:47:38 +0200
+Message-ID: <20250602134302.105058988@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134258.769974467@linuxfoundation.org>
 References: <20250602134258.769974467@linuxfoundation.org>
@@ -51,66 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+From: Viresh Kumar <viresh.kumar@linaro.org>
 
-[ Upstream commit 6be7544d19fcfcb729495e793bc6181f85bb8949 ]
+[ Upstream commit cc0aac7ca17e0ea3ca84b552fc79f3e86fd07f53 ]
 
-Set the MCS maps and the highest rates according to the number of
-spatial streams the chip has. For RTL8814AU that is 3.
+Set dma_mask for FFA devices, otherwise DMA allocation using the device pointer
+lead to following warning:
 
-Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/e86aa009-b5bf-4b3a-8112-ea5e3cd49465@gmail.com
+WARNING: CPU: 1 PID: 1 at kernel/dma/mapping.c:597 dma_alloc_attrs+0xe0/0x124
+
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Message-Id: <e3dd8042ac680bd74b6580c25df855d092079c18.1737107520.git.viresh.kumar@linaro.org>
+Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw88/main.c | 23 +++++++++--------------
- 1 file changed, 9 insertions(+), 14 deletions(-)
+ drivers/firmware/arm_ffa/bus.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/realtek/rtw88/main.c b/drivers/net/wireless/realtek/rtw88/main.c
-index 23971a5737cf5..c5d0b213a3546 100644
---- a/drivers/net/wireless/realtek/rtw88/main.c
-+++ b/drivers/net/wireless/realtek/rtw88/main.c
-@@ -1366,8 +1366,9 @@ static void rtw_init_vht_cap(struct rtw_dev *rtwdev,
- 			     struct ieee80211_sta_vht_cap *vht_cap)
- {
- 	struct rtw_efuse *efuse = &rtwdev->efuse;
--	u16 mcs_map;
-+	u16 mcs_map = 0;
- 	__le16 highest;
-+	int i;
+diff --git a/drivers/firmware/arm_ffa/bus.c b/drivers/firmware/arm_ffa/bus.c
+index f79ba6f733ba4..27820a59ce25e 100644
+--- a/drivers/firmware/arm_ffa/bus.c
++++ b/drivers/firmware/arm_ffa/bus.c
+@@ -190,6 +190,7 @@ struct ffa_device *ffa_device_register(const uuid_t *uuid, int vm_id)
+ 	dev = &ffa_dev->dev;
+ 	dev->bus = &ffa_bus_type;
+ 	dev->release = ffa_release_device;
++	dev->dma_mask = &dev->coherent_dma_mask;
+ 	dev_set_name(&ffa_dev->dev, "arm-ffa-%d", id);
  
- 	if (efuse->hw_cap.ptcl != EFUSE_HW_CAP_IGNORE &&
- 	    efuse->hw_cap.ptcl != EFUSE_HW_CAP_PTCL_VHT)
-@@ -1390,21 +1391,15 @@ static void rtw_init_vht_cap(struct rtw_dev *rtwdev,
- 	if (rtw_chip_has_rx_ldpc(rtwdev))
- 		vht_cap->cap |= IEEE80211_VHT_CAP_RXLDPC;
- 
--	mcs_map = IEEE80211_VHT_MCS_SUPPORT_0_9 << 0 |
--		  IEEE80211_VHT_MCS_NOT_SUPPORTED << 4 |
--		  IEEE80211_VHT_MCS_NOT_SUPPORTED << 6 |
--		  IEEE80211_VHT_MCS_NOT_SUPPORTED << 8 |
--		  IEEE80211_VHT_MCS_NOT_SUPPORTED << 10 |
--		  IEEE80211_VHT_MCS_NOT_SUPPORTED << 12 |
--		  IEEE80211_VHT_MCS_NOT_SUPPORTED << 14;
--	if (efuse->hw_cap.nss > 1) {
--		highest = cpu_to_le16(780);
--		mcs_map |= IEEE80211_VHT_MCS_SUPPORT_0_9 << 2;
--	} else {
--		highest = cpu_to_le16(390);
--		mcs_map |= IEEE80211_VHT_MCS_NOT_SUPPORTED << 2;
-+	for (i = 0; i < 8; i++) {
-+		if (i < efuse->hw_cap.nss)
-+			mcs_map |= IEEE80211_VHT_MCS_SUPPORT_0_9 << (i * 2);
-+		else
-+			mcs_map |= IEEE80211_VHT_MCS_NOT_SUPPORTED << (i * 2);
- 	}
- 
-+	highest = cpu_to_le16(390 * efuse->hw_cap.nss);
-+
- 	vht_cap->vht_mcs.rx_mcs_map = cpu_to_le16(mcs_map);
- 	vht_cap->vht_mcs.tx_mcs_map = cpu_to_le16(mcs_map);
- 	vht_cap->vht_mcs.rx_highest = highest;
+ 	ffa_dev->id = id;
 -- 
 2.39.5
 
