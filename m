@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B3CF238C2A;
-	Mon,  2 Jun 2025 14:59:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1976B239594;
+	Mon,  2 Jun 2025 14:59:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748876348; cv=none; b=tGxQ6z6ZPqYjuFoP/0HZlmjphyBybqxRRIjSLUs8QTXEtJB1nxtF1YGYWH76K8HACgWuUHw6P+dSXaUjMEmzGa56mzaqTvUDyPMUHn1vCBCUKaMtnWjG+xlOeccHwmufOrEDhFeXpnpdZftLSFSftEONRxk6YvcJC/yyuLnLqi0=
+	t=1748876351; cv=none; b=fdqslu5URAgCM86IaDs3Zv7KXUriY6J8EfK9prn43JKx0Lftvg/YlXpJqudmGZB80GCXw023qANXeQtHFAcpqIln/EL72Iw+g5cDGZbAtpimQ+prNPoa9Rz43MbtliMrvETFJeE05TtC6TWErypyjwmql7Txzf+fj2Bzs9AuvjA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748876348; c=relaxed/simple;
-	bh=AJGLAyta5h4jt4GzvEGl9VvXrbXTxpUSvESSabxmsik=;
+	s=arc-20240116; t=1748876351; c=relaxed/simple;
+	bh=BYV0xfdzfHJ/wxb8wm300UfB+aCAy4FBTBd5LuClJZg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MT0EXLINEHncsIzm0r9MEH6BnGBuWgp9Y2weVENVlkWUapVRYMr2Bnu5oDK+WJJSsiYSVd5U3nnhmJkIkOODgY8ZizG8370i6ouJCH9/5P5w6MqzxW4G9hyIjsmLRkJATYV7oPtpROvMqHV8LgSY38vV5vt+++DoZSH4EZw7xbU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o44u2Y5l; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H7LFib5jndaiAYxI+i3CPhaEjpELK/hyZBNgG07HamtuGdjYlvAlhJ08LqAjeP/gaLMEUnUZ28HZSlueWeH1bc0MZJQeGVcuy/yNxc4F3yizXHwLW8nW2VxGUjbgkPeYEkwbdOJRoArnAx+oRcW8Ouvw0o3m3FktwVyaRZhn3LU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w2zGszsx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o44u2Y5l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EF9EC4CEEB;
-	Mon,  2 Jun 2025 14:59:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w2zGszsx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91A03C4CEEB;
+	Mon,  2 Jun 2025 14:59:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748876347;
-	bh=AJGLAyta5h4jt4GzvEGl9VvXrbXTxpUSvESSabxmsik=;
+	s=korg; t=1748876351;
+	bh=BYV0xfdzfHJ/wxb8wm300UfB+aCAy4FBTBd5LuClJZg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o44u2Y5lrAhRs1P13urribCljmr+kFcVK/yKbe4u1S7qYMSa5QIrheuKu0M//vA1m
-	 l1WfDZTdL+Krgc2mYpiNvcWN8oq4YqR5t0c+YJExvvr97Epe7UQRpgVrUALjD596mC
-	 4H11MB9lbSTbyXC80Wny6ScXVLspBsffH+HU3maM=
+	b=w2zGszsx+erxZLSNsy4xpbuOn2DW034cWYTJX/fbUuXci3GLLxSKOTQy+lFRRnCHD
+	 CsQeRb6MU7vNtc1Hv/4pGtqRa5JnpYnOdK6gqRfB+IOLlKCjo7yY73pqos4FLACgnt
+	 qxftmNC5hY2P3CAPSVS5g4AXuxrjZew4sp+cJYGc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ravi Bangoria <ravi.bangoria@amd.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 147/207] perf/amd/ibs: Fix perf_ibs_op.cnt_mask for CurCnt
-Date: Mon,  2 Jun 2025 15:48:39 +0200
-Message-ID: <20250602134304.480764081@linuxfoundation.org>
+Subject: [PATCH 5.15 148/207] wifi: rtw88: Dont use static local variable in rtw8822b_set_tx_power_index_by_rate
+Date: Mon,  2 Jun 2025 15:48:40 +0200
+Message-ID: <20250602134304.518414811@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134258.769974467@linuxfoundation.org>
 References: <20250602134258.769974467@linuxfoundation.org>
@@ -52,61 +51,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ravi Bangoria <ravi.bangoria@amd.com>
+From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
 
-[ Upstream commit 46dcf85566170d4528b842bf83ffc350d71771fa ]
+[ Upstream commit 00451eb3bec763f708e7e58326468c1e575e5a66 ]
 
-IBS Op uses two counters: MaxCnt and CurCnt. MaxCnt is programmed with
-the desired sample period. IBS hw generates sample when CurCnt reaches
-to MaxCnt. The size of these counter used to be 20 bits but later they
-were extended to 27 bits. The 7 bit extension is indicated by CPUID
-Fn8000_001B_EAX[6 / OpCntExt].
+Some users want to plug two identical USB devices at the same time.
+This static variable could theoretically cause them to use incorrect
+TX power values.
 
-perf_ibs->cnt_mask variable contains bit masks for MaxCnt and CurCnt.
-But IBS driver does not set upper 7 bits of CurCnt in cnt_mask even
-when OpCntExt CPUID bit is set. Fix this.
+Move the variable to the caller and pass a pointer to it to
+rtw8822b_set_tx_power_index_by_rate().
 
-IBS driver uses cnt_mask[CurCnt] bits only while disabling an event.
-Fortunately, CurCnt bits are not read from MSR while re-enabling the
-event, instead MaxCnt is programmed with desired period and CurCnt is
-set to 0. Hence, we did not see any issues so far.
-
-Signed-off-by: Ravi Bangoria <ravi.bangoria@amd.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Acked-by: Namhyung Kim <namhyung@kernel.org>
-Link: https://lkml.kernel.org/r/20250115054438.1021-5-ravi.bangoria@amd.com
+Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/8a60f581-0ab5-4d98-a97d-dd83b605008f@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/amd/ibs.c         | 3 ++-
- arch/x86/include/asm/perf_event.h | 1 +
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/wireless/realtek/rtw88/rtw8822b.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/arch/x86/events/amd/ibs.c b/arch/x86/events/amd/ibs.c
-index b605e08f9a8ef..2b83056029942 100644
---- a/arch/x86/events/amd/ibs.c
-+++ b/arch/x86/events/amd/ibs.c
-@@ -803,7 +803,8 @@ static __init int perf_event_ibs_init(void)
- 	if (ibs_caps & IBS_CAPS_OPCNTEXT) {
- 		perf_ibs_op.max_period  |= IBS_OP_MAX_CNT_EXT_MASK;
- 		perf_ibs_op.config_mask	|= IBS_OP_MAX_CNT_EXT_MASK;
--		perf_ibs_op.cnt_mask    |= IBS_OP_MAX_CNT_EXT_MASK;
-+		perf_ibs_op.cnt_mask    |= (IBS_OP_MAX_CNT_EXT_MASK |
-+					    IBS_OP_CUR_CNT_EXT_MASK);
- 	}
+diff --git a/drivers/net/wireless/realtek/rtw88/rtw8822b.c b/drivers/net/wireless/realtek/rtw88/rtw8822b.c
+index 247f26e3e8192..63ecac7201a12 100644
+--- a/drivers/net/wireless/realtek/rtw88/rtw8822b.c
++++ b/drivers/net/wireless/realtek/rtw88/rtw8822b.c
+@@ -954,11 +954,11 @@ static void rtw8822b_query_rx_desc(struct rtw_dev *rtwdev, u8 *rx_desc,
+ }
  
- 	ret = perf_ibs_pmu_init(&perf_ibs_op, "ibs_op");
-diff --git a/arch/x86/include/asm/perf_event.h b/arch/x86/include/asm/perf_event.h
-index 0e4efcde07831..cbfca9d2c419b 100644
---- a/arch/x86/include/asm/perf_event.h
-+++ b/arch/x86/include/asm/perf_event.h
-@@ -417,6 +417,7 @@ struct pebs_xmm {
-  */
- #define IBS_OP_CUR_CNT		(0xFFF80ULL<<32)
- #define IBS_OP_CUR_CNT_RAND	(0x0007FULL<<32)
-+#define IBS_OP_CUR_CNT_EXT_MASK	(0x7FULL<<52)
- #define IBS_OP_CNT_CTL		(1ULL<<19)
- #define IBS_OP_VAL		(1ULL<<18)
- #define IBS_OP_ENABLE		(1ULL<<17)
+ static void
+-rtw8822b_set_tx_power_index_by_rate(struct rtw_dev *rtwdev, u8 path, u8 rs)
++rtw8822b_set_tx_power_index_by_rate(struct rtw_dev *rtwdev, u8 path,
++				    u8 rs, u32 *phy_pwr_idx)
+ {
+ 	struct rtw_hal *hal = &rtwdev->hal;
+ 	static const u32 offset_txagc[2] = {0x1d00, 0x1d80};
+-	static u32 phy_pwr_idx;
+ 	u8 rate, rate_idx, pwr_index, shift;
+ 	int j;
+ 
+@@ -966,12 +966,12 @@ rtw8822b_set_tx_power_index_by_rate(struct rtw_dev *rtwdev, u8 path, u8 rs)
+ 		rate = rtw_rate_section[rs][j];
+ 		pwr_index = hal->tx_pwr_tbl[path][rate];
+ 		shift = rate & 0x3;
+-		phy_pwr_idx |= ((u32)pwr_index << (shift * 8));
++		*phy_pwr_idx |= ((u32)pwr_index << (shift * 8));
+ 		if (shift == 0x3) {
+ 			rate_idx = rate & 0xfc;
+ 			rtw_write32(rtwdev, offset_txagc[path] + rate_idx,
+-				    phy_pwr_idx);
+-			phy_pwr_idx = 0;
++				    *phy_pwr_idx);
++			*phy_pwr_idx = 0;
+ 		}
+ 	}
+ }
+@@ -979,11 +979,13 @@ rtw8822b_set_tx_power_index_by_rate(struct rtw_dev *rtwdev, u8 path, u8 rs)
+ static void rtw8822b_set_tx_power_index(struct rtw_dev *rtwdev)
+ {
+ 	struct rtw_hal *hal = &rtwdev->hal;
++	u32 phy_pwr_idx = 0;
+ 	int rs, path;
+ 
+ 	for (path = 0; path < hal->rf_path_num; path++) {
+ 		for (rs = 0; rs < RTW_RATE_SECTION_MAX; rs++)
+-			rtw8822b_set_tx_power_index_by_rate(rtwdev, path, rs);
++			rtw8822b_set_tx_power_index_by_rate(rtwdev, path, rs,
++							    &phy_pwr_idx);
+ 	}
+ }
+ 
 -- 
 2.39.5
 
