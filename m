@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 830F422F743;
-	Mon,  2 Jun 2025 15:15:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8762F15CD55;
+	Mon,  2 Jun 2025 15:15:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748877327; cv=none; b=GumA5UzNSgdq9ql2QW7rzHP8GALN0+yCrj+9cSduhjM2WC9k6jFXnXHCwyh41s+tK6G+yXiW3lT65HQHzTV53nozA7SdEk5KmYrLlwe06T9hsIdKhyHAgyqI0+0BavLi7aySssJGRtIDb35xQ8vtWY6rX/CM+k3FoMyVZcUl3No=
+	t=1748877330; cv=none; b=TmlrrKzfvIQWyXR89vXWyQeg/+wuqTcQDDZeS4APM56+3n1PtRCSS/yNjdptVC+qkonVx5s7YpkiGTvFdxkkxvBPUjLHrqknCJNhV81mYMBiU4pXLRH1CzCWqpm4EqZvhj99cwcGgmSmh+GrnDq0cjAvia3lF+J/C/ibAuiJcXU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748877327; c=relaxed/simple;
-	bh=rL7V0smPxcurZD7jx+6P73NKpB1HxrAoLnh66QQmQwg=;
+	s=arc-20240116; t=1748877330; c=relaxed/simple;
+	bh=QlHdtWePQza0JGb0ej+ixaKr0W9ddjyaXXsQ489sR1o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=irIB6TuXAF8fmKdKcZvttzy25/zKgZ0oobkXK8QtfdLS1FyXyeHMBz26gOKyvJV3CXeKBIf9EGwaMfdcYDQCL/7rwkGhIbJQw11Lt1ds37LE/+Aqf/8KKv1NGAuWTyqHETHfNLJRQz3N/9TdA6X8YKrXKgTOoIyNIxpXJWw8gh0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ReMAS5sY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LoW2Np31feM9z9EHUwhdc8XP0N1eaZCTdYfTOCDnrCyHF5VXNZyBGPeAtPObIPdYhDJCPKORtMVq/QCy4X8P0FnPcrzKDw9pG9dobz5GJE94hjp6b/fAaHrZbUUaNJKXkODgzRHSjPbN69TvWTWToXVfhlyFW5HQvbvCDD+pu68=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tD//uAo1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ReMAS5sY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7C78C4CEEB;
-	Mon,  2 Jun 2025 15:15:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tD//uAo1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FECEC4CEEE;
+	Mon,  2 Jun 2025 15:15:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748877327;
-	bh=rL7V0smPxcurZD7jx+6P73NKpB1HxrAoLnh66QQmQwg=;
+	s=korg; t=1748877330;
+	bh=QlHdtWePQza0JGb0ej+ixaKr0W9ddjyaXXsQ489sR1o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ReMAS5sYFEBtqGg9PmOLlnasjTjbhppVeSsYyCybiJG/ZEHxbbYCBeL6BOjnMZpP7
-	 b7MxO+Llht7UirXnmsF4yUikXFhHhmFVSZR6ZrEJBK0EK/x58LMVB3USAFLFEaX/jc
-	 zTD/PTRzfPGOae5d4blMJu7x3qd4PJd+atLtK2BQ=
+	b=tD//uAo14gLH14NHsBfODfTaIM90n7Lchb4+g4jJwRkQHlz6+Z2Nw6fB9nQ/RMb/y
+	 vT5cyrY38d9tFX5u1299o3lS+7PUo1jpyttsXyf+Ds1Gq+z2xhBcQjNwi1X70uHecj
+	 6l504WaUMMgl4rsvH+01z5vy3kEpVPc+LKHVfgbs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
 	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 212/325] wifi: rtw88: Dont use static local variable in rtw8822b_set_tx_power_index_by_rate
-Date: Mon,  2 Jun 2025 15:48:08 +0200
-Message-ID: <20250602134328.412864772@linuxfoundation.org>
+Subject: [PATCH 6.1 213/325] wifi: rtw89: add wiphy_lock() to work that isnt held wiphy_lock() yet
+Date: Mon,  2 Jun 2025 15:48:09 +0200
+Message-ID: <20250602134328.453390738@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134319.723650984@linuxfoundation.org>
 References: <20250602134319.723650984@linuxfoundation.org>
@@ -51,75 +50,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+From: Ping-Ke Shih <pkshih@realtek.com>
 
-[ Upstream commit 00451eb3bec763f708e7e58326468c1e575e5a66 ]
+[ Upstream commit ebfc9199df05d37b67f4d1b7ee997193f3d2e7c8 ]
 
-Some users want to plug two identical USB devices at the same time.
-This static variable could theoretically cause them to use incorrect
-TX power values.
+To ensure where are protected by driver mutex can also be protected by
+wiphy_lock(), so afterward we can remove driver mutex safely.
 
-Move the variable to the caller and pass a pointer to it to
-rtw8822b_set_tx_power_index_by_rate().
-
-Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
 Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/8a60f581-0ab5-4d98-a97d-dd83b605008f@gmail.com
+Link: https://patch.msgid.link/20250122060310.31976-2-pkshih@realtek.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw88/rtw8822b.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ drivers/net/wireless/realtek/rtw89/regd.c | 2 ++
+ drivers/net/wireless/realtek/rtw89/ser.c  | 4 ++++
+ 2 files changed, 6 insertions(+)
 
-diff --git a/drivers/net/wireless/realtek/rtw88/rtw8822b.c b/drivers/net/wireless/realtek/rtw88/rtw8822b.c
-index 690e35c98f6e5..0b071a116c58e 100644
---- a/drivers/net/wireless/realtek/rtw88/rtw8822b.c
-+++ b/drivers/net/wireless/realtek/rtw88/rtw8822b.c
-@@ -957,11 +957,11 @@ static void rtw8822b_query_rx_desc(struct rtw_dev *rtwdev, u8 *rx_desc,
+diff --git a/drivers/net/wireless/realtek/rtw89/regd.c b/drivers/net/wireless/realtek/rtw89/regd.c
+index 6e5a740b128f0..2d31193fcc87d 100644
+--- a/drivers/net/wireless/realtek/rtw89/regd.c
++++ b/drivers/net/wireless/realtek/rtw89/regd.c
+@@ -334,6 +334,7 @@ void rtw89_regd_notifier(struct wiphy *wiphy, struct regulatory_request *request
+ 	struct ieee80211_hw *hw = wiphy_to_ieee80211_hw(wiphy);
+ 	struct rtw89_dev *rtwdev = hw->priv;
+ 
++	wiphy_lock(wiphy);
+ 	mutex_lock(&rtwdev->mutex);
+ 	rtw89_leave_ps_mode(rtwdev);
+ 
+@@ -350,4 +351,5 @@ void rtw89_regd_notifier(struct wiphy *wiphy, struct regulatory_request *request
+ 
+ exit:
+ 	mutex_unlock(&rtwdev->mutex);
++	wiphy_unlock(wiphy);
  }
+diff --git a/drivers/net/wireless/realtek/rtw89/ser.c b/drivers/net/wireless/realtek/rtw89/ser.c
+index afb1b41e1a9a5..f5dacdc4d11ab 100644
+--- a/drivers/net/wireless/realtek/rtw89/ser.c
++++ b/drivers/net/wireless/realtek/rtw89/ser.c
+@@ -153,9 +153,11 @@ static void ser_state_run(struct rtw89_ser *ser, u8 evt)
+ 	rtw89_debug(rtwdev, RTW89_DBG_SER, "ser: %s receive %s\n",
+ 		    ser_st_name(ser), ser_ev_name(ser, evt));
  
- static void
--rtw8822b_set_tx_power_index_by_rate(struct rtw_dev *rtwdev, u8 path, u8 rs)
-+rtw8822b_set_tx_power_index_by_rate(struct rtw_dev *rtwdev, u8 path,
-+				    u8 rs, u32 *phy_pwr_idx)
- {
- 	struct rtw_hal *hal = &rtwdev->hal;
- 	static const u32 offset_txagc[2] = {0x1d00, 0x1d80};
--	static u32 phy_pwr_idx;
- 	u8 rate, rate_idx, pwr_index, shift;
- 	int j;
++	wiphy_lock(rtwdev->hw->wiphy);
+ 	mutex_lock(&rtwdev->mutex);
+ 	rtw89_leave_lps(rtwdev);
+ 	mutex_unlock(&rtwdev->mutex);
++	wiphy_unlock(rtwdev->hw->wiphy);
  
-@@ -969,12 +969,12 @@ rtw8822b_set_tx_power_index_by_rate(struct rtw_dev *rtwdev, u8 path, u8 rs)
- 		rate = rtw_rate_section[rs][j];
- 		pwr_index = hal->tx_pwr_tbl[path][rate];
- 		shift = rate & 0x3;
--		phy_pwr_idx |= ((u32)pwr_index << (shift * 8));
-+		*phy_pwr_idx |= ((u32)pwr_index << (shift * 8));
- 		if (shift == 0x3) {
- 			rate_idx = rate & 0xfc;
- 			rtw_write32(rtwdev, offset_txagc[path] + rate_idx,
--				    phy_pwr_idx);
--			phy_pwr_idx = 0;
-+				    *phy_pwr_idx);
-+			*phy_pwr_idx = 0;
- 		}
- 	}
+ 	ser->st_tbl[ser->state].st_func(ser, evt);
  }
-@@ -982,11 +982,13 @@ rtw8822b_set_tx_power_index_by_rate(struct rtw_dev *rtwdev, u8 path, u8 rs)
- static void rtw8822b_set_tx_power_index(struct rtw_dev *rtwdev)
- {
- 	struct rtw_hal *hal = &rtwdev->hal;
-+	u32 phy_pwr_idx = 0;
- 	int rs, path;
+@@ -624,9 +626,11 @@ static void ser_l2_reset_st_hdl(struct rtw89_ser *ser, u8 evt)
  
- 	for (path = 0; path < hal->rf_path_num; path++) {
- 		for (rs = 0; rs < RTW_RATE_SECTION_MAX; rs++)
--			rtw8822b_set_tx_power_index_by_rate(rtwdev, path, rs);
-+			rtw8822b_set_tx_power_index_by_rate(rtwdev, path, rs,
-+							    &phy_pwr_idx);
- 	}
- }
+ 	switch (evt) {
+ 	case SER_EV_STATE_IN:
++		wiphy_lock(rtwdev->hw->wiphy);
+ 		mutex_lock(&rtwdev->mutex);
+ 		ser_l2_reset_st_pre_hdl(ser);
+ 		mutex_unlock(&rtwdev->mutex);
++		wiphy_unlock(rtwdev->hw->wiphy);
  
+ 		ieee80211_restart_hw(rtwdev->hw);
+ 		ser_set_alarm(ser, SER_RECFG_TIMEOUT, SER_EV_L2_RECFG_TIMEOUT);
 -- 
 2.39.5
 
