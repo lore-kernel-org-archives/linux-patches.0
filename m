@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03A5B22A808;
-	Mon,  2 Jun 2025 15:14:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C2DB230BEF;
+	Mon,  2 Jun 2025 15:15:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748877299; cv=none; b=lvFJxUo4tCT5CYdIZQjHIqrujGd+pP9YdoMQRlqmpSyINkoFlg1VowfLL/vUS2pyhVR3fCfIJ1/ERk2liqZODeei1cMsWELCQEO3swDjbhHoEw5LDzqFShjee9+c9Zt8n6DkBpmNuvenG0zNPOjE+vLlCE4OjV5RkzQGhUoZssU=
+	t=1748877302; cv=none; b=lw29XdNTD7yQ/yVUtyHgxtbsGLUI1i5g6ZTu72Ce/JVOlFYQP765dljLHwYIdFDu1DeZhMuIq/PPJ2idB7Z6AcKaxCdnpr0o7ZTfZ6Zw+jBIiwkiMPEmpDauWGxt4gwKJVrNZ0mKdSQFn35ijqAiFzzWA1o2kVq88JgXTeQMV2c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748877299; c=relaxed/simple;
-	bh=eKBMNlLk2GhqeK4T+JkVtprvbiqTAj4s0LknRFo7+S8=;
+	s=arc-20240116; t=1748877302; c=relaxed/simple;
+	bh=tfdSYgE0R2zIbxngj4KBpGeMelKp6tlJbsjb00xBC3E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TG+3kivvKe9T9LNj4rn4yLfKBmCGWY6MLxgw3uZW79gjv/2jsipwa8dwsPAamwVztdsVt3ObrQWUTlMqeKwcg6A/NKxQVCrjSY/x7MZ4vc17UEFhvNA5vbaB7TGhpfziSz2LkWOpqpKkDlxR4+07LhT5Q3Xa2dW75pZiFCejEwQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cFwxwFha; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fxGsiYoTjI9hNbTf7wpshhyoAMEM/zeXzrYhLBWT5z/jXPkhdXJtKMKRntexsoDk6DDNS0a6qdaIoLPy8I662tyU2a2hQM8sAS9tPXTatVqaEk4+55a8gzmX960t3SaLbmTa1JlpxfrB4RAzYfq8gUHPjNS/uphbnm6yGQxOsBU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w5f8yZZS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cFwxwFha"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 802B8C4CEEB;
-	Mon,  2 Jun 2025 15:14:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w5f8yZZS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91B43C4CEEB;
+	Mon,  2 Jun 2025 15:15:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748877298;
-	bh=eKBMNlLk2GhqeK4T+JkVtprvbiqTAj4s0LknRFo7+S8=;
+	s=korg; t=1748877302;
+	bh=tfdSYgE0R2zIbxngj4KBpGeMelKp6tlJbsjb00xBC3E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cFwxwFha/pyscc12b8ALQIEOJpqD4if+gCkF7/NwwYYuJHlHi8PrMqLvnDGVi28r9
-	 9cyGHApAFSi2glJp+brg4avPt2VRtLO8yT0kaW6LAkZKANnmaudFU7IvAr4+5+r4+8
-	 IL0VOn2CicD3NQn7sIbFTZVV/lKgjO51wCgLRPKI=
+	b=w5f8yZZSj7CtC+gFqz5BHMWKHYHm34O3a5vLmpdj7nEwFp1xSm1eHFu0IX9N/pI2e
+	 brD927pOcg468bvmDi2P5HstJ6QBNCctYMy6N0ckggJ86Qx0Yo5NachkApEumWcOA/
+	 /VwokC8CaYhtFnYCuw4VeeTm60AthJewSfgnFZ7E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 233/325] dmaengine: idxd: Fix allowing write() from different address spaces
-Date: Mon,  2 Jun 2025 15:48:29 +0200
-Message-ID: <20250602134329.251132440@linuxfoundation.org>
+Subject: [PATCH 6.1 207/325] ASoC: codecs: pcm3168a: Allow for 24-bit in provider mode
+Date: Mon,  2 Jun 2025 15:48:03 +0200
+Message-ID: <20250602134328.201367611@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134319.723650984@linuxfoundation.org>
 References: <20250602134319.723650984@linuxfoundation.org>
@@ -52,57 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vinicius Costa Gomes <vinicius.gomes@intel.com>
+From: Cezary Rojewski <cezary.rojewski@intel.com>
 
-[ Upstream commit 8dfa57aabff625bf445548257f7711ef294cd30e ]
+[ Upstream commit 7d92a38d67e5d937b64b20aa4fd14451ee1772f3 ]
 
-Check if the process submitting the descriptor belongs to the same
-address space as the one that opened the file, reject otherwise.
+As per codec device specification, 24-bit is allowed in provider mode.
+Update the code to reflect that.
 
-Fixes: 6827738dc684 ("dmaengine: idxd: add a write() method for applications to submit work")
-Signed-off-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://lore.kernel.org/r/20250421170337.3008875-1-dave.jiang@intel.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Link: https://patch.msgid.link/20250203141051.2361323-4-cezary.rojewski@intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/idxd/cdev.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ sound/soc/codecs/pcm3168a.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/dma/idxd/cdev.c b/drivers/dma/idxd/cdev.c
-index c7aa47f01df02..186f005bfa8fd 100644
---- a/drivers/dma/idxd/cdev.c
-+++ b/drivers/dma/idxd/cdev.c
-@@ -240,6 +240,9 @@ static int idxd_cdev_mmap(struct file *filp, struct vm_area_struct *vma)
- 	if (!idxd->user_submission_safe && !capable(CAP_SYS_RAWIO))
- 		return -EPERM;
- 
-+	if (current->mm != ctx->mm)
-+		return -EPERM;
-+
- 	rc = check_vma(wq, vma, __func__);
- 	if (rc < 0)
- 		return rc;
-@@ -306,6 +309,9 @@ static ssize_t idxd_cdev_write(struct file *filp, const char __user *buf, size_t
- 	ssize_t written = 0;
- 	int i;
- 
-+	if (current->mm != ctx->mm)
-+		return -EPERM;
-+
- 	for (i = 0; i < len/sizeof(struct dsa_hw_desc); i++) {
- 		int rc = idxd_submit_user_descriptor(ctx, udesc + i);
- 
-@@ -326,6 +332,9 @@ static __poll_t idxd_cdev_poll(struct file *filp,
- 	struct idxd_device *idxd = wq->idxd;
- 	__poll_t out = 0;
- 
-+	if (current->mm != ctx->mm)
-+		return -EPERM;
-+
- 	poll_wait(filp, &wq->err_queue, wait);
- 	spin_lock(&idxd->dev_lock);
- 	if (idxd->sw_err.valid)
+diff --git a/sound/soc/codecs/pcm3168a.c b/sound/soc/codecs/pcm3168a.c
+index 9d6431338fb71..329549936bd5c 100644
+--- a/sound/soc/codecs/pcm3168a.c
++++ b/sound/soc/codecs/pcm3168a.c
+@@ -494,9 +494,9 @@ static int pcm3168a_hw_params(struct snd_pcm_substream *substream,
+ 		}
+ 		break;
+ 	case 24:
+-		if (provider_mode || (format == SND_SOC_DAIFMT_DSP_A) ||
+-		    		     (format == SND_SOC_DAIFMT_DSP_B)) {
+-			dev_err(component->dev, "24-bit slots not supported in provider mode, or consumer mode using DSP\n");
++		if (!provider_mode && ((format == SND_SOC_DAIFMT_DSP_A) ||
++				       (format == SND_SOC_DAIFMT_DSP_B))) {
++			dev_err(component->dev, "24-bit slots not supported in consumer mode using DSP\n");
+ 			return -EINVAL;
+ 		}
+ 		break;
 -- 
 2.39.5
 
