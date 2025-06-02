@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F5681DE881;
-	Mon,  2 Jun 2025 14:17:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02CCC1DE881;
+	Mon,  2 Jun 2025 14:17:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748873858; cv=none; b=Yjnvj5yhNdxfhXd0B2AVWP1OXjTGz0P8tYtEb5iswy8V9n3OtXbEbPrxkqAGejiK5Cb/bq7G2DhXUXjiu3UcvgDjj6Vdx/kGW6eSQgX0H0cX/H5Mnbe0xPLZ1Cuvw3ktHqSS1iI91l493zCO/S9KDwQN6L2Mh4jcxzNmGFqknjE=
+	t=1748873862; cv=none; b=pOGDba+qKTdiQcLHuWNeaMNYDuMTRpInA/rWr0mDPqZeY9ed1h1QZjcLcwdyGFfK1PbvJiLqGQbEAE0UMWFBEfYCWr5tOYwgj/bQGrwlshQa7RYQ0tUVjAHaehfACLZCFFI/tlV/Q7de5sbUJ6BE/ev/+yYzuNHPsb/k3A5TGkQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748873858; c=relaxed/simple;
-	bh=Vsm+ynkPJzTMBzIsJ356KaoSR6oQWO/UBmTOunqgRVY=;
+	s=arc-20240116; t=1748873862; c=relaxed/simple;
+	bh=Cs33j0J9hzy2k5Z7T8RQq2bEKaHs4HMQFrlWnr5RfJM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jQMLrw2B7J9JEQoRHs0p7KUAqjZh5wrMmZ7B1o9jMRrqcE8SdB6VSHF5g4lg70dcxQB1n2KwBZouvg+mN5A4TO+ckgW0xEq5Cs6udz4RRDJZi8EjAsaklqJArdf8SolZaH7qYW/EDOBh+fvL5gcMGuWDV8K0ngOrYPNwFqX858I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YqO38wQP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cCRXFtk3ekcpJ2mOvk9L2yVDFdwvPvidr6DSajSCzrRF7HWC8Ry1emDtDnbyz+U2Y6tafZSEP2PJkf8gtagquzd3w/0LO3/a+RUo9ODBB4iz7knbvlkpm0hd9PdnTrZlem92SwFjD8m4ENCBUnpK9UV4Rn69bX/A++XnjeTmnRM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fMm3jfPO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YqO38wQP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20DA2C4CEEB;
-	Mon,  2 Jun 2025 14:17:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fMm3jfPO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3570FC4CEEB;
+	Mon,  2 Jun 2025 14:17:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748873858;
-	bh=Vsm+ynkPJzTMBzIsJ356KaoSR6oQWO/UBmTOunqgRVY=;
+	s=korg; t=1748873861;
+	bh=Cs33j0J9hzy2k5Z7T8RQq2bEKaHs4HMQFrlWnr5RfJM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YqO38wQPQpD+/LXw86SsSKKaAyXKWW9FFvsqkgoDar+mRQJ14oid3C/tSPG7PWoUa
-	 vEpBVDgA1shXHmSwJVGet9pGgAXSqUavMXQcmhh/rJ6JrXWuyJK3WH7ikSXsfC9vBD
-	 8lyacXmH8y6jMnSr3XEuOKryljyaboCWZHgK9KbU=
+	b=fMm3jfPO4PXNyBTIOShPRUqqmNJGJXPbAzIO6ZVLZVRoO4F/pFgCHSgXxHVdW2rIf
+	 Ss0bNwYs2ogzbktsEWvrM6Stiq53RxYHiIoD7HhKVLmpOKPz5XWtm/cOqM8n5OL6ye
+	 N2k8qMTAimwAD08B6Thaot0LxGCNdB7wZA3eId+Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Strauss <michael.strauss@amd.com>,
-	Wenjing Liu <wenjing.liu@amd.com>,
-	George Shen <george.shen@amd.com>,
-	Zaeem Mohamed <zaeem.mohamed@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 246/444] drm/amd/display: Update CR AUX RD interval interpretation
-Date: Mon,  2 Jun 2025 15:45:10 +0200
-Message-ID: <20250602134350.903951107@linuxfoundation.org>
+Subject: [PATCH 6.6 237/444] clk: qcom: clk-alpha-pll: Do not use random stack value for recalc rate
+Date: Mon,  2 Jun 2025 15:45:01 +0200
+Message-ID: <20250602134350.528652874@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -55,69 +51,140 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: George Shen <george.shen@amd.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 6a7fde433231c18164c117592d3e18ced648ad58 ]
+[ Upstream commit 7a243e1b814a02ab40793026ef64223155d86395 ]
 
-[Why]
-DP spec updated to have the CR AUX RD interval match the EQ AUX RD
-interval interpretation of DPCD 0000Eh/0220Eh for 8b/10b non-LTTPR mode
-and LTTPR transparent mode cases.
+If regmap_read() fails, random stack value was used in calculating new
+frequency in recalc_rate() callbacks.  Such failure is really not
+expected as these are all MMIO reads, however code should be here
+correct and bail out.  This also avoids possible warning on
+uninitialized value.
 
-[How]
-Update interpretation of DPCD 0000Eh/0220Eh for CR AUX RD interval
-during 8b/10b link training.
-
-Reviewed-by: Michael Strauss <michael.strauss@amd.com>
-Reviewed-by: Wenjing Liu <wenjing.liu@amd.com>
-Signed-off-by: George Shen <george.shen@amd.com>
-Signed-off-by: Zaeem Mohamed <zaeem.mohamed@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20250212-b4-clk-qcom-clean-v3-1-499f37444f5d@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../display/dc/link/protocols/link_dp_training_8b_10b.c    | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/clk/qcom/clk-alpha-pll.c | 52 ++++++++++++++++++++++----------
+ 1 file changed, 36 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training_8b_10b.c b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training_8b_10b.c
-index 2b4c15b0b4070..52261e7c11c0b 100644
---- a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training_8b_10b.c
-+++ b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training_8b_10b.c
-@@ -36,7 +36,8 @@
- 	link->ctx->logger
+diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
+index 80aadafffacdb..732ca46703ba3 100644
+--- a/drivers/clk/qcom/clk-alpha-pll.c
++++ b/drivers/clk/qcom/clk-alpha-pll.c
+@@ -645,14 +645,19 @@ clk_alpha_pll_recalc_rate(struct clk_hw *hw, unsigned long parent_rate)
+ 	struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
+ 	u32 alpha_width = pll_alpha_width(pll);
  
- static int32_t get_cr_training_aux_rd_interval(struct dc_link *link,
--		const struct dc_link_settings *link_settings)
-+		const struct dc_link_settings *link_settings,
-+		enum lttpr_mode lttpr_mode)
- {
- 	union training_aux_rd_interval training_rd_interval;
- 	uint32_t wait_in_micro_secs = 100;
-@@ -49,6 +50,8 @@ static int32_t get_cr_training_aux_rd_interval(struct dc_link *link,
- 				DP_TRAINING_AUX_RD_INTERVAL,
- 				(uint8_t *)&training_rd_interval,
- 				sizeof(training_rd_interval));
-+		if (lttpr_mode != LTTPR_MODE_NON_TRANSPARENT)
-+			wait_in_micro_secs = 400;
- 		if (training_rd_interval.bits.TRAINIG_AUX_RD_INTERVAL)
- 			wait_in_micro_secs = training_rd_interval.bits.TRAINIG_AUX_RD_INTERVAL * 4000;
- 	}
-@@ -110,7 +113,6 @@ void decide_8b_10b_training_settings(
- 	 */
- 	lt_settings->link_settings.link_spread = link->dp_ss_off ?
- 			LINK_SPREAD_DISABLED : LINK_SPREAD_05_DOWNSPREAD_30KHZ;
--	lt_settings->cr_pattern_time = get_cr_training_aux_rd_interval(link, link_setting);
- 	lt_settings->eq_pattern_time = get_eq_training_aux_rd_interval(link, link_setting);
- 	lt_settings->pattern_for_cr = decide_cr_training_pattern(link_setting);
- 	lt_settings->pattern_for_eq = decide_eq_training_pattern(link, link_setting);
-@@ -119,6 +121,7 @@ void decide_8b_10b_training_settings(
- 	lt_settings->disallow_per_lane_settings = true;
- 	lt_settings->always_match_dpcd_with_hw_lane_settings = true;
- 	lt_settings->lttpr_mode = dp_decide_8b_10b_lttpr_mode(link);
-+	lt_settings->cr_pattern_time = get_cr_training_aux_rd_interval(link, link_setting, lt_settings->lttpr_mode);
- 	dp_hw_to_dpcd_lane_settings(lt_settings, lt_settings->hw_lane_settings, lt_settings->dpcd_lane_settings);
+-	regmap_read(pll->clkr.regmap, PLL_L_VAL(pll), &l);
++	if (regmap_read(pll->clkr.regmap, PLL_L_VAL(pll), &l))
++		return 0;
++
++	if (regmap_read(pll->clkr.regmap, PLL_USER_CTL(pll), &ctl))
++		return 0;
+ 
+-	regmap_read(pll->clkr.regmap, PLL_USER_CTL(pll), &ctl);
+ 	if (ctl & PLL_ALPHA_EN) {
+-		regmap_read(pll->clkr.regmap, PLL_ALPHA_VAL(pll), &low);
++		if (regmap_read(pll->clkr.regmap, PLL_ALPHA_VAL(pll), &low))
++			return 0;
+ 		if (alpha_width > 32) {
+-			regmap_read(pll->clkr.regmap, PLL_ALPHA_VAL_U(pll),
+-				    &high);
++			if (regmap_read(pll->clkr.regmap, PLL_ALPHA_VAL_U(pll),
++					&high))
++				return 0;
+ 			a = (u64)high << 32 | low;
+ 		} else {
+ 			a = low & GENMASK(alpha_width - 1, 0);
+@@ -844,8 +849,11 @@ alpha_pll_huayra_recalc_rate(struct clk_hw *hw, unsigned long parent_rate)
+ 	struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
+ 	u32 l, alpha = 0, ctl, alpha_m, alpha_n;
+ 
+-	regmap_read(pll->clkr.regmap, PLL_L_VAL(pll), &l);
+-	regmap_read(pll->clkr.regmap, PLL_USER_CTL(pll), &ctl);
++	if (regmap_read(pll->clkr.regmap, PLL_L_VAL(pll), &l))
++		return 0;
++
++	if (regmap_read(pll->clkr.regmap, PLL_USER_CTL(pll), &ctl))
++		return 0;
+ 
+ 	if (ctl & PLL_ALPHA_EN) {
+ 		regmap_read(pll->clkr.regmap, PLL_ALPHA_VAL(pll), &alpha);
+@@ -1039,8 +1047,11 @@ clk_trion_pll_recalc_rate(struct clk_hw *hw, unsigned long parent_rate)
+ 	struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
+ 	u32 l, frac, alpha_width = pll_alpha_width(pll);
+ 
+-	regmap_read(pll->clkr.regmap, PLL_L_VAL(pll), &l);
+-	regmap_read(pll->clkr.regmap, PLL_ALPHA_VAL(pll), &frac);
++	if (regmap_read(pll->clkr.regmap, PLL_L_VAL(pll), &l))
++		return 0;
++
++	if (regmap_read(pll->clkr.regmap, PLL_ALPHA_VAL(pll), &frac))
++		return 0;
+ 
+ 	return alpha_pll_calc_rate(parent_rate, l, frac, alpha_width);
  }
+@@ -1098,7 +1109,8 @@ clk_alpha_pll_postdiv_recalc_rate(struct clk_hw *hw, unsigned long parent_rate)
+ 	struct clk_alpha_pll_postdiv *pll = to_clk_alpha_pll_postdiv(hw);
+ 	u32 ctl;
  
+-	regmap_read(pll->clkr.regmap, PLL_USER_CTL(pll), &ctl);
++	if (regmap_read(pll->clkr.regmap, PLL_USER_CTL(pll), &ctl))
++		return 0;
+ 
+ 	ctl >>= PLL_POST_DIV_SHIFT;
+ 	ctl &= PLL_POST_DIV_MASK(pll);
+@@ -1314,8 +1326,11 @@ static unsigned long alpha_pll_fabia_recalc_rate(struct clk_hw *hw,
+ 	struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
+ 	u32 l, frac, alpha_width = pll_alpha_width(pll);
+ 
+-	regmap_read(pll->clkr.regmap, PLL_L_VAL(pll), &l);
+-	regmap_read(pll->clkr.regmap, PLL_FRAC(pll), &frac);
++	if (regmap_read(pll->clkr.regmap, PLL_L_VAL(pll), &l))
++		return 0;
++
++	if (regmap_read(pll->clkr.regmap, PLL_FRAC(pll), &frac))
++		return 0;
+ 
+ 	return alpha_pll_calc_rate(parent_rate, l, frac, alpha_width);
+ }
+@@ -1465,7 +1480,8 @@ clk_trion_pll_postdiv_recalc_rate(struct clk_hw *hw, unsigned long parent_rate)
+ 	struct regmap *regmap = pll->clkr.regmap;
+ 	u32 i, div = 1, val;
+ 
+-	regmap_read(regmap, PLL_USER_CTL(pll), &val);
++	if (regmap_read(regmap, PLL_USER_CTL(pll), &val))
++		return 0;
+ 
+ 	val >>= pll->post_div_shift;
+ 	val &= PLL_POST_DIV_MASK(pll);
+@@ -2339,9 +2355,12 @@ static unsigned long alpha_pll_lucid_evo_recalc_rate(struct clk_hw *hw,
+ 	struct regmap *regmap = pll->clkr.regmap;
+ 	u32 l, frac;
+ 
+-	regmap_read(regmap, PLL_L_VAL(pll), &l);
++	if (regmap_read(regmap, PLL_L_VAL(pll), &l))
++		return 0;
+ 	l &= LUCID_EVO_PLL_L_VAL_MASK;
+-	regmap_read(regmap, PLL_ALPHA_VAL(pll), &frac);
++
++	if (regmap_read(regmap, PLL_ALPHA_VAL(pll), &frac))
++		return 0;
+ 
+ 	return alpha_pll_calc_rate(parent_rate, l, frac, pll_alpha_width(pll));
+ }
+@@ -2416,7 +2435,8 @@ static unsigned long clk_rivian_evo_pll_recalc_rate(struct clk_hw *hw,
+ 	struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
+ 	u32 l;
+ 
+-	regmap_read(pll->clkr.regmap, PLL_L_VAL(pll), &l);
++	if (regmap_read(pll->clkr.regmap, PLL_L_VAL(pll), &l))
++		return 0;
+ 
+ 	return parent_rate * l;
+ }
 -- 
 2.39.5
 
