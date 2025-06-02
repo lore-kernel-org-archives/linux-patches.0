@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F8F5242D9A;
-	Mon,  2 Jun 2025 14:04:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 658DC22578D;
+	Mon,  2 Jun 2025 14:04:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748873043; cv=none; b=p+k7pfzk40URREJrv++REhxBAYQkdY7IOZi2sRo+djs+bjnbe/PWTqJiqqJNBiYea+u0Tl/fmJO214t6yHdXd0inRQGTonlppJwSRHfa00+0vph9kqcQ5jyb6Rt19Pi91q9yMvq/6j4ltYbHHz+j7N7X5qiW7QCQ1EWLeFS0Z5w=
+	t=1748873046; cv=none; b=tI+ry8MaKCZA7oq/2bJE7NTCmcGrn/OAMWMI3QQpsKiVg6gHs5UpP6KdrfgTmfEdUj4c3EHG5MkuWkIiJx1441h6mvkuHmmeDBxguQ0ihNo6bl1vgRIQ3zy8qx8SCTBSb9zgd7ijAqqzwwjyYNCN+tTnvtqtOsLH1bXEo/P8IL4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748873043; c=relaxed/simple;
-	bh=4GDeteSjj5SA9uAZndmm1mcx6C+yADpYp18VZ7IODRE=;
+	s=arc-20240116; t=1748873046; c=relaxed/simple;
+	bh=/5J0F9AMB02SOB8fDoxCpx+dz0pYtXmp6Ga8QQ+A5nM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZpGW31o9KTB0yc06Fe/YkqgJlotd6WvxxfcFqFloxcG8Mg/DzeRBg2/wQ8A/HwNO0fSwHx0ZG7JwK/P0XQbkYojmoTktluie4gP5BJW9+aMmOXDnL2DYCGZj+wEYlvZJnH6BivCnTwrAd5ZiuvSK9pcaUSjp7n5sDVHXzEs+F7Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L6MgNSjA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ID0aLy6OKcKYbHgBxgq4U/2h8l6zs5hj7R6Xea2G3SruMjdNI6q+Ub0N6T3i/xuiCX/rajTWroQT73SYX4ZOMHMwhNvHbhW23TCmZDygoqy1/wqMWZRt5xe6K0QdchGae9ljvotUA3eA7hwVVXLzRdtIO5sPMkDaeKlFEM3RKRY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x8sVH/U9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L6MgNSjA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19ED4C4CEEB;
-	Mon,  2 Jun 2025 14:04:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x8sVH/U9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44BF8C4CEEB;
+	Mon,  2 Jun 2025 14:04:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748873042;
-	bh=4GDeteSjj5SA9uAZndmm1mcx6C+yADpYp18VZ7IODRE=;
+	s=korg; t=1748873045;
+	bh=/5J0F9AMB02SOB8fDoxCpx+dz0pYtXmp6Ga8QQ+A5nM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L6MgNSjAwna7uTkO8IvNfR/DZ+bURrBX+vQAtgRwNimABiCQLqkrJALg8UEuGKrMu
-	 fjVrRYN1SSh+mtvWWCM+wIIJUvI1Q7CU04fw1+h+NId9O17Ta9MTsGwxE6uXU/Q49r
-	 F7rZDrBB3qTmcP1p8o4+5l72WwPfXCeWfkWBBq8w=
+	b=x8sVH/U9zWKud2ufTeCHVNT1ydy3qZD1yePzPfysLKigslvxg1hSVz63XKNhGNYwB
+	 gkF/5ZtxAbrJf3pZHwOrTJ1cOvYO4Y1YazEdKmKCNP/OR6fIk85Y6MMaPAAPEUu5XW
+	 Qc7RUKMDRjFoeoG+5WEYzdGQk64F4+ObceK6bk3Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+efe683d57990864b8c8e@syzkaller.appspotmail.com,
-	Zhongqiu Han <quic_zhonhan@quicinc.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Jason Wang <jasowang@redhat.com>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 020/444] virtio_ring: Fix data race by tagging event_triggered as racy for KCSAN
-Date: Mon,  2 Jun 2025 15:41:24 +0200
-Message-ID: <20250602134341.736455252@linuxfoundation.org>
+Subject: [PATCH 6.6 021/444] intel_th: avoid using deprecated page->mapping, index fields
+Date: Mon,  2 Jun 2025 15:41:25 +0200
+Message-ID: <20250602134341.775111723@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -53,68 +51,143 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhongqiu Han <quic_zhonhan@quicinc.com>
+From: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
 
-[ Upstream commit 2e2f925fe737576df2373931c95e1a2b66efdfef ]
+[ Upstream commit 8e553520596bbd5ce832e26e9d721e6a0c797b8b ]
 
-syzbot reports a data-race when accessing the event_triggered, here is the
-simplified stack when the issue occurred:
+The struct page->mapping, index fields are deprecated and soon to be only
+available as part of a folio.
 
-==================================================================
-BUG: KCSAN: data-race in virtqueue_disable_cb / virtqueue_enable_cb_delayed
+It is likely the intel_th code which sets page->mapping, index is was
+implemented out of concern that some aspect of the page fault logic may
+encounter unexpected problems should they not.
 
-write to 0xffff8881025bc452 of 1 bytes by task 3288 on cpu 0:
- virtqueue_enable_cb_delayed+0x42/0x3c0 drivers/virtio/virtio_ring.c:2653
- start_xmit+0x230/0x1310 drivers/net/virtio_net.c:3264
- __netdev_start_xmit include/linux/netdevice.h:5151 [inline]
- netdev_start_xmit include/linux/netdevice.h:5160 [inline]
- xmit_one net/core/dev.c:3800 [inline]
+However, the appropriate interface for inserting kernel-allocated memory is
+vm_insert_page() in a VM_MIXEDMAP. By using the helper function
+vmf_insert_mixed() we can do this with minimal churn in the existing fault
+handler.
 
-read to 0xffff8881025bc452 of 1 bytes by interrupt on cpu 1:
- virtqueue_disable_cb_split drivers/virtio/virtio_ring.c:880 [inline]
- virtqueue_disable_cb+0x92/0x180 drivers/virtio/virtio_ring.c:2566
- skb_xmit_done+0x5f/0x140 drivers/net/virtio_net.c:777
- vring_interrupt+0x161/0x190 drivers/virtio/virtio_ring.c:2715
- __handle_irq_event_percpu+0x95/0x490 kernel/irq/handle.c:158
- handle_irq_event_percpu kernel/irq/handle.c:193 [inline]
+By doing so, we bypass the remainder of the faulting logic. The pages are
+still pinned so there is no possibility of anything unexpected being done
+with the pages once established.
 
-value changed: 0x01 -> 0x00
-==================================================================
+It would also be reasonable to pre-map everything on fault, however to
+minimise churn we retain the fault handler.
 
-When the data race occurs, the function virtqueue_enable_cb_delayed() sets
-event_triggered to false, and virtqueue_disable_cb_split/packed() reads it
-as false due to the race condition. Since event_triggered is an unreliable
-hint used for optimization, this should only cause the driver temporarily
-suggest that the device not send an interrupt notification when the event
-index is used.
+We also eliminate all code which clears page->mapping on teardown as this
+has now become unnecessary.
 
-Fix this KCSAN reported data-race issue by explicitly tagging the access as
-data_racy.
+The MSU code relies on faulting to function correctly, so is by definition
+dependent on CONFIG_MMU. We avoid spurious reports about compilation
+failure for unsupported platforms by making this requirement explicit in
+Kconfig as part of this change too.
 
-Reported-by: syzbot+efe683d57990864b8c8e@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/67c7761a.050a0220.15b4b9.0018.GAE@google.com/
-Signed-off-by: Zhongqiu Han <quic_zhonhan@quicinc.com>
-Message-Id: <20250312130412.3516307-1-quic_zhonhan@quicinc.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
+Signed-off-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Acked-by: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Link: https://lore.kernel.org/r/20250331125608.60300-1-lorenzo.stoakes@oracle.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/virtio/virtio_ring.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hwtracing/intel_th/Kconfig |  1 +
+ drivers/hwtracing/intel_th/msu.c   | 31 +++++++-----------------------
+ 2 files changed, 8 insertions(+), 24 deletions(-)
 
-diff --git a/drivers/virtio/virtio_ring.c b/drivers/virtio/virtio_ring.c
-index 80669e05bf0ee..c5f04234d9511 100644
---- a/drivers/virtio/virtio_ring.c
-+++ b/drivers/virtio/virtio_ring.c
-@@ -2530,7 +2530,7 @@ bool virtqueue_enable_cb_delayed(struct virtqueue *_vq)
- 	struct vring_virtqueue *vq = to_vvq(_vq);
+diff --git a/drivers/hwtracing/intel_th/Kconfig b/drivers/hwtracing/intel_th/Kconfig
+index 4b6359326ede9..4f7d2b6d79e29 100644
+--- a/drivers/hwtracing/intel_th/Kconfig
++++ b/drivers/hwtracing/intel_th/Kconfig
+@@ -60,6 +60,7 @@ config INTEL_TH_STH
  
- 	if (vq->event_triggered)
--		vq->event_triggered = false;
-+		data_race(vq->event_triggered = false);
+ config INTEL_TH_MSU
+ 	tristate "Intel(R) Trace Hub Memory Storage Unit"
++	depends on MMU
+ 	help
+ 	  Memory Storage Unit (MSU) trace output device enables
+ 	  storing STP traces to system memory. It supports single
+diff --git a/drivers/hwtracing/intel_th/msu.c b/drivers/hwtracing/intel_th/msu.c
+index 9621efe0e95c4..54629458fb710 100644
+--- a/drivers/hwtracing/intel_th/msu.c
++++ b/drivers/hwtracing/intel_th/msu.c
+@@ -19,6 +19,7 @@
+ #include <linux/io.h>
+ #include <linux/workqueue.h>
+ #include <linux/dma-mapping.h>
++#include <linux/pfn_t.h>
  
- 	return vq->packed_ring ? virtqueue_enable_cb_delayed_packed(_vq) :
- 				 virtqueue_enable_cb_delayed_split(_vq);
+ #ifdef CONFIG_X86
+ #include <asm/set_memory.h>
+@@ -965,7 +966,6 @@ static void msc_buffer_contig_free(struct msc *msc)
+ 	for (off = 0; off < msc->nr_pages << PAGE_SHIFT; off += PAGE_SIZE) {
+ 		struct page *page = virt_to_page(msc->base + off);
+ 
+-		page->mapping = NULL;
+ 		__free_page(page);
+ 	}
+ 
+@@ -1147,9 +1147,6 @@ static void __msc_buffer_win_free(struct msc *msc, struct msc_window *win)
+ 	int i;
+ 
+ 	for_each_sg(win->sgt->sgl, sg, win->nr_segs, i) {
+-		struct page *page = msc_sg_page(sg);
+-
+-		page->mapping = NULL;
+ 		dma_free_coherent(msc_dev(win->msc)->parent->parent, PAGE_SIZE,
+ 				  sg_virt(sg), sg_dma_address(sg));
+ 	}
+@@ -1584,22 +1581,10 @@ static void msc_mmap_close(struct vm_area_struct *vma)
+ {
+ 	struct msc_iter *iter = vma->vm_file->private_data;
+ 	struct msc *msc = iter->msc;
+-	unsigned long pg;
+ 
+ 	if (!atomic_dec_and_mutex_lock(&msc->mmap_count, &msc->buf_mutex))
+ 		return;
+ 
+-	/* drop page _refcounts */
+-	for (pg = 0; pg < msc->nr_pages; pg++) {
+-		struct page *page = msc_buffer_get_page(msc, pg);
+-
+-		if (WARN_ON_ONCE(!page))
+-			continue;
+-
+-		if (page->mapping)
+-			page->mapping = NULL;
+-	}
+-
+ 	/* last mapping -- drop user_count */
+ 	atomic_dec(&msc->user_count);
+ 	mutex_unlock(&msc->buf_mutex);
+@@ -1609,16 +1594,14 @@ static vm_fault_t msc_mmap_fault(struct vm_fault *vmf)
+ {
+ 	struct msc_iter *iter = vmf->vma->vm_file->private_data;
+ 	struct msc *msc = iter->msc;
++	struct page *page;
+ 
+-	vmf->page = msc_buffer_get_page(msc, vmf->pgoff);
+-	if (!vmf->page)
++	page = msc_buffer_get_page(msc, vmf->pgoff);
++	if (!page)
+ 		return VM_FAULT_SIGBUS;
+ 
+-	get_page(vmf->page);
+-	vmf->page->mapping = vmf->vma->vm_file->f_mapping;
+-	vmf->page->index = vmf->pgoff;
+-
+-	return 0;
++	get_page(page);
++	return vmf_insert_mixed(vmf->vma, vmf->address, page_to_pfn_t(page));
+ }
+ 
+ static const struct vm_operations_struct msc_mmap_ops = {
+@@ -1659,7 +1642,7 @@ static int intel_th_msc_mmap(struct file *file, struct vm_area_struct *vma)
+ 		atomic_dec(&msc->user_count);
+ 
+ 	vma->vm_page_prot = pgprot_noncached(vma->vm_page_prot);
+-	vm_flags_set(vma, VM_DONTEXPAND | VM_DONTCOPY);
++	vm_flags_set(vma, VM_DONTEXPAND | VM_DONTCOPY | VM_MIXEDMAP);
+ 	vma->vm_ops = &msc_mmap_ops;
+ 	return ret;
+ }
 -- 
 2.39.5
 
