@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7C6023D285;
-	Mon,  2 Jun 2025 14:12:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33D5C21B9C8;
+	Mon,  2 Jun 2025 14:12:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748873569; cv=none; b=IKwYUNZSVuFs53WcEDZkqJNW+oYBJSOF6rNpzvIY6+G9Y69fn/vml1wSQctDw5BUG0nIRfOQbwt3+VXBsshpqZOPvkQTiybPICQXIHUVoB61bFQyvMlEdb23W5PVsnxL4BN3moogiVtT0Q7UVkvn4291pIftNCzJHYFlkbjKQmM=
+	t=1748873572; cv=none; b=DIQSX+3GhAQzitamRRCHtEbLy8USbEFCrTpRDew0LGWpYp29CS5A3PJVfA/qqS+abtpvQnSN3QnL4IluYbwi5L5QNtjVCxeqV8gPP2SBj796K1Bkugxn+9VgocTqj8+QSGRVFBKUbgrmA1aT1fp/y6M5rUcxaJBWZps55IQIhlI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748873569; c=relaxed/simple;
-	bh=KxmkDQTuVhGuZUd+mVr7SBLAAyt+VXe43E5ju/npiuo=;
+	s=arc-20240116; t=1748873572; c=relaxed/simple;
+	bh=Qm+qjWDPs1elgpPYpdLe/l6RPdm4F492gIRp3wMeoc0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U6w6vE3+3bxsGygga7oHUHh/oN8mkF4BbBX8MHPQylXMWnKndGpBz2SOILfOXYqzx94HbgSShfYTcYWluvQqa4C28A/rQIP7eFQJo8PkXX+P/AAM258oIsBytJJ0/uwFDF7a4+M/hsDI8Il9MrOtmdCXS+ILvKnzcgqcfLTkQ4Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KNmA/UlQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=BMjQSK6nrCnc1V2lyS9EfcYoTRGZqDZQ+eLhOotGfPRlbtx8cZt9b+0Ib3trb+t52Crl5DKcp9Nn6PzpsBxLQQbm0cNuJJ1kb4+/Axpkehc8wJG8cL//pwdIbI+UP9VI9URIpwCXoya7xZykmhbo3eqIcB8qgKEw2H40hOtYcjg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R/rdS7FE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KNmA/UlQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65050C4CEEB;
-	Mon,  2 Jun 2025 14:12:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R/rdS7FE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 990DBC4CEEB;
+	Mon,  2 Jun 2025 14:12:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748873568;
-	bh=KxmkDQTuVhGuZUd+mVr7SBLAAyt+VXe43E5ju/npiuo=;
+	s=korg; t=1748873572;
+	bh=Qm+qjWDPs1elgpPYpdLe/l6RPdm4F492gIRp3wMeoc0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KNmA/UlQfPwjxHAw98dP1GwBQKzc6jEXIWsdeJ5MpgNStpzD7GimokHdWfJGfT/+4
-	 k/lKizjU46qjPEjVZaiNZWh+53DPaFaoR7rDEQbWAZzwvCWX3mgyrTFHtAeJbiByC3
-	 Izh9fy6aJ6I1ztm02mrjz44jV2qJwAnMQEsKO6AI=
+	b=R/rdS7FECLDgLKamIKP6nVIcnJJ3rHe/MrUJzqedcU00KQiBqMaAF7cf7NS7PvrOP
+	 lJhocqSwTNm62gKl9RuE/ET9mlhk1Mvel/RcZJRyK5/jvnSW2Inu4/zU/gXY2zg79u
+	 G9IfKRsCIXNN+polfvqQr39geDmkkusZtxYk5Dec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samson Tam <samson.tam@amd.com>,
-	Yihan Zhu <Yihan.Zhu@amd.com>,
-	Zaeem Mohamed <zaeem.mohamed@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 183/444] drm/amd/display: handle max_downscale_src_width fail check
-Date: Mon,  2 Jun 2025 15:44:07 +0200
-Message-ID: <20250602134348.322030806@linuxfoundation.org>
+Subject: [PATCH 6.6 184/444] ASoC: mediatek: mt8188: Treat DMIC_GAINx_CUR as non-volatile
+Date: Mon,  2 Jun 2025 15:44:08 +0200
+Message-ID: <20250602134348.360636499@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -48,63 +46,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yihan Zhu <Yihan.Zhu@amd.com>
+From: Nícolas F. R. A. Prado <nfraprado@collabora.com>
 
-[ Upstream commit 02a940da2ccc0cc0299811379580852b405a0ea2 ]
+[ Upstream commit 7d87bde21c73731ddaf15e572020f80999c38ee3 ]
 
-[WHY]
-If max_downscale_src_width check fails, we exit early from TAP calculation and left a NULL
-value to the scaling data structure to cause the zero divide in the DML validation.
+The DMIC_GAINx_CUR registers contain the current (as in present) gain of
+each DMIC. During capture, this gain will ramp up until a target value
+is reached, and therefore the register is volatile since it is updated
+automatically by hardware.
 
-[HOW]
-Call set default TAP calculation before early exit in get_optimal_number_of_taps due to
-max downscale limit exceed.
+However, after capture the register's value returns to the value that
+was written to it. So reading these registers returns the current gain,
+and writing configures the initial gain for every capture.
 
-Reviewed-by: Samson Tam <samson.tam@amd.com>
-Signed-off-by: Yihan Zhu <Yihan.Zhu@amd.com>
-Signed-off-by: Zaeem Mohamed <zaeem.mohamed@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+>From an audio configuration perspective, reading the instantaneous gain
+is not really useful. Instead, reading back the initial gain that was
+configured is the desired behavior. For that reason, consider the
+DMIC_GAINx_CUR registers as non-volatile, so the regmap's cache can be
+used to retrieve the values, rather than requiring pm runtime resuming
+the device.
+
+Signed-off-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://patch.msgid.link/20250225-genio700-dmic-v2-3-3076f5b50ef7@collabora.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dcn30/dcn30_dpp.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ sound/soc/mediatek/mt8188/mt8188-afe-pcm.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_dpp.c b/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_dpp.c
-index 50dc834046446..4ce45f1bdac0f 100644
---- a/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_dpp.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_dpp.c
-@@ -392,11 +392,6 @@ bool dpp3_get_optimal_number_of_taps(
- 	int min_taps_y, min_taps_c;
- 	enum lb_memory_config lb_config;
- 
--	if (scl_data->viewport.width > scl_data->h_active &&
--		dpp->ctx->dc->debug.max_downscale_src_width != 0 &&
--		scl_data->viewport.width > dpp->ctx->dc->debug.max_downscale_src_width)
--		return false;
--
- 	/*
- 	 * Set default taps if none are provided
- 	 * From programming guide: taps = min{ ceil(2*H_RATIO,1), 8} for downscaling
-@@ -434,6 +429,12 @@ bool dpp3_get_optimal_number_of_taps(
- 	else
- 		scl_data->taps.h_taps_c = in_taps->h_taps_c;
- 
-+	// Avoid null data in the scl data with this early return, proceed non-adaptive calcualtion first
-+	if (scl_data->viewport.width > scl_data->h_active &&
-+		dpp->ctx->dc->debug.max_downscale_src_width != 0 &&
-+		scl_data->viewport.width > dpp->ctx->dc->debug.max_downscale_src_width)
-+		return false;
-+
- 	/*Ensure we can support the requested number of vtaps*/
- 	min_taps_y = dc_fixpt_ceil(scl_data->ratios.vert);
- 	min_taps_c = dc_fixpt_ceil(scl_data->ratios.vert_c);
+diff --git a/sound/soc/mediatek/mt8188/mt8188-afe-pcm.c b/sound/soc/mediatek/mt8188/mt8188-afe-pcm.c
+index 11f30b183520f..4a304bffef8ba 100644
+--- a/sound/soc/mediatek/mt8188/mt8188-afe-pcm.c
++++ b/sound/soc/mediatek/mt8188/mt8188-afe-pcm.c
+@@ -2855,10 +2855,6 @@ static bool mt8188_is_volatile_reg(struct device *dev, unsigned int reg)
+ 	case AFE_DMIC3_SRC_DEBUG_MON0:
+ 	case AFE_DMIC3_UL_SRC_MON0:
+ 	case AFE_DMIC3_UL_SRC_MON1:
+-	case DMIC_GAIN1_CUR:
+-	case DMIC_GAIN2_CUR:
+-	case DMIC_GAIN3_CUR:
+-	case DMIC_GAIN4_CUR:
+ 	case ETDM_IN1_MONITOR:
+ 	case ETDM_IN2_MONITOR:
+ 	case ETDM_OUT1_MONITOR:
 -- 
 2.39.5
 
