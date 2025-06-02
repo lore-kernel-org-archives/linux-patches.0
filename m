@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA5D122F765;
-	Mon,  2 Jun 2025 14:17:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F5681DE881;
+	Mon,  2 Jun 2025 14:17:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748873855; cv=none; b=fgggyt5/ugV8U7sNWsq0sWhXDWdYTgkcEXKnK5SES8u2zhk/poi0ME8pU5KWeUOvB6I/m67i0Fdh0d2cR2a2lQRPQk3upnNwTU4pA3xVTKX5OqVvjNcfWBcwiLeGc6BNT2pCKJa6aJgzCJxTa3JyPZnzCanqStnrBfgmtu+/dHk=
+	t=1748873858; cv=none; b=Yjnvj5yhNdxfhXd0B2AVWP1OXjTGz0P8tYtEb5iswy8V9n3OtXbEbPrxkqAGejiK5Cb/bq7G2DhXUXjiu3UcvgDjj6Vdx/kGW6eSQgX0H0cX/H5Mnbe0xPLZ1Cuvw3ktHqSS1iI91l493zCO/S9KDwQN6L2Mh4jcxzNmGFqknjE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748873855; c=relaxed/simple;
-	bh=txAxfDs81Vgzf7A412zoYF4ReMuY7ArovEdo++45HrY=;
+	s=arc-20240116; t=1748873858; c=relaxed/simple;
+	bh=Vsm+ynkPJzTMBzIsJ356KaoSR6oQWO/UBmTOunqgRVY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nBPQqk/oZH07KHvkZqd4ypL45kqEhRVJa5v1Kkc26Jbozg+MrO/5T3Tu0MXA/5x5EcPi1BVNztbpi0bY2S0z2gDBBcDBZOIhmgflD1raW0o8B1Q3+kysPJnsNBmJ3yGAoriscrfj+k8LnvBhMn3PCZkos3c3ZgF2FrI4/CJVZPo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HZfdbHwz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jQMLrw2B7J9JEQoRHs0p7KUAqjZh5wrMmZ7B1o9jMRrqcE8SdB6VSHF5g4lg70dcxQB1n2KwBZouvg+mN5A4TO+ckgW0xEq5Cs6udz4RRDJZi8EjAsaklqJArdf8SolZaH7qYW/EDOBh+fvL5gcMGuWDV8K0ngOrYPNwFqX858I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YqO38wQP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HZfdbHwz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A57CC4CEEB;
-	Mon,  2 Jun 2025 14:17:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YqO38wQP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20DA2C4CEEB;
+	Mon,  2 Jun 2025 14:17:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748873855;
-	bh=txAxfDs81Vgzf7A412zoYF4ReMuY7ArovEdo++45HrY=;
+	s=korg; t=1748873858;
+	bh=Vsm+ynkPJzTMBzIsJ356KaoSR6oQWO/UBmTOunqgRVY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HZfdbHwzLFsKdVoGc4PLPiTBwialjChW90gMszvzSadS2HcrIK1em/VTklBycOoF3
-	 lYQ1AHfxpLfpOnr+4+HxIBcMkQHovh8537s/jlbjHRHYdm9L6xTDwtsryLA0i37SzI
-	 YdL/1CR0Jty9SJX90oSdM7RthKfvyE2SUe0YD0eI=
+	b=YqO38wQPQpD+/LXw86SsSKKaAyXKWW9FFvsqkgoDar+mRQJ14oid3C/tSPG7PWoUa
+	 vEpBVDgA1shXHmSwJVGet9pGgAXSqUavMXQcmhh/rJ6JrXWuyJK3WH7ikSXsfC9vBD
+	 8lyacXmH8y6jMnSr3XEuOKryljyaboCWZHgK9KbU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Jiang Liu <gerry@linux.alibaba.com>,
+	Michael Strauss <michael.strauss@amd.com>,
+	Wenjing Liu <wenjing.liu@amd.com>,
+	George Shen <george.shen@amd.com>,
+	Zaeem Mohamed <zaeem.mohamed@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 245/444] drm/amdgpu: reset psp->cmd to NULL after releasing the buffer
-Date: Mon,  2 Jun 2025 15:45:09 +0200
-Message-ID: <20250602134350.863283220@linuxfoundation.org>
+Subject: [PATCH 6.6 246/444] drm/amd/display: Update CR AUX RD interval interpretation
+Date: Mon,  2 Jun 2025 15:45:10 +0200
+Message-ID: <20250602134350.903951107@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -52,42 +55,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiang Liu <gerry@linux.alibaba.com>
+From: George Shen <george.shen@amd.com>
 
-[ Upstream commit e92f3f94cad24154fd3baae30c6dfb918492278d ]
+[ Upstream commit 6a7fde433231c18164c117592d3e18ced648ad58 ]
 
-Reset psp->cmd to NULL after releasing the buffer in function psp_sw_fini().
+[Why]
+DP spec updated to have the CR AUX RD interval match the EQ AUX RD
+interval interpretation of DPCD 0000Eh/0220Eh for 8b/10b non-LTTPR mode
+and LTTPR transparent mode cases.
 
-Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
-Signed-off-by: Jiang Liu <gerry@linux.alibaba.com>
+[How]
+Update interpretation of DPCD 0000Eh/0220Eh for CR AUX RD interval
+during 8b/10b link training.
+
+Reviewed-by: Michael Strauss <michael.strauss@amd.com>
+Reviewed-by: Wenjing Liu <wenjing.liu@amd.com>
+Signed-off-by: George Shen <george.shen@amd.com>
+Signed-off-by: Zaeem Mohamed <zaeem.mohamed@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ .../display/dc/link/protocols/link_dp_training_8b_10b.c    | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
-index 6a24e8ceb9449..a4ab02c85f65b 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
-@@ -506,7 +506,6 @@ static int psp_sw_fini(void *handle)
+diff --git a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training_8b_10b.c b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training_8b_10b.c
+index 2b4c15b0b4070..52261e7c11c0b 100644
+--- a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training_8b_10b.c
++++ b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training_8b_10b.c
+@@ -36,7 +36,8 @@
+ 	link->ctx->logger
+ 
+ static int32_t get_cr_training_aux_rd_interval(struct dc_link *link,
+-		const struct dc_link_settings *link_settings)
++		const struct dc_link_settings *link_settings,
++		enum lttpr_mode lttpr_mode)
  {
- 	struct amdgpu_device *adev = (struct amdgpu_device *)handle;
- 	struct psp_context *psp = &adev->psp;
--	struct psp_gfx_cmd_resp *cmd = psp->cmd;
- 
- 	psp_memory_training_fini(psp);
- 
-@@ -516,8 +515,8 @@ static int psp_sw_fini(void *handle)
- 	amdgpu_ucode_release(&psp->cap_fw);
- 	amdgpu_ucode_release(&psp->toc_fw);
- 
--	kfree(cmd);
--	cmd = NULL;
-+	kfree(psp->cmd);
-+	psp->cmd = NULL;
- 
- 	psp_free_shared_bufs(psp);
+ 	union training_aux_rd_interval training_rd_interval;
+ 	uint32_t wait_in_micro_secs = 100;
+@@ -49,6 +50,8 @@ static int32_t get_cr_training_aux_rd_interval(struct dc_link *link,
+ 				DP_TRAINING_AUX_RD_INTERVAL,
+ 				(uint8_t *)&training_rd_interval,
+ 				sizeof(training_rd_interval));
++		if (lttpr_mode != LTTPR_MODE_NON_TRANSPARENT)
++			wait_in_micro_secs = 400;
+ 		if (training_rd_interval.bits.TRAINIG_AUX_RD_INTERVAL)
+ 			wait_in_micro_secs = training_rd_interval.bits.TRAINIG_AUX_RD_INTERVAL * 4000;
+ 	}
+@@ -110,7 +113,6 @@ void decide_8b_10b_training_settings(
+ 	 */
+ 	lt_settings->link_settings.link_spread = link->dp_ss_off ?
+ 			LINK_SPREAD_DISABLED : LINK_SPREAD_05_DOWNSPREAD_30KHZ;
+-	lt_settings->cr_pattern_time = get_cr_training_aux_rd_interval(link, link_setting);
+ 	lt_settings->eq_pattern_time = get_eq_training_aux_rd_interval(link, link_setting);
+ 	lt_settings->pattern_for_cr = decide_cr_training_pattern(link_setting);
+ 	lt_settings->pattern_for_eq = decide_eq_training_pattern(link, link_setting);
+@@ -119,6 +121,7 @@ void decide_8b_10b_training_settings(
+ 	lt_settings->disallow_per_lane_settings = true;
+ 	lt_settings->always_match_dpcd_with_hw_lane_settings = true;
+ 	lt_settings->lttpr_mode = dp_decide_8b_10b_lttpr_mode(link);
++	lt_settings->cr_pattern_time = get_cr_training_aux_rd_interval(link, link_setting, lt_settings->lttpr_mode);
+ 	dp_hw_to_dpcd_lane_settings(lt_settings, lt_settings->hw_lane_settings, lt_settings->dpcd_lane_settings);
+ }
  
 -- 
 2.39.5
