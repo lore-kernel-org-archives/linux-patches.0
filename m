@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32ADA223715;
-	Mon,  2 Jun 2025 14:22:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B6B322333B;
+	Mon,  2 Jun 2025 14:22:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748874139; cv=none; b=NcN7WyjcD1BnSqJqO6t3MUhoH45Kpd1Cta1uP76OJIDu+m6DoFP/5uFkeJOrOLDEJSnCg0xUPQd+9U5Keu19DqL8NK+vigO9yI+3BmX/H9xLsWwC/k3ZUJKdPe8XQOLUb72U9ZiFAR5N6Hi6kecXJjK768LmoZb2hJFX2qCpp64=
+	t=1748874142; cv=none; b=cFldX+ujbfbazUeS/gfbQChWMVT82kC9IUlqCkI5vV2QlRGJRBf10ueSGdK3pJ0eKdyql96JiaZs+ayP7LZdAQIQljD2phaI+8rDFVZKtr4o82WuuM3MHCYPOspSbl79J/909d9DNpS9dgDjneXf53Hd/TILvtuasZ8QmI0pLyU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748874139; c=relaxed/simple;
-	bh=B+Ze7zziEfeHsXhzNwB4rNvB/4qkPWIpInz+Hd2+F94=;
+	s=arc-20240116; t=1748874142; c=relaxed/simple;
+	bh=TH2AZehqhRGDWUk6NoGY0hqBoRO7rKax3dszJ/M1hHY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tYrL6nfWo9XF8Sga1uAsLzzodHLWmkMb5PRAxd2wF/iVuHRQJtICKP4rllP/+7DOOxstKlgcja9i6AdhQtapr+7xZtsR8aRL4PNrW+yxpf7zGL+stuDfHs2ohfS8s//FYPzOE6CT22S4c2BvAcNpbCdnV1hgA3xpd7nqlE7uBF4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B+ybl3mp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JYzuxnvhmWHPrdC2q1c84CsHTukjqUFPEct/c0yREYhqN+5RZsPme4TDVZxQGzhyAkyiPuHIQ/SEsFfc+A2WbC4HKgJ5WnsAWuHfabQ061NohZBcJGCiylFGg7DptjmnAs3SDGD4J0qxFCsfFNz58DIznDzJzqfc/AUOGqVNBmA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0hH61YuJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B+ybl3mp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B12E8C4CEEB;
-	Mon,  2 Jun 2025 14:22:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0hH61YuJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9995C4CEF2;
+	Mon,  2 Jun 2025 14:22:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748874139;
-	bh=B+Ze7zziEfeHsXhzNwB4rNvB/4qkPWIpInz+Hd2+F94=;
+	s=korg; t=1748874142;
+	bh=TH2AZehqhRGDWUk6NoGY0hqBoRO7rKax3dszJ/M1hHY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B+ybl3mpZF5R24Dn/+ncoRua2zXvqPZMcmBRfVum36sLgRdICwyw/e1dZOX4altsQ
-	 0kTU9tORDonBQp7Br5hvuyysigofzPW8KUr2I7Ep6UIhXLTCTdDp5a80732TgIhin7
-	 nA5yJyZh2w/l/6mN2iGfG+yFwRinrr9CmNRfPU/E=
+	b=0hH61YuJt87IxR6L96q1CAdvocO/xuz88vhkapKOt/1fzOwdyrrFv8dvzqrt3ulOY
+	 BwLvprI6ubMefbFRgv60bAYZt9hKEbD75PVjj4YOftD8Idc4uwCnrS/qdrdFbr3KT9
+	 zkcL6DOz6Zeau1EdoiaAc6CvCpvzwpTR2Akl6LTk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	En-Wei Wu <en-wei.wu@canonical.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 340/444] Bluetooth: L2CAP: Fix not checking l2cap_chan security level
-Date: Mon,  2 Jun 2025 15:46:44 +0200
-Message-ID: <20250602134354.736980318@linuxfoundation.org>
+Subject: [PATCH 6.6 341/444] Bluetooth: btusb: use skb_pull to avoid unsafe access in QCA dump handling
+Date: Mon,  2 Jun 2025 15:46:45 +0200
+Message-ID: <20250602134354.775568921@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -50,90 +51,190 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: En-Wei Wu <en-wei.wu@canonical.com>
 
-[ Upstream commit 7af8479d9eb4319b4ba7b47a8c4d2c55af1c31e1 ]
+[ Upstream commit 4bcb0c7dc25446b99fc7a8fa2a143d69f3314162 ]
 
-l2cap_check_enc_key_size shall check the security level of the
-l2cap_chan rather than the hci_conn since for incoming connection
-request that may be different as hci_conn may already been
-encrypted using a different security level.
+Use skb_pull() and skb_pull_data() to safely parse QCA dump packets.
 
-Fixes: 522e9ed157e3 ("Bluetooth: l2cap: Check encryption key size on incoming connection")
+This avoids direct pointer math on skb->data, which could lead to
+invalid access if the packet is shorter than expected.
+
+Fixes: 20981ce2d5a5 ("Bluetooth: btusb: Add WCN6855 devcoredump support")
+Signed-off-by: En-Wei Wu <en-wei.wu@canonical.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_core.c | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ drivers/bluetooth/btusb.c | 98 ++++++++++++++++-----------------------
+ 1 file changed, 40 insertions(+), 58 deletions(-)
 
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index 72ee41b894a52..1c54e812ef1f7 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -1411,7 +1411,8 @@ static void l2cap_request_info(struct l2cap_conn *conn)
- 		       sizeof(req), &req);
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index d6195565ef7ae..e0dd698896088 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -3525,9 +3525,8 @@ static void btusb_coredump_qca(struct hci_dev *hdev)
+ static int handle_dump_pkt_qca(struct hci_dev *hdev, struct sk_buff *skb)
+ {
+ 	int ret = 0;
++	unsigned int skip = 0;
+ 	u8 pkt_type;
+-	u8 *sk_ptr;
+-	unsigned int sk_len;
+ 	u16 seqno;
+ 	u32 dump_size;
+ 
+@@ -3536,18 +3535,13 @@ static int handle_dump_pkt_qca(struct hci_dev *hdev, struct sk_buff *skb)
+ 	struct usb_device *udev = btdata->udev;
+ 
+ 	pkt_type = hci_skb_pkt_type(skb);
+-	sk_ptr = skb->data;
+-	sk_len = skb->len;
++	skip = sizeof(struct hci_event_hdr);
++	if (pkt_type == HCI_ACLDATA_PKT)
++		skip += sizeof(struct hci_acl_hdr);
+ 
+-	if (pkt_type == HCI_ACLDATA_PKT) {
+-		sk_ptr += HCI_ACL_HDR_SIZE;
+-		sk_len -= HCI_ACL_HDR_SIZE;
+-	}
+-
+-	sk_ptr += HCI_EVENT_HDR_SIZE;
+-	sk_len -= HCI_EVENT_HDR_SIZE;
++	skb_pull(skb, skip);
++	dump_hdr = (struct qca_dump_hdr *)skb->data;
+ 
+-	dump_hdr = (struct qca_dump_hdr *)sk_ptr;
+ 	seqno = le16_to_cpu(dump_hdr->seqno);
+ 	if (seqno == 0) {
+ 		set_bit(BTUSB_HW_SSR_ACTIVE, &btdata->flags);
+@@ -3567,16 +3561,15 @@ static int handle_dump_pkt_qca(struct hci_dev *hdev, struct sk_buff *skb)
+ 
+ 		btdata->qca_dump.ram_dump_size = dump_size;
+ 		btdata->qca_dump.ram_dump_seqno = 0;
+-		sk_ptr += offsetof(struct qca_dump_hdr, data0);
+-		sk_len -= offsetof(struct qca_dump_hdr, data0);
++
++		skb_pull(skb, offsetof(struct qca_dump_hdr, data0));
+ 
+ 		usb_disable_autosuspend(udev);
+ 		bt_dev_info(hdev, "%s memdump size(%u)\n",
+ 			    (pkt_type == HCI_ACLDATA_PKT) ? "ACL" : "event",
+ 			    dump_size);
+ 	} else {
+-		sk_ptr += offsetof(struct qca_dump_hdr, data);
+-		sk_len -= offsetof(struct qca_dump_hdr, data);
++		skb_pull(skb, offsetof(struct qca_dump_hdr, data));
+ 	}
+ 
+ 	if (!btdata->qca_dump.ram_dump_size) {
+@@ -3596,7 +3589,6 @@ static int handle_dump_pkt_qca(struct hci_dev *hdev, struct sk_buff *skb)
+ 		return ret;
+ 	}
+ 
+-	skb_pull(skb, skb->len - sk_len);
+ 	hci_devcd_append(hdev, skb);
+ 	btdata->qca_dump.ram_dump_seqno++;
+ 	if (seqno == QCA_LAST_SEQUENCE_NUM) {
+@@ -3624,68 +3616,58 @@ static int handle_dump_pkt_qca(struct hci_dev *hdev, struct sk_buff *skb)
+ /* Return: true if the ACL packet is a dump packet, false otherwise. */
+ static bool acl_pkt_is_dump_qca(struct hci_dev *hdev, struct sk_buff *skb)
+ {
+-	u8 *sk_ptr;
+-	unsigned int sk_len;
+-
+ 	struct hci_event_hdr *event_hdr;
+ 	struct hci_acl_hdr *acl_hdr;
+ 	struct qca_dump_hdr *dump_hdr;
++	struct sk_buff *clone = skb_clone(skb, GFP_ATOMIC);
++	bool is_dump = false;
+ 
+-	sk_ptr = skb->data;
+-	sk_len = skb->len;
+-
+-	acl_hdr = hci_acl_hdr(skb);
+-	if (le16_to_cpu(acl_hdr->handle) != QCA_MEMDUMP_ACL_HANDLE)
++	if (!clone)
+ 		return false;
+ 
+-	sk_ptr += HCI_ACL_HDR_SIZE;
+-	sk_len -= HCI_ACL_HDR_SIZE;
+-	event_hdr = (struct hci_event_hdr *)sk_ptr;
+-
+-	if ((event_hdr->evt != HCI_VENDOR_PKT) ||
+-	    (event_hdr->plen != (sk_len - HCI_EVENT_HDR_SIZE)))
+-		return false;
++	acl_hdr = skb_pull_data(clone, sizeof(*acl_hdr));
++	if (!acl_hdr || (le16_to_cpu(acl_hdr->handle) != QCA_MEMDUMP_ACL_HANDLE))
++		goto out;
+ 
+-	sk_ptr += HCI_EVENT_HDR_SIZE;
+-	sk_len -= HCI_EVENT_HDR_SIZE;
++	event_hdr = skb_pull_data(clone, sizeof(*event_hdr));
++	if (!event_hdr || (event_hdr->evt != HCI_VENDOR_PKT))
++		goto out;
+ 
+-	dump_hdr = (struct qca_dump_hdr *)sk_ptr;
+-	if ((sk_len < offsetof(struct qca_dump_hdr, data)) ||
+-	    (dump_hdr->vse_class != QCA_MEMDUMP_VSE_CLASS) ||
+-	    (dump_hdr->msg_type != QCA_MEMDUMP_MSG_TYPE))
+-		return false;
++	dump_hdr = skb_pull_data(clone, sizeof(*dump_hdr));
++	if (!dump_hdr || (dump_hdr->vse_class != QCA_MEMDUMP_VSE_CLASS) ||
++	   (dump_hdr->msg_type != QCA_MEMDUMP_MSG_TYPE))
++		goto out;
+ 
+-	return true;
++	is_dump = true;
++out:
++	consume_skb(clone);
++	return is_dump;
  }
  
--static bool l2cap_check_enc_key_size(struct hci_conn *hcon)
-+static bool l2cap_check_enc_key_size(struct hci_conn *hcon,
-+				     struct l2cap_chan *chan)
+ /* Return: true if the event packet is a dump packet, false otherwise. */
+ static bool evt_pkt_is_dump_qca(struct hci_dev *hdev, struct sk_buff *skb)
  {
- 	/* The minimum encryption key size needs to be enforced by the
- 	 * host stack before establishing any L2CAP connections. The
-@@ -1425,7 +1426,7 @@ static bool l2cap_check_enc_key_size(struct hci_conn *hcon)
- 	int min_key_size = hcon->hdev->min_enc_key_size;
+-	u8 *sk_ptr;
+-	unsigned int sk_len;
+-
+ 	struct hci_event_hdr *event_hdr;
+ 	struct qca_dump_hdr *dump_hdr;
++	struct sk_buff *clone = skb_clone(skb, GFP_ATOMIC);
++	bool is_dump = false;
  
- 	/* On FIPS security level, key size must be 16 bytes */
--	if (hcon->sec_level == BT_SECURITY_FIPS)
-+	if (chan->sec_level == BT_SECURITY_FIPS)
- 		min_key_size = 16;
+-	sk_ptr = skb->data;
+-	sk_len = skb->len;
+-
+-	event_hdr = hci_event_hdr(skb);
+-
+-	if ((event_hdr->evt != HCI_VENDOR_PKT)
+-	    || (event_hdr->plen != (sk_len - HCI_EVENT_HDR_SIZE)))
++	if (!clone)
+ 		return false;
  
- 	return (!test_bit(HCI_CONN_ENCRYPT, &hcon->flags) ||
-@@ -1453,7 +1454,7 @@ static void l2cap_do_start(struct l2cap_chan *chan)
- 	    !__l2cap_no_conn_pending(chan))
- 		return;
+-	sk_ptr += HCI_EVENT_HDR_SIZE;
+-	sk_len -= HCI_EVENT_HDR_SIZE;
++	event_hdr = skb_pull_data(clone, sizeof(*event_hdr));
++	if (!event_hdr || (event_hdr->evt != HCI_VENDOR_PKT))
++		goto out;
  
--	if (l2cap_check_enc_key_size(conn->hcon))
-+	if (l2cap_check_enc_key_size(conn->hcon, chan))
- 		l2cap_start_connection(chan);
- 	else
- 		__set_chan_timer(chan, L2CAP_DISC_TIMEOUT);
-@@ -1528,7 +1529,7 @@ static void l2cap_conn_start(struct l2cap_conn *conn)
- 				continue;
- 			}
+-	dump_hdr = (struct qca_dump_hdr *)sk_ptr;
+-	if ((sk_len < offsetof(struct qca_dump_hdr, data)) ||
+-	    (dump_hdr->vse_class != QCA_MEMDUMP_VSE_CLASS) ||
+-	    (dump_hdr->msg_type != QCA_MEMDUMP_MSG_TYPE))
+-		return false;
++	dump_hdr = skb_pull_data(clone, sizeof(*dump_hdr));
++	if (!dump_hdr || (dump_hdr->vse_class != QCA_MEMDUMP_VSE_CLASS) ||
++	   (dump_hdr->msg_type != QCA_MEMDUMP_MSG_TYPE))
++		goto out;
  
--			if (l2cap_check_enc_key_size(conn->hcon))
-+			if (l2cap_check_enc_key_size(conn->hcon, chan))
- 				l2cap_start_connection(chan);
- 			else
- 				l2cap_chan_close(chan, ECONNREFUSED);
-@@ -3955,7 +3956,7 @@ static void l2cap_connect(struct l2cap_conn *conn, struct l2cap_cmd_hdr *cmd,
- 	/* Check if the ACL is secure enough (if not SDP) */
- 	if (psm != cpu_to_le16(L2CAP_PSM_SDP) &&
- 	    (!hci_conn_check_link_mode(conn->hcon) ||
--	    !l2cap_check_enc_key_size(conn->hcon))) {
-+	    !l2cap_check_enc_key_size(conn->hcon, pchan))) {
- 		conn->disc_reason = HCI_ERROR_AUTH_FAILURE;
- 		result = L2CAP_CR_SEC_BLOCK;
- 		goto response;
-@@ -7323,7 +7324,7 @@ static void l2cap_security_cfm(struct hci_conn *hcon, u8 status, u8 encrypt)
- 		}
+-	return true;
++	is_dump = true;
++out:
++	consume_skb(clone);
++	return is_dump;
+ }
  
- 		if (chan->state == BT_CONNECT) {
--			if (!status && l2cap_check_enc_key_size(hcon))
-+			if (!status && l2cap_check_enc_key_size(hcon, chan))
- 				l2cap_start_connection(chan);
- 			else
- 				__set_chan_timer(chan, L2CAP_DISC_TIMEOUT);
-@@ -7333,7 +7334,7 @@ static void l2cap_security_cfm(struct hci_conn *hcon, u8 status, u8 encrypt)
- 			struct l2cap_conn_rsp rsp;
- 			__u16 res, stat;
- 
--			if (!status && l2cap_check_enc_key_size(hcon)) {
-+			if (!status && l2cap_check_enc_key_size(hcon, chan)) {
- 				if (test_bit(FLAG_DEFER_SETUP, &chan->flags)) {
- 					res = L2CAP_CR_PEND;
- 					stat = L2CAP_CS_AUTHOR_PEND;
+ static int btusb_recv_acl_qca(struct hci_dev *hdev, struct sk_buff *skb)
 -- 
 2.39.5
 
