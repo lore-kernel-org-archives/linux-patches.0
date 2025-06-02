@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28E42233712;
-	Mon,  2 Jun 2025 15:01:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38CF3223323;
+	Mon,  2 Jun 2025 15:01:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748876499; cv=none; b=UWe6uba9hkiHyKn1+RXJie9XIr1skP/P2KA05nZ2o+Xu9cpsI1ccQ4nLNZ2MxCpfa5GX14iO8wgZA5rPWX1t+1uMxpD8qSyaf0aZWi/f7ngA00G4etnc4pi/HMhZeFaCNfmkLZkJG6yPVEqRSdh7i+dvVM9cIcq67jl4AF6mjEU=
+	t=1748876502; cv=none; b=iuSQyCxmtpjFIWyRb1ilbeuPTmfI81+zfcKzyv0Scg0hJ+6HZsfYuemlP9xgBYvMSA+vLcDV8I6xTG4PLBYH06p1DQ88MqPxKcJtZQjghydlT1nQx3ZKcY73qeEN/8Iz5f5atWOqoo87qGh/pJhGAEfLvxReGzhLmM9CylRIcrw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748876499; c=relaxed/simple;
-	bh=+8vvHsGEHtrJ3/lIs4E8kaGnVXIHoBeK4daoXxOBeFc=;
+	s=arc-20240116; t=1748876502; c=relaxed/simple;
+	bh=w/eyyQQvbpLboKu6zPTSwcnfYxbOA2iB7sKTayHHR/E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=om/saGKr92HYzQIIGEs7/FWRvuRHYDEMUrKXhwwJDRFAq285chBVqpNnbQd81O43Y/K8hlMclG5xeXkkl3TLUdAFsYVnX9KacqgTG9FE61Gp47juI24fRQKKg0YYbH0GLNJC3i/SEylsiqkgMbztcSYCY1CrZAGlj5EXc4DPohk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WcNYz2Ib; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kdzNznai/oBHMjVdTsayrSkwapBCiJNG7lTZxTwgWrc2o6hGOJ4mXHZMoQRq1X8qQJ4Lo+9iukt+VFDbIeYdamNowrmgm1T+oxmnhhHiWFSEcrWSMqqNR5GOMQ1FS2wigrO3chTP40XxSxtXxTjN0psYkp8kS/zua/uexuInfEQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0zcdIHi7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WcNYz2Ib"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 369A9C4CEEB;
-	Mon,  2 Jun 2025 15:01:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0zcdIHi7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A292C4CEEB;
+	Mon,  2 Jun 2025 15:01:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748876498;
-	bh=+8vvHsGEHtrJ3/lIs4E8kaGnVXIHoBeK4daoXxOBeFc=;
+	s=korg; t=1748876502;
+	bh=w/eyyQQvbpLboKu6zPTSwcnfYxbOA2iB7sKTayHHR/E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WcNYz2Ibn9jfok3Zs+uOsz2sZl4BfbJbJt0PdIegocf7ROytGm8ZX9gHY70qz3MEB
-	 8zm0zl+K1FTJWq7j3Ra56ngFQW8JUCO7w5JZaFCmYdmfBrK2FFHB3lrb4X8sPdXW0c
-	 v7ajyD1+6LTxaDs0AbEjdPHhiWPeJrHv16t2MN6c=
+	b=0zcdIHi7I07f7s6AOzE/Fg52BabJyLaCm48Uxp8eDQyaJHlp78g2DYsdkYzCkm40B
+	 W+/JpUUfVGvktPhSkjt45vBr4aiDhjYCMGL6yqZn036MHjosPGG7Pb0O8FRm6ey2Rx
+	 IpKEFtM3bHUXPfYn7+/JYcYmOx3epRvk/X1mrZjA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luca Boccassi <luca.boccassi@gmail.com>,
-	Oleg Nesterov <oleg@redhat.com>,
+	Jan Kara <jack@suse.cz>,
 	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 5.15 194/207] coredump: fix error handling for replace_fd()
-Date: Mon,  2 Jun 2025 15:49:26 +0200
-Message-ID: <20250602134306.372923932@linuxfoundation.org>
+Subject: [PATCH 5.15 195/207] pid: add pidfd_prepare()
+Date: Mon,  2 Jun 2025 15:49:27 +0200
+Message-ID: <20250602134306.413236780@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134258.769974467@linuxfoundation.org>
 References: <20250602134258.769974467@linuxfoundation.org>
@@ -53,50 +52,126 @@ Content-Transfer-Encoding: 8bit
 
 From: Christian Brauner <brauner@kernel.org>
 
-commit 95c5f43181fe9c1b5e5a4bd3281c857a5259991f upstream.
+commit 6ae930d9dbf2d093157be33428538c91966d8a9f upstream.
 
-The replace_fd() helper returns the file descriptor number on success
-and a negative error code on failure. The current error handling in
-umh_pipe_setup() only works because the file descriptor that is replaced
-is zero but that's pretty volatile. Explicitly check for a negative
-error code.
+Add a new helper that allows to reserve a pidfd and allocates a new
+pidfd file that stashes the provided struct pid. This will allow us to
+remove places that either open code this function or that call
+pidfd_create() but then have to call close_fd() because there are still
+failure points after pidfd_create() has been called.
 
-Link: https://lore.kernel.org/20250414-work-coredump-v2-2-685bf231f828@kernel.org
-Tested-by: Luca Boccassi <luca.boccassi@gmail.com>
-Reviewed-by: Oleg Nesterov <oleg@redhat.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Message-Id: <20230327-pidfd-file-api-v1-1-5c0e9a3158e4@kernel.org>
 Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/coredump.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ include/linux/pid.h |    1 
+ kernel/fork.c       |   85 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 86 insertions(+)
 
---- a/fs/coredump.c
-+++ b/fs/coredump.c
-@@ -564,7 +564,9 @@ static int umh_pipe_setup(struct subproc
+--- a/include/linux/pid.h
++++ b/include/linux/pid.h
+@@ -79,6 +79,7 @@ struct file;
+ extern struct pid *pidfd_pid(const struct file *file);
+ struct pid *pidfd_get_pid(unsigned int fd, unsigned int *flags);
+ int pidfd_create(struct pid *pid, unsigned int flags);
++int pidfd_prepare(struct pid *pid, unsigned int flags, struct file **ret);
+ 
+ static inline struct pid *get_pid(struct pid *pid)
  {
- 	struct file *files[2];
- 	struct coredump_params *cp = (struct coredump_params *)info->data;
--	int err = create_pipe_files(files, 0);
-+	int err;
+--- a/kernel/fork.c
++++ b/kernel/fork.c
+@@ -1895,6 +1895,91 @@ const struct file_operations pidfd_fops
+ #endif
+ };
+ 
++/**
++ * __pidfd_prepare - allocate a new pidfd_file and reserve a pidfd
++ * @pid:   the struct pid for which to create a pidfd
++ * @flags: flags of the new @pidfd
++ * @pidfd: the pidfd to return
++ *
++ * Allocate a new file that stashes @pid and reserve a new pidfd number in the
++ * caller's file descriptor table. The pidfd is reserved but not installed yet.
 +
-+	err = create_pipe_files(files, 0);
- 	if (err)
- 		return err;
- 
-@@ -572,10 +574,13 @@ static int umh_pipe_setup(struct subproc
- 
- 	err = replace_fd(0, files[0], 0);
- 	fput(files[0]);
-+	if (err < 0)
-+		return err;
++ * The helper doesn't perform checks on @pid which makes it useful for pidfds
++ * created via CLONE_PIDFD where @pid has no task attached when the pidfd and
++ * pidfd file are prepared.
++ *
++ * If this function returns successfully the caller is responsible to either
++ * call fd_install() passing the returned pidfd and pidfd file as arguments in
++ * order to install the pidfd into its file descriptor table or they must use
++ * put_unused_fd() and fput() on the returned pidfd and pidfd file
++ * respectively.
++ *
++ * This function is useful when a pidfd must already be reserved but there
++ * might still be points of failure afterwards and the caller wants to ensure
++ * that no pidfd is leaked into its file descriptor table.
++ *
++ * Return: On success, a reserved pidfd is returned from the function and a new
++ *         pidfd file is returned in the last argument to the function. On
++ *         error, a negative error code is returned from the function and the
++ *         last argument remains unchanged.
++ */
++static int __pidfd_prepare(struct pid *pid, unsigned int flags, struct file **ret)
++{
++	int pidfd;
++	struct file *pidfd_file;
 +
- 	/* and disallow core files too */
- 	current->signal->rlim[RLIMIT_CORE] = (struct rlimit){1, 1};
- 
--	return err;
-+	return 0;
- }
- 
- void do_coredump(const kernel_siginfo_t *siginfo)
++	if (flags & ~(O_NONBLOCK | O_RDWR | O_CLOEXEC))
++		return -EINVAL;
++
++	pidfd = get_unused_fd_flags(O_RDWR | O_CLOEXEC);
++	if (pidfd < 0)
++		return pidfd;
++
++	pidfd_file = anon_inode_getfile("[pidfd]", &pidfd_fops, pid,
++					flags | O_RDWR | O_CLOEXEC);
++	if (IS_ERR(pidfd_file)) {
++		put_unused_fd(pidfd);
++		return PTR_ERR(pidfd_file);
++	}
++	get_pid(pid); /* held by pidfd_file now */
++	*ret = pidfd_file;
++	return pidfd;
++}
++
++/**
++ * pidfd_prepare - allocate a new pidfd_file and reserve a pidfd
++ * @pid:   the struct pid for which to create a pidfd
++ * @flags: flags of the new @pidfd
++ * @pidfd: the pidfd to return
++ *
++ * Allocate a new file that stashes @pid and reserve a new pidfd number in the
++ * caller's file descriptor table. The pidfd is reserved but not installed yet.
++ *
++ * The helper verifies that @pid is used as a thread group leader.
++ *
++ * If this function returns successfully the caller is responsible to either
++ * call fd_install() passing the returned pidfd and pidfd file as arguments in
++ * order to install the pidfd into its file descriptor table or they must use
++ * put_unused_fd() and fput() on the returned pidfd and pidfd file
++ * respectively.
++ *
++ * This function is useful when a pidfd must already be reserved but there
++ * might still be points of failure afterwards and the caller wants to ensure
++ * that no pidfd is leaked into its file descriptor table.
++ *
++ * Return: On success, a reserved pidfd is returned from the function and a new
++ *         pidfd file is returned in the last argument to the function. On
++ *         error, a negative error code is returned from the function and the
++ *         last argument remains unchanged.
++ */
++int pidfd_prepare(struct pid *pid, unsigned int flags, struct file **ret)
++{
++	if (!pid || !pid_has_task(pid, PIDTYPE_TGID))
++		return -EINVAL;
++
++	return __pidfd_prepare(pid, flags, ret);
++}
++
+ static void __delayed_free_task(struct rcu_head *rhp)
+ {
+ 	struct task_struct *tsk = container_of(rhp, struct task_struct, rcu);
 
 
