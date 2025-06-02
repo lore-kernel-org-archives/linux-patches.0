@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFF19227EBB;
-	Mon,  2 Jun 2025 14:56:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BECFA227EBB;
+	Mon,  2 Jun 2025 14:56:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748876164; cv=none; b=cf5IGc1k4TyTqwiU4+upIDvkDmsbd7GNDsNX/SJL/IHQ9K7D8Bx2X15qiqltCroPFEfl0c82ocDf2ZOkqN0zaLakzQOJbhh5dR4PRy/LwRxShxFdyVgaMThSLzW9CQCz5Lx0U/zlR/BKCQZf06i9mDPODRbqBdgX1BZZZnupcYA=
+	t=1748876167; cv=none; b=O9RY89Eaf5X+BtqgS3qasvl5Dl/rkH0YV6bLrVRZjnKv48HqJNuuOLL6UgMEmRukI8d8H0EMsLNuf2kvytRR77sA9KOOLSwV154nWb+qcrMXhI+jFaiQmM8u0r6MVXBSa5mC1kRyDmvTVp4vgWBdaPzu3DuRf4d3UThCKpO+JPg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748876164; c=relaxed/simple;
-	bh=VAlFCRKEbsV6AVW3UgesydSNHALLmXCgSlSS5qG/inI=;
+	s=arc-20240116; t=1748876167; c=relaxed/simple;
+	bh=qCWF7bffn8DWRM74W13REtCTFJb8NtZmT05JCly/cBE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SlKgU2lYPAAAQqssaDVB/lEn6cS19ziolGAzFQLlL9Dnm6rqZISGfWn6uutgY507Ufd3cVMI24ltzYxv7WftaIrcVwqZqW/ssf7QQvsfD5dVxP7sULXSojLmxZBLZvqz7KVFyK31cu0yvHhdXGiinh4xqUAwGR/7VWh5NYHV7qs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cl65YSl/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=MQR46C4+2TXWgsX7iWCQImuhfAXv0kdJYdyjyu62CAU/wr2zW1FMjln7lLZobVbUtfodfYEEraxh5s85wIIvwB2/MuqJrVmk6TKJU0VHwNLymdQNWNgsJyCoj+rjV3aBzhOuIQrO5X3tjO2PhgZq04pNs90xfvyR1M8Mr7RK6ME=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=beE5EcVD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cl65YSl/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 378F7C4CEEB;
-	Mon,  2 Jun 2025 14:56:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="beE5EcVD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FB5DC4CEEB;
+	Mon,  2 Jun 2025 14:56:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748876164;
-	bh=VAlFCRKEbsV6AVW3UgesydSNHALLmXCgSlSS5qG/inI=;
+	s=korg; t=1748876167;
+	bh=qCWF7bffn8DWRM74W13REtCTFJb8NtZmT05JCly/cBE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cl65YSl/CVLAbNbzJuI/yN2gCxDcFYv66PFs7yDHfrcgVMQ+e1/xwzEoAt77X3+L4
-	 aZIOXa0nJ9pAAaaEJTrdRZDVftFEIuDH1N2fovLC9YyRMx9k7tIg7J80fUxcYuFXRT
-	 3F2/ELQ/O6eGjZfCEsLSS84T7z/WpqsFJohxfhQo=
+	b=beE5EcVDl0/H9kzhTqjX+cFN+bkq2ppeCZUQ425xN9kpWSYpwXPKJmNnqbizP1Qvq
+	 zkgNKTqaSAO7cHzy7leQlobKaeqWAjCg5XEOqfMbwQ4yQXITpPLELTnhZ0GVmD4bOY
+	 e/pdeyzdCO0pksS7KFKECe3G1vUmhF7HUhBw7K90=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Frederic Weisbecker <frederic@kernel.org>,
+	Stanimir Varbanov <svarbanov@suse.de>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	"Ivan T. Ivanov" <iivanov@suse.de>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 051/207] posix-timers: Add cond_resched() to posix_timer_add() search loop
-Date: Mon,  2 Jun 2025 15:47:03 +0200
-Message-ID: <20250602134300.753011939@linuxfoundation.org>
+Subject: [PATCH 5.15 085/207] PCI: brcmstb: Add a softdep to MIP MSI-X driver
+Date: Mon,  2 Jun 2025 15:47:37 +0200
+Message-ID: <20250602134302.066949251@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134258.769974467@linuxfoundation.org>
 References: <20250602134258.769974467@linuxfoundation.org>
@@ -46,45 +47,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Stanimir Varbanov <svarbanov@suse.de>
 
-[ Upstream commit 5f2909c6cd13564a07ae692a95457f52295c4f22 ]
+[ Upstream commit 2294059118c550464dd8906286324d90c33b152b ]
 
-With a large number of POSIX timers the search for a valid ID might cause a
-soft lockup on PREEMPT_NONE/VOLUNTARY kernels.
+Then the brcmstb PCIe driver and MIP MSI-X interrupt controller
+drivers are built as modules there could be a race in probing.
 
-Add cond_resched() to the loop to prevent that.
+To avoid this, add a softdep to MIP driver to guarantee that
+MIP driver will be load first.
 
-[ tglx: Split out from Eric's series ]
-
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Frederic Weisbecker <frederic@kernel.org>
-Link: https://lore.kernel.org/all/20250214135911.2037402-2-edumazet@google.com
-Link: https://lore.kernel.org/all/20250308155623.635612865@linutronix.de
+Signed-off-by: Stanimir Varbanov <svarbanov@suse.de>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Tested-by: Ivan T. Ivanov <iivanov@suse.de>
+Link: https://lore.kernel.org/r/20250224083559.47645-5-svarbanov@suse.de
+[kwilczynski: commit log]
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/time/posix-timers.c | 1 +
+ drivers/pci/controller/pcie-brcmstb.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/kernel/time/posix-timers.c b/kernel/time/posix-timers.c
-index 2d6cf93ca370a..fc08d4ccdeeb9 100644
---- a/kernel/time/posix-timers.c
-+++ b/kernel/time/posix-timers.c
-@@ -161,6 +161,7 @@ static int posix_timer_add(struct k_itimer *timer)
- 			return id;
- 		}
- 		spin_unlock(&hash_lock);
-+		cond_resched();
- 	}
- 	/* POSIX return code when no timer ID could be allocated */
- 	return -EAGAIN;
+diff --git a/drivers/pci/controller/pcie-brcmstb.c b/drivers/pci/controller/pcie-brcmstb.c
+index 7121270787899..e984b57dd0d89 100644
+--- a/drivers/pci/controller/pcie-brcmstb.c
++++ b/drivers/pci/controller/pcie-brcmstb.c
+@@ -1352,3 +1352,4 @@ module_platform_driver(brcm_pcie_driver);
+ MODULE_LICENSE("GPL");
+ MODULE_DESCRIPTION("Broadcom STB PCIe RC driver");
+ MODULE_AUTHOR("Broadcom");
++MODULE_SOFTDEP("pre: irq_bcm2712_mip");
 -- 
 2.39.5
 
