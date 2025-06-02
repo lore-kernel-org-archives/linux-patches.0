@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44D75222582;
-	Mon,  2 Jun 2025 14:33:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFB01227E9B;
+	Mon,  2 Jun 2025 14:34:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748874837; cv=none; b=uCRTfW5mHOOieNqKi5Wx85ppZOXCf5IDYwIJ+fQmew/le5Hxm3oWcmKgjmhsFstMk99kVgG2YE7uR3uUQW7xiYbTahBMquGqCbIT4eWM1gwlySVxG9JT6Zl5zOqcQpQTcyMwcydV1jpEkOdIDkM8HHr9tDoZLaS79/T8WF0xX9Y=
+	t=1748874840; cv=none; b=mMHOz/O0XsEHAK0Yz4ye0proa+hOevWDk/uMJSA8tQBLBGMQD1RK6PnqrPlZpFXSuCB3L+iB5BfxHRIyZ5vo9Dr5/pEzjspK62AflPos/HKZBL3hR13RgUcAxtRJHjngqFRurnzFZ8ALYcPlK4hX+kcN3ob0bmJw+iNQ5Wd8JHM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748874837; c=relaxed/simple;
-	bh=0ItAvp/pFRDvhTJww2cTKE8FlATJDu9pHtDMiKJYxB4=;
+	s=arc-20240116; t=1748874840; c=relaxed/simple;
+	bh=8U7ocd3ZVxduwDHstB9+54pXkMBgiZ+4FZq711ZkVOw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nGZqdfz/zi7No07APuJDuutpCcl2bFeV4BCdSl+4k+MYGYmTaiCmXeY/U2BOVD/Zf/7DIrPskdbOKTwSxf+ZoIMlbg+TAQtZWGo86nd1p+5Tbh+y8su+7HykXVXhG5CDQs2W6BQohgFZ+lRaFVsV+tLQ04YRvTM65cTON8bRDQw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bpal1tfn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N0H5c1RD/PuAHnUmbTVMgzCwxOTk849qeVtpD1t3Kq7wgwtGVZD8hIFjvIY0kvWEuQi+2jJGwNYg4sD4saUfdNRt+M/P138QUyQlPdXbT5uHsF0ApGZaZQAOBHm7PFkP1ifIo7OGl3ZhuHe3bHb0jRKmZ4HY1HBp9r6DIlGMtK0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ji2tIZ+2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bpal1tfn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2100C4CEEB;
-	Mon,  2 Jun 2025 14:33:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ji2tIZ+2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D35E4C4CEEE;
+	Mon,  2 Jun 2025 14:33:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748874837;
-	bh=0ItAvp/pFRDvhTJww2cTKE8FlATJDu9pHtDMiKJYxB4=;
+	s=korg; t=1748874840;
+	bh=8U7ocd3ZVxduwDHstB9+54pXkMBgiZ+4FZq711ZkVOw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bpal1tfn2tbt2bYdXBivK+i9GXH6FUPCktW2Yj7jxXSaJltALba+iWCvh2XLzHrRB
-	 CuGHrBUwV92XpG6DzNH50WZEbN1M32lAB8LV9VvX2Zd809tQ4ilQhdB6Vg7CjyAR6I
-	 mfFpJj5eSos9dzhv+Dj8aVh27Hh3bAqTMM9kymYk=
+	b=ji2tIZ+2Dr9WdbHsbyQiXX1VPYKscIoD7frus1nFX9lHAtrTdkM3NNbU7aKC8JnJA
+	 KxRjhybAZVYznTDEfpB4Q8ldUirxuBF3zDdgxqgF2QVvurpO/FscBFj7NFxCnzEZQK
+	 1E+lOT1sAzgTgfW0qyQGBZTVKkKF680PrPLZA32A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Andrey Vatoropin <a.vatoropin@crpt.ru>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 152/204] ip: fib_rules: Fetch net from fib_rule in fib[46]_rule_configure().
-Date: Mon,  2 Jun 2025 15:48:05 +0200
-Message-ID: <20250602134301.622146156@linuxfoundation.org>
+Subject: [PATCH 5.4 153/204] hwmon: (xgene-hwmon) use appropriate type for the latency value
+Date: Mon,  2 Jun 2025 15:48:06 +0200
+Message-ID: <20250602134301.661346584@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134255.449974357@linuxfoundation.org>
 References: <20250602134255.449974357@linuxfoundation.org>
@@ -53,59 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Andrey Vatoropin <a.vatoropin@crpt.ru>
 
-[ Upstream commit 5a1ccffd30a08f5a2428cd5fbb3ab03e8eb6c66d ]
+[ Upstream commit 8df0f002827e18632dcd986f7546c1abf1953a6f ]
 
-The following patch will not set skb->sk from VRF path.
+The expression PCC_NUM_RETRIES * pcc_chan->latency is currently being
+evaluated using 32-bit arithmetic.
 
-Let's fetch net from fib_rule->fr_net instead of sock_net(skb->sk)
-in fib[46]_rule_configure().
+Since a value of type 'u64' is used to store the eventual result,
+and this result is later sent to the function usecs_to_jiffies with
+input parameter unsigned int, the current data type is too wide to
+store the value of ctx->usecs_lat.
 
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Tested-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20250207072502.87775-5-kuniyu@amazon.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Change the data type of "usecs_lat" to a more suitable (narrower) type.
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Signed-off-by: Andrey Vatoropin <a.vatoropin@crpt.ru>
+Link: https://lore.kernel.org/r/20250204095400.95013-1-a.vatoropin@crpt.ru
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/fib_rules.c  | 4 ++--
- net/ipv6/fib6_rules.c | 4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ drivers/hwmon/xgene-hwmon.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ipv4/fib_rules.c b/net/ipv4/fib_rules.c
-index e9a3cc9e98dfa..1617ea18fae3a 100644
---- a/net/ipv4/fib_rules.c
-+++ b/net/ipv4/fib_rules.c
-@@ -220,9 +220,9 @@ static int fib4_rule_configure(struct fib_rule *rule, struct sk_buff *skb,
- 			       struct nlattr **tb,
- 			       struct netlink_ext_ack *extack)
- {
--	struct net *net = sock_net(skb->sk);
-+	struct fib4_rule *rule4 = (struct fib4_rule *)rule;
-+	struct net *net = rule->fr_net;
- 	int err = -EINVAL;
--	struct fib4_rule *rule4 = (struct fib4_rule *) rule;
+diff --git a/drivers/hwmon/xgene-hwmon.c b/drivers/hwmon/xgene-hwmon.c
+index 559a73bab51e8..15889bcc85875 100644
+--- a/drivers/hwmon/xgene-hwmon.c
++++ b/drivers/hwmon/xgene-hwmon.c
+@@ -110,7 +110,7 @@ struct xgene_hwmon_dev {
  
- 	if (frh->tos & ~IPTOS_TOS_MASK) {
- 		NL_SET_ERR_MSG(extack, "Invalid tos");
-diff --git a/net/ipv6/fib6_rules.c b/net/ipv6/fib6_rules.c
-index 3cf9dc2231036..acb8610c9a9df 100644
---- a/net/ipv6/fib6_rules.c
-+++ b/net/ipv6/fib6_rules.c
-@@ -344,9 +344,9 @@ static int fib6_rule_configure(struct fib_rule *rule, struct sk_buff *skb,
- 			       struct nlattr **tb,
- 			       struct netlink_ext_ack *extack)
- {
-+	struct fib6_rule *rule6 = (struct fib6_rule *)rule;
-+	struct net *net = rule->fr_net;
- 	int err = -EINVAL;
--	struct net *net = sock_net(skb->sk);
--	struct fib6_rule *rule6 = (struct fib6_rule *) rule;
+ 	phys_addr_t		comm_base_addr;
+ 	void			*pcc_comm_addr;
+-	u64			usecs_lat;
++	unsigned int		usecs_lat;
+ };
  
- 	if (rule->action == FR_ACT_TO_TBL && !rule->l3mdev) {
- 		if (rule->table == RT6_TABLE_UNSPEC) {
+ /*
 -- 
 2.39.5
 
