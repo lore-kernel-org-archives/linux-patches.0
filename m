@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A49D0225A40;
-	Mon,  2 Jun 2025 14:28:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D642F22DF84;
+	Mon,  2 Jun 2025 14:28:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748874489; cv=none; b=GnVPALzyz90Tacv40oQZgHywhOY3MxiMrfVHpfgJfY+XbkPG5YQVSVsw2L3Hns7g75o4BETlZSL0B2G05g4ph37tcF3SQ9ZE0LEeKxCK20QG5va0wnDju0fZS5eJYrx/DkHp/ma0Jd91F/bR2CpBreNCSc0fVuMtepgSJik9Npk=
+	t=1748874492; cv=none; b=QI12IuEoeRlSbIAjAJrBXB9lygr9SjW2uzZqa6dxiFK2hJR031frh6I4QRWwYojJ2O0vytIQC9HE2GV9hXXcCPHJWoxQ4Jnfad++6LPhd8ilzXJTQ9HOqV7wz0sqXLo30DrmA0iMcn+fPIHyGfa+Phe2p/h6TOOPgVTVE/9Mrac=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748874489; c=relaxed/simple;
-	bh=ud7fEMue1kosV8YbUD4AKwpocqQBLbLT0mnPykdACj0=;
+	s=arc-20240116; t=1748874492; c=relaxed/simple;
+	bh=ACWqTkPzHD+/7huJXUfYvvaZrlroRs7HUzyaRf3iZ8Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RbcXauX+c5aTRmFrHYFjdVmrBqrRsbt7iFhY7w/nFyvF9eacMzLTN46YlcOZneNGoDkL9GUccc/AsAftaVVOnBDVAefjpZ5CBZa/5lpYyRntvqgKq3MlbLAC3SJCxChvpinPEVThVZY+cX7jVJRszuLQfnRO+aZAFTBF3aqakkA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EHBDfmQU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hxrHSrsZdekbVVnU+nst2sBwqOmV0BwduW5zZ9LuObYAEy+DLkBRaCt5g9ZC/ivx+e6rgdb97GkCyR07GkBK1+V+5Vq/r1H9VEn6G3fs1DM6npwVyG8NQZ3A/0N7YER1oxj3fDsiptxRWas2gyLloZFtXbOVz/Wyw6PgTh5iG2g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zFKcnmZV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EHBDfmQU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39528C4CEEB;
-	Mon,  2 Jun 2025 14:28:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zFKcnmZV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65FABC4CEEB;
+	Mon,  2 Jun 2025 14:28:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748874489;
-	bh=ud7fEMue1kosV8YbUD4AKwpocqQBLbLT0mnPykdACj0=;
+	s=korg; t=1748874492;
+	bh=ACWqTkPzHD+/7huJXUfYvvaZrlroRs7HUzyaRf3iZ8Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EHBDfmQU5B68g4UqOPJ/rsVjZZKC94scPfY4dn0Qbu8OOjClceOK8NkJpcRWNKmYN
-	 h95AFcoKZEEYU+JlhFNY48tTWVjD5QB7CiHEnp727xQ7qQTZeGgbYHT/mvmnFdUSjQ
-	 HrKGZjRdJTBf4hyFvOjftCe6nQshCTr+65w1310Q=
+	b=zFKcnmZVUXatbPSKPsoz1b1BKUQo5iDIRVHOM7Ti6aRFuokq9oBqktRfz28B6HyL5
+	 /h30e9XxpOSpsn3dEvNsgEmL0jbPNNNPa0+6v91KmkgC+gjVSeXeVUt/QQhg2Od/lz
+	 u4ru28AUadLWqeS/iOidVN7gMyh06KSF3naCibkI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+c8cd2d2c412b868263fb@syzkaller.appspotmail.com,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Jeongjun Park <aha310510@gmail.com>
-Subject: [PATCH 5.4 009/204] tracing: Fix oob write in trace_seq_to_buffer()
-Date: Mon,  2 Jun 2025 15:45:42 +0200
-Message-ID: <20250602134255.842400124@linuxfoundation.org>
+	Maor Gottlieb <maorg@nvidia.com>,
+	Mark Bloch <mbloch@nvidia.com>,
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 010/204] net/mlx5: E-Switch, Initialize MAC Address for Default GID
+Date: Mon,  2 Jun 2025 15:45:43 +0200
+Message-ID: <20250602134255.881995749@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134255.449974357@linuxfoundation.org>
 References: <20250602134255.449974357@linuxfoundation.org>
@@ -51,66 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeongjun Park <aha310510@gmail.com>
+From: Maor Gottlieb <maorg@nvidia.com>
 
-commit f5178c41bb43444a6008150fe6094497135d07cb upstream.
+[ Upstream commit 5d1a04f347e6cbf5ffe74da409a5d71fbe8c5f19 ]
 
-syzbot reported this bug:
-==================================================================
-BUG: KASAN: slab-out-of-bounds in trace_seq_to_buffer kernel/trace/trace.c:1830 [inline]
-BUG: KASAN: slab-out-of-bounds in tracing_splice_read_pipe+0x6be/0xdd0 kernel/trace/trace.c:6822
-Write of size 4507 at addr ffff888032b6b000 by task syz.2.320/7260
+Initialize the source MAC address when creating the default GID entry.
+Since this entry is used only for loopback traffic, it only needs to
+be a unicast address. A zeroed-out MAC address is sufficient for this
+purpose.
+Without this fix, random bits would be assigned as the source address.
+If these bits formed a multicast address, the firmware would return an
+error, preventing the user from switching to switchdev mode:
 
-CPU: 1 UID: 0 PID: 7260 Comm: syz.2.320 Not tainted 6.15.0-rc1-syzkaller-00301-g3bde70a2c827 #0 PREEMPT(full)
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 02/12/2025
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:94 [inline]
- dump_stack_lvl+0x116/0x1f0 lib/dump_stack.c:120
- print_address_description mm/kasan/report.c:408 [inline]
- print_report+0xc3/0x670 mm/kasan/report.c:521
- kasan_report+0xe0/0x110 mm/kasan/report.c:634
- check_region_inline mm/kasan/generic.c:183 [inline]
- kasan_check_range+0xef/0x1a0 mm/kasan/generic.c:189
- __asan_memcpy+0x3c/0x60 mm/kasan/shadow.c:106
- trace_seq_to_buffer kernel/trace/trace.c:1830 [inline]
- tracing_splice_read_pipe+0x6be/0xdd0 kernel/trace/trace.c:6822
- ....
-==================================================================
+Error: mlx5_core: Failed setting eswitch to offloads.
+kernel answers: Invalid argument
 
-It has been reported that trace_seq_to_buffer() tries to copy more data
-than PAGE_SIZE to buf. Therefore, to prevent this, we should use the
-smaller of trace_seq_used(&iter->seq) and PAGE_SIZE as an argument.
-
-Link: https://lore.kernel.org/20250422113026.13308-1-aha310510@gmail.com
-Reported-by: syzbot+c8cd2d2c412b868263fb@syzkaller.appspotmail.com
-Fixes: 3c56819b14b0 ("tracing: splice support for tracing_pipe")
-Suggested-by: Steven Rostedt <rostedt@goodmis.org>
-Signed-off-by: Jeongjun Park <aha310510@gmail.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 80f09dfc237f ("net/mlx5: Eswitch, enable RoCE loopback traffic")
+Signed-off-by: Maor Gottlieb <maorg@nvidia.com>
+Signed-off-by: Mark Bloch <mbloch@nvidia.com>
+Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+Link: https://patch.msgid.link/20250423083611.324567-3-mbloch@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/rdma.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -6331,13 +6331,14 @@ static ssize_t tracing_splice_read_pipe(
- 		/* Copy the data into the page, so we can start over. */
- 		ret = trace_seq_to_buffer(&iter->seq,
- 					  page_address(spd.pages[i]),
--					  trace_seq_used(&iter->seq));
-+					  min((size_t)trace_seq_used(&iter->seq),
-+						  PAGE_SIZE));
- 		if (ret < 0) {
- 			__free_page(spd.pages[i]);
- 			break;
- 		}
- 		spd.partial[i].offset = 0;
--		spd.partial[i].len = trace_seq_used(&iter->seq);
-+		spd.partial[i].len = ret;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/rdma.c b/drivers/net/ethernet/mellanox/mlx5/core/rdma.c
+index 2389239acadc9..945d90844f0cb 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/rdma.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/rdma.c
+@@ -130,8 +130,8 @@ static void mlx5_rdma_make_default_gid(struct mlx5_core_dev *dev, union ib_gid *
  
- 		trace_seq_init(&iter->seq);
- 	}
+ static int mlx5_rdma_add_roce_addr(struct mlx5_core_dev *dev)
+ {
++	u8 mac[ETH_ALEN] = {};
+ 	union ib_gid gid;
+-	u8 mac[ETH_ALEN];
+ 
+ 	mlx5_rdma_make_default_gid(dev, &gid);
+ 	return mlx5_core_roce_gid_set(dev, 0,
+-- 
+2.39.5
+
 
 
