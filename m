@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFA4C1FF61E;
-	Mon,  2 Jun 2025 14:43:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31D6A2253E0;
+	Mon,  2 Jun 2025 14:43:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748875419; cv=none; b=dRGQCTPcVC8uBa0HTPkdi2Y8YF13r2C77wTKXideRtwNA9c230adblKIdmcsN5DQpMebuLpMQ4n6lIHXZ3jHogxSy6ssHkIzKjJrk33AeV9r+QfeeDbQW8eNdchODvZc3LRoJSfG522bvNC6kmIKzB+i73m1JQw08roxNltpMH8=
+	t=1748875422; cv=none; b=cxPEMQZhcDEyUo2i31QMKbecBSDjnjRNw7Czdfm7QOwGONqei+1IjdMK22SPDrlz0cI48Vva+i/Cfaq6AW18419j+DQKA/7qtxYObeWiwtM59YbWNtYSsS14PfszGdF/m66NU/zkH5f+yn7HVFYV+ZjxbEY6/ORR39M+06mrKmI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748875419; c=relaxed/simple;
-	bh=HVt/vzxDyTVm6ucTVrt1INjG7chVr4QR2qwg/I7/GlM=;
+	s=arc-20240116; t=1748875422; c=relaxed/simple;
+	bh=UDUN+8qzbmSsw1kxia29ii01z0OZWiutF5MCsutVapk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Cw3KegCwNrGZ/d0We0zpcSt2K5By7FpYVe8QUXKZLwiumWMKIDDUB266KuPdDf1w+WdhB+RmEIw2bn99UDlUH1/+fsw9WtwsucCEEiuQJtj9tbt73FV55bY2YEfHVMxBAQInsWzHXG2sIJxUaZnIeTbjIv4QsaEkFNO70n0Onjw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cvdj51UZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rjGRx8xEglFRjlc26DEjB3Hxp6nAMHCoMIlFYrcKGriYQ3oZnEgfFruDoBnVhsFLIRXcFBuvPmcn5SjpWMajip/M3yzRzd7lC1enR8TEN8RiLNK1JEHn2SmmRRG5qXqTixarfESvcc+MpDaJ1mwgyFtGWao0oFxxbAy5eTKgNRc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dM1AMkFe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cvdj51UZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50FAFC4CEF0;
-	Mon,  2 Jun 2025 14:43:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dM1AMkFe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94E6CC4CEEB;
+	Mon,  2 Jun 2025 14:43:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748875418;
-	bh=HVt/vzxDyTVm6ucTVrt1INjG7chVr4QR2qwg/I7/GlM=;
+	s=korg; t=1748875422;
+	bh=UDUN+8qzbmSsw1kxia29ii01z0OZWiutF5MCsutVapk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cvdj51UZbeWQyn4rlkk3M6w8z4CophuGFgMJEiNpKKSTDGZm3YEXL2684KuOePcUQ
-	 4rAH2CLXNaWb2VcPT1tDktKEM/EsK95pNx4bcyZadbYTl6cLFM8kth0HSX9Mz2Slhx
-	 INN3+MMQOBRzgL3nAyxvgT7Kg2s9DuuygJMis3Kg=
+	b=dM1AMkFebBayCgpSMtayDtwCUMDzsWxlSV4LcKjERW+oqj4kJW4N19YtPtuD8AfP/
+	 aJdsXcGFUfQybzv2WtOKoQH4YcCNgdIz1twWUppTkzRFEC3x+I3n3Nq3XvL6td2C1/
+	 hFgW8Qell4CYSMZkNWAuHZw9zzRgpJQQA7O2WBgE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make24@iscas.ac.cn>,
-	Thierry Reding <treding@nvidia.com>,
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
 	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 5.10 099/270] phy: Fix error handling in tegra_xusb_port_init
-Date: Mon,  2 Jun 2025 15:46:24 +0200
-Message-ID: <20250602134311.217075010@linuxfoundation.org>
+Subject: [PATCH 5.10 100/270] phy: renesas: rcar-gen3-usb2: Set timing registers only once
+Date: Mon,  2 Jun 2025 15:46:25 +0200
+Message-ID: <20250602134311.260927622@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134307.195171844@linuxfoundation.org>
 References: <20250602134307.195171844@linuxfoundation.org>
@@ -51,56 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Ke <make24@iscas.ac.cn>
+From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 
-commit b2ea5f49580c0762d17d80d8083cb89bc3acf74f upstream.
+commit 86e70849f4b2b4597ac9f7c7931f2a363774be25 upstream.
 
-If device_add() fails, do not use device_unregister() for error
-handling. device_unregister() consists two functions: device_del() and
-put_device(). device_unregister() should only be called after
-device_add() succeeded because device_del() undoes what device_add()
-does if successful. Change device_unregister() to put_device() call
-before returning from the function.
+phy-rcar-gen3-usb2 driver exports 4 PHYs. The timing registers are common
+to all PHYs. There is no need to set them every time a PHY is initialized.
+Set timing register only when the 1st PHY is initialized.
 
-As comment of device_add() says, 'if device_add() succeeds, you should
-call device_del() when you want to get rid of it. If device_add() has
-not succeeded, use only put_device() to drop the reference count'.
-
-Found by code review.
-
+Fixes: f3b5a8d9b50d ("phy: rcar-gen3-usb2: Add R-Car Gen3 USB2 PHY driver")
 Cc: stable@vger.kernel.org
-Fixes: 53d2a715c240 ("phy: Add Tegra XUSB pad controller support")
-Signed-off-by: Ma Ke <make24@iscas.ac.cn>
-Acked-by: Thierry Reding <treding@nvidia.com>
-Link: https://lore.kernel.org/r/20250303072739.3874987-1-make24@iscas.ac.cn
+Reviewed-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+Tested-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+Reviewed-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Link: https://lore.kernel.org/r/20250507125032.565017-6-claudiu.beznea.uj@bp.renesas.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/phy/tegra/xusb.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/phy/renesas/phy-rcar-gen3-usb2.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/drivers/phy/tegra/xusb.c
-+++ b/drivers/phy/tegra/xusb.c
-@@ -536,16 +536,16 @@ static int tegra_xusb_port_init(struct t
+--- a/drivers/phy/renesas/phy-rcar-gen3-usb2.c
++++ b/drivers/phy/renesas/phy-rcar-gen3-usb2.c
+@@ -429,8 +429,11 @@ static int rcar_gen3_phy_usb2_init(struc
+ 	val = readl(usb2_base + USB2_INT_ENABLE);
+ 	val |= USB2_INT_ENABLE_UCOM_INTEN | rphy->int_enable_bits;
+ 	writel(val, usb2_base + USB2_INT_ENABLE);
+-	writel(USB2_SPD_RSM_TIMSET_INIT, usb2_base + USB2_SPD_RSM_TIMSET);
+-	writel(USB2_OC_TIMSET_INIT, usb2_base + USB2_OC_TIMSET);
++
++	if (!rcar_gen3_is_any_rphy_initialized(channel)) {
++		writel(USB2_SPD_RSM_TIMSET_INIT, usb2_base + USB2_SPD_RSM_TIMSET);
++		writel(USB2_OC_TIMSET_INIT, usb2_base + USB2_OC_TIMSET);
++	}
  
- 	err = dev_set_name(&port->dev, "%s-%u", name, index);
- 	if (err < 0)
--		goto unregister;
-+		goto put_device;
- 
- 	err = device_add(&port->dev);
- 	if (err < 0)
--		goto unregister;
-+		goto put_device;
- 
- 	return 0;
- 
--unregister:
--	device_unregister(&port->dev);
-+put_device:
-+	put_device(&port->dev);
- 	return err;
- }
- 
+ 	/* Initialize otg part */
+ 	if (channel->is_otg_channel) {
 
 
