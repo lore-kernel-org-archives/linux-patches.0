@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 062E81A83E8;
-	Mon,  2 Jun 2025 15:07:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AF9CEEBD;
+	Mon,  2 Jun 2025 15:07:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748876856; cv=none; b=pambKJCD2JVpowsFSTaDWbAcut0vrSDoufI3YhFba4voM+b3GIp1aBB4MrNdDFTtk9VTxB9Vdsm1cjpm+PeSHeJ/kI23297xEHjXhWZceVM48OCsGZDFHGxGiBRjTJek0Qo3ph4dxYHYBqzqxLD1thLf17MBv4QZBWy92MtlJkw=
+	t=1748876859; cv=none; b=HckdzqNELalx9ZYSS3yJT8cHunQG3sNF8JmUyclD7PUg6FpceR9v/XAEQXCPe6uV6+hDYPosQbNUO6hOHEYgzjdU6w5XNHxH6ozs2g5+57aDiZ/AvvE2RtakRAyi+UIzRmXpkQdVy2Jz3PHp0sGXAxlrsV491PBkA7+9JgQ7S6c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748876856; c=relaxed/simple;
-	bh=uU5LZquH70og2H93a0vTf/cRVWF1evZ3HHQJ1DeTTVk=;
+	s=arc-20240116; t=1748876859; c=relaxed/simple;
+	bh=dkMCt2fkf1aUEPg9rhuKbqot2vBRLyCrlqF8IA5STGY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kcSWaApgXmkJiRVCyxUaD/xLpDWgqdQDVxVDe0VBA3oGyW8PtIzUqumFUZtNCXWcqtcwgVTT5aicD3qPpbh0xVeIBxCYULo8LSoUzjVnUdS04kUJjwcMV1EjDlyd3sCxNmP98E1gG5BzRjOBRSfqIGot3ewgchSUQWTPfUh5Ts4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kuTI4oU6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ji+juW3eXMf4gXS3zBznOdb9WjaGh78K0EU1m079PptXT9Dkpo8J/8eh351RsrZTVx55/MfQ2BVBr0UOrevtkHgKe1rV4jdHNu7kkt1SByUBgh4uXqCleZPRWGY1kMZPxXoMBmrDr7hjkVYwSVMh3OJ42StAAdSDzGny6LP1vEI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DUMIGNgI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kuTI4oU6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ADEAC4CEEB;
-	Mon,  2 Jun 2025 15:07:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DUMIGNgI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BE6FC4CEEB;
+	Mon,  2 Jun 2025 15:07:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748876855;
-	bh=uU5LZquH70og2H93a0vTf/cRVWF1evZ3HHQJ1DeTTVk=;
+	s=korg; t=1748876859;
+	bh=dkMCt2fkf1aUEPg9rhuKbqot2vBRLyCrlqF8IA5STGY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kuTI4oU6MBW3lww94ZbQjw+3WEZJy+++1dld2DTCGQreRbfHyF62KS/N9xtZW2CNT
-	 +dGIpvHv346eXvOcZ83Ozlwki6zZuNfVXkDr+V/vWuOwVs+sRdrztNUYAUBvXRsOXC
-	 a7+0nJJMYw1nfAu2lclDpCxuEYbxOE8KB08tavTo=
+	b=DUMIGNgIBPaU4aTGiW69AAKctW6ePC8ESFtE+RZ/ErgUnGuH4EiiDG8mukFK7vVC1
+	 WZ6GIOtKUZOL6KGUNzLHf83jFMdhCW7MB//QNlj0a4XgvNBLCVMi8yNeId1fd8ki4M
+	 sEs+lD9OxsqG8pUtacKqZWu2DVM2Z4gm4XpA8a64=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>,
-	Thierry Reding <treding@nvidia.com>,
+	Andreas Schwab <schwab@linux-m68k.org>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 095/325] arm64: tegra: p2597: Fix gpio for vdd-1v8-dis regulator
-Date: Mon,  2 Jun 2025 15:46:11 +0200
-Message-ID: <20250602134323.647628924@linuxfoundation.org>
+Subject: [PATCH 6.1 096/325] powerpc/prom_init: Fixup missing #size-cells on PowerBook6,7
+Date: Mon,  2 Jun 2025 15:46:12 +0200
+Message-ID: <20250602134323.688782938@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134319.723650984@linuxfoundation.org>
 References: <20250602134319.723650984@linuxfoundation.org>
@@ -51,35 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>
+From: Andreas Schwab <schwab@linux-m68k.org>
 
-[ Upstream commit f34621f31e3be81456c903287f7e4c0609829e29 ]
+[ Upstream commit 7e67ef889c9ab7246547db73d524459f47403a77 ]
 
-According to the board schematics the enable pin of this regulator is
-connected to gpio line #9 of the first instance of the TCA9539
-GPIO expander, so adjust it.
+Similar to the PowerMac3,1, the PowerBook6,7 is missing the #size-cells
+property on the i2s node.
 
-Signed-off-by: Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>
-Link: https://lore.kernel.org/r/20250224-diogo-gpio_exp-v1-1-80fb84ac48c6@tecnico.ulisboa.pt
-Signed-off-by: Thierry Reding <treding@nvidia.com>
+Depends-on: commit 045b14ca5c36 ("of: WARN on deprecated #address-cells/#size-cells handling")
+Signed-off-by: Andreas Schwab <schwab@linux-m68k.org>
+Acked-by: Rob Herring (Arm) <robh@kernel.org>
+[maddy: added "commit" work in depends-on to avoid checkpatch error]
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/875xmizl6a.fsf@igel.home
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/nvidia/tegra210-p2597.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/powerpc/kernel/prom_init.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/nvidia/tegra210-p2597.dtsi b/arch/arm64/boot/dts/nvidia/tegra210-p2597.dtsi
-index 634373a423ef6..481a88d83a650 100644
---- a/arch/arm64/boot/dts/nvidia/tegra210-p2597.dtsi
-+++ b/arch/arm64/boot/dts/nvidia/tegra210-p2597.dtsi
-@@ -1631,7 +1631,7 @@ vdd_1v8_dis: regulator-vdd-1v8-dis {
- 		regulator-min-microvolt = <1800000>;
- 		regulator-max-microvolt = <1800000>;
- 		regulator-always-on;
--		gpio = <&exp1 14 GPIO_ACTIVE_HIGH>;
-+		gpio = <&exp1 9 GPIO_ACTIVE_HIGH>;
- 		enable-active-high;
- 		vin-supply = <&vdd_1v8>;
- 	};
+diff --git a/arch/powerpc/kernel/prom_init.c b/arch/powerpc/kernel/prom_init.c
+index a6090896f7497..ac669e58e2023 100644
+--- a/arch/powerpc/kernel/prom_init.c
++++ b/arch/powerpc/kernel/prom_init.c
+@@ -2974,11 +2974,11 @@ static void __init fixup_device_tree_pmac(void)
+ 	char type[8];
+ 	phandle node;
+ 
+-	// Some pmacs are missing #size-cells on escc nodes
++	// Some pmacs are missing #size-cells on escc or i2s nodes
+ 	for (node = 0; prom_next_node(&node); ) {
+ 		type[0] = '\0';
+ 		prom_getprop(node, "device_type", type, sizeof(type));
+-		if (prom_strcmp(type, "escc"))
++		if (prom_strcmp(type, "escc") && prom_strcmp(type, "i2s"))
+ 			continue;
+ 
+ 		if (prom_getproplen(node, "#size-cells") != PROM_ERROR)
 -- 
 2.39.5
 
