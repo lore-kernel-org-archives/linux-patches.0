@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 631EB19EEBD;
-	Mon,  2 Jun 2025 14:30:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84E41290F;
+	Mon,  2 Jun 2025 14:30:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748874644; cv=none; b=KK90XoY5PCkFJQBCwf0b7FT0IlqEyL2Jn6Hk12if9duizlYD6YKMEqwfDvqv2HqYJmtNYbaLdI+zFiHQR8oZRAm+NcC4+vANjXacpv5YaT2INCm2hjf9DEr78i6q1IpYYtAHxRsofV3oDWxXD2Nw9q6yn22Tdr8FAJhKPBxyZdE=
+	t=1748874647; cv=none; b=tIFlwX0MH0b1lVaYtGWUBlJItC1m4lDxjskaWOsFm2+WG7hacVfkjLTtWjDTtm/UHjuUYSaAeMgU0E7EsLelUPzZgIDFu0I7UboraPq/1HdSclAOc0JXuL3GVXSnz7mYJ2uDR0IE6h+OkYcNI3lEKRtRAug4bs0Zwh3YlhS8NfM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748874644; c=relaxed/simple;
-	bh=5pdxsO8gY7EhJk4y1wOHJDaN6qguvnMI41rX75cN7SA=;
+	s=arc-20240116; t=1748874647; c=relaxed/simple;
+	bh=WQgfgAoj0EDU+hxLDexSV/1XMvNsrmiTru1CYIhlJoY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sHi1nPFg7Sa7XtyC6Pes5z9S7l5D79leFFtWSk5m2hGfraYAAaDu5b//SI3x4sdhZZzI4aLe0AI63LXLBLqdS87VworQGD7T8opCISLASlG+PRQl8V4DbuP/L3MDAW0sWbjKdqxAVwFgNRSpOs0oyMrEPyVXS/RtQL0WW3EBybU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D7kdH7ot; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nMyejWSAnR7AFnvMAj/6IVbgD0rgIIrgSBes4FxU1g7CJRqXyF0EJeX4WEX3CGsKNuI4iMyKTHMV734QQSbprJTJK/dNeCbu3DaJclqMxYy+kkV8lBu5llaRVlKLk4MjTYBIMx3tItYZt2EqUc+uD0H2N6ZBj07SiewGM6U3z1I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EppcpbKG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D7kdH7ot"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92F86C4CEEB;
-	Mon,  2 Jun 2025 14:30:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EppcpbKG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC8C3C4CEEB;
+	Mon,  2 Jun 2025 14:30:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748874644;
-	bh=5pdxsO8gY7EhJk4y1wOHJDaN6qguvnMI41rX75cN7SA=;
+	s=korg; t=1748874647;
+	bh=WQgfgAoj0EDU+hxLDexSV/1XMvNsrmiTru1CYIhlJoY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D7kdH7otDjc9s4UMQJAt5RLW32NzPLdww+vNqQ6IAL1/UP7dZTqLNfzrgTquHAyRJ
-	 y6BY1Tw1ScUy0c4xk/S5J8YV/IUnAe9UhVJspetqLpKCUCKFvlM8KJJYxvu68taHpL
-	 M1R2312haeWIS8hj9PMUcws/Q2Z7ekiA/xSoJbCk=
+	b=EppcpbKGeAK6YW03se5Lpz0HrcHxKl1osNFHAuUhP2/DE7j748zIAW9Dh2xlA00+U
+	 6f4vP072OeSLBznG+4ThajfHwi2l0mIm7FDbnAthRdlvBgMEhx3kPsL1wLpyB7WQH+
+	 Z6G5iM3hG/Aemo8Nd9GdHO/hjW44oBKYphOjx/0w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Tudor Ambarus <tudor.ambarus@linaro.org>,
+	Jassi Brar <jassisinghbrar@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 072/204] net: dsa: sja1105: discard incoming frames in BR_STATE_LISTENING
-Date: Mon,  2 Jun 2025 15:46:45 +0200
-Message-ID: <20250602134258.510103274@linuxfoundation.org>
+Subject: [PATCH 5.4 090/204] mailbox: use error ret code of of_parse_phandle_with_args()
+Date: Mon,  2 Jun 2025 15:47:03 +0200
+Message-ID: <20250602134259.198800184@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134255.449974357@linuxfoundation.org>
 References: <20250602134255.449974357@linuxfoundation.org>
@@ -51,90 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Tudor Ambarus <tudor.ambarus@linaro.org>
 
-[ Upstream commit 498625a8ab2c8e1c9ab5105744310e8d6952cc01 ]
+[ Upstream commit 24fdd5074b205cfb0ef4cd0751a2d03031455929 ]
 
-It has been reported that when under a bridge with stp_state=1, the logs
-get spammed with this message:
+In case of error, of_parse_phandle_with_args() returns -EINVAL when the
+passed index is negative, or -ENOENT when the index is for an empty
+phandle. The mailbox core overwrote the error return code with a less
+precise -ENODEV. Use the error returned code from
+of_parse_phandle_with_args().
 
-[  251.734607] fsl_dpaa2_eth dpni.5 eth0: Couldn't decode source port
-
-Further debugging shows the following info associated with packets:
-source_port=-1, switch_id=-1, vid=-1, vbid=1
-
-In other words, they are data plane packets which are supposed to be
-decoded by dsa_tag_8021q_find_port_by_vbid(), but the latter (correctly)
-refuses to do so, because no switch port is currently in
-BR_STATE_LEARNING or BR_STATE_FORWARDING - so the packet is effectively
-unexpected.
-
-The error goes away after the port progresses to BR_STATE_LEARNING in 15
-seconds (the default forward_time of the bridge), because then,
-dsa_tag_8021q_find_port_by_vbid() can correctly associate the data plane
-packets with a plausible bridge port in a plausible STP state.
-
-Re-reading IEEE 802.1D-1990, I see the following:
-
-"4.4.2 Learning: (...) The Forwarding Process shall discard received
-frames."
-
-IEEE 802.1D-2004 further clarifies:
-
-"DISABLED, BLOCKING, LISTENING, and BROKEN all correspond to the
-DISCARDING port state. While those dot1dStpPortStates serve to
-distinguish reasons for discarding frames, the operation of the
-Forwarding and Learning processes is the same for all of them. (...)
-LISTENING represents a port that the spanning tree algorithm has
-selected to be part of the active topology (computing a Root Port or
-Designated Port role) but is temporarily discarding frames to guard
-against loops or incorrect learning."
-
-Well, this is not what the driver does - instead it sets
-mac[port].ingress = true.
-
-To get rid of the log spam, prevent unexpected data plane packets to
-be received by software by discarding them on ingress in the LISTENING
-state.
-
-In terms of blame attribution: the prints only date back to commit
-d7f9787a763f ("net: dsa: tag_8021q: add support for imprecise RX based
-on the VBID"). However, the settings would permit a LISTENING port to
-forward to a FORWARDING port, and the standard suggests that's not OK.
-
-Fixes: 640f763f98c2 ("net: dsa: sja1105: Add support for Spanning Tree Protocol")
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Link: https://patch.msgid.link/20250509113816.2221992-1-vladimir.oltean@nxp.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
+Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/sja1105/sja1105_main.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ drivers/mailbox/mailbox.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/dsa/sja1105/sja1105_main.c b/drivers/net/dsa/sja1105/sja1105_main.c
-index eab861352bf23..007eb05ed659f 100644
---- a/drivers/net/dsa/sja1105/sja1105_main.c
-+++ b/drivers/net/dsa/sja1105/sja1105_main.c
-@@ -1390,6 +1390,7 @@ static void sja1105_bridge_stp_state_set(struct dsa_switch *ds, int port,
- 	switch (state) {
- 	case BR_STATE_DISABLED:
- 	case BR_STATE_BLOCKING:
-+	case BR_STATE_LISTENING:
- 		/* From UM10944 description of DRPDTAG (why put this there?):
- 		 * "Management traffic flows to the port regardless of the state
- 		 * of the INGRESS flag". So BPDUs are still be allowed to pass.
-@@ -1399,11 +1400,6 @@ static void sja1105_bridge_stp_state_set(struct dsa_switch *ds, int port,
- 		mac[port].egress    = false;
- 		mac[port].dyn_learn = false;
- 		break;
--	case BR_STATE_LISTENING:
--		mac[port].ingress   = true;
--		mac[port].egress    = false;
--		mac[port].dyn_learn = false;
--		break;
- 	case BR_STATE_LEARNING:
- 		mac[port].ingress   = true;
- 		mac[port].egress    = false;
+diff --git a/drivers/mailbox/mailbox.c b/drivers/mailbox/mailbox.c
+index 4229b9b5da98f..6f54501dc7762 100644
+--- a/drivers/mailbox/mailbox.c
++++ b/drivers/mailbox/mailbox.c
+@@ -350,11 +350,12 @@ struct mbox_chan *mbox_request_channel(struct mbox_client *cl, int index)
+ 
+ 	mutex_lock(&con_mutex);
+ 
+-	if (of_parse_phandle_with_args(dev->of_node, "mboxes",
+-				       "#mbox-cells", index, &spec)) {
++	ret = of_parse_phandle_with_args(dev->of_node, "mboxes", "#mbox-cells",
++					 index, &spec);
++	if (ret) {
+ 		dev_dbg(dev, "%s: can't parse \"mboxes\" property\n", __func__);
+ 		mutex_unlock(&con_mutex);
+-		return ERR_PTR(-ENODEV);
++		return ERR_PTR(ret);
+ 	}
+ 
+ 	chan = ERR_PTR(-EPROBE_DEFER);
 -- 
 2.39.5
 
