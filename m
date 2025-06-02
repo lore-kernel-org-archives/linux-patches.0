@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBC81221F12;
-	Mon,  2 Jun 2025 13:58:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D46D1A3A80;
+	Mon,  2 Jun 2025 13:58:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748872690; cv=none; b=OKs0KHjBJHR6ObXEkuWv7kmNmI22D4Oz68i4op3Svlc6Rr/p6xTa3v8YCH9kLGVbV2zGKFYb6X+oXNZgIIWX813zisJzgwg83PpIIGafyAg5IjajMZ77vlHtJQHxhxxfxiFlb5S+1M1gmqPGygl3zjYtJ2YqqLBJfkKf0YYTpTw=
+	t=1748872694; cv=none; b=RBvc/0649RhiOjR7EtxeadB/JXDeaGFtqXQDUOdqAf4U/dubDIonzULWPUK45ebvTUkMY7hZPiFvNOtpIxbEnw5XqglheFBulr/MXh6FvK1G0a8dJv6ACq0OacHgtzc+wnhFoOrPbTRDfbq3euF+mqlSVdcN4hyg5iMuSdRPdZg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748872690; c=relaxed/simple;
-	bh=KW0ARdJJBvktfsJjF2W5IMqJ9Xkrhk6SroHsTwZSi1w=;
+	s=arc-20240116; t=1748872694; c=relaxed/simple;
+	bh=btAthm5ipkFqArGgAQGI0UDwFMvHzTp3EAIADqlk250=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jc7zCn3gatQISG+Vsy+ZV7VRnflMP+IUipNy+cI4xYWOnyiUaUUYYDZCANLw2JR7PAB21KyYpwkkWTrFyKqm8PI/4MeXgWpyDtBu5XBuzd3R0aJJ/wwoQF9b3HROXY8dlopFEH951Dj9Qc+1gXVDYR+0/OHYnTjCVIfsjx5vH3U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0vuDAtWW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I38gf4DxnlxH+z0lm0Uu1FjpdLD5iEWxvBd0KuLaCvIv1mFWx9gmD7dha+idoV8RgWKBpgA5pDF2D+XRpkVPXlLnpW3Azy3oHEi1wirOvLs2w1Xs4M5Q4qMdNU/4pHhgHFcsy6AJOKuf5kr9eLxx45RUW8hlqZg9XZIFhN8NPFw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fKEucO5/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0vuDAtWW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1062DC4CEEB;
-	Mon,  2 Jun 2025 13:58:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fKEucO5/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5B8FC4CEEB;
+	Mon,  2 Jun 2025 13:58:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748872690;
-	bh=KW0ARdJJBvktfsJjF2W5IMqJ9Xkrhk6SroHsTwZSi1w=;
+	s=korg; t=1748872694;
+	bh=btAthm5ipkFqArGgAQGI0UDwFMvHzTp3EAIADqlk250=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0vuDAtWWZ5wPmTqyn8tMXune+SB0soXBbtx4Dd/xuPfNpUR73dx0zjI8d9ihcTkWS
-	 a5YgSPzgk/D+t2E4Y4q5zgFzOoC1xKHJKzI6ZXhjM7RMKZpQkMPMXEDRPLwgQ3N5tE
-	 iIqEQ+YoXvZ5wh9viFkZJ/hHoSYuGGm4qwiCfBH8=
+	b=fKEucO5/qMQ3gADV7NXY8VY7Mi5UlHTwWmumhCdK2DK5RJ7hV6+Dc0xY44WzM5xDE
+	 y/ngYALHM8OWeEfeoerwGXDeYu9bkPcLu6v2nLjmaYyTlUwwuZMPCwsvlgfbao4U3U
+	 EzzAjBmbs3D8d4xU/w9OvZP1c0X90CoS3RP+lJXg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Judith Mendez <jm@ti.com>,
-	Moteen Shah <m-shah@ti.com>,
-	Nishanth Menon <nm@ti.com>
-Subject: [PATCH 6.14 33/73] arm64: dts: ti: k3-am65-main: Add missing taps to sdhci0
-Date: Mon,  2 Jun 2025 15:47:19 +0200
-Message-ID: <20250602134243.004738329@linuxfoundation.org>
+	Robin Murphy <robin.murphy@arm.com>,
+	Will Deacon <will@kernel.org>
+Subject: [PATCH 6.14 42/73] perf/arm-cmn: Fix REQ2/SNP2 mixup
+Date: Mon,  2 Jun 2025 15:47:28 +0200
+Message-ID: <20250602134243.349246564@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134241.673490006@linuxfoundation.org>
 References: <20250602134241.673490006@linuxfoundation.org>
@@ -51,36 +50,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Judith Mendez <jm@ti.com>
+From: Robin Murphy <robin.murphy@arm.com>
 
-commit f55c9f087cc2e2252d44ffd9d58def2066fc176e upstream.
+commit 11b0f576e0cbde6a12258f2af6753b17b8df342b upstream.
 
-For am65x, add missing ITAPDLYSEL values for Default Speed and High
-Speed SDR modes to sdhci0 node according to the device datasheet [0].
+Somehow the encodings for REQ2/SNP2 channels in XP events
+got mixed up... Unmix them.
 
-[0] https://www.ti.com/lit/gpn/am6548
-
-Fixes: eac99d38f861 ("arm64: dts: ti: k3-am654-main: Update otap-del-sel values")
-Cc: stable@vger.kernel.org
-Signed-off-by: Judith Mendez <jm@ti.com>
-Reviewed-by: Moteen Shah <m-shah@ti.com>
-Link: https://lore.kernel.org/r/20250429173009.33994-1-jm@ti.com
-Signed-off-by: Nishanth Menon <nm@ti.com>
+CC: stable@vger.kernel.org
+Fixes: 23760a014417 ("perf/arm-cmn: Add CMN-700 support")
+Signed-off-by: Robin Murphy <robin.murphy@arm.com>
+Link: https://lore.kernel.org/r/087023e9737ac93d7ec7a841da904758c254cb01.1746717400.git.robin.murphy@arm.com
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/ti/k3-am65-main.dtsi |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/perf/arm-cmn.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/arch/arm64/boot/dts/ti/k3-am65-main.dtsi
-+++ b/arch/arm64/boot/dts/ti/k3-am65-main.dtsi
-@@ -449,6 +449,8 @@
- 		ti,otap-del-sel-mmc-hs = <0x0>;
- 		ti,otap-del-sel-ddr52 = <0x5>;
- 		ti,otap-del-sel-hs200 = <0x5>;
-+		ti,itap-del-sel-legacy = <0xa>;
-+		ti,itap-del-sel-mmc-hs = <0x1>;
- 		ti,itap-del-sel-ddr52 = <0x0>;
- 		dma-coherent;
- 		status = "disabled";
+--- a/drivers/perf/arm-cmn.c
++++ b/drivers/perf/arm-cmn.c
+@@ -727,8 +727,8 @@ static umode_t arm_cmn_event_attr_is_vis
+ 
+ 		if ((chan == 5 && cmn->rsp_vc_num < 2) ||
+ 		    (chan == 6 && cmn->dat_vc_num < 2) ||
+-		    (chan == 7 && cmn->snp_vc_num < 2) ||
+-		    (chan == 8 && cmn->req_vc_num < 2))
++		    (chan == 7 && cmn->req_vc_num < 2) ||
++		    (chan == 8 && cmn->snp_vc_num < 2))
+ 			return 0;
+ 	}
+ 
+@@ -884,8 +884,8 @@ static umode_t arm_cmn_event_attr_is_vis
+ 	_CMN_EVENT_XP(pub_##_name, (_event) | (4 << 5)),	\
+ 	_CMN_EVENT_XP(rsp2_##_name, (_event) | (5 << 5)),	\
+ 	_CMN_EVENT_XP(dat2_##_name, (_event) | (6 << 5)),	\
+-	_CMN_EVENT_XP(snp2_##_name, (_event) | (7 << 5)),	\
+-	_CMN_EVENT_XP(req2_##_name, (_event) | (8 << 5))
++	_CMN_EVENT_XP(req2_##_name, (_event) | (7 << 5)),	\
++	_CMN_EVENT_XP(snp2_##_name, (_event) | (8 << 5))
+ 
+ #define CMN_EVENT_XP_DAT(_name, _event)				\
+ 	_CMN_EVENT_XP_PORT(dat_##_name, (_event) | (3 << 5)),	\
 
 
