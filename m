@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4E37221727;
-	Mon,  2 Jun 2025 15:16:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DECD1221DBD;
+	Mon,  2 Jun 2025 15:16:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748877376; cv=none; b=G9PQM0oIqUDHqLDSjs0LtUPTI6/JRAKl7GkpzQBdh2L2qSCl0DHnQfz94DwPHjDW1TvKah16dFzdEtK9EYsJzg6/0pGqi/0iUOSRrdNPatt/elblBmIggOu2sTLUzh1NIXaGOKVrUelt6ny9OfjpAn/YVvT/QGf9yLglsEtYzhQ=
+	t=1748877380; cv=none; b=rNvNGJRrf8VWr/vrb+TOESF+EGGk46B+YtImKj9MjLU0uDUNF90+Nh+n8VhHwDhdqMs74AsVNK0ZpaZv5z52uoZDFSauv9VJARASL7FdJi+viV2fioAolFa8PjGLJIuo0E+8ovYkUuQ1hREQHY9ugS3SIisUS2kMUv8ZFvd/bko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748877376; c=relaxed/simple;
-	bh=xtnkm6U1Mwhtc+jg8qs4xZlcJQKrgZ3sF9I6E++S8S8=;
+	s=arc-20240116; t=1748877380; c=relaxed/simple;
+	bh=7wSnjBXveqwBg6AgAj4QOjN6u7NbBfqmsttfxRJfXYQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=DuG8FCHQwe35SPNB007dujc7tAvH+9w/wkSzixStyGbykWcfmWCop6ZBlipc8Ke32s8muxrnCzo5yPMLua82reBxNb/tCHufwkpZPk3IUVGDNlEBB7LyvTwvZgFWkgc4dBJNNOXrNssdzs0AEwK0FSWgyLcOa3vjs93wzQGuqG4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=drbPLy2L; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=psgCU+gzzJ/CPGFspSAZ1PxBj1HYODHmRuW7YuFzR06aYtDrQA7WDn+iitIIQycNwkmtcHDJf/otT0PEAYcDPF+CBOgnX8ZciUe9dvtahSaFUPYLAgA3RMhTaW7ecu7/LgmiLrU+rABUeiRT0mVzSbuzUMRHO/XKzbJ2A2fLHxQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VPqgEL8R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="drbPLy2L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23B51C4CEEB;
-	Mon,  2 Jun 2025 15:16:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VPqgEL8R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EAE4C4CEEB;
+	Mon,  2 Jun 2025 15:16:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748877376;
-	bh=xtnkm6U1Mwhtc+jg8qs4xZlcJQKrgZ3sF9I6E++S8S8=;
+	s=korg; t=1748877379;
+	bh=7wSnjBXveqwBg6AgAj4QOjN6u7NbBfqmsttfxRJfXYQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=drbPLy2L0KorqZXp5nzsC3tAL3Cszg+mBK8HOSyKYf+uKCJ/f5Ph9ovA1H0X/EQNE
-	 zZmUBnx9YEMjisBHmSEzuj5Uslqzj4NRQYyw4lvvGyGrAAOk7IrTOAWKNrAEoR2Bit
-	 7/vHUG0mXyxa38elGxSB5Nj1PeQ6wxDDsGW8KrlA=
+	b=VPqgEL8RItTF3qhz4hxPOCgHpHJg4buMPD9aUG2Y0dHyMQcVLpVu8xGLhYrqzg+No
+	 XQt8NTUvNZo7T7qSGNL3WWNpxgG6N29ZHjd1bW+k1NJF8HpKLri9JAZoGQngIIr9YJ
+	 3d1nxtFrZVjjEQ6apUbbUSxK7KW1epKtk4Dtr/ZY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Moskovkin <Vladimir.Moskovkin@kaspersky.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 6.1 258/325] platform/x86: dell-wmi-sysman: Avoid buffer overflow in current_password_store()
-Date: Mon,  2 Jun 2025 15:48:54 +0200
-Message-ID: <20250602134330.261709832@linuxfoundation.org>
+	"feijuan.li" <feijuan.li@samsung.com>,
+	Jani Nikula <jani.nikula@intel.com>
+Subject: [PATCH 6.1 259/325] drm/edid: fixed the bug that hdr metadata was not reset
+Date: Mon,  2 Jun 2025 15:48:55 +0200
+Message-ID: <20250602134330.300282965@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134319.723650984@linuxfoundation.org>
 References: <20250602134319.723650984@linuxfoundation.org>
@@ -44,46 +44,41 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vladimir Moskovkin <Vladimir.Moskovkin@kaspersky.com>
+From: feijuan.li <feijuan.li@samsung.com>
 
-commit 4e89a4077490f52cde652d17e32519b666abf3a6 upstream.
+commit 6692dbc15e5ed40a3aa037aced65d7b8826c58cd upstream.
 
-If the 'buf' array received from the user contains an empty string, the
-'length' variable will be zero. Accessing the 'buf' array element with
-index 'length - 1' will result in a buffer overflow.
+When DP connected to a device with HDR capability,
+the hdr structure was filled.Then connected to another
+sink device without hdr capability, but the hdr info
+still exist.
 
-Add a check for an empty string.
-
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: e8a60aa7404b ("platform/x86: Introduce support for Systems Management Driver over WMI for Dell Systems")
-Cc: stable@vger.kernel.org
-Signed-off-by: Vladimir Moskovkin <Vladimir.Moskovkin@kaspersky.com>
-Link: https://lore.kernel.org/r/39973642a4f24295b4a8fad9109c5b08@kaspersky.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Fixes: e85959d6cbe0 ("drm: Parse HDR metadata info from EDID")
+Cc: <stable@vger.kernel.org> # v5.3+
+Signed-off-by: "feijuan.li" <feijuan.li@samsung.com>
+Reviewed-by: Jani Nikula <jani.nikula@intel.com>
+Link: https://lore.kernel.org/r/20250514063511.4151780-1-feijuan.li@samsung.com
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/dell/dell-wmi-sysman/passobj-attributes.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/drm_edid.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/platform/x86/dell/dell-wmi-sysman/passobj-attributes.c
-+++ b/drivers/platform/x86/dell/dell-wmi-sysman/passobj-attributes.c
-@@ -45,7 +45,7 @@ static ssize_t current_password_store(st
- 	int length;
+--- a/drivers/gpu/drm/drm_edid.c
++++ b/drivers/gpu/drm/drm_edid.c
+@@ -6164,6 +6164,7 @@ static void drm_reset_display_info(struc
+ 	info->has_hdmi_infoframe = false;
+ 	info->rgb_quant_range_selectable = false;
+ 	memset(&info->hdmi, 0, sizeof(info->hdmi));
++	memset(&connector->hdr_sink_metadata, 0, sizeof(connector->hdr_sink_metadata));
  
- 	length = strlen(buf);
--	if (buf[length-1] == '\n')
-+	if (length && buf[length - 1] == '\n')
- 		length--;
- 
- 	/* firmware does verifiation of min/max password length,
+ 	info->edid_hdmi_rgb444_dc_modes = 0;
+ 	info->edid_hdmi_ycbcr444_dc_modes = 0;
 
 
