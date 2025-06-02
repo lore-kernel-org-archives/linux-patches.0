@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE17C23D2B4;
-	Mon,  2 Jun 2025 14:03:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08A522405F8;
+	Mon,  2 Jun 2025 14:03:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748872998; cv=none; b=ANY8Dc6zDFYa6/n5wsgjhjKwKTZdYzyoSCLN2NgrfujZ/rc1klJiRlZgIsOUAAg0KalMF2g/iwfDhLivsTT/0GpDcHycwwvpol8W3CoEYWzJYHAXOj4BpR0Y+ZmV/9PKO44W8RSbC6vTKTu3Tno/Yn4MX04aPfgVYOkRnOXsa3M=
+	t=1748873002; cv=none; b=nKMyFrgIl53PqGMvMaUlPeqvoAIxUXfMM6rMSp85qvUoNXk/pLPO4nEZeH9t2hXWCCZenWogo5g/I7FprPbYd/lQFjAKuB9+pvgo3FIP5EErGU6hFy15EyRcY0yDqWozxDk4U/KYKZVg/zxJf+FC5+V7O3A3sdJE1Q36MVkwcuk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748872998; c=relaxed/simple;
-	bh=LN3t6F8brv6SGu4dXvG1xK12OSoQEIls2D+3ZC5e/aE=;
+	s=arc-20240116; t=1748873002; c=relaxed/simple;
+	bh=pH8ik2AtYWJVqKCKgIKKqg6Tc+7igSdO7d/GjboXyOs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aVXfEfMRPtqk+V4iQigM7wqg9kllhibv5IjCBULd75rd9VWdpEsNUoHb/kh7i9Q2MArJ5sXaxbPCX9KuibqlzLUq9ZOiKB8t89Awuw1f4CEaJzCnKaARVCFfaCBngVfaFLQLD19Ef9f8i2VwGk55cSbilNHanZk6VWLZjQi6XMk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CCqX3wGS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QRElqUSi85QnCHDtX0xKohwFtCgW62BCazZugs+i+c2Q4qU/b3ZZptJZjjR4TaeJrS7pHE6XmE6x/kqtxssRrhC9F8bQDSsdZ+ktS1HY/gDncDY0FJhChAisNIwygM6f2AUBjnLIwpLXK4JeHynjr/KlnTs+CcxwYIQOoFFQA1w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DygxhgdJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CCqX3wGS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12807C4CEF2;
-	Mon,  2 Jun 2025 14:03:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DygxhgdJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56E86C4CEEB;
+	Mon,  2 Jun 2025 14:03:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748872998;
-	bh=LN3t6F8brv6SGu4dXvG1xK12OSoQEIls2D+3ZC5e/aE=;
+	s=korg; t=1748873001;
+	bh=pH8ik2AtYWJVqKCKgIKKqg6Tc+7igSdO7d/GjboXyOs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CCqX3wGSdA86sMeeibkL97jkloac3iSeXe9PMDq2rJoD5ztSsX/A7Zg9OXLwvgBQz
-	 xlx5fCAKd/Jmxyhq858WU7ZYv2zeUEQ3RM3O32sQWFoSERMAWV8N6LpglalKwdUh5v
-	 Xle5pkK31uDdbSvgLljLCjQJldNwVlnGAULL+RA0=
+	b=DygxhgdJlhjw50wFlHyCg65UXZ5Jyk2e6GTcFeLpH2YTgV5KF+f12yMWDMgd94B99
+	 Gxv2lRwri6nTUvt1cUZjDk8GH94AcKfkkauoATdJ4lcI92VvpqDaI9JhhNDdnZlyOu
+	 PrrFw8qkeTuvyAfIOoH5OrBLmWX4n/BIlmbuXuIE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luca Boccassi <luca.boccassi@gmail.com>,
-	Oleg Nesterov <oleg@redhat.com>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 6.12 34/55] coredump: hand a pidfd to the usermode coredump helper
-Date: Mon,  2 Jun 2025 15:47:51 +0200
-Message-ID: <20250602134239.623925542@linuxfoundation.org>
+	Yemike Abhilash Chandra <y-abhilashchandra@ti.com>,
+	Nishanth Menon <nm@ti.com>
+Subject: [PATCH 6.12 25/55] arm64: dts: ti: k3-j721e-sk: Add requiried voltage supplies for IMX219
+Date: Mon,  2 Jun 2025 15:47:42 +0200
+Message-ID: <20250602134239.266945954@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134238.271281478@linuxfoundation.org>
 References: <20250602134238.271281478@linuxfoundation.org>
@@ -51,167 +50,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Yemike Abhilash Chandra <y-abhilashchandra@ti.com>
 
-commit b5325b2a270fcaf7b2a9a0f23d422ca8a5a8bdea upstream.
+commit c6a20a250200da6fcaf80fe945b7b92cba8cfe0f upstream.
 
-Give userspace a way to instruct the kernel to install a pidfd into the
-usermode helper process. This makes coredump handling a lot more
-reliable for userspace. In parallel with this commit we already have
-systemd adding support for this in [1].
+The device tree overlay for the IMX219 sensor requires three voltage
+supplies to be defined: VANA (analog), VDIG (digital core), and VDDL
+(digital I/O). Add the corresponding voltage supply definitions to
+avoid dtbs_check warnings.
 
-We create a pidfs file for the coredumping process when we process the
-corename pattern. When the usermode helper process is forked we then
-install the pidfs file as file descriptor three into the usermode
-helpers file descriptor table so it's available to the exec'd program.
-
-Since usermode helpers are either children of the system_unbound_wq
-workqueue or kthreadd we know that the file descriptor table is empty
-and can thus always use three as the file descriptor number.
-
-Note, that we'll install a pidfd for the thread-group leader even if a
-subthread is calling do_coredump(). We know that task linkage hasn't
-been removed due to delay_group_leader() and even if this @current isn't
-the actual thread-group leader we know that the thread-group leader
-cannot be reaped until @current has exited.
-
-[brauner: This is a backport for the v6.12 series. The upstream kernel
-has changed pidfs_alloc_file() to set O_RDWR implicitly instead of
-forcing callers to set it. Let's minimize the churn and just let the
-coredump umh handler raise O_RDWR.]
-
-Link: https://github.com/systemd/systemd/pull/37125 [1]
-Link: https://lore.kernel.org/20250414-work-coredump-v2-3-685bf231f828@kernel.org
-Tested-by: Luca Boccassi <luca.boccassi@gmail.com>
-Reviewed-by: Oleg Nesterov <oleg@redhat.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Fixes: f767eb918096 ("arm64: dts: ti: k3-j721e-sk: Add overlay for IMX219")
+Cc: stable@vger.kernel.org
+Signed-off-by: Yemike Abhilash Chandra <y-abhilashchandra@ti.com>
+Link: https://lore.kernel.org/r/20250415111328.3847502-5-y-abhilashchandra@ti.com
+Signed-off-by: Nishanth Menon <nm@ti.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/coredump.c            |   56 +++++++++++++++++++++++++++++++++++++++++++----
- include/linux/coredump.h |    1 
- 2 files changed, 53 insertions(+), 4 deletions(-)
+ arch/arm64/boot/dts/ti/k3-j721e-sk-csi2-dual-imx219.dtso |   33 +++++++++++++++
+ 1 file changed, 33 insertions(+)
 
---- a/fs/coredump.c
-+++ b/fs/coredump.c
-@@ -43,6 +43,8 @@
- #include <linux/timekeeping.h>
- #include <linux/sysctl.h>
- #include <linux/elf.h>
-+#include <linux/pidfs.h>
-+#include <uapi/linux/pidfd.h>
- 
- #include <linux/uaccess.h>
- #include <asm/mmu_context.h>
-@@ -60,6 +62,12 @@ static void free_vma_snapshot(struct cor
- #define CORE_FILE_NOTE_SIZE_DEFAULT (4*1024*1024)
- /* Define a reasonable max cap */
- #define CORE_FILE_NOTE_SIZE_MAX (16*1024*1024)
-+/*
-+ * File descriptor number for the pidfd for the thread-group leader of
-+ * the coredumping task installed into the usermode helper's file
-+ * descriptor table.
-+ */
-+#define COREDUMP_PIDFD_NUMBER 3
- 
- static int core_uses_pid;
- static unsigned int core_pipe_limit;
-@@ -339,6 +347,27 @@ static int format_corename(struct core_n
- 			case 'C':
- 				err = cn_printf(cn, "%d", cprm->cpu);
- 				break;
-+			/* pidfd number */
-+			case 'F': {
-+				/*
-+				 * Installing a pidfd only makes sense if
-+				 * we actually spawn a usermode helper.
-+				 */
-+				if (!ispipe)
-+					break;
+--- a/arch/arm64/boot/dts/ti/k3-j721e-sk-csi2-dual-imx219.dtso
++++ b/arch/arm64/boot/dts/ti/k3-j721e-sk-csi2-dual-imx219.dtso
+@@ -19,6 +19,33 @@
+ 		#clock-cells = <0>;
+ 		clock-frequency = <24000000>;
+ 	};
 +
-+				/*
-+				 * Note that we'll install a pidfd for the
-+				 * thread-group leader. We know that task
-+				 * linkage hasn't been removed yet and even if
-+				 * this @current isn't the actual thread-group
-+				 * leader we know that the thread-group leader
-+				 * cannot be reaped until @current has exited.
-+				 */
-+				cprm->pid = task_tgid(current);
-+				err = cn_printf(cn, "%d", COREDUMP_PIDFD_NUMBER);
-+				break;
-+			}
- 			default:
- 				break;
- 			}
-@@ -493,7 +522,7 @@ static void wait_for_dump_helpers(struct
- }
- 
- /*
-- * umh_pipe_setup
-+ * umh_coredump_setup
-  * helper function to customize the process used
-  * to collect the core in userspace.  Specifically
-  * it sets up a pipe and installs it as fd 0 (stdin)
-@@ -503,12 +532,31 @@ static void wait_for_dump_helpers(struct
-  * is a special value that we use to trap recursive
-  * core dumps
-  */
--static int umh_pipe_setup(struct subprocess_info *info, struct cred *new)
-+static int umh_coredump_setup(struct subprocess_info *info, struct cred *new)
- {
- 	struct file *files[2];
- 	struct coredump_params *cp = (struct coredump_params *)info->data;
- 	int err;
- 
-+	if (cp->pid) {
-+		struct file *pidfs_file __free(fput) = NULL;
++	reg_2p8v: regulator-2p8v {
++		compatible = "regulator-fixed";
++		regulator-name = "2P8V";
++		regulator-min-microvolt = <2800000>;
++		regulator-max-microvolt = <2800000>;
++		vin-supply = <&vdd_sd_dv>;
++		regulator-always-on;
++	};
 +
-+		pidfs_file = pidfs_alloc_file(cp->pid, O_RDWR);
-+		if (IS_ERR(pidfs_file))
-+			return PTR_ERR(pidfs_file);
++	reg_1p8v: regulator-1p8v {
++		compatible = "regulator-fixed";
++		regulator-name = "1P8V";
++		regulator-min-microvolt = <1800000>;
++		regulator-max-microvolt = <1800000>;
++		vin-supply = <&vdd_sd_dv>;
++		regulator-always-on;
++	};
 +
-+		/*
-+		 * Usermode helpers are childen of either
-+		 * system_unbound_wq or of kthreadd. So we know that
-+		 * we're starting off with a clean file descriptor
-+		 * table. So we should always be able to use
-+		 * COREDUMP_PIDFD_NUMBER as our file descriptor value.
-+		 */
-+		err = replace_fd(COREDUMP_PIDFD_NUMBER, pidfs_file, 0);
-+		if (err < 0)
-+			return err;
-+	}
-+
- 	err = create_pipe_files(files, 0);
- 	if (err)
- 		return err;
-@@ -598,7 +646,7 @@ void do_coredump(const kernel_siginfo_t
- 		}
- 
- 		if (cprm.limit == 1) {
--			/* See umh_pipe_setup() which sets RLIMIT_CORE = 1.
-+			/* See umh_coredump_setup() which sets RLIMIT_CORE = 1.
- 			 *
- 			 * Normally core limits are irrelevant to pipes, since
- 			 * we're not writing to the file system, but we use
-@@ -637,7 +685,7 @@ void do_coredump(const kernel_siginfo_t
- 		retval = -ENOMEM;
- 		sub_info = call_usermodehelper_setup(helper_argv[0],
- 						helper_argv, NULL, GFP_KERNEL,
--						umh_pipe_setup, NULL, &cprm);
-+						umh_coredump_setup, NULL, &cprm);
- 		if (sub_info)
- 			retval = call_usermodehelper_exec(sub_info,
- 							  UMH_WAIT_EXEC);
---- a/include/linux/coredump.h
-+++ b/include/linux/coredump.h
-@@ -28,6 +28,7 @@ struct coredump_params {
- 	int vma_count;
- 	size_t vma_data_size;
- 	struct core_vma_metadata *vma_meta;
-+	struct pid *pid;
++	reg_1p2v: regulator-1p2v {
++		compatible = "regulator-fixed";
++		regulator-name = "1P2V";
++		regulator-min-microvolt = <1200000>;
++		regulator-max-microvolt = <1200000>;
++		vin-supply = <&vdd_sd_dv>;
++		regulator-always-on;
++	};
  };
  
- extern unsigned int core_file_note_size_limit;
+ &csi_mux {
+@@ -34,6 +61,9 @@
+ 		reg = <0x10>;
+ 
+ 		clocks = <&clk_imx219_fixed>;
++		VANA-supply = <&reg_2p8v>;
++		VDIG-supply = <&reg_1p8v>;
++		VDDL-supply = <&reg_1p2v>;
+ 
+ 		port {
+ 			csi2_cam0: endpoint {
+@@ -55,6 +85,9 @@
+ 		reg = <0x10>;
+ 
+ 		clocks = <&clk_imx219_fixed>;
++		VANA-supply = <&reg_2p8v>;
++		VDIG-supply = <&reg_1p8v>;
++		VDDL-supply = <&reg_1p2v>;
+ 
+ 		port {
+ 			csi2_cam1: endpoint {
 
 
