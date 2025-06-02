@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61BB62153CB;
-	Mon,  2 Jun 2025 15:09:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE1FA2C327E;
+	Mon,  2 Jun 2025 15:09:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748876985; cv=none; b=Dzf5vuJYvvkh4J5WUQjv+9AskK0CALE2S6qQacyVXmihhBNeKkZl+MgwkFD7ahZNUZ88tfr/xHnvDq7EvTofU7OYTIntw+iXrGcKxpDCjLIJhmOQ7zWESl2p9tzUjrIhEwWUuEqYna4cjFg7+9CkdhFDOSbDsxvbjhCNMqz30RA=
+	t=1748876988; cv=none; b=tVbxvm8DyzGSdAZ7+q4PnD60GtRujlOUdcycK7rimxelwZMGW20iLD/LbguziN11P2kngeQEWTS27iMCBLlD+fWMgOyCIaIcUTQghz2i52wJ4lvWJbGoE7ho8t/HXyAk0moFlNpPBTo7YKA/oUaYcLChfAPOHla19Tevwiw1b8I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748876985; c=relaxed/simple;
-	bh=PdrA/3OjuBdj6r8w5PlgxceS79mnaOps0hpx+psD+9I=;
+	s=arc-20240116; t=1748876988; c=relaxed/simple;
+	bh=+Tx0kbOmkXm7LgNt+n7NagG0r8WKlSvBNxp+IF74blA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=b/EyKgNESWiwa4DdaYFKzb+J+M1Y8lnGxakzUD3wDDN4AtSi8KnKCsnujsHwhobfz2HxPi8qwudQVIORUA20vZc0oNkpXQ3S4bLMc8RrxbxrhOa93VZ99h7Zog7iHf8oKb2WdtCwkM5VMugBcUDdTSLJHs68aPOsFxeeGg0wAIg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HvZpppKC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BHWeA95Ljc33T0SPLr6ohk6bfkyyRwq9JWuGGDjww34o7sesynorbj357KtEC219y54QTYxXUswUAnIKcY0daPRl/GBhq3lVorxer+WkXqQ356sTAJpEpozusTMIlAKrOeGO36HPPaWLJchTbepRdNhH59wGyv4lRRi8RqLvbCM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L8IEHSPr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HvZpppKC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 147B7C4CEEB;
-	Mon,  2 Jun 2025 15:09:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L8IEHSPr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81D62C4CEEB;
+	Mon,  2 Jun 2025 15:09:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748876981;
-	bh=PdrA/3OjuBdj6r8w5PlgxceS79mnaOps0hpx+psD+9I=;
+	s=korg; t=1748876987;
+	bh=+Tx0kbOmkXm7LgNt+n7NagG0r8WKlSvBNxp+IF74blA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HvZpppKClCqqI4dFpn9pKaZqg+khE+A8oVrikcWKYoAzIj0px/RnO6JY/4xOBgQH5
-	 BqdK/qWosXi0xFMm/baaBCaTnjEEBwZ82S/83Ni/byetmIEcNm5Ilv+4Bv0pzoFnTm
-	 RFUvEvbCbUWg1ILn3/GWbkBPSKnpTf7V9i4EwBBE=
+	b=L8IEHSPr9sPUXDxcyn+YmleCnNoc3zHjn5kjAca0HkrxiZfgtCyudVVXso1GUFHtw
+	 XgDujTTZV26/0d0pUAbv5ydFOC6IR8k/hcYC1en5WR4A8k52WrQoiHOyf4FSEHnP7h
+	 5T9t+BTknAZFS+8AT+9/Xy1SWPKZizrnMZHeUBlc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Andrew Davis <afd@ti.com>,
+	Nishanth Menon <nm@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 134/325] bonding: report duplicate MAC address in all situations
-Date: Mon,  2 Jun 2025 15:46:50 +0200
-Message-ID: <20250602134325.247400181@linuxfoundation.org>
+Subject: [PATCH 6.1 135/325] soc: ti: k3-socinfo: Do not use syscon helper to build regmap
+Date: Mon,  2 Jun 2025 15:46:51 +0200
+Message-ID: <20250602134325.293677514@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134319.723650984@linuxfoundation.org>
 References: <20250602134319.723650984@linuxfoundation.org>
@@ -46,49 +45,72 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hangbin Liu <liuhangbin@gmail.com>
+From: Andrew Davis <afd@ti.com>
 
-[ Upstream commit 28d68d396a1cd21591e8c6d74afbde33a7ea107e ]
+[ Upstream commit a5caf03188e44388e8c618dcbe5fffad1a249385 ]
 
-Normally, a bond uses the MAC address of the first added slave as the bond’s
-MAC address. And the bond will set active slave’s MAC address to bond’s
-address if fail_over_mac is set to none (0) or follow (2).
+The syscon helper device_node_to_regmap() is used to fetch a regmap
+registered to a device node. It also currently creates this regmap
+if the node did not already have a regmap associated with it. This
+should only be used on "syscon" nodes. This driver is not such a
+device and instead uses device_node_to_regmap() on its own node as
+a hacky way to create a regmap for itself.
 
-When the first slave is removed, the bond will still use the removed slave’s
-MAC address, which can lead to a duplicate MAC address and potentially cause
-issues with the switch. To avoid confusion, let's warn the user in all
-situations, including when fail_over_mac is set to 2 or not in active-backup
-mode.
+This will not work going forward and so we should create our regmap
+the normal way by defining our regmap_config, fetching our memory
+resource, then using the normal regmap_init_mmio() function.
 
-Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
-Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://patch.msgid.link/20250225033914.18617-1-liuhangbin@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Andrew Davis <afd@ti.com>
+Link: https://lore.kernel.org/r/20250123181726.597144-1-afd@ti.com
+Signed-off-by: Nishanth Menon <nm@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/bonding/bond_main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/soc/ti/k3-socinfo.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
-index ded9e369e4038..3cedadef9c8ab 100644
---- a/drivers/net/bonding/bond_main.c
-+++ b/drivers/net/bonding/bond_main.c
-@@ -2431,7 +2431,7 @@ static int __bond_release_one(struct net_device *bond_dev,
+diff --git a/drivers/soc/ti/k3-socinfo.c b/drivers/soc/ti/k3-socinfo.c
+index 91f441ee61752..5b0d8260918d2 100644
+--- a/drivers/soc/ti/k3-socinfo.c
++++ b/drivers/soc/ti/k3-socinfo.c
+@@ -60,6 +60,12 @@ k3_chipinfo_partno_to_names(unsigned int partno,
+ 	return -EINVAL;
+ }
  
- 	RCU_INIT_POINTER(bond->current_arp_slave, NULL);
++static const struct regmap_config k3_chipinfo_regmap_cfg = {
++	.reg_bits = 32,
++	.val_bits = 32,
++	.reg_stride = 4,
++};
++
+ static int k3_chipinfo_probe(struct platform_device *pdev)
+ {
+ 	struct device_node *node = pdev->dev.of_node;
+@@ -67,13 +73,18 @@ static int k3_chipinfo_probe(struct platform_device *pdev)
+ 	struct device *dev = &pdev->dev;
+ 	struct soc_device *soc_dev;
+ 	struct regmap *regmap;
++	void __iomem *base;
+ 	u32 partno_id;
+ 	u32 variant;
+ 	u32 jtag_id;
+ 	u32 mfg;
+ 	int ret;
  
--	if (!all && (!bond->params.fail_over_mac ||
-+	if (!all && (bond->params.fail_over_mac != BOND_FOM_ACTIVE ||
- 		     BOND_MODE(bond) != BOND_MODE_ACTIVEBACKUP)) {
- 		if (ether_addr_equal_64bits(bond_dev->dev_addr, slave->perm_hwaddr) &&
- 		    bond_has_slaves(bond))
+-	regmap = device_node_to_regmap(node);
++	base = devm_platform_ioremap_resource(pdev, 0);
++	if (IS_ERR(base))
++		return PTR_ERR(base);
++
++	regmap = regmap_init_mmio(dev, base, &k3_chipinfo_regmap_cfg);
+ 	if (IS_ERR(regmap))
+ 		return PTR_ERR(regmap);
+ 
 -- 
 2.39.5
 
