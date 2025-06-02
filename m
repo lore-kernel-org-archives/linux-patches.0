@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B50F31E0DD8;
-	Mon,  2 Jun 2025 14:21:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5BE6223323;
+	Mon,  2 Jun 2025 14:21:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748874091; cv=none; b=H02F3IamJTYQt7Db8GORLRJoiiAyNj0/6s35ieY4BeeZBTnHfi7L8dCqPOcoggMakCB6X7muMm8jrcOvB2JqvTNBgAHnL2ikfCa6br8XXamOAt4T5NbIfI4mehym+KTSxB7+F06nlB+qkn1/YFIveKPId7Pm2TD9mtvS/G+8wxA=
+	t=1748874094; cv=none; b=DO1qn4UpJAFcdZkpDSNrgLjVxbZnoLfRuoSJvF1QADa5/ms6yYvVA2AfLDGTe2ZuY7IwY2UeuJx63eAfEFOHYMNHnwszpdIM8vgoJdZguDNPXyWuRxaAI//M9ZlAWX+CguulgX/4Z8IW6f5eMQqa64LiMPmCpJssWLnkxsJ0iuI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748874091; c=relaxed/simple;
-	bh=Gw1Zk3T4KF8VZJanfsYbcYpPNCQnaybOlryRGnp3Aoo=;
+	s=arc-20240116; t=1748874094; c=relaxed/simple;
+	bh=Jz7HfWXKxCkF2Qrk39ak3vFfPUJ8cwmUrtjXBAVHdpk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d5PXn0uAXsxnhb8WyTrmrwZ07If2wTupx/F1BbD8+DwwORd7arjXRxthg2grp5rehqSHyqJtSiAR/Y7/QdaBP3flD7fLTmaal1MBsseNMCX+VzP9VhOfU82mvmIrDoVgBHtyXwREFuqK9LpCUH4qRDpfps6+PJwXZh4KkfOK33Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ODr56mNY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ed7mqav7jp/m62ZcKeZNJKd80AN3UNVDyu18jLjMq82X7AmyEyE/slGcSUfIBkudVejHxt4ywGhsr7f6/pqA6Pt4KUJ07poQRSGZIKSDwke+No7TOjobhLxNt5outuYvHbB+5T+chUQio7KIHRXUdySqLN/PBg9hR0glMAni9uk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=byrAzFnJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ODr56mNY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EE89C4CEEB;
-	Mon,  2 Jun 2025 14:21:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="byrAzFnJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C74CC4CEF0;
+	Mon,  2 Jun 2025 14:21:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748874091;
-	bh=Gw1Zk3T4KF8VZJanfsYbcYpPNCQnaybOlryRGnp3Aoo=;
+	s=korg; t=1748874094;
+	bh=Jz7HfWXKxCkF2Qrk39ak3vFfPUJ8cwmUrtjXBAVHdpk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ODr56mNYMN2svnq/cyuXAdTelkEk1rm4nIQOmjfFZlfzn+rDuQfx0nRcs09TZg2nN
-	 uPtUg8dlm0YlIAu1akACkTtkpkL1h8ynavDtDiqqy9bMCERSefHi4suQz4iwL4DEdo
-	 CMb2YQpLyVKMxVKOP0HvhQi3kQqj6tOUkh879OAE=
+	b=byrAzFnJOaYSb/fezO7IXk32xv6z0r0BO9+XvlNTyEA/6N1ujkUuFnsXw6DVZnh3o
+	 yqO8o+ilPDWf1VWmZE/KC6ZwPrDN9zdeuP5OOJBq/9lVzCrIAqW0cOBOx0MAwTL6y0
+	 ibAvUgH6YH8nxca84nuKWG7PbLzgiPdWllMskz5I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Chaignon <paul.chaignon@gmail.com>,
-	Louis DeLosSantos <louis.delos.devel@gmail.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 337/444] xfrm: Sanitize marks before insert
-Date: Mon,  2 Jun 2025 15:46:41 +0200
-Message-ID: <20250602134354.606753659@linuxfoundation.org>
+	=?UTF-8?q?Andr=C3=A9=20Draszik?= <andre.draszik@linaro.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Stephen Boyd <sboyd@kernel.org>
+Subject: [PATCH 6.6 355/444] clk: s2mps11: initialise clk_hw_onecell_data::num before accessing ::hws[] in probe()
+Date: Mon,  2 Jun 2025 15:46:59 +0200
+Message-ID: <20250602134355.336509746@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -46,77 +45,70 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Paul Chaignon <paul.chaignon@gmail.com>
+From: André Draszik <andre.draszik@linaro.org>
 
-[ Upstream commit 0b91fda3a1f044141e1e615456ff62508c32b202 ]
+commit 3e14c7207a975eefcda1929b2134a9f4119dde45 upstream.
 
-Prior to this patch, the mark is sanitized (applying the state's mask to
-the state's value) only on inserts when checking if a conflicting XFRM
-state or policy exists.
+With UBSAN enabled, we're getting the following trace:
 
-We discovered in Cilium that this same sanitization does not occur
-in the hot-path __xfrm_state_lookup. In the hot-path, the sk_buff's mark
-is simply compared to the state's value:
+    UBSAN: array-index-out-of-bounds in .../drivers/clk/clk-s2mps11.c:186:3
+    index 0 is out of range for type 'struct clk_hw *[] __counted_by(num)' (aka 'struct clk_hw *[]')
 
-    if ((mark & x->mark.m) != x->mark.v)
-        continue;
+This is because commit f316cdff8d67 ("clk: Annotate struct
+clk_hw_onecell_data with __counted_by") annotated the hws member of
+that struct with __counted_by, which informs the bounds sanitizer about
+the number of elements in hws, so that it can warn when hws is accessed
+out of bounds.
 
-Therefore, users can define unsanitized marks (ex. 0xf42/0xf00) which will
-never match any packet.
+As noted in that change, the __counted_by member must be initialised
+with the number of elements before the first array access happens,
+otherwise there will be a warning from each access prior to the
+initialisation because the number of elements is zero. This occurs in
+s2mps11_clk_probe() due to ::num being assigned after ::hws access.
 
-This commit updates __xfrm_state_insert and xfrm_policy_insert to store
-the sanitized marks, thus removing this footgun.
+Move the assignment to satisfy the requirement of assign-before-access.
 
-This has the side effect of changing the ip output, as the
-returned mark will have the mask applied to it when printed.
-
-Fixes: 3d6acfa7641f ("xfrm: SA lookups with mark")
-Signed-off-by: Paul Chaignon <paul.chaignon@gmail.com>
-Signed-off-by: Louis DeLosSantos <louis.delos.devel@gmail.com>
-Co-developed-by: Louis DeLosSantos <louis.delos.devel@gmail.com>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: f316cdff8d67 ("clk: Annotate struct clk_hw_onecell_data with __counted_by")
+Signed-off-by: André Draszik <andre.draszik@linaro.org>
+Link: https://lore.kernel.org/r/20250326-s2mps11-ubsan-v1-1-fcc6fce5c8a9@linaro.org
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/xfrm/xfrm_policy.c | 3 +++
- net/xfrm/xfrm_state.c  | 3 +++
- 2 files changed, 6 insertions(+)
+ drivers/clk/clk-s2mps11.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/xfrm/xfrm_policy.c b/net/xfrm/xfrm_policy.c
-index 68b3f9e7edffd..2edb0f868c573 100644
---- a/net/xfrm/xfrm_policy.c
-+++ b/net/xfrm/xfrm_policy.c
-@@ -1603,6 +1603,9 @@ int xfrm_policy_insert(int dir, struct xfrm_policy *policy, int excl)
- 	struct xfrm_policy *delpol;
- 	struct hlist_head *chain;
+diff --git a/drivers/clk/clk-s2mps11.c b/drivers/clk/clk-s2mps11.c
+index 014db6386624..8ddf3a9a53df 100644
+--- a/drivers/clk/clk-s2mps11.c
++++ b/drivers/clk/clk-s2mps11.c
+@@ -137,6 +137,8 @@ static int s2mps11_clk_probe(struct platform_device *pdev)
+ 	if (!clk_data)
+ 		return -ENOMEM;
  
-+	/* Sanitize mark before store */
-+	policy->mark.v &= policy->mark.m;
++	clk_data->num = S2MPS11_CLKS_NUM;
 +
- 	spin_lock_bh(&net->xfrm.xfrm_policy_lock);
- 	chain = policy_hash_bysel(net, &policy->selector, policy->family, dir);
- 	if (chain)
-diff --git a/net/xfrm/xfrm_state.c b/net/xfrm/xfrm_state.c
-index 7222ba50390d6..86029cf5358c7 100644
---- a/net/xfrm/xfrm_state.c
-+++ b/net/xfrm/xfrm_state.c
-@@ -1475,6 +1475,9 @@ static void __xfrm_state_insert(struct xfrm_state *x)
+ 	switch (hwid) {
+ 	case S2MPS11X:
+ 		s2mps11_reg = S2MPS11_REG_RTC_CTRL;
+@@ -186,7 +188,6 @@ static int s2mps11_clk_probe(struct platform_device *pdev)
+ 		clk_data->hws[i] = &s2mps11_clks[i].hw;
+ 	}
  
- 	list_add(&x->km.all, &net->xfrm.state_all);
+-	clk_data->num = S2MPS11_CLKS_NUM;
+ 	of_clk_add_hw_provider(s2mps11_clks->clk_np, of_clk_hw_onecell_get,
+ 			       clk_data);
  
-+	/* Sanitize mark before store */
-+	x->mark.v &= x->mark.m;
-+
- 	h = xfrm_dst_hash(net, &x->id.daddr, &x->props.saddr,
- 			  x->props.reqid, x->props.family);
- 	XFRM_STATE_INSERT(bydst, &x->bydst, net->xfrm.state_bydst + h,
 -- 
-2.39.5
+2.49.0
 
 
 
