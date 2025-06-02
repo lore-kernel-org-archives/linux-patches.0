@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DF3519EEBD;
-	Mon,  2 Jun 2025 14:42:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4FCB2153CB;
+	Mon,  2 Jun 2025 14:43:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748875377; cv=none; b=K/x9vYpv4KfiUJnOCIlTXydRubOaEujS3E5Hl/zvcjtMqcVmI0YHGuemLTTYGJ20b9VymPzG1AFsS2BR6Er4CxY0ZDGibKb95gZkg73DaqJFC8eUw/wh+UftPSw68Kc/4zcV7ICbklJkCFJfGQJ0PZjlboy0kYj6/WRDHxe6HL8=
+	t=1748875380; cv=none; b=Btv8uk1b+yISufEtd8F6GVO5GWH2K6JYYgO/Cs9BmdxN4iBkiUawSPHgrhmxyvTs5GVcb8ZLQbWiArgO5Qa1Wyx73N3oUviGBnINbnFODWBjGiChYMFG7wZRSSgwEn2/kvrBjV15YV+GvNveNK3eV0QTzDGcMX6wWXAYLwwXJTo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748875377; c=relaxed/simple;
-	bh=K21+5Rlo4W0YSF363tiVZ0u5h1V5o51okzxcpx6OIEs=;
+	s=arc-20240116; t=1748875380; c=relaxed/simple;
+	bh=n2mfovEamOTReBG/leyOsyNmrOi+CXSkAX+mDyKoDeM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yc+rMSIYLSLc8bE/AksUP8Hw4uO5QtSIj+XeKJ3PvE7hyd5EavwmyrPTPQ3hcOgx6kf10BFgjqQVdKWUDBtWF+gEBLQgaHnussjZuC7eRgI+bBXGioN03saQZX66idOQeR+S+O5YQ4jaCTm3dWWD3oEbrFjp5wStVtJNYw1mMEc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FL1Mh6Lv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GfrX7V1S4GUssxWSTdLrYHGshKGleZ6x0IXrOuV8aR5CwHULanlXLkqUUTe9498SqOmpIM06nLx34nTvuS+KjWmWLAzXgJ/VvwLUFailAIl5KubGdKKsAG67pvKtbrI4fOiRM6L2z+5slul8V2w0vPbwnD+Q3sefk4ZnCoNCssE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d+4T+0yL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FL1Mh6Lv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1372C4CEEB;
-	Mon,  2 Jun 2025 14:42:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d+4T+0yL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21E89C4CEEB;
+	Mon,  2 Jun 2025 14:42:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748875377;
-	bh=K21+5Rlo4W0YSF363tiVZ0u5h1V5o51okzxcpx6OIEs=;
+	s=korg; t=1748875380;
+	bh=n2mfovEamOTReBG/leyOsyNmrOi+CXSkAX+mDyKoDeM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FL1Mh6LvzBhoeHJfCWovrwqjLfYNhiI4W/XuV9nhPsP3e4ZzPMvJgm6H33IwRF89s
-	 2N7SLorJVESk8ySC5p4JaVoKnRz+xHuFcikkDPPAm+jnHhSMx0YbuYh95qcXMHSlYI
-	 +FbjNriEgR7pKFMEDBV5IfKd4WMKhYD/Uurb1xOI=
+	b=d+4T+0yLZ/zaNUKldpKrbO/6Iwfo1UyMLrxjY79Gn4u1x4W4lSUQ7W/yplMamU2+Q
+	 XOoOy1g7+Sdr6y4CMCfkMwC7XbID0rt4OxIvKvBP+9t+Y7dF8gDHmxuDLO2U1PB6zH
+	 b70vMS/jNhn9VrrLCzEp4MBnTuL41vCWcRCQvSd4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivan Vecera <ivecera@redhat.com>,
-	Alexander Lobakin <alexandr.lobakin@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Suraj Jitindar Singh <surajjs@amazon.com>
-Subject: [PATCH 5.10 115/270] ice: arfs: fix use-after-free when freeing @rx_cpu_rmap
-Date: Mon,  2 Jun 2025 15:46:40 +0200
-Message-ID: <20250602134311.925782691@linuxfoundation.org>
+	Dmitry Bogdanov <d.bogdanov@yadro.com>,
+	Maurizio Lombardi <mlombard@redhat.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 116/270] scsi: target: iscsi: Fix timeout on deleted connection
+Date: Mon,  2 Jun 2025 15:46:41 +0200
+Message-ID: <20250602134311.970801244@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134307.195171844@linuxfoundation.org>
 References: <20250602134307.195171844@linuxfoundation.org>
@@ -52,186 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Lobakin <alexandr.lobakin@intel.com>
+From: Dmitry Bogdanov <d.bogdanov@yadro.com>
 
-commit d7442f512b71fc63a99c8a801422dde4fbbf9f93 upstream.
+[ Upstream commit 7f533cc5ee4c4436cee51dc58e81dfd9c3384418 ]
 
-The CI testing bots triggered the following splat:
+NOPIN response timer may expire on a deleted connection and crash with
+such logs:
 
-[  718.203054] BUG: KASAN: use-after-free in free_irq_cpu_rmap+0x53/0x80
-[  718.206349] Read of size 4 at addr ffff8881bd127e00 by task sh/20834
-[  718.212852] CPU: 28 PID: 20834 Comm: sh Kdump: loaded Tainted: G S      W IOE     5.17.0-rc8_nextqueue-devqueue-02643-g23f3121aca93 #1
-[  718.219695] Hardware name: Intel Corporation S2600WFT/S2600WFT, BIOS SE5C620.86B.02.01.0012.070720200218 07/07/2020
-[  718.223418] Call Trace:
-[  718.227139]
-[  718.230783]  dump_stack_lvl+0x33/0x42
-[  718.234431]  print_address_description.constprop.9+0x21/0x170
-[  718.238177]  ? free_irq_cpu_rmap+0x53/0x80
-[  718.241885]  ? free_irq_cpu_rmap+0x53/0x80
-[  718.245539]  kasan_report.cold.18+0x7f/0x11b
-[  718.249197]  ? free_irq_cpu_rmap+0x53/0x80
-[  718.252852]  free_irq_cpu_rmap+0x53/0x80
-[  718.256471]  ice_free_cpu_rx_rmap.part.11+0x37/0x50 [ice]
-[  718.260174]  ice_remove_arfs+0x5f/0x70 [ice]
-[  718.263810]  ice_rebuild_arfs+0x3b/0x70 [ice]
-[  718.267419]  ice_rebuild+0x39c/0xb60 [ice]
-[  718.270974]  ? asm_sysvec_apic_timer_interrupt+0x12/0x20
-[  718.274472]  ? ice_init_phy_user_cfg+0x360/0x360 [ice]
-[  718.278033]  ? delay_tsc+0x4a/0xb0
-[  718.281513]  ? preempt_count_sub+0x14/0xc0
-[  718.284984]  ? delay_tsc+0x8f/0xb0
-[  718.288463]  ice_do_reset+0x92/0xf0 [ice]
-[  718.292014]  ice_pci_err_resume+0x91/0xf0 [ice]
-[  718.295561]  pci_reset_function+0x53/0x80
-<...>
-[  718.393035] Allocated by task 690:
-[  718.433497] Freed by task 20834:
-[  718.495688] Last potentially related work creation:
-[  718.568966] The buggy address belongs to the object at ffff8881bd127e00
-                which belongs to the cache kmalloc-96 of size 96
-[  718.574085] The buggy address is located 0 bytes inside of
-                96-byte region [ffff8881bd127e00, ffff8881bd127e60)
-[  718.579265] The buggy address belongs to the page:
-[  718.598905] Memory state around the buggy address:
-[  718.601809]  ffff8881bd127d00: fa fb fb fb fb fb fb fb fb fb fb fb fc fc fc fc
-[  718.604796]  ffff8881bd127d80: 00 00 00 00 00 00 00 00 00 00 fc fc fc fc fc fc
-[  718.607794] >ffff8881bd127e00: fa fb fb fb fb fb fb fb fb fb fb fb fc fc fc fc
-[  718.610811]                    ^
-[  718.613819]  ffff8881bd127e80: 00 00 00 00 00 00 00 00 00 00 00 00 fc fc fc fc
-[  718.617107]  ffff8881bd127f00: fa fb fb fb fb fb fb fb fb fb fb fb fc fc fc fc
+Did not receive response to NOPIN on CID: 0, failing connection for I_T Nexus (null),i,0x00023d000125,iqn.2017-01.com.iscsi.target,t,0x3d
 
-This is due to that free_irq_cpu_rmap() is always being called
-*after* (devm_)free_irq() and thus it tries to work with IRQ descs
-already freed. For example, on device reset the driver frees the
-rmap right before allocating a new one (the splat above).
-Make rmap creation and freeing function symmetrical with
-{request,free}_irq() calls i.e. do that on ifup/ifdown instead
-of device probe/remove/resume. These operations can be performed
-independently from the actual device aRFS configuration.
-Also, make sure ice_vsi_free_irq() clears IRQ affinity notifiers
-only when aRFS is disabled -- otherwise, CPU rmap sets and clears
-its own and they must not be touched manually.
+BUG: Kernel NULL pointer dereference on read at 0x00000000
+NIP  strlcpy+0x8/0xb0
+LR iscsit_fill_cxn_timeout_err_stats+0x5c/0xc0 [iscsi_target_mod]
+Call Trace:
+ iscsit_handle_nopin_response_timeout+0xfc/0x120 [iscsi_target_mod]
+ call_timer_fn+0x58/0x1f0
+ run_timer_softirq+0x740/0x860
+ __do_softirq+0x16c/0x420
+ irq_exit+0x188/0x1c0
+ timer_interrupt+0x184/0x410
 
-Fixes: 28bf26724fdb0 ("ice: Implement aRFS")
-Co-developed-by: Ivan Vecera <ivecera@redhat.com>
-Signed-off-by: Ivan Vecera <ivecera@redhat.com>
-Signed-off-by: Alexander Lobakin <alexandr.lobakin@intel.com>
-Tested-by: Ivan Vecera <ivecera@redhat.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Signed-off-by: Suraj Jitindar Singh <surajjs@amazon.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+That is because nopin response timer may be re-started on nopin timer
+expiration.
+
+Stop nopin timer before stopping the nopin response timer to be sure
+that no one of them will be re-started.
+
+Signed-off-by: Dmitry Bogdanov <d.bogdanov@yadro.com>
+Link: https://lore.kernel.org/r/20241224101757.32300-1-d.bogdanov@yadro.com
+Reviewed-by: Maurizio Lombardi <mlombard@redhat.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_arfs.c |    9 ++-------
- drivers/net/ethernet/intel/ice/ice_lib.c  |    5 ++++-
- drivers/net/ethernet/intel/ice/ice_main.c |   20 ++++++++------------
- 3 files changed, 14 insertions(+), 20 deletions(-)
+ drivers/target/iscsi/iscsi_target.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/intel/ice/ice_arfs.c
-+++ b/drivers/net/ethernet/intel/ice/ice_arfs.c
-@@ -577,7 +577,7 @@ void ice_free_cpu_rx_rmap(struct ice_vsi
- {
- 	struct net_device *netdev;
+diff --git a/drivers/target/iscsi/iscsi_target.c b/drivers/target/iscsi/iscsi_target.c
+index 075e2a6fb474f..48fe53323f84c 100644
+--- a/drivers/target/iscsi/iscsi_target.c
++++ b/drivers/target/iscsi/iscsi_target.c
+@@ -4168,8 +4168,8 @@ int iscsit_close_connection(
+ 	spin_unlock(&iscsit_global->ts_bitmap_lock);
  
--	if (!vsi || vsi->type != ICE_VSI_PF || !vsi->arfs_fltr_list)
-+	if (!vsi || vsi->type != ICE_VSI_PF)
- 		return;
+ 	iscsit_stop_timers_for_cmds(conn);
+-	iscsit_stop_nopin_response_timer(conn);
+ 	iscsit_stop_nopin_timer(conn);
++	iscsit_stop_nopin_response_timer(conn);
  
- 	netdev = vsi->netdev;
-@@ -600,7 +600,7 @@ int ice_set_cpu_rx_rmap(struct ice_vsi *
- 	int base_idx, i;
- 
- 	if (!vsi || vsi->type != ICE_VSI_PF)
--		return -EINVAL;
-+		return 0;
- 
- 	pf = vsi->back;
- 	netdev = vsi->netdev;
-@@ -638,7 +638,6 @@ void ice_remove_arfs(struct ice_pf *pf)
- 	if (!pf_vsi)
- 		return;
- 
--	ice_free_cpu_rx_rmap(pf_vsi);
- 	ice_clear_arfs(pf_vsi);
- }
- 
-@@ -655,9 +654,5 @@ void ice_rebuild_arfs(struct ice_pf *pf)
- 		return;
- 
- 	ice_remove_arfs(pf);
--	if (ice_set_cpu_rx_rmap(pf_vsi)) {
--		dev_err(ice_pf_to_dev(pf), "Failed to rebuild aRFS\n");
--		return;
--	}
- 	ice_init_arfs(pf_vsi);
- }
---- a/drivers/net/ethernet/intel/ice/ice_lib.c
-+++ b/drivers/net/ethernet/intel/ice/ice_lib.c
-@@ -2411,6 +2411,8 @@ void ice_vsi_free_irq(struct ice_vsi *vs
- 		return;
- 
- 	vsi->irqs_ready = false;
-+	ice_free_cpu_rx_rmap(vsi);
-+
- 	ice_for_each_q_vector(vsi, i) {
- 		u16 vector = i + base;
- 		int irq_num;
-@@ -2424,7 +2426,8 @@ void ice_vsi_free_irq(struct ice_vsi *vs
- 			continue;
- 
- 		/* clear the affinity notifier in the IRQ descriptor */
--		irq_set_affinity_notifier(irq_num, NULL);
-+		if (!IS_ENABLED(CONFIG_RFS_ACCEL))
-+			irq_set_affinity_notifier(irq_num, NULL);
- 
- 		/* clear the affinity_mask in the IRQ descriptor */
- 		irq_set_affinity_hint(irq_num, NULL);
---- a/drivers/net/ethernet/intel/ice/ice_main.c
-+++ b/drivers/net/ethernet/intel/ice/ice_main.c
-@@ -2247,6 +2247,13 @@ static int ice_vsi_req_irq_msix(struct i
- 		irq_set_affinity_hint(irq_num, &q_vector->affinity_mask);
- 	}
- 
-+	err = ice_set_cpu_rx_rmap(vsi);
-+	if (err) {
-+		netdev_err(vsi->netdev, "Failed to setup CPU RMAP on VSI %u: %pe\n",
-+			   vsi->vsi_num, ERR_PTR(err));
-+		goto free_q_irqs;
-+	}
-+
- 	vsi->irqs_ready = true;
- 	return 0;
- 
-@@ -3242,22 +3249,12 @@ static int ice_setup_pf_sw(struct ice_pf
- 	 */
- 	ice_napi_add(vsi);
- 
--	status = ice_set_cpu_rx_rmap(vsi);
--	if (status) {
--		dev_err(ice_pf_to_dev(pf), "Failed to set CPU Rx map VSI %d error %d\n",
--			vsi->vsi_num, status);
--		status = -EINVAL;
--		goto unroll_napi_add;
--	}
- 	status = ice_init_mac_fltr(pf);
- 	if (status)
--		goto free_cpu_rx_map;
-+		goto unroll_napi_add;
- 
- 	return status;
- 
--free_cpu_rx_map:
--	ice_free_cpu_rx_rmap(vsi);
--
- unroll_napi_add:
- 	if (vsi) {
- 		ice_napi_del(vsi);
-@@ -4598,7 +4595,6 @@ static int __maybe_unused ice_suspend(st
- 			continue;
- 		ice_vsi_free_q_vectors(pf->vsi[v]);
- 	}
--	ice_free_cpu_rx_rmap(ice_get_main_vsi(pf));
- 	ice_clear_interrupt_scheme(pf);
- 
- 	pci_save_state(pdev);
+ 	if (conn->conn_transport->iscsit_wait_conn)
+ 		conn->conn_transport->iscsit_wait_conn(conn);
+-- 
+2.39.5
+
 
 
