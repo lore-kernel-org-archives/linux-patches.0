@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D9BA21882B;
-	Mon,  2 Jun 2025 15:20:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7ED82C324F;
+	Mon,  2 Jun 2025 15:20:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748877612; cv=none; b=m2ks+ZzeQgbL7dp1cFG4T0Dzg2ZwePn242rkn2p4lc0EAD2k5l3DMyIEohwXb9J7Ao6rzu/ql5fQ/arMtBF+MA7HSQTGiXNUhusO90yY/sVvEyvUkDnhwTm/uEWrR/PSSSVf9IjhzQMvLZVxZjICtlJxyFOslMrA0AtggpVNqfE=
+	t=1748877618; cv=none; b=H/Fd4eoHOvHdN0/IPQQkCSoTPEGLZy+FM62uaI+C0hNJK7oyQrD6fxF/LsPmZ9N4IwRnkEw5kAQWpOY6JpKJMT1FwWGt/W49mtTmRhQucYPdXBpgxE4EsS8jOE/AH7HMw1DNAh1NWR1s2VdmXziE599wOcfmN8UsjKR2PFWf5ys=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748877612; c=relaxed/simple;
-	bh=DEshiQPxoJjOBQZhDEbIYYE31nrZ9VJNVHBvK3TBm1M=;
+	s=arc-20240116; t=1748877618; c=relaxed/simple;
+	bh=tly66LsaFkSXLwydbU34mDpb/uTr27KGh/FpL1/Ng14=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uxMScimzg7IyOTfVHL18x0sNIAAm082dEx9LeZFrKTMuR9QEHwWo4YhPxQp1zMFa/JLuDAiNJXMLhXkkHU8EpO1noTq6KIOszcxBRMz2T2Q5uWDTiczLmQ2IZwV/uBQW5Iy/YU+83+hywW1r1YjGcmf48TXsYGSrjJ85WWnRcoI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VETGi4Yi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t8m2f9s53dgKWkHfSzCQdzRvchMz2A/E5XiHUURKcf4TuD9Xh6uiwVDNoL/61wF65VMDZjtvS6aD0MOA2v5VwcZCfvQUH3vuMEO9mgxw5JOnBQgpRWZvGlNMLZcW4F4bwUHz09e+oNIT0yo8W299WOHDjUsG5koYvoBA1wbtRrY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xeahaza4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VETGi4Yi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7189EC4CEEB;
-	Mon,  2 Jun 2025 15:20:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xeahaza4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DC25C4CEEE;
+	Mon,  2 Jun 2025 15:20:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748877612;
-	bh=DEshiQPxoJjOBQZhDEbIYYE31nrZ9VJNVHBvK3TBm1M=;
+	s=korg; t=1748877618;
+	bh=tly66LsaFkSXLwydbU34mDpb/uTr27KGh/FpL1/Ng14=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VETGi4Yi/go1q1C1vAjT+SaIJHoGE60EmFDxo8bOcoyB+vKact6MkW+fcAfAPkdgB
-	 JPwcOlqgo/6fDPkAIDQNPdsvu2omstJrX+9jDs7igz3oYrn0Tt2qqVOKipC+GVkx4x
-	 PCK1AI1CfeKoUUJfY0gCUu8rpqXudcyEKAuDBFbE=
+	b=xeahaza4HIghMBAlgFMJZzcqXuZEqCfMbFWirOaWzQ0NmOUKgO+oL562AZLNWWoC5
+	 8RKGv1eUn1QXt6J/hSKtwuIOoKxFJUVg5ndm9Ry0yl9vMUdhi51b6LCQ3RZmhO9YH5
+	 BgMZtC3Ys9mJSbNZMrQJOVDLx8QTJLgsi4dMSwQY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robin Murphy <robin.murphy@arm.com>,
-	Will Deacon <will@kernel.org>
-Subject: [PATCH 6.1 310/325] perf/arm-cmn: Fix REQ2/SNP2 mixup
-Date: Mon,  2 Jun 2025 15:49:46 +0200
-Message-ID: <20250602134332.516058781@linuxfoundation.org>
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Lee Jones <lee@kernel.org>
+Subject: [PATCH 6.1 302/325] af_unix: Remove lock dance in unix_peek_fds().
+Date: Mon,  2 Jun 2025 15:49:38 +0200
+Message-ID: <20250602134332.187635432@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134319.723650984@linuxfoundation.org>
 References: <20250602134319.723650984@linuxfoundation.org>
@@ -50,46 +51,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Robin Murphy <robin.murphy@arm.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-commit 11b0f576e0cbde6a12258f2af6753b17b8df342b upstream.
+commit 118f457da9ed58a79e24b73c2ef0aa1987241f0e upstream.
 
-Somehow the encodings for REQ2/SNP2 channels in XP events
-got mixed up... Unmix them.
+In the previous GC implementation, the shape of the inflight socket
+graph was not expected to change while GC was in progress.
 
-CC: stable@vger.kernel.org
-Fixes: 23760a014417 ("perf/arm-cmn: Add CMN-700 support")
-Signed-off-by: Robin Murphy <robin.murphy@arm.com>
-Link: https://lore.kernel.org/r/087023e9737ac93d7ec7a841da904758c254cb01.1746717400.git.robin.murphy@arm.com
-Signed-off-by: Will Deacon <will@kernel.org>
+MSG_PEEK was tricky because it could install inflight fd silently
+and transform the graph.
+
+Let's say we peeked a fd, which was a listening socket, and accept()ed
+some embryo sockets from it.  The garbage collection algorithm would
+have been confused because the set of sockets visited in scan_inflight()
+would change within the same GC invocation.
+
+That's why we placed spin_lock(&unix_gc_lock) and spin_unlock() in
+unix_peek_fds() with a fat comment.
+
+In the new GC implementation, we no longer garbage-collect the socket
+if it exists in another queue, that is, if it has a bridge to another
+SCC.  Also, accept() will require the lock if it has edges.
+
+Thus, we need not do the complicated lock dance.
+
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://lore.kernel.org/r/20240401173125.92184-3-kuniyu@amazon.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/perf/arm-cmn.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ include/net/af_unix.h |    1 -
+ net/unix/af_unix.c    |   42 ------------------------------------------
+ net/unix/garbage.c    |    2 +-
+ 3 files changed, 1 insertion(+), 44 deletions(-)
 
---- a/drivers/perf/arm-cmn.c
-+++ b/drivers/perf/arm-cmn.c
-@@ -675,8 +675,8 @@ static umode_t arm_cmn_event_attr_is_vis
+--- a/include/net/af_unix.h
++++ b/include/net/af_unix.h
+@@ -17,7 +17,6 @@ static inline struct unix_sock *unix_get
+ }
+ #endif
  
- 		if ((chan == 5 && cmn->rsp_vc_num < 2) ||
- 		    (chan == 6 && cmn->dat_vc_num < 2) ||
--		    (chan == 7 && cmn->snp_vc_num < 2) ||
--		    (chan == 8 && cmn->req_vc_num < 2))
-+		    (chan == 7 && cmn->req_vc_num < 2) ||
-+		    (chan == 8 && cmn->snp_vc_num < 2))
- 			return 0;
+-extern spinlock_t unix_gc_lock;
+ extern unsigned int unix_tot_inflight;
+ void unix_add_edges(struct scm_fp_list *fpl, struct unix_sock *receiver);
+ void unix_del_edges(struct scm_fp_list *fpl);
+--- a/net/unix/af_unix.c
++++ b/net/unix/af_unix.c
+@@ -1770,48 +1770,6 @@ static void unix_detach_fds(struct scm_c
+ static void unix_peek_fds(struct scm_cookie *scm, struct sk_buff *skb)
+ {
+ 	scm->fp = scm_fp_dup(UNIXCB(skb).fp);
+-
+-	/*
+-	 * Garbage collection of unix sockets starts by selecting a set of
+-	 * candidate sockets which have reference only from being in flight
+-	 * (total_refs == inflight_refs).  This condition is checked once during
+-	 * the candidate collection phase, and candidates are marked as such, so
+-	 * that non-candidates can later be ignored.  While inflight_refs is
+-	 * protected by unix_gc_lock, total_refs (file count) is not, hence this
+-	 * is an instantaneous decision.
+-	 *
+-	 * Once a candidate, however, the socket must not be reinstalled into a
+-	 * file descriptor while the garbage collection is in progress.
+-	 *
+-	 * If the above conditions are met, then the directed graph of
+-	 * candidates (*) does not change while unix_gc_lock is held.
+-	 *
+-	 * Any operations that changes the file count through file descriptors
+-	 * (dup, close, sendmsg) does not change the graph since candidates are
+-	 * not installed in fds.
+-	 *
+-	 * Dequeing a candidate via recvmsg would install it into an fd, but
+-	 * that takes unix_gc_lock to decrement the inflight count, so it's
+-	 * serialized with garbage collection.
+-	 *
+-	 * MSG_PEEK is special in that it does not change the inflight count,
+-	 * yet does install the socket into an fd.  The following lock/unlock
+-	 * pair is to ensure serialization with garbage collection.  It must be
+-	 * done between incrementing the file count and installing the file into
+-	 * an fd.
+-	 *
+-	 * If garbage collection starts after the barrier provided by the
+-	 * lock/unlock, then it will see the elevated refcount and not mark this
+-	 * as a candidate.  If a garbage collection is already in progress
+-	 * before the file count was incremented, then the lock/unlock pair will
+-	 * ensure that garbage collection is finished before progressing to
+-	 * installing the fd.
+-	 *
+-	 * (*) A -> B where B is on the queue of A or B is on the queue of C
+-	 * which is on the queue of listening socket A.
+-	 */
+-	spin_lock(&unix_gc_lock);
+-	spin_unlock(&unix_gc_lock);
+ }
+ 
+ static void unix_destruct_scm(struct sk_buff *skb)
+--- a/net/unix/garbage.c
++++ b/net/unix/garbage.c
+@@ -183,7 +183,7 @@ static void unix_free_vertices(struct sc
  	}
+ }
  
-@@ -794,8 +794,8 @@ static umode_t arm_cmn_event_attr_is_vis
- 	_CMN_EVENT_XP(pub_##_name, (_event) | (4 << 5)),	\
- 	_CMN_EVENT_XP(rsp2_##_name, (_event) | (5 << 5)),	\
- 	_CMN_EVENT_XP(dat2_##_name, (_event) | (6 << 5)),	\
--	_CMN_EVENT_XP(snp2_##_name, (_event) | (7 << 5)),	\
--	_CMN_EVENT_XP(req2_##_name, (_event) | (8 << 5))
-+	_CMN_EVENT_XP(req2_##_name, (_event) | (7 << 5)),	\
-+	_CMN_EVENT_XP(snp2_##_name, (_event) | (8 << 5))
+-DEFINE_SPINLOCK(unix_gc_lock);
++static DEFINE_SPINLOCK(unix_gc_lock);
+ unsigned int unix_tot_inflight;
  
- 
- static struct attribute *arm_cmn_event_attrs[] = {
+ void unix_add_edges(struct scm_fp_list *fpl, struct unix_sock *receiver)
 
 
