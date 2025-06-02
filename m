@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8762F15CD55;
-	Mon,  2 Jun 2025 15:15:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B290235968;
+	Mon,  2 Jun 2025 15:15:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748877330; cv=none; b=TmlrrKzfvIQWyXR89vXWyQeg/+wuqTcQDDZeS4APM56+3n1PtRCSS/yNjdptVC+qkonVx5s7YpkiGTvFdxkkxvBPUjLHrqknCJNhV81mYMBiU4pXLRH1CzCWqpm4EqZvhj99cwcGgmSmh+GrnDq0cjAvia3lF+J/C/ibAuiJcXU=
+	t=1748877333; cv=none; b=XURU5dfAO2JTvr+R18d7V5Sb15K+zyMcx0euBGD1xJpzRIr1MNy4cxilaEqGtPtV1pBZAcjQ3pOMy1PBgLWQCVwQb6b45T6AwTLY3TVc+wozNr2ydWfKCgc3kNn2WaYkqtVRFqemMcNS4nwbqowPG/bOtVrWK6NpaWGmEKw1hiY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748877330; c=relaxed/simple;
-	bh=QlHdtWePQza0JGb0ej+ixaKr0W9ddjyaXXsQ489sR1o=;
+	s=arc-20240116; t=1748877333; c=relaxed/simple;
+	bh=Qtht5JU6ta9hmvsfI5X2pCpXsslJDK/3yR/Uu8bp3Es=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LoW2Np31feM9z9EHUwhdc8XP0N1eaZCTdYfTOCDnrCyHF5VXNZyBGPeAtPObIPdYhDJCPKORtMVq/QCy4X8P0FnPcrzKDw9pG9dobz5GJE94hjp6b/fAaHrZbUUaNJKXkODgzRHSjPbN69TvWTWToXVfhlyFW5HQvbvCDD+pu68=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tD//uAo1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WzCwVR7OkOsj3IWG86wE7RuEFKExLhZeTeNmvGqc1/5KeMWz+HqpjlndPoL634PHkPOxsX3Gvz3Ypu/b+bP1lW9sL3Fds/Z+0eMb5ZmSpR1E+P0lxbdMcPCO22DXHVA4irjFfPRV6ncLwhlGvsvMqymbO+9gNz6M4d4zUEoQzRo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jejpY4iV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tD//uAo1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FECEC4CEEE;
-	Mon,  2 Jun 2025 15:15:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jejpY4iV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CC07C4CEEB;
+	Mon,  2 Jun 2025 15:15:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748877330;
-	bh=QlHdtWePQza0JGb0ej+ixaKr0W9ddjyaXXsQ489sR1o=;
+	s=korg; t=1748877333;
+	bh=Qtht5JU6ta9hmvsfI5X2pCpXsslJDK/3yR/Uu8bp3Es=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tD//uAo14gLH14NHsBfODfTaIM90n7Lchb4+g4jJwRkQHlz6+Z2Nw6fB9nQ/RMb/y
-	 vT5cyrY38d9tFX5u1299o3lS+7PUo1jpyttsXyf+Ds1Gq+z2xhBcQjNwi1X70uHecj
-	 6l504WaUMMgl4rsvH+01z5vy3kEpVPc+LKHVfgbs=
+	b=jejpY4iVt3ZiCxas9IfGiAhQUOpZ6vGAx2r6qBGcqIt0huUBxJmD5HhdnGjml5VXo
+	 tnHZ0wEaT6P1UDjf24CExu6+V/JzJwoSqOCSbz1UCWJudxivkhhgRU1xT8g5DCA1VI
+	 8qr9aUWx5sk7KNm0fkhd1Dfb9rCzwli/y8teMVEE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Justin Tee <justin.tee@broadcom.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 213/325] wifi: rtw89: add wiphy_lock() to work that isnt held wiphy_lock() yet
-Date: Mon,  2 Jun 2025 15:48:09 +0200
-Message-ID: <20250602134328.453390738@linuxfoundation.org>
+Subject: [PATCH 6.1 204/325] scsi: lpfc: Free phba irq in lpfc_sli4_enable_msi() when pci_irq_vector() fails
+Date: Mon,  2 Jun 2025 15:48:00 +0200
+Message-ID: <20250602134328.081408076@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134319.723650984@linuxfoundation.org>
 References: <20250602134319.723650984@linuxfoundation.org>
@@ -50,67 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ping-Ke Shih <pkshih@realtek.com>
+From: Justin Tee <justin.tee@broadcom.com>
 
-[ Upstream commit ebfc9199df05d37b67f4d1b7ee997193f3d2e7c8 ]
+[ Upstream commit f0842902b383982d1f72c490996aa8fc29a7aa0d ]
 
-To ensure where are protected by driver mutex can also be protected by
-wiphy_lock(), so afterward we can remove driver mutex safely.
+Fix smatch warning regarding missed calls to free_irq().  Free the phba IRQ
+in the failed pci_irq_vector cases.
 
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20250122060310.31976-2-pkshih@realtek.com
+lpfc_init.c: lpfc_sli4_enable_msi() warn: 'phba->pcidev->irq' from
+             request_irq() not released.
+
+Signed-off-by: Justin Tee <justin.tee@broadcom.com>
+Link: https://lore.kernel.org/r/20250131000524.163662-3-justintee8345@gmail.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw89/regd.c | 2 ++
- drivers/net/wireless/realtek/rtw89/ser.c  | 4 ++++
- 2 files changed, 6 insertions(+)
+ drivers/scsi/lpfc/lpfc_init.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/regd.c b/drivers/net/wireless/realtek/rtw89/regd.c
-index 6e5a740b128f0..2d31193fcc87d 100644
---- a/drivers/net/wireless/realtek/rtw89/regd.c
-+++ b/drivers/net/wireless/realtek/rtw89/regd.c
-@@ -334,6 +334,7 @@ void rtw89_regd_notifier(struct wiphy *wiphy, struct regulatory_request *request
- 	struct ieee80211_hw *hw = wiphy_to_ieee80211_hw(wiphy);
- 	struct rtw89_dev *rtwdev = hw->priv;
- 
-+	wiphy_lock(wiphy);
- 	mutex_lock(&rtwdev->mutex);
- 	rtw89_leave_ps_mode(rtwdev);
- 
-@@ -350,4 +351,5 @@ void rtw89_regd_notifier(struct wiphy *wiphy, struct regulatory_request *request
- 
- exit:
- 	mutex_unlock(&rtwdev->mutex);
-+	wiphy_unlock(wiphy);
- }
-diff --git a/drivers/net/wireless/realtek/rtw89/ser.c b/drivers/net/wireless/realtek/rtw89/ser.c
-index afb1b41e1a9a5..f5dacdc4d11ab 100644
---- a/drivers/net/wireless/realtek/rtw89/ser.c
-+++ b/drivers/net/wireless/realtek/rtw89/ser.c
-@@ -153,9 +153,11 @@ static void ser_state_run(struct rtw89_ser *ser, u8 evt)
- 	rtw89_debug(rtwdev, RTW89_DBG_SER, "ser: %s receive %s\n",
- 		    ser_st_name(ser), ser_ev_name(ser, evt));
- 
-+	wiphy_lock(rtwdev->hw->wiphy);
- 	mutex_lock(&rtwdev->mutex);
- 	rtw89_leave_lps(rtwdev);
- 	mutex_unlock(&rtwdev->mutex);
-+	wiphy_unlock(rtwdev->hw->wiphy);
- 
- 	ser->st_tbl[ser->state].st_func(ser, evt);
- }
-@@ -624,9 +626,11 @@ static void ser_l2_reset_st_hdl(struct rtw89_ser *ser, u8 evt)
- 
- 	switch (evt) {
- 	case SER_EV_STATE_IN:
-+		wiphy_lock(rtwdev->hw->wiphy);
- 		mutex_lock(&rtwdev->mutex);
- 		ser_l2_reset_st_pre_hdl(ser);
- 		mutex_unlock(&rtwdev->mutex);
-+		wiphy_unlock(rtwdev->hw->wiphy);
- 
- 		ieee80211_restart_hw(rtwdev->hw);
- 		ser_set_alarm(ser, SER_RECFG_TIMEOUT, SER_EV_L2_RECFG_TIMEOUT);
+diff --git a/drivers/scsi/lpfc/lpfc_init.c b/drivers/scsi/lpfc/lpfc_init.c
+index 1a0bafde34d86..97f3c5240d572 100644
+--- a/drivers/scsi/lpfc/lpfc_init.c
++++ b/drivers/scsi/lpfc/lpfc_init.c
+@@ -13204,6 +13204,7 @@ lpfc_sli4_enable_msi(struct lpfc_hba *phba)
+ 	eqhdl = lpfc_get_eq_hdl(0);
+ 	rc = pci_irq_vector(phba->pcidev, 0);
+ 	if (rc < 0) {
++		free_irq(phba->pcidev->irq, phba);
+ 		pci_free_irq_vectors(phba->pcidev);
+ 		lpfc_printf_log(phba, KERN_WARNING, LOG_INIT,
+ 				"0496 MSI pci_irq_vec failed (%d)\n", rc);
+@@ -13284,6 +13285,7 @@ lpfc_sli4_enable_intr(struct lpfc_hba *phba, uint32_t cfg_mode)
+ 			eqhdl = lpfc_get_eq_hdl(0);
+ 			retval = pci_irq_vector(phba->pcidev, 0);
+ 			if (retval < 0) {
++				free_irq(phba->pcidev->irq, phba);
+ 				lpfc_printf_log(phba, KERN_WARNING, LOG_INIT,
+ 					"0502 INTR pci_irq_vec failed (%d)\n",
+ 					 retval);
 -- 
 2.39.5
 
