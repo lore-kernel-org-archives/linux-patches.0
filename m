@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02DE317BBF;
-	Mon,  2 Jun 2025 14:40:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23FC422B5A1;
+	Mon,  2 Jun 2025 14:40:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748875222; cv=none; b=eLFfWFzUR29iUihzaGVKBwlrM52vMUwaveqGIU9sIZcPYAcf+vLEGVh4pke3hQD4QKd86BZgsTiyYZyhe00cEmsImHnkfOxIZZ1OyXGBZlL1F/GK9nC0GY0b3xNluPWsYM37tBv76FCzJ6hDg9FMrF/VbiAGE2tpOZWwMaJPIWk=
+	t=1748875225; cv=none; b=UsGkh716WS6PRKAXvAzlb/w5DvF4fF9t0NF8Cx2c0CAnQsBc+4yQXPQeQftcxXKDpFNqscuDHqwstF42egd+sWYELUOwL0XGTbHhfBKZH9LiraGOTKFWeQOiKPvMAoUEzPgSJ5yDE34iNYHp2bURyeVcNa6vEmj1xMNYAuPUatc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748875222; c=relaxed/simple;
-	bh=APWU9fXaElOJa7b1mSuwIVdt6T1tJy35mn8AYP4RJh8=;
+	s=arc-20240116; t=1748875225; c=relaxed/simple;
+	bh=UXAyEznDdlEg5z4X3Oi4c+7dgER0u0yre+QESh67UXc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b1TRivizYIWhV84CpbMGYcmVi+Pt/hyXlSgNrqVwWC/XyVESEy179pwjOnTdg2+HtokwzS+Jmo0FJAJVDBJjJZluyKNTkVD6DKpkRDT865rl+z5XMaLGGesbNQZBjmBTsywAB74kBA8wfT7cBfuPsmS2yQJutBFs2X6pOJiaxnQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eGS2ivVj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=arzGpnF1t3NdB5A1UPE7LCPBTqUaLmraS7z7WEqPHVWMPD5p3r/jOa1BmPstvz1PzvigDyjyTrSG6NL0L1xh8ZHSRSxiD+gjVhrUWCkxZoaybLm3m8MPuad4W4pqJcr3dk7ujpJD1PteRsCCTUFVJrz1WCJEzR+jz7LtPWFzj6U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gPRfEqWZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eGS2ivVj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F833C4CEF4;
-	Mon,  2 Jun 2025 14:40:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gPRfEqWZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90257C4CEEB;
+	Mon,  2 Jun 2025 14:40:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748875221;
-	bh=APWU9fXaElOJa7b1mSuwIVdt6T1tJy35mn8AYP4RJh8=;
+	s=korg; t=1748875225;
+	bh=UXAyEznDdlEg5z4X3Oi4c+7dgER0u0yre+QESh67UXc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eGS2ivVjOsVx4eZtKc8F0BZ+rT56CnvpazJ7wfpM1CwMWYLdLov5BPEn43MNCYpM1
-	 2Z311a27LQFNsy6OecbF+Z2pplz/A2oI7z5USLgzML12HF5MKwEPkkWUIxDx6ZfJBl
-	 kQqwPTVACItryxJLE5MVpjl0r/VZ9/A2UDbrAvjw=
+	b=gPRfEqWZphvTq656l7i+CGEstHPU0qQYmScPSEESnAirRvHJV8OzhYKLhRmuMcbrD
+	 EVskFOZJh6UotvAxZf3AvvwFJui5M7qVJGOl5SSrNMLjIG5OMZG5CwrsV1SocqcFf7
+	 JYq11Z6SNaX+ALmhLYtagwCIMQrUhWn/rzYWKGUs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Marc Zyngier <maz@kernel.org>,
+	Thangaraj Samynathan <thangaraj.s@microchip.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 036/270] irqchip/gic-v2m: Mark a few functions __init
-Date: Mon,  2 Jun 2025 15:45:21 +0200
-Message-ID: <20250602134308.669477104@linuxfoundation.org>
+Subject: [PATCH 5.10 027/270] net: lan743x: Fix memleak issue when GSO enabled
+Date: Mon,  2 Jun 2025 15:45:12 +0200
+Message-ID: <20250602134308.311902044@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134307.195171844@linuxfoundation.org>
 References: <20250602134307.195171844@linuxfoundation.org>
@@ -51,70 +52,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Thangaraj Samynathan <thangaraj.s@microchip.com>
 
-[ Upstream commit d51a15af37ce8cf59e73de51dcdce3c9f4944974 ]
+[ Upstream commit 2d52e2e38b85c8b7bc00dca55c2499f46f8c8198 ]
 
-They are all part of the init sequence.
+Always map the `skb` to the LS descriptor. Previously skb was
+mapped to EXT descriptor when the number of fragments is zero with
+GSO enabled. Mapping the skb to EXT descriptor prevents it from
+being freed, leading to a memory leak
 
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Acked-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20221121140048.534395323@linutronix.de
-Stable-dep-of: 3318dc299b07 ("irqchip/gic-v2m: Prevent use after free of gicv2m_get_fwnode()")
+Fixes: 23f0703c125b ("lan743x: Add main source files for new lan743x driver")
+Signed-off-by: Thangaraj Samynathan <thangaraj.s@microchip.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://patch.msgid.link/20250429052527.10031-1-thangaraj.s@microchip.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-gic-v2m.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/microchip/lan743x_main.c | 8 ++++++--
+ drivers/net/ethernet/microchip/lan743x_main.h | 1 +
+ 2 files changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/irqchip/irq-gic-v2m.c b/drivers/irqchip/irq-gic-v2m.c
-index 6a7551fd91a05..0b57ac48e18b6 100644
---- a/drivers/irqchip/irq-gic-v2m.c
-+++ b/drivers/irqchip/irq-gic-v2m.c
-@@ -263,7 +263,7 @@ static struct msi_domain_info gicv2m_pmsi_domain_info = {
- 	.chip	= &gicv2m_pmsi_irq_chip,
- };
- 
--static void gicv2m_teardown(void)
-+static void __init gicv2m_teardown(void)
- {
- 	struct v2m_data *v2m, *tmp;
- 
-@@ -278,7 +278,7 @@ static void gicv2m_teardown(void)
+diff --git a/drivers/net/ethernet/microchip/lan743x_main.c b/drivers/net/ethernet/microchip/lan743x_main.c
+index 50cb1c5251f71..a0f490a907573 100644
+--- a/drivers/net/ethernet/microchip/lan743x_main.c
++++ b/drivers/net/ethernet/microchip/lan743x_main.c
+@@ -1475,6 +1475,7 @@ static void lan743x_tx_frame_add_lso(struct lan743x_tx *tx,
+ 	if (nr_frags <= 0) {
+ 		tx->frame_data0 |= TX_DESC_DATA0_LS_;
+ 		tx->frame_data0 |= TX_DESC_DATA0_IOC_;
++		tx->frame_last = tx->frame_first;
  	}
- }
+ 	tx_descriptor = &tx->ring_cpu_ptr[tx->frame_tail];
+ 	tx_descriptor->data0 = cpu_to_le32(tx->frame_data0);
+@@ -1544,6 +1545,7 @@ static int lan743x_tx_frame_add_fragment(struct lan743x_tx *tx,
+ 		tx->frame_first = 0;
+ 		tx->frame_data0 = 0;
+ 		tx->frame_tail = 0;
++		tx->frame_last = 0;
+ 		return -ENOMEM;
+ 	}
  
--static int gicv2m_allocate_domains(struct irq_domain *parent)
-+static __init int gicv2m_allocate_domains(struct irq_domain *parent)
- {
- 	struct irq_domain *inner_domain, *pci_domain, *plat_domain;
- 	struct v2m_data *v2m;
-@@ -408,7 +408,7 @@ static int __init gicv2m_init_one(struct fwnode_handle *fwnode,
- 	return ret;
- }
+@@ -1584,16 +1586,18 @@ static void lan743x_tx_frame_end(struct lan743x_tx *tx,
+ 	    TX_DESC_DATA0_DTYPE_DATA_) {
+ 		tx->frame_data0 |= TX_DESC_DATA0_LS_;
+ 		tx->frame_data0 |= TX_DESC_DATA0_IOC_;
++		tx->frame_last = tx->frame_tail;
+ 	}
  
--static const struct of_device_id gicv2m_device_id[] = {
-+static __initconst struct of_device_id gicv2m_device_id[] = {
- 	{	.compatible	= "arm,gic-v2m-frame",	},
- 	{},
- };
-@@ -458,7 +458,7 @@ static int __init gicv2m_of_init(struct fwnode_handle *parent_handle,
- #ifdef CONFIG_ACPI
- static int acpi_num_msi;
+-	tx_descriptor = &tx->ring_cpu_ptr[tx->frame_tail];
+-	buffer_info = &tx->buffer_info[tx->frame_tail];
++	tx_descriptor = &tx->ring_cpu_ptr[tx->frame_last];
++	buffer_info = &tx->buffer_info[tx->frame_last];
+ 	buffer_info->skb = skb;
+ 	if (time_stamp)
+ 		buffer_info->flags |= TX_BUFFER_INFO_FLAG_TIMESTAMP_REQUESTED;
+ 	if (ignore_sync)
+ 		buffer_info->flags |= TX_BUFFER_INFO_FLAG_IGNORE_SYNC;
  
--static struct fwnode_handle *gicv2m_get_fwnode(struct device *dev)
-+static __init struct fwnode_handle *gicv2m_get_fwnode(struct device *dev)
- {
- 	struct v2m_data *data;
++	tx_descriptor = &tx->ring_cpu_ptr[tx->frame_tail];
+ 	tx_descriptor->data0 = cpu_to_le32(tx->frame_data0);
+ 	tx->frame_tail = lan743x_tx_next_index(tx, tx->frame_tail);
+ 	tx->last_tail = tx->frame_tail;
+diff --git a/drivers/net/ethernet/microchip/lan743x_main.h b/drivers/net/ethernet/microchip/lan743x_main.h
+index 751f2bc9ce84e..2a40cc827b187 100644
+--- a/drivers/net/ethernet/microchip/lan743x_main.h
++++ b/drivers/net/ethernet/microchip/lan743x_main.h
+@@ -657,6 +657,7 @@ struct lan743x_tx {
+ 	u32		frame_first;
+ 	u32		frame_data0;
+ 	u32		frame_tail;
++	u32		frame_last;
  
-@@ -473,7 +473,7 @@ static struct fwnode_handle *gicv2m_get_fwnode(struct device *dev)
- 	return data->fwnode;
- }
+ 	struct lan743x_tx_buffer_info *buffer_info;
  
--static bool acpi_check_amazon_graviton_quirks(void)
-+static __init bool acpi_check_amazon_graviton_quirks(void)
- {
- 	static struct acpi_table_madt *madt;
- 	acpi_status status;
 -- 
 2.39.5
 
