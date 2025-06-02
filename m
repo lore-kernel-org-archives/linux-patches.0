@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37F4F233727;
-	Mon,  2 Jun 2025 14:19:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A732D235061;
+	Mon,  2 Jun 2025 14:19:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748873960; cv=none; b=TrAS0XJdpRW9zsXbfuMt2wEqtNEV9opN3AKjtAcHnFrGhcOS13vh97GsvzBs+mf4ix9+eNeuQVHOZJusiMqqHv7tZPn20NqkL/ah4Yi41lN1emRr0ICSz7mh2BkU2crToqx0yQlwEM2cZItIdCpUtjFB6q62+A5cpu3BYmIxPuw=
+	t=1748873960; cv=none; b=rmio3l/wH5DbAyjQmZTtCOujI76ylpLozteMDs6Ubjkb4TNw4i2ExpaU2wovaYbJHl/AYMMfqy93G3Mw5VOH2xqaSDrPtw2ZVGsTgAT9sR1TCoBenNSrhlrbujM+bBPcoUtM3Kr/LwK8jzxfiOkutlAC/q+BnidZErbTMEtX90w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1748873960; c=relaxed/simple;
-	bh=cnj9JA4mgkWfvrcbwCW0ePEHFpXI9qrXeKqUrKK0+GE=;
+	bh=2rRz5W2LJVee0ttjhO0UcP/nqs+LolFEe3IJApwKLTI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iENsHROIbr9kmLiWjLKKIioTxtvwj/u7FYgxPiCRScgCPfCXYqYwV5ZR/7gPjHLJhFVZA2SHzoFmlUmz4U++QFFjgndmk/VgFluvnqX//iH96agkLt9lZET90rCmJU3JqJqEoFFjcIdvlrV8cQJdMVvtladDbYgnBn4lVHrKDdU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pd2isJZA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iblkzk/fwzweUr+ORZjeXe67+wQfFBCFV9nfwW9yCA+q2Q72pj4K1OdZKyMyrnIM/GOhyE/x7sukq7SLo7OY5ERWxIAREdX5CRjPYaBANvbQvGhrVej5vMuCrQdIG9/u2yQHOXS1U519FOSHrpuF+78qhlITbILVrmDAUcvm0gA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x+jAhULe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pd2isJZA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AEBCC4CEEB;
-	Mon,  2 Jun 2025 14:19:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x+jAhULe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66C21C4CEF3;
+	Mon,  2 Jun 2025 14:19:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748873956;
-	bh=cnj9JA4mgkWfvrcbwCW0ePEHFpXI9qrXeKqUrKK0+GE=;
+	s=korg; t=1748873960;
+	bh=2rRz5W2LJVee0ttjhO0UcP/nqs+LolFEe3IJApwKLTI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pd2isJZAQVUbjlvBWuVQZu7K5rjWyKxK/B0ZfLZbOrfo5CmI4ktJlMmck35Y5q/Oa
-	 00bye1mQIJUpIrgr8W5XaX0UCn8tWnAFkLyvNBeJpLYq6lkW3lDmlgE7iygbBpjSdk
-	 PcyS+Xmadt8LFnpmgKMYcSQN73SBoXoLBVcv5wCs=
+	b=x+jAhULeljHthVnwSlF/Shx9tKpu+9aXo2pqjTNBv8lfRGLHKFnLEQ2iKWEHCZjgM
+	 lI6c+ZGa26yuAnGmVBfN1PUgX2PCB42MbgSfdw6QMJqixsrwRSfD+PSt+DlL+iLp82
+	 B5PB6UoQysI0Jk0hM+0XQv8IeuI/2gqWXI02zpfw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Wojciech Drewek <wojciech.drewek@intel.com>,
-	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>,
-	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Jordan Crouse <jorcrous@amazon.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 279/444] ice: treat dyn_allowed only as suggestion
-Date: Mon,  2 Jun 2025 15:45:43 +0200
-Message-ID: <20250602134352.280332196@linuxfoundation.org>
+Subject: [PATCH 6.6 270/444] clk: qcom: camcc-sm8250: Use clk_rcg2_shared_ops for some RCGs
+Date: Mon,  2 Jun 2025 15:45:34 +0200
+Message-ID: <20250602134351.918594060@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -54,131 +53,283 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+From: Jordan Crouse <jorcrous@amazon.com>
 
-[ Upstream commit a8c2d3932c1106af2764cc6869b29bcf3cb5bc47 ]
+[ Upstream commit 52b10b591f83dc6d9a1d6c2dc89433470a787ecd ]
 
-It can be needed to have some MSI-X allocated as static and rest as
-dynamic. For example on PF VSI. We want to always have minimum one MSI-X
-on it, because of that it is allocated as a static one, rest can be
-dynamic if it is supported.
+Update some RCGs on the sm8250 camera clock controller to use
+clk_rcg2_shared_ops. The shared_ops ensure the RCGs get parked
+to the XO during clock disable to prevent the clocks from locking up
+when the GDSC is enabled. These mirror similar fixes for other controllers
+such as commit e5c359f70e4b ("clk: qcom: camcc: Update the clock ops for
+the SC7180").
 
-Change the ice_get_irq_res() to allow using static entries if they are
-free even if caller wants dynamic one.
-
-Adjust limit values to the new approach. Min and max in limit means the
-values that are valid, so decrease max and num_static by one.
-
-Set vsi::irq_dyn_alloc if dynamic allocation is supported.
-
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
-Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
-Signed-off-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: Jordan Crouse <jorcrous@amazon.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Link: https://lore.kernel.org/r/20250122222612.32351-1-jorcrous@amazon.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_irq.c | 25 ++++++++++++------------
- drivers/net/ethernet/intel/ice/ice_lib.c |  2 ++
- 2 files changed, 15 insertions(+), 12 deletions(-)
+ drivers/clk/qcom/camcc-sm8250.c | 56 ++++++++++++++++-----------------
+ 1 file changed, 28 insertions(+), 28 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_irq.c b/drivers/net/ethernet/intel/ice/ice_irq.c
-index ad82ff7d19957..09f9c7ba52795 100644
---- a/drivers/net/ethernet/intel/ice/ice_irq.c
-+++ b/drivers/net/ethernet/intel/ice/ice_irq.c
-@@ -45,7 +45,7 @@ static void ice_free_irq_res(struct ice_pf *pf, u16 index)
- /**
-  * ice_get_irq_res - get an interrupt resource
-  * @pf: board private structure
-- * @dyn_only: force entry to be dynamically allocated
-+ * @dyn_allowed: allow entry to be dynamically allocated
-  *
-  * Allocate new irq entry in the free slot of the tracker. Since xarray
-  * is used, always allocate new entry at the lowest possible index. Set
-@@ -53,11 +53,12 @@ static void ice_free_irq_res(struct ice_pf *pf, u16 index)
-  *
-  * Returns allocated irq entry or NULL on failure.
-  */
--static struct ice_irq_entry *ice_get_irq_res(struct ice_pf *pf, bool dyn_only)
-+static struct ice_irq_entry *ice_get_irq_res(struct ice_pf *pf,
-+					     bool dyn_allowed)
- {
--	struct xa_limit limit = { .max = pf->irq_tracker.num_entries,
-+	struct xa_limit limit = { .max = pf->irq_tracker.num_entries - 1,
- 				  .min = 0 };
--	unsigned int num_static = pf->irq_tracker.num_static;
-+	unsigned int num_static = pf->irq_tracker.num_static - 1;
- 	struct ice_irq_entry *entry;
- 	unsigned int index;
- 	int ret;
-@@ -66,9 +67,9 @@ static struct ice_irq_entry *ice_get_irq_res(struct ice_pf *pf, bool dyn_only)
- 	if (!entry)
- 		return NULL;
+diff --git a/drivers/clk/qcom/camcc-sm8250.c b/drivers/clk/qcom/camcc-sm8250.c
+index 9b32c56a5bc5a..e29706d782870 100644
+--- a/drivers/clk/qcom/camcc-sm8250.c
++++ b/drivers/clk/qcom/camcc-sm8250.c
+@@ -411,7 +411,7 @@ static struct clk_rcg2 cam_cc_bps_clk_src = {
+ 		.parent_data = cam_cc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
  
--	/* skip preallocated entries if the caller says so */
--	if (dyn_only)
--		limit.min = num_static;
-+	/* only already allocated if the caller says so */
-+	if (!dyn_allowed)
-+		limit.max = num_static;
+@@ -433,7 +433,7 @@ static struct clk_rcg2 cam_cc_camnoc_axi_clk_src = {
+ 		.parent_data = cam_cc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
  
- 	ret = xa_alloc(&pf->irq_tracker.entries, &index, entry, limit,
- 		       GFP_KERNEL);
-@@ -78,7 +79,7 @@ static struct ice_irq_entry *ice_get_irq_res(struct ice_pf *pf, bool dyn_only)
- 		entry = NULL;
- 	} else {
- 		entry->index = index;
--		entry->dynamic = index >= num_static;
-+		entry->dynamic = index > num_static;
- 	}
+@@ -454,7 +454,7 @@ static struct clk_rcg2 cam_cc_cci_0_clk_src = {
+ 		.parent_data = cam_cc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
  
- 	return entry;
-@@ -272,7 +273,7 @@ int ice_init_interrupt_scheme(struct ice_pf *pf)
- /**
-  * ice_alloc_irq - Allocate new interrupt vector
-  * @pf: board private structure
-- * @dyn_only: force dynamic allocation of the interrupt
-+ * @dyn_allowed: allow dynamic allocation of the interrupt
-  *
-  * Allocate new interrupt vector for a given owner id.
-  * return struct msi_map with interrupt details and track
-@@ -285,20 +286,20 @@ int ice_init_interrupt_scheme(struct ice_pf *pf)
-  * interrupt will be allocated with pci_msix_alloc_irq_at.
-  *
-  * Some callers may only support dynamically allocated interrupts.
-- * This is indicated with dyn_only flag.
-+ * This is indicated with dyn_allowed flag.
-  *
-  * On failure, return map with negative .index. The caller
-  * is expected to check returned map index.
-  *
-  */
--struct msi_map ice_alloc_irq(struct ice_pf *pf, bool dyn_only)
-+struct msi_map ice_alloc_irq(struct ice_pf *pf, bool dyn_allowed)
- {
- 	int sriov_base_vector = pf->sriov_base_vector;
- 	struct msi_map map = { .index = -ENOENT };
- 	struct device *dev = ice_pf_to_dev(pf);
- 	struct ice_irq_entry *entry;
+@@ -469,7 +469,7 @@ static struct clk_rcg2 cam_cc_cci_1_clk_src = {
+ 		.parent_data = cam_cc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
  
--	entry = ice_get_irq_res(pf, dyn_only);
-+	entry = ice_get_irq_res(pf, dyn_allowed);
- 	if (!entry)
- 		return map;
+@@ -490,7 +490,7 @@ static struct clk_rcg2 cam_cc_cphy_rx_clk_src = {
+ 		.parent_data = cam_cc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
  
-diff --git a/drivers/net/ethernet/intel/ice/ice_lib.c b/drivers/net/ethernet/intel/ice/ice_lib.c
-index 1fc4805353eb5..a6a290514e548 100644
---- a/drivers/net/ethernet/intel/ice/ice_lib.c
-+++ b/drivers/net/ethernet/intel/ice/ice_lib.c
-@@ -587,6 +587,8 @@ ice_vsi_alloc_def(struct ice_vsi *vsi, struct ice_channel *ch)
- 			return -ENOMEM;
- 	}
+@@ -511,7 +511,7 @@ static struct clk_rcg2 cam_cc_csi0phytimer_clk_src = {
+ 		.parent_data = cam_cc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
  
-+	vsi->irq_dyn_alloc = pci_msix_can_alloc_dyn(vsi->back->pdev);
-+
- 	switch (vsi->type) {
- 	case ICE_VSI_SWITCHDEV_CTRL:
- 		/* Setup eswitch MSIX irq handler for VSI */
+@@ -526,7 +526,7 @@ static struct clk_rcg2 cam_cc_csi1phytimer_clk_src = {
+ 		.parent_data = cam_cc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
+ 
+@@ -556,7 +556,7 @@ static struct clk_rcg2 cam_cc_csi3phytimer_clk_src = {
+ 		.parent_data = cam_cc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
+ 
+@@ -571,7 +571,7 @@ static struct clk_rcg2 cam_cc_csi4phytimer_clk_src = {
+ 		.parent_data = cam_cc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
+ 
+@@ -586,7 +586,7 @@ static struct clk_rcg2 cam_cc_csi5phytimer_clk_src = {
+ 		.parent_data = cam_cc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
+ 
+@@ -611,7 +611,7 @@ static struct clk_rcg2 cam_cc_fast_ahb_clk_src = {
+ 		.parent_data = cam_cc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
+ 
+@@ -634,7 +634,7 @@ static struct clk_rcg2 cam_cc_fd_core_clk_src = {
+ 		.parent_data = cam_cc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
+ 
+@@ -649,7 +649,7 @@ static struct clk_rcg2 cam_cc_icp_clk_src = {
+ 		.parent_data = cam_cc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
+ 
+@@ -673,7 +673,7 @@ static struct clk_rcg2 cam_cc_ife_0_clk_src = {
+ 		.parent_data = cam_cc_parent_data_2,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_2),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
+ 
+@@ -710,7 +710,7 @@ static struct clk_rcg2 cam_cc_ife_0_csid_clk_src = {
+ 		.parent_data = cam_cc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
+ 
+@@ -734,7 +734,7 @@ static struct clk_rcg2 cam_cc_ife_1_clk_src = {
+ 		.parent_data = cam_cc_parent_data_3,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_3),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
+ 
+@@ -749,7 +749,7 @@ static struct clk_rcg2 cam_cc_ife_1_csid_clk_src = {
+ 		.parent_data = cam_cc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
+ 
+@@ -771,7 +771,7 @@ static struct clk_rcg2 cam_cc_ife_lite_clk_src = {
+ 		.parent_data = cam_cc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
+ 
+@@ -786,7 +786,7 @@ static struct clk_rcg2 cam_cc_ife_lite_csid_clk_src = {
+ 		.parent_data = cam_cc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
+ 
+@@ -810,7 +810,7 @@ static struct clk_rcg2 cam_cc_ipe_0_clk_src = {
+ 		.parent_data = cam_cc_parent_data_4,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_4),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
+ 
+@@ -825,7 +825,7 @@ static struct clk_rcg2 cam_cc_jpeg_clk_src = {
+ 		.parent_data = cam_cc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
+ 
+@@ -847,7 +847,7 @@ static struct clk_rcg2 cam_cc_mclk0_clk_src = {
+ 		.parent_data = cam_cc_parent_data_1,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_1),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
+ 
+@@ -862,7 +862,7 @@ static struct clk_rcg2 cam_cc_mclk1_clk_src = {
+ 		.parent_data = cam_cc_parent_data_1,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_1),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
+ 
+@@ -877,7 +877,7 @@ static struct clk_rcg2 cam_cc_mclk2_clk_src = {
+ 		.parent_data = cam_cc_parent_data_1,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_1),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
+ 
+@@ -892,7 +892,7 @@ static struct clk_rcg2 cam_cc_mclk3_clk_src = {
+ 		.parent_data = cam_cc_parent_data_1,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_1),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
+ 
+@@ -907,7 +907,7 @@ static struct clk_rcg2 cam_cc_mclk4_clk_src = {
+ 		.parent_data = cam_cc_parent_data_1,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_1),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
+ 
+@@ -922,7 +922,7 @@ static struct clk_rcg2 cam_cc_mclk5_clk_src = {
+ 		.parent_data = cam_cc_parent_data_1,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_1),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
+ 
+@@ -993,7 +993,7 @@ static struct clk_rcg2 cam_cc_slow_ahb_clk_src = {
+ 		.parent_data = cam_cc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
+ 
 -- 
 2.39.5
 
