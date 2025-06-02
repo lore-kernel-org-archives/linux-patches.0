@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8EE2221FB8;
-	Mon,  2 Jun 2025 14:30:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D4CC290F;
+	Mon,  2 Jun 2025 14:30:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748874638; cv=none; b=gC8+aYiOgZwxmQwXQoVqr1gsIf0R3BmIuy75o0M9JpWrPi3YhLs+w4KSLCfN6r7q/dxea1lAG0PbiFhO1aTzM2SbGfCMxJxbsEUFgFZyNdFyoNpOl4bABRSiICgUyo7iGAvmWUlXS2lVgrwmK9AyU2QD8AIjUpOIoTsK+unxALk=
+	t=1748874641; cv=none; b=ghAOzKywz0QGOqoUWifoq3eJQM63VHUFl1Acn4e6D8M1b8R9WFhZnTJQUGCFkzleuLosczEoBx0LOLL8L6yrxXCZ5Hl3ADbrL7YD4QlLloiSkaMw7ftGhGAIkP85L+nw00iQKOpiboD+FOc3Z9fFG1orSUDxPcxwn655oOJNBpM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748874638; c=relaxed/simple;
-	bh=4L7bdygLLnDB3NEP8fXbTbXEguhqj1gXJ8VLIc2WqNI=;
+	s=arc-20240116; t=1748874641; c=relaxed/simple;
+	bh=JQwEAypVjU3z/JFM4Xr4TIhthChZ3WkkKldDNjKeSRQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=SxBdYwwaIDqf2OXK1YTVBNeo95+28W/W5CthxAexfyNNr2zaLGamSGZPdAzmW7sx+Su7R2Zbwybu/xP3OTy8nLQ8t77v6zUUAakZMikhXW4xem/cQvnVmF/c95x4SIZ2SQVg1v7eaTDrUcXlOwt7NJqsjIfJ5c+HMbSJ0EpiSvM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dUswH/51; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IcNIB38PPg6l69r1uU/lDFq521LeBeVbl/i8FZ7ufU58jQLdM9eTjj3hujpyv7auenbszceu/keMJ6TGkQhf8MMIh5ldeP9FIp1lIlbim1JPXMROUlOrOGKAwBtyE19Uf+Lna5QbwGqakqTKGEgGftTf60alxOpF+HtaXW960YA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ImDYVxKw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dUswH/51"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DAEEC4CEEB;
-	Mon,  2 Jun 2025 14:30:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ImDYVxKw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90A1DC4CEEB;
+	Mon,  2 Jun 2025 14:30:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748874637;
-	bh=4L7bdygLLnDB3NEP8fXbTbXEguhqj1gXJ8VLIc2WqNI=;
+	s=korg; t=1748874641;
+	bh=JQwEAypVjU3z/JFM4Xr4TIhthChZ3WkkKldDNjKeSRQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dUswH/51Hrlq/0Q54uzEL759fPKJsZYAPv2/b68A3pBFcJu4E1EoFkxuKwcBveapY
-	 aod5oIz5jlgvpEPekEAnynYlgVAWfwGaub2+ly1t/1MKeNbGHvOnhvraKkcq6VW2FR
-	 RUBtlXhfki3Rr4xBecbWlneT4mLlzNyAAEBtZLDs=
+	b=ImDYVxKwB9OdXa6wp4rBYThNej73Uif+H5uom92/hBKlg037gKIHpQ6NejpKRjDIM
+	 0/gqy86qhva8tThrVg85WUXcETcDeYuIFdnHQDvBunz7Sf39B3070+owFzpdURUqhV
+	 dAX/ZZa0AcWeMyYSMiAdCO3ukivuhrOSq8/N55fQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	gao xu <gaoxu2@honor.com>,
-	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
-	Tejun Heo <tj@kernel.org>,
+	Daniel Gomez <da.gomez@samsung.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 088/204] cgroup: Fix compilation issue due to cgroup_mutex not being exported
-Date: Mon,  2 Jun 2025 15:47:01 +0200
-Message-ID: <20250602134259.121981338@linuxfoundation.org>
+Subject: [PATCH 5.4 089/204] kconfig: merge_config: use an empty file as initfile
+Date: Mon,  2 Jun 2025 15:47:02 +0200
+Message-ID: <20250602134259.159384949@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134255.449974357@linuxfoundation.org>
 References: <20250602134255.449974357@linuxfoundation.org>
@@ -46,50 +45,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: gaoxu <gaoxu2@honor.com>
+From: Daniel Gomez <da.gomez@samsung.com>
 
-[ Upstream commit 87c259a7a359e73e6c52c68fcbec79988999b4e6 ]
+[ Upstream commit a26fe287eed112b4e21e854f173c8918a6a8596d ]
 
-When adding folio_memcg function call in the zram module for
-Android16-6.12, the following error occurs during compilation:
-ERROR: modpost: "cgroup_mutex" [../soc-repo/zram.ko] undefined!
+The scripts/kconfig/merge_config.sh script requires an existing
+$INITFILE (or the $1 argument) as a base file for merging Kconfig
+fragments. However, an empty $INITFILE can serve as an initial starting
+point, later referenced by the KCONFIG_ALLCONFIG Makefile variable
+if -m is not used. This variable can point to any configuration file
+containing preset config symbols (the merged output) as stated in
+Documentation/kbuild/kconfig.rst. When -m is used $INITFILE will
+contain just the merge output requiring the user to run make (i.e.
+KCONFIG_ALLCONFIG=<$INITFILE> make <allnoconfig/alldefconfig> or make
+olddefconfig).
 
-This error is caused by the indirect call to lockdep_is_held(&cgroup_mutex)
-within folio_memcg. The export setting for cgroup_mutex is controlled by
-the CONFIG_PROVE_RCU macro. If CONFIG_LOCKDEP is enabled while
-CONFIG_PROVE_RCU is not, this compilation error will occur.
+Instead of failing when `$INITFILE` is missing, create an empty file and
+use it as the starting point for merges.
 
-To resolve this issue, add a parallel macro CONFIG_LOCKDEP control to
-ensure cgroup_mutex is properly exported when needed.
-
-Signed-off-by: gao xu <gaoxu2@honor.com>
-Acked-by: Michal Koutný <mkoutny@suse.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Signed-off-by: Daniel Gomez <da.gomez@samsung.com>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/cgroup/cgroup.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ scripts/kconfig/merge_config.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/cgroup/cgroup.c b/kernel/cgroup/cgroup.c
-index 273a8a42cb721..801022a8899b5 100644
---- a/kernel/cgroup/cgroup.c
-+++ b/kernel/cgroup/cgroup.c
-@@ -81,7 +81,7 @@
- DEFINE_MUTEX(cgroup_mutex);
- DEFINE_SPINLOCK(css_set_lock);
+diff --git a/scripts/kconfig/merge_config.sh b/scripts/kconfig/merge_config.sh
+index d7d5c58b8b6aa..557f37f481fdf 100755
+--- a/scripts/kconfig/merge_config.sh
++++ b/scripts/kconfig/merge_config.sh
+@@ -98,8 +98,8 @@ INITFILE=$1
+ shift;
  
--#ifdef CONFIG_PROVE_RCU
-+#if (defined CONFIG_PROVE_RCU || defined CONFIG_LOCKDEP)
- EXPORT_SYMBOL_GPL(cgroup_mutex);
- EXPORT_SYMBOL_GPL(css_set_lock);
- #endif
+ if [ ! -r "$INITFILE" ]; then
+-	echo "The base file '$INITFILE' does not exist.  Exit." >&2
+-	exit 1
++	echo "The base file '$INITFILE' does not exist. Creating one..." >&2
++	touch "$INITFILE"
+ fi
+ 
+ MERGE_LIST=$*
 -- 
 2.39.5
 
