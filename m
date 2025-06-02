@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF088226D1D;
-	Mon,  2 Jun 2025 14:55:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF3BD226D1F;
+	Mon,  2 Jun 2025 14:55:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748876148; cv=none; b=IyJqUNYkSwViVsZE87JsoODU2yKMHSZokWCn/uk8F03VRAdOKMpCyTlzq3YQ7FPt0L1+PQDLQIXlbCmQM2p+XhSxVkUGTaumxMQZbMLRzUxvpc3E7/vMWzVZ8oLqZ7bGQSinU225hhLz/9E1VMaQ9BqP45chbaJaMfRF6XTTvlE=
+	t=1748876151; cv=none; b=LOxtcXNcZ+PfPR+4jBzLSWJSiQ8A5WMiHzGgsimtrklKN8rscv6HQp3LRsOULQG69dvUBq2DGq7YNyd3DWzqweYnUt1xi7R0M+grFYxy+CmaaybD3m3U0jXLcl2eKjOQ0MwXysRitwt9NkHNrPd3m7nvClF0vlFdVTMBsMFm/LU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748876148; c=relaxed/simple;
-	bh=sH1nSFdTKzFODSKSfkjwHOlu0yRPMF4SqGtyoY/kI/M=;
+	s=arc-20240116; t=1748876151; c=relaxed/simple;
+	bh=CUDeRkLah7K5g//8aUPAUJWcUpc7ij0512TXuJJkfSM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OeMYMVK/yyPrvNcVrw+oA7fmeUjMauwBzP4gbudgKgbW1r0qUgh7laLuRp5lyil/QJU7wASV9YEjvLyrDKn706MLb+jTYVsow/tY5LK8uqAH9vqlBJUL+o9rmyF6tVi9WdZLFtUlgC+GkqxtwfiykD4aGbBXTiU7varDqBzkPE4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qDmXXYgJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a+2vJDAbeKys5BM6+MC+JHaZdZsm+eqkFyY/bsJci+U5jUeEZw/J1nMury0WNHf9wa2+OeyBzxijDhwGDoLjZKnBlTqOwkC8OfxHy1jpAS1epl0qYoBg6fLy5Kapk3dvrP2eZpXAqf8ND+kVMrcnxyGeMjAovQnLdSWppQVQRGg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fiebqgIy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qDmXXYgJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56897C4CEEB;
-	Mon,  2 Jun 2025 14:55:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fiebqgIy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EFF9C4CEEB;
+	Mon,  2 Jun 2025 14:55:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748876148;
-	bh=sH1nSFdTKzFODSKSfkjwHOlu0yRPMF4SqGtyoY/kI/M=;
+	s=korg; t=1748876151;
+	bh=CUDeRkLah7K5g//8aUPAUJWcUpc7ij0512TXuJJkfSM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qDmXXYgJ9gwoncy3QuiLbWoAtyRDKF4ng7w/SvMY0KwEuykKC3Rxy3qu1mn7PRa6G
-	 Pdz0OFqcL/cBWiBhLdl2opw4bnr0awWr+fI4v5hfeLCLai/91t0vfhMtilrcZcQ9zp
-	 M54c1acUHiENHE5pv83woSf0l3MS0TKUbvgifMKY=
+	b=fiebqgIyLrU75cvRtaMgaoYEbruN5zKGWxWmI4xHVaXvXJQJiAXtppZYUJmVOSGdE
+	 LnhIdAbiX3VIF/T2EWb+tGU32C3CaMO4aM32Ly/JmTgC8Ggw0g/3KMLHbkySYtSLGy
+	 WLgibGh8f+fA1zZZegG99kg1x2DYErEOYV7m9CIE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Willem de Bruijn <willemb@google.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 056/207] ipv6: save dontfrag in cork
-Date: Mon,  2 Jun 2025 15:47:08 +0200
-Message-ID: <20250602134300.946704384@linuxfoundation.org>
+Subject: [PATCH 5.15 057/207] auxdisplay: charlcd: Partially revert "Move hwidth and bwidth to struct hd44780_common"
+Date: Mon,  2 Jun 2025 15:47:09 +0200
+Message-ID: <20250602134300.985579383@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134258.769974467@linuxfoundation.org>
 References: <20250602134258.769974467@linuxfoundation.org>
@@ -52,101 +51,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Willem de Bruijn <willemb@google.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit a18dfa9925b9ef6107ea3aa5814ca3c704d34a8a ]
+[ Upstream commit 09965a142078080fe7807bab0f6f1890cb5987a4 ]
 
-When spanning datagram construction over multiple send calls using
-MSG_MORE, per datagram settings are configured on the first send.
+Commit 2545c1c948a6 ("auxdisplay: Move hwidth and bwidth to struct
+hd44780_common") makes charlcd_alloc() argument-less effectively dropping
+the single allocation for the struct charlcd_priv object along with
+the driver specific one. Restore that behaviour here.
 
-That is when ip(6)_setup_cork stores these settings for subsequent use
-in __ip(6)_append_data and others.
-
-The only flag that escaped this was dontfrag. As a result, a datagram
-could be constructed with df=0 on the first sendmsg, but df=1 on a
-next. Which is what cmsg_ip.sh does in an upcoming MSG_MORE test in
-the "diff" scenario.
-
-Changing datagram conditions in the middle of constructing an skb
-makes this already complex code path even more convoluted. It is here
-unintentional. Bring this flag in line with expected sockopt/cmsg
-behavior.
-
-And stop passing ipc6 to __ip6_append_data, to avoid such issues
-in the future. This is already the case for __ip_append_data.
-
-inet6_cork had a 6 byte hole, so the 1B flag has no impact.
-
-Signed-off-by: Willem de Bruijn <willemb@google.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20250307033620.411611-3-willemdebruijn.kernel@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/ipv6.h  | 1 +
- net/ipv6/ip6_output.c | 9 +++++----
- 2 files changed, 6 insertions(+), 4 deletions(-)
+ drivers/auxdisplay/charlcd.c | 5 +++--
+ drivers/auxdisplay/charlcd.h | 5 +++--
+ drivers/auxdisplay/hd44780.c | 2 +-
+ drivers/auxdisplay/lcd2s.c   | 2 +-
+ drivers/auxdisplay/panel.c   | 2 +-
+ 5 files changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/include/linux/ipv6.h b/include/linux/ipv6.h
-index b6fb76568b01a..5dfd663b70a26 100644
---- a/include/linux/ipv6.h
-+++ b/include/linux/ipv6.h
-@@ -195,6 +195,7 @@ struct inet6_cork {
- 	struct ipv6_txoptions *opt;
- 	u8 hop_limit;
- 	u8 tclass;
-+	u8 dontfrag:1;
+diff --git a/drivers/auxdisplay/charlcd.c b/drivers/auxdisplay/charlcd.c
+index 6c010d4efa4ae..313bb7ebc2cfa 100644
+--- a/drivers/auxdisplay/charlcd.c
++++ b/drivers/auxdisplay/charlcd.c
+@@ -594,18 +594,19 @@ static int charlcd_init(struct charlcd *lcd)
+ 	return 0;
+ }
+ 
+-struct charlcd *charlcd_alloc(void)
++struct charlcd *charlcd_alloc(unsigned int drvdata_size)
+ {
+ 	struct charlcd_priv *priv;
+ 	struct charlcd *lcd;
+ 
+-	priv = kzalloc(sizeof(*priv), GFP_KERNEL);
++	priv = kzalloc(sizeof(*priv) + drvdata_size, GFP_KERNEL);
+ 	if (!priv)
+ 		return NULL;
+ 
+ 	priv->esc_seq.len = -1;
+ 
+ 	lcd = &priv->lcd;
++	lcd->drvdata = priv->drvdata;
+ 
+ 	return lcd;
+ }
+diff --git a/drivers/auxdisplay/charlcd.h b/drivers/auxdisplay/charlcd.h
+index eed80063a6d20..4bbf106b2dd8a 100644
+--- a/drivers/auxdisplay/charlcd.h
++++ b/drivers/auxdisplay/charlcd.h
+@@ -49,7 +49,7 @@ struct charlcd {
+ 		unsigned long y;
+ 	} addr;
+ 
+-	void *drvdata;
++	void *drvdata;			/* Set by charlcd_alloc() */
  };
  
  /**
-diff --git a/net/ipv6/ip6_output.c b/net/ipv6/ip6_output.c
-index 4fcff4fe5a98f..a71b7a1069958 100644
---- a/net/ipv6/ip6_output.c
-+++ b/net/ipv6/ip6_output.c
-@@ -1428,6 +1428,7 @@ static int ip6_setup_cork(struct sock *sk, struct inet_cork_full *cork,
- 	cork->fl.u.ip6 = *fl6;
- 	v6_cork->hop_limit = ipc6->hlimit;
- 	v6_cork->tclass = ipc6->tclass;
-+	v6_cork->dontfrag = ipc6->dontfrag;
- 	if (rt->dst.flags & DST_XFRM_TUNNEL)
- 		mtu = np->pmtudisc >= IPV6_PMTUDISC_PROBE ?
- 		      READ_ONCE(rt->dst.dev->mtu) : dst_mtu(&rt->dst);
-@@ -1462,7 +1463,7 @@ static int __ip6_append_data(struct sock *sk,
- 			     int getfrag(void *from, char *to, int offset,
- 					 int len, int odd, struct sk_buff *skb),
- 			     void *from, size_t length, int transhdrlen,
--			     unsigned int flags, struct ipcm6_cookie *ipc6)
-+			     unsigned int flags)
- {
- 	struct sk_buff *skb, *skb_prev = NULL;
- 	unsigned int maxfraglen, fragheaderlen, mtu, orig_mtu, pmtu;
-@@ -1519,7 +1520,7 @@ static int __ip6_append_data(struct sock *sk,
- 	if (headersize + transhdrlen > mtu)
- 		goto emsgsize;
+@@ -93,7 +93,8 @@ struct charlcd_ops {
+ };
  
--	if (cork->length + length > mtu - headersize && ipc6->dontfrag &&
-+	if (cork->length + length > mtu - headersize && v6_cork->dontfrag &&
- 	    (sk->sk_protocol == IPPROTO_UDP ||
- 	     sk->sk_protocol == IPPROTO_RAW)) {
- 		ipv6_local_rxpmtu(sk, fl6, mtu - headersize +
-@@ -1836,7 +1837,7 @@ int ip6_append_data(struct sock *sk,
+ void charlcd_backlight(struct charlcd *lcd, enum charlcd_onoff on);
+-struct charlcd *charlcd_alloc(void);
++
++struct charlcd *charlcd_alloc(unsigned int drvdata_size);
+ void charlcd_free(struct charlcd *lcd);
  
- 	return __ip6_append_data(sk, fl6, &sk->sk_write_queue, &inet->cork.base,
- 				 &np->cork, sk_page_frag(sk), getfrag,
--				 from, length, transhdrlen, flags, ipc6);
-+				 from, length, transhdrlen, flags);
- }
- EXPORT_SYMBOL_GPL(ip6_append_data);
+ int charlcd_register(struct charlcd *lcd);
+diff --git a/drivers/auxdisplay/hd44780.c b/drivers/auxdisplay/hd44780.c
+index 8b690f59df27d..ebaf0ff518f4c 100644
+--- a/drivers/auxdisplay/hd44780.c
++++ b/drivers/auxdisplay/hd44780.c
+@@ -226,7 +226,7 @@ static int hd44780_probe(struct platform_device *pdev)
+ 	if (!hdc)
+ 		return -ENOMEM;
  
-@@ -2031,7 +2032,7 @@ struct sk_buff *ip6_make_skb(struct sock *sk,
- 	err = __ip6_append_data(sk, fl6, &queue, &cork->base, &v6_cork,
- 				&current->task_frag, getfrag, from,
- 				length + exthdrlen, transhdrlen + exthdrlen,
--				flags, ipc6);
-+				flags);
- 	if (err) {
- 		__ip6_flush_pending_frames(sk, &queue, cork, &v6_cork);
- 		return ERR_PTR(err);
+-	lcd = charlcd_alloc();
++	lcd = charlcd_alloc(0);
+ 	if (!lcd)
+ 		goto fail1;
+ 
+diff --git a/drivers/auxdisplay/lcd2s.c b/drivers/auxdisplay/lcd2s.c
+index 2578b2d454397..2ee6875044a9c 100644
+--- a/drivers/auxdisplay/lcd2s.c
++++ b/drivers/auxdisplay/lcd2s.c
+@@ -307,7 +307,7 @@ static int lcd2s_i2c_probe(struct i2c_client *i2c,
+ 	if (err < 0)
+ 		return err;
+ 
+-	lcd = charlcd_alloc();
++	lcd = charlcd_alloc(0);
+ 	if (!lcd)
+ 		return -ENOMEM;
+ 
+diff --git a/drivers/auxdisplay/panel.c b/drivers/auxdisplay/panel.c
+index eba04c0de7eb3..0f3999b665e70 100644
+--- a/drivers/auxdisplay/panel.c
++++ b/drivers/auxdisplay/panel.c
+@@ -835,7 +835,7 @@ static void lcd_init(void)
+ 	if (!hdc)
+ 		return;
+ 
+-	charlcd = charlcd_alloc();
++	charlcd = charlcd_alloc(0);
+ 	if (!charlcd) {
+ 		kfree(hdc);
+ 		return;
 -- 
 2.39.5
 
