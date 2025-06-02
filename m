@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35D1123185C;
-	Mon,  2 Jun 2025 14:18:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E1EE1CBA18;
+	Mon,  2 Jun 2025 14:18:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748873930; cv=none; b=YsC8TdRqeZRcge2C42rAfL2T/HcvY/W/1sLPJy1ZYz6X83p40we5/SjmLWzL+tIaXKP9j2idq9r6ZT3Es2hXyRruQSZslo89UB2Q9LZkGl88y4O6vnXv/LSyNQBJNywmnue8FxsmAkvwuDMRtxDi+zfy2FouG2noZJwh+W+P/SE=
+	t=1748873933; cv=none; b=usScvnYUIqCexpna0TOKWcYP+uCPAH6oL32qOjn5mPkwVi6lcqLUI3+llTqDoQs0GjgaJCMzY9/I+D9i86i3JIbIkP5BYpiQFYsKFg80pxr/lcW1NqsVlSqFPqCUtGYK1pS2TXDM6Ewxx47J77W1ol1hSP7AQoXDOIGG+yS4SIc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748873930; c=relaxed/simple;
-	bh=OpRV89Dwh199eEY2fZEME02Dpl8s5V+dyP/c/dFGZMA=;
+	s=arc-20240116; t=1748873933; c=relaxed/simple;
+	bh=Oo8LxyjRJy0UKVHPm0Psz6IfJsvKFDlyi36Jdj6yY4Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xh1GDjv+/AthqD6n8OlFgO+RjRTn0KQ2VOdQJPhyf+e96BQj6gft0+pL1L/Va4Wkju1QY3VMu2zqSBGHEVJJdnRpbfmrkpdI3T33djYi196p6d9u+D6sGKYvfI0iRlOjio5rIiKsDeF0H8faToW3WhBt9lXwzlHgxA1UhutNoZk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x0K9lSot; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uRswshimLm75G9LEkbLjNVu//G64fwmr8st/gTWHVvP2GHC9n6NpsP4sW4iw7/M/SCqy9PTEi7b3iuIf2gJUe5l7kFaskZdbWXRU6m3WDI+DtOVd/MD0IKydr7WDX2Xo0mgbtrEV9BHmxI1nL4gKJyoGpzbKmAajx9SQ5Lto8CE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tct3FW2g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x0K9lSot"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5BD8C4CEEB;
-	Mon,  2 Jun 2025 14:18:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tct3FW2g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A00FCC4CEEB;
+	Mon,  2 Jun 2025 14:18:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748873930;
-	bh=OpRV89Dwh199eEY2fZEME02Dpl8s5V+dyP/c/dFGZMA=;
+	s=korg; t=1748873933;
+	bh=Oo8LxyjRJy0UKVHPm0Psz6IfJsvKFDlyi36Jdj6yY4Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x0K9lSotBlaj7NCjJ6gTcaoVXtml5jFafS6YM6GgAX30jzMytF94Yyf9YEtjtHEdg
-	 6IJQVjATROcLtIPoX5roPFUrd7teOrDtKTAHIsIGFupW1cBL6fbzXEA53Q0KO38LR1
-	 5N43ay6tFMqnFBayHjPYsfMJWrIfdQ/C9ex/IdOc=
+	b=Tct3FW2gCV0gp0rynECn0iMnakji7X9UVhVSpumZQC0LIjOIFHQpGE0tEAYTTATe4
+	 pMULjC6gb9YnuYNMewSvtFzHxzxQDcBcm3MTB7xgh3kCNO+kJAMKF7UxbGDRw/UuPZ
+	 08wVB8vawOd0Mkozz8w9+qxYcsZvstQFGk692Rj4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Depeng Shao <quic_depengs@quicinc.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>,
+	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 273/444] media: qcom: camss: csid: Only add TPG v4l2 ctrl if TPG hardware is available
-Date: Mon,  2 Jun 2025 15:45:37 +0200
-Message-ID: <20250602134352.042476047@linuxfoundation.org>
+Subject: [PATCH 6.6 300/444] wifi: rtw88: Dont use static local variable in rtw8822b_set_tx_power_index_by_rate
+Date: Mon,  2 Jun 2025 15:46:04 +0200
+Message-ID: <20250602134353.120853610@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -51,136 +51,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Depeng Shao <quic_depengs@quicinc.com>
+From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
 
-[ Upstream commit 2f1361f862a68063f37362f1beb400e78e289581 ]
+[ Upstream commit 00451eb3bec763f708e7e58326468c1e575e5a66 ]
 
-There is no CSID TPG on some SoCs, so the v4l2 ctrl in CSID driver
-shouldn't be registered. Checking the supported TPG modes to indicate
-if the TPG hardware exists or not and only registering v4l2 ctrl for
-CSID only when the TPG hardware is present.
+Some users want to plug two identical USB devices at the same time.
+This static variable could theoretically cause them to use incorrect
+TX power values.
 
-Signed-off-by: Depeng Shao <quic_depengs@quicinc.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Move the variable to the caller and pass a pointer to it to
+rtw8822b_set_tx_power_index_by_rate().
+
+Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/8a60f581-0ab5-4d98-a97d-dd83b605008f@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../media/platform/qcom/camss/camss-csid.c    | 60 +++++++++++--------
- 1 file changed, 35 insertions(+), 25 deletions(-)
+ drivers/net/wireless/realtek/rtw88/rtw8822b.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/camss/camss-csid.c b/drivers/media/platform/qcom/camss/camss-csid.c
-index 6360314f04a63..b90e2e690f3aa 100644
---- a/drivers/media/platform/qcom/camss/camss-csid.c
-+++ b/drivers/media/platform/qcom/camss/camss-csid.c
-@@ -239,11 +239,13 @@ static int csid_set_stream(struct v4l2_subdev *sd, int enable)
- 	int ret;
- 
- 	if (enable) {
--		ret = v4l2_ctrl_handler_setup(&csid->ctrls);
--		if (ret < 0) {
--			dev_err(csid->camss->dev,
--				"could not sync v4l2 controls: %d\n", ret);
--			return ret;
-+		if (csid->testgen.nmodes != CSID_PAYLOAD_MODE_DISABLED) {
-+			ret = v4l2_ctrl_handler_setup(&csid->ctrls);
-+			if (ret < 0) {
-+				dev_err(csid->camss->dev,
-+					"could not sync v4l2 controls: %d\n", ret);
-+				return ret;
-+			}
- 		}
- 
- 		if (!csid->testgen.enabled &&
-@@ -318,7 +320,8 @@ static void csid_try_format(struct csid_device *csid,
- 		break;
- 
- 	case MSM_CSID_PAD_SRC:
--		if (csid->testgen_mode->cur.val == 0) {
-+		if (csid->testgen.nmodes == CSID_PAYLOAD_MODE_DISABLED ||
-+		    csid->testgen_mode->cur.val == 0) {
- 			/* Test generator is disabled, */
- 			/* keep pad formats in sync */
- 			u32 code = fmt->code;
-@@ -368,7 +371,8 @@ static int csid_enum_mbus_code(struct v4l2_subdev *sd,
- 
- 		code->code = csid->formats[code->index].code;
- 	} else {
--		if (csid->testgen_mode->cur.val == 0) {
-+		if (csid->testgen.nmodes == CSID_PAYLOAD_MODE_DISABLED ||
-+		    csid->testgen_mode->cur.val == 0) {
- 			struct v4l2_mbus_framefmt *sink_fmt;
- 
- 			sink_fmt = __csid_get_format(csid, sd_state,
-@@ -750,7 +754,8 @@ static int csid_link_setup(struct media_entity *entity,
- 
- 		/* If test generator is enabled */
- 		/* do not allow a link from CSIPHY to CSID */
--		if (csid->testgen_mode->cur.val != 0)
-+		if (csid->testgen.nmodes != CSID_PAYLOAD_MODE_DISABLED &&
-+		    csid->testgen_mode->cur.val != 0)
- 			return -EBUSY;
- 
- 		sd = media_entity_to_v4l2_subdev(remote->entity);
-@@ -843,24 +848,27 @@ int msm_csid_register_entity(struct csid_device *csid,
- 		 MSM_CSID_NAME, csid->id);
- 	v4l2_set_subdevdata(sd, csid);
- 
--	ret = v4l2_ctrl_handler_init(&csid->ctrls, 1);
--	if (ret < 0) {
--		dev_err(dev, "Failed to init ctrl handler: %d\n", ret);
--		return ret;
--	}
-+	if (csid->testgen.nmodes != CSID_PAYLOAD_MODE_DISABLED) {
-+		ret = v4l2_ctrl_handler_init(&csid->ctrls, 1);
-+		if (ret < 0) {
-+			dev_err(dev, "Failed to init ctrl handler: %d\n", ret);
-+			return ret;
-+		}
- 
--	csid->testgen_mode = v4l2_ctrl_new_std_menu_items(&csid->ctrls,
--				&csid_ctrl_ops, V4L2_CID_TEST_PATTERN,
--				csid->testgen.nmodes, 0, 0,
--				csid->testgen.modes);
-+		csid->testgen_mode =
-+			v4l2_ctrl_new_std_menu_items(&csid->ctrls,
-+						     &csid_ctrl_ops, V4L2_CID_TEST_PATTERN,
-+						     csid->testgen.nmodes, 0, 0,
-+						     csid->testgen.modes);
- 
--	if (csid->ctrls.error) {
--		dev_err(dev, "Failed to init ctrl: %d\n", csid->ctrls.error);
--		ret = csid->ctrls.error;
--		goto free_ctrl;
--	}
-+		if (csid->ctrls.error) {
-+			dev_err(dev, "Failed to init ctrl: %d\n", csid->ctrls.error);
-+			ret = csid->ctrls.error;
-+			goto free_ctrl;
-+		}
- 
--	csid->subdev.ctrl_handler = &csid->ctrls;
-+		csid->subdev.ctrl_handler = &csid->ctrls;
-+	}
- 
- 	ret = csid_init_formats(sd, NULL);
- 	if (ret < 0) {
-@@ -891,7 +899,8 @@ int msm_csid_register_entity(struct csid_device *csid,
- media_cleanup:
- 	media_entity_cleanup(&sd->entity);
- free_ctrl:
--	v4l2_ctrl_handler_free(&csid->ctrls);
-+	if (csid->testgen.nmodes != CSID_PAYLOAD_MODE_DISABLED)
-+		v4l2_ctrl_handler_free(&csid->ctrls);
- 
- 	return ret;
+diff --git a/drivers/net/wireless/realtek/rtw88/rtw8822b.c b/drivers/net/wireless/realtek/rtw88/rtw8822b.c
+index 3017a9760da8d..99318a82b43f4 100644
+--- a/drivers/net/wireless/realtek/rtw88/rtw8822b.c
++++ b/drivers/net/wireless/realtek/rtw88/rtw8822b.c
+@@ -975,11 +975,11 @@ static void rtw8822b_query_rx_desc(struct rtw_dev *rtwdev, u8 *rx_desc,
  }
-@@ -904,5 +913,6 @@ void msm_csid_unregister_entity(struct csid_device *csid)
+ 
+ static void
+-rtw8822b_set_tx_power_index_by_rate(struct rtw_dev *rtwdev, u8 path, u8 rs)
++rtw8822b_set_tx_power_index_by_rate(struct rtw_dev *rtwdev, u8 path,
++				    u8 rs, u32 *phy_pwr_idx)
  {
- 	v4l2_device_unregister_subdev(&csid->subdev);
- 	media_entity_cleanup(&csid->subdev.entity);
--	v4l2_ctrl_handler_free(&csid->ctrls);
-+	if (csid->testgen.nmodes != CSID_PAYLOAD_MODE_DISABLED)
-+		v4l2_ctrl_handler_free(&csid->ctrls);
+ 	struct rtw_hal *hal = &rtwdev->hal;
+ 	static const u32 offset_txagc[2] = {0x1d00, 0x1d80};
+-	static u32 phy_pwr_idx;
+ 	u8 rate, rate_idx, pwr_index, shift;
+ 	int j;
+ 
+@@ -987,12 +987,12 @@ rtw8822b_set_tx_power_index_by_rate(struct rtw_dev *rtwdev, u8 path, u8 rs)
+ 		rate = rtw_rate_section[rs][j];
+ 		pwr_index = hal->tx_pwr_tbl[path][rate];
+ 		shift = rate & 0x3;
+-		phy_pwr_idx |= ((u32)pwr_index << (shift * 8));
++		*phy_pwr_idx |= ((u32)pwr_index << (shift * 8));
+ 		if (shift == 0x3) {
+ 			rate_idx = rate & 0xfc;
+ 			rtw_write32(rtwdev, offset_txagc[path] + rate_idx,
+-				    phy_pwr_idx);
+-			phy_pwr_idx = 0;
++				    *phy_pwr_idx);
++			*phy_pwr_idx = 0;
+ 		}
+ 	}
  }
+@@ -1000,11 +1000,13 @@ rtw8822b_set_tx_power_index_by_rate(struct rtw_dev *rtwdev, u8 path, u8 rs)
+ static void rtw8822b_set_tx_power_index(struct rtw_dev *rtwdev)
+ {
+ 	struct rtw_hal *hal = &rtwdev->hal;
++	u32 phy_pwr_idx = 0;
+ 	int rs, path;
+ 
+ 	for (path = 0; path < hal->rf_path_num; path++) {
+ 		for (rs = 0; rs < RTW_RATE_SECTION_MAX; rs++)
+-			rtw8822b_set_tx_power_index_by_rate(rtwdev, path, rs);
++			rtw8822b_set_tx_power_index_by_rate(rtwdev, path, rs,
++							    &phy_pwr_idx);
+ 	}
+ }
+ 
 -- 
 2.39.5
 
