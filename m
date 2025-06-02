@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5AFE2AE9A;
-	Mon,  2 Jun 2025 14:44:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3EE722A4DA;
+	Mon,  2 Jun 2025 14:44:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748875496; cv=none; b=ZSa9bXlJf8HVI7Koew74znX1vPaJnX7t1+CZ2sj68Flhncd8tRrHl4cem7/R3QfAvxqZjWu4DFZc/GFm6w4B+GRAS/Lt3iwqN8/Jyw9gu30YZEhpdltxlFkSjq/vfnIhStXhASaTDYIbSJ/D45nmXGubh27SOJQC0NYpk+TKERc=
+	t=1748875499; cv=none; b=hQ/epthtyBp9j9fn+hC2mJeeGY9pV7fDKS3meFIlRX9R8KLKE34hXYpw3+YKWGWKLLV67+EmMUGCSHfPn+e9mC0Lr9+im1l/lF8/DUJFvukFhSivjzGFcmhsh3uSzZeqsIO1eHXwkjMJerxt+dOIaqS1YYA2IXYDrTPWDcuyjS4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748875496; c=relaxed/simple;
-	bh=7sDEC8hg29sIwhau3z9cv71VUoIEBBz8p93DrFMrWuY=;
+	s=arc-20240116; t=1748875499; c=relaxed/simple;
+	bh=ATnf+tW61YoifQSz3lDo3CXqVtWWcKtmvi9QvUhxOh0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=sQwIZrD0V4rSRtfKDY+5LrQ5iy+FzkA7CIPCcA2lAKlxrK890Q/Y6enmViFSMH6LcOjgHTSIyXxx79+rr40W6syK8mdIQDFgtAjV+793dHVtnkjCvD1Rg7nlvEZGlxRfWe1TkO68WL1lnK6cL1njNy4UZOyuRKGLcrLDlS/aMCo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sYDWBZKw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qb0wTpYTcDWwR0RSfX3BOOwJ1o6aZyshtORrIdnWrqLltU10Mk4tfwLiRbZMAioAmNt3jALU5bIBmWPeQfQjPet/OZ2lDFusm6/02Kk+xt2igk0s+NLzwM9RGNjD6dcTPAWpGpIrxKg5VJq8PgRaX+0mM6yWc9zPfm23OJaVhRA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WKsBw3bU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sYDWBZKw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B9F0C4CEEB;
-	Mon,  2 Jun 2025 14:44:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WKsBw3bU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D881C4CEEB;
+	Mon,  2 Jun 2025 14:44:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748875495;
-	bh=7sDEC8hg29sIwhau3z9cv71VUoIEBBz8p93DrFMrWuY=;
+	s=korg; t=1748875498;
+	bh=ATnf+tW61YoifQSz3lDo3CXqVtWWcKtmvi9QvUhxOh0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sYDWBZKwgd/KsQ61+gKAnBZax72Tu/Xf9FSPNu7c1LpYJWmlaQ/3owj+PlSfuUtMZ
-	 0fJ9VVUz2x0IHCTzAV7bvrKHMwur1me9wJasDftWrfoE4hISfC6yZWjrU1B0Q/WNM+
-	 T2n8Z+ngmZBG4iOwwrjfG7F+G2tfQplaU56mOgLo=
+	b=WKsBw3bUGhSsIQUbRgMoS/xWIzTEOzWjAZiqfA+m/0ilsDGgGYxhYXo+QS0+kbIEr
+	 jtcs12kVJQ9PMkjmqDyj8j80K03DeyfkCkZ3JCz9H434mwcgUX0L1JlOJzWBg/f43O
+	 OrVaoTmWYa6xTLv0znGmnzz54AwT3+m/9+O8BcUQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Roeschley <kyle.roeschley@ni.com>,
-	Brad Mouring <brad.mouring@ni.com>,
-	Erick Shepherd <erick.shepherd@ni.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Willem de Bruijn <willemb@google.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 152/270] mmc: sdhci: Disable SD card clock before changing parameters
-Date: Mon,  2 Jun 2025 15:47:17 +0200
-Message-ID: <20250602134313.436379076@linuxfoundation.org>
+Subject: [PATCH 5.10 153/270] ipv6: save dontfrag in cork
+Date: Mon,  2 Jun 2025 15:47:18 +0200
+Message-ID: <20250602134313.474099534@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134307.195171844@linuxfoundation.org>
 References: <20250602134307.195171844@linuxfoundation.org>
@@ -48,56 +46,107 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Erick Shepherd <erick.shepherd@ni.com>
+From: Willem de Bruijn <willemb@google.com>
 
-[ Upstream commit fb3bbc46c94f261b6156ee863c1b06c84cf157dc ]
+[ Upstream commit a18dfa9925b9ef6107ea3aa5814ca3c704d34a8a ]
 
-Per the SD Host Controller Simplified Specification v4.20 §3.2.3, change
-the SD card clock parameters only after first disabling the external card
-clock. Doing this fixes a spurious clock pulse on Baytrail and Apollo Lake
-SD controllers which otherwise breaks voltage switching with a specific
-Swissbit SD card.
+When spanning datagram construction over multiple send calls using
+MSG_MORE, per datagram settings are configured on the first send.
 
-Signed-off-by: Kyle Roeschley <kyle.roeschley@ni.com>
-Signed-off-by: Brad Mouring <brad.mouring@ni.com>
-Signed-off-by: Erick Shepherd <erick.shepherd@ni.com>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Link: https://lore.kernel.org/r/20250211214645.469279-1-erick.shepherd@ni.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+That is when ip(6)_setup_cork stores these settings for subsequent use
+in __ip(6)_append_data and others.
+
+The only flag that escaped this was dontfrag. As a result, a datagram
+could be constructed with df=0 on the first sendmsg, but df=1 on a
+next. Which is what cmsg_ip.sh does in an upcoming MSG_MORE test in
+the "diff" scenario.
+
+Changing datagram conditions in the middle of constructing an skb
+makes this already complex code path even more convoluted. It is here
+unintentional. Bring this flag in line with expected sockopt/cmsg
+behavior.
+
+And stop passing ipc6 to __ip6_append_data, to avoid such issues
+in the future. This is already the case for __ip_append_data.
+
+inet6_cork had a 6 byte hole, so the 1B flag has no impact.
+
+Signed-off-by: Willem de Bruijn <willemb@google.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20250307033620.411611-3-willemdebruijn.kernel@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/sdhci.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ include/linux/ipv6.h  | 1 +
+ net/ipv6/ip6_output.c | 9 +++++----
+ 2 files changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/mmc/host/sdhci.c b/drivers/mmc/host/sdhci.c
-index 9091930f58591..3d601a3f31c1e 100644
---- a/drivers/mmc/host/sdhci.c
-+++ b/drivers/mmc/host/sdhci.c
-@@ -2010,10 +2010,15 @@ void sdhci_set_clock(struct sdhci_host *host, unsigned int clock)
+diff --git a/include/linux/ipv6.h b/include/linux/ipv6.h
+index d758c131ed5e1..89b3527e03675 100644
+--- a/include/linux/ipv6.h
++++ b/include/linux/ipv6.h
+@@ -189,6 +189,7 @@ struct inet6_cork {
+ 	struct ipv6_txoptions *opt;
+ 	u8 hop_limit;
+ 	u8 tclass;
++	u8 dontfrag:1;
+ };
  
- 	host->mmc->actual_clock = 0;
+ /**
+diff --git a/net/ipv6/ip6_output.c b/net/ipv6/ip6_output.c
+index 426330b8dfa47..f024d89cb0f81 100644
+--- a/net/ipv6/ip6_output.c
++++ b/net/ipv6/ip6_output.c
+@@ -1416,6 +1416,7 @@ static int ip6_setup_cork(struct sock *sk, struct inet_cork_full *cork,
+ 	cork->fl.u.ip6 = *fl6;
+ 	v6_cork->hop_limit = ipc6->hlimit;
+ 	v6_cork->tclass = ipc6->tclass;
++	v6_cork->dontfrag = ipc6->dontfrag;
+ 	if (rt->dst.flags & DST_XFRM_TUNNEL)
+ 		mtu = np->pmtudisc >= IPV6_PMTUDISC_PROBE ?
+ 		      READ_ONCE(rt->dst.dev->mtu) : dst_mtu(&rt->dst);
+@@ -1450,7 +1451,7 @@ static int __ip6_append_data(struct sock *sk,
+ 			     int getfrag(void *from, char *to, int offset,
+ 					 int len, int odd, struct sk_buff *skb),
+ 			     void *from, size_t length, int transhdrlen,
+-			     unsigned int flags, struct ipcm6_cookie *ipc6)
++			     unsigned int flags)
+ {
+ 	struct sk_buff *skb, *skb_prev = NULL;
+ 	unsigned int maxfraglen, fragheaderlen, mtu, orig_mtu, pmtu;
+@@ -1507,7 +1508,7 @@ static int __ip6_append_data(struct sock *sk,
+ 	if (headersize + transhdrlen > mtu)
+ 		goto emsgsize;
  
--	sdhci_writew(host, 0, SDHCI_CLOCK_CONTROL);
-+	clk = sdhci_readw(host, SDHCI_CLOCK_CONTROL);
-+	if (clk & SDHCI_CLOCK_CARD_EN)
-+		sdhci_writew(host, clk & ~SDHCI_CLOCK_CARD_EN,
-+			SDHCI_CLOCK_CONTROL);
+-	if (cork->length + length > mtu - headersize && ipc6->dontfrag &&
++	if (cork->length + length > mtu - headersize && v6_cork->dontfrag &&
+ 	    (sk->sk_protocol == IPPROTO_UDP ||
+ 	     sk->sk_protocol == IPPROTO_RAW)) {
+ 		ipv6_local_rxpmtu(sk, fl6, mtu - headersize +
+@@ -1825,7 +1826,7 @@ int ip6_append_data(struct sock *sk,
  
--	if (clock == 0)
-+	if (clock == 0) {
-+		sdhci_writew(host, 0, SDHCI_CLOCK_CONTROL);
- 		return;
-+	}
+ 	return __ip6_append_data(sk, fl6, &sk->sk_write_queue, &inet->cork.base,
+ 				 &np->cork, sk_page_frag(sk), getfrag,
+-				 from, length, transhdrlen, flags, ipc6);
++				 from, length, transhdrlen, flags);
+ }
+ EXPORT_SYMBOL_GPL(ip6_append_data);
  
- 	clk = sdhci_calc_clk(host, clock, &host->mmc->actual_clock);
- 	sdhci_enable_clk(host, clk);
+@@ -2020,7 +2021,7 @@ struct sk_buff *ip6_make_skb(struct sock *sk,
+ 	err = __ip6_append_data(sk, fl6, &queue, &cork->base, &v6_cork,
+ 				&current->task_frag, getfrag, from,
+ 				length + exthdrlen, transhdrlen + exthdrlen,
+-				flags, ipc6);
++				flags);
+ 	if (err) {
+ 		__ip6_flush_pending_frames(sk, &queue, cork, &v6_cork);
+ 		return ERR_PTR(err);
 -- 
 2.39.5
 
