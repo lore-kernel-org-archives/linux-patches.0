@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ED5E1E3772;
-	Mon,  2 Jun 2025 14:18:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E32FD231846;
+	Mon,  2 Jun 2025 14:18:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748873909; cv=none; b=kdF1P+fqD9AyWDHxwoMu/qTPdIPRS4gqGk/L+VL3QftDhJm35qvthtHJI0wEOLXSDai4s1jNUVwRnl/pGB7oxm5vk7rxKA9TZ7BuSQRsSDcFlY1HXWkf+Iuhqtd+p5KkGKQ2A7ElONiaZfydbvxu69Ev9VO5pzMnbhmCeUMwmMA=
+	t=1748873912; cv=none; b=TO9Vh86veu69UvjPg/F5Ti0Da7unuDKPTU/cg07BkwO2MMggIf7rLeSC9s5JSyyJCOd72yOU+ahqCS5c3XjdR8C29hA5D/wiLJkY2FFrKgdbs5k5RH+KXetzlObbarLbjbpmppJDAs2bjmotL506aw+4PKWNbe7JAxgKZkQbnmM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748873909; c=relaxed/simple;
-	bh=TYsSits4AMR3mpNFdMyfibvlnNRYkep1bKoxfbaGfWY=;
+	s=arc-20240116; t=1748873912; c=relaxed/simple;
+	bh=Ik/9l/GV4e6YrJZ1CIoL7QlDShCuBFkl7kIaF1oclfU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Uz/2zf7lx0ekqyB27clJH9ANqacJyhpnJujs8/aY/my2MKwOVgbEFaEMMoufteoI2Pmt/k5hdXU/tYROb36nl2iFhaV8xRr0NMa5iwZwB1SgRb8S4pf77c1KbbWcu0dby5Y11gC5TzfBMNjWjT+Ycqw8XgcM5A4qHrYmhLScNJM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y69lCFSZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dH2bSIAFToOx1clNKKKnWwyqoBhcpQcBXF2+07pj3X82BzRKpIxobFGKz4K02+S40Y3MQXaPBGp5mUeCqWZQThKJoSxDan2CeodWusS1q6S2LR4mZ+HdQ/wh4Ni/8r2FEKLTwCyfyYJ2NtmV8jpt7pi2qmRFu+cPPbLa3Chxt0o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CXvBgvMa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y69lCFSZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9555BC4CEEB;
-	Mon,  2 Jun 2025 14:18:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CXvBgvMa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 762EBC4CEEB;
+	Mon,  2 Jun 2025 14:18:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748873908;
-	bh=TYsSits4AMR3mpNFdMyfibvlnNRYkep1bKoxfbaGfWY=;
+	s=korg; t=1748873911;
+	bh=Ik/9l/GV4e6YrJZ1CIoL7QlDShCuBFkl7kIaF1oclfU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y69lCFSZPLVbUvle/B1gHRqcYBOVYuhS9zhhxnvqyBpGY7izj6Y4ouWh/5VXIDOeA
-	 BriiQNyWeCYfVPWVSIoZZF3MknmsiBWrbT2pszDAcWlAe4sJPgO9WOVQMJuvTZZCm+
-	 70ZyUk4jDJnVgmSQKpofiqRSld5rzqpQMGzmdKXw=
+	b=CXvBgvMaeedWJ3dEvSToex3HW7DUqi86PfoE05DRyUecCDWWKwOpE9D6zjRXPJMVe
+	 JTf9clOHHsSZ7ZCfgrpOeh4ScEHHRo7TtDtL7sLRmS0jg6quWiClVoQ2UEGT/GzGol
+	 tOTESS1mlDJt77a0DdhTPdyMso8E1JC1y+wPYPOI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuming Fan <shumingf@realtek.com>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
-	Mark Brown <broonie@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Jocelyn Falempe <jfalempe@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 293/444] ASoC: rt722-sdca: Add some missing readable registers
-Date: Mon,  2 Jun 2025 15:45:57 +0200
-Message-ID: <20250602134352.846825509@linuxfoundation.org>
+Subject: [PATCH 6.6 294/444] drm/ast: Find VBIOS mode from regular display size
+Date: Mon,  2 Jun 2025 15:45:58 +0200
+Message-ID: <20250602134352.885157834@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -53,96 +51,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Charles Keepax <ckeepax@opensource.cirrus.com>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-[ Upstream commit f9a5c4b6afc79073491acdab7f1e943ee3a19fbb ]
+[ Upstream commit c81202906b5cd56db403e95db3d29c9dfc8c74c1 ]
 
-Add a few missing registers from the readable register callback.
+The ast driver looks up supplied display modes from an internal list of
+display modes supported by the VBIOS.
 
-Suggested-by: Shuming Fan <shumingf@realtek.com>
-Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>
-Link: https://patch.msgid.link/20250107154408.814455-6-ckeepax@opensource.cirrus.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Do not use the crtc_-prefixed display values from struct drm_display_mode
+for looking up the VBIOS mode. The fields contain raw values that the
+driver programs to hardware. They are affected by display settings like
+double-scan or interlace.
+
+Instead use the regular vdisplay and hdisplay fields for lookup. As the
+programmed values can now differ from the values used for lookup, set
+struct drm_display_mode.crtc_vdisplay and .crtc_hdisplay from the VBIOS
+mode.
+
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Reviewed-by: Jocelyn Falempe <jfalempe@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250131092257.115596-9-tzimmermann@suse.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/rt722-sdca-sdw.c | 49 +++++++++++++++++++++++++++++--
- 1 file changed, 46 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/ast/ast_mode.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/sound/soc/codecs/rt722-sdca-sdw.c b/sound/soc/codecs/rt722-sdca-sdw.c
-index c382cb6be6025..c0bb1b4b2dcb5 100644
---- a/sound/soc/codecs/rt722-sdca-sdw.c
-+++ b/sound/soc/codecs/rt722-sdca-sdw.c
-@@ -28,9 +28,50 @@ static bool rt722_sdca_readable_register(struct device *dev, unsigned int reg)
- 			0):
- 	case SDW_SDCA_CTL(FUNC_NUM_JACK_CODEC, RT722_SDCA_ENT_GE49, RT722_SDCA_CTL_DETECTED_MODE,
- 			0):
--	case SDW_SDCA_CTL(FUNC_NUM_HID, RT722_SDCA_ENT_HID01, RT722_SDCA_CTL_HIDTX_CURRENT_OWNER,
--			0) ... SDW_SDCA_CTL(FUNC_NUM_HID, RT722_SDCA_ENT_HID01,
--			RT722_SDCA_CTL_HIDTX_MESSAGE_LENGTH, 0):
-+	case SDW_SDCA_CTL(FUNC_NUM_JACK_CODEC, RT722_SDCA_ENT_XU03, RT722_SDCA_CTL_SELECTED_MODE,
-+			0):
-+	case SDW_SDCA_CTL(FUNC_NUM_JACK_CODEC, RT722_SDCA_ENT_USER_FU05,
-+			  RT722_SDCA_CTL_FU_MUTE, CH_L) ...
-+	     SDW_SDCA_CTL(FUNC_NUM_JACK_CODEC, RT722_SDCA_ENT_USER_FU05,
-+			  RT722_SDCA_CTL_FU_MUTE, CH_R):
-+	case SDW_SDCA_CTL(FUNC_NUM_JACK_CODEC, RT722_SDCA_ENT_XU0D,
-+			  RT722_SDCA_CTL_SELECTED_MODE, 0):
-+	case SDW_SDCA_CTL(FUNC_NUM_JACK_CODEC, RT722_SDCA_ENT_USER_FU0F,
-+			  RT722_SDCA_CTL_FU_MUTE, CH_L) ...
-+	     SDW_SDCA_CTL(FUNC_NUM_JACK_CODEC, RT722_SDCA_ENT_USER_FU0F,
-+			  RT722_SDCA_CTL_FU_MUTE, CH_R):
-+	case SDW_SDCA_CTL(FUNC_NUM_JACK_CODEC, RT722_SDCA_ENT_PDE40,
-+			  RT722_SDCA_CTL_REQ_POWER_STATE, 0):
-+	case SDW_SDCA_CTL(FUNC_NUM_JACK_CODEC, RT722_SDCA_ENT_PDE12,
-+			  RT722_SDCA_CTL_REQ_POWER_STATE, 0):
-+	case SDW_SDCA_CTL(FUNC_NUM_JACK_CODEC, RT722_SDCA_ENT_CS01,
-+			  RT722_SDCA_CTL_SAMPLE_FREQ_INDEX, 0):
-+	case SDW_SDCA_CTL(FUNC_NUM_JACK_CODEC, RT722_SDCA_ENT_CS11,
-+			  RT722_SDCA_CTL_SAMPLE_FREQ_INDEX, 0):
-+	case SDW_SDCA_CTL(FUNC_NUM_MIC_ARRAY, RT722_SDCA_ENT_USER_FU1E,
-+			  RT722_SDCA_CTL_FU_MUTE, CH_01) ...
-+	     SDW_SDCA_CTL(FUNC_NUM_MIC_ARRAY, RT722_SDCA_ENT_USER_FU1E,
-+			  RT722_SDCA_CTL_FU_MUTE, CH_04):
-+	case SDW_SDCA_CTL(FUNC_NUM_MIC_ARRAY, RT722_SDCA_ENT_IT26,
-+			  RT722_SDCA_CTL_VENDOR_DEF, 0):
-+	case SDW_SDCA_CTL(FUNC_NUM_MIC_ARRAY, RT722_SDCA_ENT_PDE2A,
-+			  RT722_SDCA_CTL_REQ_POWER_STATE, 0):
-+	case SDW_SDCA_CTL(FUNC_NUM_MIC_ARRAY, RT722_SDCA_ENT_CS1F,
-+			  RT722_SDCA_CTL_SAMPLE_FREQ_INDEX, 0):
-+	case SDW_SDCA_CTL(FUNC_NUM_HID, RT722_SDCA_ENT_HID01,
-+			  RT722_SDCA_CTL_HIDTX_CURRENT_OWNER, 0) ...
-+	     SDW_SDCA_CTL(FUNC_NUM_HID, RT722_SDCA_ENT_HID01,
-+			  RT722_SDCA_CTL_HIDTX_MESSAGE_LENGTH, 0):
-+	case SDW_SDCA_CTL(FUNC_NUM_AMP, RT722_SDCA_ENT_USER_FU06,
-+			  RT722_SDCA_CTL_FU_MUTE, CH_L) ...
-+	     SDW_SDCA_CTL(FUNC_NUM_AMP, RT722_SDCA_ENT_USER_FU06,
-+			  RT722_SDCA_CTL_FU_MUTE, CH_R):
-+	case SDW_SDCA_CTL(FUNC_NUM_AMP, RT722_SDCA_ENT_OT23,
-+			  RT722_SDCA_CTL_VENDOR_DEF, CH_08):
-+	case SDW_SDCA_CTL(FUNC_NUM_AMP, RT722_SDCA_ENT_PDE23,
-+			  RT722_SDCA_CTL_REQ_POWER_STATE, 0):
-+	case SDW_SDCA_CTL(FUNC_NUM_AMP, RT722_SDCA_ENT_CS31,
-+			  RT722_SDCA_CTL_SAMPLE_FREQ_INDEX, 0):
- 	case RT722_BUF_ADDR_HID1 ... RT722_BUF_ADDR_HID2:
- 		return true;
- 	default:
-@@ -74,6 +115,7 @@ static bool rt722_sdca_mbq_readable_register(struct device *dev, unsigned int re
- 	case 0x5600000 ... 0x5600007:
- 	case 0x5700000 ... 0x5700004:
- 	case 0x5800000 ... 0x5800004:
-+	case 0x5810000:
- 	case 0x5b00003:
- 	case 0x5c00011:
- 	case 0x5d00006:
-@@ -81,6 +123,7 @@ static bool rt722_sdca_mbq_readable_register(struct device *dev, unsigned int re
- 	case 0x5f00030:
- 	case 0x6100000 ... 0x6100051:
- 	case 0x6100055 ... 0x6100057:
-+	case 0x6100060:
- 	case 0x6100062:
- 	case 0x6100064 ... 0x6100065:
- 	case 0x6100067:
+diff --git a/drivers/gpu/drm/ast/ast_mode.c b/drivers/gpu/drm/ast/ast_mode.c
+index 3de0f457fff6a..5f58da6ebaadb 100644
+--- a/drivers/gpu/drm/ast/ast_mode.c
++++ b/drivers/gpu/drm/ast/ast_mode.c
+@@ -132,7 +132,7 @@ static bool ast_get_vbios_mode_info(const struct drm_format_info *format,
+ 		return false;
+ 	}
+ 
+-	switch (mode->crtc_hdisplay) {
++	switch (mode->hdisplay) {
+ 	case 640:
+ 		vbios_mode->enh_table = &res_640x480[refresh_rate_index];
+ 		break;
+@@ -146,7 +146,7 @@ static bool ast_get_vbios_mode_info(const struct drm_format_info *format,
+ 		vbios_mode->enh_table = &res_1152x864[refresh_rate_index];
+ 		break;
+ 	case 1280:
+-		if (mode->crtc_vdisplay == 800)
++		if (mode->vdisplay == 800)
+ 			vbios_mode->enh_table = &res_1280x800[refresh_rate_index];
+ 		else
+ 			vbios_mode->enh_table = &res_1280x1024[refresh_rate_index];
+@@ -158,7 +158,7 @@ static bool ast_get_vbios_mode_info(const struct drm_format_info *format,
+ 		vbios_mode->enh_table = &res_1440x900[refresh_rate_index];
+ 		break;
+ 	case 1600:
+-		if (mode->crtc_vdisplay == 900)
++		if (mode->vdisplay == 900)
+ 			vbios_mode->enh_table = &res_1600x900[refresh_rate_index];
+ 		else
+ 			vbios_mode->enh_table = &res_1600x1200[refresh_rate_index];
+@@ -167,7 +167,7 @@ static bool ast_get_vbios_mode_info(const struct drm_format_info *format,
+ 		vbios_mode->enh_table = &res_1680x1050[refresh_rate_index];
+ 		break;
+ 	case 1920:
+-		if (mode->crtc_vdisplay == 1080)
++		if (mode->vdisplay == 1080)
+ 			vbios_mode->enh_table = &res_1920x1080[refresh_rate_index];
+ 		else
+ 			vbios_mode->enh_table = &res_1920x1200[refresh_rate_index];
+@@ -211,6 +211,7 @@ static bool ast_get_vbios_mode_info(const struct drm_format_info *format,
+ 	hborder = (vbios_mode->enh_table->flags & HBorder) ? 8 : 0;
+ 	vborder = (vbios_mode->enh_table->flags & VBorder) ? 8 : 0;
+ 
++	adjusted_mode->crtc_hdisplay = vbios_mode->enh_table->hde;
+ 	adjusted_mode->crtc_htotal = vbios_mode->enh_table->ht;
+ 	adjusted_mode->crtc_hblank_start = vbios_mode->enh_table->hde + hborder;
+ 	adjusted_mode->crtc_hblank_end = vbios_mode->enh_table->ht - hborder;
+@@ -220,6 +221,7 @@ static bool ast_get_vbios_mode_info(const struct drm_format_info *format,
+ 					 vbios_mode->enh_table->hfp +
+ 					 vbios_mode->enh_table->hsync);
+ 
++	adjusted_mode->crtc_vdisplay = vbios_mode->enh_table->vde;
+ 	adjusted_mode->crtc_vtotal = vbios_mode->enh_table->vt;
+ 	adjusted_mode->crtc_vblank_start = vbios_mode->enh_table->vde + vborder;
+ 	adjusted_mode->crtc_vblank_end = vbios_mode->enh_table->vt - vborder;
 -- 
 2.39.5
 
