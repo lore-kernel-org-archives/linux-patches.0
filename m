@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 399E91EA65;
-	Mon,  2 Jun 2025 14:48:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6C392248BE;
+	Mon,  2 Jun 2025 14:48:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748875719; cv=none; b=VEm/mhV46NQzURiWGhhgnOY64qWFN5sCojhzREDMe8/GBWyBaHAu8wOqfWps2wHaS6zTufr+9MHNP99I4dUUe6ZqI+pNhdkNyOTyVKAwEiHXVDjuLgvsnBmTAqcaDRQWzluO47IIY20gbkuLqP6lu5O+2BKxh58wW5W0VyBOalw=
+	t=1748875723; cv=none; b=VcT5e9F1IkgbTi/iufO9rVxgkjKcLm63OEnw+zKpTBrSCJn8u9vgNv2kRIyh00soKQsEZYh2CVr+kamjlpiSftKalwBAHFkokMsDaKu1rxtxH1BtCy6PONPXDECk1iBC93/XUZeDJMpGEbr0/7GZrZFV7WdkHSUojQY02905ugQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748875719; c=relaxed/simple;
-	bh=v+wxQsAE08UjMMlFuKFPqTvMg5VcINGuqD1VsDO202g=;
+	s=arc-20240116; t=1748875723; c=relaxed/simple;
+	bh=gl0r2aOHk7vmJVVMYpraoxM6bKkuNZ1xI7hQvlbBrDM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LkiY3JvaMRULE7eq+L+i2gRVKom7IXdnBA6k+GznDoXkgED0G8hEongss23LYhGeoBo1ukk2rN4Xy3PMCPTGP6jI1dp4HbUvFu5SUaGG5IOED9YtKfv9yqYOIyDGl8HzU7EJ2Wi/efTNkEzL5FUs193bk0slMZtBauW7yHZZ4q4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iiPPI5X/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MbGQpFtVU515WvQunZnKZROcpIqIvVS8D8eb76s1Pzg8t70C5Xn7ceMArsT6RckcdMTD+OO2d5a5vyjSBOQf5ni3MfqMl983R+0b9ZXDIQZ073SKuTVVD+AsI0Vx0afQvUN3X7THEy1aC+DPAoUsqnDTA2PVdbH1Wi1IzjR3IW0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vacRtxAB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iiPPI5X/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74335C4CEEB;
-	Mon,  2 Jun 2025 14:48:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vacRtxAB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9118C4CEEB;
+	Mon,  2 Jun 2025 14:48:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748875719;
-	bh=v+wxQsAE08UjMMlFuKFPqTvMg5VcINGuqD1VsDO202g=;
+	s=korg; t=1748875722;
+	bh=gl0r2aOHk7vmJVVMYpraoxM6bKkuNZ1xI7hQvlbBrDM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iiPPI5X/zBD+PspFTKzY5qNxTlc5Bh68d6V1djgxi+HSgyEgNTf6bAbvOyCiuYJQ7
-	 YbrfT/kcdELacLzPsUef7N696nP3ON/SVTH2aJGsGLkO6fYrFxB+3+3yYoJnWgR5WY
-	 dtlgYbtf7qwzvjEJWwb4x5zxMi0KPxzDSElefARo=
+	b=vacRtxABeP8URe41ZFBFVhsh23ZsprdqCFjgXHHC5VBSS0Z5oObxXFd5mr8yTnquy
+	 2lBeXDqZFrgb4D0Pd+UyzLCsndfJDcuwhkTXW0hUS3Fj5ZBX+vyyXaf4iXvkts8qAL
+	 Z1G8Av5QxUgXq3sLwmepWO9OcP+XY2plCCu8rOD8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Viktor Malik <vmalik@redhat.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Quentin Monnet <qmo@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Ravi Bangoria <ravi.bangoria@amd.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 221/270] bpftool: Fix readlink usage in get_fd_type
-Date: Mon,  2 Jun 2025 15:48:26 +0200
-Message-ID: <20250602134316.215123156@linuxfoundation.org>
+Subject: [PATCH 5.10 222/270] perf/amd/ibs: Fix perf_ibs_op.cnt_mask for CurCnt
+Date: Mon,  2 Jun 2025 15:48:27 +0200
+Message-ID: <20250602134316.253785488@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134307.195171844@linuxfoundation.org>
 References: <20250602134307.195171844@linuxfoundation.org>
@@ -53,47 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Viktor Malik <vmalik@redhat.com>
+From: Ravi Bangoria <ravi.bangoria@amd.com>
 
-[ Upstream commit 0053f7d39d491b6138d7c526876d13885cbb65f1 ]
+[ Upstream commit 46dcf85566170d4528b842bf83ffc350d71771fa ]
 
-The `readlink(path, buf, sizeof(buf))` call reads at most sizeof(buf)
-bytes and *does not* append null-terminator to buf. With respect to
-that, fix two pieces in get_fd_type:
+IBS Op uses two counters: MaxCnt and CurCnt. MaxCnt is programmed with
+the desired sample period. IBS hw generates sample when CurCnt reaches
+to MaxCnt. The size of these counter used to be 20 bits but later they
+were extended to 27 bits. The 7 bit extension is indicated by CPUID
+Fn8000_001B_EAX[6 / OpCntExt].
 
-1. Change the truncation check to contain sizeof(buf) rather than
-   sizeof(path).
-2. Append null-terminator to buf.
+perf_ibs->cnt_mask variable contains bit masks for MaxCnt and CurCnt.
+But IBS driver does not set upper 7 bits of CurCnt in cnt_mask even
+when OpCntExt CPUID bit is set. Fix this.
 
-Reported by Coverity.
+IBS driver uses cnt_mask[CurCnt] bits only while disabling an event.
+Fortunately, CurCnt bits are not read from MSR while re-enabling the
+event, instead MaxCnt is programmed with desired period and CurCnt is
+set to 0. Hence, we did not see any issues so far.
 
-Signed-off-by: Viktor Malik <vmalik@redhat.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Reviewed-by: Quentin Monnet <qmo@kernel.org>
-Link: https://lore.kernel.org/bpf/20250129071857.75182-1-vmalik@redhat.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Ravi Bangoria <ravi.bangoria@amd.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Acked-by: Namhyung Kim <namhyung@kernel.org>
+Link: https://lkml.kernel.org/r/20250115054438.1021-5-ravi.bangoria@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/bpf/bpftool/common.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/x86/events/amd/ibs.c         | 3 ++-
+ arch/x86/include/asm/perf_event.h | 1 +
+ 2 files changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/tools/bpf/bpftool/common.c b/tools/bpf/bpftool/common.c
-index eefa2b34e641a..33065b17900fa 100644
---- a/tools/bpf/bpftool/common.c
-+++ b/tools/bpf/bpftool/common.c
-@@ -311,10 +311,11 @@ int get_fd_type(int fd)
- 		p_err("can't read link type: %s", strerror(errno));
- 		return -1;
+diff --git a/arch/x86/events/amd/ibs.c b/arch/x86/events/amd/ibs.c
+index 354d52e17ef55..8525b7960787c 100644
+--- a/arch/x86/events/amd/ibs.c
++++ b/arch/x86/events/amd/ibs.c
+@@ -808,7 +808,8 @@ static __init int perf_event_ibs_init(void)
+ 	if (ibs_caps & IBS_CAPS_OPCNTEXT) {
+ 		perf_ibs_op.max_period  |= IBS_OP_MAX_CNT_EXT_MASK;
+ 		perf_ibs_op.config_mask	|= IBS_OP_MAX_CNT_EXT_MASK;
+-		perf_ibs_op.cnt_mask    |= IBS_OP_MAX_CNT_EXT_MASK;
++		perf_ibs_op.cnt_mask    |= (IBS_OP_MAX_CNT_EXT_MASK |
++					    IBS_OP_CUR_CNT_EXT_MASK);
  	}
--	if (n == sizeof(path)) {
-+	if (n == sizeof(buf)) {
- 		p_err("can't read link type: path too long!");
- 		return -1;
- 	}
-+	buf[n] = '\0';
  
- 	if (strstr(buf, "bpf-map"))
- 		return BPF_OBJ_MAP;
+ 	ret = perf_ibs_pmu_init(&perf_ibs_op, "ibs_op");
+diff --git a/arch/x86/include/asm/perf_event.h b/arch/x86/include/asm/perf_event.h
+index a4e4bbb7795d3..63fc0f50cd38c 100644
+--- a/arch/x86/include/asm/perf_event.h
++++ b/arch/x86/include/asm/perf_event.h
+@@ -402,6 +402,7 @@ struct pebs_xmm {
+  */
+ #define IBS_OP_CUR_CNT		(0xFFF80ULL<<32)
+ #define IBS_OP_CUR_CNT_RAND	(0x0007FULL<<32)
++#define IBS_OP_CUR_CNT_EXT_MASK	(0x7FULL<<52)
+ #define IBS_OP_CNT_CTL		(1ULL<<19)
+ #define IBS_OP_VAL		(1ULL<<18)
+ #define IBS_OP_ENABLE		(1ULL<<17)
 -- 
 2.39.5
 
