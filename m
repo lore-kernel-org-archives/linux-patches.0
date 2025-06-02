@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5130721FF39;
-	Mon,  2 Jun 2025 14:31:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B99371D516F;
+	Mon,  2 Jun 2025 14:31:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748874714; cv=none; b=k0+uMwFYGenzP3Gcy/C+vlVgZEwR889vKnbR29XM6+PPbU/yib7pMpJOf9iLBaxcTCgDnfbRM6avH5TqLn7fQhwrbGmlvoPpMDZOAx7it2z6qMxczrfFyQSDB4wTzUvIqaJujzAkymA1akUZu4mQyT+j5lTyCROkgkcV4klAMk8=
+	t=1748874716; cv=none; b=NzQTyLi4SFAu2ekDhWOaYDGF07tZeABaMS4CDmVTecFKjx00wjIruk/r7g5DRncWji82CLivS1TXNgkUXoLPLdKwzhGPzuGDvbfviGJrW0dAwNrzk4RPA3wzaCpxmWTDvHODn8I/JgRvpKd4/OP+kLVI2VcBfPeY2Ub9MMtyEaA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748874714; c=relaxed/simple;
-	bh=GkE/5cgRrt3FaRqa7OGibkPkNZi5nxlQ6Yc/IJLhiDY=;
+	s=arc-20240116; t=1748874716; c=relaxed/simple;
+	bh=/ytuouzGczHGeKcy9tzsQfEhkQh3ZIzzr3a9opPA6mw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gHVDX1t3MTvo86T38fK4OtpEm+QEP36WKt68DgZwmRhkiJStI4Tw4xjIoxI6k6d6gVNiWMc3R+/V9z0iFHgSk9UI9wnOgkmZ3nLvNZq7vW+plWXiR3ftZprV2QyVAgvhZgIQdG7Hr11by754UroeCPRx2uVke4oCN45Xosnhwwg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yGnEQAND; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z6UvdkJxE7aTW48rFF2wBf5JdahR2zZIk61N5MWAnKrGnirGwbvOdTLHj/DT+P+VyJ2l9jcONA2bH4KHCLyzsv2Nkh7Xx0hD2vtUx0oH1eguNdS42Ldv2xzeM2yx3yeBsUvY0W3RAhxnWmvbnLDbkk9bZ5fEEKlH10X86rCh1Fo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mDAKvbya; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yGnEQAND"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 495A9C4CEEB;
-	Mon,  2 Jun 2025 14:31:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mDAKvbya"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4255AC4CEEB;
+	Mon,  2 Jun 2025 14:31:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748874713;
-	bh=GkE/5cgRrt3FaRqa7OGibkPkNZi5nxlQ6Yc/IJLhiDY=;
+	s=korg; t=1748874716;
+	bh=/ytuouzGczHGeKcy9tzsQfEhkQh3ZIzzr3a9opPA6mw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yGnEQANDZ72WCBMgiIvoOQFjeX1Z3hitpnfmnTdd5+gEieUITKX1UmWlQRuLS737w
-	 +6z1WiavVqFg5ExOi4chTZ6q7TadWmkpri/f+70kTTNk4O1+Thr7cwf+KVbJdUi290
-	 br4qC9zP48P6RIgFqJf4hZ3aIQsG7vlpnfiVB2wg=
+	b=mDAKvbyaN+/1EIwouXry01KnfDdl/cNt1d0TVhk98WVe+npic6KPdWJ0UFc92jleK
+	 F4Cnxn6o1VVp0w/EXijMAr+ssYo+rs3xAi2md/s6oslITAl1cqQc8weMNtTMczenM2
+	 kmXpM70jyN6Tt7o7+ku8KezBcmaSMIewDeRgMhMA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Roeschley <kyle.roeschley@ni.com>,
-	Brad Mouring <brad.mouring@ni.com>,
-	Erick Shepherd <erick.shepherd@ni.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Andreas Schwab <schwab@linux-m68k.org>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 113/204] mmc: sdhci: Disable SD card clock before changing parameters
-Date: Mon,  2 Jun 2025 15:47:26 +0200
-Message-ID: <20250602134300.099246548@linuxfoundation.org>
+Subject: [PATCH 5.4 114/204] powerpc/prom_init: Fixup missing #size-cells on PowerBook6,7
+Date: Mon,  2 Jun 2025 15:47:27 +0200
+Message-ID: <20250602134300.138849573@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134255.449974357@linuxfoundation.org>
 References: <20250602134255.449974357@linuxfoundation.org>
@@ -48,56 +46,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Erick Shepherd <erick.shepherd@ni.com>
+From: Andreas Schwab <schwab@linux-m68k.org>
 
-[ Upstream commit fb3bbc46c94f261b6156ee863c1b06c84cf157dc ]
+[ Upstream commit 7e67ef889c9ab7246547db73d524459f47403a77 ]
 
-Per the SD Host Controller Simplified Specification v4.20 §3.2.3, change
-the SD card clock parameters only after first disabling the external card
-clock. Doing this fixes a spurious clock pulse on Baytrail and Apollo Lake
-SD controllers which otherwise breaks voltage switching with a specific
-Swissbit SD card.
+Similar to the PowerMac3,1, the PowerBook6,7 is missing the #size-cells
+property on the i2s node.
 
-Signed-off-by: Kyle Roeschley <kyle.roeschley@ni.com>
-Signed-off-by: Brad Mouring <brad.mouring@ni.com>
-Signed-off-by: Erick Shepherd <erick.shepherd@ni.com>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Link: https://lore.kernel.org/r/20250211214645.469279-1-erick.shepherd@ni.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Depends-on: commit 045b14ca5c36 ("of: WARN on deprecated #address-cells/#size-cells handling")
+Signed-off-by: Andreas Schwab <schwab@linux-m68k.org>
+Acked-by: Rob Herring (Arm) <robh@kernel.org>
+[maddy: added "commit" work in depends-on to avoid checkpatch error]
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/875xmizl6a.fsf@igel.home
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/sdhci.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ arch/powerpc/kernel/prom_init.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/mmc/host/sdhci.c b/drivers/mmc/host/sdhci.c
-index 4004e4e7b6226..f8d0a0e49abec 100644
---- a/drivers/mmc/host/sdhci.c
-+++ b/drivers/mmc/host/sdhci.c
-@@ -1708,10 +1708,15 @@ void sdhci_set_clock(struct sdhci_host *host, unsigned int clock)
+diff --git a/arch/powerpc/kernel/prom_init.c b/arch/powerpc/kernel/prom_init.c
+index b7ef63614417d..e0abb13b5806a 100644
+--- a/arch/powerpc/kernel/prom_init.c
++++ b/arch/powerpc/kernel/prom_init.c
+@@ -2906,11 +2906,11 @@ static void __init fixup_device_tree_pmac(void)
+ 	char type[8];
+ 	phandle node;
  
- 	host->mmc->actual_clock = 0;
+-	// Some pmacs are missing #size-cells on escc nodes
++	// Some pmacs are missing #size-cells on escc or i2s nodes
+ 	for (node = 0; prom_next_node(&node); ) {
+ 		type[0] = '\0';
+ 		prom_getprop(node, "device_type", type, sizeof(type));
+-		if (prom_strcmp(type, "escc"))
++		if (prom_strcmp(type, "escc") && prom_strcmp(type, "i2s"))
+ 			continue;
  
--	sdhci_writew(host, 0, SDHCI_CLOCK_CONTROL);
-+	clk = sdhci_readw(host, SDHCI_CLOCK_CONTROL);
-+	if (clk & SDHCI_CLOCK_CARD_EN)
-+		sdhci_writew(host, clk & ~SDHCI_CLOCK_CARD_EN,
-+			SDHCI_CLOCK_CONTROL);
- 
--	if (clock == 0)
-+	if (clock == 0) {
-+		sdhci_writew(host, 0, SDHCI_CLOCK_CONTROL);
- 		return;
-+	}
- 
- 	clk = sdhci_calc_clk(host, clock, &host->mmc->actual_clock);
- 	sdhci_enable_clk(host, clk);
+ 		if (prom_getproplen(node, "#size-cells") != PROM_ERROR)
 -- 
 2.39.5
 
