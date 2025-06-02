@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72BD729D05;
-	Mon,  2 Jun 2025 14:14:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B437222561;
+	Mon,  2 Jun 2025 14:14:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748873679; cv=none; b=fKq9lEc0FxfiVQZKr+GaUCkTSuTYokCkA5yp+CDhCI4swqW9ajZTXDRWJmZts/l1x6DG7TDWl+GvNDUbuAlq3TrNkwxXPaSftqrXPjBlK2VLMbrXRNG6aP259AaVwXSszYNwMrkc6lfo0qMmgBUu97VvCL1hrxMWqcv0HfXS8gU=
+	t=1748873682; cv=none; b=AlNnCdWC7Xjv4+6f37hVVciG+aaH3EJRU011TZlGR/nC0W4Ez6BbWKmReyfYd2eD8Ri2dvEsT8dvsBpZmo+ZFWI+e6kAMp0SjcluwFBQvQr2bQA47S6fr5ZVCWzO5n8Q+zG8POe+7YDCJ6yGKDFKcANqyGD9fXCuN1jXKLxDqwo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748873679; c=relaxed/simple;
-	bh=kBozSbZyWi+KUvNt5LocKh69JSOJeo9frJgntO/z5Js=;
+	s=arc-20240116; t=1748873682; c=relaxed/simple;
+	bh=nUhOAswYnFs6tENK49peOkI2FuSsNhRzhO9sH9DHD6s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XEKpIeanLx8uJvUgcfezWRHECcxgZ1abpxjesoOcdxRGzGu/Gws7XxNsHMFXkcC4QUArVk0eNdAyinO6hsQIvKaolZc+v6wnHwpKyFyCpEC96WjAQvBQcPxYvRFDl5fEY2bSk4f6wo/Gb2b/3SPVRjcvgtmx/SJJwEwiaOg1i3g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cqrMZqUs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZllQNf2xgkQ/NRtjU/ZT4TmEpXMHJVkRI/F1uSJ34Fs69+mD53neNyKeSmHA6zZ7/gem7dg+EHnS7GxMChAysjBXokjYW3Dqbs7UvB4H6MJus2VKx5n5USYeaZiiveuMpGd7X2arce35j+/6ms9j/MaYwX7luW7xeFsC0yXxYlw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LmypIN1y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cqrMZqUs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4C4FC4CEEB;
-	Mon,  2 Jun 2025 14:14:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LmypIN1y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3947C4CEEB;
+	Mon,  2 Jun 2025 14:14:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748873679;
-	bh=kBozSbZyWi+KUvNt5LocKh69JSOJeo9frJgntO/z5Js=;
+	s=korg; t=1748873682;
+	bh=nUhOAswYnFs6tENK49peOkI2FuSsNhRzhO9sH9DHD6s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cqrMZqUsJXSW3haFyqsamR/6Q97Ey0236xKfKOVTusUypIdK7X+80ZuC6r0VRTV3v
-	 NQvR23xBlS2PnWRiIuOh50IVRWAiHtr07P6aCXa+xS7LN+5+Qi+Hw9cp+2AptO9QZM
-	 dwXem9G9+wvvAji2e2MpZh6+BDym+dEC6sP/LHVo=
+	b=LmypIN1ybnPqQQkeDCrJMpMhTNNtkfWGNSZ6PXCByiOikYjlbwLDZuoZF1BoNYvlW
+	 WigD/zipQBoMKD36SD8M1T6JFmBJi/pd2DzopBHfOBLa1ZCfkAvQC7nTXCzXNhv4Wu
+	 c+XYZ/tn316H30xZ2eCAlQsn0r8XEN/jzX1tJvQI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Xiaochun Lee <lixc17@lenovo.com>,
+	Xiaofei Tan <tanxiaofei@huawei.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 217/444] PCI: Fix old_size lower bound in calculate_iosize() too
-Date: Mon,  2 Jun 2025 15:44:41 +0200
-Message-ID: <20250602134349.718163511@linuxfoundation.org>
+Subject: [PATCH 6.6 218/444] ACPI: HED: Always initialize before evged
+Date: Mon,  2 Jun 2025 15:44:42 +0200
+Message-ID: <20250602134349.757218211@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -46,50 +45,71 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Xiaofei Tan <tanxiaofei@huawei.com>
 
-[ Upstream commit ff61f380de5652e723168341480cc7adf1dd6213 ]
+[ Upstream commit cccf6ee090c8c133072d5d5b52ae25f3bc907a16 ]
 
-Commit 903534fa7d30 ("PCI: Fix resource double counting on remove &
-rescan") fixed double counting of mem resources because of old_size being
-applied too early.
+When the HED driver is built-in, it initializes after evged because they
+both are at the same initcall level, so the initialization ordering
+depends on the Makefile order.  However, this prevents RAS records
+coming in between the evged driver initialization and the HED driver
+initialization from being handled.
 
-Fix a similar counting bug on the io resource side.
+If the number of such RAS records is above the APEI HEST error source
+number, the HEST resources may be exhausted, and that may affect
+subsequent RAS error reporting.
 
-Link: https://lore.kernel.org/r/20241216175632.4175-6-ilpo.jarvinen@linux.intel.com
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Tested-by: Xiaochun Lee <lixc17@lenovo.com>
+To fix this issue, change the initcall level of HED to subsys_initcall
+and prevent the driver from being built as a module by changing ACPI_HED
+in Kconfig from "tristate" to "bool".
+
+Signed-off-by: Xiaofei Tan <tanxiaofei@huawei.com>
+Link: https://patch.msgid.link/20250212063408.927666-1-tanxiaofei@huawei.com
+[ rjw: Changelog edits ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/setup-bus.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/acpi/Kconfig | 2 +-
+ drivers/acpi/hed.c   | 7 ++++++-
+ 2 files changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pci/setup-bus.c b/drivers/pci/setup-bus.c
-index fba402f4f6330..3f40be417856e 100644
---- a/drivers/pci/setup-bus.c
-+++ b/drivers/pci/setup-bus.c
-@@ -802,11 +802,9 @@ static resource_size_t calculate_iosize(resource_size_t size,
- 	size = (size & 0xff) + ((size & ~0xffUL) << 2);
- #endif
- 	size = size + size1;
--	if (size < old_size)
--		size = old_size;
+diff --git a/drivers/acpi/Kconfig b/drivers/acpi/Kconfig
+index cee82b473dc50..648228831f5e8 100644
+--- a/drivers/acpi/Kconfig
++++ b/drivers/acpi/Kconfig
+@@ -438,7 +438,7 @@ config ACPI_SBS
+ 	  the modules will be called sbs and sbshc.
  
--	size = ALIGN(max(size, add_size) + children_add_size, align);
--	return size;
-+	size = max(size, add_size) + children_add_size;
-+	return ALIGN(max(size, old_size), align);
- }
+ config ACPI_HED
+-	tristate "Hardware Error Device"
++	bool "Hardware Error Device"
+ 	help
+ 	  This driver supports the Hardware Error Device (PNP0C33),
+ 	  which is used to report some hardware errors notified via
+diff --git a/drivers/acpi/hed.c b/drivers/acpi/hed.c
+index 46c6f8c35b436..2e01eaa8d8cd5 100644
+--- a/drivers/acpi/hed.c
++++ b/drivers/acpi/hed.c
+@@ -80,7 +80,12 @@ static struct acpi_driver acpi_hed_driver = {
+ 		.remove = acpi_hed_remove,
+ 	},
+ };
+-module_acpi_driver(acpi_hed_driver);
++
++static int __init acpi_hed_driver_init(void)
++{
++	return acpi_bus_register_driver(&acpi_hed_driver);
++}
++subsys_initcall(acpi_hed_driver_init);
  
- static resource_size_t calculate_memsize(resource_size_t size,
+ MODULE_AUTHOR("Huang Ying");
+ MODULE_DESCRIPTION("ACPI Hardware Error Device Driver");
 -- 
 2.39.5
 
