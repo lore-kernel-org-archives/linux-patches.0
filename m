@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0715B1EA65;
-	Mon,  2 Jun 2025 14:54:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E0861EA65;
+	Mon,  2 Jun 2025 14:54:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748876063; cv=none; b=aRR7jNUxHjhUsUEZjCsm9JbTltL3PjkUPQOd1sFu8+qpMAsi/JjeXbqiCSIk3lW6nSb+PuMpfHFupl7DtM2a9xZsJoav1esn7EQx1DMQxubqalhum/n8k+RlLUKhgqN8aqKv4x2u6LdSblX8komsCnZOalqULb3NL1YFNg856Tg=
+	t=1748876066; cv=none; b=avovQjHOQt81UXzT9mzP4QUNfTnOWiPCp0uKteMpJdxNi2gn9cbavk8CfCS7SwIVyZn350ZTgQtcTQo/HUQmD9zsO0wFni2Cr3uUCcfGxoli6NFrUOcQXtNKu0j/V7YPJ4Z3AjcDXmacZ2sRk+fXBzwPvfwPSV7EYO3sbAIJ+7M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748876063; c=relaxed/simple;
-	bh=pR9Ew6B/zz80Xd5obELpj15dTVvLZaWDfgYhr72ydmk=;
+	s=arc-20240116; t=1748876066; c=relaxed/simple;
+	bh=9qTg1moThmFtldyO8UMqbH9VcTMsDOYFSU6VrAgTEBQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qiSvOygzVhF5r/T1iehiER9abiQK3h2NicLXpmDWXXZAYrIJDkVwYiaLvFwwzF4CbAr4s1WqPPfb3s7e9WEbf+HoN34ANKLHq/AHkbQ1W59VMLOJr9mcdE/1N40+ldSpAMMWotcrtOxDMXfq3hZHa3MOmvgeLrCtRn0JgKKE8To=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MajpBE3N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sdDdYp0dzDziUjAdDz3zxxZd1CmbhctlY5xr71jV05q9IaWU1vU97G4Cpl9EJAZh7D8dBzTM5FKZKS396rdvNoGtcoqEOuwm5/oY6fViGg/FAkED0TaZomvi5Q0KexMwq0Vw14hnuNQCjktRzQ3+Ghhtoml5rgtKAtTCNw0Ojmo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FPw7YrbA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MajpBE3N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83CEBC4CEEB;
-	Mon,  2 Jun 2025 14:54:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FPw7YrbA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 955F4C4CEEB;
+	Mon,  2 Jun 2025 14:54:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748876062;
-	bh=pR9Ew6B/zz80Xd5obELpj15dTVvLZaWDfgYhr72ydmk=;
+	s=korg; t=1748876066;
+	bh=9qTg1moThmFtldyO8UMqbH9VcTMsDOYFSU6VrAgTEBQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MajpBE3NJor3eu8gqcF9WglhCN3mEtzwBsF6U0DebppFRwX9kSKFrAxLXfaM6V727
-	 TM+H8Wikd83fN0qm4EMulId2OCjE/6TzKJcFFL7GurIVyznNVJ1ZKh//QbfR3TINLz
-	 wJK72obOrCgiekqXhoiTzLuxxKWf84UicrqAQTh0=
+	b=FPw7YrbAdFve3c1wM/Zh/Q/ZxBjuAxQy31S5haNZxokqmtfDaO4ti7SPL5GfrJiDw
+	 r9ukvPc1P/dqsc4N/A8lencFtSs/EuSpziffE9bZHJpcxT223qpL+MQ+tswXc1HG+0
+	 Ks96UxMBQzvc6FmPEQ11jKdJx+m+dws+KXkDbk5c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>,
+	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 052/207] timer_list: Dont use %pK through printk()
-Date: Mon,  2 Jun 2025 15:47:04 +0200
-Message-ID: <20250602134300.790588139@linuxfoundation.org>
+Subject: [PATCH 5.15 061/207] arm64: tegra: p2597: Fix gpio for vdd-1v8-dis regulator
+Date: Mon,  2 Jun 2025 15:47:13 +0200
+Message-ID: <20250602134301.138669790@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134258.769974467@linuxfoundation.org>
 References: <20250602134258.769974467@linuxfoundation.org>
@@ -45,67 +45,41 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+From: Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>
 
-[ Upstream commit a52067c24ccf6ee4c85acffa0f155e9714f9adce ]
+[ Upstream commit f34621f31e3be81456c903287f7e4c0609829e29 ]
 
-This reverts commit f590308536db ("timer debug: Hide kernel addresses via
-%pK in /proc/timer_list")
+According to the board schematics the enable pin of this regulator is
+connected to gpio line #9 of the first instance of the TCA9539
+GPIO expander, so adjust it.
 
-The timer list helper SEQ_printf() uses either the real seq_printf() for
-procfs output or vprintk() to print to the kernel log, when invoked from
-SysRq-q. It uses %pK for printing pointers.
-
-In the past %pK was prefered over %p as it would not leak raw pointer
-values into the kernel log. Since commit ad67b74d2469 ("printk: hash
-addresses printed with %p") the regular %p has been improved to avoid this
-issue.
-
-Furthermore, restricted pointers ("%pK") were never meant to be used
-through printk(). They can still unintentionally leak raw pointers or
-acquire sleeping looks in atomic contexts.
-
-Switch to the regular pointer formatting which is safer, easier to reason
-about and sufficient here.
-
-Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/lkml/20250113171731-dc10e3c1-da64-4af0-b767-7c7070468023@linutronix.de/
-Link: https://lore.kernel.org/all/20250311-restricted-pointers-timer-v1-1-6626b91e54ab@linutronix.de
+Signed-off-by: Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>
+Link: https://lore.kernel.org/r/20250224-diogo-gpio_exp-v1-1-80fb84ac48c6@tecnico.ulisboa.pt
+Signed-off-by: Thierry Reding <treding@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/time/timer_list.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/nvidia/tegra210-p2597.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/time/timer_list.c b/kernel/time/timer_list.c
-index ed7d6ad694fba..20a5e6962b696 100644
---- a/kernel/time/timer_list.c
-+++ b/kernel/time/timer_list.c
-@@ -46,7 +46,7 @@ static void
- print_timer(struct seq_file *m, struct hrtimer *taddr, struct hrtimer *timer,
- 	    int idx, u64 now)
- {
--	SEQ_printf(m, " #%d: <%pK>, %ps", idx, taddr, timer->function);
-+	SEQ_printf(m, " #%d: <%p>, %ps", idx, taddr, timer->function);
- 	SEQ_printf(m, ", S:%02x", timer->state);
- 	SEQ_printf(m, "\n");
- 	SEQ_printf(m, " # expires at %Lu-%Lu nsecs [in %Ld to %Ld nsecs]\n",
-@@ -98,7 +98,7 @@ print_active_timers(struct seq_file *m, struct hrtimer_clock_base *base,
- static void
- print_base(struct seq_file *m, struct hrtimer_clock_base *base, u64 now)
- {
--	SEQ_printf(m, "  .base:       %pK\n", base);
-+	SEQ_printf(m, "  .base:       %p\n", base);
- 	SEQ_printf(m, "  .index:      %d\n", base->index);
- 
- 	SEQ_printf(m, "  .resolution: %u nsecs\n", hrtimer_resolution);
+diff --git a/arch/arm64/boot/dts/nvidia/tegra210-p2597.dtsi b/arch/arm64/boot/dts/nvidia/tegra210-p2597.dtsi
+index d8409c1b43800..4abd8b14b8a5c 100644
+--- a/arch/arm64/boot/dts/nvidia/tegra210-p2597.dtsi
++++ b/arch/arm64/boot/dts/nvidia/tegra210-p2597.dtsi
+@@ -1638,7 +1638,7 @@ vdd_1v8_dis: regulator@7 {
+ 		regulator-min-microvolt = <1800000>;
+ 		regulator-max-microvolt = <1800000>;
+ 		regulator-always-on;
+-		gpio = <&exp1 14 GPIO_ACTIVE_HIGH>;
++		gpio = <&exp1 9 GPIO_ACTIVE_HIGH>;
+ 		enable-active-high;
+ 		vin-supply = <&vdd_1v8>;
+ 	};
 -- 
 2.39.5
 
