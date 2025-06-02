@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C56A2356DB;
-	Mon,  2 Jun 2025 15:18:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74A88233140;
+	Mon,  2 Jun 2025 15:18:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748877512; cv=none; b=Ua+pnr9ulCHcaeWuqUOIr+r8YN38jH5eAmgiJLzGmUBQ0Yv4yNHRLgRgoz7WDiz1OfBOQPenybhIhJvQj8zoNYHRc8JUXE9LFOcH6/9mtBLyRGwfklMwDFM5+p3oQ7JtQQfXUvTYVCAa9PRDjdLc6t1yoqJf7OYg3IUBiSdiYkY=
+	t=1748877515; cv=none; b=cG2A6Qw0lpJK8k1QBLYvooL+N2dgaG1txFbw7dl+EQoSwVHnkC46zHvFqZ+TFwSN7wgrIR7cJFA6AWkoakxrVclIZqAP2jHBerixLTx7uLDZsCcT8JY9l3mt95A8UC4q7TwROu9ztUDbfyhbgLAAMHLs3lvjp2de/EUUVrdy3+M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748877512; c=relaxed/simple;
-	bh=HrLE0deh4e7SdE1LIHx5vT39nnNVNUbf9MneQ00Thcs=;
+	s=arc-20240116; t=1748877515; c=relaxed/simple;
+	bh=sAJB5BqDSKNc7EIhcCtWgeHzBEAIBS/RzF188DWURhc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NQXouAflBgEQpFy5DogLChV4H+v7radup0+iqZ6E4ob1xTIhwQ2V2jwKhHGKKjRF3eV4LmdG0YYXMK9B+ZIqWQwnk8EBHQz+A3dgRscm9D2nejwSTm98ET3BxS8E6SbinShAD4QHS1TfWvRETvqry31lKcHlTlgROl+Z3xK/5qM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FdKzSNAQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cOewRBjd/ZXHmNRbPzTgVB5HP1y4Z0IA8nH2Hre7IoylkfLrE5AjmAfJ2BMEFXLTAHmwGdDwUaZZnEfbMs3tv3rsAuNXZAIVufg5ZZWh2x8fnFApWsDzmlCOo3xGwzX7gemgApTEjwR6nQCAqnjvOBadwWOBAZQCZAMcWqzgGgY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P2Bmb4pV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FdKzSNAQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33CF5C4CEEB;
-	Mon,  2 Jun 2025 15:18:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P2Bmb4pV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EDD8C4CEEB;
+	Mon,  2 Jun 2025 15:18:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748877511;
-	bh=HrLE0deh4e7SdE1LIHx5vT39nnNVNUbf9MneQ00Thcs=;
+	s=korg; t=1748877514;
+	bh=sAJB5BqDSKNc7EIhcCtWgeHzBEAIBS/RzF188DWURhc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FdKzSNAQtZRP3TBBNCqHfJ/2Fj+QAYbwrgl6FaV7nlk2vxhx23yEYEo/jJyICxKkW
-	 XosNw/yr/3PrvyhfAQpYXRQ55vZ3ig7/VYettRLzdYRM6qNfIXwZkqdVCGGRb8iHv4
-	 l7G7plfDpm3X7tRermk/Gpxw413FCx+7nGLgqyQI=
+	b=P2Bmb4pV9i1CZNl9UdUl6wIaVJ0Ov0fO2KisGO7CTVMO+NzaoZUdnIdjksgpMYv+H
+	 HRfBTfOSvbm2hHjfMLROl/DCUl1HeenHznCCPE8EbLLzhN0+s0BJFScVWUNiDv9bz/
+	 XMlcJdReDjqlwIud66qLfuigtaaaHP7T4GMhRABg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>
-Subject: [PATCH 6.1 273/325] i3c: master: svc: Fix implicit fallthrough in svc_i3c_master_ibi_work()
-Date: Mon,  2 Jun 2025 15:49:09 +0200
-Message-ID: <20250602134330.857876058@linuxfoundation.org>
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Lee Jones <lee@kernel.org>
+Subject: [PATCH 6.1 300/325] af_unix: Detect dead SCC.
+Date: Mon,  2 Jun 2025 15:49:36 +0200
+Message-ID: <20250602134332.103344192@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134319.723650984@linuxfoundation.org>
 References: <20250602134319.723650984@linuxfoundation.org>
@@ -50,46 +52,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-commit e8d2d287e26d9bd9114cf258a123a6b70812442e upstream.
+commit a15702d8b3aad8ce5268c565bd29f0e02fd2db83 upstream.
 
-Clang warns (or errors with CONFIG_WERROR=y):
+When iterating SCC, we call unix_vertex_dead() for each vertex
+to check if the vertex is close()d and has no bridge to another
+SCC.
 
-  drivers/i3c/master/svc-i3c-master.c:596:2: error: unannotated fall-through between switch labels [-Werror,-Wimplicit-fallthrough]
-    596 |         default:
-        |         ^
-  drivers/i3c/master/svc-i3c-master.c:596:2: note: insert 'break;' to avoid fall-through
-    596 |         default:
-        |         ^
-        |         break;
-  1 error generated.
+If both conditions are true for every vertex in SCC, we can
+execute garbage collection for all skb in the SCC.
 
-Clang is a little more pedantic than GCC, which does not warn when
-falling through to a case that is just break or return. Clang's version
-is more in line with the kernel's own stance in deprecated.rst, which
-states that all switch/case blocks must end in either break,
-fallthrough, continue, goto, or return. Add the missing break to silence
-the warning.
+The actual garbage collection is done in the following patch,
+replacing the old implementation.
 
-Fixes: 0430bf9bc1ac ("i3c: master: svc: Fix missing STOP for master request")
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Link: https://lore.kernel.org/r/20250319-i3c-fix-clang-fallthrough-v1-1-d8e02be1ef5c@kernel.org
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Acked-by: Paolo Abeni <pabeni@redhat.com>
+Link: https://lore.kernel.org/r/20240325202425.60930-14-kuniyu@amazon.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i3c/master/svc-i3c-master.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/unix/garbage.c |   44 +++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 43 insertions(+), 1 deletion(-)
 
---- a/drivers/i3c/master/svc-i3c-master.c
-+++ b/drivers/i3c/master/svc-i3c-master.c
-@@ -496,6 +496,7 @@ static void svc_i3c_master_ibi_work(stru
- 		break;
- 	case SVC_I3C_MSTATUS_IBITYPE_MASTER_REQUEST:
- 		svc_i3c_master_emit_stop(master);
-+		break;
- 	default:
- 		break;
+--- a/net/unix/garbage.c
++++ b/net/unix/garbage.c
+@@ -289,6 +289,39 @@ void unix_destroy_fpl(struct scm_fp_list
+ 	unix_free_vertices(fpl);
+ }
+ 
++static bool unix_vertex_dead(struct unix_vertex *vertex)
++{
++	struct unix_edge *edge;
++	struct unix_sock *u;
++	long total_ref;
++
++	list_for_each_entry(edge, &vertex->edges, vertex_entry) {
++		struct unix_vertex *next_vertex = unix_edge_successor(edge);
++
++		/* The vertex's fd can be received by a non-inflight socket. */
++		if (!next_vertex)
++			return false;
++
++		/* The vertex's fd can be received by an inflight socket in
++		 * another SCC.
++		 */
++		if (next_vertex->scc_index != vertex->scc_index)
++			return false;
++	}
++
++	/* No receiver exists out of the same SCC. */
++
++	edge = list_first_entry(&vertex->edges, typeof(*edge), vertex_entry);
++	u = edge->predecessor;
++	total_ref = file_count(u->sk.sk_socket->file);
++
++	/* If not close()d, total_ref > out_degree. */
++	if (total_ref != vertex->out_degree)
++		return false;
++
++	return true;
++}
++
+ static bool unix_scc_cyclic(struct list_head *scc)
+ {
+ 	struct unix_vertex *vertex;
+@@ -377,6 +410,7 @@ prev_vertex:
+ 
+ 	if (vertex->index == vertex->scc_index) {
+ 		struct list_head scc;
++		bool scc_dead = true;
+ 
+ 		/* SCC finalised.
+ 		 *
+@@ -391,6 +425,9 @@ prev_vertex:
+ 
+ 			/* Mark vertex as off-stack. */
+ 			vertex->index = unix_vertex_grouped_index;
++
++			if (scc_dead)
++				scc_dead = unix_vertex_dead(vertex);
+ 		}
+ 
+ 		if (!unix_graph_maybe_cyclic)
+@@ -431,13 +468,18 @@ static void unix_walk_scc_fast(void)
+ 	while (!list_empty(&unix_unvisited_vertices)) {
+ 		struct unix_vertex *vertex;
+ 		struct list_head scc;
++		bool scc_dead = true;
+ 
+ 		vertex = list_first_entry(&unix_unvisited_vertices, typeof(*vertex), entry);
+ 		list_add(&scc, &vertex->scc_entry);
+ 
+-		list_for_each_entry_reverse(vertex, &scc, scc_entry)
++		list_for_each_entry_reverse(vertex, &scc, scc_entry) {
+ 			list_move_tail(&vertex->entry, &unix_visited_vertices);
+ 
++			if (scc_dead)
++				scc_dead = unix_vertex_dead(vertex);
++		}
++
+ 		list_del(&scc);
  	}
+ 
 
 
