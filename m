@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A6832248B3;
-	Mon,  2 Jun 2025 14:02:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEEAC226188;
+	Mon,  2 Jun 2025 14:02:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748872944; cv=none; b=EKTq4ML34IONOcIAKC08a4UCPbJsIoQivxJxeqtb7zgUoSp+wwCPo4CDWJ/FK1XrT5tvFdZ4F3lx2HJ68A7CnNMrELyjzd3yG3FEsa0iuVVzTc0KNaepbY0W/VeBCuK7pYlXqsmmq+2RAeLgr5CNuR7A97WPfkxUzMKtkBN0lJM=
+	t=1748872947; cv=none; b=DIKp+621dTBR7wwzXGJ6VfWOqHXed67bocJjEeXRm66Tz0ZbPnc1VthoHZHe0UWUQjx5XxDwe0ngcKCJVYL35CFVQlb8xPN4rDP3Qgs8pVwhKl9z6SjSsZnaIS+vRYgZEKeFlncrkohselO1Xqnszy/flsBZm99pZ0xFValmzB4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748872944; c=relaxed/simple;
-	bh=d7elWOw1LXkDbgdBq0m2EPpbNVp2vG5sYJ+XFpEXssg=;
+	s=arc-20240116; t=1748872947; c=relaxed/simple;
+	bh=J2/C9+XVAtBqHD6IQ6WTrMCXxIMIrwo5lpmQsBpfW7M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AONUd8VWCt7xUvpW0XnwLOW9J57mEyAcmLg33fNyOR5aAs7XElK3oh+YK6PBxbyPp40l443cMq/hw9Scwr7lpqHaNtDGMnM+dkPmgn7b/TQCrmClAYuoHN3xGS3K9q1L5j/v3r/sx/+xVFEz0T+/piyES3j8oyezFz+qbZMw4fg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OcD8jXvS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ezfvbUPuITUHDyCjVpM1Ss0N+7p4X3zD8OFBI+tqzkZYSAaXHsycAn8gSEzhz1nghgP1GfcCxK2eDxbMBlc7KoTAkt8bYmiT5veo08paGDi41fKlDyOY4P9Z+3VuIrB5vJkkdivBtZaUiWGhOc+zWofEQgoSop6jLVIwqmTBbss=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Luz5bYXv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OcD8jXvS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0165EC4CEEE;
-	Mon,  2 Jun 2025 14:02:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Luz5bYXv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CF90C4CEF7;
+	Mon,  2 Jun 2025 14:02:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748872944;
-	bh=d7elWOw1LXkDbgdBq0m2EPpbNVp2vG5sYJ+XFpEXssg=;
+	s=korg; t=1748872947;
+	bh=J2/C9+XVAtBqHD6IQ6WTrMCXxIMIrwo5lpmQsBpfW7M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OcD8jXvSec8ELIBIH33K3gySp65FhSpE3e8WoBUSnJ0dXh02bp/3c+nJlMtE9WIYy
-	 fsUChQ/kG/Ue2Lyg6PpjN78/GTjVOuo3wEoCQnBw6hbx1DJxFuBoc83fcJYqYcIjVV
-	 sDvZSRmGjOnBp08ZMNDHgVKRUd0zibEppFOyZCs4=
+	b=Luz5bYXvKDA7+zRwrhbI4XVbthxKn9/CqkdT2GmrmFhNWE0GeSoT3YPyqzEW2oNbE
+	 7GVcCpWabPQiw7LhLbLkq9AdeA+bpsobZJ8KzmADwPo9qmX3QXUG9BEpWhreIHxqtM
+	 mbUMt/MWdBBDCap78Hka8pKL3Q6gLKcOrMSvIzZY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alessandro Grassi <alessandro.grassi@mailbox.org>,
-	Mark Brown <broonie@kernel.org>,
+	Ilya Guterman <amfernusus@gmail.com>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 45/55] spi: spi-sun4i: fix early activation
-Date: Mon,  2 Jun 2025 15:48:02 +0200
-Message-ID: <20250602134240.055385114@linuxfoundation.org>
+Subject: [PATCH 6.12 46/55] nvme-pci: add NVME_QUIRK_NO_DEEPEST_PS quirk for SOLIDIGM P44 Pro
+Date: Mon,  2 Jun 2025 15:48:03 +0200
+Message-ID: <20250602134240.096235778@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134238.271281478@linuxfoundation.org>
 References: <20250602134238.271281478@linuxfoundation.org>
@@ -51,50 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alessandro Grassi <alessandro.grassi@mailbox.org>
+From: Ilya Guterman <amfernusus@gmail.com>
 
-[ Upstream commit fb98bd0a13de2c9d96cb5c00c81b5ca118ac9d71 ]
+[ Upstream commit e765bf89f42b5c82132a556b630affeb82b2a21f ]
 
-The SPI interface is activated before the CPOL setting is applied. In
-that moment, the clock idles high and CS goes low. After a short delay,
-CPOL and other settings are applied, which may cause the clock to change
-state and idle low. This transition is not part of a clock cycle, and it
-can confuse the receiving device.
+This commit adds the NVME_QUIRK_NO_DEEPEST_PS quirk for device
+[126f:2262], which belongs to device SOLIDIGM P44 Pro SSDPFKKW020X7
 
-To prevent this unexpected transition, activate the interface while CPOL
-and the other settings are being applied.
+The device frequently have trouble exiting the deepest power state (5),
+resulting in the entire disk being unresponsive.
 
-Signed-off-by: Alessandro Grassi <alessandro.grassi@mailbox.org>
-Link: https://patch.msgid.link/20250502095520.13825-1-alessandro.grassi@mailbox.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Verified by setting nvme_core.default_ps_max_latency_us=10000 and
+observing the expected behavior.
+
+Signed-off-by: Ilya Guterman <amfernusus@gmail.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-sun4i.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/nvme/host/pci.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/spi/spi-sun4i.c b/drivers/spi/spi-sun4i.c
-index 2ee6755b43f54..3019f57e65841 100644
---- a/drivers/spi/spi-sun4i.c
-+++ b/drivers/spi/spi-sun4i.c
-@@ -264,6 +264,9 @@ static int sun4i_spi_transfer_one(struct spi_controller *host,
- 	else
- 		reg |= SUN4I_CTL_DHB;
- 
-+	/* Now that the settings are correct, enable the interface */
-+	reg |= SUN4I_CTL_ENABLE;
-+
- 	sun4i_spi_write(sspi, SUN4I_CTL_REG, reg);
- 
- 	/* Ensure that we have a parent clock fast enough */
-@@ -404,7 +407,7 @@ static int sun4i_spi_runtime_resume(struct device *dev)
- 	}
- 
- 	sun4i_spi_write(sspi, SUN4I_CTL_REG,
--			SUN4I_CTL_ENABLE | SUN4I_CTL_MASTER | SUN4I_CTL_TP);
-+			SUN4I_CTL_MASTER | SUN4I_CTL_TP);
- 
- 	return 0;
- 
+diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
+index cd8a10f6accff..37fd1a8ace127 100644
+--- a/drivers/nvme/host/pci.c
++++ b/drivers/nvme/host/pci.c
+@@ -3701,6 +3701,8 @@ static const struct pci_device_id nvme_id_table[] = {
+ 		.driver_data = NVME_QUIRK_NO_DEEPEST_PS, },
+ 	{ PCI_DEVICE(0x1e49, 0x0041),   /* ZHITAI TiPro7000 NVMe SSD */
+ 		.driver_data = NVME_QUIRK_NO_DEEPEST_PS, },
++	{ PCI_DEVICE(0x025e, 0xf1ac),   /* SOLIDIGM  P44 pro SSDPFKKW020X7  */
++		.driver_data = NVME_QUIRK_NO_DEEPEST_PS, },
+ 	{ PCI_DEVICE(0xc0a9, 0x540a),   /* Crucial P2 */
+ 		.driver_data = NVME_QUIRK_BOGUS_NID, },
+ 	{ PCI_DEVICE(0x1d97, 0x2263), /* Lexar NM610 */
 -- 
 2.39.5
 
