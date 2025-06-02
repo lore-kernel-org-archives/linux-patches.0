@@ -1,43 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ABEA1B81DC;
-	Mon,  2 Jun 2025 14:24:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50D06226541;
+	Mon,  2 Jun 2025 14:24:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748874248; cv=none; b=r6we7DlQ7pwzQr54NeE7jADsNKp9Q9jU8xgL1fm2C5br6kdRExwrCZe0GTrBCgV6TfP1ZB3na9S9M5yQ4cUlxSWKJ/6NoQ6DTiIktxxtM5fRP3kW9Vjqyd1cNgqH3j046MloPY3D5Ua7D763ZMia1zPRizJUjAVMZM5PNinFOaM=
+	t=1748874251; cv=none; b=ImdVeHG65BnX40ZGjT/HkWj+RNWObZQMawbhqHHoB/070Kw6maw6+JG80jyDCm9HaO6yHTv7/Fz2pbYxK6/UuD4pjlIhSQjpxr7kAfg6rMoOOzSayZN0FApqVPy9hYw1P/Y9HkVDQ3ZVRxt+Bp+UL9v7yJZovUixQHS0P1s2/Gs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748874248; c=relaxed/simple;
-	bh=+jEblwbG4IKWq6kGWdHxE2JEIkGLFwuYt9afeVr0AfA=;
+	s=arc-20240116; t=1748874251; c=relaxed/simple;
+	bh=r9ss+CFU2CP/knOeticyNKAWyI2356KVNmr82G7XY5E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WjSqAQyxOgFNu0HXFhqrSFfSud+6sKF3HdjyJlORocRAwe5MGXpY3EuqJTg7dSor4Ae+Lpv95gQfC7aHfffjckL3k0uCONpqjqvR6MIGEQSyi+65VFYIOGCxk3uRLz/j020gELcD3RWh/yegrsNCAx8Wj99dc8dtbKYwj67E7xk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zIr2+oRi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=F6Eygiwx5j5lv7IZyYPyCYvCrIgsRn0uzIMOtQVAEorEccrYJIf3dXqmDca7EaYbqGzH4VG/dj/qb6QfzGlm1wlT37d11PACLueKE3RmBM2Z1euqT+QeqjaunqiAPCFbTOdJzl76g6pSjCEMfI0390OL52191D8iA9Y/3sVMo88=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S5UcYWzv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zIr2+oRi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D202C4CEEB;
-	Mon,  2 Jun 2025 14:24:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S5UcYWzv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B922C4CEEB;
+	Mon,  2 Jun 2025 14:24:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748874248;
-	bh=+jEblwbG4IKWq6kGWdHxE2JEIkGLFwuYt9afeVr0AfA=;
+	s=korg; t=1748874250;
+	bh=r9ss+CFU2CP/knOeticyNKAWyI2356KVNmr82G7XY5E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zIr2+oRi0qSxvhS23+l0T96NqpFQ7f7jKNeJhXSrK3jDW6ibGjFcagIiGDgsBBxqa
-	 XAii8WcMJYwgalxt/8JOBbboOjUFZlbh1icIu/nVYfH+i+Av3+bVBMsBrMYkGYM5NK
-	 Z9e8j0o+4QuGpYRlfXQjdLeepUDO44TmqU/rLAKk=
+	b=S5UcYWzvnr8dmY6FRr0YrzCER3QjZW7CH2E2mH5GYAlnqjQt9jPDWxaqLobxf9d6i
+	 1Xe9xb3Yh5Zco3lkBkYglnwIM3B+qIi/c0r5BFskFgnosSC4CNlpFNSg09XP/GjyIf
+	 4tM9bi/yszDr7KmdGb/JHwM9n/4blQffQkqWOVMU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tianyang Zhang <zhangtianyang@loongson.cn>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Michal Hocko <mhocko@suse.com>,
-	Brendan Jackman <jackmanb@google.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Zi Yan <ziy@nvidia.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 377/444] mm/page_alloc.c: avoid infinite retries caused by cpuset race
-Date: Mon,  2 Jun 2025 15:47:21 +0200
-Message-ID: <20250602134356.217786727@linuxfoundation.org>
+	Vladimir Moskovkin <Vladimir.Moskovkin@kaspersky.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Subject: [PATCH 6.6 368/444] platform/x86: dell-wmi-sysman: Avoid buffer overflow in current_password_store()
+Date: Mon,  2 Jun 2025 15:47:12 +0200
+Message-ID: <20250602134355.853696607@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -50,85 +44,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tianyang Zhang <zhangtianyang@loongson.cn>
+From: Vladimir Moskovkin <Vladimir.Moskovkin@kaspersky.com>
 
-commit e05741fb10c38d70bbd7ec12b23c197b6355d519 upstream.
+commit 4e89a4077490f52cde652d17e32519b666abf3a6 upstream.
 
-__alloc_pages_slowpath has no change detection for ac->nodemask in the
-part of retry path, while cpuset can modify it in parallel.  For some
-processes that set mempolicy as MPOL_BIND, this results ac->nodemask
-changes, and then the should_reclaim_retry will judge based on the latest
-nodemask and jump to retry, while the get_page_from_freelist only
-traverses the zonelist from ac->preferred_zoneref, which selected by a
-expired nodemask and may cause infinite retries in some cases
+If the 'buf' array received from the user contains an empty string, the
+'length' variable will be zero. Accessing the 'buf' array element with
+index 'length - 1' will result in a buffer overflow.
 
-cpu 64:
-__alloc_pages_slowpath {
-        /* ..... */
-retry:
-        /* ac->nodemask = 0x1, ac->preferred->zone->nid = 1 */
-        if (alloc_flags & ALLOC_KSWAPD)
-                wake_all_kswapds(order, gfp_mask, ac);
-        /* cpu 1:
-        cpuset_write_resmask
-            update_nodemask
-                update_nodemasks_hier
-                    update_tasks_nodemask
-                        mpol_rebind_task
-                         mpol_rebind_policy
-                          mpol_rebind_nodemask
-		// mempolicy->nodes has been modified,
-		// which ac->nodemask point to
+Add a check for an empty string.
 
-        */
-        /* ac->nodemask = 0x3, ac->preferred->zone->nid = 1 */
-        if (should_reclaim_retry(gfp_mask, order, ac, alloc_flags,
-                                 did_some_progress > 0, &no_progress_loops))
-                goto retry;
-}
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Simultaneously starting multiple cpuset01 from LTP can quickly reproduce
-this issue on a multi node server when the maximum memory pressure is
-reached and the swap is enabled
-
-Link: https://lkml.kernel.org/r/20250416082405.20988-1-zhangtianyang@loongson.cn
-Fixes: c33d6c06f60f ("mm, page_alloc: avoid looking up the first zone in a zonelist twice")
-Signed-off-by: Tianyang Zhang <zhangtianyang@loongson.cn>
-Reviewed-by: Suren Baghdasaryan <surenb@google.com>
-Reviewed-by: Vlastimil Babka <vbabka@suse.cz>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Brendan Jackman <jackmanb@google.com>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Zi Yan <ziy@nvidia.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: e8a60aa7404b ("platform/x86: Introduce support for Systems Management Driver over WMI for Dell Systems")
+Cc: stable@vger.kernel.org
+Signed-off-by: Vladimir Moskovkin <Vladimir.Moskovkin@kaspersky.com>
+Link: https://lore.kernel.org/r/39973642a4f24295b4a8fad9109c5b08@kaspersky.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/page_alloc.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/platform/x86/dell/dell-wmi-sysman/passobj-attributes.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/mm/page_alloc.c
-+++ b/mm/page_alloc.c
-@@ -4038,6 +4038,14 @@ restart:
- 	}
+--- a/drivers/platform/x86/dell/dell-wmi-sysman/passobj-attributes.c
++++ b/drivers/platform/x86/dell/dell-wmi-sysman/passobj-attributes.c
+@@ -45,7 +45,7 @@ static ssize_t current_password_store(st
+ 	int length;
  
- retry:
-+	/*
-+	 * Deal with possible cpuset update races or zonelist updates to avoid
-+	 * infinite retries.
-+	 */
-+	if (check_retry_cpuset(cpuset_mems_cookie, ac) ||
-+	    check_retry_zonelist(zonelist_iter_cookie))
-+		goto restart;
-+
- 	/* Ensure kswapd doesn't accidentally go to sleep as long as we loop */
- 	if (alloc_flags & ALLOC_KSWAPD)
- 		wake_all_kswapds(order, gfp_mask, ac);
+ 	length = strlen(buf);
+-	if (buf[length-1] == '\n')
++	if (length && buf[length - 1] == '\n')
+ 		length--;
+ 
+ 	/* firmware does verifiation of min/max password length,
 
 
