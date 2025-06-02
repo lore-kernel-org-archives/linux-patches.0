@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99007221D92;
-	Mon,  2 Jun 2025 14:22:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76C3B23C518;
+	Mon,  2 Jun 2025 14:22:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748874157; cv=none; b=f9hEPnj9cXf8nP93tJjOzVop+Ip5NJzCDzh+sIFVzZz7HzOAyYVGQCiIjmTZ1mzrY98N7x762dfg9JPcnAVCl0XPJS+SJsQSSD2tZ/04i0rEtQ1If1q8eSQyiaebqABbsjV5ihamhRmCJCtTEaB7WZZBRCm42aIQz1simmW0ZLY=
+	t=1748874160; cv=none; b=ZOO8M9KeHpcFa94rL3Zqig5CQJvDVSaG9l4RpLsKmBGNcV2x0xLiasmLcsRi1WbWdy0Lkp8uJiSMdtDAKLfhWnyf+xlZ1rq8scIkvsSUDDWLsCPuISysEiZw17exfa2uSwGrXeClcTQQ5pH1NefjdHm5BwUxmkQiFVCo5+LYopA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748874157; c=relaxed/simple;
-	bh=G/pfVWXN0n5gH6NOSqfr+mXc26ga0G6m1JVIStRnGbg=;
+	s=arc-20240116; t=1748874160; c=relaxed/simple;
+	bh=RYPVR28hMBlh3cnCeqxgABmamXke4NRtwz7/r8sSeuM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RugESR9B/d6cqHaExkXHJnOrVNH0bYQf7qJhUhLKs+ZwbdnbOmXiDOU5qkb+cHaeqlnd+WCR+4ZZ2y/S1ZYcJEuOQ14bFjI6GByOehd/PMVsxkG5OvnbaN14typTIlpU6h+zK25WpBbvR5nH+bqFtSKKN/Adbrhjo1en+xLs1jc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NmhTQ5N/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZEYbUGU7Rm0y8GKFt0L6s8Eh/ff5NfAqmxfv1DDQKWQBwLmM/7lUCKWTp9ouSRiy/DFZIgJRuaU36TxO299qW4inykbuYkmJnH6k0glIgAfkqJb1jJmaTgcFtSGqCb3MI9+ThXvdRf899lY3BCKXZcjJSZmJQ5M2gIEJNCIAAwM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M0xwWqJ7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NmhTQ5N/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5275C4CEEB;
-	Mon,  2 Jun 2025 14:22:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M0xwWqJ7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A9E7C4CEEB;
+	Mon,  2 Jun 2025 14:22:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748874157;
-	bh=G/pfVWXN0n5gH6NOSqfr+mXc26ga0G6m1JVIStRnGbg=;
+	s=korg; t=1748874160;
+	bh=RYPVR28hMBlh3cnCeqxgABmamXke4NRtwz7/r8sSeuM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NmhTQ5N/1J1uKVXT5/Mbi+KOiU4oO5aDbCrXU4NqwW9NW9NMmo3bV/bo/SZvxiG4U
-	 KIKyF/YNUAw0K3Fz/RaQ+rgzOEkDUlswuLCmOkZBA3KVnrlBreWW2dhXTkq80VvJnS
-	 mjdXGAeFKKGPLO40Q3dTS2QcxK9qw15uArrOG4Sc=
+	b=M0xwWqJ7a3rUKLvhVFT9mbgMNdWbx1dC84rKSjblTF3RY2ixCGdkmPc6j7ltcWhkF
+	 VbK6iVWHahhfulr76Gb6uSZwboiWyctB28Q5WrnZNLKgdR2nU2QObFnYPmrptWRV4m
+	 S2YAceA3k2ler8jtHxEGa95esBOz1kKIhmhKH4HA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Rui <rui.zhang@intel.com>,
-	zhang ning <zhangn1985@outlook.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.6 369/444] thermal: intel: x86_pkg_temp_thermal: Fix bogus trip temperature
-Date: Mon,  2 Jun 2025 15:47:13 +0200
-Message-ID: <20250602134355.896454348@linuxfoundation.org>
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Chen-Yu Tsai <wens@csie.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 378/444] Revert "arm64: dts: allwinner: h6: Use RSB for AXP805 PMIC connection"
+Date: Mon,  2 Jun 2025 15:47:22 +0200
+Message-ID: <20250602134356.255483007@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -51,39 +51,167 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Rui <rui.zhang@intel.com>
+From: Jernej Skrabec <jernej.skrabec@gmail.com>
 
-commit cf948c8e274e8b406e846cdf6cc48fe47f98cf57 upstream.
+[ Upstream commit 573f99c7585f597630f14596550c79e73ffaeef4 ]
 
-The tj_max value obtained from the Intel TCC library are in Celsius,
-whereas the thermal subsystem operates in milli-Celsius.
+This reverts commit 531fdbeedeb89bd32018a35c6e137765c9cc9e97.
 
-This discrepancy leads to incorrect trip temperature calculations.
+Hardware that uses I2C wasn't designed with high speeds in mind, so
+communication with PMIC via RSB can intermittently fail. Go back to I2C
+as higher speed and efficiency isn't worth the trouble.
 
-Fix bogus trip temperature by converting tj_max to milli-Celsius Unit.
-
-Fixes: 8ef0ca4a177d ("Merge back other thermal control material for 6.3.")
-Signed-off-by: Zhang Rui <rui.zhang@intel.com>
-Reported-by: zhang ning <zhangn1985@outlook.com>
-Closes: https://lore.kernel.org/all/TY2PR01MB3786EF0FE24353026293F5ACCD97A@TY2PR01MB3786.jpnprd01.prod.outlook.com/
-Tested-by: zhang ning <zhangn1985@outlook.com>
-Cc: 6.3+ <stable@vger.kernel.org> # 6.3+
-Link: https://patch.msgid.link/20250519070901.1031233-1-rui.zhang@intel.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 531fdbeedeb8 ("arm64: dts: allwinner: h6: Use RSB for AXP805 PMIC connection")
+Link: https://github.com/LibreELEC/LibreELEC.tv/issues/7731
+Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Link: https://patch.msgid.link/20250413135848.67283-1-jernej.skrabec@gmail.com
+Signed-off-by: Chen-Yu Tsai <wens@csie.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/intel/x86_pkg_temp_thermal.c |    1 +
- 1 file changed, 1 insertion(+)
+ .../dts/allwinner/sun50i-h6-beelink-gs1.dts   | 38 +++++++++----------
+ .../dts/allwinner/sun50i-h6-orangepi-3.dts    | 14 +++----
+ .../dts/allwinner/sun50i-h6-orangepi.dtsi     | 22 +++++------
+ 3 files changed, 37 insertions(+), 37 deletions(-)
 
---- a/drivers/thermal/intel/x86_pkg_temp_thermal.c
-+++ b/drivers/thermal/intel/x86_pkg_temp_thermal.c
-@@ -331,6 +331,7 @@ static int pkg_temp_thermal_device_add(u
- 	tj_max = intel_tcc_get_tjmax(cpu);
- 	if (tj_max < 0)
- 		return tj_max;
-+	tj_max *= 1000;
+diff --git a/arch/arm64/boot/dts/allwinner/sun50i-h6-beelink-gs1.dts b/arch/arm64/boot/dts/allwinner/sun50i-h6-beelink-gs1.dts
+index 381d58cea092d..c854c7e310519 100644
+--- a/arch/arm64/boot/dts/allwinner/sun50i-h6-beelink-gs1.dts
++++ b/arch/arm64/boot/dts/allwinner/sun50i-h6-beelink-gs1.dts
+@@ -151,28 +151,12 @@
+ 	vcc-pg-supply = <&reg_aldo1>;
+ };
  
- 	zonedev = kzalloc(sizeof(*zonedev), GFP_KERNEL);
- 	if (!zonedev)
+-&r_ir {
+-	linux,rc-map-name = "rc-beelink-gs1";
+-	status = "okay";
+-};
+-
+-&r_pio {
+-	/*
+-	 * FIXME: We can't add that supply for now since it would
+-	 * create a circular dependency between pinctrl, the regulator
+-	 * and the RSB Bus.
+-	 *
+-	 * vcc-pl-supply = <&reg_aldo1>;
+-	 */
+-	vcc-pm-supply = <&reg_aldo1>;
+-};
+-
+-&r_rsb {
++&r_i2c {
+ 	status = "okay";
+ 
+-	axp805: pmic@745 {
++	axp805: pmic@36 {
+ 		compatible = "x-powers,axp805", "x-powers,axp806";
+-		reg = <0x745>;
++		reg = <0x36>;
+ 		interrupt-parent = <&r_intc>;
+ 		interrupts = <GIC_SPI 96 IRQ_TYPE_LEVEL_LOW>;
+ 		interrupt-controller;
+@@ -290,6 +274,22 @@
+ 	};
+ };
+ 
++&r_ir {
++	linux,rc-map-name = "rc-beelink-gs1";
++	status = "okay";
++};
++
++&r_pio {
++	/*
++	 * PL0 and PL1 are used for PMIC I2C
++	 * don't enable the pl-supply else
++	 * it will fail at boot
++	 *
++	 * vcc-pl-supply = <&reg_aldo1>;
++	 */
++	vcc-pm-supply = <&reg_aldo1>;
++};
++
+ &spdif {
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&spdif_tx_pin>;
+diff --git a/arch/arm64/boot/dts/allwinner/sun50i-h6-orangepi-3.dts b/arch/arm64/boot/dts/allwinner/sun50i-h6-orangepi-3.dts
+index 6fc65e8db2206..8c476e089185b 100644
+--- a/arch/arm64/boot/dts/allwinner/sun50i-h6-orangepi-3.dts
++++ b/arch/arm64/boot/dts/allwinner/sun50i-h6-orangepi-3.dts
+@@ -175,16 +175,12 @@
+ 	vcc-pg-supply = <&reg_vcc_wifi_io>;
+ };
+ 
+-&r_ir {
+-	status = "okay";
+-};
+-
+-&r_rsb {
++&r_i2c {
+ 	status = "okay";
+ 
+-	axp805: pmic@745 {
++	axp805: pmic@36 {
+ 		compatible = "x-powers,axp805", "x-powers,axp806";
+-		reg = <0x745>;
++		reg = <0x36>;
+ 		interrupt-parent = <&r_intc>;
+ 		interrupts = <GIC_SPI 96 IRQ_TYPE_LEVEL_LOW>;
+ 		interrupt-controller;
+@@ -295,6 +291,10 @@
+ 	};
+ };
+ 
++&r_ir {
++	status = "okay";
++};
++
+ &rtc {
+ 	clocks = <&ext_osc32k>;
+ };
+diff --git a/arch/arm64/boot/dts/allwinner/sun50i-h6-orangepi.dtsi b/arch/arm64/boot/dts/allwinner/sun50i-h6-orangepi.dtsi
+index 92745128fcfeb..4ec4996592bef 100644
+--- a/arch/arm64/boot/dts/allwinner/sun50i-h6-orangepi.dtsi
++++ b/arch/arm64/boot/dts/allwinner/sun50i-h6-orangepi.dtsi
+@@ -112,20 +112,12 @@
+ 	vcc-pg-supply = <&reg_aldo1>;
+ };
+ 
+-&r_ir {
+-	status = "okay";
+-};
+-
+-&r_pio {
+-	vcc-pm-supply = <&reg_bldo3>;
+-};
+-
+-&r_rsb {
++&r_i2c {
+ 	status = "okay";
+ 
+-	axp805: pmic@745 {
++	axp805: pmic@36 {
+ 		compatible = "x-powers,axp805", "x-powers,axp806";
+-		reg = <0x745>;
++		reg = <0x36>;
+ 		interrupt-parent = <&r_intc>;
+ 		interrupts = <GIC_SPI 96 IRQ_TYPE_LEVEL_LOW>;
+ 		interrupt-controller;
+@@ -240,6 +232,14 @@
+ 	};
+ };
+ 
++&r_ir {
++	status = "okay";
++};
++
++&r_pio {
++	vcc-pm-supply = <&reg_bldo3>;
++};
++
+ &rtc {
+ 	clocks = <&ext_osc32k>;
+ };
+-- 
+2.39.5
+
 
 
