@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74476224B01;
-	Mon,  2 Jun 2025 14:23:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F2672C327E;
+	Mon,  2 Jun 2025 14:23:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748874193; cv=none; b=KONSzLLLuutCbNWrsu3MJtMffNb/R7ngiB/x1LXrM3mrWptX3GDG9WXMD9TDFbfZkqcODTRaeGystQnRnPVbe+XQJtgP6jcvo9hl+eneQdxuc/UQShqjW5Rr1djOO3vuT4dtmFGGsD7fQP/Ebfnkalh0UNAX8IVXPB31aT20Ttk=
+	t=1748874196; cv=none; b=PDzEXg+NGeQltB8GOVEw6cbPMCYhc0Fk5YFqNvuoKOITlsSEPV3JA7zhwNLRu3rlzki0i+Yc0NKGRw7W51+XzvwposRKwthhQEqbMY/XoyZMZRCkjchirde2IA+fHKHll20K+CJ0nvW+mR8LSQWNz86Xu+nGEoHI0GEOOj74TiM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748874193; c=relaxed/simple;
-	bh=eWulnOs6ADPVkpPqxwtRlZAIsQL9qec8Wna97bKTmR8=;
+	s=arc-20240116; t=1748874196; c=relaxed/simple;
+	bh=6QCWUvyTMYepH4lI+/I6ynK4ceYJrbRp1xxgyiae/YE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dWz5AYVJ1OYipS6MtOV0OCKosJWXtgi6JIz5sdB10w83sl9faKsbyNpSfChRb45bWNK2efC0a/ncGB7kho1AOC5hZBqrEETXCEhUpTW4M0+49ey+O/WrJZfcD1j7NNLYQEBw/aLlyIM3rb8ChXp+n2DCNbsho0LptTUSdAqoBaI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UAprGRBN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bRfqBplJ3Elol/4axOqr7Ro5lNWShPCefBLgu/Z1MDalvuaFbBlTvpz7rTYAT/iXnvD+Gpx0mtRIhMjQC/yLXxk8tTaUN3xFced/4hBc0qvSdNm0h2OqZ5Fii6TatM+vdv1s+nEPZO2zFhuUKTU0oUFwgaf24ZZHPp7o1HuEDsA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xmB4YVDu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UAprGRBN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76CE1C4CEEB;
-	Mon,  2 Jun 2025 14:23:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xmB4YVDu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0C3FC4CEEB;
+	Mon,  2 Jun 2025 14:23:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748874193;
-	bh=eWulnOs6ADPVkpPqxwtRlZAIsQL9qec8Wna97bKTmR8=;
+	s=korg; t=1748874196;
+	bh=6QCWUvyTMYepH4lI+/I6ynK4ceYJrbRp1xxgyiae/YE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UAprGRBNEGdItwblcT7ay3ok+PlX9QFMWq03YtjrQ5Bi6o7Qg5XEuUhh55YaTcuXS
-	 yJCcX8ZMhivIqiDN+cTRkYQGcG51WiaCh8M5xBLMOFim9KG9DJClmki01hikg2YzKT
-	 TtKDj0iMbalvesN2SzbfYqb/+a2ci42ppnduT3w8=
+	b=xmB4YVDueNx6aHdpO/u1yB+f0bBaGxThZLB99ZYyliLmP7osDP2K+iNm6btUmVUk2
+	 Sgj1PIDazYL+5vzr7H55AOOAhItPMxSawvboapleI+K6kchQE4vGKMhYv9CPl6SeoU
+	 hO0VKy5OZNJpMwjWHXAcypIKeHTLy/OzLZmiBdB0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Kunwu Chan <kunwu.chan@linux.dev>,
-	Linus Walleij <linus.walleij@linaro.org>
-Subject: [PATCH 6.6 388/444] pinctrl: tegra: Fix off by one in tegra_pinctrl_get_group()
-Date: Mon,  2 Jun 2025 15:47:32 +0200
-Message-ID: <20250602134356.655281941@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>
+Subject: [PATCH 6.6 389/444] i3c: master: svc: Fix implicit fallthrough in svc_i3c_master_ibi_work()
+Date: Mon,  2 Jun 2025 15:47:33 +0200
+Message-ID: <20250602134356.703707929@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -51,34 +50,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit 5a062c3c3b82004766bc3ece82b594d337076152 upstream.
+commit e8d2d287e26d9bd9114cf258a123a6b70812442e upstream.
 
-This should be >= pmx->soc->ngroups instead of > to avoid an out of
-bounds access.  The pmx->soc->groups[] array is allocated in
-tegra_pinctrl_probe().
+Clang warns (or errors with CONFIG_WERROR=y):
 
-Fixes: c12bfa0fee65 ("pinctrl-tegra: Restore SFSEL bit when freeing pins")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Kunwu Chan <kunwu.chan@linux.dev>
-Link: https://lore.kernel.org/82b40d9d-b437-42a9-9eb3-2328aa6877ac@stanley.mountain
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+  drivers/i3c/master/svc-i3c-master.c:596:2: error: unannotated fall-through between switch labels [-Werror,-Wimplicit-fallthrough]
+    596 |         default:
+        |         ^
+  drivers/i3c/master/svc-i3c-master.c:596:2: note: insert 'break;' to avoid fall-through
+    596 |         default:
+        |         ^
+        |         break;
+  1 error generated.
+
+Clang is a little more pedantic than GCC, which does not warn when
+falling through to a case that is just break or return. Clang's version
+is more in line with the kernel's own stance in deprecated.rst, which
+states that all switch/case blocks must end in either break,
+fallthrough, continue, goto, or return. Add the missing break to silence
+the warning.
+
+Fixes: 0430bf9bc1ac ("i3c: master: svc: Fix missing STOP for master request")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://lore.kernel.org/r/20250319-i3c-fix-clang-fallthrough-v1-1-d8e02be1ef5c@kernel.org
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pinctrl/tegra/pinctrl-tegra.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/i3c/master/svc-i3c-master.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/pinctrl/tegra/pinctrl-tegra.c
-+++ b/drivers/pinctrl/tegra/pinctrl-tegra.c
-@@ -307,7 +307,7 @@ static const struct tegra_pingroup *tegr
- {
- 	struct tegra_pmx *pmx = pinctrl_dev_get_drvdata(pctldev);
- 
--	if (group_index < 0 || group_index > pmx->soc->ngroups)
-+	if (group_index < 0 || group_index >= pmx->soc->ngroups)
- 		return NULL;
- 
- 	return &pmx->soc->groups[group_index];
+--- a/drivers/i3c/master/svc-i3c-master.c
++++ b/drivers/i3c/master/svc-i3c-master.c
+@@ -504,6 +504,7 @@ static void svc_i3c_master_ibi_work(stru
+ 		break;
+ 	case SVC_I3C_MSTATUS_IBITYPE_MASTER_REQUEST:
+ 		svc_i3c_master_emit_stop(master);
++		break;
+ 	default:
+ 		break;
+ 	}
 
 
