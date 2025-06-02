@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1048229B18;
-	Mon,  2 Jun 2025 14:39:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3739E2AE9A;
+	Mon,  2 Jun 2025 14:39:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748875190; cv=none; b=WqYj1K50i5jmMnJRD6UrkQ0ysAoKpQY+v2Da7azB5vMNh2F6Qfe51cpjU1NaK3KgMCuRioZP+GL6wzCg6LxxtE7EwxE7TJjEthJ3tDPXdWAyOyjhKbLk7kZDejOQjusY56UBiWS3UZo5YZqHJ8a/qB7OIZoXx0Vkn5ZpHUi7k30=
+	t=1748875193; cv=none; b=HbjCM1PjjNnfUZc1Y4wx2GExjI3lsMZ+sOQMf8ZaoXABwlaFLcIjROwgbsVSdCSbUCBLQJO95mRswFWK3+bx1rPKqzHBwNQGz3fy4ustXEPgroWyD5lkfFRg9OXqMA4cYB0xMYfQdb7gs2IgFxds/+w29gmnd/rBbgpVPqXisXw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748875190; c=relaxed/simple;
-	bh=ScRBQD0FuN+KdxINNlK9XmUrNHeh9lZdXz2oywGyhBk=;
+	s=arc-20240116; t=1748875193; c=relaxed/simple;
+	bh=wnkJi5WXucgkmFPxg8jnIRHKjoLI95DoefCdDUoRsmE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=TPCjSopqkzLnICSBe3m0r2OIylr0myick80TibVIhnlAgn5r1jmGPcz+xSZUZ8rmumI0uffRd4SL2lkCn2akiGOHgk0HZeKiAJVShZ8lYXtTl/GfTAUbPKRfMcisaZalHz3FZWBHIAulASQJXU6vnBuGy5VrUxgGbtrfpQkQJpA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Va5X4fbF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=hMiTVY+hRDzSmygfn9tuI1ZeLlGC5V1csNr/NvaKfZC401hIce4Fvr0iKL2Xp+U8sjiqh4oMrBfwIrr3XxNQGToANk2cvN6FY1FrE3gnDqXdIscrAyowl6Qubce0EDqV66r9ZY0oO5wwqWvilMKTON7y7gOp3pMlDrB9gK7PLC0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VruEDQFn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Va5X4fbF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1F89C4CEEB;
-	Mon,  2 Jun 2025 14:39:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VruEDQFn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F3A5C4CEEB;
+	Mon,  2 Jun 2025 14:39:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748875190;
-	bh=ScRBQD0FuN+KdxINNlK9XmUrNHeh9lZdXz2oywGyhBk=;
+	s=korg; t=1748875193;
+	bh=wnkJi5WXucgkmFPxg8jnIRHKjoLI95DoefCdDUoRsmE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Va5X4fbFd7+udK4b+gulxJup9KhFiUSdiqniTBwtwtFF6zi26VD0/HUwIVx2hRrsU
-	 2YxB0Oyu3/2FVCWpYX1YnJJwqIluHvhiLvocORi7omNiUvPJA1ul3CBbRIxTvEmPy/
-	 QNFvfjQ3qEvARZVtmdoW0Qvs9d4FsGfYJq1m8jXw=
+	b=VruEDQFnKrhMJP70808mm+rid0HcE0jjqdV5tBrgZb854leCIRDOuqmvizrLxc5Wg
+	 2aWLCd7WBdEpzy483optHpH9C5u4J7Mf5NWiNCwpx0pW+NP1nISiRYsgnJK+RK1jut
+	 Q0xwYkYAY6PcThIH8AP8t+u4bHHzU4ff8duQYUuE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gabriel Shahrouzi <gshahrouzi@gmail.com>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 5.10 056/270] staging: iio: adc: ad7816: Correct conditional logic for store mode
-Date: Mon,  2 Jun 2025 15:45:41 +0200
-Message-ID: <20250602134309.485494585@linuxfoundation.org>
+	Sergey Shtylyov <s.shtylyov@omp.ru>,
+	Rob Herring <robh@kernel.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@debian.org>
+Subject: [PATCH 5.10 030/270] of: module: add buffer overflow check in of_modalias()
+Date: Mon,  2 Jun 2025 15:45:15 +0200
+Message-ID: <20250602134308.431943747@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134307.195171844@linuxfoundation.org>
 References: <20250602134307.195171844@linuxfoundation.org>
@@ -52,43 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gabriel Shahrouzi <gshahrouzi@gmail.com>
+From: Sergey Shtylyov <s.shtylyov@omp.ru>
 
-commit 2e922956277187655ed9bedf7b5c28906e51708f upstream.
+commit cf7385cb26ac4f0ee6c7385960525ad534323252 upstream.
 
-The mode setting logic in ad7816_store_mode was reversed due to
-incorrect handling of the strcmp return value. strcmp returns 0 on
-match, so the `if (strcmp(buf, "full"))` block executed when the
-input was not "full".
+In of_modalias(), if the buffer happens to be too small even for the 1st
+snprintf() call, the len parameter will become negative and str parameter
+(if not NULL initially) will point beyond the buffer's end. Add the buffer
+overflow check after the 1st snprintf() call and fix such check after the
+strlen() call (accounting for the terminating NUL char).
 
-This resulted in "full" setting the mode to AD7816_PD (power-down) and
-other inputs setting it to AD7816_FULL.
-
-Fix this by checking it against 0 to correctly check for "full" and
-"power-down", mapping them to AD7816_FULL and AD7816_PD respectively.
-
-Fixes: 7924425db04a ("staging: iio: adc: new driver for AD7816 devices")
-Cc: stable@vger.kernel.org
-Signed-off-by: Gabriel Shahrouzi <gshahrouzi@gmail.com>
-Acked-by: Nuno Sá <nuno.sa@analog.com>
-Link: https://lore.kernel.org/stable/20250414152920.467505-1-gshahrouzi%40gmail.com
-Link: https://patch.msgid.link/20250414154050.469482-1-gshahrouzi@gmail.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Fixes: bc575064d688 ("of/device: use of_property_for_each_string to parse compatible strings")
+Signed-off-by: Sergey Shtylyov <s.shtylyov@omp.ru>
+Link: https://lore.kernel.org/r/bbfc6be0-c687-62b6-d015-5141b93f313e@omp.ru
+Signed-off-by: Rob Herring <robh@kernel.org>
+Signed-off-by: "Uwe Kleine-König" <ukleinek@debian.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/iio/adc/ad7816.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/of/device.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/drivers/staging/iio/adc/ad7816.c
-+++ b/drivers/staging/iio/adc/ad7816.c
-@@ -136,7 +136,7 @@ static ssize_t ad7816_store_mode(struct
- 	struct iio_dev *indio_dev = dev_to_iio_dev(dev);
- 	struct ad7816_chip_info *chip = iio_priv(indio_dev);
+--- a/drivers/of/device.c
++++ b/drivers/of/device.c
+@@ -231,14 +231,15 @@ static ssize_t of_device_get_modalias(st
+ 	csize = snprintf(str, len, "of:N%pOFn%c%s", dev->of_node, 'T',
+ 			 of_node_get_device_type(dev->of_node));
+ 	tsize = csize;
++	if (csize >= len)
++		csize = len > 0 ? len - 1 : 0;
+ 	len -= csize;
+-	if (str)
+-		str += csize;
++	str += csize;
  
--	if (strcmp(buf, "full")) {
-+	if (strcmp(buf, "full") == 0) {
- 		gpiod_set_value(chip->rdwr_pin, 1);
- 		chip->mode = AD7816_FULL;
- 	} else {
+ 	of_property_for_each_string(dev->of_node, "compatible", p, compat) {
+ 		csize = strlen(compat) + 1;
+ 		tsize += csize;
+-		if (csize > len)
++		if (csize >= len)
+ 			continue;
+ 
+ 		csize = snprintf(str, len, "C%s", compat);
 
 
