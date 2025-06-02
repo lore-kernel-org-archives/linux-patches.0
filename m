@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51349223DF6;
-	Mon,  2 Jun 2025 14:22:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D2112222B0;
+	Mon,  2 Jun 2025 14:22:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748874163; cv=none; b=K/raqyqxc6Y4XRz2HK3AuJlIIBOS9KKJmft5SX+Ua/Scxn/RbjBnoZn9W6ZrvN4ShZoQDzQMks+YMgljlOzM12l6nxPiVWPMHQhqmsGTVegrrvmysIzFvMIOmkriW/Qayq+9nhfXP2Vp6mS4yku/MpbWDiI2y1TjB7aHtbKJ7uY=
+	t=1748874166; cv=none; b=CYrpape5pt7NzX/moFXYB0lezE2ngcE0p9xiCWx/si1xi9zKaumXDAReE8LGhXBt7rcTIjWL1wmygzPxI/CdJkzW3IFnR5cwNhH168UEloUQH9QK9nAuihL6p2wRFxTTLYBWodlk8lyqQ+khO1M0LH1Ltry45ycMDwSP07jDH90=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748874163; c=relaxed/simple;
-	bh=W3jKQK6XwfYRSve7GU9aqYQnLIqRrIpfE0xoE7l4vUk=;
+	s=arc-20240116; t=1748874166; c=relaxed/simple;
+	bh=ZXFXQstqqS1IT4xICEXjBvZT/rwwe7hDvXycsBndjQE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NZ37SnO8ZN7ZtWAAOfXfsvSi+ZJP8uGFrI/xEf8dJmHIM+67b0imWFdH4fh965qpCHvSD8n/z/Ccrzhv/jStJ/wdILJlE3NTmmocLZT1G2fcETF4DdJLysUKWszRoKFaOGIm88rLycwXrolGMyvA1iv9GDh4t9i1Dd2xWr1n+0s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JnGDcXtM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XuaYGx2S8nDYNsVVO7e22I/1fhIe1u2TW8rjrd86QDbn0WWpSP1GMG61mU23rSfWqsuyjjouvznrZKClc9oMPvPDzW8JKYunYvdULa+d0xLtyJrFPaLOLcp268rwvR4YHQHDix4wwOUDM/4MEWkR+ZWP9WlcUHbJw3zoN9696IQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RW2yUu9t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JnGDcXtM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EDF5C4CEEE;
-	Mon,  2 Jun 2025 14:22:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RW2yUu9t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1884C4CEEB;
+	Mon,  2 Jun 2025 14:22:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748874163;
-	bh=W3jKQK6XwfYRSve7GU9aqYQnLIqRrIpfE0xoE7l4vUk=;
+	s=korg; t=1748874166;
+	bh=ZXFXQstqqS1IT4xICEXjBvZT/rwwe7hDvXycsBndjQE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JnGDcXtMOsp6EdydrGZoazzgKyK0ge/MTNnRdMdPNdFwLU7km47sKmeKMAde1I4/k
-	 VyjUVWUjEboEFLomIewUh9O1jbf0Rf7WNWpOgoKrOy4udRXBO7lc7mmWg7uFBABSL8
-	 WVA/vpPGw9FT2lKnPAOZiavhjg3OUX7eJM51iMYA=
+	b=RW2yUu9tBcDBGQbQGk1Pa+LJ7+89sixmhjULHY/gCQGRCvOXYJ2s8O/NCkGZOCR4p
+	 KnnXfNX2Tkkza2CH6Ue1o+Hdg31EaR5XDtBTe6BJNjB3vmBp12HgXTJ8MdI93uiuhs
+	 14Z5XID4wMAW8JLmBEeX+qvKjbWhRCUodxCkXE1o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Xulin Sun <xulin.sun@windriver.com>,
+	Larisa Grigore <larisa.grigore@nxp.com>,
+	James Clark <james.clark@linaro.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 379/444] ksmbd: fix stream write failure
-Date: Mon,  2 Jun 2025 15:47:23 +0200
-Message-ID: <20250602134356.298053079@linuxfoundation.org>
+Subject: [PATCH 6.6 380/444] spi: spi-fsl-dspi: restrict register range for regmap access
+Date: Mon,  2 Jun 2025 15:47:24 +0200
+Message-ID: <20250602134356.336729292@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -51,58 +53,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Larisa Grigore <larisa.grigore@nxp.com>
 
-[ Upstream commit 1f4bbedd4e5a69b01cde2cc21d01151ab2d0884f ]
+[ Upstream commit 283ae0c65e9c592f4a1ba4f31917f5e766da7f31 ]
 
-If there is no stream data in file, v_len is zero.
-So, If position(*pos) is zero, stream write will fail
-due to stream write position validation check.
-This patch reorganize stream write position validation.
+DSPI registers are NOT continuous, some registers are reserved and
+accessing them from userspace will trigger external abort, add regmap
+register access table to avoid below abort.
 
-Fixes: 0ca6df4f40cf ("ksmbd: prevent out-of-bounds stream writes by validating *pos")
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+  For example on S32G:
+
+  # cat /sys/kernel/debug/regmap/401d8000.spi/registers
+
+  Internal error: synchronous external abort: 96000210 1 PREEMPT SMP
+  ...
+  Call trace:
+  regmap_mmio_read32le+0x24/0x48
+  regmap_mmio_read+0x48/0x70
+  _regmap_bus_reg_read+0x38/0x48
+  _regmap_read+0x68/0x1b0
+  regmap_read+0x50/0x78
+  regmap_read_debugfs+0x120/0x338
+
+Fixes: 1acbdeb92c87 ("spi/fsl-dspi: Convert to use regmap and add big-endian support")
+Co-developed-by: Xulin Sun <xulin.sun@windriver.com>
+Signed-off-by: Xulin Sun <xulin.sun@windriver.com>
+Signed-off-by: Larisa Grigore <larisa.grigore@nxp.com>
+Signed-off-by: James Clark <james.clark@linaro.org>
+Link: https://patch.msgid.link/20250522-james-nxp-spi-v2-1-bea884630cfb@linaro.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/vfs.c | 14 ++++++--------
- 1 file changed, 6 insertions(+), 8 deletions(-)
+ drivers/spi/spi-fsl-dspi.c | 20 +++++++++++++++++++-
+ 1 file changed, 19 insertions(+), 1 deletion(-)
 
-diff --git a/fs/smb/server/vfs.c b/fs/smb/server/vfs.c
-index f6616d687365a..3bbf238270605 100644
---- a/fs/smb/server/vfs.c
-+++ b/fs/smb/server/vfs.c
-@@ -426,10 +426,15 @@ static int ksmbd_vfs_stream_write(struct ksmbd_file *fp, char *buf, loff_t *pos,
- 	ksmbd_debug(VFS, "write stream data pos : %llu, count : %zd\n",
- 		    *pos, count);
+diff --git a/drivers/spi/spi-fsl-dspi.c b/drivers/spi/spi-fsl-dspi.c
+index bcb0de864d34d..28682aa751efc 100644
+--- a/drivers/spi/spi-fsl-dspi.c
++++ b/drivers/spi/spi-fsl-dspi.c
+@@ -1,7 +1,7 @@
+ // SPDX-License-Identifier: GPL-2.0+
+ //
+ // Copyright 2013 Freescale Semiconductor, Inc.
+-// Copyright 2020 NXP
++// Copyright 2020-2025 NXP
+ //
+ // Freescale DSPI driver
+ // This file contains a driver for the Freescale DSPI
+@@ -1163,6 +1163,20 @@ static int dspi_resume(struct device *dev)
  
-+	if (*pos >= XATTR_SIZE_MAX) {
-+		pr_err("stream write position %lld is out of bounds\n",	*pos);
-+		return -EINVAL;
-+	}
+ static SIMPLE_DEV_PM_OPS(dspi_pm, dspi_suspend, dspi_resume);
+ 
++static const struct regmap_range dspi_yes_ranges[] = {
++	regmap_reg_range(SPI_MCR, SPI_MCR),
++	regmap_reg_range(SPI_TCR, SPI_CTAR(3)),
++	regmap_reg_range(SPI_SR, SPI_TXFR3),
++	regmap_reg_range(SPI_RXFR0, SPI_RXFR3),
++	regmap_reg_range(SPI_CTARE(0), SPI_CTARE(3)),
++	regmap_reg_range(SPI_SREX, SPI_SREX),
++};
 +
- 	size = *pos + count;
- 	if (size > XATTR_SIZE_MAX) {
- 		size = XATTR_SIZE_MAX;
--		count = (*pos + count) - XATTR_SIZE_MAX;
-+		count = XATTR_SIZE_MAX - *pos;
- 	}
++static const struct regmap_access_table dspi_access_table = {
++	.yes_ranges	= dspi_yes_ranges,
++	.n_yes_ranges	= ARRAY_SIZE(dspi_yes_ranges),
++};
++
+ static const struct regmap_range dspi_volatile_ranges[] = {
+ 	regmap_reg_range(SPI_MCR, SPI_TCR),
+ 	regmap_reg_range(SPI_SR, SPI_SR),
+@@ -1180,6 +1194,8 @@ static const struct regmap_config dspi_regmap_config = {
+ 	.reg_stride	= 4,
+ 	.max_register	= 0x88,
+ 	.volatile_table	= &dspi_volatile_table,
++	.rd_table	= &dspi_access_table,
++	.wr_table	= &dspi_access_table,
+ };
  
- 	v_len = ksmbd_vfs_getcasexattr(idmap,
-@@ -443,13 +448,6 @@ static int ksmbd_vfs_stream_write(struct ksmbd_file *fp, char *buf, loff_t *pos,
- 		goto out;
- 	}
- 
--	if (v_len <= *pos) {
--		pr_err("stream write position %lld is out of bounds (stream length: %zd)\n",
--				*pos, v_len);
--		err = -EINVAL;
--		goto out;
--	}
--
- 	if (v_len < size) {
- 		wbuf = kvzalloc(size, GFP_KERNEL);
- 		if (!wbuf) {
+ static const struct regmap_range dspi_xspi_volatile_ranges[] = {
+@@ -1201,6 +1217,8 @@ static const struct regmap_config dspi_xspi_regmap_config[] = {
+ 		.reg_stride	= 4,
+ 		.max_register	= 0x13c,
+ 		.volatile_table	= &dspi_xspi_volatile_table,
++		.rd_table	= &dspi_access_table,
++		.wr_table	= &dspi_access_table,
+ 	},
+ 	{
+ 		.name		= "pushr",
 -- 
 2.39.5
 
