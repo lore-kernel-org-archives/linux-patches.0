@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEAC4221D92;
-	Mon,  2 Jun 2025 14:02:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BBC7223DCD;
+	Mon,  2 Jun 2025 14:02:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748872935; cv=none; b=V+QyMM/fB+CXcZvlqY74tT5iofkDr9NHtpKjjWsA24lWmZkNveFYQIWDLRFDj5fCOvo2Bs6rec6rXnLfGXWleBCXr0sHIZpxhVbwOE42mdfpgHj40cICJo9WL2ONSJBSfFXovM0RvEWcFEgD4kuwWEdLOBpSJ2NkPmX/Pcvk7aI=
+	t=1748872938; cv=none; b=mo4B3gBmt62po4spLt6r1m9E2H+K93QmXZRyGTpZDwca7c7HWKyFRWdhffiuBT0K9VPCdfHcacTGCwwp0mcXL3WK3UQFZuWiHWJoXak/ZQKKlJhiBAZ9SigQAlFO0cZniQfHhMlKUfoA6B4joIZd5Ky1pRZEHk9jycaZWEbDv/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748872935; c=relaxed/simple;
-	bh=cMxwA7LVfv7cuW4Jcg7pd0yGKvSlioL45gSjc5HJAK0=;
+	s=arc-20240116; t=1748872938; c=relaxed/simple;
+	bh=9Gn6K/4/YaFpK3abtoa3PMvOlZ7KKL1XU/9iDlBw2YM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=unDFZ+tBG4Oj1P/xrlLDHiIlWZFTMnkhGaia1aTfYDGVC3JopLuVFluPqa9G91WfueXuGiu7dtEfNQ6fmXZZ+loLCatK9Sve5AazcoH/AlmLXfldpVFYUQ+d+1pRGhqKmTiDKGQ32UI2Uzf2/qmJwX6p6UDoWVRpUHJzU1mUlcQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Oq9V7XPx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RD1lpFadje7hDGOzYwIczF3X2+dg/ywixIGduI1nfl0G8iNfae0qFU7Xmhg+sXSWRNen+vHQ8yBXJo3dyirK8xXKNj37hn1Uf/szwQkQJ/BQz1lx9vddjSqSpi0vuMYRfj55d7F/4JdDQxRE1dE/aAF0xnuEIec5HS4EUDvT0z8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LgivJZMf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Oq9V7XPx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CF86C4CEEB;
-	Mon,  2 Jun 2025 14:02:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LgivJZMf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0B39C4CEEB;
+	Mon,  2 Jun 2025 14:02:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748872934;
-	bh=cMxwA7LVfv7cuW4Jcg7pd0yGKvSlioL45gSjc5HJAK0=;
+	s=korg; t=1748872938;
+	bh=9Gn6K/4/YaFpK3abtoa3PMvOlZ7KKL1XU/9iDlBw2YM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Oq9V7XPx4p2DPmT5bA+cMb3IfbFW2hPAg5qqleq6fEnlnWHyoAOm8mS0JulVtRArq
-	 Z6W9rs5ukidrY8TyoeanerbtgvC14J3QGUDfRF3EJOTS/EPvXqc/JJ5RHlf5wViDS9
-	 pw+yM8H8dED2fcklGq+krJI0zZyzr8rgqaknHetI=
+	b=LgivJZMfW2k2+8md+4raG/9rvH00pDdDKhEoHRl0jcC1YPMhqk8jhOSoSNiRsCc4E
+	 KCXS1gu/GsYkd+WBpilh5FSnZaSUTQiod8uSDZ5Ocf3EM0Zac8YWDHLJ7arL8wRBe2
+	 qb0t6LHrDdJXNSOddv84mFZTX6+VqR1wliIn87+E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hal Feng <hal.feng@starfivetech.com>,
+	Algea Cao <algea.cao@rock-chips.com>,
+	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 43/55] phy: starfive: jh7110-usb: Fix USB 2.0 host occasional detection failure
-Date: Mon,  2 Jun 2025 15:48:00 +0200
-Message-ID: <20250602134239.977516386@linuxfoundation.org>
+Subject: [PATCH 6.12 44/55] phy: phy-rockchip-samsung-hdptx: Fix PHY PLL output 50.25MHz error
+Date: Mon,  2 Jun 2025 15:48:01 +0200
+Message-ID: <20250602134240.016984871@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134238.271281478@linuxfoundation.org>
 References: <20250602134238.271281478@linuxfoundation.org>
@@ -51,54 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hal Feng <hal.feng@starfivetech.com>
+From: Algea Cao <algea.cao@rock-chips.com>
 
-[ Upstream commit 3f097adb9b6c804636bcf8d01e0e7bc037bee0d3 ]
+[ Upstream commit f9475055b11c0c70979bd1667a76b2ebae638eb7 ]
 
-JH7110 USB 2.0 host fails to detect USB 2.0 devices occasionally. With a
-long time of debugging and testing, we found that setting Rx clock gating
-control signal to normal power consumption mode can solve this problem.
+When using HDMI PLL frequency division coefficient at 50.25MHz
+that is calculated by rk_hdptx_phy_clk_pll_calc(), it fails to
+get PHY LANE lock. Although the calculated values are within the
+allowable range of PHY PLL configuration.
 
-Signed-off-by: Hal Feng <hal.feng@starfivetech.com>
-Link: https://lore.kernel.org/r/20250422101244.51686-1-hal.feng@starfivetech.com
+In order to fix the PHY LANE lock error and provide the expected
+50.25MHz output, manually compute the required PHY PLL frequency
+division coefficient and add it to ropll_tmds_cfg configuration
+table.
+
+Signed-off-by: Algea Cao <algea.cao@rock-chips.com>
+Reviewed-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+Acked-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://lore.kernel.org/r/20250427095124.3354439-1-algea.cao@rock-chips.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/starfive/phy-jh7110-usb.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/phy/rockchip/phy-rockchip-samsung-hdptx.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/phy/starfive/phy-jh7110-usb.c b/drivers/phy/starfive/phy-jh7110-usb.c
-index cb5454fbe2c8f..b505d89860b43 100644
---- a/drivers/phy/starfive/phy-jh7110-usb.c
-+++ b/drivers/phy/starfive/phy-jh7110-usb.c
-@@ -18,6 +18,8 @@
- #include <linux/usb/of.h>
- 
- #define USB_125M_CLK_RATE		125000000
-+#define USB_CLK_MODE_OFF		0x0
-+#define USB_CLK_MODE_RX_NORMAL_PWR	BIT(1)
- #define USB_LS_KEEPALIVE_OFF		0x4
- #define USB_LS_KEEPALIVE_ENABLE		BIT(4)
- 
-@@ -78,6 +80,7 @@ static int jh7110_usb2_phy_init(struct phy *_phy)
- {
- 	struct jh7110_usb2_phy *phy = phy_get_drvdata(_phy);
- 	int ret;
-+	unsigned int val;
- 
- 	ret = clk_set_rate(phy->usb_125m_clk, USB_125M_CLK_RATE);
- 	if (ret)
-@@ -87,6 +90,10 @@ static int jh7110_usb2_phy_init(struct phy *_phy)
- 	if (ret)
- 		return ret;
- 
-+	val = readl(phy->regs + USB_CLK_MODE_OFF);
-+	val |= USB_CLK_MODE_RX_NORMAL_PWR;
-+	writel(val, phy->regs + USB_CLK_MODE_OFF);
-+
- 	return 0;
- }
- 
+diff --git a/drivers/phy/rockchip/phy-rockchip-samsung-hdptx.c b/drivers/phy/rockchip/phy-rockchip-samsung-hdptx.c
+index dc6e01dff5c74..9b99fdd43f5f5 100644
+--- a/drivers/phy/rockchip/phy-rockchip-samsung-hdptx.c
++++ b/drivers/phy/rockchip/phy-rockchip-samsung-hdptx.c
+@@ -328,6 +328,8 @@ static const struct ropll_config ropll_tmds_cfg[] = {
+ 	  1, 1, 0, 0x20, 0x0c, 1, 0x0e, 0, 0, },
+ 	{ 650000, 162, 162, 1, 1, 11, 1, 1, 1, 1, 1, 1, 1, 54, 0, 16, 4, 1,
+ 	  1, 1, 0, 0x20, 0x0c, 1, 0x0e, 0, 0, },
++	{ 502500, 84, 84, 1, 1, 7, 1, 1, 1, 1, 1, 1, 1, 11, 1, 4, 5,
++	  4, 11, 1, 0, 0x20, 0x0c, 1, 0x0e, 0, 0, },
+ 	{ 337500, 0x70, 0x70, 1, 1, 0xf, 1, 1, 1, 1, 1, 1, 1, 0x2, 0, 0x01, 5,
+ 	  1, 1, 1, 0, 0x20, 0x0c, 1, 0x0e, 0, 0, },
+ 	{ 400000, 100, 100, 1, 1, 11, 1, 1, 0, 1, 0, 1, 1, 0x9, 0, 0x05, 0,
 -- 
 2.39.5
 
