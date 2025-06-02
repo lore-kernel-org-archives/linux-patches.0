@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AE3C221FB1;
-	Mon,  2 Jun 2025 14:06:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ED6F1FBC8C;
+	Mon,  2 Jun 2025 14:06:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748873188; cv=none; b=Qmqcfpy1Rkw399ZaD7CbelI9wXYCa4CTpnEM2wEtbq1kHNUl20TxpiVQoq/QynME6X5pWGb9wK1gAJNYJ4jzZdF/PgVKWwlBa/sRXu/frxv2wwFjVUkH52PbpQRz/cXlItaSiDxwf9ve2QgxNINQ8cVFtb1aGUG/zjokUQky5T8=
+	t=1748873191; cv=none; b=fNMhWCPiKwVhrpux+pyDp+yxtTSgUEoTPeIO/JmEvbL+ij0+mkvqZkSyDtJt/ZgtyQ2ap0e+XSoIFj0Ah72a8Kc3k4TLGsGBkoS9LymmQ1jmGu52s1N+ocR+huEw5gFM/qkb7mH0sRkxyYK64On4RR+efhswBF2rmiaeZAZs7tY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748873188; c=relaxed/simple;
-	bh=ARGIhm6+xjo4p4FMUSYamEM88Z3RqXVEBpyFskLxuh4=;
+	s=arc-20240116; t=1748873191; c=relaxed/simple;
+	bh=vY/Qeax+H4vchTi5bMoMdR4F8EOKBeV9NJfwwMczh4s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PGWPadQUg1bCAMWURIh5VvJlMyuH5e2K+NCQXYnlTMoIND7IGIIYsbkTCQvC7Gh+cOCUEfZt4VV/YSmBX5hxYJrLhG5HNP/E4K4JiSDrsAMyLWK4GeGXLxu0nfGH18/t7I1MjizK4Rn6Alr/O15/W1u/T2fdIqCY2kb/siMJjtU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QPaQolpQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y1xQN+hL1GSs9Hkeqnttir5+NxI2csK0Ttd8fphDNsnV+IDypHniGSFvRIloKN3W8eDCwQgXo3YUnCrSnplEswDZmb0ga9lEEFcR9mzjSdDBta0c5aRdl3eozaHu31NAma7vmDVYUqwzsrFH3IP+uxw7H+4oFyhEE7ooaD2wK+M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z0CeRZPQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QPaQolpQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0852BC4CEEB;
-	Mon,  2 Jun 2025 14:06:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z0CeRZPQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD023C4CEEB;
+	Mon,  2 Jun 2025 14:06:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748873188;
-	bh=ARGIhm6+xjo4p4FMUSYamEM88Z3RqXVEBpyFskLxuh4=;
+	s=korg; t=1748873191;
+	bh=vY/Qeax+H4vchTi5bMoMdR4F8EOKBeV9NJfwwMczh4s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QPaQolpQDUXbj+iSfYr7Soyxe1TaW3qVNJ3F9ODbH+29RCgDr4w6VuJ59IiE3nKXK
-	 vUtYs8Hhi+X88hBSma5ZZ+q8a7382cUWNrsJ51jr8lH+TtN6O2vpkVEqWHjJ3T/Qc9
-	 Pc/MZa56+tqHZ02J9rTh1X2H/skj2eLPdhsxMLdY=
+	b=z0CeRZPQHgOzkONhsXlNV4Y2dLEQiLRv7kg+hyx1/3rtQoUFLj2/23bIcR6I45/Ye
+	 IrdVvSi3QvDjpKfemZ270SjQXKoCf7OlHlVNsiE7rzqZvVYYaVa7jHSPQaN0izMJ1w
+	 /dmrAdhCgmaN8iicTUoCiUhmHjfBA5vu8KcM/GdM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Roger=20Pau=20Monn=C3=A9?= <roger.pau@citrix.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Juergen Gross <jgross@suse.com>,
+	Nicolas Bretz <bretznic@gmail.com>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 065/444] PCI: vmd: Disable MSI remapping bypass under Xen
-Date: Mon,  2 Jun 2025 15:42:09 +0200
-Message-ID: <20250602134343.558212515@linuxfoundation.org>
+Subject: [PATCH 6.6 066/444] ext4: on a remount, only log the ro or r/w state when it has changed
+Date: Mon,  2 Jun 2025 15:42:10 +0200
+Message-ID: <20250602134343.597831169@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250602134340.906731340@linuxfoundation.org>
 References: <20250602134340.906731340@linuxfoundation.org>
@@ -46,80 +45,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Roger Pau Monne <roger.pau@citrix.com>
+From: Nicolas Bretz <bretznic@gmail.com>
 
-[ Upstream commit 6c4d5aadf5df31ea0ac025980670eee9beaf466b ]
+[ Upstream commit d7b0befd09320e3356a75cb96541c030515e7f5f ]
 
-MSI remapping bypass (directly configuring MSI entries for devices on the
-VMD bus) won't work under Xen, as Xen is not aware of devices in such bus,
-and hence cannot configure the entries using the pIRQ interface in the PV
-case, and in the PVH case traps won't be setup for MSI entries for such
-devices.
+A user complained that a message such as:
 
-Until Xen is aware of devices in the VMD bus prevent the
-VMD_FEAT_CAN_BYPASS_MSI_REMAP capability from being used when running as
-any kind of Xen guest.
+EXT4-fs (nvme0n1p3): re-mounted UUID ro. Quota mode: none.
 
-The MSI remapping bypass is an optional feature of VMD bridges, and hence
-when running under Xen it will be masked and devices will be forced to
-redirect its interrupts from the VMD bridge.  That mode of operation must
-always be supported by VMD bridges and works when Xen is not aware of
-devices behind the VMD bridge.
+implied that the file system was previously mounted read/write and was
+now remounted read-only, when it could have been some other mount
+state that had changed by the "mount -o remount" operation.  Fix this
+by only logging "ro"or "r/w" when it has changed.
 
-Signed-off-by: Roger Pau Monné <roger.pau@citrix.com>
-Acked-by: Bjorn Helgaas <bhelgaas@google.com>
-Message-ID: <20250219092059.90850-3-roger.pau@citrix.com>
-Signed-off-by: Juergen Gross <jgross@suse.com>
+https://bugzilla.kernel.org/show_bug.cgi?id=219132
+
+Signed-off-by: Nicolas Bretz <bretznic@gmail.com>
+Link: https://patch.msgid.link/20250319171011.8372-1-bretznic@gmail.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/vmd.c | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ fs/ext4/super.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/pci/controller/vmd.c b/drivers/pci/controller/vmd.c
-index dfa222e02c4da..ad82feff0405e 100644
---- a/drivers/pci/controller/vmd.c
-+++ b/drivers/pci/controller/vmd.c
-@@ -17,6 +17,8 @@
- #include <linux/rculist.h>
- #include <linux/rcupdate.h>
+diff --git a/fs/ext4/super.c b/fs/ext4/super.c
+index 751c879271e05..3dcaf06ada364 100644
+--- a/fs/ext4/super.c
++++ b/fs/ext4/super.c
+@@ -6771,6 +6771,7 @@ static int ext4_reconfigure(struct fs_context *fc)
+ {
+ 	struct super_block *sb = fc->root->d_sb;
+ 	int ret;
++	bool old_ro = sb_rdonly(sb);
  
-+#include <xen/xen.h>
-+
- #include <asm/irqdomain.h>
+ 	fc->s_fs_info = EXT4_SB(sb);
  
- #define VMD_CFGBAR	0
-@@ -981,6 +983,24 @@ static int vmd_probe(struct pci_dev *dev, const struct pci_device_id *id)
- 	struct vmd_dev *vmd;
- 	int err;
+@@ -6782,9 +6783,9 @@ static int ext4_reconfigure(struct fs_context *fc)
+ 	if (ret < 0)
+ 		return ret;
  
-+	if (xen_domain()) {
-+		/*
-+		 * Xen doesn't have knowledge about devices in the VMD bus
-+		 * because the config space of devices behind the VMD bridge is
-+		 * not known to Xen, and hence Xen cannot discover or configure
-+		 * them in any way.
-+		 *
-+		 * Bypass of MSI remapping won't work in that case as direct
-+		 * write by Linux to the MSI entries won't result in functional
-+		 * interrupts, as Xen is the entity that manages the host
-+		 * interrupt controller and must configure interrupts.  However
-+		 * multiplexing of interrupts by the VMD bridge will work under
-+		 * Xen, so force the usage of that mode which must always be
-+		 * supported by VMD bridges.
-+		 */
-+		features &= ~VMD_FEAT_CAN_BYPASS_MSI_REMAP;
-+	}
-+
- 	if (resource_size(&dev->resource[VMD_CFGBAR]) < (1 << 20))
- 		return -ENOMEM;
+-	ext4_msg(sb, KERN_INFO, "re-mounted %pU %s. Quota mode: %s.",
+-		 &sb->s_uuid, sb_rdonly(sb) ? "ro" : "r/w",
+-		 ext4_quota_mode(sb));
++	ext4_msg(sb, KERN_INFO, "re-mounted %pU%s.",
++		 &sb->s_uuid,
++		 (old_ro != sb_rdonly(sb)) ? (sb_rdonly(sb) ? " ro" : " r/w") : "");
  
+ 	return 0;
+ }
 -- 
 2.39.5
 
