@@ -1,139 +1,184 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from NAM10-DM6-obe.outbound.protection.outlook.com (mail-dm6nam10on2057.outbound.protection.outlook.com [40.107.93.57])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58A3D38B
-	for <patches@lists.linux.dev>; Tue,  3 Jun 2025 12:18:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748953119; cv=none; b=KN5mF091rLsdrzTSIRYMs+JSMjYP/bdBBYaabqGCrmnInrJOUVWa5y22K8+OOzUSlYBgr4PH9mGpjIQAypjQke4WNFlh9AykO0ppbgnD8z1cRgs8mMEnQANwQ99iraFCEF8HHzU835nUJsQibVFSAJzPk6fycmUg+nG+TX1V1Gg=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748953119; c=relaxed/simple;
-	bh=hRBfjkyXDEB8n6PRaJohwZBVd9S/I2B0A30GC3UZkSU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ODBcf55PRk1JefZr+q7sFCPZz0sy3I9WDbbxReQhIjqFYyMbsMuDv8UF96aP8YeR2KYhsox14+7wsGWKKQj7FpFGb/ZtDnEmH5YLCGtlDStj14Ji9eOdI1tsZiNODn+4hSbQUKNKX9FWnKJnIDjoEcxyV8T7JIH0jU0mtDYJZ6E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=T0Sfa3Ri; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D262230981;
+	Tue,  3 Jun 2025 12:24:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.93.57
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1748953449; cv=fail; b=msdc54ptenGwIWB9+v3V2sItVGRA8LJfiecoi+mrQOsKcohKRvIpXUjWC93P2LWcROjSzKuRtupuNypoEC2fcUYUfEnDp5uWhFHQwO82eXBSrkjBZQb91boDuIwv5OAyJ/mWNLNMap0Jtou8Gd2P4Uj6e7z5ouuETKfLHg+zx1Q=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1748953449; c=relaxed/simple;
+	bh=8FMTDtq5V4VIditLuI5YCpka6OZnU6Q4XWl677z9w3M=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=TZ/MVe/RbCc6PQCof9tFPGnIKEvZJNDxoWIjpTJ194Qx4UN7CXmDb0BRtMAmiVYdzL+IVCONPtBXpD7oI6lNHqQIJVq752iEBB1ZFMRCWuO3Z8ebwpT6qwzSR8ZHggQ/EfAaV2NtBMki5CVrS7M8JJzp8/LJ5oUA0oo9E6tbj20=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=otZYgved; arc=fail smtp.client-ip=40.107.93.57
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="T0Sfa3Ri"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1748953116;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=ffXIBf29sZb1K6xWm0mL1At/DHNtjLOFFnwn7PxkVT4=;
-	b=T0Sfa3Rie7IzQAXADlI4KSBp39IWb7EJilsQEEdHfLmjWva5YYa9hDotGPe+bI3wHjCdvI
-	z1HHWvcpGNfHoYtmiJfdtMGsDGMkVSd0Iy5vaoRNleA332CLXsHJ36v1FGB0QVwV0+8bW/
-	bOsee/vqL1GdZQu0SWMNTnvTLgTP+Uk=
-Received: from mail-oo1-f72.google.com (mail-oo1-f72.google.com
- [209.85.161.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-500-YaIvaHeuNWS8nwtYlavPag-1; Tue, 03 Jun 2025 08:18:35 -0400
-X-MC-Unique: YaIvaHeuNWS8nwtYlavPag-1
-X-Mimecast-MFC-AGG-ID: YaIvaHeuNWS8nwtYlavPag_1748953114
-Received: by mail-oo1-f72.google.com with SMTP id 006d021491bc7-605f8bca0e3so4473167eaf.3
-        for <patches@lists.linux.dev>; Tue, 03 Jun 2025 05:18:35 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748953114; x=1749557914;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ffXIBf29sZb1K6xWm0mL1At/DHNtjLOFFnwn7PxkVT4=;
-        b=iSmaGazs81sI77wemYccp2W0lh0u+ZCOmTLFUqPrKQ+Gb/WRhSHce1Yv+KpDuW1O4t
-         Ir3nzewMSaZ70KsEWVxsZsJbFkWHAoMLRmgNNCAQz9XKEClSklh2tffBMe9B733hqsta
-         1jVsHg3qLKPlzl9TJYbjUczgq9nDjhU9QhMMm1KqNPyvUWx3mhnZ1jdN6xQnBtfw0cgQ
-         70WgjU4x4i40m2OFjErGvT3GiXohwOmfdzSkLeu2NxrwjMoet3q+2Wl4wWGkyEaVoxvP
-         2N45Vlj7zDEc6D+WY2suhaQRvrXQ3PGQXM67VWunqc4xt5Kb25U1c2nBPeCouYEDVKx0
-         0Vcg==
-X-Forwarded-Encrypted: i=1; AJvYcCXVYhh5hdhHWhSQUQ2SAsLAoLhQe1NxJZ45AI6fC3U9x1DFQszpeHKfnajBzt+6BSU1yBnilin/@lists.linux.dev
-X-Gm-Message-State: AOJu0YwTBglLCVwxkYZm6JcsqyWa4B22z4KK3mxGGn/niVtOtWqCmPgN
-	hrN82wzOheQmLpy3+8grfCAKarNHkoAfU+5e03wwjTFShamozQvh6qDSzs9PYEch+jH2/GK2azU
-	WT1hhPgVlTOtohQo3yqGE1cSnG20vwexQc5qJtTiEgAMZpyCg2f2W0mJj/+5CWdShsdRA4f7I38
-	ocosJO+yf5yixgN9SxZ1M5bNZGAaHxUfCMvO2blkxgYLW2
-X-Gm-Gg: ASbGncueSkpL5luPH+pqDUl24Fo2bxXIHrN20Bye0UlfQ0rXu7GpDvn7kmMQcPHHcVp
-	rKh0PG9YCzzRV2UehEn8+PLi9bgcYT+LHNPWAlmUeWZidqcEwP/lIV5J4moGn2PA61942ysoclB
-	JbtA==
-X-Received: by 2002:a05:6820:a02:b0:60b:d676:b666 with SMTP id 006d021491bc7-60db9ea6bf9mr7320165eaf.5.1748953114239;
-        Tue, 03 Jun 2025 05:18:34 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE8KvDsdDkgI+1PNoaL+B3Q6bgNuhvgw/iB+KFAL38XMwrBiuIXT9ZI7YntDi9tKBM5UX0PsshNsCF2QikhX9s=
-X-Received: by 2002:a05:690c:6e01:b0:70e:1ef7:6eff with SMTP id
- 00721157ae682-71097c2a91amr162686157b3.3.1748953103596; Tue, 03 Jun 2025
- 05:18:23 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="otZYgved"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=P4TEpMSlQaZQRUwxGW0He2fx+5Z1sCntQy9xHzlU5kTJQsDCx/TCsSCodWIAApdeIMSaefgYg1of9Gx1MdmGi9J+nledFeShMvdgweoSDTlh4pUgMmGWbsDzvlDJ9S/ds4fNz7euBshVzrfvORiX7Rwers6GKI6d2EOX/lqqEC3O/iV7UCdfKUqZtnvgCLDtPaWBpu11fZcfV5w3DVANkU2yshO6q1EFscaDcYd2duUT6ITAgaZORgGwx3Ln5eIcYTaJFilm/7PWuNy9/gvQbVO/5ng17sKUe3rDbilKXgvGZZXCNPvhM1vqcl/Z6hUy44q53m5NFEqCMN0a3EZKfQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=U7zl0rMrU+FPJ50bHE1pnO6w1R6firHoFui/VsYxgS8=;
+ b=DGvyQYS+xado3KYU+2BopqezdXeM725Ni9C10R4hqtKE1dti8PJPf8vbOQJbwRLtO3fKrNGYcpTzRmbfHJn+HsYPvcTcxqivCN41ZdIWoUOqZH30VpLrsshKQ3XTsVc9R6FZvmGztA26y4mKuYuJmhv+0W9qIZa+SoSOO25cAXEKzcw3cWtkq7SEtT1PXPNgTFTNs1YuZhQyeoPsaRIsfNwJMEbIOkNOr6WeTZQ0G47hnknA382mtEXHh/y7e2/mew0joVH6wmmSMd75Yi5WrTePizBgUnppQClRWfafK9SHJIdYGbtOYKVTn75zWOGa3EatEQ7yiIocacru4ry1KQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=U7zl0rMrU+FPJ50bHE1pnO6w1R6firHoFui/VsYxgS8=;
+ b=otZYgveduFuUbe1yNRHOhawydy+ok2ZLkXp7yblo05WoDvr49HwL2ktPwwLksM1S5qa73D6kq1/HT/LD9KvZoND8AAo6tx/VggaJ1ecD8w5DMCvY6LMo87WGnITXLDCHII/RjdIhWFnSvWp9CwmHNnsrXdmvzNjKAIrE9WQrzMpBOxL/GBuCN18lSIQzfCLoPy0jTi0vrfPwPygjdAxf/RoY/ce3ILPuTt0LGT7yzdCHAgLeGrmHuLT046fJI7WJ5O+/j+Sx3eCTpAxOCKeIFxQ5GgLyODMRt1TzIHQ/KKHHbhnbcOlwAGaVHNv9zwkpiWziGnv+P/LxV1WKSweCJQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from CH3PR12MB8659.namprd12.prod.outlook.com (2603:10b6:610:17c::13)
+ by DS4PR12MB9611.namprd12.prod.outlook.com (2603:10b6:8:277::6) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8769.37; Tue, 3 Jun
+ 2025 12:24:05 +0000
+Received: from CH3PR12MB8659.namprd12.prod.outlook.com
+ ([fe80::6eb6:7d37:7b4b:1732]) by CH3PR12MB8659.namprd12.prod.outlook.com
+ ([fe80::6eb6:7d37:7b4b:1732%6]) with mapi id 15.20.8792.034; Tue, 3 Jun 2025
+ 12:24:04 +0000
+Date: Tue, 3 Jun 2025 09:24:03 -0300
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: Nicolin Chen <nicolinc@nvidia.com>
+Cc: kevin.tian@intel.com, corbet@lwn.net, will@kernel.org,
+	bagasdotme@gmail.com, robin.murphy@arm.com, joro@8bytes.org,
+	thierry.reding@gmail.com, vdumpa@nvidia.com, jonathanh@nvidia.com,
+	shuah@kernel.org, jsnitsel@redhat.com, nathan@kernel.org,
+	peterz@infradead.org, yi.l.liu@intel.com, mshavit@google.com,
+	praan@google.com, zhangzekun11@huawei.com, iommu@lists.linux.dev,
+	linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, linux-tegra@vger.kernel.org,
+	linux-kselftest@vger.kernel.org, patches@lists.linux.dev,
+	mochs@nvidia.com, alok.a.tiwari@oracle.com, vasant.hegde@amd.com,
+	dwmw2@infradead.org, baolu.lu@linux.intel.com
+Subject: Re: [PATCH v5 14/29] iommufd/viommu: Add IOMMUFD_CMD_HW_QUEUE_ALLOC
+ ioctl
+Message-ID: <20250603122403.GI376789@nvidia.com>
+References: <cover.1747537752.git.nicolinc@nvidia.com>
+ <5c509f092ba61d4c0852ba57b530888ffb864ccb.1747537752.git.nicolinc@nvidia.com>
+ <20250530161455.GE233377@nvidia.com>
+ <aD6K8ZuAH+zjXIx2@Asurada-Nvidia>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aD6K8ZuAH+zjXIx2@Asurada-Nvidia>
+X-ClientProxiedBy: MN2PR19CA0042.namprd19.prod.outlook.com
+ (2603:10b6:208:19b::19) To CH3PR12MB8659.namprd12.prod.outlook.com
+ (2603:10b6:610:17c::13)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250602134340.906731340@linuxfoundation.org> <20250602134341.897528821@linuxfoundation.org>
-In-Reply-To: <20250602134341.897528821@linuxfoundation.org>
-From: Stefano Garzarella <sgarzare@redhat.com>
-Date: Tue, 3 Jun 2025 14:18:12 +0200
-X-Gm-Features: AX0GCFt5-R5_l1JcZoLRDhSODZkzwizMtWUfInGyGiuuSHRx5X0zU78Q3RYWgCE
-Message-ID: <CAGxU2F7fRUn1H_-CF5SJJ1DZDEt3xfm+er0kqa_XS9nn6uJi0g@mail.gmail.com>
-Subject: Re: [PATCH 6.6 024/444] vhost_task: fix vhost_task_create() documentation
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	"Michael S. Tsirkin" <mst@redhat.com>, Sasha Levin <sashal@kernel.org>
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: OwrB36uGTTGml00YRNK-RB3n7d6M5ocQvyEDbxRohB0_1748953114
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset="UTF-8"
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH3PR12MB8659:EE_|DS4PR12MB9611:EE_
+X-MS-Office365-Filtering-Correlation-Id: 7d53a748-2fb6-4219-71a2-08dda29987a6
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|7416014|376014|366016|1800799024;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?Fn0bPkLnIb4Mca9CliZOIxfYjGgd4bggnWFMWXbBuxTC8Eu7ZGNs686emmgq?=
+ =?us-ascii?Q?evwC9q4TAWPDuf1Ufhkfkow3RaL9YDvsl6q8juzFNhPZIP9OXsGu42QoHl0s?=
+ =?us-ascii?Q?lkZFVofpnrFfIwShBOMOMgAleQCgUzXeKYbfbCUe8kdqfJ1qum+1kcHe8f0t?=
+ =?us-ascii?Q?fwgXNXREwVXh7ZJ6bwUodfoqSwwL16mhGQKnvyobjnfwIoYf7TGOoJlAwmYn?=
+ =?us-ascii?Q?JO1iJ8wzWoy7xos4B0mKqwqBVddtZlHHD5aUKeIOplrzR8oNOYYMDsNibhhq?=
+ =?us-ascii?Q?p6bBfGtkgYLdGLrJH1lhKKzDwtiK0+wD9Rh2LIy85ifqqy2q+WVvyT0/qEK6?=
+ =?us-ascii?Q?zWEp75HaJlhPPZ6hCvtKMvtd2KTT4Bp+V+c7ofJ60DsdTM9cHQo6vTpXf9Dv?=
+ =?us-ascii?Q?30jB/gJYHNM36DEE2SzoDRq24p3ek7Son5QP18Mwn2lCWB1ZkQFXHgcsaXmj?=
+ =?us-ascii?Q?F8/ZoVMvZKIm1+tSoGQMQQdHnhzm9eguUFKdwfxg6px/i8rvxPv1myY+ed4L?=
+ =?us-ascii?Q?HfPa+58JH8jUqhAfmLsgw337Z0r8QbcBDYNt0Ou/BAyw745utMj5OTD6KwfZ?=
+ =?us-ascii?Q?Hc3fS2npJ1eFoU6h9pgfQce82Wy4QEaHIk9+qQnm8a2AXjlKGGb3GSO5YCCK?=
+ =?us-ascii?Q?AoUo57IGqyS1W45JYCxy6/vazggThZfE+awUwS/y5qenXCaKlgS5ooFcia6R?=
+ =?us-ascii?Q?ZtPWO4xyONrL2ELJ3fYrNewxJosrbB1o719/cWm35WdWfok+vXGz8fvm0HpA?=
+ =?us-ascii?Q?fLVQ7H59hQ/oD8VblynOq/oiUSzBU0LNwhYgmUFRSCkxjbvVm8qxlQ/lmYGR?=
+ =?us-ascii?Q?1zQsNeEPr9h0Ax7R/TA0tDPAYh/iwxIPpDnBKs5z80KjCyIkIRlKYMMRKHlb?=
+ =?us-ascii?Q?xVVU2u5DQnrh6Qdlq5w3DI38EhO34zTR3ZDRzltghQ7uALfTW1W/t9JiHVxW?=
+ =?us-ascii?Q?A7KSdzG5AlhXlpHWg77jxqstsJSIMaG0Ntx6v3jxFntSHAwUK7EHc6Hkjcc0?=
+ =?us-ascii?Q?Tx1bbazS9eSCiMMb+DO7RpTuCOjqttLrfnR29R5ejBleN5j/AHHEqNdXKi18?=
+ =?us-ascii?Q?8MBLvqJGDxIFeda5PjwW//aF0QjGJCbSR/On5EyJKoeF6i+SDS+fx/HuulNk?=
+ =?us-ascii?Q?2IyuuBLziH0AKMsZlaNUKraYC94CmIvYTb+U1Ni7liOhquLBP3NdpcqCmYV7?=
+ =?us-ascii?Q?astqfYYagi49HUueuzCFzyiju3GSFEAK3CLLn/fF3+ULnMvT0VZIiX59CN7B?=
+ =?us-ascii?Q?o6iYAOllkpZEVpXSVZUNkEzWwRKr3wdHiG2GJYJMCcn5KINKm1YixpK9nTH4?=
+ =?us-ascii?Q?GHlXNxTvHb3p4G4hYz8uWMFY/rZduF94Wzff2Ni+P9PkCgUeHSD/f2FSfHjS?=
+ =?us-ascii?Q?Z3nJ5P579fdXaPO49TkxDOrP00SPtoNBGrO8Uvu5OZwPQ4lL9XYT0JDupYlm?=
+ =?us-ascii?Q?Efljp6s+yos=3D?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR12MB8659.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(7416014)(376014)(366016)(1800799024);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?j+rIE3Kd98OR2m9fJk+xnvstBPzeZgHeGSXfHuqdi2FOyWqDMcDMjiBq4KxK?=
+ =?us-ascii?Q?CP+/ujJJ7IGRyncJGZu2qlGy4mEUrtm5Kl5q9W41sauCIItfGkcNG9XKXpcp?=
+ =?us-ascii?Q?6UU1T8JhL+1CP8PyNe4+mu8CCwqxqGflNMlhNKc9cykGvhs1wlQl/BBKwXUu?=
+ =?us-ascii?Q?+NrHO2xpCXBx69UwctPfNfJKUmIokn+35wAJ5ZBk0eFAClFqmJgrbxZJ6xio?=
+ =?us-ascii?Q?cWYwn9/my/NW4YXXzI6BnflnBhO7rSSr4T+Mc2+dXAtm4ksIT+zKkzr4W8Bn?=
+ =?us-ascii?Q?nRT4ACGBQwwvEMO6RijEmqmf6vDtUp+99qp2njv9iVCFuP/a6Pkd7Z8buhs6?=
+ =?us-ascii?Q?csaCCBacZczUMZEudksg80kgdrn2WUwzr73n6Y+HKwkCFLLUx3HMEUulvCgK?=
+ =?us-ascii?Q?wtaXypogi8I3FoQRKWucXCYjqK0z0jB5bnuxseYG7ZNWU7xidMSUt9RjumS7?=
+ =?us-ascii?Q?2/oC7rfKUZQFjnXHG8/Eqz3RWgZdXGeo/GB5zOOTM6YWkUmGLHJ0ns3CC2JK?=
+ =?us-ascii?Q?qjmF1YDapxJMjTyAJVgsNb/+wIf6eBo886/y98CgJtZ1wxa3bLZd6XBjiqSS?=
+ =?us-ascii?Q?5f4hUFkp/JDEtBZdb3YCmY0oHbfw8qF8yhEfAFpfB15kZgTrUdCpB88iZWuj?=
+ =?us-ascii?Q?MV0p5kMtPANv7kO4/FLzq8pU2x56qPOA3Zbf7fxRLK2wpgxaEfiddWpe3SqG?=
+ =?us-ascii?Q?CBqBivhriM+nV+E5ymsW/mry41lwB3JfKuDLRZX74lWWvQYihaKCVg3OEws6?=
+ =?us-ascii?Q?eiinUi2ntSGtNbmAfYRjcQ7ZTU8aRuqIAU1WxH5/tM2cTrsqkVE92fhIRhUL?=
+ =?us-ascii?Q?yZpbt3VIWV7SAYAQB2xxBKL71lpKPYBAkEyrkmykN/AEnnYagG0p4xBQEOyJ?=
+ =?us-ascii?Q?42VXYf/Gj1tjMOxnAJveC7RfxptCMslOUGcu6d1tgVaRWlY8XKrNHE5HFuSD?=
+ =?us-ascii?Q?fLNJ1XUPj/ddLCX+bymqZ8F2hB28jT/RAHyforfFzdLUPVg+fn4RSEvXq4Th?=
+ =?us-ascii?Q?GGupMkwzks4/V4XonORDiGGIrrGe+dPhMyveblyzPeb05KHgeC3qKT8egtmF?=
+ =?us-ascii?Q?TuXZirWxOUIgviefM9ZCxyMvnZHStKd2KahFDOQVAR9KJEHjnPtOx+lQQVip?=
+ =?us-ascii?Q?UGVNbwgTGA0u+z4ftrdv/HZPUibQJrv50D0R4JxN2In5btyPSOE4PZrl+PSo?=
+ =?us-ascii?Q?NsSRK51U6drnaOanGSntLmWD4jmv4sC0+zVFXV32OYqubT1wTEfl0LUnUDmB?=
+ =?us-ascii?Q?WcEJVf//QoXdwy+EZ80Yiq8SaNP+z/J3uHFeRRq0iviYAcRu+MVkijiWy+cO?=
+ =?us-ascii?Q?ZrVeTLv84wZpaKx6MUnLhvbdve84nj1WJyaLBO8HV3nRQ6S+C6pREP0HEo65?=
+ =?us-ascii?Q?foCyoSnmjON/czDPrh2h7m8+lZpjNrByQ6qaPcoWsMUrxiIl2gAa1DVZyCbl?=
+ =?us-ascii?Q?nPKpQejpYhgiGkEb3CMT2RzgzdzbCQ/bsLm7lJ58+wmAZC05h38JjgTjVQ/O?=
+ =?us-ascii?Q?eVG1gwFOblfxK2AKsEOjkpwted3ULCPtJKhFLuddyzdJGv6CFBEUfXPwpP1l?=
+ =?us-ascii?Q?jR0mc1JMFNEadV/wZUnJWNwY/jWCx0rupmTk+by6?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7d53a748-2fb6-4219-71a2-08dda29987a6
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB8659.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Jun 2025 12:24:04.8323
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 3W58mTbafxwzHto2b5DdJXOt+YiM7WjFs17VOj4dsel65k0Tui529xZBJZutYJCO
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS4PR12MB9611
 
-On Mon, 2 Jun 2025 at 16:04, Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> 6.6-stable review patch.  If anyone has any objections, please let me know.
+On Mon, Jun 02, 2025 at 10:41:05PM -0700, Nicolin Chen wrote:
 
-It seems that commit cb380909ae3b ("vhost: return task creation error
-instead of NULL") is not backported to 6.6, so we can skip this patch.
-BTW it's just a fix in a comment, so if it's too late, it should not
-be a big issue.
+> I found that the size_viommu or size_hw_queue might not work using
+> a static macro as that RDMA one does:
+> 
+>  - The size in vIOMMU case is type dependent. E.g. smmuv3 driver
+>    uses one iommu_ops to support two types: vSMMU and vCMDQ
 
-Just for my understanding, next time should I add a Fixes tag in this
-case, also if the patch doesn't touch code?
+Maybe they can just be max()'d?
 
-Thanks,
-Stefano
+> 1) Define a get_viommu_size(unsigned int type) op: use a similar
+>    macro in the driver function to return with:
+> 
+> #define VIOMMU_STRUCT_SIZE(ib_struct, drv_struct, member)                      \
+> 	    (sizeof(drv_struct) +                                              \
+>  		 BUILD_BUG_ON_ZERO(offsetof(drv_struct, member)) +             \
+>  		 BUILD_BUG_ON_ZERO(!__same_type(((drv_struct *)NULL)->member,  \
+>  						ib_struct)))
+> 
+> 	if (type == SMMU)
+> 		return VIOMMU_STRUCT_SIZE(
+> 			struct arm_vsmmu, struct iommufd_viommu, core);
+> 	return 0;
 
->
-> ------------------
->
-> From: Stefano Garzarella <sgarzare@redhat.com>
->
-> [ Upstream commit fec0abf52609c20279243699d08b660c142ce0aa ]
->
-> Commit cb380909ae3b ("vhost: return task creation error instead of NULL")
-> changed the return value of vhost_task_create(), but did not update the
-> documentation.
->
-> Reflect the change in the documentation: on an error, vhost_task_create()
-> returns an ERR_PTR() and no longer NULL.
->
-> Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
-> Message-Id: <20250327124435.142831-1-sgarzare@redhat.com>
-> Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
-> ---
->  kernel/vhost_task.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/kernel/vhost_task.c b/kernel/vhost_task.c
-> index 8800f5acc0071..0e4455742190c 100644
-> --- a/kernel/vhost_task.c
-> +++ b/kernel/vhost_task.c
-> @@ -111,7 +111,7 @@ EXPORT_SYMBOL_GPL(vhost_task_stop);
->   * @arg: data to be passed to fn and handled_kill
->   * @name: the thread's name
->   *
-> - * This returns a specialized task for use by the vhost layer or NULL on
-> + * This returns a specialized task for use by the vhost layer or ERR_PTR() on
->   * failure. The returned task is inactive, and the caller must fire it up
->   * through vhost_task_start().
->   */
-> --
-> 2.39.5
->
->
->
+I guess this is best?
 
+> 2) Let core allocate with sizeof(struct iommufd_viommu), then let
+>    driver krealloc during the viommu_init op call:
+
+No.. memmoving things like locks doesn't work.
+
+Jason
