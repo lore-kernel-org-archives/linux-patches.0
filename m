@@ -1,75 +1,84 @@
-Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 501781C84DE
-	for <patches@lists.linux.dev>; Tue,  3 Jun 2025 20:33:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=13.77.154.182
+Received: from mail11.truemail.it (mail11.truemail.it [217.194.8.81])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E98215E5C2
+	for <patches@lists.linux.dev>; Tue,  3 Jun 2025 20:34:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.194.8.81
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748982813; cv=none; b=qR2Q+e8Q67GAsBL50juAK8lVsey8JaFaNBjxUGnVFbhkFeRj5etYI8n025CPo4ZysoBLzMpxImwwIU3H9HtlDHpQF/3dTL/frkC1UWaQZcgWf8klpzNMRnuyQTJBE29KgB3bCj0xAdvn28SpwUzhArYHXcpOAOaurR7WIazX3W8=
+	t=1748982850; cv=none; b=qOX5ycMi1GTkvdzw2ZjjVvX7jg5OwQtM7SPYEFVRBAAUQv+kUbTLxrfRNuSzCXEelOMLCcCWwlQ7Px20KsTaC7zEeqHjM3ePAoK4eAwZ7gRILWECc3tOkzDWNvxKdSSbZTszhBdGjN8W0OtioAK2+lI3smxLfgl20uUhoJsNos8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748982813; c=relaxed/simple;
-	bh=jlZrooBu729LENn042oThPi5X1Q2ga+Zf/X1aB4zxXU=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References; b=R30GNbXTIWFBQ0sOtELeudDRt1eSeVbmuD7CSnFpuZJ2iUwUqkUiBmuYClW0FRtj5vCAO85A6E/HeUX4UTKyI583Cv8eXzlgsnakkS48OigTol2iRQ3Vv5nIL0zOMtAXiVtmEvMjM43HhsvNIZwpWIa5o16QUaCczhA6rOfLrO4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com; spf=pass smtp.mailfrom=linux.microsoft.com; dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b=HHLKUEUl; arc=none smtp.client-ip=13.77.154.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.microsoft.com
+	s=arc-20240116; t=1748982850; c=relaxed/simple;
+	bh=4ygbrJq3wOR1KcMor7zYFMw1GzTl+Xb1ncSGpKYVym8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZDJp95db6g6FpSl+CF+AoiLf9G64Ns5oDHknE7WVnDP5b0S703S+vKzDk0eaePmfsu6fbwO8yqx3MRWlR0SOuFFj6j1Sp9nwErTvZKaZA6E41+4UzTLQz9syr1R5pn1cR5kfVL0ksZFdIz254OYo04r85cUWRuD75pBskyvfTjw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=dolcini.it; spf=pass smtp.mailfrom=dolcini.it; dkim=pass (2048-bit key) header.d=dolcini.it header.i=@dolcini.it header.b=N/L2F1T1; arc=none smtp.client-ip=217.194.8.81
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=dolcini.it
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=dolcini.it
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b="HHLKUEUl"
-Received: by linux.microsoft.com (Postfix, from userid 1158)
-	id DA2F3203EE0A; Tue,  3 Jun 2025 13:33:31 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com DA2F3203EE0A
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
-	s=default; t=1748982811;
-	bh=Nny55qEA7MSIsuuGyCFFS7Ug2zkkjHkuqrLH3+Gvp7I=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HHLKUEUlOl7lD/20n/fQLQWfOOyig1YaCPUW97dCPXXxWkhwtEPzBbOcTyGqVOORf
-	 CTefZ0H0ZrH93p1HZJ8STit2vS1UecpvK79ebYXM3CZdyeL0MjsheCSABty/S1shF9
-	 z2tXQDN9l746nrm3Qr58yV/4ybJVMBCstx9sFm7I=
-From: Hardik Garg <hargar@linux.microsoft.com>
-To: gregkh@linuxfoundation.org
-Cc: akpm@linux-foundation.org,
-	broonie@kernel.org,
-	conor@kernel.org,
-	f.fainelli@gmail.com,
-	hargar@microsoft.com,
-	jonathanh@nvidia.com,
-	linux-kernel@vger.kernel.org,
-	linux@roeck-us.net,
-	lkft-triage@lists.linaro.org,
-	patches@kernelci.org,
-	patches@lists.linux.dev,
-	pavel@denx.de,
-	rwarsow@gmx.de,
-	shuah@kernel.org,
-	srw@sladewatkins.net,
-	stable@vger.kernel.org,
-	sudipm.mukherjee@gmail.com,
-	torvalds@linux-foundation.org
-Subject: Re: [PATCH 6.12 00/55] 6.12.32-rc1 review
-Date: Tue,  3 Jun 2025 13:33:31 -0700
-Message-Id: <1748982811-7116-1-git-send-email-hargar@linux.microsoft.com>
-X-Mailer: git-send-email 1.8.3.1
-In-Reply-To: <20250602134238.271281478@linuxfoundation.org>
-References: <20250602134238.271281478@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=dolcini.it header.i=@dolcini.it header.b="N/L2F1T1"
+Received: from francesco-nb (93-49-2-63.ip317.fastwebnet.it [93.49.2.63])
+	by mail11.truemail.it (Postfix) with ESMTPA id 17F421F90C;
+	Tue,  3 Jun 2025 22:33:58 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dolcini.it;
+	s=default; t=1748982838;
+	bh=aUm8NQzsFQSYbUhneDHpSy9shTurxXW3dmQDlMA4fFc=; h=From:To:Subject;
+	b=N/L2F1T18xyk/rXHMaQk7fXb3SSu4b8jT42g+o2QtS6HHPWBsU1rH/HKDyOOYQud3
+	 hl2Om3DsLgI75F3hFNQ2ZzvBuFqmPIyhfHhL439EZeLnI9vhQ195kGgqh1Bz3Ci2E3
+	 tlRwM0WFWRJTX/q96A+pgqoQNKbwSO4LUO6A8CZ3Y1i2siYvE0vSRvhQAghxvK96Pq
+	 9Z65PSo5RQaJbV1KWTzSXO9g3Rg88Sri4tP4ePbfW2a6m9dbOqSTz09uz76UCTgP3Y
+	 DIO3nY7kXv8bFSrKMoNzhnCGZe84Hhc2Jdw2Jnapd0+5tUReDZQ0F7KqVZOwp2PI6Z
+	 AGmCKEpeakjmA==
+Date: Tue, 3 Jun 2025 22:33:54 +0200
+From: Francesco Dolcini <francesco@dolcini.it>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	Jeff Chen <jeff.chen_1@nxp.com>,
+	Francesco Dolcini <francesco.dolcini@toradex.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Vitor Soares <ivitro@gmail.com>
+Subject: Re: [PATCH 6.12 130/626] wifi: mwifiex: Fix HT40 bandwidth issue.
+Message-ID: <20250603203337.GA109929@francesco-nb>
+References: <20250527162445.028718347@linuxfoundation.org>
+ <20250527162450.311998747@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250527162450.311998747@linuxfoundation.org>
 
-The kernel, bpf tool, and perf tool builds fine for v6.12.32-rc1 on x86 and arm64 Azure VM.
+Hello Greg, Sasha
 
-Kernel binary size for x86 build:
-text      data      bss      dec       hex      filename
-29859850  17724758  6385664  53970272  3378560  vmlinux
+On Tue, May 27, 2025 at 06:20:23PM +0200, Greg Kroah-Hartman wrote:
+> 6.12-stable review patch.  If anyone has any objections, please let me know.
+> 
+> ------------------
+> 
+> From: Jeff Chen <jeff.chen_1@nxp.com>
+> 
+> [ Upstream commit 4fcfcbe457349267fe048524078e8970807c1a5b ]
+> 
+> This patch addresses an issue where, despite the AP supporting 40MHz
+> bandwidth, the connection was limited to 20MHz. Without this fix,
+> even if the access point supports 40MHz, the bandwidth after
+> connection remains at 20MHz. This issue is not a regression.
+> 
+> Signed-off-by: Jeff Chen <jeff.chen_1@nxp.com>
+> Reviewed-by: Francesco Dolcini <francesco.dolcini@toradex.com>
+> Link: https://patch.msgid.link/20250314094238.2097341-1-jeff.chen_1@nxp.com
+> Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
 
-Kernel binary size for arm64 build:
-text      data      bss      dec       hex      filename
-36415263  15006501  1052880  52474644  320b314  vmlinux
+Can you please drop this patch from any additional stable kernel update?
+It seems that on 6.12.y it introduced a regression, we are currently
+investigating it and we'll eventually send a revert for 6.12.y.
 
+In the meantime it would be good to not spread the issue to any other
+stable kernel.
 
-Tested-by: Hardik Garg <hargar@linux.microsoft.com>
+Francesco
 
-
-
-
-Thanks,
-Hardik
