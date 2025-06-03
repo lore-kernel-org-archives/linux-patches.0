@@ -1,184 +1,229 @@
-Received: from NAM10-DM6-obe.outbound.protection.outlook.com (mail-dm6nam10on2057.outbound.protection.outlook.com [40.107.93.57])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vk1-f182.google.com (mail-vk1-f182.google.com [209.85.221.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D262230981;
-	Tue,  3 Jun 2025 12:24:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.93.57
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748953449; cv=fail; b=msdc54ptenGwIWB9+v3V2sItVGRA8LJfiecoi+mrQOsKcohKRvIpXUjWC93P2LWcROjSzKuRtupuNypoEC2fcUYUfEnDp5uWhFHQwO82eXBSrkjBZQb91boDuIwv5OAyJ/mWNLNMap0Jtou8Gd2P4Uj6e7z5ouuETKfLHg+zx1Q=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748953449; c=relaxed/simple;
-	bh=8FMTDtq5V4VIditLuI5YCpka6OZnU6Q4XWl677z9w3M=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=TZ/MVe/RbCc6PQCof9tFPGnIKEvZJNDxoWIjpTJ194Qx4UN7CXmDb0BRtMAmiVYdzL+IVCONPtBXpD7oI6lNHqQIJVq752iEBB1ZFMRCWuO3Z8ebwpT6qwzSR8ZHggQ/EfAaV2NtBMki5CVrS7M8JJzp8/LJ5oUA0oo9E6tbj20=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=otZYgved; arc=fail smtp.client-ip=40.107.93.57
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C864B1E50E
+	for <patches@lists.linux.dev>; Tue,  3 Jun 2025 12:30:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.182
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1748953854; cv=none; b=KhJQtNuFRQVQ/rJZzT6dscvgGtBSBFa5b10IqRUNGRw1tbieXgxDu71M9ofnzwl+QXZr8oeUs4FqXrrgkYjTva22FvV0HKC1tyzs95PCuWuXiqwS6+NRZgGMXGbT1wRhmeR7lTLz7Cb0xNZ9TgXxbQ7rx70uqQrdTszMzwD2S5I=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1748953854; c=relaxed/simple;
+	bh=EmQ/A9vSfKWWPB/K/T8g8cr639C8K9rcW3d2OXMslYI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=aesNTVU8rmMRXDLz3ICXbmtQaXxjMSDAwjOllsG9Opn6U6vY99YLD+WXHCROSFl2C4LxTfPuAmdASt9g2mosN3tgS/+s1/zfDieaLQTr3ZOa4axJVWNVUxju1sAWX01eg0QwSgnMnZg/j+KK8R5amLLqIItHqekU6MToP/w+VbY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=WSQpRvew; arc=none smtp.client-ip=209.85.221.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="otZYgved"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=P4TEpMSlQaZQRUwxGW0He2fx+5Z1sCntQy9xHzlU5kTJQsDCx/TCsSCodWIAApdeIMSaefgYg1of9Gx1MdmGi9J+nledFeShMvdgweoSDTlh4pUgMmGWbsDzvlDJ9S/ds4fNz7euBshVzrfvORiX7Rwers6GKI6d2EOX/lqqEC3O/iV7UCdfKUqZtnvgCLDtPaWBpu11fZcfV5w3DVANkU2yshO6q1EFscaDcYd2duUT6ITAgaZORgGwx3Ln5eIcYTaJFilm/7PWuNy9/gvQbVO/5ng17sKUe3rDbilKXgvGZZXCNPvhM1vqcl/Z6hUy44q53m5NFEqCMN0a3EZKfQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=U7zl0rMrU+FPJ50bHE1pnO6w1R6firHoFui/VsYxgS8=;
- b=DGvyQYS+xado3KYU+2BopqezdXeM725Ni9C10R4hqtKE1dti8PJPf8vbOQJbwRLtO3fKrNGYcpTzRmbfHJn+HsYPvcTcxqivCN41ZdIWoUOqZH30VpLrsshKQ3XTsVc9R6FZvmGztA26y4mKuYuJmhv+0W9qIZa+SoSOO25cAXEKzcw3cWtkq7SEtT1PXPNgTFTNs1YuZhQyeoPsaRIsfNwJMEbIOkNOr6WeTZQ0G47hnknA382mtEXHh/y7e2/mew0joVH6wmmSMd75Yi5WrTePizBgUnppQClRWfafK9SHJIdYGbtOYKVTn75zWOGa3EatEQ7yiIocacru4ry1KQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=U7zl0rMrU+FPJ50bHE1pnO6w1R6firHoFui/VsYxgS8=;
- b=otZYgveduFuUbe1yNRHOhawydy+ok2ZLkXp7yblo05WoDvr49HwL2ktPwwLksM1S5qa73D6kq1/HT/LD9KvZoND8AAo6tx/VggaJ1ecD8w5DMCvY6LMo87WGnITXLDCHII/RjdIhWFnSvWp9CwmHNnsrXdmvzNjKAIrE9WQrzMpBOxL/GBuCN18lSIQzfCLoPy0jTi0vrfPwPygjdAxf/RoY/ce3ILPuTt0LGT7yzdCHAgLeGrmHuLT046fJI7WJ5O+/j+Sx3eCTpAxOCKeIFxQ5GgLyODMRt1TzIHQ/KKHHbhnbcOlwAGaVHNv9zwkpiWziGnv+P/LxV1WKSweCJQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from CH3PR12MB8659.namprd12.prod.outlook.com (2603:10b6:610:17c::13)
- by DS4PR12MB9611.namprd12.prod.outlook.com (2603:10b6:8:277::6) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8769.37; Tue, 3 Jun
- 2025 12:24:05 +0000
-Received: from CH3PR12MB8659.namprd12.prod.outlook.com
- ([fe80::6eb6:7d37:7b4b:1732]) by CH3PR12MB8659.namprd12.prod.outlook.com
- ([fe80::6eb6:7d37:7b4b:1732%6]) with mapi id 15.20.8792.034; Tue, 3 Jun 2025
- 12:24:04 +0000
-Date: Tue, 3 Jun 2025 09:24:03 -0300
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: Nicolin Chen <nicolinc@nvidia.com>
-Cc: kevin.tian@intel.com, corbet@lwn.net, will@kernel.org,
-	bagasdotme@gmail.com, robin.murphy@arm.com, joro@8bytes.org,
-	thierry.reding@gmail.com, vdumpa@nvidia.com, jonathanh@nvidia.com,
-	shuah@kernel.org, jsnitsel@redhat.com, nathan@kernel.org,
-	peterz@infradead.org, yi.l.liu@intel.com, mshavit@google.com,
-	praan@google.com, zhangzekun11@huawei.com, iommu@lists.linux.dev,
-	linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, linux-tegra@vger.kernel.org,
-	linux-kselftest@vger.kernel.org, patches@lists.linux.dev,
-	mochs@nvidia.com, alok.a.tiwari@oracle.com, vasant.hegde@amd.com,
-	dwmw2@infradead.org, baolu.lu@linux.intel.com
-Subject: Re: [PATCH v5 14/29] iommufd/viommu: Add IOMMUFD_CMD_HW_QUEUE_ALLOC
- ioctl
-Message-ID: <20250603122403.GI376789@nvidia.com>
-References: <cover.1747537752.git.nicolinc@nvidia.com>
- <5c509f092ba61d4c0852ba57b530888ffb864ccb.1747537752.git.nicolinc@nvidia.com>
- <20250530161455.GE233377@nvidia.com>
- <aD6K8ZuAH+zjXIx2@Asurada-Nvidia>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aD6K8ZuAH+zjXIx2@Asurada-Nvidia>
-X-ClientProxiedBy: MN2PR19CA0042.namprd19.prod.outlook.com
- (2603:10b6:208:19b::19) To CH3PR12MB8659.namprd12.prod.outlook.com
- (2603:10b6:610:17c::13)
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="WSQpRvew"
+Received: by mail-vk1-f182.google.com with SMTP id 71dfb90a1353d-52617ceae0dso1954202e0c.0
+        for <patches@lists.linux.dev>; Tue, 03 Jun 2025 05:30:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1748953850; x=1749558650; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=LY/1nUmGBa6dpDChrxvy7BQ7e4yIy3xA/coyZFocW/0=;
+        b=WSQpRvewFw02h+P+4BmYCnuGYZWKbUpduDn1s3lzO3z9PHZQfVP66ilmYYMCHngVPA
+         IXt8CGqOzUoTPVm1PDrZK7QjNPSVyQJ49UVl333I7PVOn2UcZHKXywYsRZMaMI1hN/VR
+         oJCKZfZweV4poRQIzXtO9v4M+HzTBsd6L+67QmckO2ATzvzBzI5cuO6EVkeGf7Nov9Ol
+         yIAFdNOn5g05ikYvGiJytogqJpPyEitIGRHXul+sRejTSiXe7Ie5OK8S25WFIPuYiKZd
+         6TGqvfoA6ewVmFjJfz9qTnnqHpL3lCpEaSs/eMm4qumtCCn4eaL0aaCmju+YEW2grCPK
+         PIsA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1748953850; x=1749558650;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=LY/1nUmGBa6dpDChrxvy7BQ7e4yIy3xA/coyZFocW/0=;
+        b=B/Let5m+gqE3NoLva1/h2m+K6/11BHmYjSpHTEF2zM5ZaXj/UEH+22Xt2gu1uekf4H
+         hBY4Rpkb5EGuT+/7uFXq4CBh4tUlYcn2hNTbjnwj9kCoLs4ZokqaPuWgXEEcGtrOOZQ3
+         hHGJaAAmLnouj6z6o4UVxlYY9Y+CQZ+nemZIO2TGkMp5w1Nu+Yfyn4yJUEMh7GACEmSM
+         oW+fnp/TCEyKoaL0nH9zLPDlYuz+GPZVQulOwsAT1XRO2WZEOU2rpYM14bEw/Ky9kT+9
+         QWsLtGsccshlUcboBKnT65+dDGvGwrGnrCHwRImPEZ9/8qcvM5ejGyeuQpSYWpE/kszZ
+         T7Jw==
+X-Forwarded-Encrypted: i=1; AJvYcCXCrMfOXLVEhz9W1JuxsZGHzDjnEgl7IVK5bF+IhbfPNNPsKSLimd6062aqEmy5eiM05w9wE4XT@lists.linux.dev
+X-Gm-Message-State: AOJu0Yx/U1lntQb9eXXuYBaWhOZDNHUuS8nmuvlEdNVI5GJbK6AhdJeh
+	XWsQi3E4Uq6oKQSz7IBXeUQJVF+8TC0R+4lQPJgjPdoesq1Vqu9rS6voTL/6FHichyScDj99Zyh
+	BiX4Fc0fej/kXjkV151vxHW/a6RFBSeo1fFu4FWd5BA==
+X-Gm-Gg: ASbGncsGW64T0d7GPJfcYenoGAz/huk0RPLN3bGo7pmFrQJiZ6/8KNOS8FamSGPQbKz
+	zaY3pDbCAE81roayVp/qjZeLXB2TQeRrJdF2U29fuaaoSTxbuh4DVNqkleeONrVMz2DnXAqRbuz
+	eaEl6z52OymcsbBYJuvntaVNS8ZldNR+8=
+X-Google-Smtp-Source: AGHT+IHTosQvOBKF0L3D0Inb+MoWZZ3cSRXCp014dL+KqAo8fezAvJU5scdjR5Ga9Sawg0g6JBdjG2QGVG+FJzLfAfg=
+X-Received: by 2002:a05:6122:1ad4:b0:52c:4eb0:118d with SMTP id
+ 71dfb90a1353d-53084be0280mr12838886e0c.4.1748953849537; Tue, 03 Jun 2025
+ 05:30:49 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH3PR12MB8659:EE_|DS4PR12MB9611:EE_
-X-MS-Office365-Filtering-Correlation-Id: 7d53a748-2fb6-4219-71a2-08dda29987a6
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|7416014|376014|366016|1800799024;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?Fn0bPkLnIb4Mca9CliZOIxfYjGgd4bggnWFMWXbBuxTC8Eu7ZGNs686emmgq?=
- =?us-ascii?Q?evwC9q4TAWPDuf1Ufhkfkow3RaL9YDvsl6q8juzFNhPZIP9OXsGu42QoHl0s?=
- =?us-ascii?Q?lkZFVofpnrFfIwShBOMOMgAleQCgUzXeKYbfbCUe8kdqfJ1qum+1kcHe8f0t?=
- =?us-ascii?Q?fwgXNXREwVXh7ZJ6bwUodfoqSwwL16mhGQKnvyobjnfwIoYf7TGOoJlAwmYn?=
- =?us-ascii?Q?JO1iJ8wzWoy7xos4B0mKqwqBVddtZlHHD5aUKeIOplrzR8oNOYYMDsNibhhq?=
- =?us-ascii?Q?p6bBfGtkgYLdGLrJH1lhKKzDwtiK0+wD9Rh2LIy85ifqqy2q+WVvyT0/qEK6?=
- =?us-ascii?Q?zWEp75HaJlhPPZ6hCvtKMvtd2KTT4Bp+V+c7ofJ60DsdTM9cHQo6vTpXf9Dv?=
- =?us-ascii?Q?30jB/gJYHNM36DEE2SzoDRq24p3ek7Son5QP18Mwn2lCWB1ZkQFXHgcsaXmj?=
- =?us-ascii?Q?F8/ZoVMvZKIm1+tSoGQMQQdHnhzm9eguUFKdwfxg6px/i8rvxPv1myY+ed4L?=
- =?us-ascii?Q?HfPa+58JH8jUqhAfmLsgw337Z0r8QbcBDYNt0Ou/BAyw745utMj5OTD6KwfZ?=
- =?us-ascii?Q?Hc3fS2npJ1eFoU6h9pgfQce82Wy4QEaHIk9+qQnm8a2AXjlKGGb3GSO5YCCK?=
- =?us-ascii?Q?AoUo57IGqyS1W45JYCxy6/vazggThZfE+awUwS/y5qenXCaKlgS5ooFcia6R?=
- =?us-ascii?Q?ZtPWO4xyONrL2ELJ3fYrNewxJosrbB1o719/cWm35WdWfok+vXGz8fvm0HpA?=
- =?us-ascii?Q?fLVQ7H59hQ/oD8VblynOq/oiUSzBU0LNwhYgmUFRSCkxjbvVm8qxlQ/lmYGR?=
- =?us-ascii?Q?1zQsNeEPr9h0Ax7R/TA0tDPAYh/iwxIPpDnBKs5z80KjCyIkIRlKYMMRKHlb?=
- =?us-ascii?Q?xVVU2u5DQnrh6Qdlq5w3DI38EhO34zTR3ZDRzltghQ7uALfTW1W/t9JiHVxW?=
- =?us-ascii?Q?A7KSdzG5AlhXlpHWg77jxqstsJSIMaG0Ntx6v3jxFntSHAwUK7EHc6Hkjcc0?=
- =?us-ascii?Q?Tx1bbazS9eSCiMMb+DO7RpTuCOjqttLrfnR29R5ejBleN5j/AHHEqNdXKi18?=
- =?us-ascii?Q?8MBLvqJGDxIFeda5PjwW//aF0QjGJCbSR/On5EyJKoeF6i+SDS+fx/HuulNk?=
- =?us-ascii?Q?2IyuuBLziH0AKMsZlaNUKraYC94CmIvYTb+U1Ni7liOhquLBP3NdpcqCmYV7?=
- =?us-ascii?Q?astqfYYagi49HUueuzCFzyiju3GSFEAK3CLLn/fF3+ULnMvT0VZIiX59CN7B?=
- =?us-ascii?Q?o6iYAOllkpZEVpXSVZUNkEzWwRKr3wdHiG2GJYJMCcn5KINKm1YixpK9nTH4?=
- =?us-ascii?Q?GHlXNxTvHb3p4G4hYz8uWMFY/rZduF94Wzff2Ni+P9PkCgUeHSD/f2FSfHjS?=
- =?us-ascii?Q?Z3nJ5P579fdXaPO49TkxDOrP00SPtoNBGrO8Uvu5OZwPQ4lL9XYT0JDupYlm?=
- =?us-ascii?Q?Efljp6s+yos=3D?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR12MB8659.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(7416014)(376014)(366016)(1800799024);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?j+rIE3Kd98OR2m9fJk+xnvstBPzeZgHeGSXfHuqdi2FOyWqDMcDMjiBq4KxK?=
- =?us-ascii?Q?CP+/ujJJ7IGRyncJGZu2qlGy4mEUrtm5Kl5q9W41sauCIItfGkcNG9XKXpcp?=
- =?us-ascii?Q?6UU1T8JhL+1CP8PyNe4+mu8CCwqxqGflNMlhNKc9cykGvhs1wlQl/BBKwXUu?=
- =?us-ascii?Q?+NrHO2xpCXBx69UwctPfNfJKUmIokn+35wAJ5ZBk0eFAClFqmJgrbxZJ6xio?=
- =?us-ascii?Q?cWYwn9/my/NW4YXXzI6BnflnBhO7rSSr4T+Mc2+dXAtm4ksIT+zKkzr4W8Bn?=
- =?us-ascii?Q?nRT4ACGBQwwvEMO6RijEmqmf6vDtUp+99qp2njv9iVCFuP/a6Pkd7Z8buhs6?=
- =?us-ascii?Q?csaCCBacZczUMZEudksg80kgdrn2WUwzr73n6Y+HKwkCFLLUx3HMEUulvCgK?=
- =?us-ascii?Q?wtaXypogi8I3FoQRKWucXCYjqK0z0jB5bnuxseYG7ZNWU7xidMSUt9RjumS7?=
- =?us-ascii?Q?2/oC7rfKUZQFjnXHG8/Eqz3RWgZdXGeo/GB5zOOTM6YWkUmGLHJ0ns3CC2JK?=
- =?us-ascii?Q?qjmF1YDapxJMjTyAJVgsNb/+wIf6eBo886/y98CgJtZ1wxa3bLZd6XBjiqSS?=
- =?us-ascii?Q?5f4hUFkp/JDEtBZdb3YCmY0oHbfw8qF8yhEfAFpfB15kZgTrUdCpB88iZWuj?=
- =?us-ascii?Q?MV0p5kMtPANv7kO4/FLzq8pU2x56qPOA3Zbf7fxRLK2wpgxaEfiddWpe3SqG?=
- =?us-ascii?Q?CBqBivhriM+nV+E5ymsW/mry41lwB3JfKuDLRZX74lWWvQYihaKCVg3OEws6?=
- =?us-ascii?Q?eiinUi2ntSGtNbmAfYRjcQ7ZTU8aRuqIAU1WxH5/tM2cTrsqkVE92fhIRhUL?=
- =?us-ascii?Q?yZpbt3VIWV7SAYAQB2xxBKL71lpKPYBAkEyrkmykN/AEnnYagG0p4xBQEOyJ?=
- =?us-ascii?Q?42VXYf/Gj1tjMOxnAJveC7RfxptCMslOUGcu6d1tgVaRWlY8XKrNHE5HFuSD?=
- =?us-ascii?Q?fLNJ1XUPj/ddLCX+bymqZ8F2hB28jT/RAHyforfFzdLUPVg+fn4RSEvXq4Th?=
- =?us-ascii?Q?GGupMkwzks4/V4XonORDiGGIrrGe+dPhMyveblyzPeb05KHgeC3qKT8egtmF?=
- =?us-ascii?Q?TuXZirWxOUIgviefM9ZCxyMvnZHStKd2KahFDOQVAR9KJEHjnPtOx+lQQVip?=
- =?us-ascii?Q?UGVNbwgTGA0u+z4ftrdv/HZPUibQJrv50D0R4JxN2In5btyPSOE4PZrl+PSo?=
- =?us-ascii?Q?NsSRK51U6drnaOanGSntLmWD4jmv4sC0+zVFXV32OYqubT1wTEfl0LUnUDmB?=
- =?us-ascii?Q?WcEJVf//QoXdwy+EZ80Yiq8SaNP+z/J3uHFeRRq0iviYAcRu+MVkijiWy+cO?=
- =?us-ascii?Q?ZrVeTLv84wZpaKx6MUnLhvbdve84nj1WJyaLBO8HV3nRQ6S+C6pREP0HEo65?=
- =?us-ascii?Q?foCyoSnmjON/czDPrh2h7m8+lZpjNrByQ6qaPcoWsMUrxiIl2gAa1DVZyCbl?=
- =?us-ascii?Q?nPKpQejpYhgiGkEb3CMT2RzgzdzbCQ/bsLm7lJ58+wmAZC05h38JjgTjVQ/O?=
- =?us-ascii?Q?eVG1gwFOblfxK2AKsEOjkpwted3ULCPtJKhFLuddyzdJGv6CFBEUfXPwpP1l?=
- =?us-ascii?Q?jR0mc1JMFNEadV/wZUnJWNwY/jWCx0rupmTk+by6?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7d53a748-2fb6-4219-71a2-08dda29987a6
-X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB8659.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Jun 2025 12:24:04.8323
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 3W58mTbafxwzHto2b5DdJXOt+YiM7WjFs17VOj4dsel65k0Tui529xZBJZutYJCO
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS4PR12MB9611
+References: <20250602134241.673490006@linuxfoundation.org>
+In-Reply-To: <20250602134241.673490006@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Tue, 3 Jun 2025 18:00:38 +0530
+X-Gm-Features: AX0GCFumOsdVyieNJlmgoVB__zbTkcpeuCdAKy4COLBbvEc6SfoIbneNR7OPeWM
+Message-ID: <CA+G9fYtrUYsAtZgJg4b8ZxCUzWmekp9v0USDVC5dKgZ3XNe7UA@mail.gmail.com>
+Subject: Re: [PATCH 6.14 00/73] 6.14.10-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, 
+	broonie@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Jun 02, 2025 at 10:41:05PM -0700, Nicolin Chen wrote:
+On Mon, 2 Jun 2025 at 19:28, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.14.10 release.
+> There are 73 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Wed, 04 Jun 2025 13:42:20 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
+6.14.10-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-6.14.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-> I found that the size_viommu or size_hw_queue might not work using
-> a static macro as that RDMA one does:
-> 
->  - The size in vIOMMU case is type dependent. E.g. smmuv3 driver
->    uses one iommu_ops to support two types: vSMMU and vCMDQ
+Results from Linaro=E2=80=99s test farm.
+No regressions on arm64, arm, x86_64, and i386.
 
-Maybe they can just be max()'d?
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
-> 1) Define a get_viommu_size(unsigned int type) op: use a similar
->    macro in the driver function to return with:
-> 
-> #define VIOMMU_STRUCT_SIZE(ib_struct, drv_struct, member)                      \
-> 	    (sizeof(drv_struct) +                                              \
->  		 BUILD_BUG_ON_ZERO(offsetof(drv_struct, member)) +             \
->  		 BUILD_BUG_ON_ZERO(!__same_type(((drv_struct *)NULL)->member,  \
->  						ib_struct)))
-> 
-> 	if (type == SMMU)
-> 		return VIOMMU_STRUCT_SIZE(
-> 			struct arm_vsmmu, struct iommufd_viommu, core);
-> 	return 0;
+## Build
+* kernel: 6.14.10-rc1
+* git: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-=
+rc.git
+* git commit: d9764ae2492695b2e87e4cd07bf1c61426d3693d
+* git describe: v6.14.9-74-gd9764ae24926
+* test details:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.14.y/build/v6.14=
+.9-74-gd9764ae24926
 
-I guess this is best?
+## Test Regressions (compared to v6.14.8-784-g10804dbee7fa)
 
-> 2) Let core allocate with sizeof(struct iommufd_viommu), then let
->    driver krealloc during the viommu_init op call:
+## Metric Regressions (compared to v6.14.8-784-g10804dbee7fa)
 
-No.. memmoving things like locks doesn't work.
+## Test Fixes (compared to v6.14.8-784-g10804dbee7fa)
 
-Jason
+## Metric Fixes (compared to v6.14.8-784-g10804dbee7fa)
+
+## Test result summary
+total: 332025, pass: 306599, fail: 4596, skip: 20041, xfail: 789
+
+## Build Summary
+* arc: 5 total, 5 passed, 0 failed
+* arm: 139 total, 137 passed, 2 failed
+* arm64: 57 total, 56 passed, 1 failed
+* i386: 18 total, 18 passed, 0 failed
+* mips: 34 total, 33 passed, 1 failed
+* parisc: 4 total, 4 passed, 0 failed
+* powerpc: 40 total, 40 passed, 0 failed
+* riscv: 25 total, 22 passed, 3 failed
+* s390: 22 total, 22 passed, 0 failed
+* sh: 5 total, 5 passed, 0 failed
+* sparc: 4 total, 3 passed, 1 failed
+* x86_64: 49 total, 48 passed, 1 failed
+
+## Test suites summary
+* boot
+* commands
+* kselftest-arm64
+* kselftest-breakpoints
+* kselftest-capabilities
+* kselftest-cgroup
+* kselftest-clone3
+* kselftest-core
+* kselftest-cpu-hotplug
+* kselftest-cpufreq
+* kselftest-efivarfs
+* kselftest-exec
+* kselftest-fpu
+* kselftest-ftrace
+* kselftest-futex
+* kselftest-gpio
+* kselftest-intel_pstate
+* kselftest-ipc
+* kselftest-kcmp
+* kselftest-kvm
+* kselftest-livepatch
+* kselftest-membarrier
+* kselftest-memfd
+* kselftest-mincore
+* kselftest-mm
+* kselftest-mqueue
+* kselftest-net
+* kselftest-net-mptcp
+* kselftest-openat2
+* kselftest-ptrace
+* kselftest-rseq
+* kselftest-rtc
+* kselftest-rust
+* kselftest-seccomp
+* kselftest-sigaltstack
+* kselftest-size
+* kselftest-tc-testing
+* kselftest-timers
+* kselftest-tmpfs
+* kselftest-tpm2
+* kselftest-user_events
+* kselftest-vDSO
+* kselftest-x86
+* kunit
+* kvm-unit-tests
+* lava
+* libgpiod
+* libhugetlbfs
+* log-parser-boot
+* log-parser-build-clang
+* log-parser-build-gcc
+* log-parser-test
+* ltp-capability
+* ltp-commands
+* ltp-containers
+* ltp-controllers
+* ltp-cpuhotplug
+* ltp-crypto
+* ltp-cve
+* ltp-dio
+* ltp-fcntl-locktests
+* ltp-fs
+* ltp-fs_bind
+* ltp-fs_perms_simple
+* ltp-hugetlb
+* ltp-ipc
+* ltp-math
+* ltp-mm
+* ltp-nptl
+* ltp-pty
+* ltp-sched
+* ltp-smoke
+* ltp-syscalls
+* ltp-tracing
+* modules
+* perf
+* rcutorture
+* rt-tests-cyclicdeadline
+* rt-tests-pi-stress
+* rt-tests-pmqtest
+* rt-tests-rt-migrate-test
+* rt-tests-signaltest
+
+--
+Linaro LKFT
+https://lkft.linaro.org
