@@ -1,231 +1,139 @@
-Received: from mail-vs1-f42.google.com (mail-vs1-f42.google.com [209.85.217.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B41E71D63E4
-	for <patches@lists.linux.dev>; Tue,  3 Jun 2025 12:14:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58A3D38B
+	for <patches@lists.linux.dev>; Tue,  3 Jun 2025 12:18:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748952879; cv=none; b=Ui1FA/K5P7fYSz0GLaEliYIrz/2jL8UcoPdmeFjJLmk/6JBdtIT7LlV4PkGkRMcly/y3XvVKQ+3EiFGhUZpYynWurRlHKS9gvycRFZzrPHCearjCilqNveQMm0V0TKOebYHx7c1vJ6HSKccnImQqrYUWd65mvsi0Sm6ZJjK/rhg=
+	t=1748953119; cv=none; b=KN5mF091rLsdrzTSIRYMs+JSMjYP/bdBBYaabqGCrmnInrJOUVWa5y22K8+OOzUSlYBgr4PH9mGpjIQAypjQke4WNFlh9AykO0ppbgnD8z1cRgs8mMEnQANwQ99iraFCEF8HHzU835nUJsQibVFSAJzPk6fycmUg+nG+TX1V1Gg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748952879; c=relaxed/simple;
-	bh=t6VACjOwekeSdoTcNJF/T+YgRqCVuvNSNERLhcOem5Y=;
+	s=arc-20240116; t=1748953119; c=relaxed/simple;
+	bh=hRBfjkyXDEB8n6PRaJohwZBVd9S/I2B0A30GC3UZkSU=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=d2O4dC9mc9pfMPLg3MaH4MH7L6GA/UBHQYJRNzJgKloyv587MSKt8OqPHm3s9/kzL06aCe6833Dos58ZSicfvEU1S5K2CoILjtaZ+0FsrA0VPm+vsqMji6OGXjz18rGGqU6lOFQaPxvvNkKekvBot5i2DzdmvPssjrXpa7GUHNg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=TKepFSI5; arc=none smtp.client-ip=209.85.217.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	 To:Cc:Content-Type; b=ODBcf55PRk1JefZr+q7sFCPZz0sy3I9WDbbxReQhIjqFYyMbsMuDv8UF96aP8YeR2KYhsox14+7wsGWKKQj7FpFGb/ZtDnEmH5YLCGtlDStj14Ji9eOdI1tsZiNODn+4hSbQUKNKX9FWnKJnIDjoEcxyV8T7JIH0jU0mtDYJZ6E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=T0Sfa3Ri; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="TKepFSI5"
-Received: by mail-vs1-f42.google.com with SMTP id ada2fe7eead31-4e5aa697e7eso3307851137.1
-        for <patches@lists.linux.dev>; Tue, 03 Jun 2025 05:14:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1748952876; x=1749557676; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ekMu844lc62J2cT/hTWiYp5z39/Arp1wDxCaIiaTRQ8=;
-        b=TKepFSI57kxXyeb5fYqFW+YfvgImcvm//QUshEvMeSJ2LJttdeFwfROkxU6YOjf6op
-         8ADavN87RO3Td9Le+vbshXsroU5kciDZUHWfSlSasB6uvg8x4LTeuZPNDYlrZ6nftND5
-         ADZHDPHr6VtR4F/rWXTZFNLz5aQusDySKYsOuAqU0qurIRZNfEvcZ/ccRQpmZWz6UBEt
-         GsJ6tJWyV+RelXM4dmNd89nFxJ0FC6QN1qm6pLTfG4/+R7xmz4E8UfjbHlgd8OYGu623
-         gn+M0czZNSV60PIIRvJk8Ha005KIDM9q14Tuf4YmETkkBj2aE1YoZNXVr6LlX5qjcwr4
-         KIQQ==
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="T0Sfa3Ri"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1748953116;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=ffXIBf29sZb1K6xWm0mL1At/DHNtjLOFFnwn7PxkVT4=;
+	b=T0Sfa3Rie7IzQAXADlI4KSBp39IWb7EJilsQEEdHfLmjWva5YYa9hDotGPe+bI3wHjCdvI
+	z1HHWvcpGNfHoYtmiJfdtMGsDGMkVSd0Iy5vaoRNleA332CLXsHJ36v1FGB0QVwV0+8bW/
+	bOsee/vqL1GdZQu0SWMNTnvTLgTP+Uk=
+Received: from mail-oo1-f72.google.com (mail-oo1-f72.google.com
+ [209.85.161.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-500-YaIvaHeuNWS8nwtYlavPag-1; Tue, 03 Jun 2025 08:18:35 -0400
+X-MC-Unique: YaIvaHeuNWS8nwtYlavPag-1
+X-Mimecast-MFC-AGG-ID: YaIvaHeuNWS8nwtYlavPag_1748953114
+Received: by mail-oo1-f72.google.com with SMTP id 006d021491bc7-605f8bca0e3so4473167eaf.3
+        for <patches@lists.linux.dev>; Tue, 03 Jun 2025 05:18:35 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748952876; x=1749557676;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ekMu844lc62J2cT/hTWiYp5z39/Arp1wDxCaIiaTRQ8=;
-        b=OAm/cxYeNN6CXmVAMOhzcNhhDEdTTNFCDR+/oJgJJcCdJ1Ojt5H8Y9ypokRR28/0OS
-         H3EH6xptCrZW7h6bQF01OzuKiedlh2qGZBHqUqwpdJOMsBcd7d2d9uCuzcyfda2y+Ar8
-         +U3h6B0WvRV3o3XjVIDhoPKz/N6Q0qzTB8a6DgE44SvIEU27avXl3nMDDWGWQkHaQeXe
-         EQsQjK+ZHgpnOnjUmvZmeHJxARxA/b7Q3s4s42sBAadp1aQCXCVqGheCBqCX7EK1alu+
-         idJjj3OEv0BjdfkAPXiKcYQj+7LiQNYvx+b3y1Z8IdoWIHGL+PKNOK4AfYSDua7ZsvLb
-         CFMg==
-X-Forwarded-Encrypted: i=1; AJvYcCWIpT3C9FSj5zqnW4GPGud6UGyPLs3GQvGAOFH/YvPy92tnQGf87CIfXWVGHH1eTBuPYmKC/2mf@lists.linux.dev
-X-Gm-Message-State: AOJu0YyefJEYId7vWVUyaIVnpXWCj88iPUDcdw+Rf1BJa432hP1Zy/8A
-	q4n4RODSFW2PiNtBr61iHZahS5x2DG3urNHGzeeGi+yrEfouY1MkAFyPwXE5DlK+avWHstdCWQr
-	7sQxSZR1UmvQs+M3q6H/Dz3YnJOsYIiD1J44EtePnjQ==
-X-Gm-Gg: ASbGncsXaXUs0s8lOo4FQf+ThChxrD2U1O65kw4i0xgEliM/KlOR3bBSlA0SEC4MYol
-	tA9NkCOKP38fPt1SgUiX++DIiJlzjYrgli/VWzLs99ZorSLbkRLbmoVrmQfryZMclCc25ZbVBg8
-	oOhuhyLi4EgB9s5d1mRhT2rwx3I8sBgsBrlVc3iQNa4w==
-X-Google-Smtp-Source: AGHT+IHiguH/q/uOG6AU4kDV0YQqPceDg6Ud9t4FMNb+4rqbBbm2F1nz7LfKFd2Q4SlCoMcQHCIYagI1s9WlCBukVG0=
-X-Received: by 2002:a67:eb0f:0:b0:4e1:441d:be9f with SMTP id
- ada2fe7eead31-4e736014deamr1157543137.2.1748952876505; Tue, 03 Jun 2025
- 05:14:36 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1748953114; x=1749557914;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ffXIBf29sZb1K6xWm0mL1At/DHNtjLOFFnwn7PxkVT4=;
+        b=iSmaGazs81sI77wemYccp2W0lh0u+ZCOmTLFUqPrKQ+Gb/WRhSHce1Yv+KpDuW1O4t
+         Ir3nzewMSaZ70KsEWVxsZsJbFkWHAoMLRmgNNCAQz9XKEClSklh2tffBMe9B733hqsta
+         1jVsHg3qLKPlzl9TJYbjUczgq9nDjhU9QhMMm1KqNPyvUWx3mhnZ1jdN6xQnBtfw0cgQ
+         70WgjU4x4i40m2OFjErGvT3GiXohwOmfdzSkLeu2NxrwjMoet3q+2Wl4wWGkyEaVoxvP
+         2N45Vlj7zDEc6D+WY2suhaQRvrXQ3PGQXM67VWunqc4xt5Kb25U1c2nBPeCouYEDVKx0
+         0Vcg==
+X-Forwarded-Encrypted: i=1; AJvYcCXVYhh5hdhHWhSQUQ2SAsLAoLhQe1NxJZ45AI6fC3U9x1DFQszpeHKfnajBzt+6BSU1yBnilin/@lists.linux.dev
+X-Gm-Message-State: AOJu0YwTBglLCVwxkYZm6JcsqyWa4B22z4KK3mxGGn/niVtOtWqCmPgN
+	hrN82wzOheQmLpy3+8grfCAKarNHkoAfU+5e03wwjTFShamozQvh6qDSzs9PYEch+jH2/GK2azU
+	WT1hhPgVlTOtohQo3yqGE1cSnG20vwexQc5qJtTiEgAMZpyCg2f2W0mJj/+5CWdShsdRA4f7I38
+	ocosJO+yf5yixgN9SxZ1M5bNZGAaHxUfCMvO2blkxgYLW2
+X-Gm-Gg: ASbGncueSkpL5luPH+pqDUl24Fo2bxXIHrN20Bye0UlfQ0rXu7GpDvn7kmMQcPHHcVp
+	rKh0PG9YCzzRV2UehEn8+PLi9bgcYT+LHNPWAlmUeWZidqcEwP/lIV5J4moGn2PA61942ysoclB
+	JbtA==
+X-Received: by 2002:a05:6820:a02:b0:60b:d676:b666 with SMTP id 006d021491bc7-60db9ea6bf9mr7320165eaf.5.1748953114239;
+        Tue, 03 Jun 2025 05:18:34 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE8KvDsdDkgI+1PNoaL+B3Q6bgNuhvgw/iB+KFAL38XMwrBiuIXT9ZI7YntDi9tKBM5UX0PsshNsCF2QikhX9s=
+X-Received: by 2002:a05:690c:6e01:b0:70e:1ef7:6eff with SMTP id
+ 00721157ae682-71097c2a91amr162686157b3.3.1748953103596; Tue, 03 Jun 2025
+ 05:18:23 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250602134237.940995114@linuxfoundation.org>
-In-Reply-To: <20250602134237.940995114@linuxfoundation.org>
-From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Tue, 3 Jun 2025 17:44:25 +0530
-X-Gm-Features: AX0GCFtcVR-C4Oy5JyTm99FTojQYH7IOaO2ypXBtQVxYm4_OVJOIEFtSBGiuXhg
-Message-ID: <CA+G9fYtv6GPx0guY03DXBwoCcM-VdWHwUy5mScP=cP2g7zzo0g@mail.gmail.com>
-Subject: Re: [PATCH 6.15 00/49] 6.15.1-rc1 review
+References: <20250602134340.906731340@linuxfoundation.org> <20250602134341.897528821@linuxfoundation.org>
+In-Reply-To: <20250602134341.897528821@linuxfoundation.org>
+From: Stefano Garzarella <sgarzare@redhat.com>
+Date: Tue, 3 Jun 2025 14:18:12 +0200
+X-Gm-Features: AX0GCFt5-R5_l1JcZoLRDhSODZkzwizMtWUfInGyGiuuSHRx5X0zU78Q3RYWgCE
+Message-ID: <CAGxU2F7fRUn1H_-CF5SJJ1DZDEt3xfm+er0kqa_XS9nn6uJi0g@mail.gmail.com>
+Subject: Re: [PATCH 6.6 024/444] vhost_task: fix vhost_task_create() documentation
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, 
-	broonie@kernel.org
+	"Michael S. Tsirkin" <mst@redhat.com>, Sasha Levin <sashal@kernel.org>
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: OwrB36uGTTGml00YRNK-RB3n7d6M5ocQvyEDbxRohB0_1748953114
+X-Mimecast-Originator: redhat.com
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Mon, 2 Jun 2025 at 19:19, Greg Kroah-Hartman
+On Mon, 2 Jun 2025 at 16:04, Greg Kroah-Hartman
 <gregkh@linuxfoundation.org> wrote:
 >
-> This is the start of the stable review cycle for the 6.15.1 release.
-> There are 49 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+> 6.6-stable review patch.  If anyone has any objections, please let me know.
+
+It seems that commit cb380909ae3b ("vhost: return task creation error
+instead of NULL") is not backported to 6.6, so we can skip this patch.
+BTW it's just a fix in a comment, so if it's too late, it should not
+be a big issue.
+
+Just for my understanding, next time should I add a Fixes tag in this
+case, also if the patch doesn't touch code?
+
+Thanks,
+Stefano
+
 >
-> Responses should be made by Wed, 04 Jun 2025 13:42:20 +0000.
-> Anything received after that time might be too late.
+> ------------------
 >
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
-6.15.1-rc1.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-6.15.y
-> and the diffstat can be found below.
+> From: Stefano Garzarella <sgarzare@redhat.com>
 >
-> thanks,
+> [ Upstream commit fec0abf52609c20279243699d08b660c142ce0aa ]
 >
-> greg k-h
+> Commit cb380909ae3b ("vhost: return task creation error instead of NULL")
+> changed the return value of vhost_task_create(), but did not update the
+> documentation.
+>
+> Reflect the change in the documentation: on an error, vhost_task_create()
+> returns an ERR_PTR() and no longer NULL.
+>
+> Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+> Message-Id: <20250327124435.142831-1-sgarzare@redhat.com>
+> Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> ---
+>  kernel/vhost_task.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/kernel/vhost_task.c b/kernel/vhost_task.c
+> index 8800f5acc0071..0e4455742190c 100644
+> --- a/kernel/vhost_task.c
+> +++ b/kernel/vhost_task.c
+> @@ -111,7 +111,7 @@ EXPORT_SYMBOL_GPL(vhost_task_stop);
+>   * @arg: data to be passed to fn and handled_kill
+>   * @name: the thread's name
+>   *
+> - * This returns a specialized task for use by the vhost layer or NULL on
+> + * This returns a specialized task for use by the vhost layer or ERR_PTR() on
+>   * failure. The returned task is inactive, and the caller must fire it up
+>   * through vhost_task_start().
+>   */
+> --
+> 2.39.5
+>
+>
+>
 
-
-Results from Linaro=E2=80=99s test farm.
-No regressions on arm64, arm, x86_64, and i386.
-
-Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
-
-## Build
-* kernel: 6.15.1-rc1
-* git: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-=
-rc.git
-* git commit: 86677b94d603c727f6b88b4b77bfce2601aa4465
-* git describe: v6.15-50-g86677b94d603
-* test details:
-https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.15.y/build/v6.15=
--50-g86677b94d603
-
-## Test Regressions (compared to v6.15)
-
-## Metric Regressions (compared to v6.15)
-
-## Test Fixes (compared to v6.15)
-
-## Metric Fixes (compared to v6.15)
-
-## Test result summary
-total: 321892, pass: 296354, fail: 6075, skip: 19463, xfail: 0
-
-## Build Summary
-* arc: 5 total, 5 passed, 0 failed
-* arm: 139 total, 136 passed, 3 failed
-* arm64: 57 total, 55 passed, 1 failed, 1 skipped
-* i386: 18 total, 18 passed, 0 failed
-* mips: 34 total, 27 passed, 7 failed
-* parisc: 4 total, 4 passed, 0 failed
-* powerpc: 40 total, 39 passed, 1 failed
-* riscv: 25 total, 25 passed, 0 failed
-* s390: 22 total, 22 passed, 0 failed
-* sh: 5 total, 5 passed, 0 failed
-* sparc: 4 total, 3 passed, 1 failed
-* x86_64: 49 total, 46 passed, 3 failed
-
-## Test suites summary
-* boot
-* commands
-* kselftest-arm64
-* kselftest-breakpoints
-* kselftest-capabilities
-* kselftest-cgroup
-* kselftest-clone3
-* kselftest-core
-* kselftest-cpu-hotplug
-* kselftest-cpufreq
-* kselftest-efivarfs
-* kselftest-exec
-* kselftest-fpu
-* kselftest-ftrace
-* kselftest-futex
-* kselftest-gpio
-* kselftest-intel_pstate
-* kselftest-ipc
-* kselftest-kcmp
-* kselftest-kvm
-* kselftest-livepatch
-* kselftest-membarrier
-* kselftest-memfd
-* kselftest-mincore
-* kselftest-mm
-* kselftest-mqueue
-* kselftest-net
-* kselftest-net-mptcp
-* kselftest-openat2
-* kselftest-ptrace
-* kselftest-rseq
-* kselftest-rtc
-* kselftest-rust
-* kselftest-seccomp
-* kselftest-sigaltstack
-* kselftest-size
-* kselftest-tc-testing
-* kselftest-timers
-* kselftest-tmpfs
-* kselftest-tpm2
-* kselftest-user_events
-* kselftest-vDSO
-* kselftest-x86
-* kunit
-* kvm-unit-tests
-* lava
-* libgpiod
-* libhugetlbfs
-* log-parser-boot
-* log-parser-build-clang
-* log-parser-build-gcc
-* log-parser-test
-* ltp-capability
-* ltp-commands
-* ltp-containers
-* ltp-controllers
-* ltp-cpuhotplug
-* ltp-crypto
-* ltp-cve
-* ltp-dio
-* ltp-fcntl-locktests
-* ltp-fs
-* ltp-fs_bind
-* ltp-fs_perms_simple
-* ltp-hugetlb
-* ltp-ipc
-* ltp-math
-* ltp-mm
-* ltp-nptl
-* ltp-pty
-* ltp-sched
-* ltp-smoke
-* ltp-syscalls
-* ltp-tracing
-* modules
-* perf
-* rcutor[
-* rcutorture
-* rt-tests-cyclicdeadline
-* rt-tests-pi-stress
-* rt-tests-pmqtest
-* rt-tests-rt-migrate-test
-* rt-tests-signaltest
-
---
-Linaro LKFT
-https://lkft.linaro.org
