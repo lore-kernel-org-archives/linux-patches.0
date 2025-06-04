@@ -1,44 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F4D41862A;
-	Wed,  4 Jun 2025 00:52:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3FC61DE8A0;
+	Wed,  4 Jun 2025 00:52:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748998352; cv=none; b=ny9Vc/RRXRxI5U1NRwZwbKAG0F+fcKbOlCQt/B1sOf9StcQbt8X9tHIJgHUUQDkjy2s7dw5iqAkiw0O3jM6jNK2z5++4EiWiWa+QYmMBMTeIE4h2YPucoCxTzNw4jL3v6FuYuMKahNTs3hHXu1nPGGWZGu2cIGpeuZeTlo82gIM=
+	t=1748998354; cv=none; b=NRuh21S2rxVFy929jpfaWZ5NifPxojy1bW0r58h3Bj6G5iTnKdKz/EZbX80FMcXOsv/Eqn7L1DbVKmXiNZ0xmQXXVupj8FpJ2wReXQz0x38Lp9SoLWnALPake5lT9f9kWYVuarrk5Q+m8o6czGn9sUGLd8N33IVzueZXkknNLA8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748998352; c=relaxed/simple;
-	bh=fg1s1KXp0ngfFQ5NZx5eHC38Fjc1jFnP9nLeIMhJd50=;
+	s=arc-20240116; t=1748998354; c=relaxed/simple;
+	bh=Gy3GWvRDo+6BopqXzKv4lQ8sW1fQR0See/ZlHY9z3bo=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=O9vmms8Eyx+Ac8yMGsIzTl1qDMBZv3a9uqzsQ+0bAWJamufyky7pcWRztKTwzstMbHT9DrQoW2rBWEkJr8u8qOQhy10TQpEz3ye/NnQ1VRijBLpkKFn9HPCXdxoaphh7o3r1pqLHA3+tUTIlMQAPN2m5uF1sL8m0qCt51BlhyCc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dbn9OOXy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=DniGsanHxGdJZBV1kBefAizrCQWaOp8rj5xMaUKpDlkzCxIo/CqtjSRJKvf+LXRpDDKF9K3uWbahvJSwMp49EAInvt/svQ7Ywr/j0s7+eWgj57nYgjbN1NzBaekPSalIBdTJkih3KbijLsaG7PaKppMCA7hpieK7z5Y45fhsy+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kddrs9ne; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dbn9OOXy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED943C4CEEF;
-	Wed,  4 Jun 2025 00:52:30 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kddrs9ne"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87ABEC4CEED;
+	Wed,  4 Jun 2025 00:52:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748998352;
-	bh=fg1s1KXp0ngfFQ5NZx5eHC38Fjc1jFnP9nLeIMhJd50=;
+	s=k20201202; t=1748998353;
+	bh=Gy3GWvRDo+6BopqXzKv4lQ8sW1fQR0See/ZlHY9z3bo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dbn9OOXyDBVcahqAw+iNKQYsJ0Vhw+n0w0UzlfvLidIzh7qi8whL/0IBZJMfHDhlp
-	 WR0v1IEdevonqu1iVmmOV8czIwuN178UKFlXR3VnyvcsJ+nqA9PLcXVUGJs4CLUdxX
-	 ebh+iUuXN4I8rlP2IybM4h4hE0ClpV/IFqQdrb9W0H7Agmuzcmyc1/+3B6GQU/uLIh
-	 /9PTeEuPVAgzZMAMDBrsDEObdiJpKBWNBGuWbdikifSeDkNJUDGmLWJXsPche8PsrK
-	 NGsWbE2+UmsJ84jzjejZzS5uQe3MjJZK3K7wTQN/SAht7qGEI6IwRLthHT4o+iyMuG
-	 lQnSmT5msHXrA==
+	b=kddrs9neNotMs60gR88qpPJILxS2XTphkba7Wd9fpMx5WVESOaEqvPrDtVIQHuIOj
+	 Fh1TTHmBHoXpqjqAx3cORUOUo5kmFi2vqrIBMJFYXFbgCNT2drpSLpcTPJLOX1MDAU
+	 HFtbpYJQe9jVgnCBQYBNz+kynJt3EkJC2JROSyy46oPRuyxR1ocBjM7byOxdBJuUmD
+	 G1eRC+AviquSrR1XY553rZZLJ/2VVYLyPda8gwEr1BaMXZ5TJ11fm+Z5wQu7bHbGaX
+	 SQAgt+O+XAEJBZYRX9rjx+lw8D5lKOBIGE2Wd5z6uhayJZ1Lw7KpQ+jKbWBqmHcJU8
+	 gqrjJ0tTSAkHw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Mykyta Yatsenko <yatsenko@meta.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
+Cc: Gabor Juhos <j4g8y7@gmail.com>,
+	Imre Kaloz <kaloz@openwrt.org>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>,
-	eddyz87@gmail.com,
-	ast@kernel.org,
-	daniel@iogearbox.net,
-	bpf@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.15 051/118] libbpf: Check bpf_map_skeleton link for NULL
-Date: Tue,  3 Jun 2025 20:49:42 -0400
-Message-Id: <20250604005049.4147522-51-sashal@kernel.org>
+	gregory.clement@bootlin.com,
+	sebastian.hesselbarth@gmail.com,
+	brgl@bgdev.pl,
+	linux-arm-kernel@lists.infradead.org,
+	linux-gpio@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.15 052/118] pinctrl: armada-37xx: propagate error from armada_37xx_gpio_get()
+Date: Tue,  3 Jun 2025 20:49:43 -0400
+Message-Id: <20250604005049.4147522-52-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250604005049.4147522-1-sashal@kernel.org>
 References: <20250604005049.4147522-1-sashal@kernel.org>
@@ -54,89 +57,88 @@ X-stable-base: Linux 6.15
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mykyta Yatsenko <yatsenko@meta.com>
+From: Gabor Juhos <j4g8y7@gmail.com>
 
-[ Upstream commit d0445d7dd3fd9b15af7564c38d7aa3cbc29778ee ]
+[ Upstream commit 57273ff8bb16f3842c2597b5bbcd49e7fa12edf7 ]
 
-Avoid dereferencing bpf_map_skeleton's link field if it's NULL.
-If BPF map skeleton is created with the size, that indicates containing
-link field, but the field was not actually initialized with valid
-bpf_link pointer, libbpf crashes. This may happen when using libbpf-rs
-skeleton.
-Skeleton loading may still progress, but user needs to attach struct_ops
-map separately.
+The regmap_read() function can fail, so propagate its error up to
+the stack instead of silently ignoring that.
 
-Signed-off-by: Mykyta Yatsenko <yatsenko@meta.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20250514113220.219095-1-mykyta.yatsenko5@gmail.com
+Signed-off-by: Imre Kaloz <kaloz@openwrt.org>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+Link: https://lore.kernel.org/20250514-pinctrl-a37xx-fixes-v2-4-07e9ac1ab737@gmail.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Now I have enough information to provide a comprehensive analysis.
-**YES** This commit should be backported to stable kernel trees. Here's
-my extensive analysis: ## Critical Vulnerability Fix This commit
-addresses a **NULL pointer dereference vulnerability** in the
-`bpf_object__attach_skeleton()` function. The fix adds a simple but
-crucial NULL check for the `link` pointer before dereferencing it. ##
-Analysis of the Code Changes ### The Problem Looking at lines
-14104-14114 in the current code: ```c link = map_skel->link; if (!link)
-{ pr_warn("map '%s': BPF map skeleton link is uninitialized\n",
-bpf_map__name(map)); continue; } if (*link) continue; ``` The commit
-adds a NULL check for `link` before attempting to dereference it with
-`*link`. **Without this check, if `link` is NULL, the code would crash
-when executing `if (*link)`**. ### Why This is Critical 1. **Immediate
-crash potential**: The missing NULL check can cause immediate
-segmentation faults when `map_skel->link` is NULL 2. **Common
-occurrence**: This can happen when using libbpf-rs skeletons or other
-third-party skeleton generators that may not properly initialize the
-link field 3. **User-facing impact**: The commit message explicitly
-states this affects libbpf-rs skeleton usage, indicating real-world
-impact ## Comparison with Historical Patterns This fix follows **exactly
-the same pattern** as Similar Commit #1 (marked YES for backporting),
-which added a NULL check to `bpf_object__destroy_skeleton()`: -
-**Similar Commit #1**: Added `if (!s) return;` to prevent NULL deref in
-destroy_skeleton - **Current Commit**: Adds `if (!link)` check to
-prevent NULL deref in attach_skeleton Both are small, defensive
-programming fixes that prevent crashes without changing functionality.
-## Consistency with Existing Code Looking at the current kernel tree,
-`bpf_object__destroy_skeleton()` already has a NULL check (line
-14154-14155): ```c void bpf_object__destroy_skeleton(struct
-bpf_object_skeleton *s) { if (!s) return; ``` This commit brings
-`bpf_object__attach_skeleton()` in line with the same defensive
-programming pattern. ## Stable Tree Criteria Assessment ✅ **Fixes
-important bug**: Prevents NULL pointer dereference crashes ✅ **Small and
-contained**: Only adds 4 lines of code ✅ **No architectural changes**:
-Pure defensive programming ✅ **Minimal regression risk**: Cannot break
-existing functionality ✅ **Clear side effects**: Only prevents crashes,
-no behavioral changes ✅ **Confined to subsystem**: Only affects libbpf
-skeleton handling ## Risk Assessment - **Regression risk**: **Extremely
-low** - the check only prevents crashes - **Compatibility**: **Perfect**
-- no API changes, only prevents invalid operations - **Dependencies**:
-**None** - standalone fix with no external dependencies This is a
-textbook example of a stable tree candidate: a small, safe fix that
-prevents crashes without changing any functionality or introducing new
-behavior.
+Based on my comprehensive analysis, here is my determination: **YES**
+This commit should be backported to stable kernel trees. Here's my
+detailed analysis: ## Analysis of the Code Change The commit fixes a
+clear bug in the `armada_37xx_gpio_get()` function in
+`drivers/pinctrl/mvebu/pinctrl-armada-37xx.c`. The specific changes are:
+1. **Before**: `regmap_read(info->regmap, reg, &val);` - ignores return
+value 2. **After**: `ret = regmap_read(info->regmap, reg, &val); if
+(ret) return ret;` - properly handles errors ## Backport Suitability
+Assessment ### ✅ **Meets Stable Tree Criteria:** 1. **Bug Fix**: This
+clearly fixes a real bug where regmap read failures are silently
+ignored, potentially returning garbage data to userspace. 2. **Small and
+Contained**: The change is minimal (3 lines added) and extremely
+focused, affecting only error handling in a single function. 3. **Low
+Regression Risk**: The change only adds error checking where none
+existed before. It cannot introduce new bugs - it can only prevent
+incorrect behavior. 4. **No Architectural Changes**: This is purely
+error handling improvement with no changes to the driver's architecture
+or interfaces. 5. **Important Subsystem**: GPIO operations are
+fundamental and used by many kernel subsystems and userspace
+applications. ### ✅ **Follows Established Kernel Patterns:** My analysis
+of other GPIO drivers shows this error handling pattern is **universal**
+across the kernel: - `gpio-arizona.c`, `gpio-bd71828.c`, `gpio-
+madera.c`, `gpio-max77620.c`, `pinctrl-axp209.c`, and many others -
+**Every examined driver** checks `regmap_read` return values in GPIO get
+functions - The armada-37xx driver was an outlier in ignoring these
+errors ### ✅ **Real-World Impact:** This fix addresses scenarios where:
+- **Hardware communication failures** (I2C/SPI bus errors, device power
+issues) - **Device disconnect events** (hot-plug scenarios, power
+management) - **Timing/electrical issues** causing intermittent regmap
+failures Without this fix, `gpio_get()` would return potentially garbage
+values (using uninitialized `val`) when hardware communication fails,
+leading to incorrect GPIO state reporting to userspace. ### ✅
+**Reference Similar Commits:** Looking at the provided examples, this
+commit closely resembles: - **Similar Commit #3 (Status: YES)**: "Fix
+irq_of_parse_and_map() return value" - fixes incorrect error handling -
+**Similar Commit #1 (Status: YES)**: "Convert to use dev_err_probe()" -
+improves error handling patterns Both are small, focused error handling
+improvements that were deemed suitable for backporting. ## Conclusion
+This is a textbook example of a stable tree candidate: it's a small,
+safe bug fix that brings the driver in line with kernel-wide error
+handling standards, addresses real hardware failure scenarios, and has
+zero risk of regression while providing tangible benefits for system
+reliability.
 
- tools/lib/bpf/libbpf.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/pinctrl/mvebu/pinctrl-armada-37xx.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
-index 6b85060f07b3b..956dfd3b5fc9b 100644
---- a/tools/lib/bpf/libbpf.c
-+++ b/tools/lib/bpf/libbpf.c
-@@ -14099,6 +14099,12 @@ int bpf_object__attach_skeleton(struct bpf_object_skeleton *s)
- 		}
+diff --git a/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c b/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c
+index 2438785c9ef88..cd238730fcb7e 100644
+--- a/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c
++++ b/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c
+@@ -441,11 +441,14 @@ static int armada_37xx_gpio_get(struct gpio_chip *chip, unsigned int offset)
+ 	struct armada_37xx_pinctrl *info = gpiochip_get_data(chip);
+ 	unsigned int reg = INPUT_VAL;
+ 	unsigned int val, mask;
++	int ret;
  
- 		link = map_skel->link;
-+		if (!link) {
-+			pr_warn("map '%s': BPF map skeleton link is uninitialized\n",
-+				bpf_map__name(map));
-+			continue;
-+		}
-+
- 		if (*link)
- 			continue;
+ 	armada_37xx_update_reg(&reg, &offset);
+ 	mask = BIT(offset);
  
+-	regmap_read(info->regmap, reg, &val);
++	ret = regmap_read(info->regmap, reg, &val);
++	if (ret)
++		return ret;
+ 
+ 	return (val & mask) != 0;
+ }
 -- 
 2.39.5
 
