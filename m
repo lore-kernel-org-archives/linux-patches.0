@@ -1,45 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A41E813C3F2;
-	Wed,  4 Jun 2025 01:07:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE79927C861;
+	Wed,  4 Jun 2025 01:07:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748999242; cv=none; b=lqFip+XzPdXu1jUxNZOgVBs/G7IvltFIH9iUx0DRbJo4AsCUzHQCXZU6Nio5MxL8wwU63fj9aArDcegmzoT++l5ulNUbtcFcYWhgV6dRXrIH4jw6FL/Bm97U20CRYU2W3o8/3CJfyJcalzULp7Ahaqeqc+4ZoRd8JihD+g4/sts=
+	t=1748999244; cv=none; b=jE6W+yAgs2ymTlmQqS30tt/jNrkHo3C03dAE7zfUvdU1lsNYHD9bYfktXcIbEdd/Sdk8NtAkqFS58nKqC5rdihz3xAX9h4qZWBeGRU0BCNCYh+Pvw+rbhLKsRjwUr0ai0b5odmnMgL60jm5goQ8XDAyDL1sJofY/qoOIClarqP4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748999242; c=relaxed/simple;
-	bh=/jsKi9CSTHx+CeAbjK67+mABdsFxLzAAzg44Qy9Ksyw=;
+	s=arc-20240116; t=1748999244; c=relaxed/simple;
+	bh=rjF3uAC5sDiakL1mOlNOmrSdPifA6TY0iaN0TIa7V3Q=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=o+SvS66YzMRboJPmvkGTyDXrn7LsW/hIUEhxJJBpmDxdpIC/u2IaSRdu+0bA8Fqyc/GMbdb8s2ZbTb46zSfB+vCQ1ldmRQfdLR6JNbMAB6PQxWgQKVbr5gz9J+XGkonRQ6xIdTs8jomp7M6AzOsGMK+eMS7FV126pkRRQ8XW5To=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=exZ9JZCT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=L+Ty5JCk/klezB4NGAFWius7ppwmT+Etgd1JuK4w7wf4+CDo/mc5rn7K9SLf2yqbJ+XJ+1GGSohy96UvdJaTOozySZYZtEyT677PeB310G3P1vAV9OxYpcDiIN9a3R/JXybnAnkVhnesCFnKuULYY9f/KsTs+5haSSRZzyQ8b0Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=U6mP+Vlz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="exZ9JZCT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEFD4C4CEEF;
-	Wed,  4 Jun 2025 01:07:20 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="U6mP+Vlz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 788DCC4CEF2;
+	Wed,  4 Jun 2025 01:07:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748999242;
-	bh=/jsKi9CSTHx+CeAbjK67+mABdsFxLzAAzg44Qy9Ksyw=;
+	s=k20201202; t=1748999243;
+	bh=rjF3uAC5sDiakL1mOlNOmrSdPifA6TY0iaN0TIa7V3Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=exZ9JZCTX5HRuoxjxWI8Xh/nKrny4XlOcXQ3cXQ+qeCsgwyseqXsn62dsovj69qn5
-	 /EMAQCx18cl58Q2ex/MjJ6YIKdiNQI9hjTKRTSD/eCibzoS4VxiD6+dqyjGDZjMuZs
-	 e5gciPbRKuXeb0LNxLIUBO6+4hIk+wKyV3e6TleeuafNtGHq/3wWQhQ2s5mFTr5mLw
-	 31jcV2Dwzcm3iaJ/no6Ym+sHzm5/4eDsaXVWiV8yYhVQaHWm7D3sySTkYyGOLWU8Lp
-	 4tjczqg0HtT/sx36TFifq9P+zM0PIwfP5pAgvpxrtPBz3k+t2hLc+SVhMMvuDRXxNo
-	 z5rYuXuxk8uzw==
+	b=U6mP+VlzzuITGyjRiAOvsjUjg0lIG03rt6R7blaih3MZQsshtzQeN+VT2pVIz4sJj
+	 +lpRriRYtBoXuXUJijhrAWMqLOS8+gSTHyWJLrb5htlmjPCdIhs23nmy7UiQakIqfr
+	 V4MmaE6xwKGzxwglq+eWAzq5vpsooD4k3qiJo+k6PfNyAwNWJJTE8AqEsENMhHrC3A
+	 71hUqPKl/6dG2MVs+FQbsgscFnr09BkNkKGQZp5w9GU+bTDrszmifQuCAf37Ci0Mp+
+	 g4Y2grJHr16URb4fWQ6DCpfkjKQHahP05egEdrsGq4H4AFt9VPSktkffDS53c6FD75
+	 KY72c/Pd6NJxQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Eelco Chaudron <echaudro@redhat.com>,
-	Simon Horman <horms@kernel.org>,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: Gabor Juhos <j4g8y7@gmail.com>,
+	Imre Kaloz <kaloz@openwrt.org>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>,
-	aconole@redhat.com,
-	netdev@vger.kernel.org,
-	dev@openvswitch.org
-Subject: [PATCH AUTOSEL 5.4 09/20] openvswitch: Stricter validation for the userspace action
-Date: Tue,  3 Jun 2025 21:06:55 -0400
-Message-Id: <20250604010706.7395-9-sashal@kernel.org>
+	gregory.clement@bootlin.com,
+	sebastian.hesselbarth@gmail.com,
+	brgl@bgdev.pl,
+	linux-arm-kernel@lists.infradead.org,
+	linux-gpio@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.4 10/20] pinctrl: armada-37xx: propagate error from armada_37xx_pmx_set_by_name()
+Date: Tue,  3 Jun 2025 21:06:56 -0400
+Message-Id: <20250604010706.7395-10-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250604010706.7395-1-sashal@kernel.org>
 References: <20250604010706.7395-1-sashal@kernel.org>
@@ -52,89 +54,81 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 5.4.293
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eelco Chaudron <echaudro@redhat.com>
+From: Gabor Juhos <j4g8y7@gmail.com>
 
-[ Upstream commit 88906f55954131ed2d3974e044b7fb48129b86ae ]
+[ Upstream commit 4229c28323db141eda69cb99427be75d3edba071 ]
 
-This change enhances the robustness of validate_userspace() by ensuring
-that all Netlink attributes are fully contained within the parent
-attribute. The previous use of nla_parse_nested_deprecated() could
-silently skip trailing or malformed attributes, as it stops parsing at
-the first invalid entry.
+The regmap_update_bits() function can fail, so propagate its error
+up to the stack instead of silently ignoring that.
 
-By switching to nla_parse_deprecated_strict(), we make sure only fully
-validated attributes are copied for later use.
-
-Signed-off-by: Eelco Chaudron <echaudro@redhat.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Acked-by: Ilya Maximets <i.maximets@ovn.org>
-Link: https://patch.msgid.link/67eb414e2d250e8408bb8afeb982deca2ff2b10b.1747037304.git.echaudro@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Imre Kaloz <kaloz@openwrt.org>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+Link: https://lore.kernel.org/20250514-pinctrl-a37xx-fixes-v2-7-07e9ac1ab737@gmail.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-**YES** This commit should be backported to stable kernel trees. ##
-Analysis **Commit Overview:** The commit changes `validate_userspace()`
-function in `net/openvswitch/flow_netlink.c` by replacing
-`nla_parse_nested_deprecated()` with `nla_parse_deprecated_strict()` to
-ensure stricter validation of Netlink attributes for the userspace
-action. **Specific Code Changes:** The key change is on lines 3052-3054:
-```c // Before: error = nla_parse_nested_deprecated(a,
-OVS_USERSPACE_ATTR_MAX, attr, userspace_policy, NULL); // After: error =
-nla_parse_deprecated_strict(a, OVS_USERSPACE_ATTR_MAX, nla_data(attr),
-nla_len(attr), userspace_policy, NULL); ``` **Why This Should Be
-Backported:** 1. **Security Enhancement:** This commit addresses a
-parsing vulnerability where malformed attributes could be silently
-ignored. The original `nla_parse_nested_deprecated()` stops parsing at
-the first invalid entry, potentially allowing trailing malformed data to
-bypass validation. 2. **Robustness Fix:** The change ensures all netlink
-attributes are fully contained within the parent attribute bounds,
-preventing potential buffer over-reads or under-reads that could lead to
-security issues. 3. **Pattern Consistency:** Looking at the git blame
-output (lines 3085-3087), we can see that
-`nla_parse_deprecated_strict()` was already introduced in 2019 by commit
-8cb081746c031 and is used elsewhere in the same file for similar
-validation (e.g., `validate_and_copy_check_pkt_len()` function). 4.
-**Low Risk:** This is a small, contained change that only affects input
-validation - it doesn't change functionality or introduce new features.
-The change is defensive and follows existing patterns in the codebase.
-5. **Similar Precedent:** This commit is very similar to the validated
-"Similar Commit #2" which was marked for backporting (status: YES). That
-commit also dealt with netlink attribute validation safety in
-openvswitch (`validate_set()` function) and was considered suitable for
-stable trees. 6. **Critical Subsystem:** Open vSwitch is a critical
-networking component used in virtualization and container environments.
-Input validation issues in this subsystem could potentially be exploited
-for privilege escalation or denial of service. 7. **Clear Intent:** The
-commit message explicitly states this "enhances robustness" and ensures
-"only fully validated attributes are copied for later use," indicating
-this is a defensive security improvement. **Risk Assessment:** - Very
-low regression risk - No API changes - Only affects error handling paths
-- Follows established validation patterns in the same codebase This
-commit fits perfectly into the stable tree criteria: it's an important
-security/robustness fix, has minimal risk of regression, is well-
-contained, and addresses a clear validation vulnerability in a critical
-kernel subsystem.
+Based on my analysis of the commit and the code context, here's my
+assessment: **YES** This commit should be backported to stable kernel
+trees. Here's my extensive analysis: ## Code Analysis The commit changes
+`armada_37xx_pmx_set_by_name()` function from: ```c
+regmap_update_bits(info->regmap, reg, mask, val); return 0; ``` To: ```c
+return regmap_update_bits(info->regmap, reg, mask, val); ``` ## Why This
+Should Be Backported 1. **Bug Fix Nature**: This is a clear bug fix that
+addresses silent error handling. The `regmap_update_bits()` function
+returns an integer error code (0 on success, negative on failure), but
+the original code was ignoring this return value and always returning
+success (0). 2. **Error Propagation Impact**: The function
+`armada_37xx_pmx_set_by_name()` is called from: -
+`armada_37xx_pmx_set()` - the main pinmux set function -
+`armada_37xx_gpio_request_enable()` - GPIO request handler that already
+checks return values 3. **Consistency with Similar Fixes**: Looking at
+the historical commits provided: - **Similar Commit #2** (Backport
+Status: YES) shows the exact same pattern where
+`armada_37xx_gpio_request_enable()` was updated to check return values
+from `armada_37xx_pmx_set_by_name()` - This current commit completes
+that fix by ensuring the function actually returns errors when they
+occur 4. **Critical Subsystem**: This affects the pinctrl subsystem
+which is fundamental to GPIO and pin configuration. Silent failures in
+pin configuration can lead to: - Hardware not being configured correctly
+- GPIO requests appearing to succeed when they actually failed -
+Difficult-to-debug hardware issues 5. **Minimal Risk**: The change is
+extremely small and contained: - No new functionality added - No
+architectural changes - Simple error propagation fix - Maintains
+existing API contract 6. **Stable Tree Criteria Compliance**: - ✅ Fixes
+an important bug affecting users - ✅ Small, contained change - ✅ No new
+features - ✅ Minimal regression risk - ✅ Affects critical kernel
+subsystem 7. **Real-World Impact**: Without this fix, regmap failures
+(which can occur due to hardware issues, power management problems, or
+I2C/SPI communication errors) would be silently ignored, leading to
+unpredictable system behavior where pin configurations appear successful
+but are actually failed. The commit follows the pattern established in
+the historical commit #2 which was marked for backporting, and
+represents the completion of proper error handling in this driver's
+critical path.
 
- net/openvswitch/flow_netlink.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/pinctrl/mvebu/pinctrl-armada-37xx.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/net/openvswitch/flow_netlink.c b/net/openvswitch/flow_netlink.c
-index 4ad4c89886ee3..f1f7a0e34c7a9 100644
---- a/net/openvswitch/flow_netlink.c
-+++ b/net/openvswitch/flow_netlink.c
-@@ -2912,7 +2912,8 @@ static int validate_userspace(const struct nlattr *attr)
- 	struct nlattr *a[OVS_USERSPACE_ATTR_MAX + 1];
- 	int error;
+diff --git a/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c b/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c
+index 359b2ecfcbdb3..1ae1a944f35e0 100644
+--- a/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c
++++ b/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c
+@@ -353,9 +353,7 @@ static int armada_37xx_pmx_set_by_name(struct pinctrl_dev *pctldev,
  
--	error = nla_parse_nested_deprecated(a, OVS_USERSPACE_ATTR_MAX, attr,
-+	error = nla_parse_deprecated_strict(a, OVS_USERSPACE_ATTR_MAX,
-+					    nla_data(attr), nla_len(attr),
- 					    userspace_policy, NULL);
- 	if (error)
- 		return error;
+ 	val = grp->val[func];
+ 
+-	regmap_update_bits(info->regmap, reg, mask, val);
+-
+-	return 0;
++	return regmap_update_bits(info->regmap, reg, mask, val);
+ }
+ 
+ static int armada_37xx_pmx_set(struct pinctrl_dev *pctldev,
 -- 
 2.39.5
 
