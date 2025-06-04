@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7DF512B73;
-	Wed,  4 Jun 2025 00:57:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A66912B73;
+	Wed,  4 Jun 2025 00:57:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748998659; cv=none; b=nsGmyRdN2MLUdRYctLPvCzloKtwQVe3JmHG+XGIan3gvWvt19FFsN4IHUp7c1bVx0QLZqhsyAd0uLL48q6Y0QGRazd0yVLlF7pVKzx/Vl2rzaGqPiSqFHpNua/p3zA8s11jiZB832pctxo9TWGcNHl7G9VIp+tJ4ydu5B41TVwo=
+	t=1748998661; cv=none; b=k9LBI5Cock5CX49mgf4TKiK7GTIIkFiE3o9RdEaTy7kXSV00YrJrUmxCPI5ZXtK8p0uNPhl+u38Y7GkLLnu9OosnV4Z/SL4pJEvYo0waV1mBGH6lD0AZqYPrexSPsWCd7qo6VrNRGLpS4uNhQk2VabQuYsIp8xKe9RSUdV0CnZI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748998659; c=relaxed/simple;
-	bh=97t6qTOFW+7pNzdQWb4ZrF0I8kLOeI8bMaxrThwxrNY=;
+	s=arc-20240116; t=1748998661; c=relaxed/simple;
+	bh=mT1Rne6Ygx1Vp1ZmVqMb9hkqHaEkBQfjE281f6VFCFw=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=ak5MurkMT8zH0faVbu5VMjA3yFJ67OVyTC1eUkdPLKTdISjqBr2OpitQT5RNfQAj38+CuLpJTOP62GBrJMMV8MFHlt3B8ksGy8LvtUJFVjFf4JPT93n0kBIGt65GQ6u54VoaEZd8sKUdIjIzpmRUk6X4vECv+bKLuyjTw1CVuys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gSGatwo/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=a7tw9t0jM0RKoTzH6L+ZqRjU8MCvVCsNI3QEQjs/m5J0xznli5BRhL6VT2Ld8E/NdTfnCR6RWnX4LYyoco+mtLylVvRG4bS1aLewaPXXk1y9wt/ERc5KuKSfsxS3jyySM5BDJ5dgsll7ZJQF+ZXUIoTVops2avIZ9sQoH5hwTGY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mEG/k+U5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gSGatwo/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96900C4CEEF;
-	Wed,  4 Jun 2025 00:57:38 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mEG/k+U5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27BEFC4CEED;
+	Wed,  4 Jun 2025 00:57:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748998659;
-	bh=97t6qTOFW+7pNzdQWb4ZrF0I8kLOeI8bMaxrThwxrNY=;
+	s=k20201202; t=1748998660;
+	bh=mT1Rne6Ygx1Vp1ZmVqMb9hkqHaEkBQfjE281f6VFCFw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gSGatwo/keWr8IUJGSq2HDZVl769ym2/8rirfYo9kAxF6vKM5h5MoswS+j3JUZJj7
-	 vvzY78D0F56EXrXyQHw9fi4PBj5Wu7WShRr3AWh8PJTR8bI0jAUtfiexI32gFHqxWa
-	 D8cBjs27I9W2bowX0urJCEvd8tuhRpwTBbMvI3PXn2lZ3awzmyKCI+nuRcHVDFRkVg
-	 oCHOxw+Irr5KUtMVjuUsfnL95MIm03ORdolqVhNDhrxOMIQCTOGaTXEaSDWr/6UEd2
-	 F2u6aN1ZxxRm5MPh/1E3fm/PZHX5JaNiDdne/+AKPv6X7Cu0MgezPS3yU6CLNYyFC4
-	 wPSAYNxg83Evw==
+	b=mEG/k+U5w+R8+kapNgHO1B1nEuPZdAiJlqYRnLHnLQpd/avlHpz5NSfTKoKdsiypo
+	 LZuQRW4GLcrGPJoxwxMYPG/kDkN3o7VgH888Et9q6CpS8aDqJl/+s1+42KcVwlN/ZE
+	 LcFO2NSzoAYwfkQ0d/7dh6xPiNWqO0SPPGHgnGKSoNvBPiQGoMO1Sq4Au6kJNtafiX
+	 1m18c0eIyAv9J39c/W6DwhmcPG34mutEaik8L7k/aAzh8se/wczinykfD27m5B5qmN
+	 BrAkNZtqVzTl5DjW9qgWtjhU/5WeK/ebwYsfIBif9SI+2MUyBnlYDJC+xADE/3Wzia
+	 34x5TCWGX+vhQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Martin KaFai Lau <martin.lau@kernel.org>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+Cc: Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	daniel@iogearbox.net,
-	andrii@kernel.org,
-	bpf@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.14 061/108] bpf: Add bpf_rbtree_{root,left,right} kfunc
-Date: Tue,  3 Jun 2025 20:54:44 -0400
-Message-Id: <20250604005531.4178547-61-sashal@kernel.org>
+	linux-f2fs-devel@lists.sourceforge.net
+Subject: [PATCH AUTOSEL 6.14 062/108] f2fs: fix to bail out in get_new_segment()
+Date: Tue,  3 Jun 2025 20:54:45 -0400
+Message-Id: <20250604005531.4178547-62-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250604005531.4178547-1-sashal@kernel.org>
 References: <20250604005531.4178547-1-sashal@kernel.org>
@@ -51,299 +48,102 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.14.9
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Martin KaFai Lau <martin.lau@kernel.org>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 9e3e66c553f705de51707c7ddc7f35ce159a8ef1 ]
+[ Upstream commit bb5eb8a5b222fa5092f60d5555867a05ebc3bdf2 ]
 
-In a bpf fq implementation that is much closer to the kernel fq,
-it will need to traverse the rbtree:
-https://lore.kernel.org/bpf/20250418224652.105998-13-martin.lau@linux.dev/
+------------[ cut here ]------------
+WARNING: CPU: 3 PID: 579 at fs/f2fs/segment.c:2832 new_curseg+0x5e8/0x6dc
+pc : new_curseg+0x5e8/0x6dc
+Call trace:
+ new_curseg+0x5e8/0x6dc
+ f2fs_allocate_data_block+0xa54/0xe28
+ do_write_page+0x6c/0x194
+ f2fs_do_write_node_page+0x38/0x78
+ __write_node_page+0x248/0x6d4
+ f2fs_sync_node_pages+0x524/0x72c
+ f2fs_write_checkpoint+0x4bc/0x9b0
+ __checkpoint_and_complete_reqs+0x80/0x244
+ issue_checkpoint_thread+0x8c/0xec
+ kthread+0x114/0x1bc
+ ret_from_fork+0x10/0x20
 
-The much simplified logic that uses the bpf_rbtree_{root,left,right}
-to traverse the rbtree is like:
+get_new_segment() detects inconsistent status in between free_segmap
+and free_secmap, let's record such error into super block, and bail
+out get_new_segment() instead of continue using the segment.
 
-struct fq_flow {
-	struct bpf_rb_node	fq_node;
-	struct bpf_rb_node	rate_node;
-	struct bpf_refcount	refcount;
-	unsigned long		sk_long;
-};
-
-struct fq_flow_root {
-	struct bpf_spin_lock lock;
-	struct bpf_rb_root root __contains(fq_flow, fq_node);
-};
-
-struct fq_flow *fq_classify(...)
-{
-	struct bpf_rb_node *tofree[FQ_GC_MAX];
-	struct fq_flow_root *root;
-	struct fq_flow *gc_f, *f;
-	struct bpf_rb_node *p;
-	int i, fcnt = 0;
-
-	/* ... */
-
-	f = NULL;
-	bpf_spin_lock(&root->lock);
-	p = bpf_rbtree_root(&root->root);
-	while (can_loop) {
-		if (!p)
-			break;
-
-		gc_f = bpf_rb_entry(p, struct fq_flow, fq_node);
-		if (gc_f->sk_long == sk_long) {
-			f = bpf_refcount_acquire(gc_f);
-			break;
-		}
-
-		/* To be removed from the rbtree */
-		if (fcnt < FQ_GC_MAX && fq_gc_candidate(gc_f, jiffies_now))
-			tofree[fcnt++] = p;
-
-		if (gc_f->sk_long > sk_long)
-			p = bpf_rbtree_left(&root->root, p);
-		else
-			p = bpf_rbtree_right(&root->root, p);
-	}
-
-	/* remove from the rbtree */
-	for (i = 0; i < fcnt; i++) {
-		p = tofree[i];
-		tofree[i] = bpf_rbtree_remove(&root->root, p);
-	}
-
-	bpf_spin_unlock(&root->lock);
-
-	/* bpf_obj_drop the fq_flow(s) that have just been removed
-	 * from the rbtree.
-	 */
-	for (i = 0; i < fcnt; i++) {
-		p = tofree[i];
-		if (p) {
-			gc_f = bpf_rb_entry(p, struct fq_flow, fq_node);
-			bpf_obj_drop(gc_f);
-		}
-	}
-
-	return f;
-
-}
-
-The above simplified code needs to traverse the rbtree for two purposes,
-1) find the flow with the desired sk_long value
-2) while searching for the sk_long, collect flows that are
-   the fq_gc_candidate. They will be removed from the rbtree.
-
-This patch adds the bpf_rbtree_{root,left,right} kfunc to enable
-the rbtree traversal. The returned bpf_rb_node pointer will be a
-non-owning reference which is the same as the returned pointer
-of the exisiting bpf_rbtree_first kfunc.
-
-Acked-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
-Link: https://lore.kernel.org/r/20250506015857.817950-4-martin.lau@linux.dev
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-NO This commit should not be backported to stable kernel trees. Here's
-my extensive analysis: ## Primary Reason: New Feature Addition This
-commit adds three new kfunc functions (`bpf_rbtree_root`,
-`bpf_rbtree_left`, `bpf_rbtree_right`) to the BPF rbtree API. These are
-entirely new capabilities that enable rbtree traversal functionality
-that did not exist before. ## Specific Code Analysis ### 1. New Function
-Implementations ```c __bpf_kfunc struct bpf_rb_node
-*bpf_rbtree_root(struct bpf_rb_root *root) { struct rb_root_cached *r =
-(struct rb_root_cached *)root; return (struct bpf_rb_node
-*)r->rb_root.rb_node; } __bpf_kfunc struct bpf_rb_node
-*bpf_rbtree_left(struct bpf_rb_root *root, struct bpf_rb_node *node) {
-struct bpf_rb_node_kern *node_internal = (struct bpf_rb_node_kern
-*)node; if (READ_ONCE(node_internal->owner) != root) return NULL; return
-(struct bpf_rb_node *)node_internal->rb_node.rb_left; } __bpf_kfunc
-struct bpf_rb_node *bpf_rbtree_right(struct bpf_rb_root *root, struct
-bpf_rb_node *node) { struct bpf_rb_node_kern *node_internal = (struct
-bpf_rb_node_kern *)node; if (READ_ONCE(node_internal->owner) != root)
-return NULL; return (struct bpf_rb_node
-*)node_internal->rb_node.rb_right; } ``` These are completely new
-functions that extend the BPF API surface, which is characteristic of
-feature additions rather than bug fixes. ### 2. Verifier Infrastructure
-Expansion The commit adds these new functions to multiple verifier
-tables: ```c enum special_kfunc_type { // ... existing entries ...
-KF_bpf_rbtree_root, KF_bpf_rbtree_left, KF_bpf_rbtree_right, // ... }
-BTF_SET_START(special_kfunc_set) // ... existing entries ...
-BTF_ID(func, bpf_rbtree_root) BTF_ID(func, bpf_rbtree_left) BTF_ID(func,
-bpf_rbtree_right) BTF_SET_END(special_kfunc_set) ``` This systematic
-addition to verifier infrastructure demonstrates this is an API
-expansion, not a fix. ### 3. Enhanced Function Classification Logic ```c
-static bool is_bpf_rbtree_api_kfunc(u32 btf_id) { return btf_id ==
-special_kfunc_list[KF_bpf_rbtree_add_impl] || btf_id ==
-special_kfunc_list[KF_bpf_rbtree_remove] || btf_id ==
-special_kfunc_list[KF_bpf_rbtree_first] || + btf_id ==
-special_kfunc_list[KF_bpf_rbtree_root] || + btf_id ==
-special_kfunc_list[KF_bpf_rbtree_left] || + btf_id ==
-special_kfunc_list[KF_bpf_rbtree_right]; } ``` The functions are being
-added to existing classification systems, expanding the API scope. ###
-4. New Argument Validation Logic ```c static bool
-check_kfunc_is_graph_node_api(struct bpf_verifier_env *env, enum
-btf_field_type node_field_type, u32 kfunc_btf_id) { // ... existing
-logic ... case BPF_RB_NODE: ret = (kfunc_btf_id ==
-special_kfunc_list[KF_bpf_rbtree_remove] || kfunc_btf_id ==
-special_kfunc_list[KF_bpf_rbtree_add_impl] || + kfunc_btf_id ==
-special_kfunc_list[KF_bpf_rbtree_left] || + kfunc_btf_id ==
-special_kfunc_list[KF_bpf_rbtree_right]); break; } ``` This adds new
-argument validation paths for the new functions. ## Comparison with
-Similar Commits Looking at the historical examples: - **Similar Commit
-#1 (YES)**: Added basic rbtree kfuncs - this was part of the
-foundational rbtree infrastructure - **Similar Commit #2 (YES)**: Added
-argument support for rbtree types - essential for the basic
-functionality - **Similar Commit #3 (NO)**: Added function declarations
-to test headers - clearly test infrastructure - **Similar Commit #4
-(NO)**: Added special verifier handling - complex new feature logic -
-**Similar Commit #5 (YES)**: Added basic BTF support for rbtree types -
-foundational infrastructure ## Use Case Analysis The commit message
-describes a complex use case for implementing a Fair Queuing (FQ)
-algorithm that requires traversal capabilities. This is clearly an
-advanced feature for specialized networking applications, not a bug fix
-for existing functionality. ## Risk Assessment Adding new kfuncs carries
-several risks: 1. **API Stability**: New functions become part of the
-stable ABI 2. **Complexity**: Introduces new code paths in verifier
-logic 3. **Testing**: New functionality may not have complete test
-coverage in stable kernels 4. **Dependencies**: May rely on other recent
-changes not present in stable trees ## Conclusion This commit represents
-a clear feature addition that extends the BPF rbtree API with new
-traversal capabilities. It does not fix any existing bugs or address
-critical issues. The functionality is designed for advanced use cases
-and represents an expansion of the BPF programming model rather than
-maintenance of existing capabilities. Following stable tree guidelines,
-this should remain in mainline development kernels and not be backported
-to stable releases.
+**YES** This commit should be backported to stable kernel trees for the
+following reasons: **1. Fixes Important Bug Affecting Users:** The
+commit addresses a kernel WARNING that can be triggered during normal
+filesystem operations. The call trace shows this occurs during
+checkpoint operations (`f2fs_write_checkpoint` → `f2fs_sync_node_pages`
+→ `f2fs_do_write_node_page`), which are critical for data consistency.
+**2. Small and Contained Fix:** The changes are minimal and surgical: -
+In `fs/f2fs/segment.c`: Only 6 lines changed, replacing a
+`f2fs_bug_on()` call with proper error handling - In
+`include/linux/f2fs_fs.h`: Adding one new enum value for the stop
+checkpoint reason **3. Minimal Risk of Regression:** The change only
+affects the error path when corruption is detected. Instead of
+triggering a kernel bug, it now: - Returns `-EFSCORRUPTED` error code -
+Stops checkpoint with specific reason
+(`STOP_CP_REASON_CORRUPTED_FREE_BITMAP`) - Maintains filesystem
+integrity by preventing use of corrupted segments **4. Follows
+Established Pattern:** Similar commits (#2, #4, #5) that replace f2fs
+panics with graceful error handling have all been marked for backporting
+(Status: YES). This commit follows the exact same pattern of improving
+f2fs robustness. **5. Critical Subsystem Impact:** The fix touches f2fs
+segment management, which is fundamental to the filesystem's allocation
+strategy. Corruption in segment bitmaps could lead to data loss or
+filesystem corruption if not handled properly. **6. Clear Error Handling
+Improvement:** Rather than crashing the kernel when inconsistent bitmap
+state is detected, the fix allows the filesystem to stop checkpoint
+operations gracefully and record the corruption reason, which aids in
+debugging and recovery. The commit meets all stable tree criteria: it's
+an important bugfix, has minimal risk, doesn't introduce new features,
+and follows established patterns for similar fixes that have been
+successfully backported.
 
- kernel/bpf/helpers.c  | 30 ++++++++++++++++++++++++++++++
- kernel/bpf/verifier.c | 22 ++++++++++++++++++----
- 2 files changed, 48 insertions(+), 4 deletions(-)
+ fs/f2fs/segment.c       | 6 +++++-
+ include/linux/f2fs_fs.h | 1 +
+ 2 files changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/helpers.c b/kernel/bpf/helpers.c
-index 5e5e945a86b9b..ca3d866e9a2de 100644
---- a/kernel/bpf/helpers.c
-+++ b/kernel/bpf/helpers.c
-@@ -2354,6 +2354,33 @@ __bpf_kfunc struct bpf_rb_node *bpf_rbtree_first(struct bpf_rb_root *root)
- 	return (struct bpf_rb_node *)rb_first_cached(r);
- }
+diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
+index 384bca002ec9a..3ed55889ad7f7 100644
+--- a/fs/f2fs/segment.c
++++ b/fs/f2fs/segment.c
+@@ -2836,7 +2836,11 @@ static int get_new_segment(struct f2fs_sb_info *sbi,
+ 	}
+ got_it:
+ 	/* set it as dirty segment in free segmap */
+-	f2fs_bug_on(sbi, test_bit(segno, free_i->free_segmap));
++	if (test_bit(segno, free_i->free_segmap)) {
++		ret = -EFSCORRUPTED;
++		f2fs_stop_checkpoint(sbi, false, STOP_CP_REASON_CORRUPTED_FREE_BITMAP);
++		goto out_unlock;
++	}
  
-+__bpf_kfunc struct bpf_rb_node *bpf_rbtree_root(struct bpf_rb_root *root)
-+{
-+	struct rb_root_cached *r = (struct rb_root_cached *)root;
-+
-+	return (struct bpf_rb_node *)r->rb_root.rb_node;
-+}
-+
-+__bpf_kfunc struct bpf_rb_node *bpf_rbtree_left(struct bpf_rb_root *root, struct bpf_rb_node *node)
-+{
-+	struct bpf_rb_node_kern *node_internal = (struct bpf_rb_node_kern *)node;
-+
-+	if (READ_ONCE(node_internal->owner) != root)
-+		return NULL;
-+
-+	return (struct bpf_rb_node *)node_internal->rb_node.rb_left;
-+}
-+
-+__bpf_kfunc struct bpf_rb_node *bpf_rbtree_right(struct bpf_rb_root *root, struct bpf_rb_node *node)
-+{
-+	struct bpf_rb_node_kern *node_internal = (struct bpf_rb_node_kern *)node;
-+
-+	if (READ_ONCE(node_internal->owner) != root)
-+		return NULL;
-+
-+	return (struct bpf_rb_node *)node_internal->rb_node.rb_right;
-+}
-+
- /**
-  * bpf_task_acquire - Acquire a reference to a task. A task acquired by this
-  * kfunc which is not stored in a map as a kptr, must be released by calling
-@@ -3103,6 +3130,9 @@ BTF_ID_FLAGS(func, bpf_task_release, KF_RELEASE)
- BTF_ID_FLAGS(func, bpf_rbtree_remove, KF_ACQUIRE | KF_RET_NULL)
- BTF_ID_FLAGS(func, bpf_rbtree_add_impl)
- BTF_ID_FLAGS(func, bpf_rbtree_first, KF_RET_NULL)
-+BTF_ID_FLAGS(func, bpf_rbtree_root, KF_RET_NULL)
-+BTF_ID_FLAGS(func, bpf_rbtree_left, KF_RET_NULL)
-+BTF_ID_FLAGS(func, bpf_rbtree_right, KF_RET_NULL)
+ 	/* no free section in conventional zone */
+ 	if (new_sec && pinning &&
+diff --git a/include/linux/f2fs_fs.h b/include/linux/f2fs_fs.h
+index c24f8bc01045d..5206d63b33860 100644
+--- a/include/linux/f2fs_fs.h
++++ b/include/linux/f2fs_fs.h
+@@ -78,6 +78,7 @@ enum stop_cp_reason {
+ 	STOP_CP_REASON_UPDATE_INODE,
+ 	STOP_CP_REASON_FLUSH_FAIL,
+ 	STOP_CP_REASON_NO_SEGMENT,
++	STOP_CP_REASON_CORRUPTED_FREE_BITMAP,
+ 	STOP_CP_REASON_MAX,
+ };
  
- #ifdef CONFIG_CGROUPS
- BTF_ID_FLAGS(func, bpf_cgroup_acquire, KF_ACQUIRE | KF_RCU | KF_RET_NULL)
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 1841467c4f2e5..5c24f36ce36b2 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -11778,6 +11778,9 @@ enum special_kfunc_type {
- 	KF_bpf_rbtree_remove,
- 	KF_bpf_rbtree_add_impl,
- 	KF_bpf_rbtree_first,
-+	KF_bpf_rbtree_root,
-+	KF_bpf_rbtree_left,
-+	KF_bpf_rbtree_right,
- 	KF_bpf_dynptr_from_skb,
- 	KF_bpf_dynptr_from_xdp,
- 	KF_bpf_dynptr_slice,
-@@ -11812,6 +11815,9 @@ BTF_ID(func, bpf_rdonly_cast)
- BTF_ID(func, bpf_rbtree_remove)
- BTF_ID(func, bpf_rbtree_add_impl)
- BTF_ID(func, bpf_rbtree_first)
-+BTF_ID(func, bpf_rbtree_root)
-+BTF_ID(func, bpf_rbtree_left)
-+BTF_ID(func, bpf_rbtree_right)
- #ifdef CONFIG_NET
- BTF_ID(func, bpf_dynptr_from_skb)
- BTF_ID(func, bpf_dynptr_from_xdp)
-@@ -11843,6 +11849,9 @@ BTF_ID(func, bpf_rcu_read_unlock)
- BTF_ID(func, bpf_rbtree_remove)
- BTF_ID(func, bpf_rbtree_add_impl)
- BTF_ID(func, bpf_rbtree_first)
-+BTF_ID(func, bpf_rbtree_root)
-+BTF_ID(func, bpf_rbtree_left)
-+BTF_ID(func, bpf_rbtree_right)
- #ifdef CONFIG_NET
- BTF_ID(func, bpf_dynptr_from_skb)
- BTF_ID(func, bpf_dynptr_from_xdp)
-@@ -12258,7 +12267,10 @@ static bool is_bpf_rbtree_api_kfunc(u32 btf_id)
- {
- 	return btf_id == special_kfunc_list[KF_bpf_rbtree_add_impl] ||
- 	       btf_id == special_kfunc_list[KF_bpf_rbtree_remove] ||
--	       btf_id == special_kfunc_list[KF_bpf_rbtree_first];
-+	       btf_id == special_kfunc_list[KF_bpf_rbtree_first] ||
-+	       btf_id == special_kfunc_list[KF_bpf_rbtree_root] ||
-+	       btf_id == special_kfunc_list[KF_bpf_rbtree_left] ||
-+	       btf_id == special_kfunc_list[KF_bpf_rbtree_right];
- }
- 
- static bool is_bpf_iter_num_api_kfunc(u32 btf_id)
-@@ -12349,7 +12361,9 @@ static bool check_kfunc_is_graph_node_api(struct bpf_verifier_env *env,
- 		break;
- 	case BPF_RB_NODE:
- 		ret = (kfunc_btf_id == special_kfunc_list[KF_bpf_rbtree_remove] ||
--		       kfunc_btf_id == special_kfunc_list[KF_bpf_rbtree_add_impl]);
-+		       kfunc_btf_id == special_kfunc_list[KF_bpf_rbtree_add_impl] ||
-+		       kfunc_btf_id == special_kfunc_list[KF_bpf_rbtree_left] ||
-+		       kfunc_btf_id == special_kfunc_list[KF_bpf_rbtree_right]);
- 		break;
- 	default:
- 		verbose(env, "verifier internal error: unexpected graph node argument type %s\n",
-@@ -12864,11 +12878,11 @@ static int check_kfunc_args(struct bpf_verifier_env *env, struct bpf_kfunc_call_
- 		case KF_ARG_PTR_TO_RB_NODE:
- 			if (meta->func_id == special_kfunc_list[KF_bpf_rbtree_remove]) {
- 				if (!type_is_non_owning_ref(reg->type) || reg->ref_obj_id) {
--					verbose(env, "rbtree_remove node input must be non-owning ref\n");
-+					verbose(env, "%s node input must be non-owning ref\n", func_name);
- 					return -EINVAL;
- 				}
- 				if (in_rbtree_lock_required_cb(env)) {
--					verbose(env, "rbtree_remove not allowed in rbtree cb\n");
-+					verbose(env, "%s not allowed in rbtree cb\n", func_name);
- 					return -EINVAL;
- 				}
- 			} else {
 -- 
 2.39.5
 
