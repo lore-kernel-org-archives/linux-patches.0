@@ -1,85 +1,85 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.17])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E0833594B
-	for <patches@lists.linux.dev>; Wed,  4 Jun 2025 03:29:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.17
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 439561E3DCD
+	for <patches@lists.linux.dev>; Wed,  4 Jun 2025 03:31:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.16
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749007776; cv=fail; b=LiBfw4zuE7qxHReclYu2tKVP+l5bTexnDD2KGQoaSGjqU1LsD+czIwFdYDnKSURjHRx0YuobKS9XxcaDaBsgFTW9tN1cmG+/IYTx1drGysz/dpw4WkklISqgIw4G08VKos+rup8lHFRfuVi38l1wjYmHw7JX52Z0QqhZ7vVZVWM=
+	t=1749007875; cv=fail; b=s6CwH6sRxKnsoVE/2s6yg3gMsfnMkhVQJ0VbH4x/Lbln0aIx++J1VzMpH/OI4h2zT7WB7hsic2jVQqJvsnKX8iTwsPMn2Xq6kaC8TNticrjc7l3IEMOq31q+ZZKaZF3IvBIMTgV4AM3RN4UzueqM2m7Snn2RJR2N8QPB1Pg9z5A=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749007776; c=relaxed/simple;
-	bh=Xh2Oxizoraz4VXmYSOTMbFvFj13GCVflAJf2EvP9z+4=;
+	s=arc-20240116; t=1749007875; c=relaxed/simple;
+	bh=tcRwoc2iq+s1q/U+TNfKpEoVK3yyRKz3a/pseJ8dxko=;
 	h=Message-ID:Date:Subject:To:CC:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=szXqvXMJgWWlyMmlBKGSe1ZJA2WywvClnrPToXJzmw9etQWCby7HbZw1lC8QcCB3oN20nP/CHjEtOuVzrXOCGF+IXVil/qpYDQ/ud7t3b0eRi2cfxpaksSeamA9ZzgoKPcoSCQ406Q3PqYcCWwDY2weUNcBjD6yQ1wcAhnLzN04=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Ni+SQO+W; arc=fail smtp.client-ip=192.198.163.17
+	 Content-Type:MIME-Version; b=hLAltCKEINkULKIMTFuXp+SZBymvFCMDMPdHBhtVC24KKhPLtP3+vb0ffB2F9BXG9+xsz7PbNekFg3Mnjh+YOPy48wCt2JV+/bqKzpqDhqHTL11suPcFmS4RivDY4UQkhQ322IzYy/3wJTG5VQZOjqapwvHHaPsZfki0QcJw/QU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=EMN8g5eA; arc=fail smtp.client-ip=192.198.163.16
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Ni+SQO+W"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="EMN8g5eA"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1749007774; x=1780543774;
+  t=1749007874; x=1780543874;
   h=message-id:date:subject:to:cc:references:from:
    in-reply-to:content-transfer-encoding:mime-version;
-  bh=Xh2Oxizoraz4VXmYSOTMbFvFj13GCVflAJf2EvP9z+4=;
-  b=Ni+SQO+We2VN/og/y0EL63QhNKOqeCOptwPfvYLfo4e2+KWQPnnsaX59
-   /4m+qQHu3QGFKsSFWZl/ewftkH8CIICc8cEpvZSL/mTAMPdoiFL68VokG
-   /6ff2qpOlIvGwuaSoiUuOae+zPts+huLc7HHJPspc7l/OOEQdkw5194g/
-   YfuXzGgNbHCC1WMd1Mqd43uaAPRbsgFcZNZEFy5k60uqyA8OJDiAGXZuQ
-   qIP01gWXSQInD0xhEYtSV4Lzw1iVhbDr6mS2xGqgv9W9pC2v6r1HEAycm
-   7KguTvFvxG2nKmfgkFwt3YTGFS1qaCCyUYBN4JrHcYe5yDrR6enmDuhot
-   w==;
-X-CSE-ConnectionGUID: Dj+BeGS5Qdy7ZeOmKowIyw==
-X-CSE-MsgGUID: EuEgqMS6RVK3YGB2/bvz3g==
-X-IronPort-AV: E=McAfee;i="6700,10204,11453"; a="50985337"
+  bh=tcRwoc2iq+s1q/U+TNfKpEoVK3yyRKz3a/pseJ8dxko=;
+  b=EMN8g5eAZkM/aekG3FPD3dOLeQ+rRfyoPMiJZqWtztpcbOVLs9e5/Hpc
+   h/6/rngrsB4Q3U6hkNKOpij0TqWKpNANZI0bgNg+iHVqW4aTNkmdYRVSY
+   4fiRJ5vcnAg57E38Z5wNKpt8Lmr69kuyhFQtyDnBd51UX3OPf2BGhzNKu
+   3KEfMnrSR1wBbmMpcVbz07CXNfftXHygg91hZz7tzNwY9QLAeXPIGqZbD
+   WwJWQ71ek3q0Ul7t7PbayvF9n/SUellCX62y2tYrQqGOc0MsGXCMSscTh
+   NW3FGzJzri56erx07Ck8/7gQnoOFyWiHvLoxX3R0dMbotUdIFekNciqum
+   A==;
+X-CSE-ConnectionGUID: R116SyyTQG++q2bUF0fWKg==
+X-CSE-MsgGUID: aaG6+6LzRl2OzFUNLyDCyw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11453"; a="38702448"
 X-IronPort-AV: E=Sophos;i="6.16,208,1744095600"; 
-   d="scan'208";a="50985337"
-Received: from orviesa007.jf.intel.com ([10.64.159.147])
-  by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Jun 2025 20:29:34 -0700
-X-CSE-ConnectionGUID: ySMd8JhDTOauUksoULzvJg==
-X-CSE-MsgGUID: bQ0N54LeQKePYyMljG2guA==
+   d="scan'208";a="38702448"
+Received: from orviesa003.jf.intel.com ([10.64.159.143])
+  by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Jun 2025 20:31:14 -0700
+X-CSE-ConnectionGUID: KSAxx4rkS0eJFpkZViRTfQ==
+X-CSE-MsgGUID: l+nL5EZpQN6+bzlXp+WQ8Q==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.16,208,1744095600"; 
-   d="scan'208";a="145660411"
-Received: from orsmsx902.amr.corp.intel.com ([10.22.229.24])
-  by orviesa007.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Jun 2025 20:29:33 -0700
+   d="scan'208";a="149836422"
+Received: from orsmsx903.amr.corp.intel.com ([10.22.229.25])
+  by orviesa003.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Jun 2025 20:31:14 -0700
 Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
- ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.25; Tue, 3 Jun 2025 20:29:33 -0700
-Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
+ 15.2.1544.25; Tue, 3 Jun 2025 20:31:13 -0700
+Received: from ORSEDG601.ED.cps.intel.com (10.7.248.6) by
  ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.25 via Frontend Transport; Tue, 3 Jun 2025 20:29:33 -0700
-Received: from NAM02-DM3-obe.outbound.protection.outlook.com (40.107.95.84) by
- edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
+ 15.2.1544.25 via Frontend Transport; Tue, 3 Jun 2025 20:31:13 -0700
+Received: from NAM11-BN8-obe.outbound.protection.outlook.com (40.107.236.84)
+ by edgegateway.intel.com (134.134.137.102) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.55; Tue, 3 Jun 2025 20:29:32 -0700
+ 15.1.2507.55; Tue, 3 Jun 2025 20:31:12 -0700
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=gbZyBSYr+sn1+7a4UwAJXD1kvkf56/fyqp1IMptPH/FFhEYh7IPdh9f4Y17lOA/qQzoZX79oubAu8bX/teJzw4QUT5uxS8g93eOYum4k47r6d0uTQONYipaIJXeOZvZRmi3hvLmnggTGW7mRRmpF+GRvIDnKIVcBIoIKczmj4x6dVU8gmkSmIim2m6TCzRV06+bHcVbbfKnLqNO/lJ7POAIUcWkGSfG7MeSaHmcsKM8Wk78pKD2xPxmkxCkRT0j2Kx7BohROEcWJFRkGezk8nWkpWkMPMEScwGw+nFk/NKjkubPVYKPYEF6Ydy3KWtD3Kpy+SdGtxv2BJvRQ4DBypA==
+ b=Fa0KUvfZi+2BxERiibQFwQApOwbVBfMW8w3KB6HmDvZmx0yfqk2rxmrKDtCNz2kDvGrRfbXS31sSlpKUAy2epg98dk7XoGN6sI1381OSdoryChiogGtOulT+vG013TW/D9Im5RlCI8ypHf7+95DBzNqtB/hJgOkOr781o6HpJoL9a4hrIV3uGXMyVvq3AacAaI/wv9Jgr6Fs6eIiBetiVVff+qeEpFQVNsLGZnVlRe+DR0ivO9C3/NsxBppMiZY5+tV692UudAIV+jx/1FZHY8Bf90rKS8Ve5gD4x1mMJmXHVE8SNqlwqmXQyodbMl0YpxoWyqkCFa1YAdDvFC23Dg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=SjO7AXpuyfZ9hPxv8PNFO0MyCGCdIaoOyo9hTq8Uc88=;
- b=dbanf6qkL0k0f2zI7lyWGJd0/jrCdS0P0MswD2jMTuByquvaABIQAlLgngD05zWg2p1zQPm0ov3NyBGfC5KQLa/HwcQ0duRKzDYRZR3/YMp+xEtwey5to/vCj+Y0gRQqvJRAL2AeeA43FEU1edIK/H/KaW2XT1REUkmIZnUjBpoD3+FnnYfXP8pmn31LhPVlgX8oxcerNJ58EFIpaHe2z2kfRGjPRvgiPAGxSaKUqNmz57t9jKYm9k/KptpUowOGzDGvFHm+M54KEdqWoZGVDy6cUPKukvQBnguViZlT6M8Qh3+ko00QB9xOGuljSk40BcErmg2c2WCjA5+yo0hUKA==
+ bh=AzeTfgNAbbjYtKNhbQqDEDYnhWPblj7/Jkm6CTMkrbw=;
+ b=KhtB7UuT58cA5cd81ElW+aWLySfb4bVVtud4mn+z5yvCdI9F1RmktV2ARviHw/qeCzJuFFGGeESXyhyd5tYcfnJmNkKaS4MZb8SumUgZJmSNj5+3X6pvHKBG953MbHfG4Thb+jr/PUl3u77qGttr3bt7f0jNdr0zmFC0D2qbbV6kErObzmRQjfY84A/ChwbpBAi5AH88cd3NjrZ9RTeMA63A99EWVmvPn48uj1zjG2OoPGXkVpUELKRcIhZszInw3FUomTbMIG/HFpkd06sJI/zULXmpGkPHFBWgk+H3glT/AyHoMWHAO1z0OJZRHHj4wCtjHKBRWmb3zYcgqclbvw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
  dkim=pass header.d=intel.com; arc=none
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=intel.com;
 Received: from SJ2PR11MB7573.namprd11.prod.outlook.com (2603:10b6:a03:4d2::10)
- by SN7PR11MB8110.namprd11.prod.outlook.com (2603:10b6:806:2e1::5) with
+ by CY5PR11MB6511.namprd11.prod.outlook.com (2603:10b6:930:41::7) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8792.34; Wed, 4 Jun
- 2025 03:29:17 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8813.20; Wed, 4 Jun
+ 2025 03:31:10 +0000
 Received: from SJ2PR11MB7573.namprd11.prod.outlook.com
  ([fe80::61a:aa57:1d81:a9cf]) by SJ2PR11MB7573.namprd11.prod.outlook.com
  ([fe80::61a:aa57:1d81:a9cf%6]) with mapi id 15.20.8792.034; Wed, 4 Jun 2025
- 03:29:17 +0000
-Message-ID: <5f836ef3-bac2-4b86-9978-56e913ea222c@intel.com>
-Date: Tue, 3 Jun 2025 20:29:15 -0700
+ 03:31:09 +0000
+Message-ID: <7de291ed-a29b-4768-9b27-7fd9f5602e37@intel.com>
+Date: Tue, 3 Jun 2025 20:31:07 -0700
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 04/29] x86,fs/resctrl: Prepare for more monitor events
+Subject: Re: [PATCH v5 06/29] x86,fs/resctrl: Improve domain type checking
 To: Tony Luck <tony.luck@intel.com>, Fenghua Yu <fenghuay@nvidia.com>, "Maciej
  Wieczor-Retman" <maciej.wieczor-retman@intel.com>, Peter Newman
 	<peternewman@google.com>, James Morse <james.morse@arm.com>, Babu Moger
@@ -89,14 +89,14 @@ To: Tony Luck <tony.luck@intel.com>, Fenghua Yu <fenghuay@nvidia.com>, "Maciej
 CC: <x86@kernel.org>, <linux-kernel@vger.kernel.org>,
 	<patches@lists.linux.dev>
 References: <20250521225049.132551-1-tony.luck@intel.com>
- <20250521225049.132551-5-tony.luck@intel.com>
+ <20250521225049.132551-7-tony.luck@intel.com>
 From: Reinette Chatre <reinette.chatre@intel.com>
 Content-Language: en-US
-In-Reply-To: <20250521225049.132551-5-tony.luck@intel.com>
+In-Reply-To: <20250521225049.132551-7-tony.luck@intel.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: SJ0PR13CA0154.namprd13.prod.outlook.com
- (2603:10b6:a03:2c7::9) To SJ2PR11MB7573.namprd11.prod.outlook.com
+X-ClientProxiedBy: SJ0PR13CA0184.namprd13.prod.outlook.com
+ (2603:10b6:a03:2c3::9) To SJ2PR11MB7573.namprd11.prod.outlook.com
  (2603:10b6:a03:4d2::10)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -105,314 +105,183 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ2PR11MB7573:EE_|SN7PR11MB8110:EE_
-X-MS-Office365-Filtering-Correlation-Id: a2b2b4f1-7625-405d-a144-08dda317fc5b
+X-MS-TrafficTypeDiagnostic: SJ2PR11MB7573:EE_|CY5PR11MB6511:EE_
+X-MS-Office365-Filtering-Correlation-Id: cf810508-551c-46ca-42cb-08dda3183f60
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|366016|921020;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?SGNIaWNTUjUrKzN5WC9VQWEzS3RtR1RSS0Y1RHNzVHBVdExDVm0yUm1QRzJ1?=
- =?utf-8?B?c0FoL0NHS3J6S2hYazltUHVrMTBiVy9Sb01jOHo5SDRvZit2WTh1L2FibkxF?=
- =?utf-8?B?a3JEK0M1LzdKWW9XV1piWE02M29KNDBhWVhlS0loNFVXcjdpQlVLQTVxM2Vl?=
- =?utf-8?B?Tkx3Y0lXVHNwWlhYcEJYRFQ5bUVSeUtjMWhWUzFYZXFCMDFxa2cxOHZUVzdk?=
- =?utf-8?B?V2lRQmxFdlk4c2twRHBEQkM1Nlo1ZXJPWnpaNzN0NndmYVlaZnVxVFZRQmF6?=
- =?utf-8?B?RUlGSWlVYjVaVFlZQk9JcEt6UFJnZVBTN3RyYUQ1NjFtWEcxZ1FabWlJR3kw?=
- =?utf-8?B?ZHlnTTgvVnNXcmNqelA2Y0VsUXV4eVB2ZDg1SlA2cms2Mk91Q081OWkzbUQz?=
- =?utf-8?B?WG1VcmcyRUNwckoyblNmQnQwZDZVNVpjeVlXVjFReXVHcEdkNE1NbnpRYUZG?=
- =?utf-8?B?RmhOY0VyUS9wYjRuMUszWkx5aXZyVGNjQ0NYZk5ScUIzVEZ0dEI2d1k2OHlK?=
- =?utf-8?B?ZlhJU1dZY1kwNERZeHVwYnloS2QzbUhnLzNkOHQ4SzVTNlFrYkNZQU02YndR?=
- =?utf-8?B?TmExZWtRNU5Fdmhtc1RCTzB1VkdoRDkvZEhQeW1NS2U0VkJvQjMra1FBV0d2?=
- =?utf-8?B?WFB4YzBuOWdXTi91azhpNGNPaTVnKy9DZ2Z6cXNFZENldDBnbHE0Ylg5QVQr?=
- =?utf-8?B?S1hJR2RabVZyK2ttSkozcXlYd1JrZXNhUk03eEtIQUo2NTlBUCtpTVovV3Js?=
- =?utf-8?B?U2NQZ0NYanNNYVpLaGw0bFIyN1BhcUY0bVlzN0xuNDVHbXZSNlJMc2U1Ny9E?=
- =?utf-8?B?aHNzSmx1RWcrZERSQ2ozbXc4RzYvdEVka2lYSkFCVHZnU0pvUU1GMU93THZW?=
- =?utf-8?B?bVJXVXArNUUrS3htVCtCVWNMUFp5NUJ6UTQzRFdnUXMzSnBMZEtQSmFXeEp0?=
- =?utf-8?B?WVp4alF0MFpGMWxCb3lLSDE3K1hZRWZvUDVyWEJNcWRYbXNBUk04MTZCOE9T?=
- =?utf-8?B?ck1ZRVlZcnV6b3lEM2ZHdCs5U0ZxczloeW1KbVA4V2dVaUNYb1dXM0d3NEFp?=
- =?utf-8?B?M0Y1M2U2NDBOYVNKZko4d2lpMUNPMnVabkRuek9melhKbm5QUzJ2SWFDbzlF?=
- =?utf-8?B?WG5TZXg5NlM1a2ZVOUNyZDVzNGxpd2l6dHBQVW80eUtUU0FHQ1dvaEdxRmVG?=
- =?utf-8?B?YUdFQzJ3MmM5UTM0RGhsV2Q1WDB4ckhXcmFrM2ZBOTBwbWwyYmt0SmZlTHNo?=
- =?utf-8?B?S1RQSzhPbm9sZS9hVFNVZm9qTmwwUy9sZmg4U3EyKzVwaHFnYVErYkljRjF6?=
- =?utf-8?B?U1FJZHc5UHNhTUZxdTdRTzFpT0YxNDV2KzlOZXZhQXFmR0JSWjltZUpqcnh6?=
- =?utf-8?B?MEE2UWJvVlRlNmVMd1Z6aUZpQm5UQ3kxd0JhS0FTd296T0JGMkhnV1RORlo2?=
- =?utf-8?B?TE80ckMyeHUwZWQ0Rkdsc2wvMDBXTEFhekcvTkhxNXBrenpVWFRDcUxsTlI2?=
- =?utf-8?B?cWZvTTFheElWZVcvd0x6c3dDOUExQktxTDdia3QwRGsvYXJXT0dBcER3SThr?=
- =?utf-8?B?TVAycHhubUhSR2ovM2lybmw4djUxZ05WUEF1OEdtSkVyZGtrM0d2bEtkYUtN?=
- =?utf-8?B?SGlSeUNhRHdRdzVUSjZPSjUyK3JQQmJCa2N1Zzg1TXdQSkRiR2dCRXZnaHFD?=
- =?utf-8?B?c21PVDg4VTlhVGZ2U0FJTzVhVWJwK2U2SlNJWmlOblpLcTBKdXQ0dFVwblFY?=
- =?utf-8?B?anpxUkh3UThoT1A4QW4vZXAya1kreHdYV01qTnEyd1p0bVpTUUpncXRaU0o0?=
- =?utf-8?B?YTJlc1BYRTlLUlZHNWZwWWdUd2VSQnA5U2lmY0dDSEZmTGZOclVFRmM1ZytD?=
- =?utf-8?B?aUJNYUtFZitGbFNRZktFcDcwUE1GTGk4aTExSnp2V0dycGRveDNqeHkxdUZ5?=
- =?utf-8?B?cDEzbFdwMVNoNUZxU1hzN2ZDU3ZIMG9Kd1BDQ2h4Z2trR0prNVByK0l6STF6?=
- =?utf-8?B?bmMxd0x2T1Z3PT0=?=
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?dm91eGZPL3BZNUlnSFkwRGprVmVzS1dJdHNGTFI2bGswNys3bVdhNEVROUM4?=
+ =?utf-8?B?bXhMUlJ3eVlBdVp6RjYxb2FoY0FNQVV0MmVCWGJ4ZGkwM2dMQ2NzVW9TOTRi?=
+ =?utf-8?B?MGdaeWZoQ05ickdGS0llK09nQVR0Y1VDMG1NMktMUk9uSnFYaWtoc1NWckJT?=
+ =?utf-8?B?cXhNWEZLZkxhcVJVdnVaVHh1WUZCVFdFSjRSdnhFRHhJLzZJdEVRdkFpWmtP?=
+ =?utf-8?B?RHVreEE3d1VKYXVmMUdaMlI3dXVBNnEvM3FBajlYSERhRi8yUDNOQ1UwWFRC?=
+ =?utf-8?B?SzMyc01CUlNYOXBTdzBEWElCM2pLUllzRGRSSkJqbUp6ZEtmaS9RRVhBRThX?=
+ =?utf-8?B?czJwendzSW12aW1NVERBUjVQVE9GdllBQzU5QWFoakt6cFBXajlyWExmQWtz?=
+ =?utf-8?B?OUg5a2pMbTFkQXZoWkhyd2NvbGxnVTRQQ280TDBPaEthR2VKVlpPL3V1Ukc2?=
+ =?utf-8?B?ZWVYczkyVGVTNEIrcXNacnUvQm00djdCNDJ4dUcwU3d2UWNGeGlQaFhrK2lH?=
+ =?utf-8?B?RllVTWdaTVhDQ0taNW9Ccm03bGlGaVdxUWtIa1VpUjh0S0dvdUs5QUlRSWJR?=
+ =?utf-8?B?dW04WmZoamhSMzNDQk5mMVowL0FzOWpEOUlZN2cwSnV2eVZYMU1OcVdLVk5D?=
+ =?utf-8?B?S0FOOTNZejlCVjZySkZZenZScHVCVWVKTzZoSGNxdTVmRU9NVUZzeU9HMldz?=
+ =?utf-8?B?NHdZTlQxeFRDeGZBMElXbUFOckpvblBoRVBUUkU4TmRsSE1PbnNQeFhlUHVP?=
+ =?utf-8?B?QVc3d2RNdnpCengwaEpWaUlWWERTMmwrVVErd2Q0RWh0bFdZVFNFeEJBYTJB?=
+ =?utf-8?B?S0hCOU00VmpwVndueWt3Z3V5bEVlYkNpVXY2alJmcHdCZm9Pa1N0UmY2b1ZY?=
+ =?utf-8?B?QkhCK2ptV0FxVzRRNkp5U2JGYktmNGxkUCs2RXJNR0NQVDNyZWFNMmZpZW1x?=
+ =?utf-8?B?V0RuR25ZMDFJZXppeG90UXNqN0UrdW9LYmp3UXlZYnJaVVFVK05FOWdCNnRH?=
+ =?utf-8?B?anhVYmFNK2RmTVc1VU8vSmsvalArME8xazJLL2hGNzdwblFmMjQzZUFVM0Q5?=
+ =?utf-8?B?Z3pqQnNNRC8waENmUzJGSEtndnA1SjJDQ3lSUEVWUTUwUjRCdTFJbEdrRGsz?=
+ =?utf-8?B?TUkzalNQNk9OZkkyQ1VIeWZRWkRaVERJYzNiUS82dG41dVdLdWtWdXB0bU5C?=
+ =?utf-8?B?UEdEcmVNa3g5ZTBGZ0RZeTUvbDJzaTNMRmJHd1RZWVE5Q3RaTXBxSGFwd1lY?=
+ =?utf-8?B?UEVQakRxYXBFemlKN3V0RWhRVCtRM016MTFnd09lZmJRRVRzTHgxWUYzRENM?=
+ =?utf-8?B?bDNiRGxvWURpT2hwbDY2TkVHUmo1TUNKRFdtK0JFN3R1ZlpTYjlwV1MyT2xU?=
+ =?utf-8?B?cVhQeVNJVG05TkpSUFR6ZnZrN3JmZm9seUVJbDY1YzFtTFJjblZqb0ovbjJk?=
+ =?utf-8?B?ZlRCVk0xb1I1VnlNRFlWK0NlZHpJMldCT2xPT09EWHRKWHM1N0xaQ2E0eWlq?=
+ =?utf-8?B?RTd0cmVqOThvZ0VieENHM1VCVWpIQjdmSkNkYWlpTDZ5aGE1OXZGc1B3NGhZ?=
+ =?utf-8?B?eWNPR3ZYWlJaZXZRSkNPeUgwdW9Cc3ptMVc1dkJIZUdibFJRR1Q3ck1mdk5o?=
+ =?utf-8?B?N3FyZkVCNkZHWEYyWjJuUGJWNkVQeDNrVC9zMjRzWU5adVFCa0w2ekFLYWRC?=
+ =?utf-8?B?bm1aU0p3Sm5FSVB4R0xqcWk4a3ZpdmFraWtQckdwNHV0SER4d0x3MUNZTmcx?=
+ =?utf-8?B?UWliQXZhME1USUFINDlrMTZ6ZWJtbnVBcFFlTDNCdE9pSXNKbDRvREJYTG5v?=
+ =?utf-8?B?b0FkSmhtUUF3MEJnZnFPL1M5Y3JIcmM3NFdkZFkwQ2UxMysxeks2OFNlNFlW?=
+ =?utf-8?B?Sjk1Y1NtM2dGSjVhcGNBak9FbHJUNTErdHE0N0V1NlEwVlpPdE5BdFdueVNi?=
+ =?utf-8?B?a3Q4czhYRGQzZlVtZjBzOWlSWTBoMGxCQ2Y0b3NaWGdtT2FHM0c5bkdHQy92?=
+ =?utf-8?B?NlVKUWhkbGhnPT0=?=
 X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ2PR11MB7573.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(366016)(921020);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?Mkt4eFRiQno2TlV3Q3c3TU5PZnFRR0M4VS9GWWErT0hqUWMzcmtPS3U4R3dL?=
- =?utf-8?B?U0FOWGJsK3lZSmJGWHMya2o0dzBqQURMVE1aTzVhaWlwOG9PMFlmeXNyWVRY?=
- =?utf-8?B?QXdTREdrNWg2cG1hWFZmWGFHVW1PMHlnU3N2QTg0aEZoZlRDakJOQ0dsM2ts?=
- =?utf-8?B?elZOL0hia1NkNEFXcDBDSk42NG11YUdwRWs2Y2R0Z3dJaHVBeDFuUUtsUXhi?=
- =?utf-8?B?NTZ0d1FRTSt4bExuMkVVemN2WGEyZWZLckdIS21yWmNmKzQ2QnZnMEllcEZm?=
- =?utf-8?B?ZllZSlNhTkJsT2xVaitkWWMvVGFUcFdGWVV2SEdUK2NhZ0JEOVRRVU0rTVV0?=
- =?utf-8?B?YmZqSHZ6bGgxenBFNFVFMGhCZGhMa2dwR2tmSEg3REFtUFkyWnBReFh1dHcv?=
- =?utf-8?B?cUxwMHM0UXNBUHpZRVNxR1VwUEw3NnVYNFVtMXBQTEMxaTYzNXhvMUxqTmUw?=
- =?utf-8?B?L1d1UWllanN5MG10LzhPUjhnZWxGOHJxTHgwemVVV3AvNEVuTEdNamZhdndi?=
- =?utf-8?B?U28rM2NseG1KWDVkcXUzNVErN0FqVExJVUJJK1NzT1hMMElWYXllbzdRRmJi?=
- =?utf-8?B?UjRJK3N2VlB1bGpsUG5Lbi9rSlhIV1BWZWtEOVlIaVB0eW9TRjQ5TnE1SVRR?=
- =?utf-8?B?anNWSlVKd3RSUlJBWVY1WlFoQlJkQTB3ckZSNDZHNFpSUlNhRUxmZ2ExQklv?=
- =?utf-8?B?WElnNExVWitoZTJkZFhJMnN1NGNVMGxCNjZnU2swbWNsalhpc0cydEpFS0tn?=
- =?utf-8?B?b0xlNFY5TU5ubEFuYkRORVR3QzNvQW40NmwrcGV0TUhiVHJJS3ZTSHJTOCtH?=
- =?utf-8?B?ZkhvU1pWanBSQ01qR0FjdU00dnh4NWNydUtRT0ZITkt3Q0thWGJsZDVzaFBX?=
- =?utf-8?B?MGFMUy96RVdtcDQ0UklBa0tIUU1mOFF0MUdwdUV4dnN3eHhQTnU5eGJqTlRI?=
- =?utf-8?B?Ny9nLzBuaGdua2ZuNXByaVVNaFdrek5ibDZGb1NjdjZYZFBBb29sRmN6K3h0?=
- =?utf-8?B?MDN0NXlTbVhiajZZMXdiMC9jaVF1TzNEOGFvQmJWV2FJcG5rVFV3Rko5ZlJB?=
- =?utf-8?B?ZlQ3VXozTjBKU0I0OHJaMVVHTU1hQlo0eXB4azdJQlJWK3gwTmp3MW1waldB?=
- =?utf-8?B?TmJXSU5RcGp2UWJ6YjNrdThEQ2JMQzFOM3JodzZvb1NndjNGK3MreHhsT1J2?=
- =?utf-8?B?WFVpMzJBU20vYW1vOFdscUF4YXRMSzhacWRhckZNUitkeVNmdXpma1ltRzlZ?=
- =?utf-8?B?OERaeFc0cEhObnFiY2xTQzBsOVc0UDVRRVQyK2lXa2plYnlRUU5CMmc1NDUr?=
- =?utf-8?B?NTlEcGIvZGNSaGR1M21KR3NXZVAxa0xMTDRORGFDVklmTTFQbzFlMHhJT3RS?=
- =?utf-8?B?aXl5TVFyVjQ2eWo2WmFSQzB5YmZvTFVSeERhTzFWcjVtVzhZbVhNL0ErSW5R?=
- =?utf-8?B?R0F3OXo3Q2x3bzFiM1NZS1dDQnlQeGM3b0FMMFF4NXpoYjI4NUtaeU9BMmlO?=
- =?utf-8?B?VUdya2dVdVY3L0pqaUxzZG8zckp2a0hadzNNOGR1YTM2R1RTaWVKUWl1WFZ6?=
- =?utf-8?B?ZjZNdjY5RUR2NG5qb1ZzbTc3WW93bGwyeVlKUjNhMWFMQXNTeWRodVBsT1dK?=
- =?utf-8?B?eUlCV3RrTGFSNStTbVBHa1lseW11b2YySGhPZlBZZGdpSHJCSEhvL21QSHFi?=
- =?utf-8?B?bkRSYmZWN29CZmpVUGtxbUYyMUZRYitFTzIzSDVMYU9TTDRUNFVSbENob3NY?=
- =?utf-8?B?T1JkOVBKK1Izc1lqOEhPYlRvMEJGT2xTK1BXdlVhdVFVeGJsRlFGL2o4L1Fz?=
- =?utf-8?B?ZkRqclZFZHR0cGZ0amNKeTk3ZFFaTUJ6SlJGYldzMy93OTk4ZUhtdGJscVN6?=
- =?utf-8?B?MlNYcXE3V00yRVhOSm1pK2FZb3gwa3hXSWx5a09vb0ZDbVBrYU5UeU4rMDFR?=
- =?utf-8?B?NzRKc2x2ZzlHRnhlY3ZscjMyUEZ6NTRGSmh0MktwOXgxNHl5aFlzTDdIdnpH?=
- =?utf-8?B?eE8yTGpNWGtTVTY4MjFOQ1FkcXBNUnBpMEh4clRNNG5PYmNNbTF2akwybmFZ?=
- =?utf-8?B?T2tUZ2NEY24rZFI5MWNDWEd0L0hOL0lTME84emozbEhYSkxrOXJBRmttY01Y?=
- =?utf-8?B?TnpZQlpmbElGY1A5YTVTUnJ0SW5qRmZDemhORVM2Z2RheGQvY2RQakp0ZTdv?=
- =?utf-8?B?WWc9PQ==?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: a2b2b4f1-7625-405d-a144-08dda317fc5b
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?ZU1seWR0YjI2bUNkYWZnZTVTNG4rRHRSSDFCWm1zSDI5YURhVHNhME4yZTk2?=
+ =?utf-8?B?Y1VTRCtqcGkwa2Z4YXJkZkNEU0Qwb3RNNVh2aHgwcEhFS01kdVZvcXhiZEhO?=
+ =?utf-8?B?aGFobVIxVmYzOUxGRXJWN3lZTC90R2JVeWloc011OFg3cXYrcHRoZUtHZ0xv?=
+ =?utf-8?B?NTB6cU5CTnVrQjMvS1VhbzVwMjBXK0IrMkZERXRxaFFDYUNNbzd0ZDJrK1B4?=
+ =?utf-8?B?NUxId0RUZnJGOUhabzhJZEoyYVVKTmR5YWgxbGREOFl2WXRSSHFKVEhLL3U3?=
+ =?utf-8?B?cTNQOW1PNkpYVXliNzNLY0l3VWNXL2dCakdVMko2UDBJVTFldTQ5cjlyNXg3?=
+ =?utf-8?B?RHNDd1VwMi80d3FJNjJJcGVkZGRWV3hocUhwRVlUZGVTckN1ZGUyK3VTYWR6?=
+ =?utf-8?B?aDcyeDAvWlFxRUFodE1VQkFIZHFITkFlZHdZOEVMR21jZ3dWMVBSSVIraWFl?=
+ =?utf-8?B?a1VIOTZabDF6Q1Rad0JqeW9oUm1iNStGMWJlS1NJRHVkbkt5eTJxVjlYczlu?=
+ =?utf-8?B?L3ZaOExRdUpuck01ODYwVTZndHFZZTB4dlZ1N0VjREdnNXZFdmZSNy9VQkdK?=
+ =?utf-8?B?enJHWXZBa0Zzc3hHb2cyVkc2S0pHQndacysxbS9kQ3Y0ZmRqRS9LYVBkVnZI?=
+ =?utf-8?B?aE80TzZQWndkZHhiQ2NQNE55M2xHMCtGd1ZTK3RHSVM5Sy81dFBtOThsbS8v?=
+ =?utf-8?B?WW9NUm4wZDl2NzJJbnVWNks5czh4eUZGa0lKYnhkZWRJL2Z4ZlFlcjFhb2V1?=
+ =?utf-8?B?WnZDU1VycmpTK0NJUzJRdkczU2IyK1p0QlJPbXF4K1NXcEM0OHoyRGxNdXlY?=
+ =?utf-8?B?SENpWHVIYkc5NXpWckRDOEQxTkxTZjg1THdtelUzR210UVUzM2VuSFRYKzg3?=
+ =?utf-8?B?NngvRmJIMjFZU1ZxeUpuV1JYaGtGVmVQRjU4ejN4a2RmTU9sZ3lsTzR0VTBB?=
+ =?utf-8?B?MXJZOXlBdWZoNjlYQU9ZZlVmaGs4YmNUc1JqT2VZeVM4WDEraU5wQi9IUEhz?=
+ =?utf-8?B?ZjRzSGxlb0h2cHRHQ1lPVHpmYjY1QWRjWGVFRkdVUWZpdTNCS2hpL214L21V?=
+ =?utf-8?B?THlISi9HWDlaQTNaYjRKYmdIckpmL2VGTnVUeng5cm5RWjhPTncrNTdQQ25K?=
+ =?utf-8?B?VFN3M1E0V0xZQ2VjdDExUERwdkpZdHV0VHNOWUdzcWNFb3h5dVdOWEcwZGdx?=
+ =?utf-8?B?NXdBbTlDWjMzc21hdzVNb1NuM3JWSVVWRTVpMzVnN1k5Rk5DZDFET0xUVUtm?=
+ =?utf-8?B?UmtCdE9wZmRYRUl2YXVMN01mSVdyYk5xRm9MbjQ0RE93RDZTODhUaThhT0RX?=
+ =?utf-8?B?RVBUR09WY2hVanFNbVljWVRUZ055cVdhbmVNTGFVVTJSSm05L2liVi9XRmlq?=
+ =?utf-8?B?aXdkTXJ0aTlWYXFMREhBOGhoL1o4REpmS2dseTFVZFNKajRNRXR6UkIyT05P?=
+ =?utf-8?B?Z1VCaWVVOXQvNjdIWWxzL1ZKN2JLRlpHSjBqc3BjSU9TdlcydmRDaG9Cdmgv?=
+ =?utf-8?B?dStVaGxkVEllNFhFVFlzbzFuSytSRTFxUmVaQUFXS3NlQjhvRGlhZFdaL2h2?=
+ =?utf-8?B?VG1saVdYdDU0ZHYrNkJyNDFEdTN2WGtaYUdDbTNobmpJakwvamVpVGdCRnll?=
+ =?utf-8?B?VDJUVGZrdXdXZFBCbmplemp2dnFnWXJGemo2dEQ3MTdMaHBwVzF6bmtvZkV6?=
+ =?utf-8?B?c3JUd24rZ2JvQUs1N1A0UThNTWdlSXd3RlcrR1cwMi82NER0dGQ2a215TkRJ?=
+ =?utf-8?B?Zk9SOFJvMHpmVndrY29nK1RhRlJPcWpMck9aOVZ5WENGbElGVHo3RFVUVnZu?=
+ =?utf-8?B?WUttMWk5UDZBNWxEUm9tbmZVWVEwN25HeWkzTzlCZlRqMEtUQUdjeDgzZEdS?=
+ =?utf-8?B?aFhBekhld0hudzMrQkV6QnQ2QjZYQmpFb1lIdWE1a3NBRUZENXlZd0NyMmJV?=
+ =?utf-8?B?NC94eHBhQ3RRYVAyWSs3bTlOU1pTc0pXTVZjdHFIK2dDZC9yN3RoL1VsdWJ3?=
+ =?utf-8?B?TUZodG5zQmFmeW9FYm16QXZhYy8vdUo1U0JTbWcvSHBudVAvMW9CY1BHVUQw?=
+ =?utf-8?B?SmU0OEZFR2FoT2xxUXB5cUYrcitRVjNpYTZYZjF2U2g0NTZIWHdObnd2YVM2?=
+ =?utf-8?B?VVBhMDI0RjkrL2JoNzhEeWYrODB5RXBIcVBxR2R3TW90WW8zK2xScU5ETmlM?=
+ =?utf-8?B?aFE9PQ==?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: cf810508-551c-46ca-42cb-08dda3183f60
 X-MS-Exchange-CrossTenant-AuthSource: SJ2PR11MB7573.namprd11.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Jun 2025 03:29:17.1279
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Jun 2025 03:31:09.5625
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: FJDRRJla687mw5Mh6xyahzMCNGPANUtjy0/dcOl075fPg9BdQrAO7h53HM9+MlhhSuYWxvBEXLbrvOw+wl9PSTD+1HuZehJpk2lJyFD238w=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR11MB8110
+X-MS-Exchange-CrossTenant-UserPrincipalName: UyrEUnhqaQTtpq2Hm27ZHwTXVvVKAs89XfDehXdQMAiWmKHs/G1wfAQtrAnfG0p/tp3CH0T6+Yd0JWV2KLFR8Iux9LWWrDi9qhfHjhBMVNs=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY5PR11MB6511
 X-OriginatorOrg: intel.com
 
 Hi Tony,
 
 On 5/21/25 3:50 PM, Tony Luck wrote:
-> There's a rule in computer programming that objects appear zero,
-> once, or many times. So code accordingly.
+> The rdt_domain_hdr structure is used in both control and monitor
+> domain structures to provide common methods for operations such as
+> adding a CPU to a domain, removing a CPU from a domain, accessing
+> the mask of all CPUs in a domain.
 > 
-> There are two MBM events and resctrl is coded with a lot of
+> The "type" field provides a simple check whether a domain is a
+> control or monitor domain so that programming errors operating
+> on domains will be quickly caught.
 > 
->         if (local)
->                 do one thing
->         if (total)
->                 do a different thing
-> 
-> Change the rdt_mon_domain and rdt_hw_mon_domain structures to hold arrays
-> of pointers to per event data instead of explicit fields for total and
-> local bandwidth.
-> 
-> Simplify by coding for many events using loops on which are enabled.
-> 
-> Move resctrl_is_mbm_event() to <linux/resctrl.h> so it can be used more
-> widely. Also provide a for_each_mbm_event() helper macro.
+> To prepare for additional domain types that depend on the rdt_resource
+> to which they are connected add the resource id into the header
+> and check that in addition to the type.
 > 
 > Signed-off-by: Tony Luck <tony.luck@intel.com>
 > ---
->  include/linux/resctrl.h                | 15 +++++---
->  include/linux/resctrl_types.h          |  3 ++
->  arch/x86/kernel/cpu/resctrl/internal.h |  6 ++--
->  arch/x86/kernel/cpu/resctrl/core.c     | 38 ++++++++++----------
->  arch/x86/kernel/cpu/resctrl/monitor.c  | 36 +++++++++----------
->  fs/resctrl/monitor.c                   | 13 ++++---
->  fs/resctrl/rdtgroup.c                  | 48 ++++++++++++--------------
->  7 files changed, 82 insertions(+), 77 deletions(-)
+>  include/linux/resctrl.h            |  9 +++++++++
+>  arch/x86/kernel/cpu/resctrl/core.c | 10 ++++++----
+>  fs/resctrl/ctrlmondata.c           |  2 +-
+>  3 files changed, 16 insertions(+), 5 deletions(-)
 > 
 > diff --git a/include/linux/resctrl.h b/include/linux/resctrl.h
-> index 843ad7c8e247..40f2d0d48d02 100644
+> index 40f2d0d48d02..d6b09952ef92 100644
 > --- a/include/linux/resctrl.h
 > +++ b/include/linux/resctrl.h
-> @@ -161,8 +161,7 @@ struct rdt_ctrl_domain {
->   * @hdr:		common header for different domain types
->   * @ci:			cache info for this domain
->   * @rmid_busy_llc:	bitmap of which limbo RMIDs are above threshold
-> - * @mbm_total:		saved state for MBM total bandwidth
-> - * @mbm_local:		saved state for MBM local bandwidth
-> + * @mbm_states:		saved state for each QOS MBM event
-
-This can be more useful. For example:
-	Per-event pointer to the MBM event's saved state. An MBM event's state
-	is an array of struct mbm_state indexed by RMID on x86 or combined
-	CLOSID, RMID on Arm.
-
->   * @mbm_over:		worker to periodically read MBM h/w counters
->   * @cqm_limbo:		worker to periodically read CQM h/w counters
->   * @mbm_work_cpu:	worker CPU for MBM h/w counters
-> @@ -172,8 +171,7 @@ struct rdt_mon_domain {
->  	struct rdt_domain_hdr		hdr;
->  	struct cacheinfo		*ci;
->  	unsigned long			*rmid_busy_llc;
-> -	struct mbm_state		*mbm_total;
-> -	struct mbm_state		*mbm_local;
-> +	struct mbm_state		*mbm_states[QOS_NUM_L3_MBM_EVENTS];
->  	struct delayed_work		mbm_over;
->  	struct delayed_work		cqm_limbo;
->  	int				mbm_work_cpu;
-> @@ -376,6 +374,15 @@ bool resctrl_is_mon_event_enabled(enum resctrl_event_id evt);
+> @@ -131,15 +131,24 @@ enum resctrl_domain_type {
+>   * @list:		all instances of this resource
+>   * @id:			unique id for this instance
+>   * @type:		type of this instance
+> + * @rid:		index of resource for this domain
+>   * @cpu_mask:		which CPUs share this resource
+>   */
+>  struct rdt_domain_hdr {
+>  	struct list_head		list;
+>  	int				id;
+>  	enum resctrl_domain_type	type;
+> +	enum resctrl_res_level		rid;
+>  	struct cpumask			cpu_mask;
+>  };
 >  
->  bool resctrl_arch_is_evt_configurable(enum resctrl_event_id evt);
->  
-> +static inline bool resctrl_is_mbm_event(enum resctrl_event_id e)
-
-nit: e -> evt (re. patch #1 comments)
-
+> +static inline bool domain_header_is_valid(struct rdt_domain_hdr *hdr,
+> +					  enum resctrl_domain_type type,
+> +					  enum resctrl_res_level rid)
 > +{
-> +	return (e >= QOS_L3_MBM_TOTAL_EVENT_ID &&
-> +		e <= QOS_L3_MBM_LOCAL_EVENT_ID);
+> +	return !WARN_ON_ONCE(hdr->type != type || hdr->rid != rid);
 > +}
 > +
-> +#define for_each_mbm_event(evt)	\
-> +	for (evt = QOS_L3_MBM_TOTAL_EVENT_ID; evt <= QOS_L3_MBM_LOCAL_EVENT_ID; evt++)
-
-Please refer to comment in patch #1 about possible name change to"for_each_mbm_event_id()"
-or similar.
-
-> +
 >  /**
->   * resctrl_arch_mon_event_config_write() - Write the config for an event.
->   * @config_info: struct resctrl_mon_config_info describing the resource, domain
-> diff --git a/include/linux/resctrl_types.h b/include/linux/resctrl_types.h
-> index a25fb9c4070d..b468bfbab9ea 100644
-> --- a/include/linux/resctrl_types.h
-> +++ b/include/linux/resctrl_types.h
-> @@ -47,4 +47,7 @@ enum resctrl_event_id {
->  	QOS_NUM_EVENTS,
->  };
+>   * struct rdt_ctrl_domain - group of CPUs sharing a resctrl control resource
+>   * @hdr:		common header for different domain types
+> diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
+> index 4403a820db12..4983f6f81218 100644
+> --- a/arch/x86/kernel/cpu/resctrl/core.c
+> +++ b/arch/x86/kernel/cpu/resctrl/core.c
+> @@ -456,7 +456,7 @@ static void domain_add_cpu_ctrl(int cpu, struct rdt_resource *r)
 >  
-> +#define QOS_NUM_L3_MBM_EVENTS	(QOS_L3_MBM_LOCAL_EVENT_ID - QOS_L3_MBM_TOTAL_EVENT_ID + 1)
-> +#define MBM_STATE_IDX(evt)	((evt) - QOS_L3_MBM_TOTAL_EVENT_ID)
-> +
->  #endif /* __LINUX_RESCTRL_TYPES_H */
-> diff --git a/arch/x86/kernel/cpu/resctrl/internal.h b/arch/x86/kernel/cpu/resctrl/internal.h
-> index 5e3c41b36437..ea185b4d0d59 100644
-> --- a/arch/x86/kernel/cpu/resctrl/internal.h
-> +++ b/arch/x86/kernel/cpu/resctrl/internal.h
-> @@ -54,15 +54,13 @@ struct rdt_hw_ctrl_domain {
->   * struct rdt_hw_mon_domain - Arch private attributes of a set of CPUs that share
->   *			      a resource for a monitor function
->   * @d_resctrl:	Properties exposed to the resctrl file system
-> - * @arch_mbm_total:	arch private state for MBM total bandwidth
-> - * @arch_mbm_local:	arch private state for MBM local bandwidth
-> + * @arch_mbm_states:	arch private state for each MBM event
->   *
-
-Can also be made more useful like previous example.
-
->   * Members of this structure are accessed via helpers that provide abstraction.
->   */
->  struct rdt_hw_mon_domain {
->  	struct rdt_mon_domain		d_resctrl;
-> -	struct arch_mbm_state		*arch_mbm_total;
-> -	struct arch_mbm_state		*arch_mbm_local;
-> +	struct arch_mbm_state		*arch_mbm_states[QOS_NUM_L3_MBM_EVENTS];
->  };
+>  	hdr = resctrl_find_domain(&r->ctrl_domains, id, &add_pos);
+>  	if (hdr) {
+> -		if (WARN_ON_ONCE(hdr->type != RESCTRL_CTRL_DOMAIN))
+> +		if (!domain_header_is_valid(hdr, RESCTRL_CTRL_DOMAIN, r->rid))
+>  			return;
+>  		d = container_of(hdr, struct rdt_ctrl_domain, hdr);
 >  
->  static inline struct rdt_hw_ctrl_domain *resctrl_to_arch_ctrl_dom(struct rdt_ctrl_domain *r)
 
-...
+This is quite subtle and not obvious until a few patches later that the
+domain_header_is_valid() is done in preparation for using the
+rdt_domain_hdr::rid to verify that the correct containing structure is
+obtained in a subsequent container_of() call.
 
-> diff --git a/arch/x86/kernel/cpu/resctrl/monitor.c b/arch/x86/kernel/cpu/resctrl/monitor.c
-> index fda579251dba..85526e5540f2 100644
-> --- a/arch/x86/kernel/cpu/resctrl/monitor.c
-> +++ b/arch/x86/kernel/cpu/resctrl/monitor.c
-> @@ -160,18 +160,14 @@ static struct arch_mbm_state *get_arch_mbm_state(struct rdt_hw_mon_domain *hw_do
->  						 u32 rmid,
->  						 enum resctrl_event_id eventid)
->  {
-> -	switch (eventid) {
-> -	case QOS_L3_OCCUP_EVENT_ID:
-> -		return NULL;
-> -	case QOS_L3_MBM_TOTAL_EVENT_ID:
-> -		return &hw_dom->arch_mbm_total[rmid];
-> -	case QOS_L3_MBM_LOCAL_EVENT_ID:
-> -		return &hw_dom->arch_mbm_local[rmid];
-> -	default:
-> -		/* Never expect to get here */
-> -		WARN_ON_ONCE(1);
-> +	struct arch_mbm_state *state;
-> +
-> +	if (!resctrl_is_mbm_event(eventid))
->  		return NULL;
-> -	}
-> +
-> +	state = hw_dom->arch_mbm_states[MBM_STATE_IDX(eventid)];
-> +
-> +	return state ? &state[rmid] : NULL;
->  }
->  
->  void resctrl_arch_reset_rmid(struct rdt_resource *r, struct rdt_mon_domain *d,
-> @@ -200,14 +196,16 @@ void resctrl_arch_reset_rmid(struct rdt_resource *r, struct rdt_mon_domain *d,
->  void resctrl_arch_reset_rmid_all(struct rdt_resource *r, struct rdt_mon_domain *d)
->  {
->  	struct rdt_hw_mon_domain *hw_dom = resctrl_to_arch_mon_dom(d);
-> -
-> -	if (resctrl_is_mon_event_enabled(QOS_L3_MBM_TOTAL_EVENT_ID))
-> -		memset(hw_dom->arch_mbm_total, 0,
-> -		       sizeof(*hw_dom->arch_mbm_total) * r->num_rmid);
-> -
-> -	if (resctrl_is_mon_event_enabled(QOS_L3_MBM_LOCAL_EVENT_ID))
-> -		memset(hw_dom->arch_mbm_local, 0,
-> -		       sizeof(*hw_dom->arch_mbm_local) * r->num_rmid);
-> +	enum resctrl_event_id evt;
-> +	int idx;
-> +
-> +	for_each_mbm_event(evt) {
-> +		idx = MBM_STATE_IDX(evt);
-> +		if (!hw_dom->arch_mbm_states[idx])
-> +			continue;
+Patch #10 mentions it explicitly: "Add sanity checks where
+container_of() is used to find the surrounding domain structure that
+hdr has the expected type."
+           
+The change above, when combined with later changes, results in
+code like:
 
-Interesting change of pattern to switch from using "is event enabled" to
-"does pointer to state" exist. This creates doubt that an enabled event
-may not have its state allocated? The domain would not exist if the
-state could not be allocated, no? Why the switch in check used?
+	if (!domain_header_is_valid(hdr, RESCTRL_MON_DOMAIN, r->rid))
+		/* handle failure */
 
-> +		memset(hw_dom->arch_mbm_states[idx], 0,
-> +		       sizeof(struct arch_mbm_state) * r->num_rmid);
-> +	}
->  }
->  
->  static u64 mbm_overflow_count(u64 prev_msr, u64 cur_msr, unsigned int width)
-> diff --git a/fs/resctrl/monitor.c b/fs/resctrl/monitor.c
-> index 325e23c1a403..4cd0789998bf 100644
-> --- a/fs/resctrl/monitor.c
-> +++ b/fs/resctrl/monitor.c
-> @@ -346,15 +346,14 @@ static struct mbm_state *get_mbm_state(struct rdt_mon_domain *d, u32 closid,
->  				       u32 rmid, enum resctrl_event_id evtid)
->  {
->  	u32 idx = resctrl_arch_rmid_idx_encode(closid, rmid);
-> +	struct mbm_state *states;
+	d = container_of(hdr, struct rdt_l3_mon_domain, hdr);
+	...
 
-nit: The architectural and non-architectural states are managed the same way. Having the
-two helpers look the same helps to enforce and explain this. It is thus unexpected that
-one helper refers to the state as "state" (singular) while the other uses "states" (plural).
-This causes reader to squint and try to see what the difference may be, but there is none.
-
->  
-> -	switch (evtid) {
-> -	case QOS_L3_MBM_TOTAL_EVENT_ID:
-> -		return &d->mbm_total[idx];
-> -	case QOS_L3_MBM_LOCAL_EVENT_ID:
-> -		return &d->mbm_local[idx];
-> -	default:
-> +	if (!resctrl_is_mbm_event(evtid))
->  		return NULL;
-> -	}
-> +
-> +	states = d->mbm_states[MBM_STATE_IDX(evtid)];
-> +
-> +	return states ? &states[idx] : NULL;
->  }
->  
->  static int __mon_event_count(u32 closid, u32 rmid, struct rmid_read *rr)
+Considering this all I do not think using a variable r->rid is appropriate
+here. Specifically, if the code has it hardcoded that, for example,
+the containing structure is "struct rdt_l3_mon_domain" then should the
+test not similarly be hardcoded to ensure that rid is RDT_RESOURCE_L3?
 
 Reinette
