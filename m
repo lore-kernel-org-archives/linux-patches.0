@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F40C4111BF;
-	Wed,  4 Jun 2025 00:52:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B0ED18DF8D;
+	Wed,  4 Jun 2025 00:52:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748998369; cv=none; b=YbloY+r1Qc7MwErWdG1YtAN1N/sIYnv8vJBfnHbzDR41rp41JlmlozQZuVpjFe+VK2s4YWIXYQjis1wEMNx0Srdx3kwf0syYAabzrhtuWqvp4mXfDdTXI/0hfoYglbiMdiXFnDILv3ikU51qKRjE7/wFf+0tFdpX4MpN2GjWsac=
+	t=1748998372; cv=none; b=LNhJ2cOSjFyCI7ZN/iq2pq7Ah1wyI0Wru+OpQSBriit9rHCfuPWkhzRaVhKKB+qCqGSuvWNRyc7qfjzoQiAER8CKNz/HFlL/ah6o0vrPcL14Ee6Jpe6XLAEn45F0d3xQVMy/Pj0QxljucAmy8PKaT39qKK70FLzzBJQ4q4FKLCc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748998369; c=relaxed/simple;
-	bh=WqTxG+GTFwkX5t72aDNMBFs7Y7N43jDTPU21dIgUKMg=;
+	s=arc-20240116; t=1748998372; c=relaxed/simple;
+	bh=yMXPImoDShFl6zSDhLFuKtBrR5V5Y1MGY0SUXOTEPCY=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Rux/omU1r/RStwpSqi23InhM2mkHOgn7G9DzotSWbsh1jmuyl5xvjkz2HlIPRGQ0OGtvYxLNXgbzycc2YJEmNlQK5AOtpM1LsG3qmtOPeemtTnewuqULGMgs1JEnqd4hVAGEuWC+0AJQhiiHCCrYb0M9uVuh5f0Y1GWeV7grqnQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=J8TJvwNv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cWm5yD192o+Dxtw0zfeIlx4pFhcb13zyrP0zH9PJfsYnM8Go6ZYGCo7ARo+MGSj/dE2z1Dg6ZVdZALk+kd3lhn1XowkMuXTIAXxJBEigbaovZWWOd3WNbyYDNAgxONXA3wzbIS+ioMNl/vPSroNjNZwhGawmHf/8FWnBFMPP2Ng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LtI9ifC3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="J8TJvwNv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8933C4CEED;
-	Wed,  4 Jun 2025 00:52:47 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LtI9ifC3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22897C4CEED;
+	Wed,  4 Jun 2025 00:52:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748998368;
-	bh=WqTxG+GTFwkX5t72aDNMBFs7Y7N43jDTPU21dIgUKMg=;
+	s=k20201202; t=1748998372;
+	bh=yMXPImoDShFl6zSDhLFuKtBrR5V5Y1MGY0SUXOTEPCY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J8TJvwNvqN27N9FqUeC/eFXZ27xmPQsypx1toBLhrKZvxnGd7IhDpGBATq6Ba8bAw
-	 eIfIzjN4ViVuD5RoivoR0kn/QPb1DOQhFIDpvy139PMXDIeohefoBzyHTO+NHHB7BX
-	 Tbpz1jTVZdv015ZldmxZOQJKK2vUJc223x+X5fUGGaaXXm1CjpeSHCBEThGcgieVvw
-	 cd02e8ZTVo8hLSXNfKOfdFLvuU4y822XcaJbt5mlo3E2dWb4XjqJhXuIaGYBs2YLMP
-	 HyrQAOJ1/mas25EujRJgdgW+2PKmwb30C3i0VitZ8WNHirmxXs3igi8BnqFAWElX6q
-	 HzTS9GVMbVozw==
+	b=LtI9ifC3Uv4so1w1WwxeadEAwFVg0EnrD7N90AtGx27hzxlYBJjdx0EG5ynUv5Vxy
+	 WFOfWzx5V6dVOaBJFVRuRxYzSR0m0Bejaf1YsYbP4Idr+UZkQR1SQnGDgS8YeLHjTG
+	 Ws9mdwWB6rxMsVpKnpDYjGJiEhPoQZvYnQhsjcEu7xgKwF4gWaK5bn4B0Vp7bJj5HI
+	 siDx9Lpdis8CGGGS9Cee3VoaAGYRRcB1jnaIBOcrRmBqHq8UmRGjvE9xWrzpt20dRr
+	 v5HKi23rcP7b0Psm/+jBZNkPKag5X/0r1XqYYAb2BA3kSW52kdOy9GijCOG0xs6QHs
+	 E/D6OMSk9N56A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jason Xing <kernelxing@tencent.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
+Cc: Stefan Wahren <wahrenst@gmx.net>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	netdev@vger.kernel.org,
-	linux-rdma@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.15 054/118] net: mlx4: add SOF_TIMESTAMPING_TX_SOFTWARE flag when getting ts info
-Date: Tue,  3 Jun 2025 20:49:45 -0400
-Message-Id: <20250604005049.4147522-54-sashal@kernel.org>
+	andrew@lunn.ch,
+	horms@kernel.org
+Subject: [PATCH AUTOSEL 6.15 055/118] net: vertexcom: mse102x: Return code for mse102x_rx_pkt_spi
+Date: Tue,  3 Jun 2025 20:49:46 -0400
+Message-Id: <20250604005049.4147522-55-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250604005049.4147522-1-sashal@kernel.org>
 References: <20250604005049.4147522-1-sashal@kernel.org>
@@ -50,82 +49,144 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.15
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jason Xing <kernelxing@tencent.com>
+From: Stefan Wahren <wahrenst@gmx.net>
 
-[ Upstream commit b86bcfee30576b752302c55693fff97242b35dfd ]
+[ Upstream commit 4ecf56f4b66011b583644bf9a62188d05dfcd78c ]
 
-As mlx4 has implemented skb_tx_timestamp() in mlx4_en_xmit(), the
-SOFTWARE flag is surely needed when users are trying to get timestamp
-information.
+The MSE102x doesn't provide any interrupt register, so the only way
+to handle the level interrupt is to fetch the whole packet from
+the MSE102x internal buffer via SPI. So in cases the interrupt
+handler fails to do this, it should return IRQ_NONE. This allows
+the core to disable the interrupt in case the issue persists
+and prevent an interrupt storm.
 
-Signed-off-by: Jason Xing <kernelxing@tencent.com>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20250510093442.79711-1-kerneljasonxing@gmail.com
+Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
+Link: https://patch.msgid.link/20250509120435.43646-6-wahrenst@gmx.net
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Perfect! Now I can see that `skb_tx_timestamp(skb)` is called in the
-`mlx4_en_xmit()` function, which is the main transmit function. This
-confirms that the mlx4 driver does implement software timestamping. Now
-let me compare this to the similar commits to see the pattern: **YES**
-This commit should be backported to stable kernel trees. **Extensive
-Explanation:** This commit addresses a clear inconsistency bug where the
-mlx4 driver implements software timestamping functionality but fails to
-advertise this capability to userspace through the ethtool timestamping
-info interface. **Analysis of the fix:** 1. **The Problem**: The mlx4
-driver calls `skb_tx_timestamp(skb)` in `mlx4_en_xmit()` at line 1091 of
-`/drivers/net/ethernet/mellanox/mlx4/en_tx.c`, which means it properly
-implements software TX timestamping. However, in
-`mlx4_en_get_ts_info()`, it only advertises hardware timestamping
-capabilities (`SOF_TIMESTAMPING_TX_HARDWARE`,
-`SOF_TIMESTAMPING_RX_HARDWARE`, `SOF_TIMESTAMPING_RAW_HARDWARE`) but
-omits the `SOF_TIMESTAMPING_TX_SOFTWARE` flag. 2. **The Fix**: The
-change adds a single line `SOF_TIMESTAMPING_TX_SOFTWARE |` to the
-`info->so_timestamping` field when hardware timestamping is supported,
-correctly advertising both hardware and software timestamping
-capabilities. 3. **Impact**: This is a user-facing API correctness
-issue. Applications checking timestamping capabilities via ethtool would
-incorrectly believe software timestamping is not supported, even though
-the driver implements it. **Comparison with similar commits:** -
-**Similar Commit #1 (YES)**: Also fixed a timestamping bug in mlx4,
-showing these are important fixes - **Similar Commit #3 (YES)**: Fixed
-incorrect timestamping capability reporting in mlx5 by removing false
-software timestamping indication - **Similar Commit #5 (YES)**: Fixed
-timestamping capabilities reporting using wrong BIT() macro in mlx5 The
-pattern shows that timestamping capability reporting bugs are
-consistently considered backport-worthy because they affect user-visible
-API behavior. **Backport Criteria Assessment:** ✅ **Fixes a user-
-affecting bug**: Applications cannot detect software timestamping
-support ✅ **Small, contained change**: Single line addition with no
-functional logic changes ✅ **No architectural changes**: Only fixes
-capability reporting ✅ **Low regression risk**: Only adds a missing
-flag, doesn't change driver behavior ✅ **Clear side effects**: None
-beyond correctly advertising existing functionality ✅ **Follows stable
-rules**: Important API correctness fix with minimal risk The fix is
-identical in nature to Similar Commit #3 (marked YES) but in reverse -
-where mlx5 removed false software timestamping advertisement, this adds
-the missing software timestamping advertisement for mlx4 where it's
-actually implemented.
+**YES** This commit should be backported to stable kernel trees. Here's
+my extensive analysis: ## Primary Analysis **This is a critical
+interrupt handling bug fix that prevents system stability issues.** The
+commit changes the return value behavior of the MSE102x network driver's
+interrupt handler to prevent interrupt storms, which is a serious system
+stability concern. ## Code Changes Analysis The key changes show a
+systematic conversion from `void` return to `irqreturn_t` return values:
+1. **Function signature change**: `mse102x_rx_pkt_spi()` changes from
+`void` to `irqreturn_t` 2. **Critical early return paths**: The function
+now returns `IRQ_NONE` when SPI commands fail: ```c if (ret) - return; +
+return IRQ_NONE; ``` 3. **Memory allocation failures**: Returns
+`IRQ_NONE` when `netdev_alloc_skb_ip_align()` fails: ```c if (!skb) -
+return; + return IRQ_NONE; ``` 4. **Successful packet processing**:
+Returns `IRQ_HANDLED` when packets are processed (even with errors):
+```c if (mse102x_rx_frame_spi(mse, rxpkt, rxlen, drop)) {
+mse->ndev->stats.rx_errors++; dev_kfree_skb(skb); - return; + return
+IRQ_HANDLED; } ``` ## Why This Meets Stable Backport Criteria **1.
+Critical System Stability Issue** The commit message explicitly states
+this prevents "interrupt storms" - a condition where the system can
+become unresponsive due to continuous interrupt processing. This is a
+serious reliability concern that affects system operation. **2.
+Hardware-Specific Reliability Problem** The MSE102x hardware uses level-
+triggered interrupts and has no interrupt acknowledge mechanism. When
+the driver returns `IRQ_NONE` while the interrupt line is still
+asserted, the kernel's interrupt subsystem can disable the interrupt or
+continuously retrigger it, leading to system instability. **3. Small,
+Contained Fix** The changes are minimal and surgical - only affecting
+return values in the interrupt handler path. There are no algorithmic
+changes or new features introduced. **4. Pattern Matches Previous Stable
+Backports** Comparing to the reference commits: - Similar Commits #1-3
+were all marked "Backport Status: YES" and dealt with MSE102x
+reliability fixes - This follows the same pattern: small, targeted fixes
+for hardware-specific reliability issues - Like commit #1 (interrupt
+handling fix), this addresses interrupt-related system stability **5.
+Critical Subsystem (Interrupt Handling)** Interrupt handling is a core
+kernel subsystem where bugs can cause system-wide instability. The
+commit message specifically mentions preventing interrupt storms, which
+can freeze systems. **6. No Risk of Regression** The changes only affect
+error handling paths and make the interrupt handler more conservative by
+properly signaling when interrupts are handled vs. not handled. This
+cannot introduce new bugs - it only prevents the kernel from making
+incorrect assumptions about interrupt handling. **7.
+Infrastructure/Driver Reliability** Network drivers with interrupt
+handling bugs can cause network connectivity loss and system
+instability, particularly in embedded systems where this hardware is
+likely deployed. This commit fixes a fundamental interrupt handling bug
+that can cause system stability issues, uses minimal and safe code
+changes, and follows the pattern of previously accepted stable backports
+for the same hardware. It should definitely be backported to stable
+kernel trees.
 
- drivers/net/ethernet/mellanox/mlx4/en_ethtool.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/vertexcom/mse102x.c | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx4/en_ethtool.c b/drivers/net/ethernet/mellanox/mlx4/en_ethtool.c
-index cd17a3f4faf83..a68cd3f0304c6 100644
---- a/drivers/net/ethernet/mellanox/mlx4/en_ethtool.c
-+++ b/drivers/net/ethernet/mellanox/mlx4/en_ethtool.c
-@@ -1897,6 +1897,7 @@ static int mlx4_en_get_ts_info(struct net_device *dev,
- 	if (mdev->dev->caps.flags2 & MLX4_DEV_CAP_FLAG2_TS) {
- 		info->so_timestamping |=
- 			SOF_TIMESTAMPING_TX_HARDWARE |
-+			SOF_TIMESTAMPING_TX_SOFTWARE |
- 			SOF_TIMESTAMPING_RX_HARDWARE |
- 			SOF_TIMESTAMPING_RAW_HARDWARE;
+diff --git a/drivers/net/ethernet/vertexcom/mse102x.c b/drivers/net/ethernet/vertexcom/mse102x.c
+index e4d993f313740..545177e84c0eb 100644
+--- a/drivers/net/ethernet/vertexcom/mse102x.c
++++ b/drivers/net/ethernet/vertexcom/mse102x.c
+@@ -306,7 +306,7 @@ static void mse102x_dump_packet(const char *msg, int len, const char *data)
+ 		       data, len, true);
+ }
  
+-static void mse102x_rx_pkt_spi(struct mse102x_net *mse)
++static irqreturn_t mse102x_rx_pkt_spi(struct mse102x_net *mse)
+ {
+ 	struct sk_buff *skb;
+ 	unsigned int rxalign;
+@@ -327,7 +327,7 @@ static void mse102x_rx_pkt_spi(struct mse102x_net *mse)
+ 		mse102x_tx_cmd_spi(mse, CMD_CTR);
+ 		ret = mse102x_rx_cmd_spi(mse, (u8 *)&rx);
+ 		if (ret)
+-			return;
++			return IRQ_NONE;
+ 
+ 		cmd_resp = be16_to_cpu(rx);
+ 		if ((cmd_resp & CMD_MASK) != CMD_RTS) {
+@@ -360,7 +360,7 @@ static void mse102x_rx_pkt_spi(struct mse102x_net *mse)
+ 	rxalign = ALIGN(rxlen + DET_SOF_LEN + DET_DFT_LEN, 4);
+ 	skb = netdev_alloc_skb_ip_align(mse->ndev, rxalign);
+ 	if (!skb)
+-		return;
++		return IRQ_NONE;
+ 
+ 	/* 2 bytes Start of frame (before ethernet header)
+ 	 * 2 bytes Data frame tail (after ethernet frame)
+@@ -370,7 +370,7 @@ static void mse102x_rx_pkt_spi(struct mse102x_net *mse)
+ 	if (mse102x_rx_frame_spi(mse, rxpkt, rxlen, drop)) {
+ 		mse->ndev->stats.rx_errors++;
+ 		dev_kfree_skb(skb);
+-		return;
++		return IRQ_HANDLED;
+ 	}
+ 
+ 	if (netif_msg_pktdata(mse))
+@@ -381,6 +381,8 @@ static void mse102x_rx_pkt_spi(struct mse102x_net *mse)
+ 
+ 	mse->ndev->stats.rx_packets++;
+ 	mse->ndev->stats.rx_bytes += rxlen;
++
++	return IRQ_HANDLED;
+ }
+ 
+ static int mse102x_tx_pkt_spi(struct mse102x_net *mse, struct sk_buff *txb,
+@@ -512,12 +514,13 @@ static irqreturn_t mse102x_irq(int irq, void *_mse)
+ {
+ 	struct mse102x_net *mse = _mse;
+ 	struct mse102x_net_spi *mses = to_mse102x_spi(mse);
++	irqreturn_t ret;
+ 
+ 	mutex_lock(&mses->lock);
+-	mse102x_rx_pkt_spi(mse);
++	ret = mse102x_rx_pkt_spi(mse);
+ 	mutex_unlock(&mses->lock);
+ 
+-	return IRQ_HANDLED;
++	return ret;
+ }
+ 
+ static int mse102x_net_open(struct net_device *ndev)
 -- 
 2.39.5
 
