@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B4D112B73;
-	Wed,  4 Jun 2025 01:07:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7556812B73;
+	Wed,  4 Jun 2025 01:07:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748999230; cv=none; b=BGEOSpAPBTZKxAY83QUbuboR+wI8ynPKT+MNnGDVeaKLGXw0ff1pL/jtrSClGBt/3eIrY71YO7gXoFFavuSO9/N9LZB2f4fmTYjkbrajW4kHLZS/U0AI9N2ax0Dunnm1U6cIDdWdEe7T3hHMQiVm5L4VDXTUozWFry3OPTiFVIU=
+	t=1748999231; cv=none; b=YnE7/DJJDT3rdKoLZeyX0tY7RFVE8El0Pb8Bz4t7XBZOYT5M/POHfroHjToOIoN7m/CT73n8lNSLJnbdwu9icUIQaNhkIs0LMGZ5rNUnu8G0n0gOEqs+CmHuWpayIwJqf0r6agPcPvBkbNLOILTLbRI/v9RYKEbkOSBP2F0WCEM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748999230; c=relaxed/simple;
-	bh=C525Jn/1uIiLflF6jKCwlSvYRCR0eiNrylGZT+slQE8=;
+	s=arc-20240116; t=1748999231; c=relaxed/simple;
+	bh=uZiVtJtJElkZQ9XP1c8FaO68zfLJjauPxcW7nH4veqM=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Xz6RwNBXrVSiqplXTYXI/CjW+q00w1epFFMdv6yswyKLZzRDU8V5oGHBxpgpiRLkjEQr0B9wYgFlfE+lAhY36Uy5uqHE8cNTCIUzKPTnvoKbS/spozUqibv1uhR1YLiTETCxXZRANu2qAnaghZTvEO6P700ddMVkF67kjD4+59o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EtZcK1uB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=rdMk8WVWAsOcfsvcjTdAhhophqZJa+nTZIjYcopCHSvRz3li/Cm16KD2HD8Lx7vdWBs3PvtGhc3tV4RjjtcJvM3GotQhB9Q7v0sXwHkPqr2Lu0O4k4T77p78JqMPbxchWiBKYtkzzbSc9jOeD7wK4yhBTSin+iQRSZELh3+CYa0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Uu7FNiMw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EtZcK1uB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EA01C4CEED;
-	Wed,  4 Jun 2025 01:07:08 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Uu7FNiMw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 491C1C4CEEF;
+	Wed,  4 Jun 2025 01:07:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748999229;
-	bh=C525Jn/1uIiLflF6jKCwlSvYRCR0eiNrylGZT+slQE8=;
+	s=k20201202; t=1748999231;
+	bh=uZiVtJtJElkZQ9XP1c8FaO68zfLJjauPxcW7nH4veqM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EtZcK1uBQjs1wWGBXRjDiyiwNBlcdM2gAjxzbWYDvP5jtmvm+o8PIvJA+vtskYfx4
-	 uBYDtlsNTr868ZXxy5HURHk8Phw47WmFrob6jWLjh3fZ9ZDSR0g7vCLRUICMHtjLA1
-	 DGuYx6Qc7EsOwbM2Cxu7EaHZSM2PL+pvXf1oSWJ9dJ+7Xnd1tDyliAvPHZddhCjUxB
-	 /UZCs6t69jkV0O+dtFIw1mLLBiHJABilVpmgPrJq9KNDYMoIVX1+8BCYVzNTxAus5t
-	 CKHEQ2/WDA29Vp1jukYzycnVc14dZzthf8kXHYQYdDbEt4Gt1IFc2HW420rm5gCF82
-	 +EIrG2BIQ6ifg==
+	b=Uu7FNiMw85Q/dzfLFJK7ZkN8rKoy9ctzr23OaJHJAqmCrf9tjOJwndhhdzfPeocD7
+	 do46Or29ej19aV6CswKn4NCVaqj6NftElN/yGUup6S8Sc2hDjYdOtl+SHWGpyQq1mH
+	 3QgBE/u1Tyc8eqnBt8MPuMc5+BSaCwlSKW49ozDxkeKmp5ImaMB7kL8VktKX4smCYs
+	 8sAJZlBeOCWVad5AznqYYuQAqjdyW067yO+zFGULhe24P7jIxjTEpUhg26mYvS74Cn
+	 rtrTxprX+DXLqrD9SmxnJ1PwDUonQOnPrvWNiglWvjFCuxKRm5oiulnZN7Fli/jlA7
+	 N+Fw6sPQ9z8Eg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Tan En De <ende.tan@starfivetech.com>,
-	Jarkko Nikula <jarkko.nikula@linux.intel.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
+Cc: Alok Tiwari <alok.a.tiwari@oracle.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-i2c@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.4 02/20] i2c: designware: Invoke runtime suspend on quick slave re-registration
-Date: Tue,  3 Jun 2025 21:06:48 -0400
-Message-Id: <20250604010706.7395-2-sashal@kernel.org>
+	ajit.khaparde@broadcom.com,
+	sriharsha.basavapatna@broadcom.com,
+	somnath.kotur@broadcom.com,
+	netdev@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.4 03/20] emulex/benet: correct command version selection in be_cmd_get_stats()
+Date: Tue,  3 Jun 2025 21:06:49 -0400
+Message-Id: <20250604010706.7395-3-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250604010706.7395-1-sashal@kernel.org>
 References: <20250604010706.7395-1-sashal@kernel.org>
@@ -52,135 +54,81 @@ X-stable-base: Linux 5.4.293
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tan En De <ende.tan@starfivetech.com>
+From: Alok Tiwari <alok.a.tiwari@oracle.com>
 
-[ Upstream commit 2fe2b969d911a09abcd6a47401a3c66c38a310e6 ]
+[ Upstream commit edb888d29748cee674006a52e544925dacc7728e ]
 
-Replaced pm_runtime_put() with pm_runtime_put_sync_suspend() to ensure
-the runtime suspend is invoked immediately when unregistering a slave.
-This prevents a race condition where suspend was skipped when
-unregistering and registering slave in quick succession.
+Logic here always sets hdr->version to 2 if it is not a BE3 or Lancer chip,
+even if it is BE2. Use 'else if' to prevent multiple assignments, setting
+version 0 for BE2, version 1 for BE3 and Lancer, and version 2 for others.
+Fixes potential incorrect version setting when BE2_chip and
+BE3_chip/lancer_chip checks could both be true.
 
-For example, consider the rapid sequence of
-`delete_device -> new_device -> delete_device -> new_device`.
-In this sequence, it is observed that the dw_i2c_plat_runtime_suspend()
-might not be invoked after `delete_device` operation.
-
-This is because after `delete_device` operation, when the
-pm_runtime_put() is about to trigger suspend, the following `new_device`
-operation might race and cancel the suspend.
-
-If that happens, during the `new_device` operation,
-dw_i2c_plat_runtime_resume() is skipped (since there was no suspend), which
-means `i_dev->init()`, i.e. i2c_dw_init_slave(), is skipped.
-Since i2c_dw_init_slave() is skipped, i2c_dw_configure_fifo_slave() is
-skipped too, which leaves `DW_IC_INTR_MASK` unconfigured. If we inspect
-the interrupt mask register using devmem, it will show as zero.
-
-Example shell script to reproduce the issue:
-```
-  #!/bin/sh
-
-  SLAVE_LADDR=0x1010
-  SLAVE_BUS=13
-  NEW_DEVICE=/sys/bus/i2c/devices/i2c-$SLAVE_BUS/new_device
-  DELETE_DEVICE=/sys/bus/i2c/devices/i2c-$SLAVE_BUS/delete_device
-
-  # Create initial device
-  echo slave-24c02 $SLAVE_LADDR > $NEW_DEVICE
-  sleep 2
-
-  # Rapid sequence of
-  # delete_device -> new_device -> delete_device -> new_device
-  echo $SLAVE_LADDR > $DELETE_DEVICE
-  echo slave-24c02 $SLAVE_LADDR > $NEW_DEVICE
-  echo $SLAVE_LADDR > $DELETE_DEVICE
-  echo slave-24c02 $SLAVE_LADDR > $NEW_DEVICE
-
-  # Using devmem to inspect IC_INTR_MASK will show as zero
-```
-
-Signed-off-by: Tan En De <ende.tan@starfivetech.com>
-Acked-by: Jarkko Nikula <jarkko.nikula@linux.intel.com>
-Link: https://lore.kernel.org/r/20250412023303.378600-1-ende.tan@starfivetech.com
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
+Link: https://patch.msgid.link/20250519141731.691136-1-alok.a.tiwari@oracle.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-**YES** This commit should be backported to stable kernel trees. Here's
-my extensive analysis: ## Critical Bug Fix Analysis ### 1. **Nature of
-the Bug** This commit fixes a **race condition** that causes I2C slave
-functionality to completely break. The problem occurs during rapid slave
-device registration/unregistration sequences where: - `pm_runtime_put()`
-is asynchronous and may not complete suspend before the next
-`pm_runtime_get_sync()` - If suspend doesn't happen, runtime resume is
-skipped - Runtime resume is where `i2c_dw_init_slave()` and
-`i2c_dw_configure_fifo_slave()` restore critical hardware configuration
-- When these initialization functions are skipped, the interrupt mask
-register (`DW_IC_INTR_MASK`) remains zero, disabling all interrupts ###
-2. **Impact on Users** This is a **high-impact functional bug** that: -
-Completely breaks I2C slave functionality in affected scenarios -
-Affects real-world use cases (rapid device creation/deletion as shown in
-the shell script) - Leaves hardware in a non-functional state requiring
-manual intervention - Results in silent failures where the slave appears
-registered but cannot handle transactions ### 3. **Code Change
-Analysis** The fix is **minimal and surgical**: ```c -
-pm_runtime_put(dev->dev); + pm_runtime_put_sync_suspend(dev->dev); ```
-This single-line change: - Replaces asynchronous `pm_runtime_put()` with
-synchronous `pm_runtime_put_sync_suspend()` - Ensures runtime suspend
-happens immediately before unregistration completes - Eliminates the
-race window where suspend could be skipped - Has **no functional side
-effects** beyond the intended timing change ### 4. **Risk Assessment**
-**Very low risk** for several reasons: - **Single line change** with
-clear, well-understood semantics - **Conservative fix** - makes behavior
-more predictable, not fundamentally different - **Same end result** -
-both functions eventually suspend the device, just with different timing
-- **No new code paths** - uses existing, well-tested runtime PM
-infrastructure - **Maintains all existing error handling and power
-management policies** ### 5. **Stable Tree Criteria Compliance** ✅
-**Important bugfix** - Fixes complete loss of I2C slave functionality ✅
-**Minimal risk** - Single line change with well-understood behavior ✅
-**No new features** - Pure bug fix with no feature additions ✅ **No
-architectural changes** - Uses existing runtime PM APIs ✅ **Confined to
-subsystem** - Only affects i2c-designware slave mode ✅ **Clear
-reproduction case** - Includes shell script demonstrating the problem
-### 6. **Comparison with Similar Commits** Looking at the provided
-examples: - **Similar Commit #3 (Status: YES)**: Also fixed a race
-condition in slave mode with `synchronize_irq()` - this shows precedent
-for backporting race condition fixes in this driver - **Similar Commits
-#1,2,4,5 (Status: NO)**: Were cleanup, optimization, or architectural
-changes rather than critical bug fixes ### 7. **Technical Validation**
-The commit demonstrates understanding of the underlying issue: - **Root
-cause identified**: Async suspend being canceled by subsequent
-operations - **Mechanism explained**: Missing initialization during
-runtime resume - **Hardware impact documented**: Interrupt mask register
-left unconfigured - **Reproduction provided**: Clear test case showing
-the failure ### 8. **Maintainer Confidence** The commit has strong
-technical validation: - **Acked-by: Jarkko Nikula** - A key
-i2c-designware maintainer - **Detailed commit message** with technical
-explanation and reproduction steps - **Clean implementation** using
-standard kernel APIs ## Conclusion This commit fixes a critical race
-condition that completely breaks I2C slave functionality with minimal
-risk and clear precedent for backporting similar fixes. It meets all
-stable tree criteria for an important, low-risk bugfix that should be
-available to users running stable kernels.
+Based on my analysis, let me provide my determination: **YES** This
+commit should be backported to stable kernel trees. ## Detailed
+Analysis: ### 1. **Nature of the Bug:** The commit fixes a logical error
+in command version selection for the `be_cmd_get_stats()` function in
+the Emulex be2net driver. The original code had this problematic logic:
+```c if (BE2_chip(adapter)) hdr->version = 0; if (BE3_chip(adapter) ||
+lancer_chip(adapter)) // <- Missing "else" hdr->version = 1; else
+hdr->version = 2; ``` The bug is that the second `if` should be `else
+if`. Without the `else if`, if a chip satisfies both `BE2_chip(adapter)`
+AND `(BE3_chip(adapter) || lancer_chip(adapter))` conditions, the
+version would be incorrectly set multiple times, with the final value
+being either 1 or 2 depending on subsequent conditions. ### 2. **Impact
+Assessment:** - **User-facing impact:** This bug could cause incorrect
+command versions to be sent to the hardware, potentially leading to
+statistics retrieval failures or unexpected behavior - **Scope:**
+Affects all users of Emulex be2net network adapters where the chip
+detection logic could overlap - **Severity:** While not a critical
+security issue, it affects driver functionality and could lead to
+network statistics reporting failures ### 3. **Code Change Analysis:**
+The fix is minimal and surgical: - **Single line change:** Only changes
+`if` to `else if` on line 1612 - **No functional additions:** Does not
+introduce new features or change APIs - **Low regression risk:** The
+change makes the logic more explicit and prevents multiple assignments -
+**Clear intent:** The fix aligns with the comment stating "version 1 of
+the cmd is not supported only by BE2" ### 4. **Backport Suitability
+Criteria:** ✅ **Fixes important bug:** Corrects incorrect hardware
+command version selection ✅ **Small and contained:** Single line change
+with no side effects ✅ **Low regression risk:** Makes existing logic
+more explicit and correct ✅ **No architectural changes:** Pure bug fix
+without design modifications ✅ **Subsystem confined:** Only affects
+be2net driver statistics functionality ### 5. **Comparison with
+Historical Commits:** The provided historical commits were all marked
+"NO" for backporting because they were: - Version string updates
+(cosmetic changes) - Code simplifications (non-critical improvements) -
+Driver version removals (cleanup) In contrast, this commit fixes actual
+functional logic that could cause incorrect behavior. ### 6. **Stable
+Tree Compliance:** This commit perfectly fits the stable tree criteria:
+- Fixes a clear bug in existing code - Has minimal risk of introducing
+regressions - Affects a specific driver subsystem - Does not change
+user-visible APIs or behavior (except fixing incorrect behavior) The
+commit message clearly explains the problem and solution, and the change
+is straightforward to verify and test.
 
- drivers/i2c/busses/i2c-designware-slave.c | 2 +-
+ drivers/net/ethernet/emulex/benet/be_cmds.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/i2c/busses/i2c-designware-slave.c b/drivers/i2c/busses/i2c-designware-slave.c
-index f5f001738df5e..57e67962a602f 100644
---- a/drivers/i2c/busses/i2c-designware-slave.c
-+++ b/drivers/i2c/busses/i2c-designware-slave.c
-@@ -96,7 +96,7 @@ static int i2c_dw_unreg_slave(struct i2c_client *slave)
- 	dev->disable(dev);
- 	synchronize_irq(dev->irq);
- 	dev->slave = NULL;
--	pm_runtime_put(dev->dev);
-+	pm_runtime_put_sync_suspend(dev->dev);
- 
- 	return 0;
- }
+diff --git a/drivers/net/ethernet/emulex/benet/be_cmds.c b/drivers/net/ethernet/emulex/benet/be_cmds.c
+index 9812a9a5d033b..d9bceb26f4e5b 100644
+--- a/drivers/net/ethernet/emulex/benet/be_cmds.c
++++ b/drivers/net/ethernet/emulex/benet/be_cmds.c
+@@ -1608,7 +1608,7 @@ int be_cmd_get_stats(struct be_adapter *adapter, struct be_dma_mem *nonemb_cmd)
+ 	/* version 1 of the cmd is not supported only by BE2 */
+ 	if (BE2_chip(adapter))
+ 		hdr->version = 0;
+-	if (BE3_chip(adapter) || lancer_chip(adapter))
++	else if (BE3_chip(adapter) || lancer_chip(adapter))
+ 		hdr->version = 1;
+ 	else
+ 		hdr->version = 2;
 -- 
 2.39.5
 
