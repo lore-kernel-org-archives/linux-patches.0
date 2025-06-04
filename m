@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2519F4A2D;
-	Wed,  4 Jun 2025 01:00:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D6C14A2D;
+	Wed,  4 Jun 2025 01:00:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748998858; cv=none; b=re/tpo+EzomDXERzkms/Dx0cqQiODkqEOh0PJT1iZAizMg/+A99i7BAjzwD6oostoynfzyN6S6Ba3oTwC7RTxAzl3I3JuhXeGAkOCcc10Lnpw/bkLpJ5rHdnhcfRCpbfIMFgAlg32WucsgujIf0bsCzy7FPECJSp1Dj+ODnv39o=
+	t=1748998859; cv=none; b=eC/Jw2ihCfAzsIRqtGmJhwM3GUSAsVpQP8w+SoMKWTA6aoJsuOB57AySG/EGtGz2dyoLObJflLDYzOXx8jGlXvARAFxxE4HQiN2UX88Pnsl+rKKsT+47UL52uyZMAtUzFH2cwyeaapm25TFGSHmtWQgccGX3dCCcV1YGVP3M6T4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748998858; c=relaxed/simple;
-	bh=bMrVdcFROuaGQZZS47tY6ksX5AZ3pkjtqdQ5g5Ynl40=;
+	s=arc-20240116; t=1748998859; c=relaxed/simple;
+	bh=Jr9MwdDprcQ+Crks6HijpDIg2s9H+OgSY2RNAPf+0JQ=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nbaIRloWQl1gKUFXbYG8J46piJmdgxWlGB5ZeAZTQkVOHwuNw5i/5rrhTzy7omz1rhMhXQlWcyhWdV9OuDF0GpiSDIGBE3bv69P+iEh18X1MKmPpAxmyENqSAV9M71Lf/fG+EMbmENjtQ6k9gDY9A3B/gmKiq3bAXdwCY3qwPNA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iZ3Ba69Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=QJs//mfTkyBzmllpZN+tHDhLzPLhVBPMhSt6hv7HcYlGwb3hsVvIX0ISfWO7Pczb/a/gUcukuCkKlvvBzuhxiVDgQtvHqN4jnu8VR0SevYMeN54Ypehniz78i8b9sJxujLbUvaSALmJ3mQad32D0afVaNEZbOwUOW1qusmPYCdQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QixHk1Oh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iZ3Ba69Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D19A1C4CEEF;
-	Wed,  4 Jun 2025 01:00:56 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QixHk1Oh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03974C4CEF1;
+	Wed,  4 Jun 2025 01:00:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748998857;
-	bh=bMrVdcFROuaGQZZS47tY6ksX5AZ3pkjtqdQ5g5Ynl40=;
+	s=k20201202; t=1748998858;
+	bh=Jr9MwdDprcQ+Crks6HijpDIg2s9H+OgSY2RNAPf+0JQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iZ3Ba69QhzW19OsltRac75b8+gtDNK5VZxIV6xQvmmaE9Vev74kXnoitM+1aglsnD
-	 4KcQTf2IimnYSQE+1rBiPeAcEupXfB1E/ieml7i+VUZoCT9obZxti+Dg9AlvLZTDwl
-	 p6N8jEtfSoeZUhbCruMdQNSXF4MTkWE39hNuR5NHqI+yKK53LvLBo/xyfalBu7qew3
-	 1Hjrgc3XYX+h+2mEsaMGnrwn3OWtWTe7uc9LUGqwJTewLKKWRp3ZxjfECDAaRc2Wwo
-	 /SR16O84mkRc/4ABIWfxgqf0LtaFP5kFwbPGxIjF1ufAr9cML3Vtc0B0YsEd2nwbrm
-	 FgSN7wu/UZOhQ==
+	b=QixHk1Oh7WrrkGnFBoB2GCP0mmWMDad+OTlNS7PU0fIGdIdwrnsR7bmz0p0ZYshhQ
+	 L0BDK3LsGL3rPLZfTszNpd0mgcwoh2rWxQ+Z6LyZPvnXYcHzgixVLdLNrji/kb/aWl
+	 X3ZYHRNo4DN4SEf2s3CnQZeOATuDtv2ZZsHiVrwxB93muArXc5XEwkoe9WbYn5ejvQ
+	 V44UtyfXFm5dGOqPR6KuC5tdUnsX2R/b5BkV2NRf+kqrzPV/Da9e+XB3RrDKUIxbzY
+	 nykO0JpWu9gaYxK+N/XFFRpZSajYDfpNoBoX0kabkLyNdBjOOuaX6MtBS38yE63cwP
+	 40B/AxsWxqxjA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+Cc: Pablo Neira Ayuso <pablo@netfilter.org>,
+	Stefano Brivio <sbrivio@redhat.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-f2fs-devel@lists.sourceforge.net
-Subject: [PATCH AUTOSEL 6.12 53/93] f2fs: fix to bail out in get_new_segment()
-Date: Tue,  3 Jun 2025 20:58:39 -0400
-Message-Id: <20250604005919.4191884-53-sashal@kernel.org>
+	kadlec@netfilter.org,
+	netfilter-devel@vger.kernel.org,
+	coreteam@netfilter.org
+Subject: [PATCH AUTOSEL 6.12 54/93] netfilter: nft_set_pipapo: clamp maximum map bucket size to INT_MAX
+Date: Tue,  3 Jun 2025 20:58:40 -0400
+Message-Id: <20250604005919.4191884-54-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250604005919.4191884-1-sashal@kernel.org>
 References: <20250604005919.4191884-1-sashal@kernel.org>
@@ -51,99 +53,98 @@ X-stable-base: Linux 6.12.31
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chao Yu <chao@kernel.org>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit bb5eb8a5b222fa5092f60d5555867a05ebc3bdf2 ]
+[ Upstream commit b85e3367a5716ed3662a4fe266525190d2af76df ]
 
-------------[ cut here ]------------
-WARNING: CPU: 3 PID: 579 at fs/f2fs/segment.c:2832 new_curseg+0x5e8/0x6dc
-pc : new_curseg+0x5e8/0x6dc
-Call trace:
- new_curseg+0x5e8/0x6dc
- f2fs_allocate_data_block+0xa54/0xe28
- do_write_page+0x6c/0x194
- f2fs_do_write_node_page+0x38/0x78
- __write_node_page+0x248/0x6d4
- f2fs_sync_node_pages+0x524/0x72c
- f2fs_write_checkpoint+0x4bc/0x9b0
- __checkpoint_and_complete_reqs+0x80/0x244
- issue_checkpoint_thread+0x8c/0xec
- kthread+0x114/0x1bc
- ret_from_fork+0x10/0x20
+Otherwise, it is possible to hit WARN_ON_ONCE in __kvmalloc_node_noprof()
+when resizing hashtable because __GFP_NOWARN is unset.
 
-get_new_segment() detects inconsistent status in between free_segmap
-and free_secmap, let's record such error into super block, and bail
-out get_new_segment() instead of continue using the segment.
+Similar to:
 
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+  b541ba7d1f5a ("netfilter: conntrack: clamp maximum hashtable size to INT_MAX")
+
+Reviewed-by: Stefano Brivio <sbrivio@redhat.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-**YES** This commit should be backported to stable kernel trees for the
-following reasons: **1. Fixes Important Bug Affecting Users:** The
-commit addresses a kernel WARNING that can be triggered during normal
-filesystem operations. The call trace shows this occurs during
-checkpoint operations (`f2fs_write_checkpoint` → `f2fs_sync_node_pages`
-→ `f2fs_do_write_node_page`), which are critical for data consistency.
-**2. Small and Contained Fix:** The changes are minimal and surgical: -
-In `fs/f2fs/segment.c`: Only 6 lines changed, replacing a
-`f2fs_bug_on()` call with proper error handling - In
-`include/linux/f2fs_fs.h`: Adding one new enum value for the stop
-checkpoint reason **3. Minimal Risk of Regression:** The change only
-affects the error path when corruption is detected. Instead of
-triggering a kernel bug, it now: - Returns `-EFSCORRUPTED` error code -
-Stops checkpoint with specific reason
-(`STOP_CP_REASON_CORRUPTED_FREE_BITMAP`) - Maintains filesystem
-integrity by preventing use of corrupted segments **4. Follows
-Established Pattern:** Similar commits (#2, #4, #5) that replace f2fs
-panics with graceful error handling have all been marked for backporting
-(Status: YES). This commit follows the exact same pattern of improving
-f2fs robustness. **5. Critical Subsystem Impact:** The fix touches f2fs
-segment management, which is fundamental to the filesystem's allocation
-strategy. Corruption in segment bitmaps could lead to data loss or
-filesystem corruption if not handled properly. **6. Clear Error Handling
-Improvement:** Rather than crashing the kernel when inconsistent bitmap
-state is detected, the fix allows the filesystem to stop checkpoint
-operations gracefully and record the corruption reason, which aids in
-debugging and recovery. The commit meets all stable tree criteria: it's
-an important bugfix, has minimal risk, doesn't introduce new features,
-and follows established patterns for similar fixes that have been
-successfully backported.
+Based on my analysis of the commit and kernel context, here is my
+assessment: **YES** This commit should be backported to stable kernel
+trees. Here's my extensive analysis: ## Analysis of the Commit **1.
+Nature of the Fix** This commit addresses a kernel warning/crash
+prevention issue in the netfilter nft_set_pipapo subsystem. It adds
+`INT_MAX` bounds checking to prevent oversized `kvmalloc_array()` calls
+in two functions: - `pipapo_realloc_mt()` (line 666): `if (rules_alloc >
+(INT_MAX / sizeof(*new_mt)))` - `pipapo_clone()` (line 1505): `if
+(src->rules_alloc > (INT_MAX / sizeof(*src->mt)))` **2. Root Cause and
+Impact** The commit prevents `WARN_ON_ONCE` triggers in
+`__kvmalloc_node_noprof()` when `__GFP_NOWARN` is unset during kvmalloc
+operations. This is similar to commit `b541ba7d1f5a` which fixed the
+same issue in `nf_conntrack_core.c`. The kernel warning infrastructure
+change in commit `0708a0afe291` ("mm: Consider __GFP_NOWARN flag for
+oversized kvmalloc() calls") made these warnings more prominent and
+exposed this issue. **3. Code Analysis** The changes are minimal and
+surgical: - **pipapo_realloc_mt()**: Adds a single check before
+`kvmalloc_array(rules_alloc, sizeof(*new_mt), GFP_KERNEL_ACCOUNT)` on
+line 669 - **pipapo_clone()**: Adds a single check before
+`kvmalloc_array(src->rules_alloc, sizeof(*src->mt), GFP_KERNEL_ACCOUNT)`
+on line 1508 Both functions return appropriate error codes (`-ENOMEM`)
+when the size limit is exceeded, maintaining existing error handling
+patterns. **4. Risk Assessment - Very Low** - **Minimal code change**:
+Only adds safety checks, doesn't modify core logic - **Fail-safe
+behavior**: Returns error instead of potentially triggering
+warnings/crashes - **Well-established pattern**: Mirrors similar fixes
+in the same subsystem (`nf_conntrack_core.c`, `x_tables.c`) - **No
+functional change**: Normal operations under `INT_MAX` limits are
+unaffected **5. Alignment with Stable Tree Criteria** - ✅ **Fixes
+important bugs**: Prevents kernel warnings and potential system
+instability - ✅ **Small and contained**: Two single-line additions with
+clear bounds checking - ✅ **Minimal regression risk**: Only adds safety
+limits, doesn't change behavior - ✅ **Critical subsystem**: Affects
+netfilter, which is core network filtering infrastructure - ✅ **Clear
+fix pattern**: Follows established pattern from similar commits that
+were backported **6. Comparison with Historical Similar Commits**
+Looking at the provided reference commits, this aligns perfectly with
+commits marked "YES" for backporting: - Similar to "netfilter:
+conntrack: clamp maximum hashtable size to INT_MAX" (Status: YES) -
+Similar to "netfilter: nf_tables: Fix oversized kvmalloc() calls"
+(Status: YES) - Similar to "netfilter: nf_tables: fix out of memory
+error handling" (Status: YES) **7. User Impact** Users with systems that
+trigger large netfilter set allocations would benefit from this fix, as
+it prevents kernel warnings that could indicate system problems and
+potential instability. **Conclusion**: This is a clear, low-risk
+stability fix that prevents kernel warnings in a critical networking
+subsystem. It follows established patterns and should be backported to
+ensure system stability across kernel versions.
 
- fs/f2fs/segment.c       | 6 +++++-
- include/linux/f2fs_fs.h | 1 +
- 2 files changed, 6 insertions(+), 1 deletion(-)
+ net/netfilter/nft_set_pipapo.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
-index b9ffb2ee9548a..769a90b609e2c 100644
---- a/fs/f2fs/segment.c
-+++ b/fs/f2fs/segment.c
-@@ -2772,7 +2772,11 @@ static int get_new_segment(struct f2fs_sb_info *sbi,
- 	}
- got_it:
- 	/* set it as dirty segment in free segmap */
--	f2fs_bug_on(sbi, test_bit(segno, free_i->free_segmap));
-+	if (test_bit(segno, free_i->free_segmap)) {
-+		ret = -EFSCORRUPTED;
-+		f2fs_stop_checkpoint(sbi, false, STOP_CP_REASON_CORRUPTED_FREE_BITMAP);
-+		goto out_unlock;
-+	}
+diff --git a/net/netfilter/nft_set_pipapo.c b/net/netfilter/nft_set_pipapo.c
+index 7be342b495f5f..efbe2f027cab4 100644
+--- a/net/netfilter/nft_set_pipapo.c
++++ b/net/netfilter/nft_set_pipapo.c
+@@ -663,6 +663,9 @@ static int pipapo_realloc_mt(struct nft_pipapo_field *f,
+ 	    check_add_overflow(rules, extra, &rules_alloc))
+ 		return -EOVERFLOW;
  
- 	/* no free section in conventional zone */
- 	if (new_sec && pinning &&
-diff --git a/include/linux/f2fs_fs.h b/include/linux/f2fs_fs.h
-index c24f8bc01045d..5206d63b33860 100644
---- a/include/linux/f2fs_fs.h
-+++ b/include/linux/f2fs_fs.h
-@@ -78,6 +78,7 @@ enum stop_cp_reason {
- 	STOP_CP_REASON_UPDATE_INODE,
- 	STOP_CP_REASON_FLUSH_FAIL,
- 	STOP_CP_REASON_NO_SEGMENT,
-+	STOP_CP_REASON_CORRUPTED_FREE_BITMAP,
- 	STOP_CP_REASON_MAX,
- };
++	if (rules_alloc > (INT_MAX / sizeof(*new_mt)))
++		return -ENOMEM;
++
+ 	new_mt = kvmalloc_array(rules_alloc, sizeof(*new_mt), GFP_KERNEL_ACCOUNT);
+ 	if (!new_mt)
+ 		return -ENOMEM;
+@@ -1469,6 +1472,9 @@ static struct nft_pipapo_match *pipapo_clone(struct nft_pipapo_match *old)
+ 		       src->groups * NFT_PIPAPO_BUCKETS(src->bb));
  
+ 		if (src->rules > 0) {
++			if (src->rules_alloc > (INT_MAX / sizeof(*src->mt)))
++				goto out_mt;
++
+ 			dst->mt = kvmalloc_array(src->rules_alloc,
+ 						 sizeof(*src->mt),
+ 						 GFP_KERNEL_ACCOUNT);
 -- 
 2.39.5
 
