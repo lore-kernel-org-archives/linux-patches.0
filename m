@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A88414B96E;
-	Wed,  4 Jun 2025 00:52:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C5521CCB4B;
+	Wed,  4 Jun 2025 00:52:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748998334; cv=none; b=L0sNYNztKMfXAFUGaGutQd0Qf1kLjTJ/vEVZZ5KDHHJtexohtxHairpBHgkLmbcCjFvg8nHu6PTouEjQkvPQBNz8rbu6/PEdTPOo/MrIhEdJN0dfW8KS1dxnXYfk59Fvj+2135i64HjsFNm0SdsqFU6sGFVZfKYPckPTgdgSpp8=
+	t=1748998336; cv=none; b=O7SzarHGpxRaJlL6cD7EYVdaMx8M9G77Hm24ZZ7PkaIGssYOioMKqZkWQqtQYDQMFnZDCF56ZYAv1zIq7BH4h2y8HPaFdPeqZAcFtQtjt2O9iz6dsqu4zEcofNtTDfLw8uR47U2gek4IudzpW0sWuwexpn2IgO+H5fZzHqjgTag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748998334; c=relaxed/simple;
-	bh=GgRNPyMkWDNQQMK9f2j7+YPMtKXXDsbjUMfJY8YKraY=;
+	s=arc-20240116; t=1748998336; c=relaxed/simple;
+	bh=ZN9AF9DK4sfsbW4P396ilze9UhIc8JoMh1clH7zvHFU=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=FhoaCiuJu7oc0oIbFG7jcUnvDgvhm+FKnMqjPmL6BnwLul1jrLCz7WpJSNz8Jg3kVmAmzeWm2K/LruIMfOox/BqpO8LK7h6q3hWwttydmOVBJb2+MfDd31nt1vDxNUYUgqU9Nrz/pOF0DQ3fidNEMSXMD7QLcuWl6BIGbWGIHhY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nNXLNQK2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cUxpH5vyX+nSswZrKWOOdP3BZ9tgPPAcQ+JVLC1s49rRci/vpOj+NwIEHUSlqOaKb+gpCApPjeenPJsVBZaFawMIujUvYllwTQ7NQfCkJCnf2cCUxjlQZt1PdgXClZ89Y6dD+hX6T5bIjWWUKSigRI4vdIImdhwH8mecIOovazQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OJEp/2c8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nNXLNQK2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F577C4CEED;
-	Wed,  4 Jun 2025 00:52:13 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OJEp/2c8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9637C4CEED;
+	Wed,  4 Jun 2025 00:52:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748998334;
-	bh=GgRNPyMkWDNQQMK9f2j7+YPMtKXXDsbjUMfJY8YKraY=;
+	s=k20201202; t=1748998335;
+	bh=ZN9AF9DK4sfsbW4P396ilze9UhIc8JoMh1clH7zvHFU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nNXLNQK2+3ul2xR5izSGctL+I/A+IxK0scRbIy/Bd5021JV/XY/jPGAPtxG/E+yDk
-	 bKowBcS22nJuSLd4rVMJZuJ8LNX39vrhcZSWFjjxyWmbsyvh3MIrkLQW7Jz5+h+QsD
-	 BhUgXSL+A4bBT9oygFLgfYUBdDCgIPqxuldplpLikGEn51mUkgaOmQv4EjT5nl2CKq
-	 XbULPX2ORp/bnU50ZjFsv/34rrFUVH3udCpUSjYp9JJJqEuRBRhE4LkT+m12G++rqf
-	 CcfMFuKE9St+oLbenwojMLbErKEGceiPZinpvoTh0sYKMFydBdZG4lrAmTiMf5HStG
-	 3PALIOJ9AglKg==
+	b=OJEp/2c8EkdSyL+0kXlSXlX3epmdNdrcQVEa1rvQic9BWoRsQUzLmpogyHWhyKq9y
+	 MxOlFdKTziD5SNY+XdrY+/5cMJNlKfQaX5MiKKeQtxZti36BKcaQwwytUtjXMUyPE2
+	 ctw+vFU8BY0pMGYwRKxFtDEe96swVsRCSMRh/cDiF74SclvGdTOLpSqt0WZ9s/wmIe
+	 90ggx+P6pFrpKKQitouyXij8Ayw4QES15PtYaN2T5RmiUPnRCS6BcL+tne1seQAI1K
+	 liIrYBz1ei/mJ+CeOjXM+KvmrUB8v0a83Q/Q574MRCElENMb+PUPFu6Rzoli1w23ib
+	 i8lHfb4wzTnyg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Leon Romanovsky <leonro@nvidia.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+Cc: Dimitri Fedrau <dima.fedrau@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>,
-	davem@davemloft.net,
+	andrew@lunn.ch,
+	hkallweit1@gmail.com,
 	netdev@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.15 042/118] xfrm: validate assignment of maximal possible SEQ number
-Date: Tue,  3 Jun 2025 20:49:33 -0400
-Message-Id: <20250604005049.4147522-42-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.15 043/118] net: phy: marvell-88q2xxx: Enable temperature measurement in probe again
+Date: Tue,  3 Jun 2025 20:49:34 -0400
+Message-Id: <20250604005049.4147522-43-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250604005049.4147522-1-sashal@kernel.org>
 References: <20250604005049.4147522-1-sashal@kernel.org>
@@ -51,150 +52,228 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.15
 Content-Transfer-Encoding: 8bit
 
-From: Leon Romanovsky <leonro@nvidia.com>
+From: Dimitri Fedrau <dima.fedrau@gmail.com>
 
-[ Upstream commit e86212b6b13a20c5ad404c5597933f57fd0f1519 ]
+[ Upstream commit 10465365f3b094ba9a9795f212d13dee594bcfe7 ]
 
-Users can set any seq/seq_hi/oseq/oseq_hi values. The XFRM core code
-doesn't prevent from them to set even 0xFFFFFFFF, however this value
-will cause for traffic drop.
+Enabling of the temperature sensor was moved from mv88q2xxx_hwmon_probe to
+mv88q222x_config_init with the consequence that the sensor is only
+usable when the PHY is configured. Enable the sensor in
+mv88q2xxx_hwmon_probe as well to fix this.
 
-Is is happening because SEQ numbers here mean that packet with such
-number was processed and next number should be sent on the wire. In this
-case, the next number will be 0, and it means overflow which causes to
-(expected) packet drops.
-
-While it can be considered as misconfiguration and handled by XFRM
-datapath in the same manner as any other SEQ number, let's add
-validation to easy for packet offloads implementations which need to
-configure HW with next SEQ to send and not with current SEQ like it is
-done in core code.
-
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Signed-off-by: Dimitri Fedrau <dima.fedrau@gmail.com>
+Link: https://patch.msgid.link/20250512-marvell-88q2xxx-hwmon-enable-at-probe-v4-1-9256a5c8f603@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-**YES** This commit should be backported to stable kernel trees. Here's
-my extensive analysis: ## Bug Analysis The commit addresses a **user
-input validation bug** in the XFRM (IPsec transformation) subsystem.
-Specifically: 1. **Root Cause**: Users can set sequence numbers (`seq`,
-`seq_hi`, `oseq`, `oseq_hi`) to `0xFFFFFFFF` (U32_MAX) via netlink
-interface 2. **Problem**: When a sequence number is set to U32_MAX, the
-next packet will have sequence number 0, which triggers sequence number
-overflow detection and causes packet drops 3. **Impact**: This leads to
-**immediate traffic disruption** for IPsec connections ## Code Changes
-Analysis The fix adds **comprehensive input validation** in
-`net/xfrm/xfrm_user.c:verify_replay()`: ### For Non-ESN Mode (32-bit
-sequences): - **Output SA**: Validates `rs->oseq != U32_MAX` (lines
-189-195) - **Input SA**: Validates `rs->seq != U32_MAX` (lines 223-228)
-### For ESN Mode (64-bit sequences): - **Output SA**: Validates
-`!(rs->oseq == U32_MAX && rs->oseq_hi == U32_MAX)` (lines 196-202) -
-**Input SA**: Validates `!(rs->seq == U32_MAX && rs->seq_hi == U32_MAX)`
-(lines 230-236) ## Why This Should Be Backported ### 1. **Fixes User-
-Visible Bug** This prevents user misconfiguration from causing immediate
-IPsec traffic failure, which is a critical networking bug. ### 2.
-**Small, Contained Fix** - **Single file modified**:
-`net/xfrm/xfrm_user.c` - **Only 42 insertions, 10 deletions** - **Pure
-input validation** - no algorithmic or architectural changes - **Low
-regression risk** - only rejects previously invalid configurations ###
-3. **Benefits Hardware Offload** The commit message explicitly mentions
-this helps "packet offloads implementations which need to configure HW
-with next SEQ to send." This is increasingly important as IPsec hardware
-offload becomes more common. ### 4. **Follows Historical Pattern**
-Looking at similar commits in the reference examples: - **Similar Commit
-#1** (Status: NO) - Only validates ESN vs non-ESN mode consistency -
-**Current commit** - **More comprehensive**, validates against the
-problematic U32_MAX boundary that causes actual packet drops - **Similar
-Commits #3-5** (Status: YES) - All fix sequence number handling bugs
-that cause packet drops/corruption ### 5. **Clear Error Messages** The
-fix provides descriptive error messages via `NL_SET_ERR_MSG()`,
-improving debuggability for users. ### 6. **Builds on Previous Work**
-This extends the validation framework established in commit
-`e3aa43a50a64` ("xfrm: prevent high SEQ input in non-ESN mode"), showing
-this is part of ongoing hardening efforts. ## Risk Assessment **Minimal
-Risk**: - **No functional changes** to existing working configurations -
-**Only affects invalid configurations** that would cause problems anyway
-- **Well-tested code path** (input validation in userspace interface) -
-**Conservative approach** - rejects edge case that causes guaranteed
-failure The fix prevents a **user-triggerable traffic failure
-condition** with minimal code changes and no risk to existing working
-setups. This perfectly fits stable tree criteria: important bug fix, low
-risk, contained scope.
+Based on my analysis of the commit and the kernel repository context,
+here is my assessment: **YES** ## Detailed Analysis ### Summary of the
+Commit This commit addresses a functional regression where the
+temperature sensor in Marvell 88Q2XXX PHY devices is only usable when
+the PHY is configured. The fix implements a dual enablement strategy:
+enabling the temperature sensor in both the probe phase
+(`mv88q2xxx_hwmon_probe`) and the configuration phase
+(`mv88q2xxx_config_init`). ### Code Changes Analysis 1. **Removal of
+`enable_temp` field from private structure**: The commit removes the
+`bool enable_temp` field from `struct mv88q2xxx_priv` because it's no
+longer needed with the new approach. 2. **Introduction of
+`mv88q2xxx_enable_temp_sense()` helper**: A new static function is added
+that encapsulates the temperature sensor enablement, providing a clean
+interface for both CONFIG_HWMON enabled and disabled builds. 3. **Dual
+enablement strategy**: - **Probe phase** (line 731): Temperature sensor
+is enabled during HWMON probe to ensure it works immediately when the
+device is detected - **Config phase** (line 850): Temperature sensor is
+re-enabled during PHY configuration with explicit comment explaining
+this handles hardware resets 4. **Improved error handling**: The probe
+function now properly handles and propagates errors from temperature
+sensor enablement. ### Why This Should Be Backported 1. **Fixes a Real
+Functional Issue**: The commit addresses a legitimate problem where
+temperature monitoring becomes unavailable when PHYs are not configured,
+which is problematic for automotive applications that rely on
+temperature monitoring for thermal management. 2. **Hardware Reset
+Robustness**: The dual enablement ensures that even after hardware
+resets (via reset-gpios), the temperature sensor remains functional.
+This is critical for systems using device tree reset configurations. 3.
+**Small and Contained Change**: The modification is localized to the
+temperature sensor functionality and doesn't introduce architectural
+changes or affect other subsystems. 4. **Low Regression Risk**: - The
+change is additive (enabling in both places) rather than moving
+functionality - Maintains backward compatibility - No changes to
+external APIs or user-visible behavior - Proper conditional compilation
+for CONFIG_HWMON 5. **Clear Problem Statement**: The commit message
+clearly identifies the issue ("sensor is only usable when the PHY is
+configured") and provides a straightforward solution. 6. **Consistent
+with Similar Fixes**: Looking at the similar commit history
+(particularly commit #2 in the reference examples), this follows the
+established pattern of addressing temperature sensor reset issues in PHY
+drivers. ### Risk Assessment - **Low architectural impact**: Only
+affects temperature sensor enablement logic - **Well-tested code path**:
+Uses existing `phy_modify_mmd()` infrastructure - **No timing
+dependencies**: Temperature sensor enablement is idempotent - **Clear
+fallback**: Non-HWMON builds have proper stub implementation ###
+Conclusion This commit represents a classic stable-tree candidate: it
+fixes a clear functional regression with minimal code changes, low risk
+of side effects, and addresses a real-world problem affecting automotive
+Ethernet applications. The dual enablement approach is a robust
+engineering solution that ensures temperature monitoring works
+regardless of PHY configuration state or hardware reset scenarios.
 
- net/xfrm/xfrm_user.c | 52 +++++++++++++++++++++++++++++++++++---------
- 1 file changed, 42 insertions(+), 10 deletions(-)
+ drivers/net/phy/marvell-88q2xxx.c | 103 +++++++++++++++++-------------
+ 1 file changed, 57 insertions(+), 46 deletions(-)
 
-diff --git a/net/xfrm/xfrm_user.c b/net/xfrm/xfrm_user.c
-index 784a2d124749f..614b58cb26ab7 100644
---- a/net/xfrm/xfrm_user.c
-+++ b/net/xfrm/xfrm_user.c
-@@ -178,11 +178,27 @@ static inline int verify_replay(struct xfrm_usersa_info *p,
- 				       "Replay seq and seq_hi should be 0 for output SA");
- 			return -EINVAL;
- 		}
--		if (rs->oseq_hi && !(p->flags & XFRM_STATE_ESN)) {
--			NL_SET_ERR_MSG(
--				extack,
--				"Replay oseq_hi should be 0 in non-ESN mode for output SA");
--			return -EINVAL;
-+
-+		if (!(p->flags & XFRM_STATE_ESN)) {
-+			if (rs->oseq_hi) {
-+				NL_SET_ERR_MSG(
-+					extack,
-+					"Replay oseq_hi should be 0 in non-ESN mode for output SA");
-+				return -EINVAL;
-+			}
-+			if (rs->oseq == U32_MAX) {
-+				NL_SET_ERR_MSG(
-+					extack,
-+					"Replay oseq should be less than 0xFFFFFFFF in non-ESN mode for output SA");
-+				return -EINVAL;
-+			}
-+		} else {
-+			if (rs->oseq == U32_MAX && rs->oseq_hi == U32_MAX) {
-+				NL_SET_ERR_MSG(
-+					extack,
-+					"Replay oseq and oseq_hi should be less than 0xFFFFFFFF for output SA");
-+				return -EINVAL;
-+			}
- 		}
- 		if (rs->bmp_len) {
- 			NL_SET_ERR_MSG(extack, "Replay bmp_len should 0 for output SA");
-@@ -196,11 +212,27 @@ static inline int verify_replay(struct xfrm_usersa_info *p,
- 				       "Replay oseq and oseq_hi should be 0 for input SA");
- 			return -EINVAL;
- 		}
--		if (rs->seq_hi && !(p->flags & XFRM_STATE_ESN)) {
--			NL_SET_ERR_MSG(
--				extack,
--				"Replay seq_hi should be 0 in non-ESN mode for input SA");
--			return -EINVAL;
-+		if (!(p->flags & XFRM_STATE_ESN)) {
-+			if (rs->seq_hi) {
-+				NL_SET_ERR_MSG(
-+					extack,
-+					"Replay seq_hi should be 0 in non-ESN mode for input SA");
-+				return -EINVAL;
-+			}
-+
-+			if (rs->seq == U32_MAX) {
-+				NL_SET_ERR_MSG(
-+					extack,
-+					"Replay seq should be less than 0xFFFFFFFF in non-ESN mode for input SA");
-+				return -EINVAL;
-+			}
-+		} else {
-+			if (rs->seq == U32_MAX && rs->seq_hi == U32_MAX) {
-+				NL_SET_ERR_MSG(
-+					extack,
-+					"Replay seq and seq_hi should be less than 0xFFFFFFFF for input SA");
-+				return -EINVAL;
-+			}
- 		}
- 	}
+diff --git a/drivers/net/phy/marvell-88q2xxx.c b/drivers/net/phy/marvell-88q2xxx.c
+index 23e1f0521f549..65f31d3c34810 100644
+--- a/drivers/net/phy/marvell-88q2xxx.c
++++ b/drivers/net/phy/marvell-88q2xxx.c
+@@ -119,7 +119,6 @@
+ #define MV88Q2XXX_LED_INDEX_GPIO			1
  
+ struct mv88q2xxx_priv {
+-	bool enable_temp;
+ 	bool enable_led0;
+ };
+ 
+@@ -482,49 +481,6 @@ static int mv88q2xxx_config_aneg(struct phy_device *phydev)
+ 	return phydev->drv->soft_reset(phydev);
+ }
+ 
+-static int mv88q2xxx_config_init(struct phy_device *phydev)
+-{
+-	struct mv88q2xxx_priv *priv = phydev->priv;
+-	int ret;
+-
+-	/* The 88Q2XXX PHYs do have the extended ability register available, but
+-	 * register MDIO_PMA_EXTABLE where they should signalize it does not
+-	 * work according to specification. Therefore, we force it here.
+-	 */
+-	phydev->pma_extable = MDIO_PMA_EXTABLE_BT1;
+-
+-	/* Configure interrupt with default settings, output is driven low for
+-	 * active interrupt and high for inactive.
+-	 */
+-	if (phy_interrupt_is_valid(phydev)) {
+-		ret = phy_set_bits_mmd(phydev, MDIO_MMD_PCS,
+-				       MDIO_MMD_PCS_MV_GPIO_INT_CTRL,
+-				       MDIO_MMD_PCS_MV_GPIO_INT_CTRL_TRI_DIS);
+-		if (ret < 0)
+-			return ret;
+-	}
+-
+-	/* Enable LED function and disable TX disable feature on LED/TX_ENABLE */
+-	if (priv->enable_led0) {
+-		ret = phy_clear_bits_mmd(phydev, MDIO_MMD_PCS,
+-					 MDIO_MMD_PCS_MV_RESET_CTRL,
+-					 MDIO_MMD_PCS_MV_RESET_CTRL_TX_DISABLE);
+-		if (ret < 0)
+-			return ret;
+-	}
+-
+-	/* Enable temperature sense */
+-	if (priv->enable_temp) {
+-		ret = phy_modify_mmd(phydev, MDIO_MMD_PCS,
+-				     MDIO_MMD_PCS_MV_TEMP_SENSOR2,
+-				     MDIO_MMD_PCS_MV_TEMP_SENSOR2_DIS_MASK, 0);
+-		if (ret < 0)
+-			return ret;
+-	}
+-
+-	return 0;
+-}
+-
+ static int mv88q2xxx_get_sqi(struct phy_device *phydev)
+ {
+ 	int ret;
+@@ -667,6 +623,12 @@ static int mv88q2xxx_resume(struct phy_device *phydev)
+ }
+ 
+ #if IS_ENABLED(CONFIG_HWMON)
++static int mv88q2xxx_enable_temp_sense(struct phy_device *phydev)
++{
++	return phy_modify_mmd(phydev, MDIO_MMD_PCS, MDIO_MMD_PCS_MV_TEMP_SENSOR2,
++			      MDIO_MMD_PCS_MV_TEMP_SENSOR2_DIS_MASK, 0);
++}
++
+ static const struct hwmon_channel_info * const mv88q2xxx_hwmon_info[] = {
+ 	HWMON_CHANNEL_INFO(temp, HWMON_T_INPUT | HWMON_T_MAX | HWMON_T_ALARM),
+ 	NULL
+@@ -762,11 +724,13 @@ static const struct hwmon_chip_info mv88q2xxx_hwmon_chip_info = {
+ 
+ static int mv88q2xxx_hwmon_probe(struct phy_device *phydev)
+ {
+-	struct mv88q2xxx_priv *priv = phydev->priv;
+ 	struct device *dev = &phydev->mdio.dev;
+ 	struct device *hwmon;
++	int ret;
+ 
+-	priv->enable_temp = true;
++	ret = mv88q2xxx_enable_temp_sense(phydev);
++	if (ret < 0)
++		return ret;
+ 
+ 	hwmon = devm_hwmon_device_register_with_info(dev, NULL, phydev,
+ 						     &mv88q2xxx_hwmon_chip_info,
+@@ -776,6 +740,11 @@ static int mv88q2xxx_hwmon_probe(struct phy_device *phydev)
+ }
+ 
+ #else
++static int mv88q2xxx_enable_temp_sense(struct phy_device *phydev)
++{
++	return 0;
++}
++
+ static int mv88q2xxx_hwmon_probe(struct phy_device *phydev)
+ {
+ 	return 0;
+@@ -853,6 +822,48 @@ static int mv88q222x_probe(struct phy_device *phydev)
+ 	return mv88q2xxx_hwmon_probe(phydev);
+ }
+ 
++static int mv88q2xxx_config_init(struct phy_device *phydev)
++{
++	struct mv88q2xxx_priv *priv = phydev->priv;
++	int ret;
++
++	/* The 88Q2XXX PHYs do have the extended ability register available, but
++	 * register MDIO_PMA_EXTABLE where they should signalize it does not
++	 * work according to specification. Therefore, we force it here.
++	 */
++	phydev->pma_extable = MDIO_PMA_EXTABLE_BT1;
++
++	/* Configure interrupt with default settings, output is driven low for
++	 * active interrupt and high for inactive.
++	 */
++	if (phy_interrupt_is_valid(phydev)) {
++		ret = phy_set_bits_mmd(phydev, MDIO_MMD_PCS,
++				       MDIO_MMD_PCS_MV_GPIO_INT_CTRL,
++				       MDIO_MMD_PCS_MV_GPIO_INT_CTRL_TRI_DIS);
++		if (ret < 0)
++			return ret;
++	}
++
++	/* Enable LED function and disable TX disable feature on LED/TX_ENABLE */
++	if (priv->enable_led0) {
++		ret = phy_clear_bits_mmd(phydev, MDIO_MMD_PCS,
++					 MDIO_MMD_PCS_MV_RESET_CTRL,
++					 MDIO_MMD_PCS_MV_RESET_CTRL_TX_DISABLE);
++		if (ret < 0)
++			return ret;
++	}
++
++	/* Enable temperature sense again. There might have been a hard reset
++	 * of the PHY and in this case the register content is restored to
++	 * defaults and we need to enable it again.
++	 */
++	ret = mv88q2xxx_enable_temp_sense(phydev);
++	if (ret < 0)
++		return ret;
++
++	return 0;
++}
++
+ static int mv88q2110_config_init(struct phy_device *phydev)
+ {
+ 	int ret;
 -- 
 2.39.5
 
