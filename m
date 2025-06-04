@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF05661FFE;
-	Wed,  4 Jun 2025 00:53:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B89C954769;
+	Wed,  4 Jun 2025 00:53:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748998392; cv=none; b=Jefwj7xouI4PHvg3mbmrx1Eaq7puPgu8F3j5KWscLhJl9Kmh740Iw5HkX1YxXAbtvGi48l8W7Lko6Q6Ahid649rn3UktInqFcvc9JQHBoHnOaYqte2dr0r2OQz2Gsc5mCzufj9XUkI+XyLtTeOmPhJiGFvc0fsM1dV4gMRA/mtk=
+	t=1748998393; cv=none; b=qorfh8EbE+zW9nFFb7jeksDLRASQK0fUhZbzqyOyyQXR9hX834pv+ELA7IJEKDTDkpIRCpimsI+UwzaTrzbDy1SH6ejfLTqV2zDOZmffgEDKlkcL8VYWlcIycuw7GPYxH9ikZ66fEAaBR3nYGhgoe+N6JlOHpPdpp6Ux+0LeM+8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748998392; c=relaxed/simple;
-	bh=/jRi3XCSAt5tvrdykx0ifVGMEOP/JVR1Em2Y/tRHjK4=;
+	s=arc-20240116; t=1748998393; c=relaxed/simple;
+	bh=SFTdTKA7c2EuhIcP2Lr9BRD/MecKbH1xxQf//k5d1U4=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GWYeWnAJjdHMNe8TlpKlnehg6r1Akus5vEl6scpmp4WdPiJsDXkNMqMCz7pxq2q1yN4SCHrgGBGbKBx/qHhaWNP0/mP9sjRCdQ3gSqWDXftPBoqwLuw6uqlYlK/0cSjev8Ha9NKDbZf3X9MCBjc54ZoJJia/Cy+LN3R7HRup5Ts=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=A0mM3VY0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PCxdVPG6d07LFRNoH9/sKfUz5Y5AsYpvqPhbU/cTAzFHDd1KbRc1bBG67MsPl0nIrS77v01rnQW0YIByqeD+NfNLqjeU/CeUpsdP3J9oisNj9LuTfr3wpbnlVCciY4B07oYE7/U14+wnglgIWkQG1IcrbH4D5zYMyEXYNac0UbQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cLirCD3G; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="A0mM3VY0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D86F9C4CEED;
-	Wed,  4 Jun 2025 00:53:10 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cLirCD3G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C3C7C4CEED;
+	Wed,  4 Jun 2025 00:53:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748998391;
-	bh=/jRi3XCSAt5tvrdykx0ifVGMEOP/JVR1Em2Y/tRHjK4=;
+	s=k20201202; t=1748998393;
+	bh=SFTdTKA7c2EuhIcP2Lr9BRD/MecKbH1xxQf//k5d1U4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A0mM3VY0p6er3/mg4LVCoh8XyDKF75gJ+mFucJISvOczDxvUpxL5xStm0a56KLyLh
-	 VtM90PVsMCXip+IFCwLcP0ApuEhqpknirEAMB99F8+jxGAmSod5OzfQ2DHFg+EHIPH
-	 mAYu1klci7rE4EtBQK7gTw+gA6aVKqeDSBBz2t9bt7kvxRQ40KNCCySdtgSuanwxIp
-	 LobiASmiOU4ksWAiEtmilibpbfs3A2lWbhjIN2TdEPoss9Aznjbe9yAizjElSt7DIA
-	 nmJTqEq7RdEb/sja/6hkA0/M/t/w1wZxa7t61mkZMeZbWf6r5Tf5A3/c1TS7Q3Gf6a
-	 Ke8E71KQXCJYg==
+	b=cLirCD3G/Ewjj0CXPpTrl+RLKesMn9vIKJ53DVfvAQPhiv4L2odz8VrzlZrecfHgB
+	 ftFvauZPBdNuT7FToZhJiLFoKLGK5cctoxQ9a80meFr/9CsUTPkrX9Q0rkDsj5eQ5T
+	 jJrI7ua/MaeRqQdB1fx44rC9xy2FDP0WO07bUzH8yOKcI7N8rGA+W3F/5QVPVqhLeA
+	 XsyitXEJC7eclbO8eHstYjkY7x9yOty7nRdjlXh0uSu/79PCmi26gTGnryL03YzVhT
+	 odgAYsFf82NUjqF2qOMJPe7Zx7QJuu3yWrv04Lfj5uGuo9aQLqhVhJSlkmxwOzjJMZ
+	 pN1sq1FonIcNQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Benjamin Berg <benjamin@sipsolutions.net>,
-	Rouven Czerwinski <rouven@czerwinskis.de>,
-	Johannes Berg <johannes.berg@intel.com>,
+Cc: Martin KaFai Lau <martin.lau@kernel.org>,
+	Quentin Monnet <qmo@kernel.org>,
+	Takshak Chahande <ctakshak@meta.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	johannes@sipsolutions.net,
-	linux-wireless@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.15 059/118] wifi: mac80211: do not offer a mesh path if forwarding is disabled
-Date: Tue,  3 Jun 2025 20:49:50 -0400
-Message-Id: <20250604005049.4147522-59-sashal@kernel.org>
+	bpf@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.15 060/118] bpftool: Fix cgroup command to only show cgroup bpf programs
+Date: Tue,  3 Jun 2025 20:49:51 -0400
+Message-Id: <20250604005049.4147522-60-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250604005049.4147522-1-sashal@kernel.org>
 References: <20250604005049.4147522-1-sashal@kernel.org>
@@ -50,121 +51,167 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.15
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Benjamin Berg <benjamin@sipsolutions.net>
+From: Martin KaFai Lau <martin.lau@kernel.org>
 
-[ Upstream commit cf1b684a06170d253b47d6a5287821de976435bd ]
+[ Upstream commit b69d4413aa1961930fbf9ffad8376d577378daf9 ]
 
-When processing a PREQ the code would always check whether we have a
-mesh path locally and reply accordingly. However, when forwarding is
-disabled then we should not reply with this information as we will not
-forward data packets down that path.
+The netkit program is not a cgroup bpf program and should not be shown
+in the output of the "bpftool cgroup show" command.
 
-Move the check for dot11MeshForwarding up in the function and skip the
-mesh path lookup in that case. In the else block, set forward to false
-so that the rest of the function becomes a no-op and the
-dot11MeshForwarding check does not need to be duplicated.
+However, if the netkit device happens to have ifindex 3,
+the "bpftool cgroup show" command will output the netkit
+bpf program as well:
 
-This explains an effect observed in the Freifunk community where mesh
-forwarding is disabled. In that case a mesh with three STAs and only bad
-links in between them, individual STAs would occionally have indirect
-mpath entries. This should not have happened.
+> ip -d link show dev nk1
+3: nk1@if2: ...
+    link/ether ...
+    netkit mode ...
 
-Signed-off-by: Benjamin Berg <benjamin@sipsolutions.net>
-Reviewed-by: Rouven Czerwinski <rouven@czerwinskis.de>
-Link: https://patch.msgid.link/20250430191042.3287004-1-benjamin@sipsolutions.net
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+> bpftool net show
+tc:
+nk1(3) netkit/peer tw_ns_nk2phy prog_id 469447
+
+> bpftool cgroup show /sys/fs/cgroup/...
+ID       AttachType      AttachFlags     Name
+...      ...                             ...
+469447   netkit_peer                     tw_ns_nk2phy
+
+The reason is that the target_fd (which is the cgroup_fd here) and
+the target_ifindex are in a union in the uapi/linux/bpf.h. The bpftool
+iterates all values in "enum bpf_attach_type" which includes
+non cgroup attach types like netkit. The cgroup_fd is usually 3 here,
+so the bug is triggered when the netkit ifindex just happens
+to be 3 as well.
+
+The bpftool's cgroup.c already has a list of cgroup-only attach type
+defined in "cgroup_attach_types[]". This patch fixes it by iterating
+over "cgroup_attach_types[]" instead of "__MAX_BPF_ATTACH_TYPE".
+
+Cc: Quentin Monnet <qmo@kernel.org>
+Reported-by: Takshak Chahande <ctakshak@meta.com>
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Acked-by: Daniel Borkmann <daniel@iogearbox.net>
+Reviewed-by: Quentin Monnet <qmo@kernel.org>
+Link: https://lore.kernel.org/r/20250507203232.1420762-1-martin.lau@linux.dev
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Based on my analysis of the commit and the code, here is my assessment:
-**YES** This commit should be backported to stable kernel trees. Here's
-my extensive analysis: ## 1. Bug Fix Analysis The commit fixes a clear
-logical bug in the mesh networking HWMP (Hybrid Wireless Mesh Protocol)
-path selection algorithm. When `dot11MeshForwarding` is disabled, the
-code was incorrectly: - Still performing mesh path lookups for PREQ
-(Path Request) messages - Potentially replying with mesh path
-information even though forwarding was disabled - Creating indirect mesh
-path entries when it shouldn't ## 2. Code Analysis Looking at the
-changes in `/net/mac80211/mesh_hwmp.c:619-676`: **Before the fix:** -
-Line 639: `} else {` - The final else branch handles the case where the
-target is neither local nor broadcast - Lines 640-656: This section
-performs mesh path lookup and potentially replies with path information
-**regardless** of forwarding status - Line 657: `} else {` - Only sets
-`forward = false` but after potentially harmful operations **After the
-fix:** - Line 639: `} else if (ifmsh->mshcfg.dot11MeshForwarding) {` -
-Now conditions the mesh path lookup on forwarding being enabled - Lines
-657-659: `} else { forward = false; }` - Clean fallback when forwarding
-is disabled ## 3. Impact Assessment This is a **contained, low-risk
-fix** that: - **Fixes incorrect behavior**: Prevents mesh nodes from
-providing routing information when they won't actually forward packets -
-**Prevents resource waste**: Avoids unnecessary mesh path lookups when
-forwarding is disabled - **Improves network correctness**: Fixes the
-inconsistency where nodes advertise paths they won't use - **Addresses
-real-world issue**: The commit message mentions this was observed in the
-Freifunk community ## 4. Comparison with Similar Commits This fix aligns
-perfectly with the **YES** backport examples: **Similar to Commit #1
-(mesh: Do not send PREQ if HWMP is disabled):** - Both prevent
-sending/processing mesh protocol messages when a feature is disabled -
-Both are small, surgical fixes to logical conditions - Both prevent
-waste of network resources **Similar to Commit #3 (fix mesh path
-discovery):** - Both fix incorrect mesh path handling logic - Both have
-small, focused changes - Both include explicit mention of fixing
-behavior observed in real deployments **Similar to Commit #4 (fix mesh
-forwarding):** - Both are mesh forwarding-related fixes - Both are
-minimal changes with clear intent - Both fix protocol correctness issues
-## 5. Stable Backport Criteria Check ✅ **Fixes important bug**: Yes -
-incorrect mesh protocol behavior ✅ **Small and contained**: Yes - only 4
-lines changed, well-isolated ✅ **No new features**: Correct - only fixes
-existing logic ✅ **No architectural changes**: Correct - just reorders
-existing conditions ✅ **Low regression risk**: Very low - change is
-localized and logical ✅ **Clear side effects**: None beyond the intended
-fix ## 6. Risk Assessment The change is **extremely low risk** because:
-- It only affects the specific case where `dot11MeshForwarding` is
-disabled - It makes the code behavior more consistent (when forwarding
-is off, don't provide path info) - The change is in line with the
-intended semantics of the forwarding flag - It's a pure logic fix
-without touching data structures or complex algorithms This commit
-represents exactly the type of fix that stable trees are meant to
-include: a small, well-understood bug fix that improves correctness
-without introducing regression risk.
+This file seems unrelated to the current commit. Let me now analyze the
+specific commit to understand if it should be backported. **Analysis of
+the commit:** ## YES **Extensive explanation:** This commit should be
+backported to stable kernel trees because it fixes a clear functional
+bug with specific user-visible incorrect behavior. Here's why: ### 1.
+**Fixes a clear user-visible bug** The commit fixes a specific issue
+where `bpftool cgroup show` incorrectly displays non-cgroup BPF programs
+(specifically netkit programs) when their interface index happens to
+match the cgroup file descriptor. This is documented as causing
+confusing output where netkit programs appear in cgroup listings where
+they don't belong. ### 2. **Small, contained fix with minimal risk**
+Looking at the code changes in `tools/bpf/bpftool/cgroup.c`: - **Lines
+321-325**: Changed from `enum bpf_attach_type type;` to `unsigned int
+i;` in `do_show()` - **Lines 373-381**: Changed from `for (type = 0;
+type < __MAX_BPF_ATTACH_TYPE; type++)` to `for (i = 0; i <
+ARRAY_SIZE(cgroup_attach_types); i++)` and using
+`cgroup_attach_types[i]` instead of `type` - **Lines 403-405**: Same
+pattern change in `do_show_tree_fn()` - **Lines 437-438**: Same pattern
+change in the tree function loop The fix is straightforward: instead of
+iterating through all possible BPF attach types
+(`__MAX_BPF_ATTACH_TYPE`), it now only iterates through the predefined
+array `cgroup_attach_types[]` which contains only cgroup-specific attach
+types. ### 3. **Root cause is clearly identified** The bug occurs
+because: - `target_fd` (cgroup_fd) and `target_ifindex` are in a union
+in the BPF uapi - When iterating through all attach types including non-
+cgroup types like `BPF_NETKIT_PRIMARY`, the kernel interprets the
+cgroup_fd as an ifindex - When the cgroup_fd value (often 3) matches a
+netkit device's ifindex, the query succeeds and incorrectly shows the
+netkit program as a cgroup program ### 4. **Existing infrastructure used
+correctly** The fix leverages the existing `cgroup_attach_types[]` array
+that was already defined in the file (lines 22-52) but not being used in
+the iteration loops. This array contains only legitimate cgroup attach
+types, making the fix both correct and consistent with the existing
+codebase. ### 5. **No functional changes to legitimate use cases** The
+change only affects what gets queried - it will no longer query non-
+cgroup attach types, which should never have been relevant to cgroup
+operations anyway. All legitimate cgroup functionality remains
+unchanged. ### 6. **Typical stable tree material** This fits the stable
+tree criteria perfectly: - **Important bug fix**: Fixes
+incorrect/confusing output that misleads users - **Small and obvious**:
+The change is minimal and the fix is clear - **No architectural
+changes**: This is just correcting the iteration logic - **Low
+regression risk**: The change only restricts what gets queried to the
+appropriate types - **Userspace tool fix**: While this is a userspace
+tool, bpftool is part of the kernel tree and these fixes are commonly
+backported ### 7. **Matches pattern of similar commits** Looking at the
+similar commits provided, while they were marked as "NO" for
+backporting, those were mostly feature additions (adding netkit support,
+implementing new functionality, etc.). This commit is fundamentally
+different - it's a pure bug fix that corrects existing functionality
+rather than adding new features. The commit explicitly states it's a
+"Fix" in the subject line and clearly describes the incorrect behavior
+being corrected, making it a strong candidate for stable backporting.
 
- net/mac80211/mesh_hwmp.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ tools/bpf/bpftool/cgroup.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/net/mac80211/mesh_hwmp.c b/net/mac80211/mesh_hwmp.c
-index c94a9c7ca960e..91444301a84a4 100644
---- a/net/mac80211/mesh_hwmp.c
-+++ b/net/mac80211/mesh_hwmp.c
-@@ -636,7 +636,7 @@ static void hwmp_preq_frame_process(struct ieee80211_sub_if_data *sdata,
- 				mesh_path_add_gate(mpath);
- 		}
- 		rcu_read_unlock();
--	} else {
-+	} else if (ifmsh->mshcfg.dot11MeshForwarding) {
- 		rcu_read_lock();
- 		mpath = mesh_path_lookup(sdata, target_addr);
- 		if (mpath) {
-@@ -654,6 +654,8 @@ static void hwmp_preq_frame_process(struct ieee80211_sub_if_data *sdata,
- 			}
- 		}
- 		rcu_read_unlock();
-+	} else {
-+		forward = false;
+diff --git a/tools/bpf/bpftool/cgroup.c b/tools/bpf/bpftool/cgroup.c
+index 93b139bfb9880..a866033afd136 100644
+--- a/tools/bpf/bpftool/cgroup.c
++++ b/tools/bpf/bpftool/cgroup.c
+@@ -318,11 +318,11 @@ static int show_bpf_progs(int cgroup_fd, enum bpf_attach_type type,
+ 
+ static int do_show(int argc, char **argv)
+ {
+-	enum bpf_attach_type type;
+ 	int has_attached_progs;
+ 	const char *path;
+ 	int cgroup_fd;
+ 	int ret = -1;
++	unsigned int i;
+ 
+ 	query_flags = 0;
+ 
+@@ -370,14 +370,14 @@ static int do_show(int argc, char **argv)
+ 		       "AttachFlags", "Name");
+ 
+ 	btf_vmlinux = libbpf_find_kernel_btf();
+-	for (type = 0; type < __MAX_BPF_ATTACH_TYPE; type++) {
++	for (i = 0; i < ARRAY_SIZE(cgroup_attach_types); i++) {
+ 		/*
+ 		 * Not all attach types may be supported, so it's expected,
+ 		 * that some requests will fail.
+ 		 * If we were able to get the show for at least one
+ 		 * attach type, let's return 0.
+ 		 */
+-		if (show_bpf_progs(cgroup_fd, type, 0) == 0)
++		if (show_bpf_progs(cgroup_fd, cgroup_attach_types[i], 0) == 0)
+ 			ret = 0;
  	}
  
- 	if (reply) {
-@@ -671,7 +673,7 @@ static void hwmp_preq_frame_process(struct ieee80211_sub_if_data *sdata,
- 		}
+@@ -400,9 +400,9 @@ static int do_show(int argc, char **argv)
+ static int do_show_tree_fn(const char *fpath, const struct stat *sb,
+ 			   int typeflag, struct FTW *ftw)
+ {
+-	enum bpf_attach_type type;
+ 	int has_attached_progs;
+ 	int cgroup_fd;
++	unsigned int i;
+ 
+ 	if (typeflag != FTW_D)
+ 		return 0;
+@@ -434,8 +434,8 @@ static int do_show_tree_fn(const char *fpath, const struct stat *sb,
  	}
  
--	if (forward && ifmsh->mshcfg.dot11MeshForwarding) {
-+	if (forward) {
- 		u32 preq_id;
- 		u8 hopcount;
+ 	btf_vmlinux = libbpf_find_kernel_btf();
+-	for (type = 0; type < __MAX_BPF_ATTACH_TYPE; type++)
+-		show_bpf_progs(cgroup_fd, type, ftw->level);
++	for (i = 0; i < ARRAY_SIZE(cgroup_attach_types); i++)
++		show_bpf_progs(cgroup_fd, cgroup_attach_types[i], ftw->level);
  
+ 	if (errno == EINVAL)
+ 		/* Last attach type does not support query.
 -- 
 2.39.5
 
