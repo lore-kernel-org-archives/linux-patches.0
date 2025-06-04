@@ -1,44 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E911132122;
-	Wed,  4 Jun 2025 01:06:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D54001922FD;
+	Wed,  4 Jun 2025 01:06:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748999174; cv=none; b=nw5Dg2r4VnuUFmweHMeFS/Y6sWymijlIeLSQFDh4hREc07DXsu4PWWcKmRtR3xwojnYcdgxDQX1UbGTBpm4u/jz+0b8jibEhCgSswu6PzkRQgrarnox2DEOMLOcZcflOP6CwaGOb7NfWe55Ijha5h1N0x62qE0xGmXRhCOn6ZVg=
+	t=1748999175; cv=none; b=QNNN1jPQStKjAjl8/lgZ1oCyOXp5hdgL8+KPXHpg3fy/b2rJ3CPhrwTN1pVodQTnOaLrqAHth3SEmKPTNWj9QiolfqgdRvFQlq2Fe9uQ4yjZa25Io9Esz1OpQDyPGjyo6+x9kJYgX9bDEtuSbEyqERAGJPIpLbmXP6HloG1Dki8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748999174; c=relaxed/simple;
-	bh=SSVdKJmJAAVFunVTqqrGINFw2gnfQYn93ToHG8lLNx0=;
+	s=arc-20240116; t=1748999175; c=relaxed/simple;
+	bh=LZ1dSpbXAczOFKzfAJ7XpoFK0NeeIOBcMy1thRmdmsM=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tjWneLUgJ+JrpR1XSw3klFL0IgZ+xNy6/5T0iYqQFhQDqFzjZNmoqbGSCi81XEh8OCf6mFXqaEZUUEFqEjw9dGKVwgqpJCazu2B8jolgNeMCUHBb3mElr1Z2h+qTiaUUyiZHI9/b75B/sV+ZhO8RlHTGakhxCJiDA4MVffWeaaI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TWjP4jic; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=G3eJjcIIoxCAv23wK6DqoadHNRPD2HhcQYDEe77aa098MyRBLf69dz8dPs2C3ec278Kw/ge70ac/QJ0sdjljitS94z5omvdbMIlFGxI1j3YoMVQMa8NvrDq7S8FJNEZ7RN8cuTMwd6pXVXA6kYlK4kaPlYTgJ0KJV1ptRb8sTk8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ClgsJpIo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TWjP4jic"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C40FC4CEED;
-	Wed,  4 Jun 2025 01:06:13 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ClgsJpIo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92582C4CEED;
+	Wed,  4 Jun 2025 01:06:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748999174;
-	bh=SSVdKJmJAAVFunVTqqrGINFw2gnfQYn93ToHG8lLNx0=;
+	s=k20201202; t=1748999175;
+	bh=LZ1dSpbXAczOFKzfAJ7XpoFK0NeeIOBcMy1thRmdmsM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TWjP4jic9wapY1PWKnRmGP6uvjW9sj8hZkyYR+1lPhYPE3/frVRH3sYOUm3y3YbSh
-	 v5zX7m/a6Cuqc2a+OgLWbWe2gQ9js2RdtdBbDvIYm7K8LrW023zF9h3GMJXecNLfFQ
-	 lD90R0ajnvuTal9v/GyPL3NLchqpwHwFHkawV+j+VscHg0XwEiu+al6SfkKBBAuCP1
-	 NryZET3DjuHyFW9TqVwq4XTY/H8PMffEvBH6NfqAofrk/uPjxoyjrllVg45F8kucMi
-	 ElqmH9nwYWyZHuZ6FXO5hhhAqv2AjkKLhGEzO4yjBPGDeWodaxufMLBOBE71Qddcnd
-	 8aU2uC2xLB9qg==
+	b=ClgsJpIoJ9T6NhTf2SUDkToqC56L2f89/sGDfo10l1dRWjQVmDsr4+WYey3i09Ci1
+	 jfxaf4s1CYBESMWScjQnZb5cVb7vXoXzkBXSwU64ak/2HbdnziExgKJTP6Whx0PK8M
+	 87W8PUnLgiddzLk+ucOJy5bAiE4vq5uKecqrBWsdswhZGew2q3FZ11U5vyTCWvU32z
+	 XP0mI+Dm+fEcXAfkLJ6N1qUi23yt8Zt1qNZoQ6ubifAzu6M/TiC0YJM+unH6rFjkSM
+	 vbJd15XohoaO8SPEB6vn+WjIz8vPaDHHx8lQ2hKUwrJ/MSConKJ65Y5Lrmt2Pe50AP
+	 +V9Lx7s1DKyPg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Zijun Hu <quic_zijuhu@quicinc.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: Kyungwook Boo <bookyungwook@gmail.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Rinitha S <sx.rinitha@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	edumazet@google.com,
-	pabeni@redhat.com,
-	willemb@google.com
-Subject: [PATCH AUTOSEL 5.15 30/33] sock: Correct error checking condition for (assign|release)_proto_idx()
-Date: Tue,  3 Jun 2025 21:05:21 -0400
-Message-Id: <20250604010524.6091-30-sashal@kernel.org>
+	intel-wired-lan@lists.osuosl.org
+Subject: [PATCH AUTOSEL 5.15 31/33] i40e: fix MMIO write access to an invalid page in i40e_clear_hw
+Date: Tue,  3 Jun 2025 21:05:22 -0400
+Message-Id: <20250604010524.6091-31-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250604010524.6091-1-sashal@kernel.org>
 References: <20250604010524.6091-1-sashal@kernel.org>
@@ -54,98 +55,88 @@ X-stable-base: Linux 5.15.184
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zijun Hu <quic_zijuhu@quicinc.com>
+From: Kyungwook Boo <bookyungwook@gmail.com>
 
-[ Upstream commit faeefc173be40512341b102cf1568aa0b6571acd ]
+[ Upstream commit 015bac5daca978448f2671478c553ce1f300c21e ]
 
-(assign|release)_proto_idx() wrongly check find_first_zero_bit() failure
-by condition '(prot->inuse_idx == PROTO_INUSE_NR - 1)' obviously.
+When the device sends a specific input, an integer underflow can occur, leading
+to MMIO write access to an invalid page.
 
-Fix by correcting the condition to '(prot->inuse_idx == PROTO_INUSE_NR)'
+Prevent the integer underflow by changing the type of related variables.
 
-Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://patch.msgid.link/20250410-fix_net-v2-1-d69e7c5739a4@quicinc.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Kyungwook Boo <bookyungwook@gmail.com>
+Link: https://lore.kernel.org/lkml/ffc91764-1142-4ba2-91b6-8c773f6f7095@gmail.com/T/
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Based on my analysis of the Linux kernel source code in the environment,
-let me now provide a thorough evaluation: **YES** This commit should be
-backported to stable kernel trees. Here's my detailed analysis: ##
-Analysis of the Bug Fix ### The Core Issue The commit fixes a critical
-off-by-one error in the error checking conditions within
-`assign_proto_idx()` and `release_proto_idx()` functions in
-`net/core/sock.c`. ### Current vs. Fixed Code Comparison **Before the
-fix (incorrect):** ```c // In assign_proto_idx() if
-(unlikely(prot->inuse_idx == PROTO_INUSE_NR - 1)) { // Wrong: checks for
-63 pr_err("PROTO_INUSE_NR exhausted\n"); return -ENOSPC; } // In
-release_proto_idx() if (prot->inuse_idx != PROTO_INUSE_NR - 1) // Wrong:
-checks for 63 clear_bit(prot->inuse_idx, proto_inuse_idx); ``` **After
-the fix (correct):** ```c // In assign_proto_idx() if
-(unlikely(prot->inuse_idx == PROTO_INUSE_NR)) { // Correct: checks for
-64 pr_err("PROTO_INUSE_NR exhausted\n"); return -ENOSPC; } // In
-release_proto_idx() if (prot->inuse_idx != PROTO_INUSE_NR) // Correct:
-checks for 64 clear_bit(prot->inuse_idx, proto_inuse_idx); ``` ###
-Technical Analysis 1. **Understanding the Bug:** - `PROTO_INUSE_NR` is
-defined as 64, creating a bitmap with valid indices 0-63 -
-`find_first_zero_bit()` returns `PROTO_INUSE_NR` (64) when no free bits
-are found - The original code incorrectly checked for `PROTO_INUSE_NR -
-1` (63), which is actually a valid index - This meant the error
-condition would never trigger, and the code would attempt to set bit 64,
-causing undefined behavior 2. **Impact of the Bug:** - **Memory
-corruption risk:** Setting bit 64 in a 64-bit bitmap accesses memory
-beyond the allocated bitmap - **Resource exhaustion not detected:** The
-system would not properly detect when all protocol slots are exhausted -
-**Potential crashes:** Accessing invalid memory locations could cause
-kernel panics 3. **Why This is Backport-Worthy:** - **Fixes a clear
-bug:** The logic error is objectively wrong and could cause system
-instability - **Minimal risk change:** The fix only changes two
-comparison operators, with no architectural impact - **Important
-subsystem:** Network protocol registration is core kernel functionality
-- **Well-contained fix:** The change is localized to error checking
-conditions without affecting normal operation paths ### Comparison with
-Similar Commits Looking at the historical examples: - **Similar Commit
-#2 (YES):** Fixed error checking in packet handling - similar pattern of
-correcting error conditions - **Similar Commit #1 (NO):** More complex
-memory leak fix with broader changes - **Similar Commit #3 (NO):**
-Architectural change from BUG() to error returns - **Similar Commit #4
-(NO):** API cleanup removing function pointers - **Similar Commit #5
-(NO):** Validation fix in newer subsystem This commit most closely
-resembles Similar Commit #2, which was marked for backporting due to its
-focused bug fix nature. ### Stable Tree Criteria Met: - ✅ **Fixes
-important bug:** Prevents potential memory corruption - ✅ **Small and
-contained:** Only two line changes - ✅ **Low regression risk:** Pure bug
-fix with no behavioral changes for normal cases - ✅ **Clear side
-effects:** None beyond fixing the bug - ✅ **No architectural changes:**
-Maintains existing API and behavior This is exactly the type of focused,
-low-risk bug fix that stable trees are designed to include.
+**YES** This commit should be backported to stable kernel trees. Here's
+my extensive analysis: ## Analysis of Code Changes The commit changes
+variable types in `i40e_clear_hw()` from unsigned (`u32`) to signed
+(`s32`) for: 1. `num_pf_int` - number of PF interrupts 2. `num_vf_int` -
+number of VF interrupts 3. `i` - loop counter variable **Critical
+Security Issue**: The problem occurs when hardware registers contain
+malicious values where `num_pf_int` or `num_vf_int` could be 0 or 1. In
+the loops at lines 852-853 and 858-859: ```c for (i = 0; i < num_pf_int
+- 2; i++) wr32(hw, I40E_PFINT_DYN_CTLN(i), val); ``` If `num_pf_int` is
+0 or 1, then `num_pf_int - 2` becomes a large positive number due to
+unsigned integer underflow (0xFFFFFFFE or 0xFFFFFFFF), causing the loop
+to iterate billions of times and write to invalid MMIO addresses,
+leading to system crashes or potential security vulnerabilities. ##
+Comparison with Similar Commits This fix follows the **exact same
+pattern** as Similar Commit #2 (fc6f716a5069), which was marked **YES**
+for backporting. That commit addressed the same class of vulnerability
+in the same function: - **Similar Commit #2**: Added bounds checking (`j
+>= base_queue`, `j >= i`) to prevent underflow in queue/VF calculations
+- **Current Commit**: Changes variable types to signed to prevent
+underflow in interrupt calculations Both fixes address **integer
+underflow vulnerabilities in `i40e_clear_hw()`** that can lead to **MMIO
+writes to invalid memory pages**. ## Backport Suitability Criteria ✅
+**Fixes important security bug**: Prevents system crashes and potential
+memory corruption ✅ **Small, contained change**: Only changes variable
+types, no logic changes ✅ **Minimal side effects**: Type changes are
+safe and don't affect functionality ✅ **No architectural changes**:
+Simple type fix ✅ **Critical subsystem**: Network driver, but change is
+isolated ✅ **Clear commit message**: Explicitly describes the security
+issue ✅ **Follows stable rules**: Important security bugfix with minimal
+risk ## Historical Context The vulnerability was introduced in commit
+838d41d92a90 ("i40e: clear all queues and interrupts") from 2014. A
+related fix (fc6f716a5069) was already applied for similar underflow
+issues in the same function and was backported. This commit completes
+the fix by addressing the remaining underflow vectors. ## Risk
+Assessment **Risk: MINIMAL** - This is a simple type change that: -
+Makes signed arithmetic behave correctly - Prevents undefined behavior
+from unsigned underflow - Has no functional impact on normal operation -
+Only affects error conditions with malformed hardware registers The fix
+is **essential for security** and has **virtually zero regression
+risk**, making it an ideal candidate for stable backporting.
 
- net/core/sock.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/intel/i40e/i40e_common.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/net/core/sock.c b/net/core/sock.c
-index 7f7f02a01f2dd..3634a4f1f76c6 100644
---- a/net/core/sock.c
-+++ b/net/core/sock.c
-@@ -3571,7 +3571,7 @@ static int assign_proto_idx(struct proto *prot)
+diff --git a/drivers/net/ethernet/intel/i40e/i40e_common.c b/drivers/net/ethernet/intel/i40e/i40e_common.c
+index 99dd8187476ba..fe8e6db53f23b 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e_common.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_common.c
+@@ -1061,10 +1061,11 @@ int i40e_pf_reset(struct i40e_hw *hw)
+ void i40e_clear_hw(struct i40e_hw *hw)
  {
- 	prot->inuse_idx = find_first_zero_bit(proto_inuse_idx, PROTO_INUSE_NR);
+ 	u32 num_queues, base_queue;
+-	u32 num_pf_int;
+-	u32 num_vf_int;
++	s32 num_pf_int;
++	s32 num_vf_int;
+ 	u32 num_vfs;
+-	u32 i, j;
++	s32 i;
++	u32 j;
+ 	u32 val;
+ 	u32 eol = 0x7ff;
  
--	if (unlikely(prot->inuse_idx == PROTO_INUSE_NR - 1)) {
-+	if (unlikely(prot->inuse_idx == PROTO_INUSE_NR)) {
- 		pr_err("PROTO_INUSE_NR exhausted\n");
- 		return -ENOSPC;
- 	}
-@@ -3582,7 +3582,7 @@ static int assign_proto_idx(struct proto *prot)
- 
- static void release_proto_idx(struct proto *prot)
- {
--	if (prot->inuse_idx != PROTO_INUSE_NR - 1)
-+	if (prot->inuse_idx != PROTO_INUSE_NR)
- 		clear_bit(prot->inuse_idx, proto_inuse_idx);
- }
- #else
 -- 
 2.39.5
 
