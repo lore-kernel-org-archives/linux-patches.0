@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32A9713A3ED;
-	Wed,  4 Jun 2025 00:57:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E96FEAF1;
+	Wed,  4 Jun 2025 00:57:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748998664; cv=none; b=IctmZg5NZ6BoalEQ3odmP1T6Mr0Jjt73/O+A6RLwdy/xiQE86abIaH4Idj2MJVfKDABVJVGicxL8TbBr3qrFrwGd9zJGKZ4De7FGKxl8HfiWr4GUh3AA1mvZY9rUyUjQn6CLp8TvOE+AfMRWKzHQWAAkqMnbLVd/Pu1OiaFdgU8=
+	t=1748998665; cv=none; b=Z62y7lwOOuwD/KMfacTwZVmly7C48uYZYsR+ot0rDRbBYXnUQGEWp4NoJsVmlD7IbK/6OdQTBfEEVE6/L1qu2PCLqZKygU8yBslKHE1seZ9rgHrv4GllDp4jDuVo0sQB20PyGsicN9hcy0TcIbzbHfB4BbUUn7uB4joYYD7zpqM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748998664; c=relaxed/simple;
-	bh=lTA0fRMDoWEm7OIiiMjCQBRMB1gSvJMHjhgTlsX6aho=;
+	s=arc-20240116; t=1748998665; c=relaxed/simple;
+	bh=6/QCWYYHhvifBMJB1DbEfR2Fmskql+40LW27yUaqhCs=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pymlXEnW6EIc4qH5ezXDyPJR3pT9Bx3fVoDRkrVDS2jAxFwTqe4uUQAoLRMAelrgKEfGBKNuECngGcpMNP21hF12lZ8xNZPMhnCKz4Mn76+GAk1bbdj6cvJbEGYyzBmcpDEIQKo8tSiZ4Rd9nYi+Z5k4jZt++7xPFa9foB+BeDU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qz2L0BTf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=s7ltGcpBNhy+fWAqKo1sJ6SIU3ERu0XNRvZr2fiflx19GvUf0LcfFClmXl8GbXH6DWWbaWxK3z9ojww7ehAA6pbpVqnCC9hVIYkagLso1xdwrl5yWCekz1KFmmnGN13/Wf/ISYH60SNQiW+aS3Xzh36dNGKsmzvhxH+Cwv34ozE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lE3Ttycu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qz2L0BTf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAB23C4CEEF;
-	Wed,  4 Jun 2025 00:57:42 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lE3Ttycu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2918EC4CEF2;
+	Wed,  4 Jun 2025 00:57:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748998663;
-	bh=lTA0fRMDoWEm7OIiiMjCQBRMB1gSvJMHjhgTlsX6aho=;
+	s=k20201202; t=1748998665;
+	bh=6/QCWYYHhvifBMJB1DbEfR2Fmskql+40LW27yUaqhCs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qz2L0BTftQI0YBwgibdFNwvDopaW3mRnv1qmQZ5HLujXVoEP26yLkCjvdsHrKkuRI
-	 Z04cUa2WBLBxQc5kd7rmIDgH+fZfYDLmgEgq0t2sGVs0f5NGRvLDGsXJtClArG7C81
-	 f0vnufDb3C9UAgyO8HMmAOgr/vuih1kZwVdMXh1mDBXmdKFD2lsx82Or4e1iAzc8Pr
-	 1noCGNE9PUOEpZ1JxYxYRbIFnoBSgNyhcBnsUIyTMv4zvHSs1anNIV7/FuFMbC2BjO
-	 Y2jQMoGM57uW5zv/aS6ZjIYYW+2zVKW6hxa1CTY3qukPBabpTZHWE83gQ8mZJezeuN
-	 WKNFiT/n2kf4Q==
+	b=lE3Ttycu64YMRGYO30owKaRjrVaWxVg+ojgs9h4nnHbfIZf5ZKM6BSVdNvMmy2Jis
+	 InomValbFn9NcGchOXgEWem5SIL/dHuZ/8tkh2BNEKeKcfH3XNQBGNxzv9tI2LlWPA
+	 svQ9C6+jrWZG6uYVv+mXrAnU5tcolD72Ozqq9dveA7v4mPWNzmgg/tA0+XBl0TpDOC
+	 eU4g1s3xAsCOPT/6OdGnFWVk2c4gLGtRvPIIY5VosxUm3TtCRORBzaH2bBL9/7fibd
+	 7QbcPcDH3WgAH+SXPnpExI5knLIdAvlzx2QDjfnlqtoylmZYZlv5FLN/N+S1mDUVzi
+	 6vsK5ivsEuY5w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Alan Maguire <alan.maguire@oracle.com>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Andrii Nakryiko <andrii@kernel.org>,
+Cc: Justin Tee <justin.tee@broadcom.com>,
+	"Martin K . Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>,
-	eddyz87@gmail.com,
-	daniel@iogearbox.net,
-	bpf@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.14 064/108] libbpf: Add identical pointer detection to btf_dedup_is_equiv()
-Date: Tue,  3 Jun 2025 20:54:47 -0400
-Message-Id: <20250604005531.4178547-64-sashal@kernel.org>
+	james.smart@broadcom.com,
+	dick.kennedy@broadcom.com,
+	linux-scsi@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.14 065/108] scsi: lpfc: Fix lpfc_check_sli_ndlp() handling for GEN_REQUEST64 commands
+Date: Tue,  3 Jun 2025 20:54:48 -0400
+Message-Id: <20250604005531.4178547-65-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250604005531.4178547-1-sashal@kernel.org>
 References: <20250604005531.4178547-1-sashal@kernel.org>
@@ -54,118 +53,68 @@ X-stable-base: Linux 6.14.9
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alan Maguire <alan.maguire@oracle.com>
+From: Justin Tee <justin.tee@broadcom.com>
 
-[ Upstream commit 8e64c387c942229c551d0f23de4d9993d3a2acb6 ]
+[ Upstream commit 05ae6c9c7315d844fbc15afe393f5ba5e5771126 ]
 
-Recently as a side-effect of
+In lpfc_check_sli_ndlp(), the get_job_els_rsp64_did remote_id assignment
+does not apply for GEN_REQUEST64 commands as it only has meaning for a
+ELS_REQUEST64 command.  So, if (iocb->ndlp == ndlp) is false, we could
+erroneously return the wrong value.  Fix by replacing the fallthrough
+statement with a break statement before the remote_id check.
 
-commit ac053946f5c4 ("compiler.h: introduce TYPEOF_UNQUAL() macro")
-
-issues were observed in deduplication between modules and kernel BTF
-such that a large number of kernel types were not deduplicated so
-were found in module BTF (task_struct, bpf_prog etc).  The root cause
-appeared to be a failure to dedup struct types, specifically those
-with members that were pointers with __percpu annotations.
-
-The issue in dedup is at the point that we are deduplicating structures,
-we have not yet deduplicated reference types like pointers.  If multiple
-copies of a pointer point at the same (deduplicated) integer as in this
-case, we do not see them as identical.  Special handling already exists
-to deal with structures and arrays, so add pointer handling here too.
-
-Reported-by: Alexei Starovoitov <ast@kernel.org>
-Signed-off-by: Alan Maguire <alan.maguire@oracle.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20250429161042.2069678-1-alan.maguire@oracle.com
+Signed-off-by: Justin Tee <justin.tee@broadcom.com>
+Link: https://lore.kernel.org/r/20250425194806.3585-2-justintee8345@gmail.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Based on my comprehensive analysis of the commit message, code changes,
-historical patterns, and kernel repository context, here is my
-recommendation: **YES** This commit should be backported to stable
-kernel trees for the following reasons: ## Critical Bug Fix Analysis
-**1. Fixes a Real User-Impacting Regression:** - The commit addresses a
-regression introduced by `commit ac053946f5c4 ("compiler.h: introduce
-TYPEOF_UNQUAL() macro")` - This regression causes "a large number of
-kernel types" (task_struct, bpf_prog, etc.) to fail deduplication -
-Results in broken BPF functionality for kernel modules, which is user-
-visible **2. Follows Established Stable Tree Criteria:** - **Important
-bugfix**: ✅ Fixes BTF deduplication failures affecting core BPF
-functionality - **Minimal risk**: ✅ Small, targeted change following
-existing patterns - **No architectural changes**: ✅ Adds a simple helper
-function without changing core algorithm - **Confined to subsystem**: ✅
-Changes only affect BTF deduplication logic in libbpf ## Code Change
-Analysis **3. Conservative and Safe Implementation:** ```c +static bool
-btf_dedup_identical_ptrs(struct btf_dedup *d, __u32 id1, __u32 id2) +{ +
-struct btf_type *t1, *t2; + + t1 = btf_type_by_id(d->btf, id1); + t2 =
-btf_type_by_id(d->btf, id2); + + if (!btf_is_ptr(t1) || !btf_is_ptr(t2))
-+ return false; + + return t1->type == t2->type; +} ``` - Simple type-
-checking function with clear bounds checking - Mirrors existing
-`btf_dedup_identical_arrays()` and `btf_dedup_identical_structs()`
-patterns - No complex logic or state changes **4. Integration Follows
-Existing Pattern:** ```c + /bin /bin.usr-is-merged /boot /dev /etc /home
-/init /lib /lib.usr-is-merged /lib64 /lost+found /media /mnt /opt /proc
-/root /run /sbin /sbin.usr-is-merged /snap /srv /sys /tmp /usr /var A
-similar case is again observed for PTRs. */ + if
-(btf_dedup_identical_ptrs(d, hypot_type_id, cand_id)) + return 1; ``` -
-Added alongside existing identical array/struct checks - Same position
-in control flow as established workarounds - Consistent with documented
-compiler DWARF generation issues ## Historical Pattern Alignment **5.
-Matches "YES" Backport Pattern:** Looking at similar commits marked for
-backport: - **Similar Commit #1** (YES): Adds identical struct checking
-for BTF dedup failures - same pattern - **Similar Commit #4** (YES):
-Fixes memory leak in BTF dedup - critical subsystem fix - **Similar
-Commit #5** (YES): Handles DWARF/compiler bugs with duplicated structs -
-identical issue class This commit addresses the exact same class of
-problem (compiler-generated identical types) that has been consistently
-backported. ## Risk Assessment **6. Low Regression Risk:** - Function
-only returns `true` when types are genuinely identical (`t1->type ==
-t2->type`) - Early returns prevent processing non-pointer types - Cannot
-cause false positives that would incorrectly deduplicate different types
-- Follows defensive programming patterns used throughout the codebase ##
-Conclusion This commit fixes a regression in critical BPF functionality,
-uses a proven safe pattern, has minimal code footprint, and addresses
-issues that directly impact users. The fix quality is high and the risk
-is low, making it an excellent candidate for stable tree backporting.
+**YES** This commit should be backported to stable kernel trees. Here's
+my detailed analysis: **Reasons for Backporting:** 1. **Fixes a Clear
+Bug**: The commit addresses a specific logic error where
+`CMD_GEN_REQUEST64_CR` commands incorrectly fall through to use
+`get_job_els_rsp64_did()`, which is designed for ELS requests and may
+return meaningless data for generic requests. 2. **Small and Contained
+Change**: The fix is minimal (changing `fallthrough;` to `break;`) and
+affects only the `lpfc_check_sli_ndlp()` function in
+`drivers/scsi/lpfc/lpfc_hbadisc.c:5056`. 3. **Low Regression Risk**: The
+change makes the code logic more precise by ensuring each command type
+uses its appropriate validation method. This reduces the chance of false
+matches rather than introducing new behavior. 4. **Affects Critical
+Functionality**: The `lpfc_check_sli_ndlp()` function is used to match
+IOCBs to node lists, which is fundamental for proper SCSI I/O handling
+and could affect data integrity if nodes are incorrectly matched. 5.
+**Similar to Accepted Backports**: This fix follows the same pattern as
+Similar Commit #2 (Status: YES), which fixed missing validation in lpfc
+node handling code. **Evidence from Code Analysis:** -
+`get_job_els_rsp64_did()` extracts destination ID from ELS request
+structures (`iocbq->wqe.els_req.wqe_dest` or
+`iocbq->iocb.un.elsreq64.remoteID`) - For `CMD_GEN_REQUEST64_CR`
+commands, these ELS-specific fields may contain unrelated data - The
+incorrect fallthrough could cause `lpfc_check_sli_ndlp()` to return 1
+(match) when it should return 0 (no match), potentially leading to I/O
+being associated with wrong nodes **Stability Criteria Met:** - ✅
+Important bug fix affecting I/O path - ✅ No new features introduced - ✅
+No architectural changes - ✅ Minimal regression risk - ✅ Confined to
+lpfc driver subsystem This is exactly the type of targeted bug fix that
+stable trees are designed to include.
 
- tools/lib/bpf/btf.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ drivers/scsi/lpfc/lpfc_hbadisc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/lib/bpf/btf.c b/tools/lib/bpf/btf.c
-index a39894a7be054..37c54734ae7ae 100644
---- a/tools/lib/bpf/btf.c
-+++ b/tools/lib/bpf/btf.c
-@@ -4339,6 +4339,19 @@ static bool btf_dedup_identical_structs(struct btf_dedup *d, __u32 id1, __u32 id
- 	return true;
- }
- 
-+static bool btf_dedup_identical_ptrs(struct btf_dedup *d, __u32 id1, __u32 id2)
-+{
-+	struct btf_type *t1, *t2;
-+
-+	t1 = btf_type_by_id(d->btf, id1);
-+	t2 = btf_type_by_id(d->btf, id2);
-+
-+	if (!btf_is_ptr(t1) || !btf_is_ptr(t2))
-+		return false;
-+
-+	return t1->type == t2->type;
-+}
-+
- /*
-  * Check equivalence of BTF type graph formed by candidate struct/union (we'll
-  * call it "candidate graph" in this description for brevity) to a type graph
-@@ -4471,6 +4484,9 @@ static int btf_dedup_is_equiv(struct btf_dedup *d, __u32 cand_id,
- 		 */
- 		if (btf_dedup_identical_structs(d, hypot_type_id, cand_id))
- 			return 1;
-+		/* A similar case is again observed for PTRs. */
-+		if (btf_dedup_identical_ptrs(d, hypot_type_id, cand_id))
-+			return 1;
- 		return 0;
- 	}
- 
+diff --git a/drivers/scsi/lpfc/lpfc_hbadisc.c b/drivers/scsi/lpfc/lpfc_hbadisc.c
+index 07cd611f34bd5..1790cf6b30a15 100644
+--- a/drivers/scsi/lpfc/lpfc_hbadisc.c
++++ b/drivers/scsi/lpfc/lpfc_hbadisc.c
+@@ -5053,7 +5053,7 @@ lpfc_check_sli_ndlp(struct lpfc_hba *phba,
+ 		case CMD_GEN_REQUEST64_CR:
+ 			if (iocb->ndlp == ndlp)
+ 				return 1;
+-			fallthrough;
++			break;
+ 		case CMD_ELS_REQUEST64_CR:
+ 			if (remote_id == ndlp->nlp_DID)
+ 				return 1;
 -- 
 2.39.5
 
