@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FE4F1DED66;
-	Wed,  4 Jun 2025 00:56:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 784924B5AE;
+	Wed,  4 Jun 2025 00:56:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748998573; cv=none; b=B9Bk2RcMreg7AS7U5zfLVdC8JwjhTu4DcwLNcevAGii5FPhoENcY2/GwjdFILxLt6c0wz/XpQSO2XKC2ukIZT/qz0lss76kUu5wOMJHGyK/1ih7/A7zZJEtQPiLHJhVZ0JO7F0hMLUvVGX6Uue3YlTXIw+2HRrOHZruwgHR+eoc=
+	t=1748998574; cv=none; b=VJWJGZGDay6BkeZOCkJrlqjRvMROdl8w+AWeVbpKTSyfYyH0NKAmiOzPvqI1e7aaXD72zudyrtS6MkisFHjt5L9REJQjF3ROzK+VCesCiws55qE0VUNfWh3UjBceG5JDqwNNTX42Rlk/FOtLZH0Jn1n7xa/r8grM0RLvo5xf2s0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748998573; c=relaxed/simple;
-	bh=OKbWIEsIA50cUd9gWyV0gbV0Znm7zjy7+nU+PaJvpxI=;
+	s=arc-20240116; t=1748998574; c=relaxed/simple;
+	bh=XbjDtZGA81sTlSc5HaEVqzyX/b2ASvd7c8eC6cp+m2k=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ch2b40Syd0EQhIchzBuZeN26cKEccvC4HF7f3Oppi1p0gQeo5wI1Fo02QLn3u12B2B+QhORKYY8ZzsBE8O/Q5aEF+gZGxdR2OmI5x1BZI3aAkn9jBfncK0gGNd9yXwUvTec59hWBCAcs+dG96StKm562X/Z/kdYf/SU7rNW6vxY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dFffK53/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=XT86QqzGUIEBWLJyZIeFvZIImEM8/uPj94bd1FO4zuRoGy0wxjohVMuc844ow7bsHqNxJgDLdWZjEIMkWDM5HJXavboKCN2j3sKbSWBKyvOoJZCdf9TRjyHloE3/4ybXWf3VBTDincj+hMUxQjtwh9OefP0Dd0idOde2KgY9JPw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nKPYQG7g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dFffK53/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D2BAC4CEED;
-	Wed,  4 Jun 2025 00:56:12 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nKPYQG7g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AF36C4CEEF;
+	Wed,  4 Jun 2025 00:56:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748998573;
-	bh=OKbWIEsIA50cUd9gWyV0gbV0Znm7zjy7+nU+PaJvpxI=;
+	s=k20201202; t=1748998574;
+	bh=XbjDtZGA81sTlSc5HaEVqzyX/b2ASvd7c8eC6cp+m2k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dFffK53/dqCOELfp5/W4RlOujUH85G/nSGTCBMX2PSu42fP09QiAFV3hM7+7Pl2Jb
-	 Cr45AkdmSC5mlwNrbaScO8/IqAh5bI2XoxJ8Fo+4cn5XgBlO/kNfxwMgmFPzzEMioS
-	 EkuZq2HBH9cze8kqP0a2O00p/Apq0sYf22xNnE6St0Fv6e1sCQU4lGmZZTcThwv37f
-	 PyaaEdA8haPWtUToLfVdcZJfYDWvM1ggYhsTbljHDC9BtyRPIjm7em6kPEn8bk+GJk
-	 WiUYJl1dJ1GjUv/5jjFP1blEdfmHqFffeN3FrDn/AHD61nJAe8x7AankodgK2Og0gr
-	 Kr4JAONvYNbjg==
+	b=nKPYQG7gdLCiLO2vTuz0odoUnT2CVyXXEeg8qTuBsrulwwFWMKSejkeJgeT5cBo1z
+	 e3T4wVB3wFgdHUVw7EFYCAXYWq9Zpp7rDS2TNGtRlq2rQibZ8bS2euo1KX24DT/fyQ
+	 5/N6l4Wa1hIm2JN/ok0yUCV+Pu+3NKoBx97vN81xwHleVd52g8ASNISFDPj5N+y5BY
+	 LC/uIhzulMwXqAcBZc1uMP24ESqLLJraw0X9DGOdqIKHFrl28o3isPxAAPGle41J4T
+	 61dtGlPuAa00VcXGPdzj/mbn4/0O5yFKvk17Ut+pIwSCOBHCAzGW873ouXWzMqSz7e
+	 S9l/4i4lxS9Mg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Aditya Kumar Singh <aditya.kumar.singh@oss.qualcomm.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+Cc: Petr Malat <oss@malat.biz>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	johannes@sipsolutions.net,
-	linux-wireless@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.14 018/108] wifi: mac80211: validate SCAN_FLAG_AP in scan request during MLO
-Date: Tue,  3 Jun 2025 20:54:01 -0400
-Message-Id: <20250604005531.4178547-18-sashal@kernel.org>
+	marcelo.leitner@gmail.com,
+	linux-sctp@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.14 019/108] sctp: Do not wake readers in __sctp_write_space()
+Date: Tue,  3 Jun 2025 20:54:02 -0400
+Message-Id: <20250604005531.4178547-19-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250604005531.4178547-1-sashal@kernel.org>
 References: <20250604005531.4178547-1-sashal@kernel.org>
@@ -52,81 +53,85 @@ X-stable-base: Linux 6.14.9
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Aditya Kumar Singh <aditya.kumar.singh@oss.qualcomm.com>
+From: Petr Malat <oss@malat.biz>
 
-[ Upstream commit 78a7a126dc5b8e3c5a3d4da9f513e0236d2dc1a3 ]
+[ Upstream commit af295892a7abbf05a3c2ba7abc4d81bb448623d6 ]
 
-When an AP interface is already beaconing, a subsequent scan is not allowed
-unless the user space explicitly sets the flag NL80211_SCAN_FLAG_AP in the
-scan request. If this flag is not set, the scan request will be returned
-with the error code -EOPNOTSUPP. However, this restriction currently
-applies only to non-ML interfaces. For ML interfaces, scans are allowed
-without this flag being explicitly set by the user space which is wrong.
-This is because the beaconing check currently uses only the deflink, which
-does not get set during MLO.
+Function __sctp_write_space() doesn't set poll key, which leads to
+ep_poll_callback() waking up all waiters, not only these waiting
+for the socket being writable. Set the key properly using
+wake_up_interruptible_poll(), which is preferred over the sync
+variant, as writers are not woken up before at least half of the
+queue is available. Also, TCP does the same.
 
-Hence to fix this, during MLO, use the existing helper
-ieee80211_num_beaconing_links() to know if any of the link is beaconing.
-
-Signed-off-by: Aditya Kumar Singh <aditya.kumar.singh@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250516-bug_fix_mlo_scan-v2-1-12e59d9110ac@oss.qualcomm.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Petr Malat <oss@malat.biz>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20250516081727.1361451-1-oss@malat.biz
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Based on my analysis, here is my decision: **YES** This commit should be
-backported to stable kernel trees for the following reasons: ## Security
-and Functional Bug Analysis 1. **Clear Security/Behavioral Bug**: This
-commit fixes a significant security validation bypass in MLO (Multi-Link
-Operation) mode. The bug allows AP interfaces in MLO mode to perform
-scans without the required `NL80211_SCAN_FLAG_AP` flag, which bypasses
-an important protection mechanism. 2. **Root Cause**: The issue stems
-from line 2927 in `net/mac80211/cfg.c` where the code was checking
-`sdata->deflink.u.ap.beacon` instead of using
-`ieee80211_num_beaconing_links(sdata)`. In MLO mode, `deflink` doesn't
-get properly set, so the beaconing check fails and scans are incorrectly
-allowed without proper authorization. 3. **Impact Scope**: - The bug
-affects all kernels with MLO support (since v6.0) where
-`ieee80211_num_beaconing_links()` is available (since v6.10) - MLO was
-introduced in kernel v6.0, but the helper function was only added in
-v6.10 - This means kernels v6.10+ with MLO support have this
-vulnerability ## Code Change Analysis The fix is minimal and surgical:
-```c // Before: if (sdata->deflink.u.ap.beacon && // After: if
-(ieee80211_num_beaconing_links(sdata) && ``` This change: - Replaces a
-deflink-specific check with a MLO-aware function - The
-`ieee80211_num_beaconing_links()` function properly iterates through all
-links in MLO mode and checks for beaconing on any link - In non-MLO
-mode, it still works correctly (after commit 68b44b05f4c8) - Is
-contained, with no side effects beyond fixing the intended issue ##
-Stable Tree Criteria Met 1. **Important Bug Fix**: ✅ Fixes security
-validation bypass 2. **Small and Contained**: ✅ Single line change 3.
-**No Architectural Changes**: ✅ Uses existing helper function 4.
-**Minimal Regression Risk**: ✅ The change makes the validation more
-strict, not less 5. **Clear Affects Users**: ✅ Any MLO AP deployment is
-affected ## Historical Context Looking at the similar commits provided,
-this follows the pattern of "Backport Status: YES" from commit #5, which
-was also a small fix for MLO address translation issues that could break
-functionality. ## Recommendation This should be backported to stable
-trees that have both: - MLO support (v6.0+) - The
-`ieee80211_num_beaconing_links()` helper function (v6.10+) The backport
-target should be **v6.10+** stable trees.
+Based on my analysis of the commit and comparison with similar
+historical commits, here is my assessment: **YES** This commit should be
+backported to stable kernel trees. ## Detailed Analysis: ### 1. **Core
+Issue Being Fixed** The commit addresses a specific bug in SCTP's
+`__sctp_write_space()` function where `wake_up_interruptible()` is
+called without setting a poll key. This causes `ep_poll_callback()` to
+wake up **all** waiters on the socket, not just those waiting for
+writability (EPOLLOUT events). This is inefficient and can cause
+spurious wake-ups for readers waiting on the same socket. ### 2. **Code
+Changes Analysis** The fix is minimal and surgical: ```c // Before:
+wake_up_interruptible(&wq->wait); // After:
+wake_up_interruptible_poll(&wq->wait, EPOLLOUT | EPOLLWRNORM |
+EPOLLWRBAND); ``` ### 3. **Consistency with Existing Patterns** Looking
+at `/home/sasha/linux/net/core/stream.c:41-42`, I can see that the fix
+aligns with established patterns in the kernel networking stack: ```c
+wake_up_interruptible_poll(&wq->wait, EPOLLOUT | EPOLLWRNORM |
+EPOLLWRBAND); ``` This is exactly what TCP and other protocols use in
+their write space callbacks, making SCTP consistent with the rest of the
+networking subsystem. ### 4. **Comparison with Historical Similar
+Commits** **Positive Indicators (matching YES backports):** - **Similar
+Commit #1**: Also SCTP-related, fixes socket behavior issue affecting
+users - **Similar Commit #4**: TCP polling fix with similar wake-up
+improvements - **Similar Commit #5**: SCTP wake-up related fix that was
+backported **Risk Assessment:** - The change is contained to a single
+function (`__sctp_write_space`) - No architectural changes - Follows
+existing kernel patterns exactly - Low regression risk - improves
+efficiency without changing core behavior ### 5. **Impact and Benefits**
+- **Performance improvement**: Eliminates spurious wake-ups for readers
+when only write space becomes available - **Correctness**: Ensures only
+appropriate waiters are woken (those waiting for EPOLLOUT) -
+**Consistency**: Aligns SCTP behavior with TCP and other protocols ###
+6. **Stable Tree Criteria Compliance** ✅ **Important bugfix**: Fixes
+incorrect polling behavior affecting performance ✅ **Minimal risk**:
+Single-line change following established patterns ✅ **Small and
+contained**: Only affects one function in SCTP ✅ **No new features**:
+Pure bugfix ✅ **No architectural changes**: Maintains existing
+interfaces ### 7. **Clear Author Intent** The commit message explicitly
+states this change makes SCTP behave "as TCP does," indicating this is a
+correctness fix to align with established networking patterns rather
+than a new feature. This commit exhibits all the characteristics of a
+good stable backport candidate: it's a small, contained bugfix that
+improves correctness and performance without introducing new
+functionality or significant risk.
 
- net/mac80211/cfg.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sctp/socket.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/mac80211/cfg.c b/net/mac80211/cfg.c
-index a7aeb37254bbf..caf93f0d53370 100644
---- a/net/mac80211/cfg.c
-+++ b/net/mac80211/cfg.c
-@@ -2904,7 +2904,7 @@ static int ieee80211_scan(struct wiphy *wiphy,
- 		 * the frames sent while scanning on other channel will be
- 		 * lost)
- 		 */
--		if (sdata->deflink.u.ap.beacon &&
-+		if (ieee80211_num_beaconing_links(sdata) &&
- 		    (!(wiphy->features & NL80211_FEATURE_AP_SCAN) ||
- 		     !(req->flags & NL80211_SCAN_FLAG_AP)))
- 			return -EOPNOTSUPP;
+diff --git a/net/sctp/socket.c b/net/sctp/socket.c
+index 53725ee7ba06d..b301d64d9d80f 100644
+--- a/net/sctp/socket.c
++++ b/net/sctp/socket.c
+@@ -9100,7 +9100,8 @@ static void __sctp_write_space(struct sctp_association *asoc)
+ 		wq = rcu_dereference(sk->sk_wq);
+ 		if (wq) {
+ 			if (waitqueue_active(&wq->wait))
+-				wake_up_interruptible(&wq->wait);
++				wake_up_interruptible_poll(&wq->wait, EPOLLOUT |
++						EPOLLWRNORM | EPOLLWRBAND);
+ 
+ 			/* Note that we try to include the Async I/O support
+ 			 * here by modeling from the current TCP/UDP code.
 -- 
 2.39.5
 
