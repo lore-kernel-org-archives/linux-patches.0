@@ -1,42 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C463B70838;
-	Wed,  4 Jun 2025 01:04:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4933370838;
+	Wed,  4 Jun 2025 01:04:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748999092; cv=none; b=RL3sj9lqo2dQg+w1X3kbD/2KDtHp74052w7VrGOpLTczhZRNV52cFE+5L8h6ogppwU/h7/2+OMCoVo4YSB+tPfxmxcZddWtUOAnaTeryBi20TjctBYTiAE9SYcFNa0+GdGW+mbG6aqawPD3fe88rsyfEP1sBh8PKDNwFbosRmkQ=
+	t=1748999095; cv=none; b=G93lPwvG+W+nu2H4Y8xgYHruqq+lA4HJOFB/XMSFUuaGzkF2vGV29mOfAi8EUrod/yZKqqxAJVH9vj7scR8Is68QXlKXH7nSZ67GfK3P0on2GrG1p4R6XPx862nyH4OgoCAAZb71N/kbdCQeLQh8aASPkU+KNvzj+XpmhkJ/WkY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748999092; c=relaxed/simple;
-	bh=VPGgVsbLjrqjjOnLE309GYnSqHfDbkjC+hb3JkjyigQ=;
+	s=arc-20240116; t=1748999095; c=relaxed/simple;
+	bh=EGW8IG26zLd3hXax9meiv8hmZaJnDGeIZcfT+on6QBM=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=efWwBx7sVjDOHuW7VUOg4dLmnhY7xelUSK0KamD1HqnqTu/4tGMZ2mowRucj5NdAiee8aJ6/4YZp03yWn1uMqHz87c7/nynqTACDOLZWGSEtQI/qiDubGsgR2WJxkQuEnUEJHxN/6xeJUywsCWBgWsz93G5qvZfUFU5+SjQjZZE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RYvkJfsh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=hyGkJnu2Z4HXyNskv2qh7eM0h/2AD+CW4XAnlnbjn8+teYEkDWTsc5Kb7RPQ46O6mpgNsQgBibj9mTzrcfcfBKLW6aBLqwF9wUKitlG0qrgkqJ/nrV8moQ66EdE99dw/1qW9V0EX7+23/W1FRZa4z3XhxrDoVE8BFT1v5fJiqMg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ox/C7ZhB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RYvkJfsh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 743D8C4CEED;
-	Wed,  4 Jun 2025 01:04:51 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ox/C7ZhB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4DFAC4CEED;
+	Wed,  4 Jun 2025 01:04:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748999092;
-	bh=VPGgVsbLjrqjjOnLE309GYnSqHfDbkjC+hb3JkjyigQ=;
+	s=k20201202; t=1748999094;
+	bh=EGW8IG26zLd3hXax9meiv8hmZaJnDGeIZcfT+on6QBM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RYvkJfshRskEON6V+WQRG9dzDnylLvMTfIAnzHl0c6R7/yZFKshbmFEwiVSuSiXWu
-	 hPGulfRnmY0OEGJ7RY53rIZDvypsMc37IQ6FwChiVIl8CbkH9pXQDk5ad/2H2ZIeTM
-	 UbmM+yRJag2m67BBc+YK/vI1bNorxCuRnnn8mxlOXSangN0bZZlQKabnD3knT7Ntn1
-	 d/8/r78I3KCvxvHVlv6M+AaHB2aUPV8lXuuu3bLwWLC6gYtbkDjlSX1P4mCFKCtuNw
-	 BB4oNFuGCZOFlwn2DTt+2dlIDpGJeq2fP9qGXMBTFpsAdoWwoNZhFdppFLUYyxzg6b
-	 6MhviCENJJJoQ==
+	b=Ox/C7ZhBrR05WioyITlwl6TgdrZ+vEztpL6HGmn9s103MRAcGc8JO5/b9ntvvdDr7
+	 /DOH1l/uy4V9JJl0SFN8mA8ToOJcwgLkUmeunn0Q1H64LpxYR8yQXr+DHxQOx3yB+J
+	 Atr1bDq92chJA+oRQMOh4RgTAy5ysPTjs+s5tdZ7TlqwToieFZ2lLcTfhuJHu0/cZg
+	 WMBw0KJmLfX+zgABF/3Hyp/mv5TMCLVL+ns1zGH1qw8JODm9gD8QkJqXpbCC4jAIPb
+	 vQhMH7v5DQJOYHF6FI6S5TlJSvWY+Xpg6pWUhZtPGWx3ZsAL8SQvTDoHiv4BKzOal+
+	 XPU53/okFDhvg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Stefan Wahren <wahrenst@gmx.net>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: Salah Triki <salah.triki@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	andrew@lunn.ch,
-	horms@kernel.org
-Subject: [PATCH AUTOSEL 6.1 26/46] net: vertexcom: mse102x: Return code for mse102x_rx_pkt_spi
-Date: Tue,  3 Jun 2025 21:03:44 -0400
-Message-Id: <20250604010404.5109-26-sashal@kernel.org>
+	miriam.rachel.korenblit@intel.com,
+	emmanuel.grumbach@intel.com,
+	mingo@kernel.org,
+	tglx@linutronix.de,
+	viro@zeniv.linux.org.uk
+Subject: [PATCH AUTOSEL 6.1 27/46] wireless: purelifi: plfxlc: fix memory leak in plfxlc_usb_wreq_asyn()
+Date: Tue,  3 Jun 2025 21:03:45 -0400
+Message-Id: <20250604010404.5109-27-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250604010404.5109-1-sashal@kernel.org>
 References: <20250604010404.5109-1-sashal@kernel.org>
@@ -49,144 +52,79 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.1.140
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stefan Wahren <wahrenst@gmx.net>
+From: Salah Triki <salah.triki@gmail.com>
 
-[ Upstream commit 4ecf56f4b66011b583644bf9a62188d05dfcd78c ]
+[ Upstream commit 63a9a727d373fa5b8ce509eef50dbc45e0f745b9 ]
 
-The MSE102x doesn't provide any interrupt register, so the only way
-to handle the level interrupt is to fetch the whole packet from
-the MSE102x internal buffer via SPI. So in cases the interrupt
-handler fails to do this, it should return IRQ_NONE. This allows
-the core to disable the interrupt in case the issue persists
-and prevent an interrupt storm.
+Add usb_free_urb() in the error path to prevent memory leak.
 
-Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
-Link: https://patch.msgid.link/20250509120435.43646-6-wahrenst@gmx.net
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Salah Triki <salah.triki@gmail.com>
+Link: https://patch.msgid.link/aA3_maPlEJzO7wrL@pc
+[fix subject]
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 **YES** This commit should be backported to stable kernel trees. Here's
-my extensive analysis: ## Primary Analysis **This is a critical
-interrupt handling bug fix that prevents system stability issues.** The
-commit changes the return value behavior of the MSE102x network driver's
-interrupt handler to prevent interrupt storms, which is a serious system
-stability concern. ## Code Changes Analysis The key changes show a
-systematic conversion from `void` return to `irqreturn_t` return values:
-1. **Function signature change**: `mse102x_rx_pkt_spi()` changes from
-`void` to `irqreturn_t` 2. **Critical early return paths**: The function
-now returns `IRQ_NONE` when SPI commands fail: ```c if (ret) - return; +
-return IRQ_NONE; ``` 3. **Memory allocation failures**: Returns
-`IRQ_NONE` when `netdev_alloc_skb_ip_align()` fails: ```c if (!skb) -
-return; + return IRQ_NONE; ``` 4. **Successful packet processing**:
-Returns `IRQ_HANDLED` when packets are processed (even with errors):
-```c if (mse102x_rx_frame_spi(mse, rxpkt, rxlen, drop)) {
-mse->ndev->stats.rx_errors++; dev_kfree_skb(skb); - return; + return
-IRQ_HANDLED; } ``` ## Why This Meets Stable Backport Criteria **1.
-Critical System Stability Issue** The commit message explicitly states
-this prevents "interrupt storms" - a condition where the system can
-become unresponsive due to continuous interrupt processing. This is a
-serious reliability concern that affects system operation. **2.
-Hardware-Specific Reliability Problem** The MSE102x hardware uses level-
-triggered interrupts and has no interrupt acknowledge mechanism. When
-the driver returns `IRQ_NONE` while the interrupt line is still
-asserted, the kernel's interrupt subsystem can disable the interrupt or
-continuously retrigger it, leading to system instability. **3. Small,
-Contained Fix** The changes are minimal and surgical - only affecting
-return values in the interrupt handler path. There are no algorithmic
-changes or new features introduced. **4. Pattern Matches Previous Stable
-Backports** Comparing to the reference commits: - Similar Commits #1-3
-were all marked "Backport Status: YES" and dealt with MSE102x
-reliability fixes - This follows the same pattern: small, targeted fixes
-for hardware-specific reliability issues - Like commit #1 (interrupt
-handling fix), this addresses interrupt-related system stability **5.
-Critical Subsystem (Interrupt Handling)** Interrupt handling is a core
-kernel subsystem where bugs can cause system-wide instability. The
-commit message specifically mentions preventing interrupt storms, which
-can freeze systems. **6. No Risk of Regression** The changes only affect
-error handling paths and make the interrupt handler more conservative by
-properly signaling when interrupts are handled vs. not handled. This
-cannot introduce new bugs - it only prevents the kernel from making
-incorrect assumptions about interrupt handling. **7.
-Infrastructure/Driver Reliability** Network drivers with interrupt
-handling bugs can cause network connectivity loss and system
-instability, particularly in embedded systems where this hardware is
-likely deployed. This commit fixes a fundamental interrupt handling bug
-that can cause system stability issues, uses minimal and safe code
-changes, and follows the pattern of previously accepted stable backports
-for the same hardware. It should definitely be backported to stable
-kernel trees.
+my extensive analysis: ## Code Analysis The commit fixes a clear memory
+leak in the `plfxlc_usb_wreq_async()` function in the pureLiFi wireless
+driver. Specifically: **The Bug:** - The function calls
+`usb_alloc_urb(0, GFP_ATOMIC)` to allocate a USB URB (USB Request Block)
+- If `usb_submit_urb()` fails, the function returns the error code but
+never frees the allocated URB - This creates a memory leak every time
+USB submission fails **The Fix:** The fix adds a simple but crucial
+cleanup path: ```c r = usb_submit_urb(urb, GFP_ATOMIC); -if (r) +if (r)
+{ + usb_free_urb(urb); dev_err(&udev->dev, "Async write submit failed
+(%d)\n", r); +} ``` ## Timeline and Impact From examining the git
+history: 1. **Bug Introduction:** The bug was introduced in commit
+`68d57a07bfe5` when the driver was first added 2. **Bug Duration:** This
+memory leak has existed since the driver's introduction 3. **Impact:**
+Every failed USB submission would leak memory, potentially causing
+system instability over time ## Comparison with Similar Commits This
+commit matches the pattern of all 5 similar commits marked as "Backport
+Status: YES": 1. **Similar Commit #2** - Also fixes missing allocation
+failure check in the same function (`plfxlc_usb_wreq_async`) 2.
+**Similar Commit #1** - Fixes memory leak in the same driver
+(`__lf_x_usb_enable_rx`) 3. **Similar Commits #3-5** - All fix memory
+leaks in wireless drivers with small, contained changes ## Backport
+Criteria Met ✅ **Fixes important bug:** Memory leaks can cause system
+instability ✅ **Small and contained:** Only adds 2 lines of code in
+error path ✅ **No architectural changes:** Simple cleanup fix ✅
+**Minimal regression risk:** Standard USB cleanup pattern ✅ **Clear
+scope:** Limited to specific function in wireless driver ✅ **Follows
+stable rules:** Important bugfix with minimal impact ## Additional
+Considerations - The fix follows standard kernel patterns for USB URB
+cleanup - The same driver has had multiple similar memory leak fixes
+(commit `895b3b06efc2`) - The change is identical in nature to Similar
+Commit #2, which was also in this exact function and marked YES for
+backporting - No side effects beyond fixing the memory leak - The
+function is called from transmit path, so failures could be relatively
+common under stress This is a textbook example of a stable tree
+candidate: a clear, important bug fix with minimal code changes and no
+risk of regression.
 
- drivers/net/ethernet/vertexcom/mse102x.c | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ drivers/net/wireless/purelifi/plfxlc/usb.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/vertexcom/mse102x.c b/drivers/net/ethernet/vertexcom/mse102x.c
-index 060a566bc6aae..c902f8761d5d4 100644
---- a/drivers/net/ethernet/vertexcom/mse102x.c
-+++ b/drivers/net/ethernet/vertexcom/mse102x.c
-@@ -306,7 +306,7 @@ static void mse102x_dump_packet(const char *msg, int len, const char *data)
- 		       data, len, true);
+diff --git a/drivers/net/wireless/purelifi/plfxlc/usb.c b/drivers/net/wireless/purelifi/plfxlc/usb.c
+index 311676c1ece0a..8151bc5e00ccc 100644
+--- a/drivers/net/wireless/purelifi/plfxlc/usb.c
++++ b/drivers/net/wireless/purelifi/plfxlc/usb.c
+@@ -503,8 +503,10 @@ int plfxlc_usb_wreq_async(struct plfxlc_usb *usb, const u8 *buffer,
+ 			  (void *)buffer, buffer_len, complete_fn, context);
+ 
+ 	r = usb_submit_urb(urb, GFP_ATOMIC);
+-	if (r)
++	if (r) {
++		usb_free_urb(urb);
+ 		dev_err(&udev->dev, "Async write submit failed (%d)\n", r);
++	}
+ 
+ 	return r;
  }
- 
--static void mse102x_rx_pkt_spi(struct mse102x_net *mse)
-+static irqreturn_t mse102x_rx_pkt_spi(struct mse102x_net *mse)
- {
- 	struct sk_buff *skb;
- 	unsigned int rxalign;
-@@ -327,7 +327,7 @@ static void mse102x_rx_pkt_spi(struct mse102x_net *mse)
- 		mse102x_tx_cmd_spi(mse, CMD_CTR);
- 		ret = mse102x_rx_cmd_spi(mse, (u8 *)&rx);
- 		if (ret)
--			return;
-+			return IRQ_NONE;
- 
- 		cmd_resp = be16_to_cpu(rx);
- 		if ((cmd_resp & CMD_MASK) != CMD_RTS) {
-@@ -360,7 +360,7 @@ static void mse102x_rx_pkt_spi(struct mse102x_net *mse)
- 	rxalign = ALIGN(rxlen + DET_SOF_LEN + DET_DFT_LEN, 4);
- 	skb = netdev_alloc_skb_ip_align(mse->ndev, rxalign);
- 	if (!skb)
--		return;
-+		return IRQ_NONE;
- 
- 	/* 2 bytes Start of frame (before ethernet header)
- 	 * 2 bytes Data frame tail (after ethernet frame)
-@@ -370,7 +370,7 @@ static void mse102x_rx_pkt_spi(struct mse102x_net *mse)
- 	if (mse102x_rx_frame_spi(mse, rxpkt, rxlen, drop)) {
- 		mse->ndev->stats.rx_errors++;
- 		dev_kfree_skb(skb);
--		return;
-+		return IRQ_HANDLED;
- 	}
- 
- 	if (netif_msg_pktdata(mse))
-@@ -381,6 +381,8 @@ static void mse102x_rx_pkt_spi(struct mse102x_net *mse)
- 
- 	mse->ndev->stats.rx_packets++;
- 	mse->ndev->stats.rx_bytes += rxlen;
-+
-+	return IRQ_HANDLED;
- }
- 
- static int mse102x_tx_pkt_spi(struct mse102x_net *mse, struct sk_buff *txb,
-@@ -512,12 +514,13 @@ static irqreturn_t mse102x_irq(int irq, void *_mse)
- {
- 	struct mse102x_net *mse = _mse;
- 	struct mse102x_net_spi *mses = to_mse102x_spi(mse);
-+	irqreturn_t ret;
- 
- 	mutex_lock(&mses->lock);
--	mse102x_rx_pkt_spi(mse);
-+	ret = mse102x_rx_pkt_spi(mse);
- 	mutex_unlock(&mses->lock);
- 
--	return IRQ_HANDLED;
-+	return ret;
- }
- 
- static int mse102x_net_open(struct net_device *ndev)
 -- 
 2.39.5
 
