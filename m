@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0464E28691;
-	Wed,  4 Jun 2025 00:56:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63B14DDBC;
+	Wed,  4 Jun 2025 00:56:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748998584; cv=none; b=Wj1291Z15EbC7eVQjdOrS0JQovYV8RJG3EpM/ZrV97RbF7qgiRUFSiVdUATwqa4KmKu2KZpyjfjQYGcFZ3UM8lZrnTjwcED4K7aS6LGbY2v3UCzWpJpq4j8qL6QxebP1o5+qIggzH0QRddC4A64XeM0DaRxNfsZbiQDgCRI6yHs=
+	t=1748998588; cv=none; b=FenQwme6nNDPgxG6QWSP4Kp85D7Z34auOOjvIbBLwsaIxYT0gREc0Rrxb7upoPQfYMHD7XM84PCCy0GHmj2Au7y3lpN30rL42S+zUNh7Xfevx4u2b07OYyh5ugrJJOy7Yg4rTZofKIhO6zjxk6LhDZZ03z61MvaVJ1AYDffb0IM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748998584; c=relaxed/simple;
-	bh=rNTQSrAZbZtzeJE4gPIiLWIZK+2fQL9+NdlEHenjUX0=;
+	s=arc-20240116; t=1748998588; c=relaxed/simple;
+	bh=qyDiYDBdihp2YcchsjfqcEWHlAXGjVYhSo5yE/WnWJk=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=asNTX4VImXW2r/WF8EzW/3zk2MdzrxTYs4Dj66STFqWq9jbhF4w+zgU72Uq2C6Lrh3O25SZV7x8CTvXo4HRHultHU8MD9nCQddhD0O/SYyChowMS5U1mboDlG5X0j2UYUzqui+8Rnv8UEa7pCkhwR6O7ynepp6NaAUgH6lyxk7M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tkdPqG5N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ErR9A9hypRKGLC3a4HqKSV5oUdXjn+6wHS9nrMixwxtCM7MFo7bTgNvJuUMkrGUsoqqXoIv2gRTxPSVHvKK0leShfOjv4Flti9HdQxTK1R9w3bMzYoXhQUsCGZ/UadTPChFWUuGlZ1OmR00czI6oBacIoDE0FpadBHC5vNJGTVA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PmQumRij; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tkdPqG5N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3133C4CEF1;
-	Wed,  4 Jun 2025 00:56:22 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PmQumRij"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 402C7C4CEED;
+	Wed,  4 Jun 2025 00:56:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748998583;
-	bh=rNTQSrAZbZtzeJE4gPIiLWIZK+2fQL9+NdlEHenjUX0=;
+	s=k20201202; t=1748998588;
+	bh=qyDiYDBdihp2YcchsjfqcEWHlAXGjVYhSo5yE/WnWJk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tkdPqG5NWcyebidChlJxBaaSbcOw8y9CmkHsx4cuHc/RZ2PwiM4m5uP7U0mQu4zi0
-	 DYH0KVNNTrgVngQmYnyGpLcZEa7QmDGDnNZYYjHo/nfe2wcw9U+7+5lnibdH3IryYB
-	 nie/ZRdX+N/USul8wVBGwtJCFzY5Klr//Tl9NnYuu3Gfv60xo+oNXE0eDs5ppapOea
-	 uQlH0W2OIFmJv2IiK87SG56RCW6H3CicUUbxRYUOnkC1R0KsgjFwq5lAgH9Oy6P7Xf
-	 nKR/56jPYmgjIwujcg6VpBom2WRZIbY+FXNY4AjASBhYMq3OO3kw+vBDH+bs5/76kH
-	 /Or6VIQgpzPGg==
+	b=PmQumRij9hUzteu5Fq1n+VZ6uAx8CB1USiUq+3m9vEZ5fX28ZwrFfTvKM1y/0Uj6k
+	 XrNdTVaEfW87SxtaI/G6TiOwRlfXOuocIsZaeU7GVrGr79LiF9w2iF/XvwknNH29R2
+	 54J0mt5ekG9mEMPMqoDdrvikrNU8VFwBmROpPt8Ra4UhK0q6YLMZgubY4Wf1/CaNH6
+	 RxWrq/YCgNjqSd3hHWP3FYow5KIAAe8x7dVZi6qyiiHU49HjIPnDaT+bRf66V1XlnC
+	 ylFPA00wOQIOazOgLIm7wvXJR+lOWOh565q695ZdlKGXJOJ1N6AoJygMk6GjcvjyEd
+	 CFe2pKnGvItxg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Taniya Das <quic_tdas@quicinc.com>,
-	Imran Shaik <quic_imrashai@quicinc.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+Cc: Moon Yeounsu <yyyynoom@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-arm-msm@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.14 025/108] clk: qcom: gcc: Set FORCE_MEM_CORE_ON for gcc_ufs_axi_clk for 8650/8750
-Date: Tue,  3 Jun 2025 20:54:08 -0400
-Message-Id: <20250604005531.4178547-25-sashal@kernel.org>
+	horms@kernel.org,
+	mingo@kernel.org,
+	davem@davemloft.net,
+	tglx@linutronix.de
+Subject: [PATCH AUTOSEL 6.14 026/108] net: dlink: add synchronization for stats update
+Date: Tue,  3 Jun 2025 20:54:09 -0400
+Message-Id: <20250604005531.4178547-26-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250604005531.4178547-1-sashal@kernel.org>
 References: <20250604005531.4178547-1-sashal@kernel.org>
@@ -51,96 +53,130 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.14.9
 Content-Transfer-Encoding: 8bit
 
-From: Taniya Das <quic_tdas@quicinc.com>
+From: Moon Yeounsu <yyyynoom@gmail.com>
 
-[ Upstream commit da94a81ea6c6f1cd2f389c5631e33c145ac7b35b ]
+[ Upstream commit 12889ce926e9a9baf6b83d809ba316af539b89e2 ]
 
-Update the force mem core bit for UFS AXI clock to force the core on
-signal to remain active during halt state of the clk. If force mem
-core bit of the clock is not set, the memories of the subsystem will
-not retain the logic across power states. This is required for the MCQ
-feature of the UFS driver.
+This patch synchronizes code that accesses from both user-space
+and IRQ contexts. The `get_stats()` function can be called from both
+context.
 
-Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
-Reviewed-by: Imran Shaik <quic_imrashai@quicinc.com>
-Link: https://lore.kernel.org/r/20250414-gcc_ufs_mem_core-v1-1-67b5529b9b5d@quicinc.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+`dev->stats.tx_errors` and `dev->stats.collisions` are also updated
+in the `tx_errors()` function. Therefore, these fields must also be
+protected by synchronized.
+
+There is no code that accessses `dev->stats.tx_errors` between the
+previous and updated lines, so the updating point can be moved.
+
+Signed-off-by: Moon Yeounsu <yyyynoom@gmail.com>
+Link: https://patch.msgid.link/20250515075333.48290-1-yyyynoom@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-**YES** This commit should be backported to stable kernel trees. ##
-Detailed Analysis: ### **Code Changes Analysis:** The commit adds a
-single line to each of the two affected clock drivers: ```c
-qcom_branch_set_force_mem_core(regmap, gcc_ufs_phy_axi_clk, true); ```
-This change: 1. **Sets the FORCE_MEM_CORE_ON bit** for the UFS AXI clock
-in SM8650 and SM8750 platforms 2. **Forces the core-on signal to remain
-active** during the clock's halt state 3. **Ensures memory retention**
-across power state transitions 4. **Enables proper MCQ functionality**
-for UFS storage ### **Comparison with Similar Commits:** Looking at the
-historical reference commits provided, this change follows the **exact
-same pattern** as commits that were marked **"Backport Status: YES"**: -
-**Similar Commit #2 (YES)**: gcc-sc7280 setting force_mem_core for UFS
-ICE clock - same technical approach, same reasoning about memory
-retention - **Similar Commit #3 (YES)**: gcc-msm8998 disabling halt
-check for UFS clocks - related to UFS clock reliability - **Similar
-Commit #5 (YES)**: Adding missing UFS clock source - critical for UFS
-functionality The pattern shows that **UFS-related clock fixes are
-consistently backported** when they address hardware requirements or
-prevent data corruption. ### **Justification for Backporting:** 1.
-**Critical Bug Fix**: Without this change, UFS MCQ feature cannot work
-reliably, potentially causing data loss during power transitions 2.
-**Small and Contained**: The change is minimal - just one line per
-platform setting a hardware register bit 3. **No Side Effects**: Setting
-FORCE_MEM_CORE_ON is a conservative change that ensures memory retention
-without breaking existing functionality 4. **Hardware Requirement**:
-This addresses a discovered hardware requirement for MCQ functionality,
-not a new feature 5. **Low Regression Risk**: The change is confined to
-specific platforms (SM8650/SM8750) and only affects UFS clock behavior
-in a predictable way 6. **Data Integrity**: The commit message
-explicitly states this prevents loss of logic across power states, which
-could lead to filesystem corruption ### **Repository Analysis
-Confirms:** My examination of the kernel repository shows this is part
-of a systematic rollout of force_mem_core settings for UFS clocks across
-modern Qualcomm platforms. The same author (Taniya Das from Qualcomm)
-recently added identical changes to other platforms, indicating this is
-a vendor-validated hardware requirement rather than experimental code.
-**Conclusion**: This meets all criteria for stable backporting - it's a
-critical hardware enablement fix with minimal risk that prevents
-potential data corruption on affected UFS storage systems.
+**YES** This commit should be backported to stable kernel trees for the
+following reasons: **1. Critical Data Race Fix**: The commit addresses a
+real data race condition where `dev->stats.tx_errors` and
+`dev->stats.collisions` can be accessed concurrently from user-space
+(`get_stats()` function) and IRQ context (`tx_error()` function). This
+is a genuine bug that can cause statistics corruption. **2. User-Visible
+Impact**: The race condition affects network statistics that are exposed
+to userspace through standard interfaces like `/proc/net/dev` and
+ethtool. Corrupted statistics can mislead network monitoring tools and
+system administrators. **3. Low Risk, High Value Fix**: The changes are
+minimal and follow established kernel synchronization patterns: - Adds a
+single `spinlock_t stats_lock` field to the driver's private structure -
+Protects critical sections with
+`spin_lock_irqsave()`/`spin_unlock_irqrestore()` in `get_stats()` -
+Protects IRQ-context updates in `tx_error()` with the same spinlock - No
+functional logic changes, only synchronization additions **4. Self-
+Contained Changes**: The fix is entirely within the dl2k driver
+(`drivers/net/ethernet/dlink/dl2k.c` and `dl2k.h`), making it safe to
+backport without affecting other subsystems. **5. Precedent from Similar
+Commits**: This closely mirrors "Similar Commit #5" (net: stmmac:
+protect updates of 64-bit statistics counters) which was marked as
+"Backport Status: YES" for addressing the same type of statistics
+synchronization issue. **6. Follows Stable Tree Criteria**: - Fixes an
+important bug affecting users - Changes are small and contained -
+Minimal risk of regression - No new features or architectural changes
+The fix prevents potential data corruption in network statistics, which
+is exactly the type of bug that stable kernels should address to
+maintain system reliability and data integrity.
 
- drivers/clk/qcom/gcc-sm8650.c | 2 ++
- drivers/clk/qcom/gcc-sm8750.c | 3 ++-
- 2 files changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/dlink/dl2k.c | 14 +++++++++++++-
+ drivers/net/ethernet/dlink/dl2k.h |  2 ++
+ 2 files changed, 15 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/clk/qcom/gcc-sm8650.c b/drivers/clk/qcom/gcc-sm8650.c
-index fa1672c4e7d81..24f98062b9dd5 100644
---- a/drivers/clk/qcom/gcc-sm8650.c
-+++ b/drivers/clk/qcom/gcc-sm8650.c
-@@ -3817,7 +3817,9 @@ static int gcc_sm8650_probe(struct platform_device *pdev)
- 	qcom_branch_set_clk_en(regmap, 0x32004); /* GCC_VIDEO_AHB_CLK */
- 	qcom_branch_set_clk_en(regmap, 0x32030); /* GCC_VIDEO_XO_CLK */
+diff --git a/drivers/net/ethernet/dlink/dl2k.c b/drivers/net/ethernet/dlink/dl2k.c
+index 6bf8a7aeef908..787218d60c6b1 100644
+--- a/drivers/net/ethernet/dlink/dl2k.c
++++ b/drivers/net/ethernet/dlink/dl2k.c
+@@ -146,6 +146,8 @@ rio_probe1 (struct pci_dev *pdev, const struct pci_device_id *ent)
+ 	np->ioaddr = ioaddr;
+ 	np->chip_id = chip_idx;
+ 	np->pdev = pdev;
++
++	spin_lock_init(&np->stats_lock);
+ 	spin_lock_init (&np->tx_lock);
+ 	spin_lock_init (&np->rx_lock);
  
-+	/* FORCE_MEM_CORE_ON for ufs phy ice core and gcc ufs phy axi clocks  */
- 	qcom_branch_set_force_mem_core(regmap, gcc_ufs_phy_ice_core_clk, true);
-+	qcom_branch_set_force_mem_core(regmap, gcc_ufs_phy_axi_clk, true);
- 
- 	/* Clear GDSC_SLEEP_ENA_VOTE to stop votes being auto-removed in sleep. */
- 	regmap_write(regmap, 0x52150, 0x0);
-diff --git a/drivers/clk/qcom/gcc-sm8750.c b/drivers/clk/qcom/gcc-sm8750.c
-index b36d709760958..8092dd6b37b56 100644
---- a/drivers/clk/qcom/gcc-sm8750.c
-+++ b/drivers/clk/qcom/gcc-sm8750.c
-@@ -3244,8 +3244,9 @@ static int gcc_sm8750_probe(struct platform_device *pdev)
- 	regmap_update_bits(regmap, 0x52010, BIT(20), BIT(20));
- 	regmap_update_bits(regmap, 0x52010, BIT(21), BIT(21));
- 
--	/* FORCE_MEM_CORE_ON for ufs phy ice core clocks */
-+	/* FORCE_MEM_CORE_ON for ufs phy ice core and gcc ufs phy axi clocks  */
- 	qcom_branch_set_force_mem_core(regmap, gcc_ufs_phy_ice_core_clk, true);
-+	qcom_branch_set_force_mem_core(regmap, gcc_ufs_phy_axi_clk, true);
- 
- 	return qcom_cc_really_probe(&pdev->dev, &gcc_sm8750_desc, regmap);
+@@ -865,7 +867,6 @@ tx_error (struct net_device *dev, int tx_status)
+ 	frame_id = (tx_status & 0xffff0000);
+ 	printk (KERN_ERR "%s: Transmit error, TxStatus %4.4x, FrameId %d.\n",
+ 		dev->name, tx_status, frame_id);
+-	dev->stats.tx_errors++;
+ 	/* Ttransmit Underrun */
+ 	if (tx_status & 0x10) {
+ 		dev->stats.tx_fifo_errors++;
+@@ -902,9 +903,15 @@ tx_error (struct net_device *dev, int tx_status)
+ 		rio_set_led_mode(dev);
+ 		/* Let TxStartThresh stay default value */
+ 	}
++
++	spin_lock(&np->stats_lock);
+ 	/* Maximum Collisions */
+ 	if (tx_status & 0x08)
+ 		dev->stats.collisions++;
++
++	dev->stats.tx_errors++;
++	spin_unlock(&np->stats_lock);
++
+ 	/* Restart the Tx */
+ 	dw32(MACCtrl, dr16(MACCtrl) | TxEnable);
  }
+@@ -1073,7 +1080,9 @@ get_stats (struct net_device *dev)
+ 	int i;
+ #endif
+ 	unsigned int stat_reg;
++	unsigned long flags;
+ 
++	spin_lock_irqsave(&np->stats_lock, flags);
+ 	/* All statistics registers need to be acknowledged,
+ 	   else statistic overflow could cause problems */
+ 
+@@ -1123,6 +1132,9 @@ get_stats (struct net_device *dev)
+ 	dr16(TCPCheckSumErrors);
+ 	dr16(UDPCheckSumErrors);
+ 	dr16(IPCheckSumErrors);
++
++	spin_unlock_irqrestore(&np->stats_lock, flags);
++
+ 	return &dev->stats;
+ }
+ 
+diff --git a/drivers/net/ethernet/dlink/dl2k.h b/drivers/net/ethernet/dlink/dl2k.h
+index 0e33e2eaae960..56aff2f0bdbfa 100644
+--- a/drivers/net/ethernet/dlink/dl2k.h
++++ b/drivers/net/ethernet/dlink/dl2k.h
+@@ -372,6 +372,8 @@ struct netdev_private {
+ 	struct pci_dev *pdev;
+ 	void __iomem *ioaddr;
+ 	void __iomem *eeprom_addr;
++	// To ensure synchronization when stats are updated.
++	spinlock_t stats_lock;
+ 	spinlock_t tx_lock;
+ 	spinlock_t rx_lock;
+ 	unsigned int rx_buf_sz;		/* Based on MTU+slack. */
 -- 
 2.39.5
 
