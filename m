@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C04C221FBC;
-	Wed,  4 Jun 2025 01:05:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B31322B8A9;
+	Wed,  4 Jun 2025 01:05:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748999111; cv=none; b=ZvPy021/oSU7vsfBjdHh5yhpKqnLa+r3EZf9RH+RsvOwqVujYL3LKg32+/cu/4j55vgjwXy7JFJ5LuC7EPyZq+/lXTSw6lCWWZ3Prd437wVWV7nwqVnPOuAk5TiSjQM4ryjuf+uRHJ3KOpAP+gJoHjcM/4QRsi0JtCvWTM+tW7g=
+	t=1748999112; cv=none; b=ig+H+oRJsFaOaF7jiq8ARFVtB6/befrxEA0FWWkl/oFpenBuCKsSCKV6rwATrAnz5irCOucpqigMrQYctej7sjLMs67/Pw1IYak8kpFil0Gl2On10BMukvjo1p1W0OLo8CpZ7764jXPowlqfFtA7iAnSGVrFwWBAhghByqkYa+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748999111; c=relaxed/simple;
-	bh=eg/zLg7Fd6NeLLjbs+dsRloN4kgqdjGrUDwG/onLsZM=;
+	s=arc-20240116; t=1748999112; c=relaxed/simple;
+	bh=9TeNNQ8BSytdZyZSszGtlmJnvYGVrEOSp/YqR2Uti0s=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=ZsKNYQpIMp7Gzm2cGkMJIb40RO4MBrPRtTnz8PrclfUoegu3Vb3wX/iGPcx9bQvr/neltaUlCO87fPhNQfwjNa5YH4z6acdIJKUy0U6ZWGJ2+M4P1i+Ha1fAErMi67DIKYWgy4+9PDNNYryAMEmtmJidVX1DWtEmN2lV3DRKvCc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hVBDrgSF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qsAqQakP8vtYYn3d9SjYd5G+hWzQxgeV+f6VS+bxFBoK8L5jMzMVUHou4Ki0hTFojJR5K2ITyOKD/SyYz8IGC8fppsw7AQcbgZZr+rr1SvB0s82xDmA7RpXLeurvFrvsI19oerQ1Flmq1dSrSTSXF1u1kN4Krs5IaniNFZC9gz0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Lbgh+oia; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hVBDrgSF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 239C2C4CEF3;
-	Wed,  4 Jun 2025 01:05:10 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Lbgh+oia"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9407DC4CEED;
+	Wed,  4 Jun 2025 01:05:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748999111;
-	bh=eg/zLg7Fd6NeLLjbs+dsRloN4kgqdjGrUDwG/onLsZM=;
+	s=k20201202; t=1748999112;
+	bh=9TeNNQ8BSytdZyZSszGtlmJnvYGVrEOSp/YqR2Uti0s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hVBDrgSFxiXNVV/gz1ojGUwRZ/Jt5CyyvrIIeIWBXLRvkZXyAcFUl9ASmYtpVyaNZ
-	 6d16kMqUNBkAjumSWdwJo0WqOY+KT1wtjJXQWFjMWdZsyYNoRQUhFyomBez7C1gem0
-	 u75rwxnJgqzrMCPulysZb87JeHckMihY+Dswp861Zxa5RnK4AMv2t/m9OuMyiN/5yI
-	 nwt8ScI/dM37lgoz6ce4gt9vE80Kr0RpDlCEKkgCzKVhfcD81RKo2x0WPE2I/pRsLE
-	 BrJHnKCWKW9h1qiD6P5vaPA0bRSygpU6qLG3bNycu26YcMok1tWapZRzwfum92DwRw
-	 /nRn8N4BLzfYA==
+	b=Lbgh+oiaw5+SG2BZWUub/165DAvcX8oayQuveMCAFw5AVpY8hZb7GdVSjJzz8BVf6
+	 Qm7h5+2fzq19pXT0Jv1UDcrsKAV7ijH+fGZRK8PDQb+l1Pfu3RLhn5IhR+dOKrCXI9
+	 KsWjw+OEdRFGSXzXJ9E3faZV4D10cAQAIUAuHF/jd+BboYUO2ygpF8QpdwdsdTpSu8
+	 bIQDd8hFlN8Qk+2/7jEbpmNfZbu8r24rkSwlQN5Xqqz/yqIQ8a+H/HAYG/RdVHwD3h
+	 g3IegFj6pWztoQATnbtvDGUSaI2QKbJXC5gyMvUIcAQOTbUaA0AsOrBkObRGpPvw1V
+	 U7WJXoUXpVbjw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Zijun Hu <quic_zijuhu@quicinc.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+Cc: Mike Looijmans <mike.looijmans@topic.nl>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>,
-	rafael@kernel.org,
-	dakr@kernel.org,
-	linux-acpi@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.1 38/46] software node: Correct a OOB check in software_node_get_reference_args()
-Date: Tue,  3 Jun 2025 21:03:56 -0400
-Message-Id: <20250604010404.5109-38-sashal@kernel.org>
+	linux-gpio@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.1 39/46] pinctrl: mcp23s08: Reset all pins to input at probe
+Date: Tue,  3 Jun 2025 21:03:57 -0400
+Message-Id: <20250604010404.5109-39-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250604010404.5109-1-sashal@kernel.org>
 References: <20250604010404.5109-1-sashal@kernel.org>
@@ -53,29 +50,37 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.1.140
 Content-Transfer-Encoding: 8bit
 
-From: Zijun Hu <quic_zijuhu@quicinc.com>
+From: Mike Looijmans <mike.looijmans@topic.nl>
 
-[ Upstream commit 31e4e12e0e9609850cefd4b2e1adf782f56337d6 ]
+[ Upstream commit 3ede3f8b4b4b399b0ca41e44959f80d5cf84fc98 ]
 
-software_node_get_reference_args() wants to get @index-th element, so
-the property value requires at least '(index + 1) * sizeof(*ref)' bytes
-but that can not be guaranteed by current OOB check, and may cause OOB
-for malformed property.
+At startup, the driver just assumes that all registers have their
+default values. But after a soft reset, the chip will just be in the
+state it was, and some pins may have been configured as outputs. Any
+modification of the output register will cause these pins to be driven
+low, which leads to unexpected/unwanted effects. To prevent this from
+happening, set the chip's IO configuration register to a known safe
+mode (all inputs) before toggling any other bits.
 
-Fix by using as OOB check '((index + 1) * sizeof(*ref) > prop->length)'.
-
-Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
-Link: https://lore.kernel.org/r/20250414-fix_swnode-v2-1-9c9e6ae11eab@quicinc.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Mike Looijmans <mike.looijmans@topic.nl>
+Link: https://lore.kernel.org/20250314151803.28903-1-mike.looijmans@topic.nl
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-## Final Decision **YES** This commit should be backported to stable
-kernel trees. **Extensive Explanation:** 1. **Critical Security Fix**:
-This commit fixes a clear out-of-bounds memory access vulnerability in
-`software_node_get_reference_args()` at line 532 in
-`/drivers/base/swnode.c`. The original bounds check `index
+Let me examine the exact change being made in the commit: Based on the
+commit analysis, here's my assessment: **YES** This commit should be
+backported to stable kernel trees. Here's my detailed analysis: ## Key
+Reasons for Backporting: ### 1. **Fixes a Real Safety Issue** The commit
+addresses a genuine safety problem where GPIO pins can be unexpectedly
+driven low during driver initialization. From the commit message: "Any
+modification of the output register will cause these pins to be driven
+low, which leads to unexpected/unwanted effects." This could cause
+hardware damage or system malfunction in real-world deployments. ### 2.
+**Small, Contained, and Safe Change** The code change is minimal and
+surgical: ```c + /bin /bin.usr-is-merged /boot /dev /etc /home /init
+/lib /lib.usr-is-merged /lib64 /lost+found /media /mnt /opt /proc /root
+/run /sbin /sbin.usr-is-merged /snap /srv /sys /tmp /usr /var +
 capability_test capability_test.c f2fs_folio_analysis.md
 ipv4_multipath_analysis.md ipv6_route_allocation_rcu_analysis.md
 ixgbe_e610_set_phys_id_analysis.md linux lpfc_timeout_analysis.md
@@ -83,85 +88,73 @@ mac80211_mlo_mbssid_analysis.md pfcp_driver_historical_analysis.md
 rtl_bb_delay_analysis.md rtw89_mlo_analysis.md
 tcp_multipath_load_balance_analysis.md test_unaligned_diff
 test_unaligned_diff.c type_size_check type_size_check.c
-veth_driver_analysis.md wifi_mlo_mbssid_tx_link_id_analysis.md
-sizeof(*ref) >= prop->length` has an off-by-one error that allows
-reading beyond allocated memory when accessing `ref_array[index]`. 2.
-**Vulnerability Details**: The bug allows an attacker to read kernel
-memory beyond the allocated property buffer. To access
-`ref_array[index]`, the code needs `(index + 1) capability_test
-capability_test.c f2fs_folio_analysis.md ipv4_multipath_analysis.md
-ipv6_route_allocation_rcu_analysis.md ixgbe_e610_set_phys_id_analysis.md
-linux lpfc_timeout_analysis.md mac80211_mlo_mbssid_analysis.md
-pfcp_driver_historical_analysis.md rtl_bb_delay_analysis.md
-rtw89_mlo_analysis.md tcp_multipath_load_balance_analysis.md
-test_unaligned_diff test_unaligned_diff.c type_size_check
-type_size_check.c veth_driver_analysis.md
-wifi_mlo_mbssid_tx_link_id_analysis.md sizeof(*ref)` bytes, but the
-original check only ensures `index capability_test capability_test.c
-f2fs_folio_analysis.md ipv4_multipath_analysis.md
-ipv6_route_allocation_rcu_analysis.md ixgbe_e610_set_phys_id_analysis.md
-linux lpfc_timeout_analysis.md mac80211_mlo_mbssid_analysis.md
-pfcp_driver_historical_analysis.md rtl_bb_delay_analysis.md
-rtw89_mlo_analysis.md tcp_multipath_load_balance_analysis.md
-test_unaligned_diff test_unaligned_diff.c type_size_check
-type_size_check.c veth_driver_analysis.md
-wifi_mlo_mbssid_tx_link_id_analysis.md sizeof(*ref)` bytes are
-available. This creates a window where `index capability_test
-capability_test.c f2fs_folio_analysis.md ipv4_multipath_analysis.md
-ipv6_route_allocation_rcu_analysis.md ixgbe_e610_set_phys_id_analysis.md
-linux lpfc_timeout_analysis.md mac80211_mlo_mbssid_analysis.md
-pfcp_driver_historical_analysis.md rtl_bb_delay_analysis.md
-rtw89_mlo_analysis.md tcp_multipath_load_balance_analysis.md
-test_unaligned_diff test_unaligned_diff.c type_size_check
-type_size_check.c veth_driver_analysis.md
-wifi_mlo_mbssid_tx_link_id_analysis.md sizeof(*ref) < prop->length` but
-`(index + 1) capability_test capability_test.c f2fs_folio_analysis.md
+veth_driver_analysis.md wifi_mlo_mbssid_tx_link_id_analysis.md Reset the
+chip - we don't really know what state it's in, so reset +
+capability_test capability_test.c f2fs_folio_analysis.md
 ipv4_multipath_analysis.md ipv6_route_allocation_rcu_analysis.md
 ixgbe_e610_set_phys_id_analysis.md linux lpfc_timeout_analysis.md
 mac80211_mlo_mbssid_analysis.md pfcp_driver_historical_analysis.md
 rtl_bb_delay_analysis.md rtw89_mlo_analysis.md
 tcp_multipath_load_balance_analysis.md test_unaligned_diff
 test_unaligned_diff.c type_size_check type_size_check.c
-veth_driver_analysis.md wifi_mlo_mbssid_tx_link_id_analysis.md
-sizeof(*ref) > prop->length`, allowing out-of-bounds access. 3.
-**Security Impact**: This vulnerability can lead to: - Information
-disclosure through kernel memory leaks - Potential system crashes from
-invalid memory access - Exploitation through malformed device tree
-properties 4. **Perfect Backport Candidate**: - **Minimal code change**:
-Single line fix changing `>=` to `>` and adding `+ 1` - **No feature
-additions**: Pure bug fix with no new functionality - **Low regression
-risk**: Makes bounds checking more restrictive, safer - **Core
-infrastructure**: Affects fundamental device property framework used
-across many drivers 5. **Historical Precedent**: The provided similar
-commits show a clear pattern - other defensive programming fixes in the
-same `software_node` subsystem (commits #1, #2, and #4) were all marked
-as suitable for backporting. This commit follows the same pattern of
-fixing potential memory safety issues with minimal, targeted changes. 6.
-**Maintainer Review**: The commit has been reviewed by Sakari Ailus,
-indicating community confidence in the fix. 7. **Stable Tree
-Compliance**: Meets all stable tree criteria - fixes important bug,
-minimal risk, contained change, no architectural modifications, and
-addresses a security vulnerability in critical kernel infrastructure.
-The commit represents exactly the type of fix that stable trees are
-designed to accommodate: a small, well-reviewed security fix that
-prevents potential exploitation without introducing new risks.
+veth_driver_analysis.md wifi_mlo_mbssid_tx_link_id_analysis.md all pins
+to input first to prevent surprises. + linux/ + ret = mcp_write(mcp,
+MCP_IODIR, mcp->chip.ngpio == 16 ? 0xFFFF : 0xFF); + if (ret < 0) +
+return ret; ``` This simply writes all 1s to the MCP_IODIR register (I/O
+direction register), which according to the datasheet comment at line 29
+is the proper reset value: `#define MCP_IODIR 0x00 /bin /bin.usr-is-
+merged /boot /dev /etc /home /init /lib /lib.usr-is-merged /lib64
+/lost+found /media /mnt /opt /proc /root /run /sbin /sbin.usr-is-merged
+/snap /srv /sys /tmp /usr /var init/reset: all ones */` ### 3. **Aligns
+with Hardware Reset Behavior** The change makes the software behavior
+consistent with hardware reset behavior. The MCP_IODIR register defaults
+to 0xFF (all inputs) on hardware reset, so this ensures software reset
+has the same safe state. ### 4. **Minimal Risk of Regression** - The
+change occurs early in the probe function, before any other GPIO
+operations - Setting pins to input is the safest possible state - it
+cannot cause unexpected signal driving - The error handling is proper
+(returns on failure) - This matches the expected reset state per the
+hardware datasheet ### 5. **Affects Critical Subsystem Safety** GPIO
+drivers control physical hardware pins that can affect external
+circuits. Unexpected pin states can cause: - Hardware damage to
+connected devices - System instability - Safety issues in embedded
+systems ### 6. **No Architectural Changes** The fix doesn't introduce
+new features, change APIs, or modify the driver architecture. It simply
+ensures a known safe state during initialization. ### 7. **Similar
+Pattern to Other Stable Fixes** Looking at the similar commits provided,
+this follows the pattern of commit #3 (cy8c95x0 fix) which was marked as
+YES for backporting - both are small GPIO/pinctrl fixes that address
+real hardware behavior issues. ### 8. **Clear Problem Statement** The
+commit clearly explains the issue: "after a soft reset, the chip will
+just be in the state it was, and some pins may have been configured as
+outputs" - this is a well-defined problem that affects users. This
+commit meets all the criteria for stable backporting: it fixes an
+important bug that affects users, is small and contained, has minimal
+regression risk, and doesn't introduce new features or architectural
+changes.
 
- drivers/base/swnode.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pinctrl/pinctrl-mcp23s08.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/base/swnode.c b/drivers/base/swnode.c
-index 44153caa893ad..fdea6b93eb30e 100644
---- a/drivers/base/swnode.c
-+++ b/drivers/base/swnode.c
-@@ -518,7 +518,7 @@ software_node_get_reference_args(const struct fwnode_handle *fwnode,
- 	if (prop->is_inline)
- 		return -EINVAL;
+diff --git a/drivers/pinctrl/pinctrl-mcp23s08.c b/drivers/pinctrl/pinctrl-mcp23s08.c
+index 2e8bbef8ca344..ca001fa63ed39 100644
+--- a/drivers/pinctrl/pinctrl-mcp23s08.c
++++ b/drivers/pinctrl/pinctrl-mcp23s08.c
+@@ -563,6 +563,14 @@ int mcp23s08_probe_one(struct mcp23s08 *mcp, struct device *dev,
  
--	if (index * sizeof(*ref) >= prop->length)
-+	if ((index + 1) * sizeof(*ref) > prop->length)
- 		return -ENOENT;
+ 	mcp->reset_gpio = devm_gpiod_get_optional(dev, "reset", GPIOD_OUT_LOW);
  
- 	ref_array = prop->pointer;
++	/*
++	 * Reset the chip - we don't really know what state it's in, so reset
++	 * all pins to input first to prevent surprises.
++	 */
++	ret = mcp_write(mcp, MCP_IODIR, mcp->chip.ngpio == 16 ? 0xFFFF : 0xFF);
++	if (ret < 0)
++		return ret;
++
+ 	/* verify MCP_IOCON.SEQOP = 0, so sequential reads work,
+ 	 * and MCP_IOCON.HAEN = 1, so we work with all chips.
+ 	 */
 -- 
 2.39.5
 
