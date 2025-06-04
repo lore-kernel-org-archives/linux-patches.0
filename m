@@ -1,45 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 007641C4A20;
-	Wed,  4 Jun 2025 00:54:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6147C1C84C4;
+	Wed,  4 Jun 2025 00:54:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748998485; cv=none; b=E6gyx/oHIiccN7Kl+KO423FOSmFvUt9SMJQ3QR4pduPFX253mg5ARTE6gkXCRXfGxigan3QxQoUkBxJaGRDn73LQwaFAQwvpTvZCHNjyiJ9eVK6TuYsUb+y0d2LbMsLEJm/WxPQ5z0ktDqfJ3Q/W2n9fGIEf/Y9bTTaOLIcB3lQ=
+	t=1748998486; cv=none; b=G34GT+FtAX3kDp00fcWl1z489t2I04R7jd75arD49+TE3Yf1dr+YE7AfTvO+CgbaW2c2+nWthBa7WJO/FdtgrQmZtZ0fZdns8IN2bz10Q6qF2PyZcNfp2afSnKlbd+cUya0yq3nRB3wbw5mYcLoiCpHTorbIG/WxNP+DdLlgNzM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748998485; c=relaxed/simple;
-	bh=eKMQyV1C91DAC7hK8qLEUulNHkD5CAVhLyhXYXFIokA=;
+	s=arc-20240116; t=1748998486; c=relaxed/simple;
+	bh=dca/qdOQd8trVl3PyThEbwDVoz8kJ2EoR/OfkEaN2sc=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GGTIVe78n6dMxRFKyESdT4tR4FX+nsmsBG93YByyABDIY+GABNDN/HqowuwXSjkiuEIFzU3fs7H9THbk1ZgBbdXv5jnqTE2Sep1+6/hKwJ2k4MbUL8pGIGV8zj2bk3QczGxRqIbThxyj63NR1yjmduKROxUIGHlEplfFm6eFNZQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OVzj0JtP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Bbth8JDRND7V3h8AJ5xV746OSCNXXiMQc+17viuc+EPDKZVe/JS+YQeg64PmM0HD7QVlkiFyeEfGtJTXdopHlWbNajCOa29uOnA71YT7Phrrj1ESdlBhQ5XiNT5xr9uUpZTbsVOFZlyYusu/JwW9y9I0n/HdiVQDK4dkZvySrZk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dZkvRmpr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OVzj0JtP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB387C4CEEF;
-	Wed,  4 Jun 2025 00:54:43 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dZkvRmpr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5669CC4CEED;
+	Wed,  4 Jun 2025 00:54:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748998484;
-	bh=eKMQyV1C91DAC7hK8qLEUulNHkD5CAVhLyhXYXFIokA=;
+	s=k20201202; t=1748998486;
+	bh=dca/qdOQd8trVl3PyThEbwDVoz8kJ2EoR/OfkEaN2sc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OVzj0JtPptA4vX4EFGtMMKNUPUl5gyvhQBjzYa1CKVylxY2IsdysaSjryFqpZGZHp
-	 9AyN0Q2zqj/IHmJ99XmRIkgQ5AsiJ9d9C+SgWvFTvANriBU+2CM/uz4roCb+UJMZKP
-	 slrr956A86fU5Wx3BzhGvmm48jC/IHvOc1bHdVGK1dJSLr525FscXxkQcBrB546sKx
-	 3pQJ5VXKVOWg2pSi4f9gUTVC74ZSPqphbeLZ221YUA4rQi5z1VIS7PfhMeeCqnPDPi
-	 WD1BlM2CNOpJC5c3zEp74z1avfLcs/mCBk3dkiT9OJeX7mphxjhlrgkFboEY5eXCHo
-	 PnXFWB0Avxyrg==
+	b=dZkvRmprOMtwj5IYL2zxc8jvbJ/ggZm5MkWh4NW4+Brazawl/1YqpG3kBn0VDDMkR
+	 WH61nqXLhVTaHb2BGO0P/h+uVm8ItdPi3QZyZGe4hJF77YliImura8AK0yTMoismup
+	 Igj3GHQI3cAIpKizSm35PqNknX/xJox2KCcOw8Mo48IfHQ4zLxDYepMe4i4rRlGwxQ
+	 /Nze01I9oX9QsQDaRb7wqfR1BVtTETxm9XG8/nV0yrjbbIuzT1qfKP487u42lzGeMV
+	 j2wFNSM2utwjVwT12IT1FI2fDEPLDTe2wQANw2f9C5RSfpjalQPq+O8iWk/97J2BeA
+	 p+RvxD6ig7lCw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Kyungwook Boo <bookyungwook@gmail.com>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+Cc: Rand Deeb <rand.sec96@gmail.com>,
 	Rinitha S <sx.rinitha@intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
+	przemyslaw.kitszel@intel.com,
 	intel-wired-lan@lists.osuosl.org
-Subject: [PATCH AUTOSEL 6.15 101/118] i40e: fix MMIO write access to an invalid page in i40e_clear_hw
-Date: Tue,  3 Jun 2025 20:50:32 -0400
-Message-Id: <20250604005049.4147522-101-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.15 102/118] ixgbe: Fix unreachable retry logic in combined and byte I2C write functions
+Date: Tue,  3 Jun 2025 20:50:33 -0400
+Message-Id: <20250604005049.4147522-102-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250604005049.4147522-1-sashal@kernel.org>
 References: <20250604005049.4147522-1-sashal@kernel.org>
@@ -55,87 +53,101 @@ X-stable-base: Linux 6.15
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kyungwook Boo <bookyungwook@gmail.com>
+From: Rand Deeb <rand.sec96@gmail.com>
 
-[ Upstream commit 015bac5daca978448f2671478c553ce1f300c21e ]
+[ Upstream commit cdcb3804eeda24d588348bbab6766cf14fddbeaa ]
 
-When the device sends a specific input, an integer underflow can occur, leading
-to MMIO write access to an invalid page.
+The current implementation of `ixgbe_write_i2c_combined_generic_int` and
+`ixgbe_write_i2c_byte_generic_int` sets `max_retry` to `1`, which makes
+the condition `retry < max_retry` always evaluate to `false`. This renders
+the retry mechanism ineffective, as the debug message and retry logic are
+never executed.
 
-Prevent the integer underflow by changing the type of related variables.
+This patch increases `max_retry` to `3` in both functions, aligning them
+with the retry logic in `ixgbe_read_i2c_combined_generic_int`. This
+ensures that the retry mechanism functions as intended, improving
+robustness in case of I2C write failures.
 
-Signed-off-by: Kyungwook Boo <bookyungwook@gmail.com>
-Link: https://lore.kernel.org/lkml/ffc91764-1142-4ba2-91b6-8c773f6f7095@gmail.com/T/
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Signed-off-by: Rand Deeb <rand.sec96@gmail.com>
 Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 **YES** This commit should be backported to stable kernel trees. Here's
-my extensive analysis: ## Analysis of Code Changes The commit changes
-variable types in `i40e_clear_hw()` from unsigned (`u32`) to signed
-(`s32`) for: 1. `num_pf_int` - number of PF interrupts 2. `num_vf_int` -
-number of VF interrupts 3. `i` - loop counter variable **Critical
-Security Issue**: The problem occurs when hardware registers contain
-malicious values where `num_pf_int` or `num_vf_int` could be 0 or 1. In
-the loops at lines 852-853 and 858-859: ```c for (i = 0; i < num_pf_int
-- 2; i++) wr32(hw, I40E_PFINT_DYN_CTLN(i), val); ``` If `num_pf_int` is
-0 or 1, then `num_pf_int - 2` becomes a large positive number due to
-unsigned integer underflow (0xFFFFFFFE or 0xFFFFFFFF), causing the loop
-to iterate billions of times and write to invalid MMIO addresses,
-leading to system crashes or potential security vulnerabilities. ##
-Comparison with Similar Commits This fix follows the **exact same
-pattern** as Similar Commit #2 (fc6f716a5069), which was marked **YES**
-for backporting. That commit addressed the same class of vulnerability
-in the same function: - **Similar Commit #2**: Added bounds checking (`j
->= base_queue`, `j >= i`) to prevent underflow in queue/VF calculations
-- **Current Commit**: Changes variable types to signed to prevent
-underflow in interrupt calculations Both fixes address **integer
-underflow vulnerabilities in `i40e_clear_hw()`** that can lead to **MMIO
-writes to invalid memory pages**. ## Backport Suitability Criteria ✅
-**Fixes important security bug**: Prevents system crashes and potential
-memory corruption ✅ **Small, contained change**: Only changes variable
-types, no logic changes ✅ **Minimal side effects**: Type changes are
-safe and don't affect functionality ✅ **No architectural changes**:
-Simple type fix ✅ **Critical subsystem**: Network driver, but change is
-isolated ✅ **Clear commit message**: Explicitly describes the security
-issue ✅ **Follows stable rules**: Important security bugfix with minimal
-risk ## Historical Context The vulnerability was introduced in commit
-838d41d92a90 ("i40e: clear all queues and interrupts") from 2014. A
-related fix (fc6f716a5069) was already applied for similar underflow
-issues in the same function and was backported. This commit completes
-the fix by addressing the remaining underflow vectors. ## Risk
-Assessment **Risk: MINIMAL** - This is a simple type change that: -
-Makes signed arithmetic behave correctly - Prevents undefined behavior
-from unsigned underflow - Has no functional impact on normal operation -
-Only affects error conditions with malformed hardware registers The fix
-is **essential for security** and has **virtually zero regression
-risk**, making it an ideal candidate for stable backporting.
+my extensive analysis: ## Bug Analysis **Critical Logic Flaw:** The
+commit fixes a fundamental bug where the retry logic in I2C write
+functions was completely ineffective. With `max_retry = 1`, the
+condition `retry < max_retry` would only allow `retry = 0`, meaning the
+retry loop would never execute more than once, making the entire retry
+mechanism useless. **Code Impact:** The change from `max_retry = 1` to
+`max_retry = 3` in both: - `ixgbe_write_i2c_combined_generic_int()`
+(line ~170) - `ixgbe_write_i2c_byte_generic_int()` (line ~2288) This
+aligns with the existing `ixgbe_read_i2c_combined_generic_int()`
+function which already uses `max_retry = 3`. ## Backport Suitability
+Criteria **1. Fixes Important User-Affecting Bug:** ✓ - I2C write
+failures directly impact SFP/QSFP module detection and configuration -
+Affects `ethtool --identify` LED functionality - Can cause intermittent
+network interface initialization failures - Users would experience
+unreliable hardware detection and configuration **2. Small and Contained
+Change:** ✓ - Only changes two integer values from 1 to 3 - No
+architectural changes or new functionality - Minimal risk of introducing
+regressions - Affects only the specific I2C write retry mechanism **3.
+No Side Effects Beyond the Fix:** ✓ - Simply enables existing retry
+logic to work as intended - Doesn't change the fundamental I2C
+communication protocol - Maintains consistency with read operations - No
+new code paths introduced **4. Critical Subsystem Impact:** ✓ - Network
+driver functionality is critical for system operation - I2C
+communication is essential for modern network hardware management -
+Affects Intel ixgbe NICs which are widely deployed in enterprise
+environments **5. Clear Bug Evidence:** ✓ - Linux Verification Center
+found this with static analysis (SVACE) - Logic flaw is mathematically
+provable (retry < 1 never allows retry) - Consistent with similar
+commits in the pattern (Similar Commit #1 shows retry count adjustments
+are appropriate for backporting) ## Comparison to Historical Patterns
+This commit closely matches **Similar Commit #1** (Backport Status: YES)
+which also modified I2C retry counts in ixgbe. That commit reduced retry
+counts to avoid regressions, while this one increases retry counts to
+fix broken logic - both are stability improvements worthy of
+backporting. Unlike **Similar Commit #2** (Backport Status: NO) which
+was architectural refactoring, this commit fixes a clear functional
+defect without introducing new features or code reorganization. ## Risk
+Assessment **Low Risk:** - Increasing retries from effectively 0 to 3
+cannot make things worse - The retry mechanism already existed and was
+intended to be used - 3 retries aligns with established patterns in the
+same driver - Intel has tested this change (as indicated by the "Tested-
+by" tag) **High Impact:** - Fixes complete failure of I2C write retry
+mechanism - Improves reliability of critical network hardware
+functionality - Addresses systematic logic flaw affecting all ixgbe
+deployments This commit represents exactly the type of important, low-
+risk bug fix that stable trees are designed to receive.
 
- drivers/net/ethernet/intel/i40e/i40e_common.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/intel/ixgbe/ixgbe_phy.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_common.c b/drivers/net/ethernet/intel/i40e/i40e_common.c
-index 370b4bddee441..b11c35e307ca9 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_common.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_common.c
-@@ -817,10 +817,11 @@ int i40e_pf_reset(struct i40e_hw *hw)
- void i40e_clear_hw(struct i40e_hw *hw)
+diff --git a/drivers/net/ethernet/intel/ixgbe/ixgbe_phy.c b/drivers/net/ethernet/intel/ixgbe/ixgbe_phy.c
+index 0a03a8bb5f886..2d54828bdfbbc 100644
+--- a/drivers/net/ethernet/intel/ixgbe/ixgbe_phy.c
++++ b/drivers/net/ethernet/intel/ixgbe/ixgbe_phy.c
+@@ -167,7 +167,7 @@ int ixgbe_write_i2c_combined_generic_int(struct ixgbe_hw *hw, u8 addr,
+ 					 u16 reg, u16 val, bool lock)
  {
- 	u32 num_queues, base_queue;
--	u32 num_pf_int;
--	u32 num_vf_int;
-+	s32 num_pf_int;
-+	s32 num_vf_int;
- 	u32 num_vfs;
--	u32 i, j;
-+	s32 i;
-+	u32 j;
- 	u32 val;
- 	u32 eol = 0x7ff;
+ 	u32 swfw_mask = hw->phy.phy_semaphore_mask;
+-	int max_retry = 1;
++	int max_retry = 3;
+ 	int retry = 0;
+ 	u8 reg_high;
+ 	u8 csum;
+@@ -2285,7 +2285,7 @@ static int ixgbe_write_i2c_byte_generic_int(struct ixgbe_hw *hw, u8 byte_offset,
+ 					    u8 dev_addr, u8 data, bool lock)
+ {
+ 	u32 swfw_mask = hw->phy.phy_semaphore_mask;
+-	u32 max_retry = 1;
++	u32 max_retry = 3;
+ 	u32 retry = 0;
+ 	int status;
  
 -- 
 2.39.5
