@@ -1,42 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2586F258CEA;
-	Wed,  4 Jun 2025 00:58:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60A43145323;
+	Wed,  4 Jun 2025 00:58:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748998734; cv=none; b=F0/3YW8491JwcNdJ/pa7Kbc/oM1wWI8UOulJfvELhwqMdd52u8bShswTKJhenhR308ZzNUpNrODmUHKu1XHKem2S/dI4a0xK5heWcoa4r42SVSjBjvSCcH6jVEpifD9sx8RQj8wVcN85qjj6Nt1aneAcLYQE8EhHtFp50pjj5gw=
+	t=1748998735; cv=none; b=ThBmRtmdySKaQBNYI5941zMfOXM0etCmdQ1VbKnSEuiM4HAv8n//xPnNeGJwGh5bWxUJwJS4RVJmr+Ka/mrTFDt/2kLOvDxHVSfSOk7gb1Z6LYKCa5rFLjihWy7wLapT61+uu9D/thdxuAaWyeFo79W4yzfoKyHj+nUyWaOXNlk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748998734; c=relaxed/simple;
-	bh=QRlrp2ySsyAfBDW6dhKKmQtWIXno/2j/eDC59JEqUFM=;
+	s=arc-20240116; t=1748998735; c=relaxed/simple;
+	bh=nCAQBj66UCNNv3tCdIUtLRefyXmqteQxcdCUcSh0rXg=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GwPOUu52EelTvpqghWTU52qnm08sYELCjrYJiehvKtuj9IeV+RhbAEMUa0qiqfI2wBc6+ETROLDWQQSSHan6QZQYYWgFxfEXpCXpZgnOEnN3I/Ekn+3BqxbKU42BVkfaHOce5dNb4QdTuDTwieyB4iEWEee9UC4w3V4UcOkBRzM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=n2B748en; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uIeboXj12XbzPez4lEQkLXbbwlPKOyClRMna95LtQJVnkY26h3w9A05c8LJGrthoz9VX9BlJHZaSAR9E2iZkqRaX7mnx/+qZxbq3FfeZCgJOamKZE0JKRzfDWhF0hoig8mjIL8mVEyqmzrVGOe+WqZ4gcoRJqbUiDLOHATYRuLU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nHHUjyaj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="n2B748en"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9695C4CEF1;
-	Wed,  4 Jun 2025 00:58:52 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nHHUjyaj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0252C4CEF2;
+	Wed,  4 Jun 2025 00:58:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748998733;
-	bh=QRlrp2ySsyAfBDW6dhKKmQtWIXno/2j/eDC59JEqUFM=;
+	s=k20201202; t=1748998735;
+	bh=nCAQBj66UCNNv3tCdIUtLRefyXmqteQxcdCUcSh0rXg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n2B748en8BxtYopZ4JvT4J6NMv8R23DSwlJboskOQyb7t+dN3TdjxkY2MVliGw3a9
-	 6L+A+2PskykBLLrSnIPwiN5l/hZ4vf0pR4fpecCP1vMEfJrahxbOKZzpP5hZ+wbgba
-	 N4Z0KkntvmD70N+s1lx6pfCe1tKXbGAAHwbeyuSDK5qu+rZ4Sd9n3s2gShe/ZDBVe0
-	 cDWXm9x7FvR14AdHOPXys9NL2Yvolk8lKVQU60Xev8ZzBSmVxqZ/dYMmxHffKLwG06
-	 /IjIUBpuV5oiPd93ihluOvpVYF0ZSVtiWc8uIUWjD4r4TebOWNZ0oyJYPPSZASg9i4
-	 kFdH+AgJUYVrA==
+	b=nHHUjyajEp2wqrmvVXue+k71IXKOOqzBUQOFrh6KxuhrKqy/lNF/LopEnNP+9sCSV
+	 v0VVEv/iXwViEr6dKFcVID/K4EqUbmO5PTob0wlJll5WVjqHfkkY5J7NwmaXOamXyE
+	 VLdTgBnCUaX/SyQbSY5t7AQZBcAe5dzo/sELhPvqU0oVbk0t9KT/0XeaQt183U6jZY
+	 9N+tkL5b+b2N4nEipmfV2rPfEAafO52ksmVrvHTxNw//6jQ5p+g2dX6y/44lEE4wnH
+	 K+SB93IJxwma7Axim6CjztH0iR3Q4A8D/LOxyHLR2c5jFJdKbVXXt+y+bdfW8qmoXL
+	 aj7dCNfuKcBAQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Linus Walleij <linus.walleij@linaro.org>,
+Cc: Wentao Liang <vulab@iscas.ac.cn>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	ulli.kroll@googlemail.com,
-	linux-arm-kernel@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.14 099/108] net: ethernet: cortina: Use TOE/TSO on all TCP
-Date: Tue,  3 Jun 2025 20:55:22 -0400
-Message-Id: <20250604005531.4178547-99-sashal@kernel.org>
+	sgoutham@marvell.com,
+	gakula@marvell.com,
+	sbhatta@marvell.com,
+	hkelam@marvell.com,
+	bbhushan2@marvell.com,
+	netdev@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.14 100/108] octeontx2-pf: Add error log forcn10k_map_unmap_rq_policer()
+Date: Tue,  3 Jun 2025 20:55:23 -0400
+Message-Id: <20250604005531.4178547-100-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250604005531.4178547-1-sashal@kernel.org>
 References: <20250604005531.4178547-1-sashal@kernel.org>
@@ -49,184 +54,92 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.14.9
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Linus Walleij <linus.walleij@linaro.org>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit 6a07e3af4973402fa199a80036c10060b922c92c ]
+[ Upstream commit 9c056ec6dd1654b1420dafbbe2a69718850e6ff2 ]
 
-It is desireable to push the hardware accelerator to also
-process non-segmented TCP frames: we pass the skb->len
-to the "TOE/TSO" offloader and it will handle them.
+The cn10k_free_matchall_ipolicer() calls the cn10k_map_unmap_rq_policer()
+for each queue in a for loop without checking for any errors.
 
-Without this quirk the driver becomes unstable and lock
-up and and crash.
+Check the return value of the cn10k_map_unmap_rq_policer() function during
+each loop, and report a warning if the function fails.
 
-I do not know exactly why, but it is probably due to the
-TOE (TCP offload engine) feature that is coupled with the
-segmentation feature - it is not possible to turn one
-part off and not the other, either both TOE and TSO are
-active, or neither of them.
-
-Not having the TOE part active seems detrimental, as if
-that hardware feature is not really supposed to be turned
-off.
-
-The datasheet says:
-
-  "Based on packet parsing and TCP connection/NAT table
-   lookup results, the NetEngine puts the packets
-   belonging to the same TCP connection to the same queue
-   for the software to process. The NetEngine puts
-   incoming packets to the buffer or series of buffers
-   for a jumbo packet. With this hardware acceleration,
-   IP/TCP header parsing, checksum validation and
-   connection lookup are offloaded from the software
-   processing."
-
-After numerous tests with the hardware locking up after
-something between minutes and hours depending on load
-using iperf3 I have concluded this is necessary to stabilize
-the hardware.
-
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Link: https://patch.msgid.link/20250408-gemini-ethernet-tso-always-v1-1-e669f932359c@linaro.org
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250408032602.2909-1-vulab@iscas.ac.cn
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-**YES** This commit should be backported to stable kernel trees based on
-the following analysis: ## Critical Stability Fix This commit addresses
-a critical hardware stability issue where the Cortina Gemini ethernet
-driver would "lock up and crash" after minutes to hours of operation
-under load. The commit message explicitly states: > "Without this quirk
-the driver becomes unstable and lock up and and crash." > "After
-numerous tests with the hardware locking up after something between
-minutes and hours depending on load using iperf3 I have concluded this
-is necessary to stabilize the hardware." ## Code Analysis of Changes The
-changes are minimal and contained within the `gmac_map_tx_bufs` function
-in `drivers/net/ethernet/cortina/gemini.c`: 1. **TCP Detection Logic**:
-The code adds early TCP protocol detection: ```c bool tcp = false; if
-(skb->protocol == htons(ETH_P_IP)) tcp = (ip_hdr(skb)->protocol ==
-IPPROTO_TCP); else tcp = (ipv6_hdr(skb)->nexthdr == IPPROTO_TCP); ``` 2.
-**TOE/TSO Activation for All TCP**: For non-GSO TCP frames, it now
-activates the hardware TOE/TSO engine: ```c } else if (tcp) { mss =
-netdev->mtu + skb_tcp_all_headers(skb); mss = min(mss, skb->len); word1
-|= TSS_MTU_ENABLE_BIT; word3 |= mss; ``` 3. **Simplified Checksum
-Logic**: The checksum handling is simplified by reusing the already-
-determined `tcp` boolean instead of recalculating it. ## Hardware
-Architecture Justification The commit explains this is necessary due to
-the coupled nature of the hardware's TOE (TCP Offload Engine) and TSO
-features: > "it is probably due to the TOE (TCP offload engine) feature
-that is coupled with the segmentation feature - it is not possible to
-turn one part off and not the other" This aligns with the datasheet
-description that the NetEngine performs "IP/TCP header parsing, checksum
-validation and connection lookup" as integrated hardware acceleration.
-## Pattern Match with Historical Commits Looking at the provided similar
-commits: - **Similar Commit #2**: "net: ethernet: cortina: Restore TSO
-support" (Status: YES) - This is the direct predecessor that restored
-TSO but didn't address the stability issue for non-segmented TCP frames
-- **Similar Commit #3**: "net: ethernet: cortina: Locking fixes"
-(Status: YES) - Another stability fix for the same driver Both
-historical commits addressing Cortina Gemini stability issues were
-marked as backport-worthy, establishing a pattern. ## Backport Criteria
-Assessment ✅ **Fixes important bugs**: Prevents driver crashes and
-hardware lockups ✅ **Small and contained**: Changes are localized to one
-function with clear logic ✅ **Minimal risk**: Only affects TCP frame
-handling, doesn't change architectural behavior ✅ **No new features**:
-Uses existing hardware capabilities more appropriately ✅ **Critical
-subsystem**: Network drivers are essential for system stability ## Risk
-Assessment The risk is very low because: - The changes only affect how
-TCP frames are processed by existing hardware features - The TOE/TSO
-hardware engine was already in use for segmented frames - The
-modification ensures consistent hardware state rather than leaving it
-partially enabled - The fix has been tested extensively by the author
-under load conditions This commit follows the stable tree criteria
-perfectly: it's an important bug fix that prevents system crashes, has
-minimal risk of regression, and doesn't introduce new features.
+**YES** Based on my analysis of the commit and the surrounding codebase
+context, this commit should be backported to stable kernel trees. Here's
+my extensive analysis: ## Code Analysis ### The Specific Change The
+commit adds error checking to a loop in `cn10k_free_matchall_ipolicer()`
+that was previously ignoring return values from
+`cn10k_map_unmap_rq_policer()` calls: **Before:** ```c for (qidx = 0;
+qidx < hw->rx_queues; qidx++) cn10k_map_unmap_rq_policer(pfvf, qidx,
+hw->matchall_ipolicer, false); ``` **After:** ```c for (qidx = 0; qidx <
+hw->rx_queues; qidx++) { rc = cn10k_map_unmap_rq_policer(pfvf, qidx,
+hw->matchall_ipolicer, false); if (rc) dev_warn(pfvf->dev, "Failed to
+unmap RQ %d's policer (error %d).", qidx, rc); } ``` ### Why This Should
+Be Backported 1. **Fixes a Real Bug**: The function was silently
+ignoring failures from critical hardware unmapping operations. Based on
+my analysis of `otx2_tc.c`, this function can return various error codes
+including `-ENOMEM` and mailbox communication failures. 2. **Consistent
+Error Handling**: Every other usage of `cn10k_map_unmap_rq_policer()` in
+the codebase properly checks return values and logs errors. For example,
+in `otx2_tc.c:1216-1221`, the same operation uses: ```c err =
+cn10k_map_unmap_rq_policer(nic, flow_node->rq, flow_node->leaf_profile,
+false); if (err) netdev_err(nic->netdev, "Unmapping RQ %d & profile %d
+failed\n", flow_node->rq, flow_node->leaf_profile); ``` 3. **Meets
+Stable Criteria**: This commit: - Fixes a clear bug (missing error
+handling) - Is small and contained (only adds error checking) - Has
+minimal risk of regression (only adds logging) - Improves system
+robustness - Follows the driver's established error handling patterns 4.
+**Hardware Resource Management**: The `cn10k_map_unmap_rq_policer()`
+function deals with hardware policer resource management. Silent
+failures during cleanup could potentially: - Leave hardware in an
+inconsistent state - Cause resource leaks - Make debugging network QoS
+issues extremely difficult 5. **Alignment with Similar Commits**:
+Looking at the provided examples, this commit is very similar to
+"Similar Commit #1" and "Similar Commit #4" which both received
+"Backport Status: YES". Those commits also added error checking to
+`otx2_mbox_get_rsp()` calls that were previously unchecked. 6. **Low
+Risk**: The change only adds warning messages and doesn't change the
+control flow. Even if the warning message format had issues (which it
+doesn't), it wouldn't cause functional problems. 7. **Driver Quality**:
+This fix improves the overall quality and debuggability of the OcteonTX2
+network driver, which is important for enterprise and datacenter
+deployments where these cards are commonly used. The commit represents a
+straightforward bug fix that improves error visibility and follows
+established patterns in the driver, making it an excellent candidate for
+stable tree backporting.
 
- drivers/net/ethernet/cortina/gemini.c | 37 +++++++++++++++++++++------
- 1 file changed, 29 insertions(+), 8 deletions(-)
+ drivers/net/ethernet/marvell/octeontx2/nic/cn10k.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/cortina/gemini.c b/drivers/net/ethernet/cortina/gemini.c
-index 991e3839858b5..3735a02e2f977 100644
---- a/drivers/net/ethernet/cortina/gemini.c
-+++ b/drivers/net/ethernet/cortina/gemini.c
-@@ -1143,6 +1143,7 @@ static int gmac_map_tx_bufs(struct net_device *netdev, struct sk_buff *skb,
- 	struct gmac_txdesc *txd;
- 	skb_frag_t *skb_frag;
- 	dma_addr_t mapping;
-+	bool tcp = false;
- 	void *buffer;
- 	u16 mss;
- 	int ret;
-@@ -1150,6 +1151,13 @@ static int gmac_map_tx_bufs(struct net_device *netdev, struct sk_buff *skb,
- 	word1 = skb->len;
- 	word3 = SOF_BIT;
+diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/cn10k.c b/drivers/net/ethernet/marvell/octeontx2/nic/cn10k.c
+index c3b6e0f60a799..7f6a435ac6806 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/cn10k.c
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/cn10k.c
+@@ -357,9 +357,12 @@ int cn10k_free_matchall_ipolicer(struct otx2_nic *pfvf)
+ 	mutex_lock(&pfvf->mbox.lock);
  
-+	/* Determine if we are doing TCP */
-+	if (skb->protocol == htons(ETH_P_IP))
-+		tcp = (ip_hdr(skb)->protocol == IPPROTO_TCP);
-+	else
-+		/* IPv6 */
-+		tcp = (ipv6_hdr(skb)->nexthdr == IPPROTO_TCP);
-+
- 	mss = skb_shinfo(skb)->gso_size;
- 	if (mss) {
- 		/* This means we are dealing with TCP and skb->len is the
-@@ -1162,8 +1170,26 @@ static int gmac_map_tx_bufs(struct net_device *netdev, struct sk_buff *skb,
- 			   mss, skb->len);
- 		word1 |= TSS_MTU_ENABLE_BIT;
- 		word3 |= mss;
-+	} else if (tcp) {
-+		/* Even if we are not using TSO, use the hardware offloader
-+		 * for transferring the TCP frame: this hardware has partial
-+		 * TCP awareness (called TOE - TCP Offload Engine) and will
-+		 * according to the datasheet put packets belonging to the
-+		 * same TCP connection in the same queue for the TOE/TSO
-+		 * engine to process. The engine will deal with chopping
-+		 * up frames that exceed ETH_DATA_LEN which the
-+		 * checksumming engine cannot handle (see below) into
-+		 * manageable chunks. It flawlessly deals with quite big
-+		 * frames and frames containing custom DSA EtherTypes.
-+		 */
-+		mss = netdev->mtu + skb_tcp_all_headers(skb);
-+		mss = min(mss, skb->len);
-+		netdev_dbg(netdev, "TOE/TSO len %04x mtu %04x mss %04x\n",
-+			   skb->len, netdev->mtu, mss);
-+		word1 |= TSS_MTU_ENABLE_BIT;
-+		word3 |= mss;
- 	} else if (skb->len >= ETH_FRAME_LEN) {
--		/* Hardware offloaded checksumming isn't working on frames
-+		/* Hardware offloaded checksumming isn't working on non-TCP frames
- 		 * bigger than 1514 bytes. A hypothesis about this is that the
- 		 * checksum buffer is only 1518 bytes, so when the frames get
- 		 * bigger they get truncated, or the last few bytes get
-@@ -1180,21 +1206,16 @@ static int gmac_map_tx_bufs(struct net_device *netdev, struct sk_buff *skb,
- 	}
+ 	/* Remove RQ's policer mapping */
+-	for (qidx = 0; qidx < hw->rx_queues; qidx++)
+-		cn10k_map_unmap_rq_policer(pfvf, qidx,
+-					   hw->matchall_ipolicer, false);
++	for (qidx = 0; qidx < hw->rx_queues; qidx++) {
++		rc = cn10k_map_unmap_rq_policer(pfvf, qidx, hw->matchall_ipolicer, false);
++		if (rc)
++			dev_warn(pfvf->dev, "Failed to unmap RQ %d's policer (error %d).",
++				 qidx, rc);
++	}
  
- 	if (skb->ip_summed == CHECKSUM_PARTIAL) {
--		int tcp = 0;
--
- 		/* We do not switch off the checksumming on non TCP/UDP
- 		 * frames: as is shown from tests, the checksumming engine
- 		 * is smart enough to see that a frame is not actually TCP
- 		 * or UDP and then just pass it through without any changes
- 		 * to the frame.
- 		 */
--		if (skb->protocol == htons(ETH_P_IP)) {
-+		if (skb->protocol == htons(ETH_P_IP))
- 			word1 |= TSS_IP_CHKSUM_BIT;
--			tcp = ip_hdr(skb)->protocol == IPPROTO_TCP;
--		} else { /* IPv6 */
-+		else
- 			word1 |= TSS_IPV6_ENABLE_BIT;
--			tcp = ipv6_hdr(skb)->nexthdr == IPPROTO_TCP;
--		}
+ 	rc = cn10k_free_leaf_profile(pfvf, hw->matchall_ipolicer);
  
- 		word1 |= tcp ? TSS_TCP_CHKSUM_BIT : TSS_UDP_CHKSUM_BIT;
- 	}
 -- 
 2.39.5
 
