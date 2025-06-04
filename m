@@ -1,44 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C12241F4634;
-	Wed,  4 Jun 2025 01:00:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80FE44A2D;
+	Wed,  4 Jun 2025 01:00:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748998853; cv=none; b=nxrA+l3DBz3kt6V89ZWePbpjBy4WaQMCAvwssI/ica+KLp+WugHOQGQzABTkt+/vNZ0dT/Y4IGHjQChRx8RXnNI5wp2/z67PXYmfLIlqdwBAV0LsICo6gLu3mBreeiiET8NmAgmADB3JfViGp7aBr6zFNGJrUOM0CcFj0KM/rjc=
+	t=1748998856; cv=none; b=dj9cPl76+oTzbp1T2E4cK3T0XbuNiyW3YjGY2hjXvquwK+pVyeZDNxEiImlAtEk2gxURIpsSPIvaaf14LWyRNKAwLpRER59FbpdWJh4fyMjJtx/VcfC8g0hDY1zAmqkwDbSe6mKXlhA7kYEjc9ZhOqhh16ZPkIESiwKG0ajVCZg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748998853; c=relaxed/simple;
-	bh=a1LrlqUJFEut+kAmigXoz4i166CYI4ZZrAKiNJAUwaE=;
+	s=arc-20240116; t=1748998856; c=relaxed/simple;
+	bh=iBA1fk91v4uGGbcctiSCUBEKGkM9F0F2WI4+7OwIGbA=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CFYL5u46zx6Pr3cseieEuHeKbIoBBWGVbhYcD/iYldyRqVkqGFfYUznwUlo5EX5xfPcsEVpQ6LTJhIGH77We3sNdsizXc1wMNMQUgs5MncFzAqITf67lxeGerjOVPnYTpm7iTEFG13lopqr0URH2LnTBZfiub00SUOrzb7jEXHo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rJOwGby1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ipvdX70ScxnBabniPxc5t3gaBDjLm1zgMQqtoziCrF8QnGdDS4UU0DVFGqIfQtQILvmagCMgVydTF0WZyV+dqPr4BT475bjNI43H5s6e3ixa3fdNLF73syMR0mGc7G+uEXjOEETVbwVWriViUB4BY79MGY+JMBnydCUHSiGTf5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iqcOuzd9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rJOwGby1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BA87C4CEED;
-	Wed,  4 Jun 2025 01:00:52 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iqcOuzd9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43AF8C4CEED;
+	Wed,  4 Jun 2025 01:00:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748998853;
-	bh=a1LrlqUJFEut+kAmigXoz4i166CYI4ZZrAKiNJAUwaE=;
+	s=k20201202; t=1748998856;
+	bh=iBA1fk91v4uGGbcctiSCUBEKGkM9F0F2WI4+7OwIGbA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rJOwGby1kcKEPTw4Px5u5czA8OllXBpa/wshjZpgHHZ+RjKHK3AIphiQomZvN/GUj
-	 e3+0X2I3p+OjG/Wt2GEmY1OeRSVrfIb3igIUWTWJeTwcpYk8IPHT1W5+VGbt+3J3nX
-	 lPpeAVbXeGRfznoq8Y4lC+zCbIg2+odlI4QdmTDeADFoMms++vEBbMso1dytEhrJmy
-	 ngcTKVUPaZq1jgYkEwrNWVYQrp5p0ZIfqUHdfiSOJnd9P4NqjQh9ZyBEC6oUbU0UPz
-	 vcLoj5PSVaM0BGyYjLrj9KVa2CBlr1ncRWOcXNNwRLvHwB/ncVSh7Rx/PB6OERaSUS
-	 DvHjAHueAX9Bw==
+	b=iqcOuzd9pjYtnzj+07Ie2wB3CNQsGwxAHkq/rV3OV7jQwEHLnazBMKG8BWVkpod/k
+	 q+18+g57qKNp+DCqzgfVy0TB41fqf6QWC9vNj00LO/jE98kBvLgppoFIg2nIFtz8mS
+	 D2zRH7cWUrfEW0APgGAy9Q8viHnTLz26QiLpTjF4BcKvEonSeh4W/Q3gd3jiGSdnRk
+	 Ml+qbEC6oLONXkzjeS77nqQ2x5m46RwhqbPnGqdqz9uyD6ocxpl2DMhZRKyotTWkbB
+	 8FYGUopj/ROdTkCY3E82J92hPzYSNY0/k8KDFhhaC1lUrc1gnDoat5ebNWQA36fXh0
+	 TgOnTxE7cIhKQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: "Luke D. Jones" <luke@ljones.dev>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+Cc: Johannes Berg <johannes.berg@intel.com>,
+	Ilan Peer <ilan.peer@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	jikos@kernel.org,
-	bentiss@kernel.org,
-	linux-input@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.12 51/93] hid-asus: check ROG Ally MCU version and warn
-Date: Tue,  3 Jun 2025 20:58:37 -0400
-Message-Id: <20250604005919.4191884-51-sashal@kernel.org>
+	emmanuel.grumbach@intel.com,
+	shaul.triebitz@intel.com,
+	yedidya.ben.shimol@intel.com,
+	linux@treblig.org
+Subject: [PATCH AUTOSEL 6.12 52/93] wifi: iwlwifi: mvm: fix beacon CCK flag
+Date: Tue,  3 Jun 2025 20:58:38 -0400
+Message-Id: <20250604005919.4191884-52-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250604005919.4191884-1-sashal@kernel.org>
 References: <20250604005919.4191884-1-sashal@kernel.org>
@@ -48,226 +49,89 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.12.31
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: "Luke D. Jones" <luke@ljones.dev>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 00e005c952f74f50a3f86af96f56877be4685e14 ]
+[ Upstream commit 8d7f08922a8cb621aa5d00bdce6a7afe57af1665 ]
 
-ASUS have fixed suspend issues arising from a flag not being cleared in
-the MCU FW in both the ROG Ally 1 and the ROG Ally X.
+The beacon CCK flag should be set for any CCK rate, not
+just for 1 Mbps. Fix that.
 
-Implement a check and a warning to encourage users to update the FW to
-a minimum supported version.
-
-Signed-off-by: Luke D. Jones <luke@ljones.dev>
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://lore.kernel.org/r/20250323023421.78012-2-luke@ljones.dev
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Reviewed-by: Ilan Peer <ilan.peer@intel.com>
+Link: https://patch.msgid.link/20250505215513.fe18b7d92d7d.I7bb40a92cea102677b695beb1e2a62a5ea72678b@changeid
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-**YES** This commit should be backported to stable kernel trees for the
-following reasons: ## Analysis of Code Changes: ### 1. **Clear Bug Fix
-for User-Affecting Issue** The commit addresses a real user-impacting
-problem: suspend issues on ROG Ally devices due to firmware bugs in the
-MCU (Microcontroller Unit). The commit message explicitly states "ASUS
-have fixed suspend issues arising from a flag not being cleared in the
-MCU FW" - this is a clear hardware/firmware-related bug that affects
-system stability. ### 2. **Minimal and Contained Changes** The code
-changes are small and well-contained: - **New constants**:
-`ROG_ALLY_REPORT_SIZE`, `ROG_ALLY_X_MIN_MCU`, `ROG_ALLY_MIN_MCU` - **New
-quirk bit**: `QUIRK_ROG_ALLY_XPAD BIT(13)` - **Two new functions**:
-`mcu_parse_version_string()` and `validate_mcu_fw_version()` - **Updated
-device table entries**: Adding the new quirk to existing ROG Ally
-devices ### 3. **Conservative Approach - Warning Only** The fix is very
-conservative - it only adds **warning messages** to inform users about
-firmware issues, without changing any critical kernel behavior. From the
-code: ```c if (version < min_version) { hid_warn(hdev, "The MCU firmware
-version must be %d or greater to avoid issues with suspend.\n",
-min_version); } ``` This approach minimizes regression risk while
-providing valuable user feedback. ### 4. **Follows Established
-Patterns** The commit follows the same patterns established by similar
-commits that were marked for backporting: - **Similar to Commit #1**:
-Adds device-specific quirks for ROG Ally devices - **Similar to Commit
-#2**: Updates device tables with new quirk flags - **Similar to Commit
-#3**: Extends ROG Ally support without architectural changes ### 5.
-**Addresses Known Hardware Issue** The version checking specifically
-targets known problematic firmware versions: - ROG Ally: requires MCU
-version ≥ 319 - ROG Ally X: requires MCU version ≥ 313 This suggests
-ASUS has identified and fixed specific firmware bugs in these versions.
-### 6. **Low Risk of Regression** The changes are additive and
-defensive: - Only triggers on specific hardware (ROG Ally devices with
-the new quirk) - Fails gracefully if MCU communication fails (`if
-(version < 0) return;`) - No changes to existing code paths for other
-devices - All error conditions are properly handled ### 7. **Follows
-Stable Tree Criteria** - ✅ Fixes an important bug (suspend issues) - ✅
-Small and contained changes - ✅ No new features - just hardware support
-improvement - ✅ Minimal regression risk - ✅ Confined to specific
-subsystem (HID driver for specific devices) The commit directly improves
-user experience for ROG Ally owners who may be experiencing suspend
-issues due to outdated MCU firmware, aligning perfectly with stable
-kernel tree goals of providing important bug fixes to users.
+**YES** This commit should be backported to stable kernel trees based on
+my analysis of both the commit message and code changes: ## Analysis of
+the Bug Fix **The Bug**: The original code incorrectly sets the beacon
+CCK flag: ```c if (rate_idx <= IWL_FIRST_CCK_RATE) // WRONG: Only for 1
+Mbps rate ``` **The Fix**: Changes the condition to properly include all
+CCK rates: ```c if (rate_idx <= IWL_LAST_CCK_RATE) // CORRECT: For all
+CCK rates (1, 2, 5.5, 11 Mbps) ``` ## Why This Should Be Backported ###
+1. **Fixes Important Functional Bug** This fixes beacon transmission in
+Access Point mode for Intel WiFi devices. The beacon CCK flag tells the
+firmware which modulation type to use when transmitting beacons. Setting
+it incorrectly could cause: - Beacon transmission failures - Radio
+configuration errors - Interoperability issues with client devices -
+Power management problems ### 2. **Small, Contained Change** The fix is
+minimal and surgical - changing `IWL_FIRST_CCK_RATE` to
+`IWL_LAST_CCK_RATE` in a single line. This type of targeted fix has
+minimal risk of introducing regressions. ### 3. **Affects Critical
+Kernel Subsystem** Wireless networking is a critical subsystem, and
+beacon transmission is fundamental to WiFi Access Point operation.
+Incorrect beacon formatting could prevent devices from connecting or
+maintaining stable connections. ### 4. **Follows Stable Tree Criteria**
+- **Important bugfix**: ✅ Fixes beacon transmission logic - **Minimal
+risk**: ✅ One-line change with clear purpose - **No new features**: ✅
+Pure bug fix - **No architectural changes**: ✅ Simple condition fix -
+**Confined to subsystem**: ✅ Only affects iwlwifi driver ### 5.
+**Matches Successful Backport Patterns** Looking at the similar commits
+provided: - **Similar Commit #2** (YES): Fixed netif checksum flags -
+also a small wireless driver fix - **Similar Commit #4** (YES): Fixed
+beacon protection flags - nearly identical type of beacon-related fix -
+**Similar Commit #5** (YES): Fixed MAC filter flags - another small flag
+correction This commit has the same characteristics as those marked for
+backporting: small driver fixes that correct important functionality
+without architectural changes. ### 6. **Affects User-Visible
+Functionality** Users running Intel WiFi devices as Access Points could
+experience connection issues due to malformed beacons. This is exactly
+the type of bug that stable trees should address. The fix is
+straightforward, low-risk, and addresses a functional issue that could
+impact real-world WiFi operations, making it an excellent candidate for
+stable backporting.
 
- drivers/hid/hid-asus.c | 107 ++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 105 insertions(+), 2 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/mac-ctxt.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hid/hid-asus.c b/drivers/hid/hid-asus.c
-index bcdd168cdc6d7..c5bdf0f1b32f7 100644
---- a/drivers/hid/hid-asus.c
-+++ b/drivers/hid/hid-asus.c
-@@ -52,6 +52,10 @@ MODULE_DESCRIPTION("Asus HID Keyboard and TouchPad");
- #define FEATURE_KBD_LED_REPORT_ID1 0x5d
- #define FEATURE_KBD_LED_REPORT_ID2 0x5e
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mac-ctxt.c b/drivers/net/wireless/intel/iwlwifi/mvm/mac-ctxt.c
+index e96ddaeeeeff5..d013de30e7ed6 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/mac-ctxt.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/mac-ctxt.c
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause
+ /*
+- * Copyright (C) 2012-2014, 2018-2024 Intel Corporation
++ * Copyright (C) 2012-2014, 2018-2025 Intel Corporation
+  * Copyright (C) 2013-2014 Intel Mobile Communications GmbH
+  * Copyright (C) 2015-2017 Intel Deutschland GmbH
+  */
+@@ -962,7 +962,7 @@ u16 iwl_mvm_mac_ctxt_get_beacon_flags(const struct iwl_fw *fw, u8 rate_idx)
+ 	u16 flags = iwl_mvm_mac80211_idx_to_hwrate(fw, rate_idx);
+ 	bool is_new_rate = iwl_fw_lookup_cmd_ver(fw, BEACON_TEMPLATE_CMD, 0) > 10;
  
-+#define ROG_ALLY_REPORT_SIZE 64
-+#define ROG_ALLY_X_MIN_MCU 313
-+#define ROG_ALLY_MIN_MCU 319
-+
- #define SUPPORT_KBD_BACKLIGHT BIT(0)
+-	if (rate_idx <= IWL_FIRST_CCK_RATE)
++	if (rate_idx <= IWL_LAST_CCK_RATE)
+ 		flags |= is_new_rate ? IWL_MAC_BEACON_CCK
+ 			  : IWL_MAC_BEACON_CCK_V1;
  
- #define MAX_TOUCH_MAJOR 8
-@@ -84,6 +88,7 @@ MODULE_DESCRIPTION("Asus HID Keyboard and TouchPad");
- #define QUIRK_MEDION_E1239T		BIT(10)
- #define QUIRK_ROG_NKEY_KEYBOARD		BIT(11)
- #define QUIRK_ROG_CLAYMORE_II_KEYBOARD BIT(12)
-+#define QUIRK_ROG_ALLY_XPAD		BIT(13)
- 
- #define I2C_KEYBOARD_QUIRKS			(QUIRK_FIX_NOTEBOOK_REPORT | \
- 						 QUIRK_NO_INIT_REPORTS | \
-@@ -534,9 +539,99 @@ static bool asus_kbd_wmi_led_control_present(struct hid_device *hdev)
- 	return !!(value & ASUS_WMI_DSTS_PRESENCE_BIT);
- }
- 
-+/*
-+ * We don't care about any other part of the string except the version section.
-+ * Example strings: FGA80100.RC72LA.312_T01, FGA80100.RC71LS.318_T01
-+ * The bytes "5a 05 03 31 00 1a 13" and possibly more come before the version
-+ * string, and there may be additional bytes after the version string such as
-+ * "75 00 74 00 65 00" or a postfix such as "_T01"
-+ */
-+static int mcu_parse_version_string(const u8 *response, size_t response_size)
-+{
-+	const u8 *end = response + response_size;
-+	const u8 *p = response;
-+	int dots, err, version;
-+	char buf[4];
-+
-+	dots = 0;
-+	while (p < end && dots < 2) {
-+		if (*p++ == '.')
-+			dots++;
-+	}
-+
-+	if (dots != 2 || p >= end || (p + 3) >= end)
-+		return -EINVAL;
-+
-+	memcpy(buf, p, 3);
-+	buf[3] = '\0';
-+
-+	err = kstrtoint(buf, 10, &version);
-+	if (err || version < 0)
-+		return -EINVAL;
-+
-+	return version;
-+}
-+
-+static int mcu_request_version(struct hid_device *hdev)
-+{
-+	u8 *response __free(kfree) = kzalloc(ROG_ALLY_REPORT_SIZE, GFP_KERNEL);
-+	const u8 request[] = { 0x5a, 0x05, 0x03, 0x31, 0x00, 0x20 };
-+	int ret;
-+
-+	if (!response)
-+		return -ENOMEM;
-+
-+	ret = asus_kbd_set_report(hdev, request, sizeof(request));
-+	if (ret < 0)
-+		return ret;
-+
-+	ret = hid_hw_raw_request(hdev, FEATURE_REPORT_ID, response,
-+				ROG_ALLY_REPORT_SIZE, HID_FEATURE_REPORT,
-+				HID_REQ_GET_REPORT);
-+	if (ret < 0)
-+		return ret;
-+
-+	ret = mcu_parse_version_string(response, ROG_ALLY_REPORT_SIZE);
-+	if (ret < 0) {
-+		pr_err("Failed to parse MCU version: %d\n", ret);
-+		print_hex_dump(KERN_ERR, "MCU: ", DUMP_PREFIX_NONE,
-+			      16, 1, response, ROG_ALLY_REPORT_SIZE, false);
-+	}
-+
-+	return ret;
-+}
-+
-+static void validate_mcu_fw_version(struct hid_device *hdev, int idProduct)
-+{
-+	int min_version, version;
-+
-+	version = mcu_request_version(hdev);
-+	if (version < 0)
-+		return;
-+
-+	switch (idProduct) {
-+	case USB_DEVICE_ID_ASUSTEK_ROG_NKEY_ALLY:
-+		min_version = ROG_ALLY_MIN_MCU;
-+		break;
-+	case USB_DEVICE_ID_ASUSTEK_ROG_NKEY_ALLY_X:
-+		min_version = ROG_ALLY_X_MIN_MCU;
-+		break;
-+	default:
-+		min_version = 0;
-+	}
-+
-+	if (version < min_version) {
-+		hid_warn(hdev,
-+			"The MCU firmware version must be %d or greater to avoid issues with suspend.\n",
-+			min_version);
-+	}
-+}
-+
- static int asus_kbd_register_leds(struct hid_device *hdev)
- {
- 	struct asus_drvdata *drvdata = hid_get_drvdata(hdev);
-+	struct usb_interface *intf;
-+	struct usb_device *udev;
- 	unsigned char kbd_func;
- 	int ret;
- 
-@@ -560,6 +655,14 @@ static int asus_kbd_register_leds(struct hid_device *hdev)
- 			if (ret < 0)
- 				return ret;
- 		}
-+
-+		if (drvdata->quirks & QUIRK_ROG_ALLY_XPAD) {
-+			intf = to_usb_interface(hdev->dev.parent);
-+			udev = interface_to_usbdev(intf);
-+			validate_mcu_fw_version(hdev,
-+				le16_to_cpu(udev->descriptor.idProduct));
-+		}
-+
- 	} else {
- 		/* Initialize keyboard */
- 		ret = asus_kbd_init(hdev, FEATURE_KBD_REPORT_ID);
-@@ -1280,10 +1383,10 @@ static const struct hid_device_id asus_devices[] = {
- 	  QUIRK_USE_KBD_BACKLIGHT | QUIRK_ROG_NKEY_KEYBOARD },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ASUSTEK,
- 	    USB_DEVICE_ID_ASUSTEK_ROG_NKEY_ALLY),
--	  QUIRK_USE_KBD_BACKLIGHT | QUIRK_ROG_NKEY_KEYBOARD },
-+	  QUIRK_USE_KBD_BACKLIGHT | QUIRK_ROG_NKEY_KEYBOARD | QUIRK_ROG_ALLY_XPAD},
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ASUSTEK,
- 	    USB_DEVICE_ID_ASUSTEK_ROG_NKEY_ALLY_X),
--	  QUIRK_USE_KBD_BACKLIGHT | QUIRK_ROG_NKEY_KEYBOARD },
-+	  QUIRK_USE_KBD_BACKLIGHT | QUIRK_ROG_NKEY_KEYBOARD | QUIRK_ROG_ALLY_XPAD },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ASUSTEK,
- 	    USB_DEVICE_ID_ASUSTEK_ROG_CLAYMORE_II_KEYBOARD),
- 	  QUIRK_ROG_CLAYMORE_II_KEYBOARD },
 -- 
 2.39.5
 
