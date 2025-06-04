@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8FEA149C55;
-	Wed,  4 Jun 2025 01:01:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 208812627E9;
+	Wed,  4 Jun 2025 01:01:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748998901; cv=none; b=GvtknDxN9CthN28rckvcmhG2j3BdpYRlNj0l3uJ6DJupwOsyB8d+TfMEslbp19JRjW+RhBISU8PY7vakFvgNWV3Hqg3+Qu59d58Zy5O9HNnhnzsV+8T3oPBWAvvanqidd9odMDD7P/eCLTPdLuCacafZ+8Sj35YPvW2JznpIB8A=
+	t=1748998903; cv=none; b=j336JdaO5v2ZxArtN4zwsU9q3j29IqVK6KRzr9npy8M+ixN6Jg6fl38+rUZmcD7BTpJcGvN/4S7IkZcfmIF5nNGaZ/RIPJgGBkjZmZjTTeSosdRPn/ZeUwks4bWEO/Znh4UaiY6DXzpQHWaZmuNFpQ78ICRIw7pmXgx+AdOD0oQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748998901; c=relaxed/simple;
-	bh=MVoe63oIh7OE22z9Js4kjHwPGbpNWFTNw9gmtPB+smQ=;
+	s=arc-20240116; t=1748998903; c=relaxed/simple;
+	bh=qGVdidYM+I9XSTfz5b5fpLFbDWKQ/q1My/cwLBT0nrQ=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MI2AJVTNvpWWFhSeLuf9Gjr7U2i4/zHcsYAlBWgyqXmcajN/VELTudUNyPcP9NIJP7/w9zV7v17qHw7Y8LzP5AaO9F5JDXdxsbb24wa2X/8nA5hsBWHLAVwozurWaBsEc+N1IW10ac/pK6Z+fRtAIdCxzmDUgrlDIzLY9oeiPcs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SsZR0F1u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=W1YB5UcCvHupVIdaQC81HPLwOAe463qqbP+7KQrTBiH0b1Cg3BxvnOXSHevQ6c+YDWbtfhjGYEtcxs9+uagDT5DqN4soMdlG2hz5SnC9JcXc48pX/0zY6LaFZMSznx3Tu+C4fLHCIWsyCVSnopiCOR1M7jVEPtqpphzBTAswgVk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TrUzml9z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SsZR0F1u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DE3CC4CEF1;
-	Wed,  4 Jun 2025 01:01:40 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TrUzml9z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2DFFC4CEED;
+	Wed,  4 Jun 2025 01:01:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748998901;
-	bh=MVoe63oIh7OE22z9Js4kjHwPGbpNWFTNw9gmtPB+smQ=;
+	s=k20201202; t=1748998903;
+	bh=qGVdidYM+I9XSTfz5b5fpLFbDWKQ/q1My/cwLBT0nrQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SsZR0F1u5BCYedVtLbLl+iOHxP+Vtaa9ICKZnBLfzYbtsJMA4VTPlhIKjCHnnipqd
-	 3RY4MNx2U5U69GSXY2L7SMJ1TApVW2P9g7ovc0pBf13rVzZ/7j4gr6HL+kP0kKs0io
-	 6mY3EhVBY8NlD3Q+RlKuyh8RnnGktR4f3uERmcw6Mq1n+rAfVzGCy2MgpFxTV489MH
-	 nhaX9w0mRlaR+8mVdvx6meRCSeRP+FOGfeE2ZVHNETw1QnUV1JFe653AKdYWnfx0bb
-	 CqB9jdbVAk9IC9qCNSRWUOmF/ZmuJgbLVydKyCTEEOfCa3aL/9VViftBEDFjbQNrBx
-	 eW3yA9Gp+8BKQ==
+	b=TrUzml9zyH6DYJTtiOTlg7SRHlSZDSie01nz+es5ELmt1UoU/00b6gWSm8/aMsuK0
+	 ah2cpb1tyUG1rdfBgjgCZx5V11Q9IxINXYVlO0+PfWIQ02utxRdMT0ZL/lSMVR1Yc8
+	 XDQ2X5EW6LK9THeNIh2JzGZJ/iGg4fTrsmSQu0A3N+4+SWVg4RpwBBTgz3ouqjFt1A
+	 dir8+InbUIdIRnT8f3V+eLkP4I3JKipQlwU0a6g/iOuJPPHlqBhtCE8bNHuOaPdB63
+	 MuDvVUT03ErFiOIZE1+JO2F8wD9N4z4FVSgnv+DhwwBh7GlzFgupVnCQIFz8dwiW6X
+	 SXuzaF6wx9LIg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Daniel Wagner <wagi@kernel.org>,
-	Justin Tee <justin.tee@broadcom.com>,
-	"Martin K . Petersen" <martin.petersen@oracle.com>,
+Cc: Zijun Hu <quic_zijuhu@quicinc.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	james.smart@broadcom.com,
-	dick.kennedy@broadcom.com,
-	linux-scsi@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.12 78/93] scsi: lpfc: Use memcpy() for BIOS version
-Date: Tue,  3 Jun 2025 20:59:04 -0400
-Message-Id: <20250604005919.4191884-78-sashal@kernel.org>
+	edumazet@google.com,
+	pabeni@redhat.com,
+	willemb@google.com
+Subject: [PATCH AUTOSEL 6.12 79/93] sock: Correct error checking condition for (assign|release)_proto_idx()
+Date: Tue,  3 Jun 2025 20:59:05 -0400
+Message-Id: <20250604005919.4191884-79-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250604005919.4191884-1-sashal@kernel.org>
 References: <20250604005919.4191884-1-sashal@kernel.org>
@@ -54,88 +54,98 @@ X-stable-base: Linux 6.12.31
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daniel Wagner <wagi@kernel.org>
+From: Zijun Hu <quic_zijuhu@quicinc.com>
 
-[ Upstream commit ae82eaf4aeea060bb736c3e20c0568b67c701d7d ]
+[ Upstream commit faeefc173be40512341b102cf1568aa0b6571acd ]
 
-The strlcat() with FORTIFY support is triggering a panic because it
-thinks the target buffer will overflow although the correct target
-buffer size is passed in.
+(assign|release)_proto_idx() wrongly check find_first_zero_bit() failure
+by condition '(prot->inuse_idx == PROTO_INUSE_NR - 1)' obviously.
 
-Anyway, instead of memset() with 0 followed by a strlcat(), just use
-memcpy() and ensure that the resulting buffer is NULL terminated.
+Fix by correcting the condition to '(prot->inuse_idx == PROTO_INUSE_NR)'
 
-BIOSVersion is only used for the lpfc_printf_log() which expects a
-properly terminated string.
-
-Signed-off-by: Daniel Wagner <wagi@kernel.org>
-Link: https://lore.kernel.org/r/20250409-fix-lpfc-bios-str-v1-1-05dac9e51e13@kernel.org
-Reviewed-by: Justin Tee <justin.tee@broadcom.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://patch.msgid.link/20250410-fix_net-v2-1-d69e7c5739a4@quicinc.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Let me understand the actual problem by examining the function more
-carefully. Based on the commit message, this is about a FORTIFY panic
-when using strlcat(): **YES** This commit should be backported to stable
-kernel trees. Here's my extensive analysis: ## Bug Analysis **Root
-Cause:** The commit fixes a kernel panic triggered by FORTIFY_SOURCE
-when using `strlcat()`. The FORTIFY infrastructure incorrectly detected
-a potential buffer overflow in the BIOS version string handling code.
-**The Problem Code:** ```c memset(phba->BIOSVersion, 0,
-sizeof(phba->BIOSVersion)); strlcat(phba->BIOSVersion, (char
-*)cntl_attr->bios_ver_str, sizeof(phba->BIOSVersion)); ``` **The Fix:**
-```c memcpy(phba->BIOSVersion, cntl_attr->bios_ver_str,
-sizeof(phba->BIOSVersion)); phba->BIOSVersion[sizeof(phba->BIOSVersion)
-- 1] = '\0'; ``` ## Technical Details 1. **Buffer Sizes:** `BIOSVersion`
-is a 16-byte character array (`char BIOSVersion[16]` in lpfc.h:1267),
-while `bios_ver_str` is a 32-byte array (`uint32_t bios_ver_str[8]` in
-lpfc_hw4.h:3798). 2. **FORTIFY Issue:** The `strlcat()` function with
-FORTIFY enabled was triggering a false positive, causing kernel panics
-when it incorrectly calculated potential overflow conditions. 3. **Safe
-Solution:** The fix uses `memcpy()` for the exact buffer size and
-explicitly null-terminates the string, which is simpler and avoids the
-FORTIFY false positive. ## Backport Criteria Analysis ✅ **Fixes
-Important Bug:** This resolves kernel panics in production systems with
-FORTIFY enabled ✅ **Small & Contained:** Only 3 lines changed in a
-single function ✅ **Minimal Risk:** The change is functionally
-equivalent but safer ✅ **No Architectural Changes:** Simple string
-handling improvement ✅ **Clear Side Effects:** No behavioral changes
-beyond fixing the panic ✅ **Critical Subsystem:** SCSI driver stability
-is important for storage ## Comparison with Similar Commits This closely
-resembles **Similar Commit #2** (marked YES for backport) which fixed an
-overflow build issue with FORTIFY. Both commits: - Address FORTIFY-
-related compilation/runtime issues - Make minimal, safe code changes -
-Fix real problems affecting users - Have low regression risk ## Risk
-Assessment **Low Risk:** The change maintains identical functionality
-while eliminating the false positive. Both code paths copy BIOS version
-data into a 16-byte buffer and ensure null termination. The `memcpy()`
-approach is actually more predictable than `strlcat()` with an empty
-target buffer. ## Conclusion This commit fixes a real kernel panic issue
-that affects users running kernels with FORTIFY_SOURCE enabled. The fix
-is minimal, safe, and follows stable tree guidelines perfectly. It
-should definitely be backported to prevent production systems from
-experiencing these panics.
+Based on my analysis of the Linux kernel source code in the environment,
+let me now provide a thorough evaluation: **YES** This commit should be
+backported to stable kernel trees. Here's my detailed analysis: ##
+Analysis of the Bug Fix ### The Core Issue The commit fixes a critical
+off-by-one error in the error checking conditions within
+`assign_proto_idx()` and `release_proto_idx()` functions in
+`net/core/sock.c`. ### Current vs. Fixed Code Comparison **Before the
+fix (incorrect):** ```c // In assign_proto_idx() if
+(unlikely(prot->inuse_idx == PROTO_INUSE_NR - 1)) { // Wrong: checks for
+63 pr_err("PROTO_INUSE_NR exhausted\n"); return -ENOSPC; } // In
+release_proto_idx() if (prot->inuse_idx != PROTO_INUSE_NR - 1) // Wrong:
+checks for 63 clear_bit(prot->inuse_idx, proto_inuse_idx); ``` **After
+the fix (correct):** ```c // In assign_proto_idx() if
+(unlikely(prot->inuse_idx == PROTO_INUSE_NR)) { // Correct: checks for
+64 pr_err("PROTO_INUSE_NR exhausted\n"); return -ENOSPC; } // In
+release_proto_idx() if (prot->inuse_idx != PROTO_INUSE_NR) // Correct:
+checks for 64 clear_bit(prot->inuse_idx, proto_inuse_idx); ``` ###
+Technical Analysis 1. **Understanding the Bug:** - `PROTO_INUSE_NR` is
+defined as 64, creating a bitmap with valid indices 0-63 -
+`find_first_zero_bit()` returns `PROTO_INUSE_NR` (64) when no free bits
+are found - The original code incorrectly checked for `PROTO_INUSE_NR -
+1` (63), which is actually a valid index - This meant the error
+condition would never trigger, and the code would attempt to set bit 64,
+causing undefined behavior 2. **Impact of the Bug:** - **Memory
+corruption risk:** Setting bit 64 in a 64-bit bitmap accesses memory
+beyond the allocated bitmap - **Resource exhaustion not detected:** The
+system would not properly detect when all protocol slots are exhausted -
+**Potential crashes:** Accessing invalid memory locations could cause
+kernel panics 3. **Why This is Backport-Worthy:** - **Fixes a clear
+bug:** The logic error is objectively wrong and could cause system
+instability - **Minimal risk change:** The fix only changes two
+comparison operators, with no architectural impact - **Important
+subsystem:** Network protocol registration is core kernel functionality
+- **Well-contained fix:** The change is localized to error checking
+conditions without affecting normal operation paths ### Comparison with
+Similar Commits Looking at the historical examples: - **Similar Commit
+#2 (YES):** Fixed error checking in packet handling - similar pattern of
+correcting error conditions - **Similar Commit #1 (NO):** More complex
+memory leak fix with broader changes - **Similar Commit #3 (NO):**
+Architectural change from BUG() to error returns - **Similar Commit #4
+(NO):** API cleanup removing function pointers - **Similar Commit #5
+(NO):** Validation fix in newer subsystem This commit most closely
+resembles Similar Commit #2, which was marked for backporting due to its
+focused bug fix nature. ### Stable Tree Criteria Met: - ✅ **Fixes
+important bug:** Prevents potential memory corruption - ✅ **Small and
+contained:** Only two line changes - ✅ **Low regression risk:** Pure bug
+fix with no behavioral changes for normal cases - ✅ **Clear side
+effects:** None beyond fixing the bug - ✅ **No architectural changes:**
+Maintains existing API and behavior This is exactly the type of focused,
+low-risk bug fix that stable trees are designed to include.
 
- drivers/scsi/lpfc/lpfc_sli.c | 4 ++--
+ net/core/sock.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/scsi/lpfc/lpfc_sli.c b/drivers/scsi/lpfc/lpfc_sli.c
-index 6748fba48a07e..4dccbaeb63283 100644
---- a/drivers/scsi/lpfc/lpfc_sli.c
-+++ b/drivers/scsi/lpfc/lpfc_sli.c
-@@ -6020,9 +6020,9 @@ lpfc_sli4_get_ctl_attr(struct lpfc_hba *phba)
- 	phba->sli4_hba.flash_id = bf_get(lpfc_cntl_attr_flash_id, cntl_attr);
- 	phba->sli4_hba.asic_rev = bf_get(lpfc_cntl_attr_asic_rev, cntl_attr);
+diff --git a/net/core/sock.c b/net/core/sock.c
+index 0842dc9189bf8..d06dc259d6296 100644
+--- a/net/core/sock.c
++++ b/net/core/sock.c
+@@ -3930,7 +3930,7 @@ static int assign_proto_idx(struct proto *prot)
+ {
+ 	prot->inuse_idx = find_first_zero_bit(proto_inuse_idx, PROTO_INUSE_NR);
  
--	memset(phba->BIOSVersion, 0, sizeof(phba->BIOSVersion));
--	strlcat(phba->BIOSVersion, (char *)cntl_attr->bios_ver_str,
-+	memcpy(phba->BIOSVersion, cntl_attr->bios_ver_str,
- 		sizeof(phba->BIOSVersion));
-+	phba->BIOSVersion[sizeof(phba->BIOSVersion) - 1] = '\0';
+-	if (unlikely(prot->inuse_idx == PROTO_INUSE_NR - 1)) {
++	if (unlikely(prot->inuse_idx == PROTO_INUSE_NR)) {
+ 		pr_err("PROTO_INUSE_NR exhausted\n");
+ 		return -ENOSPC;
+ 	}
+@@ -3941,7 +3941,7 @@ static int assign_proto_idx(struct proto *prot)
  
- 	lpfc_printf_log(phba, KERN_INFO, LOG_SLI,
- 			"3086 lnk_type:%d, lnk_numb:%d, bios_ver:%s, "
+ static void release_proto_idx(struct proto *prot)
+ {
+-	if (prot->inuse_idx != PROTO_INUSE_NR - 1)
++	if (prot->inuse_idx != PROTO_INUSE_NR)
+ 		clear_bit(prot->inuse_idx, proto_inuse_idx);
+ }
+ #else
 -- 
 2.39.5
 
