@@ -1,42 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B867D221FBC;
-	Wed,  4 Jun 2025 00:56:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E622F22616C;
+	Wed,  4 Jun 2025 00:56:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748998608; cv=none; b=uRJNFsr9JhmyAqXBboylkAwEYaaG9UaF9Lw92q+E6tfehNli/gDGDiJrFoNGu7YYNHoJ2BPqUofLIteWqMxVCqR+LVPAFuaVBZMA+l1e8iFlCF4T7ckifPFzukeZe/4cj+qB2lr45P7gT7zvunQlCUt1QhmRcGRNyDRellw7IB4=
+	t=1748998610; cv=none; b=dR+KwwX8uj7nmtkDFnkq8J3fpfgtNdBght1aHxRqJsQV8EbSQYvMFCB7LZEQs3oYRUz8NP7SkdwKDpB/skEjoZSppXEg+WRt1eaeTDiVFPDnwFRRxQgREYjBVPq9d/lyVS6TQ54x4BRz0Mn155idNhjfjsrmNy8b5uVIECqHzAg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748998608; c=relaxed/simple;
-	bh=f2krVlrhkGcfJNfBsZoQMnWPwWv4KUdrcZNltF+kAjc=;
+	s=arc-20240116; t=1748998610; c=relaxed/simple;
+	bh=tCcPZHw3ghcKRMe2PKuzM5Rf3lfDAArQHLS3ql1pKn8=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=fHinz0Vbv6uVOj0FyBfG78QUCkh6sM50qctbJfRsZ79ZWu/dDwbvKjIsHT8toUc8OFUtM7wjU2bYfmIlDPVfoi8WRVLVnSkV6DRvDiS2HDxA2NwbvMpMJ07rL77+yzDmQ3hrawLAPZGXbxo8BYr5ESwCJr9/YBphMxlCPOSEa68=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WKNzLzFf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CQDkezlQWkIKFjh5ayt8DeQ+JqUf3CIzdBIo0W0tS7WoTAMxxka1EZLsGzjj6j6vCgnURNIqnEjItJCYm5CUcF3wovH4DEOVBLFdT0/RRmZWrynkPBK+xXFV3UijXAC0OsO9NT2g47ljQg2L5Uo8qzgAvxXldBntcT4AuWaqOMw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Dmncn1IP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WKNzLzFf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 595E8C4CEF1;
-	Wed,  4 Jun 2025 00:56:47 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Dmncn1IP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A396BC4CEED;
+	Wed,  4 Jun 2025 00:56:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748998608;
-	bh=f2krVlrhkGcfJNfBsZoQMnWPwWv4KUdrcZNltF+kAjc=;
+	s=k20201202; t=1748998609;
+	bh=tCcPZHw3ghcKRMe2PKuzM5Rf3lfDAArQHLS3ql1pKn8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WKNzLzFf255AF90NqgHlOhsnY7uhQfa0s8pfKthqqfB8Gt/BZVWVIYLhxOdaMl816
-	 9ZdwErFL+3O4mEbsn+1oFYSELjhrIpOxhQo+tpG0ZoWuk1dCCicIdwT+f4D7m1AZk8
-	 DJj+eVitr9Cyc4PWgVT/PODbQiFgNUEqkwFxBLH4BeVho7EXGC8Hs+Sc0aCmMmGw/+
-	 hODXwSJbEMvDTYYmX9cePXbO/N3VG0qThbpi7XQouOscGP8IY5+5Js02ZBAjSkg8B/
-	 NTXYtKeARjsIPVYpZmatOCGXZwfET0nITDUwSTnUpKrFgOV8GuN16H1hhbet3iVzp6
-	 yx6259KPDyibg==
+	b=Dmncn1IPJXpny+MkuARO3p9MB315CB1EermNmp/K4KvmieLyKx5sd8nQ5ypRmxu3u
+	 Vh8WEnfdELSGwdTSbIgIkpcPZgsVd557hzv+nPmXBUs5FQ52NrpRxBTL3xk9yFNEPg
+	 jzqZe5CciqCZNhbMxGgC7hm2GtVhMFJwaVfBmJRuQpAdb4FjypeOFn5JupLco5nprv
+	 0cp8KBEG5Pg/SkXlXBbUAcemhBYx9GX7xnE2xKctMhLDSrybrMb0cT3SwPxCDfLBNb
+	 ra7poUL6bPo3Hn2pGfBTUxbYDMzzqyWOUjIB+HdVFrsAaw943XoLH+NuURjnD4i2Dx
+	 Ly5bpvYpvIqLw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Leon Romanovsky <leonro@nvidia.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+Cc: Eelco Chaudron <echaudro@redhat.com>,
+	Simon Horman <horms@kernel.org>,
+	Ilya Maximets <i.maximets@ovn.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	davem@davemloft.net,
-	netdev@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.14 039/108] xfrm: validate assignment of maximal possible SEQ number
-Date: Tue,  3 Jun 2025 20:54:22 -0400
-Message-Id: <20250604005531.4178547-39-sashal@kernel.org>
+	aconole@redhat.com,
+	netdev@vger.kernel.org,
+	dev@openvswitch.org
+Subject: [PATCH AUTOSEL 6.14 040/108] openvswitch: Stricter validation for the userspace action
+Date: Tue,  3 Jun 2025 20:54:23 -0400
+Message-Id: <20250604005531.4178547-40-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250604005531.4178547-1-sashal@kernel.org>
 References: <20250604005531.4178547-1-sashal@kernel.org>
@@ -51,150 +54,87 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.14.9
 Content-Transfer-Encoding: 8bit
 
-From: Leon Romanovsky <leonro@nvidia.com>
+From: Eelco Chaudron <echaudro@redhat.com>
 
-[ Upstream commit e86212b6b13a20c5ad404c5597933f57fd0f1519 ]
+[ Upstream commit 88906f55954131ed2d3974e044b7fb48129b86ae ]
 
-Users can set any seq/seq_hi/oseq/oseq_hi values. The XFRM core code
-doesn't prevent from them to set even 0xFFFFFFFF, however this value
-will cause for traffic drop.
+This change enhances the robustness of validate_userspace() by ensuring
+that all Netlink attributes are fully contained within the parent
+attribute. The previous use of nla_parse_nested_deprecated() could
+silently skip trailing or malformed attributes, as it stops parsing at
+the first invalid entry.
 
-Is is happening because SEQ numbers here mean that packet with such
-number was processed and next number should be sent on the wire. In this
-case, the next number will be 0, and it means overflow which causes to
-(expected) packet drops.
+By switching to nla_parse_deprecated_strict(), we make sure only fully
+validated attributes are copied for later use.
 
-While it can be considered as misconfiguration and handled by XFRM
-datapath in the same manner as any other SEQ number, let's add
-validation to easy for packet offloads implementations which need to
-configure HW with next SEQ to send and not with current SEQ like it is
-done in core code.
-
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Signed-off-by: Eelco Chaudron <echaudro@redhat.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Acked-by: Ilya Maximets <i.maximets@ovn.org>
+Link: https://patch.msgid.link/67eb414e2d250e8408bb8afeb982deca2ff2b10b.1747037304.git.echaudro@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-**YES** This commit should be backported to stable kernel trees. Here's
-my extensive analysis: ## Bug Analysis The commit addresses a **user
-input validation bug** in the XFRM (IPsec transformation) subsystem.
-Specifically: 1. **Root Cause**: Users can set sequence numbers (`seq`,
-`seq_hi`, `oseq`, `oseq_hi`) to `0xFFFFFFFF` (U32_MAX) via netlink
-interface 2. **Problem**: When a sequence number is set to U32_MAX, the
-next packet will have sequence number 0, which triggers sequence number
-overflow detection and causes packet drops 3. **Impact**: This leads to
-**immediate traffic disruption** for IPsec connections ## Code Changes
-Analysis The fix adds **comprehensive input validation** in
-`net/xfrm/xfrm_user.c:verify_replay()`: ### For Non-ESN Mode (32-bit
-sequences): - **Output SA**: Validates `rs->oseq != U32_MAX` (lines
-189-195) - **Input SA**: Validates `rs->seq != U32_MAX` (lines 223-228)
-### For ESN Mode (64-bit sequences): - **Output SA**: Validates
-`!(rs->oseq == U32_MAX && rs->oseq_hi == U32_MAX)` (lines 196-202) -
-**Input SA**: Validates `!(rs->seq == U32_MAX && rs->seq_hi == U32_MAX)`
-(lines 230-236) ## Why This Should Be Backported ### 1. **Fixes User-
-Visible Bug** This prevents user misconfiguration from causing immediate
-IPsec traffic failure, which is a critical networking bug. ### 2.
-**Small, Contained Fix** - **Single file modified**:
-`net/xfrm/xfrm_user.c` - **Only 42 insertions, 10 deletions** - **Pure
-input validation** - no algorithmic or architectural changes - **Low
-regression risk** - only rejects previously invalid configurations ###
-3. **Benefits Hardware Offload** The commit message explicitly mentions
-this helps "packet offloads implementations which need to configure HW
-with next SEQ to send." This is increasingly important as IPsec hardware
-offload becomes more common. ### 4. **Follows Historical Pattern**
-Looking at similar commits in the reference examples: - **Similar Commit
-#1** (Status: NO) - Only validates ESN vs non-ESN mode consistency -
-**Current commit** - **More comprehensive**, validates against the
-problematic U32_MAX boundary that causes actual packet drops - **Similar
-Commits #3-5** (Status: YES) - All fix sequence number handling bugs
-that cause packet drops/corruption ### 5. **Clear Error Messages** The
-fix provides descriptive error messages via `NL_SET_ERR_MSG()`,
-improving debuggability for users. ### 6. **Builds on Previous Work**
-This extends the validation framework established in commit
-`e3aa43a50a64` ("xfrm: prevent high SEQ input in non-ESN mode"), showing
-this is part of ongoing hardening efforts. ## Risk Assessment **Minimal
-Risk**: - **No functional changes** to existing working configurations -
-**Only affects invalid configurations** that would cause problems anyway
-- **Well-tested code path** (input validation in userspace interface) -
-**Conservative approach** - rejects edge case that causes guaranteed
-failure The fix prevents a **user-triggerable traffic failure
-condition** with minimal code changes and no risk to existing working
-setups. This perfectly fits stable tree criteria: important bug fix, low
-risk, contained scope.
+**YES** This commit should be backported to stable kernel trees. ##
+Analysis **Commit Overview:** The commit changes `validate_userspace()`
+function in `net/openvswitch/flow_netlink.c` by replacing
+`nla_parse_nested_deprecated()` with `nla_parse_deprecated_strict()` to
+ensure stricter validation of Netlink attributes for the userspace
+action. **Specific Code Changes:** The key change is on lines 3052-3054:
+```c // Before: error = nla_parse_nested_deprecated(a,
+OVS_USERSPACE_ATTR_MAX, attr, userspace_policy, NULL); // After: error =
+nla_parse_deprecated_strict(a, OVS_USERSPACE_ATTR_MAX, nla_data(attr),
+nla_len(attr), userspace_policy, NULL); ``` **Why This Should Be
+Backported:** 1. **Security Enhancement:** This commit addresses a
+parsing vulnerability where malformed attributes could be silently
+ignored. The original `nla_parse_nested_deprecated()` stops parsing at
+the first invalid entry, potentially allowing trailing malformed data to
+bypass validation. 2. **Robustness Fix:** The change ensures all netlink
+attributes are fully contained within the parent attribute bounds,
+preventing potential buffer over-reads or under-reads that could lead to
+security issues. 3. **Pattern Consistency:** Looking at the git blame
+output (lines 3085-3087), we can see that
+`nla_parse_deprecated_strict()` was already introduced in 2019 by commit
+8cb081746c031 and is used elsewhere in the same file for similar
+validation (e.g., `validate_and_copy_check_pkt_len()` function). 4.
+**Low Risk:** This is a small, contained change that only affects input
+validation - it doesn't change functionality or introduce new features.
+The change is defensive and follows existing patterns in the codebase.
+5. **Similar Precedent:** This commit is very similar to the validated
+"Similar Commit #2" which was marked for backporting (status: YES). That
+commit also dealt with netlink attribute validation safety in
+openvswitch (`validate_set()` function) and was considered suitable for
+stable trees. 6. **Critical Subsystem:** Open vSwitch is a critical
+networking component used in virtualization and container environments.
+Input validation issues in this subsystem could potentially be exploited
+for privilege escalation or denial of service. 7. **Clear Intent:** The
+commit message explicitly states this "enhances robustness" and ensures
+"only fully validated attributes are copied for later use," indicating
+this is a defensive security improvement. **Risk Assessment:** - Very
+low regression risk - No API changes - Only affects error handling paths
+- Follows established validation patterns in the same codebase This
+commit fits perfectly into the stable tree criteria: it's an important
+security/robustness fix, has minimal risk of regression, is well-
+contained, and addresses a clear validation vulnerability in a critical
+kernel subsystem.
 
- net/xfrm/xfrm_user.c | 52 +++++++++++++++++++++++++++++++++++---------
- 1 file changed, 42 insertions(+), 10 deletions(-)
+ net/openvswitch/flow_netlink.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/xfrm/xfrm_user.c b/net/xfrm/xfrm_user.c
-index b5266e0848e82..dd5fd42341d7b 100644
---- a/net/xfrm/xfrm_user.c
-+++ b/net/xfrm/xfrm_user.c
-@@ -178,11 +178,27 @@ static inline int verify_replay(struct xfrm_usersa_info *p,
- 				       "Replay seq and seq_hi should be 0 for output SA");
- 			return -EINVAL;
- 		}
--		if (rs->oseq_hi && !(p->flags & XFRM_STATE_ESN)) {
--			NL_SET_ERR_MSG(
--				extack,
--				"Replay oseq_hi should be 0 in non-ESN mode for output SA");
--			return -EINVAL;
-+
-+		if (!(p->flags & XFRM_STATE_ESN)) {
-+			if (rs->oseq_hi) {
-+				NL_SET_ERR_MSG(
-+					extack,
-+					"Replay oseq_hi should be 0 in non-ESN mode for output SA");
-+				return -EINVAL;
-+			}
-+			if (rs->oseq == U32_MAX) {
-+				NL_SET_ERR_MSG(
-+					extack,
-+					"Replay oseq should be less than 0xFFFFFFFF in non-ESN mode for output SA");
-+				return -EINVAL;
-+			}
-+		} else {
-+			if (rs->oseq == U32_MAX && rs->oseq_hi == U32_MAX) {
-+				NL_SET_ERR_MSG(
-+					extack,
-+					"Replay oseq and oseq_hi should be less than 0xFFFFFFFF for output SA");
-+				return -EINVAL;
-+			}
- 		}
- 		if (rs->bmp_len) {
- 			NL_SET_ERR_MSG(extack, "Replay bmp_len should 0 for output SA");
-@@ -196,11 +212,27 @@ static inline int verify_replay(struct xfrm_usersa_info *p,
- 				       "Replay oseq and oseq_hi should be 0 for input SA");
- 			return -EINVAL;
- 		}
--		if (rs->seq_hi && !(p->flags & XFRM_STATE_ESN)) {
--			NL_SET_ERR_MSG(
--				extack,
--				"Replay seq_hi should be 0 in non-ESN mode for input SA");
--			return -EINVAL;
-+		if (!(p->flags & XFRM_STATE_ESN)) {
-+			if (rs->seq_hi) {
-+				NL_SET_ERR_MSG(
-+					extack,
-+					"Replay seq_hi should be 0 in non-ESN mode for input SA");
-+				return -EINVAL;
-+			}
-+
-+			if (rs->seq == U32_MAX) {
-+				NL_SET_ERR_MSG(
-+					extack,
-+					"Replay seq should be less than 0xFFFFFFFF in non-ESN mode for input SA");
-+				return -EINVAL;
-+			}
-+		} else {
-+			if (rs->seq == U32_MAX && rs->seq_hi == U32_MAX) {
-+				NL_SET_ERR_MSG(
-+					extack,
-+					"Replay seq and seq_hi should be less than 0xFFFFFFFF for input SA");
-+				return -EINVAL;
-+			}
- 		}
- 	}
+diff --git a/net/openvswitch/flow_netlink.c b/net/openvswitch/flow_netlink.c
+index 518be23e48ea9..ad64bb9ab5e25 100644
+--- a/net/openvswitch/flow_netlink.c
++++ b/net/openvswitch/flow_netlink.c
+@@ -3049,7 +3049,8 @@ static int validate_userspace(const struct nlattr *attr)
+ 	struct nlattr *a[OVS_USERSPACE_ATTR_MAX + 1];
+ 	int error;
  
+-	error = nla_parse_nested_deprecated(a, OVS_USERSPACE_ATTR_MAX, attr,
++	error = nla_parse_deprecated_strict(a, OVS_USERSPACE_ATTR_MAX,
++					    nla_data(attr), nla_len(attr),
+ 					    userspace_policy, NULL);
+ 	if (error)
+ 		return error;
 -- 
 2.39.5
 
