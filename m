@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7211026A0AE;
-	Wed,  4 Jun 2025 01:04:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B38DF20F060;
+	Wed,  4 Jun 2025 01:04:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748999051; cv=none; b=Fl9DJZsmV5Ox1id231TzF9GksPeLZIFEue1Ob8RLVeFdqS49CdpHyg0MXvbqspvyrAKSHCd9CqgIk3CWfWqYAfOrryZgg/FQFf1z8KfvesO5ezLkyZnAh9I+JByWXYpFWsb8I1TfMtSsmj/fcMbXfVLYgX9AAxbcVezgxDjseKo=
+	t=1748999052; cv=none; b=tL5o/42yJk4K0dJCCDYJ8IourstBtV6jeIFjK9cAgB6pA/UNthrqeL4JHWLN+e4ZRy7UlwXNn/AdHoqSw+kRVA0tVpvHoXnGzv5ZjnGYu+NMwx1owHVzi19G9hlvo/+ctndpn9ORgMOgAs9Zrf1iwY6jHXu3lVtmiFhwvX4lf7I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748999051; c=relaxed/simple;
-	bh=qd3BFSh58DalsF60jW7VYQ2dcwD3H1trjQydJgggFR0=;
+	s=arc-20240116; t=1748999052; c=relaxed/simple;
+	bh=cKy9n+2IpNlDN9vqM7snb8sd3uhOfs2Om7Vv9gBVw04=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=dVQGhp2oyqk/VOl5SeKipAl385QFuODeJUW+p4AHLFZuGDP4NbDLxz6uJfzD0lAWi5FNaQVXRYRMw6LAB1aFXkIOWRmsbuBEuzrFwc7d982l8nIIwBpL7IXACWKYsM6a6oentt72zsIiky8JR9giLVX6n+7fBYbBCS7k/rSbJGc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZH6yICfF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=RjjiavQ+1Ibu8DSqk3Mw2ew4gsahrH91mfGnDJiRXbQ4jMaUmblHWaV5Fjv51B1cvVH/2vweT6uG+i7iCepBJwWGUjiSJWQ6JS6BtjJNkucfeF4byfjhRvCdNaKha+zE2ygZFFSGnJC7QkqCvqJbxUuvnMEGJdbIsoFyRulBazk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Utpu0BWZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZH6yICfF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 461CCC4CEF2;
-	Wed,  4 Jun 2025 01:04:10 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Utpu0BWZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B27F0C4CEED;
+	Wed,  4 Jun 2025 01:04:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748999051;
-	bh=qd3BFSh58DalsF60jW7VYQ2dcwD3H1trjQydJgggFR0=;
+	s=k20201202; t=1748999052;
+	bh=cKy9n+2IpNlDN9vqM7snb8sd3uhOfs2Om7Vv9gBVw04=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZH6yICfFHNRfRaDVxzIOsSbNx0xKejwJCJvh2hbDDfzeCLF7oR5qEiQSSqmOxkLAR
-	 WJwCzWcHXJ7NT4Uz1fP8ncfj1e8t3Rfm0aXpnR5YKMWufR0pc8GLAxIL3B3irayZiu
-	 trd/lg7t5P0sBjl0XpapR/rpPh4VYGTpzjHjS5DPPcG4bCkivvdqhlQQalX/X6DA0g
-	 X/bWyuJmshHbr4V1z/JKtWg6HVbZSdg9E2KE8Yr8RVhqQsNaTuVkaKeHiBz2ZDqQ8X
-	 i/uqowe0A15F5FzhwQTgvAiRUaHwyMijRCAMQI/sghLzy8mg7rBNcz5AJt68sah8FJ
-	 PATGPoo6oKtXQ==
+	b=Utpu0BWZdjr9gm/MZc1/aLqLHfq+F5oIt8YOLUkG8H7TB6wkGkuIoxdlbsoEjGIji
+	 gcSJW8ykqNytAcDgAmGHWySRI6p6JPNmBn2/sIpKi7whp+lKtoJD8H1NzaHrVztQkv
+	 f/02YOifLv00kr6QrtXMrB0IljCJMz+7ZOxOPc9PzKi6pxSGbI+B1KznHI/OdBWzzj
+	 DSQkYvyr2c8BEgOruBPPmed1KKC53a4X+edUNrsnbabJContNhizh1tSuuFnDk4NUF
+	 QDbjaMIjArt2M8CKXqQLwZZhj166K1UqYQJTPG8DI8TJvbQgtiUmt8Zg8RVxwJAxKn
+	 irlzDOq1QdFRw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Hou Tao <houtao1@huawei.com>,
-	syzbot+dce5aae19ae4d6399986@syzkaller.appspotmail.com,
-	Alexei Starovoitov <ast@kernel.org>,
+Cc: Tan En De <ende.tan@starfivetech.com>,
+	Jarkko Nikula <jarkko.nikula@linux.intel.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	daniel@iogearbox.net,
-	andrii@kernel.org,
-	bpf@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.1 04/46] bpf: Check rcu_read_lock_trace_held() in bpf_map_lookup_percpu_elem()
-Date: Tue,  3 Jun 2025 21:03:22 -0400
-Message-Id: <20250604010404.5109-4-sashal@kernel.org>
+	linux-i2c@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.1 05/46] i2c: designware: Invoke runtime suspend on quick slave re-registration
+Date: Tue,  3 Jun 2025 21:03:23 -0400
+Message-Id: <20250604010404.5109-5-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250604010404.5109-1-sashal@kernel.org>
 References: <20250604010404.5109-1-sashal@kernel.org>
@@ -51,78 +49,138 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.1.140
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hou Tao <houtao1@huawei.com>
+From: Tan En De <ende.tan@starfivetech.com>
 
-[ Upstream commit d4965578267e2e81f67c86e2608481e77e9c8569 ]
+[ Upstream commit 2fe2b969d911a09abcd6a47401a3c66c38a310e6 ]
 
-bpf_map_lookup_percpu_elem() helper is also available for sleepable bpf
-program. When BPF JIT is disabled or under 32-bit host,
-bpf_map_lookup_percpu_elem() will not be inlined. Using it in a
-sleepable bpf program will trigger the warning in
-bpf_map_lookup_percpu_elem(), because the bpf program only holds
-rcu_read_lock_trace lock. Therefore, add the missed check.
+Replaced pm_runtime_put() with pm_runtime_put_sync_suspend() to ensure
+the runtime suspend is invoked immediately when unregistering a slave.
+This prevents a race condition where suspend was skipped when
+unregistering and registering slave in quick succession.
 
-Reported-by: syzbot+dce5aae19ae4d6399986@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/bpf/000000000000176a130617420310@google.com/
-Signed-off-by: Hou Tao <houtao1@huawei.com>
-Link: https://lore.kernel.org/r/20250526062534.1105938-1-houtao@huaweicloud.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+For example, consider the rapid sequence of
+`delete_device -> new_device -> delete_device -> new_device`.
+In this sequence, it is observed that the dw_i2c_plat_runtime_suspend()
+might not be invoked after `delete_device` operation.
+
+This is because after `delete_device` operation, when the
+pm_runtime_put() is about to trigger suspend, the following `new_device`
+operation might race and cancel the suspend.
+
+If that happens, during the `new_device` operation,
+dw_i2c_plat_runtime_resume() is skipped (since there was no suspend), which
+means `i_dev->init()`, i.e. i2c_dw_init_slave(), is skipped.
+Since i2c_dw_init_slave() is skipped, i2c_dw_configure_fifo_slave() is
+skipped too, which leaves `DW_IC_INTR_MASK` unconfigured. If we inspect
+the interrupt mask register using devmem, it will show as zero.
+
+Example shell script to reproduce the issue:
+```
+  #!/bin/sh
+
+  SLAVE_LADDR=0x1010
+  SLAVE_BUS=13
+  NEW_DEVICE=/sys/bus/i2c/devices/i2c-$SLAVE_BUS/new_device
+  DELETE_DEVICE=/sys/bus/i2c/devices/i2c-$SLAVE_BUS/delete_device
+
+  # Create initial device
+  echo slave-24c02 $SLAVE_LADDR > $NEW_DEVICE
+  sleep 2
+
+  # Rapid sequence of
+  # delete_device -> new_device -> delete_device -> new_device
+  echo $SLAVE_LADDR > $DELETE_DEVICE
+  echo slave-24c02 $SLAVE_LADDR > $NEW_DEVICE
+  echo $SLAVE_LADDR > $DELETE_DEVICE
+  echo slave-24c02 $SLAVE_LADDR > $NEW_DEVICE
+
+  # Using devmem to inspect IC_INTR_MASK will show as zero
+```
+
+Signed-off-by: Tan En De <ende.tan@starfivetech.com>
+Acked-by: Jarkko Nikula <jarkko.nikula@linux.intel.com>
+Link: https://lore.kernel.org/r/20250412023303.378600-1-ende.tan@starfivetech.com
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-**YES** This commit should be backported to stable kernel trees based on
-my analysis: ## Analysis **1. Clear Bug Fix:** This commit fixes a
-legitimate bug where `bpf_map_lookup_percpu_elem()` triggers warnings in
-sleepable BPF programs when the BPF JIT is disabled or on 32-bit hosts.
-The warning occurs because sleepable BPF programs hold
-`rcu_read_lock_trace` instead of `rcu_read_lock`, but the function only
-checked for the latter. **2. Minimal, Contained Change:** The fix is
-extremely small and surgical - it only adds
-`!rcu_read_lock_trace_held()` to the existing warning condition in
-`bpf_map_lookup_percpu_elem()` at kernel/bpf/helpers.c:132-133. This
-follows the exact same pattern established by the previous similar fix.
-**3. Strong Historical Precedent:** Multiple similar commits have been
-successfully backported: - **Commit 169410eba271** (Similar Commit #1 -
-Backport Status: YES) - Added the same `rcu_read_lock_trace_held()`
-check to `bpf_map_{lookup,update,delete}_elem()` helpers with identical
-reasoning - **Commit 29a7e00ffadd** (Similar Commit #4 - Backport
-Status: YES) - Fixed missed RCU read lock in `bpf_task_under_cgroup()`
-for sleepable programs **4. Clear User Impact:** The commit was reported
-by syzbot and fixes a concrete issue affecting users running sleepable
-BPF programs. Without this fix, users see spurious warnings that
-indicate potential RCU usage bugs. **5. Low Regression Risk:** The
-change only expands the conditions under which the warning is suppressed
-- it doesn't change any functional behavior, just makes the assertion
-more accurate for sleepable BPF programs. **6. Part of Ongoing
-Pattern:** This is the missing piece in a series of similar fixes that
-have systematically addressed RCU assertions for sleepable BPF programs.
-The previous commit 169410eba271 fixed the basic map helpers but missed
-this percpu variant. **7. Stable Tree Criteria Alignment:** - Fixes
-important functionality (eliminates false warnings) - No architectural
-changes - Minimal risk of regression - Confined to BPF subsystem - Clear
-side effects (none beyond fixing the warning) The commit perfectly
-matches the stable tree backporting criteria and follows the established
-pattern of similar successful backports.
+**YES** This commit should be backported to stable kernel trees. Here's
+my extensive analysis: ## Critical Bug Fix Analysis ### 1. **Nature of
+the Bug** This commit fixes a **race condition** that causes I2C slave
+functionality to completely break. The problem occurs during rapid slave
+device registration/unregistration sequences where: - `pm_runtime_put()`
+is asynchronous and may not complete suspend before the next
+`pm_runtime_get_sync()` - If suspend doesn't happen, runtime resume is
+skipped - Runtime resume is where `i2c_dw_init_slave()` and
+`i2c_dw_configure_fifo_slave()` restore critical hardware configuration
+- When these initialization functions are skipped, the interrupt mask
+register (`DW_IC_INTR_MASK`) remains zero, disabling all interrupts ###
+2. **Impact on Users** This is a **high-impact functional bug** that: -
+Completely breaks I2C slave functionality in affected scenarios -
+Affects real-world use cases (rapid device creation/deletion as shown in
+the shell script) - Leaves hardware in a non-functional state requiring
+manual intervention - Results in silent failures where the slave appears
+registered but cannot handle transactions ### 3. **Code Change
+Analysis** The fix is **minimal and surgical**: ```c -
+pm_runtime_put(dev->dev); + pm_runtime_put_sync_suspend(dev->dev); ```
+This single-line change: - Replaces asynchronous `pm_runtime_put()` with
+synchronous `pm_runtime_put_sync_suspend()` - Ensures runtime suspend
+happens immediately before unregistration completes - Eliminates the
+race window where suspend could be skipped - Has **no functional side
+effects** beyond the intended timing change ### 4. **Risk Assessment**
+**Very low risk** for several reasons: - **Single line change** with
+clear, well-understood semantics - **Conservative fix** - makes behavior
+more predictable, not fundamentally different - **Same end result** -
+both functions eventually suspend the device, just with different timing
+- **No new code paths** - uses existing, well-tested runtime PM
+infrastructure - **Maintains all existing error handling and power
+management policies** ### 5. **Stable Tree Criteria Compliance** ✅
+**Important bugfix** - Fixes complete loss of I2C slave functionality ✅
+**Minimal risk** - Single line change with well-understood behavior ✅
+**No new features** - Pure bug fix with no feature additions ✅ **No
+architectural changes** - Uses existing runtime PM APIs ✅ **Confined to
+subsystem** - Only affects i2c-designware slave mode ✅ **Clear
+reproduction case** - Includes shell script demonstrating the problem
+### 6. **Comparison with Similar Commits** Looking at the provided
+examples: - **Similar Commit #3 (Status: YES)**: Also fixed a race
+condition in slave mode with `synchronize_irq()` - this shows precedent
+for backporting race condition fixes in this driver - **Similar Commits
+#1,2,4,5 (Status: NO)**: Were cleanup, optimization, or architectural
+changes rather than critical bug fixes ### 7. **Technical Validation**
+The commit demonstrates understanding of the underlying issue: - **Root
+cause identified**: Async suspend being canceled by subsequent
+operations - **Mechanism explained**: Missing initialization during
+runtime resume - **Hardware impact documented**: Interrupt mask register
+left unconfigured - **Reproduction provided**: Clear test case showing
+the failure ### 8. **Maintainer Confidence** The commit has strong
+technical validation: - **Acked-by: Jarkko Nikula** - A key
+i2c-designware maintainer - **Detailed commit message** with technical
+explanation and reproduction steps - **Clean implementation** using
+standard kernel APIs ## Conclusion This commit fixes a critical race
+condition that completely breaks I2C slave functionality with minimal
+risk and clear precedent for backporting similar fixes. It meets all
+stable tree criteria for an important, low-risk bugfix that should be
+available to users running stable kernels.
 
- kernel/bpf/helpers.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/i2c/busses/i2c-designware-slave.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/helpers.c b/kernel/bpf/helpers.c
-index 4fef0a0155255..94e85d311641b 100644
---- a/kernel/bpf/helpers.c
-+++ b/kernel/bpf/helpers.c
-@@ -125,7 +125,8 @@ const struct bpf_func_proto bpf_map_peek_elem_proto = {
+diff --git a/drivers/i2c/busses/i2c-designware-slave.c b/drivers/i2c/busses/i2c-designware-slave.c
+index 5b54a9b9ed1a3..09b8ccc040c6e 100644
+--- a/drivers/i2c/busses/i2c-designware-slave.c
++++ b/drivers/i2c/busses/i2c-designware-slave.c
+@@ -97,7 +97,7 @@ static int i2c_dw_unreg_slave(struct i2c_client *slave)
+ 	dev->disable(dev);
+ 	synchronize_irq(dev->irq);
+ 	dev->slave = NULL;
+-	pm_runtime_put(dev->dev);
++	pm_runtime_put_sync_suspend(dev->dev);
  
- BPF_CALL_3(bpf_map_lookup_percpu_elem, struct bpf_map *, map, void *, key, u32, cpu)
- {
--	WARN_ON_ONCE(!rcu_read_lock_held() && !rcu_read_lock_bh_held());
-+	WARN_ON_ONCE(!rcu_read_lock_held() && !rcu_read_lock_trace_held() &&
-+		     !rcu_read_lock_bh_held());
- 	return (unsigned long) map->ops->map_lookup_percpu_elem(map, key, cpu);
+ 	return 0;
  }
- 
 -- 
 2.39.5
 
