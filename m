@@ -1,43 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B65C642065;
-	Wed,  4 Jun 2025 00:58:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7167813B58C;
+	Wed,  4 Jun 2025 00:58:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748998683; cv=none; b=F8hKg1b9Eqe7dyZwylG0SzU2bArMyEBeHRKMlMUhE2qAC5IYV85afyPV4f/u/JifbMqeG6eH8Vtiz9jJzWy3C65N+fXJckmyMK3qsMnDyroUy1LZ5I9WpLfx9MFhGk2sNNH7yc57LdmX7qpHkjSeMUWr+WG75Zxj6iMTNpUGE/Q=
+	t=1748998685; cv=none; b=dFQOfO8bOJaSxVOx+6YR8n+Ot6mjcdKXvZFJJMNFngjduTFIJiJoM5ChIG0dcBC3oxCg+P8NhFRJH93VeQSbW1PUv8L2WJ7YKRyeqvoE61riMsndUK21/l2bxf8yBnsvvrgelmSOU1Up4yP4fOpvTpP81PunLHdHgX0HURh60xY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748998683; c=relaxed/simple;
-	bh=GB/aP0q0r7SbOGwK2a1BFkG75fJVmBfPWZGOC2O0e5c=;
+	s=arc-20240116; t=1748998685; c=relaxed/simple;
+	bh=55rGHk7XWSH3l2LIzERqXJpeKuT/hiK1SADHCl+53ik=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hIUC7AswkvyiW8JKBdp/zRkUwe3kvrOoyJS/0LrLDhqrFOzZWNJL9bo+l6yNYP2o7aiRCPtzueU3WC6fi9VChm+JNlQ8+4Wi7CCkZvIiTGur6soFMcrpCme9gQJlBg2/qqeoU4RBJd1ZcIfMfVhKhL7G2f52iZwNJwC5JzLbbjc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XdNH/hUm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=QdnyMuBxXdeRa3HSoquMKxTcMPTx0r3Wvueck17ZAxuhCw6a5xc4rMKIuDfKIfaE6p2yDza9SGsum/U8aUPDYGLXcrhdWOkE5k7L3+o5zDbIR3T2pQ99QzreNIPUC8DCGBkuQq2QK2//bzlJBKF7+HzprJXYAAs9PDhyAfi4uiU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=N0NGTE2N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XdNH/hUm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEA16C4CEED;
-	Wed,  4 Jun 2025 00:58:02 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="N0NGTE2N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 157FBC4CEED;
+	Wed,  4 Jun 2025 00:58:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748998683;
-	bh=GB/aP0q0r7SbOGwK2a1BFkG75fJVmBfPWZGOC2O0e5c=;
+	s=k20201202; t=1748998685;
+	bh=55rGHk7XWSH3l2LIzERqXJpeKuT/hiK1SADHCl+53ik=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XdNH/hUm6jN/FNlUiGCenwC0aDjS1Pmd6dpOUpC3xkzqmB8NDevjeIjXVvf78Wy1w
-	 K+KGEREv9rPVPjyrsPQqvPok8ARFWeyoVMilQnlh3/9g2n3K5cJPSo3hDUsMM6oTzt
-	 +veLnwPnX/SEQNJxVfaVVTze6M0k5ENNFyhclemJ4+sSLiMmAe5dSTrRw1qhpnlpq7
-	 P751o6D/xlVX5pjbJaJtCzQJG2Pz6E7+m+lLAoNCto7UAoATc3J/A7Go8Y2E4x7cw+
-	 vEtLOtd6AfbMbUVqaE1urlvHQXU9XGDkyvhA4y2Xwfts3q3pmrL3CEjttY5ca9WSnC
-	 EVf+p3Uz2StYg==
+	b=N0NGTE2NhunnJchABnb55KrjV3arLah/ehrODGXBju56+ydFlshxZbOqiVUoKKice
+	 swwfT52oeXwXQmdfmmFV2aY7nTxLH4AmSwtY/sQbbta7UQk3yCMstx/dxucof5qJQ/
+	 mtUm75qwJUzh+fxVUd9+b5JhrHZhWppH3yQuRdwrm1n3HgU53vXRls7bgXsnQM9twG
+	 36Qt33slOfnCYhUwb7cDXwSZGYbDGCH1A16uFQ+UYDwhvN8nDKxVmXuFOI28sIVWTi
+	 WdappmNyDfptNkFj+hAAku9YHLi6ofI/YxOaswhxUJoy+d2e4YuTetq6CGw4YXQGqr
+	 pMEMPXIFaKRiw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Vlad Dogaru <vdogaru@nvidia.com>,
-	Yevgeny Kliteynik <kliteyn@nvidia.com>,
-	Mark Bloch <mbloch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: Shung-Hsi Yu <shung-hsi.yu@suse.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
 	Sasha Levin <sashal@kernel.org>,
-	tariqt@nvidia.com
-Subject: [PATCH AUTOSEL 6.14 072/108] net/mlx5: HWS, Fix IP version decision
-Date: Tue,  3 Jun 2025 20:54:55 -0400
-Message-Id: <20250604005531.4178547-72-sashal@kernel.org>
+	martin.lau@linux.dev,
+	ast@kernel.org,
+	daniel@iogearbox.net,
+	bpf@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.14 073/108] bpf: Use proper type to calculate bpf_raw_tp_null_args.mask index
+Date: Tue,  3 Jun 2025 20:54:56 -0400
+Message-Id: <20250604005531.4178547-73-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250604005531.4178547-1-sashal@kernel.org>
 References: <20250604005531.4178547-1-sashal@kernel.org>
@@ -53,169 +56,130 @@ X-stable-base: Linux 6.14.9
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vlad Dogaru <vdogaru@nvidia.com>
+From: Shung-Hsi Yu <shung-hsi.yu@suse.com>
 
-[ Upstream commit 5f2f8d8b6800e4fc760c2eccec9b2bd2cacf80cf ]
+[ Upstream commit 53ebef53a657d7957d35dc2b953db64f1bb28065 ]
 
-Unify the check for IP version when creating a definer. A given matcher
-is deemed to match on IPv6 if any of the higher order (>31) bits of
-source or destination address mask are set.
+The calculation of the index used to access the mask field in 'struct
+bpf_raw_tp_null_args' is done with 'int' type, which could overflow when
+the tracepoint being attached has more than 8 arguments.
 
-A single packet cannot mix IP versions between source and destination
-addresses, so it makes no sense that they would be decided on
-independently.
+While none of the tracepoints mentioned in raw_tp_null_args[] currently
+have more than 8 arguments, there do exist tracepoints that had more
+than 8 arguments (e.g. iocost_iocg_forgive_debt), so use the correct
+type for calculation and avoid Smatch static checker warning.
 
-Signed-off-by: Vlad Dogaru <vdogaru@nvidia.com>
-Reviewed-by: Yevgeny Kliteynik <kliteyn@nvidia.com>
-Signed-off-by: Mark Bloch <mbloch@nvidia.com>
-Link: https://patch.msgid.link/20250422092540.182091-2-mbloch@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Acked-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Link: https://lore.kernel.org/bpf/20250418074946.35569-1-shung-hsi.yu@suse.com
+
+Closes: https://lore.kernel.org/r/843a3b94-d53d-42db-93d4-be10a4090146@stanley.mountain/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-**YES** This commit should be backported to stable kernel trees. Here's
-my detailed analysis: ## Bug Analysis This commit fixes a real logical
-bug in the mlx5 HWS (Hardware Steering) definer subsystem. The issue is
-in how IP version is determined when creating flow matchers. **The
-Problem:** The old code made independent decisions about IPv6 vs IPv4
-for source and destination addresses: ```c is_s_ipv6 = s_ipv6[0] ||
-s_ipv6[1] || s_ipv6[2]; is_d_ipv6 = d_ipv6[0] || d_ipv6[1] || d_ipv6[2];
-``` This could lead to inconsistent handling where source and
-destination addresses might be treated as different IP versions, which
-is logically impossible for a single packet. **The Fix:** The new code
-correctly unifies the decision: ```c is_ipv6 = s_ipv6[0] || s_ipv6[1] ||
-s_ipv6[2] || d_ipv6[0] || d_ipv6[1] || d_ipv6[2]; ``` ## Impact
-Assessment **User Impact:** This bug could cause serious networking
-issues: 1. **Incorrect packet classification** - packets might not match
-intended flow rules 2. **Hardware steering failures** - wrong definer
-configuration could cause packets to fall back to software path 3.
-**Performance degradation** - incorrect hardware offload behavior 4.
-**Connection failures** - in environments with IPv6 traffic **Risk
-Assessment:** This is a low-risk fix: - **Scope**: Limited to two
-functions (`hws_definer_conv_outer` and `hws_definer_conv_inner`) -
-**Logic**: Simple variable consolidation with more correct networking
-logic - **Size**: Small, contained change affecting only the IP version
-decision logic ## Comparison to Similar Commits Unlike the provided
-similar commits that were marked "Backport Status: NO" (which were
-primarily new features like "added definers handling", "log unsupported
-mask", etc.), this commit: - **Fixes core functionality** rather than
-adding new features - **Addresses a logical incorrectness** that can
-impact real users - **Has minimal regression risk** while fixing a clear
-bug ## Conclusion This commit meets all criteria for stable backporting:
-✅ Fixes a user-impacting bug ✅ Small, contained change ✅ Minimal
-regression risk ✅ Affects core networking functionality ✅ Clear benefit-
-to-risk ratio The fix aligns the code with fundamental networking
-principles (a packet cannot have mixed IP versions) and resolves
-potential hardware steering issues that could impact production
-environments using mlx5 networking hardware.
+Now I have enough context to analyze this commit: **Analysis:** **YES**
+- This commit should be backported to stable kernel trees. **Extensive
+Explanation:** ## Issue Description The commit fixes a potential integer
+overflow in the BPF BTF subsystem. The bug is in lines 6830 and 6833 of
+`kernel/bpf/btf.c` where the calculation `(arg capability_test
+capability_test.c f2fs_folio_analysis.md ipv4_multipath_analysis.md
+ipv6_route_allocation_rcu_analysis.md ixgbe_e610_set_phys_id_analysis.md
+linux lpfc_timeout_analysis.md rtl_bb_delay_analysis.md
+rtw89_mlo_analysis.md tcp_multipath_load_balance_analysis.md
+type_size_check type_size_check.c veth_driver_analysis.md 4)` is done
+with `int` type when `arg` can theoretically be large enough to cause
+overflow. ## Code Analysis 1. **Variable Types**: - `arg` is declared as
+`u32` (from `btf_ctx_arg_idx` return type) - The shift operation was
+using `int` arithmetic: `(0x1 << (arg capability_test capability_test.c
+f2fs_folio_analysis.md ipv4_multipath_analysis.md
+ipv6_route_allocation_rcu_analysis.md ixgbe_e610_set_phys_id_analysis.md
+linux lpfc_timeout_analysis.md rtl_bb_delay_analysis.md
+rtw89_mlo_analysis.md tcp_multipath_load_balance_analysis.md
+type_size_check type_size_check.c veth_driver_analysis.md 4))` - The fix
+changes it to `unsigned long long`: `(0x1ULL << (arg capability_test
+capability_test.c f2fs_folio_analysis.md ipv4_multipath_analysis.md
+ipv6_route_allocation_rcu_analysis.md ixgbe_e610_set_phys_id_analysis.md
+linux lpfc_timeout_analysis.md rtl_bb_delay_analysis.md
+rtw89_mlo_analysis.md tcp_multipath_load_balance_analysis.md
+type_size_check type_size_check.c veth_driver_analysis.md 4))` 2. **The
+Overflow Scenario**: - When `arg >= 8`, the expression `(arg
+capability_test capability_test.c f2fs_folio_analysis.md
+ipv4_multipath_analysis.md ipv6_route_allocation_rcu_analysis.md
+ixgbe_e610_set_phys_id_analysis.md linux lpfc_timeout_analysis.md
+rtl_bb_delay_analysis.md rtw89_mlo_analysis.md
+tcp_multipath_load_balance_analysis.md type_size_check type_size_check.c
+veth_driver_analysis.md 4)` could be >= 32 - Shifting by >= 32 bits on a
+32-bit `int` causes undefined behavior - Even on 64-bit systems, large
+values could overflow the intermediate calculation 3. **Specific
+Changes**: ```c // Before (vulnerable): if (raw_tp_null_args[i].mask &
+(0x1 << (arg capability_test capability_test.c f2fs_folio_analysis.md
+ipv4_multipath_analysis.md ipv6_route_allocation_rcu_analysis.md
+ixgbe_e610_set_phys_id_analysis.md linux lpfc_timeout_analysis.md
+rtl_bb_delay_analysis.md rtw89_mlo_analysis.md
+tcp_multipath_load_balance_analysis.md type_size_check type_size_check.c
+veth_driver_analysis.md 4))) if (raw_tp_null_args[i].mask & (0x2 << (arg
+capability_test capability_test.c f2fs_folio_analysis.md
+ipv4_multipath_analysis.md ipv6_route_allocation_rcu_analysis.md
+ixgbe_e610_set_phys_id_analysis.md linux lpfc_timeout_analysis.md
+rtl_bb_delay_analysis.md rtw89_mlo_analysis.md
+tcp_multipath_load_balance_analysis.md type_size_check type_size_check.c
+veth_driver_analysis.md 4))) // After (fixed): if
+(raw_tp_null_args[i].mask & (0x1ULL << (arg capability_test
+capability_test.c f2fs_folio_analysis.md ipv4_multipath_analysis.md
+ipv6_route_allocation_rcu_analysis.md ixgbe_e610_set_phys_id_analysis.md
+linux lpfc_timeout_analysis.md rtl_bb_delay_analysis.md
+rtw89_mlo_analysis.md tcp_multipath_load_balance_analysis.md
+type_size_check type_size_check.c veth_driver_analysis.md 4))) if
+(raw_tp_null_args[i].mask & (0x2ULL << (arg capability_test
+capability_test.c f2fs_folio_analysis.md ipv4_multipath_analysis.md
+ipv6_route_allocation_rcu_analysis.md ixgbe_e610_set_phys_id_analysis.md
+linux lpfc_timeout_analysis.md rtl_bb_delay_analysis.md
+rtw89_mlo_analysis.md tcp_multipath_load_balance_analysis.md
+type_size_check type_size_check.c veth_driver_analysis.md 4))) ``` ##
+Why This Should Be Backported 1. **Bug Fix**: This is a clear bug fix
+addressing undefined behavior that could cause incorrect BPF program
+verification. 2. **Small and Contained**: The fix is minimal - only
+changes two lines by adding `ULL` suffix to ensure 64-bit arithmetic. 3.
+**No Side Effects**: The change maintains the same logic but uses proper
+types, eliminating undefined behavior without changing functionality. 4.
+**Critical Subsystem**: This affects BPF verification, which is
+security-critical. Incorrect verification could lead to security issues.
+5. **Static Analysis Detection**: The commit was triggered by a Smatch
+static checker warning, indicating this is a real issue that static
+analysis tools flag. 6. **Potential Real-World Impact**: While the
+commit mentions no current tracepoints have >8 arguments, the code path
+could be triggered by future tracepoints or module tracepoints, making
+this a defensive fix. 7. **Follows Stable Criteria**: - Important bugfix
+✓ - Minimal risk ✓ - No architectural changes ✓ - Confined to BPF
+subsystem ✓ ## Comparison with Similar Commits Looking at the historical
+examples, this commit is most similar to "Similar Commit #5" which was
+marked as "Backport Status: YES" - it's a small type safety fix in BPF
+BTF code that prevents undefined behavior. The fix prevents a subtle but
+potentially serious issue in BPF program verification, making it an
+excellent candidate for stable backporting.
 
- .../mellanox/mlx5/core/steering/hws/definer.c | 38 ++++++++-----------
- 1 file changed, 16 insertions(+), 22 deletions(-)
+ kernel/bpf/btf.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/definer.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/definer.c
-index 10ece7df1cfaf..bc2aa0b0fa865 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/definer.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/definer.c
-@@ -508,9 +508,9 @@ static int
- hws_definer_conv_outer(struct mlx5hws_definer_conv_data *cd,
- 		       u32 *match_param)
- {
--	bool is_s_ipv6, is_d_ipv6, smac_set, dmac_set;
- 	struct mlx5hws_definer_fc *fc = cd->fc;
- 	struct mlx5hws_definer_fc *curr_fc;
-+	bool is_ipv6, smac_set, dmac_set;
- 	u32 *s_ipv6, *d_ipv6;
- 
- 	if (HWS_IS_FLD_SET_SZ(match_param, outer_headers.l4_type, 0x2) ||
-@@ -569,10 +569,10 @@ hws_definer_conv_outer(struct mlx5hws_definer_conv_data *cd,
- 			      outer_headers.dst_ipv4_dst_ipv6.ipv6_layout);
- 
- 	/* Assume IPv6 is used if ipv6 bits are set */
--	is_s_ipv6 = s_ipv6[0] || s_ipv6[1] || s_ipv6[2];
--	is_d_ipv6 = d_ipv6[0] || d_ipv6[1] || d_ipv6[2];
-+	is_ipv6 = s_ipv6[0] || s_ipv6[1] || s_ipv6[2] ||
-+		  d_ipv6[0] || d_ipv6[1] || d_ipv6[2];
- 
--	if (is_s_ipv6) {
-+	if (is_ipv6) {
- 		/* Handle IPv6 source address */
- 		HWS_SET_HDR(fc, match_param, IPV6_SRC_127_96_O,
- 			    outer_headers.src_ipv4_src_ipv6.ipv6_simple_layout.ipv6_127_96,
-@@ -586,13 +586,6 @@ hws_definer_conv_outer(struct mlx5hws_definer_conv_data *cd,
- 		HWS_SET_HDR(fc, match_param, IPV6_SRC_31_0_O,
- 			    outer_headers.src_ipv4_src_ipv6.ipv6_simple_layout.ipv6_31_0,
- 			    ipv6_src_outer.ipv6_address_31_0);
--	} else {
--		/* Handle IPv4 source address */
--		HWS_SET_HDR(fc, match_param, IPV4_SRC_O,
--			    outer_headers.src_ipv4_src_ipv6.ipv6_simple_layout.ipv6_31_0,
--			    ipv4_src_dest_outer.source_address);
--	}
--	if (is_d_ipv6) {
- 		/* Handle IPv6 destination address */
- 		HWS_SET_HDR(fc, match_param, IPV6_DST_127_96_O,
- 			    outer_headers.dst_ipv4_dst_ipv6.ipv6_simple_layout.ipv6_127_96,
-@@ -607,6 +600,10 @@ hws_definer_conv_outer(struct mlx5hws_definer_conv_data *cd,
- 			    outer_headers.dst_ipv4_dst_ipv6.ipv6_simple_layout.ipv6_31_0,
- 			    ipv6_dst_outer.ipv6_address_31_0);
- 	} else {
-+		/* Handle IPv4 source address */
-+		HWS_SET_HDR(fc, match_param, IPV4_SRC_O,
-+			    outer_headers.src_ipv4_src_ipv6.ipv6_simple_layout.ipv6_31_0,
-+			    ipv4_src_dest_outer.source_address);
- 		/* Handle IPv4 destination address */
- 		HWS_SET_HDR(fc, match_param, IPV4_DST_O,
- 			    outer_headers.dst_ipv4_dst_ipv6.ipv6_simple_layout.ipv6_31_0,
-@@ -664,9 +661,9 @@ static int
- hws_definer_conv_inner(struct mlx5hws_definer_conv_data *cd,
- 		       u32 *match_param)
- {
--	bool is_s_ipv6, is_d_ipv6, smac_set, dmac_set;
- 	struct mlx5hws_definer_fc *fc = cd->fc;
- 	struct mlx5hws_definer_fc *curr_fc;
-+	bool is_ipv6, smac_set, dmac_set;
- 	u32 *s_ipv6, *d_ipv6;
- 
- 	if (HWS_IS_FLD_SET_SZ(match_param, inner_headers.l4_type, 0x2) ||
-@@ -727,10 +724,10 @@ hws_definer_conv_inner(struct mlx5hws_definer_conv_data *cd,
- 			      inner_headers.dst_ipv4_dst_ipv6.ipv6_layout);
- 
- 	/* Assume IPv6 is used if ipv6 bits are set */
--	is_s_ipv6 = s_ipv6[0] || s_ipv6[1] || s_ipv6[2];
--	is_d_ipv6 = d_ipv6[0] || d_ipv6[1] || d_ipv6[2];
-+	is_ipv6 = s_ipv6[0] || s_ipv6[1] || s_ipv6[2] ||
-+		  d_ipv6[0] || d_ipv6[1] || d_ipv6[2];
- 
--	if (is_s_ipv6) {
-+	if (is_ipv6) {
- 		/* Handle IPv6 source address */
- 		HWS_SET_HDR(fc, match_param, IPV6_SRC_127_96_I,
- 			    inner_headers.src_ipv4_src_ipv6.ipv6_simple_layout.ipv6_127_96,
-@@ -744,13 +741,6 @@ hws_definer_conv_inner(struct mlx5hws_definer_conv_data *cd,
- 		HWS_SET_HDR(fc, match_param, IPV6_SRC_31_0_I,
- 			    inner_headers.src_ipv4_src_ipv6.ipv6_simple_layout.ipv6_31_0,
- 			    ipv6_src_inner.ipv6_address_31_0);
--	} else {
--		/* Handle IPv4 source address */
--		HWS_SET_HDR(fc, match_param, IPV4_SRC_I,
--			    inner_headers.src_ipv4_src_ipv6.ipv6_simple_layout.ipv6_31_0,
--			    ipv4_src_dest_inner.source_address);
--	}
--	if (is_d_ipv6) {
- 		/* Handle IPv6 destination address */
- 		HWS_SET_HDR(fc, match_param, IPV6_DST_127_96_I,
- 			    inner_headers.dst_ipv4_dst_ipv6.ipv6_simple_layout.ipv6_127_96,
-@@ -765,6 +755,10 @@ hws_definer_conv_inner(struct mlx5hws_definer_conv_data *cd,
- 			    inner_headers.dst_ipv4_dst_ipv6.ipv6_simple_layout.ipv6_31_0,
- 			    ipv6_dst_inner.ipv6_address_31_0);
- 	} else {
-+		/* Handle IPv4 source address */
-+		HWS_SET_HDR(fc, match_param, IPV4_SRC_I,
-+			    inner_headers.src_ipv4_src_ipv6.ipv6_simple_layout.ipv6_31_0,
-+			    ipv4_src_dest_inner.source_address);
- 		/* Handle IPv4 destination address */
- 		HWS_SET_HDR(fc, match_param, IPV4_DST_I,
- 			    inner_headers.dst_ipv4_dst_ipv6.ipv6_simple_layout.ipv6_31_0,
+diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
+index c3223e0db2f51..9b1c18a54918f 100644
+--- a/kernel/bpf/btf.c
++++ b/kernel/bpf/btf.c
+@@ -6708,10 +6708,10 @@ bool btf_ctx_access(int off, int size, enum bpf_access_type type,
+ 			/* Is this a func with potential NULL args? */
+ 			if (strcmp(tname, raw_tp_null_args[i].func))
+ 				continue;
+-			if (raw_tp_null_args[i].mask & (0x1 << (arg * 4)))
++			if (raw_tp_null_args[i].mask & (0x1ULL << (arg * 4)))
+ 				info->reg_type |= PTR_MAYBE_NULL;
+ 			/* Is the current arg IS_ERR? */
+-			if (raw_tp_null_args[i].mask & (0x2 << (arg * 4)))
++			if (raw_tp_null_args[i].mask & (0x2ULL << (arg * 4)))
+ 				ptr_err_raw_tp = true;
+ 			break;
+ 		}
 -- 
 2.39.5
 
