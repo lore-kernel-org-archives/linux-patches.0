@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3294F78F5E;
-	Wed,  4 Jun 2025 01:04:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADF2578F5E;
+	Wed,  4 Jun 2025 01:04:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748999071; cv=none; b=gj0zK98enBuduq/7ibmomLGJW5e8bNWLTLmOxZOjDhqkuu3itnWONElnx8H6PFbLpr5tuXWdeuxijWlrHdQ+T5kYHW4BlrTPLUC/I0ccdJiWl2R+0jCRs7R+KO2mxOXB+RFQitW5nuiihvfBxJ0+pwEPuZ41zj1HGwmJkNtD6KI=
+	t=1748999072; cv=none; b=gPCY7L3OK0ny2FM8qXXAzS+k9OaPjttxarJobRL9JPTi2jjGAeOAuJUEmEIJXS4Lq5L6J80BZVIrCYSe0wgW+Zx14mY6w2wjH5OWJAvgvHJP6kuUX/TNSqtBtbvlnJOskYxP90fezii3gHHRw2h1y1qCW+/Fwhe36bUR8+2/QQs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748999071; c=relaxed/simple;
-	bh=7v37HkCV4JkT107jW6tVO4ZdQQ3wey12MMN/0XrGVX4=;
+	s=arc-20240116; t=1748999072; c=relaxed/simple;
+	bh=yoNo7uFG+rqnf0cQSZSwTsEJZIQtBUXcSPV21RGI5QI=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=upDlydyJG4CMQCuyaeGRSEKkgi1g/HLd/9I1E1t7FSlqQuTNpEkruM5yvtmy93fI9H2j1me+quUdHOxiZyH1SiqRRG/5rpwdFbwEN9BXqFe28vcS2FIxWtWmsTihLzxfaWNt6B5Yu/ZLMqkPbmngVyxBVqC+GERdo1DN8wU1I5I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=F4PfQJRI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Ab+OunrQy8xL0QLinHykTYx+zr0Ejfv8jMs3kGvXy8M5PPCiDD7BRS8ZZqCh1rojW85GxyxRcdoKWf8fr+H0q40f6ofHUSxyMG41CRK/Nwi7dqy/3J1qXHnjs6UW+fyzvZdjyO2u3rOKh85jjvzKCh1hexgnAHT7S2fr8VvEEjc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=H6wywpGK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="F4PfQJRI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AB50C4CEED;
-	Wed,  4 Jun 2025 01:04:29 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="H6wywpGK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 797A1C4CEF3;
+	Wed,  4 Jun 2025 01:04:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748999071;
-	bh=7v37HkCV4JkT107jW6tVO4ZdQQ3wey12MMN/0XrGVX4=;
+	s=k20201202; t=1748999072;
+	bh=yoNo7uFG+rqnf0cQSZSwTsEJZIQtBUXcSPV21RGI5QI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F4PfQJRI/6Vw+dw6oSocht8pD+MUy0rbJMt71BYvmhoTteU9mHIt1aFnBFI6aH2dy
-	 XWjQzmKfDHOf5ijUaJTLRJ59OkAJvUWlguPCBHilSvaEkJajpXsEUlnpncZgl7v1fW
-	 672G6UofFgDUnW+GboWqCgAHgyZ+M2hCGy2fIWkbdPIdABO/zPMebO2AH3xtkxBOfW
-	 gMkW0+i1sifH0ko1LQIETYbMsdwbJZy6NH65a7NUscoqwpljDM4yTKLsCNjbcr9D6h
-	 9aIwyVXqg0VsxloKuxIeyz12RaHRw0deuLTLZZ+UOeIKV5jp5wfDaY8MAK2qAcNAPS
-	 FOQB2fU4O+JZQ==
+	b=H6wywpGKbXcfJh5YB+XpBT9jBYz3EI0cSHQqQfM2Iu/02cVgT9r9WbDJ4eeWTer6r
+	 F76v7YTcSuXti6wmAJq8IIqmPVHeSgP1Gwfi5kDB+4dIPfAMXFIpnY8kbdPheFHb/S
+	 IB1dd0/8mLbaVozGrpN0Xvh6te/afWP5gDOeuJe6ucn3lZctetVEQb06AqfETDxEet
+	 0nGzUYwCGb4whfr3SE8Z4DvP8VA9svM55FlxEcRecZqaCSuSePDpxkIocq4+0Uwg2C
+	 bg30lms/G5ENN86PPSWWndziXy7M8ilZ9CvGXYjx21Ah1EIZGKcb8pkiyHQ8xIJsr0
+	 AhfkLepu64o5A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Moon Yeounsu <yyyynoom@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: Muhammad Usama Anjum <usama.anjum@collabora.com>,
+	Baochen Qiang <quic_bqiang@quicinc.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>,
-	horms@kernel.org,
-	tglx@linutronix.de,
-	mingo@kernel.org,
-	davem@davemloft.net
-Subject: [PATCH AUTOSEL 6.1 13/46] net: dlink: add synchronization for stats update
-Date: Tue,  3 Jun 2025 21:03:31 -0400
-Message-Id: <20250604010404.5109-13-sashal@kernel.org>
+	jjohnson@kernel.org,
+	linux-wireless@vger.kernel.org,
+	ath11k@lists.infradead.org
+Subject: [PATCH AUTOSEL 6.1 14/46] wifi: ath11k: Fix QMI memory reuse logic
+Date: Tue,  3 Jun 2025 21:03:32 -0400
+Message-Id: <20250604010404.5109-14-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250604010404.5109-1-sashal@kernel.org>
 References: <20250604010404.5109-1-sashal@kernel.org>
@@ -51,132 +51,130 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.1.140
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Moon Yeounsu <yyyynoom@gmail.com>
+From: Muhammad Usama Anjum <usama.anjum@collabora.com>
 
-[ Upstream commit 12889ce926e9a9baf6b83d809ba316af539b89e2 ]
+[ Upstream commit cd2e7bae92bd7e65063ab8d04721d2b711ba4cbe ]
 
-This patch synchronizes code that accesses from both user-space
-and IRQ contexts. The `get_stats()` function can be called from both
-context.
+Firmware requests 2 segments at first. The first segment is of 6799360
+whose allocation fails due to dma remapping not available. The success
+is returned to firmware. Then firmware asks for 22 smaller segments
+instead of 2 big ones. Those get allocated successfully. At suspend/
+hibernation time, these segments aren't freed as they will be reused
+by firmware after resuming.
 
-`dev->stats.tx_errors` and `dev->stats.collisions` are also updated
-in the `tx_errors()` function. Therefore, these fields must also be
-protected by synchronized.
+After resuming, the firmware asks for the 2 segments again with the
+first segment of 6799360 size. Since chunk->vaddr is not NULL, the
+type and size are compared with the previous type and size to know if
+it can be reused or not. Unfortunately, it is detected that it cannot
+be reused and this first smaller segment is freed. Then we continue to
+allocate 6799360 size memory which fails and ath11k_qmi_free_target_mem_chunk()
+is called which frees the second smaller segment as well. Later success
+is returned to firmware which asks for 22 smaller segments again. But
+as we had freed 2 segments already, we'll allocate the first 2 new
+smaller segments again and reuse the remaining 20. Hence 20 small
+segments are being reused instead of 22.
 
-There is no code that accessses `dev->stats.tx_errors` between the
-previous and updated lines, so the updating point can be moved.
+Add skip logic when vaddr is set, but size/type don't match. Use the
+same skip and success logic as used when dma_alloc_coherent() fails.
+By skipping, the possibility of resume failure due to kernel failing to
+allocate memory for QMI can be avoided.
 
-Signed-off-by: Moon Yeounsu <yyyynoom@gmail.com>
-Link: https://patch.msgid.link/20250515075333.48290-1-yyyynoom@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+	kernel: ath11k_pci 0000:03:00.0: failed to allocate dma memory for qmi (524288 B type 1)
+	ath11k_pci 0000:03:00.0: failed to allocate qmi target memory: -22
+
+Tested-on: WCN6855 WLAN.HSP.1.1-03926.13-QCAHSPSWPL_V2_SILICONZ_CE-2.52297.6
+
+Signed-off-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
+Reviewed-by: Baochen Qiang <quic_bqiang@quicinc.com>
+Link: https://patch.msgid.link/20250428080242.466901-1-usama.anjum@collabora.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-**YES** This commit should be backported to stable kernel trees for the
-following reasons: **1. Critical Data Race Fix**: The commit addresses a
-real data race condition where `dev->stats.tx_errors` and
-`dev->stats.collisions` can be accessed concurrently from user-space
-(`get_stats()` function) and IRQ context (`tx_error()` function). This
-is a genuine bug that can cause statistics corruption. **2. User-Visible
-Impact**: The race condition affects network statistics that are exposed
-to userspace through standard interfaces like `/proc/net/dev` and
-ethtool. Corrupted statistics can mislead network monitoring tools and
-system administrators. **3. Low Risk, High Value Fix**: The changes are
-minimal and follow established kernel synchronization patterns: - Adds a
-single `spinlock_t stats_lock` field to the driver's private structure -
-Protects critical sections with
-`spin_lock_irqsave()`/`spin_unlock_irqrestore()` in `get_stats()` -
-Protects IRQ-context updates in `tx_error()` with the same spinlock - No
-functional logic changes, only synchronization additions **4. Self-
-Contained Changes**: The fix is entirely within the dl2k driver
-(`drivers/net/ethernet/dlink/dl2k.c` and `dl2k.h`), making it safe to
-backport without affecting other subsystems. **5. Precedent from Similar
-Commits**: This closely mirrors "Similar Commit #5" (net: stmmac:
-protect updates of 64-bit statistics counters) which was marked as
-"Backport Status: YES" for addressing the same type of statistics
-synchronization issue. **6. Follows Stable Tree Criteria**: - Fixes an
-important bug affecting users - Changes are small and contained -
-Minimal risk of regression - No new features or architectural changes
-The fix prevents potential data corruption in network statistics, which
-is exactly the type of bug that stable kernels should address to
-maintain system reliability and data integrity.
+Based on my analysis of this commit and the Linux kernel ath11k QMI
+code, here's my assessment: **YES** This commit should be backported to
+stable kernel trees. Here's my extensive analysis: ## Critical Bug Fix
+for Resume/Hibernation Failures ### Problem Description The commit fixes
+a critical logic flaw in QMI memory reuse during firmware reload
+scenarios, particularly affecting suspend/resume and hibernation cycles.
+The bug causes resume failures with errors like: ``` kernel: ath11k_pci
+0000:03:00.0: failed to allocate dma memory for qmi (524288 B type 1)
+ath11k_pci 0000:03:00.0: failed to allocate qmi target memory: -22 ```
+### Code Analysis of the Fix **The core issue (lines 1996-2003 in the
+diff):** ```c + if (ab->qmi.mem_seg_count <=
+ATH11K_QMI_FW_MEM_REQ_SEGMENT_CNT) { + ath11k_dbg(ab, ATH11K_DBG_QMI, +
+"size/type mismatch (current %d %u) (prev %d %u), try later with small
+size\n", + chunk->size, chunk->type, + chunk->prev_size,
+chunk->prev_type); + ab->qmi.target_mem_delayed = true; + return 0; + }
+``` **Before the fix:** When firmware requests different memory segment
+sizes/types than previously allocated (common during resume), the driver
+would: 1. Free the existing memory chunks with `dma_free_coherent()` 2.
+Try to allocate the new larger size (often 6+ MB) 3. Fail due to memory
+fragmentation after hibernation 4. Free remaining chunks, causing loss
+of successfully allocated smaller segments **After the fix:** When
+size/type mismatch occurs and segment count ≤ 5
+(`ATH11K_QMI_FW_MEM_REQ_SEGMENT_CNT`), the driver: 1. Sets
+`target_mem_delayed = true` 2. Returns success immediately (skipping
+allocation) 3. Allows firmware to fall back to requesting smaller chunks
+4. Preserves existing memory allocations for reuse ### Why This
+Qualifies for Stable Backporting 1. **Fixes Important User-Affecting
+Bug**: Resume/hibernation failures directly impact user experience and
+system reliability 2. **Minimal and Contained Change**: The fix adds
+only 8 lines of code with a simple conditional check using existing
+mechanisms (`target_mem_delayed` flag and
+`ATH11K_QMI_FW_MEM_REQ_SEGMENT_CNT` constant) 3. **Low Regression
+Risk**: - Uses existing, well-tested delayed allocation mechanism - Only
+affects the specific error path for size/type mismatches - Maintains
+backward compatibility with all existing behavior 4. **Critical
+Subsystem**: WiFi connectivity is essential functionality, and resume
+failures can render systems unusable 5. **Clear Root Cause**: The commit
+message and code changes clearly identify and fix a specific logic error
+in memory management 6. **Follows Stable Rules**: - Important bugfix
+(resume failures) - Small and self-contained - No architectural changes
+- Confined to ath11k subsystem ### Validation Against Similar Commits
+Looking at the historical examples: - **Similar Commit #1 (YES)**: Also
+fixes QMI memory allocation warnings/failures, uses similar logic with
+`prev_size` fields - **Similar Commit #4 (YES)**: Implements the
+`target_mem_delayed` mechanism this fix builds upon This commit follows
+the same pattern as previously backported QMI memory fixes, addressing a
+critical failure scenario with minimal risk. ### Technical Validation
+The fix leverages the existing delayed allocation negotiation mechanism
+between driver and firmware, which has been proven stable since its
+introduction. By using `target_mem_delayed = true`, it allows firmware
+to adaptively request smaller, more allocation-friendly memory segments
+rather than failing outright. The `ATH11K_QMI_FW_MEM_REQ_SEGMENT_CNT =
+5` threshold ensures this optimization only applies to initial firmware
+memory requests (≤5 segments), not to scenarios where firmware has
+already adapted to smaller chunks (>5 segments). **Conclusion**: This is
+a well-contained, low-risk fix for a critical user-facing issue that
+should definitely be backported to stable kernels.
 
- drivers/net/ethernet/dlink/dl2k.c | 14 +++++++++++++-
- drivers/net/ethernet/dlink/dl2k.h |  2 ++
- 2 files changed, 15 insertions(+), 1 deletion(-)
+ drivers/net/wireless/ath/ath11k/qmi.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/net/ethernet/dlink/dl2k.c b/drivers/net/ethernet/dlink/dl2k.c
-index 71cb7fe63de3c..dfc23cc173097 100644
---- a/drivers/net/ethernet/dlink/dl2k.c
-+++ b/drivers/net/ethernet/dlink/dl2k.c
-@@ -146,6 +146,8 @@ rio_probe1 (struct pci_dev *pdev, const struct pci_device_id *ent)
- 	np->ioaddr = ioaddr;
- 	np->chip_id = chip_idx;
- 	np->pdev = pdev;
-+
-+	spin_lock_init(&np->stats_lock);
- 	spin_lock_init (&np->tx_lock);
- 	spin_lock_init (&np->rx_lock);
+diff --git a/drivers/net/wireless/ath/ath11k/qmi.c b/drivers/net/wireless/ath/ath11k/qmi.c
+index 764cd320c6c18..f790759c86115 100644
+--- a/drivers/net/wireless/ath/ath11k/qmi.c
++++ b/drivers/net/wireless/ath/ath11k/qmi.c
+@@ -1989,6 +1989,15 @@ static int ath11k_qmi_alloc_target_mem_chunk(struct ath11k_base *ab)
+ 			    chunk->prev_size == chunk->size)
+ 				continue;
  
-@@ -868,7 +870,6 @@ tx_error (struct net_device *dev, int tx_status)
- 	frame_id = (tx_status & 0xffff0000);
- 	printk (KERN_ERR "%s: Transmit error, TxStatus %4.4x, FrameId %d.\n",
- 		dev->name, tx_status, frame_id);
--	dev->stats.tx_errors++;
- 	/* Ttransmit Underrun */
- 	if (tx_status & 0x10) {
- 		dev->stats.tx_fifo_errors++;
-@@ -905,9 +906,15 @@ tx_error (struct net_device *dev, int tx_status)
- 		rio_set_led_mode(dev);
- 		/* Let TxStartThresh stay default value */
- 	}
++			if (ab->qmi.mem_seg_count <= ATH11K_QMI_FW_MEM_REQ_SEGMENT_CNT) {
++				ath11k_dbg(ab, ATH11K_DBG_QMI,
++					   "size/type mismatch (current %d %u) (prev %d %u), try later with small size\n",
++					    chunk->size, chunk->type,
++					    chunk->prev_size, chunk->prev_type);
++				ab->qmi.target_mem_delayed = true;
++				return 0;
++			}
 +
-+	spin_lock(&np->stats_lock);
- 	/* Maximum Collisions */
- 	if (tx_status & 0x08)
- 		dev->stats.collisions++;
-+
-+	dev->stats.tx_errors++;
-+	spin_unlock(&np->stats_lock);
-+
- 	/* Restart the Tx */
- 	dw32(MACCtrl, dr16(MACCtrl) | TxEnable);
- }
-@@ -1076,7 +1083,9 @@ get_stats (struct net_device *dev)
- 	int i;
- #endif
- 	unsigned int stat_reg;
-+	unsigned long flags;
- 
-+	spin_lock_irqsave(&np->stats_lock, flags);
- 	/* All statistics registers need to be acknowledged,
- 	   else statistic overflow could cause problems */
- 
-@@ -1126,6 +1135,9 @@ get_stats (struct net_device *dev)
- 	dr16(TCPCheckSumErrors);
- 	dr16(UDPCheckSumErrors);
- 	dr16(IPCheckSumErrors);
-+
-+	spin_unlock_irqrestore(&np->stats_lock, flags);
-+
- 	return &dev->stats;
- }
- 
-diff --git a/drivers/net/ethernet/dlink/dl2k.h b/drivers/net/ethernet/dlink/dl2k.h
-index 0e33e2eaae960..56aff2f0bdbfa 100644
---- a/drivers/net/ethernet/dlink/dl2k.h
-+++ b/drivers/net/ethernet/dlink/dl2k.h
-@@ -372,6 +372,8 @@ struct netdev_private {
- 	struct pci_dev *pdev;
- 	void __iomem *ioaddr;
- 	void __iomem *eeprom_addr;
-+	// To ensure synchronization when stats are updated.
-+	spinlock_t stats_lock;
- 	spinlock_t tx_lock;
- 	spinlock_t rx_lock;
- 	unsigned int rx_buf_sz;		/* Based on MTU+slack. */
+ 			/* cannot reuse the existing chunk */
+ 			dma_free_coherent(ab->dev, chunk->prev_size,
+ 					  chunk->vaddr, chunk->paddr);
 -- 
 2.39.5
 
