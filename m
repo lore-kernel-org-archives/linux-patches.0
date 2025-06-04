@@ -1,42 +1,66 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9A4918E1F;
-	Wed,  4 Jun 2025 14:57:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D90A19F40F
+	for <patches@lists.linux.dev>; Wed,  4 Jun 2025 16:33:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749049046; cv=none; b=bp6UDPdBjF97vJwSVsfzFSClXZgmHdSncrncluojQF5FJanVfVo6OvzRVkrkTMKOyQeGJ+zmzYcvlfJMM/4WuwJmrvB1oHsjpvruaDIbIS4tpy8cvPqB6ehujuqGOynEHHZvcOeSomF/nQmUBXSCPSwOmkt6tZoYyBZlrWnAfzc=
+	t=1749054802; cv=none; b=ZcSV8Hk0Mb+4sexC+6gWhVY1QKxbGB8Bp68UGH5WmxcvlpgYR+iygc0T4A14+dwHrNYbSFM4cdDRu9/surrOwSU31xHdjRelSW9vtfviPolrCdXMmBV0ROF5FvR8M+1ALTkqIRpdC19c1yW0rNcaGDQ+wD3jDAZKauec5+zJJH4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749049046; c=relaxed/simple;
-	bh=UhPTibu2IhtkcKdHuNBFIISA2CSr5AomV//Yoh1cW5I=;
+	s=arc-20240116; t=1749054802; c=relaxed/simple;
+	bh=m8wrsrYetnFPXLpdb3LHDq6bHI0VFrmQjNBUVQzBUvg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HjfEkbaO9vNNeJCPgwL/zq7RsqYPBt/+y0KjgaY/aoBqd61Dl3VPoqblcn9vFqdTGF6mLxK5af0xhHDN1MF9BmdZwkQKJobcdFucv3ld2mRYHLJI5v3ob9tcR331y+qx84TU9DO7BSplFePzETFKBHTTVSc6p3EUHdD2lJSq5cA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eouLETmS; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=gmNekDkSWVnEqXAAqxQRW+Ogjz24s3ZY1tP+tuCYYwiAdH3swM5Gn/0pxSqxpfFNTl/WrV12tCcFQvEczwPPbiG5RXOnHmboaG9ZFow+KgZ8AXdxn0YD0Z1XRv1M41B0Da/Xo7GOuLhufKDiBbXUgjlaqkpOAKGhgTSryjoDx0s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Hb49oWMK; arc=none smtp.client-ip=198.175.65.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eouLETmS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 090C3C4CEE4;
-	Wed,  4 Jun 2025 14:57:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1749049045;
-	bh=UhPTibu2IhtkcKdHuNBFIISA2CSr5AomV//Yoh1cW5I=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=eouLETmStjV448LcUxr0zSk3b5b6OBdg2nwOMQO0gNWKXj1HtvkHTT4f9d8bCkiZ3
-	 PivTAnqQ+wDxw+8M1ReVDqRIU32ERhrm9JyA0Ta344a6mmPGQAB/1KQRrhdEViflgG
-	 +zH9/AgxZzH8oS4ggb86yUA6E+hpIxU8vT8UZnMI=
-Date: Wed, 4 Jun 2025 16:57:23 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Steven Rostedt <rostedt@goodmis.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	syzbot+c8cd2d2c412b868263fb@syzkaller.appspotmail.com,
-	Jeongjun Park <aha310510@gmail.com>
-Subject: Re: [PATCH 5.4 009/204] tracing: Fix oob write in
- trace_seq_to_buffer()
-Message-ID: <2025060425-saddled-sliceable-fd12@gregkh>
-References: <20250602134255.449974357@linuxfoundation.org>
- <20250602134255.842400124@linuxfoundation.org>
- <20250602103639.6d9776d5@gandalf.local.home>
- <2025060414-dreamily-reentry-ab52@gregkh>
- <20250604104549.32f980db@gandalf.local.home>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Hb49oWMK"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1749054801; x=1780590801;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=m8wrsrYetnFPXLpdb3LHDq6bHI0VFrmQjNBUVQzBUvg=;
+  b=Hb49oWMK5dfGQZIBjX8PLvk+02V7oNqY8GFovpGJCCgoi87JD9iAa3CC
+   p/dc2Z3YoxKXdM3WkpkrybclXlGNAJLLRBUR+zmBZvoyDFy1nL1TUItUy
+   07jw//27cw4sgQSd/sX0OlSlpTczTByIDAufr/aHJb5IMy4njtvRF/M/r
+   QmYFh5nBb5DaAMl01seL9IlTG9jQ9Ie29dTXJZPioxw6C8cMnwNf6btKS
+   EqHH5s9S1RDB7xj+4tPpSd+cWoQKpo/asZObONFxO+If0XSMnMNDMKUzl
+   x32UE/qyLusbGUSbseBBCKOmBXf2oxdsxN08bDmTshEEpRC66gCj8WHkN
+   Q==;
+X-CSE-ConnectionGUID: rAjGg8+jTtWVT+c0rBso9w==
+X-CSE-MsgGUID: FwxIUwFgSE6YDivb6NgJPA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11454"; a="61412245"
+X-IronPort-AV: E=Sophos;i="6.16,209,1744095600"; 
+   d="scan'208";a="61412245"
+Received: from fmviesa005.fm.intel.com ([10.60.135.145])
+  by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Jun 2025 09:33:20 -0700
+X-CSE-ConnectionGUID: n0iGB6tNQqK0vyV181+V/g==
+X-CSE-MsgGUID: DcL2yp/LRBqedDGBaK+8Rg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,209,1744095600"; 
+   d="scan'208";a="150121986"
+Received: from agluck-desk3.sc.intel.com (HELO agluck-desk3) ([172.25.103.51])
+  by fmviesa005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Jun 2025 09:33:20 -0700
+Date: Wed, 4 Jun 2025 09:33:19 -0700
+From: "Luck, Tony" <tony.luck@intel.com>
+To: Reinette Chatre <reinette.chatre@intel.com>
+Cc: Fenghua Yu <fenghuay@nvidia.com>,
+	Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
+	Peter Newman <peternewman@google.com>,
+	James Morse <james.morse@arm.com>, Babu Moger <babu.moger@amd.com>,
+	Drew Fustini <dfustini@baylibre.com>,
+	Dave Martin <Dave.Martin@arm.com>,
+	Anil Keshavamurthy <anil.s.keshavamurthy@intel.com>,
+	Chen Yu <yu.c.chen@intel.com>, x86@kernel.org,
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH v5 01/29] x86,fs/resctrl: Consolidate monitor event
+ descriptions
+Message-ID: <aEB1T0GFqLl6RG22@agluck-desk3>
+References: <20250521225049.132551-1-tony.luck@intel.com>
+ <20250521225049.132551-2-tony.luck@intel.com>
+ <7eec0d2a-457a-42c7-904d-2c85633dc2a3@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -45,25 +69,38 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250604104549.32f980db@gandalf.local.home>
+In-Reply-To: <7eec0d2a-457a-42c7-904d-2c85633dc2a3@intel.com>
 
-On Wed, Jun 04, 2025 at 10:45:49AM -0400, Steven Rostedt wrote:
-> On Wed, 4 Jun 2025 14:31:49 +0200
-> Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+On Tue, Jun 03, 2025 at 08:25:56PM -0700, Reinette Chatre wrote:
+> Hi Tony,
+> > +void resctrl_enable_mon_event(enum resctrl_event_id evtid);
+> > +
+> >  bool resctrl_arch_is_evt_configurable(enum resctrl_event_id evt);
 > 
-> > > Note this will require this patch too:
-> > > 
-> > >    Link: https://lore.kernel.org/20250526013731.1198030-1-pantaixi@huaweicloud.com
-> > > 
-> > > commit 2fbdb6d8e03b ("tracing: Fix compilation warning on arm32")  
-> > 
-> > Thanks for the link, I'll queue this up once it hits a released kernel.
-> 
-> Oh, stable patches have to be in released kernels now? Just being in
-> Linus's tree isn't enough?
+> nit: When code is consistent in name use it is easier to read. 
+> Above there is already resctrl_arch_is_evt_configurable() that uses "evt"
+> as parameter name so naming the new parameter "evt" instead of "evtid"
+> will be much easier on the eye to make clear that this is the "same thing".
+> Also later, when resctrl_is_mbm_event() is moved it will be clean to have
+> it also use "evt" as parameter name and not end up with three different
+> "evtid", "evt",  and "e" for these related functions.
 
-Yes, unless a maintainer or developer asks for it to be added sooner.
+Should I also clean up existing muddled naming?  Upstream has the
+following names for parameters and local variables of type enum
+resctrl_event_id (counts for number of occurrences of each):
 
-thanks,
+      6 eventid
+      2 evt
+      1 evt_id
+      3 evtid
+      2 mba_mbps_default_event
+      1 mba_mbps_event
 
-greg k-h
+It seems that "eventid" is the most popular of existing uses.
+
+Also seems the most descriptive.
+
+Perhaps "mevt" would be a good standard choice for "struct mon_evt *mevt"?
+Upstream uses this three times, but I add some extra using "*evt".
+
+-Tony
