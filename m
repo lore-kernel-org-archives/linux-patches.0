@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50EB21991D2;
-	Wed,  4 Jun 2025 00:56:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78BCC198E6F;
+	Wed,  4 Jun 2025 00:56:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748998594; cv=none; b=lwhJAVAXwKp012QVb6Fg5+Mk9jmW4tcYDDv8pOyscX023o+PFC5dwsmTOpuOSqFkkZLapM9qStLG0buf6dVmB1ZGXsRqunBpA7TelH5utE51sq3b4nn0/mwJTyKBOAZ0ngle1YBbcLBPWJtNO0E/fP3VUdGKU10i0Br0+htzGoM=
+	t=1748998595; cv=none; b=Fo2fjPwEEdWr3rsCenC30gGxaypCpRhbVvPkECpg49TfnnZImGih+edjqigUVBAle3AGTkljftLIq5Foexi8pwvkaKmqZZX0lcdC/Lcw/8mZfiMCeFO9gKxYmfWmY26gQrEAmWom2WTbTRKM2uBPxOTJPTtPJ1k58cX4wC2jpR4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748998594; c=relaxed/simple;
-	bh=inBTFbANJxXrHq9i10BRsVW+ys15CCgu+2ugLjDE68Y=;
+	s=arc-20240116; t=1748998595; c=relaxed/simple;
+	bh=HIlH+3/XeJ5fnqbNOEC6WPnkbyGtfVIiHzPSBf0ns+k=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=pXWmOeBAilff3exZX0BLXN2vmVioiu52TqkmvpWXdbGEMbk35moHSJxKiNa78UOO8jwZUVkHrJal0O6Zodan2e30lnibjfqK17vYdQwN9lPEoGeb0eX8YQ3kM2JiYvOzsRG3mhaKsdSXjgK5iTP/uQPVPaaf5NAH5I8HvTlFEc4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=W6QYN7Gu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=YQ+PGjx2f8Vve3DcKQutP27ZwmXUtkpb6ePnTXGqtK5IA5bym1FUc/LFSGX13pxU3h0IASE5fTfuowSXf3Z4CakLPUqDBtsw6SO7JUYGrk+11W6bgSdgueLlskpB8yd1SfaLD9fNQpZeJ9MLF1UiIeiHFOkIH/sE96f+2mVItH0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oEu+QxEr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="W6QYN7Gu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43226C4CEED;
-	Wed,  4 Jun 2025 00:56:33 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oEu+QxEr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CEA6C4CEEF;
+	Wed,  4 Jun 2025 00:56:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748998594;
-	bh=inBTFbANJxXrHq9i10BRsVW+ys15CCgu+2ugLjDE68Y=;
+	s=k20201202; t=1748998595;
+	bh=HIlH+3/XeJ5fnqbNOEC6WPnkbyGtfVIiHzPSBf0ns+k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W6QYN7GuNX0ivQVJDP3DUxZZYmnYABt8K/nncf3SQdOCiPfz1ePVpahO0nYs/GA1a
-	 amTolTS7YnMQhHiLrNy85u9rQQ0xbzeGOPE6K2MocSRILx/HeFq4hx3HapywDXHl8l
-	 wvlZnAqP5HRr70ArdrkO2rnHVfEQX/lZRhDGnknGy/ZkIMQ9VlVM0S2DxcllD5pLNG
-	 k2omllUNZgid5vxk5MRQuCDFL9g1FvG1FLsu+8yhE+kHYSvkLMKQQalGQ6hIEU+rde
-	 tp0NZQt8uqZua1uV9ckdL8ZUDQRjkJJiZVQ/eEbrIZ5v4ZfkmXvOfKbscbIiHwiJ6P
-	 D41DS2TWgK5WA==
+	b=oEu+QxErWgL4BU+CwrfcwGOMLAvKbwOitsLWkZ4TmeMilP+pdLWvSUcg2w0rv3aFV
+	 zGZsmjgccOIj+Mfc6Cs+ZQU89aSJwW6vU5teb9194bBf7dABh4yKzErsT04qq/I7ge
+	 +fNAdH8m51FE9QdGtgwRhupPnyxCYGJ8mZ17kjs8ezqgXckXbGgDn8EYZTP3OaGPC9
+	 Xo0iDVxLMVJs5foiz6OaBxz9FXoir02zKaXuxLmJ84bjmAOgeNQqDTFkxh823jERnw
+	 qDctHx8T0AKqoIQ/tmooI21ubcv2EH8X9k/LYf/5BbKXc3ZFF4qPWhrmFSZObYyIaD
+	 GenwVUPs24dQg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Mario Limonciello <mario.limonciello@amd.com>,
-	Vasant Hegde <vasant.hegde@amd.com>,
-	Joerg Roedel <jroedel@suse.de>,
+Cc: Dian-Syuan Yang <dian_syuan0116@realtek.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>,
-	joro@8bytes.org,
-	iommu@lists.linux.dev
-Subject: [PATCH AUTOSEL 6.14 030/108] iommu/amd: Allow matching ACPI HID devices without matching UIDs
-Date: Tue,  3 Jun 2025 20:54:13 -0400
-Message-Id: <20250604005531.4178547-30-sashal@kernel.org>
+	linux-wireless@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.14 031/108] wifi: rtw89: leave idle mode when setting WEP encryption for AP mode
+Date: Tue,  3 Jun 2025 20:54:14 -0400
+Message-Id: <20250604005531.4178547-31-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250604005531.4178547-1-sashal@kernel.org>
 References: <20250604005531.4178547-1-sashal@kernel.org>
@@ -50,158 +48,103 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.14.9
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Dian-Syuan Yang <dian_syuan0116@realtek.com>
 
-[ Upstream commit 51c33f333bbf7bdb6aa2a327e3a3e4bbb2591511 ]
+[ Upstream commit d105652b33245162867ac769bea336976e67efb8 ]
 
-A BIOS upgrade has changed the IVRS DTE UID for a device that no
-longer matches the UID in the SSDT. In this case there is only
-one ACPI device on the system with that _HID but the _UID mismatch.
+Due to mac80211 triggering the hardware to enter idle mode, it fails
+to install WEP key causing connected station can't ping successfully.
+Currently, it forces the hardware to leave idle mode before driver
+adding WEP keys.
 
-IVRS:
-```
-              Subtable Type : F0 [Device Entry: ACPI HID Named Device]
-                  Device ID : 0060
-Data Setting (decoded below) : 40
-                 INITPass : 0
-                 EIntPass : 0
-                 NMIPass : 0
-                 Reserved : 0
-                 System MGMT : 0
-                 LINT0 Pass : 1
-                 LINT1 Pass : 0
-                   ACPI HID : "MSFT0201"
-                   ACPI CID : 0000000000000000
-                 UID Format : 02
-                 UID Length : 09
-                        UID : "\_SB.MHSP"
-```
-
-SSDT:
-```
-Device (MHSP)
-{
-    Name (_ADR, Zero)  // _ADR: Address
-    Name (_HID, "MSFT0201")  // _HID: Hardware ID
-    Name (_UID, One)  // _UID: Unique ID
-```
-
-To handle this case; while enumerating ACPI devices in
-get_acpihid_device_id() count the number of matching ACPI devices with
-a matching _HID. If there is exactly one _HID match then accept it even
-if the UID doesn't match. Other operating systems allow this, but the
-current IVRS spec leaves some ambiguity whether to allow or disallow it.
-This should be clarified in future revisions of the spec. Output
-'Firmware Bug' for this case to encourage it to be solved in the BIOS.
-
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
-Link: https://lore.kernel.org/r/20250512173129.1274275-1-superm1@kernel.org
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Signed-off-by: Dian-Syuan Yang <dian_syuan0116@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20250507031203.8256-1-pkshih@realtek.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Based on my analysis of the commit, the code changes, and the context
-from similar commits, here is my assessment: **YES** This commit should
-be backported to stable kernel trees for the following reasons: ## Bug
-Fix Analysis 1. **Real-world hardware compatibility issue**: The commit
-addresses a concrete problem where BIOS upgrades change IVRS DTE UIDs
-that no longer match the UIDs in SSDT, causing ACPI HID device matching
-to fail. This is a genuine hardware compatibility issue affecting real
-systems. 2. **Minimal, targeted change**: The modification is confined
-to a single function (`get_acpihid_device_id()`) in
-`drivers/iommu/amd/iommu.c`. The change adds fallback logic without
-altering the primary matching path, making it low-risk. 3.
-**Conservative approach**: The fix only allows UID mismatch when there's
-exactly one HID match (`hid_count == 1`), preventing ambiguous matches.
-It maintains strict validation by returning `-EINVAL` for multiple HID
-matches. 4. **Follows established patterns**: Similar to the reference
-commits (all marked "YES"), this addresses ACPI device matching issues
-in the AMD IOMMU subsystem, a pattern we've seen consistently
-backported. ## Code Change Analysis The modification transforms the
-original simple loop: ```c list_for_each_entry(p, &acpihid_map, list) {
-if (acpi_dev_hid_uid_match(adev, p->hid, p->uid[0] ? p->uid : NULL)) {
-if (entry) *entry = p; return p->devid; } } return -EINVAL; ``` Into a
-more robust matching algorithm that: - First attempts exact HID+UID
-matching (preserving original behavior) - Falls back to HID-only
-matching when exactly one device matches - Logs firmware bugs
-appropriately with `FW_BUG` - Rejects ambiguous multi-device scenarios
-## Risk Assessment - **Low regression risk**: The primary matching path
-remains unchanged - **Backward compatibility**: Systems with correct
-BIOS behavior continue working identically - **Forward compatibility**:
-Handles broken BIOS scenarios gracefully - **Contained scope**: Changes
-are isolated to AMD IOMMU ACPI device identification ## Comparison with
-Reference Commits This commit follows the same pattern as the "YES"
-reference commits: - **Similar scope**: ACPI HID device matching in AMD
-IOMMU (like commits #1, #2, #3, #4) - **Bug fix nature**: Addresses real
-hardware compatibility issues - **Minimal code changes**: Small,
-contained modifications - **Critical subsystem**: IOMMU functionality is
-essential for system operation The commit contrasts with reference
-commit #5 (marked "NO") which introduced new kernel parameters - a
-feature addition rather than a bug fix. This commit represents exactly
-the type of important bug fix that stable kernels are designed to
-include: it resolves real-world hardware compatibility issues with
-minimal risk and follows established successful patterns in the same
-subsystem.
+**YES** This commit should be backported to stable kernel trees. Here's
+my extensive analysis: ## Bug Fix Analysis **Real User-Affecting Bug**:
+The commit fixes a clear functional issue where WEP encryption key
+installation fails in AP mode when the rtw89 wireless device is in idle
+mode. This directly impacts users trying to establish WEP-encrypted
+connections to an AP, causing authentication failures and preventing
+network connectivity. **Specific Technical Problem**: When mac80211 puts
+the hardware into idle mode (IPS - Idle Power Save), the rtw89
+firmware/hardware enters a low-power state where key installation
+operations fail. This is particularly problematic for WEP encryption
+which appears to have specific hardware state requirements. ## Code
+Change Analysis **Minimal and Targeted**: The fix adds exactly two lines
+of code: ```c case WLAN_CIPHER_SUITE_WEP40:
+rtw89_leave_ips_by_hwflags(rtwdev); // NEW hw_key_type =
+RTW89_SEC_KEY_TYPE_WEP40; break; case WLAN_CIPHER_SUITE_WEP104:
+rtw89_leave_ips_by_hwflags(rtwdev); // NEW hw_key_type =
+RTW89_SEC_KEY_TYPE_WEP104; break; ``` **Uses Existing Infrastructure**:
+The fix leverages the existing `rtw89_leave_ips_by_hwflags()` function,
+which is a well-tested mechanism already used throughout the driver for
+similar power management scenarios. **WEP-Specific Requirement**:
+Notably, other cipher types (TKIP, CCMP, GCMP) don't require this call,
+indicating WEP has unique hardware state dependencies - likely due to
+its legacy implementation requiring specific firmware states. ## Risk
+Assessment **Very Low Risk**: - The `rtw89_leave_ips_by_hwflags()`
+function only acts when the hardware is actually in idle mode
+(`IEEE80211_CONF_IDLE` flag set) - It's a conditional safety mechanism
+that doesn't affect normal operation - Limited scope - only affects
+WEP40/WEP104 cipher types - Follows established patterns already present
+in the driver **No Architectural Changes**: This is purely a bug fix
+that ensures hardware is in the correct state before performing WEP key
+operations. ## Stable Tree Criteria Compliance **Meets All Stable
+Requirements**: 1. ✅ **Important bug fix**: Resolves WEP authentication
+failures in AP mode 2. ✅ **Small and contained**: Two identical function
+calls in a switch statement 3. ✅ **Obviously correct**: Uses existing,
+proven power management infrastructure 4. ✅ **Low regression risk**:
+Conservative fix affecting only legacy WEP encryption 5. ✅ **User-
+visible impact**: Fixes network connectivity issues ## Comparison with
+Historical Commits Looking at the similar commits provided, this follows
+the same pattern as other rtw88/rtw89 power management fixes that were
+marked as "NO" for backporting. However, those commits were primarily
+optimizations or behavior changes during scanning operations, not fixes
+for broken functionality. This commit differs because: - It fixes a
+**broken feature** (WEP key installation failure) - It's not an
+optimization or behavioral change - It has direct user-visible impact
+(connection failures) - It's a minimal, surgical fix for a specific
+failure mode ## Conclusion This is a textbook example of a commit
+suitable for stable backporting: it fixes a real bug affecting users,
+uses minimal and safe code changes, and follows established driver
+patterns. The fix ensures WEP encryption works properly in AP mode by
+guaranteeing the hardware is powered up during key installation
+operations.
 
- drivers/iommu/amd/iommu.c | 33 ++++++++++++++++++++++++++++-----
- 1 file changed, 28 insertions(+), 5 deletions(-)
+ drivers/net/wireless/realtek/rtw89/cam.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/iommu/amd/iommu.c b/drivers/iommu/amd/iommu.c
-index b3a01b7757ee1..13f5137f06ba2 100644
---- a/drivers/iommu/amd/iommu.c
-+++ b/drivers/iommu/amd/iommu.c
-@@ -243,7 +243,9 @@ static inline int get_acpihid_device_id(struct device *dev,
- 					struct acpihid_map_entry **entry)
- {
- 	struct acpi_device *adev = ACPI_COMPANION(dev);
--	struct acpihid_map_entry *p;
-+	struct acpihid_map_entry *p, *p1 = NULL;
-+	int hid_count = 0;
-+	bool fw_bug;
+diff --git a/drivers/net/wireless/realtek/rtw89/cam.c b/drivers/net/wireless/realtek/rtw89/cam.c
+index 8fa1e6c1ce139..359141e78798d 100644
+--- a/drivers/net/wireless/realtek/rtw89/cam.c
++++ b/drivers/net/wireless/realtek/rtw89/cam.c
+@@ -6,6 +6,7 @@
+ #include "debug.h"
+ #include "fw.h"
+ #include "mac.h"
++#include "ps.h"
  
- 	if (!adev)
- 		return -ENODEV;
-@@ -251,12 +253,33 @@ static inline int get_acpihid_device_id(struct device *dev,
- 	list_for_each_entry(p, &acpihid_map, list) {
- 		if (acpi_dev_hid_uid_match(adev, p->hid,
- 					   p->uid[0] ? p->uid : NULL)) {
--			if (entry)
--				*entry = p;
--			return p->devid;
-+			p1 = p;
-+			fw_bug = false;
-+			hid_count = 1;
-+			break;
-+		}
-+
-+		/*
-+		 * Count HID matches w/o UID, raise FW_BUG but allow exactly one match
-+		 */
-+		if (acpi_dev_hid_match(adev, p->hid)) {
-+			p1 = p;
-+			hid_count++;
-+			fw_bug = true;
- 		}
- 	}
--	return -EINVAL;
-+
-+	if (!p1)
-+		return -EINVAL;
-+	if (fw_bug)
-+		dev_err_once(dev, FW_BUG "No ACPI device matched UID, but %d device%s matched HID.\n",
-+			     hid_count, hid_count > 1 ? "s" : "");
-+	if (hid_count > 1)
-+		return -EINVAL;
-+	if (entry)
-+		*entry = p1;
-+
-+	return p1->devid;
- }
+ static struct sk_buff *
+ rtw89_cam_get_sec_key_cmd(struct rtw89_dev *rtwdev,
+@@ -471,9 +472,11 @@ int rtw89_cam_sec_key_add(struct rtw89_dev *rtwdev,
  
- static inline int get_device_sbdf_id(struct device *dev)
+ 	switch (key->cipher) {
+ 	case WLAN_CIPHER_SUITE_WEP40:
++		rtw89_leave_ips_by_hwflags(rtwdev);
+ 		hw_key_type = RTW89_SEC_KEY_TYPE_WEP40;
+ 		break;
+ 	case WLAN_CIPHER_SUITE_WEP104:
++		rtw89_leave_ips_by_hwflags(rtwdev);
+ 		hw_key_type = RTW89_SEC_KEY_TYPE_WEP104;
+ 		break;
+ 	case WLAN_CIPHER_SUITE_CCMP:
 -- 
 2.39.5
 
