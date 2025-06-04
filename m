@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 348A4224B05;
-	Wed,  4 Jun 2025 01:04:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 442C1224B05;
+	Wed,  4 Jun 2025 01:05:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748999099; cv=none; b=hsrZ4l76aZNfyyYPx1MFKP1qe8UIiHHmMgTwvIU9uJaEmWm1/F6Jva3RMFSZUCEVAySlHBtBsMZJMKaWU6b4Z0Rk44vVtTytU9CWNGtZE9Do/QdIjtANxToUF3ONFWK0c/k7notcC7y7XEQTuALgP45+icEZI7bX4TpdqJPky/0=
+	t=1748999100; cv=none; b=t5CO8rg6Fm5cOuke1bWNI9f+Cpv3Mxz+zTpnrKnsuoqPJchID1d1KZ/1cwCkb2MPmQdO1b6eQui6d8Ov5bdi3jg8WhbLQUrxZJ41c6reOcqf+KiqBkbfreWNhb0PnM2gbG8w5Rq1qja21wsfvANB2twXS6jup9N73F9FRzD7tss=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748999099; c=relaxed/simple;
-	bh=7GqPQYInUriePbu52Umq2SHKyss5K8IBI1SLlGH9f9U=;
+	s=arc-20240116; t=1748999100; c=relaxed/simple;
+	bh=in/5ui1CqQ4BhUaQu4ARpStDcN2PWZ18mYahgW+8yKY=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kvv0Y2NeDGmOspWUmCjwD5/E30aFisemhuQtJcMrxL+1dSWCHvLY85AkCyK6XG2K1V9TKYyXpAQWGHONjQhXTfTj3MLsQlzl92hc5YLWTD2IDr8ObxkVjBwhz4Hm1snQVPgxKl9zU7zzE7WrrEKg3VWRybnvM1r1mp2vzbvARfU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KtNgZsVq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Yu9uGkaXI+S7ycgEQ13h1AJ2EV06zOMw1m3GJrXdXqvdhalIi2j+Sj8N7Qr51IKO6QAecJIn6mNSXvfa+3tqZUtHvpI11UfZbzazwS1NniS5rNt3+IyL7SbQbe9qf3kwbcsdhfJV9VuRw+ZAXCaX47O6iLaAR9GaqFhq6QTFEz8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WhtVCTGU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KtNgZsVq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4E87C4CEF1;
-	Wed,  4 Jun 2025 01:04:57 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WhtVCTGU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1627AC4CEED;
+	Wed,  4 Jun 2025 01:04:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748999098;
-	bh=7GqPQYInUriePbu52Umq2SHKyss5K8IBI1SLlGH9f9U=;
+	s=k20201202; t=1748999100;
+	bh=in/5ui1CqQ4BhUaQu4ARpStDcN2PWZ18mYahgW+8yKY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KtNgZsVqUPhbDD8Oprfz6/2WFbaMP9ydBK5x1BJUfxTBEOfkrl2zYwBW7MDFF+Mhk
-	 6KjHz+RXnH5bKBx4hKgakpPlP33y109WZ6kREyODeYW/U+bH1B0aO4sEDcK9a3xgAU
-	 E8D1WMaJpkkvIZ2+H7WJk7GJTVJs+WHT9/Cq7VrzTV3nCkr9XWdpdQJhEcjj2f14ou
-	 jO1lQ+5sT3a4jPZ1eYwF4cikHBLnzw2q+1Pb1hJPMtrFf1wR7OwrqDASqYNLZRZtUx
-	 Ra4I+pRasfslHYzX1xvqzulE2nxUCZb51ryJDAicwG8GGh7OR3ZDK2dAx4aesjd9yx
-	 X6qocjaXBSkJw==
+	b=WhtVCTGUwB59I+MP0OibPkV+nGDoC6LiwbzzJNh6fIPC60t1skFCCy4CXpa7MfD9c
+	 3uCT6o7fb6/DCr1pUuzeCJiCU4/8wQ8dsW9hjfP+VZpcADoDSTjAsEFVxW+d17m15o
+	 9OEYPrUUtj7qXP99hsGVH5eUxjANpPrzbNGibn3JoR+mJeQphvgZETk6R2tnErs22v
+	 uEWhcFzuOFBY9g/Gb+xXYPXHRIUUcIfV7hN/g8gA2fzC1IvR/NT6Cbf5uQxE9hrlNH
+	 RArfLzIGbWJkAho1CbM2DyVsj963NBjtfkrK4a1Lj3kiPHTzDafM+EsugijLAPV87F
+	 kFA1UACDki1GQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Heiko Stuebner <heiko@sntech.de>,
+Cc: Alan Maguire <alan.maguire@oracle.com>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-arm-kernel@lists.infradead.org,
-	linux-rockchip@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.1 30/46] clk: rockchip: rk3036: mark ddrphy as critical
-Date: Tue,  3 Jun 2025 21:03:48 -0400
-Message-Id: <20250604010404.5109-30-sashal@kernel.org>
+	eddyz87@gmail.com,
+	daniel@iogearbox.net,
+	bpf@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.1 31/46] libbpf: Add identical pointer detection to btf_dedup_is_equiv()
+Date: Tue,  3 Jun 2025 21:03:49 -0400
+Message-Id: <20250604010404.5109-31-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250604010404.5109-1-sashal@kernel.org>
 References: <20250604010404.5109-1-sashal@kernel.org>
@@ -51,75 +54,118 @@ X-stable-base: Linux 6.1.140
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Heiko Stuebner <heiko@sntech.de>
+From: Alan Maguire <alan.maguire@oracle.com>
 
-[ Upstream commit 596a977b34a722c00245801a5774aa79cec4e81d ]
+[ Upstream commit 8e64c387c942229c551d0f23de4d9993d3a2acb6 ]
 
-The ddrphy is supplied by the dpll, but due to the limited number of PLLs
-on the rk3036, the dpll also is used for other periperhals, like the GPU.
+Recently as a side-effect of
 
-So it happened, when the Lima driver turned off the gpu clock, this in
-turn also disabled the dpll and thus the ram.
+commit ac053946f5c4 ("compiler.h: introduce TYPEOF_UNQUAL() macro")
 
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://lore.kernel.org/r/20250503202532.992033-4-heiko@sntech.de
+issues were observed in deduplication between modules and kernel BTF
+such that a large number of kernel types were not deduplicated so
+were found in module BTF (task_struct, bpf_prog etc).  The root cause
+appeared to be a failure to dedup struct types, specifically those
+with members that were pointers with __percpu annotations.
+
+The issue in dedup is at the point that we are deduplicating structures,
+we have not yet deduplicated reference types like pointers.  If multiple
+copies of a pointer point at the same (deduplicated) integer as in this
+case, we do not see them as identical.  Special handling already exists
+to deal with structures and arrays, so add pointer handling here too.
+
+Reported-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Alan Maguire <alan.maguire@oracle.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20250429161042.2069678-1-alan.maguire@oracle.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-**YES** This commit should absolutely be backported to stable kernel
-trees. Here's my detailed analysis: ## Critical System Stability Issue
-The commit fixes a **critical system stability problem** where the DDR
-PHY clock can be disabled, causing the system to lose access to RAM and
-crash. This is evidenced by: 1. **Root Cause Analysis**: The commit
-message clearly explains that "when the Lima driver turned off the gpu
-clock, this in turn also disabled the dpll and thus the ram" - this is a
-shared resource conflict that can brick the system. 2. **Hardware
-Limitation**: The RK3036 has "limited number of PLLs" where the DPLL is
-shared between the DDR PHY (memory controller) and GPU, creating an
-inherent conflict when GPU clock management affects memory access. ##
-Code Change Analysis The fix is **minimal and safe**: ```c static const
-char *const rk3036_critical_clocks[] __initconst = { "aclk_cpu",
-"aclk_peri", "hclk_peri", "pclk_peri", "pclk_ddrupctl", + "ddrphy", //
-<-- Single line addition }; ``` - **Single line change**: Adding
-"ddrphy" to the critical clocks array - **No functional changes**: Uses
-existing critical clock infrastructure - **No API modifications**:
-Compatible with all kernel versions that support Rockchip clocks - **No
-dependencies**: Self-contained fix within the clock driver ##
-Backporting Criteria Evaluation ✅ **Fixes important bug**: System
-crashes when GPU driver disables clocks ✅ **Small and contained**: One
-line addition to existing array ✅ **Minimal regression risk**: Only
-prevents clock from being disabled, no new functionality ✅ **Clear side
-effects**: Explicitly intended to keep DDR PHY always enabled ✅
-**Critical subsystem**: Memory controller availability is fundamental to
-system operation ## Similar Commit Pattern Analysis Looking at the
-provided similar commits, this follows the **exact same pattern** as
-Similar Commit #3 (Status: YES) which fixed "unrecoverable freezes and
-rcu_sched stall warnings" - both address critical system stability
-issues through clock configuration fixes. Unlike the other commits
-marked "NO" which were feature additions or exports, this is a **pure
-bugfix** addressing a **hardware design limitation** that causes system
-crashes. ## Conclusion This commit prevents **complete system failure**
-through a **trivial, safe change** that has **zero risk of regression**.
-The fix addresses a fundamental hardware limitation in the RK3036 where
-shared PLLs can cause memory controller clock starvation. This is
-exactly the type of critical stability fix that stable trees are
-designed to include.
+Based on my comprehensive analysis of the commit message, code changes,
+historical patterns, and kernel repository context, here is my
+recommendation: **YES** This commit should be backported to stable
+kernel trees for the following reasons: ## Critical Bug Fix Analysis
+**1. Fixes a Real User-Impacting Regression:** - The commit addresses a
+regression introduced by `commit ac053946f5c4 ("compiler.h: introduce
+TYPEOF_UNQUAL() macro")` - This regression causes "a large number of
+kernel types" (task_struct, bpf_prog, etc.) to fail deduplication -
+Results in broken BPF functionality for kernel modules, which is user-
+visible **2. Follows Established Stable Tree Criteria:** - **Important
+bugfix**: ✅ Fixes BTF deduplication failures affecting core BPF
+functionality - **Minimal risk**: ✅ Small, targeted change following
+existing patterns - **No architectural changes**: ✅ Adds a simple helper
+function without changing core algorithm - **Confined to subsystem**: ✅
+Changes only affect BTF deduplication logic in libbpf ## Code Change
+Analysis **3. Conservative and Safe Implementation:** ```c +static bool
+btf_dedup_identical_ptrs(struct btf_dedup *d, __u32 id1, __u32 id2) +{ +
+struct btf_type *t1, *t2; + + t1 = btf_type_by_id(d->btf, id1); + t2 =
+btf_type_by_id(d->btf, id2); + + if (!btf_is_ptr(t1) || !btf_is_ptr(t2))
++ return false; + + return t1->type == t2->type; +} ``` - Simple type-
+checking function with clear bounds checking - Mirrors existing
+`btf_dedup_identical_arrays()` and `btf_dedup_identical_structs()`
+patterns - No complex logic or state changes **4. Integration Follows
+Existing Pattern:** ```c + /bin /bin.usr-is-merged /boot /dev /etc /home
+/init /lib /lib.usr-is-merged /lib64 /lost+found /media /mnt /opt /proc
+/root /run /sbin /sbin.usr-is-merged /snap /srv /sys /tmp /usr /var A
+similar case is again observed for PTRs. */ + if
+(btf_dedup_identical_ptrs(d, hypot_type_id, cand_id)) + return 1; ``` -
+Added alongside existing identical array/struct checks - Same position
+in control flow as established workarounds - Consistent with documented
+compiler DWARF generation issues ## Historical Pattern Alignment **5.
+Matches "YES" Backport Pattern:** Looking at similar commits marked for
+backport: - **Similar Commit #1** (YES): Adds identical struct checking
+for BTF dedup failures - same pattern - **Similar Commit #4** (YES):
+Fixes memory leak in BTF dedup - critical subsystem fix - **Similar
+Commit #5** (YES): Handles DWARF/compiler bugs with duplicated structs -
+identical issue class This commit addresses the exact same class of
+problem (compiler-generated identical types) that has been consistently
+backported. ## Risk Assessment **6. Low Regression Risk:** - Function
+only returns `true` when types are genuinely identical (`t1->type ==
+t2->type`) - Early returns prevent processing non-pointer types - Cannot
+cause false positives that would incorrectly deduplicate different types
+- Follows defensive programming patterns used throughout the codebase ##
+Conclusion This commit fixes a regression in critical BPF functionality,
+uses a proven safe pattern, has minimal code footprint, and addresses
+issues that directly impact users. The fix quality is high and the risk
+is low, making it an excellent candidate for stable tree backporting.
 
- drivers/clk/rockchip/clk-rk3036.c | 1 +
- 1 file changed, 1 insertion(+)
+ tools/lib/bpf/btf.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/drivers/clk/rockchip/clk-rk3036.c b/drivers/clk/rockchip/clk-rk3036.c
-index d644bc155ec6e..f5f27535087a3 100644
---- a/drivers/clk/rockchip/clk-rk3036.c
-+++ b/drivers/clk/rockchip/clk-rk3036.c
-@@ -431,6 +431,7 @@ static const char *const rk3036_critical_clocks[] __initconst = {
- 	"hclk_peri",
- 	"pclk_peri",
- 	"pclk_ddrupctl",
-+	"ddrphy",
- };
+diff --git a/tools/lib/bpf/btf.c b/tools/lib/bpf/btf.c
+index 8224a797c2da5..f7e3209d6c641 100644
+--- a/tools/lib/bpf/btf.c
++++ b/tools/lib/bpf/btf.c
+@@ -3939,6 +3939,19 @@ static bool btf_dedup_identical_structs(struct btf_dedup *d, __u32 id1, __u32 id
+ 	return true;
+ }
  
- static void __init rk3036_clk_init(struct device_node *np)
++static bool btf_dedup_identical_ptrs(struct btf_dedup *d, __u32 id1, __u32 id2)
++{
++	struct btf_type *t1, *t2;
++
++	t1 = btf_type_by_id(d->btf, id1);
++	t2 = btf_type_by_id(d->btf, id2);
++
++	if (!btf_is_ptr(t1) || !btf_is_ptr(t2))
++		return false;
++
++	return t1->type == t2->type;
++}
++
+ /*
+  * Check equivalence of BTF type graph formed by candidate struct/union (we'll
+  * call it "candidate graph" in this description for brevity) to a type graph
+@@ -4071,6 +4084,9 @@ static int btf_dedup_is_equiv(struct btf_dedup *d, __u32 cand_id,
+ 		 */
+ 		if (btf_dedup_identical_structs(d, hypot_type_id, cand_id))
+ 			return 1;
++		/* A similar case is again observed for PTRs. */
++		if (btf_dedup_identical_ptrs(d, hypot_type_id, cand_id))
++			return 1;
+ 		return 0;
+ 	}
+ 
 -- 
 2.39.5
 
