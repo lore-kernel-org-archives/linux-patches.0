@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B4371BFE00;
-	Wed,  4 Jun 2025 00:58:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 654C71448D5;
+	Wed,  4 Jun 2025 00:58:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748998721; cv=none; b=Xw+YggyQIMIoZ9Jaj3J6Jcym1wlTrljPWEXJaFDQqiFZU/Bev/2eiUSAH2nXPt64hFIuq38VCnqp6mnq9c4jtY9ZehwvN57+MZ1U2CTSFVf6BQJ+WQxXund6eB+qLfSHJYZk1k37k1HVPzt4lu0XMvqKOx84mDXgVPkNgDyFmm0=
+	t=1748998722; cv=none; b=FKjz9Q7qaXWZ7uLF1A3eyH9IgyiZFiAFz9f9zck2BQ2FBmC6NRwH1FROXx+Y+z5lFPdRGWgABCDjfEG2C4qPfyKbI5HYZqIA/lCWt852ywLH3D8/Ax25h6BzKMJ2P17C+CYnWsDXh0/G4lQcQUp3D35RKWQnG/J1mywkmNTq0MM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748998721; c=relaxed/simple;
-	bh=dca/qdOQd8trVl3PyThEbwDVoz8kJ2EoR/OfkEaN2sc=;
+	s=arc-20240116; t=1748998722; c=relaxed/simple;
+	bh=/ktq5JZFE68v6KnlvaZYBGm8PhXiG3WMgJovyoI3rk8=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VeCbf29WoVUP2QX7kWFLZ63F69XL/67SbE+5PxrYMV8sj2lj9BH0pn2ns/cbMXhrN8jKdJx6HZms1otmWtrLATWY13XPqBtCREEyQvvr1FK+CM4GstZd2gdkFWenB/B7TSoPDlit+HRMsuzhUVfi9WND9EXe7kvr7AkmtIhC/iQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OJpn5CuX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=lITWxaHv7THJQ6nUjuJWykp0K4ITl23brkNgA9Gv7JugDvr/wVX/8tClicsjYqoVyEe/JmNrvY3gdYFqM5oa1b9ZVuV5mhc4lKBe8SzHbc6PFPhpKBMNva5nBknmgnssNNTTNHMStzcBhc9SmV/LjnVaNE6Jnh3LBpiduDofyUk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DRSoTkwQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OJpn5CuX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E211CC4CEF1;
-	Wed,  4 Jun 2025 00:58:39 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DRSoTkwQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47702C4CEED;
+	Wed,  4 Jun 2025 00:58:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748998720;
-	bh=dca/qdOQd8trVl3PyThEbwDVoz8kJ2EoR/OfkEaN2sc=;
+	s=k20201202; t=1748998722;
+	bh=/ktq5JZFE68v6KnlvaZYBGm8PhXiG3WMgJovyoI3rk8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OJpn5CuXNsE211pylcN76tKLV1TIF+QflLF76rsDMihhwFIInntBhaFPv2Ap8Ye45
-	 hHg7CTDmdfqsb1AoDZ4Rrvee5r5DGqaFpr0mhgoCYiAQX89BVD+AULXC9AwFMO17ZL
-	 kkubrYXkFIaJsTD2qjRP1QCICr8IkLyhlnYd+d4rUnKiZ7mtyUfy+Q8TlH8D40ykQt
-	 kosrnPCLIVoWaRWSnl28t9++1sVHBs5yE7wUyJB38dAx4YtvL/gZxtjqT/siyb5lLs
-	 A78x3/rNdQ7VX5wNb5cyXvK1qHBjyDIql8UQAR3/4h6oiYlSKJMasU6nC1so8mDxrq
-	 AiJy98A3JkGOA==
+	b=DRSoTkwQy/eMLnzAaU5ABCxyqeuqCJGgS4wxa2CiAAGPbMeXnsXmDisDHDWlDyqM9
+	 MwQRhDQb35bD9W4QV2F6mQeL60OC+Vx8NbO+P6c7hJabSnxZ/jQG4sHU9aQqI/tZlw
+	 eFejhzD4LXq4YvXGVmPea4CB5poNdZlR36NRjWJKZJoxMmWjPnxIdjoK7cV0sdJ1Vh
+	 /vYflDGELG1RxFH5jQTIkqVt1pf7TFCqIKPJ2PPDj5czsD8n/BTB8jevYjUZStUx0+
+	 14wL0ZUUcFVdofRxfpjMir1VTkzle8sIh0zeC5nl4+OokC5dxgNR0lS5HCiLWYDgSX
+	 7VyvjXzzbhN1w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Rand Deeb <rand.sec96@gmail.com>,
-	Rinitha S <sx.rinitha@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+Cc: Chen Linxuan <chenlinxuan@uniontech.com>,
+	Winston Wen <wentao@uniontech.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	przemyslaw.kitszel@intel.com,
-	intel-wired-lan@lists.osuosl.org
-Subject: [PATCH AUTOSEL 6.14 093/108] ixgbe: Fix unreachable retry logic in combined and byte I2C write functions
-Date: Tue,  3 Jun 2025 20:55:16 -0400
-Message-Id: <20250604005531.4178547-93-sashal@kernel.org>
+	tangchengchang@huawei.com,
+	huangjunxian6@hisilicon.com,
+	linux-rdma@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.14 094/108] RDMA/hns: initialize db in update_srq_db()
+Date: Tue,  3 Jun 2025 20:55:17 -0400
+Message-Id: <20250604005531.4178547-94-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250604005531.4178547-1-sashal@kernel.org>
 References: <20250604005531.4178547-1-sashal@kernel.org>
@@ -53,102 +54,129 @@ X-stable-base: Linux 6.14.9
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rand Deeb <rand.sec96@gmail.com>
+From: Chen Linxuan <chenlinxuan@uniontech.com>
 
-[ Upstream commit cdcb3804eeda24d588348bbab6766cf14fddbeaa ]
+[ Upstream commit ffe1cee21f8b533ae27c3a31bfa56b8c1b27fa6e ]
 
-The current implementation of `ixgbe_write_i2c_combined_generic_int` and
-`ixgbe_write_i2c_byte_generic_int` sets `max_retry` to `1`, which makes
-the condition `retry < max_retry` always evaluate to `false`. This renders
-the retry mechanism ineffective, as the debug message and retry logic are
-never executed.
+On x86_64 with gcc version 13.3.0, I compile
+drivers/infiniband/hw/hns/hns_roce_hw_v2.c with:
 
-This patch increases `max_retry` to `3` in both functions, aligning them
-with the retry logic in `ixgbe_read_i2c_combined_generic_int`. This
-ensures that the retry mechanism functions as intended, improving
-robustness in case of I2C write failures.
+  make defconfig
+  ./scripts/kconfig/merge_config.sh .config <(
+    echo CONFIG_COMPILE_TEST=y
+    echo CONFIG_HNS3=m
+    echo CONFIG_INFINIBAND=m
+    echo CONFIG_INFINIBAND_HNS_HIP08=m
+  )
+  make KCFLAGS="-fno-inline-small-functions -fno-inline-functions-called-once" \
+    drivers/infiniband/hw/hns/hns_roce_hw_v2.o
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+Then I get a compile error:
 
-Signed-off-by: Rand Deeb <rand.sec96@gmail.com>
-Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+    CALL    scripts/checksyscalls.sh
+    DESCEND objtool
+    INSTALL libsubcmd_headers
+    CC [M]  drivers/infiniband/hw/hns/hns_roce_hw_v2.o
+  In file included from drivers/infiniband/hw/hns/hns_roce_hw_v2.c:47:
+  drivers/infiniband/hw/hns/hns_roce_hw_v2.c: In function 'update_srq_db':
+  drivers/infiniband/hw/hns/hns_roce_common.h:74:17: error: 'db' is used uninitialized [-Werror=uninitialized]
+     74 |                 *((__le32 *)_ptr + (field_h) / 32) &=                          \
+        |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  drivers/infiniband/hw/hns/hns_roce_common.h:90:17: note: in expansion of macro '_hr_reg_clear'
+     90 |                 _hr_reg_clear(ptr, field_type, field_h, field_l);              \
+        |                 ^~~~~~~~~~~~~
+  drivers/infiniband/hw/hns/hns_roce_common.h:95:39: note: in expansion of macro '_hr_reg_write'
+     95 | #define hr_reg_write(ptr, field, val) _hr_reg_write(ptr, field, val)
+        |                                       ^~~~~~~~~~~~~
+  drivers/infiniband/hw/hns/hns_roce_hw_v2.c:948:9: note: in expansion of macro 'hr_reg_write'
+    948 |         hr_reg_write(&db, DB_TAG, srq->srqn);
+        |         ^~~~~~~~~~~~
+  drivers/infiniband/hw/hns/hns_roce_hw_v2.c:946:31: note: 'db' declared here
+    946 |         struct hns_roce_v2_db db;
+        |                               ^~
+  cc1: all warnings being treated as errors
+
+Signed-off-by: Chen Linxuan <chenlinxuan@uniontech.com>
+Co-developed-by: Winston Wen <wentao@uniontech.com>
+Signed-off-by: Winston Wen <wentao@uniontech.com>
+Link: https://patch.msgid.link/FF922C77946229B6+20250411105459.90782-5-chenlinxuan@uniontech.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-**YES** This commit should be backported to stable kernel trees. Here's
-my extensive analysis: ## Bug Analysis **Critical Logic Flaw:** The
-commit fixes a fundamental bug where the retry logic in I2C write
-functions was completely ineffective. With `max_retry = 1`, the
-condition `retry < max_retry` would only allow `retry = 0`, meaning the
-retry loop would never execute more than once, making the entire retry
-mechanism useless. **Code Impact:** The change from `max_retry = 1` to
-`max_retry = 3` in both: - `ixgbe_write_i2c_combined_generic_int()`
-(line ~170) - `ixgbe_write_i2c_byte_generic_int()` (line ~2288) This
-aligns with the existing `ixgbe_read_i2c_combined_generic_int()`
-function which already uses `max_retry = 3`. ## Backport Suitability
-Criteria **1. Fixes Important User-Affecting Bug:** ✓ - I2C write
-failures directly impact SFP/QSFP module detection and configuration -
-Affects `ethtool --identify` LED functionality - Can cause intermittent
-network interface initialization failures - Users would experience
-unreliable hardware detection and configuration **2. Small and Contained
-Change:** ✓ - Only changes two integer values from 1 to 3 - No
-architectural changes or new functionality - Minimal risk of introducing
-regressions - Affects only the specific I2C write retry mechanism **3.
-No Side Effects Beyond the Fix:** ✓ - Simply enables existing retry
-logic to work as intended - Doesn't change the fundamental I2C
-communication protocol - Maintains consistency with read operations - No
-new code paths introduced **4. Critical Subsystem Impact:** ✓ - Network
-driver functionality is critical for system operation - I2C
-communication is essential for modern network hardware management -
-Affects Intel ixgbe NICs which are widely deployed in enterprise
-environments **5. Clear Bug Evidence:** ✓ - Linux Verification Center
-found this with static analysis (SVACE) - Logic flaw is mathematically
-provable (retry < 1 never allows retry) - Consistent with similar
-commits in the pattern (Similar Commit #1 shows retry count adjustments
-are appropriate for backporting) ## Comparison to Historical Patterns
-This commit closely matches **Similar Commit #1** (Backport Status: YES)
-which also modified I2C retry counts in ixgbe. That commit reduced retry
-counts to avoid regressions, while this one increases retry counts to
-fix broken logic - both are stability improvements worthy of
-backporting. Unlike **Similar Commit #2** (Backport Status: NO) which
-was architectural refactoring, this commit fixes a clear functional
-defect without introducing new features or code reorganization. ## Risk
-Assessment **Low Risk:** - Increasing retries from effectively 0 to 3
-cannot make things worse - The retry mechanism already existed and was
-intended to be used - 3 retries aligns with established patterns in the
-same driver - Intel has tested this change (as indicated by the "Tested-
-by" tag) **High Impact:** - Fixes complete failure of I2C write retry
-mechanism - Improves reliability of critical network hardware
-functionality - Addresses systematic logic flaw affecting all ixgbe
-deployments This commit represents exactly the type of important, low-
-risk bug fix that stable trees are designed to receive.
+Based on my analysis of the commit and examination of the kernel source
+code, here is my assessment: **YES** This commit should be backported to
+stable kernel trees for the following extensive reasons: ## 1.
+**Critical Hardware Register Corruption Risk** The commit fixes a
+genuine bug where an uninitialized stack variable containing random data
+is written directly to hardware registers. In the `update_srq_db()`
+function: ```c struct hns_roce_v2_db db; // UNINITIALIZED - contains
+random stack data hr_reg_write(&db, DB_TAG, srq->srqn); // Only sets
+specific bits hr_reg_write(&db, DB_CMD, HNS_ROCE_V2_SRQ_DB); // Only
+sets specific bits hr_reg_write(&db, DB_PI, srq->idx_que.head); // Only
+sets specific bits hns_roce_write64(hr_dev, (__le32 *)&db, srq->db_reg);
+// Writes ENTIRE structure to hardware ``` The `hr_reg_write()` macros
+only modify specific bit fields within the 64-bit structure. Any bits
+not explicitly set retain their random initial values from the stack,
+which then get written to the hardware doorbell register. ## 2.
+**Pattern Inconsistency Indicates Bug** My examination of the codebase
+shows that ALL other similar functions correctly initialize their
+database structures: - `update_sq_db()`: `struct hns_roce_v2_db sq_db =
+{};` ✓ - `update_rq_db()`: `struct hns_roce_v2_db rq_db = {};` ✓ -
+`update_cq_db()`: `struct hns_roce_v2_db cq_db = {};` ✓ -
+`update_srq_db()`: `struct hns_roce_v2_db db;` ✗ (the only exception)
+This pattern strongly indicates that the uninitialized `db` variable in
+`update_srq_db()` is a bug rather than intentional design. ## 3. **Real
+Runtime Impact Potential** This is not merely a cosmetic compiler
+warning. The uninitialized data can cause: - **Subtle SRQ functionality
+degradation**: Random bits in hardware doorbell registers can confuse
+the hardware - **Performance issues**: Incorrect doorbell values may
+cause hardware to misinterpret commands - **Silent data corruption**:
+Unlike crashes, this bug could cause hard-to-debug networking issues -
+**Hardware state corruption**: Writing garbage to hardware registers can
+put the device in unexpected states ## 4. **Production Environment
+Risk** SRQ (Shared Receive Queue) is a critical InfiniBand/RoCE feature
+used in high-performance computing and data center environments. Any
+corruption in SRQ operations can: - Impact network throughput and
+latency - Cause intermittent packet loss or reordering - Lead to
+difficult-to-reproduce performance regressions - Affect reliability of
+distributed applications ## 5. **Low-Risk, High-Value Fix** The fix is
+minimal and safe: - Changes only initialization: `struct hns_roce_v2_db
+db = {};` - Zero-initialization has no functional side effects - Follows
+established patterns in the same driver - No API changes or behavioral
+modifications - Extremely low regression risk ## 6. **Similar Historical
+Precedent** Looking at the similar commits provided, commit #4 (Status:
+YES) shows a nearly identical fix for uninitialized variable usage in
+the same driver family: ```c doorbell[0] = cons_index &
+((hr_cq->cq_depth << 1) - 1); +doorbell[1] = 0; // Initialize before use
+roce_set_bit(doorbell[1], ROCEE_DB_OTHERS_H_ROCEE_DB_OTH_HW_SYNS_S, 1);
+``` This historical precedent confirms that uninitialized variable fixes
+in HNS RoCE hardware register operations are considered important enough
+for stable backporting. ## 7. **Affects Multiple Compiler Versions** The
+commit message shows this affects GCC 13.3.0 with specific optimization
+flags, but uninitialized variable usage is fundamentally unsafe
+regardless of compiler version or warning visibility. **Conclusion**:
+This commit fixes a real hardware register corruption bug with potential
+for silent data corruption in production RoCE/InfiniBand environments.
+The fix is minimal, safe, and follows established patterns. It should be
+backported to ensure system reliability in stable kernel deployments.
 
- drivers/net/ethernet/intel/ixgbe/ixgbe_phy.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/infiniband/hw/hns/hns_roce_hw_v2.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/ixgbe/ixgbe_phy.c b/drivers/net/ethernet/intel/ixgbe/ixgbe_phy.c
-index 0a03a8bb5f886..2d54828bdfbbc 100644
---- a/drivers/net/ethernet/intel/ixgbe/ixgbe_phy.c
-+++ b/drivers/net/ethernet/intel/ixgbe/ixgbe_phy.c
-@@ -167,7 +167,7 @@ int ixgbe_write_i2c_combined_generic_int(struct ixgbe_hw *hw, u8 addr,
- 					 u16 reg, u16 val, bool lock)
+diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+index 160e8927d364e..afd2ea6da3ee2 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
++++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+@@ -943,7 +943,7 @@ static void fill_wqe_idx(struct hns_roce_srq *srq, unsigned int wqe_idx)
+ static void update_srq_db(struct hns_roce_srq *srq)
  {
- 	u32 swfw_mask = hw->phy.phy_semaphore_mask;
--	int max_retry = 1;
-+	int max_retry = 3;
- 	int retry = 0;
- 	u8 reg_high;
- 	u8 csum;
-@@ -2285,7 +2285,7 @@ static int ixgbe_write_i2c_byte_generic_int(struct ixgbe_hw *hw, u8 byte_offset,
- 					    u8 dev_addr, u8 data, bool lock)
- {
- 	u32 swfw_mask = hw->phy.phy_semaphore_mask;
--	u32 max_retry = 1;
-+	u32 max_retry = 3;
- 	u32 retry = 0;
- 	int status;
+ 	struct hns_roce_dev *hr_dev = to_hr_dev(srq->ibsrq.device);
+-	struct hns_roce_v2_db db;
++	struct hns_roce_v2_db db = {};
  
+ 	hr_reg_write(&db, DB_TAG, srq->srqn);
+ 	hr_reg_write(&db, DB_CMD, HNS_ROCE_V2_SRQ_DB);
 -- 
 2.39.5
 
