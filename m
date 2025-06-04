@@ -1,42 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CF6728FA91;
-	Wed,  4 Jun 2025 11:50:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1BEC28F51A;
+	Wed,  4 Jun 2025 11:50:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749037840; cv=none; b=DusWEV6pEjMgD27duDcnXZsyWKmrDCX2TcuWOvFTyGv1CqpPLb5BMGKN3NVCLpET4aqggJstv2+HZfuIf544MYhYY6W3a2wOL/oJPGa5SdSdda4WzHZiIEyZ96ScCoJY9Dts/UjVEWCFHHWIJYATl+RFCq1hulQUADXrRQAn+OQ=
+	t=1749037842; cv=none; b=bACqW6pMCxKeqNNfSrC7ztUYYcU1YauRQATIDje0mKZTthRYik1zdNNZXhoUfpYjRAHDWanH946+ETIDB01NOn6f85xLkVrvx3CIGx8TgK8sDjYakcrOjFzJzu84NQQ/iZXwJjRvSMuaYU/hHzHl57aZzQ+yAoxkbXEGHyPinvA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749037840; c=relaxed/simple;
-	bh=71ZwEdFAjFOVAAwRnZcmu74PJaEJkRD23GstajR/2CY=;
+	s=arc-20240116; t=1749037842; c=relaxed/simple;
+	bh=5r2SHyueLT0q4vVJ5s5FgxqTtWbaGFtoD5iV1PkEIfc=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=l5Rg59m2c8o25qr3tYkUz3MweGBckpYXXhNdmm356wd/KwuNz086VpIeff+yHM6kodNlenFMLMBfRZAXMkIWtcI6m7ToodbWREWqDtTaU+LRLobfMnRuu1VWo2WzEdNyAn8NHZbSs4L4o+3ZxzGOtXC7aslt1rXPj6LNx4kOOwg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dFu0uwMA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QfP0jQ5yQIEDVAyfOKvkh+R41GO/xN/W9JbtZU7whgTf4GwUlznsBjEQ5ysAdLKTpcOO0X8E3XapR19fyv5oarr7h5TeA9HU9xVjqp/IpgI7xf+yae/YcTi4jDQCay7m1JgtltsPAjmMR0eLl63IHAYwzx+qKRQExOogO1g0gKI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X8XRUtsZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dFu0uwMA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C690C4CEE7;
-	Wed,  4 Jun 2025 11:50:39 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X8XRUtsZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53415C4CEEF;
+	Wed,  4 Jun 2025 11:50:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749037839;
-	bh=71ZwEdFAjFOVAAwRnZcmu74PJaEJkRD23GstajR/2CY=;
+	s=k20201202; t=1749037841;
+	bh=5r2SHyueLT0q4vVJ5s5FgxqTtWbaGFtoD5iV1PkEIfc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dFu0uwMAOL7fuZyi0JVrFzX+N2r1W5+8OXcfKW2guBbUEw1oyAMi8rBDqEcS4WiUA
-	 gzXlQYaUUtUFVKTVcIGlScHGLcCdRy5dE6vUmP2FSHI/9Fh/8BHDV8Mx0ijsUPpn0b
-	 wdpuMfQPjpWM3uMDNSB2Or6fMupdCunygI+8whVYmcS3XkLmOJ9HT0dRbJHC/aLJ7b
-	 16GCn2TpXO7b8eozL/olfXUsbef6nacGMV/KKiXdFprLZCr7CvCwHDPE59vh72jRw0
-	 +Ul18CjEoZy0LoyAea5r2bu6KQX8j6tTjc1MiAUx0jRUixUwouACuzXVIoPmMpZBuB
-	 MYd/MSIKfmZaQ==
+	b=X8XRUtsZSWPBoFzW9BvDcZ9Xb7PlAVveVflCKqVey1JjrQ771SxD75N/J7JxcqOl+
+	 5HDcfnjSEoEPTSAKmubUW0BYySy0dHD3Vvt2GiVVFwh1BLGoKcC8fw5IBR+qd3hCFs
+	 6kBLp/nW9fSg1KEcJquGIkgjAILvd4ZfFrAthNI4ZhWZaTR/DRAB1umQZEBTX/T5TE
+	 hkVsUMOdpKvzu79Id1swtfHgpLzW8Q7XRVzf6wVugWb5arMNcj9olUs0XHBgtp3WTE
+	 0y60O/Paq0W6vmzBh1FaiWKTTztSADuEqiD8zI1ibwBpm1/M7ogEVFzLQMnk1TM6bZ
+	 HOScWxbdftZkw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jann Horn <jannh@google.com>,
-	Jens Wiklander <jens.wiklander@linaro.org>,
-	Rouven Czerwinski <rouven.czerwinski@linaro.org>,
+Cc: Alexander Sverdlin <alexander.sverdlin@siemens.com>,
+	Andreas Kemnade <andreas@kemnade.info>,
+	Tony Lindgren <tony@atomide.com>,
+	Kevin Hilman <khilman@baylibre.com>,
 	Sasha Levin <sashal@kernel.org>,
-	op-tee@lists.trustedfirmware.org
-Subject: [PATCH AUTOSEL 5.15 4/5] tee: Prevent size calculation wraparound on 32-bit kernels
-Date: Wed,  4 Jun 2025 07:50:32 -0400
-Message-Id: <20250604115033.209492-4-sashal@kernel.org>
+	aaro.koskinen@iki.fi,
+	rogerq@kernel.org,
+	linux-omap@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.15 5/5] Revert "bus: ti-sysc: Probe for l4_wkup and l4_cfg interconnect devices first"
+Date: Wed,  4 Jun 2025 07:50:33 -0400
+Message-Id: <20250604115033.209492-5-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250604115033.209492-1-sashal@kernel.org>
 References: <20250604115033.209492-1-sashal@kernel.org>
@@ -49,137 +52,156 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 5.15.184
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jann Horn <jannh@google.com>
+From: Alexander Sverdlin <alexander.sverdlin@siemens.com>
 
-[ Upstream commit 39bb67edcc582b3b386a9ec983da67fa8a10ec03 ]
+[ Upstream commit 36305857b1ead8f6ca033a913162ebc09bee0b43 ]
 
-The current code around TEE_IOCTL_PARAM_SIZE() is a bit wrong on
-32-bit kernels: Multiplying a user-provided 32-bit value with the
-size of a structure can wrap around on such platforms.
+This reverts commit 4700a00755fb5a4bb5109128297d6fd2d1272ee6.
 
-Fix it by using saturating arithmetic for the size calculation.
+It breaks target-module@2b300050 ("ti,sysc-omap2") probe on AM62x in a case
+when minimally-configured system tries to network-boot:
 
-This has no security consequences because, in all users of
-TEE_IOCTL_PARAM_SIZE(), the subsequent kcalloc() implicitly checks
-for wrapping.
+[    6.888776] probe of 2b300050.target-module returned 517 after 258 usecs
+[   17.129637] probe of 2b300050.target-module returned 517 after 708 usecs
+[   17.137397] platform 2b300050.target-module: deferred probe pending: (reason unknown)
+[   26.878471] Waiting up to 100 more seconds for network.
 
-Signed-off-by: Jann Horn <jannh@google.com>
-Signed-off-by: Jens Wiklander <jens.wiklander@linaro.org>
-Tested-by: Rouven Czerwinski <rouven.czerwinski@linaro.org>
+There are minimal configurations possible when the deferred device is not
+being probed any more (because everything else has been successfully
+probed) and deferral lists are not processed any more.
+
+Stable mmc enumeration can be achieved by filling /aliases node properly
+(4700a00755fb commit's rationale).
+
+After revert:
+
+[    9.006816] IP-Config: Complete:
+[    9.010058]      device=lan0, ...
+
+Tested-by: Andreas Kemnade <andreas@kemnade.info> # GTA04, Panda, BT200
+Reviewed-by: Tony Lindgren <tony@atomide.com>
+Signed-off-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+Link: https://lore.kernel.org/r/20250401090643.2776793-1-alexander.sverdlin@siemens.com
+Signed-off-by: Kevin Hilman <khilman@baylibre.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-**YES** This commit should be backported to stable kernel trees. Here's
-my extensive analysis: ## Vulnerability Analysis The commit fixes a real
-integer overflow vulnerability in the TEE (Trusted Execution
-Environment) subsystem on 32-bit kernels. The issue occurs in the
-`TEE_IOCTL_PARAM_SIZE()` macro defined as: ```c #define
-TEE_IOCTL_PARAM_SIZE(x) (sizeof(struct tee_param) * (x)) ``` Where
-`struct tee_ioctl_param` is 32 bytes (4 × 8-byte fields). On 32-bit
-systems, when a user provides a large `num_params` value, the
-multiplication `32 * num_params` can wrap around, potentially bypassing
-buffer length validation checks. ## Specific Vulnerable Code Locations
-The vulnerable pattern appears in 4 locations in
-`drivers/tee/tee_core.c`: 1. **Line 490**: `tee_ioctl_open_session()` -
-`sizeof(arg) + TEE_IOCTL_PARAM_SIZE(arg.num_params) != buf.buf_len` 2.
-**Line 568**: `tee_ioctl_invoke()` - `sizeof(arg) +
-TEE_IOCTL_PARAM_SIZE(arg.num_params) != buf.buf_len` 3. **Line 702**:
-`tee_ioctl_supp_recv()` - `sizeof(*uarg) +
-TEE_IOCTL_PARAM_SIZE(num_params) != buf.buf_len` 4. **Line 801**:
-`tee_ioctl_supp_send()` - `sizeof(*uarg) +
-TEE_IOCTL_PARAM_SIZE(num_params) > buf.buf_len` ## Attack Scenario On
-32-bit systems, if `num_params = 0x08000000` (134,217,728), then: -
-`TEE_IOCTL_PARAM_SIZE(0x08000000) = 32 * 0x08000000 = 0x100000000` -
-This wraps to `0x00000000` on 32-bit systems - The size validation
-`sizeof(arg) + 0 != buf.buf_len` could be bypassed - Subsequent
-`kcalloc()` would allocate a huge buffer, but the size calculations
-would be wrong ## Why This Should Be Backported **Matches "YES" backport
-criteria from similar commits:** 1. **Security Fix**: Like Similar
-Commit #2 (rtl8188eu security hole) and #4 (gup_benchmark integer
-overflow), this prevents user-controlled integer overflow that could
-lead to memory corruption. 2. **Small, Contained Change**: The fix uses
-the kernel's standard `size_add()` and `size_mul()` helpers from
-`linux/overflow.h` - exactly like Similar Commit #3 which was noted as
-using `size_add()` for similar protection. 3. **Critical Subsystem**:
-TEE handles sensitive cryptographic operations and trusted applications,
-making security fixes here particularly important. 4. **Low Regression
-Risk**: The fix only adds overflow protection without changing
-functionality. The `size_mul()` and `size_add()` functions are well-
-tested kernel overflow helpers. 5. **User-Controllable Input**: The
-`num_params` value comes directly from user space through ioctl calls,
-making this a user-triggerable condition. 6. **Clear Security Impact**:
-While the commit states "no security consequences because kcalloc()
-implicitly checks for wrapping," this is defense-in-depth - the size
-validation should not rely on downstream allocation checks. The fix
-pattern exactly matches Similar Commit #4 (mm/gup_benchmark.c) which was
-backported for preventing integer overflow in size calculations with
-user-provided values. This commit follows the same security principle
-and uses the same overflow-safe arithmetic helpers that the kernel has
-standardized on for these scenarios.
+Based on my analysis, I can see that the current tree still has the
+original problematic code that needs to be reverted. Now let me provide
+my assessment: **YES** This commit should be backported to stable kernel
+trees. Here's my extensive analysis: ## Bug Analysis **1. Critical Boot
+Issue:** The commit fixes a critical boot failure on AM62x systems
+during network boot scenarios. The problem manifests as: - Target module
+probe returning -517 (EPROBE_DEFER) repeatedly - Network boot timing out
+after waiting 100+ seconds - Deferred probe mechanism getting stuck in
+minimal configurations **2. Root Cause:** The original commit
+4700a00755fb introduced a probe deferral mechanism that: - Uses a global
+atomic counter `sysc_defer` initialized to 10 - Forces non-critical
+interconnect devices to defer probe until l4_wkup/l4_cfg devices probe
+first - In minimal configurations, this can create a deadlock where
+deferred devices never get re-probed ## Code Impact Assessment **1.
+Minimal and Safe Changes:** The revert removes exactly 47 lines of code:
+- `early_bus_ranges[]` array definition - `sysc_defer` atomic counter -
+`sysc_defer_non_critical()` function - Call to
+`sysc_defer_non_critical()` in `sysc_map_and_check_registers()` **2. No
+Architectural Changes:** The revert simply removes a probe ordering
+mechanism without touching core functionality. **3. Well-Contained:**
+Changes are limited to `drivers/bus/ti-sysc.c` with no impact on other
+subsystems. ## Stability Considerations **1. Extensive Testing:** The
+commit has been tested on multiple platforms: - GTA04, Panda, BT200
+(confirmed by Andreas Kemnade) - AM62x systems (confirmed by original
+reporter) **2. Maintainer Approval:** The revert was reviewed and
+approved by Tony Lindgren, the original author of the problematic
+commit. **3. Alternative Solution Available:** The commit message notes
+that stable MMC enumeration (the original goal) can be achieved through
+proper `/aliases` node configuration instead. ## Comparison with Similar
+Commits Looking at the historical examples: - Similar Commit #1 (Status:
+YES) shows that ti-sysc probe ordering fixes are suitable for
+backporting - However, this revert fixes a regression introduced by such
+changes - The boot failure on AM62x represents a more critical issue
+than the original MMC renumbering problem ## Risk Assessment **Low
+Risk:** - Removes problematic code rather than adding new functionality
+- Well-tested across multiple platforms - Has maintainer blessing -
+Addresses a critical boot failure scenario **Benefits:** - Fixes network
+boot failures on AM62x - Eliminates potential deadlocks in deferred
+probe mechanism - Maintains system stability in minimal configurations
+The commit clearly meets stable tree criteria: it fixes an important
+bug, has minimal regression risk, is well-contained, and has been
+thoroughly tested. The boot failure it addresses affects real-world
+deployments, making it a priority for stable kernel inclusion.
 
- drivers/tee/tee_core.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/bus/ti-sysc.c | 49 -------------------------------------------
+ 1 file changed, 49 deletions(-)
 
-diff --git a/drivers/tee/tee_core.c b/drivers/tee/tee_core.c
-index a44e5b53e7a91..a7e89c229fc51 100644
---- a/drivers/tee/tee_core.c
-+++ b/drivers/tee/tee_core.c
-@@ -10,6 +10,7 @@
- #include <linux/fs.h>
- #include <linux/idr.h>
- #include <linux/module.h>
-+#include <linux/overflow.h>
- #include <linux/slab.h>
- #include <linux/tee_drv.h>
- #include <linux/uaccess.h>
-@@ -19,7 +20,7 @@
+diff --git a/drivers/bus/ti-sysc.c b/drivers/bus/ti-sysc.c
+index 05ae577758539..20e0907234855 100644
+--- a/drivers/bus/ti-sysc.c
++++ b/drivers/bus/ti-sysc.c
+@@ -687,51 +687,6 @@ static int sysc_parse_and_check_child_range(struct sysc *ddata)
+ 	return 0;
+ }
  
- #define TEE_NUM_DEVICES	32
+-/* Interconnect instances to probe before l4_per instances */
+-static struct resource early_bus_ranges[] = {
+-	/* am3/4 l4_wkup */
+-	{ .start = 0x44c00000, .end = 0x44c00000 + 0x300000, },
+-	/* omap4/5 and dra7 l4_cfg */
+-	{ .start = 0x4a000000, .end = 0x4a000000 + 0x300000, },
+-	/* omap4 l4_wkup */
+-	{ .start = 0x4a300000, .end = 0x4a300000 + 0x30000,  },
+-	/* omap5 and dra7 l4_wkup without dra7 dcan segment */
+-	{ .start = 0x4ae00000, .end = 0x4ae00000 + 0x30000,  },
+-};
+-
+-static atomic_t sysc_defer = ATOMIC_INIT(10);
+-
+-/**
+- * sysc_defer_non_critical - defer non_critical interconnect probing
+- * @ddata: device driver data
+- *
+- * We want to probe l4_cfg and l4_wkup interconnect instances before any
+- * l4_per instances as l4_per instances depend on resources on l4_cfg and
+- * l4_wkup interconnects.
+- */
+-static int sysc_defer_non_critical(struct sysc *ddata)
+-{
+-	struct resource *res;
+-	int i;
+-
+-	if (!atomic_read(&sysc_defer))
+-		return 0;
+-
+-	for (i = 0; i < ARRAY_SIZE(early_bus_ranges); i++) {
+-		res = &early_bus_ranges[i];
+-		if (ddata->module_pa >= res->start &&
+-		    ddata->module_pa <= res->end) {
+-			atomic_set(&sysc_defer, 0);
+-
+-			return 0;
+-		}
+-	}
+-
+-	atomic_dec_if_positive(&sysc_defer);
+-
+-	return -EPROBE_DEFER;
+-}
+-
+ static struct device_node *stdout_path;
  
--#define TEE_IOCTL_PARAM_SIZE(x) (sizeof(struct tee_param) * (x))
-+#define TEE_IOCTL_PARAM_SIZE(x) (size_mul(sizeof(struct tee_param), (x)))
+ static void sysc_init_stdout_path(struct sysc *ddata)
+@@ -957,10 +912,6 @@ static int sysc_map_and_check_registers(struct sysc *ddata)
+ 	if (error)
+ 		return error;
  
- #define TEE_UUID_NS_NAME_SIZE	128
+-	error = sysc_defer_non_critical(ddata);
+-	if (error)
+-		return error;
+-
+ 	sysc_check_children(ddata);
  
-@@ -493,7 +494,7 @@ static int tee_ioctl_open_session(struct tee_context *ctx,
- 	if (copy_from_user(&arg, uarg, sizeof(arg)))
- 		return -EFAULT;
- 
--	if (sizeof(arg) + TEE_IOCTL_PARAM_SIZE(arg.num_params) != buf.buf_len)
-+	if (size_add(sizeof(arg), TEE_IOCTL_PARAM_SIZE(arg.num_params)) != buf.buf_len)
- 		return -EINVAL;
- 
- 	if (arg.num_params) {
-@@ -571,7 +572,7 @@ static int tee_ioctl_invoke(struct tee_context *ctx,
- 	if (copy_from_user(&arg, uarg, sizeof(arg)))
- 		return -EFAULT;
- 
--	if (sizeof(arg) + TEE_IOCTL_PARAM_SIZE(arg.num_params) != buf.buf_len)
-+	if (size_add(sizeof(arg), TEE_IOCTL_PARAM_SIZE(arg.num_params)) != buf.buf_len)
- 		return -EINVAL;
- 
- 	if (arg.num_params) {
-@@ -705,7 +706,7 @@ static int tee_ioctl_supp_recv(struct tee_context *ctx,
- 	if (get_user(num_params, &uarg->num_params))
- 		return -EFAULT;
- 
--	if (sizeof(*uarg) + TEE_IOCTL_PARAM_SIZE(num_params) != buf.buf_len)
-+	if (size_add(sizeof(*uarg), TEE_IOCTL_PARAM_SIZE(num_params)) != buf.buf_len)
- 		return -EINVAL;
- 
- 	params = kcalloc(num_params, sizeof(struct tee_param), GFP_KERNEL);
-@@ -804,7 +805,7 @@ static int tee_ioctl_supp_send(struct tee_context *ctx,
- 	    get_user(num_params, &uarg->num_params))
- 		return -EFAULT;
- 
--	if (sizeof(*uarg) + TEE_IOCTL_PARAM_SIZE(num_params) > buf.buf_len)
-+	if (size_add(sizeof(*uarg), TEE_IOCTL_PARAM_SIZE(num_params)) > buf.buf_len)
- 		return -EINVAL;
- 
- 	params = kcalloc(num_params, sizeof(struct tee_param), GFP_KERNEL);
+ 	if (!of_get_property(np, "reg", NULL))
 -- 
 2.39.5
 
