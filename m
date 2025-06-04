@@ -1,46 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 886F526659A;
-	Wed,  4 Jun 2025 01:02:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B8C726658F;
+	Wed,  4 Jun 2025 01:02:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748998976; cv=none; b=i24f6tu0nyoQX7iLQ1w48WF8aGvXgHTvVYztRMLfygtAmuS48MgrGisQx00GxAPlruaOa6EwZVf3eyUWbBlWeORxVVP+aQcXK6UG2d4CHXIIfUleaV7kmK8huikz1uwlTAA5pWxVJyw6vNoPpqNt7psY7VW5253FDtNu4Q2AMiQ=
+	t=1748998978; cv=none; b=rJBfbmSgtEHto02FwKPAUxoWKnBbETJbfk2E86YYkKiKr353U3rGer/H4PJj6qiHXDfI1ofAk/7PTwsx89qwZ3FR7X28YIETho2aZ4pzY0VDRmcM9Ta4ZC5STKUzD8a4qnkuU7z6qPwdkVBH3+cyXbQY4yGfz7H93ozBUxfDZjQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748998976; c=relaxed/simple;
-	bh=bcjZHj66sG3r51QRvPSies8OC4gVklExKbXEO7cipAc=;
+	s=arc-20240116; t=1748998978; c=relaxed/simple;
+	bh=26Zdes+iQq2j+JpkiitHcQugRtuurJR7LaMZAezCZDw=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=ufp44ms3YNPzA0IX208QsTJUwsB5nZxjlSb+mNM0WOdnrHs9Vil+Wpmus8zdNaZluwe/yQ0y20jHGMwKq4uC2jahVFAnuGndRIRSz6TbLIjySweHLWsVEVL7SL8AOls6J/fYEuKF3F9jTIz0tSmOQgN7gZ34i6ueoVxGPLC11dQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iD45h3vB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=S6HP8LXBqPy0WqbhUBU9PogfRkkKQ6G6eTzYYB5KXW8yWzL8RpccVHBWSIKgQjAZKKRcMGHYjD1T67yxz2qgmIHBghn6UmlmYe/MufV4ydLFmJBXFTubfMafQ/HO0iDVwY6HVOCJ7zRfyRkbAmAEGVirgCcTRvvexD7+fQnU7o8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=P/FeQ4eV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iD45h3vB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 304EEC4CEF3;
-	Wed,  4 Jun 2025 01:02:55 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="P/FeQ4eV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFBE5C4CEEF;
+	Wed,  4 Jun 2025 01:02:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748998976;
-	bh=bcjZHj66sG3r51QRvPSies8OC4gVklExKbXEO7cipAc=;
+	s=k20201202; t=1748998978;
+	bh=26Zdes+iQq2j+JpkiitHcQugRtuurJR7LaMZAezCZDw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iD45h3vBUoU6xlv+NqytalQ3hXIdnpklsnFv+Z3nALGcv3jKfulHXbsKh8g4ZB2hU
-	 h8uNo0eRXUfOGgco+QG+ES1myC67gR/OhxEn7eqBBj4DHYW53+PHbMFSWzK/n62860
-	 jUrcLS4TZ/vOr/jJq42tMRIQnOuiP+m9C2odNuaGyx+k1JSbFqAwGpfwD+Q0YH6cNL
-	 +Dt01pAfzma1rpko7JsW97VwknbBpXcAuXr1KvcpiiC70gb0JiEIpLmM/GiwvaGRam
-	 7+ckhO5187k+93/HILpBkpzd2lE665TZjPLuuzakQXRiy6U74SWpEspLr7tzJh8q4G
-	 T7UIW/uSpAIiA==
+	b=P/FeQ4eVXw6/S2Mk+X9oYorwOhJNJeNtBbycDFmI7LoUIH/60IIAR3vdnKATHUeMf
+	 ZK/G8atukOSH8CpCHC/N7CQyx9Hj608KZMKjvpm36sTTZC4e9d/JhlRjsAWXY4JIwF
+	 I5ZMYjxt7OrTjpqyJ1Wvtci1MvSjtBxzjZ0ZfRLxhwwhj6WHtd4kvxN8iKT+0u3DK9
+	 F75u4yyQ0d/x83nI08aYFyMVyvXvjy3iZCYZlfHlWsd2QB9BqG/At4xmi5mcCgmGja
+	 dOdCk6ogPL/oHGdGRHSCG6RgJYzLPzNUn4zs0W6r8iRlSM7wHr1DxeBG76oE699kMV
+	 yPFMm1wMLMjrw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	David Ahern <dsahern@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+Cc: Eelco Chaudron <echaudro@redhat.com>,
+	Simon Horman <horms@kernel.org>,
+	Ilya Maximets <i.maximets@ovn.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	davem@davemloft.net,
-	clrkwllms@kernel.org,
-	rostedt@goodmis.org,
+	aconole@redhat.com,
 	netdev@vger.kernel.org,
-	linux-rt-devel@lists.linux.dev
-Subject: [PATCH AUTOSEL 6.6 23/62] ipv4/route: Use this_cpu_inc() for stats on PREEMPT_RT
-Date: Tue,  3 Jun 2025 21:01:34 -0400
-Message-Id: <20250604010213.3462-23-sashal@kernel.org>
+	dev@openvswitch.org
+Subject: [PATCH AUTOSEL 6.6 24/62] openvswitch: Stricter validation for the userspace action
+Date: Tue,  3 Jun 2025 21:01:35 -0400
+Message-Id: <20250604010213.3462-24-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250604010213.3462-1-sashal@kernel.org>
 References: <20250604010213.3462-1-sashal@kernel.org>
@@ -55,82 +54,87 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.6.92
 Content-Transfer-Encoding: 8bit
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Eelco Chaudron <echaudro@redhat.com>
 
-[ Upstream commit 1c0829788a6e6e165846b9bedd0b908ef16260b6 ]
+[ Upstream commit 88906f55954131ed2d3974e044b7fb48129b86ae ]
 
-The statistics are incremented with raw_cpu_inc() assuming it always
-happens with bottom half disabled. Without per-CPU locking in
-local_bh_disable() on PREEMPT_RT this is no longer true.
+This change enhances the robustness of validate_userspace() by ensuring
+that all Netlink attributes are fully contained within the parent
+attribute. The previous use of nla_parse_nested_deprecated() could
+silently skip trailing or malformed attributes, as it stops parsing at
+the first invalid entry.
 
-Use this_cpu_inc() on PREEMPT_RT for the increment to not worry about
-preemption.
+By switching to nla_parse_deprecated_strict(), we make sure only fully
+validated attributes are copied for later use.
 
-Cc: David Ahern <dsahern@kernel.org>
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Link: https://patch.msgid.link/20250512092736.229935-4-bigeasy@linutronix.de
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Eelco Chaudron <echaudro@redhat.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Acked-by: Ilya Maximets <i.maximets@ovn.org>
+Link: https://patch.msgid.link/67eb414e2d250e8408bb8afeb982deca2ff2b10b.1747037304.git.echaudro@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-**Answer: YES** This commit should be backported to stable kernel trees
-based on the following analysis: ## Technical Analysis **The Issue:**
-The commit fixes a correctness bug in IPv4 routing statistics collection
-on PREEMPT_RT kernels. The `RT_CACHE_STAT_INC` macro uses
-`raw_cpu_inc()` which assumes preemption is disabled, but this
-assumption is violated on PREEMPT_RT systems where many previously non-
-preemptible contexts become preemptible. **Code Changes:** The fix is
-minimal and surgical: ```c #ifndef CONFIG_PREEMPT_RT #define
-RT_CACHE_STAT_INC(field) raw_cpu_inc(rt_cache_stat.field) #else #define
-RT_CACHE_STAT_INC(field) this_cpu_inc(rt_cache_stat.field) #endif ```
-This conditional compilation ensures that: - Non-PREEMPT_RT systems
-maintain existing performance with `raw_cpu_inc()` - PREEMPT_RT systems
-get correctness with `this_cpu_inc()` which includes implicit preemption
-protection ## Backport Justification **1. Follows Stable Tree
-Criteria:** - **Bug Fix:** Corrects statistics corruption on PREEMPT_RT
-systems - **Small and Contained:** Only 4 lines changed in a single
-macro definition - **Low Risk:** No behavioral change for non-PREEMPT_RT
-systems - **No Architectural Changes:** Simple conditional compilation
-approach **2. Consistent with Similar Commits:** The change follows the
-exact same pattern as Similar Commit #1 and #3 (both marked "Backport
-Status: YES"), which fix preemption-related issues in per-CPU
-statistics. Like those commits, this addresses scenarios where
-`__this_cpu_*` or `raw_cpu_*` operations are called from preemptible
-context on PREEMPT_RT. **3. Real User Impact:** - **Affected Systems:**
-PREEMPT_RT kernels with IPv4 routing (real-time systems, industrial
-applications) - **Symptoms:** Inaccurate routing statistics due to race
-conditions during CPU migration - **Debugging Impact:** Could mislead
-network troubleshooting efforts **4. Technical Correctness:** Race
-conditions can occur when a process is preempted and migrated to another
-CPU between reading the per-CPU pointer and incrementing the counter,
-leading to lost statistics updates. The `this_cpu_inc()` variant
-prevents this by ensuring atomic access to per-CPU data. **5. Minimal
-Risk Profile:** - No functional changes to packet forwarding - Zero
-impact on non-PREEMPT_RT systems - Follows established kernel patterns
-for PREEMPT_RT safety - No performance regression expected This is
-exactly the type of targeted correctness fix that stable trees are
-designed to include - it addresses a real bug affecting a specific
-subset of users with minimal risk to the broader user base.
+**YES** This commit should be backported to stable kernel trees. ##
+Analysis **Commit Overview:** The commit changes `validate_userspace()`
+function in `net/openvswitch/flow_netlink.c` by replacing
+`nla_parse_nested_deprecated()` with `nla_parse_deprecated_strict()` to
+ensure stricter validation of Netlink attributes for the userspace
+action. **Specific Code Changes:** The key change is on lines 3052-3054:
+```c // Before: error = nla_parse_nested_deprecated(a,
+OVS_USERSPACE_ATTR_MAX, attr, userspace_policy, NULL); // After: error =
+nla_parse_deprecated_strict(a, OVS_USERSPACE_ATTR_MAX, nla_data(attr),
+nla_len(attr), userspace_policy, NULL); ``` **Why This Should Be
+Backported:** 1. **Security Enhancement:** This commit addresses a
+parsing vulnerability where malformed attributes could be silently
+ignored. The original `nla_parse_nested_deprecated()` stops parsing at
+the first invalid entry, potentially allowing trailing malformed data to
+bypass validation. 2. **Robustness Fix:** The change ensures all netlink
+attributes are fully contained within the parent attribute bounds,
+preventing potential buffer over-reads or under-reads that could lead to
+security issues. 3. **Pattern Consistency:** Looking at the git blame
+output (lines 3085-3087), we can see that
+`nla_parse_deprecated_strict()` was already introduced in 2019 by commit
+8cb081746c031 and is used elsewhere in the same file for similar
+validation (e.g., `validate_and_copy_check_pkt_len()` function). 4.
+**Low Risk:** This is a small, contained change that only affects input
+validation - it doesn't change functionality or introduce new features.
+The change is defensive and follows existing patterns in the codebase.
+5. **Similar Precedent:** This commit is very similar to the validated
+"Similar Commit #2" which was marked for backporting (status: YES). That
+commit also dealt with netlink attribute validation safety in
+openvswitch (`validate_set()` function) and was considered suitable for
+stable trees. 6. **Critical Subsystem:** Open vSwitch is a critical
+networking component used in virtualization and container environments.
+Input validation issues in this subsystem could potentially be exploited
+for privilege escalation or denial of service. 7. **Clear Intent:** The
+commit message explicitly states this "enhances robustness" and ensures
+"only fully validated attributes are copied for later use," indicating
+this is a defensive security improvement. **Risk Assessment:** - Very
+low regression risk - No API changes - Only affects error handling paths
+- Follows established validation patterns in the same codebase This
+commit fits perfectly into the stable tree criteria: it's an important
+security/robustness fix, has minimal risk of regression, is well-
+contained, and addresses a clear validation vulnerability in a critical
+kernel subsystem.
 
- net/ipv4/route.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/openvswitch/flow_netlink.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/ipv4/route.c b/net/ipv4/route.c
-index 97dc30a03dbf2..8ee1ad2d8c13f 100644
---- a/net/ipv4/route.c
-+++ b/net/ipv4/route.c
-@@ -192,7 +192,11 @@ const __u8 ip_tos2prio[16] = {
- EXPORT_SYMBOL(ip_tos2prio);
+diff --git a/net/openvswitch/flow_netlink.c b/net/openvswitch/flow_netlink.c
+index 089ab1826e1d5..eb85384a376be 100644
+--- a/net/openvswitch/flow_netlink.c
++++ b/net/openvswitch/flow_netlink.c
+@@ -3035,7 +3035,8 @@ static int validate_userspace(const struct nlattr *attr)
+ 	struct nlattr *a[OVS_USERSPACE_ATTR_MAX + 1];
+ 	int error;
  
- static DEFINE_PER_CPU(struct rt_cache_stat, rt_cache_stat);
-+#ifndef CONFIG_PREEMPT_RT
- #define RT_CACHE_STAT_INC(field) raw_cpu_inc(rt_cache_stat.field)
-+#else
-+#define RT_CACHE_STAT_INC(field) this_cpu_inc(rt_cache_stat.field)
-+#endif
- 
- #ifdef CONFIG_PROC_FS
- static void *rt_cache_seq_start(struct seq_file *seq, loff_t *pos)
+-	error = nla_parse_nested_deprecated(a, OVS_USERSPACE_ATTR_MAX, attr,
++	error = nla_parse_deprecated_strict(a, OVS_USERSPACE_ATTR_MAX,
++					    nla_data(attr), nla_len(attr),
+ 					    userspace_policy, NULL);
+ 	if (error)
+ 		return error;
 -- 
 2.39.5
 
