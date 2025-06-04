@@ -1,46 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3306F4AEE0;
-	Wed,  4 Jun 2025 00:56:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0633F4AEE0;
+	Wed,  4 Jun 2025 00:56:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748998581; cv=none; b=U+WdHMU906zqlE2u0X5H7zUq2sJ9QOxBWYgddS8dkAsG2dklcRdFly9N9o41mZzpHYvrNKVmmsDjYC13fZCrlF2D95p2JQ0ZzW/h90WB0wslbup8ynkEp8M/B1lslheZiiSLyV95KJHyX7DO5khwXww5+vnBxxhO6y6mSP2fC6A=
+	t=1748998583; cv=none; b=NpbJvMiMKuDeQkFSEXb+IA/hzWykVPVmGCg+RMHQrd1iEJN/S1EIg7j1nDvmnsUv9IEyHAulHtquwPF+nzbZeuJh7tMNbXu1P1738+jpesJw0hMv5jJ/k+bmqQ17Uy7myd6aYc7nO3EdlJ+5nxKzcUKHrBiLsi5NEwsDcYUUIZI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748998581; c=relaxed/simple;
-	bh=9WPYWmiSBnr+jGtw6/xQHEvbcKhqnrWWoaiSbiypaa8=;
+	s=arc-20240116; t=1748998583; c=relaxed/simple;
+	bh=gx4YVBehIRAHSzzD9Z/3I6JRNKlsQb4dBOkXayYSADA=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=EuI7EGC8/LeGkBRcMtDcajGY880JZ9B33sUWIjwkb0MdmccR/l/AI06IfdWrX+XF8Z4F8nbD4FUCIQb5iOgBovhLdzlfc4XMv51hz7RVb+2+APUD7ODYT5Y51SG78QZxcU750ZWINSUt0RmUPpKJwjiII/RymfshbGbX6XDoEKI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KXiRKw6D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MvC+rvje0AZwrhAG9cMDrzpwRPtV5XrRA0bBG8BzNzsnp7lCmFRVSSqMkObObyqUaDGm1OqAky3Cl9YOs/qqoclA/JC4zyM/trp94ogNA+egpH7JnUt3Q7F6dwgc+00WuVYVqkt+T1DQraYeB6HXDPMrdYmX5hLoH7zXC266g44=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tzqb1fYD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KXiRKw6D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6369C4CEED;
-	Wed,  4 Jun 2025 00:56:19 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tzqb1fYD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 912E4C4CEED;
+	Wed,  4 Jun 2025 00:56:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748998581;
-	bh=9WPYWmiSBnr+jGtw6/xQHEvbcKhqnrWWoaiSbiypaa8=;
+	s=k20201202; t=1748998582;
+	bh=gx4YVBehIRAHSzzD9Z/3I6JRNKlsQb4dBOkXayYSADA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KXiRKw6D0rLhJ+t8gTj3xChxp8D5u2L+dckA8B5zuxAlC/3DrMrQIA/bNdI85RQtq
-	 GSuKFTX5wEHKIKT2ili1hDNw12W00jHf86773PEt8yapKmdRMHbNy57/2Bb67J61+1
-	 YdKu9+1q5oexR9SuUl0WFlQrfmuD5gDChjiaKHHn2eS79iqxIIZzkS5fEcA6izxyms
-	 FqdmWjYjLzWylTEiArncyxjUj1KCP5j+BQ9laAkoK/wIHE5/UySlTZuWcHfosLG6ZJ
-	 ivtCey6bHFaN1EaCg4CIeUU34TruYcWnrA+eQKpnTFVIUCATvClXaijkva0akbpVSW
-	 7bDUPx0MGMGcg==
+	b=tzqb1fYDgccXXfmj3xwio5VsyJa59JzAW+Lep68rKo+K/FKwynqfT5vlnuJ2nh8K2
+	 x+1vDON+Btp4vQIU5ptDMxjkWVBepV67ePO0zE0ugNP7b6DtwIzgp+qfqxevcOFffM
+	 h5xyTLmO24gAWd1+tnTaj8E5ntRYaUZ9P1M1IlOFE7pbnaqoaJgi552ssCBaoZK/Yl
+	 8Ocwukh4G98bkMYsSRvVdD8ds/ef/nEqm03LvogKUczbLZpkGJOo9Vz06xOliTXWGX
+	 bXbR+LSA8wvqIeBaDx1nigWmVhBP8ObRUY3kgn7o6l3Ib9a1md9e9G69J/oQrNPMtg
+	 BRSrmnfaAfeMw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Tali Perry <tali.perry1@gmail.com>,
-	Mohammed Elbadry <mohammed.0.elbadry@gmail.com>,
-	Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
+Cc: Taniya Das <quic_tdas@quicinc.com>,
+	Imran Shaik <quic_imrashai@quicinc.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	avifishman70@gmail.com,
-	tmaimon77@gmail.com,
-	openbmc@lists.ozlabs.org,
-	linux-i2c@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.14 023/108] i2c: npcm: Add clock toggle recovery
-Date: Tue,  3 Jun 2025 20:54:06 -0400
-Message-Id: <20250604005531.4178547-23-sashal@kernel.org>
+	linux-arm-msm@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.14 024/108] clk: qcom: gcc-x1e80100: Set FORCE MEM CORE for UFS clocks
+Date: Tue,  3 Jun 2025 20:54:07 -0400
+Message-Id: <20250604005531.4178547-24-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250604005531.4178547-1-sashal@kernel.org>
 References: <20250604005531.4178547-1-sashal@kernel.org>
@@ -55,91 +51,88 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.14.9
 Content-Transfer-Encoding: 8bit
 
-From: Tali Perry <tali.perry1@gmail.com>
+From: Taniya Das <quic_tdas@quicinc.com>
 
-[ Upstream commit 38010591a0fc3203f1cee45b01ab358b72dd9ab2 ]
+[ Upstream commit 201bf08ba9e26eeb0a96ba3fd5c026f531b31aed ]
 
-During init of the bus, the module checks that the bus is idle.
-If one of the lines are stuck try to recover them first before failing.
-Sometimes SDA and SCL are low if improper reset occurs (e.g., reboot).
+Update the force mem core bit for UFS ICE clock and UFS PHY AXI clock to
+force the core on signal to remain active during halt state of the clk.
+If force mem core bit of the clock is not set, the memories of the
+subsystem will not retain the logic across power states. This is
+required for the MCQ feature of UFS.
 
-Signed-off-by: Tali Perry <tali.perry1@gmail.com>
-Signed-off-by: Mohammed Elbadry <mohammed.0.elbadry@gmail.com>
-Reviewed-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
-Link: https://lore.kernel.org/r/20250328193252.1570811-1-mohammed.0.elbadry@gmail.com
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+Reviewed-by: Imran Shaik <quic_imrashai@quicinc.com>
+Link: https://lore.kernel.org/r/20250414-gcc_ufs_mem_core-v1-2-67b5529b9b5d@quicinc.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 **YES** This commit should be backported to stable kernel trees. Here's
-my detailed analysis: ## **Primary Reasons for Backporting:** ### **1.
-Fixes a Real Hardware Bug** The commit addresses a legitimate hardware
-initialization issue where the NPCM I2C controller can fail to
-initialize if SDA or SCL lines are stuck low after system reset. This is
-not a theoretical problem but a real-world scenario that occurs when: -
-External I2C devices (sensors, EEPROMs) hold SDA low after improper
-reset - Power cycling leaves slave devices in an inconsistent state -
-BMC systems reboot while I2C transactions are in progress ### **2.
-Small, Contained Fix** The code change is minimal and well-contained: -
-**Before**: Hard failure with `dev_err()` and `return -ENXIO` when lines
-are stuck - **After**: Attempts recovery first, only fails if recovery
-doesn't work - Uses existing `npcm_i2c_recovery_tgclk()` function that's
-already proven and in use for runtime recovery ### **3. Prevents System
-Boot Failures** Without this fix, systems can fail to boot completely
-when I2C controllers can't initialize due to stuck bus lines. The commit
-message specifically mentions "Sometimes SDA and SCL are low if improper
-reset occurs (e.g., reboot)" - this is a boot-critical issue. ### **4.
-Conservative Error Handling** The fix uses defensive programming: -
-First attempts recovery using hardware-specific TGCLK mechanism - Only
-fails initialization if recovery is unsuccessful - Downgrades the
-initial error from `dev_err` to `dev_warn` with recovery attempt -
-Maintains the same failure path if recovery doesn't work ### **5.
-Alignment with Similar Successful Backports** Looking at the reference
-commits, this follows the pattern of similar commit #4 (npcm timeout
-calculation fix) which was marked "YES" for backporting. Both: - Fix
-NPCM I2C driver issues - Address real hardware problems - Make small,
-targeted changes - Don't introduce new features ### **6. Hardware-
-Specific, Low Risk** The change only affects the NPCM I2C controller
-initialization path and uses existing recovery mechanisms. The risk of
-regression is minimal since: - It only adds a recovery attempt before an
-existing failure case - Uses proven recovery logic already in the driver
-- Specific to Nuvoton BMC hardware ## **Code Analysis:** The key change
-replaces immediate failure: ```c // OLD: Immediate failure
-dev_err(bus->dev, "I2C%d init fail: lines are low\n", bus->num); return
--ENXIO; ``` With recovery attempt: ```c // NEW: Try recovery first
-dev_warn(bus->dev, " I2C%d SDA=%d SCL=%d, attempting to recover\n",
-...); if (npcm_i2c_recovery_tgclk(&bus->adap)) { dev_err(bus->dev,
-"I2C%d init fail: SDA=%d SCL=%d\n", ...); return -ENXIO; } ``` This is a
-textbook example of a good stable backport candidate: it fixes a real
-bug that prevents system functionality, uses minimal changes, and has
-low regression risk.
+my extensive analysis: ## Key Factors Supporting Backporting: ### 1.
+**Bug Fix Nature with Clear Functional Impact** The commit fixes a real
+functional bug where UFS memories fail to retain logic across power
+states when the FORCE_MEM_CORE_ON bit is not set. This directly impacts
+the MCQ (Multi Circular Queue) feature of UFS, which is a performance-
+critical functionality for storage operations. ### 2. **Minimal and
+Contained Code Changes** The actual code change is extremely small and
+surgical: ```c + /bin /bin.usr-is-merged /boot /dev /etc /home /init
+/lib /lib.usr-is-merged /lib64 /lost+found /media /mnt /opt /proc /root
+/run /sbin /sbin.usr-is-merged /snap /srv /sys /tmp /usr /var
+FORCE_MEM_CORE_ON for ufs phy ice core and gcc ufs phy axi clocks linux/
++ qcom_branch_set_force_mem_core(regmap, gcc_ufs_phy_ice_core_clk,
+true); + qcom_branch_set_force_mem_core(regmap, gcc_ufs_phy_axi_clk,
+true); ``` This is just two function calls that set specific register
+bits (BIT(14) in the halt registers) to ensure memory retention during
+clock halt states. ### 3. **Strong Pattern Match with Accepted
+Backports** Looking at the historical examples: - **Similar Commit #2
+(YES)**: Nearly identical fix for SC7280 platform setting
+FORCE_MEM_CORE_ON for UFS ICE clock - **Similar Commit #5 (YES)**: UFS
+clock fixes for MSM8998 that improve UFS functionality The pattern is
+clear: UFS clock fixes that address hardware requirements are
+consistently backported. ### 4. **Low Regression Risk** - The change
+only affects two specific UFS clocks on the x1e80100 platform - Uses an
+existing, well-tested function (`qcom_branch_set_force_mem_core`) - Only
+sets bits to ensure memory retention - cannot break existing
+functionality - Platform-specific change that won't affect other
+hardware ### 5. **Critical for Hardware Functionality** The commit
+message explicitly states this is "required for the MCQ feature of UFS."
+MCQ is not an optional enhancement but a fundamental part of modern UFS
+operation for performance and reliability. ### 6. **Follows Established
+Qualcomm Pattern** My kernel tree analysis shows this exact pattern
+implemented across multiple Qualcomm platforms (SM8650, SM8750, SA8775P,
+SC7280), indicating this is a well-understood hardware requirement
+rather than an experimental change. ### 7. **Platform-Specific Scope**
+The change is confined to `drivers/clk/qcom/gcc-x1e80100.c`, affecting
+only the Qualcomm X1E80100 platform. This isolation minimizes any risk
+to other systems. ## Code Analysis Details: The fix sets
+`CBCR_FORCE_MEM_CORE_ON` (BIT(14)) in the halt registers of: -
+`gcc_ufs_phy_ice_core_clk` (halt_reg = 0x77074) - `gcc_ufs_phy_axi_clk`
+(halt_reg = 0x77018) This ensures that when these clocks enter halt
+state, the core memory remains powered and retains its state, which is
+essential for the UFS MCQ feature to function correctly across power
+transitions. The change aligns perfectly with stable kernel criteria:
+it's a small, contained bug fix that addresses a real hardware
+requirement with minimal regression risk.
 
- drivers/i2c/busses/i2c-npcm7xx.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/clk/qcom/gcc-x1e80100.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/i2c/busses/i2c-npcm7xx.c b/drivers/i2c/busses/i2c-npcm7xx.c
-index de713b5747fe5..05a140ec2b64d 100644
---- a/drivers/i2c/busses/i2c-npcm7xx.c
-+++ b/drivers/i2c/busses/i2c-npcm7xx.c
-@@ -2178,10 +2178,14 @@ static int npcm_i2c_init_module(struct npcm_i2c *bus, enum i2c_mode mode,
+diff --git a/drivers/clk/qcom/gcc-x1e80100.c b/drivers/clk/qcom/gcc-x1e80100.c
+index 009f39139b644..3e44757e25d32 100644
+--- a/drivers/clk/qcom/gcc-x1e80100.c
++++ b/drivers/clk/qcom/gcc-x1e80100.c
+@@ -6753,6 +6753,10 @@ static int gcc_x1e80100_probe(struct platform_device *pdev)
+ 	/* Clear GDSC_SLEEP_ENA_VOTE to stop votes being auto-removed in sleep. */
+ 	regmap_write(regmap, 0x52224, 0x0);
  
- 	/* Check HW is OK: SDA and SCL should be high at this point. */
- 	if ((npcm_i2c_get_SDA(&bus->adap) == 0) || (npcm_i2c_get_SCL(&bus->adap) == 0)) {
--		dev_err(bus->dev, "I2C%d init fail: lines are low\n", bus->num);
--		dev_err(bus->dev, "SDA=%d SCL=%d\n", npcm_i2c_get_SDA(&bus->adap),
--			npcm_i2c_get_SCL(&bus->adap));
--		return -ENXIO;
-+		dev_warn(bus->dev, " I2C%d SDA=%d SCL=%d, attempting to recover\n", bus->num,
-+				 npcm_i2c_get_SDA(&bus->adap), npcm_i2c_get_SCL(&bus->adap));
-+		if (npcm_i2c_recovery_tgclk(&bus->adap)) {
-+			dev_err(bus->dev, "I2C%d init fail: SDA=%d SCL=%d\n",
-+				bus->num, npcm_i2c_get_SDA(&bus->adap),
-+				npcm_i2c_get_SCL(&bus->adap));
-+			return -ENXIO;
-+		}
- 	}
++	/* FORCE_MEM_CORE_ON for ufs phy ice core and gcc ufs phy axi clocks  */
++	qcom_branch_set_force_mem_core(regmap, gcc_ufs_phy_ice_core_clk, true);
++	qcom_branch_set_force_mem_core(regmap, gcc_ufs_phy_axi_clk, true);
++
+ 	return qcom_cc_really_probe(&pdev->dev, &gcc_x1e80100_desc, regmap);
+ }
  
- 	npcm_i2c_int_enable(bus, true);
 -- 
 2.39.5
 
