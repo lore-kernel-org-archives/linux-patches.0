@@ -1,42 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FC6032C85;
-	Wed,  4 Jun 2025 01:06:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF0252749DE;
+	Wed,  4 Jun 2025 01:06:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748999182; cv=none; b=X/WlvYA72Dc8K4/8gs+CrKHtehvZ8lxcfdPHUTicbTGPeagLRhol3ItCjVRLq7I2fFwsKuLidWMhK6JOEkQWX0ovDUqpLQpvJSpsTf3PnKiRFqzB2U6tGjSQva1SpAf/ub672cRzuycPLZVMy/2VLKLsPnWVHYwBVEfTOOLKz4g=
+	t=1748999184; cv=none; b=ZH+IEir+d2wVJ+XvFWA4m7K943pReBKOaPjRIy7FOLEBdc3OSAuC2+6zWdobT550EmreRGkGVx28XLoMMhnBAnLNAjcCKhlkF8HOP3ZsRyOti+ruu+w73MeVJQ9t5d/lP3jgf/KI3hiCR4NQf3KSfgPdJcvDrEfjTAU5M2MeY2I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748999182; c=relaxed/simple;
-	bh=CVVRfzt6cnR2aNlfcFAZuI4AN8zJPXZnwek1LwRqqPg=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Type; b=IbQ4plzGpsxgqxkvK9MwEtT7ZvexV4EDxxG4X/yn7jRCP5JkvDDGbo0Uj5mRHuCeMJRhPEFLM+7JxwOQ+XB7ahT/ou9nKmSF3at/5RfqvYJoS/4gjEBZ/4WFumpE9yxwo4jLhZohSXOc94FIOFjtvkp1kHYy8bsCcnl+Otaog5w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZSq+bQLH; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1748999184; c=relaxed/simple;
+	bh=78jkXTXAdVAORilFGQfaQrZZBe1S38ItLWlolRFPphA=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=HPNDJLGGR761JC6CyzngGef5msWscEuw2ntiA98xcXQgRSAtrJIgIAuiolTFCtpUF7KfKHnwFtY5jJZ4y69kHv60wpePzvYssUFkaXdSesHV6qmrQPxygy4jETIpb+8qdpRoa3Q0QXUFGQMu3F6N3xHR/dNURglJh5XNfstXLpI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LefiKd4k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZSq+bQLH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B74AC4CEF1;
-	Wed,  4 Jun 2025 01:06:21 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LefiKd4k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3C27C4CEF1;
+	Wed,  4 Jun 2025 01:06:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748999182;
-	bh=CVVRfzt6cnR2aNlfcFAZuI4AN8zJPXZnwek1LwRqqPg=;
-	h=From:To:Cc:Subject:Date:From;
-	b=ZSq+bQLHp7OW4Uw/YysTkVqlEHFmv7+/POwtUiJoALZGYMKj3cCaksq+QVrRiKojk
-	 NQ2RwhQoqVzuZkqBFR/zqG5bqnWVFpfpai5H8c/0+CfgtwehG+OqyzA6c+wwZrSSjB
-	 nstXguHxXn3at0s46rIB1eUkl9gQpAuHSozwltHysQAR1OWcDWEUYVqOxoIWCDPuYU
-	 Hz4uMt6fLheV/S9SXSbKExzubI+vS6igz34tf1yzcVyJMfbJY9HqhPrMCiup5fxGn4
-	 h4E4VR/VZ54qm/u4tIMgndshLfKNpehZ6OKSp98I7g1fh3VsBFcqtOKEKiEMp66foy
-	 IVrBgnN4rJaEQ==
+	s=k20201202; t=1748999183;
+	bh=78jkXTXAdVAORilFGQfaQrZZBe1S38ItLWlolRFPphA=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=LefiKd4kPDsoJ93TM6v79AYwZpJmF+yOHMS78AYTfj0TEnnQWRgY5VTUalJBLmBak
+	 JW93U17YO1qT/p+U/t7d5w8wXFuDAs/4qasS2PXOujeCVmmE1zP49VExRjVCivmT/B
+	 jhKU8WoZFtkBlpF1Ey2FU3EE8GG9ctjNThUhu/ycOyuX2+rYAWxbUWOJlHZXhpJ1pw
+	 2aSszVHLHR9Yc1Bfrih8FOnapAZ3z6ADNrKwGVUc56Ku0fItB0+hPSrHs5MwOVxzHO
+	 1Q5emB/ZPea0RhyBrsA2ut6K/istfKaBicY4A3Rup22mXlrhQy+TW5G346Kx5dbqkW
+	 rg5pPiFWnjCiQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Sergio Perez Gonzalez <sperezglz@gmail.com>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+Cc: Zilin Guan <zilin@seu.edu.cn>,
+	Tung Nguyen <tung.quang.nguyen@est.tech>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	nicolas.ferre@microchip.com
-Subject: [PATCH AUTOSEL 5.10 01/27] net: macb: Check return value of dma_set_mask_and_coherent()
-Date: Tue,  3 Jun 2025 21:05:54 -0400
-Message-Id: <20250604010620.6819-1-sashal@kernel.org>
+	jmaloy@redhat.com,
+	netdev@vger.kernel.org,
+	tipc-discussion@lists.sourceforge.net
+Subject: [PATCH AUTOSEL 5.10 02/27] tipc: use kfree_sensitive() for aead cleanup
+Date: Tue,  3 Jun 2025 21:05:55 -0400
+Message-Id: <20250604010620.6819-2-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250604010620.6819-1-sashal@kernel.org>
+References: <20250604010620.6819-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -46,84 +51,88 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 5.10.237
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sergio Perez Gonzalez <sperezglz@gmail.com>
+From: Zilin Guan <zilin@seu.edu.cn>
 
-[ Upstream commit 3920a758800762917177a6b5ab39707d8e376fe6 ]
+[ Upstream commit c8ef20fe7274c5766a317f9193b70bed717b6b3d ]
 
-Issue flagged by coverity. Add a safety check for the return value
-of dma_set_mask_and_coherent, go to a safe exit if it returns error.
+The tipc_aead_free() function currently uses kfree() to release the aead
+structure. However, this structure contains sensitive information, such
+as key's SALT value, which should be securely erased from memory to
+prevent potential leakage.
 
-Link: https://scan7.scan.coverity.com/#/project-view/53936/11354?selectedIssue=1643754
-Signed-off-by: Sergio Perez Gonzalez <sperezglz@gmail.com>
-Reviewed-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
-Link: https://patch.msgid.link/20250526032034.84900-1-sperezglz@gmail.com
+To enhance security, replace kfree() with kfree_sensitive() when freeing
+the aead structure. This change ensures that sensitive data is explicitly
+cleared before memory deallocation, aligning with the approach used in
+tipc_aead_init() and adhering to best practices for handling confidential
+information.
+
+Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
+Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
+Link: https://patch.msgid.link/20250523114717.4021518-1-zilin@seu.edu.cn
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Based on my analysis of the commit and the codebase context, here's my
-assessment: **YES** This commit should be backported to stable kernel
-trees. Here's my extensive analysis: ## Code Analysis The commit adds
-proper error checking for `dma_set_mask_and_coherent()` in the macb
-network driver. Looking at the specific changes: **Before the fix:**
-```c if (GEM_BFEXT(DAW64, gem_readl(bp, DCFG6))) {
-dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(44)); bp->hw_dma_cap
-|= HW_DMA_CAP_64B; } ``` **After the fix:** ```c if (GEM_BFEXT(DAW64,
-gem_readl(bp, DCFG6))) { err = dma_set_mask_and_coherent(&pdev->dev,
-DMA_BIT_MASK(44)); if (err) { dev_err(&pdev->dev, "failed to set DMA
-mask\n"); goto err_out_free_netdev; } bp->hw_dma_cap |= HW_DMA_CAP_64B;
-} ``` ## Why this should be backported: 1. **Fixes a Real Bug**: The
-original code ignores the return value of `dma_set_mask_and_coherent()`.
-If this function fails (which can happen on systems with restricted DMA
-capabilities), the driver would continue execution assuming 44-bit DMA
-addressing is available when it's not, leading to potential memory
-corruption or system crashes. 2. **Small, Contained Fix**: This is a
-minimal change that only adds proper error checking without changing any
-core logic or introducing new features. It follows the stable tree
-principle of being a small, targeted bugfix. 3. **Follows Established
-Patterns**: Looking at the similar commits provided, this matches
-exactly the pattern of commits marked "YES" for backporting (commits #1,
-#2, and #5) which all add proper error checking for DMA mask functions.
-4. **Critical Network Driver**: The macb driver is used in production
-systems, and DMA-related bugs can cause data corruption or system
-instability, making this a high-priority fix for stable trees. 5.
-**Proper Error Handling Path**: The fix correctly uses the existing
-`err_out_free_netdev` label, which properly cleans up allocated
-resources (line 5373-5383 in macb_main.c), preventing resource leaks
-when DMA setup fails. 6. **Static Analysis Tool Flagged**: The commit
-message mentions this was flagged by Coverity, indicating it's a
-legitimate code quality issue that could manifest as a runtime bug. 7.
-**Matches Stable Tree Criteria**: - Important bugfix ✓ - Minimal risk of
-regression ✓ - No architectural changes ✓ - Confined to one
-driver/subsystem ✓ - Clear side effects (proper cleanup on failure) ✓
-This commit addresses the same class of vulnerability as the other "YES"
-examples: ignoring return values of critical DMA functions that can fail
-and lead to undefined behavior. The fix is surgical, safe, and addresses
-a genuine runtime issue in a widely-used network driver.
+**YES** This commit should be backported to stable kernel trees. Here's
+my detailed analysis: ## Security Justification The commit addresses a
+clear security vulnerability by replacing `kfree()` with
+`kfree_sensitive()` for the `tipc_aead` structure in `tipc_aead_free()`.
+This is a critical security improvement because: 1. **Sensitive Data
+Content**: The `tipc_aead` structure contains highly sensitive
+cryptographic information: - `salt` field: Cryptographic salt used in
+key derivation - `key` pointer: References actual cryptographic key
+material - `hint` field: Contains key identification information 2.
+**Memory Security Risk**: Using regular `kfree()` leaves sensitive
+cryptographic data in freed memory, creating a potential information
+leakage vector where: - Attackers could potentially recover salt values
+and key hints from freed memory - Subsequent memory allocations might
+access residual cryptographic data - This violates cryptographic
+security best practices ## Code Change Analysis The specific change from
+`kfree(aead)` to `kfree_sensitive(aead)` on line 428 of
+`net/tipc/crypto.c` is: ```c - kfree(aead); + kfree_sensitive(aead); ```
+This change is: - **Minimal and contained**: Single line change with no
+functional impact - **Low risk**: `kfree_sensitive()` performs the same
+deallocation as `kfree()` but adds explicit memory zeroing -
+**Consistent**: The same file already uses `kfree_sensitive(aead->key)`
+on line 427, showing this practice is established ## Alignment with
+Similar Commits This commit closely parallels the "YES" backport
+examples: 1. **Similar Commit #1**: Used `aead_request_free()` instead
+of `kfree()` for proper crypto data handling 2. **Similar Commit #2**:
+Applied `kfree_sensitive()` to crypto buffers containing key material 3.
+**Similar Commit #5**: Fixed TIPC crypto security issue (preemption
+problem) The pattern of replacing standard memory deallocation with
+secure alternatives for cryptographic structures is well-established and
+consistently approved for backporting. ## Stable Tree Criteria
+Compliance This commit meets all stable tree requirements: - **Important
+bugfix**: Fixes potential cryptographic information leakage - **Minimal
+risk**: Single line change with no behavioral modifications - **No
+architectural changes**: Uses existing kernel API - **Contained scope**:
+Limited to TIPC crypto subsystem cleanup ## Security Impact Given TIPC's
+history of security vulnerabilities (including heap overflows and use-
+after-free issues), this defensive security measure is particularly
+valuable for preventing information disclosure attacks targeting
+cryptographic material. The commit represents a clear security hardening
+improvement with negligible risk, making it an excellent candidate for
+stable kernel backporting.
 
- drivers/net/ethernet/cadence/macb_main.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ net/tipc/crypto.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/cadence/macb_main.c b/drivers/net/ethernet/cadence/macb_main.c
-index 0f18837def3c8..4d3332d96e086 100644
---- a/drivers/net/ethernet/cadence/macb_main.c
-+++ b/drivers/net/ethernet/cadence/macb_main.c
-@@ -4578,7 +4578,11 @@ static int macb_probe(struct platform_device *pdev)
- 
- #ifdef CONFIG_ARCH_DMA_ADDR_T_64BIT
- 	if (GEM_BFEXT(DAW64, gem_readl(bp, DCFG6))) {
--		dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(44));
-+		err = dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(44));
-+		if (err) {
-+			dev_err(&pdev->dev, "failed to set DMA mask\n");
-+			goto err_out_free_netdev;
-+		}
- 		bp->hw_dma_cap |= HW_DMA_CAP_64B;
+diff --git a/net/tipc/crypto.c b/net/tipc/crypto.c
+index bf384bd126963..5434a5c4269f1 100644
+--- a/net/tipc/crypto.c
++++ b/net/tipc/crypto.c
+@@ -419,7 +419,7 @@ static void tipc_aead_free(struct rcu_head *rp)
  	}
- #endif
+ 	free_percpu(aead->tfm_entry);
+ 	kfree_sensitive(aead->key);
+-	kfree(aead);
++	kfree_sensitive(aead);
+ }
+ 
+ static int tipc_aead_users(struct tipc_aead __rcu *aead)
 -- 
 2.39.5
 
