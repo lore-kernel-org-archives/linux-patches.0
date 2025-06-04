@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FDDA1624C5;
-	Wed,  4 Jun 2025 00:55:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C2444A2D;
+	Wed,  4 Jun 2025 00:55:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748998540; cv=none; b=q02ogwcUwqU0LdS8wjhAhNLneXMg7Zid5k5hsMw5n7TkJRJ/qKSMzbytP1deC1JWywjV4K8iXfQYFjsTovVyG5RhBRCIbL/pxmMbhCDuni52vrUm9VygRO16E0KX6MGSBwY1LdFGmEc1ZMX1H2q1r8XDHwDkNf1s3+N+g792GXc=
+	t=1748998541; cv=none; b=dyxrFESHBtyr1jcjiXHv3zEm6l1hBzf9rxA+ZK9fLA0KrYqE5jQuerMrP4jc+u7YbuAg1hPnZBE5vZKSD/k/Q1RKoxhxu8+FJQcZmvCelMK8OtrcMVFFSujGnuC6t/T0xQ6xZATDJv3mKecYqtBfjlG44VJHKNOHR2tAmlEK9LA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748998540; c=relaxed/simple;
-	bh=Bpo5W1kC3c04xZa8lhDXsjmkKv55v7n2WXOklwhHewI=;
+	s=arc-20240116; t=1748998541; c=relaxed/simple;
+	bh=s+kccaFySQTv4dX2KEsncq8P9jbYWjo0NP++dg4HWh4=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=fzI3H0vi4iz/P9nyPcbyudIVJ7BHSivX3mfXiHt3jWA3VPknxLdetaOZQdT77rfz+Z8tz91GSugN8SKjhhu2+prZpRtEMhXa9aJyvkQW96XWZhtMljjcz/B02azeqqdBCbjvQAxk48OubMK+CXylaTl3EWGoPI/UD6/QwnBOL0E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NbXYFr5o; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=q2buxQPPEASHQrNHJfXlM9T7M9/W9KteU6sCnm4S5jnJqciUvfe9FhNTdWa1r91UMwGU911jXlzWZ9hxaW8vqm7vaKC107S2fpZys4K495mjI1aD88OSdmSTfMDQQSWiOR3oJpicL1DvGBniMm9EkDLafkjPwPc0D20Kw18LVO0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BAo+yf4k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NbXYFr5o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D6E8C4CEF1;
-	Wed,  4 Jun 2025 00:55:38 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BAo+yf4k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80C27C4CEED;
+	Wed,  4 Jun 2025 00:55:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748998540;
-	bh=Bpo5W1kC3c04xZa8lhDXsjmkKv55v7n2WXOklwhHewI=;
+	s=k20201202; t=1748998541;
+	bh=s+kccaFySQTv4dX2KEsncq8P9jbYWjo0NP++dg4HWh4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NbXYFr5om/jtI3AWgRgUcGp0xIh6efs5jQga+KS17+rUGk60oMx/R+RcZRNie5NK0
-	 b6mL2iRi2EJWId1Cw5pU21H3mZ+LbaTsfbFmjKzJ5NK8WjmENEuvdrYu+bHRqUQAcZ
-	 f1xZS68zBqwtY76aMq8JD1OHdZKCz7315sB1XXDOsymwl3g5UJ0biQojc0sqnlzxcj
-	 ch8OBo5huMTuOD7CaSyPkYTijKE6ZTRPaHVg6RKIhvicaMSPFaBcoI26QWr8GMb1Xw
-	 RpT5r/penoVjMNMdoiGHjO5iOrh1RVgkZd4PVCK/Nd/FxIVpm/5s8oj6y8HNB8eN+p
-	 Ac8wiSB76EcUA==
+	b=BAo+yf4kQSsPx0kMQQ0VdUf9IQoyl26iN4CjM4sVj2D04+8XTyAZzIxNT9Ns+KIja
+	 rzKplV5eZijkEYerSCvo5OgZR1H+TOW9m0PBH7Ko/7Aj43aaVZL/rk2iYOHxUnr9zG
+	 hWkGrgHzzzZROtk2Wi0l2d6rrtGOhAeZq4g2HhmhnAnp0CflHfEFs68/Yhzylqx48c
+	 AXddMSkIRdukOf2bBu6/vQxlzBzsMwn/nSIbpq3QAF5vCQlFkG3JN09kJtlxQfmCI+
+	 NZVPAWEFBiM2rOBZhdjonFrzihXo2+gtA11SzRGuS7X+iRqCqN2fAaTAs9hWOGSFfL
+	 +SCNt8ZGtEf8Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Hou Tao <houtao1@huawei.com>,
-	syzbot+dce5aae19ae4d6399986@syzkaller.appspotmail.com,
-	Alexei Starovoitov <ast@kernel.org>,
+Cc: Liwei Sun <sunliweis@126.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	daniel@iogearbox.net,
-	andrii@kernel.org,
-	bpf@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.14 005/108] bpf: Check rcu_read_lock_trace_held() in bpf_map_lookup_percpu_elem()
-Date: Tue,  3 Jun 2025 20:53:48 -0400
-Message-Id: <20250604005531.4178547-5-sashal@kernel.org>
+	marcel@holtmann.org,
+	luiz.dentz@gmail.com,
+	linux-bluetooth@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.14 006/108] Bluetooth: btusb: Add new VID/PID 13d3/3584 for MT7922
+Date: Tue,  3 Jun 2025 20:53:49 -0400
+Message-Id: <20250604005531.4178547-6-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250604005531.4178547-1-sashal@kernel.org>
 References: <20250604005531.4178547-1-sashal@kernel.org>
@@ -51,78 +50,135 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.14.9
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hou Tao <houtao1@huawei.com>
+From: Liwei Sun <sunliweis@126.com>
 
-[ Upstream commit d4965578267e2e81f67c86e2608481e77e9c8569 ]
+[ Upstream commit 71d9d3522aec301e4a1c4eae4b5e0656fc4a7262 ]
 
-bpf_map_lookup_percpu_elem() helper is also available for sleepable bpf
-program. When BPF JIT is disabled or under 32-bit host,
-bpf_map_lookup_percpu_elem() will not be inlined. Using it in a
-sleepable bpf program will trigger the warning in
-bpf_map_lookup_percpu_elem(), because the bpf program only holds
-rcu_read_lock_trace lock. Therefore, add the missed check.
+A new variant of MT7922 wireless device has been identified.
+The device introduces itself as MEDIATEK MT7922,
+so treat it as MediaTek device.
+With this patch, btusb driver works as expected:
+[    3.151162] Bluetooth: Core ver 2.22
+[    3.151185] Bluetooth: HCI device and connection manager initialized
+[    3.151189] Bluetooth: HCI socket layer initialized
+[    3.151191] Bluetooth: L2CAP socket layer initialized
+[    3.151194] Bluetooth: SCO socket layer initialized
+[    3.295718] Bluetooth: hci0: HW/SW Version: 0x008a008a, Build Time: 20241106163512
+[    4.676634] Bluetooth: BNEP (Ethernet Emulation) ver 1.3
+[    4.676637] Bluetooth: BNEP filters: protocol multicast
+[    4.676640] Bluetooth: BNEP socket layer initialized
+[    5.560453] Bluetooth: hci0: Device setup in 2320660 usecs
+[    5.560457] Bluetooth: hci0: HCI Enhanced Setup Synchronous Connection command is advertised, but not supported.
+[    5.619197] Bluetooth: hci0: AOSP extensions version v1.00
+[    5.619204] Bluetooth: hci0: AOSP quality report is supported
+[    5.619301] Bluetooth: MGMT ver 1.23
+[    6.741247] Bluetooth: RFCOMM TTY layer initialized
+[    6.741258] Bluetooth: RFCOMM socket layer initialized
+[    6.741261] Bluetooth: RFCOMM ver 1.11
 
-Reported-by: syzbot+dce5aae19ae4d6399986@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/bpf/000000000000176a130617420310@google.com/
-Signed-off-by: Hou Tao <houtao1@huawei.com>
-Link: https://lore.kernel.org/r/20250526062534.1105938-1-houtao@huaweicloud.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+lspci output:
+04:00.0 Network controller: MEDIATEK Corp. MT7922 802.11ax PCI Express Wireless Network Adapter
+
+USB information:
+T:  Bus=01 Lev=01 Prnt=01 Port=04 Cnt=02 Dev#=  3 Spd=480  MxCh= 0
+D:  Ver= 2.10 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=13d3 ProdID=3584 Rev= 1.00
+S:  Manufacturer=MediaTek Inc.
+S:  Product=Wireless_Device
+S:  SerialNumber=000000000
+C:* #Ifs= 3 Cfg#= 1 Atr=e0 MxPwr=100mA
+A:  FirstIf#= 0 IfCount= 3 Cls=e0(wlcon) Sub=01 Prot=01
+I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=125us
+E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+I:  If#= 1 Alt= 6 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+I:  If#= 2 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=8a(I) Atr=03(Int.) MxPS=  64 Ivl=125us
+E:  Ad=0a(O) Atr=03(Int.) MxPS=  64 Ivl=125us
+I:* If#= 2 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=8a(I) Atr=03(Int.) MxPS= 512 Ivl=125us
+
+Signed-off-by: Liwei Sun <sunliweis@126.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-**YES** This commit should be backported to stable kernel trees based on
-my analysis: ## Analysis **1. Clear Bug Fix:** This commit fixes a
-legitimate bug where `bpf_map_lookup_percpu_elem()` triggers warnings in
-sleepable BPF programs when the BPF JIT is disabled or on 32-bit hosts.
-The warning occurs because sleepable BPF programs hold
-`rcu_read_lock_trace` instead of `rcu_read_lock`, but the function only
-checked for the latter. **2. Minimal, Contained Change:** The fix is
-extremely small and surgical - it only adds
-`!rcu_read_lock_trace_held()` to the existing warning condition in
-`bpf_map_lookup_percpu_elem()` at kernel/bpf/helpers.c:132-133. This
-follows the exact same pattern established by the previous similar fix.
-**3. Strong Historical Precedent:** Multiple similar commits have been
-successfully backported: - **Commit 169410eba271** (Similar Commit #1 -
-Backport Status: YES) - Added the same `rcu_read_lock_trace_held()`
-check to `bpf_map_{lookup,update,delete}_elem()` helpers with identical
-reasoning - **Commit 29a7e00ffadd** (Similar Commit #4 - Backport
-Status: YES) - Fixed missed RCU read lock in `bpf_task_under_cgroup()`
-for sleepable programs **4. Clear User Impact:** The commit was reported
-by syzbot and fixes a concrete issue affecting users running sleepable
-BPF programs. Without this fix, users see spurious warnings that
-indicate potential RCU usage bugs. **5. Low Regression Risk:** The
-change only expands the conditions under which the warning is suppressed
-- it doesn't change any functional behavior, just makes the assertion
-more accurate for sleepable BPF programs. **6. Part of Ongoing
-Pattern:** This is the missing piece in a series of similar fixes that
-have systematically addressed RCU assertions for sleepable BPF programs.
-The previous commit 169410eba271 fixed the basic map helpers but missed
-this percpu variant. **7. Stable Tree Criteria Alignment:** - Fixes
-important functionality (eliminates false warnings) - No architectural
-changes - Minimal risk of regression - Confined to BPF subsystem - Clear
-side effects (none beyond fixing the warning) The commit perfectly
-matches the stable tree backporting criteria and follows the established
-pattern of similar successful backports.
+**YES** This commit should be backported to stable kernel trees. ##
+Analysis ### Commit Assessment: 1. **Bug Fix Nature**: This commit fixes
+a user-facing issue where the MediaTek MT7922 Bluetooth device with
+VID/PID 13d3:3584 was not recognized by the btusb driver. Without this
+fix, users with this specific hardware variant would have non-functional
+Bluetooth. 2. **Code Changes**: The change is minimal and extremely
+safe: - Adds a single line: `{ USB_DEVICE(0x13d3, 0x3584), .driver_info
+= BTUSB_MEDIATEK | BTUSB_WIDEBAND_SPEECH }` - This is purely additive -
+it only adds device recognition without modifying any existing
+functionality - Uses existing, well-tested driver flags (`BTUSB_MEDIATEK
+| BTUSB_WIDEBAND_SPEECH`) that are already used for other MT7922
+variants 3. **Historical Pattern**: Based on the similar commits
+provided and git history analysis: - All 4 similar commits (adding
+MT7922/MT7925 VID/PIDs) were marked as "Backport Status: YES" - Multiple
+similar MT7922 VID/PID additions have been backported to stable kernels
+(confirmed by git tag analysis showing commits like bf809efdcc4d
+appearing in v6.10.x stable releases) - The pattern shows these hardware
+enablement patches are consistently considered appropriate for stable
+backports 4. **Risk Assessment**: - **Minimal Risk**: Only affects
+systems with this specific USB device (VID 13d3, PID 3584) - **No
+Behavioral Changes**: Doesn't modify any existing code paths or
+algorithms - **Self-Contained**: Single device ID addition with proven
+driver flags - **No Side Effects**: Cannot impact other hardware or
+break existing functionality 5. **User Impact**: - **Immediate
+Benefit**: Users with this MT7922 variant get working Bluetooth
+functionality - **Hardware Support**: Essential for device recognition
+on newer hardware that might ship with this specific variant - **No
+Downside**: Zero impact on users without this hardware 6. **Stable Tree
+Criteria Compliance**: - ✅ Fixes important user-facing issue (non-
+working Bluetooth hardware) - ✅ Small, contained change - ✅ No
+architectural modifications - ✅ Uses existing, stable code paths - ✅
+Follows established pattern of similar backported commits The commit is
+a textbook example of a stable-appropriate hardware enablement fix -
+minimal risk, clear user benefit, and consistent with established
+backport patterns for MediaTek Bluetooth device additions.
 
- kernel/bpf/helpers.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/bluetooth/btusb.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/kernel/bpf/helpers.c b/kernel/bpf/helpers.c
-index f27ce162427ab..5e5e945a86b9b 100644
---- a/kernel/bpf/helpers.c
-+++ b/kernel/bpf/helpers.c
-@@ -129,7 +129,8 @@ const struct bpf_func_proto bpf_map_peek_elem_proto = {
- 
- BPF_CALL_3(bpf_map_lookup_percpu_elem, struct bpf_map *, map, void *, key, u32, cpu)
- {
--	WARN_ON_ONCE(!rcu_read_lock_held() && !rcu_read_lock_bh_held());
-+	WARN_ON_ONCE(!rcu_read_lock_held() && !rcu_read_lock_trace_held() &&
-+		     !rcu_read_lock_bh_held());
- 	return (unsigned long) map->ops->map_lookup_percpu_elem(map, key, cpu);
- }
- 
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index b15f3ed767c53..61d5e0d165bcd 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -678,6 +678,8 @@ static const struct usb_device_id quirks_table[] = {
+ 						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x13d3, 0x3568), .driver_info = BTUSB_MEDIATEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
++	{ USB_DEVICE(0x13d3, 0x3584), .driver_info = BTUSB_MEDIATEK |
++						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x13d3, 0x3605), .driver_info = BTUSB_MEDIATEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x13d3, 0x3607), .driver_info = BTUSB_MEDIATEK |
 -- 
 2.39.5
 
