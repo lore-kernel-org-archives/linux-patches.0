@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7D261A3029;
-	Wed,  4 Jun 2025 00:57:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7892139CE3;
+	Wed,  4 Jun 2025 00:57:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748998641; cv=none; b=THMyRxGgGVq4g5kVjr+zWiSiVbnPSzgzlYiBFAkQUbQwBZeFc8aVE98Q5PIQbkXTr+Bh4T95ECkBwMjcbWumI+ZnA+5zDYKzIlJvS1hDHI4TY9YZqw+aFBWxjtSTWk+4AQXCogAY8/btzAUU+L+9pkRiL/EtAg+wcgcwi09x+EU=
+	t=1748998645; cv=none; b=FMjOyRHPkKjQ2o5ujIx+MSuWleoEA4+HrhzB7RJg203WjIUGfqwhhcFh4ykLd3J7/36bao5IEIZphWA239lou6GGDwgW9tzLD8UfYfnTbDlGp9K9mVhmRoabOnIjs1LteDsuuL112ZjeyKkb3wrHWjHdDCHO8CxNTYEPo/IGYpc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748998641; c=relaxed/simple;
-	bh=aeXbskdEN6FTZKMfgECBMayTttfp/K77bjuf5/4uUTA=;
+	s=arc-20240116; t=1748998645; c=relaxed/simple;
+	bh=k0ttt0hVvxOERBZO40tXZZIloJLaohvYvr5/0BqFVHw=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OcKlKJ8wUZeEpYJgBcIO63r0a1R7Aa4ADJAUND8HoF8J9IVYYUUuOJ/wEB3kc4YbzJhfWRhK1inNejl7mp2fivj6s89aJJAe9mA28LKHEPzI1FxW+I9Z+NTVMv9Yv9yFKpiKhVWfe6Gqrc+5dKV4SEHPJZ9o95sUx78LzXTqy/g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=J2dN6TdD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=D98Sl+7M+sScjAqU78mttsWbvEZRI+iGG4fSuuNcro2r5DmvOvVxR/IAmOIn4+M/sUEUMlzJJtGDJu5dmJvBFUFn3wnrE5LCxFCQmSjGEOVs1//OhkOavIjTl1IDZT/YJHvcREt7YMyCwV+IinpGKYsH8VV5f2pC3avXfuXO9yQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Mj4GY96P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="J2dN6TdD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD1D2C4CEEF;
-	Wed,  4 Jun 2025 00:57:20 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Mj4GY96P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 647B7C4CEEF;
+	Wed,  4 Jun 2025 00:57:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748998641;
-	bh=aeXbskdEN6FTZKMfgECBMayTttfp/K77bjuf5/4uUTA=;
+	s=k20201202; t=1748998644;
+	bh=k0ttt0hVvxOERBZO40tXZZIloJLaohvYvr5/0BqFVHw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J2dN6TdDlr8kVRYbusCGRlPe7wGpW8XBrwgymwwS32SGKabR7n2khmMa0txpc7nzt
-	 RXloF3+HXXn91tSugWG43BU+ghWQnxqi7nBCmdmswAhEgg3WuUSd/y3bZysC9idowq
-	 KrRmfiml0wIDnbCAC+Tn93A7qTkonPMGB5/V3m/EwOw/vjUeOMIIwYc8gYjNDjbf0P
-	 zGFjiDa8/6HempQDBoYGCgGpyKTNPm2QLijzjXaaoMKvzrOqHI08GM1FsgZyLa4/ic
-	 rh777CvP6stLSgrnQHnvDo7DKLsOxc50kSzmJ+ZJDnPD5rYXKW86Bu5oqAfn7ycZDQ
-	 0Qtd2eE/u1MIQ==
+	b=Mj4GY96PdWIzo2ktZ3GOH3fIEjvBJuMpc88pbZd42h6zyxGx+b8uVvlhwax2mryAI
+	 LmOH8IfCQUjMkJunhsHX4BileiUec4Lm053Gh4B+CvI8yY01tiHTj99seWoc84n6JP
+	 H5qdpcLHFRHfTaaiuHX5w2dDS9T34OKZUvWF357D4nD3cmwjsFWmfglgFWOLWHWXR0
+	 l+aERJO9pNZGECwvLdfWOwcWInRuiW7t5stYnfNsGQN58RqRb4btjiGWtAqJPJCUd1
+	 FxsBtzv1d5R1UZPw46tnRcp86S9oDglTKwLOr6TiEfirqwoLfw4Tg//DqVsldvzT71
+	 zo7RAojamDJsA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Yuuki NAGAO <wf.yn386@gmail.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+Cc: Salah Triki <salah.triki@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-wireless@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.14 052/108] wifi: rtw88: rtw8822bu VID/PID for BUFFALO WI-U2-866DM
-Date: Tue,  3 Jun 2025 20:54:35 -0400
-Message-Id: <20250604005531.4178547-52-sashal@kernel.org>
+	emmanuel.grumbach@intel.com,
+	miriam.rachel.korenblit@intel.com,
+	tglx@linutronix.de,
+	viro@zeniv.linux.org.uk
+Subject: [PATCH AUTOSEL 6.14 053/108] wireless: purelifi: plfxlc: fix memory leak in plfxlc_usb_wreq_asyn()
+Date: Tue,  3 Jun 2025 20:54:36 -0400
+Message-Id: <20250604005531.4178547-53-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250604005531.4178547-1-sashal@kernel.org>
 References: <20250604005531.4178547-1-sashal@kernel.org>
@@ -51,77 +54,76 @@ X-stable-base: Linux 6.14.9
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuuki NAGAO <wf.yn386@gmail.com>
+From: Salah Triki <salah.triki@gmail.com>
 
-[ Upstream commit b7f0cc647e52296a3d4dd727b6479dcd6d7e364e ]
+[ Upstream commit 63a9a727d373fa5b8ce509eef50dbc45e0f745b9 ]
 
-Add VID/PID 0411/03d1 for recently released
-BUFFALO WI-U2-866DM USB WiFi adapter.
+Add usb_free_urb() in the error path to prevent memory leak.
 
-Signed-off-by: Yuuki NAGAO <wf.yn386@gmail.com>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20250503003227.6673-1-wf.yn386@gmail.com
+Signed-off-by: Salah Triki <salah.triki@gmail.com>
+Link: https://patch.msgid.link/aA3_maPlEJzO7wrL@pc
+[fix subject]
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Based on my analysis of the commit and comparison with the similar
-commits provided, here is my assessment: **YES** This commit should be
-backported to stable kernel trees for the following reasons: ## Analysis
-**1. Hardware Support Addition**: This commit adds VID/PID 0411/03d1 for
-the Buffalo WI-U2-866DM USB WiFi adapter to the rtw8822bu driver. This
-is a straightforward device identification addition that enables
-hardware support for users who have this specific device. **2. Code
-Changes Analysis**: The change is minimal and extremely low-risk: -
-**Single line addition**: Only adds one USB device table entry at line
-80-81 in `/drivers/net/wireless/realtek/rtw88/rtw8822bu.c` - **No
-functional code changes**: No modifications to driver logic, algorithms,
-or behavior - **Standard pattern**: Uses the exact same pattern as all
-other device entries in the table - **Reuses existing hardware
-specification**: Points to the same `rtw8822b_hw_spec` used by other
-8822bu devices **3. Comparison with Similar Commits**: - **Similar
-Commit #1** (Status: YES): Removing incorrect VID/PID had `Cc:
-stable@vger.kernel.org` and was backported - **Similar Commit #3**
-(Status: YES): Adding missing VID/PIDs for 8811CU and 8821CU had `Cc:
-stable@vger.kernel.org` and was backported - **Similar Commit #5**
-(Status: YES): Adding Buffalo WLI-UC-G450 device had `Cc:
-stable@vger.kernel.org` and was backported **4. Buffalo Device
-Pattern**: The git history shows Buffalo devices with vendor ID 0x0411
-are commonly supported across multiple rtw88 drivers (rtw8812au.c,
-rtw8821au.c, and now rtw8822bu.c), indicating this is a legitimate and
-expected device addition. **5. User Impact**: Users with this specific
-Buffalo USB WiFi adapter will have working WiFi support instead of non-
-functional hardware. This fixes a user-visible issue where the device is
-not recognized. **6. Stable Tree Criteria Met**: - ✅ **Important
-bugfix**: Enables hardware support for affected users - ✅ **Small and
-contained**: Single line addition, no behavior changes - ✅ **Minimal
-regression risk**: Cannot break existing functionality - ✅ **Confined to
-subsystem**: Only affects USB device identification in rtw88 - ✅ **Clear
-benefit**: Enables WiFi functionality for specific hardware **7. Missing
-Stable Tag**: While the original commit lacks an explicit `Cc:
-stable@vger.kernel.org` tag, this appears to be an oversight given that
-similar commits in the same subsystem (commits 0af8cd2822f3 and
-b8a62478f3b1) included stable tags for nearly identical device addition
-changes. The change is essentially risk-free as it only extends hardware
-compatibility without affecting any existing code paths or device
-support.
+**YES** This commit should be backported to stable kernel trees. Here's
+my extensive analysis: ## Code Analysis The commit fixes a clear memory
+leak in the `plfxlc_usb_wreq_async()` function in the pureLiFi wireless
+driver. Specifically: **The Bug:** - The function calls
+`usb_alloc_urb(0, GFP_ATOMIC)` to allocate a USB URB (USB Request Block)
+- If `usb_submit_urb()` fails, the function returns the error code but
+never frees the allocated URB - This creates a memory leak every time
+USB submission fails **The Fix:** The fix adds a simple but crucial
+cleanup path: ```c r = usb_submit_urb(urb, GFP_ATOMIC); -if (r) +if (r)
+{ + usb_free_urb(urb); dev_err(&udev->dev, "Async write submit failed
+(%d)\n", r); +} ``` ## Timeline and Impact From examining the git
+history: 1. **Bug Introduction:** The bug was introduced in commit
+`68d57a07bfe5` when the driver was first added 2. **Bug Duration:** This
+memory leak has existed since the driver's introduction 3. **Impact:**
+Every failed USB submission would leak memory, potentially causing
+system instability over time ## Comparison with Similar Commits This
+commit matches the pattern of all 5 similar commits marked as "Backport
+Status: YES": 1. **Similar Commit #2** - Also fixes missing allocation
+failure check in the same function (`plfxlc_usb_wreq_async`) 2.
+**Similar Commit #1** - Fixes memory leak in the same driver
+(`__lf_x_usb_enable_rx`) 3. **Similar Commits #3-5** - All fix memory
+leaks in wireless drivers with small, contained changes ## Backport
+Criteria Met ✅ **Fixes important bug:** Memory leaks can cause system
+instability ✅ **Small and contained:** Only adds 2 lines of code in
+error path ✅ **No architectural changes:** Simple cleanup fix ✅
+**Minimal regression risk:** Standard USB cleanup pattern ✅ **Clear
+scope:** Limited to specific function in wireless driver ✅ **Follows
+stable rules:** Important bugfix with minimal impact ## Additional
+Considerations - The fix follows standard kernel patterns for USB URB
+cleanup - The same driver has had multiple similar memory leak fixes
+(commit `895b3b06efc2`) - The change is identical in nature to Similar
+Commit #2, which was also in this exact function and marked YES for
+backporting - No side effects beyond fixing the memory leak - The
+function is called from transmit path, so failures could be relatively
+common under stress This is a textbook example of a stable tree
+candidate: a clear, important bug fix with minimal code changes and no
+risk of regression.
 
- drivers/net/wireless/realtek/rtw88/rtw8822bu.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/wireless/purelifi/plfxlc/usb.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw88/rtw8822bu.c b/drivers/net/wireless/realtek/rtw88/rtw8822bu.c
-index 572d1f31832ee..ab50b3c405626 100644
---- a/drivers/net/wireless/realtek/rtw88/rtw8822bu.c
-+++ b/drivers/net/wireless/realtek/rtw88/rtw8822bu.c
-@@ -77,6 +77,8 @@ static const struct usb_device_id rtw_8822bu_id_table[] = {
- 	  .driver_info = (kernel_ulong_t)&(rtw8822b_hw_spec) }, /* Mercusys MA30N */
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x2001, 0x3322, 0xff, 0xff, 0xff),
- 	  .driver_info = (kernel_ulong_t)&(rtw8822b_hw_spec) }, /* D-Link DWA-T185 rev. A1 */
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x0411, 0x03d1, 0xff, 0xff, 0xff),
-+	  .driver_info = (kernel_ulong_t)&(rtw8822b_hw_spec) }, /* BUFFALO WI-U2-866DM */
- 	{},
- };
- MODULE_DEVICE_TABLE(usb, rtw_8822bu_id_table);
+diff --git a/drivers/net/wireless/purelifi/plfxlc/usb.c b/drivers/net/wireless/purelifi/plfxlc/usb.c
+index 56d1139ba8bcc..7e7bfa532ed25 100644
+--- a/drivers/net/wireless/purelifi/plfxlc/usb.c
++++ b/drivers/net/wireless/purelifi/plfxlc/usb.c
+@@ -503,8 +503,10 @@ int plfxlc_usb_wreq_async(struct plfxlc_usb *usb, const u8 *buffer,
+ 			  (void *)buffer, buffer_len, complete_fn, context);
+ 
+ 	r = usb_submit_urb(urb, GFP_ATOMIC);
+-	if (r)
++	if (r) {
++		usb_free_urb(urb);
+ 		dev_err(&udev->dev, "Async write submit failed (%d)\n", r);
++	}
+ 
+ 	return r;
+ }
 -- 
 2.39.5
 
