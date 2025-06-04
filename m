@@ -1,46 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A80A6AA7;
-	Wed,  4 Jun 2025 00:56:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B867D221FBC;
+	Wed,  4 Jun 2025 00:56:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748998607; cv=none; b=cJ6himhU4DfD+octt+SLGSQiKEXPPRavkvqlURdk49SmLLSGc9VL9nA1HDe1VJtiD1Ns54B/0d9Q00T/mlglemkDtSD6Ms1Wzn6q/imbm7caqMTcqqWQ4IQ/SgDdG9dHO33naB6HBRSr2fUKrIYpNlNOZCaciZdEbumiVXY4W+E=
+	t=1748998608; cv=none; b=uRJNFsr9JhmyAqXBboylkAwEYaaG9UaF9Lw92q+E6tfehNli/gDGDiJrFoNGu7YYNHoJ2BPqUofLIteWqMxVCqR+LVPAFuaVBZMA+l1e8iFlCF4T7ckifPFzukeZe/4cj+qB2lr45P7gT7zvunQlCUt1QhmRcGRNyDRellw7IB4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748998607; c=relaxed/simple;
-	bh=1/z1j1K+t4TayPa4Fv3uiAcfd7KJmwb4XAdnqs4m4ks=;
+	s=arc-20240116; t=1748998608; c=relaxed/simple;
+	bh=f2krVlrhkGcfJNfBsZoQMnWPwWv4KUdrcZNltF+kAjc=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Kj/bH6Ma3UtanZH4Rt4uAhoG9WfN3Em0d7C/8qdwyokxp+3HHxXHfwqLKhT/gJSvAaJJnlSLWjCyrRGmGTd9svkjOOiZ+v59L+5pELIABblyX3xCkHB6EYMYRCdTmHavraImWbvIKZyvHhKS0OlUMATpaD33U4DrWLFK6C/4h6E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=O0Gtvzhh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fHinz0Vbv6uVOj0FyBfG78QUCkh6sM50qctbJfRsZ79ZWu/dDwbvKjIsHT8toUc8OFUtM7wjU2bYfmIlDPVfoi8WRVLVnSkV6DRvDiS2HDxA2NwbvMpMJ07rL77+yzDmQ3hrawLAPZGXbxo8BYr5ESwCJr9/YBphMxlCPOSEa68=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WKNzLzFf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="O0Gtvzhh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2F13C4CEEF;
-	Wed,  4 Jun 2025 00:56:45 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WKNzLzFf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 595E8C4CEF1;
+	Wed,  4 Jun 2025 00:56:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748998606;
-	bh=1/z1j1K+t4TayPa4Fv3uiAcfd7KJmwb4XAdnqs4m4ks=;
+	s=k20201202; t=1748998608;
+	bh=f2krVlrhkGcfJNfBsZoQMnWPwWv4KUdrcZNltF+kAjc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O0GtvzhhsWSjWV0Z9h5wAaARaE1r+q+63l24/BAwCzj/lyRG83AZcGg4580YNbhQK
-	 4eNvnWn6g9uVxxNSemcpjUfx/CdeSGPYfIML/jP+2HF2XSW+OHMjwWkuVoaTeR5OkC
-	 s51W8EUyom5JjTUZCiEZigqidDUmnk1L6QKiFoHCi11I/dh0s3lf2rNwu9Di08II/e
-	 LAscn/vKXAChs79TPRb9j9Metegup/LS0Q4YowpHXxUA8fl+gbZAoLA7pqpyICZlBe
-	 mUy5oDrS175FERPvoy8AXqhN01x+IyyXQXDnhRv64Scr8plTMlsHygrFw+Y5dOUvme
-	 gwKocGJIDLLjg==
+	b=WKNzLzFf255AF90NqgHlOhsnY7uhQfa0s8pfKthqqfB8Gt/BZVWVIYLhxOdaMl816
+	 9ZdwErFL+3O4mEbsn+1oFYSELjhrIpOxhQo+tpG0ZoWuk1dCCicIdwT+f4D7m1AZk8
+	 DJj+eVitr9Cyc4PWgVT/PODbQiFgNUEqkwFxBLH4BeVho7EXGC8Hs+Sc0aCmMmGw/+
+	 hODXwSJbEMvDTYYmX9cePXbO/N3VG0qThbpi7XQouOscGP8IY5+5Js02ZBAjSkg8B/
+	 NTXYtKeARjsIPVYpZmatOCGXZwfET0nITDUwSTnUpKrFgOV8GuN16H1hhbet3iVzp6
+	 yx6259KPDyibg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Jesper Dangaard Brouer <hawk@kernel.org>,
-	Ilias Apalodimas <ilias.apalodimas@linaro.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+Cc: Leon Romanovsky <leonro@nvidia.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>,
-	clrkwllms@kernel.org,
-	rostedt@goodmis.org,
-	netdev@vger.kernel.org,
-	linux-rt-devel@lists.linux.dev
-Subject: [PATCH AUTOSEL 6.14 038/108] net: page_pool: Don't recycle into cache on PREEMPT_RT
-Date: Tue,  3 Jun 2025 20:54:21 -0400
-Message-Id: <20250604005531.4178547-38-sashal@kernel.org>
+	davem@davemloft.net,
+	netdev@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.14 039/108] xfrm: validate assignment of maximal possible SEQ number
+Date: Tue,  3 Jun 2025 20:54:22 -0400
+Message-Id: <20250604005531.4178547-39-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250604005531.4178547-1-sashal@kernel.org>
 References: <20250604005531.4178547-1-sashal@kernel.org>
@@ -55,89 +51,149 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.14.9
 Content-Transfer-Encoding: 8bit
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit 32471b2f481dea8624f27669d36ffd131d24b732 ]
+[ Upstream commit e86212b6b13a20c5ad404c5597933f57fd0f1519 ]
 
-With preemptible softirq and no per-CPU locking in local_bh_disable() on
-PREEMPT_RT the consumer can be preempted while a skb is returned.
+Users can set any seq/seq_hi/oseq/oseq_hi values. The XFRM core code
+doesn't prevent from them to set even 0xFFFFFFFF, however this value
+will cause for traffic drop.
 
-Avoid the race by disabling the recycle into the cache on PREEMPT_RT.
+Is is happening because SEQ numbers here mean that packet with such
+number was processed and next number should be sent on the wire. In this
+case, the next number will be 0, and it means overflow which causes to
+(expected) packet drops.
 
-Cc: Jesper Dangaard Brouer <hawk@kernel.org>
-Cc: Ilias Apalodimas <ilias.apalodimas@linaro.org>
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Link: https://patch.msgid.link/20250512092736.229935-2-bigeasy@linutronix.de
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+While it can be considered as misconfiguration and handled by XFRM
+datapath in the same manner as any other SEQ number, let's add
+validation to easy for packet offloads implementations which need to
+configure HW with next SEQ to send and not with current SEQ like it is
+done in core code.
+
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 **YES** This commit should be backported to stable kernel trees. Here's
-my detailed analysis: ## Bug Fix Classification This is a **race
-condition fix** for PREEMPT_RT kernels that prevents potential memory
-corruption and system instability. The commit addresses a fundamental
-concurrency issue in the page_pool subsystem that only manifests on
-real-time kernels. ## Technical Analysis of the Race Condition The issue
-occurs in the `page_pool_napi_local()` function, which determines
-whether pages can be recycled directly into the page pool's fast cache
-(`pool->alloc.cache[]`). This lockless cache provides optimal
-performance by avoiding spinlock overhead. **On regular kernels:** -
-Softirqs are non-preemptible - Direct cache access is safe because
-producer and consumer cannot run concurrently **On PREEMPT_RT kernels:**
-- Softirqs can be preempted by higher priority tasks - A softirq
-returning pages can be interrupted while another context allocates from
-the same cache - This creates a classic race condition on the shared
-cache data structure ## Code Change Analysis The fix is minimal and
-surgical: ```c /bin /bin.usr-is-merged /boot /dev /etc /home /init /lib
-/lib.usr-is-merged /lib64 /lost+found /media /mnt /opt /proc /root /run
-/sbin /sbin.usr-is-merged /snap /srv /sys /tmp /usr /var On PREEMPT_RT
-the softirq can be preempted by the consumer linux/ if
-(IS_ENABLED(CONFIG_PREEMPT_RT)) return false; ``` This forces all page
-recycling on PREEMPT_RT to use the ring buffer path (`ptr_ring`) which
-has proper locking, instead of the lockless direct cache. ## Impact
-Assessment **Functional Impact:** Zero - pages are still recycled
-correctly, just through a different path **Performance Impact:** Minimal
-- ring buffer operations are slightly slower than direct cache access,
-but only affects PREEMPT_RT systems **Risk:** Very low - the change is
-isolated, well-understood, and follows established kernel patterns ##
-Backporting Suitability 1. **Clear bug fix:** Addresses a real race
-condition that could cause memory corruption 2. **Minimal and
-contained:** Single 4-line change with no dependencies 3. **High
-importance for affected systems:** Critical for PREEMPT_RT system
-stability 4. **Low regression risk:** Fallback to existing, proven ring
-buffer mechanism 5. **Follows established patterns:** Similar PREEMPT_RT
-guards exist throughout the networking stack ## Historical Context Based
-on my analysis of the kernel repository, the page_pool infrastructure
-has evolved significantly, with the direct caching mechanism being added
-for performance optimization. The `page_pool_napi_local()` function was
-introduced in commit 4a96a4e807c3 (Linux 6.9+) as part of the lockless
-caching optimization. This fix addresses an oversight in that
-optimization where PREEMPT_RT preemption semantics weren't considered.
-## Conclusion This commit represents exactly the type of fix that stable
-kernels should include: a focused, low-risk correction of a race
-condition that could cause system instability on specific
-configurations. While it only affects PREEMPT_RT systems, the potential
-consequences (memory corruption, crashes) are severe enough to warrant
-backporting to any stable tree that supports PREEMPT_RT and contains the
-page_pool caching infrastructure.
+my extensive analysis: ## Bug Analysis The commit addresses a **user
+input validation bug** in the XFRM (IPsec transformation) subsystem.
+Specifically: 1. **Root Cause**: Users can set sequence numbers (`seq`,
+`seq_hi`, `oseq`, `oseq_hi`) to `0xFFFFFFFF` (U32_MAX) via netlink
+interface 2. **Problem**: When a sequence number is set to U32_MAX, the
+next packet will have sequence number 0, which triggers sequence number
+overflow detection and causes packet drops 3. **Impact**: This leads to
+**immediate traffic disruption** for IPsec connections ## Code Changes
+Analysis The fix adds **comprehensive input validation** in
+`net/xfrm/xfrm_user.c:verify_replay()`: ### For Non-ESN Mode (32-bit
+sequences): - **Output SA**: Validates `rs->oseq != U32_MAX` (lines
+189-195) - **Input SA**: Validates `rs->seq != U32_MAX` (lines 223-228)
+### For ESN Mode (64-bit sequences): - **Output SA**: Validates
+`!(rs->oseq == U32_MAX && rs->oseq_hi == U32_MAX)` (lines 196-202) -
+**Input SA**: Validates `!(rs->seq == U32_MAX && rs->seq_hi == U32_MAX)`
+(lines 230-236) ## Why This Should Be Backported ### 1. **Fixes User-
+Visible Bug** This prevents user misconfiguration from causing immediate
+IPsec traffic failure, which is a critical networking bug. ### 2.
+**Small, Contained Fix** - **Single file modified**:
+`net/xfrm/xfrm_user.c` - **Only 42 insertions, 10 deletions** - **Pure
+input validation** - no algorithmic or architectural changes - **Low
+regression risk** - only rejects previously invalid configurations ###
+3. **Benefits Hardware Offload** The commit message explicitly mentions
+this helps "packet offloads implementations which need to configure HW
+with next SEQ to send." This is increasingly important as IPsec hardware
+offload becomes more common. ### 4. **Follows Historical Pattern**
+Looking at similar commits in the reference examples: - **Similar Commit
+#1** (Status: NO) - Only validates ESN vs non-ESN mode consistency -
+**Current commit** - **More comprehensive**, validates against the
+problematic U32_MAX boundary that causes actual packet drops - **Similar
+Commits #3-5** (Status: YES) - All fix sequence number handling bugs
+that cause packet drops/corruption ### 5. **Clear Error Messages** The
+fix provides descriptive error messages via `NL_SET_ERR_MSG()`,
+improving debuggability for users. ### 6. **Builds on Previous Work**
+This extends the validation framework established in commit
+`e3aa43a50a64` ("xfrm: prevent high SEQ input in non-ESN mode"), showing
+this is part of ongoing hardening efforts. ## Risk Assessment **Minimal
+Risk**: - **No functional changes** to existing working configurations -
+**Only affects invalid configurations** that would cause problems anyway
+- **Well-tested code path** (input validation in userspace interface) -
+**Conservative approach** - rejects edge case that causes guaranteed
+failure The fix prevents a **user-triggerable traffic failure
+condition** with minimal code changes and no risk to existing working
+setups. This perfectly fits stable tree criteria: important bug fix, low
+risk, contained scope.
 
- net/core/page_pool.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/xfrm/xfrm_user.c | 52 +++++++++++++++++++++++++++++++++++---------
+ 1 file changed, 42 insertions(+), 10 deletions(-)
 
-diff --git a/net/core/page_pool.c b/net/core/page_pool.c
-index cca51aa2e876f..68e7962daa08f 100644
---- a/net/core/page_pool.c
-+++ b/net/core/page_pool.c
-@@ -801,6 +801,10 @@ static bool page_pool_napi_local(const struct page_pool *pool)
- 	const struct napi_struct *napi;
- 	u32 cpuid;
- 
-+	/* On PREEMPT_RT the softirq can be preempted by the consumer */
-+	if (IS_ENABLED(CONFIG_PREEMPT_RT))
-+		return false;
+diff --git a/net/xfrm/xfrm_user.c b/net/xfrm/xfrm_user.c
+index b5266e0848e82..dd5fd42341d7b 100644
+--- a/net/xfrm/xfrm_user.c
++++ b/net/xfrm/xfrm_user.c
+@@ -178,11 +178,27 @@ static inline int verify_replay(struct xfrm_usersa_info *p,
+ 				       "Replay seq and seq_hi should be 0 for output SA");
+ 			return -EINVAL;
+ 		}
+-		if (rs->oseq_hi && !(p->flags & XFRM_STATE_ESN)) {
+-			NL_SET_ERR_MSG(
+-				extack,
+-				"Replay oseq_hi should be 0 in non-ESN mode for output SA");
+-			return -EINVAL;
 +
- 	if (unlikely(!in_softirq()))
- 		return false;
++		if (!(p->flags & XFRM_STATE_ESN)) {
++			if (rs->oseq_hi) {
++				NL_SET_ERR_MSG(
++					extack,
++					"Replay oseq_hi should be 0 in non-ESN mode for output SA");
++				return -EINVAL;
++			}
++			if (rs->oseq == U32_MAX) {
++				NL_SET_ERR_MSG(
++					extack,
++					"Replay oseq should be less than 0xFFFFFFFF in non-ESN mode for output SA");
++				return -EINVAL;
++			}
++		} else {
++			if (rs->oseq == U32_MAX && rs->oseq_hi == U32_MAX) {
++				NL_SET_ERR_MSG(
++					extack,
++					"Replay oseq and oseq_hi should be less than 0xFFFFFFFF for output SA");
++				return -EINVAL;
++			}
+ 		}
+ 		if (rs->bmp_len) {
+ 			NL_SET_ERR_MSG(extack, "Replay bmp_len should 0 for output SA");
+@@ -196,11 +212,27 @@ static inline int verify_replay(struct xfrm_usersa_info *p,
+ 				       "Replay oseq and oseq_hi should be 0 for input SA");
+ 			return -EINVAL;
+ 		}
+-		if (rs->seq_hi && !(p->flags & XFRM_STATE_ESN)) {
+-			NL_SET_ERR_MSG(
+-				extack,
+-				"Replay seq_hi should be 0 in non-ESN mode for input SA");
+-			return -EINVAL;
++		if (!(p->flags & XFRM_STATE_ESN)) {
++			if (rs->seq_hi) {
++				NL_SET_ERR_MSG(
++					extack,
++					"Replay seq_hi should be 0 in non-ESN mode for input SA");
++				return -EINVAL;
++			}
++
++			if (rs->seq == U32_MAX) {
++				NL_SET_ERR_MSG(
++					extack,
++					"Replay seq should be less than 0xFFFFFFFF in non-ESN mode for input SA");
++				return -EINVAL;
++			}
++		} else {
++			if (rs->seq == U32_MAX && rs->seq_hi == U32_MAX) {
++				NL_SET_ERR_MSG(
++					extack,
++					"Replay seq and seq_hi should be less than 0xFFFFFFFF for input SA");
++				return -EINVAL;
++			}
+ 		}
+ 	}
  
 -- 
 2.39.5
