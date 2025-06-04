@@ -1,40 +1,50 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail11.truemail.it (mail11.truemail.it [217.194.8.81])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 898341EF094;
-	Wed,  4 Jun 2025 12:31:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBBB028E610
+	for <patches@lists.linux.dev>; Wed,  4 Jun 2025 13:17:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.194.8.81
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749040313; cv=none; b=I9dM4dDySR5f79JHrzodrlijPgNLq7M/AsZgWtC8v9m8rvUAmkYLxV2lrY+cEG2d8RKW77B9NE7sNvSoqXbO39zLMbVl+srjh8mvUJI3iZ4EVvKVEgVHXqdRbv57UGe1lanvKVq4s98CKEVnpBj1ynaZrOXi0UlJfEWtGA3xl+0=
+	t=1749043054; cv=none; b=SAkx4x69RiSjdNuUuqrMzg51UfCFeEvMKa55o2z47TdGwVtbMj5eIpJ1LAq/QAKhA6af4XYWJwRWH0r60DYRkpVCLxYk1X+GpLdE0R6QBjn2EPBnG1tp+dy4HquZEIBkNiRx/8B7MmNckh0s4fzkdEahqm0GoQE6iQzKKiBC8sk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749040313; c=relaxed/simple;
-	bh=TrXtM1E9qeh0reHLNw5PD86uabM3Wq90I2FvMMDenCA=;
+	s=arc-20240116; t=1749043054; c=relaxed/simple;
+	bh=SaOK0ZQAUONqSDIxrsA81+VoVcl56Dr4lAUQABuVeC0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FiC4buhrmVHOZKnZaHHxyUl4drGPi3dH2NMW8Yz0kClQztXFOyZRireYybOfc5GIdSXUe7CZoKgZCoD1OYfP9sfUgXohQ+VSRSBqnI9B+1H55s1JyxmghxusId/0Duaufyvk+ZgfemSQwiGIhg+SAPFkgcV4n2Hs2KbzCKbR/Ms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bGRNAc2O; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=QIawhf5pUbInMQ1rhv22DZA22B2H45tubLOtNonTxohCE5f/g3QehHLDxtQWX1ErRqnEyLPDsokW4XHKgJPcxOLETGrgE/vlmb0i7APQbmxzAzr2idFx4TQrwdPKvIYr3mBBzPBWqYG7qTaJJ8KjwkRNJ5keUKh3tgsU/7CI0pI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=dolcini.it; spf=pass smtp.mailfrom=dolcini.it; dkim=pass (2048-bit key) header.d=dolcini.it header.i=@dolcini.it header.b=d4V+36Wc; arc=none smtp.client-ip=217.194.8.81
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=dolcini.it
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=dolcini.it
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bGRNAc2O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A293AC4CEE7;
-	Wed,  4 Jun 2025 12:31:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1749040312;
-	bh=TrXtM1E9qeh0reHLNw5PD86uabM3Wq90I2FvMMDenCA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=bGRNAc2OfiEw/PboRedKKVMeVYBfNNVTAZd8eJxqigSWHLjZTCYqldkdx6LNG+wuL
-	 o5NTVELpQYmXW4Vl13RpQiBGJ0byBIjIVKgG8JqxP9gNDBdrVSvISKgRVCefrBR5Pd
-	 jNcD4OFCYFh+h5gbRK5uDcYRtXqsL5vqBfD7XBvk=
-Date: Wed, 4 Jun 2025 14:31:49 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Steven Rostedt <rostedt@goodmis.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	syzbot+c8cd2d2c412b868263fb@syzkaller.appspotmail.com,
-	Jeongjun Park <aha310510@gmail.com>
-Subject: Re: [PATCH 5.4 009/204] tracing: Fix oob write in
- trace_seq_to_buffer()
-Message-ID: <2025060414-dreamily-reentry-ab52@gregkh>
-References: <20250602134255.449974357@linuxfoundation.org>
- <20250602134255.842400124@linuxfoundation.org>
- <20250602103639.6d9776d5@gandalf.local.home>
+	dkim=pass (2048-bit key) header.d=dolcini.it header.i=@dolcini.it header.b="d4V+36Wc"
+Received: from francesco-nb (93-49-2-63.ip317.fastwebnet.it [93.49.2.63])
+	by mail11.truemail.it (Postfix) with ESMTPA id 8DA9E1FE30;
+	Wed,  4 Jun 2025 15:17:28 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dolcini.it;
+	s=default; t=1749043048;
+	bh=3SyuWV6NHe5fYNpzPQJlhMYrEuX6YZHoeMrEgSPLoms=; h=From:To:Subject;
+	b=d4V+36WcZWgIqZjp5dOifiYFJ/gpF9xDjuGqwJMuOYjGOA3QxMbGycj44f8+ybSj7
+	 hpLQqg0cwH3oD3bDzEJSn8gvVf3Xt0HSS3Mzx7YG0db1/ihSDTeBPhfYBIusGlZz3i
+	 ROz2WxrpDhqQmRdKQee4MatPJ0kFvwmFXO6qRPe2Vhg723ERgdQRL149t8kY9oRzEp
+	 0pOosA0g2JH2MdsCwZUVDdFEG8pgh0O2Or9GKasfDm17FfbWWET09F6dDERhSKd0y/
+	 C6OAooIyJEEpMjM3bx213xqJygx/KBX37IEFSMO8HEbg5jgGC0sN2q8hNmmM47AVuG
+	 E4jHzlMdmJa3Q==
+Date: Wed, 4 Jun 2025 15:17:24 +0200
+From: Francesco Dolcini <francesco@dolcini.it>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Francesco Dolcini <francesco@dolcini.it>,
+	Sasha Levin <sashal@kernel.org>, stable@vger.kernel.org,
+	patches@lists.linux.dev, Jeff Chen <jeff.chen_1@nxp.com>,
+	Francesco Dolcini <francesco.dolcini@toradex.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Vitor Soares <ivitro@gmail.com>
+Subject: Re: [PATCH 6.12 130/626] wifi: mwifiex: Fix HT40 bandwidth issue.
+Message-ID: <20250604131724.GA273097@francesco-nb>
+References: <20250527162445.028718347@linuxfoundation.org>
+ <20250527162450.311998747@linuxfoundation.org>
+ <20250603203337.GA109929@francesco-nb>
+ <2025060408-concur-bubbly-04ea@gregkh>
+ <20250604102352.GB31115@francesco-nb>
+ <2025060419-gloomily-exclusive-dc3c@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -43,74 +53,64 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250602103639.6d9776d5@gandalf.local.home>
+In-Reply-To: <2025060419-gloomily-exclusive-dc3c@gregkh>
 
-On Mon, Jun 02, 2025 at 10:36:39AM -0400, Steven Rostedt wrote:
-> On Mon,  2 Jun 2025 15:45:42 +0200
-> Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+On Wed, Jun 04, 2025 at 12:36:12PM +0200, Greg Kroah-Hartman wrote:
+> On Wed, Jun 04, 2025 at 12:23:52PM +0200, Francesco Dolcini wrote:
+> > On Wed, Jun 04, 2025 at 10:39:09AM +0200, Greg Kroah-Hartman wrote:
+> > > On Tue, Jun 03, 2025 at 10:33:54PM +0200, Francesco Dolcini wrote:
+> > > > Hello Greg, Sasha
+> > > > 
+> > > > On Tue, May 27, 2025 at 06:20:23PM +0200, Greg Kroah-Hartman wrote:
+> > > > > 6.12-stable review patch.  If anyone has any objections, please let me know.
+> > > > > 
+> > > > > ------------------
+> > > > > 
+> > > > > From: Jeff Chen <jeff.chen_1@nxp.com>
+> > > > > 
+> > > > > [ Upstream commit 4fcfcbe457349267fe048524078e8970807c1a5b ]
+> > > > > 
+> > > > > This patch addresses an issue where, despite the AP supporting 40MHz
+> > > > > bandwidth, the connection was limited to 20MHz. Without this fix,
+> > > > > even if the access point supports 40MHz, the bandwidth after
+> > > > > connection remains at 20MHz. This issue is not a regression.
+> > > > > 
+> > > > > Signed-off-by: Jeff Chen <jeff.chen_1@nxp.com>
+> > > > > Reviewed-by: Francesco Dolcini <francesco.dolcini@toradex.com>
+> > > > > Link: https://patch.msgid.link/20250314094238.2097341-1-jeff.chen_1@nxp.com
+> > > > > Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+> > > > > Signed-off-by: Sasha Levin <sashal@kernel.org>
+> > > > 
+> > > > Can you please drop this patch from any additional stable kernel update?
+> > > > It seems that on 6.12.y it introduced a regression, we are currently
+> > > > investigating it and we'll eventually send a revert for 6.12.y.
+> > > 
+> > > This is already in the following released kernels:
+> > > 	6.12.31 6.14.9 6.15
+> > > I'll be glad to queue up the revert when it hits Linus's tree.  Is that
+> > > planned anytime soon?
+> > 
+> > mainline is not affected, the issues seems specific of the backport on
+> > 6.12 (6.14 not tested yet), therefore I do not expect any revert in
+> > Linus tree.
 > 
-> > 5.4-stable review patch.  If anyone has any objections, please let me know.
-> > 
-> > ------------------
-> > 
-> > From: Jeongjun Park <aha310510@gmail.com>
-> > 
-> > commit f5178c41bb43444a6008150fe6094497135d07cb upstream.
-> > 
-> > syzbot reported this bug:
-> > ==================================================================
-> > BUG: KASAN: slab-out-of-bounds in trace_seq_to_buffer kernel/trace/trace.c:1830 [inline]
-> > BUG: KASAN: slab-out-of-bounds in tracing_splice_read_pipe+0x6be/0xdd0 kernel/trace/trace.c:6822
-> > Write of size 4507 at addr ffff888032b6b000 by task syz.2.320/7260
-> > 
-> > CPU: 1 UID: 0 PID: 7260 Comm: syz.2.320 Not tainted 6.15.0-rc1-syzkaller-00301-g3bde70a2c827 #0 PREEMPT(full)
-> > Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 02/12/2025
-> > Call Trace:
-> >  <TASK>
-> >  __dump_stack lib/dump_stack.c:94 [inline]
-> >  dump_stack_lvl+0x116/0x1f0 lib/dump_stack.c:120
-> >  print_address_description mm/kasan/report.c:408 [inline]
-> >  print_report+0xc3/0x670 mm/kasan/report.c:521
-> >  kasan_report+0xe0/0x110 mm/kasan/report.c:634
-> >  check_region_inline mm/kasan/generic.c:183 [inline]
-> >  kasan_check_range+0xef/0x1a0 mm/kasan/generic.c:189
-> >  __asan_memcpy+0x3c/0x60 mm/kasan/shadow.c:106
-> >  trace_seq_to_buffer kernel/trace/trace.c:1830 [inline]
-> >  tracing_splice_read_pipe+0x6be/0xdd0 kernel/trace/trace.c:6822
-> >  ....
-> > ==================================================================
-> > 
-> > It has been reported that trace_seq_to_buffer() tries to copy more data
-> > than PAGE_SIZE to buf. Therefore, to prevent this, we should use the
-> > smaller of trace_seq_used(&iter->seq) and PAGE_SIZE as an argument.
-> > 
-> > Link: https://lore.kernel.org/20250422113026.13308-1-aha310510@gmail.com
-> > Reported-by: syzbot+c8cd2d2c412b868263fb@syzkaller.appspotmail.com
-> > Fixes: 3c56819b14b0 ("tracing: splice support for tracing_pipe")
-> > Suggested-by: Steven Rostedt <rostedt@goodmis.org>
-> > Signed-off-by: Jeongjun Park <aha310510@gmail.com>
-> > Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-> > Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> > ---
-> >  kernel/trace/trace.c |    5 +++--
-> >  1 file changed, 3 insertions(+), 2 deletions(-)
-> > 
-> > --- a/kernel/trace/trace.c
-> > +++ b/kernel/trace/trace.c
-> > @@ -6331,13 +6331,14 @@ static ssize_t tracing_splice_read_pipe(
-> >  		/* Copy the data into the page, so we can start over. */
-> >  		ret = trace_seq_to_buffer(&iter->seq,
-> >  					  page_address(spd.pages[i]),
-> > -					  trace_seq_used(&iter->seq));
-> > +					  min((size_t)trace_seq_used(&iter->seq),
-> > +						  PAGE_SIZE));
+> So 6.15 is not an issue either?
 > 
-> Note this will require this patch too:
+> > I am looking into the details now, to be sure about my finding, I'll
+> > confirm you in the next few days.
+> > 
+> > If you prefer to not wait, given that this fix was just improving the
+> > performance of a specific use case, you can just revert from 6.12.y and
+> > 6.14.y.
 > 
->    Link: https://lore.kernel.org/20250526013731.1198030-1-pantaixi@huaweicloud.com
-> 
-> commit 2fbdb6d8e03b ("tracing: Fix compilation warning on arm32")
+> And 6.15?  I'd prefer if you submit the revert as that way it can
+> contain the relevant information about why the revert is only needed
+> in the stable kernel(s) and not also in Linus's tree.
 
-Thanks for the link, I'll queue this up once it hits a released kernel.
+After more testing I can say that this commit is just broken on
+every tree, I'll send a revert to mainline soon, and after that you
+should get it like any other fix.
 
-greg k-h
+Thanks
+Francesco
+
