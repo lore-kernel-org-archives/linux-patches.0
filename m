@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51D121F8F09;
-	Wed,  4 Jun 2025 01:01:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDF78433D9;
+	Wed,  4 Jun 2025 01:01:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748998889; cv=none; b=kVEeEulQECva31GFDO3y1VvkMninbnzIr6/YJDu6daPOAa6IPZATE8RK0DMmDtEfFrCxU4/FCfMZjup9A5TFXUWpeqgyCbprDFFYtcxXaBD+A67rsfdAdsgENfIRQbk6vAFNqtiFQvH6dOPRpLdxRaeiY/mga0QF24HMu56SPTc=
+	t=1748998890; cv=none; b=ccLHKZHzOBh6rknLifmoGODaAbJubSnaLqVbNTXMIu+MxNPPXdRTcxnxTMYrec+4wUBxbiHvD0EIu9eeCVEkRJspMX6nP9rfZ81y+Xh0ylWu2fSqVW27r0ShaYWfucBnukk9GK1qD/erXWPlqKoUoAs//S/x8NtEybalJCCRYbU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748998889; c=relaxed/simple;
-	bh=SawK0NIWrwWVzK2h42/ifoD9UgaORAe7odQi9oYNTuA=;
+	s=arc-20240116; t=1748998890; c=relaxed/simple;
+	bh=UTGodAg1s9ok1dCkRdB3ZF5myQ6C3T5C46rwnQRvuls=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MRvC1xT+Up4iylcktpQQlsF3E0UbBm8LxpxtzbUunzcElYj7KK0mFYwpAtX7ZC4k3w5BoY2drBo0jq3wXbQJ/tBvThKJZMytClqMGrmNkIoHOjwxh5oQ/9jvDZx9nv49dypZehCmigcCBMKUaCP5fKul3A0KkjPTytVqFa4TzhY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SBt16nUq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pgAib59EPUc/oLKOY38oSX8klfNSd5KAPLckm0WA486OftgLKHnd/PGaiVOXrzuINpl++aSUUIfPXFtHMTWsZ1LPvM/LYyLzkXH6PeP+OVz5Y3m65oP6O49rWCaiZ0Ib8W5QbpgG1jHikPgTFBmii77l43QprLvloaMiK6T7bHY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GLU/a5ml; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SBt16nUq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33E19C4CEED;
-	Wed,  4 Jun 2025 01:01:28 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GLU/a5ml"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2AA5C4CEED;
+	Wed,  4 Jun 2025 01:01:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748998889;
-	bh=SawK0NIWrwWVzK2h42/ifoD9UgaORAe7odQi9oYNTuA=;
+	s=k20201202; t=1748998890;
+	bh=UTGodAg1s9ok1dCkRdB3ZF5myQ6C3T5C46rwnQRvuls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SBt16nUqw2dg6KI2i8eY7N1i6nQwZD4vAQp9wZcDoKGPUqt5Frwdr3kZv2j0Jh6b4
-	 KCLTWwjyvwrnbWjZI/GLrY0xAXjMexC/zu0vuKDIf4vlTbsVinDpz9nImEhv/gcPkC
-	 VyrmdsSTRVMlscrJ4g60A3B/SJ25ieQm3ZrDS8uASZ+UsXvplHqUF/SC9WSKNIWILJ
-	 fz5AWTSTeMGOMp+y3qI24joB9875B+FB+AEFE5f57HUd/orJJnQpRBP67EWs8ft8Tb
-	 ZN6eSXDm2K41SEEp5+MUSEWXEMjsNeBp/cc++ntUvjUPllVJQ+VNzF/WODZoNbVFwm
-	 qEoE2uVdJGeqg==
+	b=GLU/a5ml9ZJhixKa/hDJtCUk/8076U2Ty+5TTn7oGYCECVjKGQaDMXRGAJvyZBZgQ
+	 UMK/8LA9MzMIjuoDra7gDGrecFaxhVisp2OTuLvIZ34lG16TUJ0TXpJPU7LuJrUfSN
+	 9wvwwiCu7GKXC8mRNZwyAGDytAkYfw6Nnyiyk8TP1lsvdPvdV3tMMGf/HGFeOla/EV
+	 8EfeLWsCslmu/4kfIpYCkJSBtpY+MHrljRtOqcn7wgxh5ypScLRCUKYyHMxjCCMLHn
+	 ntDruyEd/tHek4UKEUH8Zdr0XjXK3pQ6GCwr9U2c7rV31eS0SyEDRcuEI3hxtpf0lU
+	 1u3ff59hIprgw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ido Schimmel <idosch@nvidia.com>,
-	Petr Machata <petrm@nvidia.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+Cc: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
+	Somnath Kotur <somnath.kotur@broadcom.com>,
+	Michael Chan <michael.chan@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	kuba@kernel.org,
-	menglong8.dong@gmail.com
-Subject: [PATCH AUTOSEL 6.12 70/93] vxlan: Do not treat dst cache initialization errors as fatal
-Date: Tue,  3 Jun 2025 20:58:56 -0400
-Message-Id: <20250604005919.4191884-70-sashal@kernel.org>
+	pavan.chebbi@broadcom.com,
+	netdev@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.12 71/93] bnxt_en: Remove unused field "ref_count" in struct bnxt_ulp
+Date: Tue,  3 Jun 2025 20:58:57 -0400
+Message-Id: <20250604005919.4191884-71-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250604005919.4191884-1-sashal@kernel.org>
 References: <20250604005919.4191884-1-sashal@kernel.org>
@@ -51,128 +51,93 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.12.31
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
 
-[ Upstream commit 20c76dadc783759fd3819d289c72be590660cc8b ]
+[ Upstream commit 5bccacb4cc32cb835fe2fe100a210332c494e81d ]
 
-FDB entries are allocated in an atomic context as they can be added from
-the data path when learning is enabled.
+The "ref_count" field in struct bnxt_ulp is unused after
+commit a43c26fa2e6c ("RDMA/bnxt_re: Remove the sriov config callback").
+So we can just remove it now.
 
-After converting the FDB hash table to rhashtable, the insertion rate
-will be much higher (*) which will entail a much higher rate of per-CPU
-allocations via dst_cache_init().
-
-When adding a large number of entries (e.g., 256k) in a batch, a small
-percentage (< 0.02%) of these per-CPU allocations will fail [1]. This
-does not happen with the current code since the insertion rate is low
-enough to give the per-CPU allocator a chance to asynchronously create
-new chunks of per-CPU memory.
-
-Given that:
-
-a. Only a small percentage of these per-CPU allocations fail.
-
-b. The scenario where this happens might not be the most realistic one.
-
-c. The driver can work correctly without dst caches. The dst_cache_*()
-APIs first check that the dst cache was properly initialized.
-
-d. The dst caches are not always used (e.g., 'tos inherit').
-
-It seems reasonable to not treat these allocation failures as fatal.
-
-Therefore, do not bail when dst_cache_init() fails and suppress warnings
-by specifying '__GFP_NOWARN'.
-
-[1] percpu: allocation failed, size=40 align=8 atomic=1, atomic alloc failed, no space left
-
-(*) 97% reduction in average latency of vxlan_fdb_update() when adding
-256k entries in a batch.
-
-Reviewed-by: Petr Machata <petrm@nvidia.com>
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20250415121143.345227-14-idosch@nvidia.com
-Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Somnath Kotur <somnath.kotur@broadcom.com>
+Signed-off-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Signed-off-by: Michael Chan <michael.chan@broadcom.com>
+Link: https://patch.msgid.link/20250417172448.1206107-4-michael.chan@broadcom.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Perfect! Now I have all the information needed to analyze this commit.
-**Answer: YES** **Extensive Analysis:** This commit should be backported
-to stable kernel trees for several important reasons: ## Bug Fix
-Analysis **1. Problem Being Fixed:** The commit addresses a real
-production issue where `dst_cache_init()` failures in atomic context
-cause legitimate vxlan FDB entries to be rejected. The specific problem
-occurs when: - Adding large numbers of FDB entries (e.g., 256k entries)
-- In atomic context (GFP_ATOMIC allocations) - A small percentage (<
-0.02%) of per-CPU allocations fail - This causes the entire FDB entry
-creation to fail unnecessarily **2. Code Change Analysis:** ```c //
-Before: Fatal error handling if (dst_cache_init(&rd->dst_cache,
-GFP_ATOMIC)) { kfree(rd); return -ENOMEM; } // After: Non-fatal error
-handling dst_cache_init(&rd->dst_cache, GFP_ATOMIC | __GFP_NOWARN); ```
-**3. Safety and Correctness:** The fix is extremely safe because: -
-**Safe graceful degradation**: All dst_cache functions check `if
-(!dst_cache->cache)` and gracefully handle uninitialized caches by
-returning NULL or doing nothing - **No functionality loss**: The vxlan
-driver works correctly without dst caches - they are performance
-optimizations, not functional requirements - **Atomic context
-appropriate**: Uses `__GFP_NOWARN` to prevent log spam under memory
-pressure - **Consistent with existing patterns**: Similar to commit
-examples 1 & 3 that handled resource initialization failures gracefully
-## Backport Suitability Criteria **1. Important Bug Fix**: ✅ - Fixes
-production failure scenario where legitimate network operations fail -
-Addresses memory allocation failures in high-throughput scenarios -
-Prevents spurious FDB entry creation failures **2. Small and
-Contained**: ✅ - Only 4 lines changed in a single function - No
-architectural changes - No new features introduced - Clear, targeted fix
-**3. Low Risk of Regression**: ✅ - The dst_cache API is designed to
-handle uninitialized caches safely - Removes failure path rather than
-adding complexity - Well-tested pattern (dst_cache functions all check
-cache initialization) - No changes to critical control flow **4. No Side
-Effects**: ✅ - Only changes error handling behavior - Maintains all
-functional capabilities - No API changes - No dependencies on other
-changes **5. Matches Stable Tree Rules**: ✅ - Important bugfix for
-production systems - Minimal risk - Self-contained change - Addresses
-real user-visible issue ## Comparison to Historical Examples This commit
-aligns perfectly with the "YES" examples: - **Similar to Example #1**:
-Fixes resource leak/failure issues in network driver - **Similar to
-Example #3**: Handles initialization failures gracefully rather than
-fatally - **Unlike "NO" examples**: No performance optimizations,
-architectural changes, or new features ## Network Subsystem Context
-VXLAN is a critical networking technology used in: - Container
-networking (Docker, Kubernetes) - Cloud networking overlays - Data
-center virtualization - SDN implementations FDB entry creation failures
-can cause significant networking disruption in production environments,
-making this fix important for stability. The commit correctly recognizes
-that dst_cache is a performance optimization, not a functional
-requirement, and handles allocation failures appropriately without
-compromising the core networking functionality.
+**YES** This commit should be backported to stable kernel trees.
+**Analysis:** This commit removes an unused field `ref_count` from
+`struct bnxt_ulp` and the associated code that was waiting for the
+reference count to reach zero during unregistration. Looking at the code
+changes: 1. **Removes unused field from struct definition**
+(bnxt_ulp.h:49): The `atomic_t ref_count;` field is completely removed
+from `struct bnxt_ulp`. 2. **Removes dead code** (bnxt_ulp.c:151-162):
+The commit removes a loop that was waiting for
+`atomic_read(&ulp->ref_count) != 0` with sleeps, which is now
+unnecessary since the field and its usage were removed in a previous
+commit (a43c26fa2e6c). **Why this should be backported:** 1. **Code
+cleanup with no functional impact**: This is a pure cleanup commit that
+removes truly unused code. The `ref_count` field was made unused by a
+previous commit that removed the sriov config callback. 2. **Follows
+stable backport patterns**: Looking at the similar commits, particularly
+Similar Commit #1 which was marked "YES" for backport, this commit has
+the exact same characteristics: - Removes unused functions/fields -
+Small, contained change - No risk of regression - Code cleanup that
+improves maintainability 3. **No architectural changes**: The commit
+only removes code that was already dead/unused, with no changes to
+active code paths. 4. **Minimal risk**: Since the code being removed was
+already unused (as confirmed by the commit message referencing the
+previous commit that made it unused), there's zero risk of regression.
+5. **Clear precedent**: Similar Commit #1 showed that removal of unused
+code (`bnxt_subtract_ulp_resources()` function and making
+`bnxt_get_max_func_irqs()` static) was considered appropriate for
+backporting. This commit fits the stable tree criteria perfectly: it's a
+low-risk cleanup that removes dead code without affecting functionality,
+similar to other cleanup commits that have been successfully backported.
 
- drivers/net/vxlan/vxlan_core.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt_ulp.c | 5 -----
+ drivers/net/ethernet/broadcom/bnxt/bnxt_ulp.h | 1 -
+ 2 files changed, 6 deletions(-)
 
-diff --git a/drivers/net/vxlan/vxlan_core.c b/drivers/net/vxlan/vxlan_core.c
-index 474faccf75fd9..1a70770938001 100644
---- a/drivers/net/vxlan/vxlan_core.c
-+++ b/drivers/net/vxlan/vxlan_core.c
-@@ -605,10 +605,10 @@ static int vxlan_fdb_append(struct vxlan_fdb *f,
- 	if (rd == NULL)
- 		return -ENOMEM;
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_ulp.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_ulp.c
+index 546d9a3d7efea..b33c29fdf8fd3 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt_ulp.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_ulp.c
+@@ -148,7 +148,6 @@ void bnxt_unregister_dev(struct bnxt_en_dev *edev)
+ 	struct net_device *dev = edev->net;
+ 	struct bnxt *bp = netdev_priv(dev);
+ 	struct bnxt_ulp *ulp;
+-	int i = 0;
  
--	if (dst_cache_init(&rd->dst_cache, GFP_ATOMIC)) {
--		kfree(rd);
--		return -ENOMEM;
+ 	ulp = edev->ulp_tbl;
+ 	rtnl_lock();
+@@ -164,10 +163,6 @@ void bnxt_unregister_dev(struct bnxt_en_dev *edev)
+ 	synchronize_rcu();
+ 	ulp->max_async_event_id = 0;
+ 	ulp->async_events_bmap = NULL;
+-	while (atomic_read(&ulp->ref_count) != 0 && i < 10) {
+-		msleep(100);
+-		i++;
 -	}
-+	/* The driver can work correctly without a dst cache, so do not treat
-+	 * dst cache initialization errors as fatal.
-+	 */
-+	dst_cache_init(&rd->dst_cache, GFP_ATOMIC | __GFP_NOWARN);
+ 	mutex_unlock(&edev->en_dev_lock);
+ 	rtnl_unlock();
+ 	return;
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_ulp.h b/drivers/net/ethernet/broadcom/bnxt/bnxt_ulp.h
+index 4f4914f5c84c9..b76a231ca7dac 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt_ulp.h
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_ulp.h
+@@ -48,7 +48,6 @@ struct bnxt_ulp {
+ 	unsigned long	*async_events_bmap;
+ 	u16		max_async_event_id;
+ 	u16		msix_requested;
+-	atomic_t	ref_count;
+ };
  
- 	rd->remote_ip = *ip;
- 	rd->remote_port = port;
+ struct bnxt_en_dev {
 -- 
 2.39.5
 
