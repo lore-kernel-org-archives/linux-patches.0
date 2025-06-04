@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB37B7082D;
-	Wed,  4 Jun 2025 00:53:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4484192D6B;
+	Wed,  4 Jun 2025 00:53:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748998399; cv=none; b=F+dJ60igGDfzFMXlwyzfCP0bm6yIjxXrZH84ZtNTtN0fNnN31+GpId7IqE5g36PSZdJQShsIsUSU8vN7uwUtrzNhaO49BkE/WzUgadR5cbxpbwS6ZSlUR0ChUxFv2i91RscbPVVIMRz9rL++gFMn8aWVGvTmWv2ShJy/VcuP/n0=
+	t=1748998400; cv=none; b=CQXflf63vR+RihwTB3ZVeWTYjVft9kMhR/C1zr4noqqrG3Zc/5xxT79hu0fpLIY7nCpFn7MauV1MzomnB0ZBOLFob6Zz61rSfh7qR045A0udp44NMr17u8hXX/9diN/wCpMBc9yKIXls6VhCoAHZrhNYMzRZn8WzZF4/EgbaT+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748998399; c=relaxed/simple;
-	bh=OUIKxpvxvbHJeswWtuIxaJc1T6DQhUwdQWQZCP2qinc=;
+	s=arc-20240116; t=1748998400; c=relaxed/simple;
+	bh=kNrTHjvKm2VWJs6SvCLmvxpTeN4B9WR3gAIli9ok2gc=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bO0C8bpZPovxVx9Ein/uEVHfA7y5LUemA0nch/ePy2ZkPI5hfpKI5DzVTX9OAATKOGtOo+yn6C0BSbfpDO5sdhYo4fX/an8TRrIiyifRuDfipBapkUHD60gwuLT9Ls8/rqdEB2G3mzdocAhol5Gx4RW3rdqwAvrIbFFN0pa0OKk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hAciE+KW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=peYwou0RhOcrLnDJTv0IHgfhAZJ2PPoI6MbLCPjPhsmMu89ArfKmuOSTGG09OXrUJyEe6epZtQ3/jykLtp32HKdRq9ZD+5fHZi5iS4GMWPYIM9D4SjliOoJHD02TjYHY8nRYR2cGMuhz2jldQI9eu1QHa37cCQNOfTrSaCs7YQ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PYAItiex; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hAciE+KW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B8BDC4CEED;
-	Wed,  4 Jun 2025 00:53:15 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PYAItiex"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51B87C4CEEF;
+	Wed,  4 Jun 2025 00:53:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748998396;
-	bh=OUIKxpvxvbHJeswWtuIxaJc1T6DQhUwdQWQZCP2qinc=;
+	s=k20201202; t=1748998400;
+	bh=kNrTHjvKm2VWJs6SvCLmvxpTeN4B9WR3gAIli9ok2gc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hAciE+KWms+swzMXkI/9yjbtFVb8vB7bVThRyXonx7GFxzypCo1GpTU8kltC9SAXL
-	 fpfztjxTZ9zqM4XOX/VP7uSpAn1HD5aj2l0mJ7xGBDZMZKLsdJeC+gfDVsBPKp85B5
-	 N7LxQYZbRdX5AvgbvnG1c+i61CPMb82LYDN/Ox6Jl5xJrMAsdE68nNqgoBgujsRic2
-	 75H7LldFidTLP9+KHUsP4V4GFYYhQdHz7nsIQQpHBUZYFvD1Z3epRmjZ6okdKn/2mP
-	 /O7ctntBCDJcqCq33EhEq1UQ9Wn9QukUdW2Aks0gLt5DjDGn9fQEAln8GyKPVtwQBV
-	 Cxolfm7ZC6bZA==
+	b=PYAItiexPqGDqwK6VbIFS82BWKsS6Dt8uD3C/2mWci4/Wp5zMKZfvaRFfTBqK6oks
+	 VAFTUpsYLITb0JQ0hlS7lvU/YxibuYrUNiPpXVVm0ild6PSY0yLUxQk4p1hqJaWj6r
+	 okLhXIV/kCxj97OLDzHG/6Ua6FMZur9PItW57ho6ov6qbatR0I/9xgseMWTnveDEr9
+	 xRXaA3oF+xdn/QQbnd+JSp+Jcw4grsnzw3wlMsgWo0bv/lGCRoIT2vhjeIJtoQcE32
+	 eXB4HFaV8veTixG60pmskLrMeWixdKAWZ3m3hyTUdjMLCsW9np/mceXbHcMHrLN32v
+	 fk1HlT+PtW+Rg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: "Luke D. Jones" <luke@ljones.dev>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+Cc: Tiezhu Yang <yangtiezhu@loongson.cn>,
+	Haiyong Sun <sunhaiyong@loongson.cn>,
+	Steven Rostedt <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>,
-	jikos@kernel.org,
-	bentiss@kernel.org,
-	linux-input@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.15 062/118] hid-asus: check ROG Ally MCU version and warn
-Date: Tue,  3 Jun 2025 20:49:53 -0400
-Message-Id: <20250604005049.4147522-62-sashal@kernel.org>
+	tglozar@redhat.com,
+	jstancek@redhat.com
+Subject: [PATCH AUTOSEL 6.15 064/118] rtla: Define __NR_sched_setattr for LoongArch
+Date: Tue,  3 Jun 2025 20:49:55 -0400
+Message-Id: <20250604005049.4147522-64-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250604005049.4147522-1-sashal@kernel.org>
 References: <20250604005049.4147522-1-sashal@kernel.org>
@@ -48,226 +47,80 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.15
 Content-Transfer-Encoding: 8bit
 
-From: "Luke D. Jones" <luke@ljones.dev>
+From: Tiezhu Yang <yangtiezhu@loongson.cn>
 
-[ Upstream commit 00e005c952f74f50a3f86af96f56877be4685e14 ]
+[ Upstream commit 6a38c51a2557d4d50748818a858d507c250f3bee ]
 
-ASUS have fixed suspend issues arising from a flag not being cleared in
-the MCU FW in both the ROG Ally 1 and the ROG Ally X.
+When executing "make -C tools/tracing/rtla" on LoongArch, there exists
+the following error:
 
-Implement a check and a warning to encourage users to update the FW to
-a minimum supported version.
+  src/utils.c:237:24: error: '__NR_sched_setattr' undeclared
 
-Signed-off-by: Luke D. Jones <luke@ljones.dev>
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://lore.kernel.org/r/20250323023421.78012-2-luke@ljones.dev
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Just define __NR_sched_setattr for LoongArch if not exist.
+
+Link: https://lore.kernel.org/20250422074917.25771-1-yangtiezhu@loongson.cn
+Reported-by: Haiyong Sun <sunhaiyong@loongson.cn>
+Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-**YES** This commit should be backported to stable kernel trees for the
-following reasons: ## Analysis of Code Changes: ### 1. **Clear Bug Fix
-for User-Affecting Issue** The commit addresses a real user-impacting
-problem: suspend issues on ROG Ally devices due to firmware bugs in the
-MCU (Microcontroller Unit). The commit message explicitly states "ASUS
-have fixed suspend issues arising from a flag not being cleared in the
-MCU FW" - this is a clear hardware/firmware-related bug that affects
-system stability. ### 2. **Minimal and Contained Changes** The code
-changes are small and well-contained: - **New constants**:
-`ROG_ALLY_REPORT_SIZE`, `ROG_ALLY_X_MIN_MCU`, `ROG_ALLY_MIN_MCU` - **New
-quirk bit**: `QUIRK_ROG_ALLY_XPAD BIT(13)` - **Two new functions**:
-`mcu_parse_version_string()` and `validate_mcu_fw_version()` - **Updated
-device table entries**: Adding the new quirk to existing ROG Ally
-devices ### 3. **Conservative Approach - Warning Only** The fix is very
-conservative - it only adds **warning messages** to inform users about
-firmware issues, without changing any critical kernel behavior. From the
-code: ```c if (version < min_version) { hid_warn(hdev, "The MCU firmware
-version must be %d or greater to avoid issues with suspend.\n",
-min_version); } ``` This approach minimizes regression risk while
-providing valuable user feedback. ### 4. **Follows Established
-Patterns** The commit follows the same patterns established by similar
-commits that were marked for backporting: - **Similar to Commit #1**:
-Adds device-specific quirks for ROG Ally devices - **Similar to Commit
-#2**: Updates device tables with new quirk flags - **Similar to Commit
-#3**: Extends ROG Ally support without architectural changes ### 5.
-**Addresses Known Hardware Issue** The version checking specifically
-targets known problematic firmware versions: - ROG Ally: requires MCU
-version ≥ 319 - ROG Ally X: requires MCU version ≥ 313 This suggests
-ASUS has identified and fixed specific firmware bugs in these versions.
-### 6. **Low Risk of Regression** The changes are additive and
-defensive: - Only triggers on specific hardware (ROG Ally devices with
-the new quirk) - Fails gracefully if MCU communication fails (`if
-(version < 0) return;`) - No changes to existing code paths for other
-devices - All error conditions are properly handled ### 7. **Follows
-Stable Tree Criteria** - ✅ Fixes an important bug (suspend issues) - ✅
-Small and contained changes - ✅ No new features - just hardware support
-improvement - ✅ Minimal regression risk - ✅ Confined to specific
-subsystem (HID driver for specific devices) The commit directly improves
-user experience for ROG Ally owners who may be experiencing suspend
-issues due to outdated MCU firmware, aligning perfectly with stable
-kernel tree goals of providing important bug fixes to users.
+Based on my analysis of the commit and examination of the kernel source
+tree, here is my assessment: **YES** This commit should be backported to
+stable kernel trees for the following reasons: **1. Build Fix for
+Supported Architecture**: This commit fixes a compilation error on
+LoongArch architecture where `__NR_sched_setattr` is undeclared. The
+error message shows: ``` src/utils.c:237:24: error: '__NR_sched_setattr'
+undeclared ``` **2. Minimal and Safe Change**: The change adds just two
+lines to define the syscall number for LoongArch: ```c # elif
+__loongarch__ # define __NR_sched_setattr 274 ``` **3. Follows
+Established Pattern**: From examining
+`/home/sasha/linux/include/uapi/asm-generic/unistd.h`, I confirmed that
+`__NR_sched_setattr` is indeed syscall number 274 in the generic syscall
+table. LoongArch uses the generic syscall ABI (as evidenced by
+`/home/sasha/linux/tools/arch/loongarch/include/uapi/asm/unistd.h`
+including `asm-generic/unistd.h`), so using 274 is correct and
+consistent. **4. Consistency with Similar Commits**: Looking at the
+historical commits provided: - Similar Commit #5 (Status: NO) added
+RISC-V support with the same syscall number 274 - Similar Commit #3
+(Status: YES) was a build fix that removed unused functions - Similar
+Commit #2 (Status: YES) fixed compilation issues with glibc The pattern
+shows that build fixes for architecture support are typically backported
+when they're minimal and safe. **5. Essential Functionality**: The rtla
+tool is a real-time latency analysis tool that requires scheduler
+attribute syscalls to function properly. Without this fix, the tool
+cannot be built on LoongArch systems, making it completely unusable on
+that architecture. **6. No Risk of Regression**: This change only
+affects LoongArch builds and follows the exact same pattern used for
+other architectures. It defines a constant that prevents compilation
+failure without changing any runtime behavior. **7. Stable Tree Criteria
+Met**: - Fixes an important build issue affecting users - Change is
+minimal and contained - No architectural changes or new features -
+Extremely low risk of regression - Follows established patterns The
+commit perfectly fits the stable tree criteria for important bugfixes
+with minimal risk.
 
- drivers/hid/hid-asus.c | 107 ++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 105 insertions(+), 2 deletions(-)
+ tools/tracing/rtla/src/utils.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/hid/hid-asus.c b/drivers/hid/hid-asus.c
-index 46e3e42f9eb5f..599c836507ff8 100644
---- a/drivers/hid/hid-asus.c
-+++ b/drivers/hid/hid-asus.c
-@@ -52,6 +52,10 @@ MODULE_DESCRIPTION("Asus HID Keyboard and TouchPad");
- #define FEATURE_KBD_LED_REPORT_ID1 0x5d
- #define FEATURE_KBD_LED_REPORT_ID2 0x5e
+diff --git a/tools/tracing/rtla/src/utils.c b/tools/tracing/rtla/src/utils.c
+index 4995d35cf3ec6..d6ab15dcb4907 100644
+--- a/tools/tracing/rtla/src/utils.c
++++ b/tools/tracing/rtla/src/utils.c
+@@ -227,6 +227,8 @@ long parse_ns_duration(char *val)
+ #  define __NR_sched_setattr	355
+ # elif __s390x__
+ #  define __NR_sched_setattr	345
++# elif __loongarch__
++#  define __NR_sched_setattr	274
+ # endif
+ #endif
  
-+#define ROG_ALLY_REPORT_SIZE 64
-+#define ROG_ALLY_X_MIN_MCU 313
-+#define ROG_ALLY_MIN_MCU 319
-+
- #define SUPPORT_KBD_BACKLIGHT BIT(0)
- 
- #define MAX_TOUCH_MAJOR 8
-@@ -84,6 +88,7 @@ MODULE_DESCRIPTION("Asus HID Keyboard and TouchPad");
- #define QUIRK_MEDION_E1239T		BIT(10)
- #define QUIRK_ROG_NKEY_KEYBOARD		BIT(11)
- #define QUIRK_ROG_CLAYMORE_II_KEYBOARD BIT(12)
-+#define QUIRK_ROG_ALLY_XPAD		BIT(13)
- 
- #define I2C_KEYBOARD_QUIRKS			(QUIRK_FIX_NOTEBOOK_REPORT | \
- 						 QUIRK_NO_INIT_REPORTS | \
-@@ -534,9 +539,99 @@ static bool asus_kbd_wmi_led_control_present(struct hid_device *hdev)
- 	return !!(value & ASUS_WMI_DSTS_PRESENCE_BIT);
- }
- 
-+/*
-+ * We don't care about any other part of the string except the version section.
-+ * Example strings: FGA80100.RC72LA.312_T01, FGA80100.RC71LS.318_T01
-+ * The bytes "5a 05 03 31 00 1a 13" and possibly more come before the version
-+ * string, and there may be additional bytes after the version string such as
-+ * "75 00 74 00 65 00" or a postfix such as "_T01"
-+ */
-+static int mcu_parse_version_string(const u8 *response, size_t response_size)
-+{
-+	const u8 *end = response + response_size;
-+	const u8 *p = response;
-+	int dots, err, version;
-+	char buf[4];
-+
-+	dots = 0;
-+	while (p < end && dots < 2) {
-+		if (*p++ == '.')
-+			dots++;
-+	}
-+
-+	if (dots != 2 || p >= end || (p + 3) >= end)
-+		return -EINVAL;
-+
-+	memcpy(buf, p, 3);
-+	buf[3] = '\0';
-+
-+	err = kstrtoint(buf, 10, &version);
-+	if (err || version < 0)
-+		return -EINVAL;
-+
-+	return version;
-+}
-+
-+static int mcu_request_version(struct hid_device *hdev)
-+{
-+	u8 *response __free(kfree) = kzalloc(ROG_ALLY_REPORT_SIZE, GFP_KERNEL);
-+	const u8 request[] = { 0x5a, 0x05, 0x03, 0x31, 0x00, 0x20 };
-+	int ret;
-+
-+	if (!response)
-+		return -ENOMEM;
-+
-+	ret = asus_kbd_set_report(hdev, request, sizeof(request));
-+	if (ret < 0)
-+		return ret;
-+
-+	ret = hid_hw_raw_request(hdev, FEATURE_REPORT_ID, response,
-+				ROG_ALLY_REPORT_SIZE, HID_FEATURE_REPORT,
-+				HID_REQ_GET_REPORT);
-+	if (ret < 0)
-+		return ret;
-+
-+	ret = mcu_parse_version_string(response, ROG_ALLY_REPORT_SIZE);
-+	if (ret < 0) {
-+		pr_err("Failed to parse MCU version: %d\n", ret);
-+		print_hex_dump(KERN_ERR, "MCU: ", DUMP_PREFIX_NONE,
-+			      16, 1, response, ROG_ALLY_REPORT_SIZE, false);
-+	}
-+
-+	return ret;
-+}
-+
-+static void validate_mcu_fw_version(struct hid_device *hdev, int idProduct)
-+{
-+	int min_version, version;
-+
-+	version = mcu_request_version(hdev);
-+	if (version < 0)
-+		return;
-+
-+	switch (idProduct) {
-+	case USB_DEVICE_ID_ASUSTEK_ROG_NKEY_ALLY:
-+		min_version = ROG_ALLY_MIN_MCU;
-+		break;
-+	case USB_DEVICE_ID_ASUSTEK_ROG_NKEY_ALLY_X:
-+		min_version = ROG_ALLY_X_MIN_MCU;
-+		break;
-+	default:
-+		min_version = 0;
-+	}
-+
-+	if (version < min_version) {
-+		hid_warn(hdev,
-+			"The MCU firmware version must be %d or greater to avoid issues with suspend.\n",
-+			min_version);
-+	}
-+}
-+
- static int asus_kbd_register_leds(struct hid_device *hdev)
- {
- 	struct asus_drvdata *drvdata = hid_get_drvdata(hdev);
-+	struct usb_interface *intf;
-+	struct usb_device *udev;
- 	unsigned char kbd_func;
- 	int ret;
- 
-@@ -560,6 +655,14 @@ static int asus_kbd_register_leds(struct hid_device *hdev)
- 			if (ret < 0)
- 				return ret;
- 		}
-+
-+		if (drvdata->quirks & QUIRK_ROG_ALLY_XPAD) {
-+			intf = to_usb_interface(hdev->dev.parent);
-+			udev = interface_to_usbdev(intf);
-+			validate_mcu_fw_version(hdev,
-+				le16_to_cpu(udev->descriptor.idProduct));
-+		}
-+
- 	} else {
- 		/* Initialize keyboard */
- 		ret = asus_kbd_init(hdev, FEATURE_KBD_REPORT_ID);
-@@ -1280,10 +1383,10 @@ static const struct hid_device_id asus_devices[] = {
- 	  QUIRK_USE_KBD_BACKLIGHT | QUIRK_ROG_NKEY_KEYBOARD },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ASUSTEK,
- 	    USB_DEVICE_ID_ASUSTEK_ROG_NKEY_ALLY),
--	  QUIRK_USE_KBD_BACKLIGHT | QUIRK_ROG_NKEY_KEYBOARD },
-+	  QUIRK_USE_KBD_BACKLIGHT | QUIRK_ROG_NKEY_KEYBOARD | QUIRK_ROG_ALLY_XPAD},
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ASUSTEK,
- 	    USB_DEVICE_ID_ASUSTEK_ROG_NKEY_ALLY_X),
--	  QUIRK_USE_KBD_BACKLIGHT | QUIRK_ROG_NKEY_KEYBOARD },
-+	  QUIRK_USE_KBD_BACKLIGHT | QUIRK_ROG_NKEY_KEYBOARD | QUIRK_ROG_ALLY_XPAD },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ASUSTEK,
- 	    USB_DEVICE_ID_ASUSTEK_ROG_CLAYMORE_II_KEYBOARD),
- 	  QUIRK_ROG_CLAYMORE_II_KEYBOARD },
 -- 
 2.39.5
 
