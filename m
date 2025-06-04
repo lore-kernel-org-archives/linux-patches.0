@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78AC21DFDB9;
-	Wed,  4 Jun 2025 01:06:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD8E81A2390;
+	Wed,  4 Jun 2025 01:06:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748999171; cv=none; b=epfSWQ5TyjCaBZfzjQWkyqIJhwiP6e1h75l+kxtPF56FPrwVIhNVTH1Wghqb3pVivR41BI5akKw5r/sOW47Daw5Vwnvu5xbZgWc3ITf15FbJHCc+5NUogSi+yseBp5pTqi8pqmd5462tjdTI6rsCD2QFKLReJonCHZiCPV8bWxk=
+	t=1748999173; cv=none; b=YeKOUesrsmKW8TuZ5+zJF4BFIpoNkRhHN6Wmto3X0s4t22yXoL7PByBV+JHVjyg+VhAZ+YKy89+HDpLP95vzpIrf/SzK04rKyWLXVunAQJGIGSK6sH4/8XZhp9v8mC2BqjcEuwtC8GvKKhNACQw9PEtmDkaOSIqvK7bIF0nuAFE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748999171; c=relaxed/simple;
-	bh=18c1vI6fdl8X08pJ7kxEaBy7w61ndI7KkuD5ZWyipNg=;
+	s=arc-20240116; t=1748999173; c=relaxed/simple;
+	bh=6BOcPdSjPtCnSUiVMiPdu42TLukKZ5afhqFJGZb6PYw=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=DgL67Ftnsl8hHKc1aBYn+wxXQGEIx0av18if0d2UoW451VfJSfYqon483FtVvj3S1KpdaNGP+dgouQAoFL8A9GH2C8UpF42axUPEpAYPu2L2GyftppH9khLsQFi49Wj90H7pmBIYWvkp55r/m6JDNz+KAnpwSEoIBOEIhxzj43I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=O2We4RTC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=WY/ftr0JEzz2/D86RjlhZAXrD0MGXly1ZczyOWMfQfELrN7ml2FRVGGpdnrrHiJ5oS2NiAi4ENB1BH8Wr7PIolhmLzigsntYvev5FSRlQbgRIQEomKtWymcdMn4H3TKHPu2tU/SFKKDfFDqXrFs9zRjbhRsaWLrtI4SyM4SSz4s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cAcG3kuo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="O2We4RTC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C807C4CEEF;
-	Wed,  4 Jun 2025 01:06:10 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cAcG3kuo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB750C4CEF1;
+	Wed,  4 Jun 2025 01:06:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748999171;
-	bh=18c1vI6fdl8X08pJ7kxEaBy7w61ndI7KkuD5ZWyipNg=;
+	s=k20201202; t=1748999172;
+	bh=6BOcPdSjPtCnSUiVMiPdu42TLukKZ5afhqFJGZb6PYw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O2We4RTCNbyhhz9biUzMn1ojait2BCH/DkiMLZIJ9oPPul64NLsKF7L0m/qkJd/f+
-	 xqBy8c8JEtIAcKe2fAoYHSw3oeSCHFPj1CEK3abAQRnj65m5cetiSkbHyG353HmZWq
-	 BrEdkGc1uSEN5DOhJLfUPH+Ifoi0LzCgVyPBJogZdGQypSf3BIJfYxF61axMujXdH3
-	 MeX3HUuiRqiUQT4CWPMfv/WpPyze4M7h1jPRHfKscBiGDKY3EKVdg1vmkngCNHjLMw
-	 5Bwsch4WqVBNPa/KLdxP0UciuI+YBiM0zTTQadVBnnLLRxW20QpdJ8Z1HLBGU0Ot01
-	 RNCumWJAlaJFA==
+	b=cAcG3kuonzD+eTWXlmRZEGuOgLHhOT5ZPCld+NFYl0/dHBO8cuB9H8fuoIWFUFUgT
+	 v3HsZFerJaAitYvmNX8nnlJvwdOzJ+20L7GNQZQSgTS48AJednkZzt063fKLNu/iDX
+	 q+/hPi62K50o3CpBOw4xYAbsg43OOg/R0NlG/CJYONJMtEoar0nuARFkaCbtbtp6qE
+	 x7R4rcBbtP8Y81E6tXhJdwf5NsZds1zqnnhNJEoCcY4WHHvFvKXXhr0EUw8JmxlkHI
+	 DFQ4xUN0f0ZQ3/cTWkHPr5q/ANNc2leejCoFKfs8Mn2lfYoIAxiWkw6KqyO/e9kDpj
+	 uIJL1tmdf3epw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Mike Looijmans <mike.looijmans@topic.nl>,
-	Linus Walleij <linus.walleij@linaro.org>,
+Cc: Daniel Wagner <wagi@kernel.org>,
+	Justin Tee <justin.tee@broadcom.com>,
+	"Martin K . Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-gpio@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.15 28/33] pinctrl: mcp23s08: Reset all pins to input at probe
-Date: Tue,  3 Jun 2025 21:05:19 -0400
-Message-Id: <20250604010524.6091-28-sashal@kernel.org>
+	james.smart@broadcom.com,
+	dick.kennedy@broadcom.com,
+	linux-scsi@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.15 29/33] scsi: lpfc: Use memcpy() for BIOS version
+Date: Tue,  3 Jun 2025 21:05:20 -0400
+Message-Id: <20250604010524.6091-29-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250604010524.6091-1-sashal@kernel.org>
 References: <20250604010524.6091-1-sashal@kernel.org>
@@ -48,113 +51,91 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 5.15.184
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mike Looijmans <mike.looijmans@topic.nl>
+From: Daniel Wagner <wagi@kernel.org>
 
-[ Upstream commit 3ede3f8b4b4b399b0ca41e44959f80d5cf84fc98 ]
+[ Upstream commit ae82eaf4aeea060bb736c3e20c0568b67c701d7d ]
 
-At startup, the driver just assumes that all registers have their
-default values. But after a soft reset, the chip will just be in the
-state it was, and some pins may have been configured as outputs. Any
-modification of the output register will cause these pins to be driven
-low, which leads to unexpected/unwanted effects. To prevent this from
-happening, set the chip's IO configuration register to a known safe
-mode (all inputs) before toggling any other bits.
+The strlcat() with FORTIFY support is triggering a panic because it
+thinks the target buffer will overflow although the correct target
+buffer size is passed in.
 
-Signed-off-by: Mike Looijmans <mike.looijmans@topic.nl>
-Link: https://lore.kernel.org/20250314151803.28903-1-mike.looijmans@topic.nl
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Anyway, instead of memset() with 0 followed by a strlcat(), just use
+memcpy() and ensure that the resulting buffer is NULL terminated.
+
+BIOSVersion is only used for the lpfc_printf_log() which expects a
+properly terminated string.
+
+Signed-off-by: Daniel Wagner <wagi@kernel.org>
+Link: https://lore.kernel.org/r/20250409-fix-lpfc-bios-str-v1-1-05dac9e51e13@kernel.org
+Reviewed-by: Justin Tee <justin.tee@broadcom.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Let me examine the exact change being made in the commit: Based on the
-commit analysis, here's my assessment: **YES** This commit should be
-backported to stable kernel trees. Here's my detailed analysis: ## Key
-Reasons for Backporting: ### 1. **Fixes a Real Safety Issue** The commit
-addresses a genuine safety problem where GPIO pins can be unexpectedly
-driven low during driver initialization. From the commit message: "Any
-modification of the output register will cause these pins to be driven
-low, which leads to unexpected/unwanted effects." This could cause
-hardware damage or system malfunction in real-world deployments. ### 2.
-**Small, Contained, and Safe Change** The code change is minimal and
-surgical: ```c + /bin /bin.usr-is-merged /boot /dev /etc /home /init
-/lib /lib.usr-is-merged /lib64 /lost+found /media /mnt /opt /proc /root
-/run /sbin /sbin.usr-is-merged /snap /srv /sys /tmp /usr /var +
-capability_test capability_test.c f2fs_folio_analysis.md
-ipv4_multipath_analysis.md ipv6_route_allocation_rcu_analysis.md
-ixgbe_e610_set_phys_id_analysis.md linux lpfc_timeout_analysis.md
-mac80211_mlo_mbssid_analysis.md pfcp_driver_historical_analysis.md
-rtl_bb_delay_analysis.md rtw89_mlo_analysis.md
-tcp_multipath_load_balance_analysis.md test_unaligned_diff
-test_unaligned_diff.c type_size_check type_size_check.c
-veth_driver_analysis.md wifi_mlo_mbssid_tx_link_id_analysis.md Reset the
-chip - we don't really know what state it's in, so reset +
-capability_test capability_test.c f2fs_folio_analysis.md
-ipv4_multipath_analysis.md ipv6_route_allocation_rcu_analysis.md
-ixgbe_e610_set_phys_id_analysis.md linux lpfc_timeout_analysis.md
-mac80211_mlo_mbssid_analysis.md pfcp_driver_historical_analysis.md
-rtl_bb_delay_analysis.md rtw89_mlo_analysis.md
-tcp_multipath_load_balance_analysis.md test_unaligned_diff
-test_unaligned_diff.c type_size_check type_size_check.c
-veth_driver_analysis.md wifi_mlo_mbssid_tx_link_id_analysis.md all pins
-to input first to prevent surprises. + linux/ + ret = mcp_write(mcp,
-MCP_IODIR, mcp->chip.ngpio == 16 ? 0xFFFF : 0xFF); + if (ret < 0) +
-return ret; ``` This simply writes all 1s to the MCP_IODIR register (I/O
-direction register), which according to the datasheet comment at line 29
-is the proper reset value: `#define MCP_IODIR 0x00 /bin /bin.usr-is-
-merged /boot /dev /etc /home /init /lib /lib.usr-is-merged /lib64
-/lost+found /media /mnt /opt /proc /root /run /sbin /sbin.usr-is-merged
-/snap /srv /sys /tmp /usr /var init/reset: all ones */` ### 3. **Aligns
-with Hardware Reset Behavior** The change makes the software behavior
-consistent with hardware reset behavior. The MCP_IODIR register defaults
-to 0xFF (all inputs) on hardware reset, so this ensures software reset
-has the same safe state. ### 4. **Minimal Risk of Regression** - The
-change occurs early in the probe function, before any other GPIO
-operations - Setting pins to input is the safest possible state - it
-cannot cause unexpected signal driving - The error handling is proper
-(returns on failure) - This matches the expected reset state per the
-hardware datasheet ### 5. **Affects Critical Subsystem Safety** GPIO
-drivers control physical hardware pins that can affect external
-circuits. Unexpected pin states can cause: - Hardware damage to
-connected devices - System instability - Safety issues in embedded
-systems ### 6. **No Architectural Changes** The fix doesn't introduce
-new features, change APIs, or modify the driver architecture. It simply
-ensures a known safe state during initialization. ### 7. **Similar
-Pattern to Other Stable Fixes** Looking at the similar commits provided,
-this follows the pattern of commit #3 (cy8c95x0 fix) which was marked as
-YES for backporting - both are small GPIO/pinctrl fixes that address
-real hardware behavior issues. ### 8. **Clear Problem Statement** The
-commit clearly explains the issue: "after a soft reset, the chip will
-just be in the state it was, and some pins may have been configured as
-outputs" - this is a well-defined problem that affects users. This
-commit meets all the criteria for stable backporting: it fixes an
-important bug that affects users, is small and contained, has minimal
-regression risk, and doesn't introduce new features or architectural
-changes.
+Let me understand the actual problem by examining the function more
+carefully. Based on the commit message, this is about a FORTIFY panic
+when using strlcat(): **YES** This commit should be backported to stable
+kernel trees. Here's my extensive analysis: ## Bug Analysis **Root
+Cause:** The commit fixes a kernel panic triggered by FORTIFY_SOURCE
+when using `strlcat()`. The FORTIFY infrastructure incorrectly detected
+a potential buffer overflow in the BIOS version string handling code.
+**The Problem Code:** ```c memset(phba->BIOSVersion, 0,
+sizeof(phba->BIOSVersion)); strlcat(phba->BIOSVersion, (char
+*)cntl_attr->bios_ver_str, sizeof(phba->BIOSVersion)); ``` **The Fix:**
+```c memcpy(phba->BIOSVersion, cntl_attr->bios_ver_str,
+sizeof(phba->BIOSVersion)); phba->BIOSVersion[sizeof(phba->BIOSVersion)
+- 1] = '\0'; ``` ## Technical Details 1. **Buffer Sizes:** `BIOSVersion`
+is a 16-byte character array (`char BIOSVersion[16]` in lpfc.h:1267),
+while `bios_ver_str` is a 32-byte array (`uint32_t bios_ver_str[8]` in
+lpfc_hw4.h:3798). 2. **FORTIFY Issue:** The `strlcat()` function with
+FORTIFY enabled was triggering a false positive, causing kernel panics
+when it incorrectly calculated potential overflow conditions. 3. **Safe
+Solution:** The fix uses `memcpy()` for the exact buffer size and
+explicitly null-terminates the string, which is simpler and avoids the
+FORTIFY false positive. ## Backport Criteria Analysis ✅ **Fixes
+Important Bug:** This resolves kernel panics in production systems with
+FORTIFY enabled ✅ **Small & Contained:** Only 3 lines changed in a
+single function ✅ **Minimal Risk:** The change is functionally
+equivalent but safer ✅ **No Architectural Changes:** Simple string
+handling improvement ✅ **Clear Side Effects:** No behavioral changes
+beyond fixing the panic ✅ **Critical Subsystem:** SCSI driver stability
+is important for storage ## Comparison with Similar Commits This closely
+resembles **Similar Commit #2** (marked YES for backport) which fixed an
+overflow build issue with FORTIFY. Both commits: - Address FORTIFY-
+related compilation/runtime issues - Make minimal, safe code changes -
+Fix real problems affecting users - Have low regression risk ## Risk
+Assessment **Low Risk:** The change maintains identical functionality
+while eliminating the false positive. Both code paths copy BIOS version
+data into a 16-byte buffer and ensure null termination. The `memcpy()`
+approach is actually more predictable than `strlcat()` with an empty
+target buffer. ## Conclusion This commit fixes a real kernel panic issue
+that affects users running kernels with FORTIFY_SOURCE enabled. The fix
+is minimal, safe, and follows stable tree guidelines perfectly. It
+should definitely be backported to prevent production systems from
+experiencing these panics.
 
- drivers/pinctrl/pinctrl-mcp23s08.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/scsi/lpfc/lpfc_sli.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pinctrl/pinctrl-mcp23s08.c b/drivers/pinctrl/pinctrl-mcp23s08.c
-index 852354f6681b4..a743d9c6e1c77 100644
---- a/drivers/pinctrl/pinctrl-mcp23s08.c
-+++ b/drivers/pinctrl/pinctrl-mcp23s08.c
-@@ -567,6 +567,14 @@ int mcp23s08_probe_one(struct mcp23s08 *mcp, struct device *dev,
+diff --git a/drivers/scsi/lpfc/lpfc_sli.c b/drivers/scsi/lpfc/lpfc_sli.c
+index 68b015bb6d157..fb139e1e35ca3 100644
+--- a/drivers/scsi/lpfc/lpfc_sli.c
++++ b/drivers/scsi/lpfc/lpfc_sli.c
+@@ -5926,9 +5926,9 @@ lpfc_sli4_get_ctl_attr(struct lpfc_hba *phba)
+ 	phba->sli4_hba.flash_id = bf_get(lpfc_cntl_attr_flash_id, cntl_attr);
+ 	phba->sli4_hba.asic_rev = bf_get(lpfc_cntl_attr_asic_rev, cntl_attr);
  
- 	mcp->reset_gpio = devm_gpiod_get_optional(dev, "reset", GPIOD_OUT_LOW);
+-	memset(phba->BIOSVersion, 0, sizeof(phba->BIOSVersion));
+-	strlcat(phba->BIOSVersion, (char *)cntl_attr->bios_ver_str,
++	memcpy(phba->BIOSVersion, cntl_attr->bios_ver_str,
+ 		sizeof(phba->BIOSVersion));
++	phba->BIOSVersion[sizeof(phba->BIOSVersion) - 1] = '\0';
  
-+	/*
-+	 * Reset the chip - we don't really know what state it's in, so reset
-+	 * all pins to input first to prevent surprises.
-+	 */
-+	ret = mcp_write(mcp, MCP_IODIR, mcp->chip.ngpio == 16 ? 0xFFFF : 0xFF);
-+	if (ret < 0)
-+		return ret;
-+
- 	/* verify MCP_IOCON.SEQOP = 0, so sequential reads work,
- 	 * and MCP_IOCON.HAEN = 1, so we work with all chips.
- 	 */
+ 	lpfc_printf_log(phba, KERN_INFO, LOG_SLI,
+ 			"3086 lnk_type:%d, lnk_numb:%d, bios_ver:%s, "
 -- 
 2.39.5
 
