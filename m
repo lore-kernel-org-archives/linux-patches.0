@@ -1,46 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 941CE16D9BF;
-	Wed,  4 Jun 2025 01:01:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A3961F6679;
+	Wed,  4 Jun 2025 01:01:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748998878; cv=none; b=CZG1Qvq2mXryr9kVK71BaM5ZpJ4oY+SX3Ut6rp/LEegoaLMhxAahraHOe4JS2iMl7gRsT+V6S0dFCOxm+TYMjRz8vAZoX/FO+hPxNVRI+L3aW+t42DRZY62bBxSNJCALA0iAAc8P+ZGEdmrWkk1t490GkmB4HAWL+o3loQl5W9c=
+	t=1748998879; cv=none; b=JVKC/VepqVt0epBUdn84bAUJEKULpYSHtt+Bxo+S/8vg/cf3hkVXyYJ2gruOMO0EqM6xpC5M94xK2qS9p/ALD1p0kWE/x+hJZHoziIoAlFvhwjsbTrfKAbiGN0jtZWaVNtAOkjzS4rNJILObLSuzn6T5AnkuLPBrieWGGy84gAY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748998878; c=relaxed/simple;
-	bh=xrbVIrODA0xNVk8j0F/sq5bDWaqDJHmLHFLBk9Cc75A=;
+	s=arc-20240116; t=1748998879; c=relaxed/simple;
+	bh=bS+a4Wj3sXm8dQ1JWw2YZwTfm6RPL1ikJbQBwAJYelI=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=V8IdDqJKq59gROrfZHrzgKeHCGag25df3X61pBVqUvnQDJgAtp2xJ/ygSG2JvSGz6PWzYPtXRANPWia4jFI7VJknRIXCBVGQdJcklNGlTjaezlc07v9BgB9IdgPDauewhl/yEqIQp5O78f/3ypyP7wQ8/G7OqNnluuwfm4ThJkI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JmPuZqof; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=OtHTwHnsEY+w9bM4AwugPIrW2kWp6ZNSzKM4vruYaYJl87nGdQYnW5u/vp8bpvok2vIIK2OSek5L/13tOz/kQo6eeZFjp/XHyNHgMYaSgRWvTgt43GD07TSgzn9+0B6rwq0NFBDQde/vaA9L3+rc4PaWfm9KoGNG44rwJjtkBY8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=V+XE8GTd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JmPuZqof"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2AF6C4CEF2;
-	Wed,  4 Jun 2025 01:01:16 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="V+XE8GTd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78FCBC4CEED;
+	Wed,  4 Jun 2025 01:01:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748998878;
-	bh=xrbVIrODA0xNVk8j0F/sq5bDWaqDJHmLHFLBk9Cc75A=;
+	s=k20201202; t=1748998879;
+	bh=bS+a4Wj3sXm8dQ1JWw2YZwTfm6RPL1ikJbQBwAJYelI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JmPuZqoffLmrO+IN+UZkfWCRX9PBDN+d2qMl8y2tniX2k5n4o0CNqgYeRgv5nNBz2
-	 QX8/ShIOyv6pMY39YBTx4yQYNpKBo4aoMJDg6kNqXlb6AtSlL75u6E9Wo3UXJZUOtu
-	 xmAfohgUhAd+35tRQEZooJ/zcEA+F/MX79fUzDvv4SX5WCLpFg+RSNFe4DyXbm4M4A
-	 4xVPI0yNIsjCCJE7giAqykIpcgh2osJablxaMMYrtCw5nYeMSW2+pEuozh3e4gx9qa
-	 wOo3l4uIQa9GpEaig+oVGz2JdV6nDNLNN7f9VPhzM72t5uCkX+2tPAWeNy6qMU70mj
-	 P0ECdbqv5GB9A==
+	b=V+XE8GTdYK0lf5tOH6KT5/SusmOLWeHjg4su1+oXpWpQ4nyqa7s5076UgTjtQDTzU
+	 YyKrGB+GDG7hi0JSV+W+kvmBhOAxgGMdRuEuHrR/I9gzzT1PqdUrBmMoVZjfC/JYKC
+	 4PFaSEqC2p344vlJaMyqcIrY2EY+IIQY1jmESw/bR7w8xfQjAIV8JFe33oufZdw4U7
+	 sYevPtZMxK9VC/e0DcRdZOsuVmrisGet+9fXrcn3rkZCxGpSy60b4JD/G7c84/uX/d
+	 air2X3gXQZc6Zm5nRznzEzToA8XnEBkPr8/DDXx2Hg+NkT4kJNAzJuqsvfiGerVwSf
+	 81cMyXWAa/M/g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Shung-Hsi Yu <shung-hsi.yu@suse.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+Cc: Muna Sinada <muna.sinada@oss.qualcomm.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	martin.lau@linux.dev,
-	ast@kernel.org,
-	daniel@iogearbox.net,
-	bpf@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.12 64/93] bpf: Use proper type to calculate bpf_raw_tp_null_args.mask index
-Date: Tue,  3 Jun 2025 20:58:50 -0400
-Message-Id: <20250604005919.4191884-64-sashal@kernel.org>
+	johannes@sipsolutions.net,
+	linux-wireless@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.12 65/93] wifi: mac80211: VLAN traffic in multicast path
+Date: Tue,  3 Jun 2025 20:58:51 -0400
+Message-Id: <20250604005919.4191884-65-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250604005919.4191884-1-sashal@kernel.org>
 References: <20250604005919.4191884-1-sashal@kernel.org>
@@ -56,130 +52,103 @@ X-stable-base: Linux 6.12.31
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shung-Hsi Yu <shung-hsi.yu@suse.com>
+From: Muna Sinada <muna.sinada@oss.qualcomm.com>
 
-[ Upstream commit 53ebef53a657d7957d35dc2b953db64f1bb28065 ]
+[ Upstream commit 1a4a6a22552ca9d723f28a1fe35eab1b9b3d8b33 ]
 
-The calculation of the index used to access the mask field in 'struct
-bpf_raw_tp_null_args' is done with 'int' type, which could overflow when
-the tracepoint being attached has more than 8 arguments.
+Currently for MLO, sending out multicast frames on each link is handled by
+mac80211 only when IEEE80211_HW_MLO_MCAST_MULTI_LINK_TX flag is not set.
 
-While none of the tracepoints mentioned in raw_tp_null_args[] currently
-have more than 8 arguments, there do exist tracepoints that had more
-than 8 arguments (e.g. iocost_iocg_forgive_debt), so use the correct
-type for calculation and avoid Smatch static checker warning.
+Dynamic VLAN multicast traffic utilizes software encryption.
+Due to this, mac80211 should handle transmitting multicast frames on
+all links for multicast VLAN traffic.
 
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Acked-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Link: https://lore.kernel.org/bpf/20250418074946.35569-1-shung-hsi.yu@suse.com
-
-Closes: https://lore.kernel.org/r/843a3b94-d53d-42db-93d4-be10a4090146@stanley.mountain/
+Signed-off-by: Muna Sinada <muna.sinada@oss.qualcomm.com>
+Link: https://patch.msgid.link/20250325213125.1509362-4-muna.sinada@oss.qualcomm.com
+[remove unnecessary parentheses]
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Now I have enough context to analyze this commit: **Analysis:** **YES**
-- This commit should be backported to stable kernel trees. **Extensive
-Explanation:** ## Issue Description The commit fixes a potential integer
-overflow in the BPF BTF subsystem. The bug is in lines 6830 and 6833 of
-`kernel/bpf/btf.c` where the calculation `(arg capability_test
-capability_test.c f2fs_folio_analysis.md ipv4_multipath_analysis.md
-ipv6_route_allocation_rcu_analysis.md ixgbe_e610_set_phys_id_analysis.md
-linux lpfc_timeout_analysis.md rtl_bb_delay_analysis.md
-rtw89_mlo_analysis.md tcp_multipath_load_balance_analysis.md
-type_size_check type_size_check.c veth_driver_analysis.md 4)` is done
-with `int` type when `arg` can theoretically be large enough to cause
-overflow. ## Code Analysis 1. **Variable Types**: - `arg` is declared as
-`u32` (from `btf_ctx_arg_idx` return type) - The shift operation was
-using `int` arithmetic: `(0x1 << (arg capability_test capability_test.c
-f2fs_folio_analysis.md ipv4_multipath_analysis.md
-ipv6_route_allocation_rcu_analysis.md ixgbe_e610_set_phys_id_analysis.md
-linux lpfc_timeout_analysis.md rtl_bb_delay_analysis.md
-rtw89_mlo_analysis.md tcp_multipath_load_balance_analysis.md
-type_size_check type_size_check.c veth_driver_analysis.md 4))` - The fix
-changes it to `unsigned long long`: `(0x1ULL << (arg capability_test
-capability_test.c f2fs_folio_analysis.md ipv4_multipath_analysis.md
-ipv6_route_allocation_rcu_analysis.md ixgbe_e610_set_phys_id_analysis.md
-linux lpfc_timeout_analysis.md rtl_bb_delay_analysis.md
-rtw89_mlo_analysis.md tcp_multipath_load_balance_analysis.md
-type_size_check type_size_check.c veth_driver_analysis.md 4))` 2. **The
-Overflow Scenario**: - When `arg >= 8`, the expression `(arg
-capability_test capability_test.c f2fs_folio_analysis.md
-ipv4_multipath_analysis.md ipv6_route_allocation_rcu_analysis.md
-ixgbe_e610_set_phys_id_analysis.md linux lpfc_timeout_analysis.md
-rtl_bb_delay_analysis.md rtw89_mlo_analysis.md
-tcp_multipath_load_balance_analysis.md type_size_check type_size_check.c
-veth_driver_analysis.md 4)` could be >= 32 - Shifting by >= 32 bits on a
-32-bit `int` causes undefined behavior - Even on 64-bit systems, large
-values could overflow the intermediate calculation 3. **Specific
-Changes**: ```c // Before (vulnerable): if (raw_tp_null_args[i].mask &
-(0x1 << (arg capability_test capability_test.c f2fs_folio_analysis.md
-ipv4_multipath_analysis.md ipv6_route_allocation_rcu_analysis.md
-ixgbe_e610_set_phys_id_analysis.md linux lpfc_timeout_analysis.md
-rtl_bb_delay_analysis.md rtw89_mlo_analysis.md
-tcp_multipath_load_balance_analysis.md type_size_check type_size_check.c
-veth_driver_analysis.md 4))) if (raw_tp_null_args[i].mask & (0x2 << (arg
-capability_test capability_test.c f2fs_folio_analysis.md
-ipv4_multipath_analysis.md ipv6_route_allocation_rcu_analysis.md
-ixgbe_e610_set_phys_id_analysis.md linux lpfc_timeout_analysis.md
-rtl_bb_delay_analysis.md rtw89_mlo_analysis.md
-tcp_multipath_load_balance_analysis.md type_size_check type_size_check.c
-veth_driver_analysis.md 4))) // After (fixed): if
-(raw_tp_null_args[i].mask & (0x1ULL << (arg capability_test
-capability_test.c f2fs_folio_analysis.md ipv4_multipath_analysis.md
-ipv6_route_allocation_rcu_analysis.md ixgbe_e610_set_phys_id_analysis.md
-linux lpfc_timeout_analysis.md rtl_bb_delay_analysis.md
-rtw89_mlo_analysis.md tcp_multipath_load_balance_analysis.md
-type_size_check type_size_check.c veth_driver_analysis.md 4))) if
-(raw_tp_null_args[i].mask & (0x2ULL << (arg capability_test
-capability_test.c f2fs_folio_analysis.md ipv4_multipath_analysis.md
-ipv6_route_allocation_rcu_analysis.md ixgbe_e610_set_phys_id_analysis.md
-linux lpfc_timeout_analysis.md rtl_bb_delay_analysis.md
-rtw89_mlo_analysis.md tcp_multipath_load_balance_analysis.md
-type_size_check type_size_check.c veth_driver_analysis.md 4))) ``` ##
-Why This Should Be Backported 1. **Bug Fix**: This is a clear bug fix
-addressing undefined behavior that could cause incorrect BPF program
-verification. 2. **Small and Contained**: The fix is minimal - only
-changes two lines by adding `ULL` suffix to ensure 64-bit arithmetic. 3.
-**No Side Effects**: The change maintains the same logic but uses proper
-types, eliminating undefined behavior without changing functionality. 4.
-**Critical Subsystem**: This affects BPF verification, which is
-security-critical. Incorrect verification could lead to security issues.
-5. **Static Analysis Detection**: The commit was triggered by a Smatch
-static checker warning, indicating this is a real issue that static
-analysis tools flag. 6. **Potential Real-World Impact**: While the
-commit mentions no current tracepoints have >8 arguments, the code path
-could be triggered by future tracepoints or module tracepoints, making
-this a defensive fix. 7. **Follows Stable Criteria**: - Important bugfix
-✓ - Minimal risk ✓ - No architectural changes ✓ - Confined to BPF
-subsystem ✓ ## Comparison with Similar Commits Looking at the historical
-examples, this commit is most similar to "Similar Commit #5" which was
-marked as "Backport Status: YES" - it's a small type safety fix in BPF
-BTF code that prevents undefined behavior. The fix prevents a subtle but
-potentially serious issue in BPF program verification, making it an
-excellent candidate for stable backporting.
+**YES** This commit should be backported to stable kernel trees. Here's
+my detailed analysis: ## Backporting Analysis: YES ### Nature of the
+Change This is a **targeted bug fix** that addresses a functional gap in
+MLO (Multi-Link Operation) multicast handling for AP_VLAN interfaces.
+The commit extends existing logic rather than introducing new features.
+### Technical Assessment **The Problem Fixed:** The original code in
+`ieee80211_subif_start_xmit()` only handled `NL80211_IFTYPE_AP`
+interfaces for MLO multicast transmission, but completely missed
+`NL80211_IFTYPE_AP_VLAN` interfaces. This created a behavioral
+inconsistency where: - AP interfaces: Properly handled MLO multicast
+transmission via `ieee80211_mlo_multicast_tx()` - AP_VLAN interfaces:
+Fell through to normal transmission path, bypassing MLO multicast
+coordination **The Fix Applied:** ```c } else if
+(ieee80211_vif_is_mld(&sdata->vif) && - sdata->vif.type ==
+NL80211_IFTYPE_AP && - !ieee80211_hw_check(&sdata->local->hw,
+MLO_MCAST_MULTI_LINK_TX)) { + ((sdata->vif.type == NL80211_IFTYPE_AP &&
++ !ieee80211_hw_check(&sdata->local->hw, MLO_MCAST_MULTI_LINK_TX)) || +
+(sdata->vif.type == NL80211_IFTYPE_AP_VLAN && +
+!sdata->wdev.use_4addr))) { ``` This change: 1. **Extends existing
+conditional logic** to include AP_VLAN interfaces 2. **Uses existing
+infrastructure** (`ieee80211_mlo_multicast_tx()`) 3. **Adds proper
+validation** (excludes 4-address/WDS mode via `!use_4addr`) ### Risk
+Analysis: LOW RISK **Minimal Change Scope:** - Single conditional
+modification in well-established code path - No new functions, data
+structures, or APIs introduced - Uses existing MLO multicast
+transmission infrastructure **Well-Contained Impact:** - Only affects
+MLO multicast transmission for AP_VLAN interfaces - Preserved existing
+behavior for all other interface types - Added validation ensures
+appropriate application scope **Backward Compatibility:** - No changes
+to external interfaces or user-visible behavior - No impact on non-MLO
+or non-VLAN configurations - Maintains existing AP interface behavior
+unchanged ### Comparison with Similar Commits This commit aligns with
+**Similar Commit #4** (MLD address translation fix - Status: YES): -
+Both are targeted bug fixes for MLO functionality - Both address
+specific functional gaps rather than adding new features - Both use
+existing infrastructure to correct behavioral issues - Both have minimal
+risk profiles suitable for stable backporting **Contrasts with rejected
+commits:** - Unlike Similar Commits #1, #2: This is not implementing new
+MLO features - Unlike Similar Commit #3: This is not changing
+encapsulation behavior - Unlike Similar Commit #5: This is not removing
+functionality ### Production Impact **Functional Benefits:** - **Fixes
+MLO+VLAN deployments**: Enables proper multicast operation in combined
+MLO/VLAN environments - **Consistency**: Ensures uniform multicast
+handling across AP and AP_VLAN interface types - **Reliability**:
+Prevents potential multicast delivery issues in enterprise VLAN
+configurations **Real-World Relevance:** - AP_VLAN interfaces are
+commonly used in enterprise environments for traffic segmentation - MLO
+is increasingly deployed in Wi-Fi 7 scenarios - The combination creates
+practical deployment scenarios where this fix is needed ### Stable Tree
+Criteria Compliance ✅ **Important bug fix**: Addresses functional gap
+affecting MLO+VLAN deployments ✅ **Minimal risk**: Single conditional
+extension with clear validation ✅ **No architectural changes**: Uses
+existing MLO multicast infrastructure ✅ **Well-contained**: Affects only
+specific interface type in specific scenario ✅ **Production relevant**:
+Impacts real-world enterprise VLAN configurations This commit represents
+a clear bug fix that resolves a functional inconsistency in MLO
+multicast handling, making it well-suited for stable kernel backporting
+according to established criteria.
 
- kernel/bpf/btf.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/mac80211/tx.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
-index 2c54c148a94f3..f83bd019db141 100644
---- a/kernel/bpf/btf.c
-+++ b/kernel/bpf/btf.c
-@@ -6684,10 +6684,10 @@ bool btf_ctx_access(int off, int size, enum bpf_access_type type,
- 			/* Is this a func with potential NULL args? */
- 			if (strcmp(tname, raw_tp_null_args[i].func))
- 				continue;
--			if (raw_tp_null_args[i].mask & (0x1 << (arg * 4)))
-+			if (raw_tp_null_args[i].mask & (0x1ULL << (arg * 4)))
- 				info->reg_type |= PTR_MAYBE_NULL;
- 			/* Is the current arg IS_ERR? */
--			if (raw_tp_null_args[i].mask & (0x2 << (arg * 4)))
-+			if (raw_tp_null_args[i].mask & (0x2ULL << (arg * 4)))
- 				ptr_err_raw_tp = true;
- 			break;
- 		}
+diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
+index 0ff8b56f58070..ef16ff149730a 100644
+--- a/net/mac80211/tx.c
++++ b/net/mac80211/tx.c
+@@ -4523,8 +4523,10 @@ netdev_tx_t ieee80211_subif_start_xmit(struct sk_buff *skb,
+ 						     IEEE80211_TX_CTRL_MLO_LINK_UNSPEC,
+ 						     NULL);
+ 	} else if (ieee80211_vif_is_mld(&sdata->vif) &&
+-		   sdata->vif.type == NL80211_IFTYPE_AP &&
+-		   !ieee80211_hw_check(&sdata->local->hw, MLO_MCAST_MULTI_LINK_TX)) {
++		   ((sdata->vif.type == NL80211_IFTYPE_AP &&
++		     !ieee80211_hw_check(&sdata->local->hw, MLO_MCAST_MULTI_LINK_TX)) ||
++		    (sdata->vif.type == NL80211_IFTYPE_AP_VLAN &&
++		     !sdata->wdev.use_4addr))) {
+ 		ieee80211_mlo_multicast_tx(dev, skb);
+ 	} else {
+ normal:
 -- 
 2.39.5
 
