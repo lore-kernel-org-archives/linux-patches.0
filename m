@@ -1,40 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FE891F4CA0;
-	Wed,  4 Jun 2025 01:01:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F390116D9BF;
+	Wed,  4 Jun 2025 01:01:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748998871; cv=none; b=cGqA/YaHNoX7K7fVkna1roWp3ax831agZ1G21CL8oGlo/4yj1DLh/+Lf4B42FU4UBYsembh/CSIDviLO7Oq6NfVfahNDoBbZOB5accP7FTegy+K51Mt0H80iTEipd1WzqBIKdsQcVVPnQYLE74KjJeNjMM9cri+i2vbeBSB3geo=
+	t=1748998877; cv=none; b=gD2QxpV3BOs3xhggytvqqvgsNIosMP9dGSkqdJ7Cf6hGnEEoHtWDizLLM+WQp3Gs0HnJw8ludKbVy1ITkytamR+DDPwYGiW6QOtTU6asvhM1GzkswJ7YtCKSv9H3e7TqxsM8IiZS4E4x4/r8JiofZFq6ENBL+TO2d10Thlq/RWc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748998871; c=relaxed/simple;
-	bh=8xE5uPIR737I6o6sFWV5AJsGv07/CXrfTK4q/qqtu2E=;
+	s=arc-20240116; t=1748998877; c=relaxed/simple;
+	bh=aDAv2HqRHCG5jgQLZJiTnF8bhfSVVSSbwFZs2KKSbQE=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qlMf8jDrwn01wVFr7XDtl14bIGCuOd0bW2yt3JVqyYP1/lcy5qWHjX5oM736hT7bBhoyvnf9iXG/8/ACZLbbLqv3ROvcDifxvXfjZmaaej3PZUXUrQW54T6RPDy0qT/ywZo7SVxj+1uLn2mz+38y+Zn7aweyM3N+Gbnc0KyytFM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KJ/3zmjv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=dUuJU/yKnZVLKO1mzF9PtwpAngz8+QTXzvu8Op6YEcfLWzia1dw0SqLyDZk7g+xenWlwJVHRq7RrRemYYBdRs1oGAPdAfnyUM/MkP5yt6l1r5R3iUQ03h8gb0YEwN0ptJba3K8EGZvaJyRTYF5w062hNxaSlQZpFvl9aefivxrY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mxtXTFBm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KJ/3zmjv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC09FC4CEED;
-	Wed,  4 Jun 2025 01:01:09 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mxtXTFBm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 365BDC4CEED;
+	Wed,  4 Jun 2025 01:01:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748998870;
-	bh=8xE5uPIR737I6o6sFWV5AJsGv07/CXrfTK4q/qqtu2E=;
+	s=k20201202; t=1748998876;
+	bh=aDAv2HqRHCG5jgQLZJiTnF8bhfSVVSSbwFZs2KKSbQE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KJ/3zmjv4TICMt5zh8qxLa2m8f58IveW5zfX4WS1ziaqY26l9ADY6tMKfq+uJIK7y
-	 0Vnpvs8JrjnwucbJkMyDrZIQYx78bkEZ6eSCJp42eiAb/RUodPU11KATQkM0WDWHrt
-	 w1XDVbjsXyOlbhMAiSZgwcLXYOWKdqiTFTtEKMe1NzHJbAog7hi/oSolyQPcqLYfYB
-	 Of/De6VNjUM21mRbY9oNncfJkyfZBdSSzGYUPIDisrs0oFUBC5HyiAyNWkSIfwqmhr
-	 kxUtShaKzcg/Hnu0mm0E9eKkd+sPG5Qt3IJwwPYaN89d4SGWEd1EAZRgu7zqHkYOq7
-	 KiLgJJpHUaB6A==
+	b=mxtXTFBmKIOopDeKOzH9bWYeJ0SNIDl6jjZdWV2oSbQAPql7lavT0vDPQScGUEaEY
+	 aiBfseSMdwPIBJNeQF4mlV2tzxwpQixAjmBbbySIuJVbLXwFUC3LX3MKUQ0uUENy9X
+	 e6RtQki/3t+Jn0xpeNasON3dDxzEXZ8fJLb1z5Pa/eHxAeeqs4HF38hi46aarRbADo
+	 TreMJHcVbtpRaInWKu/oEdzGX366KybkKIsQcNA0ByPyfo0j+sQ0ydhaoDdu5WtaVC
+	 I7U93bJRAdZmjw8mUXC3Uz5tKUIY0oJS1Gbr+9DXVj5D8G9ZHAtgGsefJunlo6U/nv
+	 Fk0EE58Tx8BDw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Joe Damato <jdamato@fastly.com>,
+Cc: Vlad Dogaru <vdogaru@nvidia.com>,
+	Yevgeny Kliteynik <kliteyn@nvidia.com>,
+	Mark Bloch <mbloch@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH AUTOSEL 6.12 62/93] netdevsim: Mark NAPI ID on skb in nsim_rcv
-Date: Tue,  3 Jun 2025 20:58:48 -0400
-Message-Id: <20250604005919.4191884-62-sashal@kernel.org>
+	Sasha Levin <sashal@kernel.org>,
+	tariqt@nvidia.com,
+	saeedm@nvidia.com,
+	hamdani@nvidia.com,
+	pabeni@redhat.com
+Subject: [PATCH AUTOSEL 6.12 63/93] net/mlx5: HWS, Fix IP version decision
+Date: Tue,  3 Jun 2025 20:58:49 -0400
+Message-Id: <20250604005919.4191884-63-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250604005919.4191884-1-sashal@kernel.org>
 References: <20250604005919.4191884-1-sashal@kernel.org>
@@ -50,103 +56,169 @@ X-stable-base: Linux 6.12.31
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Joe Damato <jdamato@fastly.com>
+From: Vlad Dogaru <vdogaru@nvidia.com>
 
-[ Upstream commit f71c549b26a33fd62f1e9c7deeba738bfc73fbfc ]
+[ Upstream commit 5f2f8d8b6800e4fc760c2eccec9b2bd2cacf80cf ]
 
-Previously, nsim_rcv was not marking the NAPI ID on the skb, leading to
-applications seeing a napi ID of 0 when using SO_INCOMING_NAPI_ID.
+Unify the check for IP version when creating a definer. A given matcher
+is deemed to match on IPv6 if any of the higher order (>31) bits of
+source or destination address mask are set.
 
-To add to the userland confusion, netlink appears to correctly report
-the NAPI IDs for netdevsim queues but the resulting file descriptor from
-a call to accept() was reporting a NAPI ID of 0.
+A single packet cannot mix IP versions between source and destination
+addresses, so it makes no sense that they would be decided on
+independently.
 
-Signed-off-by: Joe Damato <jdamato@fastly.com>
-Link: https://patch.msgid.link/20250424002746.16891-2-jdamato@fastly.com
+Signed-off-by: Vlad Dogaru <vdogaru@nvidia.com>
+Reviewed-by: Yevgeny Kliteynik <kliteyn@nvidia.com>
+Signed-off-by: Mark Bloch <mbloch@nvidia.com>
+Link: https://patch.msgid.link/20250422092540.182091-2-mbloch@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Perfect! Now I fully understand the issue. The test at line 74-77 shows
-the exact problem: if `napi_id == 0`, it's considered a failure because
-SO_INCOMING_NAPI_ID should return a valid NAPI ID, not 0. Based on my
-comprehensive analysis, here's my assessment: **YES** ## Detailed
-Analysis This commit should be backported to stable kernel trees because
-it fixes a **critical functional bug** that affects userspace
-applications and testing infrastructure. ### **Root Cause Analysis** The
-commit addresses a missing `skb_mark_napi_id(skb, &rq->napi)` call in
-the `nsim_rcv()` function of the netdevsim driver. Here's what was
-happening: 1. **The Bug**: Before this fix, packets processed through
-`nsim_rcv()` did not have their NAPI ID properly marked on the skb
-structure 2. **The Impact**: When userspace applications called
-`getsockopt(SO_INCOMING_NAPI_ID)`, they received 0 instead of the actual
-NAPI ID 3. **The Flow**: ``` skb gets queued → nsim_rcv() processes it →
-skb->napi_id = 0 (not set) → netif_receive_skb() → protocol stack →
-sk_mark_napi_id(sk, skb) → sk->sk_napi_id = 0 →
-getsockopt(SO_INCOMING_NAPI_ID) returns 0 ``` ### **Why This Qualifies
-for Stable Backporting** #### **1. Functional Regression/Bug Fix** -
-**Clear Bug**: Missing `skb_mark_napi_id()` call causes
-SO_INCOMING_NAPI_ID to return invalid values - **Well-Defined Fix**:
-Single line addition that follows established patterns in other network
-drivers - **No Side Effects**: The change only adds the missing NAPI ID
-marking, with no architectural implications #### **2. Critical
-Infrastructure Impact** - **Testing Infrastructure**: netdevsim is the
-primary virtual driver for kernel networking tests - **CI/Testing
-Failure**: The included selftest
-`/linux/tools/testing/selftests/drivers/net/napi_id_helper.c`
-specifically fails when NAPI ID is 0 (lines 74-77) - **Broken
-SO_INCOMING_NAPI_ID**: This socket option is fundamental for busy
-polling and advanced networking applications #### **3. User-Visible
-Impact** - **Applications Broken**: Any userspace application using
-SO_INCOMING_NAPI_ID with netdevsim gets incorrect results -
-**Performance Tools**: Network performance testing and benchmarking
-tools that rely on NAPI ID information fail silently - **Silent
-Failure**: Applications don't crash but exhibit degraded performance or
-incorrect behavior #### **4. Meets Stable Criteria** - ✅ **Important
-bugfix**: Fixes broken SO_INCOMING_NAPI_ID functionality - ✅ **Small and
-contained**: Single line addition + header include - ✅ **No
-architectural changes**: Follows existing patterns in the codebase - ✅
-**Minimal regression risk**: Only adds missing functionality, doesn't
-change existing behavior - ✅ **Clear impact**: Affects testing
-infrastructure and userspace applications #### **5. Code Pattern
-Consistency** Looking at the similar commit examples and other network
-drivers in the kernel tree, ALL proper NAPI implementations call
-`skb_mark_napi_id()` during packet reception. This fix brings netdevsim
-in line with established networking subsystem patterns. ### **Comparison
-with Similar Commits** This commit is most similar to **Similar Commit
-#4** which was marked for backporting because it fixed a functional bug
-in netdev-genl (missing RCU lock). Both: - Fix missing functionality in
-networking code - Have clear user-visible impact - Are small, contained
-changes - Address infrastructure/testing concerns ### **Conclusion**
-This is a clear **functional bug fix** that restores expected
-SO_INCOMING_NAPI_ID behavior in netdevsim. The fix is minimal, safe, and
-addresses a significant regression in testing infrastructure and
-userspace applications. It should definitely be backported to stable
-trees.
+**YES** This commit should be backported to stable kernel trees. Here's
+my detailed analysis: ## Bug Analysis This commit fixes a real logical
+bug in the mlx5 HWS (Hardware Steering) definer subsystem. The issue is
+in how IP version is determined when creating flow matchers. **The
+Problem:** The old code made independent decisions about IPv6 vs IPv4
+for source and destination addresses: ```c is_s_ipv6 = s_ipv6[0] ||
+s_ipv6[1] || s_ipv6[2]; is_d_ipv6 = d_ipv6[0] || d_ipv6[1] || d_ipv6[2];
+``` This could lead to inconsistent handling where source and
+destination addresses might be treated as different IP versions, which
+is logically impossible for a single packet. **The Fix:** The new code
+correctly unifies the decision: ```c is_ipv6 = s_ipv6[0] || s_ipv6[1] ||
+s_ipv6[2] || d_ipv6[0] || d_ipv6[1] || d_ipv6[2]; ``` ## Impact
+Assessment **User Impact:** This bug could cause serious networking
+issues: 1. **Incorrect packet classification** - packets might not match
+intended flow rules 2. **Hardware steering failures** - wrong definer
+configuration could cause packets to fall back to software path 3.
+**Performance degradation** - incorrect hardware offload behavior 4.
+**Connection failures** - in environments with IPv6 traffic **Risk
+Assessment:** This is a low-risk fix: - **Scope**: Limited to two
+functions (`hws_definer_conv_outer` and `hws_definer_conv_inner`) -
+**Logic**: Simple variable consolidation with more correct networking
+logic - **Size**: Small, contained change affecting only the IP version
+decision logic ## Comparison to Similar Commits Unlike the provided
+similar commits that were marked "Backport Status: NO" (which were
+primarily new features like "added definers handling", "log unsupported
+mask", etc.), this commit: - **Fixes core functionality** rather than
+adding new features - **Addresses a logical incorrectness** that can
+impact real users - **Has minimal regression risk** while fixing a clear
+bug ## Conclusion This commit meets all criteria for stable backporting:
+✅ Fixes a user-impacting bug ✅ Small, contained change ✅ Minimal
+regression risk ✅ Affects core networking functionality ✅ Clear benefit-
+to-risk ratio The fix aligns the code with fundamental networking
+principles (a packet cannot have mixed IP versions) and resolves
+potential hardware steering issues that could impact production
+environments using mlx5 networking hardware.
 
- drivers/net/netdevsim/netdev.c | 2 ++
- 1 file changed, 2 insertions(+)
+ .../mlx5/core/steering/hws/mlx5hws_definer.c  | 38 ++++++++-----------
+ 1 file changed, 16 insertions(+), 22 deletions(-)
 
-diff --git a/drivers/net/netdevsim/netdev.c b/drivers/net/netdevsim/netdev.c
-index 1b29d1d794a20..c2207887a70f5 100644
---- a/drivers/net/netdevsim/netdev.c
-+++ b/drivers/net/netdevsim/netdev.c
-@@ -25,6 +25,7 @@
- #include <net/pkt_cls.h>
- #include <net/rtnetlink.h>
- #include <net/udp_tunnel.h>
-+#include <net/busy_poll.h>
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_definer.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_definer.c
+index ab5f8f07f1f7e..5cabde7098b68 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_definer.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_definer.c
+@@ -508,9 +508,9 @@ static int
+ hws_definer_conv_outer(struct mlx5hws_definer_conv_data *cd,
+ 		       u32 *match_param)
+ {
+-	bool is_s_ipv6, is_d_ipv6, smac_set, dmac_set;
+ 	struct mlx5hws_definer_fc *fc = cd->fc;
+ 	struct mlx5hws_definer_fc *curr_fc;
++	bool is_ipv6, smac_set, dmac_set;
+ 	u32 *s_ipv6, *d_ipv6;
  
- #include "netdevsim.h"
+ 	if (HWS_IS_FLD_SET_SZ(match_param, outer_headers.l4_type, 0x2) ||
+@@ -569,10 +569,10 @@ hws_definer_conv_outer(struct mlx5hws_definer_conv_data *cd,
+ 			      outer_headers.dst_ipv4_dst_ipv6.ipv6_layout);
  
-@@ -341,6 +342,7 @@ static int nsim_rcv(struct nsim_rq *rq, int budget)
- 			break;
+ 	/* Assume IPv6 is used if ipv6 bits are set */
+-	is_s_ipv6 = s_ipv6[0] || s_ipv6[1] || s_ipv6[2];
+-	is_d_ipv6 = d_ipv6[0] || d_ipv6[1] || d_ipv6[2];
++	is_ipv6 = s_ipv6[0] || s_ipv6[1] || s_ipv6[2] ||
++		  d_ipv6[0] || d_ipv6[1] || d_ipv6[2];
  
- 		skb = skb_dequeue(&rq->skb_queue);
-+		skb_mark_napi_id(skb, &rq->napi);
- 		netif_receive_skb(skb);
- 	}
+-	if (is_s_ipv6) {
++	if (is_ipv6) {
+ 		/* Handle IPv6 source address */
+ 		HWS_SET_HDR(fc, match_param, IPV6_SRC_127_96_O,
+ 			    outer_headers.src_ipv4_src_ipv6.ipv6_simple_layout.ipv6_127_96,
+@@ -586,13 +586,6 @@ hws_definer_conv_outer(struct mlx5hws_definer_conv_data *cd,
+ 		HWS_SET_HDR(fc, match_param, IPV6_SRC_31_0_O,
+ 			    outer_headers.src_ipv4_src_ipv6.ipv6_simple_layout.ipv6_31_0,
+ 			    ipv6_src_outer.ipv6_address_31_0);
+-	} else {
+-		/* Handle IPv4 source address */
+-		HWS_SET_HDR(fc, match_param, IPV4_SRC_O,
+-			    outer_headers.src_ipv4_src_ipv6.ipv6_simple_layout.ipv6_31_0,
+-			    ipv4_src_dest_outer.source_address);
+-	}
+-	if (is_d_ipv6) {
+ 		/* Handle IPv6 destination address */
+ 		HWS_SET_HDR(fc, match_param, IPV6_DST_127_96_O,
+ 			    outer_headers.dst_ipv4_dst_ipv6.ipv6_simple_layout.ipv6_127_96,
+@@ -607,6 +600,10 @@ hws_definer_conv_outer(struct mlx5hws_definer_conv_data *cd,
+ 			    outer_headers.dst_ipv4_dst_ipv6.ipv6_simple_layout.ipv6_31_0,
+ 			    ipv6_dst_outer.ipv6_address_31_0);
+ 	} else {
++		/* Handle IPv4 source address */
++		HWS_SET_HDR(fc, match_param, IPV4_SRC_O,
++			    outer_headers.src_ipv4_src_ipv6.ipv6_simple_layout.ipv6_31_0,
++			    ipv4_src_dest_outer.source_address);
+ 		/* Handle IPv4 destination address */
+ 		HWS_SET_HDR(fc, match_param, IPV4_DST_O,
+ 			    outer_headers.dst_ipv4_dst_ipv6.ipv6_simple_layout.ipv6_31_0,
+@@ -664,9 +661,9 @@ static int
+ hws_definer_conv_inner(struct mlx5hws_definer_conv_data *cd,
+ 		       u32 *match_param)
+ {
+-	bool is_s_ipv6, is_d_ipv6, smac_set, dmac_set;
+ 	struct mlx5hws_definer_fc *fc = cd->fc;
+ 	struct mlx5hws_definer_fc *curr_fc;
++	bool is_ipv6, smac_set, dmac_set;
+ 	u32 *s_ipv6, *d_ipv6;
  
+ 	if (HWS_IS_FLD_SET_SZ(match_param, inner_headers.l4_type, 0x2) ||
+@@ -727,10 +724,10 @@ hws_definer_conv_inner(struct mlx5hws_definer_conv_data *cd,
+ 			      inner_headers.dst_ipv4_dst_ipv6.ipv6_layout);
+ 
+ 	/* Assume IPv6 is used if ipv6 bits are set */
+-	is_s_ipv6 = s_ipv6[0] || s_ipv6[1] || s_ipv6[2];
+-	is_d_ipv6 = d_ipv6[0] || d_ipv6[1] || d_ipv6[2];
++	is_ipv6 = s_ipv6[0] || s_ipv6[1] || s_ipv6[2] ||
++		  d_ipv6[0] || d_ipv6[1] || d_ipv6[2];
+ 
+-	if (is_s_ipv6) {
++	if (is_ipv6) {
+ 		/* Handle IPv6 source address */
+ 		HWS_SET_HDR(fc, match_param, IPV6_SRC_127_96_I,
+ 			    inner_headers.src_ipv4_src_ipv6.ipv6_simple_layout.ipv6_127_96,
+@@ -744,13 +741,6 @@ hws_definer_conv_inner(struct mlx5hws_definer_conv_data *cd,
+ 		HWS_SET_HDR(fc, match_param, IPV6_SRC_31_0_I,
+ 			    inner_headers.src_ipv4_src_ipv6.ipv6_simple_layout.ipv6_31_0,
+ 			    ipv6_src_inner.ipv6_address_31_0);
+-	} else {
+-		/* Handle IPv4 source address */
+-		HWS_SET_HDR(fc, match_param, IPV4_SRC_I,
+-			    inner_headers.src_ipv4_src_ipv6.ipv6_simple_layout.ipv6_31_0,
+-			    ipv4_src_dest_inner.source_address);
+-	}
+-	if (is_d_ipv6) {
+ 		/* Handle IPv6 destination address */
+ 		HWS_SET_HDR(fc, match_param, IPV6_DST_127_96_I,
+ 			    inner_headers.dst_ipv4_dst_ipv6.ipv6_simple_layout.ipv6_127_96,
+@@ -765,6 +755,10 @@ hws_definer_conv_inner(struct mlx5hws_definer_conv_data *cd,
+ 			    inner_headers.dst_ipv4_dst_ipv6.ipv6_simple_layout.ipv6_31_0,
+ 			    ipv6_dst_inner.ipv6_address_31_0);
+ 	} else {
++		/* Handle IPv4 source address */
++		HWS_SET_HDR(fc, match_param, IPV4_SRC_I,
++			    inner_headers.src_ipv4_src_ipv6.ipv6_simple_layout.ipv6_31_0,
++			    ipv4_src_dest_inner.source_address);
+ 		/* Handle IPv4 destination address */
+ 		HWS_SET_HDR(fc, match_param, IPV4_DST_I,
+ 			    inner_headers.dst_ipv4_dst_ipv6.ipv6_simple_layout.ipv6_31_0,
 -- 
 2.39.5
 
