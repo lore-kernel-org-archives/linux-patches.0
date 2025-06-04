@@ -1,46 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DCB151C5A;
-	Wed,  4 Jun 2025 11:49:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E30151C5A;
+	Wed,  4 Jun 2025 11:49:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749037766; cv=none; b=Zb5Z+ebv7b0oCcQIM/rAGOT5vzM1+82TR1U1zNRMDftXV0MQ/ZllBnyQLVXNlkWa9x69/Cnzi9W4lpF6FBt+vcNkVhvQrHqsPHNvNfxaSEmBGdHD0ab51nJaNL5KxhYrSHDs5DzbibYjWMWhH0vHOqq79+60EOu4fJz7xn9RnQM=
+	t=1749037771; cv=none; b=W5C6hCwgyps8d4KNKmGq64neDdzTL5SLhT1XaY2JoY+IUGM2xZBCx3zpnAstFTHYi7Cbflm+PVnFS8BGAMOWyenM0MzTESnl4TAe4s5h8Fc9jfGpEAYltfmCP9fCcqrsXIeOcb23Oik0417chX8vE2+oMvLBd5TSzRXlI07Az4Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749037766; c=relaxed/simple;
-	bh=k5m/5LQvP/c2IAWLDddodHTGsfCxoNlv3nl0csDSPlY=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Type; b=XThQKd6DFqg6P7KKRqJv4cIWJgdsuqPsRre/vrZOEaqBnBfzXpyRZDUSbdzAxcIhtsUhx2YU/hEb5bPiROb7WwKAbdQxEtMCHm2HOcAIbSG/Z6lSIDBylndMSXY1Lk5IuYKGbhPa/GPkNRjAmc7z1zOLRzy3Iz/GrAiXVAsAtqU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=G0f9P83c; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1749037771; c=relaxed/simple;
+	bh=fb4lRrc5lL2UWvGPozqwLNQGjc6zQAOjqCRgSjVn+bE=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=bSGnwVirwya1zvFmrvjjh1c7QJcy3V4l20A4eJt1i6W+19813BfDZYqXOLfWhSjbpx29dOM37nBqfBSC884bW3piTvJgCtHAoltFJ/Y5p+lepXaa+/1rQwwDtqjkO//YA3qN8VWXDxi2duPJIuF6op26c7XTMBzV/gHnTEamDvI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WQXa/58F; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="G0f9P83c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93990C4CEE7;
-	Wed,  4 Jun 2025 11:49:24 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WQXa/58F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 255D1C4CEE7;
+	Wed,  4 Jun 2025 11:49:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749037765;
-	bh=k5m/5LQvP/c2IAWLDddodHTGsfCxoNlv3nl0csDSPlY=;
-	h=From:To:Cc:Subject:Date:From;
-	b=G0f9P83cBVR6RFnzRyyLxLOzLBKDMrI+cLLA2WD3+LncduXd8sH6joPhFyjyq5hYS
-	 cM1FVlpq6ZVvCDeOmjYDLcGk8j7t12GAsxF0jW0FL/PWQ30u1HeH0TqzMp14cAZRN0
-	 DeB9yoFIsZPqDvb8feiwwiZKPwVTGLJvjSFUhMAA8QzbQAyx/uQ2eBQbtA+Tuktuxs
-	 tXHYgOf8Wtv+J4Htp5BmBc6rMpS3fuJa/JvpRhD3SXluZz3pgz1A8U7LGo92FjCeyw
-	 PVM3TFkjeyRIWb/PIm+zYTPrUtw2z2vTD6hWoeVAyZ56S0Py/1YjCQJbWdxjc+NGwU
-	 kIBCdzTSeyQjw==
+	s=k20201202; t=1749037771;
+	bh=fb4lRrc5lL2UWvGPozqwLNQGjc6zQAOjqCRgSjVn+bE=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=WQXa/58FYN8DcRXvajo324X+NZV2qs+xb5qYBG4+LuM4KRMRQwv1mTYJfijnLFs3e
+	 oOHq7qcbHxjLjGzwblY8TCZY0VDBRuKEf9a8vZBMIpMLkk5HFdGIRynJ1D5IZcSt28
+	 Fd+Y3z+/fLOmy/yrpg27zd3zlDZ+SvytmdMAhlPmLpJxiOSduPvHeakzpG8TRPsFtY
+	 iMmJmA8hWlYTKzRCrmIXFDdbsEHyVTYQorUYIVxxiXEFnMnNuWRCtLyM42g71FUqqU
+	 JvE2PZN2wa4LWdbSSljNStt+rHakrPG1AEi8WrMboWxwMLKzpCGIu+2ryf42Z8n1sG
+	 FAATnRFis3AdQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
 Cc: Kees Cook <kees@kernel.org>,
-	syzbot+a7d4444e7b6e743572f7@syzkaller.appspotmail.com,
-	Helge Deller <deller@gmx.de>,
+	Nathan Chancellor <nathan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	simona@ffwll.ch,
-	jfalempe@redhat.com,
-	qianqiang.liu@163.com,
-	soci@c64.rulez.org,
-	oushixiong@kylinos.cn
-Subject: [PATCH AUTOSEL 6.15 1/9] fbcon: Make sure modelist not set on unregistered console
-Date: Wed,  4 Jun 2025 07:49:14 -0400
-Message-Id: <20250604114923.208380-1-sashal@kernel.org>
+	johannes.berg@intel.com,
+	miriam.rachel.korenblit@intel.com,
+	emmanuel.grumbach@intel.com,
+	yedidya.ben.shimol@intel.com,
+	shaul.triebitz@intel.com,
+	llvm@lists.linux.dev
+Subject: [PATCH AUTOSEL 6.15 2/9] wifi: iwlwifi: mld: Work around Clang loop unrolling bug
+Date: Wed,  4 Jun 2025 07:49:15 -0400
+Message-Id: <20250604114923.208380-2-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250604114923.208380-1-sashal@kernel.org>
+References: <20250604114923.208380-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -50,108 +53,110 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.15
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 From: Kees Cook <kees@kernel.org>
 
-[ Upstream commit cedc1b63394a866bf8663a3e40f4546f1d28c8d8 ]
+[ Upstream commit 368556dd234dc4a506a35a0c99c0eee2ab475c77 ]
 
-It looks like attempting to write to the "store_modes" sysfs node will
-run afoul of unregistered consoles:
+The nested loop in iwl_mld_send_proto_offload() confuses Clang into
+thinking there could be a final loop iteration past the end of the
+"nsc" array (which is only 4 entries). The FORTIFY checking in memcmp()
+(via ipv6_addr_cmp()) notices this (due to the available bytes in the
+out-of-bounds position of &nsc[4] being 0), and errors out, failing
+the build. For some reason (likely due to architectural loop unrolling
+configurations), this is only exposed on ARM builds currently. Due to
+Clang's lack of inline tracking[1], the warning is not very helpful:
 
-UBSAN: array-index-out-of-bounds in drivers/video/fbdev/core/fbcon.c:122:28
-index -1 is out of range for type 'fb_info *[32]'
-...
- fbcon_info_from_console+0x192/0x1a0 drivers/video/fbdev/core/fbcon.c:122
- fbcon_new_modelist+0xbf/0x2d0 drivers/video/fbdev/core/fbcon.c:3048
- fb_new_modelist+0x328/0x440 drivers/video/fbdev/core/fbmem.c:673
- store_modes+0x1c9/0x3e0 drivers/video/fbdev/core/fbsysfs.c:113
- dev_attr_store+0x55/0x80 drivers/base/core.c:2439
+include/linux/fortify-string.h:719:4: error: call to '__read_overflow' declared with 'error' attribute: detected read beyond size of object (1st parameter)
+  719 |                         __read_overflow();
+      |                         ^
+1 error generated.
 
-static struct fb_info *fbcon_registered_fb[FB_MAX];
-...
-static signed char con2fb_map[MAX_NR_CONSOLES];
-...
-static struct fb_info *fbcon_info_from_console(int console)
-...
-        return fbcon_registered_fb[con2fb_map[console]];
+But this was tracked down to iwl_mld_send_proto_offload()'s
+ipv6_addr_cmp() call.
 
-If con2fb_map contains a -1 things go wrong here. Instead, return NULL,
-as callers of fbcon_info_from_console() are trying to compare against
-existing "info" pointers, so error handling should kick in correctly.
+An upstream Clang bug has been filed[2] to track this. For now fix the
+build by explicitly bounding the inner loop by "n_nsc", which is what
+"c" is already limited to.
 
-Reported-by: syzbot+a7d4444e7b6e743572f7@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/679d0a8f.050a0220.163cdc.000c.GAE@google.com/
+Reported-by: Nathan Chancellor <nathan@kernel.org>
+Closes: https://github.com/ClangBuiltLinux/linux/issues/2076
+Link: https://github.com/llvm/llvm-project/pull/73552 [1]
+Link: https://github.com/llvm/llvm-project/issues/136603 [2]
+Link: https://lore.kernel.org/r/20250421204153.work.935-kees@kernel.org
 Signed-off-by: Kees Cook <kees@kernel.org>
-Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-**YES** This commit should be backported to stable kernel trees. Here's
-my analysis: ## Security and Stability Issue This commit fixes a
-critical **array-index-out-of-bounds vulnerability** that can be
-triggered via sysfs. The issue occurs when `con2fb_map[console]`
-contains `-1`, causing `fbcon_info_from_console()` to access
-`fbcon_registered_fb[-1]`, which is an out-of-bounds array access. ##
-Bug Analysis The problem is in the `fbcon_info_from_console()` function
-at line 122: ```c // Before fix: return
-fbcon_registered_fb[con2fb_map[console]]; // After fix: fb =
-con2fb_map[console]; if (fb < 0 || fb >=
-ARRAY_SIZE(fbcon_registered_fb)) return NULL; return
-fbcon_registered_fb[fb]; ``` ## Trigger Path The vulnerability can be
-triggered through: 1. **sysfs interface**: Writing to
-`/sys/class/graphics/fbX/modes` 2. **Call chain**: `store_modes()` →
-`fb_new_modelist()` → `fbcon_new_modelist()` →
-`fbcon_info_from_console()` 3. **User-accessible**: This is exploitable
-from userspace through the sysfs interface ## Code Context from Analysis
-Based on the git blame, the vulnerable code path in
-`fbcon_new_modelist()` has existed since: - Original code from **2005**
-(Linus Torvalds) - The problematic `fbcon_info_from_console()` call was
-added in **2022** by commit `409d6c95f9c6` ("fbcon: Introduce wrapper
-for console->fb_info lookup") ## Risk Assessment 1. **High Impact**:
-UBSAN array bounds violation, potential for memory corruption 2. **User
-Triggerable**: Accessible via standard sysfs interface 3. **Long-
-standing**: The vulnerable pattern has existed since 2022 when the
-wrapper was introduced 4. **Active Exploitation**: Reported by syzbot,
-indicating active fuzzing found this issue ## Backport Suitability 1.
-**Small & Contained**: Only 6 lines changed in a single function 2.
-**Safe Fix**: Adds bounds checking without changing logic flow 3. **No
-Dependencies**: The fix is self-contained and doesn't require other
-commits 4. **Clear Bug**: Definitively fixes out-of-bounds access with
-proper NULL return 5. **Stable Pattern**: Callers already handle NULL
-returns from `fbcon_info_from_console()` ## Comparison to Historical
-Precedent Looking at the similar commits provided: - **Similar Commit
-#1** (Backport Status: YES): Fixed boundary checks in fbcon parameter
-parsing - this follows the same pattern of fixing bounds issues in fbcon
-- The other NO commits were architectural changes or refactoring, not
-security fixes This commit perfectly fits the stable tree criteria: it's
-an important bugfix, has minimal regression risk, is contained to a
-single subsystem, and fixes a user-triggerable vulnerability.
+Now let me analyze the similar commits to understand the backporting
+patterns: **YES** This commit should be backported to stable kernel
+trees. ## Extensive Analysis ### Code Change Analysis The commit
+modifies a single line in `drivers/net/wireless/intel/iwlwifi/mld/d3.c`,
+changing: ```c for (j = 0; j < c; j++) ``` to: ```c for (j = 0; j <
+n_nsc && j < c; j++) ``` This change adds an explicit upper bound
+(`n_nsc`) to prevent the loop iterator `j` from exceeding the size of
+the `nsc` array (which has 4 entries). ### Why This Should Be Backported
+**1. Build Failure Fix**: This commit fixes a concrete build failure
+when using Clang compiler with ARM architecture and
+`CONFIG_FORTIFY_SOURCE=y`. Build failures are critical issues that
+prevent kernel compilation entirely. **2. Compiler Support**: The fix
+enables Clang compilation support for the iwlwifi driver, which is
+important for kernel diversity and CI/build systems that use Clang. **3.
+Minimal Risk**: The change is extremely small and contained: - Only adds
+an additional bounds check (`j < n_nsc`) - No functional logic changes -
+The added check is logically correct and safe - Cannot introduce
+regressions as it only makes the loop more restrictive **4. Pattern
+Matches "YES" Commits**: This fix aligns closely with similar commits
+marked as "YES": - **Similar Commit #2** (wil6210 fortify warnings):
+Fixed FORTIFY warnings with struct_group, minimal risk - **Similar
+Commit #3** (mlxsw LLVM workaround): Explicitly worked around LLVM/Clang
+compiler issues - **Similar Commit #4** (ath9k fortify warnings): Fixed
+fortify warnings with struct_group - **Similar Commit #5** (plfxlc clang
+fortify): Fixed clang-specific fortify warning **5. Architecture-
+Specific but Affects Real Users**: While currently only exposed on ARM
+builds with Clang, this affects legitimate build configurations used in
+production environments. **6. No Side Effects**: The fix purely
+constrains loop bounds without changing algorithmic behavior. The
+original code was functionally correct but triggered false positive
+compiler analysis. ### Technical Justification **Bug Analysis**: Clang's
+loop unrolling optimization incorrectly analyzes that the variable `c`
+could reach 4, making the inner loop potentially access `nsc[4]` (out of
+bounds). The kernel's FORTIFY_SOURCE checking detects this theoretical
+overflow and fails the build. **Fix Correctness**: The added bound `j <
+n_nsc` is mathematically correct since: - `n_nsc` represents the actual
+size of the `nsc` array (4 entries) - `c` is already bounded by `n_nsc`
+in the outer loop condition - Adding `j < n_nsc` makes this constraint
+explicit to the compiler **No Functional Impact**: Since `c` never
+exceeds `n_nsc` in correct execution, the additional check `j < n_nsc`
+never actually triggers - it exists purely to satisfy the compiler's
+static analysis. ### Comparison to "NO" Reference Unlike **Similar
+Commit #1** (iwlwifi fall-through warnings) which was marked "NO"
+because it only addressed code style/warning improvements without fixing
+actual bugs, this commit fixes a real build failure that prevents
+compilation. ### Conclusion This is a textbook example of a good stable
+backport candidate: it fixes a concrete build issue with minimal risk,
+follows established patterns for compiler workarounds, and has zero
+functional impact on runtime behavior. The fix enables continued Clang
+compiler support for a critical wireless driver without introducing any
+regression risk.
 
- drivers/video/fbdev/core/fbcon.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/net/wireless/intel/iwlwifi/mld/d3.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/video/fbdev/core/fbcon.c b/drivers/video/fbdev/core/fbcon.c
-index ac3c99ed92d1a..2df48037688d1 100644
---- a/drivers/video/fbdev/core/fbcon.c
-+++ b/drivers/video/fbdev/core/fbcon.c
-@@ -117,9 +117,14 @@ static signed char con2fb_map_boot[MAX_NR_CONSOLES];
+diff --git a/drivers/net/wireless/intel/iwlwifi/mld/d3.c b/drivers/net/wireless/intel/iwlwifi/mld/d3.c
+index ee99298eebf59..7ce01ad3608e1 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mld/d3.c
++++ b/drivers/net/wireless/intel/iwlwifi/mld/d3.c
+@@ -1757,7 +1757,7 @@ iwl_mld_send_proto_offload(struct iwl_mld *mld,
  
- static struct fb_info *fbcon_info_from_console(int console)
- {
-+	signed char fb;
- 	WARN_CONSOLE_UNLOCKED();
- 
--	return fbcon_registered_fb[con2fb_map[console]];
-+	fb = con2fb_map[console];
-+	if (fb < 0 || fb >= ARRAY_SIZE(fbcon_registered_fb))
-+		return NULL;
-+
-+	return fbcon_registered_fb[fb];
- }
- 
- static int logo_lines;
+ 		addrconf_addr_solict_mult(&wowlan_data->target_ipv6_addrs[i],
+ 					  &solicited_addr);
+-		for (j = 0; j < c; j++)
++		for (j = 0; j < n_nsc && j < c; j++)
+ 			if (ipv6_addr_cmp(&nsc[j].dest_ipv6_addr,
+ 					  &solicited_addr) == 0)
+ 				break;
 -- 
 2.39.5
 
