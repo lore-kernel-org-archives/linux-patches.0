@@ -1,42 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E813A1FFC46;
-	Wed,  4 Jun 2025 01:02:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04D1618D656;
+	Wed,  4 Jun 2025 01:02:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748998943; cv=none; b=R+OZZzlSuBh6x2fLPlbQEJMgNcpV00WxurMZDvNf3Q4jQhoawI5qxEkDopVUxeWjKyf1GA83zpAAzJOPtNcJt77a1MDgS8+sFHzOIXKaFpdDLWcgp4Ltacd1bDmjre+4uUSm5in8IzXDCC13hB7eDHWrwwvUomH5wNjM2BGUdjY=
+	t=1748998946; cv=none; b=t2o/ZzzYMcez3FSNUMeFUjUVz2t+5zd4woZVUD0FBb69sem6KGEiXER4SeslXMmq4Qc7voyUDvqU8YgN+Esw5A8/+oH+NABXdwMWuuMfahIbpHEZ6xP3u6RSumADrxrmwGkmO0dbAyuBB2Dqj5AkNpo1BIF4Rvw/ucNm+IdTAqA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748998943; c=relaxed/simple;
-	bh=O6W0Y9gXzArPqkRF5TctF/7dhghYPCb58Ka6e2u32Xw=;
+	s=arc-20240116; t=1748998946; c=relaxed/simple;
+	bh=HznuKQpEMtwjCWm2MhcmLr/by2ZxE7s5ATkMe7dzqWk=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bWKMHLWRmaeIMZzNTGQMdooVejKuDYmwHjDN0oX6vK416bg+FgHJt3HB+pI26cnOaApZFAGeUZoep9d2CGLpdNVcQxQ/NsUf4F3XZ09mwWYx43IXMI04dcLKJW1rCz029J4WczJYRxQ3vY05x9XjN9hoiwrj6uQ/OEVGqKg/13c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ESGx8Zgt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C+em4DLxWceq9EymQxtsF2sRRFqnjHyhjcTJq/F7KNZn8HCFDFSZNnMMrfCjeBDxVGrk1fFq/+DwHNeyMlmgMGZlbNeAZBZDi3dUSEhj5n0/ANJHC1BYszXF0bLkM8jYIuiuX79LAVffEhAdX35UP2zm1vmEWLfNjyeG9n2LZ38=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YgQgWSP/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ESGx8Zgt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E974FC4CEF1;
-	Wed,  4 Jun 2025 01:02:21 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YgQgWSP/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4902FC4CEED;
+	Wed,  4 Jun 2025 01:02:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748998942;
-	bh=O6W0Y9gXzArPqkRF5TctF/7dhghYPCb58Ka6e2u32Xw=;
+	s=k20201202; t=1748998945;
+	bh=HznuKQpEMtwjCWm2MhcmLr/by2ZxE7s5ATkMe7dzqWk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ESGx8ZgtcTlzQz+WbBgvxIqylFA66sPAVk6AQI0p35ua4KMXVkWaTs6PR6KIkXrr+
-	 aV4mNk9Ya0uhxOasBNilmlRhUYwHnQh+m0A/wDJQgxmsBoAShGo7L9ue9yHimXZmtb
-	 TFjnIlYaR1DBQpAP4/YMlUJNALi5LR1/18IQYtC8xgbRjUfMKyN+Hz/qhmrodriFJN
-	 6WUJC90HbIbLzrRNzplY0YWbfPrNpuNh+ABQSmX9+UU05HukyytUZuZmGAVbcYO2hc
-	 RO1729/TyfssYx9N1++ZjaLEXC0RHL/URS7w5879Otq50zY8IUIJdLRf7O2gBby0O/
-	 h4CZlmdFOIGhg==
+	b=YgQgWSP/uKmfIo9ZpXJDDnCg5IvlreB5FrlO30hDTPUN7QfUE1+lDoCw0h7aI9el7
+	 AOt0LPlVL35i1eq4bkfThrmT5UQGTjlqrc6IhGfzEftU8lOcgH6cLfIlJWxGIW8W7v
+	 HjlcL0fhl/8NlDJJ9BwKA1nrypRyo5A8cBt/kSAkc3OT2pHk9sN6ZTbgsuuUxcs6SU
+	 hwLhLixO/2/9oHnu6Q/aSaHnpoLwu/GPMTiyCKXWAC6bG2xs/6XjHuVdDi5nkJH7/n
+	 BtCVvG33kp2ZEiEYCGlbrSmASL55aicq+32xgatAMNJD9LilLoODyrJI7vJeLHJI5F
+	 AVB5bzyeO0a1Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Tan En De <ende.tan@starfivetech.com>,
-	Jarkko Nikula <jarkko.nikula@linux.intel.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
+Cc: Benjamin Lin <benjamin-jw.lin@mediatek.com>,
+	Shayne Chen <shayne.chen@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-i2c@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.6 06/62] i2c: designware: Invoke runtime suspend on quick slave re-registration
-Date: Tue,  3 Jun 2025 21:01:17 -0400
-Message-Id: <20250604010213.3462-6-sashal@kernel.org>
+	matthias.bgg@gmail.com,
+	angelogioacchino.delregno@collabora.com,
+	lorenzo@kernel.org,
+	chui-hao.chiu@mediatek.com,
+	Bo.Jiao@mediatek.com,
+	StanleyYP.Wang@mediatek.com,
+	linux-kernel@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-mediatek@lists.infradead.org
+Subject: [PATCH AUTOSEL 6.6 07/62] wifi: mt76: mt7996: drop fragments with multicast or broadcast RA
+Date: Tue,  3 Jun 2025 21:01:18 -0400
+Message-Id: <20250604010213.3462-7-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250604010213.3462-1-sashal@kernel.org>
 References: <20250604010213.3462-1-sashal@kernel.org>
@@ -49,138 +57,92 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.6.92
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tan En De <ende.tan@starfivetech.com>
+From: Benjamin Lin <benjamin-jw.lin@mediatek.com>
 
-[ Upstream commit 2fe2b969d911a09abcd6a47401a3c66c38a310e6 ]
+[ Upstream commit 80fda1cd7b0a1edd0849dc71403a070d0922118d ]
 
-Replaced pm_runtime_put() with pm_runtime_put_sync_suspend() to ensure
-the runtime suspend is invoked immediately when unregistering a slave.
-This prevents a race condition where suspend was skipped when
-unregistering and registering slave in quick succession.
+IEEE 802.11 fragmentation can only be applied to unicast frames.
+Therefore, drop fragments with multicast or broadcast RA. This patch
+addresses vulnerabilities such as CVE-2020-26145.
 
-For example, consider the rapid sequence of
-`delete_device -> new_device -> delete_device -> new_device`.
-In this sequence, it is observed that the dw_i2c_plat_runtime_suspend()
-might not be invoked after `delete_device` operation.
-
-This is because after `delete_device` operation, when the
-pm_runtime_put() is about to trigger suspend, the following `new_device`
-operation might race and cancel the suspend.
-
-If that happens, during the `new_device` operation,
-dw_i2c_plat_runtime_resume() is skipped (since there was no suspend), which
-means `i_dev->init()`, i.e. i2c_dw_init_slave(), is skipped.
-Since i2c_dw_init_slave() is skipped, i2c_dw_configure_fifo_slave() is
-skipped too, which leaves `DW_IC_INTR_MASK` unconfigured. If we inspect
-the interrupt mask register using devmem, it will show as zero.
-
-Example shell script to reproduce the issue:
-```
-  #!/bin/sh
-
-  SLAVE_LADDR=0x1010
-  SLAVE_BUS=13
-  NEW_DEVICE=/sys/bus/i2c/devices/i2c-$SLAVE_BUS/new_device
-  DELETE_DEVICE=/sys/bus/i2c/devices/i2c-$SLAVE_BUS/delete_device
-
-  # Create initial device
-  echo slave-24c02 $SLAVE_LADDR > $NEW_DEVICE
-  sleep 2
-
-  # Rapid sequence of
-  # delete_device -> new_device -> delete_device -> new_device
-  echo $SLAVE_LADDR > $DELETE_DEVICE
-  echo slave-24c02 $SLAVE_LADDR > $NEW_DEVICE
-  echo $SLAVE_LADDR > $DELETE_DEVICE
-  echo slave-24c02 $SLAVE_LADDR > $NEW_DEVICE
-
-  # Using devmem to inspect IC_INTR_MASK will show as zero
-```
-
-Signed-off-by: Tan En De <ende.tan@starfivetech.com>
-Acked-by: Jarkko Nikula <jarkko.nikula@linux.intel.com>
-Link: https://lore.kernel.org/r/20250412023303.378600-1-ende.tan@starfivetech.com
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Signed-off-by: Benjamin Lin <benjamin-jw.lin@mediatek.com>
+Signed-off-by: Shayne Chen <shayne.chen@mediatek.com>
+Link: https://patch.msgid.link/20250515032952.1653494-4-shayne.chen@mediatek.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-**YES** This commit should be backported to stable kernel trees. Here's
-my extensive analysis: ## Critical Bug Fix Analysis ### 1. **Nature of
-the Bug** This commit fixes a **race condition** that causes I2C slave
-functionality to completely break. The problem occurs during rapid slave
-device registration/unregistration sequences where: - `pm_runtime_put()`
-is asynchronous and may not complete suspend before the next
-`pm_runtime_get_sync()` - If suspend doesn't happen, runtime resume is
-skipped - Runtime resume is where `i2c_dw_init_slave()` and
-`i2c_dw_configure_fifo_slave()` restore critical hardware configuration
-- When these initialization functions are skipped, the interrupt mask
-register (`DW_IC_INTR_MASK`) remains zero, disabling all interrupts ###
-2. **Impact on Users** This is a **high-impact functional bug** that: -
-Completely breaks I2C slave functionality in affected scenarios -
-Affects real-world use cases (rapid device creation/deletion as shown in
-the shell script) - Leaves hardware in a non-functional state requiring
-manual intervention - Results in silent failures where the slave appears
-registered but cannot handle transactions ### 3. **Code Change
-Analysis** The fix is **minimal and surgical**: ```c -
-pm_runtime_put(dev->dev); + pm_runtime_put_sync_suspend(dev->dev); ```
-This single-line change: - Replaces asynchronous `pm_runtime_put()` with
-synchronous `pm_runtime_put_sync_suspend()` - Ensures runtime suspend
-happens immediately before unregistration completes - Eliminates the
-race window where suspend could be skipped - Has **no functional side
-effects** beyond the intended timing change ### 4. **Risk Assessment**
-**Very low risk** for several reasons: - **Single line change** with
-clear, well-understood semantics - **Conservative fix** - makes behavior
-more predictable, not fundamentally different - **Same end result** -
-both functions eventually suspend the device, just with different timing
-- **No new code paths** - uses existing, well-tested runtime PM
-infrastructure - **Maintains all existing error handling and power
-management policies** ### 5. **Stable Tree Criteria Compliance** ✅
-**Important bugfix** - Fixes complete loss of I2C slave functionality ✅
-**Minimal risk** - Single line change with well-understood behavior ✅
-**No new features** - Pure bug fix with no feature additions ✅ **No
-architectural changes** - Uses existing runtime PM APIs ✅ **Confined to
-subsystem** - Only affects i2c-designware slave mode ✅ **Clear
-reproduction case** - Includes shell script demonstrating the problem
-### 6. **Comparison with Similar Commits** Looking at the provided
-examples: - **Similar Commit #3 (Status: YES)**: Also fixed a race
-condition in slave mode with `synchronize_irq()` - this shows precedent
-for backporting race condition fixes in this driver - **Similar Commits
-#1,2,4,5 (Status: NO)**: Were cleanup, optimization, or architectural
-changes rather than critical bug fixes ### 7. **Technical Validation**
-The commit demonstrates understanding of the underlying issue: - **Root
-cause identified**: Async suspend being canceled by subsequent
-operations - **Mechanism explained**: Missing initialization during
-runtime resume - **Hardware impact documented**: Interrupt mask register
-left unconfigured - **Reproduction provided**: Clear test case showing
-the failure ### 8. **Maintainer Confidence** The commit has strong
-technical validation: - **Acked-by: Jarkko Nikula** - A key
-i2c-designware maintainer - **Detailed commit message** with technical
-explanation and reproduction steps - **Clean implementation** using
-standard kernel APIs ## Conclusion This commit fixes a critical race
-condition that completely breaks I2C slave functionality with minimal
-risk and clear precedent for backporting similar fixes. It meets all
-stable tree criteria for an important, low-risk bugfix that should be
-available to users running stable kernels.
+## Analysis Complete **YES** This commit should be backported to stable
+kernel trees. Here's my extensive analysis: ### Security Fix for Known
+CVE The commit directly addresses **CVE-2020-26145**, a documented
+security vulnerability related to improper handling of fragmented frames
+with multicast/broadcast addresses. This is explicitly mentioned in the
+commit message and code comments. ### Code Analysis The change adds a
+critical security check in
+`drivers/net/wireless/mediatek/mt76/mt7996/mac.c` in the
+`mt7996_mac_fill_rx()` function: ```c /bin /bin.usr-is-merged /boot /dev
+/etc /home /init /lib /lib.usr-is-merged /lib64 /lost+found /media /mnt
+/opt /proc /root /run /sbin /sbin.usr-is-merged /snap /srv /sys /tmp
+/usr /var IEEE 802.11 fragmentation can only be applied to unicast
+frames. linux Hence, drop fragments with multicast/broadcast RA. linux
+This check fixes vulnerabilities, like CVE-2020-26145. linux/ if
+((ieee80211_has_morefrags(fc) || seq_ctrl & IEEE80211_SCTL_FRAG) &&
+FIELD_GET(MT_RXD3_NORMAL_ADDR_TYPE, rxd3) != MT_RXD3_NORMAL_U2M) return
+-EINVAL; ``` The logic checks: 1. **Fragment detection**:
+`ieee80211_has_morefrags(fc)` detects if there are more fragments, and
+`seq_ctrl & IEEE80211_SCTL_FRAG` checks the fragment number field 2.
+**Address type filtering**: `FIELD_GET(MT_RXD3_NORMAL_ADDR_TYPE, rxd3)
+!= MT_RXD3_NORMAL_U2M` ensures only unicast-to-multicast (U2M) frames
+are allowed when fragmented ### Comparison with Similar Commits Looking
+at the historical examples: **Similar Backported Commits (Status:
+YES):** - ath10k commits dropping multicast fragments (both PCIe and
+SDIO versions) for the same CVE-2020-26145 - mt7915 fragmentation
+threshold dummy implementation **Pattern Match:** This commit follows
+the exact same pattern as the successfully backported ath10k commits
+that address CVE-2020-26145 by dropping fragmented frames with
+multicast/broadcast destination addresses. ### Risk Assessment **Low
+Risk:** - **Small, contained change**: Only 4 lines of code added -
+**Early validation**: Check happens early in the RX path before frame
+processing - **Conservative approach**: Drops potentially malicious
+frames rather than processing them - **No architectural changes**:
+Doesn't modify existing data structures or interfaces - **Clear error
+path**: Returns `-EINVAL` which is a standard error handling pattern in
+this codebase **High Security Benefit:** - Addresses a known CVE
+affecting wireless security - Prevents potential exploitation through
+malformed fragmented multicast frames - Aligns with IEEE 802.11 standard
+(fragmentation only for unicast) ### Subsystem Stability The mt7996
+driver is part of the MediaTek mt76 wireless driver family, and similar
+security fixes have been successfully backported to other drivers in
+this family without issues. ### Conclusion This is a textbook example of
+a commit that should be backported: it's a small, low-risk security fix
+for a documented CVE, follows established patterns from other successful
+backports, and provides important protection against a wireless security
+vulnerability.
 
- drivers/i2c/busses/i2c-designware-slave.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/mt7996/mac.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/i2c/busses/i2c-designware-slave.c b/drivers/i2c/busses/i2c-designware-slave.c
-index 78e2c47e3d7da..1feb978d51cae 100644
---- a/drivers/i2c/busses/i2c-designware-slave.c
-+++ b/drivers/i2c/busses/i2c-designware-slave.c
-@@ -91,7 +91,7 @@ static int i2c_dw_unreg_slave(struct i2c_client *slave)
- 	dev->disable(dev);
- 	synchronize_irq(dev->irq);
- 	dev->slave = NULL;
--	pm_runtime_put(dev->dev);
-+	pm_runtime_put_sync_suspend(dev->dev);
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
+index 73d46ec1181ae..c55b3e621bc0e 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
+@@ -650,6 +650,14 @@ mt7996_mac_fill_rx(struct mt7996_dev *dev, struct sk_buff *skb)
+ 		status->last_amsdu = amsdu_info == MT_RXD4_LAST_AMSDU_FRAME;
+ 	}
  
- 	return 0;
- }
++	/* IEEE 802.11 fragmentation can only be applied to unicast frames.
++	 * Hence, drop fragments with multicast/broadcast RA.
++	 * This check fixes vulnerabilities, like CVE-2020-26145.
++	 */
++	if ((ieee80211_has_morefrags(fc) || seq_ctrl & IEEE80211_SCTL_FRAG) &&
++	    FIELD_GET(MT_RXD3_NORMAL_ADDR_TYPE, rxd3) != MT_RXD3_NORMAL_U2M)
++		return -EINVAL;
++
+ 	hdr_gap = (u8 *)rxd - skb->data + 2 * remove_pad;
+ 	if (hdr_trans && ieee80211_has_morefrags(fc)) {
+ 		if (mt7996_reverse_frag0_hdr_trans(skb, hdr_gap))
 -- 
 2.39.5
 
