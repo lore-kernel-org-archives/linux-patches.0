@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7556812B73;
-	Wed,  4 Jun 2025 01:07:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8E9E27AC59;
+	Wed,  4 Jun 2025 01:07:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748999231; cv=none; b=YnE7/DJJDT3rdKoLZeyX0tY7RFVE8El0Pb8Bz4t7XBZOYT5M/POHfroHjToOIoN7m/CT73n8lNSLJnbdwu9icUIQaNhkIs0LMGZ5rNUnu8G0n0gOEqs+CmHuWpayIwJqf0r6agPcPvBkbNLOILTLbRI/v9RYKEbkOSBP2F0WCEM=
+	t=1748999232; cv=none; b=mvpADgWHwor6fhYPBxMB6LeXXeeA+fliu+UZDctqTH6x1BENtVc7BODhTvEhGWUkwkv6kirhOjMDMs+aprg6ze/UAZfUjtHRX5yYLutoLajb3WAdcbvKM1LBkM9vrATtjYnIeNEUrHz9NLMlg2NkZ/iitZtISbBysoZdmEcIJn0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748999231; c=relaxed/simple;
-	bh=uZiVtJtJElkZQ9XP1c8FaO68zfLJjauPxcW7nH4veqM=;
+	s=arc-20240116; t=1748999232; c=relaxed/simple;
+	bh=NKs3htfCsGbhXiFjr6CCOQBIz2shlWn8YKn7p6JWq1o=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rdMk8WVWAsOcfsvcjTdAhhophqZJa+nTZIjYcopCHSvRz3li/Cm16KD2HD8Lx7vdWBs3PvtGhc3tV4RjjtcJvM3GotQhB9Q7v0sXwHkPqr2Lu0O4k4T77p78JqMPbxchWiBKYtkzzbSc9jOeD7wK4yhBTSin+iQRSZELh3+CYa0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Uu7FNiMw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=CiElFbT9t2B6cMhUmubvPXhGrAmKhvRzrJB0KrxnD9dN9Sc5FvC8dg5NKalhrt6QqJMiqAa+KvY0905j9dmftU/vYuu+Lt28Jp5lBy2rXglybwbekNh0C7vhg6KeH50kHgxa/F07WeX8Qd8pH083QHTxa465u2mW13VIJpZ6aK4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IH2oe8bq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Uu7FNiMw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 491C1C4CEEF;
-	Wed,  4 Jun 2025 01:07:10 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IH2oe8bq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1844C4CEED;
+	Wed,  4 Jun 2025 01:07:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748999231;
-	bh=uZiVtJtJElkZQ9XP1c8FaO68zfLJjauPxcW7nH4veqM=;
+	s=k20201202; t=1748999232;
+	bh=NKs3htfCsGbhXiFjr6CCOQBIz2shlWn8YKn7p6JWq1o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Uu7FNiMw85Q/dzfLFJK7ZkN8rKoy9ctzr23OaJHJAqmCrf9tjOJwndhhdzfPeocD7
-	 do46Or29ej19aV6CswKn4NCVaqj6NftElN/yGUup6S8Sc2hDjYdOtl+SHWGpyQq1mH
-	 3QgBE/u1Tyc8eqnBt8MPuMc5+BSaCwlSKW49ozDxkeKmp5ImaMB7kL8VktKX4smCYs
-	 8sAJZlBeOCWVad5AznqYYuQAqjdyW067yO+zFGULhe24P7jIxjTEpUhg26mYvS74Cn
-	 rtrTxprX+DXLqrD9SmxnJ1PwDUonQOnPrvWNiglWvjFCuxKRm5oiulnZN7Fli/jlA7
-	 N+Fw6sPQ9z8Eg==
+	b=IH2oe8bqZB+Uu9c9lXEfGcb754X2f4Sfv77JnIjbO+8JUie3vlr3wge7p7f8Mj+d+
+	 FT7R0yaQZxnJdXKxRO1QFaM43suR7RL7IxCn8gl9JeLQjH3OzYqq5MtePAlm0CYAiv
+	 cOjASTNAJcshUo6CP5TD1GC7z0GL4lOFBZqlWyqVD4e2jyWjbOeFKc8/Ki5Ilhqf2o
+	 8Y712Slra7pvbLTuOgmR7cWZue2bj/dTm8nFv9dltz7h4d50OlgQtO0x9ZrTZNoJyP
+	 afr+h/X6CSKHYEPrh+GH+QX1E+I/x9ROb+1HbpHHcKyC42A6QrFrA5SYbMDBrcUqRF
+	 XwQmLt9KcMWlQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Alok Tiwari <alok.a.tiwari@oracle.com>,
+Cc: Petr Malat <oss@malat.biz>,
+	Xin Long <lucien.xin@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	ajit.khaparde@broadcom.com,
-	sriharsha.basavapatna@broadcom.com,
-	somnath.kotur@broadcom.com,
-	netdev@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.4 03/20] emulex/benet: correct command version selection in be_cmd_get_stats()
-Date: Tue,  3 Jun 2025 21:06:49 -0400
-Message-Id: <20250604010706.7395-3-sashal@kernel.org>
+	marcelo.leitner@gmail.com,
+	linux-sctp@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.4 04/20] sctp: Do not wake readers in __sctp_write_space()
+Date: Tue,  3 Jun 2025 21:06:50 -0400
+Message-Id: <20250604010706.7395-4-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250604010706.7395-1-sashal@kernel.org>
 References: <20250604010706.7395-1-sashal@kernel.org>
@@ -54,81 +53,85 @@ X-stable-base: Linux 5.4.293
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alok Tiwari <alok.a.tiwari@oracle.com>
+From: Petr Malat <oss@malat.biz>
 
-[ Upstream commit edb888d29748cee674006a52e544925dacc7728e ]
+[ Upstream commit af295892a7abbf05a3c2ba7abc4d81bb448623d6 ]
 
-Logic here always sets hdr->version to 2 if it is not a BE3 or Lancer chip,
-even if it is BE2. Use 'else if' to prevent multiple assignments, setting
-version 0 for BE2, version 1 for BE3 and Lancer, and version 2 for others.
-Fixes potential incorrect version setting when BE2_chip and
-BE3_chip/lancer_chip checks could both be true.
+Function __sctp_write_space() doesn't set poll key, which leads to
+ep_poll_callback() waking up all waiters, not only these waiting
+for the socket being writable. Set the key properly using
+wake_up_interruptible_poll(), which is preferred over the sync
+variant, as writers are not woken up before at least half of the
+queue is available. Also, TCP does the same.
 
-Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
-Link: https://patch.msgid.link/20250519141731.691136-1-alok.a.tiwari@oracle.com
+Signed-off-by: Petr Malat <oss@malat.biz>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20250516081727.1361451-1-oss@malat.biz
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Based on my analysis, let me provide my determination: **YES** This
-commit should be backported to stable kernel trees. ## Detailed
-Analysis: ### 1. **Nature of the Bug:** The commit fixes a logical error
-in command version selection for the `be_cmd_get_stats()` function in
-the Emulex be2net driver. The original code had this problematic logic:
-```c if (BE2_chip(adapter)) hdr->version = 0; if (BE3_chip(adapter) ||
-lancer_chip(adapter)) // <- Missing "else" hdr->version = 1; else
-hdr->version = 2; ``` The bug is that the second `if` should be `else
-if`. Without the `else if`, if a chip satisfies both `BE2_chip(adapter)`
-AND `(BE3_chip(adapter) || lancer_chip(adapter))` conditions, the
-version would be incorrectly set multiple times, with the final value
-being either 1 or 2 depending on subsequent conditions. ### 2. **Impact
-Assessment:** - **User-facing impact:** This bug could cause incorrect
-command versions to be sent to the hardware, potentially leading to
-statistics retrieval failures or unexpected behavior - **Scope:**
-Affects all users of Emulex be2net network adapters where the chip
-detection logic could overlap - **Severity:** While not a critical
-security issue, it affects driver functionality and could lead to
-network statistics reporting failures ### 3. **Code Change Analysis:**
-The fix is minimal and surgical: - **Single line change:** Only changes
-`if` to `else if` on line 1612 - **No functional additions:** Does not
-introduce new features or change APIs - **Low regression risk:** The
-change makes the logic more explicit and prevents multiple assignments -
-**Clear intent:** The fix aligns with the comment stating "version 1 of
-the cmd is not supported only by BE2" ### 4. **Backport Suitability
-Criteria:** ✅ **Fixes important bug:** Corrects incorrect hardware
-command version selection ✅ **Small and contained:** Single line change
-with no side effects ✅ **Low regression risk:** Makes existing logic
-more explicit and correct ✅ **No architectural changes:** Pure bug fix
-without design modifications ✅ **Subsystem confined:** Only affects
-be2net driver statistics functionality ### 5. **Comparison with
-Historical Commits:** The provided historical commits were all marked
-"NO" for backporting because they were: - Version string updates
-(cosmetic changes) - Code simplifications (non-critical improvements) -
-Driver version removals (cleanup) In contrast, this commit fixes actual
-functional logic that could cause incorrect behavior. ### 6. **Stable
-Tree Compliance:** This commit perfectly fits the stable tree criteria:
-- Fixes a clear bug in existing code - Has minimal risk of introducing
-regressions - Affects a specific driver subsystem - Does not change
-user-visible APIs or behavior (except fixing incorrect behavior) The
-commit message clearly explains the problem and solution, and the change
-is straightforward to verify and test.
+Based on my analysis of the commit and comparison with similar
+historical commits, here is my assessment: **YES** This commit should be
+backported to stable kernel trees. ## Detailed Analysis: ### 1. **Core
+Issue Being Fixed** The commit addresses a specific bug in SCTP's
+`__sctp_write_space()` function where `wake_up_interruptible()` is
+called without setting a poll key. This causes `ep_poll_callback()` to
+wake up **all** waiters on the socket, not just those waiting for
+writability (EPOLLOUT events). This is inefficient and can cause
+spurious wake-ups for readers waiting on the same socket. ### 2. **Code
+Changes Analysis** The fix is minimal and surgical: ```c // Before:
+wake_up_interruptible(&wq->wait); // After:
+wake_up_interruptible_poll(&wq->wait, EPOLLOUT | EPOLLWRNORM |
+EPOLLWRBAND); ``` ### 3. **Consistency with Existing Patterns** Looking
+at `/home/sasha/linux/net/core/stream.c:41-42`, I can see that the fix
+aligns with established patterns in the kernel networking stack: ```c
+wake_up_interruptible_poll(&wq->wait, EPOLLOUT | EPOLLWRNORM |
+EPOLLWRBAND); ``` This is exactly what TCP and other protocols use in
+their write space callbacks, making SCTP consistent with the rest of the
+networking subsystem. ### 4. **Comparison with Historical Similar
+Commits** **Positive Indicators (matching YES backports):** - **Similar
+Commit #1**: Also SCTP-related, fixes socket behavior issue affecting
+users - **Similar Commit #4**: TCP polling fix with similar wake-up
+improvements - **Similar Commit #5**: SCTP wake-up related fix that was
+backported **Risk Assessment:** - The change is contained to a single
+function (`__sctp_write_space`) - No architectural changes - Follows
+existing kernel patterns exactly - Low regression risk - improves
+efficiency without changing core behavior ### 5. **Impact and Benefits**
+- **Performance improvement**: Eliminates spurious wake-ups for readers
+when only write space becomes available - **Correctness**: Ensures only
+appropriate waiters are woken (those waiting for EPOLLOUT) -
+**Consistency**: Aligns SCTP behavior with TCP and other protocols ###
+6. **Stable Tree Criteria Compliance** ✅ **Important bugfix**: Fixes
+incorrect polling behavior affecting performance ✅ **Minimal risk**:
+Single-line change following established patterns ✅ **Small and
+contained**: Only affects one function in SCTP ✅ **No new features**:
+Pure bugfix ✅ **No architectural changes**: Maintains existing
+interfaces ### 7. **Clear Author Intent** The commit message explicitly
+states this change makes SCTP behave "as TCP does," indicating this is a
+correctness fix to align with established networking patterns rather
+than a new feature. This commit exhibits all the characteristics of a
+good stable backport candidate: it's a small, contained bugfix that
+improves correctness and performance without introducing new
+functionality or significant risk.
 
- drivers/net/ethernet/emulex/benet/be_cmds.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sctp/socket.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/emulex/benet/be_cmds.c b/drivers/net/ethernet/emulex/benet/be_cmds.c
-index 9812a9a5d033b..d9bceb26f4e5b 100644
---- a/drivers/net/ethernet/emulex/benet/be_cmds.c
-+++ b/drivers/net/ethernet/emulex/benet/be_cmds.c
-@@ -1608,7 +1608,7 @@ int be_cmd_get_stats(struct be_adapter *adapter, struct be_dma_mem *nonemb_cmd)
- 	/* version 1 of the cmd is not supported only by BE2 */
- 	if (BE2_chip(adapter))
- 		hdr->version = 0;
--	if (BE3_chip(adapter) || lancer_chip(adapter))
-+	else if (BE3_chip(adapter) || lancer_chip(adapter))
- 		hdr->version = 1;
- 	else
- 		hdr->version = 2;
+diff --git a/net/sctp/socket.c b/net/sctp/socket.c
+index d7257eec66b1c..1ac05147dc304 100644
+--- a/net/sctp/socket.c
++++ b/net/sctp/socket.c
+@@ -8946,7 +8946,8 @@ static void __sctp_write_space(struct sctp_association *asoc)
+ 		wq = rcu_dereference(sk->sk_wq);
+ 		if (wq) {
+ 			if (waitqueue_active(&wq->wait))
+-				wake_up_interruptible(&wq->wait);
++				wake_up_interruptible_poll(&wq->wait, EPOLLOUT |
++						EPOLLWRNORM | EPOLLWRBAND);
+ 
+ 			/* Note that we try to include the Async I/O support
+ 			 * here by modeling from the current TCP/UDP code.
 -- 
 2.39.5
 
