@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D18C2522B4;
-	Wed,  4 Jun 2025 01:06:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F35D717F7;
+	Wed,  4 Jun 2025 01:06:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748999212; cv=none; b=lq6uZgzLlWWy6MzYr8ce2UhBnLeO2NoDgE2IpSS/xbFwkLJPqyippPGLKboS3dsMGb4AmPy8MsNOxtqHyanxGFxnNztOaVV22/KOQ+9Sam1/pwNJUFccmhCql2h1F9vjvzNT/JZ7H2ai0N8FCEX5VaW7i0Idln8kV0mJX+fLmdE=
+	t=1748999215; cv=none; b=ezz4ueqyaG+5L4SDhTRbMWXdtvbcL/zizZC6JpVMQ7MrD1ZixL8T3UikGQAL9euOs1wMutR7w19lGB3712Cuo55WTjS8QXV+o5NZSjP/+GWNukrQUe1IaWFgo+D/lGJxKxln6uZGyQ59uYOZWrBG4VnHE7oiiXsKJ3joOIMP3sQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748999212; c=relaxed/simple;
-	bh=nfDs3Wvcp54Yy0IsjgsKh6DUqSsMZoB3227CbOFozyc=;
+	s=arc-20240116; t=1748999215; c=relaxed/simple;
+	bh=rgYGBowqX+L8NT38bxQ/G+iDf882HaNNMrx5C8EogUM=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ILTicCVh7g3xPu+6dhRxXxWErWabB7qAaNVxHFGO3Opf3kckMhHo+x4eu+UKWfyTYxKHe+zMbDKNRXegON6+pupjWquOPLMldocexLMzci/rwk6OMz9kcESDDupKsIaO50XpItBWL8z+1HCFDB8xErOgPT3B4jEa+RnH+xkx+Xo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Lf3cfzUE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=trrt1rrBehcs09B3oPAPZgqnzA61nacArhnrjmA8ZS7Mdl7LPBbLNn5kFZL7Gx4TwLfKdbreItzqOU4b8Srv3qkoryM3IuWNG1clCJHlf1sQ82xBU/MeNRb2eXlOqTfAkjbyjrFmOoSJ1NP9jqhUtYNiOCKojuhTLAb5PRzCVcc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UzMlGFcL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Lf3cfzUE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EF3BC4CEED;
-	Wed,  4 Jun 2025 01:06:51 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UzMlGFcL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8294BC4CEF1;
+	Wed,  4 Jun 2025 01:06:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748999212;
-	bh=nfDs3Wvcp54Yy0IsjgsKh6DUqSsMZoB3227CbOFozyc=;
+	s=k20201202; t=1748999213;
+	bh=rgYGBowqX+L8NT38bxQ/G+iDf882HaNNMrx5C8EogUM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Lf3cfzUE4rk3bRc9qfBT/9Vqnk1XhzVHQ/L9rBA9xQIwhQ7FKwFFCMnHDu4hxc5n4
-	 F/eYiwDDx9/0tVGhNXkJ+FuTW8HUihEV918LCcbGuK4BKaWCmdujuR5GfQTFKZe4ww
-	 pdjCnA+QnMUQk5CbWmQ6XJaxzzw13jjcblnihkSU2SEYsD/D8Y5+k671ObZy7uK8RD
-	 kG4e0n+sz++2wtTRKEkmgE16+eIgFgpORxv35P1YVTnlfda7x+uOeox8BL8gBzKK0r
-	 lCEs82kn6brfzvktdolTSCGgetrZieMHwGxbcAmTb315L0sIMcfFkK4U/LiNzw6DZM
-	 GqzKGEuSPHtpw==
+	b=UzMlGFcLwucmyeqw5FgQ7KeuZBFqM2WHH+UaHeAxXitj7JYKHmLR4viX+t8JX2PZw
+	 F5soJEUS+/uXrKen4l1nd4wOyfeHLMZPtGvlzXEsoT3XGtYZaVtCh+DzpzcaI3FTxh
+	 IDevYLoxEh/HpjyINa2kBbXnJVB2FRNFw3MzyaWE3O5G9pzPQLottv36F/+a/MKmt1
+	 8ZnsnoDOULTTgBLKfx05eR1mP/y9RfIMhGlxQeb0NSKNnBzPenyjNGXEqSzFBSSbBu
+	 3flzo4obXrw7QkxUHS2SQaf7fLMQebHON3bYFH9IVhPg7CvsDMFMggvXCaOqkgH4PS
+	 JFdXd68ptN5JQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jason Xing <kernelxing@tencent.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: Benjamin Berg <benjamin@sipsolutions.net>,
+	Rouven Czerwinski <rouven@czerwinskis.de>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	netdev@vger.kernel.org,
-	linux-rdma@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.10 18/27] net: mlx4: add SOF_TIMESTAMPING_TX_SOFTWARE flag when getting ts info
-Date: Tue,  3 Jun 2025 21:06:11 -0400
-Message-Id: <20250604010620.6819-18-sashal@kernel.org>
+	johannes@sipsolutions.net,
+	linux-wireless@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.10 19/27] wifi: mac80211: do not offer a mesh path if forwarding is disabled
+Date: Tue,  3 Jun 2025 21:06:12 -0400
+Message-Id: <20250604010620.6819-19-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250604010620.6819-1-sashal@kernel.org>
 References: <20250604010620.6819-1-sashal@kernel.org>
@@ -53,78 +53,117 @@ X-stable-base: Linux 5.10.237
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jason Xing <kernelxing@tencent.com>
+From: Benjamin Berg <benjamin@sipsolutions.net>
 
-[ Upstream commit b86bcfee30576b752302c55693fff97242b35dfd ]
+[ Upstream commit cf1b684a06170d253b47d6a5287821de976435bd ]
 
-As mlx4 has implemented skb_tx_timestamp() in mlx4_en_xmit(), the
-SOFTWARE flag is surely needed when users are trying to get timestamp
-information.
+When processing a PREQ the code would always check whether we have a
+mesh path locally and reply accordingly. However, when forwarding is
+disabled then we should not reply with this information as we will not
+forward data packets down that path.
 
-Signed-off-by: Jason Xing <kernelxing@tencent.com>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20250510093442.79711-1-kerneljasonxing@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Move the check for dot11MeshForwarding up in the function and skip the
+mesh path lookup in that case. In the else block, set forward to false
+so that the rest of the function becomes a no-op and the
+dot11MeshForwarding check does not need to be duplicated.
+
+This explains an effect observed in the Freifunk community where mesh
+forwarding is disabled. In that case a mesh with three STAs and only bad
+links in between them, individual STAs would occionally have indirect
+mpath entries. This should not have happened.
+
+Signed-off-by: Benjamin Berg <benjamin@sipsolutions.net>
+Reviewed-by: Rouven Czerwinski <rouven@czerwinskis.de>
+Link: https://patch.msgid.link/20250430191042.3287004-1-benjamin@sipsolutions.net
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Perfect! Now I can see that `skb_tx_timestamp(skb)` is called in the
-`mlx4_en_xmit()` function, which is the main transmit function. This
-confirms that the mlx4 driver does implement software timestamping. Now
-let me compare this to the similar commits to see the pattern: **YES**
-This commit should be backported to stable kernel trees. **Extensive
-Explanation:** This commit addresses a clear inconsistency bug where the
-mlx4 driver implements software timestamping functionality but fails to
-advertise this capability to userspace through the ethtool timestamping
-info interface. **Analysis of the fix:** 1. **The Problem**: The mlx4
-driver calls `skb_tx_timestamp(skb)` in `mlx4_en_xmit()` at line 1091 of
-`/drivers/net/ethernet/mellanox/mlx4/en_tx.c`, which means it properly
-implements software TX timestamping. However, in
-`mlx4_en_get_ts_info()`, it only advertises hardware timestamping
-capabilities (`SOF_TIMESTAMPING_TX_HARDWARE`,
-`SOF_TIMESTAMPING_RX_HARDWARE`, `SOF_TIMESTAMPING_RAW_HARDWARE`) but
-omits the `SOF_TIMESTAMPING_TX_SOFTWARE` flag. 2. **The Fix**: The
-change adds a single line `SOF_TIMESTAMPING_TX_SOFTWARE |` to the
-`info->so_timestamping` field when hardware timestamping is supported,
-correctly advertising both hardware and software timestamping
-capabilities. 3. **Impact**: This is a user-facing API correctness
-issue. Applications checking timestamping capabilities via ethtool would
-incorrectly believe software timestamping is not supported, even though
-the driver implements it. **Comparison with similar commits:** -
-**Similar Commit #1 (YES)**: Also fixed a timestamping bug in mlx4,
-showing these are important fixes - **Similar Commit #3 (YES)**: Fixed
-incorrect timestamping capability reporting in mlx5 by removing false
-software timestamping indication - **Similar Commit #5 (YES)**: Fixed
-timestamping capabilities reporting using wrong BIT() macro in mlx5 The
-pattern shows that timestamping capability reporting bugs are
-consistently considered backport-worthy because they affect user-visible
-API behavior. **Backport Criteria Assessment:** ✅ **Fixes a user-
-affecting bug**: Applications cannot detect software timestamping
-support ✅ **Small, contained change**: Single line addition with no
-functional logic changes ✅ **No architectural changes**: Only fixes
-capability reporting ✅ **Low regression risk**: Only adds a missing
-flag, doesn't change driver behavior ✅ **Clear side effects**: None
-beyond correctly advertising existing functionality ✅ **Follows stable
-rules**: Important API correctness fix with minimal risk The fix is
-identical in nature to Similar Commit #3 (marked YES) but in reverse -
-where mlx5 removed false software timestamping advertisement, this adds
-the missing software timestamping advertisement for mlx4 where it's
-actually implemented.
+Based on my analysis of the commit and the code, here is my assessment:
+**YES** This commit should be backported to stable kernel trees. Here's
+my extensive analysis: ## 1. Bug Fix Analysis The commit fixes a clear
+logical bug in the mesh networking HWMP (Hybrid Wireless Mesh Protocol)
+path selection algorithm. When `dot11MeshForwarding` is disabled, the
+code was incorrectly: - Still performing mesh path lookups for PREQ
+(Path Request) messages - Potentially replying with mesh path
+information even though forwarding was disabled - Creating indirect mesh
+path entries when it shouldn't ## 2. Code Analysis Looking at the
+changes in `/net/mac80211/mesh_hwmp.c:619-676`: **Before the fix:** -
+Line 639: `} else {` - The final else branch handles the case where the
+target is neither local nor broadcast - Lines 640-656: This section
+performs mesh path lookup and potentially replies with path information
+**regardless** of forwarding status - Line 657: `} else {` - Only sets
+`forward = false` but after potentially harmful operations **After the
+fix:** - Line 639: `} else if (ifmsh->mshcfg.dot11MeshForwarding) {` -
+Now conditions the mesh path lookup on forwarding being enabled - Lines
+657-659: `} else { forward = false; }` - Clean fallback when forwarding
+is disabled ## 3. Impact Assessment This is a **contained, low-risk
+fix** that: - **Fixes incorrect behavior**: Prevents mesh nodes from
+providing routing information when they won't actually forward packets -
+**Prevents resource waste**: Avoids unnecessary mesh path lookups when
+forwarding is disabled - **Improves network correctness**: Fixes the
+inconsistency where nodes advertise paths they won't use - **Addresses
+real-world issue**: The commit message mentions this was observed in the
+Freifunk community ## 4. Comparison with Similar Commits This fix aligns
+perfectly with the **YES** backport examples: **Similar to Commit #1
+(mesh: Do not send PREQ if HWMP is disabled):** - Both prevent
+sending/processing mesh protocol messages when a feature is disabled -
+Both are small, surgical fixes to logical conditions - Both prevent
+waste of network resources **Similar to Commit #3 (fix mesh path
+discovery):** - Both fix incorrect mesh path handling logic - Both have
+small, focused changes - Both include explicit mention of fixing
+behavior observed in real deployments **Similar to Commit #4 (fix mesh
+forwarding):** - Both are mesh forwarding-related fixes - Both are
+minimal changes with clear intent - Both fix protocol correctness issues
+## 5. Stable Backport Criteria Check ✅ **Fixes important bug**: Yes -
+incorrect mesh protocol behavior ✅ **Small and contained**: Yes - only 4
+lines changed, well-isolated ✅ **No new features**: Correct - only fixes
+existing logic ✅ **No architectural changes**: Correct - just reorders
+existing conditions ✅ **Low regression risk**: Very low - change is
+localized and logical ✅ **Clear side effects**: None beyond the intended
+fix ## 6. Risk Assessment The change is **extremely low risk** because:
+- It only affects the specific case where `dot11MeshForwarding` is
+disabled - It makes the code behavior more consistent (when forwarding
+is off, don't provide path info) - The change is in line with the
+intended semantics of the forwarding flag - It's a pure logic fix
+without touching data structures or complex algorithms This commit
+represents exactly the type of fix that stable trees are meant to
+include: a small, well-understood bug fix that improves correctness
+without introducing regression risk.
 
- drivers/net/ethernet/mellanox/mlx4/en_ethtool.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/mac80211/mesh_hwmp.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx4/en_ethtool.c b/drivers/net/ethernet/mellanox/mlx4/en_ethtool.c
-index 962851000ace4..7cb4dde12b926 100644
---- a/drivers/net/ethernet/mellanox/mlx4/en_ethtool.c
-+++ b/drivers/net/ethernet/mellanox/mlx4/en_ethtool.c
-@@ -1905,6 +1905,7 @@ static int mlx4_en_get_ts_info(struct net_device *dev,
- 	if (mdev->dev->caps.flags2 & MLX4_DEV_CAP_FLAG2_TS) {
- 		info->so_timestamping |=
- 			SOF_TIMESTAMPING_TX_HARDWARE |
-+			SOF_TIMESTAMPING_TX_SOFTWARE |
- 			SOF_TIMESTAMPING_RX_HARDWARE |
- 			SOF_TIMESTAMPING_RAW_HARDWARE;
+diff --git a/net/mac80211/mesh_hwmp.c b/net/mac80211/mesh_hwmp.c
+index 4848e3c2f0af9..a8e80cb6a5cec 100644
+--- a/net/mac80211/mesh_hwmp.c
++++ b/net/mac80211/mesh_hwmp.c
+@@ -620,7 +620,7 @@ static void hwmp_preq_frame_process(struct ieee80211_sub_if_data *sdata,
+ 				mesh_path_add_gate(mpath);
+ 		}
+ 		rcu_read_unlock();
+-	} else {
++	} else if (ifmsh->mshcfg.dot11MeshForwarding) {
+ 		rcu_read_lock();
+ 		mpath = mesh_path_lookup(sdata, target_addr);
+ 		if (mpath) {
+@@ -638,6 +638,8 @@ static void hwmp_preq_frame_process(struct ieee80211_sub_if_data *sdata,
+ 			}
+ 		}
+ 		rcu_read_unlock();
++	} else {
++		forward = false;
+ 	}
+ 
+ 	if (reply) {
+@@ -655,7 +657,7 @@ static void hwmp_preq_frame_process(struct ieee80211_sub_if_data *sdata,
+ 		}
+ 	}
+ 
+-	if (forward && ifmsh->mshcfg.dot11MeshForwarding) {
++	if (forward) {
+ 		u32 preq_id;
+ 		u8 hopcount;
  
 -- 
 2.39.5
