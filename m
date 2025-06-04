@@ -1,46 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2147918C02E;
-	Wed,  4 Jun 2025 01:02:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3E51202C2D;
+	Wed,  4 Jun 2025 01:02:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748998961; cv=none; b=q8ootDCQDkmtymHJbsOaVY/4kGC2nJhg1vCH3wyJA1zZKaHU3Wt+Xqbm8SqMH0OVRrlsWWP4CVt0N0eDzxm4HrtO9ztLUaweLvYKye3qc4SoAU9pN4fubjokuWepvVgQEsZgUgqN8nwq54zU4f2gmsUgoAJJsxnGtEq6raB/Cfw=
+	t=1748998964; cv=none; b=cqufaAicCixmRk/uADFujkb3u+hZqH8dBdIyQNqwYZbJuZETL44v2bUQ3fkbtkDncy83rb9HDTpqtoHh96At3uzy5G4QbTihvsyZgsSkirX2WjwkorTzbtfnQZJf12/2ru2L5M0m/wVAdMJNETHkrjyXSYn6NCos9ZlxVmG+joM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748998961; c=relaxed/simple;
-	bh=3UlQ1uaKv1jVgcEcZWK5ng6OKVleb3uemsVJ7sxFYY8=;
+	s=arc-20240116; t=1748998964; c=relaxed/simple;
+	bh=skJVp1A4SQu1EaAAekUcY9sfms4LpepaF8Unp0It5Cc=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=bdEw8dt4aBIdU8XRn+llCe5HwJxW/e/nKEz0m4euhIKdEmnPOvWK7lqFRlgpFaPDCx39YhTB8Q7IdAKlFjBn4SzJYCCIqEPwxWDkLtpvfX5j3t2x3HE2PBZWCPzFCaPKDo09cZQXKFbjKPuJ2XjQKViZ09YWYJoTG9Mpy37BwvM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Cnx70lf6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bqBziK7jKf8yRvTwtRXG6t1a3Y6wWXryqx2/P10397f9oWDgBNj3n8621tfzPE94TZd3e6B0Sl18f8SiuZ7fO8nKtE0EBKkeBgpz8XfS9qs0qFA4/0RhDCsiDFqPnR5TXkzjBfo1Lj8zrotRiP1k7jWXNmxaJflmpUfLG38vbXQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=e8/9TCNH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Cnx70lf6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6382C4CEEF;
-	Wed,  4 Jun 2025 01:02:39 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="e8/9TCNH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D75CC4CEED;
+	Wed,  4 Jun 2025 01:02:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748998961;
-	bh=3UlQ1uaKv1jVgcEcZWK5ng6OKVleb3uemsVJ7sxFYY8=;
+	s=k20201202; t=1748998964;
+	bh=skJVp1A4SQu1EaAAekUcY9sfms4LpepaF8Unp0It5Cc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cnx70lf66vXyxoQvdELYxF9KsDN+LFGCXDbqx6jfJuzJNwlq0IIP7+7/KVdrfNWwE
-	 dBSeCS3JuuV33joIqKN0uo8AmoSUa+Ixt9xxXMy0hQ0b8iAiB+EJ7OkUIxRWFiY8TJ
-	 S0pqBQyJLTLswEAx7vaBPEIaXJgX2joKzFoyr/HAbuiIuPHP/SG4At3EOtOwmtTXS3
-	 Azg+84o+8l9QzwStXvWov1g93z1p0IEZ4W33z+sHhDFfYGKd6846ioglVGW41xeLOf
-	 WXkJDqpkZMGGXbojxibbyIjnKkd0hF/s+CURPOGHZ0A6VmO5kKB25f3Yx6S9SLYBzH
-	 K09V/UDf0Lccg==
+	b=e8/9TCNHEg6h865ExMKQsY7FEKN/IkPKOKv5kslizaYWTNuRVEpn8Tou3Q6f2YFw+
+	 F5AgAy9qPyjXkjZoazDY15powCCisDOejzsULarCXQtX6IMTJppOUhM0u+sAhcN3Tn
+	 09G8EfsVNUXbPplmDF3LsweepXpEjW17hMQ5UaU13d4Itc6yAuNIvOsLUpQwCDCgZ0
+	 EL20ex4HxPvF5xdCgPCFiac9OFoJKt4vfEi2OM3w5pBangLKwzoXXYQrlMW8DnrjKY
+	 7mcGAto9G+xsFQ/M4Ucn08aR91mLENwI97/3sQrf8XqHvrmFdWzuGpbfTN7nEf17Nq
+	 T2VrYnzlmgeBQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Tali Perry <tali.perry1@gmail.com>,
-	Mohammed Elbadry <mohammed.0.elbadry@gmail.com>,
-	Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
+Cc: Moon Yeounsu <yyyynoom@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	avifishman70@gmail.com,
-	tmaimon77@gmail.com,
-	openbmc@lists.ozlabs.org,
-	linux-i2c@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.6 14/62] i2c: npcm: Add clock toggle recovery
-Date: Tue,  3 Jun 2025 21:01:25 -0400
-Message-Id: <20250604010213.3462-14-sashal@kernel.org>
+	horms@kernel.org,
+	tglx@linutronix.de,
+	mingo@kernel.org,
+	davem@davemloft.net
+Subject: [PATCH AUTOSEL 6.6 15/62] net: dlink: add synchronization for stats update
+Date: Tue,  3 Jun 2025 21:01:26 -0400
+Message-Id: <20250604010213.3462-15-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250604010213.3462-1-sashal@kernel.org>
 References: <20250604010213.3462-1-sashal@kernel.org>
@@ -55,91 +53,130 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.6.92
 Content-Transfer-Encoding: 8bit
 
-From: Tali Perry <tali.perry1@gmail.com>
+From: Moon Yeounsu <yyyynoom@gmail.com>
 
-[ Upstream commit 38010591a0fc3203f1cee45b01ab358b72dd9ab2 ]
+[ Upstream commit 12889ce926e9a9baf6b83d809ba316af539b89e2 ]
 
-During init of the bus, the module checks that the bus is idle.
-If one of the lines are stuck try to recover them first before failing.
-Sometimes SDA and SCL are low if improper reset occurs (e.g., reboot).
+This patch synchronizes code that accesses from both user-space
+and IRQ contexts. The `get_stats()` function can be called from both
+context.
 
-Signed-off-by: Tali Perry <tali.perry1@gmail.com>
-Signed-off-by: Mohammed Elbadry <mohammed.0.elbadry@gmail.com>
-Reviewed-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
-Link: https://lore.kernel.org/r/20250328193252.1570811-1-mohammed.0.elbadry@gmail.com
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+`dev->stats.tx_errors` and `dev->stats.collisions` are also updated
+in the `tx_errors()` function. Therefore, these fields must also be
+protected by synchronized.
+
+There is no code that accessses `dev->stats.tx_errors` between the
+previous and updated lines, so the updating point can be moved.
+
+Signed-off-by: Moon Yeounsu <yyyynoom@gmail.com>
+Link: https://patch.msgid.link/20250515075333.48290-1-yyyynoom@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-**YES** This commit should be backported to stable kernel trees. Here's
-my detailed analysis: ## **Primary Reasons for Backporting:** ### **1.
-Fixes a Real Hardware Bug** The commit addresses a legitimate hardware
-initialization issue where the NPCM I2C controller can fail to
-initialize if SDA or SCL lines are stuck low after system reset. This is
-not a theoretical problem but a real-world scenario that occurs when: -
-External I2C devices (sensors, EEPROMs) hold SDA low after improper
-reset - Power cycling leaves slave devices in an inconsistent state -
-BMC systems reboot while I2C transactions are in progress ### **2.
-Small, Contained Fix** The code change is minimal and well-contained: -
-**Before**: Hard failure with `dev_err()` and `return -ENXIO` when lines
-are stuck - **After**: Attempts recovery first, only fails if recovery
-doesn't work - Uses existing `npcm_i2c_recovery_tgclk()` function that's
-already proven and in use for runtime recovery ### **3. Prevents System
-Boot Failures** Without this fix, systems can fail to boot completely
-when I2C controllers can't initialize due to stuck bus lines. The commit
-message specifically mentions "Sometimes SDA and SCL are low if improper
-reset occurs (e.g., reboot)" - this is a boot-critical issue. ### **4.
-Conservative Error Handling** The fix uses defensive programming: -
-First attempts recovery using hardware-specific TGCLK mechanism - Only
-fails initialization if recovery is unsuccessful - Downgrades the
-initial error from `dev_err` to `dev_warn` with recovery attempt -
-Maintains the same failure path if recovery doesn't work ### **5.
-Alignment with Similar Successful Backports** Looking at the reference
-commits, this follows the pattern of similar commit #4 (npcm timeout
-calculation fix) which was marked "YES" for backporting. Both: - Fix
-NPCM I2C driver issues - Address real hardware problems - Make small,
-targeted changes - Don't introduce new features ### **6. Hardware-
-Specific, Low Risk** The change only affects the NPCM I2C controller
-initialization path and uses existing recovery mechanisms. The risk of
-regression is minimal since: - It only adds a recovery attempt before an
-existing failure case - Uses proven recovery logic already in the driver
-- Specific to Nuvoton BMC hardware ## **Code Analysis:** The key change
-replaces immediate failure: ```c // OLD: Immediate failure
-dev_err(bus->dev, "I2C%d init fail: lines are low\n", bus->num); return
--ENXIO; ``` With recovery attempt: ```c // NEW: Try recovery first
-dev_warn(bus->dev, " I2C%d SDA=%d SCL=%d, attempting to recover\n",
-...); if (npcm_i2c_recovery_tgclk(&bus->adap)) { dev_err(bus->dev,
-"I2C%d init fail: SDA=%d SCL=%d\n", ...); return -ENXIO; } ``` This is a
-textbook example of a good stable backport candidate: it fixes a real
-bug that prevents system functionality, uses minimal changes, and has
-low regression risk.
+**YES** This commit should be backported to stable kernel trees for the
+following reasons: **1. Critical Data Race Fix**: The commit addresses a
+real data race condition where `dev->stats.tx_errors` and
+`dev->stats.collisions` can be accessed concurrently from user-space
+(`get_stats()` function) and IRQ context (`tx_error()` function). This
+is a genuine bug that can cause statistics corruption. **2. User-Visible
+Impact**: The race condition affects network statistics that are exposed
+to userspace through standard interfaces like `/proc/net/dev` and
+ethtool. Corrupted statistics can mislead network monitoring tools and
+system administrators. **3. Low Risk, High Value Fix**: The changes are
+minimal and follow established kernel synchronization patterns: - Adds a
+single `spinlock_t stats_lock` field to the driver's private structure -
+Protects critical sections with
+`spin_lock_irqsave()`/`spin_unlock_irqrestore()` in `get_stats()` -
+Protects IRQ-context updates in `tx_error()` with the same spinlock - No
+functional logic changes, only synchronization additions **4. Self-
+Contained Changes**: The fix is entirely within the dl2k driver
+(`drivers/net/ethernet/dlink/dl2k.c` and `dl2k.h`), making it safe to
+backport without affecting other subsystems. **5. Precedent from Similar
+Commits**: This closely mirrors "Similar Commit #5" (net: stmmac:
+protect updates of 64-bit statistics counters) which was marked as
+"Backport Status: YES" for addressing the same type of statistics
+synchronization issue. **6. Follows Stable Tree Criteria**: - Fixes an
+important bug affecting users - Changes are small and contained -
+Minimal risk of regression - No new features or architectural changes
+The fix prevents potential data corruption in network statistics, which
+is exactly the type of bug that stable kernels should address to
+maintain system reliability and data integrity.
 
- drivers/i2c/busses/i2c-npcm7xx.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/dlink/dl2k.c | 14 +++++++++++++-
+ drivers/net/ethernet/dlink/dl2k.h |  2 ++
+ 2 files changed, 15 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/i2c/busses/i2c-npcm7xx.c b/drivers/i2c/busses/i2c-npcm7xx.c
-index 91f508d50e7ab..5b3987460976e 100644
---- a/drivers/i2c/busses/i2c-npcm7xx.c
-+++ b/drivers/i2c/busses/i2c-npcm7xx.c
-@@ -1971,10 +1971,14 @@ static int npcm_i2c_init_module(struct npcm_i2c *bus, enum i2c_mode mode,
+diff --git a/drivers/net/ethernet/dlink/dl2k.c b/drivers/net/ethernet/dlink/dl2k.c
+index ce46f3ac3b5a1..fad5a72d3b167 100644
+--- a/drivers/net/ethernet/dlink/dl2k.c
++++ b/drivers/net/ethernet/dlink/dl2k.c
+@@ -146,6 +146,8 @@ rio_probe1 (struct pci_dev *pdev, const struct pci_device_id *ent)
+ 	np->ioaddr = ioaddr;
+ 	np->chip_id = chip_idx;
+ 	np->pdev = pdev;
++
++	spin_lock_init(&np->stats_lock);
+ 	spin_lock_init (&np->tx_lock);
+ 	spin_lock_init (&np->rx_lock);
  
- 	/* Check HW is OK: SDA and SCL should be high at this point. */
- 	if ((npcm_i2c_get_SDA(&bus->adap) == 0) || (npcm_i2c_get_SCL(&bus->adap) == 0)) {
--		dev_err(bus->dev, "I2C%d init fail: lines are low\n", bus->num);
--		dev_err(bus->dev, "SDA=%d SCL=%d\n", npcm_i2c_get_SDA(&bus->adap),
--			npcm_i2c_get_SCL(&bus->adap));
--		return -ENXIO;
-+		dev_warn(bus->dev, " I2C%d SDA=%d SCL=%d, attempting to recover\n", bus->num,
-+				 npcm_i2c_get_SDA(&bus->adap), npcm_i2c_get_SCL(&bus->adap));
-+		if (npcm_i2c_recovery_tgclk(&bus->adap)) {
-+			dev_err(bus->dev, "I2C%d init fail: SDA=%d SCL=%d\n",
-+				bus->num, npcm_i2c_get_SDA(&bus->adap),
-+				npcm_i2c_get_SCL(&bus->adap));
-+			return -ENXIO;
-+		}
+@@ -866,7 +868,6 @@ tx_error (struct net_device *dev, int tx_status)
+ 	frame_id = (tx_status & 0xffff0000);
+ 	printk (KERN_ERR "%s: Transmit error, TxStatus %4.4x, FrameId %d.\n",
+ 		dev->name, tx_status, frame_id);
+-	dev->stats.tx_errors++;
+ 	/* Ttransmit Underrun */
+ 	if (tx_status & 0x10) {
+ 		dev->stats.tx_fifo_errors++;
+@@ -903,9 +904,15 @@ tx_error (struct net_device *dev, int tx_status)
+ 		rio_set_led_mode(dev);
+ 		/* Let TxStartThresh stay default value */
  	}
++
++	spin_lock(&np->stats_lock);
+ 	/* Maximum Collisions */
+ 	if (tx_status & 0x08)
+ 		dev->stats.collisions++;
++
++	dev->stats.tx_errors++;
++	spin_unlock(&np->stats_lock);
++
+ 	/* Restart the Tx */
+ 	dw32(MACCtrl, dr16(MACCtrl) | TxEnable);
+ }
+@@ -1074,7 +1081,9 @@ get_stats (struct net_device *dev)
+ 	int i;
+ #endif
+ 	unsigned int stat_reg;
++	unsigned long flags;
  
- 	npcm_i2c_int_enable(bus, true);
++	spin_lock_irqsave(&np->stats_lock, flags);
+ 	/* All statistics registers need to be acknowledged,
+ 	   else statistic overflow could cause problems */
+ 
+@@ -1124,6 +1133,9 @@ get_stats (struct net_device *dev)
+ 	dr16(TCPCheckSumErrors);
+ 	dr16(UDPCheckSumErrors);
+ 	dr16(IPCheckSumErrors);
++
++	spin_unlock_irqrestore(&np->stats_lock, flags);
++
+ 	return &dev->stats;
+ }
+ 
+diff --git a/drivers/net/ethernet/dlink/dl2k.h b/drivers/net/ethernet/dlink/dl2k.h
+index 0e33e2eaae960..56aff2f0bdbfa 100644
+--- a/drivers/net/ethernet/dlink/dl2k.h
++++ b/drivers/net/ethernet/dlink/dl2k.h
+@@ -372,6 +372,8 @@ struct netdev_private {
+ 	struct pci_dev *pdev;
+ 	void __iomem *ioaddr;
+ 	void __iomem *eeprom_addr;
++	// To ensure synchronization when stats are updated.
++	spinlock_t stats_lock;
+ 	spinlock_t tx_lock;
+ 	spinlock_t rx_lock;
+ 	unsigned int rx_buf_sz;		/* Based on MTU+slack. */
 -- 
 2.39.5
 
