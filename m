@@ -1,47 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1043819E971;
-	Wed,  4 Jun 2025 01:07:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E8A919E971;
+	Wed,  4 Jun 2025 01:07:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748999249; cv=none; b=bjmxv/XS5WCnjIURPKyQ8wJEa0q5v2NPSqv3GqvghlbZppfX9ImryK766uEZ7TxBM9WmIov6+veqmb4DfhC1gYdnWMkq+mdabK3XUAbk1rXBbqPP45cQ3w7dGjq+FSPH57g8j5viZCsbCKSdcTYd/hJvdsXiK8H6dLsCiTjqQqA=
+	t=1748999250; cv=none; b=BANzXqiIimLGUtpHhWFKfN+UvKEHd21HfOqH4ffRL1aOh52OnFf0a+24zXnBloUxhdFFfm2IpnhwP2x7vOwf75nKMdSyFHMRgcpfp0QZsUc/PLmoJ6I5wgKY1q9zLJxkfS37FJNwdBajxpJmYvUn45xltJblMs2eR3tNS1Ife1w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748999249; c=relaxed/simple;
-	bh=dn6nh6OYRBrhWv47o2duj5vKQ7bTQyPVnZzppSU1oeY=;
+	s=arc-20240116; t=1748999250; c=relaxed/simple;
+	bh=P+A5NfgO9BFaz1yef9hYcl6zxLNgtEW8OmZXQzCd8OA=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dqgJ6XSVE1b1wp4PE5Ufz90JUMZd8GsIUtlfoCYvJZWQgoayJ2aK9+ilfPSJqYg9naLdjsl7WflwqZBZkey2V5fvXOk8nc//ZHPRjYMJ82JeyT/ERoCdX0F+ZBZwdnDBDGLPbWcvMDnMXrQqr6jXtwbdshfWMBFOc1VkHz78ySY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=geJBK+Lu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=BA+OBVHK83Sy11gotulhrn/lcCqNkPO/VY1FitetQTA4hOrYGCmixU0okrZ8d3/lg+/c/hUSPN4wMptWGoc3PI0R84XXH++/ZAhm7o8Xca4SxO2YHeVHyZqT3dtNySB+n27EKUqtYrhLalEmefxrJME2G3jdEZWIsNq8PY+5a7w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HQLQwk8A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="geJBK+Lu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 954DFC4CEF2;
-	Wed,  4 Jun 2025 01:07:27 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HQLQwk8A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57AA7C4CEF1;
+	Wed,  4 Jun 2025 01:07:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748999248;
-	bh=dn6nh6OYRBrhWv47o2duj5vKQ7bTQyPVnZzppSU1oeY=;
+	s=k20201202; t=1748999250;
+	bh=P+A5NfgO9BFaz1yef9hYcl6zxLNgtEW8OmZXQzCd8OA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=geJBK+Lue5qeixe/Izbxmt7Zq3UHvACUCKvO+E9EmCYP6MNNedAnK2f4J5IR2Lw1Y
-	 k0Rl0XwY/KmpZd0Bj04TsUEVVv4qSrwkv4gtptAGVFXt2geEK44uX9PaBqifOFDOVe
-	 zcZWGjs24VkfCoDdW74Y/51BVkNbZS1LWbKOkKLCEfW120+yrVPNqN+AYpzFns2Sj6
-	 wSss0Ws5fxKA6F85GedaNwqc7BST6Ss3w6UAOu1bfxd5mn1v+qoCBvT3SBFR6/8MVL
-	 if401G3eDnk6A2Te2l+0VwTmzJ2bDTLYgp8qWeZDZ6fqq/yOjvmcFFtYDS2oQYeRRT
-	 XsdXU6bDOIRpg==
+	b=HQLQwk8AWz48TBxyswRwv9nsjRDG+MeKhAatsKn27LTl08EOT9K/5unDuW4LBzbGQ
+	 qM+BvDFaRjKH72LfWR7/X1a/00aKuMCnj91gn+SdIM/c3UZQICrR+vrKaIQe5Ydxvd
+	 0HlSqYYSJec4BjPT9m8K79R6GWuCshTPWh589ibyjpvLhy0IlPKmROn06o+Sk93H0c
+	 JH18z6buQDg4/wFVFM1mqyAoqunAT/QR8jUzDb3PFKXd8ocmmfOLDu6OmjisvFHYu6
+	 49rWJKCuEZWYFbgBOfTC8utm+Ovt6yixICOtlcLRqo/14UV4RH17eorWMrRpCTme08
+	 JjlEJ1YutzrJQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Gabor Juhos <j4g8y7@gmail.com>,
-	Imre Kaloz <kaloz@openwrt.org>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Linus Walleij <linus.walleij@linaro.org>,
+Cc: Jason Xing <kernelxing@tencent.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	gregory.clement@bootlin.com,
-	sebastian.hesselbarth@gmail.com,
-	brgl@bgdev.pl,
-	linux-arm-kernel@lists.infradead.org,
-	linux-gpio@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.4 13/20] pinctrl: armada-37xx: propagate error from armada_37xx_gpio_get()
-Date: Tue,  3 Jun 2025 21:06:59 -0400
-Message-Id: <20250604010706.7395-13-sashal@kernel.org>
+	netdev@vger.kernel.org,
+	linux-rdma@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.4 14/20] net: mlx4: add SOF_TIMESTAMPING_TX_SOFTWARE flag when getting ts info
+Date: Tue,  3 Jun 2025 21:07:00 -0400
+Message-Id: <20250604010706.7395-14-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250604010706.7395-1-sashal@kernel.org>
 References: <20250604010706.7395-1-sashal@kernel.org>
@@ -57,88 +53,79 @@ X-stable-base: Linux 5.4.293
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gabor Juhos <j4g8y7@gmail.com>
+From: Jason Xing <kernelxing@tencent.com>
 
-[ Upstream commit 57273ff8bb16f3842c2597b5bbcd49e7fa12edf7 ]
+[ Upstream commit b86bcfee30576b752302c55693fff97242b35dfd ]
 
-The regmap_read() function can fail, so propagate its error up to
-the stack instead of silently ignoring that.
+As mlx4 has implemented skb_tx_timestamp() in mlx4_en_xmit(), the
+SOFTWARE flag is surely needed when users are trying to get timestamp
+information.
 
-Signed-off-by: Imre Kaloz <kaloz@openwrt.org>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
-Link: https://lore.kernel.org/20250514-pinctrl-a37xx-fixes-v2-4-07e9ac1ab737@gmail.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Jason Xing <kernelxing@tencent.com>
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20250510093442.79711-1-kerneljasonxing@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Based on my comprehensive analysis, here is my determination: **YES**
-This commit should be backported to stable kernel trees. Here's my
-detailed analysis: ## Analysis of the Code Change The commit fixes a
-clear bug in the `armada_37xx_gpio_get()` function in
-`drivers/pinctrl/mvebu/pinctrl-armada-37xx.c`. The specific changes are:
-1. **Before**: `regmap_read(info->regmap, reg, &val);` - ignores return
-value 2. **After**: `ret = regmap_read(info->regmap, reg, &val); if
-(ret) return ret;` - properly handles errors ## Backport Suitability
-Assessment ### ✅ **Meets Stable Tree Criteria:** 1. **Bug Fix**: This
-clearly fixes a real bug where regmap read failures are silently
-ignored, potentially returning garbage data to userspace. 2. **Small and
-Contained**: The change is minimal (3 lines added) and extremely
-focused, affecting only error handling in a single function. 3. **Low
-Regression Risk**: The change only adds error checking where none
-existed before. It cannot introduce new bugs - it can only prevent
-incorrect behavior. 4. **No Architectural Changes**: This is purely
-error handling improvement with no changes to the driver's architecture
-or interfaces. 5. **Important Subsystem**: GPIO operations are
-fundamental and used by many kernel subsystems and userspace
-applications. ### ✅ **Follows Established Kernel Patterns:** My analysis
-of other GPIO drivers shows this error handling pattern is **universal**
-across the kernel: - `gpio-arizona.c`, `gpio-bd71828.c`, `gpio-
-madera.c`, `gpio-max77620.c`, `pinctrl-axp209.c`, and many others -
-**Every examined driver** checks `regmap_read` return values in GPIO get
-functions - The armada-37xx driver was an outlier in ignoring these
-errors ### ✅ **Real-World Impact:** This fix addresses scenarios where:
-- **Hardware communication failures** (I2C/SPI bus errors, device power
-issues) - **Device disconnect events** (hot-plug scenarios, power
-management) - **Timing/electrical issues** causing intermittent regmap
-failures Without this fix, `gpio_get()` would return potentially garbage
-values (using uninitialized `val`) when hardware communication fails,
-leading to incorrect GPIO state reporting to userspace. ### ✅
-**Reference Similar Commits:** Looking at the provided examples, this
-commit closely resembles: - **Similar Commit #3 (Status: YES)**: "Fix
-irq_of_parse_and_map() return value" - fixes incorrect error handling -
-**Similar Commit #1 (Status: YES)**: "Convert to use dev_err_probe()" -
-improves error handling patterns Both are small, focused error handling
-improvements that were deemed suitable for backporting. ## Conclusion
-This is a textbook example of a stable tree candidate: it's a small,
-safe bug fix that brings the driver in line with kernel-wide error
-handling standards, addresses real hardware failure scenarios, and has
-zero risk of regression while providing tangible benefits for system
-reliability.
+Perfect! Now I can see that `skb_tx_timestamp(skb)` is called in the
+`mlx4_en_xmit()` function, which is the main transmit function. This
+confirms that the mlx4 driver does implement software timestamping. Now
+let me compare this to the similar commits to see the pattern: **YES**
+This commit should be backported to stable kernel trees. **Extensive
+Explanation:** This commit addresses a clear inconsistency bug where the
+mlx4 driver implements software timestamping functionality but fails to
+advertise this capability to userspace through the ethtool timestamping
+info interface. **Analysis of the fix:** 1. **The Problem**: The mlx4
+driver calls `skb_tx_timestamp(skb)` in `mlx4_en_xmit()` at line 1091 of
+`/drivers/net/ethernet/mellanox/mlx4/en_tx.c`, which means it properly
+implements software TX timestamping. However, in
+`mlx4_en_get_ts_info()`, it only advertises hardware timestamping
+capabilities (`SOF_TIMESTAMPING_TX_HARDWARE`,
+`SOF_TIMESTAMPING_RX_HARDWARE`, `SOF_TIMESTAMPING_RAW_HARDWARE`) but
+omits the `SOF_TIMESTAMPING_TX_SOFTWARE` flag. 2. **The Fix**: The
+change adds a single line `SOF_TIMESTAMPING_TX_SOFTWARE |` to the
+`info->so_timestamping` field when hardware timestamping is supported,
+correctly advertising both hardware and software timestamping
+capabilities. 3. **Impact**: This is a user-facing API correctness
+issue. Applications checking timestamping capabilities via ethtool would
+incorrectly believe software timestamping is not supported, even though
+the driver implements it. **Comparison with similar commits:** -
+**Similar Commit #1 (YES)**: Also fixed a timestamping bug in mlx4,
+showing these are important fixes - **Similar Commit #3 (YES)**: Fixed
+incorrect timestamping capability reporting in mlx5 by removing false
+software timestamping indication - **Similar Commit #5 (YES)**: Fixed
+timestamping capabilities reporting using wrong BIT() macro in mlx5 The
+pattern shows that timestamping capability reporting bugs are
+consistently considered backport-worthy because they affect user-visible
+API behavior. **Backport Criteria Assessment:** ✅ **Fixes a user-
+affecting bug**: Applications cannot detect software timestamping
+support ✅ **Small, contained change**: Single line addition with no
+functional logic changes ✅ **No architectural changes**: Only fixes
+capability reporting ✅ **Low regression risk**: Only adds a missing
+flag, doesn't change driver behavior ✅ **Clear side effects**: None
+beyond correctly advertising existing functionality ✅ **Follows stable
+rules**: Important API correctness fix with minimal risk The fix is
+identical in nature to Similar Commit #3 (marked YES) but in reverse -
+where mlx5 removed false software timestamping advertisement, this adds
+the missing software timestamping advertisement for mlx4 where it's
+actually implemented.
 
- drivers/pinctrl/mvebu/pinctrl-armada-37xx.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx4/en_ethtool.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c b/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c
-index 7f0c425a479ea..e93edf1c97901 100644
---- a/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c
-+++ b/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c
-@@ -433,11 +433,14 @@ static int armada_37xx_gpio_get(struct gpio_chip *chip, unsigned int offset)
- 	struct armada_37xx_pinctrl *info = gpiochip_get_data(chip);
- 	unsigned int reg = INPUT_VAL;
- 	unsigned int val, mask;
-+	int ret;
+diff --git a/drivers/net/ethernet/mellanox/mlx4/en_ethtool.c b/drivers/net/ethernet/mellanox/mlx4/en_ethtool.c
+index b711148a9d503..9dbdd6266f731 100644
+--- a/drivers/net/ethernet/mellanox/mlx4/en_ethtool.c
++++ b/drivers/net/ethernet/mellanox/mlx4/en_ethtool.c
+@@ -1889,6 +1889,7 @@ static int mlx4_en_get_ts_info(struct net_device *dev,
+ 	if (mdev->dev->caps.flags2 & MLX4_DEV_CAP_FLAG2_TS) {
+ 		info->so_timestamping |=
+ 			SOF_TIMESTAMPING_TX_HARDWARE |
++			SOF_TIMESTAMPING_TX_SOFTWARE |
+ 			SOF_TIMESTAMPING_RX_HARDWARE |
+ 			SOF_TIMESTAMPING_RAW_HARDWARE;
  
- 	armada_37xx_update_reg(&reg, &offset);
- 	mask = BIT(offset);
- 
--	regmap_read(info->regmap, reg, &val);
-+	ret = regmap_read(info->regmap, reg, &val);
-+	if (ret)
-+		return ret;
- 
- 	return (val & mask) != 0;
- }
 -- 
 2.39.5
 
