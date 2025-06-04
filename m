@@ -1,45 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80FE44A2D;
-	Wed,  4 Jun 2025 01:00:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2519F4A2D;
+	Wed,  4 Jun 2025 01:00:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748998856; cv=none; b=dj9cPl76+oTzbp1T2E4cK3T0XbuNiyW3YjGY2hjXvquwK+pVyeZDNxEiImlAtEk2gxURIpsSPIvaaf14LWyRNKAwLpRER59FbpdWJh4fyMjJtx/VcfC8g0hDY1zAmqkwDbSe6mKXlhA7kYEjc9ZhOqhh16ZPkIESiwKG0ajVCZg=
+	t=1748998858; cv=none; b=re/tpo+EzomDXERzkms/Dx0cqQiODkqEOh0PJT1iZAizMg/+A99i7BAjzwD6oostoynfzyN6S6Ba3oTwC7RTxAzl3I3JuhXeGAkOCcc10Lnpw/bkLpJ5rHdnhcfRCpbfIMFgAlg32WucsgujIf0bsCzy7FPECJSp1Dj+ODnv39o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748998856; c=relaxed/simple;
-	bh=iBA1fk91v4uGGbcctiSCUBEKGkM9F0F2WI4+7OwIGbA=;
+	s=arc-20240116; t=1748998858; c=relaxed/simple;
+	bh=bMrVdcFROuaGQZZS47tY6ksX5AZ3pkjtqdQ5g5Ynl40=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ipvdX70ScxnBabniPxc5t3gaBDjLm1zgMQqtoziCrF8QnGdDS4UU0DVFGqIfQtQILvmagCMgVydTF0WZyV+dqPr4BT475bjNI43H5s6e3ixa3fdNLF73syMR0mGc7G+uEXjOEETVbwVWriViUB4BY79MGY+JMBnydCUHSiGTf5Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iqcOuzd9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=nbaIRloWQl1gKUFXbYG8J46piJmdgxWlGB5ZeAZTQkVOHwuNw5i/5rrhTzy7omz1rhMhXQlWcyhWdV9OuDF0GpiSDIGBE3bv69P+iEh18X1MKmPpAxmyENqSAV9M71Lf/fG+EMbmENjtQ6k9gDY9A3B/gmKiq3bAXdwCY3qwPNA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iZ3Ba69Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iqcOuzd9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43AF8C4CEED;
-	Wed,  4 Jun 2025 01:00:55 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iZ3Ba69Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D19A1C4CEEF;
+	Wed,  4 Jun 2025 01:00:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748998856;
-	bh=iBA1fk91v4uGGbcctiSCUBEKGkM9F0F2WI4+7OwIGbA=;
+	s=k20201202; t=1748998857;
+	bh=bMrVdcFROuaGQZZS47tY6ksX5AZ3pkjtqdQ5g5Ynl40=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iqcOuzd9pjYtnzj+07Ie2wB3CNQsGwxAHkq/rV3OV7jQwEHLnazBMKG8BWVkpod/k
-	 q+18+g57qKNp+DCqzgfVy0TB41fqf6QWC9vNj00LO/jE98kBvLgppoFIg2nIFtz8mS
-	 D2zRH7cWUrfEW0APgGAy9Q8viHnTLz26QiLpTjF4BcKvEonSeh4W/Q3gd3jiGSdnRk
-	 Ml+qbEC6oLONXkzjeS77nqQ2x5m46RwhqbPnGqdqz9uyD6ocxpl2DMhZRKyotTWkbB
-	 8FYGUopj/ROdTkCY3E82J92hPzYSNY0/k8KDFhhaC1lUrc1gnDoat5ebNWQA36fXh0
-	 TgOnTxE7cIhKQ==
+	b=iZ3Ba69QhzW19OsltRac75b8+gtDNK5VZxIV6xQvmmaE9Vev74kXnoitM+1aglsnD
+	 4KcQTf2IimnYSQE+1rBiPeAcEupXfB1E/ieml7i+VUZoCT9obZxti+Dg9AlvLZTDwl
+	 p6N8jEtfSoeZUhbCruMdQNSXF4MTkWE39hNuR5NHqI+yKK53LvLBo/xyfalBu7qew3
+	 1Hjrgc3XYX+h+2mEsaMGnrwn3OWtWTe7uc9LUGqwJTewLKKWRp3ZxjfECDAaRc2Wwo
+	 /SR16O84mkRc/4ABIWfxgqf0LtaFP5kFwbPGxIjF1ufAr9cML3Vtc0B0YsEd2nwbrm
+	 FgSN7wu/UZOhQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Johannes Berg <johannes.berg@intel.com>,
-	Ilan Peer <ilan.peer@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+Cc: Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	emmanuel.grumbach@intel.com,
-	shaul.triebitz@intel.com,
-	yedidya.ben.shimol@intel.com,
-	linux@treblig.org
-Subject: [PATCH AUTOSEL 6.12 52/93] wifi: iwlwifi: mvm: fix beacon CCK flag
-Date: Tue,  3 Jun 2025 20:58:38 -0400
-Message-Id: <20250604005919.4191884-52-sashal@kernel.org>
+	linux-f2fs-devel@lists.sourceforge.net
+Subject: [PATCH AUTOSEL 6.12 53/93] f2fs: fix to bail out in get_new_segment()
+Date: Tue,  3 Jun 2025 20:58:39 -0400
+Message-Id: <20250604005919.4191884-53-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250604005919.4191884-1-sashal@kernel.org>
 References: <20250604005919.4191884-1-sashal@kernel.org>
@@ -55,82 +51,98 @@ X-stable-base: Linux 6.12.31
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 8d7f08922a8cb621aa5d00bdce6a7afe57af1665 ]
+[ Upstream commit bb5eb8a5b222fa5092f60d5555867a05ebc3bdf2 ]
 
-The beacon CCK flag should be set for any CCK rate, not
-just for 1 Mbps. Fix that.
+------------[ cut here ]------------
+WARNING: CPU: 3 PID: 579 at fs/f2fs/segment.c:2832 new_curseg+0x5e8/0x6dc
+pc : new_curseg+0x5e8/0x6dc
+Call trace:
+ new_curseg+0x5e8/0x6dc
+ f2fs_allocate_data_block+0xa54/0xe28
+ do_write_page+0x6c/0x194
+ f2fs_do_write_node_page+0x38/0x78
+ __write_node_page+0x248/0x6d4
+ f2fs_sync_node_pages+0x524/0x72c
+ f2fs_write_checkpoint+0x4bc/0x9b0
+ __checkpoint_and_complete_reqs+0x80/0x244
+ issue_checkpoint_thread+0x8c/0xec
+ kthread+0x114/0x1bc
+ ret_from_fork+0x10/0x20
 
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Reviewed-by: Ilan Peer <ilan.peer@intel.com>
-Link: https://patch.msgid.link/20250505215513.fe18b7d92d7d.I7bb40a92cea102677b695beb1e2a62a5ea72678b@changeid
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+get_new_segment() detects inconsistent status in between free_segmap
+and free_secmap, let's record such error into super block, and bail
+out get_new_segment() instead of continue using the segment.
+
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-**YES** This commit should be backported to stable kernel trees based on
-my analysis of both the commit message and code changes: ## Analysis of
-the Bug Fix **The Bug**: The original code incorrectly sets the beacon
-CCK flag: ```c if (rate_idx <= IWL_FIRST_CCK_RATE) // WRONG: Only for 1
-Mbps rate ``` **The Fix**: Changes the condition to properly include all
-CCK rates: ```c if (rate_idx <= IWL_LAST_CCK_RATE) // CORRECT: For all
-CCK rates (1, 2, 5.5, 11 Mbps) ``` ## Why This Should Be Backported ###
-1. **Fixes Important Functional Bug** This fixes beacon transmission in
-Access Point mode for Intel WiFi devices. The beacon CCK flag tells the
-firmware which modulation type to use when transmitting beacons. Setting
-it incorrectly could cause: - Beacon transmission failures - Radio
-configuration errors - Interoperability issues with client devices -
-Power management problems ### 2. **Small, Contained Change** The fix is
-minimal and surgical - changing `IWL_FIRST_CCK_RATE` to
-`IWL_LAST_CCK_RATE` in a single line. This type of targeted fix has
-minimal risk of introducing regressions. ### 3. **Affects Critical
-Kernel Subsystem** Wireless networking is a critical subsystem, and
-beacon transmission is fundamental to WiFi Access Point operation.
-Incorrect beacon formatting could prevent devices from connecting or
-maintaining stable connections. ### 4. **Follows Stable Tree Criteria**
-- **Important bugfix**: ✅ Fixes beacon transmission logic - **Minimal
-risk**: ✅ One-line change with clear purpose - **No new features**: ✅
-Pure bug fix - **No architectural changes**: ✅ Simple condition fix -
-**Confined to subsystem**: ✅ Only affects iwlwifi driver ### 5.
-**Matches Successful Backport Patterns** Looking at the similar commits
-provided: - **Similar Commit #2** (YES): Fixed netif checksum flags -
-also a small wireless driver fix - **Similar Commit #4** (YES): Fixed
-beacon protection flags - nearly identical type of beacon-related fix -
-**Similar Commit #5** (YES): Fixed MAC filter flags - another small flag
-correction This commit has the same characteristics as those marked for
-backporting: small driver fixes that correct important functionality
-without architectural changes. ### 6. **Affects User-Visible
-Functionality** Users running Intel WiFi devices as Access Points could
-experience connection issues due to malformed beacons. This is exactly
-the type of bug that stable trees should address. The fix is
-straightforward, low-risk, and addresses a functional issue that could
-impact real-world WiFi operations, making it an excellent candidate for
-stable backporting.
+**YES** This commit should be backported to stable kernel trees for the
+following reasons: **1. Fixes Important Bug Affecting Users:** The
+commit addresses a kernel WARNING that can be triggered during normal
+filesystem operations. The call trace shows this occurs during
+checkpoint operations (`f2fs_write_checkpoint` → `f2fs_sync_node_pages`
+→ `f2fs_do_write_node_page`), which are critical for data consistency.
+**2. Small and Contained Fix:** The changes are minimal and surgical: -
+In `fs/f2fs/segment.c`: Only 6 lines changed, replacing a
+`f2fs_bug_on()` call with proper error handling - In
+`include/linux/f2fs_fs.h`: Adding one new enum value for the stop
+checkpoint reason **3. Minimal Risk of Regression:** The change only
+affects the error path when corruption is detected. Instead of
+triggering a kernel bug, it now: - Returns `-EFSCORRUPTED` error code -
+Stops checkpoint with specific reason
+(`STOP_CP_REASON_CORRUPTED_FREE_BITMAP`) - Maintains filesystem
+integrity by preventing use of corrupted segments **4. Follows
+Established Pattern:** Similar commits (#2, #4, #5) that replace f2fs
+panics with graceful error handling have all been marked for backporting
+(Status: YES). This commit follows the exact same pattern of improving
+f2fs robustness. **5. Critical Subsystem Impact:** The fix touches f2fs
+segment management, which is fundamental to the filesystem's allocation
+strategy. Corruption in segment bitmaps could lead to data loss or
+filesystem corruption if not handled properly. **6. Clear Error Handling
+Improvement:** Rather than crashing the kernel when inconsistent bitmap
+state is detected, the fix allows the filesystem to stop checkpoint
+operations gracefully and record the corruption reason, which aids in
+debugging and recovery. The commit meets all stable tree criteria: it's
+an important bugfix, has minimal risk, doesn't introduce new features,
+and follows established patterns for similar fixes that have been
+successfully backported.
 
- drivers/net/wireless/intel/iwlwifi/mvm/mac-ctxt.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/f2fs/segment.c       | 6 +++++-
+ include/linux/f2fs_fs.h | 1 +
+ 2 files changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mac-ctxt.c b/drivers/net/wireless/intel/iwlwifi/mvm/mac-ctxt.c
-index e96ddaeeeeff5..d013de30e7ed6 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/mac-ctxt.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/mac-ctxt.c
-@@ -1,6 +1,6 @@
- // SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause
- /*
-- * Copyright (C) 2012-2014, 2018-2024 Intel Corporation
-+ * Copyright (C) 2012-2014, 2018-2025 Intel Corporation
-  * Copyright (C) 2013-2014 Intel Mobile Communications GmbH
-  * Copyright (C) 2015-2017 Intel Deutschland GmbH
-  */
-@@ -962,7 +962,7 @@ u16 iwl_mvm_mac_ctxt_get_beacon_flags(const struct iwl_fw *fw, u8 rate_idx)
- 	u16 flags = iwl_mvm_mac80211_idx_to_hwrate(fw, rate_idx);
- 	bool is_new_rate = iwl_fw_lookup_cmd_ver(fw, BEACON_TEMPLATE_CMD, 0) > 10;
+diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
+index b9ffb2ee9548a..769a90b609e2c 100644
+--- a/fs/f2fs/segment.c
++++ b/fs/f2fs/segment.c
+@@ -2772,7 +2772,11 @@ static int get_new_segment(struct f2fs_sb_info *sbi,
+ 	}
+ got_it:
+ 	/* set it as dirty segment in free segmap */
+-	f2fs_bug_on(sbi, test_bit(segno, free_i->free_segmap));
++	if (test_bit(segno, free_i->free_segmap)) {
++		ret = -EFSCORRUPTED;
++		f2fs_stop_checkpoint(sbi, false, STOP_CP_REASON_CORRUPTED_FREE_BITMAP);
++		goto out_unlock;
++	}
  
--	if (rate_idx <= IWL_FIRST_CCK_RATE)
-+	if (rate_idx <= IWL_LAST_CCK_RATE)
- 		flags |= is_new_rate ? IWL_MAC_BEACON_CCK
- 			  : IWL_MAC_BEACON_CCK_V1;
+ 	/* no free section in conventional zone */
+ 	if (new_sec && pinning &&
+diff --git a/include/linux/f2fs_fs.h b/include/linux/f2fs_fs.h
+index c24f8bc01045d..5206d63b33860 100644
+--- a/include/linux/f2fs_fs.h
++++ b/include/linux/f2fs_fs.h
+@@ -78,6 +78,7 @@ enum stop_cp_reason {
+ 	STOP_CP_REASON_UPDATE_INODE,
+ 	STOP_CP_REASON_FLUSH_FAIL,
+ 	STOP_CP_REASON_NO_SEGMENT,
++	STOP_CP_REASON_CORRUPTED_FREE_BITMAP,
+ 	STOP_CP_REASON_MAX,
+ };
  
 -- 
 2.39.5
