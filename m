@@ -1,44 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2337F78F5E;
-	Wed,  4 Jun 2025 01:04:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACFBD78F5E;
+	Wed,  4 Jun 2025 01:04:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748999074; cv=none; b=gMWWI9vY97/gvcmWxFYDsykzuhjhlryLzdDhRiqH6ix38aB94E3tbKtsMIBJj2dSBGFR0JKJxK+Gp4Yq3BXtTCxcOmtdPGQ6VCH9SD6VEzMJF6QkEdASZO+44ADLk7iN5v/evSNwRsZBgiPEhbyw0bqlLca8CBgY0K9Eg/xr3ss=
+	t=1748999075; cv=none; b=Av1+McqdeBkRBA9AXFXr7kRagLRh1MXril+77+rmGm9Iu3Dde8MeeKUl7BqgqO7fPNI1iC7FnBhMialfl9kfE8jrZJYd3371MRMuKwrJij1dbbj8o446x9fE7PsjQ/uQHha+qNDldSQpo9uYO1KcVOFr5FBTbaTLNp7Zf8bZrg0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748999074; c=relaxed/simple;
-	bh=Ij5gDPy+PFabw8tKZwwPyd0tvJG31cHqR5nFXU2hdKE=;
+	s=arc-20240116; t=1748999075; c=relaxed/simple;
+	bh=4XRD+Opj+tUl51aybXo6mYo6EJ7vLmIwTCRkF0j4bFQ=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=cdfMcHnIXUm7sOD9oi+yW9FN9scer7zrnBKKnUvMZrhN18k/uLwLdLgWapGFn4VqRuAS0R764vKBtHEnp9OQmfzYLMsjuXvjh2EZSoAfdQSqRN5StE4T07/90YcvTTYJrhGCiUavUVmzanLLo8ooJimU/iVfZmhopUCsC8DBtH8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JyjzKb0m; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=FbuBV3LMXCBeZ82dBMxw1Vo8o+OsS6dUFdP9hCMGHgtrGIm68LthngZeB/9xCMiUqO3jSYtnFUL1CtDoda7RzFGpfEgpt4SiQuxjuPvyxLiLI4DCXOqaFW8JlXlj5YyRtXcNyZjAIa0e0GPG16H4IAl3LaviRL3bu+cFYWovcwk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dnat4AMk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JyjzKb0m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8ADFC4CEED;
-	Wed,  4 Jun 2025 01:04:32 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dnat4AMk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AB6FC4CEEF;
+	Wed,  4 Jun 2025 01:04:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748999074;
-	bh=Ij5gDPy+PFabw8tKZwwPyd0tvJG31cHqR5nFXU2hdKE=;
+	s=k20201202; t=1748999075;
+	bh=4XRD+Opj+tUl51aybXo6mYo6EJ7vLmIwTCRkF0j4bFQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JyjzKb0mW0nkW8pF9s5GQCqriZ9b3Xnf2oum5rNDQT4i6mtuGqggOzYWfI71NfgHd
-	 3Ana+ZSu1amljnL/edZxuILDN6aBulsbTd35i0NifV1MaPgE+r5J+U8i8X4CqRpj42
-	 o8Ix2zX1zvsfE2/BAKGjldUBjfnRiwTo+kWFL+m1JStI+7iyHldd8sMZ1c9mYYrGXk
-	 44JjHljwf3xj+fTbRkuDXqC2PTpcXmafBrdn9rYlBCbndJn/P+mzRzwDTT1cXvqLFJ
-	 wF3yRDXjSzHdlmMv0r8uekwJc2GcJUiZCtI9Hb/0C1qLPKpNEOqRF2i0sAGU1Oi0SD
-	 CAlcRoXCirO3w==
+	b=dnat4AMkqKrThYlgaJzn3SKJubMeQAHtP1/WEcO1YQ1k4ydKUvpQp4Ztb+MQS+znP
+	 sb9QePKsLZxPTn0BHuoDJgPmbptBh9vjPwxJiq+wWDgaQ29wZECz2bqsE0H9UXiGlo
+	 4HQ91prqnur+k+9lQOo5ke9jEz0oF1KeR1JEBuhnNqxYjBYiotNg9CAsztRIL2b/MC
+	 2Q0YqzjK9xZoMHmMZczzTU1CISNIw/D/YOHWLlU2h7Yn2C3jW3m9DSL7rUHz8AVA6J
+	 7ZRvpq9QMaXWr4BCGNdXQ1VJjL7o7tNIcbU1vsNxk4NrBnonHqrv1uvbeu8kxqUEtT
+	 OXbjrof/9X6KA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
 Cc: Eric Dumazet <edumazet@google.com>,
+	Wei Wang <weiwan@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
 	ncardwell@google.com,
 	davem@davemloft.net,
 	dsahern@kernel.org,
 	netdev@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.1 15/46] tcp: always seek for minimal rtt in tcp_rcv_rtt_update()
-Date: Tue,  3 Jun 2025 21:03:33 -0400
-Message-Id: <20250604010404.5109-15-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.1 16/46] tcp: fix initial tp->rcvq_space.space value for passive TS enabled flows
+Date: Tue,  3 Jun 2025 21:03:34 -0400
+Message-Id: <20250604010404.5109-16-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250604010404.5109-1-sashal@kernel.org>
 References: <20250604010404.5109-1-sashal@kernel.org>
@@ -51,162 +52,101 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.1.140
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit b879dcb1aeeca278eacaac0b1e2425b1c7599f9f ]
+[ Upstream commit cd171461b90a2d2cf230943df60d580174633718 ]
 
-tcp_rcv_rtt_update() goal is to maintain an estimation of the RTT
-in tp->rcv_rtt_est.rtt_us, used by tcp_rcv_space_adjust()
+tcp_rcv_state_process() must tweak tp->advmss for TS enabled flows
+before the call to tcp_init_transfer() / tcp_init_buffer_space().
 
-When TCP TS are enabled, tcp_rcv_rtt_update() is using
-EWMA to smooth the samples.
-
-Change this to immediately latch the incoming value if it
-is lower than tp->rcv_rtt_est.rtt_us, so that tcp_rcv_space_adjust()
-does not overshoot tp->rcvq_space.space and sk->sk_rcvbuf.
+Otherwise tp->rcvq_space.space is off by 120 bytes
+(TCP_INIT_CWND * TCPOLEN_TSTAMP_ALIGNED).
 
 Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20250513193919.1089692-8-edumazet@google.com
+Reviewed-by: Wei Wang <weiwan@google.com>
+Link: https://patch.msgid.link/20250513193919.1089692-7-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Now I have a complete understanding. Let me analyze this commit for
-backport suitability: **YES** ## Extensive Analysis for Backport
-Decision ### **Summary of the Change** This commit modifies the TCP
-receiver RTT estimation algorithm in `tcp_rcv_rtt_update()` to always
-seek minimal RTT values instead of using EWMA smoothing for all cases.
-The key change is that when a new RTT sample is smaller than the current
-estimate, it immediately adopts the smaller value rather than smoothing
-it. ### **Detailed Code Analysis** #### **Before the Change:** ```c
-static void tcp_rcv_rtt_update(struct tcp_sock *tp, u32 sample, int
-win_dep) { u32 new_sample = tp->rcv_rtt_est.rtt_us; long m = sample; if
-(new_sample != 0) { if (!win_dep) { m -= (new_sample >> 3); new_sample
-+= m; // EWMA smoothing always applied } else { m <<= 3; if (m <
-new_sample) new_sample = m; // Only minimal for win_dep case } } else {
-new_sample = m << 3; // Initial case } } ``` #### **After the Change:**
-```c static void tcp_rcv_rtt_update(struct tcp_sock *tp, u32 sample, int
-win_dep) { u32 new_sample, old_sample = tp->rcv_rtt_est.rtt_us; long m =
-sample << 3; if (old_sample == 0 || m < old_sample) { new_sample = m; //
-Always latch minimal RTT immediately } else { if (win_dep) return; //
-Reject larger samples for window-dependent cases new_sample = old_sample
-- (old_sample >> 3) + sample; // EWMA only for larger samples } } ```
-### **Why This Should Be Backported** #### **1. Fixes Important
-Performance Problem** The commit addresses a real performance issue
-where TCP receive buffer auto-tuning can overshoot optimal buffer sizes.
-This happens because: - **Root Cause**: EWMA smoothing was preventing
-quick adaptation to improved (lower) RTT conditions - **Impact**:
-Oversized receive buffers (`tp->rcvq_space.space` and `sk->sk_rcvbuf`)
-waste memory and can hurt performance - **User Impact**: Applications
-experience suboptimal network performance and memory usage #### **2.
-Small, Contained, and Safe Change** - **Minimal Code Changes**: Only 15
-lines changed in a single function - **No New Features**: Pure bug fix
-with no architectural changes - **Backward Compatible**: No changes to
-user-visible APIs or behavior - **Self-Contained**: Changes are isolated
-to the RTT estimation algorithm #### **3. Clear Technical Merit** The
-change aligns with established networking principles: - **Minimal RTT
-Seeking**: Following the same principle used in sender-side RTT tracking
-- **Faster Convergence**: Reduces time to adapt to improved network
-conditions - **Memory Efficiency**: Prevents unnecessary buffer
-inflation - **Consistent Behavior**: Makes receiver RTT tracking behave
-more like sender RTT tracking #### **4. Integration with Critical
-Subsystem** This function directly impacts `tcp_rcv_space_adjust()`
-which: - Controls automatic receive buffer sizing (line 786: `time <
-(tp->rcv_rtt_est.rtt_us >> 3)`) - Affects memory allocation for all TCP
-connections - Impacts network performance for high-throughput
-applications #### **5. Pattern Matching with Similar Backported
-Commits** This commit closely matches the characteristics of previous
-backported commits: - **Similar to Commit #1 & #2**: Both dealt with RTT
-estimation accuracy issues - **Similar to Commit #4 & #5**: Both
-addressed minimal RTT tracking problems - **Same Author Pattern**: Eric
-Dumazet commits with RTT fixes have consistently been backported ####
-**6. Low Regression Risk** - **Conservative Change**: The modification
-makes RTT estimation more responsive to improvements, which is safer
-than the opposite - **Gradual Fallback**: Still uses EWMA smoothing for
-larger samples, maintaining stability - **Existing Safeguards**: The
-related commit `a00f135cd986` adds additional filtering to prevent bad
-samples #### **7. Part of Coordinated Improvement** This commit is part
-of a series (noted by the patch series link `20250513193919.1089692-8`)
-that improves TCP receive-side performance. The coordinated nature
-suggests thorough testing and review. ### **Specific Code Quality
-Indicators** #### **Algorithmic Improvement:** ```c // Old: Always
-smooth, even for better RTT if (!win_dep) { m -= (new_sample >> 3);
-new_sample += m; // Could delay adoption of better RTT } // New:
-Immediate adoption of better RTT if (old_sample == 0 || m < old_sample)
-{ new_sample = m; // Fast convergence to better conditions } ``` ####
-**Memory Impact Prevention:** The change directly prevents the buffer
-inflation problem described in the commit message. When RTT estimates
-are artificially high due to smoothing, `tcp_rcv_space_adjust()` may
-allocate larger buffers than necessary. #### **Consistency with
-Networking Best Practices:** Minimal RTT tracking is a well-established
-principle in TCP implementations, used in: - BBR congestion control -
-Sender-side RTT estimation - Network path characterization ### **Risk
-Assessment** #### **Minimal Risk Factors:** - **No ABI Changes**:
-Internal algorithm change only - **No Protocol Changes**: TCP wire
-format unchanged - **Gradual Impact**: Only affects new RTT
-measurements, existing connections adapt gradually - **Fallback
-Mechanism**: EWMA smoothing still used for larger samples #### **Testing
-Confidence:** - **Upstream Integration**: Already merged in mainline
-with review - **Related Testing**: Part of series with comprehensive TCP
-testing - **Author Credibility**: Eric Dumazet is a senior TCP
-maintainer with extensive experience ### **Conclusion** This commit
-represents a high-quality, low-risk improvement to TCP receive-side
-performance that addresses a real memory usage and performance issue. It
-follows established patterns of successful stable backports, makes a
-minimal and safe change, and provides clear benefits without introducing
-new features or architectural changes. The change improves TCP's ability
-to efficiently manage receive buffers by more accurately tracking
-minimal RTT, which directly benefits end-user performance and system
-memory utilization. Given the pattern of similar RTT-related commits
-being successfully backported and the conservative nature of this
-change, it meets all criteria for stable kernel inclusion.
+**YES** This commit should be backported to stable kernel trees. ##
+Detailed Analysis ### Nature of the Fix This commit addresses a **subtle
+but significant bug** in the TCP receive buffer space initialization for
+passive (server-side) connections when TCP timestamps are enabled. The
+fix is a simple 2-line reordering that moves the `advmss` adjustment for
+timestamp options **before** the call to `tcp_init_transfer()`. ### The
+Problem 1. **Root Cause**: In `tcp_rcv_state_process()` for
+`TCP_SYN_RECV` state, the `tp->advmss` reduction for timestamp options
+(`TCPOLEN_TSTAMP_ALIGNED = 12 bytes`) was happening **after**
+`tcp_init_transfer()` was called. 2. **Impact**: Since
+`tcp_init_transfer()` calls `tcp_init_buffer_space()`, which initializes
+`tp->rcvq_space.space` using the formula: ```c tp->rcvq_space.space =
+min3(tp->rcv_ssthresh, tp->rcv_wnd, (u32)TCP_INIT_CWND linux
+tp->advmss); ``` The calculation was using an **unadjusted `advmss`
+value**, leading to a 120-byte overestimate: - `TCP_INIT_CWND (10) ×
+TCPOLEN_TSTAMP_ALIGNED (12) = 120 bytes` 3. **Consequence**: The
+`rcvq_space.space` field is critical for TCP receive buffer auto-tuning
+in `tcp_rcv_space_adjust()`, and this miscalculation could lead to
+suboptimal buffer management and performance issues. ### Why This Should
+Be Backported #### ✅ **Bug Fix Criteria Met**: 1. **Clear Bug**: This
+fixes a real initialization ordering bug that affects TCP performance 2.
+**User Impact**: Affects all passive TCP connections with timestamp
+options enabled (very common) 3. **Minimal Risk**: The fix is a simple
+2-line reordering with no functional changes 4. **Contained Scope**:
+Only affects the initialization path in `tcp_rcv_state_process()` #### ✅
+**Follows Stable Tree Rules**: 1. **Important**: TCP receive buffer
+tuning affects network performance for most connections 2. **Small &
+Contained**: The change moves just 2 lines of existing code 3. **No
+Regression Risk**: The fix corrects an obvious ordering error without
+introducing new logic 4. **No Architectural Changes**: No new features
+or major changes to TCP stack #### ✅ **Comparison with Similar
+Backported Commits**: The provided reference commits show a pattern of
+TCP receive buffer and `rcvq_space` related fixes being consistently
+backported: - Integer overflow fixes in `tcp_rcv_space_adjust()` ✅
+**Backported** - Data race fixes for `sysctl_tcp_moderate_rcvbuf` ✅
+**Backported** - MPTCP `rcv_space_init` fixes ✅ **Backported** -
+Timestamp handling in `tcp_rcv_space_adjust()` ✅ **Backported** This fix
+follows the exact same pattern: a small, surgical fix to TCP receive
+buffer initialization logic. ### Technical Verification Looking at the
+code change in `/home/sasha/linux/net/ipv4/tcp_input.c:6872-6873`, the
+fix simply moves: ```c if (tp->rx_opt.tstamp_ok) tp->advmss -=
+TCPOLEN_TSTAMP_ALIGNED; ``` from **after** `tcp_init_transfer()` to
+**before** it. This ensures that when `tcp_init_buffer_space()` is
+called within `tcp_init_transfer()`, it uses the correct timestamp-
+adjusted `advmss` value. The change is **safe, targeted, and addresses a
+clear functional bug** that affects TCP performance for a large class of
+connections. It meets all criteria for stable tree backporting.
 
- net/ipv4/tcp_input.c | 22 ++++++++--------------
- 1 file changed, 8 insertions(+), 14 deletions(-)
+ net/ipv4/tcp_input.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index 3b81f6df829ff..410a5b4189ea7 100644
+index 410a5b4189ea7..3757d35040a25 100644
 --- a/net/ipv4/tcp_input.c
 +++ b/net/ipv4/tcp_input.c
-@@ -635,10 +635,12 @@ EXPORT_SYMBOL(tcp_initialize_rcv_mss);
-  */
- static void tcp_rcv_rtt_update(struct tcp_sock *tp, u32 sample, int win_dep)
- {
--	u32 new_sample = tp->rcv_rtt_est.rtt_us;
--	long m = sample;
-+	u32 new_sample, old_sample = tp->rcv_rtt_est.rtt_us;
-+	long m = sample << 3;
+@@ -6625,6 +6625,9 @@ int tcp_rcv_state_process(struct sock *sk, struct sk_buff *skb)
+ 		if (!tp->srtt_us)
+ 			tcp_synack_rtt_meas(sk, req);
  
--	if (new_sample != 0) {
-+	if (old_sample == 0 || m < old_sample) {
-+		new_sample = m;
-+	} else {
- 		/* If we sample in larger samples in the non-timestamp
- 		 * case, we could grossly overestimate the RTT especially
- 		 * with chatty applications or bulk transfer apps which
-@@ -649,17 +651,9 @@ static void tcp_rcv_rtt_update(struct tcp_sock *tp, u32 sample, int win_dep)
- 		 * else with timestamps disabled convergence takes too
- 		 * long.
- 		 */
--		if (!win_dep) {
--			m -= (new_sample >> 3);
--			new_sample += m;
--		} else {
--			m <<= 3;
--			if (m < new_sample)
--				new_sample = m;
--		}
--	} else {
--		/* No previous measure. */
--		new_sample = m << 3;
-+		if (win_dep)
-+			return;
-+		new_sample = old_sample - (old_sample >> 3) + sample;
- 	}
++		if (tp->rx_opt.tstamp_ok)
++			tp->advmss -= TCPOLEN_TSTAMP_ALIGNED;
++
+ 		if (req) {
+ 			tcp_rcv_synrecv_state_fastopen(sk);
+ 		} else {
+@@ -6649,9 +6652,6 @@ int tcp_rcv_state_process(struct sock *sk, struct sk_buff *skb)
+ 		tp->snd_wnd = ntohs(th->window) << tp->rx_opt.snd_wscale;
+ 		tcp_init_wl(tp, TCP_SKB_CB(skb)->seq);
  
- 	tp->rcv_rtt_est.rtt_us = new_sample;
+-		if (tp->rx_opt.tstamp_ok)
+-			tp->advmss -= TCPOLEN_TSTAMP_ALIGNED;
+-
+ 		if (!inet_csk(sk)->icsk_ca_ops->cong_control)
+ 			tcp_update_pacing_rate(sk);
+ 
 -- 
 2.39.5
 
