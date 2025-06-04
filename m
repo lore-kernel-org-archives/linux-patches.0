@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD6EC145323;
-	Wed,  4 Jun 2025 00:58:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2586F258CEA;
+	Wed,  4 Jun 2025 00:58:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748998732; cv=none; b=gj8mtUbmsAUPILmm68mOeCem4plcFBH7le4MKGKe/VDGj5g4UElE1QByWyz41MEdHKLVaDK5k2+578V1VUJ6HgDPblyg7+pCrKB3BxYCiCOu2wVzedziS9hquy8Dz0acKjixtoWNnpw/+SLaEynIBBiuxEiX8Sw0kRTvDKMbKaA=
+	t=1748998734; cv=none; b=F0/3YW8491JwcNdJ/pa7Kbc/oM1wWI8UOulJfvELhwqMdd52u8bShswTKJhenhR308ZzNUpNrODmUHKu1XHKem2S/dI4a0xK5heWcoa4r42SVSjBjvSCcH6jVEpifD9sx8RQj8wVcN85qjj6Nt1aneAcLYQE8EhHtFp50pjj5gw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748998732; c=relaxed/simple;
-	bh=kMap7xQWBdgSP7l4o30roZd9ADTEnhR/mpKdpt8tsFc=;
+	s=arc-20240116; t=1748998734; c=relaxed/simple;
+	bh=QRlrp2ySsyAfBDW6dhKKmQtWIXno/2j/eDC59JEqUFM=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mNHPX5vjsgPMxrqCVD6pOhfwm9Xi7NtJWjktSnjDlo+/1ne9eHa20XpyoqROd+Qkxd/wjzJ7DNGqyjBM0E2NfuABI8wqRqBsOpywC/QAYFzU21HRwHZx9u+s9Aek9FfggDePwzY5hRR+BhsrXzolD0MxVlY5OisqSpaytCyEv5U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QzRflBOk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=GwPOUu52EelTvpqghWTU52qnm08sYELCjrYJiehvKtuj9IeV+RhbAEMUa0qiqfI2wBc6+ETROLDWQQSSHan6QZQYYWgFxfEXpCXpZgnOEnN3I/Ekn+3BqxbKU42BVkfaHOce5dNb4QdTuDTwieyB4iEWEee9UC4w3V4UcOkBRzM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=n2B748en; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QzRflBOk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5041BC4CEED;
-	Wed,  4 Jun 2025 00:58:51 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="n2B748en"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9695C4CEF1;
+	Wed,  4 Jun 2025 00:58:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748998732;
-	bh=kMap7xQWBdgSP7l4o30roZd9ADTEnhR/mpKdpt8tsFc=;
+	s=k20201202; t=1748998733;
+	bh=QRlrp2ySsyAfBDW6dhKKmQtWIXno/2j/eDC59JEqUFM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QzRflBOkNw7TFvTYu6+M2Lqe1rYWBi25RbRF/3DXu1ZWJYowBsMFsDbbL0ZYlx16g
-	 kM7r7A/if0RD1twou5rUJTyEn/Dab9nI1WAhMPm28GwFht3rHQs4/Bkioc4Gx+G076
-	 K7brSTc3o/DFPvdyIlZjZufdg+cRfgQTMfwpB7QLF8mNK0CplPopC6yYV64BxCKqHk
-	 iUfqubVGZWcFJyUut4tbjguHtYKCl339RXeAA0RcqVhoBiu4ijEXrBCHDOCVbJANB+
-	 NXVJs6Hz5c/Z5Fjod8Ka+o2g91xmo6abUFncE4YZhQw1vVpnDfTtFyXfjs9+jBKdaP
-	 ufZf26JRUsIBw==
+	b=n2B748en8BxtYopZ4JvT4J6NMv8R23DSwlJboskOQyb7t+dN3TdjxkY2MVliGw3a9
+	 6L+A+2PskykBLLrSnIPwiN5l/hZ4vf0pR4fpecCP1vMEfJrahxbOKZzpP5hZ+wbgba
+	 N4Z0KkntvmD70N+s1lx6pfCe1tKXbGAAHwbeyuSDK5qu+rZ4Sd9n3s2gShe/ZDBVe0
+	 cDWXm9x7FvR14AdHOPXys9NL2Yvolk8lKVQU60Xev8ZzBSmVxqZ/dYMmxHffKLwG06
+	 /IjIUBpuV5oiPd93ihluOvpVYF0ZSVtiWc8uIUWjD4r4TebOWNZ0oyJYPPSZASg9i4
+	 kFdH+AgJUYVrA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Alexei Starovoitov <ast@kernel.org>,
+Cc: Linus Walleij <linus.walleij@linaro.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	john.fastabend@gmail.com,
-	jakub@cloudflare.com,
-	netdev@vger.kernel.org,
-	bpf@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.14 098/108] bpf, sockmap: Fix data lost during EAGAIN retries
-Date: Tue,  3 Jun 2025 20:55:21 -0400
-Message-Id: <20250604005531.4178547-98-sashal@kernel.org>
+	ulli.kroll@googlemail.com,
+	linux-arm-kernel@lists.infradead.org
+Subject: [PATCH AUTOSEL 6.14 099/108] net: ethernet: cortina: Use TOE/TSO on all TCP
+Date: Tue,  3 Jun 2025 20:55:22 -0400
+Message-Id: <20250604005531.4178547-99-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250604005531.4178547-1-sashal@kernel.org>
 References: <20250604005531.4178547-1-sashal@kernel.org>
@@ -54,115 +52,181 @@ X-stable-base: Linux 6.14.9
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Linus Walleij <linus.walleij@linaro.org>
 
-[ Upstream commit 7683167196bd727ad5f3c3fc6a9ca70f54520a81 ]
+[ Upstream commit 6a07e3af4973402fa199a80036c10060b922c92c ]
 
-We call skb_bpf_redirect_clear() to clean _sk_redir before handling skb in
-backlog, but when sk_psock_handle_skb() return EAGAIN due to sk_rcvbuf
-limit, the redirect info in _sk_redir is not recovered.
+It is desireable to push the hardware accelerator to also
+process non-segmented TCP frames: we pass the skb->len
+to the "TOE/TSO" offloader and it will handle them.
 
-Fix skb redir loss during EAGAIN retries by restoring _sk_redir
-information using skb_bpf_set_redir().
+Without this quirk the driver becomes unstable and lock
+up and and crash.
 
-Before this patch:
-'''
-./bench sockmap -c 2 -p 1 -a --rx-verdict-ingress
-Setting up benchmark 'sockmap'...
-create socket fd c1:13 p1:14 c2:15 p2:16
-Benchmark 'sockmap' started.
-Send Speed 1343.172 MB/s, BPF Speed 1343.238 MB/s, Rcv Speed   65.271 MB/s
-Send Speed 1352.022 MB/s, BPF Speed 1352.088 MB/s, Rcv Speed   0 MB/s
-Send Speed 1354.105 MB/s, BPF Speed 1354.105 MB/s, Rcv Speed   0 MB/s
-Send Speed 1355.018 MB/s, BPF Speed 1354.887 MB/s, Rcv Speed   0 MB/s
-'''
-Due to the high send rate, the RX processing path may frequently hit the
-sk_rcvbuf limit. Once triggered, incorrect _sk_redir will cause the flow
-to mistakenly enter the "!ingress" path, leading to send failures.
-(The Rcv speed depends on tcp_rmem).
+I do not know exactly why, but it is probably due to the
+TOE (TCP offload engine) feature that is coupled with the
+segmentation feature - it is not possible to turn one
+part off and not the other, either both TOE and TSO are
+active, or neither of them.
 
-After this patch:
-'''
-./bench sockmap -c 2 -p 1 -a --rx-verdict-ingress
-Setting up benchmark 'sockmap'...
-create socket fd c1:13 p1:14 c2:15 p2:16
-Benchmark 'sockmap' started.
-Send Speed 1347.236 MB/s, BPF Speed 1347.367 MB/s, Rcv Speed   65.402 MB/s
-Send Speed 1353.320 MB/s, BPF Speed 1353.320 MB/s, Rcv Speed   65.536 MB/s
-Send Speed 1353.186 MB/s, BPF Speed 1353.121 MB/s, Rcv Speed   65.536 MB/s
-'''
+Not having the TOE part active seems detrimental, as if
+that hardware feature is not really supposed to be turned
+off.
 
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Link: https://lore.kernel.org/r/20250407142234.47591-2-jiayuan.chen@linux.dev
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+The datasheet says:
+
+  "Based on packet parsing and TCP connection/NAT table
+   lookup results, the NetEngine puts the packets
+   belonging to the same TCP connection to the same queue
+   for the software to process. The NetEngine puts
+   incoming packets to the buffer or series of buffers
+   for a jumbo packet. With this hardware acceleration,
+   IP/TCP header parsing, checksum validation and
+   connection lookup are offloaded from the software
+   processing."
+
+After numerous tests with the hardware locking up after
+something between minutes and hours depending on load
+using iperf3 I have concluded this is necessary to stabilize
+the hardware.
+
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Link: https://patch.msgid.link/20250408-gemini-ethernet-tso-always-v1-1-e669f932359c@linaro.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-**YES** This commit should be backported to stable kernel trees. ##
-Extensive Analysis ### **Critical Bug Fix Nature** This is a **data loss
-bug** in the BPF sockmap subsystem that causes silent packet drops under
-load conditions. The commit adds a single line that restores essential
-redirect information during EAGAIN retry scenarios. ### **Code Change
-Analysis** The fix adds exactly one line at `net/core/skmsg.c:694`: ```c
-skb_bpf_set_redir(skb, psock->sk, ingress); ``` This line restores
-redirect information that was previously cleared by
-`skb_bpf_redirect_clear(skb)` at line 684. When `sk_psock_handle_skb()`
-returns `-EAGAIN` due to memory pressure or socket buffer limits, the
-work is rescheduled, but without this fix, the redirect information
-(`skb->_sk_redir`) would be lost. ### **Impact Without the Fix** 1.
-**Silent Data Loss**: When EAGAIN occurs, subsequent retry attempts find
-no redirect target (`skb_bpf_redirect_fetch()` returns NULL), causing
-packets to be dropped in `sk_psock_skb_redirect()` at lines 935-938. 2.
-**BPF Policy Bypass**: Packets that should be redirected according to
-BPF program logic get dropped instead, effectively bypassing network
-policies. 3. **Production Impact**: The commit message shows concrete
-performance degradation - receive speeds dropping from 65+ MB/s to 0
-MB/s under high load conditions. ### **Backport Suitability Factors**
-**✅ Minimal and Surgical:** - Single line addition - No API changes or
-structural modifications - Uses existing stable function
-`skb_bpf_set_redir()` **✅ Self-Contained:** - Fix only affects the
-specific error path (`ret == -EAGAIN`) - No dependencies on other
-concurrent changes - Uses well-established APIs present across kernel
-versions **✅ Clear Bug Fix Semantics:** - Restores state that was
-previously cleared - Follows the established pattern: clear → try →
-restore on failure - The comment explicitly states "Restore redir info
-we cleared before" **✅ Critical Subsystem:** - Affects BPF sockmap, a
-core networking infrastructure component - Used by service meshes,
-container networking, and load balancers - Failure causes silent data
-loss that's difficult to debug ### **Comparison with Similar Commits**
-Looking at the provided historical examples: - Similar to commit #2 and
-#4 (both marked YES) which also fix sockmap data handling issues -
-Unlike commit #1, #3, and #5 (marked NO) which involved more complex
-architectural changes - This fix addresses a fundamental correctness
-issue rather than optimizations ### **Risk Assessment** **Low Risk:** -
-The fix is in an error recovery path, so it only executes when problems
-already exist - Restoring redirect information cannot make the situation
-worse - The function `skb_bpf_set_redir()` is a simple state restoration
-operation ### **Stable Tree Criteria Compliance** 1. **Important
-bugfix**: ✅ Fixes silent data loss 2. **Minimal risk**: ✅ Single line,
-error path only 3. **No new features**: ✅ Pure bug fix 4. **Confined
-scope**: ✅ Limited to sockmap redirect handling 5. **User-visible
-impact**: ✅ Prevents packet loss under load This commit perfectly fits
-the stable tree criteria for important, low-risk bug fixes that address
-user-visible problems in critical subsystems.
+**YES** This commit should be backported to stable kernel trees based on
+the following analysis: ## Critical Stability Fix This commit addresses
+a critical hardware stability issue where the Cortina Gemini ethernet
+driver would "lock up and crash" after minutes to hours of operation
+under load. The commit message explicitly states: > "Without this quirk
+the driver becomes unstable and lock up and and crash." > "After
+numerous tests with the hardware locking up after something between
+minutes and hours depending on load using iperf3 I have concluded this
+is necessary to stabilize the hardware." ## Code Analysis of Changes The
+changes are minimal and contained within the `gmac_map_tx_bufs` function
+in `drivers/net/ethernet/cortina/gemini.c`: 1. **TCP Detection Logic**:
+The code adds early TCP protocol detection: ```c bool tcp = false; if
+(skb->protocol == htons(ETH_P_IP)) tcp = (ip_hdr(skb)->protocol ==
+IPPROTO_TCP); else tcp = (ipv6_hdr(skb)->nexthdr == IPPROTO_TCP); ``` 2.
+**TOE/TSO Activation for All TCP**: For non-GSO TCP frames, it now
+activates the hardware TOE/TSO engine: ```c } else if (tcp) { mss =
+netdev->mtu + skb_tcp_all_headers(skb); mss = min(mss, skb->len); word1
+|= TSS_MTU_ENABLE_BIT; word3 |= mss; ``` 3. **Simplified Checksum
+Logic**: The checksum handling is simplified by reusing the already-
+determined `tcp` boolean instead of recalculating it. ## Hardware
+Architecture Justification The commit explains this is necessary due to
+the coupled nature of the hardware's TOE (TCP Offload Engine) and TSO
+features: > "it is probably due to the TOE (TCP offload engine) feature
+that is coupled with the segmentation feature - it is not possible to
+turn one part off and not the other" This aligns with the datasheet
+description that the NetEngine performs "IP/TCP header parsing, checksum
+validation and connection lookup" as integrated hardware acceleration.
+## Pattern Match with Historical Commits Looking at the provided similar
+commits: - **Similar Commit #2**: "net: ethernet: cortina: Restore TSO
+support" (Status: YES) - This is the direct predecessor that restored
+TSO but didn't address the stability issue for non-segmented TCP frames
+- **Similar Commit #3**: "net: ethernet: cortina: Locking fixes"
+(Status: YES) - Another stability fix for the same driver Both
+historical commits addressing Cortina Gemini stability issues were
+marked as backport-worthy, establishing a pattern. ## Backport Criteria
+Assessment ✅ **Fixes important bugs**: Prevents driver crashes and
+hardware lockups ✅ **Small and contained**: Changes are localized to one
+function with clear logic ✅ **Minimal risk**: Only affects TCP frame
+handling, doesn't change architectural behavior ✅ **No new features**:
+Uses existing hardware capabilities more appropriately ✅ **Critical
+subsystem**: Network drivers are essential for system stability ## Risk
+Assessment The risk is very low because: - The changes only affect how
+TCP frames are processed by existing hardware features - The TOE/TSO
+hardware engine was already in use for segmented frames - The
+modification ensures consistent hardware state rather than leaving it
+partially enabled - The fix has been tested extensively by the author
+under load conditions This commit follows the stable tree criteria
+perfectly: it's an important bug fix that prevents system crashes, has
+minimal risk of regression, and doesn't introduce new features.
 
- net/core/skmsg.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/cortina/gemini.c | 37 +++++++++++++++++++++------
+ 1 file changed, 29 insertions(+), 8 deletions(-)
 
-diff --git a/net/core/skmsg.c b/net/core/skmsg.c
-index 0ddc4c7188332..29cb5ffd56c0b 100644
---- a/net/core/skmsg.c
-+++ b/net/core/skmsg.c
-@@ -680,7 +680,8 @@ static void sk_psock_backlog(struct work_struct *work)
- 			if (ret <= 0) {
- 				if (ret == -EAGAIN) {
- 					sk_psock_skb_state(psock, state, len, off);
+diff --git a/drivers/net/ethernet/cortina/gemini.c b/drivers/net/ethernet/cortina/gemini.c
+index 991e3839858b5..3735a02e2f977 100644
+--- a/drivers/net/ethernet/cortina/gemini.c
++++ b/drivers/net/ethernet/cortina/gemini.c
+@@ -1143,6 +1143,7 @@ static int gmac_map_tx_bufs(struct net_device *netdev, struct sk_buff *skb,
+ 	struct gmac_txdesc *txd;
+ 	skb_frag_t *skb_frag;
+ 	dma_addr_t mapping;
++	bool tcp = false;
+ 	void *buffer;
+ 	u16 mss;
+ 	int ret;
+@@ -1150,6 +1151,13 @@ static int gmac_map_tx_bufs(struct net_device *netdev, struct sk_buff *skb,
+ 	word1 = skb->len;
+ 	word3 = SOF_BIT;
+ 
++	/* Determine if we are doing TCP */
++	if (skb->protocol == htons(ETH_P_IP))
++		tcp = (ip_hdr(skb)->protocol == IPPROTO_TCP);
++	else
++		/* IPv6 */
++		tcp = (ipv6_hdr(skb)->nexthdr == IPPROTO_TCP);
++
+ 	mss = skb_shinfo(skb)->gso_size;
+ 	if (mss) {
+ 		/* This means we are dealing with TCP and skb->len is the
+@@ -1162,8 +1170,26 @@ static int gmac_map_tx_bufs(struct net_device *netdev, struct sk_buff *skb,
+ 			   mss, skb->len);
+ 		word1 |= TSS_MTU_ENABLE_BIT;
+ 		word3 |= mss;
++	} else if (tcp) {
++		/* Even if we are not using TSO, use the hardware offloader
++		 * for transferring the TCP frame: this hardware has partial
++		 * TCP awareness (called TOE - TCP Offload Engine) and will
++		 * according to the datasheet put packets belonging to the
++		 * same TCP connection in the same queue for the TOE/TSO
++		 * engine to process. The engine will deal with chopping
++		 * up frames that exceed ETH_DATA_LEN which the
++		 * checksumming engine cannot handle (see below) into
++		 * manageable chunks. It flawlessly deals with quite big
++		 * frames and frames containing custom DSA EtherTypes.
++		 */
++		mss = netdev->mtu + skb_tcp_all_headers(skb);
++		mss = min(mss, skb->len);
++		netdev_dbg(netdev, "TOE/TSO len %04x mtu %04x mss %04x\n",
++			   skb->len, netdev->mtu, mss);
++		word1 |= TSS_MTU_ENABLE_BIT;
++		word3 |= mss;
+ 	} else if (skb->len >= ETH_FRAME_LEN) {
+-		/* Hardware offloaded checksumming isn't working on frames
++		/* Hardware offloaded checksumming isn't working on non-TCP frames
+ 		 * bigger than 1514 bytes. A hypothesis about this is that the
+ 		 * checksum buffer is only 1518 bytes, so when the frames get
+ 		 * bigger they get truncated, or the last few bytes get
+@@ -1180,21 +1206,16 @@ static int gmac_map_tx_bufs(struct net_device *netdev, struct sk_buff *skb,
+ 	}
+ 
+ 	if (skb->ip_summed == CHECKSUM_PARTIAL) {
+-		int tcp = 0;
 -
-+					/* Restore redir info we cleared before */
-+					skb_bpf_set_redir(skb, psock->sk, ingress);
- 					/* Delay slightly to prioritize any
- 					 * other work that might be here.
- 					 */
+ 		/* We do not switch off the checksumming on non TCP/UDP
+ 		 * frames: as is shown from tests, the checksumming engine
+ 		 * is smart enough to see that a frame is not actually TCP
+ 		 * or UDP and then just pass it through without any changes
+ 		 * to the frame.
+ 		 */
+-		if (skb->protocol == htons(ETH_P_IP)) {
++		if (skb->protocol == htons(ETH_P_IP))
+ 			word1 |= TSS_IP_CHKSUM_BIT;
+-			tcp = ip_hdr(skb)->protocol == IPPROTO_TCP;
+-		} else { /* IPv6 */
++		else
+ 			word1 |= TSS_IPV6_ENABLE_BIT;
+-			tcp = ipv6_hdr(skb)->nexthdr == IPPROTO_TCP;
+-		}
+ 
+ 		word1 |= tcp ? TSS_TCP_CHKSUM_BIT : TSS_UDP_CHKSUM_BIT;
+ 	}
 -- 
 2.39.5
 
