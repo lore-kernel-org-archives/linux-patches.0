@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8E9E27AC59;
-	Wed,  4 Jun 2025 01:07:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17697253F03;
+	Wed,  4 Jun 2025 01:07:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748999232; cv=none; b=mvpADgWHwor6fhYPBxMB6LeXXeeA+fliu+UZDctqTH6x1BENtVc7BODhTvEhGWUkwkv6kirhOjMDMs+aprg6ze/UAZfUjtHRX5yYLutoLajb3WAdcbvKM1LBkM9vrATtjYnIeNEUrHz9NLMlg2NkZ/iitZtISbBysoZdmEcIJn0=
+	t=1748999236; cv=none; b=dh5uweFKTGYU+NBNWuVplsZzMZbE7EeOUtyPUOOkabfAWcc+YZ7HIJVlPNCmlRmho7i1VnPF0P4SsM+Ine5oZUBx5TwgqkSbPLq2PeX+t2YoN05LoHyuy5ydw1vuA6Nu+tOx8Zq6UQQZDbpTqaMSw4AN1cq9iZ3Zw7rDQRxmASg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748999232; c=relaxed/simple;
-	bh=NKs3htfCsGbhXiFjr6CCOQBIz2shlWn8YKn7p6JWq1o=;
+	s=arc-20240116; t=1748999236; c=relaxed/simple;
+	bh=w3FPo9f/e18ejmN1oZx2O8crnFnL6oVnIVlzIPFn+1A=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CiElFbT9t2B6cMhUmubvPXhGrAmKhvRzrJB0KrxnD9dN9Sc5FvC8dg5NKalhrt6QqJMiqAa+KvY0905j9dmftU/vYuu+Lt28Jp5lBy2rXglybwbekNh0C7vhg6KeH50kHgxa/F07WeX8Qd8pH083QHTxa465u2mW13VIJpZ6aK4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IH2oe8bq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hTr6dc1X2QXc+Cwp/4eTXQoV6jGMqe4j4J/1dxgS4PfwPtZj3JN7fbZiTB82aPzLT9tjIVDo0Tl3/W3qsfvotEFD4wjdT4x1Qd+e56SlBhjg2Ozx24tX3wbs00cE84Jj6eXh3bJ+4dVV7ZbUlh6sGKlF+CBMFz938oD923T9zdQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dnpbFdN/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IH2oe8bq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1844C4CEED;
-	Wed,  4 Jun 2025 01:07:11 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dnpbFdN/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07669C4CEED;
+	Wed,  4 Jun 2025 01:07:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748999232;
-	bh=NKs3htfCsGbhXiFjr6CCOQBIz2shlWn8YKn7p6JWq1o=;
+	s=k20201202; t=1748999236;
+	bh=w3FPo9f/e18ejmN1oZx2O8crnFnL6oVnIVlzIPFn+1A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IH2oe8bqZB+Uu9c9lXEfGcb754X2f4Sfv77JnIjbO+8JUie3vlr3wge7p7f8Mj+d+
-	 FT7R0yaQZxnJdXKxRO1QFaM43suR7RL7IxCn8gl9JeLQjH3OzYqq5MtePAlm0CYAiv
-	 cOjASTNAJcshUo6CP5TD1GC7z0GL4lOFBZqlWyqVD4e2jyWjbOeFKc8/Ki5Ilhqf2o
-	 8Y712Slra7pvbLTuOgmR7cWZue2bj/dTm8nFv9dltz7h4d50OlgQtO0x9ZrTZNoJyP
-	 afr+h/X6CSKHYEPrh+GH+QX1E+I/x9ROb+1HbpHHcKyC42A6QrFrA5SYbMDBrcUqRF
-	 XwQmLt9KcMWlQ==
+	b=dnpbFdN/Bn51GYqNjehKb9FJI/WISZ4V/hNlgFEj6N/uiwvHN6sZ9Ns4IrVsu3seS
+	 8jjRa3WyxzBNeN1U5XBODNKbY5JmHZxm87hjC3D0kqFkoOip0LoxtrZJiOSDEh3isP
+	 QG3YhTjcmBpIYw12dp6S4ErU8uXAGxT+0NNaWSCG/Qc4ZNbCN8Ik3u4mAxwhA6/nfx
+	 E8V0BMJiNfClCU1GZHzWtL7DthsveFVo8C+cD/BV/nqOZC7GR42x3a0vWLmQCehpZe
+	 y5A/Cq5wC6LvBttQm/oKzDwc8Lyh/+SN88gXiDiTr2W/V+6wiVMZRj0MmioCFQ5FdU
+	 BBiVpwTbPBe1g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Petr Malat <oss@malat.biz>,
-	Xin Long <lucien.xin@gmail.com>,
+Cc: Moon Yeounsu <yyyynoom@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	marcelo.leitner@gmail.com,
-	linux-sctp@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.4 04/20] sctp: Do not wake readers in __sctp_write_space()
-Date: Tue,  3 Jun 2025 21:06:50 -0400
-Message-Id: <20250604010706.7395-4-sashal@kernel.org>
+	horms@kernel.org,
+	tglx@linutronix.de,
+	davem@davemloft.net
+Subject: [PATCH AUTOSEL 5.4 05/20] net: dlink: add synchronization for stats update
+Date: Tue,  3 Jun 2025 21:06:51 -0400
+Message-Id: <20250604010706.7395-5-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250604010706.7395-1-sashal@kernel.org>
 References: <20250604010706.7395-1-sashal@kernel.org>
@@ -50,88 +50,132 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 5.4.293
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Petr Malat <oss@malat.biz>
+From: Moon Yeounsu <yyyynoom@gmail.com>
 
-[ Upstream commit af295892a7abbf05a3c2ba7abc4d81bb448623d6 ]
+[ Upstream commit 12889ce926e9a9baf6b83d809ba316af539b89e2 ]
 
-Function __sctp_write_space() doesn't set poll key, which leads to
-ep_poll_callback() waking up all waiters, not only these waiting
-for the socket being writable. Set the key properly using
-wake_up_interruptible_poll(), which is preferred over the sync
-variant, as writers are not woken up before at least half of the
-queue is available. Also, TCP does the same.
+This patch synchronizes code that accesses from both user-space
+and IRQ contexts. The `get_stats()` function can be called from both
+context.
 
-Signed-off-by: Petr Malat <oss@malat.biz>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20250516081727.1361451-1-oss@malat.biz
+`dev->stats.tx_errors` and `dev->stats.collisions` are also updated
+in the `tx_errors()` function. Therefore, these fields must also be
+protected by synchronized.
+
+There is no code that accessses `dev->stats.tx_errors` between the
+previous and updated lines, so the updating point can be moved.
+
+Signed-off-by: Moon Yeounsu <yyyynoom@gmail.com>
+Link: https://patch.msgid.link/20250515075333.48290-1-yyyynoom@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Based on my analysis of the commit and comparison with similar
-historical commits, here is my assessment: **YES** This commit should be
-backported to stable kernel trees. ## Detailed Analysis: ### 1. **Core
-Issue Being Fixed** The commit addresses a specific bug in SCTP's
-`__sctp_write_space()` function where `wake_up_interruptible()` is
-called without setting a poll key. This causes `ep_poll_callback()` to
-wake up **all** waiters on the socket, not just those waiting for
-writability (EPOLLOUT events). This is inefficient and can cause
-spurious wake-ups for readers waiting on the same socket. ### 2. **Code
-Changes Analysis** The fix is minimal and surgical: ```c // Before:
-wake_up_interruptible(&wq->wait); // After:
-wake_up_interruptible_poll(&wq->wait, EPOLLOUT | EPOLLWRNORM |
-EPOLLWRBAND); ``` ### 3. **Consistency with Existing Patterns** Looking
-at `/home/sasha/linux/net/core/stream.c:41-42`, I can see that the fix
-aligns with established patterns in the kernel networking stack: ```c
-wake_up_interruptible_poll(&wq->wait, EPOLLOUT | EPOLLWRNORM |
-EPOLLWRBAND); ``` This is exactly what TCP and other protocols use in
-their write space callbacks, making SCTP consistent with the rest of the
-networking subsystem. ### 4. **Comparison with Historical Similar
-Commits** **Positive Indicators (matching YES backports):** - **Similar
-Commit #1**: Also SCTP-related, fixes socket behavior issue affecting
-users - **Similar Commit #4**: TCP polling fix with similar wake-up
-improvements - **Similar Commit #5**: SCTP wake-up related fix that was
-backported **Risk Assessment:** - The change is contained to a single
-function (`__sctp_write_space`) - No architectural changes - Follows
-existing kernel patterns exactly - Low regression risk - improves
-efficiency without changing core behavior ### 5. **Impact and Benefits**
-- **Performance improvement**: Eliminates spurious wake-ups for readers
-when only write space becomes available - **Correctness**: Ensures only
-appropriate waiters are woken (those waiting for EPOLLOUT) -
-**Consistency**: Aligns SCTP behavior with TCP and other protocols ###
-6. **Stable Tree Criteria Compliance** ✅ **Important bugfix**: Fixes
-incorrect polling behavior affecting performance ✅ **Minimal risk**:
-Single-line change following established patterns ✅ **Small and
-contained**: Only affects one function in SCTP ✅ **No new features**:
-Pure bugfix ✅ **No architectural changes**: Maintains existing
-interfaces ### 7. **Clear Author Intent** The commit message explicitly
-states this change makes SCTP behave "as TCP does," indicating this is a
-correctness fix to align with established networking patterns rather
-than a new feature. This commit exhibits all the characteristics of a
-good stable backport candidate: it's a small, contained bugfix that
-improves correctness and performance without introducing new
-functionality or significant risk.
+**YES** This commit should be backported to stable kernel trees for the
+following reasons: **1. Critical Data Race Fix**: The commit addresses a
+real data race condition where `dev->stats.tx_errors` and
+`dev->stats.collisions` can be accessed concurrently from user-space
+(`get_stats()` function) and IRQ context (`tx_error()` function). This
+is a genuine bug that can cause statistics corruption. **2. User-Visible
+Impact**: The race condition affects network statistics that are exposed
+to userspace through standard interfaces like `/proc/net/dev` and
+ethtool. Corrupted statistics can mislead network monitoring tools and
+system administrators. **3. Low Risk, High Value Fix**: The changes are
+minimal and follow established kernel synchronization patterns: - Adds a
+single `spinlock_t stats_lock` field to the driver's private structure -
+Protects critical sections with
+`spin_lock_irqsave()`/`spin_unlock_irqrestore()` in `get_stats()` -
+Protects IRQ-context updates in `tx_error()` with the same spinlock - No
+functional logic changes, only synchronization additions **4. Self-
+Contained Changes**: The fix is entirely within the dl2k driver
+(`drivers/net/ethernet/dlink/dl2k.c` and `dl2k.h`), making it safe to
+backport without affecting other subsystems. **5. Precedent from Similar
+Commits**: This closely mirrors "Similar Commit #5" (net: stmmac:
+protect updates of 64-bit statistics counters) which was marked as
+"Backport Status: YES" for addressing the same type of statistics
+synchronization issue. **6. Follows Stable Tree Criteria**: - Fixes an
+important bug affecting users - Changes are small and contained -
+Minimal risk of regression - No new features or architectural changes
+The fix prevents potential data corruption in network statistics, which
+is exactly the type of bug that stable kernels should address to
+maintain system reliability and data integrity.
 
- net/sctp/socket.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/dlink/dl2k.c | 14 +++++++++++++-
+ drivers/net/ethernet/dlink/dl2k.h |  2 ++
+ 2 files changed, 15 insertions(+), 1 deletion(-)
 
-diff --git a/net/sctp/socket.c b/net/sctp/socket.c
-index d7257eec66b1c..1ac05147dc304 100644
---- a/net/sctp/socket.c
-+++ b/net/sctp/socket.c
-@@ -8946,7 +8946,8 @@ static void __sctp_write_space(struct sctp_association *asoc)
- 		wq = rcu_dereference(sk->sk_wq);
- 		if (wq) {
- 			if (waitqueue_active(&wq->wait))
--				wake_up_interruptible(&wq->wait);
-+				wake_up_interruptible_poll(&wq->wait, EPOLLOUT |
-+						EPOLLWRNORM | EPOLLWRBAND);
+diff --git a/drivers/net/ethernet/dlink/dl2k.c b/drivers/net/ethernet/dlink/dl2k.c
+index 55e720d2ea0c7..77388a66b1d8f 100644
+--- a/drivers/net/ethernet/dlink/dl2k.c
++++ b/drivers/net/ethernet/dlink/dl2k.c
+@@ -155,6 +155,8 @@ rio_probe1 (struct pci_dev *pdev, const struct pci_device_id *ent)
+ 	np->ioaddr = ioaddr;
+ 	np->chip_id = chip_idx;
+ 	np->pdev = pdev;
++
++	spin_lock_init(&np->stats_lock);
+ 	spin_lock_init (&np->tx_lock);
+ 	spin_lock_init (&np->rx_lock);
  
- 			/* Note that we try to include the Async I/O support
- 			 * here by modeling from the current TCP/UDP code.
+@@ -875,7 +877,6 @@ tx_error (struct net_device *dev, int tx_status)
+ 	frame_id = (tx_status & 0xffff0000);
+ 	printk (KERN_ERR "%s: Transmit error, TxStatus %4.4x, FrameId %d.\n",
+ 		dev->name, tx_status, frame_id);
+-	dev->stats.tx_errors++;
+ 	/* Ttransmit Underrun */
+ 	if (tx_status & 0x10) {
+ 		dev->stats.tx_fifo_errors++;
+@@ -912,9 +913,15 @@ tx_error (struct net_device *dev, int tx_status)
+ 		rio_set_led_mode(dev);
+ 		/* Let TxStartThresh stay default value */
+ 	}
++
++	spin_lock(&np->stats_lock);
+ 	/* Maximum Collisions */
+ 	if (tx_status & 0x08)
+ 		dev->stats.collisions++;
++
++	dev->stats.tx_errors++;
++	spin_unlock(&np->stats_lock);
++
+ 	/* Restart the Tx */
+ 	dw32(MACCtrl, dr16(MACCtrl) | TxEnable);
+ }
+@@ -1084,7 +1091,9 @@ get_stats (struct net_device *dev)
+ 	int i;
+ #endif
+ 	unsigned int stat_reg;
++	unsigned long flags;
+ 
++	spin_lock_irqsave(&np->stats_lock, flags);
+ 	/* All statistics registers need to be acknowledged,
+ 	   else statistic overflow could cause problems */
+ 
+@@ -1134,6 +1143,9 @@ get_stats (struct net_device *dev)
+ 	dr16(TCPCheckSumErrors);
+ 	dr16(UDPCheckSumErrors);
+ 	dr16(IPCheckSumErrors);
++
++	spin_unlock_irqrestore(&np->stats_lock, flags);
++
+ 	return &dev->stats;
+ }
+ 
+diff --git a/drivers/net/ethernet/dlink/dl2k.h b/drivers/net/ethernet/dlink/dl2k.h
+index 195dc6cfd8955..c24823e909ef9 100644
+--- a/drivers/net/ethernet/dlink/dl2k.h
++++ b/drivers/net/ethernet/dlink/dl2k.h
+@@ -372,6 +372,8 @@ struct netdev_private {
+ 	struct pci_dev *pdev;
+ 	void __iomem *ioaddr;
+ 	void __iomem *eeprom_addr;
++	// To ensure synchronization when stats are updated.
++	spinlock_t stats_lock;
+ 	spinlock_t tx_lock;
+ 	spinlock_t rx_lock;
+ 	unsigned int rx_buf_sz;		/* Based on MTU+slack. */
 -- 
 2.39.5
 
