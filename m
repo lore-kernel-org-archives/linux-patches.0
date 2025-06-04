@@ -1,43 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA1A2224CC;
-	Wed,  4 Jun 2025 00:51:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8F061CAA4;
+	Wed,  4 Jun 2025 00:51:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748998311; cv=none; b=bo4cxJA5pdsTW3uKhHkcIT4WZbPsAjqKrWGdfoivJWu0FCEATIjCgAjDLx67K4RIVBZ2vFmSVmowV2ezHMy6IY0sGcQtEJwA957lT3eK4O8ysVh03cM72jl55FT8HFGLjL7Tg5ZaC/TWB3F6JZ7ErTbFj3OEaU5UwMFLK8TjkT8=
+	t=1748998314; cv=none; b=M/tsVoDnzBwA+H2tpkZiQ7AWIdbFctuNtnbfzY7emMTGfNQzMzXHu0qsHj7+yF7gNl0/ANqqOluqYrDJYeVsFkeRwLK+kfdhJ9i1q3gCSoy/7Bs1ma4YZlB83wQdVt2wvXnrA5siOvolfnSbuD1I2udcmvorRB054p082f/BT4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748998311; c=relaxed/simple;
-	bh=si9RfQnKLGILklEB11U6lglq0NWiTH7lhLCqN9v9q1E=;
+	s=arc-20240116; t=1748998314; c=relaxed/simple;
+	bh=KQRPWiVIirFM5HlqIdlbktPx3zZ+EkbTpPF8djX4G4I=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=aqJp4x9S7kXwclSAZ6Gc5amg99dxYZz/cFQ7dwhjUcpxx287N8Q1KWkf2e7jVPx6xjpqupZi3iQIwTcSDchurQJE3DAEMvveHHZIAfQDKoKrLJsXFF5ojxhSdOImZq3j9tHG91F65kUSBPh1ryqM/4VOhRcyTAcvGMB1q63Aw6I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YFC7X2MT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X4BY/fNDD6+KJj6zEjR7AZusU3+HrgtuI4Uwcwf5Zym9aM931mfUF1Pe9scoptgOhSN2U4LXxDPeNPYHwweQoF2AckdMIp+dzmPpeqbiu6WnU9rDCs3Xua9A3oX5uEM+iDGTn4DF+r7+hssQLTDlS6SQLB/E29Uoy5KCX8MAge0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=F1+zSFVB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YFC7X2MT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62EC3C4CEED;
-	Wed,  4 Jun 2025 00:51:50 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="F1+zSFVB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D886AC4CEF1;
+	Wed,  4 Jun 2025 00:51:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748998311;
-	bh=si9RfQnKLGILklEB11U6lglq0NWiTH7lhLCqN9v9q1E=;
+	s=k20201202; t=1748998313;
+	bh=KQRPWiVIirFM5HlqIdlbktPx3zZ+EkbTpPF8djX4G4I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YFC7X2MTPBw+8mT4E2hCY9m2B4te8FqGIPAYwejidmD/vLXKDQYc01YK6b0YCXTZW
-	 R84/+H74z08FJ1VqWSUPt0g2vPvncPrZ+i/uQv5/t+lUdTQ8i3hFInmgwUJgGesgnw
-	 i1tjgaslJf4HGkRukGRd8ehnCdNwpPYoq6c4qVH6rnoCKyXRDQFZU/ZTGMQMEFnm4Z
-	 debFb7w4Nyj+bh/lAHzguczvfRUim/Fwdl0GrGhaCRb5CYom217i2Pj/fRGlKFh4br
-	 zx/y2i0ICJNmTxDpYisx3oaKhfpBmdsQBXhUuPDW4lVSpqxSyouEWRCR7ttq9vWI32
-	 zbvKeC8RzsL3g==
+	b=F1+zSFVBNfUIC9vLfCMo8uqHv2WsFrb2wvRUwcgKSUsIEvZ+/Y4xEIJQ1kjnVslUc
+	 4R4CoRqEG6uOf6njrxf9YkJfBui2tp/hf766naypq1FwskHmawSOAjShiz1cn4mvOW
+	 W7QqP8MHyjVW6p+HqpFNBIEjN31PjhfFUxUXslop0J3yAIbuigQ9wJdw90a9NkbVev
+	 hD0hHNe3GrgAEgszqIUCAgA2X1toNI0F1XZOBxqiY/YnoBX5PHbhVxLogMrpTEiarg
+	 ob5RbAyQFQi+mf6d8Z/jofMUXS/RBHOc+mtJoQzbiikBk9Rt5NbtxCpBQR4LaKqGGU
+	 gCHe61RIZXTQA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Moon Yeounsu <yyyynoom@gmail.com>,
+Cc: Frank Wunderlich <frank-w@public-files.de>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	horms@kernel.org,
-	tglx@linutronix.de,
-	davem@davemloft.net
-Subject: [PATCH AUTOSEL 6.15 028/118] net: dlink: add synchronization for stats update
-Date: Tue,  3 Jun 2025 20:49:19 -0400
-Message-Id: <20250604005049.4147522-28-sashal@kernel.org>
+	daniel@makrotopia.org,
+	dqfext@gmail.com,
+	SkyLake.Huang@mediatek.com,
+	matthias.bgg@gmail.com,
+	angelogioacchino.delregno@collabora.com,
+	netdev@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-mediatek@lists.infradead.org
+Subject: [PATCH AUTOSEL 6.15 029/118] net: phy: mediatek: do not require syscon compatible for pio property
+Date: Tue,  3 Jun 2025 20:49:20 -0400
+Message-Id: <20250604005049.4147522-29-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250604005049.4147522-1-sashal@kernel.org>
 References: <20250604005049.4147522-1-sashal@kernel.org>
@@ -52,130 +58,105 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.15
 Content-Transfer-Encoding: 8bit
 
-From: Moon Yeounsu <yyyynoom@gmail.com>
+From: Frank Wunderlich <frank-w@public-files.de>
 
-[ Upstream commit 12889ce926e9a9baf6b83d809ba316af539b89e2 ]
+[ Upstream commit 15d7b3dfafa98270eade6c77d2336790dde0a40d ]
 
-This patch synchronizes code that accesses from both user-space
-and IRQ contexts. The `get_stats()` function can be called from both
-context.
+Current implementation requires syscon compatible for pio property
+which is used for driving the switch leds on mt7988.
 
-`dev->stats.tx_errors` and `dev->stats.collisions` are also updated
-in the `tx_errors()` function. Therefore, these fields must also be
-protected by synchronized.
+Replace syscon_regmap_lookup_by_phandle with of_parse_phandle and
+device_node_to_regmap to get the regmap already assigned by pinctrl
+driver.
 
-There is no code that accessses `dev->stats.tx_errors` between the
-previous and updated lines, so the updating point can be moved.
-
-Signed-off-by: Moon Yeounsu <yyyynoom@gmail.com>
-Link: https://patch.msgid.link/20250515075333.48290-1-yyyynoom@gmail.com
+Signed-off-by: Frank Wunderlich <frank-w@public-files.de>
+Link: https://patch.msgid.link/20250510174933.154589-1-linux@fw-web.de
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-**YES** This commit should be backported to stable kernel trees for the
-following reasons: **1. Critical Data Race Fix**: The commit addresses a
-real data race condition where `dev->stats.tx_errors` and
-`dev->stats.collisions` can be accessed concurrently from user-space
-(`get_stats()` function) and IRQ context (`tx_error()` function). This
-is a genuine bug that can cause statistics corruption. **2. User-Visible
-Impact**: The race condition affects network statistics that are exposed
-to userspace through standard interfaces like `/proc/net/dev` and
-ethtool. Corrupted statistics can mislead network monitoring tools and
-system administrators. **3. Low Risk, High Value Fix**: The changes are
-minimal and follow established kernel synchronization patterns: - Adds a
-single `spinlock_t stats_lock` field to the driver's private structure -
-Protects critical sections with
-`spin_lock_irqsave()`/`spin_unlock_irqrestore()` in `get_stats()` -
-Protects IRQ-context updates in `tx_error()` with the same spinlock - No
-functional logic changes, only synchronization additions **4. Self-
-Contained Changes**: The fix is entirely within the dl2k driver
-(`drivers/net/ethernet/dlink/dl2k.c` and `dl2k.h`), making it safe to
-backport without affecting other subsystems. **5. Precedent from Similar
-Commits**: This closely mirrors "Similar Commit #5" (net: stmmac:
-protect updates of 64-bit statistics counters) which was marked as
-"Backport Status: YES" for addressing the same type of statistics
-synchronization issue. **6. Follows Stable Tree Criteria**: - Fixes an
-important bug affecting users - Changes are small and contained -
-Minimal risk of regression - No new features or architectural changes
-The fix prevents potential data corruption in network statistics, which
-is exactly the type of bug that stable kernels should address to
-maintain system reliability and data integrity.
+**YES** This commit should be backported to stable kernel trees. ##
+Analysis ### Core Issue Being Fixed The commit addresses a **device tree
+compatibility problem** in the MediaTek MT7988 PHY driver. The original
+code used `syscon_regmap_lookup_by_phandle()` which **requires** the
+target device node to have a "syscon" compatible string. This created an
+artificial requirement that forced users to modify their device trees
+even when the pinctrl driver already provided the necessary regmap. ###
+Code Changes Analysis The change is minimal but significant: ```c //
+OLD: Forces syscon compatible requirement regmap =
+syscon_regmap_lookup_by_phandle(np, "mediatek,pio"); // NEW: Works with
+any regmap provider pio_np = of_parse_phandle(np, "mediatek,pio", 0);
+regmap = device_node_to_regmap(pio_np); of_node_put(pio_np); ``` **Key
+differences:** - `syscon_regmap_lookup_by_phandle()` requires "syscon"
+compatible - `device_node_to_regmap()` works with any device that has
+registered a regmap - Proper error handling maintained with
+`of_node_put()` ### Why This Should Be Backported **1. Fixes Real User
+Issues:** - MT7988 hardware is actively deployed (BananaPi R4,
+networking devices) - Users cannot use PHY LED functionality without
+modifying device trees - This affects real hardware in production, not
+just development boards **2. Low Risk Change:** - Only 9 insertions, 1
+deletion - No functional behavior change - same register access, same
+error paths - Uses well-established kernel APIs - **Backward
+compatible:** Still works with DTs that have syscon compatible -
+**Forward compatible:** Also works with DTs that don't have syscon
+compatible **3. High Impact Fix:** - Removes artificial device tree
+constraints - Enables legitimate hardware configurations without DT
+hacks - Prevents fragmentation of MT7988 ecosystem across kernel
+versions - LED functionality is important for networking hardware
+visibility **4. Fits Stable Criteria:** - Fixes important functionality
+for users - Does not introduce new features - No architectural changes -
+Confined to one driver/subsystem - Minimal regression risk ###
+Comparison to Similar Commits Looking at the historical examples
+provided, this commit is similar to "clk: mediatek: Get regmap without
+syscon compatible check" which also moved from `syscon_node_to_regmap()`
+to `device_node_to_regmap()` for the same compatibility reasons. The
+pattern of removing unnecessary syscon requirements is well-established
+and safe. ### Real-World Impact Without this fix, users with legitimate
+device trees (where pinctrl doesn't have syscon compatible) cannot use
+MT7988 PHY LED functionality. This forces them to either: 1. Patch their
+device trees (not always possible in production) 2. Use older kernel
+versions 3. Lose LED functionality entirely The commit solves a
+**compatibility regression** rather than adding new functionality,
+making it an ideal stable backport candidate.
 
- drivers/net/ethernet/dlink/dl2k.c | 14 +++++++++++++-
- drivers/net/ethernet/dlink/dl2k.h |  2 ++
- 2 files changed, 15 insertions(+), 1 deletion(-)
+ drivers/net/phy/mediatek/mtk-ge-soc.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/dlink/dl2k.c b/drivers/net/ethernet/dlink/dl2k.c
-index 232e839a9d071..038a0400c1f95 100644
---- a/drivers/net/ethernet/dlink/dl2k.c
-+++ b/drivers/net/ethernet/dlink/dl2k.c
-@@ -146,6 +146,8 @@ rio_probe1 (struct pci_dev *pdev, const struct pci_device_id *ent)
- 	np->ioaddr = ioaddr;
- 	np->chip_id = chip_idx;
- 	np->pdev = pdev;
-+
-+	spin_lock_init(&np->stats_lock);
- 	spin_lock_init (&np->tx_lock);
- 	spin_lock_init (&np->rx_lock);
+diff --git a/drivers/net/phy/mediatek/mtk-ge-soc.c b/drivers/net/phy/mediatek/mtk-ge-soc.c
+index 175cf5239bba8..21975ef946d5b 100644
+--- a/drivers/net/phy/mediatek/mtk-ge-soc.c
++++ b/drivers/net/phy/mediatek/mtk-ge-soc.c
+@@ -7,6 +7,7 @@
+ #include <linux/pinctrl/consumer.h>
+ #include <linux/phy.h>
+ #include <linux/regmap.h>
++#include <linux/of.h>
  
-@@ -865,7 +867,6 @@ tx_error (struct net_device *dev, int tx_status)
- 	frame_id = (tx_status & 0xffff0000);
- 	printk (KERN_ERR "%s: Transmit error, TxStatus %4.4x, FrameId %d.\n",
- 		dev->name, tx_status, frame_id);
--	dev->stats.tx_errors++;
- 	/* Ttransmit Underrun */
- 	if (tx_status & 0x10) {
- 		dev->stats.tx_fifo_errors++;
-@@ -902,9 +903,15 @@ tx_error (struct net_device *dev, int tx_status)
- 		rio_set_led_mode(dev);
- 		/* Let TxStartThresh stay default value */
- 	}
+ #include "../phylib.h"
+ #include "mtk.h"
+@@ -1319,6 +1320,7 @@ static int mt7988_phy_probe_shared(struct phy_device *phydev)
+ {
+ 	struct device_node *np = dev_of_node(&phydev->mdio.bus->dev);
+ 	struct mtk_socphy_shared *shared = phy_package_get_priv(phydev);
++	struct device_node *pio_np;
+ 	struct regmap *regmap;
+ 	u32 reg;
+ 	int ret;
+@@ -1336,7 +1338,13 @@ static int mt7988_phy_probe_shared(struct phy_device *phydev)
+ 	 * The 4 bits in TPBANK0 are kept as package shared data and are used to
+ 	 * set LED polarity for each of the LED0.
+ 	 */
+-	regmap = syscon_regmap_lookup_by_phandle(np, "mediatek,pio");
++	pio_np = of_parse_phandle(np, "mediatek,pio", 0);
++	if (!pio_np)
++		return -ENODEV;
 +
-+	spin_lock(&np->stats_lock);
- 	/* Maximum Collisions */
- 	if (tx_status & 0x08)
- 		dev->stats.collisions++;
++	regmap = device_node_to_regmap(pio_np);
++	of_node_put(pio_np);
 +
-+	dev->stats.tx_errors++;
-+	spin_unlock(&np->stats_lock);
-+
- 	/* Restart the Tx */
- 	dw32(MACCtrl, dr16(MACCtrl) | TxEnable);
- }
-@@ -1073,7 +1080,9 @@ get_stats (struct net_device *dev)
- 	int i;
- #endif
- 	unsigned int stat_reg;
-+	unsigned long flags;
+ 	if (IS_ERR(regmap))
+ 		return PTR_ERR(regmap);
  
-+	spin_lock_irqsave(&np->stats_lock, flags);
- 	/* All statistics registers need to be acknowledged,
- 	   else statistic overflow could cause problems */
- 
-@@ -1123,6 +1132,9 @@ get_stats (struct net_device *dev)
- 	dr16(TCPCheckSumErrors);
- 	dr16(UDPCheckSumErrors);
- 	dr16(IPCheckSumErrors);
-+
-+	spin_unlock_irqrestore(&np->stats_lock, flags);
-+
- 	return &dev->stats;
- }
- 
-diff --git a/drivers/net/ethernet/dlink/dl2k.h b/drivers/net/ethernet/dlink/dl2k.h
-index 0e33e2eaae960..56aff2f0bdbfa 100644
---- a/drivers/net/ethernet/dlink/dl2k.h
-+++ b/drivers/net/ethernet/dlink/dl2k.h
-@@ -372,6 +372,8 @@ struct netdev_private {
- 	struct pci_dev *pdev;
- 	void __iomem *ioaddr;
- 	void __iomem *eeprom_addr;
-+	// To ensure synchronization when stats are updated.
-+	spinlock_t stats_lock;
- 	spinlock_t tx_lock;
- 	spinlock_t rx_lock;
- 	unsigned int rx_buf_sz;		/* Based on MTU+slack. */
 -- 
 2.39.5
 
