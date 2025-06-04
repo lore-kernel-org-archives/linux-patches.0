@@ -1,45 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4933370838;
-	Wed,  4 Jun 2025 01:04:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8FC519ABAC;
+	Wed,  4 Jun 2025 01:04:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748999095; cv=none; b=G93lPwvG+W+nu2H4Y8xgYHruqq+lA4HJOFB/XMSFUuaGzkF2vGV29mOfAi8EUrod/yZKqqxAJVH9vj7scR8Is68QXlKXH7nSZ67GfK3P0on2GrG1p4R6XPx862nyH4OgoCAAZb71N/kbdCQeLQh8aASPkU+KNvzj+XpmhkJ/WkY=
+	t=1748999097; cv=none; b=MssXeV+T+kVW7KAqguQ5RuK5UnZSzP+5AJ39zZO1TK5flEobj24jdjBW4wU/D1By49a51aD8rQzLjZU+YLGKTylcmE8G5XkotkLv9iMZwIWSWUJBXGyqgvY7S0LnO6urnfeJP8uXZlUNKZRB9rJIgBynA2pEciK5reAziZdPhag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748999095; c=relaxed/simple;
-	bh=EGW8IG26zLd3hXax9meiv8hmZaJnDGeIZcfT+on6QBM=;
+	s=arc-20240116; t=1748999097; c=relaxed/simple;
+	bh=+KRbKetx8/FSnFBf9cwBfM4I9LfPt6Acghbl8AtKm5o=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hyGkJnu2Z4HXyNskv2qh7eM0h/2AD+CW4XAnlnbjn8+teYEkDWTsc5Kb7RPQ46O6mpgNsQgBibj9mTzrcfcfBKLW6aBLqwF9wUKitlG0qrgkqJ/nrV8moQ66EdE99dw/1qW9V0EX7+23/W1FRZa4z3XhxrDoVE8BFT1v5fJiqMg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ox/C7ZhB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=F3zoN1QCra4wOAcpXRtB2lZB6hNQlxrBHgYH/+IvLtvSSvzMABTbbu/IgoGYOdv2qwmyo+BZpNhc9mGzLshjqw6oef/j3UBztWy2Woe1TSYQIsYUxQSGH4Vwbz8nvT/p30ebcEhPNHSFgU46k97KpKL28eao+yqkaFqAarUPYKo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Irng4lSs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ox/C7ZhB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4DFAC4CEED;
-	Wed,  4 Jun 2025 01:04:53 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Irng4lSs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30C99C4CEF1;
+	Wed,  4 Jun 2025 01:04:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748999094;
-	bh=EGW8IG26zLd3hXax9meiv8hmZaJnDGeIZcfT+on6QBM=;
+	s=k20201202; t=1748999096;
+	bh=+KRbKetx8/FSnFBf9cwBfM4I9LfPt6Acghbl8AtKm5o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ox/C7ZhBrR05WioyITlwl6TgdrZ+vEztpL6HGmn9s103MRAcGc8JO5/b9ntvvdDr7
-	 /DOH1l/uy4V9JJl0SFN8mA8ToOJcwgLkUmeunn0Q1H64LpxYR8yQXr+DHxQOx3yB+J
-	 Atr1bDq92chJA+oRQMOh4RgTAy5ysPTjs+s5tdZ7TlqwToieFZ2lLcTfhuJHu0/cZg
-	 WMBw0KJmLfX+zgABF/3Hyp/mv5TMCLVL+ns1zGH1qw8JODm9gD8QkJqXpbCC4jAIPb
-	 vQhMH7v5DQJOYHF6FI6S5TlJSvWY+Xpg6pWUhZtPGWx3ZsAL8SQvTDoHiv4BKzOal+
-	 XPU53/okFDhvg==
+	b=Irng4lSsolzqfq5xt2nJGNJIV/JSuRuFA+6HRAcwrmhU+9F9m1sINY0gX3zutO6t3
+	 oe7Yf6h9xMHTkrJVAUDiXPb9ZhxM1xGjTdJFtARUgrXNart49KhgeSdt/t34fCQ7EL
+	 M77HrIspklRD1m6ITHOk3gJXw+Uj5FrQsLtwuSQ9/4DQx1hXoK9luNAWn3GGlD4k5H
+	 pi4Ch68jPYRcx7+d8867IXqtTX+KhaLvWWNdaCgFE3jKCDIgb4PDJwZfBRH6DT0vyd
+	 BQNhx1sVZJR9RudGKkI6sxdZmlur2HljGzWRLw3a6IqcfQO0JSYAupchm77fetYGJf
+	 8mb96RZXnVnfg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Salah Triki <salah.triki@gmail.com>,
+Cc: Benjamin Berg <benjamin@sipsolutions.net>,
+	Rouven Czerwinski <rouven@czerwinskis.de>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	miriam.rachel.korenblit@intel.com,
-	emmanuel.grumbach@intel.com,
-	mingo@kernel.org,
-	tglx@linutronix.de,
-	viro@zeniv.linux.org.uk
-Subject: [PATCH AUTOSEL 6.1 27/46] wireless: purelifi: plfxlc: fix memory leak in plfxlc_usb_wreq_asyn()
-Date: Tue,  3 Jun 2025 21:03:45 -0400
-Message-Id: <20250604010404.5109-27-sashal@kernel.org>
+	johannes@sipsolutions.net,
+	linux-wireless@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.1 28/46] wifi: mac80211: do not offer a mesh path if forwarding is disabled
+Date: Tue,  3 Jun 2025 21:03:46 -0400
+Message-Id: <20250604010404.5109-28-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250604010404.5109-1-sashal@kernel.org>
 References: <20250604010404.5109-1-sashal@kernel.org>
@@ -55,76 +53,118 @@ X-stable-base: Linux 6.1.140
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Salah Triki <salah.triki@gmail.com>
+From: Benjamin Berg <benjamin@sipsolutions.net>
 
-[ Upstream commit 63a9a727d373fa5b8ce509eef50dbc45e0f745b9 ]
+[ Upstream commit cf1b684a06170d253b47d6a5287821de976435bd ]
 
-Add usb_free_urb() in the error path to prevent memory leak.
+When processing a PREQ the code would always check whether we have a
+mesh path locally and reply accordingly. However, when forwarding is
+disabled then we should not reply with this information as we will not
+forward data packets down that path.
 
-Signed-off-by: Salah Triki <salah.triki@gmail.com>
-Link: https://patch.msgid.link/aA3_maPlEJzO7wrL@pc
-[fix subject]
+Move the check for dot11MeshForwarding up in the function and skip the
+mesh path lookup in that case. In the else block, set forward to false
+so that the rest of the function becomes a no-op and the
+dot11MeshForwarding check does not need to be duplicated.
+
+This explains an effect observed in the Freifunk community where mesh
+forwarding is disabled. In that case a mesh with three STAs and only bad
+links in between them, individual STAs would occionally have indirect
+mpath entries. This should not have happened.
+
+Signed-off-by: Benjamin Berg <benjamin@sipsolutions.net>
+Reviewed-by: Rouven Czerwinski <rouven@czerwinskis.de>
+Link: https://patch.msgid.link/20250430191042.3287004-1-benjamin@sipsolutions.net
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
+Based on my analysis of the commit and the code, here is my assessment:
 **YES** This commit should be backported to stable kernel trees. Here's
-my extensive analysis: ## Code Analysis The commit fixes a clear memory
-leak in the `plfxlc_usb_wreq_async()` function in the pureLiFi wireless
-driver. Specifically: **The Bug:** - The function calls
-`usb_alloc_urb(0, GFP_ATOMIC)` to allocate a USB URB (USB Request Block)
-- If `usb_submit_urb()` fails, the function returns the error code but
-never frees the allocated URB - This creates a memory leak every time
-USB submission fails **The Fix:** The fix adds a simple but crucial
-cleanup path: ```c r = usb_submit_urb(urb, GFP_ATOMIC); -if (r) +if (r)
-{ + usb_free_urb(urb); dev_err(&udev->dev, "Async write submit failed
-(%d)\n", r); +} ``` ## Timeline and Impact From examining the git
-history: 1. **Bug Introduction:** The bug was introduced in commit
-`68d57a07bfe5` when the driver was first added 2. **Bug Duration:** This
-memory leak has existed since the driver's introduction 3. **Impact:**
-Every failed USB submission would leak memory, potentially causing
-system instability over time ## Comparison with Similar Commits This
-commit matches the pattern of all 5 similar commits marked as "Backport
-Status: YES": 1. **Similar Commit #2** - Also fixes missing allocation
-failure check in the same function (`plfxlc_usb_wreq_async`) 2.
-**Similar Commit #1** - Fixes memory leak in the same driver
-(`__lf_x_usb_enable_rx`) 3. **Similar Commits #3-5** - All fix memory
-leaks in wireless drivers with small, contained changes ## Backport
-Criteria Met ✅ **Fixes important bug:** Memory leaks can cause system
-instability ✅ **Small and contained:** Only adds 2 lines of code in
-error path ✅ **No architectural changes:** Simple cleanup fix ✅
-**Minimal regression risk:** Standard USB cleanup pattern ✅ **Clear
-scope:** Limited to specific function in wireless driver ✅ **Follows
-stable rules:** Important bugfix with minimal impact ## Additional
-Considerations - The fix follows standard kernel patterns for USB URB
-cleanup - The same driver has had multiple similar memory leak fixes
-(commit `895b3b06efc2`) - The change is identical in nature to Similar
-Commit #2, which was also in this exact function and marked YES for
-backporting - No side effects beyond fixing the memory leak - The
-function is called from transmit path, so failures could be relatively
-common under stress This is a textbook example of a stable tree
-candidate: a clear, important bug fix with minimal code changes and no
-risk of regression.
+my extensive analysis: ## 1. Bug Fix Analysis The commit fixes a clear
+logical bug in the mesh networking HWMP (Hybrid Wireless Mesh Protocol)
+path selection algorithm. When `dot11MeshForwarding` is disabled, the
+code was incorrectly: - Still performing mesh path lookups for PREQ
+(Path Request) messages - Potentially replying with mesh path
+information even though forwarding was disabled - Creating indirect mesh
+path entries when it shouldn't ## 2. Code Analysis Looking at the
+changes in `/net/mac80211/mesh_hwmp.c:619-676`: **Before the fix:** -
+Line 639: `} else {` - The final else branch handles the case where the
+target is neither local nor broadcast - Lines 640-656: This section
+performs mesh path lookup and potentially replies with path information
+**regardless** of forwarding status - Line 657: `} else {` - Only sets
+`forward = false` but after potentially harmful operations **After the
+fix:** - Line 639: `} else if (ifmsh->mshcfg.dot11MeshForwarding) {` -
+Now conditions the mesh path lookup on forwarding being enabled - Lines
+657-659: `} else { forward = false; }` - Clean fallback when forwarding
+is disabled ## 3. Impact Assessment This is a **contained, low-risk
+fix** that: - **Fixes incorrect behavior**: Prevents mesh nodes from
+providing routing information when they won't actually forward packets -
+**Prevents resource waste**: Avoids unnecessary mesh path lookups when
+forwarding is disabled - **Improves network correctness**: Fixes the
+inconsistency where nodes advertise paths they won't use - **Addresses
+real-world issue**: The commit message mentions this was observed in the
+Freifunk community ## 4. Comparison with Similar Commits This fix aligns
+perfectly with the **YES** backport examples: **Similar to Commit #1
+(mesh: Do not send PREQ if HWMP is disabled):** - Both prevent
+sending/processing mesh protocol messages when a feature is disabled -
+Both are small, surgical fixes to logical conditions - Both prevent
+waste of network resources **Similar to Commit #3 (fix mesh path
+discovery):** - Both fix incorrect mesh path handling logic - Both have
+small, focused changes - Both include explicit mention of fixing
+behavior observed in real deployments **Similar to Commit #4 (fix mesh
+forwarding):** - Both are mesh forwarding-related fixes - Both are
+minimal changes with clear intent - Both fix protocol correctness issues
+## 5. Stable Backport Criteria Check ✅ **Fixes important bug**: Yes -
+incorrect mesh protocol behavior ✅ **Small and contained**: Yes - only 4
+lines changed, well-isolated ✅ **No new features**: Correct - only fixes
+existing logic ✅ **No architectural changes**: Correct - just reorders
+existing conditions ✅ **Low regression risk**: Very low - change is
+localized and logical ✅ **Clear side effects**: None beyond the intended
+fix ## 6. Risk Assessment The change is **extremely low risk** because:
+- It only affects the specific case where `dot11MeshForwarding` is
+disabled - It makes the code behavior more consistent (when forwarding
+is off, don't provide path info) - The change is in line with the
+intended semantics of the forwarding flag - It's a pure logic fix
+without touching data structures or complex algorithms This commit
+represents exactly the type of fix that stable trees are meant to
+include: a small, well-understood bug fix that improves correctness
+without introducing regression risk.
 
- drivers/net/wireless/purelifi/plfxlc/usb.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/mac80211/mesh_hwmp.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/purelifi/plfxlc/usb.c b/drivers/net/wireless/purelifi/plfxlc/usb.c
-index 311676c1ece0a..8151bc5e00ccc 100644
---- a/drivers/net/wireless/purelifi/plfxlc/usb.c
-+++ b/drivers/net/wireless/purelifi/plfxlc/usb.c
-@@ -503,8 +503,10 @@ int plfxlc_usb_wreq_async(struct plfxlc_usb *usb, const u8 *buffer,
- 			  (void *)buffer, buffer_len, complete_fn, context);
+diff --git a/net/mac80211/mesh_hwmp.c b/net/mac80211/mesh_hwmp.c
+index 47eb67dc11cfe..da9e152a7aaba 100644
+--- a/net/mac80211/mesh_hwmp.c
++++ b/net/mac80211/mesh_hwmp.c
+@@ -625,7 +625,7 @@ static void hwmp_preq_frame_process(struct ieee80211_sub_if_data *sdata,
+ 				mesh_path_add_gate(mpath);
+ 		}
+ 		rcu_read_unlock();
+-	} else {
++	} else if (ifmsh->mshcfg.dot11MeshForwarding) {
+ 		rcu_read_lock();
+ 		mpath = mesh_path_lookup(sdata, target_addr);
+ 		if (mpath) {
+@@ -643,6 +643,8 @@ static void hwmp_preq_frame_process(struct ieee80211_sub_if_data *sdata,
+ 			}
+ 		}
+ 		rcu_read_unlock();
++	} else {
++		forward = false;
+ 	}
  
- 	r = usb_submit_urb(urb, GFP_ATOMIC);
--	if (r)
-+	if (r) {
-+		usb_free_urb(urb);
- 		dev_err(&udev->dev, "Async write submit failed (%d)\n", r);
-+	}
+ 	if (reply) {
+@@ -660,7 +662,7 @@ static void hwmp_preq_frame_process(struct ieee80211_sub_if_data *sdata,
+ 		}
+ 	}
  
- 	return r;
- }
+-	if (forward && ifmsh->mshcfg.dot11MeshForwarding) {
++	if (forward) {
+ 		u32 preq_id;
+ 		u8 hopcount;
+ 
 -- 
 2.39.5
 
