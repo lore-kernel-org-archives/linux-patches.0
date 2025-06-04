@@ -1,44 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 654C71448D5;
-	Wed,  4 Jun 2025 00:58:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 133A71448D5;
+	Wed,  4 Jun 2025 00:58:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748998722; cv=none; b=FKjz9Q7qaXWZ7uLF1A3eyH9IgyiZFiAFz9f9zck2BQ2FBmC6NRwH1FROXx+Y+z5lFPdRGWgABCDjfEG2C4qPfyKbI5HYZqIA/lCWt852ywLH3D8/Ax25h6BzKMJ2P17C+CYnWsDXh0/G4lQcQUp3D35RKWQnG/J1mywkmNTq0MM=
+	t=1748998724; cv=none; b=PlOs8XY14QdxIJv3n4Ud4aGOC955L2swN2wNvH3mtEHeYli0QkHTYmLSlAryWdLmbCcmxWFpT02GHy2fLd6X0wWw8TBZOlhb3kUgSamttal0DkYC7jx89X57fKIxQmk/2y8AQPjoYmLA2i7Xeol4ikcy9ZQ2BDeJk6G81YRvRnI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748998722; c=relaxed/simple;
-	bh=/ktq5JZFE68v6KnlvaZYBGm8PhXiG3WMgJovyoI3rk8=;
+	s=arc-20240116; t=1748998724; c=relaxed/simple;
+	bh=DYvO1IWNV102sNCif/OsB29SxDK2hKQlLwmPFz61b5w=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lITWxaHv7THJQ6nUjuJWykp0K4ITl23brkNgA9Gv7JugDvr/wVX/8tClicsjYqoVyEe/JmNrvY3gdYFqM5oa1b9ZVuV5mhc4lKBe8SzHbc6PFPhpKBMNva5nBknmgnssNNTTNHMStzcBhc9SmV/LjnVaNE6Jnh3LBpiduDofyUk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DRSoTkwQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=QGQY3VoH6eIJgK2NUIF3kgykyLU82UMsiAAKG7iPDeiGaijylFW2CWX6he0hHw23JJHnbWklIn5vMGzCa+Jd50cvAbB4xecsryv/PCrGpltBSocyG6rVArZ/Gjphb24sI04Dbb6HqiQqwDbk/OZ9xSaEACZvnz3GmqTifC2UU7M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=svMXCOmP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DRSoTkwQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47702C4CEED;
-	Wed,  4 Jun 2025 00:58:41 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="svMXCOmP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA012C4CEED;
+	Wed,  4 Jun 2025 00:58:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748998722;
-	bh=/ktq5JZFE68v6KnlvaZYBGm8PhXiG3WMgJovyoI3rk8=;
+	s=k20201202; t=1748998724;
+	bh=DYvO1IWNV102sNCif/OsB29SxDK2hKQlLwmPFz61b5w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DRSoTkwQy/eMLnzAaU5ABCxyqeuqCJGgS4wxa2CiAAGPbMeXnsXmDisDHDWlDyqM9
-	 MwQRhDQb35bD9W4QV2F6mQeL60OC+Vx8NbO+P6c7hJabSnxZ/jQG4sHU9aQqI/tZlw
-	 eFejhzD4LXq4YvXGVmPea4CB5poNdZlR36NRjWJKZJoxMmWjPnxIdjoK7cV0sdJ1Vh
-	 /vYflDGELG1RxFH5jQTIkqVt1pf7TFCqIKPJ2PPDj5czsD8n/BTB8jevYjUZStUx0+
-	 14wL0ZUUcFVdofRxfpjMir1VTkzle8sIh0zeC5nl4+OokC5dxgNR0lS5HCiLWYDgSX
-	 7VyvjXzzbhN1w==
+	b=svMXCOmPuJOz2BYxgon3Fnf6sbqr2K+IjslVWfjm6zbUZBZ/1cnwijmxmjknxDgAr
+	 wtS7WjfPPebGIPpGg4v29bKVmohJjmI2sUBGCdDOZb0LwVGG6aSW/oo34Qr7WDZK6S
+	 fUwsqVRzK72tgeAcXlUjtHkYfpUrcL+KRPPiUCOZpXb2VnPhV82WOcOvtSuKyu/TqA
+	 N0SgH8YfXZsE94aJ8R7aWLU2TyQyWyxohUU2bcVUC0yHZxzgLRpDmaSp0l7StnTtUo
+	 xJI6NFuzv4bZLt7ahxdlMnG7vEj7oG1+9QtWX2axrFPh+4rYdM/8skfE0cypdXRvWB
+	 whsK3NNRTojPg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Chen Linxuan <chenlinxuan@uniontech.com>,
-	Winston Wen <wentao@uniontech.com>,
-	Leon Romanovsky <leon@kernel.org>,
+Cc: Mateusz Pacuszka <mateuszx.pacuszka@intel.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
+	Larysa Zaremba <larysa.zaremba@intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	tangchengchang@huawei.com,
-	huangjunxian6@hisilicon.com,
-	linux-rdma@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.14 094/108] RDMA/hns: initialize db in update_srq_db()
-Date: Tue,  3 Jun 2025 20:55:17 -0400
-Message-Id: <20250604005531.4178547-94-sashal@kernel.org>
+	intel-wired-lan@lists.osuosl.org
+Subject: [PATCH AUTOSEL 6.14 095/108] ice: fix check for existing switch rule
+Date: Tue,  3 Jun 2025 20:55:18 -0400
+Message-Id: <20250604005531.4178547-95-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250604005531.4178547-1-sashal@kernel.org>
 References: <20250604005531.4178547-1-sashal@kernel.org>
@@ -54,129 +56,93 @@ X-stable-base: Linux 6.14.9
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Linxuan <chenlinxuan@uniontech.com>
+From: Mateusz Pacuszka <mateuszx.pacuszka@intel.com>
 
-[ Upstream commit ffe1cee21f8b533ae27c3a31bfa56b8c1b27fa6e ]
+[ Upstream commit a808691df39b52cd9db861b118e88e18b63e2299 ]
 
-On x86_64 with gcc version 13.3.0, I compile
-drivers/infiniband/hw/hns/hns_roce_hw_v2.c with:
+In case the rule already exists and another VSI wants to subscribe to it
+new VSI list is being created and both VSIs are moved to it.
+Currently, the check for already existing VSI with the same rule is done
+based on fdw_id.hw_vsi_id, which applies only to LOOKUP_RX flag.
+Change it to vsi_handle. This is software VSI ID, but it can be applied
+here, because vsi_map itself is also based on it.
 
-  make defconfig
-  ./scripts/kconfig/merge_config.sh .config <(
-    echo CONFIG_COMPILE_TEST=y
-    echo CONFIG_HNS3=m
-    echo CONFIG_INFINIBAND=m
-    echo CONFIG_INFINIBAND_HNS_HIP08=m
-  )
-  make KCFLAGS="-fno-inline-small-functions -fno-inline-functions-called-once" \
-    drivers/infiniband/hw/hns/hns_roce_hw_v2.o
+Additionally change return status in case the VSI already exists in the
+VSI map to "Already exists". Such case should be handled by the caller.
 
-Then I get a compile error:
-
-    CALL    scripts/checksyscalls.sh
-    DESCEND objtool
-    INSTALL libsubcmd_headers
-    CC [M]  drivers/infiniband/hw/hns/hns_roce_hw_v2.o
-  In file included from drivers/infiniband/hw/hns/hns_roce_hw_v2.c:47:
-  drivers/infiniband/hw/hns/hns_roce_hw_v2.c: In function 'update_srq_db':
-  drivers/infiniband/hw/hns/hns_roce_common.h:74:17: error: 'db' is used uninitialized [-Werror=uninitialized]
-     74 |                 *((__le32 *)_ptr + (field_h) / 32) &=                          \
-        |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  drivers/infiniband/hw/hns/hns_roce_common.h:90:17: note: in expansion of macro '_hr_reg_clear'
-     90 |                 _hr_reg_clear(ptr, field_type, field_h, field_l);              \
-        |                 ^~~~~~~~~~~~~
-  drivers/infiniband/hw/hns/hns_roce_common.h:95:39: note: in expansion of macro '_hr_reg_write'
-     95 | #define hr_reg_write(ptr, field, val) _hr_reg_write(ptr, field, val)
-        |                                       ^~~~~~~~~~~~~
-  drivers/infiniband/hw/hns/hns_roce_hw_v2.c:948:9: note: in expansion of macro 'hr_reg_write'
-    948 |         hr_reg_write(&db, DB_TAG, srq->srqn);
-        |         ^~~~~~~~~~~~
-  drivers/infiniband/hw/hns/hns_roce_hw_v2.c:946:31: note: 'db' declared here
-    946 |         struct hns_roce_v2_db db;
-        |                               ^~
-  cc1: all warnings being treated as errors
-
-Signed-off-by: Chen Linxuan <chenlinxuan@uniontech.com>
-Co-developed-by: Winston Wen <wentao@uniontech.com>
-Signed-off-by: Winston Wen <wentao@uniontech.com>
-Link: https://patch.msgid.link/FF922C77946229B6+20250411105459.90782-5-chenlinxuan@uniontech.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Mateusz Pacuszka <mateuszx.pacuszka@intel.com>
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+Signed-off-by: Larysa Zaremba <larysa.zaremba@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Based on my analysis of the commit and examination of the kernel source
-code, here is my assessment: **YES** This commit should be backported to
-stable kernel trees for the following extensive reasons: ## 1.
-**Critical Hardware Register Corruption Risk** The commit fixes a
-genuine bug where an uninitialized stack variable containing random data
-is written directly to hardware registers. In the `update_srq_db()`
-function: ```c struct hns_roce_v2_db db; // UNINITIALIZED - contains
-random stack data hr_reg_write(&db, DB_TAG, srq->srqn); // Only sets
-specific bits hr_reg_write(&db, DB_CMD, HNS_ROCE_V2_SRQ_DB); // Only
-sets specific bits hr_reg_write(&db, DB_PI, srq->idx_que.head); // Only
-sets specific bits hns_roce_write64(hr_dev, (__le32 *)&db, srq->db_reg);
-// Writes ENTIRE structure to hardware ``` The `hr_reg_write()` macros
-only modify specific bit fields within the 64-bit structure. Any bits
-not explicitly set retain their random initial values from the stack,
-which then get written to the hardware doorbell register. ## 2.
-**Pattern Inconsistency Indicates Bug** My examination of the codebase
-shows that ALL other similar functions correctly initialize their
-database structures: - `update_sq_db()`: `struct hns_roce_v2_db sq_db =
-{};` ✓ - `update_rq_db()`: `struct hns_roce_v2_db rq_db = {};` ✓ -
-`update_cq_db()`: `struct hns_roce_v2_db cq_db = {};` ✓ -
-`update_srq_db()`: `struct hns_roce_v2_db db;` ✗ (the only exception)
-This pattern strongly indicates that the uninitialized `db` variable in
-`update_srq_db()` is a bug rather than intentional design. ## 3. **Real
-Runtime Impact Potential** This is not merely a cosmetic compiler
-warning. The uninitialized data can cause: - **Subtle SRQ functionality
-degradation**: Random bits in hardware doorbell registers can confuse
-the hardware - **Performance issues**: Incorrect doorbell values may
-cause hardware to misinterpret commands - **Silent data corruption**:
-Unlike crashes, this bug could cause hard-to-debug networking issues -
-**Hardware state corruption**: Writing garbage to hardware registers can
-put the device in unexpected states ## 4. **Production Environment
-Risk** SRQ (Shared Receive Queue) is a critical InfiniBand/RoCE feature
-used in high-performance computing and data center environments. Any
-corruption in SRQ operations can: - Impact network throughput and
-latency - Cause intermittent packet loss or reordering - Lead to
-difficult-to-reproduce performance regressions - Affect reliability of
-distributed applications ## 5. **Low-Risk, High-Value Fix** The fix is
-minimal and safe: - Changes only initialization: `struct hns_roce_v2_db
-db = {};` - Zero-initialization has no functional side effects - Follows
-established patterns in the same driver - No API changes or behavioral
-modifications - Extremely low regression risk ## 6. **Similar Historical
-Precedent** Looking at the similar commits provided, commit #4 (Status:
-YES) shows a nearly identical fix for uninitialized variable usage in
-the same driver family: ```c doorbell[0] = cons_index &
-((hr_cq->cq_depth << 1) - 1); +doorbell[1] = 0; // Initialize before use
-roce_set_bit(doorbell[1], ROCEE_DB_OTHERS_H_ROCEE_DB_OTH_HW_SYNS_S, 1);
-``` This historical precedent confirms that uninitialized variable fixes
-in HNS RoCE hardware register operations are considered important enough
-for stable backporting. ## 7. **Affects Multiple Compiler Versions** The
-commit message shows this affects GCC 13.3.0 with specific optimization
-flags, but uninitialized variable usage is fundamentally unsafe
-regardless of compiler version or warning visibility. **Conclusion**:
-This commit fixes a real hardware register corruption bug with potential
-for silent data corruption in production RoCE/InfiniBand environments.
-The fix is minimal, safe, and follows established patterns. It should be
-backported to ensure system reliability in stable kernel deployments.
+**YES** This commit should be backported to stable kernel trees. Here's
+my detailed analysis: ## Bug Fix Nature This commit fixes a legitimate
+bug in the Intel ice driver's switch rule handling logic. The issue
+involves incorrect VSI (Virtual Station Interface) identification when
+checking for existing switch rules, which can lead to: 1. **Incorrect
+duplicate detection**: Using `fwd_id.hw_vsi_id` instead of `vsi_handle`
+for comparison 2. **Inconsistent error handling**: Returning `0` instead
+of `-EEXIST` when a VSI already exists in the VSI map ## Code Analysis
+### Primary Fix (Line 3149): ```c -if (cur_fltr->fwd_id.hw_vsi_id ==
+new_fltr->fwd_id.hw_vsi_id) +if (cur_fltr->vsi_handle ==
+new_fltr->vsi_handle) ``` This change fixes the comparison logic to use
+`vsi_handle` (software VSI ID) instead of `hw_vsi_id` (hardware VSI ID).
+The commit message explains that `hw_vsi_id` only applies to `LOOKUP_RX`
+flag, while `vsi_handle` is the correct identifier since `vsi_map` is
+based on it. ### Secondary Fix (Line 5981): ```c -return 0; +return
+-EEXIST; ``` This change ensures consistent error reporting when a VSI
+already exists in the VSI map, allowing callers to handle this case
+appropriately. ## Comparison with Similar Commits Looking at the
+provided similar commits: - **Similar Commit #2** (Status: YES): Also
+fixes switchdev rules book keeping with proper VSI handling - **Similar
+Commit #5** (Status: YES): Removes unnecessary duplicate VSI ID checks
+Both approved commits deal with VSI identification and handling issues,
+similar to this commit. ## Backport Suitability Criteria ✅ **Fixes a bug
+affecting users**: VSI rule management is critical for network
+functionality ✅ **Small and contained**: Only 4 lines changed across 2
+functions ✅ **No architectural changes**: Simply corrects existing logic
+✅ **Minimal regression risk**: Changes are targeted and well-understood
+✅ **Critical subsystem**: Network drivers are important for system
+stability ✅ **Clear side effects**: The changes have predictable
+behavior improvements ## Risk Assessment - **Low risk**: The changes are
+surgical fixes to specific comparison logic - **Well-tested**: The
+commit includes "Tested-by" tag from Intel QA - **Subsystem-confined**:
+Changes are isolated to ice driver switch handling - **Backwards
+compatible**: No API or behavioral changes for users The commit follows
+stable tree rules perfectly: it's an important bugfix with minimal risk
+that improves the reliability of network switch rule handling in the
+Intel ice driver.
 
- drivers/infiniband/hw/hns/hns_roce_hw_v2.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/intel/ice/ice_switch.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-index 160e8927d364e..afd2ea6da3ee2 100644
---- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-@@ -943,7 +943,7 @@ static void fill_wqe_idx(struct hns_roce_srq *srq, unsigned int wqe_idx)
- static void update_srq_db(struct hns_roce_srq *srq)
- {
- 	struct hns_roce_dev *hr_dev = to_hr_dev(srq->ibsrq.device);
--	struct hns_roce_v2_db db;
-+	struct hns_roce_v2_db db = {};
+diff --git a/drivers/net/ethernet/intel/ice/ice_switch.c b/drivers/net/ethernet/intel/ice/ice_switch.c
+index 4a91e0aaf0a5e..9d9a7edd3618a 100644
+--- a/drivers/net/ethernet/intel/ice/ice_switch.c
++++ b/drivers/net/ethernet/intel/ice/ice_switch.c
+@@ -3146,7 +3146,7 @@ ice_add_update_vsi_list(struct ice_hw *hw,
+ 		u16 vsi_handle_arr[2];
  
- 	hr_reg_write(&db, DB_TAG, srq->srqn);
- 	hr_reg_write(&db, DB_CMD, HNS_ROCE_V2_SRQ_DB);
+ 		/* A rule already exists with the new VSI being added */
+-		if (cur_fltr->fwd_id.hw_vsi_id == new_fltr->fwd_id.hw_vsi_id)
++		if (cur_fltr->vsi_handle == new_fltr->vsi_handle)
+ 			return -EEXIST;
+ 
+ 		vsi_handle_arr[0] = cur_fltr->vsi_handle;
+@@ -5978,7 +5978,7 @@ ice_adv_add_update_vsi_list(struct ice_hw *hw,
+ 
+ 		/* A rule already exists with the new VSI being added */
+ 		if (test_bit(vsi_handle, m_entry->vsi_list_info->vsi_map))
+-			return 0;
++			return -EEXIST;
+ 
+ 		/* Update the previously created VSI list set with
+ 		 * the new VSI ID passed in
 -- 
 2.39.5
 
