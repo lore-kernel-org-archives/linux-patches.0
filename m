@@ -1,46 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FE731953BB;
-	Wed,  4 Jun 2025 01:03:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16BBF195B37;
+	Wed,  4 Jun 2025 01:03:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748999026; cv=none; b=O+am5let1C5wv/PRcXmCRjfrSpJ2gunuCh/GTZ92sTpG90WMMP/bahahLXJB2yWzXU2n0tXJD0dwfWMP1Eqj5WG8ZJ2ibudw0hozRoAltmuHshjOaFoBMfp0AfIGOsmJ3CQTHdghbqreSn5shbBHmTlTVBFS9BU2Zotz/wa3zBs=
+	t=1748999031; cv=none; b=ZLtho7ztkLr4rHzvgqBwHbFTyitXDjtMc77Rh3NRGmNTvbj01c/Rp84ksBgBpnRKxZ28cyqQBsgIyPMwjIt41NU/DdLzh6K1uiAQRqnIwmsDEp2NJKrQ6yqxS7dTXt5GakCNc6AVnvSs0bL93L+4kU599qgxZvE+RsHt3hpGCmk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748999026; c=relaxed/simple;
-	bh=+YZpJG+r4L8oEtEpcYEUfYxPrOC3gNtxNQRubkCq43s=;
+	s=arc-20240116; t=1748999031; c=relaxed/simple;
+	bh=kyfjgGiE6DtB0Ssz56HXje2jJdNAE6ko1u4hE4WvZbQ=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PXo1/FgQmzX36aIVaMxA8DN1uKkfvNziGVhB69E3N7TOxZlgP6EXTq+387yRp+KKbH7QF8kzyI0pwLqQKRJaZtOPtIqqiW/1eWqkNVB8O+j/7R5gihdF6Ep8AxTUls5G9OyTysulkwUQBbfUqoUANQQQCJKAj5NDHcZiGqjjYmk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=edxU4pp1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=SRqsBWrlbqlrUs8dMzME5xRfZC4YFKKWTndAbPD7uW8reYumv5/HI20qxMipQnoPqu9e6AnQ46ahJgeWrhHuncR9iSI2Wm86ZEOJSIT35cziJJ/EhzcofugVVmK+GMScvP2jYpiMx3T7kfSwRK0jo3PZVOrxvEqRZJpOTpR5VIY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ebg3HsuD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="edxU4pp1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1928AC4CEEF;
-	Wed,  4 Jun 2025 01:03:45 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ebg3HsuD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF34FC4CEED;
+	Wed,  4 Jun 2025 01:03:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748999026;
-	bh=+YZpJG+r4L8oEtEpcYEUfYxPrOC3gNtxNQRubkCq43s=;
+	s=k20201202; t=1748999031;
+	bh=kyfjgGiE6DtB0Ssz56HXje2jJdNAE6ko1u4hE4WvZbQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=edxU4pp1oPAYWXzeG6i59hirDIooFu/WYGo+vokb1Uu+igK5+mEjIASpIMMJ/q7BV
-	 m7vUx/xmv7WHmiIBu2CDDDJZebDs7X0uoyX3wdadEmCpGOnt4ySGhAWCbd9P37mv0u
-	 FeseTUU1WYlAKHnS0HeooSmVVh43H0Ru1fkpl9B1p839BbVrvDNO8aotP8TJi+YF2X
-	 5TlhBXvp+LHhq+ZDtjxt1ZIg+r8m4S91Naq1LRl00yPIkhbIWXiXPEGyCz16zXxH6u
-	 RgUdM0dODUVmnqEYneVZjj7Qowh5fJVZ+mx+H2zMFjzBAdT6R1fG+FCwiEn+uN9T9u
-	 nlD6H4NHGUmWQ==
+	b=ebg3HsuDhpPGXUL/HVnN90/nbqn1h16A0lnAm6GBrbK6y048vZpD5m/Y7MHsI34WQ
+	 0IUrEOGE9m+m5KP3pzKShgk9UtCySeoME/v9MbyRcnqN+Sb5jcrKki2B9UQtERYKGs
+	 V6MYllmMlid5Y2YXf6WG+v+aPcClaaS4lMzuqKNsvIwnFE4S1gbd9UCcl/ACQ9JdHu
+	 PBsa6l8k/BWTRBFofutqsgnprvi3xkaFOfYXHvn2FPhZcdoNXtyk+KnqL1/+Lx8Slj
+	 sNo6ioHsZkhlfP4yjfSxuN+KPva3JGnARY670/SA0kYBADiR6qGrNILl6Y9faKSiL6
+	 k88FAtU7xyq+A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Mateusz Pacuszka <mateuszx.pacuszka@intel.com>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
-	Larysa Zaremba <larysa.zaremba@intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+Cc: =?UTF-8?q?Krzysztof=20Ha=C5=82asa?= <khalasa@piap.pl>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	intel-wired-lan@lists.osuosl.org
-Subject: [PATCH AUTOSEL 6.6 53/62] ice: fix check for existing switch rule
-Date: Tue,  3 Jun 2025 21:02:04 -0400
-Message-Id: <20250604010213.3462-53-sashal@kernel.org>
+	linux@armlinux.org.uk,
+	max.schulze@online.de,
+	linux-usb@vger.kernel.org,
+	netdev@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.6 54/62] usbnet: asix AX88772: leave the carrier control to phylink
+Date: Tue,  3 Jun 2025 21:02:05 -0400
+Message-Id: <20250604010213.3462-54-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250604010213.3462-1-sashal@kernel.org>
 References: <20250604010213.3462-1-sashal@kernel.org>
@@ -50,99 +49,200 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.6.92
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mateusz Pacuszka <mateuszx.pacuszka@intel.com>
+From: Krzysztof Hałasa <khalasa@piap.pl>
 
-[ Upstream commit a808691df39b52cd9db861b118e88e18b63e2299 ]
+[ Upstream commit 4145f00227ee80f21ab274e9cd9c09758e9bcf3d ]
 
-In case the rule already exists and another VSI wants to subscribe to it
-new VSI list is being created and both VSIs are moved to it.
-Currently, the check for already existing VSI with the same rule is done
-based on fdw_id.hw_vsi_id, which applies only to LOOKUP_RX flag.
-Change it to vsi_handle. This is software VSI ID, but it can be applied
-here, because vsi_map itself is also based on it.
+ASIX AX88772B based USB 10/100 Ethernet adapter doesn't come
+up ("carrier off"), despite the built-in 100BASE-FX PHY positive link
+indication. The internal PHY is configured (using EEPROM) in fixed
+100 Mbps full duplex mode.
 
-Additionally change return status in case the VSI already exists in the
-VSI map to "Already exists". Such case should be handled by the caller.
+The primary problem appears to be using carrier_netif_{on,off}() while,
+at the same time, delegating carrier management to phylink. Use only the
+latter and remove "manual control" in the asix driver.
 
-Signed-off-by: Mateusz Pacuszka <mateuszx.pacuszka@intel.com>
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
-Signed-off-by: Larysa Zaremba <larysa.zaremba@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+I don't have any other AX88772 board here, but the problem doesn't seem
+specific to a particular board or settings - it's probably
+timing-dependent.
+
+Remove unused asix_adjust_link() as well.
+
+Signed-off-by: Krzysztof Hałasa <khalasa@piap.pl>
+Tested-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Link: https://patch.msgid.link/m3plhmdfte.fsf_-_@t19.piap.pl
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 **YES** This commit should be backported to stable kernel trees. Here's
-my detailed analysis: ## Bug Fix Nature This commit fixes a legitimate
-bug in the Intel ice driver's switch rule handling logic. The issue
-involves incorrect VSI (Virtual Station Interface) identification when
-checking for existing switch rules, which can lead to: 1. **Incorrect
-duplicate detection**: Using `fwd_id.hw_vsi_id` instead of `vsi_handle`
-for comparison 2. **Inconsistent error handling**: Returning `0` instead
-of `-EEXIST` when a VSI already exists in the VSI map ## Code Analysis
-### Primary Fix (Line 3149): ```c -if (cur_fltr->fwd_id.hw_vsi_id ==
-new_fltr->fwd_id.hw_vsi_id) +if (cur_fltr->vsi_handle ==
-new_fltr->vsi_handle) ``` This change fixes the comparison logic to use
-`vsi_handle` (software VSI ID) instead of `hw_vsi_id` (hardware VSI ID).
-The commit message explains that `hw_vsi_id` only applies to `LOOKUP_RX`
-flag, while `vsi_handle` is the correct identifier since `vsi_map` is
-based on it. ### Secondary Fix (Line 5981): ```c -return 0; +return
--EEXIST; ``` This change ensures consistent error reporting when a VSI
-already exists in the VSI map, allowing callers to handle this case
-appropriately. ## Comparison with Similar Commits Looking at the
-provided similar commits: - **Similar Commit #2** (Status: YES): Also
-fixes switchdev rules book keeping with proper VSI handling - **Similar
-Commit #5** (Status: YES): Removes unnecessary duplicate VSI ID checks
-Both approved commits deal with VSI identification and handling issues,
-similar to this commit. ## Backport Suitability Criteria ✅ **Fixes a bug
-affecting users**: VSI rule management is critical for network
-functionality ✅ **Small and contained**: Only 4 lines changed across 2
-functions ✅ **No architectural changes**: Simply corrects existing logic
-✅ **Minimal regression risk**: Changes are targeted and well-understood
-✅ **Critical subsystem**: Network drivers are important for system
-stability ✅ **Clear side effects**: The changes have predictable
-behavior improvements ## Risk Assessment - **Low risk**: The changes are
-surgical fixes to specific comparison logic - **Well-tested**: The
-commit includes "Tested-by" tag from Intel QA - **Subsystem-confined**:
-Changes are isolated to ice driver switch handling - **Backwards
-compatible**: No API or behavioral changes for users The commit follows
-stable tree rules perfectly: it's an important bugfix with minimal risk
-that improves the reliability of network switch rule handling in the
-Intel ice driver.
+my detailed analysis: ## Why This Should Be Backported ### 1. **Clear
+Bug Fix Nature** This commit fixes a functional bug where ASIX AX88772B
+USB Ethernet adapters fail to establish carrier state ("carrier off")
+despite the PHY indicating a positive link. This is a real-world
+connectivity issue that affects users' ability to use their network
+hardware. ### 2. **Code Analysis - Specific Changes** Looking at the
+diff, the changes are: - **Removed `asix_adjust_link()` function** from
+`asix_common.c` - This function was manually calling
+`usbnet_link_change()` which conflicts with phylink - **Removed
+`usbnet_link_change()` calls** from `ax88772_mac_link_up()` and
+`ax88772_mac_link_down()` in `asix_devices.c` - **Removed `.status =
+asix_status`** from driver info structures for AX88772 devices -
+**Removed `FLAG_LINK_INTR`** from AX88772 device driver flags These
+changes eliminate the dual carrier control conflict by removing manual
+carrier management and letting phylink handle it exclusively. ### 3.
+**Low Risk Profile** - **Removes conflicting code** rather than adding
+new functionality - **Small, focused changes** that address a specific
+technical conflict - **Phylink is well-established** and already
+properly handles carrier management for these devices - **Changes are
+targeted** to specific hardware (AX88772) rather than broad
+architectural changes ### 4. **Comparison to Similar "NO" Commits** The
+provided similar commits were marked "NO" because they were: - **Feature
+additions** (phylink migration, selftest support) - **Architectural
+changes** (migrating from MII to phylink) - **Enhancements** rather than
+bug fixes This commit is fundamentally different - it's a **bug fix**
+that resolves a conflict introduced by previous phylink migration work.
+### 5. **User Impact** This affects users who have ASIX AX88772B
+adapters that don't work properly due to carrier detection issues. This
+is likely a regression from earlier phylink migration commits, making it
+a critical fix for hardware compatibility. ### 6. **Stable Tree Criteria
+Compliance** - ✅ **Important bug fix** - Fixes network connectivity
+issues - ✅ **Minimal risk** - Removes conflicting code, doesn't
+introduce new features - ✅ **Small and contained** - Changes are focused
+on carrier control conflict - ✅ **No architectural changes** -
+Simplifies by removing duplicate functionality - ✅ **Clear side
+effects** - Only affects AX88772 devices, improves their functionality
+The commit message explicitly states this fixes a timing-dependent issue
+where devices "don't come up" despite proper PHY indication, which is
+exactly the type of hardware compatibility bug that stable trees aim to
+address.
 
- drivers/net/ethernet/intel/ice/ice_switch.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/usb/asix.h         |  1 -
+ drivers/net/usb/asix_common.c  | 22 ----------------------
+ drivers/net/usb/asix_devices.c | 17 ++++-------------
+ 3 files changed, 4 insertions(+), 36 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_switch.c b/drivers/net/ethernet/intel/ice/ice_switch.c
-index 19f730a68fa21..ac004ef1d724d 100644
---- a/drivers/net/ethernet/intel/ice/ice_switch.c
-+++ b/drivers/net/ethernet/intel/ice/ice_switch.c
-@@ -3024,7 +3024,7 @@ ice_add_update_vsi_list(struct ice_hw *hw,
- 		u16 vsi_handle_arr[2];
+diff --git a/drivers/net/usb/asix.h b/drivers/net/usb/asix.h
+index 74162190bccc1..8531b804021aa 100644
+--- a/drivers/net/usb/asix.h
++++ b/drivers/net/usb/asix.h
+@@ -224,7 +224,6 @@ int asix_write_rx_ctl(struct usbnet *dev, u16 mode, int in_pm);
  
- 		/* A rule already exists with the new VSI being added */
--		if (cur_fltr->fwd_id.hw_vsi_id == new_fltr->fwd_id.hw_vsi_id)
-+		if (cur_fltr->vsi_handle == new_fltr->vsi_handle)
- 			return -EEXIST;
+ u16 asix_read_medium_status(struct usbnet *dev, int in_pm);
+ int asix_write_medium_mode(struct usbnet *dev, u16 mode, int in_pm);
+-void asix_adjust_link(struct net_device *netdev);
  
- 		vsi_handle_arr[0] = cur_fltr->vsi_handle;
-@@ -5991,7 +5991,7 @@ ice_adv_add_update_vsi_list(struct ice_hw *hw,
+ int asix_write_gpio(struct usbnet *dev, u16 value, int sleep, int in_pm);
  
- 		/* A rule already exists with the new VSI being added */
- 		if (test_bit(vsi_handle, m_entry->vsi_list_info->vsi_map))
--			return 0;
-+			return -EEXIST;
+diff --git a/drivers/net/usb/asix_common.c b/drivers/net/usb/asix_common.c
+index 72ffc89b477ad..7fd763917ae2c 100644
+--- a/drivers/net/usb/asix_common.c
++++ b/drivers/net/usb/asix_common.c
+@@ -414,28 +414,6 @@ int asix_write_medium_mode(struct usbnet *dev, u16 mode, int in_pm)
+ 	return ret;
+ }
  
- 		/* Update the previously created VSI list set with
- 		 * the new VSI ID passed in
+-/* set MAC link settings according to information from phylib */
+-void asix_adjust_link(struct net_device *netdev)
+-{
+-	struct phy_device *phydev = netdev->phydev;
+-	struct usbnet *dev = netdev_priv(netdev);
+-	u16 mode = 0;
+-
+-	if (phydev->link) {
+-		mode = AX88772_MEDIUM_DEFAULT;
+-
+-		if (phydev->duplex == DUPLEX_HALF)
+-			mode &= ~AX_MEDIUM_FD;
+-
+-		if (phydev->speed != SPEED_100)
+-			mode &= ~AX_MEDIUM_PS;
+-	}
+-
+-	asix_write_medium_mode(dev, mode, 0);
+-	phy_print_status(phydev);
+-	usbnet_link_change(dev, phydev->link, 0);
+-}
+-
+ int asix_write_gpio(struct usbnet *dev, u16 value, int sleep, int in_pm)
+ {
+ 	int ret;
+diff --git a/drivers/net/usb/asix_devices.c b/drivers/net/usb/asix_devices.c
+index ec4dcf89cbedd..119295f5f3b35 100644
+--- a/drivers/net/usb/asix_devices.c
++++ b/drivers/net/usb/asix_devices.c
+@@ -752,7 +752,6 @@ static void ax88772_mac_link_down(struct phylink_config *config,
+ 	struct usbnet *dev = netdev_priv(to_net_dev(config->dev));
+ 
+ 	asix_write_medium_mode(dev, 0, 0);
+-	usbnet_link_change(dev, false, false);
+ }
+ 
+ static void ax88772_mac_link_up(struct phylink_config *config,
+@@ -783,7 +782,6 @@ static void ax88772_mac_link_up(struct phylink_config *config,
+ 		m |= AX_MEDIUM_RFC;
+ 
+ 	asix_write_medium_mode(dev, m, 0);
+-	usbnet_link_change(dev, true, false);
+ }
+ 
+ static const struct phylink_mac_ops ax88772_phylink_mac_ops = {
+@@ -1350,10 +1348,9 @@ static const struct driver_info ax88772_info = {
+ 	.description = "ASIX AX88772 USB 2.0 Ethernet",
+ 	.bind = ax88772_bind,
+ 	.unbind = ax88772_unbind,
+-	.status = asix_status,
+ 	.reset = ax88772_reset,
+ 	.stop = ax88772_stop,
+-	.flags = FLAG_ETHER | FLAG_FRAMING_AX | FLAG_LINK_INTR | FLAG_MULTI_PACKET,
++	.flags = FLAG_ETHER | FLAG_FRAMING_AX | FLAG_MULTI_PACKET,
+ 	.rx_fixup = asix_rx_fixup_common,
+ 	.tx_fixup = asix_tx_fixup,
+ };
+@@ -1362,11 +1359,9 @@ static const struct driver_info ax88772b_info = {
+ 	.description = "ASIX AX88772B USB 2.0 Ethernet",
+ 	.bind = ax88772_bind,
+ 	.unbind = ax88772_unbind,
+-	.status = asix_status,
+ 	.reset = ax88772_reset,
+ 	.stop = ax88772_stop,
+-	.flags = FLAG_ETHER | FLAG_FRAMING_AX | FLAG_LINK_INTR |
+-	         FLAG_MULTI_PACKET,
++	.flags = FLAG_ETHER | FLAG_FRAMING_AX | FLAG_MULTI_PACKET,
+ 	.rx_fixup = asix_rx_fixup_common,
+ 	.tx_fixup = asix_tx_fixup,
+ 	.data = FLAG_EEPROM_MAC,
+@@ -1376,11 +1371,9 @@ static const struct driver_info lxausb_t1l_info = {
+ 	.description = "Linux Automation GmbH USB 10Base-T1L",
+ 	.bind = ax88772_bind,
+ 	.unbind = ax88772_unbind,
+-	.status = asix_status,
+ 	.reset = ax88772_reset,
+ 	.stop = ax88772_stop,
+-	.flags = FLAG_ETHER | FLAG_FRAMING_AX | FLAG_LINK_INTR |
+-		 FLAG_MULTI_PACKET,
++	.flags = FLAG_ETHER | FLAG_FRAMING_AX | FLAG_MULTI_PACKET,
+ 	.rx_fixup = asix_rx_fixup_common,
+ 	.tx_fixup = asix_tx_fixup,
+ 	.data = FLAG_EEPROM_MAC,
+@@ -1412,10 +1405,8 @@ static const struct driver_info hg20f9_info = {
+ 	.description = "HG20F9 USB 2.0 Ethernet",
+ 	.bind = ax88772_bind,
+ 	.unbind = ax88772_unbind,
+-	.status = asix_status,
+ 	.reset = ax88772_reset,
+-	.flags = FLAG_ETHER | FLAG_FRAMING_AX | FLAG_LINK_INTR |
+-	         FLAG_MULTI_PACKET,
++	.flags = FLAG_ETHER | FLAG_FRAMING_AX | FLAG_MULTI_PACKET,
+ 	.rx_fixup = asix_rx_fixup_common,
+ 	.tx_fixup = asix_tx_fixup,
+ 	.data = FLAG_EEPROM_MAC,
 -- 
 2.39.5
 
