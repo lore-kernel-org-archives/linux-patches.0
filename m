@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA4D328373;
-	Wed,  4 Jun 2025 00:53:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BFF16AA7;
+	Wed,  4 Jun 2025 00:53:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748998406; cv=none; b=mEq14iR6bT89N82Gi6MnJdksF3r1Seir36tQfmVZ1YiWuX6KqE27FA8e59/+rsLKfo3r8AaxP1fS/d/yOISD2Z2X/xh+HTGlxkVd2ubLBGBY8nJLuYTPC+vGjCi3clJt9+QuFRplG7J0mdvm0irCgshmAqjhHg7xIdfugN+R2xw=
+	t=1748998414; cv=none; b=JGrcdvV67ceZ9LA+uj962LkoyXSMZTrrDR1rHQrYgOfFJwUsEwHI0QRoO/qEcXcTrpbqyW4yjarXlGmEJ5D00jY4iiV6dRRiDJ6+Ugz+vOQVxqxvhDXuxkUhBbP7ruqpzlRqIAulc01ZKxPJTEz4r0dMs8DjieIm0ThbqPErI0A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748998406; c=relaxed/simple;
-	bh=7+kkN0WOvK5p+aqr+AmGXXsCVloX/5U7KCaTvmolSc8=;
+	s=arc-20240116; t=1748998414; c=relaxed/simple;
+	bh=iamkArx9xlfmAUAeCkWN9BxLpYjp4FtRpbN6UebXDpU=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=bnanTmGKDDj7QSZJAlKtvHx3IfSncljXF7/59bJYFsOq68DV7i5afrmSQ8Wg2m8FXKyQzCx/P814hIrpOTiDiC6C6KMIUffdxqcjANxj4Hei1BNgCyxkN6OqPsVVgJQC42vUl56dGq21Y1fM7HSJfIoQsigJoKSX6+KpvWNlF/0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Bjq2CDOz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M6v2888AmjCDImWA3E6xnnZZQv6kdX/Es0g//cq9yOQK8nqQtF4qJtFpsn9XcXV/gCGYyUckfU3LUMTpAEhFeJSRJZy/IxC1/ii5bYI+XGRGgydQvbMNfvgnEp95sgoOrkv7JlFk1YhD98yonABnOIrwLWIv0IyFp0WSRMeDXQA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jD3nfJNQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Bjq2CDOz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABC98C4CEED;
-	Wed,  4 Jun 2025 00:53:25 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jD3nfJNQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEB58C4CEED;
+	Wed,  4 Jun 2025 00:53:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748998406;
-	bh=7+kkN0WOvK5p+aqr+AmGXXsCVloX/5U7KCaTvmolSc8=;
+	s=k20201202; t=1748998413;
+	bh=iamkArx9xlfmAUAeCkWN9BxLpYjp4FtRpbN6UebXDpU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bjq2CDOzGAjA3F1QpRWyb2eyj/VXWzFrGzPSdaT8hfDoCi88dyHfiHTSyIOz7Ni4T
-	 LWA3N4eg0OVM5pCb8pJqC0TRX5o6JFgcTavpYsBd8W1HbeNNVt004OHHB6awfkMjmp
-	 a4Oo7cgQ7lNBFDwFbOV3YJhAgb8l8ESbYV0oRlI9rhNGDMsqZ7rjHhDOHpaaVUroij
-	 Ri+qQHLF0t1TtNZHmjnmNghEXwzpq3PWrYyzICiQ7sMBjWIgrs4FMuMTGgm0qCLiKy
-	 zdmbJYF6sQZLL49OY1d42btoic7udl+jATx3cmbmvA1oO4NaLy/vMcranosPD8jmR/
-	 p5FxP3MAnKZ5w==
+	b=jD3nfJNQ3QzLTTEJVXg2Ej+/xpZAcKxiPe6L63b1rm4LMmiRITNdLeeNa6O/hj37Z
+	 NWwLKT3Kztn+JnlS07NLzyRKlsgvn4JCC+WAi6pBdD/bwBlkcw6ZM8L0DWyouh9lP7
+	 ndJpzKUE3sOU0+2BFwkWphHLZ3cj9s/xRTDjnucpfc9Q3LnezRzQ9fIG+Vxek0R4UZ
+	 27QE+GPQHSbB70uFXup3Z6yqZhGYTi+M8Xl9Hm0FoF8F93FaT2LuHY0T9ykBSlzOgX
+	 jjFLq0MoMoYayrLH2ZeftZU4qpp+IdGUnx4Cz6cYuql3hkTM0zvrVh8VnsoZSZvq+H
+	 6aI0YHvRaTokA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Johannes Berg <johannes.berg@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+Cc: Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
 	emmanuel.grumbach@intel.com,
-	gregkh@linuxfoundation.org,
-	peterz@infradead.org,
-	tglx@linutronix.de
-Subject: [PATCH AUTOSEL 6.15 066/118] wifi: iwlwifi: dvm: pair transport op-mode enter/leave
-Date: Tue,  3 Jun 2025 20:49:57 -0400
-Message-Id: <20250604005049.4147522-66-sashal@kernel.org>
+	benjamin.berg@intel.com,
+	arnd@arndb.de
+Subject: [PATCH AUTOSEL 6.15 067/118] wifi: iwlwifi: mld: check for NULL before referencing a pointer
+Date: Tue,  3 Jun 2025 20:49:58 -0400
+Message-Id: <20250604005049.4147522-67-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250604005049.4147522-1-sashal@kernel.org>
 References: <20250604005049.4147522-1-sashal@kernel.org>
@@ -53,101 +52,84 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.15
 Content-Transfer-Encoding: 8bit
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 
-[ Upstream commit 6b340a694cee9e7a24b2be827c738b5b6cb13c84 ]
+[ Upstream commit f9151f16e140b9c43f076579146679408af6f442 ]
 
-If there's a failure and the op-mode didn't actually fully
-initialize, it should leave the transport again. Fix that.
+Errors can happen, and it is better not to risk with a NULL pointer
+dereference.
+Make sure that the links-to-remove pointers are not NULL before
+dereferencing it.
 
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20250504132447.714c3517548b.I49557e7ba8c03be2b558cc9fb5efa2a9fbab890e@changeid
+Reviewed-by: Johannes Berg <johannes.berg@intel.com>
+Link: https://patch.msgid.link/20250430151952.408652d45cda.I1bb72836dab17895a2e39910e4493d667db0fa80@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Based on my comprehensive analysis, here is my determination: **YES**
-This commit should be backported to stable kernel trees. ## Extensive
-Analysis ### Nature of the Bug This commit fixes a critical resource
-management bug in the iwlwifi DVM driver's initialization path. The
-problem occurs in `iwl_op_mode_dvm_start()` where
-`iwl_trans_op_mode_enter()` is called at line 1357, but several error
-paths fail to call the corresponding `iwl_trans_op_mode_leave()`. ###
-Specific Code Changes Analysis The commit makes two key changes: 1.
-**Changes goto targets from `out_free_hw` to `out_leave_trans`** for
-early error paths: - Line 1385: `goto out_leave_trans;` (was `goto
-out_free_hw;`) - Line 1393: `goto out_leave_trans;` (was `goto
-out_free_hw;`) 2. **Adds the missing `out_leave_trans` label and cleanup
-call**: ```c out_leave_trans: iwl_trans_op_mode_leave(priv->trans);
-out_free_hw: ieee80211_free_hw(priv->hw); ``` ### Why This Meets Stable
-Backport Criteria **1. Important Bug Fix**: This fixes a critical
-resource management issue where the transport layer remains in an
-inconsistent state if early initialization fails. Without the `leave`
-call, the transport maintains dangling references (`trans->op_mode`) and
-doesn't properly cancel pending work or reset its state. **2. Minimal
-Risk**: The fix is extremely contained - it only adds proper cleanup to
-existing error paths. The change follows the established pattern used by
-other iwlwifi drivers (MLD, MVM) and the normal stop path in the same
-driver. **3. Clear Side Effects Analysis**: The fix has no negative side
-effects. `iwl_trans_op_mode_leave()` is designed to be safely called in
-error scenarios and only cleans up resources that were allocated by the
-corresponding `enter` call. **4. Affects Critical Subsystem**: This
-impacts WiFi driver initialization, which can affect system stability
-and device reliability during error conditions. **5. Confined to
-Subsystem**: The change is entirely within the iwlwifi DVM driver and
-doesn't affect other kernel components. ### Comparison with Similar
-Commits Reviewing the provided similar commits, they all had "Backport
-Status: NO" because they were either: - Feature additions (commit #5:
-"add trans op to set PNVM") - Performance optimizations (commit #2:
-"skip opmode start retries") - Minor improvements (commit #3: "remove
-module loading failure message") - Module initialization improvements
-(commit #4: "fix module init error paths") In contrast, this commit
-fixes a fundamental resource management bug that can cause system
-instability. ### Real-World Impact This bug affects users when: - WiFi
-hardware initialization fails (common during driver load/reload) -
-EEPROM reading fails (hardware-dependent) - Early driver startup
-encounters errors Without this fix, failed initialization leaves the
-transport in an inconsistent state, potentially causing issues during
-subsequent driver operations, device removal, or system shutdown. ###
-Conclusion This commit represents exactly the type of fix that stable
-kernel trees are designed for: a small, contained fix for an important
-bug that improves system reliability without introducing new features or
-architectural changes. The fix ensures proper resource cleanup in error
-paths, following established patterns in the codebase.
+Now let me analyze this in detail: **YES** This commit should be
+backported to stable kernel trees. Here's my extensive analysis: ## Code
+Analysis The commit adds a NULL pointer check in the
+`iwl_mld_change_vif_links()` function: **Before:** ```c if (removed &
+BIT(i)) iwl_mld_remove_link(mld, old[i]); ``` **After:** ```c if
+(removed & BIT(i) && !WARN_ON(!old[i])) iwl_mld_remove_link(mld,
+old[i]); ``` ## Why This Should Be Backported ### 1. **Prevents Kernel
+Crashes** The change prevents a potential NULL pointer dereference that
+could cause kernel crashes. Without this check, if `old[i]` is NULL,
+passing it to `iwl_mld_remove_link()` would result in a kernel panic
+when the function tries to dereference the pointer. ### 2. **Consistent
+with Similar Backported Commits** Looking at the historical examples: -
+**Similar Commit #3** (Status: YES): Fixed NULL pointer dereference in
+iwlwifi with `for_each_vif_active_link` that also checks for valid
+pointers before dereferencing - **Similar Commit #5** (Status: YES):
+Fixed null-ptr deref on failed assoc by keeping a local copy before
+clearing This commit follows the same pattern of adding NULL checks to
+prevent crashes in error conditions. ### 3. **Small, Contained Fix** The
+change is minimal and surgical: - Only adds a single NULL check with
+WARN_ON - Doesn't change the function's core logic or introduce new
+features - No architectural changes or side effects - Follows defensive
+programming practices ### 4. **Error Handling Improvement** The commit
+message explicitly states "Errors can happen, and it is better not to
+risk with a NULL pointer dereference." This indicates it's addressing a
+real error condition that can occur during normal operation,
+particularly in WiFi 7 Multi-Link Operation scenarios. ### 5. **Critical
+Subsystem** This touches the WiFi driver subsystem, which is user-facing
+and where crashes would significantly impact system stability. Users
+could potentially trigger this condition through normal WiFi operations.
+### 6. **MLO Context Risk** The Multi-Link Operation (MLO) functionality
+is relatively new in WiFi 7, and link management operations like those
+in `iwl_mld_change_vif_links()` happen during: - Interface
+reconfiguration - Link addition/removal in MLO setups - Error recovery
+scenarios These are common operations where the `old[]` array might
+contain NULL entries due to race conditions or error states. ### 7.
+**Defensive Programming Pattern** The fix uses `WARN_ON(!old[i])` which:
+- Alerts developers to the unexpected condition - Prevents the crash by
+skipping the problematic operation - Maintains system stability -
+Provides debugging information ## Risk Assessment **Minimal Risk:** -
+The change is purely defensive - If `old[i]` is NULL, the original code
+would crash anyway - The new code gracefully handles the error condition
+- No functional changes to normal operation paths This commit clearly
+fits the stable tree criteria: it fixes a potential crash with minimal
+risk, is a small contained change, and addresses an error condition that
+could affect users in the field. The pattern matches previously
+backported NULL pointer fixes in similar network driver contexts.
 
- drivers/net/wireless/intel/iwlwifi/dvm/main.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/mld/mac80211.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/dvm/main.c b/drivers/net/wireless/intel/iwlwifi/dvm/main.c
-index a27a72cc017a3..a7f9e244c0975 100644
---- a/drivers/net/wireless/intel/iwlwifi/dvm/main.c
-+++ b/drivers/net/wireless/intel/iwlwifi/dvm/main.c
-@@ -1382,14 +1382,14 @@ static struct iwl_op_mode *iwl_op_mode_dvm_start(struct iwl_trans *trans,
+diff --git a/drivers/net/wireless/intel/iwlwifi/mld/mac80211.c b/drivers/net/wireless/intel/iwlwifi/mld/mac80211.c
+index 68d97d3b8f026..2d5233dc3e242 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mld/mac80211.c
++++ b/drivers/net/wireless/intel/iwlwifi/mld/mac80211.c
+@@ -2460,7 +2460,7 @@ iwl_mld_change_vif_links(struct ieee80211_hw *hw,
+ 		added |= BIT(0);
  
- 	err = iwl_trans_start_hw(priv->trans);
- 	if (err)
--		goto out_free_hw;
-+		goto out_leave_trans;
- 
- 	/* Read the EEPROM */
- 	err = iwl_read_eeprom(priv->trans, &priv->eeprom_blob,
- 			      &priv->eeprom_blob_size);
- 	if (err) {
- 		IWL_ERR(priv, "Unable to init EEPROM\n");
--		goto out_free_hw;
-+		goto out_leave_trans;
+ 	for (int i = 0; i < IEEE80211_MLD_MAX_NUM_LINKS; i++) {
+-		if (removed & BIT(i))
++		if (removed & BIT(i) && !WARN_ON(!old[i]))
+ 			iwl_mld_remove_link(mld, old[i]);
  	}
  
- 	/* Reset chip to save power until we load uCode during "up". */
-@@ -1508,6 +1508,8 @@ static struct iwl_op_mode *iwl_op_mode_dvm_start(struct iwl_trans *trans,
- 	kfree(priv->eeprom_blob);
- out_free_eeprom:
- 	kfree(priv->nvm_data);
-+out_leave_trans:
-+	iwl_trans_op_mode_leave(priv->trans);
- out_free_hw:
- 	ieee80211_free_hw(priv->hw);
- out:
 -- 
 2.39.5
 
