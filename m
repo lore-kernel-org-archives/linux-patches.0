@@ -1,47 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ECC120F060;
-	Wed,  4 Jun 2025 01:04:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E52D2101B7;
+	Wed,  4 Jun 2025 01:04:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748999043; cv=none; b=W3ng5/LAvJcCJY8f6Ym9NaRjzmwtjPPRlnlqIi+xVwyEyZj3o3v4ILnRzcbgtXPtkjV4ctmI5HYXGWDMz/m67MrsqdPiYWEFVDgkLLHqQEC9wUrMFSYq8pHjF+uQFpCkPkvzUQTestoE2MOLWgnRBxPwYQSGWMbPMXYW75IIfWo=
+	t=1748999047; cv=none; b=R5dA8YiatbGSrS6I4qyHUrkn5vA8ML0+KNBpA9e8gNlmh31C+kO41/gyoBx/er4oDlP7U3rucbzMF+EleG/Cyd7hRt2q6oLmY47mrk6lIMgqMaHR5SrzDkkbgoXQowzAYVzyosLf2zcCD3t40JS1SAKxmIFKM0UPAoZGKSOAvMM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748999043; c=relaxed/simple;
-	bh=gcIkWnrjXhv4BVVaCNDOZk372629RAA7pGszdQd85wE=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=q1bKDCgTQqsXDdF1ieq+Hw//DaYd/T9cjT7Ja6v7hL3Va2y1q1jIvprQGXPFPay6LCFzyQNyn/m4f4cfR5XyKQnjOmENSS957q5TavfCFWZnaciFRGCDXWBYhqtdtWke0ZumcoQ9u2GTX/MQCe09lNADVurth9VOPFzPU7VBUfc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sqYqj3H4; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1748999047; c=relaxed/simple;
+	bh=oUUefXHtUB8hBbwBIHX4KDHbahQ5XP0TqfxzE70Hkoo=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Type; b=jmrJFIhUhXOMDmpdY0oCxyPONM7+k/uF4cCiteDom/WI1NJGvGjGYjBjr1DoNM+jksHJk+C7Wwi5hIxJco0eGH14rNGj4pcC075/kzqGKcvZUOWNsZ2liQ8VngnvwnqiMZqZa3knJZi1hlPNcIgzV/9DytK2pNHhvU8WvAFL1Vs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bMgqzckp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sqYqj3H4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 293ACC4CEF1;
-	Wed,  4 Jun 2025 01:04:02 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bMgqzckp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32849C4CEED;
+	Wed,  4 Jun 2025 01:04:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748999043;
-	bh=gcIkWnrjXhv4BVVaCNDOZk372629RAA7pGszdQd85wE=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sqYqj3H4+IOKHiaaFInXp3PgI8oMZ799HlZawaiz14C7kqbbz239fPGH5PlsQl5h7
-	 O5zkG7hwASntPcRjFLhkoBiMoZ4/OPcYR4f5ImqctCvQO/yFRCeJNNkvBwIX1oV+zT
-	 nJUb72BUreYjtJ7WRUZBs6HoLAQOaIdMKWLE9yW3wjd9bNomjmMM/stBzP7LcUIrOQ
-	 o1TT1gSYEBmqZvlXvns1CLuiyZ7GfRGhT3/Fk41XAQxoAuk9/F0Ep19aGZIU4MCiNO
-	 51u79wPoubF+04Mwr3gps8NIsI5cSooS6efwvf2uz7+4idn4qgTE1GoorRz+72U5XR
-	 jAGNcnKR4qJeg==
+	s=k20201202; t=1748999047;
+	bh=oUUefXHtUB8hBbwBIHX4KDHbahQ5XP0TqfxzE70Hkoo=;
+	h=From:To:Cc:Subject:Date:From;
+	b=bMgqzckpcQqjWad+jQlrYbGNNXrxuAORaFEmPttYImMjGEQdUMh5DDLy/yg2rlvKr
+	 kzG1oDzJtRiYAswzLw3Eum77M0Mjsy5H19+5sAehF64c6Fl+TFHv+mDAhkUPCEniL/
+	 yWIDga5oDU83eWg+vXA32OtHhqUJ3UAEnA01KgyZ9NMFRavqUIG7IlsMoS0E/u3c8j
+	 7gkSuhy8VndXgOgw5lw0lqtrEuHDBmZVs3h1M5xZPw7CmopsU3lqD1zPXLb/gEfKWg
+	 Sm8pS3svP+fMnK6g46U63llRCk5RDc0PXarkmUhpmCDIgCdbnK+mWCzQHtvqdpxUVL
+	 86D/sHQq1oBWQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Suraj P Kizhakkethil <quic_surapk@quicinc.com>,
-	Aditya Kumar Singh <aditya.kumar.singh@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+Cc: Sergio Perez Gonzalez <sperezglz@gmail.com>,
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	jjohnson@kernel.org,
-	linux-wireless@vger.kernel.org,
-	ath12k@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.6 62/62] wifi: ath12k: Pass correct values of center freq1 and center freq2 for 160 MHz
-Date: Tue,  3 Jun 2025 21:02:13 -0400
-Message-Id: <20250604010213.3462-62-sashal@kernel.org>
+	nicolas.ferre@microchip.com
+Subject: [PATCH AUTOSEL 6.1 01/46] net: macb: Check return value of dma_set_mask_and_coherent()
+Date: Tue,  3 Jun 2025 21:03:19 -0400
+Message-Id: <20250604010404.5109-1-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250604010213.3462-1-sashal@kernel.org>
-References: <20250604010213.3462-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -50,117 +45,85 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.6.92
+X-stable-base: Linux 6.1.140
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Suraj P Kizhakkethil <quic_surapk@quicinc.com>
+From: Sergio Perez Gonzalez <sperezglz@gmail.com>
 
-[ Upstream commit b1b01e46a3db5ad44d1e4691ba37c1e0832cd5cf ]
+[ Upstream commit 3920a758800762917177a6b5ab39707d8e376fe6 ]
 
-Currently, for 160 MHz bandwidth, center frequency1 and
-center frequency2 are not passed correctly to the firmware.
-Set center frequency1 as the center frequency
-of the primary 80 MHz channel segment and center frequency2 as
-the center frequency of the 160 MHz channel and pass the values
-to the firmware.
+Issue flagged by coverity. Add a safety check for the return value
+of dma_set_mask_and_coherent, go to a safe exit if it returns error.
 
-Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.3.1-00173-QCAHKSWPL_SILICONZ-1
-
-Signed-off-by: Suraj P Kizhakkethil <quic_surapk@quicinc.com>
-Reviewed-by: Aditya Kumar Singh <aditya.kumar.singh@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250304095315.3050325-2-quic_surapk@quicinc.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Link: https://scan7.scan.coverity.com/#/project-view/53936/11354?selectedIssue=1643754
+Signed-off-by: Sergio Perez Gonzalez <sperezglz@gmail.com>
+Reviewed-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
+Link: https://patch.msgid.link/20250526032034.84900-1-sperezglz@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Based on my thorough analysis, here is my assessment: **YES** This
-commit should be backported to stable kernel trees for the following
-reasons: ## Analysis of the Code Changes The commit fixes a critical bug
-in the 160 MHz channel frequency handling for the ath12k driver
-(Qualcomm Wi-Fi 7 devices). The specific issues being corrected are: ###
-1. **Incorrect center frequency calculation for 160 MHz EHT channels**
-**Before the fix**: The code only handled `MODE_11AC_VHT80_80` for dual-
-band scenarios but completely ignored `MODE_11BE_EHT160` (Wi-Fi 7's 160
-MHz mode). This meant: - `chan->band_center_freq1` was incorrectly set
-to the original `arg->band_center_freq1` - `chan->band_center_freq2` was
-set to 0, providing no information about the 160 MHz channel structure
-**After the fix**: For `MODE_11BE_EHT160`, the code now correctly: -
-Sets `chan->band_center_freq1` to the center of the primary 80 MHz
-segment (±40 MHz from control channel) - Sets `chan->band_center_freq2`
-to the center of the entire 160 MHz channel - Follows the exact same
-pattern already established and proven in ath11k driver for
-`MODE_11AX_HE160` ### 2. **Follows established precedent from ath11k**
-The ath11k driver (lines 851-860 in
-`/home/sasha/linux/drivers/net/wireless/ath/ath11k/wmi.c`) already
-implements this exact logic for `MODE_11AX_HE160`: ```c if
-(arg->channel.mode == MODE_11AX_HE160) { if (arg->channel.freq >
-arg->channel.band_center_freq1) chan->band_center_freq1 = center_freq1 +
-40; else chan->band_center_freq1 = center_freq1 - 40;
-chan->band_center_freq2 = arg->channel.band_center_freq1; } ``` The
-ath12k fix implements identical logic for `MODE_11BE_EHT160`, ensuring
-consistency across the ath driver family. ### 3. **Impact on Users**
-Without this fix, 160 MHz channels on Wi-Fi 7 devices would not work
-correctly because: - The firmware receives incorrect channel center
-frequency information - This could lead to improper channel selection,
-interference, or complete failure to establish 160 MHz connections -
-Users with QCN9274 (and similar) devices would experience degraded Wi-Fi
-7 performance ### 4. **Meets Stable Backport Criteria** ✅ **Fixes
-important functionality**: 160 MHz operation is a key Wi-Fi 7 feature ✅
-**Small, contained change**: Only affects one function, adds clear
-conditional logic ✅ **Low regression risk**: Follows proven pattern from
-ath11k, only changes previously broken path ✅ **Clear side effects**:
-None beyond fixing the intended issue ✅ **Well-tested**: Commit includes
-"Tested-on: QCN9274 hw2.0" with specific firmware version ### 5.
-**Driver Maturity Context** ATH12K is the Wi-Fi 7 driver for
-current/recent Qualcomm chipsets. While newer than ath11k, it supports
-hardware that users actively deploy. The 160 MHz functionality is
-critical for achieving the high throughput promised by Wi-Fi 7. ### 6.
-**Comparison with Similar Commits** This commit closely resembles
-**Similar Commit #2** (marked YES for backport) which also fixed
-frequency calculation issues in ath12k for 6 GHz operation. Both
-commits: - Fix critical frequency/channel handling bugs - Have minimal
-code changes with low regression risk - Include proper testing
-validation - Address functionality that affects real user deployments
-The fix is essential for proper Wi-Fi 7 160 MHz operation and should be
-backported to ensure users with ath12k-supported hardware can fully
-utilize their devices' capabilities.
+Based on my analysis of the commit and the codebase context, here's my
+assessment: **YES** This commit should be backported to stable kernel
+trees. Here's my extensive analysis: ## Code Analysis The commit adds
+proper error checking for `dma_set_mask_and_coherent()` in the macb
+network driver. Looking at the specific changes: **Before the fix:**
+```c if (GEM_BFEXT(DAW64, gem_readl(bp, DCFG6))) {
+dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(44)); bp->hw_dma_cap
+|= HW_DMA_CAP_64B; } ``` **After the fix:** ```c if (GEM_BFEXT(DAW64,
+gem_readl(bp, DCFG6))) { err = dma_set_mask_and_coherent(&pdev->dev,
+DMA_BIT_MASK(44)); if (err) { dev_err(&pdev->dev, "failed to set DMA
+mask\n"); goto err_out_free_netdev; } bp->hw_dma_cap |= HW_DMA_CAP_64B;
+} ``` ## Why this should be backported: 1. **Fixes a Real Bug**: The
+original code ignores the return value of `dma_set_mask_and_coherent()`.
+If this function fails (which can happen on systems with restricted DMA
+capabilities), the driver would continue execution assuming 44-bit DMA
+addressing is available when it's not, leading to potential memory
+corruption or system crashes. 2. **Small, Contained Fix**: This is a
+minimal change that only adds proper error checking without changing any
+core logic or introducing new features. It follows the stable tree
+principle of being a small, targeted bugfix. 3. **Follows Established
+Patterns**: Looking at the similar commits provided, this matches
+exactly the pattern of commits marked "YES" for backporting (commits #1,
+#2, and #5) which all add proper error checking for DMA mask functions.
+4. **Critical Network Driver**: The macb driver is used in production
+systems, and DMA-related bugs can cause data corruption or system
+instability, making this a high-priority fix for stable trees. 5.
+**Proper Error Handling Path**: The fix correctly uses the existing
+`err_out_free_netdev` label, which properly cleans up allocated
+resources (line 5373-5383 in macb_main.c), preventing resource leaks
+when DMA setup fails. 6. **Static Analysis Tool Flagged**: The commit
+message mentions this was flagged by Coverity, indicating it's a
+legitimate code quality issue that could manifest as a runtime bug. 7.
+**Matches Stable Tree Criteria**: - Important bugfix ✓ - Minimal risk of
+regression ✓ - No architectural changes ✓ - Confined to one
+driver/subsystem ✓ - Clear side effects (proper cleanup on failure) ✓
+This commit addresses the same class of vulnerability as the other "YES"
+examples: ignoring return values of critical DMA functions that can fail
+and lead to undefined behavior. The fix is surgical, safe, and addresses
+a genuine runtime issue in a widely-used network driver.
 
- drivers/net/wireless/ath/ath12k/wmi.c | 16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/cadence/macb_main.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/wmi.c b/drivers/net/wireless/ath/ath12k/wmi.c
-index 11632b572bd38..244c1b2b289f9 100644
---- a/drivers/net/wireless/ath/ath12k/wmi.c
-+++ b/drivers/net/wireless/ath/ath12k/wmi.c
-@@ -951,14 +951,24 @@ int ath12k_wmi_vdev_down(struct ath12k *ar, u8 vdev_id)
- static void ath12k_wmi_put_wmi_channel(struct ath12k_wmi_channel_params *chan,
- 				       struct wmi_vdev_start_req_arg *arg)
- {
-+	u32 center_freq1 = arg->band_center_freq1;
-+
- 	memset(chan, 0, sizeof(*chan));
+diff --git a/drivers/net/ethernet/cadence/macb_main.c b/drivers/net/ethernet/cadence/macb_main.c
+index d2f4709dee0de..495a1cb0bc183 100644
+--- a/drivers/net/ethernet/cadence/macb_main.c
++++ b/drivers/net/ethernet/cadence/macb_main.c
+@@ -4956,7 +4956,11 @@ static int macb_probe(struct platform_device *pdev)
  
- 	chan->mhz = cpu_to_le32(arg->freq);
--	chan->band_center_freq1 = cpu_to_le32(arg->band_center_freq1);
--	if (arg->mode == MODE_11AC_VHT80_80)
-+	chan->band_center_freq1 = cpu_to_le32(center_freq1);
-+	if (arg->mode == MODE_11BE_EHT160) {
-+		if (arg->freq > center_freq1)
-+			chan->band_center_freq1 = cpu_to_le32(center_freq1 + 40);
-+		else
-+			chan->band_center_freq1 = cpu_to_le32(center_freq1 - 40);
-+
-+		chan->band_center_freq2 = cpu_to_le32(center_freq1);
-+	} else if (arg->mode == MODE_11BE_EHT80_80) {
- 		chan->band_center_freq2 = cpu_to_le32(arg->band_center_freq2);
--	else
-+	} else {
- 		chan->band_center_freq2 = 0;
-+	}
- 
- 	chan->info |= le32_encode_bits(arg->mode, WMI_CHAN_INFO_MODE);
- 	if (arg->passive)
+ #ifdef CONFIG_ARCH_DMA_ADDR_T_64BIT
+ 	if (GEM_BFEXT(DAW64, gem_readl(bp, DCFG6))) {
+-		dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(44));
++		err = dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(44));
++		if (err) {
++			dev_err(&pdev->dev, "failed to set DMA mask\n");
++			goto err_out_free_netdev;
++		}
+ 		bp->hw_dma_cap |= HW_DMA_CAP_64B;
+ 	}
+ #endif
 -- 
 2.39.5
 
