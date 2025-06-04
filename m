@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEE4413D51E;
-	Wed,  4 Jun 2025 00:54:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52CFB13D51E;
+	Wed,  4 Jun 2025 00:54:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748998467; cv=none; b=kD/QTtOrdL604oefxfSQbVnlmaiLXB3efIbZAYhJfZDFBkVWZF9oe/GCitFTXtklwglgbI/cveGs6pUG52bHOfr7SEB02CLYKCAhlTCeOeYn/Q7H9ewosYyFrgbI5jU7b+lOYVXutdy9uxIClroSSa9IGraec3OGPESXc+SZXUY=
+	t=1748998469; cv=none; b=oRA5dxx5IZNisAVDD9xwBiKjWTkRobW/mOU1Ax2Ls1USbfzaP8L1fVlesNgjbGn4hBzgMpSvlLJ0Lw2wM7IVnwK72CxnO+zOQykcOuemN5N9UqhW7B1r4XqP+ZcKwwk/QDvrRTBiaou5SQfB2R/oqHHxFjeafAS9uz4ovccbpzs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748998467; c=relaxed/simple;
-	bh=3J8L0Q40gmipmisNs5hullFuYFpPyGB12ZhWNN3xADM=;
+	s=arc-20240116; t=1748998469; c=relaxed/simple;
+	bh=2X0P1GsNVzgYrD6eTzDd41ZLUT2CV4WK0OivoVML9tw=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=prExQi3baIgwzydu1uOTkc7jPVcCQh/joJsGasAkQn64Awj0MiErAs+R5yUhEEoNBMKJFUR/XPAW1SqWns6oYJILT2JPAf1b6ajmD8VPXrfUidhcnOiN+uHXNgkqChvh0Ikydk5zH2QlGVCqcTduNioNsSLtZGLGi9jE36XyADc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R0eXpDJg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ibOfHSHW+/SMWRnzJJfm833Dl4P8p+eVLmcxerJnaNBx4gZB4MQZpMrACoo4HEW7QXUXs60xqr9G13Ur7Tue01LyrAp6UyAjKSHSSbeP1dbhiwL+Jnwy905kerD9Ysh4uGMFy88gk6clM64LO4Xw3Kcpp4WzT0ynOK0J4rI1EeM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=m3eZ3Zzl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R0eXpDJg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92094C4CEED;
-	Wed,  4 Jun 2025 00:54:26 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="m3eZ3Zzl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 271F0C4CEED;
+	Wed,  4 Jun 2025 00:54:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748998467;
-	bh=3J8L0Q40gmipmisNs5hullFuYFpPyGB12ZhWNN3xADM=;
+	s=k20201202; t=1748998469;
+	bh=2X0P1GsNVzgYrD6eTzDd41ZLUT2CV4WK0OivoVML9tw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R0eXpDJgMeTnmEMHXK0NAIsYf0HPf7A3zp3hleOmHu0COzWJ6UZw0Hga/BTYzsor9
-	 IQrqY3tsfvbworElCxRwGMmjGzQ8x86Te8pIZy//2PODEZ35pvVuBe2YaEv41xW7vW
-	 PxTXLzGA2LtLU0NA6YoRCHQFfLf5RMepS7SeQNrRKIZeO1iKHGKkiW5Y2rziZ5jJre
-	 DLjMZspDow3el7nB8JOihfOaUt5uS/jSX3Syiex0XSjPBSSWd7RDhPpeBjxbv+GGOq
-	 A2unzmnaZit487eEp+dSlClFzPiqlWlz286Gmn8jS22Qqd/O3nEVHf4SXfdDjg84aF
-	 j3Cef84mOBlBg==
+	b=m3eZ3ZzlifnfhkuMi+W9IV6+WX5n+dJ1CfNrSjbUIsc/vdLXkHFayAxM0nit7CfRl
+	 mqxbFCbb6myL2yVwsgza1S/jXUkAkWpmi/JJ7hMcSW0IVAU7oMHad+yG/QfK9kQ16+
+	 qzbXZ+8R76WNBGcCjXUszPQ1fQaZVSnDZ9imUe4pK6alX9WtSNIrQRnCf8UO4frEXl
+	 QbCyT8feSVR5nm/8ttDwp7r3GvmknzZYEa59lE2GBAuXKXwkAjsw/kOv+4RiPUKmk6
+	 Bd304QIubu6v1kgpkhiJWyWooI/xrogkz4mZePNeDqY1SI+pbttZRXceWzGwb+pWrB
+	 TM9Gn3ukheE1w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Sarika Sharma <quic_sarishar@quicinc.com>,
-	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+Cc: Robin Murphy <robin.murphy@arm.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	jjohnson@kernel.org,
-	linux-wireless@vger.kernel.org,
-	ath12k@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.15 091/118] wifi: ath12k: using msdu end descriptor to check for rx multicast packets
-Date: Tue,  3 Jun 2025 20:50:22 -0400
-Message-Id: <20250604005049.4147522-91-sashal@kernel.org>
+	joro@8bytes.org,
+	will@kernel.org,
+	iommu@lists.linux.dev
+Subject: [PATCH AUTOSEL 6.15 092/118] iommu: Avoid introducing more races
+Date: Tue,  3 Jun 2025 20:50:23 -0400
+Message-Id: <20250604005049.4147522-92-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250604005049.4147522-1-sashal@kernel.org>
 References: <20250604005049.4147522-1-sashal@kernel.org>
@@ -54,98 +54,91 @@ X-stable-base: Linux 6.15
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sarika Sharma <quic_sarishar@quicinc.com>
+From: Robin Murphy <robin.murphy@arm.com>
 
-[ Upstream commit cb7433cc5cd4d07175dbc41f5a19966e9fae48be ]
+[ Upstream commit 0c8e9c148e29a983e67060fb4944a8ca79d4362a ]
 
-Currently, the RX multicast broadcast packet check is performed using
-bit 15 from the info6 field of the MPDU start descriptor. This check
-can also be done using bit 9 from the info5 field of the MSDU end
-descriptor. However, in some scenarios multicast bit is not set when
-fetched from MPDU start descriptor.
-Therefore, checking the RX multicast broadcast packet from the MSDU
-end descriptor is more reliable as it is per MSDU.
+Although the lock-juggling is only a temporary workaround, we don't want
+it to make things avoidably worse. Jason was right to be nervous, since
+bus_iommu_probe() doesn't care *which* IOMMU instance it's probing for,
+so it probably is possible for one walk to finish a probe which a
+different walk started, thus we do want to check for that.
 
-Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.4.1-00199-QCAHKSWPL_SILICONZ-1
+Also there's no need to drop the lock just to have of_iommu_configure()
+do nothing when a fwspec already exists; check that directly and avoid
+opening a window at all in that (still somewhat likely) case.
 
-Signed-off-by: Sarika Sharma <quic_sarishar@quicinc.com>
-Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250411061523.859387-2-quic_sarishar@quicinc.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Suggested-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Robin Murphy <robin.murphy@arm.com>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Link: https://lore.kernel.org/r/09d901ad11b3a410fbb6e27f7d04ad4609c3fe4a.1741706365.git.robin.murphy@arm.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-## Analysis and Recommendation **YES** - This commit should be
-backported to stable kernel trees. ### Detailed Analysis: **1. Bug Fix
-Nature:** The commit fixes a real bug where multicast/broadcast packet
-detection is unreliable when using the MPDU start descriptor
-(`RX_MPDU_START_INFO6_MCAST_BCAST` from `info6` field). The commit
-message explicitly states "in some scenarios multicast bit is not set
-when fetched from MPDU start descriptor." **2. Code Changes Analysis:**
-The fix changes two functions in
-`drivers/net/wireless/ath/ath12k/hal.c`: -
-`ath12k_hw_qcn9274_rx_desc_is_da_mcbc()` -
-`ath12k_hw_qcn9274_compact_rx_desc_is_da_mcbc()` Both change from
-reading bit 15 of `mpdu_start.info6` to reading bit 9 of
-`msdu_end.info5`, which is described as "more reliable as it is per
-MSDU." **3. Impact Assessment:** - **User Impact**: Multicast/broadcast
-packet misclassification can cause serious networking issues including
-packet drops, incorrect routing, and potential security vulnerabilities
-- **Scope**: Limited to ath12k QCN9274 hardware (a specific WiFi
-chipset) - **Risk**: Very low risk - changes only the bit field being
-read, using well-defined hardware descriptor fields **4. Backport
-Suitability Criteria:** ✅ **Fixes important bug**: Incorrect
-multicast/broadcast detection affects real user traffic ✅ **Small and
-contained**: Only changes which bit field is read in two functions ✅
-**No architectural changes**: Simple hardware register access change ✅
-**Minimal regression risk**: Well-defined hardware fields with clear
-semantics ✅ **Critical subsystem**: Network packet classification is
-fundamental functionality ✅ **Clear side effects**: No complex side
-effects beyond fixing the core issue **5. Comparison with Historical
-Examples:** This is very similar to "Similar Commit #1" which was marked
-"YES" for backporting. Both commits: - Fix incorrect multicast/broadcast
-packet detection - Change which hardware descriptor field is used - Are
-small, contained fixes - Have minimal regression risk **6. Technical
-Justification:** The MSDU end descriptor is indeed more reliable for
-per-MSDU information as stated in the commit message. The MPDU start
-descriptor contains MPDU-level information which may not accurately
-reflect the multicast/broadcast status of individual MSDUs within an
-aggregated frame. **7. Testing and Validation:** The commit includes
-"Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.4.1-00199-QCAHKSWPL_SILICONZ-1"
-showing it has been validated on the target hardware. This is a clear,
-well-justified bug fix that meets all criteria for stable tree
-backporting with minimal risk and clear benefit to users with affected
-hardware.
+Now I have enough context to analyze this commit. Based on my analysis:
+**YES** This commit should be backported to stable kernel trees. ##
+Analysis ### Nature of the Fix This commit addresses a **race
+condition** in the IOMMU subsystem's device probing mechanism. The key
+changes are: 1. **Line 428**: Adding a check for `!dev->iommu->fwspec`
+before calling `dma_configure()` to avoid unnecessary work when firmware
+spec already exists 2. **Lines 432-434**: Adding validation after re-
+acquiring the lock to check if another instance completed the probe
+while the lock was dropped 3. **Comment update**: Clarifying that the
+device should not have a driver bound when called from `dma_configure`
+### Why This Should Be Backported **1. Fixes Important Race
+Conditions:** The commit directly addresses race conditions in device
+probing that can occur when multiple IOMMU instances are probing devices
+in parallel. The code pattern of dropping and re-acquiring locks (lines
+429-431) is inherently racy without proper validation. **2. Small and
+Contained Changes:** - Only 6 lines of actual code changes in a single
+function - Adds safety checks rather than changing core logic - Changes
+are defensive programming rather than architectural modifications **3.
+Follows Established Pattern:** Looking at the similar commits marked
+"YES": - Similar Commit #1: Also fixes races in IOMMU device probe with
+minimal changes - Similar Commit #3: Also adds locking to prevent
+double-probe scenarios **4. Addresses Critical Subsystem:** IOMMU is a
+critical kernel subsystem that handles memory isolation and device
+security. Race conditions here can lead to: - Malformed IOMMU groups -
+Potential lack of device isolation - System instability **5. Low Risk:**
+- The changes are purely defensive (adding checks) - No functional
+behavior changes for the common case - Early return paths reduce
+unnecessary work - Follows the principle of "fail fast" when
+inconsistent state is detected **6. Context Matches Stable Criteria:** -
+**Bug fix**: ✓ (addresses race conditions) - **Small scope**: ✓ (single
+function, 6 lines) - **Low risk**: ✓ (defensive checks only) -
+**Important subsystem**: ✓ (IOMMU handles device security) The commit
+message explicitly mentions this is part of temporary workarounds for
+lock-juggling, and the author (Robin Murphy) acknowledges the
+nervousness about race conditions, making this a clear stability
+improvement rather than a new feature.
 
- drivers/net/wireless/ath/ath12k/hal.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/iommu/iommu.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/hal.c b/drivers/net/wireless/ath/ath12k/hal.c
-index cd59ff8e6c7b0..42dd4cab7f258 100644
---- a/drivers/net/wireless/ath/ath12k/hal.c
-+++ b/drivers/net/wireless/ath/ath12k/hal.c
-@@ -449,8 +449,8 @@ static u8 *ath12k_hw_qcn9274_rx_desc_mpdu_start_addr2(struct hal_rx_desc *desc)
- 
- static bool ath12k_hw_qcn9274_rx_desc_is_da_mcbc(struct hal_rx_desc *desc)
- {
--	return __le32_to_cpu(desc->u.qcn9274.mpdu_start.info6) &
--	       RX_MPDU_START_INFO6_MCAST_BCAST;
-+	return __le16_to_cpu(desc->u.qcn9274.msdu_end.info5) &
-+	       RX_MSDU_END_INFO5_DA_IS_MCBC;
- }
- 
- static void ath12k_hw_qcn9274_rx_desc_get_dot11_hdr(struct hal_rx_desc *desc,
-@@ -908,8 +908,8 @@ static u8 *ath12k_hw_qcn9274_compact_rx_desc_mpdu_start_addr2(struct hal_rx_desc
- 
- static bool ath12k_hw_qcn9274_compact_rx_desc_is_da_mcbc(struct hal_rx_desc *desc)
- {
--	return __le32_to_cpu(desc->u.qcn9274_compact.mpdu_start.info6) &
--	       RX_MPDU_START_INFO6_MCAST_BCAST;
-+	return __le16_to_cpu(desc->u.qcn9274_compact.msdu_end.info5) &
-+	       RX_MSDU_END_INFO5_DA_IS_MCBC;
- }
- 
- static void ath12k_hw_qcn9274_compact_rx_desc_get_dot11_hdr(struct hal_rx_desc *desc,
+diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
+index 9d728800a862e..ee9c62150b560 100644
+--- a/drivers/iommu/iommu.c
++++ b/drivers/iommu/iommu.c
+@@ -422,13 +422,15 @@ static int iommu_init_device(struct device *dev)
+ 	 * is buried in the bus dma_configure path. Properly unpicking that is
+ 	 * still a big job, so for now just invoke the whole thing. The device
+ 	 * already having a driver bound means dma_configure has already run and
+-	 * either found no IOMMU to wait for, or we're in its replay call right
+-	 * now, so either way there's no point calling it again.
++	 * found no IOMMU to wait for, so there's no point calling it again.
+ 	 */
+-	if (!dev->driver && dev->bus->dma_configure) {
++	if (!dev->iommu->fwspec && !dev->driver && dev->bus->dma_configure) {
+ 		mutex_unlock(&iommu_probe_device_lock);
+ 		dev->bus->dma_configure(dev);
+ 		mutex_lock(&iommu_probe_device_lock);
++		/* If another instance finished the job for us, skip it */
++		if (!dev->iommu || dev->iommu_group)
++			return -ENODEV;
+ 	}
+ 	/*
+ 	 * At this point, relevant devices either now have a fwspec which will
 -- 
 2.39.5
 
