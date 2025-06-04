@@ -1,47 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60AAF846C;
-	Wed,  4 Jun 2025 00:57:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D54FD846C;
+	Wed,  4 Jun 2025 00:57:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748998622; cv=none; b=uRQjQ38aUTid0vvjV3qhSX/q8snNj112zuP4H/spTiuBeD89fI2r6rv8ODrX6Orjlb+B3eHbPC9uJ4QsW+6pL7Ah8mnvrl67+WlzlhN6VH5NlpaK/XZ0vYXUN/xDg4eCf+JtR+uGh5O2iIX7rJG2iLicRxk/fkvdQ3YzCxV+iBM=
+	t=1748998623; cv=none; b=KxV2h5OlaDaBK6OBfaEJOB7Dl01tg8RK21p2KVsr6U/g7vh2+34SpK48eAnEKjXvFrSstexnkjlpE0LaQ53qk1MWpggbxu/ciQn3vNhJeSojo3Vmh202BbUrXZk9EdPZ25ggizkkMnM0DGdoArfEyPqBhE/HOUk6BIvVPGE6iao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748998622; c=relaxed/simple;
-	bh=jTneZdOJjc2eX7VIrXjV3E1T7NY9+qMScGkWfoPBP44=;
+	s=arc-20240116; t=1748998623; c=relaxed/simple;
+	bh=2lDFq60h0MzR0msjJYZ0x3Q/avexVuVPmCD2kEjkZz4=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XE6ybknrp3p8eyjyIKPUsGL61aHRJ/lSX0iDmb4qZVqZm/RDKxYyiTPS8UalWlJKFFL6SR4unj3ZojFc6HYcJ8TK+V1ILC9m81YhxShd0udaEEwjwRrXDPUbWJt+5U8jlMzpvDHx8vt4LFlTl0nbZAEai5hSsWh++wiAnKFhpbc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OUUmJyAK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=FIg7sexUA9MnoMWR3IMRD55YdkWiHQWu4yQTG2sk3w8ulUqPtiRIQrlP1U8bqJIC0nw5Is8Gmfy0Z0TTnx/q6KjjRzTm/uUka/2kCUo4J8LoxJUHHFR8MFv4rpmsScHwkDWjmB9AdVNdXvIDaCylkJz9lQ7PTh7X5n+egCHDSjw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=enEDA9jl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OUUmJyAK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD265C4CEEF;
-	Wed,  4 Jun 2025 00:57:00 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="enEDA9jl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1B42C4CEED;
+	Wed,  4 Jun 2025 00:57:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748998622;
-	bh=jTneZdOJjc2eX7VIrXjV3E1T7NY9+qMScGkWfoPBP44=;
+	s=k20201202; t=1748998623;
+	bh=2lDFq60h0MzR0msjJYZ0x3Q/avexVuVPmCD2kEjkZz4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OUUmJyAK/SEktWpSaqfY6suA8uDi/6dnm/dhyYdxtRpMbvPhgOPB7Rl/71wEqYlWp
-	 vXUFMJUlrxlA3u/nttR+MP0VyatX81t/C2nZ1qyk06sXxBOb9/3BUhjwUjGteXx53V
-	 RaAjXXEFpBtfhGupFfxYXe4chuqmGikfegtNxgEss7oF+Ik133WOtbBYpYolmRWh4O
-	 Aa468VCJJFRrv75JJ9uMVioHQBZn4q1Az9iLOPvs/KW/uQ7Ze8J4YhW5L9wx5ny1hH
-	 o+U8W2CMh+KiJVdkKL+zN4KodQFqXIWOB22I/PFNgB5tBleQB8EWbbZj6CAdQD5sws
-	 /sM59Pk2qMqEg==
+	b=enEDA9jlUzgH+pO1SABAQZF1pu2xGni1Qf2AEFcW8JOqDq/dtJN2x0aMVcu+5sSKA
+	 9iWOppBDryMRJvuXqFH1hX8yItumBV2E5L9yW7/JDpK/KkMXQUr8v6xhPTcv8ksD/6
+	 94OfMx2UTpjk5Zv9xP9VYUeObKbMzt22xxjE52rYZrsxww/1ZYRD348x+H85Y+Y3AB
+	 uQk01+2baRMi4MvQiO5mQMX/wmKR5Yl+GtDp7anKWbZOJHHooNd/mGaYB1Op1t9XYG
+	 8mb7YEJpjdv/rTULevcFxsGc6q76B52Ef0FnP9HmdnvwmiIQmeaZSBbrYa+DPGxQoa
+	 iOplN8/KCNQ+Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Gabor Juhos <j4g8y7@gmail.com>,
-	Imre Kaloz <kaloz@openwrt.org>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Linus Walleij <linus.walleij@linaro.org>,
+Cc: Mykyta Yatsenko <yatsenko@meta.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	gregory.clement@bootlin.com,
-	sebastian.hesselbarth@gmail.com,
-	brgl@bgdev.pl,
-	linux-arm-kernel@lists.infradead.org,
-	linux-gpio@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.14 046/108] pinctrl: armada-37xx: propagate error from armada_37xx_pmx_gpio_set_direction()
-Date: Tue,  3 Jun 2025 20:54:29 -0400
-Message-Id: <20250604005531.4178547-46-sashal@kernel.org>
+	eddyz87@gmail.com,
+	ast@kernel.org,
+	daniel@iogearbox.net,
+	bpf@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.14 047/108] libbpf: Check bpf_map_skeleton link for NULL
+Date: Tue,  3 Jun 2025 20:54:30 -0400
+Message-Id: <20250604005531.4178547-47-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250604005531.4178547-1-sashal@kernel.org>
 References: <20250604005531.4178547-1-sashal@kernel.org>
@@ -57,114 +54,89 @@ X-stable-base: Linux 6.14.9
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gabor Juhos <j4g8y7@gmail.com>
+From: Mykyta Yatsenko <yatsenko@meta.com>
 
-[ Upstream commit bfa0ff804ffa8b1246ade8be08de98c9eb19d16f ]
+[ Upstream commit d0445d7dd3fd9b15af7564c38d7aa3cbc29778ee ]
 
-The armada_37xx_gpio_direction_{in,out}put() functions can fail, so
-propagate their error values back to the stack instead of silently
-ignoring those.
+Avoid dereferencing bpf_map_skeleton's link field if it's NULL.
+If BPF map skeleton is created with the size, that indicates containing
+link field, but the field was not actually initialized with valid
+bpf_link pointer, libbpf crashes. This may happen when using libbpf-rs
+skeleton.
+Skeleton loading may still progress, but user needs to attach struct_ops
+map separately.
 
-Signed-off-by: Imre Kaloz <kaloz@openwrt.org>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
-Link: https://lore.kernel.org/20250514-pinctrl-a37xx-fixes-v2-5-07e9ac1ab737@gmail.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Mykyta Yatsenko <yatsenko@meta.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20250514113220.219095-1-mykyta.yatsenko5@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Based on my comprehensive analysis, here is my determination: **YES** ##
-Extensive Analysis for Backport Recommendation ### 1. **Bug Severity and
-Real User Impact** This commit fixes a **genuine bug** where the
-`armada_37xx_pmx_gpio_set_direction()` function silently ignores errors
-from GPIO direction setting operations. The current code at lines
-476-481 shows: ```c if (input) armada_37xx_gpio_direction_input(chip,
-offset); // Return value ignored else
-armada_37xx_gpio_direction_output(chip, offset, 0); // Return value
-ignored return 0; // Always returns success regardless of actual result
-``` This silent failure can cause **real user-visible problems**: - GPIO
-pins may remain in the wrong direction (input vs output) without any
-indication - Hardware peripherals controlled by these GPIOs may
-malfunction - Applications believe GPIO operations succeeded when they
-actually failed - No error reporting prevents proper debugging of
-hardware issues ### 2. **Code Change Assessment - Small and Contained**
-The fix is **minimal and surgical**: - Adds only one variable
-declaration (`int ret`) - Changes two function calls to capture return
-values - Replaces `return 0` with `return ret` - **No architectural
-changes or new features** - **No changes to external APIs or data
-structures** This precisely matches the stable tree criteria for small,
-contained fixes. ### 3. **Comparison with Historical Similar Commits**
-Looking at the provided examples: - **Similar Commit #1** (Status: YES):
-Also fixes GPIO direction callback behavior in the same driver - this
-establishes precedent for backporting armada-37xx GPIO fixes - **Similar
-Commits #4 & #5** (Status: NO): These fix similar error propagation
-issues in different drivers, but the "NO" status appears to be due to
-them being newer cleanup patches rather than fixing actual bugs ### 4.
-**Pattern Recognition from Kernel Tree Analysis** My examination of the
-kernel repository reveals this is **part of a systematic fix series**
-addressing error propagation throughout this driver. I found related
-commits: - `4229c28323db`: "propagate error from
-armada_37xx_pmx_set_by_name()" (marked YES in autosel.txt) -
-`6481c0a83367`: "propagate error from armada_37xx_gpio_get_direction()"
-(marked YES in autosel.txt) This indicates the kernel maintainers
-consider these error propagation fixes important enough for stable
-backporting. ### 5. **Risk Assessment - Minimal Regression Risk** The
-change has **very low regression risk**: - Only affects error handling
-paths that were previously broken - If the underlying GPIO operations
-were succeeding before, they continue to succeed - If they were failing
-before (but silently), now they properly report the failure - **No
-functional behavior changes when hardware operates correctly** - The
-worst case is that previously silent failures now get reported (which is
-the desired behavior) ### 6. **Critical Subsystem Impact** This affects
-the **pinctrl/GPIO subsystem**, which is critical for: - Hardware
-initialization and control - Board-specific functionality - Device
-driver operation - Embedded system reliability Silent failures in this
-subsystem can cause hard-to-debug issues that affect system stability.
-### 7. **No Explicit Stable Backport Indicators** While the commit
-message lacks explicit `Cc: stable@vger.kernel.org` or `Fixes:` tags,
-this doesn't disqualify it. Many important bugfixes lack these tags, and
-the automated selection process (as evidenced by autosel.txt) is
-designed to catch such cases. ### 8. **Meets All Stable Tree Criteria**
-✅ **Fixes important bug**: Silent GPIO failures can cause real hardware
-issues ✅ **Minimal risk**: Only improves error reporting, no functional
-changes ✅ **Small and contained**: 4-line change in a single function ✅
-**No architectural changes**: Pure error handling improvement ✅
-**Affects critical subsystem**: GPIO/pinctrl is fundamental to hardware
-operation ### Conclusion This commit should be backported because it
-fixes a genuine bug where hardware failures are silently ignored,
-potentially causing real user issues. The fix is small, safe, and aligns
-with similar commits that have been marked for stable backporting. The
-change only improves error handling without modifying functional
-behavior, making it an ideal candidate for stable tree inclusion.
+Now I have enough information to provide a comprehensive analysis.
+**YES** This commit should be backported to stable kernel trees. Here's
+my extensive analysis: ## Critical Vulnerability Fix This commit
+addresses a **NULL pointer dereference vulnerability** in the
+`bpf_object__attach_skeleton()` function. The fix adds a simple but
+crucial NULL check for the `link` pointer before dereferencing it. ##
+Analysis of the Code Changes ### The Problem Looking at lines
+14104-14114 in the current code: ```c link = map_skel->link; if (!link)
+{ pr_warn("map '%s': BPF map skeleton link is uninitialized\n",
+bpf_map__name(map)); continue; } if (*link) continue; ``` The commit
+adds a NULL check for `link` before attempting to dereference it with
+`*link`. **Without this check, if `link` is NULL, the code would crash
+when executing `if (*link)`**. ### Why This is Critical 1. **Immediate
+crash potential**: The missing NULL check can cause immediate
+segmentation faults when `map_skel->link` is NULL 2. **Common
+occurrence**: This can happen when using libbpf-rs skeletons or other
+third-party skeleton generators that may not properly initialize the
+link field 3. **User-facing impact**: The commit message explicitly
+states this affects libbpf-rs skeleton usage, indicating real-world
+impact ## Comparison with Historical Patterns This fix follows **exactly
+the same pattern** as Similar Commit #1 (marked YES for backporting),
+which added a NULL check to `bpf_object__destroy_skeleton()`: -
+**Similar Commit #1**: Added `if (!s) return;` to prevent NULL deref in
+destroy_skeleton - **Current Commit**: Adds `if (!link)` check to
+prevent NULL deref in attach_skeleton Both are small, defensive
+programming fixes that prevent crashes without changing functionality.
+## Consistency with Existing Code Looking at the current kernel tree,
+`bpf_object__destroy_skeleton()` already has a NULL check (line
+14154-14155): ```c void bpf_object__destroy_skeleton(struct
+bpf_object_skeleton *s) { if (!s) return; ``` This commit brings
+`bpf_object__attach_skeleton()` in line with the same defensive
+programming pattern. ## Stable Tree Criteria Assessment ✅ **Fixes
+important bug**: Prevents NULL pointer dereference crashes ✅ **Small and
+contained**: Only adds 4 lines of code ✅ **No architectural changes**:
+Pure defensive programming ✅ **Minimal regression risk**: Cannot break
+existing functionality ✅ **Clear side effects**: Only prevents crashes,
+no behavioral changes ✅ **Confined to subsystem**: Only affects libbpf
+skeleton handling ## Risk Assessment - **Regression risk**: **Extremely
+low** - the check only prevents crashes - **Compatibility**: **Perfect**
+- no API changes, only prevents invalid operations - **Dependencies**:
+**None** - standalone fix with no external dependencies This is a
+textbook example of a stable tree candidate: a small, safe fix that
+prevents crashes without changing any functionality or introducing new
+behavior.
 
- drivers/pinctrl/mvebu/pinctrl-armada-37xx.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ tools/lib/bpf/libbpf.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c b/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c
-index 2431989c97e82..2438785c9ef88 100644
---- a/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c
-+++ b/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c
-@@ -470,16 +470,17 @@ static int armada_37xx_pmx_gpio_set_direction(struct pinctrl_dev *pctldev,
- {
- 	struct armada_37xx_pinctrl *info = pinctrl_dev_get_drvdata(pctldev);
- 	struct gpio_chip *chip = range->gc;
-+	int ret;
+diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
+index 1cc87dbd015d8..d710d47c747b7 100644
+--- a/tools/lib/bpf/libbpf.c
++++ b/tools/lib/bpf/libbpf.c
+@@ -14034,6 +14034,12 @@ int bpf_object__attach_skeleton(struct bpf_object_skeleton *s)
+ 		}
  
- 	dev_dbg(info->dev, "gpio_direction for pin %u as %s-%d to %s\n",
- 		offset, range->name, offset, input ? "input" : "output");
+ 		link = map_skel->link;
++		if (!link) {
++			pr_warn("map '%s': BPF map skeleton link is uninitialized\n",
++				bpf_map__name(map));
++			continue;
++		}
++
+ 		if (*link)
+ 			continue;
  
- 	if (input)
--		armada_37xx_gpio_direction_input(chip, offset);
-+		ret = armada_37xx_gpio_direction_input(chip, offset);
- 	else
--		armada_37xx_gpio_direction_output(chip, offset, 0);
-+		ret = armada_37xx_gpio_direction_output(chip, offset, 0);
- 
--	return 0;
-+	return ret;
- }
- 
- static int armada_37xx_gpio_request_enable(struct pinctrl_dev *pctldev,
 -- 
 2.39.5
 
