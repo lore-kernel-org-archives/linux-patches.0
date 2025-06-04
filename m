@@ -1,42 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD52E12B73;
-	Wed,  4 Jun 2025 01:07:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B4D112B73;
+	Wed,  4 Jun 2025 01:07:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748999228; cv=none; b=ToS1NrfPPLjHArIOSoW+1bZvu1V9VMHjUZFDYPEXkfQu/P/j2SgCxfF7G3ccOA9XphHX48BmuTBHBzsBHLDjlaS08gAw+d9+nlQ/ltEXIJP40iRvw4V67L5/qpg+EkdJCZmu+4t7XTU3by0KtqC1x2KEMobprmo85ZoIWTMufG0=
+	t=1748999230; cv=none; b=BGEOSpAPBTZKxAY83QUbuboR+wI8ynPKT+MNnGDVeaKLGXw0ff1pL/jtrSClGBt/3eIrY71YO7gXoFFavuSO9/N9LZB2f4fmTYjkbrajW4kHLZS/U0AI9N2ax0Dunnm1U6cIDdWdEe7T3hHMQiVm5L4VDXTUozWFry3OPTiFVIU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748999228; c=relaxed/simple;
-	bh=+QwOwuKoVe0V/pWIH119u0IEhTlHAkjbf0qkIzTnGD0=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Type; b=dhe9Fo9/5+vCSsePeuTa0C6yNsB0SFQUA8ddjl2UyDNwQ/yegL9bxbBj08HXRXgsLlpO09CzrK6SQv7XAhAc8+O9UjBgm0WyxyK8uadWpkbSSJkaxk9YuJC0XJ/i+A7kssWTkd8ZnCzOLoNxnOCPWiOeRA4UjbOvI+wI9bDhb0k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Gu7/SLU+; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1748999230; c=relaxed/simple;
+	bh=C525Jn/1uIiLflF6jKCwlSvYRCR0eiNrylGZT+slQE8=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=Xz6RwNBXrVSiqplXTYXI/CjW+q00w1epFFMdv6yswyKLZzRDU8V5oGHBxpgpiRLkjEQr0B9wYgFlfE+lAhY36Uy5uqHE8cNTCIUzKPTnvoKbS/spozUqibv1uhR1YLiTETCxXZRANu2qAnaghZTvEO6P700ddMVkF67kjD4+59o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EtZcK1uB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Gu7/SLU+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2F12C4CEED;
-	Wed,  4 Jun 2025 01:07:07 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EtZcK1uB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EA01C4CEED;
+	Wed,  4 Jun 2025 01:07:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748999228;
-	bh=+QwOwuKoVe0V/pWIH119u0IEhTlHAkjbf0qkIzTnGD0=;
-	h=From:To:Cc:Subject:Date:From;
-	b=Gu7/SLU+uGNHhEV6N8Evr5HlrG56UwGf1qlortPy0DZqUPhVDFE15fXomlCdWCUuI
-	 d06Uxn0mLTq72bxBwp9y7Y+ZQOir4wKwIkoVCitp0zgq4NKJ3CCqZWn1irLs3NCcs5
-	 ftuQqmVFF3QGwaRpvJzi3M+GTBX+ZwjHeqlE1uha77ADQ6vJEVC/l0yYUQlc7oLESu
-	 VYLkiAz6LsKmch1qHpclkPDK/18dHUW005jSsXrw2xfv8/Cfwj66A7vNQ1XvIj4G8b
-	 pDpGy6Qv/8HBGLfVeE9HdUCinJy1MlYZEinMA2NpuTjZITuuoEtBijLrRxc+VYnf7/
-	 fbXTnhLuIrL8w==
+	s=k20201202; t=1748999229;
+	bh=C525Jn/1uIiLflF6jKCwlSvYRCR0eiNrylGZT+slQE8=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=EtZcK1uBQjs1wWGBXRjDiyiwNBlcdM2gAjxzbWYDvP5jtmvm+o8PIvJA+vtskYfx4
+	 uBYDtlsNTr868ZXxy5HURHk8Phw47WmFrob6jWLjh3fZ9ZDSR0g7vCLRUICMHtjLA1
+	 DGuYx6Qc7EsOwbM2Cxu7EaHZSM2PL+pvXf1oSWJ9dJ+7Xnd1tDyliAvPHZddhCjUxB
+	 /UZCs6t69jkV0O+dtFIw1mLLBiHJABilVpmgPrJq9KNDYMoIVX1+8BCYVzNTxAus5t
+	 CKHEQ2/WDA29Vp1jukYzycnVc14dZzthf8kXHYQYdDbEt4Gt1IFc2HW420rm5gCF82
+	 +EIrG2BIQ6ifg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Sergio Perez Gonzalez <sperezglz@gmail.com>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: Tan En De <ende.tan@starfivetech.com>,
+	Jarkko Nikula <jarkko.nikula@linux.intel.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	nicolas.ferre@microchip.com
-Subject: [PATCH AUTOSEL 5.4 01/20] net: macb: Check return value of dma_set_mask_and_coherent()
-Date: Tue,  3 Jun 2025 21:06:47 -0400
-Message-Id: <20250604010706.7395-1-sashal@kernel.org>
+	linux-i2c@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.4 02/20] i2c: designware: Invoke runtime suspend on quick slave re-registration
+Date: Tue,  3 Jun 2025 21:06:48 -0400
+Message-Id: <20250604010706.7395-2-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250604010706.7395-1-sashal@kernel.org>
+References: <20250604010706.7395-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -49,81 +52,135 @@ X-stable-base: Linux 5.4.293
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sergio Perez Gonzalez <sperezglz@gmail.com>
+From: Tan En De <ende.tan@starfivetech.com>
 
-[ Upstream commit 3920a758800762917177a6b5ab39707d8e376fe6 ]
+[ Upstream commit 2fe2b969d911a09abcd6a47401a3c66c38a310e6 ]
 
-Issue flagged by coverity. Add a safety check for the return value
-of dma_set_mask_and_coherent, go to a safe exit if it returns error.
+Replaced pm_runtime_put() with pm_runtime_put_sync_suspend() to ensure
+the runtime suspend is invoked immediately when unregistering a slave.
+This prevents a race condition where suspend was skipped when
+unregistering and registering slave in quick succession.
 
-Link: https://scan7.scan.coverity.com/#/project-view/53936/11354?selectedIssue=1643754
-Signed-off-by: Sergio Perez Gonzalez <sperezglz@gmail.com>
-Reviewed-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
-Link: https://patch.msgid.link/20250526032034.84900-1-sperezglz@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+For example, consider the rapid sequence of
+`delete_device -> new_device -> delete_device -> new_device`.
+In this sequence, it is observed that the dw_i2c_plat_runtime_suspend()
+might not be invoked after `delete_device` operation.
+
+This is because after `delete_device` operation, when the
+pm_runtime_put() is about to trigger suspend, the following `new_device`
+operation might race and cancel the suspend.
+
+If that happens, during the `new_device` operation,
+dw_i2c_plat_runtime_resume() is skipped (since there was no suspend), which
+means `i_dev->init()`, i.e. i2c_dw_init_slave(), is skipped.
+Since i2c_dw_init_slave() is skipped, i2c_dw_configure_fifo_slave() is
+skipped too, which leaves `DW_IC_INTR_MASK` unconfigured. If we inspect
+the interrupt mask register using devmem, it will show as zero.
+
+Example shell script to reproduce the issue:
+```
+  #!/bin/sh
+
+  SLAVE_LADDR=0x1010
+  SLAVE_BUS=13
+  NEW_DEVICE=/sys/bus/i2c/devices/i2c-$SLAVE_BUS/new_device
+  DELETE_DEVICE=/sys/bus/i2c/devices/i2c-$SLAVE_BUS/delete_device
+
+  # Create initial device
+  echo slave-24c02 $SLAVE_LADDR > $NEW_DEVICE
+  sleep 2
+
+  # Rapid sequence of
+  # delete_device -> new_device -> delete_device -> new_device
+  echo $SLAVE_LADDR > $DELETE_DEVICE
+  echo slave-24c02 $SLAVE_LADDR > $NEW_DEVICE
+  echo $SLAVE_LADDR > $DELETE_DEVICE
+  echo slave-24c02 $SLAVE_LADDR > $NEW_DEVICE
+
+  # Using devmem to inspect IC_INTR_MASK will show as zero
+```
+
+Signed-off-by: Tan En De <ende.tan@starfivetech.com>
+Acked-by: Jarkko Nikula <jarkko.nikula@linux.intel.com>
+Link: https://lore.kernel.org/r/20250412023303.378600-1-ende.tan@starfivetech.com
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Based on my analysis of the commit and the codebase context, here's my
-assessment: **YES** This commit should be backported to stable kernel
-trees. Here's my extensive analysis: ## Code Analysis The commit adds
-proper error checking for `dma_set_mask_and_coherent()` in the macb
-network driver. Looking at the specific changes: **Before the fix:**
-```c if (GEM_BFEXT(DAW64, gem_readl(bp, DCFG6))) {
-dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(44)); bp->hw_dma_cap
-|= HW_DMA_CAP_64B; } ``` **After the fix:** ```c if (GEM_BFEXT(DAW64,
-gem_readl(bp, DCFG6))) { err = dma_set_mask_and_coherent(&pdev->dev,
-DMA_BIT_MASK(44)); if (err) { dev_err(&pdev->dev, "failed to set DMA
-mask\n"); goto err_out_free_netdev; } bp->hw_dma_cap |= HW_DMA_CAP_64B;
-} ``` ## Why this should be backported: 1. **Fixes a Real Bug**: The
-original code ignores the return value of `dma_set_mask_and_coherent()`.
-If this function fails (which can happen on systems with restricted DMA
-capabilities), the driver would continue execution assuming 44-bit DMA
-addressing is available when it's not, leading to potential memory
-corruption or system crashes. 2. **Small, Contained Fix**: This is a
-minimal change that only adds proper error checking without changing any
-core logic or introducing new features. It follows the stable tree
-principle of being a small, targeted bugfix. 3. **Follows Established
-Patterns**: Looking at the similar commits provided, this matches
-exactly the pattern of commits marked "YES" for backporting (commits #1,
-#2, and #5) which all add proper error checking for DMA mask functions.
-4. **Critical Network Driver**: The macb driver is used in production
-systems, and DMA-related bugs can cause data corruption or system
-instability, making this a high-priority fix for stable trees. 5.
-**Proper Error Handling Path**: The fix correctly uses the existing
-`err_out_free_netdev` label, which properly cleans up allocated
-resources (line 5373-5383 in macb_main.c), preventing resource leaks
-when DMA setup fails. 6. **Static Analysis Tool Flagged**: The commit
-message mentions this was flagged by Coverity, indicating it's a
-legitimate code quality issue that could manifest as a runtime bug. 7.
-**Matches Stable Tree Criteria**: - Important bugfix ✓ - Minimal risk of
-regression ✓ - No architectural changes ✓ - Confined to one
-driver/subsystem ✓ - Clear side effects (proper cleanup on failure) ✓
-This commit addresses the same class of vulnerability as the other "YES"
-examples: ignoring return values of critical DMA functions that can fail
-and lead to undefined behavior. The fix is surgical, safe, and addresses
-a genuine runtime issue in a widely-used network driver.
+**YES** This commit should be backported to stable kernel trees. Here's
+my extensive analysis: ## Critical Bug Fix Analysis ### 1. **Nature of
+the Bug** This commit fixes a **race condition** that causes I2C slave
+functionality to completely break. The problem occurs during rapid slave
+device registration/unregistration sequences where: - `pm_runtime_put()`
+is asynchronous and may not complete suspend before the next
+`pm_runtime_get_sync()` - If suspend doesn't happen, runtime resume is
+skipped - Runtime resume is where `i2c_dw_init_slave()` and
+`i2c_dw_configure_fifo_slave()` restore critical hardware configuration
+- When these initialization functions are skipped, the interrupt mask
+register (`DW_IC_INTR_MASK`) remains zero, disabling all interrupts ###
+2. **Impact on Users** This is a **high-impact functional bug** that: -
+Completely breaks I2C slave functionality in affected scenarios -
+Affects real-world use cases (rapid device creation/deletion as shown in
+the shell script) - Leaves hardware in a non-functional state requiring
+manual intervention - Results in silent failures where the slave appears
+registered but cannot handle transactions ### 3. **Code Change
+Analysis** The fix is **minimal and surgical**: ```c -
+pm_runtime_put(dev->dev); + pm_runtime_put_sync_suspend(dev->dev); ```
+This single-line change: - Replaces asynchronous `pm_runtime_put()` with
+synchronous `pm_runtime_put_sync_suspend()` - Ensures runtime suspend
+happens immediately before unregistration completes - Eliminates the
+race window where suspend could be skipped - Has **no functional side
+effects** beyond the intended timing change ### 4. **Risk Assessment**
+**Very low risk** for several reasons: - **Single line change** with
+clear, well-understood semantics - **Conservative fix** - makes behavior
+more predictable, not fundamentally different - **Same end result** -
+both functions eventually suspend the device, just with different timing
+- **No new code paths** - uses existing, well-tested runtime PM
+infrastructure - **Maintains all existing error handling and power
+management policies** ### 5. **Stable Tree Criteria Compliance** ✅
+**Important bugfix** - Fixes complete loss of I2C slave functionality ✅
+**Minimal risk** - Single line change with well-understood behavior ✅
+**No new features** - Pure bug fix with no feature additions ✅ **No
+architectural changes** - Uses existing runtime PM APIs ✅ **Confined to
+subsystem** - Only affects i2c-designware slave mode ✅ **Clear
+reproduction case** - Includes shell script demonstrating the problem
+### 6. **Comparison with Similar Commits** Looking at the provided
+examples: - **Similar Commit #3 (Status: YES)**: Also fixed a race
+condition in slave mode with `synchronize_irq()` - this shows precedent
+for backporting race condition fixes in this driver - **Similar Commits
+#1,2,4,5 (Status: NO)**: Were cleanup, optimization, or architectural
+changes rather than critical bug fixes ### 7. **Technical Validation**
+The commit demonstrates understanding of the underlying issue: - **Root
+cause identified**: Async suspend being canceled by subsequent
+operations - **Mechanism explained**: Missing initialization during
+runtime resume - **Hardware impact documented**: Interrupt mask register
+left unconfigured - **Reproduction provided**: Clear test case showing
+the failure ### 8. **Maintainer Confidence** The commit has strong
+technical validation: - **Acked-by: Jarkko Nikula** - A key
+i2c-designware maintainer - **Detailed commit message** with technical
+explanation and reproduction steps - **Clean implementation** using
+standard kernel APIs ## Conclusion This commit fixes a critical race
+condition that completely breaks I2C slave functionality with minimal
+risk and clear precedent for backporting similar fixes. It meets all
+stable tree criteria for an important, low-risk bugfix that should be
+available to users running stable kernels.
 
- drivers/net/ethernet/cadence/macb_main.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/i2c/busses/i2c-designware-slave.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/cadence/macb_main.c b/drivers/net/ethernet/cadence/macb_main.c
-index a750c752846cf..a635c9af26c3e 100644
---- a/drivers/net/ethernet/cadence/macb_main.c
-+++ b/drivers/net/ethernet/cadence/macb_main.c
-@@ -4320,7 +4320,11 @@ static int macb_probe(struct platform_device *pdev)
+diff --git a/drivers/i2c/busses/i2c-designware-slave.c b/drivers/i2c/busses/i2c-designware-slave.c
+index f5f001738df5e..57e67962a602f 100644
+--- a/drivers/i2c/busses/i2c-designware-slave.c
++++ b/drivers/i2c/busses/i2c-designware-slave.c
+@@ -96,7 +96,7 @@ static int i2c_dw_unreg_slave(struct i2c_client *slave)
+ 	dev->disable(dev);
+ 	synchronize_irq(dev->irq);
+ 	dev->slave = NULL;
+-	pm_runtime_put(dev->dev);
++	pm_runtime_put_sync_suspend(dev->dev);
  
- #ifdef CONFIG_ARCH_DMA_ADDR_T_64BIT
- 	if (GEM_BFEXT(DAW64, gem_readl(bp, DCFG6))) {
--		dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(44));
-+		err = dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(44));
-+		if (err) {
-+			dev_err(&pdev->dev, "failed to set DMA mask\n");
-+			goto err_out_free_netdev;
-+		}
- 		bp->hw_dma_cap |= HW_DMA_CAP_64B;
- 	}
- #endif
+ 	return 0;
+ }
 -- 
 2.39.5
 
