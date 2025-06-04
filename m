@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F022620E306;
-	Wed,  4 Jun 2025 00:56:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50EB21991D2;
+	Wed,  4 Jun 2025 00:56:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748998593; cv=none; b=sLxdCPqvmB4eGXf7jGblIzak/GTM6bAoRSYeZrJkj1i0sFeI/NWdDq9xqEBfjR52a8W5ja8QsuFK969kCeyAWXEyA1VCalQsm4fBLDSlfj37qQtUs2HKlbnTkqUPatHOdKj075zeI5DrlFrhUsf2dWqj4RHCWxGoh4X0Jo5w5d0=
+	t=1748998594; cv=none; b=lwhJAVAXwKp012QVb6Fg5+Mk9jmW4tcYDDv8pOyscX023o+PFC5dwsmTOpuOSqFkkZLapM9qStLG0buf6dVmB1ZGXsRqunBpA7TelH5utE51sq3b4nn0/mwJTyKBOAZ0ngle1YBbcLBPWJtNO0E/fP3VUdGKU10i0Br0+htzGoM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748998593; c=relaxed/simple;
-	bh=dnPSbWK0L9sPt/YSWESU7TPaDY3IJtxKKX2V+37LlvA=;
+	s=arc-20240116; t=1748998594; c=relaxed/simple;
+	bh=inBTFbANJxXrHq9i10BRsVW+ys15CCgu+2ugLjDE68Y=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=DkgWpJKRSKHp+K2nuR+sinp8mpjWC5TDIiieoW1iVTpiI9xqYoWwDYIWHbvFvtGrv9xHWlRHUfbZig+JVs4CnOFD/3Y3vBiMAd4RR+9h+Fw5ZfskqsRzRBsD9MppLhv/wHdP3v6AQzyBilfEmXjctC7N5f65dfU9MdSlE3+HmZo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MukWrOte; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pXWmOeBAilff3exZX0BLXN2vmVioiu52TqkmvpWXdbGEMbk35moHSJxKiNa78UOO8jwZUVkHrJal0O6Zodan2e30lnibjfqK17vYdQwN9lPEoGeb0eX8YQ3kM2JiYvOzsRG3mhaKsdSXjgK5iTP/uQPVPaaf5NAH5I8HvTlFEc4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=W6QYN7Gu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MukWrOte"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6DA7C4CEEF;
-	Wed,  4 Jun 2025 00:56:31 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="W6QYN7Gu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43226C4CEED;
+	Wed,  4 Jun 2025 00:56:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748998592;
-	bh=dnPSbWK0L9sPt/YSWESU7TPaDY3IJtxKKX2V+37LlvA=;
+	s=k20201202; t=1748998594;
+	bh=inBTFbANJxXrHq9i10BRsVW+ys15CCgu+2ugLjDE68Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MukWrOtemAXxsjltFwthqMJNNgYmlBawngEJaHF1B6M3RiiZQG2/GZIz5LY7VzCir
-	 qSGN5h5hX8YgWz47Qn8WurTWYqZYdsHRp8qINvIcZ86ub09XsEknGsHk1KPtGm2puw
-	 +W+vXoScR4fM4tfQOhiK+EkemotbhtSMfKaP3sefBpQk5JKqisGvGay7uqHkEuQsGs
-	 9HKu67RjWpQYmLB5VsCk5wjmLcKBQrD1C6wAxJHTTOhUJ6BmuxFI/0NXdtTO6V0zbv
-	 OaADLiBSarRdGite8CZ083RlTHb6WeytgTK129bj/MBKHgVWG9HiTD3/VsHLWr+7ls
-	 LzubEFjs1mGTA==
+	b=W6QYN7GuNX0ivQVJDP3DUxZZYmnYABt8K/nncf3SQdOCiPfz1ePVpahO0nYs/GA1a
+	 amTolTS7YnMQhHiLrNy85u9rQQ0xbzeGOPE6K2MocSRILx/HeFq4hx3HapywDXHl8l
+	 wvlZnAqP5HRr70ArdrkO2rnHVfEQX/lZRhDGnknGy/ZkIMQ9VlVM0S2DxcllD5pLNG
+	 k2omllUNZgid5vxk5MRQuCDFL9g1FvG1FLsu+8yhE+kHYSvkLMKQQalGQ6hIEU+rde
+	 tp0NZQt8uqZua1uV9ckdL8ZUDQRjkJJiZVQ/eEbrIZ5v4ZfkmXvOfKbscbIiHwiJ6P
+	 D41DS2TWgK5WA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Muhammad Usama Anjum <usama.anjum@collabora.com>,
-	Baochen Qiang <quic_bqiang@quicinc.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+Cc: Mario Limonciello <mario.limonciello@amd.com>,
+	Vasant Hegde <vasant.hegde@amd.com>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	jjohnson@kernel.org,
-	linux-wireless@vger.kernel.org,
-	ath11k@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.14 029/108] wifi: ath11k: Fix QMI memory reuse logic
-Date: Tue,  3 Jun 2025 20:54:12 -0400
-Message-Id: <20250604005531.4178547-29-sashal@kernel.org>
+	joro@8bytes.org,
+	iommu@lists.linux.dev
+Subject: [PATCH AUTOSEL 6.14 030/108] iommu/amd: Allow matching ACPI HID devices without matching UIDs
+Date: Tue,  3 Jun 2025 20:54:13 -0400
+Message-Id: <20250604005531.4178547-30-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250604005531.4178547-1-sashal@kernel.org>
 References: <20250604005531.4178547-1-sashal@kernel.org>
@@ -51,130 +50,158 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.14.9
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Muhammad Usama Anjum <usama.anjum@collabora.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit cd2e7bae92bd7e65063ab8d04721d2b711ba4cbe ]
+[ Upstream commit 51c33f333bbf7bdb6aa2a327e3a3e4bbb2591511 ]
 
-Firmware requests 2 segments at first. The first segment is of 6799360
-whose allocation fails due to dma remapping not available. The success
-is returned to firmware. Then firmware asks for 22 smaller segments
-instead of 2 big ones. Those get allocated successfully. At suspend/
-hibernation time, these segments aren't freed as they will be reused
-by firmware after resuming.
+A BIOS upgrade has changed the IVRS DTE UID for a device that no
+longer matches the UID in the SSDT. In this case there is only
+one ACPI device on the system with that _HID but the _UID mismatch.
 
-After resuming, the firmware asks for the 2 segments again with the
-first segment of 6799360 size. Since chunk->vaddr is not NULL, the
-type and size are compared with the previous type and size to know if
-it can be reused or not. Unfortunately, it is detected that it cannot
-be reused and this first smaller segment is freed. Then we continue to
-allocate 6799360 size memory which fails and ath11k_qmi_free_target_mem_chunk()
-is called which frees the second smaller segment as well. Later success
-is returned to firmware which asks for 22 smaller segments again. But
-as we had freed 2 segments already, we'll allocate the first 2 new
-smaller segments again and reuse the remaining 20. Hence 20 small
-segments are being reused instead of 22.
+IVRS:
+```
+              Subtable Type : F0 [Device Entry: ACPI HID Named Device]
+                  Device ID : 0060
+Data Setting (decoded below) : 40
+                 INITPass : 0
+                 EIntPass : 0
+                 NMIPass : 0
+                 Reserved : 0
+                 System MGMT : 0
+                 LINT0 Pass : 1
+                 LINT1 Pass : 0
+                   ACPI HID : "MSFT0201"
+                   ACPI CID : 0000000000000000
+                 UID Format : 02
+                 UID Length : 09
+                        UID : "\_SB.MHSP"
+```
 
-Add skip logic when vaddr is set, but size/type don't match. Use the
-same skip and success logic as used when dma_alloc_coherent() fails.
-By skipping, the possibility of resume failure due to kernel failing to
-allocate memory for QMI can be avoided.
+SSDT:
+```
+Device (MHSP)
+{
+    Name (_ADR, Zero)  // _ADR: Address
+    Name (_HID, "MSFT0201")  // _HID: Hardware ID
+    Name (_UID, One)  // _UID: Unique ID
+```
 
-	kernel: ath11k_pci 0000:03:00.0: failed to allocate dma memory for qmi (524288 B type 1)
-	ath11k_pci 0000:03:00.0: failed to allocate qmi target memory: -22
+To handle this case; while enumerating ACPI devices in
+get_acpihid_device_id() count the number of matching ACPI devices with
+a matching _HID. If there is exactly one _HID match then accept it even
+if the UID doesn't match. Other operating systems allow this, but the
+current IVRS spec leaves some ambiguity whether to allow or disallow it.
+This should be clarified in future revisions of the spec. Output
+'Firmware Bug' for this case to encourage it to be solved in the BIOS.
 
-Tested-on: WCN6855 WLAN.HSP.1.1-03926.13-QCAHSPSWPL_V2_SILICONZ_CE-2.52297.6
-
-Signed-off-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
-Reviewed-by: Baochen Qiang <quic_bqiang@quicinc.com>
-Link: https://patch.msgid.link/20250428080242.466901-1-usama.anjum@collabora.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
+Link: https://lore.kernel.org/r/20250512173129.1274275-1-superm1@kernel.org
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Based on my analysis of this commit and the Linux kernel ath11k QMI
-code, here's my assessment: **YES** This commit should be backported to
-stable kernel trees. Here's my extensive analysis: ## Critical Bug Fix
-for Resume/Hibernation Failures ### Problem Description The commit fixes
-a critical logic flaw in QMI memory reuse during firmware reload
-scenarios, particularly affecting suspend/resume and hibernation cycles.
-The bug causes resume failures with errors like: ``` kernel: ath11k_pci
-0000:03:00.0: failed to allocate dma memory for qmi (524288 B type 1)
-ath11k_pci 0000:03:00.0: failed to allocate qmi target memory: -22 ```
-### Code Analysis of the Fix **The core issue (lines 1996-2003 in the
-diff):** ```c + if (ab->qmi.mem_seg_count <=
-ATH11K_QMI_FW_MEM_REQ_SEGMENT_CNT) { + ath11k_dbg(ab, ATH11K_DBG_QMI, +
-"size/type mismatch (current %d %u) (prev %d %u), try later with small
-size\n", + chunk->size, chunk->type, + chunk->prev_size,
-chunk->prev_type); + ab->qmi.target_mem_delayed = true; + return 0; + }
-``` **Before the fix:** When firmware requests different memory segment
-sizes/types than previously allocated (common during resume), the driver
-would: 1. Free the existing memory chunks with `dma_free_coherent()` 2.
-Try to allocate the new larger size (often 6+ MB) 3. Fail due to memory
-fragmentation after hibernation 4. Free remaining chunks, causing loss
-of successfully allocated smaller segments **After the fix:** When
-size/type mismatch occurs and segment count ≤ 5
-(`ATH11K_QMI_FW_MEM_REQ_SEGMENT_CNT`), the driver: 1. Sets
-`target_mem_delayed = true` 2. Returns success immediately (skipping
-allocation) 3. Allows firmware to fall back to requesting smaller chunks
-4. Preserves existing memory allocations for reuse ### Why This
-Qualifies for Stable Backporting 1. **Fixes Important User-Affecting
-Bug**: Resume/hibernation failures directly impact user experience and
-system reliability 2. **Minimal and Contained Change**: The fix adds
-only 8 lines of code with a simple conditional check using existing
-mechanisms (`target_mem_delayed` flag and
-`ATH11K_QMI_FW_MEM_REQ_SEGMENT_CNT` constant) 3. **Low Regression
-Risk**: - Uses existing, well-tested delayed allocation mechanism - Only
-affects the specific error path for size/type mismatches - Maintains
-backward compatibility with all existing behavior 4. **Critical
-Subsystem**: WiFi connectivity is essential functionality, and resume
-failures can render systems unusable 5. **Clear Root Cause**: The commit
-message and code changes clearly identify and fix a specific logic error
-in memory management 6. **Follows Stable Rules**: - Important bugfix
-(resume failures) - Small and self-contained - No architectural changes
-- Confined to ath11k subsystem ### Validation Against Similar Commits
-Looking at the historical examples: - **Similar Commit #1 (YES)**: Also
-fixes QMI memory allocation warnings/failures, uses similar logic with
-`prev_size` fields - **Similar Commit #4 (YES)**: Implements the
-`target_mem_delayed` mechanism this fix builds upon This commit follows
-the same pattern as previously backported QMI memory fixes, addressing a
-critical failure scenario with minimal risk. ### Technical Validation
-The fix leverages the existing delayed allocation negotiation mechanism
-between driver and firmware, which has been proven stable since its
-introduction. By using `target_mem_delayed = true`, it allows firmware
-to adaptively request smaller, more allocation-friendly memory segments
-rather than failing outright. The `ATH11K_QMI_FW_MEM_REQ_SEGMENT_CNT =
-5` threshold ensures this optimization only applies to initial firmware
-memory requests (≤5 segments), not to scenarios where firmware has
-already adapted to smaller chunks (>5 segments). **Conclusion**: This is
-a well-contained, low-risk fix for a critical user-facing issue that
-should definitely be backported to stable kernels.
+Based on my analysis of the commit, the code changes, and the context
+from similar commits, here is my assessment: **YES** This commit should
+be backported to stable kernel trees for the following reasons: ## Bug
+Fix Analysis 1. **Real-world hardware compatibility issue**: The commit
+addresses a concrete problem where BIOS upgrades change IVRS DTE UIDs
+that no longer match the UIDs in SSDT, causing ACPI HID device matching
+to fail. This is a genuine hardware compatibility issue affecting real
+systems. 2. **Minimal, targeted change**: The modification is confined
+to a single function (`get_acpihid_device_id()`) in
+`drivers/iommu/amd/iommu.c`. The change adds fallback logic without
+altering the primary matching path, making it low-risk. 3.
+**Conservative approach**: The fix only allows UID mismatch when there's
+exactly one HID match (`hid_count == 1`), preventing ambiguous matches.
+It maintains strict validation by returning `-EINVAL` for multiple HID
+matches. 4. **Follows established patterns**: Similar to the reference
+commits (all marked "YES"), this addresses ACPI device matching issues
+in the AMD IOMMU subsystem, a pattern we've seen consistently
+backported. ## Code Change Analysis The modification transforms the
+original simple loop: ```c list_for_each_entry(p, &acpihid_map, list) {
+if (acpi_dev_hid_uid_match(adev, p->hid, p->uid[0] ? p->uid : NULL)) {
+if (entry) *entry = p; return p->devid; } } return -EINVAL; ``` Into a
+more robust matching algorithm that: - First attempts exact HID+UID
+matching (preserving original behavior) - Falls back to HID-only
+matching when exactly one device matches - Logs firmware bugs
+appropriately with `FW_BUG` - Rejects ambiguous multi-device scenarios
+## Risk Assessment - **Low regression risk**: The primary matching path
+remains unchanged - **Backward compatibility**: Systems with correct
+BIOS behavior continue working identically - **Forward compatibility**:
+Handles broken BIOS scenarios gracefully - **Contained scope**: Changes
+are isolated to AMD IOMMU ACPI device identification ## Comparison with
+Reference Commits This commit follows the same pattern as the "YES"
+reference commits: - **Similar scope**: ACPI HID device matching in AMD
+IOMMU (like commits #1, #2, #3, #4) - **Bug fix nature**: Addresses real
+hardware compatibility issues - **Minimal code changes**: Small,
+contained modifications - **Critical subsystem**: IOMMU functionality is
+essential for system operation The commit contrasts with reference
+commit #5 (marked "NO") which introduced new kernel parameters - a
+feature addition rather than a bug fix. This commit represents exactly
+the type of important bug fix that stable kernels are designed to
+include: it resolves real-world hardware compatibility issues with
+minimal risk and follows established successful patterns in the same
+subsystem.
 
- drivers/net/wireless/ath/ath11k/qmi.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/iommu/amd/iommu.c | 33 ++++++++++++++++++++++++++++-----
+ 1 file changed, 28 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath11k/qmi.c b/drivers/net/wireless/ath/ath11k/qmi.c
-index 5759fc5213162..97bbbe43105aa 100644
---- a/drivers/net/wireless/ath/ath11k/qmi.c
-+++ b/drivers/net/wireless/ath/ath11k/qmi.c
-@@ -1991,6 +1991,15 @@ static int ath11k_qmi_alloc_target_mem_chunk(struct ath11k_base *ab)
- 			    chunk->prev_size == chunk->size)
- 				continue;
+diff --git a/drivers/iommu/amd/iommu.c b/drivers/iommu/amd/iommu.c
+index b3a01b7757ee1..13f5137f06ba2 100644
+--- a/drivers/iommu/amd/iommu.c
++++ b/drivers/iommu/amd/iommu.c
+@@ -243,7 +243,9 @@ static inline int get_acpihid_device_id(struct device *dev,
+ 					struct acpihid_map_entry **entry)
+ {
+ 	struct acpi_device *adev = ACPI_COMPANION(dev);
+-	struct acpihid_map_entry *p;
++	struct acpihid_map_entry *p, *p1 = NULL;
++	int hid_count = 0;
++	bool fw_bug;
  
-+			if (ab->qmi.mem_seg_count <= ATH11K_QMI_FW_MEM_REQ_SEGMENT_CNT) {
-+				ath11k_dbg(ab, ATH11K_DBG_QMI,
-+					   "size/type mismatch (current %d %u) (prev %d %u), try later with small size\n",
-+					    chunk->size, chunk->type,
-+					    chunk->prev_size, chunk->prev_type);
-+				ab->qmi.target_mem_delayed = true;
-+				return 0;
-+			}
+ 	if (!adev)
+ 		return -ENODEV;
+@@ -251,12 +253,33 @@ static inline int get_acpihid_device_id(struct device *dev,
+ 	list_for_each_entry(p, &acpihid_map, list) {
+ 		if (acpi_dev_hid_uid_match(adev, p->hid,
+ 					   p->uid[0] ? p->uid : NULL)) {
+-			if (entry)
+-				*entry = p;
+-			return p->devid;
++			p1 = p;
++			fw_bug = false;
++			hid_count = 1;
++			break;
++		}
 +
- 			/* cannot reuse the existing chunk */
- 			dma_free_coherent(ab->dev, chunk->prev_size,
- 					  chunk->vaddr, chunk->paddr);
++		/*
++		 * Count HID matches w/o UID, raise FW_BUG but allow exactly one match
++		 */
++		if (acpi_dev_hid_match(adev, p->hid)) {
++			p1 = p;
++			hid_count++;
++			fw_bug = true;
+ 		}
+ 	}
+-	return -EINVAL;
++
++	if (!p1)
++		return -EINVAL;
++	if (fw_bug)
++		dev_err_once(dev, FW_BUG "No ACPI device matched UID, but %d device%s matched HID.\n",
++			     hid_count, hid_count > 1 ? "s" : "");
++	if (hid_count > 1)
++		return -EINVAL;
++	if (entry)
++		*entry = p1;
++
++	return p1->devid;
+ }
+ 
+ static inline int get_device_sbdf_id(struct device *dev)
 -- 
 2.39.5
 
