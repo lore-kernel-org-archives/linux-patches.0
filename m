@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03E5126A086;
-	Wed,  4 Jun 2025 01:04:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7211026A0AE;
+	Wed,  4 Jun 2025 01:04:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748999050; cv=none; b=FSAKHhRrx8XFtMf5CmT4/9MdBqYgtrhnd8QH1WoEv4I6L56yNEo0WJ0uwNdV9o2aLwrBQ9umwcHIfsengp5psGm2lCNjuPDln82BriA6Z8pCwE9+VHNbyZ0pTwMCezUU9tjqcqCNNfy7pEN1nA98nJmhPqlNQIRxdcVfBnBU6Ng=
+	t=1748999051; cv=none; b=Fl9DJZsmV5Ox1id231TzF9GksPeLZIFEue1Ob8RLVeFdqS49CdpHyg0MXvbqspvyrAKSHCd9CqgIk3CWfWqYAfOrryZgg/FQFf1z8KfvesO5ezLkyZnAh9I+JByWXYpFWsb8I1TfMtSsmj/fcMbXfVLYgX9AAxbcVezgxDjseKo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748999050; c=relaxed/simple;
-	bh=UdIiGjQZLoUzomSFRVOQaD1AgstX0wBpsBNRWycu3iQ=;
+	s=arc-20240116; t=1748999051; c=relaxed/simple;
+	bh=qd3BFSh58DalsF60jW7VYQ2dcwD3H1trjQydJgggFR0=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=iRjxEdbDOzf/1HPhFfQWJQ+X4JoC+aq8AR/45UCnnCx44npv0PNKGDV1qN4rQAJLwm5CmOhKW8y+RfcpHDRDbIOAipixxDgaPF31Jn1j69Cu/SvjgTfcUCHOHkZjzewJbcFFmyZPcYqIJV8E4RiHCgsu2h3GxGEI5+FE9+aKMe8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rvh9FxOy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dVQGhp2oyqk/VOl5SeKipAl385QFuODeJUW+p4AHLFZuGDP4NbDLxz6uJfzD0lAWi5FNaQVXRYRMw6LAB1aFXkIOWRmsbuBEuzrFwc7d982l8nIIwBpL7IXACWKYsM6a6oentt72zsIiky8JR9giLVX6n+7fBYbBCS7k/rSbJGc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZH6yICfF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rvh9FxOy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDE4EC4CEF1;
-	Wed,  4 Jun 2025 01:04:08 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZH6yICfF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 461CCC4CEF2;
+	Wed,  4 Jun 2025 01:04:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748999049;
-	bh=UdIiGjQZLoUzomSFRVOQaD1AgstX0wBpsBNRWycu3iQ=;
+	s=k20201202; t=1748999051;
+	bh=qd3BFSh58DalsF60jW7VYQ2dcwD3H1trjQydJgggFR0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rvh9FxOyRB7nh/JUJYt3t0GgnvTC01kUIiHlQqY583L24ASNbQGBi5l3kn866eVnT
-	 gV9Uoe+CIkas9ijLCMIHQwUDZyZvK0DqR8TzOu6dR7p6YC8YvIvOcCRwXXQ+KPVNgP
-	 bjXsmrhNGmPUKiYo4HeNVORO7UsggYSqfxgxrAjWudflJ6l+9I0Pk2TjXb/cntyKz2
-	 YX9k/tXdJkj8e1t71Y9qE3AvjE8aeJomEuuP34JFt190L5QIo0nkSiDSkDC4QSiyqk
-	 lQosRIFk3kKoCJlelT3LmnBP1KsfUtJ1QSK/TSY1boWaW1f38xheK4Wh4YdzZb1T3o
-	 Xifm8HiLQp6Gg==
+	b=ZH6yICfFHNRfRaDVxzIOsSbNx0xKejwJCJvh2hbDDfzeCLF7oR5qEiQSSqmOxkLAR
+	 WJwCzWcHXJ7NT4Uz1fP8ncfj1e8t3Rfm0aXpnR5YKMWufR0pc8GLAxIL3B3irayZiu
+	 trd/lg7t5P0sBjl0XpapR/rpPh4VYGTpzjHjS5DPPcG4bCkivvdqhlQQalX/X6DA0g
+	 X/bWyuJmshHbr4V1z/JKtWg6HVbZSdg9E2KE8Yr8RVhqQsNaTuVkaKeHiBz2ZDqQ8X
+	 i/uqowe0A15F5FzhwQTgvAiRUaHwyMijRCAMQI/sghLzy8mg7rBNcz5AJt68sah8FJ
+	 PATGPoo6oKtXQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Zilin Guan <zilin@seu.edu.cn>,
-	Tung Nguyen <tung.quang.nguyen@est.tech>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: Hou Tao <houtao1@huawei.com>,
+	syzbot+dce5aae19ae4d6399986@syzkaller.appspotmail.com,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	jmaloy@redhat.com,
-	netdev@vger.kernel.org,
-	tipc-discussion@lists.sourceforge.net
-Subject: [PATCH AUTOSEL 6.1 03/46] tipc: use kfree_sensitive() for aead cleanup
-Date: Tue,  3 Jun 2025 21:03:21 -0400
-Message-Id: <20250604010404.5109-3-sashal@kernel.org>
+	daniel@iogearbox.net,
+	andrii@kernel.org,
+	bpf@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.1 04/46] bpf: Check rcu_read_lock_trace_held() in bpf_map_lookup_percpu_elem()
+Date: Tue,  3 Jun 2025 21:03:22 -0400
+Message-Id: <20250604010404.5109-4-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250604010404.5109-1-sashal@kernel.org>
 References: <20250604010404.5109-1-sashal@kernel.org>
@@ -53,86 +53,76 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.1.140
 Content-Transfer-Encoding: 8bit
 
-From: Zilin Guan <zilin@seu.edu.cn>
+From: Hou Tao <houtao1@huawei.com>
 
-[ Upstream commit c8ef20fe7274c5766a317f9193b70bed717b6b3d ]
+[ Upstream commit d4965578267e2e81f67c86e2608481e77e9c8569 ]
 
-The tipc_aead_free() function currently uses kfree() to release the aead
-structure. However, this structure contains sensitive information, such
-as key's SALT value, which should be securely erased from memory to
-prevent potential leakage.
+bpf_map_lookup_percpu_elem() helper is also available for sleepable bpf
+program. When BPF JIT is disabled or under 32-bit host,
+bpf_map_lookup_percpu_elem() will not be inlined. Using it in a
+sleepable bpf program will trigger the warning in
+bpf_map_lookup_percpu_elem(), because the bpf program only holds
+rcu_read_lock_trace lock. Therefore, add the missed check.
 
-To enhance security, replace kfree() with kfree_sensitive() when freeing
-the aead structure. This change ensures that sensitive data is explicitly
-cleared before memory deallocation, aligning with the approach used in
-tipc_aead_init() and adhering to best practices for handling confidential
-information.
-
-Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
-Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
-Link: https://patch.msgid.link/20250523114717.4021518-1-zilin@seu.edu.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: syzbot+dce5aae19ae4d6399986@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/bpf/000000000000176a130617420310@google.com/
+Signed-off-by: Hou Tao <houtao1@huawei.com>
+Link: https://lore.kernel.org/r/20250526062534.1105938-1-houtao@huaweicloud.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-**YES** This commit should be backported to stable kernel trees. Here's
-my detailed analysis: ## Security Justification The commit addresses a
-clear security vulnerability by replacing `kfree()` with
-`kfree_sensitive()` for the `tipc_aead` structure in `tipc_aead_free()`.
-This is a critical security improvement because: 1. **Sensitive Data
-Content**: The `tipc_aead` structure contains highly sensitive
-cryptographic information: - `salt` field: Cryptographic salt used in
-key derivation - `key` pointer: References actual cryptographic key
-material - `hint` field: Contains key identification information 2.
-**Memory Security Risk**: Using regular `kfree()` leaves sensitive
-cryptographic data in freed memory, creating a potential information
-leakage vector where: - Attackers could potentially recover salt values
-and key hints from freed memory - Subsequent memory allocations might
-access residual cryptographic data - This violates cryptographic
-security best practices ## Code Change Analysis The specific change from
-`kfree(aead)` to `kfree_sensitive(aead)` on line 428 of
-`net/tipc/crypto.c` is: ```c - kfree(aead); + kfree_sensitive(aead); ```
-This change is: - **Minimal and contained**: Single line change with no
-functional impact - **Low risk**: `kfree_sensitive()` performs the same
-deallocation as `kfree()` but adds explicit memory zeroing -
-**Consistent**: The same file already uses `kfree_sensitive(aead->key)`
-on line 427, showing this practice is established ## Alignment with
-Similar Commits This commit closely parallels the "YES" backport
-examples: 1. **Similar Commit #1**: Used `aead_request_free()` instead
-of `kfree()` for proper crypto data handling 2. **Similar Commit #2**:
-Applied `kfree_sensitive()` to crypto buffers containing key material 3.
-**Similar Commit #5**: Fixed TIPC crypto security issue (preemption
-problem) The pattern of replacing standard memory deallocation with
-secure alternatives for cryptographic structures is well-established and
-consistently approved for backporting. ## Stable Tree Criteria
-Compliance This commit meets all stable tree requirements: - **Important
-bugfix**: Fixes potential cryptographic information leakage - **Minimal
-risk**: Single line change with no behavioral modifications - **No
-architectural changes**: Uses existing kernel API - **Contained scope**:
-Limited to TIPC crypto subsystem cleanup ## Security Impact Given TIPC's
-history of security vulnerabilities (including heap overflows and use-
-after-free issues), this defensive security measure is particularly
-valuable for preventing information disclosure attacks targeting
-cryptographic material. The commit represents a clear security hardening
-improvement with negligible risk, making it an excellent candidate for
-stable kernel backporting.
+**YES** This commit should be backported to stable kernel trees based on
+my analysis: ## Analysis **1. Clear Bug Fix:** This commit fixes a
+legitimate bug where `bpf_map_lookup_percpu_elem()` triggers warnings in
+sleepable BPF programs when the BPF JIT is disabled or on 32-bit hosts.
+The warning occurs because sleepable BPF programs hold
+`rcu_read_lock_trace` instead of `rcu_read_lock`, but the function only
+checked for the latter. **2. Minimal, Contained Change:** The fix is
+extremely small and surgical - it only adds
+`!rcu_read_lock_trace_held()` to the existing warning condition in
+`bpf_map_lookup_percpu_elem()` at kernel/bpf/helpers.c:132-133. This
+follows the exact same pattern established by the previous similar fix.
+**3. Strong Historical Precedent:** Multiple similar commits have been
+successfully backported: - **Commit 169410eba271** (Similar Commit #1 -
+Backport Status: YES) - Added the same `rcu_read_lock_trace_held()`
+check to `bpf_map_{lookup,update,delete}_elem()` helpers with identical
+reasoning - **Commit 29a7e00ffadd** (Similar Commit #4 - Backport
+Status: YES) - Fixed missed RCU read lock in `bpf_task_under_cgroup()`
+for sleepable programs **4. Clear User Impact:** The commit was reported
+by syzbot and fixes a concrete issue affecting users running sleepable
+BPF programs. Without this fix, users see spurious warnings that
+indicate potential RCU usage bugs. **5. Low Regression Risk:** The
+change only expands the conditions under which the warning is suppressed
+- it doesn't change any functional behavior, just makes the assertion
+more accurate for sleepable BPF programs. **6. Part of Ongoing
+Pattern:** This is the missing piece in a series of similar fixes that
+have systematically addressed RCU assertions for sleepable BPF programs.
+The previous commit 169410eba271 fixed the basic map helpers but missed
+this percpu variant. **7. Stable Tree Criteria Alignment:** - Fixes
+important functionality (eliminates false warnings) - No architectural
+changes - Minimal risk of regression - Confined to BPF subsystem - Clear
+side effects (none beyond fixing the warning) The commit perfectly
+matches the stable tree backporting criteria and follows the established
+pattern of similar successful backports.
 
- net/tipc/crypto.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/bpf/helpers.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/tipc/crypto.c b/net/tipc/crypto.c
-index 25c18f8783ce9..5d2914beaab89 100644
---- a/net/tipc/crypto.c
-+++ b/net/tipc/crypto.c
-@@ -425,7 +425,7 @@ static void tipc_aead_free(struct rcu_head *rp)
- 	}
- 	free_percpu(aead->tfm_entry);
- 	kfree_sensitive(aead->key);
--	kfree(aead);
-+	kfree_sensitive(aead);
+diff --git a/kernel/bpf/helpers.c b/kernel/bpf/helpers.c
+index 4fef0a0155255..94e85d311641b 100644
+--- a/kernel/bpf/helpers.c
++++ b/kernel/bpf/helpers.c
+@@ -125,7 +125,8 @@ const struct bpf_func_proto bpf_map_peek_elem_proto = {
+ 
+ BPF_CALL_3(bpf_map_lookup_percpu_elem, struct bpf_map *, map, void *, key, u32, cpu)
+ {
+-	WARN_ON_ONCE(!rcu_read_lock_held() && !rcu_read_lock_bh_held());
++	WARN_ON_ONCE(!rcu_read_lock_held() && !rcu_read_lock_trace_held() &&
++		     !rcu_read_lock_bh_held());
+ 	return (unsigned long) map->ops->map_lookup_percpu_elem(map, key, cpu);
  }
  
- static int tipc_aead_users(struct tipc_aead __rcu *aead)
 -- 
 2.39.5
 
