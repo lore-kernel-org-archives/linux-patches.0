@@ -1,48 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EE09219E0;
-	Wed,  4 Jun 2025 00:55:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2475F14A4F9;
+	Wed,  4 Jun 2025 00:56:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748998556; cv=none; b=UhJ7y9To6SYdk7VeLKDlE3I60itkAMIW309z9LRT/mTW5Y1mjBH3/A8DBNr8ihDz5qTRq8fxivVSokURAql2mChIrtQDRp44clqzxGU8g0q6nz7IMX/TMGrykP3btEiv5lnNWqnTKt8OX6GRvbaN7WS5UDXQ/RxZCMzgOhZi8Pk=
+	t=1748998561; cv=none; b=Q4kkcykjWqf22aTS88mQXxYwPN8RukOoyc0OwfmF9Oeb9uaZwtSljouQddX0YLKEZcY9pQydk+FjuuNHsZOEm6Mx0Vb4Mknsjm/YlmxiNKcD+UESfxzWlaadW8fnkj9KOMryOZvIKDtT1fPiyeeaX2V1Y9J/KTM46hxYL5sBcIo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748998556; c=relaxed/simple;
-	bh=WBzxU2Bm96gh0yyoxUxJmiKkwTontQ7udOQgLNHCUkc=;
+	s=arc-20240116; t=1748998561; c=relaxed/simple;
+	bh=NYSO8VsZ/0XDY2gTpPGIted5zwAYOW8Rxei3gMji5qo=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gnv09dwSri0CYrMdnAjWl9Uvfzx3k26cQT1pJn6AIetoq8hMcD2SIQm+sqis4304I0MA06NYm+cmKQSriN8WillmgIXYRLPvC2Ic93fCz4j85TCuQQdkX3GaPCPFxU1z3Irgyd0WaSxaExB8XOheg0AWcXxiUsdR/3pv3xK+Z0c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rDq/1vtK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=WWU00bgKU/YXhHuKVnHgVkUzCXYQGIANebJHWK/FW5SwZm4yB0+0OlqTY3cdrhoufF1bAKrFBrhpsp6PkezH0PuZ4IlBkPOPyId3O25fyl40KbG+Q7oADaHup6cQTEo6iOa+M6YZsdsedy1WX4QUmJ2U0DTlxD3HMAHZ/njkeBY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=E1IHJIb0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rDq/1vtK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8E38C4CEEF;
-	Wed,  4 Jun 2025 00:55:54 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="E1IHJIb0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6A63C4CEED;
+	Wed,  4 Jun 2025 00:55:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748998556;
-	bh=WBzxU2Bm96gh0yyoxUxJmiKkwTontQ7udOQgLNHCUkc=;
+	s=k20201202; t=1748998561;
+	bh=NYSO8VsZ/0XDY2gTpPGIted5zwAYOW8Rxei3gMji5qo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rDq/1vtKRrjlMkmFbjLaO7Q//HxQmlTVo0b1E2f4oSYOYerPJx8VxsLx3sOlKSYba
-	 9A4s8h3CzQAKw42vmsVMVE0uQ67Da+TBT2NX5hEZ9r4d7L1M+Iwwhi3FZ/nyEGbqZB
-	 o4NP63/n0hIybPArUE1NXdQaZBRpu66+pbAQYQ5EQRFeHFF8B5gAUuSYph5NlOVq/r
-	 /lY6D1hMDZAgJdeeDjsfIN2o2grSMpTwZANJUuQZQxJmiHgnc71w3l/Uwf5iH27gLu
-	 AIAMNbyRjHqeYgSD/y3Ctxz9C0EnzgQT+sSML6vHurzyoCive4Z6+C/D1rLgG3RZQt
-	 cyUeJAjP0Qraw==
+	b=E1IHJIb0VT1n4bBEfH0EFfkC0iPsJdM0hXyrwARylCNpKai459JAuzi2lBBFNduX5
+	 b7OLO9xBWoY6fWgWJ2vYtqygHB4Vh4EJWfe64c4codFiUIWHdjby8MmALtoI4kNeSB
+	 Tc8tw3pB/6WtBYFwhVSGsu3KUNjWiT5FZet99CyoGVdUGU6Gn82IEpBAvneFk6hnn3
+	 oVPPN9ZM8lLXmuSu1QEf/EYzBMnix6Rs/4tU1Igu6lQkdo5DVi+eL2Kb5EawMHRtGz
+	 6gIi2dys0uV/19rq5y5rZSH6suUUWuDRd6tGudDyooaAfYJQQwRtg9iNCKUdgIQt+Y
+	 5qLLPdavnnA2w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+Cc: Henk Vergonet <henk.vergonet@gmail.com>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>,
-	marcel@holtmann.org,
-	luiz.dentz@gmail.com,
 	matthias.bgg@gmail.com,
 	angelogioacchino.delregno@collabora.com,
-	linux-bluetooth@vger.kernel.org,
+	uwu@icenowy.me,
 	linux-kernel@vger.kernel.org,
 	linux-arm-kernel@lists.infradead.org,
 	linux-mediatek@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.14 014/108] Bluetooth: btmtksdio: Fix wakeup source leaks on device unbind
-Date: Tue,  3 Jun 2025 20:53:57 -0400
-Message-Id: <20250604005531.4178547-14-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.14 015/108] wifi: mt76: mt76x2: Add support for LiteOn WN4516R,WN4519R
+Date: Tue,  3 Jun 2025 20:53:58 -0400
+Message-Id: <20250604005531.4178547-15-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250604005531.4178547-1-sashal@kernel.org>
 References: <20250604005531.4178547-1-sashal@kernel.org>
@@ -58,82 +57,133 @@ X-stable-base: Linux 6.14.9
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Henk Vergonet <henk.vergonet@gmail.com>
 
-[ Upstream commit ee3e4209e66d44180a41d5ca7271361a2a28fccf ]
+[ Upstream commit 3c0e4f606d8693795a2c965d6f4987b1bfc31097 ]
 
-Device can be unbound or probe can fail, so driver must also release
-memory for the wakeup source.
+Adds support for:
+ - LiteOn WN4516R
+ - LiteOn WN4519R
+ Both use:
+ - A nonstandard USB connector
+ - Mediatek chipset MT7600U
+ - ASIC revision: 76320044
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Disabled VHT support on ASIC revision 76320044:
+
+ This fixes the 5G connectibity issue on LiteOn WN4519R module
+ see https://github.com/openwrt/mt76/issues/971
+
+ And may also fix the 5G issues on the XBox One Wireless Adapter
+ see https://github.com/openwrt/mt76/issues/200
+
+ I have looked at the FCC info related to the MT7632U chip as mentioned in here:
+ https://github.com/openwrt/mt76/issues/459
+ These confirm the chipset does not support 'ac' mode and hence VHT should be turned of.
+
+Signed-off-by: Henk Vergonet <henk.vergonet@gmail.com>
+Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Link: https://patch.msgid.link/20250418143914.31384-1-henk.vergonet@gmail.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 **YES** This commit should be backported to stable kernel trees. Here's
-my extensive analysis: ## Detailed Analysis ### 1. Nature of the Bug
-This is a **resource leak fix** that addresses a memory leak in wakeup
-source management. The change from `device_init_wakeup(bdev->dev, true)`
-to `devm_device_init_wakeup(bdev->dev)` is critical because: - **Manual
-management risk**: The original code manually enables wakeup capability
-but has no corresponding cleanup in the remove path - **Automatic
-cleanup**: The new `devm_device_init_wakeup()` uses the device resource
-management framework to automatically clean up wakeup sources when the
-device is unbound ### 2. Impact and Severity **Memory leak occurs
-when:** - Device is unbound/removed - Driver probe fails after wakeup
-initialization - System module unloading **What gets leaked:** - `struct
-wakeup_source` structures (~200 bytes each) - Associated name strings
-and metadata - Debugfs entries - IDA allocations for unique IDs ### 3.
-Pattern Recognition from Similar Commits Looking at the historical
-similar commits provided, I can see this is part of a **systematic
-kernel-wide fix campaign**: - **Commits #4 and #5** (gpio-zynq and gpio-
-mpc8xxx) show identical patterns with "Backport Status: YES" - **Commits
-#1, #2, #3** are feature additions/improvements with "Backport Status:
-NO" The gpio commits demonstrate this exact same fix pattern being
-deemed appropriate for stable backporting. ### 4. Code Analysis The fix
-is **minimal and contained**: ```c - err = device_init_wakeup(bdev->dev,
-true); + err = devm_device_init_wakeup(bdev->dev); ``` **Risk
-assessment:** - **Very low regression risk**:
-`devm_device_init_wakeup()` is a simple wrapper that adds automatic
-cleanup - **No functional changes**: Same wakeup behavior, just proper
-resource management - **Well-tested pattern**: Same fix applied across
-multiple kernel subsystems ### 5. Stable Tree Criteria Compliance ✅
-**Fixes important bug**: Resource leaks can lead to memory exhaustion ✅
-**Small and contained**: Single line change ✅ **Clear side effects**:
-None beyond fixing the leak ✅ **No architectural changes**: Pure
-resource management improvement ✅ **Minimal regression risk**: Uses
-established devres patterns ✅ **Author expertise**: Krzysztof Kozlowski
-is a well-known kernel maintainer ### 6. Driver Importance The btmtksdio
-driver supports MediaTek Bluetooth SDIO devices, which are widely used
-in: - Android smartphones and tablets - IoT devices - Embedded systems -
-Consumer electronics Device unbinding is common during: - System
-suspend/resume cycles - Module loading/unloading - Device hotplug
-scenarios - Driver updates ### 7. Comparison with Reference Commits This
-commit closely matches the **"YES"** examples (commits #4 and #5): -
-Same author (Krzysztof Kozlowski) - Identical fix pattern
-(`device_init_wakeup` → `devm_device_init_wakeup`) - Same commit message
-structure - Same Cc: stable@vger.kernel.org tag - Same resource leak
-issue being addressed **Conclusion**: This is a straightforward resource
-leak fix that follows established patterns for stable tree backporting.
-The risk is minimal while the benefit is clear - preventing memory leaks
-that could lead to system instability over time.
+my detailed analysis: ## Comparison with Similar Commits This commit
+closely matches **Similar Commit #1** (XBox One wifi adapter support)
+which was marked as **YES** for backporting. Both commits: - Add new USB
+device IDs for wireless adapters - Include hardware-specific workarounds
+for device limitations - Fix connectivity issues for specific hardware
+## Code Changes Analysis ### 1. USB Device ID Additions (Low Risk) ```c
+{ USB_DEVICE(0x0471, 0x2126) }, /bin /bin.usr-is-merged /boot /dev /etc
+/home /init /lib /lib.usr-is-merged /lib64 /lost+found /media /mnt /opt
+/proc /root /run /sbin /sbin.usr-is-merged /snap /srv /sys /tmp /usr
+/var LiteOn WN4516R module, nonstandard USB connector linux/ {
+USB_DEVICE(0x0471, 0x7600) }, /bin /bin.usr-is-merged /boot /dev /etc
+/home /init /lib /lib.usr-is-merged /lib64 /lost+found /media /mnt /opt
+/proc /root /run /sbin /sbin.usr-is-merged /snap /srv /sys /tmp /usr
+/var LiteOn WN4519R module, nonstandard USB connector linux/ ``` -
+**Risk**: Minimal - adding device IDs is very safe - **Impact**: Enables
+support for new hardware without affecting existing devices - **Scope**:
+Contained to device identification ### 2. VHT Capability Fix (Critical
+Bug Fix) ```c switch (dev->mt76.rev) { case 0x76320044: /bin /bin.usr-
+is-merged /boot /dev /etc /home /init /lib /lib.usr-is-merged /lib64
+/lost+found /media /mnt /opt /proc /root /run /sbin /sbin.usr-is-merged
+/snap /srv /sys /tmp /usr /var these ASIC revisions do not support VHT
+linux/ vht = false; break; default: vht = true; break; } ``` - **Fixes
+critical connectivity issues**: The commit explicitly fixes 5G
+connectivity problems - **Hardware-specific workaround**: Targets a
+specific ASIC revision (0x76320044) - **Conservative approach**:
+Disables problematic VHT only for affected hardware - **Minimal
+regression risk**: Existing devices continue using VHT as before ##
+Backport Suitability Criteria ✅ **Fixes user-affecting bugs**: Resolves
+5G connectivity issues on LiteOn modules and potentially XBox One
+adapters ✅ **Small and contained**: Changes are minimal - 2 new USB IDs
+and a targeted VHT disable ✅ **No architectural changes**: Uses existing
+framework, just adds device support and fixes capability detection ✅
+**References external issues**: Links to GitHub issues #971 and #200,
+indicating real user problems ✅ **Clear side effects documentation**:
+VHT disabling is well-documented and justified with FCC information ✅
+**Follows stable tree rules**: Important hardware support fix with
+minimal regression risk ✅ **Confined to subsystem**: Changes limited to
+mt76x2 USB driver ## Hardware Impact Assessment The commit addresses
+**confirmed hardware limitations** where VHT was incorrectly enabled on
+chipsets that don't support it, causing: - Connection failures in 5GHz
+band - Potential instability when VHT features are attempted This
+matches the pattern of **Similar Commit #1** which added support for
+newer XBox One adapters and was successfully backported. The
+risk/benefit ratio strongly favors backporting: minimal code changes
+that fix real connectivity issues for specific hardware without
+affecting other devices.
 
- drivers/bluetooth/btmtksdio.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/mt76x2/usb.c     |  2 ++
+ .../net/wireless/mediatek/mt76/mt76x2/usb_init.c    | 13 ++++++++++++-
+ 2 files changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/bluetooth/btmtksdio.c b/drivers/bluetooth/btmtksdio.c
-index 1d26207b2ba70..c16a3518b8ffa 100644
---- a/drivers/bluetooth/btmtksdio.c
-+++ b/drivers/bluetooth/btmtksdio.c
-@@ -1414,7 +1414,7 @@ static int btmtksdio_probe(struct sdio_func *func,
- 	 */
- 	pm_runtime_put_noidle(bdev->dev);
+diff --git a/drivers/net/wireless/mediatek/mt76/mt76x2/usb.c b/drivers/net/wireless/mediatek/mt76/mt76x2/usb.c
+index 84ef80ab4afbf..96cecc576a986 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt76x2/usb.c
++++ b/drivers/net/wireless/mediatek/mt76/mt76x2/usb.c
+@@ -17,6 +17,8 @@ static const struct usb_device_id mt76x2u_device_table[] = {
+ 	{ USB_DEVICE(0x057c, 0x8503) },	/* Avm FRITZ!WLAN AC860 */
+ 	{ USB_DEVICE(0x7392, 0xb711) },	/* Edimax EW 7722 UAC */
+ 	{ USB_DEVICE(0x0e8d, 0x7632) },	/* HC-M7662BU1 */
++	{ USB_DEVICE(0x0471, 0x2126) }, /* LiteOn WN4516R module, nonstandard USB connector */
++	{ USB_DEVICE(0x0471, 0x7600) }, /* LiteOn WN4519R module, nonstandard USB connector */
+ 	{ USB_DEVICE(0x2c4e, 0x0103) },	/* Mercury UD13 */
+ 	{ USB_DEVICE(0x0846, 0x9014) },	/* Netgear WNDA3100v3 */
+ 	{ USB_DEVICE(0x0846, 0x9053) },	/* Netgear A6210 */
+diff --git a/drivers/net/wireless/mediatek/mt76/mt76x2/usb_init.c b/drivers/net/wireless/mediatek/mt76/mt76x2/usb_init.c
+index 33a14365ec9b9..3b55628115115 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt76x2/usb_init.c
++++ b/drivers/net/wireless/mediatek/mt76/mt76x2/usb_init.c
+@@ -191,6 +191,7 @@ int mt76x2u_register_device(struct mt76x02_dev *dev)
+ {
+ 	struct ieee80211_hw *hw = mt76_hw(dev);
+ 	struct mt76_usb *usb = &dev->mt76.usb;
++	bool vht;
+ 	int err;
  
--	err = device_init_wakeup(bdev->dev, true);
-+	err = devm_device_init_wakeup(bdev->dev);
+ 	INIT_DELAYED_WORK(&dev->cal_work, mt76x2u_phy_calibrate);
+@@ -217,7 +218,17 @@ int mt76x2u_register_device(struct mt76x02_dev *dev)
+ 
+ 	/* check hw sg support in order to enable AMSDU */
+ 	hw->max_tx_fragments = dev->mt76.usb.sg_en ? MT_TX_SG_MAX_SIZE : 1;
+-	err = mt76_register_device(&dev->mt76, true, mt76x02_rates,
++	switch (dev->mt76.rev) {
++	case 0x76320044:
++		/* these ASIC revisions do not support VHT */
++		vht = false;
++		break;
++	default:
++		vht = true;
++		break;
++	}
++
++	err = mt76_register_device(&dev->mt76, vht, mt76x02_rates,
+ 				   ARRAY_SIZE(mt76x02_rates));
  	if (err)
- 		bt_dev_err(hdev, "failed to initialize device wakeup");
- 
+ 		goto fail;
 -- 
 2.39.5
 
