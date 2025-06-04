@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A90E1DFDBB;
-	Wed,  4 Jun 2025 01:05:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABB50272E67;
+	Wed,  4 Jun 2025 01:06:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748999159; cv=none; b=D72Ms8xdq7clpLVSnSCX3A7Hd9/zhapcB+1sAAUE+vL6nTA287VhEFutnC+QAcc2DMyisT6O3oWRz8y+0Atl0LEfWVqmRJPbcLTZxJI2mJwXoK18cL9CGXJccEaCcDyb9vVAYi1xWqa1BhuQ04r6irN7GGx1e7Fcc/LuyHGsJZc=
+	t=1748999160; cv=none; b=oQnf4jGnJVBIE+zmoWDVnSIfYuZGj1dVrCmWhCVdGwpc7Rj1rbRz5a0uCdN1PlXgMOwhfm7rDCIRPfc+bANBp2S1DBc8Vs+OqfKBT2eeYXVA3zJcMBBr6BtZDtgYmDnazGYHInm8kvkeeqE5D/NWoHtpqk/nq8/LH5sNi8MTx1M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748999159; c=relaxed/simple;
-	bh=en3sTuQOYeIUfK2bSVFMkCyoIKhLaNFCIKuYLo4W8xg=;
+	s=arc-20240116; t=1748999160; c=relaxed/simple;
+	bh=7GqPQYInUriePbu52Umq2SHKyss5K8IBI1SLlGH9f9U=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uLTEm7tQ3kTjX4uRjA1rthhPuSf5lzGupWFuWy4m9s1vQcgkPzQ23Q21QDlrv/7lOmn+OvHjhAUg5IL/0B/o8MJYYV/AgBhkVJJI00W0vWPufxTcCrel1976WfDZR35Mk8tkIvegfJrrQwKrFDr8uDOkbargrJM4H0F1fLp4IY0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hYtJY0aa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=MFWoJvrpmTq3UrhDG95GzFj31ClHLd388zS28AnmqsqqrKz/0LnGdfq3XMa2zkqwVyv8YwDunWE7BErmc50Agepa4TomHG3Fj4ReipC8WBlgEiT6DLFjLyml8zh4EgkU9LrDbtP/kml04OU3/8qr2B324mlGC/Soc5WBcT/uEeI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LgZ+TuHB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hYtJY0aa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DC56C4CEF2;
-	Wed,  4 Jun 2025 01:05:58 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LgZ+TuHB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDC3DC4CEF1;
+	Wed,  4 Jun 2025 01:05:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748999159;
-	bh=en3sTuQOYeIUfK2bSVFMkCyoIKhLaNFCIKuYLo4W8xg=;
+	s=k20201202; t=1748999160;
+	bh=7GqPQYInUriePbu52Umq2SHKyss5K8IBI1SLlGH9f9U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hYtJY0aaTnjD/rjRA8oDhjH6ht7dcznXearhPoduAq1PiColTSP6z4D/IeY4OFDhV
-	 tWNl1/deIPCw36Nm5rqSagRsKplPAOnFJGqpCzNOTmTPAPzRvRlu2nzl10Ceohxqa3
-	 ePCSYA43h/ZTSNd59RADZfhP0a0Gh/45jHOr6/3/8aRF0rRVPqxHbZGYvvKUxGFPlr
-	 nM2mWDpeqQYA3rXo1JBAPITtMEijg8khD/5/Vr0WuK5XNTsMWxQxB2O6B3Fg1A+Oto
-	 niVFYXX57+ngypuwyTSoGs6aa0pCLIp7at4OLZy/E8EEmn0s7QUMtYZN2Nz5GvsJTP
-	 Nel3VxXt0iLtQ==
+	b=LgZ+TuHBOtbPjNDjS2sEXiCv5zrWpv6qriN23v2ZZgimAnMSlXRUKZ8wfo41ENM9w
+	 AOJA1NWcTkbJRg5OhB1FCtqAIAChrjb94yf0McPI1NLiWwsghT1ae9un/9zJghMd79
+	 rybhEOTNQnap33tYUVZ2OD07X7Wlg61s8yYPbbN4clObdDqFSTS2QDDXCn459DcMzb
+	 1AEh4f2OD8Q3QxBXBIno0x7/nbmeWygpSDxz+FviM60+B/9ovVc0VAqJGpp4TM6iNm
+	 rAjI/YHwANxdx+9QN/4fjvpMq+bLT3gzxY/w87/mhzH2oWg632OYHvzulSvuwJ/BQ+
+	 o/KiZqugWTUBQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Benjamin Berg <benjamin@sipsolutions.net>,
-	Rouven Czerwinski <rouven@czerwinskis.de>,
-	Johannes Berg <johannes.berg@intel.com>,
+Cc: Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>,
-	johannes@sipsolutions.net,
-	linux-wireless@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.15 20/33] wifi: mac80211: do not offer a mesh path if forwarding is disabled
-Date: Tue,  3 Jun 2025 21:05:11 -0400
-Message-Id: <20250604010524.6091-20-sashal@kernel.org>
+	linux-arm-kernel@lists.infradead.org,
+	linux-rockchip@lists.infradead.org
+Subject: [PATCH AUTOSEL 5.15 21/33] clk: rockchip: rk3036: mark ddrphy as critical
+Date: Tue,  3 Jun 2025 21:05:12 -0400
+Message-Id: <20250604010524.6091-21-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250604010524.6091-1-sashal@kernel.org>
 References: <20250604010524.6091-1-sashal@kernel.org>
@@ -53,118 +51,75 @@ X-stable-base: Linux 5.15.184
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Benjamin Berg <benjamin@sipsolutions.net>
+From: Heiko Stuebner <heiko@sntech.de>
 
-[ Upstream commit cf1b684a06170d253b47d6a5287821de976435bd ]
+[ Upstream commit 596a977b34a722c00245801a5774aa79cec4e81d ]
 
-When processing a PREQ the code would always check whether we have a
-mesh path locally and reply accordingly. However, when forwarding is
-disabled then we should not reply with this information as we will not
-forward data packets down that path.
+The ddrphy is supplied by the dpll, but due to the limited number of PLLs
+on the rk3036, the dpll also is used for other periperhals, like the GPU.
 
-Move the check for dot11MeshForwarding up in the function and skip the
-mesh path lookup in that case. In the else block, set forward to false
-so that the rest of the function becomes a no-op and the
-dot11MeshForwarding check does not need to be duplicated.
+So it happened, when the Lima driver turned off the gpu clock, this in
+turn also disabled the dpll and thus the ram.
 
-This explains an effect observed in the Freifunk community where mesh
-forwarding is disabled. In that case a mesh with three STAs and only bad
-links in between them, individual STAs would occionally have indirect
-mpath entries. This should not have happened.
-
-Signed-off-by: Benjamin Berg <benjamin@sipsolutions.net>
-Reviewed-by: Rouven Czerwinski <rouven@czerwinskis.de>
-Link: https://patch.msgid.link/20250430191042.3287004-1-benjamin@sipsolutions.net
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://lore.kernel.org/r/20250503202532.992033-4-heiko@sntech.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Based on my analysis of the commit and the code, here is my assessment:
-**YES** This commit should be backported to stable kernel trees. Here's
-my extensive analysis: ## 1. Bug Fix Analysis The commit fixes a clear
-logical bug in the mesh networking HWMP (Hybrid Wireless Mesh Protocol)
-path selection algorithm. When `dot11MeshForwarding` is disabled, the
-code was incorrectly: - Still performing mesh path lookups for PREQ
-(Path Request) messages - Potentially replying with mesh path
-information even though forwarding was disabled - Creating indirect mesh
-path entries when it shouldn't ## 2. Code Analysis Looking at the
-changes in `/net/mac80211/mesh_hwmp.c:619-676`: **Before the fix:** -
-Line 639: `} else {` - The final else branch handles the case where the
-target is neither local nor broadcast - Lines 640-656: This section
-performs mesh path lookup and potentially replies with path information
-**regardless** of forwarding status - Line 657: `} else {` - Only sets
-`forward = false` but after potentially harmful operations **After the
-fix:** - Line 639: `} else if (ifmsh->mshcfg.dot11MeshForwarding) {` -
-Now conditions the mesh path lookup on forwarding being enabled - Lines
-657-659: `} else { forward = false; }` - Clean fallback when forwarding
-is disabled ## 3. Impact Assessment This is a **contained, low-risk
-fix** that: - **Fixes incorrect behavior**: Prevents mesh nodes from
-providing routing information when they won't actually forward packets -
-**Prevents resource waste**: Avoids unnecessary mesh path lookups when
-forwarding is disabled - **Improves network correctness**: Fixes the
-inconsistency where nodes advertise paths they won't use - **Addresses
-real-world issue**: The commit message mentions this was observed in the
-Freifunk community ## 4. Comparison with Similar Commits This fix aligns
-perfectly with the **YES** backport examples: **Similar to Commit #1
-(mesh: Do not send PREQ if HWMP is disabled):** - Both prevent
-sending/processing mesh protocol messages when a feature is disabled -
-Both are small, surgical fixes to logical conditions - Both prevent
-waste of network resources **Similar to Commit #3 (fix mesh path
-discovery):** - Both fix incorrect mesh path handling logic - Both have
-small, focused changes - Both include explicit mention of fixing
-behavior observed in real deployments **Similar to Commit #4 (fix mesh
-forwarding):** - Both are mesh forwarding-related fixes - Both are
-minimal changes with clear intent - Both fix protocol correctness issues
-## 5. Stable Backport Criteria Check ✅ **Fixes important bug**: Yes -
-incorrect mesh protocol behavior ✅ **Small and contained**: Yes - only 4
-lines changed, well-isolated ✅ **No new features**: Correct - only fixes
-existing logic ✅ **No architectural changes**: Correct - just reorders
-existing conditions ✅ **Low regression risk**: Very low - change is
-localized and logical ✅ **Clear side effects**: None beyond the intended
-fix ## 6. Risk Assessment The change is **extremely low risk** because:
-- It only affects the specific case where `dot11MeshForwarding` is
-disabled - It makes the code behavior more consistent (when forwarding
-is off, don't provide path info) - The change is in line with the
-intended semantics of the forwarding flag - It's a pure logic fix
-without touching data structures or complex algorithms This commit
-represents exactly the type of fix that stable trees are meant to
-include: a small, well-understood bug fix that improves correctness
-without introducing regression risk.
+**YES** This commit should absolutely be backported to stable kernel
+trees. Here's my detailed analysis: ## Critical System Stability Issue
+The commit fixes a **critical system stability problem** where the DDR
+PHY clock can be disabled, causing the system to lose access to RAM and
+crash. This is evidenced by: 1. **Root Cause Analysis**: The commit
+message clearly explains that "when the Lima driver turned off the gpu
+clock, this in turn also disabled the dpll and thus the ram" - this is a
+shared resource conflict that can brick the system. 2. **Hardware
+Limitation**: The RK3036 has "limited number of PLLs" where the DPLL is
+shared between the DDR PHY (memory controller) and GPU, creating an
+inherent conflict when GPU clock management affects memory access. ##
+Code Change Analysis The fix is **minimal and safe**: ```c static const
+char *const rk3036_critical_clocks[] __initconst = { "aclk_cpu",
+"aclk_peri", "hclk_peri", "pclk_peri", "pclk_ddrupctl", + "ddrphy", //
+<-- Single line addition }; ``` - **Single line change**: Adding
+"ddrphy" to the critical clocks array - **No functional changes**: Uses
+existing critical clock infrastructure - **No API modifications**:
+Compatible with all kernel versions that support Rockchip clocks - **No
+dependencies**: Self-contained fix within the clock driver ##
+Backporting Criteria Evaluation ✅ **Fixes important bug**: System
+crashes when GPU driver disables clocks ✅ **Small and contained**: One
+line addition to existing array ✅ **Minimal regression risk**: Only
+prevents clock from being disabled, no new functionality ✅ **Clear side
+effects**: Explicitly intended to keep DDR PHY always enabled ✅
+**Critical subsystem**: Memory controller availability is fundamental to
+system operation ## Similar Commit Pattern Analysis Looking at the
+provided similar commits, this follows the **exact same pattern** as
+Similar Commit #3 (Status: YES) which fixed "unrecoverable freezes and
+rcu_sched stall warnings" - both address critical system stability
+issues through clock configuration fixes. Unlike the other commits
+marked "NO" which were feature additions or exports, this is a **pure
+bugfix** addressing a **hardware design limitation** that causes system
+crashes. ## Conclusion This commit prevents **complete system failure**
+through a **trivial, safe change** that has **zero risk of regression**.
+The fix addresses a fundamental hardware limitation in the RK3036 where
+shared PLLs can cause memory controller clock starvation. This is
+exactly the type of critical stability fix that stable trees are
+designed to include.
 
- net/mac80211/mesh_hwmp.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/clk/rockchip/clk-rk3036.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/mac80211/mesh_hwmp.c b/net/mac80211/mesh_hwmp.c
-index e6b6a7508ff1b..8bf238afb5442 100644
---- a/net/mac80211/mesh_hwmp.c
-+++ b/net/mac80211/mesh_hwmp.c
-@@ -620,7 +620,7 @@ static void hwmp_preq_frame_process(struct ieee80211_sub_if_data *sdata,
- 				mesh_path_add_gate(mpath);
- 		}
- 		rcu_read_unlock();
--	} else {
-+	} else if (ifmsh->mshcfg.dot11MeshForwarding) {
- 		rcu_read_lock();
- 		mpath = mesh_path_lookup(sdata, target_addr);
- 		if (mpath) {
-@@ -638,6 +638,8 @@ static void hwmp_preq_frame_process(struct ieee80211_sub_if_data *sdata,
- 			}
- 		}
- 		rcu_read_unlock();
-+	} else {
-+		forward = false;
- 	}
+diff --git a/drivers/clk/rockchip/clk-rk3036.c b/drivers/clk/rockchip/clk-rk3036.c
+index d644bc155ec6e..f5f27535087a3 100644
+--- a/drivers/clk/rockchip/clk-rk3036.c
++++ b/drivers/clk/rockchip/clk-rk3036.c
+@@ -431,6 +431,7 @@ static const char *const rk3036_critical_clocks[] __initconst = {
+ 	"hclk_peri",
+ 	"pclk_peri",
+ 	"pclk_ddrupctl",
++	"ddrphy",
+ };
  
- 	if (reply) {
-@@ -655,7 +657,7 @@ static void hwmp_preq_frame_process(struct ieee80211_sub_if_data *sdata,
- 		}
- 	}
- 
--	if (forward && ifmsh->mshcfg.dot11MeshForwarding) {
-+	if (forward) {
- 		u32 preq_id;
- 		u8 hopcount;
- 
+ static void __init rk3036_clk_init(struct device_node *np)
 -- 
 2.39.5
 
