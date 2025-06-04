@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C790522A4DA;
-	Wed,  4 Jun 2025 11:49:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C89524BBE4;
+	Wed,  4 Jun 2025 11:49:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749037792; cv=none; b=aWf57LAiXL+6NEYNWiyAIizcNclBJYYCOI1NFnzY3yPX1fR3h2lYsi64uekPJFgzZbAPWjhyKUofCd+5md/+ptCzaJdmihT3Sk+W6+x9GsNuwPehf+yBu1WhfksXt86lNBA/Sgf+UVJfBzVJV0FgTLz+8lfq9LRhKU4lZKbUR1U=
+	t=1749037794; cv=none; b=lSFYiQw/j8Jn5/GOTlTpGuTJ0nuyHNg9JcliLzQXqki10tz33jQq12hhUtf9OvaTUSjNvOh+PAmhFRqoygGWl4yeAtyoeaalayKSjXkjhOMmnCJnqTzMEwiQxcpCShjSoTIR8ilcopm05zDtJ+ZrqV/ncq2H19RQAyT73T6zmKg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749037792; c=relaxed/simple;
-	bh=7+sNGReLs7jeizWT18ZVAuKAOTguBF2kr0JruLTc+Xk=;
+	s=arc-20240116; t=1749037794; c=relaxed/simple;
+	bh=LWoCnVWu9kyApgL0kLFdiS1HexGeNKcPhWj+9WD/Kfc=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=t7MZ7nVPLI7xpB1YalSFO+EPeLaemosAugThn2MgQklSo3XJmaKI6Vm6HKoCEQ/IJi/GcD9M8NslN1i+uPWbXmZJvA+mRxvnnNOUota8kHIraF5Cabm3FXEH5PprSlBXPZvw6fkRUzK2numkwKJ/MQceSrnWV3xKueP/AKtqze0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=l3wXdhTy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gomj5UmTXUFkpp5NrsjdLRz7w3NbK2zHftl0Uptz2xL9kY6iGOsVh38M1MdsxQNP6TYk5XU/e1TSB3DBI4dX3gRq3sJ73FgMiso8DcKxFL+2DoO+mUyVYEbhw4b6R4sLApatEBfwHAPLsCLWq9eU6G/9TDI44dtZvAPEOb5wbk4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GD1+vIdl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="l3wXdhTy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52BEBC4CEEF;
-	Wed,  4 Jun 2025 11:49:51 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GD1+vIdl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5F0AC4CEE7;
+	Wed,  4 Jun 2025 11:49:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749037792;
-	bh=7+sNGReLs7jeizWT18ZVAuKAOTguBF2kr0JruLTc+Xk=;
+	s=k20201202; t=1749037793;
+	bh=LWoCnVWu9kyApgL0kLFdiS1HexGeNKcPhWj+9WD/Kfc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l3wXdhTy+nZS9WHfttQWxPvy80k453dbrTFQVgi1dgaX6YUn4eM6pgu3pM2Rxhxgl
-	 q2Dv1b4hVmelPOdOXEa6RkBxEdF5LgePPuMpTA0ZwcZzdxNlNKRokXE/su8jpasJCU
-	 iB/yFgYrSzjy9ZfOXzvsJsmJHNfB7P6/m6oPML8YTcHVzhHLcqVAF6Gd4rlf7WjN9k
-	 C9AQ2DFAo0UeRPomMmGgQY9e5WOf4eq+2yXmwZwTFIk/5JBKovs+Ekq6CtxVDFaWmd
-	 ffuJjF9kGTrrtfm4WRwJOKToVc/vPXXWONSsYVTd2u//8ubqt5aF4lBqZ4YqTytRcw
-	 +Q4lzbumyKGzA==
+	b=GD1+vIdlvALfa654LyRw7iwQtzrVx4c5UTxu1fsr3/qFEU2EQAh5zxPuSeiZLogza
+	 5EdH9kBuU2R3zN8nPhYcZv5r4q7rIMwP6mAmzMLByhBxTwklCCxMaTp9iwUH/JfVLj
+	 //Zo1sHvaA3KiElX6e+UhROfdXPTpkzXVgE0LAj7s0b/t6F7bUaSIWnxCUvHq1+FhO
+	 Btkx+Yp+dHFR4/gszF35OfGlVWy73boOATwxqOVwvzVH20uOxHL/mK4oAAMgGBMt7k
+	 yEB6ijCtTUxRbvSVGIxx5TSnKAoDe+m4eLdEsXkTYDOu5Vv85HFTMxH9CVCXC8k2R3
+	 sSYBsUttWiDXA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jarkko Nikula <jarkko.nikula@linux.intel.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+Cc: Laurentiu Tudor <laurentiu.tudor@nxp.com>,
+	Ioana Ciornei <ioana.ciornei@nxp.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
 	Sasha Levin <sashal@kernel.org>,
-	Shyam-sundar.S-k@amd.com,
-	Guruvendra.Punugupati@amd.com,
-	billy_tsai@aspeedtech.com
-Subject: [PATCH AUTOSEL 6.14 4/8] i3c: mipi-i3c-hci: Fix handling status of i3c_hci_irq_handler()
-Date: Wed,  4 Jun 2025 07:49:39 -0400
-Message-Id: <20250604114944.208828-4-sashal@kernel.org>
+	linuxppc-dev@lists.ozlabs.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.14 5/8] bus: fsl-mc: increase MC_CMD_COMPLETION_TIMEOUT_MS value
+Date: Wed,  4 Jun 2025 07:49:40 -0400
+Message-Id: <20250604114944.208828-5-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250604114944.208828-1-sashal@kernel.org>
 References: <20250604114944.208828-1-sashal@kernel.org>
@@ -53,104 +52,80 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.14.9
 Content-Transfer-Encoding: 8bit
 
-From: Jarkko Nikula <jarkko.nikula@linux.intel.com>
+From: Laurentiu Tudor <laurentiu.tudor@nxp.com>
 
-[ Upstream commit 279c24021b838e76ca8441e9446e0ab45271153a ]
+[ Upstream commit 23d060136841c58c2f9ee8c08ad945d1879ead4b ]
 
-Return IRQ_HANDLED from the i3c_hci_irq_handler() only if some
-INTR_STATUS bit was set or if DMA/PIO handler handled it.
+In case the MC firmware runs in debug mode with extensive prints pushed
+to the console, the current timeout of 500ms is not enough.
+Increase the timeout value so that we don't have any chance of wrongly
+assuming that the firmware is not responding when it's just taking more
+time.
 
-Currently it returns IRQ_HANDLED in case INTR_STATUS is zero and IO
-handler returns false. Which could be the case if interrupt comes from
-other device or is spurious.
-
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Jarkko Nikula <jarkko.nikula@linux.intel.com>
-Link: https://lore.kernel.org/r/20250409140401.299251-2-jarkko.nikula@linux.intel.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Signed-off-by: Laurentiu Tudor <laurentiu.tudor@nxp.com>
+Signed-off-by: Ioana Ciornei <ioana.ciornei@nxp.com>
+Link: https://lore.kernel.org/r/20250408105814.2837951-7-ioana.ciornei@nxp.com
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Based on my comprehensive analysis of the commit, here is my assessment:
-**YES** This commit should be backported to stable kernel trees. Here's
-my extensive analysis: ## Code Change Analysis The commit fixes a
-critical logic bug in the `i3c_hci_irq_handler()` function in
-`drivers/i3c/master/mipi-i3c-hci/core.c`. The specific changes are: 1.
-**Line 597**: Added `result = IRQ_HANDLED;` when `val` (INTR_STATUS) is
-non-zero 2. **Line 608**: Changed from unconditional call to
-conditional: `if (hci->io->irq_handler(hci)) result = IRQ_HANDLED;` 3.
-**Lines 611-612**: Removed the `else result = IRQ_HANDLED;` logic that
-was incorrectly tied to having no unexpected status bits ## Why This
-Should Be Backported ### 1. **Fixes Important Functional Bug** The
-current code has incorrect interrupt handling logic that returns
-`IRQ_NONE` even when interrupts are successfully processed by the
-DMA/PIO handlers. This can lead to: - **Spurious interrupt detection
-issues**: The kernel may incorrectly think interrupts are unhandled -
-**Interrupt storm problems**: In shared IRQ scenarios, returning
-`IRQ_NONE` when interrupts were actually handled can cause the kernel to
-disable the IRQ line - **System stability issues**: Incorrect IRQ return
-values can affect overall system interrupt handling ### 2. **Small,
-Contained Fix** - The change is minimal (only 3 lines modified) - No
-architectural changes or new features - Only affects the interrupt
-return value logic - Low risk of introducing regressions ### 3.
-**Critical Subsystem Impact** The I3C subsystem is used for critical
-hardware communication, particularly in: - Embedded systems and IoT
-devices - Industrial applications - Hardware that uses MIPI I3C HCI
-controllers ### 4. **Follows Stable Backport Criteria** This matches the
-pattern of **Similar Commit #4** (IB/hfi1 interrupt handler fix) which
-was marked "Backport Status: YES" for fixing incorrect IRQ return
-values. ### 5. **Reviewed and Tested** The commit includes "Reviewed-by:
-Frank Li <Frank.Li@nxp.com>" indicating it has been properly reviewed by
-subsystem maintainers. ### 6. **Historical Context Shows This Is a Real
-Problem** From the git history, I can see this driver has had multiple
-interrupt-related fixes: - Commit 45357c9b37bb changed the interrupt
-handling logic per MIPI spec compliance - That change inadvertently
-introduced this return value bug - This commit fixes the logical error
-without changing the spec-compliant behavior ### 7. **Clear Problem and
-Solution** The commit message clearly explains: - **Problem**: "Return
-IRQ_HANDLED...only if some INTR_STATUS bit was set or if DMA/PIO handler
-handled it" - **Current bug**: "Currently it returns IRQ_HANDLED in case
-INTR_STATUS is zero and IO handler returns false" - **Impact**: "Which
-could be the case if interrupt comes from other device or is spurious"
-## Risk Assessment **Minimal Risk**: The change only affects when
-`IRQ_HANDLED` vs `IRQ_NONE` is returned, without changing any of the
-actual interrupt processing logic. The worst case would be reverting to
-the previous (also incorrect but differently incorrect) behavior, but
-the new logic is clearly more correct. This is exactly the type of
-important bug fix that stable trees should include: it fixes a real
-functional problem, has minimal risk, and affects critical system
-functionality (interrupt handling).
+Based on my analysis of the commit and the surrounding code context,
+here is my assessment: **YES** This commit should be backported to
+stable kernel trees. **Detailed Analysis:** **1. Bug Fix Nature:** This
+commit addresses a real timeout issue where legitimate MC firmware
+operations can fail due to an inadequate timeout value. The commit
+message explicitly states that "In case the MC firmware runs in debug
+mode with extensive prints pushed to the console, the current timeout of
+500ms is not enough." **2. Code Change Analysis:** The change is minimal
+and surgical: - Changes a single timeout constant from 500ms to 15000ms
+(15 seconds) - Only affects `drivers/bus/fsl-mc/mc-sys.c:22` - No
+architectural changes or new functionality added - The timeout is used
+in both `mc_polling_wait_preemptible()` and `mc_polling_wait_atomic()`
+functions that handle MC command completion **3. Risk Assessment:** The
+change has minimal risk: - Increasing a timeout value is generally safe
+and doesn't change behavior for successful operations - Only affects
+systems with Freescale/NXP DPAA2 Management Complex hardware - The
+original 500ms timeout was clearly insufficient for legitimate use cases
+- Similar to successful backports in the reference commits (e.g.,
+Similar Commit #1 and #3 which both increased timeouts) **4. Impact and
+Importance:** - Fixes a real user-facing issue where MC commands fail
+with timeouts during firmware debug scenarios - The FSL-MC bus is
+critical infrastructure for DPAA2 networking architecture on NXP ARM
+SoCs - Timeout failures can cause device initialization problems and
+system instability - The `mc_send_command()` function is used
+extensively throughout the FSL-MC subsystem for all hardware
+communication **5. Comparison with Similar Commits:** - Very similar to
+Similar Commit #1 (UCSI timeout increase from 1s to 5s) - **Status:
+YES** - Very similar to Similar Commit #3 (MLX5 timeout decrease from 2
+hours to 60s) - **Status: YES** - Both of these were timeout adjustments
+that got backported successfully **6. Subsystem Scope:** The change is
+contained within the FSL-MC bus driver subsystem and only affects NXP
+DPAA2 hardware platforms, making it a safe candidate for stable trees.
+**7. Explicit Stable Tree Criteria:** This meets the stable tree
+criteria: - Fixes an important bug affecting real users - Small and
+contained change with minimal regression risk - No new features or
+architectural changes - Addresses a timeout issue that can cause system
+functionality problems The commit represents a classic example of a
+safe, important bug fix that should be backported to help users
+experiencing MC command timeouts in production environments, especially
+during firmware debugging scenarios.
 
- drivers/i3c/master/mipi-i3c-hci/core.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/bus/fsl-mc/mc-sys.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/i3c/master/mipi-i3c-hci/core.c b/drivers/i3c/master/mipi-i3c-hci/core.c
-index 648c501407ced..96f077945efae 100644
---- a/drivers/i3c/master/mipi-i3c-hci/core.c
-+++ b/drivers/i3c/master/mipi-i3c-hci/core.c
-@@ -596,6 +596,7 @@ static irqreturn_t i3c_hci_irq_handler(int irq, void *dev_id)
+diff --git a/drivers/bus/fsl-mc/mc-sys.c b/drivers/bus/fsl-mc/mc-sys.c
+index f2052cd0a0517..b22c59d57c8f0 100644
+--- a/drivers/bus/fsl-mc/mc-sys.c
++++ b/drivers/bus/fsl-mc/mc-sys.c
+@@ -19,7 +19,7 @@
+ /*
+  * Timeout in milliseconds to wait for the completion of an MC command
+  */
+-#define MC_CMD_COMPLETION_TIMEOUT_MS	500
++#define MC_CMD_COMPLETION_TIMEOUT_MS	15000
  
- 	if (val) {
- 		reg_write(INTR_STATUS, val);
-+		result = IRQ_HANDLED;
- 	}
- 
- 	if (val & INTR_HC_RESET_CANCEL) {
-@@ -607,12 +608,11 @@ static irqreturn_t i3c_hci_irq_handler(int irq, void *dev_id)
- 		val &= ~INTR_HC_INTERNAL_ERR;
- 	}
- 
--	hci->io->irq_handler(hci);
-+	if (hci->io->irq_handler(hci))
-+		result = IRQ_HANDLED;
- 
- 	if (val)
- 		dev_err(&hci->master.dev, "unexpected INTR_STATUS %#x\n", val);
--	else
--		result = IRQ_HANDLED;
- 
- 	return result;
- }
+ /*
+  * usleep_range() min and max values used to throttle down polling
 -- 
 2.39.5
 
