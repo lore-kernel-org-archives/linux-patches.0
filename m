@@ -1,44 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B6AD54739;
-	Wed,  4 Jun 2025 01:03:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3005A70813;
+	Wed,  4 Jun 2025 01:03:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748999013; cv=none; b=pRv745zBJUskDK8gBBWtx/E9qDXRCAiKXFpZZBEFV477zJ/OqmS9x/A1GF4L14CeXaQeDArOUR8Me66gFnRj+3TZQ4T5H0Bj6vnROu+J3COadfYHtDNoXIJzygW/vWeQZA4HFplMGPvn0aIUl5t8NrOohkCpVEtLYPSXLTLBUkc=
+	t=1748999016; cv=none; b=k8xA1zCw21JZ5co4MgqrMhG5cZdT345HjSxRWbHz/4nfd0Kgzec5gzq05P+ygiv2ebo5XgaA9jnGc4UWKachEzPBg97ClHLGkA7IrIn437wn4xjsJjgPW+qJ1Jq4xKrd7B3SVKJ9qym+LCahQS9myoTQlvdCaO2zmyU+fA+3ha8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748999013; c=relaxed/simple;
-	bh=SSP9UnmPftQKTt5nGauegSwlrCALu8nFHUuKZtgDnHs=;
+	s=arc-20240116; t=1748999016; c=relaxed/simple;
+	bh=Omupy2yuYoEDC2rpiBevpR/rjqiArXO7lMQwSYHm1ZI=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZKeQGjb2rU2SQZHzeW4onM0QZ2csugGYYDgc35gXZMn1LVFa1TI+EPYHym+zmprnBd/AUOfVfG1EV9ykLj0Ixvsd8PJt5qLVW8g4T30x6id3SV4NbJ7TWAEyrnBny4Y0fW0DNTnw9DrUS8p5XxJbBWWssHyZfe9hIogSaE/uZh4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EGKGSCF2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=HzZnY/ySB+vrzEQT1D1QGSkDD4nRLHua7wMS1ofMeve2HYk6fR5PichQrVaYYiiGpx05cxLKmJirXedEdqi/slvpv1GTty7X8JgOupbQ2Bk6JB3zVSEASToIzwyPPFa74OXxzxBjpSglFZfC6XnufyctoB6JVa/J0bOXix0eYEY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=noGNWCeH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EGKGSCF2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DD85C4CEED;
-	Wed,  4 Jun 2025 01:03:32 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="noGNWCeH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA602C4CEED;
+	Wed,  4 Jun 2025 01:03:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748999013;
-	bh=SSP9UnmPftQKTt5nGauegSwlrCALu8nFHUuKZtgDnHs=;
+	s=k20201202; t=1748999016;
+	bh=Omupy2yuYoEDC2rpiBevpR/rjqiArXO7lMQwSYHm1ZI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EGKGSCF29Tor3+ljhIe+wCtbvqjs4ivwLvsQF+75O4iD5lVYzRTyPTchIrVv9XuiD
-	 322eZxHVqjuEgUBwCCvsAjTNSzYARps42wvnv556SH2hBI0m5GUNn7xKHuvnBOJV7Q
-	 NmzHZdwHKI469AOS+Ov1o+g7Ad98ylAESfoYqWzUfKEZI6OnCgCz9nhaHEsdyKESLb
-	 5SsD6/M0n3ZTgLZHLBkfuimMt07wL1GEC1S8atFc9lVpbYoB2DB7Ftg8G2+k+vadiu
-	 28veIclW2TFPHKf/PUMOghIACMse18Vw0cSHx8jwZY/Xpc9r+TB2UpcAnyH5DT4C22
-	 3qPlIp2d5/hWQ==
+	b=noGNWCeHYGUWOoGH3wo9sBf3EUzYVApLfRwdjN/fdzrQF96AVMzsVXl8Yb3PJtBQh
+	 b0ThAbx2PNR0xE/0XdNFzLI4UKHTnQmZpNFldexV0yleWoQD7/0dlnermwijjf5BaW
+	 uryqvMrhsQt1zV2U80bo4q7K2k/NbF0VWPf+3XGRenFaxqTihlKAyXkQYIbsPnPmKt
+	 3dLn4Nf0/dJ4HqTQkqsNpBYDTsMXBvywz9nIWBp72I0s9l2fhb226YWZwzlABU6VIz
+	 UXw6Hj2gJO5/ozU7gIh0OkcX4WCqy8NstbnfH8+gXWgGrj1R7bju6Pcl2/NSA1lhxv
+	 9fxRARc9RBYhA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ido Schimmel <idosch@nvidia.com>,
-	Petr Machata <petrm@nvidia.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+Cc: Michael Walle <mwalle@kernel.org>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	kuba@kernel.org,
-	menglong8.dong@gmail.com
-Subject: [PATCH AUTOSEL 6.6 45/62] vxlan: Do not treat dst cache initialization errors as fatal
-Date: Tue,  3 Jun 2025 21:01:56 -0400
-Message-Id: <20250604010213.3462-45-sashal@kernel.org>
+	rogerq@kernel.org,
+	horms@kernel.org,
+	davem@davemloft.net,
+	pabeni@redhat.com,
+	dan.carpenter@linaro.org
+Subject: [PATCH AUTOSEL 6.6 46/62] net: ethernet: ti: am65-cpsw: handle -EPROBE_DEFER
+Date: Tue,  3 Jun 2025 21:01:57 -0400
+Message-Id: <20250604010213.3462-46-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250604010213.3462-1-sashal@kernel.org>
 References: <20250604010213.3462-1-sashal@kernel.org>
@@ -54,125 +56,125 @@ X-stable-base: Linux 6.6.92
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Michael Walle <mwalle@kernel.org>
 
-[ Upstream commit 20c76dadc783759fd3819d289c72be590660cc8b ]
+[ Upstream commit 09737cb80b8686ffca4ed1805fee745d5c85604d ]
 
-FDB entries are allocated in an atomic context as they can be added from
-the data path when learning is enabled.
+of_get_mac_address() might fetch the MAC address from NVMEM and that
+driver might not have been loaded. In that case, -EPROBE_DEFER is
+returned. Right now, this will trigger an immediate fallback to
+am65_cpsw_am654_get_efuse_macid() possibly resulting in a random MAC
+address although the MAC address is stored in the referenced NVMEM.
 
-After converting the FDB hash table to rhashtable, the insertion rate
-will be much higher (*) which will entail a much higher rate of per-CPU
-allocations via dst_cache_init().
+Fix it by handling the -EPROBE_DEFER return code correctly. This also
+means that the creation of the MDIO device has to be moved to a later
+stage as -EPROBE_DEFER must not be returned after child devices are
+created.
 
-When adding a large number of entries (e.g., 256k) in a batch, a small
-percentage (< 0.02%) of these per-CPU allocations will fail [1]. This
-does not happen with the current code since the insertion rate is low
-enough to give the per-CPU allocator a chance to asynchronously create
-new chunks of per-CPU memory.
-
-Given that:
-
-a. Only a small percentage of these per-CPU allocations fail.
-
-b. The scenario where this happens might not be the most realistic one.
-
-c. The driver can work correctly without dst caches. The dst_cache_*()
-APIs first check that the dst cache was properly initialized.
-
-d. The dst caches are not always used (e.g., 'tos inherit').
-
-It seems reasonable to not treat these allocation failures as fatal.
-
-Therefore, do not bail when dst_cache_init() fails and suppress warnings
-by specifying '__GFP_NOWARN'.
-
-[1] percpu: allocation failed, size=40 align=8 atomic=1, atomic alloc failed, no space left
-
-(*) 97% reduction in average latency of vxlan_fdb_update() when adding
-256k entries in a batch.
-
-Reviewed-by: Petr Machata <petrm@nvidia.com>
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20250415121143.345227-14-idosch@nvidia.com
-Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Michael Walle <mwalle@kernel.org>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20250414084336.4017237-3-mwalle@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Perfect! Now I have all the information needed to analyze this commit.
-**Answer: YES** **Extensive Analysis:** This commit should be backported
-to stable kernel trees for several important reasons: ## Bug Fix
-Analysis **1. Problem Being Fixed:** The commit addresses a real
-production issue where `dst_cache_init()` failures in atomic context
-cause legitimate vxlan FDB entries to be rejected. The specific problem
-occurs when: - Adding large numbers of FDB entries (e.g., 256k entries)
-- In atomic context (GFP_ATOMIC allocations) - A small percentage (<
-0.02%) of per-CPU allocations fail - This causes the entire FDB entry
-creation to fail unnecessarily **2. Code Change Analysis:** ```c //
-Before: Fatal error handling if (dst_cache_init(&rd->dst_cache,
-GFP_ATOMIC)) { kfree(rd); return -ENOMEM; } // After: Non-fatal error
-handling dst_cache_init(&rd->dst_cache, GFP_ATOMIC | __GFP_NOWARN); ```
-**3. Safety and Correctness:** The fix is extremely safe because: -
-**Safe graceful degradation**: All dst_cache functions check `if
-(!dst_cache->cache)` and gracefully handle uninitialized caches by
-returning NULL or doing nothing - **No functionality loss**: The vxlan
-driver works correctly without dst caches - they are performance
-optimizations, not functional requirements - **Atomic context
-appropriate**: Uses `__GFP_NOWARN` to prevent log spam under memory
-pressure - **Consistent with existing patterns**: Similar to commit
-examples 1 & 3 that handled resource initialization failures gracefully
-## Backport Suitability Criteria **1. Important Bug Fix**: ✅ - Fixes
-production failure scenario where legitimate network operations fail -
-Addresses memory allocation failures in high-throughput scenarios -
-Prevents spurious FDB entry creation failures **2. Small and
-Contained**: ✅ - Only 4 lines changed in a single function - No
-architectural changes - No new features introduced - Clear, targeted fix
-**3. Low Risk of Regression**: ✅ - The dst_cache API is designed to
-handle uninitialized caches safely - Removes failure path rather than
-adding complexity - Well-tested pattern (dst_cache functions all check
-cache initialization) - No changes to critical control flow **4. No Side
-Effects**: ✅ - Only changes error handling behavior - Maintains all
-functional capabilities - No API changes - No dependencies on other
-changes **5. Matches Stable Tree Rules**: ✅ - Important bugfix for
-production systems - Minimal risk - Self-contained change - Addresses
-real user-visible issue ## Comparison to Historical Examples This commit
-aligns perfectly with the "YES" examples: - **Similar to Example #1**:
-Fixes resource leak/failure issues in network driver - **Similar to
-Example #3**: Handles initialization failures gracefully rather than
-fatally - **Unlike "NO" examples**: No performance optimizations,
-architectural changes, or new features ## Network Subsystem Context
-VXLAN is a critical networking technology used in: - Container
-networking (Docker, Kubernetes) - Cloud networking overlays - Data
-center virtualization - SDN implementations FDB entry creation failures
-can cause significant networking disruption in production environments,
-making this fix important for stability. The commit correctly recognizes
-that dst_cache is a performance optimization, not a functional
-requirement, and handles allocation failures appropriately without
-compromising the core networking functionality.
+Based on my analysis of this commit and comparison with the similar
+commits provided, here is my assessment: **YES** This commit should be
+backported to stable kernel trees for the following reasons: ## Analysis
+of Code Changes 1. **Proper EPROBE_DEFER Handling**: The commit adds
+explicit handling for `-EPROBE_DEFER` from `of_get_mac_address()` by
+checking `if (ret == -EPROBE_DEFER)` and properly propagating this error
+code up the call stack. This matches the pattern seen in the similar
+commits marked as "YES" for backporting. 2. **Critical Timing Issue
+Fix**: The code reordering addresses a fundamental probe ordering
+problem. Previously, the MDIO device creation happened before MAC
+address acquisition, but the commit message explicitly states that
+"-EPROBE_DEFER must not be returned after child devices are created."
+This reordering moves: - `am65_cpsw_nuss_get_ver(common)` -
+`am65_cpsw_nuss_init_host_p(common)` -
+`am65_cpsw_nuss_init_slave_ports(common)` (which contains the MAC
+address handling) Before the MDIO device creation, ensuring proper defer
+handling. 3. **Functional Correctness**: Without this fix, when NVMEM
+backing the MAC address isn't ready, the driver would immediately fall
+back to `am65_cpsw_am654_get_efuse_macid()` and potentially use a random
+MAC address, even though a proper MAC address exists in NVMEM but just
+isn't available yet. ## Comparison with Similar Commits This commit
+follows the exact same pattern as the "YES" backport commits: -
+**dm9000**: Added `else if (PTR_ERR(mac_addr) == -EPROBE_DEFER) return
+ERR_CAST(mac_addr);` - **mv643xx_eth**: Added `ret =
+of_get_mac_address(pnp, ppd.mac_addr); if (ret) return ret;` -
+**mtk_eth_soc**: Added `if (err == -EPROBE_DEFER) return err;` ##
+Stability Assessment 1. **Minimal Risk**: The changes are minimal and
+surgical - only adding proper error handling for a specific case 2. **No
+Architectural Changes**: No new features or major architectural
+modifications 3. **Confined to Single Driver**: Changes are isolated to
+the TI am65-cpsw driver 4. **Clear Error Path**: The error handling
+follows established kernel patterns 5. **No Side Effects**: The
+reordering doesn't change functional behavior, only ensures proper defer
+semantics ## Backport Suitability Criteria Met ✅ **Fixes Important
+Bug**: Prevents incorrect MAC address assignment when NVMEM provider
+isn't ready ✅ **Small and Contained**: Only 13 insertions, 11 deletions
+across 24 lines ✅ **No New Features**: Pure bugfix for existing
+functionality ✅ **Minimal Risk**: Well-established pattern used in other
+drivers ✅ **Critical Subsystem**: Network driver functionality ✅ **Clear
+Problem Statement**: Commit message clearly explains the issue and
+solution The commit addresses a real-world scenario where MAC addresses
+stored in NVMEM (common in embedded systems) would be ignored due to
+probe timing, leading to random MAC addresses and potential network
+configuration issues.
 
- drivers/net/vxlan/vxlan_core.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/ti/am65-cpsw-nuss.c | 24 +++++++++++++-----------
+ 1 file changed, 13 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/net/vxlan/vxlan_core.c b/drivers/net/vxlan/vxlan_core.c
-index 64db3e98a1b66..3e79769f1a589 100644
---- a/drivers/net/vxlan/vxlan_core.c
-+++ b/drivers/net/vxlan/vxlan_core.c
-@@ -606,10 +606,10 @@ static int vxlan_fdb_append(struct vxlan_fdb *f,
- 	if (rd == NULL)
- 		return -ENOMEM;
+diff --git a/drivers/net/ethernet/ti/am65-cpsw-nuss.c b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
+index 9c8376b271891..35315d9001f9e 100644
+--- a/drivers/net/ethernet/ti/am65-cpsw-nuss.c
++++ b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
+@@ -2089,7 +2089,9 @@ static int am65_cpsw_nuss_init_slave_ports(struct am65_cpsw_common *common)
+ 			goto of_node_put;
  
--	if (dst_cache_init(&rd->dst_cache, GFP_ATOMIC)) {
--		kfree(rd);
--		return -ENOMEM;
--	}
-+	/* The driver can work correctly without a dst cache, so do not treat
-+	 * dst cache initialization errors as fatal.
-+	 */
-+	dst_cache_init(&rd->dst_cache, GFP_ATOMIC | __GFP_NOWARN);
+ 		ret = of_get_mac_address(port_np, port->slave.mac_addr);
+-		if (ret) {
++		if (ret == -EPROBE_DEFER) {
++			goto of_node_put;
++		} else if (ret) {
+ 			am65_cpsw_am654_get_efuse_macid(port_np,
+ 							port->port_id,
+ 							port->slave.mac_addr);
+@@ -2949,6 +2951,16 @@ static int am65_cpsw_nuss_probe(struct platform_device *pdev)
+ 		return ret;
+ 	}
  
- 	rd->remote_ip = *ip;
- 	rd->remote_port = port;
++	am65_cpsw_nuss_get_ver(common);
++
++	ret = am65_cpsw_nuss_init_host_p(common);
++	if (ret)
++		goto err_pm_clear;
++
++	ret = am65_cpsw_nuss_init_slave_ports(common);
++	if (ret)
++		goto err_pm_clear;
++
+ 	node = of_get_child_by_name(dev->of_node, "mdio");
+ 	if (!node) {
+ 		dev_warn(dev, "MDIO node not found\n");
+@@ -2965,16 +2977,6 @@ static int am65_cpsw_nuss_probe(struct platform_device *pdev)
+ 	}
+ 	of_node_put(node);
+ 
+-	am65_cpsw_nuss_get_ver(common);
+-
+-	ret = am65_cpsw_nuss_init_host_p(common);
+-	if (ret)
+-		goto err_of_clear;
+-
+-	ret = am65_cpsw_nuss_init_slave_ports(common);
+-	if (ret)
+-		goto err_of_clear;
+-
+ 	/* init common data */
+ 	ale_params.dev = dev;
+ 	ale_params.ale_ageout = AM65_CPSW_ALE_AGEOUT_DEFAULT;
 -- 
 2.39.5
 
