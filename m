@@ -1,180 +1,175 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2062179A3
-	for <patches@lists.linux.dev>; Wed,  4 Jun 2025 08:03:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AFF9248864;
+	Wed,  4 Jun 2025 08:06:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749024216; cv=none; b=YNnvIwYdjp0UDtfxBzD5GPTAdNWhRgPEFxfZMyzCqCiu/otRyDykHlFM2RjXstYeAB8iiOJRJKjlrI1G8TWy2XNHMgMiKska1gOmZ5IbS9RubW2mDZKcUF0PQuekxSdG+/afAL3hTCc3+YjOZJy/3BQGRngIAh0qecoL/CGRj2Y=
+	t=1749024364; cv=none; b=QJ+lmsvnDYiudHlAwxblmZlbaW+1g1ly0Dmyr8EtwlqI7SadmVXbao8uRx+BmmMkbMcvBV2JeGimTj+GlcU2ArlqKlX+1r9otyDa4k18iOFObzrTUqzUYsEDbiHTcUwizDRvPayzYb5prx7TT8XUaqGhrqJ4iZLEeUsvREAVmLY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749024216; c=relaxed/simple;
-	bh=wjfzhqrBPODRSE8RYfiGeS2o/7JAHL/Dr5+Vci1seWQ=;
+	s=arc-20240116; t=1749024364; c=relaxed/simple;
+	bh=xS1R11uzqC459r4QjcDRxMAKoX1+B/CSgK8i1N/RzdQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Gki623K8X7OiL8QwNirPmtzIUmWsg3wPdkDE5vi6fbUFejgtSqNhuxubC6eo4tuTJmY1hK4Srgv6P0VXhpzFXYXoGMMK0r0TeckoIL6GmQv0MQ3eSTOB+aqPZ+dgwdBeP7tr7503SJKWNDYmBI43PIZgONh7JB2NGd7hysbfIz0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=kroah.com; spf=pass smtp.mailfrom=kroah.com; dkim=pass (2048-bit key) header.d=kroah.com header.i=@kroah.com header.b=G8lfm4MR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rQwmN9bb; arc=none smtp.client-ip=202.12.124.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=kroah.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kroah.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=gMQKoBjrzldlTTNI3qi4Dc4zIlR2c7OZR9BHlkpcTe8hsHaNjj9aiY34ui+z7DsBe0NsUYVwH5xiLAdCJ+IokLcIf4o1PgVUyhlyvWwed/xbGLMeWX4b379heAt07s1yP+wOWp3Jj7fBfY/eHoH0VKqDylA50kUfeTnX7InuYXs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=plwalYed; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kroah.com header.i=@kroah.com header.b="G8lfm4MR";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rQwmN9bb"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfout.stl.internal (Postfix) with ESMTP id 59A5711400D1;
-	Wed,  4 Jun 2025 04:03:32 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-12.internal (MEProxy); Wed, 04 Jun 2025 04:03:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kroah.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1749024212; x=1749110612; bh=nN8Fc49WUE
-	+N2x9qM0p7pP7gZnp0Kb/U4L4WHyccsao=; b=G8lfm4MRSrlMBizYsl0Qfdsveg
-	qOoyF3EqIRVou35cf4CZDrvwkVSHULp97U2N711Suk7x5vrFrQgv1/fgIlp/5Vgw
-	ebUysklHTte1FLAoCiHfYIBluhiArxiSSrzv8Si8g+1ZbKiCY8ErE3nIkzGIXX50
-	VpOJiay/XjZ1gUP7MEERm5rM+6jJqGdB7KmV3Rh5LzSd385ViLlDyBs7UgjHEMcT
-	PuACiXx8AVxvwL7PSDl55nKd4VlP64ZYD0pe0EDNXayixi9Ci4MFzca42dyJqUB1
-	L1xk2QZ76AbfCHUfekGxcIvUkP3gRENumlYdTe8dT6+SOUq5cMCmIVTmKKmA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1749024212; x=1749110612; bh=nN8Fc49WUE+N2x9qM0p7pP7gZnp0Kb/U4L4
-	WHyccsao=; b=rQwmN9bbFV4RBdSTcbNaL8SKgKSbasgPvvpQuIhEsAPAAGmmXnl
-	zGacttvIV66vDYwgKjno27j6FAxP0Gy8os70Na3Kda6K4uCuyoo3WXkV5mHRcAym
-	96RUmFzgB3ddRylglhev7U8hNxQ8zAEt7YU9FfKxofZTysihujN1gDTu8yh/6Z0Y
-	fgth63Tnz7FnR1bF7ZuPY/Ly1tIZr5d3Go20vjJSvdd1WX5GRLWFirr3isI45LJi
-	is3ofA1TfAHZM+55za9FCDT4NGZHICOlLXsr01u6pbXw0YbQKz9ZKLc3lMS4cWzx
-	6JM/q56A9JshmLI5w2X5P+PP0vHPUhXCK4Q==
-X-ME-Sender: <xms:0_0_aCighfJHE9wZ_K0McvoE8VvhOWru0veFLEH3SV5-JKwg4WuSXQ>
-    <xme:0_0_aDA9n-2fCcNYJBP5kiBIfnawdzwENb4abJeiZjZa0trAqt4nOtYYJAoIc5i1V
-    YCBrVaQPuLg8A>
-X-ME-Received: <xmr:0_0_aKGFZj22nRDI6GKNYsXsiQSCVSUGy1_Ck3GTWGzt27es_5b4XAHa>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugddukedtucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
-    ucfhrhhomhepifhrvghgucfmjfcuoehgrhgvgheskhhrohgrhhdrtghomheqnecuggftrf
-    grthhtvghrnhepueegledvgfeuffetffehfffgkeegtddtudejudeiiedvuedtteelleej
-    vddtgfefnecuffhomhgrihhnpehmshhgihgurdhlihhnkhdpkhgvrhhnvghlrdhorhhgne
-    cuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhrvghg
-    sehkrhhorghhrdgtohhmpdhnsggprhgtphhtthhopedvtddpmhhouggvpehsmhhtphhouh
-    htpdhrtghpthhtohepihdrmhgrgihimhgvthhssehovhhnrdhorhhgpdhrtghpthhtohep
-    shgrshhhrghlsehkvghrnhgvlhdrohhrghdprhgtphhtthhopehprghttghhvghssehlih
-    hsthhsrdhlihhnuhigrdguvghvpdhrtghpthhtohepshhtrggslhgvsehvghgvrhdrkhgv
-    rhhnvghlrdhorhhgpdhrtghpthhtohepvggthhgruhgurhhosehrvgguhhgrthdrtghomh
-    dprhgtphhtthhopehhohhrmhhssehkvghrnhgvlhdrohhrghdprhgtphhtthhopehkuhgs
-    rgeskhgvrhhnvghlrdhorhhgpdhrtghpthhtoheprggtohhnohhlvgesrhgvughhrghtrd
-    gtohhmpdhrtghpthhtohepnhgvthguvghvsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:0_0_aLT3BFSEezen8cxMHj_qXnqrkkFk2V2O582FwM21IXg1Fi-xGA>
-    <xmx:1P0_aPzz3Oo_RSuaTm0mQQLwL9P-BjDWPhpMRPjMxv8Sdvtu04--HA>
-    <xmx:1P0_aJ7mfngfbbzimfLS1opZjAPURp2aLIiLpxneYnzh6dfvIvyKtA>
-    <xmx:1P0_aMy2f2EL2BQnTZRrRPj17DY7isFql5ldz-wwPYqph34IwxTqfw>
-    <xmx:1P0_aJedQQxTSAnKNn-eRcw3yFo3mTqJ38-uLdrgPzyb3BQid_sRWN1b>
-Feedback-ID: i787e41f1:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 4 Jun 2025 04:03:31 -0400 (EDT)
-Date: Wed, 4 Jun 2025 10:03:29 +0200
-From: Greg KH <greg@kroah.com>
-To: Ilya Maximets <i.maximets@ovn.org>
-Cc: Sasha Levin <sashal@kernel.org>, patches@lists.linux.dev,
-	stable@vger.kernel.org, Eelco Chaudron <echaudro@redhat.com>,
-	Simon Horman <horms@kernel.org>, Jakub Kicinski <kuba@kernel.org>,
-	aconole@redhat.com, netdev@vger.kernel.org, dev@openvswitch.org
-Subject: Re: [PATCH AUTOSEL 6.15 044/118] openvswitch: Stricter validation
- for the userspace action
-Message-ID: <2025060449-arena-exceeding-a090@gregkh>
-References: <20250604005049.4147522-1-sashal@kernel.org>
- <20250604005049.4147522-44-sashal@kernel.org>
- <38ef1815-5bc1-4391-b487-05a18e84c94e@ovn.org>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="plwalYed"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B4B2C4CEE7;
+	Wed,  4 Jun 2025 08:06:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1749024364;
+	bh=xS1R11uzqC459r4QjcDRxMAKoX1+B/CSgK8i1N/RzdQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=plwalYed/vw6S10JNziXcVRYzG+GcprKkD0Ewu81fv0WFUZkYJL0DkZhLx/mUJkvN
+	 chQyNlvv0q7nF5+Xqjx1hEzg4FcKMytpRvjcOY/CzXPabFjDczpGI4U0JYtW+iuy/z
+	 iJPkHOEmuj8iSyu+DvOawYRc0us2mw1Gl++kTOv4=
+Date: Wed, 4 Jun 2025 10:06:01 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Florian Fainelli <f.fainelli@gmail.com>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
+	hargar@microsoft.com, broonie@kernel.org
+Subject: Re: [PATCH 5.10 000/270] 5.10.238-rc1 review
+Message-ID: <2025060412-cursor-navigate-126d@gregkh>
+References: <20250602134307.195171844@linuxfoundation.org>
+ <4c608184-5a64-4814-a70a-d2395662d437@gmail.com>
+ <52e321d9-2695-4677-b8bf-4be99fc0d681@gmail.com>
+ <2025060344-kiwi-anagram-fc9e@gregkh>
+ <b60e753c-eb13-46af-9365-1b33ae2e7859@gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <38ef1815-5bc1-4391-b487-05a18e84c94e@ovn.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <b60e753c-eb13-46af-9365-1b33ae2e7859@gmail.com>
 
-On Wed, Jun 04, 2025 at 09:57:20AM +0200, Ilya Maximets wrote:
-> On 6/4/25 2:49 AM, Sasha Levin wrote:
-> > From: Eelco Chaudron <echaudro@redhat.com>
+On Tue, Jun 03, 2025 at 09:00:58AM -0700, Florian Fainelli wrote:
+> On 6/3/25 00:58, Greg Kroah-Hartman wrote:
+> > On Mon, Jun 02, 2025 at 09:50:24AM -0700, Florian Fainelli wrote:
+> > > On 6/2/25 09:49, Florian Fainelli wrote:
+> > > > On 6/2/25 06:44, Greg Kroah-Hartman wrote:
+> > > > > This is the start of the stable review cycle for the 5.10.238 release.
+> > > > > There are 270 patches in this series, all will be posted as a response
+> > > > > to this one.  If anyone has any issues with these being applied, please
+> > > > > let me know.
+> > > > > 
+> > > > > Responses should be made by Wed, 04 Jun 2025 13:42:20 +0000.
+> > > > > Anything received after that time might be too late.
+> > > > > 
+> > > > > The whole patch series can be found in one patch at:
+> > > > >      https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/
+> > > > > patch-5.10.238-rc1.gz
+> > > > > or in the git tree and branch at:
+> > > > >      git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-
+> > > > > rc.git linux-5.10.y
+> > > > > and the diffstat can be found below.
+> > > > > 
+> > > > > thanks,
+> > > > > 
+> > > > > greg k-h
+> > > > 
+> > > > On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on
+> > > > BMIPS_GENERIC:
+> > > > 
+> > > > Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+> > > > 
+> > > > Similar build warning as reported for 5.4, due to the same commit:
+> > > > 
+> > > > commit b47e6abc7dc5772ecb45383d9956f9fcb7fdf33c
+> > > > Author: Jeongjun Park <aha310510@gmail.com>
+> > > > Date:   Tue Apr 22 20:30:25 2025 +0900
+> > > > 
+> > > >       tracing: Fix oob write in trace_seq_to_buffer()
+> > > > 
+> > > >       commit f5178c41bb43444a6008150fe6094497135d07cb upstream.
+> > > > 
+> > > > In file included from ./include/linux/kernel.h:15,
+> > > >                    from ./include/asm-generic/bug.h:20,
+> > > >                    from ./arch/arm/include/asm/bug.h:60,
+> > > >                    from ./include/linux/bug.h:5,
+> > > >                    from ./include/linux/mmdebug.h:5,
+> > > >                    from ./include/linux/mm.h:9,
+> > > >                    from ./include/linux/ring_buffer.h:5,
+> > > >                    from kernel/trace/trace.c:15:
+> > > > kernel/trace/trace.c: In function 'tracing_splice_read_pipe':
+> > > > ./include/linux/minmax.h:20:35: warning: comparison of distinct pointer
+> > > > types lacks a cast
+> > > >      20 |         (!!(sizeof((typeof(x) *)1 == (typeof(y) *)1)))
+> > > >         |                                   ^~
+> > > > ./include/linux/minmax.h:26:18: note: in expansion of macro '__typecheck'
+> > > >      26 |                 (__typecheck(x, y) && __no_side_effects(x, y))
+> > > >         |                  ^~~~~~~~~~~
+> > > > ./include/linux/minmax.h:36:31: note: in expansion of macro '__safe_cmp'
+> > > >      36 |         __builtin_choose_expr(__safe_cmp(x, y), \
+> > > >         |                               ^~~~~~~~~~
+> > > > ./include/linux/minmax.h:45:25: note: in expansion of macro '__careful_cmp'
+> > > >      45 | #define min(x, y)       __careful_cmp(x, y, <)
+> > > >         |                         ^~~~~~~~~~~~~
+> > > > kernel/trace/trace.c:6688:43: note: in expansion of macro 'min'
+> > > >    6688 | min((size_t)trace_seq_used(&iter->seq),
+> > > >         |                                           ^~~
+> > > > 
+> > > 
+> > > And also this one:
+> > > 
+> > > commit e0a3a33cecd3ce2fde1de4ff0e223dc1db484a8d
+> > > Author: Eric Dumazet <edumazet@google.com>
+> > > Date:   Wed Mar 5 13:05:50 2025 +0000
+> > > 
+> > >      tcp: bring back NUMA dispersion in inet_ehash_locks_alloc()
+> > > 
+> > >      [ Upstream commit f8ece40786c9342249aa0a1b55e148ee23b2a746 ]
+> > > 
+> > > 
+> > > on ARM64:
+> > > 
+> > > In file included from ./include/linux/kernel.h:15,
+> > >                   from ./include/linux/list.h:9,
+> > >                   from ./include/linux/module.h:12,
+> > >                   from net/ipv4/inet_hashtables.c:12:
+> > > net/ipv4/inet_hashtables.c: In function 'inet_ehash_locks_alloc':
+> > > ./include/linux/minmax.h:20:35: warning: comparison of distinct pointer
+> > > types lacks a cast
+> > >     20 |         (!!(sizeof((typeof(x) *)1 == (typeof(y) *)1)))
+> > >        |                                   ^~
+> > > ./include/linux/minmax.h:26:18: note: in expansion of macro '__typecheck'
+> > >     26 |                 (__typecheck(x, y) && __no_side_effects(x, y))
+> > >        |                  ^~~~~~~~~~~
+> > > ./include/linux/minmax.h:36:31: note: in expansion of macro '__safe_cmp'
+> > >     36 |         __builtin_choose_expr(__safe_cmp(x, y), \
+> > >        |                               ^~~~~~~~~~
+> > > ./include/linux/minmax.h:52:25: note: in expansion of macro '__careful_cmp'
+> > >     52 | #define max(x, y)       __careful_cmp(x, y, >)
+> > >        |                         ^~~~~~~~~~~~~
+> > > net/ipv4/inet_hashtables.c:946:19: note: in expansion of macro 'max'
+> > >    946 |         nblocks = max(nblocks, num_online_nodes() * PAGE_SIZE /
+> > > locksz);
+> > >        |                   ^~~
+> > > 
 > > 
-> > [ Upstream commit 88906f55954131ed2d3974e044b7fb48129b86ae ]
+> > For both of these, I'll just let them be as they are ok, it's just the
+> > mess of our min/max macro unwinding causes these issues.
 > > 
-> > This change enhances the robustness of validate_userspace() by ensuring
-> > that all Netlink attributes are fully contained within the parent
-> > attribute. The previous use of nla_parse_nested_deprecated() could
-> > silently skip trailing or malformed attributes, as it stops parsing at
-> > the first invalid entry.
-> > 
-> > By switching to nla_parse_deprecated_strict(), we make sure only fully
-> > validated attributes are copied for later use.
-> > 
-> > Signed-off-by: Eelco Chaudron <echaudro@redhat.com>
-> > Reviewed-by: Simon Horman <horms@kernel.org>
-> > Acked-by: Ilya Maximets <i.maximets@ovn.org>
-> > Link: https://patch.msgid.link/67eb414e2d250e8408bb8afeb982deca2ff2b10b.1747037304.git.echaudro@redhat.com
-> > Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-> > Signed-off-by: Sasha Levin <sashal@kernel.org>
-> > ---
-> > 
-> > **YES** This commit should be backported to stable kernel trees. ##
-> > Analysis **Commit Overview:** The commit changes `validate_userspace()`
-> > function in `net/openvswitch/flow_netlink.c` by replacing
-> > `nla_parse_nested_deprecated()` with `nla_parse_deprecated_strict()` to
-> > ensure stricter validation of Netlink attributes for the userspace
-> > action. **Specific Code Changes:** The key change is on lines 3052-3054:
-> > ```c // Before: error = nla_parse_nested_deprecated(a,
-> > OVS_USERSPACE_ATTR_MAX, attr, userspace_policy, NULL); // After: error =
-> > nla_parse_deprecated_strict(a, OVS_USERSPACE_ATTR_MAX, nla_data(attr),
-> > nla_len(attr), userspace_policy, NULL); ``` **Why This Should Be
-> > Backported:** 1. **Security Enhancement:** This commit addresses a
-> > parsing vulnerability where malformed attributes could be silently
-> > ignored. The original `nla_parse_nested_deprecated()` stops parsing at
-> > the first invalid entry, potentially allowing trailing malformed data to
-> > bypass validation. 2. **Robustness Fix:** The change ensures all netlink
-> > attributes are fully contained within the parent attribute bounds,
-> > preventing potential buffer over-reads or under-reads that could lead to
-> > security issues. 3. **Pattern Consistency:** Looking at the git blame
-> > output (lines 3085-3087), we can see that
-> > `nla_parse_deprecated_strict()` was already introduced in 2019 by commit
-> > 8cb081746c031 and is used elsewhere in the same file for similar
-> > validation (e.g., `validate_and_copy_check_pkt_len()` function). 4.
-> > **Low Risk:** This is a small, contained change that only affects input
-> > validation - it doesn't change functionality or introduce new features.
-> > The change is defensive and follows existing patterns in the codebase.
-> > 5. **Similar Precedent:** This commit is very similar to the validated
-> > "Similar Commit #2" which was marked for backporting (status: YES). That
-> > commit also dealt with netlink attribute validation safety in
-> > openvswitch (`validate_set()` function) and was considered suitable for
-> > stable trees. 6. **Critical Subsystem:** Open vSwitch is a critical
-> > networking component used in virtualization and container environments.
-> > Input validation issues in this subsystem could potentially be exploited
-> > for privilege escalation or denial of service. 7. **Clear Intent:** The
-> > commit message explicitly states this "enhances robustness" and ensures
-> > "only fully validated attributes are copied for later use," indicating
-> > this is a defensive security improvement. **Risk Assessment:** - Very
-> > low regression risk - No API changes - Only affects error handling paths
-> > - Follows established validation patterns in the same codebase This
-> > commit fits perfectly into the stable tree criteria: it's an important
-> > security/robustness fix, has minimal risk of regression, is well-
-> > contained, and addresses a clear validation vulnerability in a critical
-> > kernel subsystem.
+> > Unless they really bother someone, and in that case, a patch to add the
+> > correct type to the backport to make the noise go away would be greatly
+> > appreciated.
 > 
-> This change is one of two patches created for userspace action.  With an
-> intentional split - one for net and one for net-next  First one was the
-> actual fix that addressed a real bug:
->   6beb6835c1fb ("openvswitch: Fix unsafe attribute parsing in output_userspace()")
->   https://lore.kernel.org/netdev/0bd65949df61591d9171c0dc13e42cea8941da10.1746541734.git.echaudro@redhat.com/
-> 
-> This second change (this patch) was intended for -next only as it doesn't
-> fix any real issue, but affects uAPI, and so should NOT be backported.
+> Yeah that's a reasonable resolution, I will try to track down the missing
+> patches for minmax.h so we are warning free for the stable kernels.
 
-Why would you break the user api in a newer kernel?  That feels wrong,
-as any change should be able to be backported without any problems.
+I tried in the past, it's non-trivial.  What would be easier is to just
+properly cast the variables in the places where this warning is showing
+up to get rid of that warning.  We've done that in some backports in the
+past as well.
 
-If this is a userspace break, why isn't it reverted?
-
-confused,
+good luck!
 
 greg k-h
