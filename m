@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30273433C4;
-	Wed,  4 Jun 2025 01:07:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E75612B73;
+	Wed,  4 Jun 2025 01:07:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748999221; cv=none; b=o5kyFXORjLiK0laRWeIE36p30fFBnW+7PuWxrhkpSWDH1EyYEWi9EwWGuphKDlME/9amA0Ur1GFp0Iqx2SWoZHeU+ndOX2ZPDGsQvKisTbUxPKaXJqkfT1MvK1QxQ8QM+kZiUchucf4Sh5D0hMA8e11SWViSoGScCEMn6pfHeMA=
+	t=1748999222; cv=none; b=pbK0cQVfnUkPwkvSxfgdmhVqMbkODHjJE5c0577mNAF6qUabMdvxgatHCkq+ynxmqpQ32CYjJrsAlJENt4jQ0l4CJT3Mu6CWUpPGsUn0pCfQHq+BFB/sfAckJP62UC+QYcQdE9GV615dbXCsnycWmOx8QP6zqoL+jrdCb8Kcd4w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748999221; c=relaxed/simple;
-	bh=GeBnR9S3YCzjSgxpOhSguIxBjd9NhnEsJI2YMou0sPY=;
+	s=arc-20240116; t=1748999222; c=relaxed/simple;
+	bh=GINOFS9LMDmMJeXVKKNcYAE4xeFgEOUNFruaIrvOXxU=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=OeULEey5JAin2Jci1m+q1icY2mfIecJawEladylbRJicbCdVhR4zsr+UvF7uP0jStGJG+LspLRN5taA8JPTR84UsYF48sjLnARE3fPZE+8uSQmlFhAkJZtotwhzwWYq8nCIJfP0vN+tGQdd8iD080us5HTqunmjVuOfGOe0oM2I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=a8JFAFLz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=d9hgIKblSSLbp6mzV+5KCY1hg4m3GeX61yFd5V6GhN/qJ+08JCqH+195n+E/5+SQqavo3KSsfZG8AvAMNsVn9a4jEW6CDENa84XLOPyGN+OLC20xqAJD81bND9S2VEcJ1yWMTuGIn4SmfGpQuhAHR6QzxNUYYY1Qyyk6s+M5HBk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OaCRHkuj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="a8JFAFLz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 055ECC4CEEF;
-	Wed,  4 Jun 2025 01:06:59 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OaCRHkuj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7357EC4CEF2;
+	Wed,  4 Jun 2025 01:07:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748999221;
-	bh=GeBnR9S3YCzjSgxpOhSguIxBjd9NhnEsJI2YMou0sPY=;
+	s=k20201202; t=1748999222;
+	bh=GINOFS9LMDmMJeXVKKNcYAE4xeFgEOUNFruaIrvOXxU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a8JFAFLzzGHF5JMoH0+zLdFHVr49Ar7+bVuV7DEDdtDllupvr2n61a1uXSL6XRxfD
-	 f6nQWUYFx/4ByUP/I81P1DduvmtV3t5ASBpdqgLMt3zfPSCenOnnTJngjl7SkbBZSB
-	 1YlvQmcEDXGqLpV9V0JoV+3UD1+Vp5v7cKCIAYCSjq8mEt7NDwyyHuCUUivCO2I/00
-	 xr3sKodeuKYHuniUqR4mJ6QSIbbQQzDgFUl6z7ryLBFMd0Vtg2YOEZT/RNzXUFgJSa
-	 BxPoJxgSj5M1LUQJEt7yh8jeSednH5XjfmOZJeJ4sXEOsswXSVIFGgPVvNWM3YDHQG
-	 sATr22ARxKSLA==
+	b=OaCRHkuj9GzSfygbcMKP9O9tu68GBBbc6lnFJ1wmT2M7jMfXu58RqDhFd7DYCNzqh
+	 uvpqvugzmIcJ5K/6qCauXMapkVaZF1z5LlAzhqeMBZ4WJ/euwx6U6vYnDAyMJ22Znn
+	 pbHPJOLB+bPIMnhpklg1EVK/HAG6hdtvVjTig/ImijuyBzQT7QLdlXmn0rTPTVKo6u
+	 KAbwzSGJAo1aAivTLxMSbh6TLJrD3LdlJsnKClW2MfG1pNhDY4B2yguaoHID0NRiXJ
+	 MGjZHa6bPHEAMyuq8xf0ARuXKiRD07ALC+5OpgU3LptiJWB3Nyi8IbUaZjoyK0AIC3
+	 t0QAZHLHsgmdA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Zijun Hu <quic_zijuhu@quicinc.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+Cc: Daniel Wagner <wagi@kernel.org>,
+	Justin Tee <justin.tee@broadcom.com>,
+	"Martin K . Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>,
-	rafael@kernel.org,
-	dakr@kernel.org,
-	linux-acpi@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.10 24/27] software node: Correct a OOB check in software_node_get_reference_args()
-Date: Tue,  3 Jun 2025 21:06:17 -0400
-Message-Id: <20250604010620.6819-24-sashal@kernel.org>
+	james.smart@broadcom.com,
+	dick.kennedy@broadcom.com,
+	linux-scsi@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.10 25/27] scsi: lpfc: Use memcpy() for BIOS version
+Date: Tue,  3 Jun 2025 21:06:18 -0400
+Message-Id: <20250604010620.6819-25-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250604010620.6819-1-sashal@kernel.org>
 References: <20250604010620.6819-1-sashal@kernel.org>
@@ -51,117 +51,91 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 5.10.237
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zijun Hu <quic_zijuhu@quicinc.com>
+From: Daniel Wagner <wagi@kernel.org>
 
-[ Upstream commit 31e4e12e0e9609850cefd4b2e1adf782f56337d6 ]
+[ Upstream commit ae82eaf4aeea060bb736c3e20c0568b67c701d7d ]
 
-software_node_get_reference_args() wants to get @index-th element, so
-the property value requires at least '(index + 1) * sizeof(*ref)' bytes
-but that can not be guaranteed by current OOB check, and may cause OOB
-for malformed property.
+The strlcat() with FORTIFY support is triggering a panic because it
+thinks the target buffer will overflow although the correct target
+buffer size is passed in.
 
-Fix by using as OOB check '((index + 1) * sizeof(*ref) > prop->length)'.
+Anyway, instead of memset() with 0 followed by a strlcat(), just use
+memcpy() and ensure that the resulting buffer is NULL terminated.
 
-Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
-Link: https://lore.kernel.org/r/20250414-fix_swnode-v2-1-9c9e6ae11eab@quicinc.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+BIOSVersion is only used for the lpfc_printf_log() which expects a
+properly terminated string.
+
+Signed-off-by: Daniel Wagner <wagi@kernel.org>
+Link: https://lore.kernel.org/r/20250409-fix-lpfc-bios-str-v1-1-05dac9e51e13@kernel.org
+Reviewed-by: Justin Tee <justin.tee@broadcom.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-## Final Decision **YES** This commit should be backported to stable
-kernel trees. **Extensive Explanation:** 1. **Critical Security Fix**:
-This commit fixes a clear out-of-bounds memory access vulnerability in
-`software_node_get_reference_args()` at line 532 in
-`/drivers/base/swnode.c`. The original bounds check `index
-capability_test capability_test.c f2fs_folio_analysis.md
-ipv4_multipath_analysis.md ipv6_route_allocation_rcu_analysis.md
-ixgbe_e610_set_phys_id_analysis.md linux lpfc_timeout_analysis.md
-mac80211_mlo_mbssid_analysis.md pfcp_driver_historical_analysis.md
-rtl_bb_delay_analysis.md rtw89_mlo_analysis.md
-tcp_multipath_load_balance_analysis.md test_unaligned_diff
-test_unaligned_diff.c type_size_check type_size_check.c
-veth_driver_analysis.md wifi_mlo_mbssid_tx_link_id_analysis.md
-sizeof(*ref) >= prop->length` has an off-by-one error that allows
-reading beyond allocated memory when accessing `ref_array[index]`. 2.
-**Vulnerability Details**: The bug allows an attacker to read kernel
-memory beyond the allocated property buffer. To access
-`ref_array[index]`, the code needs `(index + 1) capability_test
-capability_test.c f2fs_folio_analysis.md ipv4_multipath_analysis.md
-ipv6_route_allocation_rcu_analysis.md ixgbe_e610_set_phys_id_analysis.md
-linux lpfc_timeout_analysis.md mac80211_mlo_mbssid_analysis.md
-pfcp_driver_historical_analysis.md rtl_bb_delay_analysis.md
-rtw89_mlo_analysis.md tcp_multipath_load_balance_analysis.md
-test_unaligned_diff test_unaligned_diff.c type_size_check
-type_size_check.c veth_driver_analysis.md
-wifi_mlo_mbssid_tx_link_id_analysis.md sizeof(*ref)` bytes, but the
-original check only ensures `index capability_test capability_test.c
-f2fs_folio_analysis.md ipv4_multipath_analysis.md
-ipv6_route_allocation_rcu_analysis.md ixgbe_e610_set_phys_id_analysis.md
-linux lpfc_timeout_analysis.md mac80211_mlo_mbssid_analysis.md
-pfcp_driver_historical_analysis.md rtl_bb_delay_analysis.md
-rtw89_mlo_analysis.md tcp_multipath_load_balance_analysis.md
-test_unaligned_diff test_unaligned_diff.c type_size_check
-type_size_check.c veth_driver_analysis.md
-wifi_mlo_mbssid_tx_link_id_analysis.md sizeof(*ref)` bytes are
-available. This creates a window where `index capability_test
-capability_test.c f2fs_folio_analysis.md ipv4_multipath_analysis.md
-ipv6_route_allocation_rcu_analysis.md ixgbe_e610_set_phys_id_analysis.md
-linux lpfc_timeout_analysis.md mac80211_mlo_mbssid_analysis.md
-pfcp_driver_historical_analysis.md rtl_bb_delay_analysis.md
-rtw89_mlo_analysis.md tcp_multipath_load_balance_analysis.md
-test_unaligned_diff test_unaligned_diff.c type_size_check
-type_size_check.c veth_driver_analysis.md
-wifi_mlo_mbssid_tx_link_id_analysis.md sizeof(*ref) < prop->length` but
-`(index + 1) capability_test capability_test.c f2fs_folio_analysis.md
-ipv4_multipath_analysis.md ipv6_route_allocation_rcu_analysis.md
-ixgbe_e610_set_phys_id_analysis.md linux lpfc_timeout_analysis.md
-mac80211_mlo_mbssid_analysis.md pfcp_driver_historical_analysis.md
-rtl_bb_delay_analysis.md rtw89_mlo_analysis.md
-tcp_multipath_load_balance_analysis.md test_unaligned_diff
-test_unaligned_diff.c type_size_check type_size_check.c
-veth_driver_analysis.md wifi_mlo_mbssid_tx_link_id_analysis.md
-sizeof(*ref) > prop->length`, allowing out-of-bounds access. 3.
-**Security Impact**: This vulnerability can lead to: - Information
-disclosure through kernel memory leaks - Potential system crashes from
-invalid memory access - Exploitation through malformed device tree
-properties 4. **Perfect Backport Candidate**: - **Minimal code change**:
-Single line fix changing `>=` to `>` and adding `+ 1` - **No feature
-additions**: Pure bug fix with no new functionality - **Low regression
-risk**: Makes bounds checking more restrictive, safer - **Core
-infrastructure**: Affects fundamental device property framework used
-across many drivers 5. **Historical Precedent**: The provided similar
-commits show a clear pattern - other defensive programming fixes in the
-same `software_node` subsystem (commits #1, #2, and #4) were all marked
-as suitable for backporting. This commit follows the same pattern of
-fixing potential memory safety issues with minimal, targeted changes. 6.
-**Maintainer Review**: The commit has been reviewed by Sakari Ailus,
-indicating community confidence in the fix. 7. **Stable Tree
-Compliance**: Meets all stable tree criteria - fixes important bug,
-minimal risk, contained change, no architectural modifications, and
-addresses a security vulnerability in critical kernel infrastructure.
-The commit represents exactly the type of fix that stable trees are
-designed to accommodate: a small, well-reviewed security fix that
-prevents potential exploitation without introducing new risks.
+Let me understand the actual problem by examining the function more
+carefully. Based on the commit message, this is about a FORTIFY panic
+when using strlcat(): **YES** This commit should be backported to stable
+kernel trees. Here's my extensive analysis: ## Bug Analysis **Root
+Cause:** The commit fixes a kernel panic triggered by FORTIFY_SOURCE
+when using `strlcat()`. The FORTIFY infrastructure incorrectly detected
+a potential buffer overflow in the BIOS version string handling code.
+**The Problem Code:** ```c memset(phba->BIOSVersion, 0,
+sizeof(phba->BIOSVersion)); strlcat(phba->BIOSVersion, (char
+*)cntl_attr->bios_ver_str, sizeof(phba->BIOSVersion)); ``` **The Fix:**
+```c memcpy(phba->BIOSVersion, cntl_attr->bios_ver_str,
+sizeof(phba->BIOSVersion)); phba->BIOSVersion[sizeof(phba->BIOSVersion)
+- 1] = '\0'; ``` ## Technical Details 1. **Buffer Sizes:** `BIOSVersion`
+is a 16-byte character array (`char BIOSVersion[16]` in lpfc.h:1267),
+while `bios_ver_str` is a 32-byte array (`uint32_t bios_ver_str[8]` in
+lpfc_hw4.h:3798). 2. **FORTIFY Issue:** The `strlcat()` function with
+FORTIFY enabled was triggering a false positive, causing kernel panics
+when it incorrectly calculated potential overflow conditions. 3. **Safe
+Solution:** The fix uses `memcpy()` for the exact buffer size and
+explicitly null-terminates the string, which is simpler and avoids the
+FORTIFY false positive. ## Backport Criteria Analysis ✅ **Fixes
+Important Bug:** This resolves kernel panics in production systems with
+FORTIFY enabled ✅ **Small & Contained:** Only 3 lines changed in a
+single function ✅ **Minimal Risk:** The change is functionally
+equivalent but safer ✅ **No Architectural Changes:** Simple string
+handling improvement ✅ **Clear Side Effects:** No behavioral changes
+beyond fixing the panic ✅ **Critical Subsystem:** SCSI driver stability
+is important for storage ## Comparison with Similar Commits This closely
+resembles **Similar Commit #2** (marked YES for backport) which fixed an
+overflow build issue with FORTIFY. Both commits: - Address FORTIFY-
+related compilation/runtime issues - Make minimal, safe code changes -
+Fix real problems affecting users - Have low regression risk ## Risk
+Assessment **Low Risk:** The change maintains identical functionality
+while eliminating the false positive. Both code paths copy BIOS version
+data into a 16-byte buffer and ensure null termination. The `memcpy()`
+approach is actually more predictable than `strlcat()` with an empty
+target buffer. ## Conclusion This commit fixes a real kernel panic issue
+that affects users running kernels with FORTIFY_SOURCE enabled. The fix
+is minimal, safe, and follows stable tree guidelines perfectly. It
+should definitely be backported to prevent production systems from
+experiencing these panics.
 
- drivers/base/swnode.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/lpfc/lpfc_sli.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/base/swnode.c b/drivers/base/swnode.c
-index b664c36388e24..89b53ca086d6a 100644
---- a/drivers/base/swnode.c
-+++ b/drivers/base/swnode.c
-@@ -508,7 +508,7 @@ software_node_get_reference_args(const struct fwnode_handle *fwnode,
- 	if (prop->is_inline)
- 		return -EINVAL;
+diff --git a/drivers/scsi/lpfc/lpfc_sli.c b/drivers/scsi/lpfc/lpfc_sli.c
+index 84f90f4d5abd8..ff39c596f0007 100644
+--- a/drivers/scsi/lpfc/lpfc_sli.c
++++ b/drivers/scsi/lpfc/lpfc_sli.c
+@@ -5530,9 +5530,9 @@ lpfc_sli4_get_ctl_attr(struct lpfc_hba *phba)
+ 	phba->sli4_hba.lnk_info.lnk_no =
+ 		bf_get(lpfc_cntl_attr_lnk_numb, cntl_attr);
  
--	if (index * sizeof(*ref) >= prop->length)
-+	if ((index + 1) * sizeof(*ref) > prop->length)
- 		return -ENOENT;
+-	memset(phba->BIOSVersion, 0, sizeof(phba->BIOSVersion));
+-	strlcat(phba->BIOSVersion, (char *)cntl_attr->bios_ver_str,
++	memcpy(phba->BIOSVersion, cntl_attr->bios_ver_str,
+ 		sizeof(phba->BIOSVersion));
++	phba->BIOSVersion[sizeof(phba->BIOSVersion) - 1] = '\0';
  
- 	ref_array = prop->pointer;
+ 	lpfc_printf_log(phba, KERN_INFO, LOG_SLI,
+ 			"3086 lnk_type:%d, lnk_numb:%d, bios_ver:%s\n",
 -- 
 2.39.5
 
