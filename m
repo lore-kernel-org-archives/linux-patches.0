@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DEB11A29A;
-	Wed,  4 Jun 2025 01:04:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96C4A219A7E;
+	Wed,  4 Jun 2025 01:04:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748999086; cv=none; b=aTxY6C7XTTdDOcQS8OutSF+Wu7OcrThP5qh7juYtZTEhMmBAha201HnF/oDQ72i5sk/3OpvJAXvaGfs05zA7T/B8YEBQQQvNaeIRCuXHu7i058p2yM5HOD71RlwjDBqN+Cc8qNV3ft0TB0/pugUw2C42YQJpgu6Pga8LaS+B4bk=
+	t=1748999087; cv=none; b=QFYkCrME/xen0Hxs2rd4YvUU9v/dBI9I/EN7HUlR5mvDX/0BRLm2jWGh5Tn1hEyYVqwPdX2EvbCUfqTKP/1vOQ2xt4axsF7woikOlyWZQ56h5cxkc0UuwtAhuw4fEAAsH9AtjxQuVHrjYx9YpYj5Nl9Pj5vtUptPYNDVdAE7JHU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748999086; c=relaxed/simple;
-	bh=MufHod0A/BdviTTzQlbdv34CCtmNQk+UQzrnAhhW2fs=;
+	s=arc-20240116; t=1748999087; c=relaxed/simple;
+	bh=X7cQAjTYtYTr/Jc7q5G7JsSl0ou3tjoDS9lu+kuPXnM=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OaAobS3cw5W0fUQK5gA3Bor4vhWqLSnDXoRDwaBQZi2MzuevGbOYzbVF5fwvRnurJx8F2xM/qVWX8cndEtAeFou81wsKW6ldoM4SQuHjaR7l9s6OKAji/QjYlBvJi4dZxA5+0541yDrHftKQ4Fjr1viDMb6mM1zgznR4P9C8IqE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Pqq03vnI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=eGA63anrT38blfDWzAN3kNn6OxW8HTiex3COFOEF/cR5eS2R9gXfTplpgjwvM8eWWNdevMjUcO96KA4I0US6VmQSnFXr9HdybvCaqxu0et9HpJwsB5nOyRNfpVeOFC2MUMs8yApqyEXGzMIyifKie14WaFZwOrBFEdbTBs/tvs8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XeiwTU1J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Pqq03vnI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DFB5C4CEED;
-	Wed,  4 Jun 2025 01:04:42 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XeiwTU1J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B767DC4CEEF;
+	Wed,  4 Jun 2025 01:04:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748999083;
-	bh=MufHod0A/BdviTTzQlbdv34CCtmNQk+UQzrnAhhW2fs=;
+	s=k20201202; t=1748999087;
+	bh=X7cQAjTYtYTr/Jc7q5G7JsSl0ou3tjoDS9lu+kuPXnM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Pqq03vnIL+eE11SJCKkhCvsEeObSP79n91M/rPKTlyRxuG92FWbgB+K9fEfWsT5O6
-	 FStAkem9YhWGqAfiC9xnRStwHn4oRT8351Gm8Xifg0r/r9QnlWhvmURLZZQQxOCYTQ
-	 /Zczf3fTt2wcckTI2sozIK0WJ9bQdVWUaNdGPzBK3qXLcB2lDlg6lnssJcV8ZL+nf7
-	 QEeeEEnQmPpqcFuMKRq69DprCIU5KgCLJQlCsnWerpaUsbRvSgk7wnmrUa4IXPiNQ7
-	 OWv+9zjrgZsRmNb1Dben7rkGvxnU4WQ8oqoOBg5EAXAtOebbz9npI+QmR09cp/SQfs
-	 S0UqecSjopgdg==
+	b=XeiwTU1J06mpAOVIJP7RsX1AduP4aS7ZGYJMtUjyM2nCL2uvd9rNghmgei6lzz4RN
+	 qSCNYgkFMIwgrivORlKWRHiUlr585QV8tKcn+tqIU7iX6bi5L7SQ5IX7GVsYEjVtT4
+	 O39xiDIdKtUvcy9s5aN2ErItXwC20eLhd4/b8SSO/KRnypb/ECeUN5W4YrpmNJhz5i
+	 CqABQg6uCQtCV7z0sp32D6sNFm1bNcmOI4TMAz4yAsqdG5c7jLNn2thq2NzYElZBeO
+	 ysn3Cpb5lilQ35TBfQgGfkveTSypQKpJG8TFidccV9HPQdNOD9AFwauVOux6Zego3E
+	 JnI+t1zQ1xQJQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
@@ -39,9 +39,9 @@ Cc: Gabor Juhos <j4g8y7@gmail.com>,
 	brgl@bgdev.pl,
 	linux-arm-kernel@lists.infradead.org,
 	linux-gpio@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.1 21/46] pinctrl: armada-37xx: propagate error from armada_37xx_pmx_set_by_name()
-Date: Tue,  3 Jun 2025 21:03:39 -0400
-Message-Id: <20250604010404.5109-21-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.1 23/46] pinctrl: armada-37xx: propagate error from armada_37xx_pmx_gpio_set_direction()
+Date: Tue,  3 Jun 2025 21:03:41 -0400
+Message-Id: <20250604010404.5109-23-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250604010404.5109-1-sashal@kernel.org>
 References: <20250604010404.5109-1-sashal@kernel.org>
@@ -59,76 +59,112 @@ Content-Transfer-Encoding: 8bit
 
 From: Gabor Juhos <j4g8y7@gmail.com>
 
-[ Upstream commit 4229c28323db141eda69cb99427be75d3edba071 ]
+[ Upstream commit bfa0ff804ffa8b1246ade8be08de98c9eb19d16f ]
 
-The regmap_update_bits() function can fail, so propagate its error
-up to the stack instead of silently ignoring that.
+The armada_37xx_gpio_direction_{in,out}put() functions can fail, so
+propagate their error values back to the stack instead of silently
+ignoring those.
 
 Signed-off-by: Imre Kaloz <kaloz@openwrt.org>
 Reviewed-by: Andrew Lunn <andrew@lunn.ch>
 Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
-Link: https://lore.kernel.org/20250514-pinctrl-a37xx-fixes-v2-7-07e9ac1ab737@gmail.com
+Link: https://lore.kernel.org/20250514-pinctrl-a37xx-fixes-v2-5-07e9ac1ab737@gmail.com
 Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Based on my analysis of the commit and the code context, here's my
-assessment: **YES** This commit should be backported to stable kernel
-trees. Here's my extensive analysis: ## Code Analysis The commit changes
-`armada_37xx_pmx_set_by_name()` function from: ```c
-regmap_update_bits(info->regmap, reg, mask, val); return 0; ``` To: ```c
-return regmap_update_bits(info->regmap, reg, mask, val); ``` ## Why This
-Should Be Backported 1. **Bug Fix Nature**: This is a clear bug fix that
-addresses silent error handling. The `regmap_update_bits()` function
-returns an integer error code (0 on success, negative on failure), but
-the original code was ignoring this return value and always returning
-success (0). 2. **Error Propagation Impact**: The function
-`armada_37xx_pmx_set_by_name()` is called from: -
-`armada_37xx_pmx_set()` - the main pinmux set function -
-`armada_37xx_gpio_request_enable()` - GPIO request handler that already
-checks return values 3. **Consistency with Similar Fixes**: Looking at
-the historical commits provided: - **Similar Commit #2** (Backport
-Status: YES) shows the exact same pattern where
-`armada_37xx_gpio_request_enable()` was updated to check return values
-from `armada_37xx_pmx_set_by_name()` - This current commit completes
-that fix by ensuring the function actually returns errors when they
-occur 4. **Critical Subsystem**: This affects the pinctrl subsystem
-which is fundamental to GPIO and pin configuration. Silent failures in
-pin configuration can lead to: - Hardware not being configured correctly
-- GPIO requests appearing to succeed when they actually failed -
-Difficult-to-debug hardware issues 5. **Minimal Risk**: The change is
-extremely small and contained: - No new functionality added - No
-architectural changes - Simple error propagation fix - Maintains
-existing API contract 6. **Stable Tree Criteria Compliance**: - ✅ Fixes
-an important bug affecting users - ✅ Small, contained change - ✅ No new
-features - ✅ Minimal regression risk - ✅ Affects critical kernel
-subsystem 7. **Real-World Impact**: Without this fix, regmap failures
-(which can occur due to hardware issues, power management problems, or
-I2C/SPI communication errors) would be silently ignored, leading to
-unpredictable system behavior where pin configurations appear successful
-but are actually failed. The commit follows the pattern established in
-the historical commit #2 which was marked for backporting, and
-represents the completion of proper error handling in this driver's
-critical path.
+Based on my comprehensive analysis, here is my determination: **YES** ##
+Extensive Analysis for Backport Recommendation ### 1. **Bug Severity and
+Real User Impact** This commit fixes a **genuine bug** where the
+`armada_37xx_pmx_gpio_set_direction()` function silently ignores errors
+from GPIO direction setting operations. The current code at lines
+476-481 shows: ```c if (input) armada_37xx_gpio_direction_input(chip,
+offset); // Return value ignored else
+armada_37xx_gpio_direction_output(chip, offset, 0); // Return value
+ignored return 0; // Always returns success regardless of actual result
+``` This silent failure can cause **real user-visible problems**: - GPIO
+pins may remain in the wrong direction (input vs output) without any
+indication - Hardware peripherals controlled by these GPIOs may
+malfunction - Applications believe GPIO operations succeeded when they
+actually failed - No error reporting prevents proper debugging of
+hardware issues ### 2. **Code Change Assessment - Small and Contained**
+The fix is **minimal and surgical**: - Adds only one variable
+declaration (`int ret`) - Changes two function calls to capture return
+values - Replaces `return 0` with `return ret` - **No architectural
+changes or new features** - **No changes to external APIs or data
+structures** This precisely matches the stable tree criteria for small,
+contained fixes. ### 3. **Comparison with Historical Similar Commits**
+Looking at the provided examples: - **Similar Commit #1** (Status: YES):
+Also fixes GPIO direction callback behavior in the same driver - this
+establishes precedent for backporting armada-37xx GPIO fixes - **Similar
+Commits #4 & #5** (Status: NO): These fix similar error propagation
+issues in different drivers, but the "NO" status appears to be due to
+them being newer cleanup patches rather than fixing actual bugs ### 4.
+**Pattern Recognition from Kernel Tree Analysis** My examination of the
+kernel repository reveals this is **part of a systematic fix series**
+addressing error propagation throughout this driver. I found related
+commits: - `4229c28323db`: "propagate error from
+armada_37xx_pmx_set_by_name()" (marked YES in autosel.txt) -
+`6481c0a83367`: "propagate error from armada_37xx_gpio_get_direction()"
+(marked YES in autosel.txt) This indicates the kernel maintainers
+consider these error propagation fixes important enough for stable
+backporting. ### 5. **Risk Assessment - Minimal Regression Risk** The
+change has **very low regression risk**: - Only affects error handling
+paths that were previously broken - If the underlying GPIO operations
+were succeeding before, they continue to succeed - If they were failing
+before (but silently), now they properly report the failure - **No
+functional behavior changes when hardware operates correctly** - The
+worst case is that previously silent failures now get reported (which is
+the desired behavior) ### 6. **Critical Subsystem Impact** This affects
+the **pinctrl/GPIO subsystem**, which is critical for: - Hardware
+initialization and control - Board-specific functionality - Device
+driver operation - Embedded system reliability Silent failures in this
+subsystem can cause hard-to-debug issues that affect system stability.
+### 7. **No Explicit Stable Backport Indicators** While the commit
+message lacks explicit `Cc: stable@vger.kernel.org` or `Fixes:` tags,
+this doesn't disqualify it. Many important bugfixes lack these tags, and
+the automated selection process (as evidenced by autosel.txt) is
+designed to catch such cases. ### 8. **Meets All Stable Tree Criteria**
+✅ **Fixes important bug**: Silent GPIO failures can cause real hardware
+issues ✅ **Minimal risk**: Only improves error reporting, no functional
+changes ✅ **Small and contained**: 4-line change in a single function ✅
+**No architectural changes**: Pure error handling improvement ✅
+**Affects critical subsystem**: GPIO/pinctrl is fundamental to hardware
+operation ### Conclusion This commit should be backported because it
+fixes a genuine bug where hardware failures are silently ignored,
+potentially causing real user issues. The fix is small, safe, and aligns
+with similar commits that have been marked for stable backporting. The
+change only improves error handling without modifying functional
+behavior, making it an ideal candidate for stable tree inclusion.
 
- drivers/pinctrl/mvebu/pinctrl-armada-37xx.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/pinctrl/mvebu/pinctrl-armada-37xx.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c b/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c
-index 261b46841b9f6..df0683bd663b5 100644
+index 536166b78e377..1d26fd6c5665b 100644
 --- a/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c
 +++ b/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c
-@@ -360,9 +360,7 @@ static int armada_37xx_pmx_set_by_name(struct pinctrl_dev *pctldev,
+@@ -472,16 +472,17 @@ static int armada_37xx_pmx_gpio_set_direction(struct pinctrl_dev *pctldev,
+ {
+ 	struct armada_37xx_pinctrl *info = pinctrl_dev_get_drvdata(pctldev);
+ 	struct gpio_chip *chip = range->gc;
++	int ret;
  
- 	val = grp->val[func];
+ 	dev_dbg(info->dev, "gpio_direction for pin %u as %s-%d to %s\n",
+ 		offset, range->name, offset, input ? "input" : "output");
  
--	regmap_update_bits(info->regmap, reg, mask, val);
--
+ 	if (input)
+-		armada_37xx_gpio_direction_input(chip, offset);
++		ret = armada_37xx_gpio_direction_input(chip, offset);
+ 	else
+-		armada_37xx_gpio_direction_output(chip, offset, 0);
++		ret = armada_37xx_gpio_direction_output(chip, offset, 0);
+ 
 -	return 0;
-+	return regmap_update_bits(info->regmap, reg, mask, val);
++	return ret;
  }
  
- static int armada_37xx_pmx_set(struct pinctrl_dev *pctldev,
+ static int armada_37xx_gpio_request_enable(struct pinctrl_dev *pctldev,
 -- 
 2.39.5
 
