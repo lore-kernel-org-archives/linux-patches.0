@@ -1,184 +1,84 @@
-Received: from mout-p-201.mailbox.org (mout-p-201.mailbox.org [80.241.56.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A800D27A127;
-	Thu,  5 Jun 2025 20:31:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.171
+Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3D7CC27AC48;
+	Thu,  5 Jun 2025 21:04:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=13.77.154.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749155462; cv=none; b=maynn7XGMtyRNvMI9pzpqoMhLstWkXqYD8S7DW3MMcSkDvxQGjeJIOfbkwXnwutcFsTtqZGSVLhNu2XTkLGGeOy9PS3wFWQWJkbhW4O1S4tpa76i5oS3MyaVAwsrq8qOgl6T/kUYEPDT4UCpB9TkZ1jZLU0o8aaX/ZAgRs7Ddx4=
+	t=1749157448; cv=none; b=e2ATYI2lORvTE5eMgORlc5VCzLeNKe2zHekf/RYBUe1Qxl5wJBzIr2WiEITI7z9ptK4GwKdxIs/2BIpl3Q9R7UX3rY7oEG/RXPpZR6CM7Y5Ch7gJdKAWEvfBubC6SXCEQV+7DssJTjQdvwDNEQiry4IHRGk0nGv+I2TuU0jssRQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749155462; c=relaxed/simple;
-	bh=gmlp2jwO30hBqhp/YJOURodm64jKP/qFtrzv2wdnmiY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TQGUPg6cwsWUQwLmBqk0D0uVC+dr8LZrjznbMe19kaSk8Ibfdn5WAL/XkCmJjtNQYTjVKOMyyU0SRvdV5L0R/20lOYl9efQ0qJeZqSNL2bI8rFp5BkwZ67Y+wFZ/VGL1etVq/KzK3o9SFm2Wa9DFGfmzskK3JfnhwJg8GvVT/wI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=listout.xyz; spf=pass smtp.mailfrom=listout.xyz; dkim=pass (2048-bit key) header.d=listout.xyz header.i=@listout.xyz header.b=t2u0+gy4; arc=none smtp.client-ip=80.241.56.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=listout.xyz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=listout.xyz
+	s=arc-20240116; t=1749157448; c=relaxed/simple;
+	bh=5z4lyN6eFPIUIuW6ETWM+sIFBqvUb6kdsqF23bzMXIQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=Dx9MWYnh8TJkgyXsnR8JlBij0O0tl+mnZTxvbBjymSoCKCGiQw2jG53Jp2QiTxULSRt+XDGTHIbnU+Bn/uzxRywK1cp63+v2jt3QMxbZH/CtRi9G+rXieOvHiZ4Y/QnqMZLpOSRGViFA/xqG9OB9TInUBk399cMqgUc6zn6Y75M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com; spf=pass smtp.mailfrom=linux.microsoft.com; dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b=cD7s8vD0; arc=none smtp.client-ip=13.77.154.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.microsoft.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=listout.xyz header.i=@listout.xyz header.b="t2u0+gy4"
-Received: from smtp2.mailbox.org (smtp2.mailbox.org [IPv6:2001:67c:2050:b231:465::2])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mout-p-201.mailbox.org (Postfix) with ESMTPS id 4bCx0w75fNz9tCl;
-	Thu,  5 Jun 2025 22:30:56 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=listout.xyz; s=MBO0001;
-	t=1749155457;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=pqZ663Cp9gzndHJjTiWWCOUPFc901sb/+7c37wwcIXE=;
-	b=t2u0+gy4JG5d0W54nnpWwF8JuiS0daocYRAz2FS8pJ20+YebcrSZAoHisR9G7K1HoltrZR
-	fYVjp3t7CLd47YIEtfBi0PGcxqLQC6w8xchHUyiprU5Tzh4dRzQ/gt3/mUS8Yad1J2pBe4
-	XoS6NKxnWOob6rITShJ6pIaYKV/Fo/mbArAgR0DHIn2fFey07SZvVxjhYOenijN1xzSi0I
-	yLes3fFWbuCnZiWI2N2c9NOq787Juj3t33GkjsuypWStOEZdhe+0f8pVGQT0zDGenqdCny
-	obOHKWD2MCItedA8FyzBs+tzD6B8+0uTzghnuOaJ7ZJQgJk6fmsBR49+ToL6NA==
-Date: Fri, 6 Jun 2025 02:00:52 +0530
-From: Brahmajit Das <listout@listout.xyz>
-To: stable@kernel.org
-Cc: linux-kernel-mentees@lists.linux.dev, skhan@linuxfoundation.org, 
-	gregkh@linuxfoundation.org, mpatocka@redhat.com, stable@vger.kernel.org, 
-	patches@lists.linux.dev
-Subject: Re: [PATCH 1/1] dm-verity: fix a memory leak if some arguments are
- specified multiple times
-Message-ID: <65ci7zvx3kr5qfq2ioadzzd4ghrtrtrc3pxefosexxpbup63kb@4jkc6e6usols>
-References: <20250605201116.24492-1-listout@listout.xyz>
+	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b="cD7s8vD0"
+Received: from DESKTOP-0403QTC. (unknown [40.65.108.177])
+	by linux.microsoft.com (Postfix) with ESMTPSA id 8450D210D0C2;
+	Thu,  5 Jun 2025 14:04:00 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 8450D210D0C2
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+	s=default; t=1749157441;
+	bh=Gund+dK5aJW6UtaEJ+x2rgplZpVnxwe1S5F5gyh6HAA=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:Reply-To:From;
+	b=cD7s8vD0a0AfPh3ebIr231hpAoYtxnmr5f0EAkqfQvSQ1jXXObO60Olle7BNyh26Y
+	 PQSAfLA3l+EG5LI4UboSinv7mYXWDeCbzO5VLzMylLYL36WykSm86yqe0ISRwemYjE
+	 RuzFbs8q4U3a2qW3X85abq+4uV8QpooHP9orWnmw=
+Date: Thu, 5 Jun 2025 14:03:58 -0700
+From: Jacob Pan <jacob.pan@linux.microsoft.com>
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: Jonathan Corbet <corbet@lwn.net>, iommu@lists.linux.dev, Joerg Roedel
+ <joro@8bytes.org>, Justin Stitt <justinstitt@google.com>, Kevin Tian
+ <kevin.tian@intel.com>, linux-doc@vger.kernel.org,
+ linux-kselftest@vger.kernel.org, llvm@lists.linux.dev, Bill Wendling
+ <morbo@google.com>, Nathan Chancellor <nathan@kernel.org>, Nick Desaulniers
+ <nick.desaulniers+lkml@gmail.com>, Miguel Ojeda <ojeda@kernel.org>, Robin
+ Murphy <robin.murphy@arm.com>, Shuah Khan <shuah@kernel.org>, Suravee
+ Suthikulpanit <suravee.suthikulpanit@amd.com>, Will Deacon
+ <will@kernel.org>, Alexey Kardashevskiy <aik@amd.com>, Alejandro Jimenez
+ <alejandro.j.jimenez@oracle.com>, James Gowans <jgowans@amazon.com>,
+ Michael Roth <michael.roth@amd.com>, Pasha Tatashin
+ <pasha.tatashin@soleen.com>, patches@lists.linux.dev,
+ jacob.pan@linux.microsoft.com
+Subject: Re: [PATCH v2 12/15] iommupt: Add the x86 64 bit page table format
+Message-ID: <20250605140358.2dd6c083@DESKTOP-0403QTC.>
+In-Reply-To: <12-v2-5c26bde5c22d+58b-iommu_pt_jgg@nvidia.com>
+References: <0-v2-5c26bde5c22d+58b-iommu_pt_jgg@nvidia.com>
+	<12-v2-5c26bde5c22d+58b-iommu_pt_jgg@nvidia.com>
+Reply-To: jacob.pan@linux.microsoft.com
+X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.33; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250605201116.24492-1-listout@listout.xyz>
-X-Rspamd-Queue-Id: 4bCx0w75fNz9tCl
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-Greg, Shuah, Mikulas,
-This is my first attempt at backporting an upstream patch (Part of Linux
-kernel Bug Fixing Summer 2025). Please feel free to correct me, I'm open
-to feedback.
-I see I've added two From section, if that requires me to
-resend a v2 of the patch, please let me know.
+Hi Jason,
 
-On 06.06.2025 01:41, Brahmajit Das wrote:
-> From: Mikulas Patocka <mpatocka@redhat.com>
-> 
-> From: Mikulas Patocka <mpatocka@redhat.com>
-> 
-> [ Upstream commit 66be40a14e496689e1f0add50118408e22c96169 ]
-> 
-> If some of the arguments "check_at_most_once", "ignore_zero_blocks",
-> "use_fec_from_device", "root_hash_sig_key_desc" were specified more than
-> once on the target line, a memory leak would happen.
-> 
-> This commit fixes the memory leak. It also fixes error handling in
-> verity_verify_sig_parse_opt_args.
-> 
-> Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-> Cc: stable@vger.kernel.org
-> Signed-off-by: Brahmajit Das <listout@listout.xyz>
-> ---
->  drivers/md/dm-verity-fec.c        |  4 ++++
->  drivers/md/dm-verity-target.c     |  8 +++++++-
->  drivers/md/dm-verity-verify-sig.c | 17 +++++++++++++----
->  3 files changed, 24 insertions(+), 5 deletions(-)
-> 
-> diff --git a/drivers/md/dm-verity-fec.c b/drivers/md/dm-verity-fec.c
-> index 0c41949db784..631a887b487c 100644
-> --- a/drivers/md/dm-verity-fec.c
-> +++ b/drivers/md/dm-verity-fec.c
-> @@ -593,6 +593,10 @@ int verity_fec_parse_opt_args(struct dm_arg_set *as, struct dm_verity *v,
->  	(*argc)--;
->  
->  	if (!strcasecmp(arg_name, DM_VERITY_OPT_FEC_DEV)) {
-> +		if (v->fec->dev) {
-> +			ti->error = "FEC device already specified";
-> +			return -EINVAL;
-> +		}
->  		r = dm_get_device(ti, arg_value, BLK_OPEN_READ, &v->fec->dev);
->  		if (r) {
->  			ti->error = "FEC device lookup failed";
-> diff --git a/drivers/md/dm-verity-target.c b/drivers/md/dm-verity-target.c
-> index 3c427f18a04b..ed49bcbd224f 100644
-> --- a/drivers/md/dm-verity-target.c
-> +++ b/drivers/md/dm-verity-target.c
-> @@ -1120,6 +1120,9 @@ static int verity_alloc_most_once(struct dm_verity *v)
->  {
->  	struct dm_target *ti = v->ti;
->  
-> +	if (v->validated_blocks)
-> +		return 0;
-> +
->  	/* the bitset can only handle INT_MAX blocks */
->  	if (v->data_blocks > INT_MAX) {
->  		ti->error = "device too large to use check_at_most_once";
-> @@ -1143,6 +1146,9 @@ static int verity_alloc_zero_digest(struct dm_verity *v)
->  	struct dm_verity_io *io;
->  	u8 *zero_data;
->  
-> +	if (v->zero_digest)
-> +		return 0;
-> +
->  	v->zero_digest = kmalloc(v->digest_size, GFP_KERNEL);
->  
->  	if (!v->zero_digest)
-> @@ -1577,7 +1583,7 @@ static int verity_ctr(struct dm_target *ti, unsigned int argc, char **argv)
->  			goto bad;
->  	}
->  
-> -	/* Root hash signature is  a optional parameter*/
-> +	/* Root hash signature is an optional parameter */
->  	r = verity_verify_root_hash(root_hash_digest_to_validate,
->  				    strlen(root_hash_digest_to_validate),
->  				    verify_args.sig,
-> diff --git a/drivers/md/dm-verity-verify-sig.c b/drivers/md/dm-verity-verify-sig.c
-> index a9e2c6c0a33c..d5261a0e4232 100644
-> --- a/drivers/md/dm-verity-verify-sig.c
-> +++ b/drivers/md/dm-verity-verify-sig.c
-> @@ -71,9 +71,14 @@ int verity_verify_sig_parse_opt_args(struct dm_arg_set *as,
->  				     const char *arg_name)
->  {
->  	struct dm_target *ti = v->ti;
-> -	int ret = 0;
-> +	int ret;
->  	const char *sig_key = NULL;
->  
-> +	if (v->signature_key_desc) {
-> +		ti->error = DM_VERITY_VERIFY_ERR("root_hash_sig_key_desc already specified");
-> +		return -EINVAL;
-> +	}
-> +
->  	if (!*argc) {
->  		ti->error = DM_VERITY_VERIFY_ERR("Signature key not specified");
->  		return -EINVAL;
-> @@ -83,14 +88,18 @@ int verity_verify_sig_parse_opt_args(struct dm_arg_set *as,
->  	(*argc)--;
->  
->  	ret = verity_verify_get_sig_from_key(sig_key, sig_opts);
-> -	if (ret < 0)
-> +	if (ret < 0) {
->  		ti->error = DM_VERITY_VERIFY_ERR("Invalid key specified");
-> +		return ret;
-> +	}
->  
->  	v->signature_key_desc = kstrdup(sig_key, GFP_KERNEL);
-> -	if (!v->signature_key_desc)
-> +	if (!v->signature_key_desc) {
-> +		ti->error = DM_VERITY_VERIFY_ERR("Could not allocate memory for signature key");
->  		return -ENOMEM;
-> +	}
->  
-> -	return ret;
-> +	return 0;
->  }
->  
->  /*
-> -- 
-> 2.49.0
-> 
-> 
+On Mon,  5 May 2025 11:18:42 -0300
+Jason Gunthorpe <jgg@nvidia.com> wrote:
 
--- 
-Regards,
-listout
+> +config IOMMU_PT_X86_64
+> +       tristate "IOMMU page table for x86 64 bit, 4/5 levels"
+> +	depends on !GENERIC_ATOMIC64 # for cmpxchg64
+> +	default n
+> +	help
+> +	  iommu_domain implementation for the x86 64 bit 4/5 level
+> page table.
+> +	  It supports 4K/2M/1G page sizes and can decode a sign
+> extended
+> +	  portion of the 64 bit IOVA space.
+> +
+> +	  Selected automatically by an IOMMU driver that uses this
+> format. +
+>  config IOMMU_PT_KUNIT_TEST
+>  	tristate "IOMMU Page Table KUnit Test" if !KUNIT_ALL_TESTS
+>  	depends on KUNIT
+>  	depends on IOMMU_PT_AMDV1 || !IOMMU_PT_AMDV1
+> +	depends on IOMMU_PT_X86_64 || !IOMMU_PT_X86_64
+Is this intended? or you mean:
+depends on IOMMU_PT_X86_64 || IOMMU_PT_AMDV1
