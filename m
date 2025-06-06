@@ -1,48 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7776128981F;
-	Fri,  6 Jun 2025 15:42:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 801BCEEB5;
+	Fri,  6 Jun 2025 15:42:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749224536; cv=none; b=FVDqL35M1N3Op929Y7JjIqdCjpw/9BUXAVgXPEPgP0Z6B/+vmcadv4cpj8ImomEw8MkTbUYTcqrnX4a64Zatu4C4+GIAU10zAAMzvs/+jdhW4SL42UYecv3dWAv1B0R0S7bbYLKKqsoW8KPvvotlJWFIYYmXUJxHnYrQ6GFz5dc=
+	t=1749224539; cv=none; b=rZIwL5yw7AKB/F0T35Sv/cUbh3gn0cN/u6lFTfRg0qjJ4qc2JwPXsPg+EWoMzNRJa8PYF/xUztNm1UQNnTM4l1i6E+wRdW7At0+afAXLL48W3fEPfXPor4ndV9r4LiZn27F1lWRntIY5RIBqR+dlHDkadOg08n09heLZmmisWXI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749224536; c=relaxed/simple;
-	bh=UjgSiSJlL/v1WcxaErEV15oXgE6POvKn41l7dmxFOE0=;
+	s=arc-20240116; t=1749224539; c=relaxed/simple;
+	bh=ZmA5PdSmEf70vUGOOaU9wOsDxwxgasYySGGzHobtmPA=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=VBzNkSfBdZGGUduJfccNpA17v2FOkQ3tWLzftMCKWZgwWlTZUeaXkmaWiTxBBwfzxWwSEMq9LeyUIpzlNWnoAvApT3QI/oi9m8lNwjF0gJbI2yHNoV1MFPhIqHBhM2mihOK3FrXEwaPel1XXq7MxqVE+LYFw8NVoJZAariaYWgw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=m7uU6SbB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=g7Gogf7VSaI9ar8ock8C0mrdB7Udj/ZRQQFrMLsQpq3Pm15/NVzzpaAut+p63molaoeBn1MIFDY+6WYRH5p/AzD7eb5ka/oy4rtbquO4u96CzXu7J1JxQ+fE8vFbE+3tzd0oyLLYE0BNhAGqqfJFaGNoFyyvgldHnAASeKyUW2Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L30KGyCJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="m7uU6SbB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5D99C4CEEB;
-	Fri,  6 Jun 2025 15:42:14 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L30KGyCJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8450C4CEED;
+	Fri,  6 Jun 2025 15:42:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749224536;
-	bh=UjgSiSJlL/v1WcxaErEV15oXgE6POvKn41l7dmxFOE0=;
+	s=k20201202; t=1749224539;
+	bh=ZmA5PdSmEf70vUGOOaU9wOsDxwxgasYySGGzHobtmPA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m7uU6SbBYgV4htNHrsT6R0YC9NuoXr49CvNCQAYUhUEf72eChNeLVQI79XSn037Z3
-	 SI/aqeE+EqXci0WdSEWVTJdIxnhzrZomI2HSOZvpaQKoN9wNBr6KhUOlFYIM3wSSVw
-	 71QcWLOp8ywurGdFtkyVKu7SYnJWgHRvmFj48zcDV3A+YbvtigGh9ynM/2d+sIm8rP
-	 Ptm3pp9xm9tvobM+jvoJOVhB5NWXZ/hxuVCw2FaTR+33hFMCwp9GkH/T4tbnTJREuI
-	 7r1pq4H6Uv4w3tWEfYulBkGWwIaYLZ6nDl5nmOmVKnM8/pixTWBLYz0FzowGnjtExY
-	 6iN54wN/l4nSw==
+	b=L30KGyCJqrQ7J7QnVfzzLk9/mAX49n763VIifiQLuWVJEAjpqDVdLBxjqNvS4LE1n
+	 DEXPghiGJy0edWHSug/FORX9Val+7k4pBK6jXUI6lTKSN+iEGtAIqC7WbE350uBFbQ
+	 TWvqUqgPRKvlJzYHjHImf/alrkkyxEemuMw5y2883gX4DfN6k+UjX+ZRs6HGpe+dq2
+	 Z+3uvkjfw+wx35lazPrdrK7dCpTWUQ8Z0M45Mlak0BloazP1rEzp8xIEiXxPUmpZW0
+	 esbWAXbXb2fkILiOVvRhf/62+zXeroVrYxQCpkJF9p+IGOtSiRzRdH5GPPsvR6IWIf
+	 o1ZS+kCYG2q2Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Robert Richter <rrichter@amd.com>,
-	Gregory Price <gourry@gourry.net>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+Cc: Gregory Price <gourry@gourry.net>,
 	Dave Jiang <dave.jiang@intel.com>,
+	Li Zhijian <lizhijian@fujitsu.com>,
+	Davidlohr Bueso <dave@stgolabs.net>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Dan Williams <dan.j.williams@intel.com>,
-	Alison Schofield <alison.schofield@intel.com>,
-	"Fabio M. De Francesco" <fabio.m.de.francesco@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>,
+	alison.schofield@intel.com,
 	ira.weiny@intel.com,
+	rrichter@amd.com,
 	ming.li@zohomail.com,
 	yaoxt.fnst@fujitsu.com
-Subject: [PATCH AUTOSEL 6.15 18/21] cxl/region: Add a dev_err() on missing target list entries
-Date: Fri,  6 Jun 2025 11:41:43 -0400
-Message-Id: <20250606154147.546388-18-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.15 19/21] cxl: core/region - ignore interleave granularity when ways=1
+Date: Fri,  6 Jun 2025 11:41:44 -0400
+Message-Id: <20250606154147.546388-19-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250606154147.546388-1-sashal@kernel.org>
 References: <20250606154147.546388-1-sashal@kernel.org>
@@ -55,154 +56,164 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.15.1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Robert Richter <rrichter@amd.com>
+From: Gregory Price <gourry@gourry.net>
 
-[ Upstream commit d90acdf49e18029cfe4194475c45ef143657737a ]
+[ Upstream commit ce32b0c9c522e5a69ef9c62a56d6ca08fb036d67 ]
 
-Broken target lists are hard to discover as the driver fails at a
-later initialization stage. Add an error message for this.
+When validating decoder IW/IG when setting up regions, the granularity
+is irrelevant when iw=1 - all accesses will always route to the only
+target anyway - so all ig values are "correct". Loosen the requirement
+that `ig = (parent_iw * parent_ig)` when iw=1.
 
-Example log messages:
+On some Zen5 platforms, the platform BIOS specifies a 256-byte
+interleave granularity window for host bridges when there is only
+one target downstream.  This leads to Linux rejecting the configuration
+of a region with a x2 root with two x1 hostbridges.
 
-  cxl_mem mem1: failed to find endpoint6:0000:e0:01.3 in target list of decoder1.1
-  cxl_port endpoint6: failed to register decoder6.0: -6
-  cxl_port endpoint6: probe: 0
+Decoder Programming:
+   root - iw:2 ig:256
+   hb1  - iw:1 ig:256  (Linux expects 512)
+   hb2  - iw:1 ig:256  (Linux expects 512)
+   ep1  - iw:2 ig:256
+   ep2  - iw:2 ig:256
 
-Signed-off-by: Robert Richter <rrichter@amd.com>
-Reviewed-by: Gregory Price <gourry@gourry.net>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+This change allows all decoders downstream of a passthrough decoder to
+also be configured as passthrough (iw:1 ig:X), but still disallows
+downstream decoders from applying subsequent interleaves.
+
+e.g. in the above example if there was another decoder south of hb1
+attempting to interleave 2 endpoints - Linux would enforce hb1.ig=512
+because the southern decoder would have iw:2 and require ig=pig*piw.
+
+[DJ: Fixed up against 6.15-rc1]
+
+Signed-off-by: Gregory Price <gourry@gourry.net>
 Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Tested-by: Li Zhijian <lizhijian@fujitsu.com>
+Reviewed-by: Davidlohr Bueso <dave@stgolabs.net>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Reviewed-by: Dan Williams <dan.j.williams@intel.com>
-Reviewed-by: Alison Schofield <alison.schofield@intel.com>
-Reviewed-by: "Fabio M. De Francesco" <fabio.m.de.francesco@linux.intel.com>
-Tested-by: Gregory Price <gourry@gourry.net>
-Acked-by: Dan Williams <dan.j.williams@intel.com>
-Link: https://patch.msgid.link/20250509150700.2817697-14-rrichter@amd.com
+Link: https://patch.msgid.link/20250402232552.999634-1-gourry@gourry.net
 Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Now let me check what the commit adds specifically - the error message
-when the target is not found:
+Based on my comprehensive analysis of the commit and the surrounding
+codebase, here is my assessment:
 
 **YES**
 
 This commit should be backported to stable kernel trees. Here's my
 extensive analysis:
 
-## Analysis of the Commit
+## Nature of the Fix
 
-### **What the Commit Does**
-The commit adds a single `dev_err()` call in the `find_pos_and_ways()`
-function at `/drivers/cxl/core/region.c:1808`. When the function fails
-to find a port's parent_dport in the target list of a switch decoder, it
-now logs a specific error message identifying exactly which port and
-device could not be found in which decoder's target list.
+This is a **bug fix** that addresses a platform compatibility issue
+where valid CXL configurations are incorrectly rejected by Linux. The
+fix is for a specific scenario affecting **Zen5 BIOS implementations**
+that specify 256-byte interleave granularity for host bridges with
+single targets.
 
-### **Why This Should Be Backported**
+## Technical Analysis of the Change
 
-#### **1. Debugging and Diagnostic Improvement**
-This commit significantly improves the debugging experience for CXL
-region configuration failures. The existing code path:
-- Returns `-ENXIO` when `cxlsd->target[i] == port->parent_dport` fails
-  to match for any target
-- Provides no indication of *why* the failure occurred or *which
-  specific* port/device was missing
-
-The new error message provides crucial diagnostic information:
+The commit modifies line 1449 in `drivers/cxl/core/region.c`, changing:
 ```c
-dev_err(port->uport_dev,
-        "failed to find %s:%s in target list of %s\n",
-        dev_name(&port->dev),
-        dev_name(port->parent_dport->dport_dev),
-        dev_name(&cxlsd->cxld.dev));
+cxld->interleave_granularity != ig ||
+```
+to:
+```c
+(iw > 1 && cxld->interleave_granularity != ig) ||
 ```
 
-#### **2. Critical Failure Context**
-Looking at the usage context in `cxl_calc_interleave_pos()`, when this
-function fails:
-- The calling code at `region.c:1891` sets `cxled->pos` to the negative
-  error code
-- The region sorting process continues but records the failure (`rc =
-  -ENXIO`)
-- The failure ultimately prevents proper CXL region initialization
+This change **relaxes the granularity validation** specifically when `iw
+== 1` (single interleave way/passthrough decoder). The logic is sound
+because:
 
-Without this diagnostic message, administrators and developers have no
-clear indication of which specific hardware topology element is
-misconfigured.
+1. **When iw=1**: All memory accesses route to the single target
+   regardless of granularity, making granularity irrelevant for
+   addressing
+2. **When iw>1**: The granularity validation remains strict to ensure
+   correct interleave routing
 
-#### **3. Characteristics Supporting Backporting**
+## Why This Qualifies for Stable Backporting
 
-**Small and Contained Change**: The commit adds exactly 4 lines of code
-- just a single error message. There are no functional changes to the
-logic, error handling paths, or data structures.
+### 1. **Fixes User-Affecting Bug**
+- Affects real hardware platforms (Zen5-based systems)
+- Prevents legitimate CXL region configurations from working
+- Users experience functional failures, not just degraded performance
 
-**No Risk of Regression**: The change is purely additive logging. It
-cannot introduce functional regressions since:
-- The error path already existed and returned the same error code
-- No control flow is modified
-- No data structures are changed
+### 2. **Minimal and Contained Change**
+- Single line modification with clear conditional logic
+- No architectural changes or new features
+- Focused on a specific validation path in region setup
 
-**Important Bugfix Category**: While not fixing a crash, this addresses
-a significant usability/debuggability issue. CXL region configuration
-failures are difficult to diagnose without proper error messaging.
+### 3. **Low Regression Risk**
+- Only relaxes validation when it's mathematically unnecessary (iw=1)
+- Maintains strict validation for interleaved configurations (iw>1)
+- The change aligns with the fundamental CXL addressing principles
 
-**Follows Stable Rules**: This is exactly the type of change stable
-trees are designed for - minimal risk improvements that help users
-diagnose real problems in production systems.
+### 4. **Clear Stable Tree Criteria Match**
+- **Important bugfix**: ✅ Enables CXL functionality on affected
+  platforms
+- **Minimal risk**: ✅ Highly targeted change with clear conditions
+- **Contained to subsystem**: ✅ Only affects CXL region validation logic
 
-#### **4. Comparison with Historical Commits**
-Looking at the reference commits, this aligns perfectly with commits
-marked "YES":
-- Similar to commits #1, #2, and #3 which add error handling and
-  diagnostic improvements
-- Much safer than architectural changes (like commits #4 and #5 marked
-  "NO")
-- Focuses on improving failure diagnosis rather than changing core
-  functionality
+## Evidence from Similar Commits
 
-#### **5. Production Value**
-CXL is increasingly deployed in production environments. When region
-configuration fails due to broken target lists, the current failure mode
-provides insufficient information for field diagnosis. This commit
-provides the specific device and decoder information needed to identify
-hardware topology issues.
+Looking at the historical examples:
+- **Similar Commit #2** was marked "YES" and had `Cc:
+  <stable@vger.kernel.org>` for a related granularity calculation fix
+- The current commit follows the same pattern: targeted fix for
+  granularity validation issues
+- No architectural changes or new feature introductions
 
-The commit message explicitly states this addresses "Broken target lists
-are hard to discover as the driver fails at a later initialization
-stage" - this is precisely the type of production issue that stable
-backports should address.
+## Platform Impact Assessment
 
-### **Conclusion**
-This commit represents a minimal-risk diagnostic improvement that
-significantly enhances the debuggability of CXL region configuration
-failures in production systems. It meets all criteria for stable
-backporting: important user-facing improvement, minimal code change,
-zero regression risk, and clear production value.
+The commit specifically mentions **Zen5 platforms** where BIOS specifies
+problematic configurations that should be valid but are currently
+rejected. This affects:
+- Real shipping hardware
+- Valid CXL memory configurations
+- System functionality rather than optimization
 
- drivers/cxl/core/region.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+## Code Quality and Safety
+
+The fix:
+- Preserves existing validation for interleaved cases (iw > 1)
+- Only bypasses granularity checks when they're logically unnecessary
+  (iw = 1)
+- Includes comprehensive review signatures from CXL subsystem
+  maintainers
+- Has been tested according to the commit message
+
+The change is mathematically correct: when there's only one target
+(iw=1), granularity is irrelevant because all addresses map to the same
+target regardless of the granularity value.
+
+Therefore, this commit represents a **low-risk, high-value bugfix** that
+enables proper CXL functionality on affected hardware platforms and
+should be backported to stable trees to ensure users don't encounter
+functional regressions on valid hardware configurations.
+
+ drivers/cxl/core/region.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/cxl/core/region.c b/drivers/cxl/core/region.c
-index c3f4dc244df77..24b161c7749f9 100644
+index 24b161c7749f9..7585f0302f3a2 100644
 --- a/drivers/cxl/core/region.c
 +++ b/drivers/cxl/core/region.c
-@@ -1805,6 +1805,13 @@ static int find_pos_and_ways(struct cxl_port *port, struct range *range,
- 	}
- 	put_device(dev);
+@@ -1446,7 +1446,7 @@ static int cxl_port_setup_targets(struct cxl_port *port,
  
-+	if (rc)
-+		dev_err(port->uport_dev,
-+			"failed to find %s:%s in target list of %s\n",
-+			dev_name(&port->dev),
-+			dev_name(port->parent_dport->dport_dev),
-+			dev_name(&cxlsd->cxld.dev));
-+
- 	return rc;
- }
- 
+ 	if (test_bit(CXL_REGION_F_AUTO, &cxlr->flags)) {
+ 		if (cxld->interleave_ways != iw ||
+-		    cxld->interleave_granularity != ig ||
++		    (iw > 1 && cxld->interleave_granularity != ig) ||
+ 		    !region_res_match_cxl_range(p, &cxld->hpa_range) ||
+ 		    ((cxld->flags & CXL_DECODER_F_ENABLE) == 0)) {
+ 			dev_err(&cxlr->dev,
 -- 
 2.39.5
 
