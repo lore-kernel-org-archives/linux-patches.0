@@ -1,46 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C107289834;
-	Fri,  6 Jun 2025 15:43:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E6DD289372;
+	Fri,  6 Jun 2025 15:43:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749224597; cv=none; b=TEqtF9anP+Zwup0SxnodFeIi7v62oxCbuo3kiyH+j76g1mFxsaNRS1kbB5MVp3XIEbFULoaROqT+WBSjXL0E1RGK/Xs9Ppq4OE8TkNnAaf7wLpVG3rQoL90y6yPoDs/rLYJEOXeZ92NwHX41lpeSoa0yxVtwm87vRsxjL1upbuY=
+	t=1749224598; cv=none; b=W9kLIJMFXaPrDNsTqoxxazQT5rPbDyGObFuiY1ljAlsx38I37HGeqc6bn3qrBsCVFC0gSkMFildB6Ykq2duqaakjvJr2XsAtx0QjPa+HrZTNZTm6Xr7/x8GPqZ+nNiZe/cadsp4IWWz1UtFNx4lVYxbWmvQIODGUeLHNqzI2GGY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749224597; c=relaxed/simple;
-	bh=QfryQshAaYdRvrPAWNqoI3wmAA33LofM5j2wx5IM5Lk=;
+	s=arc-20240116; t=1749224598; c=relaxed/simple;
+	bh=Du+OIFmDYpT0PLZ44mTQ6dci9Q3kfI+a8D+BUNxaBOI=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=N/JNDYW2Y005dm/zrgiphkWy5Bnih3vClJPBfk27/SlkpzFC/vcNmtHWftZ7poDJqJL0hYGszCKiDwBjbpNzTA1Nmzr/u5SmVwTdYmUhLIrbI8c+D5NB4YyNwjdvQwoqCik/XCQcqmPHSl5oLqtxWTIPRP5Nkf7l8bgPbUd/Qvo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PG+IMUtu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Q0B6VvzLp75nHjpKF+6L4+9kFCJLaN0UD/zilrAlF5Gfg0ocT8FI+TCW02HcnyzoiGng+agbg0j94mJ8d/otLekJLsVfwRdqmCFu8s2Qy83ZcKA1SFQhqr5UCMpsp+9CrkblU1vQa+kPuFONuSEJ6bVPKb0kOt027r800pPaweo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bhxmssMv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PG+IMUtu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1DF8C4CEEB;
-	Fri,  6 Jun 2025 15:43:15 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bhxmssMv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74539C4CEF3;
+	Fri,  6 Jun 2025 15:43:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749224597;
-	bh=QfryQshAaYdRvrPAWNqoI3wmAA33LofM5j2wx5IM5Lk=;
+	s=k20201202; t=1749224598;
+	bh=Du+OIFmDYpT0PLZ44mTQ6dci9Q3kfI+a8D+BUNxaBOI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PG+IMUtuPa2aVFiw6rGAkRwoQxONhzubuEnug5P/vCF65i3+sg1lzqFr8QDV5Uzis
-	 HR1sBUWvslIFn8MTx45+JV2ETpxzhPDdQnK4fmwHz5BnDlUfeMfoSrW5QpNGr7tc5s
-	 TqyFiFF3sksCm71qpT6P5fODB7dmQgGo7oZ21VPNjUgJWTSb2ElemSPrPKmSzBGKoq
-	 avExTO1FYwf5FUykPFZNz+Y5BMl8xe/S2sASDao0xd8Gn/YpGR4107m6FEKdYU6chs
-	 FBm2yt8S8U0nKFtuFM+0jK3MRICEX1jgaN+b3KG7zjaGOOfjqUY/4JaPmDSm52ITCb
-	 6KIl9e8ORy25Q==
+	b=bhxmssMvMB5kdyFcRzDU8RaqQV7WeWKVxMuE0qLMImVZnLuK4gy1tyWkbdtjLsO/l
+	 XAPY0/ozJbRzxz9ODGW5sSIpkwhmB2M/PpW+Gg9exr+fOT254+Jjt5Qh50oKFRX4bs
+	 F5zJWoYZHywJvlv5/y3Z9kAzO1RNpBEdOt+dfTl3iuYq4PF49ci2CHAd0ScZnJyvXM
+	 GSB9yuA6qaazwVCFGPzKv3SCjyWDX2JMHzLSvSLf6+rufxoEk4XybG2/vAOXVH7XiY
+	 wbWxCwCs99/Ge0uZzFM1CaH3fM8ozGGVeesmLvRWAcF7Cx9bR6zdGPDgVnnMnsy7aR
+	 8frDq3HvjyJuA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Sven Schwermer <sven.schwermer@disruptive-technologies.com>,
-	Jacek Anaszewski <jacek.anaszewski@gmail.com>,
-	Pavel Machek <pavel@ucw.cz>,
-	Tobias Deiminger <tobias.deiminger@linutronix.de>,
-	Sven Schuchmann <schuchmann@schleissheimer.de>,
-	Lee Jones <lee@kernel.org>,
+Cc: Guang Yuan Wu <gwu@ddn.com>,
+	Bernd Schubert <bschubert@ddn.com>,
+	Miklos Szeredi <mszeredi@redhat.com>,
 	Sasha Levin <sashal@kernel.org>,
-	pavel@kernel.org,
-	linux-leds@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.12 11/15] leds: multicolor: Fix intensity setting while SW blinking
-Date: Fri,  6 Jun 2025 11:42:54 -0400
-Message-Id: <20250606154259.547394-11-sashal@kernel.org>
+	miklos@szeredi.hu,
+	linux-fsdevel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.12 12/15] fuse: fix race between concurrent setattrs from multiple nodes
+Date: Fri,  6 Jun 2025 11:42:55 -0400
+Message-Id: <20250606154259.547394-12-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250606154259.547394-1-sashal@kernel.org>
 References: <20250606154259.547394-1-sashal@kernel.org>
@@ -53,116 +50,189 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.12.32
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sven Schwermer <sven.schwermer@disruptive-technologies.com>
+From: Guang Yuan Wu <gwu@ddn.com>
 
-[ Upstream commit e35ca991a777ef513040cbb36bc8245a031a2633 ]
+[ Upstream commit 69efbff69f89c9b2b72c4d82ad8b59706add768a ]
 
-When writing to the multi_intensity file, don't unconditionally call
-led_set_brightness. By only doing this if blinking is inactive we
-prevent blinking from stopping if the blinking is in its off phase while
-the file is written.
+When mounting a user-space filesystem on multiple clients, after
+concurrent ->setattr() calls from different node, stale inode
+attributes may be cached in some node.
 
-Instead, if blinking is active, the changed intensity values are applied
-upon the next blink. This is consistent with changing the brightness on
-monochrome LEDs with active blinking.
+This is caused by fuse_setattr() racing with
+fuse_reverse_inval_inode().
 
-Suggested-by: Jacek Anaszewski <jacek.anaszewski@gmail.com>
-Acked-by: Jacek Anaszewski <jacek.anaszewski@gmail.com>
-Acked-by: Pavel Machek <pavel@ucw.cz>
-Reviewed-by: Tobias Deiminger <tobias.deiminger@linutronix.de>
-Tested-by: Sven Schuchmann <schuchmann@schleissheimer.de>
-Signed-off-by: Sven Schwermer <sven.schwermer@disruptive-technologies.com>
-Link: https://lore.kernel.org/r/20250404184043.227116-1-sven@svenschwermer.de
-Signed-off-by: Lee Jones <lee@kernel.org>
+When filesystem server receives setattr request, the client node
+with valid iattr cached will be required to update the fuse_inode's
+attr_version and invalidate the cache by fuse_reverse_inval_inode(),
+and at the next call to ->getattr() they will be fetched from user
+space.
+
+The race scenario is:
+1. client-1 sends setattr (iattr-1) request to server
+2. client-1 receives the reply from server
+3. before client-1 updates iattr-1 to the cached attributes by
+   fuse_change_attributes_common(), server receives another setattr
+   (iattr-2) request from client-2
+4. server requests client-1 to update the inode attr_version and
+   invalidate the cached iattr, and iattr-1 becomes staled
+5. client-2 receives the reply from server, and caches iattr-2
+6. continue with step 2, client-1 invokes
+   fuse_change_attributes_common(), and caches iattr-1
+
+The issue has been observed from concurrent of chmod, chown, or
+truncate, which all invoke ->setattr() call.
+
+The solution is to use fuse_inode's attr_version to check whether
+the attributes have been modified during the setattr request's
+lifetime.  If so, mark the attributes as invalid in the function
+fuse_change_attributes_common().
+
+Signed-off-by: Guang Yuan Wu <gwu@ddn.com>
+Reviewed-by: Bernd Schubert <bschubert@ddn.com>
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Now I have a complete understanding of the commit. Let me analyze this
-commit for backport suitability:
+Now I have enough context to analyze this commit. Let me examine the
+core changes and understand the race condition:
 
 **YES**
 
-This commit should be backported to stable kernel trees for the
-following reasons:
+This commit should be backported to stable kernel trees. Here's my
+extensive analysis:
 
-## **Bug Analysis:**
+## Bug Analysis
 
-**The Problem:** In the multicolor LED driver, writing to the
-`multi_intensity` file unconditionally calls `led_set_brightness()` at
-line 62. When software blinking is active (`LED_BLINK_SW` flag set),
-this can incorrectly stop the blinking if the LED is currently in its
-"off" phase during the blink cycle.
+**1. Race Condition Description:**
+The commit fixes a serious race condition in FUSE between
+`fuse_setattr()` and `fuse_reverse_inval_inode()` when multiple clients
+mount the same filesystem. The race occurs when:
 
-**The Fix:** The commit adds a check `if (!test_bit(LED_BLINK_SW,
-&led_cdev->work_flags))` before calling `led_set_brightness()`. This
-ensures that when software blinking is active, the intensity changes are
-deferred and applied on the next blink cycle instead of immediately
-stopping the blinking.
+1. Client-1 sends setattr request to server
+2. Client-1 receives reply but before applying attributes via
+   `fuse_change_attributes_common()`
+3. Server receives another setattr from client-2
+4. Server calls `fuse_reverse_inval_inode()` on client-1, which bumps
+   `attr_version` (line 567 in inode.c: `fi->attr_version =
+   atomic64_inc_return(&fc->attr_version)`)
+5. Client-1 continues with step 2, applying now-stale attributes
 
-## **Backport Suitability:**
+**2. Code Changes Analysis:**
 
-1. **Bug Impact:** This fixes a clear user-visible regression where
-   adjusting multicolor LED intensity incorrectly stops blinking - a
-   functionality that users would expect to work consistently.
+The fix adds two key changes to `fuse_do_setattr()` in fs/fuse/dir.c:
 
-2. **Code Quality:** The fix is minimal, surgical, and follows
-   established patterns in the LED subsystem. Looking at the LED core
-   code (`/home/sasha/linux/drivers/leds/led-core.c`), similar checks
-   for `LED_BLINK_SW` are used in `led_set_brightness()` to handle
-   software blinking properly.
+```c
++       u64 attr_version;
+...
++       attr_version = fuse_get_attr_version(fm->fc);
+        fuse_setattr_fill(fc, &args, inode, &inarg, &outarg);
+        err = fuse_simple_request(fm, &args);
+...
++       if (fi->attr_version > attr_version) {
++               /*
++                * Apply attributes, for example for fsnotify_change(),
+but set
++                * attribute timeout to zero.
++                */
++               outarg.attr_valid = outarg.attr_valid_nsec = 0;
++       }
+```
 
-3. **Risk Assessment:** The change is extremely low-risk:
-   - Single line addition with a simple conditional check
-   - No architectural changes
-   - Uses existing, well-tested flag (`LED_BLINK_SW`)
-   - Consistent with established LED core behavior patterns
+This captures the `attr_version` before the request and checks if it
+changed during the request lifetime. If it did, the fix sets the
+attribute timeout to zero, effectively marking them invalid.
 
-4. **Subsystem Scope:** The change is confined to the multicolor LED
-   class interface, affecting only multicolor LEDs, not the broader LED
-   subsystem.
+## Backport Criteria Assessment
 
-5. **Backport Indicators:** The commit has explicit support from
-   maintainers with multiple "Acked-by", "Reviewed-by", and "Tested-by"
-   tags, indicating thorough review and validation.
+**1. Important Bug Fix:** ✅ YES
+- Fixes data consistency issues in multi-client FUSE scenarios
+- Can cause stale cached attributes (file size, permissions, timestamps)
+- Affects critical operations: chmod, chown, truncate
 
-6. **Consistency:** This aligns with similar commits marked as backport
-   candidates (like Similar Commit #4 which was marked YES for fixing
-   LED core blinking regression).
+**2. Minimal and Contained:** ✅ YES
+- Very small change: ~10 lines added
+- Localized to `fuse_do_setattr()` function only
+- No architectural changes
 
-## **Historical Context:**
+**3. Low Regression Risk:** ✅ YES
+- Uses existing FUSE infrastructure (`attr_version` mechanism)
+- Conservative approach: when in doubt, invalidate attributes
+- No changes to external APIs or data structures
 
-From the similar commits analysis, LED blinking fixes that restore
-expected behavior (like Similar Commit #4) are consistently backported,
-while new features or documentation-only changes (Similar Commits #1,
-#2, #3, #5) are not.
+**4. Critical Subsystem:** ✅ MODERATE CONCERN, BUT ACCEPTABLE
+- FUSE is important but this is a targeted fix
+- Only affects multi-client scenarios
+- Doesn't change core VFS interactions
 
-This commit clearly falls into the "restore expected behavior" category
-- multicolor LED intensity adjustment should work consistently
-regardless of blinking state, just like it does for monochrome LEDs.
+**5. Clear Side Effects:** ✅ MINIMAL
+- May cause slightly more GETATTR requests when races occur
+- But this is the correct behavior for consistency
 
-The fix ensures behavioral consistency between multicolor and monochrome
-LEDs during blinking, which is exactly the type of user-facing bug fix
-that stable trees are designed to address.
+## Comparison with Similar Commits
 
- drivers/leds/led-class-multicolor.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+This commit follows the same pattern as similar commit #1 (marked YES
+for backport), which also:
+- Fixed attribute cache consistency in FUSE
+- Used the `attr_version` mechanism
+- Made minimal, targeted changes
+- Fixed race conditions between operations
 
-diff --git a/drivers/leds/led-class-multicolor.c b/drivers/leds/led-class-multicolor.c
-index 30c1ecb5f361e..c707be97049b7 100644
---- a/drivers/leds/led-class-multicolor.c
-+++ b/drivers/leds/led-class-multicolor.c
-@@ -61,7 +61,8 @@ static ssize_t multi_intensity_store(struct device *dev,
- 	for (i = 0; i < mcled_cdev->num_colors; i++)
- 		mcled_cdev->subled_info[i].intensity = intensity_value[i];
+Unlike commits #2-#5 (marked NO), this commit:
+- Doesn't introduce new features or optimizations
+- Doesn't change architectural patterns
+- Fixes a clear data corruption/consistency bug
+
+## Conclusion
+
+This commit perfectly fits stable tree criteria: it fixes an important
+multi-client data consistency bug with minimal risk through a small,
+well-contained change. The race condition can lead to stale file
+attributes being cached, which is a serious issue for applications
+relying on accurate metadata. The fix follows established FUSE patterns
+and is conservative in approach.
+
+ fs/fuse/dir.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
+
+diff --git a/fs/fuse/dir.c b/fs/fuse/dir.c
+index ff543dc09130e..ce7324d0d9ed1 100644
+--- a/fs/fuse/dir.c
++++ b/fs/fuse/dir.c
+@@ -1921,6 +1921,7 @@ int fuse_do_setattr(struct mnt_idmap *idmap, struct dentry *dentry,
+ 	int err;
+ 	bool trust_local_cmtime = is_wb;
+ 	bool fault_blocked = false;
++	u64 attr_version;
  
--	led_set_brightness(led_cdev, led_cdev->brightness);
-+	if (!test_bit(LED_BLINK_SW, &led_cdev->work_flags))
-+		led_set_brightness(led_cdev, led_cdev->brightness);
- 	ret = size;
- err_out:
- 	mutex_unlock(&led_cdev->led_access);
+ 	if (!fc->default_permissions)
+ 		attr->ia_valid |= ATTR_FORCE;
+@@ -2005,6 +2006,8 @@ int fuse_do_setattr(struct mnt_idmap *idmap, struct dentry *dentry,
+ 		if (fc->handle_killpriv_v2 && !capable(CAP_FSETID))
+ 			inarg.valid |= FATTR_KILL_SUIDGID;
+ 	}
++
++	attr_version = fuse_get_attr_version(fm->fc);
+ 	fuse_setattr_fill(fc, &args, inode, &inarg, &outarg);
+ 	err = fuse_simple_request(fm, &args);
+ 	if (err) {
+@@ -2030,6 +2033,14 @@ int fuse_do_setattr(struct mnt_idmap *idmap, struct dentry *dentry,
+ 		/* FIXME: clear I_DIRTY_SYNC? */
+ 	}
+ 
++	if (fi->attr_version > attr_version) {
++		/*
++		 * Apply attributes, for example for fsnotify_change(), but set
++		 * attribute timeout to zero.
++		 */
++		outarg.attr_valid = outarg.attr_valid_nsec = 0;
++	}
++
+ 	fuse_change_attributes_common(inode, &outarg.attr, NULL,
+ 				      ATTR_TIMEOUT(&outarg),
+ 				      fuse_get_cache_mask(inode));
 -- 
 2.39.5
 
