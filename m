@@ -1,155 +1,143 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9CDB28A1C8;
-	Fri,  6 Jun 2025 15:44:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38F58289800;
+	Fri,  6 Jun 2025 15:44:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749224663; cv=none; b=nW9AFiK2DG0O+BpUHDKbNV/L8y1FqDFa+7xL3DLuM6lC3OOCQeubYntx4DuqHLTD8wYv9+Y1z0zp+pZmdXx7nF44N7yphiJT8e6SZCbpbteo5tMJjlfg7Go7SMVuprecLxqYBT0vSkX8+B4QuKJoaFqUFEAOEi7xShNFSLBWc0o=
+	t=1749224665; cv=none; b=arj+kinIPPBhZmlvMQhucyt0Axj/jGqKW9tg1g94iejP1/aJEs7i3fMICDQ9u4WzWAaI+QCOGa7hea3D17bIa2pOmsNIWr/c1Uq+/VsKl/zhXpczTXFGLD3TLhzJ3ZPic3NeIbXiRj+Gk7Ea5sq3zs4fkt3BPDMRjVrVB9baO4g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749224663; c=relaxed/simple;
-	bh=W3BQCoDhfQqhZjLWbxKzQVnqSWoYR75MUW+yr7LojX0=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Type; b=N24V/n5sfTrUgXvi7ZZePkI0QPWHjdymiXh7H+fbERFrOcyxvps0KCkbxEKo8jNwVhuApcXBWxpp5r2oS6IX95I59BMCLIdKGycpTgvpz7+bqpxVvEkxrvlYhHGtULkpZVcZO7l4BRAkaQrNbi9fQZxrjHdueLfWGifaUDkt8+M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=k5l1pLUx; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1749224665; c=relaxed/simple;
+	bh=ZJlegHO9KmjdIJV9wMobS9d/AF1kTCLe3V0sQp+kV+I=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=KQvoicwioFAr3HTIkdQDqEFDyjOdgbU+yspGmA7Qi8QC/in+8ypScR2f4IYluzyDnDSmjfg6vzIw0tF2zk7Yo1wRBKzHWr3QMZ5Y8+2FuA8rZIA/vsczKO0Cw4FFDqM0LHBdJns0N44vB8zwL+Q3m97ZzZIWiWy54VVVgNck4PY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JrxltWvp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="k5l1pLUx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 023C3C4CEEB;
-	Fri,  6 Jun 2025 15:44:22 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JrxltWvp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D627C4CEEB;
+	Fri,  6 Jun 2025 15:44:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749224663;
-	bh=W3BQCoDhfQqhZjLWbxKzQVnqSWoYR75MUW+yr7LojX0=;
-	h=From:To:Cc:Subject:Date:From;
-	b=k5l1pLUxxg8ia76KqIFP6VVcLnbkHDqlqUxDHPhSFNfSFecosBwIUztpM1mIWd2Ad
-	 JIuKcZLdntr+w6J56e59Q8V9fOZZ1kKOOxi5+c1vA1se1Lac/rmXSAdPc7isYFfzTQ
-	 m7H/htkf7B8RXZclF++MYTColD/EDOrGdRqAVvkXw8LzIZDHDUEcMq/SN4r/Opl2LM
-	 isB41phGnnUDLO9sDfQ3cyWy0pjZXCb5+czZShPotOjKoLU6fKbXQK5rLMbJV6CoCA
-	 /zpcKgg7hR9FSOdhja6Tj6y1LmfYoGyB8yIoYRyVfRStfNKP2e7Nz6MuLPNiEKqelF
-	 sEVQmBn6E5i6w==
+	s=k20201202; t=1749224665;
+	bh=ZJlegHO9KmjdIJV9wMobS9d/AF1kTCLe3V0sQp+kV+I=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=JrxltWvpQoxG5lEeUSM1GsMPSYD25PWXnghzhp0MRfVQwvaaCYERcsUPZgp+mD5GL
+	 3nOjgdlo8rCFZ+FBJdYh+CdzPw/uarzgS6TceOCKEKK/LPxHdF9p9oKny28OBnOkLJ
+	 YcIxDyqDzjApKTOPle/WOr4JnW78+CN2kIfLWrF3FMo+GQ7jlU0vaYbl32i/+9QbQj
+	 wD5vWCegKEAC2OzqxSlp2aG6ebc4r/2InF0qU56hjP12vLCLvr5DsfVHR9FVkb7tAx
+	 /aUzMBZLbYc54+qMC9U5krRWlEzGjPWUDaFA9AIEvjusFyVrL5G6c2uQPgnBQkiY5W
+	 pqTyNoRG5RcxA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: =?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH AUTOSEL 5.10 1/6] cifs: Fix cifs_query_path_info() for Windows NT servers
-Date: Fri,  6 Jun 2025 11:44:15 -0400
-Message-Id: <20250606154421.548570-1-sashal@kernel.org>
+Cc: Olga Kornievskaia <okorniev@redhat.com>,
+	Anna Schumaker <anna.schumaker@oracle.com>,
+	Sasha Levin <sashal@kernel.org>,
+	trondmy@kernel.org,
+	anna@kernel.org,
+	linux-nfs@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.10 2/6] NFSv4.2: fix listxattr to return selinux security label
+Date: Fri,  6 Jun 2025 11:44:16 -0400
+Message-Id: <20250606154421.548570-2-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250606154421.548570-1-sashal@kernel.org>
+References: <20250606154421.548570-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 5.10.238
 Content-Transfer-Encoding: 8bit
 
-From: Pali Rohár <pali@kernel.org>
+From: Olga Kornievskaia <okorniev@redhat.com>
 
-[ Upstream commit a3e771afbb3bce91c8296828304903e7348003fe ]
+[ Upstream commit 243fea134633ba3d64aceb4c16129c59541ea2c6 ]
 
-For TRANS2 QUERY_PATH_INFO request when the path does not exist, the
-Windows NT SMB server returns error response STATUS_OBJECT_NAME_NOT_FOUND
-or ERRDOS/ERRbadfile without the SMBFLG_RESPONSE flag set. Similarly it
-returns STATUS_DELETE_PENDING when the file is being deleted. And looks
-like that any error response from TRANS2 QUERY_PATH_INFO does not have
-SMBFLG_RESPONSE flag set.
+Currently, when NFS is queried for all the labels present on the
+file via a command example "getfattr -d -m . /mnt/testfile", it
+does not return the security label. Yet when asked specifically for
+the label (getfattr -n security.selinux) it will be returned.
+Include the security label when all attributes are queried.
 
-So relax check in check_smb_hdr() for detecting if the packet is response
-for this special case.
-
-This change fixes stat() operation against Windows NT SMB servers and also
-all operations which depends on -ENOENT result from stat like creat() or
-mkdir().
-
-Signed-off-by: Pali Rohár <pali@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Olga Kornievskaia <okorniev@redhat.com>
+Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 **YES** This commit should be backported to stable kernel trees. Here's
-my extensive analysis: ## Backport Recommendation: YES ### Nature of the
-Fix This is a **targeted bug fix** that addresses a specific protocol
-compliance issue with Windows NT SMB servers. The commit fixes a
-fundamental problem where basic file operations (`stat()`, `creat()`,
-`mkdir()`) fail against Windows NT servers due to overly strict SMB
-header validation. ### Code Change Analysis The fix is remarkably
-**simple and contained** - only 8 lines of code in a single function:
-```c /bin /bin.usr-is-merged /boot /dev /etc /home /init /lib /lib.usr-
-is-merged /lib64 /lost+found /media /mnt /opt /proc /root /run /sbin
-/sbin.usr-is-merged /snap /srv /sys /tmp /usr /var * Windows NT server
-returns error resposne (e.g. STATUS_DELETE_PENDING * or
-STATUS_OBJECT_NAME_NOT_FOUND or ERRDOS/ERRbadfile or any other) * for
-some TRANS2 requests without the RESPONSE flag set in header. */ if
-(smb->Command == SMB_COM_TRANSACTION2 && smb->Status.CifsError != 0)
-return 0; ``` The change is in the `check_smb_hdr()` function in
-`fs/smb/client/misc.c`, which validates SMB packet headers. The fix
-**relaxes validation** only for a very specific case: TRANS2 commands
-returning errors from Windows NT servers. ### Risk Assessment: LOW 1.
-**Surgical precision**: Only affects SMB1 TRANS2 error responses,
-leaving normal operation paths untouched 2. **Conservative approach**:
-The condition `smb->Status.CifsError != 0` ensures this only applies to
-actual error responses 3. **No behavioral changes** for compliant
-servers that properly set the RESPONSE flag 4. **Well-established code
-path**: The `check_smb_hdr()` function is mature and stable ### Impact
-Assessment: HIGH 1. **Fixes broken functionality**: Without this fix,
-basic file operations fail completely against Windows NT servers 2.
-**Backward compatibility**: Restores support for legacy but still-used
-server environments 3. **User-visible improvement**: Directly fixes
-`stat()`, `creat()`, and `mkdir()` operations 4. **No regressions**:
-Modern SMB servers continue to work as before ### Comparison with
-Similar Commits Looking at the provided similar commits: - **Similar
-Commit #2** (Status: YES): Also adds new status code mappings for better
-server compatibility - **Similar Commit #3** (Status: YES): Reduces
-unnecessary network roundtrips by improving error handling - **Similar
-Commit #4** (Status: YES): Fixes WSL reparse point querying over SMB1 -
-**Similar Commit #5** (Status: YES): Fixes missing resource cleanup This
-commit follows the **same pattern** as these approved backports: small,
-targeted fixes that improve compatibility and fix real-world issues
-without introducing new features or architectural changes. ### Technical
-Justification The Windows NT server behavior described in the commit is
-**non-compliant but real**: these servers return error responses for
-TRANS2 QUERY_PATH_INFO requests without setting the `SMBFLG_RESPONSE`
-flag. The current strict validation incorrectly treats these as invalid
-packets, causing the CIFS client to fail when it should handle the
-errors properly. The fix is **protocol-aware** and **conservative** - it
-only relaxes validation for the specific case where we know Windows NT
-behaves differently, ensuring no impact on standard-compliant servers.
-### Stable Tree Suitability This commit perfectly fits stable tree
-criteria: - ✅ **Important bug fix** affecting real-world usage - ✅
-**Minimal and contained** change with clear scope - ✅ **No new
-features** - purely fixes existing broken functionality - ✅ **Low
-regression risk** due to targeted nature - ✅ **Production-ready** code
-following established patterns This should be backported to all stable
-kernels that support SMB1 client functionality, as it fixes a
-fundamental compatibility issue without any meaningful risk of
-regression.
+my extensive analysis: ## Bug Analysis The commit fixes a clear
+functional bug in NFSv4.2's `listxattr` implementation in
+`fs/nfs/nfs4proc.c:10853`. When users run `getfattr -d` to list all
+extended attributes, the security label (like SELinux context) is
+missing from the output, even though it's correctly returned when
+specifically requested with `getfattr -n security.selinux`. ## Code
+Change Analysis The fix is minimal and well-contained: 1. **Variable
+addition**: Adds `error4` to track the security label listing result 2.
+**Function call**: Adds `error4 =
+security_inode_listsecurity(d_inode(dentry), list, left)` 3. **Pointer
+management**: Updates `list` and `left` after `error3` processing
+(missing in original) 4. **Total calculation**: Changes `error += error2
++ error3` to `error += error2 + error3 + error4` ## Why This Qualifies
+for Backport **1. Clear User-Facing Bug**: The inconsistency between
+`getfattr -d` and `getfattr -n security.selinux` affects real-world
+usage and user expectations. **2. Minimal Risk**: The change is
+architecturally simple - it just adds another xattr source to the
+listing function, following the exact same pattern as existing `error2`
+and `error3` handling. **3. Follows Existing Patterns**: The commit uses
+the same error handling, pointer arithmetic, and function call pattern
+established by `nfs4_listxattr_nfs4_label()` and
+`nfs4_listxattr_nfs4_user()`. **4. No Feature Addition**: This fixes
+existing functionality rather than adding new features. **5. Critical
+Subsystem**: Extended attributes and security labels are fundamental for
+SELinux environments, making this fix important for security-conscious
+deployments. **6. Similar Historical Precedent**: All 5 provided
+reference commits with "Backport Status: YES" are NFSv4 security label
+fixes with similar characteristics - small, contained bugfixes in the
+same subsystem. **7. Contained Scope**: The change is isolated to one
+function (`nfs4_listxattr`) in one file, with no cross-subsystem
+implications. The fix correctly implements the missing piece: while
+`nfs4_listxattr_nfs4_label()` calls `security_inode_listsecurity()` when
+`CONFIG_NFS_V4_SECURITY_LABEL` is enabled, the main `nfs4_listxattr()`
+function wasn't calling it directly for the general xattr listing case,
+creating the inconsistent behavior reported.
 
- fs/cifs/misc.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ fs/nfs/nfs4proc.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/fs/cifs/misc.c b/fs/cifs/misc.c
-index 2d46018b02839..54c443686daba 100644
---- a/fs/cifs/misc.c
-+++ b/fs/cifs/misc.c
-@@ -310,6 +310,14 @@ check_smb_hdr(struct smb_hdr *smb)
- 	if (smb->Command == SMB_COM_LOCKING_ANDX)
- 		return 0;
+diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
+index 1005ecf7c250b..77cc1c4219e15 100644
+--- a/fs/nfs/nfs4proc.c
++++ b/fs/nfs/nfs4proc.c
+@@ -10378,7 +10378,7 @@ const struct nfs4_minor_version_ops *nfs_v4_minor_ops[] = {
  
-+	/*
-+	 * Windows NT server returns error resposne (e.g. STATUS_DELETE_PENDING
-+	 * or STATUS_OBJECT_NAME_NOT_FOUND or ERRDOS/ERRbadfile or any other)
-+	 * for some TRANS2 requests without the RESPONSE flag set in header.
-+	 */
-+	if (smb->Command == SMB_COM_TRANSACTION2 && smb->Status.CifsError != 0)
-+		return 0;
+ static ssize_t nfs4_listxattr(struct dentry *dentry, char *list, size_t size)
+ {
+-	ssize_t error, error2, error3;
++	ssize_t error, error2, error3, error4;
+ 	size_t left = size;
+ 
+ 	error = generic_listxattr(dentry, list, left);
+@@ -10401,8 +10401,16 @@ static ssize_t nfs4_listxattr(struct dentry *dentry, char *list, size_t size)
+ 	error3 = nfs4_listxattr_nfs4_user(d_inode(dentry), list, left);
+ 	if (error3 < 0)
+ 		return error3;
++	if (list) {
++		list += error3;
++		left -= error3;
++	}
 +
- 	cifs_dbg(VFS, "Server sent request, not response. mid=%u\n",
- 		 get_mid(smb));
- 	return 1;
++	error4 = security_inode_listsecurity(d_inode(dentry), list, left);
++	if (error4 < 0)
++		return error4;
+ 
+-	error += error2 + error3;
++	error += error2 + error3 + error4;
+ 	if (size && error > size)
+ 		return -ERANGE;
+ 	return error;
 -- 
 2.39.5
 
