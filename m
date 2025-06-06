@@ -1,260 +1,190 @@
-Received: from mailgw02.mediatek.com (unknown [210.61.82.184])
+Received: from NAM10-BN7-obe.outbound.protection.outlook.com (mail-bn7nam10on2066.outbound.protection.outlook.com [40.107.92.66])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3F581A5BA9
-	for <patches@lists.linux.dev>; Fri,  6 Jun 2025 01:57:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=210.61.82.184
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749175071; cv=none; b=oAlA4jDo22iRFm5l+5+cL3rL4GWC6JOw60xkUNCV28/RFXqtJa9BSqe+TfwDqG6SPjkhR63m7369bhnUD2r0d9udH8UjqA0wT4K0gOHYXf4jiZRS+EfB03OgnP6t0e57NzLz/ZWPsnFS72Q+2Nw3OxHhM8I/5ZodytvSIpf+avs=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749175071; c=relaxed/simple;
-	bh=9A2cIopavtwlQ+4n7uHt1ROc1cBNKluPvLq6PQi2TmY=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=jTxspQ5Ti1WZ45uT3hA4BTA4CxNLiGY4ErguMYKD+8gebLjkB5tm6VkppWPTJ2GWKz8QNoHOYI59PmWwiW/LkUScVp/44XAiZkk62UOZM+GkVJu43QA1eJYwviZPXzuZlyS/jZlsSoGi9mGQKHVVV+uIxya5ohGo4qXCydAPzbA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mediatek.com; spf=pass smtp.mailfrom=mediatek.com; dkim=pass (1024-bit key) header.d=mediatek.com header.i=@mediatek.com header.b=c451iHvU; arc=none smtp.client-ip=210.61.82.184
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mediatek.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mediatek.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C22F517BA1;
+	Fri,  6 Jun 2025 04:46:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.92.66
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1749185212; cv=fail; b=dyfV0Mhl0j8lEpEeT/M8PxzSh9URIbYM0UbcGHGODfhpQ4VE1wXO/0q0vM5aNG7H/2iTlru71x+fiaIGix5SF2tglYHhDv6M58nLA7LOk1A+3W0zHc/Xs518Pys2uXYOw/l+SHwXtUQogxsHyj8J9GpMgYvrzLe+C3jIsfVUoVc=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1749185212; c=relaxed/simple;
+	bh=+opEEGLq3Yv8bpVx1bAPq0fYi4cwRvXeqzJMaIeN+k4=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Af73qG3ueXQiavThtF6X3r+JihH6ewRMnO1deyBNCcG1o+PAzP5SzqjADSnRNo+yMMJg4KKBSLJmIUlA5ruaRMjr7aRJGGgNp8O43FqXnb/fsS47T8bJCI4+haouwW/tJt5KDS4z+Hb6Bf7ALr7VMSrvIc6zRSJLcCa2cT/L5mM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=L161cLuS; arc=fail smtp.client-ip=40.107.92.66
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=mediatek.com header.i=@mediatek.com header.b="c451iHvU"
-X-UUID: a1e514c0427911f0b33aeb1e7f16c2b6-20250606
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mediatek.com; s=dk;
-	h=Content-Type:Content-Transfer-Encoding:MIME-Version:Message-ID:Date:Subject:CC:To:From; bh=zvqyrk8kJ2uCb2GN+GGEe5HFwqiqtZruRDoufvNL+rA=;
-	b=c451iHvUFND2MP+owIGUkc9BGH0qXO8kJu99ot/PPbkgqA+FocHFZNG5Dxh8X9vEM8JoRmQ9h8WeJaS+NL+cwwNn6TY96nAmiF2hctt3Fa1dpMIrHj70PvZ6O6Viwmmz3oBxlV4LysFBiBTFyYwstXhwO8OQ0M5HY+G+rtsI1VE=;
-X-CID-CACHE: Type:Local,Time:202506060957+08,HitQuantity:2
-X-CID-P-RULE: Release_Ham
-X-CID-O-INFO: VERSION:1.2.1,REQID:ecb30f98-578c-4d17-9181-4e5146851721,IP:0,UR
-	L:0,TC:0,Content:-5,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION:
-	release,TS:-5
-X-CID-META: VersionHash:0ef645f,CLOUDID:1731edf1-fe3f-487e-8db5-d099c876a5c3,B
-	ulkID:nil,BulkQuantity:0,Recheck:0,SF:102,TC:nil,Content:0|50,EDM:-3,IP:ni
-	l,URL:99|1,File:nil,RT:nil,Bulk:nil,QS:nil,BEC:nil,COL:0,OSI:0,OSA:0,AV:0,
-	LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
-X-CID-BVR: 0
-X-CID-BAS: 0,_,0,_
-X-CID-FACTOR: TF_CID_SPAM_ULS,TF_CID_SPAM_SNR
-X-UUID: a1e514c0427911f0b33aeb1e7f16c2b6-20250606
-Received: from mtkmbs09n2.mediatek.inc [(172.21.101.94)] by mailgw02.mediatek.com
-	(envelope-from <macpaul.lin@mediatek.com>)
-	(Generic MTA with TLSv1.2 ECDHE-RSA-AES256-GCM-SHA384 256/256)
-	with ESMTP id 1513382290; Fri, 06 Jun 2025 09:57:42 +0800
-Received: from mtkmbs13n2.mediatek.inc (172.21.101.108) by
- MTKMBS14N1.mediatek.inc (172.21.101.75) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1258.39; Fri, 6 Jun 2025 09:57:40 +0800
-Received: from mtksitap99.mediatek.inc (10.233.130.16) by
- mtkmbs13n2.mediatek.inc (172.21.101.73) with Microsoft SMTP Server id
- 15.2.1258.39 via Frontend Transport; Fri, 6 Jun 2025 09:57:40 +0800
-From: Macpaul Lin <macpaul.lin@mediatek.com>
-To: <patches@lists.linux.dev>, <stable@vger.kernel.org>
-CC: Bjorn Helgaas <bhelgaas@google.com>, Matthias Brugger
-	<matthias.bgg@gmail.com>, AngeloGioacchino Del Regno
-	<angelogioacchino.delregno@collabora.com>, Ajay Agarwal
-	<ajayagarwal@google.com>, Daniel Stodden <daniel.stodden@gmail.com>, Macpaul
- Lin <macpaul.lin@mediatek.com>, =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?=
-	<kwilczynski@kernel.org>, <linux-pci@vger.kernel.org>,
-	<linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
-	<linux-mediatek@lists.infradead.org>, Deren Wu <Deren.Wu@mediatek.com>, Ramax
- Lo <ramax.lo@mediatek.com>, Macpaul Lin <macpaul@gmail.com>, MediaTek
- Chromebook Upstream <Project_Global_Chrome_Upstream_Group@mediatek.com>,
-	Johnny-CC Chang <Johnny-CC.Chang@mediatek.com>
-Subject: [PATCH 6.11 1/1] PCI/ASPM: Disable L1 before disabling L1 PM Substates
-Date: Fri, 6 Jun 2025 09:57:38 +0800
-Message-ID: <20250606015738.2724220-1-macpaul.lin@mediatek.com>
-X-Mailer: git-send-email 2.45.2
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="L161cLuS"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=JvvNzVCcEZlqPLTlcpLt/Nw3gcjdBiwhUz8DpGiU2LykE+heikMi60rA2oP2ky9+JqZzsokYWJQf7SeKctkbR1hQEiiEvZ/kvVO0wsPqEJsR1mr4xV5/bnEmkFReu5iiwylZnK3LCpnEaqlhXGAlbXVwcbN3Em1UFtG9uYc6rdebHMPoF358F08XyNkSR1OPP7HoUrr2BEX+6GYPYM55IfPbl0fBaJkFBGRi/5HeoHh957MXO4eoMhmsvwXEehwuRk/JIN4EeuypdC0DrNyUYZDsSq21CjKOx7qCt2k2yxND7quvy7DWZxgTRHT7Auw071r3dQd00ysDCr2mpCTtvQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=EDMBr25Rd5V/4UNv3zTo9MCi6cLNrHYng1lWkmFyUmA=;
+ b=FTcDdNMTCo7qKxcV6L9EY7P0zPCMDU0ZBM+ERKH4JdJL++oD94uYVrPkKwAds6pH1Ypgb+vgz6dKgiWP7ZTuzgFigRUD5YCyu7A/SnMJbU2wjFoCLMHUps2IgO59uTI9kebDWhrtjbR9N5JVC5F8OQy3msDSkLes2b2tLCct/MJH7SwKs00OitK9LjqQPWqqsi615FTyQa/saDzyQ9twJyPMmCInirAgDWe54c9rjX1U/Go/6Y6KfXyUmZgFLQix/+A15Wo4K3gs4QULvA4cQzNc5EsfYCB1cplmOFLupTTavjMvHm2dbMk4fMKxyGL9Sl/ShxVqqad4PG4ZL5fNCA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.160) smtp.rcpttodomain=amd.com smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=EDMBr25Rd5V/4UNv3zTo9MCi6cLNrHYng1lWkmFyUmA=;
+ b=L161cLuSOXA+uQ+QpbQpk5BhOXXyOpIbnvsAZXjEvXGC/boKaCDwutYtTDOJ2eezMO4xit7IvI3s8KHrmPHX2XIKzE+oFVS1q83GF+udmAqtcLxgRpxHNDx7p2usAHolupsnb4WCWKbCNBVyPTgOan1ieyPgjVjT9h9oBmNaY+4caKkojhdxj7ZHuuwXdUyz0v1w2CPL4X+py4ASgkU4gW3YQJBTluxmLnaAN/E0nGhVXC7L0UZ3PQT9aEWWbFSPKPF+l6d0uhiPCEJpz/JvW3igb/RbY+9DDpnowmA3ulx3USTZTGkba2Zq1YFI5eFH1rwQQy3G0q1cl5m/0U40Hg==
+Received: from MW4PR04CA0172.namprd04.prod.outlook.com (2603:10b6:303:85::27)
+ by PH8PR12MB7181.namprd12.prod.outlook.com (2603:10b6:510:22a::17) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8722.32; Fri, 6 Jun
+ 2025 04:46:45 +0000
+Received: from SJ5PEPF00000204.namprd05.prod.outlook.com
+ (2603:10b6:303:85:cafe::bd) by MW4PR04CA0172.outlook.office365.com
+ (2603:10b6:303:85::27) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8792.19 via Frontend Transport; Fri,
+ 6 Jun 2025 04:46:45 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.160) by
+ SJ5PEPF00000204.mail.protection.outlook.com (10.167.244.37) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8792.29 via Frontend Transport; Fri, 6 Jun 2025 04:46:44 +0000
+Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
+ (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Thu, 5 Jun 2025
+ 21:46:32 -0700
+Received: from rnnvmail203.nvidia.com (10.129.68.9) by rnnvmail201.nvidia.com
+ (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Thu, 5 Jun
+ 2025 21:46:32 -0700
+Received: from Asurada-Nvidia (10.127.8.14) by mail.nvidia.com (10.129.68.9)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14 via Frontend
+ Transport; Thu, 5 Jun 2025 21:46:30 -0700
+Date: Thu, 5 Jun 2025 21:46:28 -0700
+From: Nicolin Chen <nicolinc@nvidia.com>
+To: Jason Gunthorpe <jgg@nvidia.com>
+CC: <kevin.tian@intel.com>, <corbet@lwn.net>, <will@kernel.org>,
+	<bagasdotme@gmail.com>, <robin.murphy@arm.com>, <joro@8bytes.org>,
+	<thierry.reding@gmail.com>, <vdumpa@nvidia.com>, <jonathanh@nvidia.com>,
+	<shuah@kernel.org>, <jsnitsel@redhat.com>, <nathan@kernel.org>,
+	<peterz@infradead.org>, <yi.l.liu@intel.com>, <mshavit@google.com>,
+	<praan@google.com>, <zhangzekun11@huawei.com>, <iommu@lists.linux.dev>,
+	<linux-doc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+	<linux-arm-kernel@lists.infradead.org>, <linux-tegra@vger.kernel.org>,
+	<linux-kselftest@vger.kernel.org>, <patches@lists.linux.dev>,
+	<mochs@nvidia.com>, <alok.a.tiwari@oracle.com>, <vasant.hegde@amd.com>,
+	<dwmw2@infradead.org>, <baolu.lu@linux.intel.com>
+Subject: Re: [PATCH v5 10/29] iommufd: Abstract iopt_pin_pages and
+ iopt_unpin_pages helpers
+Message-ID: <aEJypNAzkGGT375k@Asurada-Nvidia>
+References: <cover.1747537752.git.nicolinc@nvidia.com>
+ <49f7143c1b513049fd8158278a11d9f8b6c837d3.1747537752.git.nicolinc@nvidia.com>
+ <20250528171754.GY61950@nvidia.com>
+ <aEEY28ZXH+NqiE+T@Asurada-Nvidia>
+ <20250605151648.GD19710@nvidia.com>
+ <aEHOI522eucrOZyI@Asurada-Nvidia>
+ <20250605194034.GF19710@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-MTK: N
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20250605194034.GF19710@nvidia.com>
+X-NV-OnPremToCloud: AnonymousSubmission
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ5PEPF00000204:EE_|PH8PR12MB7181:EE_
+X-MS-Office365-Filtering-Correlation-Id: 699a4de5-c5a2-4073-9ca2-08dda4b523a7
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|7416014|1800799024|36860700013|376014|82310400026;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?hzgwbogu5Hwb6Bg92lwYHmC1OWuoUGYVGV3KTDtA7Ubx1IFkSzbmIzsVYLje?=
+ =?us-ascii?Q?hFC9Mkg4HQ/sp2bQkcV37R7c2Hd3N4s3umYIJz1WNiXHHRQ8eEuHmi4nG1FK?=
+ =?us-ascii?Q?k3Nb5AjCHLp+kHpnF8FTePrELgXOPVfapUNYpNpZqpzJrO5yXrgALsW3Vqet?=
+ =?us-ascii?Q?Cm9z7NbP/v8CoUGt65k4v8WSbNcUF5rxdOcPi60xKYKaS4z6SRXjviGsbftC?=
+ =?us-ascii?Q?p0EYLucx+nQR+n5E2wrHELSKg+TwbSPfgQFrZPDCw+XrY1A3I86/NQZ6G/uD?=
+ =?us-ascii?Q?dqV2BoVXEBu17GjPCC7lwTrZNnUPqlUmut2RmrN+r1WokoL8Xi0ZHF88AD8V?=
+ =?us-ascii?Q?kCm0BNPOey4TS6kpUSZNNsJi5sEhq3galp0M0NLFjU3PgUlgk0YxM0Klyv1C?=
+ =?us-ascii?Q?xvrUKQ60D8rEe3EBAk1sMnj/s3HZ8+TMp+iS0x0jy9yJs3jHvv71OA+2DssM?=
+ =?us-ascii?Q?TsKqf9TRw/sXPcqNxW32IjkVHRRegnRvqTlPHgHTbaTbjtItLHea7BDoR2Hf?=
+ =?us-ascii?Q?HJjmOb0/HK+TzfiAFVSGLdVuo5YVPsbQdeiLj2mzdxj8TVGAyerISpOSxoCw?=
+ =?us-ascii?Q?A1R55nzkmSLJca5hNhAwIITOFzcD2Zn6LNmZoIprzeX/Lx5XR7FvTUEpTx5b?=
+ =?us-ascii?Q?Ur/Nc45f+JNY6OnxJ8XmflnkqkVKjLk5UukFNQdTslq62A08FbF6UWte3VnI?=
+ =?us-ascii?Q?4LoJgVVokWgfmFNg0wTaPhBz25bH4KYpa88Y7YyPGMlx+ITDJn9qKdD6FNss?=
+ =?us-ascii?Q?DSak1tIpnirLJyj9ame3Tz8WS4B0Dr6LYDLANC5jBCq6Up+GHEWbOSL5IKPB?=
+ =?us-ascii?Q?Fm8M7z1idAsi3uDdZO9zeGY5Kwz4ijLD2gFW/Iwd+wnCsvF93OrlFCNpKm9Z?=
+ =?us-ascii?Q?f23uC8GEaHTsHlTpkm1DJrCaT1qFNVXlNYqdsyGL64J//X/UVIUk4M8A8Etz?=
+ =?us-ascii?Q?hbGMYAo/zyki07YX5nQNeZBjMr/AHA37dO+jLJ11VwWLi8DzSOLx9HvRvRUT?=
+ =?us-ascii?Q?1v21FGXMzwLSz4a/tg5Unntg2Isttsj5Usxi6oD+nvUDUzvwioYGlQrgeohu?=
+ =?us-ascii?Q?w0GtiVYAkx5NdRBwJ2IdhDOwDPJ7BiDQNGkiC2dtrgPdbBv0n6sf+DKpzM2n?=
+ =?us-ascii?Q?xs0fahXBmAByz311zb5DQ/G6t+LtbJV7viixGODBnwQ6ybWryzfwH67M5A/Q?=
+ =?us-ascii?Q?d1n0Vkzbtu2XU9r0DgnylrbHWfOwkCodcQUSIPEf4mFogHVttWosG4R3BqFN?=
+ =?us-ascii?Q?2Bo6dRXmvZy7uOUEyMUIZaY6II4aKV5hy5dt3yudQMOVvy5qupLDXL2WIiMj?=
+ =?us-ascii?Q?DUTxWFP2hWnIRJo755OGRhmnUrbSV2vG/JH43Os4HDZqM9UEIOw2MT4LzYRj?=
+ =?us-ascii?Q?xk0gd/J/wNst7SnePCC1r0LmThNlL3dR+TsJE7jtgyygWl0fCCEI+ftWA62y?=
+ =?us-ascii?Q?j7InS8luWdX9ez6f0buTYk9/gexI6WL3OtWP1Y7uiFcJ+8HKrP44+mC3XkOg?=
+ =?us-ascii?Q?BDn3i/H+g8RcOITYxnYs6MG3imrK/Rskoder?=
+X-Forefront-Antispam-Report:
+	CIP:216.228.117.160;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge1.nvidia.com;CAT:NONE;SFS:(13230040)(7416014)(1800799024)(36860700013)(376014)(82310400026);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Jun 2025 04:46:44.9665
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 699a4de5-c5a2-4073-9ca2-08dda4b523a7
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.160];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	SJ5PEPF00000204.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR12MB7181
 
-From: Ajay Agarwal <ajayagarwal@google.com>
+On Thu, Jun 05, 2025 at 04:40:34PM -0300, Jason Gunthorpe wrote:
+> On Thu, Jun 05, 2025 at 10:04:35AM -0700, Nicolin Chen wrote:
+> > On Thu, Jun 05, 2025 at 12:16:48PM -0300, Jason Gunthorpe wrote:
+> > > On Wed, Jun 04, 2025 at 09:11:07PM -0700, Nicolin Chen wrote:
+> > > 
+> > > > I found the entire ictx would be locked by iommufd_access_create(),
+> > > > then the release fop couldn't even get invoked to destroy objects.
+> > > 
+> > > Yes, that makes sense..
+> > > 
+> > > It looks to me like you can safely leave ictx as NULL instead of
+> > > adding a flag? That would be nicer than leaving a unrefcounted
+> > > pointer floating around..
+> > 
+> > Hmm, there are a few iommufd_get_object calls using access->ictx
+> > in iommufd_access_attach() and iommufd_access_destroy().
+> 
+> I counted:
+> 
+> iommufd_access_change_ioas_id
+>  * Don't call this
+> iommufd_access_destroy_object
+>  * Don't put if null
+> iommufd_access_create
+>  * Don't set it
+> iommufd_access_destroy
+>  * Call iommufd_object_destroy_user directly
+> iommufd_access_notify_unmap
+>  * Check for null access->ops->unmap and skip the lock_obj/put_obj
 
-[ Upstream commit 7447990137bf06b2aeecad9c6081e01a9f47f2aa ]
+Yea. And I added a set of lighter "_internal" helpers so the caller
+side looks consistent:
 
-PCIe r6.2, sec 5.5.4, requires that:
+	access = iommufd_access_create_internal(viommu->ictx);
+	rc = iommufd_access_attach_internal(access, viommu->hwpt->ioas);
+	...
+	iommufd_access_detach_internal(access);
+	iommufd_access_destroy_internal(ictx, access);
 
-  If setting either or both of the enable bits for ASPM L1 PM Substates,
-  both ports must be configured as described in this section while ASPM L1
-  is disabled.
-
-Previously, pcie_config_aspm_l1ss() assumed that "setting enable bits"
-meant "setting them to 1", and it configured L1SS as follows:
-
-  - Clear L1SS enable bits
-  - Disable L1
-  - Configure L1SS enable bits as required
-  - Enable L1 if required
-
-With this sequence, when disabling L1SS on an ARM A-core with a Synopsys
-DesignWare PCIe core, the CPU occasionally hangs when reading
-PCI_L1SS_CTL1, leading to a reboot when the CPU watchdog expires.
-
-Move the L1 disable to the caller (pcie_config_aspm_link(), where L1 was
-already enabled) so L1 is always disabled while updating the L1SS bits:
-
-  - Disable L1
-  - Clear L1SS enable bits
-  - Configure L1SS enable bits as required
-  - Enable L1 if required
-
-Change pcie_aspm_cap_init() similarly.
-
-Link: https://lore.kernel.org/r/20241007032917.872262-1-ajayagarwal@google.com
-Signed-off-by: Ajay Agarwal <ajayagarwal@google.com>
-[bhelgaas: comments, commit log, compute L1SS setting before config access]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Tested-by: Johnny-CC Chang <Johnny-CC.Chang@mediatek.com>
-Signed-off-by: Macpaul Lin <macpaul.lin@mediatek.com>
----
- drivers/pci/pcie/aspm.c | 92 ++++++++++++++++++++++-------------------
- 1 file changed, 50 insertions(+), 42 deletions(-)
-
-diff --git a/drivers/pci/pcie/aspm.c b/drivers/pci/pcie/aspm.c
-index cee2365e54b8..e943691bc931 100644
---- a/drivers/pci/pcie/aspm.c
-+++ b/drivers/pci/pcie/aspm.c
-@@ -805,6 +805,15 @@ static void pcie_aspm_cap_init(struct pcie_link_state *link, int blacklist)
- 	pcie_capability_read_word(parent, PCI_EXP_LNKCTL, &parent_lnkctl);
- 	pcie_capability_read_word(child, PCI_EXP_LNKCTL, &child_lnkctl);
- 
-+	/* Disable L0s/L1 before updating L1SS config */
-+	if (FIELD_GET(PCI_EXP_LNKCTL_ASPMC, child_lnkctl) ||
-+	    FIELD_GET(PCI_EXP_LNKCTL_ASPMC, parent_lnkctl)) {
-+		pcie_capability_write_word(child, PCI_EXP_LNKCTL,
-+					   child_lnkctl & ~PCI_EXP_LNKCTL_ASPMC);
-+		pcie_capability_write_word(parent, PCI_EXP_LNKCTL,
-+					   parent_lnkctl & ~PCI_EXP_LNKCTL_ASPMC);
-+	}
-+
- 	/*
- 	 * Setup L0s state
- 	 *
-@@ -829,6 +838,13 @@ static void pcie_aspm_cap_init(struct pcie_link_state *link, int blacklist)
- 
- 	aspm_l1ss_init(link);
- 
-+	/* Restore L0s/L1 if they were enabled */
-+	if (FIELD_GET(PCI_EXP_LNKCTL_ASPMC, child_lnkctl) ||
-+	    FIELD_GET(PCI_EXP_LNKCTL_ASPMC, parent_lnkctl)) {
-+		pcie_capability_write_word(parent, PCI_EXP_LNKCTL, parent_lnkctl);
-+		pcie_capability_write_word(child, PCI_EXP_LNKCTL, child_lnkctl);
-+	}
-+
- 	/* Save default state */
- 	link->aspm_default = link->aspm_enabled;
- 
-@@ -845,25 +861,28 @@ static void pcie_aspm_cap_init(struct pcie_link_state *link, int blacklist)
- 	}
- }
- 
--/* Configure the ASPM L1 substates */
-+/* Configure the ASPM L1 substates. Caller must disable L1 first. */
- static void pcie_config_aspm_l1ss(struct pcie_link_state *link, u32 state)
- {
--	u32 val, enable_req;
-+	u32 val;
- 	struct pci_dev *child = link->downstream, *parent = link->pdev;
- 
--	enable_req = (link->aspm_enabled ^ state) & state;
-+	val = 0;
-+	if (state & PCIE_LINK_STATE_L1_1)
-+		val |= PCI_L1SS_CTL1_ASPM_L1_1;
-+	if (state & PCIE_LINK_STATE_L1_2)
-+		val |= PCI_L1SS_CTL1_ASPM_L1_2;
-+	if (state & PCIE_LINK_STATE_L1_1_PCIPM)
-+		val |= PCI_L1SS_CTL1_PCIPM_L1_1;
-+	if (state & PCIE_LINK_STATE_L1_2_PCIPM)
-+		val |= PCI_L1SS_CTL1_PCIPM_L1_2;
- 
- 	/*
--	 * Here are the rules specified in the PCIe spec for enabling L1SS:
--	 * - When enabling L1.x, enable bit at parent first, then at child
--	 * - When disabling L1.x, disable bit at child first, then at parent
--	 * - When enabling ASPM L1.x, need to disable L1
--	 *   (at child followed by parent).
--	 * - The ASPM/PCIPM L1.2 must be disabled while programming timing
-+	 * PCIe r6.2, sec 5.5.4, rules for enabling L1 PM Substates:
-+	 * - Clear L1.x enable bits at child first, then at parent
-+	 * - Set L1.x enable bits at parent first, then at child
-+	 * - ASPM/PCIPM L1.2 must be disabled while programming timing
- 	 *   parameters
--	 *
--	 * To keep it simple, disable all L1SS bits first, and later enable
--	 * what is needed.
- 	 */
- 
- 	/* Disable all L1 substates */
-@@ -871,26 +890,6 @@ static void pcie_config_aspm_l1ss(struct pcie_link_state *link, u32 state)
- 				       PCI_L1SS_CTL1_L1SS_MASK, 0);
- 	pci_clear_and_set_config_dword(parent, parent->l1ss + PCI_L1SS_CTL1,
- 				       PCI_L1SS_CTL1_L1SS_MASK, 0);
--	/*
--	 * If needed, disable L1, and it gets enabled later
--	 * in pcie_config_aspm_link().
--	 */
--	if (enable_req & (PCIE_LINK_STATE_L1_1 | PCIE_LINK_STATE_L1_2)) {
--		pcie_capability_clear_word(child, PCI_EXP_LNKCTL,
--					   PCI_EXP_LNKCTL_ASPM_L1);
--		pcie_capability_clear_word(parent, PCI_EXP_LNKCTL,
--					   PCI_EXP_LNKCTL_ASPM_L1);
--	}
--
--	val = 0;
--	if (state & PCIE_LINK_STATE_L1_1)
--		val |= PCI_L1SS_CTL1_ASPM_L1_1;
--	if (state & PCIE_LINK_STATE_L1_2)
--		val |= PCI_L1SS_CTL1_ASPM_L1_2;
--	if (state & PCIE_LINK_STATE_L1_1_PCIPM)
--		val |= PCI_L1SS_CTL1_PCIPM_L1_1;
--	if (state & PCIE_LINK_STATE_L1_2_PCIPM)
--		val |= PCI_L1SS_CTL1_PCIPM_L1_2;
- 
- 	/* Enable what we need to enable */
- 	pci_clear_and_set_config_dword(parent, parent->l1ss + PCI_L1SS_CTL1,
-@@ -937,21 +936,30 @@ static void pcie_config_aspm_link(struct pcie_link_state *link, u32 state)
- 		dwstream |= PCI_EXP_LNKCTL_ASPM_L1;
- 	}
- 
-+	/*
-+	 * Per PCIe r6.2, sec 5.5.4, setting either or both of the enable
-+	 * bits for ASPM L1 PM Substates must be done while ASPM L1 is
-+	 * disabled. Disable L1 here and apply new configuration after L1SS
-+	 * configuration has been completed.
-+	 *
-+	 * Per sec 7.5.3.7, when disabling ASPM L1, software must disable
-+	 * it in the Downstream component prior to disabling it in the
-+	 * Upstream component, and ASPM L1 must be enabled in the Upstream
-+	 * component prior to enabling it in the Downstream component.
-+	 *
-+	 * Sec 7.5.3.7 also recommends programming the same ASPM Control
-+	 * value for all functions of a multi-function device.
-+	 */
-+	list_for_each_entry(child, &linkbus->devices, bus_list)
-+		pcie_config_aspm_dev(child, 0);
-+	pcie_config_aspm_dev(parent, 0);
-+
- 	if (link->aspm_capable & PCIE_LINK_STATE_L1SS)
- 		pcie_config_aspm_l1ss(link, state);
- 
--	/*
--	 * Spec 2.0 suggests all functions should be configured the
--	 * same setting for ASPM. Enabling ASPM L1 should be done in
--	 * upstream component first and then downstream, and vice
--	 * versa for disabling ASPM L1. Spec doesn't mention L0S.
--	 */
--	if (state & PCIE_LINK_STATE_L1)
--		pcie_config_aspm_dev(parent, upstream);
-+	pcie_config_aspm_dev(parent, upstream);
- 	list_for_each_entry(child, &linkbus->devices, bus_list)
- 		pcie_config_aspm_dev(child, dwstream);
--	if (!(state & PCIE_LINK_STATE_L1))
--		pcie_config_aspm_dev(parent, upstream);
- 
- 	link->aspm_enabled = state;
- 
--- 
-2.45.2
-
+Thanks
+Nicolin
