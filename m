@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D0CB28A1F8;
-	Fri,  6 Jun 2025 15:42:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC4BA28A3E4;
+	Fri,  6 Jun 2025 15:42:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749224555; cv=none; b=QxJWGH8iR2MbhoHYkNgKSb40gVWQE3WmXsg/P+c9zUSSuUy0MHb6yGUNe2k+4Pdxx7cgPc19RAjrgt916yeJPTPZmKq3XRCB1myzpYncJ9uad4gP/BAuNmeKenUomI0g3bvb/FKDrBs6xMrLD9Tqs8W9O6YSF7wj8g2EZfTkGqA=
+	t=1749224556; cv=none; b=aRUNYh965ngmPcpFKCxPixnEEwOnmAZgvgRAXmL7rNtRYvdqnQPrRGrHa9Fgt803479b33ur52TuVcSnus5IhUBmgwQkDIOYXNLxjd1OVJ8xrUpDkTK4dqoHRa5YEOfbEYPxfPzu248zoDoGENiur7G/SbjqRMXZ8EmVXMVRBWU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749224555; c=relaxed/simple;
-	bh=ni3JDOf2E7MkwZwAHGy6hecnqkPa8A9RsjsLPUbdnVs=;
+	s=arc-20240116; t=1749224556; c=relaxed/simple;
+	bh=JvxKiUvZup5FCydVPN8K3QMiW0hQscyESTJprVJQzbg=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=DJxfaOnaeuNre3Z88pw5MSJz2wLHaqlstSSJ+l5xtziC/BiPADMSkqtgZti5Dl70/SqPsfcDzYdMoGTxWv3rryvXp2eIQw+s+qRG0BXFkO5EVph5EfZ8tFQSNgjONfpiFJq5ttLe5B+2Pgn7lqzLYDHS26uIhNXU7sG2aaFTAFQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fXRLphh2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aIczj2JJJuJdXO61281a3DCc+Snr9UOLEcAL5qJnXm64XxtMNOGUJeCjRe168qA/5Z5xbOpsL9m1SB5E9QhF89aIE0Qb8UQbY3ySeIEdJjtc8W4psLrLz7ZP3TfvnyXA75n5gBXKZQil2n0wn04Nz5lzUW31/+j6bt8wDItOEAk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tLrDY8Jb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fXRLphh2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6233BC4CEF0;
-	Fri,  6 Jun 2025 15:42:34 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tLrDY8Jb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C69E2C4CEEB;
+	Fri,  6 Jun 2025 15:42:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749224555;
-	bh=ni3JDOf2E7MkwZwAHGy6hecnqkPa8A9RsjsLPUbdnVs=;
+	s=k20201202; t=1749224556;
+	bh=JvxKiUvZup5FCydVPN8K3QMiW0hQscyESTJprVJQzbg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fXRLphh2YFK5bJGvYe8W8lQ3GyLnPEWI1zGmLb8X3nPzH81YkTx4GOQSXKrT4zVsv
-	 k/DNLEKQW9pGuxVeRPcKrM2aJ5EKfnyTcp7eQvkK09gQo2P7cRTGxMa7s9i2mUeoHE
-	 wzvawzL6h/o7ei08pcqxcbWoaIudPcpcSgg4AxbRX/kW4k5u90/zy39DzcONBH6kEY
-	 /P54KxpY5YDcWC5LgNqIwdWLX6oJE783Jt0l6yBldt5MowdmXztXujxgeavBI6tn6T
-	 mi9P8PjhWhyAMyvHeX3cWJyw9AvA4b3p0lYNnIB7Wa12qUv7y75mNk7DSG+rPwAcie
-	 ba8FRpmEZaFgA==
+	b=tLrDY8JbjeNoVk8DVJ6ZNyhX5fDvG3Uvo4VAP9rTlltytl2/6fVIhp9z8/ASMLJ+s
+	 eEsarX1hCZsVRMc9JGxfhHe+b/5Gub+7mHzydC7yvgEt93kofgfJk1Th6XJZ34CTLW
+	 WNfRggRuRcoT4TFZlncQk9UimNY9BpOMN9i4HQKcWWzL3Z1eBF/GQlo3pJkjA106BM
+	 g4jDP8dQtGlb4eIbi+gfYaHtZecHwLtW2X8SkPK6bLf9UiYEpYyNJV2PNqxo1uCz7A
+	 gMjJhmWsDXN3TRMFHvfGmKzmx8LWY0XcFA1gTlYqwdPLcXWnijEuxS6gn7x+HC87a7
+	 0AC3CnODB1EKA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Sagi Grimberg <sagi@grimberg.me>,
-	Anna Schumaker <anna.schumaker@oracle.com>,
+Cc: Peng Fan <peng.fan@nxp.com>,
+	Jassi Brar <jassisinghbrar@gmail.com>,
 	Sasha Levin <sashal@kernel.org>,
-	trondmy@kernel.org,
-	anna@kernel.org,
-	linux-nfs@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.14 06/19] NFSv4.2: fix setattr caching of TIME_[MODIFY|ACCESS]_SET when timestamps are delegated
-Date: Fri,  6 Jun 2025 11:42:12 -0400
-Message-Id: <20250606154225.546969-6-sashal@kernel.org>
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.14 07/19] mailbox: Not protect module_put with spin_lock_irqsave
+Date: Fri,  6 Jun 2025 11:42:13 -0400
+Message-Id: <20250606154225.546969-7-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250606154225.546969-1-sashal@kernel.org>
 References: <20250606154225.546969-1-sashal@kernel.org>
@@ -50,174 +48,65 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.14.10
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sagi Grimberg <sagi@grimberg.me>
+From: Peng Fan <peng.fan@nxp.com>
 
-[ Upstream commit aba41e90aadeca8d4656f90639aa5f91ce564f1c ]
+[ Upstream commit dddbd233e67e792bb0a3f9694a4707e6be29b2c6 ]
 
-nfs_setattr will flush all pending writes before updating a file time
-attributes. However when the client holds delegated timestamps, it can
-update its timestamps locally as it is the authority for the file
-times attributes. The client will later set the file attributes by
-adding a setattr to the delegreturn compound updating the server time
-attributes.
+&chan->lock is not supposed to protect 'chan->mbox'.
+And in __mbox_bind_client, try_module_get is also not protected
+by &chan->lock. So move module_put out of the lock protected
+region.
 
-Fix nfs_setattr to avoid flushing pending writes when the file time
-attributes are delegated and the mtime/atime are set to a fixed
-timestamp (ATTR_[MODIFY|ACCESS]_SET. Also, when sending the setattr
-procedure over the wire, we need to clear the correct attribute bits
-from the bitmask.
-
-I was able to measure a noticable speedup when measuring untar performance.
-Test: $ time tar xzf ~/dir.tgz
-Baseline: 1m13.072s
-Patched: 0m49.038s
-
-Which is more than 30% latency improvement.
-
-Signed-off-by: Sagi Grimberg <sagi@grimberg.me>
-Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
+Signed-off-by: Peng Fan <peng.fan@nxp.com>
+Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Based on my analysis of both the commit message and code changes, and
-examination of the Linux kernel NFS subsystem: **YES** ## Extensive
-Analysis: ### Nature of the Fix This commit addresses a **significant
-performance regression** in NFSv4.2 when using delegated timestamps, not
-a security vulnerability. The code changes show: 1. **New function
-`nfs_set_timestamps_to_ts()`** in `fs/nfs/inode.c:622-647` that
-efficiently handles timestamp updates locally when timestamps are set to
-specific values (ATTR_MTIME_SET/ATTR_ATIME_SET) 2. **Modified
-`nfs_setattr()` logic** in `fs/nfs/inode.c:730-751` that avoids
-expensive write flushes and unnecessary server RPCs when the client has
-delegated timestamp authority 3. **Updated bitmask handling** in
-`fs/nfs/nfs4proc.c:327-335` that correctly clears TIME_ACCESS_SET and
-TIME_MODIFY_SET bits from server requests when timestamps are delegated
-### Performance Impact and User Benefit The commit message demonstrates
-a **>30% performance improvement** (1m13s → 49s) for common operations
-like tar extraction. This represents a substantial regression fix that
-significantly impacts user experience for NFSv4.2 workloads. ### Risk
-Assessment - Very Low - **No functional changes to correctness** -
-timestamps were being set correctly before, just inefficiently - **No
-security implications** - purely a performance optimization - **Well-
-contained changes** - limited to NFSv4.2 delegation code paths only -
-**Backwards compatible** - no protocol changes, client-side optimization
-only - **Similar to approved commits** - matches pattern of previous YES
-backports (commits #1, #2, #3, #5) which were NFS performance/efficiency
-fixes ### Alignment with Stable Criteria This commit perfectly fits
-stable tree requirements: - **Fixes important performance regression**
-introduced in v6.10 with delegated timestamp support - **Minimal risk**
-- optimization-only changes with no correctness implications - **Small,
-focused patch** - changes are surgical and well-understood - **Does not
-introduce new features** - only optimizes existing delegation
-functionality ### Comparison to Similar Commits Like the approved
-similar commits (particularly #1, #2, #5), this fix: - Addresses NFS
-timestamp/delegation edge cases - Improves efficiency without changing
-semantics - Has clear performance benefits - Contains minimal, targeted
-code changes - Fixes issues that affect real-world workloads The 30%+
-performance improvement for common file operations makes this an
-important fix for stable backporting to prevent users from experiencing
-unnecessary performance degradation in NFSv4.2 environments.
+**YES** This commit should be backported to stable kernel trees.
+**Analysis:** 1. **Clear Bug Fix**: The commit fixes an improper use of
+`module_put()` under a spinlock in `mbox_free_channel()`. Looking at the
+current code in `/home/sasha/linux/drivers/mailbox/mailbox.c:489`,
+`module_put()` is called while holding `&chan->lock` with
+`spin_lock_irqsave()`. 2. **Locking Inconsistency**: The commit message
+correctly identifies that `&chan->lock` is not supposed to protect
+`chan->mbox`. In `__mbox_bind_client()` (line 324),
+`try_module_get(chan->mbox->dev->driver->owner)` is called **outside**
+the spinlock protection, making the current `module_put()` placement
+inconsistent. 3. **Minimal Risk Change**: The fix is extremely simple
+and low-risk - it just moves one line (`module_put()`) outside the
+spinlock region. This maintains the same operation order but fixes the
+locking issue. 4. **No Side Effects**: Moving `module_put()` outside the
+lock doesn't change the functionality or introduce new race conditions.
+The `module_put()` implementation uses `atomic_dec_if_positive()`, so
+it's safe to call without additional locking. 5. **Follows Stable
+Rules**: This commit: - Fixes a real locking issue that could
+potentially cause problems - Is small and contained (single line move) -
+Has minimal regression risk - Doesn't introduce new features or
+architectural changes 6. **Similar Pattern**: Looking at similar commits
+in the historical references, commits that fix locking issues (like
+Similar Commit #5 which fixed a locking bug in mailbox-test) were marked
+as YES for backporting. The commit addresses a legitimate kernel locking
+violation where `module_put()` should not be called under a spinlock,
+making it a suitable candidate for stable tree backporting.
 
- fs/nfs/inode.c    | 49 +++++++++++++++++++++++++++++++++++++++++++----
- fs/nfs/nfs4proc.c |  8 ++++----
- 2 files changed, 49 insertions(+), 8 deletions(-)
+ drivers/mailbox/mailbox.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/nfs/inode.c b/fs/nfs/inode.c
-index 4695292378bbe..8ab7868807a7d 100644
---- a/fs/nfs/inode.c
-+++ b/fs/nfs/inode.c
-@@ -635,6 +635,34 @@ nfs_fattr_fixup_delegated(struct inode *inode, struct nfs_fattr *fattr)
- 	}
+diff --git a/drivers/mailbox/mailbox.c b/drivers/mailbox/mailbox.c
+index cb174e788a96c..92c2fb618c8e1 100644
+--- a/drivers/mailbox/mailbox.c
++++ b/drivers/mailbox/mailbox.c
+@@ -490,8 +490,8 @@ void mbox_free_channel(struct mbox_chan *chan)
+ 	if (chan->txdone_method == TXDONE_BY_ACK)
+ 		chan->txdone_method = TXDONE_BY_POLL;
+ 
+-	module_put(chan->mbox->dev->driver->owner);
+ 	spin_unlock_irqrestore(&chan->lock, flags);
++	module_put(chan->mbox->dev->driver->owner);
  }
- 
-+static void nfs_set_timestamps_to_ts(struct inode *inode, struct iattr *attr)
-+{
-+	unsigned int cache_flags = 0;
-+
-+	if (attr->ia_valid & ATTR_MTIME_SET) {
-+		struct timespec64 ctime = inode_get_ctime(inode);
-+		struct timespec64 mtime = inode_get_mtime(inode);
-+		struct timespec64 now;
-+		int updated = 0;
-+
-+		now = inode_set_ctime_current(inode);
-+		if (!timespec64_equal(&now, &ctime))
-+			updated |= S_CTIME;
-+
-+		inode_set_mtime_to_ts(inode, attr->ia_mtime);
-+		if (!timespec64_equal(&now, &mtime))
-+			updated |= S_MTIME;
-+
-+		inode_maybe_inc_iversion(inode, updated);
-+		cache_flags |= NFS_INO_INVALID_CTIME | NFS_INO_INVALID_MTIME;
-+	}
-+	if (attr->ia_valid & ATTR_ATIME_SET) {
-+		inode_set_atime_to_ts(inode, attr->ia_atime);
-+		cache_flags |= NFS_INO_INVALID_ATIME;
-+	}
-+	NFS_I(inode)->cache_validity &= ~cache_flags;
-+}
-+
- static void nfs_update_timestamps(struct inode *inode, unsigned int ia_valid)
- {
- 	enum file_time_flags time_flags = 0;
-@@ -703,14 +731,27 @@ nfs_setattr(struct mnt_idmap *idmap, struct dentry *dentry,
- 
- 	if (nfs_have_delegated_mtime(inode) && attr->ia_valid & ATTR_MTIME) {
- 		spin_lock(&inode->i_lock);
--		nfs_update_timestamps(inode, attr->ia_valid);
-+		if (attr->ia_valid & ATTR_MTIME_SET) {
-+			nfs_set_timestamps_to_ts(inode, attr);
-+			attr->ia_valid &= ~(ATTR_MTIME|ATTR_MTIME_SET|
-+						ATTR_ATIME|ATTR_ATIME_SET);
-+		} else {
-+			nfs_update_timestamps(inode, attr->ia_valid);
-+			attr->ia_valid &= ~(ATTR_MTIME|ATTR_ATIME);
-+		}
- 		spin_unlock(&inode->i_lock);
--		attr->ia_valid &= ~(ATTR_MTIME | ATTR_ATIME);
- 	} else if (nfs_have_delegated_atime(inode) &&
- 		   attr->ia_valid & ATTR_ATIME &&
- 		   !(attr->ia_valid & ATTR_MTIME)) {
--		nfs_update_delegated_atime(inode);
--		attr->ia_valid &= ~ATTR_ATIME;
-+		if (attr->ia_valid & ATTR_ATIME_SET) {
-+			spin_lock(&inode->i_lock);
-+			nfs_set_timestamps_to_ts(inode, attr);
-+			spin_unlock(&inode->i_lock);
-+			attr->ia_valid &= ~(ATTR_ATIME|ATTR_ATIME_SET);
-+		} else {
-+			nfs_update_delegated_atime(inode);
-+			attr->ia_valid &= ~ATTR_ATIME;
-+		}
- 	}
- 
- 	/* Optimization: if the end result is no change, don't RPC */
-diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
-index b1f9a75de2258..1f56f2a647c2b 100644
---- a/fs/nfs/nfs4proc.c
-+++ b/fs/nfs/nfs4proc.c
-@@ -322,14 +322,14 @@ static void nfs4_bitmap_copy_adjust(__u32 *dst, const __u32 *src,
- 
- 	if (nfs_have_delegated_mtime(inode)) {
- 		if (!(cache_validity & NFS_INO_INVALID_ATIME))
--			dst[1] &= ~FATTR4_WORD1_TIME_ACCESS;
-+			dst[1] &= ~(FATTR4_WORD1_TIME_ACCESS|FATTR4_WORD1_TIME_ACCESS_SET);
- 		if (!(cache_validity & NFS_INO_INVALID_MTIME))
--			dst[1] &= ~FATTR4_WORD1_TIME_MODIFY;
-+			dst[1] &= ~(FATTR4_WORD1_TIME_MODIFY|FATTR4_WORD1_TIME_MODIFY_SET);
- 		if (!(cache_validity & NFS_INO_INVALID_CTIME))
--			dst[1] &= ~FATTR4_WORD1_TIME_METADATA;
-+			dst[1] &= ~(FATTR4_WORD1_TIME_METADATA|FATTR4_WORD1_TIME_MODIFY_SET);
- 	} else if (nfs_have_delegated_atime(inode)) {
- 		if (!(cache_validity & NFS_INO_INVALID_ATIME))
--			dst[1] &= ~FATTR4_WORD1_TIME_ACCESS;
-+			dst[1] &= ~(FATTR4_WORD1_TIME_ACCESS|FATTR4_WORD1_TIME_ACCESS_SET);
- 	}
- }
+ EXPORT_SYMBOL_GPL(mbox_free_channel);
  
 -- 
 2.39.5
