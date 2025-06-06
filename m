@@ -1,155 +1,113 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD7CE288CB7;
-	Fri,  6 Jun 2025 15:44:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F31AE288CB7;
+	Fri,  6 Jun 2025 15:44:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749224675; cv=none; b=UaS3R5jla226/t+fAV7gBrnuDqbtSKQWb7/ztqPaZ6RGYyqBHZIdJ/1Q/6f0RKgqgw5gn9OYCgFjPPY3pQD5DYLLX+URPHv568qe6RIemrGs9CukYrzWlxLUAuwTcpUxTwsrdJ3HhU1Di+LUQ5FZ0iGU27eNn+Ljt8mabx7maBM=
+	t=1749224677; cv=none; b=k59api/5joUWKiWrVI/M6OEOdWO8dkGvog4rCo4BCzw8s6DkF2bbXO5keXHznvoxq14wx8pQCCkorvWa1ZoDy59EBO9Ft2tdb5F1loNsAXsTtghRPN5eqpoe/8rlWXiRSoUqY6j3q96JIVxwv+tjXLYIqZQ+szx0xqNFvSUgHP8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749224675; c=relaxed/simple;
-	bh=KOtSOSl7T82FAv9YkwXtNOUa3LfM/WBlJMmJamLYVSA=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Type; b=GYDQrnyO7ev7JniOIA6+wmkluBgbkih9qOHgjutfv5kEeg8HHoH6iIVLkaEvIGfYDEOZrLS+65BK3xVaVEKQehMasz7pqdyKuXvUxDrFYu0PHEFxC/+SF5KbivvZcpQAreJx1Sa/mL2NgnbS3Alc3u3HxQDaFjKhQKiMKcyd7fE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=N++9OFKa; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1749224677; c=relaxed/simple;
+	bh=4hZWSSBiBmXgCZRjHUQHX6vSbzo+EvjVtjI/uIdFtzg=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=nW1vS6bHMnTWys2YOrB8ecQigEclYimuNTa7rwpUPz7hYZ8SHsaSwzftaaozYT24j2m61Z1W9YGg74XDHNl4CCACfPeTk5WSK1Xg6LA/imu3fC/BgBafSCc94zRB/i3t483EuVsgTPOQFxl/ivstd8KzQVFPjDfd+si+5bq/8Yc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pGqFH4ZL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="N++9OFKa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E315DC4CEEB;
-	Fri,  6 Jun 2025 15:44:34 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pGqFH4ZL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12CD5C4CEF0;
+	Fri,  6 Jun 2025 15:44:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749224675;
-	bh=KOtSOSl7T82FAv9YkwXtNOUa3LfM/WBlJMmJamLYVSA=;
-	h=From:To:Cc:Subject:Date:From;
-	b=N++9OFKalam3WBvxfgVZ650NLEv1vZiCVgeX6mr7Iye4g/2T0nxYblLjR3fCQta7p
-	 3RYHReS9un/bQkfPl/wx6uJ2tOVl3hNgWW47wfxBjsv2xeASq+jV4vM5IieSQ5vrbp
-	 lgLsKRPZr63IPqivCCvx22xU0fVsjzLK5AzGDCLq2eghFeXjnWYSss/PJjfdsz4wBY
-	 +YE27UPl8aWDqIevccIKH6kQYABANYmJvx5c5rMkKOTu7AgVZGjRCb3Rs45RcGnpPn
-	 o7Nba8SGvV58DGVvpLcBFJrfSovm63d1Z6Qk7IkwDZsKvtSveND1q3MIM78VyTgvUV
-	 2P4saWyEQt7rQ==
+	s=k20201202; t=1749224676;
+	bh=4hZWSSBiBmXgCZRjHUQHX6vSbzo+EvjVtjI/uIdFtzg=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=pGqFH4ZLFN96FnGqa80FLFze15Fnb7Lv+LiHilorHz0kgobniy+su4n/3P/fnfoU8
+	 myTeLm+6UK4RzQUUGCcKB1aWt0OkjKehTEqc70YAzeMJp1QPYNBxZQo0JPuV1irRH2
+	 exMdKfPqik7bpsRFrodUQWxwQWZdqSiCCDbW34Uc0XtREMMcjQDSeDulw5Vt6h6XMh
+	 rGVGdsY2j1U+JA5sQn9xBhod0Mqk2W8dh2MA2/e3igJfctJLqkJrBYiTl0P0f8s0BV
+	 BrDN6IEwyjemnkUGd206BJf0/0HVVAijXSV/QZJvDN98iouFQLFplqMXSn2q/SyRme
+	 xILYqNGzOCjUw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: =?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH AUTOSEL 5.4 1/3] cifs: Fix cifs_query_path_info() for Windows NT servers
-Date: Fri,  6 Jun 2025 11:44:30 -0400
-Message-Id: <20250606154433.548697-1-sashal@kernel.org>
+Cc: Peng Fan <peng.fan@nxp.com>,
+	Jassi Brar <jassisinghbrar@gmail.com>,
+	Sasha Levin <sashal@kernel.org>,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.4 2/3] mailbox: Not protect module_put with spin_lock_irqsave
+Date: Fri,  6 Jun 2025 11:44:31 -0400
+Message-Id: <20250606154433.548697-2-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250606154433.548697-1-sashal@kernel.org>
+References: <20250606154433.548697-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 5.4.294
 Content-Transfer-Encoding: 8bit
 
-From: Pali Rohár <pali@kernel.org>
+From: Peng Fan <peng.fan@nxp.com>
 
-[ Upstream commit a3e771afbb3bce91c8296828304903e7348003fe ]
+[ Upstream commit dddbd233e67e792bb0a3f9694a4707e6be29b2c6 ]
 
-For TRANS2 QUERY_PATH_INFO request when the path does not exist, the
-Windows NT SMB server returns error response STATUS_OBJECT_NAME_NOT_FOUND
-or ERRDOS/ERRbadfile without the SMBFLG_RESPONSE flag set. Similarly it
-returns STATUS_DELETE_PENDING when the file is being deleted. And looks
-like that any error response from TRANS2 QUERY_PATH_INFO does not have
-SMBFLG_RESPONSE flag set.
+&chan->lock is not supposed to protect 'chan->mbox'.
+And in __mbox_bind_client, try_module_get is also not protected
+by &chan->lock. So move module_put out of the lock protected
+region.
 
-So relax check in check_smb_hdr() for detecting if the packet is response
-for this special case.
-
-This change fixes stat() operation against Windows NT SMB servers and also
-all operations which depends on -ENOENT result from stat like creat() or
-mkdir().
-
-Signed-off-by: Pali Rohár <pali@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Peng Fan <peng.fan@nxp.com>
+Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-**YES** This commit should be backported to stable kernel trees. Here's
-my extensive analysis: ## Backport Recommendation: YES ### Nature of the
-Fix This is a **targeted bug fix** that addresses a specific protocol
-compliance issue with Windows NT SMB servers. The commit fixes a
-fundamental problem where basic file operations (`stat()`, `creat()`,
-`mkdir()`) fail against Windows NT servers due to overly strict SMB
-header validation. ### Code Change Analysis The fix is remarkably
-**simple and contained** - only 8 lines of code in a single function:
-```c /bin /bin.usr-is-merged /boot /dev /etc /home /init /lib /lib.usr-
-is-merged /lib64 /lost+found /media /mnt /opt /proc /root /run /sbin
-/sbin.usr-is-merged /snap /srv /sys /tmp /usr /var * Windows NT server
-returns error resposne (e.g. STATUS_DELETE_PENDING * or
-STATUS_OBJECT_NAME_NOT_FOUND or ERRDOS/ERRbadfile or any other) * for
-some TRANS2 requests without the RESPONSE flag set in header. */ if
-(smb->Command == SMB_COM_TRANSACTION2 && smb->Status.CifsError != 0)
-return 0; ``` The change is in the `check_smb_hdr()` function in
-`fs/smb/client/misc.c`, which validates SMB packet headers. The fix
-**relaxes validation** only for a very specific case: TRANS2 commands
-returning errors from Windows NT servers. ### Risk Assessment: LOW 1.
-**Surgical precision**: Only affects SMB1 TRANS2 error responses,
-leaving normal operation paths untouched 2. **Conservative approach**:
-The condition `smb->Status.CifsError != 0` ensures this only applies to
-actual error responses 3. **No behavioral changes** for compliant
-servers that properly set the RESPONSE flag 4. **Well-established code
-path**: The `check_smb_hdr()` function is mature and stable ### Impact
-Assessment: HIGH 1. **Fixes broken functionality**: Without this fix,
-basic file operations fail completely against Windows NT servers 2.
-**Backward compatibility**: Restores support for legacy but still-used
-server environments 3. **User-visible improvement**: Directly fixes
-`stat()`, `creat()`, and `mkdir()` operations 4. **No regressions**:
-Modern SMB servers continue to work as before ### Comparison with
-Similar Commits Looking at the provided similar commits: - **Similar
-Commit #2** (Status: YES): Also adds new status code mappings for better
-server compatibility - **Similar Commit #3** (Status: YES): Reduces
-unnecessary network roundtrips by improving error handling - **Similar
-Commit #4** (Status: YES): Fixes WSL reparse point querying over SMB1 -
-**Similar Commit #5** (Status: YES): Fixes missing resource cleanup This
-commit follows the **same pattern** as these approved backports: small,
-targeted fixes that improve compatibility and fix real-world issues
-without introducing new features or architectural changes. ### Technical
-Justification The Windows NT server behavior described in the commit is
-**non-compliant but real**: these servers return error responses for
-TRANS2 QUERY_PATH_INFO requests without setting the `SMBFLG_RESPONSE`
-flag. The current strict validation incorrectly treats these as invalid
-packets, causing the CIFS client to fail when it should handle the
-errors properly. The fix is **protocol-aware** and **conservative** - it
-only relaxes validation for the specific case where we know Windows NT
-behaves differently, ensuring no impact on standard-compliant servers.
-### Stable Tree Suitability This commit perfectly fits stable tree
-criteria: - ✅ **Important bug fix** affecting real-world usage - ✅
-**Minimal and contained** change with clear scope - ✅ **No new
-features** - purely fixes existing broken functionality - ✅ **Low
-regression risk** due to targeted nature - ✅ **Production-ready** code
-following established patterns This should be backported to all stable
-kernels that support SMB1 client functionality, as it fixes a
-fundamental compatibility issue without any meaningful risk of
-regression.
+**YES** This commit should be backported to stable kernel trees.
+**Analysis:** 1. **Clear Bug Fix**: The commit fixes an improper use of
+`module_put()` under a spinlock in `mbox_free_channel()`. Looking at the
+current code in `/home/sasha/linux/drivers/mailbox/mailbox.c:489`,
+`module_put()` is called while holding `&chan->lock` with
+`spin_lock_irqsave()`. 2. **Locking Inconsistency**: The commit message
+correctly identifies that `&chan->lock` is not supposed to protect
+`chan->mbox`. In `__mbox_bind_client()` (line 324),
+`try_module_get(chan->mbox->dev->driver->owner)` is called **outside**
+the spinlock protection, making the current `module_put()` placement
+inconsistent. 3. **Minimal Risk Change**: The fix is extremely simple
+and low-risk - it just moves one line (`module_put()`) outside the
+spinlock region. This maintains the same operation order but fixes the
+locking issue. 4. **No Side Effects**: Moving `module_put()` outside the
+lock doesn't change the functionality or introduce new race conditions.
+The `module_put()` implementation uses `atomic_dec_if_positive()`, so
+it's safe to call without additional locking. 5. **Follows Stable
+Rules**: This commit: - Fixes a real locking issue that could
+potentially cause problems - Is small and contained (single line move) -
+Has minimal regression risk - Doesn't introduce new features or
+architectural changes 6. **Similar Pattern**: Looking at similar commits
+in the historical references, commits that fix locking issues (like
+Similar Commit #5 which fixed a locking bug in mailbox-test) were marked
+as YES for backporting. The commit addresses a legitimate kernel locking
+violation where `module_put()` should not be called under a spinlock,
+making it a suitable candidate for stable tree backporting.
 
- fs/cifs/misc.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/mailbox/mailbox.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/cifs/misc.c b/fs/cifs/misc.c
-index db1fcdedf289a..af9752535dbab 100644
---- a/fs/cifs/misc.c
-+++ b/fs/cifs/misc.c
-@@ -306,6 +306,14 @@ check_smb_hdr(struct smb_hdr *smb)
- 	if (smb->Command == SMB_COM_LOCKING_ANDX)
- 		return 0;
+diff --git a/drivers/mailbox/mailbox.c b/drivers/mailbox/mailbox.c
+index 6f54501dc7762..cb31ad917b352 100644
+--- a/drivers/mailbox/mailbox.c
++++ b/drivers/mailbox/mailbox.c
+@@ -459,8 +459,8 @@ void mbox_free_channel(struct mbox_chan *chan)
+ 	if (chan->txdone_method == TXDONE_BY_ACK)
+ 		chan->txdone_method = TXDONE_BY_POLL;
  
-+	/*
-+	 * Windows NT server returns error resposne (e.g. STATUS_DELETE_PENDING
-+	 * or STATUS_OBJECT_NAME_NOT_FOUND or ERRDOS/ERRbadfile or any other)
-+	 * for some TRANS2 requests without the RESPONSE flag set in header.
-+	 */
-+	if (smb->Command == SMB_COM_TRANSACTION2 && smb->Status.CifsError != 0)
-+		return 0;
-+
- 	cifs_dbg(VFS, "Server sent request, not response. mid=%u\n",
- 		 get_mid(smb));
- 	return 1;
+-	module_put(chan->mbox->dev->driver->owner);
+ 	spin_unlock_irqrestore(&chan->lock, flags);
++	module_put(chan->mbox->dev->driver->owner);
+ }
+ EXPORT_SYMBOL_GPL(mbox_free_channel);
+ 
 -- 
 2.39.5
 
