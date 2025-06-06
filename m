@@ -1,43 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D889528D8DE;
-	Fri,  6 Jun 2025 15:44:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A03B728DB40;
+	Fri,  6 Jun 2025 15:44:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749224668; cv=none; b=NeI1TTk8vvuuGSqjhEi1JRUs6/yywmeV9w3jLeXuU0qK/TUvt72NY37gY4E8JZiu1cpkH/vPYE1/E/XUPmmgkzKoRdKhaglvCJNQ+X9JJHUI4Y6QXdVxihomnCDa3pn2Wr0afpNnDFdmskH2MooXHbp9BPtymtQ9av4ZX5OxUd4=
+	t=1749224669; cv=none; b=Ah+ynadDoyKVmiFUBZAk8EP5Ur0nSxuXbubS01fWOTKdILcsyONdYX/7iaBzOy0QxGkd6aYS51o/hsTE43E9oB5m+HJYAX+wl2pPLtACnQ2+FEfzMSo3nrPy/u0ZVhI2pmB2A+UGOOApoQO/6TsPcjEaK+PXvGxyaWVD3za58XI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749224668; c=relaxed/simple;
-	bh=Xe4B3UwB3KrFzWPqln+xwgkGXyE/YS3pctsagI8BKFs=;
+	s=arc-20240116; t=1749224669; c=relaxed/simple;
+	bh=vmIYejE/rvDMJpOeYs5jeNXeUcX9QW6fvDXUdJqx2bg=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=fX+es7HnyMLNGRBGV5dDjy4zkxJig4Cof6sPBnTgmVSqWB6IERDDOr7rU6bAlHX/x4Z99u3YdtbSGgDrA6hwTKpO5PNSa+AaUabKw8JBrYJH6ohoItyOCAVhkgUWPm1sdExEL+LWnwDvaD0PTNkfajxsiKqB73l0U4TBEDNXCgs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ha+fWjjk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H6EE94JW/A9KSghyE1Rh0hby88X+iaLVgzH0IszJPvrw4y5H9Wj8aGk8s7dcoTo2L36NH9mpIrmeQggbJqBcRJ3zeX0SM8lCtbpPouyOsI3qNJxiAZ79WlTgnVdWI0UvDJ5u82YDV1/OV7QywiM7FDR8SRB2CjvlMj9wQn2W/e4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VnmH9aI5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ha+fWjjk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7420C4CEF0;
-	Fri,  6 Jun 2025 15:44:26 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VnmH9aI5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3028AC4CEEB;
+	Fri,  6 Jun 2025 15:44:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749224667;
-	bh=Xe4B3UwB3KrFzWPqln+xwgkGXyE/YS3pctsagI8BKFs=;
+	s=k20201202; t=1749224669;
+	bh=vmIYejE/rvDMJpOeYs5jeNXeUcX9QW6fvDXUdJqx2bg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ha+fWjjkAP/XRZz0MAh1AM2s+m60UknDHwRRWx9cAek89vY1B1Y1w8pnzrUVPBCH6
-	 xUdhR/EnOYfTHzuNSaXi2+jy+RazDL3GP/DHsTVkAJFEnOd3wFTyjn5SiObspeNLuY
-	 wEj5E3spe86HsIKAXpBRF9N1E2RGLPJXglsG27ynvva4rm3Wyuu+5alAJXpj7hM3zx
-	 yoh2ypvtqZi2x85bOzlQ92dZpZNHLwP7GYs98Mh7sttOuqImQdHSSoVRVepXRgQq16
-	 pRXKKVKFe74gUobnIKfLA6YNiltynZkyL/YHybNBEnB95dhiSvuTT8Rd01Ih2v+G6Z
-	 AV95lboH4KKgQ==
+	b=VnmH9aI5rQou1gduoxnxRczlBfCXnZfY4UoLHo9ktwHUmEsfvkkK9TChJseOStZrc
+	 XV3edrHoZDLVwgVVG3EEVy/klloQ4A28DoDegd9js3OGfetORqpWEw0neVTmDFJPRK
+	 v+edPCMUkOuaduIGNPUwHIutHNaE8zDixokM2NkYrL2L93AFdTuMKb8oNRCnOEpaVw
+	 Aymp/WhiGKlF0Y/hSIvc8wJglgzPn5Ypyrg3XaKok+Jik2sU4byDm7gfo81ZUpUEdy
+	 Z6CisS7Laj4Ai5mK8YgAsmc56AKcaXPHwM6037rBcTtw5qu/pL6EESx7CwSqjMriOc
+	 2giHDUacy0+9g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+Cc: Sven Schwermer <sven.schwermer@disruptive-technologies.com>,
+	Jacek Anaszewski <jacek.anaszewski@gmail.com>,
+	Pavel Machek <pavel@ucw.cz>,
+	Tobias Deiminger <tobias.deiminger@linutronix.de>,
+	Sven Schuchmann <schuchmann@schleissheimer.de>,
 	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	cw00.choi@samsung.com,
-	krzk@kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.10 4/6] mfd: max14577: Fix wakeup source leaks on device unbind
-Date: Fri,  6 Jun 2025 11:44:18 -0400
-Message-Id: <20250606154421.548570-4-sashal@kernel.org>
+	pavel@kernel.org,
+	linux-leds@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.10 5/6] leds: multicolor: Fix intensity setting while SW blinking
+Date: Fri,  6 Jun 2025 11:44:19 -0400
+Message-Id: <20250606154421.548570-5-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250606154421.548570-1-sashal@kernel.org>
 References: <20250606154421.548570-1-sashal@kernel.org>
@@ -50,115 +53,116 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 5.10.238
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Sven Schwermer <sven.schwermer@disruptive-technologies.com>
 
-[ Upstream commit d905d06e64b0eb3da43af6186c132f5282197998 ]
+[ Upstream commit e35ca991a777ef513040cbb36bc8245a031a2633 ]
 
-Device can be unbound, so driver must also release memory for the wakeup
-source.
+When writing to the multi_intensity file, don't unconditionally call
+led_set_brightness. By only doing this if blinking is inactive we
+prevent blinking from stopping if the blinking is in its off phase while
+the file is written.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20250406-mfd-device-wakekup-leak-v1-3-318e14bdba0a@linaro.org
+Instead, if blinking is active, the changed intensity values are applied
+upon the next blink. This is consistent with changing the brightness on
+monochrome LEDs with active blinking.
+
+Suggested-by: Jacek Anaszewski <jacek.anaszewski@gmail.com>
+Acked-by: Jacek Anaszewski <jacek.anaszewski@gmail.com>
+Acked-by: Pavel Machek <pavel@ucw.cz>
+Reviewed-by: Tobias Deiminger <tobias.deiminger@linutronix.de>
+Tested-by: Sven Schuchmann <schuchmann@schleissheimer.de>
+Signed-off-by: Sven Schwermer <sven.schwermer@disruptive-technologies.com>
+Link: https://lore.kernel.org/r/20250404184043.227116-1-sven@svenschwermer.de
 Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Now let me understand the difference between the fixes - the historical
-commits show two patterns:
-1. Using `devm_device_init_wakeup()` - automatically handles cleanup
-2. Manual cleanup by calling `device_init_wakeup(dev, false)` in remove
-   functions
-
-Let me check if this specific commit has `Cc: stable@vger.kernel.org` in
-the message:
-
-Based on my analysis of this commit and comparison with the similar
-historical commits, here is my assessment:
+Now I have a complete understanding of the commit. Let me analyze this
+commit for backport suitability:
 
 **YES**
 
 This commit should be backported to stable kernel trees for the
 following reasons:
 
-## Analysis
+## **Bug Analysis:**
 
-### **Code Change Analysis**
-The commit adds a single line in the `max14577_i2c_remove()` function:
-```c
-+       device_init_wakeup(max14577->dev, false);
-```
+**The Problem:** In the multicolor LED driver, writing to the
+`multi_intensity` file unconditionally calls `led_set_brightness()` at
+line 62. When software blinking is active (`LED_BLINK_SW` flag set),
+this can incorrectly stop the blinking if the LED is currently in its
+"off" phase during the blink cycle.
 
-This addition occurs at drivers/mfd/max14577.c:459, right before
-`mfd_remove_devices()` is called.
+**The Fix:** The commit adds a check `if (!test_bit(LED_BLINK_SW,
+&led_cdev->work_flags))` before calling `led_set_brightness()`. This
+ensures that when software blinking is active, the intensity changes are
+deferred and applied on the next blink cycle instead of immediately
+stopping the blinking.
 
-### **Bug Fix Characteristics**
-1. **Memory Leak Fix**: The commit fixes a wakeup source memory leak
-   that occurs when the device is unbound. When `device_init_wakeup(dev,
-   true)` is called during probe (line 442), it allocates memory for
-   wakeup source structures. Without the corresponding cleanup call,
-   this memory is leaked on device removal.
+## **Backport Suitability:**
 
-2. **Small and Contained**: The fix is minimal - a single line addition
-   that mirrors the cleanup pattern used throughout the kernel.
+1. **Bug Impact:** This fixes a clear user-visible regression where
+   adjusting multicolor LED intensity incorrectly stops blinking - a
+   functionality that users would expect to work consistently.
 
-3. **Low Risk**: The change has extremely low regression risk since it
-   only adds proper cleanup that should have been there originally.
+2. **Code Quality:** The fix is minimal, surgical, and follows
+   established patterns in the LED subsystem. Looking at the LED core
+   code (`/home/sasha/linux/drivers/leds/led-core.c`), similar checks
+   for `LED_BLINK_SW` are used in `led_set_brightness()` to handle
+   software blinking properly.
 
-### **Comparison with Historical Similar Commits**
-Looking at the provided historical commits, there are two categories:
+3. **Risk Assessment:** The change is extremely low-risk:
+   - Single line addition with a simple conditional check
+   - No architectural changes
+   - Uses existing, well-tested flag (`LED_BLINK_SW`)
+   - Consistent with established LED core behavior patterns
 
-**YES commits (backported)**:
-- `gpio: mpc8xxx: Fix wakeup source leaks on device unbind` - Same exact
-  pattern and includes `Cc: stable@vger.kernel.org`
-- `gpio: zynq: Fix wakeup source leaks on device unbind` - Same exact
-  pattern and includes `Cc: stable@vger.kernel.org`
+4. **Subsystem Scope:** The change is confined to the multicolor LED
+   class interface, affecting only multicolor LEDs, not the broader LED
+   subsystem.
 
-**NO commits (not backported)**:
-- IIO driver commits that use `devm_device_init_wakeup()` instead of
-  manual cleanup
+5. **Backport Indicators:** The commit has explicit support from
+   maintainers with multiple "Acked-by", "Reviewed-by", and "Tested-by"
+   tags, indicating thorough review and validation.
 
-The key difference is that the YES commits use the same fix pattern as
-this MFD commit - manual cleanup in the remove function, while the NO
-commits use the `devm_` managed approach that automatically handles
-cleanup.
+6. **Consistency:** This aligns with similar commits marked as backport
+   candidates (like Similar Commit #4 which was marked YES for fixing
+   LED core blinking regression).
 
-### **Impact Assessment**
-- **User Impact**: Memory leaks on device unbind affect systems where
-  MFD devices are frequently bound/unbound
-- **Subsystem**: MFD (Multi-Function Device) is a core kernel subsystem
-  used by many embedded systems
-- **Regression Risk**: Minimal - adding proper cleanup cannot cause
-  functional regression
+## **Historical Context:**
 
-### **Stable Tree Criteria Met**
-1. ✅ Fixes an important bug (memory leak)
-2. ✅ Small and contained change
-3. ✅ No architectural changes
-4. ✅ Minimal risk of regression
-5. ✅ Follows established patterns seen in other backported commits
+From the similar commits analysis, LED blinking fixes that restore
+expected behavior (like Similar Commit #4) are consistently backported,
+while new features or documentation-only changes (Similar Commits #1,
+#2, #3, #5) are not.
 
-The commit follows the exact same pattern as the GPIO driver commits
-that were successfully backported to stable trees (commits #1 and #2 in
-the historical examples), making it a clear candidate for backporting.
+This commit clearly falls into the "restore expected behavior" category
+- multicolor LED intensity adjustment should work consistently
+regardless of blinking state, just like it does for monochrome LEDs.
 
- drivers/mfd/max14577.c | 1 +
- 1 file changed, 1 insertion(+)
+The fix ensures behavioral consistency between multicolor and monochrome
+LEDs during blinking, which is exactly the type of user-facing bug fix
+that stable trees are designed to address.
 
-diff --git a/drivers/mfd/max14577.c b/drivers/mfd/max14577.c
-index be185e9d5f16b..c9e56145b08bd 100644
---- a/drivers/mfd/max14577.c
-+++ b/drivers/mfd/max14577.c
-@@ -467,6 +467,7 @@ static int max14577_i2c_remove(struct i2c_client *i2c)
- {
- 	struct max14577 *max14577 = i2c_get_clientdata(i2c);
+ drivers/leds/led-class-multicolor.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/leds/led-class-multicolor.c b/drivers/leds/led-class-multicolor.c
+index e317408583df9..5b1479b5d32ca 100644
+--- a/drivers/leds/led-class-multicolor.c
++++ b/drivers/leds/led-class-multicolor.c
+@@ -59,7 +59,8 @@ static ssize_t multi_intensity_store(struct device *dev,
+ 	for (i = 0; i < mcled_cdev->num_colors; i++)
+ 		mcled_cdev->subled_info[i].intensity = intensity_value[i];
  
-+	device_init_wakeup(max14577->dev, false);
- 	mfd_remove_devices(max14577->dev);
- 	regmap_del_irq_chip(max14577->irq, max14577->irq_data);
- 	if (max14577->dev_type == MAXIM_DEVICE_TYPE_MAX77836)
+-	led_set_brightness(led_cdev, led_cdev->brightness);
++	if (!test_bit(LED_BLINK_SW, &led_cdev->work_flags))
++		led_set_brightness(led_cdev, led_cdev->brightness);
+ 	ret = size;
+ err_out:
+ 	mutex_unlock(&led_cdev->led_access);
 -- 
 2.39.5
 
