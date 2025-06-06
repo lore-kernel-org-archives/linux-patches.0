@@ -1,45 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85049EEB5;
-	Fri,  6 Jun 2025 15:43:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AA1E28BA84;
+	Fri,  6 Jun 2025 15:43:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749224619; cv=none; b=VcxxCNCXT30iQ350JI0nUp2n5R4k1gKtry7LC+ft5llAWGOAOdwjNOTdGQRn/8wltEcUApQvNZZ67ixH2G/b+890GdA3N/NYpZveMNDzOya2ntn+RKwWjLG0fBKnMbTOACD4HYn+IK4T/jxETQDrrZLpGIkM9yXWi1Arrapa0kc=
+	t=1749224621; cv=none; b=g+jnJecZSKQ1s8bBi6SjUoxhGDi4w7TJOMsi8A08JrwgFvvH9Xg0Nht/pb4rvQMoULOYpQkzvoX9uy5p45BlWN9ZdYhkfDHaP/QTniGyKna15AzoBBfc4el3BK2c9vUar2Vk6d85RWmxnKvT6Bl2/dcwRjqd517IKQxpuog/PQ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749224619; c=relaxed/simple;
-	bh=D4mv15+bKBKTXf2d9mpoxjl7U8HbYfnSO+CrHkGP0yU=;
+	s=arc-20240116; t=1749224621; c=relaxed/simple;
+	bh=VBYYKDLJM0I51mdHNd3IaGT7PgmJzLlVNj2YChC6Ds8=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Yiv71qrs2UqQIbYMcFNnLE4JxvnT6b8af7NBKq8EOwnRIFiUsKTmHBYN1YcG3iVreeBMInaI6cZOss37ScG3kLlQvky7JgSJmQcblsyXAE5TG8bk+4FazILe5qV/xBnnN1TsCOf/ceZdBLNQm/px7urcBeyTX0PmR7d9LxB7254=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Cr+T8SC0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G0d5jSu2XvaNOrfxQBhfo/W2wLbVX7cz6NTvnLjcGxuEwxyiuO5URUqOW/xPanZM/CcZ9FAli7oFvBsyrmijNIMVOIE89zgRHdRwQ8hr7tbtWAuApKjbkanpjyKMHtBReX4AeKGwtvJE9fb6MAREnIOvJDtISM5TA1oFo7nENSM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=H/N61JQX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Cr+T8SC0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EDCAC4CEED;
-	Fri,  6 Jun 2025 15:43:38 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="H/N61JQX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE9D5C4CEED;
+	Fri,  6 Jun 2025 15:43:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749224619;
-	bh=D4mv15+bKBKTXf2d9mpoxjl7U8HbYfnSO+CrHkGP0yU=;
+	s=k20201202; t=1749224621;
+	bh=VBYYKDLJM0I51mdHNd3IaGT7PgmJzLlVNj2YChC6Ds8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cr+T8SC0qQZuKDRGCf1sk6IoY02dV+fJbSGbzAiNT9KQ8+QMOUNlEXwsvpKL/ieRH
-	 QNgnOAEqEyIhNEvE+Sw4caYWwzeRI717SFjfPvJwI3hlRXMuD9e7LDH+Ks/5KeSDgN
-	 7NWI2shDRYs1OVLCxSthgJIMw7Wgbg7XgUqTS8G6J8TyyhW3tR19aX8BUSvN8m0+vC
-	 mX43R/vnIEMBmJnxdSF0fEQFgx4jrYBJ8QqeHiF8ELJk8Y06MAKwjWzgvJhpiLnADv
-	 tn3ugCzpEO+5Vc5+NgfRXO7Chb0iE2TcKtcJEyVNKF7okaWLB5AmKYCKIs7si22aLq
-	 n64ZV3tLhC7bQ==
+	b=H/N61JQXEBOUFhk5hLFAhUKykcMZSNgltmoFDYnSdq3UWGEl4HbVH5uXzSKOzSZWX
+	 3yOnppLWb8Rc6CKNt33TGs+2kyiFZ9b9C6biXDdsti892iwb17110sDPSqpNrhEOq5
+	 6Ktgz5rAsmYPk+H5X93QskCi/OF8+2I4/ATRnZEKIJfRlLMBRSCLNv5PpYA121FQ6o
+	 sM6z4EpibqjrRPEuvJhlum2ZFaU/pnvGItf6bhgey9Zo5rzrzLKCDfuNq59ZMcuYAo
+	 /ZIdOKBSQuQbGWlmncO6say8IEuDlUzPROnbvlybe+fwqdFAS7v+g19HwJYM9XYGq6
+	 jvdPZbP4P55ZA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Nikhil Jha <njha@janestreet.com>,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Anna Schumaker <anna.schumaker@oracle.com>,
+Cc: Sven Schwermer <sven.schwermer@disruptive-technologies.com>,
+	Jacek Anaszewski <jacek.anaszewski@gmail.com>,
+	Pavel Machek <pavel@ucw.cz>,
+	Tobias Deiminger <tobias.deiminger@linutronix.de>,
+	Sven Schuchmann <schuchmann@schleissheimer.de>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	trondmy@kernel.org,
-	anna@kernel.org,
-	jlayton@kernel.org,
-	linux-nfs@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.6 08/13] sunrpc: don't immediately retransmit on seqno miss
-Date: Fri,  6 Jun 2025 11:43:21 -0400
-Message-Id: <20250606154327.547792-8-sashal@kernel.org>
+	pavel@kernel.org,
+	linux-leds@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.6 09/13] leds: multicolor: Fix intensity setting while SW blinking
+Date: Fri,  6 Jun 2025 11:43:22 -0400
+Message-Id: <20250606154327.547792-9-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250606154327.547792-1-sashal@kernel.org>
 References: <20250606154327.547792-1-sashal@kernel.org>
@@ -52,156 +53,116 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.6.93
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nikhil Jha <njha@janestreet.com>
+From: Sven Schwermer <sven.schwermer@disruptive-technologies.com>
 
-[ Upstream commit fadc0f3bb2de8c570ced6d9c1f97222213d93140 ]
+[ Upstream commit e35ca991a777ef513040cbb36bc8245a031a2633 ]
 
-RFC2203 requires that retransmitted messages use a new gss sequence
-number, but the same XID. This means that if the server is just slow
-(e.x. overloaded), the client might receive a response using an older
-seqno than the one it has recorded.
+When writing to the multi_intensity file, don't unconditionally call
+led_set_brightness. By only doing this if blinking is inactive we
+prevent blinking from stopping if the blinking is in its off phase while
+the file is written.
 
-Currently, Linux's client immediately retransmits in this case. However,
-this leads to a lot of wasted retransmits until the server eventually
-responds faster than the client can resend.
+Instead, if blinking is active, the changed intensity values are applied
+upon the next blink. This is consistent with changing the brightness on
+monochrome LEDs with active blinking.
 
-Client -> SEQ 1 -> Server
-Client -> SEQ 2 -> Server
-Client <- SEQ 1 <- Server (misses, expecting seqno = 2)
-Client -> SEQ 3 -> Server (immediate retransmission on miss)
-Client <- SEQ 2 <- Server (misses, expecting seqno = 3)
-Client -> SEQ 4 -> Server (immediate retransmission on miss)
-... and so on ...
-
-This commit makes it so that we ignore messages with bad checksums
-due to seqnum mismatch, and rely on the usual timeout behavior for
-retransmission instead of doing so immediately.
-
-Signed-off-by: Nikhil Jha <njha@janestreet.com>
-Acked-by: Chuck Lever <chuck.lever@oracle.com>
-Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
+Suggested-by: Jacek Anaszewski <jacek.anaszewski@gmail.com>
+Acked-by: Jacek Anaszewski <jacek.anaszewski@gmail.com>
+Acked-by: Pavel Machek <pavel@ucw.cz>
+Reviewed-by: Tobias Deiminger <tobias.deiminger@linutronix.de>
+Tested-by: Sven Schuchmann <schuchmann@schleissheimer.de>
+Signed-off-by: Sven Schwermer <sven.schwermer@disruptive-technologies.com>
+Link: https://lore.kernel.org/r/20250404184043.227116-1-sven@svenschwermer.de
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Based on my analysis of the commit and the similar backported commits as
-reference, here is my assessment:
+Now I have a complete understanding of the commit. Let me analyze this
+commit for backport suitability:
 
 **YES**
 
-This commit should be backported to stable kernel trees. Here's my
-detailed analysis:
+This commit should be backported to stable kernel trees for the
+following reasons:
 
-## Key Analysis Points:
+## **Bug Analysis:**
 
-### 1. **Bug Fix Nature**:
-This commit addresses a clear performance bug in SUNRPC's RPCSEC_GSS
-sequence number handling. The current code immediately retransmits when
-it receives a response with an older sequence number than expected,
-leading to excessive and wasteful retransmissions when the server is
-simply slow.
+**The Problem:** In the multicolor LED driver, writing to the
+`multi_intensity` file unconditionally calls `led_set_brightness()` at
+line 62. When software blinking is active (`LED_BLINK_SW` flag set),
+this can incorrectly stop the blinking if the LED is currently in its
+"off" phase during the blink cycle.
 
-### 2. **Alignment with RFC2203**:
-The commit correctly implements RFC2203 requirements, which state that
-retransmitted messages should use new GSS sequence numbers but keep the
-same XID. The current behavior creates a retransmission storm that
-violates the spirit of this requirement.
+**The Fix:** The commit adds a check `if (!test_bit(LED_BLINK_SW,
+&led_cdev->work_flags))` before calling `led_set_brightness()`. This
+ensures that when software blinking is active, the intensity changes are
+deferred and applied on the next blink cycle instead of immediately
+stopping the blinking.
 
-### 3. **Code Changes Analysis**:
-The modification in `rpc_decode_header()` at the `out_verifier` label is
-minimal and targeted:
+## **Backport Suitability:**
 
-**Before** (lines 2773-2776):
-```c
-case -EACCES:
-    /* Re-encode with a fresh cred */
-    fallthrough;
-default:
-    goto out_garbage;
-```
+1. **Bug Impact:** This fixes a clear user-visible regression where
+   adjusting multicolor LED intensity incorrectly stops blinking - a
+   functionality that users would expect to work consistently.
 
-**After**:
-```c
-case -EACCES:
-    /* possible RPCSEC_GSS out-of-sequence event (RFC2203),
-     - reset recv state and keep waiting, don't retransmit
-     */
-    task->tk_rqstp->rq_reply_bytes_recvd = 0;
-    task->tk_status = xprt_request_enqueue_receive(task);
-    task->tk_action = call_transmit_status;
-    return -EBADMSG;
-default:
-    goto out_garbage;
-```
+2. **Code Quality:** The fix is minimal, surgical, and follows
+   established patterns in the LED subsystem. Looking at the LED core
+   code (`/home/sasha/linux/drivers/leds/led-core.c`), similar checks
+   for `LED_BLINK_SW` are used in `led_set_brightness()` to handle
+   software blinking properly.
 
-### 4. **Risk Assessment - LOW**:
-- **Scope**: Changes are confined to a specific error handling path in
-  SUNRPC client code
-- **Behavioral change**: Instead of immediate retransmission, it now
-  waits for normal timeout-based retransmission
-- **Fallback**: The normal timeout mechanism still provides
-  retransmission if needed
-- **Error handling**: Uses existing infrastructure
-  (`xprt_request_enqueue_receive`, `call_transmit_status`)
+3. **Risk Assessment:** The change is extremely low-risk:
+   - Single line addition with a simple conditional check
+   - No architectural changes
+   - Uses existing, well-tested flag (`LED_BLINK_SW`)
+   - Consistent with established LED core behavior patterns
 
-### 5. **Comparison with Similar Backported Commits**:
-This commit shares characteristics with successful backports:
-- **Similar Commit #1**: Also fixed SUNRPC verifier handling by changing
-  `goto out_err` to `goto out_garbage`
-- **Similar Commit #2**: Fixed incomplete RPC message handling with
-  proper state management
-- **Similar Commit #5**: Fixed RPCSEC_GSS sequence number limit handling
+4. **Subsystem Scope:** The change is confined to the multicolor LED
+   class interface, affecting only multicolor LEDs, not the broader LED
+   subsystem.
 
-All these were backported because they fixed protocol compliance issues
-with minimal risk.
+5. **Backport Indicators:** The commit has explicit support from
+   maintainers with multiple "Acked-by", "Reviewed-by", and "Tested-by"
+   tags, indicating thorough review and validation.
 
-### 6. **User Impact**:
-- **Performance improvement**: Significantly reduces unnecessary
-  retransmissions under server load
-- **Network efficiency**: Reduces wasted bandwidth and server load
-- **No breaking changes**: Maintains compatibility while improving
-  behavior
+6. **Consistency:** This aligns with similar commits marked as backport
+   candidates (like Similar Commit #4 which was marked YES for fixing
+   LED core blinking regression).
 
-### 7. **Stability Criteria Compliance**:
-✅ **Important bugfix**: Fixes performance degradation and protocol
-compliance
-✅ **Minimal risk**: Small, localized change to error handling path
-✅ **No new features**: Pure bugfix, no architectural changes
-✅ **Subsystem-contained**: Changes only affect SUNRPC client verifier
-handling
-✅ **Clear benefit**: Reduces retransmission storms in production
-environments
+## **Historical Context:**
 
-The commit follows the stable tree rules perfectly: it's a targeted fix
-for a real-world performance problem with minimal risk of regression,
-affecting only the specific error case of RPCSEC_GSS sequence number
-mismatches.
+From the similar commits analysis, LED blinking fixes that restore
+expected behavior (like Similar Commit #4) are consistently backported,
+while new features or documentation-only changes (Similar Commits #1,
+#2, #3, #5) are not.
 
- net/sunrpc/clnt.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+This commit clearly falls into the "restore expected behavior" category
+- multicolor LED intensity adjustment should work consistently
+regardless of blinking state, just like it does for monochrome LEDs.
 
-diff --git a/net/sunrpc/clnt.c b/net/sunrpc/clnt.c
-index 4ffb2bcaf3648..63756607f6327 100644
---- a/net/sunrpc/clnt.c
-+++ b/net/sunrpc/clnt.c
-@@ -2733,8 +2733,13 @@ rpc_decode_header(struct rpc_task *task, struct xdr_stream *xdr)
- 	case -EPROTONOSUPPORT:
- 		goto out_err;
- 	case -EACCES:
--		/* Re-encode with a fresh cred */
--		fallthrough;
-+		/* possible RPCSEC_GSS out-of-sequence event (RFC2203),
-+		 * reset recv state and keep waiting, don't retransmit
-+		 */
-+		task->tk_rqstp->rq_reply_bytes_recvd = 0;
-+		task->tk_status = xprt_request_enqueue_receive(task);
-+		task->tk_action = call_transmit_status;
-+		return -EBADMSG;
- 	default:
- 		goto out_garbage;
- 	}
+The fix ensures behavioral consistency between multicolor and monochrome
+LEDs during blinking, which is exactly the type of user-facing bug fix
+that stable trees are designed to address.
+
+ drivers/leds/led-class-multicolor.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/leds/led-class-multicolor.c b/drivers/leds/led-class-multicolor.c
+index ec62a48116135..e0785935f4ba6 100644
+--- a/drivers/leds/led-class-multicolor.c
++++ b/drivers/leds/led-class-multicolor.c
+@@ -61,7 +61,8 @@ static ssize_t multi_intensity_store(struct device *dev,
+ 	for (i = 0; i < mcled_cdev->num_colors; i++)
+ 		mcled_cdev->subled_info[i].intensity = intensity_value[i];
+ 
+-	led_set_brightness(led_cdev, led_cdev->brightness);
++	if (!test_bit(LED_BLINK_SW, &led_cdev->work_flags))
++		led_set_brightness(led_cdev, led_cdev->brightness);
+ 	ret = size;
+ err_out:
+ 	mutex_unlock(&led_cdev->led_access);
 -- 
 2.39.5
 
