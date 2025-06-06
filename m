@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5DB928C02C;
-	Fri,  6 Jun 2025 15:43:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5128428A414;
+	Fri,  6 Jun 2025 15:43:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749224635; cv=none; b=hpNGRPlH1t11Mrv2sgH9gueaK6JJVaNbSMefbMi8G6x07wYU8DAderGM3pZQgXTrZ5QGaN1oKA3qAHQHcItuCY7fFWdNCye3rLGHOjle9kpbCceGyDylCluPGGRk5l3fUZl4cxv9aCXYh2LdzEmNJtbbkYLyqV6N3i073fGBzrs=
+	t=1749224636; cv=none; b=uudzqN8yMKIjTeWPANrycy+SctMfGNukeA/ki8b6QwRHgHKd6N787YRuwjTjwwgCVt/8WntEOXGHSlIyWGv6dN9Bpu5nfEHtLPZiIdiEZq3UCdQ2fDmvk3XxaDmns4UPspOUf9mS9A+1ulR6SxrOMHH+zlWFjSSG8vv12isuhQc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749224635; c=relaxed/simple;
-	bh=kSlg7NSFweTCveIRjYs8UK92M3Uy8ZYmA5cs9zimf/4=;
+	s=arc-20240116; t=1749224636; c=relaxed/simple;
+	bh=TF5sC5UfQvayV0pmpxghEWpWDAwZXepvOiLUi0VJX38=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dMOeaoUAuFRDt/9o5q5J7rHJPxt5QBQaq8BbZUZxM3+zX/AU7M4nNjKKGUyasoNNxQeFOkwSMFL4YHI54ngF8xw9u2EnDhp/rWWEi0wFD30WVpjEaVpvAt7bPIcidWMBGdlKL0LIHATb1yILZg/c3ouYj7aWbIQLlYkASmL9LUw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=E50+wMS3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=KP9kuYXQGA5V+SW1lViHpWQsNv4n91HcjHG2bceeVu9g+tFWEZX8a8unZgSbeT3+f8VZtKZsD9tBETL5NKpbHr7PGApQDEY9BRqWmLLTc5xMCbj3eoicsM+4ymKEsdENAI+05GQPxV6PgAD5VW5Q33Ihr0H25jEA5qWa4JHKcGw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Zo69xmq0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="E50+wMS3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0C9CC4CEF0;
-	Fri,  6 Jun 2025 15:43:53 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Zo69xmq0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33CB0C4CEF0;
+	Fri,  6 Jun 2025 15:43:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749224634;
-	bh=kSlg7NSFweTCveIRjYs8UK92M3Uy8ZYmA5cs9zimf/4=;
+	s=k20201202; t=1749224636;
+	bh=TF5sC5UfQvayV0pmpxghEWpWDAwZXepvOiLUi0VJX38=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E50+wMS3T2pQnzEHOO53pZtA/V/aDDEQEi4Gl6vV0heiRIf0mwjB69GuWP1n1lOHi
-	 2OCtn3rHaF6yaIf/0SiKlldd/xH5b4Nj4W38SAUjToTyWpcFOr0ua59P4z0+XRu/i/
-	 T4bxG07e04jwDsz46wRyTPtJSkjBFBAOxx+Fj0303rSUKl1FLtFKCaVLjTSFageVX0
-	 dAWfv1tPGIJdhj9hvfQLrk/QwqBJhV+DqX6hlQlfSbp+nyKHdxWSIUtHDIZk5CO75U
-	 PJp1vdnr/nOs5aptvuYLL+QHQsKkqKU4aUPel8lZQQXRhjODKj/zdTAp7Ni6Rcm6FM
-	 42JlIDSjOTeOg==
+	b=Zo69xmq0orewgiYZyh1sqCowxMuHPkdCs1eQaHRATVdZCk5/EdOet7t44Okcps9S9
+	 dSYI1USLcX10MyZFoODz8CDRdHooNNNBVvsDHSdRletK18qO5o6MyMzrqLxLkbC/E/
+	 vozxraVQ3bedYaR+G2SDlxDcQ94gBh4vZu3xg2TICBtgA1c9+x9w5T4nwD4Kzv1sOV
+	 UPIxNBG5rwn/rDx5iowuf3gcN6/mwtB9V2D10d3HqGY9aDYHlmDOAnGabYWxfRJ1DO
+	 YD/yVp2g53UtaChYEC8oWMrZXsjGwjOQ0xVjLb6+l5IoNF8vCIHFxEAZ/pl0mzGu6l
+	 9y2dW8zPP8nAA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: =?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+Cc: Han Young <hanyang.tony@bytedance.com>,
+	Anna Schumaker <anna.schumaker@oracle.com>,
 	Sasha Levin <sashal@kernel.org>,
-	sfrench@samba.org,
-	linux-cifs@vger.kernel.org,
-	samba-technical@lists.samba.org
-Subject: [PATCH AUTOSEL 6.1 2/9] cifs: Fix cifs_query_path_info() for Windows NT servers
-Date: Fri,  6 Jun 2025 11:43:43 -0400
-Message-Id: <20250606154350.548104-2-sashal@kernel.org>
+	trondmy@kernel.org,
+	anna@kernel.org,
+	linux-nfs@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.1 3/9] NFSv4: Always set NLINK even if the server doesn't support it
+Date: Fri,  6 Jun 2025 11:43:44 -0400
+Message-Id: <20250606154350.548104-3-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250606154350.548104-1-sashal@kernel.org>
 References: <20250606154350.548104-1-sashal@kernel.org>
@@ -47,115 +47,87 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.1.141
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pali Rohár <pali@kernel.org>
+From: Han Young <hanyang.tony@bytedance.com>
 
-[ Upstream commit a3e771afbb3bce91c8296828304903e7348003fe ]
+[ Upstream commit 3a3065352f73381d3a1aa0ccab44aec3a5a9b365 ]
 
-For TRANS2 QUERY_PATH_INFO request when the path does not exist, the
-Windows NT SMB server returns error response STATUS_OBJECT_NAME_NOT_FOUND
-or ERRDOS/ERRbadfile without the SMBFLG_RESPONSE flag set. Similarly it
-returns STATUS_DELETE_PENDING when the file is being deleted. And looks
-like that any error response from TRANS2 QUERY_PATH_INFO does not have
-SMBFLG_RESPONSE flag set.
+fattr4_numlinks is a recommended attribute, so the client should emulate
+it even if the server doesn't support it. In decode_attr_nlink function
+in nfs4xdr.c, nlink is initialized to 1. However, this default value
+isn't set to the inode due to the check in nfs_fhget.
 
-So relax check in check_smb_hdr() for detecting if the packet is response
-for this special case.
+So if the server doesn't support numlinks, inode's nlink will be zero,
+the mount will fail with error "Stale file handle". Set the nlink to 1
+if the server doesn't support it.
 
-This change fixes stat() operation against Windows NT SMB servers and also
-all operations which depends on -ENOENT result from stat like creat() or
-mkdir().
-
-Signed-off-by: Pali Rohár <pali@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Han Young <hanyang.tony@bytedance.com>
+Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-**YES** This commit should be backported to stable kernel trees. Here's
-my extensive analysis: ## Backport Recommendation: YES ### Nature of the
-Fix This is a **targeted bug fix** that addresses a specific protocol
-compliance issue with Windows NT SMB servers. The commit fixes a
-fundamental problem where basic file operations (`stat()`, `creat()`,
-`mkdir()`) fail against Windows NT servers due to overly strict SMB
-header validation. ### Code Change Analysis The fix is remarkably
-**simple and contained** - only 8 lines of code in a single function:
-```c /bin /bin.usr-is-merged /boot /dev /etc /home /init /lib /lib.usr-
-is-merged /lib64 /lost+found /media /mnt /opt /proc /root /run /sbin
-/sbin.usr-is-merged /snap /srv /sys /tmp /usr /var * Windows NT server
-returns error resposne (e.g. STATUS_DELETE_PENDING * or
-STATUS_OBJECT_NAME_NOT_FOUND or ERRDOS/ERRbadfile or any other) * for
-some TRANS2 requests without the RESPONSE flag set in header. */ if
-(smb->Command == SMB_COM_TRANSACTION2 && smb->Status.CifsError != 0)
-return 0; ``` The change is in the `check_smb_hdr()` function in
-`fs/smb/client/misc.c`, which validates SMB packet headers. The fix
-**relaxes validation** only for a very specific case: TRANS2 commands
-returning errors from Windows NT servers. ### Risk Assessment: LOW 1.
-**Surgical precision**: Only affects SMB1 TRANS2 error responses,
-leaving normal operation paths untouched 2. **Conservative approach**:
-The condition `smb->Status.CifsError != 0` ensures this only applies to
-actual error responses 3. **No behavioral changes** for compliant
-servers that properly set the RESPONSE flag 4. **Well-established code
-path**: The `check_smb_hdr()` function is mature and stable ### Impact
-Assessment: HIGH 1. **Fixes broken functionality**: Without this fix,
-basic file operations fail completely against Windows NT servers 2.
-**Backward compatibility**: Restores support for legacy but still-used
-server environments 3. **User-visible improvement**: Directly fixes
-`stat()`, `creat()`, and `mkdir()` operations 4. **No regressions**:
-Modern SMB servers continue to work as before ### Comparison with
-Similar Commits Looking at the provided similar commits: - **Similar
-Commit #2** (Status: YES): Also adds new status code mappings for better
-server compatibility - **Similar Commit #3** (Status: YES): Reduces
-unnecessary network roundtrips by improving error handling - **Similar
-Commit #4** (Status: YES): Fixes WSL reparse point querying over SMB1 -
-**Similar Commit #5** (Status: YES): Fixes missing resource cleanup This
-commit follows the **same pattern** as these approved backports: small,
-targeted fixes that improve compatibility and fix real-world issues
-without introducing new features or architectural changes. ### Technical
-Justification The Windows NT server behavior described in the commit is
-**non-compliant but real**: these servers return error responses for
-TRANS2 QUERY_PATH_INFO requests without setting the `SMBFLG_RESPONSE`
-flag. The current strict validation incorrectly treats these as invalid
-packets, causing the CIFS client to fail when it should handle the
-errors properly. The fix is **protocol-aware** and **conservative** - it
-only relaxes validation for the specific case where we know Windows NT
-behaves differently, ensuring no impact on standard-compliant servers.
-### Stable Tree Suitability This commit perfectly fits stable tree
-criteria: - ✅ **Important bug fix** affecting real-world usage - ✅
-**Minimal and contained** change with clear scope - ✅ **No new
-features** - purely fixes existing broken functionality - ✅ **Low
-regression risk** due to targeted nature - ✅ **Production-ready** code
-following established patterns This should be backported to all stable
-kernels that support SMB1 client functionality, as it fixes a
-fundamental compatibility issue without any meaningful risk of
-regression.
+Based on my analysis of the commit and the kernel source code, here is
+my determination: **YES** This commit should be backported to stable
+kernel trees. Here's my extensive analysis: ## Critical Bug Fix Analysis
+### 1. **Root Cause Understanding** The commit addresses a critical
+issue where NFSv4 mounts fail with "Stale file handle" errors when the
+server doesn't support the `fattr4_numlinks` (NLINK) attribute. Looking
+at the code: - In `/home/sasha/linux/fs/nfs/nfs4xdr.c:3969`, the
+`decode_attr_nlink` function initializes `*nlink = 1` as a default -
+However, in `/home/sasha/linux/fs/nfs/inode.c:556-559`, the current
+logic only sets the inode's nlink if `fattr->valid &
+NFS_ATTR_FATTR_NLINK` is true - When the server doesn't support
+numlinks, the `fattr->valid` flag isn't set, so the inode's nlink
+remains 0 (from initial inode allocation) ### 2. **Impact of Zero
+nlink** From `/home/sasha/linux/fs/nfs/dir.c:1578-1582`, I can see the
+critical check: ```c if (inode->i_nlink > 0 || (inode->i_nlink == 0 &&
+test_bit(NFS_INO_PRESERVE_UNLINKED, &NFS_I(inode)->flags))) return 0;
+else return -ESTALE; ``` When `i_nlink == 0` and the
+`NFS_INO_PRESERVE_UNLINKED` flag isn't set, NFS returns `-ESTALE`,
+causing "Stale file handle" errors and mount failures. ### 3. **Backport
+Suitability Criteria** **✅ Fixes important user-affecting bug**: Mount
+failures prevent basic filesystem functionality **✅ Small and contained
+fix**: The change adds only 2 lines: ```c else if (fattr_supported &
+NFS_ATTR_FATTR_NLINK) nfs_set_cache_invalid(inode,
+NFS_INO_INVALID_NLINK); +else + set_nlink(inode, 1); ``` **✅ Minimal
+regression risk**: Setting nlink=1 as fallback is safe and follows the
+NFSv4 spec (fattr4_numlinks is a "recommended" attribute, so emulation
+is appropriate) **✅ No architectural changes**: This is a targeted fix
+within existing error handling logic **✅ Follows stable tree rules**:
+It's an important bugfix with minimal risk ### 4. **Comparison with
+Similar Commits** Unlike the provided similar commits that were marked
+"NO" (which involved more complex nlink management, cache invalidation
+changes, or feature additions), this commit: - Fixes a fundamental
+compatibility issue - Prevents complete mount failures - Is minimal and
+defensive - Addresses server interoperability problems ### 5. **Server
+Compatibility** This fix ensures NFSv4 clients remain functional with
+servers that don't fully implement all recommended attributes, which is
+critical for real-world deployments where server implementations vary.
+The commit directly prevents mount failures that would otherwise require
+server-side fixes or workarounds, making it essential for stable kernel
+trees where users expect reliable NFS functionality.
 
- fs/smb/client/misc.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ fs/nfs/inode.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/smb/client/misc.c b/fs/smb/client/misc.c
-index 3826f71766086..99a0a1fe66187 100644
---- a/fs/smb/client/misc.c
-+++ b/fs/smb/client/misc.c
-@@ -307,6 +307,14 @@ check_smb_hdr(struct smb_hdr *smb)
- 	if (smb->Command == SMB_COM_LOCKING_ANDX)
- 		return 0;
- 
-+	/*
-+	 * Windows NT server returns error resposne (e.g. STATUS_DELETE_PENDING
-+	 * or STATUS_OBJECT_NAME_NOT_FOUND or ERRDOS/ERRbadfile or any other)
-+	 * for some TRANS2 requests without the RESPONSE flag set in header.
-+	 */
-+	if (smb->Command == SMB_COM_TRANSACTION2 && smb->Status.CifsError != 0)
-+		return 0;
-+
- 	cifs_dbg(VFS, "Server sent request, not response. mid=%u\n",
- 		 get_mid(smb));
- 	return 1;
+diff --git a/fs/nfs/inode.c b/fs/nfs/inode.c
+index f2e66b946f4b4..e774cfc85eeed 100644
+--- a/fs/nfs/inode.c
++++ b/fs/nfs/inode.c
+@@ -555,6 +555,8 @@ nfs_fhget(struct super_block *sb, struct nfs_fh *fh, struct nfs_fattr *fattr)
+ 			set_nlink(inode, fattr->nlink);
+ 		else if (fattr_supported & NFS_ATTR_FATTR_NLINK)
+ 			nfs_set_cache_invalid(inode, NFS_INO_INVALID_NLINK);
++		else
++			set_nlink(inode, 1);
+ 		if (fattr->valid & NFS_ATTR_FATTR_OWNER)
+ 			inode->i_uid = fattr->uid;
+ 		else if (fattr_supported & NFS_ATTR_FATTR_OWNER)
 -- 
 2.39.5
 
