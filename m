@@ -1,84 +1,108 @@
-Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3D7CC27AC48;
-	Thu,  5 Jun 2025 21:04:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=13.77.154.182
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3B0A322A
+	for <patches@lists.linux.dev>; Fri,  6 Jun 2025 00:09:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749157448; cv=none; b=e2ATYI2lORvTE5eMgORlc5VCzLeNKe2zHekf/RYBUe1Qxl5wJBzIr2WiEITI7z9ptK4GwKdxIs/2BIpl3Q9R7UX3rY7oEG/RXPpZR6CM7Y5Ch7gJdKAWEvfBubC6SXCEQV+7DssJTjQdvwDNEQiry4IHRGk0nGv+I2TuU0jssRQ=
+	t=1749168593; cv=none; b=mqe59bekm9f4o91Qxz/lPiQCkm4ySK9EAALP2dSL4Yr14HNul5ohwbX4u9Up7NYWyLGEBzcI5GzdL+BzSwdPp/Zq1dmxf2zpkOTrfiBLR9sFHi3MCZPsWKKGYiHvECozrgqnhFDi6zhB0/+l3JxG4Cm6vKXeffQlW5oimCEjWBA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749157448; c=relaxed/simple;
-	bh=5z4lyN6eFPIUIuW6ETWM+sIFBqvUb6kdsqF23bzMXIQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Dx9MWYnh8TJkgyXsnR8JlBij0O0tl+mnZTxvbBjymSoCKCGiQw2jG53Jp2QiTxULSRt+XDGTHIbnU+Bn/uzxRywK1cp63+v2jt3QMxbZH/CtRi9G+rXieOvHiZ4Y/QnqMZLpOSRGViFA/xqG9OB9TInUBk399cMqgUc6zn6Y75M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com; spf=pass smtp.mailfrom=linux.microsoft.com; dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b=cD7s8vD0; arc=none smtp.client-ip=13.77.154.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.microsoft.com
+	s=arc-20240116; t=1749168593; c=relaxed/simple;
+	bh=HelkW/bWw8McxxXZHEIrR28siZM+fgO3DHrIn0ODxGo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=bc/Kbqn/T2bbeU9wqTKX+ankVAISuBaYFteP1DcSmeGWmugE0Ky69glTicgrHLEttJG1DiN3n83LeBWpHV6Qa10HAH13U3yUBXHoCoxN4iUOeahThhuIh6tgesOMbVIi/72SjDmUHGLtAi1gVvNzi5M6wKotz68g9jykyiV1yjY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=hU3ahuw4; arc=none smtp.client-ip=192.198.163.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b="cD7s8vD0"
-Received: from DESKTOP-0403QTC. (unknown [40.65.108.177])
-	by linux.microsoft.com (Postfix) with ESMTPSA id 8450D210D0C2;
-	Thu,  5 Jun 2025 14:04:00 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 8450D210D0C2
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
-	s=default; t=1749157441;
-	bh=Gund+dK5aJW6UtaEJ+x2rgplZpVnxwe1S5F5gyh6HAA=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:Reply-To:From;
-	b=cD7s8vD0a0AfPh3ebIr231hpAoYtxnmr5f0EAkqfQvSQ1jXXObO60Olle7BNyh26Y
-	 PQSAfLA3l+EG5LI4UboSinv7mYXWDeCbzO5VLzMylLYL36WykSm86yqe0ISRwemYjE
-	 RuzFbs8q4U3a2qW3X85abq+4uV8QpooHP9orWnmw=
-Date: Thu, 5 Jun 2025 14:03:58 -0700
-From: Jacob Pan <jacob.pan@linux.microsoft.com>
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: Jonathan Corbet <corbet@lwn.net>, iommu@lists.linux.dev, Joerg Roedel
- <joro@8bytes.org>, Justin Stitt <justinstitt@google.com>, Kevin Tian
- <kevin.tian@intel.com>, linux-doc@vger.kernel.org,
- linux-kselftest@vger.kernel.org, llvm@lists.linux.dev, Bill Wendling
- <morbo@google.com>, Nathan Chancellor <nathan@kernel.org>, Nick Desaulniers
- <nick.desaulniers+lkml@gmail.com>, Miguel Ojeda <ojeda@kernel.org>, Robin
- Murphy <robin.murphy@arm.com>, Shuah Khan <shuah@kernel.org>, Suravee
- Suthikulpanit <suravee.suthikulpanit@amd.com>, Will Deacon
- <will@kernel.org>, Alexey Kardashevskiy <aik@amd.com>, Alejandro Jimenez
- <alejandro.j.jimenez@oracle.com>, James Gowans <jgowans@amazon.com>,
- Michael Roth <michael.roth@amd.com>, Pasha Tatashin
- <pasha.tatashin@soleen.com>, patches@lists.linux.dev,
- jacob.pan@linux.microsoft.com
-Subject: Re: [PATCH v2 12/15] iommupt: Add the x86 64 bit page table format
-Message-ID: <20250605140358.2dd6c083@DESKTOP-0403QTC.>
-In-Reply-To: <12-v2-5c26bde5c22d+58b-iommu_pt_jgg@nvidia.com>
-References: <0-v2-5c26bde5c22d+58b-iommu_pt_jgg@nvidia.com>
-	<12-v2-5c26bde5c22d+58b-iommu_pt_jgg@nvidia.com>
-Reply-To: jacob.pan@linux.microsoft.com
-X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.33; x86_64-pc-linux-gnu)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="hU3ahuw4"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1749168592; x=1780704592;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=HelkW/bWw8McxxXZHEIrR28siZM+fgO3DHrIn0ODxGo=;
+  b=hU3ahuw4nxEL0uH0hSp+rlEZ3UMay/zp2tA0ZaYT3qRLHmhL3xAkEWYe
+   ZxfqtwWYVZIq18B+PxBgSxhHQV9LAOPzqY3DFCOplqXEM5YpSX001EYuK
+   LRGKO3GuWb5BYN1++Ij0+xX5sR9+eZ+aUelVLxbYBVjUy/Psy1xgL1sqL
+   ao8AfyUXYs4JPnRyTdcf4/FVRLAxY7XBg3vsDAFZfiKLtcek6kFQUjKyU
+   6JIepeE03nsgcIXRz3e+7ASxkaO6JvLYH98MzGBixqVdRXkmvkJDSze3E
+   pHeFPd2WReEkMUjbLAuOseeN7NftyQ/Bka8Dbpjr4cGzLPFE75dcBZef9
+   A==;
+X-CSE-ConnectionGUID: zeR7JpoCQbqZjJy5XJNWkQ==
+X-CSE-MsgGUID: rPwmdpAVQpCPv0T5LSWFwQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11455"; a="55101501"
+X-IronPort-AV: E=Sophos;i="6.16,213,1744095600"; 
+   d="scan'208";a="55101501"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Jun 2025 17:09:51 -0700
+X-CSE-ConnectionGUID: 7BiVIETJSymTZrniWRzO7w==
+X-CSE-MsgGUID: O1hvVvTySe6NS5MwRlktaQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,213,1744095600"; 
+   d="scan'208";a="176629122"
+Received: from agluck-desk3.sc.intel.com (HELO agluck-desk3) ([172.25.103.51])
+  by orviesa002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Jun 2025 17:09:51 -0700
+Date: Thu, 5 Jun 2025 17:09:49 -0700
+From: "Luck, Tony" <tony.luck@intel.com>
+To: Reinette Chatre <reinette.chatre@intel.com>
+Cc: Fenghua Yu <fenghuay@nvidia.com>,
+	Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
+	Peter Newman <peternewman@google.com>,
+	James Morse <james.morse@arm.com>, Babu Moger <babu.moger@amd.com>,
+	Drew Fustini <dfustini@baylibre.com>,
+	Dave Martin <Dave.Martin@arm.com>,
+	Anil Keshavamurthy <anil.s.keshavamurthy@intel.com>,
+	Chen Yu <yu.c.chen@intel.com>, x86@kernel.org,
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH v5 27/29] fs/resctrl: Add file system mechanism for
+ architecture info file
+Message-ID: <aEIxzbuFybLBE3xt@agluck-desk3>
+References: <20250521225049.132551-1-tony.luck@intel.com>
+ <20250521225049.132551-28-tony.luck@intel.com>
+ <f25d136c-b1d3-483a-ac77-92464d7fe25c@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <f25d136c-b1d3-483a-ac77-92464d7fe25c@intel.com>
 
-Hi Jason,
+On Tue, Jun 03, 2025 at 09:15:02PM -0700, Reinette Chatre wrote:
+> Hi Tony,
+> 
+> On 5/21/25 3:50 PM, Tony Luck wrote:
+> > Creation of all files in the resctrl file system is under control of
+> > the file system layer.
+> > 
+> > But some resources may need to add a file to the info/{resource}
+> > directory for debug purposes.
+> > 
+> > Add a new rdt_resource::info_file field for the resource to specify
+> > show() and/or write() operations. These will be called with the
+> > rdtgroup_mutex held.
+> > 
+> > Architecture can note the file is only for debug using by setting
+> > the rftype::flags RFTYPE_DEBUG bit.
+> 
+> This needs to change. This punches a crater through the separation
+> between fs and arch that we worked hard to achieve. Please make an attempt
+> to do so as I am sure you can.
 
-On Mon,  5 May 2025 11:18:42 -0300
-Jason Gunthorpe <jgg@nvidia.com> wrote:
+The file I want to create here amy only be of interest in debugging
+the telemetry h/w interface. So my next choice is debugfs.
 
-> +config IOMMU_PT_X86_64
-> +       tristate "IOMMU page table for x86 64 bit, 4/5 levels"
-> +	depends on !GENERIC_ATOMIC64 # for cmpxchg64
-> +	default n
-> +	help
-> +	  iommu_domain implementation for the x86 64 bit 4/5 level
-> page table.
-> +	  It supports 4K/2M/1G page sizes and can decode a sign
-> extended
-> +	  portion of the 64 bit IOVA space.
-> +
-> +	  Selected automatically by an IOMMU driver that uses this
-> format. +
->  config IOMMU_PT_KUNIT_TEST
->  	tristate "IOMMU Page Table KUnit Test" if !KUNIT_ALL_TESTS
->  	depends on KUNIT
->  	depends on IOMMU_PT_AMDV1 || !IOMMU_PT_AMDV1
-> +	depends on IOMMU_PT_X86_64 || !IOMMU_PT_X86_64
-Is this intended? or you mean:
-depends on IOMMU_PT_X86_64 || IOMMU_PT_AMDV1
+But creation of the debugfs "resctrl" directory is done by file
+system code and the debugfs_resctrl variable is only marked "extern" by
+fs/resctrl/internal.h, so currently not accessible to architecture code.
+
+Is that a deliberate choice? Would it be OK to make that visible to
+architecture code to create files in /sys/kernel/debug/resctrl?
+
+Or should I add my file in a new /sys/kernel/debug/x86/resctrl
+directory?
+
+-Tony
