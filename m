@@ -1,46 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22E36289E3D;
-	Fri,  6 Jun 2025 15:44:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81DBC28A1C2;
+	Fri,  6 Jun 2025 15:44:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749224642; cv=none; b=BOzlurw4j9bcZ9XGRv8OHSW//hjJ8ugOOdRy/QhCaI9bjtkO5/ZesT/rHqfrQCitNhANYoVl8wpZHAXVlCTEMoJfBF1waqi9m88rXJzj2w1Yte5kKudlcCosHZhp6aeDZx5Vn0BEzuGJh1dyLxOEfKi7W8+gKqXWn56IAiIO3LM=
+	t=1749224644; cv=none; b=Y6Yw1Usxckh6c7pUsM8hIZctgkSD8WgLpUy061k97pzymqEy/pN5aBR7fxuJqR5kZTq7bII9V8aozSfJOpfun6xKJIsoSRz2ZMRqTkFlbtF6g+f9x55VU9VQlu2sg/8fZpGjcE+fvwW2/THkcvHmnvJ3AR6ROm14DY4LaKnehQs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749224642; c=relaxed/simple;
-	bh=VBYYKDLJM0I51mdHNd3IaGT7PgmJzLlVNj2YChC6Ds8=;
+	s=arc-20240116; t=1749224644; c=relaxed/simple;
+	bh=E9lbOIvmt00Olr1DTzRCOGOnYEfIWdVLMv+S7oDrJ0A=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=uV3Qs0DAXOi0Y2uqENCYLDCwlmddRnqUjKJd4jnfO6ma+WOJG3i5StT6KwH3m6WDyMVXQUCLkGppZo0eZglgS0qD6Xkser3j/Un8NW96H1YEb3Hc6dI6cBfiXI1903p60kZUU6GSgdR/U32gtQF17NXFGxjo3uuu7/YfDn3ygEw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=axKo7SpK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AkVV1QgHtynwX9x5awFmHeJgFnzbkiIIdlIZg2M0MFTHtURmGrLstK+WgyaLNNArPyB860rD/bt/+s1KAuJHgNzpOTXJAzmCbF1n/pr4cHGim2eh1dpDBByobiis1PcWmp4Q17wegcPgn/UQLtr44ERd45rttALikwkqGbZBjVg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UsFin9vj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="axKo7SpK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABE7DC4CEF4;
-	Fri,  6 Jun 2025 15:44:00 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UsFin9vj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41AF6C4CEF3;
+	Fri,  6 Jun 2025 15:44:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749224642;
-	bh=VBYYKDLJM0I51mdHNd3IaGT7PgmJzLlVNj2YChC6Ds8=;
+	s=k20201202; t=1749224644;
+	bh=E9lbOIvmt00Olr1DTzRCOGOnYEfIWdVLMv+S7oDrJ0A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=axKo7SpK2AbU55+kBTMOQRKvy01Abpde67fJ1sbiBO9nFjluDinNyEVHH4tpVUm0d
-	 2tiHCw2ah2EvXz5Vrm7Dk8XtsM5AQtDnCktUnblqKPTOa+SSbP2DyiQdE9W5LL6aM+
-	 SX1MyQByGqGgokhnJDz3tpTIabcMMt7SOW1A/pZEch7u+j0uesk8XD+ceM6lPtav1Q
-	 ZwDZ3TGZ1o7UzpD8c5fTyxbPIt1LifePr0HBD19UN7LvR2Oods+amwnSQFvHdBtWAb
-	 LJTkkCRWq7ppvKixsYPairNsN3g1aOfC2Jgx/hxgmww10topI+5ckX7ieDpW0gQy5E
-	 /3oWGrTLserUQ==
+	b=UsFin9vjSfnM/WXpw6Und2FtG5Dn/phVqWB4XbhmgqXyI5G5He4PNVXY1tOlJIWUR
+	 5RWSnJy8+BT/ihpF3Rfco7EPKj0E46aBSAHjWVaxjNB45P0GNYpoqCSAKJWMAOmuui
+	 DBVgxX2CsF2clMc17BAdS44Ljh23X1/fsAZ8grfkTAwI+SB52pOB7KVkqUIXjnaBpO
+	 XIAt3u2MU/QwMcvJ+eokH/LRuCxx0WhBExvvuhf17ju2D59VAVLZ8n0pfcnfhHiwuJ
+	 JGwrCEku7BC5qDKHjBwMM7iWn62cI2vdMTDEIfup1Ojo0LrDnEA/7ISUCNx6rpx+/t
+	 hLhSTJI6IJcAg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Sven Schwermer <sven.schwermer@disruptive-technologies.com>,
-	Jacek Anaszewski <jacek.anaszewski@gmail.com>,
-	Pavel Machek <pavel@ucw.cz>,
-	Tobias Deiminger <tobias.deiminger@linutronix.de>,
-	Sven Schuchmann <schuchmann@schleissheimer.de>,
-	Lee Jones <lee@kernel.org>,
+Cc: Scott Mayhew <smayhew@redhat.com>,
+	Anna Schumaker <anna.schumaker@oracle.com>,
 	Sasha Levin <sashal@kernel.org>,
-	pavel@kernel.org,
-	linux-leds@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.1 7/9] leds: multicolor: Fix intensity setting while SW blinking
-Date: Fri,  6 Jun 2025 11:43:48 -0400
-Message-Id: <20250606154350.548104-7-sashal@kernel.org>
+	trondmy@kernel.org,
+	anna@kernel.org,
+	linux-nfs@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.1 8/9] NFSv4: xattr handlers should check for absent nfs filehandles
+Date: Fri,  6 Jun 2025 11:43:49 -0400
+Message-Id: <20250606154350.548104-8-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250606154350.548104-1-sashal@kernel.org>
 References: <20250606154350.548104-1-sashal@kernel.org>
@@ -55,114 +52,110 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.1.141
 Content-Transfer-Encoding: 8bit
 
-From: Sven Schwermer <sven.schwermer@disruptive-technologies.com>
+From: Scott Mayhew <smayhew@redhat.com>
 
-[ Upstream commit e35ca991a777ef513040cbb36bc8245a031a2633 ]
+[ Upstream commit 6e9a2f8dbe93c8004c2af2c0158888628b7ca034 ]
 
-When writing to the multi_intensity file, don't unconditionally call
-led_set_brightness. By only doing this if blinking is inactive we
-prevent blinking from stopping if the blinking is in its off phase while
-the file is written.
+The nfs inodes for referral anchors that have not yet been followed have
+their filehandles zeroed out.
 
-Instead, if blinking is active, the changed intensity values are applied
-upon the next blink. This is consistent with changing the brightness on
-monochrome LEDs with active blinking.
+Attempting to call getxattr() on one of these will cause the nfs client
+to send a GETATTR to the nfs server with the preceding PUTFH sans
+filehandle.  The server will reply NFS4ERR_NOFILEHANDLE, leading to -EIO
+being returned to the application.
 
-Suggested-by: Jacek Anaszewski <jacek.anaszewski@gmail.com>
-Acked-by: Jacek Anaszewski <jacek.anaszewski@gmail.com>
-Acked-by: Pavel Machek <pavel@ucw.cz>
-Reviewed-by: Tobias Deiminger <tobias.deiminger@linutronix.de>
-Tested-by: Sven Schuchmann <schuchmann@schleissheimer.de>
-Signed-off-by: Sven Schwermer <sven.schwermer@disruptive-technologies.com>
-Link: https://lore.kernel.org/r/20250404184043.227116-1-sven@svenschwermer.de
-Signed-off-by: Lee Jones <lee@kernel.org>
+For example:
+
+$ strace -e trace=getxattr getfattr -n system.nfs4_acl /mnt/t/ref
+getxattr("/mnt/t/ref", "system.nfs4_acl", NULL, 0) = -1 EIO (Input/output error)
+/mnt/t/ref: system.nfs4_acl: Input/output error
++++ exited with 1 +++
+
+Have the xattr handlers return -ENODATA instead.
+
+Signed-off-by: Scott Mayhew <smayhew@redhat.com>
+Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Now I have a complete understanding of the commit. Let me analyze this
-commit for backport suitability:
+Based on my analysis of the commit, I can now provide my assessment.
 
 **YES**
 
 This commit should be backported to stable kernel trees for the
 following reasons:
 
-## **Bug Analysis:**
+1. **It fixes a real user-visible bug**: The commit addresses an issue
+   where attempting to call `getxattr()` on NFS referral anchors that
+   haven't been followed yet causes an I/O error (-EIO) to be returned
+   to applications. The example in the commit message clearly
+   demonstrates this:
+  ```
+  $ strace -e trace=getxattr getfattr -n system.nfs4_acl /mnt/t/ref
+  getxattr("/mnt/t/ref", "system.nfs4_acl", NULL, 0) = -1 EIO
+  (Input/output error)
+  ```
 
-**The Problem:** In the multicolor LED driver, writing to the
-`multi_intensity` file unconditionally calls `led_set_brightness()` at
-line 62. When software blinking is active (`LED_BLINK_SW` flag set),
-this can incorrectly stop the blinking if the LED is currently in its
-"off" phase during the blink cycle.
+2. **The fix is minimal and contained**: The changes are very small -
+   just adding two simple checks:
+  ```c
+  if (unlikely(NFS_FH(inode)->size == 0))
+  return -ENODATA;
+  ```
+  These checks are added to both `nfs4_proc_get_acl()` and
+  `nfs4_proc_set_acl()` functions.
 
-**The Fix:** The commit adds a check `if (!test_bit(LED_BLINK_SW,
-&led_cdev->work_flags))` before calling `led_set_brightness()`. This
-ensures that when software blinking is active, the intensity changes are
-deferred and applied on the next blink cycle instead of immediately
-stopping the blinking.
+3. **Low risk of regression**: The fix is straightforward and only
+   affects the specific error path when filehandles are zero-sized
+   (which occurs for referral anchors that haven't been followed). It
+   doesn't change any core logic or introduce new features.
 
-## **Backport Suitability:**
+4. **Improves application compatibility**: Returning -ENODATA instead of
+   -EIO is more semantically correct. Applications expect -ENODATA when
+   extended attributes are not available, while -EIO suggests a more
+   serious I/O problem.
 
-1. **Bug Impact:** This fixes a clear user-visible regression where
-   adjusting multicolor LED intensity incorrectly stops blinking - a
-   functionality that users would expect to work consistently.
+5. **Follows stable kernel rules**: This fix:
+   - Fixes a real bug that affects users
+   - Is small and self-contained
+   - Has minimal risk of introducing new issues
+   - Doesn't add new features or make architectural changes
 
-2. **Code Quality:** The fix is minimal, surgical, and follows
-   established patterns in the LED subsystem. Looking at the LED core
-   code (`/home/sasha/linux/drivers/leds/led-core.c`), similar checks
-   for `LED_BLINK_SW` are used in `led_set_brightness()` to handle
-   software blinking properly.
+The commit addresses a specific edge case in NFSv4 where referral
+anchors (mount points that redirect to other servers) have zero-length
+filehandles until they are actually accessed. When applications try to
+read extended attributes on these special inodes, the kernel would
+previously send invalid GETATTR requests to the server, resulting in
+confusing I/O errors. This fix makes the behavior more predictable and
+correct by returning -ENODATA, which indicates that the requested
+attribute doesn't exist.
 
-3. **Risk Assessment:** The change is extremely low-risk:
-   - Single line addition with a simple conditional check
-   - No architectural changes
-   - Uses existing, well-tested flag (`LED_BLINK_SW`)
-   - Consistent with established LED core behavior patterns
+ fs/nfs/nfs4proc.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-4. **Subsystem Scope:** The change is confined to the multicolor LED
-   class interface, affecting only multicolor LEDs, not the broader LED
-   subsystem.
-
-5. **Backport Indicators:** The commit has explicit support from
-   maintainers with multiple "Acked-by", "Reviewed-by", and "Tested-by"
-   tags, indicating thorough review and validation.
-
-6. **Consistency:** This aligns with similar commits marked as backport
-   candidates (like Similar Commit #4 which was marked YES for fixing
-   LED core blinking regression).
-
-## **Historical Context:**
-
-From the similar commits analysis, LED blinking fixes that restore
-expected behavior (like Similar Commit #4) are consistently backported,
-while new features or documentation-only changes (Similar Commits #1,
-#2, #3, #5) are not.
-
-This commit clearly falls into the "restore expected behavior" category
-- multicolor LED intensity adjustment should work consistently
-regardless of blinking state, just like it does for monochrome LEDs.
-
-The fix ensures behavioral consistency between multicolor and monochrome
-LEDs during blinking, which is exactly the type of user-facing bug fix
-that stable trees are designed to address.
-
- drivers/leds/led-class-multicolor.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/leds/led-class-multicolor.c b/drivers/leds/led-class-multicolor.c
-index ec62a48116135..e0785935f4ba6 100644
---- a/drivers/leds/led-class-multicolor.c
-+++ b/drivers/leds/led-class-multicolor.c
-@@ -61,7 +61,8 @@ static ssize_t multi_intensity_store(struct device *dev,
- 	for (i = 0; i < mcled_cdev->num_colors; i++)
- 		mcled_cdev->subled_info[i].intensity = intensity_value[i];
+diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
+index 2d94d1d7b0c62..29f8a2df2c11a 100644
+--- a/fs/nfs/nfs4proc.c
++++ b/fs/nfs/nfs4proc.c
+@@ -6065,6 +6065,8 @@ static ssize_t nfs4_proc_get_acl(struct inode *inode, void *buf, size_t buflen,
+ 	struct nfs_server *server = NFS_SERVER(inode);
+ 	int ret;
  
--	led_set_brightness(led_cdev, led_cdev->brightness);
-+	if (!test_bit(LED_BLINK_SW, &led_cdev->work_flags))
-+		led_set_brightness(led_cdev, led_cdev->brightness);
- 	ret = size;
- err_out:
- 	mutex_unlock(&led_cdev->led_access);
++	if (unlikely(NFS_FH(inode)->size == 0))
++		return -ENODATA;
+ 	if (!nfs4_server_supports_acls(server, type))
+ 		return -EOPNOTSUPP;
+ 	ret = nfs_revalidate_inode(inode, NFS_INO_INVALID_CHANGE);
+@@ -6139,6 +6141,9 @@ static int nfs4_proc_set_acl(struct inode *inode, const void *buf,
+ {
+ 	struct nfs4_exception exception = { };
+ 	int err;
++
++	if (unlikely(NFS_FH(inode)->size == 0))
++		return -ENODATA;
+ 	do {
+ 		err = __nfs4_proc_set_acl(inode, buf, buflen, type);
+ 		trace_nfs4_set_acl(inode, err);
 -- 
 2.39.5
 
