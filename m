@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05E79288CB7;
-	Fri,  6 Jun 2025 15:41:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14D35193077;
+	Fri,  6 Jun 2025 15:41:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749224513; cv=none; b=RLa47NeQLkZ9pLM4x4dNIHB7cRn5whnUF+rc1ijBZcol4KZkB8lZMbG/AI8vePtroRgDMTs2P4j7ojv/ef5EHHARGr580DtnQsP9AFI6SlPQmu3t0+vnWRWlvjLHRDHskCgBNqvNoJXLWu0v0y83BaLGQ/cgUP8enSjAoFX4hWs=
+	t=1749224514; cv=none; b=qE3Xd77AeNiWnblsnvSwA7YXIPiywUrF3DPoaLBkFInvNc7oubkNRn35slsan5TeQY46zRiDQfx8ffRLyx6Y3mGro7q7MoaNPgASqb9j9JkjlIHEvW68Ywc7AaLTeNcJNtJjx2d7LTcSF+Z3F5p4sxZY8U/Zdk0cFtgOc69+9Po=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749224513; c=relaxed/simple;
-	bh=9/hNsp1/olydBKPGrl2dwDhEuXh/5IvIKDRQRuXbnMY=;
+	s=arc-20240116; t=1749224514; c=relaxed/simple;
+	bh=GNhp/OFVEyqdKPrWBtDxirglDPwhP2RviNfwKcCBmfI=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=DvsUJraHNMHVfq2xjFm/rf5TLsCmQ9IF8x28aFB6+TVTT8ZyDljAzokSpDEmDT/zTndYCoCPLZTxH31yKS+4R/lntjZ12IJEUGF/A73F+YhgckABZ3Sk6Xumnvfe7IiQzUmOz+Y4y1dmZldKZu8FNzsLu6AeKqzdVUdxnwR1i0Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eRphu1sM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=o1/y0Lx3+zledoL88JfUR02SIQfrNmRUdUYYJU1SEpppiR2xTbQ8RN/wwWJcPXzu7TlL9CPUjM1ILPj9swjgnrIPxtNtDVYfdt0QljgaVwtkkLvvUZ4RTGEfHXfeN+VPW4Mj54f1cqeO1QaanYsKKzyRLk1EmgDciWWtf6Hvvg8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qVdJcXJT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eRphu1sM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B8DEC4CEF1;
-	Fri,  6 Jun 2025 15:41:51 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qVdJcXJT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EABD2C4CEF0;
+	Fri,  6 Jun 2025 15:41:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749224512;
-	bh=9/hNsp1/olydBKPGrl2dwDhEuXh/5IvIKDRQRuXbnMY=;
+	s=k20201202; t=1749224513;
+	bh=GNhp/OFVEyqdKPrWBtDxirglDPwhP2RviNfwKcCBmfI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eRphu1sMyZkznbWxx03QjLmm7D3lU/AzPntGdZuhiDbha0UE/kLPIjh1sBH/9JY6z
-	 2pxfebBK6pKQG+GL5f4jP5SO6qp1bgVF3zLemEFeckw2ox5qFCoongPydVRT4MEBeU
-	 MLmIY4D3jQkSoFOiLYZnM27pc8KvkNZB/Z5rQ0rXl2icbp+L/iBTDHksElFqSAqYfE
-	 TXrMfs/iNwOSLQgkGYwikjWF5Q30SUBeuSUYVnL05bsJiHnWIETWbkgloKDCPXD35S
-	 wmwoTIyr6qBwCCb4NJRT0h/TxghiD9k096HyYkPbBM5GAYVz1FbjsabcVGG3ZB/0vE
-	 1EAU0XzRLhMrQ==
+	b=qVdJcXJTZZpVl/sRPn+82VKMM2chnKCTLzm3PZPboDZv3bmseVbayYyjiZ+uLYAl3
+	 gXOZ2CsN9HCV6m44ofK6QkaAl5D1I2kJmfs1iWFgFPcTlnGIMrGPIQVQ4a5+AIjMd+
+	 +ecnp1vu2K3Wqp28k8eYLJmT63ZCp0mM0TIYg4vZwRw1NnIb1BXc+d2NU3xd7maXrA
+	 hCH3IOPYhXMKW9Zz34TrGae+ms1HQKssvCy1lfKJjhp9ulmDjf/kCOsATgFmTbX0+m
+	 P1HiZdeDQceOXTgvpL+fZtpdHi4l1ALlyOSzvIGjraLUOt6esG/0IlLEYP7WUIW3qY
+	 dK/0MqaCWHpJA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: =?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+Cc: Han Young <hanyang.tony@bytedance.com>,
+	Anna Schumaker <anna.schumaker@oracle.com>,
 	Sasha Levin <sashal@kernel.org>,
-	sfrench@samba.org,
-	linux-cifs@vger.kernel.org,
-	samba-technical@lists.samba.org
-Subject: [PATCH AUTOSEL 6.15 03/21] cifs: Fix encoding of SMB1 Session Setup NTLMSSP Request in non-UNICODE mode
-Date: Fri,  6 Jun 2025 11:41:28 -0400
-Message-Id: <20250606154147.546388-3-sashal@kernel.org>
+	trondmy@kernel.org,
+	anna@kernel.org,
+	linux-nfs@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.15 04/21] NFSv4: Always set NLINK even if the server doesn't support it
+Date: Fri,  6 Jun 2025 11:41:29 -0400
+Message-Id: <20250606154147.546388-4-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250606154147.546388-1-sashal@kernel.org>
 References: <20250606154147.546388-1-sashal@kernel.org>
@@ -47,126 +47,87 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.15.1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pali Rohár <pali@kernel.org>
+From: Han Young <hanyang.tony@bytedance.com>
 
-[ Upstream commit 6510ef4230b68c960309e0c1d6eb3e32eb785142 ]
+[ Upstream commit 3a3065352f73381d3a1aa0ccab44aec3a5a9b365 ]
 
-SMB1 Session Setup NTLMSSP Request in non-UNICODE mode is similar to
-UNICODE mode, just strings are encoded in ASCII and not in UTF-16.
+fattr4_numlinks is a recommended attribute, so the client should emulate
+it even if the server doesn't support it. In decode_attr_nlink function
+in nfs4xdr.c, nlink is initialized to 1. However, this default value
+isn't set to the inode due to the check in nfs_fhget.
 
-With this change it is possible to setup SMB1 session with NTLM
-authentication in non-UNICODE mode with Windows SMB server.
+So if the server doesn't support numlinks, inode's nlink will be zero,
+the mount will fail with error "Stale file handle". Set the nlink to 1
+if the server doesn't support it.
 
-This change fixes mounting SMB1 servers with -o nounicode mount option
-together with -o sec=ntlmssp mount option (which is the default sec=).
-
-Signed-off-by: Pali Rohár <pali@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Han Young <hanyang.tony@bytedance.com>
+Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Based on my analysis of both the commit and the kernel source code, I
-can now provide a comprehensive assessment: **YES** This commit should
-be backported to stable kernel trees. Here's my extensive analysis: ##
-Bug Fix Analysis This commit fixes a **functional bug** that prevents
-SMB1 sessions from being established when using specific mount options.
-The code changes address a critical logic error in the NTLMSSP session
-setup for non-UNICODE mode. ### Problem Being Fixed The original code in
-`_sess_auth_rawntlmssp_assemble_req()` contains this problematic check:
-```c if ((pSMB->req.hdr.Flags2 & SMBFLG2_UNICODE) == 0) { cifs_dbg(VFS,
-"NTLMSSP requires Unicode support\n"); return -ENOSYS; } ``` This check
-**incorrectly rejects** all non-UNICODE sessions for NTLMSSP
-authentication, making it impossible to mount SMB1 servers with: - `-o
-nounicode` (non-UNICODE mode) - `-o sec=ntlmssp` (default security mode)
-### Technical Solution The fix removes this incorrect validation and
-implements proper dual-path handling: ```c if (pSMB->req.hdr.Flags2 &
-SMBFLG2_UNICODE) { /bin /bin.usr-is-merged /boot /dev /etc /home /init
-/lib /lib.usr-is-merged /lib64 /lost+found /media /mnt /opt /proc /root
-/run /sbin /sbin.usr-is-merged /snap /srv /sys /tmp /usr /var unicode
-strings must be word aligned */ if
-(!IS_ALIGNED(sess_data->iov[0].iov_len + sess_data->iov[1].iov_len, 2))
-{ *bcc_ptr = 0; bcc_ptr++; } unicode_oslm_strings(&bcc_ptr,
-sess_data->nls_cp); } else { ascii_oslm_strings(&bcc_ptr,
-sess_data->nls_cp); } ``` This correctly handles both UNICODE and non-
-UNICODE modes by: 1. **UNICODE path**: Uses UTF-16 encoding with proper
-alignment 2. **Non-UNICODE path**: Uses ASCII encoding without alignment
-requirements ### Why This Qualifies for Backporting 1. **User-Affecting
-Bug**: The bug prevents legitimate SMB1 connections with common mount
-options, causing mount failures that users would expect to work. 2.
-**Small, Contained Fix**: The change is minimal (removes 4 lines, adds 8
-lines) and confined to a single function. Risk of regression is very
-low. 3. **No Architectural Changes**: This fix doesn't modify the
-NTLMSSP protocol implementation or introduce new features—it simply
-corrects existing logic. 4. **Similar Pattern to Accepted Backports**:
-This closely matches "Similar Commit #1" which was marked "YES" for
-backporting. Both commits: - Fix SMB1 Session Setup encoding issues -
-Handle UNICODE vs non-UNICODE mode correctly - Extract common code
-patterns for consistency - Are small, targeted bugfixes 5. **Legacy
-Protocol Support**: While SMB1 is deprecated, it's still supported in
-the kernel under `CONFIG_CIFS_ALLOW_INSECURE_LEGACY`, and users who
-explicitly enable it deserve working functionality. ### Code Correctness
-Verification The fix is technically sound because: -
-**`ascii_oslm_strings()`** and **`unicode_oslm_strings()`** are
-established functions already used elsewhere in the codebase for
-Kerberos authentication (`sess_auth_kerberos()`) - The same dual-path
-pattern exists in other session setup functions - The NTLMSSP protocol
-itself still uses UNICODE internally (for username/domain encoding), but
-the session setup strings can be ASCII - The alignment logic is
-correctly applied only to UNICODE mode where it's needed ### Risk
-Assessment **Very Low Risk**: - Fix is isolated to SMB1 NTLMSSP session
-setup - Only affects the non-UNICODE code path that was previously
-broken - No changes to the core NTLMSSP authentication logic - Pattern
-matches existing working code in the same file This is a clear bugfix
-that restores intended functionality without introducing new features or
-architectural changes, making it an ideal candidate for stable tree
-backporting.
+Based on my analysis of the commit and the kernel source code, here is
+my determination: **YES** This commit should be backported to stable
+kernel trees. Here's my extensive analysis: ## Critical Bug Fix Analysis
+### 1. **Root Cause Understanding** The commit addresses a critical
+issue where NFSv4 mounts fail with "Stale file handle" errors when the
+server doesn't support the `fattr4_numlinks` (NLINK) attribute. Looking
+at the code: - In `/home/sasha/linux/fs/nfs/nfs4xdr.c:3969`, the
+`decode_attr_nlink` function initializes `*nlink = 1` as a default -
+However, in `/home/sasha/linux/fs/nfs/inode.c:556-559`, the current
+logic only sets the inode's nlink if `fattr->valid &
+NFS_ATTR_FATTR_NLINK` is true - When the server doesn't support
+numlinks, the `fattr->valid` flag isn't set, so the inode's nlink
+remains 0 (from initial inode allocation) ### 2. **Impact of Zero
+nlink** From `/home/sasha/linux/fs/nfs/dir.c:1578-1582`, I can see the
+critical check: ```c if (inode->i_nlink > 0 || (inode->i_nlink == 0 &&
+test_bit(NFS_INO_PRESERVE_UNLINKED, &NFS_I(inode)->flags))) return 0;
+else return -ESTALE; ``` When `i_nlink == 0` and the
+`NFS_INO_PRESERVE_UNLINKED` flag isn't set, NFS returns `-ESTALE`,
+causing "Stale file handle" errors and mount failures. ### 3. **Backport
+Suitability Criteria** **✅ Fixes important user-affecting bug**: Mount
+failures prevent basic filesystem functionality **✅ Small and contained
+fix**: The change adds only 2 lines: ```c else if (fattr_supported &
+NFS_ATTR_FATTR_NLINK) nfs_set_cache_invalid(inode,
+NFS_INO_INVALID_NLINK); +else + set_nlink(inode, 1); ``` **✅ Minimal
+regression risk**: Setting nlink=1 as fallback is safe and follows the
+NFSv4 spec (fattr4_numlinks is a "recommended" attribute, so emulation
+is appropriate) **✅ No architectural changes**: This is a targeted fix
+within existing error handling logic **✅ Follows stable tree rules**:
+It's an important bugfix with minimal risk ### 4. **Comparison with
+Similar Commits** Unlike the provided similar commits that were marked
+"NO" (which involved more complex nlink management, cache invalidation
+changes, or feature additions), this commit: - Fixes a fundamental
+compatibility issue - Prevents complete mount failures - Is minimal and
+defensive - Addresses server interoperability problems ### 5. **Server
+Compatibility** This fix ensures NFSv4 clients remain functional with
+servers that don't fully implement all recommended attributes, which is
+critical for real-world deployments where server implementations vary.
+The commit directly prevents mount failures that would otherwise require
+server-side fixes or workarounds, making it essential for stable kernel
+trees where users expect reliable NFS functionality.
 
- fs/smb/client/sess.c | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ fs/nfs/inode.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/smb/client/sess.c b/fs/smb/client/sess.c
-index d53705595a512..79b4bd45e31a6 100644
---- a/fs/smb/client/sess.c
-+++ b/fs/smb/client/sess.c
-@@ -1685,22 +1685,22 @@ _sess_auth_rawntlmssp_assemble_req(struct sess_data *sess_data)
- 	pSMB = (SESSION_SETUP_ANDX *)sess_data->iov[0].iov_base;
- 
- 	capabilities = cifs_ssetup_hdr(ses, server, pSMB);
--	if ((pSMB->req.hdr.Flags2 & SMBFLG2_UNICODE) == 0) {
--		cifs_dbg(VFS, "NTLMSSP requires Unicode support\n");
--		return -ENOSYS;
--	}
--
- 	pSMB->req.hdr.Flags2 |= SMBFLG2_EXT_SEC;
- 	capabilities |= CAP_EXTENDED_SECURITY;
- 	pSMB->req.Capabilities |= cpu_to_le32(capabilities);
- 
- 	bcc_ptr = sess_data->iov[2].iov_base;
--	/* unicode strings must be word aligned */
--	if (!IS_ALIGNED(sess_data->iov[0].iov_len + sess_data->iov[1].iov_len, 2)) {
--		*bcc_ptr = 0;
--		bcc_ptr++;
-+
-+	if (pSMB->req.hdr.Flags2 & SMBFLG2_UNICODE) {
-+		/* unicode strings must be word aligned */
-+		if (!IS_ALIGNED(sess_data->iov[0].iov_len + sess_data->iov[1].iov_len, 2)) {
-+			*bcc_ptr = 0;
-+			bcc_ptr++;
-+		}
-+		unicode_oslm_strings(&bcc_ptr, sess_data->nls_cp);
-+	} else {
-+		ascii_oslm_strings(&bcc_ptr, sess_data->nls_cp);
- 	}
--	unicode_oslm_strings(&bcc_ptr, sess_data->nls_cp);
- 
- 	sess_data->iov[2].iov_len = (long) bcc_ptr -
- 					(long) sess_data->iov[2].iov_base;
+diff --git a/fs/nfs/inode.c b/fs/nfs/inode.c
+index 119e447758b99..4695292378bbe 100644
+--- a/fs/nfs/inode.c
++++ b/fs/nfs/inode.c
+@@ -557,6 +557,8 @@ nfs_fhget(struct super_block *sb, struct nfs_fh *fh, struct nfs_fattr *fattr)
+ 			set_nlink(inode, fattr->nlink);
+ 		else if (fattr_supported & NFS_ATTR_FATTR_NLINK)
+ 			nfs_set_cache_invalid(inode, NFS_INO_INVALID_NLINK);
++		else
++			set_nlink(inode, 1);
+ 		if (fattr->valid & NFS_ATTR_FATTR_OWNER)
+ 			inode->i_uid = fattr->uid;
+ 		else if (fattr_supported & NFS_ATTR_FATTR_OWNER)
 -- 
 2.39.5
 
