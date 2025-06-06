@@ -1,48 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65435289804;
-	Fri,  6 Jun 2025 15:42:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E727289804;
+	Fri,  6 Jun 2025 15:42:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749224573; cv=none; b=nzZuzHEn7ljgPSoPpR+nmToytGT+s9o79aK9b5aoaaycJDv5r+6Q5wj3QIYEZKViwmA3RFkqJ6XzXnWNZ17IbuB6VU39TuCP2xOsJY48itdZtWWRWBM5QY12/806StNdy6+X0Xl0fJd8H1P9a8s8Y7Pd1VZ12pz918C6AgJeKfo=
+	t=1749224575; cv=none; b=rN268/y8asB2csx3k7h6hrFhnCTw9gq0qAua/IUFLoySu2xK1Vm3zu+HAom6Vv5iWXWbpsRleseMNzif9hwhXqkAU3DwnPW8pFOOOR33IaPlpHtPtXsiX0qYxBJYgjJJf5fReEBYgSpj02Yb/h/UyK/DrJg33KCY54x+YG3gpK0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749224573; c=relaxed/simple;
-	bh=6tP4cwba+VT6gf7XEv4wR6PF6hC/bJRfA7yi7lfvvFo=;
+	s=arc-20240116; t=1749224575; c=relaxed/simple;
+	bh=kpySyHPeITr/KiuxKy8dkqKahVH74uDQ2kg6sMjp8Vk=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=TroG0rlY2VrsHG0lFDE9fzDTMA7MNcUP7lSs76Mb2ZWCnJprVLQ8CqbybSSGujdFnHZUnRDrOrkTC+U2+OPwk8QbIFDfkQXALkvWryIzDkQP4TmmGlsdiV45RrLzTEl/1TZAlRBlvIi6ptDs75XBqlO8NQVdt3RbBZH8Hzng2TQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=P7lgSHpc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HozWGsyqdnvRXUHDIRAW8vNs/7eZ+87RmifQ2dfaUB0YZwAw8qc7YyBqoSmBAuaSOA0J9YCwu3ktcle3pxl4nsegkinQyMTVrax33pbdOCtRFI4gf1B8dTp3LGy0EoQO21M6VzAKCdbA14+EBjCOQx2IH600sv7TSKsHDxXFXlo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=p/b9knYh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="P7lgSHpc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8FF0C4CEF0;
-	Fri,  6 Jun 2025 15:42:51 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="p/b9knYh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A84EC4CEED;
+	Fri,  6 Jun 2025 15:42:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749224573;
-	bh=6tP4cwba+VT6gf7XEv4wR6PF6hC/bJRfA7yi7lfvvFo=;
+	s=k20201202; t=1749224575;
+	bh=kpySyHPeITr/KiuxKy8dkqKahVH74uDQ2kg6sMjp8Vk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P7lgSHpci6vFPaz/8sYshnQ7XTi4id0ZosEo3/VUJ5kGM90DCQGmXc+HqibMx+s7x
-	 W0NshslMIDLN9LA4D10qgqr8XKOtuEZoZf9So3FEmr30b/R9NdVnttFZwlwt/5hJdc
-	 t5HoGcb8qELFfC2zFqceAXzEZv0KvGk95idUYftkw+d5Y/gwIZT/5tXU5qgLqH775x
-	 Twqlf4a3I1CKZxWN8xHN7RuXC55t2RnKNqlNTvDwLLnwYHW+ocZPAG5r69zP/LVmb8
-	 a3Ztp3sTIoPLIGhrVrgKSrDlOhxcRsXlEYhyfzuyEho3QxRsBulALDF2BVv+0OTBAY
-	 kXy52xqC+OFWw==
+	b=p/b9knYhl7PfHZLDeaVIkwCYPrMlQqTJNnZHQXBtz361KGVm6gM+ie87Wn+TuzUGK
+	 bc5fPjcPGBAeBm8IWDFbFBXCMLFZEHcSLjlKMdvIOeuzQNTY4uhi2y2TFZprr9IAhL
+	 QDmmZ58j7jI/VlieExIDMlY6xEhspx+f72YAHTp/JibPc9UcEfmxGLZtCt4ma34/oF
+	 L0gDaEzJPHFOrg9gwaPyJ4etRa14N4p3urwq6OQD1Xv3G2egHMBTLoMBLUYGGgJvv/
+	 mz/CsHKnWB4sl+qA7N0Jv4ERnzBO1b4vZtUlOlbb/xwH05jlZheCf1nzE4hKctY8aN
+	 VdYYp33yJuWAA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Robert Richter <rrichter@amd.com>,
-	Gregory Price <gourry@gourry.net>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Dan Williams <dan.j.williams@intel.com>,
-	Alison Schofield <alison.schofield@intel.com>,
-	"Fabio M. De Francesco" <fabio.m.de.francesco@linux.intel.com>,
+Cc: Scott Mayhew <smayhew@redhat.com>,
+	Anna Schumaker <anna.schumaker@oracle.com>,
 	Sasha Levin <sashal@kernel.org>,
-	ira.weiny@intel.com,
-	ming.li@zohomail.com,
-	yaoxt.fnst@fujitsu.com
-Subject: [PATCH AUTOSEL 6.14 17/19] cxl/region: Add a dev_err() on missing target list entries
-Date: Fri,  6 Jun 2025 11:42:23 -0400
-Message-Id: <20250606154225.546969-17-sashal@kernel.org>
+	trondmy@kernel.org,
+	anna@kernel.org,
+	linux-nfs@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.14 18/19] NFSv4: xattr handlers should check for absent nfs filehandles
+Date: Fri,  6 Jun 2025 11:42:24 -0400
+Message-Id: <20250606154225.546969-18-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250606154225.546969-1-sashal@kernel.org>
 References: <20250606154225.546969-1-sashal@kernel.org>
@@ -57,152 +52,110 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.14.10
 Content-Transfer-Encoding: 8bit
 
-From: Robert Richter <rrichter@amd.com>
+From: Scott Mayhew <smayhew@redhat.com>
 
-[ Upstream commit d90acdf49e18029cfe4194475c45ef143657737a ]
+[ Upstream commit 6e9a2f8dbe93c8004c2af2c0158888628b7ca034 ]
 
-Broken target lists are hard to discover as the driver fails at a
-later initialization stage. Add an error message for this.
+The nfs inodes for referral anchors that have not yet been followed have
+their filehandles zeroed out.
 
-Example log messages:
+Attempting to call getxattr() on one of these will cause the nfs client
+to send a GETATTR to the nfs server with the preceding PUTFH sans
+filehandle.  The server will reply NFS4ERR_NOFILEHANDLE, leading to -EIO
+being returned to the application.
 
-  cxl_mem mem1: failed to find endpoint6:0000:e0:01.3 in target list of decoder1.1
-  cxl_port endpoint6: failed to register decoder6.0: -6
-  cxl_port endpoint6: probe: 0
+For example:
 
-Signed-off-by: Robert Richter <rrichter@amd.com>
-Reviewed-by: Gregory Price <gourry@gourry.net>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Reviewed-by: Dan Williams <dan.j.williams@intel.com>
-Reviewed-by: Alison Schofield <alison.schofield@intel.com>
-Reviewed-by: "Fabio M. De Francesco" <fabio.m.de.francesco@linux.intel.com>
-Tested-by: Gregory Price <gourry@gourry.net>
-Acked-by: Dan Williams <dan.j.williams@intel.com>
-Link: https://patch.msgid.link/20250509150700.2817697-14-rrichter@amd.com
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+$ strace -e trace=getxattr getfattr -n system.nfs4_acl /mnt/t/ref
+getxattr("/mnt/t/ref", "system.nfs4_acl", NULL, 0) = -1 EIO (Input/output error)
+/mnt/t/ref: system.nfs4_acl: Input/output error
++++ exited with 1 +++
+
+Have the xattr handlers return -ENODATA instead.
+
+Signed-off-by: Scott Mayhew <smayhew@redhat.com>
+Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Now let me check what the commit adds specifically - the error message
-when the target is not found:
+Based on my analysis of the commit, I can now provide my assessment.
 
 **YES**
 
-This commit should be backported to stable kernel trees. Here's my
-extensive analysis:
+This commit should be backported to stable kernel trees for the
+following reasons:
 
-## Analysis of the Commit
+1. **It fixes a real user-visible bug**: The commit addresses an issue
+   where attempting to call `getxattr()` on NFS referral anchors that
+   haven't been followed yet causes an I/O error (-EIO) to be returned
+   to applications. The example in the commit message clearly
+   demonstrates this:
+  ```
+  $ strace -e trace=getxattr getfattr -n system.nfs4_acl /mnt/t/ref
+  getxattr("/mnt/t/ref", "system.nfs4_acl", NULL, 0) = -1 EIO
+  (Input/output error)
+  ```
 
-### **What the Commit Does**
-The commit adds a single `dev_err()` call in the `find_pos_and_ways()`
-function at `/drivers/cxl/core/region.c:1808`. When the function fails
-to find a port's parent_dport in the target list of a switch decoder, it
-now logs a specific error message identifying exactly which port and
-device could not be found in which decoder's target list.
+2. **The fix is minimal and contained**: The changes are very small -
+   just adding two simple checks:
+  ```c
+  if (unlikely(NFS_FH(inode)->size == 0))
+  return -ENODATA;
+  ```
+  These checks are added to both `nfs4_proc_get_acl()` and
+  `nfs4_proc_set_acl()` functions.
 
-### **Why This Should Be Backported**
+3. **Low risk of regression**: The fix is straightforward and only
+   affects the specific error path when filehandles are zero-sized
+   (which occurs for referral anchors that haven't been followed). It
+   doesn't change any core logic or introduce new features.
 
-#### **1. Debugging and Diagnostic Improvement**
-This commit significantly improves the debugging experience for CXL
-region configuration failures. The existing code path:
-- Returns `-ENXIO` when `cxlsd->target[i] == port->parent_dport` fails
-  to match for any target
-- Provides no indication of *why* the failure occurred or *which
-  specific* port/device was missing
+4. **Improves application compatibility**: Returning -ENODATA instead of
+   -EIO is more semantically correct. Applications expect -ENODATA when
+   extended attributes are not available, while -EIO suggests a more
+   serious I/O problem.
 
-The new error message provides crucial diagnostic information:
-```c
-dev_err(port->uport_dev,
-        "failed to find %s:%s in target list of %s\n",
-        dev_name(&port->dev),
-        dev_name(port->parent_dport->dport_dev),
-        dev_name(&cxlsd->cxld.dev));
-```
+5. **Follows stable kernel rules**: This fix:
+   - Fixes a real bug that affects users
+   - Is small and self-contained
+   - Has minimal risk of introducing new issues
+   - Doesn't add new features or make architectural changes
 
-#### **2. Critical Failure Context**
-Looking at the usage context in `cxl_calc_interleave_pos()`, when this
-function fails:
-- The calling code at `region.c:1891` sets `cxled->pos` to the negative
-  error code
-- The region sorting process continues but records the failure (`rc =
-  -ENXIO`)
-- The failure ultimately prevents proper CXL region initialization
+The commit addresses a specific edge case in NFSv4 where referral
+anchors (mount points that redirect to other servers) have zero-length
+filehandles until they are actually accessed. When applications try to
+read extended attributes on these special inodes, the kernel would
+previously send invalid GETATTR requests to the server, resulting in
+confusing I/O errors. This fix makes the behavior more predictable and
+correct by returning -ENODATA, which indicates that the requested
+attribute doesn't exist.
 
-Without this diagnostic message, administrators and developers have no
-clear indication of which specific hardware topology element is
-misconfigured.
+ fs/nfs/nfs4proc.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-#### **3. Characteristics Supporting Backporting**
-
-**Small and Contained Change**: The commit adds exactly 4 lines of code
-- just a single error message. There are no functional changes to the
-logic, error handling paths, or data structures.
-
-**No Risk of Regression**: The change is purely additive logging. It
-cannot introduce functional regressions since:
-- The error path already existed and returned the same error code
-- No control flow is modified
-- No data structures are changed
-
-**Important Bugfix Category**: While not fixing a crash, this addresses
-a significant usability/debuggability issue. CXL region configuration
-failures are difficult to diagnose without proper error messaging.
-
-**Follows Stable Rules**: This is exactly the type of change stable
-trees are designed for - minimal risk improvements that help users
-diagnose real problems in production systems.
-
-#### **4. Comparison with Historical Commits**
-Looking at the reference commits, this aligns perfectly with commits
-marked "YES":
-- Similar to commits #1, #2, and #3 which add error handling and
-  diagnostic improvements
-- Much safer than architectural changes (like commits #4 and #5 marked
-  "NO")
-- Focuses on improving failure diagnosis rather than changing core
-  functionality
-
-#### **5. Production Value**
-CXL is increasingly deployed in production environments. When region
-configuration fails due to broken target lists, the current failure mode
-provides insufficient information for field diagnosis. This commit
-provides the specific device and decoder information needed to identify
-hardware topology issues.
-
-The commit message explicitly states this addresses "Broken target lists
-are hard to discover as the driver fails at a later initialization
-stage" - this is precisely the type of production issue that stable
-backports should address.
-
-### **Conclusion**
-This commit represents a minimal-risk diagnostic improvement that
-significantly enhances the debuggability of CXL region configuration
-failures in production systems. It meets all criteria for stable
-backporting: important user-facing improvement, minimal code change,
-zero regression risk, and clear production value.
-
- drivers/cxl/core/region.c | 7 +++++++
- 1 file changed, 7 insertions(+)
-
-diff --git a/drivers/cxl/core/region.c b/drivers/cxl/core/region.c
-index e8d11a988fd92..d90a480537fc5 100644
---- a/drivers/cxl/core/region.c
-+++ b/drivers/cxl/core/region.c
-@@ -1783,6 +1783,13 @@ static int find_pos_and_ways(struct cxl_port *port, struct range *range,
- 	}
- 	put_device(dev);
+diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
+index 1f56f2a647c2b..135f302474fac 100644
+--- a/fs/nfs/nfs4proc.c
++++ b/fs/nfs/nfs4proc.c
+@@ -6182,6 +6182,8 @@ static ssize_t nfs4_proc_get_acl(struct inode *inode, void *buf, size_t buflen,
+ 	struct nfs_server *server = NFS_SERVER(inode);
+ 	int ret;
  
-+	if (rc)
-+		dev_err(port->uport_dev,
-+			"failed to find %s:%s in target list of %s\n",
-+			dev_name(&port->dev),
-+			dev_name(port->parent_dport->dport_dev),
-+			dev_name(&cxlsd->cxld.dev));
++	if (unlikely(NFS_FH(inode)->size == 0))
++		return -ENODATA;
+ 	if (!nfs4_server_supports_acls(server, type))
+ 		return -EOPNOTSUPP;
+ 	ret = nfs_revalidate_inode(inode, NFS_INO_INVALID_CHANGE);
+@@ -6256,6 +6258,9 @@ static int nfs4_proc_set_acl(struct inode *inode, const void *buf,
+ {
+ 	struct nfs4_exception exception = { };
+ 	int err;
 +
- 	return rc;
- }
- 
++	if (unlikely(NFS_FH(inode)->size == 0))
++		return -ENODATA;
+ 	do {
+ 		err = __nfs4_proc_set_acl(inode, buf, buflen, type);
+ 		trace_nfs4_set_acl(inode, err);
 -- 
 2.39.5
 
