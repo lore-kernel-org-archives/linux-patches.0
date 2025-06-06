@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B277028B7F0;
-	Fri,  6 Jun 2025 15:43:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7B8F28BA84;
+	Fri,  6 Jun 2025 15:43:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749224616; cv=none; b=uE+Mz62amENOB9xt8RsU76mJME4VuyhrstRstOz9A+kmy42M36BG04zYyNFvChR1o/+1ubHr1duYb7kTN143l7G+kaTUJ06fcoxUNrmxWAOfaGUTybY7IxYkHXFdVRp1M8NhJ8JR7w+vH9u+FDX531/IVazvAB1qN/2VxiXmk+s=
+	t=1749224618; cv=none; b=DgJIUDpxW+cCB6k5zcLMXnUXuAB2QxKiCBUNwwfYFJG3iRQiRTd9kXxCsOQBMoIqNBSDb6oBasKBrSwVP4LvZmQNCEZY2SoCamNWe20Bb6uYQtBes3OC9MlDQQXMveaysk1mn4LQQdVSL4jmbaAY+4SfmbP5H8e4ybrvBd3v1iU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749224616; c=relaxed/simple;
-	bh=tG8io3IRKx5W2mMbZ3iyTE3qJ47u13R4wAdbHPUmSW8=;
+	s=arc-20240116; t=1749224618; c=relaxed/simple;
+	bh=Hi9Va3IbJdcHxxft8GD9HKET7LbgH6Wb2VdwhoAf29M=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=RFw0GWaAIWtXWI8D82M8JDbjv27w/zR5QbrSs0udsYa1U/M7myw2IKA1TLjmRWZo6hCIfFaR8+LfhTALK66KFm+WgNsxEQNJMoku2aNGAwUKksBNugdTu/p26W+PCRjrdXy9aCObDta5tZFGMkLqSV/XsCLvNRNHwmZe4WHyg2c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=P5/g1+cB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=PPv58AFU0uU5iGM7CjI6HxXsg8j3old6jVcwzYi57hjNSOOte4sekCO3kCOy9/bBdFjsSao8229ZZy5jIjViVSAidHMbBWIFwU+m7dsds9T1JS5af2P0L1gCw0MyKtPCZt8Pr3UJQgeqnQk/TFiTB40+9GShrClRPRQ/XcFOypg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=B1ORjN2d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="P5/g1+cB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32BBFC4CEF3;
-	Fri,  6 Jun 2025 15:43:34 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="B1ORjN2d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCFD4C4CEED;
+	Fri,  6 Jun 2025 15:43:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749224615;
-	bh=tG8io3IRKx5W2mMbZ3iyTE3qJ47u13R4wAdbHPUmSW8=;
+	s=k20201202; t=1749224617;
+	bh=Hi9Va3IbJdcHxxft8GD9HKET7LbgH6Wb2VdwhoAf29M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P5/g1+cBcSP35rz0pFQbWvAO3NHaWRLh01KnyU8taWV54FSPIhdx4s3npgmvRi2wK
-	 LXOMaFLL3vD16iQJDkDoEjLbBNeM8umFpvjKMBoGtXlUWZ4MuhydWhvEbw6nH0vAL+
-	 H6H7C5qHlNyvznsUBsnqHiWDyyjzBVnjbTafs38unT6cEoPnQhUepwbhYqbnMZ/xXu
-	 dkcW5KsM8iUkHtRVht24HV18RjWFRyNyWmgzxiqCTIRR9YIy12jjw8JJuXjGHhpMNA
-	 lBDw20Tm5Ep5WUw2ELD0oFGWnLak9E+6nHfNqluHJ32rDwXSX3e8aol3wUqWUsjsMd
-	 UfXxaTTjDxc+g==
+	b=B1ORjN2dBazmv0Q+nBMbsYmGJ3Fav0l75aFeA5SzISmcjxSFpWhbVSu6oz3z6bNN5
+	 aJxx4gjIERXVvqbfhfrT38nvRrIIskrUaXykWOYF1kTIs2ej5AnPFZf+iwvC55wd29
+	 IwmUbA+67XqbtiMmD5H7hMtkL7COLP29v5Y12xtmct7k+Hy5258bDmJMhd62zVr/qX
+	 QQaFtsNcrAx5koQ1bR0RmWN+3S2nEylLFknCEJ22j5jYl8qzGbuznRVyQA8gt+e3Wk
+	 8WNB+hOJgWKa5nXhn2mOQLRHuKYcxckik8031SHNlSNbAcjYRndZkJk91HVeu/kmjr
+	 RXt2inRcxkRkA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Olga Kornievskaia <okorniev@redhat.com>,
-	Anna Schumaker <anna.schumaker@oracle.com>,
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	trondmy@kernel.org,
-	anna@kernel.org,
-	linux-nfs@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.6 05/13] NFSv4.2: fix listxattr to return selinux security label
-Date: Fri,  6 Jun 2025 11:43:18 -0400
-Message-Id: <20250606154327.547792-5-sashal@kernel.org>
+	cw00.choi@samsung.com,
+	krzk@kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.6 07/13] mfd: max14577: Fix wakeup source leaks on device unbind
+Date: Fri,  6 Jun 2025 11:43:20 -0400
+Message-Id: <20250606154327.547792-7-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250606154327.547792-1-sashal@kernel.org>
 References: <20250606154327.547792-1-sashal@kernel.org>
@@ -50,94 +50,115 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.6.93
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Olga Kornievskaia <okorniev@redhat.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 243fea134633ba3d64aceb4c16129c59541ea2c6 ]
+[ Upstream commit d905d06e64b0eb3da43af6186c132f5282197998 ]
 
-Currently, when NFS is queried for all the labels present on the
-file via a command example "getfattr -d -m . /mnt/testfile", it
-does not return the security label. Yet when asked specifically for
-the label (getfattr -n security.selinux) it will be returned.
-Include the security label when all attributes are queried.
+Device can be unbound, so driver must also release memory for the wakeup
+source.
 
-Signed-off-by: Olga Kornievskaia <okorniev@redhat.com>
-Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20250406-mfd-device-wakekup-leak-v1-3-318e14bdba0a@linaro.org
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-**YES** This commit should be backported to stable kernel trees. Here's
-my extensive analysis: ## Bug Analysis The commit fixes a clear
-functional bug in NFSv4.2's `listxattr` implementation in
-`fs/nfs/nfs4proc.c:10853`. When users run `getfattr -d` to list all
-extended attributes, the security label (like SELinux context) is
-missing from the output, even though it's correctly returned when
-specifically requested with `getfattr -n security.selinux`. ## Code
-Change Analysis The fix is minimal and well-contained: 1. **Variable
-addition**: Adds `error4` to track the security label listing result 2.
-**Function call**: Adds `error4 =
-security_inode_listsecurity(d_inode(dentry), list, left)` 3. **Pointer
-management**: Updates `list` and `left` after `error3` processing
-(missing in original) 4. **Total calculation**: Changes `error += error2
-+ error3` to `error += error2 + error3 + error4` ## Why This Qualifies
-for Backport **1. Clear User-Facing Bug**: The inconsistency between
-`getfattr -d` and `getfattr -n security.selinux` affects real-world
-usage and user expectations. **2. Minimal Risk**: The change is
-architecturally simple - it just adds another xattr source to the
-listing function, following the exact same pattern as existing `error2`
-and `error3` handling. **3. Follows Existing Patterns**: The commit uses
-the same error handling, pointer arithmetic, and function call pattern
-established by `nfs4_listxattr_nfs4_label()` and
-`nfs4_listxattr_nfs4_user()`. **4. No Feature Addition**: This fixes
-existing functionality rather than adding new features. **5. Critical
-Subsystem**: Extended attributes and security labels are fundamental for
-SELinux environments, making this fix important for security-conscious
-deployments. **6. Similar Historical Precedent**: All 5 provided
-reference commits with "Backport Status: YES" are NFSv4 security label
-fixes with similar characteristics - small, contained bugfixes in the
-same subsystem. **7. Contained Scope**: The change is isolated to one
-function (`nfs4_listxattr`) in one file, with no cross-subsystem
-implications. The fix correctly implements the missing piece: while
-`nfs4_listxattr_nfs4_label()` calls `security_inode_listsecurity()` when
-`CONFIG_NFS_V4_SECURITY_LABEL` is enabled, the main `nfs4_listxattr()`
-function wasn't calling it directly for the general xattr listing case,
-creating the inconsistent behavior reported.
+Now let me understand the difference between the fixes - the historical
+commits show two patterns:
+1. Using `devm_device_init_wakeup()` - automatically handles cleanup
+2. Manual cleanup by calling `device_init_wakeup(dev, false)` in remove
+   functions
 
- fs/nfs/nfs4proc.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+Let me check if this specific commit has `Cc: stable@vger.kernel.org` in
+the message:
 
-diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
-index 1b94a55215e7d..97a009e007f95 100644
---- a/fs/nfs/nfs4proc.c
-+++ b/fs/nfs/nfs4proc.c
-@@ -10625,7 +10625,7 @@ const struct nfs4_minor_version_ops *nfs_v4_minor_ops[] = {
- 
- static ssize_t nfs4_listxattr(struct dentry *dentry, char *list, size_t size)
+Based on my analysis of this commit and comparison with the similar
+historical commits, here is my assessment:
+
+**YES**
+
+This commit should be backported to stable kernel trees for the
+following reasons:
+
+## Analysis
+
+### **Code Change Analysis**
+The commit adds a single line in the `max14577_i2c_remove()` function:
+```c
++       device_init_wakeup(max14577->dev, false);
+```
+
+This addition occurs at drivers/mfd/max14577.c:459, right before
+`mfd_remove_devices()` is called.
+
+### **Bug Fix Characteristics**
+1. **Memory Leak Fix**: The commit fixes a wakeup source memory leak
+   that occurs when the device is unbound. When `device_init_wakeup(dev,
+   true)` is called during probe (line 442), it allocates memory for
+   wakeup source structures. Without the corresponding cleanup call,
+   this memory is leaked on device removal.
+
+2. **Small and Contained**: The fix is minimal - a single line addition
+   that mirrors the cleanup pattern used throughout the kernel.
+
+3. **Low Risk**: The change has extremely low regression risk since it
+   only adds proper cleanup that should have been there originally.
+
+### **Comparison with Historical Similar Commits**
+Looking at the provided historical commits, there are two categories:
+
+**YES commits (backported)**:
+- `gpio: mpc8xxx: Fix wakeup source leaks on device unbind` - Same exact
+  pattern and includes `Cc: stable@vger.kernel.org`
+- `gpio: zynq: Fix wakeup source leaks on device unbind` - Same exact
+  pattern and includes `Cc: stable@vger.kernel.org`
+
+**NO commits (not backported)**:
+- IIO driver commits that use `devm_device_init_wakeup()` instead of
+  manual cleanup
+
+The key difference is that the YES commits use the same fix pattern as
+this MFD commit - manual cleanup in the remove function, while the NO
+commits use the `devm_` managed approach that automatically handles
+cleanup.
+
+### **Impact Assessment**
+- **User Impact**: Memory leaks on device unbind affect systems where
+  MFD devices are frequently bound/unbound
+- **Subsystem**: MFD (Multi-Function Device) is a core kernel subsystem
+  used by many embedded systems
+- **Regression Risk**: Minimal - adding proper cleanup cannot cause
+  functional regression
+
+### **Stable Tree Criteria Met**
+1. ✅ Fixes an important bug (memory leak)
+2. ✅ Small and contained change
+3. ✅ No architectural changes
+4. ✅ Minimal risk of regression
+5. ✅ Follows established patterns seen in other backported commits
+
+The commit follows the exact same pattern as the GPIO driver commits
+that were successfully backported to stable trees (commits #1 and #2 in
+the historical examples), making it a clear candidate for backporting.
+
+ drivers/mfd/max14577.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/mfd/max14577.c b/drivers/mfd/max14577.c
+index 1f4f5002595c0..17672eeb1732a 100644
+--- a/drivers/mfd/max14577.c
++++ b/drivers/mfd/max14577.c
+@@ -463,6 +463,7 @@ static void max14577_i2c_remove(struct i2c_client *i2c)
  {
--	ssize_t error, error2, error3;
-+	ssize_t error, error2, error3, error4;
- 	size_t left = size;
+ 	struct max14577 *max14577 = i2c_get_clientdata(i2c);
  
- 	error = generic_listxattr(dentry, list, left);
-@@ -10648,8 +10648,16 @@ static ssize_t nfs4_listxattr(struct dentry *dentry, char *list, size_t size)
- 	error3 = nfs4_listxattr_nfs4_user(d_inode(dentry), list, left);
- 	if (error3 < 0)
- 		return error3;
-+	if (list) {
-+		list += error3;
-+		left -= error3;
-+	}
-+
-+	error4 = security_inode_listsecurity(d_inode(dentry), list, left);
-+	if (error4 < 0)
-+		return error4;
- 
--	error += error2 + error3;
-+	error += error2 + error3 + error4;
- 	if (size && error > size)
- 		return -ERANGE;
- 	return error;
++	device_init_wakeup(max14577->dev, false);
+ 	mfd_remove_devices(max14577->dev);
+ 	regmap_del_irq_chip(max14577->irq, max14577->irq_data);
+ 	if (max14577->dev_type == MAXIM_DEVICE_TYPE_MAX77836)
 -- 
 2.39.5
 
