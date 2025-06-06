@@ -1,45 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82474193077;
-	Fri,  6 Jun 2025 15:42:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8184D288CB7;
+	Fri,  6 Jun 2025 15:42:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749224526; cv=none; b=aGDIxAe+3H5A95bWaMG5AozlUJwjqdHD4jV4jYE0T4litDEZytF/DLwJ8jghkxF7e6OvJ1W7UlNyxcx1PlV/lA9mXQscd5ynAmWdWX6p1dshaPcG2AeH4Bww8oO8MCuKJlOAIDC/dWrd5vCFsKwXFBcHxTSqSX2Ji01qIV4rdbs=
+	t=1749224527; cv=none; b=ppsD/K5pvIFWfciBIbiVkbw7/DZV2ikuxOeRGQmCFtyTNBEgGs7qPwKaUfh1hOZEh9OSA9FBSTui0S2LbeDCxfQuFRpM1uei4Px0Li+xc/MwopPUum+haLQ9cAbqxQywFBm85ggRqs9OOhVlTCsAI5I79cWuUNZ7aTeTiuy4NBk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749224526; c=relaxed/simple;
-	bh=T5b4mt8ggPJWeguucy1B36tzEmSnYzm8EmReVO455bc=;
+	s=arc-20240116; t=1749224527; c=relaxed/simple;
+	bh=DwYUtryMDTr5IZsXqtMbi37uib8JAFsJzodmtBIYXmI=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CXU9BdMgd/5Wd0TO3fGByqMZEHS0RWwL5N2Urt/FpdVzeexrDqtWV8ZBuZ2CTvsVPpxZ/OYacOKlBZhiWfDDju/KA5+llzuk401Q6hZq7qEA8uyCIXI92+9cLQz0MTNiQh9uR61eGjOZACeGNylEgvf3XSFXwHAJskU+kdnMGK0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GvPn/zaJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BC0ObFyz+Piat/tGDcv08xgL/TKL/ztcc7wEAYOE09zQAi0ttD5wSbnsieQf7uIkH2eDFo67pfXc2h2EqzG97Mey10cQLLBhcwh2JArM6mTZW4NdWGRqibiWGCRL7CPoiiE0nemhQLWPPvRlaSrYzIl6YGnG8PbUpfZDvrPbsnw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=U3BEM6lG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GvPn/zaJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEF24C4CEED;
-	Fri,  6 Jun 2025 15:42:04 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="U3BEM6lG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BB14C4CEF0;
+	Fri,  6 Jun 2025 15:42:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749224526;
-	bh=T5b4mt8ggPJWeguucy1B36tzEmSnYzm8EmReVO455bc=;
+	s=k20201202; t=1749224527;
+	bh=DwYUtryMDTr5IZsXqtMbi37uib8JAFsJzodmtBIYXmI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GvPn/zaJ1V88lvMQ6VOZ3aWJL5NqaJo1UngkASzws8vfZNI0v/Y3NZ2MucNbTE3rv
-	 BqCG/55rh30L2MPdi+BPWZAsaCirZK9+6nhlYMO1NV+zgQTrJiPs1yOfKzAaM/0YZ4
-	 XmMBBJEL6ZLJohIZHCiujGRjLOVKs/FdX/MNNkjJw/V5mXnfT+7AwF18xd1YBOWYOj
-	 1ZSqpPzCY2QpechHvQQ7WnigPqJ7Wj3FeC0JwcR2hc07GZGxkcM9V3ymMNJPi/1IUo
-	 yEKlEmAUp4jSmBhKSlykL1bSoDfQol+UeKwIzWwrllffQBW5AemB+5wo/7cLLomwqe
-	 MRmcDAnKOZY6w==
+	b=U3BEM6lGtn26Ral9r5G+301E+90L/8Z9R8aMWFVl89q7SVshn2Q1lyUmsMOKOVpq5
+	 jk/LK4XlEfl/3AphiwNrK2nQ94KacddaClwEf6n+qPa4w6x4f5H+sVixkKPaFAcrf4
+	 40DdYBlKFbopCAJAoVzKWfDyFq5fc9e2/+C8C2EFnrDV+S44SkwrKAtSDlJYPbNA1w
+	 mfWo2W8HeXnc37qswIMsQhOX4DqjUYKgdeZxygP6xrALWZ3sdlzTGRBnOlpEBHoux8
+	 HL1PFr+qj73Ymu74sCj0zbpmUkO6aOrJVKK61y5uCb0RyQ/3150QLCUUJsLbltbdpJ
+	 jHHjzCEtyXHEw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Nikhil Jha <njha@janestreet.com>,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Anna Schumaker <anna.schumaker@oracle.com>,
+Cc: Yikai Tsai <yikai.tsai.wiwynn@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>,
-	trondmy@kernel.org,
-	anna@kernel.org,
-	jlayton@kernel.org,
-	linux-nfs@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.15 13/21] sunrpc: don't immediately retransmit on seqno miss
-Date: Fri,  6 Jun 2025 11:41:38 -0400
-Message-Id: <20250606154147.546388-13-sashal@kernel.org>
+	mail@carsten-spiess.de,
+	jdelvare@suse.com,
+	linux-hwmon@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.15 14/21] hwmon: (isl28022) Fix current reading calculation
+Date: Fri,  6 Jun 2025 11:41:39 -0400
+Message-Id: <20250606154147.546388-14-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250606154147.546388-1-sashal@kernel.org>
 References: <20250606154147.546388-1-sashal@kernel.org>
@@ -52,156 +50,143 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.15.1
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nikhil Jha <njha@janestreet.com>
+From: Yikai Tsai <yikai.tsai.wiwynn@gmail.com>
 
-[ Upstream commit fadc0f3bb2de8c570ced6d9c1f97222213d93140 ]
+[ Upstream commit b2446a16dbf2347a07af0cf994ca36576d94df77 ]
 
-RFC2203 requires that retransmitted messages use a new gss sequence
-number, but the same XID. This means that if the server is just slow
-(e.x. overloaded), the client might receive a response using an older
-seqno than the one it has recorded.
+According to the ISL28022 datasheet, bit15 of the current register is
+representing -32768. Fix the calculation to properly handle this bit,
+ensuring correct measurements for negative values.
 
-Currently, Linux's client immediately retransmits in this case. However,
-this leads to a lot of wasted retransmits until the server eventually
-responds faster than the client can resend.
-
-Client -> SEQ 1 -> Server
-Client -> SEQ 2 -> Server
-Client <- SEQ 1 <- Server (misses, expecting seqno = 2)
-Client -> SEQ 3 -> Server (immediate retransmission on miss)
-Client <- SEQ 2 <- Server (misses, expecting seqno = 3)
-Client -> SEQ 4 -> Server (immediate retransmission on miss)
-... and so on ...
-
-This commit makes it so that we ignore messages with bad checksums
-due to seqnum mismatch, and rely on the usual timeout behavior for
-retransmission instead of doing so immediately.
-
-Signed-off-by: Nikhil Jha <njha@janestreet.com>
-Acked-by: Chuck Lever <chuck.lever@oracle.com>
-Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
+Signed-off-by: Yikai Tsai <yikai.tsai.wiwynn@gmail.com>
+Link: https://lore.kernel.org/r/20250519084055.3787-2-yikai.tsai.wiwynn@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Based on my analysis of the commit and the similar backported commits as
-reference, here is my assessment:
+Now let me check for similar current register handling issues in other
+hwmon drivers. Let me look at the commit to understand the exact issue:
 
-**YES**
+Looking at the commit changes, I can see that:
 
-This commit should be backported to stable kernel trees. Here's my
-detailed analysis:
-
-## Key Analysis Points:
-
-### 1. **Bug Fix Nature**:
-This commit addresses a clear performance bug in SUNRPC's RPCSEC_GSS
-sequence number handling. The current code immediately retransmits when
-it receives a response with an older sequence number than expected,
-leading to excessive and wasteful retransmissions when the server is
-simply slow.
-
-### 2. **Alignment with RFC2203**:
-The commit correctly implements RFC2203 requirements, which state that
-retransmitted messages should use new GSS sequence numbers but keep the
-same XID. The current behavior creates a retransmission storm that
-violates the spirit of this requirement.
-
-### 3. **Code Changes Analysis**:
-The modification in `rpc_decode_header()` at the `out_verifier` label is
-minimal and targeted:
-
-**Before** (lines 2773-2776):
+**Before (broken):**
 ```c
-case -EACCES:
-    /* Re-encode with a fresh cred */
-    fallthrough;
-default:
-    goto out_garbage;
+*val = ((long)regval * 1250L * (long)data->gain) / (long)data->shunt;
 ```
 
-**After**:
+**After (fixed):**
 ```c
-case -EACCES:
-    /* possible RPCSEC_GSS out-of-sequence event (RFC2203),
-     - reset recv state and keep waiting, don't retransmit
-     */
-    task->tk_rqstp->rq_reply_bytes_recvd = 0;
-    task->tk_status = xprt_request_enqueue_receive(task);
-    task->tk_action = call_transmit_status;
-    return -EBADMSG;
-default:
-    goto out_garbage;
+u16 sign_bit;
+sign_bit = (regval >> 15) & 0x01;
+*val = (((long)(((u16)regval) & 0x7FFF) - (sign_bit * 32768)) * 1250L *
+(long)data->gain) / (long)data->shunt;
 ```
 
-### 4. **Risk Assessment - LOW**:
-- **Scope**: Changes are confined to a specific error handling path in
-  SUNRPC client code
-- **Behavioral change**: Instead of immediate retransmission, it now
-  waits for normal timeout-based retransmission
-- **Fallback**: The normal timeout mechanism still provides
-  retransmission if needed
-- **Error handling**: Uses existing infrastructure
-  (`xprt_request_enqueue_receive`, `call_transmit_status`)
+The issue is that the ISL28022 current register is a 16-bit two's
+complement signed integer where bit 15 represents the sign bit
+(equivalent to -32768), but the original code was treating it as an
+unsigned value.
 
-### 5. **Comparison with Similar Backported Commits**:
-This commit shares characteristics with successful backports:
-- **Similar Commit #1**: Also fixed SUNRPC verifier handling by changing
-  `goto out_err` to `goto out_garbage`
-- **Similar Commit #2**: Fixed incomplete RPC message handling with
-  proper state management
-- **Similar Commit #5**: Fixed RPCSEC_GSS sequence number limit handling
+Let me analyze based on the established criteria:
 
-All these were backported because they fixed protocol compliance issues
-with minimal risk.
+**Analysis:**
 
-### 6. **User Impact**:
-- **Performance improvement**: Significantly reduces unnecessary
-  retransmissions under server load
-- **Network efficiency**: Reduces wasted bandwidth and server load
-- **No breaking changes**: Maintains compatibility while improving
-  behavior
+**YES - This commit should be backported to stable kernel trees.**
 
-### 7. **Stability Criteria Compliance**:
-✅ **Important bugfix**: Fixes performance degradation and protocol
-compliance
-✅ **Minimal risk**: Small, localized change to error handling path
-✅ **No new features**: Pure bugfix, no architectural changes
-✅ **Subsystem-contained**: Changes only affect SUNRPC client verifier
-handling
-✅ **Clear benefit**: Reduces retransmission storms in production
-environments
+**Detailed Analysis:**
 
-The commit follows the stable tree rules perfectly: it's a targeted fix
-for a real-world performance problem with minimal risk of regression,
-affecting only the specific error case of RPCSEC_GSS sequence number
-mismatches.
+1. **Bug Fix Nature**: This is a clear bug fix that addresses incorrect
+   current readings for negative values. According to the ISL28022
+   datasheet mentioned in the commit, the current register (04h) is a
+   16-bit two's complement value where bit 15 represents -32768, but the
+   driver was treating it as unsigned.
 
- net/sunrpc/clnt.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+2. **User Impact**: This bug significantly affects users who rely on
+   accurate current measurements, especially when current flows in the
+   negative direction. The bug would cause:
+   - Incorrect reporting of negative currents as large positive values
+   - Complete failure to detect reverse current flow
+   - Invalid power calculations that depend on current readings
 
-diff --git a/net/sunrpc/clnt.c b/net/sunrpc/clnt.c
-index 6f75862d97820..21426c3049d35 100644
---- a/net/sunrpc/clnt.c
-+++ b/net/sunrpc/clnt.c
-@@ -2771,8 +2771,13 @@ rpc_decode_header(struct rpc_task *task, struct xdr_stream *xdr)
- 	case -EPROTONOSUPPORT:
- 		goto out_err;
- 	case -EACCES:
--		/* Re-encode with a fresh cred */
--		fallthrough;
-+		/* possible RPCSEC_GSS out-of-sequence event (RFC2203),
-+		 * reset recv state and keep waiting, don't retransmit
-+		 */
-+		task->tk_rqstp->rq_reply_bytes_recvd = 0;
-+		task->tk_status = xprt_request_enqueue_receive(task);
-+		task->tk_action = call_transmit_status;
-+		return -EBADMSG;
+3. **Code Analysis**:
+   - **Problem**: Lines 164-165 in
+     `/home/sasha/linux/drivers/hwmon/isl28022.c:164-165` treat `regval`
+     as unsigned, causing negative currents to be interpreted as large
+     positive values
+   - **Solution**: The fix properly implements sign extension by
+     extracting bit 15 as the sign bit and manually computing the two's
+     complement value: `(value & 0x7FFF) - (sign_bit * 32768)`
+   - **Consistency**: The fix follows the exact same pattern already
+     used in the shunt voltage reading function (`isl28022_read_in`) at
+     lines 120-122, showing this is the established correct approach in
+     this driver
+
+4. **Risk Assessment**:
+   - **Minimal Risk**: The change is very small and localized to the
+     current reading calculation
+   - **Well-Tested Pattern**: Uses the identical sign handling logic
+     already proven correct in the shunt voltage function
+   - **No Side Effects**: Only affects current register interpretation,
+     doesn't change any other functionality
+
+5. **Driver Context**:
+   - The ISL28022 driver was introduced in October 2024 (commit
+     39671a14df4f), making it relatively new
+   - The driver is hardware-specific and contained within the hwmon
+     subsystem
+   - This follows the same pattern as other successful backports shown
+     in the examples
+
+6. **Comparison to Similar Commits**: This commit is nearly identical to
+   the reference examples that were marked for backporting:
+   - **Similar Commit #1** (ina2xx): Fixed sign extension for current
+     register by adding `(s16)` cast
+   - **Similar Commit #3** (tmp513): Fixed sign extension with
+     `sign_extend32(regval, 15)` and type casting
+   - **Similar Commit #4** (nct7904): Fixed sign extension by converting
+     to `s8`
+   - **Similar Commit #5** (ina3221): Fixed shunt sum register bit
+     shifting
+
+7. **Critical Subsystem**: Hardware monitoring is critical for system
+   health monitoring, thermal management, and power management.
+   Incorrect current readings could lead to improper system behavior or
+   failure to detect dangerous conditions.
+
+**Conclusion**: This is a textbook stable tree candidate - it fixes a
+clear functional bug with minimal risk, follows established patterns,
+and addresses a real user-impacting issue in hardware monitoring
+functionality.
+
+ drivers/hwmon/isl28022.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/hwmon/isl28022.c b/drivers/hwmon/isl28022.c
+index 1fb9864635db9..1b4fb0824d6c0 100644
+--- a/drivers/hwmon/isl28022.c
++++ b/drivers/hwmon/isl28022.c
+@@ -154,6 +154,7 @@ static int isl28022_read_current(struct device *dev, u32 attr, long *val)
+ 	struct isl28022_data *data = dev_get_drvdata(dev);
+ 	unsigned int regval;
+ 	int err;
++	u16 sign_bit;
+ 
+ 	switch (attr) {
+ 	case hwmon_curr_input:
+@@ -161,8 +162,9 @@ static int isl28022_read_current(struct device *dev, u32 attr, long *val)
+ 				  ISL28022_REG_CURRENT, &regval);
+ 		if (err < 0)
+ 			return err;
+-		*val = ((long)regval * 1250L * (long)data->gain) /
+-			(long)data->shunt;
++		sign_bit = (regval >> 15) & 0x01;
++		*val = (((long)(((u16)regval) & 0x7FFF) - (sign_bit * 32768)) *
++			1250L * (long)data->gain) / (long)data->shunt;
+ 		break;
  	default:
- 		goto out_garbage;
- 	}
+ 		return -EOPNOTSUPP;
 -- 
 2.39.5
 
