@@ -1,43 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7B8F28BA84;
-	Fri,  6 Jun 2025 15:43:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85049EEB5;
+	Fri,  6 Jun 2025 15:43:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749224618; cv=none; b=DgJIUDpxW+cCB6k5zcLMXnUXuAB2QxKiCBUNwwfYFJG3iRQiRTd9kXxCsOQBMoIqNBSDb6oBasKBrSwVP4LvZmQNCEZY2SoCamNWe20Bb6uYQtBes3OC9MlDQQXMveaysk1mn4LQQdVSL4jmbaAY+4SfmbP5H8e4ybrvBd3v1iU=
+	t=1749224619; cv=none; b=VcxxCNCXT30iQ350JI0nUp2n5R4k1gKtry7LC+ft5llAWGOAOdwjNOTdGQRn/8wltEcUApQvNZZ67ixH2G/b+890GdA3N/NYpZveMNDzOya2ntn+RKwWjLG0fBKnMbTOACD4HYn+IK4T/jxETQDrrZLpGIkM9yXWi1Arrapa0kc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749224618; c=relaxed/simple;
-	bh=Hi9Va3IbJdcHxxft8GD9HKET7LbgH6Wb2VdwhoAf29M=;
+	s=arc-20240116; t=1749224619; c=relaxed/simple;
+	bh=D4mv15+bKBKTXf2d9mpoxjl7U8HbYfnSO+CrHkGP0yU=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PPv58AFU0uU5iGM7CjI6HxXsg8j3old6jVcwzYi57hjNSOOte4sekCO3kCOy9/bBdFjsSao8229ZZy5jIjViVSAidHMbBWIFwU+m7dsds9T1JS5af2P0L1gCw0MyKtPCZt8Pr3UJQgeqnQk/TFiTB40+9GShrClRPRQ/XcFOypg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=B1ORjN2d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Yiv71qrs2UqQIbYMcFNnLE4JxvnT6b8af7NBKq8EOwnRIFiUsKTmHBYN1YcG3iVreeBMInaI6cZOss37ScG3kLlQvky7JgSJmQcblsyXAE5TG8bk+4FazILe5qV/xBnnN1TsCOf/ceZdBLNQm/px7urcBeyTX0PmR7d9LxB7254=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Cr+T8SC0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="B1ORjN2d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCFD4C4CEED;
-	Fri,  6 Jun 2025 15:43:36 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Cr+T8SC0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EDCAC4CEED;
+	Fri,  6 Jun 2025 15:43:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749224617;
-	bh=Hi9Va3IbJdcHxxft8GD9HKET7LbgH6Wb2VdwhoAf29M=;
+	s=k20201202; t=1749224619;
+	bh=D4mv15+bKBKTXf2d9mpoxjl7U8HbYfnSO+CrHkGP0yU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B1ORjN2dBazmv0Q+nBMbsYmGJ3Fav0l75aFeA5SzISmcjxSFpWhbVSu6oz3z6bNN5
-	 aJxx4gjIERXVvqbfhfrT38nvRrIIskrUaXykWOYF1kTIs2ej5AnPFZf+iwvC55wd29
-	 IwmUbA+67XqbtiMmD5H7hMtkL7COLP29v5Y12xtmct7k+Hy5258bDmJMhd62zVr/qX
-	 QQaFtsNcrAx5koQ1bR0RmWN+3S2nEylLFknCEJ22j5jYl8qzGbuznRVyQA8gt+e3Wk
-	 8WNB+hOJgWKa5nXhn2mOQLRHuKYcxckik8031SHNlSNbAcjYRndZkJk91HVeu/kmjr
-	 RXt2inRcxkRkA==
+	b=Cr+T8SC0qQZuKDRGCf1sk6IoY02dV+fJbSGbzAiNT9KQ8+QMOUNlEXwsvpKL/ieRH
+	 QNgnOAEqEyIhNEvE+Sw4caYWwzeRI717SFjfPvJwI3hlRXMuD9e7LDH+Ks/5KeSDgN
+	 7NWI2shDRYs1OVLCxSthgJIMw7Wgbg7XgUqTS8G6J8TyyhW3tR19aX8BUSvN8m0+vC
+	 mX43R/vnIEMBmJnxdSF0fEQFgx4jrYBJ8QqeHiF8ELJk8Y06MAKwjWzgvJhpiLnADv
+	 tn3ugCzpEO+5Vc5+NgfRXO7Chb0iE2TcKtcJEyVNKF7okaWLB5AmKYCKIs7si22aLq
+	 n64ZV3tLhC7bQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Lee Jones <lee@kernel.org>,
+Cc: Nikhil Jha <njha@janestreet.com>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Anna Schumaker <anna.schumaker@oracle.com>,
 	Sasha Levin <sashal@kernel.org>,
-	cw00.choi@samsung.com,
-	krzk@kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.6 07/13] mfd: max14577: Fix wakeup source leaks on device unbind
-Date: Fri,  6 Jun 2025 11:43:20 -0400
-Message-Id: <20250606154327.547792-7-sashal@kernel.org>
+	trondmy@kernel.org,
+	anna@kernel.org,
+	jlayton@kernel.org,
+	linux-nfs@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.6 08/13] sunrpc: don't immediately retransmit on seqno miss
+Date: Fri,  6 Jun 2025 11:43:21 -0400
+Message-Id: <20250606154327.547792-8-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250606154327.547792-1-sashal@kernel.org>
 References: <20250606154327.547792-1-sashal@kernel.org>
@@ -53,112 +55,153 @@ X-stable-base: Linux 6.6.93
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Nikhil Jha <njha@janestreet.com>
 
-[ Upstream commit d905d06e64b0eb3da43af6186c132f5282197998 ]
+[ Upstream commit fadc0f3bb2de8c570ced6d9c1f97222213d93140 ]
 
-Device can be unbound, so driver must also release memory for the wakeup
-source.
+RFC2203 requires that retransmitted messages use a new gss sequence
+number, but the same XID. This means that if the server is just slow
+(e.x. overloaded), the client might receive a response using an older
+seqno than the one it has recorded.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20250406-mfd-device-wakekup-leak-v1-3-318e14bdba0a@linaro.org
-Signed-off-by: Lee Jones <lee@kernel.org>
+Currently, Linux's client immediately retransmits in this case. However,
+this leads to a lot of wasted retransmits until the server eventually
+responds faster than the client can resend.
+
+Client -> SEQ 1 -> Server
+Client -> SEQ 2 -> Server
+Client <- SEQ 1 <- Server (misses, expecting seqno = 2)
+Client -> SEQ 3 -> Server (immediate retransmission on miss)
+Client <- SEQ 2 <- Server (misses, expecting seqno = 3)
+Client -> SEQ 4 -> Server (immediate retransmission on miss)
+... and so on ...
+
+This commit makes it so that we ignore messages with bad checksums
+due to seqnum mismatch, and rely on the usual timeout behavior for
+retransmission instead of doing so immediately.
+
+Signed-off-by: Nikhil Jha <njha@janestreet.com>
+Acked-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Now let me understand the difference between the fixes - the historical
-commits show two patterns:
-1. Using `devm_device_init_wakeup()` - automatically handles cleanup
-2. Manual cleanup by calling `device_init_wakeup(dev, false)` in remove
-   functions
-
-Let me check if this specific commit has `Cc: stable@vger.kernel.org` in
-the message:
-
-Based on my analysis of this commit and comparison with the similar
-historical commits, here is my assessment:
+Based on my analysis of the commit and the similar backported commits as
+reference, here is my assessment:
 
 **YES**
 
-This commit should be backported to stable kernel trees for the
-following reasons:
+This commit should be backported to stable kernel trees. Here's my
+detailed analysis:
 
-## Analysis
+## Key Analysis Points:
 
-### **Code Change Analysis**
-The commit adds a single line in the `max14577_i2c_remove()` function:
+### 1. **Bug Fix Nature**:
+This commit addresses a clear performance bug in SUNRPC's RPCSEC_GSS
+sequence number handling. The current code immediately retransmits when
+it receives a response with an older sequence number than expected,
+leading to excessive and wasteful retransmissions when the server is
+simply slow.
+
+### 2. **Alignment with RFC2203**:
+The commit correctly implements RFC2203 requirements, which state that
+retransmitted messages should use new GSS sequence numbers but keep the
+same XID. The current behavior creates a retransmission storm that
+violates the spirit of this requirement.
+
+### 3. **Code Changes Analysis**:
+The modification in `rpc_decode_header()` at the `out_verifier` label is
+minimal and targeted:
+
+**Before** (lines 2773-2776):
 ```c
-+       device_init_wakeup(max14577->dev, false);
+case -EACCES:
+    /* Re-encode with a fresh cred */
+    fallthrough;
+default:
+    goto out_garbage;
 ```
 
-This addition occurs at drivers/mfd/max14577.c:459, right before
-`mfd_remove_devices()` is called.
+**After**:
+```c
+case -EACCES:
+    /* possible RPCSEC_GSS out-of-sequence event (RFC2203),
+     - reset recv state and keep waiting, don't retransmit
+     */
+    task->tk_rqstp->rq_reply_bytes_recvd = 0;
+    task->tk_status = xprt_request_enqueue_receive(task);
+    task->tk_action = call_transmit_status;
+    return -EBADMSG;
+default:
+    goto out_garbage;
+```
 
-### **Bug Fix Characteristics**
-1. **Memory Leak Fix**: The commit fixes a wakeup source memory leak
-   that occurs when the device is unbound. When `device_init_wakeup(dev,
-   true)` is called during probe (line 442), it allocates memory for
-   wakeup source structures. Without the corresponding cleanup call,
-   this memory is leaked on device removal.
+### 4. **Risk Assessment - LOW**:
+- **Scope**: Changes are confined to a specific error handling path in
+  SUNRPC client code
+- **Behavioral change**: Instead of immediate retransmission, it now
+  waits for normal timeout-based retransmission
+- **Fallback**: The normal timeout mechanism still provides
+  retransmission if needed
+- **Error handling**: Uses existing infrastructure
+  (`xprt_request_enqueue_receive`, `call_transmit_status`)
 
-2. **Small and Contained**: The fix is minimal - a single line addition
-   that mirrors the cleanup pattern used throughout the kernel.
+### 5. **Comparison with Similar Backported Commits**:
+This commit shares characteristics with successful backports:
+- **Similar Commit #1**: Also fixed SUNRPC verifier handling by changing
+  `goto out_err` to `goto out_garbage`
+- **Similar Commit #2**: Fixed incomplete RPC message handling with
+  proper state management
+- **Similar Commit #5**: Fixed RPCSEC_GSS sequence number limit handling
 
-3. **Low Risk**: The change has extremely low regression risk since it
-   only adds proper cleanup that should have been there originally.
+All these were backported because they fixed protocol compliance issues
+with minimal risk.
 
-### **Comparison with Historical Similar Commits**
-Looking at the provided historical commits, there are two categories:
+### 6. **User Impact**:
+- **Performance improvement**: Significantly reduces unnecessary
+  retransmissions under server load
+- **Network efficiency**: Reduces wasted bandwidth and server load
+- **No breaking changes**: Maintains compatibility while improving
+  behavior
 
-**YES commits (backported)**:
-- `gpio: mpc8xxx: Fix wakeup source leaks on device unbind` - Same exact
-  pattern and includes `Cc: stable@vger.kernel.org`
-- `gpio: zynq: Fix wakeup source leaks on device unbind` - Same exact
-  pattern and includes `Cc: stable@vger.kernel.org`
+### 7. **Stability Criteria Compliance**:
+✅ **Important bugfix**: Fixes performance degradation and protocol
+compliance
+✅ **Minimal risk**: Small, localized change to error handling path
+✅ **No new features**: Pure bugfix, no architectural changes
+✅ **Subsystem-contained**: Changes only affect SUNRPC client verifier
+handling
+✅ **Clear benefit**: Reduces retransmission storms in production
+environments
 
-**NO commits (not backported)**:
-- IIO driver commits that use `devm_device_init_wakeup()` instead of
-  manual cleanup
+The commit follows the stable tree rules perfectly: it's a targeted fix
+for a real-world performance problem with minimal risk of regression,
+affecting only the specific error case of RPCSEC_GSS sequence number
+mismatches.
 
-The key difference is that the YES commits use the same fix pattern as
-this MFD commit - manual cleanup in the remove function, while the NO
-commits use the `devm_` managed approach that automatically handles
-cleanup.
+ net/sunrpc/clnt.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-### **Impact Assessment**
-- **User Impact**: Memory leaks on device unbind affect systems where
-  MFD devices are frequently bound/unbound
-- **Subsystem**: MFD (Multi-Function Device) is a core kernel subsystem
-  used by many embedded systems
-- **Regression Risk**: Minimal - adding proper cleanup cannot cause
-  functional regression
-
-### **Stable Tree Criteria Met**
-1. ✅ Fixes an important bug (memory leak)
-2. ✅ Small and contained change
-3. ✅ No architectural changes
-4. ✅ Minimal risk of regression
-5. ✅ Follows established patterns seen in other backported commits
-
-The commit follows the exact same pattern as the GPIO driver commits
-that were successfully backported to stable trees (commits #1 and #2 in
-the historical examples), making it a clear candidate for backporting.
-
- drivers/mfd/max14577.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/drivers/mfd/max14577.c b/drivers/mfd/max14577.c
-index 1f4f5002595c0..17672eeb1732a 100644
---- a/drivers/mfd/max14577.c
-+++ b/drivers/mfd/max14577.c
-@@ -463,6 +463,7 @@ static void max14577_i2c_remove(struct i2c_client *i2c)
- {
- 	struct max14577 *max14577 = i2c_get_clientdata(i2c);
- 
-+	device_init_wakeup(max14577->dev, false);
- 	mfd_remove_devices(max14577->dev);
- 	regmap_del_irq_chip(max14577->irq, max14577->irq_data);
- 	if (max14577->dev_type == MAXIM_DEVICE_TYPE_MAX77836)
+diff --git a/net/sunrpc/clnt.c b/net/sunrpc/clnt.c
+index 4ffb2bcaf3648..63756607f6327 100644
+--- a/net/sunrpc/clnt.c
++++ b/net/sunrpc/clnt.c
+@@ -2733,8 +2733,13 @@ rpc_decode_header(struct rpc_task *task, struct xdr_stream *xdr)
+ 	case -EPROTONOSUPPORT:
+ 		goto out_err;
+ 	case -EACCES:
+-		/* Re-encode with a fresh cred */
+-		fallthrough;
++		/* possible RPCSEC_GSS out-of-sequence event (RFC2203),
++		 * reset recv state and keep waiting, don't retransmit
++		 */
++		task->tk_rqstp->rq_reply_bytes_recvd = 0;
++		task->tk_status = xprt_request_enqueue_receive(task);
++		task->tk_action = call_transmit_status;
++		return -EBADMSG;
+ 	default:
+ 		goto out_garbage;
+ 	}
 -- 
 2.39.5
 
