@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C9DF289E2A;
-	Fri,  6 Jun 2025 15:42:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D86A28A1C4;
+	Fri,  6 Jun 2025 15:42:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749224522; cv=none; b=FdTd3vN13/u14b2RQyhCRnNQVrLVSL7L7XJ5TXUUvs5m9efSMlxNK/9LGgDSE9husOyocFxo9CxHsuxWuNAMaVIhTNh2EJLpAsapRvj9Mbo5nEzBIt/qPFVq7+fRuf82VTaJrCh54s23MBxRFBckrg1Mwrva8kRiznlFttWV0wU=
+	t=1749224523; cv=none; b=j0YG7hIV52es/CJBRmXkn06Ep9CKc2ZDeBR/Jl8lJXS57FTjpOenOzx+lwFvGyftoL3aCCQ787w2f7j6Hc63b5Du9HxYCb6Nh4+YJ1r88srb5uNPn0sPDMjLxUAJQ2Zxrou4cI0+22DHb0Tf0GY8jAQwAmbAsmnkGGcLTA6N1hc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749224522; c=relaxed/simple;
-	bh=tiPe0dPe4UwN7HqdxG/tSbJJaFiRrqkxXdZlcNBDMsQ=;
+	s=arc-20240116; t=1749224523; c=relaxed/simple;
+	bh=v12Z9mNjd8kuM3bbE8OGtgZhNK+oeG0XPTkTyTLEkBY=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=S6D3bPgdKw2GZBMnuRLTaXi1jEXA2Je98PQA9A0ICAjc8YIffWyDnc32qdQIfXxo6qUpsewf6dF4WsKAzkD4oWFUfGzGteb1cheWDr7AhHZbkhrbefsJHHrHNarFgykO/+TFQr80WBVzGq4i8fn9uw6+GDMDHHRuIZfGnJ+B/w4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FXww4luO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=OuXXxNEAv/bRqSXBQ7G3yX35rrgpfFQyuDSCpHFbwdpyJeYBhRYVPHS3AqernuxNxJgLjsG+QjE9P8f+8M/lJwz2MYOBFgtS6XSi+Op7wYfg/b/rPXJ29yuF85SP504g9qXt25TvLi5b2MOXuPVKl5EEXLak8uglFGUWOFH2iRA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=adOSqBQA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FXww4luO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF14AC4CEF1;
-	Fri,  6 Jun 2025 15:42:00 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="adOSqBQA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56AC4C4AF0E;
+	Fri,  6 Jun 2025 15:42:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749224521;
-	bh=tiPe0dPe4UwN7HqdxG/tSbJJaFiRrqkxXdZlcNBDMsQ=;
+	s=k20201202; t=1749224523;
+	bh=v12Z9mNjd8kuM3bbE8OGtgZhNK+oeG0XPTkTyTLEkBY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FXww4luOf9z82lFs/omMf3NuX51KfZTRRYMBeMpjiD2TurYjklLuxZpeKTqP/zjv+
-	 28pkNPP4rLkIcinq6iSn4MW1n6LzP1USc1nroUsFEBps49GBgGoLQeVoVuKBdwi7Sv
-	 VScnZyRNvRbENzPzXP/0ZiEBHszdQtaI1gkQibhRu29gNjQ3QO8nWB0VXvvYkgSPq/
-	 SyxkksdWclFDgBsGeKXFojnpzOpp2uMGnkadwnGnGGfkjwSvZGmCi40jLiLUTW6bPf
-	 4TgKuLQNQtI52KDdm6rZr5TfNBlBi4yfl74elIfQH81hB1mbqVhk+RRqahCrnBQFN1
-	 Xj0mGM3N+7o8A==
+	b=adOSqBQAKo/qj4JRskVlBBMkqsh1AcxykhoXxRYgr+pb8E4nJtU+4EoOeTJzHvCoA
+	 BfhWOUfGX4H1sbL4k4eN2/EvjEPiNF9f1+q557h9md5rfyM8meqnRaiEx4e2eRXPA3
+	 6F8p4jE3s8kr+diBW03kEkhaaaZlyAdcjnP/ZSVVIu2bbd8PaPwmhK+Z6mRqzoKcDI
+	 8JXmRdPi28xTnAaDUCInjKWY5+bjpQe4Uu/7ASBcMyb2IVs5IJADpNgqsNYLDKbOA3
+	 ZNRkrOntClL+V1HSZQUU1VoLKI9uKN/j4lbksFucWr0ia6a7vfcWVlxKH13WmvDi2C
+	 hTfnXKT4Axvpw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
 Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Karel Balej <balejk@matfyz.cz>,
 	Lee Jones <lee@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	cw00.choi@samsung.com,
-	krzk@kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.15 10/21] mfd: max77705: Fix wakeup source leaks on device unbind
-Date: Fri,  6 Jun 2025 11:41:35 -0400
-Message-Id: <20250606154147.546388-10-sashal@kernel.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.15 11/21] mfd: 88pm886: Fix wakeup source leaks on device unbind
+Date: Fri,  6 Jun 2025 11:41:36 -0400
+Message-Id: <20250606154147.546388-11-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250606154147.546388-1-sashal@kernel.org>
 References: <20250606154147.546388-1-sashal@kernel.org>
@@ -55,108 +53,100 @@ Content-Transfer-Encoding: 8bit
 
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit a59a56cc4fb1f7d101f7ce1f5396ceaa2e304b71 ]
+[ Upstream commit 6d0b2398b2638208d68ba06601f776cd5d983b75 ]
 
 Device can be unbound, so driver must also release memory for the wakeup
 source.
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20250406-mfd-device-wakekup-leak-v1-5-318e14bdba0a@linaro.org
+Reviewed-by: Karel Balej <balejk@matfyz.cz>
+Link: https://lore.kernel.org/r/20250406-mfd-device-wakekup-leak-v1-1-318e14bdba0a@linaro.org
 Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 **YES**
 
-This commit should be backported to stable kernel trees. Here's my
-extensive analysis:
+This commit should be backported to stable kernel trees based on the
+following analysis:
 
 ## Code Change Analysis
 
-The commit changes line 134 in `drivers/mfd/max77705.c` from:
+The commit changes lines 127-128 in `drivers/mfd/88pm886.c` from:
 ```c
-device_init_wakeup(dev, true);
-```
-to:
-```c
-ret = devm_device_init_wakeup(dev);
-if (ret)
-    return dev_err_probe(dev, ret, "Failed to init wakeup\n");
+device_init_wakeup(dev, device_property_read_bool(dev, "wakeup-
+source"));
 ```
 
-This is a classic **resource leak fix** pattern where the driver was
-using `device_init_wakeup()` without proper cleanup on device unbind,
-which causes memory leaks for the wakeup source.
+To:
+```c
+if (device_property_read_bool(dev, "wakeup-source")) {
+    err = devm_device_init_wakeup(dev);
+    if (err)
+        return dev_err_probe(dev, err, "Failed to init wakeup\n");
+}
+```
 
-## Backport Suitability Assessment
+## Why This Should Be Backported
 
-### 1. **Fixes a Real Bug**: ✅ YES
-- This fixes a memory leak that occurs when devices are unbound from the
-  driver
-- The wakeup source memory is not released without proper cleanup
-- This affects real user scenarios where devices can be unbound/rebound
+**1. Clear Bug Fix**: This fixes a definitive memory leak where wakeup
+source memory is not properly freed when the device is unbound. The
+`device_init_wakeup()` function allocates memory that requires manual
+cleanup, while `devm_device_init_wakeup()` uses the device-managed
+resource framework to automatically clean up.
 
-### 2. **Small and Contained Change**: ✅ YES
-- Only 3 lines changed: 1 deletion, 2 additions
-- Single function modification in probe path
-- No architectural changes whatsoever
-- Extremely localized to wakeup source initialization
+**2. Matches Successful Backport Pattern**: This change follows the
+exact same pattern as Similar Commits #1 and #2 (gpio drivers) which
+were marked "Backport Status: YES". The fix uses identical methodology -
+replacing `device_init_wakeup()` with `devm_device_init_wakeup()` and
+proper error handling.
 
-### 3. **Low Risk of Regression**: ✅ YES
-- `devm_device_init_wakeup()` is a well-established managed resource
-  pattern
-- Same functionality as original but with automatic cleanup
-- The change follows standard kernel resource management patterns
-- No behavior change except proper cleanup
+**3. Low Risk, High Benefit**:
+   - **Risk**: Minimal - only affects error handling path and uses well-
+     established devm pattern
+   - **Benefit**: Eliminates memory leak without changing functional
+     behavior
+   - **Size**: Small, contained change with no architectural
+     implications
 
-### 4. **Pattern Consistency**: ✅ YES
-From the git history analysis, I found this is part of a systematic fix
-series by Krzysztof Kozlowski addressing the same issue across multiple
-subsystems:
-- `gpio: mpc8xxx: Fix wakeup source leaks` - **marked with Cc:
-  stable@vger.kernel.org**
-- `gpio: zynq: Fix wakeup source leaks` - **marked with Cc:
-  stable@vger.kernel.org**
-- Similar fixes in iio, watchdog, mfd subsystems with identical patterns
+**4. Stable Tree Compliance**:
+   - ✅ Fixes important bug (memory leak)
+   - ✅ No new features introduced
+   - ✅ No architectural changes
+   - ✅ Minimal regression risk
+   - ✅ Confined to single driver
 
-### 5. **Critical Subsystem**: ✅ YES
-- MFD (Multi-Function Device) drivers are core platform drivers
-- MAX77705 is a PMIC (Power Management IC) used in mobile devices
-- Resource leaks in power management components can lead to system
-  instability
+**5. Critical System Impact**: The 88PM886 is a Power Management IC used
+in embedded devices. While not immediately critical, memory leaks in
+power management components can accumulate over time in long-running
+embedded systems.
 
-### 6. **Stable Tree Compatibility**: ✅ YES
-- The `devm_device_init_wakeup()` function has been available since
-  early kernel versions
-- No new API dependencies
-- The fix pattern is well-established and widely used
+**6. Consistent with Kernel-wide Effort**: The commit is part of a
+broader kernel-wide cleanup to fix wakeup source leaks, with similar
+fixes already being backported to stable trees across multiple
+subsystems (GPIO, IIO, etc.).
 
-### 7. **Related Evidence**:
-The companion commits in the same series (`gpio: mpc8xxx` and `gpio:
-zynq`) were **explicitly tagged with `Cc: stable@vger.kernel.org`**,
-indicating the author and maintainers consider this class of fix
-appropriate for stable backporting.
+The change is technically sound, follows established patterns, and
+addresses a real resource leak with minimal risk - making it an ideal
+candidate for stable tree backporting.
 
-**Conclusion**: This is a textbook stable candidate - a small, safe
-resource leak fix that addresses a real problem with minimal risk and
-follows established patterns that have been deemed stable-worthy in the
-same patch series.
+ drivers/mfd/88pm886.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
- drivers/mfd/max77705.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/mfd/max77705.c b/drivers/mfd/max77705.c
-index 60c457c21d952..6b263bacb8c28 100644
---- a/drivers/mfd/max77705.c
-+++ b/drivers/mfd/max77705.c
-@@ -131,7 +131,9 @@ static int max77705_i2c_probe(struct i2c_client *i2c)
- 	if (ret)
- 		return dev_err_probe(dev, ret, "Failed to register child devices\n");
+diff --git a/drivers/mfd/88pm886.c b/drivers/mfd/88pm886.c
+index 891fdce5d8c12..177878aa32f86 100644
+--- a/drivers/mfd/88pm886.c
++++ b/drivers/mfd/88pm886.c
+@@ -124,7 +124,11 @@ static int pm886_probe(struct i2c_client *client)
+ 	if (err)
+ 		return dev_err_probe(dev, err, "Failed to register power off handler\n");
  
--	device_init_wakeup(dev, true);
-+	ret = devm_device_init_wakeup(dev);
-+	if (ret)
-+		return dev_err_probe(dev, ret, "Failed to init wakeup\n");
+-	device_init_wakeup(dev, device_property_read_bool(dev, "wakeup-source"));
++	if (device_property_read_bool(dev, "wakeup-source")) {
++		err = devm_device_init_wakeup(dev);
++		if (err)
++			return dev_err_probe(dev, err, "Failed to init wakeup\n");
++	}
  
  	return 0;
  }
