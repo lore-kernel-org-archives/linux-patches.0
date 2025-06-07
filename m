@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ABF121A444;
-	Sat,  7 Jun 2025 10:10:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0922C15D1;
+	Sat,  7 Jun 2025 10:10:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749291029; cv=none; b=AFxbu8TKNUGiE6q2L4MLXjaiczxNlG8mlDz7YDpPFI3VEDb/jAYDzgK+4ce8bv5M7Zwt3u19y4Q6ZtdhLDqVscc81/JITmkq37eCEigOFutiSxQcJodW86gP4CoVocUfmfFu1oPpKGoSv4WAgR+Z8SRpvnoeBj0mcKTcmpg0ipk=
+	t=1749291032; cv=none; b=oEBlf/pAtbMbF1/SZ6xSqNugenzwh/voIyAu51q+hRwbRyPPevfFUCycYK/VSNKTVl4Xrvyx+QClW95mBAAT3R5LQxL6jlOk/EDJ+e2dgoioZpPuvhawm1Uf5wahpgnMPIp7Ic6FmhDkV7IYOow3zWsOp+KgZVpUyDfkKrYNTp8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749291029; c=relaxed/simple;
-	bh=EIAlyLstKak8Y/4nr0C7lbDkdyruL3/+HI63KhcGF2E=;
+	s=arc-20240116; t=1749291032; c=relaxed/simple;
+	bh=XS8BoFch7nm5uUGQGX+nQibAZ+hu/UnpKqkTGNKBlww=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rrjVlAwk/Kpi7FcZPlh7hMGuxWng5LZnEhh/e+OfQOCUbWurFniQAGLesOEQ4yqlIGdK2lzwPE+TIne8CGXzXIDO9gS/jUMxwvQa+4PYxVVSM4brpl/+RwhtS1kWXix24kLJdzTLRiyAnpitHP5yGJECQ2Cm/NA8Hcw7JFrXf5A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m3+NodLW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Iusc0D3qLou3jy/cUhNRTC+hl/RhLeV+lFfZiv919JmrE1BPoV/T0OMCbrMGFitJ/1/yqUXfAc9xVkW6eLn8X1z3vwDRGwB14Ql8udN2R5zUG/JPXBLnses4wp16AdqfGnnY677oUbw0VvFJB7rszaKAO5C2NR0QiplSiX4RuuM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZMQ2Enfb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m3+NodLW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1F2DC4CEE4;
-	Sat,  7 Jun 2025 10:10:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZMQ2Enfb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EF9AC4CEE4;
+	Sat,  7 Jun 2025 10:10:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1749291029;
-	bh=EIAlyLstKak8Y/4nr0C7lbDkdyruL3/+HI63KhcGF2E=;
+	s=korg; t=1749291031;
+	bh=XS8BoFch7nm5uUGQGX+nQibAZ+hu/UnpKqkTGNKBlww=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m3+NodLWz1y1+Zu8GtBRoHzvHTPaSJ28MlEVqtsUhZ69hGIh7kl34LSSyTywAmbtx
-	 HbfEXhKsY8SkzVxIGAWkXRjGBpHl8rI+xODVg2pLeg7SJs1vU20NIuLBl4/rRsMZKr
-	 Z6LxkQ6lI0HSQQf7/4JrS49kjOSGN6ryXbAFqVz8=
+	b=ZMQ2Enfbp9oppIsjWP7kNQb567nATNKhnPbZaegmqS5/YTNk6OqBj0lbTV1OcxLyn
+	 ZLSmGx/OY5WiwCa8au4vFgQzxivUwsv8l8zHio2mJcu4o916HgVMtF1c+n/kD10g1u
+	 sLAd+5N9xTqpVb8yCkVhEk9lXSOeRT5Dj2wnwt/k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.15 10/34] Documentation: ACPI: Use all-string data node references
-Date: Sat,  7 Jun 2025 12:07:51 +0200
-Message-ID: <20250607100720.127165969@linuxfoundation.org>
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
+Subject: [PATCH 6.15 11/34] pinctrl: mediatek: eint: Fix invalid pointer dereference for v1 platforms
+Date: Sat,  7 Jun 2025 12:07:52 +0200
+Message-ID: <20250607100720.165134210@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250607100719.711372213@linuxfoundation.org>
 References: <20250607100719.711372213@linuxfoundation.org>
@@ -44,139 +46,159 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sakari Ailus <sakari.ailus@linux.intel.com>
+From: Nícolas F. R. A. Prado <nfraprado@collabora.com>
 
-commit 6db0261f3776bde01ae916ad8e1cb2ded3ba1a2b upstream.
+commit 1c9977b263475373b31bbf86af94a5c9ae2be42c upstream.
 
-Document that references to data nodes shall use string-only references
-instead of a device reference and a succession of the first package
-entries of hierarchical data node references.
+Commit 3ef9f710efcb ("pinctrl: mediatek: Add EINT support for multiple
+addresses") introduced an access to the 'soc' field of struct
+mtk_pinctrl in mtk_eint_do_init() and for that an include of
+pinctrl-mtk-common-v2.h.
 
-Fixes: 9880702d123f ("ACPI: property: Support using strings in reference properties")
-Cc: 6.8+ <stable@vger.kernel.org> # 6.8+
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Link: https://patch.msgid.link/20250409084738.3657079-1-sakari.ailus@linux.intel.com
-[ rjw: Clarifying edits ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+However, pinctrl drivers relying on the v1 common driver include
+pinctrl-mtk-common.h instead, which provides another definition of
+struct mtk_pinctrl that does not contain an 'soc' field.
+
+Since mtk_eint_do_init() can be called both by v1 and v2 drivers, it
+will now try to dereference an invalid pointer when called on v1
+platforms. This has been observed on Genio 350 EVK (MT8365), which
+crashes very early in boot (the kernel trace can only be seen with
+earlycon).
+
+In order to fix this, since 'struct mtk_pinctrl' was only needed to get
+a 'struct mtk_eint_pin', make 'struct mtk_eint_pin' a parameter
+of mtk_eint_do_init() so that callers need to supply it, removing
+mtk_eint_do_init()'s dependency on any particular 'struct mtk_pinctrl'.
+
+Fixes: 3ef9f710efcb ("pinctrl: mediatek: Add EINT support for multiple addresses")
+Suggested-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+Link: https://lore.kernel.org/20250520-genio-350-eint-null-ptr-deref-fix-v2-1-6a3ca966a7ba@collabora.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+[ukleinek: backport to 6.15.y]
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/firmware-guide/acpi/dsd/data-node-references.rst |   26 ++++------
- Documentation/firmware-guide/acpi/dsd/graph.rst                |   11 +---
- Documentation/firmware-guide/acpi/dsd/leds.rst                 |    7 --
- 3 files changed, 17 insertions(+), 27 deletions(-)
+ drivers/pinctrl/mediatek/mtk-eint.c              |   26 +++++++++--------------
+ drivers/pinctrl/mediatek/mtk-eint.h              |    5 ++--
+ drivers/pinctrl/mediatek/pinctrl-mtk-common-v2.c |    2 -
+ drivers/pinctrl/mediatek/pinctrl-mtk-common.c    |    2 -
+ 4 files changed, 16 insertions(+), 19 deletions(-)
 
---- a/Documentation/firmware-guide/acpi/dsd/data-node-references.rst
-+++ b/Documentation/firmware-guide/acpi/dsd/data-node-references.rst
-@@ -12,11 +12,14 @@ ACPI in general allows referring to devi
- Hierarchical data extension nodes may not be referred to directly, hence this
- document defines a scheme to implement such references.
+--- a/drivers/pinctrl/mediatek/mtk-eint.c
++++ b/drivers/pinctrl/mediatek/mtk-eint.c
+@@ -22,7 +22,6 @@
+ #include <linux/platform_device.h>
  
--A reference consist of the device object name followed by one or more
--hierarchical data extension [dsd-guide] keys. Specifically, the hierarchical
--data extension node which is referred to by the key shall lie directly under
--the parent object i.e. either the device object or another hierarchical data
--extension node.
-+A reference to a _DSD hierarchical data node is a string consisting of a
-+device object reference followed by a dot (".") and a relative path to a data
-+node object. Do not use non-string references as this will produce a copy of
-+the hierarchical data node, not a reference!
-+
-+The hierarchical data extension node which is referred to shall be located
-+directly under its parent object i.e. either the device object or another
-+hierarchical data extension node [dsd-guide].
+ #include "mtk-eint.h"
+-#include "pinctrl-mtk-common-v2.h"
  
- The keys in the hierarchical data nodes shall consist of the name of the node,
- "@" character and the number of the node in hexadecimal notation (without pre-
-@@ -33,11 +36,9 @@ extension key.
- Example
- =======
+ #define MTK_EINT_EDGE_SENSITIVE           0
+ #define MTK_EINT_LEVEL_SENSITIVE          1
+@@ -505,10 +504,9 @@ int mtk_eint_find_irq(struct mtk_eint *e
+ }
+ EXPORT_SYMBOL_GPL(mtk_eint_find_irq);
  
--In the ASL snippet below, the "reference" _DSD property contains a
--device object reference to DEV0 and under that device object, a
--hierarchical data extension key "node@1" referring to the NOD1 object
--and lastly, a hierarchical data extension key "anothernode" referring to
--the ANOD object which is also the final target node of the reference.
-+In the ASL snippet below, the "reference" _DSD property contains a string
-+reference to a hierarchical data extension node ANOD under DEV0 under the parent
-+of DEV1. ANOD is also the final target node of the reference.
- ::
+-int mtk_eint_do_init(struct mtk_eint *eint)
++int mtk_eint_do_init(struct mtk_eint *eint, struct mtk_eint_pin *eint_pin)
+ {
+ 	unsigned int size, i, port, inst = 0;
+-	struct mtk_pinctrl *hw = (struct mtk_pinctrl *)eint->pctl;
  
- 	Device (DEV0)
-@@ -76,10 +77,7 @@ the ANOD object which is also the final
- 	    Name (_DSD, Package () {
- 		ToUUID("daffd814-6eba-4d8c-8a91-bc9bbf4aa301"),
- 		Package () {
--		    Package () {
--			"reference", Package () {
--			    ^DEV0, "node@1", "anothernode"
--			}
-+		    Package () { "reference", "^DEV0.ANOD" }
- 		    },
+ 	/* If clients don't assign a specific regs, let's use generic one */
+ 	if (!eint->regs)
+@@ -519,7 +517,15 @@ int mtk_eint_do_init(struct mtk_eint *ei
+ 	if (!eint->base_pin_num)
+ 		return -ENOMEM;
+ 
+-	if (eint->nbase == 1) {
++	if (eint_pin) {
++		eint->pins = eint_pin;
++		for (i = 0; i < eint->hw->ap_num; i++) {
++			inst = eint->pins[i].instance;
++			if (inst >= eint->nbase)
++				continue;
++			eint->base_pin_num[inst]++;
++		}
++	} else {
+ 		size = eint->hw->ap_num * sizeof(struct mtk_eint_pin);
+ 		eint->pins = devm_kmalloc(eint->dev, size, GFP_KERNEL);
+ 		if (!eint->pins)
+@@ -533,16 +539,6 @@ int mtk_eint_do_init(struct mtk_eint *ei
  		}
- 	    })
---- a/Documentation/firmware-guide/acpi/dsd/graph.rst
-+++ b/Documentation/firmware-guide/acpi/dsd/graph.rst
-@@ -66,12 +66,9 @@ of that port shall be zero. Similarly, i
- endpoint, the number of that endpoint shall be zero.
- 
- The endpoint reference uses property extension with "remote-endpoint" property
--name followed by a reference in the same package. Such references consist of
--the remote device reference, the first package entry of the port data extension
--reference under the device and finally the first package entry of the endpoint
--data extension reference under the port. Individual references thus appear as::
-+name followed by a string reference in the same package. [data-node-ref]::
- 
--    Package() { device, "port@X", "endpoint@Y" }
-+    "device.datanode"
- 
- In the above example, "X" is the number of the port and "Y" is the number of
- the endpoint.
-@@ -109,7 +106,7 @@ A simple example of this is show below::
- 		ToUUID("daffd814-6eba-4d8c-8a91-bc9bbf4aa301"),
- 		Package () {
- 		    Package () { "reg", 0 },
--		    Package () { "remote-endpoint", Package() { \_SB.PCI0.ISP, "port@4", "endpoint@0" } },
-+		    Package () { "remote-endpoint", "\\_SB.PCI0.ISP.EP40" },
- 		}
- 	    })
  	}
-@@ -141,7 +138,7 @@ A simple example of this is show below::
- 		ToUUID("daffd814-6eba-4d8c-8a91-bc9bbf4aa301"),
- 		Package () {
- 		    Package () { "reg", 0 },
--		    Package () { "remote-endpoint", Package () { \_SB.PCI0.I2C2.CAM0, "port@0", "endpoint@0" } },
-+		    Package () { "remote-endpoint", "\\_SB.PCI0.I2C2.CAM0.EP00" },
- 		}
- 	    })
- 	}
---- a/Documentation/firmware-guide/acpi/dsd/leds.rst
-+++ b/Documentation/firmware-guide/acpi/dsd/leds.rst
-@@ -15,11 +15,6 @@ Referring to LEDs in Device tree is docu
- "flash-leds" property documentation. In short, LEDs are directly referred to by
- using phandles.
  
--While Device tree allows referring to any node in the tree [devicetree], in
--ACPI references are limited to device nodes only [acpi]. For this reason using
--the same mechanism on ACPI is not possible. A mechanism to refer to non-device
--ACPI nodes is documented in [data-node-ref].
+-	if (hw && hw->soc && hw->soc->eint_pin) {
+-		eint->pins = hw->soc->eint_pin;
+-		for (i = 0; i < eint->hw->ap_num; i++) {
+-			inst = eint->pins[i].instance;
+-			if (inst >= eint->nbase)
+-				continue;
+-			eint->base_pin_num[inst]++;
+-		}
+-	}
 -
- ACPI allows (as does DT) using integer arguments after the reference. A
- combination of the LED driver device reference and an integer argument,
- referring to the "reg" property of the relevant LED, is used to identify
-@@ -74,7 +69,7 @@ omitted. ::
- 			Package () {
- 				Package () {
- 					"flash-leds",
--					Package () { ^LED, "led@0", ^LED, "led@1" },
-+					Package () { "^LED.LED0", "^LED.LED1" },
- 				}
- 			}
- 		})
+ 	eint->pin_list = devm_kmalloc(eint->dev, eint->nbase * sizeof(u16 *), GFP_KERNEL);
+ 	if (!eint->pin_list)
+ 		goto err_pin_list;
+@@ -610,7 +606,7 @@ err_cur_mask:
+ err_wake_mask:
+ 	devm_kfree(eint->dev, eint->pin_list);
+ err_pin_list:
+-	if (eint->nbase == 1)
++	if (!eint_pin)
+ 		devm_kfree(eint->dev, eint->pins);
+ err_pins:
+ 	devm_kfree(eint->dev, eint->base_pin_num);
+--- a/drivers/pinctrl/mediatek/mtk-eint.h
++++ b/drivers/pinctrl/mediatek/mtk-eint.h
+@@ -88,7 +88,7 @@ struct mtk_eint {
+ };
+ 
+ #if IS_ENABLED(CONFIG_EINT_MTK)
+-int mtk_eint_do_init(struct mtk_eint *eint);
++int mtk_eint_do_init(struct mtk_eint *eint, struct mtk_eint_pin *eint_pin);
+ int mtk_eint_do_suspend(struct mtk_eint *eint);
+ int mtk_eint_do_resume(struct mtk_eint *eint);
+ int mtk_eint_set_debounce(struct mtk_eint *eint, unsigned long eint_n,
+@@ -96,7 +96,8 @@ int mtk_eint_set_debounce(struct mtk_ein
+ int mtk_eint_find_irq(struct mtk_eint *eint, unsigned long eint_n);
+ 
+ #else
+-static inline int mtk_eint_do_init(struct mtk_eint *eint)
++static inline int mtk_eint_do_init(struct mtk_eint *eint,
++				   struct mtk_eint_pin *eint_pin)
+ {
+ 	return -EOPNOTSUPP;
+ }
+--- a/drivers/pinctrl/mediatek/pinctrl-mtk-common-v2.c
++++ b/drivers/pinctrl/mediatek/pinctrl-mtk-common-v2.c
+@@ -416,7 +416,7 @@ int mtk_build_eint(struct mtk_pinctrl *h
+ 	hw->eint->pctl = hw;
+ 	hw->eint->gpio_xlate = &mtk_eint_xt;
+ 
+-	ret = mtk_eint_do_init(hw->eint);
++	ret = mtk_eint_do_init(hw->eint, hw->soc->eint_pin);
+ 	if (ret)
+ 		goto err_free_eint;
+ 
+--- a/drivers/pinctrl/mediatek/pinctrl-mtk-common.c
++++ b/drivers/pinctrl/mediatek/pinctrl-mtk-common.c
+@@ -1039,7 +1039,7 @@ static int mtk_eint_init(struct mtk_pinc
+ 	pctl->eint->pctl = pctl;
+ 	pctl->eint->gpio_xlate = &mtk_eint_xt;
+ 
+-	return mtk_eint_do_init(pctl->eint);
++	return mtk_eint_do_init(pctl->eint, NULL);
+ }
+ 
+ /* This is used as a common probe function */
 
 
