@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D73481F4CB8;
-	Sat,  7 Jun 2025 10:09:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7937315D1;
+	Sat,  7 Jun 2025 10:09:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749290968; cv=none; b=nCPfHN+c1RC661/dNgR8SkraMMs+qKlWYi3kcVXOqq/jkyeeNxBfXKZ1ZUA6iZoRKPvUEZmTnWVgy4SYg6DhS9zjHqpnGvBTJqnCbV9v7A8jS757hLwCcwPVC3qhXDpMLchZV9z8j9DoKiEUOsWTgAPl476OappKp5koPVvbNII=
+	t=1749290971; cv=none; b=DSDvgoxmHkgHlCNjy20Aw75/v2wg0AXDUDw3qUkVE2pXkrT7xN0m8Z2onD4hvRrJXkkV37ivYrwl/+mcpEreVC72PhGz6shlpEC1x6QqAZornd179vg9YpTioSwyvDufu/C5i2hdlEqadQ7hz6KThRv1cOH9uEiZ0YdBV59Le5c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749290968; c=relaxed/simple;
-	bh=icZRPus5g3PeifEPdx8kE+ynae1KiuBpAzVrm6YT68A=;
+	s=arc-20240116; t=1749290971; c=relaxed/simple;
+	bh=DGYNnGiyBbd2g8yqkEQr5WjTEvb6lUwjNlxTSp7tc00=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E9VpzGCXWlo/xWKXg0cyi1nxJ8NFKIyN+G4OnbuZ2r8Gm8XnQEjx//GXOkX5FGOMsHKypLqg9w3bwr/xwHI5UqDUEZ8MIl68WMK7C8bb4dCAJEJC3qa8d2M5uHVBVBlST1rWyQa1+9+8K5CxK1AXRUYZxEL+NxBI85nkdFK3Hlc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MfVhgH0q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IG4p/yND2nxPOoR5mWX+wSvmWQ5cEFA1+z8kVRlvm/5Czn3hfqOFQcN3WjNG+eRvkIJarA4yif2bx6/MXtUCCymg2xo2qjdJwgWjCRmUg0x6LCH8xfPoFtjT05HLO8WMa3q33seGU38FUEywrJKSmB6TzewasxQuABXtDAEBwoE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lVs/adxN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MfVhgH0q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 663FEC4CEE4;
-	Sat,  7 Jun 2025 10:09:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lVs/adxN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B11EC4CEE4;
+	Sat,  7 Jun 2025 10:09:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1749290968;
-	bh=icZRPus5g3PeifEPdx8kE+ynae1KiuBpAzVrm6YT68A=;
+	s=korg; t=1749290971;
+	bh=DGYNnGiyBbd2g8yqkEQr5WjTEvb6lUwjNlxTSp7tc00=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MfVhgH0qdu4W5M8C2HjFGs60RBqc9pyp9QVHQm1zaYKFiurkOoGJLqhKQZSsvkU0g
-	 STwJH+zW1D9WfPCQ1MfuYYxsq/LMAchiTxtkFiwuFaaph67Yw9TrRxnhNARFxqjxGQ
-	 hZQzjo2xrEZ8dudpZhJIDnSseZIW6dwQj92AV+3o=
+	b=lVs/adxNDdGZSZgNWosJr/DiKOKJbmx2XrSbEDvvTnmhCCrz3MxqAL8s+QY+DxPsl
+	 GSjr4A4JNAiykxzG0FJ6EOUJkW5HBr4xia5qnhv033TKuK7daIq6jK+ohTzFrocOHA
+	 HAmnExkSTmF6ptXL/Db7WG326ws79oRtaps/9ZRg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Imre Kaloz <kaloz@openwrt.org>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Gabor Juhos <j4g8y7@gmail.com>,
-	Linus Walleij <linus.walleij@linaro.org>
-Subject: [PATCH 6.14 03/24] pinctrl: armada-37xx: set GPIO output value before setting direction
-Date: Sat,  7 Jun 2025 12:07:43 +0200
-Message-ID: <20250607100717.840762094@linuxfoundation.org>
+	stable@kernel.org,
+	Pritam Manohar Sutar <pritam.sutar@samsung.com>,
+	Alim Akhtar <alim.akhtar@samsung.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 6.14 04/24] clk: samsung: correct clock summary for hsi1 block
+Date: Sat,  7 Jun 2025 12:07:44 +0200
+Message-ID: <20250607100717.878653338@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250607100717.706871523@linuxfoundation.org>
 References: <20250607100717.706871523@linuxfoundation.org>
@@ -52,62 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gabor Juhos <j4g8y7@gmail.com>
+From: Pritam Manohar Sutar <pritam.sutar@samsung.com>
 
-commit e6ebd4942981f8ad37189bbb36a3c8495e21ef4c upstream.
+commit 81214185e7e1fc6dfc8661a574c457accaf9a5a4 upstream.
 
-Changing the direction before updating the output value in the
-OUTPUT_VAL register may result in a glitch on the output line
-if the previous value in the OUTPUT_VAL register is different
-from the one we want to set.
+clk_summary shows wrong value for "mout_hsi1_usbdrd_user".
+It shows 400Mhz instead of 40Mhz as below.
 
-In order to avoid that, update the output value before changing
-the direction.
+dout_shared2_div4           1 1 0 400000000 0 0 50000 Y ...
+  mout_hsi1_usbdrd_user     0 0 0 400000000 0 0 50000 Y ...
+    dout_clkcmu_hsi1_usbdrd 0 0 0 40000000  0 0 50000 Y ...
 
-Cc: stable@vger.kernel.org
-Fixes: 6702abb3bf23 ("pinctrl: armada-37xx: Fix direction_output() callback behavior")
-Signed-off-by: Imre Kaloz <kaloz@openwrt.org>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
-Link: https://lore.kernel.org/20250514-pinctrl-a37xx-fixes-v2-2-07e9ac1ab737@gmail.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Correct the clk_tree by adding correct clock parent for
+"mout_hsi1_usbdrd_user".
+
+Post this change, clk_summary shows correct value.
+
+dout_shared2_div4           1 1 0 400000000 0 0 50000 Y ...
+  mout_clkcmu_hsi1_usbdrd   0 0 0 400000000 0 0 50000 Y ...
+    dout_clkcmu_hsi1_usbdrd 0 0 0 40000000  0 0 50000 Y ...
+      mout_hsi1_usbdrd_user 0 0 0 40000000  0 0 50000 Y ...
+
+Fixes: 485e13fe2fb6 ("clk: samsung: add top clock support for ExynosAuto v920 SoC")
+Cc: <stable@kernel.org>
+Signed-off-by: Pritam Manohar Sutar <pritam.sutar@samsung.com>
+Reviewed-by: Alim Akhtar <alim.akhtar@samsung.com>
+Link: https://lore.kernel.org/r/20250506080154.3995512-1-pritam.sutar@samsung.com
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pinctrl/mvebu/pinctrl-armada-37xx.c |   15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+ drivers/clk/samsung/clk-exynosautov920.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c
-+++ b/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c
-@@ -417,23 +417,22 @@ static int armada_37xx_gpio_direction_ou
- 					     unsigned int offset, int value)
- {
- 	struct armada_37xx_pinctrl *info = gpiochip_get_data(chip);
--	unsigned int val_offset = offset;
--	unsigned int reg = OUTPUT_EN;
-+	unsigned int en_offset = offset;
-+	unsigned int reg = OUTPUT_VAL;
- 	unsigned int mask, val, ret;
+--- a/drivers/clk/samsung/clk-exynosautov920.c
++++ b/drivers/clk/samsung/clk-exynosautov920.c
+@@ -1393,7 +1393,7 @@ static const unsigned long hsi1_clk_regs
+ /* List of parent clocks for Muxes in CMU_HSI1 */
+ PNAME(mout_hsi1_mmc_card_user_p) = {"oscclk", "dout_clkcmu_hsi1_mmc_card"};
+ PNAME(mout_hsi1_noc_user_p) = { "oscclk", "dout_clkcmu_hsi1_noc" };
+-PNAME(mout_hsi1_usbdrd_user_p) = { "oscclk", "mout_clkcmu_hsi1_usbdrd" };
++PNAME(mout_hsi1_usbdrd_user_p) = { "oscclk", "dout_clkcmu_hsi1_usbdrd" };
+ PNAME(mout_hsi1_usbdrd_p) = { "dout_tcxo_div2", "mout_hsi1_usbdrd_user" };
  
- 	armada_37xx_update_reg(&reg, &offset);
- 	mask = BIT(offset);
-+	val = value ? mask : 0;
- 
--	ret = regmap_update_bits(info->regmap, reg, mask, mask);
--
-+	ret = regmap_update_bits(info->regmap, reg, mask, val);
- 	if (ret)
- 		return ret;
- 
--	reg = OUTPUT_VAL;
--	armada_37xx_update_reg(&reg, &val_offset);
-+	reg = OUTPUT_EN;
-+	armada_37xx_update_reg(&reg, &en_offset);
- 
--	val = value ? mask : 0;
--	regmap_update_bits(info->regmap, reg, mask, val);
-+	regmap_update_bits(info->regmap, reg, mask, mask);
- 
- 	return 0;
- }
+ static const struct samsung_mux_clock hsi1_mux_clks[] __initconst = {
 
 
