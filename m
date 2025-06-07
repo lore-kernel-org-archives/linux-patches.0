@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 861D915D1;
-	Sat,  7 Jun 2025 10:09:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7700E15D1;
+	Sat,  7 Jun 2025 10:09:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749290942; cv=none; b=ZqLQxKPd0ZV4sJaaEfnOBrtKJ8fA8Otff3X3eahj8eatmwzkx5x1X1ulBE8qmcGipsemruS2I+5hEKNpvMLTRe9DXa0XYx6Y26DhjcukyDgqZXnm2/Qwj0kHPrdRdCsQaQjAGSZnsVTo6bnVAFwEgDlyL8a0cDAaRSAiU1ae8o4=
+	t=1749290946; cv=none; b=DBPo4aGeRN1Jk22NlMAYH81RfCIV7ulLsdTSOhVU9tuFjuC1UWgoPq453sGQKGfJ09MXAY0gmHxMLRKbkNvNO8Zc+XhtqSLzgFq32B5AgPxWYvK/BIzhqlF8ttLXwQFzZ11Qdql1nf8YCgPYCiCTybbedkdQXQc7iX5/e3Mk8mc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749290942; c=relaxed/simple;
-	bh=Q9KGhmhLURD5A7hbQnOsJ0j/ZHewYWFJj6I7QAF/WeU=;
+	s=arc-20240116; t=1749290946; c=relaxed/simple;
+	bh=fpRinYvaUR9zdqSWGgTzFf+rsSGwz4vw9A0aST5smOg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XeUN8YGvsd9NU+em/erIR20vJHinS3eVNoDc1i90N/XijfyWZf2pvyFzQiKzcsBThsKmTAu4p3SYdBRCjUu43hpMMrzETaJAq+Di9T2HWkU7XlX01udF08FiGzZ23IRlv7t9aABlFGIY8pNKwmLohV6Ey5NaUkx9ULewyuDAgsg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dqTHzMaU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=O1ZtlOtMJE/l27JZ62bywjkBCkR4VysBStHfkRGzhI/3+EF2bmnpiZcxyJ5mGFGxIqISCURkhCLH6GM0ns9ECAxsPor47o+5WrU3DDA9sRZGdfojkPL+9oYh+mYMuu8IrD/rInG9WercrSz42E7lfQI3bpfRIXtwTZACZxawtnE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Imcc7YDo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dqTHzMaU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15121C4CEE4;
-	Sat,  7 Jun 2025 10:09:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Imcc7YDo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B349BC4CEE4;
+	Sat,  7 Jun 2025 10:09:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1749290942;
-	bh=Q9KGhmhLURD5A7hbQnOsJ0j/ZHewYWFJj6I7QAF/WeU=;
+	s=korg; t=1749290945;
+	bh=fpRinYvaUR9zdqSWGgTzFf+rsSGwz4vw9A0aST5smOg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dqTHzMaUApRRBZ37cBj7MNmRymozieSFyyUQSuT6TGt3KHSr9+/OAovXjeK3cSuqB
-	 HYMMTUJGyAghqaOwHaeeAqokSUl2BtcrBPav9GrFr+awgF/P84vgvHSAOxGdyUCf4y
-	 EoX6AlgHODc0BCPfFNZtX4Z324qmv6SicATDFQLM=
+	b=Imcc7YDoIornZ+aM8wXkzprhEHLKyjXy93Jd1CXIMZjAH86cB9L2+AMtTq2St2Onr
+	 jyN0mJP/66SFC8pK2FyTCJw8xCvXDD4NuDZB5OaNTFX7ErQmlhjRyTPDrIWC9ZnEUL
+	 o01k3OGX89TuM9FSpWem4agpxaipEuoSbst3YTj4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.12 06/24] Documentation: ACPI: Use all-string data node references
-Date: Sat,  7 Jun 2025 12:07:37 +0200
-Message-ID: <20250607100718.156355039@linuxfoundation.org>
+	Alexandre Mergnat <amergnat@baylibre.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>
+Subject: [PATCH 6.12 07/24] rtc: Make rtc_time64_to_tm() support dates before 1970
+Date: Sat,  7 Jun 2025 12:07:38 +0200
+Message-ID: <20250607100718.200721771@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250607100717.910797456@linuxfoundation.org>
 References: <20250607100717.910797456@linuxfoundation.org>
@@ -44,139 +45,89 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sakari Ailus <sakari.ailus@linux.intel.com>
+From: Alexandre Mergnat <amergnat@baylibre.com>
 
-commit 6db0261f3776bde01ae916ad8e1cb2ded3ba1a2b upstream.
+commit 7df4cfef8b351fec3156160bedfc7d6d29de4cce upstream.
 
-Document that references to data nodes shall use string-only references
-instead of a device reference and a succession of the first package
-entries of hierarchical data node references.
+Conversion of dates before 1970 is still relevant today because these
+dates are reused on some hardwares to store dates bigger than the
+maximal date that is representable in the device's native format.
+This prominently and very soon affects the hardware covered by the
+rtc-mt6397 driver that can only natively store dates in the interval
+1900-01-01 up to 2027-12-31. So to store the date 2028-01-01 00:00:00
+to such a device, rtc_time64_to_tm() must do the right thing for
+time=-2208988800.
 
-Fixes: 9880702d123f ("ACPI: property: Support using strings in reference properties")
-Cc: 6.8+ <stable@vger.kernel.org> # 6.8+
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Link: https://patch.msgid.link/20250409084738.3657079-1-sakari.ailus@linux.intel.com
-[ rjw: Clarifying edits ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Alexandre Mergnat <amergnat@baylibre.com>
+Reviewed-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+Link: https://lore.kernel.org/r/20250428-enable-rtc-v4-1-2b2f7e3f9349@baylibre.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/firmware-guide/acpi/dsd/data-node-references.rst |   26 ++++------
- Documentation/firmware-guide/acpi/dsd/graph.rst                |   11 +---
- Documentation/firmware-guide/acpi/dsd/leds.rst                 |    7 --
- 3 files changed, 17 insertions(+), 27 deletions(-)
+ drivers/rtc/lib.c |   24 +++++++++++++++++++-----
+ 1 file changed, 19 insertions(+), 5 deletions(-)
 
---- a/Documentation/firmware-guide/acpi/dsd/data-node-references.rst
-+++ b/Documentation/firmware-guide/acpi/dsd/data-node-references.rst
-@@ -12,11 +12,14 @@ ACPI in general allows referring to devi
- Hierarchical data extension nodes may not be referred to directly, hence this
- document defines a scheme to implement such references.
+--- a/drivers/rtc/lib.c
++++ b/drivers/rtc/lib.c
+@@ -46,24 +46,38 @@ EXPORT_SYMBOL(rtc_year_days);
+  * rtc_time64_to_tm - converts time64_t to rtc_time.
+  *
+  * @time:	The number of seconds since 01-01-1970 00:00:00.
+- *		(Must be positive.)
++ *		Works for values since at least 1900
+  * @tm:		Pointer to the struct rtc_time.
+  */
+ void rtc_time64_to_tm(time64_t time, struct rtc_time *tm)
+ {
+-	unsigned int secs;
+-	int days;
++	int days, secs;
  
--A reference consist of the device object name followed by one or more
--hierarchical data extension [dsd-guide] keys. Specifically, the hierarchical
--data extension node which is referred to by the key shall lie directly under
--the parent object i.e. either the device object or another hierarchical data
--extension node.
-+A reference to a _DSD hierarchical data node is a string consisting of a
-+device object reference followed by a dot (".") and a relative path to a data
-+node object. Do not use non-string references as this will produce a copy of
-+the hierarchical data node, not a reference!
+ 	u64 u64tmp;
+ 	u32 u32tmp, udays, century, day_of_century, year_of_century, year,
+ 		day_of_year, month, day;
+ 	bool is_Jan_or_Feb, is_leap_year;
+ 
+-	/* time must be positive */
++	/*
++	 * Get days and seconds while preserving the sign to
++	 * handle negative time values (dates before 1970-01-01)
++	 */
+ 	days = div_s64_rem(time, 86400, &secs);
+ 
++	/*
++	 * We need 0 <= secs < 86400 which isn't given for negative
++	 * values of time. Fixup accordingly.
++	 */
++	if (secs < 0) {
++		days -= 1;
++		secs += 86400;
++	}
 +
-+The hierarchical data extension node which is referred to shall be located
-+directly under its parent object i.e. either the device object or another
-+hierarchical data extension node [dsd-guide].
+ 	/* day of the week, 1970-01-01 was a Thursday */
+ 	tm->tm_wday = (days + 4) % 7;
++	/* Ensure tm_wday is always positive */
++	if (tm->tm_wday < 0)
++		tm->tm_wday += 7;
  
- The keys in the hierarchical data nodes shall consist of the name of the node,
- "@" character and the number of the node in hexadecimal notation (without pre-
-@@ -33,11 +36,9 @@ extension key.
- Example
- =======
+ 	/*
+ 	 * The following algorithm is, basically, Proposition 6.3 of Neri
+@@ -93,7 +107,7 @@ void rtc_time64_to_tm(time64_t time, str
+ 	 * thus, is slightly different from [1].
+ 	 */
  
--In the ASL snippet below, the "reference" _DSD property contains a
--device object reference to DEV0 and under that device object, a
--hierarchical data extension key "node@1" referring to the NOD1 object
--and lastly, a hierarchical data extension key "anothernode" referring to
--the ANOD object which is also the final target node of the reference.
-+In the ASL snippet below, the "reference" _DSD property contains a string
-+reference to a hierarchical data extension node ANOD under DEV0 under the parent
-+of DEV1. ANOD is also the final target node of the reference.
- ::
+-	udays		= ((u32) days) + 719468;
++	udays		= days + 719468;
  
- 	Device (DEV0)
-@@ -76,10 +77,7 @@ the ANOD object which is also the final
- 	    Name (_DSD, Package () {
- 		ToUUID("daffd814-6eba-4d8c-8a91-bc9bbf4aa301"),
- 		Package () {
--		    Package () {
--			"reference", Package () {
--			    ^DEV0, "node@1", "anothernode"
--			}
-+		    Package () { "reference", "^DEV0.ANOD" }
- 		    },
- 		}
- 	    })
---- a/Documentation/firmware-guide/acpi/dsd/graph.rst
-+++ b/Documentation/firmware-guide/acpi/dsd/graph.rst
-@@ -66,12 +66,9 @@ of that port shall be zero. Similarly, i
- endpoint, the number of that endpoint shall be zero.
- 
- The endpoint reference uses property extension with "remote-endpoint" property
--name followed by a reference in the same package. Such references consist of
--the remote device reference, the first package entry of the port data extension
--reference under the device and finally the first package entry of the endpoint
--data extension reference under the port. Individual references thus appear as::
-+name followed by a string reference in the same package. [data-node-ref]::
- 
--    Package() { device, "port@X", "endpoint@Y" }
-+    "device.datanode"
- 
- In the above example, "X" is the number of the port and "Y" is the number of
- the endpoint.
-@@ -109,7 +106,7 @@ A simple example of this is show below::
- 		ToUUID("daffd814-6eba-4d8c-8a91-bc9bbf4aa301"),
- 		Package () {
- 		    Package () { "reg", 0 },
--		    Package () { "remote-endpoint", Package() { \_SB.PCI0.ISP, "port@4", "endpoint@0" } },
-+		    Package () { "remote-endpoint", "\\_SB.PCI0.ISP.EP40" },
- 		}
- 	    })
- 	}
-@@ -141,7 +138,7 @@ A simple example of this is show below::
- 		ToUUID("daffd814-6eba-4d8c-8a91-bc9bbf4aa301"),
- 		Package () {
- 		    Package () { "reg", 0 },
--		    Package () { "remote-endpoint", Package () { \_SB.PCI0.I2C2.CAM0, "port@0", "endpoint@0" } },
-+		    Package () { "remote-endpoint", "\\_SB.PCI0.I2C2.CAM0.EP00" },
- 		}
- 	    })
- 	}
---- a/Documentation/firmware-guide/acpi/dsd/leds.rst
-+++ b/Documentation/firmware-guide/acpi/dsd/leds.rst
-@@ -15,11 +15,6 @@ Referring to LEDs in Device tree is docu
- "flash-leds" property documentation. In short, LEDs are directly referred to by
- using phandles.
- 
--While Device tree allows referring to any node in the tree [devicetree], in
--ACPI references are limited to device nodes only [acpi]. For this reason using
--the same mechanism on ACPI is not possible. A mechanism to refer to non-device
--ACPI nodes is documented in [data-node-ref].
--
- ACPI allows (as does DT) using integer arguments after the reference. A
- combination of the LED driver device reference and an integer argument,
- referring to the "reg" property of the relevant LED, is used to identify
-@@ -74,7 +69,7 @@ omitted. ::
- 			Package () {
- 				Package () {
- 					"flash-leds",
--					Package () { ^LED, "led@0", ^LED, "led@1" },
-+					Package () { "^LED.LED0", "^LED.LED1" },
- 				}
- 			}
- 		})
+ 	u32tmp		= 4 * udays + 3;
+ 	century		= u32tmp / 146097;
 
 
