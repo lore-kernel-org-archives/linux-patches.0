@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F610219E8F;
-	Sat,  7 Jun 2025 10:09:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0546219E8F;
+	Sat,  7 Jun 2025 10:09:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749290958; cv=none; b=eatJRe4XPzxwlbAytlcLWCNdCGh1nEOMSOjT1mrDXHhhqENKRovd8c7p/qH4oFvqG6KX/P3l//PQobwAbg5g6F7dYv1+Oh6JF8dafb1YGji8So8rECWjOjxsFinluanu2MwDVxDq1j5aORBLzH6PVccLm86501eUwl2JgCGdduY=
+	t=1749290959; cv=none; b=ER4rn8uE73AFuT0FTNBzLCNOu/VSzqjCz6/95olJkHJXp8A5ffLR/RePMRsrZGWkMsg8Y1IY8JNG82gBvJ2NEMMtTfeXZrQ+rtV/1CP0CU4mZhPajAkHUicBDKW+rD5sM8W7vGfuru9ieU9yrIJ3iyFrPL2CVZrdf3r54snKcXo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749290958; c=relaxed/simple;
-	bh=fhxUVzWavN97dR9p4RJkkWbJhMhNqMrc4iZ+mb282wA=;
+	s=arc-20240116; t=1749290959; c=relaxed/simple;
+	bh=ZZjLC7jGE2KbmfROau7bbUqW3Ok/e7FZDRPCLyprGw8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P+Jh6DW7yciGW4I6ErAGmSgSvMcbA8zRgzi/gg6I3e84OzQt6wtW3Eyn+fwLuAQA83nSQAv2636DnDagKw7FulbAsnknb7Q0KIr/wgzngPkdvQ7wovdT5CMdNYlZV87NKiJId9WzjE7A7usmJWlv+c1mX35Vs/AB4y2dS/dQdMs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=09xY60lF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Vi/U7dMz2J9pkWlPqoQIuSxEkpVudLic/vNJ8SXG0H7MqqD/L90Hc/sT4rMYjSKBYfISC5iWPSoBe4jfd4dvV4x3SgHyADPWYa7zXPr3rhm0oZHs7cJOuH9dGZwh4z31XY84XRm1GZNQ8iB1eXQ/4v5z3f5SsQuHYfDEAyBybq4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ery/cZDI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="09xY60lF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD46CC4CEED;
-	Sat,  7 Jun 2025 10:09:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ery/cZDI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CA02C4CEE4;
+	Sat,  7 Jun 2025 10:09:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1749290958;
-	bh=fhxUVzWavN97dR9p4RJkkWbJhMhNqMrc4iZ+mb282wA=;
+	s=korg; t=1749290955;
+	bh=ZZjLC7jGE2KbmfROau7bbUqW3Ok/e7FZDRPCLyprGw8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=09xY60lFgqr4P3PULo2JtQRY7bkF/6fwcPK7Ye0brU3XSSyuw51GyYk9CINOmi1+m
-	 4nQDGQqF6VUp3f7/yY2H6PraaLFHGp1VO+CxoCbXUGNRUUFlIvn4hbhZvQ+h0Gyk9v
-	 5PP3pIJQsMjx/GDysc8AHTzdaisEPNgxBl7IYrxM=
+	b=ery/cZDINtRAj/IRwHVDblUSBslQtFIsLwiqpNSTfRI9C1akiJiz8OpKdx1ddP0AF
+	 9FE9HatiTJxp4qj4EEbDPLZ81ePrdY9SxBjqKJt5ZebCjrvjS8J0Xj1Ut7h6VdcAPY
+	 dT3/cq/hmEKFAZRxuXOfGaaNGGyiO75mpmq0Svko=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b6b347b7a4ea1b2e29b6@syzkaller.appspotmail.com,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
-	Alva Lan <alvalan9@foxmail.com>
-Subject: [PATCH 6.12 02/24] f2fs: fix to avoid accessing uninitialized curseg
-Date: Sat,  7 Jun 2025 12:07:33 +0200
-Message-ID: <20250607100718.006192189@linuxfoundation.org>
+	Ajay Agarwal <ajayagarwal@google.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Johnny-CC Chang <Johnny-CC.Chang@mediatek.com>,
+	Macpaul Lin <macpaul.lin@mediatek.com>
+Subject: [PATCH 6.12 11/24] PCI/ASPM: Disable L1 before disabling L1 PM Substates
+Date: Sat,  7 Jun 2025 12:07:42 +0200
+Message-ID: <20250607100718.348292137@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250607100717.910797456@linuxfoundation.org>
 References: <20250607100717.910797456@linuxfoundation.org>
@@ -52,115 +52,189 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Ajay Agarwal <ajayagarwal@google.com>
 
-commit 986c50f6bca109c6cf362b4e2babcb85aba958f6 upstream.
+commit 7447990137bf06b2aeecad9c6081e01a9f47f2aa upstream.
 
-syzbot reports a f2fs bug as below:
+PCIe r6.2, sec 5.5.4, requires that:
 
-F2FS-fs (loop3): Stopped filesystem due to reason: 7
-kworker/u8:7: attempt to access beyond end of device
-BUG: unable to handle page fault for address: ffffed1604ea3dfa
-RIP: 0010:get_ckpt_valid_blocks fs/f2fs/segment.h:361 [inline]
-RIP: 0010:has_curseg_enough_space fs/f2fs/segment.h:570 [inline]
-RIP: 0010:__get_secs_required fs/f2fs/segment.h:620 [inline]
-RIP: 0010:has_not_enough_free_secs fs/f2fs/segment.h:633 [inline]
-RIP: 0010:has_enough_free_secs+0x575/0x1660 fs/f2fs/segment.h:649
- <TASK>
- f2fs_is_checkpoint_ready fs/f2fs/segment.h:671 [inline]
- f2fs_write_inode+0x425/0x540 fs/f2fs/inode.c:791
- write_inode fs/fs-writeback.c:1525 [inline]
- __writeback_single_inode+0x708/0x10d0 fs/fs-writeback.c:1745
- writeback_sb_inodes+0x820/0x1360 fs/fs-writeback.c:1976
- wb_writeback+0x413/0xb80 fs/fs-writeback.c:2156
- wb_do_writeback fs/fs-writeback.c:2303 [inline]
- wb_workfn+0x410/0x1080 fs/fs-writeback.c:2343
- process_one_work kernel/workqueue.c:3236 [inline]
- process_scheduled_works+0xa66/0x1840 kernel/workqueue.c:3317
- worker_thread+0x870/0xd30 kernel/workqueue.c:3398
- kthread+0x7a9/0x920 kernel/kthread.c:464
- ret_from_fork+0x4b/0x80 arch/x86/kernel/process.c:148
- ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
+  If setting either or both of the enable bits for ASPM L1 PM Substates,
+  both ports must be configured as described in this section while ASPM L1
+  is disabled.
 
-Commit 8b10d3653735 ("f2fs: introduce FAULT_NO_SEGMENT") allows to trigger
-no free segment fault in allocator, then it will update curseg->segno to
-NULL_SEGNO, though, CP_ERROR_FLAG has been set, f2fs_write_inode() missed
-to check the flag, and access invalid curseg->segno directly in below call
-path, then resulting in panic:
+Previously, pcie_config_aspm_l1ss() assumed that "setting enable bits"
+meant "setting them to 1", and it configured L1SS as follows:
 
-- f2fs_write_inode
- - f2fs_is_checkpoint_ready
-  - has_enough_free_secs
-   - has_not_enough_free_secs
-    - __get_secs_required
-     - has_curseg_enough_space
-      - get_ckpt_valid_blocks
-      : access invalid curseg->segno
+  - Clear L1SS enable bits
+  - Disable L1
+  - Configure L1SS enable bits as required
+  - Enable L1 if required
 
-To avoid this issue, let's:
-- check CP_ERROR_FLAG flag in prior to f2fs_is_checkpoint_ready() in
-f2fs_write_inode().
-- in has_curseg_enough_space(), save curseg->segno into a temp variable,
-and verify its validation before use.
+With this sequence, when disabling L1SS on an ARM A-core with a Synopsys
+DesignWare PCIe core, the CPU occasionally hangs when reading
+PCI_L1SS_CTL1, leading to a reboot when the CPU watchdog expires.
 
-Fixes: 8b10d3653735 ("f2fs: introduce FAULT_NO_SEGMENT")
-Reported-by: syzbot+b6b347b7a4ea1b2e29b6@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/67973c2b.050a0220.11b1bb.0089.GAE@google.com
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-Signed-off-by: Alva Lan <alvalan9@foxmail.com>
+Move the L1 disable to the caller (pcie_config_aspm_link(), where L1 was
+already enabled) so L1 is always disabled while updating the L1SS bits:
+
+  - Disable L1
+  - Clear L1SS enable bits
+  - Configure L1SS enable bits as required
+  - Enable L1 if required
+
+Change pcie_aspm_cap_init() similarly.
+
+Link: https://lore.kernel.org/r/20241007032917.872262-1-ajayagarwal@google.com
+Signed-off-by: Ajay Agarwal <ajayagarwal@google.com>
+[bhelgaas: comments, commit log, compute L1SS setting before config access]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Tested-by: Johnny-CC Chang <Johnny-CC.Chang@mediatek.com>
+Signed-off-by: Macpaul Lin <macpaul.lin@mediatek.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/inode.c   |    7 +++++++
- fs/f2fs/segment.h |    9 ++++++++-
- 2 files changed, 15 insertions(+), 1 deletion(-)
+ drivers/pci/pcie/aspm.c |   92 ++++++++++++++++++++++++++----------------------
+ 1 file changed, 50 insertions(+), 42 deletions(-)
 
---- a/fs/f2fs/inode.c
-+++ b/fs/f2fs/inode.c
-@@ -777,6 +777,13 @@ int f2fs_write_inode(struct inode *inode
- 		!is_inode_flag_set(inode, FI_DIRTY_INODE))
- 		return 0;
+--- a/drivers/pci/pcie/aspm.c
++++ b/drivers/pci/pcie/aspm.c
+@@ -805,6 +805,15 @@ static void pcie_aspm_cap_init(struct pc
+ 	pcie_capability_read_word(parent, PCI_EXP_LNKCTL, &parent_lnkctl);
+ 	pcie_capability_read_word(child, PCI_EXP_LNKCTL, &child_lnkctl);
+ 
++	/* Disable L0s/L1 before updating L1SS config */
++	if (FIELD_GET(PCI_EXP_LNKCTL_ASPMC, child_lnkctl) ||
++	    FIELD_GET(PCI_EXP_LNKCTL_ASPMC, parent_lnkctl)) {
++		pcie_capability_write_word(child, PCI_EXP_LNKCTL,
++					   child_lnkctl & ~PCI_EXP_LNKCTL_ASPMC);
++		pcie_capability_write_word(parent, PCI_EXP_LNKCTL,
++					   parent_lnkctl & ~PCI_EXP_LNKCTL_ASPMC);
++	}
++
+ 	/*
+ 	 * Setup L0s state
+ 	 *
+@@ -829,6 +838,13 @@ static void pcie_aspm_cap_init(struct pc
+ 
+ 	aspm_l1ss_init(link);
+ 
++	/* Restore L0s/L1 if they were enabled */
++	if (FIELD_GET(PCI_EXP_LNKCTL_ASPMC, child_lnkctl) ||
++	    FIELD_GET(PCI_EXP_LNKCTL_ASPMC, parent_lnkctl)) {
++		pcie_capability_write_word(parent, PCI_EXP_LNKCTL, parent_lnkctl);
++		pcie_capability_write_word(child, PCI_EXP_LNKCTL, child_lnkctl);
++	}
++
+ 	/* Save default state */
+ 	link->aspm_default = link->aspm_enabled;
+ 
+@@ -845,25 +861,28 @@ static void pcie_aspm_cap_init(struct pc
+ 	}
+ }
+ 
+-/* Configure the ASPM L1 substates */
++/* Configure the ASPM L1 substates. Caller must disable L1 first. */
+ static void pcie_config_aspm_l1ss(struct pcie_link_state *link, u32 state)
+ {
+-	u32 val, enable_req;
++	u32 val;
+ 	struct pci_dev *child = link->downstream, *parent = link->pdev;
+ 
+-	enable_req = (link->aspm_enabled ^ state) & state;
++	val = 0;
++	if (state & PCIE_LINK_STATE_L1_1)
++		val |= PCI_L1SS_CTL1_ASPM_L1_1;
++	if (state & PCIE_LINK_STATE_L1_2)
++		val |= PCI_L1SS_CTL1_ASPM_L1_2;
++	if (state & PCIE_LINK_STATE_L1_1_PCIPM)
++		val |= PCI_L1SS_CTL1_PCIPM_L1_1;
++	if (state & PCIE_LINK_STATE_L1_2_PCIPM)
++		val |= PCI_L1SS_CTL1_PCIPM_L1_2;
+ 
+ 	/*
+-	 * Here are the rules specified in the PCIe spec for enabling L1SS:
+-	 * - When enabling L1.x, enable bit at parent first, then at child
+-	 * - When disabling L1.x, disable bit at child first, then at parent
+-	 * - When enabling ASPM L1.x, need to disable L1
+-	 *   (at child followed by parent).
+-	 * - The ASPM/PCIPM L1.2 must be disabled while programming timing
++	 * PCIe r6.2, sec 5.5.4, rules for enabling L1 PM Substates:
++	 * - Clear L1.x enable bits at child first, then at parent
++	 * - Set L1.x enable bits at parent first, then at child
++	 * - ASPM/PCIPM L1.2 must be disabled while programming timing
+ 	 *   parameters
+-	 *
+-	 * To keep it simple, disable all L1SS bits first, and later enable
+-	 * what is needed.
+ 	 */
+ 
+ 	/* Disable all L1 substates */
+@@ -871,26 +890,6 @@ static void pcie_config_aspm_l1ss(struct
+ 				       PCI_L1SS_CTL1_L1SS_MASK, 0);
+ 	pci_clear_and_set_config_dword(parent, parent->l1ss + PCI_L1SS_CTL1,
+ 				       PCI_L1SS_CTL1_L1SS_MASK, 0);
+-	/*
+-	 * If needed, disable L1, and it gets enabled later
+-	 * in pcie_config_aspm_link().
+-	 */
+-	if (enable_req & (PCIE_LINK_STATE_L1_1 | PCIE_LINK_STATE_L1_2)) {
+-		pcie_capability_clear_word(child, PCI_EXP_LNKCTL,
+-					   PCI_EXP_LNKCTL_ASPM_L1);
+-		pcie_capability_clear_word(parent, PCI_EXP_LNKCTL,
+-					   PCI_EXP_LNKCTL_ASPM_L1);
+-	}
+-
+-	val = 0;
+-	if (state & PCIE_LINK_STATE_L1_1)
+-		val |= PCI_L1SS_CTL1_ASPM_L1_1;
+-	if (state & PCIE_LINK_STATE_L1_2)
+-		val |= PCI_L1SS_CTL1_ASPM_L1_2;
+-	if (state & PCIE_LINK_STATE_L1_1_PCIPM)
+-		val |= PCI_L1SS_CTL1_PCIPM_L1_1;
+-	if (state & PCIE_LINK_STATE_L1_2_PCIPM)
+-		val |= PCI_L1SS_CTL1_PCIPM_L1_2;
+ 
+ 	/* Enable what we need to enable */
+ 	pci_clear_and_set_config_dword(parent, parent->l1ss + PCI_L1SS_CTL1,
+@@ -937,21 +936,30 @@ static void pcie_config_aspm_link(struct
+ 		dwstream |= PCI_EXP_LNKCTL_ASPM_L1;
+ 	}
  
 +	/*
-+	 * no need to update inode page, ultimately f2fs_evict_inode() will
-+	 * clear dirty status of inode.
++	 * Per PCIe r6.2, sec 5.5.4, setting either or both of the enable
++	 * bits for ASPM L1 PM Substates must be done while ASPM L1 is
++	 * disabled. Disable L1 here and apply new configuration after L1SS
++	 * configuration has been completed.
++	 *
++	 * Per sec 7.5.3.7, when disabling ASPM L1, software must disable
++	 * it in the Downstream component prior to disabling it in the
++	 * Upstream component, and ASPM L1 must be enabled in the Upstream
++	 * component prior to enabling it in the Downstream component.
++	 *
++	 * Sec 7.5.3.7 also recommends programming the same ASPM Control
++	 * value for all functions of a multi-function device.
 +	 */
-+	if (f2fs_cp_error(sbi))
-+		return -EIO;
++	list_for_each_entry(child, &linkbus->devices, bus_list)
++		pcie_config_aspm_dev(child, 0);
++	pcie_config_aspm_dev(parent, 0);
 +
- 	if (!f2fs_is_checkpoint_ready(sbi)) {
- 		f2fs_mark_inode_dirty_sync(inode, true);
- 		return -ENOSPC;
---- a/fs/f2fs/segment.h
-+++ b/fs/f2fs/segment.h
-@@ -562,13 +562,16 @@ static inline bool has_curseg_enough_spa
- 			unsigned int node_blocks, unsigned int data_blocks,
- 			unsigned int dent_blocks)
- {
--
- 	unsigned int segno, left_blocks, blocks;
- 	int i;
+ 	if (link->aspm_capable & PCIE_LINK_STATE_L1SS)
+ 		pcie_config_aspm_l1ss(link, state);
  
- 	/* check current data/node sections in the worst case. */
- 	for (i = CURSEG_HOT_DATA; i < NR_PERSISTENT_LOG; i++) {
- 		segno = CURSEG_I(sbi, i)->segno;
-+
-+		if (unlikely(segno == NULL_SEGNO))
-+			return false;
-+
- 		left_blocks = CAP_BLKS_PER_SEC(sbi) -
- 				get_ckpt_valid_blocks(sbi, segno, true);
+-	/*
+-	 * Spec 2.0 suggests all functions should be configured the
+-	 * same setting for ASPM. Enabling ASPM L1 should be done in
+-	 * upstream component first and then downstream, and vice
+-	 * versa for disabling ASPM L1. Spec doesn't mention L0S.
+-	 */
+-	if (state & PCIE_LINK_STATE_L1)
+-		pcie_config_aspm_dev(parent, upstream);
++	pcie_config_aspm_dev(parent, upstream);
+ 	list_for_each_entry(child, &linkbus->devices, bus_list)
+ 		pcie_config_aspm_dev(child, dwstream);
+-	if (!(state & PCIE_LINK_STATE_L1))
+-		pcie_config_aspm_dev(parent, upstream);
  
-@@ -579,6 +582,10 @@ static inline bool has_curseg_enough_spa
+ 	link->aspm_enabled = state;
  
- 	/* check current data section for dentry blocks. */
- 	segno = CURSEG_I(sbi, CURSEG_HOT_DATA)->segno;
-+
-+	if (unlikely(segno == NULL_SEGNO))
-+		return false;
-+
- 	left_blocks = CAP_BLKS_PER_SEC(sbi) -
- 			get_ckpt_valid_blocks(sbi, segno, true);
- 	if (dent_blocks > left_blocks)
 
 
