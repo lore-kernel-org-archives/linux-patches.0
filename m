@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46EB8217679;
-	Sat,  7 Jun 2025 10:10:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCCA821ABDB;
+	Sat,  7 Jun 2025 10:10:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749291008; cv=none; b=lo4m8u6KgxprlXbsG/JPl9WxV33on/cUfFqOFoN5pJUWi1yvBLSsD0kE5yAjNsWJIeSrK4LhOmMusRO/yhVrBQjmq9F0URplB0sd5qJQnIFWJZn8Cm13fafaLnFhpSntmV+VMTws20WuhJ1idZec3vHq/DsvM4VC2HqHrOuMTYA=
+	t=1749291011; cv=none; b=FBnXzQGzxQlla2gHeCKEoZRaT4OXt4D13oUjLZ2b7ZeAs+ElwfFYoa6T0rzXd0aCGp3CsuD7zEepKF0DCE4dTcJD1GnCNwO2vVtShww2cH0J9AFd4sB9w6QWKeTiBHw87/GvJgIne5zZ/R8nc5/6DHlRgGhoEEpMwE8NkzIsSdU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749291008; c=relaxed/simple;
-	bh=wpI1EUPN9ql+AiIbRYbeD5Qxu3GjiCndyXYkdjMqGSg=;
+	s=arc-20240116; t=1749291011; c=relaxed/simple;
+	bh=oFDPgtoP2NFyJ+Xt1s1hXvhBXNibhwSjUoxzJqodYNY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SuBK+vT9YGJTGoOz5PK2SNaAkXn2KcOnd3LvtVOIBN6mehtUS7HFemqPN7CmR6UmeEpkcCVtmuU+J1xTxefMkBZcsH0rzCcNWOUkPtB8hkIYZg4h7Rr7FwD9Qtv77txF6X9/YtbQr1cLpLryooUz1SPtBlcHPVobpG+nVCLqoRc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=08xP017K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FXVxQYXNInxhUKMcwjov7fCQ673VirQEYlllymBHC4FU62jiV9wqrUnG/jHrY6tqhZQa9AYcstzZs+Yx3tOid3biK/rPRZv835+a443SK4R75Ol3XS1xVp00PKNav0xD4x0CN/X5IYARUrMTYfJDXkzeHngND3utLDFwXVXrbj4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wAU5gQe1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="08xP017K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0EDAC4CEE4;
-	Sat,  7 Jun 2025 10:10:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wAU5gQe1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CA44C4CEE4;
+	Sat,  7 Jun 2025 10:10:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1749291008;
-	bh=wpI1EUPN9ql+AiIbRYbeD5Qxu3GjiCndyXYkdjMqGSg=;
+	s=korg; t=1749291010;
+	bh=oFDPgtoP2NFyJ+Xt1s1hXvhBXNibhwSjUoxzJqodYNY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=08xP017KBLG5MSNaWotIffFlQKyzACnu86kQK/0HgwEbP/mYl+3S5vsAQqjQM+xaN
-	 ziub+pkWetI1TgK/77v2eX9Hg6c4Bqx4OhHVqBZ/Ll3C/7UaM+TMFW9FfncXDVjDog
-	 sxhWFRvPEhMBK+B237tZ380A+RQ3SyUXvEfkbDA0=
+	b=wAU5gQe1JSEQhbUz7patq48oWK8EyvPExn4P/NxpWQS4Zmw3FS4CQJ49ZRBvnDbuz
+	 vD7jq8V9MGMK9b/oV0hMl6lr1n+rPUJ6EYKZ6V6z90rx3Gjeg6icqcdPyWhNYE0Mr9
+	 QYd72EQ11232YkI9F1SAJI+nAgyXJcGm81p3USGs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Dustin Lundquist <dustin@null-ptr.net>
-Subject: [PATCH 6.14 15/24] serial: jsm: fix NPE during jsm_uart_port_init
-Date: Sat,  7 Jun 2025 12:07:55 +0200
-Message-ID: <20250607100718.300748095@linuxfoundation.org>
+	Arnd Bergmann <arnd@arndb.de>,
+	Srinivas Kandagatla <srini@kernel.org>
+Subject: [PATCH 6.14 16/24] nvmem: rmem: select CONFIG_CRC32
+Date: Sat,  7 Jun 2025 12:07:56 +0200
+Message-ID: <20250607100718.337428224@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250607100717.706871523@linuxfoundation.org>
 References: <20250607100717.706871523@linuxfoundation.org>
@@ -50,59 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dustin Lundquist <dustin@null-ptr.net>
+From: Arnd Bergmann <arnd@arndb.de>
 
-commit e3975aa899c0a3bbc10d035e699b142cd1373a71 upstream.
+commit 7a93add1d31f14e0b7e937163904dee1e864a9a8 upstream.
 
-No device was set which caused serial_base_ctrl_add to crash.
+The newly added crc checking leads to a link failure if CRC32
+itself is disabled:
 
- BUG: kernel NULL pointer dereference, address: 0000000000000050
- Oops: Oops: 0000 [#1] PREEMPT SMP NOPTI
- CPU: 16 UID: 0 PID: 368 Comm: (udev-worker) Not tainted 6.12.25-amd64 #1  Debian 6.12.25-1
- RIP: 0010:serial_base_ctrl_add+0x96/0x120
- Call Trace:
-  <TASK>
-  serial_core_register_port+0x1a0/0x580
-  ? __setup_irq+0x39c/0x660
-  ? __kmalloc_cache_noprof+0x111/0x310
-  jsm_uart_port_init+0xe8/0x180 [jsm]
-  jsm_probe_one+0x1f4/0x410 [jsm]
-  local_pci_probe+0x42/0x90
-  pci_device_probe+0x22f/0x270
-  really_probe+0xdb/0x340
-  ? pm_runtime_barrier+0x54/0x90
-  ? __pfx___driver_attach+0x10/0x10
-  __driver_probe_device+0x78/0x110
-  driver_probe_device+0x1f/0xa0
-  __driver_attach+0xba/0x1c0
-  bus_for_each_dev+0x8c/0xe0
-  bus_add_driver+0x112/0x1f0
-  driver_register+0x72/0xd0
-  jsm_init_module+0x36/0xff0 [jsm]
-  ? __pfx_jsm_init_module+0x10/0x10 [jsm]
-  do_one_initcall+0x58/0x310
-  do_init_module+0x60/0x230
+x86_64-linux-ld: vmlinux.o: in function `rmem_eyeq5_checksum':
+rmem.c:(.text+0x52341b): undefined reference to `crc32_le_arch'
 
-Tested with Digi Neo PCIe 8 port card.
-
-Fixes: 84a9582fd203 ("serial: core: Start managing serial controllers to enable runtime PM")
+Fixes: 7e606c311f70 ("nvmem: rmem: add CRC validation for Mobileye EyeQ5 NVMEM")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Dustin Lundquist <dustin@null-ptr.net>
-Link: https://lore.kernel.org/r/3f31d4f75863614655c4673027a208be78d022ec.camel@null-ptr.net
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
+Link: https://lore.kernel.org/r/20250509122407.11763-2-srini@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/jsm/jsm_tty.c |    1 +
+ drivers/nvmem/Kconfig | 1 +
  1 file changed, 1 insertion(+)
 
---- a/drivers/tty/serial/jsm/jsm_tty.c
-+++ b/drivers/tty/serial/jsm/jsm_tty.c
-@@ -451,6 +451,7 @@ int jsm_uart_port_init(struct jsm_board
- 		if (!brd->channels[i])
- 			continue;
- 
-+		brd->channels[i]->uart_port.dev = &brd->pci_dev->dev;
- 		brd->channels[i]->uart_port.irq = brd->irq;
- 		brd->channels[i]->uart_port.uartclk = 14745600;
- 		brd->channels[i]->uart_port.type = PORT_JSM;
+diff --git a/drivers/nvmem/Kconfig b/drivers/nvmem/Kconfig
+index 8671b7c974b9..eceb3cdb421f 100644
+--- a/drivers/nvmem/Kconfig
++++ b/drivers/nvmem/Kconfig
+@@ -260,6 +260,7 @@ config NVMEM_RCAR_EFUSE
+ config NVMEM_RMEM
+ 	tristate "Reserved Memory Based Driver Support"
+ 	depends on HAS_IOMEM
++	select CRC32
+ 	help
+ 	  This driver maps reserved memory into an nvmem device. It might be
+ 	  useful to expose information left by firmware in memory.
+-- 
+2.49.0
+
 
 
