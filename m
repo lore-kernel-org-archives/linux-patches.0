@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C66E15D1;
-	Sat,  7 Jun 2025 10:11:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9936915D1;
+	Sat,  7 Jun 2025 10:11:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749291061; cv=none; b=J1arItfMVxzqJ4d0TKSRBMKi5N+Jsv66TfieCavzd13WexoyU+spv2VjKvfc72CGLMs3u1Cp66u8EVBxQK+ZaeS1tBPAl9U+VWbzbnUDeT5oFVFvLJSC8oDB6Vu3mmircqjkOkCDbdmUQC4DKlcM8XZ2Kc6m1MtICNHRzEXpRZA=
+	t=1749291063; cv=none; b=JGaeAmlN3lFz7VAV9sTMHvqqYI4kMdxG4H3jp08MXjy6v36jpiLsWTboyM6vWUgIPOKoGZNkTP5drl+a0kt+QG4QkNLFacnHaQxFwwBlUchzyXXvS/xx8Rvk6djndywWPF+8R4iqIVzar994PxX3x304rU1lDevBSRwUjZwc++E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749291061; c=relaxed/simple;
-	bh=Tj941XFhDqujdKHzHzwymLNSMmKOPKaHNTicg9MPF90=;
+	s=arc-20240116; t=1749291063; c=relaxed/simple;
+	bh=YmR3ZmWmcLnbuzRO55crJxBvSilewOc4WDyc9Sg/ALs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cfDAqEf+yGSYYgK26SUIPNBvaR7q3f3G5JnK3PDxFqvabdCVWRkv+VYWudTeQsZrAK5lniMlargFhPCHxjWrTjMteGAv23GKg2pehl/eExIGrMisfZz3Ih0dOla5rtTX/5bqtykq9ksQ10HSnB85eGo+pX3+AKrCEXKIWLHcK9E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cUJGOkfv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aG5WjZTjgyIZVFZ0DgIJEBw7qi4AHtmVqSpex7EqiWFjZoDDqvXVYPo/vlpFgagAqV0sdWSurCwswYXzGEpNO4WcXmRdnVPRufUt7XV3Ikq/K5DapIS9S/co7NnbkmoeizHNd+8C0iTPTA55fhJiAXeMPZLu+LSRhjcZxNAE/Zc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e9eZs1/A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cUJGOkfv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A0ECC4CEE4;
-	Sat,  7 Jun 2025 10:11:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e9eZs1/A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B3F2C4CEE4;
+	Sat,  7 Jun 2025 10:11:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1749291060;
-	bh=Tj941XFhDqujdKHzHzwymLNSMmKOPKaHNTicg9MPF90=;
+	s=korg; t=1749291063;
+	bh=YmR3ZmWmcLnbuzRO55crJxBvSilewOc4WDyc9Sg/ALs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cUJGOkfvZMOAR2BvtnQ/iTD+57WMdmVrphUWSRB7xzyR3YAboFgTWp3YFJ2VhRjKq
-	 HEbAcRefAL3GhQMnzyGS8yhXPtqfOwGkcmA0FAFs5erVEkq6CFJ1C6JcsE8+ISVdFq
-	 +YcTe018LUPpM9RYg9LeuLJuVV32GBamiZYcf2es=
+	b=e9eZs1/AQh3VZf1ZwXDA+zxTIG4LC1nWPg9/Cd0lVFOnWxqiOJyfdYnyAEmim01/m
+	 S4SlcppHr+PfqStwBlwkje3Va6XSnMLeN6/6vzTYnbNL4iBxDm1VSrVjA/Wr3RQTAb
+	 cD9ZVgqaYUZ9rLZ147KMv1njx9JBf3g/j/MHwvNA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ahmed Salem <x0rw3ll@gmail.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Jiri Slaby <jirislaby@kernel.org>
-Subject: [PATCH 6.15 05/34] ACPICA: Apply ACPI_NONSTRING in more places
-Date: Sat,  7 Jun 2025 12:07:46 +0200
-Message-ID: <20250607100719.931637473@linuxfoundation.org>
+	Imre Kaloz <kaloz@openwrt.org>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Gabor Juhos <j4g8y7@gmail.com>,
+	Linus Walleij <linus.walleij@linaro.org>
+Subject: [PATCH 6.15 06/34] pinctrl: armada-37xx: use correct OUTPUT_VAL register for GPIOs > 31
+Date: Sat,  7 Jun 2025 12:07:47 +0200
+Message-ID: <20250607100719.968651161@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250607100719.711372213@linuxfoundation.org>
 References: <20250607100719.711372213@linuxfoundation.org>
@@ -51,80 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ahmed Salem <x0rw3ll@gmail.com>
+From: Gabor Juhos <j4g8y7@gmail.com>
 
-commit 70662db73d5455ebc8a1da29973fa70237b18cd2 upstream.
+commit 947c93eb29c2a581c0b0b6d5f21af3c2b7ff6d25 upstream.
 
-ACPICA commit 1035a3d453f7dd49a235a59ee84ebda9d2d2f41b
+The controller has two consecutive OUTPUT_VAL registers and both
+holds output value for 32 GPIOs. Due to a missing adjustment, the
+current code always uses the first register while setting the
+output value whereas it should use the second one for GPIOs > 31.
 
-Add ACPI_NONSTRING for destination char arrays without a terminating NUL
-character. This is a follow-up to commit 35ad99236f3a ("ACPICA: Apply
-ACPI_NONSTRING") where not all instances received the same treatment, in
-preparation for replacing strncpy() calls with memcpy()
+Add the missing armada_37xx_update_reg() call to adjust the register
+according to the 'offset' parameter of the function to fix the issue.
 
-Link: https://github.com/acpica/acpica/commit/1035a3d4
-Signed-off-by: Ahmed Salem <x0rw3ll@gmail.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/3833065.MHq7AAxBmi@rjwysocki.net
-Cc: Jiri Slaby <jirislaby@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 6702abb3bf23 ("pinctrl: armada-37xx: Fix direction_output() callback behavior")
+Signed-off-by: Imre Kaloz <kaloz@openwrt.org>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+Link: https://lore.kernel.org/20250514-pinctrl-a37xx-fixes-v2-1-07e9ac1ab737@gmail.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/acpica/acdebug.h                            |    2 +-
- include/acpi/actbl.h                                     |    6 +++---
- tools/power/acpi/os_specific/service_layers/oslinuxtbl.c |    2 +-
- tools/power/acpi/tools/acpidump/apfiles.c                |    2 +-
- 4 files changed, 6 insertions(+), 6 deletions(-)
+ drivers/pinctrl/mvebu/pinctrl-armada-37xx.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/acpi/acpica/acdebug.h
-+++ b/drivers/acpi/acpica/acdebug.h
-@@ -37,7 +37,7 @@ struct acpi_db_argument_info {
- struct acpi_db_execute_walk {
- 	u32 count;
- 	u32 max_count;
--	char name_seg[ACPI_NAMESEG_SIZE + 1];
-+	char name_seg[ACPI_NAMESEG_SIZE + 1] ACPI_NONSTRING;
- };
- 
- #define PARAM_LIST(pl)                  pl
---- a/include/acpi/actbl.h
-+++ b/include/acpi/actbl.h
-@@ -66,12 +66,12 @@
-  ******************************************************************************/
- 
- struct acpi_table_header {
--	char signature[ACPI_NAMESEG_SIZE] __nonstring;	/* ASCII table signature */
-+	char signature[ACPI_NAMESEG_SIZE] ACPI_NONSTRING;	/* ASCII table signature */
- 	u32 length;		/* Length of table in bytes, including this header */
- 	u8 revision;		/* ACPI Specification minor version number */
- 	u8 checksum;		/* To make sum of entire table == 0 */
--	char oem_id[ACPI_OEM_ID_SIZE];	/* ASCII OEM identification */
--	char oem_table_id[ACPI_OEM_TABLE_ID_SIZE];	/* ASCII OEM table identification */
-+	char oem_id[ACPI_OEM_ID_SIZE] ACPI_NONSTRING;	/* ASCII OEM identification */
-+	char oem_table_id[ACPI_OEM_TABLE_ID_SIZE] ACPI_NONSTRING;	/* ASCII OEM table identification */
- 	u32 oem_revision;	/* OEM revision number */
- 	char asl_compiler_id[ACPI_NAMESEG_SIZE];	/* ASCII ASL compiler vendor ID */
- 	u32 asl_compiler_revision;	/* ASL compiler version */
---- a/tools/power/acpi/os_specific/service_layers/oslinuxtbl.c
-+++ b/tools/power/acpi/os_specific/service_layers/oslinuxtbl.c
-@@ -19,7 +19,7 @@ ACPI_MODULE_NAME("oslinuxtbl")
- typedef struct osl_table_info {
- 	struct osl_table_info *next;
- 	u32 instance;
--	char signature[ACPI_NAMESEG_SIZE];
-+	char signature[ACPI_NAMESEG_SIZE] ACPI_NONSTRING;
- 
- } osl_table_info;
- 
---- a/tools/power/acpi/tools/acpidump/apfiles.c
-+++ b/tools/power/acpi/tools/acpidump/apfiles.c
-@@ -103,7 +103,7 @@ int ap_open_output_file(char *pathname)
- 
- int ap_write_to_binary_file(struct acpi_table_header *table, u32 instance)
+--- a/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c
++++ b/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c
+@@ -417,6 +417,7 @@ static int armada_37xx_gpio_direction_ou
+ 					     unsigned int offset, int value)
  {
--	char filename[ACPI_NAMESEG_SIZE + 16];
-+	char filename[ACPI_NAMESEG_SIZE + 16] ACPI_NONSTRING;
- 	char instance_str[16];
- 	ACPI_FILE file;
- 	acpi_size actual;
+ 	struct armada_37xx_pinctrl *info = gpiochip_get_data(chip);
++	unsigned int val_offset = offset;
+ 	unsigned int reg = OUTPUT_EN;
+ 	unsigned int mask, val, ret;
+ 
+@@ -429,6 +430,8 @@ static int armada_37xx_gpio_direction_ou
+ 		return ret;
+ 
+ 	reg = OUTPUT_VAL;
++	armada_37xx_update_reg(&reg, &val_offset);
++
+ 	val = value ? mask : 0;
+ 	regmap_update_bits(info->regmap, reg, mask, val);
+ 
 
 
