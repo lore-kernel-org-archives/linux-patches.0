@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F39F121D58F;
-	Sat,  7 Jun 2025 10:11:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 958661F4CB8;
+	Sat,  7 Jun 2025 10:11:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749291085; cv=none; b=YsJjnV27AFs6ahFQKGoz3WYSD5WZJltc+m185sD7CGjilrApDyaksDZJMwbXyJ45q/HpwSNNOjEMcAe7gHECVMBO1piFMW0qrzV41jmSLwEutgLvukrnIDLuTLGGgurhJ4AZ13pJ9XsWmgBg0tyl83r+6LkVbFhcOjKfBMc5YgM=
+	t=1749291087; cv=none; b=PWpBEiA937HW8BR5E+onxx1aUKwYDKJxqgPo5E/M7GRQr/M7/bOJNazK8ki1Q9NQf4WpH1IHtcYa3dXoXcqXZ05GR64LIrHmZbAw7jLuG9HF3XrtImGIugcCy9y43S+x7vpylV5o8V458IfZkcV2HAQrxvPfoBLBh1EvQJDbBS0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749291085; c=relaxed/simple;
-	bh=MW/3oTeCkItIV+IcbwE5uKclLAw4nccfLFURd5hKIgs=;
+	s=arc-20240116; t=1749291087; c=relaxed/simple;
+	bh=Qi3cmbdD4MMPJjoFvWOnTnSmx65M0dygj3ZPj7go+TQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l0hBI1s6teG8LXMWREzRRNFi+nIfTjFNnDNqj2S7IuV2+1TuG63aFBP7tpzTL4EWuYXbhr9s7ADmdAxVrXkpOP0rEtqZxclBNss2W7YdkEOgF5JsZHrxvT/13QJHXSzdjFHh7C8jaMoSdyZkjXOESEgXcauWCXjU+hhATsUZfVA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Fkr3QsN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ju2fTy5Q24wV3uCaPpwYX0gf+mBFDm6mRnXFMif3QsV5H/qn/eQzqOqvv+7n30crWGAWv069UTcQ95IK3f30ORpFDcDhDqp8CrzN8rK1uVDNY1+iazvbNMHnF0YSzVTzWWWgD7xy2fzUHA23BbBxT+24bwP0zw0i9Ha0dAxhzZA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eN8/R4SV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Fkr3QsN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CB9CC4CEE4;
-	Sat,  7 Jun 2025 10:11:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eN8/R4SV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D41AC4CEE4;
+	Sat,  7 Jun 2025 10:11:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1749291084;
-	bh=MW/3oTeCkItIV+IcbwE5uKclLAw4nccfLFURd5hKIgs=;
+	s=korg; t=1749291087;
+	bh=Qi3cmbdD4MMPJjoFvWOnTnSmx65M0dygj3ZPj7go+TQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0Fkr3QsNtNgyAgwD8+jdb9Gu+T18RoJs3DOgGPBIV5UpS/jikerhnZestWYF8c1/Y
-	 pPSqC+tSC8BxzUFdq2XgjDmejDjOa70uJnmK3B4ma25A3mTxhC1wAX5YfDgqb70KW7
-	 WMNqYrPkCY4B6s0vGLDmych1ApWDalOL624EQdAU=
+	b=eN8/R4SVVlytOwhLUIgtjkuONo3LCSWnmNym7rCi/wJ23HiZyexDeIE1LTKp3/vQP
+	 uBSvOI3MDOlpToqZ1zjnUUxHmR08zzHfAPk69+PeIDFj9z6B3bjR0uPsXphKzJ79bO
+	 2hoJ6koeb0BTu632cAGRdo8m4UxP2ve6HeR506PE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Lukasz Czechowski <lukasz.czechowski@thaumatec.com>,
 	"Rob Herring (Arm)" <robh@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.15 31/34] dt-bindings: remoteproc: qcom,sm8150-pas: Add missing SC8180X compatible
-Date: Sat,  7 Jun 2025 12:08:12 +0200
-Message-ID: <20250607100720.934419813@linuxfoundation.org>
+	Heiko Stuebner <heiko@sntech.de>
+Subject: [PATCH 6.15 32/34] dt-bindings: usb: cypress,hx3: Add support for all variants
+Date: Sat,  7 Jun 2025 12:08:13 +0200
+Message-ID: <20250607100720.972937172@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250607100719.711372213@linuxfoundation.org>
 References: <20250607100719.711372213@linuxfoundation.org>
@@ -51,42 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Lukasz Czechowski <lukasz.czechowski@thaumatec.com>
 
-commit b278981b5ac109e6f6986b20a5cb19654aba8f68 upstream.
+commit 1ad4b5a7de16806afc1aeaf012337e62af04e001 upstream.
 
-Commit 4b4ab93ddc5f ("dt-bindings: remoteproc: Consolidate SC8180X and
-SM8150 PAS files") moved SC8180X bindings from separate file into this
-one, but it forgot to add actual compatibles in top-level properties
-section making the entire binding un-selectable (no-op) for SC8180X PAS.
+The Cypress HX3 hubs use different default PID value depending
+on the variant. Update compatibles list.
+Becasuse all hub variants use the same driver data, allow the
+dt node to have two compatibles: leftmost which matches the HW
+exactly, and the second one as fallback.
 
-Fixes: 4b4ab93ddc5f ("dt-bindings: remoteproc: Consolidate SC8180X and SM8150 PAS files")
-Cc: stable@vger.kernel.org
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Acked-by: Rob Herring (Arm) <robh@kernel.org>
-Link: https://lore.kernel.org/r/20250428075243.44256-2-krzysztof.kozlowski@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 1eca51f58a10 ("dt-bindings: usb: Add binding for Cypress HX3 USB 3.0 family")
+Cc: stable@vger.kernel.org # 6.6
+Cc: stable@vger.kernel.org # Backport of the patch ("dt-bindings: usb: usb-device: relax compatible pattern to a contains") from list: https://lore.kernel.org/linux-usb/20250418-dt-binding-usb-device-compatibles-v2-1-b3029f14e800@cherry.de/
+Cc: stable@vger.kernel.org # Backport of the patch in this series fixing product ID in onboard_dev_id_table in drivers/usb/misc/onboard_usb_dev.c driver
+Signed-off-by: Lukasz Czechowski <lukasz.czechowski@thaumatec.com>
+Reviewed-by: "Rob Herring (Arm)" <robh@kernel.org>
+Link: https://lore.kernel.org/r/20250425-onboard_usb_dev-v2-2-4a76a474a010@thaumatec.com
+[taken with Greg's blessing]
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../devicetree/bindings/remoteproc/qcom,sm8150-pas.yaml        | 3 +++
- 1 file changed, 3 insertions(+)
+ Documentation/devicetree/bindings/usb/cypress,hx3.yaml |   19 ++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,sm8150-pas.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,sm8150-pas.yaml
-index 56ff6386534d..5dcc2a32c080 100644
---- a/Documentation/devicetree/bindings/remoteproc/qcom,sm8150-pas.yaml
-+++ b/Documentation/devicetree/bindings/remoteproc/qcom,sm8150-pas.yaml
-@@ -16,6 +16,9 @@ description:
+--- a/Documentation/devicetree/bindings/usb/cypress,hx3.yaml
++++ b/Documentation/devicetree/bindings/usb/cypress,hx3.yaml
+@@ -14,9 +14,22 @@ allOf:
+ 
  properties:
    compatible:
-     enum:
-+      - qcom,sc8180x-adsp-pas
-+      - qcom,sc8180x-cdsp-pas
-+      - qcom,sc8180x-slpi-pas
-       - qcom,sm8150-adsp-pas
-       - qcom,sm8150-cdsp-pas
-       - qcom,sm8150-mpss-pas
--- 
-2.49.0
-
+-    enum:
+-      - usb4b4,6504
+-      - usb4b4,6506
++    oneOf:
++      - enum:
++          - usb4b4,6504
++          - usb4b4,6506
++      - items:
++          - enum:
++              - usb4b4,6500
++              - usb4b4,6508
++          - const: usb4b4,6504
++      - items:
++          - enum:
++              - usb4b4,6502
++              - usb4b4,6503
++              - usb4b4,6507
++              - usb4b4,650a
++          - const: usb4b4,6506
+ 
+   reg: true
+ 
 
 
