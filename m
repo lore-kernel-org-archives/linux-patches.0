@@ -1,36 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D214720A5F2;
-	Sat,  7 Jun 2025 10:11:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EA60217679;
+	Sat,  7 Jun 2025 10:11:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749291108; cv=none; b=aXi94E9n53jsH0T9n3uvs/+N9hCrZ9/sNyle1z3R19WIXhFYo1Nx7WvipffY9c9Jg1LBvaodWJvdaEe3dGwA6OuP8eWidUEs2RroGaFgE/ayYAURD6cA3goe3X1kO4WU6MzjWQmPLtaeNxriUC5sOsMaZGs399f5l2zxsiyxIAY=
+	t=1749291111; cv=none; b=Yhqm5r7dOmm9YGBzZqyekdDCX8f+/WzpHmsibyhOx0H3TYc19ic1yLcsgJ8lJt0Drxqv1m7dnej1ji2MGKlSlaBDvnOZBZcmNmB+xqpbj8ZmeUzHLKRQ3VCieuxDcgONDhuHsbxJvSNEyxGt+4umEzvC1S5maxBdpSZmzmi+T80=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749291108; c=relaxed/simple;
-	bh=1bHPnNsD8VU3nM6HYlkcQSIeMb/pm4rX5ZQdaTr1PJ4=;
+	s=arc-20240116; t=1749291111; c=relaxed/simple;
+	bh=jgCnYPOZcHeD29DkCY+FS09IGTy/pDaz8FTHlK4jXyE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XCMnyJBrRUUD/PN4DVfUxZZYtaQyJLtov9nbLzDPagCEyn4Nxbut01Sbvcvz+hKHl6Om5sOKQQoNQs79yNUjIUxHgoBpL5NnRTzEQfkOQ9GcqgE6gjMpix7K9IeyrJTYqIwPDD0oIxHJuGe3Z1/1DzV0qf4AM3kSGdQEPgTZ7Qc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h4qGPK2p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FiojFOdw7KlHwOrJLeqPxTr6+lm/a7ilo3G/z50YqH/5tGY+3aJrGzserJEn6g5tkn3P919HUa/BE8hyUDB2vF6HKSBZU6AZypO/Ql0eVYLJdQ8pBWRJQF9AlvJKVSAOpuIO+dnDMPSwNocLU9KLyeIej8FWVD/9VpRxWlvJmMk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X3Iq8utk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h4qGPK2p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 645B5C4CEE4;
-	Sat,  7 Jun 2025 10:11:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X3Iq8utk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1513DC4CEE4;
+	Sat,  7 Jun 2025 10:11:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1749291108;
-	bh=1bHPnNsD8VU3nM6HYlkcQSIeMb/pm4rX5ZQdaTr1PJ4=;
+	s=korg; t=1749291111;
+	bh=jgCnYPOZcHeD29DkCY+FS09IGTy/pDaz8FTHlK4jXyE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h4qGPK2p8wKJqDiPypwsv5HzuORsmsp1F3+N51DZNsGLjE7dpyLd/I3JjQSBfjhF7
-	 PlxR7KgsWQJj/3LaPUJ5SB+KlkG7nyTDeqsninNGbLEX5cs6HrjYe6Nn56MYP1LCil
-	 hrHshv6wFK3ah6yrazica3WkqC+beHBV4o+UmxZc=
+	b=X3Iq8utk5cDDlNUMztNu7ZqvXwclXoOsp+n9ndfYAJnJGTcSkLuv/Um6TzMzgUYsG
+	 uIeQsXlBqPwxoJkU48sVvZpF6PUZp5y5qABHhHdc1zbTY19G7/mqPhRi1RuSu7EYlA
+	 LermMSqB/vcLfjgvFALh0t6YEEFgS3P7DNmR0IFg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Penkler <dpenkler@gmail.com>
-Subject: [PATCH 6.15 26/34] usb: usbtmc: Fix timeout value in get_stb
-Date: Sat,  7 Jun 2025 12:08:07 +0200
-Message-ID: <20250607100720.742049318@linuxfoundation.org>
+	syzbot+353d7b75658a95aa955a@syzkaller.appspotmail.com,
+	Dmitry Antipov <dmantipov@yandex.ru>,
+	Carlos Llamas <cmllamas@google.com>,
+	Alice Ryhl <aliceryhl@google.com>
+Subject: [PATCH 6.15 27/34] binder: fix use-after-free in binderfs_evict_inode()
+Date: Sat,  7 Jun 2025 12:08:08 +0200
+Message-ID: <20250607100720.778038323@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250607100719.711372213@linuxfoundation.org>
 References: <20250607100719.711372213@linuxfoundation.org>
@@ -49,47 +52,192 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Penkler <dpenkler@gmail.com>
+From: Dmitry Antipov <dmantipov@yandex.ru>
 
-commit 342e4955a1f1ce28c70a589999b76365082dbf10 upstream.
+commit 8c0a559825281764061a127632e5ad273f0466ad upstream.
 
-wait_event_interruptible_timeout requires a timeout argument
-in units of jiffies. It was being called in usbtmc_get_stb
-with the usb timeout value which is in units of milliseconds.
+Running 'stress-ng --binderfs 16 --timeout 300' under KASAN-enabled
+kernel, I've noticed the following:
 
-Pass the timeout argument converted to jiffies.
+BUG: KASAN: slab-use-after-free in binderfs_evict_inode+0x1de/0x2d0
+Write of size 8 at addr ffff88807379bc08 by task stress-ng-binde/1699
 
-Fixes: 048c6d88a021 ("usb: usbtmc: Add ioctls to set/get usb timeout")
+CPU: 0 UID: 0 PID: 1699 Comm: stress-ng-binde Not tainted 6.14.0-rc7-g586de92313fc-dirty #13
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-3.fc41 04/01/2014
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x1c2/0x2a0
+ ? __pfx_dump_stack_lvl+0x10/0x10
+ ? __pfx__printk+0x10/0x10
+ ? __pfx_lock_release+0x10/0x10
+ ? __virt_addr_valid+0x18c/0x540
+ ? __virt_addr_valid+0x469/0x540
+ print_report+0x155/0x840
+ ? __virt_addr_valid+0x18c/0x540
+ ? __virt_addr_valid+0x469/0x540
+ ? __phys_addr+0xba/0x170
+ ? binderfs_evict_inode+0x1de/0x2d0
+ kasan_report+0x147/0x180
+ ? binderfs_evict_inode+0x1de/0x2d0
+ binderfs_evict_inode+0x1de/0x2d0
+ ? __pfx_binderfs_evict_inode+0x10/0x10
+ evict+0x524/0x9f0
+ ? __pfx_lock_release+0x10/0x10
+ ? __pfx_evict+0x10/0x10
+ ? do_raw_spin_unlock+0x4d/0x210
+ ? _raw_spin_unlock+0x28/0x50
+ ? iput+0x697/0x9b0
+ __dentry_kill+0x209/0x660
+ ? shrink_kill+0x8d/0x2c0
+ shrink_kill+0xa9/0x2c0
+ shrink_dentry_list+0x2e0/0x5e0
+ shrink_dcache_parent+0xa2/0x2c0
+ ? __pfx_shrink_dcache_parent+0x10/0x10
+ ? __pfx_lock_release+0x10/0x10
+ ? __pfx_do_raw_spin_lock+0x10/0x10
+ do_one_tree+0x23/0xe0
+ shrink_dcache_for_umount+0xa0/0x170
+ generic_shutdown_super+0x67/0x390
+ kill_litter_super+0x76/0xb0
+ binderfs_kill_super+0x44/0x90
+ deactivate_locked_super+0xb9/0x130
+ cleanup_mnt+0x422/0x4c0
+ ? lockdep_hardirqs_on+0x9d/0x150
+ task_work_run+0x1d2/0x260
+ ? __pfx_task_work_run+0x10/0x10
+ resume_user_mode_work+0x52/0x60
+ syscall_exit_to_user_mode+0x9a/0x120
+ do_syscall_64+0x103/0x210
+ ? asm_sysvec_apic_timer_interrupt+0x1a/0x20
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0xcac57b
+Code: c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 40 00 f3 0f 1e fa 31 f6 e9 05 00 00 00 0f 1f 44 00 00 f3 0f 1e fa b8
+RSP: 002b:00007ffecf4226a8 EFLAGS: 00000246 ORIG_RAX: 00000000000000a6
+RAX: 0000000000000000 RBX: 00007ffecf422720 RCX: 0000000000cac57b
+RDX: 0000000000000000 RSI: 0000000000000000 RDI: 00007ffecf422850
+RBP: 00007ffecf422850 R08: 0000000028d06ab1 R09: 7fffffffffffffff
+R10: 3fffffffffffffff R11: 0000000000000246 R12: 00007ffecf422718
+R13: 00007ffecf422710 R14: 00007f478f87b658 R15: 00007ffecf422830
+ </TASK>
+
+Allocated by task 1705:
+ kasan_save_track+0x3e/0x80
+ __kasan_kmalloc+0x8f/0xa0
+ __kmalloc_cache_noprof+0x213/0x3e0
+ binderfs_binder_device_create+0x183/0xa80
+ binder_ctl_ioctl+0x138/0x190
+ __x64_sys_ioctl+0x120/0x1b0
+ do_syscall_64+0xf6/0x210
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+Freed by task 1705:
+ kasan_save_track+0x3e/0x80
+ kasan_save_free_info+0x46/0x50
+ __kasan_slab_free+0x62/0x70
+ kfree+0x194/0x440
+ evict+0x524/0x9f0
+ do_unlinkat+0x390/0x5b0
+ __x64_sys_unlink+0x47/0x50
+ do_syscall_64+0xf6/0x210
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+This 'stress-ng' workload causes the concurrent deletions from
+'binder_devices' and so requires full-featured synchronization
+to prevent list corruption.
+
+I've found this issue independently but pretty sure that syzbot did
+the same, so Reported-by: and Closes: should be applicable here as well.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Dave Penkler <dpenkler@gmail.com>
-Link: https://lore.kernel.org/r/20250521121656.18174-4-dpenkler@gmail.com
+Reported-by: syzbot+353d7b75658a95aa955a@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=353d7b75658a95aa955a
+Fixes: e77aff5528a18 ("binderfs: fix use-after-free in binder_devices")
+Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+Acked-by: Carlos Llamas <cmllamas@google.com>
+Signed-off-by: Carlos Llamas <cmllamas@google.com>
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Link: https://lore.kernel.org/r/20250517170957.1317876-1-cmllamas@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/class/usbtmc.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/android/binder.c          |   15 +++++++++++++--
+ drivers/android/binder_internal.h |    8 ++++++--
+ drivers/android/binderfs.c        |    2 +-
+ 3 files changed, 20 insertions(+), 5 deletions(-)
 
---- a/drivers/usb/class/usbtmc.c
-+++ b/drivers/usb/class/usbtmc.c
-@@ -483,6 +483,7 @@ static int usbtmc_get_stb(struct usbtmc_
- 	u8 tag;
- 	int rv;
- 	long wait_rv;
-+	unsigned long expire;
+--- a/drivers/android/binder.c
++++ b/drivers/android/binder.c
+@@ -79,6 +79,8 @@ static HLIST_HEAD(binder_deferred_list);
+ static DEFINE_MUTEX(binder_deferred_lock);
  
- 	dev_dbg(dev, "Enter ioctl_read_stb iin_ep_present: %d\n",
- 		data->iin_ep_present);
-@@ -512,10 +513,11 @@ static int usbtmc_get_stb(struct usbtmc_
+ static HLIST_HEAD(binder_devices);
++static DEFINE_SPINLOCK(binder_devices_lock);
++
+ static HLIST_HEAD(binder_procs);
+ static DEFINE_MUTEX(binder_procs_lock);
+ 
+@@ -6929,7 +6931,16 @@ const struct binder_debugfs_entry binder
+ 
+ void binder_add_device(struct binder_device *device)
+ {
++	spin_lock(&binder_devices_lock);
+ 	hlist_add_head(&device->hlist, &binder_devices);
++	spin_unlock(&binder_devices_lock);
++}
++
++void binder_remove_device(struct binder_device *device)
++{
++	spin_lock(&binder_devices_lock);
++	hlist_del_init(&device->hlist);
++	spin_unlock(&binder_devices_lock);
+ }
+ 
+ static int __init init_binder_device(const char *name)
+@@ -6956,7 +6967,7 @@ static int __init init_binder_device(con
+ 		return ret;
  	}
  
- 	if (data->iin_ep_present) {
-+		expire = msecs_to_jiffies(file_data->timeout);
- 		wait_rv = wait_event_interruptible_timeout(
- 			data->waitq,
- 			atomic_read(&data->iin_data_valid) != 0,
--			file_data->timeout);
-+			expire);
- 		if (wait_rv < 0) {
- 			dev_dbg(dev, "wait interrupted %ld\n", wait_rv);
- 			rv = wait_rv;
+-	hlist_add_head(&binder_device->hlist, &binder_devices);
++	binder_add_device(binder_device);
+ 
+ 	return ret;
+ }
+@@ -7018,7 +7029,7 @@ static int __init binder_init(void)
+ err_init_binder_device_failed:
+ 	hlist_for_each_entry_safe(device, tmp, &binder_devices, hlist) {
+ 		misc_deregister(&device->miscdev);
+-		hlist_del(&device->hlist);
++		binder_remove_device(device);
+ 		kfree(device);
+ 	}
+ 
+--- a/drivers/android/binder_internal.h
++++ b/drivers/android/binder_internal.h
+@@ -583,9 +583,13 @@ struct binder_object {
+ /**
+  * Add a binder device to binder_devices
+  * @device: the new binder device to add to the global list
+- *
+- * Not reentrant as the list is not protected by any locks
+  */
+ void binder_add_device(struct binder_device *device);
+ 
++/**
++ * Remove a binder device to binder_devices
++ * @device: the binder device to remove from the global list
++ */
++void binder_remove_device(struct binder_device *device);
++
+ #endif /* _LINUX_BINDER_INTERNAL_H */
+--- a/drivers/android/binderfs.c
++++ b/drivers/android/binderfs.c
+@@ -274,7 +274,7 @@ static void binderfs_evict_inode(struct
+ 	mutex_unlock(&binderfs_minors_mutex);
+ 
+ 	if (refcount_dec_and_test(&device->ref)) {
+-		hlist_del_init(&device->hlist);
++		binder_remove_device(device);
+ 		kfree(device->context.name);
+ 		kfree(device);
+ 	}
 
 
