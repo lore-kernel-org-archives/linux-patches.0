@@ -1,51 +1,51 @@
-Received: from NAM11-DM6-obe.outbound.protection.outlook.com (mail-dm6nam11on2086.outbound.protection.outlook.com [40.107.223.86])
+Received: from NAM12-DM6-obe.outbound.protection.outlook.com (mail-dm6nam12on2084.outbound.protection.outlook.com [40.107.243.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27632BA3D
-	for <patches@lists.linux.dev>; Sat,  7 Jun 2025 00:46:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.223.86
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 766494642D
+	for <patches@lists.linux.dev>; Sat,  7 Jun 2025 00:52:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.243.84
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749257168; cv=fail; b=aeg9SLkyTOrxLpHSwti+tk7HQeR+K0X5bKVtX2eLhyc1+bCASvgl2pbADwqWOedHI6kAleTkz7iZlGEtqFuT3FIo2J3KNqLfZeiu6ACpBQJoigxk3DJsMCY3syDBNPQjYTki/7LPVPRRT8F6CtbCI0KONsJGoghlRCpA9Z6EKCs=
+	t=1749257556; cv=fail; b=qtqsQhYR3ZpnwOe4vyrYxqTOAKCuM6ZjH2DEL2hNiI1hmC2gI9WT3tC4n4HUoAUj8GISV1cG6oZVEYmFDXhi4a8uXDHF8iHp/nJuGcDLYp0GlM0FifR4Q+vodQZucE0D1nVJ+WKESjjevleF+oaHVf8D60IF8FDBCGaOrzK7Ulo=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749257168; c=relaxed/simple;
-	bh=FYwSd6h7nw8Da51KdTDJt/n680jNq20St3yr1ckiMP0=;
+	s=arc-20240116; t=1749257556; c=relaxed/simple;
+	bh=KYDJHQrgY1jMb3otetQhKsHXXfZPr9VItQlGSyTQkbk=;
 	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=QCMDAUNpKKPPCPKgj9dwCzp7+g+CkZavWBzUqQYwUZdzcUN3n+DjMFMaMD/yKAWZicaY3QTa51MEb5XyQEQMDKuDXfwR2WjLodSjypWGKBGpq9wHCk/s5k05C4MBAYWZHdduJJgzugR85ARZnzALliDZk2eVQaJM5HrNktBr0os=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=Jjwox/gN; arc=fail smtp.client-ip=40.107.223.86
+	 Content-Type:MIME-Version; b=M6sR49Wpli6Ksr3ZicpzPpPhu5l7gtunNcKzpHcVzaq6RFQFzBWX+twQA66lFi8tGNCn3kaTJyCuZgqQvRW7H/5RGHojF6KqiNTuCY7GEDiLMrQIr1KUb//KuPSCh6zL5EgB9wPIwShVLkygNjD8n06/YHDzSCy56bMwJ7OxfRA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=e+NhElLq; arc=fail smtp.client-ip=40.107.243.84
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="Jjwox/gN"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="e+NhElLq"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=rCploUGeh+0vxmqfOTCiHTj5gkeO/IzG58iv0utL0AYb/HKCjFqeiRo1Kah6iF8gJaD5xq6SSFL8CBpf0gQLlCt0OmzWMLIpIOC7goLG825qczMxj+HHpIuKJjVU175nzmvCXSb072zcedCyNvb2KouX9KbHLRbf/f5t1WlJtTTkwbcSjEW+abbarOr/4vXRkv6YG9XAa0i+vmLvk38BMH10J12IOhvsKqvptp7QWw676txFBf9evAKOA3jVeExhP3QBZ4ccj46fDFpPoNn2DTRHBECyRu71AQseiaaMsAe9Gd0OPhIfZqvn7v4pUT0yZKuFRO77lBWuGtm/CLJY1g==
+ b=Vvl5CcS1XJtpHq4ncQS1nQCr4zqmUjVobUG2MD9CuBZ2QxeSXPpMvVIAXzr/vXUXXztjEEIKy5itzLo7q9g/LcMDpCMPYvYwNwueeFubWZHFSGaoRRLbvnR9FeMt3rCKxeGxJK4vqlUPN3DKPB1l2AvehFvUSQjg/V7cJMhpK3sjhZcgDDMYTSpCJfWDFsDJ48VcztSIH0+LBKHvwChfFT7rigz64+Run5pV1BK6CyMYDcJpcRmwFIY9rSrRE2SuiYhjSVgqpGH7zL49FWKSfeFeIrn9ZauaGyvetFD2gSOhLgh9D1h1/Az8Nyg7VN/H9cZZyafGZZ7HVbeBxaqVgw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=OACl90BbEF8qzErYujmKzTdrG2WhufvmTNjJiD8LGxg=;
- b=oeNKIHpHzY5Dw+59Vc61viqz1uD6KDX5SzTbFdoXJZ541bYt4py5IvJYLQ1/GcvqLA9OCRENyGOE09RIMox1ehCv79FAi6ejO7pnjt047fQ6DYMTh26wWEIB7eDtrtGODxkLop5FM5X5U4d6RdxcxXFkx7eDiLo6LoItlq+fGCY42CQcPwuUjrg5Wg02Xr6qTTqRK3eSvIEkE3iClinPk4c8mZMaMqXEmQ/69mzzsfM4gZqvZdwSpzFp1E4ArjBHNf1mY5J7CffvuEC/GMN+eyEqHT5sRZRjiJEyZBKcDA8ckaO8pJAw+0SbuDVsHHHVDFZOLtsaSogEbXSIaToGig==
+ bh=TL9P/nrQfrNXIipPgxPLqfrpVZ+nd0uxd6XWdhTkPfM=;
+ b=Okp0gRmcUU1swxnBgBtCGgkmRA/ygbptby3DOZ8cx23o3gjKBZcWMMbDIGkVJm9KodCYSvNr5PJSZmGN5HK6y78W/eY9XmE6I89U8k9kVXKrZEP+4Ga2W3SIBui+hm3h4Ui3S0K0wYEFG+OtOLTAka4A5YAGeNh4OJf6AmDhPsvLNlH37PLBrn1KWkfyceD/38NRTwklI3kU/ZLelDuTt6LTGyK9mciYJwgqutJ65YFmgjycaC75fk9/2U6owPMHAU7MYTUHehSol+UKmbZpSPPC/uYfHO5FnUX4a9w1N3MtoDWEMNpVfAJSHPQVYda9ZBVlCZIsMyNaZzZVz35ewA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=OACl90BbEF8qzErYujmKzTdrG2WhufvmTNjJiD8LGxg=;
- b=Jjwox/gNV4k+7tVEwX/W7gXC5hEWMg5alCM9Au7Zb8A6sFwk2b/VTGlX+rAiINdxCIeEt7UHNZh0RaOJBCk5jKZxghwYXZJnmeN+CxafkWJbTSaxm6a9aAjG+GPOjdX4qxgPcBjDs5fBCWlUWnsyPbPwVPW6vjxq3IyxwiK7qs7OYwXMs3x1rxM6q29uOsPN9K0iqbyRfWtK/2DvNAMuhOXRNBfipvrrV53RkmZCgHpfs488uU1qKj6CM9kTaHm/pjM8QcCMPig+I8vDGfOuzNf6JFQkFm6yqu/hi4sJEYSqBTHmSgW56Z4UjoWiJJkNoCHE3LzfPGKm98qinPb6fA==
+ bh=TL9P/nrQfrNXIipPgxPLqfrpVZ+nd0uxd6XWdhTkPfM=;
+ b=e+NhElLqkqimCesfEN6LfdZKcv/6ZC64zt9konEbVhfRqhSsLbNrjGwZUEFZEHQS6HJGbdh287Y7XeEtp5Zpg+P7d1Peu1x7rkGI31wTMNGgEQdmbQKv44Rc1qDSstkw6VBJGpymhxtN/CJ4G8XeovfrzXJ/oALXT+gJDnQrmmmX1xDuAyhnwBUZybH+OOxRQ+16k9c1gUTo+5+txTF0zTwfPWsAgNzk2443QgaO/dRoDEmhECNlOXrgM9CN9nwlS5KquzAFwL0zj5T7/QNwQIj0uJOdgHyTdymwcUUvTqTND1hqSXkWK9ux5EWR6svg0JJxOJlQyXdWDTRialoqpQ==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from DM6PR12MB2667.namprd12.prod.outlook.com (2603:10b6:5:42::28) by
- SA1PR12MB6993.namprd12.prod.outlook.com (2603:10b6:806:24c::22) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8792.38; Sat, 7 Jun
- 2025 00:46:01 +0000
+ PH0PR12MB7930.namprd12.prod.outlook.com (2603:10b6:510:283::7) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8792.35; Sat, 7 Jun 2025 00:52:29 +0000
 Received: from DM6PR12MB2667.namprd12.prod.outlook.com
  ([fe80::bd88:b883:813d:54a2]) by DM6PR12MB2667.namprd12.prod.outlook.com
  ([fe80::bd88:b883:813d:54a2%6]) with mapi id 15.20.8792.034; Sat, 7 Jun 2025
- 00:46:00 +0000
-Message-ID: <462eb5cb-56bc-4639-9029-5166cb71b5bf@nvidia.com>
-Date: Fri, 6 Jun 2025 17:45:58 -0700
+ 00:52:29 +0000
+Message-ID: <ccb22f13-c717-478d-ab0f-ab4fbb0a8862@nvidia.com>
+Date: Fri, 6 Jun 2025 17:52:16 -0700
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 04/29] x86,fs/resctrl: Prepare for more monitor events
+Subject: Re: [PATCH v5 10/29] x86/resctrl: Change generic domain functions to
+ use struct rdt_domain_hdr
 To: Tony Luck <tony.luck@intel.com>,
  Reinette Chatre <reinette.chatre@intel.com>,
  Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
@@ -56,14 +56,14 @@ To: Tony Luck <tony.luck@intel.com>,
  Chen Yu <yu.c.chen@intel.com>
 Cc: x86@kernel.org, linux-kernel@vger.kernel.org, patches@lists.linux.dev
 References: <20250521225049.132551-1-tony.luck@intel.com>
- <20250521225049.132551-5-tony.luck@intel.com>
+ <20250521225049.132551-11-tony.luck@intel.com>
 Content-Language: en-US
 From: Fenghua Yu <fenghuay@nvidia.com>
-In-Reply-To: <20250521225049.132551-5-tony.luck@intel.com>
+In-Reply-To: <20250521225049.132551-11-tony.luck@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: BYAPR07CA0068.namprd07.prod.outlook.com
- (2603:10b6:a03:60::45) To DM6PR12MB2667.namprd12.prod.outlook.com
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: BY5PR13CA0023.namprd13.prod.outlook.com
+ (2603:10b6:a03:180::36) To DM6PR12MB2667.namprd12.prod.outlook.com
  (2603:10b6:5:42::28)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -72,461 +72,452 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM6PR12MB2667:EE_|SA1PR12MB6993:EE_
-X-MS-Office365-Filtering-Correlation-Id: a138cf0e-8717-4a4a-4057-08dda55cac6d
+X-MS-TrafficTypeDiagnostic: DM6PR12MB2667:EE_|PH0PR12MB7930:EE_
+X-MS-Office365-Filtering-Correlation-Id: 0f28e92a-4855-4614-ffbc-08dda55d9098
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|1800799024|376014|7416014|7053199007|921020;
+	BCL:0;ARA:13230040|376014|7416014|1800799024|366016|7053199007|921020;
 X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?Vy9ob0NRV29UUkpVejJvLy9kdk16dy9jUitHWExmN0JhMnJMTVNZS2JPZ1pH?=
- =?utf-8?B?V3FVUTMrVkM3TU1EQkxDdDczVVpZQkNEWU90enh1dWdvT3liMlY1WXcyWFlp?=
- =?utf-8?B?MmdkUmdJRzhYbVZFMnVHZUplQTlDS05mNHpZSG9LS3A3aENFd1BDcUlBSjFn?=
- =?utf-8?B?a0lCYXUxV0ZSZ1I2Qnp0Q0ZrdkZUMSs1SnhPVEwxRmlscjJEZ0pNd3VIaG1Y?=
- =?utf-8?B?RjRoS1QzRnI4QTExcEJGaDkyeS9rQmpUWDFrQUVWVFNxeUlGVDNmL1VySU1l?=
- =?utf-8?B?eVNnSnVyaTVzQmdrKzRLdTlNS2drbmpyVk11a3FEUFFmMjJKcnNZZ3hsVCth?=
- =?utf-8?B?NXlGU3pvU2o4QjhUZGcyR09FNkE0elhRTGxmQmE0UEdydWo0LzFNdCtRTjMx?=
- =?utf-8?B?ME5xTHF2ZVJoNFlWek1Qc1JKTUFBWlg4cmIzSFA0Z0lzS0V0MkJ6UitUTWVr?=
- =?utf-8?B?bkdaTEx4UmNXYU93U3k2QVpHOWg0UVNLNUYyaXBoc25OMnRMWGJUR04yQXhL?=
- =?utf-8?B?dWt6MG8yV2tqN1lOVFd6TDBoSExxNmt0eFBZeGI2elZkbmFJL09Fbm5mcUNN?=
- =?utf-8?B?QXdIY2Z6VXVHTCsydHRvQ1lwUEJ3azdYVUNOQy9GTU5WNEpRRCtSdjB4NGZm?=
- =?utf-8?B?SFQ4SDhJbm5IQ21DVjREdVE1Mk9OTEkveXhhdFpIWEdpSUhZMnJRUEtTeG55?=
- =?utf-8?B?anZocDVaVDBVZ2NSQ2p0YVowSEZRSDdUUGdpVWE0Z1JiMk1yY29VWXBkQldl?=
- =?utf-8?B?cEN0bEZ1QkNibGQ1akN2TURYOVg3OHZ6SnVtdzFndjJhVEJCSGtCOGNrTVZj?=
- =?utf-8?B?TDYzR21KUDI4MVNKQmpTOFB5blFjbWlhejVlVVlKb1Z6aEVIYncxcEl0Q0tL?=
- =?utf-8?B?VG12Q3cxQTN1M2hTemFwY0J6VzVkK2RqMXpPNVlHQXZFUVBlT2FlMGZFNXU5?=
- =?utf-8?B?ZUVMc3dmRHJqbjQvZFNHU0FON3huSkVUdWU1Z0paaisxbjExRkhHakFocjRZ?=
- =?utf-8?B?TUpTUVBvaUo1eklINFljZkc5eWI0dHBaZmM3NCtHWDQzTVAxSUdwV3A0TS9F?=
- =?utf-8?B?dFMrdHhuM1NldUZpNnkzRldETWw4Y1YxQWxlanFwWXlhRFlRdlNFN3dIT0hv?=
- =?utf-8?B?S3RNaXBhejBqQkxtSElWR29EOVhFb2tSMXBjbFlhaDZYWmFVVjBoeHJqeGY3?=
- =?utf-8?B?dFJKNGdMMmh2Z3dPOWVqTTJic1BjcHMyN0Y2WlN5YjRSaTI4NlV1ZCtua3JY?=
- =?utf-8?B?Q3UyNVFHQTJ4cnF4Y2cvbE1aS3R4bE03Z3luU1ZlT3ZWcEdTMmJuaWJWTUpG?=
- =?utf-8?B?NmJEaWs3eFc3Uk9mUjVzQTdiRUkvbkNJVWpWNFQwWWcxNkVmd1B4aEY1U1lm?=
- =?utf-8?B?R0F0ekxkeFcwcFNSQnJEZEVTNE9BOFR6WGpBazk3RVhzVk5LOFpmUHQwS1Vz?=
- =?utf-8?B?S3Z4aHVEVE1lYmVaN1NNTXEvenNlaVpDY3BTVklkaXdwWFpLR2dvRUp4NE5h?=
- =?utf-8?B?bkt2aW9VNTdpMisrOHVENmxrdmZTR1Bub0x4ZWszQU92a1plcVZoSUtUMkVS?=
- =?utf-8?B?Tmp3WlFCL2RMVDFsOHp6bnJtSm1saTlEdnp2dnJhbTVBYTJJNm1ISTRET3ov?=
- =?utf-8?B?bVlJK2FJZU5WRDF0MFlML0d2WGJMSGhiUXJUem1EaDZIdjQ2UklKTFIxbnFl?=
- =?utf-8?B?dVdmQVJBMFBISWE4b0JhdVlWclhEMFM5Ty9jc2NmU0V1cHZsSWYza3lkU1BG?=
- =?utf-8?B?MlN3UHJxeThVYlJOa0E3d2lFQUZYbjNhaVdROTlmKzQvNGNoNm0wdEFHdWhH?=
- =?utf-8?B?MGlPWUZrRG92cVEyYUxLMm9mZ2dpU1RmbnJ5d1hnNUFmcjk2ZjB0OWM3bU5W?=
- =?utf-8?B?eHNXcXpDQm1MU0N3SFc4aW80L3lrSlozeDU0UmN0aFdwQjRENXF1Z3JZNTdv?=
- =?utf-8?B?MmRIN1NzOFMvTStkcHg0NGpUcTFyRnB6K1JwY3NRN0pZcXR4akNmSWdmMnpr?=
- =?utf-8?B?U3Y0WEpPMVVRPT0=?=
+	=?utf-8?B?TURpU0RaWXF4a1NYSmJSNEZVb2treWRtUTZ2NDlMUGFQUjIrZU83MWQ3KzYr?=
+ =?utf-8?B?M2wydmpLcSs3S2QrTnpKTVZKV1djMTlCYUJDOWE1WkxscjNRQVhBcUczbW9R?=
+ =?utf-8?B?UHo3ZFlZOW5FcGxnUHpaMTdEVWtHV0xJbUdsNENPelF0alN5dGpSNjJ3WTJl?=
+ =?utf-8?B?bUtPVWtDQ0hjWExlakRoU3JSdFFQU09oU1BkRlJ6Y1BpK0Zqdk5BdUEwdVl1?=
+ =?utf-8?B?cEdoY2lhYTBweDNSSVE2TEFhQUFmQkw2MEY1VVZmRDRpNzZuaFZzeDVKUmxn?=
+ =?utf-8?B?bW9nOWRaZG1LR1lNeHBpZEdkVnc1UERVL2JDaGk3dTlGdmZnZVAxL0lBNVJN?=
+ =?utf-8?B?ZVRIa05nam1XRmFlU3psaW5HK0NmWWZrLzVYYXB6WjJLbVJxUFRGeDc5eE13?=
+ =?utf-8?B?VUhkb0htbVIvN25hOXJxVGZoakI0Y05YYW5rL1pXcUFqTXdGU1hXeWpRUXlN?=
+ =?utf-8?B?dGxyUVdiV2lJVDNJR0l3M0Qvd2VUdjFEL2p0VlVzN29BQXloaFA0ckZTazdi?=
+ =?utf-8?B?cGJQZml4TGQ0dFB5NDE1OUlLWnA4TjNPUC8renVRd1JMU2ZINFpQSitkZUkx?=
+ =?utf-8?B?SG5UWmttWHZJeHo0c1lPOVhKcElqbkRSRmJMTkREM3U3TUorNjE3dG9CT1FJ?=
+ =?utf-8?B?aUg2MlArdnJPMlRveWJVTnUwalA0ZGNiVUZuYkE1THVYTW1UcVlpNVdUMFBj?=
+ =?utf-8?B?OUdNWFRpZzROTkZTaW1MUXkrTVJQdDlVMFZ2UHV0UWtuWHZQUEd4Z2loVnM3?=
+ =?utf-8?B?Z3JmK3ZnVFNrRUJjVXJXRzFTcGx0K0NXbFFhNmZJRDFsU3VkWVhSR3pHTDlt?=
+ =?utf-8?B?S2xxR1U1SXJqcTFqa29NWXJEKzVsUHdpZTVUUXNqNUo0S29iRVd5d2IwSGlp?=
+ =?utf-8?B?djIwMVRCWFM4OWl5bmNLa2FYMmpwYiszWkVxWXRBS0tGS1MrYWJ6Q0h3Kzcy?=
+ =?utf-8?B?MEdCVlAyRVExYkt4MnQvM2gvL1pzSDJWbTE1WTdyREJibHppWGUrcDJXMzh2?=
+ =?utf-8?B?WkFvK2NORHgydXdyVnBBSTJ2QW9LTDViVDcycmh1OVpsdkZFVEplSmVTQm1y?=
+ =?utf-8?B?MG5JSmQrS3Zsd2RybnFyYXVBZ0UwTFBzZ1RrY0NBSWtHSWduS3VRVmJvdi9Q?=
+ =?utf-8?B?Qlgva0NTV2NlOEc1ZU01K1VCdFBrZVhYek5Db0NwRHZhQ0puY0x2bkFyTHpM?=
+ =?utf-8?B?dDMrU3QvZEtPaXJySUl1THFRY1RTc2lJeW1lRTZDaUg1b250QXgzdndjR1FN?=
+ =?utf-8?B?cU4vMnMzSDRoRFJUQXUxTy8wTWtiQTlKVU9YR3h0VUhMT1R0dG9GQ1gvRE8y?=
+ =?utf-8?B?VEpLcHlBRXpBbXZBTXE2MjFrZU56am40QkhabXAyS09Sa3V1Vk1lSWJLV0NZ?=
+ =?utf-8?B?dEpMU2t2bXRoWm1UejVzazlNMVo2ZHNhN3pJTnc4djNkQ21IaHNnc05PV280?=
+ =?utf-8?B?ajh4aWRNZXFYSXdBMzM4aC95QTRORHhRcTNGVTNxd3NvSXF0S214ZVlTY3BR?=
+ =?utf-8?B?TDMvbCtJRzNFY2ZIeVBuY2wyclNxSXBTK2Ezd3F0RjN1aVl6RU1ra0NnUHAy?=
+ =?utf-8?B?bXhrODduSURrVmRIZlgwNnpCVGd4NllKdU5YekFjOHluTFdnQjBQYlRwT09S?=
+ =?utf-8?B?YkFJOVN3eEFNV2xLYUdYbkIyNmR4MnMzUzEvQUhqcWNhWG56amt3RHlBOHlI?=
+ =?utf-8?B?aFduSkxZdEdlL1hacERjalE0VWs3cElQbktIT0NsRTY5SnVVMExsUVlhT1lF?=
+ =?utf-8?B?TW95RGExZlZDM2tvTlJaSTF3cGpuVnZHOXk2U2p2NjNCR2pqWFoyeEJsdStM?=
+ =?utf-8?B?ZVZML3pGOWlOY2Y1TjFyYnN2YTFPYVFCMTJDclFhQ295WnZ0NHJvWlpZVUgr?=
+ =?utf-8?B?eTkzdjh1MEhhd1kvUVFMOUNPQzlBbHlkeThjekxhbERlL0RjV2hWVFpTUHd5?=
+ =?utf-8?B?NGNSbzFyNGVlTGYwWmYwaEFVOHFsMFFnVGlQa1RrU0tKZXpsWlZjM0JLQUZF?=
+ =?utf-8?B?MXh1OXVIODJRPT0=?=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB2667.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(7416014)(7053199007)(921020);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB2667.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(7416014)(1800799024)(366016)(7053199007)(921020);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?YlgrR0JHYnJQTmtyY1VWdjNXMkdTOUwxaURsZ205R3lPMlJGd0xyOTliaXVw?=
- =?utf-8?B?azFOb1c5UzRvcTZtVXpvQUx0dmJJUlR0VzA3bFRhcW41TWhFdmhVR3FvWmJJ?=
- =?utf-8?B?ajFHKzMvM01NSE1nV2luMUwvTEdHbms5Vkh6TjU4TW5nNjJKR21aS0h6QUpT?=
- =?utf-8?B?cFJHckRWemI2TElPN1BJQWVKbU1GdnNZaXhhRDcrZGliMjBacGhWNm0rSGVj?=
- =?utf-8?B?OHNMMzEyVmZpdCtpcktUN3NxYmhmb3hodGlNcW1OYkRSTlJraWNTd2R5R2hj?=
- =?utf-8?B?WTZaVVZqOVV0b2dRd0VwT3ZRSGh6SGdDUlRUaStXNGZKNzBuY3k3eFZoWHpk?=
- =?utf-8?B?SlRBU2g3L05TUFhjby9ocjh4VEVrdnFVL3pwSkN4MWhpSndKVi90YmlPMkNH?=
- =?utf-8?B?NXlmcFhNSmhWNUpWZk8yMXRDMVU1VkE2LzJzT1pNNDQ1bHMybmsxMGZsVG1Q?=
- =?utf-8?B?RWJsTG1BN3ptem5aNk1SN040N2dudExRS0NQZWlDK2dKZmNRZlhsUUdrRTl2?=
- =?utf-8?B?UThXWHN0dkptTnBTZU1FVXAyZis0Zndjd2trNDJRVlN5OC85OStTRGNJZkI5?=
- =?utf-8?B?TktvRTdxRmFwejBkRnJnSWh0d2YySGlnRURJOHpsZDRrUTIzZ0lmemFlcDNs?=
- =?utf-8?B?ZUNmNUxsckRHUmc3SU0vUkdWN2swQVlSRXIxb0cxOFpBQ0JSUjVHTjhXVU1j?=
- =?utf-8?B?WDM0T2IxYkFBOUJraFJwY3FhRnlseGxnN2lBVU5iYkp6YnE4T24zQ2w2NnhB?=
- =?utf-8?B?YXYzWWxtSzM3WVo5OFIrcFdTVlEyUzNoenRVdHZYeWN5SW9iVHloZUdRYTNY?=
- =?utf-8?B?bGJkbUR0WU51ZjhoZ3JlQ0dHbkg1Mmg4bjhja09pVzFBc2RnTjlyZnprZHF6?=
- =?utf-8?B?dkJxdzJzVExhZVNoZFdPU052WjhLMGlTa3ltU3JabStNODBWeGh6RHhFTDNl?=
- =?utf-8?B?KzNQSU9peUE1VCtLdG5WYVJzVkdiYkZoOE0xdmlYZmZHRitHaUZSbXRWZUtW?=
- =?utf-8?B?SmNQMlVkeERrN092b1pGbTlEWnFwQ3Fjc2NIVnZNSFB4Mys4bFNVVk9yZEpr?=
- =?utf-8?B?MWpoYVF2MThFUmsxR2xuWExwYWQ2dTlUdmlmY1YwUlVTcXVTREd2THZNOGE0?=
- =?utf-8?B?NGNzVHhrVnU1RnBDTGkxUW4yT04yWXlGUGFZTkIrZ1NKVzJhb21CaWh6V2hs?=
- =?utf-8?B?eUpybVZ6UUl5dVc3TVlmVVhsWEJJS2UyQkZXREQvd3JxVXF2Zldsclpwc1JH?=
- =?utf-8?B?OVNUTkZheUJCWGExTlkrTHM0Sm1sTHZxUk5CVnBzVE5pVFljNlVXT0s5YkNq?=
- =?utf-8?B?ZXp1R2MxZmlDZG9KbEdWUGpVL0hwNWFyTWM1SVV2RkNVVFIvZVo2dnZKNG9p?=
- =?utf-8?B?RTk5SXdudmFKdEtVTS9YVXJuYWhuSlZsdnZZWEE3UkhlMWZ2enVWTWM4cllM?=
- =?utf-8?B?djF4S1pZN0dTMk9wM1ZNQW14aHBVbElUcHEvblhLYU1xakwyZnd5WmZkdlVr?=
- =?utf-8?B?MHdDMGtNYldlT2ljVnVqOS84QVlHeUFSUGI2dzhBekpKRWRGQnFHVUs0Vk9y?=
- =?utf-8?B?Q1h5Q1dDang2NStSa041Y3pwVC9vMnFRQW1PZzQyTWZuS3hyOXdtdDJEbVNq?=
- =?utf-8?B?eS9hYUU4aC9DT1hyeWNkV0lwN1JRbWl2WHM2bFgwY0R2VTR5dHkyWERqVTYz?=
- =?utf-8?B?bks5UkdRNnptTTBOSG8rMlJ1aDc3ZUw3SHdzaXh6aTVTV1JLVVRFYkZpNjZS?=
- =?utf-8?B?MXpKVlBIWmZBVk83eGlRUmd2c20wRTVpcmZZK2xBNHo5ejV6YmNUajBQUmRU?=
- =?utf-8?B?Y3V2TFRGTUUzVmE3VldoaGJnWTk4bndUNXlJTGhucXZLNGxNU1lRWGErTnZ5?=
- =?utf-8?B?VWg2eGtEVVRya3lKSXIybVRybFJFT3hxNXlrY2dZelNtSVdUZTByZ3VrTS9U?=
- =?utf-8?B?RnRBcVJCMjV2S3BXK0oyZ0g1QTZTK3lJTUl4cXhPQlVla0FnZTQ2djZWTXVk?=
- =?utf-8?B?RUdyTlBtb2Jadnh1SExtSVJuaERHZFk2K1RKNXpnTUl6V29reUd3UU5HVHNU?=
- =?utf-8?B?TEpaUUFuRHhRVS9DOG1rLzBsc0ltYURmWFBPUko1NE1QZ3F3RldXdXVSVDVG?=
- =?utf-8?Q?Syqnk4mvY0r7QD5D1yEO22B5L?=
+	=?utf-8?B?UHBPRjhXcElYczlPeDR0RW1UVG10UnVDVHVRNWpaOGlmUjQrRU9mcnRVb3kw?=
+ =?utf-8?B?WDZhQVUzTlUyNWpRSGVDS3BhT2c4L0FJcXZCd0NWTmRUWUJ0RnBwN05ML2Fk?=
+ =?utf-8?B?YmJmbTRXOU45M1hlT05wWFF4eW5kRE1MbnlJTmxhTkROY2tpS1dFb05SaDZE?=
+ =?utf-8?B?UDNtdFQ3dU1Ka0dKcjZyZy95dm1VMjVUcERFV2lqVnhlcWJkc2ZNSGlNQzA5?=
+ =?utf-8?B?a1FqUDlwR2RVSnNyNHZRaEZMRnB1S3VpNDdqZ3ZiVVkwcWN1UEgyUUY5OXpy?=
+ =?utf-8?B?VHhPVXptdGFtMkJTRXQ1NGd6RzBwcDlJQ3YwK2EvaG5rc2dWQjFyUlZhWGdN?=
+ =?utf-8?B?ay9icVhCTDZqWFVLWVhMV3gxdGRkcGJVTEI1Uk5QemRDSmQwL2J5bWp6dFBx?=
+ =?utf-8?B?bkJQZll2RGJnSzRMVlNUN2phOWNpeUp4K1I2V3Y2YjhDVGpmaURETVJlT2RU?=
+ =?utf-8?B?QXdlL0cyRXpnem02Y0tpejUzL3FhNHFEdVpCRWxYeDJSSm83VnhxYlNzUGlh?=
+ =?utf-8?B?NEl1QTM4TWRYYXp4MFBxYkF6ZHZpR3RoNXZranFCVlN5d2g1R2h1Nm9LRWpo?=
+ =?utf-8?B?cFBKL0dSRGs3WEFvVUUxb2JCTVhSRlVjM3pKMmJDRDkrV2JRM252NHpvdWtH?=
+ =?utf-8?B?NTBXaWdjOE10YkxSUkhNd21qREtCZ05vY3U3RW5Sa2FsUmljSDlpWEVZM250?=
+ =?utf-8?B?QU9MeDl4NzJtUE5KWVU1eGpEeGV4RThqT0VEejUyNnkrT3dGQWtyczZ3ZVFM?=
+ =?utf-8?B?VFVpcTNTQjZSWXNVVklLN0RBVWpwWGlaZXRucmVBUTVURk0zYTVnZjBUazRQ?=
+ =?utf-8?B?SzBmQVlRWXJGL0grTlNzZTB6elY4RUFiWTMzWWhINisxV0NNTFRtMTk0Z2V0?=
+ =?utf-8?B?ZFlwRTAzSzJ2Z3NJUlNWNDlrS1duWTNvdS9SU0hheURWRGdEdHJ3emsrSjl2?=
+ =?utf-8?B?VTFQNFFmRHpGdEluU3dpZy8yK1psbEl4dXRUM0NRMXpmSjZQSE1UZnB4c1Ja?=
+ =?utf-8?B?eTNPM0JWLzlKUGh2VkV6R3RFOTZkRlpPdG9STmFIWnRqNDFDTWwxL0gyYUNp?=
+ =?utf-8?B?Y3ZndHJJOUc2OUhvS01rYkdMZ29qNUJiM296SVpBYzVzbmdPWkdITXhzTjR0?=
+ =?utf-8?B?SVVibGV1bW9xcmFML0JtR1BFMUZ0dCtDVmhaeXoyOEpPNFFTaXlSWU53THRj?=
+ =?utf-8?B?UG81bGFjc1E2ZEkzRzZCUGZ6aitKakxjK1h5RExIYXJSVURLajZxWnNIUDlW?=
+ =?utf-8?B?SUZyaVNXVGJHWEdhR2ZJQVlrcHdoRUdCMkwxQ1lDdVl1Z2V5MS9FcndRdWlD?=
+ =?utf-8?B?aDExRjQ0UjJEbUtXYWM3N25xMkdnNGY1bTNTN3VHMU5KZVZ4dm04cGJVZm5I?=
+ =?utf-8?B?Y1BSMXc4bGV6cmFmRjdaTWUzeGxuTytzWjkxMTNXZTJnU3ZFWDJ6WHhyVGlQ?=
+ =?utf-8?B?YUpCRnFrdjZJV0txSitVMTFQTXNhOFVHR1NYNU4rVU5QbklOUTQzVVBMUG9L?=
+ =?utf-8?B?NnRvTURZSSsweVBka000dWowa25ZR3liMjErMWU1ZG1iWnZvdzhWVUI0UEh5?=
+ =?utf-8?B?dUxoend4QWdBcVdHNHZvMGFEWjNKUXVReHFnOVBleWhqWVZaNWJ0ZHVFc0tl?=
+ =?utf-8?B?Ny9KM0lLT1FxaWdhaFFnK2Q1bjV5NDBuWEFtNUdOQit4Q2Npc1hrZm5CVzVr?=
+ =?utf-8?B?T0ZIWmZPSG5NRFZjb09KY1cxOVloV2tpeThnWlNkOHJ6YlhvY0EwV2M2c3Vw?=
+ =?utf-8?B?bkE2eEFoTmFPYkY4YVpKa2ZoQll6L3lieUdoZkZkS3FmNDBMTHQycWpDak8r?=
+ =?utf-8?B?TUcrc25IV2JydENMRnlKYm4yT1o0MEhPZTRvd09MWldtN3RvMVVQR0hHZEJD?=
+ =?utf-8?B?Zk1WSXJ3MWVrWGZFWW11aW5TTVJ5YjFEMjFkOFdiU0xhVTc4TTY1bTVqdzlo?=
+ =?utf-8?B?dlBIYnVKckxUMjg1NDZBeFZYeXgwZXFNL3NUUFVmZjFVV2Z5M1pzM2NCMHJ4?=
+ =?utf-8?B?OXY2Vjl6a0thSzRaQ1lmanlUc2NqVGJ0OU8yZUZnOXRmelppd2xacWM3dnpj?=
+ =?utf-8?B?eUVoQ3ZROGh2cHFtS2FDeU1CRTY2QW1UaW9FZ3ZtckdBdjIrbUZiRHNmd0pQ?=
+ =?utf-8?Q?n4zc9ssXQd3el7B1iPvMV1ueS?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: a138cf0e-8717-4a4a-4057-08dda55cac6d
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0f28e92a-4855-4614-ffbc-08dda55d9098
 X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB2667.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Jun 2025 00:46:00.7520
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Jun 2025 00:52:29.8008
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: u3Kju7UgzJ2AThifOSce72ujB25KbwfRA3ZVPELL8tW1OjPfvEU4iCFFtLOtAoOPJ72CTdo2JxS0p/pXTH1CnQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR12MB6993
+X-MS-Exchange-CrossTenant-UserPrincipalName: g8Z5cRvGw7itx3kLQuXRAslCRk4WfyXDucnzoDEk/cOGppAKaIGaa8bKPZz/F+mTIYvoS9Q43MrwwjGp38g3Ig==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR12MB7930
 
 Hi, Tony,
 
 On 5/21/25 15:50, Tony Luck wrote:
-> There's a rule in computer programming that objects appear zero,
-> once, or many times. So code accordingly.
+> Historically all monitoring events have been associated with the L3
+> resource and it made sense to use "struct rdt_mon_domain *" arguments
+> to functions manipulating domains. But the addition of monitor events
+> tied to other resources changes this assumption.
 >
-> There are two MBM events and resctrl is coded with a lot of
+> Some functionality like:
+> *) adding a CPU to an existing domain
+> *) removing a CPU that is not the last one from a domain
+> can be achieved with just access to the rdt_domain_hdr structure.
 >
->          if (local)
->                  do one thing
->          if (total)
->                  do a different thing
+> Change arguments from "rdt_*_domain" to rdt_domain_hdr so functions
+> can be used on domains from any resource.
 >
-> Change the rdt_mon_domain and rdt_hw_mon_domain structures to hold arrays
-> of pointers to per event data instead of explicit fields for total and
-> local bandwidth.
+> Add sanity checks where container_of() is used to find the surrounding
+> domain structure that hdr has the expected type.
 >
-> Simplify by coding for many events using loops on which are enabled.
->
-> Move resctrl_is_mbm_event() to <linux/resctrl.h> so it can be used more
-> widely. Also provide a for_each_mbm_event() helper macro.
+> Simplify code that uses "d->hdr." to "hdr->" where possible.
 >
 > Signed-off-by: Tony Luck <tony.luck@intel.com>
 > ---
->   include/linux/resctrl.h                | 15 +++++---
->   include/linux/resctrl_types.h          |  3 ++
->   arch/x86/kernel/cpu/resctrl/internal.h |  6 ++--
->   arch/x86/kernel/cpu/resctrl/core.c     | 38 ++++++++++----------
->   arch/x86/kernel/cpu/resctrl/monitor.c  | 36 +++++++++----------
->   fs/resctrl/monitor.c                   | 13 ++++---
->   fs/resctrl/rdtgroup.c                  | 48 ++++++++++++--------------
->   7 files changed, 82 insertions(+), 77 deletions(-)
+>   include/linux/resctrl.h            |  4 +-
+>   arch/x86/kernel/cpu/resctrl/core.c | 39 +++++++-------
+>   fs/resctrl/rdtgroup.c              | 83 +++++++++++++++++++++---------
+>   3 files changed, 79 insertions(+), 47 deletions(-)
 >
 > diff --git a/include/linux/resctrl.h b/include/linux/resctrl.h
-> index 843ad7c8e247..40f2d0d48d02 100644
+> index d6b09952ef92..c02a4d59f3eb 100644
 > --- a/include/linux/resctrl.h
 > +++ b/include/linux/resctrl.h
-> @@ -161,8 +161,7 @@ struct rdt_ctrl_domain {
->    * @hdr:		common header for different domain types
->    * @ci:			cache info for this domain
->    * @rmid_busy_llc:	bitmap of which limbo RMIDs are above threshold
-> - * @mbm_total:		saved state for MBM total bandwidth
-> - * @mbm_local:		saved state for MBM local bandwidth
-> + * @mbm_states:		saved state for each QOS MBM event
->    * @mbm_over:		worker to periodically read MBM h/w counters
->    * @cqm_limbo:		worker to periodically read CQM h/w counters
->    * @mbm_work_cpu:	worker CPU for MBM h/w counters
-> @@ -172,8 +171,7 @@ struct rdt_mon_domain {
->   	struct rdt_domain_hdr		hdr;
->   	struct cacheinfo		*ci;
->   	unsigned long			*rmid_busy_llc;
-> -	struct mbm_state		*mbm_total;
-> -	struct mbm_state		*mbm_local;
-> +	struct mbm_state		*mbm_states[QOS_NUM_L3_MBM_EVENTS];
->   	struct delayed_work		mbm_over;
->   	struct delayed_work		cqm_limbo;
->   	int				mbm_work_cpu;
-> @@ -376,6 +374,15 @@ bool resctrl_is_mon_event_enabled(enum resctrl_event_id evt);
+> @@ -444,9 +444,9 @@ int resctrl_arch_update_one(struct rdt_resource *r, struct rdt_ctrl_domain *d,
+>   u32 resctrl_arch_get_config(struct rdt_resource *r, struct rdt_ctrl_domain *d,
+>   			    u32 closid, enum resctrl_conf_type type);
+>   int resctrl_online_ctrl_domain(struct rdt_resource *r, struct rdt_ctrl_domain *d);
+> -int resctrl_online_mon_domain(struct rdt_resource *r, struct rdt_mon_domain *d);
+> +int resctrl_online_mon_domain(struct rdt_resource *r, struct rdt_domain_hdr *hdr);
+>   void resctrl_offline_ctrl_domain(struct rdt_resource *r, struct rdt_ctrl_domain *d);
+> -void resctrl_offline_mon_domain(struct rdt_resource *r, struct rdt_mon_domain *d);
+> +void resctrl_offline_mon_domain(struct rdt_resource *r, struct rdt_domain_hdr *hdr);
+>   void resctrl_online_cpu(unsigned int cpu);
+>   void resctrl_offline_cpu(unsigned int cpu);
 >   
->   bool resctrl_arch_is_evt_configurable(enum resctrl_event_id evt);
->   
-> +static inline bool resctrl_is_mbm_event(enum resctrl_event_id e)
-> +{
-> +	return (e >= QOS_L3_MBM_TOTAL_EVENT_ID &&
-> +		e <= QOS_L3_MBM_LOCAL_EVENT_ID);
-> +}
-> +
-> +#define for_each_mbm_event(evt)	\
-> +	for (evt = QOS_L3_MBM_TOTAL_EVENT_ID; evt <= QOS_L3_MBM_LOCAL_EVENT_ID; evt++)
-> +
->   /**
->    * resctrl_arch_mon_event_config_write() - Write the config for an event.
->    * @config_info: struct resctrl_mon_config_info describing the resource, domain
-> diff --git a/include/linux/resctrl_types.h b/include/linux/resctrl_types.h
-> index a25fb9c4070d..b468bfbab9ea 100644
-> --- a/include/linux/resctrl_types.h
-> +++ b/include/linux/resctrl_types.h
-> @@ -47,4 +47,7 @@ enum resctrl_event_id {
->   	QOS_NUM_EVENTS,
->   };
->   
-> +#define QOS_NUM_L3_MBM_EVENTS	(QOS_L3_MBM_LOCAL_EVENT_ID - QOS_L3_MBM_TOTAL_EVENT_ID + 1)
-> +#define MBM_STATE_IDX(evt)	((evt) - QOS_L3_MBM_TOTAL_EVENT_ID)
-> +
->   #endif /* __LINUX_RESCTRL_TYPES_H */
-> diff --git a/arch/x86/kernel/cpu/resctrl/internal.h b/arch/x86/kernel/cpu/resctrl/internal.h
-> index 5e3c41b36437..ea185b4d0d59 100644
-> --- a/arch/x86/kernel/cpu/resctrl/internal.h
-> +++ b/arch/x86/kernel/cpu/resctrl/internal.h
-> @@ -54,15 +54,13 @@ struct rdt_hw_ctrl_domain {
->    * struct rdt_hw_mon_domain - Arch private attributes of a set of CPUs that share
->    *			      a resource for a monitor function
->    * @d_resctrl:	Properties exposed to the resctrl file system
-> - * @arch_mbm_total:	arch private state for MBM total bandwidth
-> - * @arch_mbm_local:	arch private state for MBM local bandwidth
-> + * @arch_mbm_states:	arch private state for each MBM event
->    *
->    * Members of this structure are accessed via helpers that provide abstraction.
->    */
->   struct rdt_hw_mon_domain {
->   	struct rdt_mon_domain		d_resctrl;
-> -	struct arch_mbm_state		*arch_mbm_total;
-> -	struct arch_mbm_state		*arch_mbm_local;
-> +	struct arch_mbm_state		*arch_mbm_states[QOS_NUM_L3_MBM_EVENTS];
->   };
->   
->   static inline struct rdt_hw_ctrl_domain *resctrl_to_arch_ctrl_dom(struct rdt_ctrl_domain *r)
 > diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
-> index 819bc7a09327..4403a820db12 100644
+> index e4125161ffbd..71b884f25475 100644
 > --- a/arch/x86/kernel/cpu/resctrl/core.c
 > +++ b/arch/x86/kernel/cpu/resctrl/core.c
-> @@ -364,8 +364,8 @@ static void ctrl_domain_free(struct rdt_hw_ctrl_domain *hw_dom)
->   
->   static void mon_domain_free(struct rdt_hw_mon_domain *hw_dom)
->   {
-> -	kfree(hw_dom->arch_mbm_total);
-> -	kfree(hw_dom->arch_mbm_local);
-> +	for (int i = 0; i < QOS_NUM_L3_MBM_EVENTS; i++)
-> +		kfree(hw_dom->arch_mbm_states[i]);
-
-Is it better to define a helper for_each_mon_event_idx(i)?
-
-#define for_each_mbm_event_idx(i) \
-
-     for (int i = 0; i < QOS_NUM_L3_MBM_EVENTS; i++)
-
-Then the above for loop can be simplified to:
-
-     for_each_mbm_event_idxd(i)
-
-	kfree(hw_dom->arch_mbm_states[i]);
-
-The helper can be used in other places as well (see below).
-
->   	kfree(hw_dom);
->   }
->   
-> @@ -399,25 +399,27 @@ static int domain_setup_ctrlval(struct rdt_resource *r, struct rdt_ctrl_domain *
->    */
->   static int arch_domain_mbm_alloc(u32 num_rmid, struct rdt_hw_mon_domain *hw_dom)
->   {
-> -	size_t tsize;
+> @@ -458,9 +458,7 @@ static void domain_add_cpu_ctrl(int cpu, struct rdt_resource *r)
+>   	if (hdr) {
+>   		if (!domain_header_is_valid(hdr, RESCTRL_CTRL_DOMAIN, r->rid))
+>   			return;
+> -		d = container_of(hdr, struct rdt_ctrl_domain, hdr);
 > -
-> -	if (resctrl_is_mon_event_enabled(QOS_L3_MBM_TOTAL_EVENT_ID)) {
-> -		tsize = sizeof(*hw_dom->arch_mbm_total);
-> -		hw_dom->arch_mbm_total = kcalloc(num_rmid, tsize, GFP_KERNEL);
-> -		if (!hw_dom->arch_mbm_total)
-> -			return -ENOMEM;
-> -	}
-> -	if (resctrl_is_mon_event_enabled(QOS_L3_MBM_LOCAL_EVENT_ID)) {
-> -		tsize = sizeof(*hw_dom->arch_mbm_local);
-> -		hw_dom->arch_mbm_local = kcalloc(num_rmid, tsize, GFP_KERNEL);
-> -		if (!hw_dom->arch_mbm_local) {
-> -			kfree(hw_dom->arch_mbm_total);
-> -			hw_dom->arch_mbm_total = NULL;
-> -			return -ENOMEM;
-> -		}
-> +	size_t tsize = sizeof(struct arch_mbm_state);
-> +	enum resctrl_event_id evt;
-> +	int idx;
-> +
-> +	for_each_mbm_event(evt) {
-> +		if (!resctrl_is_mon_event_enabled(evt))
-> +			continue;
-> +		idx = MBM_STATE_IDX(evt);
-> +		hw_dom->arch_mbm_states[idx] = kcalloc(num_rmid, tsize, GFP_KERNEL);
-> +		if (!hw_dom->arch_mbm_states[idx])
-> +			goto cleanup;
->   	}
+> -		cpumask_set_cpu(cpu, &d->hdr.cpu_mask);
+> +		cpumask_set_cpu(cpu, &hdr->cpu_mask);
+>   		if (r->cache.arch_has_per_cpu_cfg)
+>   			rdt_domain_reconfigure_cdp(r);
+>   		return;
+> @@ -524,7 +522,7 @@ static void l3_mon_domain_setup(int cpu, int id, struct rdt_resource *r, struct
 >   
->   	return 0;
-> +cleanup:
-> +	while (--idx >= 0) {
-> +		kfree(hw_dom->arch_mbm_states[idx]);
-> +		hw_dom->arch_mbm_states[idx] = NULL;
-> +	}
-> +
-> +	return -ENOMEM;
->   }
+>   	list_add_tail_rcu(&d->hdr.list, add_pos);
 >   
->   static int get_domain_id_from_scope(int cpu, enum resctrl_scope scope)
-> diff --git a/arch/x86/kernel/cpu/resctrl/monitor.c b/arch/x86/kernel/cpu/resctrl/monitor.c
-> index fda579251dba..85526e5540f2 100644
-> --- a/arch/x86/kernel/cpu/resctrl/monitor.c
-> +++ b/arch/x86/kernel/cpu/resctrl/monitor.c
-> @@ -160,18 +160,14 @@ static struct arch_mbm_state *get_arch_mbm_state(struct rdt_hw_mon_domain *hw_do
->   						 u32 rmid,
->   						 enum resctrl_event_id eventid)
->   {
-> -	switch (eventid) {
-> -	case QOS_L3_OCCUP_EVENT_ID:
-> -		return NULL;
-> -	case QOS_L3_MBM_TOTAL_EVENT_ID:
-> -		return &hw_dom->arch_mbm_total[rmid];
-> -	case QOS_L3_MBM_LOCAL_EVENT_ID:
-> -		return &hw_dom->arch_mbm_local[rmid];
-> -	default:
-> -		/* Never expect to get here */
-> -		WARN_ON_ONCE(1);
-> +	struct arch_mbm_state *state;
-> +
-> +	if (!resctrl_is_mbm_event(eventid))
->   		return NULL;
-> -	}
-> +
-> +	state = hw_dom->arch_mbm_states[MBM_STATE_IDX(eventid)];
-> +
-> +	return state ? &state[rmid] : NULL;
->   }
+> -	err = resctrl_online_mon_domain(r, d);
+> +	err = resctrl_online_mon_domain(r, &d->hdr);
+>   	if (err) {
+>   		list_del_rcu(&d->hdr.list);
+>   		synchronize_rcu();
+> @@ -597,25 +595,24 @@ static void domain_remove_cpu_ctrl(int cpu, struct rdt_resource *r)
+>   	if (!domain_header_is_valid(hdr, RESCTRL_CTRL_DOMAIN, r->rid))
+>   		return;
 >   
->   void resctrl_arch_reset_rmid(struct rdt_resource *r, struct rdt_mon_domain *d,
-> @@ -200,14 +196,16 @@ void resctrl_arch_reset_rmid(struct rdt_resource *r, struct rdt_mon_domain *d,
->   void resctrl_arch_reset_rmid_all(struct rdt_resource *r, struct rdt_mon_domain *d)
->   {
->   	struct rdt_hw_mon_domain *hw_dom = resctrl_to_arch_mon_dom(d);
+> +	cpumask_clear_cpu(cpu, &d->hdr.cpu_mask);
+> +	if (!cpumask_empty(&hdr->cpu_mask))
+> +		return;
+> +
+>   	d = container_of(hdr, struct rdt_ctrl_domain, hdr);
+>   	hw_dom = resctrl_to_arch_ctrl_dom(d);
+>   
+> -	cpumask_clear_cpu(cpu, &d->hdr.cpu_mask);
+> -	if (cpumask_empty(&d->hdr.cpu_mask)) {
+> -		resctrl_offline_ctrl_domain(r, d);
+> -		list_del_rcu(&d->hdr.list);
+> -		synchronize_rcu();
 > -
-> -	if (resctrl_is_mon_event_enabled(QOS_L3_MBM_TOTAL_EVENT_ID))
-> -		memset(hw_dom->arch_mbm_total, 0,
-> -		       sizeof(*hw_dom->arch_mbm_total) * r->num_rmid);
-> -
-> -	if (resctrl_is_mon_event_enabled(QOS_L3_MBM_LOCAL_EVENT_ID))
-> -		memset(hw_dom->arch_mbm_local, 0,
-> -		       sizeof(*hw_dom->arch_mbm_local) * r->num_rmid);
-> +	enum resctrl_event_id evt;
-> +	int idx;
-> +
-> +	for_each_mbm_event(evt) {
-> +		idx = MBM_STATE_IDX(evt);
-> +		if (!hw_dom->arch_mbm_states[idx])
-> +			continue;
-> +		memset(hw_dom->arch_mbm_states[idx], 0,
-> +		       sizeof(struct arch_mbm_state) * r->num_rmid);
-> +	}
->   }
+> -		/*
+> -		 * rdt_ctrl_domain "d" is going to be freed below, so clear
+> -		 * its pointer from pseudo_lock_region struct.
+> -		 */
+> -		if (d->plr)
+> -			d->plr->d = NULL;
+> -		ctrl_domain_free(hw_dom);
+> +	resctrl_offline_ctrl_domain(r, d);
+> +	list_del_rcu(&hdr->list);
+> +	synchronize_rcu();
 >   
->   static u64 mbm_overflow_count(u64 prev_msr, u64 cur_msr, unsigned int width)
-> diff --git a/fs/resctrl/monitor.c b/fs/resctrl/monitor.c
-> index 325e23c1a403..4cd0789998bf 100644
-> --- a/fs/resctrl/monitor.c
-> +++ b/fs/resctrl/monitor.c
-> @@ -346,15 +346,14 @@ static struct mbm_state *get_mbm_state(struct rdt_mon_domain *d, u32 closid,
->   				       u32 rmid, enum resctrl_event_id evtid)
->   {
->   	u32 idx = resctrl_arch_rmid_idx_encode(closid, rmid);
-> +	struct mbm_state *states;
->   
-> -	switch (evtid) {
-> -	case QOS_L3_MBM_TOTAL_EVENT_ID:
-> -		return &d->mbm_total[idx];
-> -	case QOS_L3_MBM_LOCAL_EVENT_ID:
-> -		return &d->mbm_local[idx];
-> -	default:
-> +	if (!resctrl_is_mbm_event(evtid))
->   		return NULL;
+> -		return;
 > -	}
-> +
-> +	states = d->mbm_states[MBM_STATE_IDX(evtid)];
-> +
-> +	return states ? &states[idx] : NULL;
+> +	/*
+> +	 * rdt_ctrl_domain "d" is going to be freed below, so clear
+> +	 * its pointer from pseudo_lock_region struct.
+> +	 */
+> +	if (d->plr)
+> +		d->plr->d = NULL;
+> +	ctrl_domain_free(hw_dom);
 >   }
 >   
->   static int __mon_event_count(u32 closid, u32 rmid, struct rmid_read *rr)
+>   static void domain_remove_cpu_mon(int cpu, struct rdt_resource *r)
+> @@ -651,8 +648,8 @@ static void domain_remove_cpu_mon(int cpu, struct rdt_resource *r)
+>   	case RDT_RESOURCE_L3:
+>   		d = container_of(hdr, struct rdt_mon_domain, hdr);
+>   		hw_dom = resctrl_to_arch_mon_dom(d);
+> -		resctrl_offline_mon_domain(r, d);
+> -		list_del_rcu(&d->hdr.list);
+> +		resctrl_offline_mon_domain(r, hdr);
+> +		list_del_rcu(&hdr->list);
+>   		synchronize_rcu();
+>   		l3_mon_domain_free(hw_dom);
+>   		break;
 > diff --git a/fs/resctrl/rdtgroup.c b/fs/resctrl/rdtgroup.c
-> index 80e74940281a..8649b89d7bfd 100644
+> index 828c743ec470..0213fb3a1113 100644
 > --- a/fs/resctrl/rdtgroup.c
 > +++ b/fs/resctrl/rdtgroup.c
-> @@ -127,12 +127,6 @@ static bool resctrl_is_mbm_enabled(void)
->   		resctrl_is_mon_event_enabled(QOS_L3_MBM_LOCAL_EVENT_ID));
->   }
->   
-> -static bool resctrl_is_mbm_event(int e)
-> -{
-> -	return (e >= QOS_L3_MBM_TOTAL_EVENT_ID &&
-> -		e <= QOS_L3_MBM_LOCAL_EVENT_ID);
-> -}
-> -
->   /*
->    * Trivial allocator for CLOSIDs. Use BITMAP APIs to manipulate a bitmap
->    * of free CLOSIDs.
-> @@ -4020,8 +4014,10 @@ static void rdtgroup_setup_default(void)
->   static void domain_destroy_mon_state(struct rdt_mon_domain *d)
+> @@ -3022,7 +3022,7 @@ static void mon_rmdir_one_subdir(struct kernfs_node *pkn, char *name, char *subn
+>    * when last domain being summed is removed.
+>    */
+>   static void rmdir_mondata_subdir_allrdtgrp(struct rdt_resource *r,
+> -					   struct rdt_mon_domain *d)
+> +					   struct rdt_domain_hdr *hdr)
 >   {
->   	bitmap_free(d->rmid_busy_llc);
-> -	kfree(d->mbm_total);
-> -	kfree(d->mbm_local);
-> +	for (int i = 0; i < QOS_NUM_L3_MBM_EVENTS; i++) {
-
-The for loop can be simplified by the new helper:
-
-                 for_each_mbm_event_idx(i) {
-
-> +		kfree(d->mbm_states[i]);
-> +		d->mbm_states[i] = NULL;
-> +	}
->   }
+>   	struct rdtgroup *prgrp, *crgrp;
+>   	char subname[32];
+> @@ -3030,9 +3030,17 @@ static void rmdir_mondata_subdir_allrdtgrp(struct rdt_resource *r,
+>   	char name[32];
 >   
->   void resctrl_offline_ctrl_domain(struct rdt_resource *r, struct rdt_ctrl_domain *d)
-> @@ -4081,32 +4077,34 @@ void resctrl_offline_mon_domain(struct rdt_resource *r, struct rdt_mon_domain *d
->   static int domain_setup_mon_state(struct rdt_resource *r, struct rdt_mon_domain *d)
->   {
->   	u32 idx_limit = resctrl_arch_system_num_rmid_idx();
-> -	size_t tsize;
-> +	size_t tsize = sizeof(struct mbm_state);
-> +	enum resctrl_event_id evt;
-> +	int idx;
->   
->   	if (resctrl_is_mon_event_enabled(QOS_L3_OCCUP_EVENT_ID)) {
->   		d->rmid_busy_llc = bitmap_zalloc(idx_limit, GFP_KERNEL);
->   		if (!d->rmid_busy_llc)
->   			return -ENOMEM;
->   	}
-> -	if (resctrl_is_mon_event_enabled(QOS_L3_MBM_TOTAL_EVENT_ID)) {
-> -		tsize = sizeof(*d->mbm_total);
-> -		d->mbm_total = kcalloc(idx_limit, tsize, GFP_KERNEL);
-> -		if (!d->mbm_total) {
-> -			bitmap_free(d->rmid_busy_llc);
-> -			return -ENOMEM;
-> -		}
-> -	}
-> -	if (resctrl_is_mon_event_enabled(QOS_L3_MBM_LOCAL_EVENT_ID)) {
-> -		tsize = sizeof(*d->mbm_local);
-> -		d->mbm_local = kcalloc(idx_limit, tsize, GFP_KERNEL);
-> -		if (!d->mbm_local) {
-> -			bitmap_free(d->rmid_busy_llc);
-> -			kfree(d->mbm_total);
-> -			return -ENOMEM;
-> -		}
+>   	snc_mode = r->mon_scope == RESCTRL_L3_NODE;
+> -	sprintf(name, "mon_%s_%02d", r->name, snc_mode ? d->ci->id : d->hdr.id);
+> -	if (snc_mode)
+> -		sprintf(subname, "mon_sub_%s_%02d", r->name, d->hdr.id);
+> +	if (snc_mode) {
+> +		struct rdt_mon_domain *d;
 > +
-> +	for_each_mbm_event(evt) {
-> +		if (!resctrl_is_mon_event_enabled(evt))
-> +			continue;
-> +		idx = MBM_STATE_IDX(evt);
-> +		d->mbm_states[idx] = kcalloc(idx_limit, tsize, GFP_KERNEL);
-> +		if (!d->mbm_states[idx])
-> +			goto cleanup;
+> +		if (!domain_header_is_valid(hdr, RESCTRL_MON_DOMAIN, r->rid))
+> +			return;
+> +		d = container_of(hdr, struct rdt_mon_domain, hdr);
+> +		sprintf(name, "mon_%s_%02d", r->name, d->ci->id);
+> +		sprintf(subname, "mon_sub_%s_%02d", r->name, hdr->id);
+> +	} else {
+> +		sprintf(name, "mon_%s_%02d", r->name, hdr->id);
+> +	}
+>   
+>   	list_for_each_entry(prgrp, &rdt_all_groups, rdtgroup_list) {
+>   		mon_rmdir_one_subdir(prgrp->mon.mon_data_kn, name, subname);
+> @@ -3042,11 +3050,12 @@ static void rmdir_mondata_subdir_allrdtgrp(struct rdt_resource *r,
+>   	}
+>   }
+>   
+> -static int mon_add_all_files(struct kernfs_node *kn, struct rdt_mon_domain *d,
+> +static int mon_add_all_files(struct kernfs_node *kn, struct rdt_domain_hdr *hdr,
+>   			     struct rdt_resource *r, struct rdtgroup *prgrp,
+>   			     bool do_sum)
+>   {
+>   	struct rmid_read rr = {0};
+> +	struct rdt_mon_domain *d;
+>   	struct mon_data *priv;
+>   	struct mon_evt *mevt;
+>   	int ret, domid;
+> @@ -3054,7 +3063,14 @@ static int mon_add_all_files(struct kernfs_node *kn, struct rdt_mon_domain *d,
+>   	for (mevt = &mon_event_all[0]; mevt < &mon_event_all[QOS_NUM_EVENTS]; mevt++) {
+>   		if (mevt->rid != r->rid || !mevt->enabled)
+>   			continue;
+> -		domid = do_sum ? d->ci->id : d->hdr.id;
+> +		if (r->rid == RDT_RESOURCE_L3) {
+> +			if (!domain_header_is_valid(hdr, RESCTRL_MON_DOMAIN, r->rid))
+> +				return -EINVAL;
+> +			d = container_of(hdr, struct rdt_mon_domain, hdr);
+> +			domid = do_sum ? d->ci->id : d->hdr.id;
+> +		} else {
+> +			domid = hdr->id;
+> +		}
+>   		priv = mon_get_kn_priv(r->rid, domid, mevt, do_sum);
+>   		if (WARN_ON_ONCE(!priv))
+>   			return -EINVAL;
+> @@ -3063,18 +3079,19 @@ static int mon_add_all_files(struct kernfs_node *kn, struct rdt_mon_domain *d,
+>   		if (ret)
+>   			return ret;
+>   
+> -		if (!do_sum && resctrl_is_mbm_event(mevt->evtid))
+> -			mon_event_read(&rr, r, d, prgrp, &d->hdr.cpu_mask, mevt->evtid, true);
+> +		if (r->rid == RDT_RESOURCE_L3 && !do_sum && resctrl_is_mbm_event(mevt->evtid))
+> +			mon_event_read(&rr, r, d, prgrp, &hdr->cpu_mask, mevt->evtid, true);
 >   	}
 >   
 >   	return 0;
-> +cleanup:
-> +	bitmap_free(d->rmid_busy_llc);
-> +	while (--idx >= 0) {
-> +		kfree(d->mbm_states[idx]);
-> +		d->mbm_states[idx] = NULL;
-> +	}
-> +
-> +	return -ENOMEM;
 >   }
 >   
->   int resctrl_online_ctrl_domain(struct rdt_resource *r, struct rdt_ctrl_domain *d)
+>   static int mkdir_mondata_subdir(struct kernfs_node *parent_kn,
+> -				struct rdt_mon_domain *d,
+> +				struct rdt_domain_hdr *hdr,
+>   				struct rdt_resource *r, struct rdtgroup *prgrp)
+>   {
+>   	struct kernfs_node *kn, *ckn;
+> +	struct rdt_mon_domain *d;
+>   	char name[32];
+>   	bool snc_mode;
+>   	int ret = 0;
+> @@ -3082,7 +3099,14 @@ static int mkdir_mondata_subdir(struct kernfs_node *parent_kn,
+>   	lockdep_assert_held(&rdtgroup_mutex);
+>   
+>   	snc_mode = r->mon_scope == RESCTRL_L3_NODE;
+> -	sprintf(name, "mon_%s_%02d", r->name, snc_mode ? d->ci->id : d->hdr.id);
+> +	if (snc_mode) {
+> +		if (!domain_header_is_valid(hdr, RESCTRL_MON_DOMAIN, r->rid))
+> +			return -EINVAL;
+> +		d = container_of(hdr, struct rdt_mon_domain, hdr);
+> +		sprintf(name, "mon_%s_%02d", r->name, d->ci->id);
+> +	} else {
+> +		sprintf(name, "mon_%s_%02d", r->name, hdr->id);
+> +	}
+>   	kn = kernfs_find_and_get(parent_kn, name);
+>   	if (kn) {
+>   		/*
+> @@ -3098,13 +3122,13 @@ static int mkdir_mondata_subdir(struct kernfs_node *parent_kn,
+>   		ret = rdtgroup_kn_set_ugid(kn);
+>   		if (ret)
+>   			goto out_destroy;
+> -		ret = mon_add_all_files(kn, d, r, prgrp, snc_mode);
+> +		ret = mon_add_all_files(kn, hdr, r, prgrp, snc_mode);
+>   		if (ret)
+>   			goto out_destroy;
+>   	}
+>   
+>   	if (snc_mode) {
+> -		sprintf(name, "mon_sub_%s_%02d", r->name, d->hdr.id);
+> +		sprintf(name, "mon_sub_%s_%02d", r->name, hdr->id);
+>   		ckn = kernfs_create_dir(kn, name, parent_kn->mode, prgrp);
+>   		if (IS_ERR(ckn)) {
+>   			ret = -EINVAL;
+> @@ -3115,7 +3139,7 @@ static int mkdir_mondata_subdir(struct kernfs_node *parent_kn,
+>   		if (ret)
+>   			goto out_destroy;
+>   
+> -		ret = mon_add_all_files(ckn, d, r, prgrp, false);
+> +		ret = mon_add_all_files(ckn, hdr, r, prgrp, false);
+>   		if (ret)
+>   			goto out_destroy;
+>   	}
+> @@ -3133,7 +3157,7 @@ static int mkdir_mondata_subdir(struct kernfs_node *parent_kn,
+>    * and "monitor" groups with given domain id.
+>    */
+>   static void mkdir_mondata_subdir_allrdtgrp(struct rdt_resource *r,
+> -					   struct rdt_mon_domain *d)
+> +					   struct rdt_domain_hdr *hdr)
+>   {
+>   	struct kernfs_node *parent_kn;
+>   	struct rdtgroup *prgrp, *crgrp;
+> @@ -3141,12 +3165,12 @@ static void mkdir_mondata_subdir_allrdtgrp(struct rdt_resource *r,
+>   
+>   	list_for_each_entry(prgrp, &rdt_all_groups, rdtgroup_list) {
+>   		parent_kn = prgrp->mon.mon_data_kn;
+> -		mkdir_mondata_subdir(parent_kn, d, r, prgrp);
+> +		mkdir_mondata_subdir(parent_kn, hdr, r, prgrp);
+>   
+>   		head = &prgrp->mon.crdtgrp_list;
+>   		list_for_each_entry(crgrp, head, mon.crdtgrp_list) {
+>   			parent_kn = crgrp->mon.mon_data_kn;
+> -			mkdir_mondata_subdir(parent_kn, d, r, crgrp);
+> +			mkdir_mondata_subdir(parent_kn, hdr, r, crgrp);
+>   		}
+>   	}
+>   }
+> @@ -3155,14 +3179,14 @@ static int mkdir_mondata_subdir_alldom(struct kernfs_node *parent_kn,
+>   				       struct rdt_resource *r,
+>   				       struct rdtgroup *prgrp)
+>   {
+> -	struct rdt_mon_domain *dom;
+> +	struct rdt_domain_hdr *hdr;
+>   	int ret;
+>   
+>   	/* Walking r->domains, ensure it can't race with cpuhp */
+>   	lockdep_assert_cpus_held();
+>   
+> -	list_for_each_entry(dom, &r->mon_domains, hdr.list) {
+> -		ret = mkdir_mondata_subdir(parent_kn, dom, r, prgrp);
+> +	list_for_each_entry(hdr, &r->mon_domains, list) {
+> +		ret = mkdir_mondata_subdir(parent_kn, hdr, r, prgrp);
+>   		if (ret)
+>   			return ret;
+>   	}
+> @@ -4030,8 +4054,10 @@ void resctrl_offline_ctrl_domain(struct rdt_resource *r, struct rdt_ctrl_domain
+>   	mutex_unlock(&rdtgroup_mutex);
+>   }
+>   
+> -void resctrl_offline_mon_domain(struct rdt_resource *r, struct rdt_mon_domain *d)
+> +void resctrl_offline_mon_domain(struct rdt_resource *r, struct rdt_domain_hdr *hdr)
+>   {
+> +	struct rdt_mon_domain *d;
+> +
+>   	mutex_lock(&rdtgroup_mutex);
+>   
+>   	/*
+> @@ -4039,11 +4065,15 @@ void resctrl_offline_mon_domain(struct rdt_resource *r, struct rdt_mon_domain *d
+>   	 * per domain monitor data directories.
+>   	 */
+>   	if (resctrl_mounted && resctrl_arch_mon_capable())
+> -		rmdir_mondata_subdir_allrdtgrp(r, d);
+> +		rmdir_mondata_subdir_allrdtgrp(r, hdr);
+>   
+>   	if (r->rid != RDT_RESOURCE_L3)
+>   		goto done;
+>   
+> +	if (!domain_header_is_valid(hdr, RESCTRL_MON_DOMAIN, r->rid))
+> +		return;
 
-for_each_mbm_event() can simplified mbm_update() as well?
+rdtgroup_mutex is being locked right now. Cannot return without 
+unlocking it.
 
--        if (resctrl_is_mon_event_enabled(QOS_L3_MBM_TOTAL_EVENT_ID))
--               mbm_update_one_event(r, d, closid, rmid, 
-QOS_L3_MBM_TOTAL_EVENT_ID);
--
--        if (resctrl_is_mon_event_enabled(QOS_L3_MBM_LOCAL_EVENT_ID))
--                mbm_update_one_event(r, d, closid, rmid, 
-QOS_L3_MBM_LOCAL_EVENT_ID);
-+        for_each_mbm_event_idx(evt) {
-+                if (resctrl_is_mon_event_enabled(evt))
-+                        mbm_update_one_event(r, d, closid, rmid, evt);
+s/return;/goto done;/
+
+> +
+> +	d = container_of(hdr, struct rdt_mon_domain, hdr);
+>   	if (resctrl_is_mbm_enabled())
+>   		cancel_delayed_work(&d->mbm_over);
+>   	if (resctrl_is_mon_event_enabled(QOS_L3_OCCUP_EVENT_ID) && has_busy_rmid(d)) {
+> @@ -4126,12 +4156,17 @@ int resctrl_online_ctrl_domain(struct rdt_resource *r, struct rdt_ctrl_domain *d
+>   	return err;
+>   }
+>   
+> -int resctrl_online_mon_domain(struct rdt_resource *r, struct rdt_mon_domain *d)
+> +int resctrl_online_mon_domain(struct rdt_resource *r, struct rdt_domain_hdr *hdr)
+>   {
+> -	int err;
+> +	struct rdt_mon_domain *d;
+> +	int err = -EINVAL;
+>   
+>   	mutex_lock(&rdtgroup_mutex);
+>   
+> +	if (!domain_header_is_valid(hdr, RESCTRL_MON_DOMAIN, r->rid))
+> +		goto out_unlock;
+> +
+> +	d = container_of(hdr, struct rdt_mon_domain, hdr);
+>   	err = domain_setup_l3_mon_state(r, d);
+>   	if (err)
+>   		goto out_unlock;
+> @@ -4152,7 +4187,7 @@ int resctrl_online_mon_domain(struct rdt_resource *r, struct rdt_mon_domain *d)
+>   	 * If resctrl is mounted, add per domain monitor data directories.
+>   	 */
+>   	if (resctrl_mounted && resctrl_arch_mon_capable())
+> -		mkdir_mondata_subdir_allrdtgrp(r, d);
+> +		mkdir_mondata_subdir_allrdtgrp(r, hdr);
+>   
+>   out_unlock:
+>   	mutex_unlock(&rdtgroup_mutex);
 
 Thanks.
 
