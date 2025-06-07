@@ -1,250 +1,287 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 229AB15D1;
-	Sat,  7 Jun 2025 10:11:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3641915D1;
+	Sat,  7 Jun 2025 10:11:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749291074; cv=none; b=HIPw+PmLiAymiekw4Bb2LGx317gq+0IkTrosBY7en86tJypnD5S8zYgnmPA6UknajzBu/qQDZV1bmA3TuLF5RClrAijytZyXV+RF99sDASKyOKQ5/arkdotA+9k4yq4kn2GyRXk/uzM59vF/YhwUHxmPbBymJt7+jVIfNLi78wg=
+	t=1749291078; cv=none; b=pzeS9ly2RwTWEdrqzKGSzq9YoX37LWkWtt6yEjhaCzsrVZjq/KdUMgBSLB/loWlJTPEKcVrc56JNl8Mg4Z1E/X/XnckTlV6ntlcZU2mU35Y6fLru//IiSgAucFdReHlzqbGosR6hO6bOe2aJ+r0xUEX0/rezoVm50mef6PHiJ80=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749291074; c=relaxed/simple;
-	bh=CFlhZNHjyPqlGOUHEMsbtBUtnLVMDYM9nigDlV7KrsY=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=PFiL6RegxGEvbywVTYjSG7KKM+CbOV3NCCB7d1AfLpfwXBGXdPcqvbYSoeq9d7MsmF6F8GfkE2ETy6xfyD6EcL/2Ng8XOAi8/HHnz94S54FPRcGb80ja9rV1V2IKiF+eKZZ/jDyC4c0ofaX0TNtEeQIa54bqj8kX8uvT6Qs8fow=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mVnaDFht; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1749291078; c=relaxed/simple;
+	bh=YKL7PgTd0ZYBOBDBVj5WyqO+dvls4aCoTstoGh3Ce8Q=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=JQtLHFop3lMX1UnCQg82DIeJkQZQquydAdTcDeHqZ+zcFXY6wqpM23xhsAmXfsjuxuBUm0kchhuzk1tNY1DCB1z1g1D8FCaKsv/LFoHoBgpWZ4IuDmiA8tesH+fKe3PpIa8Wpaslv5KlQrwsMq6wFUaZ3exavWZGr96lztIY0Rs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mdGemCn8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mVnaDFht"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73611C4CEE4;
-	Sat,  7 Jun 2025 10:11:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mdGemCn8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3ED1AC4CEE4;
+	Sat,  7 Jun 2025 10:11:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1749291074;
-	bh=CFlhZNHjyPqlGOUHEMsbtBUtnLVMDYM9nigDlV7KrsY=;
-	h=From:To:Cc:Subject:Date:From;
-	b=mVnaDFht0m/2wRkoD0b40p1cfl4EGbv2TXYXsoDiXkP+A6HA9JaJ+i36PJNZSbcPz
-	 wiTwP7mYm7awBtgvJR0CcmFNqkYUDc5Wj/pyrrS43aArlgWL7s7u4Jw9NIt8D4iV44
-	 XGXmHl4pCV8wCGaUnqYWrp7DlkGr38ksKWtHUABs=
+	s=korg; t=1749291076;
+	bh=YKL7PgTd0ZYBOBDBVj5WyqO+dvls4aCoTstoGh3Ce8Q=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=mdGemCn8UnT/70icCcQCssHM/OKpgNntxjHcGZTEKuETKQ5sbW5W7w8Q2oWavdYr9
+	 BqxB7lxVB7W/+t4CKNvjoNij4gjcWpGuSt638Vk73j6X89c+2rPYsEY9jQsXncUrUl
+	 N+Whp02WzHDMPdoCan6zAg7YKn048pGIwOqXb9EA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	hargar@microsoft.com,
-	broonie@kernel.org
-Subject: [PATCH 6.15 00/34] 6.15.2-rc1 review
-Date: Sat,  7 Jun 2025 12:07:41 +0200
-Message-ID: <20250607100719.711372213@linuxfoundation.org>
+	Hongyu Xie <xiehongyu1@kylinos.cn>,
+	stable <stable@kernel.org>
+Subject: [PATCH 6.15 20/34] usb: storage: Ignore UAS driver for SanDisk 3.2 Gen2 storage device
+Date: Sat,  7 Jun 2025 12:08:01 +0200
+Message-ID: <20250607100720.508025283@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250607100719.711372213@linuxfoundation.org>
+References: <20250607100719.711372213@linuxfoundation.org>
+User-Agent: quilt/0.68
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: quilt/0.68
-X-stable: review
-X-Patchwork-Hint: ignore
-X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.15.2-rc1.gz
-X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-X-KernelTest-Branch: linux-6.15.y
-X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
-X-KernelTest-Version: 6.15.2-rc1
-X-KernelTest-Deadline: 2025-06-09T10:07+00:00
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-This is the start of the stable review cycle for the 6.15.2 release.
-There are 34 patches in this series, all will be posted as a response
-to this one.  If anyone has any issues with these being applied, please
-let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
-Responses should be made by Mon, 09 Jun 2025 10:07:05 +0000.
-Anything received after that time might be too late.
+------------------
 
-The whole patch series can be found in one patch at:
-	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.15.2-rc1.gz
-or in the git tree and branch at:
-	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.15.y
-and the diffstat can be found below.
+From: Hongyu Xie <xiehongyu1@kylinos.cn>
 
-thanks,
+commit a541acceedf4f639f928f41fbb676b75946dc295 upstream.
 
-greg k-h
+SanDisk 3.2 Gen2 storage device(0781:55e8) doesn't work well with UAS.
+Log says,
+[    6.507865][ 3] [  T159] usb 2-1.4: new SuperSpeed Gen 1 USB device number 4 using xhci_hcd
+[    6.540314][ 3] [  T159] usb 2-1.4: New USB device found, idVendor=0781, idProduct=55e8, bcdDevice= 0.01
+[    6.576304][ 3] [  T159] usb 2-1.4: New USB device strings: Mfr=1, Product=2, SerialNumber=3
+[    6.584727][ 3] [  T159] usb 2-1.4: Product: SanDisk 3.2 Gen2
+[    6.590459][ 3] [  T159] usb 2-1.4: Manufacturer: SanDisk
+[    6.595845][ 3] [  T159] usb 2-1.4: SerialNumber: 03021707022525140940
+[    7.230852][ 0] [  T265] usbcore: registered new interface driver usb-storage
+[    7.251247][ 0] [  T265] scsi host3: uas
+[    7.255280][ 0] [  T265] usbcore: registered new interface driver uas
+[    7.270498][ 1] [  T192] scsi 3:0:0:0: Direct-Access     SanDisk  Extreme Pro DDE1 0110 PQ: 0 ANSI: 6
+[    7.299588][ 3] [  T192] scsi 3:0:0:1: Enclosure         SanDisk  SES Device       0110 PQ: 0 ANSI: 6
+[    7.321681][ 3] [  T192] sd 3:0:0:0: Attached scsi generic sg1 type 0
+[    7.328185][ 3] [  T192] scsi 3:0:0:1: Attached scsi generic sg2 type 13
+[    7.328804][ 0] [  T191] sd 3:0:0:0: [sda] 976773168 512-byte logical blocks: (500 GB/466 GiB)
+[    7.343486][ 0] [  T191] sd 3:0:0:0: [sda] 4096-byte physical blocks
+[    7.364611][ 0] [  T191] sd 3:0:0:0: [sda] Write Protect is off
+[    7.370524][ 0] [  T191] sd 3:0:0:0: [sda] Mode Sense: 3d 00 10 00
+[    7.390655][ 0] [  T191] sd 3:0:0:0: [sda] Write cache: enabled, read cache: enabled, supports DPO and FUA
+[    7.401363][ 0] [  T191] sd 3:0:0:0: [sda] Optimal transfer size 1048576 bytes
+[    7.436010][ 0] [  T191]  sda: sda1
+[    7.450850][ 0] [  T191] sd 3:0:0:0: [sda] Attached SCSI disk
+[    7.470218][ 4] [  T262] scsi 3:0:0:1: Failed to get diagnostic page 0x1
+[    7.474869][ 0] [    C0] sd 3:0:0:0: [sda] tag#0 data cmplt err -75 uas-tag 2 inflight: CMD
+[    7.476911][ 4] [  T262] scsi 3:0:0:1: Failed to bind enclosure -19
+[    7.485330][ 0] [    C0] sd 3:0:0:0: [sda] tag#0 CDB: Read(10) 28 00 00 00 00 28 00 00 10 00
+[    7.491593][ 4] [  T262] ses 3:0:0:1: Attached Enclosure device
+[   38.066980][ 4] [  T192] sd 3:0:0:0: [sda] tag#4 uas_eh_abort_handler 0 uas-tag 5 inflight: CMD IN
+[   38.076012][ 4] [  T192] sd 3:0:0:0: [sda] tag#4 CDB: Read(10) 28 00 00 00 01 08 00 00 f8 00
+[   38.086485][ 4] [  T192] sd 3:0:0:0: [sda] tag#3 uas_eh_abort_handler 0 uas-tag 1 inflight: CMD IN
+[   38.095515][ 4] [  T192] sd 3:0:0:0: [sda] tag#3 CDB: Read(10) 28 00 00 00 00 10 00 00 08 00
+[   38.104122][ 4] [  T192] sd 3:0:0:0: [sda] tag#2 uas_eh_abort_handler 0 uas-tag 4 inflight: CMD IN
+[   38.113152][ 4] [  T192] sd 3:0:0:0: [sda] tag#2 CDB: Read(10) 28 00 00 00 00 88 00 00 78 00
+[   38.121761][ 4] [  T192] sd 3:0:0:0: [sda] tag#1 uas_eh_abort_handler 0 uas-tag 3 inflight: CMD IN
+[   38.130791][ 4] [  T192] sd 3:0:0:0: [sda] tag#1 CDB: Read(10) 28 00 00 00 00 48 00 00 30 00
+[   38.139401][ 4] [  T192] sd 3:0:0:0: [sda] tag#0 uas_eh_abort_handler 0 uas-tag 2 inflight: CMD
+[   38.148170][ 4] [  T192] sd 3:0:0:0: [sda] tag#0 CDB: Read(10) 28 00 00 00 00 28 00 00 10 00
+[   38.178980][ 2] [  T304] scsi host3: uas_eh_device_reset_handler start
+[   38.901540][ 2] [  T304] usb 2-1.4: reset SuperSpeed Gen 1 USB device number 4 using xhci_hcd
+[   38.936791][ 2] [  T304] scsi host3: uas_eh_device_reset_handler success
 
--------------
-Pseudo-Shortlog of commits:
+Device decriptor is below,
+Bus 002 Device 006: ID 0781:55e8 SanDisk Corp. SanDisk 3.2 Gen2
+Device Descriptor:
+  bLength                18
+  bDescriptorType         1
+  bcdUSB               3.20
+  bDeviceClass            0
+  bDeviceSubClass         0
+  bDeviceProtocol         0
+  bMaxPacketSize0         9
+  idVendor           0x0781 SanDisk Corp.
+  idProduct          0x55e8
+  bcdDevice            0.01
+  iManufacturer           1 SanDisk
+  iProduct                2 SanDisk 3.2 Gen2
+  iSerial                 3 03021707022525140940
+  bNumConfigurations      1
+  Configuration Descriptor:
+    bLength                 9
+    bDescriptorType         2
+    wTotalLength       0x0079
+    bNumInterfaces          1
+    bConfigurationValue     1
+    iConfiguration          0
+    bmAttributes         0x80
+      (Bus Powered)
+    MaxPower              896mA
+    Interface Descriptor:
+      bLength                 9
+      bDescriptorType         4
+      bInterfaceNumber        0
+      bAlternateSetting       0
+      bNumEndpoints           2
+      bInterfaceClass         8 Mass Storage
+      bInterfaceSubClass      6 SCSI
+      bInterfaceProtocol     80 Bulk-Only
+      iInterface              0
+      Endpoint Descriptor:
+        bLength                 7
+        bDescriptorType         5
+        bEndpointAddress     0x82  EP 2 IN
+        bmAttributes            2
+          Transfer Type            Bulk
+          Synch Type               None
+          Usage Type               Data
+        wMaxPacketSize     0x0400  1x 1024 bytes
+        bInterval               0
+        bMaxBurst              15
+      Endpoint Descriptor:
+        bLength                 7
+        bDescriptorType         5
+        bEndpointAddress     0x01  EP 1 OUT
+        bmAttributes            2
+          Transfer Type            Bulk
+          Synch Type               None
+          Usage Type               Data
+        wMaxPacketSize     0x0400  1x 1024 bytes
+        bInterval               0
+        bMaxBurst              15
+    Interface Descriptor:
+      bLength                 9
+      bDescriptorType         4
+      bInterfaceNumber        0
+      bAlternateSetting       1
+      bNumEndpoints           4
+      bInterfaceClass         8 Mass Storage
+      bInterfaceSubClass      6 SCSI
+      bInterfaceProtocol     98
+      iInterface              0
+      Endpoint Descriptor:
+        bLength                 7
+        bDescriptorType         5
+        bEndpointAddress     0x01  EP 1 OUT
+        bmAttributes            2
+          Transfer Type            Bulk
+          Synch Type               None
+          Usage Type               Data
+        wMaxPacketSize     0x0400  1x 1024 bytes
+        bInterval               0
+        bMaxBurst               0
+        Command pipe (0x01)
+      Endpoint Descriptor:
+        bLength                 7
+        bDescriptorType         5
+        bEndpointAddress     0x84  EP 4 IN
+        bmAttributes            2
+          Transfer Type            Bulk
+          Synch Type               None
+          Usage Type               Data
+        wMaxPacketSize     0x0400  1x 1024 bytes
+        bInterval               0
+        bMaxBurst              15
+        MaxStreams             32
+        Status pipe (0x02)
+      Endpoint Descriptor:
+        bLength                 7
+        bDescriptorType         5
+        bEndpointAddress     0x82  EP 2 IN
+        bmAttributes            2
+          Transfer Type            Bulk
+          Synch Type               None
+          Usage Type               Data
+        wMaxPacketSize     0x0400  1x 1024 bytes
+        bInterval               0
+        bMaxBurst              15
+        MaxStreams             32
+        Data-in pipe (0x03)
+      Endpoint Descriptor:
+        bLength                 7
+        bDescriptorType         5
+        bEndpointAddress     0x03  EP 3 OUT
+        bmAttributes            2
+          Transfer Type            Bulk
+          Synch Type               None
+          Usage Type               Data
+        wMaxPacketSize     0x0400  1x 1024 bytes
+        bInterval               0
+        bMaxBurst              15
+        MaxStreams             32
+        Data-out pipe (0x04)
+Binary Object Store Descriptor:
+  bLength                 5
+  bDescriptorType        15
+  wTotalLength       0x002a
+  bNumDeviceCaps          3
+  USB 2.0 Extension Device Capability:
+    bLength                 7
+    bDescriptorType        16
+    bDevCapabilityType      2
+    bmAttributes   0x0000f41e
+      BESL Link Power Management (LPM) Supported
+    BESL value     1024 us
+    Deep BESL value    61440 us
+  SuperSpeed USB Device Capability:
+    bLength                10
+    bDescriptorType        16
+    bDevCapabilityType      3
+    bmAttributes         0x00
+    wSpeedsSupported   0x000e
+      Device can operate at Full Speed (12Mbps)
+      Device can operate at High Speed (480Mbps)
+      Device can operate at SuperSpeed (5Gbps)
+    bFunctionalitySupport   1
+      Lowest fully-functional device speed is Full Speed (12Mbps)
+    bU1DevExitLat          10 micro seconds
+    bU2DevExitLat        2047 micro seconds
+  SuperSpeedPlus USB Device Capability:
+    bLength                20
+    bDescriptorType        16
+    bDevCapabilityType     10
+    bmAttributes         0x00000001
+      Sublink Speed Attribute count 1
+      Sublink Speed ID count 0
+    wFunctionalitySupport   0x1100
+    bmSublinkSpeedAttr[0]   0x000a4030
+      Speed Attribute ID: 0 10Gb/s Symmetric RX SuperSpeedPlus
+    bmSublinkSpeedAttr[1]   0x000a40b0
+      Speed Attribute ID: 0 10Gb/s Symmetric TX SuperSpeedPlus
+Device Status:     0x0000
+  (Bus Powered)
 
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Linux 6.15.2-rc1
+So ignore UAS driver for this device.
 
-Aurabindo Pillai <aurabindo.pillai@amd.com>
-    Revert "drm/amd/display: more liberal vmin/vmax update for freesync"
+Signed-off-by: Hongyu Xie <xiehongyu1@kylinos.cn>
+Cc: stable <stable@kernel.org>
+Link: https://lore.kernel.org/r/20250519023328.1498856-1-xiehongyu1@kylinos.cn
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ drivers/usb/storage/unusual_uas.h |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
-Xu Yang <xu.yang_2@nxp.com>
-    dt-bindings: phy: imx8mq-usb: fix fsl,phy-tx-vboost-level-microvolt property
-
-Lukasz Czechowski <lukasz.czechowski@thaumatec.com>
-    dt-bindings: usb: cypress,hx3: Add support for all variants
-
-Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-    dt-bindings: remoteproc: qcom,sm8150-pas: Add missing SC8180X compatible
-
-David Lechner <dlechner@baylibre.com>
-    dt-bindings: pwm: adi,axi-pwmgen: Fix clocks
-
-Sergey Senozhatsky <senozhatsky@chromium.org>
-    thunderbolt: Do not double dequeue a configuration request
-
-Carlos Llamas <cmllamas@google.com>
-    binder: fix yet another UAF in binder_devices
-
-Dmitry Antipov <dmantipov@yandex.ru>
-    binder: fix use-after-free in binderfs_evict_inode()
-
-Dave Penkler <dpenkler@gmail.com>
-    usb: usbtmc: Fix timeout value in get_stb
-
-Arnd Bergmann <arnd@arndb.de>
-    nvmem: rmem: select CONFIG_CRC32
-
-Dustin Lundquist <dustin@null-ptr.net>
-    serial: jsm: fix NPE during jsm_uart_port_init
-
-Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-    Bluetooth: hci_qca: move the SoC type check to the right place
-
-Qasim Ijaz <qasdev00@gmail.com>
-    usb: typec: ucsi: fix Clang -Wsign-conversion warning
-
-Charles Yeh <charlesyeh522@gmail.com>
-    USB: serial: pl2303: add new chip PL2303GC-Q20 and PL2303GT-2AB
-
-Hongyu Xie <xiehongyu1@kylinos.cn>
-    usb: storage: Ignore UAS driver for SanDisk 3.2 Gen2 storage device
-
-Jiayi Li <lijiayi@kylinos.cn>
-    usb: quirks: Add NO_LPM quirk for SanDisk Extreme 55AE
-
-Kent Overstreet <kent.overstreet@linux.dev>
-    bcachefs: Fix subvol to missing root repair
-
-Kent Overstreet <kent.overstreet@linux.dev>
-    bcachefs: Run may_delete_deleted_inode() checks in bch2_inode_rm()
-
-Kent Overstreet <kent.overstreet@linux.dev>
-    bcachefs: delete dead code from may_delete_deleted_inode()
-
-Kent Overstreet <kent.overstreet@linux.dev>
-    bcachefs: Repair code for directory i_size
-
-Kent Overstreet <kent.overstreet@linux.dev>
-    bcachefs: Kill un-reverted directory i_size code
-
-Alexandre Mergnat <amergnat@baylibre.com>
-    rtc: Fix offset calculation for .start_secs < 0
-
-Alexandre Mergnat <amergnat@baylibre.com>
-    rtc: Make rtc_time64_to_tm() support dates before 1970
-
-Nícolas F. R. A. Prado <nfraprado@collabora.com>
-    pinctrl: mediatek: eint: Fix invalid pointer dereference for v1 platforms
-
-Sakari Ailus <sakari.ailus@linux.intel.com>
-    Documentation: ACPI: Use all-string data node references
-
-Gautham R. Shenoy <gautham.shenoy@amd.com>
-    acpi-cpufreq: Fix nominal_freq units to KHz in get_max_boost_ratio()
-
-Pritam Manohar Sutar <pritam.sutar@samsung.com>
-    clk: samsung: correct clock summary for hsi1 block
-
-Gabor Juhos <j4g8y7@gmail.com>
-    pinctrl: armada-37xx: set GPIO output value before setting direction
-
-Gabor Juhos <j4g8y7@gmail.com>
-    pinctrl: armada-37xx: use correct OUTPUT_VAL register for GPIOs > 31
-
-Ahmed Salem <x0rw3ll@gmail.com>
-    ACPICA: Apply ACPI_NONSTRING in more places
-
-Kees Cook <kees@kernel.org>
-    ACPICA: Apply ACPI_NONSTRING
-
-Kees Cook <kees@kernel.org>
-    ACPICA: Introduce ACPI_NONSTRING
-
-Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-    Revert "x86/smp: Eliminate mwait_play_dead_cpuid_hint()"
-
-Pan Taixi <pantaixi@huaweicloud.com>
-    tracing: Fix compilation warning on arm32
-
-
--------------
-
-Diffstat:
-
- .../bindings/phy/fsl,imx8mq-usb-phy.yaml           |  3 +-
- .../devicetree/bindings/pwm/adi,axi-pwmgen.yaml    | 13 +++-
- .../bindings/remoteproc/qcom,sm8150-pas.yaml       |  3 +
- .../devicetree/bindings/usb/cypress,hx3.yaml       | 19 +++++-
- .../acpi/dsd/data-node-references.rst              | 26 ++++----
- Documentation/firmware-guide/acpi/dsd/graph.rst    | 11 ++--
- Documentation/firmware-guide/acpi/dsd/leds.rst     |  7 +-
- Makefile                                           |  4 +-
- arch/x86/kernel/smpboot.c                          | 54 +++++++++++++--
- drivers/acpi/acpica/acdebug.h                      |  2 +-
- drivers/acpi/acpica/aclocal.h                      |  4 +-
- drivers/acpi/acpica/nsnames.c                      |  2 +-
- drivers/acpi/acpica/nsrepair2.c                    |  2 +-
- drivers/android/binder.c                           | 16 ++++-
- drivers/android/binder_internal.h                  |  8 ++-
- drivers/android/binderfs.c                         |  2 +-
- drivers/bluetooth/hci_qca.c                        | 14 ++--
- drivers/clk/samsung/clk-exynosautov920.c           |  2 +-
- drivers/cpufreq/acpi-cpufreq.c                     |  2 +-
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c  | 16 ++---
- drivers/nvmem/Kconfig                              |  1 +
- drivers/pinctrl/mediatek/mtk-eint.c                | 26 ++++----
- drivers/pinctrl/mediatek/mtk-eint.h                |  5 +-
- drivers/pinctrl/mediatek/pinctrl-mtk-common-v2.c   |  2 +-
- drivers/pinctrl/mediatek/pinctrl-mtk-common.c      |  2 +-
- drivers/pinctrl/mvebu/pinctrl-armada-37xx.c        | 14 ++--
- drivers/rtc/class.c                                |  2 +-
- drivers/rtc/lib.c                                  | 24 +++++--
- drivers/thunderbolt/ctl.c                          |  5 ++
- drivers/tty/serial/jsm/jsm_tty.c                   |  1 +
- drivers/usb/class/usbtmc.c                         |  4 +-
- drivers/usb/core/quirks.c                          |  3 +
- drivers/usb/serial/pl2303.c                        |  2 +
- drivers/usb/storage/unusual_uas.h                  |  7 ++
- drivers/usb/typec/ucsi/ucsi.h                      |  2 +-
- fs/bcachefs/dirent.c                               | 12 +---
- fs/bcachefs/dirent.h                               |  4 +-
- fs/bcachefs/errcode.h                              |  2 +
- fs/bcachefs/fs.c                                   |  8 ++-
- fs/bcachefs/fsck.c                                 |  8 +++
- fs/bcachefs/inode.c                                | 77 ++++++++++++++--------
- fs/bcachefs/namei.c                                |  4 +-
- fs/bcachefs/sb-errors_format.h                     |  4 +-
- fs/bcachefs/subvolume.c                            | 19 ++++--
- include/acpi/actbl.h                               |  6 +-
- include/acpi/actypes.h                             |  4 ++
- include/acpi/platform/acgcc.h                      |  8 +++
- kernel/trace/trace.c                               |  2 +-
- .../acpi/os_specific/service_layers/oslinuxtbl.c   |  2 +-
- tools/power/acpi/tools/acpidump/apfiles.c          |  2 +-
- 50 files changed, 314 insertions(+), 158 deletions(-)
+--- a/drivers/usb/storage/unusual_uas.h
++++ b/drivers/usb/storage/unusual_uas.h
+@@ -52,6 +52,13 @@ UNUSUAL_DEV(0x059f, 0x1061, 0x0000, 0x99
+ 		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
+ 		US_FL_NO_REPORT_OPCODES | US_FL_NO_SAME),
+ 
++/* Reported-by: Zhihong Zhou <zhouzhihong@greatwall.com.cn> */
++UNUSUAL_DEV(0x0781, 0x55e8, 0x0000, 0x9999,
++		"SanDisk",
++		"",
++		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
++		US_FL_IGNORE_UAS),
++
+ /* Reported-by: Hongling Zeng <zenghongling@kylinos.cn> */
+ UNUSUAL_DEV(0x090c, 0x2000, 0x0000, 0x9999,
+ 		"Hiksemi",
 
 
