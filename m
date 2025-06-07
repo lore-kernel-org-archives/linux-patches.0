@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 121131F8723;
-	Sat,  7 Jun 2025 10:08:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85FA121770D;
+	Sat,  7 Jun 2025 10:08:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749290914; cv=none; b=m8ZppDIhkfw1TpGxfF7BRBJ5iQaxZolOM6cOFzVn26hliygrv2uriEKgmP54MNDblJn8EersIputXSIkq4v99HwJ+uYzoiRlseoN3z658wf5G19TK6HNQthQWtIr2MkzjX1JEIGzXttqcVDEV0uR9NvnHaYr8e9a/fky1+rhyyA=
+	t=1749290916; cv=none; b=Y8PqWatoqY1tjvxrnrsUharsAgk/QILK3J5lcbfIeoR56r+74tRMoEE1K5tzv3/YiNZau3510iXMLAyurpjpCzNzh4U31YULnGxGN+IVnx3MhAMheSo+I8V+nxpcQ/zScAE5LhTKEJddoCxpDGaHbQ2et63dNjuWTCJ0zSkry5o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749290914; c=relaxed/simple;
-	bh=p6xsRjCSWtVcZfbKRRxBMJOhDnkisbt/+z0jq+whFZI=;
+	s=arc-20240116; t=1749290916; c=relaxed/simple;
+	bh=GSwezBFKy99iEDwgg67WC8il5aQemB+6XkgTSsU+S3g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dzkszKus/qYPiPAMGq5kWwbUqBhaZQtS8gcdpkwKM7bc/o9nwMe58J4UYfgEl10IVcrdJ6KolDVO5kfcs6uJkO9riQ5OlqLXPomt4NH32V0rNZWCsYu+EDtZDTVYLmeazZx0g3rq50iCQKxtDDrCHHGQE8+JM34QczdYTUJPiDA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uCTevbK4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HOtDBKOVaqC0OE6eZD/nfc1ckcGW6K1yZvEatKZbZbw8JtNXb4+06TqTYnor87oyBYkKwdjZyGZiBuwa/m1XpDAXZqJEZvvCBPAnmKkV3E6cAuhD5pY8TNxyU1EEGuNslTHa1OR/iY2RBtFj46vr9zFkahGSUjeQstjP/AJLKME=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bOaWED3G; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uCTevbK4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5116CC4CEE4;
-	Sat,  7 Jun 2025 10:08:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bOaWED3G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01524C4CEE4;
+	Sat,  7 Jun 2025 10:08:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1749290913;
-	bh=p6xsRjCSWtVcZfbKRRxBMJOhDnkisbt/+z0jq+whFZI=;
+	s=korg; t=1749290916;
+	bh=GSwezBFKy99iEDwgg67WC8il5aQemB+6XkgTSsU+S3g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uCTevbK4ohHaSut55n/jDfl1gGf+/Ve6o1BTpjqCpVyAgV6kuJYXOxlOW8zu3Lchv
-	 q+y3SmxJUZiHvF0GGyDIvAfIZVV6ySp7UKdPvg1w++/T9CETNXUK/sztcxzmOKRxgH
-	 ZlRS7/o5wFOWQ2A2L18OE1NtH+Ez1zFyUc6HixiU=
+	b=bOaWED3Glb5Mx0kZBnZAwkHhwDxo5zShMngk9HwaJaH9KDGcv88D/9rOhN4vCqsAu
+	 dRqSRwrtHTi7Wq/nmhaMZErTaEb5SP2hSAjSC9/nUssQjVH8l+FB+yskMzCs0N/e6J
+	 TBHXjU9InvgjXs2rwo86raWfMPY4UjDI8pCKcEIc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>
-Subject: [PATCH 6.12 21/24] thunderbolt: Do not double dequeue a configuration request
-Date: Sat,  7 Jun 2025 12:07:52 +0200
-Message-ID: <20250607100718.872379256@linuxfoundation.org>
+	Imre Kaloz <kaloz@openwrt.org>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Gabor Juhos <j4g8y7@gmail.com>,
+	Linus Walleij <linus.walleij@linaro.org>
+Subject: [PATCH 6.12 04/24] pinctrl: armada-37xx: set GPIO output value before setting direction
+Date: Sat,  7 Jun 2025 12:07:35 +0200
+Message-ID: <20250607100718.079131472@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250607100717.910797456@linuxfoundation.org>
 References: <20250607100717.910797456@linuxfoundation.org>
@@ -50,57 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sergey Senozhatsky <senozhatsky@chromium.org>
+From: Gabor Juhos <j4g8y7@gmail.com>
 
-commit 0f73628e9da1ee39daf5f188190cdbaee5e0c98c upstream.
+commit e6ebd4942981f8ad37189bbb36a3c8495e21ef4c upstream.
 
-Some of our devices crash in tb_cfg_request_dequeue():
+Changing the direction before updating the output value in the
+OUTPUT_VAL register may result in a glitch on the output line
+if the previous value in the OUTPUT_VAL register is different
+from the one we want to set.
 
- general protection fault, probably for non-canonical address 0xdead000000000122
+In order to avoid that, update the output value before changing
+the direction.
 
- CPU: 6 PID: 91007 Comm: kworker/6:2 Tainted: G U W 6.6.65
- RIP: 0010:tb_cfg_request_dequeue+0x2d/0xa0
- Call Trace:
- <TASK>
- ? tb_cfg_request_dequeue+0x2d/0xa0
- tb_cfg_request_work+0x33/0x80
- worker_thread+0x386/0x8f0
- kthread+0xed/0x110
- ret_from_fork+0x38/0x50
- ret_from_fork_asm+0x1b/0x30
-
-The circumstances are unclear, however, the theory is that
-tb_cfg_request_work() can be scheduled twice for a request:
-first time via frame.callback from ring_work() and second
-time from tb_cfg_request().  Both times kworkers will execute
-tb_cfg_request_dequeue(), which results in double list_del()
-from the ctl->request_queue (the list poison deference hints
-at it: 0xdead000000000122).
-
-Do not dequeue requests that don't have TB_CFG_REQUEST_ACTIVE
-bit set.
-
-Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Fixes: 6702abb3bf23 ("pinctrl: armada-37xx: Fix direction_output() callback behavior")
+Signed-off-by: Imre Kaloz <kaloz@openwrt.org>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+Link: https://lore.kernel.org/20250514-pinctrl-a37xx-fixes-v2-2-07e9ac1ab737@gmail.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thunderbolt/ctl.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/pinctrl/mvebu/pinctrl-armada-37xx.c |   15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
---- a/drivers/thunderbolt/ctl.c
-+++ b/drivers/thunderbolt/ctl.c
-@@ -148,6 +148,11 @@ static void tb_cfg_request_dequeue(struc
- 	struct tb_ctl *ctl = req->ctl;
+--- a/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c
++++ b/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c
+@@ -417,23 +417,22 @@ static int armada_37xx_gpio_direction_ou
+ 					     unsigned int offset, int value)
+ {
+ 	struct armada_37xx_pinctrl *info = gpiochip_get_data(chip);
+-	unsigned int val_offset = offset;
+-	unsigned int reg = OUTPUT_EN;
++	unsigned int en_offset = offset;
++	unsigned int reg = OUTPUT_VAL;
+ 	unsigned int mask, val, ret;
  
- 	mutex_lock(&ctl->request_queue_lock);
-+	if (!test_bit(TB_CFG_REQUEST_ACTIVE, &req->flags)) {
-+		mutex_unlock(&ctl->request_queue_lock);
-+		return;
-+	}
-+
- 	list_del(&req->list);
- 	clear_bit(TB_CFG_REQUEST_ACTIVE, &req->flags);
- 	if (test_bit(TB_CFG_REQUEST_CANCELED, &req->flags))
+ 	armada_37xx_update_reg(&reg, &offset);
+ 	mask = BIT(offset);
++	val = value ? mask : 0;
+ 
+-	ret = regmap_update_bits(info->regmap, reg, mask, mask);
+-
++	ret = regmap_update_bits(info->regmap, reg, mask, val);
+ 	if (ret)
+ 		return ret;
+ 
+-	reg = OUTPUT_VAL;
+-	armada_37xx_update_reg(&reg, &val_offset);
++	reg = OUTPUT_EN;
++	armada_37xx_update_reg(&reg, &en_offset);
+ 
+-	val = value ? mask : 0;
+-	regmap_update_bits(info->regmap, reg, mask, val);
++	regmap_update_bits(info->regmap, reg, mask, mask);
+ 
+ 	return 0;
+ }
 
 
