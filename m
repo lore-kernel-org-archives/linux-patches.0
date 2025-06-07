@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8B6A217F26;
-	Sat,  7 Jun 2025 10:08:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DA8820CCED;
+	Sat,  7 Jun 2025 10:08:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749290887; cv=none; b=rUW/1M84uNtjj0Ug/DOzEY2S63jOpK9F8NuSiwp61tWZh2p0Ks6SmgNVABoTtDYttOkwxghtRvV2n8w3PVO9nHHvYUDiA+bEg1JhZORabF5tmUvYXZaqS/a6HtLziYXvrQREP/ULOXHY56/zAp9x+/oQaKRzZgvIN2AEjAB/C7o=
+	t=1749290890; cv=none; b=jLibr7krp0QWE2BOTdyEWXiGDzx5FsVzZlpgZX4zZ3sDNLx56VKQbOlv+r/EPE/ur5yWf0S1eSBTcLiDviXuga0LXbAkb/C8gF4V/Z7RgitHSgXjH92vLzg8Gr69AlTiTZW8a04pF/dzJWN+bQ3w9AuFtLWgM3LHVsJDMilQqSM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749290887; c=relaxed/simple;
-	bh=VJPkzFzdSCVSky1sPOQgJ+LOqkcPqWVnLlg36j4mxow=;
+	s=arc-20240116; t=1749290890; c=relaxed/simple;
+	bh=3TzKhnP0yNNHqKO87vRY3O2UB2CVrT+vwiYbr/99U2M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QI6aKsTjKmjqS2Vf6h/WiEGA8hk+IekjbgD9ZZoOUyOGXTYvSnNMXBtbKSpnslMSbPrhFyfo1QOINfrFoagbUaE76rIysx9KUTNWDIWbxN8iXLJrIrYvB0Obo7w+Jv/qMvOPb1X/9sWijiRcryrAuxueApgC9SRnOlwvEBeFqwI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wJ9dE6K5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SHRPBgHkaqvLDv6ouxOVEKKnDwuim1WXH/tdTGuTiz3u1on22854j3m7LAOCH5+TkfG0YQhGaY3ehNMHwLaxAX8uH3UE2g5Yh4wDyn3nwElkzhs5be/+8znH1IZNKo1E0VuYJlA7McxMXO3bz5+5GmHHh/aYnBm0vWGLbJyDXLc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vh9Nrf5+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wJ9dE6K5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1FBEC4CEE4;
-	Sat,  7 Jun 2025 10:08:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vh9Nrf5+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8244FC4CEE4;
+	Sat,  7 Jun 2025 10:08:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1749290887;
-	bh=VJPkzFzdSCVSky1sPOQgJ+LOqkcPqWVnLlg36j4mxow=;
+	s=korg; t=1749290889;
+	bh=3TzKhnP0yNNHqKO87vRY3O2UB2CVrT+vwiYbr/99U2M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wJ9dE6K5poW6ZHqwOAwbXuOpkYR+DDZwe9ljnenYn5Ua1pTKYGv3LLU6sV4rRK0Kk
-	 HL9BZIru8sOhSx1+C4Odv377Fa6ffDk4Qfr2Oe9zPzVJ0BQvieLRZumrq1pD0kKbrV
-	 gYVS7RERlaStM9aW/CMjXWZGrRk4TR/IwFCQ3JhM=
+	b=vh9Nrf5+9SS3CvNmgBwT5AyoIGA+zNLGe2lXL6hf7U+3QE+MavTkou9gx9gySBtH+
+	 LzPrShQQXHT1/uE7qi9hJyfYZJsdWAuDtUA3Tb7rh06fGB0AVe01rSq9F9mBdN70hG
+	 YPynBxUA7dh/wx0QYhBOF8l0dz2+hok6wlTdyB/4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Imre Kaloz <kaloz@openwrt.org>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Gabor Juhos <j4g8y7@gmail.com>,
-	Linus Walleij <linus.walleij@linaro.org>
-Subject: [PATCH 6.12 03/24] pinctrl: armada-37xx: use correct OUTPUT_VAL register for GPIOs > 31
-Date: Sat,  7 Jun 2025 12:07:34 +0200
-Message-ID: <20250607100718.042512152@linuxfoundation.org>
+	Kundan Kumar <kundan.kumar@samsung.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Luis Chamberlain <mcgrof@kernel.org>,
+	Gavin Shan <gshan@redhat.com>,
+	Ming Lei <ming.lei@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Alva Lan <alvalan9@foxmail.com>
+Subject: [PATCH 6.12 12/24] block: fix adding folio to bio
+Date: Sat,  7 Jun 2025 12:07:43 +0200
+Message-ID: <20250607100718.386011321@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250607100717.910797456@linuxfoundation.org>
 References: <20250607100717.910797456@linuxfoundation.org>
@@ -52,48 +56,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gabor Juhos <j4g8y7@gmail.com>
+From: Ming Lei <ming.lei@redhat.com>
 
-commit 947c93eb29c2a581c0b0b6d5f21af3c2b7ff6d25 upstream.
+commit 26064d3e2b4d9a14df1072980e558c636fb023ea upstream.
 
-The controller has two consecutive OUTPUT_VAL registers and both
-holds output value for 32 GPIOs. Due to a missing adjustment, the
-current code always uses the first register while setting the
-output value whereas it should use the second one for GPIOs > 31.
+>4GB folio is possible on some ARCHs, such as aarch64, 16GB hugepage
+is supported, then 'offset' of folio can't be held in 'unsigned int',
+cause warning in bio_add_folio_nofail() and IO failure.
 
-Add the missing armada_37xx_update_reg() call to adjust the register
-according to the 'offset' parameter of the function to fix the issue.
+Fix it by adjusting 'page' & trimming 'offset' so that `->bi_offset` won't
+be overflow, and folio can be added to bio successfully.
 
-Cc: stable@vger.kernel.org
-Fixes: 6702abb3bf23 ("pinctrl: armada-37xx: Fix direction_output() callback behavior")
-Signed-off-by: Imre Kaloz <kaloz@openwrt.org>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
-Link: https://lore.kernel.org/20250514-pinctrl-a37xx-fixes-v2-1-07e9ac1ab737@gmail.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Fixes: ed9832bc08db ("block: introduce folio awareness and add a bigger size from folio")
+Cc: Kundan Kumar <kundan.kumar@samsung.com>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Christoph Hellwig <hch@lst.de>
+Cc: Luis Chamberlain <mcgrof@kernel.org>
+Cc: Gavin Shan <gshan@redhat.com>
+Signed-off-by: Ming Lei <ming.lei@redhat.com>
+Reviewed-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Link: https://lore.kernel.org/r/20250312145136.2891229-1-ming.lei@redhat.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+[ The follow-up fix fbecd731de05 ("xfs: fix zoned GC data corruption due to
+  wrong bv_offset") addresses issues in the file fs/xfs/xfs_zone_gc.c.  This
+  file was first introduced in version v6.15-rc1. So don't backport the follow
+  up fix to 6.12.y. ]
+Signed-off-by: Alva Lan <alvalan9@foxmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pinctrl/mvebu/pinctrl-armada-37xx.c |    3 +++
- 1 file changed, 3 insertions(+)
+ block/bio.c |   11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
---- a/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c
-+++ b/drivers/pinctrl/mvebu/pinctrl-armada-37xx.c
-@@ -417,6 +417,7 @@ static int armada_37xx_gpio_direction_ou
- 					     unsigned int offset, int value)
+--- a/block/bio.c
++++ b/block/bio.c
+@@ -1156,9 +1156,10 @@ EXPORT_SYMBOL(bio_add_page);
+ void bio_add_folio_nofail(struct bio *bio, struct folio *folio, size_t len,
+ 			  size_t off)
  {
- 	struct armada_37xx_pinctrl *info = gpiochip_get_data(chip);
-+	unsigned int val_offset = offset;
- 	unsigned int reg = OUTPUT_EN;
- 	unsigned int mask, val, ret;
- 
-@@ -429,6 +430,8 @@ static int armada_37xx_gpio_direction_ou
- 		return ret;
- 
- 	reg = OUTPUT_VAL;
-+	armada_37xx_update_reg(&reg, &val_offset);
++	unsigned long nr = off / PAGE_SIZE;
 +
- 	val = value ? mask : 0;
- 	regmap_update_bits(info->regmap, reg, mask, val);
+ 	WARN_ON_ONCE(len > UINT_MAX);
+-	WARN_ON_ONCE(off > UINT_MAX);
+-	__bio_add_page(bio, &folio->page, len, off);
++	__bio_add_page(bio, folio_page(folio, nr), len, off % PAGE_SIZE);
+ }
+ EXPORT_SYMBOL_GPL(bio_add_folio_nofail);
+ 
+@@ -1179,9 +1180,11 @@ EXPORT_SYMBOL_GPL(bio_add_folio_nofail);
+ bool bio_add_folio(struct bio *bio, struct folio *folio, size_t len,
+ 		   size_t off)
+ {
+-	if (len > UINT_MAX || off > UINT_MAX)
++	unsigned long nr = off / PAGE_SIZE;
++
++	if (len > UINT_MAX)
+ 		return false;
+-	return bio_add_page(bio, &folio->page, len, off) > 0;
++	return bio_add_page(bio, folio_page(folio, nr), len, off % PAGE_SIZE) > 0;
+ }
+ EXPORT_SYMBOL(bio_add_folio);
  
 
 
