@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7937315D1;
-	Sat,  7 Jun 2025 10:09:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DFD015D1;
+	Sat,  7 Jun 2025 10:09:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749290971; cv=none; b=DSDvgoxmHkgHlCNjy20Aw75/v2wg0AXDUDw3qUkVE2pXkrT7xN0m8Z2onD4hvRrJXkkV37ivYrwl/+mcpEreVC72PhGz6shlpEC1x6QqAZornd179vg9YpTioSwyvDufu/C5i2hdlEqadQ7hz6KThRv1cOH9uEiZ0YdBV59Le5c=
+	t=1749290974; cv=none; b=PzOCPwraRJq0TI2pNZ8G6Qe/Nfg4ou/FuNpxJKGNpRqy5T1znM5q8STJX+Dr03myvaUri7MoqlHEWwDaghwkAzQU80wp9i7z86YWUom+oNqjcJJRCDTsvIO710R7E3MFXBlj9qS37ghZOU9jEXFpEI+z3h713tUIl2ekTX5vsGE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749290971; c=relaxed/simple;
-	bh=DGYNnGiyBbd2g8yqkEQr5WjTEvb6lUwjNlxTSp7tc00=;
+	s=arc-20240116; t=1749290974; c=relaxed/simple;
+	bh=EWfqxN+2LMViiRm1SgKlsKem3FvSIzKiE3CZ+iZF+vo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IG4p/yND2nxPOoR5mWX+wSvmWQ5cEFA1+z8kVRlvm/5Czn3hfqOFQcN3WjNG+eRvkIJarA4yif2bx6/MXtUCCymg2xo2qjdJwgWjCRmUg0x6LCH8xfPoFtjT05HLO8WMa3q33seGU38FUEywrJKSmB6TzewasxQuABXtDAEBwoE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lVs/adxN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NpEFHLxgQ8qUNYWjfTtzyGrHulBXkYGm5XaBCXOb1GMlNocPBXuTTLmRKKV3Bmu4aBjCMhd8SVwGZiUe9FcNETUJ6Hglc6smKRsAySLs6r7mbTjUrWsBGNBpN63nJ7rR3QiKSwuLj/PGNkuVjjqr/PRL7ns3yAEj8cW+2Fy2fN4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Yg8OkXr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lVs/adxN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B11EC4CEE4;
-	Sat,  7 Jun 2025 10:09:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Yg8OkXr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1C3AC4CEE4;
+	Sat,  7 Jun 2025 10:09:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1749290971;
-	bh=DGYNnGiyBbd2g8yqkEQr5WjTEvb6lUwjNlxTSp7tc00=;
+	s=korg; t=1749290974;
+	bh=EWfqxN+2LMViiRm1SgKlsKem3FvSIzKiE3CZ+iZF+vo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lVs/adxNDdGZSZgNWosJr/DiKOKJbmx2XrSbEDvvTnmhCCrz3MxqAL8s+QY+DxPsl
-	 GSjr4A4JNAiykxzG0FJ6EOUJkW5HBr4xia5qnhv033TKuK7daIq6jK+ohTzFrocOHA
-	 HAmnExkSTmF6ptXL/Db7WG326ws79oRtaps/9ZRg=
+	b=1Yg8OkXr4F4bdqqvI9c5DIcbCv8t2BASYwfFJ+MI83+WZK0lhqbhtDl96CkZNtjGX
+	 L4Jn/tVCOGJuRakGmpXEwrZRLxh3L4bLOe0g+3bwTjMm4YqlbAquls2fwW6E6gcseg
+	 vzvvKg0sR21n5XeQyQ5g5CK8vbeQMmFk0ENoxj9s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Pritam Manohar Sutar <pritam.sutar@samsung.com>,
-	Alim Akhtar <alim.akhtar@samsung.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 6.14 04/24] clk: samsung: correct clock summary for hsi1 block
-Date: Sat,  7 Jun 2025 12:07:44 +0200
-Message-ID: <20250607100717.878653338@linuxfoundation.org>
+	Manu Bretelle <chantr4@gmail.com>,
+	"Gautham R. Shenoy" <gautham.shenoy@amd.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.14 05/24] acpi-cpufreq: Fix nominal_freq units to KHz in get_max_boost_ratio()
+Date: Sat,  7 Jun 2025 12:07:45 +0200
+Message-ID: <20250607100717.916118363@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250607100717.706871523@linuxfoundation.org>
 References: <20250607100717.706871523@linuxfoundation.org>
@@ -52,48 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pritam Manohar Sutar <pritam.sutar@samsung.com>
+From: Gautham R. Shenoy <gautham.shenoy@amd.com>
 
-commit 81214185e7e1fc6dfc8661a574c457accaf9a5a4 upstream.
+commit cb6a85f38f456b086c366e346ebb67ffa70c7243 upstream.
 
-clk_summary shows wrong value for "mout_hsi1_usbdrd_user".
-It shows 400Mhz instead of 40Mhz as below.
+commit 083466754596 ("cpufreq: ACPI: Fix max-frequency computation")
+modified get_max_boost_ratio() to return the nominal_freq advertised
+in the _CPC object. This was for the purposes of computing the maximum
+frequency. The frequencies advertised in _CPC objects are in
+MHz. However, cpufreq expects the frequency to be in KHz. Since the
+nominal_freq returned by get_max_boost_ratio() was not in KHz but
+instead in MHz,the cpuinfo_max_frequency that was computed using this
+nominal_freq was incorrect and an invalid value which resulted in
+cpufreq reporting the P0 frequency as the cpuinfo_max_freq.
 
-dout_shared2_div4           1 1 0 400000000 0 0 50000 Y ...
-  mout_hsi1_usbdrd_user     0 0 0 400000000 0 0 50000 Y ...
-    dout_clkcmu_hsi1_usbdrd 0 0 0 40000000  0 0 50000 Y ...
+Fix this by converting the nominal_freq to KHz before returning the
+same from get_max_boost_ratio().
 
-Correct the clk_tree by adding correct clock parent for
-"mout_hsi1_usbdrd_user".
-
-Post this change, clk_summary shows correct value.
-
-dout_shared2_div4           1 1 0 400000000 0 0 50000 Y ...
-  mout_clkcmu_hsi1_usbdrd   0 0 0 400000000 0 0 50000 Y ...
-    dout_clkcmu_hsi1_usbdrd 0 0 0 40000000  0 0 50000 Y ...
-      mout_hsi1_usbdrd_user 0 0 0 40000000  0 0 50000 Y ...
-
-Fixes: 485e13fe2fb6 ("clk: samsung: add top clock support for ExynosAuto v920 SoC")
-Cc: <stable@kernel.org>
-Signed-off-by: Pritam Manohar Sutar <pritam.sutar@samsung.com>
-Reviewed-by: Alim Akhtar <alim.akhtar@samsung.com>
-Link: https://lore.kernel.org/r/20250506080154.3995512-1-pritam.sutar@samsung.com
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reported-by: Manu Bretelle <chantr4@gmail.com>
+Closes: https://lore.kernel.org/lkml/aDaB63tDvbdcV0cg@HQ-GR2X1W2P57/
+Fixes: 083466754596 ("cpufreq: ACPI: Fix max-frequency computation")
+Signed-off-by: Gautham R. Shenoy <gautham.shenoy@amd.com>
+Cc: 6.14+ <stable@vger.kernel.org> # 6.14+
+Link: https://patch.msgid.link/20250529085143.709-1-gautham.shenoy@amd.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/samsung/clk-exynosautov920.c |    2 +-
+ drivers/cpufreq/acpi-cpufreq.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/clk/samsung/clk-exynosautov920.c
-+++ b/drivers/clk/samsung/clk-exynosautov920.c
-@@ -1393,7 +1393,7 @@ static const unsigned long hsi1_clk_regs
- /* List of parent clocks for Muxes in CMU_HSI1 */
- PNAME(mout_hsi1_mmc_card_user_p) = {"oscclk", "dout_clkcmu_hsi1_mmc_card"};
- PNAME(mout_hsi1_noc_user_p) = { "oscclk", "dout_clkcmu_hsi1_noc" };
--PNAME(mout_hsi1_usbdrd_user_p) = { "oscclk", "mout_clkcmu_hsi1_usbdrd" };
-+PNAME(mout_hsi1_usbdrd_user_p) = { "oscclk", "dout_clkcmu_hsi1_usbdrd" };
- PNAME(mout_hsi1_usbdrd_p) = { "dout_tcxo_div2", "mout_hsi1_usbdrd_user" };
+--- a/drivers/cpufreq/acpi-cpufreq.c
++++ b/drivers/cpufreq/acpi-cpufreq.c
+@@ -660,7 +660,7 @@ static u64 get_max_boost_ratio(unsigned
+ 	nominal_perf = perf_caps.nominal_perf;
  
- static const struct samsung_mux_clock hsi1_mux_clks[] __initconst = {
+ 	if (nominal_freq)
+-		*nominal_freq = perf_caps.nominal_freq;
++		*nominal_freq = perf_caps.nominal_freq * 1000;
+ 
+ 	if (!highest_perf || !nominal_perf) {
+ 		pr_debug("CPU%d: highest or nominal performance missing\n", cpu);
 
 
