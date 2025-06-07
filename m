@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E81F7219E8F;
-	Sat,  7 Jun 2025 10:10:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9393217679;
+	Sat,  7 Jun 2025 10:10:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749291003; cv=none; b=pOcGvyIMK5gfnbbe8DphmcQAJXlhOcccFSHGrwtA9Nf6F9rNhUK6c4vXSWP9tfg7oscWPDFz1BXQNMgmPd5FYi9IDIjSxCbvCQ2Tmw7i5Hbj3vTJgCHBGxM4XHN3DfeG3AZfXpAA7IRSg26MPsggNKs5rC5aTev239gSxLvFfJM=
+	t=1749291005; cv=none; b=hWMwmBgoWiTaIgj83TJZZ1Ot3FeObNXQonENpm4axzqHCKcqUvcG0XJgPaCX8+lnrqNLGuaE7KTz5LDk2rIos1DH6WS8Ep1QRXinX59FNVQ7eTXxD+fdcbyfNh/rcJGsa+LqX8SWS9eWbSmJDRY5F4/8Yxqb4+/ex3Z9zcqSr3Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749291003; c=relaxed/simple;
-	bh=IFS+gD0322gjjTbsyLJS9UkamranNl6DeUC+C0wTbRU=;
+	s=arc-20240116; t=1749291005; c=relaxed/simple;
+	bh=bfeHhsU2mj9PZq1hABPo+yRNx0lPN54oiuLgdRXHiVA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JLBSCjCezNGvd5iZpNUHtt2MLafh18HobYRKSAhcHJpgMdAKvFGInuP7yIuwfng/L4lMgMtq/Z77/cm3L9AQ2Vjq116DABD91dioEXkK9ADSD4KGGkxQDZdWsYhJVWLSHbJZWnak8EfPWDsP/t16B2172h7qSw3riRS1lL4KfTI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pZvCKplJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QD/ULcMBYUKOd/aDUVlLjg9pZajMuorvYU7bvNy/STTO8HGGR8kLHCjF4pRZ9Z2ArP95yk/MihUuxICCjjSDPV2FgPyN51Npwj/Ex+JZihtTGFPtEWsEuSjybp6uqUC8YKD6YH/XffmSYk2jiQojBHPt9irmp9xg035ZgD91c9g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s3hJVes3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pZvCKplJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76924C4CEE4;
-	Sat,  7 Jun 2025 10:10:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s3hJVes3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2716FC4CEE4;
+	Sat,  7 Jun 2025 10:10:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1749291002;
-	bh=IFS+gD0322gjjTbsyLJS9UkamranNl6DeUC+C0wTbRU=;
+	s=korg; t=1749291005;
+	bh=bfeHhsU2mj9PZq1hABPo+yRNx0lPN54oiuLgdRXHiVA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pZvCKplJorU7aENrNW0BRmLwGMYQJVTsZPP196tdi3AXBW9rniTpkTTYyz1iAFO4S
-	 x1R0yHhKXmo+6Zb8Iobs0kQucJiEtyL+X+N8hvgYcbVrvtbERi6WqB2lGPKZ6wtTPJ
-	 6ZTUdxJTJvAPro/ysIgeDFzRO/w0bqK/rjBEgAsM=
+	b=s3hJVes32hR9xLgp6QFBovMCgzwBEHygSLfIoM/IbI16f3asRDFrTV9GM5nl1OqDV
+	 aPQBr3zZiAsXJNcRXu7zLYeApel3tS+hazNFoJfIgu0Lyr0T4xwx87qMVlifQZhW7w
+	 +aDdy/+VCkW2jbzR5HPRGCZxj/kz5DMRrYvptCfs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qasim Ijaz <qasdev00@gmail.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 6.14 13/24] usb: typec: ucsi: fix Clang -Wsign-conversion warning
-Date: Sat,  7 Jun 2025 12:07:53 +0200
-Message-ID: <20250607100718.224642661@linuxfoundation.org>
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Hsin-chen Chuang <chharry@chromium.org>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.14 14/24] Bluetooth: hci_qca: move the SoC type check to the right place
+Date: Sat,  7 Jun 2025 12:07:54 +0200
+Message-ID: <20250607100718.261806939@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250607100717.706871523@linuxfoundation.org>
 References: <20250607100717.706871523@linuxfoundation.org>
@@ -50,50 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qasim Ijaz <qasdev00@gmail.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-commit f4239ace2dd8606f6824757f192965a95746da05 upstream.
+commit 0fb410c914eb03c7e9d821e26d03bac0a239e5db upstream.
 
-debugfs.c emits the following warnings when compiling with the -Wsign-conversion flag with clang 15:
+Commit 3d05fc82237a ("Bluetooth: qca: set power_ctrl_enabled on NULL
+returned by gpiod_get_optional()") accidentally changed the prevous
+behavior where power control would be disabled without the BT_EN GPIO
+only on QCA_WCN6750 and QCA_WCN6855 while also getting the error check
+wrong. We should treat every IS_ERR() return value from
+devm_gpiod_get_optional() as a reason to bail-out while we should only
+set power_ctrl_enabled to false on the two models mentioned above. While
+at it: use dev_err_probe() to save a LOC.
 
-drivers/usb/typec/ucsi/debugfs.c:58:27: warning: implicit conversion changes signedness: 'int' to 'u32' (aka 'unsigned int') [-Wsign-conversion]
-                ucsi->debugfs->status = ret;
-                                      ~ ^~~
-drivers/usb/typec/ucsi/debugfs.c:71:25: warning: implicit conversion changes signedness: 'u32' (aka 'unsigned int') to 'int' [-Wsign-conversion]
-                return ucsi->debugfs->status;
-                ~~~~~~ ~~~~~~~~~~~~~~~^~~~~~
-
-During ucsi_cmd() we see:
-
-	if (ret < 0) {
-		ucsi->debugfs->status = ret;
-		return ret;
-	}
-
-But "status" is u32 meaning unsigned wrap-around occurs when assigning a value which is < 0 to it, this obscures the real status.
-
-To fix this make the "status" of type int since ret is also of type int.
-
-Fixes: df0383ffad64 ("usb: typec: ucsi: Add debugfs for ucsi commands")
 Cc: stable@vger.kernel.org
-Signed-off-by: Qasim Ijaz <qasdev00@gmail.com>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20250422134717.66218-1-qasdev00@gmail.com
+Fixes: 3d05fc82237a ("Bluetooth: qca: set power_ctrl_enabled on NULL returned by gpiod_get_optional()")
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Tested-by: Hsin-chen Chuang <chharry@chromium.org>
+Reviewed-by: Hsin-chen Chuang <chharry@chromium.org>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/ucsi/ucsi.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/bluetooth/hci_qca.c |   14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
---- a/drivers/usb/typec/ucsi/ucsi.h
-+++ b/drivers/usb/typec/ucsi/ucsi.h
-@@ -432,7 +432,7 @@ struct ucsi_debugfs_entry {
- 		u64 low;
- 		u64 high;
- 	} response;
--	u32 status;
-+	int status;
- 	struct dentry *dentry;
- };
+--- a/drivers/bluetooth/hci_qca.c
++++ b/drivers/bluetooth/hci_qca.c
+@@ -2415,14 +2415,14 @@ static int qca_serdev_probe(struct serde
  
+ 		qcadev->bt_en = devm_gpiod_get_optional(&serdev->dev, "enable",
+ 					       GPIOD_OUT_LOW);
+-		if (IS_ERR(qcadev->bt_en) &&
+-		    (data->soc_type == QCA_WCN6750 ||
+-		     data->soc_type == QCA_WCN6855)) {
+-			dev_err(&serdev->dev, "failed to acquire BT_EN gpio\n");
+-			return PTR_ERR(qcadev->bt_en);
+-		}
++		if (IS_ERR(qcadev->bt_en))
++			return dev_err_probe(&serdev->dev,
++					     PTR_ERR(qcadev->bt_en),
++					     "failed to acquire BT_EN gpio\n");
+ 
+-		if (!qcadev->bt_en)
++		if (!qcadev->bt_en &&
++		    (data->soc_type == QCA_WCN6750 ||
++		     data->soc_type == QCA_WCN6855))
+ 			power_ctrl_enabled = false;
+ 
+ 		qcadev->sw_ctrl = devm_gpiod_get_optional(&serdev->dev, "swctrl",
 
 
