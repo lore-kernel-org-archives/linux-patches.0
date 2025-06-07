@@ -1,128 +1,118 @@
-Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.17.24])
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35DC71E2853
-	for <patches@lists.linux.dev>; Sat,  7 Jun 2025 11:49:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.24
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20EEC221554
+	for <patches@lists.linux.dev>; Sat,  7 Jun 2025 11:50:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749296947; cv=none; b=SZRKoNuAhIuZRHzy8zctLdcvA8U6rtj4kp85notLKCbpcoY/UpNz76jNB1b+cNJvBfjcCOXltRs4uCWSA0dUsc5OnScAd3Eg/d7RhLlp5XCKaAndfz3o+w/QAIK++Ol+js9QYs24OowgSaweNPGH6WTxlPdACfYs/p8YiApIpDY=
+	t=1749297050; cv=none; b=aTv6JSD4I+AMqhBRJAtQkn7GlwBq7Nu+7e821PNFmM1xj+rG5vFFLaM4KpNr+4CezjfEEm25FOLVqbE20D6uxgVMwTs08zaA/7cHvokRLkc7p0PN7ys9X606vP19L+C5k9qLMZbiF9wrYGZzGJIcEGd78dKch2jywsSTMgqaMig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749296947; c=relaxed/simple;
-	bh=A5VFj1e+xpbR6SHxeq2NDLvtJFEJtEFEkt742n8/blA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kPiAObO+RdIdpK6/jb+YHBn9eZCL86QwusUPz90igDCVBG76vdl3EhKzyFR8X55g6OL5OR7dqrC/nKRzUsfoxdr4Rg6XOF6T4u0SNQhz3V/BqPZmbvyiySV44t7bp90JUOw8nZt0b0Je714UI2MP7zQwECAGKnAq70wC37BkC5Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=heusel.eu; spf=pass smtp.mailfrom=heusel.eu; dkim=pass (2048-bit key) header.d=heusel.eu header.i=christian@heusel.eu header.b=CiU/PbOx; arc=none smtp.client-ip=212.227.17.24
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=heusel.eu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=heusel.eu
+	s=arc-20240116; t=1749297050; c=relaxed/simple;
+	bh=HtuFhXI63urBA3dRKYyXQ6GHreCYVeNttV6YM+zDLlM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=NfoqLLqtZ0vcKtXzEqRijlxNjce3Kc1GenexkExDQctoWeV4AFmiK65f99gQuWU9sSUycOU787XGumS4lTcTjhbeP4cVH2jxFALeloBIXqZg2livqV7+o/ZsoVWgnGRJXHugrVGUm769/3tP9ttnHGVaJ7RWpVRSoQzmC33JVko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=rwarsow@gmx.de header.b=ZfBdfdmJ; arc=none smtp.client-ip=212.227.17.21
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=heusel.eu header.i=christian@heusel.eu header.b="CiU/PbOx"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=heusel.eu;
-	s=s1-ionos; t=1749296937; x=1749901737; i=christian@heusel.eu;
-	bh=gIYlZ50mxQXGvz6F133XjL9sWrBBVbI6DqKQT9SVqnQ=;
-	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:In-Reply-To:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=CiU/PbOxTUN/iFI6io5lYxf1WmID+fY6M8HnU37RPgyYObIH/r4xYXoSxxPSb8P3
-	 cRp4nkHVn8MOefCIOCRYcITnER8Tbg7OmXRrL17u5Ld9ZkrXF6TXvoxCPehxzmSTw
-	 Vb469nJf5UI+7lNkZ7xpu2niOL4OUxRPnYRMpNBmXXfjvN+EiRYhfcqs11O6ozcbr
-	 WWupidWVWiFhc2rWLFAwKPtOfEwvtepoEgFY43SxbgfFXBPKfdyb7BE3+S3S5Vx8k
-	 1j9IVa6p1ObrwcYI57HjFk7SIGajcs/75YUwQvZzDGpEcmkFJVaLBiktzQ6g0168I
-	 2O4b3WrxDex/blluOg==
-X-UI-Sender-Class: 55c96926-9e95-11ee-ae09-1f7a4046a0f6
-Received: from localhost ([89.244.90.37]) by mrelayeu.kundenserver.de
- (mreue108 [212.227.15.183]) with ESMTPSA (Nemesis) id
- 1McGxG-1uyJ9j41yW-00hj8d; Sat, 07 Jun 2025 13:42:36 +0200
-Date: Sat, 7 Jun 2025 13:42:32 +0200
-From: Christian Heusel <christian@heusel.eu>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, akpm@linux-foundation.org, 
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org, 
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com, f.fainelli@gmail.com, 
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, 
-	hargar@microsoft.com, broonie@kernel.org
-Subject: Re: [PATCH 6.15 00/34] 6.15.2-rc1 review
-Message-ID: <d8e69fb7-fd1f-46b4-8031-13ab23ed8226@heusel.eu>
-References: <20250607100719.711372213@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=rwarsow@gmx.de header.b="ZfBdfdmJ"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1749297012; x=1749901812; i=rwarsow@gmx.de;
+	bh=HtuFhXI63urBA3dRKYyXQ6GHreCYVeNttV6YM+zDLlM=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+	 References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=ZfBdfdmJiaaSkvldJcyify+LUjRoKkZ7SLsy4nriapQ4osiyfSlnBsPZM/BJTHQ+
+	 VevNz2uFcTlTqa+gfTMY6lmK/CSTYSlxs6WE37VP53rdqnLomH3gCxvkbTPGtKbgz
+	 Dj0NqgdwEP6/chqR1NIQUVLvWJEcqPTmDTyo64Ju2Hk8SEBOim5WTeTxHAByouWjP
+	 AzF6QIfSx2A1hv2oO93oYH8n35ck0s2OlCnv00vhvQ6IMWDJ9lMIjfH0hQj4d45pv
+	 XdWMOz71Pj3xPPzTVvHEBNjfJNRSoL54FfcufTJSAwWMClg8ij+T5gHXyg42obxKQ
+	 K69QBXhAL7HWFDFFHw==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [192.168.200.20] ([46.142.34.40]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1N6KUT-1uvLAr0DW5-00vTlc; Sat, 07
+ Jun 2025 13:50:12 +0200
+Message-ID: <7fb63be6-8c3c-4f8a-8a34-9a6772c7ede5@gmx.de>
+Date: Sat, 7 Jun 2025 13:50:10 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="jj753swazz7l7vzc"
-Content-Disposition: inline
-In-Reply-To: <20250607100719.711372213@linuxfoundation.org>
-X-Provags-ID: V03:K1:yI7xnS0BEN970P6M2FWovJNt5Pig2NzeKXfDXnoS3GKC7ItLPaX
- QJfvdk8lbsrZAJ0mb4ZKFT7G0F2fDkBuwSKl8aTO8pO3UIkC+X9PkKbTanHZT6QrEi0P+TM
- u5e/ccnbxAjHRHP4IKXlc4ORbNQaq69yTDHvfZYZikwuvUH71r5eat5virwC2fzgFBOZY/X
- ixH276Q4UfU6ROFWPW5Lg==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:CHu/Idb2VaQ=;8nIHJxZQIeDPP2DLA+dxd+PDv8L
- vXlcw9V6+D2x9q2Xu9DDG1nmqyUUoRRQXb7SROVVYIzSw2latzg0nHVBS87BgSQzNevg92dxb
- 2mvT4ZEY4K5tSMAy59ZRbpqCWFt6gauMYiZ4Cwf593qQsVgQrLqX8UDxRqerIlZyJNqn7LLMG
- F8YPlEeNvdlI5TebV1rQQ3Uy2GC7JT0iZEQ5Lx9tThWMMz9hrFnJ8er98lJXgYRUYLZkGwrqc
- eulLeAAZUUdI0QUWAB35yv6LIIbiqRYetvkIIQTP2lutU7F5dy3l/ZmjTYquFcrqfjAscJLtz
- tj4txmBzYWdJZ/HsUekB8lvrKiQF62FZDraPWqu0ZhAIUwtLOUSFuWhUhJpsGvkH1TnwtNxku
- GBay+0Lg4WnPmxRYdFKcEkVuDx3I80YgGVZ+GcS8YhIHLelz69YFgjznFxbtzl7E/3cuqHEi/
- lmgGOl1XbhY0Oxq6bIagsXm3Ru2wcxexza80PR6pGgDnpxlaTCIJ71OY0lCe1cha5ZlVL9Zuo
- 7WDXntVj0cXRNYO0b0AfQ+J88S8TauDCbzJNYa+RjE+CbBOx9yVpVj0RU1Ju6FnWuaFDS8Ib0
- EM9SmOnNL1MfkW0muL4HXVVmlsdc11WoOEQwEzd9G5QWTn9xmi1ueNVLtmxZfTnCg+XRTBZBN
- LFNdKIWnp/4BpNbTs09Lot/r4oN2Pv91Rx06C2qeNYeWpqIt3EAPbJidephg14HcvRiHc5acw
- yGlNt/HZWet4f9vhwhjle4GlYbR5WYDY4mZZaVZuRoiX5oN9eledRR2dZ/rfg6H34+kKhLVx9
- 6ToZIrtiPyZNoqxsEl/16UoV1F9jgWDtcGdNGyW8Y5OTO5wBr+xeufqV40y9bzwuyDLm/eGYL
- lxynOX0YufVmVMG8F3ez1bGo3N0FO8bimdSOBlH9JQ3gamVNqbwSulRzOjxuJIbSa1syt8uGW
- bStOqsZxitbgx4m9P+5nVUnCyi1/DlaauwcH9i8tI3gkCAlltwRi0Ddc6Emk+4d95cBK59TKv
- uvmcxMsBhvNYkcuUOUKQnENa7S+wQcilI0kxfEgxosmy4q35FCVOh1Dqh/7p1a1mBjWBv05cI
- g44RvhvC2Fq3wairc7NAaTZKs8mZd2mDZCEErlplJldSvuYTeiKdAz9CkF3obNfKAi5QGOPoG
- pqpdr0iYLpDPrB+C+v/2+/TrUF+4yQWuLADSw6+UiQOdsQKBP20LRcXWjtwOU9MVbxeeBDBOW
- JAjNkjeOTV4IYgoMWMzwPwoLneEODF5hGfbaRiVmYU6l6jjCg5gK2Q9LKSLgEmmjYS7uEXTbg
- tbwXqhA+kPu0uBge056uU3dtBFY7gxXbI72Fit2rOrvA1NKl1zGf7ISRac3NPk+9/GwxFRTmN
- CeTdoWeenZDcbBt7hIESOOZ9H8aZSRT9PeXgZNAX7oCeEGupGgQhs4bqmTnp9cE1mvCG54oXf
- fLjZ7FQ==
-
-
---jj753swazz7l7vzc
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH 6.15 00/34] 6.15.2-rc1 review
-MIME-Version: 1.0
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
+References: <20250607100719.711372213@linuxfoundation.org>
+From: Ronald Warsow <rwarsow@gmx.de>
+Content-Language: de-DE, en-US
+In-Reply-To: <20250607100719.711372213@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K1:J773HgHQekuxhQxkPhTl0XHY3CbtlyMysiOHuVuGA1yqkk+yGkT
+ BzD+WZ/m44LXXFyEEI4brXDBTNjav1hDCNri8yGMoPtQSm1hff+hDGe2p9L78FO1oq2fonZ
+ ZCWxpmsxGfMyjl31xUAfjL8zCT4niZQvl2bakKLzUGfJryT7f1uTCuqS5Ks1i+R5ZVQoOgT
+ MxcgM4mmu/BZDktA5BSBg==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:yI0Wr2w2SXI=;humUEjXPbniw2DeaO59veWhA/ag
+ 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
+ UD1VLXOw/+7ys=
 
-On 25/06/07 12:07PM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.15.2 release.
-> There are 34 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->=20
-> Responses should be made by Mon, 09 Jun 2025 10:07:05 +0000.
-> Anything received after that time might be too late.
+Hi Greg
 
-Tested-by: Christian Heusel <christian@heusel.eu>
+no regressions here on x86_64 (RKL, Intel 11th Gen. CPU)
 
-Tested on a ThinkPad E14 Gen 3 with a AMD Ryzen 5 5500U CPU and on the
-Steam Deck (LCD variant) aswell as a Framework Desktop.
+Thanks
 
---jj753swazz7l7vzc
-Content-Type: application/pgp-signature; name="signature.asc"
+Tested-by: Ronald Warsow <rwarsow@gmx.de>
 
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEb3ea3iR6a4oPcswTwEfU8yi1JYUFAmhEJagACgkQwEfU8yi1
-JYVRIhAA0CHQq5ZUUCu6jIrBj6sVfnhYzkuiFjknop83PudJOunnfoxJOE2sw/Yj
-LbbFLGSaaKp1v2ZHLVL2pQ+rZgUeE4oUPmk4PUGuopir+PTpQkucmCuj/kvt4oiv
-JS0/wU5I20MAQ0/5BWto7MJPcaaLv+b8DJTyiQviGK6HGm9E+mEHaal/z9ID1ush
-ksFcjHzx52dbF/CZdM+tPy/9BAtNfxUWHb72KHbpnibJN+711thoLXWi6LMEQRyt
-QJB57RglQj4mTLouffN3TVS1DW9dNE8LHswpwv0RodBuAKv9vmA4TrK8zusw2fvg
-YDKvOPm9Lfwm6RaX8IzzxlLcbzmw87D1PepPFzPOI7Gta206KwU9Geak7Y3bm4RR
-UgTVPhkAX+ufeHPRyDrw+XwzG3SgxUnhg12G7BR+Q90ZWdM081/7jZvc8KJxXrAS
-+vKto2PlUCUoDxtM8KhkD6fkEVwNaLWY2Y69G1MK6weDn/m1VXoJTIX2kgHxtE/K
-Prec1aIOqh1Cm7AGv4vdcyCvAJn3viHRmHCCskS5vSLDqdWZFnhTmFeqFMGKZcdQ
-rp154zC6sTu7hhnLzrIVUxmZrWw9tOtx1X+r9IIcxtkO4jbzjVIBiXBHKL0kMlgp
-IWWtC5lo4Jb3nqjSfzpSeH0Ulel3AUoYXnHz2jdtz1LYKH4D/OM=
-=ubGG
------END PGP SIGNATURE-----
-
---jj753swazz7l7vzc--
