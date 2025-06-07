@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCCA821ABDB;
-	Sat,  7 Jun 2025 10:10:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A80321ADCC;
+	Sat,  7 Jun 2025 10:10:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749291011; cv=none; b=FBnXzQGzxQlla2gHeCKEoZRaT4OXt4D13oUjLZ2b7ZeAs+ElwfFYoa6T0rzXd0aCGp3CsuD7zEepKF0DCE4dTcJD1GnCNwO2vVtShww2cH0J9AFd4sB9w6QWKeTiBHw87/GvJgIne5zZ/R8nc5/6DHlRgGhoEEpMwE8NkzIsSdU=
+	t=1749291013; cv=none; b=JQWAzRIsrkxmdvTemSaafCdQ3DtNHr69Mp9KoMrnST9nyDEtr3rbh9WYDRQmNhY1d81z1SZ5F9AzGIch+B/0oXkwN+Lz/B+j+nIRto5iDYomvJ1ICnWi/mFqGM2MSIYCSM+f95lHtoOcKoYfbJqCXeYgqf5tcU2Y9Brp2Xyu1Cs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749291011; c=relaxed/simple;
-	bh=oFDPgtoP2NFyJ+Xt1s1hXvhBXNibhwSjUoxzJqodYNY=;
+	s=arc-20240116; t=1749291013; c=relaxed/simple;
+	bh=x3YEVfoFZ7Oho8QTL3QuiBjFHVaA048VbEOQEtiltks=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FXVxQYXNInxhUKMcwjov7fCQ673VirQEYlllymBHC4FU62jiV9wqrUnG/jHrY6tqhZQa9AYcstzZs+Yx3tOid3biK/rPRZv835+a443SK4R75Ol3XS1xVp00PKNav0xD4x0CN/X5IYARUrMTYfJDXkzeHngND3utLDFwXVXrbj4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wAU5gQe1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y96TRia+Eu1EjZ5eyiqs1Z63aZbV3unPdYPzsBJjSXIiUsF37sk0factaYruwHzropQCuXod3IHkfzH42aTkjJVSXbQng/6tFS3XOoFW6t/GfRipLV+TEgt9pwo+gdFIZVe5Pzxqag9XCPQOWq9We0FGW06c6KZATQe+6TCXwAc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xC9nDoo9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wAU5gQe1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CA44C4CEE4;
-	Sat,  7 Jun 2025 10:10:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xC9nDoo9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 187E1C4CEE4;
+	Sat,  7 Jun 2025 10:10:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1749291010;
-	bh=oFDPgtoP2NFyJ+Xt1s1hXvhBXNibhwSjUoxzJqodYNY=;
+	s=korg; t=1749291013;
+	bh=x3YEVfoFZ7Oho8QTL3QuiBjFHVaA048VbEOQEtiltks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wAU5gQe1JSEQhbUz7patq48oWK8EyvPExn4P/NxpWQS4Zmw3FS4CQJ49ZRBvnDbuz
-	 vD7jq8V9MGMK9b/oV0hMl6lr1n+rPUJ6EYKZ6V6z90rx3Gjeg6icqcdPyWhNYE0Mr9
-	 QYd72EQ11232YkI9F1SAJI+nAgyXJcGm81p3USGs=
+	b=xC9nDoo9gYdIsZrECpUuAaHSBWo2I863wi0jzNoo1qiqbcIPSJCaZjVRWBY/JKCeA
+	 T4eYFFqyVO625JiOdTEjenyoQLGUlKD34qtVdIFY15aUEJKy+4AQVf/kD1cAT8ToX6
+	 A8sTwRSGWI5lJDmjrmjfBQm2nB6tSXb8ewkuj1Uk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Srinivas Kandagatla <srini@kernel.org>
-Subject: [PATCH 6.14 16/24] nvmem: rmem: select CONFIG_CRC32
-Date: Sat,  7 Jun 2025 12:07:56 +0200
-Message-ID: <20250607100718.337428224@linuxfoundation.org>
+	Dave Penkler <dpenkler@gmail.com>
+Subject: [PATCH 6.14 17/24] usb: usbtmc: Fix timeout value in get_stb
+Date: Sat,  7 Jun 2025 12:07:57 +0200
+Message-ID: <20250607100718.373872237@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250607100717.706871523@linuxfoundation.org>
 References: <20250607100717.706871523@linuxfoundation.org>
@@ -51,40 +49,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Dave Penkler <dpenkler@gmail.com>
 
-commit 7a93add1d31f14e0b7e937163904dee1e864a9a8 upstream.
+commit 342e4955a1f1ce28c70a589999b76365082dbf10 upstream.
 
-The newly added crc checking leads to a link failure if CRC32
-itself is disabled:
+wait_event_interruptible_timeout requires a timeout argument
+in units of jiffies. It was being called in usbtmc_get_stb
+with the usb timeout value which is in units of milliseconds.
 
-x86_64-linux-ld: vmlinux.o: in function `rmem_eyeq5_checksum':
-rmem.c:(.text+0x52341b): undefined reference to `crc32_le_arch'
+Pass the timeout argument converted to jiffies.
 
-Fixes: 7e606c311f70 ("nvmem: rmem: add CRC validation for Mobileye EyeQ5 NVMEM")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
-Link: https://lore.kernel.org/r/20250509122407.11763-2-srini@kernel.org
+Fixes: 048c6d88a021 ("usb: usbtmc: Add ioctls to set/get usb timeout")
+Cc: stable@vger.kernel.org
+Signed-off-by: Dave Penkler <dpenkler@gmail.com>
+Link: https://lore.kernel.org/r/20250521121656.18174-4-dpenkler@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvmem/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/class/usbtmc.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/nvmem/Kconfig b/drivers/nvmem/Kconfig
-index 8671b7c974b9..eceb3cdb421f 100644
---- a/drivers/nvmem/Kconfig
-+++ b/drivers/nvmem/Kconfig
-@@ -260,6 +260,7 @@ config NVMEM_RCAR_EFUSE
- config NVMEM_RMEM
- 	tristate "Reserved Memory Based Driver Support"
- 	depends on HAS_IOMEM
-+	select CRC32
- 	help
- 	  This driver maps reserved memory into an nvmem device. It might be
- 	  useful to expose information left by firmware in memory.
--- 
-2.49.0
-
+--- a/drivers/usb/class/usbtmc.c
++++ b/drivers/usb/class/usbtmc.c
+@@ -483,6 +483,7 @@ static int usbtmc_get_stb(struct usbtmc_
+ 	u8 tag;
+ 	int rv;
+ 	long wait_rv;
++	unsigned long expire;
+ 
+ 	dev_dbg(dev, "Enter ioctl_read_stb iin_ep_present: %d\n",
+ 		data->iin_ep_present);
+@@ -512,10 +513,11 @@ static int usbtmc_get_stb(struct usbtmc_
+ 	}
+ 
+ 	if (data->iin_ep_present) {
++		expire = msecs_to_jiffies(file_data->timeout);
+ 		wait_rv = wait_event_interruptible_timeout(
+ 			data->waitq,
+ 			atomic_read(&data->iin_data_valid) != 0,
+-			file_data->timeout);
++			expire);
+ 		if (wait_rv < 0) {
+ 			dev_dbg(dev, "wait interrupted %ld\n", wait_rv);
+ 			rv = wait_rv;
 
 
