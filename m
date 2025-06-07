@@ -1,51 +1,51 @@
-Received: from NAM12-DM6-obe.outbound.protection.outlook.com (mail-dm6nam12on2084.outbound.protection.outlook.com [40.107.243.84])
+Received: from NAM12-BN8-obe.outbound.protection.outlook.com (mail-bn8nam12on2082.outbound.protection.outlook.com [40.107.237.82])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 766494642D
-	for <patches@lists.linux.dev>; Sat,  7 Jun 2025 00:52:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.243.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16AF21373
+	for <patches@lists.linux.dev>; Sat,  7 Jun 2025 00:54:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.237.82
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749257556; cv=fail; b=qtqsQhYR3ZpnwOe4vyrYxqTOAKCuM6ZjH2DEL2hNiI1hmC2gI9WT3tC4n4HUoAUj8GISV1cG6oZVEYmFDXhi4a8uXDHF8iHp/nJuGcDLYp0GlM0FifR4Q+vodQZucE0D1nVJ+WKESjjevleF+oaHVf8D60IF8FDBCGaOrzK7Ulo=
+	t=1749257676; cv=fail; b=kAx9yOcZey9xmMYOHxx1OyEJ9qF7J5ntZY1lxhv1hKHQtQLPaSRaQ5GwLSOBEH30E7zSjEa9cD3so/o56SIhPVY2VjdX5p1ROnm/g5MYvWOnpFt3XpKfNjpWJ7FnkPGyJIOLUbw6UdJ4aclamPtAZ8geV5hIZMixTp+OLcQve5I=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749257556; c=relaxed/simple;
-	bh=KYDJHQrgY1jMb3otetQhKsHXXfZPr9VItQlGSyTQkbk=;
+	s=arc-20240116; t=1749257676; c=relaxed/simple;
+	bh=pd0yWoI9xiX9rHUKlsdg6pkkXqoc/+GBlUq4Yg3ERNc=;
 	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=M6sR49Wpli6Ksr3ZicpzPpPhu5l7gtunNcKzpHcVzaq6RFQFzBWX+twQA66lFi8tGNCn3kaTJyCuZgqQvRW7H/5RGHojF6KqiNTuCY7GEDiLMrQIr1KUb//KuPSCh6zL5EgB9wPIwShVLkygNjD8n06/YHDzSCy56bMwJ7OxfRA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=e+NhElLq; arc=fail smtp.client-ip=40.107.243.84
+	 Content-Type:MIME-Version; b=QJK0hAPmvuPQ7yedLce/UFL7m2gQJ0A4mdMfjXoJGwZrB7tomkdr/8+IyTmaxskf2QZezOwLTHaPStI7+SzapdSI0fpHTIBUvX5q0E4mJhp7ZWI7i4P7+8gicmTu1awi6Ox3BR4gX3BrVaxugi3MdJ4E32XXuh148lV+BjDwzqU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=W1vsCcU9; arc=fail smtp.client-ip=40.107.237.82
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="e+NhElLq"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="W1vsCcU9"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Vvl5CcS1XJtpHq4ncQS1nQCr4zqmUjVobUG2MD9CuBZ2QxeSXPpMvVIAXzr/vXUXXztjEEIKy5itzLo7q9g/LcMDpCMPYvYwNwueeFubWZHFSGaoRRLbvnR9FeMt3rCKxeGxJK4vqlUPN3DKPB1l2AvehFvUSQjg/V7cJMhpK3sjhZcgDDMYTSpCJfWDFsDJ48VcztSIH0+LBKHvwChfFT7rigz64+Run5pV1BK6CyMYDcJpcRmwFIY9rSrRE2SuiYhjSVgqpGH7zL49FWKSfeFeIrn9ZauaGyvetFD2gSOhLgh9D1h1/Az8Nyg7VN/H9cZZyafGZZ7HVbeBxaqVgw==
+ b=abmWtu4/RUCfeBbMVnQuWa92OgKA8hdVbTHLnv5G9N1I9WYDYJsqisuFZimLUt4GtLbLBRQN/kDzCDxs8A5joj6dvamaVExb5nBqylt4KpfOYESy6MVABS/qMFEDgkipuSlEOL7pCVt/a5eEf7vWARggy4r9H1tA4E/StgeKeLenyoqgjEfxjRhGabjCtXNvkJdACuIUpR745Tc3DCOSUDZEi097drgbGdh9YTGIllXCnH8i3I5Q+72fWMnh2kXIske8+SlENXAUEPgm/NFJPXq0Fn6mWI/uE9BmfUbHgLwWvHrZ+z3zsFspH51gyp1Lp6Ntxsj9cWpYhRb9X597Uw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=TL9P/nrQfrNXIipPgxPLqfrpVZ+nd0uxd6XWdhTkPfM=;
- b=Okp0gRmcUU1swxnBgBtCGgkmRA/ygbptby3DOZ8cx23o3gjKBZcWMMbDIGkVJm9KodCYSvNr5PJSZmGN5HK6y78W/eY9XmE6I89U8k9kVXKrZEP+4Ga2W3SIBui+hm3h4Ui3S0K0wYEFG+OtOLTAka4A5YAGeNh4OJf6AmDhPsvLNlH37PLBrn1KWkfyceD/38NRTwklI3kU/ZLelDuTt6LTGyK9mciYJwgqutJ65YFmgjycaC75fk9/2U6owPMHAU7MYTUHehSol+UKmbZpSPPC/uYfHO5FnUX4a9w1N3MtoDWEMNpVfAJSHPQVYda9ZBVlCZIsMyNaZzZVz35ewA==
+ bh=2bzdj7SvdNaQXn3bWDlMKMR6gCSTw5s5OmrSAJX4qX8=;
+ b=lXTD4WCaplEhvX030R/Tp4MAMEAQTpxkDa7iSA/bvRrE5sSRtwg5n2N471c5vaja92RzTwg4EtGIg+jaX9dbCfL2SBv3isgsWxkQ3QErMAcTDFGSug9qLCIxgtDSXWBbUZ9XOuzPc6nhHxTi64UyXb7erJc92+ARx8oBBbEvr/SFj5EJWKx3k0FQrJ/oTTfceGT+wXO7RhKawHEBNnC9rBLGPZnWRRO6M4rfOLTvomhH391vmkl68Z93kqEzj7DUBDYQwayT1wP7zJyKw5i2+fxKrSItSncFNdyD17mbK2nSMkadLvA9i+34DQi8gsmESbNiRevtfja9Nlbtun0fhg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=TL9P/nrQfrNXIipPgxPLqfrpVZ+nd0uxd6XWdhTkPfM=;
- b=e+NhElLqkqimCesfEN6LfdZKcv/6ZC64zt9konEbVhfRqhSsLbNrjGwZUEFZEHQS6HJGbdh287Y7XeEtp5Zpg+P7d1Peu1x7rkGI31wTMNGgEQdmbQKv44Rc1qDSstkw6VBJGpymhxtN/CJ4G8XeovfrzXJ/oALXT+gJDnQrmmmX1xDuAyhnwBUZybH+OOxRQ+16k9c1gUTo+5+txTF0zTwfPWsAgNzk2443QgaO/dRoDEmhECNlOXrgM9CN9nwlS5KquzAFwL0zj5T7/QNwQIj0uJOdgHyTdymwcUUvTqTND1hqSXkWK9ux5EWR6svg0JJxOJlQyXdWDTRialoqpQ==
+ bh=2bzdj7SvdNaQXn3bWDlMKMR6gCSTw5s5OmrSAJX4qX8=;
+ b=W1vsCcU9lLQeJ9XNsuihlGS0bgDqweg8W7n6Nt09g+k4NEyS94DkSPQpivEHqe9YxFBVA5sRbYl4gPYgR3QaHxSCB1jzdSpBJI7HWIgnPU/E4Zd3ghAQTWo6exhVNVIsZmA+OyitKqRg8Y0qNW2UTOp7aEU69vG25wnc5JT14GaoNRmnUbiZAhsEnpPHT8EwsYXfE5dF+QAIPT+njkg97tbOcY9ygNrw8b5pb6jH7WPF6VALvXJekqvA9/LPNrycMSKnZEDs+AUECFBU2zWUiIRstM6PGXgkdqiAzq60dGDGL7Ne1341WLxIHxS7qgxdlggAKzii5QI/phWV2q39Aw==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from DM6PR12MB2667.namprd12.prod.outlook.com (2603:10b6:5:42::28) by
  PH0PR12MB7930.namprd12.prod.outlook.com (2603:10b6:510:283::7) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.8792.35; Sat, 7 Jun 2025 00:52:29 +0000
+ 15.20.8792.35; Sat, 7 Jun 2025 00:54:32 +0000
 Received: from DM6PR12MB2667.namprd12.prod.outlook.com
  ([fe80::bd88:b883:813d:54a2]) by DM6PR12MB2667.namprd12.prod.outlook.com
  ([fe80::bd88:b883:813d:54a2%6]) with mapi id 15.20.8792.034; Sat, 7 Jun 2025
- 00:52:29 +0000
-Message-ID: <ccb22f13-c717-478d-ab0f-ab4fbb0a8862@nvidia.com>
-Date: Fri, 6 Jun 2025 17:52:16 -0700
+ 00:54:31 +0000
+Message-ID: <9ca45c27-7d1c-4bcf-bcc9-baa24fb7c95d@nvidia.com>
+Date: Fri, 6 Jun 2025 17:54:29 -0700
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 10/29] x86/resctrl: Change generic domain functions to
- use struct rdt_domain_hdr
+Subject: Re: [PATCH v5 22/29] x86,fs/resctrl: Handle domain creation/deletion
+ for RDT_RESOURCE_PERF_PKG
 To: Tony Luck <tony.luck@intel.com>,
  Reinette Chatre <reinette.chatre@intel.com>,
  Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
@@ -56,14 +56,14 @@ To: Tony Luck <tony.luck@intel.com>,
  Chen Yu <yu.c.chen@intel.com>
 Cc: x86@kernel.org, linux-kernel@vger.kernel.org, patches@lists.linux.dev
 References: <20250521225049.132551-1-tony.luck@intel.com>
- <20250521225049.132551-11-tony.luck@intel.com>
+ <20250521225049.132551-23-tony.luck@intel.com>
 Content-Language: en-US
 From: Fenghua Yu <fenghuay@nvidia.com>
-In-Reply-To: <20250521225049.132551-11-tony.luck@intel.com>
+In-Reply-To: <20250521225049.132551-23-tony.luck@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: BY5PR13CA0023.namprd13.prod.outlook.com
- (2603:10b6:a03:180::36) To DM6PR12MB2667.namprd12.prod.outlook.com
+X-ClientProxiedBy: PH8P222CA0020.NAMP222.PROD.OUTLOOK.COM
+ (2603:10b6:510:2d7::32) To DM6PR12MB2667.namprd12.prod.outlook.com
  (2603:10b6:5:42::28)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -73,451 +73,188 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: DM6PR12MB2667:EE_|PH0PR12MB7930:EE_
-X-MS-Office365-Filtering-Correlation-Id: 0f28e92a-4855-4614-ffbc-08dda55d9098
+X-MS-Office365-Filtering-Correlation-Id: d24005ef-cc22-467f-a069-08dda55ddd16
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
 	BCL:0;ARA:13230040|376014|7416014|1800799024|366016|7053199007|921020;
 X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?TURpU0RaWXF4a1NYSmJSNEZVb2treWRtUTZ2NDlMUGFQUjIrZU83MWQ3KzYr?=
- =?utf-8?B?M2wydmpLcSs3S2QrTnpKTVZKV1djMTlCYUJDOWE1WkxscjNRQVhBcUczbW9R?=
- =?utf-8?B?UHo3ZFlZOW5FcGxnUHpaMTdEVWtHV0xJbUdsNENPelF0alN5dGpSNjJ3WTJl?=
- =?utf-8?B?bUtPVWtDQ0hjWExlakRoU3JSdFFQU09oU1BkRlJ6Y1BpK0Zqdk5BdUEwdVl1?=
- =?utf-8?B?cEdoY2lhYTBweDNSSVE2TEFhQUFmQkw2MEY1VVZmRDRpNzZuaFZzeDVKUmxn?=
- =?utf-8?B?bW9nOWRaZG1LR1lNeHBpZEdkVnc1UERVL2JDaGk3dTlGdmZnZVAxL0lBNVJN?=
- =?utf-8?B?ZVRIa05nam1XRmFlU3psaW5HK0NmWWZrLzVYYXB6WjJLbVJxUFRGeDc5eE13?=
- =?utf-8?B?VUhkb0htbVIvN25hOXJxVGZoakI0Y05YYW5rL1pXcUFqTXdGU1hXeWpRUXlN?=
- =?utf-8?B?dGxyUVdiV2lJVDNJR0l3M0Qvd2VUdjFEL2p0VlVzN29BQXloaFA0ckZTazdi?=
- =?utf-8?B?cGJQZml4TGQ0dFB5NDE1OUlLWnA4TjNPUC8renVRd1JMU2ZINFpQSitkZUkx?=
- =?utf-8?B?SG5UWmttWHZJeHo0c1lPOVhKcElqbkRSRmJMTkREM3U3TUorNjE3dG9CT1FJ?=
- =?utf-8?B?aUg2MlArdnJPMlRveWJVTnUwalA0ZGNiVUZuYkE1THVYTW1UcVlpNVdUMFBj?=
- =?utf-8?B?OUdNWFRpZzROTkZTaW1MUXkrTVJQdDlVMFZ2UHV0UWtuWHZQUEd4Z2loVnM3?=
- =?utf-8?B?Z3JmK3ZnVFNrRUJjVXJXRzFTcGx0K0NXbFFhNmZJRDFsU3VkWVhSR3pHTDlt?=
- =?utf-8?B?S2xxR1U1SXJqcTFqa29NWXJEKzVsUHdpZTVUUXNqNUo0S29iRVd5d2IwSGlp?=
- =?utf-8?B?djIwMVRCWFM4OWl5bmNLa2FYMmpwYiszWkVxWXRBS0tGS1MrYWJ6Q0h3Kzcy?=
- =?utf-8?B?MEdCVlAyRVExYkt4MnQvM2gvL1pzSDJWbTE1WTdyREJibHppWGUrcDJXMzh2?=
- =?utf-8?B?WkFvK2NORHgydXdyVnBBSTJ2QW9LTDViVDcycmh1OVpsdkZFVEplSmVTQm1y?=
- =?utf-8?B?MG5JSmQrS3Zsd2RybnFyYXVBZ0UwTFBzZ1RrY0NBSWtHSWduS3VRVmJvdi9Q?=
- =?utf-8?B?Qlgva0NTV2NlOEc1ZU01K1VCdFBrZVhYek5Db0NwRHZhQ0puY0x2bkFyTHpM?=
- =?utf-8?B?dDMrU3QvZEtPaXJySUl1THFRY1RTc2lJeW1lRTZDaUg1b250QXgzdndjR1FN?=
- =?utf-8?B?cU4vMnMzSDRoRFJUQXUxTy8wTWtiQTlKVU9YR3h0VUhMT1R0dG9GQ1gvRE8y?=
- =?utf-8?B?VEpLcHlBRXpBbXZBTXE2MjFrZU56am40QkhabXAyS09Sa3V1Vk1lSWJLV0NZ?=
- =?utf-8?B?dEpMU2t2bXRoWm1UejVzazlNMVo2ZHNhN3pJTnc4djNkQ21IaHNnc05PV280?=
- =?utf-8?B?ajh4aWRNZXFYSXdBMzM4aC95QTRORHhRcTNGVTNxd3NvSXF0S214ZVlTY3BR?=
- =?utf-8?B?TDMvbCtJRzNFY2ZIeVBuY2wyclNxSXBTK2Ezd3F0RjN1aVl6RU1ra0NnUHAy?=
- =?utf-8?B?bXhrODduSURrVmRIZlgwNnpCVGd4NllKdU5YekFjOHluTFdnQjBQYlRwT09S?=
- =?utf-8?B?YkFJOVN3eEFNV2xLYUdYbkIyNmR4MnMzUzEvQUhqcWNhWG56amt3RHlBOHlI?=
- =?utf-8?B?aFduSkxZdEdlL1hacERjalE0VWs3cElQbktIT0NsRTY5SnVVMExsUVlhT1lF?=
- =?utf-8?B?TW95RGExZlZDM2tvTlJaSTF3cGpuVnZHOXk2U2p2NjNCR2pqWFoyeEJsdStM?=
- =?utf-8?B?ZVZML3pGOWlOY2Y1TjFyYnN2YTFPYVFCMTJDclFhQ295WnZ0NHJvWlpZVUgr?=
- =?utf-8?B?eTkzdjh1MEhhd1kvUVFMOUNPQzlBbHlkeThjekxhbERlL0RjV2hWVFpTUHd5?=
- =?utf-8?B?NGNSbzFyNGVlTGYwWmYwaEFVOHFsMFFnVGlQa1RrU0tKZXpsWlZjM0JLQUZF?=
- =?utf-8?B?MXh1OXVIODJRPT0=?=
+	=?utf-8?B?cDdEQVJmbzd2YTg5dEw3K0ZyckllNlhoYzhhamJGdmlONWFIMGdQcm5YK3Nx?=
+ =?utf-8?B?em9pUXRvZ3o3TXpMaVlOb3NtV2MrQ04rL1RLaVdud0g2b3UyajlKWjhLUXpF?=
+ =?utf-8?B?T0lhUVJPbkZiQk9qdEcxN3NXQXk2UXVUZGFkZEtRM0xoY1QzWkdBWG11NExB?=
+ =?utf-8?B?OWVBTFIxSkNiYVJBN0VpeGlSUUpMU3BIbFNhYWJDSXdCUjZaa1lnRlhBbmVH?=
+ =?utf-8?B?NFZHdFdhZXVqdnRDRTdvVnZmZTFKdHl3RUMwZTc2eDNaU2xKbHQ3eGtLakhR?=
+ =?utf-8?B?eDhybmZBamFleTJ6eGVOcVNrS1YvZzBqYU5nbzZhSlpoMk8vRnk3RVNpajNv?=
+ =?utf-8?B?cDQvSzIwY0FNTWJZMGVTZFVnRFB0THF5NFVwU0VFRE9FVytGeXBsa0F3dDZP?=
+ =?utf-8?B?OGVEaktBN2VCUFNhT1VWNVBzdWRXYVIyT0x3dEJDZkdLWEdVZVVvOEYvOU9i?=
+ =?utf-8?B?TVpHYlZuUGo5dGdLb2hBeXFpdTdxTXIzNDVJbUpaVWltN1BHVlcwR3Bmdk0v?=
+ =?utf-8?B?Q0FXUUNITmV3a0VWYVphNGsxUGRzbmNManBUQ0x3ZTk3eUxjMGVnZTZtUlBZ?=
+ =?utf-8?B?RmVZTnlYNXcrR2dBK1NyTnpURHlxQksvWjlqTTlpMndTaUF2MHJBNVVOZkRT?=
+ =?utf-8?B?aGxoSHgvZXZKNVo1czBhRmxDMjlDQzRyZ3luZ1ZvTVZ5bVZuT0EyeVZPSlFX?=
+ =?utf-8?B?Q2tqS0R0QjdTOGthYVFVcWVYS3hrckxqeHh4QU1ONktlREdmM0tua0NMSDlJ?=
+ =?utf-8?B?dXdkOWtwNkN5UnFOVHE3d0JBQ1JRekFYVDFBNGNaWHZ0VmhNVWVNLzRTM1lZ?=
+ =?utf-8?B?QmZKQWVPZkxrclJ0SHlVNnpSeE4vTmFJUmtyR20rUnVpTmp1U3BPbXoyWEFR?=
+ =?utf-8?B?aWM0ZDJtaFo0cTcwbjlmOW1SY2E4WmU5cDNlVGp1Z1pnYm5SbjZ0VEIxVzYy?=
+ =?utf-8?B?SmcwVjZxUHpxcXFtdWJ6N2tJTjVQNWFFUXMvVno3S0cwN1RDQ0JCam8xM0xE?=
+ =?utf-8?B?NHZPbTBoc0ZYNTBjemdvUGI0MWR0MExEL29wcjJzSW1WUG8rNXIwdEw4SDkr?=
+ =?utf-8?B?ek12TTJEdTlBRTdPNjJSRDRFbkhCOExoU0pKVGlnOW1LbnVEREZmRldwMDhn?=
+ =?utf-8?B?RUo0L3JWcHo2RnhiY2lWWnI5QlR2WlZ0KzNVclFxQ2ZVdTdqR0x1MU9kN2Y0?=
+ =?utf-8?B?UjdUNEdjUGxoM21heXlVNmprQkZzVDFTbnoxWWw5SEc5SFhjWHRIVXMzUE1w?=
+ =?utf-8?B?bU5IOGw4MDU3ZzlreVNQZEFPalJmdldrTU81UmgybU5tZzAyaUN5TEVtL1Ju?=
+ =?utf-8?B?TlVwbHUrOXhBNThkWU12QVN0RkJsR3o5cnNkZjNPMFk5aGNSZnFYYVdiOU5V?=
+ =?utf-8?B?RmhFSUt5UzJBaW92ZEdFVEpRblFUb1N5UWI2d3Iva1A5RGxmemxldkVSUDBw?=
+ =?utf-8?B?enM5eWRTNkxnaU42OU5jN1pDc0svNU8xV1NLREgxK3FXU25zUlBPVHVrb29m?=
+ =?utf-8?B?TmdwcXNBdDJOSFoxSHVodmd1RUJTLzNHbExqT0ZyclprZjJsNnAvY3RWODRL?=
+ =?utf-8?B?UDFiNllHU0NKZGtQM2VQajRMREhtbnBteURTNXUyalNkWStxN2tKY3RveUVl?=
+ =?utf-8?B?MTBLbExrQ3J3Q3BJeUcvaEtWTU50Y2dWeGV3OEFyVjFsb0tJYnlGZG5QcE1n?=
+ =?utf-8?B?M0JYZGRiRzdLQWRkRFBGNTZpUVZHN3F5V0lqNExlVHlPN09jbzFXOS9GS2FH?=
+ =?utf-8?B?SlBnbllOaWVLaGozcEJ5a00wMlBUL3pnR2hzckplTWJHRmhVTEdxMnhKNDMv?=
+ =?utf-8?B?aHZYZlZBelBEeFQxWVlRVFc0MSsyclJFTjBPSlR5cFhBdFRoYVdPWTc4ZU5Y?=
+ =?utf-8?B?L0NhU25Ua0JmcW03MkRkczltRHdRSUZsUTE1VVcramU3bFIyanQwU3JjUDFm?=
+ =?utf-8?B?czNveWpIMEtGT0NXRmZiSngra2ZTajBpNUp1TlRZeFgwMUhuYWhTaFFlVGhR?=
+ =?utf-8?B?RzcwMU1OMkNBPT0=?=
 X-Forefront-Antispam-Report:
 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB2667.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(7416014)(1800799024)(366016)(7053199007)(921020);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?UHBPRjhXcElYczlPeDR0RW1UVG10UnVDVHVRNWpaOGlmUjQrRU9mcnRVb3kw?=
- =?utf-8?B?WDZhQVUzTlUyNWpRSGVDS3BhT2c4L0FJcXZCd0NWTmRUWUJ0RnBwN05ML2Fk?=
- =?utf-8?B?YmJmbTRXOU45M1hlT05wWFF4eW5kRE1MbnlJTmxhTkROY2tpS1dFb05SaDZE?=
- =?utf-8?B?UDNtdFQ3dU1Ka0dKcjZyZy95dm1VMjVUcERFV2lqVnhlcWJkc2ZNSGlNQzA5?=
- =?utf-8?B?a1FqUDlwR2RVSnNyNHZRaEZMRnB1S3VpNDdqZ3ZiVVkwcWN1UEgyUUY5OXpy?=
- =?utf-8?B?VHhPVXptdGFtMkJTRXQ1NGd6RzBwcDlJQ3YwK2EvaG5rc2dWQjFyUlZhWGdN?=
- =?utf-8?B?ay9icVhCTDZqWFVLWVhMV3gxdGRkcGJVTEI1Uk5QemRDSmQwL2J5bWp6dFBx?=
- =?utf-8?B?bkJQZll2RGJnSzRMVlNUN2phOWNpeUp4K1I2V3Y2YjhDVGpmaURETVJlT2RU?=
- =?utf-8?B?QXdlL0cyRXpnem02Y0tpejUzL3FhNHFEdVpCRWxYeDJSSm83VnhxYlNzUGlh?=
- =?utf-8?B?NEl1QTM4TWRYYXp4MFBxYkF6ZHZpR3RoNXZranFCVlN5d2g1R2h1Nm9LRWpo?=
- =?utf-8?B?cFBKL0dSRGs3WEFvVUUxb2JCTVhSRlVjM3pKMmJDRDkrV2JRM252NHpvdWtH?=
- =?utf-8?B?NTBXaWdjOE10YkxSUkhNd21qREtCZ05vY3U3RW5Sa2FsUmljSDlpWEVZM250?=
- =?utf-8?B?QU9MeDl4NzJtUE5KWVU1eGpEeGV4RThqT0VEejUyNnkrT3dGQWtyczZ3ZVFM?=
- =?utf-8?B?VFVpcTNTQjZSWXNVVklLN0RBVWpwWGlaZXRucmVBUTVURk0zYTVnZjBUazRQ?=
- =?utf-8?B?SzBmQVlRWXJGL0grTlNzZTB6elY4RUFiWTMzWWhINisxV0NNTFRtMTk0Z2V0?=
- =?utf-8?B?ZFlwRTAzSzJ2Z3NJUlNWNDlrS1duWTNvdS9SU0hheURWRGdEdHJ3emsrSjl2?=
- =?utf-8?B?VTFQNFFmRHpGdEluU3dpZy8yK1psbEl4dXRUM0NRMXpmSjZQSE1UZnB4c1Ja?=
- =?utf-8?B?eTNPM0JWLzlKUGh2VkV6R3RFOTZkRlpPdG9STmFIWnRqNDFDTWwxL0gyYUNp?=
- =?utf-8?B?Y3ZndHJJOUc2OUhvS01rYkdMZ29qNUJiM296SVpBYzVzbmdPWkdITXhzTjR0?=
- =?utf-8?B?SVVibGV1bW9xcmFML0JtR1BFMUZ0dCtDVmhaeXoyOEpPNFFTaXlSWU53THRj?=
- =?utf-8?B?UG81bGFjc1E2ZEkzRzZCUGZ6aitKakxjK1h5RExIYXJSVURLajZxWnNIUDlW?=
- =?utf-8?B?SUZyaVNXVGJHWEdhR2ZJQVlrcHdoRUdCMkwxQ1lDdVl1Z2V5MS9FcndRdWlD?=
- =?utf-8?B?aDExRjQ0UjJEbUtXYWM3N25xMkdnNGY1bTNTN3VHMU5KZVZ4dm04cGJVZm5I?=
- =?utf-8?B?Y1BSMXc4bGV6cmFmRjdaTWUzeGxuTytzWjkxMTNXZTJnU3ZFWDJ6WHhyVGlQ?=
- =?utf-8?B?YUpCRnFrdjZJV0txSitVMTFQTXNhOFVHR1NYNU4rVU5QbklOUTQzVVBMUG9L?=
- =?utf-8?B?NnRvTURZSSsweVBka000dWowa25ZR3liMjErMWU1ZG1iWnZvdzhWVUI0UEh5?=
- =?utf-8?B?dUxoend4QWdBcVdHNHZvMGFEWjNKUXVReHFnOVBleWhqWVZaNWJ0ZHVFc0tl?=
- =?utf-8?B?Ny9KM0lLT1FxaWdhaFFnK2Q1bjV5NDBuWEFtNUdOQit4Q2Npc1hrZm5CVzVr?=
- =?utf-8?B?T0ZIWmZPSG5NRFZjb09KY1cxOVloV2tpeThnWlNkOHJ6YlhvY0EwV2M2c3Vw?=
- =?utf-8?B?bkE2eEFoTmFPYkY4YVpKa2ZoQll6L3lieUdoZkZkS3FmNDBMTHQycWpDak8r?=
- =?utf-8?B?TUcrc25IV2JydENMRnlKYm4yT1o0MEhPZTRvd09MWldtN3RvMVVQR0hHZEJD?=
- =?utf-8?B?Zk1WSXJ3MWVrWGZFWW11aW5TTVJ5YjFEMjFkOFdiU0xhVTc4TTY1bTVqdzlo?=
- =?utf-8?B?dlBIYnVKckxUMjg1NDZBeFZYeXgwZXFNL3NUUFVmZjFVV2Z5M1pzM2NCMHJ4?=
- =?utf-8?B?OXY2Vjl6a0thSzRaQ1lmanlUc2NqVGJ0OU8yZUZnOXRmelppd2xacWM3dnpj?=
- =?utf-8?B?eUVoQ3ZROGh2cHFtS2FDeU1CRTY2QW1UaW9FZ3ZtckdBdjIrbUZiRHNmd0pQ?=
- =?utf-8?Q?n4zc9ssXQd3el7B1iPvMV1ueS?=
+	=?utf-8?B?S0o1ZUpkamswNkpqeFpaMjQ0S0J4dkhTWTI4Tm8xblN0MHNOZDFKRzdmai9E?=
+ =?utf-8?B?d1ZhUnRQeitPOC9JTWc4Nk1aSFhaTlZUS0ZiYTBvOGxLTkNnU2JwQTBzRUh6?=
+ =?utf-8?B?S21rYW0zUnZ6eVpoaEJCSUt2empLbElVWDhtMUJ3SGFOS2Z5THdHQTFHUkFS?=
+ =?utf-8?B?S1dyMEZnV2U0dks4YWk5RWtDN0ticldvVnZZNnhzMENmMGRhNlNCZlh6Qzl4?=
+ =?utf-8?B?K2laOEJkOUJvazVTaGpZNlAxckE0U2VKSmhkeGtXeCtmRjZRT1JlNnErakdX?=
+ =?utf-8?B?MjJFRDh2TCtOMnFqT0ZmZjNzeUhONjN2M052ejBKSGRoNlVEVG1PeWNGMHZu?=
+ =?utf-8?B?SVNWdmRTb09LNGxaeWN3WHQ5U0tmdHVBV1Vmd3NwbjJxdm54b0ZiWHRQREE2?=
+ =?utf-8?B?OUEydEhMUVdmelNSQkVEMWhnZ25RMExXV2hHSWd5WkVtU2doWU4vSHk1bzU1?=
+ =?utf-8?B?V2FLelhEMXN3VThHaDI3ZjlPL1U4UUpBcGNCU3d3Z2hONVBKTDY2SkJhOGQ1?=
+ =?utf-8?B?bkhibU1iRGtyUzRtai9ISUE0VDRCUE5MdDg2YzhyWUpTKzRacWYrQnMwT2Z3?=
+ =?utf-8?B?enp4OHNKMFA2TGhNK0wxbzFVL0k2SDR4YWlWdjl2RDV2TTdVck4yZTNuc0sv?=
+ =?utf-8?B?RHVsaG03ei9QNFh6a21YVTFwY3h2NStRVzA0QzBDbTJ4SS83K2k0ZGJQQnVn?=
+ =?utf-8?B?dTNPL0hQVW4zSEZzZ3ZxMktHckhzSCtRN0laTTBZU1Fqck5tRC9tSzdMWmhy?=
+ =?utf-8?B?cEFJUEk1T0JWbkw3OVFnU0xrU3FRbG1pQjBUTVNJWUhidVR1cDBJdDI3Nndw?=
+ =?utf-8?B?RUI4OFllV3lndWZRZ1E4V0xiMTQrUVJxVFdobzl1aUNwNURhMFRpckJqZGxQ?=
+ =?utf-8?B?MmRxVUlWUFFrdHZNU1B4RVEvaTdwRVlHZkw1V3hUM0ZZSy9qa0cyemgyclN6?=
+ =?utf-8?B?NlVybm91VjNkWkpUdEtnTCtyaG9OUUtVVEFYdUZmMWFKTGJEQ2xsanBKZVhw?=
+ =?utf-8?B?TGFyU0M4TFdhaDZRNTRuWXhqSndlQ0JISTdwcjNHQlg3NlhsaUhjcnBneXhT?=
+ =?utf-8?B?MTVmdDVxM29nTDBzYXNPek05bC80aVlSYWFYQjVqL0g4ZnN4cG4xT2ZuM0xL?=
+ =?utf-8?B?QVRqQzJVb2lNMERHQjFINmNOUzBDWTdLVStmRUVlb0t5bmRHTm1mZ1NkSHhV?=
+ =?utf-8?B?OG8zM1pBWU16ZlBEODQ5elVxUlB6MkRFaHBsNGptQ2ZwLzZVYkRBYU4valZP?=
+ =?utf-8?B?QThRazFKZSs2bE9UZkoyWlVVNlJhaC9UaWduTUNJRTkreWNpczRKWUNvOTNl?=
+ =?utf-8?B?OEtMcGgyNjdXM1lwMTFtS0RmaXpJT1ROQVd0Wmk1TVNLQ3o3d3l2NU90aUJH?=
+ =?utf-8?B?UGxvQURBUlRGTHY1WjQ0Z3BwWkE4K0xPak5tMUcrMktrQ0tXS1BMVXBqUG05?=
+ =?utf-8?B?aHlPeEhmU21MTUM1dmM5bW1pRWNmVkFTQ1p0c3lzaktKd2ZhaHovUmFISVJD?=
+ =?utf-8?B?ZG41ODgzL1VlenRNaXBtY0tScVBkZnNKYjRoa2VWTVRQbVpyTm90aFNVOFdG?=
+ =?utf-8?B?cVcySUVFeC8xNkZGeVlubmNhMFdMSjJiS2ZaNmltS0k1WGl0b1ZsNnltaVVJ?=
+ =?utf-8?B?ZUNaV2VOTGFwODJPV0t6YTY4dGpDOVVTcG9sb0lRMzFvM1lIOHFWTkFQRXJy?=
+ =?utf-8?B?Y2M5bmdmMkpzM2hTMnM1UjE4RFJ5anZNU0FPbG5iNU5hNHpESjJUVlBQQXly?=
+ =?utf-8?B?aXNLQVRKUThndGJlRWZJTEdPZVNrMUxPWXgyYkVXTEVUcjhZNlU5ekh0Tyt6?=
+ =?utf-8?B?MzB6WS92Nk8wWHFyTXp3WTVMNTlVSnRCNExxbSt1QzFjdlplaWcvUDRPYVdL?=
+ =?utf-8?B?dFVaU05GUmx6cUtveEI0U3dQcDlZYVBxYWgyckgweVlSV3RCNEE4NmlCM0ZO?=
+ =?utf-8?B?cDVxckQ4S2hXODRxUSt1S0NIQlRUSjNJNzV6amw1TnNsSTR6NFdLblA3aUl3?=
+ =?utf-8?B?dnhpbXhTdzZrM1BMa3NWUXFENGNBZUJuTGZNWDZuc2ZJYlMxNEtZbEtIUGQx?=
+ =?utf-8?B?TWlZd3pxVlFaK2dMZU1tM0wxdUtxaE0wWlE5U2U1VDdxVGhXUHI0OFFZUTJY?=
+ =?utf-8?Q?iC5yCK+FVR9vvYbMUd16yNxD2?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0f28e92a-4855-4614-ffbc-08dda55d9098
+X-MS-Exchange-CrossTenant-Network-Message-Id: d24005ef-cc22-467f-a069-08dda55ddd16
 X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB2667.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Jun 2025 00:52:29.8008
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Jun 2025 00:54:31.7990
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: g8Z5cRvGw7itx3kLQuXRAslCRk4WfyXDucnzoDEk/cOGppAKaIGaa8bKPZz/F+mTIYvoS9Q43MrwwjGp38g3Ig==
+X-MS-Exchange-CrossTenant-UserPrincipalName: SFbdEq0c0TQfV7QH3zAinDD+bztktb7pb76eDEoEmpk7TOY5NUA6ujU6bRhgF/exC1x04AA/R0uay0YIxRBMEg==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR12MB7930
 
 Hi, Tony,
 
 On 5/21/25 15:50, Tony Luck wrote:
-> Historically all monitoring events have been associated with the L3
-> resource and it made sense to use "struct rdt_mon_domain *" arguments
-> to functions manipulating domains. But the addition of monitor events
-> tied to other resources changes this assumption.
+> The L3 resource has several requirements for domains. There are structures
+> that hold the 64-bit values of counters, and elements to keep track of
+> the overflow and limbo threads.
 >
-> Some functionality like:
-> *) adding a CPU to an existing domain
-> *) removing a CPU that is not the last one from a domain
-> can be achieved with just access to the rdt_domain_hdr structure.
+> None of these are needed for the PERF_PKG resource. The hardware counters
+> are wide enough that they do not wrap around for decades.
 >
-> Change arguments from "rdt_*_domain" to rdt_domain_hdr so functions
-> can be used on domains from any resource.
+> Define a new rdt_perf_pkg_mon_domain structure which just consists of
+> the standard rdt_domain_hdr to keep track of domain id and CPU mask.
 >
-> Add sanity checks where container_of() is used to find the surrounding
-> domain structure that hdr has the expected type.
->
-> Simplify code that uses "d->hdr." to "hdr->" where possible.
+> Change domain_add_cpu_mon(), domain_remove_cpu_mon(),
+> resctrl_offline_mon_domain(), and resctrl_online_mon_domain() to check
+> resource type and perform only the operations needed for domains in the
+> PERF_PKG resource.
 >
 > Signed-off-by: Tony Luck <tony.luck@intel.com>
 > ---
->   include/linux/resctrl.h            |  4 +-
->   arch/x86/kernel/cpu/resctrl/core.c | 39 +++++++-------
->   fs/resctrl/rdtgroup.c              | 83 +++++++++++++++++++++---------
->   3 files changed, 79 insertions(+), 47 deletions(-)
+>   arch/x86/kernel/cpu/resctrl/core.c | 41 ++++++++++++++++++++++++++++++
+>   fs/resctrl/rdtgroup.c              |  4 +++
+>   2 files changed, 45 insertions(+)
 >
-> diff --git a/include/linux/resctrl.h b/include/linux/resctrl.h
-> index d6b09952ef92..c02a4d59f3eb 100644
-> --- a/include/linux/resctrl.h
-> +++ b/include/linux/resctrl.h
-> @@ -444,9 +444,9 @@ int resctrl_arch_update_one(struct rdt_resource *r, struct rdt_ctrl_domain *d,
->   u32 resctrl_arch_get_config(struct rdt_resource *r, struct rdt_ctrl_domain *d,
->   			    u32 closid, enum resctrl_conf_type type);
->   int resctrl_online_ctrl_domain(struct rdt_resource *r, struct rdt_ctrl_domain *d);
-> -int resctrl_online_mon_domain(struct rdt_resource *r, struct rdt_mon_domain *d);
-> +int resctrl_online_mon_domain(struct rdt_resource *r, struct rdt_domain_hdr *hdr);
->   void resctrl_offline_ctrl_domain(struct rdt_resource *r, struct rdt_ctrl_domain *d);
-> -void resctrl_offline_mon_domain(struct rdt_resource *r, struct rdt_mon_domain *d);
-> +void resctrl_offline_mon_domain(struct rdt_resource *r, struct rdt_domain_hdr *hdr);
->   void resctrl_online_cpu(unsigned int cpu);
->   void resctrl_offline_cpu(unsigned int cpu);
->   
 > diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
-> index e4125161ffbd..71b884f25475 100644
+> index 64ce561e77a0..18d84c497ee4 100644
 > --- a/arch/x86/kernel/cpu/resctrl/core.c
 > +++ b/arch/x86/kernel/cpu/resctrl/core.c
-> @@ -458,9 +458,7 @@ static void domain_add_cpu_ctrl(int cpu, struct rdt_resource *r)
->   	if (hdr) {
->   		if (!domain_header_is_valid(hdr, RESCTRL_CTRL_DOMAIN, r->rid))
->   			return;
-> -		d = container_of(hdr, struct rdt_ctrl_domain, hdr);
-> -
-> -		cpumask_set_cpu(cpu, &d->hdr.cpu_mask);
-> +		cpumask_set_cpu(cpu, &hdr->cpu_mask);
->   		if (r->cache.arch_has_per_cpu_cfg)
->   			rdt_domain_reconfigure_cdp(r);
->   		return;
-> @@ -524,7 +522,7 @@ static void l3_mon_domain_setup(int cpu, int id, struct rdt_resource *r, struct
->   
->   	list_add_tail_rcu(&d->hdr.list, add_pos);
->   
-> -	err = resctrl_online_mon_domain(r, d);
-> +	err = resctrl_online_mon_domain(r, &d->hdr);
->   	if (err) {
->   		list_del_rcu(&d->hdr.list);
->   		synchronize_rcu();
-> @@ -597,25 +595,24 @@ static void domain_remove_cpu_ctrl(int cpu, struct rdt_resource *r)
->   	if (!domain_header_is_valid(hdr, RESCTRL_CTRL_DOMAIN, r->rid))
->   		return;
->   
-> +	cpumask_clear_cpu(cpu, &d->hdr.cpu_mask);
-> +	if (!cpumask_empty(&hdr->cpu_mask))
-> +		return;
-> +
->   	d = container_of(hdr, struct rdt_ctrl_domain, hdr);
->   	hw_dom = resctrl_to_arch_ctrl_dom(d);
->   
-> -	cpumask_clear_cpu(cpu, &d->hdr.cpu_mask);
-> -	if (cpumask_empty(&d->hdr.cpu_mask)) {
-> -		resctrl_offline_ctrl_domain(r, d);
-> -		list_del_rcu(&d->hdr.list);
-> -		synchronize_rcu();
-> -
-> -		/*
-> -		 * rdt_ctrl_domain "d" is going to be freed below, so clear
-> -		 * its pointer from pseudo_lock_region struct.
-> -		 */
-> -		if (d->plr)
-> -			d->plr->d = NULL;
-> -		ctrl_domain_free(hw_dom);
-> +	resctrl_offline_ctrl_domain(r, d);
-> +	list_del_rcu(&hdr->list);
-> +	synchronize_rcu();
->   
-> -		return;
-> -	}
-> +	/*
-> +	 * rdt_ctrl_domain "d" is going to be freed below, so clear
-> +	 * its pointer from pseudo_lock_region struct.
-> +	 */
-> +	if (d->plr)
-> +		d->plr->d = NULL;
-> +	ctrl_domain_free(hw_dom);
+> @@ -540,6 +540,38 @@ static void l3_mon_domain_setup(int cpu, int id, struct rdt_resource *r, struct
+>   	}
 >   }
 >   
->   static void domain_remove_cpu_mon(int cpu, struct rdt_resource *r)
-> @@ -651,8 +648,8 @@ static void domain_remove_cpu_mon(int cpu, struct rdt_resource *r)
+> +/**
+> + * struct rdt_perf_pkg_mon_domain - CPUs sharing an Intel-PMT-scoped resctrl monitor resource
+> + * @hdr:	common header for different domain types
+> + */
+> +struct rdt_perf_pkg_mon_domain {
+> +	struct rdt_domain_hdr   hdr;
+> +};
+> +
+> +static void setup_intel_aet_mon_domain(int cpu, int id, struct rdt_resource *r,
+> +				       struct list_head *add_pos)
+> +{
+> +	struct rdt_perf_pkg_mon_domain *d;
+> +	int err;
+> +
+> +	d = kzalloc_node(sizeof(*d), GFP_KERNEL, cpu_to_node(cpu));
+> +	if (!d)
+> +		return;
+> +
+> +	d->hdr.id = id;
+> +	d->hdr.type = RESCTRL_MON_DOMAIN;
+> +	d->hdr.rid = r->rid;
+> +	cpumask_set_cpu(cpu, &d->hdr.cpu_mask);
+> +	list_add_tail_rcu(&d->hdr.list, add_pos);
+> +
+> +	err = resctrl_online_mon_domain(r, &d->hdr);
+> +	if (err) {
+> +		list_del_rcu(&d->hdr.list);
+> +		synchronize_rcu();
+> +		kfree(d);
+> +	}
+> +}
+> +
+>   static void domain_add_cpu_mon(int cpu, struct rdt_resource *r)
+>   {
+>   	int id = get_domain_id_from_scope(cpu, r->mon_scope);
+> @@ -567,6 +599,9 @@ static void domain_add_cpu_mon(int cpu, struct rdt_resource *r)
 >   	case RDT_RESOURCE_L3:
->   		d = container_of(hdr, struct rdt_mon_domain, hdr);
->   		hw_dom = resctrl_to_arch_mon_dom(d);
-> -		resctrl_offline_mon_domain(r, d);
-> -		list_del_rcu(&d->hdr.list);
+>   		l3_mon_domain_setup(cpu, id, r, add_pos);
+>   		break;
+> +	case RDT_RESOURCE_PERF_PKG:
+> +		setup_intel_aet_mon_domain(cpu, id, r, add_pos);
+> +		break;
+>   	default:
+>   		WARN_ON_ONCE(1);
+>   	}
+> @@ -666,6 +701,12 @@ static void domain_remove_cpu_mon(int cpu, struct rdt_resource *r)
+>   	default:
+>   		pr_warn_once("Unknown resource rid=%d\n", r->rid);
+>   		break;
+> +	case RDT_RESOURCE_PERF_PKG:
 > +		resctrl_offline_mon_domain(r, hdr);
 > +		list_del_rcu(&hdr->list);
->   		synchronize_rcu();
->   		l3_mon_domain_free(hw_dom);
->   		break;
-> diff --git a/fs/resctrl/rdtgroup.c b/fs/resctrl/rdtgroup.c
-> index 828c743ec470..0213fb3a1113 100644
-> --- a/fs/resctrl/rdtgroup.c
-> +++ b/fs/resctrl/rdtgroup.c
-> @@ -3022,7 +3022,7 @@ static void mon_rmdir_one_subdir(struct kernfs_node *pkn, char *name, char *subn
->    * when last domain being summed is removed.
->    */
->   static void rmdir_mondata_subdir_allrdtgrp(struct rdt_resource *r,
-> -					   struct rdt_mon_domain *d)
-> +					   struct rdt_domain_hdr *hdr)
->   {
->   	struct rdtgroup *prgrp, *crgrp;
->   	char subname[32];
-> @@ -3030,9 +3030,17 @@ static void rmdir_mondata_subdir_allrdtgrp(struct rdt_resource *r,
->   	char name[32];
->   
->   	snc_mode = r->mon_scope == RESCTRL_L3_NODE;
-> -	sprintf(name, "mon_%s_%02d", r->name, snc_mode ? d->ci->id : d->hdr.id);
-> -	if (snc_mode)
-> -		sprintf(subname, "mon_sub_%s_%02d", r->name, d->hdr.id);
-> +	if (snc_mode) {
-> +		struct rdt_mon_domain *d;
-> +
-> +		if (!domain_header_is_valid(hdr, RESCTRL_MON_DOMAIN, r->rid))
-> +			return;
-> +		d = container_of(hdr, struct rdt_mon_domain, hdr);
-> +		sprintf(name, "mon_%s_%02d", r->name, d->ci->id);
-> +		sprintf(subname, "mon_sub_%s_%02d", r->name, hdr->id);
-> +	} else {
-> +		sprintf(name, "mon_%s_%02d", r->name, hdr->id);
-> +	}
->   
->   	list_for_each_entry(prgrp, &rdt_all_groups, rdtgroup_list) {
->   		mon_rmdir_one_subdir(prgrp->mon.mon_data_kn, name, subname);
-> @@ -3042,11 +3050,12 @@ static void rmdir_mondata_subdir_allrdtgrp(struct rdt_resource *r,
+> +		synchronize_rcu();
+> +		kfree(container_of(hdr, struct rdt_perf_pkg_mon_domain, hdr));
+> +		break;
 >   	}
->   }
->   
-> -static int mon_add_all_files(struct kernfs_node *kn, struct rdt_mon_domain *d,
-> +static int mon_add_all_files(struct kernfs_node *kn, struct rdt_domain_hdr *hdr,
->   			     struct rdt_resource *r, struct rdtgroup *prgrp,
->   			     bool do_sum)
->   {
->   	struct rmid_read rr = {0};
-> +	struct rdt_mon_domain *d;
->   	struct mon_data *priv;
->   	struct mon_evt *mevt;
->   	int ret, domid;
-> @@ -3054,7 +3063,14 @@ static int mon_add_all_files(struct kernfs_node *kn, struct rdt_mon_domain *d,
->   	for (mevt = &mon_event_all[0]; mevt < &mon_event_all[QOS_NUM_EVENTS]; mevt++) {
->   		if (mevt->rid != r->rid || !mevt->enabled)
->   			continue;
-> -		domid = do_sum ? d->ci->id : d->hdr.id;
-> +		if (r->rid == RDT_RESOURCE_L3) {
-> +			if (!domain_header_is_valid(hdr, RESCTRL_MON_DOMAIN, r->rid))
-> +				return -EINVAL;
-> +			d = container_of(hdr, struct rdt_mon_domain, hdr);
-> +			domid = do_sum ? d->ci->id : d->hdr.id;
-> +		} else {
-> +			domid = hdr->id;
-> +		}
->   		priv = mon_get_kn_priv(r->rid, domid, mevt, do_sum);
->   		if (WARN_ON_ONCE(!priv))
->   			return -EINVAL;
-> @@ -3063,18 +3079,19 @@ static int mon_add_all_files(struct kernfs_node *kn, struct rdt_mon_domain *d,
->   		if (ret)
->   			return ret;
->   
-> -		if (!do_sum && resctrl_is_mbm_event(mevt->evtid))
-> -			mon_event_read(&rr, r, d, prgrp, &d->hdr.cpu_mask, mevt->evtid, true);
-> +		if (r->rid == RDT_RESOURCE_L3 && !do_sum && resctrl_is_mbm_event(mevt->evtid))
-> +			mon_event_read(&rr, r, d, prgrp, &hdr->cpu_mask, mevt->evtid, true);
->   	}
->   
->   	return 0;
->   }
->   
->   static int mkdir_mondata_subdir(struct kernfs_node *parent_kn,
-> -				struct rdt_mon_domain *d,
-> +				struct rdt_domain_hdr *hdr,
->   				struct rdt_resource *r, struct rdtgroup *prgrp)
->   {
->   	struct kernfs_node *kn, *ckn;
-> +	struct rdt_mon_domain *d;
->   	char name[32];
->   	bool snc_mode;
->   	int ret = 0;
-> @@ -3082,7 +3099,14 @@ static int mkdir_mondata_subdir(struct kernfs_node *parent_kn,
->   	lockdep_assert_held(&rdtgroup_mutex);
->   
->   	snc_mode = r->mon_scope == RESCTRL_L3_NODE;
-> -	sprintf(name, "mon_%s_%02d", r->name, snc_mode ? d->ci->id : d->hdr.id);
-> +	if (snc_mode) {
-> +		if (!domain_header_is_valid(hdr, RESCTRL_MON_DOMAIN, r->rid))
-> +			return -EINVAL;
-> +		d = container_of(hdr, struct rdt_mon_domain, hdr);
-> +		sprintf(name, "mon_%s_%02d", r->name, d->ci->id);
-> +	} else {
-> +		sprintf(name, "mon_%s_%02d", r->name, hdr->id);
-> +	}
->   	kn = kernfs_find_and_get(parent_kn, name);
->   	if (kn) {
->   		/*
-> @@ -3098,13 +3122,13 @@ static int mkdir_mondata_subdir(struct kernfs_node *parent_kn,
->   		ret = rdtgroup_kn_set_ugid(kn);
->   		if (ret)
->   			goto out_destroy;
-> -		ret = mon_add_all_files(kn, d, r, prgrp, snc_mode);
-> +		ret = mon_add_all_files(kn, hdr, r, prgrp, snc_mode);
->   		if (ret)
->   			goto out_destroy;
->   	}
->   
->   	if (snc_mode) {
-> -		sprintf(name, "mon_sub_%s_%02d", r->name, d->hdr.id);
-> +		sprintf(name, "mon_sub_%s_%02d", r->name, hdr->id);
->   		ckn = kernfs_create_dir(kn, name, parent_kn->mode, prgrp);
->   		if (IS_ERR(ckn)) {
->   			ret = -EINVAL;
-> @@ -3115,7 +3139,7 @@ static int mkdir_mondata_subdir(struct kernfs_node *parent_kn,
->   		if (ret)
->   			goto out_destroy;
->   
-> -		ret = mon_add_all_files(ckn, d, r, prgrp, false);
-> +		ret = mon_add_all_files(ckn, hdr, r, prgrp, false);
->   		if (ret)
->   			goto out_destroy;
->   	}
-> @@ -3133,7 +3157,7 @@ static int mkdir_mondata_subdir(struct kernfs_node *parent_kn,
->    * and "monitor" groups with given domain id.
->    */
->   static void mkdir_mondata_subdir_allrdtgrp(struct rdt_resource *r,
-> -					   struct rdt_mon_domain *d)
-> +					   struct rdt_domain_hdr *hdr)
->   {
->   	struct kernfs_node *parent_kn;
->   	struct rdtgroup *prgrp, *crgrp;
-> @@ -3141,12 +3165,12 @@ static void mkdir_mondata_subdir_allrdtgrp(struct rdt_resource *r,
->   
->   	list_for_each_entry(prgrp, &rdt_all_groups, rdtgroup_list) {
->   		parent_kn = prgrp->mon.mon_data_kn;
-> -		mkdir_mondata_subdir(parent_kn, d, r, prgrp);
-> +		mkdir_mondata_subdir(parent_kn, hdr, r, prgrp);
->   
->   		head = &prgrp->mon.crdtgrp_list;
->   		list_for_each_entry(crgrp, head, mon.crdtgrp_list) {
->   			parent_kn = crgrp->mon.mon_data_kn;
-> -			mkdir_mondata_subdir(parent_kn, d, r, crgrp);
-> +			mkdir_mondata_subdir(parent_kn, hdr, r, crgrp);
->   		}
->   	}
->   }
-> @@ -3155,14 +3179,14 @@ static int mkdir_mondata_subdir_alldom(struct kernfs_node *parent_kn,
->   				       struct rdt_resource *r,
->   				       struct rdtgroup *prgrp)
->   {
-> -	struct rdt_mon_domain *dom;
-> +	struct rdt_domain_hdr *hdr;
->   	int ret;
->   
->   	/* Walking r->domains, ensure it can't race with cpuhp */
->   	lockdep_assert_cpus_held();
->   
-> -	list_for_each_entry(dom, &r->mon_domains, hdr.list) {
-> -		ret = mkdir_mondata_subdir(parent_kn, dom, r, prgrp);
-> +	list_for_each_entry(hdr, &r->mon_domains, list) {
-> +		ret = mkdir_mondata_subdir(parent_kn, hdr, r, prgrp);
->   		if (ret)
->   			return ret;
->   	}
-> @@ -4030,8 +4054,10 @@ void resctrl_offline_ctrl_domain(struct rdt_resource *r, struct rdt_ctrl_domain
->   	mutex_unlock(&rdtgroup_mutex);
->   }
->   
-> -void resctrl_offline_mon_domain(struct rdt_resource *r, struct rdt_mon_domain *d)
-> +void resctrl_offline_mon_domain(struct rdt_resource *r, struct rdt_domain_hdr *hdr)
->   {
-> +	struct rdt_mon_domain *d;
-> +
->   	mutex_lock(&rdtgroup_mutex);
->   
->   	/*
-> @@ -4039,11 +4065,15 @@ void resctrl_offline_mon_domain(struct rdt_resource *r, struct rdt_mon_domain *d
->   	 * per domain monitor data directories.
->   	 */
->   	if (resctrl_mounted && resctrl_arch_mon_capable())
-> -		rmdir_mondata_subdir_allrdtgrp(r, d);
-> +		rmdir_mondata_subdir_allrdtgrp(r, hdr);
->   
->   	if (r->rid != RDT_RESOURCE_L3)
->   		goto done;
->   
-> +	if (!domain_header_is_valid(hdr, RESCTRL_MON_DOMAIN, r->rid))
-> +		return;
 
-rdtgroup_mutex is being locked right now. Cannot return without 
-unlocking it.
-
-s/return;/goto done;/
-
-> +
-> +	d = container_of(hdr, struct rdt_mon_domain, hdr);
->   	if (resctrl_is_mbm_enabled())
->   		cancel_delayed_work(&d->mbm_over);
->   	if (resctrl_is_mon_event_enabled(QOS_L3_OCCUP_EVENT_ID) && has_busy_rmid(d)) {
-> @@ -4126,12 +4156,17 @@ int resctrl_online_ctrl_domain(struct rdt_resource *r, struct rdt_ctrl_domain *d
->   	return err;
->   }
->   
-> -int resctrl_online_mon_domain(struct rdt_resource *r, struct rdt_mon_domain *d)
-> +int resctrl_online_mon_domain(struct rdt_resource *r, struct rdt_domain_hdr *hdr)
->   {
-> -	int err;
-> +	struct rdt_mon_domain *d;
-> +	int err = -EINVAL;
->   
->   	mutex_lock(&rdtgroup_mutex);
->   
-> +	if (!domain_header_is_valid(hdr, RESCTRL_MON_DOMAIN, r->rid))
-> +		goto out_unlock;
-> +
-> +	d = container_of(hdr, struct rdt_mon_domain, hdr);
->   	err = domain_setup_l3_mon_state(r, d);
->   	if (err)
->   		goto out_unlock;
-> @@ -4152,7 +4187,7 @@ int resctrl_online_mon_domain(struct rdt_resource *r, struct rdt_mon_domain *d)
->   	 * If resctrl is mounted, add per domain monitor data directories.
->   	 */
->   	if (resctrl_mounted && resctrl_arch_mon_capable())
-> -		mkdir_mondata_subdir_allrdtgrp(r, d);
-> +		mkdir_mondata_subdir_allrdtgrp(r, hdr);
->   
->   out_unlock:
->   	mutex_unlock(&rdtgroup_mutex);
+Why default is not the last one?
 
 Thanks.
 
