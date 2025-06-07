@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 589CD20A5F2;
-	Sat,  7 Jun 2025 10:10:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E81F7219E8F;
+	Sat,  7 Jun 2025 10:10:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749291000; cv=none; b=VOJbbb3t1yGJSQx/o2ZboQxMwyRsMqKe03nuT1xscd9gmvjAup2ohD202Y4nx6nxx2O1jzC48zaNG0YDPNadwyzvRyax1MLAKj8Nr8m7Eo4ubdY4Wr+X8vnX511Jdq5JlT9YdZHT0tz1n669C05D2elK1lQZFlscFqTh+ciV3VA=
+	t=1749291003; cv=none; b=pOcGvyIMK5gfnbbe8DphmcQAJXlhOcccFSHGrwtA9Nf6F9rNhUK6c4vXSWP9tfg7oscWPDFz1BXQNMgmPd5FYi9IDIjSxCbvCQ2Tmw7i5Hbj3vTJgCHBGxM4XHN3DfeG3AZfXpAA7IRSg26MPsggNKs5rC5aTev239gSxLvFfJM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749291000; c=relaxed/simple;
-	bh=8MW75Q1i/lPUrzJ+liWfmtvU2ZaXk6PtHIa9xS53G5Y=;
+	s=arc-20240116; t=1749291003; c=relaxed/simple;
+	bh=IFS+gD0322gjjTbsyLJS9UkamranNl6DeUC+C0wTbRU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cBaUWZ8RDi5Ge+Th6dIOqpAfzt0AKFGZQojJSgQOOmWyDeI106qXmGzCyx3eaCJ/LynPDLGP/2vCpF6hTVGu6VC2stSA4Zh2+J8z9SFBrLa8Vr3TTUKbdAFyzVE/paadFtp7AfjpSBdmtU2GOz1EQNjVSwzDWVp1n4L2x/Haxrc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uGLYebiK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JLBSCjCezNGvd5iZpNUHtt2MLafh18HobYRKSAhcHJpgMdAKvFGInuP7yIuwfng/L4lMgMtq/Z77/cm3L9AQ2Vjq116DABD91dioEXkK9ADSD4KGGkxQDZdWsYhJVWLSHbJZWnak8EfPWDsP/t16B2172h7qSw3riRS1lL4KfTI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pZvCKplJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uGLYebiK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA0CAC4CEE4;
-	Sat,  7 Jun 2025 10:09:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pZvCKplJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76924C4CEE4;
+	Sat,  7 Jun 2025 10:10:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1749291000;
-	bh=8MW75Q1i/lPUrzJ+liWfmtvU2ZaXk6PtHIa9xS53G5Y=;
+	s=korg; t=1749291002;
+	bh=IFS+gD0322gjjTbsyLJS9UkamranNl6DeUC+C0wTbRU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uGLYebiKWq4e9uCIlyX2MDFqTYzY49mfvqtEzQnUzp5M2XC9Ke8rK76rLhGNOuoaV
-	 qZEDGXuk9QxNrsqHZmQKpmmRG2hJm2quSIOoJVnYdSRgOUFns5Z7SDL/x1zVFT4FR5
-	 /lIBO+kvtpz4Nknjnlq+iNIrCiJ9qLzhJ6edNuJw=
+	b=pZvCKplJorU7aENrNW0BRmLwGMYQJVTsZPP196tdi3AXBW9rniTpkTTYyz1iAFO4S
+	 x1R0yHhKXmo+6Zb8Iobs0kQucJiEtyL+X+N8hvgYcbVrvtbERi6WqB2lGPKZ6wtTPJ
+	 6ZTUdxJTJvAPro/ysIgeDFzRO/w0bqK/rjBEgAsM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.14 24/24] Revert "drm/amd/display: more liberal vmin/vmax update for freesync"
-Date: Sat,  7 Jun 2025 12:08:04 +0200
-Message-ID: <20250607100718.643894267@linuxfoundation.org>
+	Qasim Ijaz <qasdev00@gmail.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 6.14 13/24] usb: typec: ucsi: fix Clang -Wsign-conversion warning
+Date: Sat,  7 Jun 2025 12:07:53 +0200
+Message-ID: <20250607100718.224642661@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250607100717.706871523@linuxfoundation.org>
 References: <20250607100717.706871523@linuxfoundation.org>
@@ -50,52 +50,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aurabindo Pillai <aurabindo.pillai@amd.com>
+From: Qasim Ijaz <qasdev00@gmail.com>
 
-commit 1b824eef269db44d068bbc0de74c94a8e8f9ce02 upstream.
+commit f4239ace2dd8606f6824757f192965a95746da05 upstream.
 
-This reverts commit cfb2d41831ee5647a4ae0ea7c24971a92d5dfa0d since it
-causes regressions on certain configs. Revert until the issue can be
-isolated and debugged.
+debugfs.c emits the following warnings when compiling with the -Wsign-conversion flag with clang 15:
 
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4238
-Signed-off-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+drivers/usb/typec/ucsi/debugfs.c:58:27: warning: implicit conversion changes signedness: 'int' to 'u32' (aka 'unsigned int') [-Wsign-conversion]
+                ucsi->debugfs->status = ret;
+                                      ~ ^~~
+drivers/usb/typec/ucsi/debugfs.c:71:25: warning: implicit conversion changes signedness: 'u32' (aka 'unsigned int') to 'int' [-Wsign-conversion]
+                return ucsi->debugfs->status;
+                ~~~~~~ ~~~~~~~~~~~~~~~^~~~~~
+
+During ucsi_cmd() we see:
+
+	if (ret < 0) {
+		ucsi->debugfs->status = ret;
+		return ret;
+	}
+
+But "status" is u32 meaning unsigned wrap-around occurs when assigning a value which is < 0 to it, this obscures the real status.
+
+To fix this make the "status" of type int since ret is also of type int.
+
+Fixes: df0383ffad64 ("usb: typec: ucsi: Add debugfs for ucsi commands")
 Cc: stable@vger.kernel.org
+Signed-off-by: Qasim Ijaz <qasdev00@gmail.com>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20250422134717.66218-1-qasdev00@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |   16 +++++-----------
- 1 file changed, 5 insertions(+), 11 deletions(-)
+ drivers/usb/typec/ucsi/ucsi.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -670,21 +670,15 @@ static void dm_crtc_high_irq(void *inter
- 	spin_lock_irqsave(&adev_to_drm(adev)->event_lock, flags);
+--- a/drivers/usb/typec/ucsi/ucsi.h
++++ b/drivers/usb/typec/ucsi/ucsi.h
+@@ -432,7 +432,7 @@ struct ucsi_debugfs_entry {
+ 		u64 low;
+ 		u64 high;
+ 	} response;
+-	u32 status;
++	int status;
+ 	struct dentry *dentry;
+ };
  
- 	if (acrtc->dm_irq_params.stream &&
--		acrtc->dm_irq_params.vrr_params.supported) {
--		bool replay_en = acrtc->dm_irq_params.stream->link->replay_settings.replay_feature_enabled;
--		bool psr_en = acrtc->dm_irq_params.stream->link->psr_settings.psr_feature_enabled;
--		bool fs_active_var_en = acrtc->dm_irq_params.freesync_config.state == VRR_STATE_ACTIVE_VARIABLE;
--
-+	    acrtc->dm_irq_params.vrr_params.supported &&
-+	    acrtc->dm_irq_params.freesync_config.state ==
-+		    VRR_STATE_ACTIVE_VARIABLE) {
- 		mod_freesync_handle_v_update(adev->dm.freesync_module,
- 					     acrtc->dm_irq_params.stream,
- 					     &acrtc->dm_irq_params.vrr_params);
- 
--		/* update vmin_vmax only if freesync is enabled, or only if PSR and REPLAY are disabled */
--		if (fs_active_var_en || (!fs_active_var_en && !replay_en && !psr_en)) {
--			dc_stream_adjust_vmin_vmax(adev->dm.dc,
--					acrtc->dm_irq_params.stream,
--					&acrtc->dm_irq_params.vrr_params.adjust);
--		}
-+		dc_stream_adjust_vmin_vmax(adev->dm.dc, acrtc->dm_irq_params.stream,
-+					   &acrtc->dm_irq_params.vrr_params.adjust);
- 	}
- 
- 	/*
 
 
