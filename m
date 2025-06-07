@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DBA321A444;
-	Sat,  7 Jun 2025 10:09:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F610219E8F;
+	Sat,  7 Jun 2025 10:09:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749290953; cv=none; b=qASA43MM/TdLknNmBG/cKTiXxzJ1EjRf1jIyd5UGBK6obMKkGhW4zLiSy6tNjqbn8hRno2A64hq1CIQ2rjvv99PmW3nHjoweTEfXtfxwj3+kUWiXBsgS4cpsi7gtTU50cZALVZnsGLA+ZsJUCnjYE+HDJHMwWr6lxT+E6uPGseY=
+	t=1749290958; cv=none; b=eatJRe4XPzxwlbAytlcLWCNdCGh1nEOMSOjT1mrDXHhhqENKRovd8c7p/qH4oFvqG6KX/P3l//PQobwAbg5g6F7dYv1+Oh6JF8dafb1YGji8So8rECWjOjxsFinluanu2MwDVxDq1j5aORBLzH6PVccLm86501eUwl2JgCGdduY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749290953; c=relaxed/simple;
-	bh=w7YjNrlsiuCZe5Kkf+uwxTTOPyH9xSQWTDiT/3CRoHM=;
+	s=arc-20240116; t=1749290958; c=relaxed/simple;
+	bh=fhxUVzWavN97dR9p4RJkkWbJhMhNqMrc4iZ+mb282wA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PiEElk256Tm9OkXuQKCgXtTntncot5ddDt88oYGeFEspLVTRFxCYqrIOhPDhiDC/1OgyxfOwnYMyhnfZBBzK8bjU8VwTbnEoYbLFPrtjLFBHcdpBwFz9GXwL0ZejVToE+hUqve7DKArTI8jZs/cWC4OLV8rG3DqbWKViqPy3590=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ktjS+BNv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P+Jh6DW7yciGW4I6ErAGmSgSvMcbA8zRgzi/gg6I3e84OzQt6wtW3Eyn+fwLuAQA83nSQAv2636DnDagKw7FulbAsnknb7Q0KIr/wgzngPkdvQ7wovdT5CMdNYlZV87NKiJId9WzjE7A7usmJWlv+c1mX35Vs/AB4y2dS/dQdMs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=09xY60lF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ktjS+BNv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B523C4CEE4;
-	Sat,  7 Jun 2025 10:09:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="09xY60lF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD46CC4CEED;
+	Sat,  7 Jun 2025 10:09:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1749290953;
-	bh=w7YjNrlsiuCZe5Kkf+uwxTTOPyH9xSQWTDiT/3CRoHM=;
+	s=korg; t=1749290958;
+	bh=fhxUVzWavN97dR9p4RJkkWbJhMhNqMrc4iZ+mb282wA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ktjS+BNv5zHugxELPejs+iiReL4xdCmZ4tFjcDNSZXr9GR4HNdbHqrhi5NNbLtvOL
-	 fPc33r9EUqP357+2RU/Gm2T42WmJ5xSA2tAKr1uu+9hJTjm05NMYQfP9Z2vPtBpexS
-	 1jBbaKPzD3M10dw4IjERRycQ9VaLOACqbBWtDprs=
+	b=09xY60lFgqr4P3PULo2JtQRY7bkF/6fwcPK7Ye0brU3XSSyuw51GyYk9CINOmi1+m
+	 4nQDGQqF6VUp3f7/yY2H6PraaLFHGp1VO+CxoCbXUGNRUUFlIvn4hbhZvQ+h0Gyk9v
+	 5PP3pIJQsMjx/GDysc8AHTzdaisEPNgxBl7IYrxM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karol Wachowski <karol.wachowski@intel.com>,
-	Maciej Falkowski <maciej.falkowski@linux.intel.com>,
-	Jeffrey Hugo <quic_jhugo@quicinc.com>,
-	Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
-Subject: [PATCH 6.12 10/24] accel/ivpu: Update power island delays
-Date: Sat,  7 Jun 2025 12:07:41 +0200
-Message-ID: <20250607100718.312680730@linuxfoundation.org>
+	syzbot+b6b347b7a4ea1b2e29b6@syzkaller.appspotmail.com,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Alva Lan <alvalan9@foxmail.com>
+Subject: [PATCH 6.12 02/24] f2fs: fix to avoid accessing uninitialized curseg
+Date: Sat,  7 Jun 2025 12:07:33 +0200
+Message-ID: <20250607100718.006192189@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250607100717.910797456@linuxfoundation.org>
 References: <20250607100717.910797456@linuxfoundation.org>
@@ -52,119 +52,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karol Wachowski <karol.wachowski@intel.com>
+From: Chao Yu <chao@kernel.org>
 
-commit 88bdd1644ca28d48591b2a1e6e8b8c2b13f4bd3f upstream.
+commit 986c50f6bca109c6cf362b4e2babcb85aba958f6 upstream.
 
-Apply Hardware Architecture Specification compatible delays
-for main island power delivery for 50xx and above.
+syzbot reports a f2fs bug as below:
 
-Signed-off-by: Karol Wachowski <karol.wachowski@intel.com>
-Signed-off-by: Maciej Falkowski <maciej.falkowski@linux.intel.com>
-Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241004162505.1695605-3-maciej.falkowski@linux.intel.com
-Signed-off-by: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
+F2FS-fs (loop3): Stopped filesystem due to reason: 7
+kworker/u8:7: attempt to access beyond end of device
+BUG: unable to handle page fault for address: ffffed1604ea3dfa
+RIP: 0010:get_ckpt_valid_blocks fs/f2fs/segment.h:361 [inline]
+RIP: 0010:has_curseg_enough_space fs/f2fs/segment.h:570 [inline]
+RIP: 0010:__get_secs_required fs/f2fs/segment.h:620 [inline]
+RIP: 0010:has_not_enough_free_secs fs/f2fs/segment.h:633 [inline]
+RIP: 0010:has_enough_free_secs+0x575/0x1660 fs/f2fs/segment.h:649
+ <TASK>
+ f2fs_is_checkpoint_ready fs/f2fs/segment.h:671 [inline]
+ f2fs_write_inode+0x425/0x540 fs/f2fs/inode.c:791
+ write_inode fs/fs-writeback.c:1525 [inline]
+ __writeback_single_inode+0x708/0x10d0 fs/fs-writeback.c:1745
+ writeback_sb_inodes+0x820/0x1360 fs/fs-writeback.c:1976
+ wb_writeback+0x413/0xb80 fs/fs-writeback.c:2156
+ wb_do_writeback fs/fs-writeback.c:2303 [inline]
+ wb_workfn+0x410/0x1080 fs/fs-writeback.c:2343
+ process_one_work kernel/workqueue.c:3236 [inline]
+ process_scheduled_works+0xa66/0x1840 kernel/workqueue.c:3317
+ worker_thread+0x870/0xd30 kernel/workqueue.c:3398
+ kthread+0x7a9/0x920 kernel/kthread.c:464
+ ret_from_fork+0x4b/0x80 arch/x86/kernel/process.c:148
+ ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
+
+Commit 8b10d3653735 ("f2fs: introduce FAULT_NO_SEGMENT") allows to trigger
+no free segment fault in allocator, then it will update curseg->segno to
+NULL_SEGNO, though, CP_ERROR_FLAG has been set, f2fs_write_inode() missed
+to check the flag, and access invalid curseg->segno directly in below call
+path, then resulting in panic:
+
+- f2fs_write_inode
+ - f2fs_is_checkpoint_ready
+  - has_enough_free_secs
+   - has_not_enough_free_secs
+    - __get_secs_required
+     - has_curseg_enough_space
+      - get_ckpt_valid_blocks
+      : access invalid curseg->segno
+
+To avoid this issue, let's:
+- check CP_ERROR_FLAG flag in prior to f2fs_is_checkpoint_ready() in
+f2fs_write_inode().
+- in has_curseg_enough_space(), save curseg->segno into a temp variable,
+and verify its validation before use.
+
+Fixes: 8b10d3653735 ("f2fs: introduce FAULT_NO_SEGMENT")
+Reported-by: syzbot+b6b347b7a4ea1b2e29b6@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/67973c2b.050a0220.11b1bb.0089.GAE@google.com
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Signed-off-by: Alva Lan <alvalan9@foxmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/accel/ivpu/ivpu_hw_40xx_reg.h |    2 +
- drivers/accel/ivpu/ivpu_hw_ip.c       |   49 ++++++++++++++++++++++------------
- 2 files changed, 34 insertions(+), 17 deletions(-)
+ fs/f2fs/inode.c   |    7 +++++++
+ fs/f2fs/segment.h |    9 ++++++++-
+ 2 files changed, 15 insertions(+), 1 deletion(-)
 
---- a/drivers/accel/ivpu/ivpu_hw_40xx_reg.h
-+++ b/drivers/accel/ivpu/ivpu_hw_40xx_reg.h
-@@ -115,6 +115,8 @@
+--- a/fs/f2fs/inode.c
++++ b/fs/f2fs/inode.c
+@@ -777,6 +777,13 @@ int f2fs_write_inode(struct inode *inode
+ 		!is_inode_flag_set(inode, FI_DIRTY_INODE))
+ 		return 0;
  
- #define VPU_50XX_HOST_SS_AON_PWR_ISLAND_EN_POST_DLY			0x00030068u
- #define VPU_50XX_HOST_SS_AON_PWR_ISLAND_EN_POST_DLY_POST_DLY_MASK	GENMASK(7, 0)
-+#define VPU_50XX_HOST_SS_AON_PWR_ISLAND_EN_POST_DLY_POST1_DLY_MASK	GENMASK(15, 8)
-+#define VPU_50XX_HOST_SS_AON_PWR_ISLAND_EN_POST_DLY_POST2_DLY_MASK	GENMASK(23, 16)
- 
- #define VPU_50XX_HOST_SS_AON_PWR_ISLAND_STATUS_DLY			0x0003006cu
- #define VPU_50XX_HOST_SS_AON_PWR_ISLAND_STATUS_DLY_STATUS_DLY_MASK	GENMASK(7, 0)
---- a/drivers/accel/ivpu/ivpu_hw_ip.c
-+++ b/drivers/accel/ivpu/ivpu_hw_ip.c
-@@ -8,15 +8,12 @@
- #include "ivpu_hw.h"
- #include "ivpu_hw_37xx_reg.h"
- #include "ivpu_hw_40xx_reg.h"
-+#include "ivpu_hw_btrs.h"
- #include "ivpu_hw_ip.h"
- #include "ivpu_hw_reg_io.h"
- #include "ivpu_mmu.h"
- #include "ivpu_pm.h"
- 
--#define PWR_ISLAND_EN_POST_DLY_FREQ_DEFAULT 0
--#define PWR_ISLAND_EN_POST_DLY_FREQ_HIGH    18
--#define PWR_ISLAND_STATUS_DLY_FREQ_DEFAULT  3
--#define PWR_ISLAND_STATUS_DLY_FREQ_HIGH	    46
- #define PWR_ISLAND_STATUS_TIMEOUT_US        (5 * USEC_PER_MSEC)
- 
- #define TIM_SAFE_ENABLE		            0xf1d0dead
-@@ -268,20 +265,15 @@ void ivpu_hw_ip_idle_gen_disable(struct
- 		idle_gen_drive_40xx(vdev, false);
- }
- 
--static void pwr_island_delay_set_50xx(struct ivpu_device *vdev)
-+static void
-+pwr_island_delay_set_50xx(struct ivpu_device *vdev, u32 post, u32 post1, u32 post2, u32 status)
++	/*
++	 * no need to update inode page, ultimately f2fs_evict_inode() will
++	 * clear dirty status of inode.
++	 */
++	if (f2fs_cp_error(sbi))
++		return -EIO;
++
+ 	if (!f2fs_is_checkpoint_ready(sbi)) {
+ 		f2fs_mark_inode_dirty_sync(inode, true);
+ 		return -ENOSPC;
+--- a/fs/f2fs/segment.h
++++ b/fs/f2fs/segment.h
+@@ -562,13 +562,16 @@ static inline bool has_curseg_enough_spa
+ 			unsigned int node_blocks, unsigned int data_blocks,
+ 			unsigned int dent_blocks)
  {
--	u32 val, post, status;
 -
--	if (vdev->hw->pll.profiling_freq == PLL_PROFILING_FREQ_DEFAULT) {
--		post = PWR_ISLAND_EN_POST_DLY_FREQ_DEFAULT;
--		status = PWR_ISLAND_STATUS_DLY_FREQ_DEFAULT;
--	} else {
--		post = PWR_ISLAND_EN_POST_DLY_FREQ_HIGH;
--		status = PWR_ISLAND_STATUS_DLY_FREQ_HIGH;
--	}
-+	u32 val;
+ 	unsigned int segno, left_blocks, blocks;
+ 	int i;
  
- 	val = REGV_RD32(VPU_50XX_HOST_SS_AON_PWR_ISLAND_EN_POST_DLY);
- 	val = REG_SET_FLD_NUM(VPU_50XX_HOST_SS_AON_PWR_ISLAND_EN_POST_DLY, POST_DLY, post, val);
-+	val = REG_SET_FLD_NUM(VPU_50XX_HOST_SS_AON_PWR_ISLAND_EN_POST_DLY, POST1_DLY, post1, val);
-+	val = REG_SET_FLD_NUM(VPU_50XX_HOST_SS_AON_PWR_ISLAND_EN_POST_DLY, POST2_DLY, post2, val);
- 	REGV_WR32(VPU_50XX_HOST_SS_AON_PWR_ISLAND_EN_POST_DLY, val);
+ 	/* check current data/node sections in the worst case. */
+ 	for (i = CURSEG_HOT_DATA; i < NR_PERSISTENT_LOG; i++) {
+ 		segno = CURSEG_I(sbi, i)->segno;
++
++		if (unlikely(segno == NULL_SEGNO))
++			return false;
++
+ 		left_blocks = CAP_BLKS_PER_SEC(sbi) -
+ 				get_ckpt_valid_blocks(sbi, segno, true);
  
- 	val = REGV_RD32(VPU_50XX_HOST_SS_AON_PWR_ISLAND_STATUS_DLY);
-@@ -686,13 +678,36 @@ static void dpu_active_drive_37xx(struct
- 	REGV_WR32(VPU_37XX_HOST_SS_AON_DPU_ACTIVE, val);
- }
+@@ -579,6 +582,10 @@ static inline bool has_curseg_enough_spa
  
-+static void pwr_island_delay_set(struct ivpu_device *vdev)
-+{
-+	bool high = vdev->hw->pll.profiling_freq == PLL_PROFILING_FREQ_HIGH;
-+	u32 post, post1, post2, status;
+ 	/* check current data section for dentry blocks. */
+ 	segno = CURSEG_I(sbi, CURSEG_HOT_DATA)->segno;
 +
-+	if (ivpu_hw_ip_gen(vdev) < IVPU_HW_IP_50XX)
-+		return;
++	if (unlikely(segno == NULL_SEGNO))
++		return false;
 +
-+	switch (ivpu_device_id(vdev)) {
-+	case PCI_DEVICE_ID_PTL_P:
-+		post = high ? 18 : 0;
-+		post1 = 0;
-+		post2 = 0;
-+		status = high ? 46 : 3;
-+		break;
-+
-+	default:
-+		dump_stack();
-+		ivpu_err(vdev, "Unknown device ID\n");
-+		return;
-+	}
-+
-+	pwr_island_delay_set_50xx(vdev, post, post1, post2, status);
-+}
-+
- int ivpu_hw_ip_pwr_domain_enable(struct ivpu_device *vdev)
- {
- 	int ret;
- 
--	if (ivpu_hw_ip_gen(vdev) == IVPU_HW_IP_50XX)
--		pwr_island_delay_set_50xx(vdev);
--
-+	pwr_island_delay_set(vdev);
- 	pwr_island_enable(vdev);
- 
- 	ret = wait_for_pwr_island_status(vdev, 0x1);
+ 	left_blocks = CAP_BLKS_PER_SEC(sbi) -
+ 			get_ckpt_valid_blocks(sbi, segno, true);
+ 	if (dent_blocks > left_blocks)
 
 
