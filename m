@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3CB91F8EEF;
-	Sat,  7 Jun 2025 10:08:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ABD620D4E3;
+	Sat,  7 Jun 2025 10:08:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749290908; cv=none; b=H/Djtyi1z99eRAEaCSiKds2ishmdCKCGDDepCpyRlU2WgfThLDk9GrLiMDswXzu8GKkB0aUJidVR0XTLCIh4ImUPGBT5ffz+ItaSkuPsg6o2SVQjv+WfeRy2hmQojS5KYu59gAZKMXHKLcTNkOLgj3bTC1D0M5byK6CdwA7qPjE=
+	t=1749290911; cv=none; b=WxPVkMg8+46kfzGYqYjI8g+Qi+aauIIJM2PctreT2wnQncwsqgd+SSZoHN8Y6hKdSSwycE6QmaZm+AnZfzx6Ra0Er2YdZBCvO9k4YEK7ih1MYuBgETA8vh+bTnsm9njXvoUj9I6dFVc0Qr2fwbzjksiNnscajn94xSbcrL44ytE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749290908; c=relaxed/simple;
-	bh=JRKrvY1DsEwtVCwcmFR7iSEcY6YRWu1JtRzDv/sp/ZA=;
+	s=arc-20240116; t=1749290911; c=relaxed/simple;
+	bh=bApfRGq7prsWnhW+GW0PeSl3Atn6YZq+DNyTDMTlcoc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=osNA3FUVZ6Ln8A0GkB/gER3U+ce/5rrNpNt/YTB/lwgYY+J0np9m9CsZAPtx7R9Z+RgoDbi7B8z76O3wQjxpJ+lpyZqrQPUXEqbdvc80jwF+MaLByWCtpq400WpRSijk4MFmyrp2/IBu3LIZ0muWmOuz/AnUwD5MY5T1LRlzquU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WlB4d6lE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kE6G+FxOOF94vRnYrftYJ2f7ebuNRXNKA9HTqJ7mgLGXBugfTZLKY4Ykok0Orl/rDhowv3HrZ9oHULll7I9Zvr55qxbezMGyEtvtd8DLYX1NC+OX9N3C7mi/KfLzhAJCh4o68nHQY97E6TuLt46ZePMtfcYL+tG5tRpLKm7obNI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lt4lwEP9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WlB4d6lE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00D02C4CEE4;
-	Sat,  7 Jun 2025 10:08:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lt4lwEP9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5E9AC4CEE4;
+	Sat,  7 Jun 2025 10:08:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1749290908;
-	bh=JRKrvY1DsEwtVCwcmFR7iSEcY6YRWu1JtRzDv/sp/ZA=;
+	s=korg; t=1749290911;
+	bh=bApfRGq7prsWnhW+GW0PeSl3Atn6YZq+DNyTDMTlcoc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WlB4d6lEubvS2nvcgSqAKGt0BCossL3qI2+l6ImvYML+7kC4dyrCmazdCiO6Lt8PM
-	 bZcMGE5TV8fdROLU4g6uC5zunaEUtf0KtNXsPkMoHX5n1jM3Pl9YSGLy45vqIFcrAc
-	 Lp8VYCmXjQcGKE4eu5APB7URnkPElfimuB2pCSS4=
+	b=Lt4lwEP9EoZ0DlnwbgaXN7L2WCwwCZItRE3fhH0A79TqG+6HAdxn9kLz/2nNcU9Ti
+	 Ik0lRwgaynz4vqp+36OPfI6zJLEWkwmeLvviNcRtC3xrdxDPUSde5n3X4PAxIzS2YI
+	 XMtxJgTuPOAC2szFEs2Za5UbILNaemCCI5P8sv54=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Dustin Lundquist <dustin@null-ptr.net>
-Subject: [PATCH 6.12 19/24] serial: jsm: fix NPE during jsm_uart_port_init
-Date: Sat,  7 Jun 2025 12:07:50 +0200
-Message-ID: <20250607100718.646458340@linuxfoundation.org>
+	Dave Penkler <dpenkler@gmail.com>
+Subject: [PATCH 6.12 20/24] usb: usbtmc: Fix timeout value in get_stb
+Date: Sat,  7 Jun 2025 12:07:51 +0200
+Message-ID: <20250607100718.682657824@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250607100717.910797456@linuxfoundation.org>
 References: <20250607100717.910797456@linuxfoundation.org>
@@ -50,59 +49,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dustin Lundquist <dustin@null-ptr.net>
+From: Dave Penkler <dpenkler@gmail.com>
 
-commit e3975aa899c0a3bbc10d035e699b142cd1373a71 upstream.
+commit 342e4955a1f1ce28c70a589999b76365082dbf10 upstream.
 
-No device was set which caused serial_base_ctrl_add to crash.
+wait_event_interruptible_timeout requires a timeout argument
+in units of jiffies. It was being called in usbtmc_get_stb
+with the usb timeout value which is in units of milliseconds.
 
- BUG: kernel NULL pointer dereference, address: 0000000000000050
- Oops: Oops: 0000 [#1] PREEMPT SMP NOPTI
- CPU: 16 UID: 0 PID: 368 Comm: (udev-worker) Not tainted 6.12.25-amd64 #1  Debian 6.12.25-1
- RIP: 0010:serial_base_ctrl_add+0x96/0x120
- Call Trace:
-  <TASK>
-  serial_core_register_port+0x1a0/0x580
-  ? __setup_irq+0x39c/0x660
-  ? __kmalloc_cache_noprof+0x111/0x310
-  jsm_uart_port_init+0xe8/0x180 [jsm]
-  jsm_probe_one+0x1f4/0x410 [jsm]
-  local_pci_probe+0x42/0x90
-  pci_device_probe+0x22f/0x270
-  really_probe+0xdb/0x340
-  ? pm_runtime_barrier+0x54/0x90
-  ? __pfx___driver_attach+0x10/0x10
-  __driver_probe_device+0x78/0x110
-  driver_probe_device+0x1f/0xa0
-  __driver_attach+0xba/0x1c0
-  bus_for_each_dev+0x8c/0xe0
-  bus_add_driver+0x112/0x1f0
-  driver_register+0x72/0xd0
-  jsm_init_module+0x36/0xff0 [jsm]
-  ? __pfx_jsm_init_module+0x10/0x10 [jsm]
-  do_one_initcall+0x58/0x310
-  do_init_module+0x60/0x230
+Pass the timeout argument converted to jiffies.
 
-Tested with Digi Neo PCIe 8 port card.
-
-Fixes: 84a9582fd203 ("serial: core: Start managing serial controllers to enable runtime PM")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Dustin Lundquist <dustin@null-ptr.net>
-Link: https://lore.kernel.org/r/3f31d4f75863614655c4673027a208be78d022ec.camel@null-ptr.net
+Fixes: 048c6d88a021 ("usb: usbtmc: Add ioctls to set/get usb timeout")
+Cc: stable@vger.kernel.org
+Signed-off-by: Dave Penkler <dpenkler@gmail.com>
+Link: https://lore.kernel.org/r/20250521121656.18174-4-dpenkler@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/jsm/jsm_tty.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/class/usbtmc.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/tty/serial/jsm/jsm_tty.c
-+++ b/drivers/tty/serial/jsm/jsm_tty.c
-@@ -451,6 +451,7 @@ int jsm_uart_port_init(struct jsm_board
- 		if (!brd->channels[i])
- 			continue;
+--- a/drivers/usb/class/usbtmc.c
++++ b/drivers/usb/class/usbtmc.c
+@@ -483,6 +483,7 @@ static int usbtmc_get_stb(struct usbtmc_
+ 	u8 tag;
+ 	int rv;
+ 	long wait_rv;
++	unsigned long expire;
  
-+		brd->channels[i]->uart_port.dev = &brd->pci_dev->dev;
- 		brd->channels[i]->uart_port.irq = brd->irq;
- 		brd->channels[i]->uart_port.uartclk = 14745600;
- 		brd->channels[i]->uart_port.type = PORT_JSM;
+ 	dev_dbg(dev, "Enter ioctl_read_stb iin_ep_present: %d\n",
+ 		data->iin_ep_present);
+@@ -512,10 +513,11 @@ static int usbtmc_get_stb(struct usbtmc_
+ 	}
+ 
+ 	if (data->iin_ep_present) {
++		expire = msecs_to_jiffies(file_data->timeout);
+ 		wait_rv = wait_event_interruptible_timeout(
+ 			data->waitq,
+ 			atomic_read(&data->iin_data_valid) != 0,
+-			file_data->timeout);
++			expire);
+ 		if (wait_rv < 0) {
+ 			dev_dbg(dev, "wait interrupted %ld\n", wait_rv);
+ 			rv = wait_rv;
 
 
