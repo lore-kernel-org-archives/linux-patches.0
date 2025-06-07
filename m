@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1A1915D1;
-	Sat,  7 Jun 2025 10:10:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9159C1F4CB8;
+	Sat,  7 Jun 2025 10:10:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749291040; cv=none; b=YTYMtT8t68BjRE4Hh/7N79MLTmKGTkKA1rBL7XVebhTd9TEpLXT6ZkZTlX7FdwqfMeS9XMjtYvlNX8TuZ0fQHpeInZInYuXWJzm/3CS6dwoHmtfjfAtj3NI8NLOsCVHJ3r27XB+LO02TQg2tSt2rMMbhLDfbOVw9VBIEYjuJFEE=
+	t=1749291042; cv=none; b=IK9h+S+DTmRWlvL7fzkujjIAZx2QOFgeoibXgel+dcySbvPy5DcOXOprObZpkP5RLdl+HvRO+Y1GXqiSwqI1cuRf+jTs/BaaxcEUeq5VQ/rSNn0TbWcv5vmNCYhj63JHkWaZ+Ojeu+FnSBuattL5Ss3KZmhR6BvpeLrNqFQBE0U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749291040; c=relaxed/simple;
-	bh=1KGsHZpbrW/MWkN0UD5spF84MRWalTABOiZd6mCv/bo=;
+	s=arc-20240116; t=1749291042; c=relaxed/simple;
+	bh=aNeJfn5mzfXpsSTTeC7/4VptP7dvFlDELZYzZ0E5K4E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LY1SF9MdiGHOYeebaKuVhTD/kCyFjLEDWQZuzJcyHapvW8dKgvkvqNwo4+H0dMR1Uik2tRJUX3IrCAqNIIwEyfRHfdLnFf5LYPp/vXJwCebJeDyG0uIv/i5mBYkXLP0+z4NToS2kaaME5ILLmgfCG/ilhkDqxGV8xmDQOdpa+Xo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pFLwmZ/j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CKBhAT5QSLutAqDAycmLApf40DHaU1ctzJDJ60gy8fHRcngELzgIULLLcl7zLBD+dyb1oGvay2E+Pfy4AdVhH2NYCfY3Zkt0r0mZigICAZtGgCB8clbaGYwhLxtgHPNAWS/IuhNwb/XPCqblRY53K8uUz8IcFzRM8HmRyJugYc4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qZ3g0mwJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pFLwmZ/j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AD03C4CEE4;
-	Sat,  7 Jun 2025 10:10:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qZ3g0mwJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22BFDC4CEE4;
+	Sat,  7 Jun 2025 10:10:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1749291039;
-	bh=1KGsHZpbrW/MWkN0UD5spF84MRWalTABOiZd6mCv/bo=;
+	s=korg; t=1749291042;
+	bh=aNeJfn5mzfXpsSTTeC7/4VptP7dvFlDELZYzZ0E5K4E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pFLwmZ/jQLsatXmc6vvQ8ewjpw7FRtQ/dh8nJq0RyI/RFxGqZ6cASyLsw8DdZT1Zp
-	 y5osE+hjPBss7Q8yvuAFITQwuM+3p5wWZM/NF/0RcGGYrOVFqDxDOi+HnXNa3N8yTT
-	 p+vt12xioNnYYnwgnfHwRe9an3gfIs4V6c5rFFLA=
+	b=qZ3g0mwJ5u3OJ9W/VIbix65n7dhDa5f+SEKQ+5kXJnrLohZG9pAOD10fkjP9GFkt4
+	 LGfCIC+jeBj/8HN8iT7CHCXFinXVReXmlMLtIkStByojafKoHkTJK1NQA5VlPEz297
+	 7MGwc/nEKBrMm/OL+8ffRTjaadwLTh+65RCq8AY8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Kent Overstreet <kent.overstreet@linux.dev>
-Subject: [PATCH 6.15 14/34] bcachefs: Kill un-reverted directory i_size code
-Date: Sat,  7 Jun 2025 12:07:55 +0200
-Message-ID: <20250607100720.279128777@linuxfoundation.org>
+Subject: [PATCH 6.15 15/34] bcachefs: Repair code for directory i_size
+Date: Sat,  7 Jun 2025 12:07:56 +0200
+Message-ID: <20250607100720.316849061@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250607100719.711372213@linuxfoundation.org>
 References: <20250607100719.711372213@linuxfoundation.org>
@@ -51,69 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 From: Kent Overstreet <kent.overstreet@linux.dev>
 
-commit 95fafc0f3407a6446082c11849df585bd3246571 upstream.
+commit 36a2fdf7c5c1ccae6ca16cd14067567096cebe17 upstream.
+
+We had a bug due due to an incomplete revert of the patch implementing
+directory i_size (summing up the size of the dirents), leading to
+completely screwy i_size values that underflow.
+
+Most userspace programs don't seem to care (e.g. du ignores it), but it
+turns out this broke sshfs, so needs to be repaired.
 
 Signed-off-by: Kent Overstreet <kent.overstreet@linux.dev>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/bcachefs/dirent.c |   12 ++----------
- fs/bcachefs/dirent.h |    4 ++--
- fs/bcachefs/namei.c  |    4 ++--
- 3 files changed, 6 insertions(+), 14 deletions(-)
+ fs/bcachefs/fsck.c             |    8 ++++++++
+ fs/bcachefs/sb-errors_format.h |    3 ++-
+ 2 files changed, 10 insertions(+), 1 deletion(-)
 
---- a/fs/bcachefs/dirent.c
-+++ b/fs/bcachefs/dirent.c
-@@ -395,8 +395,8 @@ int bch2_dirent_read_target(struct btree
- }
- 
- int bch2_dirent_rename(struct btree_trans *trans,
--		subvol_inum src_dir, struct bch_hash_info *src_hash, u64 *src_dir_i_size,
--		subvol_inum dst_dir, struct bch_hash_info *dst_hash, u64 *dst_dir_i_size,
-+		subvol_inum src_dir, struct bch_hash_info *src_hash,
-+		subvol_inum dst_dir, struct bch_hash_info *dst_hash,
- 		const struct qstr *src_name, subvol_inum *src_inum, u64 *src_offset,
- 		const struct qstr *dst_name, subvol_inum *dst_inum, u64 *dst_offset,
- 		enum bch_rename_mode mode)
-@@ -535,14 +535,6 @@ int bch2_dirent_rename(struct btree_tran
- 	    new_src->v.d_type == DT_SUBVOL)
- 		new_src->v.d_parent_subvol = cpu_to_le32(src_dir.subvol);
- 
--	if (old_dst.k)
--		*dst_dir_i_size -= bkey_bytes(old_dst.k);
--	*src_dir_i_size -= bkey_bytes(old_src.k);
--
--	if (mode == BCH_RENAME_EXCHANGE)
--		*src_dir_i_size += bkey_bytes(&new_src->k);
--	*dst_dir_i_size += bkey_bytes(&new_dst->k);
--
- 	ret = bch2_trans_update(trans, &dst_iter, &new_dst->k_i, 0);
- 	if (ret)
- 		goto out;
---- a/fs/bcachefs/dirent.h
-+++ b/fs/bcachefs/dirent.h
-@@ -80,8 +80,8 @@ enum bch_rename_mode {
- };
- 
- int bch2_dirent_rename(struct btree_trans *,
--		       subvol_inum, struct bch_hash_info *, u64 *,
--		       subvol_inum, struct bch_hash_info *, u64 *,
-+		       subvol_inum, struct bch_hash_info *,
-+		       subvol_inum, struct bch_hash_info *,
- 		       const struct qstr *, subvol_inum *, u64 *,
- 		       const struct qstr *, subvol_inum *, u64 *,
- 		       enum bch_rename_mode);
---- a/fs/bcachefs/namei.c
-+++ b/fs/bcachefs/namei.c
-@@ -418,8 +418,8 @@ int bch2_rename_trans(struct btree_trans
+--- a/fs/bcachefs/fsck.c
++++ b/fs/bcachefs/fsck.c
+@@ -1183,6 +1183,14 @@ static int check_inode(struct btree_tran
+ 		ret = 0;
  	}
  
- 	ret = bch2_dirent_rename(trans,
--				 src_dir, &src_hash, &src_dir_u->bi_size,
--				 dst_dir, &dst_hash, &dst_dir_u->bi_size,
-+				 src_dir, &src_hash,
-+				 dst_dir, &dst_hash,
- 				 src_name, &src_inum, &src_offset,
- 				 dst_name, &dst_inum, &dst_offset,
- 				 mode);
++	if (fsck_err_on(S_ISDIR(u.bi_mode) && u.bi_size,
++			trans, inode_dir_has_nonzero_i_size,
++			"directory %llu:%u with nonzero i_size %lli",
++			u.bi_inum, u.bi_snapshot, u.bi_size)) {
++		u.bi_size = 0;
++		do_update = true;
++	}
++
+ 	ret = bch2_inode_has_child_snapshots(trans, k.k->p);
+ 	if (ret < 0)
+ 		goto err;
+--- a/fs/bcachefs/sb-errors_format.h
++++ b/fs/bcachefs/sb-errors_format.h
+@@ -232,6 +232,7 @@ enum bch_fsck_flags {
+ 	x(inode_dir_multiple_links,				206,	FSCK_AUTOFIX)	\
+ 	x(inode_dir_missing_backpointer,			284,	FSCK_AUTOFIX)	\
+ 	x(inode_dir_unlinked_but_not_empty,			286,	FSCK_AUTOFIX)	\
++	x(inode_dir_has_nonzero_i_size,				319,	FSCK_AUTOFIX)	\
+ 	x(inode_multiple_links_but_nlink_0,			207,	FSCK_AUTOFIX)	\
+ 	x(inode_wrong_backpointer,				208,	FSCK_AUTOFIX)	\
+ 	x(inode_wrong_nlink,					209,	FSCK_AUTOFIX)	\
+@@ -328,7 +329,7 @@ enum bch_fsck_flags {
+ 	x(dirent_stray_data_after_cf_name,			305,	0)		\
+ 	x(rebalance_work_incorrectly_set,			309,	FSCK_AUTOFIX)	\
+ 	x(rebalance_work_incorrectly_unset,			310,	FSCK_AUTOFIX)	\
+-	x(MAX,							319,	0)
++	x(MAX,							320,	0)
+ 
+ enum bch_sb_error_id {
+ #define x(t, n, ...) BCH_FSCK_ERR_##t = n,
 
 
