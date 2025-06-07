@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB83015D1;
-	Sat,  7 Jun 2025 10:11:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D69C15D1;
+	Sat,  7 Jun 2025 10:11:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749291079; cv=none; b=LhKNRJP3WzRcSzlichefUuYjLEc+o+qe8e9pzjfl2j7vIUnQKlbDvJS8Q/WVCdUxaukRRD2ZZ0LOjsv88NMkU47yvCrgwdrlBFsxZdCIJ9mH8WR9XfP0upulvsrkctpeZUeVlLd3d9cYYfJqvDnLQEsUbxccyAF7qNkFhZRehpk=
+	t=1749291083; cv=none; b=Fq8YSnyjOfdko+fgGKD5YkuLpCsIILtr4MWKhZQTgYfv9ptat1mIVQ/6DrFN8a9A/tVGapHLUiLon0Sui3wB3o7Yw9hK37GemnzGp+Oie/ZmP7BmRc/HRnu6dOoebPz7zdyOs9rDN2jesx5gvMms//XFZAFNFFQJx+7jXXwxQZ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749291079; c=relaxed/simple;
-	bh=AaimcjWerws4ZCe43Bm5mqFykhSB1drho7vXX0mWE0E=;
+	s=arc-20240116; t=1749291083; c=relaxed/simple;
+	bh=NYzW5wdIEESssFqgBmh1iT1WQm5ebFB/cAPUJUDkobA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BOINLiKhJ1Ry+04AontuL8qZe6LpeCXITbMe8PKxzkrszhcyI8gQUqfxhsF5G3gT4Dxt1A1a4OBZ7AW4lbwu2RG7LAqztgoAVctL6uME4Sx2sDN4Z8945N51WAQLt/+IvrMyP+DJg0pAF4JrX9xp+KILM8xo+UzJXGk2zzSgemI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CB59NTyn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=EpmEDIH8eTB0VApS3bJiJ17dsTn3uX2kf8/07q8tSvwK7Cph+sKtVRZmnOQkgKAKOW7L+uQQovRg8/jMMtjgvIJk5Nr3IZhQfJPv4LnSg6NJld14uj70PaxOi8OMpD0Aea5R1lSHjWR1HQkUWnQA21KNCTkTabMQQBjnxKPpBbU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JhzIlG7J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CB59NTyn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2224C4CEE4;
-	Sat,  7 Jun 2025 10:11:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JhzIlG7J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98E8EC4CEE4;
+	Sat,  7 Jun 2025 10:11:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1749291079;
-	bh=AaimcjWerws4ZCe43Bm5mqFykhSB1drho7vXX0mWE0E=;
+	s=korg; t=1749291082;
+	bh=NYzW5wdIEESssFqgBmh1iT1WQm5ebFB/cAPUJUDkobA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CB59NTyn5AiRCd6PXPHQTuuSvlcoMv6IL+BU8MuyORGPJcaslFuQ7JDk1w8GVa7VV
-	 2zHNSmCTIcRrFa3FSxBZp0nLYwJqJu9qZlscP5nttncY/g81HYkKsN2MXvkhvRjFu6
-	 o+Sk1SAKYYgRr67yg6tW4BqSi6SKDReYlG7ZYYHM=
+	b=JhzIlG7J+EZWszgCEJ2oONb/jAVbpB/eXTHltIqWnYYnEMr1BmrmxaUCjtvHnO4+I
+	 Rz20KUfN0aO1qA2K4jDTW0buzOGTsOltmQ54n4VJ+eWiqoHbqytiV9bciX4Pz9qJpY
+	 2ovPeIFTIPV1MhmLYNLyQyc+xLe509px+frWbBxE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>
-Subject: [PATCH 6.15 29/34] thunderbolt: Do not double dequeue a configuration request
-Date: Sat,  7 Jun 2025 12:08:10 +0200
-Message-ID: <20250607100720.854417214@linuxfoundation.org>
+	David Lechner <dlechner@baylibre.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>
+Subject: [PATCH 6.15 30/34] dt-bindings: pwm: adi,axi-pwmgen: Fix clocks
+Date: Sat,  7 Jun 2025 12:08:11 +0200
+Message-ID: <20250607100720.893179321@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250607100719.711372213@linuxfoundation.org>
 References: <20250607100719.711372213@linuxfoundation.org>
@@ -44,63 +45,74 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sergey Senozhatsky <senozhatsky@chromium.org>
+From: David Lechner <dlechner@baylibre.com>
 
-commit 0f73628e9da1ee39daf5f188190cdbaee5e0c98c upstream.
+commit e683131e64f71e957ca77743cb3d313646157329 upstream.
 
-Some of our devices crash in tb_cfg_request_dequeue():
+Fix a shortcoming in the bindings that doesn't allow for a separate
+external clock.
 
- general protection fault, probably for non-canonical address 0xdead000000000122
+The AXI PWMGEN IP block has a compile option ASYNC_CLK_EN that allows
+the use of an external clock for the PWM output separate from the AXI
+clock that runs the peripheral.
 
- CPU: 6 PID: 91007 Comm: kworker/6:2 Tainted: G U W 6.6.65
- RIP: 0010:tb_cfg_request_dequeue+0x2d/0xa0
- Call Trace:
- <TASK>
- ? tb_cfg_request_dequeue+0x2d/0xa0
- tb_cfg_request_work+0x33/0x80
- worker_thread+0x386/0x8f0
- kthread+0xed/0x110
- ret_from_fork+0x38/0x50
- ret_from_fork_asm+0x1b/0x30
+This was missed in the original bindings and so users were writing dts
+files where the one and only clock specified would be the external
+clock, if there was one, incorrectly missing the separate AXI clock.
 
-The circumstances are unclear, however, the theory is that
-tb_cfg_request_work() can be scheduled twice for a request:
-first time via frame.callback from ring_work() and second
-time from tb_cfg_request().  Both times kworkers will execute
-tb_cfg_request_dequeue(), which results in double list_del()
-from the ctl->request_queue (the list poison deference hints
-at it: 0xdead000000000122).
+The correct bindings are that the AXI clock is always required and the
+external clock is optional (must be given only when HDL compile option
+ASYNC_CLK_EN=1).
 
-Do not dequeue requests that don't have TB_CFG_REQUEST_ACTIVE
-bit set.
-
-Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Fixes: 1edf2c2a2841 ("dt-bindings: pwm: Add AXI PWM generator")
 Cc: stable@vger.kernel.org
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Signed-off-by: David Lechner <dlechner@baylibre.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20250529-pwm-axi-pwmgen-add-external-clock-v3-2-5d8809a7da91@baylibre.com
+Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thunderbolt/ctl.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ Documentation/devicetree/bindings/pwm/adi,axi-pwmgen.yaml |   13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
---- a/drivers/thunderbolt/ctl.c
-+++ b/drivers/thunderbolt/ctl.c
-@@ -151,6 +151,11 @@ static void tb_cfg_request_dequeue(struc
- 	struct tb_ctl *ctl = req->ctl;
+--- a/Documentation/devicetree/bindings/pwm/adi,axi-pwmgen.yaml
++++ b/Documentation/devicetree/bindings/pwm/adi,axi-pwmgen.yaml
+@@ -30,11 +30,19 @@ properties:
+     const: 3
  
- 	mutex_lock(&ctl->request_queue_lock);
-+	if (!test_bit(TB_CFG_REQUEST_ACTIVE, &req->flags)) {
-+		mutex_unlock(&ctl->request_queue_lock);
-+		return;
-+	}
+   clocks:
+-    maxItems: 1
++    minItems: 1
++    maxItems: 2
 +
- 	list_del(&req->list);
- 	clear_bit(TB_CFG_REQUEST_ACTIVE, &req->flags);
- 	if (test_bit(TB_CFG_REQUEST_CANCELED, &req->flags))
++  clock-names:
++    minItems: 1
++    items:
++      - const: axi
++      - const: ext
+ 
+ required:
+   - reg
+   - clocks
++  - clock-names
+ 
+ unevaluatedProperties: false
+ 
+@@ -43,6 +51,7 @@ examples:
+     pwm@44b00000 {
+         compatible = "adi,axi-pwmgen-2.00.a";
+         reg = <0x44b00000 0x1000>;
+-        clocks = <&spi_clk>;
++        clocks = <&fpga_clk>, <&spi_clk>;
++        clock-names = "axi", "ext";
+         #pwm-cells = <3>;
+     };
 
 
