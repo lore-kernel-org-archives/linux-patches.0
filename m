@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0922C15D1;
-	Sat,  7 Jun 2025 10:10:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8DF71F4CB8;
+	Sat,  7 Jun 2025 10:10:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749291032; cv=none; b=oEBlf/pAtbMbF1/SZ6xSqNugenzwh/voIyAu51q+hRwbRyPPevfFUCycYK/VSNKTVl4Xrvyx+QClW95mBAAT3R5LQxL6jlOk/EDJ+e2dgoioZpPuvhawm1Uf5wahpgnMPIp7Ic6FmhDkV7IYOow3zWsOp+KgZVpUyDfkKrYNTp8=
+	t=1749291034; cv=none; b=ZrIZHUe4TtqbIT/yvcSm5nEJZ6nmmNvWGmvybhEu8HixZ1IRLmbj6MBEDXHQOtraK2xY67keCmvIE1vuWijR+i6uANU4Lt7mNXlmn1S9RedhEkUl1+w89hWgdBYgAP70Bu9/SNpy5EHb/1LzY3Ti6avkyIJ6UOooQBCMngC5B1s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749291032; c=relaxed/simple;
-	bh=XS8BoFch7nm5uUGQGX+nQibAZ+hu/UnpKqkTGNKBlww=;
+	s=arc-20240116; t=1749291034; c=relaxed/simple;
+	bh=5ePK6OfaVd3vJrSv0We/U6zcoAgaChkCN4sZaylIMCA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Iusc0D3qLou3jy/cUhNRTC+hl/RhLeV+lFfZiv919JmrE1BPoV/T0OMCbrMGFitJ/1/yqUXfAc9xVkW6eLn8X1z3vwDRGwB14Ql8udN2R5zUG/JPXBLnses4wp16AdqfGnnY677oUbw0VvFJB7rszaKAO5C2NR0QiplSiX4RuuM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZMQ2Enfb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=mphEdU6wZHvlweIHoyJs6C0hdoxr69IMPU1s3wD2TBFzfw/xEecRfpBSi0Z5ADcil/YevijEP0BohuE9knmEj2Anhuf7YZs35L8sHsbvJkTfeY6jgm5HKP/4ZHFAbsdmaD8HIdmUWx0Ps5gi146daxu/Tge0mlx/yrCnZ3zXxiU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KaE4MMjl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZMQ2Enfb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EF9AC4CEE4;
-	Sat,  7 Jun 2025 10:10:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KaE4MMjl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37968C4CEE4;
+	Sat,  7 Jun 2025 10:10:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1749291031;
-	bh=XS8BoFch7nm5uUGQGX+nQibAZ+hu/UnpKqkTGNKBlww=;
+	s=korg; t=1749291034;
+	bh=5ePK6OfaVd3vJrSv0We/U6zcoAgaChkCN4sZaylIMCA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZMQ2Enfbp9oppIsjWP7kNQb567nATNKhnPbZaegmqS5/YTNk6OqBj0lbTV1OcxLyn
-	 ZLSmGx/OY5WiwCa8au4vFgQzxivUwsv8l8zHio2mJcu4o916HgVMtF1c+n/kD10g1u
-	 sLAd+5N9xTqpVb8yCkVhEk9lXSOeRT5Dj2wnwt/k=
+	b=KaE4MMjlou4zF9Nn8SIpUpm8W6M0QVUkCzYg+yB5HalNPszddCNe9GJPl3AuPoKAB
+	 5elxe7aLFapJxUkdb3AozG8c0nX/Z22Do8GHhl2o9qiPUSi2LQ2zQuxXeJVMZT0YuO
+	 blsIlUJUrfH9pg7ZFGQdvo+yjwHBQ5M7E2LzVbUQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
-Subject: [PATCH 6.15 11/34] pinctrl: mediatek: eint: Fix invalid pointer dereference for v1 platforms
-Date: Sat,  7 Jun 2025 12:07:52 +0200
-Message-ID: <20250607100720.165134210@linuxfoundation.org>
+	Alexandre Mergnat <amergnat@baylibre.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>
+Subject: [PATCH 6.15 12/34] rtc: Make rtc_time64_to_tm() support dates before 1970
+Date: Sat,  7 Jun 2025 12:07:53 +0200
+Message-ID: <20250607100720.203256332@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250607100719.711372213@linuxfoundation.org>
 References: <20250607100719.711372213@linuxfoundation.org>
@@ -53,152 +52,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+From: Alexandre Mergnat <amergnat@baylibre.com>
 
-commit 1c9977b263475373b31bbf86af94a5c9ae2be42c upstream.
+commit 7df4cfef8b351fec3156160bedfc7d6d29de4cce upstream.
 
-Commit 3ef9f710efcb ("pinctrl: mediatek: Add EINT support for multiple
-addresses") introduced an access to the 'soc' field of struct
-mtk_pinctrl in mtk_eint_do_init() and for that an include of
-pinctrl-mtk-common-v2.h.
+Conversion of dates before 1970 is still relevant today because these
+dates are reused on some hardwares to store dates bigger than the
+maximal date that is representable in the device's native format.
+This prominently and very soon affects the hardware covered by the
+rtc-mt6397 driver that can only natively store dates in the interval
+1900-01-01 up to 2027-12-31. So to store the date 2028-01-01 00:00:00
+to such a device, rtc_time64_to_tm() must do the right thing for
+time=-2208988800.
 
-However, pinctrl drivers relying on the v1 common driver include
-pinctrl-mtk-common.h instead, which provides another definition of
-struct mtk_pinctrl that does not contain an 'soc' field.
-
-Since mtk_eint_do_init() can be called both by v1 and v2 drivers, it
-will now try to dereference an invalid pointer when called on v1
-platforms. This has been observed on Genio 350 EVK (MT8365), which
-crashes very early in boot (the kernel trace can only be seen with
-earlycon).
-
-In order to fix this, since 'struct mtk_pinctrl' was only needed to get
-a 'struct mtk_eint_pin', make 'struct mtk_eint_pin' a parameter
-of mtk_eint_do_init() so that callers need to supply it, removing
-mtk_eint_do_init()'s dependency on any particular 'struct mtk_pinctrl'.
-
-Fixes: 3ef9f710efcb ("pinctrl: mediatek: Add EINT support for multiple addresses")
-Suggested-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
-Link: https://lore.kernel.org/20250520-genio-350-eint-null-ptr-deref-fix-v2-1-6a3ca966a7ba@collabora.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-[ukleinek: backport to 6.15.y]
+Signed-off-by: Alexandre Mergnat <amergnat@baylibre.com>
+Reviewed-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+Link: https://lore.kernel.org/r/20250428-enable-rtc-v4-1-2b2f7e3f9349@baylibre.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pinctrl/mediatek/mtk-eint.c              |   26 +++++++++--------------
- drivers/pinctrl/mediatek/mtk-eint.h              |    5 ++--
- drivers/pinctrl/mediatek/pinctrl-mtk-common-v2.c |    2 -
- drivers/pinctrl/mediatek/pinctrl-mtk-common.c    |    2 -
- 4 files changed, 16 insertions(+), 19 deletions(-)
+ drivers/rtc/lib.c |   24 +++++++++++++++++++-----
+ 1 file changed, 19 insertions(+), 5 deletions(-)
 
---- a/drivers/pinctrl/mediatek/mtk-eint.c
-+++ b/drivers/pinctrl/mediatek/mtk-eint.c
-@@ -22,7 +22,6 @@
- #include <linux/platform_device.h>
- 
- #include "mtk-eint.h"
--#include "pinctrl-mtk-common-v2.h"
- 
- #define MTK_EINT_EDGE_SENSITIVE           0
- #define MTK_EINT_LEVEL_SENSITIVE          1
-@@ -505,10 +504,9 @@ int mtk_eint_find_irq(struct mtk_eint *e
- }
- EXPORT_SYMBOL_GPL(mtk_eint_find_irq);
- 
--int mtk_eint_do_init(struct mtk_eint *eint)
-+int mtk_eint_do_init(struct mtk_eint *eint, struct mtk_eint_pin *eint_pin)
+--- a/drivers/rtc/lib.c
++++ b/drivers/rtc/lib.c
+@@ -46,24 +46,38 @@ EXPORT_SYMBOL(rtc_year_days);
+  * rtc_time64_to_tm - converts time64_t to rtc_time.
+  *
+  * @time:	The number of seconds since 01-01-1970 00:00:00.
+- *		(Must be positive.)
++ *		Works for values since at least 1900
+  * @tm:		Pointer to the struct rtc_time.
+  */
+ void rtc_time64_to_tm(time64_t time, struct rtc_time *tm)
  {
- 	unsigned int size, i, port, inst = 0;
--	struct mtk_pinctrl *hw = (struct mtk_pinctrl *)eint->pctl;
+-	unsigned int secs;
+-	int days;
++	int days, secs;
  
- 	/* If clients don't assign a specific regs, let's use generic one */
- 	if (!eint->regs)
-@@ -519,7 +517,15 @@ int mtk_eint_do_init(struct mtk_eint *ei
- 	if (!eint->base_pin_num)
- 		return -ENOMEM;
+ 	u64 u64tmp;
+ 	u32 u32tmp, udays, century, day_of_century, year_of_century, year,
+ 		day_of_year, month, day;
+ 	bool is_Jan_or_Feb, is_leap_year;
  
--	if (eint->nbase == 1) {
-+	if (eint_pin) {
-+		eint->pins = eint_pin;
-+		for (i = 0; i < eint->hw->ap_num; i++) {
-+			inst = eint->pins[i].instance;
-+			if (inst >= eint->nbase)
-+				continue;
-+			eint->base_pin_num[inst]++;
-+		}
-+	} else {
- 		size = eint->hw->ap_num * sizeof(struct mtk_eint_pin);
- 		eint->pins = devm_kmalloc(eint->dev, size, GFP_KERNEL);
- 		if (!eint->pins)
-@@ -533,16 +539,6 @@ int mtk_eint_do_init(struct mtk_eint *ei
- 		}
- 	}
+-	/* time must be positive */
++	/*
++	 * Get days and seconds while preserving the sign to
++	 * handle negative time values (dates before 1970-01-01)
++	 */
+ 	days = div_s64_rem(time, 86400, &secs);
  
--	if (hw && hw->soc && hw->soc->eint_pin) {
--		eint->pins = hw->soc->eint_pin;
--		for (i = 0; i < eint->hw->ap_num; i++) {
--			inst = eint->pins[i].instance;
--			if (inst >= eint->nbase)
--				continue;
--			eint->base_pin_num[inst]++;
--		}
--	}
--
- 	eint->pin_list = devm_kmalloc(eint->dev, eint->nbase * sizeof(u16 *), GFP_KERNEL);
- 	if (!eint->pin_list)
- 		goto err_pin_list;
-@@ -610,7 +606,7 @@ err_cur_mask:
- err_wake_mask:
- 	devm_kfree(eint->dev, eint->pin_list);
- err_pin_list:
--	if (eint->nbase == 1)
-+	if (!eint_pin)
- 		devm_kfree(eint->dev, eint->pins);
- err_pins:
- 	devm_kfree(eint->dev, eint->base_pin_num);
---- a/drivers/pinctrl/mediatek/mtk-eint.h
-+++ b/drivers/pinctrl/mediatek/mtk-eint.h
-@@ -88,7 +88,7 @@ struct mtk_eint {
- };
++	/*
++	 * We need 0 <= secs < 86400 which isn't given for negative
++	 * values of time. Fixup accordingly.
++	 */
++	if (secs < 0) {
++		days -= 1;
++		secs += 86400;
++	}
++
+ 	/* day of the week, 1970-01-01 was a Thursday */
+ 	tm->tm_wday = (days + 4) % 7;
++	/* Ensure tm_wday is always positive */
++	if (tm->tm_wday < 0)
++		tm->tm_wday += 7;
  
- #if IS_ENABLED(CONFIG_EINT_MTK)
--int mtk_eint_do_init(struct mtk_eint *eint);
-+int mtk_eint_do_init(struct mtk_eint *eint, struct mtk_eint_pin *eint_pin);
- int mtk_eint_do_suspend(struct mtk_eint *eint);
- int mtk_eint_do_resume(struct mtk_eint *eint);
- int mtk_eint_set_debounce(struct mtk_eint *eint, unsigned long eint_n,
-@@ -96,7 +96,8 @@ int mtk_eint_set_debounce(struct mtk_ein
- int mtk_eint_find_irq(struct mtk_eint *eint, unsigned long eint_n);
+ 	/*
+ 	 * The following algorithm is, basically, Proposition 6.3 of Neri
+@@ -93,7 +107,7 @@ void rtc_time64_to_tm(time64_t time, str
+ 	 * thus, is slightly different from [1].
+ 	 */
  
- #else
--static inline int mtk_eint_do_init(struct mtk_eint *eint)
-+static inline int mtk_eint_do_init(struct mtk_eint *eint,
-+				   struct mtk_eint_pin *eint_pin)
- {
- 	return -EOPNOTSUPP;
- }
---- a/drivers/pinctrl/mediatek/pinctrl-mtk-common-v2.c
-+++ b/drivers/pinctrl/mediatek/pinctrl-mtk-common-v2.c
-@@ -416,7 +416,7 @@ int mtk_build_eint(struct mtk_pinctrl *h
- 	hw->eint->pctl = hw;
- 	hw->eint->gpio_xlate = &mtk_eint_xt;
+-	udays		= ((u32) days) + 719468;
++	udays		= days + 719468;
  
--	ret = mtk_eint_do_init(hw->eint);
-+	ret = mtk_eint_do_init(hw->eint, hw->soc->eint_pin);
- 	if (ret)
- 		goto err_free_eint;
- 
---- a/drivers/pinctrl/mediatek/pinctrl-mtk-common.c
-+++ b/drivers/pinctrl/mediatek/pinctrl-mtk-common.c
-@@ -1039,7 +1039,7 @@ static int mtk_eint_init(struct mtk_pinc
- 	pctl->eint->pctl = pctl;
- 	pctl->eint->gpio_xlate = &mtk_eint_xt;
- 
--	return mtk_eint_do_init(pctl->eint);
-+	return mtk_eint_do_init(pctl->eint, NULL);
- }
- 
- /* This is used as a common probe function */
+ 	u32tmp		= 4 * udays + 3;
+ 	century		= u32tmp / 146097;
 
 
