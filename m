@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFC65217F29;
-	Sat,  7 Jun 2025 10:08:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9DFF20CCED;
+	Sat,  7 Jun 2025 10:08:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749290892; cv=none; b=R9TYgbaQlE8TWLyiH494Z3sS5hVBaZTN07furPviL721ga/N6s/E+hfkLdErMaPwa2Vq68mns6VfGJtmoBxFlRn1PW7KXTbje7VwmQJd5hl+BwZ5FNPst80OGeDnPsUIrrI0YhNohQ8E39+1TgRZU9KHQ278NylSdoMDv4goKvk=
+	t=1749290897; cv=none; b=cdHSgreHK9TEKQ960+o3Itd+2UV146DZzkbC/pzodXOeKE7GWGinfQbGP5Z4SRZDAdCskugkyxy+YtGsETe3iojG9o13tcO56juD7A/9pyYPM9UAlgWKEPS4a1O8xpwdJrVgYp0c8jvB1xUlvR+LzSvm0pCdMH4MUzr02E9gPcg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749290892; c=relaxed/simple;
-	bh=aTA1IEPPAHcQw8OZS7M4ZG1hf27tbJBpDIw92yB/u8U=;
+	s=arc-20240116; t=1749290897; c=relaxed/simple;
+	bh=OuuipQSKdH0qNswtWfrDtpTtBzGZa3RuDJE4SNFhUPI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O1CYqZ+26DUIwxwroXJ87rmHpY8Et1p/Pv9XAY6svtxxSvbb1y9s+kZpuEmd0l/UYNQQXLlsiU8DcF4tH090oMC+2NFHxXCC6Iyb6qpIHgfVn/MS3SAH4VcPO5MQo3ms1qyziBsM8liEEVa9R4og5l1PfB8hm2eob53W/IHO530=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nt3AAWKh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L5QJcTLXGSRio5saTyZT7ppe8LOPE4fpc3UXbcQiRmP/OxiYVc2sQTR59A6xtAJDemoPzahpi76y/elIzgV0j6zGervsL4JH0Ava60xqYwRj8jv+wUXRexh6XENnNtfGAs7nhtt0vXKXFwu1fIiJ0LC4y8Q9F5yQtax9qBpMSqA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LlzzlBiV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nt3AAWKh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32CA4C4CEE4;
-	Sat,  7 Jun 2025 10:08:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LlzzlBiV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4AA7C4CEE4;
+	Sat,  7 Jun 2025 10:08:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1749290892;
-	bh=aTA1IEPPAHcQw8OZS7M4ZG1hf27tbJBpDIw92yB/u8U=;
+	s=korg; t=1749290895;
+	bh=OuuipQSKdH0qNswtWfrDtpTtBzGZa3RuDJE4SNFhUPI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nt3AAWKhseEd3huiGVxLAT9ok2Zin3eodQ2/T/iYmiUIEdJ09po/mTNeRJQTuVYzH
-	 A5ayY3dJeAB3u/le6rj+lER4/bmaPdEOzGgghABy6D9iVSiwJbGKmbShL5eCg5r/+j
-	 tqCtAhSLzWZCIIiVG78e5Z3CRFypgYenLgHnc7Mw=
+	b=LlzzlBiV42kGOYJQmRbJ3+R/opWkz/bUkeIJ8Bmd2fF26E84PfZpiLmPXnl2ij4+M
+	 tuVER850X8yP4RUtYbEyDWj/IdLLjYbmIkEDEoyw2AnYCdhCJlL+5eTS4h/qqhdUNa
+	 qH7XrxCiw/NpKJPkVsKZXyhXIV9L82DkF9S7DEVI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jon Hunter <jonathanh@nvidia.com>
-Subject: [PATCH 6.12 13/24] Revert "cpufreq: tegra186: Share policy per cluster"
-Date: Sat,  7 Jun 2025 12:07:44 +0200
-Message-ID: <20250607100718.422429163@linuxfoundation.org>
+	Jiayi Li <lijiayi@kylinos.cn>,
+	stable <stable@kernel.org>
+Subject: [PATCH 6.12 14/24] usb: quirks: Add NO_LPM quirk for SanDisk Extreme 55AE
+Date: Sat,  7 Jun 2025 12:07:45 +0200
+Message-ID: <20250607100718.458648926@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250607100717.910797456@linuxfoundation.org>
 References: <20250607100717.910797456@linuxfoundation.org>
@@ -49,44 +50,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jon Hunter <jonathanh@nvidia.com>
+From: Jiayi Li <lijiayi@kylinos.cn>
 
-This reverts commit d95fdee2253e612216e72f29c65b92ec42d254eb which is
-upstream commit be4ae8c19492cd6d5de61ccb34ffb3f5ede5eec8.
+commit 19f795591947596b5b9efa86fd4b9058e45786e9 upstream.
 
-This commit is causing a suspend regression on Tegra186 Jetson TX2 with
-Linux v6.12.y kernels. This is not seen with Linux v6.15 that includes
-this change but indicates that there are there changes missing.
-Therefore, revert this change.
+This device exhibits I/O errors during file transfers due to unstable
+link power management (LPM) behavior. The kernel logs show repeated
+warm resets and eventual disconnection when LPM is enabled:
 
-Fixes: d95fdee2253e ("cpufreq: tegra186: Share policy per cluster")
-Link: https://lore.kernel.org/linux-tegra/bf1dabf7-0337-40e9-8b8e-4e93a0ffd4cc@nvidia.com/
-Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
+[ 3467.810740] hub 2-0:1.0: state 7 ports 6 chg 0000 evt 0020
+[ 3467.810740] usb usb2-port5: do warm reset
+[ 3467.866444] usb usb2-port5: not warm reset yet, waiting 50ms
+[ 3467.907407] sd 0:0:0:0: [sda] tag#12 sense submit err -19
+[ 3467.994423] usb usb2-port5: status 02c0, change 0001, 10.0 Gb/s
+[ 3467.994453] usb 2-5: USB disconnect, device number 4
+
+The error -19 (ENODEV) occurs when the device disappears during write
+operations. Adding USB_QUIRK_NO_LPM disables link power management
+for this specific device, resolving the stability issues.
+
+Signed-off-by: Jiayi Li <lijiayi@kylinos.cn>
+Cc: stable <stable@kernel.org>
+Link: https://lore.kernel.org/r/20250508055947.764538-1-lijiayi@kylinos.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpufreq/tegra186-cpufreq.c |    7 -------
- 1 file changed, 7 deletions(-)
+ drivers/usb/core/quirks.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/cpufreq/tegra186-cpufreq.c
-+++ b/drivers/cpufreq/tegra186-cpufreq.c
-@@ -73,18 +73,11 @@ static int tegra186_cpufreq_init(struct
- {
- 	struct tegra186_cpufreq_data *data = cpufreq_get_driver_data();
- 	unsigned int cluster = data->cpus[policy->cpu].bpmp_cluster_id;
--	u32 cpu;
+--- a/drivers/usb/core/quirks.c
++++ b/drivers/usb/core/quirks.c
+@@ -372,6 +372,9 @@ static const struct usb_device_id usb_qu
+ 	/* SanDisk Corp. SanDisk 3.2Gen1 */
+ 	{ USB_DEVICE(0x0781, 0x55a3), .driver_info = USB_QUIRK_DELAY_INIT },
  
- 	policy->freq_table = data->clusters[cluster].table;
- 	policy->cpuinfo.transition_latency = 300 * 1000;
- 	policy->driver_data = NULL;
- 
--	/* set same policy for all cpus in a cluster */
--	for (cpu = 0; cpu < ARRAY_SIZE(tegra186_cpus); cpu++) {
--		if (data->cpus[cpu].bpmp_cluster_id == cluster)
--			cpumask_set_cpu(cpu, policy->cpus);
--	}
--
- 	return 0;
- }
++	/* SanDisk Extreme 55AE */
++	{ USB_DEVICE(0x0781, 0x55ae), .driver_info = USB_QUIRK_NO_LPM },
++
+ 	/* Realforce 87U Keyboard */
+ 	{ USB_DEVICE(0x0853, 0x011b), .driver_info = USB_QUIRK_NO_LPM },
  
 
 
