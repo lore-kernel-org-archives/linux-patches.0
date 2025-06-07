@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0546219E8F;
-	Sat,  7 Jun 2025 10:09:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61FA615D1;
+	Sat,  7 Jun 2025 10:09:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749290959; cv=none; b=ER4rn8uE73AFuT0FTNBzLCNOu/VSzqjCz6/95olJkHJXp8A5ffLR/RePMRsrZGWkMsg8Y1IY8JNG82gBvJ2NEMMtTfeXZrQ+rtV/1CP0CU4mZhPajAkHUicBDKW+rD5sM8W7vGfuru9ieU9yrIJ3iyFrPL2CVZrdf3r54snKcXo=
+	t=1749290961; cv=none; b=OgxviUMpIJtGNF33WV/wARaH3wASeAEea5XP54LeHsKP0LFXLmswKX0WZICLxbRp5HLkebuMfzKlWfL7miW7u/lYrl35DTEr8fhpjp3HtRG3HRTdPJli1+tA2+mx2woNz4vETrLCyr4A1sC0fp3qifWcGkUnwVPr2vfcRSp018k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749290959; c=relaxed/simple;
-	bh=ZZjLC7jGE2KbmfROau7bbUqW3Ok/e7FZDRPCLyprGw8=;
+	s=arc-20240116; t=1749290961; c=relaxed/simple;
+	bh=xr0KBMw1ipd17qI/GJsZPa4WVHpPmUSM+5yCvWic6Sk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vi/U7dMz2J9pkWlPqoQIuSxEkpVudLic/vNJ8SXG0H7MqqD/L90Hc/sT4rMYjSKBYfISC5iWPSoBe4jfd4dvV4x3SgHyADPWYa7zXPr3rhm0oZHs7cJOuH9dGZwh4z31XY84XRm1GZNQ8iB1eXQ/4v5z3f5SsQuHYfDEAyBybq4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ery/cZDI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FI1vPUxWesOQhcjNZ7Ta3ftkIEfl09c+D9zDI+ZMVwKzZ0Yx/VSBouBHJYDOWG0LEX+kU4JmNnh/D8JGnvWtyqDlIO4AgBQFMfKkZJQ6CBoHzi7W5gNpOexmgaTX3nHjUsg65n7Mx/KTb9jqJMHJJlgvuGIrPGdIx2KkUZsBCBg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZD4uC4jx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ery/cZDI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CA02C4CEE4;
-	Sat,  7 Jun 2025 10:09:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZD4uC4jx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 941A1C4CEE4;
+	Sat,  7 Jun 2025 10:09:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1749290955;
-	bh=ZZjLC7jGE2KbmfROau7bbUqW3Ok/e7FZDRPCLyprGw8=;
+	s=korg; t=1749290960;
+	bh=xr0KBMw1ipd17qI/GJsZPa4WVHpPmUSM+5yCvWic6Sk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ery/cZDINtRAj/IRwHVDblUSBslQtFIsLwiqpNSTfRI9C1akiJiz8OpKdx1ddP0AF
-	 9FE9HatiTJxp4qj4EEbDPLZ81ePrdY9SxBjqKJt5ZebCjrvjS8J0Xj1Ut7h6VdcAPY
-	 dT3/cq/hmEKFAZRxuXOfGaaNGGyiO75mpmq0Svko=
+	b=ZD4uC4jxJQ0SeZb4PVQUqDlhnrEvnT6LoZ5Ao5JZXoAliPBAvDv/hca/6+VQvYsL7
+	 oWgMy7ADFEJLOymRCpj6uJkiT3oMQCt8hfZLmxsVPuzvmxWUNcDszmf3GDFnRD+OfH
+	 S9Nks+HvRnWEkawEjdAjMY+CB+ddhI4aZOV7LdeU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ajay Agarwal <ajayagarwal@google.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Johnny-CC Chang <Johnny-CC.Chang@mediatek.com>,
-	Macpaul Lin <macpaul.lin@mediatek.com>
-Subject: [PATCH 6.12 11/24] PCI/ASPM: Disable L1 before disabling L1 PM Substates
-Date: Sat,  7 Jun 2025 12:07:42 +0200
-Message-ID: <20250607100718.348292137@linuxfoundation.org>
+	Jeongjun Park <aha310510@gmail.com>,
+	Pan Taixi <pantaixi@huaweicloud.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.14 01/24] tracing: Fix compilation warning on arm32
+Date: Sat,  7 Jun 2025 12:07:41 +0200
+Message-ID: <20250607100717.765483257@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250607100717.910797456@linuxfoundation.org>
-References: <20250607100717.910797456@linuxfoundation.org>
+In-Reply-To: <20250607100717.706871523@linuxfoundation.org>
+References: <20250607100717.706871523@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,193 +47,56 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ajay Agarwal <ajayagarwal@google.com>
+From: Pan Taixi <pantaixi@huaweicloud.com>
 
-commit 7447990137bf06b2aeecad9c6081e01a9f47f2aa upstream.
+commit 2fbdb6d8e03b70668c0876e635506540ae92ab05 upstream.
 
-PCIe r6.2, sec 5.5.4, requires that:
+On arm32, size_t is defined to be unsigned int, while PAGE_SIZE is
+unsigned long. This hence triggers a compilation warning as min()
+asserts the type of two operands to be equal. Casting PAGE_SIZE to size_t
+solves this issue and works on other target architectures as well.
 
-  If setting either or both of the enable bits for ASPM L1 PM Substates,
-  both ports must be configured as described in this section while ASPM L1
-  is disabled.
+Compilation warning details:
 
-Previously, pcie_config_aspm_l1ss() assumed that "setting enable bits"
-meant "setting them to 1", and it configured L1SS as follows:
+kernel/trace/trace.c: In function 'tracing_splice_read_pipe':
+./include/linux/minmax.h:20:28: warning: comparison of distinct pointer types lacks a cast
+  (!!(sizeof((typeof(x) *)1 == (typeof(y) *)1)))
+                            ^
+./include/linux/minmax.h:26:4: note: in expansion of macro '__typecheck'
+   (__typecheck(x, y) && __no_side_effects(x, y))
+    ^~~~~~~~~~~
 
-  - Clear L1SS enable bits
-  - Disable L1
-  - Configure L1SS enable bits as required
-  - Enable L1 if required
+...
 
-With this sequence, when disabling L1SS on an ARM A-core with a Synopsys
-DesignWare PCIe core, the CPU occasionally hangs when reading
-PCI_L1SS_CTL1, leading to a reboot when the CPU watchdog expires.
+kernel/trace/trace.c:6771:8: note: in expansion of macro 'min'
+        min((size_t)trace_seq_used(&iter->seq),
+        ^~~
 
-Move the L1 disable to the caller (pcie_config_aspm_link(), where L1 was
-already enabled) so L1 is always disabled while updating the L1SS bits:
-
-  - Disable L1
-  - Clear L1SS enable bits
-  - Configure L1SS enable bits as required
-  - Enable L1 if required
-
-Change pcie_aspm_cap_init() similarly.
-
-Link: https://lore.kernel.org/r/20241007032917.872262-1-ajayagarwal@google.com
-Signed-off-by: Ajay Agarwal <ajayagarwal@google.com>
-[bhelgaas: comments, commit log, compute L1SS setting before config access]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Tested-by: Johnny-CC Chang <Johnny-CC.Chang@mediatek.com>
-Signed-off-by: Macpaul Lin <macpaul.lin@mediatek.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/20250526013731.1198030-1-pantaixi@huaweicloud.com
+Fixes: f5178c41bb43 ("tracing: Fix oob write in trace_seq_to_buffer()")
+Reviewed-by: Jeongjun Park <aha310510@gmail.com>
+Signed-off-by: Pan Taixi <pantaixi@huaweicloud.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/pcie/aspm.c |   92 ++++++++++++++++++++++++++----------------------
- 1 file changed, 50 insertions(+), 42 deletions(-)
+ kernel/trace/trace.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/pci/pcie/aspm.c
-+++ b/drivers/pci/pcie/aspm.c
-@@ -805,6 +805,15 @@ static void pcie_aspm_cap_init(struct pc
- 	pcie_capability_read_word(parent, PCI_EXP_LNKCTL, &parent_lnkctl);
- 	pcie_capability_read_word(child, PCI_EXP_LNKCTL, &child_lnkctl);
- 
-+	/* Disable L0s/L1 before updating L1SS config */
-+	if (FIELD_GET(PCI_EXP_LNKCTL_ASPMC, child_lnkctl) ||
-+	    FIELD_GET(PCI_EXP_LNKCTL_ASPMC, parent_lnkctl)) {
-+		pcie_capability_write_word(child, PCI_EXP_LNKCTL,
-+					   child_lnkctl & ~PCI_EXP_LNKCTL_ASPMC);
-+		pcie_capability_write_word(parent, PCI_EXP_LNKCTL,
-+					   parent_lnkctl & ~PCI_EXP_LNKCTL_ASPMC);
-+	}
-+
- 	/*
- 	 * Setup L0s state
- 	 *
-@@ -829,6 +838,13 @@ static void pcie_aspm_cap_init(struct pc
- 
- 	aspm_l1ss_init(link);
- 
-+	/* Restore L0s/L1 if they were enabled */
-+	if (FIELD_GET(PCI_EXP_LNKCTL_ASPMC, child_lnkctl) ||
-+	    FIELD_GET(PCI_EXP_LNKCTL_ASPMC, parent_lnkctl)) {
-+		pcie_capability_write_word(parent, PCI_EXP_LNKCTL, parent_lnkctl);
-+		pcie_capability_write_word(child, PCI_EXP_LNKCTL, child_lnkctl);
-+	}
-+
- 	/* Save default state */
- 	link->aspm_default = link->aspm_enabled;
- 
-@@ -845,25 +861,28 @@ static void pcie_aspm_cap_init(struct pc
- 	}
- }
- 
--/* Configure the ASPM L1 substates */
-+/* Configure the ASPM L1 substates. Caller must disable L1 first. */
- static void pcie_config_aspm_l1ss(struct pcie_link_state *link, u32 state)
- {
--	u32 val, enable_req;
-+	u32 val;
- 	struct pci_dev *child = link->downstream, *parent = link->pdev;
- 
--	enable_req = (link->aspm_enabled ^ state) & state;
-+	val = 0;
-+	if (state & PCIE_LINK_STATE_L1_1)
-+		val |= PCI_L1SS_CTL1_ASPM_L1_1;
-+	if (state & PCIE_LINK_STATE_L1_2)
-+		val |= PCI_L1SS_CTL1_ASPM_L1_2;
-+	if (state & PCIE_LINK_STATE_L1_1_PCIPM)
-+		val |= PCI_L1SS_CTL1_PCIPM_L1_1;
-+	if (state & PCIE_LINK_STATE_L1_2_PCIPM)
-+		val |= PCI_L1SS_CTL1_PCIPM_L1_2;
- 
- 	/*
--	 * Here are the rules specified in the PCIe spec for enabling L1SS:
--	 * - When enabling L1.x, enable bit at parent first, then at child
--	 * - When disabling L1.x, disable bit at child first, then at parent
--	 * - When enabling ASPM L1.x, need to disable L1
--	 *   (at child followed by parent).
--	 * - The ASPM/PCIPM L1.2 must be disabled while programming timing
-+	 * PCIe r6.2, sec 5.5.4, rules for enabling L1 PM Substates:
-+	 * - Clear L1.x enable bits at child first, then at parent
-+	 * - Set L1.x enable bits at parent first, then at child
-+	 * - ASPM/PCIPM L1.2 must be disabled while programming timing
- 	 *   parameters
--	 *
--	 * To keep it simple, disable all L1SS bits first, and later enable
--	 * what is needed.
- 	 */
- 
- 	/* Disable all L1 substates */
-@@ -871,26 +890,6 @@ static void pcie_config_aspm_l1ss(struct
- 				       PCI_L1SS_CTL1_L1SS_MASK, 0);
- 	pci_clear_and_set_config_dword(parent, parent->l1ss + PCI_L1SS_CTL1,
- 				       PCI_L1SS_CTL1_L1SS_MASK, 0);
--	/*
--	 * If needed, disable L1, and it gets enabled later
--	 * in pcie_config_aspm_link().
--	 */
--	if (enable_req & (PCIE_LINK_STATE_L1_1 | PCIE_LINK_STATE_L1_2)) {
--		pcie_capability_clear_word(child, PCI_EXP_LNKCTL,
--					   PCI_EXP_LNKCTL_ASPM_L1);
--		pcie_capability_clear_word(parent, PCI_EXP_LNKCTL,
--					   PCI_EXP_LNKCTL_ASPM_L1);
--	}
--
--	val = 0;
--	if (state & PCIE_LINK_STATE_L1_1)
--		val |= PCI_L1SS_CTL1_ASPM_L1_1;
--	if (state & PCIE_LINK_STATE_L1_2)
--		val |= PCI_L1SS_CTL1_ASPM_L1_2;
--	if (state & PCIE_LINK_STATE_L1_1_PCIPM)
--		val |= PCI_L1SS_CTL1_PCIPM_L1_1;
--	if (state & PCIE_LINK_STATE_L1_2_PCIPM)
--		val |= PCI_L1SS_CTL1_PCIPM_L1_2;
- 
- 	/* Enable what we need to enable */
- 	pci_clear_and_set_config_dword(parent, parent->l1ss + PCI_L1SS_CTL1,
-@@ -937,21 +936,30 @@ static void pcie_config_aspm_link(struct
- 		dwstream |= PCI_EXP_LNKCTL_ASPM_L1;
- 	}
- 
-+	/*
-+	 * Per PCIe r6.2, sec 5.5.4, setting either or both of the enable
-+	 * bits for ASPM L1 PM Substates must be done while ASPM L1 is
-+	 * disabled. Disable L1 here and apply new configuration after L1SS
-+	 * configuration has been completed.
-+	 *
-+	 * Per sec 7.5.3.7, when disabling ASPM L1, software must disable
-+	 * it in the Downstream component prior to disabling it in the
-+	 * Upstream component, and ASPM L1 must be enabled in the Upstream
-+	 * component prior to enabling it in the Downstream component.
-+	 *
-+	 * Sec 7.5.3.7 also recommends programming the same ASPM Control
-+	 * value for all functions of a multi-function device.
-+	 */
-+	list_for_each_entry(child, &linkbus->devices, bus_list)
-+		pcie_config_aspm_dev(child, 0);
-+	pcie_config_aspm_dev(parent, 0);
-+
- 	if (link->aspm_capable & PCIE_LINK_STATE_L1SS)
- 		pcie_config_aspm_l1ss(link, state);
- 
--	/*
--	 * Spec 2.0 suggests all functions should be configured the
--	 * same setting for ASPM. Enabling ASPM L1 should be done in
--	 * upstream component first and then downstream, and vice
--	 * versa for disabling ASPM L1. Spec doesn't mention L0S.
--	 */
--	if (state & PCIE_LINK_STATE_L1)
--		pcie_config_aspm_dev(parent, upstream);
-+	pcie_config_aspm_dev(parent, upstream);
- 	list_for_each_entry(child, &linkbus->devices, bus_list)
- 		pcie_config_aspm_dev(child, dwstream);
--	if (!(state & PCIE_LINK_STATE_L1))
--		pcie_config_aspm_dev(parent, upstream);
- 
- 	link->aspm_enabled = state;
- 
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -6679,7 +6679,7 @@ static ssize_t tracing_splice_read_pipe(
+ 		ret = trace_seq_to_buffer(&iter->seq,
+ 					  page_address(spd.pages[i]),
+ 					  min((size_t)trace_seq_used(&iter->seq),
+-						  PAGE_SIZE));
++						  (size_t)PAGE_SIZE));
+ 		if (ret < 0) {
+ 			__free_page(spd.pages[i]);
+ 			break;
 
 
