@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E0471F4CB8;
-	Sat,  7 Jun 2025 10:10:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1A1915D1;
+	Sat,  7 Jun 2025 10:10:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749291037; cv=none; b=JYEFnJOnhD15qv7Ha88dUc2vdulRUbV9ITKwjoTcjW/0ZmIr+nBck+cTyTwlOKtjDynnxqAQ6hBIU27ilLLPuQfJyoUgtWbVDFj1NXilFJpmuD1nMoHkBRe6nDeiF3mqpFNqc4ov6qsqUyQx8ehzGNA8Y39R8R2SSro5DdHKqXM=
+	t=1749291040; cv=none; b=YTYMtT8t68BjRE4Hh/7N79MLTmKGTkKA1rBL7XVebhTd9TEpLXT6ZkZTlX7FdwqfMeS9XMjtYvlNX8TuZ0fQHpeInZInYuXWJzm/3CS6dwoHmtfjfAtj3NI8NLOsCVHJ3r27XB+LO02TQg2tSt2rMMbhLDfbOVw9VBIEYjuJFEE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749291037; c=relaxed/simple;
-	bh=9ErGhhli9UzoIUoyBKf42/n+eEx1hOtK5K8gqSd0ZZU=;
+	s=arc-20240116; t=1749291040; c=relaxed/simple;
+	bh=1KGsHZpbrW/MWkN0UD5spF84MRWalTABOiZd6mCv/bo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CFfnPOku48RsJsTJz7t+VfNsHgJygO6WkfIpWaTzLbxyC1BnRJBZz/MWB9WGUNCPtsTCfkt3fV6yqmZdEYgzJ+7OFiiT016x3JehQ0J9VQX72+X+Ut6K6jlh3vFpOvTONVE3t6jCN/4eDV++Wduqw896rRYouIaE/JADC6aH+Vw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hYb/0m+e; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LY1SF9MdiGHOYeebaKuVhTD/kCyFjLEDWQZuzJcyHapvW8dKgvkvqNwo4+H0dMR1Uik2tRJUX3IrCAqNIIwEyfRHfdLnFf5LYPp/vXJwCebJeDyG0uIv/i5mBYkXLP0+z4NToS2kaaME5ILLmgfCG/ilhkDqxGV8xmDQOdpa+Xo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pFLwmZ/j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hYb/0m+e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2448C4CEE4;
-	Sat,  7 Jun 2025 10:10:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pFLwmZ/j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AD03C4CEE4;
+	Sat,  7 Jun 2025 10:10:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1749291037;
-	bh=9ErGhhli9UzoIUoyBKf42/n+eEx1hOtK5K8gqSd0ZZU=;
+	s=korg; t=1749291039;
+	bh=1KGsHZpbrW/MWkN0UD5spF84MRWalTABOiZd6mCv/bo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hYb/0m+e73VMmgeHbRuxxNMIyO+dBR8GKHZoe0zFFXu12kgp1DC/wU7lyXLTTV9Zz
-	 A2eKrhSASBRiPEe/mO9fM1txrEI2N20oSscpuAm1v596hN+g6y0IfNAKJIEJPRtSzh
-	 E6liE5xkVe1fyN8eHhYIfTG9TKK5cjOtZQGIKkhs=
+	b=pFLwmZ/jQLsatXmc6vvQ8ewjpw7FRtQ/dh8nJq0RyI/RFxGqZ6cASyLsw8DdZT1Zp
+	 y5osE+hjPBss7Q8yvuAFITQwuM+3p5wWZM/NF/0RcGGYrOVFqDxDOi+HnXNa3N8yTT
+	 p+vt12xioNnYYnwgnfHwRe9an3gfIs4V6c5rFFLA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandre Mergnat <amergnat@baylibre.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>
-Subject: [PATCH 6.15 13/34] rtc: Fix offset calculation for .start_secs < 0
-Date: Sat,  7 Jun 2025 12:07:54 +0200
-Message-ID: <20250607100720.240415759@linuxfoundation.org>
+	Kent Overstreet <kent.overstreet@linux.dev>
+Subject: [PATCH 6.15 14/34] bcachefs: Kill un-reverted directory i_size code
+Date: Sat,  7 Jun 2025 12:07:55 +0200
+Message-ID: <20250607100720.279128777@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250607100719.711372213@linuxfoundation.org>
 References: <20250607100719.711372213@linuxfoundation.org>
@@ -45,58 +43,77 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexandre Mergnat <amergnat@baylibre.com>
+From: Kent Overstreet <kent.overstreet@linux.dev>
 
-commit fe9f5f96cfe8b82d0f24cbfa93718925560f4f8d upstream.
+commit 95fafc0f3407a6446082c11849df585bd3246571 upstream.
 
-The comparison
-
-        rtc->start_secs > rtc->range_max
-
-has a signed left-hand side and an unsigned right-hand side.
-So the comparison might become true for negative start_secs which is
-interpreted as a (possibly very large) positive value.
-
-As a negative value can never be bigger than an unsigned value
-the correct representation of the (mathematical) comparison
-
-        rtc->start_secs > rtc->range_max
-
-in C is:
-
-        rtc->start_secs >= 0 && rtc->start_secs > rtc->range_max
-
-Use that to fix the offset calculation currently used in the
-rtc-mt6397 driver.
-
-Fixes: 989515647e783 ("rtc: Add one offset seconds to expand RTC range")
-Signed-off-by: Alexandre Mergnat <amergnat@baylibre.com>
-Reviewed-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
-Link: https://lore.kernel.org/r/20250428-enable-rtc-v4-2-2b2f7e3f9349@baylibre.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+Signed-off-by: Kent Overstreet <kent.overstreet@linux.dev>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/rtc/class.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/bcachefs/dirent.c |   12 ++----------
+ fs/bcachefs/dirent.h |    4 ++--
+ fs/bcachefs/namei.c  |    4 ++--
+ 3 files changed, 6 insertions(+), 14 deletions(-)
 
---- a/drivers/rtc/class.c
-+++ b/drivers/rtc/class.c
-@@ -326,7 +326,7 @@ static void rtc_device_get_offset(struct
- 	 *
- 	 * Otherwise the offset seconds should be 0.
- 	 */
--	if (rtc->start_secs > rtc->range_max ||
-+	if ((rtc->start_secs >= 0 && rtc->start_secs > rtc->range_max) ||
- 	    rtc->start_secs + range_secs - 1 < rtc->range_min)
- 		rtc->offset_secs = rtc->start_secs - rtc->range_min;
- 	else if (rtc->start_secs > rtc->range_min)
+--- a/fs/bcachefs/dirent.c
++++ b/fs/bcachefs/dirent.c
+@@ -395,8 +395,8 @@ int bch2_dirent_read_target(struct btree
+ }
+ 
+ int bch2_dirent_rename(struct btree_trans *trans,
+-		subvol_inum src_dir, struct bch_hash_info *src_hash, u64 *src_dir_i_size,
+-		subvol_inum dst_dir, struct bch_hash_info *dst_hash, u64 *dst_dir_i_size,
++		subvol_inum src_dir, struct bch_hash_info *src_hash,
++		subvol_inum dst_dir, struct bch_hash_info *dst_hash,
+ 		const struct qstr *src_name, subvol_inum *src_inum, u64 *src_offset,
+ 		const struct qstr *dst_name, subvol_inum *dst_inum, u64 *dst_offset,
+ 		enum bch_rename_mode mode)
+@@ -535,14 +535,6 @@ int bch2_dirent_rename(struct btree_tran
+ 	    new_src->v.d_type == DT_SUBVOL)
+ 		new_src->v.d_parent_subvol = cpu_to_le32(src_dir.subvol);
+ 
+-	if (old_dst.k)
+-		*dst_dir_i_size -= bkey_bytes(old_dst.k);
+-	*src_dir_i_size -= bkey_bytes(old_src.k);
+-
+-	if (mode == BCH_RENAME_EXCHANGE)
+-		*src_dir_i_size += bkey_bytes(&new_src->k);
+-	*dst_dir_i_size += bkey_bytes(&new_dst->k);
+-
+ 	ret = bch2_trans_update(trans, &dst_iter, &new_dst->k_i, 0);
+ 	if (ret)
+ 		goto out;
+--- a/fs/bcachefs/dirent.h
++++ b/fs/bcachefs/dirent.h
+@@ -80,8 +80,8 @@ enum bch_rename_mode {
+ };
+ 
+ int bch2_dirent_rename(struct btree_trans *,
+-		       subvol_inum, struct bch_hash_info *, u64 *,
+-		       subvol_inum, struct bch_hash_info *, u64 *,
++		       subvol_inum, struct bch_hash_info *,
++		       subvol_inum, struct bch_hash_info *,
+ 		       const struct qstr *, subvol_inum *, u64 *,
+ 		       const struct qstr *, subvol_inum *, u64 *,
+ 		       enum bch_rename_mode);
+--- a/fs/bcachefs/namei.c
++++ b/fs/bcachefs/namei.c
+@@ -418,8 +418,8 @@ int bch2_rename_trans(struct btree_trans
+ 	}
+ 
+ 	ret = bch2_dirent_rename(trans,
+-				 src_dir, &src_hash, &src_dir_u->bi_size,
+-				 dst_dir, &dst_hash, &dst_dir_u->bi_size,
++				 src_dir, &src_hash,
++				 dst_dir, &dst_hash,
+ 				 src_name, &src_inum, &src_offset,
+ 				 dst_name, &dst_inum, &dst_offset,
+ 				 mode);
 
 
