@@ -1,49 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FB18205E3E;
-	Sun,  8 Jun 2025 12:55:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A63820F093;
+	Sun,  8 Jun 2025 12:55:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749387339; cv=none; b=RFhyHo7Zu1nEPI5Sz13bt4GyiT5tnQGQohs9tFB1BCbp2kidk2ikGVgXnwr3ZR54U+uxtUI7EYGG6NKh8d4/Rc7mk3xAwJ09hWNsEtDbtuX78DJhQt50jxWMNGD1LgGrldnJaVSopHNo+Spi4rb8Z8FVJBR2lda7M4gjr+vt0Mw=
+	t=1749387341; cv=none; b=cOlUoEDD6ysHkf/4t8yM9OQzeUXpsiMLATPitYySiADdkFKlYQxmfZthLOGJ0K18zEn+Yo7ViUBy+uQUbMTfGqUt4De90QyXrt4AWe92pvzE4/ouf/PluNlwwR6yd+JljtjIsAeESX5etHmcLEoXPQCHvqc3y5i/mFzHIMwvCno=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749387339; c=relaxed/simple;
-	bh=wi2FFkgVUWO5DXZMRdnfBRdsYEzBU63e/t7pIxETZBE=;
+	s=arc-20240116; t=1749387341; c=relaxed/simple;
+	bh=ZEeM/84rlnlbqcXT1/utPevTNd/Iqjmtia/woQB78vc=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=hwMKy4sbKIEXP1NSZ94PUXW3qbZKody71Q1desrDYHppVkJs2Rb3EQQdCrU12Av7yrgkRRJdG358HN31WnyCdTIO/fseOdGLfZGVHc0v0iCADuUsDEyPvh6+M+4KeOgm/+SEugtf7uEdKkRI6qQOky/3tFsP2Psdp9yFdo0ohY8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dAA52QEM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=GxXtnupKxwHa+YN8tIa6AJiNzPZqwhvYHUlr6LY9MRbWmZyNDydQzbNjfFmeTyfTxo/8H6vC+ClLV2lA3y7FR3imFYs3IkWzT6uLXK2yInBEajYO5tn2m222Ie9Lt9C6hWQ8NfuaY5Z6hFoWVYqR93z/59RC6DPTYrrrdjQ+aZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=H+QvEFov; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dAA52QEM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0349AC4CEEE;
-	Sun,  8 Jun 2025 12:55:37 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="H+QvEFov"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E820CC4CEEE;
+	Sun,  8 Jun 2025 12:55:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749387339;
-	bh=wi2FFkgVUWO5DXZMRdnfBRdsYEzBU63e/t7pIxETZBE=;
+	s=k20201202; t=1749387341;
+	bh=ZEeM/84rlnlbqcXT1/utPevTNd/Iqjmtia/woQB78vc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dAA52QEM75bJ/Z0+3UH+E2HlkDelxYo4ftKVCPrBxTaTlUXHU/SrexQgaiCyA0U7O
-	 y5N1pRUieeC3fbXl7zA+USh/qHZuvQSm102MUATVGfQFIiQTRMwhDCf2k720ZocL8z
-	 ZYPUKlkqPBGzvkrGgepbScls2LvawQpF/+LGtDtNlUKzcP0VmeeO/YWrCh0jDm5myJ
-	 Bwfuw8bQVMJ8EyD3IeIS646LrJMhSpTQiZcI0FOf7LWRmT6IqK3OrOu/4HJGeAiZC5
-	 NiQyNlM9zM3ESwf+ekZrUXFtFobjzLUGPTmaOSJHzRiEphSlaM6901zP/yRR1FvNZ7
-	 GDTIF/BTT2WcA==
+	b=H+QvEFovf/CWOGyDobwZ5RakM4Nvtc+ER1QhtuhdhRwX9kfA0Zrqj6PgZwciGJMf9
+	 MDjpHkab/0YwntNl4O2okIwD7P+hYKmqi9rSP3Uf6esfoDhcJyPp29Cfc6dhr0bs4y
+	 K+umjKvEOk8qwhzIEYNlbevrVIJE9z5+0Zc6TP7KyKUCaysH384m6nByCzpU2Axc3m
+	 NwVuPw3Vm3Vp2Oyr1H1ryVpytOTv9iTtyQ2SZOknf8g9WHpD4hv8xebZxQROp2HOGm
+	 tMiKapETQeO1Ms9ZuDo+xlPV+hpgJUDXHapNwku88oE3KbjkcxPIoxG89uWteAyUe5
+	 San5WshNQ6P3w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Thomas Gessler <thomas.gessler@brueckmann-gmbh.de>,
-	Suraj Gupta <suraj.gupta2@amd.com>,
-	Folker Schwesinger <dev@folker-schwesinger.de>,
-	Vinod Koul <vkoul@kernel.org>,
+Cc: Wenbin Yao <quic_wenbyao@quicinc.com>,
+	Qiang Yu <quic_qianyu@quicinc.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Niklas Cassel <cassel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	michal.simek@amd.com,
+	jingoohan1@gmail.com,
 	mani@kernel.org,
-	u.kleine-koenig@baylibre.com,
-	jernej.skrabec@gmail.com,
-	krzysztof.kozlowski@linaro.org,
-	marex@denx.de,
-	linux-arm-kernel@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.6 6/8] dmaengine: xilinx_dma: Set dma_device directions
-Date: Sun,  8 Jun 2025 08:55:25 -0400
-Message-Id: <20250608125527.934264-6-sashal@kernel.org>
+	linux-pci@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.6 7/8] PCI: dwc: Make link training more robust by setting PORT_LOGIC_LINK_WIDTH to one lane
+Date: Sun,  8 Jun 2025 08:55:26 -0400
+Message-Id: <20250608125527.934264-7-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250608125527.934264-1-sashal@kernel.org>
 References: <20250608125527.934264-1-sashal@kernel.org>
@@ -56,112 +53,198 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.6.93
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Gessler <thomas.gessler@brueckmann-gmbh.de>
+From: Wenbin Yao <quic_wenbyao@quicinc.com>
 
-[ Upstream commit 7e01511443c30a55a5ae78d3debd46d4d872517e ]
+[ Upstream commit af3c6eacce0c464f28fe0e3d365b3860aba07931 ]
 
-Coalesce the direction bits from the enabled TX and/or RX channels into
-the directions bit mask of dma_device. Without this mask set,
-dma_get_slave_caps() in the DMAEngine fails, which prevents the driver
-from being used with an IIO DMAEngine buffer.
+As per DWC PCIe registers description 4.30a, section 1.13.43, NUM_OF_LANES
+named as PORT_LOGIC_LINK_WIDTH in PCIe DWC driver, is referred to as the
+"Predetermined Number of Lanes" in PCIe r6.0, sec 4.2.7.2.1, which explains
+the conditions required to enter Polling.Configuration:
 
-Signed-off-by: Thomas Gessler <thomas.gessler@brueckmann-gmbh.de>
-Reviewed-by: Suraj Gupta <suraj.gupta2@amd.com>
-Tested-by: Folker Schwesinger <dev@folker-schwesinger.de>
-Link: https://lore.kernel.org/r/20250507182101.909010-1-thomas.gessler@brueckmann-gmbh.de
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+  Next state is Polling.Configuration after at least 1024 TS1 Ordered Sets
+  were transmitted, and all Lanes that detected a Receiver during Detect
+  receive eight consecutive training sequences ...
+
+  Otherwise, after a 24 ms timeout the next state is:
+
+    Polling.Configuration if,
+
+      (i) Any Lane, which detected a Receiver during Detect, received eight
+      consecutive training sequences ... and a minimum of 1024 TS1 Ordered
+      Sets are transmitted after receiving one TS1 or TS2 Ordered Set.
+
+      And
+
+      (ii) At least a predetermined set of Lanes that detected a Receiver
+      during Detect have detected an exit from Electrical Idle at least
+      once since entering Polling.Active.
+
+	Note: This may prevent one or more bad Receivers or Transmitters
+	from holding up a valid Link from being configured, and allow for
+	additional training in Polling.Configuration. The exact set of
+	predetermined Lanes is implementation specific.
+
+	Note: Any Lane that receives eight consecutive TS1 or TS2 Ordered
+	Sets should have detected an exit from Electrical Idle at least
+	once since entering Polling.Active.
+
+In a PCIe link supporting multiple lanes, if PORT_LOGIC_LINK_WIDTH is set
+to lane width the hardware supports, all lanes that detect a receiver
+during the Detect phase must receive eight consecutive training sequences.
+Otherwise, LTSSM will not enter Polling.Configuration and link training
+will fail.
+
+Therefore, always set PORT_LOGIC_LINK_WIDTH to 1, regardless of the number
+of lanes the port actually supports, to make link up more robust. This
+setting will not affect the intended link width if all lanes are
+functional. Additionally, the link can still be established with at least
+one lane if other lanes are faulty.
+
+Co-developed-by: Qiang Yu <quic_qianyu@quicinc.com>
+Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
+Signed-off-by: Wenbin Yao <quic_wenbyao@quicinc.com>
+[mani: subject change]
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+[bhelgaas: update PCIe spec citation, format quote]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Tested-by: Niklas Cassel <cassel@kernel.org>
+Link: https://patch.msgid.link/20250422103623.462277-1-quic_wenbyao@quicinc.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 **YES**
 
-## Analysis
+This commit should be backported to stable kernel trees. Here's my
+extensive analysis:
 
-This commit should be backported to stable kernel trees because it fixes
-a critical functionality bug that prevents the Xilinx DMA driver from
-working with important subsystems.
+## **Primary Justification for Backporting**
 
-### The Problem
-The commit addresses a fundamental issue where `dma_get_slave_caps()`
-fails when called on Xilinx DMA channels. The code change shows that the
-driver was not setting the `directions` field in the `dma_device`
-structure:
+**1. Critical Reliability Fix**
+The commit addresses a fundamental PCIe link training robustness issue
+in DesignWare (DWC) PCIe controllers. The core problem is that when
+`PORT_LOGIC_LINK_WIDTH` is set to match the actual lane count (2, 4, or
+8 lanes), ALL lanes must receive eight consecutive training sequences
+during the Polling.Active phase to transition to Polling.Configuration.
+If any single lane has poor signal integrity or is faulty, the entire
+link training fails.
 
+**2. Minimal Risk, High Reward Change**
+The code change is surgically precise:
 ```c
-+       xdev->common.directions |= chan->direction;
+lwsc &= ~PORT_LOGIC_LINK_WIDTH_MASK;
++lwsc |= PORT_LOGIC_LINK_WIDTH_1_LANES;  // Always set to 1 lane
 ```
 
-This single line fix accumulates the direction capabilities from
-individual channels (either `DMA_MEM_TO_DEV` or `DMA_DEV_TO_MEM`) into
-the device-level `directions` bitmask.
+The fix removes lane-specific `PORT_LOGIC_LINK_WIDTH` assignments from
+the switch statement while preserving `PORT_LINK_MODE` settings. This
+maintains full functionality for working configurations while improving
+robustness for marginal hardware.
 
-### Why This Qualifies for Backporting
+**3. Standards-Compliant Solution**
+The fix is based on official PCIe specification guidance (PCIe r6.0,
+Section 4.2.7.2.1) regarding "Predetermined Number of Lanes" and follows
+DWC hardware manual recommendations (DWC PCIe registers 4.30a, Section
+1.13.43).
 
-1. **Fixes Important User-Facing Bug**: The commit message explicitly
-   states this prevents the driver from being used with IIO DMAEngine
-   buffers, which is a significant functional regression affecting real
-   users.
+## **Technical Analysis Supporting Backporting**
 
-2. **Small and Contained Fix**: The change is minimal - just one line of
-   code that sets a required field during channel probe. This has
-   extremely low risk of introducing regressions.
+**Comparison with Historical Similar Commits:**
 
-3. **Critical Subsystem Integration**: Without this fix,
-   `dma_get_slave_caps()` calls fail with `-ENXIO`, breaking integration
-   with any subsystem that queries DMA capabilities (like IIO).
+Looking at the provided examples, this commit closely resembles
+**Similar Commit #1** and **Similar Commit #3** (both marked YES for
+backporting):
 
-4. **Clear Root Cause**: The fix directly addresses the root cause - the
-   missing `directions` field that the DMAEngine core requires to be
-   set.
+- **Similar to Commit #1**: Both fix hardware capability exposure issues
+  in DWC PCIe controllers
+- **Similar to Commit #3**: Both address link training problems with
+  clear technical justification and minimal code changes
+- **Unlike Commit #2**: This is not a vendor-specific workaround but a
+  general robustness improvement
+- **Unlike Commit #5**: This doesn't remove functionality but enhances
+  reliability
 
-5. **No Architectural Changes**: This doesn't introduce new features or
-   change driver architecture; it simply provides required capability
-   information that was missing.
+**Code Quality Indicators:**
+- **Well-tested**: Includes `Tested-by: Niklas Cassel
+  <cassel@kernel.org>`
+- **Vendor-originated**: Comes from Qualcomm engineers with deep DWC
+  hardware knowledge
+- **Maintainer-approved**: Processed through standard PCIe subsystem
+  review (Manivannan Sadhasivam → Bjorn Helgaas)
 
-### Comparison to Reference Commits
-This closely matches **Similar Commit #1** (marked YES) which also fixed
-a missing capability flag (`DMA_CYCLIC cap_mask bit`) that prevented
-proper DMA channel allocation. Both commits:
-- Fix missing capability declarations
-- Are small, single-line changes
-- Address integration failures with other subsystems
-- Have minimal regression risk
+## **Backporting Risk Assessment**
 
-The commit also mirrors **Similar Commit #2** (marked YES) which fixed
-incorrect struct usage in the same driver - both address functional
-correctness issues in the Xilinx DMA driver.
+**Low Risk Factors:**
+1. **No architectural changes**: Only modifies initialization values
+2. **Backwards compatible**: Working configurations continue to function
+   normally
+3. **No new features**: Pure reliability enhancement
+4. **Isolated scope**: Changes only affect
+   `dw_pcie_link_set_max_link_width()` function
+5. **No external dependencies**: Self-contained change
 
-### Risk Assessment
-The risk is minimal because:
-- The change only affects the capability reporting mechanism
-- It doesn't modify any data paths or transfer logic
-- The direction values being OR'd together are already correctly set
-  per-channel
-- Failure mode is obvious (capability queries will work instead of
-  failing)
+**Benefits Analysis:**
+1. **Broad applicability**: Affects all DWC PCIe implementations
+   (Qualcomm, Rockchip, i.MX, Samsung, etc.)
+2. **Field-proven improvement**: Addresses real-world link training
+   failures
+3. **Future-proof**: Aligns with PCIe specification best practices
+4. **Progressive enhancement**: Improves marginal hardware without
+   affecting good hardware
 
-This is a textbook example of a stable tree candidate: it fixes an
-important bug affecting real users with a minimal, low-risk change that
-doesn't introduce new functionality.
+## **Stable Tree Criteria Compliance**
 
- drivers/dma/xilinx/xilinx_dma.c | 2 ++
- 1 file changed, 2 insertions(+)
+This commit meets all stable tree requirements:
+- ✅ **Important bugfix**: Resolves link training failures
+- ✅ **Minimal risk**: Small, well-understood change
+- ✅ **No new features**: Pure reliability improvement
+- ✅ **Contained subsystem**: Limited to DWC PCIe controller logic
+- ✅ **Clear problem statement**: Based on PCIe specification
+  requirements
 
-diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_dma.c
-index 0a3b2e22f23db..14c4c5031b556 100644
---- a/drivers/dma/xilinx/xilinx_dma.c
-+++ b/drivers/dma/xilinx/xilinx_dma.c
-@@ -2900,6 +2900,8 @@ static int xilinx_dma_chan_probe(struct xilinx_dma_device *xdev,
- 		return -EINVAL;
- 	}
- 
-+	xdev->common.directions |= chan->direction;
-+
- 	/* Request the interrupt */
- 	chan->irq = of_irq_get(node, chan->tdest);
- 	if (chan->irq < 0)
+## **Conclusion**
+
+This commit represents an exemplary backport candidate that enhances
+PCIe link training robustness across all DWC-based platforms without
+introducing regression risk. The technical approach is sound, the
+implementation is minimal, and the benefit is broad. It should be
+backported to LTS kernels and any stable branches supporting DWC PCIe
+controllers.
+
+ drivers/pci/controller/dwc/pcie-designware.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
+
+diff --git a/drivers/pci/controller/dwc/pcie-designware.c b/drivers/pci/controller/dwc/pcie-designware.c
+index 2b60d20dfdf59..717af1b757f0a 100644
+--- a/drivers/pci/controller/dwc/pcie-designware.c
++++ b/drivers/pci/controller/dwc/pcie-designware.c
+@@ -748,22 +748,19 @@ static void dw_pcie_link_set_max_link_width(struct dw_pcie *pci, u32 num_lanes)
+ 	/* Set link width speed control register */
+ 	lwsc = dw_pcie_readl_dbi(pci, PCIE_LINK_WIDTH_SPEED_CONTROL);
+ 	lwsc &= ~PORT_LOGIC_LINK_WIDTH_MASK;
++	lwsc |= PORT_LOGIC_LINK_WIDTH_1_LANES;
+ 	switch (num_lanes) {
+ 	case 1:
+ 		plc |= PORT_LINK_MODE_1_LANES;
+-		lwsc |= PORT_LOGIC_LINK_WIDTH_1_LANES;
+ 		break;
+ 	case 2:
+ 		plc |= PORT_LINK_MODE_2_LANES;
+-		lwsc |= PORT_LOGIC_LINK_WIDTH_2_LANES;
+ 		break;
+ 	case 4:
+ 		plc |= PORT_LINK_MODE_4_LANES;
+-		lwsc |= PORT_LOGIC_LINK_WIDTH_4_LANES;
+ 		break;
+ 	case 8:
+ 		plc |= PORT_LINK_MODE_8_LANES;
+-		lwsc |= PORT_LOGIC_LINK_WIDTH_8_LANES;
+ 		break;
+ 	default:
+ 		dev_err(pci->dev, "num-lanes %u: invalid value\n", num_lanes);
 -- 
 2.39.5
 
