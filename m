@@ -1,231 +1,180 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ADB9205E3E;
-	Sun,  8 Jun 2025 12:55:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D56B6205E3E;
+	Sun,  8 Jun 2025 12:55:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749387358; cv=none; b=V/5bTNAq0+5yjWRPX4RuGvmWN60OCqGw2KfYjg/iIqAmdvucfrINlIewGOY0e3GRkmYcst0Ks81otAIK6C5HymdbazUOyQy5hHQI9MeIU3xwmhUCZc1D6WKImk4LVFfDCJDlORmlFQFHC4ODbqbN0VQWQb1NhykX0Z95c7spna4=
+	t=1749387359; cv=none; b=ToBb/9b8l7y8xaNHR39RYaSWlSNgOdVzxmEPUlj9Ts4EV52tSY76/xUtb+oS5KMe3OGGLmpKJT7XSrwAKK56usl6fqxl0upLiC9jY/LBy0LjlL9nBH8XlnhjdV2Zu5Wk8wZJpP4qBFhb9RbIvZVq4P7LYHOWpkO+9Lgnv+Ii6BI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749387358; c=relaxed/simple;
-	bh=S4rkoZzU6eSmLtfF2FpgxUqqozGAZx207dXJMEWJQnQ=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Type; b=YYLMD9PeR9SbHhx0cKwzM+SyaxL5oCnSxOw7ujAuwZhnUufdeDzM6pspyOCcwFItdS73MiBcXhSwJKNSbJXJIFZkIAQZTQXm2bfeQz6Bkbf6Cq5wsXzB4Q5pvEdbCAmbR4VDcaNn4z3kivhgNRVxlXjnmz24AzIuOm2Dz6dAoo8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MOgNWwgT; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1749387359; c=relaxed/simple;
+	bh=AZm/gjwqLwwSOgS+a+0d30mNruiU3F0TyHCO/ph0PVU=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=QHZ2U8sou9Lj3ZB7tauRuLCes7W217BgURGbgwWQ9ExngIcMMtwDm4TobDFTnjZqUQVF6xxE+eW+b+De7S1hR1NSuHf/YIT2G7wcBj8ryl/SC5Hinf7yNz5RiJxEvSMhd3iIzwEjXne7HRWkMvXF8wqmMmd+nrrWVnRS50k7IO8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kaKKyUwQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MOgNWwgT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F61EC4CEEE;
-	Sun,  8 Jun 2025 12:55:57 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kaKKyUwQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B101DC4CEEF;
+	Sun,  8 Jun 2025 12:55:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749387358;
-	bh=S4rkoZzU6eSmLtfF2FpgxUqqozGAZx207dXJMEWJQnQ=;
-	h=From:To:Cc:Subject:Date:From;
-	b=MOgNWwgTyD4UVU7zcR/MRd6K65FoP2A+OdHztkjoSEE79a9B5GljpuQ4nZb5i2hZz
-	 PAW+JskgrmTT74gAB536/1PWOSO/nuyHexKD7LzswIGF3hvNJmlNpLfZLDMRqZIvd7
-	 zpGHVbu+jDt0vCyrV+sxJlVHLk6t+aoJcaWQHjZx7dRkF1ecJEGn7NTPWI2vPHrdIG
-	 7wmMMLhIDuonVU7DfIutWULSYPEuevoh4YjCTYMvl44UoEHCgvsSKvsMchTigzqW3v
-	 OaRHk8U2/8oBotEqlB1cmpzrxwemU+mT/N2IXAhxBxITuNuQembHRoRoiD9DMsZ+iJ
-	 0/JVnZQuRAklA==
+	s=k20201202; t=1749387359;
+	bh=AZm/gjwqLwwSOgS+a+0d30mNruiU3F0TyHCO/ph0PVU=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=kaKKyUwQc4onRTMCSM6gW7LqO60qf5pWSe7E5Y+MbcMFUNQ6bCGMA0YddCBXoYGfE
+	 44v6NeiruOdT5nR1TvPYKf2F8zWwjS0wGy8FAZCcuqcP7AYp6uXvezlVv6ogJ/l8/w
+	 MmFL4lnfxkBfz4AFzAjdni1queTYOGsGJgfumB9bllpMC5WNk5TbmjQQdqJG/ZQL9H
+	 qxLPYnhLfmd22fwyWM7IwYxWCbXZvHpfOm3mBuAKvxwHJQLvCu4OWm2BdVYvoJIp4L
+	 BJz6zTmnbbT7q9Iw/+zx3BEwLX/hyjsSpw7oD7pjZcwzYyUxEzjdpmnyHVCMm8y+gw
+	 c7mFTDmEfDKSQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Namjae Jeon <linkinjeon@kernel.org>,
-	Philipp Kerling <pkerling@casix.org>,
-	Steve French <stfrench@microsoft.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH AUTOSEL 5.15 1/3] ksmbd: allow a filename to contain special characters on SMB3.1.1 posix extension
-Date: Sun,  8 Jun 2025 08:55:53 -0400
-Message-Id: <20250608125556.934550-1-sashal@kernel.org>
+Cc: Lukas Wunner <lukas@wunner.de>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Joerg Roedel <jroedel@suse.de>,
+	Sasha Levin <sashal@kernel.org>,
+	joro@8bytes.org,
+	iommu@lists.linux.dev
+Subject: [PATCH AUTOSEL 5.15 2/3] Revert "iommu/amd: Prevent binding other PCI drivers to IOMMU PCI devices"
+Date: Sun,  8 Jun 2025 08:55:54 -0400
+Message-Id: <20250608125556.934550-2-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250608125556.934550-1-sashal@kernel.org>
+References: <20250608125556.934550-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 5.15.185
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Lukas Wunner <lukas@wunner.de>
 
-[ Upstream commit dc3e0f17f74558e8a2fce00608855f050de10230 ]
+[ Upstream commit 3be5fa236649da6404f1bca1491bf02d4b0d5cce ]
 
-If client send SMB2_CREATE_POSIX_CONTEXT to ksmbd, Allow a filename
-to contain special characters.
+Commit 991de2e59090 ("PCI, x86: Implement pcibios_alloc_irq() and
+pcibios_free_irq()") changed IRQ handling on PCI driver probing.
+It inadvertently broke resume from system sleep on AMD platforms:
 
-Reported-by: Philipp Kerling <pkerling@casix.org>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+  https://lore.kernel.org/r/20150926164651.GA3640@pd.tnic/
+
+This was fixed by two independent commits:
+
+* 8affb487d4a4 ("x86/PCI: Don't alloc pcibios-irq when MSI is enabled")
+* cbbc00be2ce3 ("iommu/amd: Prevent binding other PCI drivers to IOMMU PCI devices")
+
+The breaking change and one of these two fixes were subsequently reverted:
+
+* fe25d078874f ("Revert "x86/PCI: Don't alloc pcibios-irq when MSI is enabled"")
+* 6c777e8799a9 ("Revert "PCI, x86: Implement pcibios_alloc_irq() and pcibios_free_irq()"")
+
+This rendered the second fix unnecessary, so revert it as well.  It used
+the match_driver flag in struct pci_dev, which is internal to the PCI core
+and not supposed to be touched by arbitrary drivers.
+
+Signed-off-by: Lukas Wunner <lukas@wunner.de>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Acked-by: Joerg Roedel <jroedel@suse.de>
+Link: https://patch.msgid.link/9a3ddff5cc49512044f963ba0904347bd404094d.1745572340.git.lukas@wunner.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Based on my analysis of both the commit message and code changes,
-examining the Linux kernel repository context:
-
 **YES**
 
-This commit should be backported to stable kernel trees. Here's my
-extensive analysis:
+This commit should be backported to stable kernel trees.
 
-## Nature of the Change
+**Extensive Analysis:**
 
-This is a **legitimate bug fix** that addresses a functional issue where
-SMB3.1.1 POSIX extension clients cannot create files with characters
-that are valid in POSIX filesystems but blocked by ksmbd's Windows-
-centric filename validation.
+**1. Context and Purpose:**
+This commit is part of a coordinated series of reverts addressing
+regressions introduced by commit 991de2e59090 ("PCI, x86: Implement
+pcibios_alloc_irq() and pcibios_free_irq()") which broke system
+suspend/resume on AMD platforms in v4.3. The original issue was fixed by
+two independent commits, one of which (cbbc00be2ce3) added the line
+`iommu->dev->match_driver = false;` to prevent other PCI drivers from
+binding to IOMMU devices.
 
-## Code Analysis
+**2. Code Change Analysis:**
+The commit removes exactly one line from
+`drivers/iommu/amd/init.c:2034`:
+```c
+/* Prevent binding other PCI device drivers to IOMMU devices */
+iommu->dev->match_driver = false;
+```
 
-### Key Changes:
-1. **Early POSIX context detection** (lines 2906-2925): The code now
-   checks for SMB2_CREATE_POSIX_CONTEXT early in the function
-2. **Conditional validation bypass**: The critical change at lines
-   3161-3164 where `ksmbd_validate_filename(name)` is only called when
-   `posix_ctxt == false`
-3. **Structural improvement**: Moving POSIX context parsing before
-   filename validation, which is the logical order
+This line was setting the `match_driver` field of `struct pci_dev`,
+which the commit message correctly identifies as "internal to the PCI
+core and not supposed to be touched by arbitrary drivers."
 
-### What Gets Bypassed:
-The `ksmbd_validate_filename()` function normally blocks characters like
-`"`, `<`, `>`, `|`, `?`, `*`, and control characters. For POSIX
-extensions, these restrictions are inappropriate since POSIX filesystems
-can safely handle most of these characters.
+**3. Why This Should Be Backported:**
 
-## Security Assessment
+**a) Part of Coordinated Fix Series:** This revert is the logical
+completion of a series of reverts that fixed major regressions. Looking
+at the similar commits provided as examples:
+- Similar Commit #1 (YES): Revert of x86/PCI pcibios-irq allocation
+- Similar Commit #2 (YES): Revert of PCI IRQ management helpers
+- Similar Commit #5 (YES): Revert of the original problematic
+  pcibios_alloc_irq implementation
 
-### Low Security Risk:
-1. **Limited Scope**: Only affects clients explicitly using SMB3.1.1
-   POSIX extensions (`tcon->posix_extensions` must be enabled)
-2. **VFS Protection**: Linux VFS layer provides underlying security
-   validation
-3. **No Path Traversal**: Higher-level path validation still prevents
-   `../` sequences
-4. **Standards Compliance**: Aligns with Microsoft's SMB3.1.1 POSIX
-   extension specification
+All these related reverts were marked for backporting, making this
+commit part of the same logical fix series.
 
-### Justification for the Change:
-- **User Report**: Philipp Kerling reported this as a functional issue
-- **Interoperability**: Essential for proper POSIX-aware SMB client
-  functionality
-- **Standards Adherence**: SMB3.1.1 POSIX extensions are designed to
-  allow POSIX filename semantics
+**b) Removes Inappropriate Code:** The commit eliminates code that
+violates kernel design principles by accessing internal PCI core
+structures from a driver. The `match_driver` field is not meant to be
+manipulated by individual drivers.
 
-## Comparison with Similar Commits
+**c) Cleanup After Main Fix:** Once the root cause (commit 991de2e59090)
+was reverted by commit 6c777e8799a9, the workaround became unnecessary.
+Keeping unnecessary workaround code, especially code that
+inappropriately accesses internal structures, is problematic.
 
-This follows the pattern of other backported ksmbd commits:
-- **Similar to Commit #4**: Another filename validation fix that was
-  backported (moving leading slash check)
-- **Similar scope**: Limited, well-contained change to specific
-  subsystem
-- **Bug fix nature**: Addresses functional issue rather than adding new
-  features
+**d) Minimal Risk:** The change is extremely small and low-risk - it
+simply removes one line that was setting an internal field
+inappropriately.
 
-## Stable Tree Criteria Compliance
+**e) Consistency and Completeness:** Since the other reverts in this
+series addressing the 991de2e59090 regressions were backported, this
+should be included for consistency and to ensure the cleanup is
+complete.
 
-✅ **Fixes important bug**: Enables legitimate POSIX client functionality
-✅ **Small and contained**: Changes only affect POSIX extension code path
-✅ **Minimal regression risk**: Protected by existing VFS validation
-✅ **Clear side effects**: Well-understood behavior change
-✅ **No architectural changes**: Simple conditional logic modification
+**4. Stable Tree Criteria Met:**
+- ✅ Fixes inappropriate driver behavior (accessing internal PCI
+  structures)
+- ✅ Small and contained change
+- ✅ Part of a series addressing known regressions
+- ✅ Minimal risk of introducing new issues
+- ✅ Consistent with backporting decisions for related commits
 
-## Recommendation
+The commit represents necessary cleanup after a coordinated regression
+fix and should be backported to maintain consistency with the related
+reverts and to remove code that inappropriately accesses internal kernel
+structures.
 
-This commit represents a **low-risk bug fix** that enables proper
-SMB3.1.1 POSIX extension functionality without introducing significant
-security vulnerabilities. The change is well-scoped, addresses a
-legitimate user issue, and maintains appropriate security boundaries
-through existing VFS-level protections.
+ drivers/iommu/amd/init.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
- fs/ksmbd/smb2pdu.c | 53 +++++++++++++++++++++++-----------------------
- 1 file changed, 27 insertions(+), 26 deletions(-)
-
-diff --git a/fs/ksmbd/smb2pdu.c b/fs/ksmbd/smb2pdu.c
-index b21601c0a457c..76334a983cd25 100644
---- a/fs/ksmbd/smb2pdu.c
-+++ b/fs/ksmbd/smb2pdu.c
-@@ -2679,7 +2679,7 @@ int smb2_open(struct ksmbd_work *work)
- 	int req_op_level = 0, open_flags = 0, may_flags = 0, file_info = 0;
- 	int rc = 0;
- 	int contxt_cnt = 0, query_disk_id = 0;
--	int maximal_access_ctxt = 0, posix_ctxt = 0;
-+	bool maximal_access_ctxt = false, posix_ctxt = false;
- 	int s_type = 0;
- 	int next_off = 0;
- 	char *name = NULL;
-@@ -2706,6 +2706,27 @@ int smb2_open(struct ksmbd_work *work)
- 		return create_smb2_pipe(work);
- 	}
+diff --git a/drivers/iommu/amd/init.c b/drivers/iommu/amd/init.c
+index b6ee83b81d32c..625ff2486982d 100644
+--- a/drivers/iommu/amd/init.c
++++ b/drivers/iommu/amd/init.c
+@@ -1870,9 +1870,6 @@ static int __init iommu_init_pci(struct amd_iommu *iommu)
+ 	if (!iommu->dev)
+ 		return -ENODEV;
  
-+	if (req->CreateContextsOffset && tcon->posix_extensions) {
-+		context = smb2_find_context_vals(req, SMB2_CREATE_TAG_POSIX, 16);
-+		if (IS_ERR(context)) {
-+			rc = PTR_ERR(context);
-+			goto err_out2;
-+		} else if (context) {
-+			struct create_posix *posix = (struct create_posix *)context;
-+
-+			if (le16_to_cpu(context->DataOffset) +
-+				le32_to_cpu(context->DataLength) <
-+			    sizeof(struct create_posix) - 4) {
-+				rc = -EINVAL;
-+				goto err_out2;
-+			}
-+			ksmbd_debug(SMB, "get posix context\n");
-+
-+			posix_mode = le32_to_cpu(posix->Mode);
-+			posix_ctxt = true;
-+		}
-+	}
-+
- 	if (req->NameLength) {
- 		if ((req->CreateOptions & FILE_DIRECTORY_FILE_LE) &&
- 		    *(char *)req->Buffer == '\\') {
-@@ -2737,9 +2758,11 @@ int smb2_open(struct ksmbd_work *work)
- 				goto err_out2;
- 		}
- 
--		rc = ksmbd_validate_filename(name);
--		if (rc < 0)
--			goto err_out2;
-+		if (posix_ctxt == false) {
-+			rc = ksmbd_validate_filename(name);
-+			if (rc < 0)
-+				goto err_out2;
-+		}
- 
- 		if (ksmbd_share_veto_filename(share, name)) {
- 			rc = -ENOENT;
-@@ -2854,28 +2877,6 @@ int smb2_open(struct ksmbd_work *work)
- 			rc = -EBADF;
- 			goto err_out2;
- 		}
+-	/* Prevent binding other PCI device drivers to IOMMU devices */
+-	iommu->dev->match_driver = false;
 -
--		if (tcon->posix_extensions) {
--			context = smb2_find_context_vals(req,
--							 SMB2_CREATE_TAG_POSIX, 16);
--			if (IS_ERR(context)) {
--				rc = PTR_ERR(context);
--				goto err_out2;
--			} else if (context) {
--				struct create_posix *posix =
--					(struct create_posix *)context;
--				if (le16_to_cpu(context->DataOffset) +
--				    le32_to_cpu(context->DataLength) <
--				    sizeof(struct create_posix) - 4) {
--					rc = -EINVAL;
--					goto err_out2;
--				}
--				ksmbd_debug(SMB, "get posix context\n");
--
--				posix_mode = le32_to_cpu(posix->Mode);
--				posix_ctxt = 1;
--			}
--		}
- 	}
+ 	/* ACPI _PRT won't have an IRQ for IOMMU */
+ 	iommu->dev->irq_managed = 1;
  
- 	if (ksmbd_override_fsids(work)) {
 -- 
 2.39.5
 
