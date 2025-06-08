@@ -1,49 +1,49 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.18])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3AF62A1BA
-	for <patches@lists.linux.dev>; Sun,  8 Jun 2025 21:52:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 028CC256C76
+	for <patches@lists.linux.dev>; Sun,  8 Jun 2025 22:00:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749419533; cv=none; b=quLaKWIoVaR1Vdf+jk4NTrz3c6BWO+HNdsKvFVJVrorP9Akzyqf1+uEOokbY8BMJMRE7kNLxOJ3U31QNpCkB/e8CuKxz1s4zOpo0qDD4+fW+LDCjohkrYZIiRU3ISGtT/4XNU4VGQydKN2QdFrouRteQi5K8GDySsiFVz0vpuKc=
+	t=1749420003; cv=none; b=TB5Hm5vHe3UtSFb/Km1uREapwtdzJppxio79Jf08aCNwEw7wfOLuQi7xdRyv1JJGbAYO8Mrn3FBLs8Aa2xnJ9/LQPeKbt6o9AUABPy8EnUEbX6Josomdzh8r5vxmQg6O1O3ga//fsSdcXhdiFu/0oTjzDV4vWJ5djbcyjsalhRQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749419533; c=relaxed/simple;
-	bh=/9w5UOSQHneQRj9Eh0j4t7bPnLEd4c1v15Iq2gRYH30=;
+	s=arc-20240116; t=1749420003; c=relaxed/simple;
+	bh=7EutwoH4X9Mh1hoaQBaw6NBPwLfzRL9LKYyc4fUNNPk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=R8Ynu/RMVqTgqblw1F3jAoZVHis09oPNGhtGHj6YOtUbSJrqXIquY4LgOQA7aeEcWe99ROany6FHtiU0WoBvi6ibRPUEzw10K04R91z+1RDPzGOpiuZaB6GGMXGPa10hkBcd6lbT5dbc8IP3ZEUPqs/2urWCV6aYE/Zf/Dqwrg8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=bzrm9TV1; arc=none smtp.client-ip=198.175.65.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=JpQSS2zWNqJv5Veon9D/V7v5WGCLHE0b5vruegXgtDE22YKC4Pl3YVT2hfOi+IZlqcihx2tCNQq8EAwnKLEIVLpiLLXDAJTYlr555W9KEJMnU2EKPQ8LptKLZIXDe5fQG4PJuot/GxmmHYasKDLECBjaD8Y9GXVFsUIFk2F5THk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=EK4ozIkj; arc=none smtp.client-ip=192.198.163.9
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="bzrm9TV1"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="EK4ozIkj"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1749419531; x=1780955531;
+  t=1749420002; x=1780956002;
   h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=/9w5UOSQHneQRj9Eh0j4t7bPnLEd4c1v15Iq2gRYH30=;
-  b=bzrm9TV1qp/M6prEZZsXoYU6dmhNqeAXLA1r+08ol2Mm3zO5xTywAS7a
-   ly3Hd6azNgNp1BWSmnlTob5/8PZA9KKAhPK6LkZ633IdB/JtJv1+0jXJE
-   6OC65UTDrqo2Y/j8Pz1oxELPxLf3ZomhqmMosvrK+S7L30IIup9MnXjGU
-   P/F60Q3NqfI57XfDUaI0kfIhYWSalo1X7dZhjmS+QkyMaaAFYNBFTVEgo
-   bi3kSJc/gdsJfnQFkhTc5qPLNVOtT+4++ZjJ8D/fLok8EINDVvkkaVhsD
-   HylkWP5aRpAuHSaaMZ7J+OPaic+5SlR7MCp/3Iof+COrOtK+HfOZ4nhBC
-   A==;
-X-CSE-ConnectionGUID: pl8zVJyzSROIbttuTMpUNg==
-X-CSE-MsgGUID: qIH0zkaURfiu+cYKsoFu8w==
-X-IronPort-AV: E=McAfee;i="6800,10657,11458"; a="51636565"
+   mime-version:content-transfer-encoding:in-reply-to;
+  bh=7EutwoH4X9Mh1hoaQBaw6NBPwLfzRL9LKYyc4fUNNPk=;
+  b=EK4ozIkj1s0qgj/tKc5pB0RhZaeVigtKgKcC8+U8/QTFv8TnXv0RKf/g
+   S0ymtMC960FwwgHKLpg6L2VK8KNREQozmRSgJlUXzZAxYDylSwko1XMXm
+   VSK9Y7v3saOerZUiUunaU7WlD9mjD+1GRFhBCbT28TJIXiT9RK3A3Gdnx
+   Uv1ZXVrk253EbTaawApviHkUKXVzzDJmhkkVk2VuozJ8ZItke6RtMWQna
+   Lqi1FU/QTh+qu9EoI9WQowbD+8A2s75gEoHqiB4bLT9nthmcZNvLJkOm4
+   J4mf7GSAM6UJHMUo5cew5gvOEXOznYxCJYgjELTKu+IiHLmEwcGo98aU7
+   w==;
+X-CSE-ConnectionGUID: cMYVdQI6Q+ujkDIFKWyNLg==
+X-CSE-MsgGUID: X1HaKpfQSWi5PBwKYy2/8g==
+X-IronPort-AV: E=McAfee;i="6800,10657,11458"; a="62147820"
 X-IronPort-AV: E=Sophos;i="6.16,221,1744095600"; 
-   d="scan'208";a="51636565"
-Received: from fmviesa009.fm.intel.com ([10.60.135.149])
-  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Jun 2025 14:52:11 -0700
-X-CSE-ConnectionGUID: 61L1dikVQcyhvR6HVU1iXQ==
-X-CSE-MsgGUID: Q3aIPz0OQTmXJGFpys1+pw==
+   d="scan'208";a="62147820"
+Received: from orviesa006.jf.intel.com ([10.64.159.146])
+  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Jun 2025 15:00:01 -0700
+X-CSE-ConnectionGUID: /Z/2ii+6TzO5xNezwEZt3g==
+X-CSE-MsgGUID: ZCIKP44gTUyGSmj4bRt+0A==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.16,221,1744095600"; 
-   d="scan'208";a="147273711"
+   d="scan'208";a="146239261"
 Received: from agluck-desk3.sc.intel.com (HELO agluck-desk3) ([172.25.103.51])
-  by fmviesa009-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Jun 2025 14:52:11 -0700
-Date: Sun, 8 Jun 2025 14:52:09 -0700
+  by orviesa006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Jun 2025 15:00:01 -0700
+Date: Sun, 8 Jun 2025 14:59:59 -0700
 From: "Luck, Tony" <tony.luck@intel.com>
 To: Fenghua Yu <fenghuay@nvidia.com>
 Cc: Reinette Chatre <reinette.chatre@intel.com>,
@@ -55,72 +55,51 @@ Cc: Reinette Chatre <reinette.chatre@intel.com>,
 	Anil Keshavamurthy <anil.s.keshavamurthy@intel.com>,
 	Chen Yu <yu.c.chen@intel.com>, x86@kernel.org,
 	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH v5 24/29] x86/resctrl: Add energy/perf choices to rdt
- boot option
-Message-ID: <aEYGCUuKS8_MDorA@agluck-desk3>
+Subject: Re: [PATCH v5 04/29] x86,fs/resctrl: Prepare for more monitor events
+Message-ID: <aEYH38g4N_ZNlv6b@agluck-desk3>
 References: <20250521225049.132551-1-tony.luck@intel.com>
- <20250521225049.132551-25-tony.luck@intel.com>
- <f963081e-9cbb-4d8e-b978-b6092394a330@nvidia.com>
+ <20250521225049.132551-5-tony.luck@intel.com>
+ <462eb5cb-56bc-4639-9029-5166cb71b5bf@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <f963081e-9cbb-4d8e-b978-b6092394a330@nvidia.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <462eb5cb-56bc-4639-9029-5166cb71b5bf@nvidia.com>
 
-On Fri, Jun 06, 2025 at 04:55:37PM -0700, Fenghua Yu wrote:
-> Hi, Tony,
-> 
-> On 5/21/25 15:50, Tony Luck wrote:
-> > Users may want to force either of the telemetry features on
-> > (in the case where they are disabled due to erratum) or off
-> > (in the case that a limited number of RMIDs for a telemetry
-> > feature reduces the number of monitor groups that can be
-> > created.)
-
+On Fri, Jun 06, 2025 at 05:45:58PM -0700, Fenghua Yu wrote:
 [SNIP]
 
 > > diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
-> > index f07f5b58639a..b23309566500 100644
+> > index 819bc7a09327..4403a820db12 100644
 > > --- a/arch/x86/kernel/cpu/resctrl/core.c
 > > +++ b/arch/x86/kernel/cpu/resctrl/core.c
-> > @@ -797,6 +797,8 @@ enum {
-> >   	RDT_FLAG_MBA,
-> >   	RDT_FLAG_SMBA,
-> >   	RDT_FLAG_BMEC,
-> > +	RDT_FLAG_ENERGY,
-> > +	RDT_FLAG_PERF,
-> >   };
-> >   #define RDT_OPT(idx, n, f)	\
-> > @@ -822,6 +824,8 @@ static struct rdt_options rdt_options[]  __ro_after_init = {
-> >   	RDT_OPT(RDT_FLAG_MBA,	    "mba",	X86_FEATURE_MBA),
-> >   	RDT_OPT(RDT_FLAG_SMBA,	    "smba",	X86_FEATURE_SMBA),
-> >   	RDT_OPT(RDT_FLAG_BMEC,	    "bmec",	X86_FEATURE_BMEC),
-> > +	RDT_OPT(RDT_FLAG_ENERGY,    "energy",	0),
-> > +	RDT_OPT(RDT_FLAG_PERF,	    "perf",	0),
+> > @@ -364,8 +364,8 @@ static void ctrl_domain_free(struct rdt_hw_ctrl_domain *hw_dom)
+> >   static void mon_domain_free(struct rdt_hw_mon_domain *hw_dom)
+> >   {
+> > -	kfree(hw_dom->arch_mbm_total);
+> > -	kfree(hw_dom->arch_mbm_local);
+> > +	for (int i = 0; i < QOS_NUM_L3_MBM_EVENTS; i++)
+> > +		kfree(hw_dom->arch_mbm_states[i]);
 > 
-> Boot options "energy" and "perf" are PMT event groups level. Other boot
-> options are individual event level.
+> Is it better to define a helper for_each_mon_event_idx(i)?
 > 
-> E.g. "!perf" forces off all 7 PMT PERF events.
+> #define for_each_mbm_event_idx(i) \
 > 
-> e.g. "uops retired" event has an erratum but all other PERF events work
-> fine. Disabling "perf" group disables all PERF events. Is "!perf" a useful
-> boot option?
+>     for (int i = 0; i < QOS_NUM_L3_MBM_EVENTS; i++)
 > 
-> Is there any consideration to have boot options at PMT event group level
-> instead of individual PMT event level like legacy events?
+> Then the above for loop can be simplified to:
+> 
+>     for_each_mbm_event_idxd(i)
+> 
+> 	kfree(hw_dom->arch_mbm_states[i]);
+> 
+> The helper can be used in other places as well (see below).
 
-This could be done. But it would add some complexity that may never
-be needed. I'm optimisitic that all events in a group will work.
+I think there are only two places total. So maybe?
 
-> 
-> [SNIP]
-> 
-> Thanks.
-> 
-> -Fenghua
-> 
+-Tony
