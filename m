@@ -1,167 +1,107 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F11881A5BA3;
-	Sun,  8 Jun 2025 12:56:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4A3833EA
+	for <patches@lists.linux.dev>; Sun,  8 Jun 2025 15:38:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749387374; cv=none; b=Dsmf6Gg55PWgGZQ/L5UlDbx3NXMsXcZdhuVR5dUKWVDt+DeMY07c+YDrwrQ2lq1ECYpl+qgcVB7hYzu3qzmI2UOJ4sBMgkPk6t0gdWJN8e3RbbvT2XeU1lBu9VG4RmHfM9IlxXzqdJoDIN5E3Tazpwmhc9/iocdsaPFi19O16o8=
+	t=1749397118; cv=none; b=PK3C0su97rwpqyxP/2oSSy8JdbotYiBtbQX1iIm/PeXsIrz90E81kEUQbCoI+vWBrkPPpWWptj7A9vEi1kOv153hR8nlih4d4XbkbQFNiyhj08CdbI/V0wEZarOEhyewg5Y1i8kd4UUx8M+KIHCrcIcNK04vzGmEuUhxoy4W0TY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749387374; c=relaxed/simple;
-	bh=VT/kOv8K7zbcsUNcFKYtAQaOP+wsH2uz9EYAAEUzcFg=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=euiuF5R8y6XTq5gX7nzTo9N/2IhXrfm7aHiP6oKZlGCIz2mFBqdwUh9gArOE3xcijKduEWriyxvQZzw4DF0BU0+0i3PQewRZWnWZsmE4XGgeP/EXQrTWJ3LaJDl9ogO8y/sLYZrPDZWVFK9BjDP6BNEc8xHIQjkVfco8nfn9Avc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HACRBwf9; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1749397118; c=relaxed/simple;
+	bh=m1oUG0x77rJWQXsqAeuZMVS9z9c19VzPu+Q1YtyLFzo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=JMwzLCxDUaFtH5zyWYpFvMz2iiNNsS3M4okVDLYxuZAWRBgw1ozNsNWDjw7pWTsYSxbfPNzjkIUHyuiyTFixFb6NpEpJHpF71Xx7EruUsskfhpq6aVTMn4uR5yMlHnYXK9El4XnrKGzQJKhpTeMiBOBIgjeijwq3T9MWddrsGbc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com; spf=pass smtp.mailfrom=googlemail.com; dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b=GqQP3f0D; arc=none smtp.client-ip=209.85.128.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HACRBwf9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EC1CC4CEEF;
-	Sun,  8 Jun 2025 12:56:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749387373;
-	bh=VT/kOv8K7zbcsUNcFKYtAQaOP+wsH2uz9EYAAEUzcFg=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HACRBwf9yIGHgQPqPFx8SQJamc/xPCMZGlION8Mbecqo9fNnQTzUol13AZc5/abwU
-	 ndTTTk81WdR8Z6XdcpFL/CKubi9AvaYGUNHmAYHXJl6Jz4EGADZGkCKDHelPtccsiA
-	 tOHNHmTKh+yb6TrdjO67fX02+BkkeCQM4jxOCqh0WJYGyGSJcfx5CEeK0y1U9ZYQ4x
-	 WDaBr6DCaukB6IouqLSxgVM8PP2TgSHSKhvl3QuKYA3zXXHUoGpD7Fvr6BvnTFqe+c
-	 EWVQLk7YwGh2BfvdH8+xeLEDSQaRRKKgPZK98dTXAF7HUy4ujslxmYXtr9KSJxKKXP
-	 akUw+tV0ZdePw==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: Thomas Gessler <thomas.gessler@brueckmann-gmbh.de>,
-	Suraj Gupta <suraj.gupta2@amd.com>,
-	Folker Schwesinger <dev@folker-schwesinger.de>,
-	Vinod Koul <vkoul@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	michal.simek@amd.com,
-	marex@denx.de,
-	radhey.shyam.pandey@amd.com,
-	jernej.skrabec@gmail.com,
-	u.kleine-koenig@baylibre.com,
-	krzysztof.kozlowski@linaro.org,
-	linux-arm-kernel@lists.infradead.org
-Subject: [PATCH AUTOSEL 5.4 2/2] dmaengine: xilinx_dma: Set dma_device directions
-Date: Sun,  8 Jun 2025 08:56:08 -0400
-Message-Id: <20250608125608.934695-2-sashal@kernel.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250608125608.934695-1-sashal@kernel.org>
-References: <20250608125608.934695-1-sashal@kernel.org>
+	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="GqQP3f0D"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-450cf2291bbso12444575e9.0
+        for <patches@lists.linux.dev>; Sun, 08 Jun 2025 08:38:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20230601; t=1749397114; x=1750001914; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=mAPW9CEAQTkA9ZtJQM59eScIy81/xXlC54hdG5dtI+E=;
+        b=GqQP3f0DHgqhzGTY/3VmndRmlPjlAwJ1xg/euton5d+PRb3F4no8827CKo/eg+PoPX
+         3s8sZipQfuZe+GuahLedEvBGd1/Qe/+SNCSlg8mR7u4fGnPf8waU2Rvxb3C45TMqrCks
+         E/KH+F0HUtOT7LTaVZhuSw9EJU0iiU4KunX0pGPsnNBP0kBcXIlHTglc11aXtZ5D7AQ9
+         0awOI6618BFFJ7VAfsH0LkYJ8l1fOX60h+ntN7jEbiWBu4Arg7jk0hNyD3EZ4hxqjz0c
+         0R1yfNMeyimqB2CD3mmQ5A/TfT6QgXvOQ82jRnCuXuE6XmN69VBRLSSKbbeMeWsD8YD1
+         lxQQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1749397114; x=1750001914;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=mAPW9CEAQTkA9ZtJQM59eScIy81/xXlC54hdG5dtI+E=;
+        b=oKFJB5nbPL1so8ZsH3rmOUQTdnZpPaX2hYQ5t46eMwo6Zxj7ryx5V893oFdQyZF1cs
+         8yvVHhHAShy4NDrjIBd4JGmhohcfLVHUR0oWOYHvc+NxDC5CRtNRlPkJ7as+h/VNVmOR
+         v2/vfmTzhA6uq2KqHq+ML1mOkDlaOr5rgmEQlhFsYiSbfZQzup+nH62Pmb6p1xeqOxBp
+         vCFpnMLGNokMaGAyPAbTNnX4BPgRYE6+Hzm+UgVyNSV+z4tdkzzOj96F25RVkx/i2UPP
+         IuqWngclqpb3DglxKFmC/ReOqHVwvYKsFS1MH+fG6YHtS1NIA6+6T+0YypiRcHiYAdR+
+         3YRw==
+X-Gm-Message-State: AOJu0Yyvuoa2Yp1/wm36ErWhhoo2VFaRaiDqOcpKjS105hsORkIWTdOT
+	roa4sSAlscTl7vC/b+tykpDA7dCuAd4KX9qarYZ6dflsBlRr+g2jGPk=
+X-Gm-Gg: ASbGncu/5UU86nIuIaFJJFRvZjwtku6iPLew4ZRNDMmUnSVOLaXw6qhcaKlWgmB30Q+
+	6i4QXUdSVBrQWe/LtgsQJx6fVYsc97ZT2VesP+vOwF9lw92noqS9GLacxzZ1SOBOC91eBMrTeWS
+	9prkN89acQcRyHLDfO8imjQt4kobEtIYTTPX3qKJAHggCMx8KhJRejIwozknV7DdKbHTE5U6NM2
+	1S/u2PzKIHGYA9FWqW1p4yJS56LqCNOC0aaRTYrYpgiV1h+aVtO+JNXpxxuqxJy+4a5BEVDPfTm
+	j3aiE9gmOTjFtY8uQJPWxFeSdCaNyZmIfDeFMknxVPT+QmJ0IeKJ4tuS/5L8RdWgIJuJKc739ak
+	NGGg0+GKksrWBYWJT0OiMIGJREeYkJrxnmIrwXw==
+X-Google-Smtp-Source: AGHT+IE+yeRQhGLyvfPMEYFhMszTng6Bd900060XU6yLxwA8zMJMGepOitYZ4xu2+e6pOdpNKpKBag==
+X-Received: by 2002:a5d:58f9:0:b0:3a5:3b03:3bc6 with SMTP id ffacd0b85a97d-3a53b033bd0mr3601348f8f.28.1749397113741;
+        Sun, 08 Jun 2025 08:38:33 -0700 (PDT)
+Received: from [192.168.1.3] (p5b2ace02.dip0.t-ipconnect.de. [91.42.206.2])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a532436650sm4642069f8f.65.2025.06.08.08.38.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 08 Jun 2025 08:38:31 -0700 (PDT)
+Message-ID: <d8374546-e88b-412c-9e8f-4a6356430db9@googlemail.com>
+Date: Sun, 8 Jun 2025 17:38:30 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 5.4.294
+User-Agent: Betterbird (Windows)
+Subject: Re: [PATCH 6.12 00/24] 6.12.33-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
+References: <20250607100717.910797456@linuxfoundation.org>
+Content-Language: de-DE
+From: Peter Schneider <pschneider1968@googlemail.com>
+In-Reply-To: <20250607100717.910797456@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Gessler <thomas.gessler@brueckmann-gmbh.de>
+Am 07.06.2025 um 12:07 schrieb Greg Kroah-Hartman:
+> This is the start of the stable review cycle for the 6.12.33 release.
+> There are 24 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 
-[ Upstream commit 7e01511443c30a55a5ae78d3debd46d4d872517e ]
+Builds, boots and works on my 2-socket Ivy Bridge Xeon E5-2697 v2 server. No dmesg 
+oddities or regressions found.
 
-Coalesce the direction bits from the enabled TX and/or RX channels into
-the directions bit mask of dma_device. Without this mask set,
-dma_get_slave_caps() in the DMAEngine fails, which prevents the driver
-from being used with an IIO DMAEngine buffer.
+Tested-by: Peter Schneider <pschneider1968@googlemail.com>
 
-Signed-off-by: Thomas Gessler <thomas.gessler@brueckmann-gmbh.de>
-Reviewed-by: Suraj Gupta <suraj.gupta2@amd.com>
-Tested-by: Folker Schwesinger <dev@folker-schwesinger.de>
-Link: https://lore.kernel.org/r/20250507182101.909010-1-thomas.gessler@brueckmann-gmbh.de
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
 
-**YES**
+Beste Grüße,
+Peter Schneider
 
-## Analysis
-
-This commit should be backported to stable kernel trees because it fixes
-a critical functionality bug that prevents the Xilinx DMA driver from
-working with important subsystems.
-
-### The Problem
-The commit addresses a fundamental issue where `dma_get_slave_caps()`
-fails when called on Xilinx DMA channels. The code change shows that the
-driver was not setting the `directions` field in the `dma_device`
-structure:
-
-```c
-+       xdev->common.directions |= chan->direction;
-```
-
-This single line fix accumulates the direction capabilities from
-individual channels (either `DMA_MEM_TO_DEV` or `DMA_DEV_TO_MEM`) into
-the device-level `directions` bitmask.
-
-### Why This Qualifies for Backporting
-
-1. **Fixes Important User-Facing Bug**: The commit message explicitly
-   states this prevents the driver from being used with IIO DMAEngine
-   buffers, which is a significant functional regression affecting real
-   users.
-
-2. **Small and Contained Fix**: The change is minimal - just one line of
-   code that sets a required field during channel probe. This has
-   extremely low risk of introducing regressions.
-
-3. **Critical Subsystem Integration**: Without this fix,
-   `dma_get_slave_caps()` calls fail with `-ENXIO`, breaking integration
-   with any subsystem that queries DMA capabilities (like IIO).
-
-4. **Clear Root Cause**: The fix directly addresses the root cause - the
-   missing `directions` field that the DMAEngine core requires to be
-   set.
-
-5. **No Architectural Changes**: This doesn't introduce new features or
-   change driver architecture; it simply provides required capability
-   information that was missing.
-
-### Comparison to Reference Commits
-This closely matches **Similar Commit #1** (marked YES) which also fixed
-a missing capability flag (`DMA_CYCLIC cap_mask bit`) that prevented
-proper DMA channel allocation. Both commits:
-- Fix missing capability declarations
-- Are small, single-line changes
-- Address integration failures with other subsystems
-- Have minimal regression risk
-
-The commit also mirrors **Similar Commit #2** (marked YES) which fixed
-incorrect struct usage in the same driver - both address functional
-correctness issues in the Xilinx DMA driver.
-
-### Risk Assessment
-The risk is minimal because:
-- The change only affects the capability reporting mechanism
-- It doesn't modify any data paths or transfer logic
-- The direction values being OR'd together are already correctly set
-  per-channel
-- Failure mode is obvious (capability queries will work instead of
-  failing)
-
-This is a textbook example of a stable tree candidate: it fixes an
-important bug affecting real users with a minimal, low-risk change that
-doesn't introduce new functionality.
-
- drivers/dma/xilinx/xilinx_dma.c | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_dma.c
-index be44c86a1e037..5b5cbea997ff7 100644
---- a/drivers/dma/xilinx/xilinx_dma.c
-+++ b/drivers/dma/xilinx/xilinx_dma.c
-@@ -2490,6 +2490,8 @@ static int xilinx_dma_chan_probe(struct xilinx_dma_device *xdev,
- 		return -EINVAL;
- 	}
- 
-+	xdev->common.directions |= chan->direction;
-+
- 	/* Request the interrupt */
- 	chan->irq = irq_of_parse_and_map(node, 0);
- 	err = request_irq(chan->irq, xilinx_dma_irq_handler, IRQF_SHARED,
 -- 
-2.39.5
+Climb the mountain not to plant your flag, but to embrace the challenge,
+enjoy the air and behold the view. Climb it so you can see the world,
+not so the world can see you.                    -- David McCullough Jr.
 
+OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
+Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
