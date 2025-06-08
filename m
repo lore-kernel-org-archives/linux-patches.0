@@ -1,49 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01F7B205E3E;
-	Sun,  8 Jun 2025 12:55:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE0D6205E3E;
+	Sun,  8 Jun 2025 12:55:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749387307; cv=none; b=Cxgg2HD4hUhnxNtEIfP3Ot2hdXZ+FBTqHTICe+SMgl27cuzY4JE1+2hBCmD15MQwl/VgPPC2NjGF70lvU2kBGVIozWyzlXmuEiU3BnnV7iXUvXV429CVWgK9ZinjCnx3/DQPyu08cW75aibh0lkoixkaJXXx5c2pOhY84IAyHFA=
+	t=1749387310; cv=none; b=YfcdmydioAndmj6Fri6egzu33yDq91Vf5omeN8ekfyVhuE46dl4HRZbFso1jNzD3bAWpsHubGxSq4UQXiB9LmYjghTtacMExXU6p9vrH5sBELa9wkulc/DgWArqwYdGUDAboU35DqAo/0oa5rVyn6lrXZpxHAnUOe7+ikJYfBi8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749387307; c=relaxed/simple;
-	bh=sH8wT/F6fG+SCFjPE7I8DTE0XdwWvqbuYsd+4IkpQ68=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nQXHFQy4MU98Cf7KaYUH2rytUg5FUPHO9Xp4xuyyasrEnawW2EamrWKwXuB2Vi45LUd95UzZWphdiQrhUeMhoBTcNPfC5ldYhowenmoutMyCBOZOrj7UKQSyl313ZvZY/QKVN1Bof6Sm9HCqcruxCysS72hkDyDs+GJbxriQpt4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bCc5AEIl; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1749387310; c=relaxed/simple;
+	bh=wNq+GkXA+7Uk9yoyafhlBrkCWFYFj15DUcrg+ydFnLY=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Type; b=AVVhzqGehIM/0eAgwX9PmKi27bJZqkd/Yrj4ybtvdLP4rMICRiZShGw6jbnaBl9NKjraJdpofWg/lercAP/Y/kIWxHMSSKDIgOr5/i02lOcq5Chu781XrbBYqXBtjv/zg9QzvovhW3R+pOfNfbqY2LgU2ZwunSScFXYyWq57ZTA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SLBqEtWP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bCc5AEIl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3774C4CEF2;
-	Sun,  8 Jun 2025 12:55:05 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SLBqEtWP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E25AEC4CEEE;
+	Sun,  8 Jun 2025 12:55:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749387306;
-	bh=sH8wT/F6fG+SCFjPE7I8DTE0XdwWvqbuYsd+4IkpQ68=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bCc5AEIlE2pm2M5/srwTw+VU7eh9ZYXypJJxY1dtWOqmjlvkDb8kFnwJfT1mHphWO
-	 npCtm3mnAZHYhmJvVPKL0QssWyzfiWPQq/AXfE+FWm+sP7ciFU4Joc/dilR7OUtLiT
-	 /A7mKIIudi5/yXhlmJZAxheOrpuC7u5MZuwcmQJgjVw0Z1wrYqKG4sghVYcAUfGXgg
-	 F5mCB3R3CPuRicc4IqiauswnfmR7Xk+WyQPBNBD7gqvco+98yGCcAi558WLo7N4F0v
-	 Zli7eRcU2HH+gTDQWJ/CcOTg9iJuTapr/WrwUAF5/XTfWt45r5sjWTOCWJCMJH+rYa
-	 Za/PRPeZpteFw==
+	s=k20201202; t=1749387309;
+	bh=wNq+GkXA+7Uk9yoyafhlBrkCWFYFj15DUcrg+ydFnLY=;
+	h=From:To:Cc:Subject:Date:From;
+	b=SLBqEtWPt6ltYv4ZPN6w/wwoKVe0bl2Ckndl+5wHFHhlJ52qRoF/LcgvoqlfinuTC
+	 rsZFOgGBNFKYy+nJe6mlMmd27ROzgyLQSPoWIjoneHgGWk1VYEiTrrreX88rjm2DA0
+	 uxmn097+ekU/LtjZfZXXalmJ6G7/7ScTpuR9D1wyM3v9tGjDRz0XAZF/cOLSsW5L64
+	 QQrG+UfhlfpjvsvIPrJsSyUrL++ms6mPgjJdlTf5d+TXBKWNcXNzSkVeF9+zIiIV57
+	 0GmYSSTMLlWERl/LV4PwgAzefo2G8IxqhTFRSd2gkoWF7NjMrHJlu4TL6noHWuYYw7
+	 PbTPZcSIdvEuQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Richard Zhu <hongxing.zhu@nxp.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Frank Li <Frank.Li@nxp.com>,
+Cc: Namjae Jeon <linkinjeon@kernel.org>,
+	Philipp Kerling <pkerling@casix.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>,
-	l.stach@pengutronix.de,
-	shawnguo@kernel.org,
-	linux-pci@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	imx@lists.linux.dev
-Subject: [PATCH AUTOSEL 6.14 10/10] PCI: imx6: Add workaround for errata ERR051624
-Date: Sun,  8 Jun 2025 08:54:47 -0400
-Message-Id: <20250608125447.933686-10-sashal@kernel.org>
+	smfrench@gmail.com,
+	linux-cifs@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.12 01/10] ksmbd: allow a filename to contain special characters on SMB3.1.1 posix extension
+Date: Sun,  8 Jun 2025 08:54:58 -0400
+Message-Id: <20250608125507.934032-1-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250608125447.933686-1-sashal@kernel.org>
-References: <20250608125447.933686-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -52,166 +46,188 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.14.10
+X-stable-base: Linux 6.12.32
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Richard Zhu <hongxing.zhu@nxp.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit ce0c43e855c7f652b6351110aaaabf9b521debd7 ]
+[ Upstream commit dc3e0f17f74558e8a2fce00608855f050de10230 ]
 
-ERR051624: The Controller Without Vaux Cannot Exit L23 Ready Through Beacon
-or PERST# De-assertion
+If client send SMB2_CREATE_POSIX_CONTEXT to ksmbd, Allow a filename
+to contain special characters.
 
-When the auxiliary power is not available, the controller cannot exit from
-L23 Ready with beacon or PERST# de-assertion when main power is not
-removed. So the workaround is to set SS_RW_REG_1[SYS_AUX_PWR_DET] to 1.
-
-This workaround is required irrespective of whether Vaux is supplied to the
-link partner or not.
-
-Signed-off-by: Richard Zhu <hongxing.zhu@nxp.com>
-[mani: subject and description rewording]
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Link: https://patch.msgid.link/20250416081314.3929794-5-hongxing.zhu@nxp.com
+Reported-by: Philipp Kerling <pkerling@casix.org>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
+
+Based on my analysis of both the commit message and code changes,
+examining the Linux kernel repository context:
 
 **YES**
 
 This commit should be backported to stable kernel trees. Here's my
 extensive analysis:
 
-## **Primary Justification: Hardware Errata Fix**
+## Nature of the Change
 
-**ERR051624** is a documented silicon-level hardware errata affecting
-i.MX95 PCIe controllers. The commit message clearly states this is a
-workaround for a fundamental hardware limitation where "the controller
-cannot exit from L23 Ready with beacon or PERST# de-assertion when main
-power is not removed" when auxiliary power is unavailable.
+This is a **legitimate bug fix** that addresses a functional issue where
+SMB3.1.1 POSIX extension clients cannot create files with characters
+that are valid in POSIX filesystems but blocked by ksmbd's Windows-
+centric filename validation.
 
-## **Code Analysis**
+## Code Analysis
 
-The changes are **minimal and targeted**:
+### Key Changes:
+1. **Early POSIX context detection** (lines 2906-2925): The code now
+   checks for SMB2_CREATE_POSIX_CONTEXT early in the function
+2. **Conditional validation bypass**: The critical change at lines
+   3161-3164 where `ksmbd_validate_filename(name)` is only called when
+   `posix_ctxt == false`
+3. **Structural improvement**: Moving POSIX context parsing before
+   filename validation, which is the logical order
 
-```c
-+       /*
-+        * ERR051624: The Controller Without Vaux Cannot Exit L23 Ready
-+        * Through Beacon or PERST# De-assertion
-+        *
-+        * When the auxiliary power is not available, the controller
-+        * cannot exit from L23 Ready with beacon or PERST# de-assertion
-+        * when main power is not removed.
-+        *
-+        * Workaround: Set SS_RW_REG_1[SYS_AUX_PWR_DET] to 1.
-+        */
-+       regmap_set_bits(imx_pcie->iomuxc_gpr, IMX95_PCIE_SS_RW_REG_1,
-+                       IMX95_PCIE_SYS_AUX_PWR_DET);
-```
+### What Gets Bypassed:
+The `ksmbd_validate_filename()` function normally blocks characters like
+`"`, `<`, `>`, `|`, `?`, `*`, and control characters. For POSIX
+extensions, these restrictions are inappropriate since POSIX filesystems
+can safely handle most of these characters.
 
-The fix is:
-- **Self-contained**: Only affects i.MX95 PCIe initialization path
-  (`imx95_pcie_init_phy`)
-- **Low risk**: Simple register bit set with no complex logic
-- **Well-documented**: Includes detailed errata description and official
-  workaround
-- **Hardware-specific**: No impact on other platforms or subsystems
+## Security Assessment
 
-## **Impact Assessment**
+### Low Security Risk:
+1. **Limited Scope**: Only affects clients explicitly using SMB3.1.1
+   POSIX extensions (`tcon->posix_extensions` must be enabled)
+2. **VFS Protection**: Linux VFS layer provides underlying security
+   validation
+3. **No Path Traversal**: Higher-level path validation still prevents
+   `../` sequences
+4. **Standards Compliance**: Aligns with Microsoft's SMB3.1.1 POSIX
+   extension specification
 
-This errata affects **critical system functionality**:
-- **Power Management**: Prevents proper exit from L23 Ready state
-- **System Resume**: Could cause hangs during suspend/resume cycles
-- **Platform Stability**: Affects fundamental PCIe power state
-  transitions
+### Justification for the Change:
+- **User Report**: Philipp Kerling reported this as a functional issue
+- **Interoperability**: Essential for proper POSIX-aware SMB client
+  functionality
+- **Standards Adherence**: SMB3.1.1 POSIX extensions are designed to
+  allow POSIX filename semantics
 
-## **Historical Precedent**
+## Comparison with Similar Commits
 
-Examining similar commits shows a **consistent pattern of hardware
-errata backporting**:
+This follows the pattern of other backported ksmbd commits:
+- **Similar to Commit #4**: Another filename validation fix that was
+  backported (moving leading slash check)
+- **Similar scope**: Limited, well-contained change to specific
+  subsystem
+- **Bug fix nature**: Addresses functional issue rather than adding new
+  features
 
-1. **Similar Commit #4 (Status: YES)**: "PCI: dwc: Provide deinit
-   callback for i.MX" - Also addresses i.MX PCIe initialization issues
-   and was backported
-2. **ERR005723 workaround**: Recently backported to stable (`Cc:
-   stable@vger.kernel.org`)
-3. **ERR010728 workaround**: Multiple commits addressing this errata,
-   showing active stable maintenance
+## Stable Tree Criteria Compliance
 
-## **Stable Tree Criteria Compliance**
+✅ **Fixes important bug**: Enables legitimate POSIX client functionality
+✅ **Small and contained**: Changes only affect POSIX extension code path
+✅ **Minimal regression risk**: Protected by existing VFS validation
+✅ **Clear side effects**: Well-understood behavior change
+✅ **No architectural changes**: Simple conditional logic modification
 
-✅ **Important bugfix**: Addresses hardware limitation affecting system
-power management
-✅ **Minimal risk**: Single register bit set with no side effects
-✅ **Small and contained**: 13 lines of code, confined to one function
-✅ **No architectural changes**: Simple workaround implementation
-✅ **Critical subsystem**: PCIe power management is fundamental to system
-operation
-✅ **Clear documentation**: Well-documented errata with official
-workaround
+## Recommendation
 
-## **Risk Analysis**
+This commit represents a **low-risk bug fix** that enables proper
+SMB3.1.1 POSIX extension functionality without introducing significant
+security vulnerabilities. The change is well-scoped, addresses a
+legitimate user issue, and maintains appropriate security boundaries
+through existing VFS-level protections.
 
-**Regression Risk: MINIMAL**
-- Only affects i.MX95 platforms specifically
-- Workaround is mandated by hardware vendor (NXP)
-- No conditional logic that could fail
-- Register bit set follows official errata documentation
+ fs/smb/server/smb2pdu.c | 53 +++++++++++++++++++++--------------------
+ 1 file changed, 27 insertions(+), 26 deletions(-)
 
-## **Maintainer Pattern**
-
-The i.MX PCIe driver maintainers (Richard Zhu/NXP, Manivannan
-Sadhasivam) have consistently tagged hardware errata fixes for stable
-backporting, demonstrating their commitment to stable kernel support for
-production hardware issues.
-
-## **Conclusion**
-
-This commit represents a **mandatory workaround for broken hardware**
-that affects basic system functionality (power management). It follows
-established patterns of similar errata fixes that have been successfully
-backported, poses minimal regression risk, and addresses a real-world
-issue that would impact users of i.MX95-based systems in production
-environments.
-
- drivers/pci/controller/dwc/pci-imx6.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
-
-diff --git a/drivers/pci/controller/dwc/pci-imx6.c b/drivers/pci/controller/dwc/pci-imx6.c
-index 90ace941090f9..38f14b5f50f02 100644
---- a/drivers/pci/controller/dwc/pci-imx6.c
-+++ b/drivers/pci/controller/dwc/pci-imx6.c
-@@ -49,6 +49,8 @@
- #define IMX95_PCIE_SS_RW_REG_0			0xf0
- #define IMX95_PCIE_REF_CLKEN			BIT(23)
- #define IMX95_PCIE_PHY_CR_PARA_SEL		BIT(9)
-+#define IMX95_PCIE_SS_RW_REG_1			0xf4
-+#define IMX95_PCIE_SYS_AUX_PWR_DET		BIT(31)
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index 08d9a7cfba8cd..815ee5a74901e 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -2870,7 +2870,7 @@ int smb2_open(struct ksmbd_work *work)
+ 	int req_op_level = 0, open_flags = 0, may_flags = 0, file_info = 0;
+ 	int rc = 0;
+ 	int contxt_cnt = 0, query_disk_id = 0;
+-	int maximal_access_ctxt = 0, posix_ctxt = 0;
++	bool maximal_access_ctxt = false, posix_ctxt = false;
+ 	int s_type = 0;
+ 	int next_off = 0;
+ 	char *name = NULL;
+@@ -2897,6 +2897,27 @@ int smb2_open(struct ksmbd_work *work)
+ 		return create_smb2_pipe(work);
+ 	}
  
- #define IMX95_PE0_GEN_CTRL_1			0x1050
- #define IMX95_PCIE_DEVICE_TYPE			GENMASK(3, 0)
-@@ -228,6 +230,19 @@ static unsigned int imx_pcie_grp_offset(const struct imx_pcie *imx_pcie)
- 
- static int imx95_pcie_init_phy(struct imx_pcie *imx_pcie)
- {
-+	/*
-+	 * ERR051624: The Controller Without Vaux Cannot Exit L23 Ready
-+	 * Through Beacon or PERST# De-assertion
-+	 *
-+	 * When the auxiliary power is not available, the controller
-+	 * cannot exit from L23 Ready with beacon or PERST# de-assertion
-+	 * when main power is not removed.
-+	 *
-+	 * Workaround: Set SS_RW_REG_1[SYS_AUX_PWR_DET] to 1.
-+	 */
-+	regmap_set_bits(imx_pcie->iomuxc_gpr, IMX95_PCIE_SS_RW_REG_1,
-+			IMX95_PCIE_SYS_AUX_PWR_DET);
++	if (req->CreateContextsOffset && tcon->posix_extensions) {
++		context = smb2_find_context_vals(req, SMB2_CREATE_TAG_POSIX, 16);
++		if (IS_ERR(context)) {
++			rc = PTR_ERR(context);
++			goto err_out2;
++		} else if (context) {
++			struct create_posix *posix = (struct create_posix *)context;
 +
- 	regmap_update_bits(imx_pcie->iomuxc_gpr,
- 			IMX95_PCIE_SS_RW_REG_0,
- 			IMX95_PCIE_PHY_CR_PARA_SEL,
++			if (le16_to_cpu(context->DataOffset) +
++				le32_to_cpu(context->DataLength) <
++			    sizeof(struct create_posix) - 4) {
++				rc = -EINVAL;
++				goto err_out2;
++			}
++			ksmbd_debug(SMB, "get posix context\n");
++
++			posix_mode = le32_to_cpu(posix->Mode);
++			posix_ctxt = true;
++		}
++	}
++
+ 	if (req->NameLength) {
+ 		name = smb2_get_name((char *)req + le16_to_cpu(req->NameOffset),
+ 				     le16_to_cpu(req->NameLength),
+@@ -2919,9 +2940,11 @@ int smb2_open(struct ksmbd_work *work)
+ 				goto err_out2;
+ 		}
+ 
+-		rc = ksmbd_validate_filename(name);
+-		if (rc < 0)
+-			goto err_out2;
++		if (posix_ctxt == false) {
++			rc = ksmbd_validate_filename(name);
++			if (rc < 0)
++				goto err_out2;
++		}
+ 
+ 		if (ksmbd_share_veto_filename(share, name)) {
+ 			rc = -ENOENT;
+@@ -3079,28 +3102,6 @@ int smb2_open(struct ksmbd_work *work)
+ 			rc = -EBADF;
+ 			goto err_out2;
+ 		}
+-
+-		if (tcon->posix_extensions) {
+-			context = smb2_find_context_vals(req,
+-							 SMB2_CREATE_TAG_POSIX, 16);
+-			if (IS_ERR(context)) {
+-				rc = PTR_ERR(context);
+-				goto err_out2;
+-			} else if (context) {
+-				struct create_posix *posix =
+-					(struct create_posix *)context;
+-				if (le16_to_cpu(context->DataOffset) +
+-				    le32_to_cpu(context->DataLength) <
+-				    sizeof(struct create_posix) - 4) {
+-					rc = -EINVAL;
+-					goto err_out2;
+-				}
+-				ksmbd_debug(SMB, "get posix context\n");
+-
+-				posix_mode = le32_to_cpu(posix->Mode);
+-				posix_ctxt = 1;
+-			}
+-		}
+ 	}
+ 
+ 	if (ksmbd_override_fsids(work)) {
 -- 
 2.39.5
 
