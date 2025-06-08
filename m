@@ -1,82 +1,82 @@
 Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0106C19CD07
-	for <patches@lists.linux.dev>; Sun,  8 Jun 2025 16:57:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BCCF8633F
+	for <patches@lists.linux.dev>; Sun,  8 Jun 2025 16:58:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749401872; cv=none; b=dV7c91al0tWH1tEG/TUo+TmUiqd5ZZdh1icWChx84R1Iqab846vl5JTndcxCwvz3qXI/xmxbDR0einKKrTTA7tGs84nzoPYhHBdcckLhyBjTV3vYNOcyb0PtyxN96MGF7nuFfyRqgQasGVUl4Z8THEHUpGTZS9zOovssaB2fW0g=
+	t=1749401899; cv=none; b=jxYcszX5WNi+ZJbyQBb8Zris5uwx8nVCa9X+j0Sj0d6XkD1CEDWahuWoXwfa4nWV2F9QdycBxktrWhAeYweIXptmEfIhJ0OjhklsD1CioRjdd9UnY6k/83nGXpBFzpgwEJsUT6H0ik+PUsv+2tctCrpV9K2ovIU7aFObqoiJKkg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749401872; c=relaxed/simple;
-	bh=V97iY1Sq/zaYk+CjyZO3kcrQTN6xQUok5+0Jb8EJswI=;
+	s=arc-20240116; t=1749401899; c=relaxed/simple;
+	bh=ES1nmazJC3eHPE4Dm72aaF6T8bwJef75vhIHbVci3TE=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=rYO0t07hLOOhMm1uZgYlCj7KKbkINVMLnsUZBTHii723k1OkPp5Mx/MZef8GbTD6uvO0Hn9PLGxU6gmJSu6Hy4/Eoty4ENtDfk/mlkRfr5pJA/HgqCX2eX98+dfGM112mHPcNMfQ2biQuZKYA4HDoFmaRXyrKGIo4zVylYjdWdM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=P9bEDRo3; arc=none smtp.client-ip=209.85.214.176
+	 To:Cc:Content-Type; b=PZDKiQaiUF7iNqUyKKn3veX0r9uBQ9xpFLVTDKTj0C9WpNHWbSpe6hEsbcFwFusM0bG+jvX3jDLWk4x1jX6N2KV4Gu3DbH8EQ3NfST+TKWZqtUKVuKf1SE+PQDrRLAk3O3vBNcGkTTV2K2gaxG+78JKIsW7+VMZrT2i4CGKSSrk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cotOyylj; arc=none smtp.client-ip=209.85.214.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="P9bEDRo3"
-Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-234eaea2e4eso6656315ad.0
-        for <patches@lists.linux.dev>; Sun, 08 Jun 2025 09:57:50 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cotOyylj"
+Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-234949fd425so5643465ad.2
+        for <patches@lists.linux.dev>; Sun, 08 Jun 2025 09:58:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1749401870; x=1750006670; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1749401897; x=1750006697; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=V97iY1Sq/zaYk+CjyZO3kcrQTN6xQUok5+0Jb8EJswI=;
-        b=P9bEDRo3uUYqEK4W18RVdmXqGkwuz9SMD9rnItJrk8SuqTMIBI79Sa+NcQwkrO924F
-         4PW9sPNNykePx67n4f2OP0f3BsWWw5btMwnBRmfjsy92ocFqgoMtFFSEIAlBy5cEi6TO
-         YKBsA58DhReefge4X6VnsFJ5skjGDm2CQzaQKRfvw+IFmpCVw6vAf5IMraC6qGyM9HnG
-         EGtX73FdA1wPmoo0NHflyCeExF1Lr7WtXwh6LXQAIlO7Sq5yLpSCd3zvSklQzWgGqxGE
-         kLtMbuLa+qD56qmnP3XhMRxswy8hRxMZUUaaiXiJbpY/6jKRoyCCSgkWlzuOs6sPKJoQ
-         eXZg==
+        bh=ES1nmazJC3eHPE4Dm72aaF6T8bwJef75vhIHbVci3TE=;
+        b=cotOyyljmuoslv7fdQIneEyAkGGoMLn8C3afAYMmzqvaag0sMEWrCFkWroDrhOPAcJ
+         cPoq/6CtM3ZYQv+QHU8t1ZOqUm5715Z/Y9zM8TQhb/r7DPXxPH0RDwuyU26VFCpkiLDm
+         PW82l8BDWC7WHYzGTHoL1lXNctIEqUTgSGwtNmGM6OmG21JD5i+GQVUEI0/6ituvffB2
+         uGkTrap9LjDQllJELe8ZkhnmQFkmMtUAewcI0VuKZZiuv70CqzJOhbvqzr/wZzsSbQt1
+         wxilm9sadNxIf4dOy3bsfGjfdEQJ64TSNum1wh1QFW2gfxhOuZOeXtGBa3b7GWmP3Hjr
+         e3ew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749401870; x=1750006670;
+        d=1e100.net; s=20230601; t=1749401897; x=1750006697;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=V97iY1Sq/zaYk+CjyZO3kcrQTN6xQUok5+0Jb8EJswI=;
-        b=vCRmimntJAvd35vpBWY5hcUpF0aGSjqug3B55AFHHInE9cNDqWV940LW46q8ygDXYS
-         hba81uoEyfGY2QejYQQziNKgjNH8IzLnLzQw+hGpRxk0VuOgPoSPtpNKebCtHrfh+CIe
-         PNGKBeOmdBUrpw+bTswtXCFajFwSDd78zdJ889288f0a7fNmEbMkBS7C9LSIuDkBud78
-         6LNqV1p0/KJTes2JjNeElgsPyJToATFN9wx8AyaXBlw3fhIL79Q2PKqYHmgIo1rxuMOq
-         Su3Z84esFAsUCTqk0x2FXb7OjJMXZtQrXz1gTRAz4usm/NrDlY1c0NbKYcmWI3294g+B
-         6w9g==
-X-Gm-Message-State: AOJu0Ywbi+/Vq1e9Eih6YLhPaIqNOqpShaUYhf2RGXNPAeoCYY1odMV3
-	gABOkqp05e6QuZ11bw3l3pym7r5qAladHVHfuSvdyPuu6zOFlfqSKLWen4odTGUZvBHA3wliPUd
-	wNQ5rfbgfK4w7f18Md5HKA55OrgwXpgk=
-X-Gm-Gg: ASbGnct/Hs4dx9DIKjuW40v/seM8HhJbTMqQDMH+v/M/jkX0eksS9k3S+gXIKWIiwP6
-	CAYlyw6i+J3rRW5wXzN5uNlEOYXgU1QFP7Qg8cpFEF2oV+e+kBEA2H15USjspWGJ1MpyR69pJEX
-	y/qOAc/3+mieZE/+v9/B0E2p/ulVu6vlpw
-X-Google-Smtp-Source: AGHT+IEF2US5fJhPDCUr0zqu3y97vNhUhrFfv40wDL8whslXrtkv2lLuWp2e6TAgkQkr6IJlrkWA6WJB918dTFlaWe4=
-X-Received: by 2002:a17:90b:3d04:b0:312:ec:411a with SMTP id
- 98e67ed59e1d1-3134e3fa0e4mr5065645a91.3.1749401870302; Sun, 08 Jun 2025
- 09:57:50 -0700 (PDT)
+        bh=ES1nmazJC3eHPE4Dm72aaF6T8bwJef75vhIHbVci3TE=;
+        b=gp8bTG44kUdeYb/A0b9HTl50KpFskwqF7QoMsiD4n2BYjChS8KgKtVJxoY5dlFLRzc
+         JzOm6RA5hVMdF0e5XEm080036Ndw4p22b73x9MS7BccKTkNsk5Q3GMMIzsDtquzi85O/
+         5TrqyK/tXOERlUE/qtQjaOXrxIuN7mY73oZMb5k0I3nl1Vn3F0Y5Kh8BS/KjWQsHGm9P
+         XhzVfqqXWqy4cxF20mTYBNiEDBG/aHRTHzNb+sXvDKCTKZMV2aivBxWDsHFFtOxbK16n
+         irpLqLE1topEsyYy2fn26wAIY/yoFEQAisciPIlIRn6QGD8P8Qzt4wmGMVMKuz/bLIux
+         zjYA==
+X-Gm-Message-State: AOJu0YxDQlr8hjTX/UEuP0ujZ/BeplG0cZtjDxLB8v9ZcfI1AIiLFZ3x
+	GNCeFFqW7LpsQjC6uedm9VyHZqVGJNaOemJieowxfCOBg8Jm/MCmv44NNGvi2ZCLl3XlDXr2cQl
+	n2+Zcog7z440k5Qy/YI16ZLHKTkv8U8I=
+X-Gm-Gg: ASbGncsTKG4CLns+sEmG3iBUv4ZKiR7trj9pxI9k+K64U0yGTUjucirWsqjFEOJywOQ
+	aeNJUmQL+6KU9qwt+SYZJdogykpqbIg4gDI6IR6CFKvNm94qlvcQBXMXn72MdzbyPxUcLimRBbB
+	CO2dox8bMgbtUAjOlnuB2rKD2y6mVm99lx
+X-Google-Smtp-Source: AGHT+IHc9krOpM5WexDVkHYBds+VEhCjzZygfB71gm4bGafsCOVjq+AnZZljwFNAqrP6GYyN178LCDCabGr9gE2vf4U=
+X-Received: by 2002:a17:90b:350f:b0:312:639:a06d with SMTP id
+ 98e67ed59e1d1-3134e413149mr5680859a91.5.1749401897584; Sun, 08 Jun 2025
+ 09:58:17 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250608125507.934032-1-sashal@kernel.org> <20250608125507.934032-3-sashal@kernel.org>
-In-Reply-To: <20250608125507.934032-3-sashal@kernel.org>
+References: <20250608125447.933686-1-sashal@kernel.org> <20250608125447.933686-3-sashal@kernel.org>
+In-Reply-To: <20250608125447.933686-3-sashal@kernel.org>
 From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Sun, 8 Jun 2025 18:57:38 +0200
-X-Gm-Features: AX0GCFv9TBDVmHG78YzkdTI0QzxeKMKORLyul7ZTok5DuZiL-KNBn7ier0GIHk8
-Message-ID: <CANiq72kkWkgzHAmBbfqj5cVBg7M-ubt5BW1UAXu1ns-XbUdinQ@mail.gmail.com>
-Subject: Re: [PATCH AUTOSEL 6.12 03/10] rust: module: place cleanup_module()
+Date: Sun, 8 Jun 2025 18:58:03 +0200
+X-Gm-Features: AX0GCFvZAeGmWU_hALb_8QuNqIlLnjRr8v5cZM9foJ-4o1tCZgAMz6lnNnKkYK0
+Message-ID: <CANiq72nVAUMK0z7tN4-uS_LNNgJstf6Foufe8OfpjfVvg1ahPA@mail.gmail.com>
+Subject: Re: [PATCH AUTOSEL 6.14 03/10] rust: module: place cleanup_module()
  in .exit.text section
 To: Sasha Levin <sashal@kernel.org>
 Cc: patches@lists.linux.dev, stable@vger.kernel.org, 
 	FUJITA Tomonori <fujita.tomonori@gmail.com>, Jarkko Sakkinen <jarkko@kernel.org>, 
 	Miguel Ojeda <ojeda@kernel.org>, alex.gaynor@gmail.com, lossin@kernel.org, 
 	aliceryhl@google.com, gary@garyguo.net, dakr@kernel.org, boqun.feng@gmail.com, 
-	tamird@gmail.com, igor.korotin.linux@gmail.com, walmeida@microsoft.com, 
-	anisse@astier.eu, rust-for-linux@vger.kernel.org
+	walmeida@microsoft.com, igor.korotin.linux@gmail.com, anisse@astier.eu, 
+	rust-for-linux@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Sun, Jun 8, 2025 at 2:55=E2=80=AFPM Sasha Levin <sashal@kernel.org> wrot=
+On Sun, Jun 8, 2025 at 2:54=E2=80=AFPM Sasha Levin <sashal@kernel.org> wrot=
 e:
 >
 > **YES**
