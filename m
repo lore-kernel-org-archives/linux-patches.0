@@ -1,43 +1,52 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F7DF211297;
-	Sun,  8 Jun 2025 12:55:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F266212FBE;
+	Sun,  8 Jun 2025 12:55:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749387331; cv=none; b=BojJhv6NzmofWTm+vH6awL8c1TpnL88njKOk8kGTbxFkhV2QsVstTWswiQ9LjMuNORnSwLBmjWHG+W0kvFDHpCtL8JkHQkkJP7rp4Cfx3L0HC8iB3T0O/vsLGmHAHUEvkqE+eUV+jLNKix0/DpuCzsG0ZpX0YO0RM2f3S88oBhc=
+	t=1749387334; cv=none; b=rDJuOJViwyAKqb1/jRphWLiegyuds2ESebQXI/+LHSjWEnH76jpT3RKcSN51ql1uvRmKTbauNhpjSpRP4dvC8nTKxlFq4rPfrrYlsjNfu/RPDQirF8XNl2jrBJzkUZvcX952b5iY1j5ddVDO5oOZ9o4NumNwv1LZQX54YoI9TfM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749387331; c=relaxed/simple;
-	bh=TDp3Ko/eQVaWw4fNmxQIHNENibdvUtq1A88nhGq0t1g=;
+	s=arc-20240116; t=1749387334; c=relaxed/simple;
+	bh=mTWEQBwuOQ+8xfDc0wtqzj6a+fA2sKBAoHyMcP06/pY=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RhoZw25vFGX02FH6F2iNLaIh0JV8AIqBSJ/4qHSw03YZ0NUi9JxNET8SsEO6ygZ0L8d8D7PII3IwM9VFtDlgiKF+ID+FWbfsEL7491dTL1C2iYN+uxsNCyvxQtWBVgQc/e4zw6mFgfcctFIXXRVQKpK6sS74ISXTFg+C9sUgqys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mCTGl7VB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X6guLPq125pDFoPrOtEMd13vwQ/SHKOk1aCJMX1NeI2llqWmrTI6ioQVA0I63iY1oQrLB96+xjyay58FC/yxlG5m2clAxmW/r9IOzKxjrqgtugQLBTWXz7k5ri4O3tacUJHW6sPBmHQJLgqOKePZ47GI3bx09hs/AifdYH+1+8U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qIouFK0Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mCTGl7VB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05639C4CEEE;
-	Sun,  8 Jun 2025 12:55:29 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qIouFK0Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 178BAC4CEEF;
+	Sun,  8 Jun 2025 12:55:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749387330;
-	bh=TDp3Ko/eQVaWw4fNmxQIHNENibdvUtq1A88nhGq0t1g=;
+	s=k20201202; t=1749387333;
+	bh=mTWEQBwuOQ+8xfDc0wtqzj6a+fA2sKBAoHyMcP06/pY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mCTGl7VBKf7ZRRQTD6QEZYMqas+mtrj0B8gnXFlMB9c9edyDOu4o2gJyY5+UUPPff
-	 H8CAoQZ4yN1Ctyo+ECXLdpWpLdfyO5ao8/1Z0VnHHNhFD8EolDjDp9Q2QNDeC7WRYn
-	 PIeiSA00nNmjpb/VSLaj65S569uXAYUf+D3zTVc2FXajoK/uCjI5DFDfN//9RxQdyJ
-	 cPx8Nq/PjAXoreWj2a3e9ok0f0jiKvApqrbZnSIMlkU6Pqf6lv5gVrWTC7ID7Irl83
-	 aZtriUaDeOCQ0gvtUaAIxDpkyFic9PV9CdftuXXaayKbQ+kqn6dhbN7huSuqL0E2SW
-	 u3zypiSKfiU6g==
+	b=qIouFK0ZOcjSgIRtfoVeZYL7GuStrANCzzxLLnyTSQJpcROrRs2R0qiqse2vW7D80
+	 jLrObBtUjZofu8i8NFjJ/xmELocw++2C6GbBx3IU0ybRH4NNWO1oJD7Umng9Y/4pPi
+	 9knvXP2KufnahVOsx+8Ub4/lamms3BJkwwHRgee7/iq9KzB21ja+GRbaH2AMCN8nXs
+	 mGH+V8SMsDFFda4ZCyP6eGY3OUfpNKD+GnuaFAEXR9cadszsTkYUpF5316WA2wby4L
+	 B9rH6b4l/v12vsamD1hCXXOcAu7C3mNOeCyITxHRb6Q9jXDPAgcsmnuKXczn3TaGiw
+	 gTlScqddtv6VA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Namjae Jeon <linkinjeon@kernel.org>,
-	Justin Turner Arthur <justinarthur@gmail.com>,
-	Steve French <stfrench@microsoft.com>,
+Cc: FUJITA Tomonori <fujita.tomonori@gmail.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
+	Miguel Ojeda <ojeda@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	smfrench@gmail.com,
-	linux-cifs@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.6 2/8] ksmbd: provide zero as a unique ID to the Mac client
-Date: Sun,  8 Jun 2025 08:55:21 -0400
-Message-Id: <20250608125527.934264-2-sashal@kernel.org>
+	alex.gaynor@gmail.com,
+	lossin@kernel.org,
+	aliceryhl@google.com,
+	gregkh@linuxfoundation.org,
+	dakr@kernel.org,
+	trintaeoitogc@gmail.com,
+	gary@garyguo.net,
+	igor.korotin.linux@gmail.com,
+	walmeida@microsoft.com,
+	anisse@astier.eu,
+	rust-for-linux@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.6 3/8] rust: module: place cleanup_module() in .exit.text section
+Date: Sun,  8 Jun 2025 08:55:22 -0400
+Message-Id: <20250608125527.934264-3-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250608125527.934264-1-sashal@kernel.org>
 References: <20250608125527.934264-1-sashal@kernel.org>
@@ -50,195 +59,104 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.6.93
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: FUJITA Tomonori <fujita.tomonori@gmail.com>
 
-[ Upstream commit 571781eb7ffefa65b0e922c8031e42b4411a40d4 ]
+[ Upstream commit 249c3a0e53acefc2b06d3b3e1fc28fb2081f878d ]
 
-The Mac SMB client code seems to expect the on-disk file identifier
-to have the semantics of HFS+ Catalog Node Identifier (CNID).
-ksmbd provides the inode number as a unique ID to the client,
-but in the case of subvolumes of btrfs, there are cases where different
-files have the same inode number, so the mac smb client treats it
-as an error. There is a report that a similar problem occurs
-when the share is ZFS.
-Returning UniqueId of zero will make the Mac client to stop using and
-trusting the file id returned from the server.
+Place cleanup_module() in .exit.text section. Currently,
+cleanup_module() is likely placed in the .text section. It's
+inconsistent with the layout of C modules, where cleanup_module() is
+placed in .exit.text.
 
-Reported-by: Justin Turner Arthur <justinarthur@gmail.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+[ Boqun asked for an example of how the section changed to be
+  put in the log. Tomonori provided the following examples:
+
+    C module:
+
+      $ objdump -t ~/build/x86/drivers/block/loop.o|grep clean
+      0000000000000000 l     O .exit.data    0000000000000008 __UNIQUE_ID___addressable_cleanup_module412
+      0000000000000000 g     F .exit.text    000000000000009c cleanup_module
+
+    Rust module without this patch:
+
+      $ objdump -t ~/build/x86/samples/rust/rust_minimal.o|grep clean
+      00000000000002b0 g     F .text         00000000000000c6 cleanup_module
+      0000000000000000 g     O .exit.data    0000000000000008 _R...___UNIQUE_ID___addressable_cleanup_module
+
+    Rust module with this patch:
+
+      $ objdump -t ~/build/x86/samples/rust/rust_minimal.o|grep clean
+      0000000000000000 g     F .exit.text    00000000000000c6 cleanup_module
+      0000000000000000 g     O .exit.data    0000000000000008 _R...___UNIQUE_ID___addressable_cleanup_module
+
+  - Miguel ]
+
+Signed-off-by: FUJITA Tomonori <fujita.tomonori@gmail.com>
+Acked-by: Jarkko Sakkinen <jarkko@kernel.org>
+Link: https://lore.kernel.org/r/20250308044506.14458-1-fujita.tomonori@gmail.com
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 **YES**
 
-This commit should be backported to stable kernel trees. Here's my
-extensive analysis:
+This commit should be backported to stable kernel trees.
 
-## Critical Bug Fix Analysis
+**Analysis:**
 
-**1. Real User Impact**
-The commit addresses a real-world compatibility issue reported by Justin
-Turner Arthur where Mac SMB clients fail when connecting to ksmbd shares
-backed by btrfs subvolumes or ZFS. This isn't a theoretical problem but
-affects actual production environments.
+This commit adds a single line `#[link_section = ".exit.text"]` to the
+`cleanup_module()` function in `rust/macros/module.rs`, making Rust
+modules consistent with C modules by placing cleanup code in the
+`.exit.text` section instead of the default `.text` section.
 
-**2. Root Cause Analysis**
-The core issue is an architectural mismatch:
-- **Mac SMB clients** expect file identifiers to behave like HFS+
-  Catalog Node Identifiers (CNIDs), which must be unique across the
-  entire share
-- **ksmbd** was providing Linux inode numbers as UniqueId values
-- **Modern filesystems** like btrfs subvolumes and ZFS can have
-  different files with identical inode numbers, causing Mac clients to
-  interpret this as filesystem corruption
+**Key factors supporting backporting:**
 
-**3. Code Changes Assessment**
+1. **Consistency fix**: The commit aligns Rust module behavior with
+   established C module conventions. From examining
+   `/home/sasha/linux/include/linux/init.h:56`, C modules use `#define
+   __exit __section(".exit.text")` to place cleanup functions in
+   `.exit.text`.
 
-The fix is surgically precise and low-risk:
+2. **Minimal and contained**: This is an extremely small change - adding
+   just one line to specify the link section. The risk of regression is
+   essentially zero.
 
-**a) Apple Client Detection:**
-```c
-if (conn->is_aapl == false) {
-    context = smb2_find_context_vals(req, SMB2_CREATE_AAPL, 4);
-    if (IS_ERR(context)) {
-        rc = PTR_ERR(context);
-        goto err_out1;
-    } else if (context)
-        conn->is_aapl = true;
-}
-```
-This properly detects Apple clients by looking for the
-`SMB2_CREATE_AAPL` context, which is the standard way Apple clients
-identify themselves.
+3. **Follows established pattern**: This commit mirrors Similar Commit
+   #1 which was marked "YES" for backporting. That commit placed
+   `init_module()` in `.init.text` for consistency with C modules, and
+   this commit does the same for `cleanup_module()` with `.exit.text`.
 
-**b) Conditional UniqueId Assignment:**
-```c
-if (conn->is_aapl)
-    dinfo->UniqueId = 0;
-else
-    dinfo->UniqueId = cpu_to_le64(ksmbd_kstat->kstat->ino);
-```
-For Apple clients, UniqueId is set to 0, which signals to the Mac client
-to stop trusting/using file IDs from the server. For all other clients,
-behavior remains unchanged.
+4. **Correctness improvement**: The current code places
+   `cleanup_module()` in `.text` while the corresponding C code uses
+   `.exit.text`. This inconsistency could affect tools that rely on
+   standard kernel module section layouts.
 
-**4. Comparison with Historical Precedents**
+5. **Low risk, clear benefit**: The change has no functional impact on
+   module operation but improves kernel consistency and correctness. The
+   commit message includes clear examples showing the section placement
+   before and after the fix.
 
-This commit closely matches the pattern of Similar Commit #1 (ksmbd
-UniqueId fix) which was marked "YES" for backporting:
-- **Small, contained fix**: Only affects specific client behavior
-- **Addresses real bug**: Fixes actual user-reported filesystem errors
-- **No architectural changes**: Simple conditional logic
-- **Minimal regression risk**: Only affects Apple clients
-- **Clear subsystem boundary**: Confined to ksmbd SMB server code
+The commit follows the stable tree criteria of being an important
+correctness fix with minimal risk, similar to the approved Similar
+Commit #1 that addressed the same inconsistency for `init_module()`.
 
-**5. Stable Tree Compatibility Criteria**
+ rust/macros/module.rs | 1 +
+ 1 file changed, 1 insertion(+)
 
-✅ **Important bugfix**: Fixes Mac client filesystem errors
-✅ **Minimal risk**: Changes only affect Apple clients
-✅ **Small and contained**: Three files, ~10 lines of changes
-✅ **No new features**: Pure compatibility fix
-✅ **Clear side effects**: Well-understood impact on Mac clients only
-
-**6. Technical Safety**
-
-The implementation is exceptionally safe:
-- **Backward compatible**: Non-Apple clients see no change
-- **Self-contained**: Apple client detection is robust
-- **Error handling**: Proper error checking for context parsing
-- **Standard compliance**: Uses official Apple SMB extension detection
-
-**7. Production Impact**
-
-Without this fix:
-- Mac users cannot reliably use ksmbd shares on btrfs subvolumes
-- ZFS users experience similar Mac client failures
-- Enterprise environments mixing Mac clients and modern Linux
-  filesystems are broken
-
-This is exactly the type of important, low-risk bugfix that stable
-kernel trees are designed to include. The fix resolves a significant
-compatibility issue with no regression risk for existing users.
-
- fs/smb/server/connection.h |  1 +
- fs/smb/server/smb2pdu.c    | 19 +++++++++++++++++--
- fs/smb/server/smb2pdu.h    |  3 +++
- 3 files changed, 21 insertions(+), 2 deletions(-)
-
-diff --git a/fs/smb/server/connection.h b/fs/smb/server/connection.h
-index 4fdd76ce53b90..dc07c6eb8c192 100644
---- a/fs/smb/server/connection.h
-+++ b/fs/smb/server/connection.h
-@@ -107,6 +107,7 @@ struct ksmbd_conn {
- 	__le16				signing_algorithm;
- 	bool				binding;
- 	atomic_t			refcnt;
-+	bool				is_aapl;
- };
- 
- struct ksmbd_conn_ops {
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index af360ba237a37..7c574207a1df0 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -3526,6 +3526,15 @@ int smb2_open(struct ksmbd_work *work)
- 			ksmbd_debug(SMB, "get query on disk id context\n");
- 			query_disk_id = 1;
- 		}
-+
-+		if (conn->is_aapl == false) {
-+			context = smb2_find_context_vals(req, SMB2_CREATE_AAPL, 4);
-+			if (IS_ERR(context)) {
-+				rc = PTR_ERR(context);
-+				goto err_out1;
-+			} else if (context)
-+				conn->is_aapl = true;
-+		}
- 	}
- 
- 	rc = ksmbd_vfs_getattr(&path, &stat);
-@@ -3964,7 +3973,10 @@ static int smb2_populate_readdir_entry(struct ksmbd_conn *conn, int info_level,
- 		if (dinfo->EaSize)
- 			dinfo->ExtFileAttributes = FILE_ATTRIBUTE_REPARSE_POINT_LE;
- 		dinfo->Reserved = 0;
--		dinfo->UniqueId = cpu_to_le64(ksmbd_kstat->kstat->ino);
-+		if (conn->is_aapl)
-+			dinfo->UniqueId = 0;
-+		else
-+			dinfo->UniqueId = cpu_to_le64(ksmbd_kstat->kstat->ino);
- 		if (d_info->hide_dot_file && d_info->name[0] == '.')
- 			dinfo->ExtFileAttributes |= FILE_ATTRIBUTE_HIDDEN_LE;
- 		memcpy(dinfo->FileName, conv_name, conv_len);
-@@ -3981,7 +3993,10 @@ static int smb2_populate_readdir_entry(struct ksmbd_conn *conn, int info_level,
- 			smb2_get_reparse_tag_special_file(ksmbd_kstat->kstat->mode);
- 		if (fibdinfo->EaSize)
- 			fibdinfo->ExtFileAttributes = FILE_ATTRIBUTE_REPARSE_POINT_LE;
--		fibdinfo->UniqueId = cpu_to_le64(ksmbd_kstat->kstat->ino);
-+		if (conn->is_aapl)
-+			fibdinfo->UniqueId = 0;
-+		else
-+			fibdinfo->UniqueId = cpu_to_le64(ksmbd_kstat->kstat->ino);
- 		fibdinfo->ShortNameLength = 0;
- 		fibdinfo->Reserved = 0;
- 		fibdinfo->Reserved2 = cpu_to_le16(0);
-diff --git a/fs/smb/server/smb2pdu.h b/fs/smb/server/smb2pdu.h
-index 25cc81aac350f..2821e6c8298f4 100644
---- a/fs/smb/server/smb2pdu.h
-+++ b/fs/smb/server/smb2pdu.h
-@@ -63,6 +63,9 @@ struct preauth_integrity_info {
- 
- #define SMB2_SESSION_TIMEOUT		(10 * HZ)
- 
-+/* Apple Defined Contexts */
-+#define SMB2_CREATE_AAPL		"AAPL"
-+
- struct create_durable_req_v2 {
- 	struct create_context_hdr ccontext;
- 	__u8   Name[8];
+diff --git a/rust/macros/module.rs b/rust/macros/module.rs
+index 7dee348ef0cc8..7614a7198ce20 100644
+--- a/rust/macros/module.rs
++++ b/rust/macros/module.rs
+@@ -249,6 +249,7 @@ mod __module_init {{
+                     #[cfg(MODULE)]
+                     #[doc(hidden)]
+                     #[no_mangle]
++                    #[link_section = \".exit.text\"]
+                     pub extern \"C\" fn cleanup_module() {{
+                         // SAFETY:
+                         // - This function is inaccessible to the outside due to the double
 -- 
 2.39.5
 
