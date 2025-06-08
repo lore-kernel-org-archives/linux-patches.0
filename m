@@ -1,46 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC48920AF62;
-	Sun,  8 Jun 2025 12:55:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62484171D2;
+	Sun,  8 Jun 2025 12:55:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749387316; cv=none; b=eZIz5Um4Xktci977bhLnrY1mL7Hqiw2qL1xkmECE/xA0a9I137zuQeHB5dns1V0rzL+oLycjCM6JePybsLiZ8SvokoSHph+J/4dGQbBIh1tmeYuM9X7AdwgHJLa4G1kirg7rxuo5EGdSRSRHYuWpm/5nLeBWLaDMc4Am3QnrOVk=
+	t=1749387317; cv=none; b=uMSXMjlVb54MVTHGwe1etBatdHnBNfQtmLxg6klxUybLp/AKSan3ZLXLMLMIGajg02TZ2LwakLJ3vZq62vT9JU1/jOBzMIbBy0Fy7JqH1pZ+nOLRGjEDa7zTWrKOqDgvl3xBcGrowYagz3kPhaFywlKinDnHl1NW5DXQy9MgrcE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749387316; c=relaxed/simple;
-	bh=OylT/Edd6UyE3JXirgm+eMBQfijOUvLplVyRV8YhPl0=;
+	s=arc-20240116; t=1749387317; c=relaxed/simple;
+	bh=QasLkJLz9bxcObC+E4aokXnTVO/kqeO6ZB4tdb3eIdQ=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nAy5JRIc7FWw6iwii3GDdHOcM2jqnoZbA72BzygHB0xKBGRy0ihB0Ol4xX48tTEPo5o/CRb0T/I/LB5G88Te3X5wSRr9gY9Tts/cIrTg0KpQrVQWRyAFLdH89/ckkxOwL9/ea6mn8i9VsUj4hwPj0jHuduKQos0Lxo1f0ql8dog=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZBePvvac; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Qr6dPmMmIafKM6te9PArkz10I+ihUTA/3mGxWklDqpIoR3ymKgmcB9627LYuokSGumsSQz6V4qa4J0Awxgdk8Q8sdIVjZ2w72T1Pknh+WgxsrLFgOtFoSwRZuK2d40pZtuvfJGT9Lls+VL2roMGc69eU8eXeUzdDV3/lZhJlC4o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cBoP9a9m; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZBePvvac"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 935E9C4CEEE;
-	Sun,  8 Jun 2025 12:55:14 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cBoP9a9m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3ABC7C4CEEF;
+	Sun,  8 Jun 2025 12:55:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749387315;
-	bh=OylT/Edd6UyE3JXirgm+eMBQfijOUvLplVyRV8YhPl0=;
+	s=k20201202; t=1749387317;
+	bh=QasLkJLz9bxcObC+E4aokXnTVO/kqeO6ZB4tdb3eIdQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZBePvvacOaUXNWig/TbVuCa3uxLIoguzMMI+Q7vzL1RO9Fs/6LU/Nqt6aOniAenCJ
-	 DLE8V1MqPPIC7oYR0HpTgbAE+S+C3i2U0WvNNa6LgpP9Mql+bqOxAytu5R9LbByrGL
-	 Xk27ddrZrp8rKRWM2q9pWtdZoNhVquLlvt7dytcqt4ReaEXrlGzisi5xO0DBmne3zN
-	 tLrVn3IZOVhequothPb39zJWrNveLT05ROS7eE2rjoNE/vMURqSEcBtqzVxx2HTtP0
-	 s8WXNItii7bMfddSqLznty6rKvy7VWok4ULCeO+2ZTyeoB0NkYAOzuzYT9M/Ols8OW
-	 Y95gy0FxUdoeA==
+	b=cBoP9a9mq/PuEsQYdFKVA9qOmFdo01vfMLKlhTPSPRzJX0vKl8Ye0DU73vIZsui1l
+	 gDNUVv4JDa6BNWyunf/O2kdEZeqEvtmp8nZTg3E1LjpjEFdqtoKmE+nLRver+a0Ocq
+	 ur2jYHP/gEARDmNjPRD9fENxAtXxatbF3RowItdc6Dk0cmn2m73FFa+CfKzwBiWvXR
+	 XYPfpiHLf8l8anCYnTKWP1oP9aLAjquWx2+vZRnh3WsYUzxhLuGEByqzzQHXYxfiuH
+	 aL4MaHyhZctYwvPLeSYwgeX9CYIVwBYhUBWL3JEN66s+3ZJ9zifDXM6pQN30yzd3GW
+	 Z94bWpXksseRA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Rudraksha Gupta <guptarud@gmail.com>,
-	Linux Kernel Functional Testing <lkft@linaro.org>,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Naresh Kamboju <naresh.kamboju@linaro.org>,
+Cc: Lukas Wunner <lukas@wunner.de>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	alex.gaynor@gmail.com,
-	nathan@kernel.org,
-	rust-for-linux@vger.kernel.org,
-	llvm@lists.linux.dev
-Subject: [PATCH AUTOSEL 6.12 04/10] rust: arm: fix unknown (to Clang) argument '-mno-fdpic'
-Date: Sun,  8 Jun 2025 08:55:01 -0400
-Message-Id: <20250608125507.934032-4-sashal@kernel.org>
+	joro@8bytes.org,
+	iommu@lists.linux.dev
+Subject: [PATCH AUTOSEL 6.12 05/10] Revert "iommu/amd: Prevent binding other PCI drivers to IOMMU PCI devices"
+Date: Sun,  8 Jun 2025 08:55:02 -0400
+Message-Id: <20250608125507.934032-5-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250608125507.934032-1-sashal@kernel.org>
 References: <20250608125507.934032-1-sashal@kernel.org>
@@ -50,167 +48,133 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.12.32
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rudraksha Gupta <guptarud@gmail.com>
+From: Lukas Wunner <lukas@wunner.de>
 
-[ Upstream commit 977c4308ee4270cf46e2c66b37de8e04670daa0c ]
+[ Upstream commit 3be5fa236649da6404f1bca1491bf02d4b0d5cce ]
 
-Currently rust on arm fails to compile due to '-mno-fdpic'. This flag
-disables a GCC feature that we don't want for kernel builds, so let's
-skip it as it doesn't apply to Clang.
+Commit 991de2e59090 ("PCI, x86: Implement pcibios_alloc_irq() and
+pcibios_free_irq()") changed IRQ handling on PCI driver probing.
+It inadvertently broke resume from system sleep on AMD platforms:
 
-    UPD     include/generated/asm-offsets.h
-    CALL    scripts/checksyscalls.sh
-    RUSTC L rust/core.o
-    BINDGEN rust/bindings/bindings_generated.rs
-    BINDGEN rust/bindings/bindings_helpers_generated.rs
-    CC      rust/helpers/helpers.o
-    Unable to generate bindings: clang diagnosed error: error: unknown argument: '-mno-fdpic'
-    make[2]: *** [rust/Makefile:369: rust/bindings/bindings_helpers_generated.rs] Error 1
-    make[2]: *** Deleting file 'rust/bindings/bindings_helpers_generated.rs'
-    make[2]: *** Waiting for unfinished jobs....
-    Unable to generate bindings: clang diagnosed error: error: unknown argument: '-mno-fdpic'
-    make[2]: *** [rust/Makefile:349: rust/bindings/bindings_generated.rs] Error 1
-    make[2]: *** Deleting file 'rust/bindings/bindings_generated.rs'
-    make[1]: *** [/home/pmos/build/src/linux-next-next-20250521/Makefile:1285: prepare] Error 2
-    make: *** [Makefile:248: __sub-make] Error 2
+  https://lore.kernel.org/r/20150926164651.GA3640@pd.tnic/
 
-[ Naresh provided the draft diff [1].
+This was fixed by two independent commits:
 
-  Ben explained [2]:
+* 8affb487d4a4 ("x86/PCI: Don't alloc pcibios-irq when MSI is enabled")
+* cbbc00be2ce3 ("iommu/amd: Prevent binding other PCI drivers to IOMMU PCI devices")
 
-    FDPIC is only relevant with no-MMU targets, and then only for userspace.
-    When configured for the arm-*-uclinuxfdpiceabi target, GCC enables FDPIC
-    by default to facilitate compiling userspace programs. FDPIC is never
-    used for the kernel, and we pass -mno-fdpic when building the kernel to
-    override the default and make sure FDPIC is disabled.
+The breaking change and one of these two fixes were subsequently reverted:
 
-  and [3]:
+* fe25d078874f ("Revert "x86/PCI: Don't alloc pcibios-irq when MSI is enabled"")
+* 6c777e8799a9 ("Revert "PCI, x86: Implement pcibios_alloc_irq() and pcibios_free_irq()"")
 
-    -mno-fdpic disables a GCC feature that we don't want for kernel builds.
-    clang does not support this feature, so it always behaves as though
-    -mno-fdpic is passed. Therefore, it should be fine to mix the two, at
-    least as far as FDPIC is concerned.
+This rendered the second fix unnecessary, so revert it as well.  It used
+the match_driver flag in struct pci_dev, which is internal to the PCI core
+and not supposed to be touched by arbitrary drivers.
 
-  [1] https://lore.kernel.org/rust-for-linux/CA+G9fYt4otQK4pHv8pJBW9e28yHSGCDncKquwuJiJ_1ou0pq0w@mail.gmail.com/
-  [2] https://lore.kernel.org/rust-for-linux/aAKrq2InExQk7f_k@dell-precision-5540/
-  [3] https://lore.kernel.org/rust-for-linux/aAo_F_UP1Gd4jHlZ@dell-precision-5540/
-
-    - Miguel ]
-
-Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-Closes: https://lore.kernel.org/all/CA+G9fYvOanQBYXKSg7C6EU30k8sTRC0JRPJXYu7wWK51w38QUQ@mail.gmail.com/
-Suggested-by: Miguel Ojeda <ojeda@kernel.org>
-Acked-by: Naresh Kamboju <naresh.kamboju@linaro.org>
-Signed-off-by: Rudraksha Gupta <guptarud@gmail.com>
-Link: https://lore.kernel.org/r/20250522-rust-mno-fdpic-arm-fix-v2-1-a6f691d9c198@gmail.com
-[ Reworded title. - Miguel ]
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Signed-off-by: Lukas Wunner <lukas@wunner.de>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Acked-by: Joerg Roedel <jroedel@suse.de>
+Link: https://patch.msgid.link/9a3ddff5cc49512044f963ba0904347bd404094d.1745572340.git.lukas@wunner.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 **YES**
 
-This commit should be backported to stable kernel trees. Here's my
-extensive analysis:
+This commit should be backported to stable kernel trees.
 
-## Build Fix Characteristics
-This commit fixes a concrete build failure affecting ARM Rust builds.
-The error message is clear and specific:
-```
-Unable to generate bindings: clang diagnosed error: error: unknown
-argument: '-mno-fdpic'
-```
+**Extensive Analysis:**
 
-This represents a fundamental build breakage where Rust compilation
-completely fails on ARM when using Clang-based bindgen.
+**1. Context and Purpose:**
+This commit is part of a coordinated series of reverts addressing
+regressions introduced by commit 991de2e59090 ("PCI, x86: Implement
+pcibios_alloc_irq() and pcibios_free_irq()") which broke system
+suspend/resume on AMD platforms in v4.3. The original issue was fixed by
+two independent commits, one of which (cbbc00be2ce3) added the line
+`iommu->dev->match_driver = false;` to prevent other PCI drivers from
+binding to IOMMU devices.
 
-## Code Change Analysis
-The fix is surgically precise - it adds `-mno-fdpic` to the
-`bindgen_skip_c_flags` list in `/rust/Makefile:276`. This follows the
-exact same pattern as numerous other similar fixes that have been
-successfully backported.
-
-Looking at the context from `/home/sasha/linux/rust/Makefile:255-277`,
-the `bindgen_skip_c_flags` mechanism exists specifically to handle GCC
-flags that Clang doesn't understand. The comment explains this is "a
-hack" but necessary because "bindgen relies on libclang to parse C" and
-there are compatibility issues.
-
-## Historical Precedent from Similar Commits
-The provided examples show a clear pattern:
-
-1. **Similar Commit #1 (Backported: YES)** - LoongArch GCC build fix
-   adding flags to bindgen skip list
-2. **Similar Commit #3 (Backported: NO)** - fstrict-flex-arrays bindgen
-   fix
-3. **Similar Commit #4 (Backported: YES)** - fzero-init-padding-bits
-   bindgen fix
-
-Examining the kernel history, I found additional precedent:
-- `a9c621a21712` - Recent commit adding `-fzero-init-padding-bits` to
-  bindgen skip flags
-- `869b5016e94e` - Added `-fmin-function-alignment` to bindgen skip
-  flags
-
-These demonstrate that bindgen compatibility fixes are regularly
-backported.
-
-## Technical Context
-From `/home/sasha/linux/arch/arm/Makefile:26`, I can see that `-mno-
-fdpic` is used in ARM kernel builds:
-```makefile
-# Disable FDPIC ABI
-KBUILD_CFLAGS += $(call cc-option,-mno-fdpic)
+**2. Code Change Analysis:**
+The commit removes exactly one line from
+`drivers/iommu/amd/init.c:2034`:
+```c
+/* Prevent binding other PCI device drivers to IOMMU devices */
+iommu->dev->match_driver = false;
 ```
 
-The commit message explains that FDPIC is a GCC feature for no-MMU
-userspace targets that should never be used for kernel builds. Clang
-doesn't support this feature and always behaves as if `-mno-fdpic` is
-passed. Therefore, filtering it out for bindgen is safe and correct.
+This line was setting the `match_driver` field of `struct pci_dev`,
+which the commit message correctly identifies as "internal to the PCI
+core and not supposed to be touched by arbitrary drivers."
 
-## Stable Tree Criteria Compliance
-- ✅ **Fixes important bug**: ARM Rust builds completely fail without
-  this
-- ✅ **Small and contained**: Single line addition to skip flag list
-- ✅ **No architectural changes**: Follows established pattern for
-  bindgen flag filtering
-- ✅ **Minimal regression risk**: Only affects bindgen flag filtering, no
-  functional changes
-- ✅ **Clear side effects**: None beyond fixing the build failure
+**3. Why This Should Be Backported:**
 
-## Impact Assessment
-This fix enables ARM Rust support to work properly with the standard
-toolchain configuration. Without it, any ARM platform wanting to use
-Rust features would hit a hard build failure. The change is completely
-backward compatible and only affects the flag filtering logic for
-bindgen.
+**a) Part of Coordinated Fix Series:** This revert is the logical
+completion of a series of reverts that fixed major regressions. Looking
+at the similar commits provided as examples:
+- Similar Commit #1 (YES): Revert of x86/PCI pcibios-irq allocation
+- Similar Commit #2 (YES): Revert of PCI IRQ management helpers
+- Similar Commit #5 (YES): Revert of the original problematic
+  pcibios_alloc_irq implementation
 
-The fix matches the exact same pattern as Similar Commits #1 and #4
-which were both backported, and addresses the same category of issue -
-GCC/Clang toolchain compatibility for Rust builds.
+All these related reverts were marked for backporting, making this
+commit part of the same logical fix series.
 
- rust/Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+**b) Removes Inappropriate Code:** The commit eliminates code that
+violates kernel design principles by accessing internal PCI core
+structures from a driver. The `match_driver` field is not meant to be
+manipulated by individual drivers.
 
-diff --git a/rust/Makefile b/rust/Makefile
-index 1b00e16951eeb..cf47a67cc5e7a 100644
---- a/rust/Makefile
-+++ b/rust/Makefile
-@@ -236,7 +236,7 @@ bindgen_skip_c_flags := -mno-fp-ret-in-387 -mpreferred-stack-boundary=% \
- 	-fzero-call-used-regs=% -fno-stack-clash-protection \
- 	-fno-inline-functions-called-once -fsanitize=bounds-strict \
- 	-fstrict-flex-arrays=% -fmin-function-alignment=% \
--	-fzero-init-padding-bits=% \
-+	-fzero-init-padding-bits=% -mno-fdpic \
- 	--param=% --param asan-%
+**c) Cleanup After Main Fix:** Once the root cause (commit 991de2e59090)
+was reverted by commit 6c777e8799a9, the workaround became unnecessary.
+Keeping unnecessary workaround code, especially code that
+inappropriately accesses internal structures, is problematic.
+
+**d) Minimal Risk:** The change is extremely small and low-risk - it
+simply removes one line that was setting an internal field
+inappropriately.
+
+**e) Consistency and Completeness:** Since the other reverts in this
+series addressing the 991de2e59090 regressions were backported, this
+should be included for consistency and to ensure the cleanup is
+complete.
+
+**4. Stable Tree Criteria Met:**
+- ✅ Fixes inappropriate driver behavior (accessing internal PCI
+  structures)
+- ✅ Small and contained change
+- ✅ Part of a series addressing known regressions
+- ✅ Minimal risk of introducing new issues
+- ✅ Consistent with backporting decisions for related commits
+
+The commit represents necessary cleanup after a coordinated regression
+fix and should be backported to maintain consistency with the related
+reverts and to remove code that inappropriately accesses internal kernel
+structures.
+
+ drivers/iommu/amd/init.c | 3 ---
+ 1 file changed, 3 deletions(-)
+
+diff --git a/drivers/iommu/amd/init.c b/drivers/iommu/amd/init.c
+index ff11cd7e5c068..b8b10140d41b2 100644
+--- a/drivers/iommu/amd/init.c
++++ b/drivers/iommu/amd/init.c
+@@ -2026,9 +2026,6 @@ static int __init iommu_init_pci(struct amd_iommu *iommu)
+ 	if (!iommu->dev)
+ 		return -ENODEV;
  
- # Derived from `scripts/Makefile.clang`.
+-	/* Prevent binding other PCI device drivers to IOMMU devices */
+-	iommu->dev->match_driver = false;
+-
+ 	/* ACPI _PRT won't have an IRQ for IOMMU */
+ 	iommu->dev->irq_managed = 1;
+ 
 -- 
 2.39.5
 
