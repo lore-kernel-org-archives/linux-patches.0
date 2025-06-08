@@ -1,178 +1,167 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DF031A5BA3;
-	Sun,  8 Jun 2025 12:56:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F11881A5BA3;
+	Sun,  8 Jun 2025 12:56:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749387371; cv=none; b=lvKFIRcz2j9M5yaEfzliDQSN6Y4nbfMXpRk9WbwklAvf+HBJ8s4OH9PSJ8YKxpThWteNtS1RPY3fM6BkbH4CC+FEV9HiRq7zCbBRaTG3xAGosghZ3dJ3+rVRWJnjfwHp5CnDsPCEQw6isfsReOyye/h6aEyNH/X6dcCS7hHybpk=
+	t=1749387374; cv=none; b=Dsmf6Gg55PWgGZQ/L5UlDbx3NXMsXcZdhuVR5dUKWVDt+DeMY07c+YDrwrQ2lq1ECYpl+qgcVB7hYzu3qzmI2UOJ4sBMgkPk6t0gdWJN8e3RbbvT2XeU1lBu9VG4RmHfM9IlxXzqdJoDIN5E3Tazpwmhc9/iocdsaPFi19O16o8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749387371; c=relaxed/simple;
-	bh=qpWUQRHI3tR3bkoGx/S4V8yPaOquSg8zYVLHUx1kaxc=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Type; b=dMKUcEllLXREk31K0G4Zil8h7fQ22qqREBcgQV/Cz5XWGnlrobhR4rKmP8/dO6TbHCU36tEQEoTu98AttBndxogs+P260J9+bMZ27F/QSRd1ri/D+OtYDhjm7WoJ+iYP0h/rsNYe6ikAsgpHsmRh8i3VRRQBu+g7LyXHfQNs2I0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZMU6gftl; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1749387374; c=relaxed/simple;
+	bh=VT/kOv8K7zbcsUNcFKYtAQaOP+wsH2uz9EYAAEUzcFg=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=euiuF5R8y6XTq5gX7nzTo9N/2IhXrfm7aHiP6oKZlGCIz2mFBqdwUh9gArOE3xcijKduEWriyxvQZzw4DF0BU0+0i3PQewRZWnWZsmE4XGgeP/EXQrTWJ3LaJDl9ogO8y/sLYZrPDZWVFK9BjDP6BNEc8xHIQjkVfco8nfn9Avc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HACRBwf9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZMU6gftl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D36B6C4CEF1;
-	Sun,  8 Jun 2025 12:56:09 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HACRBwf9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EC1CC4CEEF;
+	Sun,  8 Jun 2025 12:56:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749387370;
-	bh=qpWUQRHI3tR3bkoGx/S4V8yPaOquSg8zYVLHUx1kaxc=;
-	h=From:To:Cc:Subject:Date:From;
-	b=ZMU6gftlyxY5bnJpeMeeutAnLDoTPDVOk8G3xIi7//mNE+tEK/uk/a9qZOAGd5XFc
-	 ENBriDe00ayNR3Ik86p4WcUzrFJtVQ+e1maeJ8KJ3t4I6JAaTWeRVzlZha1W/NhHRj
-	 ksiVlPNzPal7g7fNMeU6WmulpgCDfZJ7cjLIL2qZDuF01ur4JzkHBxd9aoEaMspLHV
-	 inCvxMHDDjYSGl51lu1d+x+b5Cc3ckK3gwvKoEZqfkF9Sc9mjpcjBKRLowh0m1LuoF
-	 nMhyU8F+r/9auZZBc57aMMB9jL1XsPDTtu9VcS7ml6zZ7xb0PWSkr/kigM3DADGAUi
-	 REg3ynDRF+d6w==
+	s=k20201202; t=1749387373;
+	bh=VT/kOv8K7zbcsUNcFKYtAQaOP+wsH2uz9EYAAEUzcFg=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=HACRBwf9yIGHgQPqPFx8SQJamc/xPCMZGlION8Mbecqo9fNnQTzUol13AZc5/abwU
+	 ndTTTk81WdR8Z6XdcpFL/CKubi9AvaYGUNHmAYHXJl6Jz4EGADZGkCKDHelPtccsiA
+	 tOHNHmTKh+yb6TrdjO67fX02+BkkeCQM4jxOCqh0WJYGyGSJcfx5CEeK0y1U9ZYQ4x
+	 WDaBr6DCaukB6IouqLSxgVM8PP2TgSHSKhvl3QuKYA3zXXHUoGpD7Fvr6BvnTFqe+c
+	 EWVQLk7YwGh2BfvdH8+xeLEDSQaRRKKgPZK98dTXAF7HUy4ujslxmYXtr9KSJxKKXP
+	 akUw+tV0ZdePw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Lukas Wunner <lukas@wunner.de>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Joerg Roedel <jroedel@suse.de>,
+Cc: Thomas Gessler <thomas.gessler@brueckmann-gmbh.de>,
+	Suraj Gupta <suraj.gupta2@amd.com>,
+	Folker Schwesinger <dev@folker-schwesinger.de>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	joro@8bytes.org,
-	will@kernel.org,
-	iommu@lists.linux.dev
-Subject: [PATCH AUTOSEL 5.4 1/2] Revert "iommu/amd: Prevent binding other PCI drivers to IOMMU PCI devices"
-Date: Sun,  8 Jun 2025 08:56:07 -0400
-Message-Id: <20250608125608.934695-1-sashal@kernel.org>
+	michal.simek@amd.com,
+	marex@denx.de,
+	radhey.shyam.pandey@amd.com,
+	jernej.skrabec@gmail.com,
+	u.kleine-koenig@baylibre.com,
+	krzysztof.kozlowski@linaro.org,
+	linux-arm-kernel@lists.infradead.org
+Subject: [PATCH AUTOSEL 5.4 2/2] dmaengine: xilinx_dma: Set dma_device directions
+Date: Sun,  8 Jun 2025 08:56:08 -0400
+Message-Id: <20250608125608.934695-2-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250608125608.934695-1-sashal@kernel.org>
+References: <20250608125608.934695-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 5.4.294
 Content-Transfer-Encoding: 8bit
 
-From: Lukas Wunner <lukas@wunner.de>
+From: Thomas Gessler <thomas.gessler@brueckmann-gmbh.de>
 
-[ Upstream commit 3be5fa236649da6404f1bca1491bf02d4b0d5cce ]
+[ Upstream commit 7e01511443c30a55a5ae78d3debd46d4d872517e ]
 
-Commit 991de2e59090 ("PCI, x86: Implement pcibios_alloc_irq() and
-pcibios_free_irq()") changed IRQ handling on PCI driver probing.
-It inadvertently broke resume from system sleep on AMD platforms:
+Coalesce the direction bits from the enabled TX and/or RX channels into
+the directions bit mask of dma_device. Without this mask set,
+dma_get_slave_caps() in the DMAEngine fails, which prevents the driver
+from being used with an IIO DMAEngine buffer.
 
-  https://lore.kernel.org/r/20150926164651.GA3640@pd.tnic/
-
-This was fixed by two independent commits:
-
-* 8affb487d4a4 ("x86/PCI: Don't alloc pcibios-irq when MSI is enabled")
-* cbbc00be2ce3 ("iommu/amd: Prevent binding other PCI drivers to IOMMU PCI devices")
-
-The breaking change and one of these two fixes were subsequently reverted:
-
-* fe25d078874f ("Revert "x86/PCI: Don't alloc pcibios-irq when MSI is enabled"")
-* 6c777e8799a9 ("Revert "PCI, x86: Implement pcibios_alloc_irq() and pcibios_free_irq()"")
-
-This rendered the second fix unnecessary, so revert it as well.  It used
-the match_driver flag in struct pci_dev, which is internal to the PCI core
-and not supposed to be touched by arbitrary drivers.
-
-Signed-off-by: Lukas Wunner <lukas@wunner.de>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Acked-by: Joerg Roedel <jroedel@suse.de>
-Link: https://patch.msgid.link/9a3ddff5cc49512044f963ba0904347bd404094d.1745572340.git.lukas@wunner.de
+Signed-off-by: Thomas Gessler <thomas.gessler@brueckmann-gmbh.de>
+Reviewed-by: Suraj Gupta <suraj.gupta2@amd.com>
+Tested-by: Folker Schwesinger <dev@folker-schwesinger.de>
+Link: https://lore.kernel.org/r/20250507182101.909010-1-thomas.gessler@brueckmann-gmbh.de
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 **YES**
 
-This commit should be backported to stable kernel trees.
+## Analysis
 
-**Extensive Analysis:**
+This commit should be backported to stable kernel trees because it fixes
+a critical functionality bug that prevents the Xilinx DMA driver from
+working with important subsystems.
 
-**1. Context and Purpose:**
-This commit is part of a coordinated series of reverts addressing
-regressions introduced by commit 991de2e59090 ("PCI, x86: Implement
-pcibios_alloc_irq() and pcibios_free_irq()") which broke system
-suspend/resume on AMD platforms in v4.3. The original issue was fixed by
-two independent commits, one of which (cbbc00be2ce3) added the line
-`iommu->dev->match_driver = false;` to prevent other PCI drivers from
-binding to IOMMU devices.
+### The Problem
+The commit addresses a fundamental issue where `dma_get_slave_caps()`
+fails when called on Xilinx DMA channels. The code change shows that the
+driver was not setting the `directions` field in the `dma_device`
+structure:
 
-**2. Code Change Analysis:**
-The commit removes exactly one line from
-`drivers/iommu/amd/init.c:2034`:
 ```c
-/* Prevent binding other PCI device drivers to IOMMU devices */
-iommu->dev->match_driver = false;
++       xdev->common.directions |= chan->direction;
 ```
 
-This line was setting the `match_driver` field of `struct pci_dev`,
-which the commit message correctly identifies as "internal to the PCI
-core and not supposed to be touched by arbitrary drivers."
+This single line fix accumulates the direction capabilities from
+individual channels (either `DMA_MEM_TO_DEV` or `DMA_DEV_TO_MEM`) into
+the device-level `directions` bitmask.
 
-**3. Why This Should Be Backported:**
+### Why This Qualifies for Backporting
 
-**a) Part of Coordinated Fix Series:** This revert is the logical
-completion of a series of reverts that fixed major regressions. Looking
-at the similar commits provided as examples:
-- Similar Commit #1 (YES): Revert of x86/PCI pcibios-irq allocation
-- Similar Commit #2 (YES): Revert of PCI IRQ management helpers
-- Similar Commit #5 (YES): Revert of the original problematic
-  pcibios_alloc_irq implementation
+1. **Fixes Important User-Facing Bug**: The commit message explicitly
+   states this prevents the driver from being used with IIO DMAEngine
+   buffers, which is a significant functional regression affecting real
+   users.
 
-All these related reverts were marked for backporting, making this
-commit part of the same logical fix series.
+2. **Small and Contained Fix**: The change is minimal - just one line of
+   code that sets a required field during channel probe. This has
+   extremely low risk of introducing regressions.
 
-**b) Removes Inappropriate Code:** The commit eliminates code that
-violates kernel design principles by accessing internal PCI core
-structures from a driver. The `match_driver` field is not meant to be
-manipulated by individual drivers.
+3. **Critical Subsystem Integration**: Without this fix,
+   `dma_get_slave_caps()` calls fail with `-ENXIO`, breaking integration
+   with any subsystem that queries DMA capabilities (like IIO).
 
-**c) Cleanup After Main Fix:** Once the root cause (commit 991de2e59090)
-was reverted by commit 6c777e8799a9, the workaround became unnecessary.
-Keeping unnecessary workaround code, especially code that
-inappropriately accesses internal structures, is problematic.
+4. **Clear Root Cause**: The fix directly addresses the root cause - the
+   missing `directions` field that the DMAEngine core requires to be
+   set.
 
-**d) Minimal Risk:** The change is extremely small and low-risk - it
-simply removes one line that was setting an internal field
-inappropriately.
+5. **No Architectural Changes**: This doesn't introduce new features or
+   change driver architecture; it simply provides required capability
+   information that was missing.
 
-**e) Consistency and Completeness:** Since the other reverts in this
-series addressing the 991de2e59090 regressions were backported, this
-should be included for consistency and to ensure the cleanup is
-complete.
+### Comparison to Reference Commits
+This closely matches **Similar Commit #1** (marked YES) which also fixed
+a missing capability flag (`DMA_CYCLIC cap_mask bit`) that prevented
+proper DMA channel allocation. Both commits:
+- Fix missing capability declarations
+- Are small, single-line changes
+- Address integration failures with other subsystems
+- Have minimal regression risk
 
-**4. Stable Tree Criteria Met:**
-- ✅ Fixes inappropriate driver behavior (accessing internal PCI
-  structures)
-- ✅ Small and contained change
-- ✅ Part of a series addressing known regressions
-- ✅ Minimal risk of introducing new issues
-- ✅ Consistent with backporting decisions for related commits
+The commit also mirrors **Similar Commit #2** (marked YES) which fixed
+incorrect struct usage in the same driver - both address functional
+correctness issues in the Xilinx DMA driver.
 
-The commit represents necessary cleanup after a coordinated regression
-fix and should be backported to maintain consistency with the related
-reverts and to remove code that inappropriately accesses internal kernel
-structures.
+### Risk Assessment
+The risk is minimal because:
+- The change only affects the capability reporting mechanism
+- It doesn't modify any data paths or transfer logic
+- The direction values being OR'd together are already correctly set
+  per-channel
+- Failure mode is obvious (capability queries will work instead of
+  failing)
 
- drivers/iommu/amd_iommu_init.c | 3 ---
- 1 file changed, 3 deletions(-)
+This is a textbook example of a stable tree candidate: it fixes an
+important bug affecting real users with a minimal, low-risk change that
+doesn't introduce new functionality.
 
-diff --git a/drivers/iommu/amd_iommu_init.c b/drivers/iommu/amd_iommu_init.c
-index de29512c75ccc..cd17deeedf349 100644
---- a/drivers/iommu/amd_iommu_init.c
-+++ b/drivers/iommu/amd_iommu_init.c
-@@ -1751,9 +1751,6 @@ static int __init iommu_init_pci(struct amd_iommu *iommu)
- 	if (!iommu->dev)
- 		return -ENODEV;
+ drivers/dma/xilinx/xilinx_dma.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_dma.c
+index be44c86a1e037..5b5cbea997ff7 100644
+--- a/drivers/dma/xilinx/xilinx_dma.c
++++ b/drivers/dma/xilinx/xilinx_dma.c
+@@ -2490,6 +2490,8 @@ static int xilinx_dma_chan_probe(struct xilinx_dma_device *xdev,
+ 		return -EINVAL;
+ 	}
  
--	/* Prevent binding other PCI device drivers to IOMMU devices */
--	iommu->dev->match_driver = false;
--
- 	/* ACPI _PRT won't have an IRQ for IOMMU */
- 	iommu->dev->irq_managed = 1;
- 
++	xdev->common.directions |= chan->direction;
++
+ 	/* Request the interrupt */
+ 	chan->irq = irq_of_parse_and_map(node, 0);
+ 	err = request_irq(chan->irq, xilinx_dma_irq_handler, IRQF_SHARED,
 -- 
 2.39.5
 
