@@ -1,71 +1,71 @@
-Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
+Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com [209.85.216.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 625AC2110;
-	Sun,  8 Jun 2025 16:25:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFBE32110;
+	Sun,  8 Jun 2025 16:26:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749399958; cv=none; b=EGYANhGnve5tAQ3lViZ2gyOQy1MrAgIKRWtPqrFbcLN0ce/XD1Deti9ofo/P3+L0c0HzAQU6cWnoNfjHz2X01rcFcolap3XodoGzUoXeQMn6uErWtc98FM//vqzHzofDlaxDiiYIiy4kGMPOwhpWD4u3pF01EDoa1yQV9PO4gHc=
+	t=1749399970; cv=none; b=I0Wq9rjTFuvgr5+z6NnRP9qpSL1qySfEiu2FprCNN8hTxYAmNcVJMXxezF2vGGW1gfeztjZ49Swd6bROHuMoc6Bc/zp53gn8y3K5mJ/6kpjdjVV105pYsNcYi3yNRM+X3v35bAiWcF/D1WdPeXxBtW4oBIPVb1nl1jTZlzMRvl0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749399958; c=relaxed/simple;
-	bh=ylpMEiw8aCEOuAGH9DrHPUqKk8M9ynLjDqJMkNpj3fs=;
+	s=arc-20240116; t=1749399970; c=relaxed/simple;
+	bh=PzzNW4GYkHNomnaRXPXgFq59NQwY/BC5aMCaRCMv1HY=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=FVulnqNi8A7r4Luvm1oNXapiPezFN6zHvJlmLUAd5wSw2KnL0wWFGnJlVNIUfEAYx3GVjWfLdlomy6eUMCqVypBU9ZzFI7Qsv6doAmZQdn2+vK6jlnSztKJJ1vHFVME+/+UOFH+GK1STXI/RNngG65xk+XOIjDUxV15JmQ9f/6g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FPc9jypl; arc=none smtp.client-ip=209.85.214.179
+	 To:Cc:Content-Type; b=s3Nsc3VsGG57xQKtat4blUJPHYEHQny8IB9a6P+yyGYIZ/5S4KhfEmfd9qrK4MCOmITklcP0GpXZe/h3eN/R3b32MF77i3fxaYMsGJfIx1XNkaSyuadh9SMn4ceT/qnIX8UfUqmF8ZVdHjbAoyX7pmH1ZKrpqHPpNLrZnI4JhkQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=c4MDjs6p; arc=none smtp.client-ip=209.85.216.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FPc9jypl"
-Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-234949fd425so5594845ad.2;
-        Sun, 08 Jun 2025 09:25:57 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c4MDjs6p"
+Received: by mail-pj1-f53.google.com with SMTP id 98e67ed59e1d1-313862d48e7so54952a91.1;
+        Sun, 08 Jun 2025 09:26:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1749399957; x=1750004757; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1749399968; x=1750004768; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ylpMEiw8aCEOuAGH9DrHPUqKk8M9ynLjDqJMkNpj3fs=;
-        b=FPc9jypl9n1X4408Ga3z2pmpqlvboVZpy88bpsRoQ7LlF5qv59O83qEfmicxQtzVsi
-         tKmZDCP4LKAGX30/tTWZy6PPpCCsEsUiR5JLzjPQqIlKR1K2fCmF4TO16wNuqUpIoRjD
-         Z8QOWtQyv3EaNqlN+nT60hNwEVgGWnuxZJty7og5DKnCiOb/gy4gMQzb3qodUNNzzDLa
-         suIBkIHVlnMq0NX88bMflgFWQxwbbxPfwNS045HfU/JZvHd8GDN6skqjvs9LqhfDLRpI
-         YvGcZpejnwjv4a3R8/Tb3YcHlqV1IC+RHaGwmFNhulhqU1tmuLDaljROZZjMoWkHWbgs
-         EYYA==
+        bh=PzzNW4GYkHNomnaRXPXgFq59NQwY/BC5aMCaRCMv1HY=;
+        b=c4MDjs6pmObJ6LjiTwLxRRc+Aj9czL4zrVatfuNYvkuqRlJutzbMIYtLasE+jRM0ot
+         I503G+y8j4VJp/Wt1y3LgQUEh+5hKbwrK52aHMIacuKu1IwNS74+O9vLUheGO1Tk0Jzb
+         KQldpvWyiGG1G1wrmobbkDQhqnVLQmHWHch/pYxF4Zdw8aZUJvv7PiFyKtN0MFVrLz9G
+         FsU6oJq9SRmJWk+Bro6Z57ahQE0+Z6V3EKJIrBCcCm3gtQJx+eA5vXzfRVgGPjFVDZ3V
+         dwjmpgi5M/ADb7Incq2eSrMbBQ//CKZBM4SA3aF17PF8UZ3yy9kj7QWj8s5bdSpkPtWp
+         BTyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749399957; x=1750004757;
+        d=1e100.net; s=20230601; t=1749399968; x=1750004768;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ylpMEiw8aCEOuAGH9DrHPUqKk8M9ynLjDqJMkNpj3fs=;
-        b=ty2XnolgcMW7UTvjSVBgsSS8suaSWGYz4Y/auT+P+dlyCbWZzlTTqsmlxaUJ9vYHs1
-         y9s0ociPmG6bk4IJhMz0CGv9GTEnsqHW/VY+07AS3oY9l+52NqLPnXDoUr4XDOxJq6SW
-         ULEnXjvRgNHt6dfEMMY2fFwsgZvzg5sOdhno+T2NEWrppJsXNReGpJgt5vXRBBMPJDGP
-         XRpehNvEGR6L3V1BN0mr3FujA2C+M7/GVr5Cp17EzJV7XHLorS9L+sJ2WXZDLLbBeY/o
-         Y7i6LYfdd1hwsQoDJ0PbuqxvIUqzeJKxLGP3PgfCuJIJI7X9xyfxvEgRkt0FfFTXshD8
-         nPRA==
-X-Forwarded-Encrypted: i=1; AJvYcCUBE0G8YP6QpjW2/UxTZNvgzxHofviU4OD/1P3bEl3MXF6rmHQodLOQNOPpHcZPsqCOlGCV@lists.linux.dev
-X-Gm-Message-State: AOJu0YwvpD9rEOgsFlkVYs1TcNhusA4xpSvdsCFiKFgSdlVtdsr148HN
-	XDmtYVUSMn12TNW5x7HgydUJ05tP0HK5n+1ZZGwNFUS0ze8GwVSzi1/aFahKe0dA220/MOGJbD/
-	zQenShgfEr2PUa1XVMeGw7kXKQC8d18ww0E6H
-X-Gm-Gg: ASbGncuE3IXWCZvDughGQxGdIt2FIkesbdr+saJhXAuGLVNWTPTI4N4GCS3y4CTDS7u
-	YGRDdLK5jDgoL9Z7J8fzb5SytWuv44SPoSZXHKyuqNeHB3Q8KcUaKsWhrFS6rgHoiywWFGhIOuO
-	1l/F3OjxN1tMNjrVP1ABeRwHU1U29lMBbh9vP8NoTBhdk=
-X-Google-Smtp-Source: AGHT+IHzL4OxbSuKuyusu9pJe6b72lYXe3EwmKWcESLOWIozcbAjtXYVbs+pfNUgdLqHMqJRxwBHgDYwhnIQDX+c3SM=
-X-Received: by 2002:a17:90b:2886:b0:312:e9d:4001 with SMTP id
- 98e67ed59e1d1-3134e4531e8mr5126568a91.8.1749399956661; Sun, 08 Jun 2025
- 09:25:56 -0700 (PDT)
+        bh=PzzNW4GYkHNomnaRXPXgFq59NQwY/BC5aMCaRCMv1HY=;
+        b=hkgE3Fe8KqvM4PDcUnEukjGZLWVNVTs+kdCN/Tc+8GVUI7C4N5hRQ91D7P0m45WWx4
+         mjXIaheCADDeXiCzGU7/wiHYFImVD2q3LZw9StOqmvZxNZzRBkn3+TFppcOSHa0TY/kX
+         GcwI6LlpKhjrW05PCr7IUEGwzhdG88SsMwLjq07N/obAdTGp0nKzkgr7Thf+Nq6ZL73g
+         x0e4Etltf3u1r0Jkmp1FQjfmTZ8Flncrbh0xAAk1dKFj5skoId9hTh89e/OV/MNqboPL
+         mT49B4FLBrwBM7FSLxdAtIESjOEPVjffJfdsFtrCeY/HZAs/zqFZfI9rZcRbsluOsbmH
+         tOFw==
+X-Forwarded-Encrypted: i=1; AJvYcCUoZcavj92SY5tixcYAY7HGgH8bUiY31NgLJdSZ2ddXOczf8GXPcZKJ1H5ObbeWqB9wqqNz@lists.linux.dev
+X-Gm-Message-State: AOJu0Yz9fUZ28kAuZF33CovDSplWQR1zbmgSyNZv6kNULnBmVd6y/vpW
+	Y81zPuKsHaux0Rfg484FLjX+8c0kDZFmvqeEoiK0Dc2O3I0rVlqqFw+pKDV3xJVvEBF/YodLACo
+	XmvOUuzZcwPOPOgsjt7PHHOGd0Kx1h6I=
+X-Gm-Gg: ASbGncvLm6ifYDZBiHlq6uVCad9REeioIfs6Ohdx4IevqsaOrqVcanYHKC9NN8R3rqT
+	GqRVQxxlcOl50W7AfLoWl0ev3F/UVfNGDxviGBb0J0DOWgWCF1DdN0mFsc9nrCsqW0wExuQjYsf
+	b815OqDZGJNQvkyQxykw9hVKaROc/Q8srQ
+X-Google-Smtp-Source: AGHT+IFwz+44MRpwrGOU7zTWXbEpeH22WJSUgw6M8gaL3W4srWY+3hAGTSCTgwmpWoQa5N5u6N7tE+Iglj29c0oFr/4=
+X-Received: by 2002:a17:90b:350f:b0:311:c939:c855 with SMTP id
+ 98e67ed59e1d1-3134e415d0amr4910510a91.3.1749399968124; Sun, 08 Jun 2025
+ 09:26:08 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250608125447.933686-1-sashal@kernel.org> <20250608125447.933686-4-sashal@kernel.org>
-In-Reply-To: <20250608125447.933686-4-sashal@kernel.org>
+References: <20250608125427.933430-1-sashal@kernel.org> <20250608125427.933430-4-sashal@kernel.org>
+In-Reply-To: <20250608125427.933430-4-sashal@kernel.org>
 From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Sun, 8 Jun 2025 18:25:43 +0200
-X-Gm-Features: AX0GCFs-ooVc7qRwQ2yxF2Jw3GhihlUC2Pij1EJ-_8GViuKvWdBe5Xpml3aVFlU
-Message-ID: <CANiq72nOxVAfDrns6QimMUma4Nkq6nPCYL7QYyr+fD40LK-pow@mail.gmail.com>
-Subject: Re: [PATCH AUTOSEL 6.14 04/10] rust: arm: fix unknown (to Clang)
+Date: Sun, 8 Jun 2025 18:25:54 +0200
+X-Gm-Features: AX0GCFu-XvgktcoXpc-hI4_GwrH820AkN_9rLwfDQdu_Z3TO0m2kpatiNuDMY90
+Message-ID: <CANiq72mGuSUb=mKs1MTL4DUYCsh6T_O5AsseYOfOyZdRZvU1dA@mail.gmail.com>
+Subject: Re: [PATCH AUTOSEL 6.15 04/10] rust: arm: fix unknown (to Clang)
  argument '-mno-fdpic'
 To: Sasha Levin <sashal@kernel.org>
 Cc: patches@lists.linux.dev, stable@vger.kernel.org, 
@@ -80,10 +80,12 @@ e:
 >
 > **YES**
 
-This does not need to be backported to 6.14 since there is no support
-for arm (32-bit) before 6.15.
+Yeah, this should be backported since support for arm (32-bit) started
+in 6.15 -- we should have marked it as Cc: stable@ to begin with, in
+fact (even if probably not many are using it since it is a bit in its
+early stages).
 
-However, it should not hurt either.
+Thanks!
 
 Cheers,
 Miguel
