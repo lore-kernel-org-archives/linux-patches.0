@@ -1,103 +1,82 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.11])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C35D913AC1
-	for <patches@lists.linux.dev>; Sun,  8 Jun 2025 22:05:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6DF41EBA14;
+	Sun,  8 Jun 2025 22:22:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749420307; cv=none; b=GLdxbdBm2kceUNCLLG6pM6+T2kfHMyA9F6DTj5CiEDMHNhNYnwngFPTBqg3RYh9O7CoR+atPwKslm72Arf6Z39iAAXkMzHJ81am5rmcWv7jEC2exbxLEPDkUM4eQKjCTNkl+C/tEDOI6kq+3Gs7o/RpYT5rPZ748X6dFb7HeAOQ=
+	t=1749421367; cv=none; b=RONd7NGt0Z1Rj2WcygDAnbkJOYy3cgGv2htbGJ8W8kh7QJktdkdp5FUXY4cH3rNwjQBbXjEUM4jAHx80cigUGH7xAQcxxvcnauVIRSHiwzfrtIdf/q0CtunPbQkZ1AcHLVYf6E2DR+sFPaFktAl+MaK9aLMD2JCQ+vVM3h9cOcE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749420307; c=relaxed/simple;
-	bh=VFqBlw1ityMj1ZRZZ/8UV2lj+Vl0zY08vGR/qD2MUNw=;
+	s=arc-20240116; t=1749421367; c=relaxed/simple;
+	bh=FRviGFUtuS+pcps0srRO33Vx+n9bUwSE/+0bo/8ut84=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LBBum1LvVTGQpYv/IdEwhyorvuyYopCijQwS959ll1iggEMa2XJAP3Nnob2XYcSWAvP64tLQBQoQDh+VWuxGFO9IFKed5Dc7aJ6oCHCvS1ZlZwJwcZiki/YRlc1h1BQoSvP5JT8EsF6mc/sNA0KCY2+0VRKMaYfOnqWAHbb9eUU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=C7OKgtEY; arc=none smtp.client-ip=198.175.65.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=jaY28+d1O680sKaTRy4xJPjd2Sdb+aMnV+BRni9tMxb4Q0I5lSOwFN/40PgCTKv9ZNzfjqUBCa23bKvUDih1TaHXYxjbf4GFQ49QQ5lNz4f/9qqkJR7tSByAc4ZYjtlsQgQDMMDexZgcA/tC4dsO1nJxr2lb/qMicTyGXfLSg9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NnziB91r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="C7OKgtEY"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1749420306; x=1780956306;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=VFqBlw1ityMj1ZRZZ/8UV2lj+Vl0zY08vGR/qD2MUNw=;
-  b=C7OKgtEYCydDKSysial9ZjF/TECQEqGL3T4NGz37SGK8cHOdAKN/JZg3
-   Hy44FaPqK7L0EV4sDKrtcA0MvVXwibQkplEbDLnRpmMffPaC4zYHzYDwE
-   qFaBW2f1vLb6ZIJebXbF9+++4cK5Ygx7tPXl63e5eBeUVZIzC+sdHuYnv
-   mO5FOn9DPnhX/5MHFLdP9UQwtgwCxu18AIuQ0XxM018M4W2z4D3KmqAG5
-   MsQdNz8jnwUPPx1rJqwGY68PC85mRyAPoRKv7fX8isfViqqwy7V82hXYc
-   DDnbCh0AUiwwHVH5JWcj1OEmekFMaIxBqBDnChUzeAd/dmRd3q8W/IAaG
-   g==;
-X-CSE-ConnectionGUID: Y8UEl6JgT6Sdz1pPY5OMJw==
-X-CSE-MsgGUID: N/8wDuraQdWbVrhiiV5Q4g==
-X-IronPort-AV: E=McAfee;i="6800,10657,11458"; a="61761086"
-X-IronPort-AV: E=Sophos;i="6.16,221,1744095600"; 
-   d="scan'208";a="61761086"
-Received: from orviesa001.jf.intel.com ([10.64.159.141])
-  by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Jun 2025 15:05:06 -0700
-X-CSE-ConnectionGUID: 61Lci9KwTjG1IDwwkLJqAA==
-X-CSE-MsgGUID: V17FTmdJS/yzI5qwFKaxiw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,221,1744095600"; 
-   d="scan'208";a="183533038"
-Received: from agluck-desk3.sc.intel.com (HELO agluck-desk3) ([172.25.103.51])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Jun 2025 15:05:04 -0700
-Date: Sun, 8 Jun 2025 15:05:03 -0700
-From: "Luck, Tony" <tony.luck@intel.com>
-To: Fenghua Yu <fenghuay@nvidia.com>
-Cc: Reinette Chatre <reinette.chatre@intel.com>,
-	Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
-	Peter Newman <peternewman@google.com>,
-	James Morse <james.morse@arm.com>, Babu Moger <babu.moger@amd.com>,
-	Drew Fustini <dfustini@baylibre.com>,
-	Dave Martin <Dave.Martin@arm.com>,
-	Anil Keshavamurthy <anil.s.keshavamurthy@intel.com>,
-	Chen Yu <yu.c.chen@intel.com>, x86@kernel.org,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH v5 20/29] x86,fs/resctrl: Fill in details of Clearwater
- Forest events
-Message-ID: <aEYJD8OUis3O1Tdd@agluck-desk3>
-References: <20250521225049.132551-1-tony.luck@intel.com>
- <20250521225049.132551-21-tony.luck@intel.com>
- <68782596-4e0a-429a-9456-e535faadf465@nvidia.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NnziB91r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 028E5C4CEEE;
+	Sun,  8 Jun 2025 22:22:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1749421366;
+	bh=FRviGFUtuS+pcps0srRO33Vx+n9bUwSE/+0bo/8ut84=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=NnziB91rxKcv7UPxaQD1avsvOHH3MAahCe+gK8/l4WjlBVOJsdJuv6wiBijyAoxAy
+	 n8+mtT6vCidpjl/PawYgR22kTD4xEIiWIWOrn0/DdJX755OqaDk0XZAF8c+OTjL9X9
+	 Q6usIp8a43vF/8hokzy2NJ9tZz5TYTKuQR1/EplUPzJx0vwTY8TCUn1lAjHCbqSxC2
+	 gmDBpMyXTWgiCfsAdIg022zkI2M/Sqs6A4pBVXPjWzKOeP0Ii5LKsU59VzzmY0LKDG
+	 AdvcG5RYvBqKodByaAfMhpE1DHAVV5ZBcWDCpsfqvfOHxbp0L1sCt4fIcLCKYRUvPf
+	 mD40gW4+VPslw==
+Date: Sun, 8 Jun 2025 23:22:40 +0100
+From: Mark Brown <broonie@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, hargar@microsoft.com
+Subject: Re: [PATCH 6.14 00/24] 6.14.11-rc1 review
+Message-ID: <6f440c48-91bd-4028-8c75-2d5bd9fea6e9@sirena.org.uk>
+References: <20250607100717.706871523@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="HqlyhH0Bc/1wrJJF"
+Content-Disposition: inline
+In-Reply-To: <20250607100717.706871523@linuxfoundation.org>
+X-Cookie: The eyes of taxes are upon you.
+
+
+--HqlyhH0Bc/1wrJJF
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <68782596-4e0a-429a-9456-e535faadf465@nvidia.com>
 
-On Fri, Jun 06, 2025 at 05:57:09PM -0700, Fenghua Yu wrote:
-> > @@ -60,6 +78,11 @@ struct event_group {
-> >   static struct event_group energy_0x26696143 = {
-> >   	.guid		= 0x26696143,
-> >   	.mmio_size	= (576 * 2 + 3) * 8,
-> > +	.num_events	= 2,
-> > +	.evts				= {
-> Please align the "=" with the above "=".
+On Sat, Jun 07, 2025 at 12:07:40PM +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.14.11 release.
+> There are 24 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 
-Fixed.
+Tested-by: Mark Brown <broonie@kernel.org>
 
-> > +		EVT(PMT_EVENT_ENERGY, 0, 18),
-> > +		EVT(PMT_EVENT_ACTIVITY, 1, 18),
-> > +	}
-> >   };
-> >   /*
-> > @@ -69,6 +92,16 @@ static struct event_group energy_0x26696143 = {
-> >   static struct event_group perf_0x26557651 = {
-> >   	.guid		= 0x26557651,
-> >   	.mmio_size	= (576 * 7 + 3) * 8,
-> > +	.num_events	= 7,
-> > +	.evts				= {
-> 
-> Ditto.
+--HqlyhH0Bc/1wrJJF
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Ditto fixed.
+-----BEGIN PGP SIGNATURE-----
 
-Thanks
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmhGDS8ACgkQJNaLcl1U
+h9CS+gf/fauQmVBkUC/SXhMpISZK+CXzegREOuxerIVxYEO894h94jkErRAkGs5U
+Sr1y3YvzIKovqWKzzmKfhni1ReMDHs1VQGcnprkxu44BlNvYECpVuGdl++uDc/Md
+mlBPy2LYEwwnLmBPj/CTUkQEsjcO3wvm6YY6mkwMdEub8nqq1/bSeqLzHzVcSL/J
+r1ysPn+yyXM1k0AN8mQY91Iam3MYzalWUDvFwPsh0bkM6IQgDX02aVyNrepX7wCG
+bok6C8eQXkHLc4pYGxsX+8+9TKvF9HudyzPAPNdYmJ05wJ98brpd6v9d1oDCbsMT
+5n4SP4YXgEdu/6VWB65q04sdRqwZmw==
+=kKGK
+-----END PGP SIGNATURE-----
 
--Tony
+--HqlyhH0Bc/1wrJJF--
