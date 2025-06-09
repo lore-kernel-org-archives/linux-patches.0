@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D934257452;
-	Mon,  9 Jun 2025 13:47:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22A332571B0;
+	Mon,  9 Jun 2025 13:47:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749476835; cv=none; b=Fz5s8jQsGI9LEC+qp6qney4PShHUV7Anr3G+oIBU9seM874S3zsquVlVbSOQ6RiTsNUaYefvWrQTq1mJWBh8nnusEFbhWtfjQo1SzC146WD5mWj3vvnQ6+9eiy0sy8hsKYs4AWmsIXqrNyHiAx2AF1EmH81FFflJWLclC6FU8cg=
+	t=1749476839; cv=none; b=bxqSeFcX+pwVAn9/fXG1T9+dyajrxfcjr83gkR0aRJvM36m0sW9vB/B3EwE8rEVBP/gi4loz0QAAXlYkwNNM62MfwFX7FstmL+73guHvIaExD2TPVBiw/ArbqP/AIcVQuFM4C8Qtre6/mL+LTNpPxtztwaHL/2xMv6CQXUDUJPM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749476835; c=relaxed/simple;
-	bh=MTV4e7MxNaK2BnYD1QIGfGuK+8jIWRmnqe8EwVNfris=;
+	s=arc-20240116; t=1749476839; c=relaxed/simple;
+	bh=aczufKtYSoIwzavcARfSj/cTBapUkCXah0ThlH55zPw=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tfoDFeA/lX91Evk+34T4hjrBvgFOxKVE4v0OtVrdQMgivz1ObWJnG1PljPK0VDSZfswltVWWBDzNMH6pz6peUmEtfoFUCHQKHF58hb3n1hh+RG/V/ocDBPiii2k5TzKU/VLCxPSpaZhyR5UEmTkIxfxhL0X1rrvdMp5OeaRZgos=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=abdCalQv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=HpzcFWBRg2K65BfRVAt4slvHKh0GxmiibCU/7T9HVao95pgmSczncDam2EscukyDPSW02pVe0kNRSxSqQDvAvPrOK8AtWNhXA500dAwv7DvTstJYBaxnhGHSEggBYLwzUCRuMxFuQJumCVGRSw08zJ/MNwjLFH4Qu70l6yEhb+M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uZxf75wu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="abdCalQv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D3E6C4CEF2;
-	Mon,  9 Jun 2025 13:47:14 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uZxf75wu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5C75C4CEEB;
+	Mon,  9 Jun 2025 13:47:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749476835;
-	bh=MTV4e7MxNaK2BnYD1QIGfGuK+8jIWRmnqe8EwVNfris=;
+	s=k20201202; t=1749476837;
+	bh=aczufKtYSoIwzavcARfSj/cTBapUkCXah0ThlH55zPw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=abdCalQv//uWPM7kmNX8+YYlybxy8bNEBUMxEQbBDeihDu3t4nJkU52ZN95hHJTB4
-	 GZ2VeFyHfsAApqzt6gl+2pPb6nMXstUl7NUikqx6u9P+QhREcK9C2RK/vG7wl0cx1j
-	 hucsEg9uxjFPhuabjxx1pLYUqEV5eyOrKEf9GvN4Cbgjr0l+KAojuilFeTOPX/Vtbs
-	 3p2zKZNxztAhedzrsPD7aeCLDyYqPb/9/AprzYd+Ukza0zilJEGTk8kdfWfwRf/oYJ
-	 frzUTvRhqFpzlcfVP9X/Ts1peOxMQfEdZTiCKef01/B9vBH1JooMPZUwfPJUaA0wNt
-	 ixGs4morqFN1A==
+	b=uZxf75wuMxjikFTc6z1iFqpwvZgctxcHN7ZqTAGByadn6kXaUT+WhphjZFMQsIvdu
+	 3gcPZTBq0ORakKYXAO43/IzFOohaIZ1kid2EqxrcQZyeDSRFM/NCqaboNyXOxEI1gU
+	 jKe2q/KawPqbrhlFFSiSrTkglMJOS41pWgGtwBfF2F4/8MIbea95+qbE7o/JuTb/68
+	 IxyQKL6iWDzAizXk8CmdD+ASMmOE+aV4k7Dy/IErhVCultN8X8RBOD0ofaRN1uEync
+	 ae85nrsUKyBhXFO5GEMmQtxQ81sBQZk1kLL6TW2aB4YPNbkwK3mT6wuUvl7Mib9Kr3
+	 jHMhTWgpUK4Og==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jakub Lewalski <jakub.lewalski@nokia.com>,
-	Elodie Decerle <elodie.decerle@nokia.com>,
+Cc: Chance Yang <chance.yang@kneron.us>,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>,
-	jacmet@sunsite.dk,
-	linux-serial@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.6 13/18] tty: serial: uartlite: register uart driver in init
-Date: Mon,  9 Jun 2025 09:46:47 -0400
-Message-Id: <20250609134652.1344323-13-sashal@kernel.org>
+	u.kleine-koenig@baylibre.com,
+	krzysztof.kozlowski@linaro.org,
+	sebastian.reichel@collabora.com
+Subject: [PATCH AUTOSEL 6.6 14/18] usb: common: usb-conn-gpio: use a unique name for usb connector device
+Date: Mon,  9 Jun 2025 09:46:48 -0400
+Message-Id: <20250609134652.1344323-14-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250609134652.1344323-1-sashal@kernel.org>
 References: <20250609134652.1344323-1-sashal@kernel.org>
@@ -53,250 +53,179 @@ X-stable-base: Linux 6.6.93
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jakub Lewalski <jakub.lewalski@nokia.com>
+From: Chance Yang <chance.yang@kneron.us>
 
-[ Upstream commit 6bd697b5fc39fd24e2aa418c7b7d14469f550a93 ]
+[ Upstream commit d4e5b10c55627e2f3fc9e5b337a28b4e2f02a55e ]
 
-When two instances of uart devices are probing, a concurrency race can
-occur. If one thread calls uart_register_driver function, which first
-allocates and assigns memory to 'uart_state' member of uart_driver
-structure, the other instance can bypass uart driver registration and
-call ulite_assign. This calls uart_add_one_port, which expects the uart
-driver to be fully initialized. This leads to a kernel panic due to a
-null pointer dereference:
+The current implementation of the usb-conn-gpio driver uses a fixed
+"usb-charger" name for all USB connector devices. This causes conflicts
+in the power supply subsystem when multiple USB connectors are present,
+as duplicate names are not allowed.
 
-[    8.143581] BUG: kernel NULL pointer dereference, address: 00000000000002b8
-[    8.156982] #PF: supervisor write access in kernel mode
-[    8.156984] #PF: error_code(0x0002) - not-present page
-[    8.156986] PGD 0 P4D 0
-...
-[    8.180668] RIP: 0010:mutex_lock+0x19/0x30
-[    8.188624] Call Trace:
-[    8.188629]  ? __die_body.cold+0x1a/0x1f
-[    8.195260]  ? page_fault_oops+0x15c/0x290
-[    8.209183]  ? __irq_resolve_mapping+0x47/0x80
-[    8.209187]  ? exc_page_fault+0x64/0x140
-[    8.209190]  ? asm_exc_page_fault+0x22/0x30
-[    8.209196]  ? mutex_lock+0x19/0x30
-[    8.223116]  uart_add_one_port+0x60/0x440
-[    8.223122]  ? proc_tty_register_driver+0x43/0x50
-[    8.223126]  ? tty_register_driver+0x1ca/0x1e0
-[    8.246250]  ulite_probe+0x357/0x4b0 [uartlite]
+Use IDA to manage unique IDs for naming usb connectors (e.g.,
+usb-charger-0, usb-charger-1).
 
-To prevent it, move uart driver registration in to init function. This
-will ensure that uart_driver is always registered when probe function
-is called.
-
-Signed-off-by: Jakub Lewalski <jakub.lewalski@nokia.com>
-Signed-off-by: Elodie Decerle <elodie.decerle@nokia.com>
-Link: https://lore.kernel.org/r/20250331160732.2042-1-elodie.decerle@nokia.com
+Signed-off-by: Chance Yang <chance.yang@kneron.us>
+Link: https://lore.kernel.org/r/20250411-work-next-v3-1-7cd9aa80190c@kneron.us
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Based on my comprehensive analysis, I can now provide a definitive
-assessment:
-
 **YES**
 
-## Extensive Analysis
+This commit should be backported to stable kernel trees. Here's my
+extensive analysis:
 
-This commit **should be backported** to stable kernel trees. Here's my
-detailed analysis:
+## Bug Analysis
 
-### **1. Critical Bug Fix Nature**
+**Critical User-Affecting Issue**: The commit fixes a real bug where
+multiple USB connectors cannot coexist on the same system. Without this
+fix, when multiple `usb-conn-gpio` devices are present, all would
+attempt to register with the same "usb-charger" name in the power supply
+subsystem, causing registration failures and rendering additional USB
+connectors non-functional.
 
-The commit fixes a **serious race condition** that causes kernel panics
-with NULL pointer dereferences. The stack trace in the commit message
-shows:
+## Code Changes Analysis
 
-```
-[    8.143581] BUG: kernel NULL pointer dereference, address:
-00000000000002b8
-[    8.180668] RIP: 0010:mutex_lock+0x19/0x30
-[    8.223116]  uart_add_one_port+0x60/0x440
-```
+**Minimal and Well-Contained**: The changes are small and focused:
 
-This is a **critical system stability issue** that can crash the kernel
-during device initialization.
+1. **Addition of IDA infrastructure** (lines +21-22):
+  ```c
+  #include <linux/idr.h>
+  static DEFINE_IDA(usb_conn_ida);
+  ```
 
-### **2. Race Condition Analysis**
+2. **Unique ID allocation** (lines +168-177):
+  ```c
+  info->conn_id = ida_alloc(&usb_conn_ida, GFP_KERNEL);
+  desc->name = devm_kasprintf(dev, GFP_KERNEL, "usb-charger-%d",
+  info->conn_id);
+  ```
 
-**The Problem:**
-- **Before the fix:** `uart_register_driver()` was called in
-  `ulite_probe()` (lines 883-891 in current code)
-- **Race scenario:** When two UART devices probe simultaneously:
-  1. Thread 1 calls `uart_register_driver()` and starts allocating
-     `uart_driver.state`
-  2. Thread 2 sees `!ulite_uart_driver.state` as false, bypasses
-     registration, and calls `ulite_assign()`
-  3. Thread 2's `ulite_assign()` calls `uart_add_one_port()` (line 678)
-     expecting a fully initialized driver
-  4. Thread 1's registration hasn't completed, causing NULL pointer
-     dereference in `uart_add_one_port()`
+3. **Proper cleanup** (lines +297-299):
+  ```c
+  if (info->charger)
+  ida_free(&usb_conn_ida, info->conn_id);
+  ```
 
-**The Fix:**
-- **After the fix:** `uart_register_driver()` is moved to `ulite_init()`
-  ensuring:
-  1. Driver registration completes **before** any platform driver
-     registration
-  2. **No race window** exists between driver registration and device
-     probing
-  3. All probe calls find a **fully initialized** uart driver
+## Risk Assessment
 
-### **3. Code Changes Analysis**
+**Very Low Risk**:
+- Uses well-established IDA pattern found throughout the kernel (similar
+  to the USB gadget example in the historical commits)
+- No architectural changes
+- No new dependencies beyond existing IDA infrastructure
+- Proper error handling with cleanup on all failure paths
+- Changes only affect internal naming, no API breakage
 
-**Changes in `ulite_init()`:**
-```c
-static int __init ulite_init(void)
-{
-+   int ret;
+## Stable Tree Criteria Compliance
+
+**Meets All Stable Criteria**:
+
+1. **Important bugfix**: ✅ Prevents system malfunction with multiple USB
+   connectors
+2. **Affects real users**: ✅ Common on embedded systems, development
+   boards, tablets
+3. **Small and contained**: ✅ Only 25 lines of changes in single driver
+4. **No major architectural changes**: ✅ Simple naming fix using
+   established patterns
+5. **Minimal regression risk**: ✅ Well-tested IDA pattern used across
+   kernel
+
+## Comparison with Historical Commits
+
+This commit is very similar to historical commit #3 ("USB: gadget: Add
+ID numbers to gadget names"), which was marked as **NO** for
+backporting. However, there are key differences:
+
+**Why this USB connector commit SHOULD be backported (unlike the gadget
+commit)**:
+
+1. **Functional vs. Cosmetic**: The USB connector naming conflict causes
+   **actual device failure** and power management issues, whereas the
+   gadget naming was more about sysfs organization
+2. **Critical subsystem**: Power supply registration failure can affect
+   system power management and charging detection
+3. **Error severity**: Power supply naming conflicts typically cause
+   probe failures, while sysfs naming conflicts may not prevent basic
+   functionality
+4. **User impact**: USB connector detection is critical for proper power
+   management on mobile/embedded devices
+
+## Conclusion
+
+This is an excellent stable tree candidate that fixes a real functional
+bug with minimal risk. The change enables proper operation of multi-
+connector systems using established kernel patterns, making it both safe
+and beneficial for stable tree inclusion.
+
+ drivers/usb/common/usb-conn-gpio.c | 25 ++++++++++++++++++++++---
+ 1 file changed, 22 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/usb/common/usb-conn-gpio.c b/drivers/usb/common/usb-conn-gpio.c
+index 501e8bc9738eb..1096a884c8d70 100644
+--- a/drivers/usb/common/usb-conn-gpio.c
++++ b/drivers/usb/common/usb-conn-gpio.c
+@@ -20,6 +20,9 @@
+ #include <linux/power_supply.h>
+ #include <linux/regulator/consumer.h>
+ #include <linux/usb/role.h>
++#include <linux/idr.h>
 +
-+   pr_debug("uartlite: calling uart_register_driver()\n");
-+   ret = uart_register_driver(&ulite_uart_driver);
-+   if (ret)
-+       return ret;
-
-    pr_debug("uartlite: calling platform_driver_register()\n");
-- return platform_driver_register(&ulite_platform_driver);
-+   ret = platform_driver_register(&ulite_platform_driver);
-+   if (ret)
-+       uart_unregister_driver(&ulite_uart_driver);
++static DEFINE_IDA(usb_conn_ida);
+ 
+ #define USB_GPIO_DEB_MS		20	/* ms */
+ #define USB_GPIO_DEB_US		((USB_GPIO_DEB_MS) * 1000)	/* us */
+@@ -29,6 +32,7 @@
+ 
+ struct usb_conn_info {
+ 	struct device *dev;
++	int conn_id; /* store the IDA-allocated ID */
+ 	struct usb_role_switch *role_sw;
+ 	enum usb_role last_role;
+ 	struct regulator *vbus;
+@@ -160,7 +164,17 @@ static int usb_conn_psy_register(struct usb_conn_info *info)
+ 		.of_node = dev->of_node,
+ 	};
+ 
+-	desc->name = "usb-charger";
++	info->conn_id = ida_alloc(&usb_conn_ida, GFP_KERNEL);
++	if (info->conn_id < 0)
++		return info->conn_id;
 +
-+   return ret;
-}
-```
-
-**Changes in `ulite_probe()`:**
-```c
-// REMOVED the problematic race-prone code:
-- if (!ulite_uart_driver.state) {
-- dev_dbg(&pdev->dev, "uartlite: calling uart_register_driver()\n");
-- ret = uart_register_driver(&ulite_uart_driver);
-- if (ret < 0) {
-- dev_err(&pdev->dev, "Failed to register driver\n");
-- clk_disable_unprepare(pdata->clk);
-- return ret;
-- }
-- }
-```
-
-**Changes in `ulite_exit()`:**
-```c
-static void __exit ulite_exit(void)
-{
-    platform_driver_unregister(&ulite_platform_driver);
-- if (ulite_uart_driver.state)
-- uart_unregister_driver(&ulite_uart_driver);
-+   uart_unregister_driver(&ulite_uart_driver);
-}
-```
-
-### **4. Follows Kernel Best Practices**
-
-The fix aligns with **established kernel patterns**. My analysis of
-other UART drivers shows that well-architected drivers like 8250,
-altera, atmel, and liteuart all register their uart drivers in `__init`
-functions, not probe functions. This architectural pattern:
-
-- **Separates concerns:** Driver registration (what) vs device binding
-  (when)
-- **Eliminates races:** Driver available before any device probing
-- **Improves reliability:** Predictable initialization order
-
-### **5. Stable Tree Suitability Criteria**
-
-✅ **Fixes important bug:** Kernel panic with NULL pointer dereference
-✅ **Small and contained:** Moves existing code, no new functionality
-✅ **Minimal risk:** Follows established kernel patterns
-✅ **Clear side effects:** Better initialization order, no regressions
-expected
-✅ **Confined to subsystem:** Only affects uartlite driver
-✅ **Important for users:** Prevents boot crashes on Xilinx platforms
-
-### **6. Similar Historical Pattern**
-
-This fix is very similar to **Similar Commit #5** (Status: YES) which
-also fixed race conditions in TTY/serial code by ensuring proper
-initialization order. Both commits:
-- Fix race conditions in serial/TTY subsystem
-- Make architectural improvements to initialization order
-- Prevent NULL pointer dereferences
-- Have clear stable tree value
-
-### **7. Low Regression Risk**
-
-The change is **architecturally sound** because:
-- It ensures `uart_register_driver()` completes before any
-  `uart_add_one_port()` calls
-- Proper error handling ensures cleanup if platform driver registration
-  fails
-- The exit sequence properly reverses the initialization sequence
-- No functional behavior changes, only timing/ordering improvements
-
-### **Conclusion**
-
-This commit fixes a **critical kernel panic** caused by a race condition
-in the uartlite driver. The fix is **small, contained, and follows
-established kernel patterns**. It has **minimal regression risk** and
-provides **significant stability improvements** for users of Xilinx UART
-devices. The architectural change from probe-time to init-time driver
-registration is a **best practice** that eliminates the race condition
-entirely.
-
- drivers/tty/serial/uartlite.c | 25 ++++++++++++-------------
- 1 file changed, 12 insertions(+), 13 deletions(-)
-
-diff --git a/drivers/tty/serial/uartlite.c b/drivers/tty/serial/uartlite.c
-index b225a78f6175f..9f39bafa7fa96 100644
---- a/drivers/tty/serial/uartlite.c
-+++ b/drivers/tty/serial/uartlite.c
-@@ -872,16 +872,6 @@ static int ulite_probe(struct platform_device *pdev)
- 	pm_runtime_set_active(&pdev->dev);
- 	pm_runtime_enable(&pdev->dev);
- 
--	if (!ulite_uart_driver.state) {
--		dev_dbg(&pdev->dev, "uartlite: calling uart_register_driver()\n");
--		ret = uart_register_driver(&ulite_uart_driver);
--		if (ret < 0) {
--			dev_err(&pdev->dev, "Failed to register driver\n");
--			clk_disable_unprepare(pdata->clk);
--			return ret;
--		}
--	}
--
- 	ret = ulite_assign(&pdev->dev, id, res->start, irq, pdata);
- 
- 	pm_runtime_mark_last_busy(&pdev->dev);
-@@ -922,16 +912,25 @@ static struct platform_driver ulite_platform_driver = {
- 
- static int __init ulite_init(void)
- {
-+	int ret;
++	desc->name = devm_kasprintf(dev, GFP_KERNEL, "usb-charger-%d",
++				    info->conn_id);
++	if (!desc->name) {
++		ida_free(&usb_conn_ida, info->conn_id);
++		return -ENOMEM;
++	}
 +
-+	pr_debug("uartlite: calling uart_register_driver()\n");
-+	ret = uart_register_driver(&ulite_uart_driver);
-+	if (ret)
-+		return ret;
+ 	desc->properties = usb_charger_properties;
+ 	desc->num_properties = ARRAY_SIZE(usb_charger_properties);
+ 	desc->get_property = usb_charger_get_property;
+@@ -168,8 +182,10 @@ static int usb_conn_psy_register(struct usb_conn_info *info)
+ 	cfg.drv_data = info;
  
- 	pr_debug("uartlite: calling platform_driver_register()\n");
--	return platform_driver_register(&ulite_platform_driver);
-+	ret = platform_driver_register(&ulite_platform_driver);
-+	if (ret)
-+		uart_unregister_driver(&ulite_uart_driver);
-+
-+	return ret;
+ 	info->charger = devm_power_supply_register(dev, desc, &cfg);
+-	if (IS_ERR(info->charger))
+-		dev_err(dev, "Unable to register charger\n");
++	if (IS_ERR(info->charger)) {
++		dev_err(dev, "Unable to register charger %d\n", info->conn_id);
++		ida_free(&usb_conn_ida, info->conn_id);
++	}
+ 
+ 	return PTR_ERR_OR_ZERO(info->charger);
  }
+@@ -277,6 +293,9 @@ static void usb_conn_remove(struct platform_device *pdev)
  
- static void __exit ulite_exit(void)
- {
- 	platform_driver_unregister(&ulite_platform_driver);
--	if (ulite_uart_driver.state)
--		uart_unregister_driver(&ulite_uart_driver);
-+	uart_unregister_driver(&ulite_uart_driver);
- }
+ 	cancel_delayed_work_sync(&info->dw_det);
  
- module_init(ulite_init);
++	if (info->charger)
++		ida_free(&usb_conn_ida, info->conn_id);
++
+ 	if (info->last_role == USB_ROLE_HOST && info->vbus)
+ 		regulator_disable(info->vbus);
+ 
 -- 
 2.39.5
 
