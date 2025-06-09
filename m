@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D716925A642;
-	Mon,  9 Jun 2025 13:45:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33FF625B1F4;
+	Mon,  9 Jun 2025 13:45:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749476747; cv=none; b=eWMy/niKPXIwweHtG1z9Ez7O8nuBFC28gE8xUVIhmA04mIl1InzjUtGWndrZkLbCUm71nr5Tc6nD9FeuFkfKorcF3y9izuGDXRHUPy1LDw2qWlutGqrPHTxC+vuJX09kR2gcNCpavKNUgjF2A1s9lBK+1TSquhJnR7+g4tNQuxk=
+	t=1749476750; cv=none; b=drUMFa6Nl/ggaaJoij+vYkFBIgUnnor79DPAozvvWkyRksbjgJJ7etSsJd1LGebnUaxg+grYbMd3M36UCUm1PuJOrVprRqhH1ui4Jljlc3K0MIcjkGoWQLX3E/zEYtryaSnGHhnF8XY49PzUlXVS2SW58vbAzC6uehlbLDTbbr4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749476747; c=relaxed/simple;
-	bh=tFUG8HzIW//IN/0rdoNVAb1477sL9Oo8/9Wu4zkkaoQ=;
+	s=arc-20240116; t=1749476750; c=relaxed/simple;
+	bh=HjridAooayUFqN9fuzoMMCf1Aa8GkQiQtC9/KaMxQQY=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WsDx68EN0/A9wWeV6wIoF3Ye1EGnvPYXh1GLxKkkoxHz+f0OEUckzp0YW0uwWAU3QpgXbITnqdvlKXclDcmdxSJagYAMbbNst9vzfIEcDDAok00oqmuaz5fy+g6p0BPMw9ia+T3/oiBIbjGZo3KnAfOaNr/RW5Ug1FpT5XStIM4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=r4JVEa62; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Jd8KFhG1xFkqiAlV9tBZztIzE8sw2Xu2yby5Xa8NVsqCYq8DCNKJtWdPUS8hKhDUIx91udk/uxlnZOz/AewQ11whPw+Yytljec/pv9w6IVpuhV+3QNpp8Jyj69J7UdY9Tgvi+1Uim88tVHuDIrAvz92EwBcuzkTefMeTsjYBrbc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TSe0Ts1i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="r4JVEa62"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3298C4CEED;
-	Mon,  9 Jun 2025 13:45:46 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TSe0Ts1i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53748C4CEED;
+	Mon,  9 Jun 2025 13:45:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749476747;
-	bh=tFUG8HzIW//IN/0rdoNVAb1477sL9Oo8/9Wu4zkkaoQ=;
+	s=k20201202; t=1749476750;
+	bh=HjridAooayUFqN9fuzoMMCf1Aa8GkQiQtC9/KaMxQQY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r4JVEa62HD9cHC+Vaj43Ah7PgalhTMCr9EPVlTVCmKgfi7t1xyF97sl83cepf7YkP
-	 idAMgfdbu6cyVYAyJLkBxfDkiyA1gez0SkJolm1w844RUdLsaWb+YNvB/dzS/gwvOc
-	 aOghlGLlQ4ZB4xj2Ua2RU8QvNkk1hDJRDF4odKQEIGowBOGR7Swxa1NC9S2vGt5A+B
-	 kwtLgqt48S9hNgbdzbqNJghl6A1YYvYK4VpHsZrIeaAwVMyvH2kPLfvvlBQCM1V4dz
-	 v1h6dl2wK/U0+26L8Dg5z5qbdtKN8Jqw51KZhSgH8H9mKkZJSdNlCww+dJRLyL3g19
-	 6PFZbtV/0qdnw==
+	b=TSe0Ts1iVxcQzioWS/CEajfu2AuVD8ZVkXVgF5OLvfXnu8+elbk2xfZG0KRBRkvDr
+	 ZpL+kDQZZmddnb34Z7CWUqbiuaG/dN4Ght35iT+TKZxP5u683jcaaQDacIZEuNY9Mz
+	 5SijxH7gkzv91tmETjsy0F2XMawwin0HaHyDwRTQhdPxB1LgybSQSXGeuJaa5hj/hJ
+	 YocHvQ6dB3Jivt5sHJpWy9FZjWShvLQizdIWGuh/01iMjIURgt5HFSEf5T25E8yRdD
+	 yoP6DV39tKjXmNIM/VeGI3FIdf6WOJmhzdnkG9zcgQcZx+XbK1+ZXt3fNzSIqTDj6E
+	 DwuK0EMEyeUhg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Chenyuan Yang <chenyuan0y@gmail.com>,
+Cc: Chen Yufeng <chenyufeng@iie.ac.cn>,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>,
-	richardcochran@gmail.com,
-	netdev@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.14 19/29] misc: tps6594-pfsm: Add NULL pointer check in tps6594_pfsm_probe()
-Date: Mon,  9 Jun 2025 09:45:00 -0400
-Message-Id: <20250609134511.1342999-19-sashal@kernel.org>
+	Thinh.Nguyen@synopsys.com
+Subject: [PATCH AUTOSEL 6.14 20/29] usb: potential integer overflow in usbg_make_tpg()
+Date: Mon,  9 Jun 2025 09:45:01 -0400
+Message-Id: <20250609134511.1342999-20-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250609134511.1342999-1-sashal@kernel.org>
 References: <20250609134511.1342999-1-sashal@kernel.org>
@@ -52,122 +51,113 @@ X-stable-base: Linux 6.14.10
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chenyuan Yang <chenyuan0y@gmail.com>
+From: Chen Yufeng <chenyufeng@iie.ac.cn>
 
-[ Upstream commit a99b598d836c9c6411110c70a2da134c78d96e67 ]
+[ Upstream commit 153874010354d050f62f8ae25cbb960c17633dc5 ]
 
-The returned value, pfsm->miscdev.name, from devm_kasprintf()
-could be NULL.
-A pointer check is added to prevent potential NULL pointer dereference.
-This is similar to the fix in commit 3027e7b15b02
-("ice: Fix some null pointer dereference issues in ice_ptp.c").
+The variable tpgt in usbg_make_tpg() is defined as unsigned long and is
+assigned to tpgt->tport_tpgt, which is defined as u16. This may cause an
+integer overflow when tpgt is greater than USHRT_MAX (65535). I
+haven't tried to trigger it myself, but it is possible to trigger it
+by calling usbg_make_tpg() with a large value for tpgt.
 
-This issue is found by our static analysis tool.
+I modified the type of tpgt to match tpgt->tport_tpgt and adjusted the
+relevant code accordingly.
 
-Signed-off-by: Chenyuan Yang <chenyuan0y@gmail.com>
-Link: https://lore.kernel.org/r/20250311010511.1028269-1-chenyuan0y@gmail.com
+This patch is similar to commit 59c816c1f24d ("vhost/scsi: potential
+memory corruption").
+
+Signed-off-by: Chen Yufeng <chenyufeng@iie.ac.cn>
+Link: https://lore.kernel.org/r/20250415065857.1619-1-chenyufeng@iie.ac.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
+Based on my comprehensive analysis, here's my decision:
+
 **YES**
 
-This commit should be backported to stable kernel trees. Here's my
-detailed analysis:
+This commit should be backported to stable kernel trees for the
+following reasons:
 
-## Analysis
+## Analysis of the Integer Overflow Bug
 
-### 1. Bug Fix Nature
-This commit fixes a clear NULL pointer dereference vulnerability. The
-`devm_kasprintf()` function can return NULL on memory allocation
-failure, and the code was not checking this return value before using
-`pfsm->miscdev.name`. This would lead to a NULL pointer dereference when
-`misc_register(&pfsm->miscdev)` is called at line 302.
+**1. Clear Security/Correctness Issue:**
+The bug is a classic integer overflow vulnerability where a user-
+controlled value (`tpgt`) parsed from a string via `kstrtoul()` as an
+`unsigned long` gets truncated when assigned to a `u16` field
+(`tpg->tport_tpgt`).
 
-### 2. Code Analysis
-Looking at the specific changes in `drivers/misc/tps6594-pfsm.c`:
-
-**Before the fix (lines 282-283):**
+In the original code at line 1690:
 ```c
-pfsm->miscdev.name = devm_kasprintf(dev, GFP_KERNEL, "pfsm-%ld-0x%02x",
-                                    tps->chip_id, tps->reg);
+unsigned long tpgt;  // Can hold values up to ULONG_MAX
+// ... kstrtoul(name + 5, 0, &tpgt) ...
+tpg->tport_tpgt = tpgt;  // u16 field - truncation occurs!
 ```
 
-**After the fix (lines 282-286):**
-```c
-pfsm->miscdev.name = devm_kasprintf(dev, GFP_KERNEL, "pfsm-%ld-0x%02x",
-                                    tps->chip_id, tps->reg);
-+if (!pfsm->miscdev.name)
-+    return -ENOMEM;
-```
+If a user provides a value like `tpgt_70000`, the parsing succeeds
+(70000 < UINT_MAX), but when assigned to the 16-bit field, it becomes
+`70000 & 0xFFFF = 4464`, completely changing the intended value.
 
-The fix adds essential NULL pointer checking that prevents potential
-kernel crashes.
+**2. Matches Stable Backport Criteria:**
+- **Important Bug Fix**: Yes - prevents integer overflow and data
+  corruption
+- **Small, Contained Change**: Yes - only changes variable type and
+  validation function
+- **No Architectural Changes**: Correct - simply fixes data type
+  mismatch
+- **Minimal Regression Risk**: Very low risk - more restrictive
+  validation
+- **Confined to Subsystem**: Yes - only affects USB gadget target mode
 
-### 3. Comparison with Similar Commits
-This fix follows the exact same pattern as the reference commits marked
-as "Backport Status: YES":
+**3. Historical Precedent:**
+The fix directly references commit `59c816c1f24d` which was a nearly
+identical fix in `drivers/vhost/scsi.c` that was backported to stable
+trees. That commit fixed the exact same pattern:
+- `unsigned long tpgt` → `u16 tpgt`
+- `kstrtoul() || tpgt > UINT_MAX` → `kstrtou16()`
+- Assignment to `u16 tport_tpgt` field
 
-- **Similar Commit #1 (ipmi)**: Same issue with `devm_kasprintf()` not
-  being checked
-- **Similar Commit #2 (mfd: tps6594)**: Same issue, even in the same
-  TPS6594 subsystem
-- **Similar Commit #4 (ice)**: Same issue, explicitly referenced in the
-  commit message
+**4. Real Impact:**
+While this requires privileged access to trigger (configfs
+manipulation), the integer overflow could lead to:
+- Unexpected behavior in target portal group handling
+- Potential confusion in multi-target setups
+- Data integrity issues in storage target configuration
 
-All these similar commits were deemed suitable for backporting because
-they fix the same fundamental issue.
+**5. Code Quality:**
+The fix properly aligns the variable type with its intended use and
+makes the validation more precise by using `kstrtou16()` instead of the
+broader `kstrtoul()` check.
 
-### 4. Risk Assessment
-- **Minimal risk**: The fix is a simple 2-line addition that only adds
-  error checking
-- **No side effects**: The change doesn't alter functionality, only
-  prevents crashes
-- **Contained scope**: Only affects the TPS6594 PFSM driver
-  initialization path
-- **No architectural changes**: Doesn't modify any interfaces or major
-  logic
+This fix exemplifies the type of integer overflow prevention that stable
+trees actively accept - targeted, low-risk corrections that prevent
+subtle but potentially serious bugs from affecting users.
 
-### 5. Stability Criteria Met
-- ✅ **Important bug fix**: Prevents kernel NULL pointer dereference
-  crashes
-- ✅ **Minimal and contained**: Only 2 lines added for error checking
-- ✅ **Low regression risk**: Cannot introduce new issues, only prevents
-  crashes
-- ✅ **Clear fix**: Addresses a well-defined problem with obvious
-  solution
+ drivers/usb/gadget/function/f_tcm.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-### 6. Driver Context
-The TPS6594 PFSM driver was introduced in kernel v6.10, making it a
-relatively recent addition. The driver handles power management for TI
-PMIC devices, making reliability crucial for system stability.
-
-### 7. Static Analysis Tool Finding
-The commit message mentions this was found by static analysis, which
-indicates it's a real potential issue that could manifest under memory
-pressure conditions.
-
-This commit clearly meets all the criteria for stable tree backporting:
-it's a small, contained fix for an important potential crash bug with
-minimal risk of regression.
-
- drivers/misc/tps6594-pfsm.c | 3 +++
- 1 file changed, 3 insertions(+)
-
-diff --git a/drivers/misc/tps6594-pfsm.c b/drivers/misc/tps6594-pfsm.c
-index 0a24ce44cc37c..6db1c9d48f8fc 100644
---- a/drivers/misc/tps6594-pfsm.c
-+++ b/drivers/misc/tps6594-pfsm.c
-@@ -281,6 +281,9 @@ static int tps6594_pfsm_probe(struct platform_device *pdev)
- 	pfsm->miscdev.minor = MISC_DYNAMIC_MINOR;
- 	pfsm->miscdev.name = devm_kasprintf(dev, GFP_KERNEL, "pfsm-%ld-0x%02x",
- 					    tps->chip_id, tps->reg);
-+	if (!pfsm->miscdev.name)
-+		return -ENOMEM;
-+
- 	pfsm->miscdev.fops = &tps6594_pfsm_fops;
- 	pfsm->miscdev.parent = dev->parent;
- 	pfsm->chip_id = tps->chip_id;
+diff --git a/drivers/usb/gadget/function/f_tcm.c b/drivers/usb/gadget/function/f_tcm.c
+index 5a2e1237f85c3..6e8804f04baa7 100644
+--- a/drivers/usb/gadget/function/f_tcm.c
++++ b/drivers/usb/gadget/function/f_tcm.c
+@@ -1641,14 +1641,14 @@ static struct se_portal_group *usbg_make_tpg(struct se_wwn *wwn,
+ 	struct usbg_tport *tport = container_of(wwn, struct usbg_tport,
+ 			tport_wwn);
+ 	struct usbg_tpg *tpg;
+-	unsigned long tpgt;
++	u16 tpgt;
+ 	int ret;
+ 	struct f_tcm_opts *opts;
+ 	unsigned i;
+ 
+ 	if (strstr(name, "tpgt_") != name)
+ 		return ERR_PTR(-EINVAL);
+-	if (kstrtoul(name + 5, 0, &tpgt) || tpgt > UINT_MAX)
++	if (kstrtou16(name + 5, 0, &tpgt))
+ 		return ERR_PTR(-EINVAL);
+ 	ret = -ENODEV;
+ 	mutex_lock(&tpg_instances_lock);
 -- 
 2.39.5
 
