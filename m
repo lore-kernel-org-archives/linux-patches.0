@@ -1,45 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EE462550C2;
-	Mon,  9 Jun 2025 13:45:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6AC22459E6;
+	Mon,  9 Jun 2025 13:45:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749476711; cv=none; b=aZqx7an08dyWpn0QYfoa/nZNzcQnoxT7bjMmG5O+WhoymE2IW11YnOBmt/cb72nMHbLQrA1XHD/vPp0qKN3h7mSnsLn27LhYIfiv3dA7exBJcjvMtWQr4Fhv4RYvwo2l7XeyFX7fHU9kehSFwEpjl5LrvpPucFKyCuo/efDhel4=
+	t=1749476713; cv=none; b=jxv5sl44Wm2hEIuuqDutGMuKfebJGbYjXdE1rmnW7KZbc1rQxw+ggfClztGLi39avlFdCEi5UBh7+bSfdJba6rDdSG0+8X0mTS/zao6GRwGbxIyj/5WDVnKQ8SLBiGuMWQbCvMXBsoNXpkoMFFswXdDM3aIW3oEjZV5Dnr2AGS4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749476711; c=relaxed/simple;
-	bh=ZaFox6XoUC+UN13Ol6isfzjWCIb9kpqGOuujsSRcObk=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=X0jRs27I8VxT4rSQpIquL+0lg9JI9syd5xRiPJ7KKhBrJv5cv/DG37WRqqMFNNpsKE7x5GYOvRwEP7Df1J23aCnqmq3oJBAXXNLsjmh+pePA1B3Jv+Wo8JuOD+XfUu7uqNm74BQ7KaC63XCrIUtpVMw66neEtc0Y5NZm+YFBW0M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Vg2H8mZp; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1749476713; c=relaxed/simple;
+	bh=fsdkbmMFmJ9anUrgMFLezDTpdkIOcVKF3jU0J3p7K6E=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=BPis30/qA0eoNZNkJSOhusr5h/ocwmiQPQbPwWNLbAmVMKeYIBVwDGIp+H/AH1S9ZupjaKalnRaTa5A24l/VGo7W2n0u/0TPGm6htNoL10+QU9fnYhq4JkAP2PI8oDWtNekrb7t89t04c037sQm5yYEOyb+l/k6dBGszFggb22Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=U8z1s8X6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Vg2H8mZp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F14DEC4CEED;
-	Mon,  9 Jun 2025 13:45:08 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="U8z1s8X6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85F87C4CEEB;
+	Mon,  9 Jun 2025 13:45:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749476709;
-	bh=ZaFox6XoUC+UN13Ol6isfzjWCIb9kpqGOuujsSRcObk=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vg2H8mZpJ9gallejvJSVeif71ia8uVHVw9iSaOX/uT5Kbz8G4HYgs8RBCIKl0cnwi
-	 N9Rnb+uIsV2Enn+FeWOkwDjhRG6MswcmPF2E4rFXe8fyvJ8X3Dw3Dj6WWGwtrXTBym
-	 RS76HfL/z+tEIT4++jFryLzWRZpCmyXWYdhq9AmLh+vKpiQS8VrBz1WyVtg+Skmdt3
-	 u4EZQv9828m1LKhY5qs0NvSPgUKQAkngyIOwuLxlpwzxRTye7SnvuYCNd+iPlN70VX
-	 M4sJmRhCuM3VWJXlSE6tj61YBhp9wauLAebCgfzQXtlX1FDbL0BLJbdoGx/3LrWHoE
-	 L8u8ma5KA52rQ==
+	s=k20201202; t=1749476713;
+	bh=fsdkbmMFmJ9anUrgMFLezDTpdkIOcVKF3jU0J3p7K6E=;
+	h=From:To:Cc:Subject:Date:From;
+	b=U8z1s8X6CJ3Ydx01kgaikKNyQ38N2iLsolkqpOoney6fdzyVLVVEAhjgbuLrIXWT7
+	 lQO6niijIgH/h0UUCESVubWaqI1GPX71bDEpcuU41pKcP6QzZo9VQGrhpRZUGQTX5w
+	 sEQ635xBeiowAsVbgY+JJcybF9z+zuDeGzruzUb4lapmaXSbNvGLrScTj5FG4WWYs6
+	 e0kOCUVlsHLuxOySC6o7T96gf2S+vW3OLqCwWbeDaoTKo1qxLyZlyC+Zp3IXE+nP/F
+	 M4T/J2XIuMGZrtWPcOJ/O+CSyblLg9FnArAk6VbymTUOLocfeQmdDDkJO2aTfTKjQc
+	 6cz/TI3xe96sA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Michael Grzeschik <m.grzeschik@pengutronix.de>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+Cc: Hannes Reinecke <hare@kernel.org>,
+	Chris Leech <cleech@redhat.com>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-usb@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.15 35/35] usb: typec: mux: do not return on EOPNOTSUPP in {mux, switch}_set
-Date: Mon,  9 Jun 2025 09:43:51 -0400
-Message-Id: <20250609134355.1341953-35-sashal@kernel.org>
+	kbusch@kernel.org,
+	linux-nvme@lists.infradead.org
+Subject: [PATCH AUTOSEL 6.14 01/29] nvme-tcp: fix I/O stalls on congested sockets
+Date: Mon,  9 Jun 2025 09:44:42 -0400
+Message-Id: <20250609134511.1342999-1-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250609134355.1341953-1-sashal@kernel.org>
-References: <20250609134355.1341953-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -48,135 +47,113 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.15.1
-Content-Type: text/plain; charset=UTF-8
+X-stable-base: Linux 6.14.10
 Content-Transfer-Encoding: 8bit
 
-From: Michael Grzeschik <m.grzeschik@pengutronix.de>
+From: Hannes Reinecke <hare@kernel.org>
 
-[ Upstream commit 0f7bbef1794dc87141897f804e5871a293aa174b ]
+[ Upstream commit f42d4796ee100fade86086d1cf98537fb4d326c8 ]
 
-Since the typec connectors can have many muxes or switches for different
-lanes (sbu, usb2, usb3) going into different modal states (usb2, usb3,
-audio, debug) all of them will be called on typec_switch_set and
-typec_mux_set. But not all of them will be handling the expected mode.
+When the socket is busy processing nvme_tcp_try_recv() might return
+-EAGAIN, but this doesn't automatically imply that the sending side is
+blocked, too.  So check if there are pending requests once
+nvme_tcp_try_recv() returns -EAGAIN and continue with the sending loop
+to avoid I/O stalls.
 
-If one of the mux or switch will come back with EOPTNOSUPP this is no
-reason to stop running through the next ones. Therefor we skip this
-particular error value and continue calling the next.
-
-Signed-off-by: Michael Grzeschik <m.grzeschik@pengutronix.de>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20250404-ml-topic-typec-mux-v1-1-22c0526381ba@pengutronix.de
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Hannes Reinecke <hare@kernel.org>
+Acked-by: Chris Leech <cleech@redhat.com>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-This appears to be a recent Linux kernel tree. Let me simulate what the
-issue would be by looking at the original problematic code. Based on the
-commit diff provided, the issue is:
+Based on my analysis of the commit and comparison with similar commits,
+here is my determination:
 
-**Original problematic code:**
-```c
-ret = sw_dev->set(sw_dev, orientation);
-if (ret)
-    return ret;
-```
+**YES**
 
-**Fixed code:**
-```c
-ret = sw_dev->set(sw_dev, orientation);
-if (ret && ret != -EOPNOTSUPP)
-    return ret;
-```
+This commit should be backported to stable kernel trees for the
+following reasons:
 
-Now I can analyze this commit properly:
+1. **Fixes a real user-impacting bug**: The commit addresses I/O stalls
+   on congested sockets, which is a serious issue that can cause system
+   hangs or severe performance degradation. When the socket is congested
+   and `nvme_tcp_try_recv()` returns -EAGAIN, the current code
+   incorrectly assumes that the sending side is also blocked, leading to
+   I/O stalls.
 
-**Analysis:**
+2. **Small and contained fix**: The changes are minimal and localized to
+   the `nvme_tcp_io_work()` function:
+   - Changes `nvme_tcp_try_recv()` to return 0 instead of -EAGAIN to
+     prevent premature exit
+   - Adds a check after receive processing to see if the socket became
+     writable
+   - Only 5 lines of actual code changes
 
-**YES** - This commit should be backported to stable kernel trees.
+3. **Clear logic fix**: The patch addresses a specific logic error
+   where:
+   - The receive side returns -EAGAIN (socket would block on receive)
+   - But this doesn't mean the send side is also blocked
+   - The fix checks if there are pending requests and if the socket is
+     writable after receive processing
 
-**Detailed Analysis:**
+4. **Similar to other backported fixes**: Looking at the historical
+   commits:
+   - Commit #2 (backported): Fixed hangs waiting for icresp response
+   - Commit #3 (backported): Fixed wrong stop condition in io_work
+   - Commit #4 (backported): Fixed UAF when detecting digest errors
+   - Commit #5 (backported): Fixed possible null deref on timed out
+     connections
 
-1. **Bug Description**: The commit fixes a functional bug where multiple
-   USB Type-C muxes/switches connected to a single connector would fail
-   to be configured if any one of them returned `-EOPNOTSUPP` (Operation
-   Not Supported). This is a common scenario in modern Type-C connectors
-   that have separate muxes for different signal paths (SBU, USB2, USB3,
-   etc.).
+   All these commits that were backported involved fixing hangs, stalls,
+or error conditions in the nvme-tcp driver.
 
-2. **Specific Code Changes**:
-   - In `typec_switch_set()` at line 217: Changes `if (ret)` to `if (ret
-     && ret != -EOPNOTSUPP)`
-   - In `typec_mux_set()` at line 381: Changes `if (ret)` to `if (ret &&
-     ret != -EOPNOTSUPP)`
+5. **No architectural changes**: The commit doesn't introduce new
+   features or change the architecture. It simply adds a missing check
+   to prevent I/O stalls, which aligns with stable kernel criteria.
 
-3. **Problem Impact**: Before this fix, when `typec_set_orientation()`
-   or `typec_set_mode()` were called:
-   - The functions would iterate through all mux/switch devices
-   - If ANY mux returned `-EOPNOTSUPP` (which is legitimate - some muxes
-     only handle specific modes), the entire operation would fail
-   - This prevented other muxes that COULD handle the mode from being
-     configured
-   - Result: Type-C connectors with multiple muxes would not work
-     properly
+6. **Critical subsystem**: NVMe-TCP is used for storage access, and I/O
+   stalls can have severe consequences for system stability and data
+   integrity.
 
-4. **Risk Assessment**:
-   - **Very Low Risk**: The change only affects error handling logic
-   - **Minimal Code Change**: Only two lines changed, both adding the
-     same condition
-   - **Backward Compatible**: Does not change API or behavior for
-     successful cases
-   - **Well-Contained**: Limited to the USB Type-C mux subsystem
+The specific code changes show:
+- `return consumed == -EAGAIN ? 0 : consumed;` - prevents treating
+  EAGAIN as an error
+- The new check `if (nvme_tcp_queue_has_pending(queue) &&
+  sk_stream_is_writeable(queue->sock->sk))` ensures that if there are
+  pending requests and the socket is writable after receive processing,
+  we continue processing instead of stalling.
 
-5. **Stable Tree Criteria Met**:
-   - ✅ **Important Bug Fix**: Fixes functional issues with Type-C
-     connectors
-   - ✅ **Minimal Risk**: Very small, contained change
-   - ✅ **No New Features**: Pure bug fix, no new functionality
-   - ✅ **Clear Side Effects**: No unintended side effects beyond fixing
-     the issue
-   - ✅ **Affects Users**: Type-C devices with multiple muxes (common in
-     modern systems) would malfunction
+This is exactly the type of bug fix that should be backported to stable
+kernels to ensure reliable storage operation.
 
-6. **Evidence from Mux Drivers**: The examination of actual mux drivers
-   like `fsa4480.c` and `gpio-sbu-mux.c` shows they legitimately return
-   `-EOPNOTSUPP` for unsupported modes, confirming this is expected
-   behavior that should not abort the entire chain.
+ drivers/nvme/host/tcp.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-7. **Comparison to Similar Commits**: Unlike the provided reference
-   commits which were mostly cleanups or minor features (all marked NO
-   for backport), this addresses a clear functional bug affecting real-
-   world hardware configurations.
-
-This commit follows the stable tree rules perfectly: it's an important
-bugfix with minimal risk that affects users with multi-mux Type-C
-hardware configurations.
-
- drivers/usb/typec/mux.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/usb/typec/mux.c b/drivers/usb/typec/mux.c
-index 49926d6e72c71..182c902c42f61 100644
---- a/drivers/usb/typec/mux.c
-+++ b/drivers/usb/typec/mux.c
-@@ -214,7 +214,7 @@ int typec_switch_set(struct typec_switch *sw,
- 		sw_dev = sw->sw_devs[i];
+diff --git a/drivers/nvme/host/tcp.c b/drivers/nvme/host/tcp.c
+index d991baa82a1c2..a2e825e37b38b 100644
+--- a/drivers/nvme/host/tcp.c
++++ b/drivers/nvme/host/tcp.c
+@@ -1349,7 +1349,7 @@ static int nvme_tcp_try_recv(struct nvme_tcp_queue *queue)
+ 	queue->nr_cqe = 0;
+ 	consumed = sock->ops->read_sock(sk, &rd_desc, nvme_tcp_recv_skb);
+ 	release_sock(sk);
+-	return consumed;
++	return consumed == -EAGAIN ? 0 : consumed;
+ }
  
- 		ret = sw_dev->set(sw_dev, orientation);
--		if (ret)
-+		if (ret && ret != -EOPNOTSUPP)
- 			return ret;
- 	}
+ static void nvme_tcp_io_work(struct work_struct *w)
+@@ -1377,6 +1377,11 @@ static void nvme_tcp_io_work(struct work_struct *w)
+ 		else if (unlikely(result < 0))
+ 			return;
  
-@@ -378,7 +378,7 @@ int typec_mux_set(struct typec_mux *mux, struct typec_mux_state *state)
- 		mux_dev = mux->mux_devs[i];
- 
- 		ret = mux_dev->set(mux_dev, state);
--		if (ret)
-+		if (ret && ret != -EOPNOTSUPP)
- 			return ret;
- 	}
++		/* did we get some space after spending time in recv? */
++		if (nvme_tcp_queue_has_pending(queue) &&
++		    sk_stream_is_writeable(queue->sock->sk))
++			pending = true;
++
+ 		if (!pending || !queue->rd_enabled)
+ 			return;
  
 -- 
 2.39.5
