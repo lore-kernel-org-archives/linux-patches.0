@@ -1,43 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19BC520322;
-	Mon,  9 Jun 2025 13:45:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E0F820322;
+	Mon,  9 Jun 2025 13:45:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749476745; cv=none; b=uetd4WiNPnCh1zQL9Ik1UhPsx3OQnPsy79HmqcqVi9e7zqv4HforMu1ZjfoqRg4k63butMd/7ZGniuJ9vqufInyqTKRsCzZyjrRTUghk2/OTmgLURbz0KLw9czTtVracwzqYq8UMOJm+xCmO1cHoLRrK3N4HF9SMI/V06llKv0I=
+	t=1749476746; cv=none; b=ZwfCsFl6fq+ebgg/GxVN9RZAOmrmiOhR5f9hVSqzlDGrYs7XouJA3zXy0XCU+jYWkIr8nbCTgiJduvrCDrnO7xYRkBhTcdEe4CiPn9W7HZSFaaQf8mtYxb3Bb/4YHxuq/El3m8/CPzHVte5KtL3BdDzo1mDizTdT9rc5U6gS+8c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749476745; c=relaxed/simple;
-	bh=LwIqXgHH/nV0BvoU7aXYecSqA+RtceLcoV9UPQ0gWY4=;
+	s=arc-20240116; t=1749476746; c=relaxed/simple;
+	bh=pJCzUmR773gYxvZ5iMaladAJs5P8lpHkrLmEWci9EF8=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Vu25WG0QzYFrST7oXTtNAJCzSqx+nfF8ilTqCnCXCF5sFpj4bxRyG5QuMEHry5BZMEGzkdfyf8NaQ6n55v6xwrgMrj82Zd96zbJKh2gM94lRz7+vDWgt9Ljgaq9ftDJWjUfFmZExQgolXkE7Lqa1HgifTqVo9IYyPOf+dBUNYto=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=J+uvnVtI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tnUTWS9E47ViUvZnM2vMQqQgzVyLaby7UJso1KjvlZLw2K8hsW4fIm2G49XbbhaRTUZSc1AoQczWrZ1p+sOsb3sPcOAdfa1vOiuosBBetyiJArZUa+odIALykgBCSRQk6cfGP4HsxAIQGjGr3BTD7zNFmZ7TYwR4Hp9XWy+BOWM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HaRo85jg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="J+uvnVtI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DA6FC4CEF2;
-	Mon,  9 Jun 2025 13:45:43 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HaRo85jg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C7D1C4CEF8;
+	Mon,  9 Jun 2025 13:45:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749476745;
-	bh=LwIqXgHH/nV0BvoU7aXYecSqA+RtceLcoV9UPQ0gWY4=;
+	s=k20201202; t=1749476746;
+	bh=pJCzUmR773gYxvZ5iMaladAJs5P8lpHkrLmEWci9EF8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J+uvnVtI9hXvU4sWlxgOQ4HP7zE8Tb6wxg+C3ZAzcea1jELr760QfQyIyaQxF3rS5
-	 0wfCpIE5CL0qkF1/nw1bEyKlx+J1i/0kzp7Z4Fi2R2sK9GbqN7FS9hmBK3Tm9bl5Is
-	 PT+xAfHeZE/wXZinLWi6hcQRW05TfSjm1VEeZsmc+pSDZuGslnWws5fG2uK3ktzCj2
-	 SBqO9DSzcfKZp53jV1wnP7YNhgoYZr4HJyX+Eo5VqFqgePPY2HrWFNy6+5ohLyR1od
-	 lvTEQhEwpqIjul/ndsqgv2YITA1rNw3vuII3qNAI1odChjiSGEj38ZX3nMviLC7660
-	 Uw7R8LstwYimw==
+	b=HaRo85jgm60Md3AhlppGV4gi+9PoCIIoxQIZtm8D+MuNwgswVnZEktl0DBqVMcx7n
+	 PWbuz7lRBBgeisLjMqwK8wiA56QbWLgPeHFhZtcF63/YbKr9avZu90R29evPOP8iSq
+	 pIqXIccnS/78NCM2OKduv9R5FQm6MuyzwAQHq6uWA8xjp8+VDm0zpkhJA98dDsM1p4
+	 UhR8ohqsSPc4WiSt02DvSEFKWigZp0dNjBHMhsdzrfuz0g8j+VWBtxT2M7R2XOgrkI
+	 ++sbN0rsvgbP3OFRh6GTEu5zAazgfmAxDS5p0er6fFpgeo/VslUg67mMLqgHEU9rXJ
+	 fZOtLfuaL69ww==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: David Lechner <dlechner@baylibre.com>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+Cc: Zhang Lixu <lixu.zhang@intel.com>,
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>,
-	lars@metafoo.de,
-	Michael.Hennerich@analog.com
-Subject: [PATCH AUTOSEL 6.14 17/29] iio: adc: ad7606_spi: check error in ad7606B_sw_mode_config()
-Date: Mon,  9 Jun 2025 09:44:58 -0400
-Message-Id: <20250609134511.1342999-17-sashal@kernel.org>
+	jikos@kernel.org,
+	jic23@kernel.org,
+	linux-input@vger.kernel.org,
+	linux-iio@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.14 18/29] iio: hid-sensor-prox: Add support for 16-bit report size
+Date: Mon,  9 Jun 2025 09:44:59 -0400
+Message-Id: <20250609134511.1342999-18-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250609134511.1342999-1-sashal@kernel.org>
 References: <20250609134511.1342999-1-sashal@kernel.org>
@@ -47,171 +49,129 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.14.10
 Content-Transfer-Encoding: 8bit
 
-From: David Lechner <dlechner@baylibre.com>
+From: Zhang Lixu <lixu.zhang@intel.com>
 
-[ Upstream commit 4d71bf6021818a039a534c5954acefdfc4d6962c ]
+[ Upstream commit ad02ca57e44e9936fca5095840fad9d4b47c5559 ]
 
-Add missing error check in ad7606B_sw_mode_config().
+On Intel platforms, the HID_USAGE_SENSOR_HUMAN_PROXIMITY report size is 16
+bits. This patch adds support for handling 16-bit report sizes for the
+HID_USAGE_SENSOR_HUMAN_PROXIMITY usage in the HID sensor proximity driver.
 
-Reviewed-by: Nuno Sá <nuno.sa@analog.com>
-Signed-off-by: David Lechner <dlechner@baylibre.com>
-Link: https://patch.msgid.link/20250318-iio-adc-ad7606-improvements-v2-2-4b605427774c@baylibre.com
+Previously, the driver only supported 8-bit and 32-bit report sizes. With
+this change, the driver can now correctly process 16-bit proximity data,
+ensuring accurate human presence detection on platforms where this report
+size is used.
+
+Signed-off-by: Zhang Lixu <lixu.zhang@intel.com>
+Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+Link: https://patch.msgid.link/20250317013634.4117399-1-lixu.zhang@intel.com
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Now let me analyze the specific commit by creating a diff to understand
-exactly what the change would be:
-
-Based on my analysis of the commit and the Linux kernel repository, here
-is my assessment:
+Based on my analysis of the commit and the context provided, I'll now
+provide my recommendation:
 
 **YES**
 
-This commit should be backported to stable kernel trees for the
-following reasons:
+## Extensive Analysis
 
-## Code Analysis
+### Code Change Analysis
 
-**Current problematic code** (lines 136-143 in
-`/home/sasha/e/linux/drivers/iio/adc/ad7606_spi.c`):
+The commit adds support for 16-bit report sizes in the HID sensor
+proximity driver by adding a simple `case 2:` clause to the existing
+switch statement in the `prox_capture_sample()` function:
+
 ```c
-static int ad7606b_sw_mode_config(struct iio_dev *indio_dev)
-{
-    struct ad7606_state *st = iio_priv(indio_dev);
-
-    /* Configure device spi to output on a single channel */
-    return st->bops->reg_write(st, AD7606_CONFIGURATION_REGISTER,
-                   AD7606_SINGLE_DOUT);
-}
-```
-
-**Proposed fix from the commit**:
-```c
-static int ad7606B_sw_mode_config(struct iio_dev *indio_dev)
-{
-    struct ad7606_state *st = iio_priv(indio_dev);
-    int ret;
-
-    /* Configure device spi to output on a single channel */
-    ret = st->bops->reg_write(st, AD7606_CONFIGURATION_REGISTER,
-                  AD7606_SINGLE_DOUT);
-    if (ret)
-        return ret;
-
-    /*
-     - Scale can be configured individually for each channel
-     - in software mode.
-     */
-    indio_dev->channels = ad7606b_sw_channels;
-
+switch (raw_len) {
+case 1:
+    prox_state->human_presence[chan] = *(u8 *)raw_data * multiplier;
+    return 0;
++case 2:
++    prox_state->human_presence[chan] = *(u16 *)raw_data * multiplier;
++    return 0;
+case 4:
+    prox_state->human_presence[chan] = *(u32 *)raw_data * multiplier;
     return 0;
 }
 ```
 
-## Justification for Backporting
+### Why This Should Be Backported
 
-### 1. **Fixes Important Bug That Affects Users**
-- **Error Handling Failure**: The current code ignores potential SPI
-  communication failures when writing to the device's configuration
-  register
-- **Device Misconfiguration**: If the SPI write fails, the function
-  continues execution and reports success, leaving the AD7606B device in
-  an undefined state
-- **User Impact**: Applications relying on software mode configuration
-  may fail silently, leading to incorrect ADC readings
+1. **Important Bug Fix**: The commit message clearly states this is
+   needed for Intel platforms where `HID_USAGE_SENSOR_HUMAN_PROXIMITY`
+   uses 16-bit reports. Without this change, these platforms cannot
+   correctly process proximity data, making the sensor completely non-
+   functional for 16-bit report sizes.
 
-### 2. **Small and Contained Fix**
-- **Minimal Change**: The fix only adds proper error checking for an
-  existing operation
-- **No Architecture Changes**: Does not modify driver architecture or
-  introduce new functionality
-- **Pattern Consistency**: Aligns with existing error handling patterns
-  in the same file (see lines 117-119 in `ad7606_spi_reg_read`)
+2. **Minimal Risk and Scope**: The change is extremely small (3 lines
+   added) and follows the exact same pattern as existing 8-bit and
+   32-bit cases. It's confined to a single function and only affects the
+   data parsing path for proximity sensors.
 
-### 3. **Low Risk of Regression**
-- **Conservative Approach**: Only adds error path that was missing
-- **Maintains Existing Behavior**: When SPI operation succeeds, behavior
-  is identical
-- **Standard Error Handling**: Uses conventional Linux kernel error
-  propagation pattern
+3. **Pattern Consistency**: Looking at the grep results from other IIO
+   drivers, handling multiple data sizes (including 16-bit) in switch
+   statements is a common pattern throughout the IIO subsystem. This
+   change follows established conventions.
 
-### 4. **Critical Subsystem Impact**
-- **IIO Driver**: Industrial I/O subsystem drivers are used in
-  measurement and control applications where accuracy is critical
-- **Hardware Communication**: SPI communication failures can occur due
-  to electrical issues, timing problems, or hardware faults
-- **Silent Failures**: Without error checking, debugging communication
-  issues becomes extremely difficult
+4. **Hardware Compatibility**: The commit enables proper functionality
+   on Intel platforms that use 16-bit proximity reports. This is a
+   hardware compatibility fix rather than a new feature.
 
-### 5. **Similarity to Approved Backports**
-Looking at the historical similar commits, this matches the pattern of
-**Similar Commit #2** (Status: YES) which fixed missing error code
-handling in `ad9467.c`:
+5. **No Architectural Changes**: The change doesn't modify any APIs,
+   data structures, or architectural components - it simply extends the
+   existing data size handling logic.
 
-```c
-// Before fix:
-ad9467_spi_write(spi, AN877_ADC_REG_TRANSFER, AN877_ADC_TRANSFER_SYNC);
-return ret;
+6. **Similar Successful Backports**: Looking at the reference commits,
+   we see that Similar Commit #3 and #4 were both backported (Status:
+   YES), and both were fixes for scale/data handling issues in HID
+   sensor drivers. This commit follows the same pattern of fixing data
+   handling bugs.
 
-// After fix:
-if (ret)
-    return ret;
-return ad9467_spi_write(spi, AN877_ADC_REG_TRANSFER,
-AN877_ADC_TRANSFER_SYNC);
-```
+7. **Clear Failure Mode**: Without this fix, Intel platforms with 16-bit
+   proximity reports would fail to capture proximity data, returning
+   `-EINVAL` and making the proximity sensor completely unusable.
 
-Both commits address the same fundamental issue: **ignoring return
-values from critical hardware communication functions**.
+8. **Industry-Standard Fix**: The commit comes from Intel (Zhang Lixu)
+   with acknowledgment from the HID sensor maintainer (Srinivas
+   Pandruvada), indicating this addresses a real hardware compatibility
+   issue.
 
-### 6. **Follows Stable Tree Rules**
-- ✅ **Important bugfix**: Fixes silent failure in device configuration
-- ✅ **Minimal risk**: Only adds missing error handling
-- ✅ **Self-contained**: No dependencies on other changes
-- ✅ **No new features**: Purely a robustness improvement
-- ✅ **Confined to subsystem**: Limited to IIO ADC driver
+### Risk Assessment
 
-## Conclusion
+The risk is extremely low because:
+- The change only affects the specific case where `raw_len == 2`
+- Existing 8-bit and 32-bit handling remains unchanged
+- The code follows the exact same pattern as existing cases
+- No memory management or complex logic is involved
+- Failure would be immediate and obvious (wrong data values)
 
-This commit represents a textbook example of a stable tree candidate: it
-fixes a genuine bug (missing error handling) that can cause real user
-problems (silent device misconfiguration), uses a minimal and safe
-approach (standard error checking pattern), and carries virtually no
-risk of introducing regressions. The fix ensures that SPI communication
-failures are properly detected and reported rather than ignored, which
-is essential for reliable operation of industrial measurement equipment
-using the AD7606B ADC.
+This commit clearly meets the stable tree criteria: it fixes an
+important hardware compatibility bug with minimal risk and no
+architectural changes.
 
- drivers/iio/adc/ad7606_spi.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/iio/light/hid-sensor-prox.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/iio/adc/ad7606_spi.c b/drivers/iio/adc/ad7606_spi.c
-index 179115e909888..1bad270a95563 100644
---- a/drivers/iio/adc/ad7606_spi.c
-+++ b/drivers/iio/adc/ad7606_spi.c
-@@ -174,11 +174,13 @@ static int ad7616_sw_mode_config(struct iio_dev *indio_dev)
- static int ad7606B_sw_mode_config(struct iio_dev *indio_dev)
- {
- 	struct ad7606_state *st = iio_priv(indio_dev);
-+	int ret;
- 
- 	/* Configure device spi to output on a single channel */
--	st->bops->reg_write(st,
--			    AD7606_CONFIGURATION_REGISTER,
--			    AD7606_SINGLE_DOUT);
-+	ret = st->bops->reg_write(st, AD7606_CONFIGURATION_REGISTER,
-+				  AD7606_SINGLE_DOUT);
-+	if (ret)
-+		return ret;
- 
- 	/*
- 	 * Scale can be configured individually for each channel
+diff --git a/drivers/iio/light/hid-sensor-prox.c b/drivers/iio/light/hid-sensor-prox.c
+index 4c65b32d34ce4..46f788b0bc3e2 100644
+--- a/drivers/iio/light/hid-sensor-prox.c
++++ b/drivers/iio/light/hid-sensor-prox.c
+@@ -215,6 +215,9 @@ static int prox_capture_sample(struct hid_sensor_hub_device *hsdev,
+ 	case 1:
+ 		prox_state->human_presence[chan] = *(u8 *)raw_data * multiplier;
+ 		return 0;
++	case 2:
++		prox_state->human_presence[chan] = *(u16 *)raw_data * multiplier;
++		return 0;
+ 	case 4:
+ 		prox_state->human_presence[chan] = *(u32 *)raw_data * multiplier;
+ 		return 0;
 -- 
 2.39.5
 
