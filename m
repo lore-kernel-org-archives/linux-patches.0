@@ -1,48 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DD35224895;
-	Mon,  9 Jun 2025 22:54:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84AAF224895;
+	Mon,  9 Jun 2025 22:54:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749509655; cv=none; b=OpC4T44pDDqOnYVA6pmNBqiVpHIWwh7O7sMkSr3Vl45ewytLBmDwCASTHLXPw13FrJ/pktyqpuQQj6ycFZGQ0rs/eRkhGDX+xKAqjr4B/uiQvwWwAMEG67n9wvxU4L/LUzbAFeAT7pgi5UBqLUxuNLDXQGY1snaSAVagI+npa6Q=
+	t=1749509656; cv=none; b=svevhk+LVtT9DpK91mQ0EzrNVzt7Gr4dxbxcS5YjeJKFuTdvlx65KYkJIS6cOZGSF5HgcVLw8yYzjCPbt5wf5HM7pO7HjfjeveeItHDZ36yUjtqUSqJRXtOHanA1ilid8StovDoDiRnPgDmGaruI4GrTB4xgDWAzFlHJItzeCtM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749509655; c=relaxed/simple;
-	bh=Xl8S1yDfWtohHbnJAinSQDEwTI9/yvp6yfoLkr5tC5g=;
+	s=arc-20240116; t=1749509656; c=relaxed/simple;
+	bh=d//prd4TDzf52xdMCxuP7Cz3n3b6qoSH6Nasajdv0jw=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GXk7qEAspWyKVr+kPQu76+OBYICcLM7J7LUwUUTveifF/lgyC29QEgA8wArkJ00qIVYEzGCl/UMixPighis2+/gZ6hSpuNgp6ikXpS8LOMrp6bo84I3GXYcjIqibx9IOaDpXP6wU1lf+2Hry51zizaBymLroaQbsiJHhhBvPdD0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y01jHMxK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hxo6kdLqXZHK5Re9U8xCfXlUABZ6ModryQyRMoPHpjbpo7KMLHkPwneAKYKys59i5S1UpT3CQjb5Swr6LGWBo6qIw0TMVdBFOQXI1ovoNIQAl0OPNwA9sRIVLt7IKM6Vf1Cc2Vxm5tgHvpR6d18xGtOtTFfZPuxsigMJQ1I+oDo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=M/GLvrXx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y01jHMxK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7E7BC4CEED;
-	Mon,  9 Jun 2025 22:54:13 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="M/GLvrXx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80D00C4CEF3;
+	Mon,  9 Jun 2025 22:54:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749509655;
-	bh=Xl8S1yDfWtohHbnJAinSQDEwTI9/yvp6yfoLkr5tC5g=;
+	s=k20201202; t=1749509656;
+	bh=d//prd4TDzf52xdMCxuP7Cz3n3b6qoSH6Nasajdv0jw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y01jHMxKvwHlAZtagTlxFyWrhn/vk44MiKHtqPXk50Cz8kz1eL1/2f5jPISZxZG0N
-	 NKAsbghrj1UfHLvlu/KSdBnt9aCrkCbbc+7WIMTyZbKFjDyezZJMXuxHCxG71F8CBc
-	 uaaRmcLpgsH92ZV9EtXd8c6K4QJ8ajJm6p1CasSkWnNMUoryFnWBHdSmzhI2rXTjIP
-	 J1jEPKCa/jHEqCUM6vTF92+X900aQSy8jdwRmJO8vM8hfrULaUGI7Ty7ndTbVIeyGM
-	 OC9adHPitjz41PyJf1j1fWB/jaPqcSJPAiH1O+VBu33diNgoU+f7aIv/VYfkUfC5+R
-	 YaNgECgRvrBRg==
+	b=M/GLvrXxeivtGZP3tAjSfDbP5aL4erqHKiVANq5dTbb0ozl179ohRia2h9KT0GBLd
+	 3lypoomD8TXBVVNmhxtoDBTbOZkHoyIrsBJV4bvI7POOgKIsRmqNtHAmx1lsg4xWEM
+	 66hE+91oUKQboSfkZnu4KyqlB5qe5WhZEQVWR5b6SSf0OCYA6UMSHz8B5iG6TwSuq6
+	 PXbK9CQl0+F3RRJVcaHoPM5iLKk654wv/DoOenU8sH0Q/jB40UrVdT5aV9HBafsVqO
+	 4WioBUDBN5T67grU8+97dACPrtMrV3MxOKXayYXDos/3Qv83rc1M3rIh6X5MSkQ7Lx
+	 YhnUQXTy057Qg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Vijendar Mukunda <Vijendar.Mukunda@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Takashi Iwai <tiwai@suse.de>,
+Cc: Dmitry Kandybka <d.kandybka@gmail.com>,
+	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>,
-	yung-chuan.liao@linux.intel.com,
-	peter.ujfalusi@linux.intel.com,
-	pierre-louis.bossart@linux.dev,
-	hkallweit1@gmail.com,
-	maxtram95@gmail.com,
-	TonyWWang-oc@zhaoxin.com,
-	phasta@kernel.org
-Subject: [PATCH AUTOSEL 5.10 2/4] ALSA: hda: Add new pci id for AMD GPU display HD audio controller
-Date: Mon,  9 Jun 2025 18:54:07 -0400
-Message-Id: <20250609225410.1444715-2-sashal@kernel.org>
+	xiubli@redhat.com,
+	ceph-devel@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.10 3/4] ceph: fix possible integer overflow in ceph_zero_objects()
+Date: Mon,  9 Jun 2025 18:54:08 -0400
+Message-Id: <20250609225410.1444715-3-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250609225410.1444715-1-sashal@kernel.org>
 References: <20250609225410.1444715-1-sashal@kernel.org>
@@ -55,111 +50,106 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 5.10.238
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
+From: Dmitry Kandybka <d.kandybka@gmail.com>
 
-[ Upstream commit ab72bfce7647522e01a181e3600c3d14ff5c143e ]
+[ Upstream commit 0abd87942e0c93964e93224836944712feba1d91 ]
 
-Add new pci id for AMD GPU display HD audio controller(device id- 0xab40).
+In 'ceph_zero_objects', promote 'object_size' to 'u64' to avoid possible
+integer overflow.
 
-Signed-off-by: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Link: https://patch.msgid.link/20250529053838.2350071-1-Vijendar.Mukunda@amd.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Compile tested only.
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Signed-off-by: Dmitry Kandybka <d.kandybka@gmail.com>
+Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Based on my analysis of the commit and the similar historical commits
-provided, here is my assessment:
-
 **YES**
 
-This commit should be backported to stable kernel trees based on the
-following extensive analysis:
+This commit should be backported to stable kernel trees. Here's my
+detailed analysis:
 
-**1. Hardware Support Fix Pattern:**
-The commit follows the exact same pattern as the historical commits
-marked "YES" for backporting (Similar Commits #2, #3, and #4). All of
-these commits:
-- Add new PCI device IDs for hardware support
-- Use identical driver configuration (`AZX_DRIVER_ATIHDMI_NS |
-  AZX_DCAPS_PRESET_ATI_HDMI_NS | AZX_DCAPS_PM_RUNTIME`)
-- Are small, self-contained changes with minimal risk
+## Why This Should Be Backported
 
-**2. Code Analysis:**
-The change adds exactly one new PCI device entry:
+### 1. **Clear Bug Fix with User Impact**
+The commit fixes a real integer overflow vulnerability in
+`ceph_zero_objects()` where `s32 object_size` is multiplied by `s32
+stripe_count` to calculate `u64 object_set_size`. When the layout values
+exceed 2^31, the multiplication can underflow, leading to:
+- Incorrect loop bounds in the zeroing logic
+- Potential infinite loops or premature termination
+- Data integrity issues during hole punching operations
+- Incorrect `do_div()` operations
+
+### 2. **Affects Critical Kernel Functionality**
+This bug impacts core filesystem operations that users depend on:
+- `fallocate()` system call with `FALLOC_FL_PUNCH_HOLE`
+- File sparse operations used by databases, VMs, backup tools
+- Copy-on-write optimizations in Ceph filesystems
+
+### 3. **Small, Contained, and Low-Risk Fix**
+The code change is minimal and safe:
 ```c
-{ PCI_VDEVICE(ATI, 0xab40),
-  .driver_data = AZX_DRIVER_ATIHDMI_NS | AZX_DCAPS_PRESET_ATI_HDMI_NS |
-  AZX_DCAPS_PM_RUNTIME },
+- u64 object_set_size = object_size * stripe_count;
++       u64 object_set_size = (u64) object_size * stripe_count;
 ```
 
-This entry is inserted in the correct sequential order between existing
-AMD GPU audio devices (after 0xab38) and follows the exact same pattern
-as all surrounding entries. The driver data flags used are:
-- `AZX_DRIVER_ATIHDMI_NS`: Standard ATI HDMI driver
-- `AZX_DCAPS_PRESET_ATI_HDMI_NS`: ATI HDMI preset capabilities
-- `AZX_DCAPS_PM_RUNTIME`: Runtime power management support
+This fix:
+- Promotes `object_size` to `u64` before multiplication, preventing
+  overflow
+- Has no functional side effects beyond fixing the bug
+- Maintains consistency with the underlying `u32` data types in
+  `ceph_file_layout`
+- Cannot introduce regressions
 
-**3. Risk Assessment - Minimal:**
-- **No algorithmic changes**: Pure PCI ID table addition
-- **No new code paths**: Uses existing, well-tested driver
-  infrastructure
-- **No configuration changes**: Same capabilities as neighboring AMD GPU
-  devices
-- **No architectural impact**: Confined to PCI device recognition
-- **Regression risk**: Nearly zero - only affects this specific AMD GPU
-  (device ID 0xab40)
+### 4. **Follows Stable Tree Criteria**
+- **Important bugfix**: Prevents potential data corruption and system
+  instability
+- **Minimal risk**: Single-line change with no architectural impact
+- **Confined scope**: Only affects Ceph filesystem's hole punching logic
+- **No new features**: Pure defensive fix
 
-**4. User Impact - Significant:**
-This enables HD audio functionality for users with new AMD GPU hardware
-(device ID 0xab40). Without this change, the audio component of these
-GPUs would not be recognized by the kernel, leaving users without audio
-output capabilities on affected systems.
+### 5. **Matches Successful Backport Pattern**
+This commit is very similar to **Similar Commit #1** (marked YES for
+backport) which also:
+- Fixed a type promotion bug affecting critical operations
+- Had minimal code changes with clear safety benefits
+- Addressed potential data integrity issues
+- Was explicitly marked with `Cc: stable@vger.kernel.org`
 
-**5. Stable Tree Criteria Compliance:**
-- ✅ **Fixes important bug**: Lack of audio support on new hardware
-- ✅ **Minimal risk**: PCI ID additions have extremely low regression
-  potential
-- ✅ **Small and contained**: Single line addition following established
-  pattern
-- ✅ **No new features**: Pure hardware enablement
-- ✅ **Clear benefit**: Enables audio on new AMD GPUs
+### 6. **Proactive Hardening Value**
+While the bug requires specific conditions to trigger (large object
+sizes or stripe counts), backporting provides:
+- Defense against potential malicious layouts from compromised metadata
+  servers
+- Protection for users with unusual but valid filesystem configurations
+- General robustness improvement for production systems
 
-**6. Historical Precedent:**
-Similar Commits #2, #3, and #4 (all marked "YES") demonstrate that
-AMD/ATI GPU audio PCI ID additions are consistently considered
-appropriate for stable backporting. The only "NO" examples (Similar
-Commits #1 and #5) were either preparatory changes for future features
-or lacked hardware urgency.
+The fix has no downside risk and provides meaningful protection against
+a real integer overflow scenario that could affect data integrity in
+Ceph filesystems.
 
-**7. Maintainer Endorsement:**
-The commit has proper sign-offs including review by Alex Deucher (AMD
-maintainer), indicating technical correctness and hardware necessity.
+ fs/ceph/file.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-This commit perfectly fits the stable tree guidelines: it's a minimal,
-safe hardware enablement fix that provides significant user benefit with
-virtually no regression risk.
-
- sound/pci/hda/hda_intel.c | 3 +++
- 1 file changed, 3 insertions(+)
-
-diff --git a/sound/pci/hda/hda_intel.c b/sound/pci/hda/hda_intel.c
-index 407bbf9264ac4..48c00e0ddd722 100644
---- a/sound/pci/hda/hda_intel.c
-+++ b/sound/pci/hda/hda_intel.c
-@@ -2791,6 +2791,9 @@ static const struct pci_device_id azx_ids[] = {
- 	{ PCI_DEVICE(0x1002, 0xab38),
- 	  .driver_data = AZX_DRIVER_ATIHDMI_NS | AZX_DCAPS_PRESET_ATI_HDMI_NS |
- 	  AZX_DCAPS_PM_RUNTIME },
-+	{ PCI_VDEVICE(ATI, 0xab40),
-+	  .driver_data = AZX_DRIVER_ATIHDMI_NS | AZX_DCAPS_PRESET_ATI_HDMI_NS |
-+	  AZX_DCAPS_PM_RUNTIME },
- 	/* GLENFLY */
- 	{ PCI_DEVICE(PCI_VENDOR_ID_GLENFLY, PCI_ANY_ID),
- 	  .class = PCI_CLASS_MULTIMEDIA_HD_AUDIO << 8,
+diff --git a/fs/ceph/file.c b/fs/ceph/file.c
+index d4974c652e8e4..c1eafff45b194 100644
+--- a/fs/ceph/file.c
++++ b/fs/ceph/file.c
+@@ -2034,7 +2034,7 @@ static int ceph_zero_objects(struct inode *inode, loff_t offset, loff_t length)
+ 	s32 stripe_unit = ci->i_layout.stripe_unit;
+ 	s32 stripe_count = ci->i_layout.stripe_count;
+ 	s32 object_size = ci->i_layout.object_size;
+-	u64 object_set_size = object_size * stripe_count;
++	u64 object_set_size = (u64) object_size * stripe_count;
+ 	u64 nearly, t;
+ 
+ 	/* round offset up to next period boundary */
 -- 
 2.39.5
 
