@@ -1,47 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76C4C224895;
-	Mon,  9 Jun 2025 22:54:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5425224895;
+	Mon,  9 Jun 2025 22:54:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749509646; cv=none; b=jmJvDQdeATVe9WcVpnIAdoAbYq4gwqc9YfEHnSfkYKKP1IVAXCy6o83iM4l3wCT9AYVENJXd5ZC96sB94+rn9ggMOnhnoA+lQlQJkAPl0p2rOV3M3kvfmurUUJKqMlGBqGHI1HsA6hGZVS/POZ/VNBwzLeawJ+VMOAdZXbwxues=
+	t=1749509647; cv=none; b=WuanrM/hsUAOuI4/zyNA/ZaYdkXi74AU7XzUgtDgJGXQbDtoZegovJsz+pQvb4LJ4ALMSLhq+Y/z9xV9TsYdNL7Ev8Un/TLRbxAtmCFDDYtAT/Dm+k0WkdN3myJTwvspLiSNc/kULzo+1WdrRqXoiA8SR2vusFb6wkKR1FoNo+Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749509646; c=relaxed/simple;
-	bh=04q1KZcGBZLhykwygsh5lwOi3j6Zyp50Z1kiPl323fI=;
+	s=arc-20240116; t=1749509647; c=relaxed/simple;
+	bh=RmccZqSeppAcUrJV/EL0pckuGhOUvNOVwR5zgBCk2Kk=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=MJV+7NVj02jTpRt16Swyg7gT7Sy0PIakHrlAxGRZhWFgdvWZeitBhP9hg8PEyCP6370wHn8Kr2GP5z7vWHBniNwnTgJQ28HsqGNayIPRgPAODEREY8c9DGO+n+Assr1xh9i3owu0PBX3JSmzZXrgQcgY1/OkxjQ1rW2liHKiD+o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Zl1pqF3Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=S48Nf49/IgFdgz6kSDkFZUsXBdVeKk2dhwwBe6pPIzv71SjfjtVE7o/m0C3WB9puxrllQ4ARKn5FJQrGlMk3O0gFoM9H50uqqNKSOCG0yqdVZhVbXmLyExVSPymuqFpSji9eHaEFY1cGOzx8b0vqmtnGZx+mjI+vqJrnuw/Jn4w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=J/NLaGWT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Zl1pqF3Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F19AC4CEEB;
-	Mon,  9 Jun 2025 22:54:04 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="J/NLaGWT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC5D1C4CEEF;
+	Mon,  9 Jun 2025 22:54:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749509646;
-	bh=04q1KZcGBZLhykwygsh5lwOi3j6Zyp50Z1kiPl323fI=;
+	s=k20201202; t=1749509647;
+	bh=RmccZqSeppAcUrJV/EL0pckuGhOUvNOVwR5zgBCk2Kk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zl1pqF3QHFHNsDT+4fap0cov6qmg9ML/ztsEDXxKtYFC2F7+2GIi8Z/tdjIH2BXTk
-	 cZ7ngu4hA6ceQoFH7cleShc63mbGBD3/AkYaxoO/KtRe/H6FpY1CNsejMZGc5fB5Vj
-	 aUuobnrTSsqkGhKIgbrh2bPvSiZtcVQfaC4vmFSlVYZyqqahzTskH88+LPviljeWwT
-	 Pv5CLc8agh5qZsNvy7zIZoHa3DVxQ3jDCRNf5hDvRUBYsD5AjUZmrZRWR+ZrOREND4
-	 nY5sV7hKkVl2T81jUZmHyXXpNp6wEwMDP9fetgKNL/cFhir3C8SlW/h3DUM+S7C0RI
-	 rrJ+zLoxrLz5w==
+	b=J/NLaGWTQFjVJMPFsEe4EiRL+txSXg++XquOhFky6tytlU0ND0HaULS3uNuW7t2be
+	 ZJz++EQXckIzU7wYqCBgS6qJDXDav8MtkPFhs+dz/0ahT9Lf55XFIT2s5/mKMEA5PQ
+	 cep8kMJGHr2xTUwN/zugXSuyJNkl/FlcWdl3eLVQblc4UPMLN33zXs5VLmZP88v8u3
+	 Wh8PvEp/5rgxrGs5vbIdoHqKuD04rUZ3NjGXGJFX7UyajqM7JH7ufAh1kwbdKDnbOJ
+	 HLmoUD3GgqK06G/jW5UUBJcwQdDdvRw9FG3RbeqNVrgGwI85Sgv8JZNSNFKau4QdN2
+	 Tot3tkWWZttag==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Mario Limonciello <mario.limonciello@amd.com>,
-	Takashi Iwai <tiwai@suse.de>,
+Cc: Dmitry Kandybka <d.kandybka@gmail.com>,
+	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>,
-	hulianqin@vivo.com,
-	lina+kernel@asahilina.net,
-	wangdicheng@kylinos.cn,
-	cyan.vtb@gmail.com,
-	dan.carpenter@linaro.org,
-	bsevens@google.com,
-	shenlichuan@vivo.com
-Subject: [PATCH AUTOSEL 5.15 3/5] ALSA: usb-audio: Add a quirk for Lenovo Thinkpad Thunderbolt 3 dock
-Date: Mon,  9 Jun 2025 18:53:56 -0400
-Message-Id: <20250609225359.1444537-3-sashal@kernel.org>
+	xiubli@redhat.com,
+	ceph-devel@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.15 4/5] ceph: fix possible integer overflow in ceph_zero_objects()
+Date: Mon,  9 Jun 2025 18:53:57 -0400
+Message-Id: <20250609225359.1444537-4-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250609225359.1444537-1-sashal@kernel.org>
 References: <20250609225359.1444537-1-sashal@kernel.org>
@@ -56,120 +52,104 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 5.15.185
 Content-Transfer-Encoding: 8bit
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Dmitry Kandybka <d.kandybka@gmail.com>
 
-[ Upstream commit 4919353c7789b8047e06a9b2b943f775a8f72883 ]
+[ Upstream commit 0abd87942e0c93964e93224836944712feba1d91 ]
 
-The audio controller in the Lenovo Thinkpad Thunderbolt 3 dock doesn't
-support reading the sampling rate.
+In 'ceph_zero_objects', promote 'object_size' to 'u64' to avoid possible
+integer overflow.
 
-Add a quirk for it.
+Compile tested only.
 
-Suggested-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://patch.msgid.link/20250527172657.1972565-1-superm1@kernel.org
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Signed-off-by: Dmitry Kandybka <d.kandybka@gmail.com>
+Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 **YES**
 
-## Detailed Analysis for Backporting Decision
+This commit should be backported to stable kernel trees. Here's my
+detailed analysis:
 
-### **Code Change Assessment**
+## Why This Should Be Backported
 
-The commit adds a single line to the USB audio quirks table:
+### 1. **Clear Bug Fix with User Impact**
+The commit fixes a real integer overflow vulnerability in
+`ceph_zero_objects()` where `s32 object_size` is multiplied by `s32
+stripe_count` to calculate `u64 object_set_size`. When the layout values
+exceed 2^31, the multiplication can underflow, leading to:
+- Incorrect loop bounds in the zeroing logic
+- Potential infinite loops or premature termination
+- Data integrity issues during hole punching operations
+- Incorrect `do_div()` operations
+
+### 2. **Affects Critical Kernel Functionality**
+This bug impacts core filesystem operations that users depend on:
+- `fallocate()` system call with `FALLOC_FL_PUNCH_HOLE`
+- File sparse operations used by databases, VMs, backup tools
+- Copy-on-write optimizations in Ceph filesystems
+
+### 3. **Small, Contained, and Low-Risk Fix**
+The code change is minimal and safe:
 ```c
-DEVICE_FLG(0x17ef, 0x3083, /* Lenovo TBT3 dock */
-           QUIRK_FLAG_GET_SAMPLE_RATE),
+- u64 object_set_size = object_size * stripe_count;
++       u64 object_set_size = (u64) object_size * stripe_count;
 ```
 
-This follows the **exact same pattern** as similar commits marked
-"Backport Status: YES" in the reference examples:
+This fix:
+- Promotes `object_size` to `u64` before multiplication, preventing
+  overflow
+- Has no functional side effects beyond fixing the bug
+- Maintains consistency with the underlying `u32` data types in
+  `ceph_file_layout`
+- Cannot introduce regressions
 
-1. **Similar Commit #1** (Audioengine D1): Same flag, same structure,
-   marked YES
-2. **Similar Commit #3** (MCT Trigger): Same flag, same pattern, marked
-   YES
-3. **Similar Commit #4** (B850V3 CP2114): Same flag, includes Cc:
-   stable@vger.kernel.org, marked YES
-4. **Similar Commit #5** (LifeCam HD-6000): Same flag, includes Cc:
-   stable@vger.kernel.org, marked YES
+### 4. **Follows Stable Tree Criteria**
+- **Important bugfix**: Prevents potential data corruption and system
+  instability
+- **Minimal risk**: Single-line change with no architectural impact
+- **Confined scope**: Only affects Ceph filesystem's hole punching logic
+- **No new features**: Pure defensive fix
 
-### **Why This Should Be Backported**
+### 5. **Matches Successful Backport Pattern**
+This commit is very similar to **Similar Commit #1** (marked YES for
+backport) which also:
+- Fixed a type promotion bug affecting critical operations
+- Had minimal code changes with clear safety benefits
+- Addressed potential data integrity issues
+- Was explicitly marked with `Cc: stable@vger.kernel.org`
 
-**1. Fixes User-Affecting Bug**
-- Without this quirk, users experience **noisy error messages** like
-  "cannot get freq at ep 0x82"
-- Creates a **15-second delay** during audio initialization (as
-  mentioned in reference commit #3)
-- Results in **inconsistent audio behavior** during device startup
+### 6. **Proactive Hardening Value**
+While the bug requires specific conditions to trigger (large object
+sizes or stripe counts), backporting provides:
+- Defense against potential malicious layouts from compromised metadata
+  servers
+- Protection for users with unusual but valid filesystem configurations
+- General robustness improvement for production systems
 
-**2. Minimal Risk and Contained Change**
-- **Single line addition** to a device-specific quirks table
-- **No architectural changes** - uses existing, well-tested
-  QUIRK_FLAG_GET_SAMPLE_RATE mechanism
-- **Cannot break existing functionality** - only affects this specific
-  device (0x17ef, 0x3083)
-- **Well-established pattern** - this flag is used by 26+ other devices
-  successfully
+The fix has no downside risk and provides meaningful protection against
+a real integer overflow scenario that could affect data integrity in
+Ceph filesystems.
 
-**3. Follows Stable Tree Criteria**
-- **Important bugfix**: Eliminates timeout delays and error messages for
-  affected users
-- **Minimal regression risk**: Quirks table additions are extremely safe
-- **Device-specific**: Only affects Lenovo Thunderbolt 3 dock users
-- **User-visible improvement**: Faster audio initialization, cleaner
-  kernel logs
+ fs/ceph/file.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-**4. Historical Precedent**
-- **Reference commits #4 and #5** explicitly include `Cc:
-  stable@vger.kernel.org` for identical changes
-- **All similar commits** in the reference examples with this flag
-  pattern are marked "Backport Status: YES"
-- This type of device quirk is **routinely backported** to stable
-  kernels
-
-**5. Commercial Device Impact**
-- Lenovo ThinkPad Thunderbolt 3 docks are **widely deployed** in
-  enterprise environments
-- Users expect **stable, reliable audio** from docking solutions
-- **15-second delays** and error messages create poor user experience in
-  professional settings
-
-### **Code Pattern Confirmation**
-
-The QUIRK_FLAG_GET_SAMPLE_RATE mechanism is specifically designed for
-devices that don't support sample rate reading. From the kernel code
-analysis:
-
-- **Problem**: Device times out when kernel tries to read back sample
-  rate
-- **Solution**: Skip the read attempt entirely for known problematic
-  devices
-- **Result**: Faster initialization, no error messages, identical audio
-  functionality
-
-This is a **textbook example** of a stable kernel backport candidate:
-small, safe, user-affecting bugfix that follows established patterns and
-has zero regression risk.
-
- sound/usb/quirks.c | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
-index 488fcdbb6a2d4..f24a334316a29 100644
---- a/sound/usb/quirks.c
-+++ b/sound/usb/quirks.c
-@@ -1877,6 +1877,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
- 		   QUIRK_FLAG_DISABLE_AUTOSUSPEND),
- 	DEVICE_FLG(0x17aa, 0x104d, /* Lenovo ThinkStation P620 Internal Speaker + Front Headset */
- 		   QUIRK_FLAG_DISABLE_AUTOSUSPEND),
-+	DEVICE_FLG(0x17ef, 0x3083, /* Lenovo TBT3 dock */
-+		   QUIRK_FLAG_GET_SAMPLE_RATE),
- 	DEVICE_FLG(0x1852, 0x5062, /* Luxman D-08u */
- 		   QUIRK_FLAG_ITF_USB_DSD_DAC | QUIRK_FLAG_CTL_MSG_DELAY),
- 	DEVICE_FLG(0x1852, 0x5065, /* Luxman DA-06 */
+diff --git a/fs/ceph/file.c b/fs/ceph/file.c
+index f3fba3d27efa6..e92a10ba58b3f 100644
+--- a/fs/ceph/file.c
++++ b/fs/ceph/file.c
+@@ -2032,7 +2032,7 @@ static int ceph_zero_objects(struct inode *inode, loff_t offset, loff_t length)
+ 	s32 stripe_unit = ci->i_layout.stripe_unit;
+ 	s32 stripe_count = ci->i_layout.stripe_count;
+ 	s32 object_size = ci->i_layout.object_size;
+-	u64 object_set_size = object_size * stripe_count;
++	u64 object_set_size = (u64) object_size * stripe_count;
+ 	u64 nearly, t;
+ 
+ 	/* round offset up to next period boundary */
 -- 
 2.39.5
 
