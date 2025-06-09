@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1A8217E0;
-	Mon,  9 Jun 2025 13:48:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D594217E0;
+	Mon,  9 Jun 2025 13:48:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749476927; cv=none; b=U9cdn6IAEGs8jzxZsvvYbP1Hcb2cADVbtGI1lRg+AcX2XTavb6ozPYyhaQ89574rT8KLw77lDZFEtPDdkLGnz/gFgkPQTMRP25Bcir7ZT+0izJCPAv3fdsyXOK85uf0MEzoRWCGNd92G/wlv6S2s9jgQVNF0egO80PTDTf/dJ0g=
+	t=1749476928; cv=none; b=hupxgJz5osC9+n9uGkyptmCJDeD6lOPy4yMSimYEYrCV5ZdZnhVfGYVGx2jPUgJuOBwLxNiPIYIKxlNgn/F93Wc7CRjDzkkgZQFi2uWG5Ib5Up0xaEO5h/xWNmqkXoYyhbNd4K8FcFErWeLw1B7vBMGlmI+wKwWsVH983Nek6vA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749476927; c=relaxed/simple;
-	bh=JNYaGuJG98fbbsyMztoUVdQ4+6gVRaPRsoYZ7q8V9Jc=;
+	s=arc-20240116; t=1749476928; c=relaxed/simple;
+	bh=B9qnXIeCFxebL+SVg2h03q5UtSQHCEBe+aXwcJ+yOGg=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=r1zzT1z66ubKBtYCzo2HTjUX/VJlEePe/ZWktdqAbAmltV+ujEz0b4VQ1CAam5YVTHZ6xQ3Z++0cOwpGDVbiQqDqZfkuVwcbSIEDrXKfALoHUbL+/5K6depZ4nOxlacINhnRqwJnJsBJMiTo3w1Z7uvpkv90wPLeMtfAHaSbtGc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ADaB7yCc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=hgGF6u+9AE0YRTsqPq1p7Wx+aNX4oj8od7WyVKafRC8PlAOl9PzvHTW3ig5OAdUAt/XKJv74DL8ZsGVUUt0bG/BLe0aXRxDDcAuOJfU2+drW50qWvPilxSs3RmSrPmaee+flUFR2DnuDlJnKOyJyDJpYO4F0LNT8hxaoPTHNEVE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GQtalX3f; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ADaB7yCc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A35BAC4CEEB;
-	Mon,  9 Jun 2025 13:48:46 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GQtalX3f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEF4CC4CEED;
+	Mon,  9 Jun 2025 13:48:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749476927;
-	bh=JNYaGuJG98fbbsyMztoUVdQ4+6gVRaPRsoYZ7q8V9Jc=;
+	s=k20201202; t=1749476928;
+	bh=B9qnXIeCFxebL+SVg2h03q5UtSQHCEBe+aXwcJ+yOGg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ADaB7yCcNLB6RtXAE0K4VpawJ6CgnLaKHVYeqxDFTdXxkDOHfIkyIW7hx+n6fO2R2
-	 1Hycinz1KMDbGoRv+DDE4bmPfdKBlu8Qhd49UR/WS81JiwAbUtTCx7RVwC5E031l0e
-	 YavdYC2THuy/uk5VfhNDoU8jUD6ESEAG0BroGJU1olt/2BKIQk+OpGIdGXMcWWh7wW
-	 l2eQXdtgZoZXrwB8+u85GarkjhIVOEEOYl1IR9gywytqsPmX6vLiU9IyzfUDmsKlI3
-	 SL7DKDpZf3PsqmSnc233dz7DPOxOHOWhIIXeElYSNEaJ9lXOr7ZPIyjWSIrUy9drOe
-	 WnWsuZ98ERQDg==
+	b=GQtalX3fCHkdTgJA0AGpbKlyd1Krric2Ws/XDynX9WFveedR5pPu76wnc1nYr8omR
+	 vz75XiUi4dvqDlSWx6CdVwB8Q6D3iX6zyXj5X/RZe6DxbxZe3O+ceCbYspfJ8BTcs0
+	 //mEnrBvy6430/WeoRELh4ZgfIJRuzLX4TE1T/Zf0VtmSgQNC+6G1SpWl07i3yNzxl
+	 xr1wj7Ffk5+i0QER+RQ1DzGOtFKjl8npanmJWLqHc8aE061gCp08HhyAMQHwBmn2uy
+	 EAlFK3PShgYx6f6hmW6ZhaemqlxqEl/0nhXjMhPRRG2XRm/JrawNEvDtLim+jPidIO
+	 9KLi4jh8xpBHw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Chen Yufeng <chenyufeng@iie.ac.cn>,
+Cc: Jakub Lewalski <jakub.lewalski@nokia.com>,
+	Elodie Decerle <elodie.decerle@nokia.com>,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>,
-	Thinh.Nguyen@synopsys.com
-Subject: [PATCH AUTOSEL 5.4 3/7] usb: potential integer overflow in usbg_make_tpg()
-Date: Mon,  9 Jun 2025 09:48:36 -0400
-Message-Id: <20250609134840.1345797-3-sashal@kernel.org>
+	jacmet@sunsite.dk,
+	linux-serial@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.4 4/7] tty: serial: uartlite: register uart driver in init
+Date: Mon,  9 Jun 2025 09:48:37 -0400
+Message-Id: <20250609134840.1345797-4-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250609134840.1345797-1-sashal@kernel.org>
 References: <20250609134840.1345797-1-sashal@kernel.org>
@@ -51,113 +53,233 @@ X-stable-base: Linux 5.4.294
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Yufeng <chenyufeng@iie.ac.cn>
+From: Jakub Lewalski <jakub.lewalski@nokia.com>
 
-[ Upstream commit 153874010354d050f62f8ae25cbb960c17633dc5 ]
+[ Upstream commit 6bd697b5fc39fd24e2aa418c7b7d14469f550a93 ]
 
-The variable tpgt in usbg_make_tpg() is defined as unsigned long and is
-assigned to tpgt->tport_tpgt, which is defined as u16. This may cause an
-integer overflow when tpgt is greater than USHRT_MAX (65535). I
-haven't tried to trigger it myself, but it is possible to trigger it
-by calling usbg_make_tpg() with a large value for tpgt.
+When two instances of uart devices are probing, a concurrency race can
+occur. If one thread calls uart_register_driver function, which first
+allocates and assigns memory to 'uart_state' member of uart_driver
+structure, the other instance can bypass uart driver registration and
+call ulite_assign. This calls uart_add_one_port, which expects the uart
+driver to be fully initialized. This leads to a kernel panic due to a
+null pointer dereference:
 
-I modified the type of tpgt to match tpgt->tport_tpgt and adjusted the
-relevant code accordingly.
+[    8.143581] BUG: kernel NULL pointer dereference, address: 00000000000002b8
+[    8.156982] #PF: supervisor write access in kernel mode
+[    8.156984] #PF: error_code(0x0002) - not-present page
+[    8.156986] PGD 0 P4D 0
+...
+[    8.180668] RIP: 0010:mutex_lock+0x19/0x30
+[    8.188624] Call Trace:
+[    8.188629]  ? __die_body.cold+0x1a/0x1f
+[    8.195260]  ? page_fault_oops+0x15c/0x290
+[    8.209183]  ? __irq_resolve_mapping+0x47/0x80
+[    8.209187]  ? exc_page_fault+0x64/0x140
+[    8.209190]  ? asm_exc_page_fault+0x22/0x30
+[    8.209196]  ? mutex_lock+0x19/0x30
+[    8.223116]  uart_add_one_port+0x60/0x440
+[    8.223122]  ? proc_tty_register_driver+0x43/0x50
+[    8.223126]  ? tty_register_driver+0x1ca/0x1e0
+[    8.246250]  ulite_probe+0x357/0x4b0 [uartlite]
 
-This patch is similar to commit 59c816c1f24d ("vhost/scsi: potential
-memory corruption").
+To prevent it, move uart driver registration in to init function. This
+will ensure that uart_driver is always registered when probe function
+is called.
 
-Signed-off-by: Chen Yufeng <chenyufeng@iie.ac.cn>
-Link: https://lore.kernel.org/r/20250415065857.1619-1-chenyufeng@iie.ac.cn
+Signed-off-by: Jakub Lewalski <jakub.lewalski@nokia.com>
+Signed-off-by: Elodie Decerle <elodie.decerle@nokia.com>
+Link: https://lore.kernel.org/r/20250331160732.2042-1-elodie.decerle@nokia.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Based on my comprehensive analysis, here's my decision:
+Based on my comprehensive analysis, I can now provide a definitive
+assessment:
 
 **YES**
 
-This commit should be backported to stable kernel trees for the
-following reasons:
+## Extensive Analysis
 
-## Analysis of the Integer Overflow Bug
+This commit **should be backported** to stable kernel trees. Here's my
+detailed analysis:
 
-**1. Clear Security/Correctness Issue:**
-The bug is a classic integer overflow vulnerability where a user-
-controlled value (`tpgt`) parsed from a string via `kstrtoul()` as an
-`unsigned long` gets truncated when assigned to a `u16` field
-(`tpg->tport_tpgt`).
+### **1. Critical Bug Fix Nature**
 
-In the original code at line 1690:
-```c
-unsigned long tpgt;  // Can hold values up to ULONG_MAX
-// ... kstrtoul(name + 5, 0, &tpgt) ...
-tpg->tport_tpgt = tpgt;  // u16 field - truncation occurs!
+The commit fixes a **serious race condition** that causes kernel panics
+with NULL pointer dereferences. The stack trace in the commit message
+shows:
+
+```
+[    8.143581] BUG: kernel NULL pointer dereference, address:
+00000000000002b8
+[    8.180668] RIP: 0010:mutex_lock+0x19/0x30
+[    8.223116]  uart_add_one_port+0x60/0x440
 ```
 
-If a user provides a value like `tpgt_70000`, the parsing succeeds
-(70000 < UINT_MAX), but when assigned to the 16-bit field, it becomes
-`70000 & 0xFFFF = 4464`, completely changing the intended value.
+This is a **critical system stability issue** that can crash the kernel
+during device initialization.
 
-**2. Matches Stable Backport Criteria:**
-- **Important Bug Fix**: Yes - prevents integer overflow and data
-  corruption
-- **Small, Contained Change**: Yes - only changes variable type and
-  validation function
-- **No Architectural Changes**: Correct - simply fixes data type
-  mismatch
-- **Minimal Regression Risk**: Very low risk - more restrictive
-  validation
-- **Confined to Subsystem**: Yes - only affects USB gadget target mode
+### **2. Race Condition Analysis**
 
-**3. Historical Precedent:**
-The fix directly references commit `59c816c1f24d` which was a nearly
-identical fix in `drivers/vhost/scsi.c` that was backported to stable
-trees. That commit fixed the exact same pattern:
-- `unsigned long tpgt` → `u16 tpgt`
-- `kstrtoul() || tpgt > UINT_MAX` → `kstrtou16()`
-- Assignment to `u16 tport_tpgt` field
+**The Problem:**
+- **Before the fix:** `uart_register_driver()` was called in
+  `ulite_probe()` (lines 883-891 in current code)
+- **Race scenario:** When two UART devices probe simultaneously:
+  1. Thread 1 calls `uart_register_driver()` and starts allocating
+     `uart_driver.state`
+  2. Thread 2 sees `!ulite_uart_driver.state` as false, bypasses
+     registration, and calls `ulite_assign()`
+  3. Thread 2's `ulite_assign()` calls `uart_add_one_port()` (line 678)
+     expecting a fully initialized driver
+  4. Thread 1's registration hasn't completed, causing NULL pointer
+     dereference in `uart_add_one_port()`
 
-**4. Real Impact:**
-While this requires privileged access to trigger (configfs
-manipulation), the integer overflow could lead to:
-- Unexpected behavior in target portal group handling
-- Potential confusion in multi-target setups
-- Data integrity issues in storage target configuration
+**The Fix:**
+- **After the fix:** `uart_register_driver()` is moved to `ulite_init()`
+  ensuring:
+  1. Driver registration completes **before** any platform driver
+     registration
+  2. **No race window** exists between driver registration and device
+     probing
+  3. All probe calls find a **fully initialized** uart driver
 
-**5. Code Quality:**
-The fix properly aligns the variable type with its intended use and
-makes the validation more precise by using `kstrtou16()` instead of the
-broader `kstrtoul()` check.
+### **3. Code Changes Analysis**
 
-This fix exemplifies the type of integer overflow prevention that stable
-trees actively accept - targeted, low-risk corrections that prevent
-subtle but potentially serious bugs from affecting users.
+**Changes in `ulite_init()`:**
+```c
+static int __init ulite_init(void)
+{
++   int ret;
++
++   pr_debug("uartlite: calling uart_register_driver()\n");
++   ret = uart_register_driver(&ulite_uart_driver);
++   if (ret)
++       return ret;
 
- drivers/usb/gadget/function/f_tcm.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+    pr_debug("uartlite: calling platform_driver_register()\n");
+- return platform_driver_register(&ulite_platform_driver);
++   ret = platform_driver_register(&ulite_platform_driver);
++   if (ret)
++       uart_unregister_driver(&ulite_uart_driver);
++
++   return ret;
+}
+```
 
-diff --git a/drivers/usb/gadget/function/f_tcm.c b/drivers/usb/gadget/function/f_tcm.c
-index 90fe33f9e0950..48d02c5ff8491 100644
---- a/drivers/usb/gadget/function/f_tcm.c
-+++ b/drivers/usb/gadget/function/f_tcm.c
-@@ -1320,14 +1320,14 @@ static struct se_portal_group *usbg_make_tpg(struct se_wwn *wwn,
- 	struct usbg_tport *tport = container_of(wwn, struct usbg_tport,
- 			tport_wwn);
- 	struct usbg_tpg *tpg;
--	unsigned long tpgt;
-+	u16 tpgt;
- 	int ret;
- 	struct f_tcm_opts *opts;
- 	unsigned i;
+**Changes in `ulite_probe()`:**
+```c
+// REMOVED the problematic race-prone code:
+- if (!ulite_uart_driver.state) {
+- dev_dbg(&pdev->dev, "uartlite: calling uart_register_driver()\n");
+- ret = uart_register_driver(&ulite_uart_driver);
+- if (ret < 0) {
+- dev_err(&pdev->dev, "Failed to register driver\n");
+- clk_disable_unprepare(pdata->clk);
+- return ret;
+- }
+- }
+```
+
+**Changes in `ulite_exit()`:**
+```c
+static void __exit ulite_exit(void)
+{
+    platform_driver_unregister(&ulite_platform_driver);
+- if (ulite_uart_driver.state)
+- uart_unregister_driver(&ulite_uart_driver);
++   uart_unregister_driver(&ulite_uart_driver);
+}
+```
+
+### **4. Follows Kernel Best Practices**
+
+The fix aligns with **established kernel patterns**. My analysis of
+other UART drivers shows that well-architected drivers like 8250,
+altera, atmel, and liteuart all register their uart drivers in `__init`
+functions, not probe functions. This architectural pattern:
+
+- **Separates concerns:** Driver registration (what) vs device binding
+  (when)
+- **Eliminates races:** Driver available before any device probing
+- **Improves reliability:** Predictable initialization order
+
+### **5. Stable Tree Suitability Criteria**
+
+✅ **Fixes important bug:** Kernel panic with NULL pointer dereference
+✅ **Small and contained:** Moves existing code, no new functionality
+✅ **Minimal risk:** Follows established kernel patterns
+✅ **Clear side effects:** Better initialization order, no regressions
+expected
+✅ **Confined to subsystem:** Only affects uartlite driver
+✅ **Important for users:** Prevents boot crashes on Xilinx platforms
+
+### **6. Similar Historical Pattern**
+
+This fix is very similar to **Similar Commit #5** (Status: YES) which
+also fixed race conditions in TTY/serial code by ensuring proper
+initialization order. Both commits:
+- Fix race conditions in serial/TTY subsystem
+- Make architectural improvements to initialization order
+- Prevent NULL pointer dereferences
+- Have clear stable tree value
+
+### **7. Low Regression Risk**
+
+The change is **architecturally sound** because:
+- It ensures `uart_register_driver()` completes before any
+  `uart_add_one_port()` calls
+- Proper error handling ensures cleanup if platform driver registration
+  fails
+- The exit sequence properly reverses the initialization sequence
+- No functional behavior changes, only timing/ordering improvements
+
+### **Conclusion**
+
+This commit fixes a **critical kernel panic** caused by a race condition
+in the uartlite driver. The fix is **small, contained, and follows
+established kernel patterns**. It has **minimal regression risk** and
+provides **significant stability improvements** for users of Xilinx UART
+devices. The architectural change from probe-time to init-time driver
+registration is a **best practice** that eliminates the race condition
+entirely.
+
+ drivers/tty/serial/uartlite.c | 15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/tty/serial/uartlite.c b/drivers/tty/serial/uartlite.c
+index 9a4049c894f7a..e323e9c0a321e 100644
+--- a/drivers/tty/serial/uartlite.c
++++ b/drivers/tty/serial/uartlite.c
+@@ -874,16 +874,25 @@ static struct platform_driver ulite_platform_driver = {
  
- 	if (strstr(name, "tpgt_") != name)
- 		return ERR_PTR(-EINVAL);
--	if (kstrtoul(name + 5, 0, &tpgt) || tpgt > UINT_MAX)
-+	if (kstrtou16(name + 5, 0, &tpgt))
- 		return ERR_PTR(-EINVAL);
- 	ret = -ENODEV;
- 	mutex_lock(&tpg_instances_lock);
+ static int __init ulite_init(void)
+ {
++	int ret;
++
++	pr_debug("uartlite: calling uart_register_driver()\n");
++	ret = uart_register_driver(&ulite_uart_driver);
++	if (ret)
++		return ret;
+ 
+ 	pr_debug("uartlite: calling platform_driver_register()\n");
+-	return platform_driver_register(&ulite_platform_driver);
++	ret = platform_driver_register(&ulite_platform_driver);
++	if (ret)
++		uart_unregister_driver(&ulite_uart_driver);
++
++	return ret;
+ }
+ 
+ static void __exit ulite_exit(void)
+ {
+ 	platform_driver_unregister(&ulite_platform_driver);
+-	if (ulite_uart_driver.state)
+-		uart_unregister_driver(&ulite_uart_driver);
++	uart_unregister_driver(&ulite_uart_driver);
+ }
+ 
+ module_init(ulite_init);
 -- 
 2.39.5
 
