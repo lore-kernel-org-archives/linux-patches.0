@@ -1,319 +1,292 @@
-Received: from NAM02-SN1-obe.outbound.protection.outlook.com (mail-sn1nam02on2077.outbound.protection.outlook.com [40.107.96.77])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.8])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65C3A21D595;
-	Mon,  9 Jun 2025 18:45:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.96.77
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749494747; cv=fail; b=pwecjA42K+CFf48LiCwjyfjldECZkluizzaTe6iphs/kuRMmmpnhCVHf0C0ehqOxHnu1i2G+JM8cojftQb3AqGFljoqzsZEqgrfHbF032xdE2WB85KsQ/EByXslLBr5VQ+vFdOH/AloOzflsA5QUJxaUQAVnq1Hbor5+jWKbFEU=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749494747; c=relaxed/simple;
-	bh=aRyup2AXGnBBeMGUP5oDORPrO3M2Dg6xdO31PE02zf4=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=l9B8V9yu8OtkL3fR2bSqr4iD65y7BWKhxtx/bxb9IRAEhwCKIX1Cn5o3wW37DpoB6BqhJM6yF1/jPmiLsSWiIB2s0oGi/GDR0uYd1m/uTJ5qKJb1/tvRx2Q836jIUcmVL+M+a9Els21Il8PoumUH0YvgEAtGsjTVLV04G6CrUgc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=gnVhvZVg; arc=fail smtp.client-ip=40.107.96.77
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9A8321CC57
+	for <patches@lists.linux.dev>; Mon,  9 Jun 2025 18:49:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.8
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1749494987; cv=none; b=gZ5bHGtohvewnO8RniT2Z1tL6QmgcNlwYLmw1i7EwnOhfOHMBnLd1Sj7VOnzN90we/e/LjwQZf+S2eCfspdNK1qm0H3M+V8PpoVds3amo/mug43OK2yOmXuN3fP6iCB/w9p19GrBDqJHJR7CekEQXHPT7PvEFBQ8iMJhslT/3vU=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1749494987; c=relaxed/simple;
+	bh=ui78fKG/j0BBOrRHqLHpqq5sKokZGqYCCMrjcYPaejI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=i/gmrevLUUKGwcJ9rFluGJy678skCYMXBowCabmkS3gLwDEqruBXku5+tvX7UWppuaIbnKOgC+vN7UiG1DwPno8WCYUTFChouY0sq6NA5+PqVHoXU+RHiMWQi5ZYEtfm6YqOVeD1FnMa5XFhu1TEY/LMT0cX8coqbiiyJGQG9Cs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=V/9L7iLM; arc=none smtp.client-ip=192.198.163.8
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="gnVhvZVg"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=aNVJleDu4DWhA0TTf4xZzKm+GtB+/4AC2kXp6WNNqPp62tshWDwXCJO1o+Jz8UzmeRZ/Dnu2HiSTiwpxjJYCarEUm+Ha8ympacfngYWq8CwUN7OCU8VcVwEpblCjIP0qq/Edk1ijpl5U6vrsdKI3Mk1+X057LcsyZfIo5+i3f9jnxWuRdk3IXZLS3GcXOS3s8AMdbh3XqXFr9CicazbybewwfpVy4tLioQ2hV2kefSlw0wrnGh1BMGpY1rbm2BQ7/asn/ip1LhIEIA8CEDTzBFHL1k5j6UuIk9X/TwCBApHejCiq5U4x7ARpIW8ST72aMguBP4CUrMRtCUwIEtTk2A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=FL5dOOTLLPQaxOj6vypBxQbFM19fVrPBTc0ANlQPQ5Q=;
- b=aIiXwWtdqydY1IL2FGSFuioo4ZuzQoQ7gYQMTY6ziWhNAm2m598GtKBiBVSMwvJczbEQ8EfFmm2n5Gb7Rw++K7V+hjN1VmFsANBGTyWuLGJGMmhRRCSWxwD3Rwc/1nkq5GxXYQvvTvIcJvzbyiSIzRjlSavUNyw5Hw6/q93g4FOC/7i7J/BnzLD71PdswgU+bpYdkyTUnwR2PWtLqDRwmEtTYvsW4/0Fa9zIcPdLgo9i326fbVvWdnyEhgP/OeNZLEK17tQFJ6yf2NioGNuS8jkDKAxISHXX+4+dlfe+00Q9QEokpxkvkodu7xtauevERb2neuxRiAnT0c0hWDjh6A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.118.232) smtp.rcpttodomain=8bytes.org smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=FL5dOOTLLPQaxOj6vypBxQbFM19fVrPBTc0ANlQPQ5Q=;
- b=gnVhvZVgYv/LlnmmSzXvm/1jAVqvm058GP2axk19Nmo4BwodN2+0hqlFB6fre4O82e8BKja2y9dikqhrn1Qb1krsZkKpTfGLJS+/18RtNuvv7fF+AUnK+hBouzXXmBinEQ85uhAK+ywJKsrfUSQSBohXfM4/EeeDcM5jkqMD3szw+TQCACf7dix/hgH2HEYS25WAEMt6SNKcAPrOsbsGi1YsG7LNcM2FGHkWNHVc/Am1dV0yBrixXK/a4cZ+r3WBQzYZiAKnAHkIACeCubC9kBm+KnXqAHRVnFIjuyLVgy+U/zDM/4SQuZa8602MpGu6aREsbhh7fvJm0v3A3bu8TA==
-Received: from BN0PR02CA0027.namprd02.prod.outlook.com (2603:10b6:408:e4::32)
- by BL1PR12MB5923.namprd12.prod.outlook.com (2603:10b6:208:39a::22) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8792.34; Mon, 9 Jun
- 2025 18:45:41 +0000
-Received: from BL02EPF0001A105.namprd05.prod.outlook.com
- (2603:10b6:408:e4:cafe::a1) by BN0PR02CA0027.outlook.office365.com
- (2603:10b6:408:e4::32) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.8792.35 via Frontend Transport; Mon,
- 9 Jun 2025 18:45:41 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.232)
- smtp.mailfrom=nvidia.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.118.232 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.118.232; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.118.232) by
- BL02EPF0001A105.mail.protection.outlook.com (10.167.241.137) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.8835.15 via Frontend Transport; Mon, 9 Jun 2025 18:45:41 +0000
-Received: from drhqmail202.nvidia.com (10.126.190.181) by mail.nvidia.com
- (10.127.129.5) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Mon, 9 Jun 2025
- 11:45:21 -0700
-Received: from drhqmail202.nvidia.com (10.126.190.181) by
- drhqmail202.nvidia.com (10.126.190.181) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.14; Mon, 9 Jun 2025 11:45:21 -0700
-Received: from Asurada-Nvidia.nvidia.com (10.127.8.14) by mail.nvidia.com
- (10.126.190.181) with Microsoft SMTP Server id 15.2.1544.14 via Frontend
- Transport; Mon, 9 Jun 2025 11:45:20 -0700
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: <jgg@nvidia.com>, <joro@8bytes.org>, <will@kernel.org>,
-	<robin.murphy@arm.com>, <bhelgaas@google.com>
-CC: <iommu@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
-	<linux-pci@vger.kernel.org>, <patches@lists.linux.dev>,
-	<pjaroszynski@nvidia.com>, <vsethi@nvidia.com>
-Subject: [PATCH RFC v1 1/2] iommu: Introduce iommu_dev_reset_prepare() and iommu_dev_reset_done()
-Date: Mon, 9 Jun 2025 11:45:13 -0700
-Message-ID: <4153fb7131dda901b13a2e90654232fe059c8f09.1749494161.git.nicolinc@nvidia.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <cover.1749494161.git.nicolinc@nvidia.com>
-References: <cover.1749494161.git.nicolinc@nvidia.com>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="V/9L7iLM"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1749494986; x=1781030986;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:content-transfer-encoding:in-reply-to;
+  bh=ui78fKG/j0BBOrRHqLHpqq5sKokZGqYCCMrjcYPaejI=;
+  b=V/9L7iLM3OxycMUdHJ/r838FHoNf+NTCOJFOZfKLHyu0/80xSil/1LZh
+   /mD1XBXUSd+YY+5IvgRFRv3DNINgTuZRrEWOkxyipYsusE9lYcOpaUErj
+   gwaau35vHmBqHl+30H/4BUc2iFM47g0ZBIavLDcN8b1eAvxvaGpRhokpr
+   NQwZl20E+GgOQw1VAXUqNl8lXvLxmQwAw+StgFxYfPTjv5bTbuJs8xy5m
+   oWgUhueCnpXvZqEMe1RNgKEjNOlpIYwiQu7y747TTq+I9yET8LuUvnhOn
+   cFl3GRVQo8nod9CKu6ca17v/VGGcuNIOVt1Ft5yl+3on9PIwZ8k60x3mu
+   A==;
+X-CSE-ConnectionGUID: buzCi7ttREOKx6Cq6QaFqg==
+X-CSE-MsgGUID: 6gA+wSFhRB2RS+hCuPDOUA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11459"; a="69145275"
+X-IronPort-AV: E=Sophos;i="6.16,223,1744095600"; 
+   d="scan'208";a="69145275"
+Received: from orviesa001.jf.intel.com ([10.64.159.141])
+  by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Jun 2025 11:49:45 -0700
+X-CSE-ConnectionGUID: 7ckXQPO2Rmy/E1/meaBz/w==
+X-CSE-MsgGUID: B7ZqAD11S4uaq/hmoJ76/A==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,223,1744095600"; 
+   d="scan'208";a="183775988"
+Received: from agluck-desk3.sc.intel.com (HELO agluck-desk3) ([172.25.103.51])
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Jun 2025 11:49:44 -0700
+Date: Mon, 9 Jun 2025 11:49:42 -0700
+From: "Luck, Tony" <tony.luck@intel.com>
+To: Reinette Chatre <reinette.chatre@intel.com>
+Cc: Fenghua Yu <fenghuay@nvidia.com>,
+	Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
+	Peter Newman <peternewman@google.com>,
+	James Morse <james.morse@arm.com>, Babu Moger <babu.moger@amd.com>,
+	Drew Fustini <dfustini@baylibre.com>,
+	Dave Martin <Dave.Martin@arm.com>,
+	Anil Keshavamurthy <anil.s.keshavamurthy@intel.com>,
+	Chen Yu <yu.c.chen@intel.com>, x86@kernel.org,
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH v5 27/29] fs/resctrl: Add file system mechanism for
+ architecture info file
+Message-ID: <aEcsxjWroliWf3G0@agluck-desk3>
+References: <20250521225049.132551-1-tony.luck@intel.com>
+ <20250521225049.132551-28-tony.luck@intel.com>
+ <f25d136c-b1d3-483a-ac77-92464d7fe25c@intel.com>
+ <aEIxzbuFybLBE3xt@agluck-desk3>
+ <9eb9a466-2895-405a-91f7-cda75e75f7ae@intel.com>
+ <aEMlznLgnn6bK9lo@agluck-desk3>
+ <d2be3a4e-1075-459d-9bf7-b6aefcb93820@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-NV-OnPremToCloud: AnonymousSubmission
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL02EPF0001A105:EE_|BL1PR12MB5923:EE_
-X-MS-Office365-Filtering-Correlation-Id: 0353f65a-3bc6-4b25-b3f6-08dda785d5a2
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|36860700013|82310400026|1800799024|376014;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?M4SabehC9aO0LkFGW0v7bR1wFA341E/AjWJMj03IkEd2QckXwgKYlBBqWhnu?=
- =?us-ascii?Q?pKmtEeYsxMDrNiTg2Hrzq79aK7hAT6xBu5pDB9Ou5hM3eSjXXz+XlAXf5iYi?=
- =?us-ascii?Q?0aasjv6YuPymvh8OuQAI9YMLj/z83J8wq3rAayZyPnXHIQtTxcvpMV2m0SFj?=
- =?us-ascii?Q?WGdXzzR8iMxYAoc0Qf8GCQFXd9UFE1NxruMJifTeHePIDhE5DIN2Bn5AiNxS?=
- =?us-ascii?Q?4tMqd/QMlxtyUWMICRINbvhmSuEJGUQg6zn1B81LgPDZNYtymDCigJVn/kTX?=
- =?us-ascii?Q?SNcZ/f96lgD0TFdHMHLD83AZ9e1vxgnY/UGPUNlw4o5dmVjhHG6OTMW6Wpn6?=
- =?us-ascii?Q?5vYgWPoRJJrErzywMRmFJxFo5itLclVhF4f5HTCuZCSv3I849rfua/cKkPhl?=
- =?us-ascii?Q?FQQcGB+cYxkho48W6dXYDlCJeYa7dPyICP78S3nwyTp+m8mBra3fGPRwfWj6?=
- =?us-ascii?Q?/WxCtTmmd4m4GM0q0k7MAE3dv5LuWWoE93tGUUe6ncqGFbUMQzn3XVpTmSpL?=
- =?us-ascii?Q?jEsRlSTGFzSDarzsSYsyqBFM9UEybkSQSfIwio35Y/wLgIMx/pVWip/hNZut?=
- =?us-ascii?Q?TsdD0WL97E7kTQeLd/Xh7WhkqLgE1iXBPX1efVSRMhXPo4IlR2cZtDISi/km?=
- =?us-ascii?Q?QojTKDet2pTCbNnm/THn35paxl1hoVvKKUnmB+nGpXKJmkUm4E85iZbaGpdf?=
- =?us-ascii?Q?XOZDAzvymSx0eCOfWiKx7w+SXIYNWmBIIjARGgzUWLHgMjaDKYOrJmQqTCTH?=
- =?us-ascii?Q?HzP11SxOYOIh6saKlQwxEdgXmcdcMlT80iiAf3m23VrOsDiWCGuNe+UftGEK?=
- =?us-ascii?Q?Z5XYsO0T+AH5EVgQ0eDvCL+EG9+H5ifaxM47KJEdr67LIzKVRcXsLKy1mauV?=
- =?us-ascii?Q?JJ9MSVeOQkVQrK4Go8y+gPMaRlsuQqBV1ayVsMEs27oUgqcDfStij+IJvvHv?=
- =?us-ascii?Q?qZpDt5fTWOh5MX8vK7mYXSRQmjAfpJJIUYwIXXeossJwp1Z4TXqx4NiK1P4R?=
- =?us-ascii?Q?zNmqSYwEzqbBplhY1k0eV43CmJ5Arh3qt1JDXBgSTY7RGY3z4jwN10HvZ9Pz?=
- =?us-ascii?Q?RL/XXjWFQ3CeeQPhWoUv9tXrcqIsY1yyvOgnaRE6vbA/CiOsMPN9paKCzAw2?=
- =?us-ascii?Q?HFHS2fmyEMZUKoKnqGyyia+Q8pBO7gb0OxeBpYDQU5HtiCyXMpZoEWkhVPQf?=
- =?us-ascii?Q?TV3HtD01ou//YJtMlNTH0sbtTGXjlAccwh8vexKMi7B1GouTrcCV1iBZHH7t?=
- =?us-ascii?Q?XQWDtL9K0mMS7iYlP4/91/roZb6vsO2f/IUaSmn5EHRIBTrZARlke3353wRo?=
- =?us-ascii?Q?N5KvuW9M+Gcjbh3iJjaxkjpr0/ThVFBXDPp6iODQwsRX2YvbresA8HkfsXSH?=
- =?us-ascii?Q?oSPjd6R06lI0fZIDsv45I/kVLl+p+TLDPoS99nWZeERdT3CuKs/rmlU+3UwP?=
- =?us-ascii?Q?eiRJritHwPQyhpJo7ooxNp0cBb9TEQZeHuPwDqdN99aisjiPyN/wwH7XjZwU?=
- =?us-ascii?Q?y5W4p5290/k7x53zFWCka5k1YWAXZ24bfPLp?=
-X-Forefront-Antispam-Report:
-	CIP:216.228.118.232;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc7edge1.nvidia.com;CAT:NONE;SFS:(13230040)(36860700013)(82310400026)(1800799024)(376014);DIR:OUT;SFP:1101;
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Jun 2025 18:45:41.1258
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0353f65a-3bc6-4b25-b3f6-08dda785d5a2
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.118.232];Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	BL02EPF0001A105.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL1PR12MB5923
+In-Reply-To: <d2be3a4e-1075-459d-9bf7-b6aefcb93820@intel.com>
 
-Per PCIe r6.3, sec 10.3.1 IMPLEMENTATION NOTE, software should disable ATS
-before initiating a Function Level Reset, and then ensure no invalidation
-requests being issued to a device when its ATS capability is disabled.
+On Fri, Jun 06, 2025 at 02:14:56PM -0700, Reinette Chatre wrote:
+> Hi Tony,
+> 
+> On 6/6/25 10:30 AM, Luck, Tony wrote:
+> > On Fri, Jun 06, 2025 at 09:26:06AM -0700, Reinette Chatre wrote:
+> >> With /sys/kernel/debug/resctrl potentially mirroring /sys/fs/resctrl to
+> >> support various debugging scenarios there may later be resource level
+> >> debugging for which a "/sys/kernel/debug/resctrl/info/<resource>/<debugfile>" can
+> >> be used. Considering this it looks to me as though one possible boundary could
+> >> be to isolate arch specific debug to, for example, a new directory named
+> >> "/sys/kernel/debug/resctrl/info/arch_debug_name_tbd/". By placing the
+> >> arch debug in a sub-directory named "info" it avoids collision with resource
+> >> group names with naming that also avoids collision with resource names since
+> >> all these names are controlled by resctrl fs. 
+> > 
+> > 
+> > That seems like a good path. PoC patch below. Note that I put the dentry
+> > for the debug info directory into struct rdt_resource. So no call from
+> > architecture to file system code needed to access.
+> 
+> ok, reading between the lines there is now a switch to per-resource
+> requirement, which fits with the use.
+> 
+> > 
+> > Directory layout looks like this:
+> > 
+> > # tree /sys/kernel/debug/resctrl/
+> > /sys/kernel/debug/resctrl/
+> > └── info
+> >     ├── L2
+> >     ├── L3
+> >     ├── MB
+> >     └── SMBA
+> > 
+> 
+> This looks like something that needs to be owned and managed by
+> resctrl fs (more below).
+> 
+> > 6 directories, 0 files
+> > 
+> > -Tony
+> > 
+> > ---
+> > 
+> > diff --git a/include/linux/resctrl.h b/include/linux/resctrl.h
+> > index 5e28e81b35f6..78dd0f8f7ad8 100644
+> > --- a/include/linux/resctrl.h
+> > +++ b/include/linux/resctrl.h
+> > @@ -281,6 +281,7 @@ enum resctrl_schema_fmt {
+> >   * @mbm_cfg_mask:	Bandwidth sources that can be tracked when bandwidth
+> >   *			monitoring events can be configured.
+> >   * @cdp_capable:	Is the CDP feature available on this resource
+> > + * @arch_debug_info:	Debugfs info directory for architecture use
+> >   */
+> >  struct rdt_resource {
+> >  	int			rid;
+> > @@ -297,6 +298,7 @@ struct rdt_resource {
+> >  	enum resctrl_schema_fmt	schema_fmt;
+> >  	unsigned int		mbm_cfg_mask;
+> >  	bool			cdp_capable;
+> > +	struct dentry		*arch_debug_info;
+> >  };
+> 
+> ok ... but maybe not quite exactly (more below)
 
-Since pci_enable_ats() and pci_disable_ats() are called by an IOMMU driver
-while an unsolicited FLR can happen at any time in the PCI layer, PCI code
-has to notify the IOMMU subsystem about the ongoing FLR. Add a pair of new
-IOMMU APIs that will be called by the PCI reset functions before&after the
-reset routines.
+Would have been useful with the "always create directories" approach.
+As you point out below the name is problematic. Would need separate
+entries for control and monitor resources like RDT_RESOURCE_L3.
 
-However, if there is a domain attachment/replacement happening during an
-ongoing reset, the ATS might be re-enabled between the two function calls.
-So the iommu_dev_reset_prepare() has to hold the group mutex to avoid this
-race condition, unitl iommu_dev_reset_done() is finished. Thus, these two
-functions are a strong pair that must be used together.
+I don't think it is useful in the "only make directories when requested
+by architecture" mode.
 
-Inside the mutex, these two functions will dock all RID and PASID domains
-to an IOMMU_DOMAIN_BLOCKED. This would further disable ATS by two-fold: an
-IOMMU driver should disable ATS in its control bits (e.g. SMMU's STE.EATS)
-and an IOMMU driver should call pci_disable_ats() as well.
+> >  
+> >  /*
+> > diff --git a/fs/resctrl/rdtgroup.c b/fs/resctrl/rdtgroup.c
+> > index ed4fc45da346..48c587201fb6 100644
+> > --- a/fs/resctrl/rdtgroup.c
+> > +++ b/fs/resctrl/rdtgroup.c
+> > @@ -4274,6 +4274,8 @@ void resctrl_offline_cpu(unsigned int cpu)
+> >   */
+> >  int resctrl_init(void)
+> >  {
+> > +	struct dentry *debuginfodir;
+> > +	struct rdt_resource *r;
+> >  	int ret = 0;
+> >  
+> >  	seq_buf_init(&last_cmd_status, last_cmd_status_buf,
+> > @@ -4320,6 +4322,12 @@ int resctrl_init(void)
+> >  	 */
+> >  	debugfs_resctrl = debugfs_create_dir("resctrl", NULL);
+> >  
+> > +	/* Create debug info directories for each resource */
+> > +	debuginfodir = debugfs_create_dir("info", debugfs_resctrl);
+> > +
+> > +	for_each_rdt_resource(r)
+> > +		r->arch_debug_info = debugfs_create_dir(r->name, debuginfodir);
+> 
+> This ignores (*) several of the boundaries my response aimed to establish. 
+> 
+> Here are some red flags:
+> - This creates the resource named directory and hands off that pointer to the
+>   arch. As I mentioned the arch should not have control over resctrl's debugfs.
+>   I believe this is the type of information that should be in control of resctrl fs
+>   since, as I mentioned, resctrl fs may need to add debugging that mirrors /sys/fs/resctrl. 
+> - Blindly creating these directories (a) without the resource even existing on the
+>   system, and (b) without being used/requested by the architecture does not create a good
+>   interface in my opinion. User space will see a bunch of empty directories
+>   associated with resources that are not present on the system.
+> - The directories created do not even match /sys/fs/resctrl/info when it comes
+>   to the resources. Note that the directories within /sys/fs/resctrl/info are created
+>   from the schema for control resources and appends _MON to monitor resources. Like
+>   I mentioned in my earlier response there should ideally be space for a future
+>   resctrl fs extension to mirror layout of /sys/fs/resctrl for resctrl fs debug
+>   in debugfs. This solution ignores all of that.
+>   
+> I still think that the architecture should request the debugfs directory from resctrl fs.
+> This avoids resctrl fs needing to create directories/files that are never used and
+> does not present user space with an empty tree. Considering that the new PERF_PKG
+> resource may not come online until resctrl mount this should be something that can be
+> called at any time.
+> 
+> One possibility, that supports intended use while keeping the door open to support
+> future resctrl fs use of the debugfs, could be  a new resctrl fs function,
+> for example resctrl_create_mon_resource_debugfs(struct rdt_resource *r), that will initialize
+> rdt_resource::arch_debug_info(*) to point to the dentry of newly created
+> /sys/kernel/debug/resctrl/info/<rdt_resource::name>_MON/arch_debug_name_TBD *if*
+> the associated resource is capable of monitoring ... or do you think an architecture
+> may want to add debugging information before a resource is discovered/enabled?
+> If doing this then rdt_resource::arch_debug_info is no longer appropriate since it needs
+> to be specific to the monitoring resource. Perhaps then rdt_resource::arch_mon_debugfs
+> that would eventually live in [1]?
+> 
+> This is feeling rushed and I am sharing some top of mind ideas. I will give this
+> more thought.
+> 
+> Reinette
+> 
+> [1] https://lore.kernel.org/lkml/cb8425c73f57280b0b4f22e089b2912eede42f7a.1747349530.git.babu.moger@amd.com/
+> 
+> (*) I have now asked several times to stop ignoring feedback. This should not even
+>     be necessary in the first place. I do not require you to agree with me and I do not claim
+>     to always be right, please just stop ignoring feedback. The way forward I plan to ignore
+>     messages that ignores feedback.
 
-Notes:
- - This only works for IOMMU drivers that implemented ops->blocked_domain
-   correctly with pci_disable_ats().
- - This only works for IOMMU drivers that will not issue ATS invalidation
-   requests to the device, after it's docked at ops->blocked_domain.
-Driver should fix itself to align with the aforementioned notes.
+So here's a second PoC. Takes into account all of the points you make
+above with the following adjustments:
 
-Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+1) Not adding the rdt_resource::arch_mon_debugfs field.  Just returning
+the "struct dentry *" looks to be adequate for existing use case.
+
+Having the pointer in "struct resource" would be useful if some future
+use case needed to access the debugfs locations from calls to
+architecture code that pass in the rdt_resource pointer. Could be
+added if ever needed.
+
+2) I can't envision a need for debugfs entries for resources
+pre-discovery, or when not enabled. So keep things simple for
+now.
+
+3) I think the function name resctrl_debugfs_mon_info_mkdir() is a bit
+more descriptive (it is making a directory and we usually have such
+functions include "mkdir" in the name).
+
+-Tony
+
 ---
- include/linux/iommu.h |  12 +++++
- drivers/iommu/iommu.c | 106 ++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 118 insertions(+)
 
-diff --git a/include/linux/iommu.h b/include/linux/iommu.h
-index 156732807994..a17161b8625a 100644
---- a/include/linux/iommu.h
-+++ b/include/linux/iommu.h
-@@ -1123,6 +1123,9 @@ void dev_iommu_priv_set(struct device *dev, void *priv);
- extern struct mutex iommu_probe_device_lock;
- int iommu_probe_device(struct device *dev);
+diff --git a/include/linux/resctrl.h b/include/linux/resctrl.h
+index 8bec8f766b01..771e69c0c5c1 100644
+--- a/include/linux/resctrl.h
++++ b/include/linux/resctrl.h
+@@ -564,6 +564,12 @@ void resctrl_arch_reset_all_ctrls(struct rdt_resource *r);
+ extern unsigned int resctrl_rmid_realloc_threshold;
+ extern unsigned int resctrl_rmid_realloc_limit;
  
-+int iommu_dev_reset_prepare(struct device *dev);
-+void iommu_dev_reset_done(struct device *dev);
++/**
++ * resctrl_debugfs_mon_info_mkdir() - Create a debugfs info directory.
++ * @r:	Resource (must be mon_capable).
++ */
++struct dentry *resctrl_debugfs_mon_info_mkdir(struct rdt_resource *r);
 +
- int iommu_device_use_default_domain(struct device *dev);
- void iommu_device_unuse_default_domain(struct device *dev);
+ int resctrl_init(void);
+ void resctrl_exit(void);
  
-@@ -1407,6 +1410,15 @@ static inline int iommu_fwspec_add_ids(struct device *dev, u32 *ids,
- 	return -ENODEV;
+diff --git a/fs/resctrl/rdtgroup.c b/fs/resctrl/rdtgroup.c
+index 8d094a3acf2f..0f11b8d0ce0b 100644
+--- a/fs/resctrl/rdtgroup.c
++++ b/fs/resctrl/rdtgroup.c
+@@ -4344,6 +4344,22 @@ int resctrl_init(void)
+ 	return ret;
  }
  
-+static inline int iommu_dev_reset_prepare(struct device *dev)
++struct dentry *resctrl_debugfs_mon_info_mkdir(struct rdt_resource *r)
 +{
-+	return 0;
++	static struct dentry *debugfs_resctrl_info;
++	char name[32];
++
++	if (!r->mon_capable)
++		return NULL;
++
++	if (!debugfs_resctrl_info)
++		debugfs_resctrl_info = debugfs_create_dir("info", debugfs_resctrl);
++
++	sprintf(name, "%s_MON", r->name);
++
++	return debugfs_create_dir(name, debugfs_resctrl_info);
 +}
 +
-+static inline void iommu_dev_reset_done(struct device *dev)
-+{
-+}
-+
- static inline struct iommu_fwspec *dev_iommu_fwspec_get(struct device *dev)
+ static bool resctrl_online_domains_exist(void)
  {
- 	return NULL;
-diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
-index a4b606c591da..3c1854c5e55e 100644
---- a/drivers/iommu/iommu.c
-+++ b/drivers/iommu/iommu.c
-@@ -3795,6 +3795,112 @@ int iommu_replace_group_handle(struct iommu_group *group,
- }
- EXPORT_SYMBOL_NS_GPL(iommu_replace_group_handle, "IOMMUFD_INTERNAL");
- 
-+/*
-+ * Deadlock Alert
-+ *
-+ * Caller must use iommu_dev_reset_prepare() and iommu_dev_reset_done() together
-+ * before/after the core-level reset routine, as iommu_dev_reset_prepare() holds
-+ * the group->mutex that will be only released in iommu_dev_reset_done().
-+ */
-+int iommu_dev_reset_prepare(struct device *dev)
-+{
-+	struct iommu_group *group = dev->iommu_group;
-+	const struct iommu_ops *ops;
-+	unsigned long pasid;
-+	void *entry;
-+	int ret;
-+
-+	/* Before locking */
-+	if (!dev_has_iommu(dev))
-+		return 0;
-+
-+	if (dev->iommu->require_direct) {
-+		dev_warn(dev,
-+			 "Firmware has requested this device have a 1:1 IOMMU mapping, rejecting configuring the device without a 1:1 mapping. Contact your platform vendor.\n");
-+		return -EINVAL;
-+	}
-+
-+	ops = dev_iommu_ops(dev);
-+	if (!ops->blocked_domain) {
-+		dev_warn(dev,
-+			 "IOMMU driver doesn't support IOMMU_DOMAIN_BLOCKED\n");
-+		return -EOPNOTSUPP;
-+	}
-+
-+	/*
-+	 * group->mutex starts
-+	 *
-+	 * This has to hold the group mutex until the reset is done, to prevent
-+	 * any RID or PASID domain attachment/replacement, which otherwise might
-+	 * re-enable the ATS during the reset cycle.
-+	 */
-+	mutex_lock(&group->mutex);
-+
-+	/* Device is already attached to the blocked_domain. Nothing to do */
-+	if (group->domain->type == IOMMU_DOMAIN_BLOCKED)
-+		return 0;
-+
-+	/* Dock RID domain to blocked_domain while retaining group->domain */
-+	ret = __iommu_attach_device(ops->blocked_domain, dev);
-+	if (ret)
-+		return ret;
-+
-+	/* Dock PASID domains to blocked_domain while retaining pasid_array */
-+	xa_lock(&group->pasid_array);
-+	xa_for_each_start(&group->pasid_array, pasid, entry, 1)
-+		iommu_remove_dev_pasid(dev, pasid,
-+				       pasid_array_entry_to_domain(entry));
-+	xa_unlock(&group->pasid_array);
-+
-+	/* group->mutex is held. Caller must invoke iommu_dev_reset_done() */
-+
-+	return ret;
-+}
-+EXPORT_SYMBOL_GPL(iommu_dev_reset_prepare);
-+
-+/*
-+ * This is the resume routine of iommu_dev_reset_prepare(). It unlocks the group
-+ * mutex at end, after all RID/PASID domains are re-attached.
-+ *
-+ * Note that, although unlikely, there is a risk that re-attaching domains might
-+ * fail due to some unexpected happening like OOM.
-+ */
-+void iommu_dev_reset_done(struct device *dev)
-+{
-+	struct iommu_group *group = dev->iommu_group;
-+	const struct iommu_ops *ops;
-+	unsigned long pasid;
-+	void *entry;
-+
-+	/* Previously unlocked */
-+	if (!dev_has_iommu(dev))
-+		return;
-+	ops = dev_iommu_ops(dev);
-+	if (!ops->blocked_domain)
-+		return;
-+
-+	/* group->mutex held in iommu_dev_reset_prepare() continues from here */
-+	WARN_ON(!lockdep_is_held(&group->mutex));
-+
-+	if (group->domain->type == IOMMU_DOMAIN_BLOCKED)
-+		goto unlock;
-+
-+	/* Shift RID domain back to group->domain */
-+	WARN_ON(__iommu_attach_device(group->domain, dev));
-+
-+	/* Shift PASID domains back to domains retained in pasid_array */
-+	xa_lock(&group->pasid_array);
-+	xa_for_each_start(&group->pasid_array, pasid, entry, 1)
-+		WARN_ON(__iommu_set_group_pasid(
-+			pasid_array_entry_to_domain(entry), group, pasid,
-+			ops->blocked_domain));
-+	xa_unlock(&group->pasid_array);
-+
-+unlock:
-+	mutex_unlock(&group->mutex);
-+}
-+EXPORT_SYMBOL_GPL(iommu_dev_reset_done);
-+
- #if IS_ENABLED(CONFIG_IRQ_MSI_IOMMU)
- /**
-  * iommu_dma_prepare_msi() - Map the MSI page in the IOMMU domain
+ 	struct rdt_resource *r;
 -- 
-2.43.0
+2.49.0
 
