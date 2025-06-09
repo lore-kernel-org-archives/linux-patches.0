@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCCF425F788;
-	Mon,  9 Jun 2025 13:48:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73AC925C6E2;
+	Mon,  9 Jun 2025 13:48:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749476912; cv=none; b=YpO1T8/Fv41z8s5kN7fAZlnKw5LvGaZeT0PTX4MwSTRQDYzEwQZKCtcKZ9nJ94156OdIiie5vNwjSUJmwRSUBSPiKJ+epxbAt9hnIkRWYuzuCh+dejpVCYaRPPGsPxSSrhnK89wHAQt6E0hjLrboAv3O+ope4V57W6eSd9iZqig=
+	t=1749476915; cv=none; b=tmiyCgZEPP/yCRObZ1yliHD4t2qMoXq5oRporSH1SIYXIolRP+RjSdtrZxaOOaEDsgzY9yMb2XximlMbHIGJzPSowL3occZipoTULIlWQ2Xkd3tmKZ+cccMpsJ8OEMMFa/QAHuxmpIFE5tCp8gpr9u0ESLPJyA4H3viekhLJBjg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749476912; c=relaxed/simple;
-	bh=cLAjAqPluDk1hiLoi5QoIkrGFDGcCrKnfEy6emM98mU=;
+	s=arc-20240116; t=1749476915; c=relaxed/simple;
+	bh=difdIr13ozEKtgJ125gl/n4mUgttuuQCfjghhWFN5fk=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pGRXmASn32ETAonB3cUXnKJsvjib/XO8gyIHlmeoDeOOcEYdweIg1pWb+UuHE7FJLgjYVV8OliTcwHgSRqcetH/j7xv1h5HSOvSntt7H2MTagfpi6aGzR1/BPA1CEzXQXpw1yX0YjJVr8POf6x2vN1Tir8N0Ku7Zkc4o/cBr/j8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XOg5vQ11; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=VEz44Ghawy4BfMTR7XizV5lI4UY2fpax3pFV+bhkBHXRgrsDyHyA+nscRcG8nFhHtH0ppIUCx26ly7opkjb7Ta0HlI1WCSI2JAvFjH2Af5rO61GrqJMTUeEdFeeSvp/HtQI1QVe2f6tYoTxaFaCqvcS+JnYWqZuAYmmMq7ozq7A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gElhyYE3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XOg5vQ11"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B549CC4CEED;
-	Mon,  9 Jun 2025 13:48:30 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gElhyYE3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF0B2C4CEED;
+	Mon,  9 Jun 2025 13:48:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749476911;
-	bh=cLAjAqPluDk1hiLoi5QoIkrGFDGcCrKnfEy6emM98mU=;
+	s=k20201202; t=1749476913;
+	bh=difdIr13ozEKtgJ125gl/n4mUgttuuQCfjghhWFN5fk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XOg5vQ117wgHARIcMiceWrg5F7UYZ4+91I+3MUaOpfPC/4AxoBkmbP0giZXq2fH9t
-	 x7IjnAfQtwS8hgC/gmferNZ462/SVIVUoQYZ/QTlU3noQOIjoTv7ngLQr5tN0i8yx4
-	 YubJpK1oq2AsrMwIxkpeRoRq8hXhVBenth4wQ5TXiZCyyckoU62uQn7jpLGn9Mt2R4
-	 ZvLsU8VzYDibqrC4t5FSlYn2g0ZMpC2TwKIk4u7gfRuUgsie2hjmsb4oRBJAYJubnv
-	 vT086R3gIWic21bQ8uTWZYwsmtIwJDIXZPYispN68aKUcYw6S6Sfr+DHlUZZrvG3vz
-	 47e+fjFO6xWhg==
+	b=gElhyYE36RbUfHW8EUp8Bu3dhnajovjWfx4YhY8N7pa03+Jl36gcb62hSHxV3Sv1y
+	 QTq4UeS10vFhhXyT8QlYI4tXduIXfLM1mcNXYeoNwxqbaBNXNBDmXnsbMN+1FFEm3V
+	 LC2zoPqIMYpBefDPLr2paM+cjSSS0j/r0tNfC/WcCCNzwWBj+FXNHWCTJ+uhwDz6oW
+	 rMXwhMnBvIItuZFbmbOCQ3Rx6Sw1qAQ/3GOy6r8qvkHXAZwtujYsIkK0uxlyxQR9pC
+	 TqWFOk9zEJXsQOuddZXpWGGLm4t0MjIdGqesad8L2l73HO9r3eUQj3JlSIc80dF2IN
+	 rWGsb3WLumebg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Chen Yufeng <chenyufeng@iie.ac.cn>,
+Cc: Chance Yang <chance.yang@kneron.us>,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>,
-	Thinh.Nguyen@synopsys.com
-Subject: [PATCH AUTOSEL 5.10 5/9] usb: potential integer overflow in usbg_make_tpg()
-Date: Mon,  9 Jun 2025 09:48:16 -0400
-Message-Id: <20250609134820.1345562-5-sashal@kernel.org>
+	krzysztof.kozlowski@linaro.org,
+	u.kleine-koenig@baylibre.com,
+	sebastian.reichel@collabora.com
+Subject: [PATCH AUTOSEL 5.10 6/9] usb: common: usb-conn-gpio: use a unique name for usb connector device
+Date: Mon,  9 Jun 2025 09:48:17 -0400
+Message-Id: <20250609134820.1345562-6-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250609134820.1345562-1-sashal@kernel.org>
 References: <20250609134820.1345562-1-sashal@kernel.org>
@@ -51,113 +53,179 @@ X-stable-base: Linux 5.10.238
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Yufeng <chenyufeng@iie.ac.cn>
+From: Chance Yang <chance.yang@kneron.us>
 
-[ Upstream commit 153874010354d050f62f8ae25cbb960c17633dc5 ]
+[ Upstream commit d4e5b10c55627e2f3fc9e5b337a28b4e2f02a55e ]
 
-The variable tpgt in usbg_make_tpg() is defined as unsigned long and is
-assigned to tpgt->tport_tpgt, which is defined as u16. This may cause an
-integer overflow when tpgt is greater than USHRT_MAX (65535). I
-haven't tried to trigger it myself, but it is possible to trigger it
-by calling usbg_make_tpg() with a large value for tpgt.
+The current implementation of the usb-conn-gpio driver uses a fixed
+"usb-charger" name for all USB connector devices. This causes conflicts
+in the power supply subsystem when multiple USB connectors are present,
+as duplicate names are not allowed.
 
-I modified the type of tpgt to match tpgt->tport_tpgt and adjusted the
-relevant code accordingly.
+Use IDA to manage unique IDs for naming usb connectors (e.g.,
+usb-charger-0, usb-charger-1).
 
-This patch is similar to commit 59c816c1f24d ("vhost/scsi: potential
-memory corruption").
-
-Signed-off-by: Chen Yufeng <chenyufeng@iie.ac.cn>
-Link: https://lore.kernel.org/r/20250415065857.1619-1-chenyufeng@iie.ac.cn
+Signed-off-by: Chance Yang <chance.yang@kneron.us>
+Link: https://lore.kernel.org/r/20250411-work-next-v3-1-7cd9aa80190c@kneron.us
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Based on my comprehensive analysis, here's my decision:
-
 **YES**
 
-This commit should be backported to stable kernel trees for the
-following reasons:
+This commit should be backported to stable kernel trees. Here's my
+extensive analysis:
 
-## Analysis of the Integer Overflow Bug
+## Bug Analysis
 
-**1. Clear Security/Correctness Issue:**
-The bug is a classic integer overflow vulnerability where a user-
-controlled value (`tpgt`) parsed from a string via `kstrtoul()` as an
-`unsigned long` gets truncated when assigned to a `u16` field
-(`tpg->tport_tpgt`).
+**Critical User-Affecting Issue**: The commit fixes a real bug where
+multiple USB connectors cannot coexist on the same system. Without this
+fix, when multiple `usb-conn-gpio` devices are present, all would
+attempt to register with the same "usb-charger" name in the power supply
+subsystem, causing registration failures and rendering additional USB
+connectors non-functional.
 
-In the original code at line 1690:
-```c
-unsigned long tpgt;  // Can hold values up to ULONG_MAX
-// ... kstrtoul(name + 5, 0, &tpgt) ...
-tpg->tport_tpgt = tpgt;  // u16 field - truncation occurs!
-```
+## Code Changes Analysis
 
-If a user provides a value like `tpgt_70000`, the parsing succeeds
-(70000 < UINT_MAX), but when assigned to the 16-bit field, it becomes
-`70000 & 0xFFFF = 4464`, completely changing the intended value.
+**Minimal and Well-Contained**: The changes are small and focused:
 
-**2. Matches Stable Backport Criteria:**
-- **Important Bug Fix**: Yes - prevents integer overflow and data
-  corruption
-- **Small, Contained Change**: Yes - only changes variable type and
-  validation function
-- **No Architectural Changes**: Correct - simply fixes data type
-  mismatch
-- **Minimal Regression Risk**: Very low risk - more restrictive
-  validation
-- **Confined to Subsystem**: Yes - only affects USB gadget target mode
+1. **Addition of IDA infrastructure** (lines +21-22):
+  ```c
+  #include <linux/idr.h>
+  static DEFINE_IDA(usb_conn_ida);
+  ```
 
-**3. Historical Precedent:**
-The fix directly references commit `59c816c1f24d` which was a nearly
-identical fix in `drivers/vhost/scsi.c` that was backported to stable
-trees. That commit fixed the exact same pattern:
-- `unsigned long tpgt` → `u16 tpgt`
-- `kstrtoul() || tpgt > UINT_MAX` → `kstrtou16()`
-- Assignment to `u16 tport_tpgt` field
+2. **Unique ID allocation** (lines +168-177):
+  ```c
+  info->conn_id = ida_alloc(&usb_conn_ida, GFP_KERNEL);
+  desc->name = devm_kasprintf(dev, GFP_KERNEL, "usb-charger-%d",
+  info->conn_id);
+  ```
 
-**4. Real Impact:**
-While this requires privileged access to trigger (configfs
-manipulation), the integer overflow could lead to:
-- Unexpected behavior in target portal group handling
-- Potential confusion in multi-target setups
-- Data integrity issues in storage target configuration
+3. **Proper cleanup** (lines +297-299):
+  ```c
+  if (info->charger)
+  ida_free(&usb_conn_ida, info->conn_id);
+  ```
 
-**5. Code Quality:**
-The fix properly aligns the variable type with its intended use and
-makes the validation more precise by using `kstrtou16()` instead of the
-broader `kstrtoul()` check.
+## Risk Assessment
 
-This fix exemplifies the type of integer overflow prevention that stable
-trees actively accept - targeted, low-risk corrections that prevent
-subtle but potentially serious bugs from affecting users.
+**Very Low Risk**:
+- Uses well-established IDA pattern found throughout the kernel (similar
+  to the USB gadget example in the historical commits)
+- No architectural changes
+- No new dependencies beyond existing IDA infrastructure
+- Proper error handling with cleanup on all failure paths
+- Changes only affect internal naming, no API breakage
 
- drivers/usb/gadget/function/f_tcm.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+## Stable Tree Criteria Compliance
 
-diff --git a/drivers/usb/gadget/function/f_tcm.c b/drivers/usb/gadget/function/f_tcm.c
-index 7f825c961fb88..30c3a44abb183 100644
---- a/drivers/usb/gadget/function/f_tcm.c
-+++ b/drivers/usb/gadget/function/f_tcm.c
-@@ -1325,14 +1325,14 @@ static struct se_portal_group *usbg_make_tpg(struct se_wwn *wwn,
- 	struct usbg_tport *tport = container_of(wwn, struct usbg_tport,
- 			tport_wwn);
- 	struct usbg_tpg *tpg;
--	unsigned long tpgt;
-+	u16 tpgt;
- 	int ret;
- 	struct f_tcm_opts *opts;
- 	unsigned i;
+**Meets All Stable Criteria**:
+
+1. **Important bugfix**: ✅ Prevents system malfunction with multiple USB
+   connectors
+2. **Affects real users**: ✅ Common on embedded systems, development
+   boards, tablets
+3. **Small and contained**: ✅ Only 25 lines of changes in single driver
+4. **No major architectural changes**: ✅ Simple naming fix using
+   established patterns
+5. **Minimal regression risk**: ✅ Well-tested IDA pattern used across
+   kernel
+
+## Comparison with Historical Commits
+
+This commit is very similar to historical commit #3 ("USB: gadget: Add
+ID numbers to gadget names"), which was marked as **NO** for
+backporting. However, there are key differences:
+
+**Why this USB connector commit SHOULD be backported (unlike the gadget
+commit)**:
+
+1. **Functional vs. Cosmetic**: The USB connector naming conflict causes
+   **actual device failure** and power management issues, whereas the
+   gadget naming was more about sysfs organization
+2. **Critical subsystem**: Power supply registration failure can affect
+   system power management and charging detection
+3. **Error severity**: Power supply naming conflicts typically cause
+   probe failures, while sysfs naming conflicts may not prevent basic
+   functionality
+4. **User impact**: USB connector detection is critical for proper power
+   management on mobile/embedded devices
+
+## Conclusion
+
+This is an excellent stable tree candidate that fixes a real functional
+bug with minimal risk. The change enables proper operation of multi-
+connector systems using established kernel patterns, making it both safe
+and beneficial for stable tree inclusion.
+
+ drivers/usb/common/usb-conn-gpio.c | 25 ++++++++++++++++++++++---
+ 1 file changed, 22 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/usb/common/usb-conn-gpio.c b/drivers/usb/common/usb-conn-gpio.c
+index 02446092520c8..f5a1981c9eb40 100644
+--- a/drivers/usb/common/usb-conn-gpio.c
++++ b/drivers/usb/common/usb-conn-gpio.c
+@@ -20,6 +20,9 @@
+ #include <linux/power_supply.h>
+ #include <linux/regulator/consumer.h>
+ #include <linux/usb/role.h>
++#include <linux/idr.h>
++
++static DEFINE_IDA(usb_conn_ida);
  
- 	if (strstr(name, "tpgt_") != name)
- 		return ERR_PTR(-EINVAL);
--	if (kstrtoul(name + 5, 0, &tpgt) || tpgt > UINT_MAX)
-+	if (kstrtou16(name + 5, 0, &tpgt))
- 		return ERR_PTR(-EINVAL);
- 	ret = -ENODEV;
- 	mutex_lock(&tpg_instances_lock);
+ #define USB_GPIO_DEB_MS		20	/* ms */
+ #define USB_GPIO_DEB_US		((USB_GPIO_DEB_MS) * 1000)	/* us */
+@@ -29,6 +32,7 @@
+ 
+ struct usb_conn_info {
+ 	struct device *dev;
++	int conn_id; /* store the IDA-allocated ID */
+ 	struct usb_role_switch *role_sw;
+ 	enum usb_role last_role;
+ 	struct regulator *vbus;
+@@ -160,7 +164,17 @@ static int usb_conn_psy_register(struct usb_conn_info *info)
+ 		.of_node = dev->of_node,
+ 	};
+ 
+-	desc->name = "usb-charger";
++	info->conn_id = ida_alloc(&usb_conn_ida, GFP_KERNEL);
++	if (info->conn_id < 0)
++		return info->conn_id;
++
++	desc->name = devm_kasprintf(dev, GFP_KERNEL, "usb-charger-%d",
++				    info->conn_id);
++	if (!desc->name) {
++		ida_free(&usb_conn_ida, info->conn_id);
++		return -ENOMEM;
++	}
++
+ 	desc->properties = usb_charger_properties;
+ 	desc->num_properties = ARRAY_SIZE(usb_charger_properties);
+ 	desc->get_property = usb_charger_get_property;
+@@ -168,8 +182,10 @@ static int usb_conn_psy_register(struct usb_conn_info *info)
+ 	cfg.drv_data = info;
+ 
+ 	info->charger = devm_power_supply_register(dev, desc, &cfg);
+-	if (IS_ERR(info->charger))
+-		dev_err(dev, "Unable to register charger\n");
++	if (IS_ERR(info->charger)) {
++		dev_err(dev, "Unable to register charger %d\n", info->conn_id);
++		ida_free(&usb_conn_ida, info->conn_id);
++	}
+ 
+ 	return PTR_ERR_OR_ZERO(info->charger);
+ }
+@@ -296,6 +312,9 @@ static int usb_conn_remove(struct platform_device *pdev)
+ 
+ 	cancel_delayed_work_sync(&info->dw_det);
+ 
++	if (info->charger)
++		ida_free(&usb_conn_ida, info->conn_id);
++
+ 	if (info->last_role == USB_ROLE_HOST && info->vbus)
+ 		regulator_disable(info->vbus);
+ 
 -- 
 2.39.5
 
