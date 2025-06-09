@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C41A3214;
-	Mon,  9 Jun 2025 13:47:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54E163214;
+	Mon,  9 Jun 2025 13:47:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749476844; cv=none; b=W1wgEPTaBggd7E1HmydbX6ZDBmLtqad3AZXEk/c+wIQm6LHlXaUa1B974QHPrQ6tAaEKEZ7s2k6sGkVOU0qtplcXrxQ84F4uxx9KeSYKEtvQYqvO/oeenPgQ7bWoXaXyBp8NypJSxVNrMdWXPsWXq/hXathjc8+WJVqKNqpkgTI=
+	t=1749476845; cv=none; b=BCQ4N5t1X8h/+cHoMS4Y3qU9EHjfxcQ55HMvpNkYV08m28fwjok2mcmM1bYMSgEspbPixUuVivsIneuVUhmQ+beQg21OQlZst1sq0zzeCB/oWYgfeKYGWU135QkopgEVIoZyL3BjpI6xIEQJbK3xZLIL8mraMq7XAQnT5er2Z3E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749476844; c=relaxed/simple;
-	bh=IljqFBmH08jPidiV+MBkOdnswZtFwqSsKu0da2tZNQM=;
+	s=arc-20240116; t=1749476845; c=relaxed/simple;
+	bh=6DgIuKa+uU0+/vkRt+MeHlfIN7/d7zGfG/zrB+xlRPU=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=LMQ1dJZJYEqyPLjwAqVg1OLQ2y+ApZeM/fLhF/u6j8ENVApM8uKHNKzkw/+YxXpPoT9t5tlGIsaTEnlvK/z38+yqRXz+e02lmj3r1CpZMoJ+3oFVUUVEAu2DvmwL8nflO1OY8K6/TZe2RCobKeYKIFV45+dfPsjh6pAzVBRRo2Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Tla+gabG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=dSwRS3v7d5a75/J07KghSHH1oT3yrmKr9jLH+MvoRJ7KueUK4LLingJUJrNMoTw2yG45jmfvKO5Q9PIRfk19ZnYaqDc27Z31Re2gm8Y9/QIbJl3V66ridfQGbG8FOeM6K1qw/PNeGQzPYaHPC688+jNhZ6Pc4ADxerGAHn5meAU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KuA9/jTb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Tla+gabG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF26AC4CEED;
-	Mon,  9 Jun 2025 13:47:22 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KuA9/jTb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14B78C4CEEB;
+	Mon,  9 Jun 2025 13:47:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749476843;
-	bh=IljqFBmH08jPidiV+MBkOdnswZtFwqSsKu0da2tZNQM=;
+	s=k20201202; t=1749476844;
+	bh=6DgIuKa+uU0+/vkRt+MeHlfIN7/d7zGfG/zrB+xlRPU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tla+gabGNawhgIbTg8A9VIgRUhGw9mj4PZu39EVjTt4JRWgrVj6k9Tzw72YsDXeWo
-	 9qVs08AqmHZFbjcuKY0XFwVo5lbtPkht/4L3eQO7nU8VdToM6iQTzm4Q3lUjEGcVFY
-	 W9+ZKW8qqxzhOzcSMigg3/8hf2gUGNJ7Ou3L1TV7hRVpwoDW7tceFWVkiC5xrLOnAS
-	 +xFkiiJEBYBJ46us/zaXlDticq4pFcaXfVvH5CSG/JuX8chNyMgxUB0lTLxoRI3TQB
-	 h6zbcP8w8EpoJIkkjXGd6JvMHXfQwkEUQHZ9NLQsNT5qW5fOEjLw+7CON6g2NEalcH
-	 +mQ5c4/OPXsoQ==
+	b=KuA9/jTbxIA1J2Lsd5wFtr3c8ofKXdbVTIaQGVnKMp1utkPKbrOLXjouf6q5YMs5N
+	 ci5vgLqL0DZSN5tHVodXk4QO4diP9cXnfuG55I6A0cZ67O+Fkickax9t44fwIBpzoC
+	 N5CJxx0+kNVVw9ucKZUmjArKVvQKRn98xFGzzxqXjQcWUJ7uCu/AdkXNotlEd5fH/Z
+	 ZnM0D3NWBunzMUz5hV7fraHj4evTWsdV6Voig2h2FDbYGyHayHg74fDNfakKbqHMXl
+	 s1ZZk2J76CrZADvG6QnsdEen6mQauRJjyje4xke9jXUtsIBKv7GfQmGW5EKdbzox/k
+	 7X5FNVOs8vkIQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jos Wang <joswang@lenovo.com>,
+Cc: Michael Grzeschik <m.grzeschik@pengutronix.de>,
 	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>,
 	linux-usb@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.6 17/18] usb: typec: displayport: Receive DP Status Update NAK request exit dp altmode
-Date: Mon,  9 Jun 2025 09:46:51 -0400
-Message-Id: <20250609134652.1344323-17-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.6 18/18] usb: typec: mux: do not return on EOPNOTSUPP in {mux, switch}_set
+Date: Mon,  9 Jun 2025 09:46:52 -0400
+Message-Id: <20250609134652.1344323-18-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250609134652.1344323-1-sashal@kernel.org>
 References: <20250609134652.1344323-1-sashal@kernel.org>
@@ -46,136 +46,138 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.6.93
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jos Wang <joswang@lenovo.com>
+From: Michael Grzeschik <m.grzeschik@pengutronix.de>
 
-[ Upstream commit b4b38ffb38c91afd4dc387608db26f6fc34ed40b ]
+[ Upstream commit 0f7bbef1794dc87141897f804e5871a293aa174b ]
 
-Although some Type-C DRD devices that do not support the DP Sink
-function (such as Huawei Mate 40Pro), the Source Port initiates
-Enter Mode CMD, but the device responds to Enter Mode ACK, the
-Source port then initiates DP Status Update CMD, and the device
-responds to DP Status Update NAK.
+Since the typec connectors can have many muxes or switches for different
+lanes (sbu, usb2, usb3) going into different modal states (usb2, usb3,
+audio, debug) all of them will be called on typec_switch_set and
+typec_mux_set. But not all of them will be handling the expected mode.
 
-As PD2.0 spec ("6.4.4.3.4 Enter Mode Command")，A DR_Swap Message
-Shall Not be sent during Modal Operation between the Port Partners.
-At this time, the source port initiates DR_Swap message through the
-"echo device > /sys/class/typec/port0/data_role" command to switch
-the data role from host to device. The device will initiate a Hard
-Reset for recovery, resulting in the failure of data role swap.
+If one of the mux or switch will come back with EOPTNOSUPP this is no
+reason to stop running through the next ones. Therefor we skip this
+particular error value and continue calling the next.
 
-Therefore, when DP Status Update NAK is received, Exit Mode CMD is
-initiated to exit the currently entered DP altmode.
-
-Signed-off-by: Jos Wang <joswang@lenovo.com>
+Signed-off-by: Michael Grzeschik <m.grzeschik@pengutronix.de>
 Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20250209071926.69625-1-joswang1221@gmail.com
+Link: https://lore.kernel.org/r/20250404-ml-topic-typec-mux-v1-1-22c0526381ba@pengutronix.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Based on my analysis of the commit and the code, here is my assessment:
+This appears to be a recent Linux kernel tree. Let me simulate what the
+issue would be by looking at the original problematic code. Based on the
+commit diff provided, the issue is:
 
-**YES**
-
-This commit should be backported to stable kernel trees. Here's my
-extensive analysis:
-
-## Code Analysis
-
-The commit adds a simple but important fix to handle a specific NAK
-response scenario in the DisplayPort alternate mode driver.
-Specifically, it adds this code block:
-
+**Original problematic code:**
 ```c
-case CMDT_RSP_NAK:
-    switch (cmd) {
-+   case DP_CMD_STATUS_UPDATE:
-+       if (typec_altmode_exit(alt))
-+           dev_err(&dp->alt->dev, "Exit Mode Failed!\n");
-+       break;
-    case DP_CMD_CONFIGURE:
-        dp->data.conf = 0;
-        ret = dp_altmode_configured(dp);
-        break;
+ret = sw_dev->set(sw_dev, orientation);
+if (ret)
+    return ret;
 ```
 
-## Why This Should Be Backported
+**Fixed code:**
+```c
+ret = sw_dev->set(sw_dev, orientation);
+if (ret && ret != -EOPNOTSUPP)
+    return ret;
+```
 
-**1. Fixes a Real Hardware Compatibility Issue**
-- The commit specifically addresses compatibility with devices like
-  "Huawei Mate 40Pro" that don't support DP Sink function
-- These devices respond with NAK to DP Status Update commands, creating
-  a problematic state
+Now I can analyze this commit properly:
 
-**2. Prevents System Instability**
-- According to the commit message, without this fix, attempts to perform
-  DR_Swap operations result in Hard Reset from the device
-- This causes data role swap failures, which is a significant functional
-  regression
+**Analysis:**
 
-**3. Follows USB PD Specification**
-- The fix aligns with PD2.0 spec section 6.4.4.3.4 which states "A
-  DR_Swap Message Shall Not be sent during Modal Operation"
-- By exiting DP altmode when NAK is received, it allows proper DR_Swap
-  operation
+**YES** - This commit should be backported to stable kernel trees.
 
-**4. Small, Contained, Low-Risk Change**
-- The change is only 4 lines of code
-- It's confined to a specific error handling path (NAK response to
-  STATUS_UPDATE)
-- Uses existing, well-tested `typec_altmode_exit()` function
-- No new functionality or architectural changes
+**Detailed Analysis:**
 
-**5. Clear Bug Fix Pattern**
-- Similar to commit #4 in the reference examples (which was marked YES
-  for backport)
-- Both involve adding proper exit handling in response to specific
-  conditions
-- Both are small, targeted fixes for real-world device compatibility
+1. **Bug Description**: The commit fixes a functional bug where multiple
+   USB Type-C muxes/switches connected to a single connector would fail
+   to be configured if any one of them returned `-EOPNOTSUPP` (Operation
+   Not Supported). This is a common scenario in modern Type-C connectors
+   that have separate muxes for different signal paths (SBU, USB2, USB3,
+   etc.).
 
-**6. Stable Tree Criteria Met**
-- ✅ Fixes important bugs affecting real hardware
-- ✅ Minimal risk of regression
-- ✅ Doesn't introduce new features
-- ✅ No architectural changes
-- ✅ Confined to specific subsystem (USB Type-C DP altmode)
+2. **Specific Code Changes**:
+   - In `typec_switch_set()` at line 217: Changes `if (ret)` to `if (ret
+     && ret != -EOPNOTSUPP)`
+   - In `typec_mux_set()` at line 381: Changes `if (ret)` to `if (ret &&
+     ret != -EOPNOTSUPP)`
 
-**7. Reference Pattern Alignment**
-The commit pattern closely matches Similar Commit #4 which was marked
-for backport:
-- Both add exit mode handling for specific error conditions
-- Both are small, targeted fixes for real device compatibility
-- Both prevent system-level issues (Hard Reset in this case)
+3. **Problem Impact**: Before this fix, when `typec_set_orientation()`
+   or `typec_set_mode()` were called:
+   - The functions would iterate through all mux/switch devices
+   - If ANY mux returned `-EOPNOTSUPP` (which is legitimate - some muxes
+     only handle specific modes), the entire operation would fail
+   - This prevented other muxes that COULD handle the mode from being
+     configured
+   - Result: Type-C connectors with multiple muxes would not work
+     properly
 
-The change correctly handles an edge case where devices NAK the Status
-Update command, ensuring clean exit from DP altmode to prevent
-subsequent operational issues. This is exactly the type of hardware
-compatibility fix that stable trees are designed to address.
+4. **Risk Assessment**:
+   - **Very Low Risk**: The change only affects error handling logic
+   - **Minimal Code Change**: Only two lines changed, both adding the
+     same condition
+   - **Backward Compatible**: Does not change API or behavior for
+     successful cases
+   - **Well-Contained**: Limited to the USB Type-C mux subsystem
 
- drivers/usb/typec/altmodes/displayport.c | 4 ++++
- 1 file changed, 4 insertions(+)
+5. **Stable Tree Criteria Met**:
+   - ✅ **Important Bug Fix**: Fixes functional issues with Type-C
+     connectors
+   - ✅ **Minimal Risk**: Very small, contained change
+   - ✅ **No New Features**: Pure bug fix, no new functionality
+   - ✅ **Clear Side Effects**: No unintended side effects beyond fixing
+     the issue
+   - ✅ **Affects Users**: Type-C devices with multiple muxes (common in
+     modern systems) would malfunction
 
-diff --git a/drivers/usb/typec/altmodes/displayport.c b/drivers/usb/typec/altmodes/displayport.c
-index ccff838ab89e1..5f6fc5b79212e 100644
---- a/drivers/usb/typec/altmodes/displayport.c
-+++ b/drivers/usb/typec/altmodes/displayport.c
-@@ -323,6 +323,10 @@ static int dp_altmode_vdm(struct typec_altmode *alt,
- 		break;
- 	case CMDT_RSP_NAK:
- 		switch (cmd) {
-+		case DP_CMD_STATUS_UPDATE:
-+			if (typec_altmode_exit(alt))
-+				dev_err(&dp->alt->dev, "Exit Mode Failed!\n");
-+			break;
- 		case DP_CMD_CONFIGURE:
- 			dp->data.conf = 0;
- 			ret = dp_altmode_configured(dp);
+6. **Evidence from Mux Drivers**: The examination of actual mux drivers
+   like `fsa4480.c` and `gpio-sbu-mux.c` shows they legitimately return
+   `-EOPNOTSUPP` for unsupported modes, confirming this is expected
+   behavior that should not abort the entire chain.
+
+7. **Comparison to Similar Commits**: Unlike the provided reference
+   commits which were mostly cleanups or minor features (all marked NO
+   for backport), this addresses a clear functional bug affecting real-
+   world hardware configurations.
+
+This commit follows the stable tree rules perfectly: it's an important
+bugfix with minimal risk that affects users with multi-mux Type-C
+hardware configurations.
+
+ drivers/usb/typec/mux.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/usb/typec/mux.c b/drivers/usb/typec/mux.c
+index 80dd91938d960..a5b2a6f9c5795 100644
+--- a/drivers/usb/typec/mux.c
++++ b/drivers/usb/typec/mux.c
+@@ -214,7 +214,7 @@ int typec_switch_set(struct typec_switch *sw,
+ 		sw_dev = sw->sw_devs[i];
+ 
+ 		ret = sw_dev->set(sw_dev, orientation);
+-		if (ret)
++		if (ret && ret != -EOPNOTSUPP)
+ 			return ret;
+ 	}
+ 
+@@ -378,7 +378,7 @@ int typec_mux_set(struct typec_mux *mux, struct typec_mux_state *state)
+ 		mux_dev = mux->mux_devs[i];
+ 
+ 		ret = mux_dev->set(mux_dev, state);
+-		if (ret)
++		if (ret && ret != -EOPNOTSUPP)
+ 			return ret;
+ 	}
+ 
 -- 
 2.39.5
 
