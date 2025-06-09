@@ -1,45 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E0F820322;
-	Mon,  9 Jun 2025 13:45:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D716925A642;
+	Mon,  9 Jun 2025 13:45:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749476746; cv=none; b=ZwfCsFl6fq+ebgg/GxVN9RZAOmrmiOhR5f9hVSqzlDGrYs7XouJA3zXy0XCU+jYWkIr8nbCTgiJduvrCDrnO7xYRkBhTcdEe4CiPn9W7HZSFaaQf8mtYxb3Bb/4YHxuq/El3m8/CPzHVte5KtL3BdDzo1mDizTdT9rc5U6gS+8c=
+	t=1749476747; cv=none; b=eWMy/niKPXIwweHtG1z9Ez7O8nuBFC28gE8xUVIhmA04mIl1InzjUtGWndrZkLbCUm71nr5Tc6nD9FeuFkfKorcF3y9izuGDXRHUPy1LDw2qWlutGqrPHTxC+vuJX09kR2gcNCpavKNUgjF2A1s9lBK+1TSquhJnR7+g4tNQuxk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749476746; c=relaxed/simple;
-	bh=pJCzUmR773gYxvZ5iMaladAJs5P8lpHkrLmEWci9EF8=;
+	s=arc-20240116; t=1749476747; c=relaxed/simple;
+	bh=tFUG8HzIW//IN/0rdoNVAb1477sL9Oo8/9Wu4zkkaoQ=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=tnUTWS9E47ViUvZnM2vMQqQgzVyLaby7UJso1KjvlZLw2K8hsW4fIm2G49XbbhaRTUZSc1AoQczWrZ1p+sOsb3sPcOAdfa1vOiuosBBetyiJArZUa+odIALykgBCSRQk6cfGP4HsxAIQGjGr3BTD7zNFmZ7TYwR4Hp9XWy+BOWM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HaRo85jg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=WsDx68EN0/A9wWeV6wIoF3Ye1EGnvPYXh1GLxKkkoxHz+f0OEUckzp0YW0uwWAU3QpgXbITnqdvlKXclDcmdxSJagYAMbbNst9vzfIEcDDAok00oqmuaz5fy+g6p0BPMw9ia+T3/oiBIbjGZo3KnAfOaNr/RW5Ug1FpT5XStIM4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=r4JVEa62; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HaRo85jg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C7D1C4CEF8;
-	Mon,  9 Jun 2025 13:45:45 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="r4JVEa62"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3298C4CEED;
+	Mon,  9 Jun 2025 13:45:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749476746;
-	bh=pJCzUmR773gYxvZ5iMaladAJs5P8lpHkrLmEWci9EF8=;
+	s=k20201202; t=1749476747;
+	bh=tFUG8HzIW//IN/0rdoNVAb1477sL9Oo8/9Wu4zkkaoQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HaRo85jgm60Md3AhlppGV4gi+9PoCIIoxQIZtm8D+MuNwgswVnZEktl0DBqVMcx7n
-	 PWbuz7lRBBgeisLjMqwK8wiA56QbWLgPeHFhZtcF63/YbKr9avZu90R29evPOP8iSq
-	 pIqXIccnS/78NCM2OKduv9R5FQm6MuyzwAQHq6uWA8xjp8+VDm0zpkhJA98dDsM1p4
-	 UhR8ohqsSPc4WiSt02DvSEFKWigZp0dNjBHMhsdzrfuz0g8j+VWBtxT2M7R2XOgrkI
-	 ++sbN0rsvgbP3OFRh6GTEu5zAazgfmAxDS5p0er6fFpgeo/VslUg67mMLqgHEU9rXJ
-	 fZOtLfuaL69ww==
+	b=r4JVEa62HD9cHC+Vaj43Ah7PgalhTMCr9EPVlTVCmKgfi7t1xyF97sl83cepf7YkP
+	 idAMgfdbu6cyVYAyJLkBxfDkiyA1gez0SkJolm1w844RUdLsaWb+YNvB/dzS/gwvOc
+	 aOghlGLlQ4ZB4xj2Ua2RU8QvNkk1hDJRDF4odKQEIGowBOGR7Swxa1NC9S2vGt5A+B
+	 kwtLgqt48S9hNgbdzbqNJghl6A1YYvYK4VpHsZrIeaAwVMyvH2kPLfvvlBQCM1V4dz
+	 v1h6dl2wK/U0+26L8Dg5z5qbdtKN8Jqw51KZhSgH8H9mKkZJSdNlCww+dJRLyL3g19
+	 6PFZbtV/0qdnw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Zhang Lixu <lixu.zhang@intel.com>,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+Cc: Chenyuan Yang <chenyuan0y@gmail.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>,
-	jikos@kernel.org,
-	jic23@kernel.org,
-	linux-input@vger.kernel.org,
-	linux-iio@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.14 18/29] iio: hid-sensor-prox: Add support for 16-bit report size
-Date: Mon,  9 Jun 2025 09:44:59 -0400
-Message-Id: <20250609134511.1342999-18-sashal@kernel.org>
+	richardcochran@gmail.com,
+	netdev@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.14 19/29] misc: tps6594-pfsm: Add NULL pointer check in tps6594_pfsm_probe()
+Date: Mon,  9 Jun 2025 09:45:00 -0400
+Message-Id: <20250609134511.1342999-19-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250609134511.1342999-1-sashal@kernel.org>
 References: <20250609134511.1342999-1-sashal@kernel.org>
@@ -52,126 +49,125 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.14.10
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Lixu <lixu.zhang@intel.com>
+From: Chenyuan Yang <chenyuan0y@gmail.com>
 
-[ Upstream commit ad02ca57e44e9936fca5095840fad9d4b47c5559 ]
+[ Upstream commit a99b598d836c9c6411110c70a2da134c78d96e67 ]
 
-On Intel platforms, the HID_USAGE_SENSOR_HUMAN_PROXIMITY report size is 16
-bits. This patch adds support for handling 16-bit report sizes for the
-HID_USAGE_SENSOR_HUMAN_PROXIMITY usage in the HID sensor proximity driver.
+The returned value, pfsm->miscdev.name, from devm_kasprintf()
+could be NULL.
+A pointer check is added to prevent potential NULL pointer dereference.
+This is similar to the fix in commit 3027e7b15b02
+("ice: Fix some null pointer dereference issues in ice_ptp.c").
 
-Previously, the driver only supported 8-bit and 32-bit report sizes. With
-this change, the driver can now correctly process 16-bit proximity data,
-ensuring accurate human presence detection on platforms where this report
-size is used.
+This issue is found by our static analysis tool.
 
-Signed-off-by: Zhang Lixu <lixu.zhang@intel.com>
-Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Link: https://patch.msgid.link/20250317013634.4117399-1-lixu.zhang@intel.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Chenyuan Yang <chenyuan0y@gmail.com>
+Link: https://lore.kernel.org/r/20250311010511.1028269-1-chenyuan0y@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Based on my analysis of the commit and the context provided, I'll now
-provide my recommendation:
-
 **YES**
 
-## Extensive Analysis
+This commit should be backported to stable kernel trees. Here's my
+detailed analysis:
 
-### Code Change Analysis
+## Analysis
 
-The commit adds support for 16-bit report sizes in the HID sensor
-proximity driver by adding a simple `case 2:` clause to the existing
-switch statement in the `prox_capture_sample()` function:
+### 1. Bug Fix Nature
+This commit fixes a clear NULL pointer dereference vulnerability. The
+`devm_kasprintf()` function can return NULL on memory allocation
+failure, and the code was not checking this return value before using
+`pfsm->miscdev.name`. This would lead to a NULL pointer dereference when
+`misc_register(&pfsm->miscdev)` is called at line 302.
 
+### 2. Code Analysis
+Looking at the specific changes in `drivers/misc/tps6594-pfsm.c`:
+
+**Before the fix (lines 282-283):**
 ```c
-switch (raw_len) {
-case 1:
-    prox_state->human_presence[chan] = *(u8 *)raw_data * multiplier;
-    return 0;
-+case 2:
-+    prox_state->human_presence[chan] = *(u16 *)raw_data * multiplier;
-+    return 0;
-case 4:
-    prox_state->human_presence[chan] = *(u32 *)raw_data * multiplier;
-    return 0;
-}
+pfsm->miscdev.name = devm_kasprintf(dev, GFP_KERNEL, "pfsm-%ld-0x%02x",
+                                    tps->chip_id, tps->reg);
 ```
 
-### Why This Should Be Backported
+**After the fix (lines 282-286):**
+```c
+pfsm->miscdev.name = devm_kasprintf(dev, GFP_KERNEL, "pfsm-%ld-0x%02x",
+                                    tps->chip_id, tps->reg);
++if (!pfsm->miscdev.name)
++    return -ENOMEM;
+```
 
-1. **Important Bug Fix**: The commit message clearly states this is
-   needed for Intel platforms where `HID_USAGE_SENSOR_HUMAN_PROXIMITY`
-   uses 16-bit reports. Without this change, these platforms cannot
-   correctly process proximity data, making the sensor completely non-
-   functional for 16-bit report sizes.
+The fix adds essential NULL pointer checking that prevents potential
+kernel crashes.
 
-2. **Minimal Risk and Scope**: The change is extremely small (3 lines
-   added) and follows the exact same pattern as existing 8-bit and
-   32-bit cases. It's confined to a single function and only affects the
-   data parsing path for proximity sensors.
+### 3. Comparison with Similar Commits
+This fix follows the exact same pattern as the reference commits marked
+as "Backport Status: YES":
 
-3. **Pattern Consistency**: Looking at the grep results from other IIO
-   drivers, handling multiple data sizes (including 16-bit) in switch
-   statements is a common pattern throughout the IIO subsystem. This
-   change follows established conventions.
+- **Similar Commit #1 (ipmi)**: Same issue with `devm_kasprintf()` not
+  being checked
+- **Similar Commit #2 (mfd: tps6594)**: Same issue, even in the same
+  TPS6594 subsystem
+- **Similar Commit #4 (ice)**: Same issue, explicitly referenced in the
+  commit message
 
-4. **Hardware Compatibility**: The commit enables proper functionality
-   on Intel platforms that use 16-bit proximity reports. This is a
-   hardware compatibility fix rather than a new feature.
+All these similar commits were deemed suitable for backporting because
+they fix the same fundamental issue.
 
-5. **No Architectural Changes**: The change doesn't modify any APIs,
-   data structures, or architectural components - it simply extends the
-   existing data size handling logic.
+### 4. Risk Assessment
+- **Minimal risk**: The fix is a simple 2-line addition that only adds
+  error checking
+- **No side effects**: The change doesn't alter functionality, only
+  prevents crashes
+- **Contained scope**: Only affects the TPS6594 PFSM driver
+  initialization path
+- **No architectural changes**: Doesn't modify any interfaces or major
+  logic
 
-6. **Similar Successful Backports**: Looking at the reference commits,
-   we see that Similar Commit #3 and #4 were both backported (Status:
-   YES), and both were fixes for scale/data handling issues in HID
-   sensor drivers. This commit follows the same pattern of fixing data
-   handling bugs.
+### 5. Stability Criteria Met
+- ✅ **Important bug fix**: Prevents kernel NULL pointer dereference
+  crashes
+- ✅ **Minimal and contained**: Only 2 lines added for error checking
+- ✅ **Low regression risk**: Cannot introduce new issues, only prevents
+  crashes
+- ✅ **Clear fix**: Addresses a well-defined problem with obvious
+  solution
 
-7. **Clear Failure Mode**: Without this fix, Intel platforms with 16-bit
-   proximity reports would fail to capture proximity data, returning
-   `-EINVAL` and making the proximity sensor completely unusable.
+### 6. Driver Context
+The TPS6594 PFSM driver was introduced in kernel v6.10, making it a
+relatively recent addition. The driver handles power management for TI
+PMIC devices, making reliability crucial for system stability.
 
-8. **Industry-Standard Fix**: The commit comes from Intel (Zhang Lixu)
-   with acknowledgment from the HID sensor maintainer (Srinivas
-   Pandruvada), indicating this addresses a real hardware compatibility
-   issue.
+### 7. Static Analysis Tool Finding
+The commit message mentions this was found by static analysis, which
+indicates it's a real potential issue that could manifest under memory
+pressure conditions.
 
-### Risk Assessment
+This commit clearly meets all the criteria for stable tree backporting:
+it's a small, contained fix for an important potential crash bug with
+minimal risk of regression.
 
-The risk is extremely low because:
-- The change only affects the specific case where `raw_len == 2`
-- Existing 8-bit and 32-bit handling remains unchanged
-- The code follows the exact same pattern as existing cases
-- No memory management or complex logic is involved
-- Failure would be immediate and obvious (wrong data values)
-
-This commit clearly meets the stable tree criteria: it fixes an
-important hardware compatibility bug with minimal risk and no
-architectural changes.
-
- drivers/iio/light/hid-sensor-prox.c | 3 +++
+ drivers/misc/tps6594-pfsm.c | 3 +++
  1 file changed, 3 insertions(+)
 
-diff --git a/drivers/iio/light/hid-sensor-prox.c b/drivers/iio/light/hid-sensor-prox.c
-index 4c65b32d34ce4..46f788b0bc3e2 100644
---- a/drivers/iio/light/hid-sensor-prox.c
-+++ b/drivers/iio/light/hid-sensor-prox.c
-@@ -215,6 +215,9 @@ static int prox_capture_sample(struct hid_sensor_hub_device *hsdev,
- 	case 1:
- 		prox_state->human_presence[chan] = *(u8 *)raw_data * multiplier;
- 		return 0;
-+	case 2:
-+		prox_state->human_presence[chan] = *(u16 *)raw_data * multiplier;
-+		return 0;
- 	case 4:
- 		prox_state->human_presence[chan] = *(u32 *)raw_data * multiplier;
- 		return 0;
+diff --git a/drivers/misc/tps6594-pfsm.c b/drivers/misc/tps6594-pfsm.c
+index 0a24ce44cc37c..6db1c9d48f8fc 100644
+--- a/drivers/misc/tps6594-pfsm.c
++++ b/drivers/misc/tps6594-pfsm.c
+@@ -281,6 +281,9 @@ static int tps6594_pfsm_probe(struct platform_device *pdev)
+ 	pfsm->miscdev.minor = MISC_DYNAMIC_MINOR;
+ 	pfsm->miscdev.name = devm_kasprintf(dev, GFP_KERNEL, "pfsm-%ld-0x%02x",
+ 					    tps->chip_id, tps->reg);
++	if (!pfsm->miscdev.name)
++		return -ENOMEM;
++
+ 	pfsm->miscdev.fops = &tps6594_pfsm_fops;
+ 	pfsm->miscdev.parent = dev->parent;
+ 	pfsm->chip_id = tps->chip_id;
 -- 
 2.39.5
 
