@@ -1,50 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7FF52253E1;
-	Mon,  9 Jun 2025 22:52:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C85D224895;
+	Mon,  9 Jun 2025 22:52:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749509545; cv=none; b=KDAK8elvYmltGGysZS3Z1bE+kH93GRB00s29rn001gCmAG89HbRbqRlSewKgwGeSa6U9EckwehTyo6i5i50bEEK3IUIt9pnNEGKnfkzidupikxuhFc/40dgDQy4V/0A9p4+ylgbh5yZw+5okntUAX2SsdrEVneWfrWtWrTYPORE=
+	t=1749509548; cv=none; b=hU51EQbljDf3fum2ZNrO6qhC7N7ZRREAxfaE2J6fbQDxoWThgOTcrKt+yaV994fEo7vyNheC4khxUgMhj4zxLpl0jNFQ0JU4a8PZXLzogUOR3pwZSiVV1+9+FfBRpB85kVr5InIJc1IJJ3pQrC3QFoKeVIgAH3FZ54gOPTUisZc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749509545; c=relaxed/simple;
-	bh=LfNxyhUN2JsWTRujKmyyweoPVwm/To5NK4yIewPAdQA=;
+	s=arc-20240116; t=1749509548; c=relaxed/simple;
+	bh=nF4IR7dXogTo7/aRIXSAP4Oixm0np9+lK3Kk4a+lsZU=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mBWSL4X4SnNFQf427fymtsKX97hgSfdZA2vvzaMbPjj6e/gT+q8Bpm+2+TE7qvidxB4rWbox6MUAa/Y96UPXCqh/2evMS0wy0W67+I1Z3EFyGuLXttLKEll7wopo3lqXZZkgnGWS3bWJ1m+arPqa4TtqnvHXyt4qUi5iApQQC+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Jv8iPywD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=NyjO+TAMQV+8f5ZB3x/fsguRFQ9/Werfsq2ub1OZl6WCnXfYUpqMzS/cs6aNzHSVFWeYYPG+YwwDrnyVmEPXAQUlMIPhuqQaQrHs8jQnOpOGuONdV+HQKwzugysRrJSczPwnuxuahffkickwi05zjbfTF7C8lbcKD2e5NaQeXPk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PNPQI1Py; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Jv8iPywD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7A63C4CEED;
-	Mon,  9 Jun 2025 22:52:23 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PNPQI1Py"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEDE0C4CEEB;
+	Mon,  9 Jun 2025 22:52:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749509545;
-	bh=LfNxyhUN2JsWTRujKmyyweoPVwm/To5NK4yIewPAdQA=;
+	s=k20201202; t=1749509547;
+	bh=nF4IR7dXogTo7/aRIXSAP4Oixm0np9+lK3Kk4a+lsZU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Jv8iPywDPNKzpx0n2ncXnBDkMoIQ5P3M27WmMSyf5Edx5z69bmwcyYrd3RtEX+3e9
-	 Lfxu5foubxC7liuIXBksxJ0uNSy03JKyEHbOt6ucErDhx5QIbM2Wg80Ooi6mJW2Zvb
-	 vraO8Jn8m2PVOFgXTrER1pbZmTfc7cIbT3TsS0eR290Lyqf07nwUJbS944qc7KmUeE
-	 kViVsUhZPMIPwG3DK0fI/p8+Thj3vqfx8yAGCJRvYOOrUTX33+wC1qmpuGHdFjfiEn
-	 rVrYbXJnHCdSY4k+chqgeyoSTrILczmf/a3I+CMsg8f3hzimKfX6PTAhFKUHRGrPca
-	 oW/9Vdew5KVcQ==
+	b=PNPQI1PyOgJ0Gs6ZnzBvUUpFiBn/3ZDBpCuv/8WvBOd9f2QCZWu5f6Emr8AyyyzFN
+	 36X/eX0t1ipBxkp8VQCsKHr7ykkCQU2fIc17XR3gHb4GnRbKVlp3iQBberayr6uv19
+	 cO1lTZe3W2EVhufXeyU6YdmBA4MGPCT6zjkaxz/IYWU73DRry2zymtlsuNH6jClLx2
+	 Lwb9w3pgrRZLWjlDAP4vZOx3+nd3mRZyu4+5i5WoMlBC15b510FyDKAG9mFkZIK66+
+	 vWClsczb+6imguOi++JjpD2RBCP3k2Mv+/GRF3a477tEksVXa+EjSzwbyPs7McQTR0
+	 Mb+LCjzjI/H0A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: =?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@rivosinc.com>,
-	Charlie Jenkins <charlie@rivosinc.com>,
-	Andrew Jones <ajones@ventanamicro.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
+Cc: Cezary Rojewski <cezary.rojewski@intel.com>,
+	=?UTF-8?q?Amadeusz=20S=C5=82awi=C5=84ski?= <amadeuszx.slawinski@linux.intel.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	paul.walmsley@sifive.com,
-	aou@eecs.berkeley.edu,
-	conor.dooley@microchip.com,
-	alexghiti@rivosinc.com,
-	jesse@rivosinc.com,
-	nylon.chen@sifive.com,
-	evan@rivosinc.com,
-	linux-riscv@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.15 03/11] riscv: misaligned: declare misaligned_access_speed under CONFIG_RISCV_MISALIGNED
-Date: Mon,  9 Jun 2025 18:52:08 -0400
-Message-Id: <20250609225217.1443387-3-sashal@kernel.org>
+	gregkh@linuxfoundation.org
+Subject: [PATCH AUTOSEL 6.15 04/11] ALSA: hda: Ignore unsol events for cards being shut down
+Date: Mon,  9 Jun 2025 18:52:09 -0400
+Message-Id: <20250609225217.1443387-4-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250609225217.1443387-1-sashal@kernel.org>
 References: <20250609225217.1443387-1-sashal@kernel.org>
@@ -60,142 +52,150 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.15.1
 Content-Transfer-Encoding: 8bit
 
-From: Clément Léger <cleger@rivosinc.com>
+From: Cezary Rojewski <cezary.rojewski@intel.com>
 
-[ Upstream commit 1317045a7d6f397904d105f6d40dc9787876a34b ]
+[ Upstream commit 3f100f524e75586537e337b34d18c8d604b398e7 ]
 
-While misaligned_access_speed was defined in a file compile with
-CONFIG_RISCV_MISALIGNED, its definition was under
-CONFIG_RISCV_SCALAR_MISALIGNED. This resulted in compilation problems
-when using it in a file compiled with CONFIG_RISCV_MISALIGNED.
+For the classic snd_hda_intel driver, codec->card and bus->card point to
+the exact same thing. When snd_card_diconnect() fires, bus->shutdown is
+set thanks to azx_dev_disconnect(). card->shutdown is already set when
+that happens but both provide basically the same functionality.
 
-Move the declaration under CONFIG_RISCV_MISALIGNED so that it can be
-used unconditionnally when compiled with that config and remove the check
-for that variable in traps_misaligned.c.
+For the DSP snd_soc_avs driver where multiple codecs are located on
+multiple cards, bus->shutdown 'shortcut' is not sufficient. One codec
+card may be unregistered while other codecs are still operational.
+Proper check in form of card->shutdown must be used to verify whether
+the codec's card is being shut down.
 
-Signed-off-by: Clément Léger <cleger@rivosinc.com>
-Reviewed-by: Charlie Jenkins <charlie@rivosinc.com>
-Tested-by: Charlie Jenkins <charlie@rivosinc.com>
-Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
-Link: https://lore.kernel.org/r/20250523101932.1594077-9-cleger@rivosinc.com
-Signed-off-by: Palmer Dabbelt <palmer@dabbelt.com>
+Reviewed-by: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
+Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Link: https://patch.msgid.link/20250530141309.2943404-1-cezary.rojewski@intel.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 **YES**
 
-This commit should be backported to stable kernel trees.
+This commit should be backported to stable kernel trees. Here's my
+extensive analysis:
 
-## Analysis
+## Technical Analysis
 
-This commit fixes a **compilation configuration dependency issue** in
-the RISC-V architecture's misaligned access handling code. Here's my
-detailed analysis:
+### Core Problem Being Fixed
 
-### The Problem Fixed
-The commit addresses a compilation issue where:
+The commit addresses a **shutdown race condition** in multi-codec HDA
+systems, specifically in DSP/AVS drivers where multiple HDA codecs exist
+on the same sound card but with separate bus instances. The change
+modifies line 47 in `sound/pci/hda/hda_bind.c`:
 
-1. **Variable Declaration Mismatch**: The `misaligned_access_speed` per-
-   CPU variable was defined in `unaligned_access_speed.c` under
-   `CONFIG_RISCV_MISALIGNED`, but its declaration in `cpufeature.h` was
-   under `CONFIG_RISCV_SCALAR_MISALIGNED`.
+**Before:**
+```c
+if (codec->bus->shutdown)
+    return;
+```
 
-2. **Configuration Hierarchy**: From the Kconfig analysis:
-   - `CONFIG_RISCV_MISALIGNED` is a broader umbrella config
-   - `CONFIG_RISCV_SCALAR_MISALIGNED` selects `CONFIG_RISCV_MISALIGNED`
-   - Both `traps_misaligned.c` and `unaligned_access_speed.c` are
-     compiled under `CONFIG_RISCV_MISALIGNED`
+**After:**
+```c
+if (codec->card->shutdown || codec->bus->shutdown)
+    return;
+```
 
-3. **Compilation Failure**: When `CONFIG_RISCV_MISALIGNED` is enabled
-   but `CONFIG_RISCV_SCALAR_MISALIGNED` is not, code in
-   `traps_misaligned.c` tries to use `misaligned_access_speed` (line
-   372: `*this_cpu_ptr(&misaligned_access_speed) =
-   RISCV_HWPROBE_MISALIGNED_SCALAR_EMULATED;`) but the variable isn't
-   declared in the header.
+### Why This is a Good Backport Candidate
 
-### The Fix
-The commit makes two key changes:
+**1. Bug Fix Nature - Small and Contained**
+- This is a clear **bug fix** addressing a specific shutdown race
+  condition
+- The change is **minimal** (adding one condition check) and **well-
+  contained**
+- No architectural changes or new features introduced
+- Low risk of introducing regressions
 
-1. **In `cpufeature.h`**: Moves the `DECLARE_PER_CPU(long,
-   misaligned_access_speed);` declaration from
-   `CONFIG_RISCV_SCALAR_MISALIGNED` to `CONFIG_RISCV_MISALIGNED` (lines
-   82-84 in the new version)
+**2. Critical Subsystem Impact**
+- Affects **HD-audio subsystem** which is critical for audio
+  functionality
+- Could prevent system crashes or hangs during shutdown in multi-codec
+  scenarios
+- Improves system stability during shutdown sequences
 
-2. **In `traps_misaligned.c`**: Removes the conditional `#ifdef
-   CONFIG_RISCV_PROBE_UNALIGNED_ACCESS` guard around the assignment to
-   `misaligned_access_speed` (line 372), making it unconditional when
-   compiled under `CONFIG_RISCV_MISALIGNED`
+**3. Technical Correctness**
+The fix addresses a **fundamental timing issue**:
+- In multi-codec systems, `card->shutdown` is set at the ALSA core level
+  during `snd_card_disconnect()`
+- `bus->shutdown` is set later at the HDA controller level during
+  individual codec shutdown
+- **Gap exists** where unsol events could be processed after card
+  shutdown but before bus shutdown
+- This can cause codec operations on an already-disconnected sound card
 
-### Why This Should Be Backported
+**4. Follows Stable Tree Criteria**
+- **Important bug fix**: Prevents potential system instability during
+  shutdown
+- **Minimal risk**: Only adds an additional safety check, doesn't change
+  existing logic
+- **Well-understood**: The change is straightforward and follows
+  existing patterns seen in similar commits
+- **Confined to subsystem**: Only affects HDA audio subsystem
 
-1. **Fixes Compilation Errors**: This is a clear build fix for valid
-   kernel configurations, preventing compilation failures that would
-   break the kernel build.
+**5. Consistency with Similar Backported Commits**
+This follows the exact same pattern as the historical commits that were
+successfully backported:
 
-2. **Small and Contained**: The changes are minimal - just moving a
-   declaration to the correct config section and removing an unnecessary
-   guard.
+- **Similar Commit #1**: Added `bus->shutdown` check to prevent unsol
+  events during shutdown - **Backported (YES)**
+- **Similar Commit #2**: Added suspend/resume state check to unsol
+  handler - **Backported (YES)**
+- **Similar Commit #3**: Added jack disconnection during codec unbind -
+  **Backported (YES)**
+- **Similar Commit #4**: Added bus_probing flag to serialize codec
+  registration - **Backported (YES)**
 
-3. **No Functional Changes**: This doesn't change runtime behavior, only
-   fixes the build system configuration dependencies.
+All these commits follow the same pattern: **small, targeted fixes to
+prevent race conditions in HDA shutdown/initialization sequences**.
 
-4. **Low Risk**: The fix aligns the declaration with where the variable
-   is actually used, making the code more consistent and correct.
+**6. Real-World Impact**
+- Affects **DSP/AVS audio systems** which are increasingly common in
+  modern hardware
+- Without this fix, systems with multiple audio codecs could experience:
+  - Kernel oops during shutdown
+  - System hangs
+  - Audio subsystem corruption
+  - Unpredictable behavior during reboot sequences
 
-5. **Matches Stable Criteria**: Similar to **Similar Commit #4** which
-   was marked as backport candidate (YES), this fixes compilation issues
-   in configuration management without introducing new features or
-   architectural changes.
+### Risk Assessment
 
-6. **Critical Subsystem**: Unaligned access handling is important for
-   RISC-V platforms, and build failures in this area prevent kernel
-   compilation for affected configurations.
+**Very Low Risk:**
+- The change only **adds** a safety check, doesn't remove existing
+  functionality
+- `card->shutdown` check is used extensively throughout the ALSA
+  subsystem already
+- Maintains **backward compatibility** completely
+- If `card->shutdown` is false, behavior is identical to before
+- No changes to data structures, APIs, or functional logic
 
-This is exactly the type of build fix that stable trees should include -
-it resolves compilation errors without changing functionality or
-introducing regression risks.
+### Conclusion
 
- arch/riscv/include/asm/cpufeature.h  | 5 ++++-
- arch/riscv/kernel/traps_misaligned.c | 2 --
- 2 files changed, 4 insertions(+), 3 deletions(-)
+This commit represents a **textbook stable backport candidate**: it's a
+small, well-understood bug fix that addresses a real stability issue in
+a critical subsystem with minimal risk of regression. The pattern
+matches multiple previously successful backports in the same subsystem,
+and the technical merit is clear.
 
-diff --git a/arch/riscv/include/asm/cpufeature.h b/arch/riscv/include/asm/cpufeature.h
-index f56b409361fbe..7201da46694f7 100644
---- a/arch/riscv/include/asm/cpufeature.h
-+++ b/arch/riscv/include/asm/cpufeature.h
-@@ -71,7 +71,6 @@ bool __init check_unaligned_access_emulated_all_cpus(void);
- void check_unaligned_access_emulated(struct work_struct *work __always_unused);
- void unaligned_emulation_finish(void);
- bool unaligned_ctl_available(void);
--DECLARE_PER_CPU(long, misaligned_access_speed);
- #else
- static inline bool unaligned_ctl_available(void)
- {
-@@ -79,6 +78,10 @@ static inline bool unaligned_ctl_available(void)
- }
- #endif
+ sound/pci/hda/hda_bind.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/sound/pci/hda/hda_bind.c b/sound/pci/hda/hda_bind.c
+index 9521e5e0e6e6f..fdc8f65c41999 100644
+--- a/sound/pci/hda/hda_bind.c
++++ b/sound/pci/hda/hda_bind.c
+@@ -44,7 +44,7 @@ static void hda_codec_unsol_event(struct hdac_device *dev, unsigned int ev)
+ 	struct hda_codec *codec = container_of(dev, struct hda_codec, core);
  
-+#if defined(CONFIG_RISCV_MISALIGNED)
-+DECLARE_PER_CPU(long, misaligned_access_speed);
-+#endif
-+
- bool __init check_vector_unaligned_access_emulated_all_cpus(void);
- #if defined(CONFIG_RISCV_VECTOR_MISALIGNED)
- void check_vector_unaligned_access_emulated(struct work_struct *work __always_unused);
-diff --git a/arch/riscv/kernel/traps_misaligned.c b/arch/riscv/kernel/traps_misaligned.c
-index 77c788660223b..fe0ab912014ba 100644
---- a/arch/riscv/kernel/traps_misaligned.c
-+++ b/arch/riscv/kernel/traps_misaligned.c
-@@ -368,9 +368,7 @@ static int handle_scalar_misaligned_load(struct pt_regs *regs)
+ 	/* ignore unsol events during shutdown */
+-	if (codec->bus->shutdown)
++	if (codec->card->shutdown || codec->bus->shutdown)
+ 		return;
  
- 	perf_sw_event(PERF_COUNT_SW_ALIGNMENT_FAULTS, 1, regs, addr);
- 
--#ifdef CONFIG_RISCV_PROBE_UNALIGNED_ACCESS
- 	*this_cpu_ptr(&misaligned_access_speed) = RISCV_HWPROBE_MISALIGNED_SCALAR_EMULATED;
--#endif
- 
- 	if (!unaligned_enabled)
- 		return -1;
+ 	/* ignore unsol events during system suspend/resume */
 -- 
 2.39.5
 
