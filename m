@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8B013214;
-	Mon,  9 Jun 2025 13:47:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C41A3214;
+	Mon,  9 Jun 2025 13:47:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749476842; cv=none; b=sXYkbG9msCXdu9PYa5LTIP0aivAomI8qET9WEMs7V/Jl/ALFWWeEkkespnd2FU65GN+TNK4sb/k1o5x7vPn0GZuzN5Wk6ze40dw9SOXedydLnwgg/n1ocaJG1w8vVu1NAb8OiX6VMGgMSVS/8k67Hy96I+WfNLL1r2wfcL2Emio=
+	t=1749476844; cv=none; b=W1wgEPTaBggd7E1HmydbX6ZDBmLtqad3AZXEk/c+wIQm6LHlXaUa1B974QHPrQ6tAaEKEZ7s2k6sGkVOU0qtplcXrxQ84F4uxx9KeSYKEtvQYqvO/oeenPgQ7bWoXaXyBp8NypJSxVNrMdWXPsWXq/hXathjc8+WJVqKNqpkgTI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749476842; c=relaxed/simple;
-	bh=gMdVvzbUtoZ0vOBFNgcPlEAKUyHg7PjW/tihhraoc2Y=;
+	s=arc-20240116; t=1749476844; c=relaxed/simple;
+	bh=IljqFBmH08jPidiV+MBkOdnswZtFwqSsKu0da2tZNQM=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=utz5MDcC4cJXw+rYKAORjDiPB4kcd88tSV6og/KDAsrmGHkCqdkj4B14IBF7UCcGyCa6NlKAKUx4lRPzDQ9ztj4QQA4xmfVU3V6pw4UgycB7TEtUmZWy6X1Qz1XgYZli3qNub2YHwiUACHsw3YkOqXxc56l5honQBoJ5FqA6sgE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Eao8gvHZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=LMQ1dJZJYEqyPLjwAqVg1OLQ2y+ApZeM/fLhF/u6j8ENVApM8uKHNKzkw/+YxXpPoT9t5tlGIsaTEnlvK/z38+yqRXz+e02lmj3r1CpZMoJ+3oFVUUVEAu2DvmwL8nflO1OY8K6/TZe2RCobKeYKIFV45+dfPsjh6pAzVBRRo2Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Tla+gabG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Eao8gvHZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7951AC4CEEB;
-	Mon,  9 Jun 2025 13:47:21 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Tla+gabG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF26AC4CEED;
+	Mon,  9 Jun 2025 13:47:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749476842;
-	bh=gMdVvzbUtoZ0vOBFNgcPlEAKUyHg7PjW/tihhraoc2Y=;
+	s=k20201202; t=1749476843;
+	bh=IljqFBmH08jPidiV+MBkOdnswZtFwqSsKu0da2tZNQM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Eao8gvHZJ3GdPegivtykqDGWiCyteQ4I5hNoLxiyc8lkAv0oarkDSgQ3ZRthiHAvX
-	 owYADj1ptlbHz74RK8gCSJzYaeQflRuICo4bwh4XHhUt5ocQ+uKB9e9gr10w5R4aM0
-	 Q74gnOQm8ywKXjs6k9cL7p9UzUkVKLczuL/tykzXPVKdcyxhNv0rculwFI95f+cQgS
-	 neZINGUxPj8Crxz+LcX9AoEf7ztHWSXpOrg0jc8eO6PSrfzGHx5+k6pOvcQNND0d42
-	 VTlKTNNYYvr13tC9ZbyWSUhbuvFapcR92YCWyV0lLTCD/acp6cXbYXnZodTHz8/Us9
-	 cplSeznCggA9w==
+	b=Tla+gabGNawhgIbTg8A9VIgRUhGw9mj4PZu39EVjTt4JRWgrVj6k9Tzw72YsDXeWo
+	 9qVs08AqmHZFbjcuKY0XFwVo5lbtPkht/4L3eQO7nU8VdToM6iQTzm4Q3lUjEGcVFY
+	 W9+ZKW8qqxzhOzcSMigg3/8hf2gUGNJ7Ou3L1TV7hRVpwoDW7tceFWVkiC5xrLOnAS
+	 +xFkiiJEBYBJ46us/zaXlDticq4pFcaXfVvH5CSG/JuX8chNyMgxUB0lTLxoRI3TQB
+	 h6zbcP8w8EpoJIkkjXGd6JvMHXfQwkEUQHZ9NLQsNT5qW5fOEjLw+7CON6g2NEalcH
+	 +mQ5c4/OPXsoQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Robert Hodaszi <robert.hodaszi@digi.com>,
-	Oliver Neukum <oneukum@suse.com>,
+Cc: Jos Wang <joswang@lenovo.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>,
-	stern@rowland.harvard.edu,
-	viro@zeniv.linux.org.uk
-Subject: [PATCH AUTOSEL 6.6 16/18] usb: cdc-wdm: avoid setting WDM_READ for ZLP-s
-Date: Mon,  9 Jun 2025 09:46:50 -0400
-Message-Id: <20250609134652.1344323-16-sashal@kernel.org>
+	linux-usb@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.6 17/18] usb: typec: displayport: Receive DP Status Update NAK request exit dp altmode
+Date: Mon,  9 Jun 2025 09:46:51 -0400
+Message-Id: <20250609134652.1344323-17-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250609134652.1344323-1-sashal@kernel.org>
 References: <20250609134652.1344323-1-sashal@kernel.org>
@@ -47,194 +46,136 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.6.93
 Content-Transfer-Encoding: 8bit
 
-From: Robert Hodaszi <robert.hodaszi@digi.com>
+From: Jos Wang <joswang@lenovo.com>
 
-[ Upstream commit 387602d8a75574fafb451b7a8215e78dfd67ee63 ]
+[ Upstream commit b4b38ffb38c91afd4dc387608db26f6fc34ed40b ]
 
-Don't set WDM_READ flag in wdm_in_callback() for ZLP-s, otherwise when
-userspace tries to poll for available data, it might - incorrectly -
-believe there is something available, and when it tries to non-blocking
-read it, it might get stuck in the read loop.
+Although some Type-C DRD devices that do not support the DP Sink
+function (such as Huawei Mate 40Pro), the Source Port initiates
+Enter Mode CMD, but the device responds to Enter Mode ACK, the
+Source port then initiates DP Status Update CMD, and the device
+responds to DP Status Update NAK.
 
-For example this is what glib does for non-blocking read (briefly):
+As PD2.0 spec ("6.4.4.3.4 Enter Mode Command")，A DR_Swap Message
+Shall Not be sent during Modal Operation between the Port Partners.
+At this time, the source port initiates DR_Swap message through the
+"echo device > /sys/class/typec/port0/data_role" command to switch
+the data role from host to device. The device will initiate a Hard
+Reset for recovery, resulting in the failure of data role swap.
 
-  1. poll()
-  2. if poll returns with non-zero, starts a read data loop:
-    a. loop on poll() (EINTR disabled)
-    b. if revents was set, reads data
-      I. if read returns with EINTR or EAGAIN, goto 2.a.
-      II. otherwise return with data
+Therefore, when DP Status Update NAK is received, Exit Mode CMD is
+initiated to exit the currently entered DP altmode.
 
-So if ZLP sets WDM_READ (#1), we expect data, and try to read it (#2).
-But as that was a ZLP, and we are doing non-blocking read, wdm_read()
-returns with EAGAIN (#2.b.I), so loop again, and try to read again
-(#2.a.).
-
-With glib, we might stuck in this loop forever, as EINTR is disabled
-(#2.a).
-
-Signed-off-by: Robert Hodaszi <robert.hodaszi@digi.com>
-Acked-by: Oliver Neukum <oneukum@suse.com>
-Link: https://lore.kernel.org/r/20250403144004.3889125-1-robert.hodaszi@digi.com
+Signed-off-by: Jos Wang <joswang@lenovo.com>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20250209071926.69625-1-joswang1221@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-## Backport Analysis: YES
+Based on my analysis of the commit and the code, here is my assessment:
 
-This commit should be backported to stable kernel trees for the
-following reasons:
+**YES**
 
-### 1. **Clear User-Facing Bug Fix**
-The commit fixes a critical bug that causes userspace applications to
-get stuck in infinite poll/read loops when dealing with Zero-Length
-Packets (ZLPs). This is a regression that affects real-world
-applications using glib and similar libraries with cdc-wdm devices.
+This commit should be backported to stable kernel trees. Here's my
+extensive analysis:
 
-### 2. **Minimal and Surgical Changes**
-The fix is extremely contained and follows the stable tree criteria:
-- **Small code change**: Only ~20 lines modified, mostly removing
-  problematic code
-- **Well-defined scope**: Changes are limited to `wdm_in_callback()`
-  function
-- **Clear logic**: Simple check for `length == 0` and skip setting
-  `WDM_READ` flag
-- **No architectural changes**: Doesn't modify core data structures or
-  algorithms
+## Code Analysis
 
-### 3. **Low Regression Risk**
-The changes are inherently safe:
-- **Removing problematic behavior**: The fix removes the incorrect
-  setting of `WDM_READ` for ZLPs
-- **Maintains existing functionality**: All other packet handling
-  remains unchanged
-- **Proper fallback**: ZLPs still trigger service work via
-  `schedule_work(&desc->service_outs_intr)`
-- **Backwards compatible**: No API changes that could affect other
-  drivers
+The commit adds a simple but important fix to handle a specific NAK
+response scenario in the DisplayPort alternate mode driver.
+Specifically, it adds this code block:
 
-### 4. **Critical Subsystem Impact**
-The USB CDC-WDM driver is used by many mobile modems and WWAN devices.
-Getting stuck in infinite loops renders these devices unusable, which is
-a severe user impact.
+```c
+case CMDT_RSP_NAK:
+    switch (cmd) {
++   case DP_CMD_STATUS_UPDATE:
++       if (typec_altmode_exit(alt))
++           dev_err(&dp->alt->dev, "Exit Mode Failed!\n");
++       break;
+    case DP_CMD_CONFIGURE:
+        dp->data.conf = 0;
+        ret = dp_altmode_configured(dp);
+        break;
+```
 
-### 5. **Alignment with Historical Backports**
-This commit follows the same pattern as the successful backports shown
-in the examples:
-- Similar to **Commit #1 (YES)**: Fixes flag management issue that
-  causes device to become unusable
-- Similar to **Commit #2 (YES)**: Addresses race condition in flag
-  handling
-- Similar to **Commit #3 (YES)**: Prevents userspace applications from
-  hanging
+## Why This Should Be Backported
 
-### 6. **Code Analysis Details**
+**1. Fixes a Real Hardware Compatibility Issue**
+- The commit specifically addresses compatibility with devices like
+  "Huawei Mate 40Pro" that don't support DP Sink function
+- These devices respond with NAK to DP Status Update commands, creating
+  a problematic state
 
-**Key changes that support backporting:**
+**2. Prevents System Instability**
+- According to the commit message, without this fix, attempts to perform
+  DR_Swap operations result in Hard Reset from the device
+- This causes data role swap failures, which is a significant functional
+  regression
 
-1. **ZLP Detection**: `if (length == 0)` - Simple, safe check
-2. **Flag Management Fix**: Prevents incorrect `WDM_READ` setting for
-   ZLPs
-3. **Cleanup**: Removes `reslength` field and related zero-length
-   handling code that was causing the infinite loop
-4. **Proper Service Handling**: ZLPs are still processed via work queue
-   (`skip_zlp` goto)
+**3. Follows USB PD Specification**
+- The fix aligns with PD2.0 spec section 6.4.4.3.4 which states "A
+  DR_Swap Message Shall Not be sent during Modal Operation"
+- By exiting DP altmode when NAK is received, it allows proper DR_Swap
+  operation
 
-**Risk mitigation:**
-- The `service_interrupt_work()` function change adds a condition
-  `(desc->length || desc->rerr)` that ensures `WDM_READ` is only set
-  when there's actual data or an error to report
-- This prevents the exact scenario that caused infinite loops
+**4. Small, Contained, Low-Risk Change**
+- The change is only 4 lines of code
+- It's confined to a specific error handling path (NAK response to
+  STATUS_UPDATE)
+- Uses existing, well-tested `typec_altmode_exit()` function
+- No new functionality or architectural changes
 
-### 7. **Real-World Impact**
-From the kernel repository examination, this appears to be addressing a
-recently discovered issue that affects applications using glib's non-
-blocking I/O patterns with CDC-WDM devices. The infinite loop scenario
-described is a critical usability bug.
+**5. Clear Bug Fix Pattern**
+- Similar to commit #4 in the reference examples (which was marked YES
+  for backport)
+- Both involve adding proper exit handling in response to specific
+  conditions
+- Both are small, targeted fixes for real-world device compatibility
 
-**Conclusion**: This is a textbook example of a stable-worthy fix - it
-addresses a clear user-facing bug with minimal, surgical changes that
-have low regression risk and high benefit for affected users.
+**6. Stable Tree Criteria Met**
+- ✅ Fixes important bugs affecting real hardware
+- ✅ Minimal risk of regression
+- ✅ Doesn't introduce new features
+- ✅ No architectural changes
+- ✅ Confined to specific subsystem (USB Type-C DP altmode)
 
- drivers/usb/class/cdc-wdm.c | 23 +++++++++--------------
- 1 file changed, 9 insertions(+), 14 deletions(-)
+**7. Reference Pattern Alignment**
+The commit pattern closely matches Similar Commit #4 which was marked
+for backport:
+- Both add exit mode handling for specific error conditions
+- Both are small, targeted fixes for real device compatibility
+- Both prevent system-level issues (Hard Reset in this case)
 
-diff --git a/drivers/usb/class/cdc-wdm.c b/drivers/usb/class/cdc-wdm.c
-index 559c121f09230..600ad9412c146 100644
---- a/drivers/usb/class/cdc-wdm.c
-+++ b/drivers/usb/class/cdc-wdm.c
-@@ -92,7 +92,6 @@ struct wdm_device {
- 	u16			wMaxCommand;
- 	u16			wMaxPacketSize;
- 	__le16			inum;
--	int			reslength;
- 	int			length;
- 	int			read;
- 	int			count;
-@@ -214,6 +213,11 @@ static void wdm_in_callback(struct urb *urb)
- 	if (desc->rerr == 0 && status != -EPIPE)
- 		desc->rerr = status;
- 
-+	if (length == 0) {
-+		dev_dbg(&desc->intf->dev, "received ZLP\n");
-+		goto skip_zlp;
-+	}
-+
- 	if (length + desc->length > desc->wMaxCommand) {
- 		/* The buffer would overflow */
- 		set_bit(WDM_OVERFLOW, &desc->flags);
-@@ -222,18 +226,18 @@ static void wdm_in_callback(struct urb *urb)
- 		if (!test_bit(WDM_OVERFLOW, &desc->flags)) {
- 			memmove(desc->ubuf + desc->length, desc->inbuf, length);
- 			desc->length += length;
--			desc->reslength = length;
- 		}
- 	}
- skip_error:
- 
- 	if (desc->rerr) {
- 		/*
--		 * Since there was an error, userspace may decide to not read
--		 * any data after poll'ing.
-+		 * If there was a ZLP or an error, userspace may decide to not
-+		 * read any data after poll'ing.
- 		 * We should respond to further attempts from the device to send
- 		 * data, so that we can get unstuck.
- 		 */
-+skip_zlp:
- 		schedule_work(&desc->service_outs_intr);
- 	} else {
- 		set_bit(WDM_READ, &desc->flags);
-@@ -585,15 +589,6 @@ static ssize_t wdm_read
- 			goto retry;
- 		}
- 
--		if (!desc->reslength) { /* zero length read */
--			dev_dbg(&desc->intf->dev, "zero length - clearing WDM_READ\n");
--			clear_bit(WDM_READ, &desc->flags);
--			rv = service_outstanding_interrupt(desc);
--			spin_unlock_irq(&desc->iuspin);
--			if (rv < 0)
--				goto err;
--			goto retry;
--		}
- 		cntr = desc->length;
- 		spin_unlock_irq(&desc->iuspin);
- 	}
-@@ -1016,7 +1011,7 @@ static void service_interrupt_work(struct work_struct *work)
- 
- 	spin_lock_irq(&desc->iuspin);
- 	service_outstanding_interrupt(desc);
--	if (!desc->resp_count) {
-+	if (!desc->resp_count && (desc->length || desc->rerr)) {
- 		set_bit(WDM_READ, &desc->flags);
- 		wake_up(&desc->wait);
- 	}
+The change correctly handles an edge case where devices NAK the Status
+Update command, ensuring clean exit from DP altmode to prevent
+subsequent operational issues. This is exactly the type of hardware
+compatibility fix that stable trees are designed to address.
+
+ drivers/usb/typec/altmodes/displayport.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/drivers/usb/typec/altmodes/displayport.c b/drivers/usb/typec/altmodes/displayport.c
+index ccff838ab89e1..5f6fc5b79212e 100644
+--- a/drivers/usb/typec/altmodes/displayport.c
++++ b/drivers/usb/typec/altmodes/displayport.c
+@@ -323,6 +323,10 @@ static int dp_altmode_vdm(struct typec_altmode *alt,
+ 		break;
+ 	case CMDT_RSP_NAK:
+ 		switch (cmd) {
++		case DP_CMD_STATUS_UPDATE:
++			if (typec_altmode_exit(alt))
++				dev_err(&dp->alt->dev, "Exit Mode Failed!\n");
++			break;
+ 		case DP_CMD_CONFIGURE:
+ 			dp->data.conf = 0;
+ 			ret = dp_altmode_configured(dp);
 -- 
 2.39.5
 
