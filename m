@@ -1,43 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7674B224895;
-	Mon,  9 Jun 2025 22:53:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8583B224895;
+	Mon,  9 Jun 2025 22:53:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749509622; cv=none; b=kszAlh092ZpMIJWcDADwKIjJzUghVORp3ccS71pfCfcMm2EQibQiqP1PM75S/IN+I7DgjJrJ/70GnILN4GPJDDjJosMzlqQ6JXKhXo2GT0aJDBV8VXdy9nHKPxkM0OtdRx2xDFfB7/5bi6V9ROaVoXplgak7KPIpT42yABgZ2Vg=
+	t=1749509625; cv=none; b=DGegKOn0SGeE6Ae6+/U0Tgtyr/c7f7nrcSzMrONDS42zODxSj4YOPrgxt+OV2B4Xn8G4c1Jw7rCdS+XXf7E4DfzPnNSUUVpKNnYhjEetRr+LBjXQ1tke86uxVRtyLJDPZ+fgAv2W7zijLW7iPk3iUqxbwhuFC3ZgbwardOrbB2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749509622; c=relaxed/simple;
-	bh=w3rMAc32FL+Hfx+deTvd90VRUr2HVHhL8IYAXabtB5g=;
+	s=arc-20240116; t=1749509625; c=relaxed/simple;
+	bh=M8npS7yq7BD9LwiA6TjrWh6kMFqFbSUyKEB0LghpNa4=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=iF7F6sl2+bh0b2UHhd589O+BLuokONMIcg8oeEcIa8eMrKF6qJOVH0G5isgPcbbU8foaVQNvemeumUKzI/KEwKxmi4hSUjro5J17acouo0QzePZVm3D25rjVtZxTz+63k6ep49iIzzTIsVwnKV7zM/f4XO9Kh3nffeOBhl+7ACU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AwS8BIwu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hY3amIGT3OtjCMEdtBLrF0MU7Tx8MVCSDEVTl3MHhz0dW+25sz4/ALs83lXj+CBZIj5iq+2QX1wTU/LWrPKOzA5fKcgWZVLUbQ1hjAyIe2kUcn4vcCuUk1vDw/yxlhjxb71AZKk3bMDfufqe3322joLXkEG1guzsCw+o4MtiCBU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qx/F50zi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AwS8BIwu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22B3AC4CEEB;
-	Mon,  9 Jun 2025 22:53:41 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qx/F50zi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF0CAC4CEEF;
+	Mon,  9 Jun 2025 22:53:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749509622;
-	bh=w3rMAc32FL+Hfx+deTvd90VRUr2HVHhL8IYAXabtB5g=;
+	s=k20201202; t=1749509625;
+	bh=M8npS7yq7BD9LwiA6TjrWh6kMFqFbSUyKEB0LghpNa4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AwS8BIwutTPOyJos6tERoXZ8jx59ay2wuySaZf8aSGVu5Ka+qr5EVBKmVH/rYJB8a
-	 jwj12sCyWKjnGzzPoOAvYWN4rNPpPvCocHJtuCrF7Oeabe8q3snFHw8xIhofT/vD+r
-	 fsojLIXyA759tSs/MjPE/pQWkFd9maMQ64Xzr+hhOcMQwBKiHLumDc+RjqagEGTEON
-	 URf+6V73zjcpoENI0UNQafUeB5hDRVEyihLVIMnuE4g8HkiTzwQTAX7uBnwsP+fxoT
-	 I2nAduSYK4kko3nSB2lvG3OTrsTV9pZ0+tPFNuI/FDKV/j/jluVekMpmNvHVSbdgpy
-	 3JYJkfmY+WmwQ==
+	b=qx/F50zim2MDYK38Q5PUUSVV8f8GShIV9tdLMQQ9S0dqw9p5BIkccMDvP+pzOMZBE
+	 rkk97Oc5ynGnFSS6Prm1ETKYUsbnhm7SvBClBW36n8fwFIzebGZYZm5xCQo+Tz2X+k
+	 ULiY7Laif75Xg85uYsLpEKKnTjsFSURZIkYhM76yUkn0G4dq6OAOi6ur0cK1YruVaA
+	 WU8SOQrN3WQ+gAWmg3rrO0gTUZWnuthSWM6/c9umR2qCn0Ghr9r8nTqzeA+Anfk9+y
+	 lCjvMX+LBNlRErKeBWN0JLblw2C+uJrcIXkAk5CYbJzPQPqtNSgtBjuzgjQ4NeAvsY
+	 F1i3dB20qOuow==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Dmitry Kandybka <d.kandybka@gmail.com>,
-	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
+Cc: Ziqi Chen <quic_ziqichen@quicinc.com>,
+	Can Guo <quic_cang@quicinc.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K . Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>,
-	xiubli@redhat.com,
-	ceph-devel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.6 4/6] ceph: fix possible integer overflow in ceph_zero_objects()
-Date: Mon,  9 Jun 2025 18:53:30 -0400
-Message-Id: <20250609225333.1444210-4-sashal@kernel.org>
+	peter.wang@mediatek.com,
+	avri.altman@wdc.com,
+	mani@kernel.org,
+	quic_nguyenb@quicinc.com,
+	linux-scsi@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.6 5/6] scsi: ufs: core: Don't perform UFS clkscaling during host async scan
+Date: Mon,  9 Jun 2025 18:53:31 -0400
+Message-Id: <20250609225333.1444210-5-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250609225333.1444210-1-sashal@kernel.org>
 References: <20250609225333.1444210-1-sashal@kernel.org>
@@ -52,104 +56,170 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.6.93
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Kandybka <d.kandybka@gmail.com>
+From: Ziqi Chen <quic_ziqichen@quicinc.com>
 
-[ Upstream commit 0abd87942e0c93964e93224836944712feba1d91 ]
+[ Upstream commit e97633492f5a3eca7b3ff03b4ef6f993017f7955 ]
 
-In 'ceph_zero_objects', promote 'object_size' to 'u64' to avoid possible
-integer overflow.
+When preparing for UFS clock scaling, the UFS driver will quiesce all
+sdevs queues in the UFS SCSI host tagset list and then unquiesce them in
+ufshcd_clock_scaling_unprepare(). If the UFS SCSI host async scan is in
+progress at this time, some LUs may be added to the tagset list between
+UFS clkscale prepare and unprepare. This can cause two issues:
 
-Compile tested only.
+1. During clock scaling, there may be I/O requests issued through new
+added queues that have not been quiesced, leading to task abort issue.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+2. These new added queues that have not been quiesced will be unquiesced
+as well when UFS clkscale is unprepared, resulting in warning prints.
 
-Signed-off-by: Dmitry Kandybka <d.kandybka@gmail.com>
-Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Therefore, use the mutex lock scan_mutex in
+ufshcd_clock_scaling_prepare() and ufshcd_clock_scaling_unprepare() to
+protect it.
+
+Co-developed-by: Can Guo <quic_cang@quicinc.com>
+Signed-off-by: Can Guo <quic_cang@quicinc.com>
+Signed-off-by: Ziqi Chen <quic_ziqichen@quicinc.com>
+Link: https://lore.kernel.org/r/20250522081233.2358565-1-quic_ziqichen@quicinc.com
+Suggested-by: Bart Van Assche <bvanassche@acm.org>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
+
+Based on my thorough analysis of the code and the race condition, here's
+my assessment:
 
 **YES**
 
 This commit should be backported to stable kernel trees. Here's my
-detailed analysis:
+extensive analysis:
 
-## Why This Should Be Backported
+## Bug Analysis
 
-### 1. **Clear Bug Fix with User Impact**
-The commit fixes a real integer overflow vulnerability in
-`ceph_zero_objects()` where `s32 object_size` is multiplied by `s32
-stripe_count` to calculate `u64 object_set_size`. When the layout values
-exceed 2^31, the multiplication can underflow, leading to:
-- Incorrect loop bounds in the zeroing logic
-- Potential infinite loops or premature termination
-- Data integrity issues during hole punching operations
-- Incorrect `do_div()` operations
+The commit fixes a **critical race condition** between UFS clock scaling
+operations and async SCSI scanning that can lead to two serious issues:
 
-### 2. **Affects Critical Kernel Functionality**
-This bug impacts core filesystem operations that users depend on:
-- `fallocate()` system call with `FALLOC_FL_PUNCH_HOLE`
-- File sparse operations used by databases, VMs, backup tools
-- Copy-on-write optimizations in Ceph filesystems
+### 1. **The Race Condition Explained**
 
-### 3. **Small, Contained, and Low-Risk Fix**
-The code change is minimal and safe:
+Looking at the code changes, the issue occurs when:
+
+**Before the fix**: `ufshcd_clock_scaling_prepare()` performs operations
+in this order:
 ```c
-- u64 object_set_size = object_size * stripe_count;
-+       u64 object_set_size = (u64) object_size * stripe_count;
+blk_mq_quiesce_tagset(&hba->host->tag_set);  // Quiesce existing queues
+mutex_lock(&hba->wb_mutex);
+down_write(&hba->clk_scaling_lock);
 ```
 
-This fix:
-- Promotes `object_size` to `u64` before multiplication, preventing
-  overflow
-- Has no functional side effects beyond fixing the bug
-- Maintains consistency with the underlying `u32` data types in
-  `ceph_file_layout`
-- Cannot introduce regressions
+**The race**: If `ufshcd_async_scan()` is running concurrently, it calls
+`scsi_scan_host()` at line 8789, which:
+1. Discovers new LUNs and adds them to the tagset
+2. Creates new block queues for these LUNs
+3. These new queues are **not quiesced** by the earlier
+   `blk_mq_quiesce_tagset()` call
 
-### 4. **Follows Stable Tree Criteria**
-- **Important bugfix**: Prevents potential data corruption and system
-  instability
-- **Minimal risk**: Single-line change with no architectural impact
-- **Confined scope**: Only affects Ceph filesystem's hole punching logic
-- **No new features**: Pure defensive fix
+**After the fix**: The addition of `mutex_lock(&hba->host->scan_mutex)`
+**before** `blk_mq_quiesce_tagset()` ensures:
+```c
+mutex_lock(&hba->host->scan_mutex);          // NEW: Serialize with
+scanning
+blk_mq_quiesce_tagset(&hba->host->tag_set);  // Now quiesces ALL queues
+```
 
-### 5. **Matches Successful Backport Pattern**
-This commit is very similar to **Similar Commit #1** (marked YES for
-backport) which also:
-- Fixed a type promotion bug affecting critical operations
-- Had minimal code changes with clear safety benefits
-- Addressed potential data integrity issues
-- Was explicitly marked with `Cc: stable@vger.kernel.org`
+### 2. **Specific Problems This Fixes**
 
-### 6. **Proactive Hardening Value**
-While the bug requires specific conditions to trigger (large object
-sizes or stripe counts), backporting provides:
-- Defense against potential malicious layouts from compromised metadata
-  servers
-- Protection for users with unusual but valid filesystem configurations
-- General robustness improvement for production systems
+**Issue #1 - Task Abort**: Non-quiesced new queues can continue issuing
+I/O during clock scaling, leading to task aborts when the UFS controller
+changes power states mid-transaction.
 
-The fix has no downside risk and provides meaningful protection against
-a real integer overflow scenario that could affect data integrity in
-Ceph filesystems.
+**Issue #2 - Warning Messages**: In `ufshcd_clock_scaling_unprepare()`,
+`blk_mq_unquiesce_tagset()` attempts to unquiesce ALL queues in the
+tagset, including newly added ones that were never quiesced, triggering
+warning messages.
 
- fs/ceph/file.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+### 3. **Why This Should Be Backported**
 
-diff --git a/fs/ceph/file.c b/fs/ceph/file.c
-index a03b11cf78872..e12657b4c3e04 100644
---- a/fs/ceph/file.c
-+++ b/fs/ceph/file.c
-@@ -2513,7 +2513,7 @@ static int ceph_zero_objects(struct inode *inode, loff_t offset, loff_t length)
- 	s32 stripe_unit = ci->i_layout.stripe_unit;
- 	s32 stripe_count = ci->i_layout.stripe_count;
- 	s32 object_size = ci->i_layout.object_size;
--	u64 object_set_size = object_size * stripe_count;
-+	u64 object_set_size = (u64) object_size * stripe_count;
- 	u64 nearly, t;
+**Critical System Stability**: This fixes a race that can cause:
+- I/O errors and potential data corruption during clock scaling
+- System warnings and potential instability
+- Unpredictable behavior during device discovery
+
+**High Impact**: The race affects:
+- **UFS storage devices** (widely used in mobile phones, tablets,
+  servers)
+- **Clock scaling operations** (essential for power management)
+- **Device discovery** (happens during boot and hotplug)
+
+**Low Risk Change**: The fix is minimal and surgical:
+- Only adds `scan_mutex` synchronization around existing code
+- No functional changes to the clock scaling or scanning logic
+- Follows established kernel locking patterns (similar to other SCSI
+  drivers)
+
+**Timing-Dependent Bug**: This is exactly the type of race condition
+that:
+- May not be easily reproducible in testing
+- Can appear randomly in production under load
+- Becomes more likely with faster systems or specific timing conditions
+
+### 4. **Code Quality Assessment**
+
+The fix demonstrates good kernel programming practices:
+- **Proper lock ordering**: Acquires `scan_mutex` first to serialize
+  with scanning
+- **Complete error handling**: Properly releases `scan_mutex` in error
+  paths
+- **Symmetric operations**: Both `prepare` and `unprepare` handle the
+  mutex consistently
+- **Minimal scope**: Changes only what's necessary to fix the race
+
+### 5. **Comparison with Similar Commits**
+
+Looking at the historical commits provided:
+- This is similar to commit #4 (marked YES) which also fixes
+  synchronization during async operations
+- Unlike commits #1, #2, #3, #5 (marked NO) which are
+  optimization/refactoring changes
+- This is a **bug fix** addressing a real race condition, not a feature
+  addition
+
+**Conclusion**: This commit fixes a legitimate race condition that can
+cause system instability in UFS-based systems. It's a small, well-
+contained fix that addresses a critical synchronization issue without
+introducing new features or architectural changes. This makes it an
+ideal candidate for stable kernel backporting.
+
+ drivers/ufs/core/ufshcd.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
+index 2346a1fc72b56..a6c8af2c24805 100644
+--- a/drivers/ufs/core/ufshcd.c
++++ b/drivers/ufs/core/ufshcd.c
+@@ -1284,6 +1284,7 @@ static int ufshcd_clock_scaling_prepare(struct ufs_hba *hba, u64 timeout_us)
+ 	 * make sure that there are no outstanding requests when
+ 	 * clock scaling is in progress
+ 	 */
++	mutex_lock(&hba->host->scan_mutex);
+ 	blk_mq_quiesce_tagset(&hba->host->tag_set);
+ 	mutex_lock(&hba->wb_mutex);
+ 	down_write(&hba->clk_scaling_lock);
+@@ -1294,6 +1295,7 @@ static int ufshcd_clock_scaling_prepare(struct ufs_hba *hba, u64 timeout_us)
+ 		up_write(&hba->clk_scaling_lock);
+ 		mutex_unlock(&hba->wb_mutex);
+ 		blk_mq_unquiesce_tagset(&hba->host->tag_set);
++		mutex_unlock(&hba->host->scan_mutex);
+ 		goto out;
+ 	}
  
- 	/* round offset up to next period boundary */
+@@ -1315,6 +1317,7 @@ static void ufshcd_clock_scaling_unprepare(struct ufs_hba *hba, int err, bool sc
+ 	mutex_unlock(&hba->wb_mutex);
+ 
+ 	blk_mq_unquiesce_tagset(&hba->host->tag_set);
++	mutex_unlock(&hba->host->scan_mutex);
+ 	ufshcd_release(hba);
+ }
+ 
 -- 
 2.39.5
 
