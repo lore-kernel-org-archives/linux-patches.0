@@ -1,45 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54E163214;
-	Mon,  9 Jun 2025 13:47:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C74B3214;
+	Mon,  9 Jun 2025 13:47:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749476845; cv=none; b=BCQ4N5t1X8h/+cHoMS4Y3qU9EHjfxcQ55HMvpNkYV08m28fwjok2mcmM1bYMSgEspbPixUuVivsIneuVUhmQ+beQg21OQlZst1sq0zzeCB/oWYgfeKYGWU135QkopgEVIoZyL3BjpI6xIEQJbK3xZLIL8mraMq7XAQnT5er2Z3E=
+	t=1749476848; cv=none; b=HfYvOjovihh3ItP2uKn4r6gwGnv4d06/65R5UotlFa+tdLWpclfHyzYMyxw1NN6KXeyR5pNuTy3j/IeivJv0zkS0m4MuBForbehQBRSJVEsCVpk5Y2EwY/k3rxKT+Y4TV/nKSAI8lgwKUTR42oxxf7dFo0iPLAEBUpPM/MjUzRQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749476845; c=relaxed/simple;
-	bh=6DgIuKa+uU0+/vkRt+MeHlfIN7/d7zGfG/zrB+xlRPU=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dSwRS3v7d5a75/J07KghSHH1oT3yrmKr9jLH+MvoRJ7KueUK4LLingJUJrNMoTw2yG45jmfvKO5Q9PIRfk19ZnYaqDc27Z31Re2gm8Y9/QIbJl3V66ridfQGbG8FOeM6K1qw/PNeGQzPYaHPC688+jNhZ6Pc4ADxerGAHn5meAU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KuA9/jTb; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1749476848; c=relaxed/simple;
+	bh=A58gyf+TvL5SL2BQsCUPolYIARQx5D5XMQJwkzNJZhI=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=iu1lewL5TuWZ1hnJaZQhB3oHIPO8jHkvFOnRJTWCnPU2ZmVWkEJrzUyFYcT9aOj1SgJgWkwkQkSJKZGhBPD0oD1ZOArn0NbR+ms3cQwydr/gOeaf4gYvRucHAPvFn5jGcrYR//CcoLHuXGqsRZZF4oWcy6K1na+axRyiGchLFdA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=B77aFKlx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KuA9/jTb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14B78C4CEEB;
-	Mon,  9 Jun 2025 13:47:23 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="B77aFKlx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 000B3C4CEF2;
+	Mon,  9 Jun 2025 13:47:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749476844;
-	bh=6DgIuKa+uU0+/vkRt+MeHlfIN7/d7zGfG/zrB+xlRPU=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KuA9/jTbxIA1J2Lsd5wFtr3c8ofKXdbVTIaQGVnKMp1utkPKbrOLXjouf6q5YMs5N
-	 ci5vgLqL0DZSN5tHVodXk4QO4diP9cXnfuG55I6A0cZ67O+Fkickax9t44fwIBpzoC
-	 N5CJxx0+kNVVw9ucKZUmjArKVvQKRn98xFGzzxqXjQcWUJ7uCu/AdkXNotlEd5fH/Z
-	 ZnM0D3NWBunzMUz5hV7fraHj4evTWsdV6Voig2h2FDbYGyHayHg74fDNfakKbqHMXl
-	 s1ZZk2J76CrZADvG6QnsdEen6mQauRJjyje4xke9jXUtsIBKv7GfQmGW5EKdbzox/k
-	 7X5FNVOs8vkIQ==
+	s=k20201202; t=1749476848;
+	bh=A58gyf+TvL5SL2BQsCUPolYIARQx5D5XMQJwkzNJZhI=;
+	h=From:To:Cc:Subject:Date:From;
+	b=B77aFKlxk9oCztSB3syeazFhshiuzFcEPmcIDv0y7FFK0RwIs7OlLw/0JlCmeHTfT
+	 fMQXjYxatSDxSqxg9OKmCx/l6e+8CBdzHqLaKfcOJguO0ojrNn5hgpkmx45sZhbZKI
+	 4NvOcdzpBUXUcR/ShM6mp6N4SU0gahZsMWbqY2zLBJwoJxaQzCFMTYwf77ycY/IbXB
+	 YvOsv43YLHluz4rHX3M7fCnJif3PlI65rx1H99ZUO4+wJya2e+B4mehRqBab77yHY3
+	 lY0qol8tEPpCZCe7u7I6gL/61ECq//5+hXt7Yq/IDyGlQgCoFaZqqVYmJq9GZLaHed
+	 U3k0Q/yu6apWw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Michael Grzeschik <m.grzeschik@pengutronix.de>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+Cc: Yu Kuai <yukuai3@huawei.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Hannes Reinecke <hare@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-usb@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.6 18/18] usb: typec: mux: do not return on EOPNOTSUPP in {mux, switch}_set
-Date: Mon,  9 Jun 2025 09:46:52 -0400
-Message-Id: <20250609134652.1344323-18-sashal@kernel.org>
+	song@kernel.org,
+	linux-raid@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.1 01/16] md/md-bitmap: fix dm-raid max_write_behind setting
+Date: Mon,  9 Jun 2025 09:47:10 -0400
+Message-Id: <20250609134725.1344921-1-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250609134652.1344323-1-sashal@kernel.org>
-References: <20250609134652.1344323-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -48,136 +46,131 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.6.93
-Content-Type: text/plain; charset=UTF-8
+X-stable-base: Linux 6.1.141
 Content-Transfer-Encoding: 8bit
 
-From: Michael Grzeschik <m.grzeschik@pengutronix.de>
+From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit 0f7bbef1794dc87141897f804e5871a293aa174b ]
+[ Upstream commit 2afe17794cfed5f80295b1b9facd66e6f65e5002 ]
 
-Since the typec connectors can have many muxes or switches for different
-lanes (sbu, usb2, usb3) going into different modal states (usb2, usb3,
-audio, debug) all of them will be called on typec_switch_set and
-typec_mux_set. But not all of them will be handling the expected mode.
+It's supposed to be COUNTER_MAX / 2, not COUNTER_MAX.
 
-If one of the mux or switch will come back with EOPTNOSUPP this is no
-reason to stop running through the next ones. Therefor we skip this
-particular error value and continue calling the next.
-
-Signed-off-by: Michael Grzeschik <m.grzeschik@pengutronix.de>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20250404-ml-topic-typec-mux-v1-1-22c0526381ba@pengutronix.de
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/linux-raid/20250524061320.370630-14-yukuai1@huaweicloud.com
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-This appears to be a recent Linux kernel tree. Let me simulate what the
-issue would be by looking at the original problematic code. Based on the
-commit diff provided, the issue is:
+Now I have a clear understanding. Let me analyze the specific code
+change in the commit:
 
-**Original problematic code:**
+**YES**
+
+This commit should be backported to stable kernel trees. Here's my
+extensive analysis:
+
+## Analysis of the Bug Fix
+
+### 1. The Bug
+The code in `md_bitmap_new_disk_sb()` incorrectly validates
+`write_behind` against `COUNTER_MAX` instead of `COUNTER_MAX / 2`:
+
 ```c
-ret = sw_dev->set(sw_dev, orientation);
-if (ret)
-    return ret;
+- if (write_behind > COUNTER_MAX)
++       if (write_behind > COUNTER_MAX / 2)
+                write_behind = COUNTER_MAX / 2;
 ```
 
-**Fixed code:**
+### 2. Why This is a Real Bug
+
+The comment immediately above this code explicitly states:
 ```c
-ret = sw_dev->set(sw_dev, orientation);
-if (ret && ret != -EOPNOTSUPP)
-    return ret;
+/*
+ - FIXME: write_behind for RAID1.  If not specified, what
+ - is a good choice?  We choose COUNTER_MAX / 2 arbitrarily.
+ */
 ```
 
-Now I can analyze this commit properly:
+The intent is clearly to limit write_behind to `COUNTER_MAX / 2`, but
+the validation check was incorrectly comparing against `COUNTER_MAX`.
+This creates an inconsistency where:
+- Values between `COUNTER_MAX / 2` and `COUNTER_MAX` would pass the
+  check
+- But then get clamped to `COUNTER_MAX / 2` anyway
+- This means the validation isn't serving its intended purpose
 
-**Analysis:**
+### 3. Impact on Users
 
-**YES** - This commit should be backported to stable kernel trees.
+This bug affects:
+- **dm-raid users**: When creating new bitmap superblocks for RAID
+  arrays with write-behind configured
+- **Data consistency**: While not causing data corruption, it creates
+  confusion about the actual limits
+- **Configuration validation**: Users might set values that appear to be
+  accepted but are silently reduced
 
-**Detailed Analysis:**
+### 4. Consistency with Other Code
 
-1. **Bug Description**: The commit fixes a functional bug where multiple
-   USB Type-C muxes/switches connected to a single connector would fail
-   to be configured if any one of them returned `-EOPNOTSUPP` (Operation
-   Not Supported). This is a common scenario in modern Type-C connectors
-   that have separate muxes for different signal paths (SBU, USB2, USB3,
-   etc.).
+The fix aligns with the pattern used elsewhere:
+- In `dm-raid.c`: The validation correctly checks `value / 2 >
+  COUNTER_MAX` (equivalent check for sector-based values)
+- The clamping value of `COUNTER_MAX / 2` is consistently used as the
+  default throughout the codebase
 
-2. **Specific Code Changes**:
-   - In `typec_switch_set()` at line 217: Changes `if (ret)` to `if (ret
-     && ret != -EOPNOTSUPP)`
-   - In `typec_mux_set()` at line 381: Changes `if (ret)` to `if (ret &&
-     ret != -EOPNOTSUPP)`
+### 5. Backport Criteria
 
-3. **Problem Impact**: Before this fix, when `typec_set_orientation()`
-   or `typec_set_mode()` were called:
-   - The functions would iterate through all mux/switch devices
-   - If ANY mux returned `-EOPNOTSUPP` (which is legitimate - some muxes
-     only handle specific modes), the entire operation would fail
-   - This prevented other muxes that COULD handle the mode from being
-     configured
-   - Result: Type-C connectors with multiple muxes would not work
-     properly
+This commit meets the stable kernel backport criteria:
+- **It fixes a bug**: Incorrect validation logic that doesn't match the
+  intended behavior
+- **Simple and contained**: One-line change with minimal risk
+- **Clear fix**: The correct value is obvious from the surrounding code
+  and comment
+- **User-visible impact**: Affects configuration validation for dm-raid
+  users
 
-4. **Risk Assessment**:
-   - **Very Low Risk**: The change only affects error handling logic
-   - **Minimal Code Change**: Only two lines changed, both adding the
-     same condition
-   - **Backward Compatible**: Does not change API or behavior for
-     successful cases
-   - **Well-Contained**: Limited to the USB Type-C mux subsystem
+### 6. Similar Historical Commits
 
-5. **Stable Tree Criteria Met**:
-   - ✅ **Important Bug Fix**: Fixes functional issues with Type-C
-     connectors
-   - ✅ **Minimal Risk**: Very small, contained change
-   - ✅ **No New Features**: Pure bug fix, no new functionality
-   - ✅ **Clear Side Effects**: No unintended side effects beyond fixing
-     the issue
-   - ✅ **Affects Users**: Type-C devices with multiple muxes (common in
-     modern systems) would malfunction
+Looking at the similar commits provided:
+- Commit #1 (backported): Added validation to prevent setting
+  max_write_behind without write-mostly devices
+- Commit #4 (backported): Fixed missing bitmap updates with write-mostly
+  devices
 
-6. **Evidence from Mux Drivers**: The examination of actual mux drivers
-   like `fsa4480.c` and `gpio-sbu-mux.c` shows they legitimately return
-   `-EOPNOTSUPP` for unsupported modes, confirming this is expected
-   behavior that should not abort the entire chain.
+Both of these were backported and dealt with correctness issues in the
+write-behind functionality, establishing a pattern that such fixes are
+considered stable-worthy.
 
-7. **Comparison to Similar Commits**: Unlike the provided reference
-   commits which were mostly cleanups or minor features (all marked NO
-   for backport), this addresses a clear functional bug affecting real-
-   world hardware configurations.
+### 7. Risk Assessment
 
-This commit follows the stable tree rules perfectly: it's an important
-bugfix with minimal risk that affects users with multi-mux Type-C
-hardware configurations.
+- **Low risk**: Single character change ('/' to '/ 2')
+- **Well-understood**: The correct limit is documented in the comment
+- **No ABI changes**: Just tightens an existing validation check
+- **Fail-safe**: Makes the validation more restrictive, not less
 
- drivers/usb/typec/mux.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+## Conclusion
 
-diff --git a/drivers/usb/typec/mux.c b/drivers/usb/typec/mux.c
-index 80dd91938d960..a5b2a6f9c5795 100644
---- a/drivers/usb/typec/mux.c
-+++ b/drivers/usb/typec/mux.c
-@@ -214,7 +214,7 @@ int typec_switch_set(struct typec_switch *sw,
- 		sw_dev = sw->sw_devs[i];
- 
- 		ret = sw_dev->set(sw_dev, orientation);
--		if (ret)
-+		if (ret && ret != -EOPNOTSUPP)
- 			return ret;
- 	}
- 
-@@ -378,7 +378,7 @@ int typec_mux_set(struct typec_mux *mux, struct typec_mux_state *state)
- 		mux_dev = mux->mux_devs[i];
- 
- 		ret = mux_dev->set(mux_dev, state);
--		if (ret)
-+		if (ret && ret != -EOPNOTSUPP)
- 			return ret;
- 	}
- 
+This is a clear bug fix that corrects an incorrect validation check to
+match the documented and intended behavior. The fix is trivial, safe,
+and addresses a real issue that affects dm-raid users. It should be
+backported to ensure consistent behavior across stable kernel versions.
+
+ drivers/md/md-bitmap.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/md/md-bitmap.c b/drivers/md/md-bitmap.c
+index 02629516748e4..dac27206cd3df 100644
+--- a/drivers/md/md-bitmap.c
++++ b/drivers/md/md-bitmap.c
+@@ -546,7 +546,7 @@ static int md_bitmap_new_disk_sb(struct bitmap *bitmap)
+ 	 * is a good choice?  We choose COUNTER_MAX / 2 arbitrarily.
+ 	 */
+ 	write_behind = bitmap->mddev->bitmap_info.max_write_behind;
+-	if (write_behind > COUNTER_MAX)
++	if (write_behind > COUNTER_MAX / 2)
+ 		write_behind = COUNTER_MAX / 2;
+ 	sb->write_behind = cpu_to_le32(write_behind);
+ 	bitmap->mddev->bitmap_info.max_write_behind = write_behind;
 -- 
 2.39.5
 
