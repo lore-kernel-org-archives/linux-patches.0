@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C5E52459E6;
-	Mon,  9 Jun 2025 13:44:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B94862580CC;
+	Mon,  9 Jun 2025 13:44:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749476642; cv=none; b=IkkRLfHD87/5PLjTq5/LoaJ+MCNwNj9VKlGl/i4HK/3DqfDLrjIluID+E/xbGgNx/8HSqKTryQW3IvSi2Q8uJce5vmq5S5no02YDehYWPq+ESj5/qewq+wAV5WQODiR0GCriaTGWr+AHZgKDFjikuMkqSPZjEBvr4sFEWKjpjmM=
+	t=1749476643; cv=none; b=KgUB7vj4hTwkSU+FqiXLx3c/5+qRCSC/bj5XlauTK22Fmv5AwtuF/Kg+etXKgr70DhK2i5odNpwVC1RFN47xbXmWxar6lLSxe3B3MTZ+zGgT7ZkgtFi8IwBxI8JSlEJIvLOb6vk5Rm4aXBXTjRy12derzSMS3T8WI9mykG9Q7aE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749476642; c=relaxed/simple;
-	bh=+NLbCTM1HvxphxMUmY5TbB34v7C0iU2XQ9XXCSz6HHU=;
+	s=arc-20240116; t=1749476643; c=relaxed/simple;
+	bh=CzsR/YWJHA63OqV2kX9vqTxOmlDz3/W80JAj7YN2HAI=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=VjrbatRCBkxjnY00y8DPMjpNgjrChy2Rym6zvGyUrD0x4xFXhQT5f66SvVjuW94SNHncIOnCOLtu+SuflASuM/dbQxuolmrz9fCVddm4zGDF5tLnClFs7eKRWbDT44YJoTAX6X/K6+v7mAyzReC59VwZnsyCKjPUvFs99s/5y+k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=s+CpdKIP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uN4p7IjFRfqstKQ1cNLGFo72Fhz+DShPl22Teye3kepITH3hxgEI/oRMDlEKjlI358zgLkCOBaGhQkv36cIIiSV40EgrBMUjTuPNeTPFNkHOOb7GkiE1PEg3XXBeD9VpBDHUHwijKGpOCg1Hq8tdRSi3v6fNHDFqfe+nCFjSF7w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rrVLdeiq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="s+CpdKIP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20901C4CEF3;
-	Mon,  9 Jun 2025 13:44:01 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rrVLdeiq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 733B8C4CEEB;
+	Mon,  9 Jun 2025 13:44:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749476642;
-	bh=+NLbCTM1HvxphxMUmY5TbB34v7C0iU2XQ9XXCSz6HHU=;
+	s=k20201202; t=1749476643;
+	bh=CzsR/YWJHA63OqV2kX9vqTxOmlDz3/W80JAj7YN2HAI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s+CpdKIPITd4+/R0BnOaBP6yVF2nLRUmRa43bZDcWrBRc0CxTItDzJB6KQXdumoXC
-	 3e13HD4bKYaPv4MdctOhjcp9RE6NmR5Lkcz6w224gu9pTHnvORBgNm3zqWHk1kxMh9
-	 HbN+bo6UtjcQERvVWPe5LHxle5Zdeq2vj1hZKaFPk2Wsrpd7F8KtWkbWkn6foMGGU5
-	 jpQXV5JGxEI/Tqcy6RmxMWHexU0YwuZiGj7TmQouvP5BdNA4kKVxwto/ZsPzAnAMYL
-	 4PFFpiJZ/X1H4tU6QhOSxl4L++e5PW9SXezKy1uTNPFwL7H3NiIFF5cdJutLDlhdnS
-	 WeL+ZVQYqcmpg==
+	b=rrVLdeiqDoBrRTMoM21a0J71VYhz6+9nwnt7wUvsOnh3WIHHhN8e/ohNWFC3rR8ez
+	 4GlgGGnvwW63/+jdItMWxKo46DyEOPPNYtQ398gsGh5PbCCgeETfYPmoDQRnJ0Ks56
+	 d7HXST0qQZb9xVR02oSDGFRHM5ct3andIBqP/c9spZ8iqUT7Sjyok1o7VfDgInaLFc
+	 Z/p+L9twHmAycZO6igKDKt+A8FlYouNB1AjLAkhZSLVCr+uKmYuKXpvQX28bWunK70
+	 JPk1+lsBuDTG2ck4YAa3rgap5M3iq74OWQ7KsrIq3HkyV2tKIWA/bGERvzdyFmXCU0
+	 oYWXpgpqg7Qyg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Yu Kuai <yukuai3@huawei.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Hannes Reinecke <hare@suse.de>,
+Cc: Yifan Zhang <yifan1.zhang@amd.com>,
+	Philip Yang <Philip.Yang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	song@kernel.org,
-	linux-raid@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.15 04/35] md/md-bitmap: fix dm-raid max_write_behind setting
-Date: Mon,  9 Jun 2025 09:43:20 -0400
-Message-Id: <20250609134355.1341953-4-sashal@kernel.org>
+	Felix.Kuehling@amd.com,
+	amd-gfx@lists.freedesktop.org
+Subject: [PATCH AUTOSEL 6.15 05/35] amd/amdkfd: fix a kfd_process ref leak
+Date: Mon,  9 Jun 2025 09:43:21 -0400
+Message-Id: <20250609134355.1341953-5-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250609134355.1341953-1-sashal@kernel.org>
 References: <20250609134355.1341953-1-sashal@kernel.org>
@@ -52,128 +52,93 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.15.1
 Content-Transfer-Encoding: 8bit
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Yifan Zhang <yifan1.zhang@amd.com>
 
-[ Upstream commit 2afe17794cfed5f80295b1b9facd66e6f65e5002 ]
+[ Upstream commit 90237b16ec1d7afa16e2173cc9a664377214cdd9 ]
 
-It's supposed to be COUNTER_MAX / 2, not COUNTER_MAX.
+This patch is to fix a kfd_prcess ref leak.
 
-Link: https://lore.kernel.org/linux-raid/20250524061320.370630-14-yukuai1@huaweicloud.com
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Hannes Reinecke <hare@suse.de>
+Signed-off-by: Yifan Zhang <yifan1.zhang@amd.com>
+Reviewed-by: Philip Yang <Philip.Yang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
-
-Now I have a clear understanding. Let me analyze the specific code
-change in the commit:
 
 **YES**
 
 This commit should be backported to stable kernel trees. Here's my
-extensive analysis:
+detailed analysis:
 
-## Analysis of the Bug Fix
+## Bug Analysis
 
-### 1. The Bug
-The code in `md_bitmap_new_disk_sb()` incorrectly validates
-`write_behind` against `COUNTER_MAX` instead of `COUNTER_MAX / 2`:
+This patch fixes a clear **resource leak bug** where a reference count
+is not properly decremented in an error path. Specifically:
 
-```c
-- if (write_behind > COUNTER_MAX)
-+       if (write_behind > COUNTER_MAX / 2)
-                write_behind = COUNTER_MAX / 2;
-```
+1. **The leak occurs in `kfd_signal_poison_consumed_event()`** at line
+   1334 where the function returns early without calling
+   `kfd_unref_process(p)`:
+  ```c
+  if (unlikely(user_gpu_id == -EINVAL)) {
+  WARN_ONCE(1, "Could not get user_gpu_id from dev->id:%x\n", dev->id);
+  return;  // BUG: Missing kfd_unref_process(p)
+  }
+  ```
 
-### 2. Why This is a Real Bug
+2. **The function `kfd_lookup_process_by_pasid()` increments the
+   reference count** on the kfd_process object (as confirmed by
+   examining the kernel source). This means every successful call must
+   be paired with `kfd_unref_process()`.
 
-The comment immediately above this code explicitly states:
-```c
-/*
- - FIXME: write_behind for RAID1.  If not specified, what
- - is a good choice?  We choose COUNTER_MAX / 2 arbitrarily.
- */
-```
+3. **The fix is minimal and correct**: It simply adds the missing
+   `kfd_unref_process(p)` call before the early return, ensuring the
+   reference count is properly decremented.
 
-The intent is clearly to limit write_behind to `COUNTER_MAX / 2`, but
-the validation check was incorrectly comparing against `COUNTER_MAX`.
-This creates an inconsistency where:
-- Values between `COUNTER_MAX / 2` and `COUNTER_MAX` would pass the
-  check
-- But then get clamped to `COUNTER_MAX / 2` anyway
-- This means the validation isn't serving its intended purpose
+## Why This Should Be Backported
 
-### 3. Impact on Users
+1. **It's a clear bug fix**: This fixes a reference count leak that will
+   cause memory to be leaked every time this error path is hit. Over
+   time, this could lead to significant memory exhaustion.
 
-This bug affects:
-- **dm-raid users**: When creating new bitmap superblocks for RAID
-  arrays with write-behind configured
-- **Data consistency**: While not causing data corruption, it creates
-  confusion about the actual limits
-- **Configuration validation**: Users might set values that appear to be
-  accepted but are silently reduced
+2. **The fix is minimal and contained**: Only one line is added, making
+   it low-risk for regression. The change doesn't alter any logic or
+   introduce new features.
 
-### 4. Consistency with Other Code
+3. **It affects user-visible behavior**: When GPU errors occur and this
+   code path is triggered repeatedly, the memory leak could impact
+   system stability and performance.
 
-The fix aligns with the pattern used elsewhere:
-- In `dm-raid.c`: The validation correctly checks `value / 2 >
-  COUNTER_MAX` (equivalent check for sector-based values)
-- The clamping value of `COUNTER_MAX / 2` is consistently used as the
-  default throughout the codebase
+4. **Similar to previously backported commits**: Looking at the
+   historical examples, commit #4 which also fixed a memory leak in
+   create_process failure was marked for backporting and included "Cc:
+   stable@vger.kernel.org".
 
-### 5. Backport Criteria
+5. **The bug is in error handling code**: While the error condition
+   might be rare (invalid GPU ID), when it does occur, the leak happens
+   every time. Error handling bugs are particularly important to fix
+   because they can accumulate unnoticed.
 
-This commit meets the stable kernel backport criteria:
-- **It fixes a bug**: Incorrect validation logic that doesn't match the
-  intended behavior
-- **Simple and contained**: One-line change with minimal risk
-- **Clear fix**: The correct value is obvious from the surrounding code
-  and comment
-- **User-visible impact**: Affects configuration validation for dm-raid
-  users
+6. **No architectural changes**: This is a simple bug fix that doesn't
+   change any APIs, data structures, or introduce new functionality.
 
-### 6. Similar Historical Commits
+The commit follows the stable kernel rules perfectly: it fixes a real
+bug, is minimal in scope, has clear consequences if not fixed (memory
+leak), and doesn't introduce new features or risky changes.
 
-Looking at the similar commits provided:
-- Commit #1 (backported): Added validation to prevent setting
-  max_write_behind without write-mostly devices
-- Commit #4 (backported): Fixed missing bitmap updates with write-mostly
-  devices
+ drivers/gpu/drm/amd/amdkfd/kfd_events.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-Both of these were backported and dealt with correctness issues in the
-write-behind functionality, establishing a pattern that such fixes are
-considered stable-worthy.
-
-### 7. Risk Assessment
-
-- **Low risk**: Single character change ('/' to '/ 2')
-- **Well-understood**: The correct limit is documented in the comment
-- **No ABI changes**: Just tightens an existing validation check
-- **Fail-safe**: Makes the validation more restrictive, not less
-
-## Conclusion
-
-This is a clear bug fix that corrects an incorrect validation check to
-match the documented and intended behavior. The fix is trivial, safe,
-and addresses a real issue that affects dm-raid users. It should be
-backported to ensure consistent behavior across stable kernel versions.
-
- drivers/md/md-bitmap.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/drivers/md/md-bitmap.c b/drivers/md/md-bitmap.c
-index 37b08f26c62f5..45dd3d9f01a8e 100644
---- a/drivers/md/md-bitmap.c
-+++ b/drivers/md/md-bitmap.c
-@@ -789,7 +789,7 @@ static int md_bitmap_new_disk_sb(struct bitmap *bitmap)
- 	 * is a good choice?  We choose COUNTER_MAX / 2 arbitrarily.
- 	 */
- 	write_behind = bitmap->mddev->bitmap_info.max_write_behind;
--	if (write_behind > COUNTER_MAX)
-+	if (write_behind > COUNTER_MAX / 2)
- 		write_behind = COUNTER_MAX / 2;
- 	sb->write_behind = cpu_to_le32(write_behind);
- 	bitmap->mddev->bitmap_info.max_write_behind = write_behind;
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_events.c b/drivers/gpu/drm/amd/amdkfd/kfd_events.c
+index fecdb67940750..3a926eb82379b 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_events.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_events.c
+@@ -1331,6 +1331,7 @@ void kfd_signal_poison_consumed_event(struct kfd_node *dev, u32 pasid)
+ 	user_gpu_id = kfd_process_get_user_gpu_id(p, dev->id);
+ 	if (unlikely(user_gpu_id == -EINVAL)) {
+ 		WARN_ONCE(1, "Could not get user_gpu_id from dev->id:%x\n", dev->id);
++		kfd_unref_process(p);
+ 		return;
+ 	}
+ 
 -- 
 2.39.5
 
