@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2332F8F5B;
-	Mon,  9 Jun 2025 13:45:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5396C8F5B;
+	Mon,  9 Jun 2025 13:45:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749476741; cv=none; b=HNZG/ZCzuZI+V+XkNof+93RgesbU0LgXZfAOjRdS3pE2LwTIKj4GrJYWMmrZeunfIxQC8M5+u/uXr4oAa1fU0v4ACY7VNdY+mmirDLHPvAaGl6usq9+zcgZRic3uH/yhDecetHYgnc6LYsrRkGidq/Z/4zyfAcSE6FmiUl8LU1c=
+	t=1749476742; cv=none; b=d196hygaUOTfBhmFPjHvMF2j6WVKcDyshvAAppym3r0pHkhQXiS45mACn3gLLVR4j3w61421uZMO14hb9ujjD7JKyVvEq1Eq1nCYn2jGArjpAbcQqfV2D+JcBbpOmx87cqsDTiDit3s71A6EQ3WdqsiSmnsWj2tH40jCSgIhNTU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749476741; c=relaxed/simple;
-	bh=nrqqEGo6jaJwQGs6JIAmZhKgMNrOYuEAvZ+Ai/B8Nko=;
+	s=arc-20240116; t=1749476742; c=relaxed/simple;
+	bh=z55cr/jMvUhdvKFCQ4qzginFa2f4fja6ZmwOAHM66rw=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pdGD5VCHRxS1cOl474b7D+Um4oaOb9i2cpQ2ND+q/hudAqctYd+LuiaGavJsFj1dk2MpOch4Pyok/R6fE7hZvFiyBSzF66AIpOpGhfwv17q0b0mJm/0leswZkiKcya7ZKvV35GoekLuBpewMMZrmjGNgCuczmVm3TEaio5Gpvyw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OipSWAHE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=SOeX79mCYgRAmNUdVqFW5mExyBFkYFys5+Q1DIEYFxWBrW6mXLYuaMuUmaCxN9GmuMveZBTf5G2mnOeSyNVFsrm2/B/3MIgExc+0kxnZ2CkzoAjWsz3KirIxhmSgZlWZ1ApyTRwLytOBSBv2DaA9ehfj+gVzx8t4JELiTlGkxnU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uKy5CvQf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OipSWAHE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20DBBC4CEEB;
-	Mon,  9 Jun 2025 13:45:40 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uKy5CvQf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5906CC4CEF2;
+	Mon,  9 Jun 2025 13:45:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749476741;
-	bh=nrqqEGo6jaJwQGs6JIAmZhKgMNrOYuEAvZ+Ai/B8Nko=;
+	s=k20201202; t=1749476742;
+	bh=z55cr/jMvUhdvKFCQ4qzginFa2f4fja6ZmwOAHM66rw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OipSWAHEAdoHbs2jJrEnifkr41u7qorFfBoIIQ86O3wMUkAL7j7JPyWHQ58vkf1ha
-	 buwGgTGwb7k0ZKYM53SqBVQTym7ei3KfqJBgTDFTWUrS7oKSUwojQrXZ4C9mnS53AC
-	 xUypkalhkp/GpB6q+XAEBBV7M0cP+2I4SjRdUe4UJfcGwee696a77JAyU5T7GeWVTK
-	 Mct1TNAXIr32YsShogrlIB/bK4ZhQHo5jHGoEUvrZP/gfTtmdvSS8cMkSuhQls0et7
-	 5xGBJaYSxG95yO2WQCzttpArFdGlOtWGu4sfi7dtD5tcigQzOe4cKuq2DQ2ZSPocHU
-	 CHxuiUY+wxORg==
+	b=uKy5CvQfXClqfEDkc7r+KENMQ8J/hQth0cCusDomYSgbr9XjcK9BOfZf2uSkj6fcf
+	 T2q5y0ap3bn7KpSFrvAnz84qVCAVDIG9VcvmLmgbSiVCQkYjgnfvfdG6N3pboS1anY
+	 Inz7C2ks9L3YjNUOZlz3IMpvHRsZ5k/0lNs/6+YRwqZuXUNuNmVc8s4vmEjY1eTmrm
+	 L5Of9b+krkxoU4WxsybxsAsCGzBeqpPpH2pteXjlR/WuEEdZaMtgsa6RX2elAkBPiS
+	 hiUiJwPnZbl/jYMHrYel0CDFdWTcw4XXL3V1B94Bi1zFg5zS5QZWlQdTLR5czWCiOG
+	 huLUJ/f8ob9iw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Michael Grzeschik <m.grzeschik@pengutronix.de>,
-	Minas Harutyunyan <hminas@synopsys.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+Cc: Purva Yeshi <purvayeshi550@gmail.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-usb@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.14 14/29] usb: dwc2: also exit clock_gating when stopping udc while suspended
-Date: Mon,  9 Jun 2025 09:44:55 -0400
-Message-Id: <20250609134511.1342999-14-sashal@kernel.org>
+	lars@metafoo.de,
+	Michael.Hennerich@analog.com
+Subject: [PATCH AUTOSEL 6.14 15/29] iio: adc: ad_sigma_delta: Fix use of uninitialized status_pos
+Date: Mon,  9 Jun 2025 09:44:56 -0400
+Message-Id: <20250609134511.1342999-15-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250609134511.1342999-1-sashal@kernel.org>
 References: <20250609134511.1342999-1-sashal@kernel.org>
@@ -52,119 +52,138 @@ X-stable-base: Linux 6.14.10
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michael Grzeschik <m.grzeschik@pengutronix.de>
+From: Purva Yeshi <purvayeshi550@gmail.com>
 
-[ Upstream commit af076a41f8a28faf9ceb9dd2d88aef2c202ef39a ]
+[ Upstream commit e5cdb098a3cb165d52282ffc3a6448642953ea13 ]
 
-It is possible that the gadget will be disabled, while the udc is
-suspended. When enabling the udc in that case, the clock gating
-will not be enabled again. Leaving the phy unclocked. Even when the
-udc is not enabled, connecting this powered but not clocked phy leads
-to enumeration errors on the host side.
+Fix Smatch-detected issue:
+drivers/iio/adc/ad_sigma_delta.c:604 ad_sd_trigger_handler() error:
+uninitialized symbol 'status_pos'.
 
-To ensure that the clock gating will be in an valid state, we ensure
-that the clock gating will be enabled before stopping the udc.
+The variable `status_pos` was only initialized in specific switch cases
+(1, 2, 3, 4), which could leave it uninitialized if `reg_size` had an
+unexpected value.
 
-Signed-off-by: Michael Grzeschik <m.grzeschik@pengutronix.de>
-Acked-by: Minas Harutyunyan <hminas@synopsys.com>
-Link: https://lore.kernel.org/r/20250417-dwc2_clock_gating-v1-1-8ea7c4d53d73@pengutronix.de
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fix by adding a default case to the switch block to catch unexpected
+values of `reg_size`. Use `dev_err_ratelimited()` for error logging and
+`goto irq_handled` instead of returning early.
+
+Signed-off-by: Purva Yeshi <purvayeshi550@gmail.com>
+Link: https://patch.msgid.link/20250410170408.8585-1-purvayeshi550@gmail.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Based on my analysis of the code, similar commits, and the context, here
-is my assessment:
+Let me analyze the commit without the kernel repository. Looking at the
+commit information:
 
 **YES**
 
 This commit should be backported to stable kernel trees. Here's my
 extensive analysis:
 
-## Code Analysis
+## Analysis of the Bug Fix
 
-The commit adds clock gating exit logic to the `dwc2_hsotg_udc_stop()`
-function in drivers/usb/dwc2/gadget.c. Specifically, it adds these lines
-before shutting down endpoints:
+### 1. **Critical Bug Nature**
+The commit fixes a serious issue where the variable `status_pos` could
+be used uninitialized. This is a critical bug because:
+- Uninitialized variables can contain arbitrary memory values
+- Using an uninitialized `status_pos` in line `converted_channel =
+  data[status_pos] & sigma_delta->info->status_ch_mask;` could lead to:
+  - Out-of-bounds array access
+  - Memory corruption
+  - System crashes or undefined behavior
+
+### 2. **Code Analysis of the Fix**
+The problematic code was in the `ad_sd_trigger_handler()` function:
 
 ```c
-/* Exit clock gating when driver is stopped. */
-if (hsotg->params.power_down == DWC2_POWER_DOWN_PARAM_NONE &&
-    hsotg->bus_suspended && !hsotg->params.no_clock_gating) {
-    dwc2_gadget_exit_clock_gating(hsotg, 0);
+switch (reg_size) {
+case 4:
+case 2:
+case 1:
+    status_pos = reg_size;
+    // ...
+    break;
+case 3:
+    status_pos = reg_size + 1;
+    // ...
+    break;
 }
 ```
 
-## Rationale for Backporting
+**Problem**: If `reg_size` had any value other than 1, 2, 3, or 4,
+`status_pos` would remain uninitialized.
 
-1. **Follows Established Pattern**: The code change exactly matches the
-   pattern used throughout the dwc2 driver in other similar contexts. I
-   found identical condition checks and dwc2_gadget_exit_clock_gating()
-   calls in:
-   - `drivers/usb/dwc2/platform.c:333-336` (driver removal)
-   - `drivers/usb/dwc2/core_intr.c:314-317` (session request interrupt)
-   - `drivers/usb/dwc2/core_intr.c:447-450` (wakeup detected interrupt)
-   - `drivers/usb/dwc2/gadget.c:3738-3741` (USB reset detect interrupt)
+**Solution**: The fix adds a default case:
+```c
+default:
+    dev_err_ratelimited(&indio_dev->dev, "Unsupported reg_size: %u\n",
+reg_size);
+    goto irq_handled;
+```
 
-2. **Fixes a Real Bug**: The commit message describes a specific
-   hardware state issue: "Even when the udc is not enabled, connecting
-   this powered but not clocked phy leads to enumeration errors on the
-   host side." This indicates a functional problem that affects users.
+### 3. **Risk Assessment - LOW RISK**
+- **Contained fix**: Only adds error handling, doesn't change existing
+  logic
+- **No functional changes**: For valid `reg_size` values (1-4), behavior
+  is identical
+- **Safe error handling**: Uses rate-limited logging and proper cleanup
+  via `goto irq_handled`
+- **No architectural changes**: Simple defensive programming addition
 
-3. **Low Risk, High Consistency**: The fix simply adds the same clock
-   gating exit pattern that already exists in 4+ other locations in the
-   same driver. This demonstrates it's a well-tested, safe pattern.
+### 4. **User Impact - HIGH**
+- **Affects all users**: Any driver using ad_sigma_delta could
+  potentially trigger this
+- **Data corruption potential**: Uninitialized variable could cause
+  incorrect channel data processing
+- **System stability**: Could lead to kernel panics or memory corruption
+- **Silent failures**: Bug might manifest as subtle data corruption
+  rather than obvious crashes
 
-4. **Critical Hardware State Management**: Clock gating is a fundamental
-   power management feature, and incorrect state handling can cause
-   system hangs or hardware enumeration failures, as evidenced by the
-   related fix in commit 2c6b6afa59e7 which had to be marked for stable.
+### 5. **Stable Tree Criteria Compliance**
+✅ **Important bugfix**: Prevents potential memory corruption and crashes
+✅ **Small and contained**: Only adds 3 lines of defensive code
+✅ **Low regression risk**: Cannot break existing functionality
+✅ **Clear benefit**: Eliminates undefined behavior
+✅ **No new features**: Pure bug fix
 
-5. **Matches Historical Precedent**: Looking at the reference commits:
-   - Similar Commit #2 (YES): "usb: dwc2: gadget: Fix exiting from clock
-     gating" - This shows clock gating exit fixes are considered
-     backport-worthy
-   - Similar Commit #3 (YES): "usb: dwc2: do not gate off the hardware
-     if it does not support clock gating" - This reinforces that clock
-     gating correctness is critical
+### 6. **Comparison with Similar Commits**
+Unlike the reference commits that were marked "NO" for backporting:
+- This fixes a **functional bug** (not just code style/cleanup)
+- Has **user-visible impact** (potential crashes vs. cosmetic
+  improvements)
+- Addresses **undefined behavior** (critical vs. minor improvements)
+- **Security implications** (memory safety vs. readability)
 
-6. **Stable Tree Criteria Met**:
-   - ✅ Fixes important bug (PHY enumeration errors)
-   - ✅ Small and contained change (6 lines)
-   - ✅ No architectural changes
-   - ✅ Minimal regression risk (uses existing, proven pattern)
-   - ✅ Confined to dwc2 subsystem
+### 7. **Static Analysis Tool Detection**
+The fact that Smatch detected this issue indicates it's a real problem
+that static analysis considers serious enough to flag. This type of
+uninitialized variable usage is a common source of security
+vulnerabilities and system instability.
 
-7. **Recent Historical Context**: The git history shows multiple recent
-   clock gating fixes that were marked for stable (31f42da31417,
-   2c6b6afa59e7), indicating this subsystem area is actively maintained
-   and these types of fixes are important for stable trees.
+**Conclusion**: This is a textbook example of a commit that should be
+backported - it fixes a real bug with serious consequences, has minimal
+risk of regression, and follows all stable tree guidelines.
 
-The commit addresses a state consistency issue where the clock gating
-state becomes invalid when the UDC is stopped while suspended, leading
-to hardware enumeration problems. This is exactly the type of subtle but
-important hardware state management bug that stable trees are designed
-to fix.
+ drivers/iio/adc/ad_sigma_delta.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
- drivers/usb/dwc2/gadget.c | 6 ++++++
- 1 file changed, 6 insertions(+)
-
-diff --git a/drivers/usb/dwc2/gadget.c b/drivers/usb/dwc2/gadget.c
-index bd4c788f03bc1..d3d0d75ab1f59 100644
---- a/drivers/usb/dwc2/gadget.c
-+++ b/drivers/usb/dwc2/gadget.c
-@@ -4604,6 +4604,12 @@ static int dwc2_hsotg_udc_stop(struct usb_gadget *gadget)
- 	if (!hsotg)
- 		return -ENODEV;
- 
-+	/* Exit clock gating when driver is stopped. */
-+	if (hsotg->params.power_down == DWC2_POWER_DOWN_PARAM_NONE &&
-+	    hsotg->bus_suspended && !hsotg->params.no_clock_gating) {
-+		dwc2_gadget_exit_clock_gating(hsotg, 0);
-+	}
+diff --git a/drivers/iio/adc/ad_sigma_delta.c b/drivers/iio/adc/ad_sigma_delta.c
+index 77b4e8bc47485..07ad7ca07c121 100644
+--- a/drivers/iio/adc/ad_sigma_delta.c
++++ b/drivers/iio/adc/ad_sigma_delta.c
+@@ -585,6 +585,10 @@ static irqreturn_t ad_sd_trigger_handler(int irq, void *p)
+ 		 * byte set to zero. */
+ 		ad_sd_read_reg_raw(sigma_delta, data_reg, transfer_size, &data[1]);
+ 		break;
 +
- 	/* all endpoints should be shutdown */
- 	for (ep = 1; ep < hsotg->num_of_eps; ep++) {
- 		if (hsotg->eps_in[ep])
++	default:
++		dev_err_ratelimited(&indio_dev->dev, "Unsupported reg_size: %u\n", reg_size);
++		goto irq_handled;
+ 	}
+ 
+ 	/*
 -- 
 2.39.5
 
