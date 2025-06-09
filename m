@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94D54224895;
-	Mon,  9 Jun 2025 22:53:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03951224895;
+	Mon,  9 Jun 2025 22:53:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749509582; cv=none; b=iqAyxUErjRIqdeS9j58U+xm7p0+MQs7oJukZfmL0fOerflrTTUdOzbUDWX/dOyahkAXgBRGT+T16UXisWzcZw7OCs8ked7XANkxgjtNZYYE1M8RSP7qp555w6fuFHTbFXJIzwIT+vkz8naRDsnosqAc1k5z+DugpStl7bCSA240=
+	t=1749509584; cv=none; b=WfLHFCUAsf1WpwiEeAcxPbl7b/1uyNJ3+ul8hTUwcuUZoS7sGQ3BCg6/xYsbkRZ6/6igeFWua42EVYf5CBLN1XxIzt4rZkaOCOb2lOXS5R7r4aFDaKLQC9StuZNU4iUFiXXuqAEz+UmMtFHU9OuloWW88sJ0Ttz1dQIXnZ7pXtQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749509582; c=relaxed/simple;
-	bh=HW9Yeg7MnH1ief6DhkUNV93WZye3u434SJbVmqYqwKc=;
+	s=arc-20240116; t=1749509584; c=relaxed/simple;
+	bh=K/3He4YlzTS0OS4zmzm19ApC83LDJtal0YLT3Vtwj88=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=sAUN3/SP999p63RjMRtMqH0mSUkG3Fa4fvwAjj6yWAIQIsrFRNZcRaw9RUW42B12JEAwETTILPNkDfBhVyDftDoBB1sVFziDgpBNoRfjDO5tryo1dwKiVbTC6xHaQ6ZwJDb7AZWO0ijdFe36sBAvJA4WuIIW1cfys4wkyRn0V4g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aa1h/krb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=alWafd3CIyho+31jCvSFAvGcDNza2YcJT7pCsFtkjfsBw42t7medXweZou1qob/onmprrhNsvFU3hZ3aJpzz2q1gZ4AEPi/BhCi767EjHLFIAg87NNJR9IVAh0YwnmY5FgnXQfiVnojD14o6tc6aNTf/GaB8wqrX9wpESfrTr/c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uZM7KTHk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aa1h/krb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B925AC4CEED;
-	Mon,  9 Jun 2025 22:53:01 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uZM7KTHk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB08BC4CEED;
+	Mon,  9 Jun 2025 22:53:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749509582;
-	bh=HW9Yeg7MnH1ief6DhkUNV93WZye3u434SJbVmqYqwKc=;
+	s=k20201202; t=1749509583;
+	bh=K/3He4YlzTS0OS4zmzm19ApC83LDJtal0YLT3Vtwj88=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aa1h/krbbJlgLRihWO9EYVOXZihN6iPLIO5C75dCiCZjDe7G0JJ9zfrMkgPc1cg+l
-	 GPCOqxSLv6Nll+SkjSobgaulfV0JIdiw1rvaUibQRBcHUCFr2bqR+Hgymh2fTvs8es
-	 6aoLfpA+y7wq/GZZxh5AV64NJujV3If4rHabhbvHT+lfdLyExLZpPXuBFqpOS4TOJU
-	 e6nVaea0grKvB5x5BCoIenrAfnZrg1r6SKS9voqSn5z3BNY06v2ua7fenX8pVZZ35Q
-	 zW4IQjZG/+/6HKy7o1rQeR2AEumK8opuoxFVJ1xsfDJxTiVEuRgtID4iBxrfU+uh2G
-	 Ur5isdPCk55kA==
+	b=uZM7KTHkLgqj3+qmarFKeigirZZdstlOAw4y46RQraDv24ihmKRSHEaP8mDO0lZ29
+	 lEXIi5cINvROks74pMElwkTctWWNe020qw3XBTQUog6rP8yhUJMj1LpYSwgn3ErxkW
+	 6Y07JVOv7vTQWrbDQf8uKZr3Lt00VwU4MHrY2oX4k29He9H2t+sQP0ShwoIxq8w0Tw
+	 hq+OHbVeFMX5wRoMhSWsXDYBdgGCulJm1g1Xqkk0hjduybM2zAAIwolP0wbucrXQwW
+	 gKNeMHvzQmcJRr7FnISkvcO/8GySZOVWXOqb2stbTo0ABUiU/+cS++8K8heHV2u0lo
+	 a5ZhNA0ZGVvbg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Shuming Fan <shumingf@realtek.com>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Dmitry Kandybka <d.kandybka@gmail.com>,
+	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>,
-	oder_chiou@realtek.com
-Subject: [PATCH AUTOSEL 6.14 07/11] ASoC: rt1320: fix speaker noise when volume bar is 100%
-Date: Mon,  9 Jun 2025 18:52:41 -0400
-Message-Id: <20250609225246.1443679-7-sashal@kernel.org>
+	xiubli@redhat.com,
+	ceph-devel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.14 08/11] ceph: fix possible integer overflow in ceph_zero_objects()
+Date: Mon,  9 Jun 2025 18:52:42 -0400
+Message-Id: <20250609225246.1443679-8-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250609225246.1443679-1-sashal@kernel.org>
 References: <20250609225246.1443679-1-sashal@kernel.org>
@@ -48,124 +50,106 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.14.10
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shuming Fan <shumingf@realtek.com>
+From: Dmitry Kandybka <d.kandybka@gmail.com>
 
-[ Upstream commit 9adf2de86611ac108d07e769a699556d87f052e2 ]
+[ Upstream commit 0abd87942e0c93964e93224836944712feba1d91 ]
 
-This patch updates the settings to fix the speaker noise.
+In 'ceph_zero_objects', promote 'object_size' to 'u64' to avoid possible
+integer overflow.
 
-Signed-off-by: Shuming Fan <shumingf@realtek.com>
-Link: https://patch.msgid.link/20250602085851.4081886-1-shumingf@realtek.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Compile tested only.
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Signed-off-by: Dmitry Kandybka <d.kandybka@gmail.com>
+Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 **YES**
 
 This commit should be backported to stable kernel trees. Here's my
-extensive analysis:
-
-## Analysis of Code Changes
-
-The commit modifies the `rt1320_vc_blind_write` array, which contains
-critical audio initialization settings for the RT1320 version C audio
-amplifier chip. The specific changes are:
-
-1. **Register 0x1000db00**: Value changed from `0x04` to `0x07`
-2. **New registers added**: 0x1000db15 through 0x1000db23 with specific
-   coefficient values
+detailed analysis:
 
 ## Why This Should Be Backported
 
-### 1. **Critical Audio Quality Issue**
-This directly addresses speaker noise at 100% volume, which is a
-significant user experience problem. Looking at the similar commits in
-the reference examples, this aligns with "Similar Commit #1" (marked
-YES) which fixed "random louder sound" in RT1308-SDW. Both commits:
-- Fix audio quality issues that directly affect users
-- Modify vendor-specific register settings
-- Address problems with volume control/audio output
+### 1. **Clear Bug Fix with User Impact**
+The commit fixes a real integer overflow vulnerability in
+`ceph_zero_objects()` where `s32 object_size` is multiplied by `s32
+stripe_count` to calculate `u64 object_set_size`. When the layout values
+exceed 2^31, the multiplication can underflow, leading to:
+- Incorrect loop bounds in the zeroing logic
+- Potential infinite loops or premature termination
+- Data integrity issues during hole punching operations
+- Incorrect `do_div()` operations
 
-### 2. **Small, Contained, Low-Risk Fix**
-The changes are minimal and highly targeted:
-- Only modifies initialization register values in a lookup table
-- No architectural changes or new features
-- Limited to the RT1320 VC chip variant specifically
-- Changes are applied during device initialization only
+### 2. **Affects Critical Kernel Functionality**
+This bug impacts core filesystem operations that users depend on:
+- `fallocate()` system call with `FALLOC_FL_PUNCH_HOLE`
+- File sparse operations used by databases, VMs, backup tools
+- Copy-on-write optimizations in Ceph filesystems
 
-### 3. **Hardware-Level Bug Fix**
-The register addresses (0x1000db00-0x1000db23) are in the DSP/firmware
-patch area, indicating this fixes a hardware-level audio processing
-issue. These appear to be audio coefficient or speaker protection
-parameters that prevent distortion at maximum volume.
+### 3. **Small, Contained, and Low-Risk Fix**
+The code change is minimal and safe:
+```c
+- u64 object_set_size = object_size * stripe_count;
++       u64 object_set_size = (u64) object_size * stripe_count;
+```
+
+This fix:
+- Promotes `object_size` to `u64` before multiplication, preventing
+  overflow
+- Has no functional side effects beyond fixing the bug
+- Maintains consistency with the underlying `u32` data types in
+  `ceph_file_layout`
+- Cannot introduce regressions
 
 ### 4. **Follows Stable Tree Criteria**
-This commit meets all stable tree requirements:
-- ✅ **Important bugfix**: Fixes audible speaker noise affecting user
-  experience
-- ✅ **Minimal risk**: Only changes register initialization values
-- ✅ **Confined scope**: Limited to RT1320 VC audio amplifier
-- ✅ **No new features**: Pure bug fix for existing functionality
-- ✅ **Clear impact**: Eliminates speaker noise at 100% volume
+- **Important bugfix**: Prevents potential data corruption and system
+  instability
+- **Minimal risk**: Single-line change with no architectural impact
+- **Confined scope**: Only affects Ceph filesystem's hole punching logic
+- **No new features**: Pure defensive fix
 
-### 5. **Clear User Impact**
-Users with RT1320 VC amplifiers (commonly found in modern
-laptops/devices) would experience:
-- **Before**: Audible noise/distortion when volume is at 100%
-- **After**: Clean audio output at all volume levels including maximum
+### 5. **Matches Successful Backport Pattern**
+This commit is very similar to **Similar Commit #1** (marked YES for
+backport) which also:
+- Fixed a type promotion bug affecting critical operations
+- Had minimal code changes with clear safety benefits
+- Addressed potential data integrity issues
+- Was explicitly marked with `Cc: stable@vger.kernel.org`
 
-### 6. **Pattern Matching with Approved Backports**
-This closely matches "Similar Commit #1" which was marked for
-backporting (YES). Both commits:
-- Fix audio output quality issues
-- Use vendor registers to resolve problems
-- Address volume-related audio artifacts
-- Have minimal code impact with targeted register changes
+### 6. **Proactive Hardening Value**
+While the bug requires specific conditions to trigger (large object
+sizes or stripe counts), backporting provides:
+- Defense against potential malicious layouts from compromised metadata
+  servers
+- Protection for users with unusual but valid filesystem configurations
+- General robustness improvement for production systems
 
-The commit represents exactly the type of important, low-risk hardware
-compatibility fix that stable trees are designed to include.
+The fix has no downside risk and provides meaningful protection against
+a real integer overflow scenario that could affect data integrity in
+Ceph filesystems.
 
- sound/soc/codecs/rt1320-sdw.c | 17 ++++++++++++++++-
- 1 file changed, 16 insertions(+), 1 deletion(-)
+ fs/ceph/file.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/rt1320-sdw.c b/sound/soc/codecs/rt1320-sdw.c
-index d83b236a04503..4953f554caf08 100644
---- a/sound/soc/codecs/rt1320-sdw.c
-+++ b/sound/soc/codecs/rt1320-sdw.c
-@@ -204,7 +204,7 @@ static const struct reg_sequence rt1320_vc_blind_write[] = {
- 	{ 0x3fc2bfc0, 0x03 },
- 	{ 0x0000d486, 0x43 },
- 	{ SDW_SDCA_CTL(FUNC_NUM_AMP, RT1320_SDCA_ENT_PDE23, RT1320_SDCA_CTL_REQ_POWER_STATE, 0), 0x00 },
--	{ 0x1000db00, 0x04 },
-+	{ 0x1000db00, 0x07 },
- 	{ 0x1000db01, 0x00 },
- 	{ 0x1000db02, 0x11 },
- 	{ 0x1000db03, 0x00 },
-@@ -225,6 +225,21 @@ static const struct reg_sequence rt1320_vc_blind_write[] = {
- 	{ 0x1000db12, 0x00 },
- 	{ 0x1000db13, 0x00 },
- 	{ 0x1000db14, 0x45 },
-+	{ 0x1000db15, 0x0d },
-+	{ 0x1000db16, 0x01 },
-+	{ 0x1000db17, 0x00 },
-+	{ 0x1000db18, 0x00 },
-+	{ 0x1000db19, 0xbf },
-+	{ 0x1000db1a, 0x13 },
-+	{ 0x1000db1b, 0x09 },
-+	{ 0x1000db1c, 0x00 },
-+	{ 0x1000db1d, 0x00 },
-+	{ 0x1000db1e, 0x00 },
-+	{ 0x1000db1f, 0x12 },
-+	{ 0x1000db20, 0x09 },
-+	{ 0x1000db21, 0x00 },
-+	{ 0x1000db22, 0x00 },
-+	{ 0x1000db23, 0x00 },
- 	{ 0x0000d540, 0x01 },
- 	{ 0x0000c081, 0xfc },
- 	{ 0x0000f01e, 0x80 },
+diff --git a/fs/ceph/file.c b/fs/ceph/file.c
+index 851d70200c6b8..a7254cab44cc2 100644
+--- a/fs/ceph/file.c
++++ b/fs/ceph/file.c
+@@ -2616,7 +2616,7 @@ static int ceph_zero_objects(struct inode *inode, loff_t offset, loff_t length)
+ 	s32 stripe_unit = ci->i_layout.stripe_unit;
+ 	s32 stripe_count = ci->i_layout.stripe_count;
+ 	s32 object_size = ci->i_layout.object_size;
+-	u64 object_set_size = object_size * stripe_count;
++	u64 object_set_size = (u64) object_size * stripe_count;
+ 	u64 nearly, t;
+ 
+ 	/* round offset up to next period boundary */
 -- 
 2.39.5
 
