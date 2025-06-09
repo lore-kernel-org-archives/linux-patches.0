@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52AE725D8F5;
-	Mon,  9 Jun 2025 13:48:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCCF425F788;
+	Mon,  9 Jun 2025 13:48:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749476909; cv=none; b=Y1ddC0fKscwWx5e5EIfeGoSh4TXognsHXhC5QSjIKKP0+YdldzQuk4jjKNxCpV68ZmPmJEfKtauweWX8VJkna4uahX+Gsfr7tRkdJqPEE+PgawA6QbwdopfJGb7XL+dvPZzgxbaYM3JRZ8g2LJjahMmDdDFIyuHYTqY2TAcKGdU=
+	t=1749476912; cv=none; b=YpO1T8/Fv41z8s5kN7fAZlnKw5LvGaZeT0PTX4MwSTRQDYzEwQZKCtcKZ9nJ94156OdIiie5vNwjSUJmwRSUBSPiKJ+epxbAt9hnIkRWYuzuCh+dejpVCYaRPPGsPxSSrhnK89wHAQt6E0hjLrboAv3O+ope4V57W6eSd9iZqig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749476909; c=relaxed/simple;
-	bh=qrZpZsMrsU1gfoQb0W7EnINpdzrBuhVDdB9nntc+yHM=;
+	s=arc-20240116; t=1749476912; c=relaxed/simple;
+	bh=cLAjAqPluDk1hiLoi5QoIkrGFDGcCrKnfEy6emM98mU=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Q9k+4wb7t36kq9UpN83lOUAn5Lee5WaUp0gUIM3PBZlvbWjXBx9Zig3S6kCcJr9Qbpe8v0cTjADsRUaXsTWI7sF/l1vmusOB9W+Pnywm5X7yfc3uWfnmaWwSh1I9RdQMjfm5PvMrK1FEHut3nclPTUBNbACaO46SSu/ipqgpqJk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KJ21jPQo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=pGRXmASn32ETAonB3cUXnKJsvjib/XO8gyIHlmeoDeOOcEYdweIg1pWb+UuHE7FJLgjYVV8OliTcwHgSRqcetH/j7xv1h5HSOvSntt7H2MTagfpi6aGzR1/BPA1CEzXQXpw1yX0YjJVr8POf6x2vN1Tir8N0Ku7Zkc4o/cBr/j8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XOg5vQ11; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KJ21jPQo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CE01C4CEED;
-	Mon,  9 Jun 2025 13:48:28 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XOg5vQ11"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B549CC4CEED;
+	Mon,  9 Jun 2025 13:48:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749476909;
-	bh=qrZpZsMrsU1gfoQb0W7EnINpdzrBuhVDdB9nntc+yHM=;
+	s=k20201202; t=1749476911;
+	bh=cLAjAqPluDk1hiLoi5QoIkrGFDGcCrKnfEy6emM98mU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KJ21jPQogzMlvwoE75oezqa27IvaUdk6CutCpvvh/TDRj7ZQwdvRiGxOun9PdfVP5
-	 faz/n7JnZf18KH5CSU4fhzX+DpRFKlPse+DyUW8Z4nW1ol8Q+h5//lqMXaAHOpwglb
-	 SaUUrJqS2wUvVlrXH9j/zdzwvaGhNGgJsqsVUfh+pLsX+sPCaHAdRsdAIYcglkW6V8
-	 58XLlXk6v7wIYykgyyXsdLmqNaMnIniDxPGFEMQl9w/3pRioMgXASbfDQIMmFYlFDZ
-	 3LPFnrptXKF1/4mTpV8QbcOvuhYbrU6YbzdcYz2lw9WEUQHbN3u7PfGH/lC2DKWyDV
-	 abYpVtAjCHfFw==
+	b=XOg5vQ117wgHARIcMiceWrg5F7UYZ4+91I+3MUaOpfPC/4AxoBkmbP0giZXq2fH9t
+	 x7IjnAfQtwS8hgC/gmferNZ462/SVIVUoQYZ/QTlU3noQOIjoTv7ngLQr5tN0i8yx4
+	 YubJpK1oq2AsrMwIxkpeRoRq8hXhVBenth4wQ5TXiZCyyckoU62uQn7jpLGn9Mt2R4
+	 ZvLsU8VzYDibqrC4t5FSlYn2g0ZMpC2TwKIk4u7gfRuUgsie2hjmsb4oRBJAYJubnv
+	 vT086R3gIWic21bQ8uTWZYwsmtIwJDIXZPYispN68aKUcYw6S6Sfr+DHlUZZrvG3vz
+	 47e+fjFO6xWhg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Sami Tolvanen <samitolvanen@google.com>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	linux-kbuild@vger.kernel.org,
-	kernel test robot <lkp@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH AUTOSEL 5.10 4/9] um: Add cmpxchg8b_emu and checksum functions to asm-prototypes.h
-Date: Mon,  9 Jun 2025 09:48:15 -0400
-Message-Id: <20250609134820.1345562-4-sashal@kernel.org>
+Cc: Chen Yufeng <chenyufeng@iie.ac.cn>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Thinh.Nguyen@synopsys.com
+Subject: [PATCH AUTOSEL 5.10 5/9] usb: potential integer overflow in usbg_make_tpg()
+Date: Mon,  9 Jun 2025 09:48:16 -0400
+Message-Id: <20250609134820.1345562-5-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250609134820.1345562-1-sashal@kernel.org>
 References: <20250609134820.1345562-1-sashal@kernel.org>
@@ -50,123 +48,116 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 5.10.238
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sami Tolvanen <samitolvanen@google.com>
+From: Chen Yufeng <chenyufeng@iie.ac.cn>
 
-[ Upstream commit 674d03f6bd6b0f8327f1a4920ff5893557facfbd ]
+[ Upstream commit 153874010354d050f62f8ae25cbb960c17633dc5 ]
 
-With CONFIG_GENDWARFKSYMS, um builds fail due to missing prototypes
-in asm/asm-prototypes.h. Add declarations for cmpxchg8b_emu and the
-exported checksum functions, including csum_partial_copy_generic as
-it's also exported.
+The variable tpgt in usbg_make_tpg() is defined as unsigned long and is
+assigned to tpgt->tport_tpgt, which is defined as u16. This may cause an
+integer overflow when tpgt is greater than USHRT_MAX (65535). I
+haven't tried to trigger it myself, but it is possible to trigger it
+by calling usbg_make_tpg() with a large value for tpgt.
 
-Cc: Masahiro Yamada <masahiroy@kernel.org>
-Cc: linux-kbuild@vger.kernel.org
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202503251216.lE4t9Ikj-lkp@intel.com/
-Signed-off-by: Sami Tolvanen <samitolvanen@google.com>
-Link: https://patch.msgid.link/20250326190500.847236-2-samitolvanen@google.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+I modified the type of tpgt to match tpgt->tport_tpgt and adjusted the
+relevant code accordingly.
+
+This patch is similar to commit 59c816c1f24d ("vhost/scsi: potential
+memory corruption").
+
+Signed-off-by: Chen Yufeng <chenyufeng@iie.ac.cn>
+Link: https://lore.kernel.org/r/20250415065857.1619-1-chenyufeng@iie.ac.cn
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
+Based on my comprehensive analysis, here's my decision:
+
 **YES**
 
-This commit should be backported to stable kernel trees based on the
-following analysis:
+This commit should be backported to stable kernel trees for the
+following reasons:
 
-## Analysis
+## Analysis of the Integer Overflow Bug
 
-### Purpose and Context
-This commit fixes a build failure in the User Mode Linux (UM)
-architecture when `CONFIG_GENDWARFKSYMS` is enabled. The
-`CONFIG_GENDWARFKSYMS` feature is a new kernel build system enhancement
-for generating DWARF-based symbol versioning, which requires proper
-prototypes in `asm-prototypes.h` files to generate correct CRCs for
-exported symbols.
+**1. Clear Security/Correctness Issue:**
+The bug is a classic integer overflow vulnerability where a user-
+controlled value (`tpgt`) parsed from a string via `kstrtoul()` as an
+`unsigned long` gets truncated when assigned to a `u16` field
+(`tpg->tport_tpgt`).
 
-### Code Changes Analysis
+In the original code at line 1690:
+```c
+unsigned long tpgt;  // Can hold values up to ULONG_MAX
+// ... kstrtoul(name + 5, 0, &tpgt) ...
+tpg->tport_tpgt = tpgt;  // u16 field - truncation occurs!
+```
 
-**File 1: `arch/um/include/asm/asm-prototypes.h`**
-- **Before**: Only included the generic asm-prototypes.h
-- **After**: Added includes for `<asm/checksum.h>` and conditional
-  declaration of `cmpxchg8b_emu()` for `CONFIG_UML_X86`
+If a user provides a value like `tpgt_70000`, the parsing succeeds
+(70000 < UINT_MAX), but when assigned to the 16-bit field, it becomes
+`70000 & 0xFFFF = 4464`, completely changing the intended value.
 
-**File 2: `arch/x86/um/asm/checksum.h`**
-- **Before**: Only declared `csum_partial()` function
-- **After**: Added declaration for `csum_partial_copy_generic()` with a
-  comment explaining it's for export type visibility
+**2. Matches Stable Backport Criteria:**
+- **Important Bug Fix**: Yes - prevents integer overflow and data
+  corruption
+- **Small, Contained Change**: Yes - only changes variable type and
+  validation function
+- **No Architectural Changes**: Correct - simply fixes data type
+  mismatch
+- **Minimal Regression Risk**: Very low risk - more restrictive
+  validation
+- **Confined to Subsystem**: Yes - only affects USB gadget target mode
 
-### Why This Should Be Backported
+**3. Historical Precedent:**
+The fix directly references commit `59c816c1f24d` which was a nearly
+identical fix in `drivers/vhost/scsi.c` that was backported to stable
+trees. That commit fixed the exact same pattern:
+- `unsigned long tpgt` → `u16 tpgt`
+- `kstrtoul() || tpgt > UINT_MAX` → `kstrtou16()`
+- Assignment to `u16 tport_tpgt` field
 
-1. **Fixes Important Build Failures**: This directly addresses build
-   failures when `CONFIG_GENDWARFKSYMS` is enabled for UM architecture,
-   as confirmed by the kernel test robot report.
+**4. Real Impact:**
+While this requires privileged access to trigger (configfs
+manipulation), the integer overflow could lead to:
+- Unexpected behavior in target portal group handling
+- Potential confusion in multi-target setups
+- Data integrity issues in storage target configuration
 
-2. **Minimal Risk Changes**:
-   - Only adds function declarations, no implementation changes
-   - Changes are confined to UM architecture headers
-   - No behavioral changes to existing code paths
+**5. Code Quality:**
+The fix properly aligns the variable type with its intended use and
+makes the validation more precise by using `kstrtou16()` instead of the
+broader `kstrtoul()` check.
 
-3. **Follows Established Patterns**: Similar commits in the reference
-   history (Similar Commit #1 and #5) that add missing prototypes to
-   `asm-prototypes.h` files were marked as "YES" for backporting. This
-   follows the exact same pattern.
+This fix exemplifies the type of integer overflow prevention that stable
+trees actively accept - targeted, low-risk corrections that prevent
+subtle but potentially serious bugs from affecting users.
 
-4. **Critical Infrastructure Fix**: The `asm-prototypes.h`
-   infrastructure is essential for proper symbol versioning. Missing
-   prototypes can cause genksyms to segfault during build, making this a
-   critical build system fix.
+ drivers/usb/gadget/function/f_tcm.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-5. **Architecture-Specific Scope**: Changes are limited to UM
-   architecture, reducing risk of regressions in other subsystems.
-
-6. **Self-Contained**: The fix includes both the missing `cmpxchg8b_emu`
-   prototype (conditional on `CONFIG_UML_X86`) and the checksum function
-   declarations, making it complete.
-
-### Comparison to Reference Commits
-- **Similar to Commit #1**: Adds missing prototypes for genksyms CRC
-  generation (Status: YES)
-- **Similar to Commit #5**: Fixes missing prototypes causing build
-  issues with symbol versioning (Status: YES)
-- **Unlike Commits #2, #3, #4**: This is not just a comment update or
-  cleanup, but fixes actual build failures
-
-The fix addresses a concrete build failure affecting users who enable
-`CONFIG_GENDWARFKSYMS` with UM, making it an important bugfix that meets
-stable tree criteria for backporting.
-
- arch/um/include/asm/asm-prototypes.h | 5 +++++
- arch/x86/um/asm/checksum.h           | 3 +++
- 2 files changed, 8 insertions(+)
-
-diff --git a/arch/um/include/asm/asm-prototypes.h b/arch/um/include/asm/asm-prototypes.h
-index 5898a26daa0dd..408b31d591279 100644
---- a/arch/um/include/asm/asm-prototypes.h
-+++ b/arch/um/include/asm/asm-prototypes.h
-@@ -1 +1,6 @@
- #include <asm-generic/asm-prototypes.h>
-+#include <asm/checksum.h>
-+
-+#ifdef CONFIG_UML_X86
-+extern void cmpxchg8b_emu(void);
-+#endif
-diff --git a/arch/x86/um/asm/checksum.h b/arch/x86/um/asm/checksum.h
-index b07824500363f..ddc144657efad 100644
---- a/arch/x86/um/asm/checksum.h
-+++ b/arch/x86/um/asm/checksum.h
-@@ -20,6 +20,9 @@
-  */
- extern __wsum csum_partial(const void *buff, int len, __wsum sum);
+diff --git a/drivers/usb/gadget/function/f_tcm.c b/drivers/usb/gadget/function/f_tcm.c
+index 7f825c961fb88..30c3a44abb183 100644
+--- a/drivers/usb/gadget/function/f_tcm.c
++++ b/drivers/usb/gadget/function/f_tcm.c
+@@ -1325,14 +1325,14 @@ static struct se_portal_group *usbg_make_tpg(struct se_wwn *wwn,
+ 	struct usbg_tport *tport = container_of(wwn, struct usbg_tport,
+ 			tport_wwn);
+ 	struct usbg_tpg *tpg;
+-	unsigned long tpgt;
++	u16 tpgt;
+ 	int ret;
+ 	struct f_tcm_opts *opts;
+ 	unsigned i;
  
-+/* Do not call this directly. Declared for export type visibility. */
-+extern __visible __wsum csum_partial_copy_generic(const void *src, void *dst, int len);
-+
- /**
-  * csum_fold - Fold and invert a 32bit checksum.
-  * sum: 32bit unfolded sum
+ 	if (strstr(name, "tpgt_") != name)
+ 		return ERR_PTR(-EINVAL);
+-	if (kstrtoul(name + 5, 0, &tpgt) || tpgt > UINT_MAX)
++	if (kstrtou16(name + 5, 0, &tpgt))
+ 		return ERR_PTR(-EINVAL);
+ 	ret = -ENODEV;
+ 	mutex_lock(&tpg_instances_lock);
 -- 
 2.39.5
 
