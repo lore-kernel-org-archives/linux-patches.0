@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6939C13B788;
-	Mon,  9 Jun 2025 13:44:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D719313B788;
+	Mon,  9 Jun 2025 13:44:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749476680; cv=none; b=KH0WcdPHM6mVRboT82VWVymeopKjnv3ht3DhETImCb6O1CljwRwsl2w4AZWyWsnKSvx4pRUasCb2suv39EDylJcm8WEkPuiA6dW46MTIOJKWBHvEWzRKrx9h9xUY+YwjRyfWNGrVQpz3m7PSkIAhe8n4C1Up+9YifRzpk+phmkc=
+	t=1749476684; cv=none; b=tYGiWZuLHSi42hkx8ZQGc0Q2GVD4nCO4pp+NoiUFu/15N09g0vr69H8Gh5sBEISIi4cSptsMwDO0WXUTwDCBkB8z8BOAZc9yHSapyhr2H4DFNOMrYIBETb7Wvz84kRlqQBIdc3FnSyDBxp84FxfE3f2Dmp6vuG6PcR+nRbgV704=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749476680; c=relaxed/simple;
-	bh=zxudhQb8Mp1JBIOaZ7bO8hA+l9Nz8UTGG6Erllqa2NA=;
+	s=arc-20240116; t=1749476684; c=relaxed/simple;
+	bh=gFZT/IpN0NPWElZthO194zhcbMHS5G1mfW6krDuYoW0=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=AeSfTTVu8VmS/HZG78HayOpxsqzKXbIGQ6bPbo999PM8hvwTvcv9fRoPX7V9uvKCeV6lORSlJqnrWPSQKpZ4e6dK6nfKfvdR+c3GC5aOj6FTuOW5qVvKY0FcueWSOu7y8q3mLTdeEDR26Er9ZPvIcTaDHNvavEbfPLnlsIeypZo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WbV+yTgJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Tx1mfWuo9ZYfwKhVTN0ChwAReMs/rrUVFDHPUCXtxkZE6DOxcPqnQJ7UYmsJzEZhN4skLqnEphSnzvKU2M/r2mR/o3OwSXYJ1PIU7dF5i2670DQxT7xiFuYgg7wW9NkXrkkERrBrJvverXvA8Cb3JMC3LygqyiT4P8T26pd6Lfg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ChVKVPOo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WbV+yTgJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AD7DC4CEEB;
-	Mon,  9 Jun 2025 13:44:39 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ChVKVPOo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 820EFC4CEEB;
+	Mon,  9 Jun 2025 13:44:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749476680;
-	bh=zxudhQb8Mp1JBIOaZ7bO8hA+l9Nz8UTGG6Erllqa2NA=;
+	s=k20201202; t=1749476684;
+	bh=gFZT/IpN0NPWElZthO194zhcbMHS5G1mfW6krDuYoW0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WbV+yTgJXdGcyVS8IMoqZ4SlDhu19wt/0YjqoH4fsAW9U8QAMA5M9b0qveqbYMY5Y
-	 tlQKTeQlX/7sT2uW/o4Ne/tDFQbmiM67rkZrgl/FOFa2V+lku1iZvbtUySMhuAY8Zy
-	 NVUbZIOkeojCL7VEsVWbamv8l6vy3AGOkDI3bIgkz+aYbilXhcQjvfw4Pu4YEsD5hB
-	 Nurg8mBDITZ8T9zPiF8nabUNgpYw4/TpxUgltocDtwtc2pP018R+d4NpdczXWVhxNa
-	 8Y4FsfJLRRC2sosaxg2714lFhtQidzZyWpchvOGN9drEdGhP9L4QzyIy1YLdmGGO53
-	 xpGHz4Q40+jmw==
+	b=ChVKVPOoHJ4Cq/j6PdCX9vJvaqHlFuIkRFXiHO0Wb0/mS+S5c/X3Z4PfWcXo5ghI9
+	 peyMrCDxJlBpgWa/t54ifOmC7K+dGNVHgKq7eXEr5y5ctVTitW96uW0MOYl7sEpRRo
+	 86E3qTEI89de3PcKQP6D+EoOGkoFcTfNFEvaXP8QeC6AP4cxaaKZ15Gob3Vs6/Vd5m
+	 jyK3LjtkbOPvh+VdbhlJfjcqpiCn7ssCmtgBauKoWRFhrC503XhYOW663BnxreVSbX
+	 CaDYpE21Dx4XuDpIGYiHKSZrLs1FfQOUcI7hCcQvZKBSUhAR0Ta5ux1WGuqk40ntYX
+	 5Y9Mq/k3CZRFw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Angelo Dureghello <adureghello@baylibre.com>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+Cc: David Heidelberg <david@ixit.cz>,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>,
-	lars@metafoo.de,
-	Michael.Hennerich@analog.com,
-	linux-iio@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.15 21/35] iio: dac: adi-axi-dac: add cntrl chan check
-Date: Mon,  9 Jun 2025 09:43:37 -0400
-Message-Id: <20250609134355.1341953-21-sashal@kernel.org>
+	andy@kernel.org,
+	dlechner@baylibre.com,
+	clamor95@gmail.com
+Subject: [PATCH AUTOSEL 6.15 22/35] iio: light: al3000a: Fix an error handling path in al3000a_probe()
+Date: Mon,  9 Jun 2025 09:43:38 -0400
+Message-Id: <20250609134355.1341953-22-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250609134355.1341953-1-sashal@kernel.org>
 References: <20250609134355.1341953-1-sashal@kernel.org>
@@ -48,195 +47,171 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.15.1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Angelo Dureghello <adureghello@baylibre.com>
+From: David Heidelberg <david@ixit.cz>
 
-[ Upstream commit 029035636de37395124a602c830152ef39a35fab ]
+[ Upstream commit c0461f8e842495041c18b2c67647501d55c17441 ]
 
-Add validity check on CNTRL_X channels (valid as 0 to 15).
+If regmap_write() fails in al3000a_init(), al3000a_set_pwr_off is
+not called.
 
-Reviewed-by: Nuno Sá <nuno.sa@analog.com>
-Signed-off-by: Angelo Dureghello <adureghello@baylibre.com>
-Link: https://patch.msgid.link/20250409-wip-bl-ad3552r-fixes-v5-1-fb429c3a6515@baylibre.com
+In order to avoid such a situation, move the devm_add_action_or_reset()
+which calls al3000a_set_pwr_off right after a successful
+al3000a_set_pwr_on.
+
+Signed-off-by: David Heidelberg <david@ixit.cz>
+Link: https://patch.msgid.link/20250402-al3010-iio-regmap-v4-2-d189bea87261@ixit.cz
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
+Now let me analyze the commit thoroughly:
+
+## Analysis
+
 **YES**
 
-This commit should be backported to stable kernel trees because it fixes
-a real security vulnerability involving bounds checking of channel
-numbers.
+This commit should be backported to stable kernel trees. Here's my
+detailed analysis:
 
-## Analysis of the Commit
+### 1. **Bug Fix Nature**
+This commit fixes a clear resource management bug in the error handling
+path. Looking at the code changes:
 
-### **Security Vulnerability Fixed**
+**Before the fix (problematic code flow):**
+```c
+static int al3000a_init(struct al3000a_data *data)
+{
+    ret = al3000a_set_pwr_on(data);  // Enables regulator + device
+    if (ret)
+        return ret;
 
-The commit adds critical bounds checking to prevent out-of-bounds memory
-access. Looking at the code changes:
+    ret = regmap_write(data->regmap, AL3000A_REG_SYSTEM,
+AL3000A_CONFIG_RESET);
+    if (ret)
+        return ret;  // BUG: Power stays on if this fails
 
-1. **Defines maximum channel limit**: `#define AXI_DAC_CHAN_CNTRL_MAX
-   15`
-2. **Adds validation in multiple functions**:
-   - `__axi_dac_frequency_get()`: `if (chan > AXI_DAC_CHAN_CNTRL_MAX)
-     return -EINVAL;`
-   - `axi_dac_scale_get()`: `if (chan->channel > AXI_DAC_CHAN_CNTRL_MAX)
-     return -EINVAL;`
-   - `axi_dac_phase_get()`: `if (chan->channel > AXI_DAC_CHAN_CNTRL_MAX)
-     return -EINVAL;`
-   - `__axi_dac_frequency_set()`: `if (chan > AXI_DAC_CHAN_CNTRL_MAX)
-     return -EINVAL;`
-   - `axi_dac_scale_set()`: `if (chan->channel > AXI_DAC_CHAN_CNTRL_MAX)
-     return -EINVAL;`
-   - `axi_dac_phase_set()`: `if (chan->channel > AXI_DAC_CHAN_CNTRL_MAX)
-     return -EINVAL;`
-   - `axi_dac_data_source_set()`: `if (chan > AXI_DAC_CHAN_CNTRL_MAX)
-     return -EINVAL;`
-   - `axi_dac_set_sample_rate()`: `if (chan > AXI_DAC_CHAN_CNTRL_MAX)
-     return -EINVAL;`
+    return regmap_write(data->regmap, AL3000A_REG_SYSTEM,
+AL3000A_CONFIG_ENABLE);
+    // BUG: Power stays on if this fails too
+}
+```
 
-### **Why This is a Real Security Issue**
+**After the fix:**
+```c
+static int al3000a_init(struct al3000a_data *data)
+{
+    ret = al3000a_set_pwr_on(data);
+    if (ret)
+        return ret;
 
-1. **Memory-mapped I/O vulnerability**: The register address calculation
-   `#define AXI_DAC_CHAN_CNTRL_1_REG(c) (0x0400 + (c) * 0x40)` uses
-   channel numbers directly. Without bounds checking, channel numbers >
-   15 could access memory outside the intended register space.
+    ret = devm_add_action_or_reset(dev, al3000a_set_pwr_off, data);
+    if (ret)
+        return ret;  // Now power gets turned off automatically
 
-2. **User-accessible attack surface**: These functions are accessible
-   through sysfs interfaces and backend APIs, allowing userspace or
-   other kernel modules to potentially exploit the vulnerability.
+    ret = regmap_write(data->regmap, AL3000A_REG_SYSTEM,
+AL3000A_CONFIG_RESET);
+    if (ret)
+        return ret;  // Power automatically cleaned up by devm
 
-3. **Potential for memory corruption**: Out-of-bounds register access
-   could corrupt adjacent memory-mapped regions, leading to system
-   instability or privilege escalation.
+    return regmap_write(data->regmap, AL3000A_REG_SYSTEM,
+AL3000A_CONFIG_ENABLE);
+}
+```
 
-### **Comparison with Similar Commits**
+### 2. **Resource Leak Impact**
+This fixes a resource leak where:
+- The regulator remains enabled if `regmap_write()` operations fail
+- The device remains powered on unnecessarily
+- This can affect power management and battery life on portable devices
+- Could potentially cause issues for subsequent probe attempts
 
-Looking at the provided similar commits, this follows the same pattern
-as Similar Commit #1 (Status: YES), which added interface busy checking
-to avoid "possible issues." This commit similarly adds defensive bounds
-checking to prevent memory safety issues.
+### 3. **Pattern Consistency**
+Examining the similar commit #1 (al3010 driver) with "Backport Status:
+YES", this fix follows the exact same pattern:
+- Both fix resource management in error paths
+- Both move `devm_add_action_or_reset()` immediately after power-on
+- Both ensure cleanup happens automatically if subsequent operations
+  fail
+- Both are minimal, targeted fixes
 
-Unlike Similar Commits #2, #3, #4, and #5 (Status: NO), which were non-
-functional cleanups, refactoring, or new feature additions, this commit
-addresses a concrete security vulnerability.
+Looking at `/home/sasha/linux/drivers/iio/light/al3010.c:93-97`, I can
+see the al3010 driver already implements this pattern correctly,
+confirming this is the established best practice.
 
-### **Backport Criteria Met**
+### 4. **Minimal Risk Assessment**
+- **Change scope**: Very limited, only affects error handling in probe
+  path
+- **No functional changes**: Normal operation flow remains identical
+- **No architectural changes**: Just moves existing cleanup code earlier
+- **Backward compatible**: No API or behavior changes for successful
+  cases
 
-This commit satisfies all stable tree criteria:
-- ✅ **Fixes important security bug**: Prevents out-of-bounds memory
-  access
-- ✅ **Small and contained**: Simple bounds checking additions
-- ✅ **Clear side effects**: Minimal risk - only adds validation
-- ✅ **No architectural changes**: Just adds safety checks
-- ✅ **Critical subsystem**: IIO drivers are used in industrial/embedded
+### 5. **Stable Tree Criteria Compliance**
+✅ **Important bugfix**: Fixes resource leak affecting all users of this
+driver
+✅ **Minimal risk**: Change is very small and well-contained
+✅ **No new features**: Pure bug fix
+✅ **Confined to subsystem**: Only affects IIO light sensor driver
+✅ **Clear side effects**: Only positive effect (proper resource cleanup)
+
+### 6. **User Impact**
+- Affects any system using the AL3000A ambient light sensor
+- Resource leaks can accumulate over time with repeated probe failures
+- Power management improvements are important for embedded/mobile
   systems
-- ✅ **Minimal regression risk**: Early validation with clear error
-  returns
 
-The fix is straightforward, low-risk, and addresses a real vulnerability
-that could affect systems using this FPGA-based DAC driver in production
-environments.
+### 7. **Historical Context**
+The similar commit reference #1 for al3010 driver shows this exact same
+pattern was deemed worthy of backporting, establishing precedent for
+these types of resource management fixes in IIO light drivers.
 
- drivers/iio/dac/adi-axi-dac.c | 24 ++++++++++++++++++++++++
- 1 file changed, 24 insertions(+)
+This commit fits all the criteria for stable backporting: it's a clear
+bugfix, has minimal risk, follows established patterns, and improves
+system reliability without introducing new features or architectural
+changes.
 
-diff --git a/drivers/iio/dac/adi-axi-dac.c b/drivers/iio/dac/adi-axi-dac.c
-index 892d770aec69c..f86acb98b0cff 100644
---- a/drivers/iio/dac/adi-axi-dac.c
-+++ b/drivers/iio/dac/adi-axi-dac.c
-@@ -84,6 +84,7 @@
- #define AXI_DAC_CHAN_CNTRL_7_REG(c)		(0x0418 + (c) * 0x40)
- #define   AXI_DAC_CHAN_CNTRL_7_DATA_SEL		GENMASK(3, 0)
+ drivers/iio/light/al3000a.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/iio/light/al3000a.c b/drivers/iio/light/al3000a.c
+index e2fbb1270040f..6d5115b2a06c5 100644
+--- a/drivers/iio/light/al3000a.c
++++ b/drivers/iio/light/al3000a.c
+@@ -85,12 +85,17 @@ static void al3000a_set_pwr_off(void *_data)
  
-+#define AXI_DAC_CHAN_CNTRL_MAX			15
- #define AXI_DAC_RD_ADDR(x)			(BIT(7) | (x))
- 
- /* 360 degrees in rad */
-@@ -186,6 +187,9 @@ static int __axi_dac_frequency_get(struct axi_dac_state *st, unsigned int chan,
- 	u32 reg, raw;
- 	int ret;
- 
-+	if (chan > AXI_DAC_CHAN_CNTRL_MAX)
-+		return -EINVAL;
-+
- 	if (!st->dac_clk) {
- 		dev_err(st->dev, "Sampling rate is 0...\n");
- 		return -EINVAL;
-@@ -230,6 +234,9 @@ static int axi_dac_scale_get(struct axi_dac_state *st,
- 	int ret, vals[2];
- 	u32 reg, raw;
- 
-+	if (chan->channel > AXI_DAC_CHAN_CNTRL_MAX)
-+		return -EINVAL;
-+
- 	if (tone_2)
- 		reg = AXI_DAC_CHAN_CNTRL_3_REG(chan->channel);
- 	else
-@@ -264,6 +271,9 @@ static int axi_dac_phase_get(struct axi_dac_state *st,
- 	u32 reg, raw, phase;
- 	int ret, vals[2];
- 
-+	if (chan->channel > AXI_DAC_CHAN_CNTRL_MAX)
-+		return -EINVAL;
-+
- 	if (tone_2)
- 		reg = AXI_DAC_CHAN_CNTRL_4_REG(chan->channel);
- 	else
-@@ -291,6 +301,9 @@ static int __axi_dac_frequency_set(struct axi_dac_state *st, unsigned int chan,
- 	u16 raw;
- 	int ret;
- 
-+	if (chan > AXI_DAC_CHAN_CNTRL_MAX)
-+		return -EINVAL;
-+
- 	if (!sample_rate || freq > sample_rate / 2) {
- 		dev_err(st->dev, "Invalid frequency(%u) dac_clk(%llu)\n",
- 			freq, sample_rate);
-@@ -342,6 +355,9 @@ static int axi_dac_scale_set(struct axi_dac_state *st,
- 	u32 raw = 0, reg;
- 	int ret;
- 
-+	if (chan->channel > AXI_DAC_CHAN_CNTRL_MAX)
-+		return -EINVAL;
-+
- 	ret = iio_str_to_fixpoint(buf, 100000, &integer, &frac);
- 	if (ret)
- 		return ret;
-@@ -385,6 +401,9 @@ static int axi_dac_phase_set(struct axi_dac_state *st,
- 	u32 raw, reg;
- 	int ret;
- 
-+	if (chan->channel > AXI_DAC_CHAN_CNTRL_MAX)
-+		return -EINVAL;
-+
- 	ret = iio_str_to_fixpoint(buf, 100000, &integer, &frac);
- 	if (ret)
- 		return ret;
-@@ -493,6 +512,9 @@ static int axi_dac_data_source_set(struct iio_backend *back, unsigned int chan,
+ static int al3000a_init(struct al3000a_data *data)
  {
- 	struct axi_dac_state *st = iio_backend_get_priv(back);
++	struct device *dev = regmap_get_device(data->regmap);
+ 	int ret;
  
-+	if (chan > AXI_DAC_CHAN_CNTRL_MAX)
-+		return -EINVAL;
+ 	ret = al3000a_set_pwr_on(data);
+ 	if (ret)
+ 		return ret;
+ 
++	ret = devm_add_action_or_reset(dev, al3000a_set_pwr_off, data);
++	if (ret)
++		return dev_err_probe(dev, ret, "failed to add action\n");
 +
- 	switch (data) {
- 	case IIO_BACKEND_INTERNAL_CONTINUOUS_WAVE:
- 		return regmap_update_bits(st->regmap,
-@@ -521,6 +543,8 @@ static int axi_dac_set_sample_rate(struct iio_backend *back, unsigned int chan,
- 	unsigned int freq;
- 	int ret, tone;
+ 	ret = regmap_write(data->regmap, AL3000A_REG_SYSTEM, AL3000A_CONFIG_RESET);
+ 	if (ret)
+ 		return ret;
+@@ -157,10 +162,6 @@ static int al3000a_probe(struct i2c_client *client)
+ 	if (ret)
+ 		return dev_err_probe(dev, ret, "failed to init ALS\n");
  
-+	if (chan > AXI_DAC_CHAN_CNTRL_MAX)
-+		return -EINVAL;
- 	if (!sample_rate)
- 		return -EINVAL;
- 	if (st->reg_config & AXI_DAC_CONFIG_DDS_DISABLE)
+-	ret = devm_add_action_or_reset(dev, al3000a_set_pwr_off, data);
+-	if (ret)
+-		return dev_err_probe(dev, ret, "failed to add action\n");
+-
+ 	return devm_iio_device_register(dev, indio_dev);
+ }
+ 
 -- 
 2.39.5
 
