@@ -1,45 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 049B2254AF0;
-	Mon,  9 Jun 2025 13:44:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0605D8BFF;
+	Mon,  9 Jun 2025 13:44:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749476666; cv=none; b=IZOdxGCLwBshf9MtEMteVRgnfczYUwGd136FPOYVKKShRz1yWPxOUZjTF6kH8+0ew65GMFlSIpmjHigdMrAt33WyGRBWoA7XTlQiryCxqbKIK8MrjdSJGEgtqjMM8ox+IyeZ+MsLJMjQ2yObfWwSWFUmqtcvd5I+eAb1oroHGU8=
+	t=1749476669; cv=none; b=bxKT8fR8xQ/5Y4yMbJlF5l1w3YhOAegixnvVdIqiBuzjx4t4HpSwFtQzNEOGaqwT4pIH9GsBZPyR8JOrCuYjw/qQ7oeaZ2XdFZEMtSAEXDtY7wLE3KUqhfWbHCTp3bTfMuPB6Z2gtxsBXlLWqk5X7yiPxVDTQfgHxtJeEu4O5oo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749476666; c=relaxed/simple;
-	bh=LKm2808+cP+hBbJ2eJwniRk0sgjivoUvFgWACAexZSk=;
+	s=arc-20240116; t=1749476669; c=relaxed/simple;
+	bh=Fkdc2mrIKFlmhNNbP0Mzr8cDWF6yzWl7vUyue4xveOU=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=HzPSlwNoIbRrycCBCQEZ+PAWHA2T6pzudwjTvwSCKyyLRg00aIuEL3Pi5qR6L0GRAG1xC8WC+a/mzcuEU5Ly3uW/SK7x7NHZ1m2W+iLBvpnbtFncdTQQzyJMmwsvTM8YSDjUIKzvcv5BFurFzmrP7Q7YPu4VHgpqJn2qC/qUPn4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HecTXjCI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tbiRhuS4GLJ9fyCRsr8Y05Bc8dPm9zi+GTQXcp+B1cKE7wOAkYainR68RBCnpeFa9vELds8CJ9cpP8BurRKuIJplIfeL3XGUREZ9shmlncAhSmxez06jhp+T9VEkezHzIloAqJ8DrC7ZZF58QyR06OoluWGhtfd9c+Vu3Ed6kbQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X1YmTzY3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HecTXjCI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BEF4C4CEEB;
-	Mon,  9 Jun 2025 13:44:24 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X1YmTzY3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D334C4CEED;
+	Mon,  9 Jun 2025 13:44:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749476665;
-	bh=LKm2808+cP+hBbJ2eJwniRk0sgjivoUvFgWACAexZSk=;
+	s=k20201202; t=1749476668;
+	bh=Fkdc2mrIKFlmhNNbP0Mzr8cDWF6yzWl7vUyue4xveOU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HecTXjCI69WJs/QzTa7xs0ivx6BrGIZbIQuRt0bcu3ua02Z8EdMCsJlgDt8QBeksp
-	 eb0nH64t7cqE+kXOq6d9Eqprl6JgrVUp69NcWLcmWDFMIQz1CqtOzNuAQADuZJGfw7
-	 eHxXketoDgTjgp78vP9zjX7oOwYkoG4MMImRIBg/EdZinvEaFjR/J4ehi4n3EgmWnL
-	 VWOrmH6p7O8WZvW0tz4Ny6AqjD2JuSGy6vky0irJklCaJzx5NMKgSoxaj+OotGjsCo
-	 h+fOiE55ed9Wob+mFQx/B7SNn8znLujCUe35EiYhUTtwNXk8a3o40unYWil9o+mioG
-	 hvi4s7W00EftA==
+	b=X1YmTzY3pgnja4cqx5oAc9MhNcT9UrllRH8D4jKOgudNqZ+U1g8tfnxtHg0T7Rxeo
+	 E43anRlbkhR0KMnYpFLhYNvF0sccOzufbRaEV7RCaOkp+4GFmZPK+x67yU0NtSQd8d
+	 6PI1t1OwJnpOGEnUYLJtjNQaucgmyzKU3Ysn2TtN846VnmVkrq5jkbO1xexcSCZfqi
+	 gFd1MfCurp0f1JP452trI4pV8e11US9YDUUoq8ey8bS15CL1xd7B1AsD0FVANCH6Je
+	 2dQdBoqeV9TmZQ48zjbZ7hP702sMnYG5B6NutCZCY49aRKeJhOyX7QvfrZQ28laS4E
+	 6R+3n1+5hnsYQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	David Lechner <dlechner@baylibre.com>,
+Cc: Daniele Palmas <dnlplm@gmail.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
 	Sasha Levin <sashal@kernel.org>,
-	marcelo.schmitt1@gmail.com,
-	gregkh@linuxfoundation.org,
-	javier.carrasco.cruz@gmail.com,
-	peterz@infradead.org,
-	viro@zeniv.linux.org.uk
-Subject: [PATCH AUTOSEL 6.15 13/35] iio: pressure: zpa2326: Use aligned_s64 for the timestamp
-Date: Mon,  9 Jun 2025 09:43:29 -0400
-Message-Id: <20250609134355.1341953-13-sashal@kernel.org>
+	mani@kernel.org,
+	slark_xiao@163.com,
+	mingo@kernel.org,
+	johan+linaro@kernel.org,
+	tglx@linutronix.de,
+	quic_vpernami@quicinc.com,
+	mank.wang@netprisma.us,
+	quic_msarkar@quicinc.com,
+	quic_skananth@quicinc.com
+Subject: [PATCH AUTOSEL 6.15 14/35] bus: mhi: host: pci_generic: Add Telit FN920C04 modem support
+Date: Mon,  9 Jun 2025 09:43:30 -0400
+Message-Id: <20250609134355.1341953-14-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250609134355.1341953-1-sashal@kernel.org>
 References: <20250609134355.1341953-1-sashal@kernel.org>
@@ -54,84 +58,138 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.15.1
 Content-Transfer-Encoding: 8bit
 
-From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From: Daniele Palmas <dnlplm@gmail.com>
 
-[ Upstream commit 886a446b76afddfad307488e95e87f23a08ffd51 ]
+[ Upstream commit 6348f62ef7ecc5855b710a7d4ea682425c38bb80 ]
 
-On x86_32 s64 fields are only 32-bit aligned.  Hence force the alignment of
-the field and padding in the structure by using aligned_s64 instead.
+Add SDX35 based modem Telit FN920C04.
 
-Reviewed-by: David Lechner <dlechner@baylibre.com>
-Link: https://patch.msgid.link/20250413103443.2420727-19-jic23@kernel.org
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+$ lspci -vv
+01:00.0 Unassigned class [ff00]: Qualcomm Device 011a
+        Subsystem: Device 1c5d:2020
+
+Signed-off-by: Daniele Palmas <dnlplm@gmail.com>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Link: https://patch.msgid.link/20250401093458.2953872-1-dnlplm@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Based on my analysis, here is my determination:
+## Analysis
 
 **YES**
 
-This commit should be backported to stable kernel trees for the
-following reasons:
+This commit should be backported to stable kernel trees. Here's my
+analysis:
 
-1. **Critical Bug Fix**: The commit fixes a subtle but serious alignment
-   bug that can cause **buffer overruns** on 32-bit architectures. The
-   original code uses a plain `u64 timestamp` field in the sample
-   structure, which is only guaranteed 4-byte alignment on x86_32 and
-   other 32-bit architectures.
+**Reasons supporting backport:**
 
-2. **Security Impact**: As shown in the
-   `iio_push_to_buffers_with_timestamp()` function at line `((int64_t
-   *)data)[ts_offset] = timestamp;`, the code performs a 64-bit write at
-   a calculated offset. If the buffer is only 4-byte aligned but the
-   offset calculation assumes 8-byte alignment, this can result in:
-   - Buffer overflow beyond the allocated structure
-   - Memory corruption of adjacent stack variables
-   - Potential information leaks to userspace
+1. **Clear Hardware Support Pattern**: This commit follows the exact
+   same pattern as the similar commits marked "YES" in the reference
+   examples. It adds support for a new Telit modem (FN920C04) by:
+   - Adding channel configuration (`mhi_telit_fn920c04_channels[]`)
+   - Adding controller configuration (`modem_telit_fn920c04_config`)
+   - Adding device info structure (`mhi_telit_fn920c04_info`)
+   - Adding PCI device ID entry in the table
 
-3. **Pattern of Similar Fixes**: Looking at similar commits:
-   - Commit #2 (mprls0025pa: use aligned_s64) was marked for stable with
-     `Fixes:` tag
-   - Commit #5 (ms5611 Fix buffer element alignment) was marked for
-     stable
-   - The analysis document shows this is part of a systematic campaign
-     to fix these issues since 2020
+2. **Hardware Enablement**: The commit enables a specific hardware
+   device (Telit FN920C04 with PCI ID 0x011a/subsystem 0x1c5d:0x2020)
+   that users may already have but cannot use without this support. This
+   is precisely the type of hardware enablement that benefits stable
+   users.
 
-4. **Small, Contained Change**: The fix is minimal - simply changing
-   `u64 timestamp` to `aligned_s64 timestamp`. This ensures the
-   timestamp field is properly 8-byte aligned through the `__aligned(8)`
-   attribute, preventing any alignment issues.
+3. **Minimal Risk**: The changes are entirely additive - no existing
+   code paths are modified. The commit only:
+   - Adds new data structures specific to this device
+   - Adds one new entry to the PCI device table
+   - Uses existing, well-tested infrastructure (reuses
+     `mhi_telit_fn990_events` for events)
 
-5. **Architecture-Specific Vulnerability**: The bug specifically affects
-   32-bit architectures where s64 has only 4-byte natural alignment.
-   This makes it a real issue for ARM32 and other 32-bit platforms still
-   in use.
+4. **Pattern Consistency**: All five reference commits adding Telit
+   modem support were marked as "YES" for backporting, demonstrating
+   this is an accepted pattern for stable inclusion.
 
-6. **Recent Related Security Fix**: The same file had a recent security
-   fix (commit 6007d10c5262) for information leaks, showing this driver
-   has active security concerns that need addressing in stable trees.
+5. **Well-Contained Changes**: The 39-line addition is self-contained
+   and doesn't affect any other device configurations. The new device
+   uses standard MHI patterns already present in the driver.
 
-The commit follows the stable tree rules perfectly: it fixes an
-important bug with minimal changes and low regression risk. The
-alignment issue can cause actual crashes or data corruption on affected
-architectures, making it a clear candidate for stable backporting.
+6. **Same Author/Maintainer**: The commit is from Daniele Palmas, the
+   same author as the other Telit commits that were successfully
+   backported, suggesting familiarity with stable backport requirements.
 
- drivers/iio/pressure/zpa2326.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+**Key specifics from the code changes:**
+- Device uses new PCI ID `0x011a` with subsystem `0x1c5d:0x2020`
+- Based on SDX35 chipset (newer hardware that users may encounter)
+- Uses standard MHI channel configuration patterns
+- Timeout increased to 50000ms (vs 20000ms for FN990) - device-specific
+  tuning
+- Includes `edl_trigger = true` for emergency download mode support
+- Reuses proven event configuration from FN990
 
-diff --git a/drivers/iio/pressure/zpa2326.c b/drivers/iio/pressure/zpa2326.c
-index 9db1c94dfc188..b2e04368532a0 100644
---- a/drivers/iio/pressure/zpa2326.c
-+++ b/drivers/iio/pressure/zpa2326.c
-@@ -582,7 +582,7 @@ static int zpa2326_fill_sample_buffer(struct iio_dev               *indio_dev,
- 	struct {
- 		u32 pressure;
- 		u16 temperature;
--		u64 timestamp;
-+		aligned_s64 timestamp;
- 	}   sample;
- 	int err;
+The commit represents exactly the type of hardware enablement change
+that stable trees accept: low-risk, additive hardware support that helps
+users with existing hardware.
+
+ drivers/bus/mhi/host/pci_generic.c | 39 ++++++++++++++++++++++++++++++
+ 1 file changed, 39 insertions(+)
+
+diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
+index 03aa887952098..059cfd77382f0 100644
+--- a/drivers/bus/mhi/host/pci_generic.c
++++ b/drivers/bus/mhi/host/pci_generic.c
+@@ -782,6 +782,42 @@ static const struct mhi_pci_dev_info mhi_telit_fe990a_info = {
+ 	.mru_default = 32768,
+ };
  
++static const struct mhi_channel_config mhi_telit_fn920c04_channels[] = {
++	MHI_CHANNEL_CONFIG_UL_SBL(2, "SAHARA", 32, 0),
++	MHI_CHANNEL_CONFIG_DL_SBL(3, "SAHARA", 32, 0),
++	MHI_CHANNEL_CONFIG_UL(4, "DIAG", 64, 1),
++	MHI_CHANNEL_CONFIG_DL(5, "DIAG", 64, 1),
++	MHI_CHANNEL_CONFIG_UL(14, "QMI", 32, 0),
++	MHI_CHANNEL_CONFIG_DL(15, "QMI", 32, 0),
++	MHI_CHANNEL_CONFIG_UL(32, "DUN", 32, 0),
++	MHI_CHANNEL_CONFIG_DL(33, "DUN", 32, 0),
++	MHI_CHANNEL_CONFIG_UL_FP(34, "FIREHOSE", 32, 0),
++	MHI_CHANNEL_CONFIG_DL_FP(35, "FIREHOSE", 32, 0),
++	MHI_CHANNEL_CONFIG_UL(92, "DUN2", 32, 1),
++	MHI_CHANNEL_CONFIG_DL(93, "DUN2", 32, 1),
++	MHI_CHANNEL_CONFIG_HW_UL(100, "IP_HW0", 128, 2),
++	MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0", 128, 3),
++};
++
++static const struct mhi_controller_config modem_telit_fn920c04_config = {
++	.max_channels = 128,
++	.timeout_ms = 50000,
++	.num_channels = ARRAY_SIZE(mhi_telit_fn920c04_channels),
++	.ch_cfg = mhi_telit_fn920c04_channels,
++	.num_events = ARRAY_SIZE(mhi_telit_fn990_events),
++	.event_cfg = mhi_telit_fn990_events,
++};
++
++static const struct mhi_pci_dev_info mhi_telit_fn920c04_info = {
++	.name = "telit-fn920c04",
++	.config = &modem_telit_fn920c04_config,
++	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
++	.dma_data_width = 32,
++	.sideband_wake = false,
++	.mru_default = 32768,
++	.edl_trigger = true,
++};
++
+ static const struct mhi_pci_dev_info mhi_netprisma_lcur57_info = {
+ 	.name = "netprisma-lcur57",
+ 	.edl = "qcom/prog_firehose_sdx24.mbn",
+@@ -806,6 +842,9 @@ static const struct mhi_pci_dev_info mhi_netprisma_fcun69_info = {
+ static const struct pci_device_id mhi_pci_id_table[] = {
+ 	{PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0116),
+ 		.driver_data = (kernel_ulong_t) &mhi_qcom_sa8775p_info },
++	/* Telit FN920C04 (sdx35) */
++	{PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x011a, 0x1c5d, 0x2020),
++		.driver_data = (kernel_ulong_t) &mhi_telit_fn920c04_info },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0304),
+ 		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx24_info },
+ 	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0306, PCI_VENDOR_ID_QCOM, 0x010c),
 -- 
 2.39.5
 
