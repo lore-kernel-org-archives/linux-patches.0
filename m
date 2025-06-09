@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D69922459E6;
-	Mon,  9 Jun 2025 13:44:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C5E52459E6;
+	Mon,  9 Jun 2025 13:44:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749476640; cv=none; b=RtQINuU4xuQsCIswysEQ9d/Y6B+SIWruBxmXXorNLd5yssc99ONq1zoiQSc0fPmhlvEwn0wOdsixlV8xe8Fudz3qTtpijTzfii6SBAQBQsf8aQopNCIT+6DJktjk7jMnT47G7mOXYf1pjf0IyhQmCrF4dcon03dEcjsnIrAPIaA=
+	t=1749476642; cv=none; b=IkkRLfHD87/5PLjTq5/LoaJ+MCNwNj9VKlGl/i4HK/3DqfDLrjIluID+E/xbGgNx/8HSqKTryQW3IvSi2Q8uJce5vmq5S5no02YDehYWPq+ESj5/qewq+wAV5WQODiR0GCriaTGWr+AHZgKDFjikuMkqSPZjEBvr4sFEWKjpjmM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749476640; c=relaxed/simple;
-	bh=hjPGawhC/2LTJ3V8gVPwidQih/3lP2XeNBysbydkZqc=;
+	s=arc-20240116; t=1749476642; c=relaxed/simple;
+	bh=+NLbCTM1HvxphxMUmY5TbB34v7C0iU2XQ9XXCSz6HHU=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=ldmZPm6zckuNhXe33FK/QtOS0DQtxxrjQ2u0gY0gNvUTwebjYiH15nSIddOeVcIMoaMRg3CDFsUROeQCEd1+h7RcdRyI2ko7Js78NsZFJDLCRq3/1hJf1QexnK3LxGFdasCYOl4uCxi74wnhD59kQdnZoa0BUo7439eSkRbq/ns=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=S8XA87Mn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VjrbatRCBkxjnY00y8DPMjpNgjrChy2Rym6zvGyUrD0x4xFXhQT5f66SvVjuW94SNHncIOnCOLtu+SuflASuM/dbQxuolmrz9fCVddm4zGDF5tLnClFs7eKRWbDT44YJoTAX6X/K6+v7mAyzReC59VwZnsyCKjPUvFs99s/5y+k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=s+CpdKIP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="S8XA87Mn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4D9FC4CEF0;
-	Mon,  9 Jun 2025 13:43:59 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="s+CpdKIP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20901C4CEF3;
+	Mon,  9 Jun 2025 13:44:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749476640;
-	bh=hjPGawhC/2LTJ3V8gVPwidQih/3lP2XeNBysbydkZqc=;
+	s=k20201202; t=1749476642;
+	bh=+NLbCTM1HvxphxMUmY5TbB34v7C0iU2XQ9XXCSz6HHU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S8XA87MnOmE3dlNfqQ6AYj4OBgDo4ipe4YDxFTh9uhrAfaurJauiD0BoWXHeEPQaF
-	 DHS3V7s5YSJmI8dPg07/SJc1WZYuR2JhCTeBMmFntU0L1tHeLwlOCbRI6BUqiOw2RS
-	 jTPQq9uhGIv/wSr+CBADvdR+sWLCnLb0aoYeYvblQj5xOr7Y4kpB2KtYS/Y68oceAb
-	 mec5uzWTnA5NlnYcI6+/DJQPv2f4d1ykzUxV+XmNDqmZLJLM1QFdRSQrfQJjprxRzp
-	 i2ouenrSHB7Yt6tdQ07Cqaawmrq8ACTtCTvQE/rk58zgGyzdygNEknoDBxhYaSe8tO
-	 Q1oLEmhUZLPZg==
+	b=s+CpdKIPITd4+/R0BnOaBP6yVF2nLRUmRa43bZDcWrBRc0CxTItDzJB6KQXdumoXC
+	 3e13HD4bKYaPv4MdctOhjcp9RE6NmR5Lkcz6w224gu9pTHnvORBgNm3zqWHk1kxMh9
+	 HbN+bo6UtjcQERvVWPe5LHxle5Zdeq2vj1hZKaFPk2Wsrpd7F8KtWkbWkn6foMGGU5
+	 jpQXV5JGxEI/Tqcy6RmxMWHexU0YwuZiGj7TmQouvP5BdNA4kKVxwto/ZsPzAnAMYL
+	 4PFFpiJZ/X1H4tU6QhOSxl4L++e5PW9SXezKy1uTNPFwL7H3NiIFF5cdJutLDlhdnS
+	 WeL+ZVQYqcmpg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Hannes Reinecke <hare@kernel.org>,
-	Sagi Grimberg <sagi@grimberg.me>,
+Cc: Yu Kuai <yukuai3@huawei.com>,
 	Christoph Hellwig <hch@lst.de>,
+	Hannes Reinecke <hare@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	kbusch@kernel.org,
-	linux-nvme@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.15 03/35] nvme-tcp: sanitize request list handling
-Date: Mon,  9 Jun 2025 09:43:19 -0400
-Message-Id: <20250609134355.1341953-3-sashal@kernel.org>
+	song@kernel.org,
+	linux-raid@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.15 04/35] md/md-bitmap: fix dm-raid max_write_behind setting
+Date: Mon,  9 Jun 2025 09:43:20 -0400
+Message-Id: <20250609134355.1341953-4-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250609134355.1341953-1-sashal@kernel.org>
 References: <20250609134355.1341953-1-sashal@kernel.org>
@@ -52,144 +52,128 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.15.1
 Content-Transfer-Encoding: 8bit
 
-From: Hannes Reinecke <hare@kernel.org>
+From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit 0bf04c874fcb1ae46a863034296e4b33d8fbd66c ]
+[ Upstream commit 2afe17794cfed5f80295b1b9facd66e6f65e5002 ]
 
-Validate the request in nvme_tcp_handle_r2t() to ensure it's not part of
-any list, otherwise a malicious R2T PDU might inject a loop in request
-list processing.
+It's supposed to be COUNTER_MAX / 2, not COUNTER_MAX.
 
-Signed-off-by: Hannes Reinecke <hare@kernel.org>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/linux-raid/20250524061320.370630-14-yukuai1@huaweicloud.com
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Based on my analysis of the commit message and code changes, I provide
-the following assessment:
+Now I have a clear understanding. Let me analyze the specific code
+change in the commit:
 
-**YES**, this commit should be backported to stable kernel trees.
+**YES**
 
-## Extensive Explanation:
+This commit should be backported to stable kernel trees. Here's my
+extensive analysis:
 
-### 1. **Security Vulnerability Fix**
-This commit fixes a serious security vulnerability where a malicious
-NVMe-TCP target can inject loops in request list processing. The code
-changes show clear validation being added to prevent this attack:
+## Analysis of the Bug Fix
+
+### 1. The Bug
+The code in `md_bitmap_new_disk_sb()` incorrectly validates
+`write_behind` against `COUNTER_MAX` instead of `COUNTER_MAX / 2`:
 
 ```c
-if (llist_on_list(&req->lentry) || !list_empty(&req->entry)) {
-    dev_err(queue->ctrl->ctrl.device,
-        "req %d unexpected r2t while processing request\n",
-        rq->tag);
-    return -EPROTO;
-}
+- if (write_behind > COUNTER_MAX)
++       if (write_behind > COUNTER_MAX / 2)
+                write_behind = COUNTER_MAX / 2;
 ```
 
-### 2. **Attack Vector and Impact**
-The vulnerability allows a compromised storage target to send R2T (Ready
-to Transfer) PDUs for requests that are already being processed. Without
-this validation:
-- The same request could be added to lists multiple times
-- This creates circular references or list corruption
-- Can lead to infinite loops, system hangs, or memory corruption
-- Potential for arbitrary code execution through use-after-free
-  conditions
+### 2. Why This is a Real Bug
 
-### 3. **Minimal and Contained Fix**
-The fix is:
-- Small in scope (only touches request list handling)
-- Well-contained to the nvme-tcp subsystem
-- Adds simple validation checks without architectural changes
-- Initializes list nodes properly to maintain clean state
+The comment immediately above this code explicitly states:
+```c
+/*
+ - FIXME: write_behind for RAID1.  If not specified, what
+ - is a good choice?  We choose COUNTER_MAX / 2 arbitrarily.
+ */
+```
 
-### 4. **Clear Bug Fix Pattern**
+The intent is clearly to limit write_behind to `COUNTER_MAX / 2`, but
+the validation check was incorrectly comparing against `COUNTER_MAX`.
+This creates an inconsistency where:
+- Values between `COUNTER_MAX / 2` and `COUNTER_MAX` would pass the
+  check
+- But then get clamped to `COUNTER_MAX / 2` anyway
+- This means the validation isn't serving its intended purpose
+
+### 3. Impact on Users
+
+This bug affects:
+- **dm-raid users**: When creating new bitmap superblocks for RAID
+  arrays with write-behind configured
+- **Data consistency**: While not causing data corruption, it creates
+  confusion about the actual limits
+- **Configuration validation**: Users might set values that appear to be
+  accepted but are silently reduced
+
+### 4. Consistency with Other Code
+
+The fix aligns with the pattern used elsewhere:
+- In `dm-raid.c`: The validation correctly checks `value / 2 >
+  COUNTER_MAX` (equivalent check for sector-based values)
+- The clamping value of `COUNTER_MAX / 2` is consistently used as the
+  default throughout the codebase
+
+### 5. Backport Criteria
+
+This commit meets the stable kernel backport criteria:
+- **It fixes a bug**: Incorrect validation logic that doesn't match the
+  intended behavior
+- **Simple and contained**: One-line change with minimal risk
+- **Clear fix**: The correct value is obvious from the surrounding code
+  and comment
+- **User-visible impact**: Affects configuration validation for dm-raid
+  users
+
+### 6. Similar Historical Commits
+
 Looking at the similar commits provided:
-- Commit #3 (marked YES for backport) also fixed a validation issue in
-  nvme-tcp
-- This follows the same pattern of adding necessary validation to
-  prevent malicious behavior
-- It's fixing a clear bug rather than adding features or optimizations
+- Commit #1 (backported): Added validation to prevent setting
+  max_write_behind without write-mostly devices
+- Commit #4 (backported): Fixed missing bitmap updates with write-mostly
+  devices
 
-### 5. **High Security Impact**
-This vulnerability affects:
-- Any system using NVMe-TCP with untrusted storage targets
-- Cloud environments and multi-tenant storage systems
-- Data centers with NVMe-over-Fabrics deployments
+Both of these were backported and dealt with correctness issues in the
+write-behind functionality, establishing a pattern that such fixes are
+considered stable-worthy.
 
-The security impact is significant enough to warrant backporting to
-protect stable kernel users.
+### 7. Risk Assessment
 
-### 6. **No Complex Dependencies**
-The changes are self-contained and don't depend on major architectural
-changes or new features. The fix:
-- Uses existing list handling APIs (`llist_on_list`, `list_empty`)
-- Adds proper initialization with standard macros
-- Returns existing error codes (`-EPROTO`)
+- **Low risk**: Single character change ('/' to '/ 2')
+- **Well-understood**: The correct limit is documented in the comment
+- **No ABI changes**: Just tightens an existing validation check
+- **Fail-safe**: Makes the validation more restrictive, not less
 
-### 7. **Follows Stable Kernel Rules**
-This commit clearly follows stable kernel criteria:
-- Fixes a real bug that affects users (security vulnerability)
-- Small change with minimal risk
-- No new features or architectural changes
-- Important for system security and stability
+## Conclusion
 
-The commit prevents a serious security issue where malicious storage
-devices could compromise system stability or potentially gain
-unauthorized access through memory corruption. This makes it a critical
-candidate for stable kernel backporting.
+This is a clear bug fix that corrects an incorrect validation check to
+match the documented and intended behavior. The fix is trivial, safe,
+and addresses a real issue that affects dm-raid users. It should be
+backported to ensure consistent behavior across stable kernel versions.
 
- drivers/nvme/host/tcp.c | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ drivers/md/md-bitmap.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/nvme/host/tcp.c b/drivers/nvme/host/tcp.c
-index 599f7406b5945..cc4a80b021d58 100644
---- a/drivers/nvme/host/tcp.c
-+++ b/drivers/nvme/host/tcp.c
-@@ -452,7 +452,8 @@ nvme_tcp_fetch_request(struct nvme_tcp_queue *queue)
- 			return NULL;
- 	}
- 
--	list_del(&req->entry);
-+	list_del_init(&req->entry);
-+	init_llist_node(&req->lentry);
- 	return req;
- }
- 
-@@ -560,6 +561,8 @@ static int nvme_tcp_init_request(struct blk_mq_tag_set *set,
- 	req->queue = queue;
- 	nvme_req(rq)->ctrl = &ctrl->ctrl;
- 	nvme_req(rq)->cmd = &pdu->cmd;
-+	init_llist_node(&req->lentry);
-+	INIT_LIST_HEAD(&req->entry);
- 
- 	return 0;
- }
-@@ -764,6 +767,14 @@ static int nvme_tcp_handle_r2t(struct nvme_tcp_queue *queue,
- 		return -EPROTO;
- 	}
- 
-+	if (llist_on_list(&req->lentry) ||
-+	    !list_empty(&req->entry)) {
-+		dev_err(queue->ctrl->ctrl.device,
-+			"req %d unexpected r2t while processing request\n",
-+			rq->tag);
-+		return -EPROTO;
-+	}
-+
- 	req->pdu_len = 0;
- 	req->h2cdata_left = r2t_length;
- 	req->h2cdata_offset = r2t_offset;
-@@ -2641,6 +2652,8 @@ static void nvme_tcp_submit_async_event(struct nvme_ctrl *arg)
- 	ctrl->async_req.offset = 0;
- 	ctrl->async_req.curr_bio = NULL;
- 	ctrl->async_req.data_len = 0;
-+	init_llist_node(&ctrl->async_req.lentry);
-+	INIT_LIST_HEAD(&ctrl->async_req.entry);
- 
- 	nvme_tcp_queue_request(&ctrl->async_req, true, true);
- }
+diff --git a/drivers/md/md-bitmap.c b/drivers/md/md-bitmap.c
+index 37b08f26c62f5..45dd3d9f01a8e 100644
+--- a/drivers/md/md-bitmap.c
++++ b/drivers/md/md-bitmap.c
+@@ -789,7 +789,7 @@ static int md_bitmap_new_disk_sb(struct bitmap *bitmap)
+ 	 * is a good choice?  We choose COUNTER_MAX / 2 arbitrarily.
+ 	 */
+ 	write_behind = bitmap->mddev->bitmap_info.max_write_behind;
+-	if (write_behind > COUNTER_MAX)
++	if (write_behind > COUNTER_MAX / 2)
+ 		write_behind = COUNTER_MAX / 2;
+ 	sb->write_behind = cpu_to_le32(write_behind);
+ 	bitmap->mddev->bitmap_info.max_write_behind = write_behind;
 -- 
 2.39.5
 
