@@ -1,43 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF82C25A324;
-	Mon,  9 Jun 2025 13:48:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41DFA17E0;
+	Mon,  9 Jun 2025 13:48:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749476922; cv=none; b=qYutTjUHpcMmVZLrOoHFAOUrJudfugfDHlWC1HXXBHQj1AL/fec2Q8eaa2WSqavZXrRRNN8bL/VVTjTMI1MnslsF6BObJfWAQOcI12xhMHzhH/udRVG8e+ElOn7ncVN6FbEB39+yn62tWr6Zc9msxTSZ71WvcdsBj6YYpcZfmvs=
+	t=1749476925; cv=none; b=ABdow/zwstZGJDHzU0a4wGCw3jOSibVWjHQ8fFn+IKpnmQ3tDbdxLwB3Ydu49uKkae4ums2mGZaWPiS3vQxrWR9/GHcpyFg04rjE4fm3g+FwCFSRPAm/LyMHYtKqC2jGHyX5NsZH9THDa0kwp8lMC0kVriG+m7lLl01hDzm7UNw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749476922; c=relaxed/simple;
-	bh=qEaq+RCQH1DlF9UxQqmYJyWz3mOJOJeJGKLlqfDcuj0=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=TJjkM4/2W08pu5Gtlys9QnvacdwJ3XUWzY1xFOy3HRB66KkJbeuOK8S5Wlx3aYe3ko1xcYwbd4qrSk1kP/kAv5QJkO+6pyg0dfFoQmXXcNDLQepmPS9Xm6Id75WO98HQXRkeKkTk3mHzb+Dy+LNIGTXKlnPnpFR86ZddSk8PP8U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TaehjnQR; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1749476925; c=relaxed/simple;
+	bh=JIL62xHR82YdWLJPAJw3zGJqHCa+5dQTRxM6ourP3bA=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=aLExpYgXtkDC6Mv+yHAERCFVN1PBnL07BpvJWp2xzK7e2Kgs/os8hWpt7eaugALkqazn8IwDvogGwoOdsTPc0798A/NuJQJVUyibVT2t3ldeEhRT1ZMWIucp/DnvRpZUyjQHes1rbQG2HjWtrmXEkG87owXmAoe0OWdRqFWkTto=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=N7httfey; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TaehjnQR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1058C4CEF0;
-	Mon,  9 Jun 2025 13:48:41 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="N7httfey"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18019C4CEF0;
+	Mon,  9 Jun 2025 13:48:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749476922;
-	bh=qEaq+RCQH1DlF9UxQqmYJyWz3mOJOJeJGKLlqfDcuj0=;
-	h=From:To:Cc:Subject:Date:From;
-	b=TaehjnQR2q2V9JM3d2aqhYu5QE4135DPaivcYbnjDn4v0f96BIk5TTqWhea9TpMxE
-	 4PeV3Ht14M9JSEwZtDWJCfaRfgVf+WE/qD3jIk8H1R4CwmmX6UqI1U80EOxHHIlH7T
-	 ZskJvwIaIJBcThnlaJb5XolHLZ3gxUhlvXe8QuY39svrbYJPjwpNhyQkgJC6vtEoiO
-	 4phKalVcVg0ELyQi5dgolDgSQZZlj4aIFZqu/GT/idohss3LC/f9Cxo5vsBMIfpx96
-	 +qCJAQatefqLzUg7jQF/5bZzO01blfTVyxjJBrjlwxyN/lBlMKvts0yaJ9gNrApqvD
-	 rGs092IeBLJjw==
+	s=k20201202; t=1749476925;
+	bh=JIL62xHR82YdWLJPAJw3zGJqHCa+5dQTRxM6ourP3bA=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=N7httfey8I0HAhoe3TZtZnHwgIV78mAaRIC6BeD9Xa5gdywp9qvZ0xZx4X5kXyhgr
+	 A/qDFdOOcv+PZfOXaACw+f0UrFu/dgLxir0tfiB1gG1cQF0qZ3RJodVj37eJuXwlik
+	 M6z52i2KwuCR66ZdBjJoEkdUIdgZQB79HJ1TGjm80f0PYJoiqJEsYirX1+TfK/2bu2
+	 zFfx8FfO5dCI23tF2C4alhRG+gNjG40f9eNOEmUOv9AJvuTNeup6m/9z8gENFODbe1
+	 3Gx5zK9P8KBEsCCExsoUBhac2x4Gren6ZfhbyoQm89XGIIVKWumtqAw72a5umGeGUi
+	 sfkWPNpm3QWVA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Yu Kuai <yukuai3@huawei.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Hannes Reinecke <hare@suse.de>,
+Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	David Lechner <dlechner@baylibre.com>,
 	Sasha Levin <sashal@kernel.org>,
-	song@kernel.org,
-	linux-raid@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.4 1/7] md/md-bitmap: fix dm-raid max_write_behind setting
-Date: Mon,  9 Jun 2025 09:48:34 -0400
-Message-Id: <20250609134840.1345797-1-sashal@kernel.org>
+	peterz@infradead.org,
+	javier.carrasco.cruz@gmail.com,
+	mazziesaccount@gmail.com,
+	viro@zeniv.linux.org.uk
+Subject: [PATCH AUTOSEL 5.4 2/7] iio: pressure: zpa2326: Use aligned_s64 for the timestamp
+Date: Mon,  9 Jun 2025 09:48:35 -0400
+Message-Id: <20250609134840.1345797-2-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250609134840.1345797-1-sashal@kernel.org>
+References: <20250609134840.1345797-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -49,128 +53,84 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 5.4.294
 Content-Transfer-Encoding: 8bit
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 
-[ Upstream commit 2afe17794cfed5f80295b1b9facd66e6f65e5002 ]
+[ Upstream commit 886a446b76afddfad307488e95e87f23a08ffd51 ]
 
-It's supposed to be COUNTER_MAX / 2, not COUNTER_MAX.
+On x86_32 s64 fields are only 32-bit aligned.  Hence force the alignment of
+the field and padding in the structure by using aligned_s64 instead.
 
-Link: https://lore.kernel.org/linux-raid/20250524061320.370630-14-yukuai1@huaweicloud.com
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Hannes Reinecke <hare@suse.de>
+Reviewed-by: David Lechner <dlechner@baylibre.com>
+Link: https://patch.msgid.link/20250413103443.2420727-19-jic23@kernel.org
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Now I have a clear understanding. Let me analyze the specific code
-change in the commit:
+Based on my analysis, here is my determination:
 
 **YES**
 
-This commit should be backported to stable kernel trees. Here's my
-extensive analysis:
+This commit should be backported to stable kernel trees for the
+following reasons:
 
-## Analysis of the Bug Fix
+1. **Critical Bug Fix**: The commit fixes a subtle but serious alignment
+   bug that can cause **buffer overruns** on 32-bit architectures. The
+   original code uses a plain `u64 timestamp` field in the sample
+   structure, which is only guaranteed 4-byte alignment on x86_32 and
+   other 32-bit architectures.
 
-### 1. The Bug
-The code in `md_bitmap_new_disk_sb()` incorrectly validates
-`write_behind` against `COUNTER_MAX` instead of `COUNTER_MAX / 2`:
+2. **Security Impact**: As shown in the
+   `iio_push_to_buffers_with_timestamp()` function at line `((int64_t
+   *)data)[ts_offset] = timestamp;`, the code performs a 64-bit write at
+   a calculated offset. If the buffer is only 4-byte aligned but the
+   offset calculation assumes 8-byte alignment, this can result in:
+   - Buffer overflow beyond the allocated structure
+   - Memory corruption of adjacent stack variables
+   - Potential information leaks to userspace
 
-```c
-- if (write_behind > COUNTER_MAX)
-+       if (write_behind > COUNTER_MAX / 2)
-                write_behind = COUNTER_MAX / 2;
-```
+3. **Pattern of Similar Fixes**: Looking at similar commits:
+   - Commit #2 (mprls0025pa: use aligned_s64) was marked for stable with
+     `Fixes:` tag
+   - Commit #5 (ms5611 Fix buffer element alignment) was marked for
+     stable
+   - The analysis document shows this is part of a systematic campaign
+     to fix these issues since 2020
 
-### 2. Why This is a Real Bug
+4. **Small, Contained Change**: The fix is minimal - simply changing
+   `u64 timestamp` to `aligned_s64 timestamp`. This ensures the
+   timestamp field is properly 8-byte aligned through the `__aligned(8)`
+   attribute, preventing any alignment issues.
 
-The comment immediately above this code explicitly states:
-```c
-/*
- - FIXME: write_behind for RAID1.  If not specified, what
- - is a good choice?  We choose COUNTER_MAX / 2 arbitrarily.
- */
-```
+5. **Architecture-Specific Vulnerability**: The bug specifically affects
+   32-bit architectures where s64 has only 4-byte natural alignment.
+   This makes it a real issue for ARM32 and other 32-bit platforms still
+   in use.
 
-The intent is clearly to limit write_behind to `COUNTER_MAX / 2`, but
-the validation check was incorrectly comparing against `COUNTER_MAX`.
-This creates an inconsistency where:
-- Values between `COUNTER_MAX / 2` and `COUNTER_MAX` would pass the
-  check
-- But then get clamped to `COUNTER_MAX / 2` anyway
-- This means the validation isn't serving its intended purpose
+6. **Recent Related Security Fix**: The same file had a recent security
+   fix (commit 6007d10c5262) for information leaks, showing this driver
+   has active security concerns that need addressing in stable trees.
 
-### 3. Impact on Users
+The commit follows the stable tree rules perfectly: it fixes an
+important bug with minimal changes and low regression risk. The
+alignment issue can cause actual crashes or data corruption on affected
+architectures, making it a clear candidate for stable backporting.
 
-This bug affects:
-- **dm-raid users**: When creating new bitmap superblocks for RAID
-  arrays with write-behind configured
-- **Data consistency**: While not causing data corruption, it creates
-  confusion about the actual limits
-- **Configuration validation**: Users might set values that appear to be
-  accepted but are silently reduced
-
-### 4. Consistency with Other Code
-
-The fix aligns with the pattern used elsewhere:
-- In `dm-raid.c`: The validation correctly checks `value / 2 >
-  COUNTER_MAX` (equivalent check for sector-based values)
-- The clamping value of `COUNTER_MAX / 2` is consistently used as the
-  default throughout the codebase
-
-### 5. Backport Criteria
-
-This commit meets the stable kernel backport criteria:
-- **It fixes a bug**: Incorrect validation logic that doesn't match the
-  intended behavior
-- **Simple and contained**: One-line change with minimal risk
-- **Clear fix**: The correct value is obvious from the surrounding code
-  and comment
-- **User-visible impact**: Affects configuration validation for dm-raid
-  users
-
-### 6. Similar Historical Commits
-
-Looking at the similar commits provided:
-- Commit #1 (backported): Added validation to prevent setting
-  max_write_behind without write-mostly devices
-- Commit #4 (backported): Fixed missing bitmap updates with write-mostly
-  devices
-
-Both of these were backported and dealt with correctness issues in the
-write-behind functionality, establishing a pattern that such fixes are
-considered stable-worthy.
-
-### 7. Risk Assessment
-
-- **Low risk**: Single character change ('/' to '/ 2')
-- **Well-understood**: The correct limit is documented in the comment
-- **No ABI changes**: Just tightens an existing validation check
-- **Fail-safe**: Makes the validation more restrictive, not less
-
-## Conclusion
-
-This is a clear bug fix that corrects an incorrect validation check to
-match the documented and intended behavior. The fix is trivial, safe,
-and addresses a real issue that affects dm-raid users. It should be
-backported to ensure consistent behavior across stable kernel versions.
-
- drivers/md/md-bitmap.c | 2 +-
+ drivers/iio/pressure/zpa2326.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/md/md-bitmap.c b/drivers/md/md-bitmap.c
-index 8fc85b6251e48..feff5b29d0985 100644
---- a/drivers/md/md-bitmap.c
-+++ b/drivers/md/md-bitmap.c
-@@ -549,7 +549,7 @@ static int md_bitmap_new_disk_sb(struct bitmap *bitmap)
- 	 * is a good choice?  We choose COUNTER_MAX / 2 arbitrarily.
- 	 */
- 	write_behind = bitmap->mddev->bitmap_info.max_write_behind;
--	if (write_behind > COUNTER_MAX)
-+	if (write_behind > COUNTER_MAX / 2)
- 		write_behind = COUNTER_MAX / 2;
- 	sb->write_behind = cpu_to_le32(write_behind);
- 	bitmap->mddev->bitmap_info.max_write_behind = write_behind;
+diff --git a/drivers/iio/pressure/zpa2326.c b/drivers/iio/pressure/zpa2326.c
+index df60b3d91dad4..85ca48f2fe665 100644
+--- a/drivers/iio/pressure/zpa2326.c
++++ b/drivers/iio/pressure/zpa2326.c
+@@ -581,7 +581,7 @@ static int zpa2326_fill_sample_buffer(struct iio_dev               *indio_dev,
+ 	struct {
+ 		u32 pressure;
+ 		u16 temperature;
+-		u64 timestamp;
++		aligned_s64 timestamp;
+ 	}   sample;
+ 	int err;
+ 
 -- 
 2.39.5
 
