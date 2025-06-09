@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C690A13CF9C;
-	Mon,  9 Jun 2025 13:46:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E6B617E0;
+	Mon,  9 Jun 2025 13:46:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749476817; cv=none; b=hT7hnw0lquuJVc65JluDrqwAe6PTtAhgJ3fRqs85NwMfb7Jg6NSIPZ8KCIbpMjhDdlrbm8SK4L3UPUqv46FMGRfVBmtKpmFZBcTcSRQu0w+6s10UbgWnHIZo+3eZyos4OUayqcnbg/PItq30VHpf7ZIGlgq71ukoWfavip4i13s=
+	t=1749476819; cv=none; b=ZK9S+qOY09WLmH3UjKMGdY1ltVEURzgO+w54E1iG0FvtzAjFzjIepaum0bctpBPAQA9nHzQHFV8M/zKRMyIFpILUTNjM658QFEHI0WFs1AdXY1eSgfhhVMUtmRnwAfY0pvVa9N9UCi+pFkntHqahVHu89AoyEjt9j6YSlIhOrgE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749476817; c=relaxed/simple;
-	bh=g2szcnhIYuY71Df4Doa44QyB7ESsV7z+3jEZWv2XEcc=;
+	s=arc-20240116; t=1749476819; c=relaxed/simple;
+	bh=4xgaNV/25Sr/6yY7vJhhNXhnqW3+Pt0AiV/ZUqM58gE=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Sl7QBBxadQlggqEjtYqLE7K2jiH0XkEQ8peyWhaT2hgLbo4a3AuBy/dxABxRtGFxn0LP/PgQo93fBmQv63L8/jrWiN4a9S4o9s7c39erQlUmZQUkk1RX2Vvqu79ZgOW+Q0VSHC5H/jIS1CeUVoC4jxtrXtANpTmCSyhwgtaip+Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eqvuFRty; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=iyFQ7R21Guwg8AX05CKMoi4g6668CbQJSa1UWy0JKg7Z0O3LaSCcT5eHs5LiuC9uFXk9iHTiRmj7vEsjXDRHW41s5AXkWTIUD3ljJj2+LmoB05lNA5Q0EOQx/uTqckc0C/3lnp54UuC9aSplh4w1x8nJ5OdPr7lGvtMZ91UmTwg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rFLBMo0H; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eqvuFRty"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4179C4CEED;
-	Mon,  9 Jun 2025 13:46:56 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rFLBMo0H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19403C4CEED;
+	Mon,  9 Jun 2025 13:46:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749476817;
-	bh=g2szcnhIYuY71Df4Doa44QyB7ESsV7z+3jEZWv2XEcc=;
+	s=k20201202; t=1749476819;
+	bh=4xgaNV/25Sr/6yY7vJhhNXhnqW3+Pt0AiV/ZUqM58gE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eqvuFRtyxL5brWMz6MAmgiIasMlguiF2d8X9tuoSev4C7GTXS+xik1bSBks0fnFjQ
-	 LIVQYpV4HpftA8dJaIultxjSdtEkJgF7QygRw1PA2gCCTNI4jCyMWYJJS7u0TO7fdK
-	 u966D7VIFk3d6M+z7KrBYaE87jPYDiSnyex4WF3gPX2N88hTQFL0Y1T1glQs837UTM
-	 uotIJZTk6Bw4tTSwOyhfFihfKXV7zO3UpOUYW0/rFF5ESEMBZaqavCpeg66sr/8PUt
-	 uEreToJKDdlM+kXFe7PVBAaHSVbJHCL5uRxmraBjMSNgsbc4kxbpcR8nGhl2CRj9Bj
-	 /pSOpBHI/wfGA==
+	b=rFLBMo0HaGb3bx7MOrE9pSIbkft90hMgha7rlsBZJVU0611gat6KdQOw523CxVEOz
+	 c95py1l3Bi22fxoXd9ll4wXWgg+/ubKAOWLJDrP28FQjuoBOg5S36e09kDO82Q4+3n
+	 ZhMQgLu0WQ5nTXzFlOu3f09mkcKaDz7AfjifDh+Vj7Vq7pPS/8WeK4rUSCiSpVwOUx
+	 XIYOYb/KM38Nys8a7Cg9c5LDW6yBGnNz4jJLWcYAbXU7kOfKd+LXMixq8brTGZAAOy
+	 rbWRGnk/9ETEaXDLeo9aspUe22b4rVXGl8NczMDxMI3OdaByxA38hjpbwAtpjdky9o
+	 AIoSBuY/A854g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Linggang Zeng <linggang.zeng@easystack.cn>,
-	Mingzhe Zou <mingzhe.zou@easystack.cn>,
-	Coly Li <colyli@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>,
+Cc: "Lin.Cao" <lincao12@amd.com>,
+	Philipp Stanner <phasta@kernel.org>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	kent.overstreet@linux.dev,
-	linux-bcache@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.6 03/18] bcache: fix NULL pointer in cache_set_flush()
-Date: Mon,  9 Jun 2025 09:46:37 -0400
-Message-Id: <20250609134652.1344323-3-sashal@kernel.org>
+	matthew.brost@intel.com,
+	dakr@kernel.org,
+	dri-devel@lists.freedesktop.org
+Subject: [PATCH AUTOSEL 6.6 04/18] drm/scheduler: signal scheduled fence when kill job
+Date: Mon,  9 Jun 2025 09:46:38 -0400
+Message-Id: <20250609134652.1344323-4-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250609134652.1344323-1-sashal@kernel.org>
 References: <20250609134652.1344323-1-sashal@kernel.org>
@@ -48,131 +48,32 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.6.93
 Content-Transfer-Encoding: 8bit
 
-From: Linggang Zeng <linggang.zeng@easystack.cn>
+From: "Lin.Cao" <lincao12@amd.com>
 
-[ Upstream commit 1e46ed947ec658f89f1a910d880cd05e42d3763e ]
+[ Upstream commit 471db2c2d4f80ee94225a1ef246e4f5011733e50 ]
 
-1. LINE#1794 - LINE#1887 is some codes about function of
-   bch_cache_set_alloc().
-2. LINE#2078 - LINE#2142 is some codes about function of
-   register_cache_set().
-3. register_cache_set() will call bch_cache_set_alloc() in LINE#2098.
+When an entity from application B is killed, drm_sched_entity_kill()
+removes all jobs belonging to that entity through
+drm_sched_entity_kill_jobs_work(). If application A's job depends on a
+scheduled fence from application B's job, and that fence is not properly
+signaled during the killing process, application A's dependency cannot be
+cleared.
 
- 1794 struct cache_set *bch_cache_set_alloc(struct cache_sb *sb)
- 1795 {
- ...
- 1860         if (!(c->devices = kcalloc(c->nr_uuids, sizeof(void *), GFP_KERNEL)) ||
- 1861             mempool_init_slab_pool(&c->search, 32, bch_search_cache) ||
- 1862             mempool_init_kmalloc_pool(&c->bio_meta, 2,
- 1863                                 sizeof(struct bbio) + sizeof(struct bio_vec) *
- 1864                                 bucket_pages(c)) ||
- 1865             mempool_init_kmalloc_pool(&c->fill_iter, 1, iter_size) ||
- 1866             bioset_init(&c->bio_split, 4, offsetof(struct bbio, bio),
- 1867                         BIOSET_NEED_BVECS|BIOSET_NEED_RESCUER) ||
- 1868             !(c->uuids = alloc_bucket_pages(GFP_KERNEL, c)) ||
- 1869             !(c->moving_gc_wq = alloc_workqueue("bcache_gc",
- 1870                                                 WQ_MEM_RECLAIM, 0)) ||
- 1871             bch_journal_alloc(c) ||
- 1872             bch_btree_cache_alloc(c) ||
- 1873             bch_open_buckets_alloc(c) ||
- 1874             bch_bset_sort_state_init(&c->sort, ilog2(c->btree_pages)))
- 1875                 goto err;
-                      ^^^^^^^^
- 1876
- ...
- 1883         return c;
- 1884 err:
- 1885         bch_cache_set_unregister(c);
-              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
- 1886         return NULL;
- 1887 }
- ...
- 2078 static const char *register_cache_set(struct cache *ca)
- 2079 {
- ...
- 2098         c = bch_cache_set_alloc(&ca->sb);
- 2099         if (!c)
- 2100                 return err;
-                      ^^^^^^^^^^
- ...
- 2128         ca->set = c;
- 2129         ca->set->cache[ca->sb.nr_this_dev] = ca;
-              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
- ...
- 2138         return NULL;
- 2139 err:
- 2140         bch_cache_set_unregister(c);
- 2141         return err;
- 2142 }
+This leads to application A hanging indefinitely while waiting for a
+dependency that will never be resolved. Fix this issue by ensuring that
+scheduled fences are properly signaled when an entity is killed, allowing
+dependent applications to continue execution.
 
-(1) If LINE#1860 - LINE#1874 is true, then do 'goto err'(LINE#1875) and
-    call bch_cache_set_unregister()(LINE#1885).
-(2) As (1) return NULL(LINE#1886), LINE#2098 - LINE#2100 would return.
-(3) As (2) has returned, LINE#2128 - LINE#2129 would do *not* give the
-    value to c->cache[], it means that c->cache[] is NULL.
-
-LINE#1624 - LINE#1665 is some codes about function of cache_set_flush().
-As (1), in LINE#1885 call
-bch_cache_set_unregister()
----> bch_cache_set_stop()
-     ---> closure_queue()
-          -.-> cache_set_flush() (as below LINE#1624)
-
- 1624 static void cache_set_flush(struct closure *cl)
- 1625 {
- ...
- 1654         for_each_cache(ca, c, i)
- 1655                 if (ca->alloc_thread)
-                          ^^
- 1656                         kthread_stop(ca->alloc_thread);
- ...
- 1665 }
-
-(4) In LINE#1655 ca is NULL(see (3)) in cache_set_flush() then the
-    kernel crash occurred as below:
-[  846.712887] bcache: register_cache() error drbd6: cannot allocate memory
-[  846.713242] bcache: register_bcache() error : failed to register device
-[  846.713336] bcache: cache_set_free() Cache set 2f84bdc1-498a-4f2f-98a7-01946bf54287 unregistered
-[  846.713768] BUG: unable to handle kernel NULL pointer dereference at 00000000000009f8
-[  846.714790] PGD 0 P4D 0
-[  846.715129] Oops: 0000 [#1] SMP PTI
-[  846.715472] CPU: 19 PID: 5057 Comm: kworker/19:16 Kdump: loaded Tainted: G           OE    --------- -  - 4.18.0-147.5.1.el8_1.5es.3.x86_64 #1
-[  846.716082] Hardware name: ESPAN GI-25212/X11DPL-i, BIOS 2.1 06/15/2018
-[  846.716451] Workqueue: events cache_set_flush [bcache]
-[  846.716808] RIP: 0010:cache_set_flush+0xc9/0x1b0 [bcache]
-[  846.717155] Code: 00 4c 89 a5 b0 03 00 00 48 8b 85 68 f6 ff ff a8 08 0f 84 88 00 00 00 31 db 66 83 bd 3c f7 ff ff 00 48 8b 85 48 ff ff ff 74 28 <48> 8b b8 f8 09 00 00 48 85 ff 74 05 e8 b6 58 a2 e1 0f b7 95 3c f7
-[  846.718026] RSP: 0018:ffffb56dcf85fe70 EFLAGS: 00010202
-[  846.718372] RAX: 0000000000000000 RBX: 0000000000000000 RCX: 0000000000000000
-[  846.718725] RDX: 0000000000000001 RSI: 0000000040000001 RDI: 0000000000000000
-[  846.719076] RBP: ffffa0ccc0f20df8 R08: ffffa0ce1fedb118 R09: 000073746e657665
-[  846.719428] R10: 8080808080808080 R11: 0000000000000000 R12: ffffa0ce1fee8700
-[  846.719779] R13: ffffa0ccc0f211a8 R14: ffffa0cd1b902840 R15: ffffa0ccc0f20e00
-[  846.720132] FS:  0000000000000000(0000) GS:ffffa0ce1fec0000(0000) knlGS:0000000000000000
-[  846.720726] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[  846.721073] CR2: 00000000000009f8 CR3: 00000008ba00a005 CR4: 00000000007606e0
-[  846.721426] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-[  846.721778] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-[  846.722131] PKRU: 55555554
-[  846.722467] Call Trace:
-[  846.722814]  process_one_work+0x1a7/0x3b0
-[  846.723157]  worker_thread+0x30/0x390
-[  846.723501]  ? create_worker+0x1a0/0x1a0
-[  846.723844]  kthread+0x112/0x130
-[  846.724184]  ? kthread_flush_work_fn+0x10/0x10
-[  846.724535]  ret_from_fork+0x35/0x40
-
-Now, check whether that ca is NULL in LINE#1655 to fix the issue.
-
-Signed-off-by: Linggang Zeng <linggang.zeng@easystack.cn>
-Signed-off-by: Mingzhe Zou <mingzhe.zou@easystack.cn>
-Signed-off-by: Coly Li <colyli@kernel.org>
-Link: https://lore.kernel.org/r/20250527051601.74407-2-colyli@kernel.org
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Lin.Cao <lincao12@amd.com>
+Reviewed-by: Philipp Stanner <phasta@kernel.org>
+Signed-off-by: Christian König <christian.koenig@amd.com>
+Link: https://lore.kernel.org/r/20250515020713.1110476-1-lincao12@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -181,125 +82,117 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
 This commit should be backported to stable kernel trees. Here's my
 extensive analysis:
 
-## Bug Severity and Impact
+## Analysis of the Commit
 
-This commit fixes a **NULL pointer dereference** in the bcache subsystem
-that causes a kernel crash. The crash trace shows:
+### 1. **This is a Critical Bug Fix**
 
-```
-BUG: unable to handle kernel NULL pointer dereference at
-00000000000009f8
-```
+The commit fixes a serious bug where applications can hang indefinitely
+when they depend on scheduled fences from killed jobs. The specific
+change adds a single line:
 
-The crash occurs during cache set registration failure in an out-of-
-memory (OOM) condition, which is a real-world scenario that can happen
-in production systems under memory pressure.
-
-## Root Cause Analysis
-
-The commit message provides excellent debugging information showing the
-precise execution flow:
-
-1. In `bch_cache_set_alloc()`, if memory allocation fails (lines
-   1860-1874), it goes to the error path which calls
-   `bch_cache_set_unregister()` and returns NULL
-2. In `register_cache_set()`, when `bch_cache_set_alloc()` returns NULL,
-   the function returns early (line 2100)
-3. Because of the early return, `ca->set` is never assigned (lines
-   2128-2129), leaving `c->cache[]` as NULL
-4. When `cache_set_flush()` is called via the closure mechanism, it
-   tries to access `ca->alloc_thread` where `ca` is NULL, causing the
-   crash
-
-## Code Change Analysis
-
-The fix is minimal and surgical:
-
-```diff
-- if (ca->alloc_thread)
-+       /*
-+        * If the register_cache_set() call to bch_cache_set_alloc()
-failed,
-+        * ca has not been assigned a value and return error.
-+        * So we need check ca is not NULL during
-bch_cache_set_unregister().
-+        */
-+       if (ca && ca->alloc_thread)
-                kthread_stop(ca->alloc_thread);
+```c
++       drm_sched_fence_scheduled(job->s_fence, NULL);
 ```
 
-This adds a NULL check before dereferencing `ca`, which is a defensive
-programming practice that prevents the crash.
+This line signals the scheduled fence when killing a job, which was
+previously missing and caused the hang.
 
-## Comparison with Similar Commits
+### 2. **Clear User-Visible Impact**
 
-Looking at the similar commits with "Backport Status: YES":
+From the commit message:
+- Application A's job depends on a scheduled fence from Application B's
+  job
+- When Application B is killed, the fence was not properly signaled
+- This causes Application A to hang indefinitely waiting for a
+  dependency that will never resolve
 
-1. **Similar commits #1, #2, #3**: All fix NULL pointer dereferences in
-   bcache during OOM conditions
-2. **Similar commits #4, #5**: Fix potential NULL pointer issues in
-   btree node allocation
-3. All these commits share characteristics:
-   - Fix real crashes with clear reproducers
-   - Minimal code changes (often just adding NULL checks)
-   - No architectural changes
-   - No new features
-   - Clear bug fixes in error paths
+This is a real-world scenario that affects system stability and user
+experience.
 
-## Stable Tree Criteria Assessment
+### 3. **Minimal and Safe Change**
 
-This commit meets all the stable tree criteria:
+The fix is:
+- **One line addition** - extremely minimal change
+- **Well-contained** - only affects the job kill path
+- **No API/ABI changes** - just adds a missing fence signal
+- **No new features** - purely fixes existing broken behavior
 
-1. **Fixes a real bug**: Yes - NULL pointer dereference causing kernel
-   crash
-2. **Already in Linus' tree**: Yes - has been merged by Jens Axboe
-3. **Small and contained**: Yes - single line change adding NULL check
-4. **No new features**: Correct - purely a bug fix
-5. **Minimal risk**: Very low risk - adds defensive NULL check
-6. **Clear issue**: The crash trace and detailed analysis make the issue
-   crystal clear
+### 4. **Comparison with Similar Commits**
 
-## Additional Considerations
+Looking at the historical commits provided:
 
-- The bug occurs in an error path during OOM conditions, which might be
-  considered rare but is definitely possible in production
-- The fix prevents a kernel crash, which is always high priority for
-  stable backports
-- The bcache subsystem is used in production systems for caching, making
-  stability critical
-- The fix pattern (adding NULL checks in error paths) is well-
-  established and safe
+**Similar Commit #1 (Backported: YES)** - "drm/scheduler: fix fence ref
+counting"
+- Fixed dependency fence leaks when processes were killed
+- Added proper fence reference management
+- Similar in nature: fixing fence handling in the kill path
+
+This commit shares key characteristics:
+- Fixes fence handling bugs in entity kill path
+- Prevents resource leaks/hangs
+- Minimal, targeted fix
+
+The other similar commits (NOT backported) were either:
+- Large architectural changes (Commit #3 - complete rework of dependency
+  handling)
+- Feature additions (Commit #4 - new error handling logic)
+- Less critical fixes (Commit #5 - memleak in uncommon path)
+
+### 5. **Risk Assessment**
+
+**Low Risk**:
+- The change only affects the error/kill path, not normal operation
+- Signaling a fence with NULL is a valid operation indicating no
+  hardware execution
+- The `drm_sched_fence_finished()` call immediately after still signals
+  completion with error
+- No changes to data structures or algorithms
+
+### 6. **Follows Stable Kernel Rules**
+
+According to stable kernel rules, this commit qualifies because it:
+- ✓ Fixes a real bug that affects users (application hangs)
+- ✓ Is already in Linus's tree (has proper Link: tag)
+- ✓ Is small and self-contained (1 line)
+- ✓ Has been reviewed (Reviewed-by: tag present)
+- ✓ Doesn't introduce new features
+- ✓ Has clear problem description and solution
+
+### 7. **Technical Details**
+
+The fix ensures proper fence signaling order:
+1. `drm_sched_fence_scheduled(job->s_fence, NULL)` - signals that the
+   job was "scheduled" (even though it won't run)
+2. `drm_sched_fence_finished(job->s_fence, -ESRCH)` - signals completion
+   with error
+
+This allows dependent jobs waiting on the scheduled fence to proceed and
+handle the error appropriately, preventing indefinite hangs.
 
 ## Conclusion
 
-This commit is an excellent candidate for stable backporting. It fixes a
-real kernel crash with a minimal, safe change that adds proper NULL
-checking in an error path. The detailed commit message with line-by-line
-analysis demonstrates thorough understanding of the issue, and the fix
-follows established patterns seen in other successful bcache stable
-backports.
+This commit is an ideal candidate for stable backporting. It fixes a
+serious user-visible bug (application hangs) with a minimal, well-
+understood change that follows the established fence signaling pattern
+in the DRM scheduler. The fix is similar in nature to previous commits
+that were successfully backported, and the risk of regression is very
+low since it only affects the error handling path.
 
- drivers/md/bcache/super.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/scheduler/sched_entity.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/md/bcache/super.c b/drivers/md/bcache/super.c
-index 8440b56e385d5..b9dfebaa9eae5 100644
---- a/drivers/md/bcache/super.c
-+++ b/drivers/md/bcache/super.c
-@@ -1739,7 +1739,12 @@ static void cache_set_flush(struct closure *cl)
- 			mutex_unlock(&b->write_lock);
- 		}
+diff --git a/drivers/gpu/drm/scheduler/sched_entity.c b/drivers/gpu/drm/scheduler/sched_entity.c
+index 53130a50584ca..eed3b8bed9e40 100644
+--- a/drivers/gpu/drm/scheduler/sched_entity.c
++++ b/drivers/gpu/drm/scheduler/sched_entity.c
+@@ -167,6 +167,7 @@ static void drm_sched_entity_kill_jobs_work(struct work_struct *wrk)
+ {
+ 	struct drm_sched_job *job = container_of(wrk, typeof(*job), work);
  
--	if (ca->alloc_thread)
-+	/*
-+	 * If the register_cache_set() call to bch_cache_set_alloc() failed,
-+	 * ca has not been assigned a value and return error.
-+	 * So we need check ca is not NULL during bch_cache_set_unregister().
-+	 */
-+	if (ca && ca->alloc_thread)
- 		kthread_stop(ca->alloc_thread);
- 
- 	if (c->journal.cur) {
++	drm_sched_fence_scheduled(job->s_fence, NULL);
+ 	drm_sched_fence_finished(job->s_fence, -ESRCH);
+ 	WARN_ON(job->s_fence->parent);
+ 	job->sched->ops->free_job(job);
 -- 
 2.39.5
 
