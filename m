@@ -1,45 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E88B25A2CD;
-	Mon,  9 Jun 2025 13:47:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AD03259CBE;
+	Mon,  9 Jun 2025 13:47:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749476853; cv=none; b=lPda5JH30tIvCHC2PUp2jqLDTxbOgLa+eql7QpJZrW+MW95aDSugrtzeFF/4re59DHDK15qwY7M4Pf/YBCCmCSDio5g7eDRvbDJUkWHEwH2S05bAesp+uvB2u84zB3J5YbTCEYrpXhAzh+bBPBUrPgS8hZj/w6JLGrF497hwUIA=
+	t=1749476856; cv=none; b=G5EnTGXk7ufCmgoVTo29nG8/GBEB/qBIGtK0qg4iHC1wwrAr8OkhOysasb3eODO8Gvmt4crsyXJT18KV/ayq+yQgPfczQjAT6Q1IMEQlMYpIa5GzRFtnOtm8kSBLyqdfBog8ay5/w+o4DLgRGHvbTFh50GX5sQ6DgjDs8Gc0MxQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749476853; c=relaxed/simple;
-	bh=n9hEVNd8tHOgjn/9oeG6CKb1eZrPMuGpoadrEMuYz4M=;
+	s=arc-20240116; t=1749476856; c=relaxed/simple;
+	bh=qrZpZsMrsU1gfoQb0W7EnINpdzrBuhVDdB9nntc+yHM=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=g78cVuOBWGYPZtA3W4pF6KlWd4fVpf2OupDUaHxA/sc4PlWJKxnXLv2ebUK+ZZP2ls+hxazkRDiKShdhQrvcsyLn5gW0TXqWU4PLboejakU52tJAU3tiN6haXFRyS86XOvgGzc1Jh36zP567vAMKJLNPfgZrapHb+6sHkB/vJ4k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AVeH3On/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=igJ0vSA9UXn/KbSNkJYcAX7O4SDo3thBtUe1cDmzVwoAGvUZoBsVXydrPZeVxZFn2dSN2rMgibopJR8QG9S7KEncx5WOKQbB4OIJbD3++zKTbpFN8NAlmYO537ytrK/VVx+nbH3vobhirjGdjvWavjyY8pmRk2LbOOGNEDzSYrA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oGmlajFG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AVeH3On/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25831C4CEED;
-	Mon,  9 Jun 2025 13:47:32 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oGmlajFG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29C09C4CEEB;
+	Mon,  9 Jun 2025 13:47:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749476853;
-	bh=n9hEVNd8tHOgjn/9oeG6CKb1eZrPMuGpoadrEMuYz4M=;
+	s=k20201202; t=1749476856;
+	bh=qrZpZsMrsU1gfoQb0W7EnINpdzrBuhVDdB9nntc+yHM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AVeH3On/Pp6IRz5+m2FrByuSmjAdVG2XU/fmcP6aGht2cDcOzMdOdQHfM9j9geFQ9
-	 dleg05Ybu8bK8VLRAAMMK9Bheen5g3ur3J0ff2uKz5EJRtgoWuQD9Ol4KLzwQZzIGg
-	 SWbN1t9wOI0/1XkRQXoD0X8y3B1EauwcsN5V2ENEn/q4XNMux3gWGDUQyDPCL220AR
-	 /ndsRrN9lL9OIqz1DAfEFJJn9ztX1kdBlchZb4rJqJP3idOLeQEAaTebFjt9L4Mhxa
-	 i/7jc3RTlwhFCrciw/CB5+JHvdqKKpskbXbauKitwYUgPdh7x5jJCzNtEg0EjqrYv0
-	 Q2VBEKypGPv/A==
+	b=oGmlajFGSLCULwYYSLzfcD+Y2XjaP3p3QaWn3F8pNn2QjzfxbYOfg9afMEoObRyWp
+	 7YwyJ/7nP+UDLzgfRWeVAqg6TaA+wClc1ljoalGihhKYCjcqYmS5s2/E4yUfuS7on3
+	 1s4Yb+AgY8JNi3Jw9XV+UeK7WlqiTuGLcT0x2jwRi4nDwTsEOqS86agflDdhUgq7f4
+	 3W7CqulQOOl718aEOYw2gVgL3GpnsOiyWoy8wwqETR3Mvdf90FHdlhba7GjvtRGPDe
+	 pTKzRVDKMcdvTQuXjXgF4TUu/FI5zZtRRdMyvroYBq6znik7mXvvakS3i5Ep/TFIGo
+	 mrhDbtZrXBq8A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	David Lechner <dlechner@baylibre.com>,
-	Sasha Levin <sashal@kernel.org>,
-	marcelo.schmitt1@gmail.com,
-	mazziesaccount@gmail.com,
-	javier.carrasco.cruz@gmail.com,
-	peterz@infradead.org,
-	viro@zeniv.linux.org.uk
-Subject: [PATCH AUTOSEL 6.1 04/16] iio: pressure: zpa2326: Use aligned_s64 for the timestamp
-Date: Mon,  9 Jun 2025 09:47:13 -0400
-Message-Id: <20250609134725.1344921-4-sashal@kernel.org>
+Cc: Sami Tolvanen <samitolvanen@google.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	linux-kbuild@vger.kernel.org,
+	kernel test robot <lkp@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.1 05/16] um: Add cmpxchg8b_emu and checksum functions to asm-prototypes.h
+Date: Mon,  9 Jun 2025 09:47:14 -0400
+Message-Id: <20250609134725.1344921-5-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250609134725.1344921-1-sashal@kernel.org>
 References: <20250609134725.1344921-1-sashal@kernel.org>
@@ -54,84 +52,121 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.1.141
 Content-Transfer-Encoding: 8bit
 
-From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From: Sami Tolvanen <samitolvanen@google.com>
 
-[ Upstream commit 886a446b76afddfad307488e95e87f23a08ffd51 ]
+[ Upstream commit 674d03f6bd6b0f8327f1a4920ff5893557facfbd ]
 
-On x86_32 s64 fields are only 32-bit aligned.  Hence force the alignment of
-the field and padding in the structure by using aligned_s64 instead.
+With CONFIG_GENDWARFKSYMS, um builds fail due to missing prototypes
+in asm/asm-prototypes.h. Add declarations for cmpxchg8b_emu and the
+exported checksum functions, including csum_partial_copy_generic as
+it's also exported.
 
-Reviewed-by: David Lechner <dlechner@baylibre.com>
-Link: https://patch.msgid.link/20250413103443.2420727-19-jic23@kernel.org
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: Masahiro Yamada <masahiroy@kernel.org>
+Cc: linux-kbuild@vger.kernel.org
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202503251216.lE4t9Ikj-lkp@intel.com/
+Signed-off-by: Sami Tolvanen <samitolvanen@google.com>
+Link: https://patch.msgid.link/20250326190500.847236-2-samitolvanen@google.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Based on my analysis, here is my determination:
-
 **YES**
 
-This commit should be backported to stable kernel trees for the
-following reasons:
+This commit should be backported to stable kernel trees based on the
+following analysis:
 
-1. **Critical Bug Fix**: The commit fixes a subtle but serious alignment
-   bug that can cause **buffer overruns** on 32-bit architectures. The
-   original code uses a plain `u64 timestamp` field in the sample
-   structure, which is only guaranteed 4-byte alignment on x86_32 and
-   other 32-bit architectures.
+## Analysis
 
-2. **Security Impact**: As shown in the
-   `iio_push_to_buffers_with_timestamp()` function at line `((int64_t
-   *)data)[ts_offset] = timestamp;`, the code performs a 64-bit write at
-   a calculated offset. If the buffer is only 4-byte aligned but the
-   offset calculation assumes 8-byte alignment, this can result in:
-   - Buffer overflow beyond the allocated structure
-   - Memory corruption of adjacent stack variables
-   - Potential information leaks to userspace
+### Purpose and Context
+This commit fixes a build failure in the User Mode Linux (UM)
+architecture when `CONFIG_GENDWARFKSYMS` is enabled. The
+`CONFIG_GENDWARFKSYMS` feature is a new kernel build system enhancement
+for generating DWARF-based symbol versioning, which requires proper
+prototypes in `asm-prototypes.h` files to generate correct CRCs for
+exported symbols.
 
-3. **Pattern of Similar Fixes**: Looking at similar commits:
-   - Commit #2 (mprls0025pa: use aligned_s64) was marked for stable with
-     `Fixes:` tag
-   - Commit #5 (ms5611 Fix buffer element alignment) was marked for
-     stable
-   - The analysis document shows this is part of a systematic campaign
-     to fix these issues since 2020
+### Code Changes Analysis
 
-4. **Small, Contained Change**: The fix is minimal - simply changing
-   `u64 timestamp` to `aligned_s64 timestamp`. This ensures the
-   timestamp field is properly 8-byte aligned through the `__aligned(8)`
-   attribute, preventing any alignment issues.
+**File 1: `arch/um/include/asm/asm-prototypes.h`**
+- **Before**: Only included the generic asm-prototypes.h
+- **After**: Added includes for `<asm/checksum.h>` and conditional
+  declaration of `cmpxchg8b_emu()` for `CONFIG_UML_X86`
 
-5. **Architecture-Specific Vulnerability**: The bug specifically affects
-   32-bit architectures where s64 has only 4-byte natural alignment.
-   This makes it a real issue for ARM32 and other 32-bit platforms still
-   in use.
+**File 2: `arch/x86/um/asm/checksum.h`**
+- **Before**: Only declared `csum_partial()` function
+- **After**: Added declaration for `csum_partial_copy_generic()` with a
+  comment explaining it's for export type visibility
 
-6. **Recent Related Security Fix**: The same file had a recent security
-   fix (commit 6007d10c5262) for information leaks, showing this driver
-   has active security concerns that need addressing in stable trees.
+### Why This Should Be Backported
 
-The commit follows the stable tree rules perfectly: it fixes an
-important bug with minimal changes and low regression risk. The
-alignment issue can cause actual crashes or data corruption on affected
-architectures, making it a clear candidate for stable backporting.
+1. **Fixes Important Build Failures**: This directly addresses build
+   failures when `CONFIG_GENDWARFKSYMS` is enabled for UM architecture,
+   as confirmed by the kernel test robot report.
 
- drivers/iio/pressure/zpa2326.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+2. **Minimal Risk Changes**:
+   - Only adds function declarations, no implementation changes
+   - Changes are confined to UM architecture headers
+   - No behavioral changes to existing code paths
 
-diff --git a/drivers/iio/pressure/zpa2326.c b/drivers/iio/pressure/zpa2326.c
-index fdb1b765206bc..7f352a79c1a55 100644
---- a/drivers/iio/pressure/zpa2326.c
-+++ b/drivers/iio/pressure/zpa2326.c
-@@ -582,7 +582,7 @@ static int zpa2326_fill_sample_buffer(struct iio_dev               *indio_dev,
- 	struct {
- 		u32 pressure;
- 		u16 temperature;
--		u64 timestamp;
-+		aligned_s64 timestamp;
- 	}   sample;
- 	int err;
+3. **Follows Established Patterns**: Similar commits in the reference
+   history (Similar Commit #1 and #5) that add missing prototypes to
+   `asm-prototypes.h` files were marked as "YES" for backporting. This
+   follows the exact same pattern.
+
+4. **Critical Infrastructure Fix**: The `asm-prototypes.h`
+   infrastructure is essential for proper symbol versioning. Missing
+   prototypes can cause genksyms to segfault during build, making this a
+   critical build system fix.
+
+5. **Architecture-Specific Scope**: Changes are limited to UM
+   architecture, reducing risk of regressions in other subsystems.
+
+6. **Self-Contained**: The fix includes both the missing `cmpxchg8b_emu`
+   prototype (conditional on `CONFIG_UML_X86`) and the checksum function
+   declarations, making it complete.
+
+### Comparison to Reference Commits
+- **Similar to Commit #1**: Adds missing prototypes for genksyms CRC
+  generation (Status: YES)
+- **Similar to Commit #5**: Fixes missing prototypes causing build
+  issues with symbol versioning (Status: YES)
+- **Unlike Commits #2, #3, #4**: This is not just a comment update or
+  cleanup, but fixes actual build failures
+
+The fix addresses a concrete build failure affecting users who enable
+`CONFIG_GENDWARFKSYMS` with UM, making it an important bugfix that meets
+stable tree criteria for backporting.
+
+ arch/um/include/asm/asm-prototypes.h | 5 +++++
+ arch/x86/um/asm/checksum.h           | 3 +++
+ 2 files changed, 8 insertions(+)
+
+diff --git a/arch/um/include/asm/asm-prototypes.h b/arch/um/include/asm/asm-prototypes.h
+index 5898a26daa0dd..408b31d591279 100644
+--- a/arch/um/include/asm/asm-prototypes.h
++++ b/arch/um/include/asm/asm-prototypes.h
+@@ -1 +1,6 @@
+ #include <asm-generic/asm-prototypes.h>
++#include <asm/checksum.h>
++
++#ifdef CONFIG_UML_X86
++extern void cmpxchg8b_emu(void);
++#endif
+diff --git a/arch/x86/um/asm/checksum.h b/arch/x86/um/asm/checksum.h
+index b07824500363f..ddc144657efad 100644
+--- a/arch/x86/um/asm/checksum.h
++++ b/arch/x86/um/asm/checksum.h
+@@ -20,6 +20,9 @@
+  */
+ extern __wsum csum_partial(const void *buff, int len, __wsum sum);
  
++/* Do not call this directly. Declared for export type visibility. */
++extern __visible __wsum csum_partial_copy_generic(const void *src, void *dst, int len);
++
+ /**
+  * csum_fold - Fold and invert a 32bit checksum.
+  * sum: 32bit unfolded sum
 -- 
 2.39.5
 
