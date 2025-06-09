@@ -1,194 +1,174 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from NAM02-BN1-obe.outbound.protection.outlook.com (mail-bn1nam02on2043.outbound.protection.outlook.com [40.107.212.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A432F193062;
-	Mon,  9 Jun 2025 21:13:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749503605; cv=none; b=TEieSYK4HoasgmW+73e6T3kbc4qtroGNCj1jSkJgmpmykHEO5F09fGx0FLgYGlIKWN1HsWdlNUPjpZE61BdqE0HIfy16kyx9HrpsQB4vsjlN+1RSGD1mbxAuNoZTlsewkXnBI+xcXN6/hTnEZtFdp2yKA+d+8c9zz0Y0vK1EK0U=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749503605; c=relaxed/simple;
-	bh=X5QJvkv3j9iTTBXNXX/rB02EIeJPcHs224rzb2cLDzc=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=I6okcErGzOsAnil2v+6Tg5wrmeBmafPp+PRlGt7PAnG0Vj8OmEQ6LLThupnSeV9IEY0tzszL0ISgl/2AHFFRO8FJNCL6YUfB3Xd03h/YvUJvliHF96quGkGT2cvCNk1luq2r4kDE5PrKzdom3BwkVP7JXEsaMW6nwc7wdFPErcA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bpIwq2rU; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA73D19E992;
+	Mon,  9 Jun 2025 22:16:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.212.43
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1749507390; cv=fail; b=nWqGyTgt7lW6yTmeoQiMrW/J9HzNUikdGZfwC1pSkI4RrokdFHaCrX+W5xaIl0258Y/RZFkoAMrTUne8uIZ1XblVQlxHVSA1J0Rrh9LmXIrffkqxnqIFBuLBRveIlGR3c18iih0nh/pXUJIP/L9hTr7y+/JX/3tkyXKYe8eW+Fo=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1749507390; c=relaxed/simple;
+	bh=wWclb7cJx/C+qqexJG5oJCEigWnONInSA+V2zpyNphQ=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=q12BwAUUvI6spsgjVwwAg8+QoLsjt2dRaNA+PVi/p8dgKlO9P1Xfk9a68zoMO0k3BbSc1V/dQR5o7XNVjl7RRQ6qw7dukIw0Gvrv5DPc+AAOGyPluLX0OuMAc1G1M95N7/a3VDDWAqJAOpOJL2KgNg691qKhL4Q3eddupgDZLNE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=Hlml93mK; arc=fail smtp.client-ip=40.107.212.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bpIwq2rU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2985DC4CEEB;
-	Mon,  9 Jun 2025 21:13:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749503605;
-	bh=X5QJvkv3j9iTTBXNXX/rB02EIeJPcHs224rzb2cLDzc=;
-	h=From:Date:Subject:To:Cc:From;
-	b=bpIwq2rUwzQKl3zfzKbT9YJHN2vvEqIcRDykHF8RnSilZ11qhxmilwjHbp2RS7cBE
-	 79akQ0ZevawAWTNxxlOc2okC/REnFzO4WP4ZdnbWp94jnapLHaQgDMd1oYGscZT2xT
-	 xdkV75K/Vw7Cs2VUy3levdwN1r66Nys8UxlprdxeewzF96nmSdgfipdiYmuIIw3HqM
-	 HriOFob2C10CCM+HpRXht9Nf2xYOXpB4UuJnYBrTAPmYpaQ9fNUrrZNOk7mckT6SQO
-	 zkHC69f7CWNCoJzJsvpp/rX5hsngkj5weYe+GfHOqRU7GoZTrwUzsdZ4Gu+Fsmge9y
-	 /nPx/ItoL2VsA==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Mon, 09 Jun 2025 14:13:14 -0700
-Subject: [PATCH] staging: rtl8723bs: Avoid memset() in aes_cipher() and
- aes_decipher()
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="Hlml93mK"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=toO8cJXOuZV+C2OTEC6tYJSNmrYRON7k0BD+c/e5hRb8zSpYoJqLvwxPtJP81dIw3BCVfLuMs8CZV67E4QmC/v4SImp428qzhU2bi/Bs/7wfpH8PyGoix9yXaAwGS7LCSQovcvWxagFSLzkab1gM8GRYXxAZOOiDDfnKigDNFyqPTT/asLlqltiO39DYH4GiwRSxunmTwKAtXzJux3vlIRNgeA9GOtMrMX1zXfMjqYXlQcAIzGcAEMY8mk18Klv9Pr77zOPnzmXDguC3CmSUOJZ3EIKvR/fAmiklqKkbF3jauIAZIXGLA7tIZQuq85VjJSHnutfQusdAAFGAjB96jg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=DnxtUCVepOokMLj9HewGrMSru18ryYsCZaVG1F9beBI=;
+ b=Z4Z4yPZnaonQmzsw87c7crJWGdYfOtjgEjj0gnUJS4cOKR/W4EjgoCgo2YMKTKNs/pm8wx6udqmYLk5W+0kSf3oCH73RAQpKUf+fYQPfXtmnXBhDnHVbIAaEncft2zrMP2YB9HfpVQ1/hR3a4b3SarH5PY8KHEyQtGCC1Jam1hvpjruJDc/6j0jA9y0AbPIYhF3WEAqtGNeoIV2kmbiKjj4JJa9Oforav599Vl0cq174cuyhtLTnfQlk/FsRL2KsdIKzIb8Lami48/wPoM5+41W1IGHkCwxh52FzNxII5QxhPBv+Z9IkzjM8hT2V+8rRoV5pF2LF4c1V53CekcKPyA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.161) smtp.rcpttodomain=samsung.com smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=DnxtUCVepOokMLj9HewGrMSru18ryYsCZaVG1F9beBI=;
+ b=Hlml93mK+DoN36JmZuHhatJ9ovGuOwzxuoMcEdg8k5bdScYDj50RbiZaGS+b7gKnTyu0yKkEZpDLCO/1vr66McWZ4qBQAHawHsCg1KWz3CKU2rJZwDOn0Ebad1a5+FiGcC4KopbOJ47stLQ7Zt2jZKt6zhy3/BZNQsq6kBz83pwiPExsSCXmgiAIfjrs+pgupoCX6lPLqY4kwZjdzqFBwGpKQDjWry8iM2r+K2O8c+fPyGvle+oaoPQYw0GMY4AZ4yy8RH8BF/NI8fgTDhr1MphWy/lY78DGzUBDCqykfsvysTOiD7RtgF4H5SiBY1zyYu8iPIZx4FRWX9nW63D5bQ==
+Received: from CH0PR04CA0024.namprd04.prod.outlook.com (2603:10b6:610:76::29)
+ by PH7PR12MB7842.namprd12.prod.outlook.com (2603:10b6:510:27a::21) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8792.35; Mon, 9 Jun
+ 2025 22:16:24 +0000
+Received: from CH1PEPF0000AD80.namprd04.prod.outlook.com
+ (2603:10b6:610:76:cafe::a9) by CH0PR04CA0024.outlook.office365.com
+ (2603:10b6:610:76::29) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8792.35 via Frontend Transport; Mon,
+ 9 Jun 2025 22:16:23 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.161) by
+ CH1PEPF0000AD80.mail.protection.outlook.com (10.167.244.90) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8835.15 via Frontend Transport; Mon, 9 Jun 2025 22:16:22 +0000
+Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
+ (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Mon, 9 Jun 2025
+ 15:16:05 -0700
+Received: from rnnvmail203.nvidia.com (10.129.68.9) by rnnvmail201.nvidia.com
+ (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Mon, 9 Jun
+ 2025 15:16:05 -0700
+Received: from nvidia.com (10.127.8.10) by mail.nvidia.com (10.129.68.9) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14 via Frontend
+ Transport; Mon, 9 Jun 2025 15:15:50 -0700
+Date: Mon, 9 Jun 2025 15:15:47 -0700
+From: Nicolin Chen <nicolinc@nvidia.com>
+To: Jason Gunthorpe <jgg@nvidia.com>
+CC: Alexandre Ghiti <alex@ghiti.fr>, Alim Akhtar <alim.akhtar@samsung.com>,
+	Alyssa Rosenzweig <alyssa@rosenzweig.io>, AngeloGioacchino Del Regno
+	<angelogioacchino.delregno@collabora.com>, Albert Ou <aou@eecs.berkeley.edu>,
+	<asahi@lists.linux.dev>, Baolin Wang <baolin.wang@linux.alibaba.com>, "David
+ Woodhouse" <dwmw2@infradead.org>, Gerald Schaefer
+	<gerald.schaefer@linux.ibm.com>, Heiko Stuebner <heiko@sntech.de>,
+	<iommu@lists.linux.dev>, Janne Grunau <j@jannau.net>, Jean-Philippe Brucker
+	<jean-philippe@linaro.org>, Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Jonathan Hunter <jonathanh@nvidia.com>, Joerg Roedel <joro@8bytes.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	<linux-arm-kernel@lists.infradead.org>, <linux-arm-msm@vger.kernel.org>,
+	<linux-mediatek@lists.infradead.org>, <linux-riscv@lists.infradead.org>,
+	<linux-rockchip@lists.infradead.org>, <linux-s390@vger.kernel.org>,
+	<linux-samsung-soc@vger.kernel.org>, <linux-sunxi@lists.linux.dev>,
+	<linux-tegra@vger.kernel.org>, Marek Szyprowski <m.szyprowski@samsung.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>, Matthew Rosato
+	<mjrosato@linux.ibm.com>, Neal Gompa <neal@gompa.dev>, Orson Zhai
+	<orsonzhai@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>, Paul Walmsley
+	<paul.walmsley@sifive.com>, Rob Clark <robin.clark@oss.qualcomm.com>, "Robin
+ Murphy" <robin.murphy@arm.com>, Samuel Holland <samuel@sholland.org>, "Sven
+ Peter" <sven@kernel.org>, Thierry Reding <thierry.reding@gmail.com>, "Krishna
+ Reddy" <vdumpa@nvidia.com>, <virtualization@lists.linux.dev>, Chen-Yu Tsai
+	<wens@csie.org>, Will Deacon <will@kernel.org>, Yong Wu
+	<yong.wu@mediatek.com>, Chunyan Zhang <zhang.lyra@gmail.com>, Lu Baolu
+	<baolu.lu@linux.intel.com>, Kevin Tian <kevin.tian@intel.com>,
+	<patches@lists.linux.dev>, Niklas Schnelle <schnelle@linux.ibm.com>, "Sven
+ Peter" <sven@svenpeter.dev>, Tomasz Jeznach <tjeznach@rivosinc.com>
+Subject: Re: [PATCH v2 1/7] qiommu/arm-smmu-v3: Remove iommu_ops pgsize_bitmap
+Message-ID: <aEddE8bupuaVJTEP@nvidia.com>
+References: <0-v2-68a2e1ba507c+1fb-iommu_rm_ops_pgsize_jgg@nvidia.com>
+ <1-v2-68a2e1ba507c+1fb-iommu_rm_ops_pgsize_jgg@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250609-rtl8723bs-fix-clang-arm64-wflt-v1-1-e2accba43def@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAGlOR2gC/x2NQQqDMBAAvyJ77kIak2j6FenB2LVdSFU2UgXx7
- y49DgwzBxQSpgKP6gChHxeeJ4X7rYLh009vQn4pgzXWm2Aiyprbxtap4Mg7Dlkd7OUbHG5jXjG
- 5FIO30bjkQSOLkHr/Qfc8zwvNAAubcAAAAA==
-X-Change-ID: 20250609-rtl8723bs-fix-clang-arm64-wflt-b4b9652904b5
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: linux-staging@lists.linux.dev, llvm@lists.linux.dev, 
- patches@lists.linux.dev, stable@vger.kernel.org, 
- Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5267; i=nathan@kernel.org;
- h=from:subject:message-id; bh=X5QJvkv3j9iTTBXNXX/rB02EIeJPcHs224rzb2cLDzc=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDBnufsUB1c+2OdotPmr2YYW3QCfbbd9Cu6/fJqT2CKst8
- 6tc2y/ZUcrCIMbFICumyFL9WPW4oeGcs4w3Tk2CmcPKBDKEgYtTACZyYRnDL6aiVatvr2Y9lXYo
- 1NbfM1nzhGf5FNEDn7KtQ7PUMywZKhkZnur6yHnuX/2cbWlqc0nPKfXcoHliRrOmLT8ot7fupdQ
- EBgA=
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <1-v2-68a2e1ba507c+1fb-iommu_rm_ops_pgsize_jgg@nvidia.com>
+X-NV-OnPremToCloud: AnonymousSubmission
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH1PEPF0000AD80:EE_|PH7PR12MB7842:EE_
+X-MS-Office365-Filtering-Correlation-Id: 1b1b875e-3771-4ba5-4c8a-08dda7a344bb
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|36860700013|82310400026|7416014|376014;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?OSezRCpiydD53Qcq2T/8oeT3KoeMpQFSKDai6OzhBEc2t/4yWp9h/ySqq4xb?=
+ =?us-ascii?Q?GkFu19ya0mOVmgsnOz+jHrsByPXKDjiQC4y0q9KzpfeEREXboKdk75z/oDmq?=
+ =?us-ascii?Q?wukgCtqNksbUx61mkiKD2Z33D/jMnwDHPE5RJI7PWXJSeN3wnOD4hemqLUrx?=
+ =?us-ascii?Q?b8D5+lX6j7X9QOic6E383/XZnSKd6tz5Phc++JlTznvAksTgUKOp3HMGTIjH?=
+ =?us-ascii?Q?SAaYCuNM3U1v+C5jtU8hLNVa2ayrSF8sHLr93d3AZy+cK1s+aL7ufOaPB186?=
+ =?us-ascii?Q?zKHV+6vWMUktAZwlsNxMotkCHQEiUr+DNziVS2XA7fmh2LIiXq4ICcWj7P4D?=
+ =?us-ascii?Q?IA/530qo1x7OmAIAXkExCTkvAZ83260NsyXhTdNKp68aAr7EtCtF8/q957Ym?=
+ =?us-ascii?Q?kHlugg9BSe7P8CziATyy+adN2Vj03xwMrWeZGcxgM6peedN1G+VmC2Q8gvSv?=
+ =?us-ascii?Q?bJUr1H74qtqCMHE5UuVJfkPwcwkdrIIHQcPAOxoc7jrykc4Yt845WMWS2QgR?=
+ =?us-ascii?Q?JR3edYcMuNbYxPCKPvXxy8HLfkcVIJx8ztrhiaup9+cSwLZuWsDP/ng6aRYz?=
+ =?us-ascii?Q?cE0xlB0QP5S5T4e1G9EHc/DCIFqorAWKbob4nDu3C5MZXNc7NcOaeYOjYnyq?=
+ =?us-ascii?Q?IzF7FevIRSgDJ40SMK7rqN153BoLVV2PllX+IV+3otpsYUOiU+i71oVs/xOQ?=
+ =?us-ascii?Q?Pbs4naC5IzG+74tUoIK0VG/UhXtpJDvVcxSfS/QZj4Gulhd0bp6xt2EoUtcY?=
+ =?us-ascii?Q?KHDkez2KvSSEs9jS6i184sEPaIYEmqwtX9CQAB34GuZi/ly7qqpNj0ztlXxW?=
+ =?us-ascii?Q?5URmnTbuICPV3hZZjKPcwOAzwogVf22OONsv39K+ZTpcoz1de0NaKfdHFkIY?=
+ =?us-ascii?Q?0PD4QJLN2My8F6TkzgndccK8uJUY/iPKZg6BXoX+/vCsPxDs2+CUXhgYj4aq?=
+ =?us-ascii?Q?quPvQNi3t47lffoNXwBA3vhPFA73Jj5fHbYMUAGBwrxPbzZK1cmwObcbbucg?=
+ =?us-ascii?Q?6Mmq552W6GDtx8X40gb8QxCzFFBJl9gjaPxhx8ZP+yW5xC3RTioVVVyb57y7?=
+ =?us-ascii?Q?C8vcqOUk9cjmpsn/N4GRKsMxS/asuo9UqgoVUIfcToN7W8Era32ejF/saWEk?=
+ =?us-ascii?Q?HDQvK09dzXMhqYT5fPNwePkN53DhgbOEldouo2V07fPaaGaqEPLURm583dYo?=
+ =?us-ascii?Q?zQChpXmhbb07j5p2xyHRPuCM5zP0U9cLtUv3UkgHag4l5TfkLeIDuOU6BXmJ?=
+ =?us-ascii?Q?vtzR25OWYcgu3qAbPb+VBVLo/06yYX/ZD4NQ/9z5ZprbwoYSav/xPxZtlLlR?=
+ =?us-ascii?Q?mlcwk4SOkynmro0HlzSYWbcCws3K87FNb1n7ou9afTOSagbxmoirzlspx2O8?=
+ =?us-ascii?Q?wz2XoYaKN1UacOB51hm35jaSNAoMTl+YJfigxNTcqmSeODzomJjvwuHD+DvF?=
+ =?us-ascii?Q?vnle13Tn6L8WoEFZui4R+fxmMx7vdHwnSGyr3bATyhofhNi5Lk7gGbYnK/5M?=
+ =?us-ascii?Q?ukPc5SCUf3iccDv/mTlZ8iuh+FBQUiDzlFox?=
+X-Forefront-Antispam-Report:
+	CIP:216.228.117.161;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge2.nvidia.com;CAT:NONE;SFS:(13230040)(1800799024)(36860700013)(82310400026)(7416014)(376014);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Jun 2025 22:16:22.9802
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1b1b875e-3771-4ba5-4c8a-08dda7a344bb
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.161];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	CH1PEPF0000AD80.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB7842
 
-After commit 6f110a5e4f99 ("Disable SLUB_TINY for build testing"), which
-causes CONFIG_KASAN to be enabled in allmodconfig again, arm64
-allmodconfig builds with older versions of clang (15 through 17) show an
-instance of -Wframe-larger-than (which breaks the build with
-CONFIG_WERROR=y):
+On Mon, Jun 09, 2025 at 05:41:25PM -0300, Jason Gunthorpe wrote:
+> The driver never reads this value, arm_smmu_domain_finalise() always sets
+> domain.pgsize_bitmap to pgtbl_cfg, which comes from the per-smmu
+> calculated value.
+> 
+> Remove the ops version entirely, the related dead code and make
+> arm_smmu_ops const.
+> 
+> Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+> Acked-by: Will Deacon <will@kernel.org>
+> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 
-  drivers/staging/rtl8723bs/core/rtw_security.c:1287:5: error: stack frame size (2208) exceeds limit (2048) in 'rtw_aes_decrypt' [-Werror,-Wframe-larger-than]
-   1287 | u32 rtw_aes_decrypt(struct adapter *padapter, u8 *precvframe)
-        |     ^
+Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
 
-This comes from aes_decipher() being inlined in rtw_aes_decrypt().
-Running the same build with CONFIG_FRAME_WARN=128 shows aes_cipher()
-also uses a decent amount of stack, just under the limit of 2048:
-
-  drivers/staging/rtl8723bs/core/rtw_security.c:864:19: warning: stack frame size (1952) exceeds limit (128) in 'aes_cipher' [-Wframe-larger-than]
-    864 | static signed int aes_cipher(u8 *key, uint      hdrlen,
-        |                   ^
-
--Rpass-analysis=stack-frame-layout only shows one large structure on the
-stack, which is the ctx variable inlined from aes128k128d(). A good
-number of the other variables come from the additional checks of
-fortified string routines, which are present in memset(), which both
-aes_cipher() and aes_decipher() use to initialize some temporary
-buffers. In this case, since the size is known at compile time, these
-additional checks should not result in any code generation changes but
-allmodconfig has several sanitizers enabled, which may make it harder
-for the compiler to eliminate the compile time checks and the variables
-that come about from them.
-
-The memset() calls are just initializing these buffers to zero, so use
-'= {}' instead, which is used all over the kernel and does the exact
-same thing as memset() without the fortify checks, which drops the stack
-usage of these functions by a few hundred kilobytes.
-
-  drivers/staging/rtl8723bs/core/rtw_security.c:864:19: warning: stack frame size (1584) exceeds limit (128) in 'aes_cipher' [-Wframe-larger-than]
-    864 | static signed int aes_cipher(u8 *key, uint      hdrlen,
-        |                   ^
-  drivers/staging/rtl8723bs/core/rtw_security.c:1271:5: warning: stack frame size (1456) exceeds limit (128) in 'rtw_aes_decrypt' [-Wframe-larger-than]
-   1271 | u32 rtw_aes_decrypt(struct adapter *padapter, u8 *precvframe)
-        |     ^
-
-Cc: stable@vger.kernel.org
-Fixes: 554c0a3abf21 ("staging: Add rtl8723bs sdio wifi driver")
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
- drivers/staging/rtl8723bs/core/rtw_security.c | 44 +++++++++------------------
- 1 file changed, 14 insertions(+), 30 deletions(-)
-
-diff --git a/drivers/staging/rtl8723bs/core/rtw_security.c b/drivers/staging/rtl8723bs/core/rtw_security.c
-index 1e9eff01b1aa..e9f382c280d9 100644
---- a/drivers/staging/rtl8723bs/core/rtw_security.c
-+++ b/drivers/staging/rtl8723bs/core/rtw_security.c
-@@ -868,29 +868,21 @@ static signed int aes_cipher(u8 *key, uint	hdrlen,
- 		num_blocks, payload_index;
- 
- 	u8 pn_vector[6];
--	u8 mic_iv[16];
--	u8 mic_header1[16];
--	u8 mic_header2[16];
--	u8 ctr_preload[16];
-+	u8 mic_iv[16] = {};
-+	u8 mic_header1[16] = {};
-+	u8 mic_header2[16] = {};
-+	u8 ctr_preload[16] = {};
- 
- 	/* Intermediate Buffers */
--	u8 chain_buffer[16];
--	u8 aes_out[16];
--	u8 padded_buffer[16];
-+	u8 chain_buffer[16] = {};
-+	u8 aes_out[16] = {};
-+	u8 padded_buffer[16] = {};
- 	u8 mic[8];
- 	uint	frtype  = GetFrameType(pframe);
- 	uint	frsubtype  = GetFrameSubType(pframe);
- 
- 	frsubtype = frsubtype>>4;
- 
--	memset((void *)mic_iv, 0, 16);
--	memset((void *)mic_header1, 0, 16);
--	memset((void *)mic_header2, 0, 16);
--	memset((void *)ctr_preload, 0, 16);
--	memset((void *)chain_buffer, 0, 16);
--	memset((void *)aes_out, 0, 16);
--	memset((void *)padded_buffer, 0, 16);
--
- 	if ((hdrlen == WLAN_HDR_A3_LEN) || (hdrlen ==  WLAN_HDR_A3_QOS_LEN))
- 		a4_exists = 0;
- 	else
-@@ -1080,15 +1072,15 @@ static signed int aes_decipher(u8 *key, uint	hdrlen,
- 			num_blocks, payload_index;
- 	signed int res = _SUCCESS;
- 	u8 pn_vector[6];
--	u8 mic_iv[16];
--	u8 mic_header1[16];
--	u8 mic_header2[16];
--	u8 ctr_preload[16];
-+	u8 mic_iv[16] = {};
-+	u8 mic_header1[16] = {};
-+	u8 mic_header2[16] = {};
-+	u8 ctr_preload[16] = {};
- 
- 		/* Intermediate Buffers */
--	u8 chain_buffer[16];
--	u8 aes_out[16];
--	u8 padded_buffer[16];
-+	u8 chain_buffer[16] = {};
-+	u8 aes_out[16] = {};
-+	u8 padded_buffer[16] = {};
- 	u8 mic[8];
- 
- 	uint frtype  = GetFrameType(pframe);
-@@ -1096,14 +1088,6 @@ static signed int aes_decipher(u8 *key, uint	hdrlen,
- 
- 	frsubtype = frsubtype>>4;
- 
--	memset((void *)mic_iv, 0, 16);
--	memset((void *)mic_header1, 0, 16);
--	memset((void *)mic_header2, 0, 16);
--	memset((void *)ctr_preload, 0, 16);
--	memset((void *)chain_buffer, 0, 16);
--	memset((void *)aes_out, 0, 16);
--	memset((void *)padded_buffer, 0, 16);
--
- 	/* start to decrypt the payload */
- 
- 	num_blocks = (plen-8) / 16; /* plen including LLC, payload_length and mic) */
-
----
-base-commit: 19272b37aa4f83ca52bdf9c16d5d81bdd1354494
-change-id: 20250609-rtl8723bs-fix-clang-arm64-wflt-b4b9652904b5
-
-Best regards,
--- 
-Nathan Chancellor <nathan@kernel.org>
-
+Is "qiommu" a typo in the subject?
