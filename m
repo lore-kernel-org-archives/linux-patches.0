@@ -1,44 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0F7F8F5B;
-	Mon,  9 Jun 2025 13:46:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2899D253F35;
+	Mon,  9 Jun 2025 13:46:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749476772; cv=none; b=EZNqOb2/bfEXlhfifF/NX4E7kVxpbuHYYmFJ9dHS5Wxog7kGeJYwA9ziF0sE/0Iq4/0ejlZ2Ix/wj0B0qah5Rz3349TBQvFoVlxDdL3/zkBkGo8PWDYkrdBmTFPFmv4oDwCIJrzE/y46MBw++1OaAkcCth9VmI+jScRsugyxONo=
+	t=1749476774; cv=none; b=SRU2/48Ge9US33nM8hdQeQ7Q80cwUwKuQjZsFvLPgNqqJm4UmRt5hT3rOE2KLV4dEXIiJ5swcFlX9J4Vbtq7f77PIs0iiOE0wjtORRG2X/ft0vdYVQxG+eg878fhhQ0PQCDjt2MP5M6D1EpkF1qE+WpnXQM3wyrSjh9YpZdaS8g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749476772; c=relaxed/simple;
-	bh=qTsnulNbXyifTKMdAXe8Pqdotq4gGz2uAJ+xcynUIJc=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=ds7FK1POnHTAiquFu9KuF20BBBRgq2xQ6MU1w3m/ZXakna4UPPdVvepHjPoWmyueGOuCA1Sa0weGX0PRJzeNuA0AVWkpSDtkg4O30pB7zN6ylfruZPjkWCZhWPbc2DQ+vVhlL9c8cX84T3G0Elihn2HtS/SjDEn/aWQIoZe/ioM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dVbri1Jf; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1749476774; c=relaxed/simple;
+	bh=QDiIjWqI+6vYM4gt8RQdgOvu7LUndg7Sz5IXzR/8vuk=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=RzHdKDfp5PG6+Jq5wHQiiODWRA7xi3TkbybXKqj+q2wXe4P3rJX2WMzywTdaIiKNeCOJDt8C1gQRIAzhNYd0E+H+JaXYDOfdI+k4Nje4MzjEFlTeibiO+jqc2NzLU5mPWWIYskttL8qdQZYelhvXOMddiA2lwJNM+Mr45TZjvSg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HRhBvO85; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dVbri1Jf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FEA0C4CEEB;
-	Mon,  9 Jun 2025 13:46:11 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HRhBvO85"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C83AC4CEEB;
+	Mon,  9 Jun 2025 13:46:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749476772;
-	bh=qTsnulNbXyifTKMdAXe8Pqdotq4gGz2uAJ+xcynUIJc=;
-	h=From:To:Cc:Subject:Date:From;
-	b=dVbri1Jft1qbMSdoW+47WfWmj+xG97OC5G4+tiaVHEUjRE4j/O5ubOjVsfQYnlimX
-	 rDg/czLENr7YDvw+lruhREINS5YquHsMdVIGz3vP7yBC+oJwqsdBkpJCn2oIFeqLiT
-	 dlRxzA1jMyBR/hJywAy9I20hzuK3EMrVU0CxFEj2uRQg6QhGxN3Ct1tZvF+mh96aDm
-	 fBejGO6sAaZfm8zd861x17dSntTFEnHrJ7H++K2X/YcmAGFkfRyPZ6voqQTYMRG7Cs
-	 zdOqDHiOR7MxO55YAPwTFHVT3oN0Ii5iiwYpy2n2Su3u1B3xetPYV6y6L6CGeZIxRk
-	 L9fMmQbsqt6bA==
+	s=k20201202; t=1749476774;
+	bh=QDiIjWqI+6vYM4gt8RQdgOvu7LUndg7Sz5IXzR/8vuk=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=HRhBvO85lKmPSiNp0Q59l8dEYfZkfjk/PVKBJWAe3SqPCcU6RIbA5PSlteWct411O
+	 nn5D5V0DsL/AA4NIJ/jCcjWte2w0WeU324m1LrkMxcoL77MWZAQfmWLX09wipT+ORM
+	 PDrMZldGlIESmqZD8HRDQQOfHA7DtyFqL7lDoJdCLKqliVklHYVMWImGJN/AeWZEWr
+	 xhXaV/FPoXH+XE/5DWkev0SDo+oOff1EJj3pEymlxoUpZ1xln0rR2lsi76eRAVW0uj
+	 XOTYJh+VB6lEWnywGW86iP1ugFpXTq4+y3jDfM7o+Ktb9FSNWAkJBxrp/PQeoi4W90
+	 P6ptTyNHQFR3A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
 Cc: Hannes Reinecke <hare@kernel.org>,
-	Chris Leech <cleech@redhat.com>,
 	Sagi Grimberg <sagi@grimberg.me>,
 	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>,
 	kbusch@kernel.org,
 	linux-nvme@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.12 01/23] nvme-tcp: fix I/O stalls on congested sockets
-Date: Mon,  9 Jun 2025 09:45:48 -0400
-Message-Id: <20250609134610.1343777-1-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.12 02/23] nvme-tcp: sanitize request list handling
+Date: Mon,  9 Jun 2025 09:45:49 -0400
+Message-Id: <20250609134610.1343777-2-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250609134610.1343777-1-sashal@kernel.org>
+References: <20250609134610.1343777-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -52,109 +54,142 @@ Content-Transfer-Encoding: 8bit
 
 From: Hannes Reinecke <hare@kernel.org>
 
-[ Upstream commit f42d4796ee100fade86086d1cf98537fb4d326c8 ]
+[ Upstream commit 0bf04c874fcb1ae46a863034296e4b33d8fbd66c ]
 
-When the socket is busy processing nvme_tcp_try_recv() might return
--EAGAIN, but this doesn't automatically imply that the sending side is
-blocked, too.  So check if there are pending requests once
-nvme_tcp_try_recv() returns -EAGAIN and continue with the sending loop
-to avoid I/O stalls.
+Validate the request in nvme_tcp_handle_r2t() to ensure it's not part of
+any list, otherwise a malicious R2T PDU might inject a loop in request
+list processing.
 
 Signed-off-by: Hannes Reinecke <hare@kernel.org>
-Acked-by: Chris Leech <cleech@redhat.com>
 Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
 Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Based on my analysis of the commit and comparison with similar commits,
-here is my determination:
+Based on my analysis of the commit message and code changes, I provide
+the following assessment:
 
-**YES**
+**YES**, this commit should be backported to stable kernel trees.
 
-This commit should be backported to stable kernel trees for the
-following reasons:
+## Extensive Explanation:
 
-1. **Fixes a real user-impacting bug**: The commit addresses I/O stalls
-   on congested sockets, which is a serious issue that can cause system
-   hangs or severe performance degradation. When the socket is congested
-   and `nvme_tcp_try_recv()` returns -EAGAIN, the current code
-   incorrectly assumes that the sending side is also blocked, leading to
-   I/O stalls.
+### 1. **Security Vulnerability Fix**
+This commit fixes a serious security vulnerability where a malicious
+NVMe-TCP target can inject loops in request list processing. The code
+changes show clear validation being added to prevent this attack:
 
-2. **Small and contained fix**: The changes are minimal and localized to
-   the `nvme_tcp_io_work()` function:
-   - Changes `nvme_tcp_try_recv()` to return 0 instead of -EAGAIN to
-     prevent premature exit
-   - Adds a check after receive processing to see if the socket became
-     writable
-   - Only 5 lines of actual code changes
+```c
+if (llist_on_list(&req->lentry) || !list_empty(&req->entry)) {
+    dev_err(queue->ctrl->ctrl.device,
+        "req %d unexpected r2t while processing request\n",
+        rq->tag);
+    return -EPROTO;
+}
+```
 
-3. **Clear logic fix**: The patch addresses a specific logic error
-   where:
-   - The receive side returns -EAGAIN (socket would block on receive)
-   - But this doesn't mean the send side is also blocked
-   - The fix checks if there are pending requests and if the socket is
-     writable after receive processing
+### 2. **Attack Vector and Impact**
+The vulnerability allows a compromised storage target to send R2T (Ready
+to Transfer) PDUs for requests that are already being processed. Without
+this validation:
+- The same request could be added to lists multiple times
+- This creates circular references or list corruption
+- Can lead to infinite loops, system hangs, or memory corruption
+- Potential for arbitrary code execution through use-after-free
+  conditions
 
-4. **Similar to other backported fixes**: Looking at the historical
-   commits:
-   - Commit #2 (backported): Fixed hangs waiting for icresp response
-   - Commit #3 (backported): Fixed wrong stop condition in io_work
-   - Commit #4 (backported): Fixed UAF when detecting digest errors
-   - Commit #5 (backported): Fixed possible null deref on timed out
-     connections
+### 3. **Minimal and Contained Fix**
+The fix is:
+- Small in scope (only touches request list handling)
+- Well-contained to the nvme-tcp subsystem
+- Adds simple validation checks without architectural changes
+- Initializes list nodes properly to maintain clean state
 
-   All these commits that were backported involved fixing hangs, stalls,
-or error conditions in the nvme-tcp driver.
+### 4. **Clear Bug Fix Pattern**
+Looking at the similar commits provided:
+- Commit #3 (marked YES for backport) also fixed a validation issue in
+  nvme-tcp
+- This follows the same pattern of adding necessary validation to
+  prevent malicious behavior
+- It's fixing a clear bug rather than adding features or optimizations
 
-5. **No architectural changes**: The commit doesn't introduce new
-   features or change the architecture. It simply adds a missing check
-   to prevent I/O stalls, which aligns with stable kernel criteria.
+### 5. **High Security Impact**
+This vulnerability affects:
+- Any system using NVMe-TCP with untrusted storage targets
+- Cloud environments and multi-tenant storage systems
+- Data centers with NVMe-over-Fabrics deployments
 
-6. **Critical subsystem**: NVMe-TCP is used for storage access, and I/O
-   stalls can have severe consequences for system stability and data
-   integrity.
+The security impact is significant enough to warrant backporting to
+protect stable kernel users.
 
-The specific code changes show:
-- `return consumed == -EAGAIN ? 0 : consumed;` - prevents treating
-  EAGAIN as an error
-- The new check `if (nvme_tcp_queue_has_pending(queue) &&
-  sk_stream_is_writeable(queue->sock->sk))` ensures that if there are
-  pending requests and the socket is writable after receive processing,
-  we continue processing instead of stalling.
+### 6. **No Complex Dependencies**
+The changes are self-contained and don't depend on major architectural
+changes or new features. The fix:
+- Uses existing list handling APIs (`llist_on_list`, `list_empty`)
+- Adds proper initialization with standard macros
+- Returns existing error codes (`-EPROTO`)
 
-This is exactly the type of bug fix that should be backported to stable
-kernels to ensure reliable storage operation.
+### 7. **Follows Stable Kernel Rules**
+This commit clearly follows stable kernel criteria:
+- Fixes a real bug that affects users (security vulnerability)
+- Small change with minimal risk
+- No new features or architectural changes
+- Important for system security and stability
 
- drivers/nvme/host/tcp.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+The commit prevents a serious security issue where malicious storage
+devices could compromise system stability or potentially gain
+unauthorized access through memory corruption. This makes it a critical
+candidate for stable kernel backporting.
+
+ drivers/nvme/host/tcp.c | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/nvme/host/tcp.c b/drivers/nvme/host/tcp.c
-index 4cc72be28c731..13ede6e309092 100644
+index 13ede6e309092..25e486e6e8054 100644
 --- a/drivers/nvme/host/tcp.c
 +++ b/drivers/nvme/host/tcp.c
-@@ -1349,7 +1349,7 @@ static int nvme_tcp_try_recv(struct nvme_tcp_queue *queue)
- 	queue->nr_cqe = 0;
- 	consumed = sock->ops->read_sock(sk, &rd_desc, nvme_tcp_recv_skb);
- 	release_sock(sk);
--	return consumed;
-+	return consumed == -EAGAIN ? 0 : consumed;
+@@ -453,7 +453,8 @@ nvme_tcp_fetch_request(struct nvme_tcp_queue *queue)
+ 			return NULL;
+ 	}
+ 
+-	list_del(&req->entry);
++	list_del_init(&req->entry);
++	init_llist_node(&req->lentry);
+ 	return req;
  }
  
- static void nvme_tcp_io_work(struct work_struct *w)
-@@ -1377,6 +1377,11 @@ static void nvme_tcp_io_work(struct work_struct *w)
- 		else if (unlikely(result < 0))
- 			return;
+@@ -561,6 +562,8 @@ static int nvme_tcp_init_request(struct blk_mq_tag_set *set,
+ 	req->queue = queue;
+ 	nvme_req(rq)->ctrl = &ctrl->ctrl;
+ 	nvme_req(rq)->cmd = &pdu->cmd;
++	init_llist_node(&req->lentry);
++	INIT_LIST_HEAD(&req->entry);
  
-+		/* did we get some space after spending time in recv? */
-+		if (nvme_tcp_queue_has_pending(queue) &&
-+		    sk_stream_is_writeable(queue->sock->sk))
-+			pending = true;
+ 	return 0;
+ }
+@@ -765,6 +768,14 @@ static int nvme_tcp_handle_r2t(struct nvme_tcp_queue *queue,
+ 		return -EPROTO;
+ 	}
+ 
++	if (llist_on_list(&req->lentry) ||
++	    !list_empty(&req->entry)) {
++		dev_err(queue->ctrl->ctrl.device,
++			"req %d unexpected r2t while processing request\n",
++			rq->tag);
++		return -EPROTO;
++	}
 +
- 		if (!pending || !queue->rd_enabled)
- 			return;
+ 	req->pdu_len = 0;
+ 	req->h2cdata_left = r2t_length;
+ 	req->h2cdata_offset = r2t_offset;
+@@ -2599,6 +2610,8 @@ static void nvme_tcp_submit_async_event(struct nvme_ctrl *arg)
+ 	ctrl->async_req.offset = 0;
+ 	ctrl->async_req.curr_bio = NULL;
+ 	ctrl->async_req.data_len = 0;
++	init_llist_node(&ctrl->async_req.lentry);
++	INIT_LIST_HEAD(&ctrl->async_req.entry);
  
+ 	nvme_tcp_queue_request(&ctrl->async_req, true, true);
+ }
 -- 
 2.39.5
 
