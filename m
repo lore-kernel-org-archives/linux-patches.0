@@ -1,115 +1,88 @@
-Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
+Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 025BC5789D;
-	Tue, 10 Jun 2025 03:48:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F92C188580
+	for <patches@lists.linux.dev>; Tue, 10 Jun 2025 03:48:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749527283; cv=none; b=RcPface6eB7pTR/+owj9PNTilCiy0P9jomjcgcV2YmfjjjvVjEDTBaab8q6kLvcpYkxem6kvnbF4nqSfniT6i/pTpqvyu8P4hoy0v88KTnQ+Nq7Qvyng0/pOQlYGem9lNhE32AE+v47Oqjx2zb6Dmc3RBqO0EH5iSVSHJAlncMY=
+	t=1749527335; cv=none; b=W0i4Y8Qiwi0IOk7sQyYjjHGkuDoJQFlB+dWxS1oR1cMrQkCStjBvcvZFdXVBQw5HJQPdBsdBCCnQ1zmYHGbi+3XvNlXqwaPvATuCZZMZ0PxGvemmtO2aZ3aNeBmsMS6aDrUBNGpJKOrG3pbEc9/F2KPqbQjA1sdgPCXIQZy6zFg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749527283; c=relaxed/simple;
-	bh=SuVp9AFmt8gLD64j4a+SRLxEwyPAPmST5oVeKyyVGVI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Mu8uHccwBCdDoNdl2v6G+sovkuBYpacsA6eHpP+f/r1PPH2PbphcqF/A6tfn2tAcHlaTtc/w4twB2vq/n3DRdGK9/WF2dAwMzEDtsu7UaLpz26BciL0asHsnf4iuwMIQne7dFmHa1kmWXtdeNslqPwm3dUNNlqORtBfjEiF1ofc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=csie.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.167.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=csie.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-55324062ea8so6500869e87.3;
-        Mon, 09 Jun 2025 20:48:00 -0700 (PDT)
+	s=arc-20240116; t=1749527335; c=relaxed/simple;
+	bh=LfDKku90Dd3qk/Tpjpfg+vTZqQ5m61fR/4fkUTRneyg=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=Tb9mERT76T73hBLs1cm3pUN/s26VuTaWYrRssr8zE7RhA3FmE0Z6sYZesaxgF7zBDoDXMKEbc5WiBuaWqLAgjYBcr/QGYACiXarvZwUlwrLa8c1fopTM6uSZ9Y0VcJiWWR6O0HaPu55obNd6f/oaMTXEA7xKT9Ok5hyucH+fpsY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com; spf=pass smtp.mailfrom=bytedance.com; dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b=EdJf3meR; arc=none smtp.client-ip=209.85.210.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bytedance.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b="EdJf3meR"
+Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-742c46611b6so6273655b3a.1
+        for <patches@lists.linux.dev>; Mon, 09 Jun 2025 20:48:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bytedance.com; s=google; t=1749527333; x=1750132133; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=LfDKku90Dd3qk/Tpjpfg+vTZqQ5m61fR/4fkUTRneyg=;
+        b=EdJf3meRn/LwBB9b2pNwQfStRzkAw5nUt3DfcXydTgVbWn7PIQpgXe1Ui+iyRv3XLI
+         zabqePl+rXd5Oy7Aowu3aMJRfMOu15aUuTMJBJo6f0VDh0g6veP7fEEPvEYTOrNxNuyo
+         cp/q/7aWK3UY88IPeirPb/x+YxPmFsX8M0vPEdSvN+C/LgWLn5iNiYJkLJgagWNBxoEG
+         Kc6ApPaqnOqntLNtB6886y+V9B8EqU18lUoXdmhyZz0fYwQwK7LHmPxkRrmU2Tc2Egnw
+         fyTZ7flbSzhgQCqsEvvgmXN3LzkxSgWVMP6AtajDfUK7D1tSPrMUdHACPlubbe97CP2+
+         y9YA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749527277; x=1750132077;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :reply-to:in-reply-to:references:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=nZk/7/4MvcJfckdyvA+r+JfqYVWkeTH5dDDkcVRzYjI=;
-        b=npvz1VhC5KA6u0OjMoj+2uReTIGarS2o8jVousLs6Afkzhd8G2R57JFi2vtTrJuNIJ
-         trK8Q5ZTy/MUU6pYPmu7a3wImIRNTuYxImi0OCZ6R7QGstT9gJyk836A9n2TROqACrde
-         ShR23YagqDPM14maJYdqzvvl7jGVDkCjYYVaN+LKOO/hwyVTAWp+8xSvSrnC8JP2CUHs
-         RiW7k8x1n1HafOs2cXfVkMfcHO36TRShZ9DqllJetOTYl3oJcBTye40+ffNVRoF7WZpW
-         uv44gW+BzbZeI/UAukkpG62i0uLZftUWs9qqL9TV/UEfhtKokT4Y9JnbZEQklBk9GEgI
-         ruFQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUuCNGfHBqrsxmopS937gDBeAwtbS+bXXK5kVommpfigOKLBmBzOQhCmKjnUKk6K0GnDjrXKw==@lists.linux.dev, AJvYcCUvBWV36XJYOLKOpC7fvHxX7VpGI6amZUqqFJZnQGcfsN9lTY8ekF3vodfzZRmg3XCu+NkEO0jpYXNe69A=@lists.linux.dev, AJvYcCVzieEgg+FGZ5ffHRcwXozLrXTLT7jKca0mRVIEKGYFbOwK1gWr7cCwsXdzL+fZt6+2eJVtMUNaS2Gb1C+Lbwo=@lists.linux.dev, AJvYcCXr7B6Zi6KNoG5QTqPDNe/GyUopy7xDFoKubMnKY0b0Ss6DvSWLmY9UIiiYgucGKcpA572X3Zw=@lists.linux.dev, AJvYcCXxmTeWUMZPEeI6IH1VA/4kHHFh7nNF3s3UL8M9CLWgdilKuMtwmdrALBKOG3qq6J22SNN8nyjFvw==@lists.linux.dev
-X-Gm-Message-State: AOJu0YxXp6RRlRhQDnjIthr9igEBeRZ9OfhtbYq1SJjIDsLDQhHTjKtW
-	cn726Lr4hREecR9o3iFQF1ETDFuPwZeePcLZg5HMnD7VRi36kVLRWnLTOn7do94sx3o=
-X-Gm-Gg: ASbGncsrvPv+DUbvpksIuO9QyjqNTU2b1+p5y7yJy8/fUBswHRxnEXmBnwD46G5/z0f
-	A3tUTXk8hrf8XLW1Hd/cEO8ANbBYLjzkVjE9T7o6pqr2vim7uqGHh0zZMPf+s3yQiTvTj4+dPPB
-	6VUw6VYAS0bV90P8WpW40M2hSuOvzmwqruVYvb3zeGwEVwLRDgjEz2vSORz1x7swo9qh46cH17X
-	CFQxt/GiguAjZqbHr5QdyhxfyU/M+QeQZjGfrPvp6tab16qgbisatogOFnr1Ht8gR9X3W/8SMkb
-	JFLihVKgval7KVc4MQfA3s3D1AfsGGYzMnvwZj7F5c2UvlYmOL5uB+wAW6CAmf2SLPXvRpOg5xq
-	X80WmCsTb3ssTW9Twknw=
-X-Google-Smtp-Source: AGHT+IGtAx3E0GkGm96xBngjQMnlMxOYfUOrjVJ/FWCIHj0a/rSABsf/iGXRzYWdHKJrM9Fw89B6Hw==
-X-Received: by 2002:a05:6512:3056:b0:553:2ca4:39d3 with SMTP id 2adb3069b0e04-55366c3288cmr4346426e87.48.1749527276542;
-        Mon, 09 Jun 2025 20:47:56 -0700 (PDT)
-Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com. [209.85.208.180])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-553676d03c2sm1402937e87.18.2025.06.09.20.47.54
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 09 Jun 2025 20:47:55 -0700 (PDT)
-Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-310447fe59aso47865611fa.0;
-        Mon, 09 Jun 2025 20:47:54 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCUUcfAxfY09EycBp3URiND+SBv5l3fAtTjE/yVJDQCqTgViZ2U0hOwQI67UUkk6+SOdgen3OGXK5g==@lists.linux.dev, AJvYcCVHDbgWHO5Uc/sxr4wVLoo4RRzbCjCVa54gMv3VMXTFGeQPNOpFW3dS6uqh+XjrukaSB1KaR9Pt/++VPN5uFOw=@lists.linux.dev, AJvYcCVIf1kXeQACZUBx1ahX1ocsBna+ZJ06MZ/3s10reUGmHlhH9mdabNk4+OmgjQhp/ecaAARxbBu1ABmhg5Y=@lists.linux.dev, AJvYcCVQPkd+8Lt9QXzKL35O4rANoTXKN0ALeSv4gzmTVhLLnwrGJK4oYgsZ7hBy+wIHh43+j0dN9g==@lists.linux.dev, AJvYcCWoGIUBgdLptIW9DQYxbVZvq5jIiVuoETE4gOYXvndBxnyt9nwnSBb2sJF+xY9Ii+ShUC3v0Ys=@lists.linux.dev
-X-Received: by 2002:a2e:b693:0:b0:32a:ddd2:208e with SMTP id
- 38308e7fff4ca-32adfc06f41mr30364041fa.9.1749527274652; Mon, 09 Jun 2025
- 20:47:54 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1749527333; x=1750132133;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=LfDKku90Dd3qk/Tpjpfg+vTZqQ5m61fR/4fkUTRneyg=;
+        b=vW6lZuuRVtc+k7izPK914Y90NPVFCtXRHGh/GuQbTQqDuUgqECsPKX6R+6ACyG4kVc
+         vLRRduxE8I8kkNfDtVhfukK1LhBdd5NCnQzO+1x/vlP/iczoQzg85XEqrfFL0ucG9Zlb
+         jJT0xKHht0/jFIvrAdoc5X59jckj6MoM7SrKsPBTug4f9bjfXFMnnLADwgaqLy07hzQ4
+         +2fF8537p+iQNlWCAPZ7daRbGKzxNPusHum0tl9OuLoRAJI2Qd3n1ZLLqyqtTOtswkOP
+         bdrPo4TlTCOnh4ocyCTEEU28auNVchT2lzt7lTmUgaaYj/wcx7kgAB9N28NhYjhxQBKQ
+         1ukg==
+X-Gm-Message-State: AOJu0Ywwx7FQvggPunWBHvP4/JcKo2GUHo4dfd48xnQR4YbtdcTCg2t0
+	MedQe9HXLA9/rzxe0Z0jw1GWNfd06DIjHNAgJIjwe7IlZs6V7dkZ/F9BVVK9jwgsU6U=
+X-Gm-Gg: ASbGnct4QV0EAOeE6HzVhw3XVDD9iD9khz3tq7U5+JyMtAfuuSyFNlkm9nfA1QDWPZt
+	awCvgcA78Ty+7Hvix6K43vbiSzkkGPg2DuKOCLyPOLBliB7i+4qP4oKHBO8CQf/TOpkJFm9/JAq
+	QLDxN1L57n7D6H8CWUPkf9HGB3XxzaPFeM4Z7D6d2jLkQNyBWK7HrtzQorQm5W8yai/gzffylN1
+	+MPdRAHWv6eIYN7JvDjFyQT6yGKR+tH0E4gIksWgsDGeeb8wlLUOTsBMGZrKal+7niB+aGF+pV8
+	Pex3y/RnygV5PmBod5WdKPIBhjqn8fk3/y0T3KrZr3CpgE9srnhOdBUe16hck33/SpdmMzccgA4
+	WWLH8CfScT9/LYa5Lolc=
+X-Google-Smtp-Source: AGHT+IG1ix41IRlPEDG1HenvHY+yF8PR1xemRzGkkLgVLLnz1RDwPTZbUhRrHTkZMMX4Gu1C+XxPvg==
+X-Received: by 2002:a05:6a00:2343:b0:736:5664:53f3 with SMTP id d2e1a72fcca58-74827f159afmr18347886b3a.15.1749527332612;
+        Mon, 09 Jun 2025 20:48:52 -0700 (PDT)
+Received: from localhost.localdomain ([63.216.146.178])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7482b083b03sm6488081b3a.83.2025.06.09.20.48.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 09 Jun 2025 20:48:51 -0700 (PDT)
+From: Han Young <hanyang.tony@bytedance.com>
+To: lionelcons1972@gmail.com
+Cc: patches@lists.linux.dev,
+	stable@vger.kernel.org,
+	linux-nfs@vger.kernel.org,
+	Han Young <hanyang.tony@bytedance.com>
+Subject: Re: [PATCH AUTOSEL 6.1 3/9] NFSv4: Always set NLINK even if the server doesn't support it
+Date: Tue, 10 Jun 2025 11:48:40 +0800
+Message-ID: <20250610034840.36099-1-hanyang.tony@bytedance.com>
+X-Mailer: git-send-email 2.49.0.654.g845c48a16a.dirty
+In-Reply-To: <CAPJSo4XSoTNVvH8MpZWD4W50u=U4bw6YBCnNeiJZpe2LT-YNYg@mail.gmail.com>
+References: <CAPJSo4XSoTNVvH8MpZWD4W50u=U4bw6YBCnNeiJZpe2LT-YNYg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <0-v2-68a2e1ba507c+1fb-iommu_rm_ops_pgsize_jgg@nvidia.com> <4-v2-68a2e1ba507c+1fb-iommu_rm_ops_pgsize_jgg@nvidia.com>
-In-Reply-To: <4-v2-68a2e1ba507c+1fb-iommu_rm_ops_pgsize_jgg@nvidia.com>
-Reply-To: wens@csie.org
-From: Chen-Yu Tsai <wens@csie.org>
-Date: Tue, 10 Jun 2025 11:47:42 +0800
-X-Gmail-Original-Message-ID: <CAGb2v672aLfjX2_+=gnYEt09Z2m+sDoUi-weN2VsgtqnrK_fDw@mail.gmail.com>
-X-Gm-Features: AX0GCFvT3cfnNTYictCtJSVKUrXJH3fCgSrvu85ggYc6KyathRV-zklZHWwYSnM
-Message-ID: <CAGb2v672aLfjX2_+=gnYEt09Z2m+sDoUi-weN2VsgtqnrK_fDw@mail.gmail.com>
-Subject: Re: [PATCH v2 4/7] iommu: Remove iommu_ops pgsize_bitmap from simple drivers
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: Alexandre Ghiti <alex@ghiti.fr>, Alim Akhtar <alim.akhtar@samsung.com>, 
-	Alyssa Rosenzweig <alyssa@rosenzweig.io>, 
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, Albert Ou <aou@eecs.berkeley.edu>, 
-	asahi@lists.linux.dev, Baolin Wang <baolin.wang@linux.alibaba.com>, 
-	David Woodhouse <dwmw2@infradead.org>, Gerald Schaefer <gerald.schaefer@linux.ibm.com>, 
-	Heiko Stuebner <heiko@sntech.de>, iommu@lists.linux.dev, Janne Grunau <j@jannau.net>, 
-	Jean-Philippe Brucker <jean-philippe@linaro.org>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
-	Jonathan Hunter <jonathanh@nvidia.com>, Joerg Roedel <joro@8bytes.org>, 
-	Krzysztof Kozlowski <krzk@kernel.org>, linux-arm-kernel@lists.infradead.org, 
-	linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org, 
-	linux-riscv@lists.infradead.org, linux-rockchip@lists.infradead.org, 
-	linux-s390@vger.kernel.org, linux-samsung-soc@vger.kernel.org, 
-	linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org, 
-	Marek Szyprowski <m.szyprowski@samsung.com>, Matthias Brugger <matthias.bgg@gmail.com>, 
-	Matthew Rosato <mjrosato@linux.ibm.com>, Neal Gompa <neal@gompa.dev>, 
-	Orson Zhai <orsonzhai@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>, 
-	Paul Walmsley <paul.walmsley@sifive.com>, Rob Clark <robin.clark@oss.qualcomm.com>, 
-	Robin Murphy <robin.murphy@arm.com>, Samuel Holland <samuel@sholland.org>, Sven Peter <sven@kernel.org>, 
-	Thierry Reding <thierry.reding@gmail.com>, Krishna Reddy <vdumpa@nvidia.com>, 
-	virtualization@lists.linux.dev, Will Deacon <will@kernel.org>, 
-	Yong Wu <yong.wu@mediatek.com>, Chunyan Zhang <zhang.lyra@gmail.com>, 
-	Lu Baolu <baolu.lu@linux.intel.com>, Kevin Tian <kevin.tian@intel.com>, patches@lists.linux.dev, 
-	Niklas Schnelle <schnelle@linux.ibm.com>, Sven Peter <sven@svenpeter.dev>, 
-	Tomasz Jeznach <tjeznach@rivosinc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Tue, Jun 10, 2025 at 4:41=E2=80=AFAM Jason Gunthorpe <jgg@nvidia.com> wr=
-ote:
->
-> These drivers just have a constant value for their page size, move it
-> into their domain_alloc_paging function before setting up the geometry.
->
-> Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-> Acked-by: Niklas Schnelle <schnelle@linux.ibm.com> # for s390-iommu.c
-> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-> ---
->  drivers/iommu/exynos-iommu.c   | 3 ++-
->  drivers/iommu/ipmmu-vmsa.c     | 4 ++--
->  drivers/iommu/mtk_iommu_v1.c   | 3 ++-
->  drivers/iommu/omap-iommu.c     | 3 ++-
->  drivers/iommu/rockchip-iommu.c | 3 ++-
->  drivers/iommu/s390-iommu.c     | 2 +-
->  drivers/iommu/sprd-iommu.c     | 3 ++-
->  drivers/iommu/sun50i-iommu.c   | 3 ++-
+On Mon, 9 Jun 2025 at 09:12, Lionel Cons <lionelcons1972@gmail.com> wrote:
+> How can an application then test whether a filesystem supports hard
+> links, or not?
 
-Acked-by: Chen-Yu Tsai <wens@csie.org> # sun50i-iommu.c
+I think link will fail with EPERM on those systems. However, this patch
+doesn't break existing things though, since filesystems don't support
+hard links cannot be mounted by NFS (before).
+
+Thanks.
