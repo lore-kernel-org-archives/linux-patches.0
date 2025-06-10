@@ -1,50 +1,50 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.13])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38CA31A727D;
-	Tue, 10 Jun 2025 04:27:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45A2025F7A1;
+	Tue, 10 Jun 2025 05:56:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.17
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749529677; cv=none; b=B4ydrCndqCR9fYv+unSSsxzqt8T0mLM8ZahPsH7BOgTBWg3aRq6ifrh6eUnlNjGS61fcpl3HVvFeOBeck719J8YVxje7+KItJwicRbxCxXQgROVs6/tCNMLQGR0yd5F4JHHheZHYxB+TaalKkRYRY7TfMGMASgIIVyixJU3MWiI=
+	t=1749534963; cv=none; b=s4Z/+F+0F5eA/JElxn7N0udGSDCBu/dSxRcIDEPE04LEg969Ov6u9+0249C5soSpCGf9Wm1ZScklc/XoV0rQJBQGoKXQf2KmzPYaNnI5jOiTouIevWG5vCJTTO/eFtsBxfeRssJzr7aNTGAVIBKk3RY+I3X8AmTE0IQim0BYpHA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749529677; c=relaxed/simple;
-	bh=bABhSsjxKZ0piICCcKMoHsdmRblKy52gHCDlFNdDTTk=;
+	s=arc-20240116; t=1749534963; c=relaxed/simple;
+	bh=G4e/2eOK6ny5QB/E7KrW01XPlfzZ3rtlWZTAQU/NK50=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=n+ZSwALaKC/NswphsTqQN7ERbsV9utXEKpUU3nAMvy/1e/g627D5lY3eAiAX+N2+eEV1BIhJQwh5ytXHwa+FJOceB52eEuty05xSiYvqGR4RGWHlp53f53XDCZLXeKdUf/IFMv6GncOtnxltIsbgDo+LqWNwBt1hHk+HYxR7S44=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=RSIXrrzR; arc=none smtp.client-ip=192.198.163.13
+	 In-Reply-To:Content-Type; b=jXQbGdoRyEhLvLXOYA8qQYOIUAQJUuLWWOUBPSSJn34726tjarct+7TqnxKXL7PKQn3S/bAKR+XGwunTmml8St4XzGF7TO3eJtJNGKpfXu+R5jfEb3GlwrGRHhWXmUY2oT9eTpHEjLGFkFajh9Ck58lKjTm9hOw+Im5sqyNrRW8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=J+2QAMvR; arc=none smtp.client-ip=198.175.65.17
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="RSIXrrzR"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="J+2QAMvR"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1749529676; x=1781065676;
+  t=1749534961; x=1781070961;
   h=message-id:date:mime-version:subject:to:cc:references:
    from:in-reply-to:content-transfer-encoding;
-  bh=bABhSsjxKZ0piICCcKMoHsdmRblKy52gHCDlFNdDTTk=;
-  b=RSIXrrzR9b56c/uHKY3dj4tZ9XnOt9rHwhag/MICWNBjFJMq5tfe+XxN
-   DArdmv07RM1+QqZM41cTnbUKPg/Yd5/GpLuYrDErthUESHQiE3w03mPU1
-   Qeda88Cd+K+Xd0nUmz6wp0mOsE87LoUQT8qHaSYwMFmZRZ1rfMDwXQBVM
-   tGWGehSHg3xxGAVr+60+k1SWB/OzyAn4EzTr9dHJbIiGZoYgEXU70lDRo
-   7k4ZcFFFzrQXri+ivIeBS9Ga5glLQFY+zyMRzM6usUa/pF3D5hSD8OGDn
-   qUKaHivgJSChXRitAKbeTItx93Qtj5SikKtiC77Kerfou4Ld0ryy03k5j
-   Q==;
-X-CSE-ConnectionGUID: jiqklvmNRd+Hd0B71UdFxg==
-X-CSE-MsgGUID: 1VuOHPL1Sou2EOuO2A4nJw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11459"; a="54253717"
+  bh=G4e/2eOK6ny5QB/E7KrW01XPlfzZ3rtlWZTAQU/NK50=;
+  b=J+2QAMvRlu3bnPN05KcoHdCuKfvI9ZsE+/8JR3mz0Bux0EY1dAKNfKKK
+   tfSp6DyDpepuimbKfiCQC1tVPA+CWI8gQXpNu2qHF0coXwkobzh8EtsSV
+   HjJkgFQyzRhMb1lqQk9FkrOEt9wbom1Ip+lwqEHvNa0D3vvBLxxGWc0hU
+   HnYKs1vLcP6k8u9Hv8PkU4+kkh47ZgGVENpPjZHcluJEPDh3w5H9EcYuP
+   H5QFnc6CRmlrP2qnoz4V5W7i9YB20sQNlJ5UYatKgYx49dZezC6rAFU30
+   77cneI/tcQR9v1EatbZeELIQ1HgGyRzOMlGnfTXOxf8eduodm4lV7fQVG
+   A==;
+X-CSE-ConnectionGUID: jEQiK5n3SDOcJPL/vbqbfQ==
+X-CSE-MsgGUID: mMprEojfTrGSECaHHrbyZg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11459"; a="51619301"
 X-IronPort-AV: E=Sophos;i="6.16,224,1744095600"; 
-   d="scan'208";a="54253717"
-Received: from fmviesa006.fm.intel.com ([10.60.135.146])
-  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Jun 2025 21:27:56 -0700
-X-CSE-ConnectionGUID: ILtEZ1+rTOWRrlJcfV9EDw==
-X-CSE-MsgGUID: yGjo7KvoSn+NESx7FbV2aw==
+   d="scan'208";a="51619301"
+Received: from orviesa008.jf.intel.com ([10.64.159.148])
+  by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Jun 2025 22:56:00 -0700
+X-CSE-ConnectionGUID: iwtgq3SFR1qHMUrMNb3N1Q==
+X-CSE-MsgGUID: +iV+ck/8TO6QZ8hxjHdHGQ==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.16,224,1744095600"; 
-   d="scan'208";a="146597903"
+   d="scan'208";a="147692069"
 Received: from allen-sbox.sh.intel.com (HELO [10.239.159.30]) ([10.239.159.30])
-  by fmviesa006-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Jun 2025 21:27:53 -0700
-Message-ID: <34442ab9-08e1-4e9a-b08e-3b81a581fec3@linux.intel.com>
-Date: Tue, 10 Jun 2025 12:27:04 +0800
+  by orviesa008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Jun 2025 22:55:56 -0700
+Message-ID: <663c7eee-5a3a-48e5-8bed-8abad62f3484@linux.intel.com>
+Date: Tue, 10 Jun 2025 13:55:05 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -52,68 +52,62 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC v1 2/2] pci: Suspend ATS before doing FLR
-To: Nicolin Chen <nicolinc@nvidia.com>, jgg@nvidia.com, joro@8bytes.org,
- will@kernel.org, robin.murphy@arm.com, bhelgaas@google.com
-Cc: iommu@lists.linux.dev, linux-kernel@vger.kernel.org,
- linux-pci@vger.kernel.org, patches@lists.linux.dev, pjaroszynski@nvidia.com,
- vsethi@nvidia.com
-References: <cover.1749494161.git.nicolinc@nvidia.com>
- <29cc1268dfdae2a836dbdeaa4eea3bedae564497.1749494161.git.nicolinc@nvidia.com>
+Subject: Re: [PATCH v1 08/12] iommufd/viommu: Replace ops->viommu_alloc with
+ ops->viommu_init
+To: Nicolin Chen <nicolinc@nvidia.com>, jgg@nvidia.com, kevin.tian@intel.com
+Cc: will@kernel.org, robin.murphy@arm.com, joro@8bytes.org,
+ ddutile@redhat.com, yi.l.liu@intel.com, peterz@infradead.org,
+ jsnitsel@redhat.com, praan@google.com, linux-arm-kernel@lists.infradead.org,
+ iommu@lists.linux.dev, linux-kernel@vger.kernel.org, patches@lists.linux.dev
+References: <cover.1749488870.git.nicolinc@nvidia.com>
+ <5586990446e4c97827b5a195622ec0f8cf9d2d67.1749488870.git.nicolinc@nvidia.com>
 Content-Language: en-US
 From: Baolu Lu <baolu.lu@linux.intel.com>
-In-Reply-To: <29cc1268dfdae2a836dbdeaa4eea3bedae564497.1749494161.git.nicolinc@nvidia.com>
+In-Reply-To: <5586990446e4c97827b5a195622ec0f8cf9d2d67.1749488870.git.nicolinc@nvidia.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 6/10/25 02:45, Nicolin Chen wrote:
-> Per PCIe r6.3, sec 10.3.1 IMPLEMENTATION NOTE, software should disable ATS
-> before initiating a Function Level Reset.
+On 6/10/25 01:13, Nicolin Chen wrote:
+> To ease the for-driver iommufd APIs, get_viommu_size and viommu_init ops
+> are introduced. Now, those existing vIOMMU supported drivers implemented
+> these two ops too.
 > 
-> Call iommu_dev_reset_prepare() before FLR and iommu_dev_reset_done() after,
-> in the two FLR Functions. This will dock the device at IOMMU_DOMAIN_BLOCKED
-> during the FLR function, which should allow the IOMMU driver to pause DMA
-> traffic and invode pci_disable_ats() and pci_enable_ats() respectively.
+> Relace the ops->viommu_alloc call with the two new ones.
 > 
-> Add a warning if ATS isn't disabled, in which case IOMMU driver should fix
-> itself to disable ATS following the design in iommu_dev_reset_prepare().
+> Note that this will fail a !viommu->ops case from now on, since a vIOMMU
+> is expected to support alloc_domain_nested at least.
+
+Does this mean that the viommu implementation in the iommu driver is
+required to implement alloc_domain_nested? I suppose viommu should soon
+be extended to support TEE/IO.
+
 > 
+> Suggested-by: Jason Gunthorpe<jgg@nvidia.com>
 > Signed-off-by: Nicolin Chen<nicolinc@nvidia.com>
 > ---
->   drivers/pci/pci.c | 42 ++++++++++++++++++++++++++++++++++++++----
->   1 file changed, 38 insertions(+), 4 deletions(-)
+>   drivers/iommu/iommufd/viommu.c | 30 +++++++++++++++++++++++++++---
+>   1 file changed, 27 insertions(+), 3 deletions(-)
 > 
-> diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
-> index e9448d55113b..61535435bde1 100644
-> --- a/drivers/pci/pci.c
-> +++ b/drivers/pci/pci.c
-> @@ -13,6 +13,7 @@
->   #include <linux/delay.h>
->   #include <linux/dmi.h>
->   #include <linux/init.h>
-> +#include <linux/iommu.h>
->   #include <linux/msi.h>
->   #include <linux/of.h>
->   #include <linux/pci.h>
-> @@ -4518,13 +4519,26 @@ EXPORT_SYMBOL(pci_wait_for_pending_transaction);
->    */
->   int pcie_flr(struct pci_dev *dev)
->   {
-> +	int ret = 0;
-> +
->   	if (!pci_wait_for_pending_transaction(dev))
->   		pci_err(dev, "timed out waiting for pending transaction; performing function level reset anyway\n");
->   
-> +	/*
-> +	 * Per PCIe r6.3, sec 10.3.1 IMPLEMENTATION NOTE, software disables ATS
-> +	 * before initiating a Function Level Reset. So notify the iommu driver
-> +	 * that actually enabled ATS. Have to call it after waiting for pending
-> +	 * DMA transaction.
-> +	 */
-> +	if (iommu_dev_reset_prepare(&dev->dev))
-> +		pci_err(dev, "failed to stop IOMMU\n");
 
-Need to abort here?
+<...>
+
+> @@ -68,6 +82,16 @@ int iommufd_viommu_alloc_ioctl(struct iommufd_ucmd *ucmd)
+>   	 */
+>   	viommu->iommu_dev = __iommu_get_iommu_dev(idev->dev);
+>   
+> +	rc = ops->viommu_init(viommu, hwpt_paging->common.domain);
+> +	if (rc)
+> +		goto out_abort;
+> +
+> +	/* It is a driver bug that viommu->ops isn't filled */
+> +	if (WARN_ON_ONCE(!viommu->ops)) {
+> +		rc = -EINVAL;
+> +		goto out_abort;
+> +	}
+> +
+>   	cmd->out_viommu_id = viommu->obj.id;
+>   	rc = iommufd_ucmd_respond(ucmd, sizeof(*cmd));
+>   	if (rc)
 
 Thanks,
 baolu
