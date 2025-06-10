@@ -1,168 +1,157 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.16])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4328821D594;
-	Tue, 10 Jun 2025 07:13:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.16
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5CA028A71A;
+	Tue, 10 Jun 2025 09:11:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749539619; cv=none; b=c0hyclru70ubQ8v6X2beJh0kQ7calKaGhiaLKCzWsSo2AntMeAQPEA1KoxpR9B98+g4ulc4rO1vmLyXmPtnv0694sE5C4zm4lpH/C/vGJ1bg1KXa5Jw9BGLsjk24suw2BAlMGUPehEbQ1PF4jRMKQkZTt7OU6b8wVOTTn6PAoSk=
+	t=1749546700; cv=none; b=lx2Mx1k9zkIYNEtgyhaIsbbZZZZELDTkNQc2KR7JLKep5Ps2MvVWV8z2tAysljUXau9DwWIj0oonvjhTuflpiG8NZ/cSp2P0/Egew57IKCBNsP01S41RKxV1NxsAbFPZLdD9mMM5nSzj3IF9Sir3MYkw1Ye72oKBbiKGaaM9ZU0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749539619; c=relaxed/simple;
-	bh=r2x5LeEtlYx8MECf8oW5WFH0h9jiFbPXfyHstvEq8dM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=R7LLCt8/+Q/U5jGJy1MjlbzsONoiuI9Ndy4GdVZEuMmhBWu4BPXpgS9XlmUphwWLaeWPJl6Qj1NbKbXuzBf6l13autbOWRSuhd5FOziGeaOXeJuUhx5RiMUQoVMxVHIaqq2e440HGAS2MH0oCTk79jbHvHnN18PBvgIZx+X43pI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=GtF/oqPR; arc=none smtp.client-ip=192.198.163.16
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+	s=arc-20240116; t=1749546700; c=relaxed/simple;
+	bh=gtuGk4aRFSpL1zHBjW3pY01TZxS1XUNvzlXCe18x3zY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=AokrcfttryTOMaWfu2htW0ySxGLfeWhYgg7xgi8XjbTF4n3dCw/huREmtdpzPytQtz+wSn1DnTdjF1RP5+oq51MivJbkr3J6v3TgseeOGj5APLNU4ZjlRWOfQn2uPRlQRw+JLQyasK2dcJfuTsZwcsRBrnFZ2u9tlWI8XlYXD8I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=F/1hzaj7; arc=none smtp.client-ip=209.85.221.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="GtF/oqPR"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1749539617; x=1781075617;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=r2x5LeEtlYx8MECf8oW5WFH0h9jiFbPXfyHstvEq8dM=;
-  b=GtF/oqPRClxITSlFe2ibe1M+jVAvfNUab+3PkUQhxDIG62QEDyA+UWAn
-   Kq33a4U03nEvqDYT0Y0HHsTJJm1LofZSNkJL5/Ilxd5jbbvE2zUZboz2h
-   Qn2R/880231uXiT8S9ZwtM5qlcM5KnvhVKrWc8ielYUdVJLhZ8cui0EV8
-   VTJafiOcCXTa93F2hLoTs7b7mK1V8H/n0EKhqJ23HUJVGwKM1EBFCjGNZ
-   l8FtlVe/cCoV+CwEr4H9nqheU9mGz9OuPEQkd3QO+4GqD+GoS3a0myDfA
-   fA4vOqFSyVk7uGMp6qllrAJYUTdDOKYjE+Vy/I7XVPPb04SCDEwk9m+RX
-   A==;
-X-CSE-ConnectionGUID: 0//Ok76fSPiXMGLw/Yz2Mg==
-X-CSE-MsgGUID: UYtX8nwkTq+ZdWKad9x25g==
-X-IronPort-AV: E=McAfee;i="6800,10657,11459"; a="39256082"
-X-IronPort-AV: E=Sophos;i="6.16,224,1744095600"; 
-   d="scan'208";a="39256082"
-Received: from orviesa005.jf.intel.com ([10.64.159.145])
-  by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Jun 2025 00:13:35 -0700
-X-CSE-ConnectionGUID: mjbqwKKyQp+VCTn9xroZYw==
-X-CSE-MsgGUID: wmQtb+7hQcSAcQbZQJ40SQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,224,1744095600"; 
-   d="scan'208";a="152002052"
-Received: from allen-sbox.sh.intel.com (HELO [10.239.159.30]) ([10.239.159.30])
-  by orviesa005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Jun 2025 00:13:33 -0700
-Message-ID: <39400661-9f18-4ba3-8cb8-d56ef548c9b0@linux.intel.com>
-Date: Tue, 10 Jun 2025 15:12:43 +0800
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="F/1hzaj7"
+Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-3a53ee6fcd5so1565617f8f.1;
+        Tue, 10 Jun 2025 02:11:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1749546694; x=1750151494; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=/J4JSHATnk9TCsjKFzEkFQy2OXqCakBAt2qzrcv/bCo=;
+        b=F/1hzaj7d6LszItlOPvGDPi6HbZ/kxblDGcnhFcbEXCU0+qmdiutcdi31IqoeUbW6o
+         DpsdReGJNoRNWBGNK5uT1Y/QxVpvqThIN9CH9qvNckchLb7Gza1c/Xx313WFn9+LwqkU
+         yisULe+Ex0iQwNJehfeQSxycfGWYjhKL339WPzHYPXXBcIj7Ynuhumoanf6vjSB3MN0S
+         iFIPW85egcD0o7yvjXOvbJMUSM9t0coGBDGusCasH37xGuzvH4644UpHstjBgIm3zQqn
+         M1TBmSCnLK6Qwv8x3esg+yncUn8+r/O6pShvCwQv53GFRirY0QR+dOnBBkWK5/6fobT0
+         M7TA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1749546694; x=1750151494;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=/J4JSHATnk9TCsjKFzEkFQy2OXqCakBAt2qzrcv/bCo=;
+        b=quY4HFqqxQHTg5qg8W7v/XJ4ST+3iCHvaUtu8xvmzstyMsF5/ji4U/IQecfTs389mi
+         YCLxyJn1UFfj38ZVzUuN/QUoyN6xnvywyAv2ENxGGt8O4nblhISED4u8V5Q3PFmRipUr
+         u6gD/EiW9eswnYDlNGKbp3oPdMPj9tIvPKXhBSYJAfxf8P2h777qwE99sMPBdCD3jk/z
+         utwIW7ims/mASdEiLgnBQ0aPKkNOfVO7k8mokwVM1RhVPuBjqJVsPt2D1MaMXjI6CcZw
+         ZJ+6U3qznWEGFxO1RCvkK8GUZWHnkK565GGYs31QGV6ihLJG7eUhIVkeyf71VbldGVal
+         QyeQ==
+X-Forwarded-Encrypted: i=1; AJvYcCU2w7bVsM4Fa9BLv+pN8po1B3WzaWzblEezxIcY0HMi86CM+Rl1hdzrCmHB/DLx9MPtOii/NA==@lists.linux.dev, AJvYcCV4ulvcvQEt6TejaX0Xrx/iTio1VAkkNOKsd4Xy7diHlW9bFF5Zlzmwu6fIBjj9gkcXYSjsvxbqEdtTK+0=@lists.linux.dev, AJvYcCVes+JduTtbgDx4raBT8QBGXEAH6wHegt3YqkQIGa2l++qvGB5QjgdhSzMdPJ/LCcf1C2/5xLA7l88UpNTU25Y=@lists.linux.dev, AJvYcCW0/UDuwWEsrqjXBfwLk2NwclBXO7MfIqFXuZ1rOI/uCzef6XHiAadPp5gfVpdscyv6LCrNQT40Rg==@lists.linux.dev, AJvYcCXPPOQIez7tgTMCUhM4CxZ69kSQwipvy79HqxfMaEW48va+Q7C/LkhsQo7I2/Ls2pj1E/2dtZs=@lists.linux.dev
+X-Gm-Message-State: AOJu0YxT7DmOn3y3/giReXoFsZyB/YJOeofu8zKIo2hieVXaYQ4w13O5
+	JKK/vx9Rfz9y968YoEpDOJBFFNjEKNY2d8VEY8dI/DtseaynCa8X8pxt
+X-Gm-Gg: ASbGncsfSmPpKfG0M4bDmD0QXyMhiDCS5bDRuBY8G9Fyg/5ubtOJ0cBDANHFXu49Scb
+	4zChDiaNUgr695Sw/tPosbd9A/qLh7Ieni2Pr83SjVK4QrYVPhkPSWxIcH9QXijQ+oVEZCfm6WM
+	BSOP/b17ypVaCr3FedbIuX322jvFrO1HMiQbrKKHlmb+LEAwnjfHd7D6ON3yxyl7hB5vDJj9laY
+	PgwADgACHG2fH+AAxj0fJoBwU4VnzasSJVC9SOOMnfYlkAYL/5LuLGn5ziler7b4DwojExZNrBf
+	Ly1f1s4gpsJva5rmtgZnjh7Hy8xYMk6Y+8FsNcfhwHKzjnZoKJBYTJDtcLxBY298kjAbSj9SF20
+	pUKgU1+jZ+/1t2SSvlooTEzvojzsUM0+TR4wKsjuNDDEjWo/i
+X-Google-Smtp-Source: AGHT+IGiaud+NmiD3BNjNEkh0KdS8oAZ8TPOqcLbBsZsD4cCdkMv4OiwbthBO25zWdPhWgZ1rXZiAA==
+X-Received: by 2002:a5d:588a:0:b0:3a4:f936:7882 with SMTP id ffacd0b85a97d-3a531ced06fmr13875069f8f.55.1749546693846;
+        Tue, 10 Jun 2025 02:11:33 -0700 (PDT)
+Received: from orome (p200300e41f281b00f22f74fffe1f3a53.dip0.t-ipconnect.de. [2003:e4:1f28:1b00:f22f:74ff:fe1f:3a53])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45320580af6sm6174635e9.1.2025.06.10.02.11.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 10 Jun 2025 02:11:32 -0700 (PDT)
+Date: Tue, 10 Jun 2025 11:11:30 +0200
+From: Thierry Reding <thierry.reding@gmail.com>
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: Alexandre Ghiti <alex@ghiti.fr>, Alim Akhtar <alim.akhtar@samsung.com>, 
+	Alyssa Rosenzweig <alyssa@rosenzweig.io>, 
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, Albert Ou <aou@eecs.berkeley.edu>, asahi@lists.linux.dev, 
+	Baolin Wang <baolin.wang@linux.alibaba.com>, David Woodhouse <dwmw2@infradead.org>, 
+	Gerald Schaefer <gerald.schaefer@linux.ibm.com>, Heiko Stuebner <heiko@sntech.de>, iommu@lists.linux.dev, 
+	Janne Grunau <j@jannau.net>, Jean-Philippe Brucker <jean-philippe@linaro.org>, 
+	Jernej Skrabec <jernej.skrabec@gmail.com>, Jonathan Hunter <jonathanh@nvidia.com>, 
+	Joerg Roedel <joro@8bytes.org>, Krzysztof Kozlowski <krzk@kernel.org>, 
+	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org, 
+	linux-mediatek@lists.infradead.org, linux-riscv@lists.infradead.org, 
+	linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org, linux-samsung-soc@vger.kernel.org, 
+	linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org, 
+	Marek Szyprowski <m.szyprowski@samsung.com>, Matthias Brugger <matthias.bgg@gmail.com>, 
+	Matthew Rosato <mjrosato@linux.ibm.com>, Neal Gompa <neal@gompa.dev>, Orson Zhai <orsonzhai@gmail.com>, 
+	Palmer Dabbelt <palmer@dabbelt.com>, Paul Walmsley <paul.walmsley@sifive.com>, 
+	Rob Clark <robin.clark@oss.qualcomm.com>, Robin Murphy <robin.murphy@arm.com>, 
+	Samuel Holland <samuel@sholland.org>, Sven Peter <sven@kernel.org>, Krishna Reddy <vdumpa@nvidia.com>, 
+	virtualization@lists.linux.dev, Chen-Yu Tsai <wens@csie.org>, Will Deacon <will@kernel.org>, 
+	Yong Wu <yong.wu@mediatek.com>, Chunyan Zhang <zhang.lyra@gmail.com>, 
+	Lu Baolu <baolu.lu@linux.intel.com>, Kevin Tian <kevin.tian@intel.com>, patches@lists.linux.dev, 
+	Niklas Schnelle <schnelle@linux.ibm.com>, Sven Peter <sven@svenpeter.dev>, 
+	Tomasz Jeznach <tjeznach@rivosinc.com>
+Subject: Re: [PATCH v2 4/7] iommu: Remove iommu_ops pgsize_bitmap from simple
+ drivers
+Message-ID: <zkfsgkps6z5wyjxdl3wmn2piwgir7swgml4jomuhxxkedne22d@hwzwxvcwpu3h>
+References: <0-v2-68a2e1ba507c+1fb-iommu_rm_ops_pgsize_jgg@nvidia.com>
+ <4-v2-68a2e1ba507c+1fb-iommu_rm_ops_pgsize_jgg@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 7/7] iommu/vtd: Split paging_domain_compatible()
-To: Jason Gunthorpe <jgg@nvidia.com>, David Woodhouse <dwmw2@infradead.org>,
- iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
- Robin Murphy <robin.murphy@arm.com>, Will Deacon <will@kernel.org>
-Cc: patches@lists.linux.dev, Wei Wang <wei.w.wang@intel.com>
-References: <7-v1-20c73f153f4c+1895-vtd_prep_jgg@nvidia.com>
-Content-Language: en-US
-From: Baolu Lu <baolu.lu@linux.intel.com>
-In-Reply-To: <7-v1-20c73f153f4c+1895-vtd_prep_jgg@nvidia.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="noll3rebw4hmh74s"
+Content-Disposition: inline
+In-Reply-To: <4-v2-68a2e1ba507c+1fb-iommu_rm_ops_pgsize_jgg@nvidia.com>
 
-On 6/10/25 03:58, Jason Gunthorpe wrote:
-> Make First/Second stage specific functions that follow the same pattern in
-> intel_iommu_domain_alloc_first/second_stage() for computing
-> EOPNOTSUPP. This makes the code easier to understand as if we couldn't
-> create a domain with the parameters for this IOMMU instance then we
-> certainly are not compatible with it.
-> 
-> Check superpage support directly against the per-stage cap bits and the
-> pgsize_bitmap.
-> 
-> Add a note that the force_snooping is read without locking. The locking
-> needs to cover the compatible check and the add of the device to the list.
-> 
-> Signed-off-by: Jason Gunthorpe<jgg@nvidia.com>
-> ---
->   drivers/iommu/intel/iommu.c | 66 ++++++++++++++++++++++++++++++-------
->   1 file changed, 54 insertions(+), 12 deletions(-)
-> 
-> diff --git a/drivers/iommu/intel/iommu.c b/drivers/iommu/intel/iommu.c
-> index ab2e9fef75293c..a482d1b77d1203 100644
-> --- a/drivers/iommu/intel/iommu.c
-> +++ b/drivers/iommu/intel/iommu.c
-> @@ -3416,33 +3416,75 @@ static void intel_iommu_domain_free(struct iommu_domain *domain)
->   	kfree(dmar_domain);
->   }
->   
-> +static int paging_domain_compatible_first_stage(struct dmar_domain *dmar_domain,
-> +						struct intel_iommu *iommu)
-> +{
-> +	if (WARN_ON(dmar_domain->domain.dirty_ops ||
-> +		    dmar_domain->nested_parent))
-> +		return -EINVAL;
-> +
-> +	/* Only SL is available in legacy mode */
-> +	if (!sm_supported(iommu) || !ecap_flts(iommu->ecap))
-> +		return -EINVAL;
-> +
-> +	/* Same page size support */
-> +	if (!cap_fl1gp_support(iommu->cap) &&
-> +	    (dmar_domain->domain.pgsize_bitmap & SZ_1G))
-> +		return -EINVAL;
-> +	return 0;
-> +}
-> +
-> +static int
-> +paging_domain_compatible_second_stage(struct dmar_domain *dmar_domain,
-> +				      struct intel_iommu *iommu)
-> +{
-> +	unsigned int sslps = cap_super_page_val(iommu->cap);
-> +
-> +	if (dmar_domain->domain.dirty_ops && !ssads_supported(iommu))
-> +		return -EINVAL;
-> +	if (dmar_domain->nested_parent && !nested_supported(iommu))
-> +		return -EINVAL;
-> +
-> +	/* Legacy mode always supports second stage */
-> +	if (sm_supported(iommu) && !ecap_slts(iommu->ecap))
-> +		return -EINVAL;
-> +
-> +	/* Same page size support */
-> +	if (!(sslps & BIT(0)) && (dmar_domain->domain.pgsize_bitmap & SZ_2M))
-> +		return -EINVAL;
-> +	if (!(sslps & BIT(1)) && (dmar_domain->domain.pgsize_bitmap & SZ_1G))
-> +		return -EINVAL;
-> +	return 0;
-> +}
-> +
->   int paging_domain_compatible(struct iommu_domain *domain, struct device *dev)
->   {
->   	struct device_domain_info *info = dev_iommu_priv_get(dev);
->   	struct dmar_domain *dmar_domain = to_dmar_domain(domain);
->   	struct intel_iommu *iommu = info->iommu;
-> +	int ret = -EINVAL;
->   	int addr_width;
->   
-> -	if (WARN_ON_ONCE(!(domain->type & __IOMMU_DOMAIN_PAGING)))
-> -		return -EPERM;
-> +	if (domain->ops == &intel_fs_paging_domain_ops)
-> +		ret = paging_domain_compatible_first_stage(dmar_domain, iommu);
-> +	else if (domain->ops == &intel_ss_paging_domain_ops)
-> +		ret = paging_domain_compatible_second_stage(dmar_domain, iommu);
-> +	else if (WARN_ON(true))
-> +		ret = -EINVAL;
-> +	if (ret)
-> +		return ret;
->   
-> +	/*
-> +	 * FIXME this is locked wrong, it needs to be under the
-> +	 * dmar_domain->lock
-> +	 */
->   	if (dmar_domain->force_snooping && !ecap_sc_support(iommu->ecap))
->   		return -EINVAL;
 
-Perhaps we can use group->mutex to fix this in the future?
+--noll3rebw4hmh74s
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH v2 4/7] iommu: Remove iommu_ops pgsize_bitmap from simple
+ drivers
+MIME-Version: 1.0
 
-paging_domain_compatible() is in the domain attaching path, which is
-already synchronized by group->mutex. We can further expose an iommu
-interface for cache coherency enforcement, which would also apply group-
- >mutex.
+On Mon, Jun 09, 2025 at 05:41:28PM -0300, Jason Gunthorpe wrote:
+[...]
+> diff --git a/drivers/iommu/tegra-smmu.c b/drivers/iommu/tegra-smmu.c
+> index 61897d50162dd7..fa0913e9346c71 100644
+> --- a/drivers/iommu/tegra-smmu.c
+> +++ b/drivers/iommu/tegra-smmu.c
+> @@ -318,6 +318,8 @@ static struct iommu_domain *tegra_smmu_domain_alloc_p=
+aging(struct device *dev)
+> =20
+>  	spin_lock_init(&as->lock);
+> =20
+> +	as->domain.pgsize_bitmap =3D SZ_4K;
+> +
+>  	/* setup aperture */
+>  	as->domain.geometry.aperture_start =3D 0;
+>  	as->domain.geometry.aperture_end =3D 0xffffffff;
+> @@ -1002,7 +1004,6 @@ static const struct iommu_ops tegra_smmu_ops =3D {
+>  	.probe_device =3D tegra_smmu_probe_device,
+>  	.device_group =3D tegra_smmu_device_group,
+>  	.of_xlate =3D tegra_smmu_of_xlate,
+> -	.pgsize_bitmap =3D SZ_4K,
+>  	.default_domain_ops =3D &(const struct iommu_domain_ops) {
+>  		.attach_dev	=3D tegra_smmu_attach_dev,
+>  		.map_pages	=3D tegra_smmu_map,
 
-Thanks,
-baolu
+Acked-by: Thierry Reding <treding@nvidia.com>
+
+--noll3rebw4hmh74s
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEiOrDCAFJzPfAjcif3SOs138+s6EFAmhH9sIACgkQ3SOs138+
+s6HNrxAAo93PCboo986Da72XguJIozPLAKyIbWbaeG0mAjcZN8YUqcSh21C3Xp4m
+qkNL3FwIbtg55H/1upzln07ZErFxc56r95b+GjnH7G4+X4608YnbKmdlZMxzkhpk
+Hiqglce9T205CGZdT2oaZeO26+zHlTeh3LBiiR4o0eurhupQldQ9evEZ5qVseZDA
+FOHY9nWWRDf0/HkM/+MpPA/8cXnNUpME3+OMZIWf6E0Fk0YJnGKS/FIj/aoYPvJI
+9cHiJLi/xs2mxDGh9xUuYDXRcapqzGw6fpsFzJM4G1dEDbYctUR9IOgvdWJ/vzNk
+zYnCdPC4tMYkkOwW85wmXbkVUkbTplxVlLUrVBDVjsou2gKfhKOj/lXWBQjWXJ2w
+PWaIHU9l+OSWsvXB3qkUtROmoqFqrf4+XA/2kV9AlRJO7rrb0hK8yj42rtjec2ix
+y5aU/5/v0Hcr+d09jaikpqhAx1miE9mHEFObqRBtOVko2pZ4l/DD6OVWBNDJyqHM
+9fX438+BucatKIy11m72MpW4m9FdBxwhPEfpyQSc79NCDtoKzoxE0wGFzxqcKyys
+EMGegmdKh0OKQke0uP2Ieo02BIp7sCoCf4m98nTRTYfOGTgfXO4kmfccAUeki59x
+5ez2fDP654E1ESVH+Xn7bWfBKtFiuw6IlaPL+CPNnjcaAxxtDUk=
+=E5td
+-----END PGP SIGNATURE-----
+
+--noll3rebw4hmh74s--
