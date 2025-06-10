@@ -1,127 +1,129 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA3D828B4E1;
-	Tue, 10 Jun 2025 09:43:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF96C28BAB5;
+	Tue, 10 Jun 2025 09:53:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749548580; cv=none; b=UYup7L4iBWlDDeX9adFaJANwB+BJOGY711nJ8BNPpL45+JdzgTpR+/59m5KOfiXkIPECURbZAe9iC+Mv7s0aSmVinn9TxPKHbJ57Yt9gvRzD8I6Gw19oIs+0nRC1Kr4NH0VMOXsD4GbWzAcfifEuekpsKCpEKczFd16ahFnvYTg=
+	t=1749549209; cv=none; b=SCdCJNg3k2byTekey3NxXaCqr3ho171E/2WVqOffdyMGhJJSoMi4TgbCOMjubwCwIYoGPAAO+k4iAKSWd+l5fD7kxLwBwadwetsfA6+5y8wPOAb0hpTe0QVdJqrLm7jkW3ZbJhXrrQw/pG1245G1pMb6ZQ4gjEWimAJi0UB0A7w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749548580; c=relaxed/simple;
-	bh=fzmo2aRYWdxEbzfDTHzVg4vQOgBDHmhwkQgMU5JBwvc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=RgUSdpzC5H2KafocLXdQcnWhHLMmcOKgANQ934xjdAQIdzOQEyQYI2QBjebea7QmM5ruvL5sL7DgkW1X4tN0eCYKDxsub/3i2dLTElRhcxrf770D0W5Vdkuz/WKmdWbfyGV/4Uqs+UgCJtuJ6s70CnWKfVG2VVXIRFELU/RgKiY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MdoGrN/l; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1749549209; c=relaxed/simple;
+	bh=YmsTgiwWpHWvrWlkYScp/25qE9Zm0x2xShBrVv7CupE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mnXwYqpbecpZCCkiBUnuEm88DYUOLzzRdNEGzgfbjc1bNZhIu9xYPg5amp/UVpivxwzWuU+hBG4LyikehAYB475ptnKEuLUMz5HPAIiCo99lUxfikk5NzOxEz9I3fgAfrHDLkYL/o8Q+00hR7tePjxtC1Bj0s+EbAvb9DtY6V+g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fa/uWHhw; arc=none smtp.client-ip=209.85.218.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MdoGrN/l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D8E0C4CEED;
-	Tue, 10 Jun 2025 09:43:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749548580;
-	bh=fzmo2aRYWdxEbzfDTHzVg4vQOgBDHmhwkQgMU5JBwvc=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=MdoGrN/ljx1EVSXQdpSoXwORJfsaIubdlqtrT2t6IYKz/6bmoFXNdsbU9AGJiZJOw
-	 t0QPQzTeJ3BZ/6jDtt4ByUfvsLm/R5ABJE7slMJGdOI2z4ZATJooy2cB9tgPFmfVsg
-	 w2kiuAZJ/bvQq+Jp6tCb/xuXSRM3rUpKvT8H8GLLIAlkjcT4XdWyv62VvTpZs9J5rg
-	 fW1tykH/nE+5ItVo0ZcrjWRwOibBylNA5yPQcGaHZsBlLREWNo/MfbQnZBLh4Mtvgb
-	 HCw9TMcmd0KPQ4HcZ9Ha+f7bArgTWHI8Tl5o0fKEPEpxGlGVasp31zC4b4tD93+DXH
-	 koXgEFaUy+rUg==
-Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-5535652f42cso5350891e87.2;
-        Tue, 10 Jun 2025 02:43:00 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCWA8lpYoT6/C6avI8bGKgxwtQpuJw6bi8m3nnvYQ3d+FMhIo3oST+VyjcE9eMMRDearuP4fcWmc4w==@lists.linux.dev, AJvYcCWbD7ogWExVuf4RpL7CHaMq9FOYXO1vTfMy7OcHeGKcQCS9BYDFKh8fqApGKgJC6fuuhhP8@lists.linux.dev
-X-Gm-Message-State: AOJu0YzauovXKWTw22n1+oYcP9N34MhtPnvHjfMkeUCgSZ/EZRyQrUy9
-	g+YwF46hAx+y1K+E4dse5YC0CBUT5XhHXG/3gSiZElLLduusR6Ga353LanS/UU12frI5OlLpsPM
-	KEUNi+I0FblfPZW3wh6YwDYGKZKZtHgA=
-X-Google-Smtp-Source: AGHT+IE4nSa2bN4TzrktkXCRfEv1np+VUrkGQV9lEdeLrzrSEiaejfA3SM6i9AyO2/WtBhsU+gxaR7qTX0JhonighTg=
-X-Received: by 2002:a05:6512:110d:b0:553:2bb2:7890 with SMTP id
- 2adb3069b0e04-55394776841mr436094e87.25.1749548578816; Tue, 10 Jun 2025
- 02:42:58 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fa/uWHhw"
+Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-adb5cb6d8f1so835379466b.3;
+        Tue, 10 Jun 2025 02:53:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1749549206; x=1750154006; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=ynyqhKwfprNPUGA4lTvvfAnYi3kIYj6o56wh0qfwUuY=;
+        b=fa/uWHhwz8Wvysa0fb/TKfEjrQaLrNIo1Rr1FVGl5EsXRWcx5md/mh/mJv2RcUCqDm
+         C07NVViTjeyhZZihWhRU38XIQyooOAjaIdkNpN27h759ryyxN8fycV6MeMZZlvESG99H
+         4uouUqH2AUV3DMoAHONzGEfva92b1pKw6/6wMyqgY8s+m4xhNfA7zKMRGq2769gLTTNO
+         5cgi0JE+71RNZUcHJC3NsE6hC4md/QXmQH47Gnd8QruqdP+fuX9Q/HsYvXuZVMxiFsN/
+         T50DYlw3eYT3GACZEjvZyRJdZsNcLUYeNLRsMM+eqrw6QUezscCDpy44R29VwvRL2Ple
+         UVGA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1749549206; x=1750154006;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ynyqhKwfprNPUGA4lTvvfAnYi3kIYj6o56wh0qfwUuY=;
+        b=uYypW5nx4rGYOwvkzn9I3HKzRTa/TDGb5hStTr9sxa1x/8amwspuCLmrJ2iHPRgopq
+         2PsELpI8+YA9x94V2eeXUtDINw3WsxLcLd0Y9mBr0Ur77tYmBEcGb+w+crKw+oXYbXZ0
+         jfDZbDmgagF4R2Q+Oco6wETLJemF2cT/CCI0bcEDrt324kQrVwK57gAAgr3Or7/k4zPL
+         RyzqhYWUJqbG2pBIuMS9twMPiw1CG0KlEt4E+1F3MH5rECYuKJtZOF0lyJpot8RPXPFD
+         4t6WpQFKznp6U08mJO/wPnxZEtg4T5COSgR6AE2wzaZwckW76w3Dj89tNHbw6pq0IQQa
+         hRZQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUyQSWOUJaU73UbhEifL94ID10kC7L3xoLuFWM1IRlclvrTjJKfNz7K3TqKZS3YYtIVYtCQC3XR@lists.linux.dev
+X-Gm-Message-State: AOJu0YzKkQH1eCax3F7Uofix23O0a2ZUXkrjhmntLTwPvTbYjbc44MIE
+	YySz8IuUtZOHNFfBZut/TxrQxczvJOR8asjsvNzGx3PU5oBglbvBt/4I
+X-Gm-Gg: ASbGncv2vnuWGrmmwNXUPFDU46tqp/j7/Y8K0IdPwZ2aoylqsf14DIZwLuKbtMYUY6h
+	K0p29M+JSBAnAuD49DCZfK4US4SA3IsnicEjpuRO4GOB2UAb/fEz7XhSsCfelaLOnBsePz5p6Ht
+	QzFMu7BkLiFI6/QZkBlLaEHqz7sm53yh7q7abeMcrud6Sa4eYmlPVH8/iHi+0GZ35QDs6pAC7gr
+	RjPzuyNw7rB5dfajZvXenWr0Z1Nb8MnXiA3DbY296saRx1l0DytyfPNvpYIMyp3RTxP1//Ob2C5
+	yvmkeVy5dB20HKqrnAWFUXU/UxOISjrBRbhgmKxmr/KNEkkTD1MaCTmuSdBCs2hHTfEYI49luVz
+	RvYXMii5Md6mvgF0AJ9PIlT7qsz/VMp09NEbTxZudz3HWt62ZaJaF8kPSBZY=
+X-Google-Smtp-Source: AGHT+IGe0qSd+CguPpuDw/vWQmo+8UBgL9eF8vO1hXeva+H8aYcdbH0HcR/1Tkn/Fb7c2OknDpbnIA==
+X-Received: by 2002:a17:907:7b96:b0:ad8:8efe:3205 with SMTP id a640c23a62f3a-ade1abc5a39mr1482183866b.55.1749549205928;
+        Tue, 10 Jun 2025 02:53:25 -0700 (PDT)
+Received: from orome (p200300e41f281b00f22f74fffe1f3a53.dip0.t-ipconnect.de. [2003:e4:1f28:1b00:f22f:74ff:fe1f:3a53])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ade1db5784bsm688003166b.71.2025.06.10.02.53.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 10 Jun 2025 02:53:24 -0700 (PDT)
+Date: Tue, 10 Jun 2025 11:53:22 +0200
+From: Thierry Reding <thierry.reding@gmail.com>
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: iommu@lists.linux.dev, Jonathan Hunter <jonathanh@nvidia.com>, 
+	Joerg Roedel <joro@8bytes.org>, linux-tegra@vger.kernel.org, Robin Murphy <robin.murphy@arm.com>, 
+	Krishna Reddy <vdumpa@nvidia.com>, Will Deacon <will@kernel.org>, 
+	Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>, Joerg Roedel <jroedel@suse.de>, patches@lists.linux.dev
+Subject: Re: [PATCH rc] iommu/terga: Fix incorrect size calculation
+Message-ID: <ymj7mvy7ezlbb2t5jrv47qdrxg557q424g6d2vlnc4dyav4vfn@smwgn5d4av3s>
+References: <0-v1-da7b8b3d57eb+ce-iommu_terga_sizeof_jgg@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250609-curve25519-hacl64-disable-kasan-clang-v1-1-08ea0ac5ccff@kernel.org>
-In-Reply-To: <20250609-curve25519-hacl64-disable-kasan-clang-v1-1-08ea0ac5ccff@kernel.org>
-From: Ard Biesheuvel <ardb@kernel.org>
-Date: Tue, 10 Jun 2025 11:42:47 +0200
-X-Gmail-Original-Message-ID: <CAMj1kXFFb2EbQnOdKuw2xMPG1Y2WXJt4XigC7Wzqh1Sv0PGodA@mail.gmail.com>
-X-Gm-Features: AX0GCFu0n6arctlqt-pm09a_qRtTHEWwn8b0pKXXaifIkWO-61Tq9-c1nzXSmMI
-Message-ID: <CAMj1kXFFb2EbQnOdKuw2xMPG1Y2WXJt4XigC7Wzqh1Sv0PGodA@mail.gmail.com>
-Subject: Re: [PATCH] crypto: lib/curve25519-hacl64 - Disable KASAN with
- clang-17 and older
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: Eric Biggers <ebiggers@kernel.org>, "Jason A. Donenfeld" <Jason@zx2c4.com>, linux-crypto@vger.kernel.org, 
-	llvm@lists.linux.dev, patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="xtiiprxlyuwuxuqc"
+Content-Disposition: inline
+In-Reply-To: <0-v1-da7b8b3d57eb+ce-iommu_terga_sizeof_jgg@nvidia.com>
 
-On Tue, 10 Jun 2025 at 00:45, Nathan Chancellor <nathan@kernel.org> wrote:
->
-> After commit 6f110a5e4f99 ("Disable SLUB_TINY for build testing"), which
-> causes CONFIG_KASAN to be enabled in allmodconfig again, arm64
-> allmodconfig builds with clang-17 and older show an instance of
-> -Wframe-larger-than (which breaks the build with CONFIG_WERROR=y):
->
->   lib/crypto/curve25519-hacl64.c:757:6: error: stack frame size (2336) exceeds limit (2048) in 'curve25519_generic' [-Werror,-Wframe-larger-than]
->     757 | void curve25519_generic(u8 mypublic[CURVE25519_KEY_SIZE],
->         |      ^
->
-> When KASAN is disabled, the stack usage is roughly quartered:
->
->   lib/crypto/curve25519-hacl64.c:757:6: error: stack frame size (608) exceeds limit (128) in 'curve25519_generic' [-Werror,-Wframe-larger-than]
->     757 | void curve25519_generic(u8 mypublic[CURVE25519_KEY_SIZE],
->         |      ^
->
-> Using '-Rpass-analysis=stack-frame-layout' shows the following variables
-> and many, many 8-byte spills when KASAN is enabled:
->
->   Offset: [SP-144], Type: Variable, Align: 8, Size: 40
->   Offset: [SP-464], Type: Variable, Align: 8, Size: 320
->   Offset: [SP-784], Type: Variable, Align: 8, Size: 320
->   Offset: [SP-864], Type: Variable, Align: 32, Size: 80
->   Offset: [SP-896], Type: Variable, Align: 32, Size: 32
->   Offset: [SP-1016], Type: Variable, Align: 8, Size: 120
->
-> When KASAN is disabled, there are still spills but not at many and the
-> variables list is smaller:
->
->   Offset: [SP-192], Type: Variable, Align: 32, Size: 80
->   Offset: [SP-224], Type: Variable, Align: 32, Size: 32
->   Offset: [SP-344], Type: Variable, Align: 8, Size: 120
->
-> Disable KASAN for this file when using clang-17 or older to avoid
-> blowing out the stack, clearing up the warning.
->
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 
-Acked-by: Ard Biesheuvel <ardb@kernel.org>
+--xtiiprxlyuwuxuqc
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH rc] iommu/terga: Fix incorrect size calculation
+MIME-Version: 1.0
 
+On Tue, Jun 03, 2025 at 04:14:45PM -0300, Jason Gunthorpe wrote:
+> This driver uses a mixture of ways to get the size of a PTE,
+> tegra_smmu_set_pde() did it as sizeof(*pd) which became wrong when pd
+> switched to a struct tegra_pd.
+>=20
+> Switch pd back to a u32* in tegra_smmu_set_pde() so the sizeof(*pd)
+> returns 4.
+>=20
+> Fixes: 50568f87d1e2 ("iommu/terga: Do not use struct page as the handle f=
+or as->pd memory")
+> Reported-by: Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>
+> Closes: https://lore.kernel.org/all/62e7f7fe-6200-4e4f-ad42-d58ad272baa6@=
+tecnico.ulisboa.pt/
+> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 > ---
->  lib/crypto/Makefile | 4 ++++
->  1 file changed, 4 insertions(+)
->
-> diff --git a/lib/crypto/Makefile b/lib/crypto/Makefile
-> index 3e79283b617d..18664127ecd6 100644
-> --- a/lib/crypto/Makefile
-> +++ b/lib/crypto/Makefile
-> @@ -35,6 +35,10 @@ obj-$(CONFIG_CRYPTO_LIB_CURVE25519_GENERIC)  += libcurve25519-generic.o
->  libcurve25519-generic-y                                := curve25519-fiat32.o
->  libcurve25519-generic-$(CONFIG_ARCH_SUPPORTS_INT128)   := curve25519-hacl64.o
->  libcurve25519-generic-y                                += curve25519-generic.o
-> +# clang versions prior to 18 may blow out the stack with KASAN
-> +ifeq ($(call clang-min-version, 180000),)
-> +KASAN_SANITIZE_curve25519-hacl64.o := n
-> +endif
->
->  obj-$(CONFIG_CRYPTO_LIB_CURVE25519)            += libcurve25519.o
->  libcurve25519-y                                        += curve25519.o
->
-> ---
-> base-commit: 19272b37aa4f83ca52bdf9c16d5d81bdd1354494
-> change-id: 20250609-curve25519-hacl64-disable-kasan-clang-faf6e97315e4
->
-> Best regards,
-> --
-> Nathan Chancellor <nathan@kernel.org>
->
+>  drivers/iommu/tegra-smmu.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+
+Acked-by: Thierry Reding <treding@nvidia.com>
+
+--xtiiprxlyuwuxuqc
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEiOrDCAFJzPfAjcif3SOs138+s6EFAmhIAJAACgkQ3SOs138+
+s6F98Q//SCHTzZhRnxaJm7hof3jA2KxWVvS+Xsgu1tWVrea5XhXWm6wz6BoupZPk
+zLdS9MGapHHxrsqVfddKDGsBW08GqDml+oFxuYV6gnX7sYpcHyjFYbqOkR2+6Z9W
+wl2jRJEhDaU0woCj7NsVqqBABMSJhQxsZLp7tIOACNXNUIQ0clz4uwXCfnBDEhFI
+BB6Bm9pdOy5BovIq0JeQnus8S32W84Ptn0OXB7ZCxhBHr1kM3kuiz3YU5Y2e69cb
+hM5jcuNKIsp2xFEoC5dnfYA2lyH3aO+/+6bcbU16ZoHJHohByREND7XaKnZFe8pW
+I1VfWSl7A3jC+Ti6q4Q43jUVAdPsOh02umxDzMZvXebySC43YE5dxoHWbBJCTf7j
+1P0C0Sv/7vhUfaW8Vb7ocvEMFufBreVryrgGs98HW9LRYQ80J/HsQGlOG4z5nbqr
+ljLk+nq9WNYNFgKb/KNwhWodGehQh+oR5fkBxjoRaqUwlSl3QDx/jXfvK4ihsdmr
+0wC1/hv/wVgJ4bcWEVi1nbMb+Ryoij9QVwp0c/ETLqNVjwag+wjDwW19IPHtP+kW
+Sos6hV1fcwOo5/+g29MLLNJEmokgaVw6O4XzmDcgyOAp7/ZQrwYEV1frSjYOIdNm
+DnLfkT6xj+MP1vXUxNJEBTKlkIJjJo51zRseJiAWfKc/HJkbmds=
+=CuHx
+-----END PGP SIGNATURE-----
+
+--xtiiprxlyuwuxuqc--
