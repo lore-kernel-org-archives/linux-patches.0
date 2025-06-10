@@ -1,99 +1,160 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
+Received: from NAM02-DM3-obe.outbound.protection.outlook.com (mail-dm3nam02on2077.outbound.protection.outlook.com [40.107.95.77])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C00CB25C81D;
-	Tue, 10 Jun 2025 06:42:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.12
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749537724; cv=none; b=hEHLzQ717TaG4FYwcGMoknazPGUDYnoaPezws6pSAior8+K6r3jcOpBl3jAw9z5Kp8O6LDn8UgNbo19ddWMp73OuRRMFVvz+l0Q2Hu+S7uI5dkXv3xUbcL3a/iGutEaW7OMOlbElak/mLJRqgB5l1mEA8xinP6P41iS6ZAxWgKg=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749537724; c=relaxed/simple;
-	bh=mlIq0rj35hHowNTMUTsIRssPhHB0i/W0bi9ky3jkku0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Gk4npR/7GWwseECjFkvVuecN3pmyGOvd1N9eD9s+QkK8bjLRWrukeJ1P/Ge1SYj4vtIt9R9A8h8Fhdq8DKJ3PTwl0QRduhf3GNu90NQwGo+Bju4NNOLt4m/oB5f9Xt4jfgagzfXct8kOtBI3tHytsEhqDxXkxwb/bmPRTO9gkJw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=nfIZm9Lu; arc=none smtp.client-ip=192.198.163.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE88927876A;
+	Tue, 10 Jun 2025 06:56:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.95.77
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1749538566; cv=fail; b=VXwDyYTilgjLKjHR4P+zgRc/MeHYDuTF2RyZbKQhXUVRMIcQXsDGAJqEH2pf0HZonpGaixmA8eRaR6rVBrQTyy0FjEAeSB5SioERFbP3uDoCXxVtgJ308+zyCE8EHC+lRULeNRX9/yDngitpKfV+3tyAg1r8VeY7AAK/yR6nS/k=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1749538566; c=relaxed/simple;
+	bh=rHxcNI/jKQ/w09IaTqxGn+IVphFr/SqIjClot171EYA=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Dv69UA7yy3fg2vfPELk7gkf2hcFvTkyL8eXZQGLH41pX35BKCLncW8+qV/WxMLzkyjxUh8EGDrrj2XXb8DdPGvvtr/swLKf7qNzMJtdzzeDdyCmcWGtREz6qRM2YegGFz4ls86x08/QS/GfARUev1MOwmLxRyjH7Y03JInoyMR0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=m4n/Nu8l; arc=fail smtp.client-ip=40.107.95.77
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="nfIZm9Lu"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1749537723; x=1781073723;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=mlIq0rj35hHowNTMUTsIRssPhHB0i/W0bi9ky3jkku0=;
-  b=nfIZm9LuuvnOmDnWEq/sHk0fmjE3b4yWpLM3DoLTUwuf6n5XTkYPX3dH
-   /mKDxJIPQR+ukESX8seZiWuKMkeqt7QEi1SaMIJl533ZcbcRPCjaPn1su
-   GPcjRgsRHvd+WRkVARfIhEYUss1HAwrtTIRUpMPsu/Up3gNxfW6arwLRB
-   1FUAvZ4S27PVQQf19dUuk6+zPC/3YXQnh8DHR4LV/vCe/Zp0zMJOrrSeR
-   XNehrdM+uCyXMdQ/UJlDAxbiUbb1gPyHclRP3YF5bUlzCePRAWpkqIR55
-   YHnQp2uViik+wKUIokm2B4y2GFfNJboR9+l9FvD90v4GN/VRrJOHtYJJz
-   w==;
-X-CSE-ConnectionGUID: CamrGX6oRW+8YtaC7TguEQ==
-X-CSE-MsgGUID: Qbn56Ap+RxSi2Szkwf/8SQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11459"; a="55424902"
-X-IronPort-AV: E=Sophos;i="6.16,224,1744095600"; 
-   d="scan'208";a="55424902"
-Received: from fmviesa010.fm.intel.com ([10.60.135.150])
-  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Jun 2025 23:42:02 -0700
-X-CSE-ConnectionGUID: cKC6HGgKQBCwOQCJTnH5Zg==
-X-CSE-MsgGUID: 5e2z/EglQKaLY1TKbbQUAA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,224,1744095600"; 
-   d="scan'208";a="147249002"
-Received: from allen-sbox.sh.intel.com (HELO [10.239.159.30]) ([10.239.159.30])
-  by fmviesa010-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Jun 2025 23:42:00 -0700
-Message-ID: <06566252-25a9-4b68-8deb-e1fbd8b7a3b8@linux.intel.com>
-Date: Tue, 10 Jun 2025 14:41:11 +0800
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="m4n/Nu8l"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=CUs8KR5wkcIekTMNfK/PpR9fgivmpQBkZQla5+j15OFHNpgaMdS+c9C6yZ7hl8tubJu3lsG71kk5loxrAyDiuOK/baqplCLI3Cfa6KJQaO16mTnO5Papudi3T7pCZ8Hg+w8txoro8CtXg1fyZ68evLbvHvwK5Tu5jbn+SEbeuMefW38mY4GoGxT3gawrtuS0yNE+TzeoXzwiftZ1OOnj27KL2ViXqntZBjrKTYtNlXrGYiWeA6rsVi2Fl8vKkTS3H7HR2g3tsFssw7LQoKJkQX6T/NktfnMtn9ihT3DWOj3zrjtver8ZOgeTCEjcL+e6F7CdCCiRtoTPSWs/lhMuLg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=zMGdeZBBihZD4qE5JZtjkAH9CktW4Fc9fEH6+dZoVZI=;
+ b=cb6440m7n1XnuVJlNCkyBF8eK67wt5xDaMO2e/uwtBVJ3ebjky74FeKEazhpg/ABcvnRVqZfrkPRDOmFy/zIVlk8eorQ0YM9MAa/0TU52xJPu8Ji8n96wsxiEePfFA1JrEaqOdmKHypKbTltDzul1HOjB7jJzjyLFhg89vrVkwiTl6Jksj9vds6Xb1iqleQ6CEB/1hBoieJ/0EHDbYI62/pXhror3nmQunOJ3VwX8AMNrhHEt7Nj8pH1UkJ7z7PujbU5yfER96kzxhMiWlGfdHRUcfUkL125gV/fsG1pGCIbJw5SL7+aWb1J8IK+yzP6Q9yq34KRpVcSUB98RuP1+w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.161) smtp.rcpttodomain=linux.intel.com smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=zMGdeZBBihZD4qE5JZtjkAH9CktW4Fc9fEH6+dZoVZI=;
+ b=m4n/Nu8lRIiIsJy6GgejHOnSjAcIrj4dnMCvUk79xhAHSS1IAOo/h3gNRIhnHAdjmbrPp3Q5Td+7qYA0GbmD+k7KvnSrp7n4tT1Z3w/DcwypxNDO8dtIftuhfOY3yGWI5hSMPgOGrGSI2qii8KQHPBjWYPAtCb/92B2SGQYNdgpkKxbpafeLAcICi437jVeFSbMIChRnrXCKAet5jrylZEgb0C59Qi3HW3Q+bNOd0797511eXYGbtJg9MwkhhXu70MZcx6iRwpbh40w0sKTfMX4f4H1fIYpx0gvX9+xZngFO03LbVKLyAjhloZ+8JfUQQjUvwyDxSzlO/VIkrMQ6kg==
+Received: from BY3PR03CA0030.namprd03.prod.outlook.com (2603:10b6:a03:39a::35)
+ by DS0PR12MB7559.namprd12.prod.outlook.com (2603:10b6:8:134::19) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8792.35; Tue, 10 Jun
+ 2025 06:56:01 +0000
+Received: from SJ1PEPF00002318.namprd03.prod.outlook.com
+ (2603:10b6:a03:39a:cafe::6f) by BY3PR03CA0030.outlook.office365.com
+ (2603:10b6:a03:39a::35) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8792.35 via Frontend Transport; Tue,
+ 10 Jun 2025 06:56:01 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.161) by
+ SJ1PEPF00002318.mail.protection.outlook.com (10.167.242.228) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8835.15 via Frontend Transport; Tue, 10 Jun 2025 06:56:00 +0000
+Received: from rnnvmail205.nvidia.com (10.129.68.10) by mail.nvidia.com
+ (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Mon, 9 Jun 2025
+ 23:55:42 -0700
+Received: from rnnvmail205.nvidia.com (10.129.68.10) by rnnvmail205.nvidia.com
+ (10.129.68.10) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Mon, 9 Jun
+ 2025 23:55:41 -0700
+Received: from nvidia.com (10.127.8.12) by mail.nvidia.com (10.129.68.10) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14 via Frontend
+ Transport; Mon, 9 Jun 2025 23:55:38 -0700
+Date: Mon, 9 Jun 2025 23:55:35 -0700
+From: Nicolin Chen <nicolinc@nvidia.com>
+To: Baolu Lu <baolu.lu@linux.intel.com>
+CC: <jgg@nvidia.com>, <joro@8bytes.org>, <will@kernel.org>,
+	<robin.murphy@arm.com>, <bhelgaas@google.com>, <iommu@lists.linux.dev>,
+	<linux-kernel@vger.kernel.org>, <linux-pci@vger.kernel.org>,
+	<patches@lists.linux.dev>, <pjaroszynski@nvidia.com>, <vsethi@nvidia.com>
+Subject: Re: [PATCH RFC v1 2/2] pci: Suspend ATS before doing FLR
+Message-ID: <aEfW53F8Gmb/NYs1@nvidia.com>
+References: <cover.1749494161.git.nicolinc@nvidia.com>
+ <29cc1268dfdae2a836dbdeaa4eea3bedae564497.1749494161.git.nicolinc@nvidia.com>
+ <34442ab9-08e1-4e9a-b08e-3b81a581fec3@linux.intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/7] iommu/vtd: Do not wipe out the page table NID when
- devices detach
-To: Jason Gunthorpe <jgg@nvidia.com>, David Woodhouse <dwmw2@infradead.org>,
- iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
- Robin Murphy <robin.murphy@arm.com>, Will Deacon <will@kernel.org>
-Cc: patches@lists.linux.dev, Wei Wang <wei.w.wang@intel.com>
-References: <3-v1-20c73f153f4c+1895-vtd_prep_jgg@nvidia.com>
-Content-Language: en-US
-From: Baolu Lu <baolu.lu@linux.intel.com>
-In-Reply-To: <3-v1-20c73f153f4c+1895-vtd_prep_jgg@nvidia.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <34442ab9-08e1-4e9a-b08e-3b81a581fec3@linux.intel.com>
+X-NV-OnPremToCloud: AnonymousSubmission
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ1PEPF00002318:EE_|DS0PR12MB7559:EE_
+X-MS-Office365-Filtering-Correlation-Id: 01c366e1-a0dd-4347-4c7b-08dda7ebdc08
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|82310400026|36860700013|376014;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?irQ/AJSoj0XmGmzfuqeBe0/k57EH+3qqTe5g7+zaUhuhdJZdBWrWVKYZWfQq?=
+ =?us-ascii?Q?HyH+GybPLC0o5lZaWXexEIJ9uvYHx+6WQPT4x+w3hzD/K5s3g0gNZD4LTlqt?=
+ =?us-ascii?Q?xZ7LeHmDFfx18+8PWGDEjpJShJ1yd+Lx/9JzaJNBIzXDzm/IDR01gHiYDENI?=
+ =?us-ascii?Q?LDhqmDCAqyODgnRTlunYFk+HZ4O7H1ruKZf5kX5y2GEeHwW+q/Zcc6ZIiGsS?=
+ =?us-ascii?Q?9BhGfPA8/WWkR3tWa8ttoSjci7bZP+tavZGQl7BdSSgWvfI8aJ0uH3TbuOC2?=
+ =?us-ascii?Q?dW3p1e2jumvnF73/Hpu2hpWiFBIZsiJsWfjg26o9hJ7IFJYceB9f4QIsbaq7?=
+ =?us-ascii?Q?JZJWcrcEZ6IIFQu7CO9CGrHCrLoEBd34ki2ByNTFGUaorP802csqKuVjbSc3?=
+ =?us-ascii?Q?xeN0WX/M5kqV6hvlzElrBEBR8r8p3I/MDOyZDGMkICyXa3+S6o9WJQrqx5og?=
+ =?us-ascii?Q?64Hkmv4L6LYGaAxTHBBSb4pJmbkAwqW0bgETFPsLzomaMRWTWg0S+je6FaTu?=
+ =?us-ascii?Q?1t1UcLlz6R+t4RxXfaS0zDFxKUF+2XmycBQ8zkeT9FCoP2VNKmsxCoEXMCb8?=
+ =?us-ascii?Q?dpwjaXJ+ZUgRGBQp1RZuLzDLZH0z3xoLMNgn2w5nLG3a9ov0iDyYx5c3YOLi?=
+ =?us-ascii?Q?9zQYXavjkiiKeupqET0gsfNfeXAxwUvnX3DcPwKUzVe7mdkaKSWIEchNJoaS?=
+ =?us-ascii?Q?L691QWft/k1ARmM3nsHToOeqMrOcA9cEQJJdJBs5BTBDJO8YZjjQm56AEhnl?=
+ =?us-ascii?Q?5XWYmY34R+klQbuu/KvXYUD+bGwFaLsUv4AS67k/rJ3Y0D4SOccMi3bLIq3l?=
+ =?us-ascii?Q?engIAtuYa5MYbSwtIXIK4blWL48TJamoqegucJh9WF3AaoLSSW0s5eD0YsXf?=
+ =?us-ascii?Q?F39ft3ezrn4nykrYmVsdpO4nUYsKH6AZtd7fKy2hUABFk3TToyopIrEEY1sK?=
+ =?us-ascii?Q?Mp0Bl2mt1xbiEY0Ff+yu9tbzO5POLGjutes+1P4c2qE/S2mXZ9zuv0BTfain?=
+ =?us-ascii?Q?N0m7hUHyfZrfjuAYaubrbmvLklk16c7QnKzH3xMTrOlSoMODPWTpwNPSmYvJ?=
+ =?us-ascii?Q?3Ciy4vgZT7DpZKVFgoJfPFCaRcLPeARFRS2t1NHZ2xX15D7m5qiWTwGJ3DAR?=
+ =?us-ascii?Q?CITgAcAnhBvu6ZaYic9/ThIujwEzyJY6rPa2Y+hdOMLUzXs/wlurXBCBHz1k?=
+ =?us-ascii?Q?jx4F5pYxXUr8TjLYif83POOEKb5Vy8eSHYxsybzYcueZvykR1MbNlNHpsdxQ?=
+ =?us-ascii?Q?Kfa7XV0TwBaMWi4pfHlmXGPhvndZVuSMds4Dt1aRVXEfqQXrFug376RutaCY?=
+ =?us-ascii?Q?fRg4FubhUd72mYImI8l9FqIvrA05FbUsdVZcu3cX0p2WHQ/iSQddDbOwdp36?=
+ =?us-ascii?Q?Lz4T7GD+wzNenKgyaXvMPF2RaDhcoGIguYaw4ShoqnJogGP8A2Xw8+mXy+4X?=
+ =?us-ascii?Q?pKyN5Qwfe9FxOCZ2IFYF4qmtZVqsESPRsvl5wgDBnnnsabY3YlouX7b4q79C?=
+ =?us-ascii?Q?mCsWSEda5TVAAu0Je/VOzA4m+DfvWES9/7B+?=
+X-Forefront-Antispam-Report:
+	CIP:216.228.117.161;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge2.nvidia.com;CAT:NONE;SFS:(13230040)(1800799024)(82310400026)(36860700013)(376014);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Jun 2025 06:56:00.6898
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 01c366e1-a0dd-4347-4c7b-08dda7ebdc08
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.161];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	SJ1PEPF00002318.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB7559
 
-On 6/10/25 03:58, Jason Gunthorpe wrote:
-> The NID is used to control which NUMA node memory for the page table is
-> allocated it from. It should be a permanent property of the page table
-> when it was allocated and not change during attach/detach of devices.
+On Tue, Jun 10, 2025 at 12:27:04PM +0800, Baolu Lu wrote:
+> On 6/10/25 02:45, Nicolin Chen wrote:
+> >   int pcie_flr(struct pci_dev *dev)
+> >   {
+> > +	int ret = 0;
+> > +
+> >   	if (!pci_wait_for_pending_transaction(dev))
+> >   		pci_err(dev, "timed out waiting for pending transaction; performing function level reset anyway\n");
+> > +	/*
+> > +	 * Per PCIe r6.3, sec 10.3.1 IMPLEMENTATION NOTE, software disables ATS
+> > +	 * before initiating a Function Level Reset. So notify the iommu driver
+> > +	 * that actually enabled ATS. Have to call it after waiting for pending
+> > +	 * DMA transaction.
+> > +	 */
+> > +	if (iommu_dev_reset_prepare(&dev->dev))
+> > +		pci_err(dev, "failed to stop IOMMU\n");
 > 
-> Signed-off-by: Jason Gunthorpe<jgg@nvidia.com>
-> ---
->   drivers/iommu/intel/iommu.c | 1 -
->   1 file changed, 1 deletion(-)
-> 
-> diff --git a/drivers/iommu/intel/iommu.c b/drivers/iommu/intel/iommu.c
-> index ceb960a796e2ba..72b0769c391008 100644
-> --- a/drivers/iommu/intel/iommu.c
-> +++ b/drivers/iommu/intel/iommu.c
-> @@ -1391,7 +1391,6 @@ void domain_detach_iommu(struct dmar_domain *domain, struct intel_iommu *iommu)
->   	if (--info->refcnt == 0) {
->   		ida_free(&iommu->domain_ida, info->did);
->   		xa_erase(&domain->iommu_array, iommu->seq_id);
-> -		domain->nid = NUMA_NO_NODE;
+> Need to abort here?
 
-It appears that this is a fix. Before domain_alloc()'s retirement, no
-device pointer was passed to the domain allocation callback. Thus, the
-NUMA node ID could only be determined when the domain was attached to a
-device. Since we have introduced domain_alloc_paging, this should be
-removed. So,
+Yea. I think it should abort.
 
-Fixes: 7c204426b818 ("iommu/vt-d: Add domain_alloc_paging support")
-
-?
-
-Thanks,
-baolu
+Thanks!
+Nicolin
