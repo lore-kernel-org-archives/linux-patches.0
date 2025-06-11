@@ -1,50 +1,40 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.18])
+Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B32C42CCC9;
-	Wed, 11 Jun 2025 04:51:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 215502609DC;
+	Wed, 11 Jun 2025 09:40:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749617466; cv=none; b=SnrADV+kSb8aGDVkxQjqE66STcBw+oc+JLvy6BJoKIJM6BP7uyhRSTT3lHE6kk1y4zPnvAr3GvHI2y3ODsxhq5rvcK2Jo2jG8ajSIg7P6jWHOD7+SfcbR2xSfPiTChpRkvLLx1LlqDBdAEv1TIgLgEHqXxKJhBM5Zsj8Sl8ndgo=
+	t=1749634819; cv=none; b=cf0tBekk9n2CgXA50m+8J6HqWdaCvq4JEeeZBS0PCb44zkuNAO9Vt1evpwvnjH/r3BsC8DmsIf3O86ZbFVTjmkMTGVsLpxOUqAiptnF4THX4ZLWzD2bpV0Bnk4HcaPsIBlEu1z67hLDL2Ch7SI1pydqDgyIK1U5N8OIC++ckt+k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749617466; c=relaxed/simple;
-	bh=tQJqHS9D3oD2yrr4hr6rV32IS13ZgiCeQMLhGvBLfyg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=p4TE5/e6EH3kAAytMBS6Cl0nFzDGgh07GBpR5YTNT+Ek0A81vK3FsWAc9Ywu20C0OV1PLoI4DxibWreAHfRg26FCI5wjiNdlyNtMpcldo7TJzKsUncHt68eAzJ/soBDtLUOH1nagrmgNjI/hGYRO/Z/P7ewZDhLOoVfpJ7YwuSY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Uo4eb20j; arc=none smtp.client-ip=198.175.65.18
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+	s=arc-20240116; t=1749634819; c=relaxed/simple;
+	bh=EOF0wPKaDO4VgvfGSVrXCHsbhCfTQG4KN/6dg+9yv4s=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=hE9ZrSywuDAB8B9Ty7kfGOVbaR2FJCOidO4+xjCYa1RVdgx+leegRXmkErMX075rvqOBH2DJ5DXrBcQ+9esFl6JWEYgu91e6sYGvOV1iE2I13RVJq9uEvF41Echp0BSIrusz8o3J4vT5VWEC7ZoKep8oIQwU7kikLM+8wWgdQ+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=G1EFhqLh; arc=none smtp.client-ip=148.251.105.195
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Uo4eb20j"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1749617464; x=1781153464;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=tQJqHS9D3oD2yrr4hr6rV32IS13ZgiCeQMLhGvBLfyg=;
-  b=Uo4eb20jEkgTWw4c56tjnZzzHHd0Mw6FqopQ1Rp2Oa24l2AfjICGlsSy
-   w7FNzR1P1Mw3w069Gsm6twVJtQ/aP4xysurQdIm4NMTiXwZUluvEjrrbY
-   VYetmi9PYMaPg6k9hUMOeokOfqhbkWHFDyxBY4qNS/QMwVjNwZxit4H38
-   xK6DNlBL2qLZbwotzFJAj222tFVjRPjYnKYLEX+qYIkhUrYnWlvTJN3g0
-   CTBtZsvb4H0UO6lsIXaAy/lUr6kkGttHwsjE6VzCYZbo8AVkDb3y3w85B
-   TXbKLkXnwmpJITSAZRBI0ScktUum6J01VyvRUykLWWAnmZ1wsy/fEAboC
-   w==;
-X-CSE-ConnectionGUID: 9Xi8S9YhQQeLLQeDr0ezHw==
-X-CSE-MsgGUID: oAM9rYVxTSyzWKN7rBCiBA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11460"; a="51884971"
-X-IronPort-AV: E=Sophos;i="6.16,227,1744095600"; 
-   d="scan'208";a="51884971"
-Received: from fmviesa002.fm.intel.com ([10.60.135.142])
-  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Jun 2025 21:51:04 -0700
-X-CSE-ConnectionGUID: EazqtwJTQnKI3qJRQ2vXxw==
-X-CSE-MsgGUID: VijVnaRzRU2eFOQvmbJeog==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,227,1744095600"; 
-   d="scan'208";a="170236807"
-Received: from allen-sbox.sh.intel.com (HELO [10.239.159.30]) ([10.239.159.30])
-  by fmviesa002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Jun 2025 21:51:02 -0700
-Message-ID: <da8a6938-c45f-4923-af52-1a34702f1b0a@linux.intel.com>
-Date: Wed, 11 Jun 2025 12:50:11 +0800
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="G1EFhqLh"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+	s=mail; t=1749634815;
+	bh=EOF0wPKaDO4VgvfGSVrXCHsbhCfTQG4KN/6dg+9yv4s=;
+	h=Date:From:Subject:To:Cc:References:In-Reply-To:From;
+	b=G1EFhqLhpfUNHYRce2Shf7OUW7CiLa9zTxIYeMK9msSvQcpGRddVYbboJFxp09cTw
+	 pfCXxWcB111nao4H/6Un1OT5MRE1keyyNcCbWArEQxEoS4sKk6cKLDyN5wQmCcFRe0
+	 6ULMq4cpFtCfLIVeK1Vn1ahRyCQau3XZn5ofNA0qvwhRWHfYxuoovAr99sRCcgUx2z
+	 P6tlwpz/dHR3L5Keiq4qtZ7yTZES8vavuGGH4aTGckSgw/BhIDDk1c1a8p1aR852Yb
+	 iTSEbqL8vlmj9ANW56RRvQAKnFqOpvUFvx70VMhHzOFWrfwNI15zoQoSEU0wkePWUt
+	 D6rgOCsNCAr2A==
+Received: from [192.168.1.100] (2-237-20-237.ip236.fastwebnet.it [2.237.20.237])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: kholk11)
+	by bali.collaboradmins.com (Postfix) with ESMTPSA id D4FA517E0FAD;
+	Wed, 11 Jun 2025 11:40:12 +0200 (CEST)
+Message-ID: <d5f0a339-11a4-42d1-82b6-807e6e45953b@collabora.com>
+Date: Wed, 11 Jun 2025 11:40:12 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -52,51 +42,54 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 7/7] iommu/vtd: Split paging_domain_compatible()
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: David Woodhouse <dwmw2@infradead.org>, iommu@lists.linux.dev,
- Joerg Roedel <joro@8bytes.org>, Robin Murphy <robin.murphy@arm.com>,
- Will Deacon <will@kernel.org>, patches@lists.linux.dev,
- Wei Wang <wei.w.wang@intel.com>
-References: <7-v1-20c73f153f4c+1895-vtd_prep_jgg@nvidia.com>
- <39400661-9f18-4ba3-8cb8-d56ef548c9b0@linux.intel.com>
- <20250610235125.GP543171@nvidia.com>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Subject: Re: [PATCH v2 4/7] iommu: Remove iommu_ops pgsize_bitmap from simple
+ drivers
+To: Jason Gunthorpe <jgg@nvidia.com>, Alexandre Ghiti <alex@ghiti.fr>,
+ Alim Akhtar <alim.akhtar@samsung.com>,
+ Alyssa Rosenzweig <alyssa@rosenzweig.io>, Albert Ou <aou@eecs.berkeley.edu>,
+ asahi@lists.linux.dev, Baolin Wang <baolin.wang@linux.alibaba.com>,
+ David Woodhouse <dwmw2@infradead.org>,
+ Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
+ Heiko Stuebner <heiko@sntech.de>, iommu@lists.linux.dev,
+ Janne Grunau <j@jannau.net>, Jean-Philippe Brucker
+ <jean-philippe@linaro.org>, Jernej Skrabec <jernej.skrabec@gmail.com>,
+ Jonathan Hunter <jonathanh@nvidia.com>, Joerg Roedel <joro@8bytes.org>,
+ Krzysztof Kozlowski <krzk@kernel.org>, linux-arm-kernel@lists.infradead.org,
+ linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
+ linux-riscv@lists.infradead.org, linux-rockchip@lists.infradead.org,
+ linux-s390@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
+ linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
+ Marek Szyprowski <m.szyprowski@samsung.com>,
+ Matthias Brugger <matthias.bgg@gmail.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>, Neal Gompa <neal@gompa.dev>,
+ Orson Zhai <orsonzhai@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Paul Walmsley <paul.walmsley@sifive.com>,
+ Rob Clark <robin.clark@oss.qualcomm.com>, Robin Murphy
+ <robin.murphy@arm.com>, Samuel Holland <samuel@sholland.org>,
+ Sven Peter <sven@kernel.org>, Thierry Reding <thierry.reding@gmail.com>,
+ Krishna Reddy <vdumpa@nvidia.com>, virtualization@lists.linux.dev,
+ Chen-Yu Tsai <wens@csie.org>, Will Deacon <will@kernel.org>,
+ Yong Wu <yong.wu@mediatek.com>, Chunyan Zhang <zhang.lyra@gmail.com>
+Cc: Lu Baolu <baolu.lu@linux.intel.com>, Kevin Tian <kevin.tian@intel.com>,
+ patches@lists.linux.dev, Niklas Schnelle <schnelle@linux.ibm.com>,
+ Sven Peter <sven@svenpeter.dev>, Tomasz Jeznach <tjeznach@rivosinc.com>
+References: <4-v2-68a2e1ba507c+1fb-iommu_rm_ops_pgsize_jgg@nvidia.com>
 Content-Language: en-US
-From: Baolu Lu <baolu.lu@linux.intel.com>
-In-Reply-To: <20250610235125.GP543171@nvidia.com>
+In-Reply-To: <4-v2-68a2e1ba507c+1fb-iommu_rm_ops_pgsize_jgg@nvidia.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 6/11/25 07:51, Jason Gunthorpe wrote:
-> On Tue, Jun 10, 2025 at 03:12:43PM +0800, Baolu Lu wrote:
->>> +	/*
->>> +	 * FIXME this is locked wrong, it needs to be under the
->>> +	 * dmar_domain->lock
->>> +	 */
->>>    	if (dmar_domain->force_snooping && !ecap_sc_support(iommu->ecap))
->>>    		return -EINVAL;
->>
->> Perhaps we can use group->mutex to fix this in the future?
+Il 09/06/25 22:41, Jason Gunthorpe ha scritto:
+> These drivers just have a constant value for their page size, move it
+> into their domain_alloc_paging function before setting up the geometry.
 > 
-> It is part of the iommu_domain, there is no clear group->mutex that
-> is affiliated with a domain, there can be multiple devices attached..
+> Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+> Acked-by: Niklas Schnelle <schnelle@linux.ibm.com> # for s390-iommu.c
+> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 
-Fair enough.
+For MediaTek:
 
-> Maybe we should change the enforce coherency away from a function op
-> and into a domain creation flag. Then it won't change at run time,
-> fixing this race, and we don't have the issue of possibly having PTEs
-> with the wrong bit already mapped into the domain.
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-That's a better approach. enforce_cache_coherency is only used in vfio
-and iommufd, where the cache coherency is enforced just after the domain
-is allocated.
 
-> When this was first done that was harder, but now I think we have
-> enough infrastructure to do it easily..
-
-Yes. I can follow up with a patch series for broad discussion if you
-don't want to include it in this series.
-
-Thanks,
-baolu
