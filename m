@@ -1,133 +1,165 @@
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 15D992F4337
-	for <patches@lists.linux.dev>; Thu, 12 Jun 2025 16:20:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749745209; cv=none; b=llqSMbWNFxgOfzWZNaGCrZCawWgtzgTitSHHZdGPLcmHHEskiQD8fBwX35r6F6LNJPtMZvPzbatpQn20snPpYa9NGr8rc6UU24UjAxC1ethWVAdKL3AdCJkxezy4feQFsuthmJna7gasUvhbJspc6mjEMGdqmeXKxBFX8Z85ezw=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749745209; c=relaxed/simple;
-	bh=+tvZzd0kkE2nYV+4N1Ormbpy8ugVT1tsiBVKBZVlzrE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=t0bBVuZkPJ7Megb5JwfI2Izy15eQXPoCH+8FI1vgp6abzrI6OMR6NRl4BqPSJ82UxaKml88h5k2NS4aCwiOaCaZ1/OMMHxRhTKr0sU9c5EEiWylFzBo0zZ4HqhhHx+qGN6GZcV2m57AiJGIjWj12WrVKpb8Wql6DSHDDa/UAV2s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 59683153B;
-	Thu, 12 Jun 2025 09:19:46 -0700 (PDT)
-Received: from e133380.arm.com (e133380.arm.com [10.1.197.52])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 4E6193F673;
-	Thu, 12 Jun 2025 09:20:04 -0700 (PDT)
-Date: Thu, 12 Jun 2025 17:19:55 +0100
-From: Dave Martin <Dave.Martin@arm.com>
-To: "Luck, Tony" <tony.luck@intel.com>
-Cc: "Chatre, Reinette" <reinette.chatre@intel.com>,
-	Fenghua Yu <fenghuay@nvidia.com>,
-	"Wieczor-Retman, Maciej" <maciej.wieczor-retman@intel.com>,
-	Peter Newman <peternewman@google.com>,
-	James Morse <james.morse@arm.com>, Babu Moger <babu.moger@amd.com>,
-	Drew Fustini <dfustini@baylibre.com>,
-	"Keshavamurthy, Anil S" <anil.s.keshavamurthy@intel.com>,
-	"Chen, Yu C" <yu.c.chen@intel.com>,
-	"x86@kernel.org" <x86@kernel.org>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>
-Subject: Re: [PATCH v5 14/29] x86,fs/resctrl: Support binary fixed point
- event counters
-Message-ID: <aEr2OJspONWeWo34@e133380.arm.com>
-References: <20250521225049.132551-1-tony.luck@intel.com>
- <20250521225049.132551-15-tony.luck@intel.com>
- <f368c506-c479-4e8b-a5c6-b9bc5bcd5674@intel.com>
- <aEMWhMbLpImmMBrL@agluck-desk3>
- <7d4c739b-3fe2-43e2-9771-6137f15b42f1@intel.com>
- <aEhMWBemtev/f3yf@e133380.arm.com>
- <SJ1PR11MB60833DCE7DF82E40BFB80FA5FC6AA@SJ1PR11MB6083.namprd11.prod.outlook.com>
+Received: from NAM12-BN8-obe.outbound.protection.outlook.com (mail-bn8nam12on2085.outbound.protection.outlook.com [40.107.237.85])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F4D63596B;
+	Thu, 12 Jun 2025 17:07:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.237.85
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1749748045; cv=fail; b=Zgb0OSHxlvYk6FRQ+aDMSSPHfz3NUC++sy6dlK33pv7xWkvt6OKPVU631UoCmwVaP80JYkvYhlUaLmBrhTAIkTfVmx1cL6h6Yh5DedYh53rUK2ZPZc0+1rQnyzkp/9vZBLgJMvNfUCuA4K8CfJj/tze9jNVgE8e+8iQToXd/zbI=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1749748045; c=relaxed/simple;
+	bh=jv5Vyr/g07ojqzDZEcRYu8CJFdpSGbcSp9Pvgc8RKTY=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=U4TBGPw72wAUv/+tC6nVPjqiH+0OYRP/9F6kIHWKZgsfIFSyKD6eQNo5NMV0oGRLov6uMmudfOObmrlRBbDYORtYF4LACgVy1T8TU9WHNQW1d0d6l73wAuGQcDx5ZZRJZp0qdFxCGAc/HAcc44Tmz3zGykzzZSdb6Ab7q9rRPqc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=PrVLNaGP; arc=fail smtp.client-ip=40.107.237.85
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="PrVLNaGP"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=VMbCwoErNgP/y4QK/9xC5cTuQPAfDU/L6vm7B7q1InVUOTTr3ML+qn4RtfMmMFHUYqRVqnrG3B0CY5TJpgSyj/SAlzm5HtYN30OifHJHGJhxz01hQN/VjRTSs/Trh6w7NiEOEJ987G1YJ7hB57j0/amRPeHksWe2pzXKy4JerP7hIwgT0UAbFbgIvipsw7Sc2/FtOWb5IM7Kxd4zbM8pGRw8coIIZ4lCFZmuD0A2QdVXgWIyfB4xzKIheZT6maQTY31AtVdYT1vCALhP7dpn5Ya18mKGDCXI3b3FHy1tvo2fCKNJs37rEJS6E+1izUKFA10ZyM2V++wDFd0e2pI1Zw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=SOS4QBWMfZa0ntDYdWKw36vasyXju+x4Srhb59aFSe4=;
+ b=UndIsrGOKbm/alGeH9XM75n37BZKdse4MJkpIVErOHYYRbGk6C8zw3OCl4tkn9/epOUw7sdwW4dmVqlwRdKdozbvVE1Lfrro/ecVz9u2n8f/FK0nDwgSAP5gnWWzzjFUvxa77fl1kxp79v/UA2hVNgV6M1KtcMV0A5P4PLKu5K2+NCSZT2UUX4jKlmcOtyL6V3XyOeGslqN/cIPC3LxPkN7WgkRvYjKQVdCCdWb6HxymbYWYmHs7Smkz8F/4g0OW5mi69fSczqP0zut2Q/gKQGT1iVWxvGfM79goSE5Ou266msPsx7SGiJ/jUb9TRfZAdxLDJE/wXuRsdBYUSQNWDQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.161) smtp.rcpttodomain=intel.com smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=SOS4QBWMfZa0ntDYdWKw36vasyXju+x4Srhb59aFSe4=;
+ b=PrVLNaGPvP3orqCriZppaS/1y8PZCh9487w1MpZhrV0lWTnJkSnaVcmWRhDC2vOKS20WOlrQF383uLxKxBztWqSyC4yF9MN8zsP3VgkHg/U4VZ6Rs9sVxCBWykYszcVjX6Y+4mF/f7NYPI0Xq/snxohujarKIoGWsYWJhACrATS7wYaOmyxxNrWSR7kd4WyqOzN5iXapVOU8kY9GWW6ll975eopvxTcfHOpMDErZ5WSVRdI8oPjd0Qx9687vQu5FbYbLOC299WYaY2qzQM3KW3/Dkvi3A4EPRqLEYa8ptuKZmlY2d2tpIrHaYYODMd/7Obld417HFyx5e1ZAaLHFxA==
+Received: from BL0PR02CA0133.namprd02.prod.outlook.com (2603:10b6:208:35::38)
+ by DM4PR12MB7693.namprd12.prod.outlook.com (2603:10b6:8:103::8) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8835.18; Thu, 12 Jun
+ 2025 17:07:15 +0000
+Received: from BN3PEPF0000B078.namprd04.prod.outlook.com
+ (2603:10b6:208:35:cafe::1) by BL0PR02CA0133.outlook.office365.com
+ (2603:10b6:208:35::38) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8792.24 via Frontend Transport; Thu,
+ 12 Jun 2025 17:07:15 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.161) by
+ BN3PEPF0000B078.mail.protection.outlook.com (10.167.243.123) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8835.15 via Frontend Transport; Thu, 12 Jun 2025 17:07:14 +0000
+Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
+ (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Thu, 12 Jun
+ 2025 10:06:55 -0700
+Received: from rnnvmail204.nvidia.com (10.129.68.6) by rnnvmail201.nvidia.com
+ (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Thu, 12 Jun
+ 2025 10:06:55 -0700
+Received: from nvidia.com (10.127.8.9) by mail.nvidia.com (10.129.68.6) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14 via Frontend
+ Transport; Thu, 12 Jun 2025 10:06:52 -0700
+Date: Thu, 12 Jun 2025 10:06:49 -0700
+From: Nicolin Chen <nicolinc@nvidia.com>
+To: "Tian, Kevin" <kevin.tian@intel.com>
+CC: "jgg@nvidia.com" <jgg@nvidia.com>, "will@kernel.org" <will@kernel.org>,
+	"robin.murphy@arm.com" <robin.murphy@arm.com>, "joro@8bytes.org"
+	<joro@8bytes.org>, "ddutile@redhat.com" <ddutile@redhat.com>, "Liu, Yi L"
+	<yi.l.liu@intel.com>, "peterz@infradead.org" <peterz@infradead.org>,
+	"jsnitsel@redhat.com" <jsnitsel@redhat.com>, "praan@google.com"
+	<praan@google.com>, "linux-arm-kernel@lists.infradead.org"
+	<linux-arm-kernel@lists.infradead.org>, "iommu@lists.linux.dev"
+	<iommu@lists.linux.dev>, "linux-kernel@vger.kernel.org"
+	<linux-kernel@vger.kernel.org>, "patches@lists.linux.dev"
+	<patches@lists.linux.dev>, "baolu.lu@linux.intel.com"
+	<baolu.lu@linux.intel.com>
+Subject: Re: [PATCH v1 05/12] iommu: Introduce get_viommu_size and
+ viommu_init ops
+Message-ID: <aEsJKZLRTf36Dh3Q@nvidia.com>
+References: <cover.1749488870.git.nicolinc@nvidia.com>
+ <bc2c57254c40028e4dc74f32ac350826a26b3d8c.1749488870.git.nicolinc@nvidia.com>
+ <BN9PR11MB5276F17940D4B219D5B4F4BC8C74A@BN9PR11MB5276.namprd11.prod.outlook.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <SJ1PR11MB60833DCE7DF82E40BFB80FA5FC6AA@SJ1PR11MB6083.namprd11.prod.outlook.com>
+In-Reply-To: <BN9PR11MB5276F17940D4B219D5B4F4BC8C74A@BN9PR11MB5276.namprd11.prod.outlook.com>
+X-NV-OnPremToCloud: AnonymousSubmission
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BN3PEPF0000B078:EE_|DM4PR12MB7693:EE_
+X-MS-Office365-Filtering-Correlation-Id: e6f04d18-1cb6-4ff6-6dcd-08dda9d39484
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|376014|7416014|82310400026|36860700013;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?UTD8HR328U7fIMGXgo+ybW/0jNXjfQokZV+mwmVA/fQXkBouSNXuTqe60PKa?=
+ =?us-ascii?Q?FP2Iogxi1qsXKs094arjfR7rz0DImxVlMo9Fc7AdYbJ2KprtzLH3cWJ98Pm8?=
+ =?us-ascii?Q?Z5rUAumWKbN6RDZ1NL2oKqeIKCysiNiyuY+mr9RUz0hb+yJpoEreRSxTxIwn?=
+ =?us-ascii?Q?EKMkcabbcVeAaX4//bC23DvooyxoXdcfIRyB4fUF5S/ghPYdsYkzmhZfB+ot?=
+ =?us-ascii?Q?tjSthBp1M53v+DEaPVxoTLSLrKAMVPzrURVDeJ8FeF+WLgwLwAy1n9XTS/0x?=
+ =?us-ascii?Q?1kzbTdVFIsxaNcuIVUoWvOIVD+xpVcDax9fm89xWqTKQ5dQDXdkv2rYFeQ3v?=
+ =?us-ascii?Q?6HmyUHFPsFaSmSI9vWCTuIwDl9BCOvX2YGx3fYcn/InW16zdXo5tfHg3XG7L?=
+ =?us-ascii?Q?xAjdqsDgCZI72K0QES8WwHvzqytKOxBoOOyzeZI6+3qrCwzhGqa5ZdAhV7qm?=
+ =?us-ascii?Q?dlp75I1StftEXOGYnrq2UwbZN5udoZ+Z5FI569/nM+DP11i2CCEgd9Ap1F7w?=
+ =?us-ascii?Q?5fDxO3gw8S/w17J9ETtJhRTe5Ta2DqK8KTxpjYsn2P6aWtZSsba80NMCE5yS?=
+ =?us-ascii?Q?0fLt6wCkoaQYENz9YW20F/7zjPkTX4o4SMpcMAuUlPwRi56QvLELcYs31DbK?=
+ =?us-ascii?Q?/XntLKGWLBNpM8kCxaaVXjNlyXGm0QgZOaZ8OQVG2ztL1+4cOEmJWj913ZTa?=
+ =?us-ascii?Q?Mj1zj4/3bNnevI/65X1wZ6HcKmLOXudYAzPKwsgbbmmqI1QhRMghdFSVY8ot?=
+ =?us-ascii?Q?/e9o4adAvaeurd+2YUCFApS6FDCeqq3eqmylKuhv6Etd+WDhyxjvyj8tUel1?=
+ =?us-ascii?Q?WbMhivAWU+ZdeLlS5VNMzHgAz80nQF/3vvUEIK9IO+N4sdqZkyOuMt3qAnJB?=
+ =?us-ascii?Q?524i9IKbwCw7w9rOj2UfD9q6wvBZb9lpip3SAGHYN1s+n7iZZEzvL7SuI3zK?=
+ =?us-ascii?Q?Bl4f8oSpXdKDEWHMlmgyuIgj+pS9iwC7FFUgoOVEtUfaIExyn5KtQqv8A/Gw?=
+ =?us-ascii?Q?JP8uJuFfCJbsUqaHgpK0rIprE5AMtJFt8cRiupqnUgFR7OqQelF597XAHeP7?=
+ =?us-ascii?Q?X5E3eukNicckrzhmLsaXoqrYrmBsav6AhcBP3BLiPGdYyXOXGlZN/ZNj32UQ?=
+ =?us-ascii?Q?WotrjI0YExwTSmfXdBh+ZOSF0ZQUxP/FIpLyNvNrywm412fFMHjh6vCMHq37?=
+ =?us-ascii?Q?ex8z0nYMGsuH2Csz0vc9Kfe2Wj4imhiSUBPtrWGGN+96gKbiXgbzgIHLwmPy?=
+ =?us-ascii?Q?ZV/spteI54q+ilSezGcZMfPemgALOq6eIxE1PXRNVfhij0fSUqC0+HulBobM?=
+ =?us-ascii?Q?PUmJFZFH/TcS3Jt6c1GpzxsVwDwmgOs0dLWIHRRI99AznIjzYel41YGqBANU?=
+ =?us-ascii?Q?Rnto8x38NVxpREnVOehPUWEgcqljxZ9oCySedrmaPK6MLGzYKPRqP/Qb8GNM?=
+ =?us-ascii?Q?SaY9/+oxjxcT7hevR0zaGP+EJOc2pEXDQYo1hSfYN8X+St5a48Ehr2Oj9XEP?=
+ =?us-ascii?Q?xXVp20db+K0MRWNcK2ztvtuV0Mq6j+kuFFfZ?=
+X-Forefront-Antispam-Report:
+	CIP:216.228.117.161;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge2.nvidia.com;CAT:NONE;SFS:(13230040)(1800799024)(376014)(7416014)(82310400026)(36860700013);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Jun 2025 17:07:14.9908
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: e6f04d18-1cb6-4ff6-6dcd-08dda9d39484
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.161];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	BN3PEPF0000B078.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB7693
 
-Hi,
-
-On Tue, Jun 10, 2025 at 03:54:35PM +0000, Luck, Tony wrote:
-> > Trying to circumvent this...
-> >
-> > Why do these conversions need to be done in the kernel at all?
-> >
-> > Can't we just tell userspace the scaling factor and expose the
-> > parameter as an integer?
-> >
-> > In your example, this above value would be exposed as
-> >
-> >       0b110_0000_0000_0000_0000 / 0b100_0000_0000_0000_0000
-> >
-> > (=    0x60000 / 0x40000)
-> >
-> > This has the advantage that the data exchanged with userspace is exact,
-> > (so far as the hardware permits, anyway) and there is no unnecessary
-> > cost or complexity in the kernel.
-> >
-> > Since userspace is probably some kind of scripting language, it can do
-> > scaling conversions and pretty-print tables more straightforwardly
-> > than the kernel can -- if it wants to.  But it can also work in the
-> > native representation with no introduction of rounding errors, and do
-> > conversions only when necessary rather than every time a value crosses
-> > the user/kernel boundary...
+On Thu, Jun 12, 2025 at 08:12:29AM +0000, Tian, Kevin wrote:
+> > From: Nicolin Chen <nicolinc@nvidia.com>
+> > Sent: Tuesday, June 10, 2025 1:13 AM
+> > + * @get_viommu_size: Get the size of a driver-level vIOMMU structure for a
+> > given
+> > + *                   @dev corresponding to @viommu_type. Driver should return
+> > an
+> > + *                   errno if vIOMMU isn't supported accordingly. It is required
+> > + *                   for driver to use the VIOMMU_STRUCT_SIZE macro to sanitize
+> > + *                   a driver-level vIOMMU structure related to the core one
 > 
-> It seems user hostile to print 8974832975 with some info file to explain that
-> the scaling factor is 262144. While it may be common to read using some
-> special tool, it make life harder for casual scripts.
-> 
-> Printing that value as 34236.270809 makes it simple for all tools.
+> What about returning size with '0' indicating NOSUPPORT?
 
-The divisor is going to be a power of two or a power of ten in
-practice, and I think most technical users are fairly used to looking
-at values scaled by those -- so I'm not convinced that this is quite as
-bad as you suggest.
+I tend to support other errnos here. Basically this moves all the
+driver-level sanity checks from viommu_alloc to get_viommu_size,
+to reject an incompatible case immediately before allocating any
+structure. And there can be another errno than EOPNOTSUPP.
 
-The choice of unit in the interface is still arbitrary, and the kernel
-is already inconsistent with itself in this area, so I think userspace
-is often going to have to do some scaling conversions anyway.
-
-resctrl is not (necessarily) a user interface, but I agree that it is
-no bad thing for make the output eyeball-friendly, so long is the cost
-of doing so is reasonable.
-
-(Plenty of virtual "text" files exported by the kernel are extremely
-cryptic and user-hostile, though.)
-
-> The rounding error from the kernel is insignificant ("true" value is
-> 34236.270809173583984375 ... so the error is around five parts
-> per trillion).
-> 
-> Things are worse sampling the Joule values once per-second to convert
-> to Watts. But even there the rounding errors from a 1-Watt workload
-> are tiny. Worst case you see 0.999999 followed by 2.000001 one second
-> later and report as 1.000002 Watts instead of 1.0
-> 
-> The error bars on the values computed by hardware are enormously
-> larger than this. Further compounded by the telemetry update rate
-> of 2 millliseconds. Errors from uncertainty in when the value was
-> captured are also orders of magnitude higher than kernel rounding
-> errors.
-> 
-> -Tony
-
-If we can make the intermediate interface error-free by construction
-and without making life especially hard for anyone, then that means we
-can bolt whatever on at each end without having to even think about the
-effect on accuracy.
-
-I agree though that the inaccuracies introduced by the interface will
-be very marginal, and likely swamped by hardware limitations and timing
-skid.
-
-Either way, it's not my call...
-
-Cheers
----Dave
+Thanks
+Nicolin
