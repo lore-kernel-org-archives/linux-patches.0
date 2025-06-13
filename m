@@ -1,103 +1,99 @@
-Received: from mail-pg1-f172.google.com (mail-pg1-f172.google.com [209.85.215.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D38351DEFDD
-	for <patches@lists.linux.dev>; Fri, 13 Jun 2025 02:17:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C056A239E7B;
+	Fri, 13 Jun 2025 03:16:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749781048; cv=none; b=CZW4UNXZxW3Z+o/+uS68LXfHoI+ejnSnVVmmVqpVltZMBlu+oeUYFX+uXiXXpYZuABQeJuru7pMS+gFexWBw+T4alfFworW9GgA3Rs8QSCRKgOG1lyVIGQR+tbX65ecmhErAsKj14IUgyGl3NLY0HCPdL1Tf2NPCBdF0K0pU8vs=
+	t=1749784618; cv=none; b=Ri3LEksGz4qgT5baw1fbQz+R6ulmWm8/wED7xMx1Yvd0q64eq2C20FAYMfLQ7t/Ce84TbH8SDDYKtGODybF+41MidZHD7D+x2OdN1xZu3+03D3AyXK1EJB0mM1fqsqidVOYr8GB/8AIb6viSNf6q7HDSBot+GuCdQEumBWO9Cos=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749781048; c=relaxed/simple;
-	bh=NUDxPMataEvCFbMf4ol6/OGJGbZ5DtNd4C4vpmftFMA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=c0tJ4mgb0eqRSePt2mLEj+NSWTVQ84SP2ejJ6NFQ2/YICBFPC5M7j4mYAc2zpnoBA+q09oFfn/ORcuUGu4V2XSVpcGELXyZfHn21zIvJ8eXk8h0KX9w+ymp2uqzEYIQzXWUgqhoPyQ8pS+6uUTy8Td8O7O0qDFQ3uRUhscuQvIQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XKSANjG5; arc=none smtp.client-ip=209.85.215.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1749784618; c=relaxed/simple;
+	bh=0jvaie0511ftK/fpbJnHTGdXtBfH9xiqZuo3B3+eSac=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=uLSa2kCB1dxwQc44mO+e8LgiQj7leE5uWZVPfJY0XOb2GWD0TQty+j57YYySKeBcSGnULhBcn6CjqJKwNLYNlLFex4xsSi7x9UkUzeeDfTxsVvknp+TIYge78Zm2hqRc50DgkybMnP27HM9JVYsCEfinhEg8mHm7JeR1EXlYWIg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=X5Q2vH2n; arc=none smtp.client-ip=192.198.163.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XKSANjG5"
-Received: by mail-pg1-f172.google.com with SMTP id 41be03b00d2f7-b2c4476d381so1448447a12.0
-        for <patches@lists.linux.dev>; Thu, 12 Jun 2025 19:17:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1749781046; x=1750385846; darn=lists.linux.dev;
-        h=mime-version:user-agent:message-id:date:references:in-reply-to
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=NUDxPMataEvCFbMf4ol6/OGJGbZ5DtNd4C4vpmftFMA=;
-        b=XKSANjG5M6CDtTfgeM+CcP1G3+5pk9fuclKSsrVeCA2FuMo20B20j+WIIEOIKWlfGH
-         7OaAfvBAJ4x9sWbEpHr6Bz4FapqKAPB+VlnLA9X5qm3kmv2YcUC0BR9i4LW7y6qLBOYX
-         Nb+8HPIJwu31l4gjrEsoxr3L7UNVKPhuG2V1V5atzcqY32ZR1cPqva0QO0UFN+alij6R
-         WfHajFssH5EuzRluBI7j3/GO9pZWVeKue8qcl3Qt49v0jFsz8obtGrvy6bBbBlxWpwBG
-         lWVMAWy1buya5bBO8AmFV/ijIqEE8RDOXQKo5h/TYWWwufmVC7oUQPV1WbQjPsYHfpVq
-         8d6A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749781046; x=1750385846;
-        h=mime-version:user-agent:message-id:date:references:in-reply-to
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=NUDxPMataEvCFbMf4ol6/OGJGbZ5DtNd4C4vpmftFMA=;
-        b=rFhbR/7N/i74XqwAC0+g4F54mckdL4UxKhs9I6VwcKqMqhRMGBWK+l8nEkEzwpIYMu
-         vbQEb6+/esSxozx3ueu13nYPeLWEGWB4pHBS7xmKXtIM1JjT74WhY4MnLXkYtKr9HPty
-         /GnLuHmG1S9GDUNWYN6WnNl1BYsU+FcYzpZPqToViw1YzRb5HLUBi19i6H1hWSMsZwKD
-         Ot7V2VZkEZW/oWkzhrZbQs5asXoYqtvtZWB2pHRZLRwQNcvqRpBmgLQWo2J8hDrMpZhz
-         3+uskzaS6ZwRtP0+wj2/Q++r3BCjD+tat1i+KzyfGQJfqVrM4SX6pI0W7cHkjuafdMeH
-         QiOg==
-X-Forwarded-Encrypted: i=1; AJvYcCXPJclp/eA9NwVR7nF9OT9iNn4aXTVgFQkhkw0uXP60sRlMNvrXgwUjzHK6R/o/HPvIlYz3vsZH@lists.linux.dev
-X-Gm-Message-State: AOJu0Yz0/bZAhJAA7JKwYdOtAjlAFrjqLTTbi64atbD1AWMGYRoxnBjG
-	4OOqtdZFhZr3bMyZoRsGTH98G18xjJF9fagyHxynnAhLUXefOyZvi5wB
-X-Gm-Gg: ASbGncsLG28yy55BbkbPNhmQjt3YyZYb7VKPqOtFHdAV0ZwKzRD+lwdjbKMrUaSwbQT
-	iIBT5Yb5KPpK7tgSbwz0hewKGRgd0R3PpAYNCJm5IPzsR1bsPXrU5hm80Q7RjtzzA32TTjIulDT
-	jpRZHmiYoVQWp94g6AYqN7Pm47C3GGu/pBP1eSIySMOrVX+quqpjGqaD2fuVp1T8Nbt9V7HCEF+
-	esR8uwdIZwnO9TyXtC6qBA8+9pGnAdkzMdE7RTbmGSEjcCEBJH2BKhV6S0aWDhULDnfed5o+5lo
-	SQmRdQT8rAwNlIH58Fq2vYUxasq0T4gcRtWQweFEqg==
-X-Google-Smtp-Source: AGHT+IEw5WjanWEDLG1X7eGAa5C3gNbnzr6H4t+9xgEgCh4Bs6rTuwlJibxIHRYrLNDWh6Unpvc6nA==
-X-Received: by 2002:a05:6a20:a11b:b0:21f:54e0:b0a3 with SMTP id adf61e73a8af0-21faee4e610mr1073126637.2.1749781046083;
-        Thu, 12 Jun 2025 19:17:26 -0700 (PDT)
-Received: from fedora ([2601:646:8081:3770::f55])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b2fe1639f44sm412874a12.4.2025.06.12.19.17.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Jun 2025 19:17:25 -0700 (PDT)
-From: Collin Funk <collin.funk1@gmail.com>
-To: Ahmed Salem <x0rw3ll@gmail.com>
-Cc: Jiri Slaby <jirislaby@kernel.org>,  Greg Kroah-Hartman
- <gregkh@linuxfoundation.org>,  stable@vger.kernel.org,
-  patches@lists.linux.dev,  "Rafael J. Wysocki"
- <rafael.j.wysocki@intel.com>
-Subject: Re: [PATCH 6.15 05/34] ACPICA: Apply ACPI_NONSTRING in more places
-In-Reply-To: <3nobung2ragvykho52thb2pouxgjatmh5cjtc2vh3aro72lkk4@bp45zihoq6v5>
-References: <87ecvpcypw.fsf@gmail.com>
-	<5c210121-c9b8-4458-b1ad-0da24732ac72@kernel.org>
-	<3nobung2ragvykho52thb2pouxgjatmh5cjtc2vh3aro72lkk4@bp45zihoq6v5>
-Date: Thu, 12 Jun 2025 19:17:24 -0700
-Message-ID: <87zfecs7uz.fsf@gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="X5Q2vH2n"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1749784617; x=1781320617;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=0jvaie0511ftK/fpbJnHTGdXtBfH9xiqZuo3B3+eSac=;
+  b=X5Q2vH2ndODM/SmEP/AZoXNTWbOiWBsmyqY/6iV0w0i1OG9902sarzPO
+   VqkUZwkzLPGPcYI+Le3GcdbbuAbssyiIq9Tw+N/Xhi8NqD35XTE7SrJNB
+   fo/e437N1xQj/jPwzStM1iyuqCojbe1jYU5EN/uXws6JVfekhU4sE+AmP
+   7SU3TrwdErjZKg/svI/O93phlWTz7HG+bdk0IJ5bcpoxaOlkHBwgmMQdc
+   v6fEswSY7YSJO3SCmJqE1amIc8bLoGFh9K2anErmIRoBAXUJJmcLuJ/Np
+   FLCbLXvo+m/emWiqqOBeWjG7DdlRGqsflvaYv90NgewJhPEkU7RUiq/Fe
+   A==;
+X-CSE-ConnectionGUID: dcqxz/snQEOEYY05GO5wHg==
+X-CSE-MsgGUID: 5BbsB/iGTaSjri4jaNrUyA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11462"; a="62598173"
+X-IronPort-AV: E=Sophos;i="6.16,232,1744095600"; 
+   d="scan'208";a="62598173"
+Received: from orviesa005.jf.intel.com ([10.64.159.145])
+  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Jun 2025 20:16:56 -0700
+X-CSE-ConnectionGUID: +q824qZfTWm/aNHbL7elTw==
+X-CSE-MsgGUID: rMC4t20NQfSfe9vXGSZ4Kw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,232,1744095600"; 
+   d="scan'208";a="152996243"
+Received: from allen-sbox.sh.intel.com (HELO [10.239.159.30]) ([10.239.159.30])
+  by orviesa005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Jun 2025 20:16:53 -0700
+Message-ID: <1e71b605-1224-4de6-b816-16c1c0ca2ce6@linux.intel.com>
+Date: Fri, 13 Jun 2025 11:15:59 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 7/7] iommu/vtd: Split paging_domain_compatible()
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: David Woodhouse <dwmw2@infradead.org>, iommu@lists.linux.dev,
+ Joerg Roedel <joro@8bytes.org>, Robin Murphy <robin.murphy@arm.com>,
+ Will Deacon <will@kernel.org>, patches@lists.linux.dev,
+ Wei Wang <wei.w.wang@intel.com>
+References: <7-v1-20c73f153f4c+1895-vtd_prep_jgg@nvidia.com>
+ <39400661-9f18-4ba3-8cb8-d56ef548c9b0@linux.intel.com>
+ <20250610235125.GP543171@nvidia.com>
+ <da8a6938-c45f-4923-af52-1a34702f1b0a@linux.intel.com>
+ <20250612134701.GT543171@nvidia.com>
+Content-Language: en-US
+From: Baolu Lu <baolu.lu@linux.intel.com>
+In-Reply-To: <20250612134701.GT543171@nvidia.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Ahmed Salem <x0rw3ll@gmail.com> writes:
+On 6/12/25 21:47, Jason Gunthorpe wrote:
+> On Wed, Jun 11, 2025 at 12:50:11PM +0800, Baolu Lu wrote:
+> 
+>>> When this was first done that was harder, but now I think we have
+>>> enough infrastructure to do it easily..
+>> Yes. I can follow up with a patch series for broad discussion if you
+>> don't want to include it in this series.
+> Please, I'd rather keep this as is.
+> 
+> There is also a problem here with AMD, it turns out only its V1 page
+> table can support disabling no-snoop, the v2 page table cannot and
+> there is nothing like the PGSNP there.
+> 
+> The iommufd side assumes that if a device supports coherencey then all
+> paging iommu_domains support it.. Maybe a creation flag can fix that
+> also?
 
-> Thank you so much, Collin, for shedding light on this issue!
->
-> This is now reverted in upstream ACPICA commit a6ee09c ("acpidump: drop
-> ACPI_NONSTRING attribute from FileName") [1], and pending merge.
-[...]
-> Thank you so much, Jiri, for the attention to the other issue.
->
-> The above issue is now reverted in upstream ACPICA commit 4623b33
-> ("Debugger: drop ACPI_NONSTRING attribute from NameSeg") [2], and pending
-> merge.
->
-> Rafael, the upstream PR [3] is ready. My apologies to
-> everyone, and thank you so much for the review and efforts!
+I guess so. For the AMD case, a FORCE_COHERENCY allocation flag
+indicates that the IOMMU driver should select a right page table type to
+meet this requirement. This requirement will also be enforced in the
+domain attaching paths, meaning it will be an incompatible failure if a
+FORCE_COHERENCY domain is attached to any device that doesn't support
+this feature.
 
-No problem. I'm sure many others made similar mistakes while attempting
-to pacify -Wunterminated-string-initialization warnings introduced by
-GCC 15 on existing code.
+Anyway, we can discuss the details when we have that code.
 
-Thanks for the quick fix to ACPICA.
-
-Collin
+Thanks,
+baolu
