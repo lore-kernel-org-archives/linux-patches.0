@@ -1,72 +1,74 @@
-Received: from mail-pg1-f177.google.com (mail-pg1-f177.google.com [209.85.215.177])
+Received: from mail-pg1-f172.google.com (mail-pg1-f172.google.com [209.85.215.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B600F1EB19B
-	for <patches@lists.linux.dev>; Fri, 13 Jun 2025 02:12:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D38351DEFDD
+	for <patches@lists.linux.dev>; Fri, 13 Jun 2025 02:17:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749780780; cv=none; b=EzYZY9AcUKBz5Oqhs9G5qbc39+xDlBnFtLNmGnUqM8pRo1+a37Z4P2dhkih79WNtrlOHVCfdmpu6rpF7Hnb/wH9XHmjpYJEHzl4kPbONy686dA3TTGIBbYJ82smzXejEfQb/q8Swpn4gYrXxX1Im/DuooOjHjBZb7XEsjv2u7OE=
+	t=1749781048; cv=none; b=CZW4UNXZxW3Z+o/+uS68LXfHoI+ejnSnVVmmVqpVltZMBlu+oeUYFX+uXiXXpYZuABQeJuru7pMS+gFexWBw+T4alfFworW9GgA3Rs8QSCRKgOG1lyVIGQR+tbX65ecmhErAsKj14IUgyGl3NLY0HCPdL1Tf2NPCBdF0K0pU8vs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749780780; c=relaxed/simple;
-	bh=0n6xKtbuDQY6G+0/L/F9fnARyJe2FFGoyAd3+Bcd5ng=;
+	s=arc-20240116; t=1749781048; c=relaxed/simple;
+	bh=NUDxPMataEvCFbMf4ol6/OGJGbZ5DtNd4C4vpmftFMA=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=kN5t4LAx96TH5teQLIP+9eBvbpUxbJrML0lD59QgZyZttNhiGeYnDA5oYdBkWkKkVVzCprgNA1/gLyGyu+w4SibXPh2RY6dZAc4OEMtIqqBMwoYbUWT76C/9u9qUvN0ca6PGMaIN7po0ke8Rgq5zjaMu31a1zwVNNaw1udb67Uc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gjVkeP7T; arc=none smtp.client-ip=209.85.215.177
+	 MIME-Version:Content-Type; b=c0tJ4mgb0eqRSePt2mLEj+NSWTVQ84SP2ejJ6NFQ2/YICBFPC5M7j4mYAc2zpnoBA+q09oFfn/ORcuUGu4V2XSVpcGELXyZfHn21zIvJ8eXk8h0KX9w+ymp2uqzEYIQzXWUgqhoPyQ8pS+6uUTy8Td8O7O0qDFQ3uRUhscuQvIQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XKSANjG5; arc=none smtp.client-ip=209.85.215.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gjVkeP7T"
-Received: by mail-pg1-f177.google.com with SMTP id 41be03b00d2f7-af51596da56so1296865a12.0
-        for <patches@lists.linux.dev>; Thu, 12 Jun 2025 19:12:58 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XKSANjG5"
+Received: by mail-pg1-f172.google.com with SMTP id 41be03b00d2f7-b2c4476d381so1448447a12.0
+        for <patches@lists.linux.dev>; Thu, 12 Jun 2025 19:17:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1749780778; x=1750385578; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1749781046; x=1750385846; darn=lists.linux.dev;
         h=mime-version:user-agent:message-id:date:references:in-reply-to
          :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=hA5PNUdIZ+JmMrzptJYJdiFK4HF3VPgHYOcvKuhG3Pk=;
-        b=gjVkeP7T2ri4uNQBIthJq15BLOx2oXn6joenGkhJwnmHor8u/L8AXFZ5n1z0kF1CHb
-         nS/DRqmtzDevVGmSL9yZ/C8mRDSu90h3ddi/G6YUWesQJGw9gGbv06le47qGzUjBRah2
-         POzSebUCf9D6xH8K4jNejAmTF5SVW4KQst5MpP1Pmu0dGhHAa+eA3qAZ7cDxJwYHP0Jw
-         CQLzSt/UbKd7d2MyrMYd4Y4JzNcFhr9aSXMf6EWwnGwrrf3Y/FnXGQMLp2J1qZWvRKo5
-         3AJM5TlLrDyNcTULrwbHNGnbGloq8IpY/owYYbaYSFzOdf7yPiacnM0N4/4T2j/J38OA
-         wZWA==
+        bh=NUDxPMataEvCFbMf4ol6/OGJGbZ5DtNd4C4vpmftFMA=;
+        b=XKSANjG5M6CDtTfgeM+CcP1G3+5pk9fuclKSsrVeCA2FuMo20B20j+WIIEOIKWlfGH
+         7OaAfvBAJ4x9sWbEpHr6Bz4FapqKAPB+VlnLA9X5qm3kmv2YcUC0BR9i4LW7y6qLBOYX
+         Nb+8HPIJwu31l4gjrEsoxr3L7UNVKPhuG2V1V5atzcqY32ZR1cPqva0QO0UFN+alij6R
+         WfHajFssH5EuzRluBI7j3/GO9pZWVeKue8qcl3Qt49v0jFsz8obtGrvy6bBbBlxWpwBG
+         lWVMAWy1buya5bBO8AmFV/ijIqEE8RDOXQKo5h/TYWWwufmVC7oUQPV1WbQjPsYHfpVq
+         8d6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749780778; x=1750385578;
+        d=1e100.net; s=20230601; t=1749781046; x=1750385846;
         h=mime-version:user-agent:message-id:date:references:in-reply-to
          :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=hA5PNUdIZ+JmMrzptJYJdiFK4HF3VPgHYOcvKuhG3Pk=;
-        b=YhKUx9Bh6PHrIGC9MVQKcpRYDbLC76yjwFyFusEE7U0d06+0Kskz3tudOjSfpNq7ft
-         TQHPR2QbGxek71Qc1GEV41SZs039rmYo0sf/FKX6bYAhU7f08p0OrPZzEQU7JCk9cIvP
-         yL+OqPM07fEABh6fQejK90jc8xHHfMDYQPvfnziGht5YMHQt4RhPxdVgGPPCjW05T7Kn
-         w2xyabSVTHhCRUgsOpR1VhO8upa3chiGMVG//gfDTKWivoGMPZZC9hI0jdmKqncW39md
-         WGCW6BfkOl3+xm/nbwwCS86ptJBt+xKeIE9z6QQmYCU0DqaikHUaCsJf06sxWu0Y/+hC
-         0kIg==
-X-Forwarded-Encrypted: i=1; AJvYcCX9K77TgdTDaZglbh1jPU9jGyS42cc6UIVbnQtRBG2tvp74ekqnhIBmEspWrOxQchlubtgKvdLG@lists.linux.dev
-X-Gm-Message-State: AOJu0YyroI4n1iw1MK3HwQbl9sz5JwaRqtbhKGE70VuE/MfD7lLfxQ7M
-	zZYxwAYCjyth7z2TYUmVw/Kh350NQLClSj4jkbACThSt+ABbAW+lqewU
-X-Gm-Gg: ASbGncvBe4ONvnla/rCu02otC/Zdux5+OsNEdaKdriGhBU7zLMcS1elaT5yKGvDu+16
-	DiqZ4aAF9zK1tIajLmVo7DW6FJU/P9aPL3ObCE/l3Lkjf+EMNsYaMzUd2G/vpyGX7als/Wr3YWq
-	yVRg0sCi5J9mSAMPIlWiJncmUtN0Q5AbApwqpYAMSZjIuxpZLxZhTgMp0QWlqa2Bx2C/LCYRq6Z
-	TWepzO93eMh+mOH4tcwamiI8ERJQrfI6jIHlBk0ZbmPpihMyz1ThI2fy5qubGWp2PkD1hkEwVEa
-	RHpq2R9ccOZoktxsbYxP7RkWpZQvMH1yN7IElC6gxQ==
-X-Google-Smtp-Source: AGHT+IFd0X4fVlfy/Sj7SKCnZ2+k8ZfFwMQcvcYO+UMt1DilGhPBBy1wimHt3DWPorXsAVAVimbFvQ==
-X-Received: by 2002:a05:6a21:a343:b0:210:1c3a:6804 with SMTP id adf61e73a8af0-21facec4603mr1757128637.31.1749780777994;
-        Thu, 12 Jun 2025 19:12:57 -0700 (PDT)
+        bh=NUDxPMataEvCFbMf4ol6/OGJGbZ5DtNd4C4vpmftFMA=;
+        b=rFhbR/7N/i74XqwAC0+g4F54mckdL4UxKhs9I6VwcKqMqhRMGBWK+l8nEkEzwpIYMu
+         vbQEb6+/esSxozx3ueu13nYPeLWEGWB4pHBS7xmKXtIM1JjT74WhY4MnLXkYtKr9HPty
+         /GnLuHmG1S9GDUNWYN6WnNl1BYsU+FcYzpZPqToViw1YzRb5HLUBi19i6H1hWSMsZwKD
+         Ot7V2VZkEZW/oWkzhrZbQs5asXoYqtvtZWB2pHRZLRwQNcvqRpBmgLQWo2J8hDrMpZhz
+         3+uskzaS6ZwRtP0+wj2/Q++r3BCjD+tat1i+KzyfGQJfqVrM4SX6pI0W7cHkjuafdMeH
+         QiOg==
+X-Forwarded-Encrypted: i=1; AJvYcCXPJclp/eA9NwVR7nF9OT9iNn4aXTVgFQkhkw0uXP60sRlMNvrXgwUjzHK6R/o/HPvIlYz3vsZH@lists.linux.dev
+X-Gm-Message-State: AOJu0Yz0/bZAhJAA7JKwYdOtAjlAFrjqLTTbi64atbD1AWMGYRoxnBjG
+	4OOqtdZFhZr3bMyZoRsGTH98G18xjJF9fagyHxynnAhLUXefOyZvi5wB
+X-Gm-Gg: ASbGncsLG28yy55BbkbPNhmQjt3YyZYb7VKPqOtFHdAV0ZwKzRD+lwdjbKMrUaSwbQT
+	iIBT5Yb5KPpK7tgSbwz0hewKGRgd0R3PpAYNCJm5IPzsR1bsPXrU5hm80Q7RjtzzA32TTjIulDT
+	jpRZHmiYoVQWp94g6AYqN7Pm47C3GGu/pBP1eSIySMOrVX+quqpjGqaD2fuVp1T8Nbt9V7HCEF+
+	esR8uwdIZwnO9TyXtC6qBA8+9pGnAdkzMdE7RTbmGSEjcCEBJH2BKhV6S0aWDhULDnfed5o+5lo
+	SQmRdQT8rAwNlIH58Fq2vYUxasq0T4gcRtWQweFEqg==
+X-Google-Smtp-Source: AGHT+IEw5WjanWEDLG1X7eGAa5C3gNbnzr6H4t+9xgEgCh4Bs6rTuwlJibxIHRYrLNDWh6Unpvc6nA==
+X-Received: by 2002:a05:6a20:a11b:b0:21f:54e0:b0a3 with SMTP id adf61e73a8af0-21faee4e610mr1073126637.2.1749781046083;
+        Thu, 12 Jun 2025 19:17:26 -0700 (PDT)
 Received: from fedora ([2601:646:8081:3770::f55])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b2fe16805c8sm398181a12.44.2025.06.12.19.12.57
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b2fe1639f44sm412874a12.4.2025.06.12.19.17.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Jun 2025 19:12:57 -0700 (PDT)
+        Thu, 12 Jun 2025 19:17:25 -0700 (PDT)
 From: Collin Funk <collin.funk1@gmail.com>
-To: Jiri Slaby <jirislaby@kernel.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-  stable@vger.kernel.org,  patches@lists.linux.dev,  Ahmed Salem
- <x0rw3ll@gmail.com>,  "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+To: Ahmed Salem <x0rw3ll@gmail.com>
+Cc: Jiri Slaby <jirislaby@kernel.org>,  Greg Kroah-Hartman
+ <gregkh@linuxfoundation.org>,  stable@vger.kernel.org,
+  patches@lists.linux.dev,  "Rafael J. Wysocki"
+ <rafael.j.wysocki@intel.com>
 Subject: Re: [PATCH 6.15 05/34] ACPICA: Apply ACPI_NONSTRING in more places
-In-Reply-To: <5c210121-c9b8-4458-b1ad-0da24732ac72@kernel.org>
+In-Reply-To: <3nobung2ragvykho52thb2pouxgjatmh5cjtc2vh3aro72lkk4@bp45zihoq6v5>
 References: <87ecvpcypw.fsf@gmail.com>
 	<5c210121-c9b8-4458-b1ad-0da24732ac72@kernel.org>
-Date: Thu, 12 Jun 2025 19:12:56 -0700
-Message-ID: <877c1gtmmv.fsf@gmail.com>
+	<3nobung2ragvykho52thb2pouxgjatmh5cjtc2vh3aro72lkk4@bp45zihoq6v5>
+Date: Thu, 12 Jun 2025 19:17:24 -0700
+Message-ID: <87zfecs7uz.fsf@gmail.com>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -76,22 +78,26 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Hi Jiri,
+Ahmed Salem <x0rw3ll@gmail.com> writes:
 
-Jiri Slaby <jirislaby@kernel.org> writes:
+> Thank you so much, Collin, for shedding light on this issue!
+>
+> This is now reverted in upstream ACPICA commit a6ee09c ("acpidump: drop
+> ACPI_NONSTRING attribute from FileName") [1], and pending merge.
+[...]
+> Thank you so much, Jiri, for the attention to the other issue.
+>
+> The above issue is now reverted in upstream ACPICA commit 4623b33
+> ("Debugger: drop ACPI_NONSTRING attribute from NameSeg") [2], and pending
+> merge.
+>
+> Rafael, the upstream PR [3] is ready. My apologies to
+> everyone, and thank you so much for the review and efforts!
 
-> Ugh, indeed.
->
-> FTR this is about 70662db73d54 ("ACPICA: Apply ACPI_NONSTRING in more
-> places").
->
-> To me neither the above, nor struct acpi_db_execute_walk's:
->   char name_seg[ACPI_NAMESEG_SIZE + 1] ACPI_NONSTRING;
-> is correct in the commit.
->
-> This is broken in upstream/-next too.
+No problem. I'm sure many others made similar mistakes while attempting
+to pacify -Wunterminated-string-initialization warnings introduced by
+GCC 15 on existing code.
 
-Yep, that's right. Wasn't sure if it was best to report here or upstream
-ACPICA, since I'm not sure how often that is imported.
+Thanks for the quick fix to ACPICA.
 
 Collin
