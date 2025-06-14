@@ -1,204 +1,224 @@
-Received: from mail-wr1-f67.google.com (mail-wr1-f67.google.com [209.85.221.67])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from NAM02-BN1-obe.outbound.protection.outlook.com (mail-bn1nam02on2041.outbound.protection.outlook.com [40.107.212.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A2101C8601
-	for <patches@lists.linux.dev>; Sat, 14 Jun 2025 04:30:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.67
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749875407; cv=none; b=ClDLyMVvys+/ELVWEI/ZpL1O7942R1zUa14vfweEXjUgEZkiWOBSweq1f3yNmbYlK48Gil5H+gvYTWFxB0iiCiXkul+qNpPMr8MT96AdJDO+uonuYq5pbVTn8zYTpz+kUT/SsI5/OH3J+bTwwt5ME3i+BjcBGb4lYPouybIJkrs=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749875407; c=relaxed/simple;
-	bh=XNGM7hbzMffKhpfxMTQ3F/J1yS9Q30hS8zYBljaE3r4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=s6Ypi5gMmgkqD5oEsYXOviJbCKa1BKEwmOULxGs9cO4Kv1MAksWFPwHLxWQMaYoCfSfBeQrogQeG7x3Ci07LEBUPC7Wnpd4JnaXnkguDWLQYzPqIhtmo6Tf28e7lwpPQjKlp4WHcIiTOjmjS4aqG9T86G34zsm/m7Uaow4ZuVhk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com; spf=pass smtp.mailfrom=suse.com; dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b=QzvSjfPs; arc=none smtp.client-ip=209.85.221.67
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 741752AE99;
+	Sat, 14 Jun 2025 06:35:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.212.41
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1749882949; cv=fail; b=FopF/s/r1HT5Fq5qNZdT+CXY5EFjFm6RGkMozyD+bn1FLGxXilGr2a1VWkxDDsKZj5hdO1IpdCHfcHhODrBceqCMkaeAf7iL/P0ZFtqZC/871xicR5dcsf2pSmAK6ZDA1wSdGyRbOdiIOzqeeXVmTj7MhxFZPaKDjRDhirzMc7c=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1749882949; c=relaxed/simple;
+	bh=z19R8Y0zWlJaNZavSwuc2Piz13nR8v5kYvqW902upXs=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=MGw6aRF2YRSh8Zlix3eSYreAJIKQACbelr2gbkc9c6QlBbpwUetG4xZfJo4rToWHo+YUL1kXAbsVJ5kOLKgE462BYmi0B4maG4FHmM//QDQXvFWSaLzO8JddzfflYuPEddTbjXKRioly8c/2/78bTEFueYXOGFNqjEqBMPo40JA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=TyDTz0bS; arc=fail smtp.client-ip=40.107.212.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b="QzvSjfPs"
-Received: by mail-wr1-f67.google.com with SMTP id ffacd0b85a97d-3a365a6804eso1840063f8f.3
-        for <patches@lists.linux.dev>; Fri, 13 Jun 2025 21:30:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=suse.com; s=google; t=1749875404; x=1750480204; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=3UyMkex9gWKrcutLitVneuFUOREOl7zIrZSd0dvQp3g=;
-        b=QzvSjfPsWwekPLD2ZkfTGOR9AXCpQaxEpgDhWgE3mbJBgAdEPIdYCW8Lb4qIG5ejjy
-         oTUiKhvrQAHrok2+DQUxbAKucs2Gyp45EmRhvyyE+K2Ra5txJG7yP189LVCPz1GEdGUg
-         Llfl0X4LGWzqLQECkBMYzPkt08wrD5z/X3zy63q3DiBXSRj+7M6xyO97e1Ths938aEuP
-         dae/uS0qKI0diny4uAhBHzBX4d37bK/kfN9e4AW1vUT1P1IGr0MdJlKYZBObKrbzcJ7D
-         q4lhDOK++oCb8n8SzAi1IYIw0DF+PpZteIndCyLkz00K+MJAQz3RB6MC74iqESofxVqR
-         sR9g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749875404; x=1750480204;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=3UyMkex9gWKrcutLitVneuFUOREOl7zIrZSd0dvQp3g=;
-        b=RDHht/UXkJYMNd5bG7TR5F5Z1qZd2FS55QwjVOHAIEvtB2R7L+AvSVrrPBXxmblCsr
-         oStN0oaDxWIUq4nN8bzZR5P/mRn4K5+EFRJesTSqAIC0sYTSjKJFMyvF3cPJTNoZ6H3k
-         np4EZmhudSdFFte/fkBDA2Bj32zHCpoNFrI/G/ygrsT/HBcbh0a43Nec8r25brhUywP+
-         yl6JBu+MxJRNBqAtl2zczUtkyueP7HrZihdtYNTdRbJniCPp9+e7j6ZCiwsF7sM6gCr9
-         tEzDca5rBEymrQZDPgL1hXQ3H9qy5zk52QsXHEbOLbhE6WBSZPj/XyCKkilvQO4qEqZL
-         vo/g==
-X-Gm-Message-State: AOJu0Yyl2ToDN9IwDnBpAbsHG3yuhLB/0Mgu7imNRoChYy/0FsiB/S+X
-	8zBV+y6RA0c5I/9s8YXxqsPP5xpTLUvBaHZ8YEUb6sunRacL1mrw9oWZ7A7h8RL+m+4=
-X-Gm-Gg: ASbGncuvYv04p1rRyyYGxwMhXUE/2Jyo6HQZ6mje7GTBHPBneoNPR1+X9kJ5fogCCRy
-	cd2FWnnisS9L+bd/yQ4PNh4WCYPiEksjjcJyiBbtHbQoxK4KLDab+AkuCt/6J7yGquWXhdXMceP
-	hdvJzWXf3CBMTgz3VKMa+A6fBD5CK6iPYsgz6Jie7xoo0Uzd9UodQqs+pVb0/HYh+Rs3tpm6+tp
-	O8cCCbPiNVp9CvnJ5QbS9cAjTsN9YNjWE/m8kYtmunwKvsvFyCTwEp3a4rOTWjGk7G5UOKmX2nU
-	k+tjSk7tQIdnUSwERxs7rHM+/83XxSQWQhrIgOx1dtH94gwO4ReV/WcC
-X-Google-Smtp-Source: AGHT+IEMTpDP3L2lj4VyrQ5EbeDIvTfzZ44zSGT6lzrokTIqEWCgQGUu8OSQ5ScRV3QFtV3wZkj1fA==
-X-Received: by 2002:a05:6000:240e:b0:3a5:2875:f986 with SMTP id ffacd0b85a97d-3a572874a1cmr2022636f8f.44.1749875403734;
-        Fri, 13 Jun 2025 21:30:03 -0700 (PDT)
-Received: from u94a ([2401:e180:8d23:7dd3:95f2:880a:1c89:3ec])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2365deb887csm22950965ad.192.2025.06.13.21.30.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Jun 2025 21:30:03 -0700 (PDT)
-Date: Sat, 14 Jun 2025 12:29:53 +0800
-From: Shung-Hsi Yu <shung-hsi.yu@suse.com>
-To: Sasha Levin <sashal@kernel.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, Martin KaFai Lau <martin.lau@kernel.org>, 
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>, Alexei Starovoitov <ast@kernel.org>, daniel@iogearbox.net, 
-	andrii@kernel.org, bpf@vger.kernel.org
-Subject: Re: [PATCH AUTOSEL 6.15 068/118] bpf: Add
- bpf_rbtree_{root,left,right} kfunc
-Message-ID: <avgg2fdgpdm4mwb375zwnqjvtgugwtgw73a2zkx5ybmvvixifo@mlhxcnm4y7ac>
-References: <20250604005049.4147522-1-sashal@kernel.org>
- <20250604005049.4147522-68-sashal@kernel.org>
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="TyDTz0bS"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=xA+0ugDCuaS5RpogHQjds+tybv08yPs/QQNBDYfY+rUw+Nh5PYaq/qCpHK2T80mBs+rIqJ+Qu0pvXC4IwLa2E+Ki/6k2jXCf5vyEutbmu/4YHjY0girZArU80aDfOXmYfPskR4sPB/X3/banBqlR2MpCBcyzmtKig7xSIMoMQB7utJ3X+s3P9q3Xndkj+A9eNtndtuAfmVwIxsRUazBMwtWAeIp0CFRozpXYAuo8bjVlaTgSpTKvofDR574rFPGpmJO6xOpOCxQRAaZSPKCYH4T6qukOLt/LYaGworFobR289C2uctg1u83fxbPQVAroMfzbKfYZo+vztFV+xOW8lQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=BlYfFf8rCgrPNZIBS5/aBAMxDCZDOtoAHN0HQbfgiLk=;
+ b=ytuw5pvakZacATBaqPo9mCrPkzMd3/xkHfCNPAd4HSfif02Sfk5I9kQpShVApUwry39TiGAt1hLlF+rdnNH9t4xH1v1o+acjDw/ETWHDUJZ/hTJlt1LT2sFY7NWVG7DtCIYmXmUv4tgr6rx5mb84/PfH4wLC+gyX4m2y5leeJFC4bNRlZFEMDuWx/6oYC3owWELiBazbFIbga8EbzmyUCGjC1ZqQ4LRsOzImVdLGEP6o28APJilkr6f1BjRewV+78a8kTFJm7DzBO4YV3NF/0N6bvp/osjjB625RBL9tlSvGuNwxPNSVvn4aWMGD/s/eq1bSfHZvzScWvr+MUpPk9A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.161) smtp.rcpttodomain=intel.com smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=BlYfFf8rCgrPNZIBS5/aBAMxDCZDOtoAHN0HQbfgiLk=;
+ b=TyDTz0bS7Cec7+ccymQWQ+tXcQ3HDsK0jheMYG8xxeRVXz5G/jCgRSLsOaXHg03kHUfCtVKvOTXw3WDCGjuCvSXMjn6sVEIgBXsnO5/ueESNoMfQaJZ0moPdHH2Quy6aAe9BwgOO2vDS5gUD8OQ4cRwhg1Q/+9dROp0m5oc57fYZmB7taUbFVFnqxJMTTEY93hM3Vk8Z5BHPXKhiRbfNKPX7wb7VULts1gCbY7IZrVwHQIqAslKrzhsLeztc/xIo/9lvqJ97aVdIyjjbBfU74I6LEbqBDXRlGM5K7g2sxCeEvlmelhSjc0KrE4i1i1HLFyrX42zKdkKEyZRt9psBpA==
+Received: from CH0PR03CA0216.namprd03.prod.outlook.com (2603:10b6:610:e7::11)
+ by SJ5PPF3487F9737.namprd12.prod.outlook.com (2603:10b6:a0f:fc02::990) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8678.31; Sat, 14 Jun
+ 2025 06:35:42 +0000
+Received: from CH2PEPF00000149.namprd02.prod.outlook.com
+ (2603:10b6:610:e7:cafe::2a) by CH0PR03CA0216.outlook.office365.com
+ (2603:10b6:610:e7::11) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8835.25 via Frontend Transport; Sat,
+ 14 Jun 2025 06:35:41 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.161) by
+ CH2PEPF00000149.mail.protection.outlook.com (10.167.244.106) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8835.15 via Frontend Transport; Sat, 14 Jun 2025 06:35:41 +0000
+Received: from rnnvmail204.nvidia.com (10.129.68.6) by mail.nvidia.com
+ (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Fri, 13 Jun
+ 2025 23:35:31 -0700
+Received: from rnnvmail201.nvidia.com (10.129.68.8) by rnnvmail204.nvidia.com
+ (10.129.68.6) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Fri, 13 Jun
+ 2025 23:35:30 -0700
+Received: from Asurada-Nvidia.nvidia.com (10.127.8.11) by mail.nvidia.com
+ (10.129.68.8) with Microsoft SMTP Server id 15.2.1544.14 via Frontend
+ Transport; Fri, 13 Jun 2025 23:35:30 -0700
+From: Nicolin Chen <nicolinc@nvidia.com>
+To: <jgg@nvidia.com>, <kevin.tian@intel.com>
+CC: <will@kernel.org>, <robin.murphy@arm.com>, <joro@8bytes.org>,
+	<praan@google.com>, <yi.l.liu@intel.com>, <peterz@infradead.org>,
+	<jsnitsel@redhat.com>, <linux-arm-kernel@lists.infradead.org>,
+	<iommu@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
+	<patches@lists.linux.dev>, <baolu.lu@linux.intel.com>
+Subject: [PATCH v2 00/14] iommufd: Prepare for IOMMUFD_OBJ_HW_QUEUE
+Date: Fri, 13 Jun 2025 23:35:12 -0700
+Message-ID: <cover.1749882255.git.nicolinc@nvidia.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250604005049.4147522-68-sashal@kernel.org>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-NV-OnPremToCloud: AnonymousSubmission
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH2PEPF00000149:EE_|SJ5PPF3487F9737:EE_
+X-MS-Office365-Filtering-Correlation-Id: c6900e1a-b9d0-44da-4ef0-08ddab0daf3f
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|82310400026|1800799024|36860700013|7416014|376014|13003099007;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?gGJdH3MV9TXUSzg80mz2oLQ+gaQBhAPAjV5fB2WLg/rJCPQw6xNKktEbF/Lt?=
+ =?us-ascii?Q?uGWunVIxUHg9LNL/FUtoTb2y7ftK8LI/pMbaRhj4opE4kytTX3H8NbYpQ5Rz?=
+ =?us-ascii?Q?mBBRCyV/lnUX2tak4rtQTkZqA/kaO5Q4/m+2BcKCpWmf4XaDtGyn+vc2qT9o?=
+ =?us-ascii?Q?N3Qhs62LEeMvuveXker5PNB/DmFYwS5PZT43MArpqGzglSKI9tb1Y0v1YQdk?=
+ =?us-ascii?Q?ZEzHFL4yo45litL78773KyBtEnM99iGPZBfeOwQx6Xj5EjY8BmTfj8zDujqh?=
+ =?us-ascii?Q?Bi8WxbydukcMgXPTb77RGBzzHwAreLJXYBNo6HsNbn5J3qiXWKhzwJuJZQoB?=
+ =?us-ascii?Q?0evtTTV6rFULHngB1tJpbnDjbo1/tUZqLOKKiTLmtNC5m8NJai8k8CCPj3n1?=
+ =?us-ascii?Q?mekLNfs/gBoj0NnLI3HNmDQw02sc3BNoUfcUz7x6M/bNkO5R9Oj+OVgxoA6G?=
+ =?us-ascii?Q?zVFsYyQF0dXEmywPU0acxstN4VHpJQHyaFZ4atIb/ScKv/ZZZJQsvnjtZDZ/?=
+ =?us-ascii?Q?U/P6mCQzOQW+eT7nn9NEU4dNvx+wZVjHkY8GwSJmHsMwCxWUPDCs7UuBhZJ5?=
+ =?us-ascii?Q?tAO+14oeIU8zuUFkAP+wZvsSjDVqBXf2nIIUI6ZBkuOiQeHxJ84TLGgkLk0h?=
+ =?us-ascii?Q?NL+wyvzXJLyGKzDXUrYyjr8Oc+S1OqVm2GSMOJS21LZwimvEPcX+CJyoBmb9?=
+ =?us-ascii?Q?M4J0Vk3/Hkfwcbk15smEuYVaaQxFHvp/DCx24x9G7AL02b48RKr9k4UBgNEO?=
+ =?us-ascii?Q?uYJsA12tACZRKGFdScBuWmRwiO7q6s3s89GWnS1f+V0yP11ZWIMxMndP8WWi?=
+ =?us-ascii?Q?UE8tXq1Gbk4oDrxEyFYICnvinjsLPi5M65MUaKigU7O9jM6or+5CyPVOGN0v?=
+ =?us-ascii?Q?4UfsVm3XeuX8G4E2El5rezdB9YKIhLB9gnKtlp4VPQSZ6h3Z5NS9SPVZ8Txc?=
+ =?us-ascii?Q?Kn26L1FzfP8Ehes8EME9V+poE7eHtcp1U7yEZLYPYNKNkILwVl716uzEKznp?=
+ =?us-ascii?Q?CGidX57KDZxl81JviXLpv4zUU0sPjUiiqMi4Rt94TncZPQvKTI+nfbwSh+oj?=
+ =?us-ascii?Q?GKtaj4bxMs+JGTOLb2ZfQSUAMMuh/uUSPutDjAxp9+Bau4Mw978QWtAebv17?=
+ =?us-ascii?Q?6vJ34cQL3ozpfpXrtG2GG44cK/f+7bWaNAFNBxrTrUVK2j0rV+VbRj90SHaM?=
+ =?us-ascii?Q?q/Sj14Nb/uw93vrq63Wre2qhpMTmic6PP18VFPbkMOioMC2AjLxNXUlYFtTW?=
+ =?us-ascii?Q?WnhXDk/6LPJqq6dis+smfWrMqDjK/Z9ikq1Jbit6+ecyOJ7FyKVApBrTz8WR?=
+ =?us-ascii?Q?osXH26QwfSPJ/LxILH9UgFZtijPLUenShmohYuugtBNfQfjwgbgKSyDKHxxX?=
+ =?us-ascii?Q?3EAsn7BAVsNPxey823rkQcFTG7w4gj64+Nf4QojyI7xw2Ox4FdB+OnRRf+tC?=
+ =?us-ascii?Q?rSV+bJffYr3nzrc/ZV8EoYSIfHsOlDjCZ94ue13fBET4iKC2t4oCuL1Je/iN?=
+ =?us-ascii?Q?WG0LXY2avCSHEWPMzgVPFMGgytlC3uHK/kC6o3xRDfLtafoN78E9IxnPTg?=
+ =?us-ascii?Q?=3D=3D?=
+X-Forefront-Antispam-Report:
+	CIP:216.228.117.161;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge2.nvidia.com;CAT:NONE;SFS:(13230040)(82310400026)(1800799024)(36860700013)(7416014)(376014)(13003099007);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Jun 2025 06:35:41.7968
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: c6900e1a-b9d0-44da-4ef0-08ddab0daf3f
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.161];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	CH2PEPF00000149.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ5PPF3487F9737
 
-On Tue, Jun 03, 2025 at 08:49:59PM -0400, Sasha Levin wrote:
-> From: Martin KaFai Lau <martin.lau@kernel.org>
-> 
-> [ Upstream commit 9e3e66c553f705de51707c7ddc7f35ce159a8ef1 ]
-> 
-> In a bpf fq implementation that is much closer to the kernel fq,
-> it will need to traverse the rbtree:
-> https://lore.kernel.org/bpf/20250418224652.105998-13-martin.lau@linux.dev/
-> 
-...
-> 
-> Acked-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-> Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
-> Link: https://lore.kernel.org/r/20250506015857.817950-4-martin.lau@linux.dev
-> Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
-> ---
-> 
-> NO This commit should not be backported to stable kernel trees. Here's
-> my extensive analysis: ## Primary Reason: New Feature Addition This
-> commit adds three new kfunc functions (`bpf_rbtree_root`,
-> `bpf_rbtree_left`, `bpf_rbtree_right`) to the BPF rbtree API. These are
-> entirely new capabilities that enable rbtree traversal functionality
-> that did not exist before. ## Specific Code Analysis ### 1. New Function
-> Implementations ```c __bpf_kfunc struct bpf_rb_node
-> *bpf_rbtree_root(struct bpf_rb_root *root) { struct rb_root_cached *r =
-> (struct rb_root_cached *)root; return (struct bpf_rb_node
-> *)r->rb_root.rb_node; } __bpf_kfunc struct bpf_rb_node
-> *bpf_rbtree_left(struct bpf_rb_root *root, struct bpf_rb_node *node) {
-> struct bpf_rb_node_kern *node_internal = (struct bpf_rb_node_kern
-> *)node; if (READ_ONCE(node_internal->owner) != root) return NULL; return
-> (struct bpf_rb_node *)node_internal->rb_node.rb_left; } __bpf_kfunc
-> struct bpf_rb_node *bpf_rbtree_right(struct bpf_rb_root *root, struct
-> bpf_rb_node *node) { struct bpf_rb_node_kern *node_internal = (struct
-> bpf_rb_node_kern *)node; if (READ_ONCE(node_internal->owner) != root)
-> return NULL; return (struct bpf_rb_node
-> *)node_internal->rb_node.rb_right; } ``` These are completely new
-> functions that extend the BPF API surface, which is characteristic of
-> feature additions rather than bug fixes. ### 2. Verifier Infrastructure
-> Expansion The commit adds these new functions to multiple verifier
-> tables: ```c enum special_kfunc_type { // ... existing entries ...
-> KF_bpf_rbtree_root, KF_bpf_rbtree_left, KF_bpf_rbtree_right, // ... }
-> BTF_SET_START(special_kfunc_set) // ... existing entries ...
-> BTF_ID(func, bpf_rbtree_root) BTF_ID(func, bpf_rbtree_left) BTF_ID(func,
-> bpf_rbtree_right) BTF_SET_END(special_kfunc_set) ``` This systematic
-> addition to verifier infrastructure demonstrates this is an API
-> expansion, not a fix. ### 3. Enhanced Function Classification Logic ```c
-> static bool is_bpf_rbtree_api_kfunc(u32 btf_id) { return btf_id ==
-> special_kfunc_list[KF_bpf_rbtree_add_impl] || btf_id ==
-> special_kfunc_list[KF_bpf_rbtree_remove] || btf_id ==
-> special_kfunc_list[KF_bpf_rbtree_first] || + btf_id ==
-> special_kfunc_list[KF_bpf_rbtree_root] || + btf_id ==
-> special_kfunc_list[KF_bpf_rbtree_left] || + btf_id ==
-> special_kfunc_list[KF_bpf_rbtree_right]; } ``` The functions are being
-> added to existing classification systems, expanding the API scope. ###
-> 4. New Argument Validation Logic ```c static bool
-> check_kfunc_is_graph_node_api(struct bpf_verifier_env *env, enum
-> btf_field_type node_field_type, u32 kfunc_btf_id) { // ... existing
-> logic ... case BPF_RB_NODE: ret = (kfunc_btf_id ==
-> special_kfunc_list[KF_bpf_rbtree_remove] || kfunc_btf_id ==
-> special_kfunc_list[KF_bpf_rbtree_add_impl] || + kfunc_btf_id ==
-> special_kfunc_list[KF_bpf_rbtree_left] || + kfunc_btf_id ==
-> special_kfunc_list[KF_bpf_rbtree_right]); break; } ``` This adds new
-> argument validation paths for the new functions. ## Comparison with
-> Similar Commits Looking at the historical examples: - **Similar Commit
-> #1 (YES)**: Added basic rbtree kfuncs - this was part of the
-> foundational rbtree infrastructure - **Similar Commit #2 (YES)**: Added
-> argument support for rbtree types - essential for the basic
-> functionality - **Similar Commit #3 (NO)**: Added function declarations
-> to test headers - clearly test infrastructure - **Similar Commit #4
-> (NO)**: Added special verifier handling - complex new feature logic -
-> **Similar Commit #5 (YES)**: Added basic BTF support for rbtree types -
-> foundational infrastructure ## Use Case Analysis The commit message
-> describes a complex use case for implementing a Fair Queuing (FQ)
-> algorithm that requires traversal capabilities. This is clearly an
-> advanced feature for specialized networking applications, not a bug fix
-> for existing functionality. ## Risk Assessment Adding new kfuncs carries
-> several risks: 1. **API Stability**: New functions become part of the
-> stable ABI 2. **Complexity**: Introduces new code paths in verifier
-> logic 3. **Testing**: New functionality may not have complete test
-> coverage in stable kernels 4. **Dependencies**: May rely on other recent
-> changes not present in stable trees ## Conclusion This commit represents
-> a clear feature addition that extends the BPF rbtree API with new
-> traversal capabilities. ...
+The new HW Queue object will require more interactions with IOMMU drivers,
+with a few more for-driver APIs. This will complicate the driver-allocated
+structure design like the viommu_alloc op: since the core structure is not
+initialized during the driver allocation stage, a new for-driver API can't
+reference any member in the core vIOMMU structure.
 
-Hi Sasha,
+[before]
+core:	viommu = ops->viommu_alloc();
+driver:	// my_viommu is successfully allocated
+driver:	my_viommu = iommufd_viommu_alloc(...);
+driver:	// This may crash if it reads viommu->ictx
+driver:	new = iommufd_new_viommu_helper(my_viommu->core ...);
+core:	viommu->ictx = ucmd->ictx;
+core:	...
 
-Any reason this patch is included despite your tooling suggest _not_
-taking the patch into stable?
+Make a preparatory series doing:
+ 1 Replace viommu_alloc design with get_viommu_size + viommu_init
+ 2 Add a new iommufd_object_alloc_ucmd
+ 3 Cosmetic fixes and clean ups
 
-> It does not fix any existing bugs or address
-> critical issues. The functionality is designed for advanced use cases
-> and represents an expansion of the BPF programming model rather than
-> maintenance of existing capabilities. Following stable tree guidelines,
-> this should remain in mainline development kernels and not be backported
-> to stable releases.
+[after 1]
+core:	viommu = ops->get_viommu_size();
+driver:	return VIOMMU_STRUCT_SIZE();
+core:	viommu->ictx = ucmd->ictx; // and others
+core:	rc = ops->viommu_init();
+driver:	// This is safe now as viommu->ictx is inited
+driver:	new = iommufd_new_viommu_helper(my_viommu->core ...);
+core:	...
 
-I don't see a Stable-dep-of tag, so it seem more likely that this patch
-was accidentally selected.
+Some of the patches are included from:
+[PATCH v5 00/29] iommufd: Add vIOMMU infrastructure (Part-4 HW QUEUE)
+https://lore.kernel.org/all/cover.1747537752.git.nicolinc@nvidia.com/
 
-Also could you have the tooling's decision log better formatted? In it's
-current form it cannot be easily read. 
+This is on Github:
+https://github.com/nicolinc/iommufd/commits/iommufd_hw_queue-prep-v2
 
-Thanks,
-Shung-Hsi Yu
+Changelog
+v2
+ * Add Reviewed-by from Kevin and Jason
+ * Drop unused mock_nested->parent
+ * Revise commit messages and kdocs
+ * Add WARN_ON if new_obj is already set
+ * Re-organize the patches replacing viommu_alloc
+ * Use EOPNOTSUPP for failures due to driver bugs
+ * Return size_t for get_viommu_size op (0 means EOPNOTSUPP)
+v1
+ https://lore.kernel.org/all/cover.1749488870.git.nicolinc@nvidia.com/
 
->  kernel/bpf/helpers.c  | 30 ++++++++++++++++++++++++++++++
->  kernel/bpf/verifier.c | 22 ++++++++++++++++++----
->  2 files changed, 48 insertions(+), 4 deletions(-)
-> 
-> diff --git a/kernel/bpf/helpers.c b/kernel/bpf/helpers.c
-> index a71aa4cb85fae..6a55198c2d9ad 100644
-> --- a/kernel/bpf/helpers.c
-> +++ b/kernel/bpf/helpers.c
-> @@ -2367,6 +2367,33 @@ __bpf_kfunc struct bpf_rb_node *bpf_rbtree_first(struct bpf_rb_root *root)
->  	return (struct bpf_rb_node *)rb_first_cached(r);
->  }
->  
-> +__bpf_kfunc struct bpf_rb_node *bpf_rbtree_root(struct bpf_rb_root *root)
-> +{
-> +	struct rb_root_cached *r = (struct rb_root_cached *)root;
-> +
-> +	return (struct bpf_rb_node *)r->rb_root.rb_node;
-> +}
-> +
-...
+Thanks
+Nicolin
+
+Nicolin Chen (14):
+  iommufd: Apply obvious cosmetic fixes
+  iommufd: Drop unused ictx in struct iommufd_vdevice
+  iommufd: Use enum iommu_viommu_type for type in struct iommufd_viommu
+  iommufd: Use enum iommu_veventq_type for type in struct
+    iommufd_veventq
+  iommufd: Return EOPNOTSUPP for failures due to driver bugs
+  iommu: Introduce get_viommu_size and viommu_init ops
+  iommufd/viommu: Support get_viommu_size and viommu_init ops
+  iommufd/selftest: Drop parent domain from mock_iommu_domain_nested
+  iommufd/selftest: Replace mock_viommu_alloc with mock_viommu_init
+  iommu/arm-smmu-v3: Replace arm_vsmmu_alloc with arm_vsmmu_init
+  iommu: Deprecate viommu_alloc op
+  iommufd: Move _iommufd_object_alloc out of driver.c
+  iommufd: Introduce iommufd_object_alloc_ucmd helper
+  iommufd: Apply the new iommufd_object_alloc_ucmd helper
+
+ drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h   | 11 ++--
+ drivers/iommu/iommufd/io_pagetable.h          |  2 +-
+ drivers/iommu/iommufd/iommufd_private.h       | 42 ++++++++++---
+ include/linux/iommu.h                         | 26 ++++----
+ include/linux/iommufd.h                       | 39 +++---------
+ .../arm/arm-smmu-v3/arm-smmu-v3-iommufd.c     | 46 +++++++-------
+ drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c   |  3 +-
+ drivers/iommu/iommufd/device.c                |  5 +-
+ drivers/iommu/iommufd/driver.c                | 33 ----------
+ drivers/iommu/iommufd/eventq.c                | 14 ++---
+ drivers/iommu/iommufd/hw_pagetable.c          | 10 ++-
+ drivers/iommu/iommufd/io_pagetable.c          |  3 +-
+ drivers/iommu/iommufd/iova_bitmap.c           |  1 -
+ drivers/iommu/iommufd/main.c                  | 63 +++++++++++++++++--
+ drivers/iommu/iommufd/pages.c                 |  9 ++-
+ drivers/iommu/iommufd/selftest.c              | 56 ++++++++---------
+ drivers/iommu/iommufd/viommu.c                | 48 +++++++++-----
+ 17 files changed, 222 insertions(+), 189 deletions(-)
+
+-- 
+2.43.0
+
