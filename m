@@ -1,50 +1,50 @@
 Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.10])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94FB71CF5C6;
-	Mon, 16 Jun 2025 06:26:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C65C9158520;
+	Mon, 16 Jun 2025 06:27:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.10
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750055195; cv=none; b=dj0AgXpGhwE9rDglkf3UQ2iPx8K6lm0zusbErEZYlsVRJybtIPDIMXeUWkGMQg0lXx5CQzJ63Cav3CdLbpwR/NkXK09aCG1eKegCrGMAk0eOs9i3ZfKM23nMdqQ+cfmIKlUkuZhecCRh5Gf4hxkTo3cNxT5ImFNq9s7NMoZhO+E=
+	t=1750055232; cv=none; b=ivCbRKEASrHV9ilTPOGzLS56DJxXMyM9g+7C+LDIv1q4iktMWWT+yQvgvmxodLpNu467PwpoANAruW3O3gRky5ydgqbLNRxnDbxzSADSXx63UmLB23bPI0JC0llYCLWCXMurWc14h8+eYtldbk0MJx8wArPmOtk2d0bGQQgldMk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750055195; c=relaxed/simple;
-	bh=HM/nycRhtf8N42uu6R05gdsOLIoLfoh3SEuT7ZJryPI=;
+	s=arc-20240116; t=1750055232; c=relaxed/simple;
+	bh=guthJV8X5Sn3QS48dFxzVUYchT/ptlQNDvr7/P3ystE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=NfrNPBEmJQX+FmpfA1JNQx3WUhaHzZ9JyN5Ff4+m6SRsDPf9S2Bz1zUrhfT/p0MD+ATK0y4tBgJ+hI66Qgdg7pyjlxjb3H2G3dwg4FYU5QbxjSQr2S3LNSna8UmWIcNc2zOeqDwS838A9Xe0IG8S944DyVInsUcT6USFtuHB7Kc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=gKlG62xz; arc=none smtp.client-ip=198.175.65.10
+	 In-Reply-To:Content-Type; b=BsJIyVL8TDnNsJDM7dNH9cUyexoR4+tCl9qUSufKM34pR183S2VDqexqzsbJnHZhkR5fvzbzRl5T74lPm3tvzWqX0mIYGwed8DDoY5A/1xzkQbUmX+KOwHBv34WWGtQCmE0IknUYT0iDRPlLq7s7jAzuz2nDlQyxhnoekBJEFwY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=K5dXqaE9; arc=none smtp.client-ip=198.175.65.10
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="gKlG62xz"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="K5dXqaE9"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1750055193; x=1781591193;
+  t=1750055231; x=1781591231;
   h=message-id:date:mime-version:subject:to:cc:references:
    from:in-reply-to:content-transfer-encoding;
-  bh=HM/nycRhtf8N42uu6R05gdsOLIoLfoh3SEuT7ZJryPI=;
-  b=gKlG62xzu4UiRGbbS/8UujqNGNbmqC1NK1ykVcNIDIyFC3BakmYtgmgc
-   dTLQ7mAFkZ7rjihwFcCrI7iRtEa2jFUZjNyheCUe+Mie65VW7qov6ZHE4
-   qePGy4D9PHN64Aq/m8WN3TY9mmrwkAYk8cQ4DOWQO3PfRyokQRhNUDaf8
-   N23gMDF6OGDRY0SLsMxx0guaULFk3knoTdotJV/cr5Dsd1zuf3Ae2vWop
-   LUO9rcNuOwrd86bo5NgANLrNaQ7myI/0ZChPwXecx0MFotHWbekmaDnUY
-   S9wZkJQHDa9QLBMcXeqqCAcTp8dKjg/RZ9mDGp9ahWUsoLrL2IndInyeu
-   g==;
-X-CSE-ConnectionGUID: o0VezYlzQoSB+HZBDEC+LQ==
-X-CSE-MsgGUID: /7xAgUM2S1uUl2lptt3efA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11465"; a="69632416"
+  bh=guthJV8X5Sn3QS48dFxzVUYchT/ptlQNDvr7/P3ystE=;
+  b=K5dXqaE962XWgFPw+wlzrnBzVwqJGvkQ4tg+xT+96tR3QqGTTC2cw0vg
+   0aO/xb1+pplrEMaat/Wj4Hu/E5ZYZWKmPqPVjfVaXjCmLwK8WBDybk1Xk
+   yRw+F+2NdPS1CWHhQveTtYzFpC02GV/NuIGFy2GrYt4EPDunO6QR5qfPT
+   4cIvdN8lGBzzLERNllMbL9lXawjbTzDJvAPsB/fQ2s26vypxGbcKP0gBt
+   6JeT5mimSIpXMfHc7LSiE13MagOvfMLmizAuapCZWMz2Ll+AX6z24WtQp
+   ATCDmh6NaA/jAB4DUHFqSaQJYCUQY9P5TZw/ExsyiW5lX/+EtnJVXNZ+C
+   w==;
+X-CSE-ConnectionGUID: gXak1TetRPa5YISvpkQZ3Q==
+X-CSE-MsgGUID: xl88WnUGQ26Kh0iuq6zGBA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11465"; a="69632518"
 X-IronPort-AV: E=Sophos;i="6.16,240,1744095600"; 
-   d="scan'208";a="69632416"
+   d="scan'208";a="69632518"
 Received: from fmviesa010.fm.intel.com ([10.60.135.150])
-  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Jun 2025 23:26:32 -0700
-X-CSE-ConnectionGUID: bbwYisgpS32dkyJ6Bx5rnw==
-X-CSE-MsgGUID: cFHQS0MtTmmVQHGxTz19LA==
+  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Jun 2025 23:27:10 -0700
+X-CSE-ConnectionGUID: ZURGS4SzT3Cu91PvtlrvWg==
+X-CSE-MsgGUID: ZI6oSjeARV23YgzKHmA7PQ==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.16,240,1744095600"; 
-   d="scan'208";a="148841753"
+   d="scan'208";a="148841810"
 Received: from allen-sbox.sh.intel.com (HELO [10.239.159.30]) ([10.239.159.30])
-  by fmviesa010-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Jun 2025 23:26:25 -0700
-Message-ID: <4bee4885-3e30-4376-947e-eae881e757d7@linux.intel.com>
-Date: Mon, 16 Jun 2025 14:25:26 +0800
+  by fmviesa010-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Jun 2025 23:27:03 -0700
+Message-ID: <ee1b9096-4687-49ad-815d-efe3dda5d31a@linux.intel.com>
+Date: Mon, 16 Jun 2025 14:26:04 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -52,8 +52,8 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 06/25] iommufd/access: Allow access->ops to be NULL for
- internal use
+Subject: Re: [PATCH v6 08/25] iommufd/viommu: Add driver-defined vDEVICE
+ support
 To: Nicolin Chen <nicolinc@nvidia.com>, jgg@nvidia.com, kevin.tian@intel.com,
  corbet@lwn.net, will@kernel.org
 Cc: bagasdotme@gmail.com, robin.murphy@arm.com, joro@8bytes.org,
@@ -66,31 +66,36 @@ Cc: bagasdotme@gmail.com, robin.murphy@arm.com, joro@8bytes.org,
  linux-kselftest@vger.kernel.org, patches@lists.linux.dev, mochs@nvidia.com,
  alok.a.tiwari@oracle.com, vasant.hegde@amd.com, dwmw2@infradead.org
 References: <cover.1749884998.git.nicolinc@nvidia.com>
- <e6a989c4dd9cb94aa4a98d46ed56a2afcb41b70d.1749884998.git.nicolinc@nvidia.com>
+ <937d515032be07af36c06a4adb662ee2f7693c75.1749884998.git.nicolinc@nvidia.com>
 Content-Language: en-US
 From: Baolu Lu <baolu.lu@linux.intel.com>
-In-Reply-To: <e6a989c4dd9cb94aa4a98d46ed56a2afcb41b70d.1749884998.git.nicolinc@nvidia.com>
+In-Reply-To: <937d515032be07af36c06a4adb662ee2f7693c75.1749884998.git.nicolinc@nvidia.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 On 6/14/25 15:14, Nicolin Chen wrote:
-> The access object has been used externally by VFIO mdev devices, allowing
-> them to pin/unpin physical pages (via needs_pin_pages). Meanwhile, a racy
-> unmap can occur in this case, so these devices usually implement an unmap
-> handler, invoked by iommufd_access_notify_unmap().
+> NVIDIA VCMDQ driver will have a driver-defined vDEVICE structure and do
+> some HW configurations with that.
 > 
-> The new HW queue object will need the same pin/unpin feature, although it
-> (unlike the mdev case) wants to reject any unmap attempt, during its life
-> cycle.
+> To allow IOMMU drivers to define their own vDEVICE structures, move the
+> struct iommufd_vdevice to the public header and provide a pair of viommu
+> ops, similar to get_viommu_size and viommu_init.
 > 
-> To reuse the access object for the new HW queue, allow its access->ops to
-> be NULL. Error out a NULL access->ops in iommufd_access_notify_unmap() to
-> reject an unmap operation and propagatethe errno upwards.
+> Doing this, however, creates a new window between the vDEVICE allocation
+> and its driver-level initialization, during which an abort could happen
+> but it can't invoke a driver destroy function from the struct viommu_ops
+> since the driver structure isn't initialized yet. vIOMMU object doesn't
+> have this problem, since its destroy op is set via the viommu_ops by the
+> driver viommu_init function. Thus, vDEVICE should do something similar:
+> add a destroy function pointer inside the struct iommufd_vdevice instead
+> of the struct iommufd_viommu_ops.
 > 
-> Then, update iommufd_access_change_ioas() and iommufd_access_pin_pages(),
-> to allow this new use case.
+> Note that there is unlikely a use case for a type dependent vDEVICE, so
+> a static vdevice_size is probably enough for the near term instead of a
+> get_vdevice_size function op.
 > 
-> Suggested-by: Jason Gunthorpe<jgg@nvidia.com>
+> Reviewed-by: Jason Gunthorpe<jgg@nvidia.com>
+> Reviewed-by: Kevin Tian<kevin.tian@intel.com>
 > Signed-off-by: Nicolin Chen<nicolinc@nvidia.com>
 
 Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
