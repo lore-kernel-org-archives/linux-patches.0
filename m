@@ -1,50 +1,50 @@
 Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B4E228E59E;
-	Mon, 16 Jun 2025 03:25:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A798A1EEE6;
+	Mon, 16 Jun 2025 03:25:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750044335; cv=none; b=aKzVWJa+19lpx3ifSTYZn1cenL251DlHfA1VfbUT8uLyN1dvuQjfOFI3Gc3NwRV1STcZW196CViVgkmK3MboLSG8/vky8AiMoizS+OahWcmJRpUt9ys0xs7fEjVdypv1CtujY1nHnWKB/AgjuYcWovXCy3krvFylvLFSG+f7TL4=
+	t=1750044359; cv=none; b=X7uSHoU7V1E0/ULeBSMwexQ5qgkLRhzu6TdYzqp/4rCxHNavPCIAjnLyzHV6UGt3cYh4ll5UhNvw+FoSeypnqVQlc4fOoiNHwEPgdqHCXHL/J537PCHDvA8FCYy83hOXISPlhi0wH6AHneY8QD4h9Jf+WH3ly4X9OCwJW3ze5og=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750044335; c=relaxed/simple;
-	bh=jZ0hXk7/0POkfoovE7h6rCUu2FvCYd02o4Psw04apZ4=;
+	s=arc-20240116; t=1750044359; c=relaxed/simple;
+	bh=ShGXHWtQJnGfuAnsYBv4PVasiGw/1AVnM6GQMo/0N0I=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=EQ6Fzg26QCmrPK8Fz9Tjor6tt46U0oYh5oahSBjByritczcMEPc5JFTKE0SEKhDgguDCdzCSw4RwMU36px48yjpfc/nEQCbQf3ugZ+7toPp8iWNqpHPDdRaoQ+Ayy4qZtVIlZ2oMPdMJaJFJ6ldDFaWIdK6JDqQij2xV6T5wxd4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=TSVRnbLc; arc=none smtp.client-ip=198.175.65.11
+	 In-Reply-To:Content-Type; b=ZrbatHf8KwsO8DRZPNvSeV0rST0s/zemqIvVaQnpvizvzO6qtsT2U3m59UJw5C7uPN8TH4J4g4QxsGd2RjuNohZppXuE6jIaj3nlbThlStN1fbowsxZM8gR24EIddXeWOa5h5n5lSLt7vGJwiNTk2o0mBpkuqbrF0JhvwZ4eRgU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=JHBD48id; arc=none smtp.client-ip=198.175.65.11
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="TSVRnbLc"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="JHBD48id"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1750044334; x=1781580334;
+  t=1750044358; x=1781580358;
   h=message-id:date:mime-version:subject:to:cc:references:
    from:in-reply-to:content-transfer-encoding;
-  bh=jZ0hXk7/0POkfoovE7h6rCUu2FvCYd02o4Psw04apZ4=;
-  b=TSVRnbLcNinmg0ot++Ccgvga2Mw6W92I7k94wELVD4l9fMz6pefTtWAH
-   x8nxhDTAh0EMDJn3+as2Glltwuw71kh1Lclbyq0rLHtTtygZCuJrftIUD
-   UYOsWPYxhJpigQFMhtOC3qtWH0ETHYxogUDRrvD2mNhel47edeIZuLWu3
-   34VkxlR2AHe2Cex0naLIWIJGf1KAT+qcF3M3eyF9V28VJN352gCRsaV0r
-   jOCO1jmXk3hwZ8v1qd850PfmfFE7pyz7x5NfP6I/tgtid0SQJ8fDEoFrS
-   7W+KxvJD5JR3g1lT5bKAvuF/p0oeDUkwQKLD1mObtmaSXyKgllJuExMGz
-   w==;
-X-CSE-ConnectionGUID: QNqY+cfZRk68rKBc8M9o5g==
-X-CSE-MsgGUID: +G4kF2RLSJSbztEg0ElGRg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11465"; a="62449437"
+  bh=ShGXHWtQJnGfuAnsYBv4PVasiGw/1AVnM6GQMo/0N0I=;
+  b=JHBD48idomxGV7FpYil/P6MXB+Q9o0bTPYKyrFWNWSgBM9CqS5zt9X2T
+   S/mcg3kYXluxyep1elmqOF1D3Iz3zJPdg0i5K45IcWXEvEZ3Rqt7xsVir
+   /jAb8fV/8zJF4dCZzGlkypyKGBWMw/2dMx0FTcP/Ch11/wLsoJkLBkCx/
+   YO0yJHNGl//zUtPQUNGDyQ+P8fsKk9JuDkk/v4eocTWuigsHH5NzFiudO
+   0kpz2MX8NVID1lqRem9bhxkxBNIzFigP0YMa1Xw78Zzy72Z0I3roIbD5j
+   OmdS2SRSF6qBZrtpBWfu5CVx7KumMdHTbtYzpF7dovZTz5/Xl3VWnXBHK
+   g==;
+X-CSE-ConnectionGUID: WgHrBPWZR365RckGfRucUw==
+X-CSE-MsgGUID: +UlKJH9jRL+wIuZIeHY4gQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11465"; a="62449459"
 X-IronPort-AV: E=Sophos;i="6.16,240,1744095600"; 
-   d="scan'208";a="62449437"
+   d="scan'208";a="62449459"
 Received: from fmviesa006.fm.intel.com ([10.60.135.146])
-  by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Jun 2025 20:25:33 -0700
-X-CSE-ConnectionGUID: uGKXemABSzCHxhRvxLMldQ==
-X-CSE-MsgGUID: 2VqEThBvQeukd4nM1Yqg7Q==
+  by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Jun 2025 20:25:58 -0700
+X-CSE-ConnectionGUID: pmS7pV1yRJqPkZEn6XMIxQ==
+X-CSE-MsgGUID: QYOKb70KSYSku4PXGZsZGQ==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.16,240,1744095600"; 
-   d="scan'208";a="148205608"
+   d="scan'208";a="148205623"
 Received: from allen-sbox.sh.intel.com (HELO [10.239.159.30]) ([10.239.159.30])
-  by fmviesa006-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Jun 2025 20:25:30 -0700
-Message-ID: <6e7aa7c7-942a-4600-8496-7b5d1bd259c3@linux.intel.com>
-Date: Mon, 16 Jun 2025 11:24:31 +0800
+  by fmviesa006-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Jun 2025 20:25:55 -0700
+Message-ID: <a84cb244-deb8-4bc7-8220-504add900b88@linux.intel.com>
+Date: Mon, 16 Jun 2025 11:24:55 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -52,25 +52,23 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 03/14] iommufd: Use enum iommu_viommu_type for type in
- struct iommufd_viommu
+Subject: Re: [PATCH v2 04/14] iommufd: Use enum iommu_veventq_type for type in
+ struct iommufd_veventq
 To: Nicolin Chen <nicolinc@nvidia.com>, jgg@nvidia.com, kevin.tian@intel.com
 Cc: will@kernel.org, robin.murphy@arm.com, joro@8bytes.org, praan@google.com,
  yi.l.liu@intel.com, peterz@infradead.org, jsnitsel@redhat.com,
  linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
  linux-kernel@vger.kernel.org, patches@lists.linux.dev
 References: <cover.1749882255.git.nicolinc@nvidia.com>
- <6c6ba5c0cd381594f17ae74355872d78d7a022c0.1749882255.git.nicolinc@nvidia.com>
+ <208a260c100a00667d3799feaad1260745f96c6b.1749882255.git.nicolinc@nvidia.com>
 Content-Language: en-US
 From: Baolu Lu <baolu.lu@linux.intel.com>
-In-Reply-To: <6c6ba5c0cd381594f17ae74355872d78d7a022c0.1749882255.git.nicolinc@nvidia.com>
+In-Reply-To: <208a260c100a00667d3799feaad1260745f96c6b.1749882255.git.nicolinc@nvidia.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 On 6/14/25 14:35, Nicolin Chen wrote:
 > Replace unsigned init, to make it clear. No functional changes.
-> 
-> The viommu_alloc iommu op will be deprecated, so don't change that.
 > 
 > Reviewed-by: Kevin Tian<kevin.tian@intel.com>
 > Reviewed-by: Jason Gunthorpe<jgg@nvidia.com>
