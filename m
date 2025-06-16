@@ -1,50 +1,50 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.10])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15B1529CB48;
-	Mon, 16 Jun 2025 11:33:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FFD11A840A;
+	Mon, 16 Jun 2025 11:34:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.10
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750073616; cv=none; b=ahCNGZBtjSgRpzT9XJC96i2NGV7LH/ud49IO/0UoxWaAMlTulRJEIf19MSlsTCjnI9rf3AqiIWKZ//V/VlegkA73BTSj+PPFos7Aua/ks4Egzk63Hd6o07Fin9GaDc4XGPBw62P6pRgRgX29EfsqaJYzxIqUIfchebqw6po/OaI=
+	t=1750073698; cv=none; b=sPzho459OuNNujbvnyqjklXE9OHf+kAeMakX2lxx53yBy0PEpRYkHW4uplFGDZ7+c4JmDuSq6tpzrabSwzIx8eS4LjDpMaSuZ1AYessn1wIkp0ZseBMjkCU1OJfO+6c267yKj9H9EPBXY6CyHZALaKKc/PrNNeL0GKj6b7Uksg0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750073616; c=relaxed/simple;
-	bh=TaASRe4qgqRwxxXiP0Y/pcupbVmXyYU7JDAROJSiwPw=;
+	s=arc-20240116; t=1750073698; c=relaxed/simple;
+	bh=ojHEuztj0i3yHmHmm9T4QjxP+NTevWKTFSWpUEeibRQ=;
 	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=rdO0Fnl4bWmKNr2y1tVMeOOeYa4srkTYfo+YSS0qkrYl4JAfUbYzgZ0I3v4aSW6zu3bXEgaOOREodLL+FF7vTqdayoLmqUD01RBlpQoOtuQA1+jmjTjIgxAINBhNzMhV8r0xkXB0LXJZEuokYDGpbfGX25/Ko+5nyRNGRupaezM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=XacZ9Hv+; arc=none smtp.client-ip=192.198.163.12
+	 In-Reply-To:Content-Type; b=nwmW/GrmcCjxEpzI4O+ar/wfn2iJYYPuWytLvuN6bZtnx1W4T6iYYvZj3SSrm6Z91rpWBWcCyt7jbX1E9Zdq04mAYZiE8BEe/WZCsfzXWn4NsE7zvEzi7+gJUbpXpnfIQkaK6kl23R9Grbsy26OcI6q6smOriNCrF4MfOrmJynY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Wo/2qXbm; arc=none smtp.client-ip=198.175.65.10
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="XacZ9Hv+"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Wo/2qXbm"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1750073615; x=1781609615;
+  t=1750073698; x=1781609698;
   h=message-id:date:mime-version:cc:subject:to:references:
    from:in-reply-to:content-transfer-encoding;
-  bh=TaASRe4qgqRwxxXiP0Y/pcupbVmXyYU7JDAROJSiwPw=;
-  b=XacZ9Hv+jo2WeIQQWA2hO40n9JT6mSf2WQHFiXR5/p62QyjDhd6MUQZo
-   om+4ObtCh3ZPUrNi7zO2lPX4COvFKeCFkXIkbSoXdq0EkafGjSk5jAGoH
-   edIXe3SKuwzENwmTyMVVTtOvPBlhmhLHSxzh74BLSXLaPyyal851eHtO8
-   XyJnRCe4Z1eJ5BWTpHrln69dIvvzPwcTMUp4s3vlzWXFg2KuYvB/p+/1I
-   0WA3XzguNCThCBew7aqO2bj/fChN+HE25WmLxZ87zfb3ShtQN3HQVEiml
-   myDhJKtgq6CHFls7wwzkz7nz3OZewBvHkgD4Mo3yZAhA3RBHfOC1u33PY
+  bh=ojHEuztj0i3yHmHmm9T4QjxP+NTevWKTFSWpUEeibRQ=;
+  b=Wo/2qXbmML3fgsfk040axuB9230CKOuiWmZu/B7DhtzI1b9isKL5R78N
+   Fk/LS+JTuTU5AlSS7plyhvBvs+y+A4hFEspov9LSH02QVqT2Neei0MtW8
+   IQWk1IJRhbDRLxkELnY8+Ol98GneT2wEMdBcojGuC883p+Pgd0HApUX/X
+   bZXw4k2uG3EfjU3q6+pcSlnXkpBO9pF0wJQx9cMIht6j9h+bJyA8RFdX+
+   +mb9LmvcD8ornvxTKol4qT5RZKe0ad1BjZENan5b3lhIFl82flwqk5z4M
+   2Dn+7S5HSoGrj6WNLOT3CY1kwzhjx6gd9Txw3lcbjqBdGxYO++TMShw1w
    Q==;
-X-CSE-ConnectionGUID: WrTnB81qSLuphksbzyc8yw==
-X-CSE-MsgGUID: ifNxQ+vxRRiujjiVAtRI/A==
-X-IronPort-AV: E=McAfee;i="6800,10657,11465"; a="56014288"
+X-CSE-ConnectionGUID: SZ4oNYp4ShaUTQbAS/CkNQ==
+X-CSE-MsgGUID: dlILrE5fS9+jzVkUXhf8Rg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11465"; a="69657846"
 X-IronPort-AV: E=Sophos;i="6.16,241,1744095600"; 
-   d="scan'208";a="56014288"
-Received: from orviesa002.jf.intel.com ([10.64.159.142])
-  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Jun 2025 04:33:33 -0700
-X-CSE-ConnectionGUID: iWMVCjyURKeZAdHUUOXn7g==
-X-CSE-MsgGUID: 7yInmTY6T6CqB6tjeGUWbQ==
+   d="scan'208";a="69657846"
+Received: from fmviesa003.fm.intel.com ([10.60.135.143])
+  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Jun 2025 04:34:57 -0700
+X-CSE-ConnectionGUID: gaIal/9STnGso6QkRJ98mQ==
+X-CSE-MsgGUID: u+WnkkfGQnmQxYoDn68uJg==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.16,241,1744095600"; 
-   d="scan'208";a="179345988"
+   d="scan'208";a="152282524"
 Received: from blu2-mobl.ccr.corp.intel.com (HELO [10.124.243.252]) ([10.124.243.252])
-  by orviesa002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Jun 2025 04:33:25 -0700
-Message-ID: <a774510d-bc55-4ea5-bc1a-2d31cb5bf589@linux.intel.com>
-Date: Mon, 16 Jun 2025 19:33:22 +0800
+  by fmviesa003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Jun 2025 04:34:50 -0700
+Message-ID: <68fda26e-f6d8-4be3-a411-a0cea13115b9@linux.intel.com>
+Date: Mon, 16 Jun 2025 19:34:47 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -62,33 +62,23 @@ Cc: baolu.lu@linux.intel.com, bagasdotme@gmail.com, robin.murphy@arm.com,
  linux-tegra@vger.kernel.org, linux-kselftest@vger.kernel.org,
  patches@lists.linux.dev, mochs@nvidia.com, alok.a.tiwari@oracle.com,
  vasant.hegde@amd.com, dwmw2@infradead.org
-Subject: Re: [PATCH v6 13/25] iommufd: Add mmap interface
+Subject: Re: [PATCH v6 15/25] Documentation: userspace-api: iommufd: Update HW
+ QUEUE
 To: Nicolin Chen <nicolinc@nvidia.com>, jgg@nvidia.com, kevin.tian@intel.com,
  corbet@lwn.net, will@kernel.org
 References: <cover.1749884998.git.nicolinc@nvidia.com>
- <c9929e0c9ec6f3f6348cd0c399d6fdfa9f35f973.1749884998.git.nicolinc@nvidia.com>
+ <e6931ee1643d717f13bdc30e7dfd9eeb9fd0fafa.1749884998.git.nicolinc@nvidia.com>
 Content-Language: en-US
 From: Baolu Lu <baolu.lu@linux.intel.com>
-In-Reply-To: <c9929e0c9ec6f3f6348cd0c399d6fdfa9f35f973.1749884998.git.nicolinc@nvidia.com>
+In-Reply-To: <e6931ee1643d717f13bdc30e7dfd9eeb9fd0fafa.1749884998.git.nicolinc@nvidia.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 On 6/14/2025 3:14 PM, Nicolin Chen wrote:
-> For vIOMMU passing through HW resources to user space (VMs), allowing a VM
-> to control the passed through HW directly by accessing hardware registers,
-> add an mmap infrastructure to map the physical MMIO pages to user space.
+> With the introduction of the new object and its infrastructure, update the
+> doc to reflect that.
 > 
-> Maintain a maple tree per ictx as a translation table managing mmappable
-> regions, from an allocated for-user mmap offset to an iommufd_mmap struct,
-> where it stores the real PFN range for an io_remap_pfn_range call.
-> 
-> Keep track of the lifecycle of the mmappable region by taking refcount of
-> its owner, so as to enforce user space to unmap the region first before it
-> can destroy its owner object.
-> 
-> To allow an IOMMU driver to add and delete mmappable regions onto/from the
-> maple tree, add iommufd_viommu_alloc/destroy_mmap helpers.
-> 
+> Reviewed-by: Jason Gunthorpe<jgg@nvidia.com>
 > Reviewed-by: Kevin Tian<kevin.tian@intel.com>
 > Signed-off-by: Nicolin Chen<nicolinc@nvidia.com>
 
