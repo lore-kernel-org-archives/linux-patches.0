@@ -1,50 +1,50 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.10])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FFD11A840A;
-	Mon, 16 Jun 2025 11:34:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.10
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 370272E0B7E;
+	Mon, 16 Jun 2025 11:54:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750073698; cv=none; b=sPzho459OuNNujbvnyqjklXE9OHf+kAeMakX2lxx53yBy0PEpRYkHW4uplFGDZ7+c4JmDuSq6tpzrabSwzIx8eS4LjDpMaSuZ1AYessn1wIkp0ZseBMjkCU1OJfO+6c267yKj9H9EPBXY6CyHZALaKKc/PrNNeL0GKj6b7Uksg0=
+	t=1750074846; cv=none; b=R0G7ITLjVDd7HzRPSythM4rO8odsZh4fsRr72S+2Pe/NCq5Zld6muMBrft/1Zmd+eRb4xeNTMhfDjbhHuFveWwH4Db3+tkJApdATnAwGDKPEpQenosZ3OyO0EnUydu75aXyZnn1U14SJM6wk+LcHuGUqbzi9tu2Vrkm5tdloMgQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750073698; c=relaxed/simple;
-	bh=ojHEuztj0i3yHmHmm9T4QjxP+NTevWKTFSWpUEeibRQ=;
+	s=arc-20240116; t=1750074846; c=relaxed/simple;
+	bh=pP5MfHtYu2fbe1zYj4J2fUs/FbilXaL/PP8TBCvNC0M=;
 	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=nwmW/GrmcCjxEpzI4O+ar/wfn2iJYYPuWytLvuN6bZtnx1W4T6iYYvZj3SSrm6Z91rpWBWcCyt7jbX1E9Zdq04mAYZiE8BEe/WZCsfzXWn4NsE7zvEzi7+gJUbpXpnfIQkaK6kl23R9Grbsy26OcI6q6smOriNCrF4MfOrmJynY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Wo/2qXbm; arc=none smtp.client-ip=198.175.65.10
+	 In-Reply-To:Content-Type; b=dpYnmMfMuDhJNW8H7bc6Oz61H8l33vknSA59WM61/NXslKVFtKGpOcuPoQdLhtWMvGNeQhNS5Cb/RdcaAfJtgz4ADhoruoXrGZjKUX2x/klFXIqlGOGafuSK8jHKNv1xwx7vTtq/D1hgMVTLG0iex+mcIc3UTRG6WzNmaoz47xc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=i5903fB9; arc=none smtp.client-ip=192.198.163.19
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Wo/2qXbm"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="i5903fB9"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1750073698; x=1781609698;
+  t=1750074845; x=1781610845;
   h=message-id:date:mime-version:cc:subject:to:references:
    from:in-reply-to:content-transfer-encoding;
-  bh=ojHEuztj0i3yHmHmm9T4QjxP+NTevWKTFSWpUEeibRQ=;
-  b=Wo/2qXbmML3fgsfk040axuB9230CKOuiWmZu/B7DhtzI1b9isKL5R78N
-   Fk/LS+JTuTU5AlSS7plyhvBvs+y+A4hFEspov9LSH02QVqT2Neei0MtW8
-   IQWk1IJRhbDRLxkELnY8+Ol98GneT2wEMdBcojGuC883p+Pgd0HApUX/X
-   bZXw4k2uG3EfjU3q6+pcSlnXkpBO9pF0wJQx9cMIht6j9h+bJyA8RFdX+
-   +mb9LmvcD8ornvxTKol4qT5RZKe0ad1BjZENan5b3lhIFl82flwqk5z4M
-   2Dn+7S5HSoGrj6WNLOT3CY1kwzhjx6gd9Txw3lcbjqBdGxYO++TMShw1w
-   Q==;
-X-CSE-ConnectionGUID: SZ4oNYp4ShaUTQbAS/CkNQ==
-X-CSE-MsgGUID: dlILrE5fS9+jzVkUXhf8Rg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11465"; a="69657846"
+  bh=pP5MfHtYu2fbe1zYj4J2fUs/FbilXaL/PP8TBCvNC0M=;
+  b=i5903fB9KuaaEwiiQ4KR7DWzBwiGVwC2ZKVj7QGIV3nyh/KCbjP/YA0s
+   +NCjLtXmTvq2JfjF212Wd8ldqsIw4v/g4WE2lyWxFxt78Q5s6dBang1H7
+   qjzMQpzbnmzgVcQ3bbxBjgm+mcbOeLMkvj0/IXfmG9dFNVs7A/CfYrZHi
+   Jj2t/V6qYOdRymg3kMIzAXRbkGC1zFX8XA6aHAMi6Huxhoi1Ggt6UMgub
+   O7AZ/Xz4yBdn4rhktFZfEaFYUVhE/wPj8ufuA7VNWiiV5in62DlW2YR/u
+   Vfqnh10Rf76CyqLyteopH5/lnFBjCi0dS98tWe8NdASAVPZvd5qQi0GdB
+   g==;
+X-CSE-ConnectionGUID: uXH6ZmP2QY+SBiEX/FL9qw==
+X-CSE-MsgGUID: Wskqs4IzRbSck7YczdP1lQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11465"; a="51323311"
 X-IronPort-AV: E=Sophos;i="6.16,241,1744095600"; 
-   d="scan'208";a="69657846"
-Received: from fmviesa003.fm.intel.com ([10.60.135.143])
-  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Jun 2025 04:34:57 -0700
-X-CSE-ConnectionGUID: gaIal/9STnGso6QkRJ98mQ==
-X-CSE-MsgGUID: u+WnkkfGQnmQxYoDn68uJg==
+   d="scan'208";a="51323311"
+Received: from fmviesa008.fm.intel.com ([10.60.135.148])
+  by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Jun 2025 04:54:04 -0700
+X-CSE-ConnectionGUID: 9avOGMS9Tx6HGo/PK5JOTQ==
+X-CSE-MsgGUID: ascvokOsSvasnbq8CTB7dA==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.16,241,1744095600"; 
-   d="scan'208";a="152282524"
+   d="scan'208";a="148824249"
 Received: from blu2-mobl.ccr.corp.intel.com (HELO [10.124.243.252]) ([10.124.243.252])
-  by fmviesa003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Jun 2025 04:34:50 -0700
-Message-ID: <68fda26e-f6d8-4be3-a411-a0cea13115b9@linux.intel.com>
-Date: Mon, 16 Jun 2025 19:34:47 +0800
+  by fmviesa008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Jun 2025 04:53:58 -0700
+Message-ID: <b60267c2-df8c-4833-a299-62f29004fb6e@linux.intel.com>
+Date: Mon, 16 Jun 2025 19:53:55 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -62,24 +62,29 @@ Cc: baolu.lu@linux.intel.com, bagasdotme@gmail.com, robin.murphy@arm.com,
  linux-tegra@vger.kernel.org, linux-kselftest@vger.kernel.org,
  patches@lists.linux.dev, mochs@nvidia.com, alok.a.tiwari@oracle.com,
  vasant.hegde@amd.com, dwmw2@infradead.org
-Subject: Re: [PATCH v6 15/25] Documentation: userspace-api: iommufd: Update HW
- QUEUE
+Subject: Re: [PATCH v6 16/25] iommu: Allow an input type in hw_info op
 To: Nicolin Chen <nicolinc@nvidia.com>, jgg@nvidia.com, kevin.tian@intel.com,
  corbet@lwn.net, will@kernel.org
 References: <cover.1749884998.git.nicolinc@nvidia.com>
- <e6931ee1643d717f13bdc30e7dfd9eeb9fd0fafa.1749884998.git.nicolinc@nvidia.com>
+ <2dc47d6016bf5f6ad6062ad7d84c7220b789b429.1749884998.git.nicolinc@nvidia.com>
 Content-Language: en-US
 From: Baolu Lu <baolu.lu@linux.intel.com>
-In-Reply-To: <e6931ee1643d717f13bdc30e7dfd9eeb9fd0fafa.1749884998.git.nicolinc@nvidia.com>
+In-Reply-To: <2dc47d6016bf5f6ad6062ad7d84c7220b789b429.1749884998.git.nicolinc@nvidia.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 On 6/14/2025 3:14 PM, Nicolin Chen wrote:
-> With the introduction of the new object and its infrastructure, update the
-> doc to reflect that.
+> The hw_info uAPI will support a bidirectional data_type field that can be
+> used as an input field for user space to request for a specific info data.
 > 
-> Reviewed-by: Jason Gunthorpe<jgg@nvidia.com>
+> To prepare for the uAPI update, change the iommu layer first:
+>   - Add a new IOMMU_HW_INFO_TYPE_DEFAULT as an input, for which driver can
+>     output its only (or firstly) supported type
+>   - Update the kdoc accordingly
+>   - Roll out the type validation in the existing drivers
+> 
 > Reviewed-by: Kevin Tian<kevin.tian@intel.com>
+> Reviewed-by: Jason Gunthorpe<jgg@nvidia.com>
 > Signed-off-by: Nicolin Chen<nicolinc@nvidia.com>
 
 Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
