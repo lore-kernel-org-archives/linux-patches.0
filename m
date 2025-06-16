@@ -1,92 +1,81 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.15])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34D3727454;
-	Mon, 16 Jun 2025 07:12:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 442C3278E71;
+	Mon, 16 Jun 2025 10:03:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750057965; cv=none; b=RDgq+5ZzZPviIyjSNhHxLntrzrT7JHqAYaEwwabZhRdhAT6wOkzmePn/OaQ0DfitaGpN3pNTkAG/uJEL3h2aMbvgmBTeZ0jAXfH8ElqjlnaXORK4v+NVay5Tto1Xj6l8KWrEq2Lt2rcG5rgKyh8CYubpCHjOFVJ8JzIb+izoCY0=
+	t=1750068190; cv=none; b=uU/PAoW//ODD/9QHh98gL9xgPbKsX0fJ1CAj1NZRGgCVtmw1vgUPAsD+OSU9FShPQ9Rqn03gjB/I7FR3WwdwFR8IAm3k6B4l2VE+KNwZpkUYfojc4JaN5jz0alRnLBHttdz9DComBHdLAmtlyDQHlygi/NoOarFgOGsiV40HVX4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750057965; c=relaxed/simple;
-	bh=xacBKMgmFTMZBZEnYG/hW2BtKPaY7xU5btWyaSE3iwY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Ci4VfOpwpuRKGb3idcLQazuARHsUwbsHmodtyREZN4rQI5P9Z32VBXo6owAD+5LFdFPzjsB4sfZPDTvczO3498WlOqdBgDQ5ZsGI+vAYmfZ5QvOx78rxDluUZPs9ftYPL+mldiXLE1v5XrTyUiHgPdlCM4JDKzvuQAE951gqWeY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=HbTgNI/B; arc=none smtp.client-ip=198.175.65.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+	s=arc-20240116; t=1750068190; c=relaxed/simple;
+	bh=XQM8j714x8CB0+wIsMuEuOxZKpbd7ep9EJ8KDVn9O04=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=MspZ6jFnuxd1VpgE+walzLfOWFJIh0Icc/Cn3Ja1VaJj8MZgwzZgFR98YCM+uV2SDJTjLMghluvWO0WBE7EHOz4OeascCPgMd/1mGkozhXpzVXyTRwqRJ2wSeKBV8/HBYVbj57ScZdLVxDaiyBuPMtstZqCCfZTohurMnlHf7lk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Bjo78z/u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="HbTgNI/B"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1750057964; x=1781593964;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=xacBKMgmFTMZBZEnYG/hW2BtKPaY7xU5btWyaSE3iwY=;
-  b=HbTgNI/BcInoeSjn2dwcDplbomMHSXKoK+Cg+G6djkaxm9u37f24k4h4
-   6+B8y9+RdZJTwTecqTNe+MmhzlWDqMWo8ubdsUdFDg1XKN4bsEDrMknQ4
-   k9Na+q234GE+KMzF3oQofUOwKHkQWoDsIlBNr7sdhlFzsodpm7r3bU2zx
-   RynFwCzoMT1HtbA5yGazyKUHdcNM+XG4fihLKb9UhleNd42Pvl6P9rOVJ
-   eQC4ijkMquho+leSI0S2BAxfT5tBXw8b7Lhw7ya9yFjXPjLFxnkLpLoH+
-   iPJJcQp2M3JqokXPr05Vl+V4E5uiXSjC6DKFkGDChOI0wSmQLDYKML7Ow
-   w==;
-X-CSE-ConnectionGUID: 5IySNJ4eREikl4lnYkTOqA==
-X-CSE-MsgGUID: 1abhIlq0T6Sw1mmdKmqLOA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11465"; a="55866586"
-X-IronPort-AV: E=Sophos;i="6.16,240,1744095600"; 
-   d="scan'208";a="55866586"
-Received: from orviesa010.jf.intel.com ([10.64.159.150])
-  by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Jun 2025 00:12:44 -0700
-X-CSE-ConnectionGUID: HjGOjZ05Sou9BY7TtQfcPA==
-X-CSE-MsgGUID: /QmppINgRhqjZEZzCyDuPg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,240,1744095600"; 
-   d="scan'208";a="148290800"
-Received: from allen-sbox.sh.intel.com (HELO [10.239.159.30]) ([10.239.159.30])
-  by orviesa010-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Jun 2025 00:12:37 -0700
-Message-ID: <8b57d3fb-bc0c-4ab6-8a53-22d93718b422@linux.intel.com>
-Date: Mon, 16 Jun 2025 15:11:37 +0800
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Bjo78z/u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F1DDC4CEEA;
+	Mon, 16 Jun 2025 10:03:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1750068189;
+	bh=XQM8j714x8CB0+wIsMuEuOxZKpbd7ep9EJ8KDVn9O04=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Bjo78z/unMglag+thKwfukBAUjd4ObIDnwtDCbACbFN5dFlqSZb7v2YHP8Ec096Xz
+	 3bBI17L+F4CO4kHNuVKN4tT+N3y5D96977CfynimipzSkpa684O1LZf8Tpd8b3uXfH
+	 VjyIiqTLkKw0ooqWiFAab1+KWJAr5v0cdg1farxLQL2LQG3yXIKkAPYh1W1dX9/ga7
+	 jaEmX0vtnKB6tc/p+4nOfiX5AMUCLhbfPMmMgV3qM2RDzSnlJsw0r+EPs9u4X0rXfd
+	 gRIEN/qyLYZiLxAYWFv8B/s11wE2NTm2iv3Fjv3cL2qiaYUZ8LYvqLelF9dj8magUt
+	 O/gxT9SFf8NjQ==
+Date: Mon, 16 Jun 2025 11:03:04 +0100
+From: Will Deacon <will@kernel.org>
+To: Nicolin Chen <nicolinc@nvidia.com>
+Cc: jgg@nvidia.com, kevin.tian@intel.com, robin.murphy@arm.com,
+	joro@8bytes.org, praan@google.com, yi.l.liu@intel.com,
+	peterz@infradead.org, jsnitsel@redhat.com,
+	linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+	baolu.lu@linux.intel.com
+Subject: Re: [PATCH v2 10/14] iommu/arm-smmu-v3: Replace arm_vsmmu_alloc with
+ arm_vsmmu_init
+Message-ID: <20250616100303.GA17132@willie-the-truck>
+References: <cover.1749882255.git.nicolinc@nvidia.com>
+ <64e4b4c33acd26e1bd676e077be80e00fb63f17c.1749882255.git.nicolinc@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 10/25] iommufd/viommu: Add IOMMUFD_CMD_HW_QUEUE_ALLOC
- ioctl
-To: Nicolin Chen <nicolinc@nvidia.com>, jgg@nvidia.com, kevin.tian@intel.com,
- corbet@lwn.net, will@kernel.org
-Cc: bagasdotme@gmail.com, robin.murphy@arm.com, joro@8bytes.org,
- thierry.reding@gmail.com, vdumpa@nvidia.com, jonathanh@nvidia.com,
- shuah@kernel.org, jsnitsel@redhat.com, nathan@kernel.org,
- peterz@infradead.org, yi.l.liu@intel.com, mshavit@google.com,
- praan@google.com, zhangzekun11@huawei.com, iommu@lists.linux.dev,
- linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, linux-tegra@vger.kernel.org,
- linux-kselftest@vger.kernel.org, patches@lists.linux.dev, mochs@nvidia.com,
- alok.a.tiwari@oracle.com, vasant.hegde@amd.com, dwmw2@infradead.org
-References: <cover.1749884998.git.nicolinc@nvidia.com>
- <7dfb002613f224f57a069d27e7bf2b306b0a5ba0.1749884998.git.nicolinc@nvidia.com>
-Content-Language: en-US
-From: Baolu Lu <baolu.lu@linux.intel.com>
-In-Reply-To: <7dfb002613f224f57a069d27e7bf2b306b0a5ba0.1749884998.git.nicolinc@nvidia.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <64e4b4c33acd26e1bd676e077be80e00fb63f17c.1749882255.git.nicolinc@nvidia.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 
-On 6/14/25 15:14, Nicolin Chen wrote:
-> Introduce a new IOMMUFD_CMD_HW_QUEUE_ALLOC ioctl for user space to allocate
-> a HW QUEUE object for a vIOMMU specific HW-accelerated queue, e.g.:
->   - NVIDIA's Virtual Command Queue
->   - AMD vIOMMU's Command Buffer, Event Log Buffers, and PPR Log Buffers
+On Fri, Jun 13, 2025 at 11:35:22PM -0700, Nicolin Chen wrote:
+> To ease the for-driver iommufd APIs, get_viommu_size and viommu_init ops
+> are introduced.
 > 
-> Since this is introduced with NVIDIA's VCMDQs that access the guest memory
-> in the physical address space, add an iommufd_hw_queue_alloc_phys() helper
-> that will create an access object to the queue memory in the IOAS, to avoid
-> the mappings of the guest memory from being unmapped, during the life cycle
-> of the HW queue object.
+> Sanitize the inputs and report the size of struct arm_vsmmu on success, in
+> arm_smmu_get_viommu_size().
 > 
-> Reviewed-by: Pranjal Shrivastava<praan@google.com>
-> Reviewed-by: Kevin Tian<kevin.tian@intel.com>
-> Signed-off-by: Nicolin Chen<nicolinc@nvidia.com>
+> Place the type sanity at the last, becase there will be soon an impl level
+> get_viommu_size op, which will require the same sanity tests prior. It can
+> simply insert a piece of code in front of the IOMMU_VIOMMU_TYPE_ARM_SMMUV3
+> sanity.
+> 
+> The core will ensure the viommu_type is set to the core vIOMMU object, and
+> pass in the same dev pointer, so arm_vsmmu_init() won't need to repeat the
+> same sanity tests but to simply init the arm_vsmmu struct.
+> 
+> Remove the arm_vsmmu_alloc, completing the replacement.
+> 
+> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+> ---
+>  drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h   | 11 +++--
+>  .../arm/arm-smmu-v3/arm-smmu-v3-iommufd.c     | 46 ++++++++++---------
+>  drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c   |  3 +-
+>  3 files changed, 32 insertions(+), 28 deletions(-)
 
-Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
+Acked-by: Will Deacon <will@kernel.org>
+
+Will
