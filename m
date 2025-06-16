@@ -1,50 +1,50 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.16])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.10])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DA9586329;
-	Mon, 16 Jun 2025 03:28:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.16
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55A3C2882D6;
+	Mon, 16 Jun 2025 03:28:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.10
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750044492; cv=none; b=fd9dnPg2qrs0qQErYjwCkic3j0C+Ib4rf8HbCuDwIbsr1KbEq0vNpjwnUSlJk+KB6v3GYJJKiWtRcZyBmllUklVvdfMuwSoRgFlupz2OG59DwQCMyrzY0qhtOKWpPg8EMBOE+tk4p2GqEIRBQe3KisvOPynjNhpJFObvJit89Wk=
+	t=1750044508; cv=none; b=jlPxH65WQEbKBx3WmI1+KbGcSry9gxCMqG3GvpFZPL8gyYDnGZJUOZBGf2rW8MM23ROROCpi0O1zuCTAKKPP5rNspnkL77XzK3Q5hw6DrhIdB+9lLB+zAWzSEV3gJ0r/040WngwWcE9QVqcM6XTy0ViH69zL74/DkP59U0p08Ds=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750044492; c=relaxed/simple;
-	bh=OBHrIbSL+kVLYZcNrGsRVOq3vlVKlEr4ATmlpyHec4g=;
+	s=arc-20240116; t=1750044508; c=relaxed/simple;
+	bh=3crnHZWWyc6HQi2ObquKyXrIRR65iwUXK5eb9xDLGyE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ZXAfvubGoYN4kqhzqmWVv7n5xacNtyKTUOoG4ZARvGJDAlpy2921X38JNLTEREPe3PgHtrxoc15HGO+Cz1eNweguGZTtVqzCZd+CoJqyIKUCNGk+jwE+nUZIdLYeNrh+WT94bnqSSGnGAOsE23++ljqwKlf1Yzu5RNEYutAmLu0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=G9VMAHgo; arc=none smtp.client-ip=198.175.65.16
+	 In-Reply-To:Content-Type; b=unMOejC0Ex/vin/JBGpCspKWxv6z9pUEC1tow4swHa3a7OVMd8yhs1rsbuvt6uc1OOradkXTFNiIH4z5zB4F7JvIL0LMp08VWXOa4Cffim5qkTzi6vdKRszdOnxVP/IoMy+PVsWwsbX9CvlrhtJx4iYYngTp5H6PZ459Dqu9y+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=F+BZVN81; arc=none smtp.client-ip=198.175.65.10
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="G9VMAHgo"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="F+BZVN81"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1750044492; x=1781580492;
+  t=1750044507; x=1781580507;
   h=message-id:date:mime-version:subject:to:cc:references:
    from:in-reply-to:content-transfer-encoding;
-  bh=OBHrIbSL+kVLYZcNrGsRVOq3vlVKlEr4ATmlpyHec4g=;
-  b=G9VMAHgoSU+lLFWqfHvhHVxDNqc0gjHJQKSqM9JC15Do6PeGPWVDJNL5
-   NCeD/2tLz/H24cq9mHe17PjtwWVQmAomTf3Tb1ZqAdgSMvJU35IcEUhcR
-   3qI0nPrQYM/8R9OFmpW5Fgf/aMGpx/g98EP69RoNJ62UVsgyqwpnwLtIn
-   vvKhVFP86aLmZkXiAkBHMPD5hiWxM98G5mnzMci638nW+JF1RpnoSrdki
-   XdIjg2BGmdXXbo9UaFRo0xhOD0leevLJdkYn42Lnsr+Ie+x1sXIaPrIH2
-   W6ehERVfTnXG9XS9a3Y5VDlS11DB8NnlsGmVKy27ZRezuNB94roK+CHRg
-   g==;
-X-CSE-ConnectionGUID: /GaOvJYiSRCG5ZosPZsizQ==
-X-CSE-MsgGUID: TVERpS02RkmVSPtZILblyQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11465"; a="52269818"
+  bh=3crnHZWWyc6HQi2ObquKyXrIRR65iwUXK5eb9xDLGyE=;
+  b=F+BZVN81jDiKJ2VQPbjGkHq+Y0xVf7/cNYEsB5tTtqk04kJw0Z7YyH8h
+   rauAWbyI2+CaoitaQ5QGKO40Oq2Hb3mKOHv+HVXc20xI/6f3n5YTphv40
+   nZa8qdK963qQO7LLakr5Fd33Wn/5QWvzQzo1bpk3S3Epgf5JvGaPAIgYU
+   E5tucVcHB0ORedXVQLgcmrxA0qoIO2cK9F9RvFRkMrcCpX6eNxclZpYls
+   6OCZ3f2dPzdT9+IgH0Pjr48uPuvdFThZLF/1IdvlOapwhGGRPPNxVpaYw
+   xjXgMV2azdsBayd8fkCgtHGxYqxZhyY+AdXzkuESIzr+tArazAzvAFw5e
+   w==;
+X-CSE-ConnectionGUID: 7N/xRyllT/mDPHIRJgGXpQ==
+X-CSE-MsgGUID: 4P9kP0aAQ7iJfdglg4iZOQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11465"; a="69621977"
 X-IronPort-AV: E=Sophos;i="6.16,240,1744095600"; 
-   d="scan'208";a="52269818"
-Received: from fmviesa009.fm.intel.com ([10.60.135.149])
-  by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Jun 2025 20:28:11 -0700
-X-CSE-ConnectionGUID: a8uc1QaeSDizUFA//+SP+A==
-X-CSE-MsgGUID: 7aN3AdV0RMqe4irRZ+9pzQ==
+   d="scan'208";a="69621977"
+Received: from fmviesa003.fm.intel.com ([10.60.135.143])
+  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Jun 2025 20:28:27 -0700
+X-CSE-ConnectionGUID: U7O3D45sRme+/EgWHKETWw==
+X-CSE-MsgGUID: aL3V/0EgTX2OJibq0nW3Sw==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.16,240,1744095600"; 
-   d="scan'208";a="149262538"
+   d="scan'208";a="152177197"
 Received: from allen-sbox.sh.intel.com (HELO [10.239.159.30]) ([10.239.159.30])
-  by fmviesa009-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Jun 2025 20:28:07 -0700
-Message-ID: <8df501e1-73e0-4668-8ebb-880d4b70c53f@linux.intel.com>
-Date: Mon, 16 Jun 2025 11:27:08 +0800
+  by fmviesa003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Jun 2025 20:28:24 -0700
+Message-ID: <e27acc05-3d31-42c3-8674-4891122ba833@linux.intel.com>
+Date: Mon, 16 Jun 2025 11:27:24 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -52,7 +52,7 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 13/14] iommufd: Introduce iommufd_object_alloc_ucmd
+Subject: Re: [PATCH v2 14/14] iommufd: Apply the new iommufd_object_alloc_ucmd
  helper
 To: Nicolin Chen <nicolinc@nvidia.com>, jgg@nvidia.com, kevin.tian@intel.com
 Cc: will@kernel.org, robin.murphy@arm.com, joro@8bytes.org, praan@google.com,
@@ -60,26 +60,24 @@ Cc: will@kernel.org, robin.murphy@arm.com, joro@8bytes.org, praan@google.com,
  linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
  linux-kernel@vger.kernel.org, patches@lists.linux.dev
 References: <cover.1749882255.git.nicolinc@nvidia.com>
- <e7206d4227844887cc8dbf0cc7b0242580fafd9d.1749882255.git.nicolinc@nvidia.com>
+ <107b24a3b791091bb09c92ffb0081c56c413b26d.1749882255.git.nicolinc@nvidia.com>
 Content-Language: en-US
 From: Baolu Lu <baolu.lu@linux.intel.com>
-In-Reply-To: <e7206d4227844887cc8dbf0cc7b0242580fafd9d.1749882255.git.nicolinc@nvidia.com>
+In-Reply-To: <107b24a3b791091bb09c92ffb0081c56c413b26d.1749882255.git.nicolinc@nvidia.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 On 6/14/25 14:35, Nicolin Chen wrote:
-> An object allocator needs to call either iommufd_object_finalize() upon a
-> success or iommufd_object_abort_and_destroy() upon an error code.
+> Now the new ucmd-based object allocator eases the finalize/abort routine,
+> apply this to all existing allocators that aren't protected by any lock.
 > 
-> To reduce duplication, store a new_obj in the struct iommufd_ucmd and call
-> iommufd_object_finalize/iommufd_object_abort_and_destroy() accordingly in
-> the main function.
+> Upgrade the for-driver vIOMMU alloctor too, and pass down to all existing
+> viommu_alloc op accordingly.
 > 
-> Similar to iommufd_object_alloc() and __iommufd_object_alloc(), add a pair
-> of helpers: __iommufd_object_alloc_ucmd() and iommufd_object_alloc_ucmd().
+> Note that __iommufd_object_alloc_ucmd() builds in some static tests that
+> cover both static_asserts in the iommufd_viommu_alloc(). Thus drop them.
 > 
 > Suggested-by: Jason Gunthorpe<jgg@nvidia.com>
-> Reviewed-by: Kevin Tian<kevin.tian@intel.com>
 > Reviewed-by: Jason Gunthorpe<jgg@nvidia.com>
 > Signed-off-by: Nicolin Chen<nicolinc@nvidia.com>
 
