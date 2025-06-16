@@ -1,47 +1,47 @@
 Received: from NAM12-BN8-obe.outbound.protection.outlook.com (mail-bn8nam12on2076.outbound.protection.outlook.com [40.107.237.76])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F505155C82;
-	Mon, 16 Jun 2025 18:06:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A2F2288514;
+	Mon, 16 Jun 2025 18:06:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.237.76
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750097188; cv=fail; b=N+qxwL1xSxcoDQdbfe6gad9BXIpSfigq0pBcOw/Swp5bdldyuaZPcHIyKmtepEIwQajuOzQ8J+x7vOdb++DSn44UKahV0MWjmPY0q4H6tMISVWPQTRiah9vwAqJWen+ZzrHzumxnMsdf+X2IUVE1FloDZu0m1tMdSaGV5WtVBRE=
+	t=1750097189; cv=fail; b=sWBYnY5g+iJRKebZgNO3q0j1iL9qhnMXU0ZpCUAV3BqVba+oanqPAI98KEou5S8mDoBUZaAyEpC0BQ2iOZhe0+bHURl7MJwi0ylSghRNAPP10Ew8Zdp2MBY1ulh1pvzipQtJqbP9U5/0gbKTkycfr/sDlUyi7FVr+f/9x15/4YM=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750097188; c=relaxed/simple;
-	bh=sEForbCvSbZYOLPNwrv+2ZT5pNFPWK/ArVdpr5CecUU=;
+	s=arc-20240116; t=1750097189; c=relaxed/simple;
+	bh=eeRDbU/3fY1tkiQ78NGa8Pks9esi3AF0ocQtO6ULo2w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=VrdzHAEbnaS5i7jwgBRCd8iTvdNIWfLHy0DhT2oFg0y1f4kjp2dKszrAkJo5JGZp0Vko0sisItVcNIPHR97OGKuOVMHl9KkJO7ychkSriN50JVkqU2jzjwZCPgO7QvQJFXGR3fxhIeYF+xbDjDS3yhR6NmHjbZf1Y70To1r56Mg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=DsxP3uVK; arc=fail smtp.client-ip=40.107.237.76
+	 Content-Type:MIME-Version; b=Oyzo/Ds5WRR8bdo2ywkG/+lSEmcQWcKjJbIxei5OWBfJaej1OkpRfpfK6ghVCGiCazqqZrlsJZfQiRzd1xLQECcHrBFWNO5KfuJnPYcTbmx0yKk9ckgG77m2nykGhH8ha+Yaby7S8s6Z/PLMQjKIX4tq1HWaSOk1RQoCxrzNcUE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=iTZsVTCt; arc=fail smtp.client-ip=40.107.237.76
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="DsxP3uVK"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="iTZsVTCt"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=OaQlRm4fTW2/knWGLkCXAu+LllbJGMFrqphJekyH683CtVveenzFMkojCiMXL5SZD7CmQcUsT7B6eYhC7XNM2k8O/xKO/COklqOMIrPa1rOo5NG4la9kbAED1KLfggC7dqejmoOcXlodN9cIqGyu/7jMbYfOeE2tx3IeWDAvoqXBI1xoDTE/NGUksi8UnPWOnc5W5kmvAWQ0iwsYDiUyx+QPRQq+QqXPKbvpf4q89SueLIYXeWR1UB9qsRhx9eIyALh9SotWURIGxJ02kxHHYd2oXtnRmnYVq9DdN34GbuEwTvd2+mSacJbxpZ7J+D5oj5uqQtr5IdrNEDqHULIujw==
+ b=khzYBMe7TAmPAsJkNaEWyzMhDxM5HJcx6EkKYoFt3JXnV3APQ47yh3BOngyZgAOdKfFqnJf07MN8kgQzQaBGVg+kVZe42RL2hTeJZNz/Uu5qT4Z7cslOzcYIZqmG+PiBVe5ND0KGUzmEBnq91yJ2VButSBnQPqDMF8J12xiq+4RcJoKFQ7/6glAqdcTBoHQfW70zDRpZH68tMuJ5gSYxMYEvnwLGM8W3rxdoxNo/OwQYV6YwSPiLvTKIyJAmCTXWsFYunMd3um7w/CYMQVZnKfdBpTJn4393EIv2gyJ8mDqTWCCp1QMW+uDUPDi+LK9Pxf6kRKcr6uXO6DvMQoBR2w==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=33KU/0f6LM2cz1xGD8H6FQ53sI9qfHArmGVPbAK1GCY=;
- b=fXaNrcLzmxNSdeuqaG/pyLT6B4PU32r1+WdSOom+xBQYR39OXcmmCDVkNXu3wXlhSA7ysncad/Hr3f3vj2KhPKze4S4zQ4+JdeqE7nHhuq8zfT1k77Z53fELPu8NMfXoOCgiBSH/z0UR0qVTbJUmEdd0oj8dw4Xo6Vge+IYzSTeZn+s4am1CC7IO70Qh9lRgqDi1FvsOJvYDgEpc+odGHDXhiG/rRsl7vwBHT70hNNbaiE8rUjfyc/N7p8YL0PEoVb6BmBxyyXdSr2T+ycqS4XMPeULtpHQ7NNCoF5CCkSbjhvO4yjQWMYfZaHbC8wlJiFg4m1m8spnTFkNTDtY3Sg==
+ bh=lA596Vm/ZHmNIz+0LwIRqzEPDcGZuT7WHKu+MdE/JJU=;
+ b=mSR08zJ7ldKD2+ennkSdY91d77bmpwn6GnEFWhDnG37DMIJLLLhB2R7JYCBfVipnEOP++lXCUZ2b+vRw0IWqNFk8aaMI1JpAUHNtlc3ut4ghiwX5DNVkijvHDxVnIbQadP8b3NNr+gg6ZdzSEIruhC8zh92Uu5ljRPFJlwhcDtH/iWY9TRxj79qpl6VxfHrMuiubEz8vFBgg6cYb5JSmyxWAggkGk9XA2HIeiblm91F+N8Ip48wyN9RP0rfRL/BSysPJT4wBIZJmhLnnBqSt65HAXvFsZJMt1ynZS07bOYzSFZEQMXXogUNkefPSz6yfoSeEloCC8cXuQkwpGuC0hA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=33KU/0f6LM2cz1xGD8H6FQ53sI9qfHArmGVPbAK1GCY=;
- b=DsxP3uVKKWWUFi9v+whgyUTGs8nj7t6cgAyhEytrgUwFKNMpcf7Gousnj1TWENVXG1lSKmfFZpDO+MWeehXlkyt9IZYJ9VGMNWo9zGx8ni9zGC0VmlW5CA6ycokQpIVa1LVQrEC21lwTORy0G/9YZj0foVJ/IqD1UCSgCYjTtPOnNoDmha/qzE+w01aQwi1/CPsJZv8BnYTvPlDYkNliRIJyQTFpqpoC2rVHrUER3cJw9HqmoMnD+5hsPPIu5+gNy7O43d/17yczGrZQkEABQce8BDF6HvKLNnbk0qsIwn4ZXqm8Egxd50cdjY9PznL9ngqnxbCC3txxhx9b8jW06g==
+ bh=lA596Vm/ZHmNIz+0LwIRqzEPDcGZuT7WHKu+MdE/JJU=;
+ b=iTZsVTCtVJjc4AaYD4uwR6oDRIOd8iIWOb1D6PJSborullXnsVtK5Wxx+SLN1osfFtluU91r0h9V3ThtrXJ+0DoZ2B8rIXU59WgsgYaNcotwW/RO5K6GGb/9kmjaMzcx6XGq0MSJAaut4hFQAmx+7s3/Mp6iXy3ks8Dbh87DsHh5S2q9Ith+lQif5Va036faGKrix5j1EyMBBOguZ0bNDO5cL0YPADVLLoM3a+cCo1G3Cap3giJkcfAEYiR162CFLwF1A/ZhRHV0FHxhaWcyb7fPeTQMhMlWn2hkmJBiapRwZZ2LHPZMOz9KvPXkBCviPjAHOc5irCURBaqXJi6Ikg==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from CH3PR12MB8659.namprd12.prod.outlook.com (2603:10b6:610:17c::13)
  by SJ1PR12MB6267.namprd12.prod.outlook.com (2603:10b6:a03:456::10) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8835.28; Mon, 16 Jun
- 2025 18:06:21 +0000
+ 2025 18:06:22 +0000
 Received: from CH3PR12MB8659.namprd12.prod.outlook.com
  ([fe80::6eb6:7d37:7b4b:1732]) by CH3PR12MB8659.namprd12.prod.outlook.com
  ([fe80::6eb6:7d37:7b4b:1732%7]) with mapi id 15.20.8835.023; Mon, 16 Jun 2025
- 18:06:20 +0000
+ 18:06:22 +0000
 From: Jason Gunthorpe <jgg@nvidia.com>
 To: Jonathan Corbet <corbet@lwn.net>,
 	iommu@lists.linux.dev,
@@ -65,15 +65,15 @@ Cc: Alexey Kardashevskiy <aik@amd.com>,
 	Michael Roth <michael.roth@amd.com>,
 	Pasha Tatashin <pasha.tatashin@soleen.com>,
 	patches@lists.linux.dev
-Subject: [PATCH v3 02/15] genpt: Add Documentation/ files
-Date: Mon, 16 Jun 2025 15:06:05 -0300
-Message-ID: <2-v3-a93aab628dbc+521-iommu_pt_jgg@nvidia.com>
+Subject: [PATCH v3 05/15] iommupt: Add iova_to_phys op
+Date: Mon, 16 Jun 2025 15:06:08 -0300
+Message-ID: <5-v3-a93aab628dbc+521-iommu_pt_jgg@nvidia.com>
 In-Reply-To: <0-v3-a93aab628dbc+521-iommu_pt_jgg@nvidia.com>
 References:
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: YT4PR01CA0129.CANPRD01.PROD.OUTLOOK.COM
- (2603:10b6:b01:d5::23) To CH3PR12MB8659.namprd12.prod.outlook.com
+X-ClientProxiedBy: DM6PR05CA0063.namprd05.prod.outlook.com
+ (2603:10b6:5:335::32) To CH3PR12MB8659.namprd12.prod.outlook.com
  (2603:10b6:610:17c::13)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -83,249 +83,260 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: CH3PR12MB8659:EE_|SJ1PR12MB6267:EE_
-X-MS-Office365-Filtering-Correlation-Id: 0464e5ec-1c6f-4b32-f914-08ddad007ef2
+X-MS-Office365-Filtering-Correlation-Id: 0e44ca07-5ddf-4cd2-bd2f-08ddad007ede
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
 	BCL:0;ARA:13230040|366016|1800799024|7416014|376014|921020;
 X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?5oAoA6ajomY7yBDvwnqQBmtf+X8cGXwYH3Cop1+1RiaktRJG1fPsUfXpMuKN?=
- =?us-ascii?Q?7gNFaAUS+gVAfC8ux84gAybAH20iXEAe7NlmydjnIpYyHSX7tmzcyflqwrCh?=
- =?us-ascii?Q?vkfPbFaZP7ZT1nnGjKwRf//blrtULEo+Rw2C0tw9DP7iJnb4m+bBjNLlLvF5?=
- =?us-ascii?Q?7MlbSapS4YVTVUkFkGepqKt5tEth+aBc7//veXHyCWUsVteAfEHTg245oPt9?=
- =?us-ascii?Q?S/HCfkDAPB02FLlI8yE1d7yzXca2AEn/5/KxJ5PrLbmS3KfzefIn6bK759gi?=
- =?us-ascii?Q?x7IhzggLRI0bvjv7lpiVx+iR80ArLzD1prHbi+8EV9kt5hTjeGEoa4nLsf20?=
- =?us-ascii?Q?DfliyUg0YZSLj4/eP+3pBLdWas9zmgzAg9c4Wf7Qatb1QjfxInhcs8G28sNB?=
- =?us-ascii?Q?R13i5fWxdrEsJVdzsQOZrPU4M0UgxLhyZaFvcK3IAFFpm24zsWfwJzPYlXcu?=
- =?us-ascii?Q?FY0ZuPNcVrZI0BxqfXtV/ZphNnmvut5Y1SH/VVZeI9BOPVbL7B14qq1TOCip?=
- =?us-ascii?Q?PPRPK8D25/xVyDpJUKQXXyJY72hlfeUwaWqcjzOGQfJfxNdfJd/NjpGfDXtI?=
- =?us-ascii?Q?ewNRgSwBlQG3sS3yaJzBB1N3ZiBwf5uUcrq8L363aBpKPsj4q7LGdcOLVTUg?=
- =?us-ascii?Q?e0abVIC0KXzIr/QD1mACIgNohKBDYMHg0DnmRMbBPpOPRsSco5QvvhudPWLK?=
- =?us-ascii?Q?BiPFPOhv0Q94t0A7mWuO2x7sFSwmDw3WTyS8JzuiFqWl5MJd4LPa8w+5Vpgs?=
- =?us-ascii?Q?I8YNEmwNjJiJXVp/JO9P5P6vkqitQ33jMgv0u5eb9gOSTFu12/H/whwn3OA8?=
- =?us-ascii?Q?YE0T/OZLGs3zna3c7dN+uM6AjFgDkP7sgqpAbbLCxoKJa8zn38MVUvUuEgnB?=
- =?us-ascii?Q?AfTIRENLyXyCGvwsx+KmK6fjPoJeAOJD/E3amczHSqX0SvBGGhHGfRnmZXHx?=
- =?us-ascii?Q?IuP5f6EUAjcA9aecuJDG6XoFuK4RA0oNP+9YDT+GkZfVG0/579dq3pnYGKMt?=
- =?us-ascii?Q?Air5Rx0Z5u2+dBbU2qzXf4LBpYe4VkWGNnpXJ86Ubwv8ZdVZNcgAcWGcq7Gn?=
- =?us-ascii?Q?HP+OJZ7N8vAmvCEJ01LPlEXaZ4Iou2P/qXne6WbXGXKncllbzfPKYH9NmsKd?=
- =?us-ascii?Q?euRaQBLSivl5as3n4E4wUn1AKtuk83s/dMAkkbKFlixPRyrRPr2EzLJXDe6Z?=
- =?us-ascii?Q?E0+ncbP18qaVfXXiptxl2ZLv/CdnQ+OK5tRNKJEwCVGXK26mwcT9k84wtdGY?=
- =?us-ascii?Q?Gv3PaecMDZGuDqj9n4g+IjI6mQiyNwrPIujpqy/DAGTCZ0pltwPh5on5P2L+?=
- =?us-ascii?Q?e03r4UxTo9QOdLBHGTarMgHlBWzTeeayvc3xuoGJhNdYzAy+djetmM4K2XAr?=
- =?us-ascii?Q?00mAegB3C+V7JIj/FjRSJ03G1ZaMxlbsYFBf+H1wdXogg1QYUnvPs2gu5XC8?=
- =?us-ascii?Q?ogOV3rNswgyF5PDU2Bn2mMguvVvBIBfzwK15pABC7iAVtOLPDjfYPw=3D=3D?=
+	=?us-ascii?Q?mfOaDXyqaEEEBm4ochLBwJxwR2rtzhTLgmbuLBfIgin2zXN3z8Q6mcBbjoeK?=
+ =?us-ascii?Q?umB4RznokIsduN+EiqGu5HYKy/Qa7h4kszZLBZhIoxAqwmJp8XJQApAAwWQW?=
+ =?us-ascii?Q?ngnfkUOMKPGsPFTQRecJlqB5OBmVF7t69/gkecBz9HJ94MCJUGEm5zE+KQzn?=
+ =?us-ascii?Q?PjwmBAVfcdX3ugvnBRSg47XNA7+yeyYiKoyWBXzZWipZ0hG70kGo+dFAONxW?=
+ =?us-ascii?Q?AKB9DI4eLCJ3q1sBQGoSpymTqlG+YPiaeebtw9B3m9CRrboUQVXklJVT5enY?=
+ =?us-ascii?Q?/7hiJ6X/aB3xpNbjARw/42012HCCjTAFsZWCWZV7c0zzpqmHEeVl6TTvMZsE?=
+ =?us-ascii?Q?HvZrkEOBTbGo1lQFrWNVxTzU4sR0284H3xHZYgcYWh2Aa1aY9d8n4gbRJDT1?=
+ =?us-ascii?Q?IB7wHivG38jXG1cK1BTGPqWytuZU5NCUTTC+8oJJhygk/oiXp6uyFH/jnvsR?=
+ =?us-ascii?Q?EL/wtZ2qHK3A9QjcD8RjKpdsGPFTWL1a2ksp0UoCV0gp1X/fom0SybKSbx7G?=
+ =?us-ascii?Q?rtYn5VEqmwP/cEWUO3Bjs/aBCpvaLNTdlc0kIwaBJqjQqVlO6r2uXrwmbFvI?=
+ =?us-ascii?Q?mlnnHb8XC0UTHJ/lEfc/RfVLOLhgjj2szkPu+qSuYbW2JyHGLVb64w9r5BY7?=
+ =?us-ascii?Q?dzxEK3ED97i3nFgum2c0o/CKvmhIbzBR1NcSOArHnoywxyf9/xjMg3E4NOlz?=
+ =?us-ascii?Q?oMll6cho1CGL/oFE4FaWKmMYfUDniK1R1m/IyYrpmwHwND7ltRJ3EkDLjkN9?=
+ =?us-ascii?Q?NvoL27PVos0Ma2+5CZ/gXIBHZCyZs9RCekpNfVaUs+YIvuATXcDIr1kl/QSw?=
+ =?us-ascii?Q?VE1rMG54AWKnc7YrISaeVp7DqOyYOm2WhBNNcoPksSwuk3LPYF/Xdy59DESU?=
+ =?us-ascii?Q?m8u+NSP/0KRQDgeJ3E2YTqTSmm3/jEsBI62QS7e14qvM7lAXtgMsO1/dMPo4?=
+ =?us-ascii?Q?X7tLJR13I66oXIxWpHv/PjVtujVf94OhRP9xleuCMRdOAlcYZ6lME3Zp4/za?=
+ =?us-ascii?Q?wuurz2gnzQiCh0NL7DMbpdYJxg6EUnQLI8UR6rJ+4ROiQPeBF0pSzcjZSFVA?=
+ =?us-ascii?Q?oJif11bgjrWsaPzzPe/e4/vTDXE1fUcXSFU0WuTjSBB7GLxBCB77xN9/XqlY?=
+ =?us-ascii?Q?0W3rB0PRhmKvvL6tgNAl+ojjJj6x2WVcqkHkVlueuBjmt3LXH8Gdas9S/NGS?=
+ =?us-ascii?Q?u/KyFvgtfkLmUpeUjS4DzWUhzCWt58WxjaoTBGTANlQ/BRdldIIqQ1EJovtm?=
+ =?us-ascii?Q?S/f4XgoEQj2OGnEaupE7oC4WF/m2rBANFyuFZ7yghkH4uCpvVUtDdVwv0AEy?=
+ =?us-ascii?Q?/FW8v+pVkyeYf11CBMn+KFzFn9fGt8mimi8Vj68PmvnXITWlmqv1IgSbCu+h?=
+ =?us-ascii?Q?cMjXdZhrKctq8ZZZbvceBVjNx9GfI0FSQ/Zlvljf66F+ra9SBMWs0dE5BAhE?=
+ =?us-ascii?Q?nsFYpo9a8lx7S3Dgr3Wu2Y3FyF9Qqk8T?=
 X-Forefront-Antispam-Report:
 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR12MB8659.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(7416014)(376014)(921020);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?UvfZN5PT7OnwAB5+lFKzMaS5WmAL6jMGuBF28mEDlkryNClXG3epU9WWAzdF?=
- =?us-ascii?Q?CPYM5j5TyYW9nW+4OEk7jp59k7pnRufZVWwA2avWxqXI3eVdb4IhdudgtFEG?=
- =?us-ascii?Q?0jHjjvRjIWr6lK3+2yYMq/VFFY+CQ168PTvOh5tjTtBqzar42G2rtSN/8AuR?=
- =?us-ascii?Q?FuLEDKOyvhs/UtP6GBjilHOqV2Ukv9uw0w3KJWFmNcUQXmPjlF2yVNssFgau?=
- =?us-ascii?Q?2HsWN4e9BUZu2q5oH0EwbGL6m/yeSEO9hvUV5Igokj3wTQipeivUydUjK9lN?=
- =?us-ascii?Q?+rnxhoI2C1C5VaYWk5Fcw/RerFwbP5GXl+AXU2jq/igUzlDPzDCQLig1Yog5?=
- =?us-ascii?Q?ZgSRMjhON2rw8NfR7leebm0X3K7f7uQRDxuuQFUtOBOynutC3LK9kdUh2Ue7?=
- =?us-ascii?Q?umrvDzleBMMtOn/EsBYGwzuDeA+M9kupc+fet5UpBC+voTHSw1o/PkJoYf7h?=
- =?us-ascii?Q?moPb9qz09bzdJwxOj/zEDmO41X0rWVDR/LadPbN9ejJV39zybNKGNCsEjmpv?=
- =?us-ascii?Q?UhibZ51q/7jVRtIXh1aIwXyPZX8sFDTGU3KIVQr/K5LpZbFYKHUHZmwcJJZp?=
- =?us-ascii?Q?LlSfuPXDPDOs0BNmfphxgjqHH9i7Emk9yq7SRHsEcjutAC1cGtqVEmc1VlMu?=
- =?us-ascii?Q?2Vsi7Grv/SbWqcF03uAQr+hURIq9me+0ZpKqibndB+9uIK2n0izM+IPonfzd?=
- =?us-ascii?Q?ieLzHfU+S9z2mQ27JOe+1gV1ZuK8jR2dolh//FdqQdEKA8Ax83+RUe3C0P2W?=
- =?us-ascii?Q?7/Um/lhv79/sYSv/XyhxmUwZVm2sgbftZo7eQF4OH8y+4x2we5q42XrgoeGc?=
- =?us-ascii?Q?7zcD4j9ZoX0Y5EI3xBZxdYbdPSoiBWKnu/Q7AVM5CWwMaz8UP3Bnp1vAsbRq?=
- =?us-ascii?Q?2OPvJJ4WoYsi7glLG+cM20P1GTowoLdBGPpmX3hVxX9DDSnF9wbGcPWrMhAs?=
- =?us-ascii?Q?4gfFyLmpC/ricEtuf9WY9Rg85T4mCMXZscIb3cXD6GRYUgYnNL8md8BaSgPH?=
- =?us-ascii?Q?cxW0hdCnMabpf0k2hqhfdpSbMbp8OnHVRdBMPsEYgZ8OuXd4aLmCnsjcdN/e?=
- =?us-ascii?Q?HJDifgqHySe1ySHsbiJVqiqtZEurPqbIEQwiV0ZpSa2MqLXU2rH1re1dVWm8?=
- =?us-ascii?Q?ue2lNsAivv6Z2eRkmy9fogk/1mfWvtsoHunzDrGRLcQChiUpyJUMl1M8CU8f?=
- =?us-ascii?Q?oqbqTLL3uqnGrVwu1NjFOQqTdrNEJeYOgjj4PIQb4pRMlPNtK4LIPot95xLX?=
- =?us-ascii?Q?i9pxkh2u3vev8JCslnrIwkFPU0YvSMnpI51Rz9jWHQH7W0KfOCmUjVr0+/Jh?=
- =?us-ascii?Q?QSS0/JYRZxjgc42BEXH44/jsZAQcVnWuuLnYvGpfg1aIL6v5Cxk8rGgWYm0D?=
- =?us-ascii?Q?jVBflTRbTCfAdYacHsSP1JcXwxccab3LYo3r03rp7q4rxSly+AukO66yO4BS?=
- =?us-ascii?Q?73rhdNg/g6OWyMw9sjyFdMEmpf7y9MuqkTRuo3QcNPQOSd2lTS+ZFvQu5367?=
- =?us-ascii?Q?93KMNFnLhmVnOcjolIQBVY26hSSXG/OjtgB09h0QqC65aCjT2/pwIvvN44oF?=
- =?us-ascii?Q?KGH7KZAcTO5ii8KQMIPImuWO7GhYTYoMvpKVe+xt?=
+	=?us-ascii?Q?oNUp5b93vmmboAdi15aWsL2H3FwQN+AcaLS5NurNPICSZfMyDThTzscpGphO?=
+ =?us-ascii?Q?FUZmsfc94NgSgRIXL2v6rwPRgp/f0xbqmtTNfTV3++FIBaVBXlbUhyTuH/r0?=
+ =?us-ascii?Q?X1rBVk3wVgpOUuw7SRT259tYZSRdwDR8lTNHHQ0RW0t9OpP0IVYKFN7583Rs?=
+ =?us-ascii?Q?YTEBxUmR163lxtZWspVvL1lDtC7AH5Qzfd+tp4QYJzAsjr4jimfQKgclffJv?=
+ =?us-ascii?Q?3BZIHJgsBGQYtOO2zAzwTA1gEJheA44JmEvs+RlrKJ8dJW1Qrjxbm14JqCLf?=
+ =?us-ascii?Q?H/jJRda0WjnbhEdg+h4Z6XjWizCyWyJfttGxNqicvuRwbebsyk3ONf5TiIJO?=
+ =?us-ascii?Q?RaywRISBRilcFHcEq7Lj/yEbj987zCBwaYXX/FdtWdeRkmNAAAGGWExVFUHf?=
+ =?us-ascii?Q?LoI5NlPT0uz6uow/PERgZybo0uRDsVy4Eq+dq9Wsux+xiKB2XBIJCIs7eXk6?=
+ =?us-ascii?Q?tVMoIR6Dlucy8pwgekG3LM4f3IaOJTvI3jZ+39qi76uITyzbEignG9tYkoM6?=
+ =?us-ascii?Q?qt/kW89gsqskwSEwQ5Py6Bd9W9XQzOP1JGGs56VWFUeM+ESAL9sLL2VGbfOK?=
+ =?us-ascii?Q?2zlOqzvtNwtVV6AW+VJX0+u5qocm0c6edfb49DRfmJG2PsSBgSow3MTwd151?=
+ =?us-ascii?Q?+9OSZFTiLz2Zcu97zf8jtJkD5esp2QRaY5DLPASru2uJO/Cn5xxl24clJoEE?=
+ =?us-ascii?Q?mVki+yiZsuGVQq40u+75V17/k+TGPPrLLLLAFp+BP39KC8LbQ5gtNvwQvrAv?=
+ =?us-ascii?Q?xYJhZf0xqdw7j5hhdiHVMXx1l+QSen87OT7Gy8MRLdEM6/jOanv9+5KAL0JA?=
+ =?us-ascii?Q?uCVE/iklHmr2A4lsqNvlmgbVgWWo1CXzWawzJUK3jIkJiRsAT2igRfM0vGXC?=
+ =?us-ascii?Q?ipCE03P7h443qpsS5gYICle+BU6va3Bz2b/bOLgmPl9E5EK9RQw8OB/GCPrG?=
+ =?us-ascii?Q?I4HYLdNaaTuLysL8QgabFquNmkGZdBGax72pypJRs/0p/1cyM6lXSQlFOrBp?=
+ =?us-ascii?Q?t1f3ZdSpf9v5A1b2NN38X4DbBrlnk0LRus45cNEnZge1GIGzD6ou9TFtJgjC?=
+ =?us-ascii?Q?XUGEpN5BFQb8UvFs4izlpvaxNZTkHWCbIjxQPKlryfhMCf4gLG10SDeS2TEU?=
+ =?us-ascii?Q?JGdlkOuF/i2ocFoyqK1Siy4FHoSW/uvDpDmaGtzg5TWLBs2k38dBansl+kAK?=
+ =?us-ascii?Q?udo9Re0UL/PU0GJ4DzVKsjYzJ6pDTXZf2OovFZ/bU2NZWfC4bSPRbEK+zWLW?=
+ =?us-ascii?Q?BD4/RGNbtp+WzRGw67/00OibzB5svtCy4MU3q96JxBsU4qFV1iIJ9Gmhmrel?=
+ =?us-ascii?Q?VzIN2r6aoVoWCciWwWDyMNnFhcmHRoP8oNpa1dpAVyqFeJdgQb25yEsI26HB?=
+ =?us-ascii?Q?n8r9DYaRw/WOIk7sEKAHmrvVNyB1h5Rc8iN8dFIXVvWo+4nFKkHFQNe7P0zM?=
+ =?us-ascii?Q?TgYWDNdTqjfJBPh4cKFYHfP7RbzXN9hesSD3ypUAUL5R6shjaumOpYTIg1SG?=
+ =?us-ascii?Q?xGxXA2rWp8fC4eU/8KMouNRfeUan6z6i1pVrI/kLK3xE6oZlDko9o9b0y4zY?=
+ =?us-ascii?Q?q+8e1zO681icRXX3ovX4aHmE8q66qF2/8gazUeBI?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0464e5ec-1c6f-4b32-f914-08ddad007ef2
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0e44ca07-5ddf-4cd2-bd2f-08ddad007ede
 X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB8659.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Jun 2025 18:06:20.2272
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Jun 2025 18:06:20.3473
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: PPBW09L0+SNo1YhFOZLu0gG4AXEnPGvw5Yy5JyqhpskB0gzplTYFd/dgF375f36o
+X-MS-Exchange-CrossTenant-UserPrincipalName: OxeM2KeVo3e2IcbD1HovkLFqrfOsB0GuTBFOmhY/tndErCChBjgTP+Xfo27NbhkU
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ1PR12MB6267
 
-Add some general description and pull in the kdoc comments from the source
-file to index most of the useful functions.
+iova_to_phys is a performance path for the DMA API and iommufd, implement
+it using an unrolled get_user_pages() like function waterfall scheme.
+
+The implementation itself is fairly trivial.
 
 Tested-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 ---
- Documentation/driver-api/generic_pt.rst | 140 ++++++++++++++++++++++++
- Documentation/driver-api/index.rst      |   1 +
- 2 files changed, 141 insertions(+)
- create mode 100644 Documentation/driver-api/generic_pt.rst
+ drivers/iommu/generic_pt/iommu_pt.h | 105 ++++++++++++++++++++++++++++
+ include/linux/generic_pt/iommu.h    |  34 +++++++--
+ 2 files changed, 134 insertions(+), 5 deletions(-)
 
-diff --git a/Documentation/driver-api/generic_pt.rst b/Documentation/driver-api/generic_pt.rst
-new file mode 100644
-index 00000000000000..c0593f73318653
---- /dev/null
-+++ b/Documentation/driver-api/generic_pt.rst
-@@ -0,0 +1,140 @@
-+.. SPDX-License-Identifier: GPL-2.0
+diff --git a/drivers/iommu/generic_pt/iommu_pt.h b/drivers/iommu/generic_pt/iommu_pt.h
+index 205c232bda68b5..bae87ff34b8043 100644
+--- a/drivers/iommu/generic_pt/iommu_pt.h
++++ b/drivers/iommu/generic_pt/iommu_pt.h
+@@ -17,6 +17,111 @@
+ 
+ #define DOMAIN_NS(op) CONCATENATE(CONCATENATE(pt_iommu_, PTPFX), op)
+ 
++static int make_range_ul(struct pt_common *common, struct pt_range *range,
++			 unsigned long iova, unsigned long len)
++{
++	unsigned long last;
 +
-+========================
-+Generic Radix Page Table
-+========================
++	if (unlikely(len == 0))
++		return -EINVAL;
 +
-+.. kernel-doc:: include/linux/generic_pt/common.h
-+	:doc: Generic Radix Page Table
++	if (check_add_overflow(iova, len - 1, &last))
++		return -EOVERFLOW;
 +
-+.. kernel-doc:: drivers/iommu/generic_pt/pt_defs.h
-+	:doc: Generic Page Table Language
++	*range = pt_make_range(common, iova, last);
++	if (sizeof(iova) > sizeof(range->va)) {
++		if (unlikely(range->va != iova || range->last_va != last))
++			return -EOVERFLOW;
++	}
++	return 0;
++}
 +
-+-----
-+Usage
-+-----
++static __maybe_unused int make_range_u64(struct pt_common *common,
++					 struct pt_range *range, u64 iova,
++					 u64 len)
++{
++	if (unlikely(iova > ULONG_MAX || len > ULONG_MAX))
++		return -EOVERFLOW;
++	return make_range_ul(common, range, iova, len);
++}
 +
-+Generic PT is structured as a multi-compilation system. Since each format
-+provides an API using a common set of names there can be only one format active
-+within a compilation unit. This design avoids function pointers around the low
-+level API.
++/*
++ * Some APIs use unsigned long some use dma_addr_t as the type. Dispatch to the
++ * correct validation based on the type.
++ */
++#define make_range_no_check(common, range, iova, len)                   \
++	({                                                              \
++		int ret;                                                \
++		if (sizeof(iova) > sizeof(unsigned long) ||             \
++		    sizeof(len) > sizeof(unsigned long))                \
++			ret = make_range_u64(common, range, iova, len); \
++		else                                                    \
++			ret = make_range_ul(common, range, iova, len);  \
++		ret;                                                    \
++	})
 +
-+Instead the function pointers can end up at the higher level API (ie map/unmap,
-+etc) and the per-format code can be directly inlined into the per-format
-+compilation unit. For something like iommu each format will be compiled into a
-+per-format iommu operations kernel module.
++#define make_range(common, range, iova, len)                             \
++	({                                                               \
++		int ret = make_range_no_check(common, range, iova, len); \
++		if (!ret)                                                \
++			ret = pt_check_range(range);                     \
++		ret;                                                     \
++	})
 +
-+For this to work the .c file for each compilation unit will include both the
-+format headers and the generic code for the implementation. For instance in an
-+implementation compilation unit the headers would normally be included as
-+follows::
++static __always_inline int __do_iova_to_phys(struct pt_range *range, void *arg,
++					     unsigned int level,
++					     struct pt_table_p *table,
++					     pt_level_fn_t descend_fn)
++{
++	struct pt_state pts = pt_init(range, level, table);
++	pt_oaddr_t *res = arg;
 +
-+	#include <linux/generic_pt/common.h>
-+	#include "fmt/defs_amdv1.h"
-+	#include "pt_defs.h"
-+	#include "fmt/amdv1.h"
-+	#include "pt_common.h"
-+	#include "pt_iter.h"
-+	#include "iommut_pt.h"  /* The iommu implementation */
++	switch (pt_load_single_entry(&pts)) {
++	case PT_ENTRY_EMPTY:
++		return -ENOENT;
++	case PT_ENTRY_TABLE:
++		return pt_descend(&pts, arg, descend_fn);
++	case PT_ENTRY_OA:
++		*res = pt_entry_oa_full(&pts);
++		return 0;
++	}
++	return -ENOENT;
++}
++PT_MAKE_LEVELS(__iova_to_phys, __do_iova_to_phys);
 +
-+iommu_pt.h includes definitions that will generate the operations functions for
-+map/unmap/etc using the definitions provided by AMDv1. The resulting module
-+will have exported symbols named like pt_iommu_amdv1_init().
++/**
++ * iova_to_phys() - Return the output address for the given IOVA
++ * @iommu_table: Table to query
++ * @iova: IO virtual address to query
++ *
++ * Determine the output address from the given IOVA. @iova may have any
++ * alignment, the returned physical will be adjusted with any sub page offset.
++ *
++ * Context: The caller must hold a read range lock that includes @iova.
++ *
++ * Return: 0 if there is no translation for the given iova.
++ */
++phys_addr_t DOMAIN_NS(iova_to_phys)(struct iommu_domain *domain,
++				    dma_addr_t iova)
++{
++	struct pt_iommu *iommu_table =
++		container_of(domain, struct pt_iommu, domain);
++	struct pt_range range;
++	pt_oaddr_t res;
++	int ret;
 +
-+Refer to drivers/iommu/generic-pt/fmt/iommu_template.h for an example of how the
-+iommu implementation uses multi-compilation to generate per-format ops structs
-+pointers.
++	ret = make_range(common_from_iommu(iommu_table), &range, iova, 1);
++	if (ret)
++		return ret;
 +
-+The format code is written so that the common names arise from #defines to
-+distinct format specific names. This is intended to aid debuggability by
-+avoiding symbol clashes across all the different formats.
++	ret = pt_walk_range(&range, __iova_to_phys, &res);
++	/* PHYS_ADDR_MAX would be a better error code */
++	if (ret)
++		return 0;
++	return res;
++}
++EXPORT_SYMBOL_NS_GPL(DOMAIN_NS(iova_to_phys), "GENERIC_PT_IOMMU");
 +
-+Exported symbols and other global names are mangled using a per-format string
-+via the NS() helper macro.
+ struct pt_iommu_collect_args {
+ 	struct iommu_pages_list free_list;
+ 	u8 ignore_mapped : 1;
+diff --git a/include/linux/generic_pt/iommu.h b/include/linux/generic_pt/iommu.h
+index b51de39c03c431..1fe5106997f833 100644
+--- a/include/linux/generic_pt/iommu.h
++++ b/include/linux/generic_pt/iommu.h
+@@ -116,11 +116,13 @@ struct pt_iommu_cfg {
+ };
+ 
+ /* Generate the exported function signatures from iommu_pt.h */
+-#define IOMMU_PROTOTYPES(fmt)                                             \
+-	int pt_iommu_##fmt##_init(struct pt_iommu_##fmt *table,           \
+-				  const struct pt_iommu_##fmt##_cfg *cfg, \
+-				  gfp_t gfp);                             \
+-	void pt_iommu_##fmt##_hw_info(struct pt_iommu_##fmt *table,       \
++#define IOMMU_PROTOTYPES(fmt)                                                  \
++	phys_addr_t pt_iommu_##fmt##_iova_to_phys(struct iommu_domain *domain, \
++						  dma_addr_t iova);            \
++	int pt_iommu_##fmt##_init(struct pt_iommu_##fmt *table,                \
++				  const struct pt_iommu_##fmt##_cfg *cfg,      \
++				  gfp_t gfp);                                  \
++	void pt_iommu_##fmt##_hw_info(struct pt_iommu_##fmt *table,            \
+ 				      struct pt_iommu_##fmt##_hw_info *info)
+ #define IOMMU_FORMAT(fmt, member)       \
+ 	struct pt_iommu_##fmt {         \
+@@ -129,6 +131,28 @@ struct pt_iommu_cfg {
+ 	};                              \
+ 	IOMMU_PROTOTYPES(fmt)
+ 
++/*
++ * A driver uses IOMMU_PT_DOMAIN_OPS to populate the iommu_domain_ops for the
++ * iommu_pt
++ */
++#define IOMMU_PT_DOMAIN_OPS(fmt) \
++	.iova_to_phys = &pt_iommu_##fmt##_iova_to_phys,
 +
-+The format uses struct pt_common as the top level struct for the table,
-+and each format will have its own struct pt_xxx which embeds it to store
-+format-specific information.
-+
-+The implementation will further wrapper this in its own top level struct, such
-+as struct pt_iommu_amdv1.
-+
-+----------------------------------------------
-+Format functions at the struct pt_common level
-+----------------------------------------------
-+
-+.. kernel-doc:: include/linux/generic_pt/common.h
-+	:identifiers:
-+.. kernel-doc:: drivers/iommu/generic_pt/pt_common.h
-+
-+-----------------
-+Iteration Helpers
-+-----------------
-+
-+.. kernel-doc:: drivers/iommu/generic_pt/pt_iter.h
-+
-+----------------
-+Writing a Format
-+----------------
-+
-+It is best to start from a simple format that is similar to the target. x86_64
-+is usually a good reference for something simple, and AMDv1 is something fairly
-+complete.
-+
-+The required inline functions need to be implemented in the format header.
-+These should all follow the standard pattern of::
-+
-+ static inline pt_oaddr_t amdv1pt_entry_oa(const struct pt_state *pts)
-+ {
-+	[..]
-+ }
-+ #define pt_entry_oa amdv1pt_entry_oa
-+
-+Where a uniquely named per-format inline function provides the implementation
-+and a define maps it to the generic name. This is intended to make debug symbols
-+work better. inline functions should always be used as the prototypes in
-+pt_common.h will cause the compiler to validate the function signature to
-+prevent errors.
-+
-+Review pt_fmt_defaults.h to understand some of the optional inlines.
-+
-+Once the format compiles then it should be run through the generic page table
-+kunit test in kunit_generic_pt.h using kunit. For example::
-+
-+   $ tools/testing/kunit/kunit.py run --build_dir build_kunit_x86_64 --arch x86_64 --kunitconfig ./drivers/iommu/generic_pt/.kunitconfig amdv1_fmt_test.*
-+   [...]
-+   [11:15:08] Testing complete. Ran 9 tests: passed: 9
-+   [11:15:09] Elapsed time: 3.137s total, 0.001s configuring, 2.368s building, 0.311s running
-+
-+The generic tests are intended to prove out the format functions and give
-+clearer failures to speed finding the problems. Once those pass then the entire
-+kunit suite should be run.
-+
-+---------------------------
-+IOMMU Invalidation Features
-+---------------------------
-+
-+Invalidation is how the page table algorithms synchronize with a HW cache of the
-+pagetable memory, typically called the TLB (or IOTLB for IOMMU cases).
-+
-+The TLB can store present PTEs, non-present PTEs and table pointers, depending
-+on its design. Every HW has its own approach on how to describe what has changed
-+to get changed items removed from the TLB.
-+
-+PT_FEAT_FLUSH_RANGE
-+-------------------
-+
-+PT_FEAT_FLUSH_RANGE is the easiest scheme to understand. It tries to generate a
-+single range invalidation for each operation, over invalidating if there are
-+gaps of VA that don't need invalidation. This trades off impacted VA for number
-+of invalidation operations. It does not keep track of what is being invalidated,
-+however if pages have to be freed then page table pointers have to be cleaned
-+from the walk cache. The range can start/end at any page boundary.
-+
-+PT_FEAT_FLUSH_RANGE_NO_GAPS
-+---------------------------
-+
-+PT_FEAT_FLUSH_RANGE_NO_GAPS is similar to PT_FEAT_FLUSH_RANGE however it tries
-+to minimize the amount of impacted VA by issuing extra flush operations. This is
-+useful if the cost of processing VA is very high, for instance because a
-+hypervisor is processing the page table with a shadowing algorithm.
-diff --git a/Documentation/driver-api/index.rst b/Documentation/driver-api/index.rst
-index 3e2a270bd82826..baff96b5cf0ba4 100644
---- a/Documentation/driver-api/index.rst
-+++ b/Documentation/driver-api/index.rst
-@@ -93,6 +93,7 @@ Subsystem-specific APIs
-    frame-buffer
-    aperture
-    generic-counter
-+   generic_pt
-    gpio/index
-    hsi
-    hte/index
++/*
++ * The driver should setup its domain struct like
++ *	union {
++ *		struct iommu_domain domain;
++ *		struct pt_iommu_xxx xx;
++ *	};
++ * PT_IOMMU_CHECK_DOMAIN(struct mock_iommu_domain, xx.iommu, domain);
++ *
++ * Which creates an alias between driver_domain.domain and
++ * driver_domain.xx.iommu.domain. This is to avoid a mass rename of existing
++ * driver_domain.domain users.
++ */
++#define PT_IOMMU_CHECK_DOMAIN(s, pt_iommu_memb, domain_memb) \
++	static_assert(offsetof(s, pt_iommu_memb.domain) ==   \
++		      offsetof(s, domain_memb))
+ 
+ struct pt_iommu_amdv1_cfg {
+ 	struct pt_iommu_cfg common;
 -- 
 2.43.0
 
