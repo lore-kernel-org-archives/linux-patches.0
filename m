@@ -1,50 +1,50 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.10])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55A3C2882D6;
-	Mon, 16 Jun 2025 03:28:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.10
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCCAF1DB958;
+	Mon, 16 Jun 2025 06:13:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.17
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750044508; cv=none; b=jlPxH65WQEbKBx3WmI1+KbGcSry9gxCMqG3GvpFZPL8gyYDnGZJUOZBGf2rW8MM23ROROCpi0O1zuCTAKKPP5rNspnkL77XzK3Q5hw6DrhIdB+9lLB+zAWzSEV3gJ0r/040WngwWcE9QVqcM6XTy0ViH69zL74/DkP59U0p08Ds=
+	t=1750054392; cv=none; b=o4Y8BPkuWVa9QnA5MMnuqMHCTsJIMv0gtMGAd2Baj7T+k/y1h76Q2VtsWtPXhAAGoiEcMJEAOLcrMe25r6dd2L8VC+qWM4VWGZXXbIrbk49txtFwYJFNJyWxcrCcMFciVlsVog4nBB3l85ww+0tbm7oscY6/9NCQb1Hri9/Q3xY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750044508; c=relaxed/simple;
-	bh=3crnHZWWyc6HQi2ObquKyXrIRR65iwUXK5eb9xDLGyE=;
+	s=arc-20240116; t=1750054392; c=relaxed/simple;
+	bh=iUtofJ2lBJJnR0k38D5Yh0JcJemRL1qcI7UtvYgj9UM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=unMOejC0Ex/vin/JBGpCspKWxv6z9pUEC1tow4swHa3a7OVMd8yhs1rsbuvt6uc1OOradkXTFNiIH4z5zB4F7JvIL0LMp08VWXOa4Cffim5qkTzi6vdKRszdOnxVP/IoMy+PVsWwsbX9CvlrhtJx4iYYngTp5H6PZ459Dqu9y+A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=F+BZVN81; arc=none smtp.client-ip=198.175.65.10
+	 In-Reply-To:Content-Type; b=o+n7J38yyZZdoxNibFHeiGmEynfrkdu8gXqGDU3vWl5dEUchObSlInboKSeRfbBkqkIBc4vN+FcB5YRuStLLgiY3+Q34xKaqMCNw4vuhws3zINtr3ayEoBPKXRcAezw/C63Cb5jpW+ir7A/BXOAtMQkKNqkxj8J/X7VfunLp0H4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=SRi174Av; arc=none smtp.client-ip=192.198.163.17
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="F+BZVN81"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="SRi174Av"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1750044507; x=1781580507;
+  t=1750054391; x=1781590391;
   h=message-id:date:mime-version:subject:to:cc:references:
    from:in-reply-to:content-transfer-encoding;
-  bh=3crnHZWWyc6HQi2ObquKyXrIRR65iwUXK5eb9xDLGyE=;
-  b=F+BZVN81jDiKJ2VQPbjGkHq+Y0xVf7/cNYEsB5tTtqk04kJw0Z7YyH8h
-   rauAWbyI2+CaoitaQ5QGKO40Oq2Hb3mKOHv+HVXc20xI/6f3n5YTphv40
-   nZa8qdK963qQO7LLakr5Fd33Wn/5QWvzQzo1bpk3S3Epgf5JvGaPAIgYU
-   E5tucVcHB0ORedXVQLgcmrxA0qoIO2cK9F9RvFRkMrcCpX6eNxclZpYls
-   6OCZ3f2dPzdT9+IgH0Pjr48uPuvdFThZLF/1IdvlOapwhGGRPPNxVpaYw
-   xjXgMV2azdsBayd8fkCgtHGxYqxZhyY+AdXzkuESIzr+tArazAzvAFw5e
+  bh=iUtofJ2lBJJnR0k38D5Yh0JcJemRL1qcI7UtvYgj9UM=;
+  b=SRi174AvaoftgfxfRtFzfudM+D82kgn/S3ioPm8DFwpwq6YzanWNbeYM
+   7P+MFULmGWJWEWAE1wguBaUaHoWqVyo69s7SfOxmBA/ZmEQD4Hkov+U7o
+   aq6BvsdMExgxLEGMIEEpZncL4BNWVSrcCu7b1eVXOdi6VPDA5uZqhLlYG
+   Illqlngz2mcPchd0llbYOoe10nE/WR8KXzHrvmxrTAWrUxth2xRQizhIf
+   MhUe2K66+bKhTWZbhuGib+cV6Mjs8iCHInaCC9m6kFlcaYXLQq7Pqf9jd
+   9/2PZPuwi/ZrzEqsF6ZrHRV8bDB5OIdcp8n2Mak7Qkaecm3AeYnfjF1kK
    w==;
-X-CSE-ConnectionGUID: 7N/xRyllT/mDPHIRJgGXpQ==
-X-CSE-MsgGUID: 4P9kP0aAQ7iJfdglg4iZOQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11465"; a="69621977"
+X-CSE-ConnectionGUID: cgrNmMiZTvG/i2fTaRSzXw==
+X-CSE-MsgGUID: VW5F8gReRXyx37LgarR/dA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11465"; a="52106666"
 X-IronPort-AV: E=Sophos;i="6.16,240,1744095600"; 
-   d="scan'208";a="69621977"
-Received: from fmviesa003.fm.intel.com ([10.60.135.143])
-  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Jun 2025 20:28:27 -0700
-X-CSE-ConnectionGUID: U7O3D45sRme+/EgWHKETWw==
-X-CSE-MsgGUID: aL3V/0EgTX2OJibq0nW3Sw==
+   d="scan'208";a="52106666"
+Received: from fmviesa002.fm.intel.com ([10.60.135.142])
+  by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Jun 2025 23:13:10 -0700
+X-CSE-ConnectionGUID: sd2pUJD5S46jXmmHW640QQ==
+X-CSE-MsgGUID: P6HgX+1BTxazlc+ar7+jBQ==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.16,240,1744095600"; 
-   d="scan'208";a="152177197"
+   d="scan'208";a="171591560"
 Received: from allen-sbox.sh.intel.com (HELO [10.239.159.30]) ([10.239.159.30])
-  by fmviesa003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Jun 2025 20:28:24 -0700
-Message-ID: <e27acc05-3d31-42c3-8674-4891122ba833@linux.intel.com>
-Date: Mon, 16 Jun 2025 11:27:24 +0800
+  by fmviesa002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Jun 2025 23:13:04 -0700
+Message-ID: <1ab8030b-8d2f-4ebe-a280-6d0e4e1d17c7@linux.intel.com>
+Date: Mon, 16 Jun 2025 14:12:04 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -52,33 +52,226 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 14/14] iommufd: Apply the new iommufd_object_alloc_ucmd
- helper
-To: Nicolin Chen <nicolinc@nvidia.com>, jgg@nvidia.com, kevin.tian@intel.com
-Cc: will@kernel.org, robin.murphy@arm.com, joro@8bytes.org, praan@google.com,
- yi.l.liu@intel.com, peterz@infradead.org, jsnitsel@redhat.com,
- linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
- linux-kernel@vger.kernel.org, patches@lists.linux.dev
-References: <cover.1749882255.git.nicolinc@nvidia.com>
- <107b24a3b791091bb09c92ffb0081c56c413b26d.1749882255.git.nicolinc@nvidia.com>
+Subject: Re: [PATCH v6 10/25] iommufd/viommu: Add IOMMUFD_CMD_HW_QUEUE_ALLOC
+ ioctl
+To: Nicolin Chen <nicolinc@nvidia.com>, jgg@nvidia.com, kevin.tian@intel.com,
+ corbet@lwn.net, will@kernel.org
+Cc: bagasdotme@gmail.com, robin.murphy@arm.com, joro@8bytes.org,
+ thierry.reding@gmail.com, vdumpa@nvidia.com, jonathanh@nvidia.com,
+ shuah@kernel.org, jsnitsel@redhat.com, nathan@kernel.org,
+ peterz@infradead.org, yi.l.liu@intel.com, mshavit@google.com,
+ praan@google.com, zhangzekun11@huawei.com, iommu@lists.linux.dev,
+ linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-tegra@vger.kernel.org,
+ linux-kselftest@vger.kernel.org, patches@lists.linux.dev, mochs@nvidia.com,
+ alok.a.tiwari@oracle.com, vasant.hegde@amd.com, dwmw2@infradead.org
+References: <cover.1749884998.git.nicolinc@nvidia.com>
+ <7dfb002613f224f57a069d27e7bf2b306b0a5ba0.1749884998.git.nicolinc@nvidia.com>
 Content-Language: en-US
 From: Baolu Lu <baolu.lu@linux.intel.com>
-In-Reply-To: <107b24a3b791091bb09c92ffb0081c56c413b26d.1749882255.git.nicolinc@nvidia.com>
+In-Reply-To: <7dfb002613f224f57a069d27e7bf2b306b0a5ba0.1749884998.git.nicolinc@nvidia.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 6/14/25 14:35, Nicolin Chen wrote:
-> Now the new ucmd-based object allocator eases the finalize/abort routine,
-> apply this to all existing allocators that aren't protected by any lock.
+On 6/14/25 15:14, Nicolin Chen wrote:
+> Introduce a new IOMMUFD_CMD_HW_QUEUE_ALLOC ioctl for user space to allocate
+> a HW QUEUE object for a vIOMMU specific HW-accelerated queue, e.g.:
+>   - NVIDIA's Virtual Command Queue
+>   - AMD vIOMMU's Command Buffer, Event Log Buffers, and PPR Log Buffers
 > 
-> Upgrade the for-driver vIOMMU alloctor too, and pass down to all existing
-> viommu_alloc op accordingly.
+> Since this is introduced with NVIDIA's VCMDQs that access the guest memory
+> in the physical address space, add an iommufd_hw_queue_alloc_phys() helper
+> that will create an access object to the queue memory in the IOAS, to avoid
+> the mappings of the guest memory from being unmapped, during the life cycle
+> of the HW queue object.
 > 
-> Note that __iommufd_object_alloc_ucmd() builds in some static tests that
-> cover both static_asserts in the iommufd_viommu_alloc(). Thus drop them.
-> 
-> Suggested-by: Jason Gunthorpe<jgg@nvidia.com>
-> Reviewed-by: Jason Gunthorpe<jgg@nvidia.com>
+> Reviewed-by: Pranjal Shrivastava<praan@google.com>
+> Reviewed-by: Kevin Tian<kevin.tian@intel.com>
 > Signed-off-by: Nicolin Chen<nicolinc@nvidia.com>
+> ---
+>   drivers/iommu/iommufd/iommufd_private.h |   2 +
+>   include/linux/iommufd.h                 |   1 +
+>   include/uapi/linux/iommufd.h            |  33 +++++
+>   drivers/iommu/iommufd/main.c            |   6 +
+>   drivers/iommu/iommufd/viommu.c          | 184 ++++++++++++++++++++++++
+>   5 files changed, 226 insertions(+)
+> 
 
-Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
+[...]
+
+> diff --git a/drivers/iommu/iommufd/viommu.c b/drivers/iommu/iommufd/viommu.c
+> index 28ea5d026222..506479ece826 100644
+> --- a/drivers/iommu/iommufd/viommu.c
+> +++ b/drivers/iommu/iommufd/viommu.c
+> @@ -201,3 +201,187 @@ int iommufd_vdevice_alloc_ioctl(struct iommufd_ucmd *ucmd)
+>   	iommufd_put_object(ucmd->ictx, &viommu->obj);
+>   	return rc;
+>   }
+> +
+> +static void iommufd_hw_queue_destroy_access(struct iommufd_ctx *ictx,
+> +					    struct iommufd_access *access,
+> +					    u64 base_iova, size_t length)
+> +{
+> +	iommufd_access_unpin_pages(access, base_iova, length);
+> +	iommufd_access_detach_internal(access);
+> +	iommufd_access_destroy_internal(ictx, access);
+> +}
+> +
+> +void iommufd_hw_queue_destroy(struct iommufd_object *obj)
+> +{
+> +	struct iommufd_hw_queue *hw_queue =
+> +		container_of(obj, struct iommufd_hw_queue, obj);
+> +	struct iommufd_viommu *viommu = hw_queue->viommu;
+> +
+> +	if (hw_queue->destroy)
+> +		hw_queue->destroy(hw_queue);
+> +	if (hw_queue->access)
+> +		iommufd_hw_queue_destroy_access(viommu->ictx, hw_queue->access,
+> +						hw_queue->base_addr,
+> +						hw_queue->length);
+> +	refcount_dec(&viommu->obj.users);
+> +}
+> +
+> +/*
+> + * When the HW accesses the guest queue via physical addresses, the underlying
+> + * physical pages of the guest queue must be contiguous. Also, for the security
+> + * concern that IOMMUFD_CMD_IOAS_UNMAP could potentially remove the mappings of
+> + * the guest queue from the nesting parent iopt while the HW is still accessing
+> + * the guest queue memory physically, such a HW queue must require an access to
+> + * pin the underlying pages and prevent that from happening.
+> + */
+> +static struct iommufd_access *
+> +iommufd_hw_queue_alloc_phys(struct iommu_hw_queue_alloc *cmd,
+> +			    struct iommufd_viommu *viommu, phys_addr_t *base_pa)
+> +{
+> +	struct iommufd_access *access;
+> +	struct page **pages;
+> +	int max_npages, i;
+> +	u64 offset;
+> +	int rc;
+> +
+> +	offset =
+> +		cmd->nesting_parent_iova - PAGE_ALIGN(cmd->nesting_parent_iova);
+> +	max_npages = DIV_ROUND_UP(offset + cmd->length, PAGE_SIZE);
+> +
+> +	/*
+> +	 * FIXME allocation may fail when sizeof(*pages) * max_npages is
+> +	 * larger than PAGE_SIZE. This might need a new API returning a
+> +	 * bio_vec or something more efficient.
+> +	 */
+> +	pages = kcalloc(max_npages, sizeof(*pages), GFP_KERNEL);
+> +	if (!pages)
+> +		return ERR_PTR(-ENOMEM);
+> +
+> +	access = iommufd_access_create_internal(viommu->ictx);
+> +	if (IS_ERR(access)) {
+> +		rc = PTR_ERR(access);
+> +		goto out_free;
+> +	}
+> +
+> +	rc = iommufd_access_attach_internal(access, viommu->hwpt->ioas);
+> +	if (rc)
+> +		goto out_destroy;
+> +
+> +	rc = iommufd_access_pin_pages(access, cmd->nesting_parent_iova,
+> +				      cmd->length, pages, 0);
+> +	if (rc)
+> +		goto out_detach;
+> +
+> +	/* Validate if the underlying physical pages are contiguous */
+> +	for (i = 1; i < max_npages; i++) {
+> +		if (page_to_pfn(pages[i]) == page_to_pfn(pages[i - 1]) + 1)
+> +			continue;
+> +		rc = -EFAULT;
+> +		goto out_unpin;
+> +	}
+> +
+> +	*base_pa = page_to_pfn(pages[0]) << PAGE_SHIFT;
+> +	kfree(pages);
+> +	return access;
+> +
+> +out_unpin:
+> +	iommufd_access_unpin_pages(access, cmd->nesting_parent_iova,
+> +				   cmd->length);
+> +out_detach:
+> +	iommufd_access_detach_internal(access);
+> +out_destroy:
+> +	iommufd_access_destroy_internal(viommu->ictx, access);
+> +out_free:
+> +	kfree(pages);
+> +	return ERR_PTR(rc);
+> +}
+> +
+> +int iommufd_hw_queue_alloc_ioctl(struct iommufd_ucmd *ucmd)
+> +{
+> +	struct iommu_hw_queue_alloc *cmd = ucmd->cmd;
+> +	struct iommufd_hw_queue *hw_queue;
+> +	struct iommufd_viommu *viommu;
+> +	struct iommufd_access *access;
+> +	size_t hw_queue_size;
+> +	phys_addr_t base_pa;
+> +	u64 last;
+> +	int rc;
+> +
+> +	if (cmd->flags || cmd->type == IOMMU_HW_QUEUE_TYPE_DEFAULT)
+> +		return -EOPNOTSUPP;
+> +	if (!cmd->length)
+> +		return -EINVAL;
+> +	if (check_add_overflow(cmd->nesting_parent_iova, cmd->length - 1,
+> +			       &last))
+> +		return -EOVERFLOW;
+> +
+> +	viommu = iommufd_get_viommu(ucmd, cmd->viommu_id);
+> +	if (IS_ERR(viommu))
+> +		return PTR_ERR(viommu);
+> +
+> +	if (!viommu->ops || !viommu->ops->get_hw_queue_size ||
+> +	    !viommu->ops->hw_queue_init_phys) {
+> +		rc = -EOPNOTSUPP;
+> +		goto out_put_viommu;
+> +	}
+> +
+> +	/*
+> +	 * FIXME once ops->hw_queue_init is introduced, a WARN_ON_ONCE will be
+> +	 * required, if hw_queue_init and hw_queue_init_phys both exist, since
+> +	 * they should be mutually exclusive
+> +	 */
+> +
+> +	hw_queue_size = viommu->ops->get_hw_queue_size(viommu, cmd->type);
+> +	if (!hw_queue_size) {
+> +		rc = -EOPNOTSUPP;
+> +		goto out_put_viommu;
+> +	}
+> +
+> +	/*
+> +	 * It is a driver bug for providing a hw_queue_size smaller than the
+> +	 * core HW queue structure size
+> +	 */
+> +	if (WARN_ON_ONCE(hw_queue_size < sizeof(*hw_queue))) {
+> +		rc = -EOPNOTSUPP;
+> +		goto out_put_viommu;
+> +	}
+> +
+> +	/*
+> +	 * FIXME once ops->hw_queue_init is introduced, this should check "if
+> +	 * ops->hw_queue_init_phys". And "access" should be initialized to NULL.
+> +	 */
+
+I just don't follow here. Up until now, only viommu->ops->
+hw_queue_init_phys has been added, which means the current code only
+supports hardware queues that access guest memory using physical
+addresses. The access object is not needed for the other type of
+hardware queue that uses guest IOVA.
+
+So, why not just abort here if ops->hw_queue_init_phys is not supported
+by the IOMMU driver? Leave other logics to the patches that introduce
+ops->hw_queue_init? I guess that would make this patch more readible.
+
+> +	access = iommufd_hw_queue_alloc_phys(cmd, viommu, &base_pa);
+> +	if (IS_ERR(access)) {
+> +		rc = PTR_ERR(access);
+> +		goto out_put_viommu;
+> +	}
+
+Thanks,
+baolu
