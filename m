@@ -1,47 +1,47 @@
-Received: from NAM12-BN8-obe.outbound.protection.outlook.com (mail-bn8nam12on2076.outbound.protection.outlook.com [40.107.237.76])
+Received: from NAM04-DM6-obe.outbound.protection.outlook.com (mail-dm6nam04on2045.outbound.protection.outlook.com [40.107.102.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A340289371;
-	Mon, 16 Jun 2025 18:06:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.237.76
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E680289345;
+	Mon, 16 Jun 2025 18:06:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.102.45
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750097199; cv=fail; b=I7FO6o0U8bx9Bj4zX8yGyFb7R9+SvEYb0lPAxPlxou31Azu4OEFhJVz0/kD/K+O/gdjwx44rc7I/xTbcAR/YaZ6/lhuXiCsa1mS/M291h9ry4gIahK93nKWBzLRiGF6D9wBNh4MFan1CKSDZKmwjYpqS2nf4wMnyPwsW84Th1FE=
+	t=1750097201; cv=fail; b=FDLRtkz9Nxpzc4o1YgBScZ5m+V+Prl/bPsHbSE70kpASZIsb0l2XlYCuPBeuV33ZKaCNTbV8WREqrgIppJzChvHugB2wpPlUiCUvhCk09f45cgFppEXB/Z4rwz0Znz4hpd9FrqfqViuAi2ut6nfGKYaMC1At2v7xiJO7RB3ZS50=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750097199; c=relaxed/simple;
-	bh=cCD8QiVcWTSag7s8OHnmOZwA8d6pEGUPgkmyzOqLyGA=;
+	s=arc-20240116; t=1750097201; c=relaxed/simple;
+	bh=XRlR1oCMkR0XMRoaQrifmoviy21n0jf8xqWNSBDv4jM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=dzNslOnwdBbhaG4k4bXwU477jrsnSJMk+zBxifDFP6XCcjcCjIXReCdAg/FPLzs9QYHzMWiFKPSpRmekrpd01HU32juhoYJCY0/CvxzimbFWhaCYjDZ2qUWHG5DCEFfVEw7OjvdUCJbKOJpyM4SUKlG0UGAhJQ60XV2e3CLvBio=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=WE3MARsD; arc=fail smtp.client-ip=40.107.237.76
+	 Content-Type:MIME-Version; b=Cx+kslO3PhV1wWgnLs2tA6bPumirwiKKUuVV+xwPbi9Vq4oZKKT7fDBGlX/52PtQgkApMb0kgnZ79erpa7tY8nYFEflCtgYsEV/wx/WhlXSpMOn8eYOi8mfuV3OtSQRicpA7zRMy0NKC/y1Gy01X2RCgK7AFZhQVMOpOSCOEI/8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=kr5Bx5FL; arc=fail smtp.client-ip=40.107.102.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="WE3MARsD"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="kr5Bx5FL"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=smfoY+pF+sZH83cF16AD/8CvZO7Yfl27/Ec+jNOWYzJlOksvVslH9Z5D1g7RllVmhJMJZtP2gynWL4O81hnY3hWIgke2PkuKSAQ0DqR0TtjmqU2J5DYFBqIpwPMLKIujuoutGwDfvzjXycg8zb7TbVnCmF6vTMmEto+BkAKxEEO7fPvIqwMPEuGJn08RmDkMSvyuw44IMUKkY2DraqyJwf0VTh2cEeFlVFapnW4LPNYB9wPDHZNuQQRXrEVOWXlKKGytHObxjmNDKOT/r/S0LoE+FbbV35T87yy6h1jUM7TbA0oy6QVmt6TDW0HC48NyUYH4G4Tzyun5K3pLqCyc8g==
+ b=ZWtM+brwTIzX1BY+dRLas26ODKcrY7xA0HsfaHyyYWFKVaPe1iZ+J3L1uxZim0LFdFA1mGf2DV7yZt0Zc4hWwxTSL1jqGBTPXkpoSJ2i5dSeIGDWeMBQpkZ7p/b2jhREkAG4RWdR6mhATOmS2NEc9353udCbXhpix495CPFxj33KWbW7EggxdcFizO11nftksaWaFjPp73fra90zuM7Cduvj0LsYYiLngUNN+Ye3QM7GXpTxscP5PiuBno98QidBI7lIlGBlyq1P04Aa3L/GXxPrq0kXVtYA/6LvBCUyamX8rUi6QmImjkOp04LIUtvprGkb4FSwz1swxAhxvgVAnQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=a0A893A1rjih4d31EMWk+QRN02rqEfHHi6remt8e0xY=;
- b=vaoRLUEKPAwKPZitIIkA9GEGfSktheqcBoIruloVI87hEEnwXWfumppZAcCzMaaCadt4lxmWXZ75+szmrUarbnMbwHVNaLNtohdWJNwpewFsaxif9H3KMNqYw3b85RWC0JdbSAqiNJh59vxYlpKRuNZy4iAUV9OyYuMqMiLuX/llfOR789rOmE8eMS2v6cQTcwOjG0Mgaw19FZNTDR7BNaprZEicO7tyDdEg2+L82zFAFEEJr3gGf4+duCVEknj+Hio1A3EX/hayN7nVjBuNFsf9RfPMpZXbMyKkLr183CdkcKJohJB54S0OWC5gSSdW9mjNQ00n1y3TdbdaHZDSIQ==
+ bh=4Lf1mQWXlQlKJUnKczGn9ZUZ8FUhQESIt6Ii5B36xyM=;
+ b=Jz+iN/cGoaL4RTahuqXAhKx0QiA54WiDNlh4Brfz2xx/fu9JR+TIdlrrz9VRv7/nfOWPYw/+QLxwtsxRVoq6AEPu6qTuFesNMM4jqVCUAmDQWAcKAr8qMuOsWbqQgU78i/LcYS91xxaOcLYQgPXmdrELiJuW5J9RcWS6+d4tt0KAxUjzP+MTmnUQY+5AyeOc2gfCFuBMd2YOjEmuoSz0dzlksJ9lxB/4K+6UCA9kR2sj5bZankZ15BOnThnLCgmvtCtMH4tb1cEVGy4++5VQo3Mg9FB0B6Cl1OP55fvq/k+VaxWSvj1aV76KhA18G9S3OGOhBju5rRUUbNB5B6BK7g==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=a0A893A1rjih4d31EMWk+QRN02rqEfHHi6remt8e0xY=;
- b=WE3MARsDf1/vXuX+ayurvpA+bCMVZZW0CJ6j2jfcmn03g0B4zXUXpFXb0h2NF0rXaHWeZ9evopCzUOHnP1xIQ0j4UDw6ijo1FH1wY/sx2WxYUIVg9gpu1/ys66QrVkghIMd3RMVWPMbix7rEXkxxvPld35vTGEkYQ6ihBce3aI51RE0tPYKf8sqU50RhK0ZDQCSvmIB0MWun+oTkxnTvFvNdeGc99LR56GTHC8luS2cWpZ8fdZqlwn0dS+alrYZn6n1hKp5OMwq0FuTZnHQXaRwc0eaQD45CzrCalgaMNWXvfyXHbn0YJPBUFUlhTxUdvi574o4gurHEvA+NTDL91w==
+ bh=4Lf1mQWXlQlKJUnKczGn9ZUZ8FUhQESIt6Ii5B36xyM=;
+ b=kr5Bx5FLVPNwkGQdLfadgF9NzxDX9MnOdYVTg8WMUFAOhvAxJYHU3gHpF+VA8KXHOOJzYIILhkqm3wmtt4jpSTyk77Vyw77cec7A+gZclJ2DHB7g8ggBserAQeAAAAQDrGiIx+0QsbIR5JafxHHzGd3MkRfG2ltDG/1WfCCfwyN4UHuWW4A1HUc25B4yivVihqY3SGPKTx6Hj3idqyxlfUF3RtYXhaX8lHfFZilHih26iXkUU3IRUVia2b2BSaoFmNTLrYCvhOEya7+7Z6LPU2XXx/XrmbpIY6F2hpyTnvD86STPu33AAMY6GDzIKxWOAxEKVtLywXH6yaDrTKrKGw==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from CH3PR12MB8659.namprd12.prod.outlook.com (2603:10b6:610:17c::13)
- by SJ1PR12MB6267.namprd12.prod.outlook.com (2603:10b6:a03:456::10) with
+ by SN7PR12MB7321.namprd12.prod.outlook.com (2603:10b6:806:298::14) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8835.28; Mon, 16 Jun
- 2025 18:06:25 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8835.26; Mon, 16 Jun
+ 2025 18:06:28 +0000
 Received: from CH3PR12MB8659.namprd12.prod.outlook.com
  ([fe80::6eb6:7d37:7b4b:1732]) by CH3PR12MB8659.namprd12.prod.outlook.com
  ([fe80::6eb6:7d37:7b4b:1732%7]) with mapi id 15.20.8835.023; Mon, 16 Jun 2025
- 18:06:25 +0000
+ 18:06:28 +0000
 From: Jason Gunthorpe <jgg@nvidia.com>
 To: Jonathan Corbet <corbet@lwn.net>,
 	iommu@lists.linux.dev,
@@ -65,15 +65,15 @@ Cc: Alexey Kardashevskiy <aik@amd.com>,
 	Michael Roth <michael.roth@amd.com>,
 	Pasha Tatashin <pasha.tatashin@soleen.com>,
 	patches@lists.linux.dev
-Subject: [PATCH v3 04/15] iommupt: Add the AMD IOMMU v1 page table format
-Date: Mon, 16 Jun 2025 15:06:07 -0300
-Message-ID: <4-v3-a93aab628dbc+521-iommu_pt_jgg@nvidia.com>
+Subject: [PATCH v3 11/15] iommufd: Change the selftest to use iommupt instead of xarray
+Date: Mon, 16 Jun 2025 15:06:14 -0300
+Message-ID: <11-v3-a93aab628dbc+521-iommu_pt_jgg@nvidia.com>
 In-Reply-To: <0-v3-a93aab628dbc+521-iommu_pt_jgg@nvidia.com>
 References:
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: PH5P222CA0010.NAMP222.PROD.OUTLOOK.COM
- (2603:10b6:510:34b::11) To CH3PR12MB8659.namprd12.prod.outlook.com
+X-ClientProxiedBy: MN2PR19CA0021.namprd19.prod.outlook.com
+ (2603:10b6:208:178::34) To CH3PR12MB8659.namprd12.prod.outlook.com
  (2603:10b6:610:17c::13)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -82,712 +82,964 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH3PR12MB8659:EE_|SJ1PR12MB6267:EE_
-X-MS-Office365-Filtering-Correlation-Id: 68fcd62c-aad3-46ca-5e78-08ddad008046
+X-MS-TrafficTypeDiagnostic: CH3PR12MB8659:EE_|SN7PR12MB7321:EE_
+X-MS-Office365-Filtering-Correlation-Id: a19ed211-a8b3-4a78-00fb-08ddad008205
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
 	BCL:0;ARA:13230040|366016|1800799024|7416014|376014|921020;
 X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?5NKK0sDDwys5n1vCgl0cMLXBrjY47GUqjOR905LSM9F28vt7x3GXLQs/tV5o?=
- =?us-ascii?Q?qHjw3gsetmJaWzP2Bq63n/YPy4jcRrSq9hKFDLHGpb8AGz22rvBANv1VtI5J?=
- =?us-ascii?Q?GWMWqYPXEYSXrpPHtTKQ/7Q1CUiQEeTfAwmBQ0IQ5GtZMPEbMWCtpI2SmcZE?=
- =?us-ascii?Q?j9oDcr0mzgofBHuMkgIm7TYlK+mdaa+RCqNmj2sy+zadwUM+RrBUh65+vlym?=
- =?us-ascii?Q?j8oT2NJlQLkk7GygGFkDmk1+KR1peQD7EgHZ9IUJLpbOEWs+oC3H4+IZ4HEW?=
- =?us-ascii?Q?lZD4A1vAshn3Iz5B6gb1l/CGgV2Ct9d+cP2no8qMYLmb/TN9zadPvDpZzVb8?=
- =?us-ascii?Q?c1+MBaTkMJRmgw+P/PiD/eWULlMVZ5sjuCcbW2fb0Q8RIFec54/R1ombq+vv?=
- =?us-ascii?Q?WKBsRLyYNWXfkE7g2rmt0njkDtoEanynMAza8UizEcGoeMqGubHJ8vRjZKM0?=
- =?us-ascii?Q?V6Mwr/UBvUBNojCnOGjh3LNvVIemCAvnsLvdvar0TQZjFntVtGW97iyu1Cs9?=
- =?us-ascii?Q?D1en158QaRt7l9j3d6gSfqji1iBNcQ2GX4wRyxUFLrSs9HLO8uLsC483x39b?=
- =?us-ascii?Q?Qjygl5qrG6A5s1ZOscrT2pyQOdNf9oB8wc6hNczPW5wXY/eNk/RR5HURFGNw?=
- =?us-ascii?Q?ogMKAY5rlP5Edv1fFb3qvT1ywhbxgzmzXYHafoVwJhQHw86ZhvH7lI0sC1rB?=
- =?us-ascii?Q?4M5tA8cSxKc3pbUp0kcufG2Ay7zDg7/M5S9hAdv3Eyz+3MTiesn4MNzXwaSj?=
- =?us-ascii?Q?WKIs//DHImAWyOpzZWAXhXw+a+TqNIbpmVshke/d3odFt0N8foGRN4PjKaXD?=
- =?us-ascii?Q?ZIRn9FVMuKVedX9BX8pNj8sccMwu8pEBYMqz2fZi7iB6zIHC0gNy59IxPmR7?=
- =?us-ascii?Q?W+rYJEieNuO6AQhtJ0fHF/fCxfmevHoXNYWP3qJIFfcNpH2T821JRKp91Dga?=
- =?us-ascii?Q?TGQCV7HAaDgUjKNVI1T/gwB/4K6UBtKetLv88A716QdEc9XdLedXVw988w2O?=
- =?us-ascii?Q?J5oOTj/56eaNw2yFvZ/nuZVCOhtrZcsa3A9xte6EpxuOLGfZaBD6eTBUp18E?=
- =?us-ascii?Q?/D9cij0TUaz/qfkblq6UFin1/2VnjA8rAkZV/q2EZmBzNG5P+ddSLVncKvKp?=
- =?us-ascii?Q?ErqeDQE9C/TfBh3oNkIAk2omdiCJ9KqLe/x6JXW1Uic65RqPunXfZUU9DoMY?=
- =?us-ascii?Q?2TNJ8lRxmhMG6/GxY9/ZSNgaKQPpdgwEZ4VWi+FmYKJQBvGdGLbtC9Dj6JRN?=
- =?us-ascii?Q?+01Gu+hruHu6eTSMArkLtiy3qCA/cREm3NxZnR0rCkZPUPQnwUibPc4e0XPU?=
- =?us-ascii?Q?Lg6MH8QmMfMMRlMWzW2O2peZN3/tqsOmgmqj4dWdL/bp+A0GHK+n+VgWhXfJ?=
- =?us-ascii?Q?gbjPtH7RXxnZjx74tBh8+vMt83uLK1u6LggodoaVL976xmIJk1VlHLWHdf7d?=
- =?us-ascii?Q?ixfHWSIwIWFYXhtsKCGe8rq+jQESU+XcEYPhxbb3W1vp0ltH48G+4Q=3D=3D?=
+	=?us-ascii?Q?L/GhwXb7RI9BtZTfvSgmz9M8S+HzC2edO/XCTOidYiqnSodau44Upai300gE?=
+ =?us-ascii?Q?sLW1JpsRaS7SMqq3VdUQoKHcs20SdaOJDBOkDQaZr4WUxhWLlvOdB1l4AVTa?=
+ =?us-ascii?Q?Rw/GLIeX0tPMwXyZD0IFaV5WsGAeZ3PZABovD/eHOKJ7QpeqEWhamlIMPuPl?=
+ =?us-ascii?Q?ifYxIzzty/uS15dv9RmDLAyAuCYairkC1qebXdmwTp78NtfdLG5IucGKuTgJ?=
+ =?us-ascii?Q?vqVlMwlu+8CNMneEiNiHmZx9v92aVALx6KcvVqo8S1djHfScKznJE4GCt9St?=
+ =?us-ascii?Q?wsvJq1TWV94XDxLKqJ5XU6IYlFX9tyJgbNgn186cXfiq0F8NGWqGZYmRi6q9?=
+ =?us-ascii?Q?psfnTa8hAV4p3kbGo2IJ08ROeg9O1psifC3PFz2SL4UsLyJ60J+xBp179kgx?=
+ =?us-ascii?Q?ks5GZSX9aVmGtUrl+FAx+JlEn/BTBgwxNc23cAM156OZvjy1BMbbxHEUwg6j?=
+ =?us-ascii?Q?OhsLdlKFHHxNflBN0xduorgiH4H/O2x3usJ82hxZyveNLZ20H7d6KbkAX9r6?=
+ =?us-ascii?Q?foXVHBVgW5kNZyV/phqxIDu7pLQPe34wL345jvYaj4al9G+4L/IubPJqpHVe?=
+ =?us-ascii?Q?AvOojdK1Ux5tMf62DJASRLNfgmEvyw8F83LthMKCWXcKrz9YjjqC2kYzuPcA?=
+ =?us-ascii?Q?/We3dG3L2gMRjchFnwn76Pn0PD/iyKJFa2j6KdPmdkMXlr2huKj0hwwWjQ6C?=
+ =?us-ascii?Q?7mk2VtOSTY8Ek2BKkuRUnmr0W0eA7qq5h1lA8yemcAcKnKK9kbQQkB6VQdui?=
+ =?us-ascii?Q?dHgJANghZEGXNt8SnVPbaV2RRRhcD69hKq/bXM+W+RliH4dH2/ggTD/U+mD8?=
+ =?us-ascii?Q?qCo9PhsLd+W+ufWgLC7ozF7kva9ewuQGjQbqkvd+121GPjZIvCAleb3B3Fbw?=
+ =?us-ascii?Q?Q5QVOlL0I31hAwkL67C5TgoUzyTZIF04dCBkbwTAGCTEcGeXTPuhfKrrKVtp?=
+ =?us-ascii?Q?scx9yC+Fnm+OJDlcUMLyXskbFynepGv4aQCLP7HLF+hax7CE54gw2QW0ACh4?=
+ =?us-ascii?Q?+7E0EgllxELjmnBmuZ3uNYPbhVabitVe/6+g8HoAmxjZ9ycV1w/HD85lCHGW?=
+ =?us-ascii?Q?zOX+6evPLRIpYciGIsHoTzpLkuUG8OpjKpLMDxpWtFwSUk7QOye+DW9Uyid4?=
+ =?us-ascii?Q?00JfQIMCNA4l2jpHAUDcAVURcRUd6GyKDpdgnkUkx3AtPG2W3vWjuAvhgR6d?=
+ =?us-ascii?Q?NwCkpE+8BRAnSGyvS43pB1ZJBHT62GcQFbR+q24Pbs7hPcsKMl29mLGI6JxZ?=
+ =?us-ascii?Q?6ybnPPUHmRmzT3768yK3L8FsdCY0EMN+qCjqeqT1zcXwUKiR3SGp+WZBSKtC?=
+ =?us-ascii?Q?mHCRP3jSkj8fjemZeoWgzFPmw3XqQZdNWrGc+5EUYTcBt71T2lFy/ato1kc6?=
+ =?us-ascii?Q?ZQgzkgYeL267GJNePojWPnrLhvgrLYLorzH3DEViv+fAeaM6WIkllBnx6fj4?=
+ =?us-ascii?Q?D0SOpjgVdnD/1BE9ZHW/orqZ0bzpZ72e23pdP9a55QN1vHbvsya2Hg=3D=3D?=
 X-Forefront-Antispam-Report:
 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR12MB8659.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(7416014)(376014)(921020);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?SRRhBS/91pDKtbTjFKLX8UbRAyw0g/nMCiwcT7GPRIwcbtkqEyWjswKcC+j9?=
- =?us-ascii?Q?d0soBAqp55K3nI3btFBb2Wvg9+7vUvariyVFjiv3mbQ6p4ObFf0JpXmGtcQv?=
- =?us-ascii?Q?/VYU178e9+nSSRMrBwvzVvPipeEZ4vDvT9/OLXYen+bp2siWCmqNnByHayDa?=
- =?us-ascii?Q?Mv6l+9Nk3SWZ/bGrMDug4tPywWcxXIM/4zbmcqgXRGwKhq8fCccz1ZXQ25ol?=
- =?us-ascii?Q?rw8GFFf7usskYR27BZL+a5joW8l6om3kYQPyR47HwacNTDZf9yp4SiqNY1J1?=
- =?us-ascii?Q?MC0mMpSjQGhtnvIIqqCDDz54qqejFsJnWblZqOtNnRySd1XceNxx6d7aedpS?=
- =?us-ascii?Q?fiPd7o3PYbWbYWvAXZNPVUaXBImC/w2UizaUYu4JFbV7S5/1yklrc1/2jZFi?=
- =?us-ascii?Q?jrjUsQV4pcxY0O7Aid6GepBMtkQFaat63p7uigZfcFrRi4MjshUm5dgtDYcq?=
- =?us-ascii?Q?T4CEExBnd5uavE2KuKsZN0qRhEii/c3C0+MQyjRFWB47C/I9xt2VFVuyUI4s?=
- =?us-ascii?Q?E/IaV8w8CYj4KU3EWnW7zouWs73NhkqW1OyCtCXXLnKy7mS9IC27vTI48GAL?=
- =?us-ascii?Q?nRVOlWUecbs9CmIbWeRrArHbozXFw7qn6CWK4MKeLDjSGhtfxY84i8Mf2Zb9?=
- =?us-ascii?Q?aYDRCLR4M4SnXzC7wJsaI72dak22UPDBVvoVWbsu4vncq8RNdnKkQ3efiCqV?=
- =?us-ascii?Q?Eb4aFHNnqZNw0M/EseiolDqWRUrs9hLfLDkLwyAgLAUO4ce5yNafV4+THrHm?=
- =?us-ascii?Q?UCuaysrpuQQW7VhIY2jYaf1mYycJvTJdpvkuRQ/xnYlD8e+CVhz6aX23ODTb?=
- =?us-ascii?Q?PYyGfrY4GodNT42Ksn5oEuDLrDQ4gwqgoQ4d9tSMpP4PYPxcbD7oV3Dl8ynH?=
- =?us-ascii?Q?Tkw6JcN786EKIZTrjIfHwCoOse2iKnrianTaTGGYWmYlZ2tLeyrm5ALqouIp?=
- =?us-ascii?Q?MgfWUT1i7YSFBeP2seHzsn2Zt/KHlgBryfBlgQpe4uaVbLmYrVJgHHUHe1dR?=
- =?us-ascii?Q?ZL2XtzgnbnpYjakeXPRpvTVeyLlh4bLTu6FO1n/9+3VhT/WyYiJLCsb12fZU?=
- =?us-ascii?Q?j/oM+u/YcYOnqa8Ya8cRA7N2wVvFqslQpzM8Bmjgj+Dewm3PTAvVtYGWVPZM?=
- =?us-ascii?Q?TykdimI5lCnHUqAjFPWYLjsaUmp3NQYsqYI6/MtkHlNaxpSotrXZ8fcqTjf+?=
- =?us-ascii?Q?vlfhJDGU9rDBPqJGslrOWRZca/6E+P6goomRnv+19g48/OfSD62ZT7BV2xcP?=
- =?us-ascii?Q?ZMTBWPoGf2mvyA+A5hnFYQHdlJivXz1EZ666U7i4JwSlmpcJwNhqMBvEwLuB?=
- =?us-ascii?Q?UyKN0qBQbJFXYdPn9K0yzLEEOzg+yULFdUpEWuCv+dvgqu6NL3nRpQU03TYf?=
- =?us-ascii?Q?V6tMMAVsxnm9U92DmCVHPJU8FCagAJLo4HWIXAu1zhHo5Uxh5QFFKwpW+8K8?=
- =?us-ascii?Q?3C0mqiunLKY3Me1jRUn3TJjpbJgRPwfrHjKjZ3G6fzo0slIfOn+99/EJJKsM?=
- =?us-ascii?Q?Oarw1IYU6sP2pdY3lL9CsbD3KsTahWVaAQyy9r1Kw/zmup2z+YU5cNxb78Tm?=
- =?us-ascii?Q?54Ph5eXVLy7aKhkByl92I6OanyLNETZaF3UxDMg5?=
+	=?us-ascii?Q?YPm4ACdeHiPSdRVRQgbIgO3/J2UZclEdZMXIHKcybxACH6d6kBnq1EtfOTta?=
+ =?us-ascii?Q?fz3VReFJuFzKGOTHmHPSWpq968dtSdZhTMXNsRaJvNd4fg4u20v644SQ5Xvp?=
+ =?us-ascii?Q?O0GsEpBP5wkSLcCAMVHINUyBGXKVIKkkOHK/zbbKCJBw7LRBBjq9mdqkViiQ?=
+ =?us-ascii?Q?P99FuHUO0e3RqhreWt0z8S6W9xkZ7vqLdCYmVbfUFzNXIiuMW/zRuO1MOzph?=
+ =?us-ascii?Q?+HM3/bd4IjhwmRuMpe4LS8bodWlObg5xb87pZrK4RSTt2zkhz90ESwyUGtX9?=
+ =?us-ascii?Q?RzHOufpeJF4BeVYalYvdSWV9Q/6Y9zi2QfL4tyPJHqFXI/iDixA/IByaBMZg?=
+ =?us-ascii?Q?EiCd51IPFC8bJuTsnTMEKlnHZW4ybif3vs6pwI8593O4NCcbxYQp3zSdVIpa?=
+ =?us-ascii?Q?fGACzxGS+IGyzHrDZwRQukyu5yLZJAlywMK2gVYZv7bIssKEcrhWLyo5ufOY?=
+ =?us-ascii?Q?mmTbbxWqOCxumv5RNsShu9aahtdqPQKQ9ua31x30K2K+9+9AqRAfDk+QGgx7?=
+ =?us-ascii?Q?HYMv35MGhbitePzRlmj2KQC6UHmu88Cnfi8gG7ht7f9bjdD0A87Av8TbirYt?=
+ =?us-ascii?Q?we0NZxTBfyPshRx56h6X1JVBTCQoSQKN9chl0f/IDVWm8EnsU0Yz2Lq2v/u5?=
+ =?us-ascii?Q?cTsG76eEm+WiRRHpsU8DJHb3/MlZmHimi84khimCfWEs6r5TlK7sS4b9KUoo?=
+ =?us-ascii?Q?Ro2ORpkLuEzLhamB2ufWGfP6HbuaIrG+vPn975HddwTDqgNbMmv+awl/Huqu?=
+ =?us-ascii?Q?2cE0ntB7mNxqXFVu1VA1lvPnaRkZ/4pwncJLZ0QL//JW4fwLH+FVYlB0gs6U?=
+ =?us-ascii?Q?g1Ybe73AKQJ/pfs0k5zH/lu9/BeoW3eqcdKnm8KxZbILbEzS0HzqPEREHj6W?=
+ =?us-ascii?Q?AfAy2gziAJorBOSmNfvxr0+urUaLNDrP7RuVTRLzlpM8fyH8shG0f+OL840y?=
+ =?us-ascii?Q?AIvwsOayVkGG/5qrZSUYxSNric25ootgsZw8dxshiGjcHyTB20y7si+8r/Y2?=
+ =?us-ascii?Q?9NQM8X7RJQ5+VyjoeckIlfP+QMRn9Nr7pyYKfo6+/TnyozQvw8/E83D6Ittk?=
+ =?us-ascii?Q?luxYM2kEYDG+rTWmtC0L2j7U7FcFMmKOPQRBhR8xQ2Tbpy7smqPrbRTMHcT1?=
+ =?us-ascii?Q?Jk6GJWvsGKKCPWs/XkrUn8ebxv3sGthuOqUJAaW1iRLoVlXQ3G5myq9hudQt?=
+ =?us-ascii?Q?9/JfHshJdt31cAIUDt7rrqFGqyx8CaCCVylk3GUu0YdxWwS2tG/lusFxy36d?=
+ =?us-ascii?Q?mF/Co3goZCi76iqrA8U0qGw2qet1eGZ+mphHeavTRzHqH52lxxJDXnyN7xO/?=
+ =?us-ascii?Q?DD77H++m/lMIYxfNS/yift41SKwsx/vWEO5/JJe9igBWJ7yyiKjGC7UGqqCt?=
+ =?us-ascii?Q?QYp2dl0UWmf13aiihv56IgkCrGnlpoJL6CyyZmYQsBvY7vVjpSnYSUTJKLDE?=
+ =?us-ascii?Q?/vjVtKGT9IU39Er5WT8Ri0NpDpyXpEI+bnH/8Pbn/qUn1yu65Uh8evz06w44?=
+ =?us-ascii?Q?TBjFzDubD93lcIMWGHU1cvf9lMMDE2DR31aF+q/UPN4tBGJN6SxcdAJLsmU/?=
+ =?us-ascii?Q?FSUtfUEX25L5Io8P0L0bkiWEiex9bHd670XxF47v?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 68fcd62c-aad3-46ca-5e78-08ddad008046
+X-MS-Exchange-CrossTenant-Network-Message-Id: a19ed211-a8b3-4a78-00fb-08ddad008205
 X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB8659.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Jun 2025 18:06:22.6274
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Jun 2025 18:06:25.4250
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: X3F4N/rOKripv7tiEuaKFyfXYAzNiLb8vS/0mMGgY8VEQv+FqTdQR0AY9t1XuvB0
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ1PR12MB6267
+X-MS-Exchange-CrossTenant-UserPrincipalName: PDXX6cbOqzEZutDOnUQ2wnUWfj+WCEBjXA+DUEBSfJugM+OQmK2P/MBXV0dKU9Sc
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR12MB7321
 
-AMD IOMMU v1 is unique in supporting contiguous pages with a variable size
-and it can decode the full 64 bit VA space. Unlike other x86 page tables
-this explicitly does not do sign extension as part of allowing the entire
-64 bit VA space to be supported.
+The iommufd self test uses an xarray to store the pfns and their orders to
+emulate a page table. Make it act more like a real iommu driver by
+replacing the xarray with an iommupt based page table. The new AMDv1 mock
+format behaves similarly to the xarray.
 
-The general design is quite similar to the x86 PAE format, except with a
-6th level and quite different PTE encoding.
+Add set_dirty() as a iommu_pt operation to allow the test suite to
+simulate HW dirty.
 
-This format is the only one that uses the PT_FEAT_DYNAMIC_TOP feature in
-the existing code as the existing AMDv1 code starts out with a 3 level
-table and adds levels on the fly if more IOVA is needed.
+Userspace can select between several formats including the normal AMDv1
+format and a special MOCK_IOMMUPT_HUGE variation for testing huge page
+dirty tracking. To make the dirty tracking test work the page table must
+only store exactly 2M huge pages otherwise the logic the test uses
+fails. They cannot be broken up or combined.
 
-Comparing the performance of several operations to the existing version:
-
-iommu_map()
-   pgsz  ,avg new,old ns, min new,old ns  , min % (+ve is better)
-     2^12,     65,64    ,      62,61      ,  -1.01
-     2^13,     70,66    ,      67,62      ,  -8.08
-     2^14,     73,69    ,      71,65      ,  -9.09
-     2^15,     78,75    ,      75,71      ,  -5.05
-     2^16,     89,89    ,      86,84      ,  -2.02
-     2^17,    128,121   ,     124,112     , -10.10
-     2^18,    175,175   ,     170,163     ,  -4.04
-     2^19,    264,306   ,     261,279     ,   6.06
-     2^20,    444,525   ,     438,489     ,  10.10
-     2^21,     60,62    ,      58,59      ,   1.01
- 256*2^12,    381,1833  ,     367,1795    ,  79.79
- 256*2^21,    375,1623  ,     356,1555    ,  77.77
- 256*2^30,    356,1338  ,     349,1277    ,  72.72
-
-iommu_unmap()
-   pgsz  ,avg new,old ns, min new,old ns  , min % (+ve is better)
-     2^12,     76,89    ,      71,86      ,  17.17
-     2^13,     79,89    ,      75,86      ,  12.12
-     2^14,     78,90    ,      74,86      ,  13.13
-     2^15,     82,89    ,      74,86      ,  13.13
-     2^16,     79,89    ,      74,86      ,  13.13
-     2^17,     81,89    ,      77,87      ,  11.11
-     2^18,     90,92    ,      87,89      ,   2.02
-     2^19,     91,93    ,      88,90      ,   2.02
-     2^20,     96,95    ,      91,92      ,   1.01
-     2^21,     72,88    ,      68,85      ,  20.20
- 256*2^12,    372,6583  ,     364,6251    ,  94.94
- 256*2^21,    398,6032  ,     392,5758    ,  93.93
- 256*2^30,    396,5665  ,     389,5258    ,  92.92
-
-The ~5-17x speedup when working with mutli-PTE map/unmaps is because the
-AMD implementation rewalks the entire table on every new PTE while this
-version retains its position. The same speedup will be seen with dirtys as
-well.
-
-The old implementation triggers a compiler optimization that ends up
-generating a "rep stos" memset for contiguous PTEs. Since AMD can have
-contiguous PTEs that span 2Kbytes of table this is a huge win compared to
-a normal movq loop. It is why the unmap side has a fairly flat runtime as
-the contiguous PTE sides increases. This version makes it explicit with a
-memset64() call.
+Aside from aligning the selftest with a real page table implementation,
+this helps test the iommupt code itself.
 
 Tested-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 ---
- drivers/iommu/Makefile                     |   1 +
- drivers/iommu/generic_pt/Kconfig           |  13 +
- drivers/iommu/generic_pt/fmt/Makefile      |  11 +
- drivers/iommu/generic_pt/fmt/amdv1.h       | 385 +++++++++++++++++++++
- drivers/iommu/generic_pt/fmt/defs_amdv1.h  |  21 ++
- drivers/iommu/generic_pt/fmt/iommu_amdv1.c |  15 +
- include/linux/generic_pt/common.h          |  19 +
- include/linux/generic_pt/iommu.h           |  29 ++
- 8 files changed, 494 insertions(+)
- create mode 100644 drivers/iommu/generic_pt/fmt/Makefile
- create mode 100644 drivers/iommu/generic_pt/fmt/amdv1.h
- create mode 100644 drivers/iommu/generic_pt/fmt/defs_amdv1.h
- create mode 100644 drivers/iommu/generic_pt/fmt/iommu_amdv1.c
+ drivers/iommu/generic_pt/iommu_pt.h           |  39 ++
+ drivers/iommu/iommufd/Kconfig                 |   1 +
+ drivers/iommu/iommufd/iommufd_test.h          |  11 +-
+ drivers/iommu/iommufd/selftest.c              | 439 +++++++-----------
+ include/linux/generic_pt/iommu.h              |  12 +
+ tools/testing/selftests/iommu/iommufd.c       |  60 ++-
+ tools/testing/selftests/iommu/iommufd_utils.h |  12 +
+ 7 files changed, 289 insertions(+), 285 deletions(-)
 
-diff --git a/drivers/iommu/Makefile b/drivers/iommu/Makefile
-index 355294fa9033f3..b17ef9818759be 100644
---- a/drivers/iommu/Makefile
-+++ b/drivers/iommu/Makefile
-@@ -3,6 +3,7 @@ obj-y += arm/ iommufd/
- obj-$(CONFIG_AMD_IOMMU) += amd/
- obj-$(CONFIG_INTEL_IOMMU) += intel/
- obj-$(CONFIG_RISCV_IOMMU) += riscv/
-+obj-$(CONFIG_GENERIC_PT) += generic_pt/fmt/
- obj-$(CONFIG_IOMMU_API) += iommu.o
- obj-$(CONFIG_IOMMU_SUPPORT) += iommu-pages.o
- obj-$(CONFIG_IOMMU_API) += iommu-traces.o
-diff --git a/drivers/iommu/generic_pt/Kconfig b/drivers/iommu/generic_pt/Kconfig
-index 73b7a54375f9bd..887c585a66699a 100644
---- a/drivers/iommu/generic_pt/Kconfig
-+++ b/drivers/iommu/generic_pt/Kconfig
-@@ -32,4 +32,17 @@ config IOMMU_PT
- 	  IOMMU_PT provides an implementation of the page table operations
- 	  related struct iommu_domain using GENERIC_PT to abstract the page
- 	  table format.
+diff --git a/drivers/iommu/generic_pt/iommu_pt.h b/drivers/iommu/generic_pt/iommu_pt.h
+index 9ad2d17f91ed33..c5588685c3f4f8 100644
+--- a/drivers/iommu/generic_pt/iommu_pt.h
++++ b/drivers/iommu/generic_pt/iommu_pt.h
+@@ -263,6 +263,41 @@ int DOMAIN_NS(read_and_clear_dirty)(struct iommu_domain *domain,
+ }
+ EXPORT_SYMBOL_NS_GPL(DOMAIN_NS(read_and_clear_dirty), "GENERIC_PT_IOMMU");
+ 
++static inline int __set_dirty(struct pt_range *range, void *arg,
++			      unsigned int level, struct pt_table_p *table)
++{
++	struct pt_state pts = pt_init(range, level, table);
 +
-+if IOMMU_PT
-+config IOMMU_PT_AMDV1
-+	tristate "IOMMU page table for 64 bit AMD IOMMU v1"
-+	depends on !GENERIC_ATOMIC64 # for cmpxchg64
-+	default n
-+	help
-+	  iommu_domain implementation for the AMD v1 page table. AMDv1 is the
-+	  "host" page table. It supports granular page sizes of almost every
-+	  power of 2 and decodes an full 64 bit IOVA space.
++	switch (pt_load_single_entry(&pts)) {
++	case PT_ENTRY_EMPTY:
++		return -ENOENT;
++	case PT_ENTRY_TABLE:
++		return pt_descend(&pts, arg, __set_dirty);
++	case PT_ENTRY_OA:
++		if (!pt_entry_make_write_dirty(&pts))
++			return -EAGAIN;
++		return 0;
++	}
++	return -ENOENT;
++}
 +
-+	  Selected automatically by an IOMMU driver that uses this format.
-+endif
- endif
-diff --git a/drivers/iommu/generic_pt/fmt/Makefile b/drivers/iommu/generic_pt/fmt/Makefile
-new file mode 100644
-index 00000000000000..a4d83b7e0cf691
---- /dev/null
-+++ b/drivers/iommu/generic_pt/fmt/Makefile
-@@ -0,0 +1,11 @@
-+# SPDX-License-Identifier: GPL-2.0
++static int __maybe_unused NS(set_dirty)(struct pt_iommu *iommu_table,
++					dma_addr_t iova)
++{
++	struct pt_range range;
++	int ret;
 +
-+iommu_pt_fmt-$(CONFIG_IOMMU_PT_AMDV1) += amdv1
++	ret = make_range(common_from_iommu(iommu_table), &range, iova, 1);
++	if (ret)
++		return ret;
 +
-+define create_format
-+obj-$(2) += iommu_$(1).o
++	/*
++	 * Note: There is no locking here yet, if the test suite races this it
++	 * can crash. It should use RCU locking eventually.
++	 */
++	return pt_walk_range(&range, __set_dirty, NULL);
++}
 +
-+endef
-+
-+$(eval $(foreach fmt,$(iommu_pt_fmt-y),$(call create_format,$(fmt),y)))
-+$(eval $(foreach fmt,$(iommu_pt_fmt-m),$(call create_format,$(fmt),m)))
-diff --git a/drivers/iommu/generic_pt/fmt/amdv1.h b/drivers/iommu/generic_pt/fmt/amdv1.h
-new file mode 100644
-index 00000000000000..901fc4a80e9a83
---- /dev/null
-+++ b/drivers/iommu/generic_pt/fmt/amdv1.h
-@@ -0,0 +1,385 @@
-+/* SPDX-License-Identifier: GPL-2.0-only */
-+/*
-+ * Copyright (c) 2024-2025, NVIDIA CORPORATION & AFFILIATES
-+ *
-+ * AMD IOMMU v1 page table
-+ *
-+ * This is described in Section "2.2.3 I/O Page Tables for Host Translations"
-+ * of the "AMD I/O Virtualization Technology (IOMMU) Specification"
-+ *
-+ * Note the level numbering here matches the core code, so level 0 is the same
-+ * as mode 1.
-+ *
-+ */
-+#ifndef __GENERIC_PT_FMT_AMDV1_H
-+#define __GENERIC_PT_FMT_AMDV1_H
-+
-+#include "defs_amdv1.h"
-+#include "../pt_defs.h"
-+
-+#include <asm/page.h>
-+#include <linux/bitfield.h>
-+#include <linux/container_of.h>
-+#include <linux/mem_encrypt.h>
-+#include <linux/minmax.h>
-+#include <linux/sizes.h>
-+#include <linux/string.h>
-+
+ struct pt_iommu_collect_args {
+ 	struct iommu_pages_list free_list;
+ 	u8 ignore_mapped : 1;
+@@ -940,6 +975,10 @@ static void NS(deinit)(struct pt_iommu *iommu_table)
+ }
+ 
+ static const struct pt_iommu_ops NS(ops) = {
++#if IS_ENABLED(CONFIG_IOMMUFD_DRIVER) && defined(pt_entry_write_is_dirty) && \
++	IS_ENABLED(CONFIG_IOMMUFD_TEST) && defined(pt_entry_make_write_dirty)
++	.set_dirty = NS(set_dirty),
++#endif
+ 	.get_info = NS(get_info),
+ 	.deinit = NS(deinit),
+ };
+diff --git a/drivers/iommu/iommufd/Kconfig b/drivers/iommu/iommufd/Kconfig
+index 2beeb4f60ee538..eae3f03629b0c1 100644
+--- a/drivers/iommu/iommufd/Kconfig
++++ b/drivers/iommu/iommufd/Kconfig
+@@ -41,6 +41,7 @@ config IOMMUFD_TEST
+ 	depends on DEBUG_KERNEL
+ 	depends on FAULT_INJECTION
+ 	depends on RUNTIME_TESTING_MENU
++	depends on IOMMU_PT_AMDV1
+ 	select IOMMUFD_DRIVER
+ 	default n
+ 	help
+diff --git a/drivers/iommu/iommufd/iommufd_test.h b/drivers/iommu/iommufd/iommufd_test.h
+index 1cd7e839412980..36d898498fcc99 100644
+--- a/drivers/iommu/iommufd/iommufd_test.h
++++ b/drivers/iommu/iommufd/iommufd_test.h
+@@ -31,9 +31,18 @@ enum {
+ 	IOMMU_TEST_OP_PASID_CHECK_HWPT,
+ };
+ 
 +enum {
-+	PT_MAX_OUTPUT_ADDRESS_LG2 = 52,
-+	PT_MAX_VA_ADDRESS_LG2 = 64,
-+	PT_ITEM_WORD_SIZE = sizeof(u64),
-+	PT_MAX_TOP_LEVEL = 5,
-+	PT_GRANULE_LG2SZ = 12,
-+	PT_TABLEMEM_LG2SZ = 12,
-+
-+	/* The DTE only has these bits for the top phyiscal address */
-+	PT_TOP_PHYS_MASK = GENMASK_ULL(51, 12),
++	MOCK_IOMMUPT_DEFAULT = 0,
++	MOCK_IOMMUPT_HUGE,
++	MOCK_IOMMUPT_AMDV1,
 +};
 +
-+/* PTE bits */
-+enum {
-+	AMDV1PT_FMT_PR = BIT(0),
-+	AMDV1PT_FMT_D = BIT(6),
-+	AMDV1PT_FMT_NEXT_LEVEL = GENMASK_ULL(11, 9),
-+	AMDV1PT_FMT_OA = GENMASK_ULL(51, 12),
-+	AMDV1PT_FMT_FC = BIT_ULL(60),
-+	AMDV1PT_FMT_IR = BIT_ULL(61),
-+	AMDV1PT_FMT_IW = BIT_ULL(62),
-+};
-+
-+/*
-+ * gcc 13 has a bug where it thinks the output of FIELD_GET() is an enum, make
-+ * these defines to avoid it.
-+ */
-+#define AMDV1PT_FMT_NL_DEFAULT 0
-+#define AMDV1PT_FMT_NL_SIZE 7
-+
-+#define common_to_amdv1pt(common_ptr) \
-+	container_of_const(common_ptr, struct pt_amdv1, common)
-+#define to_amdv1pt(pts) common_to_amdv1pt((pts)->range->common)
-+
-+static inline pt_oaddr_t amdv1pt_table_pa(const struct pt_state *pts)
-+{
-+	return oalog2_mul(FIELD_GET(AMDV1PT_FMT_OA, pts->entry),
-+			  PT_GRANULE_LG2SZ);
-+}
-+#define pt_table_pa amdv1pt_table_pa
-+
-+/* Returns the oa for the start of the contiguous entry */
-+static inline pt_oaddr_t amdv1pt_entry_oa(const struct pt_state *pts)
-+{
-+	pt_oaddr_t oa = FIELD_GET(AMDV1PT_FMT_OA, pts->entry);
-+
-+	if (FIELD_GET(AMDV1PT_FMT_NEXT_LEVEL, pts->entry) ==
-+	    AMDV1PT_FMT_NL_SIZE) {
-+		unsigned int sz_bits = oalog2_ffz(oa);
-+
-+		oa = oalog2_set_mod(oa, 0, sz_bits);
-+	} else if (PT_WARN_ON(FIELD_GET(AMDV1PT_FMT_NEXT_LEVEL, pts->entry) !=
-+			      AMDV1PT_FMT_NL_DEFAULT))
-+		return 0;
-+	return oalog2_mul(oa, PT_GRANULE_LG2SZ);
-+}
-+#define pt_entry_oa amdv1pt_entry_oa
-+
-+static inline bool amdv1pt_can_have_leaf(const struct pt_state *pts)
-+{
-+	/*
-+	 * Table 15: Page Table Level Parameters
-+	 * The top most level cannot have translation entries
-+	 */
-+	return pts->level < PT_MAX_TOP_LEVEL;
-+}
-+#define pt_can_have_leaf amdv1pt_can_have_leaf
-+
-+static inline unsigned int amdv1pt_table_item_lg2sz(const struct pt_state *pts)
-+{
-+	return PT_GRANULE_LG2SZ +
-+	       (PT_TABLEMEM_LG2SZ - ilog2(PT_ITEM_WORD_SIZE)) * pts->level;
-+}
-+#define pt_table_item_lg2sz amdv1pt_table_item_lg2sz
-+
-+static inline unsigned int
-+amdv1pt_entry_num_contig_lg2(const struct pt_state *pts)
-+{
-+	u32 code;
-+
-+	if (FIELD_GET(AMDV1PT_FMT_NEXT_LEVEL, pts->entry) ==
-+	    AMDV1PT_FMT_NL_DEFAULT)
-+		return ilog2(1);
-+
-+	PT_WARN_ON(FIELD_GET(AMDV1PT_FMT_NEXT_LEVEL, pts->entry) !=
-+		   AMDV1PT_FMT_NL_SIZE);
-+
-+	/*
-+	 * The contiguous size is encoded in the length of a string of 1's in
-+	 * the low bits of the OA. Reverse the equation:
-+	 *  code = log2_to_int(num_contig_lg2 + item_lg2sz -
-+	 *              PT_GRANULE_LG2SZ - 1) - 1
-+	 * Which can be expressed as:
-+	 *  num_contig_lg2 = oalog2_ffz(code) + 1 -
-+	 *              item_lg2sz - PT_GRANULE_LG2SZ
-+	 *
-+	 * Assume the bit layout is correct and remove the masking. Reorganize
-+	 * the equation to move all the arithmetic before the ffz.
-+	 */
-+	code = pts->entry >> (__bf_shf(AMDV1PT_FMT_OA) - 1 +
-+			      pt_table_item_lg2sz(pts) - PT_GRANULE_LG2SZ);
-+	return log2_ffz_t(u32, code);
-+}
-+#define pt_entry_num_contig_lg2 amdv1pt_entry_num_contig_lg2
-+
-+static inline unsigned int amdv1pt_num_items_lg2(const struct pt_state *pts)
-+{
-+	/*
-+	 * Top entry covers bits [63:57] only, this is handled through
-+	 * max_vasz_lg2.
-+	 */
-+	if (PT_WARN_ON(pts->level == 5))
-+		return 7;
-+	return PT_TABLEMEM_LG2SZ - ilog2(sizeof(u64));
-+}
-+#define pt_num_items_lg2 amdv1pt_num_items_lg2
-+
-+static inline pt_vaddr_t amdv1pt_possible_sizes(const struct pt_state *pts)
-+{
-+	unsigned int isz_lg2 = pt_table_item_lg2sz(pts);
-+
-+	if (!amdv1pt_can_have_leaf(pts))
-+		return 0;
-+
-+	/*
-+	 * Table 14: Example Page Size Encodings
-+	 * Address bits 51:32 can be used to encode page sizes greater than 4
-+	 * Gbytes. Address bits 63:52 are zero-extended.
-+	 *
-+	 * 512GB Pages are not supported due to a hardware bug.
-+	 * Otherwise every power of two size is supported.
-+	 */
-+	return GENMASK_ULL(min(51, isz_lg2 + amdv1pt_num_items_lg2(pts) - 1),
-+			   isz_lg2) & ~SZ_512G;
-+}
-+#define pt_possible_sizes amdv1pt_possible_sizes
-+
-+static inline enum pt_entry_type amdv1pt_load_entry_raw(struct pt_state *pts)
-+{
-+	const u64 *tablep = pt_cur_table(pts, u64) + pts->index;
-+	unsigned int next_level;
-+	u64 entry;
-+
-+	pts->entry = entry = READ_ONCE(*tablep);
-+	if (!(entry & AMDV1PT_FMT_PR))
-+		return PT_ENTRY_EMPTY;
-+
-+	next_level = FIELD_GET(AMDV1PT_FMT_NEXT_LEVEL, pts->entry);
-+	if (pts->level == 0 || next_level == AMDV1PT_FMT_NL_DEFAULT ||
-+	    next_level == AMDV1PT_FMT_NL_SIZE)
-+		return PT_ENTRY_OA;
-+	return PT_ENTRY_TABLE;
-+}
-+#define pt_load_entry_raw amdv1pt_load_entry_raw
-+
-+static inline void
-+amdv1pt_install_leaf_entry(struct pt_state *pts, pt_oaddr_t oa,
-+			   unsigned int oasz_lg2,
-+			   const struct pt_write_attrs *attrs)
-+{
-+	unsigned int isz_lg2 = pt_table_item_lg2sz(pts);
-+	u64 *tablep = pt_cur_table(pts, u64) + pts->index;
-+	u64 entry;
-+
-+	entry = AMDV1PT_FMT_PR |
-+		FIELD_PREP(AMDV1PT_FMT_OA, log2_div(oa, PT_GRANULE_LG2SZ)) |
-+		attrs->descriptor_bits;
-+
-+	if (oasz_lg2 == isz_lg2) {
-+		entry |= FIELD_PREP(AMDV1PT_FMT_NEXT_LEVEL,
-+				    AMDV1PT_FMT_NL_DEFAULT);
-+		WRITE_ONCE(*tablep, entry);
-+	} else {
-+		unsigned int num_contig_lg2 = oasz_lg2 - isz_lg2;
-+		u64 *end = tablep + log2_to_int(num_contig_lg2);
-+
-+		entry |= FIELD_PREP(AMDV1PT_FMT_NEXT_LEVEL,
-+				    AMDV1PT_FMT_NL_SIZE) |
-+			 FIELD_PREP(AMDV1PT_FMT_OA,
-+				    oalog2_to_int(oasz_lg2 - PT_GRANULE_LG2SZ -
-+						  1) -
-+					    1);
-+
-+		/* See amdv1pt_clear_entry() */
-+		if (num_contig_lg2 <= ilog2(32)) {
-+			for (; tablep != end; tablep++)
-+				WRITE_ONCE(*tablep, entry);
-+		} else {
-+			memset64(tablep, entry, log2_to_int(num_contig_lg2));
-+		}
-+	}
-+	pts->entry = entry;
-+}
-+#define pt_install_leaf_entry amdv1pt_install_leaf_entry
-+
-+static inline bool amdv1pt_install_table(struct pt_state *pts,
-+					 pt_oaddr_t table_pa,
-+					 const struct pt_write_attrs *attrs)
-+{
-+	u64 entry;
-+
-+	/*
-+	 * IR and IW are ANDed from the table levels along with the PTE. We
-+	 * always control permissions from the PTE, so always set IR and IW for
-+	 * tables.
-+	 */
-+	entry = AMDV1PT_FMT_PR |
-+		FIELD_PREP(AMDV1PT_FMT_NEXT_LEVEL, pts->level) |
-+		FIELD_PREP(AMDV1PT_FMT_OA,
-+			   log2_div(table_pa, PT_GRANULE_LG2SZ)) |
-+		AMDV1PT_FMT_IR | AMDV1PT_FMT_IW;
-+	if (pts_feature(pts, PT_FEAT_AMDV1_ENCRYPT_TABLES))
-+		entry = __sme_set(entry);
-+	return pt_table_install64(pts, entry);
-+}
-+#define pt_install_table amdv1pt_install_table
-+
-+static inline void amdv1pt_attr_from_entry(const struct pt_state *pts,
-+					   struct pt_write_attrs *attrs)
-+{
-+	attrs->descriptor_bits =
-+		pts->entry & (AMDV1PT_FMT_FC | AMDV1PT_FMT_IR | AMDV1PT_FMT_IW);
-+}
-+#define pt_attr_from_entry amdv1pt_attr_from_entry
-+
-+static inline void amdv1pt_clear_entry(struct pt_state *pts,
-+				       unsigned int num_contig_lg2)
-+{
-+	u64 *tablep = pt_cur_table(pts, u64) + pts->index;
-+	u64 *end = tablep + log2_to_int(num_contig_lg2);
-+
-+	/*
-+	 * gcc generates rep stos for the io-pgtable code, and this difference
-+	 * can show in microbenchmarks with larger contiguous page sizes.
-+	 * rep is slower for small cases.
-+	 */
-+	if (num_contig_lg2 <= ilog2(32)) {
-+		for (; tablep != end; tablep++)
-+			WRITE_ONCE(*tablep, 0);
-+	} else {
-+		memset64(tablep, 0, log2_to_int(num_contig_lg2));
-+	}
-+}
-+#define pt_clear_entry amdv1pt_clear_entry
-+
-+static inline bool amdv1pt_entry_write_is_dirty(const struct pt_state *pts)
-+{
-+	unsigned int num_contig_lg2 = amdv1pt_entry_num_contig_lg2(pts);
-+	u64 *tablep = pt_cur_table(pts, u64) +
-+		      log2_set_mod(pts->index, 0, num_contig_lg2);
-+	u64 *end = tablep + log2_to_int(num_contig_lg2);
-+
-+	for (; tablep != end; tablep++)
-+		if (READ_ONCE(*tablep) & AMDV1PT_FMT_D)
-+			return true;
-+	return false;
-+}
-+#define pt_entry_write_is_dirty amdv1pt_entry_write_is_dirty
-+
-+static inline void amdv1pt_entry_set_write_clean(struct pt_state *pts)
-+{
-+	unsigned int num_contig_lg2 = amdv1pt_entry_num_contig_lg2(pts);
-+	u64 *tablep = pt_cur_table(pts, u64) +
-+		      log2_set_mod(pts->index, 0, num_contig_lg2);
-+	u64 *end = tablep + log2_to_int(num_contig_lg2);
-+
-+	for (; tablep != end; tablep++)
-+		WRITE_ONCE(*tablep, READ_ONCE(*tablep) & ~(u64)AMDV1PT_FMT_D);
-+}
-+#define pt_entry_set_write_clean amdv1pt_entry_set_write_clean
-+
-+static inline bool amdv1pt_entry_make_write_dirty(struct pt_state *pts)
-+{
-+	u64 *tablep = pt_cur_table(pts, u64) + pts->index;
-+	u64 new = pts->entry | AMDV1PT_FMT_D;
-+
-+	return try_cmpxchg64(tablep, &pts->entry, new);
-+}
-+#define pt_entry_make_write_dirty amdv1pt_entry_make_write_dirty
-+
-+/* --- iommu */
++/* These values are true for MOCK_IOMMUPT_DEFAULT */
+ enum {
+ 	MOCK_APERTURE_START = 1UL << 24,
+ 	MOCK_APERTURE_LAST = (1UL << 31) - 1,
++	MOCK_PAGE_SIZE = 2048,
++	MOCK_HUGE_PAGE_SIZE = 512 * MOCK_PAGE_SIZE,
+ };
+ 
+ enum {
+@@ -52,7 +61,6 @@ enum {
+ 
+ enum {
+ 	MOCK_FLAGS_DEVICE_NO_DIRTY = 1 << 0,
+-	MOCK_FLAGS_DEVICE_HUGE_IOVA = 1 << 1,
+ 	MOCK_FLAGS_DEVICE_PASID = 1 << 2,
+ };
+ 
+@@ -205,6 +213,7 @@ struct iommu_test_hw_info {
+  */
+ struct iommu_hwpt_selftest {
+ 	__u32 iotlb;
++	__u32 pagetable_type;
+ };
+ 
+ /* Should not be equal to any defined value in enum iommu_hwpt_invalidate_data_type */
+diff --git a/drivers/iommu/iommufd/selftest.c b/drivers/iommu/iommufd/selftest.c
+index 6bd0abf9a641e2..4c2b32bc15641a 100644
+--- a/drivers/iommu/iommufd/selftest.c
++++ b/drivers/iommu/iommufd/selftest.c
+@@ -12,6 +12,8 @@
+ #include <linux/slab.h>
+ #include <linux/xarray.h>
+ #include <uapi/linux/iommufd.h>
 +#include <linux/generic_pt/iommu.h>
-+#include <linux/iommu.h>
-+
-+#define pt_iommu_table pt_iommu_amdv1
-+
-+/* The common struct is in the per-format common struct */
-+static inline struct pt_common *common_from_iommu(struct pt_iommu *iommu_table)
++#include "../iommu-pages.h"
+ 
+ #include "../iommu-priv.h"
+ #include "io_pagetable.h"
+@@ -41,21 +43,6 @@ static DEFINE_IDA(mock_dev_ida);
+ 
+ enum {
+ 	MOCK_DIRTY_TRACK = 1,
+-	MOCK_IO_PAGE_SIZE = PAGE_SIZE / 2,
+-	MOCK_HUGE_PAGE_SIZE = 512 * MOCK_IO_PAGE_SIZE,
+-
+-	/*
+-	 * Like a real page table alignment requires the low bits of the address
+-	 * to be zero. xarray also requires the high bit to be zero, so we store
+-	 * the pfns shifted. The upper bits are used for metadata.
+-	 */
+-	MOCK_PFN_MASK = ULONG_MAX / MOCK_IO_PAGE_SIZE,
+-
+-	_MOCK_PFN_START = MOCK_PFN_MASK + 1,
+-	MOCK_PFN_START_IOVA = _MOCK_PFN_START,
+-	MOCK_PFN_LAST_IOVA = _MOCK_PFN_START,
+-	MOCK_PFN_DIRTY_IOVA = _MOCK_PFN_START << 1,
+-	MOCK_PFN_HUGE_IOVA = _MOCK_PFN_START << 2,
+ };
+ 
+ static int mock_dev_enable_iopf(struct device *dev, struct iommu_domain *domain);
+@@ -124,10 +111,15 @@ void iommufd_test_syz_conv_iova_id(struct iommufd_ucmd *ucmd,
+ }
+ 
+ struct mock_iommu_domain {
++	union {
++		struct iommu_domain domain;
++		struct pt_iommu iommu;
++		struct pt_iommu_amdv1 amdv1;
++	};
+ 	unsigned long flags;
+-	struct iommu_domain domain;
+-	struct xarray pfns;
+ };
++PT_IOMMU_CHECK_DOMAIN(struct mock_iommu_domain, iommu, domain);
++PT_IOMMU_CHECK_DOMAIN(struct mock_iommu_domain, amdv1.iommu, domain);
+ 
+ static inline struct mock_iommu_domain *
+ to_mock_domain(struct iommu_domain *domain)
+@@ -322,74 +314,6 @@ static int mock_domain_set_dirty_tracking(struct iommu_domain *domain,
+ 	return 0;
+ }
+ 
+-static bool mock_test_and_clear_dirty(struct mock_iommu_domain *mock,
+-				      unsigned long iova, size_t page_size,
+-				      unsigned long flags)
+-{
+-	unsigned long cur, end = iova + page_size - 1;
+-	bool dirty = false;
+-	void *ent, *old;
+-
+-	for (cur = iova; cur < end; cur += MOCK_IO_PAGE_SIZE) {
+-		ent = xa_load(&mock->pfns, cur / MOCK_IO_PAGE_SIZE);
+-		if (!ent || !(xa_to_value(ent) & MOCK_PFN_DIRTY_IOVA))
+-			continue;
+-
+-		dirty = true;
+-		/* Clear dirty */
+-		if (!(flags & IOMMU_DIRTY_NO_CLEAR)) {
+-			unsigned long val;
+-
+-			val = xa_to_value(ent) & ~MOCK_PFN_DIRTY_IOVA;
+-			old = xa_store(&mock->pfns, cur / MOCK_IO_PAGE_SIZE,
+-				       xa_mk_value(val), GFP_KERNEL);
+-			WARN_ON_ONCE(ent != old);
+-		}
+-	}
+-
+-	return dirty;
+-}
+-
+-static int mock_domain_read_and_clear_dirty(struct iommu_domain *domain,
+-					    unsigned long iova, size_t size,
+-					    unsigned long flags,
+-					    struct iommu_dirty_bitmap *dirty)
+-{
+-	struct mock_iommu_domain *mock = to_mock_domain(domain);
+-	unsigned long end = iova + size;
+-	void *ent;
+-
+-	if (!(mock->flags & MOCK_DIRTY_TRACK) && dirty->bitmap)
+-		return -EINVAL;
+-
+-	do {
+-		unsigned long pgsize = MOCK_IO_PAGE_SIZE;
+-		unsigned long head;
+-
+-		ent = xa_load(&mock->pfns, iova / MOCK_IO_PAGE_SIZE);
+-		if (!ent) {
+-			iova += pgsize;
+-			continue;
+-		}
+-
+-		if (xa_to_value(ent) & MOCK_PFN_HUGE_IOVA)
+-			pgsize = MOCK_HUGE_PAGE_SIZE;
+-		head = iova & ~(pgsize - 1);
+-
+-		/* Clear dirty */
+-		if (mock_test_and_clear_dirty(mock, head, pgsize, flags))
+-			iommu_dirty_bitmap_record(dirty, iova, pgsize);
+-		iova += pgsize;
+-	} while (iova < end);
+-
+-	return 0;
+-}
+-
+-static const struct iommu_dirty_ops dirty_ops = {
+-	.set_dirty_tracking = mock_domain_set_dirty_tracking,
+-	.read_and_clear_dirty = mock_domain_read_and_clear_dirty,
+-};
+-
+ static struct mock_iommu_domain_nested *
+ __mock_domain_alloc_nested(const struct iommu_user_data *user_data)
+ {
+@@ -424,7 +348,7 @@ mock_domain_alloc_nested(struct device *dev, struct iommu_domain *parent,
+ 
+ 	if (flags & ~IOMMU_HWPT_ALLOC_PASID)
+ 		return ERR_PTR(-EOPNOTSUPP);
+-	if (!parent || parent->ops != mock_ops.default_domain_ops)
++	if (!parent || !(parent->type & __IOMMU_DOMAIN_PAGING))
+ 		return ERR_PTR(-EINVAL);
+ 
+ 	mock_parent = to_mock_domain(parent);
+@@ -438,6 +362,138 @@ mock_domain_alloc_nested(struct device *dev, struct iommu_domain *parent,
+ 	return &mock_nested->domain;
+ }
+ 
++static void mock_domain_free(struct iommu_domain *domain)
 +{
-+	return &container_of(iommu_table, struct pt_iommu_amdv1, iommu)
-+			->amdpt.common;
++	struct mock_iommu_domain *mock = to_mock_domain(domain);
++
++	pt_iommu_deinit(&mock->iommu);
++	kfree(mock);
 +}
 +
-+static inline struct pt_iommu *iommu_from_common(struct pt_common *common)
++static void mock_iotlb_sync(struct iommu_domain *domain,
++				struct iommu_iotlb_gather *gather)
 +{
-+	return &container_of(common, struct pt_iommu_amdv1, amdpt.common)->iommu;
++	iommu_put_pages_list(&gather->freelist);
 +}
 +
-+static inline int amdv1pt_iommu_set_prot(struct pt_common *common,
-+					 struct pt_write_attrs *attrs,
-+					 unsigned int iommu_prot)
-+{
-+	u64 pte = 0;
++static const struct iommu_domain_ops amdv1_mock_ops = {
++	IOMMU_PT_DOMAIN_OPS(amdv1_mock),
++	.free = mock_domain_free,
++	.attach_dev = mock_domain_nop_attach,
++	.set_dev_pasid = mock_domain_set_dev_pasid_nop,
++	.iotlb_sync = &mock_iotlb_sync,
++};
 +
-+	if (pt_feature(common, PT_FEAT_AMDV1_FORCE_COHERENCE))
-+		pte |= AMDV1PT_FMT_FC;
-+	if (iommu_prot & IOMMU_READ)
-+		pte |= AMDV1PT_FMT_IR;
-+	if (iommu_prot & IOMMU_WRITE)
-+		pte |= AMDV1PT_FMT_IW;
++static const struct iommu_domain_ops amdv1_mock_huge_ops = {
++	IOMMU_PT_DOMAIN_OPS(amdv1_mock),
++	.free = mock_domain_free,
++	.attach_dev = mock_domain_nop_attach,
++	.set_dev_pasid = mock_domain_set_dev_pasid_nop,
++	.iotlb_sync = &mock_iotlb_sync,
++};
++#undef pt_iommu_amdv1_mock_map_pages
++
++static const struct iommu_dirty_ops amdv1_mock_dirty_ops = {
++	IOMMU_PT_DIRTY_OPS(amdv1_mock),
++	.set_dirty_tracking = mock_domain_set_dirty_tracking,
++};
++
++static const struct iommu_domain_ops amdv1_ops = {
++	IOMMU_PT_DOMAIN_OPS(amdv1),
++	.free = mock_domain_free,
++	.attach_dev = mock_domain_nop_attach,
++	.set_dev_pasid = mock_domain_set_dev_pasid_nop,
++	.iotlb_sync = &mock_iotlb_sync,
++};
++
++static const struct iommu_dirty_ops amdv1_dirty_ops = {
++	IOMMU_PT_DIRTY_OPS(amdv1),
++	.set_dirty_tracking = mock_domain_set_dirty_tracking,
++};
++
++static struct mock_iommu_domain *
++mock_domain_alloc_pgtable(struct device *dev,
++			  const struct iommu_hwpt_selftest *user_cfg, u32 flags)
++{
++	struct mock_iommu_domain *mock;
++	int rc;
++
++	mock = kzalloc(sizeof(*mock), GFP_KERNEL);
++	if (!mock)
++		return ERR_PTR(-ENOMEM);
++	mock->domain.type = IOMMU_DOMAIN_UNMANAGED;
++
++	mock->amdv1.iommu.nid = NUMA_NO_NODE;
++
++	switch (user_cfg->pagetable_type) {
++	case MOCK_IOMMUPT_DEFAULT:
++	case MOCK_IOMMUPT_HUGE: {
++		struct pt_iommu_amdv1_cfg cfg = {};
++
++		/* The mock version has a 2k page size */
++		cfg.common.hw_max_vasz_lg2 = 56;
++		cfg.common.hw_max_oasz_lg2 = 51;
++		cfg.starting_level = 2;
++		if (user_cfg->pagetable_type == MOCK_IOMMUPT_HUGE)
++			mock->domain.ops = &amdv1_mock_huge_ops;
++		else
++			mock->domain.ops = &amdv1_mock_ops;
++		rc = pt_iommu_amdv1_mock_init(&mock->amdv1, &cfg, GFP_KERNEL);
++		if (rc)
++			goto err_free;
++
++		/*
++		 * In huge mode userspace should only provide huge pages, we
++		 * have to include PAGE_SIZE for the domain to be accepted by
++		 * iommufd.
++		 */
++		if (user_cfg->pagetable_type == MOCK_IOMMUPT_HUGE)
++			mock->domain.pgsize_bitmap = MOCK_HUGE_PAGE_SIZE |
++						     PAGE_SIZE;
++		if (flags & IOMMU_HWPT_ALLOC_DIRTY_TRACKING)
++			mock->domain.dirty_ops = &amdv1_mock_dirty_ops;
++		break;
++	}
++
++	case MOCK_IOMMUPT_AMDV1: {
++		struct pt_iommu_amdv1_cfg cfg = {};
++
++		cfg.common.hw_max_vasz_lg2 = 64;
++		cfg.common.hw_max_oasz_lg2 = 52;
++		cfg.common.features = BIT(PT_FEAT_DYNAMIC_TOP) |
++				      BIT(PT_FEAT_AMDV1_ENCRYPT_TABLES) |
++				      BIT(PT_FEAT_AMDV1_FORCE_COHERENCE);
++		cfg.starting_level = 2;
++		mock->domain.ops = &amdv1_ops;
++		rc = pt_iommu_amdv1_init(&mock->amdv1, &cfg, GFP_KERNEL);
++		if (rc)
++			goto err_free;
++		if (flags & IOMMU_HWPT_ALLOC_DIRTY_TRACKING)
++			mock->domain.dirty_ops = &amdv1_dirty_ops;
++		break;
++	}
++	default:
++		rc = -EOPNOTSUPP;
++		goto err_free;
++	}
 +
 +	/*
-+	 * Ideally we'd have an IOMMU_ENCRYPTED flag set by higher levels to
-+	 * control this. For now if the tables use sme_set then so do the ptes.
++	 * Override the real aperture to the MOCK aperture for test purposes.
 +	 */
-+	if (pt_feature(common, PT_FEAT_AMDV1_ENCRYPT_TABLES))
-+		pte = __sme_set(pte);
++	if (user_cfg->pagetable_type == MOCK_IOMMUPT_DEFAULT) {
++		WARN_ON(mock->domain.geometry.aperture_start != 0);
++		WARN_ON(mock->domain.geometry.aperture_end < MOCK_APERTURE_LAST);
 +
-+	attrs->descriptor_bits = pte;
-+	return 0;
++		mock->domain.geometry.aperture_start = MOCK_APERTURE_START;
++		mock->domain.geometry.aperture_end = MOCK_APERTURE_LAST;
++	}
++
++	return mock;
++err_free:
++	kfree(mock);
++	return ERR_PTR(rc);
 +}
-+#define pt_iommu_set_prot amdv1pt_iommu_set_prot
 +
-+static inline int amdv1pt_iommu_fmt_init(struct pt_iommu_amdv1 *iommu_table,
-+					 const struct pt_iommu_amdv1_cfg *cfg)
-+{
-+	struct pt_amdv1 *table = &iommu_table->amdpt;
-+	unsigned int max_vasz_lg2 = PT_MAX_VA_ADDRESS_LG2;
+ static struct iommu_domain *
+ mock_domain_alloc_paging_flags(struct device *dev, u32 flags,
+ 			       const struct iommu_user_data *user_data)
+@@ -448,151 +504,30 @@ mock_domain_alloc_paging_flags(struct device *dev, u32 flags,
+ 				 IOMMU_HWPT_ALLOC_PASID;
+ 	struct mock_dev *mdev = to_mock_dev(dev);
+ 	bool no_dirty_ops = mdev->flags & MOCK_FLAGS_DEVICE_NO_DIRTY;
++	struct iommu_hwpt_selftest user_cfg = {};
+ 	struct mock_iommu_domain *mock;
++	int rc;
+ 
+-	if (user_data)
+-		return ERR_PTR(-EOPNOTSUPP);
+ 	if ((flags & ~PAGING_FLAGS) || (has_dirty_flag && no_dirty_ops))
+ 		return ERR_PTR(-EOPNOTSUPP);
+ 
+-	mock = kzalloc(sizeof(*mock), GFP_KERNEL);
+-	if (!mock)
+-		return ERR_PTR(-ENOMEM);
+-	mock->domain.geometry.aperture_start = MOCK_APERTURE_START;
+-	mock->domain.geometry.aperture_end = MOCK_APERTURE_LAST;
+-	mock->domain.pgsize_bitmap = MOCK_IO_PAGE_SIZE;
+-	if (dev && mdev->flags & MOCK_FLAGS_DEVICE_HUGE_IOVA)
+-		mock->domain.pgsize_bitmap |= MOCK_HUGE_PAGE_SIZE;
+-	mock->domain.ops = mock_ops.default_domain_ops;
+-	mock->domain.type = IOMMU_DOMAIN_UNMANAGED;
+-	xa_init(&mock->pfns);
++	if (user_data && (user_data->type != IOMMU_HWPT_DATA_SELFTEST &&
++			  user_data->type != IOMMU_HWPT_DATA_NONE))
++		return ERR_PTR(-EOPNOTSUPP);
+ 
+-	if (has_dirty_flag)
+-		mock->domain.dirty_ops = &dirty_ops;
++	if (user_data) {
++		rc = iommu_copy_struct_from_user(
++			&user_cfg, user_data, IOMMU_HWPT_DATA_SELFTEST, iotlb);
++		if (rc)
++			return ERR_PTR(rc);
++	}
 +
-+	if (cfg->starting_level == 0 || cfg->starting_level > PT_MAX_TOP_LEVEL)
++	mock = mock_domain_alloc_pgtable(dev, &user_cfg, flags);
++	if (IS_ERR(mock))
++		return ERR_CAST(mock);
+ 	return &mock->domain;
+ }
+ 
+-static void mock_domain_free(struct iommu_domain *domain)
+-{
+-	struct mock_iommu_domain *mock = to_mock_domain(domain);
+-
+-	WARN_ON(!xa_empty(&mock->pfns));
+-	kfree(mock);
+-}
+-
+-static int mock_domain_map_pages(struct iommu_domain *domain,
+-				 unsigned long iova, phys_addr_t paddr,
+-				 size_t pgsize, size_t pgcount, int prot,
+-				 gfp_t gfp, size_t *mapped)
+-{
+-	struct mock_iommu_domain *mock = to_mock_domain(domain);
+-	unsigned long flags = MOCK_PFN_START_IOVA;
+-	unsigned long start_iova = iova;
+-
+-	/*
+-	 * xarray does not reliably work with fault injection because it does a
+-	 * retry allocation, so put our own failure point.
+-	 */
+-	if (iommufd_should_fail())
+-		return -ENOENT;
+-
+-	WARN_ON(iova % MOCK_IO_PAGE_SIZE);
+-	WARN_ON(pgsize % MOCK_IO_PAGE_SIZE);
+-	for (; pgcount; pgcount--) {
+-		size_t cur;
+-
+-		for (cur = 0; cur != pgsize; cur += MOCK_IO_PAGE_SIZE) {
+-			void *old;
+-
+-			if (pgcount == 1 && cur + MOCK_IO_PAGE_SIZE == pgsize)
+-				flags = MOCK_PFN_LAST_IOVA;
+-			if (pgsize != MOCK_IO_PAGE_SIZE) {
+-				flags |= MOCK_PFN_HUGE_IOVA;
+-			}
+-			old = xa_store(&mock->pfns, iova / MOCK_IO_PAGE_SIZE,
+-				       xa_mk_value((paddr / MOCK_IO_PAGE_SIZE) |
+-						   flags),
+-				       gfp);
+-			if (xa_is_err(old)) {
+-				for (; start_iova != iova;
+-				     start_iova += MOCK_IO_PAGE_SIZE)
+-					xa_erase(&mock->pfns,
+-						 start_iova /
+-							 MOCK_IO_PAGE_SIZE);
+-				return xa_err(old);
+-			}
+-			WARN_ON(old);
+-			iova += MOCK_IO_PAGE_SIZE;
+-			paddr += MOCK_IO_PAGE_SIZE;
+-			*mapped += MOCK_IO_PAGE_SIZE;
+-			flags = 0;
+-		}
+-	}
+-	return 0;
+-}
+-
+-static size_t mock_domain_unmap_pages(struct iommu_domain *domain,
+-				      unsigned long iova, size_t pgsize,
+-				      size_t pgcount,
+-				      struct iommu_iotlb_gather *iotlb_gather)
+-{
+-	struct mock_iommu_domain *mock = to_mock_domain(domain);
+-	bool first = true;
+-	size_t ret = 0;
+-	void *ent;
+-
+-	WARN_ON(iova % MOCK_IO_PAGE_SIZE);
+-	WARN_ON(pgsize % MOCK_IO_PAGE_SIZE);
+-
+-	for (; pgcount; pgcount--) {
+-		size_t cur;
+-
+-		for (cur = 0; cur != pgsize; cur += MOCK_IO_PAGE_SIZE) {
+-			ent = xa_erase(&mock->pfns, iova / MOCK_IO_PAGE_SIZE);
+-
+-			/*
+-			 * iommufd generates unmaps that must be a strict
+-			 * superset of the map's performend So every
+-			 * starting/ending IOVA should have been an iova passed
+-			 * to map.
+-			 *
+-			 * This simple logic doesn't work when the HUGE_PAGE is
+-			 * turned on since the core code will automatically
+-			 * switch between the two page sizes creating a break in
+-			 * the unmap calls. The break can land in the middle of
+-			 * contiguous IOVA.
+-			 */
+-			if (!(domain->pgsize_bitmap & MOCK_HUGE_PAGE_SIZE)) {
+-				if (first) {
+-					WARN_ON(ent && !(xa_to_value(ent) &
+-							 MOCK_PFN_START_IOVA));
+-					first = false;
+-				}
+-				if (pgcount == 1 &&
+-				    cur + MOCK_IO_PAGE_SIZE == pgsize)
+-					WARN_ON(ent && !(xa_to_value(ent) &
+-							 MOCK_PFN_LAST_IOVA));
+-			}
+-
+-			iova += MOCK_IO_PAGE_SIZE;
+-			ret += MOCK_IO_PAGE_SIZE;
+-		}
+-	}
+-	return ret;
+-}
+-
+-static phys_addr_t mock_domain_iova_to_phys(struct iommu_domain *domain,
+-					    dma_addr_t iova)
+-{
+-	struct mock_iommu_domain *mock = to_mock_domain(domain);
+-	void *ent;
+-
+-	WARN_ON(iova % MOCK_IO_PAGE_SIZE);
+-	ent = xa_load(&mock->pfns, iova / MOCK_IO_PAGE_SIZE);
+-	WARN_ON(!ent);
+-	return (xa_to_value(ent) & MOCK_PFN_MASK) * MOCK_IO_PAGE_SIZE;
+-}
+-
+ static bool mock_domain_capable(struct device *dev, enum iommu_cap cap)
+ {
+ 	struct mock_dev *mdev = to_mock_dev(dev);
+@@ -801,7 +736,6 @@ static const struct iommu_ops mock_ops = {
+ 	.default_domain = &mock_blocking_domain,
+ 	.blocked_domain = &mock_blocking_domain,
+ 	.owner = THIS_MODULE,
+-	.pgsize_bitmap = MOCK_IO_PAGE_SIZE,
+ 	.hw_info = mock_domain_hw_info,
+ 	.domain_alloc_paging_flags = mock_domain_alloc_paging_flags,
+ 	.domain_alloc_nested = mock_domain_alloc_nested,
+@@ -811,15 +745,6 @@ static const struct iommu_ops mock_ops = {
+ 	.page_response = mock_domain_page_response,
+ 	.user_pasid_table = true,
+ 	.viommu_alloc = mock_viommu_alloc,
+-	.default_domain_ops =
+-		&(struct iommu_domain_ops){
+-			.free = mock_domain_free,
+-			.attach_dev = mock_domain_nop_attach,
+-			.map_pages = mock_domain_map_pages,
+-			.unmap_pages = mock_domain_unmap_pages,
+-			.iova_to_phys = mock_domain_iova_to_phys,
+-			.set_dev_pasid = mock_domain_set_dev_pasid_nop,
+-		},
+ };
+ 
+ static void mock_domain_free_nested(struct iommu_domain *domain)
+@@ -903,7 +828,7 @@ get_md_pagetable(struct iommufd_ucmd *ucmd, u32 mockpt_id,
+ 	if (IS_ERR(hwpt))
+ 		return hwpt;
+ 	if (hwpt->domain->type != IOMMU_DOMAIN_UNMANAGED ||
+-	    hwpt->domain->ops != mock_ops.default_domain_ops) {
++	    hwpt->domain->owner != &mock_ops) {
+ 		iommufd_put_object(ucmd->ictx, &hwpt->obj);
+ 		return ERR_PTR(-EINVAL);
+ 	}
+@@ -944,7 +869,6 @@ static struct mock_dev *mock_dev_create(unsigned long dev_flags)
+ 		{},
+ 	};
+ 	const u32 valid_flags = MOCK_FLAGS_DEVICE_NO_DIRTY |
+-				MOCK_FLAGS_DEVICE_HUGE_IOVA |
+ 				MOCK_FLAGS_DEVICE_PASID;
+ 	struct mock_dev *mdev;
+ 	int rc, i;
+@@ -1133,23 +1057,25 @@ static int iommufd_test_md_check_pa(struct iommufd_ucmd *ucmd,
+ {
+ 	struct iommufd_hw_pagetable *hwpt;
+ 	struct mock_iommu_domain *mock;
++	unsigned int page_size;
+ 	uintptr_t end;
+ 	int rc;
+ 
+-	if (iova % MOCK_IO_PAGE_SIZE || length % MOCK_IO_PAGE_SIZE ||
+-	    (uintptr_t)uptr % MOCK_IO_PAGE_SIZE ||
+-	    check_add_overflow((uintptr_t)uptr, (uintptr_t)length, &end))
+-		return -EINVAL;
+-
+ 	hwpt = get_md_pagetable(ucmd, mockpt_id, &mock);
+ 	if (IS_ERR(hwpt))
+ 		return PTR_ERR(hwpt);
+ 
+-	for (; length; length -= MOCK_IO_PAGE_SIZE) {
++	page_size = 1 << __ffs(mock->domain.pgsize_bitmap);
++	if (iova % page_size || length % page_size ||
++	    (uintptr_t)uptr % page_size ||
++	    check_add_overflow((uintptr_t)uptr, (uintptr_t)length, &end))
 +		return -EINVAL;
 +
-+	if (!pt_feature(&table->common, PT_FEAT_DYNAMIC_TOP) &&
-+	    cfg->starting_level != PT_MAX_TOP_LEVEL)
-+		max_vasz_lg2 = PT_GRANULE_LG2SZ +
-+			       (PT_TABLEMEM_LG2SZ - ilog2(sizeof(u64))) *
-+				       (cfg->starting_level + 1);
-+
-+	table->common.max_vasz_lg2 =
-+		min(max_vasz_lg2, cfg->common.hw_max_vasz_lg2);
-+	table->common.max_oasz_lg2 =
-+		min(PT_MAX_OUTPUT_ADDRESS_LG2, cfg->common.hw_max_oasz_lg2);
-+	pt_top_set_level(&table->common, cfg->starting_level);
-+	return 0;
-+}
-+#define pt_iommu_fmt_init amdv1pt_iommu_fmt_init
-+
-+static inline void
-+amdv1pt_iommu_fmt_hw_info(struct pt_iommu_amdv1 *table,
-+			  const struct pt_range *top_range,
-+			  struct pt_iommu_amdv1_hw_info *info)
-+{
-+	info->host_pt_root = virt_to_phys(top_range->top_table);
-+	PT_WARN_ON(info->host_pt_root & ~PT_TOP_PHYS_MASK);
-+	info->mode = top_range->top_level + 1;
-+}
-+#define pt_iommu_fmt_hw_info amdv1pt_iommu_fmt_hw_info
-+#endif
-diff --git a/drivers/iommu/generic_pt/fmt/defs_amdv1.h b/drivers/iommu/generic_pt/fmt/defs_amdv1.h
-new file mode 100644
-index 00000000000000..0b9614ca6d103c
---- /dev/null
-+++ b/drivers/iommu/generic_pt/fmt/defs_amdv1.h
-@@ -0,0 +1,21 @@
-+/* SPDX-License-Identifier: GPL-2.0-only */
-+/*
-+ * Copyright (c) 2024-2025, NVIDIA CORPORATION & AFFILIATES
-+ *
-+ */
-+#ifndef __GENERIC_PT_FMT_DEFS_AMDV1_H
-+#define __GENERIC_PT_FMT_DEFS_AMDV1_H
-+
-+#include <linux/generic_pt/common.h>
-+#include <linux/types.h>
-+
-+typedef u64 pt_vaddr_t;
-+typedef u64 pt_oaddr_t;
-+
-+struct amdv1pt_write_attrs {
-+	u64 descriptor_bits;
-+	gfp_t gfp;
-+};
-+#define pt_write_attrs amdv1pt_write_attrs
-+
-+#endif
-diff --git a/drivers/iommu/generic_pt/fmt/iommu_amdv1.c b/drivers/iommu/generic_pt/fmt/iommu_amdv1.c
-new file mode 100644
-index 00000000000000..72a2337d0c5510
---- /dev/null
-+++ b/drivers/iommu/generic_pt/fmt/iommu_amdv1.c
-@@ -0,0 +1,15 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Copyright (c) 2024-2025, NVIDIA CORPORATION & AFFILIATES
-+ */
-+#define PT_FMT amdv1
-+#define PT_SUPPORTED_FEATURES                                          \
-+	(BIT(PT_FEAT_FULL_VA) | BIT(PT_FEAT_DYNAMIC_TOP) |             \
-+	 BIT(PT_FEAT_FLUSH_RANGE) | BIT(PT_FEAT_FLUSH_RANGE_NO_GAPS) | \
-+	 BIT(PT_FEAT_AMDV1_ENCRYPT_TABLES) |                           \
-+	 BIT(PT_FEAT_AMDV1_FORCE_COHERENCE))
-+#define PT_FORCE_ENABLED_FEATURES                                       \
-+	(BIT(PT_FEAT_DYNAMIC_TOP) | BIT(PT_FEAT_AMDV1_ENCRYPT_TABLES) | \
-+	 BIT(PT_FEAT_AMDV1_FORCE_COHERENCE))
-+
-+#include "iommu_template.h"
-diff --git a/include/linux/generic_pt/common.h b/include/linux/generic_pt/common.h
-index 91869fad33fbdf..b127d8915d48fc 100644
---- a/include/linux/generic_pt/common.h
-+++ b/include/linux/generic_pt/common.h
-@@ -131,4 +131,23 @@ enum pt_features {
- 	PT_FEAT_FMT_START,
- };
++	for (; length; length -= page_size) {
+ 		struct page *pages[1];
++		phys_addr_t io_phys;
+ 		unsigned long pfn;
+ 		long npages;
+-		void *ent;
  
-+struct pt_amdv1 {
-+	struct pt_common common;
-+};
+ 		npages = get_user_pages_fast((uintptr_t)uptr & PAGE_MASK, 1, 0,
+ 					     pages);
+@@ -1164,15 +1090,14 @@ static int iommufd_test_md_check_pa(struct iommufd_ucmd *ucmd,
+ 		pfn = page_to_pfn(pages[0]);
+ 		put_page(pages[0]);
+ 
+-		ent = xa_load(&mock->pfns, iova / MOCK_IO_PAGE_SIZE);
+-		if (!ent ||
+-		    (xa_to_value(ent) & MOCK_PFN_MASK) * MOCK_IO_PAGE_SIZE !=
+-			    pfn * PAGE_SIZE + ((uintptr_t)uptr % PAGE_SIZE)) {
++		io_phys = mock->domain.ops->iova_to_phys(&mock->domain, iova);
++		if (io_phys !=
++		    pfn * PAGE_SIZE + ((uintptr_t)uptr % PAGE_SIZE)) {
+ 			rc = -EINVAL;
+ 			goto out_put;
+ 		}
+-		iova += MOCK_IO_PAGE_SIZE;
+-		uptr += MOCK_IO_PAGE_SIZE;
++		iova += page_size;
++		uptr += page_size;
+ 	}
+ 	rc = 0;
+ 
+@@ -1652,7 +1577,7 @@ static int iommufd_test_dirty(struct iommufd_ucmd *ucmd, unsigned int mockpt_id,
+ 	if (IS_ERR(hwpt))
+ 		return PTR_ERR(hwpt);
+ 
+-	if (!(mock->flags & MOCK_DIRTY_TRACK)) {
++	if (!(mock->flags & MOCK_DIRTY_TRACK) || !mock->iommu.ops->set_dirty) {
+ 		rc = -EINVAL;
+ 		goto out_put;
+ 	}
+@@ -1671,22 +1596,10 @@ static int iommufd_test_dirty(struct iommufd_ucmd *ucmd, unsigned int mockpt_id,
+ 	}
+ 
+ 	for (i = 0; i < max; i++) {
+-		unsigned long cur = iova + i * page_size;
+-		void *ent, *old;
+-
+ 		if (!test_bit(i, (unsigned long *)tmp))
+ 			continue;
+-
+-		ent = xa_load(&mock->pfns, cur / page_size);
+-		if (ent) {
+-			unsigned long val;
+-
+-			val = xa_to_value(ent) | MOCK_PFN_DIRTY_IOVA;
+-			old = xa_store(&mock->pfns, cur / page_size,
+-				       xa_mk_value(val), GFP_KERNEL);
+-			WARN_ON_ONCE(ent != old);
+-			count++;
+-		}
++		mock->iommu.ops->set_dirty(&mock->iommu, iova + i * page_size);
++		count++;
+ 	}
+ 
+ 	cmd->dirty.out_nr_dirty = count;
+@@ -2060,3 +1973,5 @@ void iommufd_test_exit(void)
+ 	platform_device_unregister(selftest_iommu_dev);
+ 	debugfs_remove_recursive(dbgfs_root);
+ }
 +
-+enum {
-+	/*
-+	 * The memory backing the tables is encrypted. Use __sme_set() to adjust
-+	 * the page table pointers in the tree. This only works with
-+	 * CONFIG_AMD_MEM_ENCRYPT.
-+	 */
-+	PT_FEAT_AMDV1_ENCRYPT_TABLES = PT_FEAT_FMT_START,
-+	/*
-+	 * The PTEs are set to prevent cache incoherent traffic, such as PCI no
-+	 * snoop. This is set either at creation time or before the first map
-+	 * operation.
-+	 */
-+	PT_FEAT_AMDV1_FORCE_COHERENCE,
-+};
-+
- #endif
++MODULE_IMPORT_NS("GENERIC_PT_IOMMU");
 diff --git a/include/linux/generic_pt/iommu.h b/include/linux/generic_pt/iommu.h
-index 9d2152bc64c0d6..b51de39c03c431 100644
+index cbe6433550f380..58c9fa74fb0701 100644
 --- a/include/linux/generic_pt/iommu.h
 +++ b/include/linux/generic_pt/iommu.h
-@@ -115,4 +115,33 @@ struct pt_iommu_cfg {
- 	u8 hw_max_oasz_lg2;
+@@ -73,6 +73,18 @@ struct pt_iommu_info {
  };
  
-+/* Generate the exported function signatures from iommu_pt.h */
-+#define IOMMU_PROTOTYPES(fmt)                                             \
-+	int pt_iommu_##fmt##_init(struct pt_iommu_##fmt *table,           \
-+				  const struct pt_iommu_##fmt##_cfg *cfg, \
-+				  gfp_t gfp);                             \
-+	void pt_iommu_##fmt##_hw_info(struct pt_iommu_##fmt *table,       \
-+				      struct pt_iommu_##fmt##_hw_info *info)
-+#define IOMMU_FORMAT(fmt, member)       \
-+	struct pt_iommu_##fmt {         \
-+		struct pt_iommu iommu;  \
-+		struct pt_##fmt member; \
-+	};                              \
-+	IOMMU_PROTOTYPES(fmt)
+ struct pt_iommu_ops {
++	/**
++	 * set_dirty() - Make the iova write dirty
++	 * @iommu_table: Table to manipulate
++	 * @iova: IO virtual address to start
++	 *
++	 * This is only used by iommufd testing. It makes the iova dirty so that
++	 * read_and_clear_dirty() will see it as dirty. Unlike all the other ops
++	 * this one is safe to call without holding any locking. It may return
++	 * -EAGAIN if there is a race.
++	 */
++	int (*set_dirty)(struct pt_iommu *iommu_table, dma_addr_t iova);
 +
+ 	/**
+ 	 * get_info() - Return the pt_iommu_info structure
+ 	 * @iommu_table: Table to query
+diff --git a/tools/testing/selftests/iommu/iommufd.c b/tools/testing/selftests/iommu/iommufd.c
+index 1a8e85afe9aa51..4f7c64c992a4bf 100644
+--- a/tools/testing/selftests/iommu/iommufd.c
++++ b/tools/testing/selftests/iommu/iommufd.c
+@@ -13,9 +13,6 @@
+ 
+ static unsigned long HUGEPAGE_SIZE;
+ 
+-#define MOCK_PAGE_SIZE (PAGE_SIZE / 2)
+-#define MOCK_HUGE_PAGE_SIZE (512 * MOCK_PAGE_SIZE)
+-
+ static unsigned long get_huge_page_size(void)
+ {
+ 	char buf[80];
+@@ -2008,6 +2005,12 @@ FIXTURE_VARIANT(iommufd_dirty_tracking)
+ 
+ FIXTURE_SETUP(iommufd_dirty_tracking)
+ {
++	struct iommu_option cmd = {
++		.size = sizeof(cmd),
++		.option_id = IOMMU_OPTION_HUGE_PAGES,
++		.op = IOMMU_OPTION_OP_SET,
++		.val64 = 0,
++	};
+ 	unsigned long size;
+ 	int mmap_flags;
+ 	void *vrc;
+@@ -2015,7 +2018,7 @@ FIXTURE_SETUP(iommufd_dirty_tracking)
+ 
+ 	if (variant->buffer_size < MOCK_PAGE_SIZE) {
+ 		SKIP(return,
+-		     "Skipping buffer_size=%lu, less than MOCK_PAGE_SIZE=%lu",
++		     "Skipping buffer_size=%lu, less than MOCK_PAGE_SIZE=%u",
+ 		     variant->buffer_size, MOCK_PAGE_SIZE);
+ 	}
+ 
+@@ -2052,16 +2055,18 @@ FIXTURE_SETUP(iommufd_dirty_tracking)
+ 	assert((uintptr_t)self->bitmap % PAGE_SIZE == 0);
+ 
+ 	test_ioctl_ioas_alloc(&self->ioas_id);
+-	/* Enable 1M mock IOMMU hugepages */
+-	if (variant->hugepages) {
+-		test_cmd_mock_domain_flags(self->ioas_id,
+-					   MOCK_FLAGS_DEVICE_HUGE_IOVA,
+-					   &self->stdev_id, &self->hwpt_id,
+-					   &self->idev_id);
+-	} else {
+-		test_cmd_mock_domain(self->ioas_id, &self->stdev_id,
+-				     &self->hwpt_id, &self->idev_id);
+-	}
 +
-+struct pt_iommu_amdv1_cfg {
-+	struct pt_iommu_cfg common;
-+	unsigned int starting_level;
-+};
++	/*
++	 * For dirty testing it is important that the page size fed into
++	 * the iommu page tables matches the size the dirty logic
++	 * expects, or set_dirty can touch too much stuff.
++	 */
++	cmd.object_id = self->ioas_id;
++	if (!variant->hugepages)
++		ASSERT_EQ(0, ioctl(self->fd, IOMMU_OPTION, &cmd));
 +
-+struct pt_iommu_amdv1_hw_info {
-+	u64 host_pt_root;
-+	u8 mode;
-+};
++	test_cmd_mock_domain(self->ioas_id, &self->stdev_id, &self->hwpt_id,
++			     &self->idev_id);
+ }
+ 
+ FIXTURE_TEARDOWN(iommufd_dirty_tracking)
+@@ -2187,18 +2192,23 @@ TEST_F(iommufd_dirty_tracking, device_dirty_capability)
+ TEST_F(iommufd_dirty_tracking, get_dirty_bitmap)
+ {
+ 	uint32_t page_size = MOCK_PAGE_SIZE;
++	uint32_t ioas_id = self->ioas_id;
+ 	uint32_t hwpt_id;
+-	uint32_t ioas_id;
+ 
+ 	if (variant->hugepages)
+ 		page_size = MOCK_HUGE_PAGE_SIZE;
+ 
+-	test_ioctl_ioas_alloc(&ioas_id);
+ 	test_ioctl_ioas_map_fixed_id(ioas_id, self->buffer,
+ 				     variant->buffer_size, MOCK_APERTURE_START);
+ 
+-	test_cmd_hwpt_alloc(self->idev_id, ioas_id,
+-			    IOMMU_HWPT_ALLOC_DIRTY_TRACKING, &hwpt_id);
++	if (variant->hugepages)
++		test_cmd_hwpt_alloc_iommupt(self->idev_id, ioas_id,
++					    IOMMU_HWPT_ALLOC_DIRTY_TRACKING,
++					    MOCK_IOMMUPT_HUGE, &hwpt_id);
++	else
++		test_cmd_hwpt_alloc_iommupt(self->idev_id, ioas_id,
++					    IOMMU_HWPT_ALLOC_DIRTY_TRACKING,
++					    MOCK_IOMMUPT_DEFAULT, &hwpt_id);
+ 
+ 	test_cmd_set_dirty_tracking(hwpt_id, true);
+ 
+@@ -2224,18 +2234,24 @@ TEST_F(iommufd_dirty_tracking, get_dirty_bitmap)
+ TEST_F(iommufd_dirty_tracking, get_dirty_bitmap_no_clear)
+ {
+ 	uint32_t page_size = MOCK_PAGE_SIZE;
++	uint32_t ioas_id = self->ioas_id;
+ 	uint32_t hwpt_id;
+-	uint32_t ioas_id;
+ 
+ 	if (variant->hugepages)
+ 		page_size = MOCK_HUGE_PAGE_SIZE;
+ 
+-	test_ioctl_ioas_alloc(&ioas_id);
+ 	test_ioctl_ioas_map_fixed_id(ioas_id, self->buffer,
+ 				     variant->buffer_size, MOCK_APERTURE_START);
+ 
+-	test_cmd_hwpt_alloc(self->idev_id, ioas_id,
+-			    IOMMU_HWPT_ALLOC_DIRTY_TRACKING, &hwpt_id);
 +
-+IOMMU_FORMAT(amdv1, amdpt);
-+
-+#undef IOMMU_PROTOTYPES
-+#undef IOMMU_FORMAT
- #endif
++	if (variant->hugepages)
++		test_cmd_hwpt_alloc_iommupt(self->idev_id, ioas_id,
++					    IOMMU_HWPT_ALLOC_DIRTY_TRACKING,
++					    MOCK_IOMMUPT_HUGE, &hwpt_id);
++	else
++		test_cmd_hwpt_alloc_iommupt(self->idev_id, ioas_id,
++					    IOMMU_HWPT_ALLOC_DIRTY_TRACKING,
++					    MOCK_IOMMUPT_DEFAULT, &hwpt_id);
+ 
+ 	test_cmd_set_dirty_tracking(hwpt_id, true);
+ 
+diff --git a/tools/testing/selftests/iommu/iommufd_utils.h b/tools/testing/selftests/iommu/iommufd_utils.h
+index 72f6636e5d9099..d0d9d788f478c3 100644
+--- a/tools/testing/selftests/iommu/iommufd_utils.h
++++ b/tools/testing/selftests/iommu/iommufd_utils.h
+@@ -206,6 +206,18 @@ static int _test_cmd_hwpt_alloc(int fd, __u32 device_id, __u32 pt_id, __u32 ft_i
+ 	ASSERT_EQ(0, _test_cmd_hwpt_alloc(self->fd, device_id, pt_id, 0, flags,   \
+ 					  hwpt_id, IOMMU_HWPT_DATA_NONE, NULL, \
+ 					  0))
++#define test_cmd_hwpt_alloc_iommupt(device_id, pt_id, flags, iommupt_type, \
++				    hwpt_id)                               \
++	({                                                                 \
++		struct iommu_hwpt_selftest user_cfg = {                    \
++			.pagetable_type = iommupt_type                     \
++		};                                                         \
++                                                                           \
++		ASSERT_EQ(0, _test_cmd_hwpt_alloc(                         \
++				     self->fd, device_id, pt_id, 0, flags, \
++				     hwpt_id, IOMMU_HWPT_DATA_SELFTEST,    \
++				     &user_cfg, sizeof(user_cfg)));        \
++	})
+ #define test_err_hwpt_alloc(_errno, device_id, pt_id, flags, hwpt_id)   \
+ 	EXPECT_ERRNO(_errno, _test_cmd_hwpt_alloc(                      \
+ 				     self->fd, device_id, pt_id, 0, flags, \
 -- 
 2.43.0
 
