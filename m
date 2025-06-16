@@ -1,81 +1,95 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 442C3278E71;
-	Mon, 16 Jun 2025 10:03:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15B1529CB48;
+	Mon, 16 Jun 2025 11:33:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750068190; cv=none; b=uU/PAoW//ODD/9QHh98gL9xgPbKsX0fJ1CAj1NZRGgCVtmw1vgUPAsD+OSU9FShPQ9Rqn03gjB/I7FR3WwdwFR8IAm3k6B4l2VE+KNwZpkUYfojc4JaN5jz0alRnLBHttdz9DComBHdLAmtlyDQHlygi/NoOarFgOGsiV40HVX4=
+	t=1750073616; cv=none; b=ahCNGZBtjSgRpzT9XJC96i2NGV7LH/ud49IO/0UoxWaAMlTulRJEIf19MSlsTCjnI9rf3AqiIWKZ//V/VlegkA73BTSj+PPFos7Aua/ks4Egzk63Hd6o07Fin9GaDc4XGPBw62P6pRgRgX29EfsqaJYzxIqUIfchebqw6po/OaI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750068190; c=relaxed/simple;
-	bh=XQM8j714x8CB0+wIsMuEuOxZKpbd7ep9EJ8KDVn9O04=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MspZ6jFnuxd1VpgE+walzLfOWFJIh0Icc/Cn3Ja1VaJj8MZgwzZgFR98YCM+uV2SDJTjLMghluvWO0WBE7EHOz4OeascCPgMd/1mGkozhXpzVXyTRwqRJ2wSeKBV8/HBYVbj57ScZdLVxDaiyBuPMtstZqCCfZTohurMnlHf7lk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Bjo78z/u; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1750073616; c=relaxed/simple;
+	bh=TaASRe4qgqRwxxXiP0Y/pcupbVmXyYU7JDAROJSiwPw=;
+	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=rdO0Fnl4bWmKNr2y1tVMeOOeYa4srkTYfo+YSS0qkrYl4JAfUbYzgZ0I3v4aSW6zu3bXEgaOOREodLL+FF7vTqdayoLmqUD01RBlpQoOtuQA1+jmjTjIgxAINBhNzMhV8r0xkXB0LXJZEuokYDGpbfGX25/Ko+5nyRNGRupaezM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=XacZ9Hv+; arc=none smtp.client-ip=192.198.163.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Bjo78z/u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F1DDC4CEEA;
-	Mon, 16 Jun 2025 10:03:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1750068189;
-	bh=XQM8j714x8CB0+wIsMuEuOxZKpbd7ep9EJ8KDVn9O04=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Bjo78z/unMglag+thKwfukBAUjd4ObIDnwtDCbACbFN5dFlqSZb7v2YHP8Ec096Xz
-	 3bBI17L+F4CO4kHNuVKN4tT+N3y5D96977CfynimipzSkpa684O1LZf8Tpd8b3uXfH
-	 VjyIiqTLkKw0ooqWiFAab1+KWJAr5v0cdg1farxLQL2LQG3yXIKkAPYh1W1dX9/ga7
-	 jaEmX0vtnKB6tc/p+4nOfiX5AMUCLhbfPMmMgV3qM2RDzSnlJsw0r+EPs9u4X0rXfd
-	 gRIEN/qyLYZiLxAYWFv8B/s11wE2NTm2iv3Fjv3cL2qiaYUZ8LYvqLelF9dj8magUt
-	 O/gxT9SFf8NjQ==
-Date: Mon, 16 Jun 2025 11:03:04 +0100
-From: Will Deacon <will@kernel.org>
-To: Nicolin Chen <nicolinc@nvidia.com>
-Cc: jgg@nvidia.com, kevin.tian@intel.com, robin.murphy@arm.com,
-	joro@8bytes.org, praan@google.com, yi.l.liu@intel.com,
-	peterz@infradead.org, jsnitsel@redhat.com,
-	linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-	baolu.lu@linux.intel.com
-Subject: Re: [PATCH v2 10/14] iommu/arm-smmu-v3: Replace arm_vsmmu_alloc with
- arm_vsmmu_init
-Message-ID: <20250616100303.GA17132@willie-the-truck>
-References: <cover.1749882255.git.nicolinc@nvidia.com>
- <64e4b4c33acd26e1bd676e077be80e00fb63f17c.1749882255.git.nicolinc@nvidia.com>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="XacZ9Hv+"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1750073615; x=1781609615;
+  h=message-id:date:mime-version:cc:subject:to:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=TaASRe4qgqRwxxXiP0Y/pcupbVmXyYU7JDAROJSiwPw=;
+  b=XacZ9Hv+jo2WeIQQWA2hO40n9JT6mSf2WQHFiXR5/p62QyjDhd6MUQZo
+   om+4ObtCh3ZPUrNi7zO2lPX4COvFKeCFkXIkbSoXdq0EkafGjSk5jAGoH
+   edIXe3SKuwzENwmTyMVVTtOvPBlhmhLHSxzh74BLSXLaPyyal851eHtO8
+   XyJnRCe4Z1eJ5BWTpHrln69dIvvzPwcTMUp4s3vlzWXFg2KuYvB/p+/1I
+   0WA3XzguNCThCBew7aqO2bj/fChN+HE25WmLxZ87zfb3ShtQN3HQVEiml
+   myDhJKtgq6CHFls7wwzkz7nz3OZewBvHkgD4Mo3yZAhA3RBHfOC1u33PY
+   Q==;
+X-CSE-ConnectionGUID: WrTnB81qSLuphksbzyc8yw==
+X-CSE-MsgGUID: ifNxQ+vxRRiujjiVAtRI/A==
+X-IronPort-AV: E=McAfee;i="6800,10657,11465"; a="56014288"
+X-IronPort-AV: E=Sophos;i="6.16,241,1744095600"; 
+   d="scan'208";a="56014288"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Jun 2025 04:33:33 -0700
+X-CSE-ConnectionGUID: iWMVCjyURKeZAdHUUOXn7g==
+X-CSE-MsgGUID: 7yInmTY6T6CqB6tjeGUWbQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,241,1744095600"; 
+   d="scan'208";a="179345988"
+Received: from blu2-mobl.ccr.corp.intel.com (HELO [10.124.243.252]) ([10.124.243.252])
+  by orviesa002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Jun 2025 04:33:25 -0700
+Message-ID: <a774510d-bc55-4ea5-bc1a-2d31cb5bf589@linux.intel.com>
+Date: Mon, 16 Jun 2025 19:33:22 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <64e4b4c33acd26e1bd676e077be80e00fb63f17c.1749882255.git.nicolinc@nvidia.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+User-Agent: Mozilla Thunderbird
+Cc: baolu.lu@linux.intel.com, bagasdotme@gmail.com, robin.murphy@arm.com,
+ joro@8bytes.org, thierry.reding@gmail.com, vdumpa@nvidia.com,
+ jonathanh@nvidia.com, shuah@kernel.org, jsnitsel@redhat.com,
+ nathan@kernel.org, peterz@infradead.org, yi.l.liu@intel.com,
+ mshavit@google.com, praan@google.com, zhangzekun11@huawei.com,
+ iommu@lists.linux.dev, linux-doc@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-tegra@vger.kernel.org, linux-kselftest@vger.kernel.org,
+ patches@lists.linux.dev, mochs@nvidia.com, alok.a.tiwari@oracle.com,
+ vasant.hegde@amd.com, dwmw2@infradead.org
+Subject: Re: [PATCH v6 13/25] iommufd: Add mmap interface
+To: Nicolin Chen <nicolinc@nvidia.com>, jgg@nvidia.com, kevin.tian@intel.com,
+ corbet@lwn.net, will@kernel.org
+References: <cover.1749884998.git.nicolinc@nvidia.com>
+ <c9929e0c9ec6f3f6348cd0c399d6fdfa9f35f973.1749884998.git.nicolinc@nvidia.com>
+Content-Language: en-US
+From: Baolu Lu <baolu.lu@linux.intel.com>
+In-Reply-To: <c9929e0c9ec6f3f6348cd0c399d6fdfa9f35f973.1749884998.git.nicolinc@nvidia.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Fri, Jun 13, 2025 at 11:35:22PM -0700, Nicolin Chen wrote:
-> To ease the for-driver iommufd APIs, get_viommu_size and viommu_init ops
-> are introduced.
+On 6/14/2025 3:14 PM, Nicolin Chen wrote:
+> For vIOMMU passing through HW resources to user space (VMs), allowing a VM
+> to control the passed through HW directly by accessing hardware registers,
+> add an mmap infrastructure to map the physical MMIO pages to user space.
 > 
-> Sanitize the inputs and report the size of struct arm_vsmmu on success, in
-> arm_smmu_get_viommu_size().
+> Maintain a maple tree per ictx as a translation table managing mmappable
+> regions, from an allocated for-user mmap offset to an iommufd_mmap struct,
+> where it stores the real PFN range for an io_remap_pfn_range call.
 > 
-> Place the type sanity at the last, becase there will be soon an impl level
-> get_viommu_size op, which will require the same sanity tests prior. It can
-> simply insert a piece of code in front of the IOMMU_VIOMMU_TYPE_ARM_SMMUV3
-> sanity.
+> Keep track of the lifecycle of the mmappable region by taking refcount of
+> its owner, so as to enforce user space to unmap the region first before it
+> can destroy its owner object.
 > 
-> The core will ensure the viommu_type is set to the core vIOMMU object, and
-> pass in the same dev pointer, so arm_vsmmu_init() won't need to repeat the
-> same sanity tests but to simply init the arm_vsmmu struct.
+> To allow an IOMMU driver to add and delete mmappable regions onto/from the
+> maple tree, add iommufd_viommu_alloc/destroy_mmap helpers.
 > 
-> Remove the arm_vsmmu_alloc, completing the replacement.
-> 
-> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
-> ---
->  drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h   | 11 +++--
->  .../arm/arm-smmu-v3/arm-smmu-v3-iommufd.c     | 46 ++++++++++---------
->  drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c   |  3 +-
->  3 files changed, 32 insertions(+), 28 deletions(-)
+> Reviewed-by: Kevin Tian<kevin.tian@intel.com>
+> Signed-off-by: Nicolin Chen<nicolinc@nvidia.com>
 
-Acked-by: Will Deacon <will@kernel.org>
-
-Will
+Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
