@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6051E285048;
-	Tue, 17 Jun 2025 16:42:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 061592EA161;
+	Tue, 17 Jun 2025 16:42:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750178561; cv=none; b=BsvSlpgN06kwTJwncBN/VK08lm/uay+HcO9EBlcO1qHAFCsvB+pGybEqa3AC4aQT5bxWlxjrlx4h46jXPda4rHLCAyRCQ2LTNiNGajoYRJ4iUkCfVFNlSGtHdSNrLCn62w1D/rdUwi8o5G7W2GERYI7b1SuKBaEcZrCNcgLKIU0=
+	t=1750178565; cv=none; b=ihaaCeXThL766GC07ZgpXdPt35JEFHtCxCm0tCgFzlbQuvIWpEW6IalG/LKhJMPL/TIClkNidJyOWTTnWd7gj+g+G3EhLlaOWlnyzGdvv4EZaD/OveAlFgymJxYnf1XTbFD1uTFGLc5RPh9xsf8b7+LoeHk0OqjhR7X7Zw4TFkE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750178561; c=relaxed/simple;
-	bh=FUldUU2rSJIj2WtTj4dT0ERCpIRqvKa0GLSC9x0dvOU=;
+	s=arc-20240116; t=1750178565; c=relaxed/simple;
+	bh=o9IL9hfjMaDKQoNarJUgR51hqLNlwIgBd6Jmt0xkt18=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bWYhxQRFHca0AWJVQKhtO6MEBopUy6WF1yckxZQmKy/Y7wVo1g4rVRDVucD2kKpsIhi+eVCvOiGO3KwdGRF+UnFIi6GN1s7rfEPqSPCLlrp8hL+C8VhQjVaKT0t7ERbY0zKNVpBXh2ukaYXh29yIgXdSrP5IXXWE4jQmaGuPOhc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=An8xtmiD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IoihQSWUk7iv/FVw6IJ55PbjFnIabQdanPTOxHjMgB8v8jWujnZQgPGEXvf2+PYcn0xLvR4GReQI/APpS/MfHaV54egB7KnMPHP5S8yTWmQ/+mCD2V1fXiR4nS7cxNEtdtdExmG+FjHpQBz2VBOvwEB6FG5gy7FNHfGI1RNRNHA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lf0TKNDH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="An8xtmiD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3F31C4CEE3;
-	Tue, 17 Jun 2025 16:42:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lf0TKNDH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 135E2C4CEE3;
+	Tue, 17 Jun 2025 16:42:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750178561;
-	bh=FUldUU2rSJIj2WtTj4dT0ERCpIRqvKa0GLSC9x0dvOU=;
+	s=korg; t=1750178564;
+	bh=o9IL9hfjMaDKQoNarJUgR51hqLNlwIgBd6Jmt0xkt18=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=An8xtmiDz7TJyQHFlCzVn9fxtfeFFREAxhW8yrI6rG3YQTfwA8j65yAUjnYBcmFcM
-	 FdbTMmCI/ej4ESdsGyKGix/vgKZpSgVlmUG8Q4SJRTX+mNkYaLk/t20kFxb9Dei2so
-	 X4JK3WGTryrMywNXQrrAtCazJI928CI8OIFH1dmI=
+	b=Lf0TKNDHV9WgErP8pInlCQP+sUfTKo4NDV/mEtki9hF+Ir7sKFNsRsc3sREKBu2mI
+	 zSM/nA03S3qAUhRBsMy0zPSScIAq9DUlh8elbhn2AUefJzfSSo+VnioC46Qa6HC0ry
+	 aMCmeHD5T9yfi/o9VUwxX7EtFzJHHav860NJ1UWs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pekka Ristola <pekkarr@protonmail.com>,
-	Benno Lossin <lossin@kernel.org>,
-	Alice Ryhl <aliceryhl@google.com>,
+	Amir Goldstein <amir73il@gmail.com>,
+	Jan Kara <jack@suse.cz>,
 	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 485/780] rust: file: mark `LocalFile` as `repr(transparent)`
-Date: Tue, 17 Jun 2025 17:23:13 +0200
-Message-ID: <20250617152511.240571547@linuxfoundation.org>
+Subject: [PATCH 6.15 486/780] exportfs: require ->fh_to_parent() to encode connectable file handles
+Date: Tue, 17 Jun 2025 17:23:14 +0200
+Message-ID: <20250617152511.282187346@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
 References: <20250617152451.485330293@linuxfoundation.org>
@@ -53,42 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pekka Ristola <pekkarr@protonmail.com>
+From: Amir Goldstein <amir73il@gmail.com>
 
-[ Upstream commit 15ecd83dc06277385ad71dc7ea26911d9a79acaf ]
+[ Upstream commit 5402c4d4d2000a9baa30c1157c97152ec6383733 ]
 
-Unsafe code in `LocalFile`'s methods assumes that the type has the same
-layout as the inner `bindings::file`. This is not guaranteed by the default
-struct representation in Rust, but requires specifying the `transparent`
-representation.
+When user requests a connectable file handle explicitly with the
+AT_HANDLE_CONNECTABLE flag, fail the request if filesystem (e.g. nfs)
+does not know how to decode a connected non-dir dentry.
 
-The `File` struct (which also wraps `bindings::file`) is already marked as
-`repr(transparent)`, so this change makes their layouts equivalent.
-
-Fixes: 851849824bb5 ("rust: file: add Rust abstraction for `struct file`")
-Closes: https://github.com/Rust-for-Linux/linux/issues/1165
-Signed-off-by: Pekka Ristola <pekkarr@protonmail.com>
-Link: https://lore.kernel.org/20250527204636.12573-1-pekkarr@protonmail.com
-Reviewed-by: Benno Lossin <lossin@kernel.org>
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Fixes: c374196b2b9f ("fs: name_to_handle_at() support for "explicit connectable" file handles")
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Link: https://lore.kernel.org/20250525104731.1461704-1-amir73il@gmail.com
+Reviewed-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- rust/kernel/fs/file.rs | 1 +
- 1 file changed, 1 insertion(+)
+ include/linux/exportfs.h | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/rust/kernel/fs/file.rs b/rust/kernel/fs/file.rs
-index 13a0e44cd1aa8..138693bdeb3fd 100644
---- a/rust/kernel/fs/file.rs
-+++ b/rust/kernel/fs/file.rs
-@@ -219,6 +219,7 @@ unsafe impl AlwaysRefCounted for File {
- ///   must be on the same thread as this file.
- ///
- /// [`assume_no_fdget_pos`]: LocalFile::assume_no_fdget_pos
-+#[repr(transparent)]
- pub struct LocalFile {
-     inner: Opaque<bindings::file>,
- }
+diff --git a/include/linux/exportfs.h b/include/linux/exportfs.h
+index fc93f0abf513c..25c4a5afbd443 100644
+--- a/include/linux/exportfs.h
++++ b/include/linux/exportfs.h
+@@ -314,6 +314,9 @@ static inline bool exportfs_can_decode_fh(const struct export_operations *nop)
+ static inline bool exportfs_can_encode_fh(const struct export_operations *nop,
+ 					  int fh_flags)
+ {
++	if (!nop)
++		return false;
++
+ 	/*
+ 	 * If a non-decodeable file handle was requested, we only need to make
+ 	 * sure that filesystem did not opt-out of encoding fid.
+@@ -321,6 +324,13 @@ static inline bool exportfs_can_encode_fh(const struct export_operations *nop,
+ 	if (fh_flags & EXPORT_FH_FID)
+ 		return exportfs_can_encode_fid(nop);
+ 
++	/*
++	 * If a connectable file handle was requested, we need to make sure that
++	 * filesystem can also decode connected file handles.
++	 */
++	if ((fh_flags & EXPORT_FH_CONNECTABLE) && !nop->fh_to_parent)
++		return false;
++
+ 	/*
+ 	 * If a decodeable file handle was requested, we need to make sure that
+ 	 * filesystem can also decode file handles.
 -- 
 2.39.5
 
