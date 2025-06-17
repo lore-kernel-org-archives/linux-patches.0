@@ -1,106 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CEA68F54;
-	Tue, 17 Jun 2025 16:33:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC3F52DFF1B;
+	Tue, 17 Jun 2025 16:33:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177997; cv=none; b=Mdk4hbG5v5xbs1nmiWE5+14dJtP+BFG7RDHOShsSq9cRQPmengKhBJFTxyJj9ceMxOPx3lfV2GC4FOREETVNOTTcBgz7yZjMAoYjL2uVVJJI6/RI++maV4i/aqAxt5pNlyM3NKyuftHPss6xAkGW0Wbp6oXnAyz7Mp04dE7dJsQ=
+	t=1750178001; cv=none; b=BjAvcL8j7E3Z+4fgOyMt7aC56quVIRNlVJxmMh6u5iwqUu1yAksPuLOYIAUlMKGHySWnu4mdKNDgCQHku8CzIPfIctv+HC6rfT9IsUtt8tdIYwZguAxrRqOFOwTJFTINRTYXGzWlTnvOZJmcc8+JhzaroVk6ZEEWC0B6/UEIq+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177997; c=relaxed/simple;
-	bh=ayaKlxVHRUROIUp4ENAPD1t5upaQH8w1kt8d4GfkCxw=;
+	s=arc-20240116; t=1750178001; c=relaxed/simple;
+	bh=pSsAulrkD1Z49+w5y6MTu2A7zgAehUVl+parOAoc+KM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZihEIxL19lNuhNca8M9NsNgcsTwHW/Tmbj6ZjCanqCv0He8Rif1N+VfDcM1iYyTwxQQz0VHErQ9dqT25gy6ngLD5AJnuNqw0+voKB/kA6JRUMv3LehqCTYy3YE5wRljw0jf1pOkHfp10n92fpf/U2nZYYjGiIUmA7QGO8ZlyV/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DoVluRmR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TaDKjokoWi42jzDOsNN9+5g/H1h15Vs5TYZO5lm7WgLuoJsXNB1JgDaG8b9INqx80oHn24uqS26iJsliyyYHt8BkzzyDERda8ywOrWnwaJL3pEIAfCpx3EHIhbBlrlYreSeO5oFVeRQFLDI4bS7uzHJKh1XygH7I2p8F4/7qP+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aDDu9Kf/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DoVluRmR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40991C4CEE3;
-	Tue, 17 Jun 2025 16:33:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aDDu9Kf/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D579C4CEE3;
+	Tue, 17 Jun 2025 16:33:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177997;
-	bh=ayaKlxVHRUROIUp4ENAPD1t5upaQH8w1kt8d4GfkCxw=;
+	s=korg; t=1750178000;
+	bh=pSsAulrkD1Z49+w5y6MTu2A7zgAehUVl+parOAoc+KM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DoVluRmRczELqHb/+aBB1ObjJJbcJk5tkLWIOfqC2yHX4LsUUijF/9wMG5vOMguYG
-	 rQdWgg5sci9PxksuKOl7bMHoQNjpv7nSgEqSwkmhL7cMLbIhDpXo5GiWgihleKPj07
-	 RqF7wUfsUtK2v4OkSlNCN/L7wyzziKn8jQi91waY=
+	b=aDDu9Kf/EZjQgV5eytcwdp7Ggb5Mjxu1p17UtV1lYMKJ30XzCfRqOPt7zMzhWOqIx
+	 JRJ2UmIAk6zG4tyD5us++Sc84y8rNpOwFgkvztQkqpbmAy0gSG6JzZSGM2YIiYUcKf
+	 S+zgG2eetcUG9CnpBiSOpnueHtX7EF9FTvzBUvAM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Johnson <quic_jjohnson@quicinc.com>,
-	Easwar Hariharan <eahariha@linux.microsoft.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	Andrew Lunn <andrew+netdev@lunn.ch>,
-	Anna-Maria Behnsen <anna-maria@linutronix.de>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Daniel Mack <daniel@zonque.org>,
-	David Airlie <airlied@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Dick Kennedy <dick.kennedy@broadcom.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Haojian Zhuang <haojian.zhuang@gmail.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
-	Jack Wang <jinpu.wang@cloud.ionos.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	James Bottomley <James.Bottomley@HansenPartnership.com>,
-	James Smart <james.smart@broadcom.com>,
-	Jaroslav Kysela <perex@perex.cz>,
-	Jeff Johnson <jjohnson@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>,
-	Jeroen de Borst <jeroendb@google.com>,
-	Jiri Kosina <jikos@kernel.org>,
-	Joe Lawrence <joe.lawrence@redhat.com>,
-	Johan Hedberg <johan.hedberg@gmail.com>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	Jozsef Kadlecsik <kadlec@netfilter.org>,
-	Julia Lawall <julia.lawall@inria.fr>,
-	Kalle Valo <kvalo@kernel.org>,
-	Louis Peens <louis.peens@corigine.com>,
-	Lucas De Marchi <lucas.demarchi@intel.com>,
-	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
-	Marcel Holtmann <marcel@holtmann.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Miroslav Benes <mbenes@suse.cz>,
-	Naveen N Rao <naveen@kernel.org>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	Nicolas Palix <nicolas.palix@imag.fr>,
-	Oded Gabbay <ogabbay@kernel.org>,
-	Ofir Bitton <obitton@habana.ai>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Petr Mladek <pmladek@suse.com>,
-	Praveen Kaligineedi <pkaligineedi@google.com>,
-	Ray Jui <rjui@broadcom.com>,
-	Robert Jarzmik <robert.jarzmik@free.fr>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	=?UTF-8?q?Roger=20Pau=20Monn=C3=A9?= <roger.pau@citrix.com>,
-	Russell King <linux@armlinux.org.uk>,
-	Scott Branden <sbranden@broadcom.com>,
-	Shailend Chand <shailend@google.com>,
-	Simona Vetter <simona@ffwll.ch>,
-	Simon Horman <horms@kernel.org>,
-	Sven Schnelle <svens@linux.ibm.com>,
-	Takashi Iwai <tiwai@suse.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Vasily Gorbik <gor@linux.ibm.com>,
-	Xiubo Li <xiubli@redhat.com>,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 429/512] wifi: ath11k: convert timeouts to secs_to_jiffies()
-Date: Tue, 17 Jun 2025 17:26:35 +0200
-Message-ID: <20250617152436.957381348@linuxfoundation.org>
+Subject: [PATCH 6.15 394/780] nilfs2: add pointer check for nilfs_direct_propagate()
+Date: Tue, 17 Jun 2025 17:21:42 +0200
+Message-ID: <20250617152507.500313512@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -110,122 +46,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Easwar Hariharan <eahariha@linux.microsoft.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit b29425972c5234a59b6fb634125420ed74266377 ]
+[ Upstream commit f43f02429295486059605997bc43803527d69791 ]
 
-Commit b35108a51cf7 ("jiffies: Define secs_to_jiffies()") introduced
-secs_to_jiffies().  As the value here is a multiple of 1000, use
-secs_to_jiffies() instead of msecs_to_jiffies to avoid the multiplication.
+Patch series "nilfs2: improve sanity checks in dirty state propagation".
 
-This is converted using scripts/coccinelle/misc/secs_to_jiffies.cocci with
-the following Coccinelle rules:
+This fixes one missed check for block mapping anomalies and one improper
+return of an error code during a preparation step for log writing, thereby
+improving checking for filesystem corruption on writeback.
 
-@@ constant C; @@
+This patch (of 2):
 
-- msecs_to_jiffies(C * 1000)
-+ secs_to_jiffies(C)
+In nilfs_direct_propagate(), the printer get from nilfs_direct_get_ptr()
+need to be checked to ensure it is not an invalid pointer.
 
-@@ constant C; @@
+If the pointer value obtained by nilfs_direct_get_ptr() is
+NILFS_BMAP_INVALID_PTR, means that the metadata (in this case, i_bmap in
+the nilfs_inode_info struct) that should point to the data block at the
+buffer head of the argument is corrupted and the data block is orphaned,
+meaning that the file system has lost consistency.
 
-- msecs_to_jiffies(C * MSEC_PER_SEC)
-+ secs_to_jiffies(C)
+Add a value check and return -EINVAL when it is an invalid pointer.
 
-Link: https://lkml.kernel.org/r/20241210-converge-secs-to-jiffies-v3-14-ddfefd7e9f2a@linux.microsoft.com
-Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
-Signed-off-by: Easwar Hariharan <eahariha@linux.microsoft.com>
-Cc: Alexander Gordeev <agordeev@linux.ibm.com>
-Cc: Andrew Lunn <andrew+netdev@lunn.ch>
-Cc: Anna-Maria Behnsen <anna-maria@linutronix.de>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Christian Borntraeger <borntraeger@linux.ibm.com>
-Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
-Cc: Daniel Mack <daniel@zonque.org>
-Cc: David Airlie <airlied@gmail.com>
-Cc: David S. Miller <davem@davemloft.net>
-Cc: Dick Kennedy <dick.kennedy@broadcom.com>
-Cc: Eric Dumazet <edumazet@google.com>
-Cc: Florian Fainelli <florian.fainelli@broadcom.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Haojian Zhuang <haojian.zhuang@gmail.com>
-Cc: Heiko Carstens <hca@linux.ibm.com>
-Cc: Ilya Dryomov <idryomov@gmail.com>
-Cc: Jack Wang <jinpu.wang@cloud.ionos.com>
-Cc: Jakub Kicinski <kuba@kernel.org>
-Cc: James Bottomley <James.Bottomley@HansenPartnership.com>
-Cc: James Smart <james.smart@broadcom.com>
-Cc: Jaroslav Kysela <perex@perex.cz>
-Cc: Jeff Johnson <jjohnson@kernel.org>
-Cc: Jens Axboe <axboe@kernel.dk>
-Cc: Jeroen de Borst <jeroendb@google.com>
-Cc: Jiri Kosina <jikos@kernel.org>
-Cc: Joe Lawrence <joe.lawrence@redhat.com>
-Cc: Johan Hedberg <johan.hedberg@gmail.com>
-Cc: Josh Poimboeuf <jpoimboe@kernel.org>
-Cc: Jozsef Kadlecsik <kadlec@netfilter.org>
-Cc: Julia Lawall <julia.lawall@inria.fr>
-Cc: Kalle Valo <kvalo@kernel.org>
-Cc: Louis Peens <louis.peens@corigine.com>
-Cc: Lucas De Marchi <lucas.demarchi@intel.com>
-Cc: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
-Cc: Marcel Holtmann <marcel@holtmann.org>
-Cc: Martin K. Petersen <martin.petersen@oracle.com>
-Cc: Maxime Ripard <mripard@kernel.org>
-Cc: Michael Ellerman <mpe@ellerman.id.au>
-Cc: Miroslav Benes <mbenes@suse.cz>
-Cc: Naveen N Rao <naveen@kernel.org>
-Cc: Nicholas Piggin <npiggin@gmail.com>
-Cc: Nicolas Palix <nicolas.palix@imag.fr>
-Cc: Oded Gabbay <ogabbay@kernel.org>
-Cc: Ofir Bitton <obitton@habana.ai>
-Cc: Pablo Neira Ayuso <pablo@netfilter.org>
-Cc: Paolo Abeni <pabeni@redhat.com>
-Cc: Petr Mladek <pmladek@suse.com>
-Cc: Praveen Kaligineedi <pkaligineedi@google.com>
-Cc: Ray Jui <rjui@broadcom.com>
-Cc: Robert Jarzmik <robert.jarzmik@free.fr>
-Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Cc: Roger Pau Monné <roger.pau@citrix.com>
-Cc: Russell King <linux@armlinux.org.uk>
-Cc: Scott Branden <sbranden@broadcom.com>
-Cc: Shailend Chand <shailend@google.com>
-Cc: Simona Vetter <simona@ffwll.ch>
-Cc: Simon Horman <horms@kernel.org>
-Cc: Sven Schnelle <svens@linux.ibm.com>
-Cc: Takashi Iwai <tiwai@suse.com>
-Cc: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Cc: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: Vasily Gorbik <gor@linux.ibm.com>
-Cc: Xiubo Li <xiubli@redhat.com>
+Link: https://lkml.kernel.org/r/20250428173808.6452-1-konishi.ryusuke@gmail.com
+Link: https://lkml.kernel.org/r/20250428173808.6452-2-konishi.ryusuke@gmail.com
+Fixes: 36a580eb489f ("nilfs2: direct block mapping")
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: 9f6e82d11bb9 ("wifi: ath11k: avoid burning CPU in ath11k_debugfs_fw_stats_request()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/debugfs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nilfs2/direct.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/wireless/ath/ath11k/debugfs.c b/drivers/net/wireless/ath/ath11k/debugfs.c
-index 57281a135dd7f..bf192529e3fe2 100644
---- a/drivers/net/wireless/ath/ath11k/debugfs.c
-+++ b/drivers/net/wireless/ath/ath11k/debugfs.c
-@@ -178,7 +178,7 @@ static int ath11k_debugfs_fw_stats_request(struct ath11k *ar,
- 	 * received 'update stats' event, we keep a 3 seconds timeout in case,
- 	 * fw_stats_done is not marked yet
- 	 */
--	timeout = jiffies + msecs_to_jiffies(3 * 1000);
-+	timeout = jiffies + secs_to_jiffies(3);
- 
- 	ath11k_debugfs_fw_stats_reset(ar);
- 
+diff --git a/fs/nilfs2/direct.c b/fs/nilfs2/direct.c
+index 893ab36824cc2..2d8dc6b35b547 100644
+--- a/fs/nilfs2/direct.c
++++ b/fs/nilfs2/direct.c
+@@ -273,6 +273,9 @@ static int nilfs_direct_propagate(struct nilfs_bmap *bmap,
+ 	dat = nilfs_bmap_get_dat(bmap);
+ 	key = nilfs_bmap_data_get_key(bmap, bh);
+ 	ptr = nilfs_direct_get_ptr(bmap, key);
++	if (ptr == NILFS_BMAP_INVALID_PTR)
++		return -EINVAL;
++
+ 	if (!buffer_nilfs_volatile(bh)) {
+ 		oldreq.pr_entry_nr = ptr;
+ 		newreq.pr_entry_nr = ptr;
 -- 
 2.39.5
 
