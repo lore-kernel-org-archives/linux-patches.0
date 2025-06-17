@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 978FE2ED84A;
-	Tue, 17 Jun 2025 16:30:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFD522ED84A;
+	Tue, 17 Jun 2025 16:30:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177845; cv=none; b=PP85xv3YGnPYOSrx5H6dl1ah+OwhN+gjORnWCPmE9i28ELIDUB4XDSziyocg325CK1DXoQwjnIzYMFmvB9hDiePADaZ7BtHumhcTf+ZhsqHdXY0AVDzlyf6xF+FESHvj34w+Eq9f1BSdgxCUmgagSzs8gGX36Gp1GRNoFQ42YkA=
+	t=1750177849; cv=none; b=hMuxdRo+UUfxpK/dASl74SOxn2vkXBPiWwoBar76BK6wFESjaAWt9OlNKCJIxOoQki4QGq7AWWm6Faq0GAxuG5y7l5H7rs+cFJLZ49ZaBmpGhyYVV5UFxvR4xyb0cmuu5pojzSHCklOngJPFnTqfzj12Z8WWhldTZBkiFIo//sM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177845; c=relaxed/simple;
-	bh=ZGoym5ssVRf2irud4bWiVbRy8+MB6aQBd1UYXES2Yf8=;
+	s=arc-20240116; t=1750177849; c=relaxed/simple;
+	bh=aCgJSjEKsozDt+ljwK6SjdgEUDu0AO7Tduep19h+Mjw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nfg00gPBEH7q9CP0pxeiEm+83V8C5xJPR/zUpgKzJvPJN4rfEJaNDRDcNqPOuX8V1eSVmFiNhBWBGK1lQjTQfMg2dB1sgof/x6pEZhescV88btgwsam0AFqSgo07hNkflyPPvlGovbYxQWznyEj+CP2qBLq+E2FVLwg/vXfTFuo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v1n+r6Ub; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=heXcisTEyfY1jJWD1a3KYQ2nG2ZMKC+BhpOL/ALICEgBNEorpRERavCH/W3A0CvlV9cHPuFzbgPon5WYsqSQYMSMKjH8sn6iFkBvDWGLLaMh46X7KTHGThHSOXWSHhOm6ciyECBlgVrJsZCl2ZOMddgstWeqQvGO1ws5pLk8HAk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GDqyXjW0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v1n+r6Ub"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04078C4CEE3;
-	Tue, 17 Jun 2025 16:30:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GDqyXjW0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47A2DC4CEE3;
+	Tue, 17 Jun 2025 16:30:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177845;
-	bh=ZGoym5ssVRf2irud4bWiVbRy8+MB6aQBd1UYXES2Yf8=;
+	s=korg; t=1750177848;
+	bh=aCgJSjEKsozDt+ljwK6SjdgEUDu0AO7Tduep19h+Mjw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v1n+r6UbUFm7tyNoyZyhRQW3PcWciZm+mbBYEvTvT2jz98ZhT4zld4W45o2nkUOR9
-	 9Fg8z6Ut49Np/FD9VwA5DH9MDsLZTMZC79VRyj32fZxeVt8JdTdJwFZzRW9Xo8vH8p
-	 4jDahsvvSxksRZl84NvdJwwh0gGwErq2Q2vgwy9o=
+	b=GDqyXjW0Sre6x6g6iR+8dk0OnlqXkyAvZmE3IzmP16v/raoQML4plxPxyODhgOMtf
+	 qAAq4Mv6UB2pOCVfuV/r+lFLPTnnkQnRyYzD1BgdffC/EVH/wLD4kWlAOSXJmP7xs/
+	 wzmN7cso/vRZ1fT51Ak6jYbAEyBgiq1Ti4o23PAs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pin-yen Lin <treapking@chromium.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Stefan Binding <sbinding@opensource.cirrus.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 371/780] arm64: dts: mt8183: Add port node to mt8183.dtsi
-Date: Tue, 17 Jun 2025 17:21:19 +0200
-Message-ID: <20250617152506.558626755@linuxfoundation.org>
+Subject: [PATCH 6.12 405/512] ALSA: hda/realtek: Add support for HP Agusta using CS35L41 HDA
+Date: Tue, 17 Jun 2025 17:26:11 +0200
+Message-ID: <20250617152435.989988048@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,67 +47,37 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pin-yen Lin <treapking@chromium.org>
+From: Stefan Binding <sbinding@opensource.cirrus.com>
 
-[ Upstream commit d15059f7be59f887c1a370037cc2337c2ff2ad56 ]
+[ Upstream commit 7150d57c370f9e61b7d0e82c58002f1c5a205ac4 ]
 
-Add the port node to fix the binding schema check. Also update
-mt8183-kukui to reference the new port node.
+Add support for HP Agusta.
 
-Fixes: 88ec840270e6 ("arm64: dts: mt8183: Add dsi node")
-Fixes: 27eaf34df364 ("arm64: dts: mt8183: config dsi node")
-Signed-off-by: Pin-yen Lin <treapking@chromium.org>
-Link: https://lore.kernel.org/r/20250423040354.2847447-1-treapking@chromium.org
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Laptops use 2 CS35L41 Amps with HDA, using Internal boost, with I2C
+
+Signed-off-by: Stefan Binding <sbinding@opensource.cirrus.com>
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20250520124757.12597-1-sbinding@opensource.cirrus.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8183-kukui.dtsi | 10 +++-------
- arch/arm64/boot/dts/mediatek/mt8183.dtsi       |  4 ++++
- 2 files changed, 7 insertions(+), 7 deletions(-)
+ sound/pci/hda/patch_realtek.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8183-kukui.dtsi b/arch/arm64/boot/dts/mediatek/mt8183-kukui.dtsi
-index e1495f1900a7b..f9ca6b3720e91 100644
---- a/arch/arm64/boot/dts/mediatek/mt8183-kukui.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8183-kukui.dtsi
-@@ -259,14 +259,10 @@
- 			};
- 		};
- 	};
-+};
- 
--	ports {
--		port {
--			dsi_out: endpoint {
--				remote-endpoint = <&panel_in>;
--			};
--		};
--	};
-+&dsi_out {
-+	remote-endpoint = <&panel_in>;
- };
- 
- &gic {
-diff --git a/arch/arm64/boot/dts/mediatek/mt8183.dtsi b/arch/arm64/boot/dts/mediatek/mt8183.dtsi
-index 0aa34e5bbaaa8..3c1fe80e64b9c 100644
---- a/arch/arm64/boot/dts/mediatek/mt8183.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8183.dtsi
-@@ -1836,6 +1836,10 @@
- 			phys = <&mipi_tx0>;
- 			phy-names = "dphy";
- 			status = "disabled";
-+
-+			port {
-+				dsi_out: endpoint { };
-+			};
- 		};
- 
- 		dpi0: dpi@14015000 {
--- 
-2.39.5
-
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -10832,6 +10832,8 @@ static const struct hda_quirk alc269_fix
+ 	SND_PCI_QUIRK(0x103c, 0x8e2c, "HP EliteBook 16 G12", ALC285_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8e36, "HP 14 Enstrom OmniBook X", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x103c, 0x8e37, "HP 16 Piston OmniBook X", ALC287_FIXUP_CS35L41_I2C_2),
++	SND_PCI_QUIRK(0x103c, 0x8e3a, "HP Agusta", ALC287_FIXUP_CS35L41_I2C_2),
++	SND_PCI_QUIRK(0x103c, 0x8e3b, "HP Agusta", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x103c, 0x8e60, "HP Trekker ", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x103c, 0x8e61, "HP Trekker ", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x103c, 0x8e62, "HP Trekker ", ALC287_FIXUP_CS35L41_I2C_2),
 
 
