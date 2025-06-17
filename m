@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DEA32EA729;
-	Tue, 17 Jun 2025 16:45:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B37515D1;
+	Tue, 17 Jun 2025 16:45:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750178702; cv=none; b=T7HhGnjMK4DChH/3sQ+zYrBsfaDDTmOI9htHIdxZ1l1gDURYeqA749iUCRWru1/sY+M0B4YKF4g8cE/vx1xZAnzyO3vfPq8dhy6cbBU6QbeKLh3nit6Dx0g4jp4f0sLwVDpAwwOpwrncrL8jR9l2EhfJdeQZJNMBX6E9gEn3InU=
+	t=1750178705; cv=none; b=lUIjgPj0Oo8yIpZFaiSwkhcOfRzFwLpQDGC8p177vKtb+Ah+2zoO1ymeUogldGzRdg+QV78wcCCc1GmLsllLGRqAYOmjnaJe/g2se7SbuBfLdReD+hL8Kbu099b6VVWcIJWHQ2xC0Q4Da8wnoKDwYyz/R6wP6uAwcF5o3pQzJNQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750178702; c=relaxed/simple;
-	bh=i27bWy4ZbkUoskZXLIf237mB6hgkZXzwkQp0FsKtgZs=;
+	s=arc-20240116; t=1750178705; c=relaxed/simple;
+	bh=N4+PS0WG9DlNJM0X5eQjReDuNarDWKi7bvKREpKM8hc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TEe9FLuCaWkko//+oVznf2kIu3YvQkYLr5/aLZuiQhX7ZSGHDXzStJXakxg75OuCVsplwrINwsHUDy3sd3mfqnDYocXVRdDsOCvJ8IH4nGKJ0fJUykQBoY5teSPdbfiSsVLAJTOTNSUbT+kVW/9Sck0g2xLtXbdkOsPDM37smFI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C3ZfVSwJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Qb9wv2HdhD0Tnq57tXMbXNSgNA5lmhbSDF4pnf9pFMa1DpZviaI8atUJr6/DsGNlE+ajzt+GOXTmyNljqs9iLeQ22kVnBBsSXCqKxEKXKbfQb9bseLLTGt2gsRE4fGlROwikmO/h9+NzjJvtreSqMbar+fhaGlt3i+PzzS9sCQM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G65l+RMk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C3ZfVSwJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92EB0C4CEE3;
-	Tue, 17 Jun 2025 16:45:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G65l+RMk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D76C8C4CEE3;
+	Tue, 17 Jun 2025 16:45:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750178702;
-	bh=i27bWy4ZbkUoskZXLIf237mB6hgkZXzwkQp0FsKtgZs=;
+	s=korg; t=1750178705;
+	bh=N4+PS0WG9DlNJM0X5eQjReDuNarDWKi7bvKREpKM8hc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C3ZfVSwJK1p/b8f360Iq369/6Daa0k6SfjEVrcR0VLiMLyI45glycinEqyL97zwy2
-	 4QE9PebhgjXvZMBWLPfURAKvYWKIWtSZE4Udzhk7RNYfn4Xmai6E+hHz7ApgIi4rIB
-	 uCKtc9DDjYo2zx7pZK2L8cBKaB+KV7xH1E/zdZUU=
+	b=G65l+RMkvlpq+KlJuP0ViwfA+Z6SHlrTwGsYApLqAO4IuPMwqH9Nkhov2YcZKWbdo
+	 k+Fe2Tj31+1C3LDZPbeVqWIXfxLKYp6uMW7XWmGauRpPfl+G40QFTFJciMLksQLh98
+	 3ZeXuhXLr+wTAH/rh9wLdIi4rs/qV6v4Q7dNTaM8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yabin Cui <yabinc@google.com>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
-	James Clark <james.clark@linaro.org>,
-	Mike Leach <mike.leach@linaro.org>,
-	Leo Yan <leo.yan@arm.com>,
+	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	William Breathitt Gray <wbg@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 527/780] coresight: core: Disable helpers for devices that fail to enable
-Date: Tue, 17 Jun 2025 17:23:55 +0200
-Message-ID: <20250617152512.971843777@linuxfoundation.org>
+Subject: [PATCH 6.15 528/780] counter: interrupt-cnt: Protect enable/disable OPs with mutex
+Date: Tue, 17 Jun 2025 17:23:56 +0200
+Message-ID: <20250617152513.010903854@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
 References: <20250617152451.485330293@linuxfoundation.org>
@@ -54,74 +52,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yabin Cui <yabinc@google.com>
+From: Alexander Sverdlin <alexander.sverdlin@siemens.com>
 
-[ Upstream commit f6028eeeb5e4cf86f93f805098c84974a79bba8a ]
+[ Upstream commit 7351312632e831e51383f48957d47712fae791ef ]
 
-When enabling a SINK or LINK type coresight device fails, the
-associated helpers should be disabled.
+Enable/disable seems to be racy on SMP, consider the following scenario:
 
-Fixes: 6148652807ba ("coresight: Enable and disable helper devices adjacent to the path")
-Signed-off-by: Yabin Cui <yabinc@google.com>
-Suggested-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Reviewed-by: James Clark <james.clark@linaro.org>
-Reviewed-by: Mike Leach <mike.leach@linaro.org>
-Reviewed-by: Leo Yan <leo.yan@arm.com>
-Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Link: https://lore.kernel.org/r/20250429231301.1952246-3-yabinc@google.com
+CPU0					CPU1
+
+interrupt_cnt_enable_write(true)
+{
+	if (priv->enabled == enable)
+		return 0;
+
+	if (enable) {
+		priv->enabled = true;
+					interrupt_cnt_enable_write(false)
+					{
+						if (priv->enabled == enable)
+							return 0;
+
+						if (enable) {
+							priv->enabled = true;
+							enable_irq(priv->irq);
+						} else {
+							disable_irq(priv->irq)
+							priv->enabled = false;
+						}
+		enable_irq(priv->irq);
+	} else {
+		disable_irq(priv->irq);
+		priv->enabled = false;
+	}
+
+The above would result in priv->enabled == false, but IRQ left enabled.
+Protect both write (above race) and read (to propagate the value on SMP)
+callbacks with a mutex.
+
+Signed-off-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+Fixes: a55ebd47f21f ("counter: add IRQ or GPIO based counter")
+Acked-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Link: https://lore.kernel.org/r/20250331163642.2382651-1-alexander.sverdlin@siemens.com
+Signed-off-by: William Breathitt Gray <wbg@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwtracing/coresight/coresight-core.c | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ drivers/counter/interrupt-cnt.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/hwtracing/coresight/coresight-core.c b/drivers/hwtracing/coresight/coresight-core.c
-index dabec7073aeda..d3523f0262af8 100644
---- a/drivers/hwtracing/coresight/coresight-core.c
-+++ b/drivers/hwtracing/coresight/coresight-core.c
-@@ -465,7 +465,7 @@ int coresight_enable_path(struct coresight_path *path, enum cs_mode mode,
- 		/* Enable all helpers adjacent to the path first */
- 		ret = coresight_enable_helpers(csdev, mode, path);
- 		if (ret)
--			goto err;
-+			goto err_disable_path;
- 		/*
- 		 * ETF devices are tricky... They can be a link or a sink,
- 		 * depending on how they are configured.  If an ETF has been
-@@ -486,8 +486,10 @@ int coresight_enable_path(struct coresight_path *path, enum cs_mode mode,
- 			 * that need disabling. Disabling the path here
- 			 * would mean we could disrupt an existing session.
- 			 */
--			if (ret)
-+			if (ret) {
-+				coresight_disable_helpers(csdev, path);
- 				goto out;
-+			}
- 			break;
- 		case CORESIGHT_DEV_TYPE_SOURCE:
- 			/* sources are enabled from either sysFS or Perf */
-@@ -497,16 +499,19 @@ int coresight_enable_path(struct coresight_path *path, enum cs_mode mode,
- 			child = list_next_entry(nd, link)->csdev;
- 			ret = coresight_enable_link(csdev, parent, child, source);
- 			if (ret)
--				goto err;
-+				goto err_disable_helpers;
- 			break;
- 		default:
--			goto err;
-+			ret = -EINVAL;
-+			goto err_disable_helpers;
- 		}
- 	}
+diff --git a/drivers/counter/interrupt-cnt.c b/drivers/counter/interrupt-cnt.c
+index 949598d51575a..d83848d0fe2af 100644
+--- a/drivers/counter/interrupt-cnt.c
++++ b/drivers/counter/interrupt-cnt.c
+@@ -3,12 +3,14 @@
+  * Copyright (c) 2021 Pengutronix, Oleksij Rempel <kernel@pengutronix.de>
+  */
  
- out:
- 	return ret;
--err:
-+err_disable_helpers:
-+	coresight_disable_helpers(csdev, path);
-+err_disable_path:
- 	coresight_disable_path_from(path, nd);
- 	goto out;
- }
++#include <linux/cleanup.h>
+ #include <linux/counter.h>
+ #include <linux/gpio/consumer.h>
+ #include <linux/interrupt.h>
+ #include <linux/irq.h>
+ #include <linux/mod_devicetable.h>
+ #include <linux/module.h>
++#include <linux/mutex.h>
+ #include <linux/platform_device.h>
+ #include <linux/types.h>
+ 
+@@ -19,6 +21,7 @@ struct interrupt_cnt_priv {
+ 	struct gpio_desc *gpio;
+ 	int irq;
+ 	bool enabled;
++	struct mutex lock;
+ 	struct counter_signal signals;
+ 	struct counter_synapse synapses;
+ 	struct counter_count cnts;
+@@ -41,6 +44,8 @@ static int interrupt_cnt_enable_read(struct counter_device *counter,
+ {
+ 	struct interrupt_cnt_priv *priv = counter_priv(counter);
+ 
++	guard(mutex)(&priv->lock);
++
+ 	*enable = priv->enabled;
+ 
+ 	return 0;
+@@ -51,6 +56,8 @@ static int interrupt_cnt_enable_write(struct counter_device *counter,
+ {
+ 	struct interrupt_cnt_priv *priv = counter_priv(counter);
+ 
++	guard(mutex)(&priv->lock);
++
+ 	if (priv->enabled == enable)
+ 		return 0;
+ 
+@@ -227,6 +234,8 @@ static int interrupt_cnt_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		return ret;
+ 
++	mutex_init(&priv->lock);
++
+ 	ret = devm_counter_add(dev, counter);
+ 	if (ret < 0)
+ 		return dev_err_probe(dev, ret, "Failed to add counter\n");
 -- 
 2.39.5
 
