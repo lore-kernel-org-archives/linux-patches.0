@@ -1,48 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5354C2EE607;
-	Tue, 17 Jun 2025 15:58:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5E4A2EF2B6;
+	Tue, 17 Jun 2025 15:58:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175884; cv=none; b=j6ZJvzmAF4nWHFLXLF1QYJcEBcfgFvF3/hF2kG9BTe9nHcZLgikQCIKW6Tp3JRcZ5dQzWnIwU8j4bFHENkxzLKvY+zUhuqEacLs5F+4y+EkXE4aBRk86xXppYSQHVf2YhuHJGWtcJkRnipUl2IBptHrXc5XjQSAW76zlxwvEiMQ=
+	t=1750175886; cv=none; b=n4mFkldjj2K5W17HNx4zNE5Bua665bju6Qg2eEMwbMzzDm6q5TwnnamSBiAWn/B96d5lOM4rgad7DfuVfe2+ed26xexRQx7IpzvOyAW8jTu7ZnKnn+WjfSENj7fgPtNsxOzRR5QQpEqpamQzJ3dD5GBcP+dTiZq9CWVHqIJv0PU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175884; c=relaxed/simple;
-	bh=m8q5k6Io4+ifP+yM2UQxJc6bXZfxvB1x0yCl7MHwk6E=;
+	s=arc-20240116; t=1750175886; c=relaxed/simple;
+	bh=BzRdBWEAG2VvzGn2XQlg3fq6FkvdxY8Q96vCKTRaJCM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qk4Wrnc9uxEOrNeLvNmxpWv7qOT5cKjRAkHb5Zyddfn5TJEPtxo2CFsRwHUWIYtGQAhZvzUhX6AwKSG0HaDl0+pUQSnlw9/ECVWcRAZmmqHN6c8XeETWYwBk3vg8Xu6+LKWBx/JTdcmodSmE1RRo910bOKmFzgt3QytHDYtXZlg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nnajng1K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=powfGGsJ4cDYuCjLu8f9tLgR21Ae6U9RHOFntBLEaauV4LD9a603vmlHfHvZD35hNFAm4obG0VV8aMI06xciD5Fg8ttWni8b2YS2WaY9YbDPyM1BjHJrE59scIPUtPm1zkrLEtW9URb9SOxKBkpymNmgWnBMatAg8SAf9dzAocc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VqZvrv1l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nnajng1K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F43FC4CEFA;
-	Tue, 17 Jun 2025 15:58:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VqZvrv1l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 638B7C4CEE7;
+	Tue, 17 Jun 2025 15:58:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175883;
-	bh=m8q5k6Io4+ifP+yM2UQxJc6bXZfxvB1x0yCl7MHwk6E=;
+	s=korg; t=1750175886;
+	bh=BzRdBWEAG2VvzGn2XQlg3fq6FkvdxY8Q96vCKTRaJCM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nnajng1KxmMCQYgaStRLXq5X4GBjkRfxafu39vMojJJBMn5EEZ6iakD17cX1Oxqh0
-	 DPsDQY0jDYFTWgYyziLw5KULA897KQuPIN+WHjgrx7S9o6/X/Pfk2K8jx/lO5npzAw
-	 m9czfRMlyVnxFlfIRuoU+0SWcG1TIHBEouMf0OdA=
+	b=VqZvrv1lkSixHxuGbMHd/FI4QUsZ5xwYyHTuOb3x08Zo9rXpiClvbEO72Mc+bhzbF
+	 XliIYV9wBrz82RUbayg1tICQ2CCtsHr1zlBb1m04IkHDLauH2S4Iq6K+EZfImdt0+E
+	 DmgJD1vu6lolaoC0uhIOG7lavWconE24ItrxI1kg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Howard Chu <howardchu95@gmail.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ian Rogers <irogers@google.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Alexey Kodanev <aleksei.kodanev@bell-sw.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 207/356] perf trace: Fix leaks of struct thread in set_filter_loop_pids()
-Date: Tue, 17 Jun 2025 17:25:22 +0200
-Message-ID: <20250617152346.542585531@linuxfoundation.org>
+Subject: [PATCH 6.12 172/512] wifi: rtw88: fix the para buffer size to avoid reading out of bounds
+Date: Tue, 17 Jun 2025 17:22:18 +0200
+Message-ID: <20250617152426.587802975@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-References: <20250617152338.212798615@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -54,53 +47,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Namhyung Kim <namhyung@kernel.org>
+From: Alexey Kodanev <aleksei.kodanev@bell-sw.com>
 
-[ Upstream commit 30d20fb1f84ad5c92706fe2c6cbb2d4cc293e671 ]
+[ Upstream commit 4c2c372de2e108319236203cce6de44d70ae15cd ]
 
-I've found some leaks from 'perf trace -a'.
+Set the size to 6 instead of 2, since 'para' array is passed to
+'rtw_fw_bt_wifi_control(rtwdev, para[0], &para[1])', which reads
+5 bytes:
 
-It seems there are more leaks but this is what I can find for now.
+void rtw_fw_bt_wifi_control(struct rtw_dev *rtwdev, u8 op_code, u8 *data)
+{
+    ...
+    SET_BT_WIFI_CONTROL_DATA1(h2c_pkt, *data);
+    SET_BT_WIFI_CONTROL_DATA2(h2c_pkt, *(data + 1));
+    ...
+    SET_BT_WIFI_CONTROL_DATA5(h2c_pkt, *(data + 4));
 
-Fixes: 082ab9a18e532864 ("perf trace: Filter out 'sshd' in the tracer ancestry in syswide tracing")
-Reviewed-by: Howard Chu <howardchu95@gmail.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@kernel.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20250403054213.7021-1-namhyung@kernel.org
-[ split from a larget patch ]
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Detected using the static analysis tool - Svace.
+Fixes: 4136214f7c46 ("rtw88: add BT co-existence support")
+Signed-off-by: Alexey Kodanev <aleksei.kodanev@bell-sw.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20250513121304.124141-1-aleksei.kodanev@bell-sw.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-trace.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/wireless/realtek/rtw88/coex.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/perf/builtin-trace.c b/tools/perf/builtin-trace.c
-index 12bdbf3ecc6ae..908509df007ba 100644
---- a/tools/perf/builtin-trace.c
-+++ b/tools/perf/builtin-trace.c
-@@ -3589,10 +3589,13 @@ static int trace__set_filter_loop_pids(struct trace *trace)
- 		if (!strcmp(thread__comm_str(parent), "sshd") ||
- 		    strstarts(thread__comm_str(parent), "gnome-terminal")) {
- 			pids[nr++] = thread__tid(parent);
-+			thread__put(parent);
- 			break;
- 		}
-+		thread__put(thread);
- 		thread = parent;
- 	}
-+	thread__put(thread);
+diff --git a/drivers/net/wireless/realtek/rtw88/coex.c b/drivers/net/wireless/realtek/rtw88/coex.c
+index a99776af56c27..c476e65c4d71e 100644
+--- a/drivers/net/wireless/realtek/rtw88/coex.c
++++ b/drivers/net/wireless/realtek/rtw88/coex.c
+@@ -309,7 +309,7 @@ static void rtw_coex_tdma_timer_base(struct rtw_dev *rtwdev, u8 type)
+ {
+ 	struct rtw_coex *coex = &rtwdev->coex;
+ 	struct rtw_coex_stat *coex_stat = &coex->stat;
+-	u8 para[2] = {0};
++	u8 para[6] = {};
+ 	u8 times;
+ 	u16 tbtt_interval = coex_stat->wl_beacon_interval;
  
- 	err = evlist__append_tp_filter_pids(trace->evlist, nr, pids);
- 	if (!err && trace->filter_pids.map)
 -- 
 2.39.5
 
