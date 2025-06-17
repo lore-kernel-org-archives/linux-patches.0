@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A255C2E9753;
-	Tue, 17 Jun 2025 15:51:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 221C22E9753;
+	Tue, 17 Jun 2025 15:51:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175502; cv=none; b=SazrWlrqmC5R17gGq5paN4JU1pBqYvpWtBqdW1R3u0VQLXQisH0yk5Kd0KN5qAoty3y5Cf4httsN5Yt+07kcCrorE/9y3t78hTZ2yYm3GszjGkqGU3gQIvO74qMGV5vv8RaB5rq7Dk0f+qgQDgB8baBMlQuuYIaEAdPcY83Ur4A=
+	t=1750175506; cv=none; b=n4MplNFwI/0YG3vpSj3EywgEoZGoMgmQZsM4CBFyEEhcTerTp4IaeS8kwMEiJ1tRervDgn2JyHM9BwgVDkePCf+r0Xng/7Fxwlke7W0wK7FYeS76XgCi89WODOOIAMbbCsMpUm8hKBuCtrdShSVbrvqou3+5Tq1zg1wwcL/dmDw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175502; c=relaxed/simple;
-	bh=M12dxQy0491kS0/affHWFca/tUBLtFXFt8QPWeMuQEM=;
+	s=arc-20240116; t=1750175506; c=relaxed/simple;
+	bh=OHAAriTRrAtV0FjtGxXcaxqCw5Qk+IrNjwvJrUdp1YY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rPAHQMM5PVxMqsY7cSt2wbZtvukbDcyRLwlwGFr3bb4VWmw9WdSZuVAqWiWhXV6sM6Nl+Q4Lb8lTQEsO/ytiiz4eH1TrDEkC6r8POkvDomKyRhljaxgJNLbLVHXCZGbtVOwKQ97elAoIhetkD1tKmuayYcaKKKlvs+UBwqLNt1Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TRB1E5Zr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VyVbuHmVE1QGOCoEUIcC1e6JLa3nqChlIREUiEuK7mdz8rOUTQ1n5rcHBnd5cqEG9lxoCN0s+PI4Crp5NZzkqa/WVaXMfh9eNazgRCRkiFJidmMdDKs396G+yN3LMnyJ2HBV40Tb0HyrRFPw3Cr+u4os9qqBf8pbc1yuYegJbXg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h03ul06q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TRB1E5Zr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12CE9C4CEE3;
-	Tue, 17 Jun 2025 15:51:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h03ul06q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C240C4CEE3;
+	Tue, 17 Jun 2025 15:51:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175502;
-	bh=M12dxQy0491kS0/affHWFca/tUBLtFXFt8QPWeMuQEM=;
+	s=korg; t=1750175505;
+	bh=OHAAriTRrAtV0FjtGxXcaxqCw5Qk+IrNjwvJrUdp1YY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TRB1E5ZrmtuahBm+VC2mZoITXtyw2UfBg8y/22g2JGxTEITgpiakDnGS7/S4Syed8
-	 DVw2kwArA5u4HBVRnLko6TO5N+6np87mA7++4TZU9tCH6QxzSHg2MHVYP6VGObiRfQ
-	 Wj5iAzRgN2yvEBHaRA5lLziybnW4EVnf3Ra/PwBg=
+	b=h03ul06qy+TLTKc8X0x0Xn3UK9hzU4NOOwPiw3lKT4I6Te/ER5I6EinM2Yjx93cDj
+	 WAo4SZyDemykELUqYlau1bpzuWwIAYDart/Po4lwbwUdvqCPGJJ/FXdnmLLqqDGBTC
+	 jvtG6LZOMhbsBujf2VIuddEYTZ040mM7mPjQc+f0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Badal Nilawar <badal.nilawar@intel.com>,
-	Anshuman Gupta <anshuman.gupta@intel.com>,
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 094/780] drm/xe/d3cold: Set power state to D3Cold during s2idle/s3
-Date: Tue, 17 Jun 2025 17:16:42 +0200
-Message-ID: <20250617152455.341516718@linuxfoundation.org>
+Subject: [PATCH 6.6 183/356] nilfs2: do not propagate ENOENT error from nilfs_btree_propagate()
+Date: Tue, 17 Jun 2025 17:24:58 +0200
+Message-ID: <20250617152345.582908396@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
+References: <20250617152338.212798615@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,47 +48,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Badal Nilawar <badal.nilawar@intel.com>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-[ Upstream commit f945dd89fa8da3f662508165453dafdb4035d9d3 ]
+[ Upstream commit 8e39fbb1edbb4ec9d7c1124f403877fc167fcecd ]
 
-According to pci core guidelines, pci_save_config is recommended when the
-driver explicitly needs to set the pci power state. As of now xe kmd is
-only doing pci_save_config while entering to s2idle/s3 state, which makes
-pci core think that device driver has already applied required pci power
-state. This leads to GPU remain in D0 state. To fix the issue setting
-the pci power state to D3Cold.
+In preparation for writing logs, in nilfs_btree_propagate(), which makes
+parent and ancestor node blocks dirty starting from a modified data block
+or b-tree node block, if the starting block does not belong to the b-tree,
+i.e.  is isolated, nilfs_btree_do_lookup() called within the function
+fails with -ENOENT.
 
-Fixes:dd08ebf6c352 ("drm/xe: Introduce a new DRM driver for Intel GPUs")
+In this case, even though -ENOENT is an internal code, it is propagated to
+the log writer via nilfs_bmap_propagate() and may be erroneously returned
+to system calls such as fsync().
 
-Cc: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Signed-off-by: Badal Nilawar <badal.nilawar@intel.com>
-Signed-off-by: Anshuman Gupta <anshuman.gupta@intel.com>
-Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Link: https://lore.kernel.org/r/20250327161914.432552-1-badal.nilawar@intel.com
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Fix this issue by changing the error code to -EINVAL in this case, and
+having the bmap layer detect metadata corruption and convert the error
+code appropriately.
+
+Link: https://lkml.kernel.org/r/20250428173808.6452-3-konishi.ryusuke@gmail.com
+Fixes: 1f5abe7e7dbc ("nilfs2: replace BUG_ON and BUG calls triggerable from ioctl")
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Cc: Wentao Liang <vulab@iscas.ac.cn>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_pci.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/nilfs2/btree.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_pci.c b/drivers/gpu/drm/xe/xe_pci.c
-index f4d108dc49b1b..30f7ce06c8969 100644
---- a/drivers/gpu/drm/xe/xe_pci.c
-+++ b/drivers/gpu/drm/xe/xe_pci.c
-@@ -922,6 +922,7 @@ static int xe_pci_suspend(struct device *dev)
+diff --git a/fs/nilfs2/btree.c b/fs/nilfs2/btree.c
+index dbd27a44632fa..5e70a3478afe0 100644
+--- a/fs/nilfs2/btree.c
++++ b/fs/nilfs2/btree.c
+@@ -2094,11 +2094,13 @@ static int nilfs_btree_propagate(struct nilfs_bmap *btree,
  
- 	pci_save_state(pdev);
- 	pci_disable_device(pdev);
-+	pci_set_power_state(pdev, PCI_D3cold);
+ 	ret = nilfs_btree_do_lookup(btree, path, key, NULL, level + 1, 0);
+ 	if (ret < 0) {
+-		if (unlikely(ret == -ENOENT))
++		if (unlikely(ret == -ENOENT)) {
+ 			nilfs_crit(btree->b_inode->i_sb,
+ 				   "writing node/leaf block does not appear in b-tree (ino=%lu) at key=%llu, level=%d",
+ 				   btree->b_inode->i_ino,
+ 				   (unsigned long long)key, level);
++			ret = -EINVAL;
++		}
+ 		goto out;
+ 	}
  
- 	return 0;
- }
 -- 
 2.39.5
 
