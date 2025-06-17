@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEB302E92AA;
-	Tue, 17 Jun 2025 15:29:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45B022EB5A8;
+	Tue, 17 Jun 2025 15:29:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750174185; cv=none; b=eAsXUE94/Gsm0vR3tEOlOwxBqwYF+3h7FHyMOD4gBcl4vRlgzogcIjwFeddZ6pPQLBxiv+6zQiupzuy+dcrDUXNowD5nVanRS+pK34FtaWuDhP+sQfll+DAqHok/dpu6wtgekzv/xiqR9Z1V7PY9F8vROST/ncFKL8MEQ1I9n8o=
+	t=1750174191; cv=none; b=PrOJM4Wd2o2jwrNrJzcQJptrmFL5JJo1gK4zzDUkob+x/QdT8Q7v7x43AjOhMQ8W6TA9Dpp/BbX+o0JpNB3zU/3eYHIKqLTislFMSJBu+JuW81FNFYkJbOs3GBKelG5wSWpwolKH8M6Wq4rsS50L+Lb58uto6SY6P07qVEsLo30=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750174185; c=relaxed/simple;
-	bh=bmdBg43wsdCvpN0FGQtEg/FkVTW2PaYbWTuwDFKBGko=;
+	s=arc-20240116; t=1750174191; c=relaxed/simple;
+	bh=BJKMMHysefZ6AR9d1eYBJMQtTs9VLQ7nMqVFtKntjE4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PVeTdB5GgcSs5Tbs2s2dvcVOr822kw8Xbd+DKve381z6/X4HdCT6eJv52hHSBCi3zq2vwMtwmg78ASDPDvrmsSrcOn0V8xI6O6Th9XBApZ5wlUZyFKUku2yRP9VQt1pqp9CcxVxhfajQb6tt6OYBodxdLJxe3k0ZwwoRRK82/T8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tl3RCtbG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ua01YIpQsMBWcKLwE+rgCEwtoIwVeHcBF0VwnOYi5WIoRDH45E1UzTO3jo0LmAsc+I5eUW4YtLNHV5CwI8oGWcvNX4qxdABVJpq57RcuPktz917X0mlmdkqpfbB+daupQc60i+x4RFdC2kTuIXrnlQ7AgmtPaTVGCIV0eDLzEws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dn/9mhVd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tl3RCtbG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0A90C4CEE3;
-	Tue, 17 Jun 2025 15:29:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dn/9mhVd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5315FC4CEE3;
+	Tue, 17 Jun 2025 15:29:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750174185;
-	bh=bmdBg43wsdCvpN0FGQtEg/FkVTW2PaYbWTuwDFKBGko=;
+	s=korg; t=1750174190;
+	bh=BJKMMHysefZ6AR9d1eYBJMQtTs9VLQ7nMqVFtKntjE4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tl3RCtbGEv26QduiZDFhE9rca1nhN+VMeA1EKCf+a+YOf4PRGdOZOGgtUjfKNLz9g
-	 JgNs21BlbkZ1MxBfGViD7X8G4OrKCqQ/FjG51apt8n1X23kgLl5yQPnNfADBslnF3G
-	 Zq4SB4j5FA37fr10/y6siieH+2B/BLjEtltTqzYE=
+	b=dn/9mhVdSxQ/YeArQwtkrS436y4WA9rf//GYABRIDrGl/NdMg5mbw3fcitxB4A1L7
+	 Qs5Y7Kek+TW96S4hmQ0qAbqIlQZWHT1TCTAPD6cv3V/7/ixFMIfgPCGCbAH42fJLR7
+	 gwgPW7Fs4Ba/c6SvJeeS7ib4EP+By3ttAXXbNBJI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manu Bretelle <chantr4@gmail.com>,
-	"Gautham R. Shenoy" <gautham.shenoy@amd.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.6 004/356] acpi-cpufreq: Fix nominal_freq units to KHz in get_max_boost_ratio()
-Date: Tue, 17 Jun 2025 17:21:59 +0200
-Message-ID: <20250617152338.396363842@linuxfoundation.org>
+	Dave Penkler <dpenkler@gmail.com>
+Subject: [PATCH 6.6 013/356] usb: usbtmc: Fix timeout value in get_stb
+Date: Tue, 17 Jun 2025 17:22:08 +0200
+Message-ID: <20250617152338.761642070@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
 References: <20250617152338.212798615@linuxfoundation.org>
@@ -51,45 +49,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gautham R. Shenoy <gautham.shenoy@amd.com>
+From: Dave Penkler <dpenkler@gmail.com>
 
-commit cb6a85f38f456b086c366e346ebb67ffa70c7243 upstream.
+commit 342e4955a1f1ce28c70a589999b76365082dbf10 upstream.
 
-commit 083466754596 ("cpufreq: ACPI: Fix max-frequency computation")
-modified get_max_boost_ratio() to return the nominal_freq advertised
-in the _CPC object. This was for the purposes of computing the maximum
-frequency. The frequencies advertised in _CPC objects are in
-MHz. However, cpufreq expects the frequency to be in KHz. Since the
-nominal_freq returned by get_max_boost_ratio() was not in KHz but
-instead in MHz,the cpuinfo_max_frequency that was computed using this
-nominal_freq was incorrect and an invalid value which resulted in
-cpufreq reporting the P0 frequency as the cpuinfo_max_freq.
+wait_event_interruptible_timeout requires a timeout argument
+in units of jiffies. It was being called in usbtmc_get_stb
+with the usb timeout value which is in units of milliseconds.
 
-Fix this by converting the nominal_freq to KHz before returning the
-same from get_max_boost_ratio().
+Pass the timeout argument converted to jiffies.
 
-Reported-by: Manu Bretelle <chantr4@gmail.com>
-Closes: https://lore.kernel.org/lkml/aDaB63tDvbdcV0cg@HQ-GR2X1W2P57/
-Fixes: 083466754596 ("cpufreq: ACPI: Fix max-frequency computation")
-Signed-off-by: Gautham R. Shenoy <gautham.shenoy@amd.com>
-Cc: 6.14+ <stable@vger.kernel.org> # 6.14+
-Link: https://patch.msgid.link/20250529085143.709-1-gautham.shenoy@amd.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 048c6d88a021 ("usb: usbtmc: Add ioctls to set/get usb timeout")
+Cc: stable@vger.kernel.org
+Signed-off-by: Dave Penkler <dpenkler@gmail.com>
+Link: https://lore.kernel.org/r/20250521121656.18174-4-dpenkler@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpufreq/acpi-cpufreq.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/class/usbtmc.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/cpufreq/acpi-cpufreq.c
-+++ b/drivers/cpufreq/acpi-cpufreq.c
-@@ -659,7 +659,7 @@ static u64 get_max_boost_ratio(unsigned
- 	nominal_perf = perf_caps.nominal_perf;
+--- a/drivers/usb/class/usbtmc.c
++++ b/drivers/usb/class/usbtmc.c
+@@ -483,6 +483,7 @@ static int usbtmc_get_stb(struct usbtmc_
+ 	u8 tag;
+ 	int rv;
+ 	long wait_rv;
++	unsigned long expire;
  
- 	if (nominal_freq)
--		*nominal_freq = perf_caps.nominal_freq;
-+		*nominal_freq = perf_caps.nominal_freq * 1000;
+ 	dev_dbg(dev, "Enter ioctl_read_stb iin_ep_present: %d\n",
+ 		data->iin_ep_present);
+@@ -512,10 +513,11 @@ static int usbtmc_get_stb(struct usbtmc_
+ 	}
  
- 	if (!highest_perf || !nominal_perf) {
- 		pr_debug("CPU%d: highest or nominal performance missing\n", cpu);
+ 	if (data->iin_ep_present) {
++		expire = msecs_to_jiffies(file_data->timeout);
+ 		wait_rv = wait_event_interruptible_timeout(
+ 			data->waitq,
+ 			atomic_read(&data->iin_data_valid) != 0,
+-			file_data->timeout);
++			expire);
+ 		if (wait_rv < 0) {
+ 			dev_dbg(dev, "wait interrupted %ld\n", wait_rv);
+ 			rv = wait_rv;
 
 
