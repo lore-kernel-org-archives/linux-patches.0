@@ -1,39 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E8F61A5B9D;
-	Tue, 17 Jun 2025 16:36:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77A192264D6;
+	Tue, 17 Jun 2025 16:36:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750178195; cv=none; b=UTb2bmREJ8zrlDVtn7qH0nwtaK/ozwEBdrOpADX7bjZwFTMePm3D8Dkfh7gXxU3NUOVQhDDh512f/5T6xtxgZNSqBtjMx6SaDi/oM/UI0qeePUE9Mf4jvq75IcMK/YdJseTDd64sNAGpwqcN7dK5o+nV78Xxv+g7rhfSPz2aUKI=
+	t=1750178198; cv=none; b=pbtDqPiRl++iPoNUkg0DNNvH7BoNyXzKUdJoVSaiWMfiGzm5YP17KpPPwMVuHK0G+hxgpJ0g6vvYkrSt8CCSaN2VHBqFFGYm6S0xTKOdBVdbN3WGXZQVzxAVde96F5TETT7yBKoQI/B2sqXFwtsI/S7dH3o+86Ftz8ZIJalkL+k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750178195; c=relaxed/simple;
-	bh=4WsLkaDmxICNfd4ej1e/1CAnxAgs5p2ww3g8ZVb0wIA=;
+	s=arc-20240116; t=1750178198; c=relaxed/simple;
+	bh=vQaYCV3cswK0bXRejsX24Bri7b/FHmhS+NNOqyOijhw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aWFbfOfSW+5QeaDAu8f83Veu1qde++nuGdxn5xTDLWB8WeWQaRXuQQeH+5o8GlIKcGftWJGDsoc4djLNyl38ynE88/t00kHee6ZKsQUlStvzuxeDjW4GxU7QPwISIC2ng46LmzxL3OeLeF2FjyimFV25Ej+tO0qo5nCCk4FAsgc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vbTKWFLo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pgJPXr1IrrFc3gvqDaycW6v+uELhiDrQVbJqRF7YSTGKJ6g6bZnc3lXn2YJ7l64z1lNaxVSSqngduELH8gNoOufghhaYrrp2xDvRRASMfwftdBMiZEOIxtcdj1fPcuyCAQTHvb4CdRrDbdOWVfeFB+olaPMoedC9NddLn5tbf38=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wod+5s8P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vbTKWFLo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E09D6C4CEE3;
-	Tue, 17 Jun 2025 16:36:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wod+5s8P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B96DAC4CEE7;
+	Tue, 17 Jun 2025 16:36:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750178195;
-	bh=4WsLkaDmxICNfd4ej1e/1CAnxAgs5p2ww3g8ZVb0wIA=;
+	s=korg; t=1750178198;
+	bh=vQaYCV3cswK0bXRejsX24Bri7b/FHmhS+NNOqyOijhw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vbTKWFLobwzC4r4fVCX1FM9gTJBCZzLrqc8a1x+TdLdC0JnE2bWtcPA4NZLBYlVvZ
-	 jb21UNbnWPODvH36kKzLSuUiJ2ZSN7SxUvHf6CbqdcvpFfGTCPdGPDTFVCirLwHMJF
-	 eTWd5Is+3ZKI5cb6wR6p2D2y8vjpEqTb8boPuI8c=
+	b=Wod+5s8P8baeSkmlujNVPy/Ei3uEB6OlWSiaUnVpwjoQ8FqfYDoRm50kGDIYPeKoe
+	 K54eMBGq9UR2aQSlSnOGu59PCy+jrbPNyTPD6l/OavtpLNFj5/wZBNuCcH5pRufQbT
+	 ScL5CNtdxrA9VpGFvZt5PsaM5M1i7TMefjXcZ6UM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quentin Schulz <quentin.schulz@cherry.de>,
-	Lukasz Czechowski <lukasz.czechowski@thaumatec.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Ingo Molnar <mingo@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Dmitriy Vyukov <dvyukov@google.com>,
+	Howard Chu <howardchu95@gmail.com>,
+	Ian Rogers <irogers@google.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 405/780] arm64: dts: rockchip: disable unrouted USB controllers and PHY on RK3399 Puma with Haikou
-Date: Tue, 17 Jun 2025 17:21:53 +0200
-Message-ID: <20250617152507.957454023@linuxfoundation.org>
+Subject: [PATCH 6.15 423/780] tools build: Dont show libbfd build status as it is opt-in
+Date: Tue, 17 Jun 2025 17:22:11 +0200
+Message-ID: <20250617152508.698643634@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
 References: <20250617152451.485330293@linuxfoundation.org>
@@ -52,64 +59,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Quentin Schulz <quentin.schulz@cherry.de>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit febd8c6ab52c683b447fe22fc740918c86feae43 ]
+[ Upstream commit e0eb84cd518084582c0d1db5d904f31b16902fdc ]
 
-The u2phy0_host port is the part of the USB PHY0 (namely the
-HOST0_DP/DM lanes) which routes directly to the USB2.0 HOST
-controller[1]. The other lanes of the PHY are routed to the USB3.0 OTG
-controller (dwc3), which we do use.
+Since dd317df072071903 ("perf build: Make binutil libraries opt in")
+doesn't try to build with binutils libraries, so showing that it is OFF
+when building causes just distraction, remove it from FEATURES_DISPLAY.
 
-The HOST0_DP/DM lanes aren't routed on RK3399 Puma so let's simply
-disable the USB2.0 controllers.
+For people that for some reason notice that there is always 'perf -vv',
+a short hand for 'perf version --build-options' and 'perf check feature
+libbfd' that now explains why it is not built:
 
-USB3 OTG has been known to be unstable on RK3399 Puma Haikou for a
-while, one of the recurring issues being that only USB2 is detected and
-not USB3 in host mode. Reading the justification above and seeing that
-we are keeping u2phy0_host in the Haikou carrierboard DTS probably may
-have bothered you since it should be changed to u2phy0_otg. The issue is
-that if it's switched to that, USB OTG on Haikou is entirely broken. I
-have checked the routing in the Gerber file, the lanes are going to the
-expected ball pins (that is, NOT HOST0_DP/DM).
-u2phy0_host is for sure the wrong part of the PHY to use, but it's the
-only one that works at the moment for that board so keep it until we
-figure out what exactly is broken.
+  $ perf check feature libbfd
+  libbfd: [ OFF ]  # HAVE_LIBBFD_SUPPORT ( tip: Deprecated, license incompatibility, use BUILD_NONDISTRO=1 and install binutils-dev[el] )
+  $
 
-No intended functional change.
-
-[1] https://rockchip.fr/Rockchip%20RK3399%20TRM%20V1.3%20Part2.pdf
-    Chapter 2 USB2.0 PHY
-
-Fixes: 2c66fc34e945 ("arm64: dts: rockchip: add RK3399-Q7 (Puma) SoM")
-Signed-off-by: Quentin Schulz <quentin.schulz@cherry.de>
-Signed-off-by: Lukasz Czechowski <lukasz.czechowski@thaumatec.com>
-Link: https://lore.kernel.org/r/20250425-onboard_usb_dev-v2-5-4a76a474a010@thaumatec.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Fixes: dd317df072071903 ("perf build: Make binutil libraries opt in")
+Tested-by: Ingo Molnar <mingo@kernel.org>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Dmitriy Vyukov <dvyukov@google.com>
+Cc: Howard Chu <howardchu95@gmail.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Link: https://lore.kernel.org/r/Z--pWmTHGb62_83e@gmail.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3399-puma-haikou.dts | 8 --------
- 1 file changed, 8 deletions(-)
+ tools/build/Makefile.feature | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3399-puma-haikou.dts b/arch/arm64/boot/dts/rockchip/rk3399-puma-haikou.dts
-index f2234dabd6641..70979079923c1 100644
---- a/arch/arm64/boot/dts/rockchip/rk3399-puma-haikou.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3399-puma-haikou.dts
-@@ -312,14 +312,6 @@
- 	status = "okay";
- };
- 
--&usb_host0_ehci {
--	status = "okay";
--};
--
--&usb_host0_ohci {
--	status = "okay";
--};
--
- &vopb {
- 	status = "okay";
- };
+diff --git a/tools/build/Makefile.feature b/tools/build/Makefile.feature
+index 357749701239f..57bd995ce6afa 100644
+--- a/tools/build/Makefile.feature
++++ b/tools/build/Makefile.feature
+@@ -147,8 +147,6 @@ endif
+ FEATURE_DISPLAY ?=              \
+          libdw                  \
+          glibc                  \
+-         libbfd                 \
+-         libbfd-buildid		\
+          libelf                 \
+          libnuma                \
+          numa_num_possible_cpus \
 -- 
 2.39.5
 
