@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B8142FA62D;
-	Tue, 17 Jun 2025 16:41:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 878692FA625;
+	Tue, 17 Jun 2025 16:41:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750178482; cv=none; b=SWSizmeSxVuDSa/MmBF+1t3ZdyJntEpNoqnBdvvztF7w3CFl1cDeW9nj5+Ebp6w5j5AJqXSK+2Tqbt2z9jt5tBHRq792BZE1mpQ9DUcLEo53Dw+1svgnnNS5puT7wH+gMy8UGoofvFR7iwZm3O0tDqH/kQmhmRqamx/G8/Xr4v0=
+	t=1750178485; cv=none; b=U9zCIAVIIgBOrLhG9b9wPAvj6ATB9GZ0quY2j/lRtA6OXPTobxcA5m+fOtxSxCUxuTjXauVR2k3WOYzd/BBzvbpNHtoaqcxJSn/YVPzS99P1BSvzYplNaSUyHF/ZysrYWADFaKjlAX4YW/wnLP+seCDtm87BFpqjYauPVOPdnHg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750178482; c=relaxed/simple;
-	bh=l8rxJ8RkEfOpnW7BQ3irEEWjkuv6xPNbgXLiOmIMsdg=;
+	s=arc-20240116; t=1750178485; c=relaxed/simple;
+	bh=vr6HkXRbyTEkvPNOcsWMXT2CikG+53o81bVhmhF1O4Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OVqOthnixUKrljpQLmsqGDdhBsoLWqQFsCiz8ksAEcmE+/sxMh9rpiNSfP08tGJFYfOwqrApGudPBnyNTJ8VZz3+dj6DbkikpElikS3ylePe8OKe/1RoC150CW8APh9jPf8RdGlAeWiv31Kqv803xRQ4bgd9VcaCvp3R3MPIUUE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=boCyeBBq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tCy05hz+X+UBoE4a2tBTBkKXtwFuevbNM25AxBpKQyppaOqA58HkKrI1uQjdD5rxPdpt7aQSbFR4vNktQoftNWy+y6nMmFyOnjr8bouFTKizIQ+xanWOe9HL+B0rDpLWDs+KOVlmbed7cUS2jsg5Lo9niNd1Ctl+qr4fPSrZEcs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WXt8xz+M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="boCyeBBq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8E53C4CEE3;
-	Tue, 17 Jun 2025 16:41:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WXt8xz+M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05F4BC4CEE3;
+	Tue, 17 Jun 2025 16:41:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750178482;
-	bh=l8rxJ8RkEfOpnW7BQ3irEEWjkuv6xPNbgXLiOmIMsdg=;
+	s=korg; t=1750178485;
+	bh=vr6HkXRbyTEkvPNOcsWMXT2CikG+53o81bVhmhF1O4Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=boCyeBBqQGMw8oDTnUTnOxD4D30F5Iwv0ohJ61uHd2mfC6nOG1oviWINBSfwgP+hF
-	 vTjkWRfWtounO0ebxvxC/8ppVSgSFJ75hHunH+0zlDgqvLFkfLcFPovYFpFlusZfXa
-	 gMhkujomzd96muMQk+HWHH1WdB5fzcyyD0cnV3ts=
+	b=WXt8xz+MBBrhJYUhj0JcYv2pJnEL9YDJPZVSjTrlq7+ep7Ha6f2SkA4ymZIpQV2+X
+	 bik7k0+Qgdi5/k6FKft1GkNgOpRXp7wLkGuyR5KvwsvjjGRTz5j/lgJukPIvR1Kw/n
+	 ydZRryxQB0WeuXDcNeggjDtdn07Qnqk0unHDz1NE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"H. Peter Anvin (Intel)" <hpa@zytor.com>,
-	"Xin Li (Intel)" <xin@zytor.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Sohil Mehta <sohil.mehta@intel.com>
-Subject: [PATCH 6.12 505/512] x86/fred/signal: Prevent immediate repeat of single step trap on return from SIGTRAP handler
-Date: Tue, 17 Jun 2025 17:27:51 +0200
-Message-ID: <20250617152440.082336050@linuxfoundation.org>
+	Jens Axboe <axboe@kernel.dk>,
+	Dave Chinner <dchinner@redhat.com>,
+	Christian Brauner <brauner@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.15 466/780] iomap: dont lose folio dropbehind state for overwrites
+Date: Tue, 17 Jun 2025 17:22:54 +0200
+Message-ID: <20250617152510.467992197@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,128 +48,124 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Xin Li (Intel) <xin@zytor.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-commit e34dbbc85d64af59176fe59fad7b4122f4330fe2 upstream.
+[ Upstream commit 34ecde3c56066ba79e5ec3d93c5b14ea83e3603e ]
 
-Clear the software event flag in the augmented SS to prevent immediate
-repeat of single step trap on return from SIGTRAP handler if the trap
-flag (TF) is set without an external debugger attached.
+DONTCACHE I/O must have the completion punted to a workqueue, just like
+what is done for unwritten extents, as the completion needs task context
+to perform the invalidation of the folio(s). However, if writeback is
+started off filemap_fdatawrite_range() off generic_sync() and it's an
+overwrite, then the DONTCACHE marking gets lost as iomap_add_to_ioend()
+don't look at the folio being added and no further state is passed down
+to help it know that this is a dropbehind/DONTCACHE write.
 
-Following is a typical single-stepping flow for a user process:
+Check if the folio being added is marked as dropbehind, and set
+IOMAP_IOEND_DONTCACHE if that is the case. Then XFS can factor this into
+the decision making of completion context in xfs_submit_ioend().
+Additionally include this ioend flag in the NOMERGE flags, to avoid
+mixing it with unrelated IO.
 
-1) The user process is prepared for single-stepping by setting
-   RFLAGS.TF = 1.
-2) When any instruction in user space completes, a #DB is triggered.
-3) The kernel handles the #DB and returns to user space, invoking the
-   SIGTRAP handler with RFLAGS.TF = 0.
-4) After the SIGTRAP handler finishes, the user process performs a
-   sigreturn syscall, restoring the original state, including
-   RFLAGS.TF = 1.
-5) Goto step 2.
+Since this is the 3rd flag that will cause XFS to punt the completion to
+a workqueue, add a helper so that each one of them can get appropriately
+commented.
 
-According to the FRED specification:
+This fixes extra page cache being instantiated when the write performed
+is an overwrite, rather than newly instantiated blocks.
 
-A) Bit 17 in the augmented SS is designated as the software event
-   flag, which is set to 1 for FRED event delivery of SYSCALL,
-   SYSENTER, or INT n.
-B) If bit 17 of the augmented SS is 1 and ERETU would result in
-   RFLAGS.TF = 1, a single-step trap will be pending upon completion
-   of ERETU.
-
-In step 4) above, the software event flag is set upon the sigreturn
-syscall, and its corresponding ERETU would restore RFLAGS.TF = 1.
-This combination causes a pending single-step trap upon completion of
-ERETU.  Therefore, another #DB is triggered before any user space
-instruction is executed, which leads to an infinite loop in which the
-SIGTRAP handler keeps being invoked on the same user space IP.
-
-Fixes: 14619d912b65 ("x86/fred: FRED entry/exit and dispatch code")
-Suggested-by: H. Peter Anvin (Intel) <hpa@zytor.com>
-Signed-off-by: Xin Li (Intel) <xin@zytor.com>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Tested-by: Sohil Mehta <sohil.mehta@intel.com>
-Cc:stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20250609084054.2083189-2-xin%40zytor.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: b2cd5ae693a3 ("iomap: make buffered writes work with RWF_DONTCACHE")
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Link: https://lore.kernel.org/5153f6e8-274d-4546-bf55-30a5018e0d03@kernel.dk
+Reviewed-by: Dave Chinner <dchinner@redhat.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/sighandling.h |   22 ++++++++++++++++++++++
- arch/x86/kernel/signal_32.c        |    4 ++++
- arch/x86/kernel/signal_64.c        |    4 ++++
- 3 files changed, 30 insertions(+)
+ fs/iomap/buffered-io.c |  2 ++
+ fs/xfs/xfs_aops.c      | 22 ++++++++++++++++++++--
+ include/linux/iomap.h  |  5 ++++-
+ 3 files changed, 26 insertions(+), 3 deletions(-)
 
---- a/arch/x86/include/asm/sighandling.h
-+++ b/arch/x86/include/asm/sighandling.h
-@@ -24,4 +24,26 @@ int ia32_setup_rt_frame(struct ksignal *
- int x64_setup_rt_frame(struct ksignal *ksig, struct pt_regs *regs);
- int x32_setup_rt_frame(struct ksignal *ksig, struct pt_regs *regs);
+diff --git a/fs/iomap/buffered-io.c b/fs/iomap/buffered-io.c
+index 5b08bd417b287..0ac474888a02e 100644
+--- a/fs/iomap/buffered-io.c
++++ b/fs/iomap/buffered-io.c
+@@ -1675,6 +1675,8 @@ static int iomap_add_to_ioend(struct iomap_writepage_ctx *wpc,
+ 		ioend_flags |= IOMAP_IOEND_UNWRITTEN;
+ 	if (wpc->iomap.flags & IOMAP_F_SHARED)
+ 		ioend_flags |= IOMAP_IOEND_SHARED;
++	if (folio_test_dropbehind(folio))
++		ioend_flags |= IOMAP_IOEND_DONTCACHE;
+ 	if (pos == wpc->iomap.offset && (wpc->iomap.flags & IOMAP_F_BOUNDARY))
+ 		ioend_flags |= IOMAP_IOEND_BOUNDARY;
  
-+/*
-+ * To prevent immediate repeat of single step trap on return from SIGTRAP
-+ * handler if the trap flag (TF) is set without an external debugger attached,
-+ * clear the software event flag in the augmented SS, ensuring no single-step
-+ * trap is pending upon ERETU completion.
-+ *
-+ * Note, this function should be called in sigreturn() before the original
-+ * state is restored to make sure the TF is read from the entry frame.
-+ */
-+static __always_inline void prevent_single_step_upon_eretu(struct pt_regs *regs)
+diff --git a/fs/xfs/xfs_aops.c b/fs/xfs/xfs_aops.c
+index 26a04a7834896..63151feb9c3fd 100644
+--- a/fs/xfs/xfs_aops.c
++++ b/fs/xfs/xfs_aops.c
+@@ -436,6 +436,25 @@ xfs_map_blocks(
+ 	return 0;
+ }
+ 
++static bool
++xfs_ioend_needs_wq_completion(
++	struct iomap_ioend	*ioend)
 +{
-+	/*
-+	 * If the trap flag (TF) is set, i.e., the sigreturn() SYSCALL instruction
-+	 * is being single-stepped, do not clear the software event flag in the
-+	 * augmented SS, thus a debugger won't skip over the following instruction.
-+	 */
-+#ifdef CONFIG_X86_FRED
-+	if (!(regs->flags & X86_EFLAGS_TF))
-+		regs->fred_ss.swevent = 0;
-+#endif
++	/* Changing inode size requires a transaction. */
++	if (xfs_ioend_is_append(ioend))
++		return true;
++
++	/* Extent manipulation requires a transaction. */
++	if (ioend->io_flags & (IOMAP_IOEND_UNWRITTEN | IOMAP_IOEND_SHARED))
++		return true;
++
++	/* Page cache invalidation cannot be done in irq context. */
++	if (ioend->io_flags & IOMAP_IOEND_DONTCACHE)
++		return true;
++
++	return false;
 +}
 +
- #endif /* _ASM_X86_SIGHANDLING_H */
---- a/arch/x86/kernel/signal_32.c
-+++ b/arch/x86/kernel/signal_32.c
-@@ -152,6 +152,8 @@ SYSCALL32_DEFINE0(sigreturn)
- 	struct sigframe_ia32 __user *frame = (struct sigframe_ia32 __user *)(regs->sp-8);
- 	sigset_t set;
+ static int
+ xfs_submit_ioend(
+ 	struct iomap_writepage_ctx *wpc,
+@@ -460,8 +479,7 @@ xfs_submit_ioend(
+ 	memalloc_nofs_restore(nofs_flag);
  
-+	prevent_single_step_upon_eretu(regs);
-+
- 	if (!access_ok(frame, sizeof(*frame)))
- 		goto badframe;
- 	if (__get_user(set.sig[0], &frame->sc.oldmask)
-@@ -175,6 +177,8 @@ SYSCALL32_DEFINE0(rt_sigreturn)
- 	struct rt_sigframe_ia32 __user *frame;
- 	sigset_t set;
+ 	/* send ioends that might require a transaction to the completion wq */
+-	if (xfs_ioend_is_append(ioend) ||
+-	    (ioend->io_flags & (IOMAP_IOEND_UNWRITTEN | IOMAP_IOEND_SHARED)))
++	if (xfs_ioend_needs_wq_completion(ioend))
+ 		ioend->io_bio.bi_end_io = xfs_end_bio;
  
-+	prevent_single_step_upon_eretu(regs);
-+
- 	frame = (struct rt_sigframe_ia32 __user *)(regs->sp - 4);
+ 	if (status)
+diff --git a/include/linux/iomap.h b/include/linux/iomap.h
+index 68416b135151d..522644d62f30f 100644
+--- a/include/linux/iomap.h
++++ b/include/linux/iomap.h
+@@ -377,13 +377,16 @@ sector_t iomap_bmap(struct address_space *mapping, sector_t bno,
+ #define IOMAP_IOEND_BOUNDARY		(1U << 2)
+ /* is direct I/O */
+ #define IOMAP_IOEND_DIRECT		(1U << 3)
++/* is DONTCACHE I/O */
++#define IOMAP_IOEND_DONTCACHE		(1U << 4)
  
- 	if (!access_ok(frame, sizeof(*frame)))
---- a/arch/x86/kernel/signal_64.c
-+++ b/arch/x86/kernel/signal_64.c
-@@ -250,6 +250,8 @@ SYSCALL_DEFINE0(rt_sigreturn)
- 	sigset_t set;
- 	unsigned long uc_flags;
+ /*
+  * Flags that if set on either ioend prevent the merge of two ioends.
+  * (IOMAP_IOEND_BOUNDARY also prevents merges, but only one-way)
+  */
+ #define IOMAP_IOEND_NOMERGE_FLAGS \
+-	(IOMAP_IOEND_SHARED | IOMAP_IOEND_UNWRITTEN | IOMAP_IOEND_DIRECT)
++	(IOMAP_IOEND_SHARED | IOMAP_IOEND_UNWRITTEN | IOMAP_IOEND_DIRECT | \
++	 IOMAP_IOEND_DONTCACHE)
  
-+	prevent_single_step_upon_eretu(regs);
-+
- 	frame = (struct rt_sigframe __user *)(regs->sp - sizeof(long));
- 	if (!access_ok(frame, sizeof(*frame)))
- 		goto badframe;
-@@ -366,6 +368,8 @@ COMPAT_SYSCALL_DEFINE0(x32_rt_sigreturn)
- 	sigset_t set;
- 	unsigned long uc_flags;
- 
-+	prevent_single_step_upon_eretu(regs);
-+
- 	frame = (struct rt_sigframe_x32 __user *)(regs->sp - 8);
- 
- 	if (!access_ok(frame, sizeof(*frame)))
+ /*
+  * Structure for writeback I/O completions.
+-- 
+2.39.5
+
 
 
