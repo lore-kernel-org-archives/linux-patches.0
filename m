@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E20E221F14;
-	Tue, 17 Jun 2025 16:04:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E92EC2F2368;
+	Tue, 17 Jun 2025 16:04:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750176275; cv=none; b=U0VnhZom1fkRLcyZwGwNMB6QU6hgykDh7BDQszAIyEoS5Xt/5VNUaOzwecS4PojBG7Wl31u2d8euDX61JO2a7qDjKt5E/1LCromJIeW3ZB6wmtCxpJsgF5BJnwTARbM9pW9Zq1HztgsKrED5KHrWV0B0nhYhzezOIecAcFD2dzg=
+	t=1750176279; cv=none; b=UMx76OTYqE4KOe1l5hsHCZI7yyc04KeS1WDqZGQ4UcjUbdKDLCtpJ/gAPFbv+GdFtOFeHQ0G4qGsgdea1zaOHvvDbRbr8S0RlPbE8hZr8jRksd4rjb7iaRmutlXqSDLnGFCNUUe5rMcUKYRf7AOnWdxx4BK6w1y+7FyQWPBhspE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750176275; c=relaxed/simple;
-	bh=aZy3ypc3QMVVFsIjZB8s9Ycd0JKSb9h8kKppu7S7F8A=;
+	s=arc-20240116; t=1750176279; c=relaxed/simple;
+	bh=qoNSDkNnNibqHpT+2jO/e+zWclqcGNPht/HVi8HfnUo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Zg4YGLjMXCEk+8gEkKpYa1yger57ugcSzsXv6yDUMpkR48Tpc410xlTmj32fOqDtqCIrAA8WJ7z6jHEfygfXf7o3Uvepo/ybmQAn6vTKARjVEk4AA9+kZHAFrk0r/LaVAOx5lEzORSeSJywKu9X3MKvIry/r6za1/zRY1+SfH2M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yWiK2Zsf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nc82q1k8w9XHaZXMVzK2y08ACMaCSRTaoOUkBUGYne0Qm0idSjiL5fNC1vT4NmnvFdY+8jeq6Cq/IqChKHn1OI7W6Vj7XlagSggZruQatKQusGN24H9VY3wABt2ksNkHou3XcVBq/kIFvZtOrC8BgeRJ2TCkZBQtyNkW81R0JZE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xtPX23Eq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yWiK2Zsf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A851FC4CEE3;
-	Tue, 17 Jun 2025 16:04:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xtPX23Eq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC708C4CEF0;
+	Tue, 17 Jun 2025 16:04:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750176275;
-	bh=aZy3ypc3QMVVFsIjZB8s9Ycd0JKSb9h8kKppu7S7F8A=;
+	s=korg; t=1750176278;
+	bh=qoNSDkNnNibqHpT+2jO/e+zWclqcGNPht/HVi8HfnUo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yWiK2ZsfJsVDqZgJ6A0kRFcLG5OonQ500ex//QIMgU2cLiPcF4j2ut//AyFGKyoUz
-	 b4GVkylbTJwAY+ci7/xc+5Zw6dIAsCOFQNVH0VVhmQzjkBDhYviWzHfNxnphuo1YEc
-	 9sgMw0mNt01hD/I46lW+9gYZUrhzfOa9UIovzrFE=
+	b=xtPX23EqdCXBjy03HHd5hcXBQDoBLviJ1tgkU+rTQTFrMYfYdrwo0cvmOIM/PRXX3
+	 wRMOEYSLWEFiCXqhvg//K5MyGD664/zoMYrTTTSUYeBqDJhQ47SoW1yi0IUeZWYnK4
+	 Fs4f3X6BCRWFIApDOwuBV5rbGAL01yu74RtzVV8w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Wajdeczko <michal.wajdeczko@intel.com>,
-	Lucas De Marchi <lucas.demarchi@intel.com>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	John Fastabend <john.fastabend@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 156/780] drm/xe/guc: Refactor GuC debugfs initialization
-Date: Tue, 17 Jun 2025 17:17:44 +0200
-Message-ID: <20250617152457.849019049@linuxfoundation.org>
+Subject: [PATCH 6.15 171/780] bpf: fix ktls panic with sockmap
+Date: Tue, 17 Jun 2025 17:17:59 +0200
+Message-ID: <20250617152458.444599544@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
 References: <20250617152451.485330293@linuxfoundation.org>
@@ -45,207 +46,127 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michal Wajdeczko <michal.wajdeczko@intel.com>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-[ Upstream commit e15826bb3c2c5377eedc757f2adec8dcaa5255f7 ]
+[ Upstream commit 54a3ecaeeeae8176da8badbd7d72af1017032c39 ]
 
-We don't have to drmm_kmalloc() local copy of debugfs_list to
-write there our pointer to the struct xe_guc as we can extract
-pointer to the struct xe_gt from the grandparent debugfs entry,
-in similar way to what we did for GT debugfs files.
+[ 2172.936997] ------------[ cut here ]------------
+[ 2172.936999] kernel BUG at lib/iov_iter.c:629!
+......
+[ 2172.944996] PKRU: 55555554
+[ 2172.945155] Call Trace:
+[ 2172.945299]  <TASK>
+[ 2172.945428]  ? die+0x36/0x90
+[ 2172.945601]  ? do_trap+0xdd/0x100
+[ 2172.945795]  ? iov_iter_revert+0x178/0x180
+[ 2172.946031]  ? iov_iter_revert+0x178/0x180
+[ 2172.946267]  ? do_error_trap+0x7d/0x110
+[ 2172.946499]  ? iov_iter_revert+0x178/0x180
+[ 2172.946736]  ? exc_invalid_op+0x50/0x70
+[ 2172.946961]  ? iov_iter_revert+0x178/0x180
+[ 2172.947197]  ? asm_exc_invalid_op+0x1a/0x20
+[ 2172.947446]  ? iov_iter_revert+0x178/0x180
+[ 2172.947683]  ? iov_iter_revert+0x5c/0x180
+[ 2172.947913]  tls_sw_sendmsg_locked.isra.0+0x794/0x840
+[ 2172.948206]  tls_sw_sendmsg+0x52/0x80
+[ 2172.948420]  ? inet_sendmsg+0x1f/0x70
+[ 2172.948634]  __sys_sendto+0x1cd/0x200
+[ 2172.948848]  ? find_held_lock+0x2b/0x80
+[ 2172.949072]  ? syscall_trace_enter+0x140/0x270
+[ 2172.949330]  ? __lock_release.isra.0+0x5e/0x170
+[ 2172.949595]  ? find_held_lock+0x2b/0x80
+[ 2172.949817]  ? syscall_trace_enter+0x140/0x270
+[ 2172.950211]  ? lockdep_hardirqs_on_prepare+0xda/0x190
+[ 2172.950632]  ? ktime_get_coarse_real_ts64+0xc2/0xd0
+[ 2172.951036]  __x64_sys_sendto+0x24/0x30
+[ 2172.951382]  do_syscall_64+0x90/0x170
+......
 
-Note that there is no change in file/directory structure, just
-refactored how files are created and how functions are called.
+After calling bpf_exec_tx_verdict(), the size of msg_pl->sg may increase,
+e.g., when the BPF program executes bpf_msg_push_data().
 
-Signed-off-by: Michal Wajdeczko <michal.wajdeczko@intel.com>
-Reviewed-by: Lucas De Marchi <lucas.demarchi@intel.com>
-Link: https://lore.kernel.org/r/20250403142635.1821-2-michal.wajdeczko@intel.com
-Stable-dep-of: e22d7acf9f47 ("drm/xe/guc: Make creation of SLPC debugfs files conditional")
+If the BPF program sets cork_bytes and sg.size is smaller than cork_bytes,
+it will return -ENOSPC and attempt to roll back to the non-zero copy
+logic. However, during rollback, msg->msg_iter is reset, but since
+msg_pl->sg.size has been increased, subsequent executions will exceed the
+actual size of msg_iter.
+'''
+iov_iter_revert(&msg->msg_iter, msg_pl->sg.size - orig_size);
+'''
+
+The changes in this commit are based on the following considerations:
+
+1. When cork_bytes is set, rolling back to non-zero copy logic is
+pointless and can directly go to zero-copy logic.
+
+2. We can not calculate the correct number of bytes to revert msg_iter.
+
+Assume the original data is "abcdefgh" (8 bytes), and after 3 pushes
+by the BPF program, it becomes 11-byte data: "abc?de?fgh?".
+Then, we set cork_bytes to 6, which means the first 6 bytes have been
+processed, and the remaining 5 bytes "?fgh?" will be cached until the
+length meets the cork_bytes requirement.
+
+However, some data in "?fgh?" is not within 'sg->msg_iter'
+(but in msg_pl instead), especially the data "?" we pushed.
+
+So it doesn't seem as simple as just reverting through an offset of
+msg_iter.
+
+3. For non-TLS sockets in tcp_bpf_sendmsg, when a "cork" situation occurs,
+the user-space send() doesn't return an error, and the returned length is
+the same as the input length parameter, even if some data is cached.
+
+Additionally, I saw that the current non-zero-copy logic for handling
+corking is written as:
+'''
+line 1177
+else if (ret != -EAGAIN) {
+	if (ret == -ENOSPC)
+		ret = 0;
+	goto send_end;
+'''
+
+So it's ok to just return 'copied' without error when a "cork" situation
+occurs.
+
+Fixes: fcb14cb1bdac ("new iov_iter flavour - ITER_UBUF")
+Fixes: d3b18ad31f93 ("tls: add bpf support to sk_msg handling")
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Acked-by: John Fastabend <john.fastabend@gmail.com>
+Link: https://lore.kernel.org/r/20250219052015.274405-2-jiayuan.chen@linux.dev
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_guc_debugfs.c | 130 ++++++++++++++--------------
- 1 file changed, 67 insertions(+), 63 deletions(-)
+ net/tls/tls_sw.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_guc_debugfs.c b/drivers/gpu/drm/xe/xe_guc_debugfs.c
-index c569ff456e741..9a1c78b89f457 100644
---- a/drivers/gpu/drm/xe/xe_guc_debugfs.c
-+++ b/drivers/gpu/drm/xe/xe_guc_debugfs.c
-@@ -17,101 +17,105 @@
- #include "xe_macros.h"
- #include "xe_pm.h"
- 
--static struct xe_guc *node_to_guc(struct drm_info_node *node)
--{
--	return node->info_ent->data;
--}
--
--static int guc_info(struct seq_file *m, void *data)
-+/*
-+ * guc_debugfs_show - A show callback for struct drm_info_list
-+ * @m: the &seq_file
-+ * @data: data used by the drm debugfs helpers
-+ *
-+ * This callback can be used in struct drm_info_list to describe debugfs
-+ * files that are &xe_guc specific in similar way how we handle &xe_gt
-+ * specific files using &xe_gt_debugfs_simple_show.
-+ *
-+ * It is assumed that those debugfs files will be created on directory entry
-+ * which grandparent struct dentry d_inode->i_private points to &xe_gt.
-+ *
-+ *      /sys/kernel/debug/dri/0/
-+ *      ├── gt0			# dent->d_parent->d_parent (d_inode->i_private == gt)
-+ *      │   ├── uc		# dent->d_parent
-+ *      │   │   ├── guc_info	# dent
-+ *      │   │   ├── guc_...
-+ *
-+ * This function assumes that &m->private will be set to the &struct
-+ * drm_info_node corresponding to the instance of the info on a given &struct
-+ * drm_minor (see struct drm_info_list.show for details).
-+ *
-+ * This function also assumes that struct drm_info_list.data will point to the
-+ * function code that will actually print a file content::
-+ *
-+ *    int (*print)(struct xe_guc *, struct drm_printer *)
-+ *
-+ * Example::
-+ *
-+ *    int foo(struct xe_guc *guc, struct drm_printer *p)
-+ *    {
-+ *        drm_printf(p, "enabled %d\n", guc->submission_state.enabled);
-+ *        return 0;
-+ *    }
-+ *
-+ *    static const struct drm_info_list bar[] = {
-+ *        { name = "foo", .show = guc_debugfs_show, .data = foo },
-+ *    };
-+ *
-+ *    parent = debugfs_create_dir("uc", gtdir);
-+ *    drm_debugfs_create_files(bar, ARRAY_SIZE(bar), parent, minor);
-+ *
-+ * Return: 0 on success or a negative error code on failure.
-+ */
-+static int guc_debugfs_show(struct seq_file *m, void *data)
- {
--	struct xe_guc *guc = node_to_guc(m->private);
--	struct xe_device *xe = guc_to_xe(guc);
- 	struct drm_printer p = drm_seq_file_printer(m);
-+	struct drm_info_node *node = m->private;
-+	struct dentry *parent = node->dent->d_parent;
-+	struct dentry *grandparent = parent->d_parent;
-+	struct xe_gt *gt = grandparent->d_inode->i_private;
-+	struct xe_device *xe = gt_to_xe(gt);
-+	int (*print)(struct xe_guc *, struct drm_printer *) = node->info_ent->data;
-+	int ret;
- 
- 	xe_pm_runtime_get(xe);
--	xe_guc_print_info(guc, &p);
-+	ret = print(&gt->uc.guc, &p);
- 	xe_pm_runtime_put(xe);
- 
--	return 0;
-+	return ret;
- }
- 
--static int guc_log(struct seq_file *m, void *data)
-+static int guc_log(struct xe_guc *guc, struct drm_printer *p)
- {
--	struct xe_guc *guc = node_to_guc(m->private);
--	struct xe_device *xe = guc_to_xe(guc);
--	struct drm_printer p = drm_seq_file_printer(m);
--
--	xe_pm_runtime_get(xe);
--	xe_guc_log_print(&guc->log, &p);
--	xe_pm_runtime_put(xe);
--
-+	xe_guc_log_print(&guc->log, p);
- 	return 0;
- }
- 
--static int guc_log_dmesg(struct seq_file *m, void *data)
-+static int guc_log_dmesg(struct xe_guc *guc, struct drm_printer *p)
- {
--	struct xe_guc *guc = node_to_guc(m->private);
--	struct xe_device *xe = guc_to_xe(guc);
--
--	xe_pm_runtime_get(xe);
- 	xe_guc_log_print_dmesg(&guc->log);
--	xe_pm_runtime_put(xe);
--
- 	return 0;
- }
- 
--static int guc_ctb(struct seq_file *m, void *data)
-+static int guc_ctb(struct xe_guc *guc, struct drm_printer *p)
- {
--	struct xe_guc *guc = node_to_guc(m->private);
--	struct xe_device *xe = guc_to_xe(guc);
--	struct drm_printer p = drm_seq_file_printer(m);
--
--	xe_pm_runtime_get(xe);
--	xe_guc_ct_print(&guc->ct, &p, true);
--	xe_pm_runtime_put(xe);
--
-+	xe_guc_ct_print(&guc->ct, p, true);
- 	return 0;
- }
- 
--static int guc_pc(struct seq_file *m, void *data)
-+static int guc_pc(struct xe_guc *guc, struct drm_printer *p)
- {
--	struct xe_guc *guc = node_to_guc(m->private);
--	struct xe_device *xe = guc_to_xe(guc);
--	struct drm_printer p = drm_seq_file_printer(m);
--
--	xe_pm_runtime_get(xe);
--	xe_guc_pc_print(&guc->pc, &p);
--	xe_pm_runtime_put(xe);
--
-+	xe_guc_pc_print(&guc->pc, p);
- 	return 0;
- }
- 
- static const struct drm_info_list debugfs_list[] = {
--	{"guc_info", guc_info, 0},
--	{"guc_log", guc_log, 0},
--	{"guc_log_dmesg", guc_log_dmesg, 0},
--	{"guc_ctb", guc_ctb, 0},
--	{"guc_pc", guc_pc, 0},
-+	{ "guc_info", .show = guc_debugfs_show, .data = xe_guc_print_info },
-+	{ "guc_log", .show = guc_debugfs_show, .data = guc_log },
-+	{ "guc_log_dmesg", .show = guc_debugfs_show, .data = guc_log_dmesg },
-+	{ "guc_ctb", .show = guc_debugfs_show, .data = guc_ctb },
-+	{ "guc_pc", .show = guc_debugfs_show, .data = guc_pc },
- };
- 
- void xe_guc_debugfs_register(struct xe_guc *guc, struct dentry *parent)
- {
- 	struct drm_minor *minor = guc_to_xe(guc)->drm.primary;
--	struct drm_info_list *local;
--	int i;
--
--#define DEBUGFS_SIZE	(ARRAY_SIZE(debugfs_list) * sizeof(struct drm_info_list))
--	local = drmm_kmalloc(&guc_to_xe(guc)->drm, DEBUGFS_SIZE, GFP_KERNEL);
--	if (!local)
--		return;
--
--	memcpy(local, debugfs_list, DEBUGFS_SIZE);
--#undef DEBUGFS_SIZE
--
--	for (i = 0; i < ARRAY_SIZE(debugfs_list); ++i)
--		local[i].data = guc;
- 
--	drm_debugfs_create_files(local,
-+	drm_debugfs_create_files(debugfs_list,
- 				 ARRAY_SIZE(debugfs_list),
- 				 parent, minor);
- }
+diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
+index 914d4e1516a3c..f3d7d19482da9 100644
+--- a/net/tls/tls_sw.c
++++ b/net/tls/tls_sw.c
+@@ -1120,9 +1120,13 @@ static int tls_sw_sendmsg_locked(struct sock *sk, struct msghdr *msg,
+ 					num_async++;
+ 				else if (ret == -ENOMEM)
+ 					goto wait_for_memory;
+-				else if (ctx->open_rec && ret == -ENOSPC)
++				else if (ctx->open_rec && ret == -ENOSPC) {
++					if (msg_pl->cork_bytes) {
++						ret = 0;
++						goto send_end;
++					}
+ 					goto rollback_iter;
+-				else if (ret != -EAGAIN)
++				} else if (ret != -EAGAIN)
+ 					goto send_end;
+ 			}
+ 			continue;
 -- 
 2.39.5
 
