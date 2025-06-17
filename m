@@ -1,41 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92A3E2F234B;
-	Tue, 17 Jun 2025 16:02:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC9B22DFF03;
+	Tue, 17 Jun 2025 16:02:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750176173; cv=none; b=sD0vfcVR5Q5li/1cYx2GP+IUyCZrCbISdqbSGg8L5FRKaB4vI1o6IF29IIvYNGa1wv6TykYQ5sHd1nKXA52SMnJ4ZJOWyahPb3p8bA5xh6c4GAynU5EuB/i44/7qqWnN7CTz7OD7njsnIuQWMFDjwOm+tm2CvIr3fT3KdG50CKw=
+	t=1750176176; cv=none; b=efEXxujVy0JzJ069ghT5JXoJ0N+ihkgp/wga8uoxKq9wFRp4VhFtzunWZzBLXqUy7bRUt0wVaH66KtrtJqratIcwPB0lVKSNgnSBrzQj+AoaHt8E2Ws2r473NDlrUD4wTgV13Ffzj1aSMKCXlRMRF2ygs8b3qfMvuTTIbns/h9s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750176173; c=relaxed/simple;
-	bh=lbpJFo1LscpSK7ul1Yq23cPPlbn4U1ietZtFDny98p8=;
+	s=arc-20240116; t=1750176176; c=relaxed/simple;
+	bh=ZFQyUJsTktW88Za1Qqz6UUhXEremtQ2zeWONIBhiRyg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l2e1kgDZqKN3HYPHsdozF7vQxQIeD+++Wd7ZmxfrpesDKlVhxwB1ZJ778K9Ysy409z3+z4cCHuoR7wp6lC1wtToq1mKk+WLZZL1nHnGLNzukFEToJCDw1/NXrNbX84p+dQq6Z8tCHJiw29nnYsuWbIpIakPtkM8bbApMvci/QzA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZcIdkCwQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OdBASvyos0jbGKQmE0rTJhMxPv3+eHe+F8DTDI9/ml8m2QGrmvU9OSctubXtJhWSze3f1Li4TIEQ9GLUHOJVEVQHEBW9xPIFF4t/mT3X68gPDSXRuM8K6sqYYdXirbkbjrZeQ1OnMuNJiIZWn1Gb1G9khLzdmPvIc1dxFNwaRUw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WHQ7JCvO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZcIdkCwQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01459C4CEE3;
-	Tue, 17 Jun 2025 16:02:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WHQ7JCvO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 130ACC4CEE3;
+	Tue, 17 Jun 2025 16:02:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750176173;
-	bh=lbpJFo1LscpSK7ul1Yq23cPPlbn4U1ietZtFDny98p8=;
+	s=korg; t=1750176176;
+	bh=ZFQyUJsTktW88Za1Qqz6UUhXEremtQ2zeWONIBhiRyg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZcIdkCwQ3MzoTC88ENvY5JlNjEAlXdnNh1t6Kqa9ngQSJ+27fjrMTWebeJffLq7h4
-	 y95uYG790OmczHGaIJv1Fb3qgDv+6aA+AXVXgDdri45M0XyXG1M7z1pcMtf1XRMU7m
-	 JVrZaNxjshIubKGwSUf/FbU47KKl5zZQN+3opzgA=
+	b=WHQ7JCvOSFFh3vmsueyfHM5S+lPBEvTeVnTH1sTmcXdWAzFWe/ETv5yfWG6I2sLi5
+	 dL8ZYM4rf337k93erpD92hy3HcRTbUrdfV6pkCxRtMuxEChdgBD/xtXmTNaU/X3I2N
+	 zZYXNsTmKvN99k8otunB3h2IyMlhL5XfnoUjfeUI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Horatiu Vultur <horatiu.vultur@microchip.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 203/512] net: lan966x: Fix 1-step timestamping over ipv4 or ipv6
-Date: Tue, 17 Jun 2025 17:22:49 +0200
-Message-ID: <20250617152427.865701114@linuxfoundation.org>
+	Dawid Osuchowski <dawid.osuchowski@linux.intel.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Michal Kubiak <michal.kubiak@intel.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Jesse Brandeburg <jbrandeburg@cloudflare.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Saritha Sanigani <sarithax.sanigani@intel.com>
+Subject: [PATCH 6.6 252/356] ice: fix Tx scheduler error handling in XDP callback
+Date: Tue, 17 Jun 2025 17:26:07 +0200
+Message-ID: <20250617152348.346172616@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
+References: <20250617152338.212798615@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,170 +54,184 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Horatiu Vultur <horatiu.vultur@microchip.com>
+From: Michal Kubiak <michal.kubiak@intel.com>
 
-[ Upstream commit 57ee9584fd8606deef66d7b65fa4dcf94f6843aa ]
+[ Upstream commit 0153f36041b8e52019ebfa8629c13bf8f9b0a951 ]
 
-When enabling 1-step timestamping for ptp frames that are over udpv4 or
-udpv6 then the inserted timestamp is added at the wrong offset in the
-frame, meaning that will modify the frame at the wrong place, so the
-frame will be malformed.
-To fix this, the HW needs to know which kind of frame it is to know
-where to insert the timestamp. For that there is a field in the IFH that
-says the PDU_TYPE, which can be NONE  which is the default value,
-IPV4 or IPV6. Therefore make sure to set the PDU_TYPE so the HW knows
-where to insert the timestamp.
-Like I mention before the issue is not seen with L2 frames because by
-default the PDU_TYPE has a value of 0, which represents the L2 frames.
+When the XDP program is loaded, the XDP callback adds new Tx queues.
+This means that the callback must update the Tx scheduler with the new
+queue number. In the event of a Tx scheduler failure, the XDP callback
+should also fail and roll back any changes previously made for XDP
+preparation.
 
-Fixes: 77eecf25bd9d2f ("net: lan966x: Update extraction/injection for timestamping")
-Signed-off-by: Horatiu Vultur <horatiu.vultur@microchip.com>
-Link: https://patch.msgid.link/20250521124159.2713525-1-horatiu.vultur@microchip.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+The previous implementation had a bug that not all changes made by the
+XDP callback were rolled back. This caused the crash with the following
+call trace:
+
+[  +9.549584] ice 0000:ca:00.0: Failed VSI LAN queue config for XDP, error: -5
+[  +0.382335] Oops: general protection fault, probably for non-canonical address 0x50a2250a90495525: 0000 [#1] SMP NOPTI
+[  +0.010710] CPU: 103 UID: 0 PID: 0 Comm: swapper/103 Not tainted 6.14.0-net-next-mar-31+ #14 PREEMPT(voluntary)
+[  +0.010175] Hardware name: Intel Corporation M50CYP2SBSTD/M50CYP2SBSTD, BIOS SE5C620.86B.01.01.0005.2202160810 02/16/2022
+[  +0.010946] RIP: 0010:__ice_update_sample+0x39/0xe0 [ice]
+
+[...]
+
+[  +0.002715] Call Trace:
+[  +0.002452]  <IRQ>
+[  +0.002021]  ? __die_body.cold+0x19/0x29
+[  +0.003922]  ? die_addr+0x3c/0x60
+[  +0.003319]  ? exc_general_protection+0x17c/0x400
+[  +0.004707]  ? asm_exc_general_protection+0x26/0x30
+[  +0.004879]  ? __ice_update_sample+0x39/0xe0 [ice]
+[  +0.004835]  ice_napi_poll+0x665/0x680 [ice]
+[  +0.004320]  __napi_poll+0x28/0x190
+[  +0.003500]  net_rx_action+0x198/0x360
+[  +0.003752]  ? update_rq_clock+0x39/0x220
+[  +0.004013]  handle_softirqs+0xf1/0x340
+[  +0.003840]  ? sched_clock_cpu+0xf/0x1f0
+[  +0.003925]  __irq_exit_rcu+0xc2/0xe0
+[  +0.003665]  common_interrupt+0x85/0xa0
+[  +0.003839]  </IRQ>
+[  +0.002098]  <TASK>
+[  +0.002106]  asm_common_interrupt+0x26/0x40
+[  +0.004184] RIP: 0010:cpuidle_enter_state+0xd3/0x690
+
+Fix this by performing the missing unmapping of XDP queues from
+q_vectors and setting the XDP rings pointer back to NULL after all those
+queues are released.
+Also, add an immediate exit from the XDP callback in case of ring
+preparation failure.
+
+Fixes: efc2214b6047 ("ice: Add support for XDP")
+Reviewed-by: Dawid Osuchowski <dawid.osuchowski@linux.intel.com>
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Signed-off-by: Michal Kubiak <michal.kubiak@intel.com>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Jesse Brandeburg <jbrandeburg@cloudflare.com>
+Tested-by: Saritha Sanigani <sarithax.sanigani@intel.com> (A Contingent Worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/microchip/lan966x/lan966x_main.c |  6 +++
- .../ethernet/microchip/lan966x/lan966x_main.h |  5 ++
- .../ethernet/microchip/lan966x/lan966x_ptp.c  | 49 ++++++++++++++-----
- 3 files changed, 47 insertions(+), 13 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_main.c | 47 ++++++++++++++++-------
+ 1 file changed, 33 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_main.c b/drivers/net/ethernet/microchip/lan966x/lan966x_main.c
-index 534d4716d5f7d..73832bba93270 100644
---- a/drivers/net/ethernet/microchip/lan966x/lan966x_main.c
-+++ b/drivers/net/ethernet/microchip/lan966x/lan966x_main.c
-@@ -353,6 +353,11 @@ static void lan966x_ifh_set_rew_op(void *ifh, u64 rew_op)
- 	lan966x_ifh_set(ifh, rew_op, IFH_POS_REW_CMD, IFH_WID_REW_CMD);
+diff --git a/drivers/net/ethernet/intel/ice/ice_main.c b/drivers/net/ethernet/intel/ice/ice_main.c
+index 0ae7bdfff83fb..e1a68fb5e9fff 100644
+--- a/drivers/net/ethernet/intel/ice/ice_main.c
++++ b/drivers/net/ethernet/intel/ice/ice_main.c
+@@ -2650,6 +2650,27 @@ static void ice_vsi_assign_bpf_prog(struct ice_vsi *vsi, struct bpf_prog *prog)
+ 		bpf_prog_put(old_prog);
  }
  
-+static void lan966x_ifh_set_oam_type(void *ifh, u64 oam_type)
++/**
++ * ice_unmap_xdp_rings - Unmap XDP rings from interrupt vectors
++ * @vsi: the VSI with XDP rings being unmapped
++ */
++static void ice_unmap_xdp_rings(struct ice_vsi *vsi)
 +{
-+	lan966x_ifh_set(ifh, oam_type, IFH_POS_PDU_TYPE, IFH_WID_PDU_TYPE);
++	int v_idx;
++
++	ice_for_each_q_vector(vsi, v_idx) {
++		struct ice_q_vector *q_vector = vsi->q_vectors[v_idx];
++		struct ice_tx_ring *ring;
++
++		ice_for_each_tx_ring(ring, q_vector->tx)
++			if (!ring->tx_buf || !ice_ring_is_xdp(ring))
++				break;
++
++		/* restore the value of last node prior to XDP setup */
++		q_vector->tx.tx_ring = ring;
++	}
 +}
 +
- static void lan966x_ifh_set_timestamp(void *ifh, u64 timestamp)
- {
- 	lan966x_ifh_set(ifh, timestamp, IFH_POS_TIMESTAMP, IFH_WID_TIMESTAMP);
-@@ -380,6 +385,7 @@ static netdev_tx_t lan966x_port_xmit(struct sk_buff *skb,
- 			return err;
- 
- 		lan966x_ifh_set_rew_op(ifh, LAN966X_SKB_CB(skb)->rew_op);
-+		lan966x_ifh_set_oam_type(ifh, LAN966X_SKB_CB(skb)->pdu_type);
- 		lan966x_ifh_set_timestamp(ifh, LAN966X_SKB_CB(skb)->ts_id);
+ /**
+  * ice_prepare_xdp_rings - Allocate, configure and setup Tx rings for XDP
+  * @vsi: VSI to bring up Tx rings used by XDP
+@@ -2749,7 +2770,7 @@ int ice_prepare_xdp_rings(struct ice_vsi *vsi, struct bpf_prog *prog,
+ 	if (status) {
+ 		dev_err(dev, "Failed VSI LAN queue config for XDP, error: %d\n",
+ 			status);
+-		goto clear_xdp_rings;
++		goto unmap_xdp_rings;
  	}
  
-diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_main.h b/drivers/net/ethernet/microchip/lan966x/lan966x_main.h
-index 25cb2f61986f6..bd3d19cea0034 100644
---- a/drivers/net/ethernet/microchip/lan966x/lan966x_main.h
-+++ b/drivers/net/ethernet/microchip/lan966x/lan966x_main.h
-@@ -75,6 +75,10 @@
- #define IFH_REW_OP_ONE_STEP_PTP		0x3
- #define IFH_REW_OP_TWO_STEP_PTP		0x4
+ 	/* assign the prog only when it's not already present on VSI;
+@@ -2765,6 +2786,8 @@ int ice_prepare_xdp_rings(struct ice_vsi *vsi, struct bpf_prog *prog,
+ 		ice_vsi_assign_bpf_prog(vsi, prog);
  
-+#define IFH_PDU_TYPE_NONE		0
-+#define IFH_PDU_TYPE_IPV4		7
-+#define IFH_PDU_TYPE_IPV6		8
+ 	return 0;
++unmap_xdp_rings:
++	ice_unmap_xdp_rings(vsi);
+ clear_xdp_rings:
+ 	ice_for_each_xdp_txq(vsi, i)
+ 		if (vsi->xdp_rings[i]) {
+@@ -2781,6 +2804,8 @@ int ice_prepare_xdp_rings(struct ice_vsi *vsi, struct bpf_prog *prog,
+ 	mutex_unlock(&pf->avail_q_mutex);
+ 
+ 	devm_kfree(dev, vsi->xdp_rings);
++	vsi->xdp_rings = NULL;
 +
- #define FDMA_RX_DCB_MAX_DBS		1
- #define FDMA_TX_DCB_MAX_DBS		1
- 
-@@ -254,6 +258,7 @@ struct lan966x_phc {
- 
- struct lan966x_skb_cb {
- 	u8 rew_op;
-+	u8 pdu_type;
- 	u16 ts_id;
- 	unsigned long jiffies;
- };
-diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_ptp.c b/drivers/net/ethernet/microchip/lan966x/lan966x_ptp.c
-index 63905bb5a63a8..87e5e81d40dc6 100644
---- a/drivers/net/ethernet/microchip/lan966x/lan966x_ptp.c
-+++ b/drivers/net/ethernet/microchip/lan966x/lan966x_ptp.c
-@@ -322,34 +322,55 @@ void lan966x_ptp_hwtstamp_get(struct lan966x_port *port,
- 	*cfg = phc->hwtstamp_config;
+ 	return -ENOMEM;
  }
  
--static int lan966x_ptp_classify(struct lan966x_port *port, struct sk_buff *skb)
-+static void lan966x_ptp_classify(struct lan966x_port *port, struct sk_buff *skb,
-+				 u8 *rew_op, u8 *pdu_type)
+@@ -2796,7 +2821,7 @@ int ice_destroy_xdp_rings(struct ice_vsi *vsi, enum ice_xdp_cfg cfg_type)
  {
- 	struct ptp_header *header;
- 	u8 msgtype;
- 	int type;
+ 	u16 max_txqs[ICE_MAX_TRAFFIC_CLASS] = { 0 };
+ 	struct ice_pf *pf = vsi->back;
+-	int i, v_idx;
++	int i;
  
--	if (port->ptp_tx_cmd == IFH_REW_OP_NOOP)
--		return IFH_REW_OP_NOOP;
-+	if (port->ptp_tx_cmd == IFH_REW_OP_NOOP) {
-+		*rew_op = IFH_REW_OP_NOOP;
-+		*pdu_type = IFH_PDU_TYPE_NONE;
-+		return;
-+	}
+ 	/* q_vectors are freed in reset path so there's no point in detaching
+ 	 * rings
+@@ -2804,17 +2829,7 @@ int ice_destroy_xdp_rings(struct ice_vsi *vsi, enum ice_xdp_cfg cfg_type)
+ 	if (cfg_type == ICE_XDP_CFG_PART)
+ 		goto free_qmap;
  
- 	type = ptp_classify_raw(skb);
--	if (type == PTP_CLASS_NONE)
--		return IFH_REW_OP_NOOP;
-+	if (type == PTP_CLASS_NONE) {
-+		*rew_op = IFH_REW_OP_NOOP;
-+		*pdu_type = IFH_PDU_TYPE_NONE;
-+		return;
-+	}
+-	ice_for_each_q_vector(vsi, v_idx) {
+-		struct ice_q_vector *q_vector = vsi->q_vectors[v_idx];
+-		struct ice_tx_ring *ring;
+-
+-		ice_for_each_tx_ring(ring, q_vector->tx)
+-			if (!ring->tx_buf || !ice_ring_is_xdp(ring))
+-				break;
+-
+-		/* restore the value of last node prior to XDP setup */
+-		q_vector->tx.tx_ring = ring;
+-	}
++	ice_unmap_xdp_rings(vsi);
  
- 	header = ptp_parse_header(skb, type);
--	if (!header)
--		return IFH_REW_OP_NOOP;
-+	if (!header) {
-+		*rew_op = IFH_REW_OP_NOOP;
-+		*pdu_type = IFH_PDU_TYPE_NONE;
-+		return;
-+	}
+ free_qmap:
+ 	mutex_lock(&pf->avail_q_mutex);
+@@ -2956,11 +2971,14 @@ ice_xdp_setup_prog(struct ice_vsi *vsi, struct bpf_prog *prog,
+ 		xdp_ring_err = ice_vsi_determine_xdp_res(vsi);
+ 		if (xdp_ring_err) {
+ 			NL_SET_ERR_MSG_MOD(extack, "Not enough Tx resources for XDP");
++			goto resume_if;
+ 		} else {
+ 			xdp_ring_err = ice_prepare_xdp_rings(vsi, prog,
+ 							     ICE_XDP_CFG_FULL);
+-			if (xdp_ring_err)
++			if (xdp_ring_err) {
+ 				NL_SET_ERR_MSG_MOD(extack, "Setting up XDP Tx resources failed");
++				goto resume_if;
++			}
+ 		}
+ 		xdp_features_set_redirect_target(vsi->netdev, true);
+ 		/* reallocate Rx queues that are used for zero-copy */
+@@ -2978,6 +2996,7 @@ ice_xdp_setup_prog(struct ice_vsi *vsi, struct bpf_prog *prog,
+ 			NL_SET_ERR_MSG_MOD(extack, "Freeing XDP Rx resources failed");
+ 	}
  
--	if (port->ptp_tx_cmd == IFH_REW_OP_TWO_STEP_PTP)
--		return IFH_REW_OP_TWO_STEP_PTP;
-+	if (type & PTP_CLASS_L2)
-+		*pdu_type = IFH_PDU_TYPE_NONE;
-+	if (type & PTP_CLASS_IPV4)
-+		*pdu_type = IFH_PDU_TYPE_IPV4;
-+	if (type & PTP_CLASS_IPV6)
-+		*pdu_type = IFH_PDU_TYPE_IPV6;
-+
-+	if (port->ptp_tx_cmd == IFH_REW_OP_TWO_STEP_PTP) {
-+		*rew_op = IFH_REW_OP_TWO_STEP_PTP;
-+		return;
-+	}
++resume_if:
+ 	if (if_running)
+ 		ret = ice_up(vsi);
  
- 	/* If it is sync and run 1 step then set the correct operation,
- 	 * otherwise run as 2 step
- 	 */
- 	msgtype = ptp_get_msgtype(header, type);
--	if ((msgtype & 0xf) == 0)
--		return IFH_REW_OP_ONE_STEP_PTP;
-+	if ((msgtype & 0xf) == 0) {
-+		*rew_op = IFH_REW_OP_ONE_STEP_PTP;
-+		return;
-+	}
- 
--	return IFH_REW_OP_TWO_STEP_PTP;
-+	*rew_op = IFH_REW_OP_TWO_STEP_PTP;
- }
- 
- static void lan966x_ptp_txtstamp_old_release(struct lan966x_port *port)
-@@ -374,10 +395,12 @@ int lan966x_ptp_txtstamp_request(struct lan966x_port *port,
- {
- 	struct lan966x *lan966x = port->lan966x;
- 	unsigned long flags;
-+	u8 pdu_type;
- 	u8 rew_op;
- 
--	rew_op = lan966x_ptp_classify(port, skb);
-+	lan966x_ptp_classify(port, skb, &rew_op, &pdu_type);
- 	LAN966X_SKB_CB(skb)->rew_op = rew_op;
-+	LAN966X_SKB_CB(skb)->pdu_type = pdu_type;
- 
- 	if (rew_op != IFH_REW_OP_TWO_STEP_PTP)
- 		return 0;
 -- 
 2.39.5
 
