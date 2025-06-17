@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01772285059;
-	Tue, 17 Jun 2025 16:39:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 546252ECEA7;
+	Tue, 17 Jun 2025 16:39:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750178377; cv=none; b=QroPbUuWMTaCIgnbbFhPyjDioesKSF23OB2CsjFUDy6SKdnu0dJIZ0aFGueWAztfGaV+EG7UCsSIlJVXedBgMLp2tho3bdFWntT/quX8u6PwxAUw5cgOk35jl8Vlo4SwZJtZ31ECMwkXLA7EZ2gxPyWoFNd3e9llo1WWTQBOJn4=
+	t=1750178380; cv=none; b=Yxg+5GUiteRV/87hsPMdnq+Sm3pYdnNd7gCM7/Avh5+01FAYjKcBMASWa2GNwBHuWJRlyi1RymZy/KAVDICXqcKO0lbVD6xdr6lqDVB9yOut71SNH6HR9A8/RRc5vEIcJgnmsDDhda9oeGwAiaurFqMfRTX131vm3p1EzOEoGTM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750178377; c=relaxed/simple;
-	bh=uKnM2Jm0BA5nUZ2h5DOaX6YIzEW7DY7ilEUj2gwIZ78=;
+	s=arc-20240116; t=1750178380; c=relaxed/simple;
+	bh=748FPP2pIXfT6ntjgRySuMjw8Fy3jeyNSg+B9E+jFls=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Sw5gejVgKlmVRIXW2sPtXCRx4uFj2xCR75lEX22WhUjhJeYxzwuyLYLNcQmUKkCYglBo6P9cea1gUFsHDuvttCHBx4TfEfVfRcUocQjcs8bBuNJnn7De5AgZPwZSuRs09XphpwiTnsyKTgvzYv9ei1vJ4FE9LtRSCYGTFVoYJ0g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PC7UqLUv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=XkKaNsJcNXXGkrYA1HcaJdmBJBaCclsDm0qb+7cWxD1tOkXDp0OzxpiVrVqgzXOgUmnZtSZL2zj4imbxt4mdMw8aanzRsMDnsybj+TnIsilJ38bqN918ZpgQ4oqpqY0UlpwP1uJC88optzOiuFWhesKUwrn5vQKOt7CwXq6pQak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I63+gMKW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PC7UqLUv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29DF9C4CEE3;
-	Tue, 17 Jun 2025 16:39:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I63+gMKW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8E83C4CEE7;
+	Tue, 17 Jun 2025 16:39:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750178376;
-	bh=uKnM2Jm0BA5nUZ2h5DOaX6YIzEW7DY7ilEUj2gwIZ78=;
+	s=korg; t=1750178380;
+	bh=748FPP2pIXfT6ntjgRySuMjw8Fy3jeyNSg+B9E+jFls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PC7UqLUvAsLiTBvff6x9E/5iROJFz0wF9AQrUbA17e0OpDHUE4T8+zfVo+cP3wyiI
-	 6HNzOq6RKeEXG/CAbeYHmT9MuTJ2YNTLgbLsUDQv4I8kNh2wKtOEf9rxAkDcI+6Aqp
-	 tWnKMOXMlt2Yn9O27MQ3f6HJvAL/C2TpnkSshpuI=
+	b=I63+gMKWOvN5rC5kSXLPyZlVdi5EylH9r4wbA1xH7ZlAtYMBCDhBQ+8gBr3Gaq5OH
+	 txKeMiV6yKe6x08o6pMCTv8UXCrG94JFX+9VH3w/AXlVxX7Gc1mkEvLM3uWyaIiMLw
+	 wPYH6z7+1EacQtNrSCSWqtUIMoeF1A4fRmYfJCb4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Beleswar Padhi <b-padhi@ti.com>,
-	Judith Mendez <jm@ti.com>,
-	Andrew Davis <afd@ti.com>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 451/780] remoteproc: k3-r5: Refactor sequential core power up/down operations
-Date: Tue, 17 Jun 2025 17:22:39 +0200
-Message-ID: <20250617152509.829603531@linuxfoundation.org>
+	=?UTF-8?q?Beno=C3=AEt=20Sevens?= <bsevens@google.com>,
+	Oleg Nesterov <oleg@redhat.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 6.12 487/512] posix-cpu-timers: fix race between handle_posix_cpu_timers() and posix_cpu_timer_del()
+Date: Tue, 17 Jun 2025 17:27:33 +0200
+Message-ID: <20250617152439.360439060@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,237 +45,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Beleswar Padhi <b-padhi@ti.com>
+From: Oleg Nesterov <oleg@redhat.com>
 
-[ Upstream commit 701177511abd295e0fc2499796e466d8ff12165c ]
+commit f90fff1e152dedf52b932240ebbd670d83330eca upstream.
 
-The existing implementation of the waiting mechanism in
-"k3_r5_cluster_rproc_init()" waits for the "released_from_reset" flag to
-be set as part of the firmware boot process in "k3_r5_rproc_start()".
-The "k3_r5_cluster_rproc_init()" function is invoked in the probe
-routine which causes unexpected failures in cases where the firmware is
-unavailable at boot time, resulting in probe failure and removal of the
-remoteproc handles in the sysfs paths.
+If an exiting non-autoreaping task has already passed exit_notify() and
+calls handle_posix_cpu_timers() from IRQ, it can be reaped by its parent
+or debugger right after unlock_task_sighand().
 
-To address this, the waiting mechanism is refactored out of the probe
-routine into the appropriate "k3_r5_rproc_{prepare/unprepare}()"
-functions. This allows the probe routine to complete without depending
-on firmware booting, while still maintaining the required
-power-synchronization between cores.
+If a concurrent posix_cpu_timer_del() runs at that moment, it won't be
+able to detect timer->it.cpu.firing != 0: cpu_timer_task_rcu() and/or
+lock_task_sighand() will fail.
 
-Further, this wait mechanism is dropped from
-"k3_r5_rproc_{start/stop}()" functions as they deal with Core Run/Halt
-operations, and as such, there is no constraint in Running or Halting
-the cores of a cluster in order.
+Add the tsk->exit_state check into run_posix_cpu_timers() to fix this.
 
-Fixes: 61f6f68447ab ("remoteproc: k3-r5: Wait for core0 power-up before powering up core1")
-Signed-off-by: Beleswar Padhi <b-padhi@ti.com>
-Tested-by: Judith Mendez <jm@ti.com>
-Reviewed-by: Andrew Davis <afd@ti.com>
-Link: https://lore.kernel.org/r/20250513054510.3439842-4-b-padhi@ti.com
-Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This fix is not needed if CONFIG_POSIX_CPU_TIMERS_TASK_WORK=y, because
+exit_task_work() is called before exit_notify(). But the check still
+makes sense, task_work_add(&tsk->posix_cputimers_work.work) will fail
+anyway in this case.
+
+Cc: stable@vger.kernel.org
+Reported-by: Benoît Sevens <bsevens@google.com>
+Fixes: 0bdd2ed4138e ("sched: run_posix_cpu_timers: Don't check ->exit_state, use lock_task_sighand()")
+Signed-off-by: Oleg Nesterov <oleg@redhat.com>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/remoteproc/ti_k3_r5_remoteproc.c | 110 +++++++++++++----------
- 1 file changed, 63 insertions(+), 47 deletions(-)
+ kernel/time/posix-cpu-timers.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/remoteproc/ti_k3_r5_remoteproc.c b/drivers/remoteproc/ti_k3_r5_remoteproc.c
-index 3fc0b97dec600..ba082ca13e750 100644
---- a/drivers/remoteproc/ti_k3_r5_remoteproc.c
-+++ b/drivers/remoteproc/ti_k3_r5_remoteproc.c
-@@ -440,13 +440,36 @@ static int k3_r5_rproc_prepare(struct rproc *rproc)
- {
- 	struct k3_r5_rproc *kproc = rproc->priv;
- 	struct k3_r5_cluster *cluster = kproc->cluster;
--	struct k3_r5_core *core = kproc->core;
-+	struct k3_r5_core *core = kproc->core, *core0, *core1;
- 	struct device *dev = kproc->dev;
- 	u32 ctrl = 0, cfg = 0, stat = 0;
- 	u64 boot_vec = 0;
- 	bool mem_init_dis;
- 	int ret;
+--- a/kernel/time/posix-cpu-timers.c
++++ b/kernel/time/posix-cpu-timers.c
+@@ -1401,6 +1401,15 @@ void run_posix_cpu_timers(void)
+ 	lockdep_assert_irqs_disabled();
  
-+	/*
-+	 * R5 cores require to be powered on sequentially, core0 should be in
-+	 * higher power state than core1 in a cluster. So, wait for core0 to
-+	 * power up before proceeding to core1 and put timeout of 2sec. This
-+	 * waiting mechanism is necessary because rproc_auto_boot_callback() for
-+	 * core1 can be called before core0 due to thread execution order.
-+	 *
-+	 * By placing the wait mechanism here in .prepare() ops, this condition
-+	 * is enforced for rproc boot requests from sysfs as well.
-+	 */
-+	core0 = list_first_entry(&cluster->cores, struct k3_r5_core, elem);
-+	core1 = list_last_entry(&cluster->cores, struct k3_r5_core, elem);
-+	if (cluster->mode == CLUSTER_MODE_SPLIT && core == core1 &&
-+	    !core0->released_from_reset) {
-+		ret = wait_event_interruptible_timeout(cluster->core_transition,
-+						       core0->released_from_reset,
-+						       msecs_to_jiffies(2000));
-+		if (ret <= 0) {
-+			dev_err(dev, "can not power up core1 before core0");
-+			return -EPERM;
-+		}
-+	}
-+
- 	ret = ti_sci_proc_get_status(core->tsp, &boot_vec, &cfg, &ctrl, &stat);
- 	if (ret < 0)
- 		return ret;
-@@ -462,6 +485,14 @@ static int k3_r5_rproc_prepare(struct rproc *rproc)
- 		return ret;
- 	}
- 
-+	/*
-+	 * Notify all threads in the wait queue when core0 state has changed so
-+	 * that threads waiting for this condition can be executed.
-+	 */
-+	core->released_from_reset = true;
-+	if (core == core0)
-+		wake_up_interruptible(&cluster->core_transition);
-+
  	/*
- 	 * Newer IP revisions like on J7200 SoCs support h/w auto-initialization
- 	 * of TCMs, so there is no need to perform the s/w memzero. This bit is
-@@ -507,10 +538,30 @@ static int k3_r5_rproc_unprepare(struct rproc *rproc)
- {
- 	struct k3_r5_rproc *kproc = rproc->priv;
- 	struct k3_r5_cluster *cluster = kproc->cluster;
--	struct k3_r5_core *core = kproc->core;
-+	struct k3_r5_core *core = kproc->core, *core0, *core1;
- 	struct device *dev = kproc->dev;
- 	int ret;
- 
-+	/*
-+	 * Ensure power-down of cores is sequential in split mode. Core1 must
-+	 * power down before Core0 to maintain the expected state. By placing
-+	 * the wait mechanism here in .unprepare() ops, this condition is
-+	 * enforced for rproc stop or shutdown requests from sysfs and device
-+	 * removal as well.
++	 * Ensure that release_task(tsk) can't happen while
++	 * handle_posix_cpu_timers() is running. Otherwise, a concurrent
++	 * posix_cpu_timer_del() may fail to lock_task_sighand(tsk) and
++	 * miss timer->it.cpu.firing != 0.
 +	 */
-+	core0 = list_first_entry(&cluster->cores, struct k3_r5_core, elem);
-+	core1 = list_last_entry(&cluster->cores, struct k3_r5_core, elem);
-+	if (cluster->mode == CLUSTER_MODE_SPLIT && core == core0 &&
-+	    core1->released_from_reset) {
-+		ret = wait_event_interruptible_timeout(cluster->core_transition,
-+						       !core1->released_from_reset,
-+						       msecs_to_jiffies(2000));
-+		if (ret <= 0) {
-+			dev_err(dev, "can not power down core0 before core1");
-+			return -EPERM;
-+		}
-+	}
++	if (tsk->exit_state)
++		return;
 +
- 	/* Re-use LockStep-mode reset logic for Single-CPU mode */
- 	ret = (cluster->mode == CLUSTER_MODE_LOCKSTEP ||
- 	       cluster->mode == CLUSTER_MODE_SINGLECPU) ?
-@@ -518,6 +569,14 @@ static int k3_r5_rproc_unprepare(struct rproc *rproc)
- 	if (ret)
- 		dev_err(dev, "unable to disable cores, ret = %d\n", ret);
- 
 +	/*
-+	 * Notify all threads in the wait queue when core1 state has changed so
-+	 * that threads waiting for this condition can be executed.
-+	 */
-+	core->released_from_reset = false;
-+	if (core == core1)
-+		wake_up_interruptible(&cluster->core_transition);
-+
- 	return ret;
- }
- 
-@@ -543,7 +602,7 @@ static int k3_r5_rproc_start(struct rproc *rproc)
- 	struct k3_r5_rproc *kproc = rproc->priv;
- 	struct k3_r5_cluster *cluster = kproc->cluster;
- 	struct device *dev = kproc->dev;
--	struct k3_r5_core *core0, *core;
-+	struct k3_r5_core *core;
- 	u32 boot_addr;
- 	int ret;
- 
-@@ -565,21 +624,9 @@ static int k3_r5_rproc_start(struct rproc *rproc)
- 				goto unroll_core_run;
- 		}
- 	} else {
--		/* do not allow core 1 to start before core 0 */
--		core0 = list_first_entry(&cluster->cores, struct k3_r5_core,
--					 elem);
--		if (core != core0 && core0->rproc->state == RPROC_OFFLINE) {
--			dev_err(dev, "%s: can not start core 1 before core 0\n",
--				__func__);
--			return -EPERM;
--		}
--
- 		ret = k3_r5_core_run(core);
- 		if (ret)
- 			return ret;
--
--		core->released_from_reset = true;
--		wake_up_interruptible(&cluster->core_transition);
- 	}
- 
- 	return 0;
-@@ -620,8 +667,7 @@ static int k3_r5_rproc_stop(struct rproc *rproc)
- {
- 	struct k3_r5_rproc *kproc = rproc->priv;
- 	struct k3_r5_cluster *cluster = kproc->cluster;
--	struct device *dev = kproc->dev;
--	struct k3_r5_core *core1, *core = kproc->core;
-+	struct k3_r5_core *core = kproc->core;
- 	int ret;
- 
- 	/* halt all applicable cores */
-@@ -634,16 +680,6 @@ static int k3_r5_rproc_stop(struct rproc *rproc)
- 			}
- 		}
- 	} else {
--		/* do not allow core 0 to stop before core 1 */
--		core1 = list_last_entry(&cluster->cores, struct k3_r5_core,
--					elem);
--		if (core != core1 && core1->rproc->state != RPROC_OFFLINE) {
--			dev_err(dev, "%s: can not stop core 0 before core 1\n",
--				__func__);
--			ret = -EPERM;
--			goto out;
--		}
--
- 		ret = k3_r5_core_halt(core);
- 		if (ret)
- 			goto out;
-@@ -1271,26 +1307,6 @@ static int k3_r5_cluster_rproc_init(struct platform_device *pdev)
- 		    cluster->mode == CLUSTER_MODE_SINGLECPU ||
- 		    cluster->mode == CLUSTER_MODE_SINGLECORE)
- 			break;
--
--		/*
--		 * R5 cores require to be powered on sequentially, core0
--		 * should be in higher power state than core1 in a cluster
--		 * So, wait for current core to power up before proceeding
--		 * to next core and put timeout of 2sec for each core.
--		 *
--		 * This waiting mechanism is necessary because
--		 * rproc_auto_boot_callback() for core1 can be called before
--		 * core0 due to thread execution order.
--		 */
--		ret = wait_event_interruptible_timeout(cluster->core_transition,
--						       core->released_from_reset,
--						       msecs_to_jiffies(2000));
--		if (ret <= 0) {
--			dev_err(dev,
--				"Timed out waiting for %s core to power up!\n",
--				rproc->name);
--			goto out;
--		}
- 	}
- 
- 	return 0;
--- 
-2.39.5
-
+ 	 * If the actual expiry is deferred to task work context and the
+ 	 * work is already scheduled there is no point to do anything here.
+ 	 */
 
 
