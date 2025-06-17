@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23BB82ED179;
-	Tue, 17 Jun 2025 16:08:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A273E2ED176;
+	Tue, 17 Jun 2025 16:09:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750176538; cv=none; b=bxCIHrMHS+z6izcOOwfegrDOzMYW93JKR9VrOKgBdedwHzpbTmaeHm5ZRlsXFqX5etRsn4I7I39xjQPQD0Qnd03tEoD+Wh8G08tgipts20X8i4adjLmBIbp83GG/fj3M8a3S41y77KAXQhwNIps4K27EhS3CfdohzSuKdIyGDV0=
+	t=1750176541; cv=none; b=iE84eYdJYE2vGpcQzUXnLLjzSq9Ip4ytgmsm5Z6XSoOhshZ303G/LoXPKEDNEWRlc7HhF1aeSPlknZRvlnZn+bbY8iOFktU9y1+o1epioYwlxJNx6HNA8+Gx9sZMoMURqTSEVwShWD/kP5L1i9Cygu9sWfJJ7IfSIsK9lJvb0pw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750176538; c=relaxed/simple;
-	bh=7j2NYvOnWVcuoqn0TUp3TslP5JODh3FtfYfRag1Zouo=;
+	s=arc-20240116; t=1750176541; c=relaxed/simple;
+	bh=10xGQac022hY1dr5inw4AqR3hyU42XMNxD6FFBnw4vs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JlHRKF0RLASh/m4Sq3yxRbubIZjMedJ+1VaxD2+XDnIK6fNTYKDsh+AjTF+4g3ezxWTDfZo1y2+YVei9cPUcpHrQzG+CFbG02iIpbMOAIgS/Z82U/StEhi1vGi5tSxLvreLD9047UxJ6LsEekfeQAmyEHBG1CmDzzPl3ubMNOq8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hKJ0CWKU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=vEg2nNlYv0nGD3cQYaXPxbNdRqNiJcESmcZLrDLgU/84bsUr9nXhSRTfgGnzd3YbqzXVTYP+PZaI+O78/Wk3sx3RcgtEm489+Y9ETOj8+yRuaFvXlY/3RXl1Uh1bFIrhEhGeT5dcHWCZXnCv8M/j8wZKpNqCmvYrjLCkCrSgI5Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=igKzwMdG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hKJ0CWKU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87C7CC4CEE3;
-	Tue, 17 Jun 2025 16:08:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="igKzwMdG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB1A4C4CEE3;
+	Tue, 17 Jun 2025 16:09:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750176538;
-	bh=7j2NYvOnWVcuoqn0TUp3TslP5JODh3FtfYfRag1Zouo=;
+	s=korg; t=1750176541;
+	bh=10xGQac022hY1dr5inw4AqR3hyU42XMNxD6FFBnw4vs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hKJ0CWKUo1W2pbYiN5SyiAHcP2NOI/839eNyt7ooy2EH11biCPUa5Ol18wnqZ/+yV
-	 u4xBTFIPrO5dqnu2IjJUUyqgyf7NV9Dhtgr5Bbjma9/qo0QhaLy7DVutAasayDzkHA
-	 Gsnb1oC255hVcDQ0GdkQBcoMm1dWGwRbZyj2vPSQ=
+	b=igKzwMdGvdObdliFKG2UW5zN7uay5KQfXxVmKNRplyfBVASzismxE1nanGJhml6WA
+	 TRDs2fkp8LlNGeF6yE4B4+CSYyWKXvG0CkEn9aPJApsMyEKxVdXAO5WMhlKTFUNsLU
+	 fnZoz2XIcFMCYj2Er4bBmyu1Zt0Q7Z2JsT9gFcpU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adam Ford <aford173@gmail.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Pauli Virtanen <pav@iki.fi>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 240/512] arm64: dts: imx8mn-beacon: Set SAI5 MCLK direction to output for HDMI audio
-Date: Tue, 17 Jun 2025 17:23:26 +0200
-Message-ID: <20250617152429.345678276@linuxfoundation.org>
+Subject: [PATCH 6.6 291/356] Bluetooth: hci_core: fix list_for_each_entry_rcu usage
+Date: Tue, 17 Jun 2025 17:26:46 +0200
+Message-ID: <20250617152349.892762891@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
+References: <20250617152338.212798615@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,42 +48,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Adam Ford <aford173@gmail.com>
+From: Pauli Virtanen <pav@iki.fi>
 
-[ Upstream commit a747c4dd2a60c4d0179b372032a4b98548135096 ]
+[ Upstream commit 308a3a8ce8ea41b26c46169f3263e50f5997c28e ]
 
-The HDMI bridge chip fails to generate an audio source due to the SAI5
-master clock (MCLK) direction not being set to output. This prevents proper
-clocking of the HDMI audio interface.
+Releasing + re-acquiring RCU lock inside list_for_each_entry_rcu() loop
+body is not correct.
 
-Add the `fsl,sai-mclk-direction-output` property to the SAI5 node to ensure
-the MCLK is driven by the SoC, resolving the HDMI sound issue.
+Fix by taking the update-side hdev->lock instead.
 
-Fixes: 1d6880ceef43 ("arm64: dts: imx8mn-beacon: Add HDMI video with sound")
-Signed-off-by: Adam Ford <aford173@gmail.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Fixes: c7eaf80bfb0c ("Bluetooth: Fix hci_link_tx_to RCU lock usage")
+Signed-off-by: Pauli Virtanen <pav@iki.fi>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx8mn-beacon-kit.dts | 1 +
- 1 file changed, 1 insertion(+)
+ net/bluetooth/hci_core.c | 11 +++--------
+ 1 file changed, 3 insertions(+), 8 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8mn-beacon-kit.dts b/arch/arm64/boot/dts/freescale/imx8mn-beacon-kit.dts
-index 1df5ceb113879..37fc5ed98d7f6 100644
---- a/arch/arm64/boot/dts/freescale/imx8mn-beacon-kit.dts
-+++ b/arch/arm64/boot/dts/freescale/imx8mn-beacon-kit.dts
-@@ -124,6 +124,7 @@
- 	assigned-clock-parents = <&clk IMX8MN_AUDIO_PLL1_OUT>;
- 	assigned-clock-rates = <24576000>;
- 	#sound-dai-cells = <0>;
-+	fsl,sai-mclk-direction-output;
- 	status = "okay";
- };
+diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
+index 30519d47e8a69..febfd389ecf43 100644
+--- a/net/bluetooth/hci_core.c
++++ b/net/bluetooth/hci_core.c
+@@ -3380,23 +3380,18 @@ static void hci_link_tx_to(struct hci_dev *hdev, __u8 type)
  
+ 	bt_dev_err(hdev, "link tx timeout");
+ 
+-	rcu_read_lock();
++	hci_dev_lock(hdev);
+ 
+ 	/* Kill stalled connections */
+-	list_for_each_entry_rcu(c, &h->list, list) {
++	list_for_each_entry(c, &h->list, list) {
+ 		if (c->type == type && c->sent) {
+ 			bt_dev_err(hdev, "killing stalled connection %pMR",
+ 				   &c->dst);
+-			/* hci_disconnect might sleep, so, we have to release
+-			 * the RCU read lock before calling it.
+-			 */
+-			rcu_read_unlock();
+ 			hci_disconnect(c, HCI_ERROR_REMOTE_USER_TERM);
+-			rcu_read_lock();
+ 		}
+ 	}
+ 
+-	rcu_read_unlock();
++	hci_dev_unlock(hdev);
+ }
+ 
+ static struct hci_chan *hci_chan_sent(struct hci_dev *hdev, __u8 type,
 -- 
 2.39.5
 
