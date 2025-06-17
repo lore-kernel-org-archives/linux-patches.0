@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6A312ECEB2;
-	Tue, 17 Jun 2025 15:59:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10E102ECD36;
+	Tue, 17 Jun 2025 15:59:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175959; cv=none; b=UZUg720IFepyWUl33JEXtWD9w8988vR/cI5rqXlf7sQ5fTtN0Wsfzbr2HV1BPfbPkDw7OCml5qKnJTu3VBPU2pls1TqdBvZ4bjPXKf6rQ2NUIlvw+W31cAtI1bGL+rRgLtJTT2JyxO/8J62h5SF7Qgy+1KUqKTIoQu+5y/WJBYY=
+	t=1750175963; cv=none; b=gCl/SwqUKDhAiyeTqS/j+yz8wcC7vs74YmaIjFu0olkR8+3LlZgHuP2oIIDIIRmr8jt+34898xbe7Waol5t4ymWxrxYDxWN5bGH9y4bKyZ+1SoBaTgcIkivpgL2N5kOuYVPLdrvJuMyfctegTLxgyFr/GYD4gZnU2ja4a/pOMuQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175959; c=relaxed/simple;
-	bh=hcmSfGrHlOGwER+KMI44Whvtj9uYzwPR7O8kVIMrH1w=;
+	s=arc-20240116; t=1750175963; c=relaxed/simple;
+	bh=dFjt2b+rUjEix1qyGabia9XQeLweBeN24hRNAWtYxlU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KQw3uCXLkChlwKY9wOIx9vNREUU8rBzstAhgkXs45YbQXEq1PSIZUfapJbsqW5Uy15lhms6xQqTkSGq67V6TVexeZspqQmF6ni6qClt5cDtQPDXLw3VvdqMkWEr4Q7HsD/BUwYm3eGdBeqWxgGtTRof/w5wzubVwlmcK+E4Fg58=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zo1AS+cZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NwbokhezJE1cviXZSFJxVEzse+8gayFUYQ4z8d4QTv0Txzi9fIYNTnuRQ25mDQk9EUzUwz463t4jDzHU3aH7J6CcRAXXovuZHM0eQ5nPvt5V+BDHfLVMyO7H58Qnnvd47hb86DoWsa/Fq3WqB/mNfmobu/gzbRIVmH/zInFsEtQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nV5lT0aP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zo1AS+cZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EA07C4CEE3;
-	Tue, 17 Jun 2025 15:59:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nV5lT0aP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 728FFC4CEF2;
+	Tue, 17 Jun 2025 15:59:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175959;
-	bh=hcmSfGrHlOGwER+KMI44Whvtj9uYzwPR7O8kVIMrH1w=;
+	s=korg; t=1750175962;
+	bh=dFjt2b+rUjEix1qyGabia9XQeLweBeN24hRNAWtYxlU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zo1AS+cZQap4x70u2rSg3QyD8U+Pm5SNj6eOAST4IE1LLTR+lrTrpTeJ4RWPlGY/4
-	 AswdHt4iijNrxPQVqfyCJIhPH30r4weYiPF3A7n00TH3AOx6L+c4FwXUvIaldhJ0ii
-	 33jtqQnL4MW78ahPzBaIZk2KiqSDSCds4pCIBL2I=
+	b=nV5lT0aPOJtzdrsrBgmdLWgelgAcsbgn3wwLmANB7jolS/y2UdjWaJAhA8qbG/ymX
+	 RUH1eYWrnKQBEk22t1gRU2Cvk6IcHMSQFURwfcuONqgJ4xwKFTzu2fLu2C1m1/ETil
+	 5/ukr4McA6clvqjhAks27Zdjug/UfPx8u10u2TQE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+	Henry Martin <bsdhenrymartin@gmail.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 230/356] usb: renesas_usbhs: Reorder clock handling and power management in probe
-Date: Tue, 17 Jun 2025 17:25:45 +0200
-Message-ID: <20250617152347.454825218@linuxfoundation.org>
+Subject: [PATCH 6.12 183/512] wifi: mt76: mt7996: Fix null-ptr-deref in mt7996_mmio_wed_init()
+Date: Tue, 17 Jun 2025 17:22:29 +0200
+Message-ID: <20250617152427.064228843@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-References: <20250617152338.212798615@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,193 +47,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+From: Henry Martin <bsdhenrymartin@gmail.com>
 
-[ Upstream commit ffb34a60ce86656ba12d46e91f1ccc71dd221251 ]
+[ Upstream commit 8f30e2b059757d8711a823e4c9c023db62a1d171 ]
 
-Reorder the initialization sequence in `usbhs_probe()` to enable runtime
-PM before accessing registers, preventing potential crashes due to
-uninitialized clocks.
+devm_ioremap() returns NULL on error. Currently, mt7996_mmio_wed_init()
+does not check for this case, which results in a NULL pointer
+dereference.
 
-Currently, in the probe path, registers are accessed before enabling the
-clocks, leading to a synchronous external abort on the RZ/V2H SoC.
-The problematic call flow is as follows:
+Prevent null pointer dereference in mt7996_mmio_wed_init()
 
-    usbhs_probe()
-        usbhs_sys_clock_ctrl()
-            usbhs_bset()
-                usbhs_write()
-                    iowrite16()  <-- Register access before enabling clocks
-
-Since `iowrite16()` is performed without ensuring the required clocks are
-enabled, this can lead to access errors. To fix this, enable PM runtime
-early in the probe function and ensure clocks are acquired before register
-access, preventing crashes like the following on RZ/V2H:
-
-[13.272640] Internal error: synchronous external abort: 0000000096000010 [#1] PREEMPT SMP
-[13.280814] Modules linked in: cec renesas_usbhs(+) drm_kms_helper fuse drm backlight ipv6
-[13.289088] CPU: 1 UID: 0 PID: 195 Comm: (udev-worker) Not tainted 6.14.0-rc7+ #98
-[13.296640] Hardware name: Renesas RZ/V2H EVK Board based on r9a09g057h44 (DT)
-[13.303834] pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-[13.310770] pc : usbhs_bset+0x14/0x4c [renesas_usbhs]
-[13.315831] lr : usbhs_probe+0x2e4/0x5ac [renesas_usbhs]
-[13.321138] sp : ffff8000827e3850
-[13.324438] x29: ffff8000827e3860 x28: 0000000000000000 x27: ffff8000827e3ca0
-[13.331554] x26: ffff8000827e3ba0 x25: ffff800081729668 x24: 0000000000000025
-[13.338670] x23: ffff0000c0f08000 x22: 0000000000000000 x21: ffff0000c0f08010
-[13.345783] x20: 0000000000000000 x19: ffff0000c3b52080 x18: 00000000ffffffff
-[13.352895] x17: 0000000000000000 x16: 0000000000000000 x15: ffff8000827e36ce
-[13.360009] x14: 00000000000003d7 x13: 00000000000003d7 x12: 0000000000000000
-[13.367122] x11: 0000000000000000 x10: 0000000000000aa0 x9 : ffff8000827e3750
-[13.374235] x8 : ffff0000c1850b00 x7 : 0000000003826060 x6 : 000000000000001c
-[13.381347] x5 : 000000030d5fcc00 x4 : ffff8000825c0000 x3 : 0000000000000000
-[13.388459] x2 : 0000000000000400 x1 : 0000000000000000 x0 : ffff0000c3b52080
-[13.395574] Call trace:
-[13.398013]  usbhs_bset+0x14/0x4c [renesas_usbhs] (P)
-[13.403076]  platform_probe+0x68/0xdc
-[13.406738]  really_probe+0xbc/0x2c0
-[13.410306]  __driver_probe_device+0x78/0x120
-[13.414653]  driver_probe_device+0x3c/0x154
-[13.418825]  __driver_attach+0x90/0x1a0
-[13.422647]  bus_for_each_dev+0x7c/0xe0
-[13.426470]  driver_attach+0x24/0x30
-[13.430032]  bus_add_driver+0xe4/0x208
-[13.433766]  driver_register+0x68/0x130
-[13.437587]  __platform_driver_register+0x24/0x30
-[13.442273]  renesas_usbhs_driver_init+0x20/0x1000 [renesas_usbhs]
-[13.448450]  do_one_initcall+0x60/0x1d4
-[13.452276]  do_init_module+0x54/0x1f8
-[13.456014]  load_module+0x1754/0x1c98
-[13.459750]  init_module_from_file+0x88/0xcc
-[13.464004]  __arm64_sys_finit_module+0x1c4/0x328
-[13.468689]  invoke_syscall+0x48/0x104
-[13.472426]  el0_svc_common.constprop.0+0xc0/0xe0
-[13.477113]  do_el0_svc+0x1c/0x28
-[13.480415]  el0_svc+0x30/0xcc
-[13.483460]  el0t_64_sync_handler+0x10c/0x138
-[13.487800]  el0t_64_sync+0x198/0x19c
-[13.491453] Code: 2a0103e1 12003c42 12003c63 8b010084 (79400084)
-[13.497522] ---[ end trace 0000000000000000 ]---
-
-Fixes: f1407d5c66240 ("usb: renesas_usbhs: Add Renesas USBHS common code")
-Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Reviewed-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
-Tested-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
-Link: https://lore.kernel.org/r/20250407105002.107181-4-prabhakar.mahadev-lad.rj@bp.renesas.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 83eafc9251d6 ("wifi: mt76: mt7996: add wed tx support")
+Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
+Link: https://patch.msgid.link/20250407032349.83360-1-bsdhenrymartin@gmail.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/renesas_usbhs/common.c | 50 +++++++++++++++++++++++-------
- 1 file changed, 38 insertions(+), 12 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7996/mmio.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/usb/renesas_usbhs/common.c b/drivers/usb/renesas_usbhs/common.c
-index 205820544f6f9..b720899725e53 100644
---- a/drivers/usb/renesas_usbhs/common.c
-+++ b/drivers/usb/renesas_usbhs/common.c
-@@ -674,10 +674,29 @@ static int usbhs_probe(struct platform_device *pdev)
- 	INIT_DELAYED_WORK(&priv->notify_hotplug_work, usbhsc_notify_hotplug);
- 	spin_lock_init(usbhs_priv_to_lock(priv));
- 
-+	/*
-+	 * Acquire clocks and enable power management (PM) early in the
-+	 * probe process, as the driver accesses registers during
-+	 * initialization. Ensure the device is active before proceeding.
-+	 */
-+	pm_runtime_enable(dev);
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mmio.c b/drivers/net/wireless/mediatek/mt76/mt7996/mmio.c
+index b6209ed1cfe01..bffee73b780cb 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/mmio.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/mmio.c
+@@ -323,6 +323,9 @@ int mt7996_mmio_wed_init(struct mt7996_dev *dev, void *pdev_ptr,
+ 	wed->wlan.base = devm_ioremap(dev->mt76.dev,
+ 				      pci_resource_start(pci_dev, 0),
+ 				      pci_resource_len(pci_dev, 0));
++	if (!wed->wlan.base)
++		return -ENOMEM;
 +
-+	ret = usbhsc_clk_get(dev, priv);
-+	if (ret)
-+		goto probe_pm_disable;
-+
-+	ret = pm_runtime_resume_and_get(dev);
-+	if (ret)
-+		goto probe_clk_put;
-+
-+	ret = usbhsc_clk_prepare_enable(priv);
-+	if (ret)
-+		goto probe_pm_put;
-+
- 	/* call pipe and module init */
- 	ret = usbhs_pipe_probe(priv);
- 	if (ret < 0)
--		return ret;
-+		goto probe_clk_dis_unprepare;
+ 	wed->wlan.phy_base = pci_resource_start(pci_dev, 0);
  
- 	ret = usbhs_fifo_probe(priv);
- 	if (ret < 0)
-@@ -694,10 +713,6 @@ static int usbhs_probe(struct platform_device *pdev)
- 	if (ret)
- 		goto probe_fail_rst;
- 
--	ret = usbhsc_clk_get(dev, priv);
--	if (ret)
--		goto probe_fail_clks;
--
- 	/*
- 	 * deviece reset here because
- 	 * USB device might be used in boot loader.
-@@ -710,7 +725,7 @@ static int usbhs_probe(struct platform_device *pdev)
- 		if (ret) {
- 			dev_warn(dev, "USB function not selected (GPIO)\n");
- 			ret = -ENOTSUPP;
--			goto probe_end_mod_exit;
-+			goto probe_assert_rest;
- 		}
- 	}
- 
-@@ -724,14 +739,19 @@ static int usbhs_probe(struct platform_device *pdev)
- 	ret = usbhs_platform_call(priv, hardware_init, pdev);
- 	if (ret < 0) {
- 		dev_err(dev, "platform init failed.\n");
--		goto probe_end_mod_exit;
-+		goto probe_assert_rest;
- 	}
- 
- 	/* reset phy for connection */
- 	usbhs_platform_call(priv, phy_reset, pdev);
- 
--	/* power control */
--	pm_runtime_enable(dev);
-+	/*
-+	 * Disable the clocks that were enabled earlier in the probe path,
-+	 * and let the driver handle the clocks beyond this point.
-+	 */
-+	usbhsc_clk_disable_unprepare(priv);
-+	pm_runtime_put(dev);
-+
- 	if (!usbhs_get_dparam(priv, runtime_pwctrl)) {
- 		usbhsc_power_ctrl(priv, 1);
- 		usbhs_mod_autonomy_mode(priv);
-@@ -748,9 +768,7 @@ static int usbhs_probe(struct platform_device *pdev)
- 
- 	return ret;
- 
--probe_end_mod_exit:
--	usbhsc_clk_put(priv);
--probe_fail_clks:
-+probe_assert_rest:
- 	reset_control_assert(priv->rsts);
- probe_fail_rst:
- 	usbhs_mod_remove(priv);
-@@ -758,6 +776,14 @@ static int usbhs_probe(struct platform_device *pdev)
- 	usbhs_fifo_remove(priv);
- probe_end_pipe_exit:
- 	usbhs_pipe_remove(priv);
-+probe_clk_dis_unprepare:
-+	usbhsc_clk_disable_unprepare(priv);
-+probe_pm_put:
-+	pm_runtime_put(dev);
-+probe_clk_put:
-+	usbhsc_clk_put(priv);
-+probe_pm_disable:
-+	pm_runtime_disable(dev);
- 
- 	dev_info(dev, "probe failed (%d)\n", ret);
- 
+ 	if (hif2) {
 -- 
 2.39.5
 
