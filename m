@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E82B62E9730;
-	Tue, 17 Jun 2025 15:32:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B478D2EBDCC;
+	Tue, 17 Jun 2025 15:32:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750174356; cv=none; b=Z4/XJWOWcfaEAkEYMEP9F1RjHHLRJ2xWf8W119sVv+OUjXROJr6mdEjh2jSNBzlsWfhxv7r8MACAWazjeF5RK8+6MGsVm7l4mVolHM4dAoAjuzt2gg6HGkm4UmiEBUPRPhVy3wIZHp3nLhD1sM7qi8Dii9qyfMZ/7FgqOPEvZ80=
+	t=1750174358; cv=none; b=Tz2A7ATCPYANyFFuPRj48gNwtrtegT5DSrzTy1FT+2Il+yRxOxgYTHM3NsT8MlQnhzjNC7XuPEcRwO/DjIcz1P4z37+tlD364weknrSm3PRUlq9CnNb43uhPDPpmfYGSP9DQ1BDCjuVgF3bmW9SsETp0pKqQw0olvR/fpSq6alo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750174356; c=relaxed/simple;
-	bh=MGe5bzZoUTGtYC8LXLuXo+WEtvXCzjS7EnjrQxiPp4M=;
+	s=arc-20240116; t=1750174358; c=relaxed/simple;
+	bh=U05zce7TDzSQOzL4vV7lkBOIWVdkks9Y9RdK3sZc7PY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=C1foH8AVSxT3Xe3mN6UlquehMxRtDWLJCB1INYMBYRwWiH9IYuIwk0UU5ald4BNAFXz8vE8RyVuPjh0gPNdWExNeMa8EbBIjy+QGORuMQFJlC4smNHTNovo+ORjPeLW5Ku18pI+ggaAevrg6CwElPi6mo2aTf0mDBoc/8Yvqqy0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gFt1XhBq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KzWRn7556pigo+wMixujaKHJixA18wspRkHqU5o7WCbZdcJ780xz9qyR2uPPTkRfZlwum7t54oqTlAXgC8Fcspzyp08zJXrcn/EqVQFv45VxDQOad8QQ9+vtq9kmvFTSp22Rb0SKc65G4Ws/8MoGrayJJz1800xJ8ok8Ujfy94o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C/8c8P53; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gFt1XhBq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE71FC4CEF2;
-	Tue, 17 Jun 2025 15:32:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C/8c8P53"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22EE9C4CEE3;
+	Tue, 17 Jun 2025 15:32:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750174355;
-	bh=MGe5bzZoUTGtYC8LXLuXo+WEtvXCzjS7EnjrQxiPp4M=;
+	s=korg; t=1750174358;
+	bh=U05zce7TDzSQOzL4vV7lkBOIWVdkks9Y9RdK3sZc7PY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gFt1XhBqlv7Ii550L4Jj9t3EvsuUWiDRaeLfHNpvel2J6OJjdcpXchYKz37bClGWq
-	 fWEXnOZRTDA4M6fmEio6qOmyaNfi4nFAMUmzrPioX+5iqLMRbqpg6IFC6rd5K5zRAG
-	 d0I7Gnhi+QVQpDaxXqvvQ7yQhRMFihoXK6iCP5QA=
+	b=C/8c8P53VqBgrg4fwQtiOMcFdqJNn7uiiFds+ClmZJEbsFQCmrCsMEvmc27UJuSQG
+	 g3Gfj/V0qlMU77pQ0/RteE4XuHFxxCpQ3Aj1zkM4sFOfcNPzD90+L641BYdviNHdd1
+	 2aoMCihrUXi60U1GmdKXwM/HgZE1Pe0hEwRyBf5w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
-	Maxime Ripard <mripard@kernel.org>,
+	"Ahmed S. Darwish" <darwi@linutronix.de>,
+	Ingo Molnar <mingo@kernel.org>,
+	Andrew Cooper <andrew.cooper3@citrix.com>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	John Ogness <john.ogness@linutronix.de>,
+	x86-cpuid@lists.linux.dev,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 056/356] drm/vc4: tests: Use return instead of assert
-Date: Tue, 17 Jun 2025 17:22:51 +0200
-Message-ID: <20250617152340.489467007@linuxfoundation.org>
+Subject: [PATCH 6.6 028/356] x86/cpu: Sanitize CPUID(0x80000000) output
+Date: Tue, 17 Jun 2025 17:22:23 +0200
+Message-ID: <20250617152339.367697558@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
 References: <20250617152338.212798615@linuxfoundation.org>
@@ -45,115 +49,96 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maxime Ripard <mripard@kernel.org>
+From: Ahmed S. Darwish <darwi@linutronix.de>
 
-[ Upstream commit 9e26a3740cc08ef8bcdc5e5d824792cd677affce ]
+[ Upstream commit cc663ba3fe383a628a812f893cc98aafff39ab04 ]
 
-The vc4_mock_atomic_add_output() and vc4_mock_atomic_del_output() assert
-that the functions they are calling didn't fail. Since some of them can
-return EDEADLK, we can't properly deal with it.
+CPUID(0x80000000).EAX returns the max extended CPUID leaf available.  On
+x86-32 machines without an extended CPUID range, a CPUID(0x80000000)
+query will just repeat the output of the last valid standard CPUID leaf
+on the CPU; i.e., a garbage values.  Current tip:x86/cpu code protects against
+this by doing:
 
-Since both functions are expected to return an int, and all caller check
-the return value, let's just properly propagate the errors when they
-occur.
+	eax = cpuid_eax(0x80000000);
+	c->extended_cpuid_level = eax;
 
-Fixes: f759f5b53f1c ("drm/vc4: tests: Introduce a mocking infrastructure")
-Fixes: 76ec18dc5afa ("drm/vc4: tests: Add unit test suite for the PV muxing")
-Reviewed-by: Maíra Canal <mcanal@igalia.com>
-Link: https://lore.kernel.org/r/20250403-drm-vc4-kunit-failures-v2-1-e09195cc8840@kernel.org
-Signed-off-by: Maxime Ripard <mripard@kernel.org>
+	if ((eax & 0xffff0000) == 0x80000000) {
+		// CPU has an extended CPUID range. Check for 0x80000001
+		if (eax >= 0x80000001) {
+			cpuid(0x80000001, ...);
+		}
+	}
+
+This is correct so far.  Afterwards though, the same possibly broken EAX
+value is used to check the availability of other extended CPUID leaves:
+
+	if (c->extended_cpuid_level >= 0x80000007)
+		...
+	if (c->extended_cpuid_level >= 0x80000008)
+		...
+	if (c->extended_cpuid_level >= 0x8000000a)
+		...
+	if (c->extended_cpuid_level >= 0x8000001f)
+		...
+
+which is invalid.  Fix this by immediately setting the CPU's max extended
+CPUID leaf to zero if CPUID(0x80000000).EAX doesn't indicate a valid
+CPUID extended range.
+
+While at it, add a comment, similar to kernel/head_32.S, clarifying the
+CPUID(0x80000000) sanity check.
+
+References: 8a50e5135af0 ("x86-32: Use symbolic constants, safer CPUID when enabling EFER.NX")
+Fixes: 3da99c977637 ("x86: make (early)_identify_cpu more the same between 32bit and 64 bit")
+Signed-off-by: Ahmed S. Darwish <darwi@linutronix.de>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: Andrew Cooper <andrew.cooper3@citrix.com>
+Cc: H. Peter Anvin <hpa@zytor.com>
+Cc: John Ogness <john.ogness@linutronix.de>
+Cc: x86-cpuid@lists.linux.dev
+Link: https://lore.kernel.org/r/20250506050437.10264-3-darwi@linutronix.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vc4/tests/vc4_mock_output.c | 36 ++++++++++++++-------
- 1 file changed, 24 insertions(+), 12 deletions(-)
+ arch/x86/kernel/cpu/common.c | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/gpu/drm/vc4/tests/vc4_mock_output.c b/drivers/gpu/drm/vc4/tests/vc4_mock_output.c
-index e70d7c3076acf..f0ddc223c1f83 100644
---- a/drivers/gpu/drm/vc4/tests/vc4_mock_output.c
-+++ b/drivers/gpu/drm/vc4/tests/vc4_mock_output.c
-@@ -75,24 +75,30 @@ int vc4_mock_atomic_add_output(struct kunit *test,
- 	int ret;
+diff --git a/arch/x86/kernel/cpu/common.c b/arch/x86/kernel/cpu/common.c
+index 067e31fb9e165..b6e43dad577a3 100644
+--- a/arch/x86/kernel/cpu/common.c
++++ b/arch/x86/kernel/cpu/common.c
+@@ -1066,17 +1066,18 @@ void get_cpu_cap(struct cpuinfo_x86 *c)
+ 		c->x86_capability[CPUID_D_1_EAX] = eax;
+ 	}
  
- 	encoder = vc4_find_encoder_by_type(drm, type);
--	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, encoder);
-+	if (!encoder)
-+		return -ENODEV;
+-	/* AMD-defined flags: level 0x80000001 */
++	/*
++	 * Check if extended CPUID leaves are implemented: Max extended
++	 * CPUID leaf must be in the 0x80000001-0x8000ffff range.
++	 */
+ 	eax = cpuid_eax(0x80000000);
+-	c->extended_cpuid_level = eax;
++	c->extended_cpuid_level = ((eax & 0xffff0000) == 0x80000000) ? eax : 0;
  
- 	crtc = vc4_find_crtc_for_encoder(test, drm, encoder);
--	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, crtc);
-+	if (!crtc)
-+		return -ENODEV;
+-	if ((eax & 0xffff0000) == 0x80000000) {
+-		if (eax >= 0x80000001) {
+-			cpuid(0x80000001, &eax, &ebx, &ecx, &edx);
++	if (c->extended_cpuid_level >= 0x80000001) {
++		cpuid(0x80000001, &eax, &ebx, &ecx, &edx);
  
- 	output = encoder_to_vc4_dummy_output(encoder);
- 	conn = &output->connector;
- 	conn_state = drm_atomic_get_connector_state(state, conn);
--	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, conn_state);
-+	if (IS_ERR(conn_state))
-+		return PTR_ERR(conn_state);
+-			c->x86_capability[CPUID_8000_0001_ECX] = ecx;
+-			c->x86_capability[CPUID_8000_0001_EDX] = edx;
+-		}
++		c->x86_capability[CPUID_8000_0001_ECX] = ecx;
++		c->x86_capability[CPUID_8000_0001_EDX] = edx;
+ 	}
  
- 	ret = drm_atomic_set_crtc_for_connector(conn_state, crtc);
--	KUNIT_EXPECT_EQ(test, ret, 0);
-+	if (ret)
-+		return ret;
- 
- 	crtc_state = drm_atomic_get_crtc_state(state, crtc);
--	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, crtc_state);
-+	if (IS_ERR(crtc_state))
-+		return PTR_ERR(crtc_state);
- 
- 	ret = drm_atomic_set_mode_for_crtc(crtc_state, &default_mode);
--	KUNIT_EXPECT_EQ(test, ret, 0);
-+	if (ret)
-+		return ret;
- 
- 	crtc_state->active = true;
- 
-@@ -113,26 +119,32 @@ int vc4_mock_atomic_del_output(struct kunit *test,
- 	int ret;
- 
- 	encoder = vc4_find_encoder_by_type(drm, type);
--	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, encoder);
-+	if (!encoder)
-+		return -ENODEV;
- 
- 	crtc = vc4_find_crtc_for_encoder(test, drm, encoder);
--	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, crtc);
-+	if (!crtc)
-+		return -ENODEV;
- 
- 	crtc_state = drm_atomic_get_crtc_state(state, crtc);
--	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, crtc_state);
-+	if (IS_ERR(crtc_state))
-+		return PTR_ERR(crtc_state);
- 
- 	crtc_state->active = false;
- 
- 	ret = drm_atomic_set_mode_for_crtc(crtc_state, NULL);
--	KUNIT_ASSERT_EQ(test, ret, 0);
-+	if (ret)
-+		return ret;
- 
- 	output = encoder_to_vc4_dummy_output(encoder);
- 	conn = &output->connector;
- 	conn_state = drm_atomic_get_connector_state(state, conn);
--	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, conn_state);
-+	if (IS_ERR(conn_state))
-+		return PTR_ERR(conn_state);
- 
- 	ret = drm_atomic_set_crtc_for_connector(conn_state, NULL);
--	KUNIT_ASSERT_EQ(test, ret, 0);
-+	if (ret)
-+		return ret;
- 
- 	return 0;
- }
+ 	if (c->extended_cpuid_level >= 0x80000007) {
 -- 
 2.39.5
 
