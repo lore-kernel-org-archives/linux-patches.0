@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 957EE2E9753;
-	Tue, 17 Jun 2025 15:39:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8775220F090;
+	Tue, 17 Jun 2025 15:39:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750174740; cv=none; b=jN6KPZFErLtJWOyM8Y8XANd8tIK+2R5/RQpKBFf2jBczg+RacSZkv3qwXN+HBp/vnxDb64hjqUdcAVqtVyyFJ0z9x5GWO65it9kUIY0N3QRbMHlzspTuscEj/JEzQ9i+g8gUJwaB/hWxeULPGQQWaSlxqWudZgqU6IHz0NmlpfE=
+	t=1750174743; cv=none; b=ZXx6EtWc+i1vzPHHzBqb8knPHzK8Sa69R7YgyOs0VDFtCtFDvHpCcHqVrq3u7/PuvOkfRG6GM+H7ddcXmvwn/RBJ88KOwF+zowmzO1OfOwsUEgH5lSjl3PFmY9afMsI2VdboXVUVOkOLpocApAUlBmJpsbMrHX9WgXCnou0K9rY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750174740; c=relaxed/simple;
-	bh=78xnMrqXjQ6FeNyavfswU5O6AI0mMnMQCc870HTo5Vc=;
+	s=arc-20240116; t=1750174743; c=relaxed/simple;
+	bh=wNk+USIWRbwhdPgkJrkCkjpf6D2nz4N1l9BvfbvV3Pk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ki/aVEiAhRKMRbRsWYQl+Gb4mTnfC8GGJGAEMu37h1vO/v7NDFcNjbhNTVTzQu6w5SD5r5s8q7HWPVXbk1niCpv1uelG1XwoQVdQoU9MjslveoXO1EQ6JlkFS169yuOD7/LnWwE2R91juBqNOuNbat8FNBMaMNzQkpMTeK+DDu8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S+gt4Bgf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HCN/mVF0r9Rk+CPlVBVXxNynpd6qGBb0yS5R9ptKlTWw2TQW+vXbELMRsGNoSvM0wVXHja1sBe15WD7ZHvXu/zZM+aipqgdMBc44jsiK/Y4IvoyxdqmcdDwUL7ArhbCPnivXaOQy/psOXS0pYEFCWi2O4eI49EVj5gtOhVDE+yg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IqoSpuFi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S+gt4Bgf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1BA2C4CEE3;
-	Tue, 17 Jun 2025 15:38:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IqoSpuFi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDFBBC4CEE3;
+	Tue, 17 Jun 2025 15:39:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750174740;
-	bh=78xnMrqXjQ6FeNyavfswU5O6AI0mMnMQCc870HTo5Vc=;
+	s=korg; t=1750174743;
+	bh=wNk+USIWRbwhdPgkJrkCkjpf6D2nz4N1l9BvfbvV3Pk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S+gt4BgfQ/neu7I3ofhIq3/nNHM++3JfEO1AvaQ9Y7nwMNgXlvCMWKzwrBlPB4Epl
-	 0lIf0gAmtfHnKICVpPe9WCQ94fZLY+7T7uW4otgbpdID34gZFDcSZ7lUqgnNWu2Osz
-	 iJ7Ok+8NMeEyEsOQauQYt8HFfNTF0Vvx7nm4I+6E=
+	b=IqoSpuFifZJ88FxRH0NQweNpCzMT4gutvQf0h0ijx3XCgheypF5YlC3j7cVecD8MD
+	 wfFNL9Tj6sVLbmn8fmVre90jLI10aS0X9QsJYs5Nd9oLHNz21wBkfwl+BZmDX90f9n
+	 a8pIPHemWYflabDdFWtJPBupzpgQLBoO6qlUgkJE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacob Moroni <jmoroni@google.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Andreas Gruenbacher <agruenba@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 081/356] IB/cm: use rwlock for MAD agent lock
-Date: Tue, 17 Jun 2025 17:23:16 +0200
-Message-ID: <20250617152341.480474819@linuxfoundation.org>
+Subject: [PATCH 6.15 013/780] gfs2: replace sd_aspace with sd_inode
+Date: Tue, 17 Jun 2025 17:15:21 +0200
+Message-ID: <20250617152452.034444871@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-References: <20250617152338.212798615@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,119 +46,239 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jacob Moroni <jmoroni@google.com>
+From: Andreas Gruenbacher <agruenba@redhat.com>
 
-[ Upstream commit 4dab26bed543584577b64b36aadb8b5b165bf44f ]
+[ Upstream commit ae9f3bd8259a0a8f67be2420e66bb05fbb95af48 ]
 
-In workloads where there are many processes establishing connections using
-RDMA CM in parallel (large scale MPI), there can be heavy contention for
-mad_agent_lock in cm_alloc_msg.
+Currently, sdp->sd_aspace and the per-inode metadata address spaces use
+sb->s_bdev->bd_mapping->host as their ->host; folios in those address
+spaces will thus appear to be on bdev rather than on gfs2 filesystems.
+This is a problem because gfs2 doesn't support cgroup writeback
+(SB_I_CGROUPWB), but bdev does.
 
-This contention can occur while inside of a spin_lock_irq region, leading
-to interrupts being disabled for extended durations on many
-cores. Furthermore, it leads to the serialization of rdma_create_ah calls,
-which has negative performance impacts for NICs which are capable of
-processing multiple address handle creations in parallel.
+Fix that by using a "dummy" gfs2 inode as ->host in those address
+spaces.  When coming from a folio, folio->mapping->host->i_sb will then
+be a gfs2 super block and the SB_I_CGROUPWB flag will not be set in
+sb->s_iflags.
 
-The end result is the machine becoming unresponsive, hung task warnings,
-netdev TX timeouts, etc.
+Based on a previous version from Bob Peterson from several years ago.
+Thanks to Tetsuo Handa, Jan Kara, and Rafael Aquini for helping figure
+this out.
 
-Since the lock appears to be only for protection from cm_remove_one, it
-can be changed to a rwlock to resolve these issues.
-
-Reproducer:
-
-Server:
-  for i in $(seq 1 512); do
-    ucmatose -c 32 -p $((i + 5000)) &
-  done
-
-Client:
-  for i in $(seq 1 512); do
-    ucmatose -c 32 -p $((i + 5000)) -s 10.2.0.52 &
-  done
-
-Fixes: 76039ac9095f ("IB/cm: Protect cm_dev, cm_ports and mad_agent with kref and lock")
-Link: https://patch.msgid.link/r/20250220175612.2763122-1-jmoroni@google.com
-Signed-off-by: Jacob Moroni <jmoroni@google.com>
-Acked-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fixes: aaa2cacf8184 ("writeback: add lockdep annotation to inode_to_wb()")
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/cm.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ fs/gfs2/glock.c      |  3 +--
+ fs/gfs2/glops.c      |  4 ++--
+ fs/gfs2/incore.h     |  9 ++++++++-
+ fs/gfs2/meta_io.c    |  2 +-
+ fs/gfs2/meta_io.h    |  4 +---
+ fs/gfs2/ops_fstype.c | 31 ++++++++++++++++++-------------
+ fs/gfs2/super.c      |  2 +-
+ 7 files changed, 32 insertions(+), 23 deletions(-)
 
-diff --git a/drivers/infiniband/core/cm.c b/drivers/infiniband/core/cm.c
-index 07fb8d3c037f0..d45e3909dafe1 100644
---- a/drivers/infiniband/core/cm.c
-+++ b/drivers/infiniband/core/cm.c
-@@ -166,7 +166,7 @@ struct cm_port {
- struct cm_device {
- 	struct kref kref;
- 	struct list_head list;
--	spinlock_t mad_agent_lock;
-+	rwlock_t mad_agent_lock;
- 	struct ib_device *ib_device;
- 	u8 ack_delay;
- 	int going_down;
-@@ -284,7 +284,7 @@ static struct ib_mad_send_buf *cm_alloc_msg(struct cm_id_private *cm_id_priv)
- 	if (!cm_id_priv->av.port)
- 		return ERR_PTR(-EINVAL);
+diff --git a/fs/gfs2/glock.c b/fs/gfs2/glock.c
+index d7220a6fe8f55..ba25b884169e5 100644
+--- a/fs/gfs2/glock.c
++++ b/fs/gfs2/glock.c
+@@ -1166,7 +1166,6 @@ int gfs2_glock_get(struct gfs2_sbd *sdp, u64 number,
+ 		   const struct gfs2_glock_operations *glops, int create,
+ 		   struct gfs2_glock **glp)
+ {
+-	struct super_block *s = sdp->sd_vfs;
+ 	struct lm_lockname name = { .ln_number = number,
+ 				    .ln_type = glops->go_type,
+ 				    .ln_sbd = sdp };
+@@ -1229,7 +1228,7 @@ int gfs2_glock_get(struct gfs2_sbd *sdp, u64 number,
+ 	mapping = gfs2_glock2aspace(gl);
+ 	if (mapping) {
+                 mapping->a_ops = &gfs2_meta_aops;
+-		mapping->host = s->s_bdev->bd_mapping->host;
++		mapping->host = sdp->sd_inode;
+ 		mapping->flags = 0;
+ 		mapping_set_gfp_mask(mapping, GFP_NOFS);
+ 		mapping->i_private_data = NULL;
+diff --git a/fs/gfs2/glops.c b/fs/gfs2/glops.c
+index eb4714f299efb..116efe335c321 100644
+--- a/fs/gfs2/glops.c
++++ b/fs/gfs2/glops.c
+@@ -168,7 +168,7 @@ void gfs2_ail_flush(struct gfs2_glock *gl, bool fsync)
+ static int gfs2_rgrp_metasync(struct gfs2_glock *gl)
+ {
+ 	struct gfs2_sbd *sdp = gl->gl_name.ln_sbd;
+-	struct address_space *metamapping = &sdp->sd_aspace;
++	struct address_space *metamapping = gfs2_aspace(sdp);
+ 	struct gfs2_rgrpd *rgd = gfs2_glock2rgrp(gl);
+ 	const unsigned bsize = sdp->sd_sb.sb_bsize;
+ 	loff_t start = (rgd->rd_addr * bsize) & PAGE_MASK;
+@@ -225,7 +225,7 @@ static int rgrp_go_sync(struct gfs2_glock *gl)
+ static void rgrp_go_inval(struct gfs2_glock *gl, int flags)
+ {
+ 	struct gfs2_sbd *sdp = gl->gl_name.ln_sbd;
+-	struct address_space *mapping = &sdp->sd_aspace;
++	struct address_space *mapping = gfs2_aspace(sdp);
+ 	struct gfs2_rgrpd *rgd = gfs2_glock2rgrp(gl);
+ 	const unsigned bsize = sdp->sd_sb.sb_bsize;
+ 	loff_t start, end;
+diff --git a/fs/gfs2/incore.h b/fs/gfs2/incore.h
+index 74abbd4970f80..0a41c4e76b326 100644
+--- a/fs/gfs2/incore.h
++++ b/fs/gfs2/incore.h
+@@ -795,7 +795,7 @@ struct gfs2_sbd {
  
--	spin_lock(&cm_id_priv->av.port->cm_dev->mad_agent_lock);
-+	read_lock(&cm_id_priv->av.port->cm_dev->mad_agent_lock);
- 	mad_agent = cm_id_priv->av.port->mad_agent;
- 	if (!mad_agent) {
- 		m = ERR_PTR(-EINVAL);
-@@ -315,7 +315,7 @@ static struct ib_mad_send_buf *cm_alloc_msg(struct cm_id_private *cm_id_priv)
- 	m->context[0] = cm_id_priv;
+ 	/* Log stuff */
  
- out:
--	spin_unlock(&cm_id_priv->av.port->cm_dev->mad_agent_lock);
-+	read_unlock(&cm_id_priv->av.port->cm_dev->mad_agent_lock);
- 	return m;
+-	struct address_space sd_aspace;
++	struct inode *sd_inode;
+ 
+ 	spinlock_t sd_log_lock;
+ 
+@@ -851,6 +851,13 @@ struct gfs2_sbd {
+ 	unsigned long sd_glock_dqs_held;
+ };
+ 
++#define GFS2_BAD_INO 1
++
++static inline struct address_space *gfs2_aspace(struct gfs2_sbd *sdp)
++{
++	return sdp->sd_inode->i_mapping;
++}
++
+ static inline void gfs2_glstats_inc(struct gfs2_glock *gl, int which)
+ {
+ 	gl->gl_stats.stats[which]++;
+diff --git a/fs/gfs2/meta_io.c b/fs/gfs2/meta_io.c
+index 198cc70566375..9dc8885c95d07 100644
+--- a/fs/gfs2/meta_io.c
++++ b/fs/gfs2/meta_io.c
+@@ -132,7 +132,7 @@ struct buffer_head *gfs2_getbuf(struct gfs2_glock *gl, u64 blkno, int create)
+ 	unsigned int bufnum;
+ 
+ 	if (mapping == NULL)
+-		mapping = &sdp->sd_aspace;
++		mapping = gfs2_aspace(sdp);
+ 
+ 	shift = PAGE_SHIFT - sdp->sd_sb.sb_bsize_shift;
+ 	index = blkno >> shift;             /* convert block to page */
+diff --git a/fs/gfs2/meta_io.h b/fs/gfs2/meta_io.h
+index 831d988c2ceb7..b7c8a6684d024 100644
+--- a/fs/gfs2/meta_io.h
++++ b/fs/gfs2/meta_io.h
+@@ -44,9 +44,7 @@ static inline struct gfs2_sbd *gfs2_mapping2sbd(struct address_space *mapping)
+ 		struct gfs2_glock_aspace *gla =
+ 			container_of(mapping, struct gfs2_glock_aspace, mapping);
+ 		return gla->glock.gl_name.ln_sbd;
+-	} else if (mapping->a_ops == &gfs2_rgrp_aops)
+-		return container_of(mapping, struct gfs2_sbd, sd_aspace);
+-	else
++	} else
+ 		return inode->i_sb->s_fs_info;
  }
  
-@@ -1294,10 +1294,10 @@ static __be64 cm_form_tid(struct cm_id_private *cm_id_priv)
- 	if (!cm_id_priv->av.port)
- 		return cpu_to_be64(low_tid);
+diff --git a/fs/gfs2/ops_fstype.c b/fs/gfs2/ops_fstype.c
+index e83d293c36142..6ce475e1c6d64 100644
+--- a/fs/gfs2/ops_fstype.c
++++ b/fs/gfs2/ops_fstype.c
+@@ -72,7 +72,6 @@ void free_sbd(struct gfs2_sbd *sdp)
+ static struct gfs2_sbd *init_sbd(struct super_block *sb)
+ {
+ 	struct gfs2_sbd *sdp;
+-	struct address_space *mapping;
  
--	spin_lock(&cm_id_priv->av.port->cm_dev->mad_agent_lock);
-+	read_lock(&cm_id_priv->av.port->cm_dev->mad_agent_lock);
- 	if (cm_id_priv->av.port->mad_agent)
- 		hi_tid = ((u64)cm_id_priv->av.port->mad_agent->hi_tid) << 32;
--	spin_unlock(&cm_id_priv->av.port->cm_dev->mad_agent_lock);
-+	read_unlock(&cm_id_priv->av.port->cm_dev->mad_agent_lock);
- 	return cpu_to_be64(hi_tid | low_tid);
- }
+ 	sdp = kzalloc(sizeof(struct gfs2_sbd), GFP_KERNEL);
+ 	if (!sdp)
+@@ -109,16 +108,6 @@ static struct gfs2_sbd *init_sbd(struct super_block *sb)
  
-@@ -4374,7 +4374,7 @@ static int cm_add_one(struct ib_device *ib_device)
- 		return -ENOMEM;
+ 	INIT_LIST_HEAD(&sdp->sd_sc_inodes_list);
  
- 	kref_init(&cm_dev->kref);
--	spin_lock_init(&cm_dev->mad_agent_lock);
-+	rwlock_init(&cm_dev->mad_agent_lock);
- 	cm_dev->ib_device = ib_device;
- 	cm_dev->ack_delay = ib_device->attrs.local_ca_ack_delay;
- 	cm_dev->going_down = 0;
-@@ -4490,9 +4490,9 @@ static void cm_remove_one(struct ib_device *ib_device, void *client_data)
- 		 * The above ensures no call paths from the work are running,
- 		 * the remaining paths all take the mad_agent_lock.
- 		 */
--		spin_lock(&cm_dev->mad_agent_lock);
-+		write_lock(&cm_dev->mad_agent_lock);
- 		port->mad_agent = NULL;
--		spin_unlock(&cm_dev->mad_agent_lock);
-+		write_unlock(&cm_dev->mad_agent_lock);
- 		ib_unregister_mad_agent(mad_agent);
- 		ib_port_unregister_client_groups(ib_device, i,
- 						 cm_counter_groups);
+-	mapping = &sdp->sd_aspace;
+-
+-	address_space_init_once(mapping);
+-	mapping->a_ops = &gfs2_rgrp_aops;
+-	mapping->host = sb->s_bdev->bd_mapping->host;
+-	mapping->flags = 0;
+-	mapping_set_gfp_mask(mapping, GFP_NOFS);
+-	mapping->i_private_data = NULL;
+-	mapping->writeback_index = 0;
+-
+ 	spin_lock_init(&sdp->sd_log_lock);
+ 	atomic_set(&sdp->sd_log_pinned, 0);
+ 	INIT_LIST_HEAD(&sdp->sd_log_revokes);
+@@ -1135,6 +1124,7 @@ static int gfs2_fill_super(struct super_block *sb, struct fs_context *fc)
+ 	int silent = fc->sb_flags & SB_SILENT;
+ 	struct gfs2_sbd *sdp;
+ 	struct gfs2_holder mount_gh;
++	struct address_space *mapping;
+ 	int error;
+ 
+ 	sdp = init_sbd(sb);
+@@ -1156,6 +1146,7 @@ static int gfs2_fill_super(struct super_block *sb, struct fs_context *fc)
+ 	sb->s_flags |= SB_NOSEC;
+ 	sb->s_magic = GFS2_MAGIC;
+ 	sb->s_op = &gfs2_super_ops;
++
+ 	sb->s_d_op = &gfs2_dops;
+ 	sb->s_export_op = &gfs2_export_ops;
+ 	sb->s_qcop = &gfs2_quotactl_ops;
+@@ -1181,9 +1172,21 @@ static int gfs2_fill_super(struct super_block *sb, struct fs_context *fc)
+ 		sdp->sd_tune.gt_statfs_quantum = 30;
+ 	}
+ 
++	/* Set up an address space for metadata writes */
++	sdp->sd_inode = new_inode(sb);
++	error = -ENOMEM;
++	if (!sdp->sd_inode)
++		goto fail_free;
++	sdp->sd_inode->i_ino = GFS2_BAD_INO;
++	sdp->sd_inode->i_size = OFFSET_MAX;
++
++	mapping = gfs2_aspace(sdp);
++	mapping->a_ops = &gfs2_rgrp_aops;
++	mapping_set_gfp_mask(mapping, GFP_NOFS);
++
+ 	error = init_names(sdp, silent);
+ 	if (error)
+-		goto fail_free;
++		goto fail_iput;
+ 
+ 	snprintf(sdp->sd_fsname, sizeof(sdp->sd_fsname), "%s", sdp->sd_table_name);
+ 
+@@ -1192,7 +1195,7 @@ static int gfs2_fill_super(struct super_block *sb, struct fs_context *fc)
+ 			WQ_MEM_RECLAIM | WQ_HIGHPRI | WQ_FREEZABLE, 0,
+ 			sdp->sd_fsname);
+ 	if (!sdp->sd_glock_wq)
+-		goto fail_free;
++		goto fail_iput;
+ 
+ 	sdp->sd_delete_wq = alloc_workqueue("gfs2-delete/%s",
+ 			WQ_MEM_RECLAIM | WQ_FREEZABLE, 0, sdp->sd_fsname);
+@@ -1309,6 +1312,8 @@ static int gfs2_fill_super(struct super_block *sb, struct fs_context *fc)
+ fail_glock_wq:
+ 	if (sdp->sd_glock_wq)
+ 		destroy_workqueue(sdp->sd_glock_wq);
++fail_iput:
++	iput(sdp->sd_inode);
+ fail_free:
+ 	free_sbd(sdp);
+ 	sb->s_fs_info = NULL;
+diff --git a/fs/gfs2/super.c b/fs/gfs2/super.c
+index 44e5658b896c8..4529b7dda8ca2 100644
+--- a/fs/gfs2/super.c
++++ b/fs/gfs2/super.c
+@@ -648,7 +648,7 @@ static void gfs2_put_super(struct super_block *sb)
+ 	gfs2_jindex_free(sdp);
+ 	/*  Take apart glock structures and buffer lists  */
+ 	gfs2_gl_hash_clear(sdp);
+-	truncate_inode_pages_final(&sdp->sd_aspace);
++	iput(sdp->sd_inode);
+ 	gfs2_delete_debugfs_file(sdp);
+ 
+ 	gfs2_sys_fs_del(sdp);
 -- 
 2.39.5
 
