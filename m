@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 015EE2EA72C;
-	Tue, 17 Jun 2025 16:41:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 100402EA72C;
+	Tue, 17 Jun 2025 16:41:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750178462; cv=none; b=nrhDNB5OjNBiSfT8pZHokNBZ+sf2CXL8sWuFX6hiBDNxsRjEZHZsg6eGLwvdNrk95ITIFgYPJaN9/GKetoT/OWjAfJ7mhX/JF9B2RH2FB+2fqk7jdplpWq7eLRNeUov7rj/bjVoHwXF2b1kY64Cnffp7USyO3tofzBCQbEBwz90=
+	t=1750178465; cv=none; b=g4FcZtl/IL0Xnu5LywaE+7gJH05UFchwbut7MH/U3PNHeWSrK58XJa11f24mXaTcATcrij95zIQ8jk2a2zNbqN36z3krjCCrjVnU7TqbAyhgabKdVwVV8khbu0nHTYpMDqpn62Vwkix7k/fkgFDbSsK3RMci0zEqlw6nFn4tMaM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750178462; c=relaxed/simple;
-	bh=9b8p/QYhNLzkaTf4+CjLU9qMu8NoDTt3skTCjD0y9Yk=;
+	s=arc-20240116; t=1750178465; c=relaxed/simple;
+	bh=awFXpan8vcccc+tshElBr8CYJlKZCndFVlK6S+oLVks=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RwgdPtaEpT3U/HTo73ljA9hHY7Lhwsga9Sn/GQGLrocpji6kHiOkdyhkfrGvQCxMFqh5ZKd/u/6ntwk5JAy1BEjTj0Xn2qzUcO5znDlO1TJnROd9cJTKhA55UtoUT34zFhf962/7C9F7VMumDOmLK4/PXBiRi8ahojcq8okLhCA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FOjukrQx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YIqik9NBuNsZWJOVH81v4noV3ANcQ8u9ZzClFbg+nQdgGGAvIu+PDPCqUncrL9AvU7/7Q9OYABX8ZVH1ned1JHOchT0H29P/3BPBtZOtS95ybjxFo9eTo0HourYmZyGwHm2hLeK1G9cP4rsuDKQJmfZVDjFM2rxrDQn3NoYd2/A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V+byQ53z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FOjukrQx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C247C4CEE3;
-	Tue, 17 Jun 2025 16:41:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V+byQ53z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78FE6C4CEE3;
+	Tue, 17 Jun 2025 16:41:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750178461;
-	bh=9b8p/QYhNLzkaTf4+CjLU9qMu8NoDTt3skTCjD0y9Yk=;
+	s=korg; t=1750178464;
+	bh=awFXpan8vcccc+tshElBr8CYJlKZCndFVlK6S+oLVks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FOjukrQxOZ3aFFXJc55eRYw6iJDsERhXyEYHzdaPsCR80btRX9lWtlPV6XR1TM43I
-	 qZ4vZvppsOFPUS44WsWnw6y8WopJJRyRGQAA1Dd7iRhrpR+HH+6rmUn44rSQ0ggpNq
-	 o4l9fo9kwRKzsPUFPZXQr6BQ4vcHjx0qlw1yodMQ=
+	b=V+byQ53z8F6fM6TQKkB/9gb2RAz2Bu/yZY7SVvJul+v5whnahtctJnT3cHZLxvhLE
+	 aV0abP927cE3wWWzd81RLmxCD8nWTJfDoplh9kC3vM2UIk6Q7UhLkuuc0c5WJp6cf6
+	 tgBUOl76wYaerEuEUeXCN5ZD/o0FZ0NyEgaHVgwE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yue Haibing <yuehaibing@huawei.com>,
-	Jassi Brar <jassisinghbrar@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 463/780] mailbox: mchp-ipc-sbi: Fix COMPILE_TEST build error
-Date: Tue, 17 Jun 2025 17:22:51 +0200
-Message-ID: <20250617152510.342268937@linuxfoundation.org>
+	stable@kernel.org,
+	Stefano Stabellini <stefano.stabellini@amd.com>,
+	Juergen Gross <jgross@suse.com>
+Subject: [PATCH 6.12 503/512] xen/arm: call uaccess_ttbr0_enable for dm_op hypercall
+Date: Tue, 17 Jun 2025 17:27:49 +0200
+Message-ID: <20250617152440.004782545@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,52 +47,67 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yue Haibing <yuehaibing@huawei.com>
+From: Stefano Stabellini <stefano.stabellini@amd.com>
 
-[ Upstream commit d635ba4207c31940398c41caa0cedd80f3b9c9c7 ]
+commit 7f9bbc1140ff8796230bc2634055763e271fd692 upstream.
 
-If COMPILE_TEST is y but RISCV_SBI is n, build fails:
+dm_op hypercalls might come from userspace and pass memory addresses as
+parameters. The memory addresses typically correspond to buffers
+allocated in userspace to hold extra hypercall parameters.
 
-drivers/mailbox/mailbox-mchp-ipc-sbi.c: In function 'mchp_ipc_sbi_chan_send':
-drivers/mailbox/mailbox-mchp-ipc-sbi.c:119:23: error: storage size of 'ret' isn't known
-	struct sbiret ret;
-	              ^~~
-  CC      drivers/nvmem/lpc18xx_otp.o
-drivers/mailbox/mailbox-mchp-ipc-sbi.c:121:15: error: implicit declaration of function 'sbi_ecall' [-Werror=implicit-function-declaration]
-	ret = sbi_ecall(SBI_EXT_MICROCHIP_TECHNOLOGY, command, channel,
-	      ^~~~~~~~~
+On ARM, when CONFIG_ARM64_SW_TTBR0_PAN is enabled, they might not be
+accessible by Xen, as a result ioreq hypercalls might fail. See the
+existing comment in arch/arm64/xen/hypercall.S regarding privcmd_call
+for reference.
 
-move COMPILE_TEST to ARCH_MICROCHIP dependency as other drivers.
+For privcmd_call, Linux calls uaccess_ttbr0_enable before issuing the
+hypercall thanks to commit 9cf09d68b89a. We need to do the same for
+dm_op. This resolves the problem.
 
-Fixes: e4b1d67e7141 ("mailbox: add Microchip IPC support")
-Signed-off-by: Yue Haibing <yuehaibing@huawei.com>
-Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@kernel.org
+Fixes: 9cf09d68b89a ("arm64: xen: Enable user access before a privcmd hvc call")
+Signed-off-by: Stefano Stabellini <stefano.stabellini@amd.com>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Message-ID: <alpine.DEB.2.22.394.2505121446370.8380@ubuntu-linux-20-04-desktop>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mailbox/Kconfig | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/xen/hypercall.S |   21 ++++++++++++++++++++-
+ 1 file changed, 20 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/mailbox/Kconfig b/drivers/mailbox/Kconfig
-index ed52db272f4d0..e8445cda7c618 100644
---- a/drivers/mailbox/Kconfig
-+++ b/drivers/mailbox/Kconfig
-@@ -191,8 +191,8 @@ config POLARFIRE_SOC_MAILBOX
+--- a/arch/arm64/xen/hypercall.S
++++ b/arch/arm64/xen/hypercall.S
+@@ -83,7 +83,26 @@ HYPERCALL3(vcpu_op);
+ HYPERCALL1(platform_op_raw);
+ HYPERCALL2(multicall);
+ HYPERCALL2(vm_assist);
+-HYPERCALL3(dm_op);
++
++SYM_FUNC_START(HYPERVISOR_dm_op)
++	mov x16, #__HYPERVISOR_dm_op;	\
++	/*
++	 * dm_op hypercalls are issued by the userspace. The kernel needs to
++	 * enable access to TTBR0_EL1 as the hypervisor would issue stage 1
++	 * translations to user memory via AT instructions. Since AT
++	 * instructions are not affected by the PAN bit (ARMv8.1), we only
++	 * need the explicit uaccess_enable/disable if the TTBR0 PAN emulation
++	 * is enabled (it implies that hardware UAO and PAN disabled).
++	 */
++	uaccess_ttbr0_enable x6, x7, x8
++	hvc XEN_IMM
++
++	/*
++	 * Disable userspace access from kernel once the hyp call completed.
++	 */
++	uaccess_ttbr0_disable x6, x7
++	ret
++SYM_FUNC_END(HYPERVISOR_dm_op);
  
- config MCHP_SBI_IPC_MBOX
- 	tristate "Microchip Inter-processor Communication (IPC) SBI driver"
--	depends on RISCV_SBI || COMPILE_TEST
--	depends on ARCH_MICROCHIP
-+	depends on RISCV_SBI
-+	depends on ARCH_MICROCHIP || COMPILE_TEST
- 	help
- 	  Mailbox implementation for Microchip devices with an
- 	  Inter-process communication (IPC) controller.
--- 
-2.39.5
-
+ SYM_FUNC_START(privcmd_call)
+ 	mov x16, x0
 
 
