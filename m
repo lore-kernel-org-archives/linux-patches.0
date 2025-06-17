@@ -1,42 +1,106 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF10E8F54;
-	Tue, 17 Jun 2025 16:33:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CEA68F54;
+	Tue, 17 Jun 2025 16:33:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177993; cv=none; b=qE2yKpvrkKRR6Qj4801NoI8GvUOHOZ5UYlWSv7YfA7WZJar9+ykOJJurZGPT+xZQyGy54Dej7TnZGlWtOyeggnYCsoZ9W/ZF9T2d65xQi4gs8uykoSBP5JnxgBiA7K/5fv7iOJK/D34it647mFTUH3Y+QcGvzfTh3bwyhPmvwzY=
+	t=1750177997; cv=none; b=Mdk4hbG5v5xbs1nmiWE5+14dJtP+BFG7RDHOShsSq9cRQPmengKhBJFTxyJj9ceMxOPx3lfV2GC4FOREETVNOTTcBgz7yZjMAoYjL2uVVJJI6/RI++maV4i/aqAxt5pNlyM3NKyuftHPss6xAkGW0Wbp6oXnAyz7Mp04dE7dJsQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177993; c=relaxed/simple;
-	bh=YQdVr+tzRVXkDJG1xkRSGGmOAnwovA88YV/xcd6pUHE=;
+	s=arc-20240116; t=1750177997; c=relaxed/simple;
+	bh=ayaKlxVHRUROIUp4ENAPD1t5upaQH8w1kt8d4GfkCxw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=avBqqGVZrN6G1CEIsKFERnmhpyMkPvZ+JGyTH2eS6GxIOF9utiPx/YgWuvVmHpou4TM39cH5SVCmkEiewFD5ws9+AI7pBxneZqf9Vg14UOCph2TadY1poZc32HQvblnZtXlF2Y3Osf5FamvScEgAN2oxftfBYQMemMqmxNlOFms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HsA8ab2T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ZihEIxL19lNuhNca8M9NsNgcsTwHW/Tmbj6ZjCanqCv0He8Rif1N+VfDcM1iYyTwxQQz0VHErQ9dqT25gy6ngLD5AJnuNqw0+voKB/kA6JRUMv3LehqCTYy3YE5wRljw0jf1pOkHfp10n92fpf/U2nZYYjGiIUmA7QGO8ZlyV/c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DoVluRmR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HsA8ab2T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EB1DC4CEE3;
-	Tue, 17 Jun 2025 16:33:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DoVluRmR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40991C4CEE3;
+	Tue, 17 Jun 2025 16:33:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177993;
-	bh=YQdVr+tzRVXkDJG1xkRSGGmOAnwovA88YV/xcd6pUHE=;
+	s=korg; t=1750177997;
+	bh=ayaKlxVHRUROIUp4ENAPD1t5upaQH8w1kt8d4GfkCxw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HsA8ab2TPXNCbKfyIiIE2BbxbQ9dnL6fjU5Vbkg0yo075/rQZqYfVBRf707oQCjxE
-	 xx94ge5UjIPlnbJfLVvAAA1widCcy2itwcXESgEHYCCUxGRAlwHWvqI+lnx8uLYwEr
-	 C4iM/hrSSdFCWdi67Hc5MIP3vOIdWFuBr/zZkHSQ=
+	b=DoVluRmRczELqHb/+aBB1ObjJJbcJk5tkLWIOfqC2yHX4LsUUijF/9wMG5vOMguYG
+	 rQdWgg5sci9PxksuKOl7bMHoQNjpv7nSgEqSwkmhL7cMLbIhDpXo5GiWgihleKPj07
+	 RqF7wUfsUtK2v4OkSlNCN/L7wyzziKn8jQi91waY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Minnekhanov <alexeymin@postmarketos.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Jeff Johnson <quic_jjohnson@quicinc.com>,
+	Easwar Hariharan <eahariha@linux.microsoft.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Andrew Lunn <andrew+netdev@lunn.ch>,
+	Anna-Maria Behnsen <anna-maria@linutronix.de>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Daniel Mack <daniel@zonque.org>,
+	David Airlie <airlied@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Dick Kennedy <dick.kennedy@broadcom.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Haojian Zhuang <haojian.zhuang@gmail.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
+	Jack Wang <jinpu.wang@cloud.ionos.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	James Bottomley <James.Bottomley@HansenPartnership.com>,
+	James Smart <james.smart@broadcom.com>,
+	Jaroslav Kysela <perex@perex.cz>,
+	Jeff Johnson <jjohnson@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
+	Jeroen de Borst <jeroendb@google.com>,
+	Jiri Kosina <jikos@kernel.org>,
+	Joe Lawrence <joe.lawrence@redhat.com>,
+	Johan Hedberg <johan.hedberg@gmail.com>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Jozsef Kadlecsik <kadlec@netfilter.org>,
+	Julia Lawall <julia.lawall@inria.fr>,
+	Kalle Valo <kvalo@kernel.org>,
+	Louis Peens <louis.peens@corigine.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Marcel Holtmann <marcel@holtmann.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Miroslav Benes <mbenes@suse.cz>,
+	Naveen N Rao <naveen@kernel.org>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	Nicolas Palix <nicolas.palix@imag.fr>,
+	Oded Gabbay <ogabbay@kernel.org>,
+	Ofir Bitton <obitton@habana.ai>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Petr Mladek <pmladek@suse.com>,
+	Praveen Kaligineedi <pkaligineedi@google.com>,
+	Ray Jui <rjui@broadcom.com>,
+	Robert Jarzmik <robert.jarzmik@free.fr>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	=?UTF-8?q?Roger=20Pau=20Monn=C3=A9?= <roger.pau@citrix.com>,
+	Russell King <linux@armlinux.org.uk>,
+	Scott Branden <sbranden@broadcom.com>,
+	Shailend Chand <shailend@google.com>,
+	Simona Vetter <simona@ffwll.ch>,
+	Simon Horman <horms@kernel.org>,
+	Sven Schnelle <svens@linux.ibm.com>,
+	Takashi Iwai <tiwai@suse.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Xiubo Li <xiubli@redhat.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 380/780] arm64: dts: qcom: sdm660-lavender: Add missing USB phy supply
-Date: Tue, 17 Jun 2025 17:21:28 +0200
-Message-ID: <20250617152506.935200571@linuxfoundation.org>
+Subject: [PATCH 6.12 429/512] wifi: ath11k: convert timeouts to secs_to_jiffies()
+Date: Tue, 17 Jun 2025 17:26:35 +0200
+Message-ID: <20250617152436.957381348@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,41 +110,121 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexey Minnekhanov <alexeymin@postmarketos.org>
+From: Easwar Hariharan <eahariha@linux.microsoft.com>
 
-[ Upstream commit dbf62a117a1b7f605a98dd1fd1fd6c85ec324ea0 ]
+[ Upstream commit b29425972c5234a59b6fb634125420ed74266377 ]
 
-Fixes the following dtbs check error:
+Commit b35108a51cf7 ("jiffies: Define secs_to_jiffies()") introduced
+secs_to_jiffies().  As the value here is a multiple of 1000, use
+secs_to_jiffies() instead of msecs_to_jiffies to avoid the multiplication.
 
- phy@c012000: 'vdda-pll-supply' is a required property
+This is converted using scripts/coccinelle/misc/secs_to_jiffies.cocci with
+the following Coccinelle rules:
 
-Fixes: e5d3e752b050e ("arm64: dts: qcom: sdm660-xiaomi-lavender: Add USB")
-Signed-off-by: Alexey Minnekhanov <alexeymin@postmarketos.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250504115120.1432282-3-alexeymin@postmarketos.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+@@ constant C; @@
+
+- msecs_to_jiffies(C * 1000)
++ secs_to_jiffies(C)
+
+@@ constant C; @@
+
+- msecs_to_jiffies(C * MSEC_PER_SEC)
++ secs_to_jiffies(C)
+
+Link: https://lkml.kernel.org/r/20241210-converge-secs-to-jiffies-v3-14-ddfefd7e9f2a@linux.microsoft.com
+Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+Signed-off-by: Easwar Hariharan <eahariha@linux.microsoft.com>
+Cc: Alexander Gordeev <agordeev@linux.ibm.com>
+Cc: Andrew Lunn <andrew+netdev@lunn.ch>
+Cc: Anna-Maria Behnsen <anna-maria@linutronix.de>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Christian Borntraeger <borntraeger@linux.ibm.com>
+Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
+Cc: Daniel Mack <daniel@zonque.org>
+Cc: David Airlie <airlied@gmail.com>
+Cc: David S. Miller <davem@davemloft.net>
+Cc: Dick Kennedy <dick.kennedy@broadcom.com>
+Cc: Eric Dumazet <edumazet@google.com>
+Cc: Florian Fainelli <florian.fainelli@broadcom.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Haojian Zhuang <haojian.zhuang@gmail.com>
+Cc: Heiko Carstens <hca@linux.ibm.com>
+Cc: Ilya Dryomov <idryomov@gmail.com>
+Cc: Jack Wang <jinpu.wang@cloud.ionos.com>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: James Bottomley <James.Bottomley@HansenPartnership.com>
+Cc: James Smart <james.smart@broadcom.com>
+Cc: Jaroslav Kysela <perex@perex.cz>
+Cc: Jeff Johnson <jjohnson@kernel.org>
+Cc: Jens Axboe <axboe@kernel.dk>
+Cc: Jeroen de Borst <jeroendb@google.com>
+Cc: Jiri Kosina <jikos@kernel.org>
+Cc: Joe Lawrence <joe.lawrence@redhat.com>
+Cc: Johan Hedberg <johan.hedberg@gmail.com>
+Cc: Josh Poimboeuf <jpoimboe@kernel.org>
+Cc: Jozsef Kadlecsik <kadlec@netfilter.org>
+Cc: Julia Lawall <julia.lawall@inria.fr>
+Cc: Kalle Valo <kvalo@kernel.org>
+Cc: Louis Peens <louis.peens@corigine.com>
+Cc: Lucas De Marchi <lucas.demarchi@intel.com>
+Cc: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
+Cc: Marcel Holtmann <marcel@holtmann.org>
+Cc: Martin K. Petersen <martin.petersen@oracle.com>
+Cc: Maxime Ripard <mripard@kernel.org>
+Cc: Michael Ellerman <mpe@ellerman.id.au>
+Cc: Miroslav Benes <mbenes@suse.cz>
+Cc: Naveen N Rao <naveen@kernel.org>
+Cc: Nicholas Piggin <npiggin@gmail.com>
+Cc: Nicolas Palix <nicolas.palix@imag.fr>
+Cc: Oded Gabbay <ogabbay@kernel.org>
+Cc: Ofir Bitton <obitton@habana.ai>
+Cc: Pablo Neira Ayuso <pablo@netfilter.org>
+Cc: Paolo Abeni <pabeni@redhat.com>
+Cc: Petr Mladek <pmladek@suse.com>
+Cc: Praveen Kaligineedi <pkaligineedi@google.com>
+Cc: Ray Jui <rjui@broadcom.com>
+Cc: Robert Jarzmik <robert.jarzmik@free.fr>
+Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Cc: Roger Pau Monné <roger.pau@citrix.com>
+Cc: Russell King <linux@armlinux.org.uk>
+Cc: Scott Branden <sbranden@broadcom.com>
+Cc: Shailend Chand <shailend@google.com>
+Cc: Simona Vetter <simona@ffwll.ch>
+Cc: Simon Horman <horms@kernel.org>
+Cc: Sven Schnelle <svens@linux.ibm.com>
+Cc: Takashi Iwai <tiwai@suse.com>
+Cc: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: Vasily Gorbik <gor@linux.ibm.com>
+Cc: Xiubo Li <xiubli@redhat.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: 9f6e82d11bb9 ("wifi: ath11k: avoid burning CPU in ath11k_debugfs_fw_stats_request()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/wireless/ath/ath11k/debugfs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts b/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts
-index 0b4d71c14a772..a9926ad6c6f9f 100644
---- a/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts
-@@ -107,6 +107,7 @@
- 	status = "okay";
+diff --git a/drivers/net/wireless/ath/ath11k/debugfs.c b/drivers/net/wireless/ath/ath11k/debugfs.c
+index 57281a135dd7f..bf192529e3fe2 100644
+--- a/drivers/net/wireless/ath/ath11k/debugfs.c
++++ b/drivers/net/wireless/ath/ath11k/debugfs.c
+@@ -178,7 +178,7 @@ static int ath11k_debugfs_fw_stats_request(struct ath11k *ar,
+ 	 * received 'update stats' event, we keep a 3 seconds timeout in case,
+ 	 * fw_stats_done is not marked yet
+ 	 */
+-	timeout = jiffies + msecs_to_jiffies(3 * 1000);
++	timeout = jiffies + secs_to_jiffies(3);
  
- 	vdd-supply = <&vreg_l1b_0p925>;
-+	vdda-pll-supply = <&vreg_l10a_1p8>;
- 	vdda-phy-dpdm-supply = <&vreg_l7b_3p125>;
- };
+ 	ath11k_debugfs_fw_stats_reset(ar);
  
 -- 
 2.39.5
