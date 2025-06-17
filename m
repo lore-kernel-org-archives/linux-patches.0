@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61C382EA487;
-	Tue, 17 Jun 2025 15:43:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C20562EA487;
+	Tue, 17 Jun 2025 15:43:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750174980; cv=none; b=X3BNqhurL4tEdxZGQc4eme+5Y6uQuF1+E0zWV+ltVQjRQkZYs5plrvOVgHZ0TjVVAG5F4wkpzr036O2dxLZHN0eOAjHvcTAFqNGSGnvaMAk+N4JqgsvFPu4qHZ332DP/hePpbFwCa48vZthUUvjzIOE/NKc7Eo0mNQ447w0wOUA=
+	t=1750174983; cv=none; b=TSR6Q2QKfMyJ0DtOR9pl6PKovWJNTTBAUJeuHTzHRd/DYheUOXiN0i/wCSinx4BAkqplkBZq/vg7nbgPapEWCMPChxTrffNWpwOQ7b0cqee0XwmDiZ168Ctwkpk5Rd3tO6/nqUjhnC0bCpKWzN+gjpg52pwRpTy1DuW6NLXXwU8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750174980; c=relaxed/simple;
-	bh=cExr6gHhZVQFCYBC2G32BYItAWl6K/CaWgK2l39f+bc=;
+	s=arc-20240116; t=1750174983; c=relaxed/simple;
+	bh=5XxaZV6odZChrIbeJnfSrZVqaL9+jmeI4fDM12bKfUo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Dz4Bj3ndMOAzPH7uIFMe+Q1MX4ntHbJQWReeEImWatz/kkbtB3argHTXvlWEf7ArU64gmPynro+2cQnArYXzB81XEz59y0T0GQW8LtJN9K25xFZWodfyDGjko7Vaz0j8aSsDYh53AflnHpOhK+U6vccDcbLxLWOE0CXekusTySs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xUhIzHbW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p4hdFDbayLBtX7s9J8S1jB05JnQOEAI2fo3587Psh242YRJW7TW0mJmN4tMmxdRLTVrpsDKkIatMdxfX1LmCiWdpuYAPeoqXHh4QaSmTSOlKBIBD6thq5qQnNrv1ddHhQMsvTpbSVcNPBhuC8PnIBHqd0gIwEilXvoE2nhVTBBg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vmtzqw5A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xUhIzHbW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA523C4CEE3;
-	Tue, 17 Jun 2025 15:42:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vmtzqw5A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AC88C4CEE3;
+	Tue, 17 Jun 2025 15:43:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750174980;
-	bh=cExr6gHhZVQFCYBC2G32BYItAWl6K/CaWgK2l39f+bc=;
+	s=korg; t=1750174983;
+	bh=5XxaZV6odZChrIbeJnfSrZVqaL9+jmeI4fDM12bKfUo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xUhIzHbWtY4PfJvBbN0EVU+x8bSOFHxJxPr/8B4KGVtU5SkYY7Z6DJbfa/eRKfRQO
-	 m7FTsH7Vcowri1mU5MCF3zOLR+61718Ha+gUFrWAod+I3qrx+zX1rDNbBOFZ3apDck
-	 EkHLDMxeo+6P/WHelKVB2Z8b+VtilC/grHNI24MM=
+	b=vmtzqw5AYcZEVZWAfE1ThMg6ilF/6NPlP3dU1K4HhmJvFMUvfW9R0I7BR0NRZEkTc
+	 OE2/Wov5+XvRxO3pyqZfTHkBRPc2hc9IaaQjMW1Dl/lhQc1iEwyt/+Io6YjmSHa+hh
+	 lnSm7QQ5EwVt5pYHISthiUF0G5byUSiUKgZ/aqy4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Ridong <chenridong@huawei.com>,
-	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
-	Tejun Heo <tj@kernel.org>,
+	Gaurav Batra <gbatra@linux.ibm.com>,
+	Nilay Shroff <nilay@linux.ibm.com>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 133/356] kernfs: Relax constraint in draining guard
-Date: Tue, 17 Jun 2025 17:24:08 +0200
-Message-ID: <20250617152343.590263981@linuxfoundation.org>
+Subject: [PATCH 6.15 039/780] powerpc/pseries/iommu: Fix kmemleak in TCE table userspace view
+Date: Tue, 17 Jun 2025 17:15:47 +0200
+Message-ID: <20250617152453.089683458@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-References: <20250617152338.212798615@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,90 +47,87 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michal Koutný <mkoutny@suse.com>
+From: Gaurav Batra <gbatra@linux.ibm.com>
 
-[ Upstream commit 071d8e4c2a3b0999a9b822e2eb8854784a350f8a ]
+[ Upstream commit d36e3f11fe8b55b801bdbe84ad51f612b1bd84da ]
 
-The active reference lifecycle provides the break/unbreak mechanism but
-the active reference is not truly active after unbreak -- callers don't
-use it afterwards but it's important for proper pairing of kn->active
-counting. Assuming this mechanism is in place, the WARN check in
-kernfs_should_drain_open_files() is too sensitive -- it may transiently
-catch those (rightful) callers between
-kernfs_unbreak_active_protection() and kernfs_put_active() as found out by Chen
-Ridong:
+When a device is opened by a userspace driver, via VFIO interface, DMA
+window is created. This DMA window has TCE Table and a corresponding
+data for userview of TCE table.
 
-	kernfs_remove_by_name_ns	kernfs_get_active // active=1
-	__kernfs_remove					  // active=0x80000002
-	kernfs_drain			...
-	wait_event
-	//waiting (active == 0x80000001)
-					kernfs_break_active_protection
-					// active = 0x80000001
-	// continue
-					kernfs_unbreak_active_protection
-					// active = 0x80000002
-	...
-	kernfs_should_drain_open_files
-	// warning occurs
-					kernfs_put_active
+When the userspace driver closes the device, all the above infrastructure
+is free'ed and the device control given back to kernel. Both DMA window
+and TCE table is getting free'ed. But due to a code bug, userview of the
+TCE table is not getting free'ed. This is resulting in a memory leak.
 
-To avoid the false positives (mind panic_on_warn) remove the check altogether.
-(This is meant as quick fix, I think active reference break/unbreak may be
-simplified with larger rework.)
+Befow is the information from KMEMLEAK
 
-Fixes: bdb2fd7fc56e1 ("kernfs: Skip kernfs_drain_open_files() more aggressively")
-Link: https://lore.kernel.org/r/kmmrseckjctb4gxcx2rdminrjnq2b4ipf7562nvfd432ld5v5m@2byj5eedkb2o/
+unreferenced object 0xc008000022af0000 (size 16777216):
+  comm "senlib_unit_tes", pid 9346, jiffies 4294983174
+  hex dump (first 32 bytes):
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+  backtrace (crc 0):
+    kmemleak_vmalloc+0xc8/0x1a0
+    __vmalloc_node_range+0x284/0x340
+    vzalloc+0x58/0x70
+    spapr_tce_create_table+0x4b0/0x8d0
+    tce_iommu_create_table+0xcc/0x170 [vfio_iommu_spapr_tce]
+    tce_iommu_create_window+0x144/0x2f0 [vfio_iommu_spapr_tce]
+    tce_iommu_ioctl.part.0+0x59c/0xc90 [vfio_iommu_spapr_tce]
+    vfio_fops_unl_ioctl+0x88/0x280 [vfio]
+    sys_ioctl+0xf4/0x160
+    system_call_exception+0x164/0x310
+    system_call_vectored_common+0xe8/0x278
+unreferenced object 0xc008000023b00000 (size 4194304):
+  comm "senlib_unit_tes", pid 9351, jiffies 4294984116
+  hex dump (first 32 bytes):
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+  backtrace (crc 0):
+    kmemleak_vmalloc+0xc8/0x1a0
+    __vmalloc_node_range+0x284/0x340
+    vzalloc+0x58/0x70
+    spapr_tce_create_table+0x4b0/0x8d0
+    tce_iommu_create_table+0xcc/0x170 [vfio_iommu_spapr_tce]
+    tce_iommu_create_window+0x144/0x2f0 [vfio_iommu_spapr_tce]
+    tce_iommu_create_default_window+0x88/0x120 [vfio_iommu_spapr_tce]
+    tce_iommu_ioctl.part.0+0x57c/0xc90 [vfio_iommu_spapr_tce]
+    vfio_fops_unl_ioctl+0x88/0x280 [vfio]
+    sys_ioctl+0xf4/0x160
+    system_call_exception+0x164/0x310
+    system_call_vectored_common+0xe8/0x278
 
-Cc: Chen Ridong <chenridong@huawei.com>
-Signed-off-by: Michal Koutný <mkoutny@suse.com>
-Acked-by: Tejun Heo <tj@kernel.org>
-Link: https://lore.kernel.org/r/20250505121201.879823-1-mkoutny@suse.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: f431a8cde7f1 ("powerpc/iommu: Reimplement the iommu_table_group_ops for pSeries")
+Signed-off-by: Gaurav Batra <gbatra@linux.ibm.com>
+Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
+Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20250512224653.35697-1-gbatra@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/kernfs/dir.c  | 5 +++--
- fs/kernfs/file.c | 3 ++-
- 2 files changed, 5 insertions(+), 3 deletions(-)
+ arch/powerpc/platforms/pseries/iommu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/kernfs/dir.c b/fs/kernfs/dir.c
-index b068ed32d7b32..f6e2a4523f7e6 100644
---- a/fs/kernfs/dir.c
-+++ b/fs/kernfs/dir.c
-@@ -1560,8 +1560,9 @@ void kernfs_break_active_protection(struct kernfs_node *kn)
-  * invoked before finishing the kernfs operation.  Note that while this
-  * function restores the active reference, it doesn't and can't actually
-  * restore the active protection - @kn may already or be in the process of
-- * being removed.  Once kernfs_break_active_protection() is invoked, that
-- * protection is irreversibly gone for the kernfs operation instance.
-+ * being drained and removed.  Once kernfs_break_active_protection() is
-+ * invoked, that protection is irreversibly gone for the kernfs operation
-+ * instance.
-  *
-  * While this function may be called at any point after
-  * kernfs_break_active_protection() is invoked, its most useful location
-diff --git a/fs/kernfs/file.c b/fs/kernfs/file.c
-index 332d08d2fe0d5..6b90fea6cca20 100644
---- a/fs/kernfs/file.c
-+++ b/fs/kernfs/file.c
-@@ -820,8 +820,9 @@ bool kernfs_should_drain_open_files(struct kernfs_node *kn)
- 	/*
- 	 * @kn being deactivated guarantees that @kn->attr.open can't change
- 	 * beneath us making the lockless test below safe.
-+	 * Callers post kernfs_unbreak_active_protection may be counted in
-+	 * kn->active by now, do not WARN_ON because of them.
- 	 */
--	WARN_ON_ONCE(atomic_read(&kn->active) != KN_DEACTIVATED_BIAS);
+diff --git a/arch/powerpc/platforms/pseries/iommu.c b/arch/powerpc/platforms/pseries/iommu.c
+index d6ebc19fb99c5..eec333dd2e598 100644
+--- a/arch/powerpc/platforms/pseries/iommu.c
++++ b/arch/powerpc/platforms/pseries/iommu.c
+@@ -197,7 +197,7 @@ static void tce_iommu_userspace_view_free(struct iommu_table *tbl)
  
- 	rcu_read_lock();
- 	on = rcu_dereference(kn->attr.open);
+ static void tce_free_pSeries(struct iommu_table *tbl)
+ {
+-	if (!tbl->it_userspace)
++	if (tbl->it_userspace)
+ 		tce_iommu_userspace_view_free(tbl);
+ }
+ 
 -- 
 2.39.5
 
