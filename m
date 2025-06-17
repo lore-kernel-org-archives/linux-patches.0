@@ -1,46 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C7392EE29D;
-	Tue, 17 Jun 2025 16:31:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CF421ADC97;
+	Tue, 17 Jun 2025 16:31:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177909; cv=none; b=QtNDk+zZon+aIBWgjYQOAE9Muu3BePFejNSWAxP2NH+soiXJsphFUGp97iP48uRpZx5PsWrZrzNT3bXxbB6Adw3TgqLiMZQCmcR3X/u9LYWyiqXIxMB2nB7DChXJ52dSUJLCUZQjbeRlYTaPheA/VrgYglP4QUQYFAg8MT30bnk=
+	t=1750177912; cv=none; b=jSMp0mG40dz6smzy+GW7EM6m3gf1eXV+fZgbgHySRLVGRS1nvx4knr4IEWRh4k6tC2ClQe+bZzbcDYPPqtB16UxWtPQBW24MRllWYSIiKylvEUt4uzdWxvLlUQpx5CkWS3AIArcSoO0i4+/b0vxx4Qm+6e/ZYkFQbp0EjcYixgw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177909; c=relaxed/simple;
-	bh=NqDxoLVhvg5NBOGeghX1X3pbqq2/eD5rcWamWGP46dE=;
+	s=arc-20240116; t=1750177912; c=relaxed/simple;
+	bh=1+ZWVxzZiFf6k1Bq9kBStU2XlEePWAUGu2AycTKKNVw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WQtsXEkwn8AQus58n3LFPRCF52Z8XmvYB88JGjDXyKq2Yddv0H23iRjAF2VVbqDAicZmGGmVvBriUdG2yZmDOm6X+m3QcUa/kjqWdhpwh10IOCFOYGXYERm1uGWay7bA25UcnldoIV+op5mNVurpRzxhNddNM4WH8FZvKTXv48Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o4ufJA/o; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sKlrvTqv5Wzv10RalibgHqBsXaAgzsF93Okc1F9bdYruEqrDQnq0Ku24UPNuS+Xl1l0B1en3RxHXEuh9TstJP+vSh3DH1dIpTLmILkEkOo2Km2RRQQgr9JFOz6PAXuPTja7IAkiKt7u5eZI2LfB7etLpDkY5xIuccTYflPvO8lA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VzvuPRsq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o4ufJA/o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E250AC4CEE3;
-	Tue, 17 Jun 2025 16:31:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VzvuPRsq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0027DC4CEE3;
+	Tue, 17 Jun 2025 16:31:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177909;
-	bh=NqDxoLVhvg5NBOGeghX1X3pbqq2/eD5rcWamWGP46dE=;
+	s=korg; t=1750177912;
+	bh=1+ZWVxzZiFf6k1Bq9kBStU2XlEePWAUGu2AycTKKNVw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o4ufJA/o9ZgLo/wyirbcgk1RGLWZhak/W7vDVnjg1970xs8KGenVty0pK+n98cB7c
-	 FcwPV51Pm7EcjvUlIjMPQz3PmgW6bhQ9AT49DFJJC0PzqUMNQuMCCcowDyxgkNZw+3
-	 qucrTUCntpIzpxnYq/OE9gQzfCMresbqRM98XU8o=
+	b=VzvuPRsqZJ4FPtcyZ+kxKROndrhUe+vWdJHdy1Fu5KI4qK0eQYSpRBmyMuVd30idv
+	 HvUmYmqvLwvbXPiSUKpYg1wczSNhvUHdeU4Hqkx9asY7MVso4KzlqgDstxxNJDaWue
+	 tTyigmeEIoCDtSJgZqexPdDQQ1tR3oVlX7fGwh4o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>,
-	Anuj Gupta <anuj20.g@samsung.com>,
-	Nitesh Shetty <nj.shetty@samsung.com>,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Christian Brauner <brauner@kernel.org>,
-	Keith Busch <kbusch@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Varadarajan Narayanan <quic_varada@quicinc.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 392/512] iov_iter: use iov_offset for length calculation in iov_iter_aligned_bvec
-Date: Tue, 17 Jun 2025 17:25:58 +0200
-Message-ID: <20250617152435.470995678@linuxfoundation.org>
+Subject: [PATCH 6.15 359/780] arm64: dts: qcom: ipq9574: Fix USB vdd info
+Date: Tue, 17 Jun 2025 17:21:07 +0200
+Message-ID: <20250617152506.077822265@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -52,90 +48,67 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nitesh Shetty <nj.shetty@samsung.com>
+From: Varadarajan Narayanan <quic_varada@quicinc.com>
 
-[ Upstream commit 334d7c4fb60cf21e0abac134d92fe49e9b04377e ]
+[ Upstream commit 4f4c905e6a2a4e884f4e9b7326c94fac3500e0f9 ]
 
-If iov_offset is non-zero, then we need to consider iov_offset in length
-calculation, otherwise we might pass smaller IOs such as 512 bytes, in
-below scenario [1].
+USB phys in ipq9574 use the 'L5' regulator. The commit ec4f047679d5
+("arm64: dts: qcom: ipq9574: Enable USB") incorrectly specified it as
+'L2'. Because of this when the phy module turns off/on its regulators,
+the wrong regulator is turned off/on resulting in 2 issues, namely the
+correct regulator related to the USB phy is not turned off/on and the
+module powered by the incorrect regulator is affected.
 
-This issue is reproducible using lib-uring test/fixed-seg.c application
-with fixed buffer on a 512 LBA formatted device.
-
-[1]
-
-At present we pass the alignment check, for 512 LBA formatted devices,
-len_mask = 511 when IO is smaller, i->count = 512 has an offset,
-i->io_offset = 3584 with bvec values, bvec->bv_offset = 256,
-bvec->bv_len = 3840.  In short, the first 256 bytes are in the current
-page, next 256 bytes are in the another page.  Ideally we expect to
-fail the IO.
-
-I can think of 2 userspace scenarios where we experience this.
-
-a: From userspace, we observe a different behaviour when device LBA
-   size is 512 vs 4096 bytes.  For 4096 LBA formatted device, I see the
-   same liburing test [2] failing, whereas 512 the test passes without
-   this.  This is reproducible everytime.
-
-   [2] https://github.com/axboe/liburing/
-
-b: Although I was not able to reproduce the below condition, but I
-   suspect below case should be possible from user space for devices
-   with 512 LBA formatted device.  Lets say from userspace while
-   allocating a virtually single chunk of memory, if we get 2 physical
-   chunk of memory, and IO happens to be at the boundary of first
-   physical chunk with length crossing first chunk, then we allow IOs
-   to proceed and hence we might map wrong physical address length and
-   proceed with IO rather than failing.
-
-: --- a/test/fixed-seg.c
-: +++ b/test/fixed-seg.c
-: @@ -64,7 +64,7 @@ static int test(struct io_uring *ring, int fd, int
-: vec_off)
-: 		return T_EXIT_FAIL;
-: 	}
-:
-: -       ret = read_it(ring, fd, 4096, vec_off);
-: +       ret = read_it(ring, fd, 4096, 7*512 + 256);
-: 	if (ret) {
-: 		fprintf(stderr, "4096 0 failed\n");
-: 		return T_EXIT_FAIL;
-
-Effectively this is a write crossing the page boundary.
-
-Link: https://lkml.kernel.org/r/20250428095849.11709-1-nj.shetty@samsung.com
-Fixes: 2263639f96f2 ("iov_iter: streamline iovec/bvec alignment iteration")
-Reviewed-by: Jens Axboe <axboe@kernel.dk>
-Reviewed-by: Anuj Gupta <anuj20.g@samsung.com>
-Signed-off-by: Nitesh Shetty <nj.shetty@samsung.com>
-Cc: Al Viro <viro@zeniv.linux.org.uk>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Keith Busch <kbusch@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: ec4f047679d5 ("arm64: dts: qcom: ipq9574: Enable USB")
+Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20250207073545.1768990-2-quic_varada@quicinc.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/iov_iter.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/lib/iov_iter.c b/lib/iov_iter.c
-index bdb37d572e97c..8ede6be556a96 100644
---- a/lib/iov_iter.c
-+++ b/lib/iov_iter.c
-@@ -820,7 +820,7 @@ static bool iov_iter_aligned_bvec(const struct iov_iter *i, unsigned addr_mask,
- 	size_t size = i->count;
+diff --git a/arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi b/arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi
+index ae12f069f26fa..b24b795873d41 100644
+--- a/arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi
+@@ -111,6 +111,13 @@
+ 			regulator-always-on;
+ 			regulator-boot-on;
+ 		};
++
++		mp5496_l5: l5 {
++			regulator-min-microvolt = <1800000>;
++			regulator-max-microvolt = <1800000>;
++			regulator-always-on;
++			regulator-boot-on;
++		};
+ 	};
+ };
  
- 	do {
--		size_t len = bvec->bv_len;
-+		size_t len = bvec->bv_len - skip;
+@@ -146,7 +153,7 @@
+ };
  
- 		if (len > size)
- 			len = size;
+ &usb_0_qmpphy {
+-	vdda-pll-supply = <&mp5496_l2>;
++	vdda-pll-supply = <&mp5496_l5>;
+ 	vdda-phy-supply = <&regulator_fixed_0p925>;
+ 
+ 	status = "okay";
+@@ -154,7 +161,7 @@
+ 
+ &usb_0_qusbphy {
+ 	vdd-supply = <&regulator_fixed_0p925>;
+-	vdda-pll-supply = <&mp5496_l2>;
++	vdda-pll-supply = <&mp5496_l5>;
+ 	vdda-phy-dpdm-supply = <&regulator_fixed_3p3>;
+ 
+ 	status = "okay";
 -- 
 2.39.5
 
