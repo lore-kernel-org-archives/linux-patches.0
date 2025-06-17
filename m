@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 610A42ED84A;
-	Tue, 17 Jun 2025 16:20:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 543EA22FF2B;
+	Tue, 17 Jun 2025 16:20:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177205; cv=none; b=jeevpVPvgevI2LPm/7LLGI3nXL5qJK0Cd3Hy6FHRhkjvOWfcniUZh6HxUnYh4eY149bPMeuR1Zep5XPKjs6+CI/2N2vsfIuZNFNsTefC0ker6mYuhr6zsxZ24KAj3XKgU+9FMFXPQ6SKwEJTMZxOSEibSE1Q8LZISmlUcU8hr0Q=
+	t=1750177208; cv=none; b=cyT4pCPLaCDbEGOFFj1f620VrPiunV5fpygt0TG6ke/i4pV7Vgo8bv6++2YMkgQylwNwE4G4jaHxzytYeJLsc35hzgsL/I4t/nWpLSqOJm4Bpr9lbkwHBFPa23eWnDunSypsV17MeTVm7MogYzkpJk+owOGBaF2V8Y/DPKxG/qE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177205; c=relaxed/simple;
-	bh=hflle3bOD+lF2yRRrQzHANqkkCl6+LoTrvwrp3Jovh0=;
+	s=arc-20240116; t=1750177208; c=relaxed/simple;
+	bh=tRNeG6bp9STMj5uC7Cy2bhGZ3Oi0w1vifZRNXGVX2SQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uXfatmlnU6ARaYrt7uzrCmKi52jyFuRMtsgDWQTCl2Xzn3LfokJ8iWeSiggr1b6P8FAT33Od6jXjL3Idh2A/1mi2lWweOqGaCziB8LCqK8ybXiSKeR/wDMXtY+4ket0m96DfQDmWNvsReB/dAyCZYSZ4YDaQgLAsignABVaqDHc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DshLvfCy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QA1iuLQxTYM1tu4jvDhUfNcMeuHWTRt0Os93BmAqh7rUDLoQnasxKhdyvPAJwUTHbQiY8gd30TifLiEko7EfH1gfh8akGsCKAgPt+yiLQxPYECinLEoFKf3nf8oLlGTvQkQO5ngP/uN8VMJIqtpQyTGuE6CYJAKLgVKVUX32vSk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IBbzvTIM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DshLvfCy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C42DAC4CEE3;
-	Tue, 17 Jun 2025 16:20:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IBbzvTIM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAC8CC4CEE3;
+	Tue, 17 Jun 2025 16:20:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177205;
-	bh=hflle3bOD+lF2yRRrQzHANqkkCl6+LoTrvwrp3Jovh0=;
+	s=korg; t=1750177208;
+	bh=tRNeG6bp9STMj5uC7Cy2bhGZ3Oi0w1vifZRNXGVX2SQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DshLvfCy98xqSrCCLfHmhsTA7KVmq6DKt+cprBSx5dR4XcAx4ekuF7XDxMCeB2ujr
-	 nB80zxl/mjCYLmlaO51Tcv4oUGrl3qDaLKsPNIihShaBavWnAq7ahhCRWZkso9l/+D
-	 C//4V9K29GhdkiQhCwopu+8Q9Pewzih3HsKNiKYg=
+	b=IBbzvTIMvAhzdYgnyVzsxTMAFG/VTf/btRDSWP7lg+5pzvbOKmHuZpmo/TIaIgkLl
+	 DlQ8sR9CEFlR+hdngQdrbVungRbaqwF7vf1/hYwKqoxU+FgY2w9mupuqjRvcAxwK+8
+	 SBk3giU9lcPSdk28yR28kxITyxQ2qvSmFh8FHCkE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	P Praneesh <praneesh.p@oss.qualcomm.com>,
+	Sowjanya vardhineni <quic_svardhin@quicinc.com>,
+	Mahendran P <quic_mahep@quicinc.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 307/512] phy: rockchip: samsung-hdptx: Fix clock ratio setup
-Date: Tue, 17 Jun 2025 17:24:33 +0200
-Message-ID: <20250617152432.045416321@linuxfoundation.org>
+Subject: [PATCH 6.15 272/780] wifi: ath12k: Fix invalid RSSI values in station dump
+Date: Tue, 17 Jun 2025 17:19:40 +0200
+Message-ID: <20250617152502.541052437@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,53 +49,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+From: P Praneesh <praneesh.p@oss.qualcomm.com>
 
-[ Upstream commit 0422253ac1919fea8292381c85f11a9decff1bb1 ]
+[ Upstream commit 3126f1c52af5bc8d40d2c984907daeb501f6b739 ]
 
-The switch from 1/10 to 1/40 clock ratio must happen when exceeding the
-340 MHz rate limit of HDMI 1.4, i.e. when entering the HDMI 2.0 domain,
-and not before.
+When processing a "station dump" command, the driver retrieves RSSI
+values from the HAL_PHYRX_RSSI_LEGACY TLV received from the monitor
+destination ring, and reports them to userspace. Currently, the RSSI
+values reported are improper because the hardware has not been
+configured to update them properly.
 
-Therefore, use the correct comparison operator '>' instead of '>=' when
-checking the max rate.  While at it, introduce a define for this rate
-limit constant.
+To fix this, enable the HTT_RX_FILTER_TLV_FLAGS_PPDU_START_USER_INFO in
+the filter setup to ensure the correct RSSI values are returned in the
+HAL_PHYRX_RSSI_LEGACY TLV, resulting in correct RSSI values being
+reported to userspace.
 
-Fixes: 553be2830c5f ("phy: rockchip: Add Samsung HDMI/eDP Combo PHY driver")
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
-Link: https://lore.kernel.org/r/20250318-phy-sam-hdptx-bpc-v6-3-8cb1678e7663@collabora.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.3.1-00218-QCAHKSWPL_SILICONZ-1
+Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.0.c5-00481-QCAHMTSWPL_V1.0_V2.0_SILICONZ-3
+
+Fixes: d889913205cf ("wifi: ath12k: driver for Qualcomm Wi-Fi 7 devices")
+Signed-off-by: P Praneesh <praneesh.p@oss.qualcomm.com>
+Signed-off-by: Sowjanya vardhineni <quic_svardhin@quicinc.com>
+Reviewed-by: Mahendran P <quic_mahep@quicinc.com>
+Link: https://patch.msgid.link/20250424055104.2503723-1-quic_svardhin@quicinc.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/rockchip/phy-rockchip-samsung-hdptx.c | 3 ++-
+ drivers/net/wireless/ath/ath12k/mac.c | 3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/phy/rockchip/phy-rockchip-samsung-hdptx.c b/drivers/phy/rockchip/phy-rockchip-samsung-hdptx.c
-index 9b99fdd43f5f5..70526c67ca0f1 100644
---- a/drivers/phy/rockchip/phy-rockchip-samsung-hdptx.c
-+++ b/drivers/phy/rockchip/phy-rockchip-samsung-hdptx.c
-@@ -192,6 +192,7 @@
- #define LN3_TX_SER_RATE_SEL_HBR2	BIT(3)
- #define LN3_TX_SER_RATE_SEL_HBR3	BIT(2)
- 
-+#define HDMI14_MAX_RATE			340000000
- #define HDMI20_MAX_RATE			600000000
- 
- struct lcpll_config {
-@@ -851,7 +852,7 @@ static int rk_hdptx_ropll_tmds_mode_config(struct rk_hdptx_phy *hdptx,
- 
- 	regmap_write(hdptx->regmap, LNTOP_REG(0200), 0x06);
- 
--	if (rate >= 3400000) {
-+	if (rate > HDMI14_MAX_RATE / 100) {
- 		/* For 1/40 bitrate clk */
- 		rk_hdptx_multi_reg_write(hdptx, rk_hdtpx_tmds_lntop_highbr_seq);
- 	} else {
+diff --git a/drivers/net/wireless/ath/ath12k/mac.c b/drivers/net/wireless/ath/ath12k/mac.c
+index 65eb50bf03b24..331bcf5e6c4cc 100644
+--- a/drivers/net/wireless/ath/ath12k/mac.c
++++ b/drivers/net/wireless/ath/ath12k/mac.c
+@@ -229,7 +229,8 @@ ath12k_phymodes[NUM_NL80211_BANDS][ATH12K_CHAN_WIDTH_NUM] = {
+ const struct htt_rx_ring_tlv_filter ath12k_mac_mon_status_filter_default = {
+ 	.rx_filter = HTT_RX_FILTER_TLV_FLAGS_MPDU_START |
+ 		     HTT_RX_FILTER_TLV_FLAGS_PPDU_END |
+-		     HTT_RX_FILTER_TLV_FLAGS_PPDU_END_STATUS_DONE,
++		     HTT_RX_FILTER_TLV_FLAGS_PPDU_END_STATUS_DONE |
++		     HTT_RX_FILTER_TLV_FLAGS_PPDU_START_USER_INFO,
+ 	.pkt_filter_flags0 = HTT_RX_FP_MGMT_FILTER_FLAGS0,
+ 	.pkt_filter_flags1 = HTT_RX_FP_MGMT_FILTER_FLAGS1,
+ 	.pkt_filter_flags2 = HTT_RX_FP_CTRL_FILTER_FLASG2,
 -- 
 2.39.5
 
