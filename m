@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7017420F090;
-	Tue, 17 Jun 2025 15:38:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6724420F090;
+	Tue, 17 Jun 2025 15:38:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750174724; cv=none; b=FK1D04NFU+HEBHTGNW8rOT59WnP9siMi1gluDHNEqB5TuzXYTk4i7l2XmnzLDYR1La/WAn7crmpQPU9axQr2j9h83pXvU816FjwV7hbG5M/m6EMmB6hMFpMLbSNEGKIGk0Kb0xDNdoefkl7EJHDeyM2uRVbACOB3s9+whxz4ANA=
+	t=1750174727; cv=none; b=aAo79ssbsfL6eptYpWTmX4WaTQ3lhkI7j1ANMVdaOIYf6lj1WFgziL2DsOK2KPtB/ydVMzJX1n/01MF/+bkSb/Np+BPMLMGXRNNnE5htR+fUf4a4+z78JWF0BVA8HpOqtB+nSdmmK9VHfkerg0cDB1v+8x6gD/oqCwoQgRwLzho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750174724; c=relaxed/simple;
-	bh=gt3NNMBs8jshSCjviRvU0w2hyuC/Ai6fEDxfHfQGjPc=;
+	s=arc-20240116; t=1750174727; c=relaxed/simple;
+	bh=XGNHoOohUCshgaQ0PArfUql1dny7xurUdMs1++0flXc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ir5i97wj0cYilyUjUXUuwdY7U9ybfpGI5HH3sl6PhTeadWs8vJhllQB887tyg5g3GbjSfbKdga4JCdDKQk9qiqbZRSOrcXFISQZei7rHI+PqfTnm3KdXyApajqAwTADdFCxvoDTMjvsSgTLD8ImUrE4mwnVU/u5Nk88PMqtRo70=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pLVOKwDK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=FpQvrKf9TsC4WGjk+DWlOwTMIbxT9QNXa/eTbQgjxz4vkOV9E0tj1ITTLEq8w+C+3N4HhB+Sd2WfE790BuQhItIbESTjOlscoLVUeJqw7DURiljsYye4cN9O5fSyUcs3nJhSSHBo0Kt7EzpjzU7+2j0PAoahplccbgJLBxmwwuo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lhake3GA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pLVOKwDK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D7D8C4CEE3;
-	Tue, 17 Jun 2025 15:38:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lhake3GA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1127C4CEE3;
+	Tue, 17 Jun 2025 15:38:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750174724;
-	bh=gt3NNMBs8jshSCjviRvU0w2hyuC/Ai6fEDxfHfQGjPc=;
+	s=korg; t=1750174727;
+	bh=XGNHoOohUCshgaQ0PArfUql1dny7xurUdMs1++0flXc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pLVOKwDKDzvLAOyZJ3lUT8+HUgTlPiouf3M3bcORg2X4RqA0eWrAtJPoIZLE2NfHK
-	 OEn01MtO+oeynHbDsfjIcO2If4DRnnDwpoT/1fk2muaBwP2DDnx3lLucy4o3JTLo3z
-	 3IMqScH8ViS8OGbKK/FWs1t/QO6alQczmBEwaoPA=
+	b=Lhake3GAcuN5XsLlWWczrJBCh/TqvinanScCs5uVHJ8PcxP/hj5H4vixc94Y5EQRj
+	 aZHEALJjXRr2teg+TA0ntdLs+jGVjK8tu3l9LRBpgdo40R8/Iy4lkaGrgNF5KNUTyY
+	 U9uNCREOPdIPLYyUjocoLOo/lKsVajvA7TaUAMhM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 054/512] thermal/drivers/mediatek/lvts: Fix debugfs unregister on failure
-Date: Tue, 17 Jun 2025 17:20:20 +0200
-Message-ID: <20250617152421.726913858@linuxfoundation.org>
+Subject: [PATCH 6.6 085/356] bpf, sockmap: Fix panic when calling skb_linearize
+Date: Tue, 17 Jun 2025 17:23:20 +0200
+Message-ID: <20250617152341.641656808@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
+References: <20250617152338.212798615@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,83 +45,200 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-[ Upstream commit b49825661af93d9b8d7236f914803f136896f8fd ]
+[ Upstream commit 5ca2e29f6834c64c0e5a9ccf1278c21fb49b827e ]
 
-When running the probe function for this driver, the function
-lvts_debugfs_init() gets called in lvts_domain_init() which, in
-turn, gets called in lvts_probe() before registering threaded
-interrupt handlers.
+The panic can be reproduced by executing the command:
+./bench sockmap -c 2 -p 1 -a --rx-verdict-ingress --rx-strp 100000
 
-Even though it's unlikely, the last call may fail and, if it does,
-there's nothing removing the already created debugfs folder and
-files.
+Then a kernel panic was captured:
+'''
+[  657.460555] kernel BUG at net/core/skbuff.c:2178!
+[  657.462680] Tainted: [W]=WARN
+[  657.463287] Workqueue: events sk_psock_backlog
+...
+[  657.469610]  <TASK>
+[  657.469738]  ? die+0x36/0x90
+[  657.469916]  ? do_trap+0x1d0/0x270
+[  657.470118]  ? pskb_expand_head+0x612/0xf40
+[  657.470376]  ? pskb_expand_head+0x612/0xf40
+[  657.470620]  ? do_error_trap+0xa3/0x170
+[  657.470846]  ? pskb_expand_head+0x612/0xf40
+[  657.471092]  ? handle_invalid_op+0x2c/0x40
+[  657.471335]  ? pskb_expand_head+0x612/0xf40
+[  657.471579]  ? exc_invalid_op+0x2d/0x40
+[  657.471805]  ? asm_exc_invalid_op+0x1a/0x20
+[  657.472052]  ? pskb_expand_head+0xd1/0xf40
+[  657.472292]  ? pskb_expand_head+0x612/0xf40
+[  657.472540]  ? lock_acquire+0x18f/0x4e0
+[  657.472766]  ? find_held_lock+0x2d/0x110
+[  657.472999]  ? __pfx_pskb_expand_head+0x10/0x10
+[  657.473263]  ? __kmalloc_cache_noprof+0x5b/0x470
+[  657.473537]  ? __pfx___lock_release.isra.0+0x10/0x10
+[  657.473826]  __pskb_pull_tail+0xfd/0x1d20
+[  657.474062]  ? __kasan_slab_alloc+0x4e/0x90
+[  657.474707]  sk_psock_skb_ingress_enqueue+0x3bf/0x510
+[  657.475392]  ? __kasan_kmalloc+0xaa/0xb0
+[  657.476010]  sk_psock_backlog+0x5cf/0xd70
+[  657.476637]  process_one_work+0x858/0x1a20
+'''
 
-In order to fix that, instead of calling the lvts debugfs cleanup
-function upon failure, register a devm action that will take care
-of calling that upon failure or driver removal.
+The panic originates from the assertion BUG_ON(skb_shared(skb)) in
+skb_linearize(). A previous commit(see Fixes tag) introduced skb_get()
+to avoid race conditions between skb operations in the backlog and skb
+release in the recvmsg path. However, this caused the panic to always
+occur when skb_linearize is executed.
 
-Since devm was used, also delete the call to lvts_debugfs_exit()
-in the lvts_remove() callback, as now that's done automatically.
+The "--rx-strp 100000" parameter forces the RX path to use the strparser
+module which aggregates data until it reaches 100KB before calling sockmap
+logic. The 100KB payload exceeds MAX_MSG_FRAGS, triggering skb_linearize.
 
-Fixes: f5f633b18234 ("thermal/drivers/mediatek: Add the Low Voltage Thermal Sensor driver")
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: Chen-Yu Tsai <wenst@chromium.org>
-Link: https://lore.kernel.org/r/20250402083852.20624-1-angelogioacchino.delregno@collabora.com
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+To fix this issue, just move skb_get into sk_psock_skb_ingress_enqueue.
+
+'''
+sk_psock_backlog:
+    sk_psock_handle_skb
+       skb_get(skb) <== we move it into 'sk_psock_skb_ingress_enqueue'
+       sk_psock_skb_ingress____________
+                                       ↓
+                                       |
+                                       | → sk_psock_skb_ingress_self
+                                       |      sk_psock_skb_ingress_enqueue
+sk_psock_verdict_apply_________________↑          skb_linearize
+'''
+
+Note that for verdict_apply path, the skb_get operation is unnecessary so
+we add 'take_ref' param to control it's behavior.
+
+Fixes: a454d84ee20b ("bpf, sockmap: Fix skb refcnt race after locking changes")
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Link: https://lore.kernel.org/r/20250407142234.47591-4-jiayuan.chen@linux.dev
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/mediatek/lvts_thermal.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ net/core/skmsg.c | 31 ++++++++++++++++---------------
+ 1 file changed, 16 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/thermal/mediatek/lvts_thermal.c b/drivers/thermal/mediatek/lvts_thermal.c
-index 3295b27ab70d2..944c28a0c4736 100644
---- a/drivers/thermal/mediatek/lvts_thermal.c
-+++ b/drivers/thermal/mediatek/lvts_thermal.c
-@@ -209,6 +209,13 @@ static const struct debugfs_reg32 lvts_regs[] = {
- 	LVTS_DEBUG_FS_REGS(LVTS_CLKEN),
- };
- 
-+static void lvts_debugfs_exit(void *data)
-+{
-+	struct lvts_domain *lvts_td = data;
-+
-+	debugfs_remove_recursive(lvts_td->dom_dentry);
-+}
-+
- static int lvts_debugfs_init(struct device *dev, struct lvts_domain *lvts_td)
+diff --git a/net/core/skmsg.c b/net/core/skmsg.c
+index c284c8a3d6792..c7edf77fd6fde 100644
+--- a/net/core/skmsg.c
++++ b/net/core/skmsg.c
+@@ -529,16 +529,22 @@ static int sk_psock_skb_ingress_enqueue(struct sk_buff *skb,
+ 					u32 off, u32 len,
+ 					struct sk_psock *psock,
+ 					struct sock *sk,
+-					struct sk_msg *msg)
++					struct sk_msg *msg,
++					bool take_ref)
  {
- 	struct debugfs_regset32 *regset;
-@@ -241,12 +248,7 @@ static int lvts_debugfs_init(struct device *dev, struct lvts_domain *lvts_td)
- 		debugfs_create_regset32("registers", 0400, dentry, regset);
+ 	int num_sge, copied;
+ 
++	/* skb_to_sgvec will fail when the total number of fragments in
++	 * frag_list and frags exceeds MAX_MSG_FRAGS. For example, the
++	 * caller may aggregate multiple skbs.
++	 */
+ 	num_sge = skb_to_sgvec(skb, msg->sg.data, off, len);
+ 	if (num_sge < 0) {
+ 		/* skb linearize may fail with ENOMEM, but lets simply try again
+ 		 * later if this happens. Under memory pressure we don't want to
+ 		 * drop the skb. We need to linearize the skb so that the mapping
+ 		 * in skb_to_sgvec can not error.
++		 * Note that skb_linearize requires the skb not to be shared.
+ 		 */
+ 		if (skb_linearize(skb))
+ 			return -EAGAIN;
+@@ -555,7 +561,7 @@ static int sk_psock_skb_ingress_enqueue(struct sk_buff *skb,
+ 	msg->sg.start = 0;
+ 	msg->sg.size = copied;
+ 	msg->sg.end = num_sge;
+-	msg->skb = skb;
++	msg->skb = take_ref ? skb_get(skb) : skb;
+ 
+ 	sk_psock_queue_msg(psock, msg);
+ 	sk_psock_data_ready(sk, psock);
+@@ -563,7 +569,7 @@ static int sk_psock_skb_ingress_enqueue(struct sk_buff *skb,
+ }
+ 
+ static int sk_psock_skb_ingress_self(struct sk_psock *psock, struct sk_buff *skb,
+-				     u32 off, u32 len);
++				     u32 off, u32 len, bool take_ref);
+ 
+ static int sk_psock_skb_ingress(struct sk_psock *psock, struct sk_buff *skb,
+ 				u32 off, u32 len)
+@@ -577,7 +583,7 @@ static int sk_psock_skb_ingress(struct sk_psock *psock, struct sk_buff *skb,
+ 	 * correctly.
+ 	 */
+ 	if (unlikely(skb->sk == sk))
+-		return sk_psock_skb_ingress_self(psock, skb, off, len);
++		return sk_psock_skb_ingress_self(psock, skb, off, len, true);
+ 	msg = sk_psock_create_ingress_msg(sk, skb);
+ 	if (!msg)
+ 		return -EAGAIN;
+@@ -589,7 +595,7 @@ static int sk_psock_skb_ingress(struct sk_psock *psock, struct sk_buff *skb,
+ 	 * into user buffers.
+ 	 */
+ 	skb_set_owner_r(skb, sk);
+-	err = sk_psock_skb_ingress_enqueue(skb, off, len, psock, sk, msg);
++	err = sk_psock_skb_ingress_enqueue(skb, off, len, psock, sk, msg, true);
+ 	if (err < 0)
+ 		kfree(msg);
+ 	return err;
+@@ -600,7 +606,7 @@ static int sk_psock_skb_ingress(struct sk_psock *psock, struct sk_buff *skb,
+  * because the skb is already accounted for here.
+  */
+ static int sk_psock_skb_ingress_self(struct sk_psock *psock, struct sk_buff *skb,
+-				     u32 off, u32 len)
++				     u32 off, u32 len, bool take_ref)
+ {
+ 	struct sk_msg *msg = alloc_sk_msg(GFP_ATOMIC);
+ 	struct sock *sk = psock->sk;
+@@ -609,7 +615,7 @@ static int sk_psock_skb_ingress_self(struct sk_psock *psock, struct sk_buff *skb
+ 	if (unlikely(!msg))
+ 		return -EAGAIN;
+ 	skb_set_owner_r(skb, sk);
+-	err = sk_psock_skb_ingress_enqueue(skb, off, len, psock, sk, msg);
++	err = sk_psock_skb_ingress_enqueue(skb, off, len, psock, sk, msg, take_ref);
+ 	if (err < 0)
+ 		kfree(msg);
+ 	return err;
+@@ -618,18 +624,13 @@ static int sk_psock_skb_ingress_self(struct sk_psock *psock, struct sk_buff *skb
+ static int sk_psock_handle_skb(struct sk_psock *psock, struct sk_buff *skb,
+ 			       u32 off, u32 len, bool ingress)
+ {
+-	int err = 0;
+-
+ 	if (!ingress) {
+ 		if (!sock_writeable(psock->sk))
+ 			return -EAGAIN;
+ 		return skb_send_sock(psock->sk, skb, off, len);
  	}
- 
--	return 0;
--}
--
--static void lvts_debugfs_exit(struct lvts_domain *lvts_td)
--{
--	debugfs_remove_recursive(lvts_td->dom_dentry);
-+	return devm_add_action_or_reset(dev, lvts_debugfs_exit, lvts_td);
+-	skb_get(skb);
+-	err = sk_psock_skb_ingress(psock, skb, off, len);
+-	if (err < 0)
+-		kfree_skb(skb);
+-	return err;
++
++	return sk_psock_skb_ingress(psock, skb, off, len);
  }
  
- #else
-@@ -1352,8 +1354,6 @@ static void lvts_remove(struct platform_device *pdev)
- 
- 	for (i = 0; i < lvts_td->num_lvts_ctrl; i++)
- 		lvts_ctrl_set_enable(&lvts_td->lvts_ctrl[i], false);
--
--	lvts_debugfs_exit(lvts_td);
- }
- 
- static const struct lvts_ctrl_data mt7988_lvts_ap_data_ctrl[] = {
+ static void sk_psock_skb_state(struct sk_psock *psock,
+@@ -1017,7 +1018,7 @@ static int sk_psock_verdict_apply(struct sk_psock *psock, struct sk_buff *skb,
+ 				off = stm->offset;
+ 				len = stm->full_len;
+ 			}
+-			err = sk_psock_skb_ingress_self(psock, skb, off, len);
++			err = sk_psock_skb_ingress_self(psock, skb, off, len, false);
+ 		}
+ 		if (err < 0) {
+ 			spin_lock_bh(&psock->ingress_lock);
 -- 
 2.39.5
 
