@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5665111CBA;
-	Tue, 17 Jun 2025 15:31:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AAA92EF659;
+	Tue, 17 Jun 2025 15:31:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750174271; cv=none; b=LIlnLSCCg7E1qsL/EBZBlE6iRX7R8zJcD+OSYDvHRXE/d/PpmHpcELH4Hsa07nSk++xAIGoOslMNrmuKI0f/nJqy1pXZ63nhXayPimk75AlSSuPWpJtZFDXp4ga8iCBuqjXs7W9SGGAYhSxQpI2etf3BygEycmrXu5IA7l8CzfE=
+	t=1750174279; cv=none; b=FqVyVx6ujGLUrtsOLXu/5J22t06KlhiQjXfTj8mmPmcEJ5zoegrEeJEkzRplXX4a9FQpp1XZJVDgKjiUFaNPdMi/1MN4N1kZ3nX0rJQGxwxX8CSu45BhbKq0EjQ/96vDkRQmIZH1a6NpTjpGPnM0RbJ7x8G7G2RipflVAZJPzfQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750174271; c=relaxed/simple;
-	bh=CvdF3J/SsBl8So+Rnlmzy3d0b3OXPUn0dKWcXOyZxkM=;
+	s=arc-20240116; t=1750174279; c=relaxed/simple;
+	bh=c6u6ToaMp+/CumCafUOXPKIqQsxeXIQ2OpAjIfw7zIY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EGWe5F0PIFSg7zuZ6j7RnmoCLes0BTyF+sYGD1Bkfk9PpmvrkgJYKuM187NuegDreJBNApPEZGDJxc2y2IF9umLNrAtxZriI+Gr9tbk9k/P65AAmpfqA8zQZd0Uw3wNUMNb6rXzw0lmLd/a/JMOtKWCnkkyESeEnRkg0Em/9h2I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wfC5nmnH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aPxj/cMcjr0bCwGZX1/dqmQ0INq4jgPaLSgVSnlnvMFwb2iHNOhKQpMNDXCs3ZqGCdcUF/kUhWprebmyNQemLHps2EttryZZrpH9WnQfKnXEtgtTYMVSmeeTRBv9vzYk/4XDkhMB4oQ+Suards9h/ikPO6uig2aIsIn3DWPUL4k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wzgVTdTY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wfC5nmnH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD87AC4CEE3;
-	Tue, 17 Jun 2025 15:31:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wzgVTdTY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6C7DC4CEE3;
+	Tue, 17 Jun 2025 15:31:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750174271;
-	bh=CvdF3J/SsBl8So+Rnlmzy3d0b3OXPUn0dKWcXOyZxkM=;
+	s=korg; t=1750174279;
+	bh=c6u6ToaMp+/CumCafUOXPKIqQsxeXIQ2OpAjIfw7zIY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wfC5nmnHXKo366Xaz+KLdsA1Roamj6R0/rM+w/se0WkVoCZqDjanMfEw31cntIaWb
-	 FebIiUrdcQJZo/KgzKBKTQb/S48wRJwe36MKJa2sgVqYMjN4SdWtnTfHG4iHiVYcCe
-	 LzAWbb5MoSFBbdwSxs1/OeDE08QjCoMFX+OxVMH8=
+	b=wzgVTdTY844gURr5D+OxdnBVSEUD1pUnWXnP4oKPWW9ET6lEs60NFL1AIyIxIZC+X
+	 xlfqWlWEGU7cNLpw2sGUi5sgAeVmdSHl2H6qs4zlAwLkZCPbncltHEwle5BtsswSQm
+	 HmLlNaxD2gZscDwss46AOqRSfyZFwXWBxvwoneCQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ovidiu Panait <ovidiu.panait.oss@gmail.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Tzung-Bi Shih <tzungbi@kernel.org>,
+	David Gow <davidgow@google.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 036/356] crypto: sun8i-ce - move fallback ahash_request to the end of the struct
-Date: Tue, 17 Jun 2025 17:22:31 +0200
-Message-ID: <20250617152339.673429289@linuxfoundation.org>
+Subject: [PATCH 6.6 037/356] kunit: Fix wrong parameter to kunit_deactivate_static_stub()
+Date: Tue, 17 Jun 2025 17:22:32 +0200
+Message-ID: <20250617152339.712546254@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
 References: <20250617152338.212798615@linuxfoundation.org>
@@ -51,38 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ovidiu Panait <ovidiu.panait.oss@gmail.com>
+From: Tzung-Bi Shih <tzungbi@kernel.org>
 
-[ Upstream commit c822831b426307a6ca426621504d3c7f99765a39 ]
+[ Upstream commit 772e50a76ee664e75581624f512df4e45582605a ]
 
-'struct ahash_request' has a flexible array at the end, so it must be the
-last member in a struct, to avoid overwriting other struct members.
+kunit_deactivate_static_stub() accepts real_fn_addr instead of
+replacement_addr.  In the case, it always passes NULL to
+kunit_deactivate_static_stub().
 
-Therefore, move 'fallback_req' to the end of the 'sun8i_ce_hash_reqctx'
-struct.
+Fix it.
 
-Fixes: 56f6d5aee88d ("crypto: sun8i-ce - support hash algorithms")
-Signed-off-by: Ovidiu Panait <ovidiu.panait.oss@gmail.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Link: https://lore.kernel.org/r/20250520082050.2254875-1-tzungbi@kernel.org
+Fixes: e047c5eaa763 ("kunit: Expose 'static stub' API to redirect functions")
+Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Reviewed-by: David Gow <davidgow@google.com>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/allwinner/sun8i-ce/sun8i-ce.h | 2 +-
+ lib/kunit/static_stub.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/allwinner/sun8i-ce/sun8i-ce.h b/drivers/crypto/allwinner/sun8i-ce/sun8i-ce.h
-index 93d4985def87a..65cc1278ee155 100644
---- a/drivers/crypto/allwinner/sun8i-ce/sun8i-ce.h
-+++ b/drivers/crypto/allwinner/sun8i-ce/sun8i-ce.h
-@@ -293,8 +293,8 @@ struct sun8i_ce_hash_tfm_ctx {
-  * @flow:	the flow to use for this request
-  */
- struct sun8i_ce_hash_reqctx {
--	struct ahash_request fallback_req;
- 	int flow;
-+	struct ahash_request fallback_req; // keep at the end
- };
+diff --git a/lib/kunit/static_stub.c b/lib/kunit/static_stub.c
+index 92b2cccd5e763..484fd85251b41 100644
+--- a/lib/kunit/static_stub.c
++++ b/lib/kunit/static_stub.c
+@@ -96,7 +96,7 @@ void __kunit_activate_static_stub(struct kunit *test,
  
- /*
+ 	/* If the replacement address is NULL, deactivate the stub. */
+ 	if (!replacement_addr) {
+-		kunit_deactivate_static_stub(test, replacement_addr);
++		kunit_deactivate_static_stub(test, real_fn_addr);
+ 		return;
+ 	}
+ 
 -- 
 2.39.5
 
