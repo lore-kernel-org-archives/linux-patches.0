@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE2B22FA649;
-	Tue, 17 Jun 2025 16:52:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9BCE285077;
+	Tue, 17 Jun 2025 16:52:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750179158; cv=none; b=GgRJg6z2ffRYwalJGUgDpjxfjqfi6ZDhmKSrJsQBcmnS0Es2Rhqgt7SbkFsB5Hzz6oma7AGBifaY5aWO1m5Ynm38m40G4rpsa/qrc+YmeFaC4QcXLQnbhQrXcnktNDQ/OIpk1TZBHx6pmoU13AMQEE/gQnXF9fNp5mmHzGBX/Pg=
+	t=1750179159; cv=none; b=CNm7rPIgoaJxyuFIdTQ0zJEhau70ynJ7yxIA9lvKjwDa9PT/vD6dgxhN3ygpjRXDHYNu+mM1ehx3uFAqeoKIKvPkF/7Y+xtzY9LA6lRdsKTkdk3KXgpyA6l78NmsZaq8Fs4QL5Ygqq+3MDTOzAae7S2ahIhsQJlT9o8D/KZqK8I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750179158; c=relaxed/simple;
-	bh=ixf3Iaa9/6nmqiFS4BrM2X/iOvwss2LWrSmXih8uHw8=;
+	s=arc-20240116; t=1750179159; c=relaxed/simple;
+	bh=30+gQ6oJURlLKs6y+DUPkuH9ALnxR1tlPc1Uxc0Acnc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gt1yyRGZ5nhmAsshRumX2PWaqWfQM3YOaaCoTdzZwRROCr+M5PqBGjvcIUDygFYGZBx/0ZartBTECSXZ4+kOZX8E4wX17VXidt25ze/swD76h8AEcbeIDMjH7Yie2534HQAN9m/hlER69W4ZarCx+iEu5PSQ8Ys905efVJe0Q1s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RvK7Xvqk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=iyblkiwovC5ZEJEWXcxs55qELTTDJyUgPQC8zTgCsi4tfG+x+r+ahoK460B2qVkcdFHGtCsSNA31a8BXP67WFGg0ekIUvfE77mhHasbLwYQAOOubSe3CnNLOehg8wm90Iwgd/1BkzAiyWg7og1kKLslA4ik2L2uKUpt8rkLyeXE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DTNpif7g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RvK7Xvqk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B80B5C4CEE3;
-	Tue, 17 Jun 2025 16:52:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DTNpif7g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07AA1C4CEE3;
+	Tue, 17 Jun 2025 16:52:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750179156;
-	bh=ixf3Iaa9/6nmqiFS4BrM2X/iOvwss2LWrSmXih8uHw8=;
+	s=korg; t=1750179159;
+	bh=30+gQ6oJURlLKs6y+DUPkuH9ALnxR1tlPc1Uxc0Acnc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RvK7Xvqk04AFu0fmRdDe0wiCYyPvTzf6qBeqaO2HwLi5b7MGihPXjJ/cIHrF0bKwy
-	 XZEaq8rEHjJMbEynv73lonDylKNgW3NIlqa+/ktwwBNVCaz4kPhNOnNWPfC9HOj+y2
-	 F6MAv8Z5xDnMx2OuwpuQIA9opzrg6Otgc1cPq+oc=
+	b=DTNpif7gs/0vKO+C0U3IulqsGQNasWqUjDNUUEqo6dS8W5FShGhyySAcQf3MfsW4O
+	 2b/UlXBqvPdr3rYyQzVCSMtv66VtWoD9oXvyQCLOXK0VgzBSxHqULWHDJGnW4yNbvO
+	 BGl4Z/yJxFbw8zfukrrO6bwmJbO9aAtc02I66pqo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chandrashekar Devegowda <chandrashekar.devegowda@intel.com>,
-	Kiran K <kiran.k@intel.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	=?UTF-8?q?Amadeusz=20S=C5=82awi=C5=84ski?= <amadeuszx.slawinski@linux.intel.com>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 665/780] Bluetooth: btintel_pcie: Increase the tx and rx descriptor count
-Date: Tue, 17 Jun 2025 17:26:13 +0200
-Message-ID: <20250617152518.547949930@linuxfoundation.org>
+Subject: [PATCH 6.15 639/780] ASoC: Intel: avs: Fix PPLCxFMT calculation
+Date: Tue, 17 Jun 2025 17:25:47 +0200
+Message-ID: <20250617152517.497022631@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
 References: <20250617152451.485330293@linuxfoundation.org>
@@ -46,111 +46,70 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chandrashekar Devegowda <chandrashekar.devegowda@intel.com>
+From: Cezary Rojewski <cezary.rojewski@intel.com>
 
-[ Upstream commit 2dd711102ce69ae41f65d09c012441227d4aa983 ]
+[ Upstream commit 347c8d6db7c9d65d93ef226849b273823f54eaea ]
 
-This change addresses latency issues observed in HID use cases where
-events arrive in bursts. By increasing the Rx descriptor count to 64,
-the firmware can handle bursty data more effectively, reducing latency
-and preventing buffer overflows.
+HDAudio transfer types utilize SDxFMT for front-end (HOST) and PPLCxFMT
+for back-end (LINK) side when setting up the stream. BE's
+substream->runtime duplicates FE runtime so switch to using BE's
+hw_params to address incorrect format values on the LINK side when FE
+and BE formats differ.
 
-Signed-off-by: Chandrashekar Devegowda <chandrashekar.devegowda@intel.com>
-Signed-off-by: Kiran K <kiran.k@intel.com>
-Fixes: c2b636b3f788 ("Bluetooth: btintel_pcie: Add support for PCIe transport")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+The problem is introduced with commit d070002a20fc ("ASoC: Intel: avs:
+HDA PCM BE operations") but the code has been shuffled around since then
+so direct 'Fixes:' tag does not apply.
+
+Reviewed-by: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
+Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Link: https://patch.msgid.link/20250530141025.2942936-4-cezary.rojewski@intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btintel_pcie.c | 24 ++++++++++++------------
- drivers/bluetooth/btintel_pcie.h |  7 +++++--
- 2 files changed, 17 insertions(+), 14 deletions(-)
+ sound/soc/intel/avs/pcm.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/bluetooth/btintel_pcie.c b/drivers/bluetooth/btintel_pcie.c
-index a1bfc76fa29b2..a4883523ccc9e 100644
---- a/drivers/bluetooth/btintel_pcie.c
-+++ b/drivers/bluetooth/btintel_pcie.c
-@@ -1665,8 +1665,8 @@ static int btintel_pcie_alloc(struct btintel_pcie_data *data)
- 	 *  + size of index * Number of queues(2) * type of index array(4)
- 	 *  + size of context information
- 	 */
--	total = (sizeof(struct tfd) + sizeof(struct urbd0) + sizeof(struct frbd)
--		+ sizeof(struct urbd1)) * BTINTEL_DESCS_COUNT;
-+	total = (sizeof(struct tfd) + sizeof(struct urbd0)) * BTINTEL_PCIE_TX_DESCS_COUNT;
-+	total += (sizeof(struct frbd) + sizeof(struct urbd1)) * BTINTEL_PCIE_RX_DESCS_COUNT;
+diff --git a/sound/soc/intel/avs/pcm.c b/sound/soc/intel/avs/pcm.c
+index 6116465c8f9b1..fc51fa1fd40d2 100644
+--- a/sound/soc/intel/avs/pcm.c
++++ b/sound/soc/intel/avs/pcm.c
+@@ -449,9 +449,10 @@ static int avs_dai_hda_be_hw_free(struct snd_pcm_substream *substream, struct sn
  
- 	/* Add the sum of size of index array and size of ci struct */
- 	total += (sizeof(u16) * BTINTEL_PCIE_NUM_QUEUES * 4) + sizeof(struct ctx_info);
-@@ -1691,36 +1691,36 @@ static int btintel_pcie_alloc(struct btintel_pcie_data *data)
- 	data->dma_v_addr = v_addr;
+ static int avs_dai_hda_be_prepare(struct snd_pcm_substream *substream, struct snd_soc_dai *dai)
+ {
+-	struct snd_pcm_runtime *runtime = substream->runtime;
++	struct snd_soc_pcm_runtime *be = snd_soc_substream_to_rtd(substream);
+ 	const struct snd_soc_pcm_stream *stream_info;
+ 	struct hdac_ext_stream *link_stream;
++	const struct snd_pcm_hw_params *p;
+ 	struct avs_dma_data *data;
+ 	unsigned int format_val;
+ 	unsigned int bits;
+@@ -459,14 +460,15 @@ static int avs_dai_hda_be_prepare(struct snd_pcm_substream *substream, struct sn
  
- 	/* Setup descriptor count */
--	data->txq.count = BTINTEL_DESCS_COUNT;
--	data->rxq.count = BTINTEL_DESCS_COUNT;
-+	data->txq.count = BTINTEL_PCIE_TX_DESCS_COUNT;
-+	data->rxq.count = BTINTEL_PCIE_RX_DESCS_COUNT;
+ 	data = snd_soc_dai_get_dma_data(dai, substream);
+ 	link_stream = data->link_stream;
++	p = &be->dpcm[substream->stream].hw_params;
  
- 	/* Setup tfds */
- 	data->txq.tfds_p_addr = p_addr;
- 	data->txq.tfds = v_addr;
+ 	if (link_stream->link_prepared)
+ 		return 0;
  
--	p_addr += (sizeof(struct tfd) * BTINTEL_DESCS_COUNT);
--	v_addr += (sizeof(struct tfd) * BTINTEL_DESCS_COUNT);
-+	p_addr += (sizeof(struct tfd) * BTINTEL_PCIE_TX_DESCS_COUNT);
-+	v_addr += (sizeof(struct tfd) * BTINTEL_PCIE_TX_DESCS_COUNT);
+ 	stream_info = snd_soc_dai_get_pcm_stream(dai, substream->stream);
+-	bits = snd_hdac_stream_format_bits(runtime->format, runtime->subformat,
++	bits = snd_hdac_stream_format_bits(params_format(p), params_subformat(p),
+ 					   stream_info->sig_bits);
+-	format_val = snd_hdac_stream_format(runtime->channels, bits, runtime->rate);
++	format_val = snd_hdac_stream_format(params_channels(p), bits, params_rate(p));
  
- 	/* Setup urbd0 */
- 	data->txq.urbd0s_p_addr = p_addr;
- 	data->txq.urbd0s = v_addr;
- 
--	p_addr += (sizeof(struct urbd0) * BTINTEL_DESCS_COUNT);
--	v_addr += (sizeof(struct urbd0) * BTINTEL_DESCS_COUNT);
-+	p_addr += (sizeof(struct urbd0) * BTINTEL_PCIE_TX_DESCS_COUNT);
-+	v_addr += (sizeof(struct urbd0) * BTINTEL_PCIE_TX_DESCS_COUNT);
- 
- 	/* Setup FRBD*/
- 	data->rxq.frbds_p_addr = p_addr;
- 	data->rxq.frbds = v_addr;
- 
--	p_addr += (sizeof(struct frbd) * BTINTEL_DESCS_COUNT);
--	v_addr += (sizeof(struct frbd) * BTINTEL_DESCS_COUNT);
-+	p_addr += (sizeof(struct frbd) * BTINTEL_PCIE_RX_DESCS_COUNT);
-+	v_addr += (sizeof(struct frbd) * BTINTEL_PCIE_RX_DESCS_COUNT);
- 
- 	/* Setup urbd1 */
- 	data->rxq.urbd1s_p_addr = p_addr;
- 	data->rxq.urbd1s = v_addr;
- 
--	p_addr += (sizeof(struct urbd1) * BTINTEL_DESCS_COUNT);
--	v_addr += (sizeof(struct urbd1) * BTINTEL_DESCS_COUNT);
-+	p_addr += (sizeof(struct urbd1) * BTINTEL_PCIE_RX_DESCS_COUNT);
-+	v_addr += (sizeof(struct urbd1) * BTINTEL_PCIE_RX_DESCS_COUNT);
- 
- 	/* Setup data buffers for txq */
- 	err = btintel_pcie_setup_txq_bufs(data, &data->txq);
-diff --git a/drivers/bluetooth/btintel_pcie.h b/drivers/bluetooth/btintel_pcie.h
-index 3f59138dfcca4..a94910ccd5d3c 100644
---- a/drivers/bluetooth/btintel_pcie.h
-+++ b/drivers/bluetooth/btintel_pcie.h
-@@ -135,8 +135,11 @@ enum btintel_pcie_tlv_type {
- /* Default interrupt timeout in msec */
- #define BTINTEL_DEFAULT_INTR_TIMEOUT_MS	3000
- 
--/* The number of descriptors in TX/RX queues */
--#define BTINTEL_DESCS_COUNT	16
-+/* The number of descriptors in TX queues */
-+#define BTINTEL_PCIE_TX_DESCS_COUNT	32
-+
-+/* The number of descriptors in RX queues */
-+#define BTINTEL_PCIE_RX_DESCS_COUNT	64
- 
- /* Number of Queue for TX and RX
-  * It indicates the index of the IA(Index Array)
+ 	snd_hdac_ext_stream_decouple(&data->adev->base.core, link_stream, true);
+ 	snd_hdac_ext_stream_reset(link_stream);
 -- 
 2.39.5
 
