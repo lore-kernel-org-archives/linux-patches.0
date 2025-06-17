@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 328DC2F2346;
-	Tue, 17 Jun 2025 15:56:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D3382F2346;
+	Tue, 17 Jun 2025 15:56:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175760; cv=none; b=oWTQFqskKPBcSZhUCgm0+Ye4jESjiS8uSmpFOpGgOpyb6gl4ikT8xUYlqENirybp3vcup0RMvSzMkA6xh6HlsDnUgw12P6FZun9BdUaAcjZVb+mmsIftAosUKYS8Pa1LqKxWdi1tMxZ+1ISba9Bb9hOnRbbobKMFkTYwwVgSqxo=
+	t=1750175763; cv=none; b=nZG/ctjMUXI3W7vos4CNYwQTiWToPBzh9rQFexNMnseJ/Z3tAwQaCHVR5Fd5NGw+vXU5t5rrU2CX/C20nMp7wni7MU5ZtkPZtYNkJ8/S1FF5JvBXBIbxGHoZ9RfTl3gseqkUuESz5GMLdyQuXX7F+u1QHeYSPp/l41ae9SlGaTs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175760; c=relaxed/simple;
-	bh=A0+bbFDfYh6Y/XLUAp7QEYdAHnoSFC2UJursFdL+bwM=;
+	s=arc-20240116; t=1750175763; c=relaxed/simple;
+	bh=MogzHdUdEzlVvhgFdYxuJwGJQbd8DtyZ0x5B0sQSBeo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZuyO1OYDe9WjpcJAaVBuDcoO1R92qLye87xK+W7FVioQnV4Rwua3hK2kvVDJCmMOZgaM6r2/wDOIDAxSzMu6jRFQ4tnyW45xmjEbmeqGJPzFYIsBj6AXMbpon0QOsbcfJCsdcQXxIr9QBabk33tbhynvz7MRsWBbUbTVhDUCrnw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TXvtA6D1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LlwFgHVPXNaSEQ/ZaaVpacDjCGkNmaRzX9Nr/mbgmsHk3LkzRvESZyanXEkyPGrs9tIOIpKsiz5jqnBg5w+s7nie0eLP6OzGVzF2QUFhkIT3CkAizPcQoHVur7pQecp1F/IB3on50mxqHn5tpUzeaPqTv3wRBXi/+/8xCqdF1jI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fo1j3oSv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TXvtA6D1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95DB0C4CEE7;
-	Tue, 17 Jun 2025 15:55:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fo1j3oSv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFB03C4CEE3;
+	Tue, 17 Jun 2025 15:56:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175760;
-	bh=A0+bbFDfYh6Y/XLUAp7QEYdAHnoSFC2UJursFdL+bwM=;
+	s=korg; t=1750175763;
+	bh=MogzHdUdEzlVvhgFdYxuJwGJQbd8DtyZ0x5B0sQSBeo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TXvtA6D1zl76hIjmHJdcXK40SfdiSyhNDqyNkotQyxMKeglHYy8xRyYlm/URLdYEp
-	 PsZyq8KC0RjMAUKZjXRtKZG4/PCY3W8JGh+u7/g8aq2IGUbdL8QRJsHqcqrcwE93Cs
-	 vJ32XwHOoaoQquak2qwzwxTkXvtlfrgKpUFjf0E0=
+	b=fo1j3oSvSL9E6CjlipVGNkUIwttmCLIC07UdOezJz39bhsxJC9PwSVfHNpwb1jfMp
+	 yWXjT/FzR5V/iQPJwbnWVM3g2v6tI127oIlbJDoQvYccersV77vOP3Luc/6Kb2Ugiq
+	 a42jTwu0RutFTL6jtgh78CuoXzR4srO9hEAi38QU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luis Gerhorst <luis.gerhorst@fau.de>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	syzbot+e36cc3297bd3afd25e19@syzkaller.appspotmail.com,
+	Lizhi Xu <lizhi.xu@windriver.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 160/512] selftests/bpf: Fix caps for __xlated/jited_unpriv
-Date: Tue, 17 Jun 2025 17:22:06 +0200
-Message-ID: <20250617152426.095909541@linuxfoundation.org>
+Subject: [PATCH 6.15 120/780] fs/ntfs3: Add missing direct_IO in ntfs_aops_cmpr
+Date: Tue, 17 Jun 2025 17:17:08 +0200
+Message-ID: <20250617152456.386125207@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,72 +48,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Luis Gerhorst <luis.gerhorst@fau.de>
+From: Lizhi Xu <lizhi.xu@windriver.com>
 
-[ Upstream commit cf15cdc0f0f39a5c6315200808ec3e3995b0c2d2 ]
+[ Upstream commit 8b26c8c376b29cf29710fbfd093df194cefe26ad ]
 
-Currently, __xlated_unpriv and __jited_unpriv do not work because the
-BPF syscall will overwrite info.jited_prog_len and info.xlated_prog_len
-with 0 if the process is not bpf_capable(). This bug was not noticed
-before, because there is no test that actually uses
-__xlated_unpriv/__jited_unpriv.
+The ntfs3 can use the page cache directly, so its address_space_operations
+need direct_IO. Exit ntfs_direct_IO() if it is a compressed file.
 
-To resolve this, simply restore the capabilities earlier (but still
-after loading the program). Adding this here unconditionally is fine
-because the function first checks that the capabilities were initialized
-before attempting to restore them.
-
-This will be important later when we add tests that check whether a
-speculation barrier was inserted in the correct location.
-
-Signed-off-by: Luis Gerhorst <luis.gerhorst@fau.de>
-Fixes: 9c9f73391310 ("selftests/bpf: allow checking xlated programs in verifier_* tests")
-Fixes: 7d743e4c759c ("selftests/bpf: __jited test tag to check disassembly after jit")
-Acked-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Tested-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://lore.kernel.org/r/20250501073603.1402960-2-luis.gerhorst@fau.de
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: b432163ebd15 ("fs/ntfs3: Update inode->i_mapping->a_ops on compression state")
+Reported-by: syzbot+e36cc3297bd3afd25e19@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=e36cc3297bd3afd25e19
+Signed-off-by: Lizhi Xu <lizhi.xu@windriver.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/test_loader.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ fs/ntfs3/inode.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/tools/testing/selftests/bpf/test_loader.c b/tools/testing/selftests/bpf/test_loader.c
-index 3e9b009580d4e..7f69d7b5bd4d4 100644
---- a/tools/testing/selftests/bpf/test_loader.c
-+++ b/tools/testing/selftests/bpf/test_loader.c
-@@ -970,6 +970,14 @@ void run_subtest(struct test_loader *tester,
- 	emit_verifier_log(tester->log_buf, false /*force*/);
- 	validate_msgs(tester->log_buf, &subspec->expect_msgs, emit_verifier_log);
- 
-+	/* Restore capabilities because the kernel will silently ignore requests
-+	 * for program info (such as xlated program text) if we are not
-+	 * bpf-capable. Also, for some reason test_verifier executes programs
-+	 * with all capabilities restored. Do the same here.
-+	 */
-+	if (restore_capabilities(&caps))
-+		goto tobj_cleanup;
-+
- 	if (subspec->expect_xlated.cnt) {
- 		err = get_xlated_program_text(bpf_program__fd(tprog),
- 					      tester->log_buf, tester->log_buf_sz);
-@@ -995,12 +1003,6 @@ void run_subtest(struct test_loader *tester,
+diff --git a/fs/ntfs3/inode.c b/fs/ntfs3/inode.c
+index 3e2957a1e3605..0f0d27d4644a9 100644
+--- a/fs/ntfs3/inode.c
++++ b/fs/ntfs3/inode.c
+@@ -805,6 +805,10 @@ static ssize_t ntfs_direct_IO(struct kiocb *iocb, struct iov_iter *iter)
+ 		ret = 0;
+ 		goto out;
  	}
++	if (is_compressed(ni)) {
++		ret = 0;
++		goto out;
++	}
  
- 	if (should_do_test_run(spec, subspec)) {
--		/* For some reason test_verifier executes programs
--		 * with all capabilities restored. Do the same here.
--		 */
--		if (restore_capabilities(&caps))
--			goto tobj_cleanup;
--
- 		/* Do bpf_map__attach_struct_ops() for each struct_ops map.
- 		 * This should trigger bpf_struct_ops->reg callback on kernel side.
- 		 */
+ 	ret = blockdev_direct_IO(iocb, inode, iter,
+ 				 wr ? ntfs_get_block_direct_IO_W :
+@@ -2068,5 +2072,6 @@ const struct address_space_operations ntfs_aops_cmpr = {
+ 	.read_folio	= ntfs_read_folio,
+ 	.readahead	= ntfs_readahead,
+ 	.dirty_folio	= block_dirty_folio,
++	.direct_IO	= ntfs_direct_IO,
+ };
+ // clang-format on
 -- 
 2.39.5
 
