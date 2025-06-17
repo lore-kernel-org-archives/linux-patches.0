@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5F0E2EF28A;
-	Tue, 17 Jun 2025 16:02:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50B942EF287;
+	Tue, 17 Jun 2025 16:02:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750176167; cv=none; b=Ga7wlAJbwZCH9XPqO/VEwmeoOiHZsFQNHgsDbHAZ2igoDKMHQGr7OhTYWs/xpCr7plMGBEGXXy72SYRLGLMPEYoAtm/VhjNuQs0CZzvcob5NASohKOfcO9O52jteQGnoDPMNgVk0Xx855WOebnjetBlT4YIoNTtP2HiP6+v1dR8=
+	t=1750176170; cv=none; b=rHtUbkaOJD7iEHChaS0u3fUnXB5dyCjXw3WmIQMbiXYd/GPP9pBTJVEHYxxhkemydgsG+G7PsJdHX9g7NnYR6FSkipPk8ifxiNWzowaEHI68cT3NNKBjd01n2I7EAgUoXZmkSdGmHIbE9+PjDxI8OS644znDF2xq7snz1dLz9mY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750176167; c=relaxed/simple;
-	bh=DBY+sGN/MtYQOCdQiRxGXE/hvMUmo3cTMFwNBFjrSv0=;
+	s=arc-20240116; t=1750176170; c=relaxed/simple;
+	bh=AAvqcEscDnxnKkQ/o3TJG34JO/oWwyOSjUYIVgJuI5Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JACc809wD6xc4ZzyX9c0jYJCvLkqVlwLP89Yf+wOsNZ8bUlqiOBgzk1XyugOIs/+C5JSf5rHOXnWo7Wq/Xe5QavH1KK2z9W5r1bBWC/zaE2WJpyHv014ihSsnZtScRdyEBjkGNfhHcre0bgddLuNZ88CkSA1Gat2mP1OPTyCtn4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zXFZCdke; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gzzxK1dTe4kjkTwJbfk5oS/dqPbJQXeIZJVwwn2WYGFeciRd6uF6Gdu1SrG/d49x9kd2gVhgHOlY2cASeulp9P6a7naIqJ075ZMJdqaHyrasRZhuG/FpxqDlAkb9w78QI5b3UE7lcMMo/uWuZJ1x+15U48AiL1vFhmqgWK+pJq8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IZmzxQbD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zXFZCdke"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 558E7C4CEE7;
-	Tue, 17 Jun 2025 16:02:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IZmzxQbD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B266EC4CEE3;
+	Tue, 17 Jun 2025 16:02:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750176166;
-	bh=DBY+sGN/MtYQOCdQiRxGXE/hvMUmo3cTMFwNBFjrSv0=;
+	s=korg; t=1750176170;
+	bh=AAvqcEscDnxnKkQ/o3TJG34JO/oWwyOSjUYIVgJuI5Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zXFZCdkecL+VEQ5tt7+5TQ4HwsRrxoXWb+f3+L3z5bLsQKE0wpbELI3g/v2oPaYBM
-	 Gb++oOvfILMwoRuYDvcsqqzGO0Ozmv+NGdvquvcJx4HOxY1ctfMgz2ZkRGdPOVs6g4
-	 CO0ZFHphlqpOJRkXZkyIjS+eFM2oRjYyWNF0OyHQ=
+	b=IZmzxQbDSF5x4fBdQd75nSG7MMeBnKAdnsX8VPv1proTANwJSPrYjlJAYGEQIx4LK
+	 hPwjjaH3uRmQ5Kkuyki1TEqxUrexD6Q5EKmhUnL6PM4ULeQO0A32jqhtv3fbLCHq40
+	 dUtAVKJa+fgDJRshlGxNs800NShL7JOa1hBLojwQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+f0c4a4aba757549ae26c@syzkaller.appspotmail.com,
-	Charalampos Mitrodimas <charmitro@posteo.net>,
-	Tung Nguyen <tung.quang.nguyen@est.tech>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
+	Karthikeyan Periyasamy <quic_periyasa@quicinc.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 245/356] net: tipc: fix refcount warning in tipc_aead_encrypt
-Date: Tue, 17 Jun 2025 17:26:00 +0200
-Message-ID: <20250617152348.070114815@linuxfoundation.org>
+Subject: [PATCH 6.15 161/780] wifi: ath12k: fix NULL access in assign channel context handler
+Date: Tue, 17 Jun 2025 17:17:49 +0200
+Message-ID: <20250617152458.046421185@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-References: <20250617152338.212798615@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,59 +48,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Charalampos Mitrodimas <charmitro@posteo.net>
+From: Karthikeyan Periyasamy <quic_periyasa@quicinc.com>
 
-[ Upstream commit f29ccaa07cf3d35990f4d25028cc55470d29372b ]
+[ Upstream commit ea24531d00f782f4e659e8c74578b7ac144720ca ]
 
-syzbot reported a refcount warning [1] caused by calling get_net() on
-a network namespace that is being destroyed (refcount=0). This happens
-when a TIPC discovery timer fires during network namespace cleanup.
+Currently, when ath12k_mac_assign_vif_to_vdev() fails, the radio handle
+(ar) gets accessed from the link VIF handle (arvif) for debug logging, This
+is incorrect. In the fail scenario, radio handle is NULL. Fix the NULL
+access, avoid radio handle access by moving to the hardware debug logging
+helper function (ath12k_hw_warn).
 
-The recently added get_net() call in commit e279024617134 ("net/tipc:
-fix slab-use-after-free Read in tipc_aead_encrypt_done") attempts to
-hold a reference to the network namespace. However, if the namespace
-is already being destroyed, its refcount might be zero, leading to the
-use-after-free warning.
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.3.1-00173-QCAHKSWPL_SILICONZ-1
+Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.0.c5-00481-QCAHMTSWPL_V1.0_V2.0_SILICONZ-3
 
-Replace get_net() with maybe_get_net(), which safely checks if the
-refcount is non-zero before incrementing it. If the namespace is being
-destroyed, return -ENODEV early, after releasing the bearer reference.
-
-[1]: https://lore.kernel.org/all/68342b55.a70a0220.253bc2.0091.GAE@google.com/T/#m12019cf9ae77e1954f666914640efa36d52704a2
-
-Reported-by: syzbot+f0c4a4aba757549ae26c@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/68342b55.a70a0220.253bc2.0091.GAE@google.com/T/#m12019cf9ae77e1954f666914640efa36d52704a2
-Fixes: e27902461713 ("net/tipc: fix slab-use-after-free Read in tipc_aead_encrypt_done")
-Signed-off-by: Charalampos Mitrodimas <charmitro@posteo.net>
-Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
-Link: https://patch.msgid.link/20250527-net-tipc-warning-v2-1-df3dc398a047@posteo.net
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 90570ba4610b ("wifi: ath12k: do not return invalid link id for scan link")
+Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
+Signed-off-by: Karthikeyan Periyasamy <quic_periyasa@quicinc.com>
+Link: https://patch.msgid.link/20250324062518.2752822-8-quic_periyasa@quicinc.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tipc/crypto.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/net/wireless/ath/ath12k/mac.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/tipc/crypto.c b/net/tipc/crypto.c
-index 8584893b47851..79f91b6ca8c84 100644
---- a/net/tipc/crypto.c
-+++ b/net/tipc/crypto.c
-@@ -818,7 +818,11 @@ static int tipc_aead_encrypt(struct tipc_aead *aead, struct sk_buff *skb,
+diff --git a/drivers/net/wireless/ath/ath12k/mac.c b/drivers/net/wireless/ath/ath12k/mac.c
+index dfa05f0ee6c9f..c20fd92000dfe 100644
+--- a/drivers/net/wireless/ath/ath12k/mac.c
++++ b/drivers/net/wireless/ath/ath12k/mac.c
+@@ -9462,8 +9462,8 @@ ath12k_mac_op_assign_vif_chanctx(struct ieee80211_hw *hw,
+ 
+ 	ar = ath12k_mac_assign_vif_to_vdev(hw, arvif, ctx);
+ 	if (!ar) {
+-		ath12k_warn(arvif->ar->ab, "failed to assign chanctx for vif %pM link id %u link vif is already started",
+-			    vif->addr, link_id);
++		ath12k_hw_warn(ah, "failed to assign chanctx for vif %pM link id %u link vif is already started",
++			       vif->addr, link_id);
+ 		return -EINVAL;
  	}
  
- 	/* Get net to avoid freed tipc_crypto when delete namespace */
--	get_net(aead->crypto->net);
-+	if (!maybe_get_net(aead->crypto->net)) {
-+		tipc_bearer_put(b);
-+		rc = -ENODEV;
-+		goto exit;
-+	}
- 
- 	/* Now, do encrypt */
- 	rc = crypto_aead_encrypt(req);
 -- 
 2.39.5
 
