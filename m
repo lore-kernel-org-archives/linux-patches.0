@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 276F6188006;
-	Tue, 17 Jun 2025 16:33:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 503EE188006;
+	Tue, 17 Jun 2025 16:33:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177984; cv=none; b=P34CHYLo36RrcvXXD2bH+l9axk2idE3ZYJFPar6uZ00sVD+6kzWAJyj/e6J1RbFy8NigUzm2wVwtKrq1wKkcrPiebcmjpHTa7AoV4piUCV8tOH2dfSbnVCSW+1D+cUhrPwuNaoy3N2JZHG3wJ22vH+HyB9b28JolF9s9JDozokA=
+	t=1750177987; cv=none; b=gxEfooXsD7Yvsu7JTZ3haynpltRgFP4z/6eX9/azK0UmZIL9AbeL7waEYW2QKC2e6tWLioHHP2z5Jx9MNcYm2PZpvhK5TphJnN3vuIAfxingTIIGs4ebzesFqfM0wV9go0z9Phtg02GY4kA62KzTLPXhtb5x1g7dRfP2owCTRGM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177984; c=relaxed/simple;
-	bh=ngcMMIZ6UsniJ4DJIQZb1k/lmw2Hyr0q55TVUk4MRPg=;
+	s=arc-20240116; t=1750177987; c=relaxed/simple;
+	bh=+hca7Cbi6Sbv9nHeLCZTtP6ZHDZHeRFoNAFsf+YKHRM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CI8GWowoooo+WMs8XDXaGTgsOwnS+EV5Az0rp69kWWkZuZyIJV+fiJ+vGqxg8mwd29Y55ktaorxDYOY+sTq0yKnFKc4n7I5raa883SCllG1QSbBOgmRhQ8GYVd+hH4QU27Bqmd4r0zlg3WhjHihfwhFcUOq+iwSf3r257upOJB8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RB6WZy4e; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dpWmxKcED69sZCfUS2P3Tr00V8Hk1z7h3N4oLZyejydzJwFmZr/MGiunZj0KNzbVc8BauwvVoqmYJpPtacM2fgZEzLhUYt7sWL8lTOvUOrnh7aUkx1XSn577znWdbxcSHYKJLYGHmrX7HEaA7x/pHMy3N8YF32b4LNw6eouqhhk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dbqeeN5p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RB6WZy4e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89966C4CEE7;
-	Tue, 17 Jun 2025 16:33:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dbqeeN5p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B45C1C4CEE3;
+	Tue, 17 Jun 2025 16:33:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177984;
-	bh=ngcMMIZ6UsniJ4DJIQZb1k/lmw2Hyr0q55TVUk4MRPg=;
+	s=korg; t=1750177987;
+	bh=+hca7Cbi6Sbv9nHeLCZTtP6ZHDZHeRFoNAFsf+YKHRM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RB6WZy4eiS8XNjThiQOxz5O5sxHEKxvOyZnn81LrNVAAh1AQZ0GWmqIt4NClEzqrr
-	 uSevBJGn5Kcv92XdAHjqjzepIGRKO7fYX5beO0JmVBwYQex2Ubl3Yy2duWfC3AQInD
-	 0hiYUb3hnWXiXmwh4WlbDB809N1+gLWAg0W6HYko=
+	b=dbqeeN5p0rBgV2uaertH0Ecu5Ia18KQwmPSvoAkGoilIzF2g5mmLqy4cV4rDnbnPn
+	 ALCG/96euVSUDjNJ1HcppjxcfpBBeElq5xFUsb7nFlVDYkIj0jdT2BDfbIJFHGSg9u
+	 jQRtMQ1d7LbtqozWIqbDCSpg51O7OHotfOws7SC4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+65761fc25a137b9c8c6e@syzkaller.appspotmail.com,
-	Phillip Lougher <phillip@squashfs.org.uk>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Caleb Connolly <caleb.connolly@linaro.org>,
+	Loic Poulain <loic.poulain@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 392/780] Squashfs: check return result of sb_min_blocksize
-Date: Tue, 17 Jun 2025 17:21:40 +0200
-Message-ID: <20250617152507.418605674@linuxfoundation.org>
+Subject: [PATCH 6.12 428/512] ath10k: snoc: fix unbalanced IRQ enable in crash recovery
+Date: Tue, 17 Jun 2025 17:26:34 +0200
+Message-ID: <20250617152436.909693050@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,68 +48,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Phillip Lougher <phillip@squashfs.org.uk>
+From: Caleb Connolly <caleb.connolly@linaro.org>
 
-[ Upstream commit 734aa85390ea693bb7eaf2240623d41b03705c84 ]
+[ Upstream commit 1650d32b92b01db03a1a95d69ee74fcbc34d4b00 ]
 
-Syzkaller reports an "UBSAN: shift-out-of-bounds in squashfs_bio_read" bug.
+In ath10k_snoc_hif_stop() we skip disabling the IRQs in the crash
+recovery flow, but we still unconditionally call enable again in
+ath10k_snoc_hif_start().
 
-Syzkaller forks multiple processes which after mounting the Squashfs
-filesystem, issues an ioctl("/dev/loop0", LOOP_SET_BLOCK_SIZE, 0x8000).
-Now if this ioctl occurs at the same time another process is in the
-process of mounting a Squashfs filesystem on /dev/loop0, the failure
-occurs.  When this happens the following code in squashfs_fill_super()
-fails.
+We can't check the ATH10K_FLAG_CRASH_FLUSH bit since it is cleared
+before hif_start() is called, so instead check the
+ATH10K_SNOC_FLAG_RECOVERY flag and skip enabling the IRQs during crash
+recovery.
 
-----
-msblk->devblksize = sb_min_blocksize(sb, SQUASHFS_DEVBLK_SIZE);
-msblk->devblksize_log2 = ffz(~msblk->devblksize);
-----
+This fixes unbalanced IRQ enable splats that happen after recovering from
+a crash.
 
-sb_min_blocksize() returns 0, which means msblk->devblksize is set to 0.
-
-As a result, ffz(~msblk->devblksize) returns 64, and msblk->devblksize_log2
-is set to 64.
-
-This subsequently causes the
-
-UBSAN: shift-out-of-bounds in fs/squashfs/block.c:195:36
-shift exponent 64 is too large for 64-bit type 'u64' (aka
-'unsigned long long')
-
-This commit adds a check for a 0 return by sb_min_blocksize().
-
-Link: https://lkml.kernel.org/r/20250409024747.876480-1-phillip@squashfs.org.uk
-Fixes: 0aa666190509 ("Squashfs: super block operations")
-Reported-by: syzbot+65761fc25a137b9c8c6e@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/67f0dd7a.050a0220.0a13.0230.GAE@google.com/
-Signed-off-by: Phillip Lougher <phillip@squashfs.org.uk>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 0e622f67e041 ("ath10k: add support for WCN3990 firmware crash recovery")
+Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
+Tested-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Link: https://patch.msgid.link/20250318205043.1043148-1-caleb.connolly@linaro.org
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/squashfs/super.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/wireless/ath/ath10k/snoc.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/squashfs/super.c b/fs/squashfs/super.c
-index 67c55fe32ce88..992ea0e372572 100644
---- a/fs/squashfs/super.c
-+++ b/fs/squashfs/super.c
-@@ -202,6 +202,11 @@ static int squashfs_fill_super(struct super_block *sb, struct fs_context *fc)
- 	msblk->panic_on_errors = (opts->errors == Opt_errors_panic);
+diff --git a/drivers/net/wireless/ath/ath10k/snoc.c b/drivers/net/wireless/ath/ath10k/snoc.c
+index 0fe47d51013c7..59f7ccb33fde3 100644
+--- a/drivers/net/wireless/ath/ath10k/snoc.c
++++ b/drivers/net/wireless/ath/ath10k/snoc.c
+@@ -937,7 +937,9 @@ static int ath10k_snoc_hif_start(struct ath10k *ar)
  
- 	msblk->devblksize = sb_min_blocksize(sb, SQUASHFS_DEVBLK_SIZE);
-+	if (!msblk->devblksize) {
-+		errorf(fc, "squashfs: unable to set blocksize\n");
-+		return -EINVAL;
-+	}
-+
- 	msblk->devblksize_log2 = ffz(~msblk->devblksize);
+ 	dev_set_threaded(ar->napi_dev, true);
+ 	ath10k_core_napi_enable(ar);
+-	ath10k_snoc_irq_enable(ar);
++	/* IRQs are left enabled when we restart due to a firmware crash */
++	if (!test_bit(ATH10K_SNOC_FLAG_RECOVERY, &ar_snoc->flags))
++		ath10k_snoc_irq_enable(ar);
+ 	ath10k_snoc_rx_post(ar);
  
- 	mutex_init(&msblk->meta_index_mutex);
+ 	clear_bit(ATH10K_SNOC_FLAG_RECOVERY, &ar_snoc->flags);
 -- 
 2.39.5
 
