@@ -1,45 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E2262E92AA;
-	Tue, 17 Jun 2025 15:28:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEB302E92AA;
+	Tue, 17 Jun 2025 15:29:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750174134; cv=none; b=c89dXZ3OBVjfYzyqmpFmjubnwr5SaVPzbcvVppwXxl9Gf1CzldldGhonxBAZVQ1OElixkYZ7/+9/cIFPH5IauqQe3WZo4UW8aCq/uwEk2ozvhF0L4BF42gTQYDc38tPFsvTbVQyLB5Je2EZ+wNZQe/OTnblu8xnOfdT44xYxkaQ=
+	t=1750174185; cv=none; b=eAsXUE94/Gsm0vR3tEOlOwxBqwYF+3h7FHyMOD4gBcl4vRlgzogcIjwFeddZ6pPQLBxiv+6zQiupzuy+dcrDUXNowD5nVanRS+pK34FtaWuDhP+sQfll+DAqHok/dpu6wtgekzv/xiqR9Z1V7PY9F8vROST/ncFKL8MEQ1I9n8o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750174134; c=relaxed/simple;
-	bh=lxJSAOSnG0p/ziKk21uR9t9LB4xeQyCa9kUMU54ekzM=;
+	s=arc-20240116; t=1750174185; c=relaxed/simple;
+	bh=bmdBg43wsdCvpN0FGQtEg/FkVTW2PaYbWTuwDFKBGko=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JZeVDl9CGmffaljPdHAw6zQXwYMqb9D5yL6Dv0Y212LZToxr1i3QuxiUn5C74E6naI4qhp/qED2t0vS5heM8aT1DNZhEIjHCqR8nK2twyEEwPZ7AuKJo15cN0NDa9cFfqTIQrGd+gKGWV1cZ7HBH0js7RQg4SjJpANsdQBQLN7w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u2BR99WB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PVeTdB5GgcSs5Tbs2s2dvcVOr822kw8Xbd+DKve381z6/X4HdCT6eJv52hHSBCi3zq2vwMtwmg78ASDPDvrmsSrcOn0V8xI6O6Th9XBApZ5wlUZyFKUku2yRP9VQt1pqp9CcxVxhfajQb6tt6OYBodxdLJxe3k0ZwwoRRK82/T8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tl3RCtbG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u2BR99WB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CF9EC4CEE3;
-	Tue, 17 Jun 2025 15:28:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tl3RCtbG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0A90C4CEE3;
+	Tue, 17 Jun 2025 15:29:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750174134;
-	bh=lxJSAOSnG0p/ziKk21uR9t9LB4xeQyCa9kUMU54ekzM=;
+	s=korg; t=1750174185;
+	bh=bmdBg43wsdCvpN0FGQtEg/FkVTW2PaYbWTuwDFKBGko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u2BR99WBtosXj4VE4KD48lfR4y7G3d/Cus4hIpeASct4goTunaoidhJTiobsh7UAt
-	 Vt+rE9mebrVYnr+L1sZwU42HwqpQAMp8r6ugTdJ6cd3BHeZNx4dQFyDS4z7K6c6oyt
-	 /H/iYQab3ejMYgTZEoZBg09jQmBRyln2olXxlsD0=
+	b=tl3RCtbGEv26QduiZDFhE9rca1nhN+VMeA1EKCf+a+YOf4PRGdOZOGgtUjfKNLz9g
+	 JgNs21BlbkZ1MxBfGViD7X8G4OrKCqQ/FjG51apt8n1X23kgLl5yQPnNfADBslnF3G
+	 Zq4SB4j5FA37fr10/y6siieH+2B/BLjEtltTqzYE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Remington Brasga <rbrasga@uci.edu>,
-	"Ahmed S. Darwish" <darwi@linutronix.de>,
-	Ingo Molnar <mingo@kernel.org>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Josh Poimboeuf <jpoimboe@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 001/780] tools/x86/kcpuid: Fix error handling
-Date: Tue, 17 Jun 2025 17:15:09 +0200
-Message-ID: <20250617152451.555962395@linuxfoundation.org>
+	Manu Bretelle <chantr4@gmail.com>,
+	"Gautham R. Shenoy" <gautham.shenoy@amd.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.6 004/356] acpi-cpufreq: Fix nominal_freq units to KHz in get_max_boost_ratio()
+Date: Tue, 17 Jun 2025 17:21:59 +0200
+Message-ID: <20250617152338.396363842@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
+References: <20250617152338.212798615@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -51,172 +47,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ahmed S. Darwish <darwi@linutronix.de>
+From: Gautham R. Shenoy <gautham.shenoy@amd.com>
 
-[ Upstream commit 116edfe173d0c59ec2aa87fb91f2f31d477b61b3 ]
+commit cb6a85f38f456b086c366e346ebb67ffa70c7243 upstream.
 
-Error handling in kcpuid is unreliable.  On malloc() failures, the code
-prints an error then just goes on.  The error messages are also printed
-to standard output instead of standard error.
+commit 083466754596 ("cpufreq: ACPI: Fix max-frequency computation")
+modified get_max_boost_ratio() to return the nominal_freq advertised
+in the _CPC object. This was for the purposes of computing the maximum
+frequency. The frequencies advertised in _CPC objects are in
+MHz. However, cpufreq expects the frequency to be in KHz. Since the
+nominal_freq returned by get_max_boost_ratio() was not in KHz but
+instead in MHz,the cpuinfo_max_frequency that was computed using this
+nominal_freq was incorrect and an invalid value which resulted in
+cpufreq reporting the P0 frequency as the cpuinfo_max_freq.
 
-Use err() and errx() from <err.h> to direct all error messages to
-standard error and automatically exit the program.  Use err() to include
-the errno information, and errx() otherwise.  Use warnx() for warnings.
+Fix this by converting the nominal_freq to KHz before returning the
+same from get_max_boost_ratio().
 
-While at it, alphabetically reorder the header includes.
-
-[ mingo: Fix capitalization in the help text while at it. ]
-
-Fixes: c6b2f240bf8d ("tools/x86: Add a kcpuid tool to show raw CPU features")
-Reported-by: Remington Brasga <rbrasga@uci.edu>
-Signed-off-by: Ahmed S. Darwish <darwi@linutronix.de>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: H. Peter Anvin <hpa@zytor.com>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Josh Poimboeuf <jpoimboe@redhat.com>
-Link: https://lore.kernel.org/r/20250324142042.29010-2-darwi@linutronix.de
-Closes: https://lkml.kernel.org/r/20240926223557.2048-1-rbrasga@uci.edu
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Manu Bretelle <chantr4@gmail.com>
+Closes: https://lore.kernel.org/lkml/aDaB63tDvbdcV0cg@HQ-GR2X1W2P57/
+Fixes: 083466754596 ("cpufreq: ACPI: Fix max-frequency computation")
+Signed-off-by: Gautham R. Shenoy <gautham.shenoy@amd.com>
+Cc: 6.14+ <stable@vger.kernel.org> # 6.14+
+Link: https://patch.msgid.link/20250529085143.709-1-gautham.shenoy@amd.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/arch/x86/kcpuid/kcpuid.c | 47 +++++++++++++++++-----------------
- 1 file changed, 23 insertions(+), 24 deletions(-)
+ drivers/cpufreq/acpi-cpufreq.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/arch/x86/kcpuid/kcpuid.c b/tools/arch/x86/kcpuid/kcpuid.c
-index 1b25c0a95d3f9..40a9e59c2fd56 100644
---- a/tools/arch/x86/kcpuid/kcpuid.c
-+++ b/tools/arch/x86/kcpuid/kcpuid.c
-@@ -1,11 +1,12 @@
- // SPDX-License-Identifier: GPL-2.0
- #define _GNU_SOURCE
+--- a/drivers/cpufreq/acpi-cpufreq.c
++++ b/drivers/cpufreq/acpi-cpufreq.c
+@@ -659,7 +659,7 @@ static u64 get_max_boost_ratio(unsigned
+ 	nominal_perf = perf_caps.nominal_perf;
  
--#include <stdio.h>
-+#include <err.h>
-+#include <getopt.h>
- #include <stdbool.h>
-+#include <stdio.h>
- #include <stdlib.h>
- #include <string.h>
--#include <getopt.h>
+ 	if (nominal_freq)
+-		*nominal_freq = perf_caps.nominal_freq;
++		*nominal_freq = perf_caps.nominal_freq * 1000;
  
- #define ARRAY_SIZE(x)	(sizeof(x) / sizeof((x)[0]))
- #define min(a, b)	(((a) < (b)) ? (a) : (b))
-@@ -145,14 +146,14 @@ static bool cpuid_store(struct cpuid_range *range, u32 f, int subleaf,
- 	if (!func->leafs) {
- 		func->leafs = malloc(sizeof(struct subleaf));
- 		if (!func->leafs)
--			perror("malloc func leaf");
-+			err(EXIT_FAILURE, NULL);
- 
- 		func->nr = 1;
- 	} else {
- 		s = func->nr;
- 		func->leafs = realloc(func->leafs, (s + 1) * sizeof(*leaf));
- 		if (!func->leafs)
--			perror("realloc f->leafs");
-+			err(EXIT_FAILURE, NULL);
- 
- 		func->nr++;
- 	}
-@@ -211,7 +212,7 @@ struct cpuid_range *setup_cpuid_range(u32 input_eax)
- 
- 	range = malloc(sizeof(struct cpuid_range));
- 	if (!range)
--		perror("malloc range");
-+		err(EXIT_FAILURE, NULL);
- 
- 	if (input_eax & 0x80000000)
- 		range->is_ext = true;
-@@ -220,7 +221,7 @@ struct cpuid_range *setup_cpuid_range(u32 input_eax)
- 
- 	range->funcs = malloc(sizeof(struct cpuid_func) * idx_func);
- 	if (!range->funcs)
--		perror("malloc range->funcs");
-+		err(EXIT_FAILURE, NULL);
- 
- 	range->nr = idx_func;
- 	memset(range->funcs, 0, sizeof(struct cpuid_func) * idx_func);
-@@ -395,8 +396,8 @@ static int parse_line(char *line)
- 	return 0;
- 
- err_exit:
--	printf("Warning: wrong line format:\n");
--	printf("\tline[%d]: %s\n", flines, line);
-+	warnx("Wrong line format:\n"
-+	      "\tline[%d]: %s", flines, line);
- 	return -1;
- }
- 
-@@ -418,10 +419,8 @@ static void parse_text(void)
- 		file = fopen("./cpuid.csv", "r");
- 	}
- 
--	if (!file) {
--		printf("Fail to open '%s'\n", filename);
--		return;
--	}
-+	if (!file)
-+		err(EXIT_FAILURE, "%s", filename);
- 
- 	while (1) {
- 		ret = getline(&line, &len, file);
-@@ -530,7 +529,7 @@ static inline struct cpuid_func *index_to_func(u32 index)
- 	func_idx = index & 0xffff;
- 
- 	if ((func_idx + 1) > (u32)range->nr) {
--		printf("ERR: invalid input index (0x%x)\n", index);
-+		warnx("Invalid input index (0x%x)", index);
- 		return NULL;
- 	}
- 	return &range->funcs[func_idx];
-@@ -562,7 +561,7 @@ static void show_info(void)
- 				return;
- 			}
- 
--			printf("ERR: invalid input subleaf (0x%x)\n", user_sub);
-+			warnx("Invalid input subleaf (0x%x)", user_sub);
- 		}
- 
- 		show_func(func);
-@@ -593,15 +592,15 @@ static void setup_platform_cpuid(void)
- 
- static void usage(void)
- {
--	printf("kcpuid [-abdfhr] [-l leaf] [-s subleaf]\n"
--		"\t-a|--all             Show both bit flags and complex bit fields info\n"
--		"\t-b|--bitflags        Show boolean flags only\n"
--		"\t-d|--detail          Show details of the flag/fields (default)\n"
--		"\t-f|--flags           Specify the cpuid csv file\n"
--		"\t-h|--help            Show usage info\n"
--		"\t-l|--leaf=index      Specify the leaf you want to check\n"
--		"\t-r|--raw             Show raw cpuid data\n"
--		"\t-s|--subleaf=sub     Specify the subleaf you want to check\n"
-+	warnx("kcpuid [-abdfhr] [-l leaf] [-s subleaf]\n"
-+	      "\t-a|--all             Show both bit flags and complex bit fields info\n"
-+	      "\t-b|--bitflags        Show boolean flags only\n"
-+	      "\t-d|--detail          Show details of the flag/fields (default)\n"
-+	      "\t-f|--flags           Specify the CPUID CSV file\n"
-+	      "\t-h|--help            Show usage info\n"
-+	      "\t-l|--leaf=index      Specify the leaf you want to check\n"
-+	      "\t-r|--raw             Show raw CPUID data\n"
-+	      "\t-s|--subleaf=sub     Specify the subleaf you want to check"
- 	);
- }
- 
-@@ -652,7 +651,7 @@ static int parse_options(int argc, char *argv[])
- 			user_sub = strtoul(optarg, NULL, 0);
- 			break;
- 		default:
--			printf("%s: Invalid option '%c'\n", argv[0], optopt);
-+			warnx("Invalid option '%c'", optopt);
- 			return -1;
- 	}
- 
--- 
-2.39.5
-
+ 	if (!highest_perf || !nominal_perf) {
+ 		pr_debug("CPU%d: highest or nominal performance missing\n", cpu);
 
 
