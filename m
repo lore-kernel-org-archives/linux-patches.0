@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90E1F1E3DCF;
-	Tue, 17 Jun 2025 16:43:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5AD42EA17F;
+	Tue, 17 Jun 2025 16:43:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750178591; cv=none; b=nVMeVl6kiSuNFz0ZJdpjqSNeUHvHaIIJODzX3+5V7KGAv2OiXbJlNk4DnN7nih/oM6zJn99tDywutbFcxwk44X+RpI6oALSoDGC1ymtyeKYmK274U4nCanAHs+ErMDkWPi47HGsx6SJLXds7Wotffhexavk6W3+SksC/5EGsQ7c=
+	t=1750178594; cv=none; b=bTu9u5VX0byocgkBgwlJclZqVwylyxSaHh3t80UcalgbFcJ2w9vrNhwXc8oJyYmrL/U7cl2NAhuYvNcMtZBsyFLrgz4H6e2TJAhHZXUtb+lZcJfrZ8Pe9rTyEVhqROMFXHAQ0nohlUi7Mv9/6pfr4NfCOBCng10D3SV1CGU/pC0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750178591; c=relaxed/simple;
-	bh=G4sLLsK4YVM7ZMu2jIeRnI+n+43d3HLniA9EnAQ4V2g=;
+	s=arc-20240116; t=1750178594; c=relaxed/simple;
+	bh=SIaYDl5A5MvyJL5aGnvUNlGPnmoZPDN9vRlUUMg7128=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=sdp+TQeV5mfS2YnSxzoeQWvVLyVENAz63rPz5nHyuV3i5Enka44CHBZ9xpcyDVP+2T0VJVmBZvXnKcAimE5ty/f33ZiSfkmtuUZz/pnFjJxrXrvG5tIsKwMamGZLAkQ5zcIGIyJmsrfCekJx2cEUOk3Hpcc4wNfzw08xsSbCEi0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=beR46hKr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=elb1GGCcdJdNAL9NKiCiwEeHfJXMlK/f6pas+w+ZqavgMufuuxCjMnhfWbnzGbWOjFt8a/T3KzXd/V3anPMuoWtusrSLDtMGtB441tFHtwwjYtLwMr3AjwW1ZMzo5vhOD/zbLQZGcV8sznQhndIlC4ke3pYapOA//1E9e9s89pI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1NpJNGNf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="beR46hKr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02954C4CEE3;
-	Tue, 17 Jun 2025 16:43:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1NpJNGNf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45F0FC4CEE3;
+	Tue, 17 Jun 2025 16:43:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750178591;
-	bh=G4sLLsK4YVM7ZMu2jIeRnI+n+43d3HLniA9EnAQ4V2g=;
+	s=korg; t=1750178594;
+	bh=SIaYDl5A5MvyJL5aGnvUNlGPnmoZPDN9vRlUUMg7128=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=beR46hKrlAzzs8f0KeRQVliu2FmLcEtTj+JfFIB5Ua85QAwP4Y2yQ2c2TqVcMo374
-	 oqt8lU4UYxcI85GJOFfxCDQqhy8QK/X2JxFqo1SZcytcC5UK45lbw4dZPg4nelXhxu
-	 67lNfZ4hrMYB7cJjSW4eIipa9efN906xOXy8jpS8=
+	b=1NpJNGNfqn+GZWQr4gbmqOTNQRAhBV3LK3uw7b710OPrk8rVcg9vlOK8lZW4ci+PP
+	 2UPmPOzgb3nm8OsPJJgFzf28Fm7ZNh0w96s3rMydn5PxrCCQayY967Lm1TCD16iH4/
+	 T9XLP7CqcunJv7QHrzqwUVXZRxOORGxnRQZjq5P0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joel Mathew Thomas <proxy0@tutamail.com>,
-	Lukas Wunner <lukas@wunner.de>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	NeilBrown <neil@brown.name>,
+	Anna Schumaker <anna.schumaker@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 494/780] PCI: pciehp: Ignore Link Down/Up caused by Secondary Bus Reset
-Date: Tue, 17 Jun 2025 17:23:22 +0200
-Message-ID: <20250617152511.604362479@linuxfoundation.org>
+Subject: [PATCH 6.15 477/780] nfs_localio: use cmpxchg() to install new nfs_file_localio
+Date: Tue, 17 Jun 2025 17:23:05 +0200
+Message-ID: <20250617152510.914463800@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
 References: <20250617152451.485330293@linuxfoundation.org>
@@ -48,324 +45,124 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lukas Wunner <lukas@wunner.de>
+From: NeilBrown <neil@brown.name>
 
-[ Upstream commit 2af781a9edc4ef5f6684c0710cc3542d9be48b31 ]
+[ Upstream commit ed9be317330c7390df7db9e1d046698c02001bd2 ]
 
-When a Secondary Bus Reset is issued at a hotplug port, it causes a Data
-Link Layer State Changed event as a side effect.  On hotplug ports using
-in-band presence detect, it additionally causes a Presence Detect Changed
-event.
+Rather than using nfs_uuid.lock to protect installing
+a new ro_file or rw_file, change to use cmpxchg().
+Removing the file already uses xchg() so this improves symmetry
+and also makes the code a little simpler.
 
-These spurious events should not result in teardown and re-enumeration of
-the device in the slot.  Hence commit 2e35afaefe64 ("PCI: pciehp: Add
-reset_slot() method") masked the Presence Detect Changed Enable bit in the
-Slot Control register during a Secondary Bus Reset.  Commit 06a8d89af551
-("PCI: pciehp: Disable link notification across slot reset") additionally
-masked the Data Link Layer State Changed Enable bit.
+Also remove the optimisation of not taking the lock, and not removing
+the nfs_file_localio from the linked list, when both ->ro_file and
+->rw_file are already NULL.  Given that ->nfs_uuid was not NULL, it is
+extremely unlikely that neither ->ro_file or ->rw_file is NULL so
+this optimisation can be of little value and it complicates
+understanding of the code - why can the list_del_init() be skipped?
 
-However masking those bits only disables interrupt generation (PCIe r6.2
-sec 6.7.3.1).  The events are still visible in the Slot Status register
-and picked up by the IRQ handler if it runs during a Secondary Bus Reset.
-This can happen if the interrupt is shared or if an unmasked hotplug event
-occurs, e.g. Attention Button Pressed or Power Fault Detected.
+Finally, move the assignment of NULL to ->nfs_uuid until after
+the last action on the nfs_file_localio (the list_del_init).  As soon as
+this is NULL a racing nfs_close_local_fh() can bypass all the locking
+and go on to free the nfs_file_localio, so we must be certain to be
+finished with it first.
 
-The likelihood of this happening used to be small, so it wasn't much of a
-problem in practice.  That has changed with the recent introduction of
-bandwidth control in v6.13-rc1 with commit 665745f27487 ("PCI/bwctrl:
-Re-add BW notification portdrv as PCIe BW controller"):
-
-Bandwidth control shares the interrupt with PCIe hotplug.  A Secondary Bus
-Reset causes a Link Bandwidth Notification, so the hotplug IRQ handler
-runs, picks up the masked events and tears down the device in the slot.
-
-As a result, Joel reports VFIO passthrough failure of a GPU, which Ilpo
-root-caused to the incorrect handling of masked hotplug events.
-
-Clearly, a more reliable way is needed to ignore spurious hotplug events.
-
-For Downstream Port Containment, a new ignore mechanism was introduced by
-commit a97396c6eb13 ("PCI: pciehp: Ignore Link Down/Up caused by DPC").
-It has been working reliably for the past four years.
-
-Adapt it for Secondary Bus Resets.
-
-Introduce two helpers to annotate code sections which cause spurious link
-changes:  pci_hp_ignore_link_change() and pci_hp_unignore_link_change()
-Use those helpers in lieu of masking interrupts in the Slot Control
-register.
-
-Introduce a helper to check whether such a code section is executing
-concurrently and if so, await it:  pci_hp_spurious_link_change()
-Invoke the helper in the hotplug IRQ thread pciehp_ist().  Re-use the
-IRQ thread's existing code which ignores DPC-induced link changes unless
-the link is unexpectedly down after reset recovery or the device was
-replaced during the bus reset.
-
-That code block in pciehp_ist() was previously only executed if a Data
-Link Layer State Changed event has occurred.  Additionally execute it for
-Presence Detect Changed events.  That's necessary for compatibility with
-PCIe r1.0 hotplug ports because Data Link Layer State Changed didn't exist
-before PCIe r1.1.  DPC was added with PCIe r3.1 and thus DPC-capable
-hotplug ports always support Data Link Layer State Changed events.
-But the same cannot be assumed for Secondary Bus Reset, which already
-existed in PCIe r1.0.
-
-Secondary Bus Reset is only one of many causes of spurious link changes.
-Others include runtime suspend to D3cold, firmware updates or FPGA
-reconfiguration.  The new pci_hp_{,un}ignore_link_change() helpers may be
-used by all kinds of drivers to annotate such code sections, hence their
-declarations are publicly visible in <linux/pci.h>.  A case in point is
-the Mellanox Ethernet driver which disables a firmware reset feature if
-the Ethernet card is attached to a hotplug port, see commit 3d7a3f2612d7
-("net/mlx5: Nack sync reset request when HotPlug is enabled").  Going
-forward, PCIe hotplug will be able to cope gracefully with all such use
-cases once the code sections are properly annotated.
-
-The new helpers internally use two bits in struct pci_dev's priv_flags as
-well as a wait_queue.  This mirrors what was done for DPC by commit
-a97396c6eb13 ("PCI: pciehp: Ignore Link Down/Up caused by DPC").  That may
-be insufficient if spurious link changes are caused by multiple sources
-simultaneously.  An example might be a Secondary Bus Reset issued by AER
-during FPGA reconfiguration.  If this turns out to happen in real life,
-support for it can easily be added by replacing the PCI_LINK_CHANGING flag
-with an atomic_t counter incremented by pci_hp_ignore_link_change() and
-decremented by pci_hp_unignore_link_change().  Instead of awaiting a zero
-PCI_LINK_CHANGING flag, the pci_hp_spurious_link_change() helper would
-then simply await a zero counter.
-
-Fixes: 665745f27487 ("PCI/bwctrl: Re-add BW notification portdrv as PCIe BW controller")
-Reported-by: Joel Mathew Thomas <proxy0@tutamail.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219765
-Signed-off-by: Lukas Wunner <lukas@wunner.de>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Tested-by: Joel Mathew Thomas <proxy0@tutamail.com>
-Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Link: https://patch.msgid.link/d04deaf49d634a2edf42bf3c06ed81b4ca54d17b.1744298239.git.lukas@wunner.de
+Fixes: 86e00412254a ("nfs: cache all open LOCALIO nfsd_file(s) in client")
+Signed-off-by: NeilBrown <neil@brown.name>
+Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/hotplug/pci_hotplug_core.c | 69 ++++++++++++++++++++++++++
- drivers/pci/hotplug/pciehp_hpc.c       | 35 +++++--------
- drivers/pci/pci.h                      |  3 ++
- include/linux/pci.h                    |  8 +++
- 4 files changed, 92 insertions(+), 23 deletions(-)
+ fs/nfs/localio.c           | 11 +++--------
+ fs/nfs_common/nfslocalio.c | 39 +++++++++++++++++---------------------
+ 2 files changed, 20 insertions(+), 30 deletions(-)
 
-diff --git a/drivers/pci/hotplug/pci_hotplug_core.c b/drivers/pci/hotplug/pci_hotplug_core.c
-index d30f1316c98e2..d7fc3bc039643 100644
---- a/drivers/pci/hotplug/pci_hotplug_core.c
-+++ b/drivers/pci/hotplug/pci_hotplug_core.c
-@@ -492,6 +492,75 @@ void pci_hp_destroy(struct hotplug_slot *slot)
- }
- EXPORT_SYMBOL_GPL(pci_hp_destroy);
+diff --git a/fs/nfs/localio.c b/fs/nfs/localio.c
+index 4ec952f9f47dd..595903c215235 100644
+--- a/fs/nfs/localio.c
++++ b/fs/nfs/localio.c
+@@ -280,14 +280,9 @@ nfs_local_open_fh(struct nfs_client *clp, const struct cred *cred,
+ 			return NULL;
+ 		rcu_read_lock();
+ 		/* try to swap in the pointer */
+-		spin_lock(&clp->cl_uuid.lock);
+-		nf = rcu_dereference_protected(*pnf, 1);
+-		if (!nf) {
+-			nf = new;
+-			new = NULL;
+-			rcu_assign_pointer(*pnf, nf);
+-		}
+-		spin_unlock(&clp->cl_uuid.lock);
++		nf = unrcu_pointer(cmpxchg(pnf, NULL, RCU_INITIALIZER(new)));
++		if (!nf)
++			swap(nf, new);
+ 	}
+ 	nf = nfs_local_file_get(nf);
+ 	rcu_read_unlock();
+diff --git a/fs/nfs_common/nfslocalio.c b/fs/nfs_common/nfslocalio.c
+index 6a0bdea6d6449..bdf251332b6b8 100644
+--- a/fs/nfs_common/nfslocalio.c
++++ b/fs/nfs_common/nfslocalio.c
+@@ -273,8 +273,8 @@ EXPORT_SYMBOL_GPL(nfs_open_local_fh);
  
-+static DECLARE_WAIT_QUEUE_HEAD(pci_hp_link_change_wq);
-+
-+/**
-+ * pci_hp_ignore_link_change - begin code section causing spurious link changes
-+ * @pdev: PCI hotplug bridge
-+ *
-+ * Mark the beginning of a code section causing spurious link changes on the
-+ * Secondary Bus of @pdev, e.g. as a side effect of a Secondary Bus Reset,
-+ * D3cold transition, firmware update or FPGA reconfiguration.
-+ *
-+ * Hotplug drivers can thus check whether such a code section is executing
-+ * concurrently, await it with pci_hp_spurious_link_change() and ignore the
-+ * resulting link change events.
-+ *
-+ * Must be paired with pci_hp_unignore_link_change().  May be called both
-+ * from the PCI core and from Endpoint drivers.  May be called for bridges
-+ * which are not hotplug-capable, in which case it has no effect because
-+ * no hotplug driver is bound to the bridge.
-+ */
-+void pci_hp_ignore_link_change(struct pci_dev *pdev)
-+{
-+	set_bit(PCI_LINK_CHANGING, &pdev->priv_flags);
-+	smp_mb__after_atomic(); /* pairs with implied barrier of wait_event() */
-+}
-+
-+/**
-+ * pci_hp_unignore_link_change - end code section causing spurious link changes
-+ * @pdev: PCI hotplug bridge
-+ *
-+ * Mark the end of a code section causing spurious link changes on the
-+ * Secondary Bus of @pdev.  Must be paired with pci_hp_ignore_link_change().
-+ */
-+void pci_hp_unignore_link_change(struct pci_dev *pdev)
-+{
-+	set_bit(PCI_LINK_CHANGED, &pdev->priv_flags);
-+	mb(); /* ensure pci_hp_spurious_link_change() sees either bit set */
-+	clear_bit(PCI_LINK_CHANGING, &pdev->priv_flags);
-+	wake_up_all(&pci_hp_link_change_wq);
-+}
-+
-+/**
-+ * pci_hp_spurious_link_change - check for spurious link changes
-+ * @pdev: PCI hotplug bridge
-+ *
-+ * Check whether a code section is executing concurrently which is causing
-+ * spurious link changes on the Secondary Bus of @pdev.  Await the end of the
-+ * code section if so.
-+ *
-+ * May be called by hotplug drivers to check whether a link change is spurious
-+ * and can be ignored.
-+ *
-+ * Because a genuine link change may have occurred in-between a spurious link
-+ * change and the invocation of this function, hotplug drivers should perform
-+ * sanity checks such as retrieving the current link state and bringing down
-+ * the slot if the link is down.
-+ *
-+ * Return: %true if such a code section has been executing concurrently,
-+ * otherwise %false.  Also return %true if such a code section has not been
-+ * executing concurrently, but at least once since the last invocation of this
-+ * function.
-+ */
-+bool pci_hp_spurious_link_change(struct pci_dev *pdev)
-+{
-+	wait_event(pci_hp_link_change_wq,
-+		   !test_bit(PCI_LINK_CHANGING, &pdev->priv_flags));
-+
-+	return test_and_clear_bit(PCI_LINK_CHANGED, &pdev->priv_flags);
-+}
-+
- static int __init pci_hotplug_init(void)
+ void nfs_close_local_fh(struct nfs_file_localio *nfl)
  {
- 	int result;
-diff --git a/drivers/pci/hotplug/pciehp_hpc.c b/drivers/pci/hotplug/pciehp_hpc.c
-index 388fbed25402b..ebd342bda235d 100644
---- a/drivers/pci/hotplug/pciehp_hpc.c
-+++ b/drivers/pci/hotplug/pciehp_hpc.c
-@@ -592,21 +592,21 @@ bool pciehp_device_replaced(struct controller *ctrl)
- 	return false;
- }
+-	struct nfsd_file *ro_nf = NULL;
+-	struct nfsd_file *rw_nf = NULL;
++	struct nfsd_file *ro_nf;
++	struct nfsd_file *rw_nf;
+ 	nfs_uuid_t *nfs_uuid;
  
--static void pciehp_ignore_dpc_link_change(struct controller *ctrl,
--					  struct pci_dev *pdev, int irq,
--					  u16 ignored_events)
-+static void pciehp_ignore_link_change(struct controller *ctrl,
-+				      struct pci_dev *pdev, int irq,
-+				      u16 ignored_events)
- {
- 	/*
- 	 * Ignore link changes which occurred while waiting for DPC recovery.
- 	 * Could be several if DPC triggered multiple times consecutively.
-+	 * Also ignore link changes caused by Secondary Bus Reset, etc.
- 	 */
- 	synchronize_hardirq(irq);
- 	atomic_and(~ignored_events, &ctrl->pending_events);
- 	if (pciehp_poll_mode)
- 		pcie_capability_write_word(pdev, PCI_EXP_SLTSTA,
- 					   ignored_events);
--	ctrl_info(ctrl, "Slot(%s): Link Down/Up ignored (recovered by DPC)\n",
--		  slot_name(ctrl));
-+	ctrl_info(ctrl, "Slot(%s): Link Down/Up ignored\n", slot_name(ctrl));
- 
- 	/*
- 	 * If the link is unexpectedly down after successful recovery,
-@@ -762,9 +762,11 @@ static irqreturn_t pciehp_ist(int irq, void *dev_id)
- 
- 	/*
- 	 * Ignore Link Down/Up events caused by Downstream Port Containment
--	 * if recovery from the error succeeded.
-+	 * if recovery succeeded, or caused by Secondary Bus Reset,
-+	 * suspend to D3cold, firmware update, FPGA reconfiguration, etc.
- 	 */
--	if ((events & PCI_EXP_SLTSTA_DLLSC) && pci_dpc_recovered(pdev) &&
-+	if ((events & (PCI_EXP_SLTSTA_PDC | PCI_EXP_SLTSTA_DLLSC)) &&
-+	    (pci_dpc_recovered(pdev) || pci_hp_spurious_link_change(pdev)) &&
- 	    ctrl->state == ON_STATE) {
- 		u16 ignored_events = PCI_EXP_SLTSTA_DLLSC;
- 
-@@ -772,7 +774,7 @@ static irqreturn_t pciehp_ist(int irq, void *dev_id)
- 			ignored_events |= events & PCI_EXP_SLTSTA_PDC;
- 
- 		events &= ~ignored_events;
--		pciehp_ignore_dpc_link_change(ctrl, pdev, irq, ignored_events);
-+		pciehp_ignore_link_change(ctrl, pdev, irq, ignored_events);
+ 	rcu_read_lock();
+@@ -285,28 +285,23 @@ void nfs_close_local_fh(struct nfs_file_localio *nfl)
+ 		return;
  	}
  
- 	/*
-@@ -937,7 +939,6 @@ int pciehp_reset_slot(struct hotplug_slot *hotplug_slot, bool probe)
- {
- 	struct controller *ctrl = to_ctrl(hotplug_slot);
- 	struct pci_dev *pdev = ctrl_dev(ctrl);
--	u16 stat_mask = 0, ctrl_mask = 0;
- 	int rc;
- 
- 	if (probe)
-@@ -945,23 +946,11 @@ int pciehp_reset_slot(struct hotplug_slot *hotplug_slot, bool probe)
- 
- 	down_write_nested(&ctrl->reset_lock, ctrl->depth);
- 
--	if (!ATTN_BUTTN(ctrl)) {
--		ctrl_mask |= PCI_EXP_SLTCTL_PDCE;
--		stat_mask |= PCI_EXP_SLTSTA_PDC;
--	}
--	ctrl_mask |= PCI_EXP_SLTCTL_DLLSCE;
--	stat_mask |= PCI_EXP_SLTSTA_DLLSC;
+-	ro_nf = rcu_access_pointer(nfl->ro_file);
+-	rw_nf = rcu_access_pointer(nfl->rw_file);
+-	if (ro_nf || rw_nf) {
+-		spin_lock(&nfs_uuid->lock);
+-		if (ro_nf)
+-			ro_nf = rcu_dereference_protected(xchg(&nfl->ro_file, NULL), 1);
+-		if (rw_nf)
+-			rw_nf = rcu_dereference_protected(xchg(&nfl->rw_file, NULL), 1);
 -
--	pcie_write_cmd(ctrl, 0, ctrl_mask);
--	ctrl_dbg(ctrl, "%s: SLOTCTRL %x write cmd %x\n", __func__,
--		 pci_pcie_cap(ctrl->pcie->port) + PCI_EXP_SLTCTL, 0);
-+	pci_hp_ignore_link_change(pdev);
+-		/* Remove nfl from nfs_uuid->files list */
+-		RCU_INIT_POINTER(nfl->nfs_uuid, NULL);
+-		list_del_init(&nfl->list);
+-		spin_unlock(&nfs_uuid->lock);
+-		rcu_read_unlock();
++	ro_nf = unrcu_pointer(xchg(&nfl->ro_file, NULL));
++	rw_nf = unrcu_pointer(xchg(&nfl->rw_file, NULL));
  
- 	rc = pci_bridge_secondary_bus_reset(ctrl->pcie->port);
- 
--	pcie_capability_write_word(pdev, PCI_EXP_SLTSTA, stat_mask);
--	pcie_write_cmd_nowait(ctrl, ctrl_mask, ctrl_mask);
--	ctrl_dbg(ctrl, "%s: SLOTCTRL %x write cmd %x\n", __func__,
--		 pci_pcie_cap(ctrl->pcie->port) + PCI_EXP_SLTCTL, ctrl_mask);
-+	pci_hp_unignore_link_change(pdev);
- 
- 	up_write(&ctrl->reset_lock);
- 	return rc;
-diff --git a/drivers/pci/pci.h b/drivers/pci/pci.h
-index b81e99cd4b62a..7db798bdcaaae 100644
---- a/drivers/pci/pci.h
-+++ b/drivers/pci/pci.h
-@@ -227,6 +227,7 @@ static inline int pci_proc_detach_bus(struct pci_bus *bus) { return 0; }
- 
- /* Functions for PCI Hotplug drivers to use */
- int pci_hp_add_bridge(struct pci_dev *dev);
-+bool pci_hp_spurious_link_change(struct pci_dev *pdev);
- 
- #if defined(CONFIG_SYSFS) && defined(HAVE_PCI_LEGACY)
- void pci_create_legacy_files(struct pci_bus *bus);
-@@ -557,6 +558,8 @@ static inline int pci_dev_set_disconnected(struct pci_dev *dev, void *unused)
- #define PCI_DPC_RECOVERED 1
- #define PCI_DPC_RECOVERING 2
- #define PCI_DEV_REMOVED 3
-+#define PCI_LINK_CHANGED 4
-+#define PCI_LINK_CHANGING 5
- 
- static inline void pci_dev_assign_added(struct pci_dev *dev)
- {
-diff --git a/include/linux/pci.h b/include/linux/pci.h
-index 51e2bd6405cda..081e5c0a3ddf4 100644
---- a/include/linux/pci.h
-+++ b/include/linux/pci.h
-@@ -1850,6 +1850,14 @@ static inline bool pcie_aspm_support_enabled(void) { return false; }
- static inline bool pcie_aspm_enabled(struct pci_dev *pdev) { return false; }
- #endif
- 
-+#ifdef CONFIG_HOTPLUG_PCI
-+void pci_hp_ignore_link_change(struct pci_dev *pdev);
-+void pci_hp_unignore_link_change(struct pci_dev *pdev);
-+#else
-+static inline void pci_hp_ignore_link_change(struct pci_dev *pdev) { }
-+static inline void pci_hp_unignore_link_change(struct pci_dev *pdev) { }
-+#endif
+-		if (ro_nf)
+-			nfs_to_nfsd_file_put_local(ro_nf);
+-		if (rw_nf)
+-			nfs_to_nfsd_file_put_local(rw_nf);
+-		return;
+-	}
++	spin_lock(&nfs_uuid->lock);
++	/* Remove nfl from nfs_uuid->files list */
++	list_del_init(&nfl->list);
++	spin_unlock(&nfs_uuid->lock);
+ 	rcu_read_unlock();
++	/* Now we can allow racing nfs_close_local_fh() to
++	 * skip the locking.
++	 */
++	RCU_INIT_POINTER(nfl->nfs_uuid, NULL);
 +
- #ifdef CONFIG_PCIEAER
- bool pci_aer_available(void);
- #else
++	if (ro_nf)
++		nfs_to_nfsd_file_put_local(ro_nf);
++	if (rw_nf)
++		nfs_to_nfsd_file_put_local(rw_nf);
+ }
+ EXPORT_SYMBOL_GPL(nfs_close_local_fh);
+ 
 -- 
 2.39.5
 
