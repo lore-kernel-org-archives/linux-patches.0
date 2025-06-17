@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20C2D2E92BC;
-	Tue, 17 Jun 2025 15:57:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2372D2E92BC;
+	Tue, 17 Jun 2025 15:57:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175870; cv=none; b=bn+2x3cyQ6o75ZLje+cGIRENOYTrUVEPATYtVfJplnijk8jYJPkGA7CJ1vJv3UG2dPEK358MzJ3OoldIUDepjTfFMIVbUSIqSmkukwVouY+YWhzrjABoiXXxyVfnGqFGGgTHJpmYDLz37+LjsNuOFT8uquefa84WoWELIbTYxbA=
+	t=1750175873; cv=none; b=IM4rSSsKr05Oz7ShikxiOYi8O1HsiOgfC4qUuIqwpJqlaVua2geNwKtjBJk/syi+0O0TMia+J7ehKhmHN7IEp68wQDitbGS4vSkFPYsFm9IwX4nTPUjbMBlh96Kv5n5SRI7XorA1tvEf7uBgO9awyf9aw0PJCpnKTWtJhPJDlMQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175870; c=relaxed/simple;
-	bh=ki6ICGJgZe01Q9OCFgjDXzh09GiSxZ+Z3+nM+IGR990=;
+	s=arc-20240116; t=1750175873; c=relaxed/simple;
+	bh=3ec4PhmvagJLuh0Z+DSPn76XYFD+nK6jO7O/2plels0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c9kDCgc5L4IzMZBPKrmvoTmQ4qlmQuiLtWAwOhFq1rSa8IVLFGfJW5kWvwUTlyqT2VZQMmezl7NsobXU5myMJvWqyKib740N46HJqyR/2DBTbfeqNaAkcqolSGNwAjzx9F/pPsUekiCFGcGVjsyJ1fH1Tvp8ZJGhcGJVXTlFbKA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ecsn8zsg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Oxv8B3F7Ug6PsnZ0uggUU9zDJL+b/HP8IRLW3P9Mxvhy3+AyncnVnZkA9M6w6BR9mwUMB5Sg0Ngzlv+kOMoR0Bhj42F74DdLg1QN2+iF4eEpCtQHpzhtnrX9IlfqwiAkMs0rLu4W1R534WDE8HiVgzh+xpbjnYNTG/noJR8lf74=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PMLffwXb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ecsn8zsg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C97DC4CEE7;
-	Tue, 17 Jun 2025 15:57:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PMLffwXb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88F4AC4CEE3;
+	Tue, 17 Jun 2025 15:57:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175869;
-	bh=ki6ICGJgZe01Q9OCFgjDXzh09GiSxZ+Z3+nM+IGR990=;
+	s=korg; t=1750175873;
+	bh=3ec4PhmvagJLuh0Z+DSPn76XYFD+nK6jO7O/2plels0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ecsn8zsgXdH5Uu/AKsZ2EhzGy8aN7jm2LbupxmE5I/u9pV1QtC1k+oI3s/OmN++4s
-	 /QR0LV/EShm/l+tS1BmDBeIvgHXW2JoZNmwzf+zddGzF7WJbRA9FFzWZPf0tCROkzn
-	 p31R+LCxp1L6zFfV+dM+T6aAkhQgj4kNptWgAiI0=
+	b=PMLffwXbFj31QmjlAb5wqPES6xUIfjsG6s/EwrHXs0Ee2yiCvrKF2lXlt6b2WeVV+
+	 0dYkWIXFF/dTHQSRE5sfT1LUjwficvZtS3Sx5iY5mGfdbQfpo0p5durd6ghawRjP8u
+	 cZapuu7HBgBXPb4wqSjrMcVH6Y+4UBBRdR9ilk+g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Samuel Reyes <zohrlaffz@gmail.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 130/780] drm/msm/dpu: remove DSC feature bit for PINGPONG on MSM8937
-Date: Tue, 17 Jun 2025 17:17:18 +0200
-Message-ID: <20250617152456.800550057@linuxfoundation.org>
+Subject: [PATCH 6.12 171/512] wifi: rtw89: pci: enlarge retry times of RX tag to 1000
+Date: Tue, 17 Jun 2025 17:22:17 +0200
+Message-ID: <20250617152426.548185373@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,51 +47,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Ping-Ke Shih <pkshih@realtek.com>
 
-[ Upstream commit b43c524134e0b0ae38acecc4e1dc585940ff6f88 ]
+[ Upstream commit dda27a47c036d981ec664ac57e044a21035ffe12 ]
 
-The MSM8937 platform doesn't have DSC blocks nor does have it DSC
-registers in the PINGPONG block. Drop the DPU_PINGPONG_DSC feature bit
-from the PINGPONG's feature mask and, as it is the only remaining bit,
-drop the .features assignment completely.
+RX tag is sequence number to ensure RX DMA is complete. On platform
+Gigabyte X870 AORUS ELITE WIFI7, sometimes it needs longer retry times
+to complete RX DMA, or driver throws warnings and connection drops:
 
-Fixes: c079680bb0fa ("drm/msm/dpu: Add support for MSM8937")
-Reported-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Patchwork: https://patchwork.freedesktop.org/patch/640299/
-Link: https://lore.kernel.org/r/20250301-dpu-fix-catalog-v2-1-498271be8b50@linaro.org
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+  rtw89_8922ae 0000:07:00.0: failed to update 162 RXBD info: -11
+  rtw89_8922ae 0000:07:00.0: failed to update 163 RXBD info: -11
+  rtw89_8922ae 0000:07:00.0: failed to update 32 RXBD info: -11
+  rtw89_8922ae 0000:07:00.0: failed to release TX skbs
+
+Fixes: 0bc7d1d4e63c ("wifi: rtw89: pci: validate RX tag for RXQ and RPQ")
+Reported-by: Samuel Reyes <zohrlaffz@gmail.com>
+Closes: https://lore.kernel.org/linux-wireless/f4355539f3ac46bbaf9c586d059a8cbb@realtek.com/T/#t
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20250509013433.7573-1-pkshih@realtek.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_14_msm8937.h | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/net/wireless/realtek/rtw89/pci.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_14_msm8937.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_14_msm8937.h
-index ad60089f18ea6..39027a21c6fee 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_14_msm8937.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_14_msm8937.h
-@@ -100,14 +100,12 @@ static const struct dpu_pingpong_cfg msm8937_pp[] = {
- 	{
- 		.name = "pingpong_0", .id = PINGPONG_0,
- 		.base = 0x70000, .len = 0xd4,
--		.features = PINGPONG_MSM8996_MASK,
- 		.sblk = &msm8996_pp_sblk,
- 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 8),
- 		.intr_rdptr = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 12),
- 	}, {
- 		.name = "pingpong_1", .id = PINGPONG_1,
- 		.base = 0x70800, .len = 0xd4,
--		.features = PINGPONG_MSM8996_MASK,
- 		.sblk = &msm8996_pp_sblk,
- 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 9),
- 		.intr_rdptr = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 13),
+diff --git a/drivers/net/wireless/realtek/rtw89/pci.c b/drivers/net/wireless/realtek/rtw89/pci.c
+index 0ac84f968994b..e203d3b2a8274 100644
+--- a/drivers/net/wireless/realtek/rtw89/pci.c
++++ b/drivers/net/wireless/realtek/rtw89/pci.c
+@@ -228,7 +228,7 @@ int rtw89_pci_sync_skb_for_device_and_validate_rx_info(struct rtw89_dev *rtwdev,
+ 						       struct sk_buff *skb)
+ {
+ 	struct rtw89_pci_rx_info *rx_info = RTW89_PCI_RX_SKB_CB(skb);
+-	int rx_tag_retry = 100;
++	int rx_tag_retry = 1000;
+ 	int ret;
+ 
+ 	do {
 -- 
 2.39.5
 
