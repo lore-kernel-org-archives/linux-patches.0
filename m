@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C7B1285048;
-	Tue, 17 Jun 2025 16:35:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41C26285048;
+	Tue, 17 Jun 2025 16:35:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750178135; cv=none; b=IsNnavI3MngxLqOH3DhkXZUfUk5t11KPZbJMikOtCCzqceYjy/l9vYLYnHKF/HDG5qGTfafSpEvdnH4ylaZG6kBMvWHh73jCUcwAWM9H+82eQrtH3Av/p4BmXbfwAjGX3I0HomTRRjrRoEyxSn2NcdWmAwPTkEiYwGdgKqrwR3c=
+	t=1750178138; cv=none; b=HIwKtnrEj7XwLMPFS5P546Y5ByaChU3j1ZWPyt/2DsOLsjZXlVCdSCU9748SLSrz2SpxLcyGYTOmK8OP2bWn9oNRTM1Hg5/XdnGvDPAXjiviVUiMCYUlwRVgm0Nf/QUn7cZj6CWHsuyD51cPE42UyfYicmo/1Kp31pyN7oxidHg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750178135; c=relaxed/simple;
-	bh=iSnAhAzBAwItEoGA/8D6zPbhUUkPjAofK8EG+MXdE6w=;
+	s=arc-20240116; t=1750178138; c=relaxed/simple;
+	bh=uCFfkCBAWTEAGKgSQiZ2ScyUeV0MjzvPj2+Ik8ElGZA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fGQnQh2Rr1ICdCVsgkWwmO9Gy6PkjaMWjadzMH8jHmfz0Ib+WAYgbV5M6H/sqqwMXap9dZzdSyIn0mtguVfb+OJ1NQF7KwVsJrz/3AbqlSN+0cXyhgs/iOUsNa7r0tMkxst2igmm840fuaj/ZVhTJ/GD3SI9aLOhmgr7qimxLx0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e/CkNbFV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CuP4dSmQM3KKsoWp1PaCH24QcMw0lHugRUY/5N4/MKTgZA35H9glSsYLu/xr2K9re69Q+B3tSvHe0opuPOr2U2Iq3yncSjJJ9BZdCWOKyezq230Xq1T9KcD9LWN8XmUeUlPZsnS5czGqV1f2RlHdRM3e3tHi/zjswM5NuKhJQqk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I7DlgjZ4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e/CkNbFV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 623FBC4CEE3;
-	Tue, 17 Jun 2025 16:35:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I7DlgjZ4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5A1DC4CEE3;
+	Tue, 17 Jun 2025 16:35:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750178134;
-	bh=iSnAhAzBAwItEoGA/8D6zPbhUUkPjAofK8EG+MXdE6w=;
+	s=korg; t=1750178138;
+	bh=uCFfkCBAWTEAGKgSQiZ2ScyUeV0MjzvPj2+Ik8ElGZA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e/CkNbFVIyvhP0CIy0XyS0Qc12IXQc+NeHZ804kDRskpvCrdsz4380fD2IIzPbDmZ
-	 7f52YL0G11VrUgtQ/dGJpE0bA5wKqNAjB/xTkpgyi6kdrJHbUMdfzcEuNAyv3jLZlK
-	 hIcpsAmqL9Kar1qu48HiWCa/Z2uKtw1dLE9Sl8u4=
+	b=I7DlgjZ4P3w1ymrnbOTVtZFUIi2CsAweG1tOcbtDdcITNp4KUOiulUAEAl2DqcoOx
+	 rFO7+OA8zj3kJLkbo0uTP96LwZtuT9JV/wWWz8w9Twjoxp8laDZBQtWDdbrKhAS/g2
+	 FX6v1zB7Vf5TGZAeUAz/ZfoYmDAA7oyBt40M2Al4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Lu <luxu.kernel@bytedance.com>,
-	Yunhui Cui <cuiyunhui@bytedance.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	kernel test robot <oliver.sang@intel.com>,
+	Eric Biggers <ebiggers@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Marco Elver <elver@google.com>,
+	Kees Cook <kees@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 451/512] ACPI: CPPC: Fix NULL pointer dereference when nosmp is used
-Date: Tue, 17 Jun 2025 17:26:57 +0200
-Message-ID: <20250617152437.841564210@linuxfoundation.org>
+Subject: [PATCH 6.15 415/780] ubsan: integer-overflow: depend on BROKEN to keep this out of CI
+Date: Tue, 17 Jun 2025 17:22:03 +0200
+Message-ID: <20250617152508.374768723@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,50 +50,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yunhui Cui <cuiyunhui@bytedance.com>
+From: Kees Cook <kees@kernel.org>
 
-[ Upstream commit 15eece6c5b05e5f9db0711978c3e3b7f1a2cfe12 ]
+[ Upstream commit d6a0e0bfecccdcecb08defe75a137c7262352102 ]
 
-With nosmp in cmdline, other CPUs are not brought up, leaving
-their cpc_desc_ptr NULL. CPU0's iteration via for_each_possible_cpu()
-dereferences these NULL pointers, causing panic.
+Depending on !COMPILE_TEST isn't sufficient to keep this feature out of
+CI because we can't stop it from being included in randconfig builds.
+This feature is still highly experimental, and is developed in lock-step
+with Clang's Overflow Behavior Types[1]. Depend on BROKEN to keep it
+from being enabled by anyone not expecting it.
 
-Panic backtrace:
-
-[    0.401123] Unable to handle kernel NULL pointer dereference at virtual address 00000000000000b8
-...
-[    0.403255] [<ffffffff809a5818>] cppc_allow_fast_switch+0x6a/0xd4
-...
-Kernel panic - not syncing: Attempted to kill init!
-
-Fixes: 3cc30dd00a58 ("cpufreq: CPPC: Enable fast_switch")
-Reported-by: Xu Lu <luxu.kernel@bytedance.com>
-Signed-off-by: Yunhui Cui <cuiyunhui@bytedance.com>
-Link: https://patch.msgid.link/20250604023036.99553-1-cuiyunhui@bytedance.com
-[ rjw: New subject ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://discourse.llvm.org/t/rfc-v2-clang-introduce-overflowbehaviortypes-for-wrapping-and-non-wrapping-arithmetic/86507 [1]
+Reported-by: kernel test robot <oliver.sang@intel.com>
+Closes: https://lore.kernel.org/oe-lkp/202505281024.f42beaa7-lkp@intel.com
+Fixes: 557f8c582a9b ("ubsan: Reintroduce signed overflow sanitizer")
+Acked-by: Eric Biggers <ebiggers@kernel.org>
+Link: https://lore.kernel.org/r/20250528182616.work.296-kees@kernel.org
+Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+Acked-by: Marco Elver <elver@google.com>
+Signed-off-by: Kees Cook <kees@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/cppc_acpi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ lib/Kconfig.ubsan | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/acpi/cppc_acpi.c b/drivers/acpi/cppc_acpi.c
-index e78e3754d99e1..dab941dc984a9 100644
---- a/drivers/acpi/cppc_acpi.c
-+++ b/drivers/acpi/cppc_acpi.c
-@@ -463,7 +463,7 @@ bool cppc_allow_fast_switch(void)
- 	struct cpc_desc *cpc_ptr;
- 	int cpu;
+diff --git a/lib/Kconfig.ubsan b/lib/Kconfig.ubsan
+index f6ea0c5b5da39..96cd896684676 100644
+--- a/lib/Kconfig.ubsan
++++ b/lib/Kconfig.ubsan
+@@ -118,6 +118,8 @@ config UBSAN_UNREACHABLE
  
--	for_each_possible_cpu(cpu) {
-+	for_each_present_cpu(cpu) {
- 		cpc_ptr = per_cpu(cpc_desc_ptr, cpu);
- 		desired_reg = &cpc_ptr->cpc_regs[DESIRED_PERF];
- 		if (!CPC_IN_SYSTEM_MEMORY(desired_reg) &&
+ config UBSAN_INTEGER_WRAP
+ 	bool "Perform checking for integer arithmetic wrap-around"
++	# This is very experimental so drop the next line if you really want it
++	depends on BROKEN
+ 	depends on !COMPILE_TEST
+ 	depends on $(cc-option,-fsanitize-undefined-ignore-overflow-pattern=all)
+ 	depends on $(cc-option,-fsanitize=signed-integer-overflow)
 -- 
 2.39.5
 
