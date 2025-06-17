@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C17D2EA14E;
-	Tue, 17 Jun 2025 16:18:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A733D2ED16D;
+	Tue, 17 Jun 2025 16:18:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177116; cv=none; b=S6bi99njQKnfUcQ3TZewyEhPnKN3sqKnC2sq5yHG0lnP9+37lF3nQOlR2RJmnD1BqC1mipkbO22x3ylpxB925McA7nIjWPwU+VW16qou2dvlT1NQc+MUotK9bt6iQSytZnc24KP5FDZtcykB3XYOC45nxktsTuRy115bqga+Jv4=
+	t=1750177119; cv=none; b=H9asBfYEiObv1iL02CZBm0/srn9x1fuFrU2JEq8ozwTB4T1Na8YRrtfoTfxadWkNQFl1BHdM1nalX4AVmP6Rt20EvZGCPLEzlSSA3RWaNYNIL1jsI9TArTBIl6szRXVzM4DhvdeRyRTcCh5ISMPm5fZRr10MPdEQYEQRLRGaw4k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177116; c=relaxed/simple;
-	bh=JgXRAPpGlCu7/Y9pWr0EpwFmcLiYELES4kwp/VBgg08=;
+	s=arc-20240116; t=1750177119; c=relaxed/simple;
+	bh=r0fl+5gjZYX+97RCB7W5cl1iHwG46O3ZM98vf6sN9oI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G6clRWBBHO80x43rMq7iqD1kVrgIcmjHFId7AwprGXwnRmlPvDs4GkUIe9D/OlK+GeZdaTeCulUIk5OyxKcXeBCkUvaEvREKOPg49n7yGztB5P2XvdddTibQgWG6A4InL/LzsPSpL0K0MU978KpNiNZe60Df/L3TnaTTi8AeAag=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W7o5IugV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pL2uQ34jyEH6nnJgL1AslaZyTLtuluo42hMq4dPLHARF9f2lnXY3WXpBSi/4rJkFnBI57aKwNCqh9n2L2q+K68BMayN9CmolXCslM5n5t9XG4tWCgdK+gVvt2LgIWOU2QR4L0sVPY/klv7sFAQX1ZEwrdzeyt9+Zqfu2dRVsEC0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fvg1lKtt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W7o5IugV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0A2AC4CEE3;
-	Tue, 17 Jun 2025 16:18:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fvg1lKtt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F48CC4CEE3;
+	Tue, 17 Jun 2025 16:18:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177116;
-	bh=JgXRAPpGlCu7/Y9pWr0EpwFmcLiYELES4kwp/VBgg08=;
+	s=korg; t=1750177119;
+	bh=r0fl+5gjZYX+97RCB7W5cl1iHwG46O3ZM98vf6sN9oI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W7o5IugVRWPCIKvCsmux5zfB5DmCOA4+yNjpNmbv3bHSjLM8OwzxfVbYz0wCrwdC5
-	 Jgg+9NQm8FjmPAob6PmO/O0sayBfltvcnaSq/QBSkNXDNm14sB6GTU0De+2TR0pUFz
-	 ZKXtWmwnqp8KgvtlPqJAS2jH+4Q3OqOdAeGL0/CE=
+	b=Fvg1lKtt98om7/mRK6O9/Z4gqXCit6McKimIyCspHLmRERaSeIZOY7vXemSyaHf45
+	 ldMxnTyQn+7bYIAJeQgDIWzhv1RombGQzzEALxsn9Q6e7qM4MPFWnlCjA8VOZDNcKU
+	 XiL9ZTHgTr4OE1Hh/ATWuiQdGZ912zLHcrtlmkaQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 6.6 349/356] usb: Flush altsetting 0 endpoints before reinitializating them after reset.
-Date: Tue, 17 Jun 2025 17:27:44 +0200
-Message-ID: <20250617152352.182024880@linuxfoundation.org>
+	syzbot+45b0c89a0fc7ae8dbadc@syzkaller.appspotmail.com,
+	Alexei Starovoitov <ast@kernel.org>,
+	Tao Chen <chen.dylane@linux.dev>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.15 263/780] bpf: Fix WARN() in get_bpf_raw_tp_regs
+Date: Tue, 17 Jun 2025 17:19:31 +0200
+Message-ID: <20250617152502.164801461@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-References: <20250617152338.212798615@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,79 +49,90 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mathias Nyman <mathias.nyman@linux.intel.com>
+From: Tao Chen <chen.dylane@linux.dev>
 
-commit 89bb3dc13ac29a563f4e4c555e422882f64742bd upstream.
+[ Upstream commit 3880cdbed1c4607e378f58fa924c5d6df900d1d3 ]
 
-usb core avoids sending a Set-Interface altsetting 0 request after device
-reset, and instead relies on calling usb_disable_interface() and
-usb_enable_interface() to flush and reset host-side of those endpoints.
+syzkaller reported an issue:
 
-xHCI hosts allocate and set up endpoint ring buffers and host_ep->hcpriv
-during usb_hcd_alloc_bandwidth() callback, which in this case is called
-before flushing the endpoint in usb_disable_interface().
+WARNING: CPU: 3 PID: 5971 at kernel/trace/bpf_trace.c:1861 get_bpf_raw_tp_regs+0xa4/0x100 kernel/trace/bpf_trace.c:1861
+Modules linked in:
+CPU: 3 UID: 0 PID: 5971 Comm: syz-executor205 Not tainted 6.15.0-rc5-syzkaller-00038-g707df3375124 #0 PREEMPT(full)
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2~bpo12+1 04/01/2014
+RIP: 0010:get_bpf_raw_tp_regs+0xa4/0x100 kernel/trace/bpf_trace.c:1861
+RSP: 0018:ffffc90003636fa8 EFLAGS: 00010293
+RAX: 0000000000000000 RBX: 0000000000000003 RCX: ffffffff81c6bc4c
+RDX: ffff888032efc880 RSI: ffffffff81c6bc83 RDI: 0000000000000005
+RBP: ffff88806a730860 R08: 0000000000000005 R09: 0000000000000003
+R10: 0000000000000004 R11: 0000000000000000 R12: 0000000000000004
+R13: 0000000000000001 R14: ffffc90003637008 R15: 0000000000000900
+FS:  0000000000000000(0000) GS:ffff8880d6cdf000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007f7baee09130 CR3: 0000000029f5a000 CR4: 0000000000352ef0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ <TASK>
+ ____bpf_get_stack_raw_tp kernel/trace/bpf_trace.c:1934 [inline]
+ bpf_get_stack_raw_tp+0x24/0x160 kernel/trace/bpf_trace.c:1931
+ bpf_prog_ec3b2eefa702d8d3+0x43/0x47
+ bpf_dispatcher_nop_func include/linux/bpf.h:1316 [inline]
+ __bpf_prog_run include/linux/filter.h:718 [inline]
+ bpf_prog_run include/linux/filter.h:725 [inline]
+ __bpf_trace_run kernel/trace/bpf_trace.c:2363 [inline]
+ bpf_trace_run3+0x23f/0x5a0 kernel/trace/bpf_trace.c:2405
+ __bpf_trace_mmap_lock_acquire_returned+0xfc/0x140 include/trace/events/mmap_lock.h:47
+ __traceiter_mmap_lock_acquire_returned+0x79/0xc0 include/trace/events/mmap_lock.h:47
+ __do_trace_mmap_lock_acquire_returned include/trace/events/mmap_lock.h:47 [inline]
+ trace_mmap_lock_acquire_returned include/trace/events/mmap_lock.h:47 [inline]
+ __mmap_lock_do_trace_acquire_returned+0x138/0x1f0 mm/mmap_lock.c:35
+ __mmap_lock_trace_acquire_returned include/linux/mmap_lock.h:36 [inline]
+ mmap_read_trylock include/linux/mmap_lock.h:204 [inline]
+ stack_map_get_build_id_offset+0x535/0x6f0 kernel/bpf/stackmap.c:157
+ __bpf_get_stack+0x307/0xa10 kernel/bpf/stackmap.c:483
+ ____bpf_get_stack kernel/bpf/stackmap.c:499 [inline]
+ bpf_get_stack+0x32/0x40 kernel/bpf/stackmap.c:496
+ ____bpf_get_stack_raw_tp kernel/trace/bpf_trace.c:1941 [inline]
+ bpf_get_stack_raw_tp+0x124/0x160 kernel/trace/bpf_trace.c:1931
+ bpf_prog_ec3b2eefa702d8d3+0x43/0x47
 
-Call usb_disable_interface() before usb_hcd_alloc_bandwidth() to ensure
-URBs are flushed before new ring buffers for the endpoints are allocated.
+Tracepoint like trace_mmap_lock_acquire_returned may cause nested call
+as the corner case show above, which will be resolved with more general
+method in the future. As a result, WARN_ON_ONCE will be triggered. As
+Alexei suggested, remove the WARN_ON_ONCE first.
 
-Otherwise host driver will attempt to find and remove old stale URBs
-from a freshly allocated new ringbuffer.
+Fixes: 9594dc3c7e71 ("bpf: fix nested bpf tracepoints with per-cpu data")
+Reported-by: syzbot+45b0c89a0fc7ae8dbadc@syzkaller.appspotmail.com
+Suggested-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Tao Chen <chen.dylane@linux.dev>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20250513042747.757042-1-chen.dylane@linux.dev
 
-Cc: stable <stable@kernel.org>
-Fixes: 4fe0387afa89 ("USB: don't send Set-Interface after reset")
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20250514132520.225345-1-mathias.nyman@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Closes: https://lore.kernel.org/bpf/8bc2554d-1052-4922-8832-e0078a033e1d@gmail.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/core/hub.c |   16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ kernel/trace/bpf_trace.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/core/hub.c
-+++ b/drivers/usb/core/hub.c
-@@ -6103,6 +6103,7 @@ static int usb_reset_and_verify_device(s
- 	struct usb_hub			*parent_hub;
- 	struct usb_hcd			*hcd = bus_to_hcd(udev->bus);
- 	struct usb_device_descriptor	descriptor;
-+	struct usb_interface		*intf;
- 	struct usb_host_bos		*bos;
- 	int				i, j, ret = 0;
- 	int				port1 = udev->portnum;
-@@ -6160,6 +6161,18 @@ static int usb_reset_and_verify_device(s
- 	if (!udev->actconfig)
- 		goto done;
+diff --git a/kernel/trace/bpf_trace.c b/kernel/trace/bpf_trace.c
+index 0f5906f43d7ca..e1bf9c06007fb 100644
+--- a/kernel/trace/bpf_trace.c
++++ b/kernel/trace/bpf_trace.c
+@@ -1858,7 +1858,7 @@ static struct pt_regs *get_bpf_raw_tp_regs(void)
+ 	struct bpf_raw_tp_regs *tp_regs = this_cpu_ptr(&bpf_raw_tp_regs);
+ 	int nest_level = this_cpu_inc_return(bpf_raw_tp_nest_level);
  
-+	/*
-+	 * Some devices can't handle setting default altsetting 0 with a
-+	 * Set-Interface request. Disable host-side endpoints of those
-+	 * interfaces here. Enable and reset them back after host has set
-+	 * its internal endpoint structures during usb_hcd_alloc_bandwith()
-+	 */
-+	for (i = 0; i < udev->actconfig->desc.bNumInterfaces; i++) {
-+		intf = udev->actconfig->interface[i];
-+		if (intf->cur_altsetting->desc.bAlternateSetting == 0)
-+			usb_disable_interface(udev, intf, true);
-+	}
-+
- 	mutex_lock(hcd->bandwidth_mutex);
- 	ret = usb_hcd_alloc_bandwidth(udev, udev->actconfig, NULL, NULL);
- 	if (ret < 0) {
-@@ -6191,12 +6204,11 @@ static int usb_reset_and_verify_device(s
- 	 */
- 	for (i = 0; i < udev->actconfig->desc.bNumInterfaces; i++) {
- 		struct usb_host_config *config = udev->actconfig;
--		struct usb_interface *intf = config->interface[i];
- 		struct usb_interface_descriptor *desc;
- 
-+		intf = config->interface[i];
- 		desc = &intf->cur_altsetting->desc;
- 		if (desc->bAlternateSetting == 0) {
--			usb_disable_interface(udev, intf, true);
- 			usb_enable_interface(udev, intf, true);
- 			ret = 0;
- 		} else {
+-	if (WARN_ON_ONCE(nest_level > ARRAY_SIZE(tp_regs->regs))) {
++	if (nest_level > ARRAY_SIZE(tp_regs->regs)) {
+ 		this_cpu_dec(bpf_raw_tp_nest_level);
+ 		return ERR_PTR(-EBUSY);
+ 	}
+-- 
+2.39.5
+
 
 
