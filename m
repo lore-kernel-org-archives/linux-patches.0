@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 402E02F2379;
-	Tue, 17 Jun 2025 15:50:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BEE32F2379;
+	Tue, 17 Jun 2025 15:50:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175441; cv=none; b=DlBi14xphwSirzNT4vlVgRS2ZlJ94UhGGz1y/JkMN5TmP5czv9zRVNCAHonxBcM0wY43/0D8H2lkGShzWzxjyepm3fSyo1qfz7iVrkNn+vD7WagUR3QTDEkdf/lb9I0kIhQWGyS4CHosMow1YuwiiHUOZlx1C6PkqRsRU1TwTkw=
+	t=1750175444; cv=none; b=JFwtyqnRNnu2Iuor0hJyczg+enBy1jiVmgkbTIhN5B15xrhJtImcerBWGtWnDIN2yqGohChEo0iFnHF6IpphO+/qEKRsyXb5h8XAUgQ8J82yCE/uFaAQl781hbWcBCUyt1T3pZV/W5ZIytgTikOtM4So+JCBOgT+j4cELTZDcGc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175441; c=relaxed/simple;
-	bh=iWdH0rqHZd2JcLX37jajw5HNCFlSTni/bLXyIw9qjGg=;
+	s=arc-20240116; t=1750175444; c=relaxed/simple;
+	bh=w6T8r/FNm8CW72qLJO4e9TJZqX7QmIUnA8JQz9kccj4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YprRfv6j9PmAa7cl8KFGx9zePjoPrbbcmUHXgtjhfDXwGEXxgkwDEICGyO3S78pbHoO8OWim0LL7bj+ZHNeYeMjDpJJdcqjuooE7d95mFcCeUTHsK7IRNJUTyg9DL+iU8AOZ6lB3Mu7USSM+kcWjXLSUjbnfm3xWxzU+arQi+Cs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l3D/W56n; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m//VuM3rHK+Q4V2a2EoPFR22Gzobet0ktTLib7+y6MR1tllkUEkQ4b/TMnuAR5Ws5qSe9D+509xYJ8MVl+dbGv0UZULUWIA3ZMT+uCf45w1hJQHdgxPBFfg147jBPAl79mlN/+3nMPa/I3I7BWVc/XBu1+tJfqGCFmuELYIk9rk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PxWFPPdP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l3D/W56n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3403C4CEE3;
-	Tue, 17 Jun 2025 15:50:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PxWFPPdP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 924EFC4CEE3;
+	Tue, 17 Jun 2025 15:50:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175441;
-	bh=iWdH0rqHZd2JcLX37jajw5HNCFlSTni/bLXyIw9qjGg=;
+	s=korg; t=1750175443;
+	bh=w6T8r/FNm8CW72qLJO4e9TJZqX7QmIUnA8JQz9kccj4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l3D/W56n50wSNwp/a1uUy8B2SlRw5zTBHeI/9EOjH5o+qK7vOwDXIRR0GCqSJ8vmb
-	 pKIqELkgD2aCY0OKM7yGAkILvOgnzsiY/B+EQqEL+wsOAsfm6ylPVmU78Xn3JwmmOq
-	 0U8nbPnFSx/s3+H9KUVjwV+oYAl+QcJpfTYOKYFE=
+	b=PxWFPPdPVaWRkKVBXiUV8eXNkpOwB/4OVhjvPE5Atsf4/wOMpLRy6edFLQmsn9CO7
+	 /HjMq09yKCgFsiH/Vv69WfBI7bieAKCbukvh+HrYeitzB3U8DKAKki+2e+2ITX2vKm
+	 8Xdfc54W1q2ixjgEXXr5ZbTMFo1zj+1euYYz8bC8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Forbes <ian.forbes@broadcom.com>,
-	Zack Rusin <zack.rusin@broadcom.com>,
+	Peter Robinson <pbrobinson@gmail.com>,
+	Diederik de Haas <didi.debian@cknow.org>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 088/780] drm/vmwgfx: Add seqno waiter for sync_files
-Date: Tue, 17 Jun 2025 17:16:36 +0200
-Message-ID: <20250617152455.097671366@linuxfoundation.org>
+Subject: [PATCH 6.6 177/356] arm64: dts: rockchip: Update eMMC for NanoPi R5 series
+Date: Tue, 17 Jun 2025 17:24:52 +0200
+Message-ID: <20250617152345.337321877@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
+References: <20250617152338.212798615@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,90 +48,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ian Forbes <ian.forbes@broadcom.com>
+From: Peter Robinson <pbrobinson@gmail.com>
 
-[ Upstream commit 0039a3b35b10d9c15d3d26320532ab56cc566750 ]
+[ Upstream commit 8eca9e979a1efbcc3d090f6eb3f4da621e7c87e0 ]
 
-Because sync_files are passive waiters they do not participate in
-the processing of fences like the traditional vmw_fence_wait IOCTL.
-If userspace exclusively uses sync_files for synchronization then
-nothing in the kernel actually processes fence updates as interrupts
-for fences are masked and ignored if the kernel does not indicate to the
-SVGA device that there are active waiters.
+Add the 3.3v and 1.8v regulators that are connected to
+the eMMC on the R5 series devices, as well as adding the
+eMMC data strobe, and enable eMMC HS200 mode as the
+Foresee FEMDNN0xxG-A3A55 modules support it.
 
-This oversight results in a bug where the entire GUI can freeze waiting
-on a sync_file that will never be signalled as we've masked the interrupts
-to signal its completion. This bug is incredibly racy as any process which
-interacts with the fencing code via the 3D stack can process the stuck
-fences on behalf of the stuck process causing it to run again. Even a
-simple app like eglinfo is enough to resume the stuck process. Usually
-this bug is seen at a login screen like GDM because there are no other
-3D apps running.
-
-By adding a seqno waiter we re-enable interrupt based processing of the
-dma_fences associated with the sync_file which is signalled as part of a
-dma_fence_callback.
-
-This has likely been broken since it was initially added to the kernel in
-2017 but has gone unnoticed until mutter recently started using sync_files
-heavily over the course of 2024 as part of their explicit sync support.
-
-Fixes: c906965dee22 ("drm/vmwgfx: Add export fence to file descriptor support")
-Signed-off-by: Ian Forbes <ian.forbes@broadcom.com>
-Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250228200633.642417-1-ian.forbes@broadcom.com
+Fixes: c8ec73b05a95d ("arm64: dts: rockchip: create common dtsi for NanoPi R5 series")
+Signed-off-by: Peter Robinson <pbrobinson@gmail.com>
+Reviewed-by: Diederik de Haas <didi.debian@cknow.org>
+Link: https://lore.kernel.org/r/20250506222531.625157-1-pbrobinson@gmail.com
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c | 26 +++++++++++++++++++++++++
- 1 file changed, 26 insertions(+)
+ arch/arm64/boot/dts/rockchip/rk3568-nanopi-r5s.dtsi | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c b/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
-index 2e52d73eba484..ea741bc4ac3fc 100644
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
-@@ -4086,6 +4086,23 @@ static int vmw_execbuf_tie_context(struct vmw_private *dev_priv,
- 	return 0;
- }
- 
-+/*
-+ * DMA fence callback to remove a seqno_waiter
-+ */
-+struct seqno_waiter_rm_context {
-+	struct dma_fence_cb base;
-+	struct vmw_private *dev_priv;
-+};
-+
-+static void seqno_waiter_rm_cb(struct dma_fence *f, struct dma_fence_cb *cb)
-+{
-+	struct seqno_waiter_rm_context *ctx =
-+		container_of(cb, struct seqno_waiter_rm_context, base);
-+
-+	vmw_seqno_waiter_remove(ctx->dev_priv);
-+	kfree(ctx);
-+}
-+
- int vmw_execbuf_process(struct drm_file *file_priv,
- 			struct vmw_private *dev_priv,
- 			void __user *user_commands, void *kernel_commands,
-@@ -4266,6 +4283,15 @@ int vmw_execbuf_process(struct drm_file *file_priv,
- 		} else {
- 			/* Link the fence with the FD created earlier */
- 			fd_install(out_fence_fd, sync_file->file);
-+			struct seqno_waiter_rm_context *ctx =
-+				kmalloc(sizeof(*ctx), GFP_KERNEL);
-+			ctx->dev_priv = dev_priv;
-+			vmw_seqno_waiter_add(dev_priv);
-+			if (dma_fence_add_callback(&fence->base, &ctx->base,
-+						   seqno_waiter_rm_cb) < 0) {
-+				vmw_seqno_waiter_remove(dev_priv);
-+				kfree(ctx);
-+			}
- 		}
- 	}
+diff --git a/arch/arm64/boot/dts/rockchip/rk3568-nanopi-r5s.dtsi b/arch/arm64/boot/dts/rockchip/rk3568-nanopi-r5s.dtsi
+index 93189f8306400..c30354268c8f5 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3568-nanopi-r5s.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3568-nanopi-r5s.dtsi
+@@ -486,9 +486,12 @@
+ &sdhci {
+ 	bus-width = <8>;
+ 	max-frequency = <200000000>;
++	mmc-hs200-1_8v;
+ 	non-removable;
+ 	pinctrl-names = "default";
+-	pinctrl-0 = <&emmc_bus8 &emmc_clk &emmc_cmd>;
++	pinctrl-0 = <&emmc_bus8 &emmc_clk &emmc_cmd &emmc_datastrobe>;
++	vmmc-supply = <&vcc_3v3>;
++	vqmmc-supply = <&vcc_1v8>;
+ 	status = "okay";
+ };
  
 -- 
 2.39.5
