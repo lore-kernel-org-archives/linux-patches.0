@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0BB72F2C64;
-	Tue, 17 Jun 2025 15:54:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42B1B2F2C53;
+	Tue, 17 Jun 2025 15:54:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175649; cv=none; b=gAlVpyE8pVLnBr1pSBvKcBL/Xundwv3XwxCAVcKBJVb/JDHBFYGIyKGFrinSXrdspQeTmTN9zFyiHrSzN7Lexf+DAn+pmt7uKrjjZ4rALM1pslOQgU2avThUweF+kqX3o7HspokAGli4afWpdVuycbONjF9bxXX5knQuzvNvMzU=
+	t=1750175652; cv=none; b=QILsPiUhnd5luIaUhY4UwTjZtvmBMU+DYmh2YviTgi3UWPILx+baCsDirv93eQ5goU3+bsy/OZk48uqKHsCQfjozNaaNRq6uCFtWYDaU/jYVySilDern1UYfXPPiWBBhTqHwnSohngMrjBcssYTn3O95hDQsFRvj6qN43Vd1FE0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175649; c=relaxed/simple;
-	bh=t3ZWamaGPA7srMqFRXERs7kWP3c1/koVy6W4j9B4y3k=;
+	s=arc-20240116; t=1750175652; c=relaxed/simple;
+	bh=Mh8OcQ6kQtcOpoGsIi30HrwbBlrSE51zxLWpTqO0cEw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uubXV8oZSjs12ELu5XCKMa2wGR+SuYSj0k6cMsstq1LNFC4VieTqcd8mmxyczb0W8WTTL2gGp0/TDExs4afNPmIjBLhbbfA5IpQhv8shPd90/0s0xTRIZioijMokGbfBjHyB73Lmml1hvJExmqUJlFJPB8Ve7YV3XrvKSKmjW2c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K6+3MsLq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KVQNRsGwAbej5HYIJnWq9gyjc1P6SGKn30AH7UIIzXujtHj1A4QZHUXuz/gNZ9EXUt+lzoTnmH5gIrt50+uoRALcA8IqAQPoPzvR5fcrIgLWKGHEy+Rs2gxkGkNt/ljXIic+aazfY0MwEvck40n7xCfn4lHPoYYBem8eVJMdxeg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kaPjJGSC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K6+3MsLq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62934C4CEE3;
-	Tue, 17 Jun 2025 15:54:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kaPjJGSC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5936C4CEE3;
+	Tue, 17 Jun 2025 15:54:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175648;
-	bh=t3ZWamaGPA7srMqFRXERs7kWP3c1/koVy6W4j9B4y3k=;
+	s=korg; t=1750175652;
+	bh=Mh8OcQ6kQtcOpoGsIi30HrwbBlrSE51zxLWpTqO0cEw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K6+3MsLqexNXRJXFEJeGDdQpF2t4InZo+y9JOa12PxwyERK3ehRxZWIkYMfYUfN3s
-	 DsdUI2N9MMvqkZYnzWhGv45IIZNH5lCdc096C9GkncTnVOxpkD2KPrnORcF3YarRXy
-	 MbRownHN03emMYF6XuTN8y+t0ukxM67Axf0TBAyI=
+	b=kaPjJGSCj5R9fLHtDB7giBl5C5DPTWJJRKkNDprDcZwaMLrnDnbAZzZeFiJ9XCIf7
+	 JmaKOn6twjV9CRAjpobhU2lB3jmbN5Im330cwhsjmx+OoJr+shz+f35xkruvXYtD2R
+	 Wl3mvNv6ZX9OF5ZbcaWkW/vTeE86Y0i0Yk8b92Q4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anton Protopopov <a.s.protopopov@gmail.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Thiago Jung Bauermann <thiago.bauermann@linaro.org>,
+	Ingo Saitz <ingo@hannover.ccc.de>,
+	Kees Cook <kees@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 150/512] bpf: Fix uninitialized values in BPF_{CORE,PROBE}_READ
-Date: Tue, 17 Jun 2025 17:21:56 +0200
-Message-ID: <20250617152425.683638630@linuxfoundation.org>
+Subject: [PATCH 6.6 197/356] randstruct: gcc-plugin: Fix attribute addition
+Date: Tue, 17 Jun 2025 17:25:12 +0200
+Message-ID: <20250617152346.147243656@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
+References: <20250617152338.212798615@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,60 +48,136 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Anton Protopopov <a.s.protopopov@gmail.com>
+From: Kees Cook <kees@kernel.org>
 
-[ Upstream commit 41d4ce6df3f4945341ec509a840cc002a413b6cc ]
+[ Upstream commit f39f18f3c3531aa802b58a20d39d96e82eb96c14 ]
 
-With the latest LLVM bpf selftests build will fail with
-the following error message:
+Based on changes in the 2021 public version of the randstruct
+out-of-tree GCC plugin[1], more carefully update the attributes on
+resulting decls, to avoid tripping checks in GCC 15's
+comptypes_check_enum_int() when it has been configured with
+"--enable-checking=misc":
 
-    progs/profiler.inc.h:710:31: error: default initialization of an object of type 'typeof ((parent_task)->real_cred->uid.val)' (aka 'const unsigned int') leaves the object uninitialized and is incompatible with C++ [-Werror,-Wdefault-const-init-unsafe]
-      710 |         proc_exec_data->parent_uid = BPF_CORE_READ(parent_task, real_cred, uid.val);
-          |                                      ^
-    tools/testing/selftests/bpf/tools/include/bpf/bpf_core_read.h:520:35: note: expanded from macro 'BPF_CORE_READ'
-      520 |         ___type((src), a, ##__VA_ARGS__) __r;                               \
-          |                                          ^
+arch/arm64/kernel/kexec_image.c:132:14: internal compiler error: in comptypes_check_enum_int, at c/c-typeck.cc:1519
+  132 | const struct kexec_file_ops kexec_image_ops = {
+      |              ^~~~~~~~~~~~~~
+ internal_error(char const*, ...), at gcc/gcc/diagnostic-global-context.cc:517
+ fancy_abort(char const*, int, char const*), at gcc/gcc/diagnostic.cc:1803
+ comptypes_check_enum_int(tree_node*, tree_node*, bool*), at gcc/gcc/c/c-typeck.cc:1519
+ ...
 
-This happens because BPF_CORE_READ (and other macro) declare the
-variable __r using the ___type macro which can inherit const modifier
-from intermediate types.
-
-Fix this by using __typeof_unqual__, when supported. (And when it
-is not supported, the problem shouldn't appear, as older compilers
-haven't complained.)
-
-Fixes: 792001f4f7aa ("libbpf: Add user-space variants of BPF_CORE_READ() family of macros")
-Fixes: a4b09a9ef945 ("libbpf: Add non-CO-RE variants of BPF_CORE_READ() macro family")
-Signed-off-by: Anton Protopopov <a.s.protopopov@gmail.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20250502193031.3522715-1-a.s.protopopov@gmail.com
+Link: https://archive.org/download/grsecurity/grsecurity-3.1-5.10.41-202105280954.patch.gz [1]
+Reported-by: Thiago Jung Bauermann <thiago.bauermann@linaro.org>
+Closes: https://github.com/KSPP/linux/issues/367
+Closes: https://lore.kernel.org/lkml/20250530000646.104457-1-thiago.bauermann@linaro.org/
+Reported-by: Ingo Saitz <ingo@hannover.ccc.de>
+Closes: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1104745
+Fixes: 313dd1b62921 ("gcc-plugins: Add the randstruct plugin")
+Tested-by: Thiago Jung Bauermann <thiago.bauermann@linaro.org>
+Link: https://lore.kernel.org/r/20250530221824.work.623-kees@kernel.org
+Signed-off-by: Kees Cook <kees@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/bpf_core_read.h | 6 ++++++
- 1 file changed, 6 insertions(+)
+ scripts/gcc-plugins/gcc-common.h              | 32 +++++++++++++++++++
+ scripts/gcc-plugins/randomize_layout_plugin.c | 22 ++++++-------
+ 2 files changed, 43 insertions(+), 11 deletions(-)
 
-diff --git a/tools/lib/bpf/bpf_core_read.h b/tools/lib/bpf/bpf_core_read.h
-index c0e13cdf96607..b997c68bd9453 100644
---- a/tools/lib/bpf/bpf_core_read.h
-+++ b/tools/lib/bpf/bpf_core_read.h
-@@ -388,7 +388,13 @@ extern void *bpf_rdonly_cast(const void *obj, __u32 btf_id) __ksym __weak;
- #define ___arrow10(a, b, c, d, e, f, g, h, i, j) a->b->c->d->e->f->g->h->i->j
- #define ___arrow(...) ___apply(___arrow, ___narg(__VA_ARGS__))(__VA_ARGS__)
+diff --git a/scripts/gcc-plugins/gcc-common.h b/scripts/gcc-plugins/gcc-common.h
+index 1ae39b9f4a95e..90e83d62adb54 100644
+--- a/scripts/gcc-plugins/gcc-common.h
++++ b/scripts/gcc-plugins/gcc-common.h
+@@ -128,6 +128,38 @@ static inline tree build_const_char_string(int len, const char *str)
+ 	return cstr;
+ }
  
-+#if defined(__clang__) && (__clang_major__ >= 19)
-+#define ___type(...) __typeof_unqual__(___arrow(__VA_ARGS__))
-+#elif defined(__GNUC__) && (__GNUC__ >= 14)
-+#define ___type(...) __typeof_unqual__(___arrow(__VA_ARGS__))
-+#else
- #define ___type(...) typeof(___arrow(__VA_ARGS__))
-+#endif
++static inline void __add_type_attr(tree type, const char *attr, tree args)
++{
++	tree oldattr;
++
++	if (type == NULL_TREE)
++		return;
++	oldattr = lookup_attribute(attr, TYPE_ATTRIBUTES(type));
++	if (oldattr != NULL_TREE) {
++		gcc_assert(TREE_VALUE(oldattr) == args || TREE_VALUE(TREE_VALUE(oldattr)) == TREE_VALUE(args));
++		return;
++	}
++
++	TYPE_ATTRIBUTES(type) = copy_list(TYPE_ATTRIBUTES(type));
++	TYPE_ATTRIBUTES(type) = tree_cons(get_identifier(attr), args, TYPE_ATTRIBUTES(type));
++}
++
++static inline void add_type_attr(tree type, const char *attr, tree args)
++{
++	tree main_variant = TYPE_MAIN_VARIANT(type);
++
++	__add_type_attr(TYPE_CANONICAL(type), attr, args);
++	__add_type_attr(TYPE_CANONICAL(main_variant), attr, args);
++	__add_type_attr(main_variant, attr, args);
++
++	for (type = TYPE_NEXT_VARIANT(main_variant); type; type = TYPE_NEXT_VARIANT(type)) {
++		if (!lookup_attribute(attr, TYPE_ATTRIBUTES(type)))
++			TYPE_ATTRIBUTES(type) = TYPE_ATTRIBUTES(main_variant);
++
++		__add_type_attr(TYPE_CANONICAL(type), attr, args);
++	}
++}
++
+ #define PASS_INFO(NAME, REF, ID, POS)		\
+ struct register_pass_info NAME##_pass_info = {	\
+ 	.pass = make_##NAME##_pass(),		\
+diff --git a/scripts/gcc-plugins/randomize_layout_plugin.c b/scripts/gcc-plugins/randomize_layout_plugin.c
+index bb8c6631971db..e70eef049ada6 100644
+--- a/scripts/gcc-plugins/randomize_layout_plugin.c
++++ b/scripts/gcc-plugins/randomize_layout_plugin.c
+@@ -77,6 +77,9 @@ static tree handle_randomize_layout_attr(tree *node, tree name, tree args, int f
  
- #define ___read(read_fn, dst, src_type, src, accessor)			    \
- 	read_fn((void *)(dst), sizeof(*(dst)), &((src_type)(src))->accessor)
+ 	if (TYPE_P(*node)) {
+ 		type = *node;
++	} else if (TREE_CODE(*node) == FIELD_DECL) {
++		*no_add_attrs = false;
++		return NULL_TREE;
+ 	} else {
+ 		gcc_assert(TREE_CODE(*node) == TYPE_DECL);
+ 		type = TREE_TYPE(*node);
+@@ -352,15 +355,14 @@ static int relayout_struct(tree type)
+ 		TREE_CHAIN(newtree[i]) = newtree[i+1];
+ 	TREE_CHAIN(newtree[num_fields - 1]) = NULL_TREE;
+ 
++	add_type_attr(type, "randomize_performed", NULL_TREE);
++	add_type_attr(type, "designated_init", NULL_TREE);
++	if (has_flexarray)
++		add_type_attr(type, "has_flexarray", NULL_TREE);
++
+ 	main_variant = TYPE_MAIN_VARIANT(type);
+-	for (variant = main_variant; variant; variant = TYPE_NEXT_VARIANT(variant)) {
++	for (variant = main_variant; variant; variant = TYPE_NEXT_VARIANT(variant))
+ 		TYPE_FIELDS(variant) = newtree[0];
+-		TYPE_ATTRIBUTES(variant) = copy_list(TYPE_ATTRIBUTES(variant));
+-		TYPE_ATTRIBUTES(variant) = tree_cons(get_identifier("randomize_performed"), NULL_TREE, TYPE_ATTRIBUTES(variant));
+-		TYPE_ATTRIBUTES(variant) = tree_cons(get_identifier("designated_init"), NULL_TREE, TYPE_ATTRIBUTES(variant));
+-		if (has_flexarray)
+-			TYPE_ATTRIBUTES(type) = tree_cons(get_identifier("has_flexarray"), NULL_TREE, TYPE_ATTRIBUTES(type));
+-	}
+ 
+ 	/*
+ 	 * force a re-layout of the main variant
+@@ -428,10 +430,8 @@ static void randomize_type(tree type)
+ 	if (lookup_attribute("randomize_layout", TYPE_ATTRIBUTES(TYPE_MAIN_VARIANT(type))) || is_pure_ops_struct(type))
+ 		relayout_struct(type);
+ 
+-	for (variant = TYPE_MAIN_VARIANT(type); variant; variant = TYPE_NEXT_VARIANT(variant)) {
+-		TYPE_ATTRIBUTES(type) = copy_list(TYPE_ATTRIBUTES(type));
+-		TYPE_ATTRIBUTES(type) = tree_cons(get_identifier("randomize_considered"), NULL_TREE, TYPE_ATTRIBUTES(type));
+-	}
++	add_type_attr(type, "randomize_considered", NULL_TREE);
++
+ #ifdef __DEBUG_PLUGIN
+ 	fprintf(stderr, "Marking randomize_considered on struct %s\n", ORIG_TYPE_NAME(type));
+ #ifdef __DEBUG_VERBOSE
 -- 
 2.39.5
 
