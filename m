@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 807122ECEA6;
-	Tue, 17 Jun 2025 16:32:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7691E2DFF18;
+	Tue, 17 Jun 2025 16:32:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177961; cv=none; b=iEoAkC4fQmEaFQVx8aM1cFdPKbVEQSgbWFT4fA5rxadaZYrjRo2gWA4rXJf0HSYqd0D6wkz8gKw4ERDTwGpUECZIj5dVDS7RAyI6BXxN925rd5lMlZx2M0ENiJ/nFi87p05A6ptsotKUFprbiwzy82awI4dgjFg+Va66v2gWkSg=
+	t=1750177964; cv=none; b=LLbngdbrkhm6DOkYlA27rwMehx0A1awF/9ZrlRt29o5cFU8a+YL2MLVOXpFO1+9eVZMMX4JJTy/J4hJihgHjIQS3X1nFunYvIuHTXPtaultJX46Wc9OSRXcRGreFkSymUQbR5JZWFDoLQnm0wtspRoQQp61AUAVVzsTqaHp2Ozo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177961; c=relaxed/simple;
-	bh=rgXdq9XGbRufHQKV8IPsYxnQFy2TLHuna6QbdQTKBSc=;
+	s=arc-20240116; t=1750177964; c=relaxed/simple;
+	bh=camwjpo32DkZOgtV5mV9JHs3jP9us6HUfM74giQB3Nc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HsENOzjjFtWAgG52ign7kzbLalf+M/jYOCoWYWlK79labx0jDrsj0rH90uqp3Bav6pbBgt2vFlAvZ3m7ArNQ/96C1pNmv4PXPa0t1uD7FwCmxeJJBayNmyMppzrAex2q/4gziGrap8G3FluoMJlp6GfCvsjPxxVS7vlq6ZYKyX0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u+ENbhNX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XGgc2oJIHva49MIFxTMUwuSndGO3QU2qJYdTTLPY0dComdE5SE8eQ4yN8j2NQOJoEKynuIYSn0f5yMVcw3IFva3QQdJ+GOudnxaWefYrMp5JCy/56tl3YUw0aPLyQCXt/i+eRx1KqIFXE3aYifKlf4OXTIKhKkWfVPjZMWFctQQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zdm8DqeB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u+ENbhNX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A202FC4CEE3;
-	Tue, 17 Jun 2025 16:32:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zdm8DqeB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCC32C4CEE3;
+	Tue, 17 Jun 2025 16:32:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177961;
-	bh=rgXdq9XGbRufHQKV8IPsYxnQFy2TLHuna6QbdQTKBSc=;
+	s=korg; t=1750177964;
+	bh=camwjpo32DkZOgtV5mV9JHs3jP9us6HUfM74giQB3Nc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u+ENbhNXI1A4BiJ4YoQWeKGiFlKnALzLNfSELbSE/AJonZyD1ywrHbU2re74PCo6c
-	 AorvKKHSH4k8bUY4dYQEB7wOZ137ufI+XjPjwWEAXjKPB5sqZjnyaqVp5Aj4yFPRTV
-	 kcru3bVEMliGPToc+8EvglbJvURWTlRvW7TisXdI=
+	b=Zdm8DqeBxGMka4BtH+xXHk38JaGinQgqkWtf0tUjXHaZlSWMQY3v4m3w2ifn9Zo/Z
+	 qKwFc+2BuvjRfHVWOwDv2dqWV3STbIXQJVj5jEW37fOnqKpphbNNWPoR5B5RSCm2j5
+	 VDLkP3X5w8yXLAatX/pfP7CQK+KMCAxfn+k/14Qc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Dr. David Alan Gilbert" <linux@treblig.org>,
-	Simon Horman <horms@kernel.org>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Aaron Kling <webgeek1234@gmail.com>,
+	Tomasz Maciej Nowak <tmn505@gmail.com>,
+	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 424/512] Bluetooth: MGMT: Remove unused mgmt_pending_find_data
-Date: Tue, 17 Jun 2025 17:26:30 +0200
-Message-ID: <20250617152436.753734404@linuxfoundation.org>
+Subject: [PATCH 6.15 389/780] arm64: tegra: Add uartd serial alias for Jetson TX1 module
+Date: Tue, 17 Jun 2025 17:21:37 +0200
+Message-ID: <20250617152507.298393377@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,72 +48,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dr. David Alan Gilbert <linux@treblig.org>
+From: Aaron Kling <webgeek1234@gmail.com>
 
-[ Upstream commit 276af34d82f13bda0b2a4d9786c90b8bbf1cd064 ]
+[ Upstream commit dfb25484bd73c8590954ead6fd58a1587ba3bbc5 ]
 
-mgmt_pending_find_data() last use was removed in 2021 by
-commit 5a7501374664 ("Bluetooth: hci_sync: Convert MGMT_OP_GET_CLOCK_INFO")
+If a serial-tegra interface does not have an alias, the driver fails to
+probe with an error:
+serial-tegra 70006300.serial: failed to get alias id, errno -19
+This prevents the bluetooth device from being accessible.
 
-Remove it.
-
-Signed-off-by: Dr. David Alan Gilbert <linux@treblig.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Stable-dep-of: 6fe26f694c82 ("Bluetooth: MGMT: Protect mgmt_pending list with its own lock")
+Fixes: 6eba6471bbb7 ("arm64: tegra: Wire up Bluetooth on Jetson TX1 module")
+Signed-off-by: Aaron Kling <webgeek1234@gmail.com>
+Reviewed-by: Tomasz Maciej Nowak <tmn505@gmail.com>
+Link: https://lore.kernel.org/r/20250420-tx1-bt-v1-1-153cba105a4e@gmail.com
+Signed-off-by: Thierry Reding <treding@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/mgmt_util.c | 17 -----------------
- net/bluetooth/mgmt_util.h |  4 ----
- 2 files changed, 21 deletions(-)
+ arch/arm64/boot/dts/nvidia/tegra210-p2180.dtsi | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/bluetooth/mgmt_util.c b/net/bluetooth/mgmt_util.c
-index 67db32a60c6a9..3713ff490c65d 100644
---- a/net/bluetooth/mgmt_util.c
-+++ b/net/bluetooth/mgmt_util.c
-@@ -229,23 +229,6 @@ struct mgmt_pending_cmd *mgmt_pending_find(unsigned short channel, u16 opcode,
- 	return NULL;
- }
+diff --git a/arch/arm64/boot/dts/nvidia/tegra210-p2180.dtsi b/arch/arm64/boot/dts/nvidia/tegra210-p2180.dtsi
+index 9b9d1d15b0c7e..1bb1f9640a800 100644
+--- a/arch/arm64/boot/dts/nvidia/tegra210-p2180.dtsi
++++ b/arch/arm64/boot/dts/nvidia/tegra210-p2180.dtsi
+@@ -11,6 +11,7 @@
+ 		rtc0 = "/i2c@7000d000/pmic@3c";
+ 		rtc1 = "/rtc@7000e000";
+ 		serial0 = &uarta;
++		serial3 = &uartd;
+ 	};
  
--struct mgmt_pending_cmd *mgmt_pending_find_data(unsigned short channel,
--						u16 opcode,
--						struct hci_dev *hdev,
--						const void *data)
--{
--	struct mgmt_pending_cmd *cmd;
--
--	list_for_each_entry(cmd, &hdev->mgmt_pending, list) {
--		if (cmd->user_data != data)
--			continue;
--		if (cmd->opcode == opcode)
--			return cmd;
--	}
--
--	return NULL;
--}
--
- void mgmt_pending_foreach(u16 opcode, struct hci_dev *hdev,
- 			  void (*cb)(struct mgmt_pending_cmd *cmd, void *data),
- 			  void *data)
-diff --git a/net/bluetooth/mgmt_util.h b/net/bluetooth/mgmt_util.h
-index bdf978605d5a8..f2ba994ab1d84 100644
---- a/net/bluetooth/mgmt_util.h
-+++ b/net/bluetooth/mgmt_util.h
-@@ -54,10 +54,6 @@ int mgmt_cmd_complete(struct sock *sk, u16 index, u16 cmd, u8 status,
- 
- struct mgmt_pending_cmd *mgmt_pending_find(unsigned short channel, u16 opcode,
- 					   struct hci_dev *hdev);
--struct mgmt_pending_cmd *mgmt_pending_find_data(unsigned short channel,
--						u16 opcode,
--						struct hci_dev *hdev,
--						const void *data);
- void mgmt_pending_foreach(u16 opcode, struct hci_dev *hdev,
- 			  void (*cb)(struct mgmt_pending_cmd *cmd, void *data),
- 			  void *data);
+ 	chosen {
 -- 
 2.39.5
 
