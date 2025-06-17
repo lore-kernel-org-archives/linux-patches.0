@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6487D2DF3C9;
-	Tue, 17 Jun 2025 15:37:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 914DE18A6AE;
+	Tue, 17 Jun 2025 15:37:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750174656; cv=none; b=F1KjtV3pe7z3ONNxAp1OO7/PFvZncrU8bGYQo6opcbl6CbxZaydlZE/8AHdjcKFmaKeKYn5x3fuZoUJhQgDvY73dTkwo1p4sW6Vs+udHkzKOsUUVe0nYjy7UoAW83mup20ai+UOkWISW+07AanFI1alopULyiW2DCCDDPzgcW7Q=
+	t=1750174659; cv=none; b=W22dpghbe01VSdFtiD3v3/6E46C5VVBSic++yMbfu9zrJAYDS7N8fn4s6hrOWygKVEaYbc16Uon9i1bo4sAIfn/41vt5Icsq+6TZinom6387TqIDnyjQv6BuU0iJ599b1Q6KE9/uWopUnKf4zr4/Tf4YRYsfTifLWPXJRv96rTQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750174656; c=relaxed/simple;
-	bh=JypuzBis73hv2S0zz4bsC4aywDqJOnJUn41Jn552veo=;
+	s=arc-20240116; t=1750174659; c=relaxed/simple;
+	bh=qFVeJKDbiQKmO8hCSiviB7YghMI3VhMqfA2Gwbifm1E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Igf7WlM0xmSRvxLiqJtUoupSbs8HNecGmkirVXP18Iua5mSDJ3pWiObXcBO0qQ+f7QOaDgh/THiC1OElprdpFagHZYEvBP2U1TcrowojryJHDex2KAORH8aknioXQAJTbJcs5svIAZ0gL8Bfk58DLWHP+PkPQY2UWOGMpXlxCeE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=erItK4tJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H/0W+V5LN4vwrm8CC8pb7RnPLV/ZcuyepPINQ22Vm/vmzAa7+PBTqqG1mlbu9h/kAfHYPaBlkcuq9G7NpmGxDu6uQNA3RtSRM/UQwz5RGF0Ag8fdVcgFocBlJNVOS6INAHiNKS5ZNC9Zk7bf9zVIDbjnl+qfbfRTiAox9qbCBG8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GOFLtcdl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="erItK4tJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9E69C4CEF0;
-	Tue, 17 Jun 2025 15:37:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GOFLtcdl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0058DC4CEE3;
+	Tue, 17 Jun 2025 15:37:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750174656;
-	bh=JypuzBis73hv2S0zz4bsC4aywDqJOnJUn41Jn552veo=;
+	s=korg; t=1750174659;
+	bh=qFVeJKDbiQKmO8hCSiviB7YghMI3VhMqfA2Gwbifm1E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=erItK4tJJspralb6SGsNSMdH/6NLjukmr4jG2jLcARWWb+WlnFBRsaDO5jQ8Lu8e/
-	 2IdRzSGHOfNJXvstZ6ODxmQs3GzG1oX7hiji7GrIHvdq2TIJUuCLIXSLsY9T8wvwtr
-	 mdQzSiv48HbjTeFJ9HYXGQ6WQHlQGRJUFpmqDYSs=
+	b=GOFLtcdljvuK1H2iaPCDhOgKVBingP2yGy+iPdxzGG5q9b6tWzltHmPQOEwI+oHRs
+	 etw/tF9IvGSQlk0hTjo2NzBP1A0/cmA2jgBrV+d5uCCFOXo4jPyHqx8ZoGWhCK4QLj
+	 aGaFZMBC+lH0jSCux6lFl61B1WiPujF41w+x1md8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Wiepert <jonathan.wiepert@gmail.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Mykyta Yatsenko <mykyta.yatsenko5@gmail.com>,
+	Kees Cook <kees@kernel.org>,
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 099/356] Use thread-safe function pointer in libbpf_print
-Date: Tue, 17 Jun 2025 17:23:34 +0200
-Message-ID: <20250617152342.210098182@linuxfoundation.org>
+Subject: [PATCH 6.12 048/512] ASoC: SOF: ipc4-pcm: Adjust pipeline_list->pipelines allocation type
+Date: Tue, 17 Jun 2025 17:20:14 +0200
+Message-ID: <20250617152421.483026308@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-References: <20250617152338.212798615@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,41 +48,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jonathan Wiepert <jonathan.wiepert@gmail.com>
+From: Kees Cook <kees@kernel.org>
 
-[ Upstream commit 91dbac4076537b464639953c055c460d2bdfc7ea ]
+[ Upstream commit 00a371adbbfb46db561db85a9d7b53b2363880a1 ]
 
-This patch fixes a thread safety bug where libbpf_print uses the
-global variable storing the print function pointer rather than the local
-variable that had the print function set via __atomic_load_n.
+In preparation for making the kmalloc family of allocators type aware,
+we need to make sure that the returned type from the allocation matches
+the type of the variable being assigned. (Before, the allocator would
+always return "void *", which can be implicitly cast to any pointer type.)
 
-Fixes: f1cb927cdb62 ("libbpf: Ensure print callback usage is thread-safe")
-Signed-off-by: Jonathan Wiepert <jonathan.wiepert@gmail.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Acked-by: Mykyta Yatsenko <mykyta.yatsenko5@gmail.com>
-Link: https://lore.kernel.org/bpf/20250424221457.793068-1-jonathan.wiepert@gmail.com
+The assigned type is "struct snd_sof_pipeline **", but the returned type
+will be "struct snd_sof_widget **". These are the same size allocation
+(pointer size) but the types don't match. Adjust the allocation type to
+match the assignment.
+
+Signed-off-by: Kees Cook <kees@kernel.org>
+Fixes: 9c04363d222b ("ASoC: SOF: Introduce struct snd_sof_pipeline")
+Acked-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Link: https://patch.msgid.link/20250426062511.work.859-kees@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/libbpf.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/sof/ipc4-pcm.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
-index 18e96375dc319..5dc2e55553358 100644
---- a/tools/lib/bpf/libbpf.c
-+++ b/tools/lib/bpf/libbpf.c
-@@ -246,7 +246,7 @@ void libbpf_print(enum libbpf_print_level level, const char *format, ...)
- 	old_errno = errno;
+diff --git a/sound/soc/sof/ipc4-pcm.c b/sound/soc/sof/ipc4-pcm.c
+index 2fe4969cdc3b4..9db2cdb321282 100644
+--- a/sound/soc/sof/ipc4-pcm.c
++++ b/sound/soc/sof/ipc4-pcm.c
+@@ -780,7 +780,8 @@ static int sof_ipc4_pcm_setup(struct snd_sof_dev *sdev, struct snd_sof_pcm *spcm
  
- 	va_start(args, format);
--	__libbpf_pr(level, format, args);
-+	print_fn(level, format, args);
- 	va_end(args);
- 
- 	errno = old_errno;
+ 		/* allocate memory for max number of pipeline IDs */
+ 		pipeline_list->pipelines = kcalloc(ipc4_data->max_num_pipelines,
+-						   sizeof(struct snd_sof_widget *), GFP_KERNEL);
++						   sizeof(*pipeline_list->pipelines),
++						   GFP_KERNEL);
+ 		if (!pipeline_list->pipelines) {
+ 			sof_ipc4_pcm_free(sdev, spcm);
+ 			return -ENOMEM;
 -- 
 2.39.5
 
