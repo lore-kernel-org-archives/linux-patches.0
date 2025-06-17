@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE1BE2ECEA2;
-	Tue, 17 Jun 2025 16:25:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 255B42ECE87;
+	Tue, 17 Jun 2025 16:25:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177552; cv=none; b=VJDvaY9HmZ177lUTFdK1tBxIhL04LcEujTAdPfcbHl5fQVs+10hhHgPXp1DIAKAT6JJItYTumzAyAyLG11+OI+MSfFLz0DR5aad2vwo41x732w+efH/AerzYRjRQKG2WjYd8lhukc4QEPMWHOoqFk8s7Ugg3JH0iqNnOwV2uZb8=
+	t=1750177556; cv=none; b=SRYNINnYVMefKP3JfC5CNYEkjmCLKdF3DU7HIc96MND0MdI6ObndtkRqkLlCXu9LHWVVzFTob8efgLnbgx5A1YoquPo74muV3LXlDfTFCTreU51hG6Buz3X4PkfLFM3P+IXMVv7If0+NfKFvinvzwashrRFH/YuvTdGAN7psF/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177552; c=relaxed/simple;
-	bh=1ZiHetbPeToCTZoLqVGRT4hUyNAHCsopo+Yv8fGrPtM=;
+	s=arc-20240116; t=1750177556; c=relaxed/simple;
+	bh=RbMePumnu9p5AzczLWMmkrlA4lpJu1Pso6tOpOrOFhw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=j5aB/r/UbvduLG0pnsU4tzs5O4L6AKT1sDnoCLjMjJSXf/kSKDwGOgskHtDhDXdQ1YPD4imZok9Et9oumltHqFqhRNmHaEo6a4LF5kMbZXtAxVYzSzxhl9zWdU6XABeviMUvRA/REsZbwDJz5iIeXNgoJgz/GpqM0899QvjSQMI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u3dKjJOt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nrJxq/2/UlOf53P3ZCkxwpQJXwBO3/sKYKeGii5FC0FdfnbyPSV9dSrVFSYCr6xyXMT50bgx1Zwkp0sVAwoSpW/JHIVend8GzVLwNF4sLr+ERmzFtWDRC9JTY0f3oYUi2hQhWX9b1AZxkYs7ebNzMHgR8f3JuWrW7rEwzEvXHAo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sCOoWuJg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u3dKjJOt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CE9EC4CEE3;
-	Tue, 17 Jun 2025 16:25:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sCOoWuJg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84363C4CEE3;
+	Tue, 17 Jun 2025 16:25:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177552;
-	bh=1ZiHetbPeToCTZoLqVGRT4hUyNAHCsopo+Yv8fGrPtM=;
+	s=korg; t=1750177556;
+	bh=RbMePumnu9p5AzczLWMmkrlA4lpJu1Pso6tOpOrOFhw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u3dKjJOtUXkl8iwsrP+ozVpRg3HQocpJyX+aLe40HA19pXKxMh++r4SZGVY0JWPip
-	 1rshBjMa4p/1go/tJlHeMqLhOYv7QqV2pZK7qMRuf7jVfidMVO/C4s1JzIhYUTI+oO
-	 ekA3vnFFsx9knYmGKpYYY0vD1d+NYxlKG8ljctBQ=
+	b=sCOoWuJgaJTGmt0saauXro9XcPdihEnaH2VkN1g5A82Fm52KoRXOv6u83jt/B0H6W
+	 yYT3uwEK7QnfiTD4RwCRNuruoNCGUtGEozm/lB0yVOHUZeraU3ziSKzTkTcFt0eeEC
+	 EcaIjze0vqrbbFt27uwbA2Dp3Jm2fSvA5NWg1HLI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Alexis=20Lothor=C3=A9?= <alexis.lothore@bootlin.com>,
-	Yanteng Si <si.yanteng@linux.dev>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Israel Rukshin <israelr@nvidia.com>,
+	Parav Pandit <parav@nvidia.com>,
+	Max Gurtovoy <mgurtovoy@nvidia.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 362/512] net: stmmac: make sure that ptp_rate is not 0 before configuring timestamping
-Date: Tue, 17 Jun 2025 17:25:28 +0200
-Message-ID: <20250617152434.247182993@linuxfoundation.org>
+Subject: [PATCH 6.15 323/780] virtio-pci: Fix result size returned for the admin command completion
+Date: Tue, 17 Jun 2025 17:20:31 +0200
+Message-ID: <20250617152504.606919426@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,89 +47,76 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexis Lothoré <alexis.lothore@bootlin.com>
+From: Israel Rukshin <israelr@nvidia.com>
 
-[ Upstream commit 030ce919e114a111e83b7976ecb3597cefd33f26 ]
+[ Upstream commit 9ef41ebf787fcbde99ac404ae473f8467641f983 ]
 
-The stmmac platform drivers that do not open-code the clk_ptp_rate value
-after having retrieved the default one from the device-tree can end up
-with 0 in clk_ptp_rate (as clk_get_rate can return 0). It will
-eventually propagate up to PTP initialization when bringing up the
-interface, leading to a divide by 0:
+The result size returned by virtio_pci_admin_dev_parts_get() is 8 bytes
+larger than the actual result data size. This occurs because the
+result_sg_size field of the command is filled with the result length
+from virtqueue_get_buf(), which includes both the data size and an
+additional 8 bytes of status.
 
- Division by zero in kernel.
- CPU: 1 UID: 0 PID: 1 Comm: swapper/0 Not tainted 6.12.30-00001-g48313bd5768a #22
- Hardware name: STM32 (Device Tree Support)
- Call trace:
-  unwind_backtrace from show_stack+0x18/0x1c
-  show_stack from dump_stack_lvl+0x6c/0x8c
-  dump_stack_lvl from Ldiv0_64+0x8/0x18
-  Ldiv0_64 from stmmac_init_tstamp_counter+0x190/0x1a4
-  stmmac_init_tstamp_counter from stmmac_hw_setup+0xc1c/0x111c
-  stmmac_hw_setup from __stmmac_open+0x18c/0x434
-  __stmmac_open from stmmac_open+0x3c/0xbc
-  stmmac_open from __dev_open+0xf4/0x1ac
-  __dev_open from __dev_change_flags+0x1cc/0x224
-  __dev_change_flags from dev_change_flags+0x24/0x60
-  dev_change_flags from ip_auto_config+0x2e8/0x11a0
-  ip_auto_config from do_one_initcall+0x84/0x33c
-  do_one_initcall from kernel_init_freeable+0x1b8/0x214
-  kernel_init_freeable from kernel_init+0x24/0x140
-  kernel_init from ret_from_fork+0x14/0x28
- Exception stack(0xe0815fb0 to 0xe0815ff8)
+This oversized result size causes two issues:
+1. The state transferred to the destination includes 8 bytes of extra
+   data at the end.
+2. The allocated buffer in the kernel may be smaller than the returned
+   size, leading to failures when reading beyond the allocated size.
 
-Prevent this division by 0 by adding an explicit check and error log
-about the actual issue. While at it, remove the same check from
-stmmac_ptp_register, which then becomes duplicate
+The commit fixes this by subtracting the status size from the result of
+virtqueue_get_buf().
 
-Fixes: 19d857c9038e ("stmmac: Fix calculations for ptp counters when clock input = 50Mhz.")
-Signed-off-by: Alexis Lothoré <alexis.lothore@bootlin.com>
-Reviewed-by: Yanteng Si <si.yanteng@linux.dev>
-Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Link: https://patch.msgid.link/20250529-stmmac_tstamp_div-v4-1-d73340a794d5@bootlin.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+This fix has been tested through live migrations with virtio-net,
+virtio-net-transitional, and virtio-blk devices.
+
+Fixes: 704806ca400e ("virtio: Extend the admin command to include the result size")
+Signed-off-by: Israel Rukshin <israelr@nvidia.com>
+Reviewed-by: Parav Pandit <parav@nvidia.com>
+Reviewed-by: Max Gurtovoy <mgurtovoy@nvidia.com>
+Message-Id: <1745318025-23103-1-git-send-email-israelr@nvidia.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 5 +++++
- drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c  | 2 +-
- 2 files changed, 6 insertions(+), 1 deletion(-)
+ drivers/virtio/virtio_pci_modern.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index 918d7f2e8ba99..f68e3ece919cc 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -835,6 +835,11 @@ int stmmac_init_tstamp_counter(struct stmmac_priv *priv, u32 systime_flags)
- 	if (!(priv->dma_cap.time_stamp || priv->dma_cap.atime_stamp))
- 		return -EOPNOTSUPP;
- 
-+	if (!priv->plat->clk_ptp_rate) {
-+		netdev_err(priv->dev, "Invalid PTP clock rate");
-+		return -EINVAL;
-+	}
-+
- 	stmmac_config_hw_tstamping(priv, priv->ptpaddr, systime_flags);
- 	priv->systime_flags = systime_flags;
- 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c
-index a6b1de9a251dd..5c85040a1b937 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c
-@@ -303,7 +303,7 @@ void stmmac_ptp_register(struct stmmac_priv *priv)
- 
- 	/* Calculate the clock domain crossing (CDC) error if necessary */
- 	priv->plat->cdc_error_adj = 0;
--	if (priv->plat->has_gmac4 && priv->plat->clk_ptp_rate)
-+	if (priv->plat->has_gmac4)
- 		priv->plat->cdc_error_adj = (2 * NSEC_PER_SEC) / priv->plat->clk_ptp_rate;
- 
- 	stmmac_ptp_clock_ops.n_per_out = priv->dma_cap.pps_out_num;
+diff --git a/drivers/virtio/virtio_pci_modern.c b/drivers/virtio/virtio_pci_modern.c
+index d50fe030d8253..7182f43ed0551 100644
+--- a/drivers/virtio/virtio_pci_modern.c
++++ b/drivers/virtio/virtio_pci_modern.c
+@@ -48,6 +48,7 @@ void vp_modern_avq_done(struct virtqueue *vq)
+ {
+ 	struct virtio_pci_device *vp_dev = to_vp_device(vq->vdev);
+ 	struct virtio_pci_admin_vq *admin_vq = &vp_dev->admin_vq;
++	unsigned int status_size = sizeof(struct virtio_admin_cmd_status);
+ 	struct virtio_admin_cmd *cmd;
+ 	unsigned long flags;
+ 	unsigned int len;
+@@ -56,7 +57,17 @@ void vp_modern_avq_done(struct virtqueue *vq)
+ 	do {
+ 		virtqueue_disable_cb(vq);
+ 		while ((cmd = virtqueue_get_buf(vq, &len))) {
+-			cmd->result_sg_size = len;
++			/* If the number of bytes written by the device is less
++			 * than the size of struct virtio_admin_cmd_status, the
++			 * remaining status bytes will remain zero-initialized,
++			 * since the buffer was zeroed during allocation.
++			 * In this case, set the size of command_specific_result
++			 * to 0.
++			 */
++			if (len < status_size)
++				cmd->result_sg_size = 0;
++			else
++				cmd->result_sg_size = len - status_size;
+ 			complete(&cmd->completion);
+ 		}
+ 	} while (!virtqueue_enable_cb(vq));
 -- 
 2.39.5
 
