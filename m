@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DA252ED86F;
-	Tue, 17 Jun 2025 15:49:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27A752ED85E;
+	Tue, 17 Jun 2025 15:49:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175372; cv=none; b=o2t3P2IKdT8DGhhfarGqVpWNvuQqtR6OvzwVVB7ObY8iVkl0EiXnapLmb/cPAHJt62cXC5DItfRz/ZH3KvAOhy+o9/vnlaUwAH7zTTKwerRNu8M3yyGcldqSMxXnG/52zzGoUsBNRs7XHXqndfGYJIYCak+6fCpZXqdPWqPjqAc=
+	t=1750175374; cv=none; b=KdMFdY25KruCH5FLwvLxz0Hip/+UcPes1ChtcAVK2luxT8h+azUMW7P6U2CqxoIeWOI6jxo63LZuZ+lryUqbLNzj6jdRVOqmXpt53hMgre0GD1WMncJbUoGLDke2xFaWVZStOgy5WtyePqf2sw2cyjaVXOpkqOaFl5biHkCPaMw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175372; c=relaxed/simple;
-	bh=5Qz8QLgYUvBPCe6jhJsNIQDVF8pPf8GN4r/weuo1KhU=;
+	s=arc-20240116; t=1750175374; c=relaxed/simple;
+	bh=TcKK1Bo4NsEzzy7MP+tdN8eVUxea+HMb6+xlPQVMiy0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WJP0919ES6ahuu3Fdl03RZdRxFVxdzbOOfeXwOLsikx+715AYqx0vePf+qb4n12gFe9HVGpwRSZhJn7v4UznflLC93S4FQkc47FVZzmDLhN0dhyub2wbpRjl5QjQVy9kzJu+hMQk8JnYpTe9xrb0W7ndTKV6XHk7RnDGNoozWm4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WxK8mrYu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DA2p+JWa4EyM5RpxCmd4W2H6AuRJ6NN9zgOlR/kJn2TGfpMODTgnpg43OiGM3UzrPkecQVJHbnM/xcXH1LV+pFvq5s4aYzITr/ZaLYm4Ly1nryP2XNJxNyWhmfguzKLAR0ETmclPZHYW79+4ViO5vnWrYHMUXgUWx46r96+T2H8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TCM4xCwT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WxK8mrYu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D5C0C4CEE3;
-	Tue, 17 Jun 2025 15:49:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TCM4xCwT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88578C4CEE3;
+	Tue, 17 Jun 2025 15:49:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175370;
-	bh=5Qz8QLgYUvBPCe6jhJsNIQDVF8pPf8GN4r/weuo1KhU=;
+	s=korg; t=1750175374;
+	bh=TcKK1Bo4NsEzzy7MP+tdN8eVUxea+HMb6+xlPQVMiy0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WxK8mrYu4AoBxaV7R5zKh6e0wz5J8JbF59IqtyiEIgCiTcxJccRh+f8xhCWZp8kjp
-	 eT7iN24UNo/3QK9EBWkTS1UsuvxiUv7j1EfmdbXioMQ7LaF700EYIfvA/gMKr+DlNH
-	 rxRo9AZ717mRatW9VlVgcklLmDL4b0uLYCKtck80=
+	b=TCM4xCwTFf0dnPdngSJc0TWq+qXaial+3DfNcLllicxVy6F/Qsw9oDvvCBQ2lvpug
+	 iJUsBClocRTc6o/f8JVNN5RfLZWraescN4Fv/zkvOjBeOpzQrAg/cRg5n9TFsNlsbS
+	 iuQuxwYwReTU+2l0mEJjLpdaMyOj6IyX3dT2Q7x4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+8b376a77b2f364097fbe@syzkaller.appspotmail.com,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Armin Wolf <W_Armin@gmx.de>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 120/512] f2fs: fix to do sanity check on sbi->total_valid_block_count
-Date: Tue, 17 Jun 2025 17:21:26 +0200
-Message-ID: <20250617152424.448267983@linuxfoundation.org>
+Subject: [PATCH 6.15 082/780] ACPI: thermal: Execute _SCP before reading trip points
+Date: Tue, 17 Jun 2025 17:16:30 +0200
+Message-ID: <20250617152454.853037920@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,78 +47,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Armin Wolf <W_Armin@gmx.de>
 
-[ Upstream commit 05872a167c2cab80ef186ef23cc34a6776a1a30c ]
+[ Upstream commit 3f7cd28ae3d1a1d6f151178469cfaef1b07fdbcc ]
 
-syzbot reported a f2fs bug as below:
+As specified in section 11.4.13 of the ACPI specification the
+operating system is required to evaluate the _ACx and _PSV objects
+after executing the _SCP control method.
 
-------------[ cut here ]------------
-kernel BUG at fs/f2fs/f2fs.h:2521!
-RIP: 0010:dec_valid_block_count+0x3b2/0x3c0 fs/f2fs/f2fs.h:2521
-Call Trace:
- f2fs_truncate_data_blocks_range+0xc8c/0x11a0 fs/f2fs/file.c:695
- truncate_dnode+0x417/0x740 fs/f2fs/node.c:973
- truncate_nodes+0x3ec/0xf50 fs/f2fs/node.c:1014
- f2fs_truncate_inode_blocks+0x8e3/0x1370 fs/f2fs/node.c:1197
- f2fs_do_truncate_blocks+0x840/0x12b0 fs/f2fs/file.c:810
- f2fs_truncate_blocks+0x10d/0x300 fs/f2fs/file.c:838
- f2fs_truncate+0x417/0x720 fs/f2fs/file.c:888
- f2fs_setattr+0xc4f/0x12f0 fs/f2fs/file.c:1112
- notify_change+0xbca/0xe90 fs/attr.c:552
- do_truncate+0x222/0x310 fs/open.c:65
- handle_truncate fs/namei.c:3466 [inline]
- do_open fs/namei.c:3849 [inline]
- path_openat+0x2e4f/0x35d0 fs/namei.c:4004
- do_filp_open+0x284/0x4e0 fs/namei.c:4031
- do_sys_openat2+0x12b/0x1d0 fs/open.c:1429
- do_sys_open fs/open.c:1444 [inline]
- __do_sys_creat fs/open.c:1522 [inline]
- __se_sys_creat fs/open.c:1516 [inline]
- __x64_sys_creat+0x124/0x170 fs/open.c:1516
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0xf3/0x230 arch/x86/entry/syscall_64.c:94
+Move the execution of the _SCP control method before the invocation
+of acpi_thermal_get_trip_points() to avoid missing updates to the
+_ACx and _PSV objects.
 
-The reason is: in fuzzed image, sbi->total_valid_block_count is
-inconsistent w/ mapped blocks indexed by inode, so, we should
-not trigger panic for such case, instead, let's print log and
-set fsck flag.
-
-Fixes: 39a53e0ce0df ("f2fs: add superblock and major in-memory structure")
-Reported-by: syzbot+8b376a77b2f364097fbe@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/linux-f2fs-devel/67f3c0b2.050a0220.396535.0547.GAE@google.com
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: b09872a652d3 ("ACPI: thermal: Fold acpi_thermal_get_info() into its caller")
+Signed-off-by: Armin Wolf <W_Armin@gmx.de>
+Link: https://patch.msgid.link/20250410165456.4173-3-W_Armin@gmx.de
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/f2fs.h | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/acpi/thermal.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/fs/f2fs/f2fs.h b/fs/f2fs/f2fs.h
-index 1c783c2e4902a..1219e37fa7ad3 100644
---- a/fs/f2fs/f2fs.h
-+++ b/fs/f2fs/f2fs.h
-@@ -2508,8 +2508,14 @@ static inline void dec_valid_block_count(struct f2fs_sb_info *sbi,
- 	blkcnt_t sectors = count << F2FS_LOG_SECTORS_PER_BLOCK;
+diff --git a/drivers/acpi/thermal.c b/drivers/acpi/thermal.c
+index 0c874186f8aed..5c2defe55898f 100644
+--- a/drivers/acpi/thermal.c
++++ b/drivers/acpi/thermal.c
+@@ -803,6 +803,12 @@ static int acpi_thermal_add(struct acpi_device *device)
  
- 	spin_lock(&sbi->stat_lock);
--	f2fs_bug_on(sbi, sbi->total_valid_block_count < (block_t) count);
--	sbi->total_valid_block_count -= (block_t)count;
-+	if (unlikely(sbi->total_valid_block_count < count)) {
-+		f2fs_warn(sbi, "Inconsistent total_valid_block_count:%u, ino:%lu, count:%u",
-+			  sbi->total_valid_block_count, inode->i_ino, count);
-+		sbi->total_valid_block_count = 0;
-+		set_sbi_flag(sbi, SBI_NEED_FSCK);
-+	} else {
-+		sbi->total_valid_block_count -= count;
-+	}
- 	if (sbi->reserved_blocks &&
- 		sbi->current_reserved_blocks < sbi->reserved_blocks)
- 		sbi->current_reserved_blocks = min(sbi->reserved_blocks,
+ 	acpi_thermal_aml_dependency_fix(tz);
+ 
++	/*
++	 * Set the cooling mode [_SCP] to active cooling. This needs to happen before
++	 * we retrieve the trip point values.
++	 */
++	acpi_execute_simple_method(tz->device->handle, "_SCP", ACPI_THERMAL_MODE_ACTIVE);
++
+ 	/* Get trip points [_ACi, _PSV, etc.] (required). */
+ 	acpi_thermal_get_trip_points(tz);
+ 
+@@ -814,10 +820,6 @@ static int acpi_thermal_add(struct acpi_device *device)
+ 	if (result)
+ 		goto free_memory;
+ 
+-	/* Set the cooling mode [_SCP] to active cooling. */
+-	acpi_execute_simple_method(tz->device->handle, "_SCP",
+-				   ACPI_THERMAL_MODE_ACTIVE);
+-
+ 	/* Determine the default polling frequency [_TZP]. */
+ 	if (tzp)
+ 		tz->polling_frequency = tzp;
 -- 
 2.39.5
 
