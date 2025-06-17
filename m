@@ -1,42 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDE062DFF1F;
-	Tue, 17 Jun 2025 15:58:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2FEF2DFF08;
+	Tue, 17 Jun 2025 15:58:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175907; cv=none; b=syYjYg0fK2L/2/dZc1mbhD5f2LEjK5d6Kh9hkq3y4o2GSlwn9bPD2kIcfMPx0ChWws+gjjanDC0R6vvngIQyHsosoT5zzrAlwJ3ICtIrhzb9KEESWJ5/EQ9btmsJ9/wqopYsdeldPbqf4G5VQLXH9aAMr4vz+mp+CzL60f6BCd4=
+	t=1750175910; cv=none; b=k1aSA9gRo0Q+9V5sWWZ7DKoXfozfkDH48nXbqOnorlEgWwWEcRUcw1FrF1AVUu0hq+8BFz7+zLZa6zc8xn8qyBFa1yt+VYMCRvCRjvPKPQUyxinmfS1VcZxLfCfJnvLOpJxn5qXC5E7dNKO4q6eBB28d0o5fkCWh+SdcbSF1EwU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175907; c=relaxed/simple;
-	bh=ey0HWvXFQ9Y231RuplHoYp2/TMvyPbUh1yjuYoinRvU=;
+	s=arc-20240116; t=1750175910; c=relaxed/simple;
+	bh=g+kq3EyNLYyxWOrwfnPHJ7WuyE4VXp5XioulviOrc1E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eQ0/L8mY3B9OsffEQPtHf6Z16XeO5rcnzYzljfD2xNos2uxYzMZ98E/xhaAazParG9D3FdQzs48Agk7Yieh3M51xDrT+IWZmMh2c7d7DNEHVNrsmSPGO8fG979qrJqmu8T/ZIxhs6DAkcpCWZIh6yPvvEj/S6Czbdsv5hIPtjj0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jN8XLHOz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hY9plAhmjcsJzjzGne9588+hMsfAwNXjuUIXZNnJ2iWJWjXyEQtw9+UQLixWrO34Eh/HOgU/tIcCDQ4OXw6rznTfF4WGbhrbQl4pgX74qhbMn1sWn3zL2rR7YNi7zLsgZZ1yu8YCHV8OC7fBA6J1TJtVx7Mner54mpvmUC1xcIo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zJM4wb8Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jN8XLHOz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3366C4CEE3;
-	Tue, 17 Jun 2025 15:58:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zJM4wb8Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2241AC4CEE3;
+	Tue, 17 Jun 2025 15:58:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175907;
-	bh=ey0HWvXFQ9Y231RuplHoYp2/TMvyPbUh1yjuYoinRvU=;
+	s=korg; t=1750175910;
+	bh=g+kq3EyNLYyxWOrwfnPHJ7WuyE4VXp5XioulviOrc1E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jN8XLHOzEYmfb0iHYeWmoQlPjYOeu0P6J/uBBBsZSvUxPIz20AeNQu6nkUbq877ih
-	 e6syPpW5xcf/eLHRvSAjhjzGf0rUeSDtbl6+3HxZNAIvpcgzrmMXgbzEGkn44F5Yak
-	 qYSBYrUKX9Nc1FqVHiMSisLXXvIpJRzhYD5ucFaQ=
+	b=zJM4wb8YZuxU3FcUxi9wyRC+gI/wO8bjJoHr21TWwYNrCzD8grPHI601+II053mHZ
+	 DqNajKTfxuD8i8GGOc+L8uB+4Stj/pGWeSPX3oMgtfMTvXmbP38LOoyWr7Gm8rpZyn
+	 UbyxX0YH2ClVrZ50SfI4c0HEmDEgnV0WaTET1bks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rolf Eike Beer <eb@emlix.com>,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Joerg Roedel <jroedel@suse.de>,
+	Hector Martin <marcan@marcan.st>,
+	Alyssa Rosenzweig <alyssa@rosenzweig.io>,
+	Marc Zyngier <maz@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Janne Grunau <j@jannau.net>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 174/512] iommu: remove duplicate selection of DMAR_TABLE
-Date: Tue, 17 Jun 2025 17:22:20 +0200
-Message-ID: <20250617152426.676377365@linuxfoundation.org>
+Subject: [PATCH 6.6 224/356] PCI: apple: Use gpiod_set_value_cansleep in probe flow
+Date: Tue, 17 Jun 2025 17:25:39 +0200
+Message-ID: <20250617152347.220321015@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
+References: <20250617152338.212798615@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,38 +51,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rolf Eike Beer <eb@emlix.com>
+From: Hector Martin <marcan@marcan.st>
 
-[ Upstream commit 9548feff840a05d61783e6316d08ed37e115f3b1 ]
+[ Upstream commit 7334364f9de79a9a236dd0243ba574b8d2876e89 ]
 
-This is already done in intel/Kconfig.
+We're allowed to sleep here, so tell the GPIO core by using
+gpiod_set_value_cansleep instead of gpiod_set_value.
 
-Fixes: 70bad345e622 ("iommu: Fix compilation without CONFIG_IOMMU_INTEL")
-Signed-off-by: Rolf Eike Beer <eb@emlix.com>
-Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
-Link: https://lore.kernel.org/r/2232605.Mh6RI2rZIc@devpool92.emlix.com
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Fixes: 1e33888fbe44 ("PCI: apple: Add initial hardware bring-up")
+Signed-off-by: Hector Martin <marcan@marcan.st>
+Signed-off-by: Alyssa Rosenzweig <alyssa@rosenzweig.io>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Tested-by: Janne Grunau <j@jannau.net>
+Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Acked-by: Alyssa Rosenzweig <alyssa@rosenzweig.io>
+Link: https://patch.msgid.link/20250401091713.2765724-12-maz@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/Kconfig | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/pci/controller/pcie-apple.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/iommu/Kconfig b/drivers/iommu/Kconfig
-index b3aa1f5d53218..1469ad0794f28 100644
---- a/drivers/iommu/Kconfig
-+++ b/drivers/iommu/Kconfig
-@@ -199,7 +199,6 @@ source "drivers/iommu/iommufd/Kconfig"
- config IRQ_REMAP
- 	bool "Support for Interrupt Remapping"
- 	depends on X86_64 && X86_IO_APIC && PCI_MSI && ACPI
--	select DMAR_TABLE if INTEL_IOMMU
- 	help
- 	  Supports Interrupt remapping for IO-APIC and MSI devices.
- 	  To use x2apic mode in the CPU's which support x2APIC enhancements or
+diff --git a/drivers/pci/controller/pcie-apple.c b/drivers/pci/controller/pcie-apple.c
+index f7a248393a8f1..7e6bd63a6425e 100644
+--- a/drivers/pci/controller/pcie-apple.c
++++ b/drivers/pci/controller/pcie-apple.c
+@@ -541,7 +541,7 @@ static int apple_pcie_setup_port(struct apple_pcie *pcie,
+ 	rmw_set(PORT_APPCLK_EN, port->base + PORT_APPCLK);
+ 
+ 	/* Assert PERST# before setting up the clock */
+-	gpiod_set_value(reset, 1);
++	gpiod_set_value_cansleep(reset, 1);
+ 
+ 	ret = apple_pcie_setup_refclk(pcie, port);
+ 	if (ret < 0)
+@@ -552,7 +552,7 @@ static int apple_pcie_setup_port(struct apple_pcie *pcie,
+ 
+ 	/* Deassert PERST# */
+ 	rmw_set(PORT_PERST_OFF, port->base + PORT_PERST);
+-	gpiod_set_value(reset, 0);
++	gpiod_set_value_cansleep(reset, 0);
+ 
+ 	/* Wait for 100ms after PERST# deassertion (PCIe r5.0, 6.6.1) */
+ 	msleep(100);
 -- 
 2.39.5
 
