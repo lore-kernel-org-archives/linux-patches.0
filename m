@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EEF92DFF14;
-	Tue, 17 Jun 2025 16:09:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A92C82DFF14;
+	Tue, 17 Jun 2025 16:09:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750176594; cv=none; b=V7RYG+SUv+ybH6gLPxsNM96k+7Y2kUgkAnP06jpqbelD4eK+XmMGK9S+GqhsTqW2q1H21rhxUPbv0lyVnovJokrWD9cjAyuErzUN1y6IRUJrijP7w5FPmICbua2aFmPRYyfIPdfVHp1rYdTbheRgNGEwIdMXTLofkp7E0I1DEIY=
+	t=1750176597; cv=none; b=psa6Li2Esj16qE4g3fnQUPQlGOiNeXAXy4+ziTUwjMyQp2TcLvh6mNJabb/6K/5wuEl+vCsQLcodTL57oY8bFrHPnEodMpoU+D+UMcJJiiWYtv59mmXhWGDDz+bI3B/EDf2tLRqk2fwXysHr7+MG2xXPGBm4+oKuD0aXzFIQ6KQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750176594; c=relaxed/simple;
-	bh=1MNmyECIROc45xNqedAi543IxXBxvcS2DLhQlPmTUZQ=;
+	s=arc-20240116; t=1750176597; c=relaxed/simple;
+	bh=CSO9S61RN2fFJTcpq8v6NI/ZxY3diLU3mzC2d6JItys=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UDRvS8H2z1B6ICjT8Vg9E6CUMPJJC98cO7IYsQESAyNkQE+8S21H1ojLd/7zXX7EOjrjuogV9Gc3MbiKwYi1R8h98WXcQfSXShmfJVmmYL+AOm1lstk/uB/pqtTiCpT0Y5NxpxXfNTSyS8yNYoXTkmvchPRmzx086+YLGExizc0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z91ayebM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TraKWXPlMFb91MSGcafta3MKNrQmpQ3OWAHq7QZOfvUoX8m9gVakKeB92N5lNrQ4PASgrsDlIxpbENf4/UU5qc9KtbOfjLAeRtPaZxO/sVGtVzligJPVfr2M7o6dFpIMEijujLE5lfGhx9zDMMZnxAc1yXLQm5Lh2mqhJaqdDRQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VHdlqMbo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z91ayebM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4516C4CEE3;
-	Tue, 17 Jun 2025 16:09:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VHdlqMbo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E60BC4CEE3;
+	Tue, 17 Jun 2025 16:09:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750176594;
-	bh=1MNmyECIROc45xNqedAi543IxXBxvcS2DLhQlPmTUZQ=;
+	s=korg; t=1750176597;
+	bh=CSO9S61RN2fFJTcpq8v6NI/ZxY3diLU3mzC2d6JItys=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z91ayebM5f10fQ5Uz0vQbyLA6PP7iMutpgS7VrA3PH8qNSlbmaa5LT2TI2ZikFpkJ
-	 7vIncpMv6fa9JYePQr1MRgCj54ZcCDX3kz2jRU7RG347axTx4iPaFWEeNFQktwhXl/
-	 RmAiX63QUH5RQeB6JxEMW9ec0/omXN1ys1wf5JhY=
+	b=VHdlqMboCxAtUQatfbw0mPFA0mnjiXDVqN1+XSCEIOKwyGJ27P3mcHAnD/+MKXMZ5
+	 fUjPXm9SB2MAw4fVrtEysnmwdjtIFyQQ6e2U8xbggdxL9ep0aFplQQnL+s4vuNHRXK
+	 XdYu19ePzbehWHr/1OkO66XuOiJS/1mjV6i/D/Ic=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	Caleb Connolly <caleb.connolly@linaro.org>,
+	Loic Poulain <loic.poulain@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 287/356] serial: sh-sci: Check if TX data was written to device in .tx_empty()
-Date: Tue, 17 Jun 2025 17:26:42 +0200
-Message-ID: <20250617152349.736717256@linuxfoundation.org>
+Subject: [PATCH 6.6 296/356] ath10k: snoc: fix unbalanced IRQ enable in crash recovery
+Date: Tue, 17 Jun 2025 17:26:51 +0200
+Message-ID: <20250617152350.087643471@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
 References: <20250617152338.212798615@linuxfoundation.org>
@@ -50,153 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+From: Caleb Connolly <caleb.connolly@linaro.org>
 
-commit 7cc0e0a43a91052477c2921f924a37d9c3891f0c upstream.
+[ Upstream commit 1650d32b92b01db03a1a95d69ee74fcbc34d4b00 ]
 
-On the Renesas RZ/G3S, when doing suspend to RAM, the uart_suspend_port()
-is called. The uart_suspend_port() calls 3 times the
-struct uart_port::ops::tx_empty() before shutting down the port.
+In ath10k_snoc_hif_stop() we skip disabling the IRQs in the crash
+recovery flow, but we still unconditionally call enable again in
+ath10k_snoc_hif_start().
 
-According to the documentation, the struct uart_port::ops::tx_empty()
-API tests whether the transmitter FIFO and shifter for the port is
-empty.
+We can't check the ATH10K_FLAG_CRASH_FLUSH bit since it is cleared
+before hif_start() is called, so instead check the
+ATH10K_SNOC_FLAG_RECOVERY flag and skip enabling the IRQs during crash
+recovery.
 
-The Renesas RZ/G3S SCIFA IP reports the number of data units stored in the
-transmit FIFO through the FDR (FIFO Data Count Register). The data units
-in the FIFOs are written in the shift register and transmitted from there.
-The TEND bit in the Serial Status Register reports if the data was
-transmitted from the shift register.
+This fixes unbalanced IRQ enable splats that happen after recovering from
+a crash.
 
-In the previous code, in the tx_empty() API implemented by the sh-sci
-driver, it is considered that the TX is empty if the hardware reports the
-TEND bit set and the number of data units in the FIFO is zero.
-
-According to the HW manual, the TEND bit has the following meaning:
-
-0: Transmission is in the waiting state or in progress.
-1: Transmission is completed.
-
-It has been noticed that when opening the serial device w/o using it and
-then switch to a power saving mode, the tx_empty() call in the
-uart_port_suspend() function fails, leading to the "Unable to drain
-transmitter" message being printed on the console. This is because the
-TEND=0 if nothing has been transmitted and the FIFOs are empty. As the
-TEND=0 has double meaning (waiting state, in progress) we can't
-determined the scenario described above.
-
-Add a software workaround for this. This sets a variable if any data has
-been sent on the serial console (when using PIO) or if the DMA callback has
-been called (meaning something has been transmitted). In the tx_empty()
-API the status of the DMA transaction is also checked and if it is
-completed or in progress the code falls back in checking the hardware
-registers instead of relying on the software variable.
-
-Fixes: 73a19e4c0301 ("serial: sh-sci: Add DMA support.")
-Cc: stable@vger.kernel.org
-Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Link: https://lore.kernel.org/r/20241125115856.513642-1-claudiu.beznea.uj@bp.renesas.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-[claudiu.beznea: fixed conflict by:
- - keeping serial_port_out() instead of sci_port_out() in
-   sci_transmit_chars()
- - keeping !uart_circ_empty(xmit) condition in sci_dma_tx_complete(),
-   after s->tx_occurred = true; assignement]
-Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Fixes: 0e622f67e041 ("ath10k: add support for WCN3990 firmware crash recovery")
+Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
+Tested-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Link: https://patch.msgid.link/20250318205043.1043148-1-caleb.connolly@linaro.org
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/sh-sci.c | 29 +++++++++++++++++++++++++++++
- 1 file changed, 29 insertions(+)
+ drivers/net/wireless/ath/ath10k/snoc.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/tty/serial/sh-sci.c b/drivers/tty/serial/sh-sci.c
-index 61d8f50676b1b..d57fa80b6f52a 100644
---- a/drivers/tty/serial/sh-sci.c
-+++ b/drivers/tty/serial/sh-sci.c
-@@ -174,6 +174,7 @@ struct sci_port {
+diff --git a/drivers/net/wireless/ath/ath10k/snoc.c b/drivers/net/wireless/ath/ath10k/snoc.c
+index 2c39bad7ebfb9..1d06d4125992d 100644
+--- a/drivers/net/wireless/ath/ath10k/snoc.c
++++ b/drivers/net/wireless/ath/ath10k/snoc.c
+@@ -937,7 +937,9 @@ static int ath10k_snoc_hif_start(struct ath10k *ar)
  
- 	bool has_rtscts;
- 	bool autorts;
-+	bool tx_occurred;
- };
+ 	dev_set_threaded(&ar->napi_dev, true);
+ 	ath10k_core_napi_enable(ar);
+-	ath10k_snoc_irq_enable(ar);
++	/* IRQs are left enabled when we restart due to a firmware crash */
++	if (!test_bit(ATH10K_SNOC_FLAG_RECOVERY, &ar_snoc->flags))
++		ath10k_snoc_irq_enable(ar);
+ 	ath10k_snoc_rx_post(ar);
  
- #define SCI_NPORTS CONFIG_SERIAL_SH_SCI_NR_UARTS
-@@ -838,6 +839,7 @@ static void sci_transmit_chars(struct uart_port *port)
- {
- 	struct circ_buf *xmit = &port->state->xmit;
- 	unsigned int stopped = uart_tx_stopped(port);
-+	struct sci_port *s = to_sci_port(port);
- 	unsigned short status;
- 	unsigned short ctrl;
- 	int count;
-@@ -874,6 +876,7 @@ static void sci_transmit_chars(struct uart_port *port)
- 		}
- 
- 		serial_port_out(port, SCxTDR, c);
-+		s->tx_occurred = true;
- 
- 		port->icount.tx++;
- 	} while (--count > 0);
-@@ -1230,6 +1233,8 @@ static void sci_dma_tx_complete(void *arg)
- 	if (uart_circ_chars_pending(xmit) < WAKEUP_CHARS)
- 		uart_write_wakeup(port);
- 
-+	s->tx_occurred = true;
-+
- 	if (!uart_circ_empty(xmit)) {
- 		s->cookie_tx = 0;
- 		schedule_work(&s->work_tx);
-@@ -1719,6 +1724,19 @@ static void sci_flush_buffer(struct uart_port *port)
- 		s->cookie_tx = -EINVAL;
- 	}
- }
-+
-+static void sci_dma_check_tx_occurred(struct sci_port *s)
-+{
-+	struct dma_tx_state state;
-+	enum dma_status status;
-+
-+	if (!s->chan_tx)
-+		return;
-+
-+	status = dmaengine_tx_status(s->chan_tx, s->cookie_tx, &state);
-+	if (status == DMA_COMPLETE || status == DMA_IN_PROGRESS)
-+		s->tx_occurred = true;
-+}
- #else /* !CONFIG_SERIAL_SH_SCI_DMA */
- static inline void sci_request_dma(struct uart_port *port)
- {
-@@ -1728,6 +1746,10 @@ static inline void sci_free_dma(struct uart_port *port)
- {
- }
- 
-+static void sci_dma_check_tx_occurred(struct sci_port *s)
-+{
-+}
-+
- #define sci_flush_buffer	NULL
- #endif /* !CONFIG_SERIAL_SH_SCI_DMA */
- 
-@@ -2064,6 +2086,12 @@ static unsigned int sci_tx_empty(struct uart_port *port)
- {
- 	unsigned short status = serial_port_in(port, SCxSR);
- 	unsigned short in_tx_fifo = sci_txfill(port);
-+	struct sci_port *s = to_sci_port(port);
-+
-+	sci_dma_check_tx_occurred(s);
-+
-+	if (!s->tx_occurred)
-+		return TIOCSER_TEMT;
- 
- 	return (status & SCxSR_TEND(port)) && !in_tx_fifo ? TIOCSER_TEMT : 0;
- }
-@@ -2234,6 +2262,7 @@ static int sci_startup(struct uart_port *port)
- 
- 	dev_dbg(port->dev, "%s(%d)\n", __func__, port->line);
- 
-+	s->tx_occurred = false;
- 	sci_request_dma(port);
- 
- 	ret = sci_request_irq(s);
+ 	clear_bit(ATH10K_SNOC_FLAG_RECOVERY, &ar_snoc->flags);
 -- 
 2.39.5
 
