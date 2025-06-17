@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47A002F234C;
-	Tue, 17 Jun 2025 15:44:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A2EA2F2366;
+	Tue, 17 Jun 2025 15:44:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175066; cv=none; b=cXNSzcQYMNuzbhTJTiKENFiUMX5Ge7ANxsuDMeG/2hvujBzQcNomOroKmAjrWG1Wa3oz5MysRF7fkrpBGYjB3aYSvZs3bfw1umIw9VWWF6yy9e78eAerfs4K3yWK37Kf63+hE5LRhAQuDsLQqSUdij1KIfP9ZkPT/ZlTn+Abblo=
+	t=1750175069; cv=none; b=Q2M0GHgPXM2bYtJ12uMXMFkSyhSIO27ZiVp0F4N4PSTa3EHDqxrgoKi6UT5pPFzaDPPrgT4IuQU8ujboMgXZv4k8XfG+kCnUaNV4UjpqSc/NvdLWmN4LvnR1hNYC1blSxVTVh1RPQRohqBFxkI1TU5fzyfjaru8/Dhn/L/NPmW4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175066; c=relaxed/simple;
-	bh=HEV1LGzc+js8IlQKN5dTl7MFxCjtviQgEWrHH2qDnG4=;
+	s=arc-20240116; t=1750175069; c=relaxed/simple;
+	bh=IK8f7PO3mIHlZz6k2gvIimUaYK5/M9BZvuZjsB2v7L4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fa/0RGwpuljNs9le5HhqwHXRmLTYrP8SeXne1XDLwuRSk27ErsXggHLYxSCsy2zH9cfyfbZMRl8Xm8ZYOrHD2HPIiqWZzhB9iouaIwZlQuR55aWZBRtE3gEgp1elqyBspFrYfg457fBttH9fZgl+jazCSYAAbJGqO/LcuCwu4bc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jQfzblgU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=axEo5PelH4z/o4obaJ1y5r6sp6zNZHyTtVdP/8v1p9MVjTmghH1OtKPBlnAGHhgRhMt+WGnGoLeaeMjhWkxpMq2jZxxg4uDSLsy2BukMM+nCJxHmRPRQzevvRF06j+DeeKl8/Lcq6hMEsF3EvO1SrIOBwG/S32TpZ8dEdtdJgN4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B1q7Cc8D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jQfzblgU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E696C4CEF1;
-	Tue, 17 Jun 2025 15:44:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B1q7Cc8D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B02BC4CEE3;
+	Tue, 17 Jun 2025 15:44:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175065;
-	bh=HEV1LGzc+js8IlQKN5dTl7MFxCjtviQgEWrHH2qDnG4=;
+	s=korg; t=1750175069;
+	bh=IK8f7PO3mIHlZz6k2gvIimUaYK5/M9BZvuZjsB2v7L4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jQfzblgUniL80CA2oUqxXMjOuIEDnSmra1OGqoLGE/bMFE1Nuduog1kUMF76o1kLc
-	 CO8VMOEjdYjD0JNeBebWrwxYxr+SBBpCE1oozpE5kc7OL8MlQfEMFMrtwOCQOC5PBq
-	 C7mXPNPhhpWBQ5QpES7UUI1SqbmK3/2BgrRiBd8E=
+	b=B1q7Cc8DnT8jnAJrGGlAhGcLB8Qnfu93yqLS1N6tuRqBggAVOJ3jQf+TNJELQzOpH
+	 v/kvAK+D2TzhxzB+u2NJxGiUrpHvgnySBJ1VwmLeYuEBApPxoa0I99o6Q9hJ1cfqK4
+	 6VZAY61axQ9xvbj9oUL/4yILWFa04BZRwEFx0D8s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Luczaj <mhal@rbox.co>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
-	John Fastabend <john.fastabend@gmail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 140/356] bpf, sockmap: Avoid using sk_socket after free when sending
-Date: Tue, 17 Jun 2025 17:24:15 +0200
-Message-ID: <20250617152343.874972545@linuxfoundation.org>
+Subject: [PATCH 6.15 046/780] crypto: xts - Only add ecb if it is not already there
+Date: Tue, 17 Jun 2025 17:15:54 +0200
+Message-ID: <20250617152453.372920174@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-References: <20250617152338.212798615@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,127 +46,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-[ Upstream commit 8259eb0e06d8f64c700f5fbdb28a5c18e10de291 ]
+[ Upstream commit 270b6f13454cb7f2f7058c50df64df409c5dcf55 ]
 
-The sk->sk_socket is not locked or referenced in backlog thread, and
-during the call to skb_send_sock(), there is a race condition with
-the release of sk_socket. All types of sockets(tcp/udp/unix/vsock)
-will be affected.
+Only add ecb to the cipher name if it isn't already ecb.
 
-Race conditions:
-'''
-CPU0                               CPU1
+Also use memcmp instead of strncmp since these strings are all
+stored in an array of length CRYPTO_MAX_ALG_NAME.
 
-backlog::skb_send_sock
-  sendmsg_unlocked
-    sock_sendmsg
-      sock_sendmsg_nosec
-                                   close(fd):
-                                     ...
-                                     ops->release() -> sock_map_close()
-                                     sk_socket->ops = NULL
-                                     free(socket)
-      sock->ops->sendmsg
-            ^
-            panic here
-'''
-
-The ref of psock become 0 after sock_map_close() executed.
-'''
-void sock_map_close()
-{
-    ...
-    if (likely(psock)) {
-    ...
-    // !! here we remove psock and the ref of psock become 0
-    sock_map_remove_links(sk, psock)
-    psock = sk_psock_get(sk);
-    if (unlikely(!psock))
-        goto no_psock; <=== Control jumps here via goto
-        ...
-        cancel_delayed_work_sync(&psock->work); <=== not executed
-        sk_psock_put(sk, psock);
-        ...
-}
-'''
-
-Based on the fact that we already wait for the workqueue to finish in
-sock_map_close() if psock is held, we simply increase the psock
-reference count to avoid race conditions.
-
-With this patch, if the backlog thread is running, sock_map_close() will
-wait for the backlog thread to complete and cancel all pending work.
-
-If no backlog running, any pending work that hasn't started by then will
-fail when invoked by sk_psock_get(), as the psock reference count have
-been zeroed, and sk_psock_drop() will cancel all jobs via
-cancel_delayed_work_sync().
-
-In summary, we require synchronization to coordinate the backlog thread
-and close() thread.
-
-The panic I catched:
-'''
-Workqueue: events sk_psock_backlog
-RIP: 0010:sock_sendmsg+0x21d/0x440
-RAX: 0000000000000000 RBX: ffffc9000521fad8 RCX: 0000000000000001
-...
-Call Trace:
- <TASK>
- ? die_addr+0x40/0xa0
- ? exc_general_protection+0x14c/0x230
- ? asm_exc_general_protection+0x26/0x30
- ? sock_sendmsg+0x21d/0x440
- ? sock_sendmsg+0x3e0/0x440
- ? __pfx_sock_sendmsg+0x10/0x10
- __skb_send_sock+0x543/0xb70
- sk_psock_backlog+0x247/0xb80
-...
-'''
-
-Fixes: 4b4647add7d3 ("sock_map: avoid race between sock_map_close and sk_psock_put")
-Reported-by: Michal Luczaj <mhal@rbox.co>
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
-Reviewed-by: John Fastabend <john.fastabend@gmail.com>
-Link: https://lore.kernel.org/r/20250516141713.291150-1-jiayuan.chen@linux.dev
+Fixes: f1c131b45410 ("crypto: xts - Convert to skcipher")
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/skmsg.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ crypto/xts.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/core/skmsg.c b/net/core/skmsg.c
-index c7edf77fd6fde..2076db464e936 100644
---- a/net/core/skmsg.c
-+++ b/net/core/skmsg.c
-@@ -655,6 +655,13 @@ static void sk_psock_backlog(struct work_struct *work)
- 	bool ingress;
- 	int ret;
+diff --git a/crypto/xts.c b/crypto/xts.c
+index 31529c9ef08f8..46b7c70ea54bb 100644
+--- a/crypto/xts.c
++++ b/crypto/xts.c
+@@ -363,7 +363,7 @@ static int xts_create(struct crypto_template *tmpl, struct rtattr **tb)
  
-+	/* Increment the psock refcnt to synchronize with close(fd) path in
-+	 * sock_map_close(), ensuring we wait for backlog thread completion
-+	 * before sk_socket freed. If refcnt increment fails, it indicates
-+	 * sock_map_close() completed with sk_socket potentially already freed.
-+	 */
-+	if (!sk_psock_get(psock->sk))
-+		return;
- 	mutex_lock(&psock->work_mutex);
- 	while ((skb = skb_peek(&psock->ingress_skb))) {
- 		len = skb->len;
-@@ -706,6 +713,7 @@ static void sk_psock_backlog(struct work_struct *work)
- 	}
- end:
- 	mutex_unlock(&psock->work_mutex);
-+	sk_psock_put(psock->sk, psock);
- }
+ 	err = crypto_grab_skcipher(&ctx->spawn, skcipher_crypto_instance(inst),
+ 				   cipher_name, 0, mask);
+-	if (err == -ENOENT) {
++	if (err == -ENOENT && memcmp(cipher_name, "ecb(", 4)) {
+ 		err = -ENAMETOOLONG;
+ 		if (snprintf(name, CRYPTO_MAX_ALG_NAME, "ecb(%s)",
+ 			     cipher_name) >= CRYPTO_MAX_ALG_NAME)
+@@ -397,7 +397,7 @@ static int xts_create(struct crypto_template *tmpl, struct rtattr **tb)
+ 	/* Alas we screwed up the naming so we have to mangle the
+ 	 * cipher name.
+ 	 */
+-	if (!strncmp(cipher_name, "ecb(", 4)) {
++	if (!memcmp(cipher_name, "ecb(", 4)) {
+ 		int len;
  
- struct sk_psock *sk_psock_init(struct sock *sk, int node)
+ 		len = strscpy(name, cipher_name + 4, sizeof(name));
 -- 
 2.39.5
 
