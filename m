@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FAB32ED150;
-	Tue, 17 Jun 2025 16:30:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B41C42F198B;
+	Tue, 17 Jun 2025 16:30:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177809; cv=none; b=ZJHH+UHT7hULjOrcJ4is/HbNUO3whIae1LKZY8RQUpjLDYzMaxsHrPdB9pBEc67p2+K7DqyTzAE21xUL2nlAddBjPRV59EHII0R6iPBQdDEAPgHBBZo7XI8bOEyXNOfkb3XLU1h5SPqjpx8raHu9EqgZyy8VDC9TuTEjUuctD7I=
+	t=1750177812; cv=none; b=GtyQr6X+D91NBobYtX6mrr7bCmiICAhAXU3ZmClHIIwZ/nYuB5kEdlsTDyix0riIfUSu4P7qN2oNpbrcDDcDSeh4cnTUrLIxG0/G8+6S7hvIaFnkDPWtursmLHOlLWona8O6Wy0H7dXJqs+ae1xovEtBrDnSkdvrrrSCrRWA8LQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177809; c=relaxed/simple;
-	bh=rhxqsohmuJ7rhhQmMqj630Qm3QH607dQ8N24Ou4ZxV4=;
+	s=arc-20240116; t=1750177812; c=relaxed/simple;
+	bh=ZGJW7cwT+7b6SX9e2qw4vV9TDCi0Xr+m5WcfUTKBIyM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XSFXRTP7PRHX8C1fs9OZupAaSWYdIlEixLPAK3DWZD2L/xBDE7VLIblvUcD/MgEOrGpIGkWw5E2Tb+LC4lUmJG3ICj6BHdVX+0CCXPP3u4msa8cO33KxlfibneStVpWJDKDyGaSnFVDLJFK0/9Ne+25kds57gFozXP6IWkmDsW4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mRLqetRc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Mlnrn4QPES8/gx/yj3NNEunhcSeC3+a7cEz9GU+jTcgU0YEUlk8yT152+hCyeF1n88+3nC5QbpB4W1TxZw3o1EFTz51mqTkz7FoXqiGCmwx7RZe2NiaorZ5vjDwRMEvmhegBHAS7IMXnSNMwsbeiRfCpNcPRK+bQeTEXUDL06pg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sLU8KlOr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mRLqetRc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3BF7C4CEE3;
-	Tue, 17 Jun 2025 16:30:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sLU8KlOr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 240AAC4CEE3;
+	Tue, 17 Jun 2025 16:30:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177809;
-	bh=rhxqsohmuJ7rhhQmMqj630Qm3QH607dQ8N24Ou4ZxV4=;
+	s=korg; t=1750177812;
+	bh=ZGJW7cwT+7b6SX9e2qw4vV9TDCi0Xr+m5WcfUTKBIyM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mRLqetRcO9o+PwHAxGWFL9SOAAQo9XLO2Dei5MGFGB+kKbK5+T510zfZv6TOXPS+U
-	 8TuIpBqq4LZWP6ZHn+jV2jc1q2FIG0TnCgEaFr8tC10GD0kutuzvBmGSIVjni4gbN5
-	 1kkUJDMniolj00DlN7NhAfFQM16A4XgrkNAIxycg=
+	b=sLU8KlOrHQA/4UR7yq5ToQwpRUc0MvF/BTm7e02zGwrFsUNSmsXQ05FiWuR5BnwbD
+	 ImpPY0NaT1Mh/CewBsLxk7RP1WW4TlqApKNBN7wlKWZ83N78DzC6yR2cZSqYAhXDm3
+	 otKInrmcVIzfYVX7tfCf31zpiRJC3so/aqxOyQrM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	Jason-JH Lin <jason-jh.lin@mediatek.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Chris Chiu <chris.chiu@canonical.com>,
+	Simon Trimmer <simont@opensource.cirrus.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 366/780] arm64: dts: mediatek: mt8188: Fix IOMMU device for rdma0
-Date: Tue, 17 Jun 2025 17:21:14 +0200
-Message-ID: <20250617152506.359008786@linuxfoundation.org>
+Subject: [PATCH 6.12 400/512] ALSA: hda/realtek: fix micmute LEDs on HP Laptops with ALC3315
+Date: Tue, 17 Jun 2025 17:26:06 +0200
+Message-ID: <20250617152435.795001447@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,57 +48,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chen-Yu Tsai <wenst@chromium.org>
+From: Chris Chiu <chris.chiu@canonical.com>
 
-[ Upstream commit 267623000d11f6d483214be2484555f600393a12 ]
+[ Upstream commit 0b1b5161648f35fb96967fb9d80965614657a84e ]
 
-Based on the comments in the MT8188 IOMMU binding header, the rdma0
-device specifies the wrong IOMMU device for the IOMMU port it is
-tied to:
+More HP laptops with Realtek HDA codec ALC3315 with combined CS35L56
+Amplifiers need quirk ALC285_FIXUP_HP_GPIO_LED to fix the micmute LED.
 
-    This SoC have two MM IOMMU HWs, this is the connected information:
-    iommu-vdo: larb0/2/5/9/10/11A/11C/13/16B/17B/19/21
-    iommu-vpp: larb1/3/4/6/7/11B/12/14/15/16A/17A/23/27
-
-rdma0's endpoint is M4U_PORT_L1_DISP_RDMA0 (on larb1), which should use
-iommu-vpp, but it is currently tied to iommu-vdo.
-
-Somehow this went undetected until recently in Linux v6.15-rc1 with some
-IOMMU subsystem framework changes that caused the IOMMU to no longer
-work. The IOMMU would fail to probe if any devices associated with it
-could not be successfully attached. Prior to these changes, only the
-end device would be left without an IOMMU attached.
-
-Fixes: 7075b21d1a8e ("arm64: dts: mediatek: mt8188: Add display nodes for vdosys0")
-Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
-Reviewed-by: Jason-JH Lin <jason-jh.lin@mediatek.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20250408092303.3563231-1-wenst@chromium.org
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Chris Chiu <chris.chiu@canonical.com>
+Reviewed-by: Simon Trimmer <simont@opensource.cirrus.com>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20250321104914.544233-1-chris.chiu@canonical.com
+Stable-dep-of: f709b78aecab ("ALSA: hda/realtek - Add new HP ZBook laptop with micmute led fixup")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8188.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/pci/hda/patch_realtek.c |   14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8188.dtsi b/arch/arm64/boot/dts/mediatek/mt8188.dtsi
-index 69a8423d38589..29d35ca945973 100644
---- a/arch/arm64/boot/dts/mediatek/mt8188.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8188.dtsi
-@@ -2579,7 +2579,7 @@
- 			reg = <0 0x1c002000 0 0x1000>;
- 			clocks = <&vdosys0 CLK_VDO0_DISP_RDMA0>;
- 			interrupts = <GIC_SPI 638 IRQ_TYPE_LEVEL_HIGH 0>;
--			iommus = <&vdo_iommu M4U_PORT_L1_DISP_RDMA0>;
-+			iommus = <&vpp_iommu M4U_PORT_L1_DISP_RDMA0>;
- 			power-domains = <&spm MT8188_POWER_DOMAIN_VDOSYS0>;
- 			mediatek,gce-client-reg = <&gce0 SUBSYS_1c00XXXX 0x2000 0x1000>;
- 
--- 
-2.39.5
-
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -10770,11 +10770,25 @@ static const struct hda_quirk alc269_fix
+ 	SND_PCI_QUIRK(0x103c, 0x8cf5, "HP ZBook Studio 16", ALC245_FIXUP_CS35L41_SPI_4_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8d01, "HP ZBook Power 14 G12", ALC285_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8d84, "HP EliteBook X G1i", ALC285_FIXUP_HP_GPIO_LED),
++	SND_PCI_QUIRK(0x103c, 0x8d85, "HP EliteBook 14 G12", ALC285_FIXUP_HP_GPIO_LED),
++	SND_PCI_QUIRK(0x103c, 0x8d86, "HP Elite X360 14 G12", ALC285_FIXUP_HP_GPIO_LED),
++	SND_PCI_QUIRK(0x103c, 0x8d8c, "HP EliteBook 13 G12", ALC285_FIXUP_HP_GPIO_LED),
++	SND_PCI_QUIRK(0x103c, 0x8d8d, "HP Elite X360 13 G12", ALC285_FIXUP_HP_GPIO_LED),
++	SND_PCI_QUIRK(0x103c, 0x8d8e, "HP EliteBook 14 G12", ALC285_FIXUP_HP_GPIO_LED),
++	SND_PCI_QUIRK(0x103c, 0x8d8f, "HP EliteBook 14 G12", ALC285_FIXUP_HP_GPIO_LED),
++	SND_PCI_QUIRK(0x103c, 0x8d90, "HP EliteBook 16 G12", ALC285_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8d91, "HP ZBook Firefly 14 G12", ALC285_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8d92, "HP ZBook Firefly 16 G12", ALC285_FIXUP_HP_GPIO_LED),
++	SND_PCI_QUIRK(0x103c, 0x8e14, "HP ZBook Firefly 14 G12", ALC285_FIXUP_HP_GPIO_LED),
++	SND_PCI_QUIRK(0x103c, 0x8e15, "HP ZBook Firefly 14 G12", ALC285_FIXUP_HP_GPIO_LED),
++	SND_PCI_QUIRK(0x103c, 0x8e16, "HP ZBook Firefly 14 G12", ALC285_FIXUP_HP_GPIO_LED),
++	SND_PCI_QUIRK(0x103c, 0x8e17, "HP ZBook Firefly 14 G12", ALC285_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8e18, "HP ZBook Firefly 14 G12A", ALC285_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8e19, "HP ZBook Firefly 14 G12A", ALC285_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8e1a, "HP ZBook Firefly 14 G12A", ALC285_FIXUP_HP_GPIO_LED),
++	SND_PCI_QUIRK(0x103c, 0x8e1b, "HP EliteBook G12", ALC285_FIXUP_HP_GPIO_LED),
++	SND_PCI_QUIRK(0x103c, 0x8e1c, "HP EliteBook G12", ALC285_FIXUP_HP_GPIO_LED),
++	SND_PCI_QUIRK(0x103c, 0x8e2c, "HP EliteBook 16 G12", ALC285_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x1043, 0x103e, "ASUS X540SA", ALC256_FIXUP_ASUS_MIC),
+ 	SND_PCI_QUIRK(0x1043, 0x103f, "ASUS TX300", ALC282_FIXUP_ASUS_TX300),
+ 	SND_PCI_QUIRK(0x1043, 0x1054, "ASUS G614FH/FM/FP", ALC287_FIXUP_CS35L41_I2C_2),
 
 
