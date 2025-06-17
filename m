@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B29BA2ECEAE;
-	Tue, 17 Jun 2025 16:14:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01E142EE619;
+	Tue, 17 Jun 2025 16:14:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750176878; cv=none; b=cTvB4rm/hL7fBKyo9TziEZHGGQP5dzH2DQMrCCvOwA6WWNdAW6VG0/6rD0pnwWhoZOqJQ18TuskcB8hASPPZ5rzgbignjppLGAIUQdOxXADktnDR17gfhZsGv19nbTByX2e09lcv9ZCB7Y4mU9hXKSVb6aovt4DSxqUmVkkp4X4=
+	t=1750176882; cv=none; b=hRsSdsvy5egji6MNGROmKSFhLv1jmFSTynlO41RkcXDlhqMXnlF0frQjBBVyYHhqXTgVcpcbNrT4duQFgKWdSvdT0FQY7aoDF007lvYlu2CKlPxE/IRftFQ6LJrZ4pR/qijthg82091/n/Plk5iEj246f3U1MN8oqL3FBJ5HDL8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750176878; c=relaxed/simple;
-	bh=AJK/WDHkqL0swgjbygnTQ6xllN47Lu9u9NDFZnmpMdc=;
+	s=arc-20240116; t=1750176882; c=relaxed/simple;
+	bh=17R0wA4qy37mxhQz0+YJfCeaMMOh2VBk7ZGbNEGjqks=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DdqIB2+jClT8tmvCZegUHvi/sr+z7vSRp38+dEN1lJ0zeiN/tZCYkwDrX4VpeE1s9uijkBLnrm0zMYodWLlOV4pOkQGlnhDvizAHhFVZz93GCxjf1nbLl50xKIhGEsbJZOW0zjZx/CFDRCw/Enyzs5pFo0sG7tcQKP701iB8qd4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nROSNiJD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UYMajnxOVCHFF6ZDqj8OaHVHM2dL+gORE01+oWLbUoy+yTE5dNpdrgUtnMqWViSkJIOSMlZh9izkBr7FCVZUrjzUOXm4ePv4EWbjZmJ7AtzQxUwBYZax6RwEBrCqsk3euDpw+4I+unNresox4J+DFvXmeCnnPNWSzs0Zjwu/F8o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0dZHzciB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nROSNiJD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22634C4CEE3;
-	Tue, 17 Jun 2025 16:14:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0dZHzciB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65FE9C4CEE3;
+	Tue, 17 Jun 2025 16:14:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750176878;
-	bh=AJK/WDHkqL0swgjbygnTQ6xllN47Lu9u9NDFZnmpMdc=;
+	s=korg; t=1750176881;
+	bh=17R0wA4qy37mxhQz0+YJfCeaMMOh2VBk7ZGbNEGjqks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nROSNiJD119m0nnzJyNB+ws2i8np+Uj/HEvOe2y4wJd0z62xTvLMCB72q4ragiBg2
-	 sd6+glO4VZzeMI2NcQIazWGZtC1NN2gemSTQvAwEsW1YSxTyRCVdmN51ZIZcqG4rOp
-	 klXL7K9WlkuTs0vZrUJkBzwtcW0VqQM8SXpyHY04=
+	b=0dZHzciBeZrYSm276I9I/6BKVVyhL0BupUeB5B+PaIUd3T00AydeZZlLj+vuuJEah
+	 EOvYx9DeVt3zNHs71glVUqvu6vwAQmzGWGhCW0BrlSDhx3rDuWRW7tKbVHlPF2Otxk
+	 MfXwgXBcQd9AL8Ozas7Fj849lVFVd8F1Sizfb/2c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Henry Martin <bsdhenrymartin@gmail.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	"Daniel Thompson (RISCstar)" <danielt@kernel.org>,
-	Lee Jones <lee@kernel.org>,
+	kernel test robot <lkp@intel.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 275/512] backlight: pm8941: Add NULL check in wled_configure()
-Date: Tue, 17 Jun 2025 17:24:01 +0200
-Message-ID: <20250617152430.737635583@linuxfoundation.org>
+Subject: [PATCH 6.6 322/356] Bluetooth: MGMT: Fix sparse errors
+Date: Tue, 17 Jun 2025 17:27:17 +0200
+Message-ID: <20250617152351.116370742@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
+References: <20250617152338.212798615@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,49 +47,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Henry Martin <bsdhenrymartin@gmail.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit e12d3e1624a02706cdd3628bbf5668827214fa33 ]
+[ Upstream commit 7dd38ba4acbea9875b4ee061e20a26413e39d9f4 ]
 
-devm_kasprintf() returns NULL when memory allocation fails. Currently,
-wled_configure() does not check for this case, which results in a NULL
-pointer dereference.
+This fixes the following errors:
 
-Add NULL check after devm_kasprintf() to prevent this issue.
+net/bluetooth/mgmt.c:5400:59: sparse: sparse: incorrect type in argument 3
+(different base types) @@     expected unsigned short [usertype] handle @@
+got restricted __le16 [usertype] monitor_handle @@
+net/bluetooth/mgmt.c:5400:59: sparse:     expected unsigned short [usertype] handle
+net/bluetooth/mgmt.c:5400:59: sparse:     got restricted __le16 [usertype] monitor_handle
 
-Fixes: f86b77583d88 ("backlight: pm8941: Convert to using %pOFn instead of device_node.name")
-Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: "Daniel Thompson (RISCstar)" <danielt@kernel.org>
-Link: https://lore.kernel.org/r/20250401091647.22784-1-bsdhenrymartin@gmail.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+Fixes: e6ed54e86aae ("Bluetooth: MGMT: Fix UAF on mgmt_remove_adv_monitor_complete")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202506060347.ux2O1p7L-lkp@intel.com/
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/backlight/qcom-wled.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ net/bluetooth/mgmt.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/video/backlight/qcom-wled.c b/drivers/video/backlight/qcom-wled.c
-index 10129095a4c17..b19e5f73de8bb 100644
---- a/drivers/video/backlight/qcom-wled.c
-+++ b/drivers/video/backlight/qcom-wled.c
-@@ -1406,9 +1406,11 @@ static int wled_configure(struct wled *wled)
- 	wled->ctrl_addr = be32_to_cpu(*prop_addr);
+diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
+index 44174f59b31e6..853d217cabc91 100644
+--- a/net/bluetooth/mgmt.c
++++ b/net/bluetooth/mgmt.c
+@@ -5159,11 +5159,11 @@ static void mgmt_adv_monitor_added(struct sock *sk, struct hci_dev *hdev,
+ }
  
- 	rc = of_property_read_string(dev->of_node, "label", &wled->name);
--	if (rc)
-+	if (rc) {
- 		wled->name = devm_kasprintf(dev, GFP_KERNEL, "%pOFn", dev->of_node);
--
-+		if (!wled->name)
-+			return -ENOMEM;
-+	}
- 	switch (wled->version) {
- 	case 3:
- 		u32_opts = wled3_opts;
+ static void mgmt_adv_monitor_removed(struct sock *sk, struct hci_dev *hdev,
+-				     u16 handle)
++				     __le16 handle)
+ {
+ 	struct mgmt_ev_adv_monitor_removed ev;
+ 
+-	ev.monitor_handle = cpu_to_le16(handle);
++	ev.monitor_handle = handle;
+ 
+ 	mgmt_event(MGMT_EV_ADV_MONITOR_REMOVED, hdev, &ev, sizeof(ev), sk);
+ }
 -- 
 2.39.5
 
