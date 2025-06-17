@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 021542F19A0;
-	Tue, 17 Jun 2025 16:30:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46FB62F198E;
+	Tue, 17 Jun 2025 16:30:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177816; cv=none; b=kCzjklLmaal5CV7Y/2k+a9gHGcmfBlWudNuB/EbvlBORP9v40EnHoGpaYoUqShZRqLBTL21OeEq7v4Xt1oibek6/hiZ2e1lciQN37yqqIoFcx265hRe4Hebpi9t0i901JMaD3etrLgLQWOJxGNdCfNKOcamJzbc4PrgWNQhypBw=
+	t=1750177819; cv=none; b=MG5PGa/w9Kr6dJgbxTB1YrJ7AaDKNwmTNRU3FfbhEhPo2F1bAWpBRHEEOSW3aPp9otU7N9Tg7Sjyr95uc1kfPeHirM3OF1v3w8mGV5s3Mqcf3L7IKgUNco8vq6FXNOG/lTsoRUs9j8jAxA/p1LWo9RI9C5vahsDzk02RGsrtjOM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177816; c=relaxed/simple;
-	bh=TyN3ys2Dlidln4QxL7t5IDeINumH94fY94Q4cBzsyQ8=;
+	s=arc-20240116; t=1750177819; c=relaxed/simple;
+	bh=1tdV5u4ezSsLj3uj6lsuBuu+np3b8PZquSUXsWczfcA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iD51eCIQ/cAem1uA1U6TJlWr/ALe22ecpPTZtFQtP7LxbRs9sGzB/3+NEqFPASESJuGMV6FSTk52x3darXnODpgxpBedfRqYJ1C3199sFt65Zxv1rUAFYQal2dED157cnn99+eo97AmmFNmTIImLSxqrEwDU/jUgumgyslGSJKE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cli885Gt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rSeotpjb/TzYDOdYhZaJzlw+cuTginXZ8wm59L3epLDMqC4Tyqz37tzyIDKo6ppAWBM3NYKsRFfyotuAQDrZANG9sPa33za3P1UseDrG/mZiO8ilkkqiZaWSDQfDFTdKloagoEnV/sXvM1kzeYKEthed1Gn1yuor1RFlBJkdn04=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P/SNM2g5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cli885Gt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66B1AC4CEE3;
-	Tue, 17 Jun 2025 16:30:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P/SNM2g5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA3DBC4CEE3;
+	Tue, 17 Jun 2025 16:30:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177815;
-	bh=TyN3ys2Dlidln4QxL7t5IDeINumH94fY94Q4cBzsyQ8=;
+	s=korg; t=1750177819;
+	bh=1tdV5u4ezSsLj3uj6lsuBuu+np3b8PZquSUXsWczfcA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cli885Gt3kfKoeZzhxpvT30dYCODpZXfFqI6EFUeIrCuQIYu0XN9cVBQfu3nPbKGL
-	 6WZCccnto2EgN4H12WL8xDRD0oSR36Pdn7jPJi9oN2OwoR78YRxBfhUVDl/JyMEHA5
-	 iLBwPNA2NmIjJL6X0ZT8xg2xVWqY3UOQKi1ey1zM=
+	b=P/SNM2g52m31zewWFxbAT02gxzmQvbifHS+bKYwDLmyZMGclaUYdnoizZUa2vWtdR
+	 X3xHQs4zOzrhL2qc7zannpz7vr2whiZCPrmAAf/oReby+0Tvo3MQNIbGiss9AnvcQB
+	 RvcnTH/HlT6ohdm5zc7clgj/Th+p84YEvqneojYg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Chris Chiu <chris.chiu@canonical.com>,
+	Simon Trimmer <simont@opensource.cirrus.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 367/780] arm64: dts: mediatek: mt8195: Reparent vdec1/2 and venc1 power domains
-Date: Tue, 17 Jun 2025 17:21:15 +0200
-Message-ID: <20250617152506.397955632@linuxfoundation.org>
+Subject: [PATCH 6.12 401/512] ALSA: hda/realtek: fix micmute LEDs on HP Laptops with ALC3247
+Date: Tue, 17 Jun 2025 17:26:07 +0200
+Message-ID: <20250617152435.835242305@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,113 +48,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+From: Chris Chiu <chris.chiu@canonical.com>
 
-[ Upstream commit 394f29033324e2317bfd6a7ed99b9a60832b36a2 ]
+[ Upstream commit 78f4ca3c6f6fd305b9af8c51470643617df85e11 ]
 
-By hardware, the first and second core of the video decoder IP
-need the VDEC_SOC to be powered up in order to be able to be
-accessed (both internally, by firmware, and externally, by the
-kernel).
-Similarly, for the video encoder IP, the second core needs the
-first core to be powered up in order to be accessible.
+More HP EliteBook with Realtek HDA codec ALC3247 with combined CS35L56
+Amplifiers need quirk ALC236_FIXUP_HP_GPIO_LED to fix the micmute LED.
 
-Fix that by reparenting the VDEC1/2 power domains to be children
-of VDEC0 (VDEC_SOC), and the VENC1 to be a child of VENC0.
-
-Fixes: 2b515194bf0c ("arm64: dts: mt8195: Add power domains controller")
-Reviewed-by: Chen-Yu Tsai <wenst@chromium.org>
-Link: https://lore.kernel.org/r/20250402090615.25871-3-angelogioacchino.delregno@collabora.com
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Chris Chiu <chris.chiu@canonical.com>
+Reviewed-by: Simon Trimmer <simont@opensource.cirrus.com>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20250321104914.544233-2-chris.chiu@canonical.com
+Stable-dep-of: f709b78aecab ("ALSA: hda/realtek - Add new HP ZBook laptop with micmute led fixup")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8195.dtsi | 50 +++++++++++++-----------
- 1 file changed, 27 insertions(+), 23 deletions(-)
+ sound/pci/hda/patch_realtek.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8195.dtsi b/arch/arm64/boot/dts/mediatek/mt8195.dtsi
-index 4f2dc0a755661..1ded4b3f87605 100644
---- a/arch/arm64/boot/dts/mediatek/mt8195.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8195.dtsi
-@@ -617,22 +617,6 @@
- 					#size-cells = <0>;
- 					#power-domain-cells = <1>;
- 
--					power-domain@MT8195_POWER_DOMAIN_VDEC1 {
--						reg = <MT8195_POWER_DOMAIN_VDEC1>;
--						clocks = <&vdecsys CLK_VDEC_LARB1>;
--						clock-names = "vdec1-0";
--						mediatek,infracfg = <&infracfg_ao>;
--						#power-domain-cells = <0>;
--					};
--
--					power-domain@MT8195_POWER_DOMAIN_VENC_CORE1 {
--						reg = <MT8195_POWER_DOMAIN_VENC_CORE1>;
--						clocks = <&vencsys_core1 CLK_VENC_CORE1_LARB>;
--						clock-names = "venc1-larb";
--						mediatek,infracfg = <&infracfg_ao>;
--						#power-domain-cells = <0>;
--					};
--
- 					power-domain@MT8195_POWER_DOMAIN_VDOSYS0 {
- 						reg = <MT8195_POWER_DOMAIN_VDOSYS0>;
- 						clocks = <&topckgen CLK_TOP_CFG_VDO0>,
-@@ -678,15 +662,25 @@
- 							clocks = <&vdecsys_soc CLK_VDEC_SOC_LARB1>;
- 							clock-names = "vdec0-0";
- 							mediatek,infracfg = <&infracfg_ao>;
-+							#address-cells = <1>;
-+							#size-cells = <0>;
- 							#power-domain-cells = <0>;
--						};
- 
--						power-domain@MT8195_POWER_DOMAIN_VDEC2 {
--							reg = <MT8195_POWER_DOMAIN_VDEC2>;
--							clocks = <&vdecsys_core1 CLK_VDEC_CORE1_LARB1>;
--							clock-names = "vdec2-0";
--							mediatek,infracfg = <&infracfg_ao>;
--							#power-domain-cells = <0>;
-+							power-domain@MT8195_POWER_DOMAIN_VDEC1 {
-+								reg = <MT8195_POWER_DOMAIN_VDEC1>;
-+								clocks = <&vdecsys CLK_VDEC_LARB1>;
-+								clock-names = "vdec1-0";
-+								mediatek,infracfg = <&infracfg_ao>;
-+								#power-domain-cells = <0>;
-+							};
-+
-+							power-domain@MT8195_POWER_DOMAIN_VDEC2 {
-+								reg = <MT8195_POWER_DOMAIN_VDEC2>;
-+								clocks = <&vdecsys_core1 CLK_VDEC_CORE1_LARB1>;
-+								clock-names = "vdec2-0";
-+								mediatek,infracfg = <&infracfg_ao>;
-+								#power-domain-cells = <0>;
-+							};
- 						};
- 
- 						power-domain@MT8195_POWER_DOMAIN_VENC {
-@@ -694,7 +688,17 @@
- 							clocks = <&vencsys CLK_VENC_LARB>;
- 							clock-names = "venc0-larb";
- 							mediatek,infracfg = <&infracfg_ao>;
-+							#address-cells = <1>;
-+							#size-cells = <0>;
- 							#power-domain-cells = <0>;
-+
-+							power-domain@MT8195_POWER_DOMAIN_VENC_CORE1 {
-+								reg = <MT8195_POWER_DOMAIN_VENC_CORE1>;
-+								clocks = <&vencsys_core1 CLK_VENC_CORE1_LARB>;
-+								clock-names = "venc1-larb";
-+								mediatek,infracfg = <&infracfg_ao>;
-+								#power-domain-cells = <0>;
-+							};
- 						};
- 
- 						power-domain@MT8195_POWER_DOMAIN_VDOSYS1 {
--- 
-2.39.5
-
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -10779,6 +10779,11 @@ static const struct hda_quirk alc269_fix
+ 	SND_PCI_QUIRK(0x103c, 0x8d90, "HP EliteBook 16 G12", ALC285_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8d91, "HP ZBook Firefly 14 G12", ALC285_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8d92, "HP ZBook Firefly 16 G12", ALC285_FIXUP_HP_GPIO_LED),
++	SND_PCI_QUIRK(0x103c, 0x8dec, "HP EliteBook 640 G12", ALC236_FIXUP_HP_GPIO_LED),
++	SND_PCI_QUIRK(0x103c, 0x8dee, "HP EliteBook 660 G12", ALC236_FIXUP_HP_GPIO_LED),
++	SND_PCI_QUIRK(0x103c, 0x8df0, "HP EliteBook 630 G12", ALC236_FIXUP_HP_GPIO_LED),
++	SND_PCI_QUIRK(0x103c, 0x8dfc, "HP EliteBook 645 G12", ALC236_FIXUP_HP_GPIO_LED),
++	SND_PCI_QUIRK(0x103c, 0x8dfe, "HP EliteBook 665 G12", ALC236_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8e14, "HP ZBook Firefly 14 G12", ALC285_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8e15, "HP ZBook Firefly 14 G12", ALC285_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8e16, "HP ZBook Firefly 14 G12", ALC285_FIXUP_HP_GPIO_LED),
 
 
