@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFAC01A2632;
-	Tue, 17 Jun 2025 16:39:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01772285059;
+	Tue, 17 Jun 2025 16:39:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750178373; cv=none; b=pZuVxLfzSIsV1WgAIl/qaaeZy2MmS4IaQza301pvO+6KNWkPoFJheFmtplGqyAi1qC73epn7RMWzuZBP80zFEt8NquTHnfLQ7kIGFqrNCs44KcyfPK0SrnAMMpciVFpN9idgh0AwMoVWglZdhmuSOSS0IdtqNxkME3wwnhFsmik=
+	t=1750178377; cv=none; b=QroPbUuWMTaCIgnbbFhPyjDioesKSF23OB2CsjFUDy6SKdnu0dJIZ0aFGueWAztfGaV+EG7UCsSIlJVXedBgMLp2tho3bdFWntT/quX8u6PwxAUw5cgOk35jl8Vlo4SwZJtZ31ECMwkXLA7EZ2gxPyWoFNd3e9llo1WWTQBOJn4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750178373; c=relaxed/simple;
-	bh=68H1BjoyalK+OaFuPks/uGJrDydWsPTvmjs29xas8Ok=;
+	s=arc-20240116; t=1750178377; c=relaxed/simple;
+	bh=uKnM2Jm0BA5nUZ2h5DOaX6YIzEW7DY7ilEUj2gwIZ78=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RUuEActlDndgERBVGZj8Wcfog0HeoOMAbNmuFm94meqKIfbetIpRUUVC1+g7kMKEfS0uLLsTdUdffQf2YT6jKO/bR5CM4JJ3ZG3cbmWKHUzKvwX3dbk5JQuoOT4zBWLHRv1pN7/+0Xjs44o+7AK9w0S6XQdg7uB/5p/NQSy7KS4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m+MRtCu0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Sw5gejVgKlmVRIXW2sPtXCRx4uFj2xCR75lEX22WhUjhJeYxzwuyLYLNcQmUKkCYglBo6P9cea1gUFsHDuvttCHBx4TfEfVfRcUocQjcs8bBuNJnn7De5AgZPwZSuRs09XphpwiTnsyKTgvzYv9ei1vJ4FE9LtRSCYGTFVoYJ0g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PC7UqLUv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m+MRtCu0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3105C4CEE3;
-	Tue, 17 Jun 2025 16:39:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PC7UqLUv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29DF9C4CEE3;
+	Tue, 17 Jun 2025 16:39:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750178373;
-	bh=68H1BjoyalK+OaFuPks/uGJrDydWsPTvmjs29xas8Ok=;
+	s=korg; t=1750178376;
+	bh=uKnM2Jm0BA5nUZ2h5DOaX6YIzEW7DY7ilEUj2gwIZ78=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m+MRtCu04voGHuVPmHoyEUmECftOazrJ54wKLE3kqSzYB0lVk3KpNP62BecdRpzuQ
-	 oFcJiv+ycn/p4IXlEL/YEnEYLsdRtTS0Z8xTLTcvbxeHMM5DUtldWTNlb/fJYNve/+
-	 kDOgaa5Fzb1k2b9zDQaHKd9+24SDg/jfyMlZc8zY=
+	b=PC7UqLUvAsLiTBvff6x9E/5iROJFz0wF9AQrUbA17e0OpDHUE4T8+zfVo+cP3wyiI
+	 6HNzOq6RKeEXG/CAbeYHmT9MuTJ2YNTLgbLsUDQv4I8kNh2wKtOEf9rxAkDcI+6Aqp
+	 tWnKMOXMlt2Yn9O27MQ3f6HJvAL/C2TpnkSshpuI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+c52569baf0c843f35495@syzkaller.appspotmail.com,
-	Terry Junge <linuxhid@cosmicgizmosystems.com>,
-	Michael Kelley <mhklinux@outlook.com>,
-	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 6.12 486/512] HID: usbhid: Eliminate recurrent out-of-bounds bug in usbhid_parse()
-Date: Tue, 17 Jun 2025 17:27:32 +0200
-Message-ID: <20250617152439.315939412@linuxfoundation.org>
+	Beleswar Padhi <b-padhi@ti.com>,
+	Judith Mendez <jm@ti.com>,
+	Andrew Davis <afd@ti.com>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.15 451/780] remoteproc: k3-r5: Refactor sequential core power up/down operations
+Date: Tue, 17 Jun 2025 17:22:39 +0200
+Message-ID: <20250617152509.829603531@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,169 +49,235 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Terry Junge <linuxhid@cosmicgizmosystems.com>
+From: Beleswar Padhi <b-padhi@ti.com>
 
-commit fe7f7ac8e0c708446ff017453add769ffc15deed upstream.
+[ Upstream commit 701177511abd295e0fc2499796e466d8ff12165c ]
 
-Update struct hid_descriptor to better reflect the mandatory and
-optional parts of the HID Descriptor as per USB HID 1.11 specification.
-Note: the kernel currently does not parse any optional HID class
-descriptors, only the mandatory report descriptor.
+The existing implementation of the waiting mechanism in
+"k3_r5_cluster_rproc_init()" waits for the "released_from_reset" flag to
+be set as part of the firmware boot process in "k3_r5_rproc_start()".
+The "k3_r5_cluster_rproc_init()" function is invoked in the probe
+routine which causes unexpected failures in cases where the firmware is
+unavailable at boot time, resulting in probe failure and removal of the
+remoteproc handles in the sysfs paths.
 
-Update all references to member element desc[0] to rpt_desc.
+To address this, the waiting mechanism is refactored out of the probe
+routine into the appropriate "k3_r5_rproc_{prepare/unprepare}()"
+functions. This allows the probe routine to complete without depending
+on firmware booting, while still maintaining the required
+power-synchronization between cores.
 
-Add test to verify bLength and bNumDescriptors values are valid.
+Further, this wait mechanism is dropped from
+"k3_r5_rproc_{start/stop}()" functions as they deal with Core Run/Halt
+operations, and as such, there is no constraint in Running or Halting
+the cores of a cluster in order.
 
-Replace the for loop with direct access to the mandatory HID class
-descriptor member for the report descriptor. This eliminates the
-possibility of getting an out-of-bounds fault.
-
-Add a warning message if the HID descriptor contains any unsupported
-optional HID class descriptors.
-
-Reported-by: syzbot+c52569baf0c843f35495@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=c52569baf0c843f35495
-Fixes: f043bfc98c19 ("HID: usbhid: fix out-of-bounds bug")
-Cc: stable@vger.kernel.org
-Signed-off-by: Terry Junge <linuxhid@cosmicgizmosystems.com>
-Reviewed-by: Michael Kelley <mhklinux@outlook.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 61f6f68447ab ("remoteproc: k3-r5: Wait for core0 power-up before powering up core1")
+Signed-off-by: Beleswar Padhi <b-padhi@ti.com>
+Tested-by: Judith Mendez <jm@ti.com>
+Reviewed-by: Andrew Davis <afd@ti.com>
+Link: https://lore.kernel.org/r/20250513054510.3439842-4-b-padhi@ti.com
+Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-hyperv.c            |    4 ++--
- drivers/hid/usbhid/hid-core.c       |   25 ++++++++++++++-----------
- drivers/usb/gadget/function/f_hid.c |   12 ++++++------
- include/linux/hid.h                 |    3 ++-
- 4 files changed, 24 insertions(+), 20 deletions(-)
+ drivers/remoteproc/ti_k3_r5_remoteproc.c | 110 +++++++++++++----------
+ 1 file changed, 63 insertions(+), 47 deletions(-)
 
---- a/drivers/hid/hid-hyperv.c
-+++ b/drivers/hid/hid-hyperv.c
-@@ -192,7 +192,7 @@ static void mousevsc_on_receive_device_i
- 		goto cleanup;
+diff --git a/drivers/remoteproc/ti_k3_r5_remoteproc.c b/drivers/remoteproc/ti_k3_r5_remoteproc.c
+index 3fc0b97dec600..ba082ca13e750 100644
+--- a/drivers/remoteproc/ti_k3_r5_remoteproc.c
++++ b/drivers/remoteproc/ti_k3_r5_remoteproc.c
+@@ -440,13 +440,36 @@ static int k3_r5_rproc_prepare(struct rproc *rproc)
+ {
+ 	struct k3_r5_rproc *kproc = rproc->priv;
+ 	struct k3_r5_cluster *cluster = kproc->cluster;
+-	struct k3_r5_core *core = kproc->core;
++	struct k3_r5_core *core = kproc->core, *core0, *core1;
+ 	struct device *dev = kproc->dev;
+ 	u32 ctrl = 0, cfg = 0, stat = 0;
+ 	u64 boot_vec = 0;
+ 	bool mem_init_dis;
+ 	int ret;
  
- 	input_device->report_desc_size = le16_to_cpu(
--					desc->desc[0].wDescriptorLength);
-+					desc->rpt_desc.wDescriptorLength);
- 	if (input_device->report_desc_size == 0) {
- 		input_device->dev_info_status = -EINVAL;
- 		goto cleanup;
-@@ -210,7 +210,7 @@ static void mousevsc_on_receive_device_i
- 
- 	memcpy(input_device->report_desc,
- 	       ((unsigned char *)desc) + desc->bLength,
--	       le16_to_cpu(desc->desc[0].wDescriptorLength));
-+	       le16_to_cpu(desc->rpt_desc.wDescriptorLength));
- 
- 	/* Send the ack */
- 	memset(&ack, 0, sizeof(struct mousevsc_prt_msg));
---- a/drivers/hid/usbhid/hid-core.c
-+++ b/drivers/hid/usbhid/hid-core.c
-@@ -984,12 +984,11 @@ static int usbhid_parse(struct hid_devic
- 	struct usb_host_interface *interface = intf->cur_altsetting;
- 	struct usb_device *dev = interface_to_usbdev (intf);
- 	struct hid_descriptor *hdesc;
-+	struct hid_class_descriptor *hcdesc;
- 	u32 quirks = 0;
- 	unsigned int rsize = 0;
- 	char *rdesc;
--	int ret, n;
--	int num_descriptors;
--	size_t offset = offsetof(struct hid_descriptor, desc);
-+	int ret;
- 
- 	quirks = hid_lookup_quirk(hid);
- 
-@@ -1011,20 +1010,19 @@ static int usbhid_parse(struct hid_devic
- 		return -ENODEV;
- 	}
- 
--	if (hdesc->bLength < sizeof(struct hid_descriptor)) {
--		dbg_hid("hid descriptor is too short\n");
-+	if (!hdesc->bNumDescriptors ||
-+	    hdesc->bLength != sizeof(*hdesc) +
-+			      (hdesc->bNumDescriptors - 1) * sizeof(*hcdesc)) {
-+		dbg_hid("hid descriptor invalid, bLen=%hhu bNum=%hhu\n",
-+			hdesc->bLength, hdesc->bNumDescriptors);
- 		return -EINVAL;
- 	}
- 
- 	hid->version = le16_to_cpu(hdesc->bcdHID);
- 	hid->country = hdesc->bCountryCode;
- 
--	num_descriptors = min_t(int, hdesc->bNumDescriptors,
--	       (hdesc->bLength - offset) / sizeof(struct hid_class_descriptor));
--
--	for (n = 0; n < num_descriptors; n++)
--		if (hdesc->desc[n].bDescriptorType == HID_DT_REPORT)
--			rsize = le16_to_cpu(hdesc->desc[n].wDescriptorLength);
-+	if (hdesc->rpt_desc.bDescriptorType == HID_DT_REPORT)
-+		rsize = le16_to_cpu(hdesc->rpt_desc.wDescriptorLength);
- 
- 	if (!rsize || rsize > HID_MAX_DESCRIPTOR_SIZE) {
- 		dbg_hid("weird size of report descriptor (%u)\n", rsize);
-@@ -1052,6 +1050,11 @@ static int usbhid_parse(struct hid_devic
- 		goto err;
- 	}
- 
-+	if (hdesc->bNumDescriptors > 1)
-+		hid_warn(intf,
-+			"%u unsupported optional hid class descriptors\n",
-+			(int)(hdesc->bNumDescriptors - 1));
++	/*
++	 * R5 cores require to be powered on sequentially, core0 should be in
++	 * higher power state than core1 in a cluster. So, wait for core0 to
++	 * power up before proceeding to core1 and put timeout of 2sec. This
++	 * waiting mechanism is necessary because rproc_auto_boot_callback() for
++	 * core1 can be called before core0 due to thread execution order.
++	 *
++	 * By placing the wait mechanism here in .prepare() ops, this condition
++	 * is enforced for rproc boot requests from sysfs as well.
++	 */
++	core0 = list_first_entry(&cluster->cores, struct k3_r5_core, elem);
++	core1 = list_last_entry(&cluster->cores, struct k3_r5_core, elem);
++	if (cluster->mode == CLUSTER_MODE_SPLIT && core == core1 &&
++	    !core0->released_from_reset) {
++		ret = wait_event_interruptible_timeout(cluster->core_transition,
++						       core0->released_from_reset,
++						       msecs_to_jiffies(2000));
++		if (ret <= 0) {
++			dev_err(dev, "can not power up core1 before core0");
++			return -EPERM;
++		}
++	}
 +
- 	hid->quirks |= quirks;
+ 	ret = ti_sci_proc_get_status(core->tsp, &boot_vec, &cfg, &ctrl, &stat);
+ 	if (ret < 0)
+ 		return ret;
+@@ -462,6 +485,14 @@ static int k3_r5_rproc_prepare(struct rproc *rproc)
+ 		return ret;
+ 	}
+ 
++	/*
++	 * Notify all threads in the wait queue when core0 state has changed so
++	 * that threads waiting for this condition can be executed.
++	 */
++	core->released_from_reset = true;
++	if (core == core0)
++		wake_up_interruptible(&cluster->core_transition);
++
+ 	/*
+ 	 * Newer IP revisions like on J7200 SoCs support h/w auto-initialization
+ 	 * of TCMs, so there is no need to perform the s/w memzero. This bit is
+@@ -507,10 +538,30 @@ static int k3_r5_rproc_unprepare(struct rproc *rproc)
+ {
+ 	struct k3_r5_rproc *kproc = rproc->priv;
+ 	struct k3_r5_cluster *cluster = kproc->cluster;
+-	struct k3_r5_core *core = kproc->core;
++	struct k3_r5_core *core = kproc->core, *core0, *core1;
+ 	struct device *dev = kproc->dev;
+ 	int ret;
+ 
++	/*
++	 * Ensure power-down of cores is sequential in split mode. Core1 must
++	 * power down before Core0 to maintain the expected state. By placing
++	 * the wait mechanism here in .unprepare() ops, this condition is
++	 * enforced for rproc stop or shutdown requests from sysfs and device
++	 * removal as well.
++	 */
++	core0 = list_first_entry(&cluster->cores, struct k3_r5_core, elem);
++	core1 = list_last_entry(&cluster->cores, struct k3_r5_core, elem);
++	if (cluster->mode == CLUSTER_MODE_SPLIT && core == core0 &&
++	    core1->released_from_reset) {
++		ret = wait_event_interruptible_timeout(cluster->core_transition,
++						       !core1->released_from_reset,
++						       msecs_to_jiffies(2000));
++		if (ret <= 0) {
++			dev_err(dev, "can not power down core0 before core1");
++			return -EPERM;
++		}
++	}
++
+ 	/* Re-use LockStep-mode reset logic for Single-CPU mode */
+ 	ret = (cluster->mode == CLUSTER_MODE_LOCKSTEP ||
+ 	       cluster->mode == CLUSTER_MODE_SINGLECPU) ?
+@@ -518,6 +569,14 @@ static int k3_r5_rproc_unprepare(struct rproc *rproc)
+ 	if (ret)
+ 		dev_err(dev, "unable to disable cores, ret = %d\n", ret);
+ 
++	/*
++	 * Notify all threads in the wait queue when core1 state has changed so
++	 * that threads waiting for this condition can be executed.
++	 */
++	core->released_from_reset = false;
++	if (core == core1)
++		wake_up_interruptible(&cluster->core_transition);
++
+ 	return ret;
+ }
+ 
+@@ -543,7 +602,7 @@ static int k3_r5_rproc_start(struct rproc *rproc)
+ 	struct k3_r5_rproc *kproc = rproc->priv;
+ 	struct k3_r5_cluster *cluster = kproc->cluster;
+ 	struct device *dev = kproc->dev;
+-	struct k3_r5_core *core0, *core;
++	struct k3_r5_core *core;
+ 	u32 boot_addr;
+ 	int ret;
+ 
+@@ -565,21 +624,9 @@ static int k3_r5_rproc_start(struct rproc *rproc)
+ 				goto unroll_core_run;
+ 		}
+ 	} else {
+-		/* do not allow core 1 to start before core 0 */
+-		core0 = list_first_entry(&cluster->cores, struct k3_r5_core,
+-					 elem);
+-		if (core != core0 && core0->rproc->state == RPROC_OFFLINE) {
+-			dev_err(dev, "%s: can not start core 1 before core 0\n",
+-				__func__);
+-			return -EPERM;
+-		}
+-
+ 		ret = k3_r5_core_run(core);
+ 		if (ret)
+ 			return ret;
+-
+-		core->released_from_reset = true;
+-		wake_up_interruptible(&cluster->core_transition);
+ 	}
  
  	return 0;
---- a/drivers/usb/gadget/function/f_hid.c
-+++ b/drivers/usb/gadget/function/f_hid.c
-@@ -144,8 +144,8 @@ static struct hid_descriptor hidg_desc =
- 	.bcdHID				= cpu_to_le16(0x0101),
- 	.bCountryCode			= 0x00,
- 	.bNumDescriptors		= 0x1,
--	/*.desc[0].bDescriptorType	= DYNAMIC */
--	/*.desc[0].wDescriptorLenght	= DYNAMIC */
-+	/*.rpt_desc.bDescriptorType	= DYNAMIC */
-+	/*.rpt_desc.wDescriptorLength	= DYNAMIC */
- };
+@@ -620,8 +667,7 @@ static int k3_r5_rproc_stop(struct rproc *rproc)
+ {
+ 	struct k3_r5_rproc *kproc = rproc->priv;
+ 	struct k3_r5_cluster *cluster = kproc->cluster;
+-	struct device *dev = kproc->dev;
+-	struct k3_r5_core *core1, *core = kproc->core;
++	struct k3_r5_core *core = kproc->core;
+ 	int ret;
  
- /* Super-Speed Support */
-@@ -939,8 +939,8 @@ static int hidg_setup(struct usb_functio
- 			struct hid_descriptor hidg_desc_copy = hidg_desc;
+ 	/* halt all applicable cores */
+@@ -634,16 +680,6 @@ static int k3_r5_rproc_stop(struct rproc *rproc)
+ 			}
+ 		}
+ 	} else {
+-		/* do not allow core 0 to stop before core 1 */
+-		core1 = list_last_entry(&cluster->cores, struct k3_r5_core,
+-					elem);
+-		if (core != core1 && core1->rproc->state != RPROC_OFFLINE) {
+-			dev_err(dev, "%s: can not stop core 0 before core 1\n",
+-				__func__);
+-			ret = -EPERM;
+-			goto out;
+-		}
+-
+ 		ret = k3_r5_core_halt(core);
+ 		if (ret)
+ 			goto out;
+@@ -1271,26 +1307,6 @@ static int k3_r5_cluster_rproc_init(struct platform_device *pdev)
+ 		    cluster->mode == CLUSTER_MODE_SINGLECPU ||
+ 		    cluster->mode == CLUSTER_MODE_SINGLECORE)
+ 			break;
+-
+-		/*
+-		 * R5 cores require to be powered on sequentially, core0
+-		 * should be in higher power state than core1 in a cluster
+-		 * So, wait for current core to power up before proceeding
+-		 * to next core and put timeout of 2sec for each core.
+-		 *
+-		 * This waiting mechanism is necessary because
+-		 * rproc_auto_boot_callback() for core1 can be called before
+-		 * core0 due to thread execution order.
+-		 */
+-		ret = wait_event_interruptible_timeout(cluster->core_transition,
+-						       core->released_from_reset,
+-						       msecs_to_jiffies(2000));
+-		if (ret <= 0) {
+-			dev_err(dev,
+-				"Timed out waiting for %s core to power up!\n",
+-				rproc->name);
+-			goto out;
+-		}
+ 	}
  
- 			VDBG(cdev, "USB_REQ_GET_DESCRIPTOR: HID\n");
--			hidg_desc_copy.desc[0].bDescriptorType = HID_DT_REPORT;
--			hidg_desc_copy.desc[0].wDescriptorLength =
-+			hidg_desc_copy.rpt_desc.bDescriptorType = HID_DT_REPORT;
-+			hidg_desc_copy.rpt_desc.wDescriptorLength =
- 				cpu_to_le16(hidg->report_desc_length);
- 
- 			length = min_t(unsigned short, length,
-@@ -1210,8 +1210,8 @@ static int hidg_bind(struct usb_configur
- 	 * We can use hidg_desc struct here but we should not relay
- 	 * that its content won't change after returning from this function.
- 	 */
--	hidg_desc.desc[0].bDescriptorType = HID_DT_REPORT;
--	hidg_desc.desc[0].wDescriptorLength =
-+	hidg_desc.rpt_desc.bDescriptorType = HID_DT_REPORT;
-+	hidg_desc.rpt_desc.wDescriptorLength =
- 		cpu_to_le16(hidg->report_desc_length);
- 
- 	hidg_hs_in_ep_desc.bEndpointAddress =
---- a/include/linux/hid.h
-+++ b/include/linux/hid.h
-@@ -736,8 +736,9 @@ struct hid_descriptor {
- 	__le16 bcdHID;
- 	__u8  bCountryCode;
- 	__u8  bNumDescriptors;
-+	struct hid_class_descriptor rpt_desc;
- 
--	struct hid_class_descriptor desc[1];
-+	struct hid_class_descriptor opt_descs[];
- } __attribute__ ((packed));
- 
- #define HID_DEVICE(b, g, ven, prod)					\
+ 	return 0;
+-- 
+2.39.5
+
 
 
