@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E0122E8E13;
-	Tue, 17 Jun 2025 16:24:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7FDC524F;
+	Tue, 17 Jun 2025 16:24:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177480; cv=none; b=fj38Gy1XnXj4rlx2V1hbxcCUjrmoMf1n8alX5XVNhq73eAB14hBlhtPrfdnUMyJJ059hvutHRUES9bBUExbU9ngYLH6EnAbucvaPfchAy7LfA+BPpd7ztar8+rTDjX521jdZbvm5zSTKcEcJereixNHlHWifbv+ryp+MaPVeH98=
+	t=1750177484; cv=none; b=dB11EalDUZxMFnXiF6ipnEhYDdYwNJdqYEQmOi1ZycORVRxj7029oZFLcQp3aD5JttGSOxZGAcvUWz0sjf4klIOAVcjwEKgdQCRbHPf5UGxPrViTyUYjDiKs2tvyYwQmn7qeE4mMLuJL8eoMRdsbqeTc9V8CvFevAl4XwdbmmcM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177480; c=relaxed/simple;
-	bh=oUHaisArnsTpcGZueEtVF1kIOD5/2G6LRsvTkGfsoDI=;
+	s=arc-20240116; t=1750177484; c=relaxed/simple;
+	bh=pI+XmgDNWST5b9/M9nyhMNf9Hk3k1rwWdERSBJ/wj5Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W4xpXXANuYRPE0Mm4UPUPuZqQ+RFg5tJ9/5rk/QDKYzEagjNO0zQIYEE5XUyhihqt4pwOLDcGCkr6mnD6RBDSrJJlR7EqF0EecBLy2EdCWSai2vSZ4PJJbeaRsXGoGcvwDcK+oX/iymVkIjnSKwD1bzSVU/Y9myRXtyO8ViHqxA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yj8uIa5C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EKLW5holXnFcW6nXjqj32xuDHcS4BvXEHPY+Abwm9kFpKwv2+Ac61S/0drMPG5jqYx2xn05SL99PhRxewaTJTJA7EJu2A3SJPh4xkhRyfFQtcTGKjyMad/0zLqZVruuWwPHKDcjWFDyxRvHy9TdWBVGFBVxMO9GlRKCpdO8xz58=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A2Ttz1f/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yj8uIa5C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DB67C4CEE3;
-	Tue, 17 Jun 2025 16:24:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A2Ttz1f/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52627C4CEE3;
+	Tue, 17 Jun 2025 16:24:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177480;
-	bh=oUHaisArnsTpcGZueEtVF1kIOD5/2G6LRsvTkGfsoDI=;
+	s=korg; t=1750177483;
+	bh=pI+XmgDNWST5b9/M9nyhMNf9Hk3k1rwWdERSBJ/wj5Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yj8uIa5CfpCFvsGbi9tYdLkmNRoNolYvHbOVBWlg66YRgFxRUA4IIzHujtVnTp97D
-	 a8ACxa4lq3/SCNWYsAun7JLkjqWisVy+4Htj72TUr8C/VDxVVWXrOhO9zQIVu1uvev
-	 ULvbM4vWe5S/wc3h+Bt0/RpjtfWhzxMFbeppGJcI=
+	b=A2Ttz1f/iym80N7BcWYUh8pcqkIXPdE+Ht7t/wkf6GX6K0O1qYCd3PzmU0jCt/Ktw
+	 Jn5HCvP7IP8/sEpPt9q73JlAmqYEnWKEgAXJ2vq0Zm94Iy/enuByUqcWiHIVtKg/jV
+	 nwIj+LdxkClCnTHJSZ2yifG3Sjw9vsGUE/dgR64g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Horatiu Vultur <horatiu.vultur@microchip.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 352/512] net: lan966x: Make sure to insert the vlan tags also in host mode
-Date: Tue, 17 Jun 2025 17:25:18 +0200
-Message-ID: <20250617152433.843660891@linuxfoundation.org>
+Subject: [PATCH 6.15 313/780] netfilter: nf_tables: nft_fib: consistent l3mdev handling
+Date: Tue, 17 Jun 2025 17:20:21 +0200
+Message-ID: <20250617152504.212243174@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,114 +47,169 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Horatiu Vultur <horatiu.vultur@microchip.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 27eab4c644236a9324084a70fe79e511cbd07393 ]
+[ Upstream commit 9a119669fb1924cd9658c16da39a5a585e129e50 ]
 
-When running these commands on DUT (and similar at the other end)
-ip link set dev eth0 up
-ip link add link eth0 name eth0.10 type vlan id 10
-ip addr add 10.0.0.1/24 dev eth0.10
-ip link set dev eth0.10 up
-ping 10.0.0.2
+fib has two modes:
+1. Obtain output device according to source or destination address
+2. Obtain the type of the address, e.g. local, unicast, multicast.
 
-The ping will fail.
+'fib daddr type' should return 'local' if the address is configured
+in this netns or unicast otherwise.
 
-The reason why is failing is because, the network interfaces for lan966x
-have a flag saying that the HW can insert the vlan tags into the
-frames(NETIF_F_HW_VLAN_CTAG_TX). Meaning that the frames that are
-transmitted don't have the vlan tag inside the skb data, but they have
-it inside the skb. We already get that vlan tag and put it in the IFH
-but the problem is that we don't configure the HW to rewrite the frame
-when the interface is in host mode.
-The fix consists in actually configuring the HW to insert the vlan tag
-if it is different than 0.
+'fib daddr . iif type' should return 'local' if the address is configured
+on the input interface or unicast otherwise, i.e. more restrictive.
 
-Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Fixes: 6d2c186afa5d ("net: lan966x: Add vlan support.")
-Signed-off-by: Horatiu Vultur <horatiu.vultur@microchip.com>
-Link: https://patch.msgid.link/20250528093619.3738998-1-horatiu.vultur@microchip.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+However, if the interface is part of a VRF, then 'fib daddr type'
+returns unicast even if the address is configured on the incoming
+interface.
+
+This is broken for both ipv4 and ipv6.
+
+In the ipv4 case, inet_dev_addr_type must only be used if the
+'iif' or 'oif' (strict mode) was requested.
+
+Else inet_addr_type_dev_table() needs to be used and the correct
+dev argument must be passed as well so the correct fib (vrf) table
+is used.
+
+In the ipv6 case, the bug is similar, without strict mode, dev is NULL
+so .flowi6_l3mdev will be set to 0.
+
+Add a new 'nft_fib_l3mdev_master_ifindex_rcu()' helper and use that
+to init the .l3mdev structure member.
+
+For ipv6, use it from nft_fib6_flowi_init() which gets called from
+both the 'type' and the 'route' mode eval functions.
+
+This provides consistent behaviour for all modes for both ipv4 and ipv6:
+If strict matching is requested, the input respectively output device
+of the netfilter hooks is used.
+
+Otherwise, use skb->dev to obtain the l3mdev ifindex.
+
+Without this, most type checks in updated nft_fib.sh selftest fail:
+
+  FAIL: did not find veth0 . 10.9.9.1 . local in fibtype4
+  FAIL: did not find veth0 . dead:1::1 . local in fibtype6
+  FAIL: did not find veth0 . dead:9::1 . local in fibtype6
+  FAIL: did not find tvrf . 10.0.1.1 . local in fibtype4
+  FAIL: did not find tvrf . 10.9.9.1 . local in fibtype4
+  FAIL: did not find tvrf . dead:1::1 . local in fibtype6
+  FAIL: did not find tvrf . dead:9::1 . local in fibtype6
+  FAIL: fib expression address types match (iif in vrf)
+
+(fib errounously returns 'unicast' for all of them, even
+ though all of these addresses are local to the vrf).
+
+Fixes: f6d0cbcf09c5 ("netfilter: nf_tables: add fib expression")
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/microchip/lan966x/lan966x_main.c |  1 +
- .../ethernet/microchip/lan966x/lan966x_main.h |  1 +
- .../microchip/lan966x/lan966x_switchdev.c     |  1 +
- .../ethernet/microchip/lan966x/lan966x_vlan.c | 21 +++++++++++++++++++
- 4 files changed, 24 insertions(+)
+ include/net/netfilter/nft_fib.h   |  9 +++++++++
+ net/ipv4/netfilter/nft_fib_ipv4.c | 11 +++++++++--
+ net/ipv6/netfilter/nft_fib_ipv6.c |  4 +---
+ 3 files changed, 19 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_main.c b/drivers/net/ethernet/microchip/lan966x/lan966x_main.c
-index 73832bba93270..b34e015eedf9b 100644
---- a/drivers/net/ethernet/microchip/lan966x/lan966x_main.c
-+++ b/drivers/net/ethernet/microchip/lan966x/lan966x_main.c
-@@ -880,6 +880,7 @@ static int lan966x_probe_port(struct lan966x *lan966x, u32 p,
- 	lan966x_vlan_port_set_vlan_aware(port, 0);
- 	lan966x_vlan_port_set_vid(port, HOST_PVID, false, false);
- 	lan966x_vlan_port_apply(port);
-+	lan966x_vlan_port_rew_host(port);
+diff --git a/include/net/netfilter/nft_fib.h b/include/net/netfilter/nft_fib.h
+index 6e202ed5e63f3..7370fba844efc 100644
+--- a/include/net/netfilter/nft_fib.h
++++ b/include/net/netfilter/nft_fib.h
+@@ -2,6 +2,7 @@
+ #ifndef _NFT_FIB_H_
+ #define _NFT_FIB_H_
  
- 	return 0;
- }
-diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_main.h b/drivers/net/ethernet/microchip/lan966x/lan966x_main.h
-index bd3d19cea0034..8aa39497818fe 100644
---- a/drivers/net/ethernet/microchip/lan966x/lan966x_main.h
-+++ b/drivers/net/ethernet/microchip/lan966x/lan966x_main.h
-@@ -497,6 +497,7 @@ void lan966x_vlan_port_apply(struct lan966x_port *port);
- bool lan966x_vlan_cpu_member_cpu_vlan_mask(struct lan966x *lan966x, u16 vid);
- void lan966x_vlan_port_set_vlan_aware(struct lan966x_port *port,
- 				      bool vlan_aware);
-+void lan966x_vlan_port_rew_host(struct lan966x_port *port);
- int lan966x_vlan_port_set_vid(struct lan966x_port *port,
- 			      u16 vid,
- 			      bool pvid,
-diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_switchdev.c b/drivers/net/ethernet/microchip/lan966x/lan966x_switchdev.c
-index 1c88120eb291a..bcb4db76b75cd 100644
---- a/drivers/net/ethernet/microchip/lan966x/lan966x_switchdev.c
-+++ b/drivers/net/ethernet/microchip/lan966x/lan966x_switchdev.c
-@@ -297,6 +297,7 @@ static void lan966x_port_bridge_leave(struct lan966x_port *port,
- 	lan966x_vlan_port_set_vlan_aware(port, false);
- 	lan966x_vlan_port_set_vid(port, HOST_PVID, false, false);
- 	lan966x_vlan_port_apply(port);
-+	lan966x_vlan_port_rew_host(port);
++#include <net/l3mdev.h>
+ #include <net/netfilter/nf_tables.h>
+ 
+ struct nft_fib {
+@@ -39,6 +40,14 @@ static inline bool nft_fib_can_skip(const struct nft_pktinfo *pkt)
+ 	return nft_fib_is_loopback(pkt->skb, indev);
  }
  
- int lan966x_port_changeupper(struct net_device *dev,
-diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_vlan.c b/drivers/net/ethernet/microchip/lan966x/lan966x_vlan.c
-index fa34a739c748e..7da22520724ce 100644
---- a/drivers/net/ethernet/microchip/lan966x/lan966x_vlan.c
-+++ b/drivers/net/ethernet/microchip/lan966x/lan966x_vlan.c
-@@ -149,6 +149,27 @@ void lan966x_vlan_port_set_vlan_aware(struct lan966x_port *port,
- 	port->vlan_aware = vlan_aware;
- }
- 
-+/* When the interface is in host mode, the interface should not be vlan aware
-+ * but it should insert all the tags that it gets from the network stack.
-+ * The tags are not in the data of the frame but actually in the skb and the ifh
-+ * is configured already to get this tag. So what we need to do is to update the
-+ * rewriter to insert the vlan tag for all frames which have a vlan tag
-+ * different than 0.
-+ */
-+void lan966x_vlan_port_rew_host(struct lan966x_port *port)
++static inline int nft_fib_l3mdev_master_ifindex_rcu(const struct nft_pktinfo *pkt,
++						    const struct net_device *iif)
 +{
-+	struct lan966x *lan966x = port->lan966x;
-+	u32 val;
++	const struct net_device *dev = iif ? iif : pkt->skb->dev;
 +
-+	/* Tag all frames except when VID=0*/
-+	val = REW_TAG_CFG_TAG_CFG_SET(2);
-+
-+	/* Update only some bits in the register */
-+	lan_rmw(val,
-+		REW_TAG_CFG_TAG_CFG,
-+		lan966x, REW_TAG_CFG(port->chip_port));
++	return l3mdev_master_ifindex_rcu(dev);
 +}
 +
- void lan966x_vlan_port_apply(struct lan966x_port *port)
- {
- 	struct lan966x *lan966x = port->lan966x;
+ int nft_fib_dump(struct sk_buff *skb, const struct nft_expr *expr, bool reset);
+ int nft_fib_init(const struct nft_ctx *ctx, const struct nft_expr *expr,
+ 		 const struct nlattr * const tb[]);
+diff --git a/net/ipv4/netfilter/nft_fib_ipv4.c b/net/ipv4/netfilter/nft_fib_ipv4.c
+index 9082ca17e845c..7e7c49535e3f5 100644
+--- a/net/ipv4/netfilter/nft_fib_ipv4.c
++++ b/net/ipv4/netfilter/nft_fib_ipv4.c
+@@ -50,7 +50,12 @@ void nft_fib4_eval_type(const struct nft_expr *expr, struct nft_regs *regs,
+ 	else
+ 		addr = iph->saddr;
+ 
+-	*dst = inet_dev_addr_type(nft_net(pkt), dev, addr);
++	if (priv->flags & (NFTA_FIB_F_IIF | NFTA_FIB_F_OIF)) {
++		*dst = inet_dev_addr_type(nft_net(pkt), dev, addr);
++		return;
++	}
++
++	*dst = inet_addr_type_dev_table(nft_net(pkt), pkt->skb->dev, addr);
+ }
+ EXPORT_SYMBOL_GPL(nft_fib4_eval_type);
+ 
+@@ -65,8 +70,8 @@ void nft_fib4_eval(const struct nft_expr *expr, struct nft_regs *regs,
+ 	struct flowi4 fl4 = {
+ 		.flowi4_scope = RT_SCOPE_UNIVERSE,
+ 		.flowi4_iif = LOOPBACK_IFINDEX,
++		.flowi4_proto = pkt->tprot,
+ 		.flowi4_uid = sock_net_uid(nft_net(pkt), NULL),
+-		.flowi4_l3mdev = l3mdev_master_ifindex_rcu(nft_in(pkt)),
+ 	};
+ 	const struct net_device *oif;
+ 	const struct net_device *found;
+@@ -90,6 +95,8 @@ void nft_fib4_eval(const struct nft_expr *expr, struct nft_regs *regs,
+ 	else
+ 		oif = NULL;
+ 
++	fl4.flowi4_l3mdev = nft_fib_l3mdev_master_ifindex_rcu(pkt, oif);
++
+ 	iph = skb_header_pointer(pkt->skb, noff, sizeof(_iph), &_iph);
+ 	if (!iph) {
+ 		regs->verdict.code = NFT_BREAK;
+diff --git a/net/ipv6/netfilter/nft_fib_ipv6.c b/net/ipv6/netfilter/nft_fib_ipv6.c
+index f1f5640da6728..421036a3605b4 100644
+--- a/net/ipv6/netfilter/nft_fib_ipv6.c
++++ b/net/ipv6/netfilter/nft_fib_ipv6.c
+@@ -50,6 +50,7 @@ static int nft_fib6_flowi_init(struct flowi6 *fl6, const struct nft_fib *priv,
+ 		fl6->flowi6_mark = pkt->skb->mark;
+ 
+ 	fl6->flowlabel = (*(__be32 *)iph) & IPV6_FLOWINFO_MASK;
++	fl6->flowi6_l3mdev = nft_fib_l3mdev_master_ifindex_rcu(pkt, dev);
+ 
+ 	return lookup_flags;
+ }
+@@ -73,8 +74,6 @@ static u32 __nft_fib6_eval_type(const struct nft_fib *priv,
+ 	else if (priv->flags & NFTA_FIB_F_OIF)
+ 		dev = nft_out(pkt);
+ 
+-	fl6.flowi6_l3mdev = l3mdev_master_ifindex_rcu(dev);
+-
+ 	nft_fib6_flowi_init(&fl6, priv, pkt, dev, iph);
+ 
+ 	if (dev && nf_ipv6_chk_addr(nft_net(pkt), &fl6.daddr, dev, true))
+@@ -166,7 +165,6 @@ void nft_fib6_eval(const struct nft_expr *expr, struct nft_regs *regs,
+ 		.flowi6_iif = LOOPBACK_IFINDEX,
+ 		.flowi6_proto = pkt->tprot,
+ 		.flowi6_uid = sock_net_uid(nft_net(pkt), NULL),
+-		.flowi6_l3mdev = l3mdev_master_ifindex_rcu(nft_in(pkt)),
+ 	};
+ 	struct rt6_info *rt;
+ 	int lookup_flags;
 -- 
 2.39.5
 
