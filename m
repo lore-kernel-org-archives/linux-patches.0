@@ -1,49 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5834D1DF271;
-	Tue, 17 Jun 2025 16:36:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D8BC2EA161;
+	Tue, 17 Jun 2025 16:36:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750178174; cv=none; b=cWWop3mE7C4ALIwzsawOc8LEdq5ZY8r0iP+boTUPkm1RQeLeSQBLmwg/oAqLGagj+w5440f/jf/3v44oXOybXQoIsDc8d9+YJl3eRSeAQxymPofxQHKbYefjDLEke1Rnfq6hKDM2vP679t2fu0tonJs7Wr8z3nCioRHW4dK5RRk=
+	t=1750178177; cv=none; b=iS9EfUd9LMc17mVyAwwNvNk5kDCV3a7PB6QIeLL4SOWGi5luwruWGOSKB69etgs9j4/NmKT7gcV0fhO36A1zq40WZG87jNR4KNwC+TRjPR52e9SMLLGHna7pZ0WSBY/kxXUIopiC5QAA4lyHE739CZ2Qm+QFiK5nN4BYheFYc18=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750178174; c=relaxed/simple;
-	bh=l4n9LwSjZGaJt291lJrXaLqnYNZquCZ1uWlrNRKBbqA=;
+	s=arc-20240116; t=1750178177; c=relaxed/simple;
+	bh=LdXTvprbEKpmZtsGvfqo+aY0+UON8pnucEklWlUj2g8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WnMWSeHceVIL2UMJKuwV8+xf6Vk9teXcRtKQdtfHZDV2ZuhkQcHfMMGLEBE5DX6I568nOUw7zGZaznKxpA8N39CHl0y61AZ2qW6hoYpauIpggtj4BSAHGMjpGHRzx0TqMgBqQV6a62PIfSpLW37VgP5NoYwUQV7flaIR8OYnHSs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A4yVex8c; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TqTY7w8Zb7CH7CGvbHWI9Zq0jsMii3ETgSu/YFr/WZmULpaY9WXb4xewss6JxZOlLYSjGJ+P07sSVJh7KlwUSzQvo9a8VRjwByZajvR7PZUCHl/WIaPzn5eA79iYS+4+9V4OshWUPO7UNbgikCyyHX6ZKSWsnHG8e45JIJQJMhI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gfpjmx4E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A4yVex8c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99139C4CEE7;
-	Tue, 17 Jun 2025 16:36:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gfpjmx4E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD884C4CEE7;
+	Tue, 17 Jun 2025 16:36:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750178174;
-	bh=l4n9LwSjZGaJt291lJrXaLqnYNZquCZ1uWlrNRKBbqA=;
+	s=korg; t=1750178177;
+	bh=LdXTvprbEKpmZtsGvfqo+aY0+UON8pnucEklWlUj2g8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A4yVex8cgEEkRy8iLQx9FLWICPY/WsvVWVoSHyjLIj+LkbdBBB2ZhxET2KsIpkWta
-	 Dflo5ECPDc8BG/4uK7J1WYDwnn1ZukZfkmhUEtmYE6SkyG06BKzh/+h+7EJw+/DZwb
-	 l7Wb6tc6rFE3ROcr1OFDHrX4GP8CFPTBEz0l/9Kw=
+	b=Gfpjmx4EIc92dhtcuAyuWBRnReR3RKk1Wl5qLMKwGCd5CSL9ezS8jwR2Oo9SKU5Oq
+	 tOzC9Do+ZrMzmenwCslFGTVxXQfwF79AIrXrXh0DLwheNPfbXA+RDiWMZBj2Qu7uE2
+	 lUbf/rT8KOluUVTnNOiEF2PyQeixDD9NqW9hi0X0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ingo Molnar <mingo@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Dmitriy Vyukov <dvyukov@google.com>,
-	Ian Rogers <irogers@google.com>,
-	James Clark <james.clark@linaro.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 420/780] tools build: Dont set libunwind as available if test-all.c build succeeds
-Date: Tue, 17 Jun 2025 17:22:08 +0200
-Message-ID: <20250617152508.576153672@linuxfoundation.org>
+Subject: [PATCH 6.12 457/512] Bluetooth: hci_sync: Fix broadcast/PA when using an existing instance
+Date: Tue, 17 Jun 2025 17:27:03 +0200
+Message-ID: <20250617152438.089943160@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -55,113 +46,107 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit 6559b83e4e71ba77461c8d6e6af7b89693c8e677 ]
+[ Upstream commit 5725bc608252050ed8a4d47d59225b7dd73474c8 ]
 
-The tools/build/feature/test-all.c file tries to detect the expected,
-most common set of libraries/features we expect to have available to
-build perf with.
+When using and existing adv_info instance for broadcast source it
+needs to be updated to periodic first before it can be reused, also in
+case the existing instance already have data hci_set_adv_instance_data
+cannot be used directly since it would overwrite the existing data so
+this reappend the original data after the Broadcast ID, if one was
+generated.
 
-At some point libunwind was deemed not to be part of that set of
-libries, but the patches making it to be opt-in ended up forgetting some
-details, fix one more.
+Example:
 
-Testing it:
+bluetoothctl># Add PBP to EA so it can be later referenced as the BIS ID
+bluetoothctl> advertise.service 0x1856 0x00 0x00
+bluetoothctl> advertise on
+...
+< HCI Command: LE Set Extended Advertising Data (0x08|0x0037) plen 13
+        Handle: 0x01
+        Operation: Complete extended advertising data (0x03)
+        Fragment preference: Minimize fragmentation (0x01)
+        Data length: 0x09
+        Service Data: Public Broadcast Announcement (0x1856)
+          Data[2]: 0000
+        Flags: 0x06
+          LE General Discoverable Mode
+          BR/EDR Not Supported
+...
+bluetoothctl># Attempt to acquire Broadcast Source transport
+bluetoothctl>transport.acquire /org/bluez/hci0/pac_bcast0/fd0
+...
+< HCI Command: LE Set Extended Advertising Data (0x08|0x0037) plen 255
+        Handle: 0x01
+        Operation: Complete extended advertising data (0x03)
+        Fragment preference: Minimize fragmentation (0x01)
+        Data length: 0x0e
+        Service Data: Broadcast Audio Announcement (0x1852)
+        Broadcast ID: 11371620 (0xad8464)
+        Service Data: Public Broadcast Announcement (0x1856)
+          Data[2]: 0000
+        Flags: 0x06
+          LE General Discoverable Mode
+          BR/EDR Not Supported
 
-  $ rm -rf /tmp/build/$(basename $PWD)/ ; mkdir -p /tmp/build/$(basename $PWD)/
-  $ rpm -q libunwind-devel
-  libunwind-devel-1.8.0-3.fc40.x86_64
-  $ make -k LIBUNWIND=1 CORESIGHT=1 O=/tmp/build/$(basename $PWD)/ -C tools/perf install-bin |& grep unwind && ldd ~/bin/perf | grep unwind
-  ...                               libunwind: [ on  ]
-    CC      /tmp/build/perf-tools-next/arch/x86/tests/dwarf-unwind.o
-    CC      /tmp/build/perf-tools-next/arch/x86/util/unwind-libunwind.o
-    CC      /tmp/build/perf-tools-next/util/arm64-frame-pointer-unwind-support.o
-    CC      /tmp/build/perf-tools-next/tests/dwarf-unwind.o
-    CC      /tmp/build/perf-tools-next/util/unwind-libunwind-local.o
-    CC      /tmp/build/perf-tools-next/util/unwind-libunwind.o
-	  libunwind-x86_64.so.8 => /lib64/libunwind-x86_64.so.8 (0x00007f615a549000)
-	  libunwind.so.8 => /lib64/libunwind.so.8 (0x00007f615a52f000)
-  $ sudo rpm -e libunwind-devel
-  $ rm -rf /tmp/build/$(basename $PWD)/ ; mkdir -p /tmp/build/$(basename $PWD)/
-  $ make -k LIBUNWIND=1 CORESIGHT=1 O=/tmp/build/$(basename $PWD)/ -C tools/perf install-bin |& grep unwind && ldd ~/bin/perf | grep unwind
-  Makefile.config:653: No libunwind found. Please install libunwind-dev[el] >= 1.1 and/or set LIBUNWIND_DIR
-  ...                               libunwind: [ OFF ]
-    CC      /tmp/build/perf-tools-next/arch/x86/tests/dwarf-unwind.o
-    CC      /tmp/build/perf-tools-next/arch/x86/util/unwind-libdw.o
-    CC      /tmp/build/perf-tools-next/util/arm64-frame-pointer-unwind-support.o
-    CC      /tmp/build/perf-tools-next/tests/dwarf-unwind.o
-    CC      /tmp/build/perf-tools-next/util/unwind-libdw.o
-  $
-
-Should be in a separate patch, but tired now, so also adding a message
-about the need to use LIBUNWIND=1 in the output when its not available,
-so done here as well.
-
-So, now when the devel files are not available we get:
-
-  $ make -k LIBUNWIND=1 CORESIGHT=1 O=/tmp/build/$(basename $PWD)/ -C tools/perf install-bin |& grep unwind && ldd ~/bin/perf | grep unwind
-  Makefile.config:653: No libunwind found. Please install libunwind-dev[el] >= 1.1 and/or set LIBUNWIND_DIR and set LIBUNWIND=1 in the make command line as it is opt-in now
-  ...                               libunwind: [ OFF ]
-  $
-
-Fixes: 13e17c9ff49119aa ("perf build: Make libunwind opt-in rather than opt-out")
-Reported-by: Ingo Molnar <mingo@kernel.org>
-Tested-by: Ingo Molnar <mingo@kernel.org>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Dmitriy Vyukov <dvyukov@google.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: James Clark <james.clark@linaro.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/Z_AnsW9oJzFbhIFC@x1
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Link: https://github.com/bluez/bluez/issues/1117
+Fixes: eca0ae4aea66 ("Bluetooth: Add initial implementation of BIS connections")
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/build/Makefile.feature | 1 -
- tools/perf/Makefile.config   | 4 +++-
- 2 files changed, 3 insertions(+), 2 deletions(-)
+ net/bluetooth/hci_sync.c | 20 +++++++++++++++-----
+ 1 file changed, 15 insertions(+), 5 deletions(-)
 
-diff --git a/tools/build/Makefile.feature b/tools/build/Makefile.feature
-index 1f44ca677ad3d..48e3f124b98ac 100644
---- a/tools/build/Makefile.feature
-+++ b/tools/build/Makefile.feature
-@@ -87,7 +87,6 @@ FEATURE_TESTS_BASIC :=                  \
-         libtracefs                      \
-         libcpupower                     \
-         libcrypto                       \
--        libunwind                       \
-         pthread-attr-setaffinity-np     \
-         pthread-barrier     		\
-         reallocarray                    \
-diff --git a/tools/perf/Makefile.config b/tools/perf/Makefile.config
-index b7769a22fe1af..e0c20a5c19cfe 100644
---- a/tools/perf/Makefile.config
-+++ b/tools/perf/Makefile.config
-@@ -625,6 +625,8 @@ endif
- ifndef NO_LIBUNWIND
-   have_libunwind :=
+diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+index 59011f45906a1..3fb70b4ee8c8a 100644
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -1559,7 +1559,8 @@ static int hci_enable_per_advertising_sync(struct hci_dev *hdev, u8 instance)
+ static int hci_adv_bcast_annoucement(struct hci_dev *hdev, struct adv_info *adv)
+ {
+ 	u8 bid[3];
+-	u8 ad[4 + 3];
++	u8 ad[HCI_MAX_EXT_AD_LENGTH];
++	u8 len;
  
-+  $(call feature_check,libunwind)
-+
-   $(call feature_check,libunwind-x86)
-   ifeq ($(feature-libunwind-x86), 1)
-     $(call detected,CONFIG_LIBUNWIND_X86)
-@@ -649,7 +651,7 @@ ifndef NO_LIBUNWIND
-   endif
+ 	/* Skip if NULL adv as instance 0x00 is used for general purpose
+ 	 * advertising so it cannot used for the likes of Broadcast Announcement
+@@ -1585,8 +1586,10 @@ static int hci_adv_bcast_annoucement(struct hci_dev *hdev, struct adv_info *adv)
  
-   ifneq ($(feature-libunwind), 1)
--    $(warning No libunwind found. Please install libunwind-dev[el] >= 1.1 and/or set LIBUNWIND_DIR)
-+    $(warning No libunwind found. Please install libunwind-dev[el] >= 1.1 and/or set LIBUNWIND_DIR and set LIBUNWIND=1 in the make command line as it is opt-in now)
-     NO_LOCAL_LIBUNWIND := 1
-   else
-     have_libunwind := 1
+ 	/* Generate Broadcast ID */
+ 	get_random_bytes(bid, sizeof(bid));
+-	eir_append_service_data(ad, 0, 0x1852, bid, sizeof(bid));
+-	hci_set_adv_instance_data(hdev, adv->instance, sizeof(ad), ad, 0, NULL);
++	len = eir_append_service_data(ad, 0, 0x1852, bid, sizeof(bid));
++	memcpy(ad + len, adv->adv_data, adv->adv_data_len);
++	hci_set_adv_instance_data(hdev, adv->instance, len + adv->adv_data_len,
++				  ad, 0, NULL);
+ 
+ 	return hci_update_adv_data_sync(hdev, adv->instance);
+ }
+@@ -1603,8 +1606,15 @@ int hci_start_per_adv_sync(struct hci_dev *hdev, u8 instance, u8 data_len,
+ 
+ 	if (instance) {
+ 		adv = hci_find_adv_instance(hdev, instance);
+-		/* Create an instance if that could not be found */
+-		if (!adv) {
++		if (adv) {
++			/* Turn it into periodic advertising */
++			adv->periodic = true;
++			adv->per_adv_data_len = data_len;
++			if (data)
++				memcpy(adv->per_adv_data, data, data_len);
++			adv->flags = flags;
++		} else if (!adv) {
++			/* Create an instance if that could not be found */
+ 			adv = hci_add_per_instance(hdev, instance, flags,
+ 						   data_len, data,
+ 						   sync_interval,
 -- 
 2.39.5
 
