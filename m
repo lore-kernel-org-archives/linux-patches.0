@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B34892EE605;
-	Tue, 17 Jun 2025 15:50:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 870C12ECE99;
+	Tue, 17 Jun 2025 15:50:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175400; cv=none; b=kRaAXOaJeo85nzv8QpQfY32tPj1RHeoanuNX080U0N/h/4OHbZwFh5n67bwvp8WwlDpJwi8Xr0DiinHknMXlNEpECe/jKabO3FzEWdyrD6uY4PY8FYx5fSkM119QzM+q6mkh29vRpaEKYleI6KaB+xgcsCS5Kh13hl8LhTjGv18=
+	t=1750175403; cv=none; b=h9a6DBUWkpeY92H+A+DbNqgdY4PePe6z/C2rRR4ENWd7wtcJYMqaEHeCKlt6UKCQQ24iH01i0C5Os1DnVq7mCB1b/jG2cznKoqj/7ECh+YmdTOv4newYWuSBu9jdfOEizB4L4i8o3lUKg/P6D/iFMPsLjIz+kId1V1H8R827nZk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175400; c=relaxed/simple;
-	bh=eJbZOraSOVxaC1M8YohBUKTSbFqJXrhpdznRGJoF428=;
+	s=arc-20240116; t=1750175403; c=relaxed/simple;
+	bh=9oaeHIVyz1Xkhj6gWqAlnB/xtPniHLC6P5klpmv57gU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZhAj0EbOPRyarv3uUz2JjVCfI1vNI6jeGBbr8kADacn9tP7sEhTTc5fTzuEXT26nItSwcs0SeQoF6oUY+WHHwO/FDh2EwZklfjkDWoGYxFzwTnSHpVxL5/YVg4ZsRWhreQvRscCe8KwRGnVjYPs+7hcY8dmOCRoLpudMo2TC7gU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LCalOfvU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FB6LOvKQoEsHBGE96eLG8+7sraZt8I8DieKbBvqtjWrQe5g86K5/itD9kCxm7RQp3S9nC4CwD2J9rD9+hM2vBlLFtMTzbe95H32RUz4VobnAMT+xPcvcpqQxRDayavV+mU5hRaLPI+mq+eEJkmYL/THilhEiSgMFFuqxTFzMkkg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ADxEmMzl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LCalOfvU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5CE8C4CEE3;
-	Tue, 17 Jun 2025 15:49:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ADxEmMzl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C64AC4CEE3;
+	Tue, 17 Jun 2025 15:50:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175400;
-	bh=eJbZOraSOVxaC1M8YohBUKTSbFqJXrhpdznRGJoF428=;
+	s=korg; t=1750175403;
+	bh=9oaeHIVyz1Xkhj6gWqAlnB/xtPniHLC6P5klpmv57gU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LCalOfvUWKIQ+sDDYH33yIflWfK2yrDMHKg55MrJ9ROi7cqj1lf2sk8eNMBE3szKZ
-	 XHsBsSV9OEXsNx7gL91PGs2bCFNVRfAexbKD4uTmlWRnshCfTqFuw3NUpwPgq0YWPw
-	 jc8lU2dlAaoTAmyfb0nBPP/QrBsyRj64C+eWuh3U=
+	b=ADxEmMzlJOzYalbxX2IaGdc6m2hcTX4+1q4z9/m4qDJmLKH0seE0qImHK8Xh4zc3n
+	 SuWtPwPWrV+vNglRK0dT31ULbdzRe0PLbOsbJJOX+jP6ee785Ap08/7lIDJ1zN1/h+
+	 3qqh8OqZvgoMsKnpeIoirOdGWaMxiXALFWOhkDlo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Hari Kalavakunta <kalavakunta.hari.prasad@gmail.com>,
+	Paul Fertser <fercerpav@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 173/356] arm64: dts: mediatek: mt6357: Drop regulator-fixed compatibles
-Date: Tue, 17 Jun 2025 17:24:48 +0200
-Message-ID: <20250617152345.180577529@linuxfoundation.org>
+Subject: [PATCH 6.12 123/512] net: ncsi: Fix GCPS 64-bit member variables
+Date: Tue, 17 Jun 2025 17:21:29 +0200
+Message-ID: <20250617152424.579927113@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-References: <20250617152338.212798615@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,123 +46,165 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+From: Hari Kalavakunta <kalavakunta.hari.prasad@gmail.com>
 
-[ Upstream commit d77e89b7b03fb945b4353f2dcc4a70b34baa7bcb ]
+[ Upstream commit e8a1bd8344054ce27bebf59f48e3f6bc10bc419b ]
 
-Some of the regulators in the MT6357 PMIC dtsi have compatible set to
-regulator-fixed, even though they don't serve any purpose: all those
-regulators are handled as a whole by the mt6357-regulator driver. In
-fact this is the only dtsi in this family of chips where this is the
-case: mt6359 and mt6358 don't have any such compatibles.
+Correct Get Controller Packet Statistics (GCPS) 64-bit wide member
+variables, as per DSP0222 v1.0.0 and forward specs. The Driver currently
+collects these stats, but they are yet to be exposed to the user.
+Therefore, no user impact.
 
-A side-effect caused by this is that the DT kselftest, which is supposed
-to identify nodes with compatibles that can be probed, but haven't,
-shows these nodes as failures.
+Statistics fixes:
+Total Bytes Received (byte range 28..35)
+Total Bytes Transmitted (byte range 36..43)
+Total Unicast Packets Received (byte range 44..51)
+Total Multicast Packets Received (byte range 52..59)
+Total Broadcast Packets Received (byte range 60..67)
+Total Unicast Packets Transmitted (byte range 68..75)
+Total Multicast Packets Transmitted (byte range 76..83)
+Total Broadcast Packets Transmitted (byte range 84..91)
+Valid Bytes Received (byte range 204..11)
 
-Remove the useless compatibles to move the dtsi in line with the others
-in its family and fix the DT kselftest failures.
-
-Fixes: 55749bb478f8 ("arm64: dts: mediatek: add mt6357 device-tree")
-Signed-off-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
-Link: https://lore.kernel.org/r/20250502-mt6357-regulator-fixed-compatibles-removal-v1-1-a582c16743fe@collabora.com
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Hari Kalavakunta <kalavakunta.hari.prasad@gmail.com>
+Reviewed-by: Paul Fertser <fercerpav@gmail.com>
+Link: https://patch.msgid.link/20250410012309.1343-1-kalavakunta.hari.prasad@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt6357.dtsi | 10 ----------
- 1 file changed, 10 deletions(-)
+ net/ncsi/internal.h | 21 ++++++++++-----------
+ net/ncsi/ncsi-pkt.h | 23 +++++++++++------------
+ net/ncsi/ncsi-rsp.c | 21 ++++++++++-----------
+ 3 files changed, 31 insertions(+), 34 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt6357.dtsi b/arch/arm64/boot/dts/mediatek/mt6357.dtsi
-index 5fafa842d312f..dca4e5c3d8e21 100644
---- a/arch/arm64/boot/dts/mediatek/mt6357.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt6357.dtsi
-@@ -60,7 +60,6 @@
- 			};
+diff --git a/net/ncsi/internal.h b/net/ncsi/internal.h
+index 4e0842df5234e..2c260f33b55cc 100644
+--- a/net/ncsi/internal.h
++++ b/net/ncsi/internal.h
+@@ -143,16 +143,15 @@ struct ncsi_channel_vlan_filter {
+ };
  
- 			mt6357_vfe28_reg: ldo-vfe28 {
--				compatible = "regulator-fixed";
- 				regulator-name = "vfe28";
- 				regulator-min-microvolt = <2800000>;
- 				regulator-max-microvolt = <2800000>;
-@@ -75,7 +74,6 @@
- 			};
+ struct ncsi_channel_stats {
+-	u32 hnc_cnt_hi;		/* Counter cleared            */
+-	u32 hnc_cnt_lo;		/* Counter cleared            */
+-	u32 hnc_rx_bytes;	/* Rx bytes                   */
+-	u32 hnc_tx_bytes;	/* Tx bytes                   */
+-	u32 hnc_rx_uc_pkts;	/* Rx UC packets              */
+-	u32 hnc_rx_mc_pkts;     /* Rx MC packets              */
+-	u32 hnc_rx_bc_pkts;	/* Rx BC packets              */
+-	u32 hnc_tx_uc_pkts;	/* Tx UC packets              */
+-	u32 hnc_tx_mc_pkts;	/* Tx MC packets              */
+-	u32 hnc_tx_bc_pkts;	/* Tx BC packets              */
++	u64 hnc_cnt;		/* Counter cleared            */
++	u64 hnc_rx_bytes;	/* Rx bytes                   */
++	u64 hnc_tx_bytes;	/* Tx bytes                   */
++	u64 hnc_rx_uc_pkts;	/* Rx UC packets              */
++	u64 hnc_rx_mc_pkts;     /* Rx MC packets              */
++	u64 hnc_rx_bc_pkts;	/* Rx BC packets              */
++	u64 hnc_tx_uc_pkts;	/* Tx UC packets              */
++	u64 hnc_tx_mc_pkts;	/* Tx MC packets              */
++	u64 hnc_tx_bc_pkts;	/* Tx BC packets              */
+ 	u32 hnc_fcs_err;	/* FCS errors                 */
+ 	u32 hnc_align_err;	/* Alignment errors           */
+ 	u32 hnc_false_carrier;	/* False carrier detection    */
+@@ -181,7 +180,7 @@ struct ncsi_channel_stats {
+ 	u32 hnc_tx_1023_frames;	/* Tx 512-1023 bytes frames   */
+ 	u32 hnc_tx_1522_frames;	/* Tx 1024-1522 bytes frames  */
+ 	u32 hnc_tx_9022_frames;	/* Tx 1523-9022 bytes frames  */
+-	u32 hnc_rx_valid_bytes;	/* Rx valid bytes             */
++	u64 hnc_rx_valid_bytes;	/* Rx valid bytes             */
+ 	u32 hnc_rx_runt_pkts;	/* Rx error runt packets      */
+ 	u32 hnc_rx_jabber_pkts;	/* Rx error jabber packets    */
+ 	u32 ncsi_rx_cmds;	/* Rx NCSI commands           */
+diff --git a/net/ncsi/ncsi-pkt.h b/net/ncsi/ncsi-pkt.h
+index f2f3b5c1b9412..24edb27379724 100644
+--- a/net/ncsi/ncsi-pkt.h
++++ b/net/ncsi/ncsi-pkt.h
+@@ -252,16 +252,15 @@ struct ncsi_rsp_gp_pkt {
+ /* Get Controller Packet Statistics */
+ struct ncsi_rsp_gcps_pkt {
+ 	struct ncsi_rsp_pkt_hdr rsp;            /* Response header            */
+-	__be32                  cnt_hi;         /* Counter cleared            */
+-	__be32                  cnt_lo;         /* Counter cleared            */
+-	__be32                  rx_bytes;       /* Rx bytes                   */
+-	__be32                  tx_bytes;       /* Tx bytes                   */
+-	__be32                  rx_uc_pkts;     /* Rx UC packets              */
+-	__be32                  rx_mc_pkts;     /* Rx MC packets              */
+-	__be32                  rx_bc_pkts;     /* Rx BC packets              */
+-	__be32                  tx_uc_pkts;     /* Tx UC packets              */
+-	__be32                  tx_mc_pkts;     /* Tx MC packets              */
+-	__be32                  tx_bc_pkts;     /* Tx BC packets              */
++	__be64                  cnt;            /* Counter cleared            */
++	__be64                  rx_bytes;       /* Rx bytes                   */
++	__be64                  tx_bytes;       /* Tx bytes                   */
++	__be64                  rx_uc_pkts;     /* Rx UC packets              */
++	__be64                  rx_mc_pkts;     /* Rx MC packets              */
++	__be64                  rx_bc_pkts;     /* Rx BC packets              */
++	__be64                  tx_uc_pkts;     /* Tx UC packets              */
++	__be64                  tx_mc_pkts;     /* Tx MC packets              */
++	__be64                  tx_bc_pkts;     /* Tx BC packets              */
+ 	__be32                  fcs_err;        /* FCS errors                 */
+ 	__be32                  align_err;      /* Alignment errors           */
+ 	__be32                  false_carrier;  /* False carrier detection    */
+@@ -290,11 +289,11 @@ struct ncsi_rsp_gcps_pkt {
+ 	__be32                  tx_1023_frames; /* Tx 512-1023 bytes frames   */
+ 	__be32                  tx_1522_frames; /* Tx 1024-1522 bytes frames  */
+ 	__be32                  tx_9022_frames; /* Tx 1523-9022 bytes frames  */
+-	__be32                  rx_valid_bytes; /* Rx valid bytes             */
++	__be64                  rx_valid_bytes; /* Rx valid bytes             */
+ 	__be32                  rx_runt_pkts;   /* Rx error runt packets      */
+ 	__be32                  rx_jabber_pkts; /* Rx error jabber packets    */
+ 	__be32                  checksum;       /* Checksum                   */
+-};
++}  __packed __aligned(4);
  
- 			mt6357_vrf18_reg: ldo-vrf18 {
--				compatible = "regulator-fixed";
- 				regulator-name = "vrf18";
- 				regulator-min-microvolt = <1800000>;
- 				regulator-max-microvolt = <1800000>;
-@@ -83,7 +81,6 @@
- 			};
+ /* Get NCSI Statistics */
+ struct ncsi_rsp_gns_pkt {
+diff --git a/net/ncsi/ncsi-rsp.c b/net/ncsi/ncsi-rsp.c
+index 4a8ce2949faea..8668888c5a2f9 100644
+--- a/net/ncsi/ncsi-rsp.c
++++ b/net/ncsi/ncsi-rsp.c
+@@ -926,16 +926,15 @@ static int ncsi_rsp_handler_gcps(struct ncsi_request *nr)
  
- 			mt6357_vrf12_reg: ldo-vrf12 {
--				compatible = "regulator-fixed";
- 				regulator-name = "vrf12";
- 				regulator-min-microvolt = <1200000>;
- 				regulator-max-microvolt = <1200000>;
-@@ -112,7 +109,6 @@
- 			};
+ 	/* Update HNC's statistics */
+ 	ncs = &nc->stats;
+-	ncs->hnc_cnt_hi         = ntohl(rsp->cnt_hi);
+-	ncs->hnc_cnt_lo         = ntohl(rsp->cnt_lo);
+-	ncs->hnc_rx_bytes       = ntohl(rsp->rx_bytes);
+-	ncs->hnc_tx_bytes       = ntohl(rsp->tx_bytes);
+-	ncs->hnc_rx_uc_pkts     = ntohl(rsp->rx_uc_pkts);
+-	ncs->hnc_rx_mc_pkts     = ntohl(rsp->rx_mc_pkts);
+-	ncs->hnc_rx_bc_pkts     = ntohl(rsp->rx_bc_pkts);
+-	ncs->hnc_tx_uc_pkts     = ntohl(rsp->tx_uc_pkts);
+-	ncs->hnc_tx_mc_pkts     = ntohl(rsp->tx_mc_pkts);
+-	ncs->hnc_tx_bc_pkts     = ntohl(rsp->tx_bc_pkts);
++	ncs->hnc_cnt            = be64_to_cpu(rsp->cnt);
++	ncs->hnc_rx_bytes       = be64_to_cpu(rsp->rx_bytes);
++	ncs->hnc_tx_bytes       = be64_to_cpu(rsp->tx_bytes);
++	ncs->hnc_rx_uc_pkts     = be64_to_cpu(rsp->rx_uc_pkts);
++	ncs->hnc_rx_mc_pkts     = be64_to_cpu(rsp->rx_mc_pkts);
++	ncs->hnc_rx_bc_pkts     = be64_to_cpu(rsp->rx_bc_pkts);
++	ncs->hnc_tx_uc_pkts     = be64_to_cpu(rsp->tx_uc_pkts);
++	ncs->hnc_tx_mc_pkts     = be64_to_cpu(rsp->tx_mc_pkts);
++	ncs->hnc_tx_bc_pkts     = be64_to_cpu(rsp->tx_bc_pkts);
+ 	ncs->hnc_fcs_err        = ntohl(rsp->fcs_err);
+ 	ncs->hnc_align_err      = ntohl(rsp->align_err);
+ 	ncs->hnc_false_carrier  = ntohl(rsp->false_carrier);
+@@ -964,7 +963,7 @@ static int ncsi_rsp_handler_gcps(struct ncsi_request *nr)
+ 	ncs->hnc_tx_1023_frames = ntohl(rsp->tx_1023_frames);
+ 	ncs->hnc_tx_1522_frames = ntohl(rsp->tx_1522_frames);
+ 	ncs->hnc_tx_9022_frames = ntohl(rsp->tx_9022_frames);
+-	ncs->hnc_rx_valid_bytes = ntohl(rsp->rx_valid_bytes);
++	ncs->hnc_rx_valid_bytes = be64_to_cpu(rsp->rx_valid_bytes);
+ 	ncs->hnc_rx_runt_pkts   = ntohl(rsp->rx_runt_pkts);
+ 	ncs->hnc_rx_jabber_pkts = ntohl(rsp->rx_jabber_pkts);
  
- 			mt6357_vcn28_reg: ldo-vcn28 {
--				compatible = "regulator-fixed";
- 				regulator-name = "vcn28";
- 				regulator-min-microvolt = <2800000>;
- 				regulator-max-microvolt = <2800000>;
-@@ -120,7 +116,6 @@
- 			};
- 
- 			mt6357_vcn18_reg: ldo-vcn18 {
--				compatible = "regulator-fixed";
- 				regulator-name = "vcn18";
- 				regulator-min-microvolt = <1800000>;
- 				regulator-max-microvolt = <1800000>;
-@@ -142,7 +137,6 @@
- 			};
- 
- 			mt6357_vcamio_reg: ldo-vcamio18 {
--				compatible = "regulator-fixed";
- 				regulator-name = "vcamio";
- 				regulator-min-microvolt = <1800000>;
- 				regulator-max-microvolt = <1800000>;
-@@ -175,7 +169,6 @@
- 			};
- 
- 			mt6357_vaux18_reg: ldo-vaux18 {
--				compatible = "regulator-fixed";
- 				regulator-name = "vaux18";
- 				regulator-min-microvolt = <1800000>;
- 				regulator-max-microvolt = <1800000>;
-@@ -183,7 +176,6 @@
- 			};
- 
- 			mt6357_vaud28_reg: ldo-vaud28 {
--				compatible = "regulator-fixed";
- 				regulator-name = "vaud28";
- 				regulator-min-microvolt = <2800000>;
- 				regulator-max-microvolt = <2800000>;
-@@ -191,7 +183,6 @@
- 			};
- 
- 			mt6357_vio28_reg: ldo-vio28 {
--				compatible = "regulator-fixed";
- 				regulator-name = "vio28";
- 				regulator-min-microvolt = <2800000>;
- 				regulator-max-microvolt = <2800000>;
-@@ -199,7 +190,6 @@
- 			};
- 
- 			mt6357_vio18_reg: ldo-vio18 {
--				compatible = "regulator-fixed";
- 				regulator-name = "vio18";
- 				regulator-min-microvolt = <1800000>;
- 				regulator-max-microvolt = <1800000>;
 -- 
 2.39.5
 
