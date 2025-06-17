@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EFC82F2366;
-	Tue, 17 Jun 2025 15:44:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A684B2F236D;
+	Tue, 17 Jun 2025 15:44:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175072; cv=none; b=sqkGrGx0H57eOO/4Cv8aT87IgiEqYjGSbnYY2jy7snPqrxCvJ8mJNcZxBINyYGYGa9VQD2AfLmeNB4Gm1rhdaLjSULyRy/Ki9H+N9r35ctjSYk+tYa2kSX1tPjpJB4HYrIYV7PNmduMjjBF3wzd13tpo/TTcZ6p4L5Tym89L52g=
+	t=1750175075; cv=none; b=r0f5ph9guxoVJhcgSq3txsFk7oTBZyookpwtGN0ImRhV8C0wJr0i1f2TvlSZCpnTAMOZUNA0mcBqhmHWjPfzngpFC23mTweukjRL/2Q8KFzvreoUy7wT2f4lK4nCo/dDlp5Swbc7UyX6sVhDIh+ynbX13u3w/oHjVdMdVTp/3JU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175072; c=relaxed/simple;
-	bh=NDhQI3uA1WMxgZF4xBl/ybhsR5OYsiVmNaZCWjVfnYM=;
+	s=arc-20240116; t=1750175075; c=relaxed/simple;
+	bh=PiK9sN0lSxlpSIpcmN94pgIawLDXoVAxdbW/RfzrFpA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C3jQl37VK8/VAbhcJTZ5AO/WPq4x34+FM1A4Krdc/T4mmcJwEzQCEcfZrA7FjCM8OeZ+fkq+rSLk8WlS4TpN/cOOLhtd9t0BFKGfmpXKPSDPc4+Z2Oa+jigB6EbdfSm5KVtn6pAplsdn5upBrR3NjB1Q26AvJUP/K7qTwwbtYMI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nJhbbvJy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WiK4E1pWM7zzjHZ75II0y4mV0Vu9RDyWgHnZg3V/guNr0IMHoT86GoqD/Uysx3FhyODpwqtQRBfv9HL3cVC+RcDtoy6KHEz4ppWGJixMzoCdlrqWfano1ghZJH0e6mWublSh7ZGzqpGXxCYdQ3S5K8krI17lRjwo7AUcsqKXlw4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gU23LdFS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nJhbbvJy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C56EC4CEE3;
-	Tue, 17 Jun 2025 15:44:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gU23LdFS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B73D2C4CEE3;
+	Tue, 17 Jun 2025 15:44:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175072;
-	bh=NDhQI3uA1WMxgZF4xBl/ybhsR5OYsiVmNaZCWjVfnYM=;
+	s=korg; t=1750175075;
+	bh=PiK9sN0lSxlpSIpcmN94pgIawLDXoVAxdbW/RfzrFpA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nJhbbvJyJV+T6ILu77BUosCRuG0U3gXAcNY1JKgQaUR44zy82IcptZijbWWo8+pDH
-	 uFqA7Mo3/xGE0v+xX3qh9sBGzGONNzll44YZRc0Y2AcdjFbfeUXZYz8POUJ2RYPcTC
-	 8tnur0yjgLqBgYKBLz8t9AUffRPUX+PZfcze8K4g=
+	b=gU23LdFSYYdM/XuwIwstLLCO/LRygdQfhrGqd2//cbafh6UivNKOOkKdw/T9BGyeG
+	 2AGK/Ed93FGyXuKnr9j0JDyeR8kIynNH7KHuQqW9l1TJCmR5tkapl/Z3zmPBMWmmC4
+	 E9d46fPcbtFKnPPRI5jfezHjfzCuiA8FjjritEj8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Biju Das <biju.das.jz@bp.renesas.com>,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-	Tomi Valkeinen <tomi.valkeinen+renesas@ideasonboard.com>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 089/512] drm: rcar-du: Fix memory leak in rcar_du_vsps_init()
-Date: Tue, 17 Jun 2025 17:20:55 +0200
-Message-ID: <20250617152423.188386014@linuxfoundation.org>
+Subject: [PATCH 6.6 141/356] netfilter: nft_tunnel: fix geneve_opt dump
+Date: Tue, 17 Jun 2025 17:24:16 +0200
+Message-ID: <20250617152343.917874844@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
+References: <20250617152338.212798615@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,63 +47,73 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Biju Das <biju.das.jz@bp.renesas.com>
+From: Fernando Fernandez Mancera <fmancera@suse.de>
 
-[ Upstream commit 91e3bf09a90bb4340c0c3c51396e7531555efda4 ]
+[ Upstream commit 22a9613de4c29d7d0770bfb8a5a9d73eb8df7dad ]
 
-The rcar_du_vsps_init() doesn't free the np allocated by
-of_parse_phandle_with_fixed_args() for the non-error case.
+When dumping a nft_tunnel with more than one geneve_opt configured the
+netlink attribute hierarchy should be as follow:
 
-Fix memory leak for the non-error case.
+ NFTA_TUNNEL_KEY_OPTS
+ |
+ |--NFTA_TUNNEL_KEY_OPTS_GENEVE
+ |  |
+ |  |--NFTA_TUNNEL_KEY_GENEVE_CLASS
+ |  |--NFTA_TUNNEL_KEY_GENEVE_TYPE
+ |  |--NFTA_TUNNEL_KEY_GENEVE_DATA
+ |
+ |--NFTA_TUNNEL_KEY_OPTS_GENEVE
+ |  |
+ |  |--NFTA_TUNNEL_KEY_GENEVE_CLASS
+ |  |--NFTA_TUNNEL_KEY_GENEVE_TYPE
+ |  |--NFTA_TUNNEL_KEY_GENEVE_DATA
+ |
+ |--NFTA_TUNNEL_KEY_OPTS_GENEVE
+ ...
 
-While at it, replace the label 'error'->'done' as it applies to non-error
-case as well and update the error check condition for rcar_du_vsp_init()
-to avoid breakage in future, if it returns positive value.
+Otherwise, userspace tools won't be able to fetch the geneve options
+configured correctly.
 
-Fixes: 3e81374e2014 ("drm: rcar-du: Support multiple sources from the same VSP")
-Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
-Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Link: https://lore.kernel.org/r/20231116122424.80136-1-biju.das.jz@bp.renesas.com
-Signed-off-by: Tomi Valkeinen <tomi.valkeinen+renesas@ideasonboard.com>
+Fixes: 925d844696d9 ("netfilter: nft_tunnel: add support for geneve opts")
+Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/renesas/rcar-du/rcar_du_kms.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ net/netfilter/nft_tunnel.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/renesas/rcar-du/rcar_du_kms.c b/drivers/gpu/drm/renesas/rcar-du/rcar_du_kms.c
-index 70d8ad065bfa1..4c8fe83dd6101 100644
---- a/drivers/gpu/drm/renesas/rcar-du/rcar_du_kms.c
-+++ b/drivers/gpu/drm/renesas/rcar-du/rcar_du_kms.c
-@@ -705,7 +705,7 @@ static int rcar_du_vsps_init(struct rcar_du_device *rcdu)
- 		ret = of_parse_phandle_with_fixed_args(np, vsps_prop_name,
- 						       cells, i, &args);
- 		if (ret < 0)
--			goto error;
-+			goto done;
+diff --git a/net/netfilter/nft_tunnel.c b/net/netfilter/nft_tunnel.c
+index d499eb3f4f297..3e3ae29dde335 100644
+--- a/net/netfilter/nft_tunnel.c
++++ b/net/netfilter/nft_tunnel.c
+@@ -617,10 +617,10 @@ static int nft_tunnel_opts_dump(struct sk_buff *skb,
+ 		struct geneve_opt *opt;
+ 		int offset = 0;
  
- 		/*
- 		 * Add the VSP to the list or update the corresponding existing
-@@ -743,13 +743,11 @@ static int rcar_du_vsps_init(struct rcar_du_device *rcdu)
- 		vsp->dev = rcdu;
- 
- 		ret = rcar_du_vsp_init(vsp, vsps[i].np, vsps[i].crtcs_mask);
--		if (ret < 0)
--			goto error;
-+		if (ret)
-+			goto done;
+-		inner = nla_nest_start_noflag(skb, NFTA_TUNNEL_KEY_OPTS_GENEVE);
+-		if (!inner)
+-			goto failure;
+ 		while (opts->len > offset) {
++			inner = nla_nest_start_noflag(skb, NFTA_TUNNEL_KEY_OPTS_GENEVE);
++			if (!inner)
++				goto failure;
+ 			opt = (struct geneve_opt *)(opts->u.data + offset);
+ 			if (nla_put_be16(skb, NFTA_TUNNEL_KEY_GENEVE_CLASS,
+ 					 opt->opt_class) ||
+@@ -630,8 +630,8 @@ static int nft_tunnel_opts_dump(struct sk_buff *skb,
+ 				    opt->length * 4, opt->opt_data))
+ 				goto inner_failure;
+ 			offset += sizeof(*opt) + opt->length * 4;
++			nla_nest_end(skb, inner);
+ 		}
+-		nla_nest_end(skb, inner);
  	}
- 
--	return 0;
--
--error:
-+done:
- 	for (i = 0; i < ARRAY_SIZE(vsps); ++i)
- 		of_node_put(vsps[i].np);
- 
+ 	nla_nest_end(skb, nest);
+ 	return 0;
 -- 
 2.39.5
 
