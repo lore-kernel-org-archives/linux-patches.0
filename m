@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17FB92F9499;
-	Tue, 17 Jun 2025 16:13:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A34E2F94BA;
+	Tue, 17 Jun 2025 16:13:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750176830; cv=none; b=LAiQB0UrFwZOUUuVpKM+LpIwEzxsPi4Ksmcb6vVf3+H+s2jCGyDtcVPwtegA9LuW0aQqit+Kw8dLAX1HwYMMxaoTiJHZWQboeRjpcYtHwpA5JkUBHpjceR2iqktYYTjKx4e235BxNrRBL58Mx7YaxqshPoNp3rp57N2KhbTUAI8=
+	t=1750176833; cv=none; b=Aais15T0aUtG3EvX+qoU7FqXty9EikgQQRWfc9TIzke2w2KaR2KTcsygDDYfryavVTv/YzvINyhm2J2WDzk2y/Q3dOqVdCgIa8ux1gkFXNfF8jRrQ5nEVf+RKnhDQA+6XW/RGwFZhHOqWyJHT4c9o7wWFQn0v+V5e0874haJrrg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750176830; c=relaxed/simple;
-	bh=UGbFau2zbhnkYls57bWQwLrQ/1wPO5yKxHyRhEfcEJE=;
+	s=arc-20240116; t=1750176833; c=relaxed/simple;
+	bh=mGM8Dq7DHc8ji/KTBbyRIV/SUdugJzU/MUvSO3wE/Ng=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ND+CKlHCSANDTJ6unsg36j5cO9/rWypruW9uq39gJSPMwrnqH/7lrmemmIHIn4oYXfWx0hnWqINpLoyUHZyPeRSFp2U2HQAom/LmS7gSyplHyFway7SOqz3urTkDViCPZPYJ5f5bjgGZ53nKpGGxmEV/OOylHcNEAoIe0RxhHOw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KiHGgTwb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CYfCVlALyINbllFEvwFq/xveBr919iVyy2GV43+y53fDCLb8LVW3BPdB7iS+5LrQTtzOWgfWYG0bBsToeYX6XEg+Qx0upwCr0t9ReN9pDtS5pPmtfauIan5qSlmv16l8BV6iDHeki5onn2Wi078BRWYpdYY8j35WdokUAObKzaU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BVsbgeTF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KiHGgTwb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A3A3C4CEE3;
-	Tue, 17 Jun 2025 16:13:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BVsbgeTF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD952C4CEE3;
+	Tue, 17 Jun 2025 16:13:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750176830;
-	bh=UGbFau2zbhnkYls57bWQwLrQ/1wPO5yKxHyRhEfcEJE=;
+	s=korg; t=1750176833;
+	bh=mGM8Dq7DHc8ji/KTBbyRIV/SUdugJzU/MUvSO3wE/Ng=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KiHGgTwbp8PRAIGpEmlB/y3iD11JtImWzqMvWeyI3sOjD4+KusQ+3vtfe6FHzW875
-	 gC9hIDLY1ZK4pJFvnOlrR2Gm9Nyl0kbFlaHpDi7/VuoPe5y9t8UvWJmhA50MpdnYZK
-	 hO1iyoMmDx/2tRBtG0k2piZi3XB1NMzswyxOQZhY=
+	b=BVsbgeTFJa4B5/cGSWu+mOioiZOoqQyv138QncmhYhgMrksDanI47YMN6cj6LyyAE
+	 TrPOcx0RJsrxHPmCXAsWB4Gd0dG1jq1TfwH804Qx5vmTuWNfaIgOezDahG81UYpgV8
+	 GzPK6dk+N+U382eLrKd7QNm1UxFJzt/1z1vfI+W4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreu Montiel <Andreu.Montiel@technica-engineering.de>,
-	Carlos Fernandez <carlos.fernandez@technica-engineering.de>,
-	Subbaraya Sundeep <sbhatta@marvell.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Scott Benesh <scott.benesh@microchip.com>,
+	Mike McGowen <mike.mcgowen@microchip.com>,
+	Don Brace <don.brace@microchip.com>,
+	Yi Zhang <yi.zhang@redhat.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 317/356] macsec: MACsec SCI assignment for ES = 0
-Date: Tue, 17 Jun 2025 17:27:12 +0200
-Message-ID: <20250617152350.920755805@linuxfoundation.org>
+Subject: [PATCH 6.15 230/780] scsi: smartpqi: Fix smp_processor_id() call trace for preemptible kernels
+Date: Tue, 17 Jun 2025 17:18:58 +0200
+Message-ID: <20250617152500.818377750@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-References: <20250617152338.212798615@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,130 +50,70 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Carlos Fernandez <carlos.fernandez@technica-engineering.de>
+From: Yi Zhang <yi.zhang@redhat.com>
 
-[ Upstream commit d9816ec74e6d6aa29219d010bba3f780ba1d9d75 ]
+[ Upstream commit 42d033cf4b517e91c187ad2fbd7b30fdc6d2d62c ]
 
-According to 802.1AE standard, when ES and SC flags in TCI are zero,
-used SCI should be the current active SC_RX. Current code uses the
-header MAC address. Without this patch, when ES flag is 0 (using a
-bridge or switch), header MAC will not fit the SCI and MACSec frames
-will be discarted.
+Correct kernel call trace when calling smp_processor_id() when called in
+preemptible kernels by using raw_smp_processor_id().
 
-In order to test this issue, MACsec link should be stablished between
-two interfaces, setting SC and ES flags to zero and a port identifier
-different than one. For example, using ip macsec tools:
+smp_processor_id() checks to see if preemption is disabled and if not,
+issue an error message followed by a call to dump_stack().
 
-ip link add link $ETH0 macsec0 type macsec port 11 send_sci off
-end_station off
-ip macsec add macsec0 tx sa 0 pn 2 on key 01 $ETH1_KEY
-ip macsec add macsec0 rx port 11 address $ETH1_MAC
-ip macsec add macsec0 rx port 11 address $ETH1_MAC sa 0 pn 2 on key 02
-ip link set dev macsec0 up
+Brief example of call trace:
+kernel:  check_preemption_disabled: 436 callbacks suppressed
+kernel:  BUG: using smp_processor_id() in preemptible [00000000]
+         code: kworker/u1025:0/2354
+kernel:  caller is pqi_scsi_queue_command+0x183/0x310 [smartpqi]
+kernel:  CPU: 129 PID: 2354 Comm: kworker/u1025:0
+kernel:  ...
+kernel:  Workqueue: writeback wb_workfn (flush-253:0)
+kernel:  Call Trace:
+kernel:   <TASK>
+kernel:   dump_stack_lvl+0x34/0x48
+kernel:   check_preemption_disabled+0xdd/0xe0
+kernel:   pqi_scsi_queue_command+0x183/0x310 [smartpqi]
+kernel:  ...
 
-ip link add link $ETH1 macsec1 type macsec port 11 send_sci off
-end_station off
-ip macsec add macsec1 tx sa 0 pn 2 on key 01 $ETH0_KEY
-ip macsec add macsec1 rx port 11 address $ETH0_MAC
-ip macsec add macsec1 rx port 11 address $ETH0_MAC sa 0 pn 2 on key 02
-ip link set dev macsec1 up
-
-Fixes: c09440f7dcb3 ("macsec: introduce IEEE 802.1AE driver")
-Co-developed-by: Andreu Montiel <Andreu.Montiel@technica-engineering.de>
-Signed-off-by: Andreu Montiel <Andreu.Montiel@technica-engineering.de>
-Signed-off-by: Carlos Fernandez <carlos.fernandez@technica-engineering.de>
-Reviewed-by: Subbaraya Sundeep <sbhatta@marvell.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 283dcc1b142e ("scsi: smartpqi: add counter for parity write stream requests")
+Reviewed-by: Scott Benesh <scott.benesh@microchip.com>
+Reviewed-by: Mike McGowen <mike.mcgowen@microchip.com>
+Tested-by: Don Brace <don.brace@microchip.com>
+Signed-off-by: Yi Zhang <yi.zhang@redhat.com>
+Signed-off-by: Don Brace <don.brace@microchip.com>
+Link: https://lore.kernel.org/r/20250423183229.538572-5-don.brace@microchip.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/macsec.c | 40 ++++++++++++++++++++++++++++++++++------
- 1 file changed, 34 insertions(+), 6 deletions(-)
+ drivers/scsi/smartpqi/smartpqi_init.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/macsec.c b/drivers/net/macsec.c
-index 7c96493a367bf..767053d6c6b6f 100644
---- a/drivers/net/macsec.c
-+++ b/drivers/net/macsec.c
-@@ -243,15 +243,39 @@ static sci_t make_sci(const u8 *addr, __be16 port)
- 	return sci;
- }
+diff --git a/drivers/scsi/smartpqi/smartpqi_init.c b/drivers/scsi/smartpqi/smartpqi_init.c
+index 8a26eca4fdc9b..6c9dec7e3128f 100644
+--- a/drivers/scsi/smartpqi/smartpqi_init.c
++++ b/drivers/scsi/smartpqi/smartpqi_init.c
+@@ -5990,7 +5990,7 @@ static bool pqi_is_parity_write_stream(struct pqi_ctrl_info *ctrl_info,
+ 			pqi_stream_data->next_lba = rmd.first_block +
+ 				rmd.block_cnt;
+ 			pqi_stream_data->last_accessed = jiffies;
+-			per_cpu_ptr(device->raid_io_stats, smp_processor_id())->write_stream_cnt++;
++				per_cpu_ptr(device->raid_io_stats, raw_smp_processor_id())->write_stream_cnt++;
+ 			return true;
+ 		}
  
--static sci_t macsec_frame_sci(struct macsec_eth_header *hdr, bool sci_present)
-+static sci_t macsec_active_sci(struct macsec_secy *secy)
- {
--	sci_t sci;
-+	struct macsec_rx_sc *rx_sc = rcu_dereference_bh(secy->rx_sc);
-+
-+	/* Case single RX SC */
-+	if (rx_sc && !rcu_dereference_bh(rx_sc->next))
-+		return (rx_sc->active) ? rx_sc->sci : 0;
-+	/* Case no RX SC or multiple */
-+	else
-+		return 0;
-+}
-+
-+static sci_t macsec_frame_sci(struct macsec_eth_header *hdr, bool sci_present,
-+			      struct macsec_rxh_data *rxd)
-+{
-+	struct macsec_dev *macsec;
-+	sci_t sci = 0;
- 
--	if (sci_present)
-+	/* SC = 1 */
-+	if (sci_present) {
- 		memcpy(&sci, hdr->secure_channel_id,
- 		       sizeof(hdr->secure_channel_id));
--	else
-+	/* SC = 0; ES = 0 */
-+	} else if ((!(hdr->tci_an & (MACSEC_TCI_ES | MACSEC_TCI_SC))) &&
-+		   (list_is_singular(&rxd->secys))) {
-+		/* Only one SECY should exist on this scenario */
-+		macsec = list_first_or_null_rcu(&rxd->secys, struct macsec_dev,
-+						secys);
-+		if (macsec)
-+			return macsec_active_sci(&macsec->secy);
-+	} else {
- 		sci = make_sci(hdr->eth.h_source, MACSEC_PORT_ES);
-+	}
- 
- 	return sci;
- }
-@@ -1105,7 +1129,7 @@ static rx_handler_result_t macsec_handle_frame(struct sk_buff **pskb)
- 	struct macsec_rxh_data *rxd;
- 	struct macsec_dev *macsec;
- 	unsigned int len;
--	sci_t sci;
-+	sci_t sci = 0;
- 	u32 hdr_pn;
- 	bool cbit;
- 	struct pcpu_rx_sc_stats *rxsc_stats;
-@@ -1152,11 +1176,14 @@ static rx_handler_result_t macsec_handle_frame(struct sk_buff **pskb)
- 
- 	macsec_skb_cb(skb)->has_sci = !!(hdr->tci_an & MACSEC_TCI_SC);
- 	macsec_skb_cb(skb)->assoc_num = hdr->tci_an & MACSEC_AN_MASK;
--	sci = macsec_frame_sci(hdr, macsec_skb_cb(skb)->has_sci);
- 
- 	rcu_read_lock();
- 	rxd = macsec_data_rcu(skb->dev);
- 
-+	sci = macsec_frame_sci(hdr, macsec_skb_cb(skb)->has_sci, rxd);
-+	if (!sci)
-+		goto drop_nosc;
-+
- 	list_for_each_entry_rcu(macsec, &rxd->secys, secys) {
- 		struct macsec_rx_sc *sc = find_rx_sc(&macsec->secy, sci);
- 
-@@ -1279,6 +1306,7 @@ static rx_handler_result_t macsec_handle_frame(struct sk_buff **pskb)
- 	macsec_rxsa_put(rx_sa);
- drop_nosa:
- 	macsec_rxsc_put(rx_sc);
-+drop_nosc:
- 	rcu_read_unlock();
- drop_direct:
- 	kfree_skb(skb);
+@@ -6069,7 +6069,7 @@ static int pqi_scsi_queue_command(struct Scsi_Host *shost, struct scsi_cmnd *scm
+ 			rc = pqi_raid_bypass_submit_scsi_cmd(ctrl_info, device, scmd, queue_group);
+ 			if (rc == 0 || rc == SCSI_MLQUEUE_HOST_BUSY) {
+ 				raid_bypassed = true;
+-				per_cpu_ptr(device->raid_io_stats, smp_processor_id())->raid_bypass_cnt++;
++				per_cpu_ptr(device->raid_io_stats, raw_smp_processor_id())->raid_bypass_cnt++;
+ 			}
+ 		}
+ 		if (!raid_bypassed)
 -- 
 2.39.5
 
