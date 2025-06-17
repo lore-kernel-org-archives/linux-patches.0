@@ -1,42 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 873BB2F9483;
-	Tue, 17 Jun 2025 16:20:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ACF52F9492;
+	Tue, 17 Jun 2025 16:20:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177245; cv=none; b=M+YQhLLDStuvLgWf+MbMmss7oArrYdlk+miHeCtrrdLU9cFE5un0J8XwuaHVefVLm3nicSz4/xdWKTLdRY0AnlKbD5Ct3eDdcP+NwCktuLgynreljZAKNnQgsXe5HUqtkeb0n6l7wZs0LghlxUX55yrdIktTVUAGLioUW+2zcDM=
+	t=1750177248; cv=none; b=V4p20wW/0jtz39anw8ZhDmAgofu/Wnjh/ZG/POb68qS+fximUlwnI8Th6OeJT9lI/s3TPE2DWTtrFLVOKiqmFXCoew5IjHVGi3fKbigNzvHUqb8UNR1FmyqTddb56YwJNBHGkEKH8IV9kpxbCJcpJtIJSrv+mSX2kIVLM/Mqkz0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177245; c=relaxed/simple;
-	bh=QOVKehIsrWSgm7+cbJ2uGcYGgq4vCCt0wMTDxlWYcLE=;
+	s=arc-20240116; t=1750177248; c=relaxed/simple;
+	bh=d/sOActGyxksS981kqg1LbxdqGJVundRozjeOgnNfyI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DTT0ZZeEpFf1OtOH3JKIBD0wgIP2XoD6S6qd6/q/6XAbYe+noMwt9D+8cfCCoYpYirVjru/31E0yiYDPYI3d8QYvffRQo8u8C8+hyj79vYw22MiJlqEjFVmUIF7x0xDAQGezBLKGk+KI+JNM5Yws0MKFmFkCc7r74BVdTvR+ku4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JYPvGv3z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lhsRxpCeecmiCbFfcCNyyu5LjHPEXkuO/VNnAZGgn8aCZ5KfkSBe5k7/7WBgDxgMo5GlELnKU60Hf4Ptn3wRff1mmkb0R3GaOQRBLalSebOdT2EF+Yc+28oBqH8q0pwvZ1AWfirWqO2QrGfD+cb/u/s6Mecq7JdknbhgN6M9VXA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ov6pVI57; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JYPvGv3z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 584E6C4CEE7;
-	Tue, 17 Jun 2025 16:20:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ov6pVI57"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6092C4CEE3;
+	Tue, 17 Jun 2025 16:20:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177245;
-	bh=QOVKehIsrWSgm7+cbJ2uGcYGgq4vCCt0wMTDxlWYcLE=;
+	s=korg; t=1750177248;
+	bh=d/sOActGyxksS981kqg1LbxdqGJVundRozjeOgnNfyI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JYPvGv3zkiZRfkF102lPGVt44Fg/wu1pF3YOS1KqmjlcnEhoVs1H8Wc3zLBbDG8ui
-	 0gHMda6fsY0qYVzS+AjT55YYYvp2H8x6QfKIJSebz2YO/dWW5NOyYork3O7ZbbBEgV
-	 eyGI52Ks2M8bE/5bBQQbB+gQ65UKsFl3aH5VLth4=
+	b=Ov6pVI57sTeKj/8TX9QRb2dAFrjhHJFN6qBApKUF6jfLgWA2grBMOO8WOsxMUe3jm
+	 xEtgQKBS34XUZtRtSov2J3aUtwV2G4CWeTcICHkBk9EnnpJyOToE3TnINfKpmXs6dL
+	 zyrXfbd6fSOrn1emfadn9Osw0aml/nRqc5lsewOE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Longfang Liu <liulongfang@huawei.com>,
-	Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
-	Alex Williamson <alex.williamson@redhat.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Denis Benato <benato.denis96@gmail.com>,
+	Yijun Shen <Yijun_Shen@Dell.com>,
+	David Perry <david.perry@amd.com>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 277/780] hisi_acc_vfio_pci: bugfix cache write-back issue
-Date: Tue, 17 Jun 2025 17:19:45 +0200
-Message-ID: <20250617152502.747143785@linuxfoundation.org>
+Subject: [PATCH 6.12 313/512] PCI: Explicitly put devices into D0 when initializing
+Date: Tue, 17 Jun 2025 17:24:39 +0200
+Message-ID: <20250617152432.297176178@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,72 +51,110 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Longfang Liu <liulongfang@huawei.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit e63c466398731bb7867f42f44b76fa984de59db2 ]
+[ Upstream commit 4d4c10f763d7808fbade28d83d237411603bca05 ]
 
-At present, cache write-back is placed in the device data
-copy stage after stopping the device operation.
-Writing back to the cache at this stage will cause the data
-obtained by the cache to be written back to be empty.
+AMD BIOS team has root caused an issue that NVMe storage failed to come
+back from suspend to a lack of a call to _REG when NVMe device was probed.
 
-In order to ensure that the cache data is written back
-successfully, the data needs to be written back into the
-stop device stage.
+112a7f9c8edbf ("PCI/ACPI: Call _REG when transitioning D-states") added
+support for calling _REG when transitioning D-states, but this only works
+if the device actually "transitions" D-states.
 
-Fixes: b0eed085903e ("hisi_acc_vfio_pci: Add support for VFIO live migration")
-Signed-off-by: Longfang Liu <liulongfang@huawei.com>
-Reviewed-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
-Link: https://lore.kernel.org/r/20250510081155.55840-4-liulongfang@huawei.com
-Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
+967577b062417 ("PCI/PM: Keep runtime PM enabled for unbound PCI devices")
+added support for runtime PM on PCI devices, but never actually
+'explicitly' sets the device to D0.
+
+To make sure that devices are in D0 and that platform methods such as
+_REG are called, explicitly set all devices into D0 during initialization.
+
+Fixes: 967577b062417 ("PCI/PM: Keep runtime PM enabled for unbound PCI devices")
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Tested-by: Denis Benato <benato.denis96@gmail.com>
+Tested-By: Yijun Shen <Yijun_Shen@Dell.com>
+Tested-By: David Perry <david.perry@amd.com>
+Reviewed-by: Rafael J. Wysocki <rafael@kernel.org>
+Link: https://patch.msgid.link/20250424043232.1848107-1-superm1@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ drivers/pci/pci-driver.c |  6 ------
+ drivers/pci/pci.c        | 13 ++++++++++---
+ drivers/pci/pci.h        |  1 +
+ 3 files changed, 11 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c b/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
-index 80217aea54755..d96446f499ed0 100644
---- a/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
-+++ b/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
-@@ -566,7 +566,6 @@ static int vf_qm_state_save(struct hisi_acc_vf_core_device *hisi_acc_vdev,
- {
- 	struct acc_vf_data *vf_data = &migf->vf_data;
- 	struct hisi_qm *vf_qm = &hisi_acc_vdev->vf_qm;
--	struct device *dev = &vf_qm->pdev->dev;
- 	int ret;
- 
- 	if (unlikely(qm_wait_dev_not_ready(vf_qm))) {
-@@ -580,12 +579,6 @@ static int vf_qm_state_save(struct hisi_acc_vf_core_device *hisi_acc_vdev,
- 	vf_data->vf_qm_state = QM_READY;
- 	hisi_acc_vdev->vf_qm_state = vf_data->vf_qm_state;
- 
--	ret = vf_qm_cache_wb(vf_qm);
--	if (ret) {
--		dev_err(dev, "failed to writeback QM Cache!\n");
--		return ret;
--	}
--
- 	ret = vf_qm_read_data(vf_qm, vf_data);
- 	if (ret)
- 		return -EINVAL;
-@@ -1012,6 +1005,13 @@ static int hisi_acc_vf_stop_device(struct hisi_acc_vf_core_device *hisi_acc_vdev
- 		dev_err(dev, "failed to check QM INT state!\n");
- 		return ret;
- 	}
-+
-+	ret = vf_qm_cache_wb(vf_qm);
-+	if (ret) {
-+		dev_err(dev, "failed to writeback QM cache!\n");
-+		return ret;
-+	}
-+
- 	return 0;
+diff --git a/drivers/pci/pci-driver.c b/drivers/pci/pci-driver.c
+index 35270172c8331..a90990157e0b7 100644
+--- a/drivers/pci/pci-driver.c
++++ b/drivers/pci/pci-driver.c
+@@ -555,12 +555,6 @@ static void pci_pm_default_resume(struct pci_dev *pci_dev)
+ 	pci_enable_wake(pci_dev, PCI_D0, false);
  }
  
+-static void pci_pm_power_up_and_verify_state(struct pci_dev *pci_dev)
+-{
+-	pci_power_up(pci_dev);
+-	pci_update_current_state(pci_dev, PCI_D0);
+-}
+-
+ static void pci_pm_default_resume_early(struct pci_dev *pci_dev)
+ {
+ 	pci_pm_power_up_and_verify_state(pci_dev);
+diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
+index 7ca5422feb2d4..1a6639dbe81b3 100644
+--- a/drivers/pci/pci.c
++++ b/drivers/pci/pci.c
+@@ -3185,6 +3185,12 @@ void pci_d3cold_disable(struct pci_dev *dev)
+ }
+ EXPORT_SYMBOL_GPL(pci_d3cold_disable);
+ 
++void pci_pm_power_up_and_verify_state(struct pci_dev *pci_dev)
++{
++	pci_power_up(pci_dev);
++	pci_update_current_state(pci_dev, PCI_D0);
++}
++
+ /**
+  * pci_pm_init - Initialize PM functions of given PCI device
+  * @dev: PCI device to handle.
+@@ -3195,9 +3201,6 @@ void pci_pm_init(struct pci_dev *dev)
+ 	u16 status;
+ 	u16 pmc;
+ 
+-	pm_runtime_forbid(&dev->dev);
+-	pm_runtime_set_active(&dev->dev);
+-	pm_runtime_enable(&dev->dev);
+ 	device_enable_async_suspend(&dev->dev);
+ 	dev->wakeup_prepared = false;
+ 
+@@ -3259,6 +3262,10 @@ void pci_pm_init(struct pci_dev *dev)
+ 	pci_read_config_word(dev, PCI_STATUS, &status);
+ 	if (status & PCI_STATUS_IMM_READY)
+ 		dev->imm_ready = 1;
++	pci_pm_power_up_and_verify_state(dev);
++	pm_runtime_forbid(&dev->dev);
++	pm_runtime_set_active(&dev->dev);
++	pm_runtime_enable(&dev->dev);
+ }
+ 
+ static unsigned long pci_ea_flags(struct pci_dev *dev, u8 prop)
+diff --git a/drivers/pci/pci.h b/drivers/pci/pci.h
+index 65df6d2ac0032..c1a5874eeb6cf 100644
+--- a/drivers/pci/pci.h
++++ b/drivers/pci/pci.h
+@@ -146,6 +146,7 @@ void pci_dev_adjust_pme(struct pci_dev *dev);
+ void pci_dev_complete_resume(struct pci_dev *pci_dev);
+ void pci_config_pm_runtime_get(struct pci_dev *dev);
+ void pci_config_pm_runtime_put(struct pci_dev *dev);
++void pci_pm_power_up_and_verify_state(struct pci_dev *pci_dev);
+ void pci_pm_init(struct pci_dev *dev);
+ void pci_ea_init(struct pci_dev *dev);
+ void pci_msi_init(struct pci_dev *dev);
 -- 
 2.39.5
 
