@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB48818A6AE;
-	Tue, 17 Jun 2025 15:37:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08E8B18A6AE;
+	Tue, 17 Jun 2025 15:37:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750174662; cv=none; b=R87K05fCPn+NVnItXCJ5tDUhI7quyHuqFzozVyNWr1Y3WtNCYwV6tfnaMLUP6fhqJr9IGBd3CUpvrc4V0/V/fx9L5oe5N6er6XhNlF82eRvXeOfLEmtIHhYZqZjot6qEmp1kHPVUQHbFWx/5QHSX7+MOxMgpitSS0iSdMzFaNoo=
+	t=1750174666; cv=none; b=egoS2EwEd/2qzewOft3M5zR+NCnYDYvs4TI6NqVegMcDaobkhhh9f25u823jF168dxPDflJx81xmMXptJYlZjapinEbNy2p+bmEAZ2y22vToheJMwS/7w3NMjiii46dVbJPbGUkNJz/DqXyHdzz3q9MTyhZHyny//5vkUbubsYc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750174662; c=relaxed/simple;
-	bh=gftoO5w7UNPgM/H45IjTAejCLT5TA3eHmzKww86r9mo=;
+	s=arc-20240116; t=1750174666; c=relaxed/simple;
+	bh=BEsG/HiFYH/HM73bSOyd+dfvBrR1NZYiB8pDrIhdfws=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K30rzM0KGWYptTW9cUk79Na1b2gfzbVHB0XmA1Djh3o2f7zOYoPn0BVfsX4k3CpsMto5xGuTz8zwHRUkpdY9/ckY7PgrvNwGP2+omWQh45AX2GoswjjSp4trvlERBlQHHnEnuhs2QaNAUeXWXiFEdA9dZCGuYkfgA6mqkB6FMHA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oUUdUaFD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Yr0lbkzd1HMw9mni+v44tuf+yHmbGhuwZWMboChw4oM6byiivNJPEYm/3b5RdSFbQH5D6sVQKyWtipcRgmDCRvxD081Rl3awZh1BcMRmaMbeN091clI3up8ajKftuPhhyJvnNGUW7Ss+RZu4EE/oXBynfjlNCBwVMnzIyFYzmiI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mpsNk0Uc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oUUdUaFD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C9EBC4CEE7;
-	Tue, 17 Jun 2025 15:37:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mpsNk0Uc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E4C6C4CEE7;
+	Tue, 17 Jun 2025 15:37:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750174662;
-	bh=gftoO5w7UNPgM/H45IjTAejCLT5TA3eHmzKww86r9mo=;
+	s=korg; t=1750174665;
+	bh=BEsG/HiFYH/HM73bSOyd+dfvBrR1NZYiB8pDrIhdfws=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oUUdUaFDN7AqVcaDexkepabd793pN/usJ3yjXNRnIM3z0+nloYuOtjl/4Xi3eg4Iu
-	 g3qKNCm1xCHeOjVJfaZ98lwHqOB6Jyy8zdntafZXH73xxvunusnUaKRsTTkGZwrzGc
-	 0jKSPkoS0G4eZSR3ax0TcEs5jzgmvL2K2wrCixxI=
+	b=mpsNk0Uc4Hlypt2Waj4UZhISqG0NmNEji3FUfL0KXHgX68tscv6PbiQ/4O2uhUvkg
+	 l3/g2yXv5Y1kjFZJeoDUzfM4Lxhpbrw98BfzM2R20W5skX1C7M+1hpOg6EzYJ1HFWy
+	 PUy9GmuSkMAAWTz1HKwuX1eOth6qtW4oroZd88Cs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukas Wunner <lukas@wunner.de>,
-	Stefan Berger <stefanb@linux.ibm.com>,
-	Ignat Korchagin <ignat@cloudflare.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 006/780] crypto: ecdsa - Fix enc/dec size reported by KEYCTL_PKEY_QUERY
-Date: Tue, 17 Jun 2025 17:15:14 +0200
-Message-ID: <20250617152451.756523110@linuxfoundation.org>
+Subject: [PATCH 6.6 084/356] bpf, sockmap: fix duplicated data transmission
+Date: Tue, 17 Jun 2025 17:23:19 +0200
+Message-ID: <20250617152341.601995096@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
+References: <20250617152338.212798615@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,75 +47,70 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lukas Wunner <lukas@wunner.de>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-[ Upstream commit 3828485e1c7b111290122ab6e083c2a37132b5c2 ]
+[ Upstream commit 3b4f14b794287be137ea2c6158765d1ea1e018a4 ]
 
-KEYCTL_PKEY_QUERY system calls for ecdsa keys return the key size as
-max_enc_size and max_dec_size, even though such keys cannot be used for
-encryption/decryption.  They're exclusively for signature generation or
-verification.
+In the !ingress path under sk_psock_handle_skb(), when sending data to the
+remote under snd_buf limitations, partial skb data might be transmitted.
 
-Only rsa keys with pkcs1 encoding can also be used for encryption or
-decryption.
+Although we preserved the partial transmission state (offset/length), the
+state wasn't properly consumed during retries. This caused the retry path
+to resend the entire skb data instead of continuing from the previous
+offset, resulting in data overlap at the receiver side.
 
-Return 0 instead for ecdsa keys (as well as ecrdsa keys).
-
-Signed-off-by: Lukas Wunner <lukas@wunner.de>
-Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
-Reviewed-by: Ignat Korchagin <ignat@cloudflare.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Stable-dep-of: 6b7f9397c98c ("crypto: ecdsa - Fix NIST P521 key size reported by KEYCTL_PKEY_QUERY")
+Fixes: 405df89dd52c ("bpf, sockmap: Improved check for empty queue")
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Link: https://lore.kernel.org/r/20250407142234.47591-3-jiayuan.chen@linux.dev
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/asymmetric_keys/public_key.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ net/core/skmsg.c | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
-diff --git a/crypto/asymmetric_keys/public_key.c b/crypto/asymmetric_keys/public_key.c
-index bf165d321440d..dd44a966947fb 100644
---- a/crypto/asymmetric_keys/public_key.c
-+++ b/crypto/asymmetric_keys/public_key.c
-@@ -188,6 +188,8 @@ static int software_key_query(const struct kernel_pkey_params *params,
- 	ptr = pkey_pack_u32(ptr, pkey->paramlen);
- 	memcpy(ptr, pkey->params, pkey->paramlen);
+diff --git a/net/core/skmsg.c b/net/core/skmsg.c
+index b9b941c487c8a..c284c8a3d6792 100644
+--- a/net/core/skmsg.c
++++ b/net/core/skmsg.c
+@@ -655,11 +655,6 @@ static void sk_psock_backlog(struct work_struct *work)
+ 	int ret;
  
-+	memset(info, 0, sizeof(*info));
+ 	mutex_lock(&psock->work_mutex);
+-	if (unlikely(state->len)) {
+-		len = state->len;
+-		off = state->off;
+-	}
+-
+ 	while ((skb = skb_peek(&psock->ingress_skb))) {
+ 		len = skb->len;
+ 		off = 0;
+@@ -669,6 +664,13 @@ static void sk_psock_backlog(struct work_struct *work)
+ 			off = stm->offset;
+ 			len = stm->full_len;
+ 		}
 +
- 	if (issig) {
- 		sig = crypto_alloc_sig(alg_name, 0, 0);
- 		if (IS_ERR(sig)) {
-@@ -211,6 +213,9 @@ static int software_key_query(const struct kernel_pkey_params *params,
- 			info->supported_ops |= KEYCTL_SUPPORTS_SIGN;
- 
- 		if (strcmp(params->encoding, "pkcs1") == 0) {
-+			info->max_enc_size = len;
-+			info->max_dec_size = len;
++		/* Resume processing from previous partial state */
++		if (unlikely(state->len)) {
++			len = state->len;
++			off = state->off;
++		}
 +
- 			info->supported_ops |= KEYCTL_SUPPORTS_ENCRYPT;
- 			if (pkey->key_is_private)
- 				info->supported_ops |= KEYCTL_SUPPORTS_DECRYPT;
-@@ -232,6 +237,8 @@ static int software_key_query(const struct kernel_pkey_params *params,
- 		len = crypto_akcipher_maxsize(tfm);
- 		info->max_sig_size = len;
- 		info->max_data_size = len;
-+		info->max_enc_size = len;
-+		info->max_dec_size = len;
+ 		ingress = skb_bpf_ingress(skb);
+ 		skb_bpf_redirect_clear(skb);
+ 		do {
+@@ -696,6 +698,8 @@ static void sk_psock_backlog(struct work_struct *work)
+ 			len -= ret;
+ 		} while (len);
  
- 		info->supported_ops = KEYCTL_SUPPORTS_ENCRYPT;
- 		if (pkey->key_is_private)
-@@ -239,8 +246,6 @@ static int software_key_query(const struct kernel_pkey_params *params,
++		/* The entire skb sent, clear state */
++		sk_psock_skb_state(psock, state, 0, 0);
+ 		skb = skb_dequeue(&psock->ingress_skb);
+ 		kfree_skb(skb);
  	}
- 
- 	info->key_size = len * 8;
--	info->max_enc_size = len;
--	info->max_dec_size = len;
- 
- 	ret = 0;
- 
 -- 
 2.39.5
 
