@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 654672FA658;
-	Tue, 17 Jun 2025 16:52:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3C4F2FA651;
+	Tue, 17 Jun 2025 16:52:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750179133; cv=none; b=UWrn3y73LxYhCw9/2NMhr7g2HUv0L9Xn6MVhANrWpFrYWTmK3O9cDAn5cDPnmvCawphSwtM4LDSRisILXsd8Q8MAcCMFkM6YSpM6dq25IPYkaos8746yjVF5G8AQ1auv8CrIPkPcxXrgBD1ypj9hStAPbVA88cLlthXiKNDaUns=
+	t=1750179138; cv=none; b=Be41Fp/h5HA+cVIVSM5sRzqO+/S+C5b9zkVa0dGBk2lUW/Rk4oTT3OMUCtL+6r0tiXFHrgEMh1S49mqICbJ5ZPABquP3oWmE/sOyObbuUz6PP76R/vDVWPdBd6VB9ZHbJ+ZCqyXlalUSP2fAEt23wmAB9GKAca62qxftdpmVjrw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750179133; c=relaxed/simple;
-	bh=n5O1UGu7sSmmc4V91KkbkfFhUXk6LEW/xy84LIaOrPg=;
+	s=arc-20240116; t=1750179138; c=relaxed/simple;
+	bh=upbTyz0jZYFgooCAss6hg1c++lNyc/GrYABD4Rmk/uk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JDDdvRBUoHzRGnhlbw7trKaRAfiUNWn3iLH222nqqBUiZ1pD44gErMe7FusOLKlmNWVX2DhHs804vvFJuzs9mxuaA6FWWSHd2PIXgAHgfWoHBmEX9FHvkXFNePM1wk1dz6druKDt0PizVlD6FCJm9E1vFRF6sRO1zlDsj9Jl/8U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PbrTUUAC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r5exUedm7W17bkXbwVsO97dVpG0CLhP6NVgKCaB0QSXctSYknTQ0NZFxSirSWVhiYLaWvNlvYxGc8kX+xtBBUO+BK9sw+0Mwf6jP0cKdaddg0c3e3W/l8Fz3RxqE1/jbxPzWj6zbY+ny7NghotblLPYNTS1voWGtJ1hVzMX0y8Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eyninxLB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PbrTUUAC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF2C5C4CEE3;
-	Tue, 17 Jun 2025 16:52:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eyninxLB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16DB2C4CEE3;
+	Tue, 17 Jun 2025 16:52:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750179133;
-	bh=n5O1UGu7sSmmc4V91KkbkfFhUXk6LEW/xy84LIaOrPg=;
+	s=korg; t=1750179136;
+	bh=upbTyz0jZYFgooCAss6hg1c++lNyc/GrYABD4Rmk/uk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PbrTUUAC1/S2E5ziLlULO9b9/rM5V9yic1wqYQjbEVSM9KGeaONtGv9V05skB8gw/
-	 XK7HQfAOo5/lCyen7vvKBkU23mqJfqyrZKU19qdQoSALQU3srRJtiNTV+Gkv48NUhY
-	 ApvnOTiIGryCHtFRWVBWoxl/HJwLGRIhVEUOuyQk=
+	b=eyninxLBpT2s0HhZnZWLAZX9zvenglqnu2SiKCn0lkpqERBcXVDw5/CGLOKdW9YcY
+	 Bo0yZpqQh4Xu+S2XBxn5M6Kev75NBrJSAQI60xvr/J+3qVe5mDpItMDLqv0aKGw1q5
+	 GMQ+dwzdOv+gbXq2POa60ktupSGAW5fJyN3MgAf0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Gautham R. Shenoy" <gautham.shenoy@amd.com>,
-	Len Brown <len.brown@intel.com>,
+	Peter Griffin <peter.griffin@linaro.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 658/780] tools/power turbostat: Fix AMD package-energy reporting
-Date: Tue, 17 Jun 2025 17:26:06 +0200
-Message-ID: <20250617152518.265307900@linuxfoundation.org>
+Subject: [PATCH 6.15 659/780] pinctrl: samsung: refactor drvdata suspend & resume callbacks
+Date: Tue, 17 Jun 2025 17:26:07 +0200
+Message-ID: <20250617152518.303602992@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
 References: <20250617152451.485330293@linuxfoundation.org>
@@ -51,124 +51,295 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gautham R. Shenoy <gautham.shenoy@amd.com>
+From: Peter Griffin <peter.griffin@linaro.org>
 
-[ Upstream commit adb49732c8c63665dd3476e8e6b7c67a0f851245 ]
+[ Upstream commit 3ade961e97f3b05dcdd9a4fabfe179c9e75571e0 ]
 
-commit 05a2f07db888 ("tools/power turbostat: read RAPL counters via
-perf") that adds support to read RAPL counters via perf defines the
-notion of a RAPL domain_id which is set to physical_core_id on
-platforms which support per_core_rapl counters (Eg: AMD processors
-Family 17h onwards) and is set to the physical_package_id on all the
-other platforms.
+This enables the clk_enable() and clk_disable() logic to be removed
+from each callback, but otherwise should have no functional impact.
 
-However, the physical_core_id is only unique within a package and on
-platforms with multiple packages more than one core can have the same
-physical_core_id and thus the same domain_id. (For eg, the first cores
-of each package have the physical_core_id = 0). This results in all
-these cores with the same physical_core_id using the same entry in the
-rapl_counter_info_perdomain[]. Since rapl_perf_init() skips the
-perf-initialization for cores whose domain_ids have already been
-visited, cores that have the same physical_core_id always read the
-perf file corresponding to the physical_core_id of the first package
-and thus the package-energy is incorrectly reported to be the same
-value for different packages.
+It is a prepatory patch so that the callbacks can become SoC
+specific.
 
-Note: This issue only arises when RAPL counters are read via perf and
-not when they are read via MSRs since in the latter case the MSRs are
-read separately on each core.
-
-Fix this issue by associating each CPU with rapl_core_id which is
-unique across all the packages in the system.
-
-Fixes: 05a2f07db888 ("tools/power turbostat: read RAPL counters via perf")
-Signed-off-by: Gautham R. Shenoy <gautham.shenoy@amd.com>
-Signed-off-by: Len Brown <len.brown@intel.com>
+Signed-off-by: Peter Griffin <peter.griffin@linaro.org>
+Link: https://lore.kernel.org/r/20250402-pinctrl-fltcon-suspend-v6-1-78ce0d4eb30c@linaro.org
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Stable-dep-of: bdbe0a0f7100 ("pinctrl: samsung: add gs101 specific eint suspend/resume callbacks")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/power/x86/turbostat/turbostat.c | 41 +++++++++++++++++++++++----
- 1 file changed, 36 insertions(+), 5 deletions(-)
+ drivers/pinctrl/samsung/pinctrl-exynos.c  | 89 ++++++-----------------
+ drivers/pinctrl/samsung/pinctrl-exynos.h  |  4 +-
+ drivers/pinctrl/samsung/pinctrl-samsung.c | 21 ++++--
+ drivers/pinctrl/samsung/pinctrl-samsung.h |  8 +-
+ 4 files changed, 42 insertions(+), 80 deletions(-)
 
-diff --git a/tools/power/x86/turbostat/turbostat.c b/tools/power/x86/turbostat/turbostat.c
-index 0170d3cc68194..ab79854cb296e 100644
---- a/tools/power/x86/turbostat/turbostat.c
-+++ b/tools/power/x86/turbostat/turbostat.c
-@@ -4766,6 +4766,38 @@ unsigned long pmt_read_counter(struct pmt_counter *ppmt, unsigned int domain_id)
- 	return (value & value_mask) >> value_shift;
+diff --git a/drivers/pinctrl/samsung/pinctrl-exynos.c b/drivers/pinctrl/samsung/pinctrl-exynos.c
+index 42093bae8bb79..ae82f42be83cf 100644
+--- a/drivers/pinctrl/samsung/pinctrl-exynos.c
++++ b/drivers/pinctrl/samsung/pinctrl-exynos.c
+@@ -762,19 +762,11 @@ __init int exynos_eint_wkup_init(struct samsung_pinctrl_drv_data *d)
+ 	return 0;
  }
  
-+
-+/* Rapl domain enumeration helpers */
-+static inline int get_rapl_num_domains(void)
-+{
-+	int num_packages = topo.max_package_id + 1;
-+	int num_cores_per_package;
-+	int num_cores;
-+
-+	if (!platform->has_per_core_rapl)
-+		return num_packages;
-+
-+	num_cores_per_package = topo.max_core_id + 1;
-+	num_cores = num_cores_per_package * num_packages;
-+
-+	return num_cores;
-+}
-+
-+static inline int get_rapl_domain_id(int cpu)
-+{
-+	int nr_cores_per_package = topo.max_core_id + 1;
-+	int rapl_core_id;
-+
-+	if (!platform->has_per_core_rapl)
-+		return cpus[cpu].physical_package_id;
-+
-+	/* Compute the system-wide unique core-id for @cpu */
-+	rapl_core_id = cpus[cpu].physical_core_id;
-+	rapl_core_id += cpus[cpu].physical_package_id * nr_cores_per_package;
-+
-+	return rapl_core_id;
-+}
-+
- /*
-  * get_counters(...)
-  * migrate to cpu
-@@ -4821,7 +4853,7 @@ int get_counters(struct thread_data *t, struct core_data *c, struct pkg_data *p)
- 		goto done;
- 
- 	if (platform->has_per_core_rapl) {
--		status = get_rapl_counters(cpu, c->core_id, c, p);
-+		status = get_rapl_counters(cpu, get_rapl_domain_id(cpu), c, p);
- 		if (status != 0)
- 			return status;
- 	}
-@@ -4887,7 +4919,7 @@ int get_counters(struct thread_data *t, struct core_data *c, struct pkg_data *p)
- 		p->sys_lpi = cpuidle_cur_sys_lpi_us;
- 
- 	if (!platform->has_per_core_rapl) {
--		status = get_rapl_counters(cpu, p->package_id, c, p);
-+		status = get_rapl_counters(cpu, get_rapl_domain_id(cpu), c, p);
- 		if (status != 0)
- 			return status;
- 	}
-@@ -7863,7 +7895,7 @@ void linux_perf_init(void)
- 
- void rapl_perf_init(void)
+-static void exynos_pinctrl_suspend_bank(
+-				struct samsung_pinctrl_drv_data *drvdata,
+-				struct samsung_pin_bank *bank)
++static void exynos_pinctrl_suspend_bank(struct samsung_pin_bank *bank)
  {
--	const unsigned int num_domains = (platform->has_per_core_rapl ? topo.max_core_id : topo.max_package_id) + 1;
-+	const unsigned int num_domains = get_rapl_num_domains();
- 	bool *domain_visited = calloc(num_domains, sizeof(bool));
+ 	struct exynos_eint_gpio_save *save = bank->soc_priv;
+ 	const void __iomem *regs = bank->eint_base;
  
- 	rapl_counter_info_perdomain = calloc(num_domains, sizeof(*rapl_counter_info_perdomain));
-@@ -7904,8 +7936,7 @@ void rapl_perf_init(void)
- 				continue;
+-	if (clk_enable(bank->drvdata->pclk)) {
+-		dev_err(bank->gpio_chip.parent,
+-			"unable to enable clock for saving state\n");
+-		return;
+-	}
+-
+ 	save->eint_con = readl(regs + EXYNOS_GPIO_ECON_OFFSET
+ 						+ bank->eint_offset);
+ 	save->eint_fltcon0 = readl(regs + EXYNOS_GPIO_EFLTCON_OFFSET
+@@ -784,71 +776,46 @@ static void exynos_pinctrl_suspend_bank(
+ 	save->eint_mask = readl(regs + bank->irq_chip->eint_mask
+ 						+ bank->eint_offset);
  
- 			/* Skip already seen and handled RAPL domains */
--			next_domain =
--			    platform->has_per_core_rapl ? cpus[cpu].physical_core_id : cpus[cpu].physical_package_id;
-+			next_domain = get_rapl_domain_id(cpu);
+-	clk_disable(bank->drvdata->pclk);
+-
+ 	pr_debug("%s: save     con %#010x\n", bank->name, save->eint_con);
+ 	pr_debug("%s: save fltcon0 %#010x\n", bank->name, save->eint_fltcon0);
+ 	pr_debug("%s: save fltcon1 %#010x\n", bank->name, save->eint_fltcon1);
+ 	pr_debug("%s: save    mask %#010x\n", bank->name, save->eint_mask);
+ }
  
- 			assert(next_domain < num_domains);
+-static void exynosauto_pinctrl_suspend_bank(struct samsung_pinctrl_drv_data *drvdata,
+-					    struct samsung_pin_bank *bank)
++static void exynosauto_pinctrl_suspend_bank(struct samsung_pin_bank *bank)
+ {
+ 	struct exynos_eint_gpio_save *save = bank->soc_priv;
+ 	const void __iomem *regs = bank->eint_base;
  
+-	if (clk_enable(bank->drvdata->pclk)) {
+-		dev_err(bank->gpio_chip.parent,
+-			"unable to enable clock for saving state\n");
+-		return;
+-	}
+-
+ 	save->eint_con = readl(regs + bank->pctl_offset + bank->eint_con_offset);
+ 	save->eint_mask = readl(regs + bank->pctl_offset + bank->eint_mask_offset);
+ 
+-	clk_disable(bank->drvdata->pclk);
+-
+ 	pr_debug("%s: save     con %#010x\n", bank->name, save->eint_con);
+ 	pr_debug("%s: save    mask %#010x\n", bank->name, save->eint_mask);
+ }
+ 
+-void exynos_pinctrl_suspend(struct samsung_pinctrl_drv_data *drvdata)
++void exynos_pinctrl_suspend(struct samsung_pin_bank *bank)
+ {
+-	struct samsung_pin_bank *bank = drvdata->pin_banks;
+ 	struct exynos_irq_chip *irq_chip = NULL;
+-	int i;
+ 
+-	for (i = 0; i < drvdata->nr_banks; ++i, ++bank) {
+-		if (bank->eint_type == EINT_TYPE_GPIO) {
+-			if (bank->eint_con_offset)
+-				exynosauto_pinctrl_suspend_bank(drvdata, bank);
+-			else
+-				exynos_pinctrl_suspend_bank(drvdata, bank);
+-		}
+-		else if (bank->eint_type == EINT_TYPE_WKUP) {
+-			if (!irq_chip) {
+-				irq_chip = bank->irq_chip;
+-				irq_chip->set_eint_wakeup_mask(drvdata,
+-							       irq_chip);
+-			}
++	if (bank->eint_type == EINT_TYPE_GPIO) {
++		if (bank->eint_con_offset)
++			exynosauto_pinctrl_suspend_bank(bank);
++		else
++			exynos_pinctrl_suspend_bank(bank);
++	} else if (bank->eint_type == EINT_TYPE_WKUP) {
++		if (!irq_chip) {
++			irq_chip = bank->irq_chip;
++			irq_chip->set_eint_wakeup_mask(bank->drvdata, irq_chip);
+ 		}
+ 	}
+ }
+ 
+-static void exynos_pinctrl_resume_bank(
+-				struct samsung_pinctrl_drv_data *drvdata,
+-				struct samsung_pin_bank *bank)
++static void exynos_pinctrl_resume_bank(struct samsung_pin_bank *bank)
+ {
+ 	struct exynos_eint_gpio_save *save = bank->soc_priv;
+ 	void __iomem *regs = bank->eint_base;
+ 
+-	if (clk_enable(bank->drvdata->pclk)) {
+-		dev_err(bank->gpio_chip.parent,
+-			"unable to enable clock for restoring state\n");
+-		return;
+-	}
+-
+ 	pr_debug("%s:     con %#010x => %#010x\n", bank->name,
+ 			readl(regs + EXYNOS_GPIO_ECON_OFFSET
+ 			+ bank->eint_offset), save->eint_con);
+@@ -870,22 +837,13 @@ static void exynos_pinctrl_resume_bank(
+ 						+ 2 * bank->eint_offset + 4);
+ 	writel(save->eint_mask, regs + bank->irq_chip->eint_mask
+ 						+ bank->eint_offset);
+-
+-	clk_disable(bank->drvdata->pclk);
+ }
+ 
+-static void exynosauto_pinctrl_resume_bank(struct samsung_pinctrl_drv_data *drvdata,
+-					   struct samsung_pin_bank *bank)
++static void exynosauto_pinctrl_resume_bank(struct samsung_pin_bank *bank)
+ {
+ 	struct exynos_eint_gpio_save *save = bank->soc_priv;
+ 	void __iomem *regs = bank->eint_base;
+ 
+-	if (clk_enable(bank->drvdata->pclk)) {
+-		dev_err(bank->gpio_chip.parent,
+-			"unable to enable clock for restoring state\n");
+-		return;
+-	}
+-
+ 	pr_debug("%s:     con %#010x => %#010x\n", bank->name,
+ 		 readl(regs + bank->pctl_offset + bank->eint_con_offset), save->eint_con);
+ 	pr_debug("%s:    mask %#010x => %#010x\n", bank->name,
+@@ -894,21 +852,16 @@ static void exynosauto_pinctrl_resume_bank(struct samsung_pinctrl_drv_data *drvd
+ 	writel(save->eint_con, regs + bank->pctl_offset + bank->eint_con_offset);
+ 	writel(save->eint_mask, regs + bank->pctl_offset + bank->eint_mask_offset);
+ 
+-	clk_disable(bank->drvdata->pclk);
+ }
+ 
+-void exynos_pinctrl_resume(struct samsung_pinctrl_drv_data *drvdata)
++void exynos_pinctrl_resume(struct samsung_pin_bank *bank)
+ {
+-	struct samsung_pin_bank *bank = drvdata->pin_banks;
+-	int i;
+-
+-	for (i = 0; i < drvdata->nr_banks; ++i, ++bank)
+-		if (bank->eint_type == EINT_TYPE_GPIO) {
+-			if (bank->eint_con_offset)
+-				exynosauto_pinctrl_resume_bank(drvdata, bank);
+-			else
+-				exynos_pinctrl_resume_bank(drvdata, bank);
+-		}
++	if (bank->eint_type == EINT_TYPE_GPIO) {
++		if (bank->eint_con_offset)
++			exynosauto_pinctrl_resume_bank(bank);
++		else
++			exynos_pinctrl_resume_bank(bank);
++	}
+ }
+ 
+ static void exynos_retention_enable(struct samsung_pinctrl_drv_data *drvdata)
+diff --git a/drivers/pinctrl/samsung/pinctrl-exynos.h b/drivers/pinctrl/samsung/pinctrl-exynos.h
+index b483270ddc53c..341155c1abd15 100644
+--- a/drivers/pinctrl/samsung/pinctrl-exynos.h
++++ b/drivers/pinctrl/samsung/pinctrl-exynos.h
+@@ -240,8 +240,8 @@ struct exynos_muxed_weint_data {
+ 
+ int exynos_eint_gpio_init(struct samsung_pinctrl_drv_data *d);
+ int exynos_eint_wkup_init(struct samsung_pinctrl_drv_data *d);
+-void exynos_pinctrl_suspend(struct samsung_pinctrl_drv_data *drvdata);
+-void exynos_pinctrl_resume(struct samsung_pinctrl_drv_data *drvdata);
++void exynos_pinctrl_suspend(struct samsung_pin_bank *bank);
++void exynos_pinctrl_resume(struct samsung_pin_bank *bank);
+ struct samsung_retention_ctrl *
+ exynos_retention_init(struct samsung_pinctrl_drv_data *drvdata,
+ 		      const struct samsung_retention_data *data);
+diff --git a/drivers/pinctrl/samsung/pinctrl-samsung.c b/drivers/pinctrl/samsung/pinctrl-samsung.c
+index 2896eb2de2c09..ef557217e173a 100644
+--- a/drivers/pinctrl/samsung/pinctrl-samsung.c
++++ b/drivers/pinctrl/samsung/pinctrl-samsung.c
+@@ -1333,6 +1333,7 @@ static int samsung_pinctrl_probe(struct platform_device *pdev)
+ static int __maybe_unused samsung_pinctrl_suspend(struct device *dev)
+ {
+ 	struct samsung_pinctrl_drv_data *drvdata = dev_get_drvdata(dev);
++	struct samsung_pin_bank *bank;
+ 	int i;
+ 
+ 	i = clk_enable(drvdata->pclk);
+@@ -1343,7 +1344,7 @@ static int __maybe_unused samsung_pinctrl_suspend(struct device *dev)
+ 	}
+ 
+ 	for (i = 0; i < drvdata->nr_banks; i++) {
+-		struct samsung_pin_bank *bank = &drvdata->pin_banks[i];
++		bank = &drvdata->pin_banks[i];
+ 		const void __iomem *reg = bank->pctl_base + bank->pctl_offset;
+ 		const u8 *offs = bank->type->reg_offset;
+ 		const u8 *widths = bank->type->fld_width;
+@@ -1371,10 +1372,14 @@ static int __maybe_unused samsung_pinctrl_suspend(struct device *dev)
+ 		}
+ 	}
+ 
++	for (i = 0; i < drvdata->nr_banks; i++) {
++		bank = &drvdata->pin_banks[i];
++		if (drvdata->suspend)
++			drvdata->suspend(bank);
++	}
++
+ 	clk_disable(drvdata->pclk);
+ 
+-	if (drvdata->suspend)
+-		drvdata->suspend(drvdata);
+ 	if (drvdata->retention_ctrl && drvdata->retention_ctrl->enable)
+ 		drvdata->retention_ctrl->enable(drvdata);
+ 
+@@ -1392,6 +1397,7 @@ static int __maybe_unused samsung_pinctrl_suspend(struct device *dev)
+ static int __maybe_unused samsung_pinctrl_resume(struct device *dev)
+ {
+ 	struct samsung_pinctrl_drv_data *drvdata = dev_get_drvdata(dev);
++	struct samsung_pin_bank *bank;
+ 	int ret;
+ 	int i;
+ 
+@@ -1406,11 +1412,14 @@ static int __maybe_unused samsung_pinctrl_resume(struct device *dev)
+ 		return ret;
+ 	}
+ 
+-	if (drvdata->resume)
+-		drvdata->resume(drvdata);
++	for (i = 0; i < drvdata->nr_banks; i++) {
++		bank = &drvdata->pin_banks[i];
++		if (drvdata->resume)
++			drvdata->resume(bank);
++	}
+ 
+ 	for (i = 0; i < drvdata->nr_banks; i++) {
+-		struct samsung_pin_bank *bank = &drvdata->pin_banks[i];
++		bank = &drvdata->pin_banks[i];
+ 		void __iomem *reg = bank->pctl_base + bank->pctl_offset;
+ 		const u8 *offs = bank->type->reg_offset;
+ 		const u8 *widths = bank->type->fld_width;
+diff --git a/drivers/pinctrl/samsung/pinctrl-samsung.h b/drivers/pinctrl/samsung/pinctrl-samsung.h
+index 3cf758df7d691..fcc57c244d167 100644
+--- a/drivers/pinctrl/samsung/pinctrl-samsung.h
++++ b/drivers/pinctrl/samsung/pinctrl-samsung.h
+@@ -285,8 +285,8 @@ struct samsung_pin_ctrl {
+ 	int		(*eint_gpio_init)(struct samsung_pinctrl_drv_data *);
+ 	int		(*eint_wkup_init)(struct samsung_pinctrl_drv_data *);
+ 	void		(*pud_value_init)(struct samsung_pinctrl_drv_data *drvdata);
+-	void		(*suspend)(struct samsung_pinctrl_drv_data *);
+-	void		(*resume)(struct samsung_pinctrl_drv_data *);
++	void		(*suspend)(struct samsung_pin_bank *bank);
++	void		(*resume)(struct samsung_pin_bank *bank);
+ };
+ 
+ /**
+@@ -335,8 +335,8 @@ struct samsung_pinctrl_drv_data {
+ 
+ 	struct samsung_retention_ctrl	*retention_ctrl;
+ 
+-	void (*suspend)(struct samsung_pinctrl_drv_data *);
+-	void (*resume)(struct samsung_pinctrl_drv_data *);
++	void (*suspend)(struct samsung_pin_bank *bank);
++	void (*resume)(struct samsung_pin_bank *bank);
+ };
+ 
+ /**
 -- 
 2.39.5
 
