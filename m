@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B91D2F2370;
-	Tue, 17 Jun 2025 16:32:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 807122ECEA6;
+	Tue, 17 Jun 2025 16:32:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177958; cv=none; b=nMlA2Vq3sqYTFZUWGzUjKrjPNQCk+XUW9mo9L1t5moeL/ohfX1IAvgy2AtY6/Ybl5xg8SFBBIOhwuA+tSaREA/ZxwQYrayIdheWehypeDjVDZ2NpXifoZfl3/Zz5j8qKYKYIoI+heshvT+1fkSiJLrbKDiq+4UDsped7mcK6tUQ=
+	t=1750177961; cv=none; b=iEoAkC4fQmEaFQVx8aM1cFdPKbVEQSgbWFT4fA5rxadaZYrjRo2gWA4rXJf0HSYqd0D6wkz8gKw4ERDTwGpUECZIj5dVDS7RAyI6BXxN925rd5lMlZx2M0ENiJ/nFi87p05A6ptsotKUFprbiwzy82awI4dgjFg+Va66v2gWkSg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177958; c=relaxed/simple;
-	bh=0cgrny0a2sB6eYytrn7F3bkDknrVsze/Z1n2AsF2LXA=;
+	s=arc-20240116; t=1750177961; c=relaxed/simple;
+	bh=rgXdq9XGbRufHQKV8IPsYxnQFy2TLHuna6QbdQTKBSc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pd552GvewFw50zNNtXrttZH5Y6UCgwmqppmeeSFAbauDGRAGLWs2/uKTQZrHoXc6twiAqxRcVRZK7aWL2BaQZ570ZLMpiQRG2Eqbvsm2J5VGB8YZ9mofEBzVIWVSG+edalmQU6rhxSzFgoAg34cg7TGqiaV1f/1kWKjJ1Gkbwd8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eWiL4eBm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HsENOzjjFtWAgG52ign7kzbLalf+M/jYOCoWYWlK79labx0jDrsj0rH90uqp3Bav6pbBgt2vFlAvZ3m7ArNQ/96C1pNmv4PXPa0t1uD7FwCmxeJJBayNmyMppzrAex2q/4gziGrap8G3FluoMJlp6GfCvsjPxxVS7vlq6ZYKyX0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u+ENbhNX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eWiL4eBm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ED30C4CEE3;
-	Tue, 17 Jun 2025 16:32:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u+ENbhNX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A202FC4CEE3;
+	Tue, 17 Jun 2025 16:32:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177957;
-	bh=0cgrny0a2sB6eYytrn7F3bkDknrVsze/Z1n2AsF2LXA=;
+	s=korg; t=1750177961;
+	bh=rgXdq9XGbRufHQKV8IPsYxnQFy2TLHuna6QbdQTKBSc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eWiL4eBmAgAxU7VsAq1i9AFmmGSTU/5jEM8LX11AD3o6ozn13rcA6JAXxZ4C2XEBI
-	 8UGcw7LUYiqf7mNBxQt30ycFgrLgWNOwaLiiBszy42ZjEs3avPuBhvMJZz6r0Sde3k
-	 InnNxvkhTZc5wjsdyWABzv+AyomhN7iUEplfSAQU=
+	b=u+ENbhNXI1A4BiJ4YoQWeKGiFlKnALzLNfSELbSE/AJonZyD1ywrHbU2re74PCo6c
+	 AorvKKHSH4k8bUY4dYQEB7wOZ137ufI+XjPjwWEAXjKPB5sqZjnyaqVp5Aj4yFPRTV
+	 kcru3bVEMliGPToc+8EvglbJvURWTlRvW7TisXdI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Nuno Sa <nuno.sa@analog.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
+	"Dr. David Alan Gilbert" <linux@treblig.org>,
+	Simon Horman <horms@kernel.org>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 415/512] dt-bindings: pwm: Correct indentation and style in DTS example
-Date: Tue, 17 Jun 2025 17:26:21 +0200
-Message-ID: <20250617152436.397572503@linuxfoundation.org>
+Subject: [PATCH 6.12 424/512] Bluetooth: MGMT: Remove unused mgmt_pending_find_data
+Date: Tue, 17 Jun 2025 17:26:30 +0200
+Message-ID: <20250617152436.753734404@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
 References: <20250617152419.512865572@linuxfoundation.org>
@@ -46,88 +46,74 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Dr. David Alan Gilbert <linux@treblig.org>
 
-[ Upstream commit 78dcad6daa405b8a939cd08f6ccd6c4e2cb50a9c ]
+[ Upstream commit 276af34d82f13bda0b2a4d9786c90b8bbf1cd064 ]
 
-DTS example in the bindings should be indented with 2- or 4-spaces and
-aligned with opening '- |', so correct any differences like 3-spaces or
-mixtures 2- and 4-spaces in one binding.
+mgmt_pending_find_data() last use was removed in 2021 by
+commit 5a7501374664 ("Bluetooth: hci_sync: Convert MGMT_OP_GET_CLOCK_INFO")
 
-No functional changes here, but saves some comments during reviews of
-new patches built on existing code.
+Remove it.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Acked-by: Nuno Sa <nuno.sa@analog.com>
-Link: https://lore.kernel.org/r/20250107125831.225068-1-krzysztof.kozlowski@linaro.org
-Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
-Stable-dep-of: e683131e64f7 ("dt-bindings: pwm: adi,axi-pwmgen: Fix clocks")
+Signed-off-by: Dr. David Alan Gilbert <linux@treblig.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Stable-dep-of: 6fe26f694c82 ("Bluetooth: MGMT: Protect mgmt_pending list with its own lock")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/devicetree/bindings/pwm/adi,axi-pwmgen.yaml | 8 ++++----
- .../devicetree/bindings/pwm/brcm,bcm7038-pwm.yaml         | 8 ++++----
- Documentation/devicetree/bindings/pwm/brcm,kona-pwm.yaml  | 8 ++++----
- 3 files changed, 12 insertions(+), 12 deletions(-)
+ net/bluetooth/mgmt_util.c | 17 -----------------
+ net/bluetooth/mgmt_util.h |  4 ----
+ 2 files changed, 21 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/pwm/adi,axi-pwmgen.yaml b/Documentation/devicetree/bindings/pwm/adi,axi-pwmgen.yaml
-index aa35209f74cfa..45e112d0efb46 100644
---- a/Documentation/devicetree/bindings/pwm/adi,axi-pwmgen.yaml
-+++ b/Documentation/devicetree/bindings/pwm/adi,axi-pwmgen.yaml
-@@ -41,8 +41,8 @@ unevaluatedProperties: false
- examples:
-   - |
-     pwm@44b00000 {
--       compatible = "adi,axi-pwmgen-2.00.a";
--       reg = <0x44b00000 0x1000>;
--       clocks = <&spi_clk>;
--       #pwm-cells = <3>;
-+        compatible = "adi,axi-pwmgen-2.00.a";
-+        reg = <0x44b00000 0x1000>;
-+        clocks = <&spi_clk>;
-+        #pwm-cells = <3>;
-     };
-diff --git a/Documentation/devicetree/bindings/pwm/brcm,bcm7038-pwm.yaml b/Documentation/devicetree/bindings/pwm/brcm,bcm7038-pwm.yaml
-index 119de3d7f9dd7..44548a9da1580 100644
---- a/Documentation/devicetree/bindings/pwm/brcm,bcm7038-pwm.yaml
-+++ b/Documentation/devicetree/bindings/pwm/brcm,bcm7038-pwm.yaml
-@@ -35,8 +35,8 @@ additionalProperties: false
- examples:
-   - |
-     pwm: pwm@f0408000 {
--       compatible = "brcm,bcm7038-pwm";
--       reg = <0xf0408000 0x28>;
--       #pwm-cells = <2>;
--       clocks = <&upg_fixed>;
-+        compatible = "brcm,bcm7038-pwm";
-+        reg = <0xf0408000 0x28>;
-+        #pwm-cells = <2>;
-+        clocks = <&upg_fixed>;
-     };
-diff --git a/Documentation/devicetree/bindings/pwm/brcm,kona-pwm.yaml b/Documentation/devicetree/bindings/pwm/brcm,kona-pwm.yaml
-index e86c8053b366a..fd785da5d3d73 100644
---- a/Documentation/devicetree/bindings/pwm/brcm,kona-pwm.yaml
-+++ b/Documentation/devicetree/bindings/pwm/brcm,kona-pwm.yaml
-@@ -43,9 +43,9 @@ examples:
-     #include <dt-bindings/clock/bcm281xx.h>
+diff --git a/net/bluetooth/mgmt_util.c b/net/bluetooth/mgmt_util.c
+index 67db32a60c6a9..3713ff490c65d 100644
+--- a/net/bluetooth/mgmt_util.c
++++ b/net/bluetooth/mgmt_util.c
+@@ -229,23 +229,6 @@ struct mgmt_pending_cmd *mgmt_pending_find(unsigned short channel, u16 opcode,
+ 	return NULL;
+ }
  
-     pwm@3e01a000 {
--       compatible = "brcm,bcm11351-pwm", "brcm,kona-pwm";
--       reg = <0x3e01a000 0xcc>;
--       clocks = <&slave_ccu BCM281XX_SLAVE_CCU_PWM>;
--       #pwm-cells = <3>;
-+        compatible = "brcm,bcm11351-pwm", "brcm,kona-pwm";
-+        reg = <0x3e01a000 0xcc>;
-+        clocks = <&slave_ccu BCM281XX_SLAVE_CCU_PWM>;
-+        #pwm-cells = <3>;
-     };
- ...
+-struct mgmt_pending_cmd *mgmt_pending_find_data(unsigned short channel,
+-						u16 opcode,
+-						struct hci_dev *hdev,
+-						const void *data)
+-{
+-	struct mgmt_pending_cmd *cmd;
+-
+-	list_for_each_entry(cmd, &hdev->mgmt_pending, list) {
+-		if (cmd->user_data != data)
+-			continue;
+-		if (cmd->opcode == opcode)
+-			return cmd;
+-	}
+-
+-	return NULL;
+-}
+-
+ void mgmt_pending_foreach(u16 opcode, struct hci_dev *hdev,
+ 			  void (*cb)(struct mgmt_pending_cmd *cmd, void *data),
+ 			  void *data)
+diff --git a/net/bluetooth/mgmt_util.h b/net/bluetooth/mgmt_util.h
+index bdf978605d5a8..f2ba994ab1d84 100644
+--- a/net/bluetooth/mgmt_util.h
++++ b/net/bluetooth/mgmt_util.h
+@@ -54,10 +54,6 @@ int mgmt_cmd_complete(struct sock *sk, u16 index, u16 cmd, u8 status,
+ 
+ struct mgmt_pending_cmd *mgmt_pending_find(unsigned short channel, u16 opcode,
+ 					   struct hci_dev *hdev);
+-struct mgmt_pending_cmd *mgmt_pending_find_data(unsigned short channel,
+-						u16 opcode,
+-						struct hci_dev *hdev,
+-						const void *data);
+ void mgmt_pending_foreach(u16 opcode, struct hci_dev *hdev,
+ 			  void (*cb)(struct mgmt_pending_cmd *cmd, void *data),
+ 			  void *data);
 -- 
 2.39.5
 
