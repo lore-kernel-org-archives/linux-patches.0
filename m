@@ -1,54 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8FB82ED17C;
-	Tue, 17 Jun 2025 15:57:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 647C92ECE94;
+	Tue, 17 Jun 2025 15:57:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175834; cv=none; b=sxvMN74IggS1PQS2d3uGoztP8ZhR6QZdLHx6p7lry/PBi4yiTGd/Lu1IAmHm262yatc5uJHWStkDEI2BuiTaaGYdrvaB97+5mDOlo51LQa8/nzsX49SSqSxMThHDeemBFQEbPZM/4CLUWU5pnup6aOSHCabUMeYu6AvA/A5j8E0=
+	t=1750175837; cv=none; b=YUWHLWu/o/W0NPkQkwX8oy0qoTtPks8gchdgt7BzzPqxc/y17/PM+q0U/8v1vjBD3aDI7Fe7YUbgLtObe1WmLo0aMLnxo4kpyP25DBWW3eq2uI1iyOY9MA/CBYr9/tsJkjkLVz0l0k4cRQvkknGnauWOuddTKxChdel3HAS7BqM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175834; c=relaxed/simple;
-	bh=2X98Nb9/jV+v+5pvTZKSzMPSMO1jQy6Nb7Gk0wZXqxo=;
+	s=arc-20240116; t=1750175837; c=relaxed/simple;
+	bh=+5Gtjn8DbwxtcszkNbyt2IkqKQcHWS+WcJbRHYxLtvI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ul77iKmj3W7ZH1WXzuStH3a/5fXp1PTvqQT+QlsGD2y8kKC2IbQJm65YyvnM/yPBzeAGTFzqnaYwq1b7AVZ+xl+qp98Pg53UqSxiTlqvNrmfMOqs+928lFqyW/IsQmmpukRBf+D2FXRDwtNqosP/8hnZMi2bUrFp8D5uiNDL1A8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p5fTXr8Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k/iu4pEawY/DOnyVN3C791d4XjKKUeoFwXbXgDDe0GfNLoppqduAhT4QhFqOm1x/EnTCnExseckL5ufM0UaViTspe7wYniifS2pLQsGs4txKXi8UcEZZlsbR3Fb0FMu5VI7X06OHbaljbFZ3WyaFf1vD4hUKQG5Fk2IhFn3vE8k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oLEIQTd/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p5fTXr8Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C42DEC4CEF0;
-	Tue, 17 Jun 2025 15:57:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oLEIQTd/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E158CC4CEE3;
+	Tue, 17 Jun 2025 15:57:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175834;
-	bh=2X98Nb9/jV+v+5pvTZKSzMPSMO1jQy6Nb7Gk0wZXqxo=;
+	s=korg; t=1750175837;
+	bh=+5Gtjn8DbwxtcszkNbyt2IkqKQcHWS+WcJbRHYxLtvI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p5fTXr8YItltCS+uZ0jMPO2d2cPerp8VjMZq5hgKNWNbuhPR2P+KSdAy9EvS3Ttlv
-	 0bEz5hzZ3P7fhoVSFY5YgvzrLA6YF7eS1XWJdeiDmxqc31zwWFuowk+lfDf9sHNSHz
-	 i0T7/ovJt1I7tXliplnaeoKYRlUJDe9uhfdNe8+k=
+	b=oLEIQTd/vL52anvldWzn3+INpemI70nSuLeqgezXtpcnW9945ebbUXYpJBA4Xai3y
+	 CeHpLikljHmp291oWvltLU5utL23AW8gJVKTHFSMYjyqBxNmrSPz+pzLtPc7Jc/MZw
+	 USf4TBe3zaVJ8B6OcU5A/hIqoVeqP5/VK5qvojKk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Howard Chu <howardchu95@gmail.com>,
-	Anubhav Shelat <ashelat@redhat.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Dapeng Mi <dapeng1.mi@linux.intel.com>,
-	Ian Rogers <irogers@google.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	James Clark <james.clark@linaro.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Michael Petlan <mpetlan@redhat.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Neill Kapron <nkapron@google.com>,
+	Kees Cook <kees@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 217/356] perf trace: Always print return value for syscalls returning a pid
-Date: Tue, 17 Jun 2025 17:25:32 +0200
-Message-ID: <20250617152346.940828976@linuxfoundation.org>
+Subject: [PATCH 6.15 127/780] selftests/seccomp: fix syscall_restart test for arm compat
+Date: Tue, 17 Jun 2025 17:17:15 +0200
+Message-ID: <20250617152456.680576057@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-References: <20250617152338.212798615@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -60,69 +47,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Anubhav Shelat <ashelat@redhat.com>
+From: Neill Kapron <nkapron@google.com>
 
-[ Upstream commit c7a48ea9b919e2fa0e4a1d9938fdb03e9afe276c ]
+[ Upstream commit 797002deed03491215a352ace891749b39741b69 ]
 
-The syscalls that were consistently observed were set_robust_list and
-rseq. This is because perf cannot find their child process.
+The inconsistencies in the systcall ABI between arm and arm-compat can
+can cause a failure in the syscall_restart test due to the logic
+attempting to work around the differences. The 'machine' field for an
+ARM64 device running in compat mode can report 'armv8l' or 'armv8b'
+which matches with the string 'arm' when only examining the first three
+characters of the string.
 
-This change ensures that the return value is always printed.
+This change adds additional validation to the workaround logic to make
+sure we only take the arm path when running natively, not in arm-compat.
 
-Before:
-     0.256 ( 0.001 ms): set_robust_list(head: 0x7f09c77dba20, len: 24)                        =
-     0.259 ( 0.001 ms): rseq(rseq: 0x7f09c77dc0e0, rseq_len: 32, sig: 1392848979)             =
-After:
-     0.270 ( 0.002 ms): set_robust_list(head: 0x7f0bb14a6a20, len: 24)                        = 0
-     0.273 ( 0.002 ms): rseq(rseq: 0x7f0bb14a70e0, rseq_len: 32, sig: 1392848979)             = 0
-
-Committer notes:
-
-As discussed in the thread in the Link: tag below, these two don't
-return a pid, but for syscalls returning one, we need to print the
-result and if we manage to find the children in 'perf trace' data
-structures, then print its name as well.
-
-Fixes: 11c8e39f5133aed9 ("perf trace: Infrastructure to show COMM strings for syscalls returning PIDs")
-Reviewed-by: Howard Chu <howardchu95@gmail.com>
-Signed-off-by: Anubhav Shelat <ashelat@redhat.com>
-Acked-by: Namhyung Kim <namhyung@kernel.org>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Dapeng Mi <dapeng1.mi@linux.intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: James Clark <james.clark@linaro.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Michael Petlan <mpetlan@redhat.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20250403160411.159238-2-ashelat@redhat.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: 256d0afb11d6 ("selftests/seccomp: build and pass on arm64")
+Signed-off-by: Neill Kapron <nkapron@google.com>
+Link: https://lore.kernel.org/r/20250427094103.3488304-2-nkapron@google.com
+Signed-off-by: Kees Cook <kees@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-trace.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/seccomp/seccomp_bpf.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/tools/perf/builtin-trace.c b/tools/perf/builtin-trace.c
-index 908509df007ba..7ee3285af10c9 100644
---- a/tools/perf/builtin-trace.c
-+++ b/tools/perf/builtin-trace.c
-@@ -2586,8 +2586,8 @@ errno_print: {
- 	else if (sc->fmt->errpid) {
- 		struct thread *child = machine__find_thread(trace->host, ret, ret);
- 
-+		fprintf(trace->output, "%ld", ret);
- 		if (child != NULL) {
--			fprintf(trace->output, "%ld", ret);
- 			if (thread__comm_set(child))
- 				fprintf(trace->output, " (%s)", thread__comm_str(child));
- 			thread__put(child);
+diff --git a/tools/testing/selftests/seccomp/seccomp_bpf.c b/tools/testing/selftests/seccomp/seccomp_bpf.c
+index b2f76a52215ad..53bf6a9c801f8 100644
+--- a/tools/testing/selftests/seccomp/seccomp_bpf.c
++++ b/tools/testing/selftests/seccomp/seccomp_bpf.c
+@@ -3166,12 +3166,15 @@ TEST(syscall_restart)
+ 	ret = get_syscall(_metadata, child_pid);
+ #if defined(__arm__)
+ 	/*
+-	 * FIXME:
+ 	 * - native ARM registers do NOT expose true syscall.
+ 	 * - compat ARM registers on ARM64 DO expose true syscall.
++	 * - values of utsbuf.machine include 'armv8l' or 'armb8b'
++	 *   for ARM64 running in compat mode.
+ 	 */
+ 	ASSERT_EQ(0, uname(&utsbuf));
+-	if (strncmp(utsbuf.machine, "arm", 3) == 0) {
++	if ((strncmp(utsbuf.machine, "arm", 3) == 0) &&
++	    (strncmp(utsbuf.machine, "armv8l", 6) != 0) &&
++	    (strncmp(utsbuf.machine, "armv8b", 6) != 0)) {
+ 		EXPECT_EQ(__NR_nanosleep, ret);
+ 	} else
+ #endif
 -- 
 2.39.5
 
