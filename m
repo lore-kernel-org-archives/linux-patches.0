@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01E142EE619;
-	Tue, 17 Jun 2025 16:14:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46D532EE619;
+	Tue, 17 Jun 2025 16:14:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750176882; cv=none; b=hRsSdsvy5egji6MNGROmKSFhLv1jmFSTynlO41RkcXDlhqMXnlF0frQjBBVyYHhqXTgVcpcbNrT4duQFgKWdSvdT0FQY7aoDF007lvYlu2CKlPxE/IRftFQ6LJrZ4pR/qijthg82091/n/Plk5iEj246f3U1MN8oqL3FBJ5HDL8=
+	t=1750176885; cv=none; b=SLD3wpykl7dFcpE5NWbYcqUvjmz7kyuh+bMsSJJchZGJZ3DktkRRZwfQhjJM5KiyoYMYxgoAeOo81+0GrSp4CXkaBWYE5kHaBKHe6LafW/USOuppg0seyxXOGJRPwk25Cax7gaW+WO3xQHMFhzS4VwqHwyAo0Brm1g0N/2Ja9ko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750176882; c=relaxed/simple;
-	bh=17R0wA4qy37mxhQz0+YJfCeaMMOh2VBk7ZGbNEGjqks=;
+	s=arc-20240116; t=1750176885; c=relaxed/simple;
+	bh=gT5ArMBW2AofmJljPn8tUygScn9++TWLEclFd5wsyxU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UYMajnxOVCHFF6ZDqj8OaHVHM2dL+gORE01+oWLbUoy+yTE5dNpdrgUtnMqWViSkJIOSMlZh9izkBr7FCVZUrjzUOXm4ePv4EWbjZmJ7AtzQxUwBYZax6RwEBrCqsk3euDpw+4I+unNresox4J+DFvXmeCnnPNWSzs0Zjwu/F8o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0dZHzciB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kjVe9e3iCkJFiS+pDh4W0rv+Jnc3mwkhjP0DZa6dw3g0cVncHaWrcMPGow+8l5Ed8OL0dkJ3sPrCBlBEAvZr0SMfpcdrpgVjHujvAVg/furvaOWbuJ66BrUQyM+ZFcvJC2cmP9ezBWkiur9BC65OnzSurl/GwxXOZB1tR+U4O+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GHk5jJ+G; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0dZHzciB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65FE9C4CEE3;
-	Tue, 17 Jun 2025 16:14:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GHk5jJ+G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9DF8C4CEE3;
+	Tue, 17 Jun 2025 16:14:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750176881;
-	bh=17R0wA4qy37mxhQz0+YJfCeaMMOh2VBk7ZGbNEGjqks=;
+	s=korg; t=1750176885;
+	bh=gT5ArMBW2AofmJljPn8tUygScn9++TWLEclFd5wsyxU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0dZHzciBeZrYSm276I9I/6BKVVyhL0BupUeB5B+PaIUd3T00AydeZZlLj+vuuJEah
-	 EOvYx9DeVt3zNHs71glVUqvu6vwAQmzGWGhCW0BrlSDhx3rDuWRW7tKbVHlPF2Otxk
-	 MfXwgXBcQd9AL8Ozas7Fj849lVFVd8F1Sizfb/2c=
+	b=GHk5jJ+GLb0DTcQWv17Upbh7eAk9/h56xi6QuhONQ4rwOaQ7+2opC9zhCdWMfYgw1
+	 fbkdGdjv4Bu1UTQv2QnStCIysS2/ALwafAWNaC/Eu5FIT3u+Mxp5LOR24WflKsJzim
+	 +cxLkYG7N7LyNYxJp5dqs6s4rmfdqo97gPdCT3GU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Huajian Yang <huajianyang@asrmicro.com>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 322/356] Bluetooth: MGMT: Fix sparse errors
-Date: Tue, 17 Jun 2025 17:27:17 +0200
-Message-ID: <20250617152351.116370742@linuxfoundation.org>
+Subject: [PATCH 6.15 235/780] netfilter: bridge: Move specific fragmented packet to slow_path instead of dropping it
+Date: Tue, 17 Jun 2025 17:19:03 +0200
+Message-ID: <20250617152501.028091753@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-References: <20250617152338.212798615@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,49 +48,97 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Huajian Yang <huajianyang@asrmicro.com>
 
-[ Upstream commit 7dd38ba4acbea9875b4ee061e20a26413e39d9f4 ]
+[ Upstream commit aa04c6f45b9224b949aa35d4fa5f8d0ba07b23d4 ]
 
-This fixes the following errors:
+The config NF_CONNTRACK_BRIDGE will change the bridge forwarding for
+fragmented packets.
 
-net/bluetooth/mgmt.c:5400:59: sparse: sparse: incorrect type in argument 3
-(different base types) @@     expected unsigned short [usertype] handle @@
-got restricted __le16 [usertype] monitor_handle @@
-net/bluetooth/mgmt.c:5400:59: sparse:     expected unsigned short [usertype] handle
-net/bluetooth/mgmt.c:5400:59: sparse:     got restricted __le16 [usertype] monitor_handle
+The original bridge does not know that it is a fragmented packet and
+forwards it directly, after NF_CONNTRACK_BRIDGE is enabled, function
+nf_br_ip_fragment and br_ip6_fragment will check the headroom.
 
-Fixes: e6ed54e86aae ("Bluetooth: MGMT: Fix UAF on mgmt_remove_adv_monitor_complete")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202506060347.ux2O1p7L-lkp@intel.com/
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+In original br_forward, insufficient headroom of skb may indeed exist,
+but there's still a way to save the skb in the device driver after
+dev_queue_xmit.So droping the skb will change the original bridge
+forwarding in some cases.
+
+Fixes: 3c171f496ef5 ("netfilter: bridge: add connection tracking system")
+Signed-off-by: Huajian Yang <huajianyang@asrmicro.com>
+Reviewed-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/mgmt.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/bridge/netfilter/nf_conntrack_bridge.c | 12 ++++++------
+ net/ipv6/netfilter.c                       | 12 ++++++------
+ 2 files changed, 12 insertions(+), 12 deletions(-)
 
-diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
-index 44174f59b31e6..853d217cabc91 100644
---- a/net/bluetooth/mgmt.c
-+++ b/net/bluetooth/mgmt.c
-@@ -5159,11 +5159,11 @@ static void mgmt_adv_monitor_added(struct sock *sk, struct hci_dev *hdev,
- }
+diff --git a/net/bridge/netfilter/nf_conntrack_bridge.c b/net/bridge/netfilter/nf_conntrack_bridge.c
+index 816bb0fde718e..6482de4d87509 100644
+--- a/net/bridge/netfilter/nf_conntrack_bridge.c
++++ b/net/bridge/netfilter/nf_conntrack_bridge.c
+@@ -60,19 +60,19 @@ static int nf_br_ip_fragment(struct net *net, struct sock *sk,
+ 		struct ip_fraglist_iter iter;
+ 		struct sk_buff *frag;
  
- static void mgmt_adv_monitor_removed(struct sock *sk, struct hci_dev *hdev,
--				     u16 handle)
-+				     __le16 handle)
- {
- 	struct mgmt_ev_adv_monitor_removed ev;
+-		if (first_len - hlen > mtu ||
+-		    skb_headroom(skb) < ll_rs)
++		if (first_len - hlen > mtu)
+ 			goto blackhole;
  
--	ev.monitor_handle = cpu_to_le16(handle);
-+	ev.monitor_handle = handle;
+-		if (skb_cloned(skb))
++		if (skb_cloned(skb) ||
++		    skb_headroom(skb) < ll_rs)
+ 			goto slow_path;
  
- 	mgmt_event(MGMT_EV_ADV_MONITOR_REMOVED, hdev, &ev, sizeof(ev), sk);
- }
+ 		skb_walk_frags(skb, frag) {
+-			if (frag->len > mtu ||
+-			    skb_headroom(frag) < hlen + ll_rs)
++			if (frag->len > mtu)
+ 				goto blackhole;
+ 
+-			if (skb_shared(frag))
++			if (skb_shared(frag) ||
++			    skb_headroom(frag) < hlen + ll_rs)
+ 				goto slow_path;
+ 		}
+ 
+diff --git a/net/ipv6/netfilter.c b/net/ipv6/netfilter.c
+index 581ce055bf520..4541836ee3da2 100644
+--- a/net/ipv6/netfilter.c
++++ b/net/ipv6/netfilter.c
+@@ -164,20 +164,20 @@ int br_ip6_fragment(struct net *net, struct sock *sk, struct sk_buff *skb,
+ 		struct ip6_fraglist_iter iter;
+ 		struct sk_buff *frag2;
+ 
+-		if (first_len - hlen > mtu ||
+-		    skb_headroom(skb) < (hroom + sizeof(struct frag_hdr)))
++		if (first_len - hlen > mtu)
+ 			goto blackhole;
+ 
+-		if (skb_cloned(skb))
++		if (skb_cloned(skb) ||
++		    skb_headroom(skb) < (hroom + sizeof(struct frag_hdr)))
+ 			goto slow_path;
+ 
+ 		skb_walk_frags(skb, frag2) {
+-			if (frag2->len > mtu ||
+-			    skb_headroom(frag2) < (hlen + hroom + sizeof(struct frag_hdr)))
++			if (frag2->len > mtu)
+ 				goto blackhole;
+ 
+ 			/* Partially cloned skb? */
+-			if (skb_shared(frag2))
++			if (skb_shared(frag2) ||
++			    skb_headroom(frag2) < (hlen + hroom + sizeof(struct frag_hdr)))
+ 				goto slow_path;
+ 		}
+ 
 -- 
 2.39.5
 
