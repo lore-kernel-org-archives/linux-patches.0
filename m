@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 870C12ECE99;
-	Tue, 17 Jun 2025 15:50:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F32B2ECE80;
+	Tue, 17 Jun 2025 15:50:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175403; cv=none; b=h9a6DBUWkpeY92H+A+DbNqgdY4PePe6z/C2rRR4ENWd7wtcJYMqaEHeCKlt6UKCQQ24iH01i0C5Os1DnVq7mCB1b/jG2cznKoqj/7ECh+YmdTOv4newYWuSBu9jdfOEizB4L4i8o3lUKg/P6D/iFMPsLjIz+kId1V1H8R827nZk=
+	t=1750175406; cv=none; b=ny5qHYVSsO5kvz0NpFiYXzCVok+2D4g9ikX2wVOjlw32CvNpck4YM/Lp0ytpdmOYVM1H3E5E7v8eczeuZ27RXf8Vx7/7lm/eiyqiY87jt5zmpFj6Wp8qMG841ToQqFzv0cLgr5HCLgYU+Uj2WPgap91d7AS7rsYE7ZMbl9XlSXs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175403; c=relaxed/simple;
-	bh=9oaeHIVyz1Xkhj6gWqAlnB/xtPniHLC6P5klpmv57gU=;
+	s=arc-20240116; t=1750175406; c=relaxed/simple;
+	bh=40l6X3GVXdB8jON9QlgvzVWoNUS2oV9gW+FIKT2dIj4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FB6LOvKQoEsHBGE96eLG8+7sraZt8I8DieKbBvqtjWrQe5g86K5/itD9kCxm7RQp3S9nC4CwD2J9rD9+hM2vBlLFtMTzbe95H32RUz4VobnAMT+xPcvcpqQxRDayavV+mU5hRaLPI+mq+eEJkmYL/THilhEiSgMFFuqxTFzMkkg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ADxEmMzl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BeQXNdNJ+xT73KeQDY2r8EkhdYLbDvUYF2LAopcQ9nw88ZJUk/nWi3fKP5F9rnAuVLeLWPEz0yrth8Nuriw5QFTaAKaRfMpUk4neuGOs1hRb4tVv/q3qFca6D94kflJuK8Be9iGeWXolYuJS9PzbVevWVhdtOR8w8Lx9ZHIoh48=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KV0ofUFo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ADxEmMzl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C64AC4CEE3;
-	Tue, 17 Jun 2025 15:50:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KV0ofUFo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD4ECC4CEE3;
+	Tue, 17 Jun 2025 15:50:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175403;
-	bh=9oaeHIVyz1Xkhj6gWqAlnB/xtPniHLC6P5klpmv57gU=;
+	s=korg; t=1750175406;
+	bh=40l6X3GVXdB8jON9QlgvzVWoNUS2oV9gW+FIKT2dIj4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ADxEmMzlJOzYalbxX2IaGdc6m2hcTX4+1q4z9/m4qDJmLKH0seE0qImHK8Xh4zc3n
-	 SuWtPwPWrV+vNglRK0dT31ULbdzRe0PLbOsbJJOX+jP6ee785Ap08/7lIDJ1zN1/h+
-	 3qqh8OqZvgoMsKnpeIoirOdGWaMxiXALFWOhkDlo=
+	b=KV0ofUFoJPXH92FA86E4u1p0txwh6cLGK2omld/5fnKaK0OmipLzd5N3sGie5PisG
+	 pHtD7N1NigIIaDVmz7YpXf6BxRsiDpaTs41kCKkpBh3YKF55CPJWOSSSB/3bXwMZlY
+	 /T1QPjLCdniLKhyy8tqQ58p08A4IQmho871iK2fU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hari Kalavakunta <kalavakunta.hari.prasad@gmail.com>,
-	Paul Fertser <fercerpav@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	David Thompson <davthompson@nvidia.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Shravan Kumar Ramani <shravankr@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 123/512] net: ncsi: Fix GCPS 64-bit member variables
-Date: Tue, 17 Jun 2025 17:21:29 +0200
-Message-ID: <20250617152424.579927113@linuxfoundation.org>
+Subject: [PATCH 6.15 085/780] EDAC/bluefield: Dont use bluefield_edac_readl() result on error
+Date: Tue, 17 Jun 2025 17:16:33 +0200
+Message-ID: <20250617152454.978875659@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,163 +48,86 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hari Kalavakunta <kalavakunta.hari.prasad@gmail.com>
+From: David Thompson <davthompson@nvidia.com>
 
-[ Upstream commit e8a1bd8344054ce27bebf59f48e3f6bc10bc419b ]
+[ Upstream commit ea3b0b7f541b9511abe2b89547c95458804f38e2 ]
 
-Correct Get Controller Packet Statistics (GCPS) 64-bit wide member
-variables, as per DSP0222 v1.0.0 and forward specs. The Driver currently
-collects these stats, but they are yet to be exposed to the user.
-Therefore, no user impact.
+The bluefield_edac_readl() routine returns an uninitialized result on error
+paths. In those cases the calling routine should not use the uninitialized
+result. The driver should simply log the error, and then return early.
 
-Statistics fixes:
-Total Bytes Received (byte range 28..35)
-Total Bytes Transmitted (byte range 36..43)
-Total Unicast Packets Received (byte range 44..51)
-Total Multicast Packets Received (byte range 52..59)
-Total Broadcast Packets Received (byte range 60..67)
-Total Unicast Packets Transmitted (byte range 68..75)
-Total Multicast Packets Transmitted (byte range 76..83)
-Total Broadcast Packets Transmitted (byte range 84..91)
-Valid Bytes Received (byte range 204..11)
-
-Signed-off-by: Hari Kalavakunta <kalavakunta.hari.prasad@gmail.com>
-Reviewed-by: Paul Fertser <fercerpav@gmail.com>
-Link: https://patch.msgid.link/20250410012309.1343-1-kalavakunta.hari.prasad@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: e41967575474 ("EDAC/bluefield: Use Arm SMC for EMI access on BlueField-2")
+Signed-off-by: David Thompson <davthompson@nvidia.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Shravan Kumar Ramani <shravankr@nvidia.com>
+Link: https://lore.kernel.org/20250318214747.12271-1-davthompson@nvidia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ncsi/internal.h | 21 ++++++++++-----------
- net/ncsi/ncsi-pkt.h | 23 +++++++++++------------
- net/ncsi/ncsi-rsp.c | 21 ++++++++++-----------
- 3 files changed, 31 insertions(+), 34 deletions(-)
+ drivers/edac/bluefield_edac.c | 20 +++++++++++++++-----
+ 1 file changed, 15 insertions(+), 5 deletions(-)
 
-diff --git a/net/ncsi/internal.h b/net/ncsi/internal.h
-index 4e0842df5234e..2c260f33b55cc 100644
---- a/net/ncsi/internal.h
-+++ b/net/ncsi/internal.h
-@@ -143,16 +143,15 @@ struct ncsi_channel_vlan_filter {
- };
+diff --git a/drivers/edac/bluefield_edac.c b/drivers/edac/bluefield_edac.c
+index 4942a240c30f2..ae3bb7afa103e 100644
+--- a/drivers/edac/bluefield_edac.c
++++ b/drivers/edac/bluefield_edac.c
+@@ -199,8 +199,10 @@ static void bluefield_gather_report_ecc(struct mem_ctl_info *mci,
+ 	 * error without the detailed information.
+ 	 */
+ 	err = bluefield_edac_readl(priv, MLXBF_SYNDROM, &dram_syndrom);
+-	if (err)
++	if (err) {
+ 		dev_err(priv->dev, "DRAM syndrom read failed.\n");
++		return;
++	}
  
- struct ncsi_channel_stats {
--	u32 hnc_cnt_hi;		/* Counter cleared            */
--	u32 hnc_cnt_lo;		/* Counter cleared            */
--	u32 hnc_rx_bytes;	/* Rx bytes                   */
--	u32 hnc_tx_bytes;	/* Tx bytes                   */
--	u32 hnc_rx_uc_pkts;	/* Rx UC packets              */
--	u32 hnc_rx_mc_pkts;     /* Rx MC packets              */
--	u32 hnc_rx_bc_pkts;	/* Rx BC packets              */
--	u32 hnc_tx_uc_pkts;	/* Tx UC packets              */
--	u32 hnc_tx_mc_pkts;	/* Tx MC packets              */
--	u32 hnc_tx_bc_pkts;	/* Tx BC packets              */
-+	u64 hnc_cnt;		/* Counter cleared            */
-+	u64 hnc_rx_bytes;	/* Rx bytes                   */
-+	u64 hnc_tx_bytes;	/* Tx bytes                   */
-+	u64 hnc_rx_uc_pkts;	/* Rx UC packets              */
-+	u64 hnc_rx_mc_pkts;     /* Rx MC packets              */
-+	u64 hnc_rx_bc_pkts;	/* Rx BC packets              */
-+	u64 hnc_tx_uc_pkts;	/* Tx UC packets              */
-+	u64 hnc_tx_mc_pkts;	/* Tx MC packets              */
-+	u64 hnc_tx_bc_pkts;	/* Tx BC packets              */
- 	u32 hnc_fcs_err;	/* FCS errors                 */
- 	u32 hnc_align_err;	/* Alignment errors           */
- 	u32 hnc_false_carrier;	/* False carrier detection    */
-@@ -181,7 +180,7 @@ struct ncsi_channel_stats {
- 	u32 hnc_tx_1023_frames;	/* Tx 512-1023 bytes frames   */
- 	u32 hnc_tx_1522_frames;	/* Tx 1024-1522 bytes frames  */
- 	u32 hnc_tx_9022_frames;	/* Tx 1523-9022 bytes frames  */
--	u32 hnc_rx_valid_bytes;	/* Rx valid bytes             */
-+	u64 hnc_rx_valid_bytes;	/* Rx valid bytes             */
- 	u32 hnc_rx_runt_pkts;	/* Rx error runt packets      */
- 	u32 hnc_rx_jabber_pkts;	/* Rx error jabber packets    */
- 	u32 ncsi_rx_cmds;	/* Rx NCSI commands           */
-diff --git a/net/ncsi/ncsi-pkt.h b/net/ncsi/ncsi-pkt.h
-index f2f3b5c1b9412..24edb27379724 100644
---- a/net/ncsi/ncsi-pkt.h
-+++ b/net/ncsi/ncsi-pkt.h
-@@ -252,16 +252,15 @@ struct ncsi_rsp_gp_pkt {
- /* Get Controller Packet Statistics */
- struct ncsi_rsp_gcps_pkt {
- 	struct ncsi_rsp_pkt_hdr rsp;            /* Response header            */
--	__be32                  cnt_hi;         /* Counter cleared            */
--	__be32                  cnt_lo;         /* Counter cleared            */
--	__be32                  rx_bytes;       /* Rx bytes                   */
--	__be32                  tx_bytes;       /* Tx bytes                   */
--	__be32                  rx_uc_pkts;     /* Rx UC packets              */
--	__be32                  rx_mc_pkts;     /* Rx MC packets              */
--	__be32                  rx_bc_pkts;     /* Rx BC packets              */
--	__be32                  tx_uc_pkts;     /* Tx UC packets              */
--	__be32                  tx_mc_pkts;     /* Tx MC packets              */
--	__be32                  tx_bc_pkts;     /* Tx BC packets              */
-+	__be64                  cnt;            /* Counter cleared            */
-+	__be64                  rx_bytes;       /* Rx bytes                   */
-+	__be64                  tx_bytes;       /* Tx bytes                   */
-+	__be64                  rx_uc_pkts;     /* Rx UC packets              */
-+	__be64                  rx_mc_pkts;     /* Rx MC packets              */
-+	__be64                  rx_bc_pkts;     /* Rx BC packets              */
-+	__be64                  tx_uc_pkts;     /* Tx UC packets              */
-+	__be64                  tx_mc_pkts;     /* Tx MC packets              */
-+	__be64                  tx_bc_pkts;     /* Tx BC packets              */
- 	__be32                  fcs_err;        /* FCS errors                 */
- 	__be32                  align_err;      /* Alignment errors           */
- 	__be32                  false_carrier;  /* False carrier detection    */
-@@ -290,11 +289,11 @@ struct ncsi_rsp_gcps_pkt {
- 	__be32                  tx_1023_frames; /* Tx 512-1023 bytes frames   */
- 	__be32                  tx_1522_frames; /* Tx 1024-1522 bytes frames  */
- 	__be32                  tx_9022_frames; /* Tx 1523-9022 bytes frames  */
--	__be32                  rx_valid_bytes; /* Rx valid bytes             */
-+	__be64                  rx_valid_bytes; /* Rx valid bytes             */
- 	__be32                  rx_runt_pkts;   /* Rx error runt packets      */
- 	__be32                  rx_jabber_pkts; /* Rx error jabber packets    */
- 	__be32                  checksum;       /* Checksum                   */
--};
-+}  __packed __aligned(4);
+ 	serr = FIELD_GET(MLXBF_SYNDROM__SERR, dram_syndrom);
+ 	derr = FIELD_GET(MLXBF_SYNDROM__DERR, dram_syndrom);
+@@ -213,20 +215,26 @@ static void bluefield_gather_report_ecc(struct mem_ctl_info *mci,
+ 	}
  
- /* Get NCSI Statistics */
- struct ncsi_rsp_gns_pkt {
-diff --git a/net/ncsi/ncsi-rsp.c b/net/ncsi/ncsi-rsp.c
-index 4a8ce2949faea..8668888c5a2f9 100644
---- a/net/ncsi/ncsi-rsp.c
-+++ b/net/ncsi/ncsi-rsp.c
-@@ -926,16 +926,15 @@ static int ncsi_rsp_handler_gcps(struct ncsi_request *nr)
+ 	err = bluefield_edac_readl(priv, MLXBF_ADD_INFO, &dram_additional_info);
+-	if (err)
++	if (err) {
+ 		dev_err(priv->dev, "DRAM additional info read failed.\n");
++		return;
++	}
  
- 	/* Update HNC's statistics */
- 	ncs = &nc->stats;
--	ncs->hnc_cnt_hi         = ntohl(rsp->cnt_hi);
--	ncs->hnc_cnt_lo         = ntohl(rsp->cnt_lo);
--	ncs->hnc_rx_bytes       = ntohl(rsp->rx_bytes);
--	ncs->hnc_tx_bytes       = ntohl(rsp->tx_bytes);
--	ncs->hnc_rx_uc_pkts     = ntohl(rsp->rx_uc_pkts);
--	ncs->hnc_rx_mc_pkts     = ntohl(rsp->rx_mc_pkts);
--	ncs->hnc_rx_bc_pkts     = ntohl(rsp->rx_bc_pkts);
--	ncs->hnc_tx_uc_pkts     = ntohl(rsp->tx_uc_pkts);
--	ncs->hnc_tx_mc_pkts     = ntohl(rsp->tx_mc_pkts);
--	ncs->hnc_tx_bc_pkts     = ntohl(rsp->tx_bc_pkts);
-+	ncs->hnc_cnt            = be64_to_cpu(rsp->cnt);
-+	ncs->hnc_rx_bytes       = be64_to_cpu(rsp->rx_bytes);
-+	ncs->hnc_tx_bytes       = be64_to_cpu(rsp->tx_bytes);
-+	ncs->hnc_rx_uc_pkts     = be64_to_cpu(rsp->rx_uc_pkts);
-+	ncs->hnc_rx_mc_pkts     = be64_to_cpu(rsp->rx_mc_pkts);
-+	ncs->hnc_rx_bc_pkts     = be64_to_cpu(rsp->rx_bc_pkts);
-+	ncs->hnc_tx_uc_pkts     = be64_to_cpu(rsp->tx_uc_pkts);
-+	ncs->hnc_tx_mc_pkts     = be64_to_cpu(rsp->tx_mc_pkts);
-+	ncs->hnc_tx_bc_pkts     = be64_to_cpu(rsp->tx_bc_pkts);
- 	ncs->hnc_fcs_err        = ntohl(rsp->fcs_err);
- 	ncs->hnc_align_err      = ntohl(rsp->align_err);
- 	ncs->hnc_false_carrier  = ntohl(rsp->false_carrier);
-@@ -964,7 +963,7 @@ static int ncsi_rsp_handler_gcps(struct ncsi_request *nr)
- 	ncs->hnc_tx_1023_frames = ntohl(rsp->tx_1023_frames);
- 	ncs->hnc_tx_1522_frames = ntohl(rsp->tx_1522_frames);
- 	ncs->hnc_tx_9022_frames = ntohl(rsp->tx_9022_frames);
--	ncs->hnc_rx_valid_bytes = ntohl(rsp->rx_valid_bytes);
-+	ncs->hnc_rx_valid_bytes = be64_to_cpu(rsp->rx_valid_bytes);
- 	ncs->hnc_rx_runt_pkts   = ntohl(rsp->rx_runt_pkts);
- 	ncs->hnc_rx_jabber_pkts = ntohl(rsp->rx_jabber_pkts);
+ 	err_prank = FIELD_GET(MLXBF_ADD_INFO__ERR_PRANK, dram_additional_info);
  
+ 	ecc_dimm = (err_prank >= 2 && priv->dimm_ranks[0] <= 2) ? 1 : 0;
+ 
+ 	err = bluefield_edac_readl(priv, MLXBF_ERR_ADDR_0, &edea0);
+-	if (err)
++	if (err) {
+ 		dev_err(priv->dev, "Error addr 0 read failed.\n");
++		return;
++	}
+ 
+ 	err = bluefield_edac_readl(priv, MLXBF_ERR_ADDR_1, &edea1);
+-	if (err)
++	if (err) {
+ 		dev_err(priv->dev, "Error addr 1 read failed.\n");
++		return;
++	}
+ 
+ 	ecc_dimm_addr = ((u64)edea1 << 32) | edea0;
+ 
+@@ -250,8 +258,10 @@ static void bluefield_edac_check(struct mem_ctl_info *mci)
+ 		return;
+ 
+ 	err = bluefield_edac_readl(priv, MLXBF_ECC_CNT, &ecc_count);
+-	if (err)
++	if (err) {
+ 		dev_err(priv->dev, "ECC count read failed.\n");
++		return;
++	}
+ 
+ 	single_error_count = FIELD_GET(MLXBF_ECC_CNT__SERR_CNT, ecc_count);
+ 	double_error_count = FIELD_GET(MLXBF_ECC_CNT__DERR_CNT, ecc_count);
 -- 
 2.39.5
 
