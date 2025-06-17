@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 225A42FA642;
-	Tue, 17 Jun 2025 16:45:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1746A21FF44;
+	Tue, 17 Jun 2025 16:46:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750178758; cv=none; b=Uk8/M6B0lATU4yueGtTUfp9KS0epbhkzB5xf3sZsl/tnfMEqLaP4IU5RKbgWar3YZgXYkpjttEBQ+Bvjk11K52QZk8MvYjuUXInjQz3jGXbWS0ZmdsT0uFsGqK3sTrUfH/Mqs4dCwp5PBhZOjjIdgWC35pUk/RjkGJzv6mtU2ck=
+	t=1750178761; cv=none; b=MTBH/ae+1kuiJL/3wYm2CRhQzsXSxXYUw1LlLaeSgKGbpw3ozg6XGREBrAK7tBvwCz4wLTN+VziSNKnXPW04HNN5BwSSF/JktRsp+puB4ToogbqIL1dl7f9MJf3UO6WPHIviaiowHLQ7AYaNqNyAkmjVvm2gEr+SrWFj0arqSkM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750178758; c=relaxed/simple;
-	bh=dghugeQD5Uv5n2e2BjTYobZbJy9utIEyUdCF3a+6yaQ=;
+	s=arc-20240116; t=1750178761; c=relaxed/simple;
+	bh=PM3pS4IEuxav31Qh1nUCzH5EJ+mb5/daMjPL9POdNHU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k98/BIdYTittetakXJWeJryLa37vSbVvvummBRTGEiQBfbLfKmmy4YMfIGOKcIDaexLSdb6RyJK0kSMFAa8vJKhWcJrYNSs9VdfT3hJz9KF5Bgn5w/tXWRhVk8v/Vlja4yKmG2d6lGEyu7XNqVAz5+lyxuaOQoxUMVkTc+Hasdw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lhkOSohf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rv7avAAQ1DiiyVRUVy8c1RMc/cawZ9ZefxFjqlmlVPUtiLGhtOcDdgGrCdxV1C12W1jpWeWuHYAQpNjw9YG4/H1tCFBBbXZI1we6g/NW8kIzWuRYLy1cLQDg1ENuOtpe1kWiGZ8IypkybNOBFLRnHoSNmLNQEYPYMghc2dRlppg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eycquu4c; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lhkOSohf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 327A4C4CEE3;
-	Tue, 17 Jun 2025 16:45:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eycquu4c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76302C4CEE3;
+	Tue, 17 Jun 2025 16:46:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750178757;
-	bh=dghugeQD5Uv5n2e2BjTYobZbJy9utIEyUdCF3a+6yaQ=;
+	s=korg; t=1750178760;
+	bh=PM3pS4IEuxav31Qh1nUCzH5EJ+mb5/daMjPL9POdNHU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lhkOSohf1VOuwFwppQibmsrsRbd1isvjGCrekpNpqneqjPGN3sp9nhYQTNcAEtd2g
-	 2Ra2VxZzHeLfHzq8gaAAWeETCl6u3ZZtnlg1RBEV6war3L5qQiJq/MjYPO7MqIGbe9
-	 HO8mUuyGrJZb/LpB7rRERwrQaWdk6tEYbOytlToA=
+	b=eycquu4cbejK/R2yPrJoeFDkJvYqZDpd7cGfSP0qHuLIuqDdKQuRet2KoLwptkaGw
+	 YKeA0E67J3qUFsn2vs4WfvOPZUIZiVhvAMFZfBNYgIdTOAmTQCIc7DISF/39tD1rZp
+	 95EY6KISOggRFOY3tMDVZ5uU9N/ycvGhdmZEFggo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrea Righi <arighi@nvidia.com>,
-	Tejun Heo <tj@kernel.org>,
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 514/780] sched_ext: idle: Skip cross-node search with !CONFIG_NUMA
-Date: Tue, 17 Jun 2025 17:23:42 +0200
-Message-ID: <20250617152512.442749413@linuxfoundation.org>
+Subject: [PATCH 6.15 515/780] usb: renesas_usbhs: Reorder clock handling and power management in probe
+Date: Tue, 17 Jun 2025 17:23:43 +0200
+Message-ID: <20250617152512.484205543@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
 References: <20250617152451.485330293@linuxfoundation.org>
@@ -51,50 +51,189 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrea Righi <arighi@nvidia.com>
+From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
 
-[ Upstream commit 9960be72a54cf0e4d47abdd4cacd1278835a3bb4 ]
+[ Upstream commit ffb34a60ce86656ba12d46e91f1ccc71dd221251 ]
 
-In the idle CPU selection logic, attempting cross-node searches adds
-unnecessary complexity when CONFIG_NUMA is disabled.
+Reorder the initialization sequence in `usbhs_probe()` to enable runtime
+PM before accessing registers, preventing potential crashes due to
+uninitialized clocks.
 
-Since there's no meaningful concept of nodes in this case, simplify the
-logic by restricting the idle CPU search to the current node only.
+Currently, in the probe path, registers are accessed before enabling the
+clocks, leading to a synchronous external abort on the RZ/V2H SoC.
+The problematic call flow is as follows:
 
-Fixes: 48849271e6611 ("sched_ext: idle: Per-node idle cpumasks")
-Signed-off-by: Andrea Righi <arighi@nvidia.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+    usbhs_probe()
+        usbhs_sys_clock_ctrl()
+            usbhs_bset()
+                usbhs_write()
+                    iowrite16()  <-- Register access before enabling clocks
+
+Since `iowrite16()` is performed without ensuring the required clocks are
+enabled, this can lead to access errors. To fix this, enable PM runtime
+early in the probe function and ensure clocks are acquired before register
+access, preventing crashes like the following on RZ/V2H:
+
+[13.272640] Internal error: synchronous external abort: 0000000096000010 [#1] PREEMPT SMP
+[13.280814] Modules linked in: cec renesas_usbhs(+) drm_kms_helper fuse drm backlight ipv6
+[13.289088] CPU: 1 UID: 0 PID: 195 Comm: (udev-worker) Not tainted 6.14.0-rc7+ #98
+[13.296640] Hardware name: Renesas RZ/V2H EVK Board based on r9a09g057h44 (DT)
+[13.303834] pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[13.310770] pc : usbhs_bset+0x14/0x4c [renesas_usbhs]
+[13.315831] lr : usbhs_probe+0x2e4/0x5ac [renesas_usbhs]
+[13.321138] sp : ffff8000827e3850
+[13.324438] x29: ffff8000827e3860 x28: 0000000000000000 x27: ffff8000827e3ca0
+[13.331554] x26: ffff8000827e3ba0 x25: ffff800081729668 x24: 0000000000000025
+[13.338670] x23: ffff0000c0f08000 x22: 0000000000000000 x21: ffff0000c0f08010
+[13.345783] x20: 0000000000000000 x19: ffff0000c3b52080 x18: 00000000ffffffff
+[13.352895] x17: 0000000000000000 x16: 0000000000000000 x15: ffff8000827e36ce
+[13.360009] x14: 00000000000003d7 x13: 00000000000003d7 x12: 0000000000000000
+[13.367122] x11: 0000000000000000 x10: 0000000000000aa0 x9 : ffff8000827e3750
+[13.374235] x8 : ffff0000c1850b00 x7 : 0000000003826060 x6 : 000000000000001c
+[13.381347] x5 : 000000030d5fcc00 x4 : ffff8000825c0000 x3 : 0000000000000000
+[13.388459] x2 : 0000000000000400 x1 : 0000000000000000 x0 : ffff0000c3b52080
+[13.395574] Call trace:
+[13.398013]  usbhs_bset+0x14/0x4c [renesas_usbhs] (P)
+[13.403076]  platform_probe+0x68/0xdc
+[13.406738]  really_probe+0xbc/0x2c0
+[13.410306]  __driver_probe_device+0x78/0x120
+[13.414653]  driver_probe_device+0x3c/0x154
+[13.418825]  __driver_attach+0x90/0x1a0
+[13.422647]  bus_for_each_dev+0x7c/0xe0
+[13.426470]  driver_attach+0x24/0x30
+[13.430032]  bus_add_driver+0xe4/0x208
+[13.433766]  driver_register+0x68/0x130
+[13.437587]  __platform_driver_register+0x24/0x30
+[13.442273]  renesas_usbhs_driver_init+0x20/0x1000 [renesas_usbhs]
+[13.448450]  do_one_initcall+0x60/0x1d4
+[13.452276]  do_init_module+0x54/0x1f8
+[13.456014]  load_module+0x1754/0x1c98
+[13.459750]  init_module_from_file+0x88/0xcc
+[13.464004]  __arm64_sys_finit_module+0x1c4/0x328
+[13.468689]  invoke_syscall+0x48/0x104
+[13.472426]  el0_svc_common.constprop.0+0xc0/0xe0
+[13.477113]  do_el0_svc+0x1c/0x28
+[13.480415]  el0_svc+0x30/0xcc
+[13.483460]  el0t_64_sync_handler+0x10c/0x138
+[13.487800]  el0t_64_sync+0x198/0x19c
+[13.491453] Code: 2a0103e1 12003c42 12003c63 8b010084 (79400084)
+[13.497522] ---[ end trace 0000000000000000 ]---
+
+Fixes: f1407d5c66240 ("usb: renesas_usbhs: Add Renesas USBHS common code")
+Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Reviewed-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+Tested-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+Link: https://lore.kernel.org/r/20250407105002.107181-4-prabhakar.mahadev-lad.rj@bp.renesas.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/ext_idle.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/usb/renesas_usbhs/common.c | 50 +++++++++++++++++++++++-------
+ 1 file changed, 38 insertions(+), 12 deletions(-)
 
-diff --git a/kernel/sched/ext_idle.c b/kernel/sched/ext_idle.c
-index e67a19a071c11..50b9f3af810d9 100644
---- a/kernel/sched/ext_idle.c
-+++ b/kernel/sched/ext_idle.c
-@@ -131,6 +131,7 @@ static s32 pick_idle_cpu_in_node(const struct cpumask *cpus_allowed, int node, u
- 		goto retry;
- }
+diff --git a/drivers/usb/renesas_usbhs/common.c b/drivers/usb/renesas_usbhs/common.c
+index 4b35ef216125c..16692e72b7365 100644
+--- a/drivers/usb/renesas_usbhs/common.c
++++ b/drivers/usb/renesas_usbhs/common.c
+@@ -685,10 +685,29 @@ static int usbhs_probe(struct platform_device *pdev)
+ 	INIT_DELAYED_WORK(&priv->notify_hotplug_work, usbhsc_notify_hotplug);
+ 	spin_lock_init(usbhs_priv_to_lock(priv));
  
-+#ifdef CONFIG_NUMA
- /*
-  * Tracks nodes that have not yet been visited when searching for an idle
-  * CPU across all available nodes.
-@@ -179,6 +180,13 @@ static s32 pick_idle_cpu_from_online_nodes(const struct cpumask *cpus_allowed, i
++	/*
++	 * Acquire clocks and enable power management (PM) early in the
++	 * probe process, as the driver accesses registers during
++	 * initialization. Ensure the device is active before proceeding.
++	 */
++	pm_runtime_enable(dev);
++
++	ret = usbhsc_clk_get(dev, priv);
++	if (ret)
++		goto probe_pm_disable;
++
++	ret = pm_runtime_resume_and_get(dev);
++	if (ret)
++		goto probe_clk_put;
++
++	ret = usbhsc_clk_prepare_enable(priv);
++	if (ret)
++		goto probe_pm_put;
++
+ 	/* call pipe and module init */
+ 	ret = usbhs_pipe_probe(priv);
+ 	if (ret < 0)
+-		return ret;
++		goto probe_clk_dis_unprepare;
  
- 	return cpu;
- }
-+#else
-+static inline s32
-+pick_idle_cpu_from_online_nodes(const struct cpumask *cpus_allowed, int node, u64 flags)
-+{
-+	return -EBUSY;
-+}
-+#endif
+ 	ret = usbhs_fifo_probe(priv);
+ 	if (ret < 0)
+@@ -705,10 +724,6 @@ static int usbhs_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		goto probe_fail_rst;
  
- /*
-  * Find an idle CPU in the system, starting from @node.
+-	ret = usbhsc_clk_get(dev, priv);
+-	if (ret)
+-		goto probe_fail_clks;
+-
+ 	/*
+ 	 * deviece reset here because
+ 	 * USB device might be used in boot loader.
+@@ -721,7 +736,7 @@ static int usbhs_probe(struct platform_device *pdev)
+ 		if (ret) {
+ 			dev_warn(dev, "USB function not selected (GPIO)\n");
+ 			ret = -ENOTSUPP;
+-			goto probe_end_mod_exit;
++			goto probe_assert_rest;
+ 		}
+ 	}
+ 
+@@ -735,14 +750,19 @@ static int usbhs_probe(struct platform_device *pdev)
+ 	ret = usbhs_platform_call(priv, hardware_init, pdev);
+ 	if (ret < 0) {
+ 		dev_err(dev, "platform init failed.\n");
+-		goto probe_end_mod_exit;
++		goto probe_assert_rest;
+ 	}
+ 
+ 	/* reset phy for connection */
+ 	usbhs_platform_call(priv, phy_reset, pdev);
+ 
+-	/* power control */
+-	pm_runtime_enable(dev);
++	/*
++	 * Disable the clocks that were enabled earlier in the probe path,
++	 * and let the driver handle the clocks beyond this point.
++	 */
++	usbhsc_clk_disable_unprepare(priv);
++	pm_runtime_put(dev);
++
+ 	if (!usbhs_get_dparam(priv, runtime_pwctrl)) {
+ 		usbhsc_power_ctrl(priv, 1);
+ 		usbhs_mod_autonomy_mode(priv);
+@@ -759,9 +779,7 @@ static int usbhs_probe(struct platform_device *pdev)
+ 
+ 	return ret;
+ 
+-probe_end_mod_exit:
+-	usbhsc_clk_put(priv);
+-probe_fail_clks:
++probe_assert_rest:
+ 	reset_control_assert(priv->rsts);
+ probe_fail_rst:
+ 	usbhs_mod_remove(priv);
+@@ -769,6 +787,14 @@ static int usbhs_probe(struct platform_device *pdev)
+ 	usbhs_fifo_remove(priv);
+ probe_end_pipe_exit:
+ 	usbhs_pipe_remove(priv);
++probe_clk_dis_unprepare:
++	usbhsc_clk_disable_unprepare(priv);
++probe_pm_put:
++	pm_runtime_put(dev);
++probe_clk_put:
++	usbhsc_clk_put(priv);
++probe_pm_disable:
++	pm_runtime_disable(dev);
+ 
+ 	dev_info(dev, "probe failed (%d)\n", ret);
+ 
 -- 
 2.39.5
 
