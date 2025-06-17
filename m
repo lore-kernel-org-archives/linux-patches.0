@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E58B12ED17A;
-	Tue, 17 Jun 2025 15:45:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C46861E573F;
+	Tue, 17 Jun 2025 15:45:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175118; cv=none; b=a1CZA36l8EOdtBTF9bC96tiWcyT+gZnpcajQqs7pEEtBGvT07fgKOHPgfxRzM0UNcxEs+gvgDl9dYSOBeVdZxgA+qOuMVEAJiIrBJ+UqujAXceUHGzkUIF7zUU1xsru3nO1feoxcRK5/oLMcAVLYBKM1d5beEFIKlY5Z/yS5Smc=
+	t=1750175120; cv=none; b=t8KvEDIIohqzkopY2wsX1qfnjf0mTrzjIdRDg7ctxorOyO3VuhCPaKKtnWXR+R4fbknFTGpirQLls8fGlI6Hfbj2ZFjT0vytEfa9fHcAIfDQF5BzM3RlrY12kAK06s14S/I/zYWj+amrYgOVBfXkNWvWjdeAq1LCtpYyyjB93aw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175118; c=relaxed/simple;
-	bh=ZxwJmlHHjAb2V6wZNNQXVo+9ux0IA/+/h59OkqW7oU4=;
+	s=arc-20240116; t=1750175120; c=relaxed/simple;
+	bh=csTfDBH0JSYiPI2tjD8LPvhLE5YD3kEfEEzeptIcigI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RPsvwQsf5+GQAzauBhsvCpBnoIQ0AL/walQ23eWv0MZijc95Jl7Y/b74OIQmA4T1pJINHIKfkOHoS8eQsypYDU1OpBOahR9M/e7b9Bq98/3ZqS1/JtcMP95Hq26YVmjfmyCBulmYcCSigtdDAGMVGuKWNOeSoZ5NrYNwmROWuKw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KlThkdda; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GXdQf+R3PSKhiffuVONqUhgOpL22Jj+OUtB5qD/x/bL6AVuXQNtTMKRjfeDJRzvBiHWGVPGZDSxmENfG82+catmqiUsGOTJ4CNvBiytFL7iv3bFjrgeRFkEqN1XyzPC+5cTwi6glM0auDLKCyACAR6z46omEr9P+RyhkOA0T+j4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DrdO87S9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KlThkdda"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09BD7C4CEE3;
-	Tue, 17 Jun 2025 15:45:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DrdO87S9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 382A8C4CEE3;
+	Tue, 17 Jun 2025 15:45:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175117;
-	bh=ZxwJmlHHjAb2V6wZNNQXVo+9ux0IA/+/h59OkqW7oU4=;
+	s=korg; t=1750175120;
+	bh=csTfDBH0JSYiPI2tjD8LPvhLE5YD3kEfEEzeptIcigI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KlThkddaEzSMO1nAF2wUMNLJEY2Z8f4YpSeKHhCb/g21oL3J/V1y8m4t4Vw4ZWiJW
-	 MnHl8QH9XhgTsXwmdvWyjejyU0CaGLn0T7uAgs3/QzayuhBSKk6zYJrLspIrnjwMXa
-	 pF+6EfVMSPq3JtvP8NGSV9OnHBfAc+QewhUwWwnw=
+	b=DrdO87S9K0xmMPCpXLAc3/N/BJqteifa94Eu9bgzn7Gc+v1WRXjGX7vYOclGTXD78
+	 ElpJoVB1kr5QjUlyEkHMNPN4/TOqCT6Z+5OGa+9p0KPoiCe5Q7kM7qDQBuBlIyxsIX
+	 0lDUYCyYkK1Js9y746CcywSzWzgnxWp9xLmNmJQo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Horatiu Vultur <horatiu.vultur@microchip.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Andreas Gruenbacher <agruenba@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 145/356] net: lan966x: Fix 1-step timestamping over ipv4 or ipv6
-Date: Tue, 17 Jun 2025 17:24:20 +0200
-Message-ID: <20250617152344.072847785@linuxfoundation.org>
+Subject: [PATCH 6.15 051/780] gfs2: Dont start unnecessary transactions during log flush
+Date: Tue, 17 Jun 2025 17:15:59 +0200
+Message-ID: <20250617152453.577789919@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-References: <20250617152338.212798615@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,170 +46,112 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Horatiu Vultur <horatiu.vultur@microchip.com>
+From: Andreas Gruenbacher <agruenba@redhat.com>
 
-[ Upstream commit 57ee9584fd8606deef66d7b65fa4dcf94f6843aa ]
+[ Upstream commit 5a90f8d499225512a385585ffe3e28f687263d47 ]
 
-When enabling 1-step timestamping for ptp frames that are over udpv4 or
-udpv6 then the inserted timestamp is added at the wrong offset in the
-frame, meaning that will modify the frame at the wrong place, so the
-frame will be malformed.
-To fix this, the HW needs to know which kind of frame it is to know
-where to insert the timestamp. For that there is a field in the IFH that
-says the PDU_TYPE, which can be NONE  which is the default value,
-IPV4 or IPV6. Therefore make sure to set the PDU_TYPE so the HW knows
-where to insert the timestamp.
-Like I mention before the issue is not seen with L2 frames because by
-default the PDU_TYPE has a value of 0, which represents the L2 frames.
+Commit 8d391972ae2d ("gfs2: Remove __gfs2_writepage()") changed the log
+flush code in gfs2_ail1_start_one() to call aops->writepages() instead
+of aops->writepage().  For jdata inodes, this means that we will now try
+to reserve log space and start a transaction before we can determine
+that the pages in question have already been journaled.  When this
+happens in the context of gfs2_logd(), it can now appear that not enough
+log space is available for freeing up log space, and we will lock up.
 
-Fixes: 77eecf25bd9d2f ("net: lan966x: Update extraction/injection for timestamping")
-Signed-off-by: Horatiu Vultur <horatiu.vultur@microchip.com>
-Link: https://patch.msgid.link/20250521124159.2713525-1-horatiu.vultur@microchip.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fix that by issuing journal writes directly instead of going through
+aops->writepages() in the log flush code.
+
+Fixes: 8d391972ae2d ("gfs2: Remove __gfs2_writepage()")
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/microchip/lan966x/lan966x_main.c |  6 +++
- .../ethernet/microchip/lan966x/lan966x_main.h |  5 ++
- .../ethernet/microchip/lan966x/lan966x_ptp.c  | 49 ++++++++++++++-----
- 3 files changed, 47 insertions(+), 13 deletions(-)
+ fs/gfs2/aops.c | 31 +++++++++++++++++++++++++++++++
+ fs/gfs2/aops.h |  1 +
+ fs/gfs2/log.c  |  7 ++++++-
+ 3 files changed, 38 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_main.c b/drivers/net/ethernet/microchip/lan966x/lan966x_main.c
-index c3f6c10bc2393..05f6c92275830 100644
---- a/drivers/net/ethernet/microchip/lan966x/lan966x_main.c
-+++ b/drivers/net/ethernet/microchip/lan966x/lan966x_main.c
-@@ -353,6 +353,11 @@ static void lan966x_ifh_set_rew_op(void *ifh, u64 rew_op)
- 	lan966x_ifh_set(ifh, rew_op, IFH_POS_REW_CMD, IFH_WID_REW_CMD);
+diff --git a/fs/gfs2/aops.c b/fs/gfs2/aops.c
+index ed2c708a215a4..eb4270e82ef8e 100644
+--- a/fs/gfs2/aops.c
++++ b/fs/gfs2/aops.c
+@@ -117,6 +117,37 @@ static int __gfs2_jdata_write_folio(struct folio *folio,
+ 	return gfs2_write_jdata_folio(folio, wbc);
  }
  
-+static void lan966x_ifh_set_oam_type(void *ifh, u64 oam_type)
++/**
++ * gfs2_jdata_writeback - Write jdata folios to the log
++ * @mapping: The mapping to write
++ * @wbc: The writeback control
++ *
++ * Returns: errno
++ */
++int gfs2_jdata_writeback(struct address_space *mapping, struct writeback_control *wbc)
 +{
-+	lan966x_ifh_set(ifh, oam_type, IFH_POS_PDU_TYPE, IFH_WID_PDU_TYPE);
++	struct inode *inode = mapping->host;
++	struct gfs2_inode *ip = GFS2_I(inode);
++	struct gfs2_sbd *sdp = GFS2_SB(mapping->host);
++	struct folio *folio = NULL;
++	int error;
++
++	BUG_ON(current->journal_info);
++	if (gfs2_assert_withdraw(sdp, ip->i_gl->gl_state == LM_ST_EXCLUSIVE))
++		return 0;
++
++	while ((folio = writeback_iter(mapping, wbc, folio, &error))) {
++		if (folio_test_checked(folio)) {
++			folio_redirty_for_writepage(wbc, folio);
++			folio_unlock(folio);
++			continue;
++		}
++		error = __gfs2_jdata_write_folio(folio, wbc);
++	}
++
++	return error;
 +}
 +
- static void lan966x_ifh_set_timestamp(void *ifh, u64 timestamp)
- {
- 	lan966x_ifh_set(ifh, timestamp, IFH_POS_TIMESTAMP, IFH_WID_TIMESTAMP);
-@@ -380,6 +385,7 @@ static netdev_tx_t lan966x_port_xmit(struct sk_buff *skb,
- 			return err;
+ /**
+  * gfs2_writepages - Write a bunch of dirty pages back to disk
+  * @mapping: The mapping to write
+diff --git a/fs/gfs2/aops.h b/fs/gfs2/aops.h
+index f9fa41aaeaf41..bf002522a7822 100644
+--- a/fs/gfs2/aops.h
++++ b/fs/gfs2/aops.h
+@@ -9,5 +9,6 @@
+ #include "incore.h"
  
- 		lan966x_ifh_set_rew_op(ifh, LAN966X_SKB_CB(skb)->rew_op);
-+		lan966x_ifh_set_oam_type(ifh, LAN966X_SKB_CB(skb)->pdu_type);
- 		lan966x_ifh_set_timestamp(ifh, LAN966X_SKB_CB(skb)->ts_id);
- 	}
+ void adjust_fs_space(struct inode *inode);
++int gfs2_jdata_writeback(struct address_space *mapping, struct writeback_control *wbc);
  
-diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_main.h b/drivers/net/ethernet/microchip/lan966x/lan966x_main.h
-index caa9e0533c96b..b65d58a1552b5 100644
---- a/drivers/net/ethernet/microchip/lan966x/lan966x_main.h
-+++ b/drivers/net/ethernet/microchip/lan966x/lan966x_main.h
-@@ -74,6 +74,10 @@
- #define IFH_REW_OP_ONE_STEP_PTP		0x3
- #define IFH_REW_OP_TWO_STEP_PTP		0x4
+ #endif /* __AOPS_DOT_H__ */
+diff --git a/fs/gfs2/log.c b/fs/gfs2/log.c
+index f9c5089783d24..115c4ac457e90 100644
+--- a/fs/gfs2/log.c
++++ b/fs/gfs2/log.c
+@@ -31,6 +31,7 @@
+ #include "dir.h"
+ #include "trace_gfs2.h"
+ #include "trans.h"
++#include "aops.h"
  
-+#define IFH_PDU_TYPE_NONE		0
-+#define IFH_PDU_TYPE_IPV4		7
-+#define IFH_PDU_TYPE_IPV6		8
-+
- #define FDMA_RX_DCB_MAX_DBS		1
- #define FDMA_TX_DCB_MAX_DBS		1
- #define FDMA_DCB_INFO_DATAL(x)		((x) & GENMASK(15, 0))
-@@ -306,6 +310,7 @@ struct lan966x_phc {
+ static void gfs2_log_shutdown(struct gfs2_sbd *sdp);
  
- struct lan966x_skb_cb {
- 	u8 rew_op;
-+	u8 pdu_type;
- 	u16 ts_id;
- 	unsigned long jiffies;
- };
-diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_ptp.c b/drivers/net/ethernet/microchip/lan966x/lan966x_ptp.c
-index 63905bb5a63a8..87e5e81d40dc6 100644
---- a/drivers/net/ethernet/microchip/lan966x/lan966x_ptp.c
-+++ b/drivers/net/ethernet/microchip/lan966x/lan966x_ptp.c
-@@ -322,34 +322,55 @@ void lan966x_ptp_hwtstamp_get(struct lan966x_port *port,
- 	*cfg = phc->hwtstamp_config;
- }
- 
--static int lan966x_ptp_classify(struct lan966x_port *port, struct sk_buff *skb)
-+static void lan966x_ptp_classify(struct lan966x_port *port, struct sk_buff *skb,
-+				 u8 *rew_op, u8 *pdu_type)
- {
- 	struct ptp_header *header;
- 	u8 msgtype;
- 	int type;
- 
--	if (port->ptp_tx_cmd == IFH_REW_OP_NOOP)
--		return IFH_REW_OP_NOOP;
-+	if (port->ptp_tx_cmd == IFH_REW_OP_NOOP) {
-+		*rew_op = IFH_REW_OP_NOOP;
-+		*pdu_type = IFH_PDU_TYPE_NONE;
-+		return;
-+	}
- 
- 	type = ptp_classify_raw(skb);
--	if (type == PTP_CLASS_NONE)
--		return IFH_REW_OP_NOOP;
-+	if (type == PTP_CLASS_NONE) {
-+		*rew_op = IFH_REW_OP_NOOP;
-+		*pdu_type = IFH_PDU_TYPE_NONE;
-+		return;
-+	}
- 
- 	header = ptp_parse_header(skb, type);
--	if (!header)
--		return IFH_REW_OP_NOOP;
-+	if (!header) {
-+		*rew_op = IFH_REW_OP_NOOP;
-+		*pdu_type = IFH_PDU_TYPE_NONE;
-+		return;
-+	}
- 
--	if (port->ptp_tx_cmd == IFH_REW_OP_TWO_STEP_PTP)
--		return IFH_REW_OP_TWO_STEP_PTP;
-+	if (type & PTP_CLASS_L2)
-+		*pdu_type = IFH_PDU_TYPE_NONE;
-+	if (type & PTP_CLASS_IPV4)
-+		*pdu_type = IFH_PDU_TYPE_IPV4;
-+	if (type & PTP_CLASS_IPV6)
-+		*pdu_type = IFH_PDU_TYPE_IPV6;
-+
-+	if (port->ptp_tx_cmd == IFH_REW_OP_TWO_STEP_PTP) {
-+		*rew_op = IFH_REW_OP_TWO_STEP_PTP;
-+		return;
-+	}
- 
- 	/* If it is sync and run 1 step then set the correct operation,
- 	 * otherwise run as 2 step
- 	 */
- 	msgtype = ptp_get_msgtype(header, type);
--	if ((msgtype & 0xf) == 0)
--		return IFH_REW_OP_ONE_STEP_PTP;
-+	if ((msgtype & 0xf) == 0) {
-+		*rew_op = IFH_REW_OP_ONE_STEP_PTP;
-+		return;
-+	}
- 
--	return IFH_REW_OP_TWO_STEP_PTP;
-+	*rew_op = IFH_REW_OP_TWO_STEP_PTP;
- }
- 
- static void lan966x_ptp_txtstamp_old_release(struct lan966x_port *port)
-@@ -374,10 +395,12 @@ int lan966x_ptp_txtstamp_request(struct lan966x_port *port,
- {
- 	struct lan966x *lan966x = port->lan966x;
- 	unsigned long flags;
-+	u8 pdu_type;
- 	u8 rew_op;
- 
--	rew_op = lan966x_ptp_classify(port, skb);
-+	lan966x_ptp_classify(port, skb, &rew_op, &pdu_type);
- 	LAN966X_SKB_CB(skb)->rew_op = rew_op;
-+	LAN966X_SKB_CB(skb)->pdu_type = pdu_type;
- 
- 	if (rew_op != IFH_REW_OP_TWO_STEP_PTP)
- 		return 0;
+@@ -131,7 +132,11 @@ __acquires(&sdp->sd_ail_lock)
+ 		if (!mapping)
+ 			continue;
+ 		spin_unlock(&sdp->sd_ail_lock);
+-		ret = mapping->a_ops->writepages(mapping, wbc);
++		BUG_ON(GFS2_SB(mapping->host) != sdp);
++		if (gfs2_is_jdata(GFS2_I(mapping->host)))
++			ret = gfs2_jdata_writeback(mapping, wbc);
++		else
++			ret = mapping->a_ops->writepages(mapping, wbc);
+ 		if (need_resched()) {
+ 			blk_finish_plug(plug);
+ 			cond_resched();
 -- 
 2.39.5
 
