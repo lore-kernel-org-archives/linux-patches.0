@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DABF02F94A0;
-	Tue, 17 Jun 2025 16:26:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 054541ADC97;
+	Tue, 17 Jun 2025 16:26:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177604; cv=none; b=moVkvKZitD8t944YtU3WIA6v8bZxwz2TGCIybDXlgRuF7Jrk3wT+y4yukMKlFQ581S74B+c+5+We3fE5mVm2b7s4CwFVbK8evQtB0FvyZRILBtx7/N98+frJUgv33WIhHBGehkQ8DHRoMFZnAilnM2ZOh4F/DmZl0YA/9rU0jYM=
+	t=1750177608; cv=none; b=cieib/DYfwkXtTb0g/b3kVzPQPtG7D+8rYyGksmM7Xarn0Dh/EAOxYtZphrRNPHBtf9bPmuQltH9bq4qSlVVjuMpQUDhuoa/wvTlvdf8CrijM3QbzXh49RIHNGY76hWBoYOAHpwfl1TPz59BDLMlCmZLo9+diomHgFnmSic1/mM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177604; c=relaxed/simple;
-	bh=w+MablAKOtjpAIzfaE93LWcLx7IwtS31PApZgx9keEs=;
+	s=arc-20240116; t=1750177608; c=relaxed/simple;
+	bh=C4ckT8RUXODunkfyo0k7i5G2R1PsWF8BXwEjE9mSqLc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mRTclF3e2IOY+4dc6CZGnJOz4w03zgMyoRuSbNyj6kVDbYEsyMhYs2dVagA2WYRe9hYixpR4vtli8tRYsoMJ7e2BY5Et0Rac3jTnZI3Co1XcFMfMUYuyUwJbGi8fq9PWza7jnr3g1Wd49+SDJZoxFjVOUZ5RB6BeK5osVTVFSJw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=trFmuveg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=opauG95CsMP64iBbZDa+1hHXOcAQBOJAQCRPO9c4SzoUQVmrLLClmx8+YIm0gZxTx6n9hvIPOLaxCXHqO2QYjb3hkbtcN2jJWfLQ4jX3ujIg7fkKieNJflpWZt2OrlJtFhtt9jLtq/UBhVeNhwvqMa5PrLqOwRXlcuXvjZAUs8w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ukzBNNw1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="trFmuveg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FB30C4CEE3;
-	Tue, 17 Jun 2025 16:26:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ukzBNNw1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28BA5C4CEE3;
+	Tue, 17 Jun 2025 16:26:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177604;
-	bh=w+MablAKOtjpAIzfaE93LWcLx7IwtS31PApZgx9keEs=;
+	s=korg; t=1750177607;
+	bh=C4ckT8RUXODunkfyo0k7i5G2R1PsWF8BXwEjE9mSqLc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=trFmuvegRi9wPwYkb6A4AUfcmwna3YQrgCqMQdscgv9l1N5BR/R0E3WxeOU04Nfcl
-	 awE9NTG+ssKgKLMIZ91pO530wzRNTO8m1AnkAAmWFWkOmDWjtErTvO0FohBbFOn6mQ
-	 OoUdalqoiAdLdz913k2G38/rTHu94egNw3XPLF58=
+	b=ukzBNNw1VLcvNwMdg145I4kRP4PCiolhOp+rmDYa/rzKPa9VdS2OtLV01pweqwGkb
+	 5oDt+zRFmelCjI+AjGU7ioeM91ashfxbPFQlPbeBLitJ7h013a/PIIoOzL9/ns5dOe
+	 cfdHsVkVH2/3z4eOdwuVTGxX4ds//gu/W7dtzOpg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hariprasad Kelam <hkelam@marvell.com>,
-	Simon Horman <horms@kernel.org>,
+	Ronak Doshi <ronak.doshi@broadcom.com>,
+	Guolin Yang <guolin.yang@broadcom.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 334/780] octeontx2-pf: QOS: Refactor TC_HTB_LEAF_DEL_LAST callback
-Date: Tue, 17 Jun 2025 17:20:42 +0200
-Message-ID: <20250617152505.050350219@linuxfoundation.org>
+Subject: [PATCH 6.12 370/512] vmxnet3: correctly report gso type for UDP tunnels
+Date: Tue, 17 Jun 2025 17:25:36 +0200
+Message-ID: <20250617152434.584669111@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,62 +48,84 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hariprasad Kelam <hkelam@marvell.com>
+From: Ronak Doshi <ronak.doshi@broadcom.com>
 
-[ Upstream commit 67af4ec948e8ce3ea53a9cf614d01fddf172e56d ]
+[ Upstream commit 982d30c30eaa2ec723df42e3bf526c014c1dbb88 ]
 
-This patch addresses below issues,
+Commit 3d010c8031e3 ("udp: do not accept non-tunnel GSO skbs landing
+in a tunnel") added checks in linux stack to not accept non-tunnel
+GRO packets landing in a tunnel. This exposed an issue in vmxnet3
+which was not correctly reporting GRO packets for tunnel packets.
 
-1. Active traffic on the leaf node must be stopped before its send queue
-   is reassigned to the parent. This patch resolves the issue by marking
-   the node as 'Inner'.
+This patch fixes this issue by setting correct GSO type for the
+tunnel packets.
 
-2. During a system reboot, the interface receives TC_HTB_LEAF_DEL
-   and TC_HTB_LEAF_DEL_LAST callbacks to delete its HTB queues.
-   In the case of TC_HTB_LEAF_DEL_LAST, although the same send queue
-   is reassigned to the parent, the current logic still attempts to update
-   the real number of queues, leadning to below warnings
+Currently, vmxnet3 does not support reporting inner fields for LRO
+tunnel packets. The issue is not seen for egress drivers that do not
+use skb inner fields. The workaround is to enable tnl-segmentation
+offload on the egress interfaces if the driver supports it. This
+problem pre-exists this patch fix and can be addressed as a separate
+future patch.
 
-        New queues can't be registered after device unregistration.
-        WARNING: CPU: 0 PID: 6475 at net/core/net-sysfs.c:1714
-        netdev_queue_update_kobjects+0x1e4/0x200
-
-Fixes: 5e6808b4c68d ("octeontx2-pf: Add support for HTB offload")
-Signed-off-by: Hariprasad Kelam <hkelam@marvell.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250522115842.1499666-1-hkelam@marvell.com
+Fixes: dacce2be3312 ("vmxnet3: add geneve and vxlan tunnel offload support")
+Signed-off-by: Ronak Doshi <ronak.doshi@broadcom.com>
+Acked-by: Guolin Yang <guolin.yang@broadcom.com>
+Link: https://patch.msgid.link/20250530152701.70354-1-ronak.doshi@broadcom.com
+[pabeni@redhat.com: dropped the changelog]
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/nic/qos.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/net/vmxnet3/vmxnet3_drv.c | 26 ++++++++++++++++++++++++++
+ 1 file changed, 26 insertions(+)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/qos.c b/drivers/net/ethernet/marvell/octeontx2/nic/qos.c
-index 35acc07bd9648..5765bac119f0e 100644
---- a/drivers/net/ethernet/marvell/octeontx2/nic/qos.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/qos.c
-@@ -1638,6 +1638,7 @@ static int otx2_qos_leaf_del_last(struct otx2_nic *pfvf, u16 classid, bool force
- 	if (!node->is_static)
- 		dwrr_del_node = true;
- 
-+	WRITE_ONCE(node->qid, OTX2_QOS_QID_INNER);
- 	/* destroy the leaf node */
- 	otx2_qos_disable_sq(pfvf, qid);
- 	otx2_qos_destroy_node(pfvf, node);
-@@ -1682,9 +1683,6 @@ static int otx2_qos_leaf_del_last(struct otx2_nic *pfvf, u16 classid, bool force
- 	}
- 	kfree(new_cfg);
- 
--	/* update tx_real_queues */
--	otx2_qos_update_tx_netdev_queues(pfvf);
--
- 	return 0;
+diff --git a/drivers/net/vmxnet3/vmxnet3_drv.c b/drivers/net/vmxnet3/vmxnet3_drv.c
+index 151d7cdfc4802..c48c2de6f961f 100644
+--- a/drivers/net/vmxnet3/vmxnet3_drv.c
++++ b/drivers/net/vmxnet3/vmxnet3_drv.c
+@@ -1560,6 +1560,30 @@ vmxnet3_get_hdr_len(struct vmxnet3_adapter *adapter, struct sk_buff *skb,
+ 	return (hlen + (hdr.tcp->doff << 2));
  }
  
++static void
++vmxnet3_lro_tunnel(struct sk_buff *skb, __be16 ip_proto)
++{
++	struct udphdr *uh = NULL;
++
++	if (ip_proto == htons(ETH_P_IP)) {
++		struct iphdr *iph = (struct iphdr *)skb->data;
++
++		if (iph->protocol == IPPROTO_UDP)
++			uh = (struct udphdr *)(iph + 1);
++	} else {
++		struct ipv6hdr *iph = (struct ipv6hdr *)skb->data;
++
++		if (iph->nexthdr == IPPROTO_UDP)
++			uh = (struct udphdr *)(iph + 1);
++	}
++	if (uh) {
++		if (uh->check)
++			skb_shinfo(skb)->gso_type |= SKB_GSO_UDP_TUNNEL_CSUM;
++		else
++			skb_shinfo(skb)->gso_type |= SKB_GSO_UDP_TUNNEL;
++	}
++}
++
+ static int
+ vmxnet3_rq_rx_complete(struct vmxnet3_rx_queue *rq,
+ 		       struct vmxnet3_adapter *adapter, int quota)
+@@ -1873,6 +1897,8 @@ vmxnet3_rq_rx_complete(struct vmxnet3_rx_queue *rq,
+ 			if (segCnt != 0 && mss != 0) {
+ 				skb_shinfo(skb)->gso_type = rcd->v4 ?
+ 					SKB_GSO_TCPV4 : SKB_GSO_TCPV6;
++				if (encap_lro)
++					vmxnet3_lro_tunnel(skb, skb->protocol);
+ 				skb_shinfo(skb)->gso_size = mss;
+ 				skb_shinfo(skb)->gso_segs = segCnt;
+ 			} else if ((segCnt != 0 || skb->len > mtu) && !encap_lro) {
 -- 
 2.39.5
 
