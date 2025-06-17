@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F204D239E9F;
-	Tue, 17 Jun 2025 16:08:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1727A1A9B48;
+	Tue, 17 Jun 2025 16:08:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750176486; cv=none; b=n93PJfRAZlO3mog+9l9DrW0yswr1UItNntXfyIwx1w/NXoYBlZPb8epF9tdCfSVAxhC3wRoRa1pxTL4m+0r+64CJs/V39BZEqdTe34XVKckA4sTwXgtqtyDqQtTEznkAhDGfRHXN7n2Lc/KR8Wjh1XesMCN0em56loabBxMH1Sc=
+	t=1750176489; cv=none; b=VvtODh3WPXELnZJyfBC/KLE6QHghmwoYORStmg3prSgA7O7XvMDjhU7gAg28q/gG4eqjHVM1nup5Dmi2y/Dj0BTHHvcOjPAKulSWjyzg4btGPFvLsNJ4P70JPMV/4ou3UNMDVRxQhHno9sDXoajutCffF8AUreitS8BCA2rHtic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750176486; c=relaxed/simple;
-	bh=kzLi5Rktq+KCFYj8pjjZw8LsA6Ou8eObrQcO8nkc9tk=;
+	s=arc-20240116; t=1750176489; c=relaxed/simple;
+	bh=gdPiSNv4ssWZ8AEE4KoC365of7PLTryrDoJu2WqEyBk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S/HQhicJNpRlXEuyPBOiI+FuSxez/zn5IBJY03NfKGCLu865ucF+GCB6/lQQt6sSgYJ51GkI64xMa8UtCkniQgtqRRxvCoC92MCQY+JMKDrAgTPwrYVPGgz9MWuchauZuFXVo038LiZWKuHasNDi2KiKTFtgY3b7C+d0HdK4/tk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RvQ8bAQ4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I+SCZ6TDiOTKufkte1ji84pab7mnbCPTa+e+/7Z3nIQnVXUHYFzRBUOC9qIFKSVfVojhDNYvaX18AboJLepVISrudYzcVsP/oWTqWvCD+1QRekh0fBMshaqFRmm44uOSc6TrbARYxZ+UIbCBdgsajMQtADSF6gcIhbvyo65DNg0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MBnKnAFX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RvQ8bAQ4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82EFEC4CEE3;
-	Tue, 17 Jun 2025 16:08:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MBnKnAFX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82A7FC4CEE3;
+	Tue, 17 Jun 2025 16:08:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750176485;
-	bh=kzLi5Rktq+KCFYj8pjjZw8LsA6Ou8eObrQcO8nkc9tk=;
+	s=korg; t=1750176489;
+	bh=gdPiSNv4ssWZ8AEE4KoC365of7PLTryrDoJu2WqEyBk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RvQ8bAQ4iyq0DF+4TgbX/6JWAJ0v2qnO6mZxodaF6iw86K1rZSXmZs6zObIBfM84q
-	 t6T23lcJEznC3K1KPomT/FeZXOddNDjsask1YlBnWwZ3ClMHQyjTvzE8NNygD2wIpF
-	 jEcyXlQ0fvwXleSlFtM781yrD5Ns2KjAqQ3nwp3Q=
+	b=MBnKnAFXieVkwNQSuVBZxT2Q8pySWiZazIaSpg2hxsLrQwSDUaiVAD3EH1CcrGFY2
+	 qIS3mGQxFFadrA32S33k9FWE92CRzlHMGPDsgcK5B9J/xzGE4tXbkMMg60HmIOHGOy
+	 i0P6Ti40wrpKSPV4b0/1FdBvWjMboJaIGJ3HKg5g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Judith Mendez <jm@ti.com>,
-	Nishanth Menon <nm@ti.com>,
+	Cosmin Ratiu <cratiu@nvidia.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 282/356] arm64: dts: ti: k3-am65-main: Fix sdhci node properties
-Date: Tue, 17 Jun 2025 17:26:37 +0200
-Message-ID: <20250617152349.543942981@linuxfoundation.org>
+Subject: [PATCH 6.15 194/780] net/mlx5: Avoid using xso.real_dev unnecessarily
+Date: Tue, 17 Jun 2025 17:18:22 +0200
+Message-ID: <20250617152459.376198767@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-References: <20250617152338.212798615@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,85 +49,118 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Judith Mendez <jm@ti.com>
+From: Cosmin Ratiu <cratiu@nvidia.com>
 
-[ Upstream commit 8ffe9cb889f2b831a9d5bbb1f7ad42d30e31170f ]
+[ Upstream commit d79444e8c3d40b11f5e155e5591d53bd1e512e1f ]
 
-Update otap-del-sel properties as per datasheet [0].
+xso.real_dev is the active device of an offloaded xfrm state and is
+managed by bonding. As such, it's subject to change when states are
+migrated to a new device. Using it in places other than
+offloading/unoffloading the states is risky.
 
-Add missing clkbuf-sel and itap-del-sel values also as per
-datasheet [0].
+This commit saves the device into the driver-specific struct
+mlx5e_ipsec_sa_entry and switches mlx5e_ipsec_init_macs() and
+mlx5e_ipsec_netevent_event() to make use of it.
 
-Move clkbuf-sel and ti,trm-icp above the otap-del-sel properties
-so the sdhci nodes could be more uniform across platforms.
+Additionally, mlx5e_xfrm_update_stats() used xso.real_dev to validate
+that correct net locks are held. But in a bonding config, the net of the
+master device is the same as the underlying devices, and the net is
+already a local var, so use that instead.
 
-[0] https://www.ti.com/lit/ds/symlink/am6548.pdf
+The only remaining references to xso.real_dev are now in the
+.xdo_dev_state_add() / .xdo_dev_state_delete() path.
 
-Fixes: eac99d38f861 ("arm64: dts: ti: k3-am654-main: Update otap-del-sel values")
-Fixes: d7600d070fb0 ("arm64: dts: ti: k3-am65-main: Add support for sdhci1")
-Signed-off-by: Judith Mendez <jm@ti.com>
-Link: https://lore.kernel.org/r/20240423151732.3541894-2-jm@ti.com
-Signed-off-by: Nishanth Menon <nm@ti.com>
-Stable-dep-of: f55c9f087cc2 ("arm64: dts: ti: k3-am65-main: Add missing taps to sdhci0")
+Signed-off-by: Cosmin Ratiu <cratiu@nvidia.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Stable-dep-of: fd4e41ebf66c ("bonding: Mark active offloaded xfrm_states")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/ti/k3-am65-main.dtsi | 17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ .../ethernet/mellanox/mlx5/core/en_accel/ipsec.c | 16 +++++-----------
+ .../ethernet/mellanox/mlx5/core/en_accel/ipsec.h |  1 +
+ 2 files changed, 6 insertions(+), 11 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/ti/k3-am65-main.dtsi b/arch/arm64/boot/dts/ti/k3-am65-main.dtsi
-index 57befcce93b97..9c5de448351e9 100644
---- a/arch/arm64/boot/dts/ti/k3-am65-main.dtsi
-+++ b/arch/arm64/boot/dts/ti/k3-am65-main.dtsi
-@@ -436,6 +436,8 @@ sdhci0: mmc@4f80000 {
- 		interrupts = <GIC_SPI 136 IRQ_TYPE_LEVEL_HIGH>;
- 		mmc-ddr-1_8v;
- 		mmc-hs200-1_8v;
-+		ti,clkbuf-sel = <0x7>;
-+		ti,trm-icp = <0x8>;
- 		ti,otap-del-sel-legacy = <0x0>;
- 		ti,otap-del-sel-mmc-hs = <0x0>;
- 		ti,otap-del-sel-sd-hs = <0x0>;
-@@ -446,8 +448,7 @@ sdhci0: mmc@4f80000 {
- 		ti,otap-del-sel-ddr50 = <0x5>;
- 		ti,otap-del-sel-ddr52 = <0x5>;
- 		ti,otap-del-sel-hs200 = <0x5>;
--		ti,otap-del-sel-hs400 = <0x0>;
--		ti,trm-icp = <0x8>;
-+		ti,itap-del-sel-ddr52 = <0x0>;
- 		dma-coherent;
- 	};
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c
+index 2dd842aac6fc4..626e525c0f0d7 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c
+@@ -259,8 +259,7 @@ static void mlx5e_ipsec_init_macs(struct mlx5e_ipsec_sa_entry *sa_entry,
+ 				  struct mlx5_accel_esp_xfrm_attrs *attrs)
+ {
+ 	struct mlx5_core_dev *mdev = mlx5e_ipsec_sa2dev(sa_entry);
+-	struct xfrm_state *x = sa_entry->x;
+-	struct net_device *netdev;
++	struct net_device *netdev = sa_entry->dev;
+ 	struct neighbour *n;
+ 	u8 addr[ETH_ALEN];
+ 	const void *pkey;
+@@ -270,8 +269,6 @@ static void mlx5e_ipsec_init_macs(struct mlx5e_ipsec_sa_entry *sa_entry,
+ 	    attrs->type != XFRM_DEV_OFFLOAD_PACKET)
+ 		return;
  
-@@ -458,18 +459,22 @@ sdhci1: mmc@4fa0000 {
- 		clocks = <&k3_clks 48 0>, <&k3_clks 48 1>;
- 		clock-names = "clk_ahb", "clk_xin";
- 		interrupts = <GIC_SPI 137 IRQ_TYPE_LEVEL_HIGH>;
-+		ti,clkbuf-sel = <0x7>;
-+		ti,trm-icp = <0x8>;
- 		ti,otap-del-sel-legacy = <0x0>;
- 		ti,otap-del-sel-mmc-hs = <0x0>;
- 		ti,otap-del-sel-sd-hs = <0x0>;
--		ti,otap-del-sel-sdr12 = <0x0>;
--		ti,otap-del-sel-sdr25 = <0x0>;
-+		ti,otap-del-sel-sdr12 = <0xf>;
-+		ti,otap-del-sel-sdr25 = <0xf>;
- 		ti,otap-del-sel-sdr50 = <0x8>;
- 		ti,otap-del-sel-sdr104 = <0x7>;
- 		ti,otap-del-sel-ddr50 = <0x4>;
- 		ti,otap-del-sel-ddr52 = <0x4>;
- 		ti,otap-del-sel-hs200 = <0x7>;
--		ti,clkbuf-sel = <0x7>;
--		ti,trm-icp = <0x8>;
-+		ti,itap-del-sel-legacy = <0xa>;
-+		ti,itap-del-sel-sd-hs = <0x1>;
-+		ti,itap-del-sel-sdr12 = <0xa>;
-+		ti,itap-del-sel-sdr25 = <0x1>;
- 		dma-coherent;
- 	};
+-	netdev = x->xso.real_dev;
+-
+ 	mlx5_query_mac_address(mdev, addr);
+ 	switch (attrs->dir) {
+ 	case XFRM_DEV_OFFLOAD_IN:
+@@ -713,6 +710,7 @@ static int mlx5e_xfrm_add_state(struct xfrm_state *x,
+ 		return -ENOMEM;
  
+ 	sa_entry->x = x;
++	sa_entry->dev = netdev;
+ 	sa_entry->ipsec = ipsec;
+ 	/* Check if this SA is originated from acquire flow temporary SA */
+ 	if (x->xso.flags & XFRM_DEV_OFFLOAD_FLAG_ACQ)
+@@ -855,8 +853,6 @@ static int mlx5e_ipsec_netevent_event(struct notifier_block *nb,
+ 	struct mlx5e_ipsec_sa_entry *sa_entry;
+ 	struct mlx5e_ipsec *ipsec;
+ 	struct neighbour *n = ptr;
+-	struct net_device *netdev;
+-	struct xfrm_state *x;
+ 	unsigned long idx;
+ 
+ 	if (event != NETEVENT_NEIGH_UPDATE || !(n->nud_state & NUD_VALID))
+@@ -876,11 +872,9 @@ static int mlx5e_ipsec_netevent_event(struct notifier_block *nb,
+ 				continue;
+ 		}
+ 
+-		x = sa_entry->x;
+-		netdev = x->xso.real_dev;
+ 		data = sa_entry->work->data;
+ 
+-		neigh_ha_snapshot(data->addr, n, netdev);
++		neigh_ha_snapshot(data->addr, n, sa_entry->dev);
+ 		queue_work(ipsec->wq, &sa_entry->work->work);
+ 	}
+ 
+@@ -996,8 +990,8 @@ static void mlx5e_xfrm_update_stats(struct xfrm_state *x)
+ 	size_t headers;
+ 
+ 	lockdep_assert(lockdep_is_held(&x->lock) ||
+-		       lockdep_is_held(&dev_net(x->xso.real_dev)->xfrm.xfrm_cfg_mutex) ||
+-		       lockdep_is_held(&dev_net(x->xso.real_dev)->xfrm.xfrm_state_lock));
++		       lockdep_is_held(&net->xfrm.xfrm_cfg_mutex) ||
++		       lockdep_is_held(&net->xfrm.xfrm_state_lock));
+ 
+ 	if (x->xso.flags & XFRM_DEV_OFFLOAD_FLAG_ACQ)
+ 		return;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.h b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.h
+index a63c2289f8af9..ffcd0cdeb7754 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.h
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.h
+@@ -274,6 +274,7 @@ struct mlx5e_ipsec_limits {
+ struct mlx5e_ipsec_sa_entry {
+ 	struct mlx5e_ipsec_esn_state esn_state;
+ 	struct xfrm_state *x;
++	struct net_device *dev;
+ 	struct mlx5e_ipsec *ipsec;
+ 	struct mlx5_accel_esp_xfrm_attrs attrs;
+ 	void (*set_iv_op)(struct sk_buff *skb, struct xfrm_state *x,
 -- 
 2.39.5
 
