@@ -1,47 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCB7E2ED159;
-	Tue, 17 Jun 2025 16:25:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E1FC2EA14E;
+	Tue, 17 Jun 2025 16:25:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177530; cv=none; b=R7CpV1Y3fCZ6JnBYT4rgQVu6YVQb/3lRiKBXfNu0SrE3bma2BmYOERctGoC3GxNECMDxvYTMLb4xvZL7+CcX8Jd+2btlAtTXxSbctSxD6yrbd8x8nJj5H7Dlo578tAOv4Rz2kAbvCijLjMkmKmrk6HfbcddEVyMZXoKUtBVRho0=
+	t=1750177533; cv=none; b=A/6p3j+I+MHxOo4GK/AnEMrq5XQaPlJ2mYudDf8TDCMHLpW8ggzh483NMgkIbtpUtHiXC1OftI1pz9siI9Dcy9pvifj0WIs/DQvnsg94+RjuteelgwEEO0T0g7bnHBnyvtKbvLc1SHsOzlqu52qTtRE1PaRY/kF08DonAnVELz4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177530; c=relaxed/simple;
-	bh=YM4fXmvQoinkrBIFZAceHMg9+ubZvNfsB2tgMnw07Gs=;
+	s=arc-20240116; t=1750177533; c=relaxed/simple;
+	bh=DyW9BBjbKPVrY0e8EquHMaPj4C5cfHuvHuYDMo79i5k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ag3RqPHdgjs5nLPTNJZdPGc/WY9A68E1KGQZTUc4mnFkciSvRbsf8Y1trf/0AvL2raYlZXo0Pdd/eVX6rWlH4H2XI6Tzoj0FkVdghok5w1JiEPekTorzhBO2cpMIaA0EnradlruUUQJutuCa6lq5wRH/vA68loHi4emhcAzikC4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HeRucCPO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UibYTP/vbDbKcEG0oDXhYHDl4pR3BxZo/AtcOVSuFsaky8oe5TN2oOnNHxfTUjQPoOdLPzBfmZF9EWOk2Hac35otAAO060Gj0/3mPetoKJyefAoTP8GskpAEreOJE3pbR76pg4bxqmPcs4GIU8V+I6cWtpywvkO19hlvk5kop8s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=viLgV+/b; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HeRucCPO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C921C4CEE3;
-	Tue, 17 Jun 2025 16:25:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="viLgV+/b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FE97C4CEE3;
+	Tue, 17 Jun 2025 16:25:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177529;
-	bh=YM4fXmvQoinkrBIFZAceHMg9+ubZvNfsB2tgMnw07Gs=;
+	s=korg; t=1750177533;
+	bh=DyW9BBjbKPVrY0e8EquHMaPj4C5cfHuvHuYDMo79i5k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HeRucCPO4szMqt1LtSa5nwbET09FctyT6c0H88wA6ptrVgoLRFLR+dbJlY3l4I5lJ
-	 po7NlH8yBpuQM1CgdGshboYH06HuC8GQYTjgceU+G/6XyEp3Tk7PaxrM9DFIYsOkW1
-	 4r1ZwKzCFsa0tzK8AtrOsIMw1DkzK8Qop5mUCB6E=
+	b=viLgV+/b1U8n6ZhTlnI2VCyZk366uZ2D0xY8P4p7hlVBOnM2/Rwi7qNGaMb4MRV+G
+	 umDkftiJ2enaul4j2YywIMBSSCUh/XwSPsYYIeIivpAnr9YeKhKlz+N6uf3sb8Oc8C
+	 Kd+IRrdjf/cCMo4wm9EWbzpmZW5rH5OV6eDKu6WI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Madhu Chittim <madhu.chittim@intel.com>,
-	Josh Hay <joshua.a.hay@intel.com>,
-	Brian Vazquez <brianvv@google.com>,
-	Luigi Rizzo <lrizzo@google.com>,
-	Simon Horman <horms@kernel.org>,
-	Samuel Salin <Samuel.salin@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Horatiu Vultur <horatiu.vultur@microchip.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 359/512] idpf: fix a race in txq wakeup
-Date: Tue, 17 Jun 2025 17:25:25 +0200
-Message-ID: <20250617152434.130169204@linuxfoundation.org>
+Subject: [PATCH 6.15 320/780] net: lan966x: Fix 1-step timestamping over ipv4 or ipv6
+Date: Tue, 17 Jun 2025 17:20:28 +0200
+Message-ID: <20250617152504.485425077@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -53,185 +47,170 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Brian Vazquez <brianvv@google.com>
+From: Horatiu Vultur <horatiu.vultur@microchip.com>
 
-[ Upstream commit 7292af042bcf22e2c18b96ed250f78498a5b28ab ]
+[ Upstream commit 57ee9584fd8606deef66d7b65fa4dcf94f6843aa ]
 
-Add a helper function to correctly handle the lockless
-synchronization when the sender needs to block. The paradigm is
+When enabling 1-step timestamping for ptp frames that are over udpv4 or
+udpv6 then the inserted timestamp is added at the wrong offset in the
+frame, meaning that will modify the frame at the wrong place, so the
+frame will be malformed.
+To fix this, the HW needs to know which kind of frame it is to know
+where to insert the timestamp. For that there is a field in the IFH that
+says the PDU_TYPE, which can be NONE  which is the default value,
+IPV4 or IPV6. Therefore make sure to set the PDU_TYPE so the HW knows
+where to insert the timestamp.
+Like I mention before the issue is not seen with L2 frames because by
+default the PDU_TYPE has a value of 0, which represents the L2 frames.
 
-        if (no_resources()) {
-                stop_queue();
-                barrier();
-                if (!no_resources())
-                        restart_queue();
-        }
-
-netif_subqueue_maybe_stop already handles the paradigm correctly, but
-the code split the check for resources in three parts, the first one
-(descriptors) followed the protocol, but the other two (completions and
-tx_buf) were only doing the first part and so race prone.
-
-Luckily netif_subqueue_maybe_stop macro already allows you to use a
-function to evaluate the start/stop conditions so the fix only requires
-the right helper function to evaluate all the conditions at once.
-
-The patch removes idpf_tx_maybe_stop_common since it's no longer needed
-and instead adjusts separately the conditions for singleq and splitq.
-
-Note that idpf_tx_buf_hw_update doesn't need to check for resources
-since that will be covered in idpf_tx_splitq_frame.
-
-To reproduce:
-
-Reduce the threshold for pending completions to increase the chances of
-hitting this pause by changing your kernel:
-
-drivers/net/ethernet/intel/idpf/idpf_txrx.h
-
--#define IDPF_TX_COMPLQ_OVERFLOW_THRESH(txcq)   ((txcq)->desc_count >> 1)
-+#define IDPF_TX_COMPLQ_OVERFLOW_THRESH(txcq)   ((txcq)->desc_count >> 4)
-
-Use pktgen to force the host to push small pkts very aggressively:
-
-./pktgen_sample02_multiqueue.sh -i eth1 -s 100 -6 -d $IP -m $MAC \
-  -p 10000-10000 -t 16 -n 0 -v -x -c 64
-
-Fixes: 6818c4d5b3c2 ("idpf: add splitq start_xmit")
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Reviewed-by: Madhu Chittim <madhu.chittim@intel.com>
-Signed-off-by: Josh Hay <joshua.a.hay@intel.com>
-Signed-off-by: Brian Vazquez <brianvv@google.com>
-Signed-off-by: Luigi Rizzo <lrizzo@google.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Samuel Salin <Samuel.salin@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: 77eecf25bd9d2f ("net: lan966x: Update extraction/injection for timestamping")
+Signed-off-by: Horatiu Vultur <horatiu.vultur@microchip.com>
+Link: https://patch.msgid.link/20250521124159.2713525-1-horatiu.vultur@microchip.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/intel/idpf/idpf_singleq_txrx.c   |  9 ++--
- drivers/net/ethernet/intel/idpf/idpf_txrx.c   | 45 +++++++------------
- drivers/net/ethernet/intel/idpf/idpf_txrx.h   |  8 ----
- 3 files changed, 22 insertions(+), 40 deletions(-)
+ .../ethernet/microchip/lan966x/lan966x_main.c |  6 +++
+ .../ethernet/microchip/lan966x/lan966x_main.h |  5 ++
+ .../ethernet/microchip/lan966x/lan966x_ptp.c  | 49 ++++++++++++++-----
+ 3 files changed, 47 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/idpf/idpf_singleq_txrx.c b/drivers/net/ethernet/intel/idpf/idpf_singleq_txrx.c
-index dfd7cf1d9aa0a..a986dd5725559 100644
---- a/drivers/net/ethernet/intel/idpf/idpf_singleq_txrx.c
-+++ b/drivers/net/ethernet/intel/idpf/idpf_singleq_txrx.c
-@@ -362,17 +362,18 @@ netdev_tx_t idpf_tx_singleq_frame(struct sk_buff *skb,
- {
- 	struct idpf_tx_offload_params offload = { };
- 	struct idpf_tx_buf *first;
-+	int csum, tso, needed;
- 	unsigned int count;
- 	__be16 protocol;
--	int csum, tso;
- 
- 	count = idpf_tx_desc_count_required(tx_q, skb);
- 	if (unlikely(!count))
- 		return idpf_tx_drop_skb(tx_q, skb);
- 
--	if (idpf_tx_maybe_stop_common(tx_q,
--				      count + IDPF_TX_DESCS_PER_CACHE_LINE +
--				      IDPF_TX_DESCS_FOR_CTX)) {
-+	needed = count + IDPF_TX_DESCS_PER_CACHE_LINE + IDPF_TX_DESCS_FOR_CTX;
-+	if (!netif_subqueue_maybe_stop(tx_q->netdev, tx_q->idx,
-+				       IDPF_DESC_UNUSED(tx_q),
-+				       needed, needed)) {
- 		idpf_tx_buf_hw_update(tx_q, tx_q->next_to_use, false);
- 
- 		u64_stats_update_begin(&tx_q->stats_sync);
-diff --git a/drivers/net/ethernet/intel/idpf/idpf_txrx.c b/drivers/net/ethernet/intel/idpf/idpf_txrx.c
-index 623bf17f87f9c..c6c36de58b9d1 100644
---- a/drivers/net/ethernet/intel/idpf/idpf_txrx.c
-+++ b/drivers/net/ethernet/intel/idpf/idpf_txrx.c
-@@ -2132,6 +2132,19 @@ void idpf_tx_splitq_build_flow_desc(union idpf_tx_flex_desc *desc,
- 	desc->flow.qw1.compl_tag = cpu_to_le16(params->compl_tag);
+diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_main.c b/drivers/net/ethernet/microchip/lan966x/lan966x_main.c
+index 0af143ec0f869..427bdc0e4908c 100644
+--- a/drivers/net/ethernet/microchip/lan966x/lan966x_main.c
++++ b/drivers/net/ethernet/microchip/lan966x/lan966x_main.c
+@@ -353,6 +353,11 @@ static void lan966x_ifh_set_rew_op(void *ifh, u64 rew_op)
+ 	lan966x_ifh_set(ifh, rew_op, IFH_POS_REW_CMD, IFH_WID_REW_CMD);
  }
  
-+/* Global conditions to tell whether the txq (and related resources)
-+ * has room to allow the use of "size" descriptors.
-+ */
-+static int idpf_txq_has_room(struct idpf_tx_queue *tx_q, u32 size)
++static void lan966x_ifh_set_oam_type(void *ifh, u64 oam_type)
 +{
-+	if (IDPF_DESC_UNUSED(tx_q) < size ||
-+	    IDPF_TX_COMPLQ_PENDING(tx_q->txq_grp) >
-+		IDPF_TX_COMPLQ_OVERFLOW_THRESH(tx_q->txq_grp->complq) ||
-+	    IDPF_TX_BUF_RSV_LOW(tx_q))
-+		return 0;
-+	return 1;
++	lan966x_ifh_set(ifh, oam_type, IFH_POS_PDU_TYPE, IFH_WID_PDU_TYPE);
 +}
 +
- /**
-  * idpf_tx_maybe_stop_splitq - 1st level check for Tx splitq stop conditions
-  * @tx_q: the queue to be checked
-@@ -2142,29 +2155,11 @@ void idpf_tx_splitq_build_flow_desc(union idpf_tx_flex_desc *desc,
- static int idpf_tx_maybe_stop_splitq(struct idpf_tx_queue *tx_q,
- 				     unsigned int descs_needed)
+ static void lan966x_ifh_set_timestamp(void *ifh, u64 timestamp)
  {
--	if (idpf_tx_maybe_stop_common(tx_q, descs_needed))
--		goto out;
--
--	/* If there are too many outstanding completions expected on the
--	 * completion queue, stop the TX queue to give the device some time to
--	 * catch up
--	 */
--	if (unlikely(IDPF_TX_COMPLQ_PENDING(tx_q->txq_grp) >
--		     IDPF_TX_COMPLQ_OVERFLOW_THRESH(tx_q->txq_grp->complq)))
--		goto splitq_stop;
--
--	/* Also check for available book keeping buffers; if we are low, stop
--	 * the queue to wait for more completions
--	 */
--	if (unlikely(IDPF_TX_BUF_RSV_LOW(tx_q)))
--		goto splitq_stop;
--
--	return 0;
--
--splitq_stop:
--	netif_stop_subqueue(tx_q->netdev, tx_q->idx);
-+	if (netif_subqueue_maybe_stop(tx_q->netdev, tx_q->idx,
-+				      idpf_txq_has_room(tx_q, descs_needed),
-+				      1, 1))
-+		return 0;
+ 	lan966x_ifh_set(ifh, timestamp, IFH_POS_TIMESTAMP, IFH_WID_TIMESTAMP);
+@@ -380,6 +385,7 @@ static netdev_tx_t lan966x_port_xmit(struct sk_buff *skb,
+ 			return err;
  
--out:
- 	u64_stats_update_begin(&tx_q->stats_sync);
- 	u64_stats_inc(&tx_q->q_stats.q_busy);
- 	u64_stats_update_end(&tx_q->stats_sync);
-@@ -2190,12 +2185,6 @@ void idpf_tx_buf_hw_update(struct idpf_tx_queue *tx_q, u32 val,
- 	nq = netdev_get_tx_queue(tx_q->netdev, tx_q->idx);
- 	tx_q->next_to_use = val;
+ 		lan966x_ifh_set_rew_op(ifh, LAN966X_SKB_CB(skb)->rew_op);
++		lan966x_ifh_set_oam_type(ifh, LAN966X_SKB_CB(skb)->pdu_type);
+ 		lan966x_ifh_set_timestamp(ifh, LAN966X_SKB_CB(skb)->ts_id);
+ 	}
  
--	if (idpf_tx_maybe_stop_common(tx_q, IDPF_TX_DESC_NEEDED)) {
--		u64_stats_update_begin(&tx_q->stats_sync);
--		u64_stats_inc(&tx_q->q_stats.q_busy);
--		u64_stats_update_end(&tx_q->stats_sync);
--	}
--
- 	/* Force memory writes to complete before letting h/w
- 	 * know there are new descriptors to fetch.  (Only
- 	 * applicable for weak-ordered memory model archs,
-diff --git a/drivers/net/ethernet/intel/idpf/idpf_txrx.h b/drivers/net/ethernet/intel/idpf/idpf_txrx.h
-index 9c1fe84108ed2..ffeeaede6cf8f 100644
---- a/drivers/net/ethernet/intel/idpf/idpf_txrx.h
-+++ b/drivers/net/ethernet/intel/idpf/idpf_txrx.h
-@@ -1052,12 +1052,4 @@ bool idpf_rx_singleq_buf_hw_alloc_all(struct idpf_rx_queue *rxq,
- 				      u16 cleaned_count);
- int idpf_tso(struct sk_buff *skb, struct idpf_tx_offload_params *off);
+diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_main.h b/drivers/net/ethernet/microchip/lan966x/lan966x_main.h
+index 1efa584e71077..1f9df67f05044 100644
+--- a/drivers/net/ethernet/microchip/lan966x/lan966x_main.h
++++ b/drivers/net/ethernet/microchip/lan966x/lan966x_main.h
+@@ -75,6 +75,10 @@
+ #define IFH_REW_OP_ONE_STEP_PTP		0x3
+ #define IFH_REW_OP_TWO_STEP_PTP		0x4
  
--static inline bool idpf_tx_maybe_stop_common(struct idpf_tx_queue *tx_q,
--					     u32 needed)
--{
--	return !netif_subqueue_maybe_stop(tx_q->netdev, tx_q->idx,
--					  IDPF_DESC_UNUSED(tx_q),
--					  needed, needed);
--}
--
- #endif /* !_IDPF_TXRX_H_ */
++#define IFH_PDU_TYPE_NONE		0
++#define IFH_PDU_TYPE_IPV4		7
++#define IFH_PDU_TYPE_IPV6		8
++
+ #define FDMA_RX_DCB_MAX_DBS		1
+ #define FDMA_TX_DCB_MAX_DBS		1
+ 
+@@ -254,6 +258,7 @@ struct lan966x_phc {
+ 
+ struct lan966x_skb_cb {
+ 	u8 rew_op;
++	u8 pdu_type;
+ 	u16 ts_id;
+ 	unsigned long jiffies;
+ };
+diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_ptp.c b/drivers/net/ethernet/microchip/lan966x/lan966x_ptp.c
+index 63905bb5a63a8..87e5e81d40dc6 100644
+--- a/drivers/net/ethernet/microchip/lan966x/lan966x_ptp.c
++++ b/drivers/net/ethernet/microchip/lan966x/lan966x_ptp.c
+@@ -322,34 +322,55 @@ void lan966x_ptp_hwtstamp_get(struct lan966x_port *port,
+ 	*cfg = phc->hwtstamp_config;
+ }
+ 
+-static int lan966x_ptp_classify(struct lan966x_port *port, struct sk_buff *skb)
++static void lan966x_ptp_classify(struct lan966x_port *port, struct sk_buff *skb,
++				 u8 *rew_op, u8 *pdu_type)
+ {
+ 	struct ptp_header *header;
+ 	u8 msgtype;
+ 	int type;
+ 
+-	if (port->ptp_tx_cmd == IFH_REW_OP_NOOP)
+-		return IFH_REW_OP_NOOP;
++	if (port->ptp_tx_cmd == IFH_REW_OP_NOOP) {
++		*rew_op = IFH_REW_OP_NOOP;
++		*pdu_type = IFH_PDU_TYPE_NONE;
++		return;
++	}
+ 
+ 	type = ptp_classify_raw(skb);
+-	if (type == PTP_CLASS_NONE)
+-		return IFH_REW_OP_NOOP;
++	if (type == PTP_CLASS_NONE) {
++		*rew_op = IFH_REW_OP_NOOP;
++		*pdu_type = IFH_PDU_TYPE_NONE;
++		return;
++	}
+ 
+ 	header = ptp_parse_header(skb, type);
+-	if (!header)
+-		return IFH_REW_OP_NOOP;
++	if (!header) {
++		*rew_op = IFH_REW_OP_NOOP;
++		*pdu_type = IFH_PDU_TYPE_NONE;
++		return;
++	}
+ 
+-	if (port->ptp_tx_cmd == IFH_REW_OP_TWO_STEP_PTP)
+-		return IFH_REW_OP_TWO_STEP_PTP;
++	if (type & PTP_CLASS_L2)
++		*pdu_type = IFH_PDU_TYPE_NONE;
++	if (type & PTP_CLASS_IPV4)
++		*pdu_type = IFH_PDU_TYPE_IPV4;
++	if (type & PTP_CLASS_IPV6)
++		*pdu_type = IFH_PDU_TYPE_IPV6;
++
++	if (port->ptp_tx_cmd == IFH_REW_OP_TWO_STEP_PTP) {
++		*rew_op = IFH_REW_OP_TWO_STEP_PTP;
++		return;
++	}
+ 
+ 	/* If it is sync and run 1 step then set the correct operation,
+ 	 * otherwise run as 2 step
+ 	 */
+ 	msgtype = ptp_get_msgtype(header, type);
+-	if ((msgtype & 0xf) == 0)
+-		return IFH_REW_OP_ONE_STEP_PTP;
++	if ((msgtype & 0xf) == 0) {
++		*rew_op = IFH_REW_OP_ONE_STEP_PTP;
++		return;
++	}
+ 
+-	return IFH_REW_OP_TWO_STEP_PTP;
++	*rew_op = IFH_REW_OP_TWO_STEP_PTP;
+ }
+ 
+ static void lan966x_ptp_txtstamp_old_release(struct lan966x_port *port)
+@@ -374,10 +395,12 @@ int lan966x_ptp_txtstamp_request(struct lan966x_port *port,
+ {
+ 	struct lan966x *lan966x = port->lan966x;
+ 	unsigned long flags;
++	u8 pdu_type;
+ 	u8 rew_op;
+ 
+-	rew_op = lan966x_ptp_classify(port, skb);
++	lan966x_ptp_classify(port, skb, &rew_op, &pdu_type);
+ 	LAN966X_SKB_CB(skb)->rew_op = rew_op;
++	LAN966X_SKB_CB(skb)->pdu_type = pdu_type;
+ 
+ 	if (rew_op != IFH_REW_OP_TWO_STEP_PTP)
+ 		return 0;
 -- 
 2.39.5
 
