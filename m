@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3EFA2EA720;
-	Tue, 17 Jun 2025 16:40:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41BE01A5B9D;
+	Tue, 17 Jun 2025 16:40:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750178432; cv=none; b=EKOp4UwvobiwRgHfUloEQbiGbsCcGcqCGckppf1s5SIbFXtu3xSfGgOmLGXAWpZs7P6H4se6o8NyO6yQafreVb1P6osmV67sClGrQYiHSXzqfqYuMPzeZp7IrRqGwYvT5/bLKWuTN78IyqavT9oPzyqAfCK395xZnzon5rUOyoc=
+	t=1750178436; cv=none; b=e6ZOLjstV6ijtuss2H2s2W0gpyWVAvDVYctF2YkZgbaWYGkFTHNf2sK+2Y4ZP5kubl+rOYjabNhchCEIIlAYip/fSfoU07aANT42b+wERu+vTrhcj4+ESGUuxieLekKPPeIRhdM+pVqp27wU9EYj7fnxVgaRs9TQKVmAI9OiJYg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750178432; c=relaxed/simple;
-	bh=Kq2gVdlf0I7vVKlVpWh8Q9SdvAHSfLKleSG37KAXlVw=;
+	s=arc-20240116; t=1750178436; c=relaxed/simple;
+	bh=mvYztDUC4oJ4Y5R1hYzQdqo6blQY6IfaYaQyV3H7wcQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OCV3lEflxf0bw5Tmmv8lonAG/sXF/tSM7JnERRb6PWH40DXx3ZhvbrBAsxkOK2+B/OPzyTUWx0NiwU2IiNFNWgyCrdEuinW2MdM/0qlCvI66OXc6metTp/+34/SRu5HTkUnK6ol9bLIobwAM5W6/ti5txWTXRMImd3QIvUgnBxQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rFM5vONE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WONUqZ3UihILUHMgQFlSKpmiUQk5Br419IZ5Lf/fKDTwa8K+cEBRktwISKIpSmE3bzT6CtDt54pyy8NTRsH1tY2wpzg5YO8W/Q1o1OiaevSZaAIyQPTnfOupyC1TT/u4qtBlfiEuGtF2r3MDSMvfKccgUMw/uzko++QUGYs3Gbk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q5SS8mZb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rFM5vONE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14965C4CEE3;
-	Tue, 17 Jun 2025 16:40:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q5SS8mZb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58497C4CEE3;
+	Tue, 17 Jun 2025 16:40:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750178432;
-	bh=Kq2gVdlf0I7vVKlVpWh8Q9SdvAHSfLKleSG37KAXlVw=;
+	s=korg; t=1750178435;
+	bh=mvYztDUC4oJ4Y5R1hYzQdqo6blQY6IfaYaQyV3H7wcQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rFM5vONEuO5ymhf22B4goMH1Rrn9fuZ3+yShqWhOCK97+4wCKdKga/7nlfGn0UYK0
-	 APiEZKgz/KljouGmzesbGRK1sb2k6K6wUO0Q2lNzpZ+e/0TI3XprrLk3dWVaaUgN6g
-	 EMD5r5+V6mmbnuyVjdr4HZ8Q6ApvWw4/RVIByFhQ=
+	b=q5SS8mZbhXY1oLBytx6TAsGlEfwGECOOmtssU/kmMx07XQ4Yj6KKpOEZ1bv01yJb8
+	 ZCXidSeeNzIV56Ei2dIFhEB501eh1rB1fO1xYF2CZ6nZhSUtWzqy2xHNJpkb1FNCiY
+	 PJBzt1SyCM9ZoESq0BNE669O9+fvtd8ze5EnnwRI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Lee Jones <lee@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 459/780] mfd: exynos-lpass: Fix another error handling path in exynos_lpass_probe()
-Date: Tue, 17 Jun 2025 17:22:47 +0200
-Message-ID: <20250617152510.171495411@linuxfoundation.org>
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Vincent Donnefort <vdonnefort@google.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.12 499/512] ring-buffer: Do not trigger WARN_ON() due to a commit_overrun
+Date: Tue, 17 Jun 2025 17:27:45 +0200
+Message-ID: <20250617152439.848387972@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,88 +48,149 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-[ Upstream commit f41cc37f4bc0e8cd424697bf6e26586cadcf4b9b ]
+commit 4fc78a7c9ca994e1da5d3940704d4e8f0ea8c5e4 upstream.
 
-If devm_of_platform_populate() fails, some clean-up needs to be done, as
-already done in the remove function.
+When reading a memory mapped buffer the reader page is just swapped out
+with the last page written in the write buffer. If the reader page is the
+same as the commit buffer (the buffer that is currently being written to)
+it was assumed that it should never have missed events. If it does, it
+triggers a WARN_ON_ONCE().
 
-Add a new devm_add_action_or_reset() to fix the leak in the probe and
-remove the need of a remove function.
+But there just happens to be one scenario where this can legitimately
+happen. That is on a commit_overrun. A commit overrun is when an interrupt
+preempts an event being written to the buffer and then the interrupt adds
+so many new events that it fills and wraps the buffer back to the commit.
+Any new events would then be dropped and be reported as "missed_events".
 
-Fixes: c695abab2429 ("mfd: Add Samsung Exynos Low Power Audio Subsystem driver")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/69471e839efc0249a504492a8de3497fcdb6a009.1745247209.git.christophe.jaillet@wanadoo.fr
-Signed-off-by: Lee Jones <lee@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+In this case, the next page to read is the commit buffer and after the
+swap of the reader page, the reader page will be the commit buffer, but
+this time there will be missed events and this triggers the following
+warning:
+
+ ------------[ cut here ]------------
+ WARNING: CPU: 2 PID: 1127 at kernel/trace/ring_buffer.c:7357 ring_buffer_map_get_reader+0x49a/0x780
+ Modules linked in: kvm_intel kvm irqbypass
+ CPU: 2 UID: 0 PID: 1127 Comm: trace-cmd Not tainted 6.15.0-rc7-test-00004-g478bc2824b45-dirty #564 PREEMPT
+ Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+ RIP: 0010:ring_buffer_map_get_reader+0x49a/0x780
+ Code: 00 00 00 48 89 fe 48 c1 ee 03 80 3c 2e 00 0f 85 ec 01 00 00 4d 3b a6 a8 00 00 00 0f 85 8a fd ff ff 48 85 c0 0f 84 55 fe ff ff <0f> 0b e9 4e fe ff ff be 08 00 00 00 4c 89 54 24 58 48 89 54 24 50
+ RSP: 0018:ffff888121787dc0 EFLAGS: 00010002
+ RAX: 00000000000006a2 RBX: ffff888100062800 RCX: ffffffff8190cb49
+ RDX: ffff888126934c00 RSI: 1ffff11020200a15 RDI: ffff8881010050a8
+ RBP: dffffc0000000000 R08: 0000000000000000 R09: ffffed1024d26982
+ R10: ffff888126934c17 R11: ffff8881010050a8 R12: ffff888126934c00
+ R13: ffff8881010050b8 R14: ffff888101005000 R15: ffff888126930008
+ FS:  00007f95c8cd7540(0000) GS:ffff8882b576e000(0000) knlGS:0000000000000000
+ CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+ CR2: 00007f95c8de4dc0 CR3: 0000000128452002 CR4: 0000000000172ef0
+ Call Trace:
+  <TASK>
+  ? __pfx_ring_buffer_map_get_reader+0x10/0x10
+  tracing_buffers_ioctl+0x283/0x370
+  __x64_sys_ioctl+0x134/0x190
+  do_syscall_64+0x79/0x1c0
+  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+ RIP: 0033:0x7f95c8de48db
+ Code: 00 48 89 44 24 18 31 c0 48 8d 44 24 60 c7 04 24 10 00 00 00 48 89 44 24 08 48 8d 44 24 20 48 89 44 24 10 b8 10 00 00 00 0f 05 <89> c2 3d 00 f0 ff ff 77 1c 48 8b 44 24 18 64 48 2b 04 25 28 00 00
+ RSP: 002b:00007ffe037ba110 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
+ RAX: ffffffffffffffda RBX: 00007ffe037bb2b0 RCX: 00007f95c8de48db
+ RDX: 0000000000000000 RSI: 0000000000005220 RDI: 0000000000000006
+ RBP: 00007ffe037ba180 R08: 0000000000000000 R09: 0000000000000000
+ R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+ R13: 00007ffe037bb6f8 R14: 00007f95c9065000 R15: 00005575c7492c90
+  </TASK>
+ irq event stamp: 5080
+ hardirqs last  enabled at (5079): [<ffffffff83e0adb0>] _raw_spin_unlock_irqrestore+0x50/0x70
+ hardirqs last disabled at (5080): [<ffffffff83e0aa83>] _raw_spin_lock_irqsave+0x63/0x70
+ softirqs last  enabled at (4182): [<ffffffff81516122>] handle_softirqs+0x552/0x710
+ softirqs last disabled at (4159): [<ffffffff815163f7>] __irq_exit_rcu+0x107/0x210
+ ---[ end trace 0000000000000000 ]---
+
+The above was triggered by running on a kernel with both lockdep and KASAN
+as well as kmemleak enabled and executing the following command:
+
+ # perf record -o perf-test.dat -a -- trace-cmd record --nosplice  -e all -p function hackbench 50
+
+With perf interjecting a lot of interrupts and trace-cmd enabling all
+events as well as function tracing, with lockdep, KASAN and kmemleak
+enabled, it could cause an interrupt preempting an event being written to
+add enough events to wrap the buffer. trace-cmd was modified to have
+--nosplice use mmap instead of reading the buffer.
+
+The way to differentiate this case from the normal case of there only
+being one page written to where the swap of the reader page received that
+one page (which is the commit page), check if the tail page is on the
+reader page. The difference between the commit page and the tail page is
+that the tail page is where new writes go to, and the commit page holds
+the first write that hasn't been committed yet. In the case of an
+interrupt preempting the write of an event and filling the buffer, it
+would move the tail page but not the commit page.
+
+Have the warning only trigger if the tail page is also on the reader page,
+and also print out the number of events dropped by a commit overrun as
+that can not yet be safely added to the page so that the reader can see
+there were events dropped.
+
+Cc: stable@vger.kernel.org
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Vincent Donnefort <vdonnefort@google.com>
+Link: https://lore.kernel.org/20250528121555.2066527e@gandalf.local.home
+Fixes: fe832be05a8ee ("ring-buffer: Have mmapped ring buffer keep track of missed events")
+Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mfd/exynos-lpass.c | 25 +++++++++++++++----------
- 1 file changed, 15 insertions(+), 10 deletions(-)
+ kernel/trace/ring_buffer.c |   26 ++++++++++++++++++--------
+ 1 file changed, 18 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/mfd/exynos-lpass.c b/drivers/mfd/exynos-lpass.c
-index a2785ceea8bfc..44797001a4322 100644
---- a/drivers/mfd/exynos-lpass.c
-+++ b/drivers/mfd/exynos-lpass.c
-@@ -104,11 +104,22 @@ static const struct regmap_config exynos_lpass_reg_conf = {
- 	.fast_io	= true,
- };
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -7274,8 +7274,8 @@ consume:
+ 	/* Check if any events were dropped */
+ 	missed_events = cpu_buffer->lost_events;
  
-+static void exynos_lpass_disable_lpass(void *data)
-+{
-+	struct platform_device *pdev = data;
-+	struct exynos_lpass *lpass = platform_get_drvdata(pdev);
-+
-+	pm_runtime_disable(&pdev->dev);
-+	if (!pm_runtime_status_suspended(&pdev->dev))
-+		exynos_lpass_disable(lpass);
-+}
-+
- static int exynos_lpass_probe(struct platform_device *pdev)
- {
- 	struct device *dev = &pdev->dev;
- 	struct exynos_lpass *lpass;
- 	void __iomem *base_top;
-+	int ret;
+-	if (cpu_buffer->reader_page != cpu_buffer->commit_page) {
+-		if (missed_events) {
++	if (missed_events) {
++		if (cpu_buffer->reader_page != cpu_buffer->commit_page) {
+ 			struct buffer_data_page *bpage = reader->page;
+ 			unsigned int commit;
+ 			/*
+@@ -7296,13 +7296,23 @@ consume:
+ 				local_add(RB_MISSED_STORED, &bpage->commit);
+ 			}
+ 			local_add(RB_MISSED_EVENTS, &bpage->commit);
++		} else if (!WARN_ONCE(cpu_buffer->reader_page == cpu_buffer->tail_page,
++				      "Reader on commit with %ld missed events",
++				      missed_events)) {
++			/*
++			 * There shouldn't be any missed events if the tail_page
++			 * is on the reader page. But if the tail page is not on the
++			 * reader page and the commit_page is, that would mean that
++			 * there's a commit_overrun (an interrupt preempted an
++			 * addition of an event and then filled the buffer
++			 * with new events). In this case it's not an
++			 * error, but it should still be reported.
++			 *
++			 * TODO: Add missed events to the page for user space to know.
++			 */
++			pr_info("Ring buffer [%d] commit overrun lost %ld events at timestamp:%lld\n",
++				cpu, missed_events, cpu_buffer->reader_page->page->time_stamp);
+ 		}
+-	} else {
+-		/*
+-		 * There really shouldn't be any missed events if the commit
+-		 * is on the reader page.
+-		 */
+-		WARN_ON_ONCE(missed_events);
+ 	}
  
- 	lpass = devm_kzalloc(dev, sizeof(*lpass), GFP_KERNEL);
- 	if (!lpass)
-@@ -134,16 +145,11 @@ static int exynos_lpass_probe(struct platform_device *pdev)
- 	pm_runtime_enable(dev);
- 	exynos_lpass_enable(lpass);
- 
--	return devm_of_platform_populate(dev);
--}
--
--static void exynos_lpass_remove(struct platform_device *pdev)
--{
--	struct exynos_lpass *lpass = platform_get_drvdata(pdev);
-+	ret = devm_add_action_or_reset(dev, exynos_lpass_disable_lpass, pdev);
-+	if (ret)
-+		return ret;
- 
--	pm_runtime_disable(&pdev->dev);
--	if (!pm_runtime_status_suspended(&pdev->dev))
--		exynos_lpass_disable(lpass);
-+	return devm_of_platform_populate(dev);
- }
- 
- static int __maybe_unused exynos_lpass_suspend(struct device *dev)
-@@ -183,7 +189,6 @@ static struct platform_driver exynos_lpass_driver = {
- 		.of_match_table	= exynos_lpass_of_match,
- 	},
- 	.probe	= exynos_lpass_probe,
--	.remove	= exynos_lpass_remove,
- };
- module_platform_driver(exynos_lpass_driver);
- 
--- 
-2.39.5
-
+ 	cpu_buffer->lost_events = 0;
 
 
