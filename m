@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19B362ECD2A;
-	Tue, 17 Jun 2025 15:38:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 957EE2E9753;
+	Tue, 17 Jun 2025 15:39:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750174737; cv=none; b=sj3qas0dD8mXMha/hFlO+1ZKbOX+F5efOfM48dVRNJRkw6Zlp19JKi7REz5nVBi0yT9JfsO66hUzJkrG02ddreTM1FdppE3Y3CBfw/HORISiojnx9Keau7h2iVwrVR98n5AC1gL/KF87cq+0V070w6ItB29JNyS7JzB/hXA9t6c=
+	t=1750174740; cv=none; b=jN6KPZFErLtJWOyM8Y8XANd8tIK+2R5/RQpKBFf2jBczg+RacSZkv3qwXN+HBp/vnxDb64hjqUdcAVqtVyyFJ0z9x5GWO65it9kUIY0N3QRbMHlzspTuscEj/JEzQ9i+g8gUJwaB/hWxeULPGQQWaSlxqWudZgqU6IHz0NmlpfE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750174737; c=relaxed/simple;
-	bh=QUUGa9j/IXY8IwN1O0Z37yERnMfreYAXDiFRUabtMag=;
+	s=arc-20240116; t=1750174740; c=relaxed/simple;
+	bh=78xnMrqXjQ6FeNyavfswU5O6AI0mMnMQCc870HTo5Vc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KhNfabZPy5lzMhpleMvDEAA49lYQ81LbOR+XLvrTBM+4Wn8EOtllbHq3iJUIqfKUkOcA1MR0ofFTpAaeaTofIz688QvNCftnMoCYaFVpfQ5bEW93x6489TBpJfIX33hLw6MRUPoKVNUlqSNuTnsk0Xv0Sn21lsjONEF3jOQtUYA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ixQUYIF5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ki/aVEiAhRKMRbRsWYQl+Gb4mTnfC8GGJGAEMu37h1vO/v7NDFcNjbhNTVTzQu6w5SD5r5s8q7HWPVXbk1niCpv1uelG1XwoQVdQoU9MjslveoXO1EQ6JlkFS169yuOD7/LnWwE2R91juBqNOuNbat8FNBMaMNzQkpMTeK+DDu8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S+gt4Bgf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ixQUYIF5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97231C4CEE3;
-	Tue, 17 Jun 2025 15:38:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S+gt4Bgf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1BA2C4CEE3;
+	Tue, 17 Jun 2025 15:38:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750174737;
-	bh=QUUGa9j/IXY8IwN1O0Z37yERnMfreYAXDiFRUabtMag=;
+	s=korg; t=1750174740;
+	bh=78xnMrqXjQ6FeNyavfswU5O6AI0mMnMQCc870HTo5Vc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ixQUYIF5v+iHPKifSDqKeSUc4QTu7vjymwFHMmw6ebuMXlQI48ufczn64ez8Ph1Tb
-	 xFFbV2CO8i4DA5Ge1Y5mAvhZih6mk1JVU6qeY5ufOuIYSHsOW16P4tgJ45EHLVf0yg
-	 y+WnZAHf7qvHgEVbnC6KG7bt+TYi9+nHVSj+95hU=
+	b=S+gt4BgfQ/neu7I3ofhIq3/nNHM++3JfEO1AvaQ9Y7nwMNgXlvCMWKzwrBlPB4Epl
+	 0lIf0gAmtfHnKICVpPe9WCQ94fZLY+7T7uW4otgbpdID34gZFDcSZ7lUqgnNWu2Osz
+	 iJ7Ok+8NMeEyEsOQauQYt8HFfNTF0Vvx7nm4I+6E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ingo Franzki <ifranzki@linux.ibm.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Jacob Moroni <jmoroni@google.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Zhu Yanjun <yanjun.zhu@linux.dev>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 035/512] crypto: api - Redo lookup on EEXIST
-Date: Tue, 17 Jun 2025 17:20:01 +0200
-Message-ID: <20250617152420.977170898@linuxfoundation.org>
+Subject: [PATCH 6.6 081/356] IB/cm: use rwlock for MAD agent lock
+Date: Tue, 17 Jun 2025 17:23:16 +0200
+Message-ID: <20250617152341.480474819@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
+References: <20250617152338.212798615@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,58 +49,119 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Jacob Moroni <jmoroni@google.com>
 
-[ Upstream commit 0a3cf32da469ff1df6e016f5f82b439a63d14461 ]
+[ Upstream commit 4dab26bed543584577b64b36aadb8b5b165bf44f ]
 
-When two crypto algorithm lookups occur at the same time with
-different names for the same algorithm, e.g., ctr(aes-generic)
-and ctr(aes), they will both be instantiated.  However, only one
-of them can be registered.  The second instantiation will fail
-with EEXIST.
+In workloads where there are many processes establishing connections using
+RDMA CM in parallel (large scale MPI), there can be heavy contention for
+mad_agent_lock in cm_alloc_msg.
 
-Avoid failing the second lookup by making it retry, but only once
-because there are tricky names such as gcm_base(ctr(aes),ghash)
-that will always fail, despite triggering instantiation and EEXIST.
+This contention can occur while inside of a spin_lock_irq region, leading
+to interrupts being disabled for extended durations on many
+cores. Furthermore, it leads to the serialization of rdma_create_ah calls,
+which has negative performance impacts for NICs which are capable of
+processing multiple address handle creations in parallel.
 
-Reported-by: Ingo Franzki <ifranzki@linux.ibm.com>
-Fixes: 2825982d9d66 ("[CRYPTO] api: Added event notification")
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+The end result is the machine becoming unresponsive, hung task warnings,
+netdev TX timeouts, etc.
+
+Since the lock appears to be only for protection from cm_remove_one, it
+can be changed to a rwlock to resolve these issues.
+
+Reproducer:
+
+Server:
+  for i in $(seq 1 512); do
+    ucmatose -c 32 -p $((i + 5000)) &
+  done
+
+Client:
+  for i in $(seq 1 512); do
+    ucmatose -c 32 -p $((i + 5000)) -s 10.2.0.52 &
+  done
+
+Fixes: 76039ac9095f ("IB/cm: Protect cm_dev, cm_ports and mad_agent with kref and lock")
+Link: https://patch.msgid.link/r/20250220175612.2763122-1-jmoroni@google.com
+Signed-off-by: Jacob Moroni <jmoroni@google.com>
+Acked-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/api.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/infiniband/core/cm.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/crypto/api.c b/crypto/api.c
-index c2c4eb14ef955..5ce54328fef11 100644
---- a/crypto/api.c
-+++ b/crypto/api.c
-@@ -220,10 +220,19 @@ static struct crypto_alg *crypto_larval_wait(struct crypto_alg *alg,
- 		if (crypto_is_test_larval(larval))
- 			crypto_larval_kill(larval);
- 		alg = ERR_PTR(-ETIMEDOUT);
--	} else if (!alg) {
-+	} else if (!alg || PTR_ERR(alg) == -EEXIST) {
-+		int err = alg ? -EEXIST : -EAGAIN;
-+
-+		/*
-+		 * EEXIST is expected because two probes can be scheduled
-+		 * at the same time with one using alg_name and the other
-+		 * using driver_name.  Do a re-lookup but do not retry in
-+		 * case we hit a quirk like gcm_base(ctr(aes),...) which
-+		 * will never match.
-+		 */
- 		alg = &larval->alg;
- 		alg = crypto_alg_lookup(alg->cra_name, type, mask) ?:
--		      ERR_PTR(-EAGAIN);
-+		      ERR_PTR(err);
- 	} else if (IS_ERR(alg))
- 		;
- 	else if (crypto_is_test_larval(larval) &&
+diff --git a/drivers/infiniband/core/cm.c b/drivers/infiniband/core/cm.c
+index 07fb8d3c037f0..d45e3909dafe1 100644
+--- a/drivers/infiniband/core/cm.c
++++ b/drivers/infiniband/core/cm.c
+@@ -166,7 +166,7 @@ struct cm_port {
+ struct cm_device {
+ 	struct kref kref;
+ 	struct list_head list;
+-	spinlock_t mad_agent_lock;
++	rwlock_t mad_agent_lock;
+ 	struct ib_device *ib_device;
+ 	u8 ack_delay;
+ 	int going_down;
+@@ -284,7 +284,7 @@ static struct ib_mad_send_buf *cm_alloc_msg(struct cm_id_private *cm_id_priv)
+ 	if (!cm_id_priv->av.port)
+ 		return ERR_PTR(-EINVAL);
+ 
+-	spin_lock(&cm_id_priv->av.port->cm_dev->mad_agent_lock);
++	read_lock(&cm_id_priv->av.port->cm_dev->mad_agent_lock);
+ 	mad_agent = cm_id_priv->av.port->mad_agent;
+ 	if (!mad_agent) {
+ 		m = ERR_PTR(-EINVAL);
+@@ -315,7 +315,7 @@ static struct ib_mad_send_buf *cm_alloc_msg(struct cm_id_private *cm_id_priv)
+ 	m->context[0] = cm_id_priv;
+ 
+ out:
+-	spin_unlock(&cm_id_priv->av.port->cm_dev->mad_agent_lock);
++	read_unlock(&cm_id_priv->av.port->cm_dev->mad_agent_lock);
+ 	return m;
+ }
+ 
+@@ -1294,10 +1294,10 @@ static __be64 cm_form_tid(struct cm_id_private *cm_id_priv)
+ 	if (!cm_id_priv->av.port)
+ 		return cpu_to_be64(low_tid);
+ 
+-	spin_lock(&cm_id_priv->av.port->cm_dev->mad_agent_lock);
++	read_lock(&cm_id_priv->av.port->cm_dev->mad_agent_lock);
+ 	if (cm_id_priv->av.port->mad_agent)
+ 		hi_tid = ((u64)cm_id_priv->av.port->mad_agent->hi_tid) << 32;
+-	spin_unlock(&cm_id_priv->av.port->cm_dev->mad_agent_lock);
++	read_unlock(&cm_id_priv->av.port->cm_dev->mad_agent_lock);
+ 	return cpu_to_be64(hi_tid | low_tid);
+ }
+ 
+@@ -4374,7 +4374,7 @@ static int cm_add_one(struct ib_device *ib_device)
+ 		return -ENOMEM;
+ 
+ 	kref_init(&cm_dev->kref);
+-	spin_lock_init(&cm_dev->mad_agent_lock);
++	rwlock_init(&cm_dev->mad_agent_lock);
+ 	cm_dev->ib_device = ib_device;
+ 	cm_dev->ack_delay = ib_device->attrs.local_ca_ack_delay;
+ 	cm_dev->going_down = 0;
+@@ -4490,9 +4490,9 @@ static void cm_remove_one(struct ib_device *ib_device, void *client_data)
+ 		 * The above ensures no call paths from the work are running,
+ 		 * the remaining paths all take the mad_agent_lock.
+ 		 */
+-		spin_lock(&cm_dev->mad_agent_lock);
++		write_lock(&cm_dev->mad_agent_lock);
+ 		port->mad_agent = NULL;
+-		spin_unlock(&cm_dev->mad_agent_lock);
++		write_unlock(&cm_dev->mad_agent_lock);
+ 		ib_unregister_mad_agent(mad_agent);
+ 		ib_port_unregister_client_groups(ib_device, i,
+ 						 cm_counter_groups);
 -- 
 2.39.5
 
