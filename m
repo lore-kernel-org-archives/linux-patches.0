@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD7212DFF17;
-	Tue, 17 Jun 2025 16:23:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 282D222DF80;
+	Tue, 17 Jun 2025 16:23:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177428; cv=none; b=dcsJ1axRp9fdWoIVw6A4XZlEUoWJqOT1Czkc4tmdhiS12FgJgvc+KVTHS2x8yqjnxm9O5zZyzUEgfY212VP8okzK6gZdiZBbmX+D+uwPSKQNUOa9HU+Bv/vQzeXhs2RrPLtuSahOKDSERy43WSSfdqzg5u+/qogYDvA7pNdZdG0=
+	t=1750177432; cv=none; b=KakhtAlry+iRx+YAxozrcG9XVUALZFQi6ztZiklOQiZ9TdzeWyvVZ9u5WTKYxx19UxMxag1yoSZL2olKIhOcTogdUN4RbW2pEOYyQRnNpaeOrPbAoL+jbm9GjRUamlu7FQikUTlsLkOT15F2sZIbcO7wfwNyYz2xG8mOE91O0Sg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177428; c=relaxed/simple;
-	bh=oqR5ptHMG50fs/tiOkBIi5tuVQDkFyLwwlNpRR/+lFQ=;
+	s=arc-20240116; t=1750177432; c=relaxed/simple;
+	bh=40pbeMe+YPQAWcEvbSsiusJTRHF9Hnzu+CcyP4j5LVc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mo+eRS6ab7lqJ/in6n18Kx0qcUCyYMqJ3d/D53pGGOuWtzCYcE8JEqVvaCZ36iS6x6i19Ri0JTv+vdFDM83lMG85l/2bwHmQroG+GPU7uH7WfWo9i1T0SIyS9a2rP6C/sWVUrZTgqRyZwEr+YKzmNf3Q1TUs733saDV2jRVi7gA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QBme1rZK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ggFIp/Ef3V4oVqIKx4xwZPtL9AfQ+EWnqtlaGCldHAND0f1Cu1N0HfUILi69B9KfVzw3toP/Grg+ffkQv++uWhbTebGWQesKmcJ41P+sp+BGGMQ8EOb9PlcrHNwQ9ChiSfXGhFkqYo13Y+paL1QCBru9GaFqpD8OkX9gmEtkVB8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dJ/91wZK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QBme1rZK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09B03C4CEE3;
-	Tue, 17 Jun 2025 16:23:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dJ/91wZK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33DEFC4CEE3;
+	Tue, 17 Jun 2025 16:23:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177428;
-	bh=oqR5ptHMG50fs/tiOkBIi5tuVQDkFyLwwlNpRR/+lFQ=;
+	s=korg; t=1750177431;
+	bh=40pbeMe+YPQAWcEvbSsiusJTRHF9Hnzu+CcyP4j5LVc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QBme1rZKk6plSEfJVExXRQFsZxc+W86hLitEMaatEtpGD40lRf+K4aPL/cv+xvaRy
-	 wTilpCK3JcEy82ReKDt1Vux4t7rIJBgXN23+VYTm5Gwn+EFWvnvQ9UPEwNypJOoCP+
-	 u4gmAad/5y2QLgIQZtb48/FmeVvT7EHx1QnqWQYE=
+	b=dJ/91wZK1LyN3ayUHNKbLOWZTlFg9iwsFMEJbVSGOySwKUEbP70sc+1CAykLHxowy
+	 3754qZWC/u+P/qYujTEJhUCmNcI8F5EvEBhejXRhzQCtgsCVUU8VuBg8DT8VehV0Lk
+	 XUqmox/cIbCYXCoreopihr+T94Y4eGVT+sZGO6OU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"ping.gao" <ping.gao@samsung.com>,
-	Peter Wang <peter.wang@mediatek.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Jerome Brunet <jbrunet@baylibre.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Niklas Cassel <cassel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 282/780] scsi: ufs: mcq: Delete ufshcd_release_scsi_cmd() in ufshcd_mcq_abort()
-Date: Tue, 17 Jun 2025 17:19:50 +0200
-Message-ID: <20250617152502.955551977@linuxfoundation.org>
+Subject: [PATCH 6.12 320/512] PCI: endpoint: Retain fixed-size BAR size as well as aligned size
+Date: Tue, 17 Jun 2025 17:24:46 +0200
+Message-ID: <20250617152432.576516049@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,59 +49,128 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: ping.gao <ping.gao@samsung.com>
+From: Jerome Brunet <jbrunet@baylibre.com>
 
-[ Upstream commit 53755903b9357e69b2dd6a02fafbb1e30c741895 ]
+[ Upstream commit 793908d60b8745c386b9f4e29eb702f74ceb0886 ]
 
-After UFS_ABORT_TASK has been processed successfully, the host will
-generate MCQ IRQ for ABORT TAG with response OCS_ABORTED. This results in
-ufshcd_compl_one_cqe() calling ufshcd_release_scsi_cmd().
+When allocating space for an endpoint function on a BAR with a fixed size,
+the size saved in 'struct pci_epf_bar.size' should be the fixed size as
+expected by pci_epc_set_bar().
 
-But ufshcd_mcq_abort() already calls ufshcd_release_scsi_cmd(), resulting
-in __ufshcd_release() being called twice. This means
-hba->clk_gating.active_reqs will be decreased twice, making it go
-negative.
+However, if pci_epf_alloc_space() increased the allocation size to
+accommodate iATU alignment requirements, it previously saved the larger
+aligned size in .size, which broke pci_epc_set_bar().
 
-Delete ufshcd_release_scsi_cmd() in ufshcd_mcq_abort().
+To solve this, keep the fixed BAR size in .size and save the aligned size
+in a new .aligned_size for use when deallocating it.
 
-Fixes: f1304d442077 ("scsi: ufs: mcq: Added ufshcd_mcq_abort()")
-Signed-off-by: ping.gao <ping.gao@samsung.com>
-Link: https://lore.kernel.org/r/20250516083812.3894396-1-ping.gao@samsung.com
-Reviewed-by: Peter Wang <peter.wang@mediatek.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 2a9a801620ef ("PCI: endpoint: Add support to specify alignment for buffers allocated to BARs")
+Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
+[mani: commit message fixup]
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+[bhelgaas: more specific subject, commit log, wrap comment to match file]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Niklas Cassel <cassel@kernel.org>
+Link: https://patch.msgid.link/20250424-pci-ep-size-alignment-v5-1-2d4ec2af23f5@baylibre.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/core/ufs-mcq.c | 6 ------
- 1 file changed, 6 deletions(-)
+ drivers/pci/endpoint/pci-epf-core.c | 22 +++++++++++++++-------
+ include/linux/pci-epf.h             |  3 +++
+ 2 files changed, 18 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/ufs/core/ufs-mcq.c b/drivers/ufs/core/ufs-mcq.c
-index f1294c29f4849..1e50675772feb 100644
---- a/drivers/ufs/core/ufs-mcq.c
-+++ b/drivers/ufs/core/ufs-mcq.c
-@@ -674,7 +674,6 @@ int ufshcd_mcq_abort(struct scsi_cmnd *cmd)
- 	int tag = scsi_cmd_to_rq(cmd)->tag;
- 	struct ufshcd_lrb *lrbp = &hba->lrb[tag];
- 	struct ufs_hw_queue *hwq;
--	unsigned long flags;
- 	int err;
- 
- 	/* Skip task abort in case previous aborts failed and report failure */
-@@ -713,10 +712,5 @@ int ufshcd_mcq_abort(struct scsi_cmnd *cmd)
- 		return FAILED;
+diff --git a/drivers/pci/endpoint/pci-epf-core.c b/drivers/pci/endpoint/pci-epf-core.c
+index 50bc2892a36c5..963d2f3aa5d47 100644
+--- a/drivers/pci/endpoint/pci-epf-core.c
++++ b/drivers/pci/endpoint/pci-epf-core.c
+@@ -236,12 +236,13 @@ void pci_epf_free_space(struct pci_epf *epf, void *addr, enum pci_barno bar,
  	}
  
--	spin_lock_irqsave(&hwq->cq_lock, flags);
--	if (ufshcd_cmd_inflight(lrbp->cmd))
--		ufshcd_release_scsi_cmd(hba, lrbp);
--	spin_unlock_irqrestore(&hwq->cq_lock, flags);
--
- 	return SUCCESS;
+ 	dev = epc->dev.parent;
+-	dma_free_coherent(dev, epf_bar[bar].size, addr,
++	dma_free_coherent(dev, epf_bar[bar].aligned_size, addr,
+ 			  epf_bar[bar].phys_addr);
+ 
+ 	epf_bar[bar].phys_addr = 0;
+ 	epf_bar[bar].addr = NULL;
+ 	epf_bar[bar].size = 0;
++	epf_bar[bar].aligned_size = 0;
+ 	epf_bar[bar].barno = 0;
+ 	epf_bar[bar].flags = 0;
  }
+@@ -264,7 +265,7 @@ void *pci_epf_alloc_space(struct pci_epf *epf, size_t size, enum pci_barno bar,
+ 			  enum pci_epc_interface_type type)
+ {
+ 	u64 bar_fixed_size = epc_features->bar[bar].fixed_size;
+-	size_t align = epc_features->align;
++	size_t aligned_size, align = epc_features->align;
+ 	struct pci_epf_bar *epf_bar;
+ 	dma_addr_t phys_addr;
+ 	struct pci_epc *epc;
+@@ -281,12 +282,18 @@ void *pci_epf_alloc_space(struct pci_epf *epf, size_t size, enum pci_barno bar,
+ 			return NULL;
+ 		}
+ 		size = bar_fixed_size;
++	} else {
++		/* BAR size must be power of two */
++		size = roundup_pow_of_two(size);
+ 	}
+ 
+-	if (align)
+-		size = ALIGN(size, align);
+-	else
+-		size = roundup_pow_of_two(size);
++	/*
++	 * Allocate enough memory to accommodate the iATU alignment
++	 * requirement.  In most cases, this will be the same as .size but
++	 * it might be different if, for example, the fixed size of a BAR
++	 * is smaller than align.
++	 */
++	aligned_size = align ? ALIGN(size, align) : size;
+ 
+ 	if (type == PRIMARY_INTERFACE) {
+ 		epc = epf->epc;
+@@ -297,7 +304,7 @@ void *pci_epf_alloc_space(struct pci_epf *epf, size_t size, enum pci_barno bar,
+ 	}
+ 
+ 	dev = epc->dev.parent;
+-	space = dma_alloc_coherent(dev, size, &phys_addr, GFP_KERNEL);
++	space = dma_alloc_coherent(dev, aligned_size, &phys_addr, GFP_KERNEL);
+ 	if (!space) {
+ 		dev_err(dev, "failed to allocate mem space\n");
+ 		return NULL;
+@@ -306,6 +313,7 @@ void *pci_epf_alloc_space(struct pci_epf *epf, size_t size, enum pci_barno bar,
+ 	epf_bar[bar].phys_addr = phys_addr;
+ 	epf_bar[bar].addr = space;
+ 	epf_bar[bar].size = size;
++	epf_bar[bar].aligned_size = aligned_size;
+ 	epf_bar[bar].barno = bar;
+ 	if (upper_32_bits(size) || epc_features->bar[bar].only_64bit)
+ 		epf_bar[bar].flags |= PCI_BASE_ADDRESS_MEM_TYPE_64;
+diff --git a/include/linux/pci-epf.h b/include/linux/pci-epf.h
+index 18a3aeb62ae4e..cd6f8f4bc4540 100644
+--- a/include/linux/pci-epf.h
++++ b/include/linux/pci-epf.h
+@@ -114,6 +114,8 @@ struct pci_epf_driver {
+  * @phys_addr: physical address that should be mapped to the BAR
+  * @addr: virtual address corresponding to the @phys_addr
+  * @size: the size of the address space present in BAR
++ * @aligned_size: the size actually allocated to accommodate the iATU alignment
++ *                requirement
+  * @barno: BAR number
+  * @flags: flags that are set for the BAR
+  */
+@@ -121,6 +123,7 @@ struct pci_epf_bar {
+ 	dma_addr_t	phys_addr;
+ 	void		*addr;
+ 	size_t		size;
++	size_t		aligned_size;
+ 	enum pci_barno	barno;
+ 	int		flags;
+ };
 -- 
 2.39.5
 
