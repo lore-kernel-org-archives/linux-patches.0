@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F207C2F2367;
-	Tue, 17 Jun 2025 16:08:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F204D239E9F;
+	Tue, 17 Jun 2025 16:08:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750176483; cv=none; b=fRHyMTjxCz9Uk/uR0dWFeB/LAb0sCsxBHGcfpVyGPlrLOZwPlhAjjjdzrfPmcO32kNLqQ3epfrxdgMDFJDRFIhgiOXWWbH6qiVhpF7BFV+NrhpPRjF+iUAMTRwaqJvU1rgicFfs4+ba2DgOizuD6xNuQ2a5yvasmKMtISR9pWK4=
+	t=1750176486; cv=none; b=n93PJfRAZlO3mog+9l9DrW0yswr1UItNntXfyIwx1w/NXoYBlZPb8epF9tdCfSVAxhC3wRoRa1pxTL4m+0r+64CJs/V39BZEqdTe34XVKckA4sTwXgtqtyDqQtTEznkAhDGfRHXN7n2Lc/KR8Wjh1XesMCN0em56loabBxMH1Sc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750176483; c=relaxed/simple;
-	bh=UUTnPYcAEcO7Vr6xJLBaGBT3dslaRDwOckZ0y7WBd34=;
+	s=arc-20240116; t=1750176486; c=relaxed/simple;
+	bh=kzLi5Rktq+KCFYj8pjjZw8LsA6Ou8eObrQcO8nkc9tk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GILh88Q5RFvO8eTVwfAyoHOp0JzG9VFS9KtSiYxSw23ss6NADnFmulOlMEtTg2fprzq2KWnL0I4ZG5EyUa3ni5WsDOijgaYdJZ5bB72IVprBiEg1pVBHB6vADKPybDTPOYukAzZ2YXrZJWb0gQJiVlJl9pLQWqS02llB7przrao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jOQrligg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=S/HQhicJNpRlXEuyPBOiI+FuSxez/zn5IBJY03NfKGCLu865ucF+GCB6/lQQt6sSgYJ51GkI64xMa8UtCkniQgtqRRxvCoC92MCQY+JMKDrAgTPwrYVPGgz9MWuchauZuFXVo038LiZWKuHasNDi2KiKTFtgY3b7C+d0HdK4/tk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RvQ8bAQ4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jOQrligg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5850FC4CEE3;
-	Tue, 17 Jun 2025 16:08:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RvQ8bAQ4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82EFEC4CEE3;
+	Tue, 17 Jun 2025 16:08:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750176482;
-	bh=UUTnPYcAEcO7Vr6xJLBaGBT3dslaRDwOckZ0y7WBd34=;
+	s=korg; t=1750176485;
+	bh=kzLi5Rktq+KCFYj8pjjZw8LsA6Ou8eObrQcO8nkc9tk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jOQrliggMxD9JvWb99YRG70UOXY5ROd0KfNs8B+m8DHNEEhZdSN9tokcBtFtP3aHC
-	 FUahlP+VA7cP9pQv/GR+P76U7eJQ2QlXDNcDb/DCX509r8nFbASq/SYSNK+19oCofV
-	 xrumgRe+gnSCAIkUQIt6uWulQmn6J4YhOXJRYu1I=
+	b=RvQ8bAQ4iyq0DF+4TgbX/6JWAJ0v2qnO6mZxodaF6iw86K1rZSXmZs6zObIBfM84q
+	 t6T23lcJEznC3K1KPomT/FeZXOddNDjsask1YlBnWwZ3ClMHQyjTvzE8NNygD2wIpF
+	 jEcyXlQ0fvwXleSlFtM781yrD5Ns2KjAqQ3nwp3Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Minnekhanov <alexeymin@postmarketos.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Judith Mendez <jm@ti.com>,
+	Nishanth Menon <nm@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 234/512] arm64: dts: qcom: sdm660-xiaomi-lavender: Add missing SD card detect GPIO
-Date: Tue, 17 Jun 2025 17:23:20 +0200
-Message-ID: <20250617152429.107263937@linuxfoundation.org>
+Subject: [PATCH 6.6 282/356] arm64: dts: ti: k3-am65-main: Fix sdhci node properties
+Date: Tue, 17 Jun 2025 17:26:37 +0200
+Message-ID: <20250617152349.543942981@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
+References: <20250617152338.212798615@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,41 +47,85 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexey Minnekhanov <alexeymin@postmarketos.org>
+From: Judith Mendez <jm@ti.com>
 
-[ Upstream commit 2eca6af66709de0d1ba14cdf8b6d200a1337a3a2 ]
+[ Upstream commit 8ffe9cb889f2b831a9d5bbb1f7ad42d30e31170f ]
 
-During initial porting these cd-gpios were missed. Having card detect is
-beneficial because driver does not need to do polling every second and it
-can just use IRQ. SD card detection in U-Boot is also fixed by this.
+Update otap-del-sel properties as per datasheet [0].
 
-Fixes: cf85e9aee210 ("arm64: dts: qcom: sdm660-xiaomi-lavender: Add eMMC and SD")
-Signed-off-by: Alexey Minnekhanov <alexeymin@postmarketos.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250415130101.1429281-1-alexeymin@postmarketos.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Add missing clkbuf-sel and itap-del-sel values also as per
+datasheet [0].
+
+Move clkbuf-sel and ti,trm-icp above the otap-del-sel properties
+so the sdhci nodes could be more uniform across platforms.
+
+[0] https://www.ti.com/lit/ds/symlink/am6548.pdf
+
+Fixes: eac99d38f861 ("arm64: dts: ti: k3-am654-main: Update otap-del-sel values")
+Fixes: d7600d070fb0 ("arm64: dts: ti: k3-am65-main: Add support for sdhci1")
+Signed-off-by: Judith Mendez <jm@ti.com>
+Link: https://lore.kernel.org/r/20240423151732.3541894-2-jm@ti.com
+Signed-off-by: Nishanth Menon <nm@ti.com>
+Stable-dep-of: f55c9f087cc2 ("arm64: dts: ti: k3-am65-main: Add missing taps to sdhci0")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm64/boot/dts/ti/k3-am65-main.dtsi | 17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts b/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts
-index 7167f75bced3f..0b4d71c14a772 100644
---- a/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts
-@@ -404,6 +404,8 @@
- &sdhc_2 {
- 	status = "okay";
+diff --git a/arch/arm64/boot/dts/ti/k3-am65-main.dtsi b/arch/arm64/boot/dts/ti/k3-am65-main.dtsi
+index 57befcce93b97..9c5de448351e9 100644
+--- a/arch/arm64/boot/dts/ti/k3-am65-main.dtsi
++++ b/arch/arm64/boot/dts/ti/k3-am65-main.dtsi
+@@ -436,6 +436,8 @@ sdhci0: mmc@4f80000 {
+ 		interrupts = <GIC_SPI 136 IRQ_TYPE_LEVEL_HIGH>;
+ 		mmc-ddr-1_8v;
+ 		mmc-hs200-1_8v;
++		ti,clkbuf-sel = <0x7>;
++		ti,trm-icp = <0x8>;
+ 		ti,otap-del-sel-legacy = <0x0>;
+ 		ti,otap-del-sel-mmc-hs = <0x0>;
+ 		ti,otap-del-sel-sd-hs = <0x0>;
+@@ -446,8 +448,7 @@ sdhci0: mmc@4f80000 {
+ 		ti,otap-del-sel-ddr50 = <0x5>;
+ 		ti,otap-del-sel-ddr52 = <0x5>;
+ 		ti,otap-del-sel-hs200 = <0x5>;
+-		ti,otap-del-sel-hs400 = <0x0>;
+-		ti,trm-icp = <0x8>;
++		ti,itap-del-sel-ddr52 = <0x0>;
+ 		dma-coherent;
+ 	};
  
-+	cd-gpios = <&tlmm 54 GPIO_ACTIVE_HIGH>;
-+
- 	vmmc-supply = <&vreg_l5b_2p95>;
- 	vqmmc-supply = <&vreg_l2b_2p95>;
- };
+@@ -458,18 +459,22 @@ sdhci1: mmc@4fa0000 {
+ 		clocks = <&k3_clks 48 0>, <&k3_clks 48 1>;
+ 		clock-names = "clk_ahb", "clk_xin";
+ 		interrupts = <GIC_SPI 137 IRQ_TYPE_LEVEL_HIGH>;
++		ti,clkbuf-sel = <0x7>;
++		ti,trm-icp = <0x8>;
+ 		ti,otap-del-sel-legacy = <0x0>;
+ 		ti,otap-del-sel-mmc-hs = <0x0>;
+ 		ti,otap-del-sel-sd-hs = <0x0>;
+-		ti,otap-del-sel-sdr12 = <0x0>;
+-		ti,otap-del-sel-sdr25 = <0x0>;
++		ti,otap-del-sel-sdr12 = <0xf>;
++		ti,otap-del-sel-sdr25 = <0xf>;
+ 		ti,otap-del-sel-sdr50 = <0x8>;
+ 		ti,otap-del-sel-sdr104 = <0x7>;
+ 		ti,otap-del-sel-ddr50 = <0x4>;
+ 		ti,otap-del-sel-ddr52 = <0x4>;
+ 		ti,otap-del-sel-hs200 = <0x7>;
+-		ti,clkbuf-sel = <0x7>;
+-		ti,trm-icp = <0x8>;
++		ti,itap-del-sel-legacy = <0xa>;
++		ti,itap-del-sel-sd-hs = <0x1>;
++		ti,itap-del-sel-sdr12 = <0xa>;
++		ti,itap-del-sel-sdr25 = <0x1>;
+ 		dma-coherent;
+ 	};
+ 
 -- 
 2.39.5
 
