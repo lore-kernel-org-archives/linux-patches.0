@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B18292EF297;
-	Tue, 17 Jun 2025 16:14:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B85202EF297;
+	Tue, 17 Jun 2025 16:14:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750176862; cv=none; b=Zl3x9vfY9BXkAmj64mtL18lkYmN/ZT8dyAlw29KHPegRZxqCQF9VcZ9GFJkxfbg2qX8Xyx4MAIvc9WvjghJUNSLRulI9R8YOuk48bdvPTA4a6vrKAjYCOUiivwqHYh1l0OJaMzDSRIQGqHTSHi6NYB4Ev/trQMTsptx2N7mf94g=
+	t=1750176865; cv=none; b=lt/6YMyO0vMo+xmF55CV6HnUVhCi9v8DT5NMRTVdyWYeih2CsfmBku6S0IWaFfiki3KbeUJtd4gwGuOBEIONK7Ad014e8cvHg1bHeVbKcTEa+4xgH1WqcQAaSLqrK6/8pj4qZnemHZpJcToyQKKCJJ1e6PH6sJ4czDeqyMBDS64=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750176862; c=relaxed/simple;
-	bh=osnnhtOlVUHEhwU7Cgvas2yPhiG3pjAmRS/fUzKNQuo=;
+	s=arc-20240116; t=1750176865; c=relaxed/simple;
+	bh=6++8/E2qwlXO18K7fYF09VqEkOBCuGzgeUyAvHLHLa8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WeuV2izuwZWYMxHB0k+ahm2A8Qu3VM/K8JARUvmRi24kNkVye61EZR4cF9/HOwiQWFflJIxbUmLgq2fIoBLWIoix7ajhlMAeQg8INukWvSx/9A6U2M4SDm0JxorECt0JpeKPXI1iamY4aMA0c3mpsYsrDHabfdbaCiwff5f6cwo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CtXdlhUK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=isfJgPbNzSJAgljrm2//L18VcoiXTAhcOkNvpw3dmkJTtKhqb2I0F+SbjYObL36hrbEj2Tr86lQ53Iu0/jaYdEKmzfqDL6ziN92vMGz5vvvr6MUAuTjBJ4bbwoHFRmo/ht6Uc7LINJalrmTGD9vpy45K5J+5BpHsw2T7PagNx7Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L6H9573H; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CtXdlhUK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3828C4CEE3;
-	Tue, 17 Jun 2025 16:14:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L6H9573H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20EB5C4CEE3;
+	Tue, 17 Jun 2025 16:14:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750176862;
-	bh=osnnhtOlVUHEhwU7Cgvas2yPhiG3pjAmRS/fUzKNQuo=;
+	s=korg; t=1750176865;
+	bh=6++8/E2qwlXO18K7fYF09VqEkOBCuGzgeUyAvHLHLa8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CtXdlhUKEhmnKBbTVXGcl6lS9ljaiPA6LsfY8kbt9Ivv5+b6zOjh2eafMD9EsvO9i
-	 /7X0GUygCOUCsgQMIXDWhTpxGO8hcKVwoaC84RPS1LyRrnXGe+0rcQ0z9pOd72lPJP
-	 Ib4hBX5h8PPd5GEth0xNGQfchZa1+CNe5YcKC3Ic=
+	b=L6H9573HfSRPUrRiE4c8a7OpVI0xk9niSlxa28C/NumRKbKJxJece9AEZtBUydESl
+	 w/Gd3aJZrficHqE4KemoOn9z7R1YG2uT5Lm+MnZCCaHGnyElU8KOKRikaiq6rM33RM
+	 1iR9k+g4aWzhdz0SguE2W8NXmuGaFDSLzyRP1TNA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Anton Protopopov <a.s.protopopov@gmail.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 320/356] Bluetooth: Fix NULL pointer deference on eir_get_service_data
-Date: Tue, 17 Jun 2025 17:27:15 +0200
-Message-ID: <20250617152351.039178473@linuxfoundation.org>
+Subject: [PATCH 6.15 233/780] libbpf: Use proper errno value in linker
+Date: Tue, 17 Jun 2025 17:19:01 +0200
+Message-ID: <20250617152500.943140867@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-References: <20250617152338.212798615@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,52 +47,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Anton Protopopov <a.s.protopopov@gmail.com>
 
-[ Upstream commit 20a2aa01f5aeb6daad9aeaa7c33dd512c58d81eb ]
+[ Upstream commit 358b1c0f56ebb6996fcec7dcdcf6bae5dcbc8b6c ]
 
-The len parameter is considered optional so it can be NULL so it cannot
-be used for skipping to next entry of EIR_SERVICE_DATA.
+Return values of the linker_append_sec_data() and the
+linker_append_elf_relos() functions are propagated all the
+way up to users of libbpf API. In some error cases these
+functions return -1 which will be seen as -EPERM from user's
+point of view. Instead, return a more reasonable -EINVAL.
 
-Fixes: 8f9ae5b3ae80 ("Bluetooth: eir: Add helpers for managing service data")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: faf6ed321cf6 ("libbpf: Add BPF static linker APIs")
+Signed-off-by: Anton Protopopov <a.s.protopopov@gmail.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20250430120820.2262053-1-a.s.protopopov@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/eir.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ tools/lib/bpf/linker.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/bluetooth/eir.c b/net/bluetooth/eir.c
-index 1bc51e2b05a34..3e1713673ecc9 100644
---- a/net/bluetooth/eir.c
-+++ b/net/bluetooth/eir.c
-@@ -366,17 +366,19 @@ u8 eir_create_scan_rsp(struct hci_dev *hdev, u8 instance, u8 *ptr)
+diff --git a/tools/lib/bpf/linker.c b/tools/lib/bpf/linker.c
+index 56f5068e2ebab..a469e5d4fee70 100644
+--- a/tools/lib/bpf/linker.c
++++ b/tools/lib/bpf/linker.c
+@@ -1376,7 +1376,7 @@ static int linker_append_sec_data(struct bpf_linker *linker, struct src_obj *obj
+ 		} else {
+ 			if (!secs_match(dst_sec, src_sec)) {
+ 				pr_warn("ELF sections %s are incompatible\n", src_sec->sec_name);
+-				return -1;
++				return -EINVAL;
+ 			}
  
- void *eir_get_service_data(u8 *eir, size_t eir_len, u16 uuid, size_t *len)
- {
--	while ((eir = eir_get_data(eir, eir_len, EIR_SERVICE_DATA, len))) {
-+	size_t dlen;
-+
-+	while ((eir = eir_get_data(eir, eir_len, EIR_SERVICE_DATA, &dlen))) {
- 		u16 value = get_unaligned_le16(eir);
- 
- 		if (uuid == value) {
- 			if (len)
--				*len -= 2;
-+				*len = dlen - 2;
- 			return &eir[2];
+ 			/* "license" and "version" sections are deduped */
+@@ -2223,7 +2223,7 @@ static int linker_append_elf_relos(struct bpf_linker *linker, struct src_obj *ob
+ 			}
+ 		} else if (!secs_match(dst_sec, src_sec)) {
+ 			pr_warn("sections %s are not compatible\n", src_sec->sec_name);
+-			return -1;
++			return -EINVAL;
  		}
  
--		eir += *len;
--		eir_len -= *len;
-+		eir += dlen;
-+		eir_len -= dlen;
- 	}
- 
- 	return NULL;
+ 		/* shdr->sh_link points to SYMTAB */
 -- 
 2.39.5
 
