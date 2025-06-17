@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F2BE2DF3CB;
-	Tue, 17 Jun 2025 15:31:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8312811CBA;
+	Tue, 17 Jun 2025 15:32:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750174317; cv=none; b=e9jHtBgeEe4mhVpj0YVIBfGKNsewg/JG/E6cvYxXzTXH0rD9q2X8L27jiQh91pUd96ReepUps04tFikYXR3DzVoOn3Aq6TKhBxz2+69I+EC3kesp7FcRur7RplqMkwRD+DmWUUKjCl+R0Wxt1CQ4HQR/GN+c/yXqn4rlgVIKrcE=
+	t=1750174320; cv=none; b=q6lKRVHbJ6m7mjTWc264Vq4fm0zEH6mgpELFcBGnQHZ3+HCNFie1LW1ECZqnSI2C865nWoA1aDvllbwoyFYSYz+U7HOgqOQdk0T8UUO7NvA0sBb10dRADKClRDJxmGbARpdQVJ8TzCws+4GCfIcEbssY86VykZk+z6FF88iy4Lo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750174317; c=relaxed/simple;
-	bh=17kLOvF/t7RFPwn1ESN0LkSXPbWaePe9K53rvNShpD8=;
+	s=arc-20240116; t=1750174320; c=relaxed/simple;
+	bh=Ciia5kjpjm9/0kJ8mCE5rJ+z2TEDuN2YYAEH+1dkjdk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Uu/QMbaggiFYQsOzQ9W3tiiBtlnSxwz4vPmt5g3zXdHwqe9EAJ+KLPnjd72mqMM/7VAsZTIl1RVQgr+r6sztRF7sqLHXil7cjn8I0/rt9dTMYs0x6rKDBE8cW73EfWBuyRjI1ZyHw3T84i7F2ql4Kph/dApwB9X5dfXwh9aOs0Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lvS5rrt1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VQ4U/pqLv9/GEpmWXzCr90kIyxhcxD9rm9d4q14Tqj/UqXOQdJo78mRRxvrJj3t1MynAQDoED0ERYVPoXk50Ahy3Ff9EJO/Hg9ns7aLUOlfLOPDsNDrbIlK3Wy13GzEDo/QQ+2wPEU+dr4QJzktec34Ui8WSRhA95EXGzdkDcM0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J6htfzUR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lvS5rrt1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD527C4CEE3;
-	Tue, 17 Jun 2025 15:31:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J6htfzUR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8567C4CEE3;
+	Tue, 17 Jun 2025 15:31:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750174317;
-	bh=17kLOvF/t7RFPwn1ESN0LkSXPbWaePe9K53rvNShpD8=;
+	s=korg; t=1750174320;
+	bh=Ciia5kjpjm9/0kJ8mCE5rJ+z2TEDuN2YYAEH+1dkjdk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lvS5rrt1vXUOcTL8gyz4Goihcl1zIX2JqRJl4Y3UMCHxIfH5hZ00gu0giPkT+uOvb
-	 NQDkK6weqT8BPBzWrbv1hPJzVE5JYuIhkrkf0L60zftHRO/TaRCjTrDtYW8yqPuq10
-	 Taqtjd+sH+quG1oD6LZfzBvPLiJ8Mh6Bz067VVGk=
+	b=J6htfzUR2dtoxprHacSDlpGXwWqCssrBC33+tQXOw8r9Pniybwzp0CN8mulLR6kIo
+	 8V3e7VbNSPYodhseG+ta/0GeQQs9NJaG04G2ymwavU8XwQBDRMB1Q/+CC8JINWDGhe
+	 tU/8YomTjM2ZKtj6e+rKbyZQdg4y3HllPx/DA8Ao=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kees Cook <kees@kernel.org>,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Zijun Hu <quic_zijuhu@quicinc.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 048/356] ASoC: SOF: ipc4-pcm: Adjust pipeline_list->pipelines allocation type
-Date: Tue, 17 Jun 2025 17:22:43 +0200
-Message-ID: <20250617152340.170034638@linuxfoundation.org>
+Subject: [PATCH 6.6 049/356] PM: wakeup: Delete space in the end of string shown by pm_show_wakelocks()
+Date: Tue, 17 Jun 2025 17:22:44 +0200
+Message-ID: <20250617152340.208225109@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
 References: <20250617152338.212798615@linuxfoundation.org>
@@ -52,44 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kees Cook <kees@kernel.org>
+From: Zijun Hu <quic_zijuhu@quicinc.com>
 
-[ Upstream commit 00a371adbbfb46db561db85a9d7b53b2363880a1 ]
+[ Upstream commit f0050a3e214aa941b78ad4caf122a735a24d81a6 ]
 
-In preparation for making the kmalloc family of allocators type aware,
-we need to make sure that the returned type from the allocation matches
-the type of the variable being assigned. (Before, the allocator would
-always return "void *", which can be implicitly cast to any pointer type.)
+pm_show_wakelocks() is called to generate a string when showing
+attributes /sys/power/wake_(lock|unlock), but the string ends
+with an unwanted space that was added back by mistake by commit
+c9d967b2ce40 ("PM: wakeup: simplify the output logic of
+pm_show_wakelocks()").
 
-The assigned type is "struct snd_sof_pipeline **", but the returned type
-will be "struct snd_sof_widget **". These are the same size allocation
-(pointer size) but the types don't match. Adjust the allocation type to
-match the assignment.
+Remove the unwanted space.
 
-Signed-off-by: Kees Cook <kees@kernel.org>
-Fixes: 9c04363d222b ("ASoC: SOF: Introduce struct snd_sof_pipeline")
-Acked-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Link: https://patch.msgid.link/20250426062511.work.859-kees@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: c9d967b2ce40 ("PM: wakeup: simplify the output logic of pm_show_wakelocks()")
+Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
+Link: https://patch.msgid.link/20250505-fix_power-v1-1-0f7f2c2f338c@quicinc.com
+[ rjw: Changelog edits ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sof/ipc4-pcm.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ kernel/power/wakelock.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/sound/soc/sof/ipc4-pcm.c b/sound/soc/sof/ipc4-pcm.c
-index bb5df0d214e36..a29632423ccda 100644
---- a/sound/soc/sof/ipc4-pcm.c
-+++ b/sound/soc/sof/ipc4-pcm.c
-@@ -615,7 +615,8 @@ static int sof_ipc4_pcm_setup(struct snd_sof_dev *sdev, struct snd_sof_pcm *spcm
+diff --git a/kernel/power/wakelock.c b/kernel/power/wakelock.c
+index 52571dcad768b..4e941999a53ba 100644
+--- a/kernel/power/wakelock.c
++++ b/kernel/power/wakelock.c
+@@ -49,6 +49,9 @@ ssize_t pm_show_wakelocks(char *buf, bool show_active)
+ 			len += sysfs_emit_at(buf, len, "%s ", wl->name);
+ 	}
  
- 		/* allocate memory for max number of pipeline IDs */
- 		pipeline_list->pipelines = kcalloc(ipc4_data->max_num_pipelines,
--						   sizeof(struct snd_sof_widget *), GFP_KERNEL);
-+						   sizeof(*pipeline_list->pipelines),
-+						   GFP_KERNEL);
- 		if (!pipeline_list->pipelines) {
- 			sof_ipc4_pcm_free(sdev, spcm);
- 			return -ENOMEM;
++	if (len > 0)
++		--len;
++
+ 	len += sysfs_emit_at(buf, len, "\n");
+ 
+ 	mutex_unlock(&wakelocks_lock);
 -- 
 2.39.5
 
