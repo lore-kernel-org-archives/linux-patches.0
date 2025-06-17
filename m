@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66BEF2046B3;
-	Tue, 17 Jun 2025 15:47:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAD5B2DFF17;
+	Tue, 17 Jun 2025 15:47:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175226; cv=none; b=GCbAYhFiCWLIYbrN0HpuTUGXW4sy9kDM9t/SptlN616YL5sOwP6gvvGooGt6Gg/0rPrfNge+murAq/qmJmi60Z61Fi0Z5fG72Chk/RYAj6JysGq6C0/Hczeayc8hA7ajRUfsrcmF+3LiuAGK7dl8gCUOaqzU6nH7QkwyHVanZA0=
+	t=1750175229; cv=none; b=tj1aXmJoKOsXOpXssndU1DV1ndnPtJCJG+2G+09H+YpxVEw6wAQdShKHT9Vs2PeXwEiqR+81oPPKsU+M+EKeFZl9uS0GEJKRdbNfV4HTHtyplfu5Jgv4Z/KFp+gj0gkSSRhVvvGaOam2vIwS6vnKdE9c7a9oJ7ISU40SvmZ13Z0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175226; c=relaxed/simple;
-	bh=bVrVstVibx7ySLd48R1l25osLF7v0oUaMEGt01Ewwts=;
+	s=arc-20240116; t=1750175229; c=relaxed/simple;
+	bh=mZHemQ5g/goDFEM4StwYm3bh+ulpj3q58/5lCMKtyQs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D5ydo6GvIwe3Mhi23gZrT4dCZK3WG7YUOWDkp1bu/jxYK2X/ABfp85c9DizGj/1KO/ROQJTgCDQElkRIKe9sGDR9A/DDJOe3NA6nsxZ66VnPy5RZqVo3Ntan54QQd6lz7mg4644qeRoGwk0WWqytjmAffZppO5X+baBaUX73ftY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AOD4DsZu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IXsgkGvdjoM7Pd9O50AIk37yok3Q5N9xa9JQpqWLU83GEKfc0n7vQAq3Bqf6HWP2cDh11j2gZWCYSsygQ4jqq3YrKM7SyaH2U+Ijl/xG9VAYG9i27uonzM2tH2aYK7+Y02ispoCcWRXNPAvmvV5EXRv+BZnmc2JjngkhLh7nIr4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vS+lULOf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AOD4DsZu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9FD3C4CEE3;
-	Tue, 17 Jun 2025 15:47:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vS+lULOf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 439E3C4CEE3;
+	Tue, 17 Jun 2025 15:47:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175226;
-	bh=bVrVstVibx7ySLd48R1l25osLF7v0oUaMEGt01Ewwts=;
+	s=korg; t=1750175229;
+	bh=mZHemQ5g/goDFEM4StwYm3bh+ulpj3q58/5lCMKtyQs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AOD4DsZuX7QPhRFPZsBWZC9/sEm1AjIA1i5AbDMfj1wrsGXJh2Lo5IUBarol9J0ve
-	 vKkjWtR1AZTxHU7kJvEhpuNjC64S5WE+So1DLk5TCVvEa2YmgGxdCbWlTl9QWe+8bG
-	 SjCtB99GZ+fSubgHPTRQiBdAFibHZ0XtWM2aI0pk=
+	b=vS+lULOfb1mKYpkvP5q5re5/nqrU8MXqPl5CYOTcsn1ejVyJI9kIk6XfqQ6Ebk/7o
+	 MduuEjnBzaHWrsYvY0sV18VO2etOXs6CwLgpyExoSuM1AohRK4W+aB+tHcMlh1Wu0e
+	 OQta7Dnw7zoj1D6bs4oseXXCIbYb8VsMgg1zmIIM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhiguo Niu <zhiguo.niu@unisoc.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	P Praneesh <praneesh.p@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 155/356] f2fs: use d_inode(dentry) cleanup dentry->d_inode
-Date: Tue, 17 Jun 2025 17:24:30 +0200
-Message-ID: <20250617152344.468913904@linuxfoundation.org>
+Subject: [PATCH 6.12 106/512] wifi: ath12k: Fix memory leak during vdev_id mismatch
+Date: Tue, 17 Jun 2025 17:21:12 +0200
+Message-ID: <20250617152423.888189801@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-References: <20250617152338.212798615@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,76 +47,70 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhiguo Niu <zhiguo.niu@unisoc.com>
+From: P Praneesh <praneesh.p@oss.qualcomm.com>
 
-[ Upstream commit a6c397a31f58a1d577c2c8d04b624e9baa31951c ]
+[ Upstream commit 75ec94db880b1e4b4f9182885d60db0db6e2ee56 ]
 
-no logic changes.
+Currently driver enables vdev_id check as part of the bank configuration
+in ath12k_dp_tx_get_vdev_bank_config(). This check ensures that the vdev_id
+configured in the bank register aligns with the vdev_id in the packet's
+address search table within the firmware. If there is a mismatch, the
+firmware forwards the packet with the HTT status
+HAL_WBM_REL_HTT_TX_COMP_STATUS_VDEVID_MISMATCH. Since driver does not
+handle this vdev_id mismatch HTT status, the corresponding buffers are not
+freed properly, causing a memory leak. Fix this issue by adding handling to
+free the buffers when a vdev_id mismatch HTT status is encountered.
 
-Signed-off-by: Zhiguo Niu <zhiguo.niu@unisoc.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.4.1-00199-QCAHKSWPL_SILICONZ-1
+Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.0.c5-00481-QCAHMTSWPL_V1.0_V2.0_SILICONZ-
+
+Fixes: d889913205cf ("wifi: ath12k: driver for Qualcomm Wi-Fi 7 devices")
+Signed-off-by: P Praneesh <praneesh.p@oss.qualcomm.com>
+Link: https://patch.msgid.link/20250402174032.2651221-1-praneesh.p@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/namei.c | 8 ++++----
- fs/f2fs/super.c | 4 ++--
- 2 files changed, 6 insertions(+), 6 deletions(-)
+ drivers/net/wireless/ath/ath12k/dp_tx.c    | 1 +
+ drivers/net/wireless/ath/ath12k/hal_desc.h | 3 ++-
+ 2 files changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/f2fs/namei.c b/fs/f2fs/namei.c
-index 2e08e1fdf485c..58ab04aff6bff 100644
---- a/fs/f2fs/namei.c
-+++ b/fs/f2fs/namei.c
-@@ -411,7 +411,7 @@ static int f2fs_link(struct dentry *old_dentry, struct inode *dir,
+diff --git a/drivers/net/wireless/ath/ath12k/dp_tx.c b/drivers/net/wireless/ath/ath12k/dp_tx.c
+index 201ffdb8c44ae..734e3da4cbf19 100644
+--- a/drivers/net/wireless/ath/ath12k/dp_tx.c
++++ b/drivers/net/wireless/ath/ath12k/dp_tx.c
+@@ -566,6 +566,7 @@ ath12k_dp_tx_process_htt_tx_complete(struct ath12k_base *ab,
+ 	case HAL_WBM_REL_HTT_TX_COMP_STATUS_TTL:
+ 	case HAL_WBM_REL_HTT_TX_COMP_STATUS_REINJ:
+ 	case HAL_WBM_REL_HTT_TX_COMP_STATUS_INSPECT:
++	case HAL_WBM_REL_HTT_TX_COMP_STATUS_VDEVID_MISMATCH:
+ 		ath12k_dp_tx_free_txbuf(ab, msdu, mac_id, tx_ring);
+ 		break;
+ 	case HAL_WBM_REL_HTT_TX_COMP_STATUS_MEC_NOTIFY:
+diff --git a/drivers/net/wireless/ath/ath12k/hal_desc.h b/drivers/net/wireless/ath/ath12k/hal_desc.h
+index 4f745cfd7d8e7..c68998e9667c9 100644
+--- a/drivers/net/wireless/ath/ath12k/hal_desc.h
++++ b/drivers/net/wireless/ath/ath12k/hal_desc.h
+@@ -1,7 +1,7 @@
+ /* SPDX-License-Identifier: BSD-3-Clause-Clear */
+ /*
+  * Copyright (c) 2018-2021 The Linux Foundation. All rights reserved.
+- * Copyright (c) 2021-2022, 2024 Qualcomm Innovation Center, Inc. All rights reserved.
++ * Copyright (c) 2021-2022, 2024-2025 Qualcomm Innovation Center, Inc. All rights reserved.
+  */
+ #include "core.h"
  
- 	if (is_inode_flag_set(dir, FI_PROJ_INHERIT) &&
- 			(!projid_eq(F2FS_I(dir)->i_projid,
--			F2FS_I(old_dentry->d_inode)->i_projid)))
-+			F2FS_I(inode)->i_projid)))
- 		return -EXDEV;
+@@ -1296,6 +1296,7 @@ enum hal_wbm_htt_tx_comp_status {
+ 	HAL_WBM_REL_HTT_TX_COMP_STATUS_REINJ,
+ 	HAL_WBM_REL_HTT_TX_COMP_STATUS_INSPECT,
+ 	HAL_WBM_REL_HTT_TX_COMP_STATUS_MEC_NOTIFY,
++	HAL_WBM_REL_HTT_TX_COMP_STATUS_VDEVID_MISMATCH,
+ 	HAL_WBM_REL_HTT_TX_COMP_STATUS_MAX,
+ };
  
- 	err = f2fs_dquot_initialize(dir);
-@@ -905,7 +905,7 @@ static int f2fs_rename(struct mnt_idmap *idmap, struct inode *old_dir,
- 
- 	if (is_inode_flag_set(new_dir, FI_PROJ_INHERIT) &&
- 			(!projid_eq(F2FS_I(new_dir)->i_projid,
--			F2FS_I(old_dentry->d_inode)->i_projid)))
-+			F2FS_I(old_inode)->i_projid)))
- 		return -EXDEV;
- 
- 	/*
-@@ -1101,10 +1101,10 @@ static int f2fs_cross_rename(struct inode *old_dir, struct dentry *old_dentry,
- 
- 	if ((is_inode_flag_set(new_dir, FI_PROJ_INHERIT) &&
- 			!projid_eq(F2FS_I(new_dir)->i_projid,
--			F2FS_I(old_dentry->d_inode)->i_projid)) ||
-+			F2FS_I(old_inode)->i_projid)) ||
- 	    (is_inode_flag_set(new_dir, FI_PROJ_INHERIT) &&
- 			!projid_eq(F2FS_I(old_dir)->i_projid,
--			F2FS_I(new_dentry->d_inode)->i_projid)))
-+			F2FS_I(new_inode)->i_projid)))
- 		return -EXDEV;
- 
- 	err = f2fs_dquot_initialize(old_dir);
-diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
-index 4cc87921aac3e..6b3cafbe98672 100644
---- a/fs/f2fs/super.c
-+++ b/fs/f2fs/super.c
-@@ -1849,9 +1849,9 @@ static int f2fs_statfs(struct dentry *dentry, struct kstatfs *buf)
- 	buf->f_fsid    = u64_to_fsid(id);
- 
- #ifdef CONFIG_QUOTA
--	if (is_inode_flag_set(dentry->d_inode, FI_PROJ_INHERIT) &&
-+	if (is_inode_flag_set(d_inode(dentry), FI_PROJ_INHERIT) &&
- 			sb_has_quota_limits_enabled(sb, PRJQUOTA)) {
--		f2fs_statfs_project(sb, F2FS_I(dentry->d_inode)->i_projid, buf);
-+		f2fs_statfs_project(sb, F2FS_I(d_inode(dentry))->i_projid, buf);
- 	}
- #endif
- 	return 0;
 -- 
 2.39.5
 
