@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A26A118A6AE;
-	Tue, 17 Jun 2025 15:36:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A4A518A6AE;
+	Tue, 17 Jun 2025 15:36:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750174572; cv=none; b=UzAA438VrTUFMhDj6IwCvGcqwZPYEJJ/87T/UEYX9j83SYjMCL0UFVKDI2FPBFL84FvRksFrKNYN7wuWij1MJiro/qHbh8JFRb/hBMJ1WS9UjK9R1pjyO0YC/gMyan9+HfyWbQYbucGwci15CiB5974BFKl4c3hZNhwWbKRz2Yw=
+	t=1750174574; cv=none; b=W3MgkNhBXCXnyA60j/kx8UvxSBNKXD2ldPJqbOLTzsM+QwlqXgYYF1/koia+RXGiQzYk78RVsjuDITjJj5W5/UQykamkLM80QeE6HiMEz1AkINs5pweGG+0EN+uqICOQzSSDlFbl6gy05i8JtoSmV1PNNgPc1qw9PHEZRBAW2lU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750174572; c=relaxed/simple;
-	bh=OjMOtLPPbimRLE+giYTuZ+SDDYjURvPseLZwyDx4F/4=;
+	s=arc-20240116; t=1750174574; c=relaxed/simple;
+	bh=6AQhV45gVCmHzaE6FhajLni/ZG1G0qMGyKL8T1MNHX4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aMbdFZeJfXveUbyW7696yGEPRxC8QcofY1e19ZhdcBSi6mVsTEHNpIVfkyS+Sfs17uJcF4hud4saRCBCCPtgYuhv9j4Onxflr65RnDiEPGXLjKPDKCVHmUm7C0qn/YvZgrOA03WMl77PUbbxGzdKioVZiL+BOuPf2fQZhV8fPzs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d03W5R9U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=qme3COCyQ7xfwiIdSrVyI+N3Ffj3nBJakjZ4sRwZIvswg6zwe6Qr5XefspMhN7bhyC/Flw+0aHmxDi6r7+xYqkV44Ep6+0XJPAevn5xIAD5DUO1adMjb2VK3gzxKhMvZT6aKf50m39SIS1x6YB3dcnWNXqaVMeI6RBx3uY1Qorg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KMPwmAJO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d03W5R9U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBC89C4CEE3;
-	Tue, 17 Jun 2025 15:36:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KMPwmAJO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 022E0C4CEE3;
+	Tue, 17 Jun 2025 15:36:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750174571;
-	bh=OjMOtLPPbimRLE+giYTuZ+SDDYjURvPseLZwyDx4F/4=;
+	s=korg; t=1750174574;
+	bh=6AQhV45gVCmHzaE6FhajLni/ZG1G0qMGyKL8T1MNHX4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d03W5R9U5uSU4vuWdLRP0QdKEL0It3LDGdwKnl6KHcl8HarSZRt1CQQTM1J6WjEGk
-	 2DrXrx3xYb0aOeASd4WLYEaoJAHXiV54oRS6kZJUW6m/xUpAnXEgSHio8OIdb5WlwT
-	 cTz6rbK5NKsHab6y+Rd1r/qMvfT0nmIdqXQrNKv8=
+	b=KMPwmAJOVSxq2LEgJwHVYeOEdTLU55254G7/r0Ta/MDT8m+XUNS8Xcy+WQP1HFTtJ
+	 v81rSQgSbhMrRrW8xiATHogQ39LASysLG6b1k7cGLjINgoW2plBKlyH+27KeFKNa8S
+	 KBc4X7WmBdzOkcSs8I+9Z9mY8k45nDO/pw0IUmW0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hari Kalavakunta <kalavakunta.hari.prasad@gmail.com>,
-	Paul Fertser <fercerpav@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Jemmy Wong <jemmywong512@gmail.com>,
+	Willy Tarreau <w@1wt.eu>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 088/356] net: ncsi: Fix GCPS 64-bit member variables
-Date: Tue, 17 Jun 2025 17:23:23 +0200
-Message-ID: <20250617152341.758621647@linuxfoundation.org>
+Subject: [PATCH 6.12 037/512] tools/nolibc/types.h: fix mismatched parenthesis in minor()
+Date: Tue, 17 Jun 2025 17:20:03 +0200
+Message-ID: <20250617152421.054801233@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-References: <20250617152338.212798615@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,165 +46,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hari Kalavakunta <kalavakunta.hari.prasad@gmail.com>
+From: Jemmy Wong <jemmywong512@gmail.com>
 
-[ Upstream commit e8a1bd8344054ce27bebf59f48e3f6bc10bc419b ]
+[ Upstream commit 9c138ac9392228835b520fd4dbb07e636b34a867 ]
 
-Correct Get Controller Packet Statistics (GCPS) 64-bit wide member
-variables, as per DSP0222 v1.0.0 and forward specs. The Driver currently
-collects these stats, but they are yet to be exposed to the user.
-Therefore, no user impact.
+Fix an imbalance where opening parentheses exceed closing ones.
 
-Statistics fixes:
-Total Bytes Received (byte range 28..35)
-Total Bytes Transmitted (byte range 36..43)
-Total Unicast Packets Received (byte range 44..51)
-Total Multicast Packets Received (byte range 52..59)
-Total Broadcast Packets Received (byte range 60..67)
-Total Unicast Packets Transmitted (byte range 68..75)
-Total Multicast Packets Transmitted (byte range 76..83)
-Total Broadcast Packets Transmitted (byte range 84..91)
-Valid Bytes Received (byte range 204..11)
-
-Signed-off-by: Hari Kalavakunta <kalavakunta.hari.prasad@gmail.com>
-Reviewed-by: Paul Fertser <fercerpav@gmail.com>
-Link: https://patch.msgid.link/20250410012309.1343-1-kalavakunta.hari.prasad@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: eba6d00d38e7c ("tools/nolibc/types: move makedev to types.h and make it a macro")
+Signed-off-by: Jemmy Wong <jemmywong512@gmail.com>
+Acked-by: Willy Tarreau <w@1wt.eu>
+Link: https://lore.kernel.org/r/20250411073624.22153-1-jemmywong512@gmail.com
+Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ncsi/internal.h | 21 ++++++++++-----------
- net/ncsi/ncsi-pkt.h | 23 +++++++++++------------
- net/ncsi/ncsi-rsp.c | 21 ++++++++++-----------
- 3 files changed, 31 insertions(+), 34 deletions(-)
+ tools/include/nolibc/types.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ncsi/internal.h b/net/ncsi/internal.h
-index 4e0842df5234e..2c260f33b55cc 100644
---- a/net/ncsi/internal.h
-+++ b/net/ncsi/internal.h
-@@ -143,16 +143,15 @@ struct ncsi_channel_vlan_filter {
- };
+diff --git a/tools/include/nolibc/types.h b/tools/include/nolibc/types.h
+index b26a5d0c417c7..32d0929c633bb 100644
+--- a/tools/include/nolibc/types.h
++++ b/tools/include/nolibc/types.h
+@@ -201,7 +201,7 @@ struct stat {
+ /* WARNING, it only deals with the 4096 first majors and 256 first minors */
+ #define makedev(major, minor) ((dev_t)((((major) & 0xfff) << 8) | ((minor) & 0xff)))
+ #define major(dev) ((unsigned int)(((dev) >> 8) & 0xfff))
+-#define minor(dev) ((unsigned int)(((dev) & 0xff))
++#define minor(dev) ((unsigned int)((dev) & 0xff))
  
- struct ncsi_channel_stats {
--	u32 hnc_cnt_hi;		/* Counter cleared            */
--	u32 hnc_cnt_lo;		/* Counter cleared            */
--	u32 hnc_rx_bytes;	/* Rx bytes                   */
--	u32 hnc_tx_bytes;	/* Tx bytes                   */
--	u32 hnc_rx_uc_pkts;	/* Rx UC packets              */
--	u32 hnc_rx_mc_pkts;     /* Rx MC packets              */
--	u32 hnc_rx_bc_pkts;	/* Rx BC packets              */
--	u32 hnc_tx_uc_pkts;	/* Tx UC packets              */
--	u32 hnc_tx_mc_pkts;	/* Tx MC packets              */
--	u32 hnc_tx_bc_pkts;	/* Tx BC packets              */
-+	u64 hnc_cnt;		/* Counter cleared            */
-+	u64 hnc_rx_bytes;	/* Rx bytes                   */
-+	u64 hnc_tx_bytes;	/* Tx bytes                   */
-+	u64 hnc_rx_uc_pkts;	/* Rx UC packets              */
-+	u64 hnc_rx_mc_pkts;     /* Rx MC packets              */
-+	u64 hnc_rx_bc_pkts;	/* Rx BC packets              */
-+	u64 hnc_tx_uc_pkts;	/* Tx UC packets              */
-+	u64 hnc_tx_mc_pkts;	/* Tx MC packets              */
-+	u64 hnc_tx_bc_pkts;	/* Tx BC packets              */
- 	u32 hnc_fcs_err;	/* FCS errors                 */
- 	u32 hnc_align_err;	/* Alignment errors           */
- 	u32 hnc_false_carrier;	/* False carrier detection    */
-@@ -181,7 +180,7 @@ struct ncsi_channel_stats {
- 	u32 hnc_tx_1023_frames;	/* Tx 512-1023 bytes frames   */
- 	u32 hnc_tx_1522_frames;	/* Tx 1024-1522 bytes frames  */
- 	u32 hnc_tx_9022_frames;	/* Tx 1523-9022 bytes frames  */
--	u32 hnc_rx_valid_bytes;	/* Rx valid bytes             */
-+	u64 hnc_rx_valid_bytes;	/* Rx valid bytes             */
- 	u32 hnc_rx_runt_pkts;	/* Rx error runt packets      */
- 	u32 hnc_rx_jabber_pkts;	/* Rx error jabber packets    */
- 	u32 ncsi_rx_cmds;	/* Rx NCSI commands           */
-diff --git a/net/ncsi/ncsi-pkt.h b/net/ncsi/ncsi-pkt.h
-index f2f3b5c1b9412..24edb27379724 100644
---- a/net/ncsi/ncsi-pkt.h
-+++ b/net/ncsi/ncsi-pkt.h
-@@ -252,16 +252,15 @@ struct ncsi_rsp_gp_pkt {
- /* Get Controller Packet Statistics */
- struct ncsi_rsp_gcps_pkt {
- 	struct ncsi_rsp_pkt_hdr rsp;            /* Response header            */
--	__be32                  cnt_hi;         /* Counter cleared            */
--	__be32                  cnt_lo;         /* Counter cleared            */
--	__be32                  rx_bytes;       /* Rx bytes                   */
--	__be32                  tx_bytes;       /* Tx bytes                   */
--	__be32                  rx_uc_pkts;     /* Rx UC packets              */
--	__be32                  rx_mc_pkts;     /* Rx MC packets              */
--	__be32                  rx_bc_pkts;     /* Rx BC packets              */
--	__be32                  tx_uc_pkts;     /* Tx UC packets              */
--	__be32                  tx_mc_pkts;     /* Tx MC packets              */
--	__be32                  tx_bc_pkts;     /* Tx BC packets              */
-+	__be64                  cnt;            /* Counter cleared            */
-+	__be64                  rx_bytes;       /* Rx bytes                   */
-+	__be64                  tx_bytes;       /* Tx bytes                   */
-+	__be64                  rx_uc_pkts;     /* Rx UC packets              */
-+	__be64                  rx_mc_pkts;     /* Rx MC packets              */
-+	__be64                  rx_bc_pkts;     /* Rx BC packets              */
-+	__be64                  tx_uc_pkts;     /* Tx UC packets              */
-+	__be64                  tx_mc_pkts;     /* Tx MC packets              */
-+	__be64                  tx_bc_pkts;     /* Tx BC packets              */
- 	__be32                  fcs_err;        /* FCS errors                 */
- 	__be32                  align_err;      /* Alignment errors           */
- 	__be32                  false_carrier;  /* False carrier detection    */
-@@ -290,11 +289,11 @@ struct ncsi_rsp_gcps_pkt {
- 	__be32                  tx_1023_frames; /* Tx 512-1023 bytes frames   */
- 	__be32                  tx_1522_frames; /* Tx 1024-1522 bytes frames  */
- 	__be32                  tx_9022_frames; /* Tx 1523-9022 bytes frames  */
--	__be32                  rx_valid_bytes; /* Rx valid bytes             */
-+	__be64                  rx_valid_bytes; /* Rx valid bytes             */
- 	__be32                  rx_runt_pkts;   /* Rx error runt packets      */
- 	__be32                  rx_jabber_pkts; /* Rx error jabber packets    */
- 	__be32                  checksum;       /* Checksum                   */
--};
-+}  __packed __aligned(4);
- 
- /* Get NCSI Statistics */
- struct ncsi_rsp_gns_pkt {
-diff --git a/net/ncsi/ncsi-rsp.c b/net/ncsi/ncsi-rsp.c
-index 4a8ce2949faea..8668888c5a2f9 100644
---- a/net/ncsi/ncsi-rsp.c
-+++ b/net/ncsi/ncsi-rsp.c
-@@ -926,16 +926,15 @@ static int ncsi_rsp_handler_gcps(struct ncsi_request *nr)
- 
- 	/* Update HNC's statistics */
- 	ncs = &nc->stats;
--	ncs->hnc_cnt_hi         = ntohl(rsp->cnt_hi);
--	ncs->hnc_cnt_lo         = ntohl(rsp->cnt_lo);
--	ncs->hnc_rx_bytes       = ntohl(rsp->rx_bytes);
--	ncs->hnc_tx_bytes       = ntohl(rsp->tx_bytes);
--	ncs->hnc_rx_uc_pkts     = ntohl(rsp->rx_uc_pkts);
--	ncs->hnc_rx_mc_pkts     = ntohl(rsp->rx_mc_pkts);
--	ncs->hnc_rx_bc_pkts     = ntohl(rsp->rx_bc_pkts);
--	ncs->hnc_tx_uc_pkts     = ntohl(rsp->tx_uc_pkts);
--	ncs->hnc_tx_mc_pkts     = ntohl(rsp->tx_mc_pkts);
--	ncs->hnc_tx_bc_pkts     = ntohl(rsp->tx_bc_pkts);
-+	ncs->hnc_cnt            = be64_to_cpu(rsp->cnt);
-+	ncs->hnc_rx_bytes       = be64_to_cpu(rsp->rx_bytes);
-+	ncs->hnc_tx_bytes       = be64_to_cpu(rsp->tx_bytes);
-+	ncs->hnc_rx_uc_pkts     = be64_to_cpu(rsp->rx_uc_pkts);
-+	ncs->hnc_rx_mc_pkts     = be64_to_cpu(rsp->rx_mc_pkts);
-+	ncs->hnc_rx_bc_pkts     = be64_to_cpu(rsp->rx_bc_pkts);
-+	ncs->hnc_tx_uc_pkts     = be64_to_cpu(rsp->tx_uc_pkts);
-+	ncs->hnc_tx_mc_pkts     = be64_to_cpu(rsp->tx_mc_pkts);
-+	ncs->hnc_tx_bc_pkts     = be64_to_cpu(rsp->tx_bc_pkts);
- 	ncs->hnc_fcs_err        = ntohl(rsp->fcs_err);
- 	ncs->hnc_align_err      = ntohl(rsp->align_err);
- 	ncs->hnc_false_carrier  = ntohl(rsp->false_carrier);
-@@ -964,7 +963,7 @@ static int ncsi_rsp_handler_gcps(struct ncsi_request *nr)
- 	ncs->hnc_tx_1023_frames = ntohl(rsp->tx_1023_frames);
- 	ncs->hnc_tx_1522_frames = ntohl(rsp->tx_1522_frames);
- 	ncs->hnc_tx_9022_frames = ntohl(rsp->tx_9022_frames);
--	ncs->hnc_rx_valid_bytes = ntohl(rsp->rx_valid_bytes);
-+	ncs->hnc_rx_valid_bytes = be64_to_cpu(rsp->rx_valid_bytes);
- 	ncs->hnc_rx_runt_pkts   = ntohl(rsp->rx_runt_pkts);
- 	ncs->hnc_rx_jabber_pkts = ntohl(rsp->rx_jabber_pkts);
- 
+ #ifndef offsetof
+ #define offsetof(TYPE, FIELD) ((size_t) &((TYPE *)0)->FIELD)
 -- 
 2.39.5
 
