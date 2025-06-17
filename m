@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE343285048;
-	Tue, 17 Jun 2025 16:35:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C98E62E92CD;
+	Tue, 17 Jun 2025 16:35:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750178141; cv=none; b=ovjMzsIl0y6cQMQVvZNs2P9C2vhaqbL/nkIHRv/3lv+LqbwgdsTQG9sZ6dxwn/zBvHPHHjwRLS6q+7hIRaWsLjutiPAPB3F1zj+rHtmByuU1nKLBkRGi3rCSN/qTNZSs6q1zfU/liGvPBeOYyqo/xO8+5S4CNAms6WcVqgYejNM=
+	t=1750178144; cv=none; b=DGEoZPaEkAPMLm1JvYKnssyifCEEwg6qZXFCJfcgvUDljklRS0xoVTYYhBOgfiVMAtNDovseW78BD9zFYw0p4yLZXyEXPyJ82aZgeBVLZDhSzVOTNu5QWEo8ObA2oPZjlkEmAbehbFZPrdn+F8VugWO6XyhNeexkyep3eaeV58U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750178141; c=relaxed/simple;
-	bh=jiqKqn4kPJEHS3ZrtZMmvS77kHbusVBAde4ghL7YztY=;
+	s=arc-20240116; t=1750178144; c=relaxed/simple;
+	bh=4jgiDB1c4ICennXf5qRlsdpmcgdM5AA9d7RHwd86GS0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EzVglcKlf5aEZZDjKqz0sHt8NDjGFbOIfD4ss3UUNhorGHqmyS9AnJ6JRI2FdhwzYPdT+smb666OyYx0Lr72yeHPF4zK8HEp9tcyVmoJUmSufZfqx6HxC1lLOEGCDx9VwXU4oMEZzXRXDi37Zwyc7EGbg4gJ7Cx6mZq339YWCGQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D6rMh58W; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iXozTANMAi/EMGZ2DZwFmnNEnIZPL8wAyez2UBKAVp4rnSgvhyGsO9Gh/jMtyoG8yHRfwoCLqNDHOIy4r6RIz2pSJOKp0NNUip6KtkrEBMxA0ZA2pDzX8JPv4lg15lnj3cH7hBaJiUYEj5uAKdQwyCdt3RjqW/bE0osJNRZY85A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mdIVUtmx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D6rMh58W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9355C4CEE3;
-	Tue, 17 Jun 2025 16:35:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mdIVUtmx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3951DC4CEE3;
+	Tue, 17 Jun 2025 16:35:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750178141;
-	bh=jiqKqn4kPJEHS3ZrtZMmvS77kHbusVBAde4ghL7YztY=;
+	s=korg; t=1750178144;
+	bh=4jgiDB1c4ICennXf5qRlsdpmcgdM5AA9d7RHwd86GS0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D6rMh58Wl2d9zcy7+rFVj4lJaz3yZN2RKbV0ZFzgIr018qTXWZupUlo2xNTGCTWHo
-	 Xkqi2nWsJl/7Q73b8AWpA1TkhVHuoX+DY8agRtmIVamSsO28fblN3qQL8uMS2h4/8T
-	 kJR8AbtSX+EwQfcjnrfhtLpcCnIbaZJhEjsZuuP4=
+	b=mdIVUtmx7xFZ1LNLyu3VXzqE9mdMGMQspZzOArjYjXAACbaxL4jUVs1+OQ/roR4wW
+	 pGbdpkWXbEi15n8yIfl0lMMNRuLhUzRzu5v4+kHEbW/OEc5xgFzMLUpD/9NV8hBh0p
+	 efDB1m1m5hSTxwKo+8stStcxK+WuVzj8hd/2TSzo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Sitnicki <jakub@cloudflare.com>,
-	Michal Luczaj <mhal@rbox.co>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sergey Shtylyov <s.shtylyov@omp.ru>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 452/512] net: Fix TOCTOU issue in sk_is_readable()
-Date: Tue, 17 Jun 2025 17:26:58 +0200
-Message-ID: <20250617152437.884768118@linuxfoundation.org>
+Subject: [PATCH 6.15 416/780] fbdev: core: fbcvt: avoid division by 0 in fb_cvt_hperiod()
+Date: Tue, 17 Jun 2025 17:22:04 +0200
+Message-ID: <20250617152508.414646553@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,54 +47,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michal Luczaj <mhal@rbox.co>
+From: Sergey Shtylyov <s.shtylyov@omp.ru>
 
-[ Upstream commit 2660a544fdc0940bba15f70508a46cf9a6491230 ]
+[ Upstream commit 3f6dae09fc8c306eb70fdfef70726e1f154e173a ]
 
-sk->sk_prot->sock_is_readable is a valid function pointer when sk resides
-in a sockmap. After the last sk_psock_put() (which usually happens when
-socket is removed from sockmap), sk->sk_prot gets restored and
-sk->sk_prot->sock_is_readable becomes NULL.
+In fb_find_mode_cvt(), iff mode->refresh somehow happens to be 0x80000000,
+cvt.f_refresh will become 0 when multiplying it by 2 due to overflow. It's
+then passed to fb_cvt_hperiod(), where it's used as a divider -- division
+by 0 will result in kernel oops. Add a sanity check for cvt.f_refresh to
+avoid such overflow...
 
-This makes sk_is_readable() racy, if the value of sk->sk_prot is reloaded
-after the initial check. Which in turn may lead to a null pointer
-dereference.
+Found by Linux Verification Center (linuxtesting.org) with the Svace static
+analysis tool.
 
-Ensure the function pointer does not turn NULL after the check.
-
-Fixes: 8934ce2fd081 ("bpf: sockmap redirect ingress support")
-Suggested-by: Jakub Sitnicki <jakub@cloudflare.com>
-Signed-off-by: Michal Luczaj <mhal@rbox.co>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20250609-skisreadable-toctou-v1-1-d0dfb2d62c37@rbox.co
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 96fe6a2109db ("[PATCH] fbdev: Add VESA Coordinated Video Timings (CVT) support")
+Signed-off-by: Sergey Shtylyov <s.shtylyov@omp.ru>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/sock.h | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/video/fbdev/core/fbcvt.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/net/sock.h b/include/net/sock.h
-index fa9b9dadbe170..b7270b6b9e9cc 100644
---- a/include/net/sock.h
-+++ b/include/net/sock.h
-@@ -2942,8 +2942,11 @@ int sock_ioctl_inout(struct sock *sk, unsigned int cmd,
- int sk_ioctl(struct sock *sk, unsigned int cmd, void __user *arg);
- static inline bool sk_is_readable(struct sock *sk)
- {
--	if (sk->sk_prot->sock_is_readable)
--		return sk->sk_prot->sock_is_readable(sk);
-+	const struct proto *prot = READ_ONCE(sk->sk_prot);
-+
-+	if (prot->sock_is_readable)
-+		return prot->sock_is_readable(sk);
-+
- 	return false;
- }
- #endif	/* _SOCK_H */
+diff --git a/drivers/video/fbdev/core/fbcvt.c b/drivers/video/fbdev/core/fbcvt.c
+index 64843464c6613..cd3821bd82e56 100644
+--- a/drivers/video/fbdev/core/fbcvt.c
++++ b/drivers/video/fbdev/core/fbcvt.c
+@@ -312,7 +312,7 @@ int fb_find_mode_cvt(struct fb_videomode *mode, int margins, int rb)
+ 	cvt.f_refresh = cvt.refresh;
+ 	cvt.interlace = 1;
+ 
+-	if (!cvt.xres || !cvt.yres || !cvt.refresh) {
++	if (!cvt.xres || !cvt.yres || !cvt.refresh || cvt.f_refresh > INT_MAX) {
+ 		printk(KERN_INFO "fbcvt: Invalid input parameters\n");
+ 		return 1;
+ 	}
 -- 
 2.39.5
 
