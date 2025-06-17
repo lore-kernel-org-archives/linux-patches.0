@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B3C52E88A5;
-	Tue, 17 Jun 2025 15:39:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F65D2ECD0B;
+	Tue, 17 Jun 2025 15:40:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750174798; cv=none; b=DzulaZzXKBsnRc+Fmtga6jOdfuYX62SQUhYzmLsS0j3xwIuZUURERgWGQRMDyPJChAVtFfKqJ7+bFBqjLZCjDSoV7EfwG2OCOB//2fAbh+fsJE4aDP9dVh4QzMrBYYBlH1ZDojTN3rxLo7nuaLFU4Fl7Um6YoZclotQwC7j6vZE=
+	t=1750174801; cv=none; b=agdLYg6NLDqUu4PT8+QEJoyFQq0ubqDxPXI9339wVaLnA5s1R1H/zpijvta/sBX3BpqeQPMH7UdtYfjcOQiWsfnuRyPRhZnm7G3lhEnbR2tC3UoHWBD42UZMog/KaohDS0e1jbRE/91DEUDTTennxbk5HmSnpwVb6EC7GR7a3wU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750174798; c=relaxed/simple;
-	bh=tXVLEE4xR6SA1yLmJLcfpTLvJE/85e3jDqo8gNjs3f0=;
+	s=arc-20240116; t=1750174801; c=relaxed/simple;
+	bh=wAmEkufnu1yeyn6AIKCCEwVof1Ild3phNg/EI1piaQk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i538558wuAJrfhCRWm1zuVZKfHbgq3XVrqHa0Umv8f7LyYAwZpLU9LC/pWW7sJN65vmV5qfw5xpr5BFtWCLt1OAd7293ilN/W3K11H39LLOZulp3+sVfqF4wFsUPoRkx5V3DtP6+5HaTkqj5y1kApS+Wg6vuAdOTxw7Gn/+SJyM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZlrOnJXJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rUg+sCg3RmGWdbJkYxHV2mberj4JXPFO9RSvLeJ6TfJAH3M3p9AhWJrCJ+8J+uQYEvE0VKtI1KcaSS1665i0ohAUOzEEFUVF0LrGGxy/iOWRkTt+O0YwrR9/2/N+vrSCX2Pjo/rGiRgEoiztu7KJSiiChOHUvDfdo36i8HakZHo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ztN90uKS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZlrOnJXJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8049C4CEE7;
-	Tue, 17 Jun 2025 15:39:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ztN90uKS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1F6AC4CEE3;
+	Tue, 17 Jun 2025 15:40:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750174798;
-	bh=tXVLEE4xR6SA1yLmJLcfpTLvJE/85e3jDqo8gNjs3f0=;
+	s=korg; t=1750174801;
+	bh=wAmEkufnu1yeyn6AIKCCEwVof1Ild3phNg/EI1piaQk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZlrOnJXJIofLkq+wepsF7WUOnV2oc3OKQQea5J8UWKIqSxdAzRYUTtv/1rOt1bcsf
-	 tK/XwLxFUUpeLIbjyXLq0tTv3Qs04WXLdzEUfFiSnDavXQOfwh+TKSCU/6MF8yqp8z
-	 44g0adHPxRbRvvbRAmpbzstHYM3fcLAeE0IbD1lE=
+	b=ztN90uKS6PpGenCngCTDH0Et9Bdxwg5sJeo5+m/RNHzaCoKbJzLr8UEApO/Cmbm+W
+	 ubHTq+Skj/BXEd06acvlIEPnicOLbwrfiqXb2Ul3RPtaMqh6nxmtZYt/9LeB1nfy+u
+	 TcjoO/Thiz1WPHYkn3nJ1yU59pW6MeHFrNsod/aA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luca Weiss <luca.weiss@fairphone.com>,
-	Taniya Das <quic_tdas@quicinc.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Eddie James <eajames@linux.ibm.com>,
+	Hari Bathini <hbathini@linux.ibm.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 114/356] clk: qcom: gpucc-sm6350: Add *_wait_val values for GDSCs
-Date: Tue, 17 Jun 2025 17:23:49 +0200
-Message-ID: <20250617152342.812137567@linuxfoundation.org>
+Subject: [PATCH 6.15 022/780] powerpc/crash: Fix non-smp kexec preparation
+Date: Tue, 17 Jun 2025 17:15:30 +0200
+Message-ID: <20250617152452.415988512@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-References: <20250617152338.212798615@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,58 +48,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Luca Weiss <luca.weiss@fairphone.com>
+From: Eddie James <eajames@linux.ibm.com>
 
-[ Upstream commit d988b0b866c2aeb23aa74022b5bbd463165a7a33 ]
+[ Upstream commit 882b25af265de8e05c66f72b9a29f6047102958f ]
 
-Compared to the msm-4.19 driver the mainline GDSC driver always sets the
-bits for en_rest, en_few & clk_dis, and if those values are not set
-per-GDSC in the respective driver then the default value from the GDSC
-driver is used. The downstream driver only conditionally sets
-clk_dis_wait_val if qcom,clk-dis-wait-val is given in devicetree.
+In non-smp configurations, crash_kexec_prepare is never called in
+the crash shutdown path. One result of this is that the crashing_cpu
+variable is never set, preventing crash_save_cpu from storing the
+NT_PRSTATUS elf note in the core dump.
 
-Correct this situation by explicitly setting those values. For all GDSCs
-the reset value of those bits are used, with the exception of
-gpu_cx_gdsc which has an explicit value (qcom,clk-dis-wait-val = <8>).
-
-Fixes: 013804a727a0 ("clk: qcom: Add GPU clock controller driver for SM6350")
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-Reviewed-by: Taniya Das <quic_tdas@quicinc.com>
-Link: https://lore.kernel.org/r/20250425-sm6350-gdsc-val-v1-4-1f252d9c5e4e@fairphone.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: c7255058b543 ("powerpc/crash: save cpu register data in crash_smp_send_stop()")
+Signed-off-by: Eddie James <eajames@linux.ibm.com>
+Reviewed-by: Hari Bathini <hbathini@linux.ibm.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20250211162054.857762-1-eajames@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/gpucc-sm6350.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ arch/powerpc/kexec/crash.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/clk/qcom/gpucc-sm6350.c b/drivers/clk/qcom/gpucc-sm6350.c
-index 0bcbba2a29436..86c8ad5b55bac 100644
---- a/drivers/clk/qcom/gpucc-sm6350.c
-+++ b/drivers/clk/qcom/gpucc-sm6350.c
-@@ -412,6 +412,9 @@ static struct clk_branch gpu_cc_gx_vsense_clk = {
- static struct gdsc gpu_cx_gdsc = {
- 	.gdscr = 0x106c,
- 	.gds_hw_ctrl = 0x1540,
-+	.en_rest_wait_val = 0x2,
-+	.en_few_wait_val = 0x2,
-+	.clk_dis_wait_val = 0x8,
- 	.pd = {
- 		.name = "gpu_cx_gdsc",
- 	},
-@@ -422,6 +425,9 @@ static struct gdsc gpu_cx_gdsc = {
- static struct gdsc gpu_gx_gdsc = {
- 	.gdscr = 0x100c,
- 	.clamp_io_ctrl = 0x1508,
-+	.en_rest_wait_val = 0x2,
-+	.en_few_wait_val = 0x2,
-+	.clk_dis_wait_val = 0x2,
- 	.pd = {
- 		.name = "gpu_gx_gdsc",
- 		.power_on = gdsc_gx_do_nothing_enable,
+diff --git a/arch/powerpc/kexec/crash.c b/arch/powerpc/kexec/crash.c
+index 9ac3266e49652..a325c1c02f96d 100644
+--- a/arch/powerpc/kexec/crash.c
++++ b/arch/powerpc/kexec/crash.c
+@@ -359,7 +359,10 @@ void default_machine_crash_shutdown(struct pt_regs *regs)
+ 	if (TRAP(regs) == INTERRUPT_SYSTEM_RESET)
+ 		is_via_system_reset = 1;
+ 
+-	crash_smp_send_stop();
++	if (IS_ENABLED(CONFIG_SMP))
++		crash_smp_send_stop();
++	else
++		crash_kexec_prepare();
+ 
+ 	crash_save_cpu(regs, crashing_cpu);
+ 
 -- 
 2.39.5
 
