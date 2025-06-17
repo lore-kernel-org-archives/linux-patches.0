@@ -1,43 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA0CF2DF3C9;
-	Tue, 17 Jun 2025 15:40:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37F9B2DF3C9;
+	Tue, 17 Jun 2025 15:40:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750174837; cv=none; b=iywydM7VEQu3DX0Zr3/2t26EMAY5F73F3WCnoqIjmsIroo0i+lp6yoNjmwuaCWPDITlpx/X/60St2tFeJJJe6X60BPWjXb0TBqF6SxTQsQeJynKdyl4BtDfZhdox5rIyk+z02sRxv1mGD19sdX1zYS/7Q91udfEsc8icwoe6fVM=
+	t=1750174840; cv=none; b=slx6c9c3uF+NAY7T/BQjx4/8seV2AWNkbFceFc9NUMV/6A0Bg+REkbBsTB8vMnKk7tFUbwxJt/GSYsrcGCht6zows7ep/YNZk1AaRIlZUdRSCYyDTPeI18DXJV2r0KwZcDEOCF3rVzNzI5K68jgEdPKn+jca/Xqj0Yy3k1nt0UE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750174837; c=relaxed/simple;
-	bh=a01qzjbKVsHgc/I+WxaMOAoiqzwyFWvG9JwjdH5JwjM=;
+	s=arc-20240116; t=1750174840; c=relaxed/simple;
+	bh=j4eWm/wr3NgXfcC2aBap/9bGvccrLZCWzpC3G7erPsI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZJzrY9/D9w/JJapymazkKONBkGjtFt8jM+kiRwrMhN9BMmLQ7GKmOU1fEFA6HPpv4N/Q6zOCzv5AlPxGmKOMFap3LyWIUpCC1ulQ4DpyMa4yVgjqtWzoqtH32yTL8+qGcOWvk3/b695TbNC8Dm8ACEyP5WrjqIG0odwV0T76wN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zQsoaqOu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KWXZTq3xrm2pioYJo+PwW9O9oaCmHmtUeJdNsU53NxxRUNpLgGNE6HM+v7K0FWbazsyD84zz8WY6BHpwb8RDU2R1Iq0yF/y31xbfX+04ulvNK3Gj9/Oo8kDHUYILEUervzIH9vzjSi+jTlHAtR+Q4R8rRd87cQw+eulsHHRkSX4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aZLWaMsR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zQsoaqOu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58489C4CEF0;
-	Tue, 17 Jun 2025 15:40:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aZLWaMsR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B199C4CEE3;
+	Tue, 17 Jun 2025 15:40:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750174836;
-	bh=a01qzjbKVsHgc/I+WxaMOAoiqzwyFWvG9JwjdH5JwjM=;
+	s=korg; t=1750174840;
+	bh=j4eWm/wr3NgXfcC2aBap/9bGvccrLZCWzpC3G7erPsI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zQsoaqOuhN4hLB8Ofsb824BjQFyvPq7chUfZqw6y83gsAXV2nRNkMEA6vdNp4YNAT
-	 2hhhYwdbje4HtoLocDk4gzddt20Uc/2sv7mkDuRZRXdfpSfcSFqFPjce0Zqzs42WdW
-	 Kk2XnoMcIae6WIGA9zpnsEFK7TjgWWqiv/H16R5s=
+	b=aZLWaMsR++G9jeiORq6+v5O8XLj0euZ3XxbfP9CoZBYB3wtTQx60JuaaCZU+oY7Ie
+	 WlylW2PnRmndwZnWQmUENfO9xybUxj5nSL8B/s0oPKLCR/qQz6E+mu2Mv1jHzZq4cX
+	 KMrwRuu7A16fUaDw4CjDQWHR4+B7FCZ7Ehrr/r1A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Bee <knaerzche@gmail.com>,
-	Jonas Karlman <jonas@kwiboo.se>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Tom Zanussi <zanussi@kernel.org>,
+	Miaoqian Lin <linmq006@gmail.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 065/512] media: rkvdec: Fix frame size enumeration
-Date: Tue, 17 Jun 2025 17:20:31 +0200
-Message-ID: <20250617152422.213835215@linuxfoundation.org>
+Subject: [PATCH 6.6 118/356] tracing: Fix error handling in event_trigger_parse()
+Date: Tue, 17 Jun 2025 17:23:53 +0200
+Message-ID: <20250617152342.977412318@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
+References: <20250617152338.212798615@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,56 +52,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jonas Karlman <jonas@kwiboo.se>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-[ Upstream commit f270005b99fa19fee9a6b4006e8dee37c10f1944 ]
+[ Upstream commit c5dd28e7fb4f63475b50df4f58311df92939d011 ]
 
-The VIDIOC_ENUM_FRAMESIZES ioctl should return all frame sizes (i.e.
-width and height in pixels) that the device supports for the given pixel
-format.
+According to trigger_data_alloc() doc, trigger_data_free() should be
+used to free an event_trigger_data object. This fixes a mismatch introduced
+when kzalloc was replaced with trigger_data_alloc without updating
+the corresponding deallocation calls.
 
-It doesn't make a lot of sense to return the frame-sizes in a stepwise
-manner, which is used to enforce hardware alignments requirements for
-CAPTURE buffers, for coded formats.
-
-Instead, applications should receive an indication, about the maximum
-supported frame size for that hardware decoder, via a continuous
-frame-size enumeration.
-
-Fixes: cd33c830448b ("media: rkvdec: Add the rkvdec driver")
-Suggested-by: Alex Bee <knaerzche@gmail.com>
-Signed-off-by: Jonas Karlman <jonas@kwiboo.se>
-Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Tom Zanussi <zanussi@kernel.org>
+Link: https://lore.kernel.org/20250507145455.944453325@goodmis.org
+Link: https://lore.kernel.org/20250318112737.4174-1-linmq006@gmail.com
+Fixes: e1f187d09e11 ("tracing: Have existing event_command.parse() implementations use helpers")
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+[ SDR: Changed event_trigger_alloc/free() to trigger_data_alloc/free() ]
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/media/rkvdec/rkvdec.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ kernel/trace/trace_events_trigger.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/staging/media/rkvdec/rkvdec.c b/drivers/staging/media/rkvdec/rkvdec.c
-index ac398b5a97360..a1d941b0be00b 100644
---- a/drivers/staging/media/rkvdec/rkvdec.c
-+++ b/drivers/staging/media/rkvdec/rkvdec.c
-@@ -213,8 +213,14 @@ static int rkvdec_enum_framesizes(struct file *file, void *priv,
- 	if (!fmt)
- 		return -EINVAL;
+diff --git a/kernel/trace/trace_events_trigger.c b/kernel/trace/trace_events_trigger.c
+index 4c92def8b1143..fe079ff82ef1b 100644
+--- a/kernel/trace/trace_events_trigger.c
++++ b/kernel/trace/trace_events_trigger.c
+@@ -1000,7 +1000,7 @@ event_trigger_parse(struct event_command *cmd_ops,
  
--	fsize->type = V4L2_FRMSIZE_TYPE_STEPWISE;
--	fsize->stepwise = fmt->frmsize;
-+	fsize->type = V4L2_FRMSIZE_TYPE_CONTINUOUS;
-+	fsize->stepwise.min_width = 1;
-+	fsize->stepwise.max_width = fmt->frmsize.max_width;
-+	fsize->stepwise.step_width = 1;
-+	fsize->stepwise.min_height = 1;
-+	fsize->stepwise.max_height = fmt->frmsize.max_height;
-+	fsize->stepwise.step_height = 1;
-+
- 	return 0;
+ 	if (remove) {
+ 		event_trigger_unregister(cmd_ops, file, glob+1, trigger_data);
+-		kfree(trigger_data);
++		trigger_data_free(trigger_data);
+ 		ret = 0;
+ 		goto out;
+ 	}
+@@ -1027,7 +1027,7 @@ event_trigger_parse(struct event_command *cmd_ops,
+ 
+  out_free:
+ 	event_trigger_reset_filter(cmd_ops, trigger_data);
+-	kfree(trigger_data);
++	trigger_data_free(trigger_data);
+ 	goto out;
  }
  
 -- 
