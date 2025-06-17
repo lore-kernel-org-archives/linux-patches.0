@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 978E51E8332;
-	Tue, 17 Jun 2025 15:33:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A57623B633;
+	Tue, 17 Jun 2025 15:33:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750174430; cv=none; b=MkctRriyCO/OAU4XIeYfqfqwXsClkQqGLU6HglWEUfBnDQpG8HS/HdGXngUfiBFtbHFTf+uEJRpIU81R7cLIDzc95zhcc/yrY6GiWMV1/dYIX4n83jF/3dU5z71RnLyHRGMnN9Pkj0cRJ8wFfB3ZCUOscz6Nnf2vQmCi6WxoWhU=
+	t=1750174434; cv=none; b=Hy1zXlb2mPdpenrtDshEmX6ZnXhRYt0ZqyJd6YgqMj1TXNOabfeX7qMk4zWghvwdxJCtt2jJhEMO2MrYEQ9IupUoK/AoMdxkfb+i0PY/8cMUWx9T00zWGBS9mCLroSLpeY3812EE1lABvKKQZnG6mOO421ohdDAHVsdundi9db4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750174430; c=relaxed/simple;
-	bh=2eeGmzbezLmOPYJ9xjqYRkKDG1Ix1e0Q/QHFUsXhe5M=;
+	s=arc-20240116; t=1750174434; c=relaxed/simple;
+	bh=gBStC8i7spQ9RNZt5szXonOXSJvsgg/EO+5h9gBl9Bo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=onTaXuMYlIF5wNWRf6KVHy9jxr9ncBWcZWuuiA0XiAk6icdnnK4aR4SVFi+7f1BtaMZvDrBfkPGaDG7y6HrCo5/1k9q8n08Eq8m9yIgOJUScOx1wGMsKBbsZn34dyPQ2PPoxoSRXBwJijTC/qU1oH1T3rRYkbgsjrA1Q775nypY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=faKO1asx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mgIWconrw2HEAx2GnteWESlsw/ikzbjCr8XRFXrmvgn5O6rjUTc5KuXTMJvaunBg3HMdfgAVHx7rX996jCGnfkaoZXu+ga5qw1qIfXRB8lyPtmkSy+EqFPSGUJusn1Pinf7c1nj82x0A6BlmOY796AWbOJcoNykumECSVCU9N2o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E8cI16L8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="faKO1asx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B18D7C4CEE3;
-	Tue, 17 Jun 2025 15:33:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E8cI16L8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19223C4CEE3;
+	Tue, 17 Jun 2025 15:33:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750174430;
-	bh=2eeGmzbezLmOPYJ9xjqYRkKDG1Ix1e0Q/QHFUsXhe5M=;
+	s=korg; t=1750174433;
+	bh=gBStC8i7spQ9RNZt5szXonOXSJvsgg/EO+5h9gBl9Bo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=faKO1asxPPZ/zSe0BaM/IlXP/0jvu2z1SEVcZGgofL02QMhcC/c7smonNcpu5gwAB
-	 rQ513BsfHSsK1Eonu/N5uqZvaXZyf6EBuL7c9cjc9jsDnLMS/XPBKSaXoj0cCZuAUz
-	 8IiPMjUkvkddZywGFouAs9gAp5Bj4fYxTNgMaStg=
+	b=E8cI16L8hEItpbVphyvhf0TKG6ivBjiT/p82XK4ct2XU1rgRxPqSTsQjO/40K4dYg
+	 RYYBtJ8yMyciSP4bSUpGb8papIIM0Vu5aOifyw4X/Kn7uFgFPgRsvnfZVRy6HheWNy
+	 d4BLhd5dRiHBgl4Um/2fJuWI/mTH5XtUaqejuPwU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Ingo Molnar <mingo@kernel.org>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Peter Zijlstra <peterz@infradead.org>,
+	Neill Kapron <nkapron@google.com>,
+	Kees Cook <kees@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 018/512] x86/insn: Fix opcode map (!REX2) superscript tags
-Date: Tue, 17 Jun 2025 17:19:44 +0200
-Message-ID: <20250617152420.261872896@linuxfoundation.org>
+Subject: [PATCH 6.6 068/356] selftests/seccomp: fix syscall_restart test for arm compat
+Date: Tue, 17 Jun 2025 17:23:03 +0200
+Message-ID: <20250617152340.965075968@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
+References: <20250617152338.212798615@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,205 +47,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Neill Kapron <nkapron@google.com>
 
-[ Upstream commit ca698ec2f07873a448d53c580795c4e023c75393 ]
+[ Upstream commit 797002deed03491215a352ace891749b39741b69 ]
 
-Commit:
+The inconsistencies in the systcall ABI between arm and arm-compat can
+can cause a failure in the syscall_restart test due to the logic
+attempting to work around the differences. The 'machine' field for an
+ARM64 device running in compat mode can report 'armv8l' or 'armv8b'
+which matches with the string 'arm' when only examining the first three
+characters of the string.
 
-  159039af8c07 ("x86/insn: x86/insn: Add support for REX2 prefix to the instruction decoder opcode map")
+This change adds additional validation to the workaround logic to make
+sure we only take the arm path when running natively, not in arm-compat.
 
-added (!REX2) superscript with a space, but the correct format requires ','
-for concatination with other superscript tags.
-
-Add ',' to generate correct insn attribute tables.
-
-I confirmed with following command:
-
-      arch/x86/lib/x86-opcode-map.txt | grep e8 | head -n 1
-  [0xe8] = INAT_MAKE_IMM(INAT_IMM_VWORD32) | INAT_FORCE64 | INAT_NO_REX2,
-
-Fixes: 159039af8c07 ("x86/insn: x86/insn: Add support for REX2 prefix to the instruction decoder opcode map")
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: H. Peter Anvin <hpa@zytor.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/174580489027.388420.15539375184727726142.stgit@devnote2
+Fixes: 256d0afb11d6 ("selftests/seccomp: build and pass on arm64")
+Signed-off-by: Neill Kapron <nkapron@google.com>
+Link: https://lore.kernel.org/r/20250427094103.3488304-2-nkapron@google.com
+Signed-off-by: Kees Cook <kees@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/lib/x86-opcode-map.txt       | 50 +++++++++++++--------------
- tools/arch/x86/lib/x86-opcode-map.txt | 50 +++++++++++++--------------
- 2 files changed, 50 insertions(+), 50 deletions(-)
+ tools/testing/selftests/seccomp/seccomp_bpf.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/arch/x86/lib/x86-opcode-map.txt b/arch/x86/lib/x86-opcode-map.txt
-index f5dd84eb55dcd..cd3fd5155f6ec 100644
---- a/arch/x86/lib/x86-opcode-map.txt
-+++ b/arch/x86/lib/x86-opcode-map.txt
-@@ -35,7 +35,7 @@
- #  - (!F3) : the last prefix is not 0xF3 (including non-last prefix case)
- #  - (66&F2): Both 0x66 and 0xF2 prefixes are specified.
- #
--# REX2 Prefix
-+# REX2 Prefix Superscripts
- #  - (!REX2): REX2 is not allowed
- #  - (REX2): REX2 variant e.g. JMPABS
- 
-@@ -286,10 +286,10 @@ df: ESC
- # Note: "forced64" is Intel CPU behavior: they ignore 0x66 prefix
- # in 64-bit mode. AMD CPUs accept 0x66 prefix, it causes RIP truncation
- # to 16 bits. In 32-bit mode, 0x66 is accepted by both Intel and AMD.
--e0: LOOPNE/LOOPNZ Jb (f64) (!REX2)
--e1: LOOPE/LOOPZ Jb (f64) (!REX2)
--e2: LOOP Jb (f64) (!REX2)
--e3: JrCXZ Jb (f64) (!REX2)
-+e0: LOOPNE/LOOPNZ Jb (f64),(!REX2)
-+e1: LOOPE/LOOPZ Jb (f64),(!REX2)
-+e2: LOOP Jb (f64),(!REX2)
-+e3: JrCXZ Jb (f64),(!REX2)
- e4: IN AL,Ib (!REX2)
- e5: IN eAX,Ib (!REX2)
- e6: OUT Ib,AL (!REX2)
-@@ -298,10 +298,10 @@ e7: OUT Ib,eAX (!REX2)
- # in "near" jumps and calls is 16-bit. For CALL,
- # push of return address is 16-bit wide, RSP is decremented by 2
- # but is not truncated to 16 bits, unlike RIP.
--e8: CALL Jz (f64) (!REX2)
--e9: JMP-near Jz (f64) (!REX2)
--ea: JMP-far Ap (i64) (!REX2)
--eb: JMP-short Jb (f64) (!REX2)
-+e8: CALL Jz (f64),(!REX2)
-+e9: JMP-near Jz (f64),(!REX2)
-+ea: JMP-far Ap (i64),(!REX2)
-+eb: JMP-short Jb (f64),(!REX2)
- ec: IN AL,DX (!REX2)
- ed: IN eAX,DX (!REX2)
- ee: OUT DX,AL (!REX2)
-@@ -478,22 +478,22 @@ AVXcode: 1
- 7f: movq Qq,Pq | vmovdqa Wx,Vx (66) | vmovdqa32/64 Wx,Vx (66),(evo) | vmovdqu Wx,Vx (F3) | vmovdqu32/64 Wx,Vx (F3),(evo) | vmovdqu8/16 Wx,Vx (F2),(ev)
- # 0x0f 0x80-0x8f
- # Note: "forced64" is Intel CPU behavior (see comment about CALL insn).
--80: JO Jz (f64) (!REX2)
--81: JNO Jz (f64) (!REX2)
--82: JB/JC/JNAE Jz (f64) (!REX2)
--83: JAE/JNB/JNC Jz (f64) (!REX2)
--84: JE/JZ Jz (f64) (!REX2)
--85: JNE/JNZ Jz (f64) (!REX2)
--86: JBE/JNA Jz (f64) (!REX2)
--87: JA/JNBE Jz (f64) (!REX2)
--88: JS Jz (f64) (!REX2)
--89: JNS Jz (f64) (!REX2)
--8a: JP/JPE Jz (f64) (!REX2)
--8b: JNP/JPO Jz (f64) (!REX2)
--8c: JL/JNGE Jz (f64) (!REX2)
--8d: JNL/JGE Jz (f64) (!REX2)
--8e: JLE/JNG Jz (f64) (!REX2)
--8f: JNLE/JG Jz (f64) (!REX2)
-+80: JO Jz (f64),(!REX2)
-+81: JNO Jz (f64),(!REX2)
-+82: JB/JC/JNAE Jz (f64),(!REX2)
-+83: JAE/JNB/JNC Jz (f64),(!REX2)
-+84: JE/JZ Jz (f64),(!REX2)
-+85: JNE/JNZ Jz (f64),(!REX2)
-+86: JBE/JNA Jz (f64),(!REX2)
-+87: JA/JNBE Jz (f64),(!REX2)
-+88: JS Jz (f64),(!REX2)
-+89: JNS Jz (f64),(!REX2)
-+8a: JP/JPE Jz (f64),(!REX2)
-+8b: JNP/JPO Jz (f64),(!REX2)
-+8c: JL/JNGE Jz (f64),(!REX2)
-+8d: JNL/JGE Jz (f64),(!REX2)
-+8e: JLE/JNG Jz (f64),(!REX2)
-+8f: JNLE/JG Jz (f64),(!REX2)
- # 0x0f 0x90-0x9f
- 90: SETO Eb | kmovw/q Vk,Wk | kmovb/d Vk,Wk (66)
- 91: SETNO Eb | kmovw/q Mv,Vk | kmovb/d Mv,Vk (66)
-diff --git a/tools/arch/x86/lib/x86-opcode-map.txt b/tools/arch/x86/lib/x86-opcode-map.txt
-index f5dd84eb55dcd..cd3fd5155f6ec 100644
---- a/tools/arch/x86/lib/x86-opcode-map.txt
-+++ b/tools/arch/x86/lib/x86-opcode-map.txt
-@@ -35,7 +35,7 @@
- #  - (!F3) : the last prefix is not 0xF3 (including non-last prefix case)
- #  - (66&F2): Both 0x66 and 0xF2 prefixes are specified.
- #
--# REX2 Prefix
-+# REX2 Prefix Superscripts
- #  - (!REX2): REX2 is not allowed
- #  - (REX2): REX2 variant e.g. JMPABS
- 
-@@ -286,10 +286,10 @@ df: ESC
- # Note: "forced64" is Intel CPU behavior: they ignore 0x66 prefix
- # in 64-bit mode. AMD CPUs accept 0x66 prefix, it causes RIP truncation
- # to 16 bits. In 32-bit mode, 0x66 is accepted by both Intel and AMD.
--e0: LOOPNE/LOOPNZ Jb (f64) (!REX2)
--e1: LOOPE/LOOPZ Jb (f64) (!REX2)
--e2: LOOP Jb (f64) (!REX2)
--e3: JrCXZ Jb (f64) (!REX2)
-+e0: LOOPNE/LOOPNZ Jb (f64),(!REX2)
-+e1: LOOPE/LOOPZ Jb (f64),(!REX2)
-+e2: LOOP Jb (f64),(!REX2)
-+e3: JrCXZ Jb (f64),(!REX2)
- e4: IN AL,Ib (!REX2)
- e5: IN eAX,Ib (!REX2)
- e6: OUT Ib,AL (!REX2)
-@@ -298,10 +298,10 @@ e7: OUT Ib,eAX (!REX2)
- # in "near" jumps and calls is 16-bit. For CALL,
- # push of return address is 16-bit wide, RSP is decremented by 2
- # but is not truncated to 16 bits, unlike RIP.
--e8: CALL Jz (f64) (!REX2)
--e9: JMP-near Jz (f64) (!REX2)
--ea: JMP-far Ap (i64) (!REX2)
--eb: JMP-short Jb (f64) (!REX2)
-+e8: CALL Jz (f64),(!REX2)
-+e9: JMP-near Jz (f64),(!REX2)
-+ea: JMP-far Ap (i64),(!REX2)
-+eb: JMP-short Jb (f64),(!REX2)
- ec: IN AL,DX (!REX2)
- ed: IN eAX,DX (!REX2)
- ee: OUT DX,AL (!REX2)
-@@ -478,22 +478,22 @@ AVXcode: 1
- 7f: movq Qq,Pq | vmovdqa Wx,Vx (66) | vmovdqa32/64 Wx,Vx (66),(evo) | vmovdqu Wx,Vx (F3) | vmovdqu32/64 Wx,Vx (F3),(evo) | vmovdqu8/16 Wx,Vx (F2),(ev)
- # 0x0f 0x80-0x8f
- # Note: "forced64" is Intel CPU behavior (see comment about CALL insn).
--80: JO Jz (f64) (!REX2)
--81: JNO Jz (f64) (!REX2)
--82: JB/JC/JNAE Jz (f64) (!REX2)
--83: JAE/JNB/JNC Jz (f64) (!REX2)
--84: JE/JZ Jz (f64) (!REX2)
--85: JNE/JNZ Jz (f64) (!REX2)
--86: JBE/JNA Jz (f64) (!REX2)
--87: JA/JNBE Jz (f64) (!REX2)
--88: JS Jz (f64) (!REX2)
--89: JNS Jz (f64) (!REX2)
--8a: JP/JPE Jz (f64) (!REX2)
--8b: JNP/JPO Jz (f64) (!REX2)
--8c: JL/JNGE Jz (f64) (!REX2)
--8d: JNL/JGE Jz (f64) (!REX2)
--8e: JLE/JNG Jz (f64) (!REX2)
--8f: JNLE/JG Jz (f64) (!REX2)
-+80: JO Jz (f64),(!REX2)
-+81: JNO Jz (f64),(!REX2)
-+82: JB/JC/JNAE Jz (f64),(!REX2)
-+83: JAE/JNB/JNC Jz (f64),(!REX2)
-+84: JE/JZ Jz (f64),(!REX2)
-+85: JNE/JNZ Jz (f64),(!REX2)
-+86: JBE/JNA Jz (f64),(!REX2)
-+87: JA/JNBE Jz (f64),(!REX2)
-+88: JS Jz (f64),(!REX2)
-+89: JNS Jz (f64),(!REX2)
-+8a: JP/JPE Jz (f64),(!REX2)
-+8b: JNP/JPO Jz (f64),(!REX2)
-+8c: JL/JNGE Jz (f64),(!REX2)
-+8d: JNL/JGE Jz (f64),(!REX2)
-+8e: JLE/JNG Jz (f64),(!REX2)
-+8f: JNLE/JG Jz (f64),(!REX2)
- # 0x0f 0x90-0x9f
- 90: SETO Eb | kmovw/q Vk,Wk | kmovb/d Vk,Wk (66)
- 91: SETNO Eb | kmovw/q Mv,Vk | kmovb/d Mv,Vk (66)
+diff --git a/tools/testing/selftests/seccomp/seccomp_bpf.c b/tools/testing/selftests/seccomp/seccomp_bpf.c
+index cacf6507f6905..15325ca35f1e2 100644
+--- a/tools/testing/selftests/seccomp/seccomp_bpf.c
++++ b/tools/testing/selftests/seccomp/seccomp_bpf.c
+@@ -3154,12 +3154,15 @@ TEST(syscall_restart)
+ 	ret = get_syscall(_metadata, child_pid);
+ #if defined(__arm__)
+ 	/*
+-	 * FIXME:
+ 	 * - native ARM registers do NOT expose true syscall.
+ 	 * - compat ARM registers on ARM64 DO expose true syscall.
++	 * - values of utsbuf.machine include 'armv8l' or 'armb8b'
++	 *   for ARM64 running in compat mode.
+ 	 */
+ 	ASSERT_EQ(0, uname(&utsbuf));
+-	if (strncmp(utsbuf.machine, "arm", 3) == 0) {
++	if ((strncmp(utsbuf.machine, "arm", 3) == 0) &&
++	    (strncmp(utsbuf.machine, "armv8l", 6) != 0) &&
++	    (strncmp(utsbuf.machine, "armv8b", 6) != 0)) {
+ 		EXPECT_EQ(__NR_nanosleep, ret);
+ 	} else
+ #endif
 -- 
 2.39.5
 
