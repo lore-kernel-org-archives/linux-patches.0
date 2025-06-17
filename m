@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20F622F2344;
-	Tue, 17 Jun 2025 15:48:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 955D92F235D;
+	Tue, 17 Jun 2025 15:48:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175326; cv=none; b=TDbxr3DGGgy48+MToSv4/fLz3+t4wVHunWXH3LeXLuqMORmRAMdm68bUqcjnsntEFq+7pvH+DPYAdxbBNtlY6IXjjt8PT2symgGVIKXMx58aN1RWxBMwwvC/H/v34uE3LmLw0F0UbMkdyJ6lhU0V8YWVRzS+NhNulDjKplK5fdk=
+	t=1750175329; cv=none; b=hchdWMqyly/lOxcZCF10klNun803ima0gB9nGu1UqZTGnLBqUQRNYdeJlaP4IaxCpilc+yycAFRy5DYMvOvjGbTKGSBnd2K03DRrF3PJWdZU24D0zT14uY0r2b1I3ntYk/mV8OjHPNOArKmUXY/GKF+MNj25yvmS31m6J1KvrbE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175326; c=relaxed/simple;
-	bh=GQfZUI3MJmJuGUCjZDMf9tlnpazh29FUVt3B5/BvPx0=;
+	s=arc-20240116; t=1750175329; c=relaxed/simple;
+	bh=IwIYY3wrygYNJmYdNDlQ+20ylnVssXf4ugT5lp4tGPA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c2KY3TX9CO86UjfduXD8FgEVAn0RAf6ykL2MgnulRIFxSjzH/nqzizPPaWnJIrGMQYnxRwA+Z8bUWpV7SPA/nfskhwVV5t2gXkOdV3a8E2KwwTjqjiAiM0cSNJqCPx3b8552CwF9ZNU0kjg6tsogFhRg9vT9hCdwQmGu4f91fZk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MhJP5353; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hBwbGJr+44jnWniYxFZ0MTZApUEamDcuVhMHQ8hVaEwAZyIa7kB0SVwY4GX9nmVDcBSMftNIqywqztRxgoLqevPv1AECGhlFp+iZvtUTAGs2MeA8QI4GpgFpQRkTwLVEI+uZWo6Zlnkg6VMq1wLbNq8mugO8PDfj69ocHwTl/ls=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h8ZQD0yp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MhJP5353"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91ADBC4CEE7;
-	Tue, 17 Jun 2025 15:48:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h8ZQD0yp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6089C4CEE7;
+	Tue, 17 Jun 2025 15:48:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175326;
-	bh=GQfZUI3MJmJuGUCjZDMf9tlnpazh29FUVt3B5/BvPx0=;
+	s=korg; t=1750175329;
+	bh=IwIYY3wrygYNJmYdNDlQ+20ylnVssXf4ugT5lp4tGPA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MhJP5353JDdTbuyp/Wy7KAC9UYEEt+rScDiUcs+IoVJqnmRkTZfNKcypGnbpdKc80
-	 4Ree4soTD4Ok+cujszPCiDV8gxR2diO7u9OBHef5oy0/zuPDY6CQFktl9fQuDTIkJf
-	 3/6CR8mXbaUSZwtzxBFkiumOnuYgrXoYgwO9Qvc8=
+	b=h8ZQD0ypzyV/aWu0bhURyXeiBDAREhg67CyvqRLHgrL7s5QGilwiFRRvlQfX3jtYB
+	 qvwFH+gq7cOnp3geyjgG1Q6VWSkulUkjD3CsaOOTfU4B3SoXvQlM39jpC2h1aDzDah
+	 DjmYge9h1TYk+x1ZUX6GxIHt9V/Q75+LCUWkq3vY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Raj Kumar Bhagat <quic_rajkbhag@quicinc.com>,
-	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Neal Gompa <neal@gompa.dev>,
+	Hector Martin <marcan@marcan.st>,
+	James Calligeros <jcalligeros99@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 115/512] wifi: ath12k: fix cleanup path after mhi init
-Date: Tue, 17 Jun 2025 17:21:21 +0200
-Message-ID: <20250617152424.248034347@linuxfoundation.org>
+Subject: [PATCH 6.15 056/780] ASoC: tas2764: Enable main IRQs
+Date: Tue, 17 Jun 2025 17:16:04 +0200
+Message-ID: <20250617152453.783284790@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,49 +49,42 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Raj Kumar Bhagat <quic_rajkbhag@quicinc.com>
+From: Hector Martin <marcan@marcan.st>
 
-[ Upstream commit 6177c97fb6f05bf0473a2806e3bece7e77693209 ]
+[ Upstream commit dd50f0e38563f15819059c923bf142200453e003 ]
 
-Currently, the 'err_pci_msi_free' label is misplaced, causing the cleanup
-sequence to be incorrect. Fix this by moving the 'err_pci_msi_free' label
-to the correct position after 'err_irq_affinity_cleanup'.
+IRQ handling was added in commit dae191fb957f ("ASoC: tas2764: Add IRQ
+handling") however that same commit masks all interrupts coming from
+the chip. Unmask the "main" interrupts so that we can see and
+deal with a number of errors including clock, voltage, and current.
 
-Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.3.1-00209-QCAHKSWPL_SILICONZ-1
-
-Fixes: a3012f206d07 ("wifi: ath12k: set IRQ affinity to CPU0 in case of one MSI vector")
-Signed-off-by: Raj Kumar Bhagat <quic_rajkbhag@quicinc.com>
-Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250403-ath12k-cleanup-v1-1-ad8f67b0e9cf@quicinc.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Fixes: dae191fb957f ("ASoC: tas2764: Add IRQ handling")
+Reviewed-by: Neal Gompa <neal@gompa.dev>
+Signed-off-by: Hector Martin <marcan@marcan.st>
+Signed-off-by: James Calligeros <jcalligeros99@gmail.com>
+Link: https://patch.msgid.link/20250406-apple-codec-changes-v5-4-50a00ec850a3@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/pci.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ sound/soc/codecs/tas2764.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/pci.c b/drivers/net/wireless/ath/ath12k/pci.c
-index 45d537066345a..1068cc07bc9f6 100644
---- a/drivers/net/wireless/ath/ath12k/pci.c
-+++ b/drivers/net/wireless/ath/ath12k/pci.c
-@@ -1514,12 +1514,12 @@ static int ath12k_pci_probe(struct pci_dev *pdev,
- err_mhi_unregister:
- 	ath12k_mhi_unregister(ab_pci);
+diff --git a/sound/soc/codecs/tas2764.c b/sound/soc/codecs/tas2764.c
+index 49b73b74b2d9d..fbfe4d032df7b 100644
+--- a/sound/soc/codecs/tas2764.c
++++ b/sound/soc/codecs/tas2764.c
+@@ -564,7 +564,7 @@ static int tas2764_codec_probe(struct snd_soc_component *component)
+ 	regmap_reinit_cache(tas2764->regmap, &tas2764_i2c_regmap);
  
--err_pci_msi_free:
--	ath12k_pci_msi_free(ab_pci);
--
- err_irq_affinity_cleanup:
- 	ath12k_pci_set_irq_affinity_hint(ab_pci, NULL);
- 
-+err_pci_msi_free:
-+	ath12k_pci_msi_free(ab_pci);
-+
- err_pci_free_region:
- 	ath12k_pci_free_region(ab_pci);
+ 	if (tas2764->irq) {
+-		ret = snd_soc_component_write(tas2764->component, TAS2764_INT_MASK0, 0xff);
++		ret = snd_soc_component_write(tas2764->component, TAS2764_INT_MASK0, 0x00);
+ 		if (ret < 0)
+ 			return ret;
  
 -- 
 2.39.5
