@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F8F722FF2B;
-	Tue, 17 Jun 2025 16:20:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C65F2ED854;
+	Tue, 17 Jun 2025 16:20:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177216; cv=none; b=lK5ERYG9SscT7Lfq1BaK4f6Cs06xm/g4Swn1nNedvtXQmaZXOmtlhiPfNU1nrPKbyzJ8AafITMIUpvVdkneAx5jGV5pSWkTiNoWh+AB3qi79c4Ug5ODGRxV9s7EUuOqplpFZOBspVL0WaChiqSUUIqJytF/28lgkTQGWYQzm6ts=
+	t=1750177218; cv=none; b=SSniy+CGjfc9qrpLEv5HqnARnoN/oR5cGSTa5vHoygw3vGCRV0vuC6yUWs2qYP6cljLiOqmmImyj3IRV5vriEWX9poTOEyhjQePyEunIK1XGERDO92t6Sm60EA/LF6zgN8jNAM0zG9J+tG5GESnoTC62bukpST9I34ipn7ZHI88=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177216; c=relaxed/simple;
-	bh=Yt8QUY3ogpF68k5OAyZZHEKqQXDhW8Xq5eiUhfuF4HE=;
+	s=arc-20240116; t=1750177218; c=relaxed/simple;
+	bh=yrcn9IxFr2O2pfhF90QtuXjqg6SiqcdrWEZ1HYDV07s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KcJIpVeala7rI3+psQSvrUsvhxNKXO7lMc4mKAyEzsAr2M/SiDxmpzmcM4u3fr4PoJwzOmT8BEEBkJDAufsGkelWZPwUbfCH/C1vUw/18v8M1Rv2/q2LDLURYJjP0Fan/2tdsWbcy5iPG9lOwdf/c1o6E6eTftZDS5Q4QNP3vyk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oyZQMp7r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JZti2VSn7ryljaCcj7TK6Jym3yeiiOEZ/UGuATjh+4cVQPFu5JxDgW3dTyD0DJtVXOOOkoqhEH6R3MAQkE8KdhwKchfv8ne13DC7sJ3OxuUjr/+Ws36jWkfCr3uMYmknwiF8x4n3c67sWl/PwiBBdqiqg2hnVkA0MK+IKIAjfZc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HbgNdZ2O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oyZQMp7r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3527C4CEE3;
-	Tue, 17 Jun 2025 16:20:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HbgNdZ2O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE276C4CEE3;
+	Tue, 17 Jun 2025 16:20:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177215;
-	bh=Yt8QUY3ogpF68k5OAyZZHEKqQXDhW8Xq5eiUhfuF4HE=;
+	s=korg; t=1750177218;
+	bh=yrcn9IxFr2O2pfhF90QtuXjqg6SiqcdrWEZ1HYDV07s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oyZQMp7rr6fkZ/0aHYgxuQmKf/qpDCdCpU7h+lz/BG9WQNQx/zD+6wcx2N1BL/hGr
-	 7jIbNkYZ2KvmKbGqNGTJF1RgzHIL3RvIaaUMltpiFLy8okK9wWq7gINHP4fhlOrr/d
-	 o7GOFx5hNSoyDoH2YH6N27yWC/T6AtBbek2rvpaM=
+	b=HbgNdZ2Oc4LD9euoJzpBNI7jgLUSSdgT2XyWvMsrzs2Ewmfa6wg5AZMaQyQdgusAp
+	 e8rMBSIGOuI0WL2yZ7vPd7l6CK8cCshpjdDxLOmN9xv4MXyxLQCHO3b1I37bKySKTc
+	 bUSjf6HQQEiUtwFCEF+Ug+BKpUFJ+uaV6RvfjPzc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason-JH Lin <jason-jh.lin@mediatek.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Jassi Brar <jassisinghbrar@gmail.com>,
+	Yingying Tang <quic_yintang@quicinc.com>,
+	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 296/512] mailbox: mtk-cmdq: Refine GCE_GCTL_VALUE setting
-Date: Tue, 17 Jun 2025 17:24:22 +0200
-Message-ID: <20250617152431.590983353@linuxfoundation.org>
+Subject: [PATCH 6.15 273/780] wifi: ath12k: Reorder and relocate the release of resources in ath12k_core_deinit()
+Date: Tue, 17 Jun 2025 17:19:41 +0200
+Message-ID: <20250617152502.587221545@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,145 +48,123 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jason-JH Lin <jason-jh.lin@mediatek.com>
+From: Yingying Tang <quic_yintang@quicinc.com>
 
-[ Upstream commit 9fcebcb37c3e0a4b6eb40768cc5a5faebf166fbe ]
+[ Upstream commit aabd3be90579ed088aa34f0584ab6836c735c76f ]
 
-Add cmdq_gctl_value_toggle() to configure GCE_CTRL_BY_SW and GCE_DDR_EN
-together in the same GCE_GCTL_VALUE register.
+Ath12k panic notifier is registered in driver loading process. But it is not
+unregistered if ATH12K_FLAG_QMI_FAIL is set(e.g. load BDF failed) and unload
+driver. It causes a dirty node in panic notifier list since ath12k panic
+notifier is not unregistered from list but the buffer of this node is freed
+in driver unloading process. If load driver again there will be a page fault
+error due to this dirty node in panic notifier list.
 
-For the SoCs whose GCE is located in MMINFRA and uses MMINFRA_AO power,
-this allows it to be written without enabling the clocks. Otherwise, all
-GCE registers should be written after the GCE clocks are enabled.
-Move this function into cmdq_runtime_resume() and cmdq_runtime_suspend()
-to ensure it is called when the GCE clock is enabled.
+This issue is caused by asymmetry between ath12k_core_init() and
+ath12k_core_deinit(). Reorder and relocate the release of resources in
+ath12k_core_deinit() to avoid this asymmetry issue.
 
-Fixes: 7abd037aa581 ("mailbox: mtk-cmdq: add gce ddr enable support flow")
-Signed-off-by: Jason-JH Lin <jason-jh.lin@mediatek.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
+Call Trace:
+<TASK>
+? show_regs+0x67/0x70
+? __die_body+0x20/0x70
+? __die+0x2b/0x40
+? page_fault_oops+0x15d/0x500
+? search_bpf_extables+0x63/0x90
+? notifier_chain_register+0x21/0xe0
+? search_exception_tables+0x5f/0x70
+? kernelmode_fixup_or_oops.isra.0+0x61/0x80
+? __bad_area_nosemaphore+0x179/0x240
+? bad_area_nosemaphore+0x16/0x20
+? do_user_addr_fault+0x312/0x7f0
+? prb_read_valid+0x1c/0x30
+? exc_page_fault+0x78/0x180
+? asm_exc_page_fault+0x27/0x30
+? notifier_chain_register+0x21/0xe0
+? notifier_chain_register+0x55/0xe0
+atomic_notifier_chain_register+0x2c/0x50
+ath12k_core_init+0x7e/0x110 [ath12k]
+ath12k_pci_probe+0xaba/0xba0 [ath12k]
+
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.0-02903-QCAHKSWPL_SILICONZ-1
+Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.0.c5-00481-QCAHMTSWPL_V1.0_V2.0_SILICONZ-3
+
+Fixes: 809055628bce8 ("wifi: ath12k: add panic handler")
+Signed-off-by: Yingying Tang <quic_yintang@quicinc.com>
+Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
+Link: https://patch.msgid.link/20250423055650.16230-2-quic_yintang@quicinc.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mailbox/mtk-cmdq-mailbox.c | 51 +++++++++++++-----------------
- 1 file changed, 22 insertions(+), 29 deletions(-)
+ drivers/net/wireless/ath/ath12k/core.c | 5 ++---
+ drivers/net/wireless/ath/ath12k/core.h | 1 +
+ drivers/net/wireless/ath/ath12k/pci.c  | 5 ++---
+ 3 files changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/mailbox/mtk-cmdq-mailbox.c b/drivers/mailbox/mtk-cmdq-mailbox.c
-index 9c43ed9bdd37b..d24f71819c3d6 100644
---- a/drivers/mailbox/mtk-cmdq-mailbox.c
-+++ b/drivers/mailbox/mtk-cmdq-mailbox.c
-@@ -92,18 +92,6 @@ struct gce_plat {
- 	u32 gce_num;
+diff --git a/drivers/net/wireless/ath/ath12k/core.c b/drivers/net/wireless/ath/ath12k/core.c
+index 6b0c719be5434..770156347ffad 100644
+--- a/drivers/net/wireless/ath/ath12k/core.c
++++ b/drivers/net/wireless/ath/ath12k/core.c
+@@ -1785,7 +1785,7 @@ static void ath12k_core_hw_group_destroy(struct ath12k_hw_group *ag)
+ 	}
+ }
+ 
+-static void ath12k_core_hw_group_cleanup(struct ath12k_hw_group *ag)
++void ath12k_core_hw_group_cleanup(struct ath12k_hw_group *ag)
+ {
+ 	struct ath12k_base *ab;
+ 	int i;
+@@ -1933,10 +1933,9 @@ int ath12k_core_init(struct ath12k_base *ab)
+ 
+ void ath12k_core_deinit(struct ath12k_base *ab)
+ {
+-	ath12k_core_panic_notifier_unregister(ab);
+-	ath12k_core_hw_group_cleanup(ab->ag);
+ 	ath12k_core_hw_group_destroy(ab->ag);
+ 	ath12k_core_hw_group_unassign(ab);
++	ath12k_core_panic_notifier_unregister(ab);
+ }
+ 
+ void ath12k_core_free(struct ath12k_base *ab)
+diff --git a/drivers/net/wireless/ath/ath12k/core.h b/drivers/net/wireless/ath/ath12k/core.h
+index 2ee83517eadc7..f5f1ec796f7c5 100644
+--- a/drivers/net/wireless/ath/ath12k/core.h
++++ b/drivers/net/wireless/ath/ath12k/core.h
+@@ -1195,6 +1195,7 @@ struct ath12k_fw_stats_pdev {
  };
  
--static void cmdq_sw_ddr_enable(struct cmdq *cmdq, bool enable)
--{
--	WARN_ON(clk_bulk_enable(cmdq->pdata->gce_num, cmdq->clocks));
--
--	if (enable)
--		writel(GCE_DDR_EN | GCE_CTRL_BY_SW, cmdq->base + GCE_GCTL_VALUE);
--	else
--		writel(GCE_CTRL_BY_SW, cmdq->base + GCE_GCTL_VALUE);
--
--	clk_bulk_disable(cmdq->pdata->gce_num, cmdq->clocks);
--}
--
- u8 cmdq_get_shift_pa(struct mbox_chan *chan)
- {
- 	struct cmdq *cmdq = container_of(chan->mbox, struct cmdq, mbox);
-@@ -112,6 +100,19 @@ u8 cmdq_get_shift_pa(struct mbox_chan *chan)
- }
- EXPORT_SYMBOL(cmdq_get_shift_pa);
+ int ath12k_core_qmi_firmware_ready(struct ath12k_base *ab);
++void ath12k_core_hw_group_cleanup(struct ath12k_hw_group *ag);
+ int ath12k_core_pre_init(struct ath12k_base *ab);
+ int ath12k_core_init(struct ath12k_base *ath12k);
+ void ath12k_core_deinit(struct ath12k_base *ath12k);
+diff --git a/drivers/net/wireless/ath/ath12k/pci.c b/drivers/net/wireless/ath/ath12k/pci.c
+index 99b2c7927ec81..273f4bc260bfe 100644
+--- a/drivers/net/wireless/ath/ath12k/pci.c
++++ b/drivers/net/wireless/ath/ath12k/pci.c
+@@ -1734,8 +1734,6 @@ static void ath12k_pci_remove(struct pci_dev *pdev)
  
-+static void cmdq_gctl_value_toggle(struct cmdq *cmdq, bool ddr_enable)
-+{
-+	u32 val = cmdq->pdata->control_by_sw ? GCE_CTRL_BY_SW : 0;
-+
-+	if (!cmdq->pdata->control_by_sw && !cmdq->pdata->sw_ddr_en)
-+		return;
-+
-+	if (cmdq->pdata->sw_ddr_en && ddr_enable)
-+		val |= GCE_DDR_EN;
-+
-+	writel(val, cmdq->base + GCE_GCTL_VALUE);
-+}
-+
- static int cmdq_thread_suspend(struct cmdq *cmdq, struct cmdq_thread *thread)
- {
- 	u32 status;
-@@ -140,16 +141,10 @@ static void cmdq_thread_resume(struct cmdq_thread *thread)
- static void cmdq_init(struct cmdq *cmdq)
- {
- 	int i;
--	u32 gctl_regval = 0;
+ 	if (test_bit(ATH12K_FLAG_QMI_FAIL, &ab->dev_flags)) {
+ 		ath12k_pci_power_down(ab, false);
+-		ath12k_qmi_deinit_service(ab);
+-		ath12k_core_hw_group_unassign(ab);
+ 		goto qmi_fail;
+ 	}
  
- 	WARN_ON(clk_bulk_enable(cmdq->pdata->gce_num, cmdq->clocks));
--	if (cmdq->pdata->control_by_sw)
--		gctl_regval = GCE_CTRL_BY_SW;
--	if (cmdq->pdata->sw_ddr_en)
--		gctl_regval |= GCE_DDR_EN;
+@@ -1743,9 +1741,10 @@ static void ath12k_pci_remove(struct pci_dev *pdev)
  
--	if (gctl_regval)
--		writel(gctl_regval, cmdq->base + GCE_GCTL_VALUE);
-+	cmdq_gctl_value_toggle(cmdq, true);
+ 	cancel_work_sync(&ab->reset_work);
+ 	cancel_work_sync(&ab->dump_work);
+-	ath12k_core_deinit(ab);
++	ath12k_core_hw_group_cleanup(ab->ag);
  
- 	writel(CMDQ_THR_ACTIVE_SLOT_CYCLES, cmdq->base + CMDQ_THR_SLOT_CYCLES);
- 	for (i = 0; i <= CMDQ_MAX_EVENT; i++)
-@@ -315,14 +310,21 @@ static irqreturn_t cmdq_irq_handler(int irq, void *dev)
- static int cmdq_runtime_resume(struct device *dev)
- {
- 	struct cmdq *cmdq = dev_get_drvdata(dev);
-+	int ret;
- 
--	return clk_bulk_enable(cmdq->pdata->gce_num, cmdq->clocks);
-+	ret = clk_bulk_enable(cmdq->pdata->gce_num, cmdq->clocks);
-+	if (ret)
-+		return ret;
-+
-+	cmdq_gctl_value_toggle(cmdq, true);
-+	return 0;
- }
- 
- static int cmdq_runtime_suspend(struct device *dev)
- {
- 	struct cmdq *cmdq = dev_get_drvdata(dev);
- 
-+	cmdq_gctl_value_toggle(cmdq, false);
- 	clk_bulk_disable(cmdq->pdata->gce_num, cmdq->clocks);
- 	return 0;
- }
-@@ -347,9 +349,6 @@ static int cmdq_suspend(struct device *dev)
- 	if (task_running)
- 		dev_warn(dev, "exist running task(s) in suspend\n");
- 
--	if (cmdq->pdata->sw_ddr_en)
--		cmdq_sw_ddr_enable(cmdq, false);
--
- 	return pm_runtime_force_suspend(dev);
- }
- 
-@@ -360,9 +359,6 @@ static int cmdq_resume(struct device *dev)
- 	WARN_ON(pm_runtime_force_resume(dev));
- 	cmdq->suspended = false;
- 
--	if (cmdq->pdata->sw_ddr_en)
--		cmdq_sw_ddr_enable(cmdq, true);
--
- 	return 0;
- }
- 
-@@ -370,9 +366,6 @@ static void cmdq_remove(struct platform_device *pdev)
- {
- 	struct cmdq *cmdq = platform_get_drvdata(pdev);
- 
--	if (cmdq->pdata->sw_ddr_en)
--		cmdq_sw_ddr_enable(cmdq, false);
--
- 	if (!IS_ENABLED(CONFIG_PM))
- 		cmdq_runtime_suspend(&pdev->dev);
+ qmi_fail:
++	ath12k_core_deinit(ab);
+ 	ath12k_fw_unmap(ab);
+ 	ath12k_mhi_unregister(ab_pci);
  
 -- 
 2.39.5
