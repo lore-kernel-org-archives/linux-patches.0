@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ADE62FA654;
-	Tue, 17 Jun 2025 16:58:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22BEC2FA623;
+	Tue, 17 Jun 2025 16:58:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750179493; cv=none; b=ZqIrpknYanKxYjG5eWCYN4aj2XojYhjpLxZJx+Kg/FEuQrHDGDpi5TnTCgWUPs2BLlOGwOtTXNLXxzF/m9vg20SBC75uj7Rq22PxJt773wA19yUT5bY/nshlcXl9VENSsI+GAsvsKHIk43oDfw5eOF59NeJcqH9qQp0TwEy3k40=
+	t=1750179499; cv=none; b=rFxV8WImByp0fCxc02Lc/ypnrogtRM4m2F7VvnhIWtKhneiWpoMj/aogZ/KiHGJdU99SO12qFPXoMNFl7RAWSm7NC+BHSjizsGifhGTMAcnYrzXdF43kVmeUhr0yZV7XQfFHGbwe2kTZ/k50LY8RuEGmHPDpx/P2QAwi17Obk4s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750179493; c=relaxed/simple;
-	bh=+cEXI/S87VoS6fz9dhJhUS/kH4gMyy/bjh4PkBzm2uo=;
+	s=arc-20240116; t=1750179499; c=relaxed/simple;
+	bh=qrX32344hNXTxO6sjI6ijmL5yqMv5SD7rjrbj8fUPCs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cNRHWS4+pefUtjI9VunagUkHlVl7hiXQ0RbCK2WF0XjArGv1UJtsgQOv2Jp4DoOgMjMKIkLRWYHrT4/hsOj5TcfszdnDNP1YdKnMSY5R/aDh5t9vLFRHOHgFmKN2iwINTJVm9IMG/Tpul/d7iOb5ddbEX90yqZHEAwULEFb+Kms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wwwg4NlP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QYGzy2V98OB1qPG3m1O53bTN0pm4zVJ0tK7a4P2grSBJbZDZBUvINkSIPMbIuzu2o793yXXRzxn97txzUvREX7gMPET4Qf9MjdAzHH7opNPQAMVuIUGLvAwn4XQ9fsF6HrHgR6jRkLVP4PzrgMhvKwSVTshqUZMe8yKXyTb1LkA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q/2NpI0L; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wwwg4NlP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8862C4CEE3;
-	Tue, 17 Jun 2025 16:58:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q/2NpI0L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39F15C4CEE3;
+	Tue, 17 Jun 2025 16:58:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750179493;
-	bh=+cEXI/S87VoS6fz9dhJhUS/kH4gMyy/bjh4PkBzm2uo=;
+	s=korg; t=1750179496;
+	bh=qrX32344hNXTxO6sjI6ijmL5yqMv5SD7rjrbj8fUPCs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wwwg4NlPahkjpWjbj0UqFHGVTxGYCZJpYDcrTvi2Jxv8koZBbIwvRgsocI35DPqcf
-	 FtJbeDmN+j31uCDqMNbsVRYZP0mGiP70/g05gwkRid6qBiV6B1YVuYNvYnN3RC36VB
-	 zu9SjtfQAKUOJClsS82BbaXJPvgGl3IRVuKX0HzA=
+	b=q/2NpI0LNDRf14yteBb0nKrjwnfLMKnjUOS3JEXDWDSig42WPTB6VAu4U+hNEv4Mn
+	 30A5T3Z1OAMBEbazm9/341iQTM90K+Ln1BpSgY5glAIBFHYxlCm7NiVjg6YJSrX0k3
+	 U2P+Jro0tHcWUNOPqyA2PUJnqN4ibeWk71Ak8vAM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	v9fs@lists.linux.dev,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Dominique Martinet <asmadeus@codewreck.org>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 6.15 762/780] 9p: Add a migrate_folio method
-Date: Tue, 17 Jun 2025 17:27:50 +0200
-Message-ID: <20250617152522.541972255@linuxfoundation.org>
+	Allison Karlitskaya <lis@redhat.com>,
+	Christian Brauner <brauner@kernel.org>,
+	Al Viro <viro@zeniv.linux.org.uk>
+Subject: [PATCH 6.15 763/780] Dont propagate mounts into detached trees
+Date: Tue, 17 Jun 2025 17:27:51 +0200
+Message-ID: <20250617152522.582231332@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
 References: <20250617152451.485330293@linuxfoundation.org>
@@ -53,37 +51,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Wilcox (Oracle) <willy@infradead.org>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-commit 03ddd7725ed1b39cf9251e1a420559f25dac49b3 upstream.
+commit 3b5260d12b1fe76b566fe182de8abc586b827ed0 upstream.
 
-The migration code used to be able to migrate dirty 9p folios by writing
-them back using writepage.  When the writepage method was removed,
-we neglected to add a migrate_folio method, which means that dirty 9p
-folios have been unmovable ever since.  This reduced our success at
-defragmenting memory on machines which use 9p heavily.
+All versions up to 6.14 did not propagate mount events into detached
+tree.  Shortly after 6.14 a merge of vfs-6.15-rc1.mount.namespace
+(130e696aa68b) has changed that.
 
-Fixes: 80105ed2fd27 (9p: Use netfslib read/write_iter)
+Unfortunately, that has caused userland regressions (reported in
+https://lore.kernel.org/all/CAOYeF9WQhFDe+BGW=Dp5fK8oRy5AgZ6zokVyTj1Wp4EUiYgt4w@mail.gmail.com/)
+
+Straight revert wouldn't be an option - in particular, the variant in 6.14
+had a bug that got fixed in d1ddc6f1d9f0 ("fix IS_MNT_PROPAGATING uses")
+and we don't want to bring the bug back.
+
+This is a modification of manual revert posted by Christian, with changes
+needed to avoid reintroducing the breakage in scenario described in
+d1ddc6f1d9f0.
+
 Cc: stable@vger.kernel.org
-Cc: David Howells <dhowells@redhat.com>
-Cc: v9fs@lists.linux.dev
-Signed-off-by: "Matthew Wilcox (Oracle)" <willy@infradead.org>
-Link: https://lore.kernel.org/r/20250402150005.2309458-2-willy@infradead.org
-Acked-by: Dominique Martinet <asmadeus@codewreck.org>
-Reviewed-by: David Howells <dhowells@redhat.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Reported-by: Allison Karlitskaya <lis@redhat.com>
+Tested-by: Allison Karlitskaya <lis@redhat.com>
+Acked-by: Christian Brauner <brauner@kernel.org>
+Co-developed-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/9p/vfs_addr.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/mount.h     |    5 -----
+ fs/namespace.c |   15 ++-------------
+ fs/pnode.c     |    4 ++--
+ 3 files changed, 4 insertions(+), 20 deletions(-)
 
---- a/fs/9p/vfs_addr.c
-+++ b/fs/9p/vfs_addr.c
-@@ -165,4 +165,5 @@ const struct address_space_operations v9
- 	.invalidate_folio	= netfs_invalidate_folio,
- 	.direct_IO		= noop_direct_IO,
- 	.writepages		= netfs_writepages,
-+	.migrate_folio		= filemap_migrate_folio,
- };
+--- a/fs/mount.h
++++ b/fs/mount.h
+@@ -7,10 +7,6 @@
+ 
+ extern struct list_head notify_list;
+ 
+-typedef __u32 __bitwise mntns_flags_t;
+-
+-#define MNTNS_PROPAGATING	((__force mntns_flags_t)(1 << 0))
+-
+ struct mnt_namespace {
+ 	struct ns_common	ns;
+ 	struct mount *	root;
+@@ -37,7 +33,6 @@ struct mnt_namespace {
+ 	struct rb_node		mnt_ns_tree_node; /* node in the mnt_ns_tree */
+ 	struct list_head	mnt_ns_list; /* entry in the sequential list of mounts namespace */
+ 	refcount_t		passive; /* number references not pinning @mounts */
+-	mntns_flags_t		mntns_flags;
+ } __randomize_layout;
+ 
+ struct mnt_pcp {
+--- a/fs/namespace.c
++++ b/fs/namespace.c
+@@ -3673,7 +3673,7 @@ static int do_move_mount(struct path *ol
+ 	if (!(attached ? check_mnt(old) : is_anon_ns(ns)))
+ 		goto out;
+ 
+-	if (is_anon_ns(ns)) {
++	if (is_anon_ns(ns) && ns == p->mnt_ns) {
+ 		/*
+ 		 * Ending up with two files referring to the root of the
+ 		 * same anonymous mount namespace would cause an error
+@@ -3681,16 +3681,7 @@ static int do_move_mount(struct path *ol
+ 		 * twice into the mount tree which would be rejected
+ 		 * later. But be explicit about it right here.
+ 		 */
+-		if ((is_anon_ns(p->mnt_ns) && ns == p->mnt_ns))
+-			goto out;
+-
+-		/*
+-		 * If this is an anonymous mount tree ensure that mount
+-		 * propagation can detect mounts that were just
+-		 * propagated to the target mount tree so we don't
+-		 * propagate onto them.
+-		 */
+-		ns->mntns_flags |= MNTNS_PROPAGATING;
++		goto out;
+ 	} else if (is_anon_ns(p->mnt_ns)) {
+ 		/*
+ 		 * Don't allow moving an attached mount tree to an
+@@ -3747,8 +3738,6 @@ static int do_move_mount(struct path *ol
+ 	if (attached)
+ 		put_mountpoint(old_mp);
+ out:
+-	if (is_anon_ns(ns))
+-		ns->mntns_flags &= ~MNTNS_PROPAGATING;
+ 	unlock_mount(mp);
+ 	if (!err) {
+ 		if (attached) {
+--- a/fs/pnode.c
++++ b/fs/pnode.c
+@@ -231,8 +231,8 @@ static int propagate_one(struct mount *m
+ 	/* skip if mountpoint isn't visible in m */
+ 	if (!is_subdir(dest_mp->m_dentry, m->mnt.mnt_root))
+ 		return 0;
+-	/* skip if m is in the anon_ns we are emptying */
+-	if (m->mnt_ns->mntns_flags & MNTNS_PROPAGATING)
++	/* skip if m is in the anon_ns */
++	if (is_anon_ns(m->mnt_ns))
+ 		return 0;
+ 
+ 	if (peers(m, last_dest)) {
 
 
