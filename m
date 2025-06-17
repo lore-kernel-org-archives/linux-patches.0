@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A92C82DFF14;
-	Tue, 17 Jun 2025 16:09:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF5312DFF06;
+	Tue, 17 Jun 2025 16:10:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750176597; cv=none; b=psa6Li2Esj16qE4g3fnQUPQlGOiNeXAXy4+ziTUwjMyQp2TcLvh6mNJabb/6K/5wuEl+vCsQLcodTL57oY8bFrHPnEodMpoU+D+UMcJJiiWYtv59mmXhWGDDz+bI3B/EDf2tLRqk2fwXysHr7+MG2xXPGBm4+oKuD0aXzFIQ6KQ=
+	t=1750176601; cv=none; b=Ffrm3pw/6yOWXvLwx019u3szWvBUl775N6ReisWzveDBv2UWXSH81eVvIXvJYJi4TPmNN5+9deSKDznBR9QttUONDW3TPzG3+v1ZMf4qKYrZLkhldQGhKCSYFstcrVWT0rpMjQ/XX9Q5tMJHmEWfYkuBQ2GeHC4evIpyH902UQs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750176597; c=relaxed/simple;
-	bh=CSO9S61RN2fFJTcpq8v6NI/ZxY3diLU3mzC2d6JItys=;
+	s=arc-20240116; t=1750176601; c=relaxed/simple;
+	bh=fmdQufRFvtMN43klt2q1kG2OE0sx+AQ2wEnHDfOcFSw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TraKWXPlMFb91MSGcafta3MKNrQmpQ3OWAHq7QZOfvUoX8m9gVakKeB92N5lNrQ4PASgrsDlIxpbENf4/UU5qc9KtbOfjLAeRtPaZxO/sVGtVzligJPVfr2M7o6dFpIMEijujLE5lfGhx9zDMMZnxAc1yXLQm5Lh2mqhJaqdDRQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VHdlqMbo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kr+tajN8/XoxNCCm/vXh37dvRI8obM+68dVfGU0YCLvtkKaKf+M1e5BTzpQo+BzPsK84ZzrIfWNz12n3yxwlEUWCzq8unNJNF8xXkFuZimVSP+ze7rkWaYAYCHtyV5SV76YU+cFo9t2rjlEdOXOL31t0xcQ3+2rprmsBPB45kI4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tdIVvRT1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VHdlqMbo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E60BC4CEE3;
-	Tue, 17 Jun 2025 16:09:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tdIVvRT1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F70AC4CEE3;
+	Tue, 17 Jun 2025 16:10:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750176597;
-	bh=CSO9S61RN2fFJTcpq8v6NI/ZxY3diLU3mzC2d6JItys=;
+	s=korg; t=1750176600;
+	bh=fmdQufRFvtMN43klt2q1kG2OE0sx+AQ2wEnHDfOcFSw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VHdlqMboCxAtUQatfbw0mPFA0mnjiXDVqN1+XSCEIOKwyGJ27P3mcHAnD/+MKXMZ5
-	 fUjPXm9SB2MAw4fVrtEysnmwdjtIFyQQ6e2U8xbggdxL9ep0aFplQQnL+s4vuNHRXK
-	 XdYu19ePzbehWHr/1OkO66XuOiJS/1mjV6i/D/Ic=
+	b=tdIVvRT1WnboAke9sVxou9rqK9ilh/LEOLVAR7nagLS2dQ2sN+kz0E4FeGO2Tv8xU
+	 OanZPHyXWNqw40pHOp/rvVO4TkgTXoFVpiA/F0rHvaIA9p5PHMcWgWxJr/7KU+tAYx
+	 9L4gDuubOGxfEyN+1y7Zqx1CqcdAuldnUFcd8Fag=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Caleb Connolly <caleb.connolly@linaro.org>,
-	Loic Poulain <loic.poulain@oss.qualcomm.com>,
+	Ramasamy Kaliappan <quic_rkaliapp@quicinc.com>,
+	Nithyanantham Paramasivam <nithyanantham.paramasivam@oss.qualcomm.com>,
+	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
 	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 296/356] ath10k: snoc: fix unbalanced IRQ enable in crash recovery
-Date: Tue, 17 Jun 2025 17:26:51 +0200
-Message-ID: <20250617152350.087643471@linuxfoundation.org>
+Subject: [PATCH 6.15 205/780] wifi: ath12k: Fix the QoS control field offset to build QoS header
+Date: Tue, 17 Jun 2025 17:18:33 +0200
+Message-ID: <20250617152459.809964156@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-References: <20250617152338.212798615@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,51 +49,70 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Caleb Connolly <caleb.connolly@linaro.org>
+From: Ramasamy Kaliappan <quic_rkaliapp@quicinc.com>
 
-[ Upstream commit 1650d32b92b01db03a1a95d69ee74fcbc34d4b00 ]
+[ Upstream commit 8599d4cc4191c8c1af34207a8b9414acca4afb59 ]
 
-In ath10k_snoc_hif_stop() we skip disabling the IRQs in the crash
-recovery flow, but we still unconditionally call enable again in
-ath10k_snoc_hif_start().
+Currently, in the mac80211 layer, received EAPOL packets are dropped
+when the HT control field is present in the QoS header. This issue
+arises due to an incorrect QoS control field offset used to build
+the QoS header in the MSDU data, leading to a corrupted header in the
+mac80211 layer. This issue also applies to other frames that contain
+the QoS control field, such as QoS data or Null frames. To resolve
+this, use ieee80211_get_qos_ctl() to obtain the correct QoS control
+offset from the MSDU data. Additionally, ensure the QoS control header
+is copied in little-endian format within the MSDU data.
 
-We can't check the ATH10K_FLAG_CRASH_FLUSH bit since it is cleared
-before hif_start() is called, so instead check the
-ATH10K_SNOC_FLAG_RECOVERY flag and skip enabling the IRQs during crash
-recovery.
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.4.1-00199-QCAHKSWPL_SILICONZ-1
+Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.0.c5-00481-QCAHMTSWPL_V1.0_V2.0_SILICONZ-3
 
-This fixes unbalanced IRQ enable splats that happen after recovering from
-a crash.
-
-Fixes: 0e622f67e041 ("ath10k: add support for WCN3990 firmware crash recovery")
-Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
-Tested-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250318205043.1043148-1-caleb.connolly@linaro.org
+Fixes: d889913205cf ("wifi: ath12k: driver for Qualcomm Wi-Fi 7 devices")
+Signed-off-by: Ramasamy Kaliappan <quic_rkaliapp@quicinc.com>
+Signed-off-by: Nithyanantham Paramasivam <nithyanantham.paramasivam@oss.qualcomm.com>
+Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
+Link: https://patch.msgid.link/20250415184102.2707300-1-nithyanantham.paramasivam@oss.qualcomm.com
 Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath10k/snoc.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/wireless/ath/ath12k/dp_rx.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath10k/snoc.c b/drivers/net/wireless/ath/ath10k/snoc.c
-index 2c39bad7ebfb9..1d06d4125992d 100644
---- a/drivers/net/wireless/ath/ath10k/snoc.c
-+++ b/drivers/net/wireless/ath/ath10k/snoc.c
-@@ -937,7 +937,9 @@ static int ath10k_snoc_hif_start(struct ath10k *ar)
+diff --git a/drivers/net/wireless/ath/ath12k/dp_rx.c b/drivers/net/wireless/ath/ath12k/dp_rx.c
+index 317cc6e6e1f5b..125ccbd0532ce 100644
+--- a/drivers/net/wireless/ath/ath12k/dp_rx.c
++++ b/drivers/net/wireless/ath/ath12k/dp_rx.c
+@@ -2119,7 +2119,7 @@ static void ath12k_get_dot11_hdr_from_rx_desc(struct ath12k *ar,
+ 	struct ath12k_base *ab = ar->ab;
+ 	size_t hdr_len, crypto_len;
+ 	struct ieee80211_hdr hdr;
+-	u16 qos_ctl;
++	__le16 qos_ctl;
+ 	u8 *crypto_hdr, mesh_ctrl;
  
- 	dev_set_threaded(&ar->napi_dev, true);
- 	ath10k_core_napi_enable(ar);
--	ath10k_snoc_irq_enable(ar);
-+	/* IRQs are left enabled when we restart due to a firmware crash */
-+	if (!test_bit(ATH10K_SNOC_FLAG_RECOVERY, &ar_snoc->flags))
-+		ath10k_snoc_irq_enable(ar);
- 	ath10k_snoc_rx_post(ar);
+ 	ath12k_dp_rx_desc_get_dot11_hdr(ab, rx_desc, &hdr);
+@@ -2140,13 +2140,13 @@ static void ath12k_get_dot11_hdr_from_rx_desc(struct ath12k *ar,
  
- 	clear_bit(ATH10K_SNOC_FLAG_RECOVERY, &ar_snoc->flags);
+ 	/* Add QOS header */
+ 	if (ieee80211_is_data_qos(hdr.frame_control)) {
+-		qos_ctl = rxcb->tid;
++		struct ieee80211_hdr *qos_ptr = (struct ieee80211_hdr *)msdu->data;
++
++		qos_ctl = cpu_to_le16(rxcb->tid & IEEE80211_QOS_CTL_TID_MASK);
+ 		if (mesh_ctrl)
+-			qos_ctl |= IEEE80211_QOS_CTL_MESH_CONTROL_PRESENT;
++			qos_ctl |= cpu_to_le16(IEEE80211_QOS_CTL_MESH_CONTROL_PRESENT);
+ 
+-		/* TODO: Add other QoS ctl fields when required */
+-		memcpy(msdu->data + (hdr_len - IEEE80211_QOS_CTL_LEN),
+-		       &qos_ctl, IEEE80211_QOS_CTL_LEN);
++		memcpy(ieee80211_get_qos_ctl(qos_ptr), &qos_ctl, IEEE80211_QOS_CTL_LEN);
+ 	}
+ }
+ 
 -- 
 2.39.5
 
