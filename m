@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 011B415B0EC;
-	Tue, 17 Jun 2025 16:43:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D88312135A0;
+	Tue, 17 Jun 2025 16:43:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750178605; cv=none; b=P30aKNFZ019mQ6zL8Nyfzbg1UhwmyuBC1E1tLffnfkgOF01YL4j3rXilEcQUcuvdz/o2eB61UfpLKas2abcSukkw22UdBak2sKphIjCUh74zPN86TPItP2FTZ8VSUqNq9RhQJHiue3FRlkCjZgTSn/LlF0WXQ5mjCiGV8Itrmpk=
+	t=1750178607; cv=none; b=OTNbR8CMm6NkpzVbM6//M7IrlDBxGi9oUDb8sC3ejoWV48caT+95Dj/1v6h+9UIJfD8GuYo4unNw4qivuEL47+92pGboekon6EGAWoYHkICuvHgZI1C0h5szHeYLFDBG/fHlJ0E8dCWmLz5207zBiYQkF/WsVNR4AVg6DA0ksb8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750178605; c=relaxed/simple;
-	bh=4tSUnrKwFhccExyKTenUWPhF5JjlAetq4jdpo6UwmQ8=;
+	s=arc-20240116; t=1750178607; c=relaxed/simple;
+	bh=Oud/0JPoomWQmHFuIArSRUJ9FgDh+S8qSij29+Y1xSQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EMQMYZhHkbm/6Vx6iBgNSNPN5IBD5VikU/YMvDSF64eFQhHz99Geb6Lak/mgPbXRVECEbDb+rnvUSAoA92sFh6N/GIEY/kFYjpQJs1xvdJjOTXZqnF5V82SGv1iE97EmjDT48EALiSZVeuLMt6Fb2c9lVS1NUAuC90yhlTd5AUw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gdEpzxv3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gQt+LJIvR+DZm3RuuMXmynf6l0X4SjSHMj3lfmmLIPM7Go95pyrGQK7r2HMdv9Vvib4AQjXYkR9CdKoT9II2Gxd8Gx+JHtOLHc2X/aMi4JsIS6baALRifkTRp+dpe1ey3PD+Kn6/MxIGobX2gav+A4WjX0hRmTJOJBCX0Exej3M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GNyoJoDC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gdEpzxv3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D27CC4CEE3;
-	Tue, 17 Jun 2025 16:43:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GNyoJoDC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D837C4CEE3;
+	Tue, 17 Jun 2025 16:43:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750178604;
-	bh=4tSUnrKwFhccExyKTenUWPhF5JjlAetq4jdpo6UwmQ8=;
+	s=korg; t=1750178607;
+	bh=Oud/0JPoomWQmHFuIArSRUJ9FgDh+S8qSij29+Y1xSQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gdEpzxv35VGouP7mXeVbVy0I188ldHcdEXrS4Xb9IhcyqpxNtz0vPbkKa2L/9hVIS
-	 GY11g1B5I8QXhvN+6kNrZ3Cnn4yDFUP02AogF6r8PCgsnKr6zAv+Bv9pD/EVwY5ZxN
-	 X/7FzTSbx3jC7hkPGS9ytFvunGGJzattLq/xKqF4=
+	b=GNyoJoDCxPPcukJRI8umGM27x2Olmy5cVkuGjx3oSNyuR/h4Lxwga1XNJspXVIzq0
+	 AP3WWf1nsiLYFtzbWLRk/fx9lDnevDpYjbeOOFG1KY75qzirlExpV0FleS79+3pMSr
+	 SVeS+7US/zkr/+Yo96BfVW3VIss1CVQEuDakcff4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jerome Brunet <jbrunet@baylibre.com>,
+	Hans Zhang <18255117159@163.com>,
 	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 497/780] PCI: rcar-gen4: set ep BAR4 fixed size
-Date: Tue, 17 Jun 2025 17:23:25 +0200
-Message-ID: <20250617152511.734846217@linuxfoundation.org>
+Subject: [PATCH 6.15 498/780] PCI: cadence: Fix runtime atomic count underflow
+Date: Tue, 17 Jun 2025 17:23:26 +0200
+Message-ID: <20250617152511.775038085@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
 References: <20250617152451.485330293@linuxfoundation.org>
@@ -51,35 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jerome Brunet <jbrunet@baylibre.com>
+From: Hans Zhang <18255117159@163.com>
 
-[ Upstream commit b584ab12d59f646b9254b2b16ff197d612fd4935 ]
+[ Upstream commit 8805f32a96d3b97cef07999fa6f52112678f7e65 ]
 
-On rcar-gen4, the ep BAR4 has a fixed size of 256B. Document this
-constraint in the epc features of the platform.
+If the call to pci_host_probe() in cdns_pcie_host_setup() fails, PM
+runtime count is decremented in the error path using pm_runtime_put_sync().
+But the runtime count is not incremented by this driver, but only by the
+callers (cdns_plat_pcie_probe/j721e_pcie_probe). And the callers also
+decrement the runtime PM count in their error path. So this leads to the
+below warning from the PM core:
 
-Fixes: e311b3834dfa ("PCI: rcar-gen4: Add endpoint mode support")
-Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
+	"runtime PM usage count underflow!"
+
+So fix it by getting rid of pm_runtime_put_sync() in the error path and
+directly return the errno.
+
+Fixes: 49e427e6bdd1 ("Merge branch 'pci/host-probe-refactor'")
+Signed-off-by: Hans Zhang <18255117159@163.com>
 Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Link: https://patch.msgid.link/20250328-rcar-gen4-bar4-v1-1-10bb6ce9ee7f@baylibre.com
+Link: https://patch.msgid.link/20250419133058.162048-1-18255117159@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pcie-rcar-gen4.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/pci/controller/cadence/pcie-cadence-host.c | 11 +----------
+ 1 file changed, 1 insertion(+), 10 deletions(-)
 
-diff --git a/drivers/pci/controller/dwc/pcie-rcar-gen4.c b/drivers/pci/controller/dwc/pcie-rcar-gen4.c
-index fc872dd35029c..02638ec442e70 100644
---- a/drivers/pci/controller/dwc/pcie-rcar-gen4.c
-+++ b/drivers/pci/controller/dwc/pcie-rcar-gen4.c
-@@ -403,6 +403,7 @@ static const struct pci_epc_features rcar_gen4_pcie_epc_features = {
- 	.msix_capable = false,
- 	.bar[BAR_1] = { .type = BAR_RESERVED, },
- 	.bar[BAR_3] = { .type = BAR_RESERVED, },
-+	.bar[BAR_4] = { .type = BAR_FIXED, .fixed_size = 256 },
- 	.bar[BAR_5] = { .type = BAR_RESERVED, },
- 	.align = SZ_1M,
- };
+diff --git a/drivers/pci/controller/cadence/pcie-cadence-host.c b/drivers/pci/controller/cadence/pcie-cadence-host.c
+index 8af95e9da7cec..741e10a575ec7 100644
+--- a/drivers/pci/controller/cadence/pcie-cadence-host.c
++++ b/drivers/pci/controller/cadence/pcie-cadence-host.c
+@@ -570,14 +570,5 @@ int cdns_pcie_host_setup(struct cdns_pcie_rc *rc)
+ 	if (!bridge->ops)
+ 		bridge->ops = &cdns_pcie_host_ops;
+ 
+-	ret = pci_host_probe(bridge);
+-	if (ret < 0)
+-		goto err_init;
+-
+-	return 0;
+-
+- err_init:
+-	pm_runtime_put_sync(dev);
+-
+-	return ret;
++	return pci_host_probe(bridge);
+ }
 -- 
 2.39.5
 
