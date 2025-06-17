@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A240238C0A;
-	Tue, 17 Jun 2025 16:28:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1D7B1FBEA8;
+	Tue, 17 Jun 2025 16:28:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177714; cv=none; b=MscrBV+Rbyu65IHPyERIRMRiYlcN1csRFVIuuKRAZWxO+nFcK7aPcOoLp/ifw+9MdMZdg0ptbEMSfza3v4G8q9/geZSQitS+ax8wyrE1i7jUmNS5WSPTvBx7Kt+JrmeIJ3QPB0RPsFlG1m9o/gO8y6x9sMQlHFThFmRxGvL15sE=
+	t=1750177718; cv=none; b=QPYHJV++hWBBEbtiNpm/NuFLZD/BQZT88jbpXPgvWFm/QuMBXcwAjXkDzrCeWH3+d5qKQhERtHjVHJ7F7uD7Gf5DCNm874YsEbFLr4ueHxbd/LoFYb0vKkZ6V+94ZZWYUFWlAOEl+12MJ6wki+wjxfZ8OX2SXxAbBeAwrgXq754=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177714; c=relaxed/simple;
-	bh=uB4IFMb7KM5juBOpZv10i78lxEv3wX6il79QCJi71T4=;
+	s=arc-20240116; t=1750177718; c=relaxed/simple;
+	bh=pZ41FbTikQJ76kJwHgabu/aa4FOZwBqOHabK+4pEfUc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rtwxZOpDcCd31ZkwRnTgb4kkVjjcqZwqu0Vbdle+m+f9OKTPAD2BXUWZBF8JHX5KC02Zsx2d+VWQuRHe3AjqOYE7vu9uF6PSrp+t/WqvubgaRUbgxFSC4g6ImPn320t6ND6uDLotq+DEFtdaNSJ0OfIw9hts8qWFkei51IO6u6A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q4dDjSCz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qt2ORNGSiF05aImugsntdYMyCUdJnQi0RIxA4bCRjP1d53X3hRuZpENBMg9FQ/lPaLhkn8RnAigPLBWyZdtxvzy9NMRxiF0Fl1Opb6e5VdcFQ1l+GminevW40N4mTpRMv+NItMyoHY+y73E1EQZ5xWzs2ZB5RuugTt7K7PlMETQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qYXwM0mw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q4dDjSCz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3DB0C4CEE3;
-	Tue, 17 Jun 2025 16:28:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qYXwM0mw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEC4DC4CEE3;
+	Tue, 17 Jun 2025 16:28:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177714;
-	bh=uB4IFMb7KM5juBOpZv10i78lxEv3wX6il79QCJi71T4=;
+	s=korg; t=1750177717;
+	bh=pZ41FbTikQJ76kJwHgabu/aa4FOZwBqOHabK+4pEfUc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q4dDjSCzi9jEzBCHeDcpRj52Zp77x5G8lkMXjQ+NzUYPVoH41OVAuoqfA+ZPE1ddA
-	 Xw9eOsqLkNzPcQKkEAQELxT3VxoILxytZqiN/ZzFnPAqn6ZIetoNq1Aze55RrQic40
-	 GT+2K0wZ5cVnp4GSq4LOjx7EfXMNqFKGYb7uHwq0=
+	b=qYXwM0mwGdngIzZWjoIwQFluD9XkdYZe5RBYr+RP9dd2/3ZkElxC2xb7KEKYOe84c
+	 xkVn0hxx6NCe6xzjw7xd4V39TwI5fb/89uex1sBU1l6dlhSVkTAR4k2mW9Zhr0Dc7h
+	 a5rY4b2rlZ/r+vcLSsRA7nauTDNKKWQA+3rXFs/8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Machata <petrm@nvidia.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	David Ahern <dsahern@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Dzmitry Sankouski <dsankouski@gmail.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 385/512] seg6: Fix validation of nexthop addresses
-Date: Tue, 17 Jun 2025 17:25:51 +0200
-Message-ID: <20250617152435.184844813@linuxfoundation.org>
+Subject: [PATCH 6.15 350/780] arm64: dts: qcom: sdm845-starqltechn: fix usb regulator mistake
+Date: Tue, 17 Jun 2025 17:20:58 +0200
+Message-ID: <20250617152505.708580841@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,50 +48,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Dzmitry Sankouski <dsankouski@gmail.com>
 
-[ Upstream commit 7632fedb266d93ed0ed9f487133e6c6314a9b2d1 ]
+[ Upstream commit 242e4126ee007b95765c21a9d74651fdcf221f2b ]
 
-The kernel currently validates that the length of the provided nexthop
-address does not exceed the specified length. This can lead to the
-kernel reading uninitialized memory if user space provided a shorter
-length than the specified one.
+Usb regulator was wrongly pointed to vreg_l1a_0p875.
+However, on starqltechn it's powered from vreg_l5a_0p8.
 
-Fix by validating that the provided length exactly matches the specified
-one.
-
-Fixes: d1df6fd8a1d2 ("ipv6: sr: define core operations for seg6local lightweight tunnel")
-Reviewed-by: Petr Machata <petrm@nvidia.com>
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://patch.msgid.link/20250604113252.371528-1-idosch@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: d711b22eee55 ("arm64: dts: qcom: starqltechn: add initial device tree for starqltechn")
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Signed-off-by: Dzmitry Sankouski <dsankouski@gmail.com>
+Link: https://lore.kernel.org/r/20250225-starqltechn_integration_upstream-v9-3-a5d80375cb66@gmail.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/seg6_local.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/net/ipv6/seg6_local.c b/net/ipv6/seg6_local.c
-index c74705ead9849..e445a0a45568d 100644
---- a/net/ipv6/seg6_local.c
-+++ b/net/ipv6/seg6_local.c
-@@ -1644,10 +1644,8 @@ static const struct nla_policy seg6_local_policy[SEG6_LOCAL_MAX + 1] = {
- 	[SEG6_LOCAL_SRH]	= { .type = NLA_BINARY },
- 	[SEG6_LOCAL_TABLE]	= { .type = NLA_U32 },
- 	[SEG6_LOCAL_VRFTABLE]	= { .type = NLA_U32 },
--	[SEG6_LOCAL_NH4]	= { .type = NLA_BINARY,
--				    .len = sizeof(struct in_addr) },
--	[SEG6_LOCAL_NH6]	= { .type = NLA_BINARY,
--				    .len = sizeof(struct in6_addr) },
-+	[SEG6_LOCAL_NH4]	= NLA_POLICY_EXACT_LEN(sizeof(struct in_addr)),
-+	[SEG6_LOCAL_NH6]	= NLA_POLICY_EXACT_LEN(sizeof(struct in6_addr)),
- 	[SEG6_LOCAL_IIF]	= { .type = NLA_U32 },
- 	[SEG6_LOCAL_OIF]	= { .type = NLA_U32 },
- 	[SEG6_LOCAL_BPF]	= { .type = NLA_NESTED },
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts b/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
+index 6fc30fd1262b8..f3f2b25883d81 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
++++ b/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
+@@ -135,8 +135,6 @@
+ 		vdda_sp_sensor:
+ 		vdda_ufs1_core:
+ 		vdda_ufs2_core:
+-		vdda_usb1_ss_core:
+-		vdda_usb2_ss_core:
+ 		vreg_l1a_0p875: ldo1 {
+ 			regulator-min-microvolt = <880000>;
+ 			regulator-max-microvolt = <880000>;
+@@ -157,6 +155,7 @@
+ 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+ 		};
+ 
++		vdda_usb1_ss_core:
+ 		vdd_wcss_cx:
+ 		vdd_wcss_mx:
+ 		vdda_wcss_pll:
 -- 
 2.39.5
 
