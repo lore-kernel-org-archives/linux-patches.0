@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D014D2DFF3B;
-	Tue, 17 Jun 2025 16:39:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 298842DFF1B;
+	Tue, 17 Jun 2025 16:39:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750178350; cv=none; b=qWdzEA/FW7+JpKueGoiJFL3rr0aYdnot1T7Uw3xDPo6ltIF+3Htr3F7lVAKHirsaA2+37fOW2BMpaUWejn89II8LFme14N5b/OUawRTR/fbQifDmd636ptTS7azA1P1mzBLpnUEXMN3qmmkus5GO0SDyU0f3RLs633GGCK/nUE4=
+	t=1750178354; cv=none; b=oMlXux6Wxll55j++whQstqel7HMwg0NR8f31AXtsq6HBucsxcrG3QLILZ8W+Lcdck59woykCnS6NZUSiB4qbcZnJBCFL63qlC2PoCKrmZacflBT8NQhI/Agq0ejxIX/KEZMzTBMb4bDhOJWaz7rqBSyaoHYXdLMDFnmzCf6teg8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750178350; c=relaxed/simple;
-	bh=QLitYBQgP8GImp3855rm7NiUvQl2a/3O2dce40UJDDs=;
+	s=arc-20240116; t=1750178354; c=relaxed/simple;
+	bh=Dgq50nzt/x3boONEJ36VvSkBijAXIUjhSoLWavbHH2I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G268kSvzRHzvOhbcYch1UKgXP36lNZKuQiTqXn9o6LcDIEtnLEDFUMDWk1T6NJkMsz8f3BoIw+W2uYPbqp3IcUtdV9y6NGcD8mezH13ifStai0IVxqoe9l3xmlLY3YwxW45NtcXhFh72uphbWscj0e6gjh1sWRKOSnOnW3GBYRs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x7Q8iQta; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J85HvWXCuBq1zcIoPukcZwE7f7TQqFHn/WIxOCeXREZvDUNNJb/huH0uxQ/rDeRYVSD+ZdXenGgIZzkvBHxspGiXiDujSIubQdvb/u2mQLrmkoPdnAQwWXyMaBDcMfJv/6wMrtLxrJ8FYZWaK2Wlxq71mA7Usx2B3g+N+VftiE8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MnoL8jmd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x7Q8iQta"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4050EC4CEE3;
-	Tue, 17 Jun 2025 16:39:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MnoL8jmd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84BAEC4CEE3;
+	Tue, 17 Jun 2025 16:39:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750178350;
-	bh=QLitYBQgP8GImp3855rm7NiUvQl2a/3O2dce40UJDDs=;
+	s=korg; t=1750178354;
+	bh=Dgq50nzt/x3boONEJ36VvSkBijAXIUjhSoLWavbHH2I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x7Q8iQtaIpCuAHAVKAw5zrKj6kpjL9PV6vM9CK6UI+MHx9DTbMwQgzfm7J1Q5lsHj
-	 FkCNfDcd+1ae0YTAPEa8F38Q4HhVzMSU3vMVKwRU/XwL1jK/0PwiL/4bsD6bthUdrJ
-	 zdmUWEWBLArL8gdVDbn0kp1849Lj3E+9k/UDCmuY=
+	b=MnoL8jmdq51kybyBYs6Z/OknpRCAVR/gWNUdojcH+e3652HGEWfG1tlbnU5RbVMZc
+	 LskULCCkkxWEIWEU//uguBfkeJEaYnIsOx1sZT4Z5V8KplxKKkM7rPgVyw5jB/DT2f
+	 ReeF7uKCN3v9MCxqm+3Mkx2SsD7eAijw52sfzkig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Aditya Garg <gargaditya08@live.com>,
-	Jiri Kosina <jkosina@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 430/780] HID: HID_APPLETB_KBD should depend on X86
-Date: Tue, 17 Jun 2025 17:22:18 +0200
-Message-ID: <20250617152508.976249968@linuxfoundation.org>
+	Suleiman Souhlal <suleiman@google.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Jiri Olsa <jolsa@kernel.org>
+Subject: [PATCH 6.12 483/512] tools/resolve_btfids: Fix build when cross compiling kernel with clang.
+Date: Tue, 17 Jun 2025 17:27:29 +0200
+Message-ID: <20250617152439.185791071@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,41 +47,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Suleiman Souhlal <suleiman@google.com>
 
-[ Upstream commit 2a647d400afecdf12ba5905424e1337fbc2d6750 ]
+commit a298bbab903e3fb4cbe16d36d6195e68fad1b776 upstream.
 
-The Apple Touch Bar is only present on x86 MacBook Pros.  Hence add a
-dependency on X86, to prevent asking the user about this driver when
-configuring a kernel for a different architecture.
+When cross compiling the kernel with clang, we need to override
+CLANG_CROSS_FLAGS when preparing the step libraries.
 
-Fixes: 8e9b9152cfbdc2a9 ("HID: hid-appletb-kbd: add driver for the keyboard mode of Apple Touch Bars")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: Aditya Garg <gargaditya08@live.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Prior to commit d1d096312176 ("tools: fix annoying "mkdir -p ..." logs
+when building tools in parallel"), MAKEFLAGS would have been set to a
+value that wouldn't set a value for CLANG_CROSS_FLAGS, hiding the
+fact that we weren't properly overriding it.
+
+Fixes: 56a2df7615fa ("tools/resolve_btfids: Compile resolve_btfids as host program")
+Signed-off-by: Suleiman Souhlal <suleiman@google.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Acked-by: Jiri Olsa <jolsa@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/bpf/20250606074538.1608546-1-suleiman@google.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ tools/bpf/resolve_btfids/Makefile |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hid/Kconfig b/drivers/hid/Kconfig
-index a503252702b7b..119e5190a2df7 100644
---- a/drivers/hid/Kconfig
-+++ b/drivers/hid/Kconfig
-@@ -163,6 +163,7 @@ config HID_APPLETB_KBD
- 	depends on USB_HID
- 	depends on BACKLIGHT_CLASS_DEVICE
- 	depends on INPUT
-+	depends on X86 || COMPILE_TEST
- 	select INPUT_SPARSEKMAP
- 	select HID_APPLETB_BL
- 	help
--- 
-2.39.5
-
+--- a/tools/bpf/resolve_btfids/Makefile
++++ b/tools/bpf/resolve_btfids/Makefile
+@@ -19,7 +19,7 @@ endif
+ 
+ # Overrides for the prepare step libraries.
+ HOST_OVERRIDES := AR="$(HOSTAR)" CC="$(HOSTCC)" LD="$(HOSTLD)" ARCH="$(HOSTARCH)" \
+-		  CROSS_COMPILE="" EXTRA_CFLAGS="$(HOSTCFLAGS)"
++		  CROSS_COMPILE="" CLANG_CROSS_FLAGS="" EXTRA_CFLAGS="$(HOSTCFLAGS)"
+ 
+ RM      ?= rm
+ HOSTCC  ?= gcc
 
 
