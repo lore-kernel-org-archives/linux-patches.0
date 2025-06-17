@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9DEA238D49;
-	Tue, 17 Jun 2025 16:27:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A78B8F54;
+	Tue, 17 Jun 2025 16:27:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177658; cv=none; b=b1Gcsxk+qKiiosjuvhKue3J7f+5cMtffkxFwS5t2eJF8c4ICrVehS4HzdWkLnRYR6t2hIRNcTFUMmd5hbui9ysbaW8Z5tsSCJstu2adR7+0EVceoAdYWACXqRmqCK/v5YdfIKSGGrfwEEijId6Vuqvr+5s1EfvYGdM9eNQ1HLl4=
+	t=1750177662; cv=none; b=eTBqChudGxSsyoIV4oAfBp1iDiKBva8qATgkWimn9erxJklg7fwfsc0CJfyGU3hYX+qKmUIGFY6ie3bHEUBI0xiZkpEyvhOAePEv1Yz+QkMALW5FpgXJ07vuOr3qz8KdMWkkV/4Mbc3RCMPrtiSlyLKZF0RVRP5OWy1shT38/kQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177658; c=relaxed/simple;
-	bh=nMmi431Re2rC0lwPNhh/GWPl5lOSSEKCgtpLIOkq2yU=;
+	s=arc-20240116; t=1750177662; c=relaxed/simple;
+	bh=pV38S/SUkuX+0gBB24UyzF2U8cBe+5hroHnBP4KkpQE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cE8p1o6tAC9zTy62EFIC0GpoPCx63ztZDtoVZoiBYU7Yo7gX1brDjJi0oQu/tzZ89KxZgh3QV3Gv9OuyRMT7XNwZW/+osbT/7Tvdj+d7uT2BJRug5GViVia6EQGcF+7Iz16Gp6Oz3S9ME0t7TxLds6YvXb2HtCZYpJoPXm5E0bY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v5idy+/i; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N6EZCT8SpHCYwu3RXygL4eDRcflBcAgCv4Vt8Nav7V/YjcN8J1tGo+Rs8Yw9uJxKAefeqtGVULLwAplbNw3gX7nhPzpfEZjemucfUFtIAwdnrGkT591xXJtqAa0fVV+cqxGWtcglC4IHrlueHbY5v2zjUTzk/So9xfVF79x1M7A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bhb684Zz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v5idy+/i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20437C4CEE3;
-	Tue, 17 Jun 2025 16:27:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bhb684Zz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D200C4CEE3;
+	Tue, 17 Jun 2025 16:27:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177658;
-	bh=nMmi431Re2rC0lwPNhh/GWPl5lOSSEKCgtpLIOkq2yU=;
+	s=korg; t=1750177662;
+	bh=pV38S/SUkuX+0gBB24UyzF2U8cBe+5hroHnBP4KkpQE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v5idy+/iIgHSWs/0YzQHnRauZEFRRoKoIA3khqxPXVuiH/f1uG8Orwlw9M2dPRUm2
-	 tb1iq0xj8oC1b7f+B+7jo7U5cUCLfWKwhvXP2PFi02UVqjmq+4Y76hLrRuPE+eKrbp
-	 8JVjLXPODslgctYALa6cAoaPcW1KJ2WAhf4Skszg=
+	b=bhb684Zzw4dTlIUJNrxFeoWy7ySt9HXDpJjOd2An63iXXEOBR4jabdC4+IS9Pz/UH
+	 c7IC0drFDoQ+ZZ2SvBupYKOo2Hln+qmJgIktTw13mbQygQ4/pTJOeTvxogrjmX9PP9
+	 MpkO5UJhaXV3cUEMgFISHtO5HKpRz0xn911Uzzb4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Meghana Malladi <m-malladi@ti.com>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 342/780] arm64: dts: qcom: sm8650: setup gpu thermal with higher temperatures
-Date: Tue, 17 Jun 2025 17:20:50 +0200
-Message-ID: <20250617152505.381016484@linuxfoundation.org>
+Subject: [PATCH 6.12 378/512] net: ti: icssg-prueth: Fix swapped TX stats for MII interfaces.
+Date: Tue, 17 Jun 2025 17:25:44 +0200
+Message-ID: <20250617152434.911742449@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,242 +48,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Neil Armstrong <neil.armstrong@linaro.org>
+From: Meghana Malladi <m-malladi@ti.com>
 
-[ Upstream commit 2250f65b32565eb8b757e89248c75977f370f498 ]
+[ Upstream commit 919d763d609428c2680ec8159257d9655f002f89 ]
 
-On the SM8650, the dynamic clock and voltage scaling (DCVS) for the GPU
-is done from the HLOS, but the GPU can achieve a much higher temperature
-before failing according the reference downstream implementation.
+In MII mode, Tx lines are swapped for port0 and port1, which means
+Tx port0 receives data from PRU1 and the Tx port1 receives data from
+PRU0. This is an expected hardware behavior and reading the Tx stats
+needs to be handled accordingly in the driver. Update the driver to
+read Tx stats from the PRU1 for port0 and PRU0 for port1.
 
-Set higher temperatures in the GPU trip points corresponding to
-the temperatures provided by Qualcomm in the dowstream source, much
-closer to the junction temperature and with a higher critical
-temperature trip in the case the HLOS DCVS cannot handle the
-temperature surge.
-
-The tsens MAX_THRESHOLD is set to 120C on those platforms, so set
-the hot to 110C to leave a chance to HLOS to react and critical to
-115C to avoid the monitor thermal shutdown.
-
-Fixes: 497624ed5506 ("arm64: dts: qcom: sm8650: Throttle the GPU when overheating")
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250203-topic-sm8650-thermal-cpu-idle-v4-2-65e35f307301@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: c1e10d5dc7a1 ("net: ti: icssg-prueth: Add ICSSG Stats")
+Signed-off-by: Meghana Malladi <m-malladi@ti.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250603052904.431203-1-m-malladi@ti.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8650.dtsi | 64 ++++++++++++++--------------
- 1 file changed, 32 insertions(+), 32 deletions(-)
+ drivers/net/ethernet/ti/icssg/icssg_stats.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-index c8a2a76a98f00..9591c13edbb9d 100644
---- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-@@ -6537,20 +6537,20 @@
+diff --git a/drivers/net/ethernet/ti/icssg/icssg_stats.c b/drivers/net/ethernet/ti/icssg/icssg_stats.c
+index 6f0edae38ea24..172ae38381b45 100644
+--- a/drivers/net/ethernet/ti/icssg/icssg_stats.c
++++ b/drivers/net/ethernet/ti/icssg/icssg_stats.c
+@@ -29,6 +29,14 @@ void emac_update_hardware_stats(struct prueth_emac *emac)
+ 	spin_lock(&prueth->stats_lock);
  
- 			trips {
- 				gpu0_alert0: trip-point0 {
--					temperature = <85000>;
-+					temperature = <95000>;
- 					hysteresis = <1000>;
- 					type = "passive";
- 				};
- 
- 				trip-point1 {
--					temperature = <90000>;
-+					temperature = <110000>;
- 					hysteresis = <1000>;
- 					type = "hot";
- 				};
- 
- 				trip-point2 {
--					temperature = <110000>;
--					hysteresis = <1000>;
-+					temperature = <115000>;
-+					hysteresis = <0>;
- 					type = "critical";
- 				};
- 			};
-@@ -6570,20 +6570,20 @@
- 
- 			trips {
- 				gpu1_alert0: trip-point0 {
--					temperature = <85000>;
-+					temperature = <95000>;
- 					hysteresis = <1000>;
- 					type = "passive";
- 				};
- 
- 				trip-point1 {
--					temperature = <90000>;
-+					temperature = <110000>;
- 					hysteresis = <1000>;
- 					type = "hot";
- 				};
- 
- 				trip-point2 {
--					temperature = <110000>;
--					hysteresis = <1000>;
-+					temperature = <115000>;
-+					hysteresis = <0>;
- 					type = "critical";
- 				};
- 			};
-@@ -6603,20 +6603,20 @@
- 
- 			trips {
- 				gpu2_alert0: trip-point0 {
--					temperature = <85000>;
-+					temperature = <95000>;
- 					hysteresis = <1000>;
- 					type = "passive";
- 				};
- 
- 				trip-point1 {
--					temperature = <90000>;
-+					temperature = <110000>;
- 					hysteresis = <1000>;
- 					type = "hot";
- 				};
- 
- 				trip-point2 {
--					temperature = <110000>;
--					hysteresis = <1000>;
-+					temperature = <115000>;
-+					hysteresis = <0>;
- 					type = "critical";
- 				};
- 			};
-@@ -6636,20 +6636,20 @@
- 
- 			trips {
- 				gpu3_alert0: trip-point0 {
--					temperature = <85000>;
-+					temperature = <95000>;
- 					hysteresis = <1000>;
- 					type = "passive";
- 				};
- 
- 				trip-point1 {
--					temperature = <90000>;
-+					temperature = <110000>;
- 					hysteresis = <1000>;
- 					type = "hot";
- 				};
- 
- 				trip-point2 {
--					temperature = <110000>;
--					hysteresis = <1000>;
-+					temperature = <115000>;
-+					hysteresis = <0>;
- 					type = "critical";
- 				};
- 			};
-@@ -6669,20 +6669,20 @@
- 
- 			trips {
- 				gpu4_alert0: trip-point0 {
--					temperature = <85000>;
-+					temperature = <95000>;
- 					hysteresis = <1000>;
- 					type = "passive";
- 				};
- 
- 				trip-point1 {
--					temperature = <90000>;
-+					temperature = <110000>;
- 					hysteresis = <1000>;
- 					type = "hot";
- 				};
- 
- 				trip-point2 {
--					temperature = <110000>;
--					hysteresis = <1000>;
-+					temperature = <115000>;
-+					hysteresis = <0>;
- 					type = "critical";
- 				};
- 			};
-@@ -6702,20 +6702,20 @@
- 
- 			trips {
- 				gpu5_alert0: trip-point0 {
--					temperature = <85000>;
-+					temperature = <95000>;
- 					hysteresis = <1000>;
- 					type = "passive";
- 				};
- 
- 				trip-point1 {
--					temperature = <90000>;
-+					temperature = <110000>;
- 					hysteresis = <1000>;
- 					type = "hot";
- 				};
- 
- 				trip-point2 {
--					temperature = <110000>;
--					hysteresis = <1000>;
-+					temperature = <115000>;
-+					hysteresis = <0>;
- 					type = "critical";
- 				};
- 			};
-@@ -6735,20 +6735,20 @@
- 
- 			trips {
- 				gpu6_alert0: trip-point0 {
--					temperature = <85000>;
-+					temperature = <95000>;
- 					hysteresis = <1000>;
- 					type = "passive";
- 				};
- 
- 				trip-point1 {
--					temperature = <90000>;
-+					temperature = <110000>;
- 					hysteresis = <1000>;
- 					type = "hot";
- 				};
- 
- 				trip-point2 {
--					temperature = <110000>;
--					hysteresis = <1000>;
-+					temperature = <115000>;
-+					hysteresis = <0>;
- 					type = "critical";
- 				};
- 			};
-@@ -6768,20 +6768,20 @@
- 
- 			trips {
- 				gpu7_alert0: trip-point0 {
--					temperature = <85000>;
-+					temperature = <95000>;
- 					hysteresis = <1000>;
- 					type = "passive";
- 				};
- 
- 				trip-point1 {
--					temperature = <90000>;
-+					temperature = <110000>;
- 					hysteresis = <1000>;
- 					type = "hot";
- 				};
- 
- 				trip-point2 {
--					temperature = <110000>;
--					hysteresis = <1000>;
-+					temperature = <115000>;
-+					hysteresis = <0>;
- 					type = "critical";
- 				};
- 			};
+ 	for (i = 0; i < ARRAY_SIZE(icssg_all_miig_stats); i++) {
++		/* In MII mode TX lines are swapped inside ICSSG, so read Tx stats
++		 * from slice1 for port0 and slice0 for port1 to get accurate Tx
++		 * stats for a given port
++		 */
++		if (emac->phy_if == PHY_INTERFACE_MODE_MII &&
++		    icssg_all_miig_stats[i].offset >= ICSSG_TX_PACKET_OFFSET &&
++		    icssg_all_miig_stats[i].offset <= ICSSG_TX_BYTE_OFFSET)
++			base = stats_base[slice ^ 1];
+ 		regmap_read(prueth->miig_rt,
+ 			    base + icssg_all_miig_stats[i].offset,
+ 			    &val);
 -- 
 2.39.5
 
