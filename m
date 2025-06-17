@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D446E2EE5E3;
-	Tue, 17 Jun 2025 15:45:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B80D92EE5F4;
+	Tue, 17 Jun 2025 15:45:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175140; cv=none; b=ZNg5ZSdTAGihhh0QxFiyhdyDMZMv32vpXDoL/OeuTUB3WF2kldRjk7SuS6GvUeexY8J1awWatRVrj9xViTVHQSnScGLe5twW+dtK4D+Nae0MCtXBRpMWfcrP4wKavn29ooTJ1x37tL9cit/cZMkQ2N/bvJsH4AP8PS/hpHBgVzc=
+	t=1750175143; cv=none; b=Xau+gU7ahRCXcpPX0iefsPtuRteZBq3Mbq+MF5SV8vTGHDGuWRSwhPnyOdVEUFJ1Qo1kBUSiOb9H3dixoWbRBnmFFgrKafOBC4cZBRNfS+jtR6ETLeqlsW6xSQG2+2pqVR7FKogSQeawSVb1rCtjoLAl0EkRty1ddDWQyWH3vqo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175140; c=relaxed/simple;
-	bh=P6kMKSZyofVnwfcVZN1cP6ObYgdfLMd5apA/uXxSsec=;
+	s=arc-20240116; t=1750175143; c=relaxed/simple;
+	bh=TkKJGXe/jkjnOc+TLmMR6UN480rIdcPU34dOfHtxbbI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LRE1w3l9uPdaZVX4i4dduFSFXYRh4ZsfnODjwtfKjby0vBbT5qJQgnaU6xiCKBi/uejcHC+UW+rt8J/gRCo9lc+TlGo0sC2s3uIXFNDtw9qnVxTWtPj9w5EBOdAOlP6h/Jv4rA1/VlYQM8WP8vNC8OZb4IprK1QGDRkUfUgRt8Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ny7mfZPn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AVOEb7L3JTwyJ9CvHrzNcSAeBOtvYCu9Wqnkz1fUBwFzyvdrMHvfTt6Y8CtZ3hq2m/jZNp7TFnrO/qkAIq1AlzM+K5PRvuljtDsQG783g/czt6EfQUPAdrQBCClFQ0vcdYXeph7XFs54k88FYmOXmoclJBtQBLgpTBxyxRYY6gk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XMAjUYUx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ny7mfZPn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6910C4CEE3;
-	Tue, 17 Jun 2025 15:45:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XMAjUYUx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26167C4CEF1;
+	Tue, 17 Jun 2025 15:45:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175140;
-	bh=P6kMKSZyofVnwfcVZN1cP6ObYgdfLMd5apA/uXxSsec=;
+	s=korg; t=1750175143;
+	bh=TkKJGXe/jkjnOc+TLmMR6UN480rIdcPU34dOfHtxbbI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ny7mfZPnN540ynlY0iymOc5laeky9Z/qHotcJa58beDcvsbAFo9X14uxVWWtDuEMO
-	 blEyfeo4Ry1ee3FoTICi+ddKlNVJrpSPWf5cIVfblJrO9Dy/SqKr9VRtFF+XLLZFaJ
-	 CnpCiratZJUh5XRYIv4ZTq5jFxgrgXUAk6rwuTjg=
+	b=XMAjUYUx5uCbBZnrmP0fy/EE1kMYytPW9hi6ze7rF61yVrbmE7B3DMSGNNMcC7BN7
+	 oi5oMjyiRwPCK4MXfdv712xWBYT4KkRuiXNTHtAPe5E3Ub5o8jkWayled9mwpOyDeU
+	 Q7xckvh91EA8zSFHlC+5himu238MuXnjRIs+hruM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Longfang Liu <liulongfang@huawei.com>,
-	Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
-	Alex Williamson <alex.williamson@redhat.com>,
+	Liviu Dudau <liviu.dudau@arm.com>,
+	Steven Price <steven.price@arm.com>,
+	Boris Brezillon <boris.brezillon@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 129/356] hisi_acc_vfio_pci: add eq and aeq interruption restore
-Date: Tue, 17 Jun 2025 17:24:04 +0200
-Message-ID: <20250617152343.431289526@linuxfoundation.org>
+Subject: [PATCH 6.12 073/512] drm/panthor: Update panthor_mmu::irq::mask when needed
+Date: Tue, 17 Jun 2025 17:20:39 +0200
+Message-ID: <20250617152422.540251448@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-References: <20250617152338.212798615@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,66 +48,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Longfang Liu <liulongfang@huawei.com>
+From: Boris Brezillon <boris.brezillon@collabora.com>
 
-[ Upstream commit 3495cec0787721ba7a9d5c19d0bbb66d182de584 ]
+[ Upstream commit 8ba64cf2f358079d09faba7529aad2b0a46c7903 ]
 
-In order to ensure that the task packets of the accelerator
-device are not lost during the migration process, it is necessary
-to send an EQ and AEQ command to the device after the live migration
-is completed and to update the completion position of the task queue.
+When we clear the faulty bits in the AS mask, we also need to update
+the panthor_mmu::irq::mask field otherwise our IRQ handler won't get
+called again until the GPU is reset.
 
-Let the device recheck the completed tasks data and if there are
-uncollected packets, device resend a task completion interrupt
-to the software.
+Changes in v2:
+- Add Liviu's R-b
 
-Fixes: b0eed085903e ("hisi_acc_vfio_pci: Add support for VFIO live migration")
-Signed-off-by: Longfang Liu <liulongfang@huawei.com>
-Reviewed-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
-Link: https://lore.kernel.org/r/20250510081155.55840-3-liulongfang@huawei.com
-Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
+Changes in v3:
+- Add Steve's R-b
+
+Fixes: 647810ec2476 ("drm/panthor: Add the MMU/VM logical block")
+Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
+Reviewed-by: Steven Price <steven.price@arm.com>
+Link: https://lore.kernel.org/r/20250404080933.2912674-4-boris.brezillon@collabora.com
+Signed-off-by: Boris Brezillon <boris.brezillon@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ drivers/gpu/drm/panthor/panthor_mmu.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c b/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
-index d09e7d295625d..521f969e1c608 100644
---- a/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
-+++ b/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
-@@ -470,6 +470,19 @@ static int vf_qm_get_match_data(struct hisi_acc_vf_core_device *hisi_acc_vdev,
- 	return 0;
- }
- 
-+static void vf_qm_xeqc_save(struct hisi_qm *qm,
-+			    struct hisi_acc_vf_migration_file *migf)
-+{
-+	struct acc_vf_data *vf_data = &migf->vf_data;
-+	u16 eq_head, aeq_head;
-+
-+	eq_head = vf_data->qm_eqc_dw[0] & 0xFFFF;
-+	qm_db(qm, 0, QM_DOORBELL_CMD_EQ, eq_head, 0);
-+
-+	aeq_head = vf_data->qm_aeqc_dw[0] & 0xFFFF;
-+	qm_db(qm, 0, QM_DOORBELL_CMD_AEQ, aeq_head, 0);
-+}
-+
- static int vf_qm_load_data(struct hisi_acc_vf_core_device *hisi_acc_vdev,
- 			   struct hisi_acc_vf_migration_file *migf)
- {
-@@ -566,6 +579,9 @@ static int vf_qm_state_save(struct hisi_acc_vf_core_device *hisi_acc_vdev,
+diff --git a/drivers/gpu/drm/panthor/panthor_mmu.c b/drivers/gpu/drm/panthor/panthor_mmu.c
+index 0e6f94df690dd..b57824abeb9ee 100644
+--- a/drivers/gpu/drm/panthor/panthor_mmu.c
++++ b/drivers/gpu/drm/panthor/panthor_mmu.c
+@@ -780,6 +780,7 @@ int panthor_vm_active(struct panthor_vm *vm)
+ 	if (ptdev->mmu->as.faulty_mask & panthor_mmu_as_fault_mask(ptdev, as)) {
+ 		gpu_write(ptdev, MMU_INT_CLEAR, panthor_mmu_as_fault_mask(ptdev, as));
+ 		ptdev->mmu->as.faulty_mask &= ~panthor_mmu_as_fault_mask(ptdev, as);
++		ptdev->mmu->irq.mask |= panthor_mmu_as_fault_mask(ptdev, as);
+ 		gpu_write(ptdev, MMU_INT_MASK, ~ptdev->mmu->as.faulty_mask);
  	}
- 
- 	migf->total_length = sizeof(struct acc_vf_data);
-+	/* Save eqc and aeqc interrupt information */
-+	vf_qm_xeqc_save(vf_qm, migf);
-+
- 	return 0;
- }
  
 -- 
 2.39.5
