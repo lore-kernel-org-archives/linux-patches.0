@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A5662264A5;
-	Tue, 17 Jun 2025 16:22:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D05662CCC5;
+	Tue, 17 Jun 2025 16:22:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177366; cv=none; b=X77ZisLqyM92Z3ia2/QeJa+kAAu4QbtD8iCw5rx0c9EC+5YQf/NXhMW3Ts+jNbyuiHhgvVSvKd9xyExqE1Bg4BLl5Jv3VQM5tq+8F2fOHMZ786jaLyxjZUUV55Ewq526ckJLV2DgCPUIXBfmKn26D6xQQG6RjdVl0yqTl+EXpIs=
+	t=1750177369; cv=none; b=J94LG+rCogXTveDiDT9AofE+nr9tuoGegn7QpBx7u0y/ug2HUcc05Ab7B8tffMX/3KG/MYLmwGbFQIX1mg1quruzpQP5OFipUhv2eYR+j1hS+Jqz9vrvFgaQRCeBWo5yNwxQpxrZ3oYLgzxGldS+66xf0ZY0CftlcqUTLIMHXyA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177366; c=relaxed/simple;
-	bh=YKeYZ8kqf1Z1zTA9kS+3VvPtptV87jOKvIu3zcRwmE0=;
+	s=arc-20240116; t=1750177369; c=relaxed/simple;
+	bh=FPVyktUG+yUKuoTDI1K6LIEK08UggPS01544AxjgETk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m9lwd2shjedWH/zBlke/Z4/7yTaINkYZfbhtnIBzYcdKBt38Gh1J4Rg5oc5e+4Td8RNDxvMlqx4WSg7dGgt9PkWoS7pmaDqRKuHioXkVuKb6X6/3UQiWOGTNVvS6yMwDvN7+GVk3WFfie33iVXWNIcneN/ykrvmq0KHzNiZLPQk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IxOekMtc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Jt0vnXvzChPXHW3sDBhaB9gu/egWK3Rz8KaRl1Nc6+ey76ar3zBfBh+wvEqJLXQwwjNsWhtawbL9uiTLHUsxhGs2HdEzLwxcz1gU08jxJ+bYdU9uHYxk6v8K0SGNCb73lKVVvPNPOe0wQbjlI2G3LG5R7e3ny6gr6iuL8Ce0Tn8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ms0JJbaL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IxOekMtc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF300C4CEE3;
-	Tue, 17 Jun 2025 16:22:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ms0JJbaL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EEF8C4CEE3;
+	Tue, 17 Jun 2025 16:22:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177366;
-	bh=YKeYZ8kqf1Z1zTA9kS+3VvPtptV87jOKvIu3zcRwmE0=;
+	s=korg; t=1750177369;
+	bh=FPVyktUG+yUKuoTDI1K6LIEK08UggPS01544AxjgETk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IxOekMtcjm55+Dr/WjgPN0C1z4hzz478zoffJjOG4kj5dudW7lA7u1e6fx//HtNzR
-	 9rx3n69MiFyR+tvtzM42iTX744QSF5CdpqcBVi+zUkhG04YvGy4Uwpwq6GIwY4aAhN
-	 mZTkqVcXbTat0lWxsw8Aeo67lXIDiJi71S3SoBbI=
+	b=Ms0JJbaLaATdAwVX65cbLlE/hjfFvBeFMTMpGyOKGUmQBQA4uUellltJ+DHf/8Bk5
+	 yUDZGaolnfZVWXMspR5jXJwT+mtumaJuLjC3TPZarP6zKTQtzV4FGc+HKcjy9aGON4
+	 XdzbPXDR0OBTxJweyX3prXGG50XC/bjGO7exDRak=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	William Breathitt Gray <wbg@kernel.org>,
+	Henry Martin <bsdhenrymartin@gmail.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 333/512] counter: interrupt-cnt: Protect enable/disable OPs with mutex
-Date: Tue, 17 Jun 2025 17:24:59 +0200
-Message-ID: <20250617152433.105329123@linuxfoundation.org>
+Subject: [PATCH 6.15 296/780] wifi: mt76: mt7996: Fix null-ptr-deref in mt7996_mmio_wed_init()
+Date: Tue, 17 Jun 2025 17:20:04 +0200
+Message-ID: <20250617152503.519757554@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,111 +47,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+From: Henry Martin <bsdhenrymartin@gmail.com>
 
-[ Upstream commit 7351312632e831e51383f48957d47712fae791ef ]
+[ Upstream commit 8f30e2b059757d8711a823e4c9c023db62a1d171 ]
 
-Enable/disable seems to be racy on SMP, consider the following scenario:
+devm_ioremap() returns NULL on error. Currently, mt7996_mmio_wed_init()
+does not check for this case, which results in a NULL pointer
+dereference.
 
-CPU0					CPU1
+Prevent null pointer dereference in mt7996_mmio_wed_init()
 
-interrupt_cnt_enable_write(true)
-{
-	if (priv->enabled == enable)
-		return 0;
-
-	if (enable) {
-		priv->enabled = true;
-					interrupt_cnt_enable_write(false)
-					{
-						if (priv->enabled == enable)
-							return 0;
-
-						if (enable) {
-							priv->enabled = true;
-							enable_irq(priv->irq);
-						} else {
-							disable_irq(priv->irq)
-							priv->enabled = false;
-						}
-		enable_irq(priv->irq);
-	} else {
-		disable_irq(priv->irq);
-		priv->enabled = false;
-	}
-
-The above would result in priv->enabled == false, but IRQ left enabled.
-Protect both write (above race) and read (to propagate the value on SMP)
-callbacks with a mutex.
-
-Signed-off-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
-Fixes: a55ebd47f21f ("counter: add IRQ or GPIO based counter")
-Acked-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Link: https://lore.kernel.org/r/20250331163642.2382651-1-alexander.sverdlin@siemens.com
-Signed-off-by: William Breathitt Gray <wbg@kernel.org>
+Fixes: 83eafc9251d6 ("wifi: mt76: mt7996: add wed tx support")
+Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
+Link: https://patch.msgid.link/20250407032349.83360-1-bsdhenrymartin@gmail.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/counter/interrupt-cnt.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/net/wireless/mediatek/mt76/mt7996/mmio.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/counter/interrupt-cnt.c b/drivers/counter/interrupt-cnt.c
-index 229473855c5b3..bc762ba87a19b 100644
---- a/drivers/counter/interrupt-cnt.c
-+++ b/drivers/counter/interrupt-cnt.c
-@@ -3,12 +3,14 @@
-  * Copyright (c) 2021 Pengutronix, Oleksij Rempel <kernel@pengutronix.de>
-  */
- 
-+#include <linux/cleanup.h>
- #include <linux/counter.h>
- #include <linux/gpio/consumer.h>
- #include <linux/interrupt.h>
- #include <linux/irq.h>
- #include <linux/mod_devicetable.h>
- #include <linux/module.h>
-+#include <linux/mutex.h>
- #include <linux/platform_device.h>
- #include <linux/types.h>
- 
-@@ -19,6 +21,7 @@ struct interrupt_cnt_priv {
- 	struct gpio_desc *gpio;
- 	int irq;
- 	bool enabled;
-+	struct mutex lock;
- 	struct counter_signal signals;
- 	struct counter_synapse synapses;
- 	struct counter_count cnts;
-@@ -41,6 +44,8 @@ static int interrupt_cnt_enable_read(struct counter_device *counter,
- {
- 	struct interrupt_cnt_priv *priv = counter_priv(counter);
- 
-+	guard(mutex)(&priv->lock);
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mmio.c b/drivers/net/wireless/mediatek/mt76/mt7996/mmio.c
+index 13b188e281bdb..af9169030bad9 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/mmio.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/mmio.c
+@@ -323,6 +323,9 @@ int mt7996_mmio_wed_init(struct mt7996_dev *dev, void *pdev_ptr,
+ 	wed->wlan.base = devm_ioremap(dev->mt76.dev,
+ 				      pci_resource_start(pci_dev, 0),
+ 				      pci_resource_len(pci_dev, 0));
++	if (!wed->wlan.base)
++		return -ENOMEM;
 +
- 	*enable = priv->enabled;
+ 	wed->wlan.phy_base = pci_resource_start(pci_dev, 0);
  
- 	return 0;
-@@ -51,6 +56,8 @@ static int interrupt_cnt_enable_write(struct counter_device *counter,
- {
- 	struct interrupt_cnt_priv *priv = counter_priv(counter);
- 
-+	guard(mutex)(&priv->lock);
-+
- 	if (priv->enabled == enable)
- 		return 0;
- 
-@@ -227,6 +234,8 @@ static int interrupt_cnt_probe(struct platform_device *pdev)
- 	if (ret)
- 		return ret;
- 
-+	mutex_init(&priv->lock);
-+
- 	ret = devm_counter_add(dev, counter);
- 	if (ret < 0)
- 		return dev_err_probe(dev, ret, "Failed to add counter\n");
+ 	if (hif2) {
 -- 
 2.39.5
 
