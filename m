@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EEEA2FA622;
-	Tue, 17 Jun 2025 16:45:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 722202FA622;
+	Tue, 17 Jun 2025 16:45:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750178725; cv=none; b=bsSzID//qJPjeLPhr2wpt8R6ml5p1jA1UYdsaoV0GAG9PNO10IdhxvxUjnjnRDAowO3f0s5hTEJ8zpw2JXc6O7Aoqy+jC1zJQQyKyolWzzZOmje3yZADxT5QJihmRpFxH2ahM4r1+w11cxfq/PZPfrmLiOJeQUc//V4DXQ8C6V4=
+	t=1750178728; cv=none; b=A+egFwpt62gUY8Oqohl4SP0T3qPV00aOjmHf8W54RKctY+53PSliK/o4x3Ba/ErlfmpFoHXn0cu/EmVWaJVolLU80/phz41rO8nrSmeP/FTR2wxXHhGKsoa3beK65e1Y8B45zTZes7E6koLB5UrUEPCE9HgY1WNWUV6wbAMiyEw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750178725; c=relaxed/simple;
-	bh=O+Z3YJfqkFZBKG2bPBRFf/g3NcQPC+vp8pu5T2d1vFg=;
+	s=arc-20240116; t=1750178728; c=relaxed/simple;
+	bh=9RFEfGTuxXh+7Ea9bHdmcjYFv83F4vrG/Wu0Dhm4p3s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g5Mkfs0dA8UN/aoktqTUl/rxHvviQ/HyYPsd1zZzuPsxRLaeZw7mLukxLnJi4fdLdAIqgHgDv9d3o17qIPSlfiFo3BbOSbf8R8bgCnJrL63ji8gxaOYeNoAm+r5+W46naWM4ZahJtOxp0xczQuDpW7xZf7KRzYzcTz6ELlQrorE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fPuuyoFR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pU1RderOEJH/Wls33RQpY+gZHzXuLy3VJYlHz+LwIhlAMww3vzATCNcd11EFE6sOJ030g0nAGzcp6yIPlgHQd8UH9UNtH/FzFwmNtXPyggfz9t+Mjw0anzfmxC496r8BY5mRktLQnHGkuTgnx+Z+cEgLRhqNTc279fG8ZDmUAYw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xf2EWrm6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fPuuyoFR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84250C4CEE3;
-	Tue, 17 Jun 2025 16:45:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xf2EWrm6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0775C4CEE3;
+	Tue, 17 Jun 2025 16:45:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750178725;
-	bh=O+Z3YJfqkFZBKG2bPBRFf/g3NcQPC+vp8pu5T2d1vFg=;
+	s=korg; t=1750178728;
+	bh=9RFEfGTuxXh+7Ea9bHdmcjYFv83F4vrG/Wu0Dhm4p3s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fPuuyoFRz0C8aQxx7VGH6w/Gg3is1A7GmoN13MgVQLwA2jkiDtBvULTeaL5UebyQF
-	 I+euEXtrWs9dRvS1xEXydidnWmnn20Zt5IntYM1to2a5AgLyiFaEVovNvbvSQHvFEL
-	 b6L7UmdWSxJ+RvHIjmB/AUc53k6GJux9tz+5GGi4=
+	b=xf2EWrm6kIWaP4L6mDNLUyS31PJCitLnAWYIQD7oeirQKzSLPRU47WDiGIRUIYDue
+	 ogqduFa/OAGV3otcuFIn5wqcJJxyLcpg05QPdd/dtRAMsseA8MiWvF/u1ihKE/78Xo
+	 p/a8HAP+n+4D0bEQ4YkMyBiUSdO80chLUo3eg8MA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Leo Yan <leo.yan@arm.com>,
 	Suzuki K Poulose <suzuki.poulose@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 534/780] coresight/etm4: fix missing disable active config
-Date: Tue, 17 Jun 2025 17:24:02 +0200
-Message-ID: <20250617152513.256323496@linuxfoundation.org>
+Subject: [PATCH 6.15 535/780] coresight: holding cscfg_csdev_lock while removing cscfg from csdev
+Date: Tue, 17 Jun 2025 17:24:03 +0200
+Message-ID: <20250617152513.296204596@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
 References: <20250617152451.485330293@linuxfoundation.org>
@@ -54,35 +54,54 @@ Content-Transfer-Encoding: 8bit
 
 From: Yeoreum Yun <yeoreum.yun@arm.com>
 
-[ Upstream commit 895b12b7d7b8c651f73f57a1ea040d35aa7048cb ]
+[ Upstream commit 53b9e2659719b04f5ba7593f2af0f2335f75e94a ]
 
-When etm4 device is disabled via sysfs, it should disable its active
-count.
+There'll be possible race scenario for coresight config:
 
-Fixes: 7ebd0ec6cf94 ("coresight: configfs: Allow configfs to activate configuration")
+CPU0                                          CPU1
+(perf enable)                                 load module
+                                              cscfg_load_config_sets()
+                                              activate config. // sysfs
+                                              (sys_active_cnt == 1)
+...
+cscfg_csdev_enable_active_config()
+  lock(csdev->cscfg_csdev_lock)
+                                              deactivate config // sysfs
+                                              (sys_activec_cnt == 0)
+                                              cscfg_unload_config_sets()
+  <iterating config_csdev_list>               cscfg_remove_owned_csdev_configs()
+  // here load config activate by CPU1
+  unlock(csdev->cscfg_csdev_lock)
+
+iterating config_csdev_list could be raced with config_csdev_list's
+entry delete.
+
+To resolve this race , hold csdev->cscfg_csdev_lock() while
+cscfg_remove_owned_csdev_configs()
+
+Fixes: 02bd588e12df ("coresight: configuration: Update API to permit dynamic load/unload")
 Signed-off-by: Yeoreum Yun <yeoreum.yun@arm.com>
 Reviewed-by: Leo Yan <leo.yan@arm.com>
 Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Link: https://lore.kernel.org/r/20250514161951.3427590-2-yeoreum.yun@arm.com
+Link: https://lore.kernel.org/r/20250514161951.3427590-3-yeoreum.yun@arm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwtracing/coresight/coresight-etm4x-core.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/hwtracing/coresight/coresight-syscfg.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/hwtracing/coresight/coresight-etm4x-core.c b/drivers/hwtracing/coresight/coresight-etm4x-core.c
-index b42b03dba516d..88ef381ee6dd9 100644
---- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
-+++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
-@@ -1020,6 +1020,9 @@ static void etm4_disable_sysfs(struct coresight_device *csdev)
- 	smp_call_function_single(drvdata->cpu, etm4_disable_hw, drvdata, 1);
+diff --git a/drivers/hwtracing/coresight/coresight-syscfg.c b/drivers/hwtracing/coresight/coresight-syscfg.c
+index a70c1454b4106..23017612f2eae 100644
+--- a/drivers/hwtracing/coresight/coresight-syscfg.c
++++ b/drivers/hwtracing/coresight/coresight-syscfg.c
+@@ -395,6 +395,8 @@ static void cscfg_remove_owned_csdev_configs(struct coresight_device *csdev, voi
+ 	if (list_empty(&csdev->config_csdev_list))
+ 		return;
  
- 	raw_spin_unlock(&drvdata->spinlock);
++  guard(raw_spinlock_irqsave)(&csdev->cscfg_csdev_lock);
 +
-+	cscfg_csdev_disable_active_config(csdev);
-+
- 	cpus_read_unlock();
- 
- 	/*
+ 	list_for_each_entry_safe(config_csdev, tmp, &csdev->config_csdev_list, node) {
+ 		if (config_csdev->config_desc->load_owner == load_owner)
+ 			list_del(&config_csdev->node);
 -- 
 2.39.5
 
