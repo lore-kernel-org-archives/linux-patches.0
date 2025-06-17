@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7900A2ECEA6;
-	Tue, 17 Jun 2025 15:58:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 920232F2379;
+	Tue, 17 Jun 2025 15:58:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175900; cv=none; b=tSuv7JvBikknoKpboF2xI3m+Okn3N8Ao0w3ZrrP72WATvhWK1FebBeFbapDv74giq8QOnXCkYbBo/fxvG9QWoBqCeVps49f9ayyyzeDiKrdkwZKeHyOFiWu69crhxJDVG6ZkQs0lWHfxe1OW+jGAoaFaxTvCF1dVo26oxwCaGoo=
+	t=1750175904; cv=none; b=obHQJbMvohPGDXwpctky8kJeo5X4oTgbsh+au8GI986RTbsARBuxftdW0WfMxDQi6NVlw0bK5pqe+WiSJ+A5dPrv63sIHz84lqEAZEIKZBC96agMR/gqLoVixqKPntmDQSYgHK0zCt7MUr3SLwinLVNTiHRUdhcujTBQX707PeY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175900; c=relaxed/simple;
-	bh=cmVXHO8FeSsSncakzoNCJgwqcnJIWy0jtA/aDPtuTd0=;
+	s=arc-20240116; t=1750175904; c=relaxed/simple;
+	bh=HSNkOsKUb0xGm4hdodTUCwvK4Fz3hgp4YtFw1MYoGyE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EcaQ3z7zm6EwmtuEAY/jdObBOJtaq90sSuOK+gijeLEkVa0Z1q5zp2KVKz1BAMDba0TeDsbBB/Zye3JrtkD/5AS6zIFiT8n+CvzlvOZ4wvbvJr8wLPixJas4wW6gNZO9gEFvJTocBijfP47xGTsUFGxgUe3I+LjxgV6q41ApxQ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=136CJFWz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tgO2sQgcIrbs061eNaMKnJIdzhwm2t70W0kIb9jkJOb5wZWp5GX0Ky0OI+lSwdTxHs+JuylYyMAyvdBzkSCnIWgLKZ9MDYemLqjpL172x0RjFQ3QYCCWkOaVkm0ZokGlD7j4HSquPtkb9PfTfU8w8h1xbEBSNKTfnMNkP8sN8fY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CdlS0kps; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="136CJFWz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC1B1C4CEE3;
-	Tue, 17 Jun 2025 15:58:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CdlS0kps"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8AAEC4CEE3;
+	Tue, 17 Jun 2025 15:58:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175900;
-	bh=cmVXHO8FeSsSncakzoNCJgwqcnJIWy0jtA/aDPtuTd0=;
+	s=korg; t=1750175904;
+	bh=HSNkOsKUb0xGm4hdodTUCwvK4Fz3hgp4YtFw1MYoGyE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=136CJFWznUZkOzaHa7y+fIVGFiMk0dGlX/5KZZtPP9mQJgF4Nl8bI9bzLKQGNyFzb
-	 n84rmHQPI+Qb3oMaYSBvwAM94pWZvdF1g5E/0KoEnNRm9eHA8aLjQihffw3o1aqG7N
-	 4fAUHGmLdqLasl/BMugQ6vQY+E5IakAjKynww2jc=
+	b=CdlS0kps5haS8W89V2f6CBY5EpZ8n7sVVJsRhM2tmmLbxMnLsgSLcV6YnP6Bxz+cJ
+	 HNV3eFcF8dzF9caVM4QKTyUeJBz8F3tubxgmxHUeuvrALMnc8WKqEC50oxeYgIeKGT
+	 qNkA3AEDfz/jJ22pYZsqO88j/1MRwDXZRQgfgJ+k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Zhang <18255117159@163.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Biju Das <biju.das.jz@bp.renesas.com>,
+	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+	Tomi Valkeinen <tomi.valkeinen+renesas@ideasonboard.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 223/356] PCI: cadence: Fix runtime atomic count underflow
-Date: Tue, 17 Jun 2025 17:25:38 +0200
-Message-ID: <20250617152347.181636607@linuxfoundation.org>
+Subject: [PATCH 6.15 133/780] drm: rcar-du: Fix memory leak in rcar_du_vsps_init()
+Date: Tue, 17 Jun 2025 17:17:21 +0200
+Message-ID: <20250617152456.920252438@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-References: <20250617152338.212798615@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,55 +48,63 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hans Zhang <18255117159@163.com>
+From: Biju Das <biju.das.jz@bp.renesas.com>
 
-[ Upstream commit 8805f32a96d3b97cef07999fa6f52112678f7e65 ]
+[ Upstream commit 91e3bf09a90bb4340c0c3c51396e7531555efda4 ]
 
-If the call to pci_host_probe() in cdns_pcie_host_setup() fails, PM
-runtime count is decremented in the error path using pm_runtime_put_sync().
-But the runtime count is not incremented by this driver, but only by the
-callers (cdns_plat_pcie_probe/j721e_pcie_probe). And the callers also
-decrement the runtime PM count in their error path. So this leads to the
-below warning from the PM core:
+The rcar_du_vsps_init() doesn't free the np allocated by
+of_parse_phandle_with_fixed_args() for the non-error case.
 
-	"runtime PM usage count underflow!"
+Fix memory leak for the non-error case.
 
-So fix it by getting rid of pm_runtime_put_sync() in the error path and
-directly return the errno.
+While at it, replace the label 'error'->'done' as it applies to non-error
+case as well and update the error check condition for rcar_du_vsp_init()
+to avoid breakage in future, if it returns positive value.
 
-Fixes: 49e427e6bdd1 ("Merge branch 'pci/host-probe-refactor'")
-Signed-off-by: Hans Zhang <18255117159@163.com>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Link: https://patch.msgid.link/20250419133058.162048-1-18255117159@163.com
+Fixes: 3e81374e2014 ("drm: rcar-du: Support multiple sources from the same VSP")
+Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+Link: https://lore.kernel.org/r/20231116122424.80136-1-biju.das.jz@bp.renesas.com
+Signed-off-by: Tomi Valkeinen <tomi.valkeinen+renesas@ideasonboard.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/cadence/pcie-cadence-host.c | 11 +----------
- 1 file changed, 1 insertion(+), 10 deletions(-)
+ drivers/gpu/drm/renesas/rcar-du/rcar_du_kms.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/pci/controller/cadence/pcie-cadence-host.c b/drivers/pci/controller/cadence/pcie-cadence-host.c
-index 8af95e9da7cec..741e10a575ec7 100644
---- a/drivers/pci/controller/cadence/pcie-cadence-host.c
-+++ b/drivers/pci/controller/cadence/pcie-cadence-host.c
-@@ -570,14 +570,5 @@ int cdns_pcie_host_setup(struct cdns_pcie_rc *rc)
- 	if (!bridge->ops)
- 		bridge->ops = &cdns_pcie_host_ops;
+diff --git a/drivers/gpu/drm/renesas/rcar-du/rcar_du_kms.c b/drivers/gpu/drm/renesas/rcar-du/rcar_du_kms.c
+index 70d8ad065bfa1..4c8fe83dd6101 100644
+--- a/drivers/gpu/drm/renesas/rcar-du/rcar_du_kms.c
++++ b/drivers/gpu/drm/renesas/rcar-du/rcar_du_kms.c
+@@ -705,7 +705,7 @@ static int rcar_du_vsps_init(struct rcar_du_device *rcdu)
+ 		ret = of_parse_phandle_with_fixed_args(np, vsps_prop_name,
+ 						       cells, i, &args);
+ 		if (ret < 0)
+-			goto error;
++			goto done;
  
--	ret = pci_host_probe(bridge);
--	if (ret < 0)
--		goto err_init;
--
+ 		/*
+ 		 * Add the VSP to the list or update the corresponding existing
+@@ -743,13 +743,11 @@ static int rcar_du_vsps_init(struct rcar_du_device *rcdu)
+ 		vsp->dev = rcdu;
+ 
+ 		ret = rcar_du_vsp_init(vsp, vsps[i].np, vsps[i].crtcs_mask);
+-		if (ret < 0)
+-			goto error;
++		if (ret)
++			goto done;
+ 	}
+ 
 -	return 0;
 -
-- err_init:
--	pm_runtime_put_sync(dev);
--
--	return ret;
-+	return pci_host_probe(bridge);
- }
+-error:
++done:
+ 	for (i = 0; i < ARRAY_SIZE(vsps); ++i)
+ 		of_node_put(vsps[i].np);
+ 
 -- 
 2.39.5
 
