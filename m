@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 316DE2ECEA8;
-	Tue, 17 Jun 2025 15:46:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B387F2ECEA2;
+	Tue, 17 Jun 2025 15:46:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175189; cv=none; b=ommo1LQBssCfjgp86P673P1iuMbKiW5YpzQmurq09h8j+QUNSzDHYElcNJ1OSOre0AEWuZ9bRwmNXrgz07ooxieZFHOoyc0N8RxRMrdXCSQ9IiLXlL2H08gTjX8K68LKZigVHTIjvL0AAInpooZz/XweIfmbvF/KkST3gG2/40U=
+	t=1750175191; cv=none; b=gouZHs2UI5HjsPArIt6AjAT8KXUUYS9X1e1MvmY8t8FPd2mTDMBoC+sUW4cCJRQQ6V4vFsBQ3sw2z+6O5sJeNl4uYMOUx6JxR/8V6tix4V7GNsJ7eYMeH6Zk2FxlIIHVc6v/ZEnabMpE5iKKS79i0fpc/6BqHhKh2rk8vF47Qjk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175189; c=relaxed/simple;
-	bh=lEhvI3hZ+uYl9FsrBle9peRbmbKDY0lXc4FEEUTBDS8=;
+	s=arc-20240116; t=1750175191; c=relaxed/simple;
+	bh=uQL038PFPxYl4OWSa4RqO2DCTLQY8xDtHZEpll97eEo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s+7afF0P/xe3B1tT7u9lmPKamK8tPZkiUzV/Tsk0tziOggdq8f/Kkn2ybXBu8cifcJP+suhjdhfS25y01nmYrjdDXwdB+H3xsczPYvzUA4X1MoYCctzClBxylebr9wQzb5QT6vm/20L2q6vvq11q1DEDbralxKRVAade67lNHjg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OvAl+2I4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=NYliydqGSAOCgvRexaSpdRtVrmC0pONzNU+u9ujbpM+XneWWlsqrCbX9Nx7ofAKqXNas7t7n8raZra3rAbvFu7isW2uch8xaBovAtAObTSzDa+X2KuopId5KzkQvpZNYfJ3kQVkZ0U4lvqKJUzf18k/24/xavG0RnjJ6GRV/rvM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KwbJWyF2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OvAl+2I4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65931C4CEF0;
-	Tue, 17 Jun 2025 15:46:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KwbJWyF2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C45EC4CEE3;
+	Tue, 17 Jun 2025 15:46:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175188;
-	bh=lEhvI3hZ+uYl9FsrBle9peRbmbKDY0lXc4FEEUTBDS8=;
+	s=korg; t=1750175191;
+	bh=uQL038PFPxYl4OWSa4RqO2DCTLQY8xDtHZEpll97eEo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OvAl+2I4d83tdJFoT3w9VMwdJZFVYytQkw2xpdpECbExuMtUdidPxPlxTqAIoTYyz
-	 Nk9QoXgBxs+8oEFhy7gIey/eIaIXHgOs2U5rvETzB/qT2ITCanfG2fRbRoNP9N6oCm
-	 ZOemuhpppBBCP20MInuXXzyhAkbxrimGGmpnbkeE=
+	b=KwbJWyF2+PRoS5jZykeTCgqerf/1ZOAPdNVtptUSWUtF1eW9ahXTE6LrwQVnUFe6A
+	 rx8QWPFLX4XFaVz4aTMWKz+xVygt/M6wlR4RR+y3YJvgKiIW5cUY8hrYEDzsEYUYkO
+	 fsX8PlWWp7q/42pcaAehRvbFr/+IDB6bc+DVH01M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Detlev Casanova <detlev.casanova@collabora.com>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	Willy Tarreau <w@1wt.eu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 102/512] media: verisilicon: Free post processor buffers on error
-Date: Tue, 17 Jun 2025 17:21:08 +0200
-Message-ID: <20250617152423.730784025@linuxfoundation.org>
+Subject: [PATCH 6.15 061/780] tools/nolibc: fix integer overflow in i{64,}toa_r() and
+Date: Tue, 17 Jun 2025 17:16:09 +0200
+Message-ID: <20250617152453.984157843@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,51 +45,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Detlev Casanova <detlev.casanova@collabora.com>
+From: Thomas Weißschuh <linux@weissschuh.net>
 
-[ Upstream commit 11beb0fc346e00c412b3bfd19013206f6b655604 ]
+[ Upstream commit 4d231a7df1a85c7572b67a4666cb73adb977fbf6 ]
 
-During initialization, the post processor allocates the same number of
-buffers as the buf queue.
-As the init function is called in streamon(), if an allocation fails,
-streamon will return an error and streamoff() will not be called, keeping
-all post processor buffers allocated.
+In twos complement the most negative number can not be negated.
 
-To avoid that, all post proc buffers are freed in case of an allocation
-error.
-
-Fixes: 26711491a807 ("media: verisilicon: Refactor postprocessor to store more buffers")
-Signed-off-by: Detlev Casanova <detlev.casanova@collabora.com>
-Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Fixes: b1c21e7d99cd ("tools/nolibc/stdlib: add i64toa() and u64toa()")
+Fixes: 66c397c4d2e1 ("tools/nolibc/stdlib: replace the ltoa() function with more efficient ones")
+Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
+Acked-by: Willy Tarreau <w@1wt.eu>
+Link: https://lore.kernel.org/r/20250419-nolibc-ubsan-v2-5-060b8a016917@weissschuh.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/verisilicon/hantro_postproc.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ tools/include/nolibc/stdlib.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/platform/verisilicon/hantro_postproc.c b/drivers/media/platform/verisilicon/hantro_postproc.c
-index 232c93eea7eea..18cad5ac92d8d 100644
---- a/drivers/media/platform/verisilicon/hantro_postproc.c
-+++ b/drivers/media/platform/verisilicon/hantro_postproc.c
-@@ -260,8 +260,10 @@ int hantro_postproc_init(struct hantro_ctx *ctx)
+diff --git a/tools/include/nolibc/stdlib.h b/tools/include/nolibc/stdlib.h
+index 86ad378ab1ea2..32b3038002c16 100644
+--- a/tools/include/nolibc/stdlib.h
++++ b/tools/include/nolibc/stdlib.h
+@@ -275,7 +275,7 @@ int itoa_r(long in, char *buffer)
+ 	int len = 0;
  
- 	for (i = 0; i < num_buffers; i++) {
- 		ret = hantro_postproc_alloc(ctx, i);
--		if (ret)
-+		if (ret) {
-+			hantro_postproc_free(ctx);
- 			return ret;
-+		}
+ 	if (in < 0) {
+-		in = -in;
++		in = -(unsigned long)in;
+ 		*(ptr++) = '-';
+ 		len++;
  	}
+@@ -411,7 +411,7 @@ int i64toa_r(int64_t in, char *buffer)
+ 	int len = 0;
  
- 	return 0;
+ 	if (in < 0) {
+-		in = -in;
++		in = -(uint64_t)in;
+ 		*(ptr++) = '-';
+ 		len++;
+ 	}
 -- 
 2.39.5
 
