@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FF8B21FF44;
-	Tue, 17 Jun 2025 15:48:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B75242EA176;
+	Tue, 17 Jun 2025 15:48:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175293; cv=none; b=s8sECh5DYkmShH0z4ghzS19F4ssFRb6WjVxx6ZOJBxGPiinB14lrw5jjG4rPWab7rx3NrrvM2n9+TlPn5LaDUaswQpYRpFOkhb07OCBY8OX9mjtuuxoT80hNLKXUYCn5csDhVqcafgrc3XgMHq16fEovGH6PVawQBmVXA4JoLaU=
+	t=1750175296; cv=none; b=Ea5FVZaxihsF5l9YHtICZCni7UpA1pWoSyMl5xkv0Mi2mFoWX+NHc2TxqI8vYVk3cCeWFS7qmPBkTUQsXbml8cjI4l23CWcCVRivLFKnm0O4MMVrDih4rN7XTJNE4hrUUbPOIU0VlUKLmLjpod/P1XW2kzn8fJVRhSHW5viWSRo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175293; c=relaxed/simple;
-	bh=VidjBmUl/OPL92RD/8K4bvGGEHYAUu5W20NXE190XJo=;
+	s=arc-20240116; t=1750175296; c=relaxed/simple;
+	bh=6hQvvdYL1LxQrOYmz8K8/3SQBhk5APkmby1odPgwovE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OyR/IMz+bjdGxSHULzcCiBTRFUDylkVRO4jNHQhnuODK64ykGF/m2BQHQhNoG9sP5d6XEynTukPWPceLl/yjslRe5Y/yozWkVuO0A0sAljbof+WfYneC5PvdO2bN4xUcaTKN8DWBHRoCKAUZkUgMFhVZ5ujK+EQ7C6U9xxicLuo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A1vaBjP4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HXI9UJYdn+T7Q6wKtyjMxGVrHF2T1U60b5yXppu3kp+Ykye9BIG+GCtzAHAG8n4l0hqhngof4uaP/JhvbmWsV/TFkcO3NQ6VKg/4E/u53xaTait8xO2XGc5K1aGvQjfinm2aob07SNsgDBkB/oPSck7ba+xSlP0K1NGiqCtzyq4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PDFldgg4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A1vaBjP4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3142C4CEE3;
-	Tue, 17 Jun 2025 15:48:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PDFldgg4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22D14C4CEF0;
+	Tue, 17 Jun 2025 15:48:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175293;
-	bh=VidjBmUl/OPL92RD/8K4bvGGEHYAUu5W20NXE190XJo=;
+	s=korg; t=1750175296;
+	bh=6hQvvdYL1LxQrOYmz8K8/3SQBhk5APkmby1odPgwovE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A1vaBjP4nn8I3npq2+umNtXeSNhFiR5N3+jIhy8590GmCXegIY8KUclp0w9i2TJq6
-	 orASz8M1+NnT4+cHEuwJteBImsPuaLvEgikQXQe8vYhEp+vIqXkpHX4LXLn7kkJpo6
-	 SA0i8kqSS3JBwSLZzqu9KVhtwiURWh+Fuaj8fCH4=
+	b=PDFldgg4crPc7OPCjoAsxoKgPHqkbNQJTvPnOa2TMMSOqvYnqTdg6UTuk1T7w3TjL
+	 HlRGk1Ovz0MERqJyFnj4o463t+jTQzKJ9qcgq2utelgvch3CRg/jo2/x3d273POSCk
+	 FxPhTM3we057qOz4krZL7Jz7SYD8RHk9pyPmD2vw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Vijendar Mukunda <Vijendar.Mukunda@amd.com>,
+	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 112/512] bpf, sockmap: fix duplicated data transmission
-Date: Tue, 17 Jun 2025 17:21:18 +0200
-Message-ID: <20250617152424.127924351@linuxfoundation.org>
+Subject: [PATCH 6.15 071/780] ASoC: SOF: amd: add missing acp descriptor field
+Date: Tue, 17 Jun 2025 17:16:19 +0200
+Message-ID: <20250617152454.407199803@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,70 +49,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
 
-[ Upstream commit 3b4f14b794287be137ea2c6158765d1ea1e018a4 ]
+[ Upstream commit 7c2bad7b95db5b4b978853cd4dd042ae3ec83e63 ]
 
-In the !ingress path under sk_psock_handle_skb(), when sending data to the
-remote under snd_buf limitations, partial skb data might be transmitted.
+Add missing acp descriptor field acp_error_stat for ACP7.0 platform.
 
-Although we preserved the partial transmission state (offset/length), the
-state wasn't properly consumed during retries. This caused the retry path
-to resend the entire skb data instead of continuing from the previous
-offset, resulting in data overlap at the receiver side.
+Fixes: 490be7ba2a01 ("ASoC: SOF: amd: add support for acp7.0 based platform")
 
-Fixes: 405df89dd52c ("bpf, sockmap: Improved check for empty queue")
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Link: https://lore.kernel.org/r/20250407142234.47591-3-jiayuan.chen@linux.dev
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
+Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Link: https://patch.msgid.link/20250502154445.3008598-3-Vijendar.Mukunda@amd.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/skmsg.c | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ sound/soc/sof/amd/pci-acp70.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/core/skmsg.c b/net/core/skmsg.c
-index f76cbf49c68c8..74eac311faf25 100644
---- a/net/core/skmsg.c
-+++ b/net/core/skmsg.c
-@@ -655,11 +655,6 @@ static void sk_psock_backlog(struct work_struct *work)
- 	int ret;
- 
- 	mutex_lock(&psock->work_mutex);
--	if (unlikely(state->len)) {
--		len = state->len;
--		off = state->off;
--	}
--
- 	while ((skb = skb_peek(&psock->ingress_skb))) {
- 		len = skb->len;
- 		off = 0;
-@@ -669,6 +664,13 @@ static void sk_psock_backlog(struct work_struct *work)
- 			off = stm->offset;
- 			len = stm->full_len;
- 		}
-+
-+		/* Resume processing from previous partial state */
-+		if (unlikely(state->len)) {
-+			len = state->len;
-+			off = state->off;
-+		}
-+
- 		ingress = skb_bpf_ingress(skb);
- 		skb_bpf_redirect_clear(skb);
- 		do {
-@@ -696,6 +698,8 @@ static void sk_psock_backlog(struct work_struct *work)
- 			len -= ret;
- 		} while (len);
- 
-+		/* The entire skb sent, clear state */
-+		sk_psock_skb_state(psock, state, 0, 0);
- 		skb = skb_dequeue(&psock->ingress_skb);
- 		kfree_skb(skb);
- 	}
+diff --git a/sound/soc/sof/amd/pci-acp70.c b/sound/soc/sof/amd/pci-acp70.c
+index 8fa1170a2161e..9108f1139ff2d 100644
+--- a/sound/soc/sof/amd/pci-acp70.c
++++ b/sound/soc/sof/amd/pci-acp70.c
+@@ -33,6 +33,7 @@ static const struct sof_amd_acp_desc acp70_chip_info = {
+ 	.ext_intr_cntl = ACP70_EXTERNAL_INTR_CNTL,
+ 	.ext_intr_stat	= ACP70_EXT_INTR_STAT,
+ 	.ext_intr_stat1	= ACP70_EXT_INTR_STAT1,
++	.acp_error_stat = ACP70_ERROR_STATUS,
+ 	.dsp_intr_base	= ACP70_DSP_SW_INTR_BASE,
+ 	.acp_sw0_i2s_err_reason = ACP7X_SW0_I2S_ERROR_REASON,
+ 	.sram_pte_offset = ACP70_SRAM_PTE_OFFSET,
 -- 
 2.39.5
 
