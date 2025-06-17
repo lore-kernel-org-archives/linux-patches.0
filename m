@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EB5A2ECE98;
-	Tue, 17 Jun 2025 15:45:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECD462EE5FD;
+	Tue, 17 Jun 2025 15:45:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175156; cv=none; b=IX7JB5BBjVG5Eags0kqz65s+xj1bRWjB3wl0pSeLzdwetPMIdL+2VxyOww/dxOnPQNFjVnXqTJbVr3PBANvandxkvx7rzhuxwbQux3iwJxgcztTV1sVeL4eYzfI9Fff0wTcc+bxPc4BBOnQ5O45PjrfHQQ98Cv8cbM1NrtSfof0=
+	t=1750175160; cv=none; b=odHL4rvClJ4oAM9HhoJZgK8RNx6KFvf+MQbkZfH1CEB9D1V5f3JEeE7S3Vqr17hc1xZ4G7K67oNhkWUo/F5eGL8HMrK0IC7Sq7tmU0vc0v5ZhGDJi4hTZxgQ9XVbJTH+QkTqNR6oG1lZj45/EZeg1dz4wTqxYTIReRCDUPaV7aM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175156; c=relaxed/simple;
-	bh=lq3mDSHSS+wIMC0fRRbkM4gXo66nX2HQRlYTtjG9NhY=;
+	s=arc-20240116; t=1750175160; c=relaxed/simple;
+	bh=CYKAoRmL1FzmCnpIsug7Y9hNubj/bi4FD4bTli1x+Ys=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n+rbNvUKYIEwiFxL7wa0NGYA/r7+pMxA40J20un+Ex8TNR8sIOoVmTQwEm4HD8SOgpfqs2X3ZfxFLiRD7hAD8QExYeI+JAOEo4fJDhjUhES+CXELx4L+VLC1Dz6mi8xwGnxmiDM6oQPj2aO8oCNoL6S95eRVoipXqRHT6D/5jpY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jZP6rNAq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bZdMJHk7fbn1jBxrpXnXuOsE8bVSxB+3MSo5ZXoyezwhgt+X8KovB8vLtXgkqrj1EH79RrUh2ye7L7LJUO/6GRHpspfwYS66XosKLc3NjUZQAjzE41WnfD1iDfbL1rcGZWrSkwePgtlj7m/3kGYSRPfejmeVdb7q7yYimL2I4Ws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NVd79Jv0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jZP6rNAq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E124C4CEE3;
-	Tue, 17 Jun 2025 15:45:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NVd79Jv0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DFDDC4CEE3;
+	Tue, 17 Jun 2025 15:45:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175156;
-	bh=lq3mDSHSS+wIMC0fRRbkM4gXo66nX2HQRlYTtjG9NhY=;
+	s=korg; t=1750175159;
+	bh=CYKAoRmL1FzmCnpIsug7Y9hNubj/bi4FD4bTli1x+Ys=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jZP6rNAq1qV/0nY4IoX4ZLQM6RjcOUC3GYBbMFnyyI5OadlD4KUdvUzIPn6bnHfPO
-	 MirqEPAx/+MqRqo8bfrbw3NXccVZWgfb9cW1Ga1C4H5e3UQfg06BcjPhzJ8AvHxvaH
-	 IX5bQCI1eUMr7e8SqPA6+9H8+q/FEmev2KoludU0=
+	b=NVd79Jv0vJbcHEUIFXCcuxUEgI+twns3UjMxLKB9HWFV1pxwLpzGJx+skq89d61Zu
+	 F+CrDdmASbeyPwqGQq6E8wz23V6pBLYZPGEJ5PKFC6tIJy65YVmjaXZxPuKElZoPS7
+	 3fB5NKWBeBOOq68BcuHSq6KTJC4HkLD/Kd3To1fQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+	Feng Xu <feng.f.xu@intel.com>,
+	Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
+	Tony Luck <tony.luck@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 099/512] drm/mediatek: mtk_drm_drv: Fix kobject put for mtk_mutex device ptr
-Date: Tue, 17 Jun 2025 17:21:05 +0200
-Message-ID: <20250617152423.608704182@linuxfoundation.org>
+Subject: [PATCH 6.15 058/780] EDAC/skx_common: Fix general protection fault
+Date: Tue, 17 Jun 2025 17:16:06 +0200
+Message-ID: <20250617152453.865266826@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,109 +48,70 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+From: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
 
-[ Upstream commit 22918591fb747a6d16801e74a170cf98e886f83b ]
+[ Upstream commit 20d2d476b3ae18041be423671a8637ed5ffd6958 ]
 
-This driver is taking a kobject for mtk_mutex only once per mmsys
-device for each drm-mediatek driver instance, differently from the
-behavior with other components, but it is decrementing the kobj's
-refcount in a loop and once per mmsys: this is not right and will
-result in a refcount_t underflow warning when mediatek-drm returns
-multiple probe deferrals in one boot (or when manually bound and
-unbound).
+After loading i10nm_edac (which automatically loads skx_edac_common), if
+unload only i10nm_edac, then reload it and perform error injection testing,
+a general protection fault may occur:
 
-Besides that, the refcount for mutex_dev was not decremented for
-error cases in mtk_drm_bind(), causing another refcount_t warning
-but this time for overflow, when the failure happens not during
-driver bind but during component bind.
+  mce: [Hardware Error]: Machine check events logged
+  Oops: general protection fault ...
+  ...
+  Workqueue: events mce_gen_pool_process
+  RIP: 0010:string+0x53/0xe0
+  ...
+  Call Trace:
+  <TASK>
+  ? die_addr+0x37/0x90
+  ? exc_general_protection+0x1e7/0x3f0
+  ? asm_exc_general_protection+0x26/0x30
+  ? string+0x53/0xe0
+  vsnprintf+0x23e/0x4c0
+  snprintf+0x4d/0x70
+  skx_adxl_decode+0x16a/0x330 [skx_edac_common]
+  skx_mce_check_error.part.0+0xf8/0x220 [skx_edac_common]
+  skx_mce_check_error+0x17/0x20 [skx_edac_common]
+  ...
 
-In order to fix one of the reasons why this is happening, remove
-the put_device(xx->mutex_dev) loop from the mtk_drm_kms_init()'s
-put_mutex_dev label (and drop the label) and add a single call to
-correctly free the single incremented refcount of mutex_dev to
-the mtk_drm_unbind() function to fix the refcount_t underflow.
+The issue arose was because the variable 'adxl_component_count' (inside
+skx_edac_common), which counts the ADXL components, was not reset. During
+the reloading of i10nm_edac, the count was incremented by the actual number
+of ADXL components again, resulting in a count that was double the real
+number of ADXL components. This led to an out-of-bounds reference to the
+ADXL component array, causing the general protection fault above.
 
-Moreover, add the same call to the error cases in mtk_drm_bind()
-to fix the refcount_t overflow.
+Fix this issue by resetting the 'adxl_component_count' in adxl_put(),
+which is called during the unloading of {skx,i10nm}_edac.
 
-Fixes: 1ef7ed48356c ("drm/mediatek: Modify mediatek-drm for mt8195 multi mmsys support")
-Reviewed-by: Chen-Yu Tsai <wenst@chromium.org>
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://patchwork.kernel.org/project/dri-devel/patch/20250403104741.71045-2-angelogioacchino.delregno@collabora.com/
-Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Fixes: 123b15863550 ("EDAC, i10nm: make skx_common.o a separate module")
+Reported-by: Feng Xu <feng.f.xu@intel.com>
+Signed-off-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+Tested-by: Feng Xu <feng.f.xu@intel.com>
+Link: https://lore.kernel.org/r/20250417150724.1170168-2-qiuxu.zhuo@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/mediatek/mtk_drm_drv.c | 17 ++++++++++-------
- 1 file changed, 10 insertions(+), 7 deletions(-)
+ drivers/edac/skx_common.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/mediatek/mtk_drm_drv.c b/drivers/gpu/drm/mediatek/mtk_drm_drv.c
-index 4e93fd075e03c..86541b0d5c496 100644
---- a/drivers/gpu/drm/mediatek/mtk_drm_drv.c
-+++ b/drivers/gpu/drm/mediatek/mtk_drm_drv.c
-@@ -463,7 +463,7 @@ static int mtk_drm_kms_init(struct drm_device *drm)
+diff --git a/drivers/edac/skx_common.c b/drivers/edac/skx_common.c
+index fa5b442b18449..c9ade45c1a99f 100644
+--- a/drivers/edac/skx_common.c
++++ b/drivers/edac/skx_common.c
+@@ -116,6 +116,7 @@ EXPORT_SYMBOL_GPL(skx_adxl_get);
  
- 	ret = drmm_mode_config_init(drm);
- 	if (ret)
--		goto put_mutex_dev;
-+		return ret;
- 
- 	drm->mode_config.min_width = 64;
- 	drm->mode_config.min_height = 64;
-@@ -482,7 +482,7 @@ static int mtk_drm_kms_init(struct drm_device *drm)
- 		drm->dev_private = private->all_drm_private[i];
- 		ret = component_bind_all(private->all_drm_private[i]->dev, drm);
- 		if (ret)
--			goto put_mutex_dev;
-+			return ret;
- 	}
- 
- 	/*
-@@ -575,9 +575,6 @@ static int mtk_drm_kms_init(struct drm_device *drm)
- err_component_unbind:
- 	for (i = 0; i < private->data->mmsys_dev_num; i++)
- 		component_unbind_all(private->all_drm_private[i]->dev, drm);
--put_mutex_dev:
--	for (i = 0; i < private->data->mmsys_dev_num; i++)
--		put_device(private->all_drm_private[i]->mutex_dev);
- 
- 	return ret;
+ void skx_adxl_put(void)
+ {
++	adxl_component_count = 0;
+ 	kfree(adxl_values);
+ 	kfree(adxl_msg);
  }
-@@ -648,8 +645,10 @@ static int mtk_drm_bind(struct device *dev)
- 		return 0;
- 
- 	drm = drm_dev_alloc(&mtk_drm_driver, dev);
--	if (IS_ERR(drm))
--		return PTR_ERR(drm);
-+	if (IS_ERR(drm)) {
-+		ret = PTR_ERR(drm);
-+		goto err_put_dev;
-+	}
- 
- 	private->drm_master = true;
- 	drm->dev_private = private;
-@@ -675,6 +674,8 @@ static int mtk_drm_bind(struct device *dev)
- 	drm_dev_put(drm);
- 	for (i = 0; i < private->data->mmsys_dev_num; i++)
- 		private->all_drm_private[i]->drm = NULL;
-+err_put_dev:
-+	put_device(private->mutex_dev);
- 	return ret;
- }
- 
-@@ -687,6 +688,8 @@ static void mtk_drm_unbind(struct device *dev)
- 		drm_dev_unregister(private->drm);
- 		mtk_drm_kms_deinit(private->drm);
- 		drm_dev_put(private->drm);
-+
-+		put_device(private->mutex_dev);
- 	}
- 	private->mtk_drm_bound = false;
- 	private->drm_master = false;
 -- 
 2.39.5
 
