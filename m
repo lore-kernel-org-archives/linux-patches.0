@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CD642E92AD;
-	Tue, 17 Jun 2025 16:29:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0E342EA145;
+	Tue, 17 Jun 2025 16:29:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177758; cv=none; b=ruK7ez7VGBphPySL5xNDIS5GMLmaygWD3HmXbPOWDNM2xtESxenA0rj2dv+3HEEdrrQdKeDhAgrsjC4M0l1L0f7wB/NKG0Zn1MHfJ5mC/fyzWbGbzxvi1KnSJIfHrcZ6C1P/HSRPJgF4nzpvxh4mFaaoiqXImVhVXMe4+BFdd54=
+	t=1750177760; cv=none; b=rOWsZTmXjRL4/tg63bV9wRh0Tnrt9IwTUyYkw/nvmzZvXhTThmSJvN3EDcJjSqZgwbhBobo+PXXBbVNyO1PIjBxFZp5AYJTNmDHbl4/q1x+ecwuXgkk0xW8znnwqqYzdBgiex0nX/lgYhxsf0y48jyGDq1a8c4qCNoRtSJ3J9TE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177758; c=relaxed/simple;
-	bh=7MlrkWcjD7/Kk0K+u1ONZqWrdkfJe7LxEBrwpjdTJsA=;
+	s=arc-20240116; t=1750177760; c=relaxed/simple;
+	bh=ic5w4DvB5bO6k/DQLPzklGV1SizilgVsC87xPOZ04w8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pNcR6yMniTsOaZP+hBXDK8KUvoDi0ORFBXgYkbNx3Coymwxlfl+G/lLynQIRyUlffCkRGVVLuaimMJU+6NhOeO6yOCvejxQd7Gzb68/VB8VAC3OLPUZZcFLRHHYGSjm+5GN/sao+4HgWtgFz99CMcz6Xc4Jani3NbzYuR9fE05I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dqcZeuDn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b552e/+rg8e1XRGcW9I+j4iH95NEhYwd6SjRXixBX2VoZ/AbzdWoZAAtUXMqmFiu3Xae7mETnBppdDhd0eiUr/bikEvXkW91tP9qV7/w8aFDBl3cY25WOeRMFSpeFXTKScUpl5BJIULysKXzhvCsPm6uhKRqKDn/Q95G8YTcCDA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J6kQMiEj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dqcZeuDn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B65EBC4CEE3;
-	Tue, 17 Jun 2025 16:29:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J6kQMiEj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05D32C4CEE3;
+	Tue, 17 Jun 2025 16:29:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177757;
-	bh=7MlrkWcjD7/Kk0K+u1ONZqWrdkfJe7LxEBrwpjdTJsA=;
+	s=korg; t=1750177760;
+	bh=ic5w4DvB5bO6k/DQLPzklGV1SizilgVsC87xPOZ04w8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dqcZeuDnfKWzeynOvqIMlUFx8JRBJKENA7NpfvZej189v8H4ULzmx0+gyJOwjBnVj
-	 BDUTyuPH1GgBYEnOH4tjuuqTzg0xhBcO+uHO+JnjGXRGZQAxnAkQpAqeaNAgFoavC/
-	 vPbGndB+/yejihLM8Z0II4MBDpV6hVd62ml6tnIg=
+	b=J6kQMiEjaDxxxprEJfzc9dmq9kNV8zAI1gejs+w8QQ92uOS/XcQDbg9n/OVTS6xvV
+	 jpwYEaYwkd0+PPc6Q6KVOwBFi2uO/lHxEfmKnNUKBYn7h9DmjbU1Sbhxf6R1TN0nyK
+	 ZdbBndL33L+2AqkjTXvTF/ejIX8NvDOvnSgWPZbM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjian Song <jinjian.song@fibocom.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 369/512] net: wwan: t7xx: Fix napi rx poll issue
-Date: Tue, 17 Jun 2025 17:25:35 +0200
-Message-ID: <20250617152434.537772388@linuxfoundation.org>
+Subject: [PATCH 6.15 327/780] net: airoha: Fix an error handling path in airoha_alloc_gdm_port()
+Date: Tue, 17 Jun 2025 17:20:35 +0200
+Message-ID: <20250617152504.763387558@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,105 +49,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jinjian Song <jinjian.song@fibocom.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 905fe0845bb27e4eed2ca27ea06e6c4847f1b2b1 ]
+[ Upstream commit c59783780c8ad66f6076a9a7c74df3e006e29519 ]
 
-When driver handles the napi rx polling requests, the netdev might
-have been released by the dellink logic triggered by the disconnect
-operation on user plane. However, in the logic of processing skb in
-polling, an invalid netdev is still being used, which causes a panic.
+If register_netdev() fails, the error handling path of the probe will not
+free the memory allocated by the previous airoha_metadata_dst_alloc() call
+because port->dev->reg_state will not be NETREG_REGISTERED.
 
-BUG: kernel NULL pointer dereference, address: 00000000000000f1
-Oops: 0000 [#1] PREEMPT SMP NOPTI
-RIP: 0010:dev_gro_receive+0x3a/0x620
-[...]
-Call Trace:
- <IRQ>
- ? __die_body+0x68/0xb0
- ? page_fault_oops+0x379/0x3e0
- ? exc_page_fault+0x4f/0xa0
- ? asm_exc_page_fault+0x22/0x30
- ? __pfx_t7xx_ccmni_recv_skb+0x10/0x10 [mtk_t7xx (HASH:1400 7)]
- ? dev_gro_receive+0x3a/0x620
- napi_gro_receive+0xad/0x170
- t7xx_ccmni_recv_skb+0x48/0x70 [mtk_t7xx (HASH:1400 7)]
- t7xx_dpmaif_napi_rx_poll+0x590/0x800 [mtk_t7xx (HASH:1400 7)]
- net_rx_action+0x103/0x470
- irq_exit_rcu+0x13a/0x310
- sysvec_apic_timer_interrupt+0x56/0x90
- </IRQ>
+So, an explicit airoha_metadata_dst_free() call is needed in this case to
+avoid a memory leak.
 
-Fixes: 5545b7b9f294 ("net: wwan: t7xx: Add NAPI support")
-Signed-off-by: Jinjian Song <jinjian.song@fibocom.com>
-Link: https://patch.msgid.link/20250530031648.5592-1-jinjian.song@fibocom.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: af3cf757d5c9 ("net: airoha: Move DSA tag in DMA descriptor")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/1b94b91345017429ed653e2f05d25620dc2823f9.1746715755.git.christophe.jaillet@wanadoo.fr
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wwan/t7xx/t7xx_netdev.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/airoha/airoha_eth.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wwan/t7xx/t7xx_netdev.c b/drivers/net/wwan/t7xx/t7xx_netdev.c
-index 91fa082e9cab8..fc0a7cb181df2 100644
---- a/drivers/net/wwan/t7xx/t7xx_netdev.c
-+++ b/drivers/net/wwan/t7xx/t7xx_netdev.c
-@@ -302,7 +302,7 @@ static int t7xx_ccmni_wwan_newlink(void *ctxt, struct net_device *dev, u32 if_id
- 	ccmni->ctlb = ctlb;
- 	ccmni->dev = dev;
- 	atomic_set(&ccmni->usage, 0);
--	ctlb->ccmni_inst[if_id] = ccmni;
-+	WRITE_ONCE(ctlb->ccmni_inst[if_id], ccmni);
+diff --git a/drivers/net/ethernet/airoha/airoha_eth.c b/drivers/net/ethernet/airoha/airoha_eth.c
+index 1e9ab65218ff1..c169b8b411b4f 100644
+--- a/drivers/net/ethernet/airoha/airoha_eth.c
++++ b/drivers/net/ethernet/airoha/airoha_eth.c
+@@ -2541,7 +2541,15 @@ static int airoha_alloc_gdm_port(struct airoha_eth *eth,
+ 	if (err)
+ 		return err;
  
- 	ret = register_netdevice(dev);
- 	if (ret)
-@@ -324,6 +324,7 @@ static void t7xx_ccmni_wwan_dellink(void *ctxt, struct net_device *dev, struct l
- 	if (WARN_ON(ctlb->ccmni_inst[if_id] != ccmni))
- 		return;
- 
-+	WRITE_ONCE(ctlb->ccmni_inst[if_id], NULL);
- 	unregister_netdevice(dev);
+-	return register_netdev(dev);
++	err = register_netdev(dev);
++	if (err)
++		goto free_metadata_dst;
++
++	return 0;
++
++free_metadata_dst:
++	airoha_metadata_dst_free(port);
++	return err;
  }
  
-@@ -419,7 +420,7 @@ static void t7xx_ccmni_recv_skb(struct t7xx_ccmni_ctrl *ccmni_ctlb, struct sk_bu
- 
- 	skb_cb = T7XX_SKB_CB(skb);
- 	netif_id = skb_cb->netif_idx;
--	ccmni = ccmni_ctlb->ccmni_inst[netif_id];
-+	ccmni = READ_ONCE(ccmni_ctlb->ccmni_inst[netif_id]);
- 	if (!ccmni) {
- 		dev_kfree_skb(skb);
- 		return;
-@@ -441,7 +442,7 @@ static void t7xx_ccmni_recv_skb(struct t7xx_ccmni_ctrl *ccmni_ctlb, struct sk_bu
- 
- static void t7xx_ccmni_queue_tx_irq_notify(struct t7xx_ccmni_ctrl *ctlb, int qno)
- {
--	struct t7xx_ccmni *ccmni = ctlb->ccmni_inst[0];
-+	struct t7xx_ccmni *ccmni = READ_ONCE(ctlb->ccmni_inst[0]);
- 	struct netdev_queue *net_queue;
- 
- 	if (netif_running(ccmni->dev) && atomic_read(&ccmni->usage) > 0) {
-@@ -453,7 +454,7 @@ static void t7xx_ccmni_queue_tx_irq_notify(struct t7xx_ccmni_ctrl *ctlb, int qno
- 
- static void t7xx_ccmni_queue_tx_full_notify(struct t7xx_ccmni_ctrl *ctlb, int qno)
- {
--	struct t7xx_ccmni *ccmni = ctlb->ccmni_inst[0];
-+	struct t7xx_ccmni *ccmni = READ_ONCE(ctlb->ccmni_inst[0]);
- 	struct netdev_queue *net_queue;
- 
- 	if (atomic_read(&ccmni->usage) > 0) {
-@@ -471,7 +472,7 @@ static void t7xx_ccmni_queue_state_notify(struct t7xx_pci_dev *t7xx_dev,
- 	if (ctlb->md_sta != MD_STATE_READY)
- 		return;
- 
--	if (!ctlb->ccmni_inst[0]) {
-+	if (!READ_ONCE(ctlb->ccmni_inst[0])) {
- 		dev_warn(&t7xx_dev->pdev->dev, "No netdev registered yet\n");
- 		return;
- 	}
+ static int airoha_probe(struct platform_device *pdev)
 -- 
 2.39.5
 
