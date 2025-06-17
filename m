@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A589B2EA17C;
-	Tue, 17 Jun 2025 15:59:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6E3C2DFF22;
+	Tue, 17 Jun 2025 15:59:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175986; cv=none; b=tPR5KSzwBB0xMyg/6iWbhwaJWMlEUWJLNOG3Amo72YdblyKzZ52mQOE3TFeoWyHsZpMLAKv+CAfSxXIO2VSP76UawL2CAk2UNk7OKUpXEoGQlcJrkDmsnVe/pgwg2IT/Gj6n4zEB4gbW0R+da71cq4XkAJpXUBYetM8aYKVtK1c=
+	t=1750175989; cv=none; b=mxfgv/CXg+H08eC/rRUbzugCe811w03svK+MHa+aWDG8DbHyyh2kmNigcdSHvUh0xXFl7rGeijBWQG5tdgbP995H8epSPLrsg2JtUzCRqLPHjnUTxiWLoPkD1vTfe5dR4jfribUFcwxOt6Oj5zRxQCXEt5h49HL0YMcQQt/7J7s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175986; c=relaxed/simple;
-	bh=JO27YwDsPJD9P3d33giKgOp0YWA1jIQIs1HLJi54WPw=;
+	s=arc-20240116; t=1750175989; c=relaxed/simple;
+	bh=DEJkTf2BXgJtkwY1C4K737sO5Da0zzraa0V3nwF972k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M5Y0nh6Oikwxtlu18gECGdqEBuiHiKd9MEFYhZRBb7EGTQcsOSYTKjRP4Og6WIYl128We3HX/VuKV6oGiEYX5KyCIIpfXzptx1PSEpu97zFJH9cgovCYMMUTnxBdjZwzJtG89bCkZMlVAUhGe1cwOyHsSq9LjOrfMiLFQ3mKCWs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CTJzo+8c; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O+KT2/W0bLWyI306r9TQg2NMIzWWooGNzaiGSlhWmG5HyfDVYzQqV8xQ99wFu8h2WdGLlh9jSiUJq8m2qDNJfvOwmH3MJbBO6siiBgp4GJ1BcpIdYg4rtwMRgjlG9di6OBtvz5fuArBoPwqp7R35T6igeeXcwc0Cl3MTcVRYQQo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=br5muKzF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CTJzo+8c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11571C4CEE3;
-	Tue, 17 Jun 2025 15:59:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="br5muKzF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48492C4CEE3;
+	Tue, 17 Jun 2025 15:59:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175986;
-	bh=JO27YwDsPJD9P3d33giKgOp0YWA1jIQIs1HLJi54WPw=;
+	s=korg; t=1750175989;
+	bh=DEJkTf2BXgJtkwY1C4K737sO5Da0zzraa0V3nwF972k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CTJzo+8chcWObHJ8EfRXpdGYVg6PWx0k32UeZI3hET2ZOySX94Uv98xWWbCtAEux8
-	 ++gUd507lA1IDw6WfaHj3kseBiRjHnai63XQfRZdAToKm3GYiUEJ2uvgc3ITiRdr1G
-	 mErmDPNmnVDh+JOQpeU7A0MagbPOvK1zoGAa74wM=
+	b=br5muKzFiRBg9zY4NfWS0dSeA14sO6mNXMmeiudo4xe0HDJOUOGX+8wJsk0OtCalJ
+	 fwBwYTj+3yV0DG7TJWHYk7LscrLyYlszIyg/zNqo3ryI6QLRf65XkHtQbHxX4HiG7o
+	 LPjgxP/8x1cAgSPDIPVVKssb2HgXpHzBDSExhdeo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Yen Hsieh <mingyen.hsieh@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 185/512] wifi: mt76: mt7925: prevent multiple scan commands
-Date: Tue, 17 Jun 2025 17:22:31 +0200
-Message-ID: <20250617152427.140048090@linuxfoundation.org>
+Subject: [PATCH 6.15 141/780] media: synopsys: hdmirx: Renamed frame_idx to sequence
+Date: Tue, 17 Jun 2025 17:17:29 +0200
+Message-ID: <20250617152457.244141557@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,40 +48,70 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
+From: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 
-[ Upstream commit 122f270aca2c86d7de264ab67161c845e0691d73 ]
+[ Upstream commit 0400bee67f49753b878c2576c02c1bc454f091ed ]
 
-Add a check to ensure only one scan command is active at a time
-by testing the MT76_HW_SCANNING state.
+This variable is used to fill the v4l2_buffer.sequence, let's name it
+the exact same way to reduce confusion.
 
-Fixes: c948b5da6bbe ("wifi: mt76: mt7925: add Mediatek Wi-Fi7 driver for mt7925 chips")
-Signed-off-by: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
-Link: https://patch.msgid.link/20250414013954.1151774-1-mingyen.hsieh@mediatek.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+No functional changes.
+
+Fixes: 7b59b132ad439 ("media: platform: synopsys: Add support for HDMI input driver")
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Reviewed-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7925/mcu.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/media/platform/synopsys/hdmirx/snps_hdmirx.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
-index 2396e1795fe17..7ad9e1eaaa8f3 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
-@@ -2771,6 +2771,9 @@ int mt7925_mcu_hw_scan(struct mt76_phy *phy, struct ieee80211_vif *vif,
- 	struct tlv *tlv;
- 	int max_len;
+diff --git a/drivers/media/platform/synopsys/hdmirx/snps_hdmirx.c b/drivers/media/platform/synopsys/hdmirx/snps_hdmirx.c
+index 3d2913de9a86c..f5b3f5010ede5 100644
+--- a/drivers/media/platform/synopsys/hdmirx/snps_hdmirx.c
++++ b/drivers/media/platform/synopsys/hdmirx/snps_hdmirx.c
+@@ -114,7 +114,7 @@ struct hdmirx_stream {
+ 	spinlock_t vbq_lock; /* to lock video buffer queue */
+ 	bool stopping;
+ 	wait_queue_head_t wq_stopped;
+-	u32 frame_idx;
++	u32 sequence;
+ 	u32 line_flag_int_cnt;
+ 	u32 irq_stat;
+ };
+@@ -1540,7 +1540,7 @@ static int hdmirx_start_streaming(struct vb2_queue *queue, unsigned int count)
+ 	int line_flag;
  
-+	if (test_bit(MT76_HW_SCANNING, &phy->state))
-+		return -EBUSY;
-+
- 	max_len = sizeof(*hdr) + sizeof(*req) + sizeof(*ssid) +
- 				sizeof(*bssid) + sizeof(*chan_info) +
- 				sizeof(*misc) + sizeof(*ie);
+ 	mutex_lock(&hdmirx_dev->stream_lock);
+-	stream->frame_idx = 0;
++	stream->sequence = 0;
+ 	stream->line_flag_int_cnt = 0;
+ 	stream->curr_buf = NULL;
+ 	stream->next_buf = NULL;
+@@ -1948,7 +1948,7 @@ static void dma_idle_int_handler(struct snps_hdmirx_dev *hdmirx_dev,
+ 
+ 			if (vb_done) {
+ 				vb_done->vb2_buf.timestamp = ktime_get_ns();
+-				vb_done->sequence = stream->frame_idx;
++				vb_done->sequence = stream->sequence;
+ 
+ 				if (bt->interlaced)
+ 					vb_done->field = V4L2_FIELD_INTERLACED_TB;
+@@ -1956,8 +1956,8 @@ static void dma_idle_int_handler(struct snps_hdmirx_dev *hdmirx_dev,
+ 					vb_done->field = V4L2_FIELD_NONE;
+ 
+ 				hdmirx_vb_done(stream, vb_done);
+-				stream->frame_idx++;
+-				if (stream->frame_idx == 30)
++				stream->sequence++;
++				if (stream->sequence == 30)
+ 					v4l2_dbg(1, debug, v4l2_dev,
+ 						 "rcv frames\n");
+ 			}
 -- 
 2.39.5
 
