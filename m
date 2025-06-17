@@ -1,47 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05135285059;
-	Tue, 17 Jun 2025 16:39:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CA8E2DFF1F;
+	Tue, 17 Jun 2025 16:39:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750178341; cv=none; b=R2sImE3SV7GAqownktkMckhCvUAI1QO/2qfl5kYVKsO/SZO2+mmluw8h9ez4Jg/w1ridSh8MDoJEwcU2iTOwC1oft1p1z00TKdjI0oJ5swljwvEvzsy6qQOV7uBDLmTxiV9SlNdyZDNT8Cv+tTECHDvcok3j9TtKmpc0mo6wt9g=
+	t=1750178344; cv=none; b=QfcBCU5ME0VzF3yFAXWxPSr13FcMonf84dF9R6dtnN1UCaiuZd0BJh9ib4tg4TyX6lPN5wMqvreZJh/BUSyIydcFweDlsDZB3YBV27ODz/nQLHALp1lcx84gKtSz3WS+zBX+MT9L6JnfSqt+N2F8IAYAuSAcaac+UVI76JSxf+U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750178341; c=relaxed/simple;
-	bh=2G89DD0shL4qifgBmqINvGr/IChj/MI8rHw4/4zS0U8=;
+	s=arc-20240116; t=1750178344; c=relaxed/simple;
+	bh=GJoYqscII4zAO0rOkp2D/v+BxMLPpkcEwNm7mEylm1M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bmEivIAwMmpFybU/NVzbfiZC2Pdxsa+d0+rB1OJ3H09XMkff+FhLwv4RHNacO6U75mrkPboAgf3fujhuMRCwRBATO599PgAgKYod+wOJl0f0SudSlF5p/g4EbnbfBm2r3bBEQrh1S/HhHas2fDKngxL8PGCVbNdxcgF1W2acvQE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=phJwXoEm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SZXj4f3+/7bX8GmIoM61IYWEbrxehfzRvvnRMCZhws5ZVraJqfjN4cXdSsROu1hrsfjuuICyaceWocdr6LV1Ix7LNljasYN2E8MpmXo9+zj7q6aCcVzNRMppi1zBE5R3kkczPYM36tRBQNbyEooiCaBZruAWjNynyVq514axLNc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0L9RoCBe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="phJwXoEm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A5F0C4CEE3;
-	Tue, 17 Jun 2025 16:39:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0L9RoCBe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD468C4CEE3;
+	Tue, 17 Jun 2025 16:39:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750178340;
-	bh=2G89DD0shL4qifgBmqINvGr/IChj/MI8rHw4/4zS0U8=;
+	s=korg; t=1750178344;
+	bh=GJoYqscII4zAO0rOkp2D/v+BxMLPpkcEwNm7mEylm1M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=phJwXoEm15xOl57zCtTiqEe7i9c2/gYxYT70GqISEfT3ZOqHf3hSVyGGVBXKpSzsU
-	 joPtBTtoRDy1KMbi6KEMfLLyMIV8eudi9Hwl/riGjsD0hbwCt+YgBXSSArjj0tr9s7
-	 dmXPUNhZyWC4Dyp3KXrXaTpaqhr+w5d/YPNHqSwE=
+	b=0L9RoCBezzGLNN29o+q6wsbcKGh/M2svQxi8f6aWa21oJcR/CrJGtTqD3H6cd720A
+	 oKPUzrwPkdlB68Wlx9UmvM2bzxrmTpRppJ/m27Oaqru4Bv/mzj36/2KCHb1G3t9oOE
+	 uYkFUX0skupYsuIKfuQDXTk0eVKV7IUN/tkSmBbs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ian Rogers <irogers@google.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Tony Jones <tonyj@suse.de>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 446/780] perf scripts python: exported-sql-viewer.py: Fix pattern matching with Python 3
-Date: Tue, 17 Jun 2025 17:22:34 +0200
-Message-ID: <20250617152509.617727133@linuxfoundation.org>
+	John Hubbard <jhubbard@nvidia.com>,
+	Timur Tabi <ttabi@nvidia.com>,
+	Kane York <kanepyork@gmail.com>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Joel Fernandes <joelagnelf@nvidia.com>,
+	Miguel Ojeda <ojeda@kernel.org>
+Subject: [PATCH 6.12 482/512] objtool/rust: relax slice condition to cover more `noreturn` Rust functions
+Date: Tue, 17 Jun 2025 17:27:28 +0200
+Message-ID: <20250617152439.131646178@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -53,56 +51,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Miguel Ojeda <ojeda@kernel.org>
 
-[ Upstream commit 17e548405a81665fd14cee960db7d093d1396400 ]
+commit cbeaa41dfe26b72639141e87183cb23e00d4b0dd upstream.
 
-The script allows the user to enter patterns to find symbols.
+Developers are indeed hitting other of the `noreturn` slice symbols in
+Nova [1], thus relax the last check in the list so that we catch all of
+them, i.e.
 
-The pattern matching characters are converted for use in SQL.
+    *_4core5slice5index22slice_index_order_fail
+    *_4core5slice5index24slice_end_index_len_fail
+    *_4core5slice5index26slice_start_index_len_fail
+    *_4core5slice5index29slice_end_index_overflow_fail
+    *_4core5slice5index31slice_start_index_overflow_fail
 
-For PostgreSQL the conversion involves using the Python maketrans()
-method which is slightly different in Python 3 compared with Python 2.
+These all exist since at least Rust 1.78.0, thus backport it too.
 
-Fix to work in Python 3.
+See commit 56d680dd23c3 ("objtool/rust: list `noreturn` Rust functions")
+for more details.
 
-Fixes: beda0e725e5f06ac ("perf script python: Add Python3 support to exported-sql-viewer.py")
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Tony Jones <tonyj@suse.de>
-Link: https://lore.kernel.org/r/20250512093932.79854-4-adrian.hunter@intel.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org # Needed in 6.12.y and later.
+Cc: John Hubbard <jhubbard@nvidia.com>
+Cc: Timur Tabi <ttabi@nvidia.com>
+Cc: Kane York <kanepyork@gmail.com>
+Cc: Josh Poimboeuf <jpoimboe@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Reported-by: Joel Fernandes <joelagnelf@nvidia.com>
+Fixes: 56d680dd23c3 ("objtool/rust: list `noreturn` Rust functions")
+Closes: https://lore.kernel.org/rust-for-linux/20250513180757.GA1295002@joelnvbox/ [1]
+Tested-by: Joel Fernandes <joelagnelf@nvidia.com>
+Link: https://lore.kernel.org/r/20250520185555.825242-1-ojeda@kernel.org
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/perf/scripts/python/exported-sql-viewer.py | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ tools/objtool/check.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/tools/perf/scripts/python/exported-sql-viewer.py b/tools/perf/scripts/python/exported-sql-viewer.py
-index 121cf61ba1b34..e0b2e7268ef68 100755
---- a/tools/perf/scripts/python/exported-sql-viewer.py
-+++ b/tools/perf/scripts/python/exported-sql-viewer.py
-@@ -680,7 +680,10 @@ class CallGraphModelBase(TreeModel):
- 				s = value.replace("%", "\\%")
- 				s = s.replace("_", "\\_")
- 				# Translate * and ? into SQL LIKE pattern characters % and _
--				trans = string.maketrans("*?", "%_")
-+				if sys.version_info[0] == 3:
-+					trans = str.maketrans("*?", "%_")
-+				else:
-+					trans = string.maketrans("*?", "%_")
- 				match = " LIKE '" + str(s).translate(trans) + "'"
- 			else:
- 				match = " GLOB '" + str(value) + "'"
--- 
-2.39.5
-
+--- a/tools/objtool/check.c
++++ b/tools/objtool/check.c
+@@ -222,7 +222,8 @@ static bool is_rust_noreturn(const struc
+ 	       str_ends_with(func->name, "_7___rustc17rust_begin_unwind")				||
+ 	       strstr(func->name, "_4core9panicking13assert_failed")					||
+ 	       strstr(func->name, "_4core9panicking11panic_const24panic_const_")			||
+-	       (strstr(func->name, "_4core5slice5index24slice_") &&
++	       (strstr(func->name, "_4core5slice5index") &&
++		strstr(func->name, "slice_") &&
+ 		str_ends_with(func->name, "_fail"));
+ }
+ 
 
 
