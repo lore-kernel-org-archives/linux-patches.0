@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A768E2EA143;
-	Tue, 17 Jun 2025 16:01:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF5CB2ECE94;
+	Tue, 17 Jun 2025 16:01:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750176087; cv=none; b=ZCY8x6kusVYIdKmUS3afwK9VAUtRRBrPxZWajuuxXFf4EMGd/Ug3aHcUQi+hghzpsQepFdhtDYrYyfGEgr63nqa0+wmVA86dVk3+v6RgYZ1B8dtOtzMSVsbscoCxnMc2qXl6ypPxf+++FNVHnc/aX6ESIs9c+narVikmc0aFdaI=
+	t=1750176090; cv=none; b=T2+60OR02jdP6dusP/mqIHVQyQZJns23PQSkXqV7puYRtS1IqDFDQHWacNj71K7LjB/OzypAcg3jI6wDv6ySjeKvIG1/x9z2zaFees5dTHnKjePamo0JjW4DheFHg/pXIysQ9nCBVYPK67awOsvmIl697r8L0FNMpv6zcwsULsM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750176087; c=relaxed/simple;
-	bh=KCQact9RXe45zTYa+leJoF8VmpnF6r8XRYDrTTxqx/Y=;
+	s=arc-20240116; t=1750176090; c=relaxed/simple;
+	bh=hE7C4zxyudq5a9659cZPVBU/HfOKuk4tas+cvubhx3A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TjwfzMAhfjHTKQHUc1QxDLtgFhio8r+xLQiEnr4o5fSgVE1FsxiU9NDcD32rk5aFqCiHuvZKMdKXyt9ipzlJLlPQV4ciZygdKlInoXeJ8NEGFsAX1m1YtYZfor5WHxStMnOCoT94WwQ9DxUQxSdwZUIh0lkGE0aXqWS4Nc6T61o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n7GYe7Ul; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X63o2ayzQmfMqu80WKY0GhiecgCpDWsKuw2+YElPMlgcExa+vaIoAIgjtsAQgMveCLCCGkQqhsO6e/sgIJn+GTllMjDld7xwoLd9kOInFB98WtdC46KUTHKtpnh2P7jAJOTQ9FEQ6bf2k1ukYefp8KR729q/G1hub7h+TIpKF/Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JjO7a1DE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n7GYe7Ul"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16926C4CEE3;
-	Tue, 17 Jun 2025 16:01:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JjO7a1DE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 407BDC4CEE3;
+	Tue, 17 Jun 2025 16:01:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750176087;
-	bh=KCQact9RXe45zTYa+leJoF8VmpnF6r8XRYDrTTxqx/Y=;
+	s=korg; t=1750176090;
+	bh=hE7C4zxyudq5a9659cZPVBU/HfOKuk4tas+cvubhx3A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n7GYe7Ulw8dfMhAG+Pjlq7cp+wrV3+qd8AduyLDuBH31Si6f/YhNsGnhpCKyELtJQ
-	 bTOAn1phCMPPeG2BclNq1oIOM1YuN4ZuWk6v5s0jjg+HlN3do4MTN1rNPFqchDC597
-	 27L7nWZN2IfKtMcw5tLz4uWyCqUEIszymr11fm8w=
+	b=JjO7a1DEP3EjP7oT2SgzoBys/GGmRcTxDnBXRxEs2nwuSYxZmVfq5+8R9KveoF1zV
+	 iGagrAlnAsc+OksCCm2IlzS3RnMx3TDi6SBIjqKGUnNG2DkyKZEK0xGOy6QWAJ1cYs
+	 RAe1ZCZQfJ/eCgoOgWYnok1lbLi3zlju9q0+5T0A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+	Nicolas Pitre <npitre@baylibre.com>,
+	Jiri Slaby <jirislaby@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 150/780] drm/mediatek: mtk_drm_drv: Fix kobject put for mtk_mutex device ptr
-Date: Tue, 17 Jun 2025 17:17:38 +0200
-Message-ID: <20250617152457.612745686@linuxfoundation.org>
+Subject: [PATCH 6.6 242/356] vt: remove VT_RESIZE and VT_RESIZEX from vt_compat_ioctl()
+Date: Tue, 17 Jun 2025 17:25:57 +0200
+Message-ID: <20250617152347.950925701@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
+References: <20250617152338.212798615@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,109 +47,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+From: Nicolas Pitre <npitre@baylibre.com>
 
-[ Upstream commit 22918591fb747a6d16801e74a170cf98e886f83b ]
+[ Upstream commit c4c7ead7b86c1e7f11c64915b7e5bb6d2e242691 ]
 
-This driver is taking a kobject for mtk_mutex only once per mmsys
-device for each drm-mediatek driver instance, differently from the
-behavior with other components, but it is decrementing the kobj's
-refcount in a loop and once per mmsys: this is not right and will
-result in a refcount_t underflow warning when mediatek-drm returns
-multiple probe deferrals in one boot (or when manually bound and
-unbound).
+They are listed amon those cmd values that "treat 'arg' as an integer"
+which is wrong. They should instead fall into the default case. Probably
+nobody ever relied on that code since 2009 but still.
 
-Besides that, the refcount for mutex_dev was not decremented for
-error cases in mtk_drm_bind(), causing another refcount_t warning
-but this time for overflow, when the failure happens not during
-driver bind but during component bind.
-
-In order to fix one of the reasons why this is happening, remove
-the put_device(xx->mutex_dev) loop from the mtk_drm_kms_init()'s
-put_mutex_dev label (and drop the label) and add a single call to
-correctly free the single incremented refcount of mutex_dev to
-the mtk_drm_unbind() function to fix the refcount_t underflow.
-
-Moreover, add the same call to the error cases in mtk_drm_bind()
-to fix the refcount_t overflow.
-
-Fixes: 1ef7ed48356c ("drm/mediatek: Modify mediatek-drm for mt8195 multi mmsys support")
-Reviewed-by: Chen-Yu Tsai <wenst@chromium.org>
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://patchwork.kernel.org/project/dri-devel/patch/20250403104741.71045-2-angelogioacchino.delregno@collabora.com/
-Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Fixes: e92166517e3c ("tty: handle VT specific compat ioctls in vt driver")
+Signed-off-by: Nicolas Pitre <npitre@baylibre.com>
+Reviewed-by: Jiri Slaby <jirislaby@kernel.org>
+Link: https://lore.kernel.org/r/pr214s15-36r8-6732-2pop-159nq85o48r7@syhkavp.arg
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/mediatek/mtk_drm_drv.c | 17 ++++++++++-------
- 1 file changed, 10 insertions(+), 7 deletions(-)
+ drivers/tty/vt/vt_ioctl.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/mediatek/mtk_drm_drv.c b/drivers/gpu/drm/mediatek/mtk_drm_drv.c
-index 74158b9d65035..5994e2a97dc13 100644
---- a/drivers/gpu/drm/mediatek/mtk_drm_drv.c
-+++ b/drivers/gpu/drm/mediatek/mtk_drm_drv.c
-@@ -470,7 +470,7 @@ static int mtk_drm_kms_init(struct drm_device *drm)
- 
- 	ret = drmm_mode_config_init(drm);
- 	if (ret)
--		goto put_mutex_dev;
-+		return ret;
- 
- 	drm->mode_config.min_width = 64;
- 	drm->mode_config.min_height = 64;
-@@ -489,7 +489,7 @@ static int mtk_drm_kms_init(struct drm_device *drm)
- 		drm->dev_private = private->all_drm_private[i];
- 		ret = component_bind_all(private->all_drm_private[i]->dev, drm);
- 		if (ret)
--			goto put_mutex_dev;
-+			return ret;
- 	}
+diff --git a/drivers/tty/vt/vt_ioctl.c b/drivers/tty/vt/vt_ioctl.c
+index 8c685b5014044..5b21b60547da1 100644
+--- a/drivers/tty/vt/vt_ioctl.c
++++ b/drivers/tty/vt/vt_ioctl.c
+@@ -1105,8 +1105,6 @@ long vt_compat_ioctl(struct tty_struct *tty,
+ 	case VT_WAITACTIVE:
+ 	case VT_RELDISP:
+ 	case VT_DISALLOCATE:
+-	case VT_RESIZE:
+-	case VT_RESIZEX:
+ 		return vt_ioctl(tty, cmd, arg);
  
  	/*
-@@ -582,9 +582,6 @@ static int mtk_drm_kms_init(struct drm_device *drm)
- err_component_unbind:
- 	for (i = 0; i < private->data->mmsys_dev_num; i++)
- 		component_unbind_all(private->all_drm_private[i]->dev, drm);
--put_mutex_dev:
--	for (i = 0; i < private->data->mmsys_dev_num; i++)
--		put_device(private->all_drm_private[i]->mutex_dev);
- 
- 	return ret;
- }
-@@ -655,8 +652,10 @@ static int mtk_drm_bind(struct device *dev)
- 		return 0;
- 
- 	drm = drm_dev_alloc(&mtk_drm_driver, dev);
--	if (IS_ERR(drm))
--		return PTR_ERR(drm);
-+	if (IS_ERR(drm)) {
-+		ret = PTR_ERR(drm);
-+		goto err_put_dev;
-+	}
- 
- 	private->drm_master = true;
- 	drm->dev_private = private;
-@@ -682,6 +681,8 @@ static int mtk_drm_bind(struct device *dev)
- 	drm_dev_put(drm);
- 	for (i = 0; i < private->data->mmsys_dev_num; i++)
- 		private->all_drm_private[i]->drm = NULL;
-+err_put_dev:
-+	put_device(private->mutex_dev);
- 	return ret;
- }
- 
-@@ -694,6 +695,8 @@ static void mtk_drm_unbind(struct device *dev)
- 		drm_dev_unregister(private->drm);
- 		mtk_drm_kms_deinit(private->drm);
- 		drm_dev_put(private->drm);
-+
-+		put_device(private->mutex_dev);
- 	}
- 	private->mtk_drm_bound = false;
- 	private->drm_master = false;
 -- 
 2.39.5
 
