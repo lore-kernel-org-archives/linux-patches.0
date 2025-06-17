@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFB93221F1F;
-	Tue, 17 Jun 2025 15:35:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 876CE2DF3C9;
+	Tue, 17 Jun 2025 15:35:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750174508; cv=none; b=CZFHELLo8yuk5sL2GOQM9kSBtRh4aSCbtjW+yLUf4N+2fHFdeFe+7ocNWzWlKF6B1cvMSpIhIdeuocUKebKJ0WLIIGgci2BU32MF6S8vVQ/KAwjlA/QLl2uusIv9iheMwpu374gJPzpbvN+QYghXnk/FSeDbpKW1C3HTtsWkt6w=
+	t=1750174511; cv=none; b=aM1Gt67vJJhH57/ytupqdVjqxH81P6yhVuLYSO15BjYWiA0NP4uCUyIO2WG8vmQIp3Av/TEKk3hK2oEz1BrV9/jvKpYQgqnb/YSwAzli6SGn6sIVJ/leuh5tV9U7HZD663nCEToSev3tv3WWWsokklpmVaQ3CcVA1bRWl4UzojE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750174508; c=relaxed/simple;
-	bh=RV5LbI/PmiMyzVkcx2eXk+Xhg0LthIEZqB4HIBgf10I=;
+	s=arc-20240116; t=1750174511; c=relaxed/simple;
+	bh=q9Rq33MRrxNLfTI+F4sia/9ns/IW9R9+tNZG3PPyNbw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eUjbTFj1343KJEOQ/QzRLZZtRvAFD8B77ukvuEhf0Dq+fAmjiLOEve/TQJmoerxSwCmG01sIPRsrJiFcH5jmMSIEgISMOUymb/ViEc5pTmJqHHDRcAcZkxBQSy1p674d6GX2/tByomCJpV3xZp4goukxlLdXxlSaOX0EOcKaAMk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ffgCKTVZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YxbMZbHGi8z+I61PPzwHutQ8htxo5/s/zFyM/znuDavIFLxk8uJTP4bRKBbFi2Zz8QGmiDbo8xD/ZY9zvtuqZe4hBtjQjmXqAiuuztgbaizjZk1d9d8pLuymthwVeVjCqUKWzgQ778+6p6wEs1Snxjjn0E+Or98+5nKnnaWUJeM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j/t5HI32; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ffgCKTVZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C935C4CEF2;
-	Tue, 17 Jun 2025 15:35:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j/t5HI32"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E279CC4CEE7;
+	Tue, 17 Jun 2025 15:35:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750174508;
-	bh=RV5LbI/PmiMyzVkcx2eXk+Xhg0LthIEZqB4HIBgf10I=;
+	s=korg; t=1750174511;
+	bh=q9Rq33MRrxNLfTI+F4sia/9ns/IW9R9+tNZG3PPyNbw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ffgCKTVZWykYJ/GNgKyOUEl6cu+8T2GLY+QslSO6LHpBPOekSTrUNmRAwHCNtfeyn
-	 mpZE61BD483li/suPBDlRQO6f1FruQYRWEGe/P8q93ILUSMKEgx2r6olQK8xrJZsSh
-	 FrJEalcIYfSTy7S8dqELPUeMYck09TiEV23JpTRw=
+	b=j/t5HI32kWR83hYFVD2XpBavtEk2WkARTVNJ3Xi1EdKpf5Zm6DqpK4e1DsV+ebmQs
+	 rwc/C+nzTIr/VX80U0Or19xSJfVtdOTdlPZYtyo6Hs/3b3iyPi0tSU+sx97k6QqBmz
+	 nL1nrRg2aqIw0r+KGqxjWHAh0mI64fICDCa4G+WM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 077/356] drm/mediatek: Fix kobject put for component sub-drivers
-Date: Tue, 17 Jun 2025 17:23:12 +0200
-Message-ID: <20250617152341.322876326@linuxfoundation.org>
+Subject: [PATCH 6.12 028/512] btrfs: scrub: fix a wrong error type when metadata bytenr mismatches
+Date: Tue, 17 Jun 2025 17:19:54 +0200
+Message-ID: <20250617152420.699438376@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-References: <20250617152338.212798615@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,69 +47,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+From: Qu Wenruo <wqu@suse.com>
 
-[ Upstream commit 80805b62ea5b95eda54c225b989f929ca0691ab0 ]
+[ Upstream commit f2c19541e421b3235efc515dad88b581f00592ae ]
 
-In function mtk_drm_get_all_drm_priv(), this driver is incrementing
-the refcount for the sub-drivers of mediatek-drm with a call to
-device_find_child() when taking a reference to all of those child
-devices.
+When the bytenr doesn't match for a metadata tree block, we will report
+it as an csum error, which is incorrect and should be reported as a
+metadata error instead.
 
-When the component bind fails multiple times this results in a
-refcount_t overflow, as the reference count is never decremented:
-fix that by adding a call to put_device() for all of the mmsys
-devices in a loop, in error cases of mtk_drm_bind() and in the
-mtk_drm_unbind() callback.
-
-Fixes: 1ef7ed48356c ("drm/mediatek: Modify mediatek-drm for mt8195 multi mmsys support")
-Reviewed-by: Chen-Yu Tsai <wenst@chromium.org>
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://patchwork.kernel.org/project/dri-devel/patch/20250403104741.71045-3-angelogioacchino.delregno@collabora.com/
-Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Fixes: a3ddbaebc7c9 ("btrfs: scrub: introduce a helper to verify one metadata block")
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/mediatek/mtk_drm_drv.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ fs/btrfs/scrub.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/mediatek/mtk_drm_drv.c b/drivers/gpu/drm/mediatek/mtk_drm_drv.c
-index 108cab35ce485..32d66fa75b7c4 100644
---- a/drivers/gpu/drm/mediatek/mtk_drm_drv.c
-+++ b/drivers/gpu/drm/mediatek/mtk_drm_drv.c
-@@ -635,6 +635,10 @@ static int mtk_drm_bind(struct device *dev)
- 	for (i = 0; i < private->data->mmsys_dev_num; i++)
- 		private->all_drm_private[i]->drm = NULL;
- err_put_dev:
-+	for (i = 0; i < private->data->mmsys_dev_num; i++) {
-+		/* For device_find_child in mtk_drm_get_all_priv() */
-+		put_device(private->all_drm_private[i]->dev);
-+	}
- 	put_device(private->mutex_dev);
- 	return ret;
- }
-@@ -642,6 +646,7 @@ static int mtk_drm_bind(struct device *dev)
- static void mtk_drm_unbind(struct device *dev)
- {
- 	struct mtk_drm_private *private = dev_get_drvdata(dev);
-+	int i;
+diff --git a/fs/btrfs/scrub.c b/fs/btrfs/scrub.c
+index 51eb41d18c3e5..3fcc7c092c5ec 100644
+--- a/fs/btrfs/scrub.c
++++ b/fs/btrfs/scrub.c
+@@ -619,7 +619,7 @@ static void scrub_verify_one_metadata(struct scrub_stripe *stripe, int sector_nr
+ 	memcpy(on_disk_csum, header->csum, fs_info->csum_size);
  
- 	/* for multi mmsys dev, unregister drm dev in mmsys master */
- 	if (private->drm_master) {
-@@ -649,6 +654,10 @@ static void mtk_drm_unbind(struct device *dev)
- 		mtk_drm_kms_deinit(private->drm);
- 		drm_dev_put(private->drm);
- 
-+		for (i = 0; i < private->data->mmsys_dev_num; i++) {
-+			/* For device_find_child in mtk_drm_get_all_priv() */
-+			put_device(private->all_drm_private[i]->dev);
-+		}
- 		put_device(private->mutex_dev);
- 	}
- 	private->mtk_drm_bound = false;
+ 	if (logical != btrfs_stack_header_bytenr(header)) {
+-		bitmap_set(&stripe->csum_error_bitmap, sector_nr, sectors_per_tree);
++		bitmap_set(&stripe->meta_error_bitmap, sector_nr, sectors_per_tree);
+ 		bitmap_set(&stripe->error_bitmap, sector_nr, sectors_per_tree);
+ 		btrfs_warn_rl(fs_info,
+ 		"tree block %llu mirror %u has bad bytenr, has %llu want %llu",
 -- 
 2.39.5
 
