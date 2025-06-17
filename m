@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41C26285048;
-	Tue, 17 Jun 2025 16:35:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE343285048;
+	Tue, 17 Jun 2025 16:35:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750178138; cv=none; b=HIwKtnrEj7XwLMPFS5P546Y5ByaChU3j1ZWPyt/2DsOLsjZXlVCdSCU9748SLSrz2SpxLcyGYTOmK8OP2bWn9oNRTM1Hg5/XdnGvDPAXjiviVUiMCYUlwRVgm0Nf/QUn7cZj6CWHsuyD51cPE42UyfYicmo/1Kp31pyN7oxidHg=
+	t=1750178141; cv=none; b=ovjMzsIl0y6cQMQVvZNs2P9C2vhaqbL/nkIHRv/3lv+LqbwgdsTQG9sZ6dxwn/zBvHPHHjwRLS6q+7hIRaWsLjutiPAPB3F1zj+rHtmByuU1nKLBkRGi3rCSN/qTNZSs6q1zfU/liGvPBeOYyqo/xO8+5S4CNAms6WcVqgYejNM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750178138; c=relaxed/simple;
-	bh=uCFfkCBAWTEAGKgSQiZ2ScyUeV0MjzvPj2+Ik8ElGZA=;
+	s=arc-20240116; t=1750178141; c=relaxed/simple;
+	bh=jiqKqn4kPJEHS3ZrtZMmvS77kHbusVBAde4ghL7YztY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CuP4dSmQM3KKsoWp1PaCH24QcMw0lHugRUY/5N4/MKTgZA35H9glSsYLu/xr2K9re69Q+B3tSvHe0opuPOr2U2Iq3yncSjJJ9BZdCWOKyezq230Xq1T9KcD9LWN8XmUeUlPZsnS5czGqV1f2RlHdRM3e3tHi/zjswM5NuKhJQqk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I7DlgjZ4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EzVglcKlf5aEZZDjKqz0sHt8NDjGFbOIfD4ss3UUNhorGHqmyS9AnJ6JRI2FdhwzYPdT+smb666OyYx0Lr72yeHPF4zK8HEp9tcyVmoJUmSufZfqx6HxC1lLOEGCDx9VwXU4oMEZzXRXDi37Zwyc7EGbg4gJ7Cx6mZq339YWCGQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D6rMh58W; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I7DlgjZ4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5A1DC4CEE3;
-	Tue, 17 Jun 2025 16:35:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D6rMh58W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9355C4CEE3;
+	Tue, 17 Jun 2025 16:35:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750178138;
-	bh=uCFfkCBAWTEAGKgSQiZ2ScyUeV0MjzvPj2+Ik8ElGZA=;
+	s=korg; t=1750178141;
+	bh=jiqKqn4kPJEHS3ZrtZMmvS77kHbusVBAde4ghL7YztY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I7DlgjZ4P3w1ymrnbOTVtZFUIi2CsAweG1tOcbtDdcITNp4KUOiulUAEAl2DqcoOx
-	 rFO7+OA8zj3kJLkbo0uTP96LwZtuT9JV/wWWz8w9Twjoxp8laDZBQtWDdbrKhAS/g2
-	 FX6v1zB7Vf5TGZAeUAz/ZfoYmDAA7oyBt40M2Al4=
+	b=D6rMh58Wl2d9zcy7+rFVj4lJaz3yZN2RKbV0ZFzgIr018qTXWZupUlo2xNTGCTWHo
+	 Xkqi2nWsJl/7Q73b8AWpA1TkhVHuoX+DY8agRtmIVamSsO28fblN3qQL8uMS2h4/8T
+	 kJR8AbtSX+EwQfcjnrfhtLpcCnIbaZJhEjsZuuP4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <oliver.sang@intel.com>,
-	Eric Biggers <ebiggers@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Marco Elver <elver@google.com>,
-	Kees Cook <kees@kernel.org>,
+	Jakub Sitnicki <jakub@cloudflare.com>,
+	Michal Luczaj <mhal@rbox.co>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 415/780] ubsan: integer-overflow: depend on BROKEN to keep this out of CI
-Date: Tue, 17 Jun 2025 17:22:03 +0200
-Message-ID: <20250617152508.374768723@linuxfoundation.org>
+Subject: [PATCH 6.12 452/512] net: Fix TOCTOU issue in sk_is_readable()
+Date: Tue, 17 Jun 2025 17:26:58 +0200
+Message-ID: <20250617152437.884768118@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,47 +49,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kees Cook <kees@kernel.org>
+From: Michal Luczaj <mhal@rbox.co>
 
-[ Upstream commit d6a0e0bfecccdcecb08defe75a137c7262352102 ]
+[ Upstream commit 2660a544fdc0940bba15f70508a46cf9a6491230 ]
 
-Depending on !COMPILE_TEST isn't sufficient to keep this feature out of
-CI because we can't stop it from being included in randconfig builds.
-This feature is still highly experimental, and is developed in lock-step
-with Clang's Overflow Behavior Types[1]. Depend on BROKEN to keep it
-from being enabled by anyone not expecting it.
+sk->sk_prot->sock_is_readable is a valid function pointer when sk resides
+in a sockmap. After the last sk_psock_put() (which usually happens when
+socket is removed from sockmap), sk->sk_prot gets restored and
+sk->sk_prot->sock_is_readable becomes NULL.
 
-Link: https://discourse.llvm.org/t/rfc-v2-clang-introduce-overflowbehaviortypes-for-wrapping-and-non-wrapping-arithmetic/86507 [1]
-Reported-by: kernel test robot <oliver.sang@intel.com>
-Closes: https://lore.kernel.org/oe-lkp/202505281024.f42beaa7-lkp@intel.com
-Fixes: 557f8c582a9b ("ubsan: Reintroduce signed overflow sanitizer")
-Acked-by: Eric Biggers <ebiggers@kernel.org>
-Link: https://lore.kernel.org/r/20250528182616.work.296-kees@kernel.org
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Acked-by: Marco Elver <elver@google.com>
-Signed-off-by: Kees Cook <kees@kernel.org>
+This makes sk_is_readable() racy, if the value of sk->sk_prot is reloaded
+after the initial check. Which in turn may lead to a null pointer
+dereference.
+
+Ensure the function pointer does not turn NULL after the check.
+
+Fixes: 8934ce2fd081 ("bpf: sockmap redirect ingress support")
+Suggested-by: Jakub Sitnicki <jakub@cloudflare.com>
+Signed-off-by: Michal Luczaj <mhal@rbox.co>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20250609-skisreadable-toctou-v1-1-d0dfb2d62c37@rbox.co
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/Kconfig.ubsan | 2 ++
- 1 file changed, 2 insertions(+)
+ include/net/sock.h | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/lib/Kconfig.ubsan b/lib/Kconfig.ubsan
-index f6ea0c5b5da39..96cd896684676 100644
---- a/lib/Kconfig.ubsan
-+++ b/lib/Kconfig.ubsan
-@@ -118,6 +118,8 @@ config UBSAN_UNREACHABLE
- 
- config UBSAN_INTEGER_WRAP
- 	bool "Perform checking for integer arithmetic wrap-around"
-+	# This is very experimental so drop the next line if you really want it
-+	depends on BROKEN
- 	depends on !COMPILE_TEST
- 	depends on $(cc-option,-fsanitize-undefined-ignore-overflow-pattern=all)
- 	depends on $(cc-option,-fsanitize=signed-integer-overflow)
+diff --git a/include/net/sock.h b/include/net/sock.h
+index fa9b9dadbe170..b7270b6b9e9cc 100644
+--- a/include/net/sock.h
++++ b/include/net/sock.h
+@@ -2942,8 +2942,11 @@ int sock_ioctl_inout(struct sock *sk, unsigned int cmd,
+ int sk_ioctl(struct sock *sk, unsigned int cmd, void __user *arg);
+ static inline bool sk_is_readable(struct sock *sk)
+ {
+-	if (sk->sk_prot->sock_is_readable)
+-		return sk->sk_prot->sock_is_readable(sk);
++	const struct proto *prot = READ_ONCE(sk->sk_prot);
++
++	if (prot->sock_is_readable)
++		return prot->sock_is_readable(sk);
++
+ 	return false;
+ }
+ #endif	/* _SOCK_H */
 -- 
 2.39.5
 
