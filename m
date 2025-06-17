@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 036512DFF0B;
-	Tue, 17 Jun 2025 15:59:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3862C2DFF3D;
+	Tue, 17 Jun 2025 15:59:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175980; cv=none; b=rr7/uO18MMu7EnCObZFSVKThdhHOdN+vznICpbnrM63LR0SWO/T+SZKIpFokN0OstO7dGxpLFm4P5CjFqQrqzHgP2OUJ3ynKXcKCO8oaNQVnhEkFpW+mdsgwmJSpnUCDh10itjlzIv8Ic+ojK+sxw2dSDrAw1+79DTutjw2cBJU=
+	t=1750175983; cv=none; b=bNn/HA8nv4yk8VI3ib+gQtyPZp1F7IOiDeWSWGzt97lUjKXmEWMK8O37JrolDuVUJs2sPMj/GHadEtgiFbjZWrAVI5+bKqslHbLrrMHtmQ7hJvMbIIzqtsosQeyqU1N3OAqoVqpMXCH/+n6EnvBo4cbN/j/iGegld7nTA2YrQn8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175980; c=relaxed/simple;
-	bh=L/K1dvP4S7DvGsURvhvPgEB4sPLxwI7QkKIHKyJaUtQ=;
+	s=arc-20240116; t=1750175983; c=relaxed/simple;
+	bh=/hbD7ry40RU7O3g3by5L2x3XWrUFmJ3z+pCR/BX6H98=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l/65riHCjlBWkj717DXjcLjyUuDGNukIqDfSJPOENzXAb3je8KG1AHcC6SWI00SndiDu27E1cx5ePNVlZuTQ+Y9I5NA24LaR08R2WwcHtm+VV8jR29GkEom0zu8AcR8M6GwT/19TuVrcQ6dO4auBkn0aFhotpcdlECC5FrIwDDU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x3fT5uo4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZTCmRm1b5PLwh4glOPHtQXzTe/kv93ZL6vyBCdkyJeBjb7880S6a98XLHjkceNsf2HuOvTdnhUazVqprP39CubNzzTa4wSUYTa1IdXhbNfdmhmJ6ghL4WzSPK5ShSJDAL8r7QnMN68OExU9ZFQQ8o/tLOvT82TqyGqz/iTltcEM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tEviTx3m; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x3fT5uo4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1D40C4CEF6;
-	Tue, 17 Jun 2025 15:59:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tEviTx3m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E153C4CEF1;
+	Tue, 17 Jun 2025 15:59:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175979;
-	bh=L/K1dvP4S7DvGsURvhvPgEB4sPLxwI7QkKIHKyJaUtQ=;
+	s=korg; t=1750175983;
+	bh=/hbD7ry40RU7O3g3by5L2x3XWrUFmJ3z+pCR/BX6H98=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x3fT5uo4eQWQb7DKhNmJ+Jd31Aaj5aGwHGwRqYuyag0EQIV/xOqj15UGhXuONuxQT
-	 A7rzoyj+YhbTFOtJ9kF5mPjp+NY5Uz8I5FG9MB1PsJf+BYko9YG4inlEhTod1sse4k
-	 ATfmpRdPkdQiVF+QT2R1uEixijLwb/9u/CvKw4Tk=
+	b=tEviTx3mnGw4dvw5OgbpVOV9qd0Huyh9DDg5IHphUh2pfeVeBJDQDnoUWr5S5zoSK
+	 UXcPJHp9KJpTy6+qjSjqp8SJMyMKZEb0AhKyjLGzTuaXV40g6sRo0Q9hnT/0qyR+s9
+	 2qmsopwEZCCXNbY6AqVHdfBXzJWZGnVtObY+HeFU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kees Cook <kees@kernel.org>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 140/780] scsi: qedf: Use designated initializer for struct qed_fcoe_cb_ops
-Date: Tue, 17 Jun 2025 17:17:28 +0200
-Message-ID: <20250617152457.201159418@linuxfoundation.org>
+Subject: [PATCH 6.6 232/356] thunderbolt: Fix a logic error in wake on connect
+Date: Tue, 17 Jun 2025 17:25:47 +0200
+Message-ID: <20250617152347.533077158@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
+References: <20250617152338.212798615@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,45 +47,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kees Cook <kees@kernel.org>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit d8720235d5b5cad86c1f07f65117ef2a96f8bec7 ]
+[ Upstream commit 1a760d10ded372d113a0410c42be246315bbc2ff ]
 
-Recent fixes to the randstruct GCC plugin allowed it to notice
-that this structure is entirely function pointers and is therefore
-subject to randomization, but doing so requires that it always use
-designated initializers. Explicitly specify the "common" member as being
-initialized. Silences:
+commit a5cfc9d65879c ("thunderbolt: Add wake on connect/disconnect
+on USB4 ports") introduced a sysfs file to control wake up policy
+for a given USB4 port that defaulted to disabled.
 
-drivers/scsi/qedf/qedf_main.c:702:9: error: positional initialization of field in 'struct' declared with 'designated_init' attribute [-Werror=designated-init]
-  702 |         {
-      |         ^
+However when testing commit 4bfeea6ec1c02 ("thunderbolt: Use wake
+on connect and disconnect over suspend") I found that it was working
+even without making changes to the power/wakeup file (which defaults
+to disabled). This is because of a logic error doing a bitwise or
+of the wake-on-connect flag with device_may_wakeup() which should
+have been a logical AND.
 
-Fixes: 035f7f87b729 ("randstruct: Enable Clang support")
-Link: https://lore.kernel.org/r/20250502224156.work.617-kees@kernel.org
-Signed-off-by: Kees Cook <kees@kernel.org>
+Adjust the logic so that policy is only applied when wakeup is
+actually enabled.
+
+Fixes: a5cfc9d65879c ("thunderbolt: Add wake on connect/disconnect on USB4 ports")
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/qedf/qedf_main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/thunderbolt/usb4.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/scsi/qedf/qedf_main.c b/drivers/scsi/qedf/qedf_main.c
-index 436bd29d5ebae..6b1ebab36fa35 100644
---- a/drivers/scsi/qedf/qedf_main.c
-+++ b/drivers/scsi/qedf/qedf_main.c
-@@ -699,7 +699,7 @@ static u32 qedf_get_login_failures(void *cookie)
- }
+diff --git a/drivers/thunderbolt/usb4.c b/drivers/thunderbolt/usb4.c
+index 8db9bd32f4738..e445516290f91 100644
+--- a/drivers/thunderbolt/usb4.c
++++ b/drivers/thunderbolt/usb4.c
+@@ -442,10 +442,10 @@ int usb4_switch_set_wake(struct tb_switch *sw, unsigned int flags)
+ 			bool configured = val & PORT_CS_19_PC;
+ 			usb4 = port->usb4;
  
- static struct qed_fcoe_cb_ops qedf_cb_ops = {
--	{
-+	.common = {
- 		.link_update = qedf_link_update,
- 		.bw_update = qedf_bw_update,
- 		.schedule_recovery_handler = qedf_schedule_recovery_handler,
+-			if (((flags & TB_WAKE_ON_CONNECT) |
++			if (((flags & TB_WAKE_ON_CONNECT) &&
+ 			      device_may_wakeup(&usb4->dev)) && !configured)
+ 				val |= PORT_CS_19_WOC;
+-			if (((flags & TB_WAKE_ON_DISCONNECT) |
++			if (((flags & TB_WAKE_ON_DISCONNECT) &&
+ 			      device_may_wakeup(&usb4->dev)) && configured)
+ 				val |= PORT_CS_19_WOD;
+ 			if ((flags & TB_WAKE_ON_USB4) && configured)
 -- 
 2.39.5
 
