@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A0802EE5F2;
-	Tue, 17 Jun 2025 16:21:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E3352EE5F0;
+	Tue, 17 Jun 2025 16:21:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177284; cv=none; b=YXE0BI38m1qfiPMeQzaadlu4Add0fugFTUDYdM8wamHcj+EA/tSIqjgTP0nGfwxCTheBNVonkIuMFwADzLLO52Vj0QYGTLCD0Sz2yOLEVmeKbpm0aiPtJnLVDB5m30NMOYAuoV3oQ9JbEGwzvVS+7uBG2bso7pO5gNvXhiG8WcY=
+	t=1750177287; cv=none; b=t0RvU1oBV9dDxq8FODQ37i7Po9zcqKV9KlyXH1W3+To34VoftZA3CGhNPVFgg94ReZ6wkKDOn/2PanTrQcpLyvWr01Zm0txHlCfURT9pMPohm802ctqIYZfLI9XrdDRQl/XYMMY2+OMxJLuGKu3WVyWuVRRtCa/pDWSdaV+mHTY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177284; c=relaxed/simple;
-	bh=6QIl8UdHeSa2ENbElvQ23zS5xyQ6XrJY4fv1tl8mIuE=;
+	s=arc-20240116; t=1750177287; c=relaxed/simple;
+	bh=7jU2m3HstC6AknkSZ2nHmLJWKYD4Uoaku33b+qOi4xY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=slZkexhKh1Yf2kMsvhT7YYMckevzeFmgqkqpXd0VVzFbnG+atDa4auxITqR+7xKKMKALRG9rSbd6cWta+OQUVJnEV3sl0V51ErQqKYj6YD1Ep3yVTwmCQY6vcptfD/op/c+Y2vhJZaRP/FKKqT4JVq1YqP5lZparb+QskpZQoic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N2xjG5wS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BRYsB2zB2VING6TAwe5WVTsPy9VQzw4Bsco2a7S6d7UjjTq4+FmqE2LsIuCnRV1Ik555emDfe4SLe8yM9Eh2ezAO1TevpI/ORuryG0AE4tijTqSmLVno5IvRxWMjwJyyuIe8zqwZKQmqeaxxkgRsYw8SHoxc1afo2DXRN1hCjnw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cvj2yOpS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N2xjG5wS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F344C4CEE3;
-	Tue, 17 Jun 2025 16:21:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cvj2yOpS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0BA2C4CEE3;
+	Tue, 17 Jun 2025 16:21:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177284;
-	bh=6QIl8UdHeSa2ENbElvQ23zS5xyQ6XrJY4fv1tl8mIuE=;
+	s=korg; t=1750177287;
+	bh=7jU2m3HstC6AknkSZ2nHmLJWKYD4Uoaku33b+qOi4xY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N2xjG5wSD+sqRfBWTN4oBUHpvqooJs9MPQEpHfUNVWtTbSJ3yEWb9HzjHHLvBvTkG
-	 l+RBI9eqB0B9GcCPDimpmlp2Bz3UJRFo1UEAuVzFvpIdbp0MZrTD0CwbelvvEC1bxj
-	 4ZWYoeJHk8aY1+5MVIi98xpos87tmbWyzILyW1g8=
+	b=Cvj2yOpSkPwgMSAvZNQzR9xO3AH/FcginwdI1mv5n4opeRu4qcMGSIYn1kEL/bc+g
+	 vxZXYawnlYt9BjTmziYuH3ukRlr9WcOpQC8NQJkCMXQNQtSDh5fnn+dAX2+lkEG5WS
+	 Y4t2Jno8qxbDFPF5y+05wBy3Gl999/yRKMqBOEWk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+	Gautam R A <gautam-r.a@broadcom.com>,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 321/512] usb: renesas_usbhs: Reorder clock handling and power management in probe
-Date: Tue, 17 Jun 2025 17:24:47 +0200
-Message-ID: <20250617152432.614501162@linuxfoundation.org>
+Subject: [PATCH 6.15 284/780] RDMA/bnxt_re: Fix incorrect display of inactivity_cp in debugfs output
+Date: Tue, 17 Jun 2025 17:19:52 +0200
+Message-ID: <20250617152503.039891266@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,193 +48,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+From: Gautam R A <gautam-r.a@broadcom.com>
 
-[ Upstream commit ffb34a60ce86656ba12d46e91f1ccc71dd221251 ]
+[ Upstream commit 58d7a965bb2b014d467445d38cdb07099b1f0f77 ]
 
-Reorder the initialization sequence in `usbhs_probe()` to enable runtime
-PM before accessing registers, preventing potential crashes due to
-uninitialized clocks.
+The inactivity_cp parameter in debugfs was not being read or
+written correctly, resulting in "Invalid argument" errors.
 
-Currently, in the probe path, registers are accessed before enabling the
-clocks, leading to a synchronous external abort on the RZ/V2H SoC.
-The problematic call flow is as follows:
+Fixed this by ensuring proper mapping of inactivity_cp in
+both the map_cc_config_offset_gen0_ext0 and
+bnxt_re_fill_gen0_ext0() functions.
 
-    usbhs_probe()
-        usbhs_sys_clock_ctrl()
-            usbhs_bset()
-                usbhs_write()
-                    iowrite16()  <-- Register access before enabling clocks
-
-Since `iowrite16()` is performed without ensuring the required clocks are
-enabled, this can lead to access errors. To fix this, enable PM runtime
-early in the probe function and ensure clocks are acquired before register
-access, preventing crashes like the following on RZ/V2H:
-
-[13.272640] Internal error: synchronous external abort: 0000000096000010 [#1] PREEMPT SMP
-[13.280814] Modules linked in: cec renesas_usbhs(+) drm_kms_helper fuse drm backlight ipv6
-[13.289088] CPU: 1 UID: 0 PID: 195 Comm: (udev-worker) Not tainted 6.14.0-rc7+ #98
-[13.296640] Hardware name: Renesas RZ/V2H EVK Board based on r9a09g057h44 (DT)
-[13.303834] pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-[13.310770] pc : usbhs_bset+0x14/0x4c [renesas_usbhs]
-[13.315831] lr : usbhs_probe+0x2e4/0x5ac [renesas_usbhs]
-[13.321138] sp : ffff8000827e3850
-[13.324438] x29: ffff8000827e3860 x28: 0000000000000000 x27: ffff8000827e3ca0
-[13.331554] x26: ffff8000827e3ba0 x25: ffff800081729668 x24: 0000000000000025
-[13.338670] x23: ffff0000c0f08000 x22: 0000000000000000 x21: ffff0000c0f08010
-[13.345783] x20: 0000000000000000 x19: ffff0000c3b52080 x18: 00000000ffffffff
-[13.352895] x17: 0000000000000000 x16: 0000000000000000 x15: ffff8000827e36ce
-[13.360009] x14: 00000000000003d7 x13: 00000000000003d7 x12: 0000000000000000
-[13.367122] x11: 0000000000000000 x10: 0000000000000aa0 x9 : ffff8000827e3750
-[13.374235] x8 : ffff0000c1850b00 x7 : 0000000003826060 x6 : 000000000000001c
-[13.381347] x5 : 000000030d5fcc00 x4 : ffff8000825c0000 x3 : 0000000000000000
-[13.388459] x2 : 0000000000000400 x1 : 0000000000000000 x0 : ffff0000c3b52080
-[13.395574] Call trace:
-[13.398013]  usbhs_bset+0x14/0x4c [renesas_usbhs] (P)
-[13.403076]  platform_probe+0x68/0xdc
-[13.406738]  really_probe+0xbc/0x2c0
-[13.410306]  __driver_probe_device+0x78/0x120
-[13.414653]  driver_probe_device+0x3c/0x154
-[13.418825]  __driver_attach+0x90/0x1a0
-[13.422647]  bus_for_each_dev+0x7c/0xe0
-[13.426470]  driver_attach+0x24/0x30
-[13.430032]  bus_add_driver+0xe4/0x208
-[13.433766]  driver_register+0x68/0x130
-[13.437587]  __platform_driver_register+0x24/0x30
-[13.442273]  renesas_usbhs_driver_init+0x20/0x1000 [renesas_usbhs]
-[13.448450]  do_one_initcall+0x60/0x1d4
-[13.452276]  do_init_module+0x54/0x1f8
-[13.456014]  load_module+0x1754/0x1c98
-[13.459750]  init_module_from_file+0x88/0xcc
-[13.464004]  __arm64_sys_finit_module+0x1c4/0x328
-[13.468689]  invoke_syscall+0x48/0x104
-[13.472426]  el0_svc_common.constprop.0+0xc0/0xe0
-[13.477113]  do_el0_svc+0x1c/0x28
-[13.480415]  el0_svc+0x30/0xcc
-[13.483460]  el0t_64_sync_handler+0x10c/0x138
-[13.487800]  el0t_64_sync+0x198/0x19c
-[13.491453] Code: 2a0103e1 12003c42 12003c63 8b010084 (79400084)
-[13.497522] ---[ end trace 0000000000000000 ]---
-
-Fixes: f1407d5c66240 ("usb: renesas_usbhs: Add Renesas USBHS common code")
-Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Reviewed-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
-Tested-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
-Link: https://lore.kernel.org/r/20250407105002.107181-4-prabhakar.mahadev-lad.rj@bp.renesas.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 656dff55da19 ("RDMA/bnxt_re: Congestion control settings using debugfs hook")
+Signed-off-by: Gautam R A <gautam-r.a@broadcom.com>
+Link: https://patch.msgid.link/20250520035910.1061918-2-kalesh-anakkur.purayil@broadcom.com
+Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/renesas_usbhs/common.c | 50 +++++++++++++++++++++++-------
- 1 file changed, 38 insertions(+), 12 deletions(-)
+ drivers/infiniband/hw/bnxt_re/debugfs.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/usb/renesas_usbhs/common.c b/drivers/usb/renesas_usbhs/common.c
-index 7324de52d9505..161786e9b7e47 100644
---- a/drivers/usb/renesas_usbhs/common.c
-+++ b/drivers/usb/renesas_usbhs/common.c
-@@ -685,10 +685,29 @@ static int usbhs_probe(struct platform_device *pdev)
- 	INIT_DELAYED_WORK(&priv->notify_hotplug_work, usbhsc_notify_hotplug);
- 	spin_lock_init(usbhs_priv_to_lock(priv));
- 
-+	/*
-+	 * Acquire clocks and enable power management (PM) early in the
-+	 * probe process, as the driver accesses registers during
-+	 * initialization. Ensure the device is active before proceeding.
-+	 */
-+	pm_runtime_enable(dev);
-+
-+	ret = usbhsc_clk_get(dev, priv);
-+	if (ret)
-+		goto probe_pm_disable;
-+
-+	ret = pm_runtime_resume_and_get(dev);
-+	if (ret)
-+		goto probe_clk_put;
-+
-+	ret = usbhsc_clk_prepare_enable(priv);
-+	if (ret)
-+		goto probe_pm_put;
-+
- 	/* call pipe and module init */
- 	ret = usbhs_pipe_probe(priv);
- 	if (ret < 0)
--		return ret;
-+		goto probe_clk_dis_unprepare;
- 
- 	ret = usbhs_fifo_probe(priv);
- 	if (ret < 0)
-@@ -705,10 +724,6 @@ static int usbhs_probe(struct platform_device *pdev)
- 	if (ret)
- 		goto probe_fail_rst;
- 
--	ret = usbhsc_clk_get(dev, priv);
--	if (ret)
--		goto probe_fail_clks;
--
- 	/*
- 	 * deviece reset here because
- 	 * USB device might be used in boot loader.
-@@ -721,7 +736,7 @@ static int usbhs_probe(struct platform_device *pdev)
- 		if (ret) {
- 			dev_warn(dev, "USB function not selected (GPIO)\n");
- 			ret = -ENOTSUPP;
--			goto probe_end_mod_exit;
-+			goto probe_assert_rest;
- 		}
+diff --git a/drivers/infiniband/hw/bnxt_re/debugfs.c b/drivers/infiniband/hw/bnxt_re/debugfs.c
+index af91d16c3c77f..a3aad6c3dbec1 100644
+--- a/drivers/infiniband/hw/bnxt_re/debugfs.c
++++ b/drivers/infiniband/hw/bnxt_re/debugfs.c
+@@ -170,6 +170,9 @@ static int map_cc_config_offset_gen0_ext0(u32 offset, struct bnxt_qplib_cc_param
+ 	case CMDQ_MODIFY_ROCE_CC_MODIFY_MASK_TCP_CP:
+ 		*val =  ccparam->tcp_cp;
+ 		break;
++	case CMDQ_MODIFY_ROCE_CC_MODIFY_MASK_INACTIVITY_CP:
++		*val = ccparam->inact_th;
++		break;
+ 	default:
+ 		return -EINVAL;
  	}
- 
-@@ -735,14 +750,19 @@ static int usbhs_probe(struct platform_device *pdev)
- 	ret = usbhs_platform_call(priv, hardware_init, pdev);
- 	if (ret < 0) {
- 		dev_err(dev, "platform init failed.\n");
--		goto probe_end_mod_exit;
-+		goto probe_assert_rest;
- 	}
- 
- 	/* reset phy for connection */
- 	usbhs_platform_call(priv, phy_reset, pdev);
- 
--	/* power control */
--	pm_runtime_enable(dev);
-+	/*
-+	 * Disable the clocks that were enabled earlier in the probe path,
-+	 * and let the driver handle the clocks beyond this point.
-+	 */
-+	usbhsc_clk_disable_unprepare(priv);
-+	pm_runtime_put(dev);
-+
- 	if (!usbhs_get_dparam(priv, runtime_pwctrl)) {
- 		usbhsc_power_ctrl(priv, 1);
- 		usbhs_mod_autonomy_mode(priv);
-@@ -759,9 +779,7 @@ static int usbhs_probe(struct platform_device *pdev)
- 
- 	return ret;
- 
--probe_end_mod_exit:
--	usbhsc_clk_put(priv);
--probe_fail_clks:
-+probe_assert_rest:
- 	reset_control_assert(priv->rsts);
- probe_fail_rst:
- 	usbhs_mod_remove(priv);
-@@ -769,6 +787,14 @@ static int usbhs_probe(struct platform_device *pdev)
- 	usbhs_fifo_remove(priv);
- probe_end_pipe_exit:
- 	usbhs_pipe_remove(priv);
-+probe_clk_dis_unprepare:
-+	usbhsc_clk_disable_unprepare(priv);
-+probe_pm_put:
-+	pm_runtime_put(dev);
-+probe_clk_put:
-+	usbhsc_clk_put(priv);
-+probe_pm_disable:
-+	pm_runtime_disable(dev);
- 
- 	dev_info(dev, "probe failed (%d)\n", ret);
- 
+@@ -247,7 +250,9 @@ static void bnxt_re_fill_gen0_ext0(struct bnxt_qplib_cc_param *ccparam, u32 offs
+ 		ccparam->tcp_cp = val;
+ 		break;
+ 	case CMDQ_MODIFY_ROCE_CC_MODIFY_MASK_TX_QUEUE:
++		break;
+ 	case CMDQ_MODIFY_ROCE_CC_MODIFY_MASK_INACTIVITY_CP:
++		ccparam->inact_th = val;
+ 		break;
+ 	case CMDQ_MODIFY_ROCE_CC_MODIFY_MASK_TIME_PER_PHASE:
+ 		ccparam->time_pph = val;
 -- 
 2.39.5
 
