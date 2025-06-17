@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0A862F94AB;
-	Tue, 17 Jun 2025 16:13:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F139F2F9499;
+	Tue, 17 Jun 2025 16:13:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750176814; cv=none; b=hIQcj7JZdxS49+Cr4YUVpFakei/AszXrKNIC4X6NmNt3D79FnlC8dSzaA7Ne7Kinf7XM6We16ZNgRUFNjzY/VFYCPQ0F39mt+0CdW7TI5XDs0bnbLZl0i2WybDHF3Cj0Q4PJvOn/AXZM3WE2fO95WOjo3IBg9zKK+EeG2P9Tnrk=
+	t=1750176817; cv=none; b=pSdQSgqBz1YNE0MCCS0IQHZ4aWGfDPgNSgBfYCncMIsxseYdt2HZMSpGZPzkPQeGoMMir+y9CzWJK2Lzneb9kkTAwdUE3Jno/Y7+rUi39bwRTCeUghmZU2lAhujYf/7wzbUbKu2NBDFqWmbVB/I8U9Gx0ViVtww1Jh6yJhqzt4E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750176814; c=relaxed/simple;
-	bh=ULwO+4u84glcxy/QiGQqmwF5UccAk3FgppwUj8s9AQ4=;
+	s=arc-20240116; t=1750176817; c=relaxed/simple;
+	bh=FTxgQHBTx7nOk67lE2rdxKyqA8h4q00fc8GkPNbp46s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BYbQTtLaDRIY3C1czI5PJbmc/cUWfhR6yoc6FfNUtedAaEE1PY52keWrfeM55SQLKSMHSvIOdPcBRTajeAGeVn5fw+kAPcga81d74uBYcSIC5nOT/tLFtqG4GZ57lZrfUYWM82AOhACrRnPo5Wdw9Eo0sHiDDTftHc3fWIL0/wI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xh4LcgkW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZRCRc5kb9D/PkR+rkm8SfoqqAL/bAsmmkpAENdsXcV3VHn+rkC5Uh33nk3FchCOz0oQ2l+d57LGLAawnc69qbtRpFiKotuZ1yEPMYaFlpjovHoB+kYMFuydH3mvSizYFexRB2ZUCjIk/AYjWo7/H2lM1ZhQHjgXkST7TE01zPu8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q7FEDXnq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xh4LcgkW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EA05C4CEE3;
-	Tue, 17 Jun 2025 16:13:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q7FEDXnq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F8CDC4CEE3;
+	Tue, 17 Jun 2025 16:13:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750176813;
-	bh=ULwO+4u84glcxy/QiGQqmwF5UccAk3FgppwUj8s9AQ4=;
+	s=korg; t=1750176816;
+	bh=FTxgQHBTx7nOk67lE2rdxKyqA8h4q00fc8GkPNbp46s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xh4LcgkWFLITBWkEbWF67Pj9hmkhWq84ozJgPcvsBCzQSovJVFrmNOYCf70TbvLG8
-	 umb4Rlhc3+3gqbxEdt8qUH6MX5SLOtP4ACQXd31sgjkS+fH3TMmnepbMWeX1NbK0n6
-	 cCQj5TXo9qXEL0XSoeuph0yadZYY1iN0bfIz1hcA=
+	b=Q7FEDXnqKpgmFW0qv6otxQ3AS8xG3bWavHrULliwCeGK7hIfaoaFRMjuW2XRmFhlx
+	 tBzI8JxXqaKXQkv4skAl3U8/rQJwXG/j3M41AroglFB+18P50/FZGGfWy9HNWeR73v
+	 V8t85sKoDRjnMuvyKknCZ6yC+oG2iaMiCWeD988c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Dr. David Alan Gilbert" <linux@treblig.org>,
-	Mark Brown <broonie@kernel.org>,
-	WangYuli <wangyuli@uniontech.com>,
-	Kees Cook <kees@kernel.org>,
+	Junxian Huang <huangjunxian6@hisilicon.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 269/512] randstruct: gcc-plugin: Remove bogus void member
-Date: Tue, 17 Jun 2025 17:23:55 +0200
-Message-ID: <20250617152430.497576387@linuxfoundation.org>
+Subject: [PATCH 6.15 216/780] RDMA/hns: Include hnae3.h in hns_roce_hw_v2.h
+Date: Tue, 17 Jun 2025 17:18:44 +0200
+Message-ID: <20250617152500.254943418@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,121 +45,97 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kees Cook <kees@kernel.org>
+From: Junxian Huang <huangjunxian6@hisilicon.com>
 
-[ Upstream commit e136a4062174a9a8d1c1447ca040ea81accfa6a8 ]
+[ Upstream commit 2b11d33de23262cb20d1dcb24b586dbb8f54d463 ]
 
-When building the randomized replacement tree of struct members, the
-randstruct GCC plugin would insert, as the first member, a 0-sized void
-member. This appears as though it was done to catch non-designated
-("unnamed") static initializers, which wouldn't be stable since they
-depend on the original struct layout order.
+hns_roce_hw_v2.h has a direct dependency on hnae3.h due to the
+inline function hns_roce_write64(), but it doesn't include this
+header currently. This leads to that files including
+hns_roce_hw_v2.h must also include hnae3.h to avoid compilation
+errors, even if they themselves don't really rely on hnae3.h.
+This doesn't make sense, hns_roce_hw_v2.h should include hnae3.h
+directly.
 
-This was accomplished by having the side-effect of the "void member"
-tripping an assert in GCC internals (count_type_elements) if the member
-list ever needed to be counted (e.g. for figuring out the order of members
-during a non-designated initialization), which would catch impossible type
-(void) in the struct:
-
-security/landlock/fs.c: In function ‘hook_file_ioctl_common’:
-security/landlock/fs.c:1745:61: internal compiler error: in count_type_elements, at expr.cc:7075
- 1745 |                         .u.op = &(struct lsm_ioctlop_audit) {
-      |                                                             ^
-
-static HOST_WIDE_INT
-count_type_elements (const_tree type, bool for_ctor_p)
-{
-  switch (TREE_CODE (type))
-...
-    case VOID_TYPE:
-    default:
-      gcc_unreachable ();
-    }
-}
-
-However this is a redundant safety measure since randstruct uses the
-__designated_initializer attribute both internally and within the
-__randomized_layout attribute macro so that this would be enforced
-by the compiler directly even when randstruct was not enabled (via
--Wdesignated-init).
-
-A recent change in Landlock ended up tripping the same member counting
-routine when using a full-struct copy initializer as part of an anonymous
-initializer. This, however, is a false positive as the initializer is
-copying between identical structs (and hence identical layouts). The
-"path" member is "struct path", a randomized struct, and is being copied
-to from another "struct path", the "f_path" member:
-
-        landlock_log_denial(landlock_cred(file->f_cred), &(struct landlock_request) {
-                .type = LANDLOCK_REQUEST_FS_ACCESS,
-                .audit = {
-                        .type = LSM_AUDIT_DATA_IOCTL_OP,
-                        .u.op = &(struct lsm_ioctlop_audit) {
-                                .path = file->f_path,
-                                .cmd = cmd,
-                        },
-                },
-	...
-
-As can be seen with the coming randstruct KUnit test, there appears to
-be no behavioral problems with this kind of initialization when the void
-member is removed from the randstruct GCC plugin, so remove it.
-
-Reported-by: "Dr. David Alan Gilbert" <linux@treblig.org>
-Closes: https://lore.kernel.org/lkml/Z_PRaKx7q70MKgCA@gallifrey/
-Reported-by: Mark Brown <broonie@kernel.org>
-Closes: https://lore.kernel.org/lkml/20250407-kbuild-disable-gcc-plugins-v1-1-5d46ae583f5e@kernel.org/
-Reported-by: WangYuli <wangyuli@uniontech.com>
-Closes: https://lore.kernel.org/lkml/337D5D4887277B27+3c677db3-a8b9-47f0-93a4-7809355f1381@uniontech.com/
-Fixes: 313dd1b62921 ("gcc-plugins: Add the randstruct plugin")
-Signed-off-by: Kees Cook <kees@kernel.org>
+Fixes: d3743fa94ccd ("RDMA/hns: Fix the chip hanging caused by sending doorbell during reset")
+Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
+Link: https://patch.msgid.link/20250421132750.1363348-6-huangjunxian6@hisilicon.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/gcc-plugins/randomize_layout_plugin.c | 18 +-----------------
- 1 file changed, 1 insertion(+), 17 deletions(-)
+ drivers/infiniband/hw/hns/hns_roce_ah.c       | 1 -
+ drivers/infiniband/hw/hns/hns_roce_hw_v2.c    | 1 -
+ drivers/infiniband/hw/hns/hns_roce_hw_v2.h    | 1 +
+ drivers/infiniband/hw/hns/hns_roce_main.c     | 1 -
+ drivers/infiniband/hw/hns/hns_roce_restrack.c | 1 -
+ 5 files changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/scripts/gcc-plugins/randomize_layout_plugin.c b/scripts/gcc-plugins/randomize_layout_plugin.c
-index 5694df3da2e95..971a1908a8cc4 100644
---- a/scripts/gcc-plugins/randomize_layout_plugin.c
-+++ b/scripts/gcc-plugins/randomize_layout_plugin.c
-@@ -344,29 +344,13 @@ static int relayout_struct(tree type)
+diff --git a/drivers/infiniband/hw/hns/hns_roce_ah.c b/drivers/infiniband/hw/hns/hns_roce_ah.c
+index 4fc5b9d5fea87..307c35888b300 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_ah.c
++++ b/drivers/infiniband/hw/hns/hns_roce_ah.c
+@@ -33,7 +33,6 @@
+ #include <linux/pci.h>
+ #include <rdma/ib_addr.h>
+ #include <rdma/ib_cache.h>
+-#include "hnae3.h"
+ #include "hns_roce_device.h"
+ #include "hns_roce_hw_v2.h"
  
- 	shuffle(type, (tree *)newtree, shuffle_length);
+diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+index 160e8927d364e..59352d1b62099 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
++++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+@@ -43,7 +43,6 @@
+ #include <rdma/ib_umem.h>
+ #include <rdma/uverbs_ioctl.h>
  
--	/*
--	 * set up a bogus anonymous struct field designed to error out on unnamed struct initializers
--	 * as gcc provides no other way to detect such code
--	 */
--	list = make_node(FIELD_DECL);
--	TREE_CHAIN(list) = newtree[0];
--	TREE_TYPE(list) = void_type_node;
--	DECL_SIZE(list) = bitsize_zero_node;
--	DECL_NONADDRESSABLE_P(list) = 1;
--	DECL_FIELD_BIT_OFFSET(list) = bitsize_zero_node;
--	DECL_SIZE_UNIT(list) = size_zero_node;
--	DECL_FIELD_OFFSET(list) = size_zero_node;
--	DECL_CONTEXT(list) = type;
--	// to satisfy the constify plugin
--	TREE_READONLY(list) = 1;
--
- 	for (i = 0; i < num_fields - 1; i++)
- 		TREE_CHAIN(newtree[i]) = newtree[i+1];
- 	TREE_CHAIN(newtree[num_fields - 1]) = NULL_TREE;
+-#include "hnae3.h"
+ #include "hns_roce_common.h"
+ #include "hns_roce_device.h"
+ #include "hns_roce_cmd.h"
+diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.h b/drivers/infiniband/hw/hns/hns_roce_hw_v2.h
+index 91a5665465ffb..bc7466830eaf9 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.h
++++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.h
+@@ -34,6 +34,7 @@
+ #define _HNS_ROCE_HW_V2_H
  
- 	main_variant = TYPE_MAIN_VARIANT(type);
- 	for (variant = main_variant; variant; variant = TYPE_NEXT_VARIANT(variant)) {
--		TYPE_FIELDS(variant) = list;
-+		TYPE_FIELDS(variant) = newtree[0];
- 		TYPE_ATTRIBUTES(variant) = copy_list(TYPE_ATTRIBUTES(variant));
- 		TYPE_ATTRIBUTES(variant) = tree_cons(get_identifier("randomize_performed"), NULL_TREE, TYPE_ATTRIBUTES(variant));
- 		TYPE_ATTRIBUTES(variant) = tree_cons(get_identifier("designated_init"), NULL_TREE, TYPE_ATTRIBUTES(variant));
+ #include <linux/bitops.h>
++#include "hnae3.h"
+ 
+ #define HNS_ROCE_V2_MAX_RC_INL_INN_SZ		32
+ #define HNS_ROCE_V2_MTT_ENTRY_SZ		64
+diff --git a/drivers/infiniband/hw/hns/hns_roce_main.c b/drivers/infiniband/hw/hns/hns_roce_main.c
+index 8d0b63d4b50a6..e7a497cc125cc 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_main.c
++++ b/drivers/infiniband/hw/hns/hns_roce_main.c
+@@ -37,7 +37,6 @@
+ #include <rdma/ib_smi.h>
+ #include <rdma/ib_user_verbs.h>
+ #include <rdma/ib_cache.h>
+-#include "hnae3.h"
+ #include "hns_roce_common.h"
+ #include "hns_roce_device.h"
+ #include "hns_roce_hem.h"
+diff --git a/drivers/infiniband/hw/hns/hns_roce_restrack.c b/drivers/infiniband/hw/hns/hns_roce_restrack.c
+index 356d988169497..f637b73b946e4 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_restrack.c
++++ b/drivers/infiniband/hw/hns/hns_roce_restrack.c
+@@ -4,7 +4,6 @@
+ #include <rdma/rdma_cm.h>
+ #include <rdma/restrack.h>
+ #include <uapi/rdma/rdma_netlink.h>
+-#include "hnae3.h"
+ #include "hns_roce_common.h"
+ #include "hns_roce_device.h"
+ #include "hns_roce_hw_v2.h"
 -- 
 2.39.5
 
