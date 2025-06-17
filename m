@@ -1,42 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B478D2EBDCC;
-	Tue, 17 Jun 2025 15:32:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD3F21E8332;
+	Tue, 17 Jun 2025 15:32:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750174358; cv=none; b=Tz2A7ATCPYANyFFuPRj48gNwtrtegT5DSrzTy1FT+2Il+yRxOxgYTHM3NsT8MlQnhzjNC7XuPEcRwO/DjIcz1P4z37+tlD364weknrSm3PRUlq9CnNb43uhPDPpmfYGSP9DQ1BDCjuVgF3bmW9SsETp0pKqQw0olvR/fpSq6alo=
+	t=1750174362; cv=none; b=GCm+ykah7loh6iS1WgCAgVrAVUW7rgccFUPfAMZb4yUsCldcPpcsr8uN04Z2wR/9korh7OjwAG6iyb8HRyxwNLw4plOoiQ6ri2FOYq26Kwexenxlssy7j0sOIUyAFqel9aIN2N9TtkeW6AIEFSo+QaZpl77SauLZYqwhEPvAS64=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750174358; c=relaxed/simple;
-	bh=U05zce7TDzSQOzL4vV7lkBOIWVdkks9Y9RdK3sZc7PY=;
+	s=arc-20240116; t=1750174362; c=relaxed/simple;
+	bh=+xS33DYqv7Vk6yJEiksJpzyHMM/NxW9UP+o9D5X2p7A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KzWRn7556pigo+wMixujaKHJixA18wspRkHqU5o7WCbZdcJ780xz9qyR2uPPTkRfZlwum7t54oqTlAXgC8Fcspzyp08zJXrcn/EqVQFv45VxDQOad8QQ9+vtq9kmvFTSp22Rb0SKc65G4Ws/8MoGrayJJz1800xJ8ok8Ujfy94o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C/8c8P53; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KyM7LUQ4fyVg8wb7IazIK+yMWQUntd/+X/dnj/iGZ5JKfp5QaM0RsZEJPXgLI1QjbLGBCMWmoTpNfKr9vfZb61o7EMJeMR/mgOj9F7oOW9UziwmZGmcAROyCYz6hBB09kh3EOC013w94k0nd2ee7JGQgMWdeqNd3Oztned/ZMyU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZhOvcLmd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C/8c8P53"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22EE9C4CEE3;
-	Tue, 17 Jun 2025 15:32:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZhOvcLmd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66C1EC4CEE3;
+	Tue, 17 Jun 2025 15:32:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750174358;
-	bh=U05zce7TDzSQOzL4vV7lkBOIWVdkks9Y9RdK3sZc7PY=;
+	s=korg; t=1750174361;
+	bh=+xS33DYqv7Vk6yJEiksJpzyHMM/NxW9UP+o9D5X2p7A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C/8c8P53VqBgrg4fwQtiOMcFdqJNn7uiiFds+ClmZJEbsFQCmrCsMEvmc27UJuSQG
-	 g3Gfj/V0qlMU77pQ0/RteE4XuHFxxCpQ3Aj1zkM4sFOfcNPzD90+L641BYdviNHdd1
-	 2aoMCihrUXi60U1GmdKXwM/HgZE1Pe0hEwRyBf5w=
+	b=ZhOvcLmdXgK4oUwZSzYVSdY0DacJWQpeISEVPLV5X0Q+4NxnTlseE2KghwTVkqIt5
+	 glit8pzXOfG8LHrfMfAOfbjwyFYK7RKSAKQuEDQvfSgHard6f+V2sqfQLwZE5q4swe
+	 YerLC45NEY1SxkNmBVG6FsbQqu18JXUJ5ozidDRg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Ahmed S. Darwish" <darwi@linutronix.de>,
-	Ingo Molnar <mingo@kernel.org>,
-	Andrew Cooper <andrew.cooper3@citrix.com>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	John Ogness <john.ogness@linutronix.de>,
-	x86-cpuid@lists.linux.dev,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 028/356] x86/cpu: Sanitize CPUID(0x80000000) output
-Date: Tue, 17 Jun 2025 17:22:23 +0200
-Message-ID: <20250617152339.367697558@linuxfoundation.org>
+Subject: [PATCH 6.6 029/356] crypto: marvell/cesa - Handle zero-length skcipher requests
+Date: Tue, 17 Jun 2025 17:22:24 +0200
+Message-ID: <20250617152339.406156437@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
 References: <20250617152338.212798615@linuxfoundation.org>
@@ -55,90 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ahmed S. Darwish <darwi@linutronix.de>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-[ Upstream commit cc663ba3fe383a628a812f893cc98aafff39ab04 ]
+[ Upstream commit 8a4e047c6cc07676f637608a9dd675349b5de0a7 ]
 
-CPUID(0x80000000).EAX returns the max extended CPUID leaf available.  On
-x86-32 machines without an extended CPUID range, a CPUID(0x80000000)
-query will just repeat the output of the last valid standard CPUID leaf
-on the CPU; i.e., a garbage values.  Current tip:x86/cpu code protects against
-this by doing:
+Do not access random memory for zero-length skcipher requests.
+Just return 0.
 
-	eax = cpuid_eax(0x80000000);
-	c->extended_cpuid_level = eax;
-
-	if ((eax & 0xffff0000) == 0x80000000) {
-		// CPU has an extended CPUID range. Check for 0x80000001
-		if (eax >= 0x80000001) {
-			cpuid(0x80000001, ...);
-		}
-	}
-
-This is correct so far.  Afterwards though, the same possibly broken EAX
-value is used to check the availability of other extended CPUID leaves:
-
-	if (c->extended_cpuid_level >= 0x80000007)
-		...
-	if (c->extended_cpuid_level >= 0x80000008)
-		...
-	if (c->extended_cpuid_level >= 0x8000000a)
-		...
-	if (c->extended_cpuid_level >= 0x8000001f)
-		...
-
-which is invalid.  Fix this by immediately setting the CPU's max extended
-CPUID leaf to zero if CPUID(0x80000000).EAX doesn't indicate a valid
-CPUID extended range.
-
-While at it, add a comment, similar to kernel/head_32.S, clarifying the
-CPUID(0x80000000) sanity check.
-
-References: 8a50e5135af0 ("x86-32: Use symbolic constants, safer CPUID when enabling EFER.NX")
-Fixes: 3da99c977637 ("x86: make (early)_identify_cpu more the same between 32bit and 64 bit")
-Signed-off-by: Ahmed S. Darwish <darwi@linutronix.de>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: Andrew Cooper <andrew.cooper3@citrix.com>
-Cc: H. Peter Anvin <hpa@zytor.com>
-Cc: John Ogness <john.ogness@linutronix.de>
-Cc: x86-cpuid@lists.linux.dev
-Link: https://lore.kernel.org/r/20250506050437.10264-3-darwi@linutronix.de
+Fixes: f63601fd616a ("crypto: marvell/cesa - add a new driver for Marvell's CESA")
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cpu/common.c | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ drivers/crypto/marvell/cesa/cipher.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/x86/kernel/cpu/common.c b/arch/x86/kernel/cpu/common.c
-index 067e31fb9e165..b6e43dad577a3 100644
---- a/arch/x86/kernel/cpu/common.c
-+++ b/arch/x86/kernel/cpu/common.c
-@@ -1066,17 +1066,18 @@ void get_cpu_cap(struct cpuinfo_x86 *c)
- 		c->x86_capability[CPUID_D_1_EAX] = eax;
- 	}
+diff --git a/drivers/crypto/marvell/cesa/cipher.c b/drivers/crypto/marvell/cesa/cipher.c
+index 0f37dfd42d850..3876e3ce822f4 100644
+--- a/drivers/crypto/marvell/cesa/cipher.c
++++ b/drivers/crypto/marvell/cesa/cipher.c
+@@ -459,6 +459,9 @@ static int mv_cesa_skcipher_queue_req(struct skcipher_request *req,
+ 	struct mv_cesa_skcipher_req *creq = skcipher_request_ctx(req);
+ 	struct mv_cesa_engine *engine;
  
--	/* AMD-defined flags: level 0x80000001 */
-+	/*
-+	 * Check if extended CPUID leaves are implemented: Max extended
-+	 * CPUID leaf must be in the 0x80000001-0x8000ffff range.
-+	 */
- 	eax = cpuid_eax(0x80000000);
--	c->extended_cpuid_level = eax;
-+	c->extended_cpuid_level = ((eax & 0xffff0000) == 0x80000000) ? eax : 0;
- 
--	if ((eax & 0xffff0000) == 0x80000000) {
--		if (eax >= 0x80000001) {
--			cpuid(0x80000001, &eax, &ebx, &ecx, &edx);
-+	if (c->extended_cpuid_level >= 0x80000001) {
-+		cpuid(0x80000001, &eax, &ebx, &ecx, &edx);
- 
--			c->x86_capability[CPUID_8000_0001_ECX] = ecx;
--			c->x86_capability[CPUID_8000_0001_EDX] = edx;
--		}
-+		c->x86_capability[CPUID_8000_0001_ECX] = ecx;
-+		c->x86_capability[CPUID_8000_0001_EDX] = edx;
- 	}
- 
- 	if (c->extended_cpuid_level >= 0x80000007) {
++	if (!req->cryptlen)
++		return 0;
++
+ 	ret = mv_cesa_skcipher_req_init(req, tmpl);
+ 	if (ret)
+ 		return ret;
 -- 
 2.39.5
 
