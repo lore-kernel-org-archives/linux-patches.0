@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68ADE2ECEAE;
-	Tue, 17 Jun 2025 16:14:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 694922DFF13;
+	Tue, 17 Jun 2025 16:14:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750176893; cv=none; b=fHLzwtsD2Ali0kP1jKl4E6nMnx0qdsgkjunOXuoqRxj2DiypRmBolwxJxKaax8Xj08eZPQuQs7hbxXRk14rV1frgP+CTtoHTpKKV+RweBr7GS59sGiRU1f7agf0Ieg0Rq7v215DDtiN/3k5MQ8sUe9wb8Rw+N+ByhGqCauV+zdE=
+	t=1750176895; cv=none; b=ccn81w3PchVWnZ8wJh1gCMZvzbPrZwA7akZEk83JsFJr+4JHE8Sm/wn6qo4zJJe0MkCQMKL++2PZ8diMzU7dRn/26TS+DFFrDFEEAGIOffnui+/7rzqia5/FHM6IvjXo+JaxZlxCl5Aueecarxs4CibLwSe8FcfqGnnowS+xMLs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750176893; c=relaxed/simple;
-	bh=1w8h+HOsH4dAvjL3epDArXiK8q6+VdPR3NvMPuXp6Fo=;
+	s=arc-20240116; t=1750176895; c=relaxed/simple;
+	bh=yTQMG3mAJSn382L0S/fs4wiAUVraoEaLua2qdaFG7UY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tfKs5XIWZpXzFd/M/PvWwDSQIiDTPzzPHpf2ResBJel7SlcwzVXVhyFnXKV4ijJaVYxvP32CnkPanlAq+ceVQUAakUWSEoYthBN9Yk20gpA2+93TDUf6OGD8hqQvKfCT/8odYbb8X8pF76q3T6sl+S7yGzMeLf1dGLDx3h1RUwI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sAud9fYO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WxoIOmu3EXjGb8rcReIb8aPIEL+jlBUSN+MriikHAGx9QaLbwdviMEEYpW1sdrZro1W6n6aT0JowhbnJ0IhsGfcDe1H9B0kHMdiQclaCkrorEr9m7e/sM5hP9LDkVhadqYhwJRNJjNV70et4qQOn30ojkWDpdv/WKi1iYDRiq44=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SziTHUr0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sAud9fYO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 885CBC4CEE3;
-	Tue, 17 Jun 2025 16:14:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SziTHUr0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB251C4CEF0;
+	Tue, 17 Jun 2025 16:14:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750176892;
-	bh=1w8h+HOsH4dAvjL3epDArXiK8q6+VdPR3NvMPuXp6Fo=;
+	s=korg; t=1750176895;
+	bh=yTQMG3mAJSn382L0S/fs4wiAUVraoEaLua2qdaFG7UY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sAud9fYOwjbQ4/vtABV75g5yOwDzP5Iw/jVbukAcxXuR8X0In1nm4plyAc6xiPrLp
-	 MD/XvVxEz1nmnGAbNdFfjwC3Js5Lpst4fhD6KVjoIrBdCqEvkP9XNlSgmNfhbOUUCv
-	 JddUezRMZgiwwZNt78sUDfJ2OYD2H9+J36NnuE8E=
+	b=SziTHUr0i9jyz0/ribCrdmMFmJZEfAUWhY1HQkeVz8ICFm7rN7ASsVw7oY8w8XU4o
+	 MJgcaNiiIsmqz2awUZtcFlsyEc6BZJY98roCL2m/dSzjlvn1mqqm0qRzY+sl+2mDsx
+	 pqTROJe/ob7QzWwE+1alG5hgRNh9IMVVVAgyduZQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Sean Christopherson <seanjc@google.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 276/512] x86/irq: Ensure initial PIR loads are performed exactly once
-Date: Tue, 17 Jun 2025 17:24:02 +0200
-Message-ID: <20250617152430.779586870@linuxfoundation.org>
+Subject: [PATCH 6.12 258/512] ARM: dts: qcom: apq8064 merge hw splinlock into corresponding syscon device
+Date: Tue, 17 Jun 2025 17:23:44 +0200
+Message-ID: <20250617152430.046196249@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
 References: <20250617152419.512865572@linuxfoundation.org>
@@ -51,37 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-[ Upstream commit 600e9606046ac3b9b7a3f0500d08a179df84c45e ]
+[ Upstream commit 325c6a441ae1f8fcb1db9bb945b8bdbd3142141e ]
 
-Ensure the PIR is read exactly once at the start of handle_pending_pir(),
-to guarantee that checking for an outstanding posted interrupt in a given
-chuck doesn't reload the chunk from the "real" PIR.  Functionally, a reload
-is benign, but it would defeat the purpose of pre-loading into a copy.
+Follow up the expected way of describing the SFPB hwspinlock and merge
+hwspinlock node into corresponding syscon node, fixing several dt-schema
+warnings.
 
-Fixes: 1b03d82ba15e ("x86/irq: Install posted MSI notification handler")
-Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/r/20250401163447.846608-2-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Fixes: 24a9baf933dc ("ARM: dts: qcom: apq8064: Add hwmutex and SMEM nodes")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20250318-fix-nexus-4-v2-7-bcedd1406790@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/irq.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm/boot/dts/qcom/qcom-apq8064.dtsi | 13 ++++---------
+ 1 file changed, 4 insertions(+), 9 deletions(-)
 
-diff --git a/arch/x86/kernel/irq.c b/arch/x86/kernel/irq.c
-index feca4f20b06aa..85fa2db38dc42 100644
---- a/arch/x86/kernel/irq.c
-+++ b/arch/x86/kernel/irq.c
-@@ -414,7 +414,7 @@ static __always_inline bool handle_pending_pir(u64 *pir, struct pt_regs *regs)
- 	bool handled = false;
+diff --git a/arch/arm/boot/dts/qcom/qcom-apq8064.dtsi b/arch/arm/boot/dts/qcom/qcom-apq8064.dtsi
+index 1d802d931028d..38ce6f5fe6b48 100644
+--- a/arch/arm/boot/dts/qcom/qcom-apq8064.dtsi
++++ b/arch/arm/boot/dts/qcom/qcom-apq8064.dtsi
+@@ -213,12 +213,6 @@
+ 		};
+ 	};
  
- 	for (i = 0; i < 4; i++)
--		pir_copy[i] = pir[i];
-+		pir_copy[i] = READ_ONCE(pir[i]);
+-	sfpb_mutex: hwmutex {
+-		compatible = "qcom,sfpb-mutex";
+-		syscon = <&sfpb_wrapper_mutex 0x604 0x4>;
+-		#hwlock-cells = <1>;
+-	};
+-
+ 	smem {
+ 		compatible = "qcom,smem";
+ 		memory-region = <&smem_region>;
+@@ -305,9 +299,10 @@
+ 			pinctrl-0 = <&ps_hold_default_state>;
+ 		};
  
- 	for (i = 0; i < 4; i++) {
- 		if (!pir_copy[i])
+-		sfpb_wrapper_mutex: syscon@1200000 {
+-			compatible = "syscon";
+-			reg = <0x01200000 0x8000>;
++		sfpb_mutex: hwmutex@1200600 {
++			compatible = "qcom,sfpb-mutex";
++			reg = <0x01200600 0x100>;
++			#hwlock-cells = <1>;
+ 		};
+ 
+ 		intc: interrupt-controller@2000000 {
 -- 
 2.39.5
 
