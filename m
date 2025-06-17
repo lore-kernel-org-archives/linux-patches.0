@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F51420A5EA;
-	Tue, 17 Jun 2025 16:05:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1560118E025;
+	Tue, 17 Jun 2025 16:05:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750176322; cv=none; b=U7g0PJvnuNPEC3z64BWW7srUQmGVRE1n90VaGC7JWSf+A+GyQBYYlQn3QLE48QcrqlVx3SLUz/Lx6ZRhhu7E4bJgxmvDkGE8h1zN0Rk4KulMEOnz/nPQwL3GdE5/GBUhbBzkJbZK7zb+Px/TsT4zW0+UfirURhUGdRkI/X9UfFY=
+	t=1750176325; cv=none; b=e6PJ2I9mqEmXLHOxfq7pnNQ2pIJm0P64KwPZeqOVyixzXFbIlAPrrkGHSjxBGCUOxlnwMRDR0Nt1Sfn59c7AgecsZv2Ql60j/tq7rkb1/CXrERnfTjiDgNjzJZ5AlrtRu/8fbRVR0FLQaGG7RoMmfo0MWpdUddfkMn1HFg1Ci3M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750176322; c=relaxed/simple;
-	bh=5ZfWgy9esgahb0QqQijGFmO8QmsKCjGb6OQMi39jBxY=;
+	s=arc-20240116; t=1750176325; c=relaxed/simple;
+	bh=rk+3b9lWcAwdnOc8Z2Z+WSM/M3fxXp4R5FsUmjVo0XM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QkwmXEeJvDiF4XYeqro2pvdTY1L9m2lQh6cCq0Y60K3CyKMlNOEvd2w+mIUBlM9SQwd5fmyIvGxKVLK5yflZoXSqhdbIUXeHdsGAnL5ww/t/kWJg2CHQMIa3sObkOSCTR6SNEiC8yFDzInBQMkPvZ2EJ1HIK4Jn/MvCTFFNibfU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YoBjmuGh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q79F58Z1m98LJTmeLOEPRTiibVLQAlwUwrgvcCG5gJxFD4MQ2SSNzHGgCp0/qfOjpP5MLjfKO4ClPr/J5hWZaP9FBr1Maks+eL9f9xIqj/cWPYw7EwEm/Jk/YApyHssef8PybDB5nbiP3DlaoZk2QJitovAvpy8ij9BhidLGUHg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o1GuNw5s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YoBjmuGh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C5D6C4CEE3;
-	Tue, 17 Jun 2025 16:05:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o1GuNw5s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F2ECC4CEE3;
+	Tue, 17 Jun 2025 16:05:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750176321;
-	bh=5ZfWgy9esgahb0QqQijGFmO8QmsKCjGb6OQMi39jBxY=;
+	s=korg; t=1750176324;
+	bh=rk+3b9lWcAwdnOc8Z2Z+WSM/M3fxXp4R5FsUmjVo0XM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YoBjmuGhxDhgeq/ZHnQlrk8lIPWDu2PPkhkewPJ0w0tOrH30Cz4K6w+blGoBsowuL
-	 6mEwpOT4lXA+H/EoaXD0LGUgVeiE6024JFIWtJ7BoO6mVTQ7/sbt9E1uWBGUvgble0
-	 4Qk/S9oGe77GiWU1Dvce0ZOXom8WN6Ex2SN/fdoQ=
+	b=o1GuNw5s9JtGoJT//qCnVGMzf49F8eNpBUxxKxZ/l6SaDjpfQ0fyuLyTxuwh0PZMH
+	 8pRZmxQ3wt/Pu5APggNUwjauZ+OtsJd4sn7CmbebAhPUl08843lM9KkVhespnthq2o
+	 bS/4xdClcRjdyymgaSZ6D7lYjkriYvQqNqJXQ5OE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Detlev Casanova <detlev.casanova@collabora.com>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>,
+	Daniel Golle <daniel@makrotopia.org>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Christian Marangi <ansuelsmth@gmail.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 153/780] media: verisilicon: Free post processor buffers on error
-Date: Tue, 17 Jun 2025 17:17:41 +0200
-Message-ID: <20250617152457.730557260@linuxfoundation.org>
+Subject: [PATCH 6.15 175/780] net: phy: mediatek: permit to compile test GE SOC PHY driver
+Date: Tue, 17 Jun 2025 17:18:03 +0200
+Message-ID: <20250617152458.607006437@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
 References: <20250617152451.485330293@linuxfoundation.org>
@@ -52,45 +54,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Detlev Casanova <detlev.casanova@collabora.com>
+From: Christian Marangi <ansuelsmth@gmail.com>
 
-[ Upstream commit 11beb0fc346e00c412b3bfd19013206f6b655604 ]
+[ Upstream commit e5566162af8b9690e096d2e6089e4ed955a0d13d ]
 
-During initialization, the post processor allocates the same number of
-buffers as the buf queue.
-As the init function is called in streamon(), if an allocation fails,
-streamon will return an error and streamoff() will not be called, keeping
-all post processor buffers allocated.
+When commit 462a3daad679 ("net: phy: mediatek: fix compile-test
+dependencies") fixed the dependency, it should have also introduced
+an or on COMPILE_TEST to permit this driver to be compile-tested even if
+NVMEM_MTK_EFUSE wasn't selected. The driver makes use of NVMEM API that
+are always compiled (return error) so the driver can actually be
+compiled even without that config.
 
-To avoid that, all post proc buffers are freed in case of an allocation
-error.
+Fix and simplify the dependency condition of this kernel config.
 
-Fixes: 26711491a807 ("media: verisilicon: Refactor postprocessor to store more buffers")
-Signed-off-by: Detlev Casanova <detlev.casanova@collabora.com>
-Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Fixes: 462a3daad679 ("net: phy: mediatek: fix compile-test dependencies")
+Acked-by: Daniel Golle <daniel@makrotopia.org>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+Acked-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://patch.msgid.link/20250410100410.348-1-ansuelsmth@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/verisilicon/hantro_postproc.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/phy/mediatek/Kconfig | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/media/platform/verisilicon/hantro_postproc.c b/drivers/media/platform/verisilicon/hantro_postproc.c
-index c435a393e0cb7..9f559a13d409b 100644
---- a/drivers/media/platform/verisilicon/hantro_postproc.c
-+++ b/drivers/media/platform/verisilicon/hantro_postproc.c
-@@ -250,8 +250,10 @@ int hantro_postproc_init(struct hantro_ctx *ctx)
+diff --git a/drivers/net/phy/mediatek/Kconfig b/drivers/net/phy/mediatek/Kconfig
+index 2a8ac5aed0f89..6a4c2b328c418 100644
+--- a/drivers/net/phy/mediatek/Kconfig
++++ b/drivers/net/phy/mediatek/Kconfig
+@@ -15,8 +15,7 @@ config MEDIATEK_GE_PHY
  
- 	for (i = 0; i < num_buffers; i++) {
- 		ret = hantro_postproc_alloc(ctx, i);
--		if (ret)
-+		if (ret) {
-+			hantro_postproc_free(ctx);
- 			return ret;
-+		}
- 	}
- 
- 	return 0;
+ config MEDIATEK_GE_SOC_PHY
+ 	tristate "MediaTek SoC Ethernet PHYs"
+-	depends on (ARM64 && ARCH_MEDIATEK) || COMPILE_TEST
+-	depends on NVMEM_MTK_EFUSE
++	depends on (ARM64 && ARCH_MEDIATEK && NVMEM_MTK_EFUSE) || COMPILE_TEST
+ 	select MTK_NET_PHYLIB
+ 	help
+ 	  Supports MediaTek SoC built-in Gigabit Ethernet PHYs.
 -- 
 2.39.5
 
