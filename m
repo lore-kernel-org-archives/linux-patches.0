@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 647C92ECE94;
-	Tue, 17 Jun 2025 15:57:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 896C52E92CD;
+	Tue, 17 Jun 2025 15:57:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175837; cv=none; b=YUWHLWu/o/W0NPkQkwX8oy0qoTtPks8gchdgt7BzzPqxc/y17/PM+q0U/8v1vjBD3aDI7Fe7YUbgLtObe1WmLo0aMLnxo4kpyP25DBWW3eq2uI1iyOY9MA/CBYr9/tsJkjkLVz0l0k4cRQvkknGnauWOuddTKxChdel3HAS7BqM=
+	t=1750175840; cv=none; b=cBdstHWEorJqkUGGZVuNCgNIpJQvqF2WxD63ioiwgtyNxpkau91QZttPCqapioNrpIOcNEMnptkS1YKWrQqaKu83wWdmMhPBY5/h5nkCFVWSEMnjNGjPD6ISNG3PH7TxxKWZJ1eZ/nYB0UBZ1a5pkjtq33ulJaZzw1zqPIayHhc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175837; c=relaxed/simple;
-	bh=+5Gtjn8DbwxtcszkNbyt2IkqKQcHWS+WcJbRHYxLtvI=;
+	s=arc-20240116; t=1750175840; c=relaxed/simple;
+	bh=yAzAa9Mg/zQx4IdnR9yg0NGCixpmxoKBTCyfiyTDn6g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k/iu4pEawY/DOnyVN3C791d4XjKKUeoFwXbXgDDe0GfNLoppqduAhT4QhFqOm1x/EnTCnExseckL5ufM0UaViTspe7wYniifS2pLQsGs4txKXi8UcEZZlsbR3Fb0FMu5VI7X06OHbaljbFZ3WyaFf1vD4hUKQG5Fk2IhFn3vE8k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oLEIQTd/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NYhbnkwAOk/c6oNjpXbCr0mlInUxnNHwfLXUuiDh3OPkccT89KOc1Z3WBPUjg6To+sRtGV021He070wWeUOhQEEZc7izur4P8ssuulYtAXrKQs4VKt/B5JvuGkUvrpUu8bwZ4h9efxnC5ESlKG4VYfI/LdNWPwpUYl4A1fHgOsI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fVJV1S0D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oLEIQTd/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E158CC4CEE3;
-	Tue, 17 Jun 2025 15:57:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fVJV1S0D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2D11C4CEE3;
+	Tue, 17 Jun 2025 15:57:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175837;
-	bh=+5Gtjn8DbwxtcszkNbyt2IkqKQcHWS+WcJbRHYxLtvI=;
+	s=korg; t=1750175840;
+	bh=yAzAa9Mg/zQx4IdnR9yg0NGCixpmxoKBTCyfiyTDn6g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oLEIQTd/vL52anvldWzn3+INpemI70nSuLeqgezXtpcnW9945ebbUXYpJBA4Xai3y
-	 CeHpLikljHmp291oWvltLU5utL23AW8gJVKTHFSMYjyqBxNmrSPz+pzLtPc7Jc/MZw
-	 USf4TBe3zaVJ8B6OcU5A/hIqoVeqP5/VK5qvojKk=
+	b=fVJV1S0DUfJGQSMUbCOq8+xFsuo5FjzXX0IZzvrmlPkgyzHJZJjj14wzMcfB97rBi
+	 a/WmPz4g51lopU6yu8g8Ql7HSEFJF2Sc98cN2B+z8I1D4t+0MqUzV8yQEK1AMgqCKX
+	 3YvwWA+fOwVtp8PNUDdlTEknx6N+eRNi+KJhUQ5w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neill Kapron <nkapron@google.com>,
-	Kees Cook <kees@kernel.org>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 127/780] selftests/seccomp: fix syscall_restart test for arm compat
-Date: Tue, 17 Jun 2025 17:17:15 +0200
-Message-ID: <20250617152456.680576057@linuxfoundation.org>
+Subject: [PATCH 6.12 168/512] dt-bindings: soc: fsl,qman-fqd: Fix reserved-memory.yaml reference
+Date: Tue, 17 Jun 2025 17:22:14 +0200
+Message-ID: <20250617152426.429976092@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,55 +47,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Neill Kapron <nkapron@google.com>
+From: Rob Herring (Arm) <robh@kernel.org>
 
-[ Upstream commit 797002deed03491215a352ace891749b39741b69 ]
+[ Upstream commit 1090c38bbfd9ab7f22830c0e8a5c605e7d4ef084 ]
 
-The inconsistencies in the systcall ABI between arm and arm-compat can
-can cause a failure in the syscall_restart test due to the logic
-attempting to work around the differences. The 'machine' field for an
-ARM64 device running in compat mode can report 'armv8l' or 'armv8b'
-which matches with the string 'arm' when only examining the first three
-characters of the string.
+The reserved-memory.yaml reference needs the full path. No warnings were
+generated because the example has the wrong compatible string, so fix
+that too.
 
-This change adds additional validation to the workaround logic to make
-sure we only take the arm path when running natively, not in arm-compat.
-
-Fixes: 256d0afb11d6 ("selftests/seccomp: build and pass on arm64")
-Signed-off-by: Neill Kapron <nkapron@google.com>
-Link: https://lore.kernel.org/r/20250427094103.3488304-2-nkapron@google.com
-Signed-off-by: Kees Cook <kees@kernel.org>
+Fixes: 304a90c4f75d ("dt-bindings: soc: fsl: Convert q(b)man-* to yaml format")
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
+Link: https://lore.kernel.org/r/20250507154231.1590634-1-robh@kernel.org
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/seccomp/seccomp_bpf.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ Documentation/devicetree/bindings/soc/fsl/fsl,qman-fqd.yaml | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/seccomp/seccomp_bpf.c b/tools/testing/selftests/seccomp/seccomp_bpf.c
-index b2f76a52215ad..53bf6a9c801f8 100644
---- a/tools/testing/selftests/seccomp/seccomp_bpf.c
-+++ b/tools/testing/selftests/seccomp/seccomp_bpf.c
-@@ -3166,12 +3166,15 @@ TEST(syscall_restart)
- 	ret = get_syscall(_metadata, child_pid);
- #if defined(__arm__)
- 	/*
--	 * FIXME:
- 	 * - native ARM registers do NOT expose true syscall.
- 	 * - compat ARM registers on ARM64 DO expose true syscall.
-+	 * - values of utsbuf.machine include 'armv8l' or 'armb8b'
-+	 *   for ARM64 running in compat mode.
- 	 */
- 	ASSERT_EQ(0, uname(&utsbuf));
--	if (strncmp(utsbuf.machine, "arm", 3) == 0) {
-+	if ((strncmp(utsbuf.machine, "arm", 3) == 0) &&
-+	    (strncmp(utsbuf.machine, "armv8l", 6) != 0) &&
-+	    (strncmp(utsbuf.machine, "armv8b", 6) != 0)) {
- 		EXPECT_EQ(__NR_nanosleep, ret);
- 	} else
- #endif
+diff --git a/Documentation/devicetree/bindings/soc/fsl/fsl,qman-fqd.yaml b/Documentation/devicetree/bindings/soc/fsl/fsl,qman-fqd.yaml
+index de0b4ae740ff2..a975bce599750 100644
+--- a/Documentation/devicetree/bindings/soc/fsl/fsl,qman-fqd.yaml
++++ b/Documentation/devicetree/bindings/soc/fsl/fsl,qman-fqd.yaml
+@@ -50,7 +50,7 @@ required:
+   - compatible
+ 
+ allOf:
+-  - $ref: reserved-memory.yaml
++  - $ref: /schemas/reserved-memory/reserved-memory.yaml
+ 
+ unevaluatedProperties: false
+ 
+@@ -61,7 +61,7 @@ examples:
+         #size-cells = <2>;
+ 
+         qman-fqd {
+-            compatible = "shared-dma-pool";
++            compatible = "fsl,qman-fqd";
+             size = <0 0x400000>;
+             alignment = <0 0x400000>;
+             no-map;
 -- 
 2.39.5
 
