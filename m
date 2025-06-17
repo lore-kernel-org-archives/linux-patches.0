@@ -1,41 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E1FC2EA14E;
-	Tue, 17 Jun 2025 16:25:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FB652ED17B;
+	Tue, 17 Jun 2025 16:25:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177533; cv=none; b=A/6p3j+I+MHxOo4GK/AnEMrq5XQaPlJ2mYudDf8TDCMHLpW8ggzh483NMgkIbtpUtHiXC1OftI1pz9siI9Dcy9pvifj0WIs/DQvnsg94+RjuteelgwEEO0T0g7bnHBnyvtKbvLc1SHsOzlqu52qTtRE1PaRY/kF08DonAnVELz4=
+	t=1750177536; cv=none; b=HMsOUuhP5vQjTA1NduQrPayLPANtFRUOwmv6M9GU+4QzayIC3YN4T3GcuQrZ3KhclYJX8usa9CfFqUuFs/+GD6QZwCavxynDfArm17rKzcOeZbU3iSAQg41UVncqsyQDL3bIVThvAuBrVbupkwGjpZ+jYUNt8sj2xAtzPZffu+Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177533; c=relaxed/simple;
-	bh=DyW9BBjbKPVrY0e8EquHMaPj4C5cfHuvHuYDMo79i5k=;
+	s=arc-20240116; t=1750177536; c=relaxed/simple;
+	bh=ErRLCUVquNbbDMLc9qn46AmxXZ6r2GdANGHGuSB09WM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UibYTP/vbDbKcEG0oDXhYHDl4pR3BxZo/AtcOVSuFsaky8oe5TN2oOnNHxfTUjQPoOdLPzBfmZF9EWOk2Hac35otAAO060Gj0/3mPetoKJyefAoTP8GskpAEreOJE3pbR76pg4bxqmPcs4GIU8V+I6cWtpywvkO19hlvk5kop8s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=viLgV+/b; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=juPUcGB845CVdAaw39N/zKskOUOKX9Mbwa8+KH2nibtq22LLW6Qo60bbuV3jMtFfeFBp+PVD2XvxP/m5wgH5IgXVEbKPpW/rDi10Q2mJWtXDUbLPVa8ktH0iPuofdu5P2rQLwHonxL80m4pLG1lq6C1rnlDDnKeDGcQAo1+aAk0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vjc/DSfE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="viLgV+/b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FE97C4CEE3;
-	Tue, 17 Jun 2025 16:25:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vjc/DSfE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D417DC4CEE3;
+	Tue, 17 Jun 2025 16:25:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177533;
-	bh=DyW9BBjbKPVrY0e8EquHMaPj4C5cfHuvHuYDMo79i5k=;
+	s=korg; t=1750177536;
+	bh=ErRLCUVquNbbDMLc9qn46AmxXZ6r2GdANGHGuSB09WM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=viLgV+/b1U8n6ZhTlnI2VCyZk366uZ2D0xY8P4p7hlVBOnM2/Rwi7qNGaMb4MRV+G
-	 umDkftiJ2enaul4j2YywIMBSSCUh/XwSPsYYIeIivpAnr9YeKhKlz+N6uf3sb8Oc8C
-	 Kd+IRrdjf/cCMo4wm9EWbzpmZW5rH5OV6eDKu6WI=
+	b=Vjc/DSfEKc9V/xwGrRErbHSp5erusoZxTxRqO025wJzcNNLuy3yiyHOJUk78ypc/F
+	 cha+WivGN13iJej+gFQVmEMkgo9OOA2FhLWo9f+vZ0lsHxjC07roxugvL464RwgJSE
+	 Ll9BusGWt0XvhUXragaEKSPMCExvtcdt0Hxhxd1Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Horatiu Vultur <horatiu.vultur@microchip.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Joshua Hay <joshua.a.hay@intel.com>,
+	Emil Tantilov <emil.s.tantilov@intel.com>,
+	Ahmed Zaki <ahmed.zaki@intel.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Samuel Salin <Samuel.salin@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 320/780] net: lan966x: Fix 1-step timestamping over ipv4 or ipv6
-Date: Tue, 17 Jun 2025 17:20:28 +0200
-Message-ID: <20250617152504.485425077@linuxfoundation.org>
+Subject: [PATCH 6.12 360/512] idpf: avoid mailbox timeout delays during reset
+Date: Tue, 17 Jun 2025 17:25:26 +0200
+Message-ID: <20250617152434.170853598@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,170 +52,103 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Horatiu Vultur <horatiu.vultur@microchip.com>
+From: Emil Tantilov <emil.s.tantilov@intel.com>
 
-[ Upstream commit 57ee9584fd8606deef66d7b65fa4dcf94f6843aa ]
+[ Upstream commit 9dc63d8ff182150d7d7b318ab9389702a2c0a292 ]
 
-When enabling 1-step timestamping for ptp frames that are over udpv4 or
-udpv6 then the inserted timestamp is added at the wrong offset in the
-frame, meaning that will modify the frame at the wrong place, so the
-frame will be malformed.
-To fix this, the HW needs to know which kind of frame it is to know
-where to insert the timestamp. For that there is a field in the IFH that
-says the PDU_TYPE, which can be NONE  which is the default value,
-IPV4 or IPV6. Therefore make sure to set the PDU_TYPE so the HW knows
-where to insert the timestamp.
-Like I mention before the issue is not seen with L2 frames because by
-default the PDU_TYPE has a value of 0, which represents the L2 frames.
+Mailbox operations are not possible while the driver is in reset.
+Operations that require MBX exchange with the control plane will result
+in long delays if executed while a reset is in progress:
 
-Fixes: 77eecf25bd9d2f ("net: lan966x: Update extraction/injection for timestamping")
-Signed-off-by: Horatiu Vultur <horatiu.vultur@microchip.com>
-Link: https://patch.msgid.link/20250521124159.2713525-1-horatiu.vultur@microchip.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+ethtool -L <inf> combined 8& echo 1 > /sys/class/net/<inf>/device/reset
+idpf 0000:83:00.0: HW reset detected
+idpf 0000:83:00.0: Device HW Reset initiated
+idpf 0000:83:00.0: Transaction timed-out (op:504 cookie:be00 vc_op:504 salt:be timeout:2000ms)
+idpf 0000:83:00.0: Transaction timed-out (op:508 cookie:bf00 vc_op:508 salt:bf timeout:2000ms)
+idpf 0000:83:00.0: Transaction timed-out (op:512 cookie:c000 vc_op:512 salt:c0 timeout:2000ms)
+idpf 0000:83:00.0: Transaction timed-out (op:510 cookie:c100 vc_op:510 salt:c1 timeout:2000ms)
+idpf 0000:83:00.0: Transaction timed-out (op:509 cookie:c200 vc_op:509 salt:c2 timeout:60000ms)
+idpf 0000:83:00.0: Transaction timed-out (op:509 cookie:c300 vc_op:509 salt:c3 timeout:60000ms)
+idpf 0000:83:00.0: Transaction timed-out (op:505 cookie:c400 vc_op:505 salt:c4 timeout:60000ms)
+idpf 0000:83:00.0: Failed to configure queues for vport 0, -62
+
+Disable mailbox communication in case of a reset, unless it's done during
+a driver load, where the virtchnl operations are needed to configure the
+device.
+
+Fixes: 8077c727561aa ("idpf: add controlq init and reset checks")
+Co-developed-by: Joshua Hay <joshua.a.hay@intel.com>
+Signed-off-by: Joshua Hay <joshua.a.hay@intel.com>
+Signed-off-by: Emil Tantilov <emil.s.tantilov@intel.com>
+Reviewed-by: Ahmed Zaki <ahmed.zaki@intel.com>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Samuel Salin <Samuel.salin@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/microchip/lan966x/lan966x_main.c |  6 +++
- .../ethernet/microchip/lan966x/lan966x_main.h |  5 ++
- .../ethernet/microchip/lan966x/lan966x_ptp.c  | 49 ++++++++++++++-----
- 3 files changed, 47 insertions(+), 13 deletions(-)
+ drivers/net/ethernet/intel/idpf/idpf_lib.c     | 18 +++++++++++++-----
+ .../net/ethernet/intel/idpf/idpf_virtchnl.c    |  2 +-
+ .../net/ethernet/intel/idpf/idpf_virtchnl.h    |  1 +
+ 3 files changed, 15 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_main.c b/drivers/net/ethernet/microchip/lan966x/lan966x_main.c
-index 0af143ec0f869..427bdc0e4908c 100644
---- a/drivers/net/ethernet/microchip/lan966x/lan966x_main.c
-+++ b/drivers/net/ethernet/microchip/lan966x/lan966x_main.c
-@@ -353,6 +353,11 @@ static void lan966x_ifh_set_rew_op(void *ifh, u64 rew_op)
- 	lan966x_ifh_set(ifh, rew_op, IFH_POS_REW_CMD, IFH_WID_REW_CMD);
+diff --git a/drivers/net/ethernet/intel/idpf/idpf_lib.c b/drivers/net/ethernet/intel/idpf/idpf_lib.c
+index 615e74d038457..ba645ab22d394 100644
+--- a/drivers/net/ethernet/intel/idpf/idpf_lib.c
++++ b/drivers/net/ethernet/intel/idpf/idpf_lib.c
+@@ -1802,11 +1802,19 @@ void idpf_vc_event_task(struct work_struct *work)
+ 	if (test_bit(IDPF_REMOVE_IN_PROG, adapter->flags))
+ 		return;
+ 
+-	if (test_bit(IDPF_HR_FUNC_RESET, adapter->flags) ||
+-	    test_bit(IDPF_HR_DRV_LOAD, adapter->flags)) {
+-		set_bit(IDPF_HR_RESET_IN_PROG, adapter->flags);
+-		idpf_init_hard_reset(adapter);
+-	}
++	if (test_bit(IDPF_HR_FUNC_RESET, adapter->flags))
++		goto func_reset;
++
++	if (test_bit(IDPF_HR_DRV_LOAD, adapter->flags))
++		goto drv_load;
++
++	return;
++
++func_reset:
++	idpf_vc_xn_shutdown(adapter->vcxn_mngr);
++drv_load:
++	set_bit(IDPF_HR_RESET_IN_PROG, adapter->flags);
++	idpf_init_hard_reset(adapter);
  }
  
-+static void lan966x_ifh_set_oam_type(void *ifh, u64 oam_type)
-+{
-+	lan966x_ifh_set(ifh, oam_type, IFH_POS_PDU_TYPE, IFH_WID_PDU_TYPE);
-+}
-+
- static void lan966x_ifh_set_timestamp(void *ifh, u64 timestamp)
+ /**
+diff --git a/drivers/net/ethernet/intel/idpf/idpf_virtchnl.c b/drivers/net/ethernet/intel/idpf/idpf_virtchnl.c
+index 99bdb95bf2266..151beea20d343 100644
+--- a/drivers/net/ethernet/intel/idpf/idpf_virtchnl.c
++++ b/drivers/net/ethernet/intel/idpf/idpf_virtchnl.c
+@@ -376,7 +376,7 @@ static void idpf_vc_xn_init(struct idpf_vc_xn_manager *vcxn_mngr)
+  * All waiting threads will be woken-up and their transaction aborted. Further
+  * operations on that object will fail.
+  */
+-static void idpf_vc_xn_shutdown(struct idpf_vc_xn_manager *vcxn_mngr)
++void idpf_vc_xn_shutdown(struct idpf_vc_xn_manager *vcxn_mngr)
  {
- 	lan966x_ifh_set(ifh, timestamp, IFH_POS_TIMESTAMP, IFH_WID_TIMESTAMP);
-@@ -380,6 +385,7 @@ static netdev_tx_t lan966x_port_xmit(struct sk_buff *skb,
- 			return err;
+ 	int i;
  
- 		lan966x_ifh_set_rew_op(ifh, LAN966X_SKB_CB(skb)->rew_op);
-+		lan966x_ifh_set_oam_type(ifh, LAN966X_SKB_CB(skb)->pdu_type);
- 		lan966x_ifh_set_timestamp(ifh, LAN966X_SKB_CB(skb)->ts_id);
- 	}
+diff --git a/drivers/net/ethernet/intel/idpf/idpf_virtchnl.h b/drivers/net/ethernet/intel/idpf/idpf_virtchnl.h
+index 83da5d8da56bf..23271cf0a2160 100644
+--- a/drivers/net/ethernet/intel/idpf/idpf_virtchnl.h
++++ b/drivers/net/ethernet/intel/idpf/idpf_virtchnl.h
+@@ -66,5 +66,6 @@ int idpf_send_get_stats_msg(struct idpf_vport *vport);
+ int idpf_send_set_sriov_vfs_msg(struct idpf_adapter *adapter, u16 num_vfs);
+ int idpf_send_get_set_rss_key_msg(struct idpf_vport *vport, bool get);
+ int idpf_send_get_set_rss_lut_msg(struct idpf_vport *vport, bool get);
++void idpf_vc_xn_shutdown(struct idpf_vc_xn_manager *vcxn_mngr);
  
-diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_main.h b/drivers/net/ethernet/microchip/lan966x/lan966x_main.h
-index 1efa584e71077..1f9df67f05044 100644
---- a/drivers/net/ethernet/microchip/lan966x/lan966x_main.h
-+++ b/drivers/net/ethernet/microchip/lan966x/lan966x_main.h
-@@ -75,6 +75,10 @@
- #define IFH_REW_OP_ONE_STEP_PTP		0x3
- #define IFH_REW_OP_TWO_STEP_PTP		0x4
- 
-+#define IFH_PDU_TYPE_NONE		0
-+#define IFH_PDU_TYPE_IPV4		7
-+#define IFH_PDU_TYPE_IPV6		8
-+
- #define FDMA_RX_DCB_MAX_DBS		1
- #define FDMA_TX_DCB_MAX_DBS		1
- 
-@@ -254,6 +258,7 @@ struct lan966x_phc {
- 
- struct lan966x_skb_cb {
- 	u8 rew_op;
-+	u8 pdu_type;
- 	u16 ts_id;
- 	unsigned long jiffies;
- };
-diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_ptp.c b/drivers/net/ethernet/microchip/lan966x/lan966x_ptp.c
-index 63905bb5a63a8..87e5e81d40dc6 100644
---- a/drivers/net/ethernet/microchip/lan966x/lan966x_ptp.c
-+++ b/drivers/net/ethernet/microchip/lan966x/lan966x_ptp.c
-@@ -322,34 +322,55 @@ void lan966x_ptp_hwtstamp_get(struct lan966x_port *port,
- 	*cfg = phc->hwtstamp_config;
- }
- 
--static int lan966x_ptp_classify(struct lan966x_port *port, struct sk_buff *skb)
-+static void lan966x_ptp_classify(struct lan966x_port *port, struct sk_buff *skb,
-+				 u8 *rew_op, u8 *pdu_type)
- {
- 	struct ptp_header *header;
- 	u8 msgtype;
- 	int type;
- 
--	if (port->ptp_tx_cmd == IFH_REW_OP_NOOP)
--		return IFH_REW_OP_NOOP;
-+	if (port->ptp_tx_cmd == IFH_REW_OP_NOOP) {
-+		*rew_op = IFH_REW_OP_NOOP;
-+		*pdu_type = IFH_PDU_TYPE_NONE;
-+		return;
-+	}
- 
- 	type = ptp_classify_raw(skb);
--	if (type == PTP_CLASS_NONE)
--		return IFH_REW_OP_NOOP;
-+	if (type == PTP_CLASS_NONE) {
-+		*rew_op = IFH_REW_OP_NOOP;
-+		*pdu_type = IFH_PDU_TYPE_NONE;
-+		return;
-+	}
- 
- 	header = ptp_parse_header(skb, type);
--	if (!header)
--		return IFH_REW_OP_NOOP;
-+	if (!header) {
-+		*rew_op = IFH_REW_OP_NOOP;
-+		*pdu_type = IFH_PDU_TYPE_NONE;
-+		return;
-+	}
- 
--	if (port->ptp_tx_cmd == IFH_REW_OP_TWO_STEP_PTP)
--		return IFH_REW_OP_TWO_STEP_PTP;
-+	if (type & PTP_CLASS_L2)
-+		*pdu_type = IFH_PDU_TYPE_NONE;
-+	if (type & PTP_CLASS_IPV4)
-+		*pdu_type = IFH_PDU_TYPE_IPV4;
-+	if (type & PTP_CLASS_IPV6)
-+		*pdu_type = IFH_PDU_TYPE_IPV6;
-+
-+	if (port->ptp_tx_cmd == IFH_REW_OP_TWO_STEP_PTP) {
-+		*rew_op = IFH_REW_OP_TWO_STEP_PTP;
-+		return;
-+	}
- 
- 	/* If it is sync and run 1 step then set the correct operation,
- 	 * otherwise run as 2 step
- 	 */
- 	msgtype = ptp_get_msgtype(header, type);
--	if ((msgtype & 0xf) == 0)
--		return IFH_REW_OP_ONE_STEP_PTP;
-+	if ((msgtype & 0xf) == 0) {
-+		*rew_op = IFH_REW_OP_ONE_STEP_PTP;
-+		return;
-+	}
- 
--	return IFH_REW_OP_TWO_STEP_PTP;
-+	*rew_op = IFH_REW_OP_TWO_STEP_PTP;
- }
- 
- static void lan966x_ptp_txtstamp_old_release(struct lan966x_port *port)
-@@ -374,10 +395,12 @@ int lan966x_ptp_txtstamp_request(struct lan966x_port *port,
- {
- 	struct lan966x *lan966x = port->lan966x;
- 	unsigned long flags;
-+	u8 pdu_type;
- 	u8 rew_op;
- 
--	rew_op = lan966x_ptp_classify(port, skb);
-+	lan966x_ptp_classify(port, skb, &rew_op, &pdu_type);
- 	LAN966X_SKB_CB(skb)->rew_op = rew_op;
-+	LAN966X_SKB_CB(skb)->pdu_type = pdu_type;
- 
- 	if (rew_op != IFH_REW_OP_TWO_STEP_PTP)
- 		return 0;
+ #endif /* _IDPF_VIRTCHNL_H_ */
 -- 
 2.39.5
 
