@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82CB22ED142;
-	Tue, 17 Jun 2025 16:00:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC82518E025;
+	Tue, 17 Jun 2025 16:01:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750176059; cv=none; b=HPizeRhb5yLLEaV5kWMu4zQzpq+0JSR8yCKMhmZYUr7AckMlKZXSLjmiKZPFL608VQIyU2oIWYSUS34hQ+mSLsW14SpI7bYHFo6e1syxnGHFfw3E9WhgU1Zood4JjUbM8oS2aZkunqFHZVYcpIGNfW356LgL7I1NjudiIflUpE8=
+	t=1750176062; cv=none; b=pC7vrbnlgCO6ThMu71k9Ay9xUh6sAxxqiCLDUDK7tfCepkz4h0ROjvtX6O6OOyTf4637AcWP6q46UqdV9Xz8gV0giiYXeq9xMfCIV4ZAAT2bUrnYU03QMNfF+NR2PHxpW6qoPYeKQZ8hDi0LP/4WCaFsjM+13qOB5WIqyfwxHKg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750176059; c=relaxed/simple;
-	bh=wi2/H+o4xD9jHm3Gt3tfklv6rJynmHUwYSE2ghx68no=;
+	s=arc-20240116; t=1750176062; c=relaxed/simple;
+	bh=HZFed2DZjmQ5t3EoH4BS1ApYjbBcFdgqvMhHUWtXlvs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XgATtg6S/R2aT3kdsN1BhWnjmA6N4a62SyVKYIGcgYDazBlT/X/C9JbtCIPZY0vzCC/rYYTF2e/nn0jwAc7hIiIpJ2g5wNMqKgfa9jjcUMQwr+2asRSRpX96CU3LySir2RUOAvp+6TjOK9AjTNZTIP9Y/6d6u4TbH40O/VRorI0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mlkj2Ji9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bSk+U97JYO7nWiM6+pYqXzSzQQq5hBJC4DWzGtjeGNF+FGoWQZIrD1cbtHUmKBwG8vGmulF8UWHV5iB7ImM6J8EJcC87Ex8aoVMWTLo1z61i8VjvDmuYYK8Vz9Qyem8krUoukSTL7NncWGDZS+6tHtaOhKyOAjJfIm+XTn0715I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JNKECMb2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mlkj2Ji9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4127C4CEF3;
-	Tue, 17 Jun 2025 16:00:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JNKECMb2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19CE3C4CEE3;
+	Tue, 17 Jun 2025 16:01:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750176059;
-	bh=wi2/H+o4xD9jHm3Gt3tfklv6rJynmHUwYSE2ghx68no=;
+	s=korg; t=1750176062;
+	bh=HZFed2DZjmQ5t3EoH4BS1ApYjbBcFdgqvMhHUWtXlvs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mlkj2Ji93DnZkqJBkgOzsE7jZMtcqsc0E4nD7UN1ASflTs3JXcl/gqvQ+6Da9CSxw
-	 ZhAbqkM2mB7+BjKD3QKxQUcSa7As0dIAsPtblIrlHSkMCl/UQIHG9UFXWS6SWagSIj
-	 acLZMhQe3d+cTaaabgZ9lP7T46RiaKqkGhSWgOj8=
+	b=JNKECMb2P2kiRowH7k/dkid7FiaSX9rVOwJ0+qMG6nE6LWcfJBtror/D3n5Je4IaS
+	 dl5W/NOJgQwHI/gnlaqgcegEHbG3T+J0glkC/8u2GaRlE72jwwn8ZTiOirRlqTCn4y
+	 8co2Lk7thwrB25qOLUNbc7GanB9xYf0KRvCUfbcI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	William Breathitt Gray <wbg@kernel.org>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 239/356] counter: interrupt-cnt: Protect enable/disable OPs with mutex
-Date: Tue, 17 Jun 2025 17:25:54 +0200
-Message-ID: <20250617152347.832062985@linuxfoundation.org>
+Subject: [PATCH 6.12 192/512] netfilter: nf_tables: nft_fib_ipv6: fix VRF ipv4/ipv6 result discrepancy
+Date: Tue, 17 Jun 2025 17:22:38 +0200
+Message-ID: <20250617152427.416128904@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-References: <20250617152338.212798615@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,111 +47,81 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 7351312632e831e51383f48957d47712fae791ef ]
+[ Upstream commit 8b53f46eb430fe5b42d485873b85331d2de2c469 ]
 
-Enable/disable seems to be racy on SMP, consider the following scenario:
+With a VRF, ipv4 and ipv6 FIB expression behave differently.
 
-CPU0					CPU1
+   fib daddr . iif oif
 
-interrupt_cnt_enable_write(true)
-{
-	if (priv->enabled == enable)
-		return 0;
+Will return the input interface name for ipv4, but the real device
+for ipv6.  Example:
 
-	if (enable) {
-		priv->enabled = true;
-					interrupt_cnt_enable_write(false)
-					{
-						if (priv->enabled == enable)
-							return 0;
+If VRF device name is tvrf and real (incoming) device is veth0.
+First round is ok, both ipv4 and ipv6 will yield 'veth0'.
 
-						if (enable) {
-							priv->enabled = true;
-							enable_irq(priv->irq);
-						} else {
-							disable_irq(priv->irq)
-							priv->enabled = false;
-						}
-		enable_irq(priv->irq);
-	} else {
-		disable_irq(priv->irq);
-		priv->enabled = false;
-	}
+But in the second round (incoming device will be set to "tvrf"), ipv4
+will yield "tvrf" whereas ipv6 returns "veth0" for the second round too.
 
-The above would result in priv->enabled == false, but IRQ left enabled.
-Protect both write (above race) and read (to propagate the value on SMP)
-callbacks with a mutex.
+This makes ipv6 behave like ipv4.
 
-Signed-off-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
-Fixes: a55ebd47f21f ("counter: add IRQ or GPIO based counter")
-Acked-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Link: https://lore.kernel.org/r/20250331163642.2382651-1-alexander.sverdlin@siemens.com
-Signed-off-by: William Breathitt Gray <wbg@kernel.org>
+A followup patch will add a test case for this, without this change
+it will fail with:
+  get element inet t fibif6iif { tvrf . dead:1::99 . tvrf }
+  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  FAIL: did not find tvrf . dead:1::99 . tvrf in fibif6iif
+
+Alternatively we could either not do anything at all or change
+ipv4 to also return the lower/real device, however, nft (userspace)
+doc says "iif: if fib lookup provides a route then check its output
+interface is identical to the packets input interface." which is what
+the nft fib ipv4 behaviour is.
+
+Fixes: f6d0cbcf09c5 ("netfilter: nf_tables: add fib expression")
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/counter/interrupt-cnt.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ net/ipv6/netfilter/nft_fib_ipv6.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/counter/interrupt-cnt.c b/drivers/counter/interrupt-cnt.c
-index 229473855c5b3..bc762ba87a19b 100644
---- a/drivers/counter/interrupt-cnt.c
-+++ b/drivers/counter/interrupt-cnt.c
-@@ -3,12 +3,14 @@
-  * Copyright (c) 2021 Pengutronix, Oleksij Rempel <kernel@pengutronix.de>
-  */
- 
-+#include <linux/cleanup.h>
- #include <linux/counter.h>
- #include <linux/gpio/consumer.h>
- #include <linux/interrupt.h>
- #include <linux/irq.h>
- #include <linux/mod_devicetable.h>
- #include <linux/module.h>
-+#include <linux/mutex.h>
- #include <linux/platform_device.h>
- #include <linux/types.h>
- 
-@@ -19,6 +21,7 @@ struct interrupt_cnt_priv {
- 	struct gpio_desc *gpio;
- 	int irq;
- 	bool enabled;
-+	struct mutex lock;
- 	struct counter_signal signals;
- 	struct counter_synapse synapses;
- 	struct counter_count cnts;
-@@ -41,6 +44,8 @@ static int interrupt_cnt_enable_read(struct counter_device *counter,
+diff --git a/net/ipv6/netfilter/nft_fib_ipv6.c b/net/ipv6/netfilter/nft_fib_ipv6.c
+index 7fd9d7b21cd42..f1f5640da6728 100644
+--- a/net/ipv6/netfilter/nft_fib_ipv6.c
++++ b/net/ipv6/netfilter/nft_fib_ipv6.c
+@@ -158,6 +158,7 @@ void nft_fib6_eval(const struct nft_expr *expr, struct nft_regs *regs,
  {
- 	struct interrupt_cnt_priv *priv = counter_priv(counter);
+ 	const struct nft_fib *priv = nft_expr_priv(expr);
+ 	int noff = skb_network_offset(pkt->skb);
++	const struct net_device *found = NULL;
+ 	const struct net_device *oif = NULL;
+ 	u32 *dest = &regs->data[priv->dreg];
+ 	struct ipv6hdr *iph, _iph;
+@@ -203,11 +204,15 @@ void nft_fib6_eval(const struct nft_expr *expr, struct nft_regs *regs,
+ 	if (rt->rt6i_flags & (RTF_REJECT | RTF_ANYCAST | RTF_LOCAL))
+ 		goto put_rt_err;
  
-+	guard(mutex)(&priv->lock);
-+
- 	*enable = priv->enabled;
+-	if (oif && oif != rt->rt6i_idev->dev &&
+-	    l3mdev_master_ifindex_rcu(rt->rt6i_idev->dev) != oif->ifindex)
+-		goto put_rt_err;
++	if (!oif) {
++		found = rt->rt6i_idev->dev;
++	} else {
++		if (oif == rt->rt6i_idev->dev ||
++		    l3mdev_master_ifindex_rcu(rt->rt6i_idev->dev) == oif->ifindex)
++			found = oif;
++	}
  
- 	return 0;
-@@ -51,6 +56,8 @@ static int interrupt_cnt_enable_write(struct counter_device *counter,
- {
- 	struct interrupt_cnt_priv *priv = counter_priv(counter);
- 
-+	guard(mutex)(&priv->lock);
-+
- 	if (priv->enabled == enable)
- 		return 0;
- 
-@@ -227,6 +234,8 @@ static int interrupt_cnt_probe(struct platform_device *pdev)
- 	if (ret)
- 		return ret;
- 
-+	mutex_init(&priv->lock);
-+
- 	ret = devm_counter_add(dev, counter);
- 	if (ret < 0)
- 		return dev_err_probe(dev, ret, "Failed to add counter\n");
+-	nft_fib_store_result(dest, priv, rt->rt6i_idev->dev);
++	nft_fib_store_result(dest, priv, found);
+  put_rt_err:
+ 	ip6_rt_put(rt);
+ }
 -- 
 2.39.5
 
