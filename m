@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECD462EE5FD;
-	Tue, 17 Jun 2025 15:45:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62D9C2ECE80;
+	Tue, 17 Jun 2025 15:46:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175160; cv=none; b=odHL4rvClJ4oAM9HhoJZgK8RNx6KFvf+MQbkZfH1CEB9D1V5f3JEeE7S3Vqr17hc1xZ4G7K67oNhkWUo/F5eGL8HMrK0IC7Sq7tmU0vc0v5ZhGDJi4hTZxgQ9XVbJTH+QkTqNR6oG1lZj45/EZeg1dz4wTqxYTIReRCDUPaV7aM=
+	t=1750175163; cv=none; b=SY/fioZxz/0eGgubgxQsC7sCpmlxpOBlitNRSokDn3muCuXFPvC+1jvQSuDMs0vy+8sw0ENR5OSay1Gxf7lfFPSS/md1/zc45/WTMsXdZno7XMSpM+Fd1qTZNHJMp04u0H2W4l6fIc93zB/JwJ02lEwFqYAWpsxoQR/7JImHW80=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175160; c=relaxed/simple;
-	bh=CYKAoRmL1FzmCnpIsug7Y9hNubj/bi4FD4bTli1x+Ys=;
+	s=arc-20240116; t=1750175163; c=relaxed/simple;
+	bh=u8GGos/xzkwc7FWUM845t+NcERwOfboI9BKg3jN1dQU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bZdMJHk7fbn1jBxrpXnXuOsE8bVSxB+3MSo5ZXoyezwhgt+X8KovB8vLtXgkqrj1EH79RrUh2ye7L7LJUO/6GRHpspfwYS66XosKLc3NjUZQAjzE41WnfD1iDfbL1rcGZWrSkwePgtlj7m/3kGYSRPfejmeVdb7q7yYimL2I4Ws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NVd79Jv0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eFuqfFjuIF/pMvrTFw2S/Az9pFj+xSEf9CD1E3xcNQFH/Yokyyy9gBay/vctpvIoqGzjtl/+ptiBHJvgQupTl73woLKKu+bfctacLefxqN2UDFP66ZvAwvkamtevGiYzwrzBkhdkWmPyHCsm5axbRKK3RqvCnvOrJHruKNKaH3U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1ED9+lOy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NVd79Jv0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DFDDC4CEE3;
-	Tue, 17 Jun 2025 15:45:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1ED9+lOy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6A3FC4CEE3;
+	Tue, 17 Jun 2025 15:46:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175159;
-	bh=CYKAoRmL1FzmCnpIsug7Y9hNubj/bi4FD4bTli1x+Ys=;
+	s=korg; t=1750175163;
+	bh=u8GGos/xzkwc7FWUM845t+NcERwOfboI9BKg3jN1dQU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NVd79Jv0vJbcHEUIFXCcuxUEgI+twns3UjMxLKB9HWFV1pxwLpzGJx+skq89d61Zu
-	 F+CrDdmASbeyPwqGQq6E8wz23V6pBLYZPGEJ5PKFC6tIJy65YVmjaXZxPuKElZoPS7
-	 3fB5NKWBeBOOq68BcuHSq6KTJC4HkLD/Kd3To1fQ=
+	b=1ED9+lOyJ1VSdRvxnR2N9mlquoJARm0PQ95Wh7E2kVGnfaXrMDgAT3B8pWUgjlD1P
+	 q6lzkIfYvHaE8QhVEkTqE8yGNpgGMD5Y8m3uBWy0Gmh+Ndb9bJU0L3azL/XQvtnfm/
+	 HaqEH6qJwyN59zcWGIAXcznFPLWdx9r3z6ZXy2Fc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Feng Xu <feng.f.xu@intel.com>,
-	Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
-	Tony Luck <tony.luck@intel.com>,
+	Thangaraj Samynathan <thangaraj.s@microchip.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 058/780] EDAC/skx_common: Fix general protection fault
-Date: Tue, 17 Jun 2025 17:16:06 +0200
-Message-ID: <20250617152453.865266826@linuxfoundation.org>
+Subject: [PATCH 6.6 149/356] net: lan743x: rename lan743x_reset_phy to lan743x_hw_reset_phy
+Date: Tue, 17 Jun 2025 17:24:24 +0200
+Message-ID: <20250617152344.234263572@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
+References: <20250617152338.212798615@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,70 +48,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
+From: Thangaraj Samynathan <thangaraj.s@microchip.com>
 
-[ Upstream commit 20d2d476b3ae18041be423671a8637ed5ffd6958 ]
+[ Upstream commit 68927eb52d0af04863584930db06075d2610e194 ]
 
-After loading i10nm_edac (which automatically loads skx_edac_common), if
-unload only i10nm_edac, then reload it and perform error injection testing,
-a general protection fault may occur:
+rename the function to lan743x_hw_reset_phy to better describe it
+operation.
 
-  mce: [Hardware Error]: Machine check events logged
-  Oops: general protection fault ...
-  ...
-  Workqueue: events mce_gen_pool_process
-  RIP: 0010:string+0x53/0xe0
-  ...
-  Call Trace:
-  <TASK>
-  ? die_addr+0x37/0x90
-  ? exc_general_protection+0x1e7/0x3f0
-  ? asm_exc_general_protection+0x26/0x30
-  ? string+0x53/0xe0
-  vsnprintf+0x23e/0x4c0
-  snprintf+0x4d/0x70
-  skx_adxl_decode+0x16a/0x330 [skx_edac_common]
-  skx_mce_check_error.part.0+0xf8/0x220 [skx_edac_common]
-  skx_mce_check_error+0x17/0x20 [skx_edac_common]
-  ...
-
-The issue arose was because the variable 'adxl_component_count' (inside
-skx_edac_common), which counts the ADXL components, was not reset. During
-the reloading of i10nm_edac, the count was incremented by the actual number
-of ADXL components again, resulting in a count that was double the real
-number of ADXL components. This led to an out-of-bounds reference to the
-ADXL component array, causing the general protection fault above.
-
-Fix this issue by resetting the 'adxl_component_count' in adxl_put(),
-which is called during the unloading of {skx,i10nm}_edac.
-
-Fixes: 123b15863550 ("EDAC, i10nm: make skx_common.o a separate module")
-Reported-by: Feng Xu <feng.f.xu@intel.com>
-Signed-off-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
-Signed-off-by: Tony Luck <tony.luck@intel.com>
-Tested-by: Feng Xu <feng.f.xu@intel.com>
-Link: https://lore.kernel.org/r/20250417150724.1170168-2-qiuxu.zhuo@intel.com
+Fixes: 23f0703c125be ("lan743x: Add main source files for new lan743x driver")
+Signed-off-by: Thangaraj Samynathan <thangaraj.s@microchip.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20250526053048.287095-2-thangaraj.s@microchip.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/edac/skx_common.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/microchip/lan743x_main.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/edac/skx_common.c b/drivers/edac/skx_common.c
-index fa5b442b18449..c9ade45c1a99f 100644
---- a/drivers/edac/skx_common.c
-+++ b/drivers/edac/skx_common.c
-@@ -116,6 +116,7 @@ EXPORT_SYMBOL_GPL(skx_adxl_get);
- 
- void skx_adxl_put(void)
- {
-+	adxl_component_count = 0;
- 	kfree(adxl_values);
- 	kfree(adxl_msg);
+diff --git a/drivers/net/ethernet/microchip/lan743x_main.c b/drivers/net/ethernet/microchip/lan743x_main.c
+index f971d60484f06..781440d5756f3 100644
+--- a/drivers/net/ethernet/microchip/lan743x_main.c
++++ b/drivers/net/ethernet/microchip/lan743x_main.c
+@@ -1373,7 +1373,7 @@ static int lan743x_mac_set_mtu(struct lan743x_adapter *adapter, int new_mtu)
  }
+ 
+ /* PHY */
+-static int lan743x_phy_reset(struct lan743x_adapter *adapter)
++static int lan743x_hw_reset_phy(struct lan743x_adapter *adapter)
+ {
+ 	u32 data;
+ 
+@@ -1407,7 +1407,7 @@ static void lan743x_phy_update_flowcontrol(struct lan743x_adapter *adapter,
+ 
+ static int lan743x_phy_init(struct lan743x_adapter *adapter)
+ {
+-	return lan743x_phy_reset(adapter);
++	return lan743x_hw_reset_phy(adapter);
+ }
+ 
+ static void lan743x_phy_link_status_change(struct net_device *netdev)
 -- 
 2.39.5
 
