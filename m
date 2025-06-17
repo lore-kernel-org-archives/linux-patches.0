@@ -1,37 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 610D22FA624;
-	Tue, 17 Jun 2025 16:58:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7A742FA62E;
+	Tue, 17 Jun 2025 16:58:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750179516; cv=none; b=qxi3xH9oZZfu/kpoWoA7SFpJqm4QxQ6yLRUHKzn7Z/TbzgFprSoQBlKE/hOImBGN5OyPvTINP0AGib9lkoaf+vslQEkZbMtNm9qo59hpqUtFJ72W9DhitOZ8EjhcfEYV978juJWwJ7Q+7d4UrZB9fLnUwksC5Jq7RjGvouwP0aQ=
+	t=1750179519; cv=none; b=bVqdQW/xnOnZo5TyXbbcVE4AyOZONxqQGg3c49d9kYs2HKSisK5GTO7vR2q5UVlWE5izO8WIem8MUWfCo0K2wNm/BcO6OWlz79R/y8fPnkKyXq+rCWKgwdppGqgWv4gL/AlWESWkNTNbU0OFlITcoO0Fpjwudew4u1K6X6cUvwY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750179516; c=relaxed/simple;
-	bh=dIR40E4RFRQnd0tDORg/5BQXAKLJrseam3ccjLF2NOg=;
+	s=arc-20240116; t=1750179519; c=relaxed/simple;
+	bh=cCErqSqKF0vVVs/GVKqQRcwgiorY0qUHwzTjAUXTZcc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=G13NzUT1PQ8xz0HY2JNTifIg0r9KxoudR6KYkztW8Fuu6wVs4WBMxofPdajNb5j7w46+1GuRCh/ygw5b46b9IUOXCneMwq70cRe0WBYoYzOIspBm1J2Ab6lq9vyRWdzv7Ht/RID+UHsgdb03Ha2Qkp0IYPGSqC2HyYuILqeut1o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eqTAjfTq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iKQMM9hgxLJ6/htStAGmquaSuY8Vvz+SuvHaxsTGVNNGMAIRIzUxEtsCWBgSVNe3L0YCZVIVfsi5L2l7qMV8VEcZXNBDZwNyybxg/tHWORUJu/SojFf97jAr/40f2C4iL0La2t7xPy3t4waMmgEOig5cRyWJkirxv3xZEef1Btk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qdXkzu2Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eqTAjfTq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C32B8C4CEE3;
-	Tue, 17 Jun 2025 16:58:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qdXkzu2Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11EE3C4CEE7;
+	Tue, 17 Jun 2025 16:58:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750179516;
-	bh=dIR40E4RFRQnd0tDORg/5BQXAKLJrseam3ccjLF2NOg=;
+	s=korg; t=1750179519;
+	bh=cCErqSqKF0vVVs/GVKqQRcwgiorY0qUHwzTjAUXTZcc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eqTAjfTqMMG/Q2lkoFkipmu9w1pQgDQPC9tJngWSqNq7l6qv7CrT59u3vPfQZzH0J
-	 QkkaaGS5fdOjqkvYNnszxCBQypilL+O8BT++6STGYmkQ8v2ys57i8qjFk7ytK0fx7f
-	 Z9AKytnEMjf7d8CodbYswiijECLs5z4m2dr+j9mM=
+	b=qdXkzu2ZepNSKaKUB7RBZtbGUtad8ZF7G3SvhplnUEPXB0STeD96Ops4boh2YM/C5
+	 qnAw0786q2O2INSkVRTM2JaHFg4Vb/vJq92ms73Jwj8r4rkOMMGKxRivM8gY9ZT+PO
+	 u+1DqkpUO6oNbtB85XKGw+vCfWYIhVmqmqkfx4vI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
-	"Yury Norov [NVIDIA]" <yury.norov@gmail.com>
-Subject: [PATCH 6.15 739/780] uapi: bitops: use UAPI-safe variant of BITS_PER_LONG again
-Date: Tue, 17 Jun 2025 17:27:27 +0200
-Message-ID: <20250617152521.595872826@linuxfoundation.org>
+	John Hubbard <jhubbard@nvidia.com>,
+	Timur Tabi <ttabi@nvidia.com>,
+	Kane York <kanepyork@gmail.com>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Joel Fernandes <joelagnelf@nvidia.com>,
+	Miguel Ojeda <ojeda@kernel.org>
+Subject: [PATCH 6.15 740/780] objtool/rust: relax slice condition to cover more `noreturn` Rust functions
+Date: Tue, 17 Jun 2025 17:27:28 +0200
+Message-ID: <20250617152521.636145695@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
 References: <20250617152451.485330293@linuxfoundation.org>
@@ -44,55 +49,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+From: Miguel Ojeda <ojeda@kernel.org>
 
-commit 11fcf368506d347088e613edf6cd2604d70c454f upstream.
+commit cbeaa41dfe26b72639141e87183cb23e00d4b0dd upstream.
 
-Commit 1e7933a575ed ("uapi: Revert "bitops: avoid integer overflow in GENMASK(_ULL)"")
-did not take in account that the usage of BITS_PER_LONG in __GENMASK() was
-changed to __BITS_PER_LONG for UAPI-safety in
-commit 3c7a8e190bc5 ("uapi: introduce uapi-friendly macros for GENMASK").
-BITS_PER_LONG can not be used in UAPI headers as it derives from the kernel
-configuration and not from the current compiler invocation.
-When building compat userspace code or a compat vDSO its value will be
-incorrect.
+Developers are indeed hitting other of the `noreturn` slice symbols in
+Nova [1], thus relax the last check in the list so that we catch all of
+them, i.e.
 
-Switch back to __BITS_PER_LONG.
+    *_4core5slice5index22slice_index_order_fail
+    *_4core5slice5index24slice_end_index_len_fail
+    *_4core5slice5index26slice_start_index_len_fail
+    *_4core5slice5index29slice_end_index_overflow_fail
+    *_4core5slice5index31slice_start_index_overflow_fail
 
-Fixes: 1e7933a575ed ("uapi: Revert "bitops: avoid integer overflow in GENMASK(_ULL)"")
-Cc: stable@vger.kernel.org
-Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-Signed-off-by: Yury Norov [NVIDIA] <yury.norov@gmail.com>
+These all exist since at least Rust 1.78.0, thus backport it too.
+
+See commit 56d680dd23c3 ("objtool/rust: list `noreturn` Rust functions")
+for more details.
+
+Cc: stable@vger.kernel.org # Needed in 6.12.y and later.
+Cc: John Hubbard <jhubbard@nvidia.com>
+Cc: Timur Tabi <ttabi@nvidia.com>
+Cc: Kane York <kanepyork@gmail.com>
+Cc: Josh Poimboeuf <jpoimboe@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Reported-by: Joel Fernandes <joelagnelf@nvidia.com>
+Fixes: 56d680dd23c3 ("objtool/rust: list `noreturn` Rust functions")
+Closes: https://lore.kernel.org/rust-for-linux/20250513180757.GA1295002@joelnvbox/ [1]
+Tested-by: Joel Fernandes <joelagnelf@nvidia.com>
+Link: https://lore.kernel.org/r/20250520185555.825242-1-ojeda@kernel.org
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/uapi/linux/bits.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tools/objtool/check.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/include/uapi/linux/bits.h b/include/uapi/linux/bits.h
-index 682b406e1067..a04afef9efca 100644
---- a/include/uapi/linux/bits.h
-+++ b/include/uapi/linux/bits.h
-@@ -4,9 +4,9 @@
- #ifndef _UAPI_LINUX_BITS_H
- #define _UAPI_LINUX_BITS_H
+--- a/tools/objtool/check.c
++++ b/tools/objtool/check.c
+@@ -230,7 +230,8 @@ static bool is_rust_noreturn(const struc
+ 	       str_ends_with(func->name, "_7___rustc17rust_begin_unwind")				||
+ 	       strstr(func->name, "_4core9panicking13assert_failed")					||
+ 	       strstr(func->name, "_4core9panicking11panic_const24panic_const_")			||
+-	       (strstr(func->name, "_4core5slice5index24slice_") &&
++	       (strstr(func->name, "_4core5slice5index") &&
++		strstr(func->name, "slice_") &&
+ 		str_ends_with(func->name, "_fail"));
+ }
  
--#define __GENMASK(h, l) (((~_UL(0)) << (l)) & (~_UL(0) >> (BITS_PER_LONG - 1 - (h))))
-+#define __GENMASK(h, l) (((~_UL(0)) << (l)) & (~_UL(0) >> (__BITS_PER_LONG - 1 - (h))))
- 
--#define __GENMASK_ULL(h, l) (((~_ULL(0)) << (l)) & (~_ULL(0) >> (BITS_PER_LONG_LONG - 1 - (h))))
-+#define __GENMASK_ULL(h, l) (((~_ULL(0)) << (l)) & (~_ULL(0) >> (__BITS_PER_LONG_LONG - 1 - (h))))
- 
- #define __GENMASK_U128(h, l) \
- 	((_BIT128((h)) << 1) - (_BIT128(l)))
--- 
-2.49.0
-
 
 
