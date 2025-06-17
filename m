@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 869801F37A1;
-	Tue, 17 Jun 2025 16:15:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 707012E8DE7;
+	Tue, 17 Jun 2025 16:15:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750176940; cv=none; b=Erft3wf7SfREi3AfBMPJ/RI3wAj6gSI7c2E+55IhtFJ9sqD/MBI3vVmU8PGNnWkr5/rysxwC/thacWVG2GIUTad2YfigsRnASkPUl0ae4/KzwM6Dl1pkNj65xKbAHRrXWFNIzT441lCBtUndriPCnUErPkAnf6cnIN1R0oAN9/c=
+	t=1750176943; cv=none; b=gLAS8ohMpxXiDtaco1PlaRCzLRNqP8Xc3uGViyc2IHYW3XpqFppTVVXSwDfi4f6A3b2sQEpoQanWQiPUIe/li6Vs21kAxHPeV30KLfhs/Y2p4VtPwfF72zU19TJeSDpFA7EZ6JBRG8VacUgBvVX8bKn7H7JVLUEjJUWfaKPY8Gk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750176940; c=relaxed/simple;
-	bh=vh7fnCt9gsV3TmecoP1WcoVK3Ttk+PNuzcohUOM4hCo=;
+	s=arc-20240116; t=1750176943; c=relaxed/simple;
+	bh=qZGmtcy/+bTqCqNx9f/cKXWUZXNVkHnKIOhCphNEgv8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fMkICWv3JiuaZ5ij8qfsu3szbIaRc5eP3VRayp+qpZDcVXou62BlnUg61N5sR8OcsTwAbuH8QWjiqv1ljyjz6YZBLwutxvjQik9F0+Vk4hobt7ixBHQpRFwYr1kTs4xlWj2RkfMNhepMtmXH1NSqcpmIiX//NeHBC/svWKE1ZII=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vWuRLfQC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L/mJkYxCWtYdgNqwvGr9YJXdzIHQ5/WBq0EELlZOqiFbN4SV0ew8LNX+SFu0x0NyUNWMskPKl1C9JKxJTZYFrSohrn6crrVNv9Bsjjl3GGfs4NABzOs+jLz7o7dyczmQZ5sDpifDPlmtdjiAbVgWqIG8dvma/KrVOfZyC4N7hbY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zcz79ekB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vWuRLfQC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F003C4CEE7;
-	Tue, 17 Jun 2025 16:15:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zcz79ekB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D20FAC4CEE3;
+	Tue, 17 Jun 2025 16:15:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750176940;
-	bh=vh7fnCt9gsV3TmecoP1WcoVK3Ttk+PNuzcohUOM4hCo=;
+	s=korg; t=1750176943;
+	bh=qZGmtcy/+bTqCqNx9f/cKXWUZXNVkHnKIOhCphNEgv8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vWuRLfQCaan0OGPzkw6SXNJ6BH8XvAewban9WEfZG3DLx7cWZUFGtkOnEYDT4iDBp
-	 B6MZVyl1z0gR8c+6Hqls7Y5kpdj+n3UqusmoGv7Rhwo7pTHrAJh6qi3klq6DFaO90U
-	 iLCkFz6TPPBnu7nYc4gWkwYfqXKSc2i4a75NvR/s=
+	b=Zcz79ekBCywHn27kgqQohYWjfg7yN+HGPdSiiBe9kXplKnL4IytjcO69rKW0IS8IT
+	 FXhHZeATl31/ZArt7AwhwWXBJ5J38Gv7xjzr2tcXF81kTpwAJ5bgLy4KwihXmdxeyM
+	 GStQmx/wkky/kOD8+VfbGlQwyx35OtFWyJHsWP+E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Tom Zanussi <zanussi@kernel.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Kent Overstreet <kent.overstreet@linux.dev>,
+	Benjamin Marzinski <bmarzins@redhat.com>,
+	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 242/780] tracing: Move histogram trigger variables from stack to per CPU structure
-Date: Tue, 17 Jun 2025 17:19:10 +0200
-Message-ID: <20250617152501.308939114@linuxfoundation.org>
+Subject: [PATCH 6.12 282/512] dm-flakey: make corrupting read bios work
+Date: Tue, 17 Jun 2025 17:24:08 +0200
+Message-ID: <20250617152431.023267272@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,240 +48,182 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Benjamin Marzinski <bmarzins@redhat.com>
 
-[ Upstream commit 7ab0fc61ce73040f89b12d76a8279995ec283541 ]
+[ Upstream commit 13e79076c89f6e96a6cca8f6df38b40d025907b4 ]
 
-The histogram trigger has three somewhat large arrays on the kernel stack:
+dm-flakey corrupts the read bios in the endio function.  However, the
+corrupt_bio_* functions checked bio_has_data() to see if there was data
+to corrupt. Since this was the endio function, there was no data left to
+complete, so bio_has_data() was always false. Fix this by saving a copy
+of the bio's bi_iter in flakey_map(), and using this to initialize the
+iter for corrupting the read bios. This patch also skips cloning the bio
+for write bios with no data.
 
-	unsigned long entries[HIST_STACKTRACE_DEPTH];
-	u64 var_ref_vals[TRACING_MAP_VARS_MAX];
-	char compound_key[HIST_KEY_SIZE_MAX];
-
-Checking the function event_hist_trigger() stack frame size, it currently
-uses 816 bytes for its stack frame due to these variables!
-
-Instead, allocate a per CPU structure that holds these arrays for each
-context level (normal, softirq, irq and NMI). That is, each CPU will have
-4 of these structures. This will be allocated when the first histogram
-trigger is enabled and freed when the last is disabled. When the
-histogram callback triggers, it will request this structure. The request
-will disable preemption, get the per CPU structure at the index of the
-per CPU variable, and increment that variable.
-
-The callback will use the arrays in this structure to perform its work and
-then release the structure. That in turn will simply decrement the per CPU
-index and enable preemption.
-
-Moving the variables from the kernel stack to the per CPU structure brings
-the stack frame of event_hist_trigger() down to just 112 bytes.
-
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Tom Zanussi <zanussi@kernel.org>
-Link: https://lore.kernel.org/20250407123851.74ea8d58@gandalf.local.home
-Fixes: 067fe038e70f6 ("tracing: Add variable reference handling to hist triggers")
-Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Reported-by: Kent Overstreet <kent.overstreet@linux.dev>
+Fixes: a3998799fb4df ("dm flakey: add corrupt_bio_byte feature")
+Signed-off-by: Benjamin Marzinski <bmarzins@redhat.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_events_hist.c | 120 +++++++++++++++++++++++++++----
- 1 file changed, 105 insertions(+), 15 deletions(-)
+ drivers/md/dm-flakey.c | 54 ++++++++++++++++++++++--------------------
+ 1 file changed, 28 insertions(+), 26 deletions(-)
 
-diff --git a/kernel/trace/trace_events_hist.c b/kernel/trace/trace_events_hist.c
-index 1260c23cfa5fc..0ec692f80aefc 100644
---- a/kernel/trace/trace_events_hist.c
-+++ b/kernel/trace/trace_events_hist.c
-@@ -5246,17 +5246,94 @@ hist_trigger_actions(struct hist_trigger_data *hist_data,
+diff --git a/drivers/md/dm-flakey.c b/drivers/md/dm-flakey.c
+index 806a80dd3bd9b..347881f323d5b 100644
+--- a/drivers/md/dm-flakey.c
++++ b/drivers/md/dm-flakey.c
+@@ -47,7 +47,8 @@ enum feature_flag_bits {
+ };
+ 
+ struct per_bio_data {
+-	bool bio_submitted;
++	bool bio_can_corrupt;
++	struct bvec_iter saved_iter;
+ };
+ 
+ static int parse_features(struct dm_arg_set *as, struct flakey_c *fc,
+@@ -339,7 +340,8 @@ static void flakey_map_bio(struct dm_target *ti, struct bio *bio)
+ }
+ 
+ static void corrupt_bio_common(struct bio *bio, unsigned int corrupt_bio_byte,
+-			       unsigned char corrupt_bio_value)
++			       unsigned char corrupt_bio_value,
++			       struct bvec_iter start)
+ {
+ 	struct bvec_iter iter;
+ 	struct bio_vec bvec;
+@@ -348,7 +350,7 @@ static void corrupt_bio_common(struct bio *bio, unsigned int corrupt_bio_byte,
+ 	 * Overwrite the Nth byte of the bio's data, on whichever page
+ 	 * it falls.
+ 	 */
+-	bio_for_each_segment(bvec, bio, iter) {
++	__bio_for_each_segment(bvec, bio, iter, start) {
+ 		if (bio_iter_len(bio, iter) > corrupt_bio_byte) {
+ 			unsigned char *segment = bvec_kmap_local(&bvec);
+ 			segment[corrupt_bio_byte] = corrupt_bio_value;
+@@ -357,36 +359,31 @@ static void corrupt_bio_common(struct bio *bio, unsigned int corrupt_bio_byte,
+ 				"(rw=%c bi_opf=%u bi_sector=%llu size=%u)\n",
+ 				bio, corrupt_bio_value, corrupt_bio_byte,
+ 				(bio_data_dir(bio) == WRITE) ? 'w' : 'r', bio->bi_opf,
+-				(unsigned long long)bio->bi_iter.bi_sector,
+-				bio->bi_iter.bi_size);
++				(unsigned long long)start.bi_sector,
++				start.bi_size);
+ 			break;
+ 		}
+ 		corrupt_bio_byte -= bio_iter_len(bio, iter);
  	}
  }
  
-+/*
-+ * The hist_pad structure is used to save information to create
-+ * a histogram from the histogram trigger. It's too big to store
-+ * on the stack, so when the histogram trigger is initialized
-+ * a percpu array of 4 hist_pad structures is allocated.
-+ * This will cover every context from normal, softirq, irq and NMI
-+ * in the very unlikely event that a tigger happens at each of
-+ * these contexts and interrupts a currently active trigger.
-+ */
-+struct hist_pad {
-+	unsigned long		entries[HIST_STACKTRACE_DEPTH];
-+	u64			var_ref_vals[TRACING_MAP_VARS_MAX];
-+	char			compound_key[HIST_KEY_SIZE_MAX];
-+};
-+
-+static struct hist_pad __percpu *hist_pads;
-+static DEFINE_PER_CPU(int, hist_pad_cnt);
-+static refcount_t hist_pad_ref;
-+
-+/* One hist_pad for every context (normal, softirq, irq, NMI) */
-+#define MAX_HIST_CNT 4
-+
-+static int alloc_hist_pad(void)
-+{
-+	lockdep_assert_held(&event_mutex);
-+
-+	if (refcount_read(&hist_pad_ref)) {
-+		refcount_inc(&hist_pad_ref);
-+		return 0;
-+	}
-+
-+	hist_pads = __alloc_percpu(sizeof(struct hist_pad) * MAX_HIST_CNT,
-+				   __alignof__(struct hist_pad));
-+	if (!hist_pads)
-+		return -ENOMEM;
-+
-+	refcount_set(&hist_pad_ref, 1);
-+	return 0;
-+}
-+
-+static void free_hist_pad(void)
-+{
-+	lockdep_assert_held(&event_mutex);
-+
-+	if (!refcount_dec_and_test(&hist_pad_ref))
-+		return;
-+
-+	free_percpu(hist_pads);
-+	hist_pads = NULL;
-+}
-+
-+static struct hist_pad *get_hist_pad(void)
-+{
-+	struct hist_pad *hist_pad;
-+	int cnt;
-+
-+	if (WARN_ON_ONCE(!hist_pads))
-+		return NULL;
-+
-+	preempt_disable();
-+
-+	hist_pad = per_cpu_ptr(hist_pads, smp_processor_id());
-+
-+	if (this_cpu_read(hist_pad_cnt) == MAX_HIST_CNT) {
-+		preempt_enable();
-+		return NULL;
-+	}
-+
-+	cnt = this_cpu_inc_return(hist_pad_cnt) - 1;
-+
-+	return &hist_pad[cnt];
-+}
-+
-+static void put_hist_pad(void)
-+{
-+	this_cpu_dec(hist_pad_cnt);
-+	preempt_enable();
-+}
-+
- static void event_hist_trigger(struct event_trigger_data *data,
- 			       struct trace_buffer *buffer, void *rec,
- 			       struct ring_buffer_event *rbe)
+-static void corrupt_bio_data(struct bio *bio, struct flakey_c *fc)
++static void corrupt_bio_data(struct bio *bio, struct flakey_c *fc,
++			     struct bvec_iter start)
  {
- 	struct hist_trigger_data *hist_data = data->private_data;
- 	bool use_compound_key = (hist_data->n_keys > 1);
--	unsigned long entries[HIST_STACKTRACE_DEPTH];
--	u64 var_ref_vals[TRACING_MAP_VARS_MAX];
--	char compound_key[HIST_KEY_SIZE_MAX];
- 	struct tracing_map_elt *elt = NULL;
- 	struct hist_field *key_field;
-+	struct hist_pad *hist_pad;
- 	u64 field_contents;
- 	void *key = NULL;
- 	unsigned int i;
-@@ -5264,12 +5341,18 @@ static void event_hist_trigger(struct event_trigger_data *data,
- 	if (unlikely(!rbe))
- 		return;
+ 	unsigned int corrupt_bio_byte = fc->corrupt_bio_byte - 1;
  
--	memset(compound_key, 0, hist_data->key_size);
-+	hist_pad = get_hist_pad();
-+	if (!hist_pad)
-+		return;
+-	if (!bio_has_data(bio))
+-		return;
+-
+-	corrupt_bio_common(bio, corrupt_bio_byte, fc->corrupt_bio_value);
++	corrupt_bio_common(bio, corrupt_bio_byte, fc->corrupt_bio_value, start);
+ }
+ 
+-static void corrupt_bio_random(struct bio *bio)
++static void corrupt_bio_random(struct bio *bio, struct bvec_iter start)
+ {
+ 	unsigned int corrupt_byte;
+ 	unsigned char corrupt_value;
+ 
+-	if (!bio_has_data(bio))
+-		return;
+-
+-	corrupt_byte = get_random_u32() % bio->bi_iter.bi_size;
++	corrupt_byte = get_random_u32() % start.bi_size;
+ 	corrupt_value = get_random_u8();
+ 
+-	corrupt_bio_common(bio, corrupt_byte, corrupt_value);
++	corrupt_bio_common(bio, corrupt_byte, corrupt_value, start);
+ }
+ 
+ static void clone_free(struct bio *clone)
+@@ -481,7 +478,7 @@ static int flakey_map(struct dm_target *ti, struct bio *bio)
+ 	unsigned int elapsed;
+ 	struct per_bio_data *pb = dm_per_bio_data(bio, sizeof(struct per_bio_data));
+ 
+-	pb->bio_submitted = false;
++	pb->bio_can_corrupt = false;
+ 
+ 	if (op_is_zone_mgmt(bio_op(bio)))
+ 		goto map_bio;
+@@ -490,10 +487,11 @@ static int flakey_map(struct dm_target *ti, struct bio *bio)
+ 	elapsed = (jiffies - fc->start_time) / HZ;
+ 	if (elapsed % (fc->up_interval + fc->down_interval) >= fc->up_interval) {
+ 		bool corrupt_fixed, corrupt_random;
+-		/*
+-		 * Flag this bio as submitted while down.
+-		 */
+-		pb->bio_submitted = true;
 +
-+	memset(hist_pad->compound_key, 0, hist_data->key_size);
++		if (bio_has_data(bio)) {
++			pb->bio_can_corrupt = true;
++			pb->saved_iter = bio->bi_iter;
++		}
  
- 	for_each_hist_key_field(i, hist_data) {
- 		key_field = hist_data->fields[i];
- 
- 		if (key_field->flags & HIST_FIELD_FL_STACKTRACE) {
-+			unsigned long *entries = hist_pad->entries;
-+
- 			memset(entries, 0, HIST_STACKTRACE_SIZE);
- 			if (key_field->field) {
- 				unsigned long *stack, n_entries;
-@@ -5293,26 +5376,31 @@ static void event_hist_trigger(struct event_trigger_data *data,
+ 		/*
+ 		 * Error reads if neither corrupt_bio_byte or drop_writes or error_writes are set.
+@@ -516,6 +514,8 @@ static int flakey_map(struct dm_target *ti, struct bio *bio)
+ 			return DM_MAPIO_SUBMITTED;
  		}
  
- 		if (use_compound_key)
--			add_to_key(compound_key, key, key_field, rec);
-+			add_to_key(hist_pad->compound_key, key, key_field, rec);
- 	}
++		if (!pb->bio_can_corrupt)
++			goto map_bio;
+ 		/*
+ 		 * Corrupt matching writes.
+ 		 */
+@@ -535,9 +535,11 @@ static int flakey_map(struct dm_target *ti, struct bio *bio)
+ 			struct bio *clone = clone_bio(ti, fc, bio);
+ 			if (clone) {
+ 				if (corrupt_fixed)
+-					corrupt_bio_data(clone, fc);
++					corrupt_bio_data(clone, fc,
++							 clone->bi_iter);
+ 				if (corrupt_random)
+-					corrupt_bio_random(clone);
++					corrupt_bio_random(clone,
++							   clone->bi_iter);
+ 				submit_bio(clone);
+ 				return DM_MAPIO_SUBMITTED;
+ 			}
+@@ -559,21 +561,21 @@ static int flakey_end_io(struct dm_target *ti, struct bio *bio,
+ 	if (op_is_zone_mgmt(bio_op(bio)))
+ 		return DM_ENDIO_DONE;
  
- 	if (use_compound_key)
--		key = compound_key;
-+		key = hist_pad->compound_key;
- 
- 	if (hist_data->n_var_refs &&
--	    !resolve_var_refs(hist_data, key, var_ref_vals, false))
--		return;
-+	    !resolve_var_refs(hist_data, key, hist_pad->var_ref_vals, false))
-+		goto out;
- 
- 	elt = tracing_map_insert(hist_data->map, key);
- 	if (!elt)
--		return;
-+		goto out;
- 
--	hist_trigger_elt_update(hist_data, elt, buffer, rec, rbe, var_ref_vals);
-+	hist_trigger_elt_update(hist_data, elt, buffer, rec, rbe, hist_pad->var_ref_vals);
- 
--	if (resolve_var_refs(hist_data, key, var_ref_vals, true))
--		hist_trigger_actions(hist_data, elt, buffer, rec, rbe, key, var_ref_vals);
-+	if (resolve_var_refs(hist_data, key, hist_pad->var_ref_vals, true)) {
-+		hist_trigger_actions(hist_data, elt, buffer, rec, rbe,
-+				     key, hist_pad->var_ref_vals);
-+	}
- 
- 	hist_poll_wakeup();
-+
-+ out:
-+	put_hist_pad();
- }
- 
- static void hist_trigger_stacktrace_print(struct seq_file *m,
-@@ -6157,6 +6245,9 @@ static int event_hist_trigger_init(struct event_trigger_data *data)
- {
- 	struct hist_trigger_data *hist_data = data->private_data;
- 
-+	if (alloc_hist_pad() < 0)
-+		return -ENOMEM;
-+
- 	if (!data->ref && hist_data->attrs->name)
- 		save_named_trigger(hist_data->attrs->name, data);
- 
-@@ -6201,6 +6292,7 @@ static void event_hist_trigger_free(struct event_trigger_data *data)
- 
- 		destroy_hist_data(hist_data);
- 	}
-+	free_hist_pad();
- }
- 
- static const struct event_trigger_ops event_hist_trigger_ops = {
-@@ -6216,9 +6308,7 @@ static int event_hist_trigger_named_init(struct event_trigger_data *data)
- 
- 	save_named_trigger(data->named_data->name, data);
- 
--	event_hist_trigger_init(data->named_data);
--
--	return 0;
-+	return event_hist_trigger_init(data->named_data);
- }
- 
- static void event_hist_trigger_named_free(struct event_trigger_data *data)
+-	if (!*error && pb->bio_submitted && (bio_data_dir(bio) == READ)) {
++	if (!*error && pb->bio_can_corrupt && (bio_data_dir(bio) == READ)) {
+ 		if (fc->corrupt_bio_byte) {
+ 			if ((fc->corrupt_bio_rw == READ) &&
+ 			    all_corrupt_bio_flags_match(bio, fc)) {
+ 				/*
+ 				 * Corrupt successful matching READs while in down state.
+ 				 */
+-				corrupt_bio_data(bio, fc);
++				corrupt_bio_data(bio, fc, pb->saved_iter);
+ 			}
+ 		}
+ 		if (fc->random_read_corrupt) {
+ 			u64 rnd = get_random_u64();
+ 			u32 rem = do_div(rnd, PROBABILITY_BASE);
+ 			if (rem < fc->random_read_corrupt)
+-				corrupt_bio_random(bio);
++				corrupt_bio_random(bio, pb->saved_iter);
+ 		}
+ 		if (test_bit(ERROR_READS, &fc->flags)) {
+ 			/*
 -- 
 2.39.5
 
