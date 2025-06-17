@@ -1,42 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D91972EA16C;
-	Tue, 17 Jun 2025 16:25:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 411292EB5CE;
+	Tue, 17 Jun 2025 16:25:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177503; cv=none; b=OYG3wNbBgZHLu/vwVQuyyQ1zmSCk1p90Pmx2ip/YvuFKDcRVnCk3frj3oRkMbdbOAUwwYNMJwXpHDUqp/iz02j6vt9x1cJqg3OEb1OjT7uFlq7qCdytheStxMJoZiZ47YNWJZW/B1hhT3kbx8sgkEWkgOHryHfz3C4AynXo34oE=
+	t=1750177507; cv=none; b=gTpFdfdsZVW2ZxcFnbH3G/t+KCaJMKsdOZd+ESa7k/iI0Zr2IwTMb+wvNeK7mq3YYr1CYIyK3LKpKJnsZLdx+n/oreUlJQdHzC/Fv0fwzjsPj5Lnk+vE8YNdv3EVYHvmAtpJ2MfEFLWKp8PTxDK+h1SvUK1u8XpGuJv24GHGxTc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177503; c=relaxed/simple;
-	bh=pd7FkzlKvB05P9fWIZGdTMELEdwBt+F5MSgXbEcxprw=;
+	s=arc-20240116; t=1750177507; c=relaxed/simple;
+	bh=wWov2uJ7Jxnq3JVW9mLntW+Nfc5/Kx1kqS3207PUuBk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CM8RE6fmkus4jO6YdtFG4wnuD9i+fCBRYVo4rysk9bPuJWfTsokSLpGMQI3NfwJb0e78uAN6dJTUu+PwyYGfq12nfB7Xil/tdq5AsNYFmPYJQAuy+6KCXS4Z8SrcvhV0jiO03p12owkLirGepTRuB8k+6g2kI8cI1xQuXiZoObo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VMtlQy3o; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Gq1Gss6tnDKENVeP5sixa5UoXIphkvMGtD6ZKVf8Nz5G+vausNSSnOvYFlfuh3zgApuRqXtCR7UUfEf4ls2vTdYwfA+PqU7Hc71mpzMJRd5jZDxV+Fnp6PhtG67nJaoK9Y16SMECesNf6tNCsX0tPMKpNWqB6zT0uNpMkGADxog=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vELxwecx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VMtlQy3o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49679C4CEE3;
-	Tue, 17 Jun 2025 16:25:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vELxwecx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 420ABC4CEE3;
+	Tue, 17 Jun 2025 16:25:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177503;
-	bh=pd7FkzlKvB05P9fWIZGdTMELEdwBt+F5MSgXbEcxprw=;
+	s=korg; t=1750177506;
+	bh=wWov2uJ7Jxnq3JVW9mLntW+Nfc5/Kx1kqS3207PUuBk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VMtlQy3oOpJLmvJPXUNOdHCaCCSAa/bsQt/zjAD7u+0fC9hRW6T9p6TQZpzH/EMXF
-	 nYw5AU8EMtMB8Ydti+mr8vddcl2wiWjmr08ijpKFe19pb1siM+fkvhAn19Rlq3ysmn
-	 iLN67o4SzTbrWauSE5Uvptagr4HfmijRZGgVbYy8=
+	b=vELxwecxwZWUSWHn3js/gx/B8a1q1A4NTKWV2V7cXrWPn4/5RcR/MY1eI1kYgJnup
+	 bs/dcFoGoXtemNcCLnRLKLJzCH0bOTNsqQ8Xdv1hgZyphZI7MdzigOeZ4dK2Fpi5AP
+	 3ZFSoopNzB/2JXnjKVolhyQumE6gyqZO47yA61Ok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+3b6b9ff7b80430020c7b@syzkaller.appspotmail.com,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 316/780] net: usb: aqc111: fix error handling of usbnet read calls
-Date: Tue, 17 Jun 2025 17:20:24 +0200
-Message-ID: <20250617152504.328154570@linuxfoundation.org>
+	Dawid Osuchowski <dawid.osuchowski@linux.intel.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Michal Kubiak <michal.kubiak@intel.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Jesse Brandeburg <jbrandeburg@cloudflare.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Saritha Sanigani <sarithax.sanigani@intel.com>
+Subject: [PATCH 6.12 356/512] ice: fix Tx scheduler error handling in XDP callback
+Date: Tue, 17 Jun 2025 17:25:22 +0200
+Message-ID: <20250617152434.001829051@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,108 +54,184 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+From: Michal Kubiak <michal.kubiak@intel.com>
 
-[ Upstream commit 405b0d610745fb5e84fc2961d9b960abb9f3d107 ]
+[ Upstream commit 0153f36041b8e52019ebfa8629c13bf8f9b0a951 ]
 
-Syzkaller, courtesy of syzbot, identified an error (see report [1]) in
-aqc111 driver, caused by incomplete sanitation of usb read calls'
-results. This problem is quite similar to the one fixed in commit
-920a9fa27e78 ("net: asix: add proper error handling of usb read errors").
+When the XDP program is loaded, the XDP callback adds new Tx queues.
+This means that the callback must update the Tx scheduler with the new
+queue number. In the event of a Tx scheduler failure, the XDP callback
+should also fail and roll back any changes previously made for XDP
+preparation.
 
-For instance, usbnet_read_cmd() may read fewer than 'size' bytes,
-even if the caller expected the full amount, and aqc111_read_cmd()
-will not check its result properly. As [1] shows, this may lead
-to MAC address in aqc111_bind() being only partly initialized,
-triggering KMSAN warnings.
+The previous implementation had a bug that not all changes made by the
+XDP callback were rolled back. This caused the crash with the following
+call trace:
 
-Fix the issue by verifying that the number of bytes read is
-as expected and not less.
+[  +9.549584] ice 0000:ca:00.0: Failed VSI LAN queue config for XDP, error: -5
+[  +0.382335] Oops: general protection fault, probably for non-canonical address 0x50a2250a90495525: 0000 [#1] SMP NOPTI
+[  +0.010710] CPU: 103 UID: 0 PID: 0 Comm: swapper/103 Not tainted 6.14.0-net-next-mar-31+ #14 PREEMPT(voluntary)
+[  +0.010175] Hardware name: Intel Corporation M50CYP2SBSTD/M50CYP2SBSTD, BIOS SE5C620.86B.01.01.0005.2202160810 02/16/2022
+[  +0.010946] RIP: 0010:__ice_update_sample+0x39/0xe0 [ice]
 
-[1] Partial syzbot report:
-BUG: KMSAN: uninit-value in is_valid_ether_addr include/linux/etherdevice.h:208 [inline]
-BUG: KMSAN: uninit-value in usbnet_probe+0x2e57/0x4390 drivers/net/usb/usbnet.c:1830
- is_valid_ether_addr include/linux/etherdevice.h:208 [inline]
- usbnet_probe+0x2e57/0x4390 drivers/net/usb/usbnet.c:1830
- usb_probe_interface+0xd01/0x1310 drivers/usb/core/driver.c:396
- call_driver_probe drivers/base/dd.c:-1 [inline]
- really_probe+0x4d1/0xd90 drivers/base/dd.c:658
- __driver_probe_device+0x268/0x380 drivers/base/dd.c:800
-...
+[...]
 
-Uninit was stored to memory at:
- dev_addr_mod+0xb0/0x550 net/core/dev_addr_lists.c:582
- __dev_addr_set include/linux/netdevice.h:4874 [inline]
- eth_hw_addr_set include/linux/etherdevice.h:325 [inline]
- aqc111_bind+0x35f/0x1150 drivers/net/usb/aqc111.c:717
- usbnet_probe+0xbe6/0x4390 drivers/net/usb/usbnet.c:1772
- usb_probe_interface+0xd01/0x1310 drivers/usb/core/driver.c:396
-...
+[  +0.002715] Call Trace:
+[  +0.002452]  <IRQ>
+[  +0.002021]  ? __die_body.cold+0x19/0x29
+[  +0.003922]  ? die_addr+0x3c/0x60
+[  +0.003319]  ? exc_general_protection+0x17c/0x400
+[  +0.004707]  ? asm_exc_general_protection+0x26/0x30
+[  +0.004879]  ? __ice_update_sample+0x39/0xe0 [ice]
+[  +0.004835]  ice_napi_poll+0x665/0x680 [ice]
+[  +0.004320]  __napi_poll+0x28/0x190
+[  +0.003500]  net_rx_action+0x198/0x360
+[  +0.003752]  ? update_rq_clock+0x39/0x220
+[  +0.004013]  handle_softirqs+0xf1/0x340
+[  +0.003840]  ? sched_clock_cpu+0xf/0x1f0
+[  +0.003925]  __irq_exit_rcu+0xc2/0xe0
+[  +0.003665]  common_interrupt+0x85/0xa0
+[  +0.003839]  </IRQ>
+[  +0.002098]  <TASK>
+[  +0.002106]  asm_common_interrupt+0x26/0x40
+[  +0.004184] RIP: 0010:cpuidle_enter_state+0xd3/0x690
 
-Uninit was stored to memory at:
- ether_addr_copy include/linux/etherdevice.h:305 [inline]
- aqc111_read_perm_mac drivers/net/usb/aqc111.c:663 [inline]
- aqc111_bind+0x794/0x1150 drivers/net/usb/aqc111.c:713
- usbnet_probe+0xbe6/0x4390 drivers/net/usb/usbnet.c:1772
- usb_probe_interface+0xd01/0x1310 drivers/usb/core/driver.c:396
- call_driver_probe drivers/base/dd.c:-1 [inline]
-...
+Fix this by performing the missing unmapping of XDP queues from
+q_vectors and setting the XDP rings pointer back to NULL after all those
+queues are released.
+Also, add an immediate exit from the XDP callback in case of ring
+preparation failure.
 
-Local variable buf.i created at:
- aqc111_read_perm_mac drivers/net/usb/aqc111.c:656 [inline]
- aqc111_bind+0x221/0x1150 drivers/net/usb/aqc111.c:713
- usbnet_probe+0xbe6/0x4390 drivers/net/usb/usbnet.c:1772
-
-Reported-by: syzbot+3b6b9ff7b80430020c7b@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=3b6b9ff7b80430020c7b
-Tested-by: syzbot+3b6b9ff7b80430020c7b@syzkaller.appspotmail.com
-Fixes: df2d59a2ab6c ("net: usb: aqc111: Add support for getting and setting of MAC address")
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-Link: https://patch.msgid.link/20250520113240.2369438-1-n.zhandarovich@fintech.ru
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: efc2214b6047 ("ice: Add support for XDP")
+Reviewed-by: Dawid Osuchowski <dawid.osuchowski@linux.intel.com>
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Signed-off-by: Michal Kubiak <michal.kubiak@intel.com>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Jesse Brandeburg <jbrandeburg@cloudflare.com>
+Tested-by: Saritha Sanigani <sarithax.sanigani@intel.com> (A Contingent Worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/aqc111.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_main.c | 47 ++++++++++++++++-------
+ 1 file changed, 33 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/net/usb/aqc111.c b/drivers/net/usb/aqc111.c
-index ff5be2cbf17b9..453a2cf82753f 100644
---- a/drivers/net/usb/aqc111.c
-+++ b/drivers/net/usb/aqc111.c
-@@ -30,10 +30,13 @@ static int aqc111_read_cmd_nopm(struct usbnet *dev, u8 cmd, u16 value,
- 	ret = usbnet_read_cmd_nopm(dev, cmd, USB_DIR_IN | USB_TYPE_VENDOR |
- 				   USB_RECIP_DEVICE, value, index, data, size);
- 
--	if (unlikely(ret < 0))
-+	if (unlikely(ret < size)) {
-+		ret = ret < 0 ? ret : -ENODATA;
-+
- 		netdev_warn(dev->net,
- 			    "Failed to read(0x%x) reg index 0x%04x: %d\n",
- 			    cmd, index, ret);
-+	}
- 
- 	return ret;
+diff --git a/drivers/net/ethernet/intel/ice/ice_main.c b/drivers/net/ethernet/intel/ice/ice_main.c
+index 63d2105fce933..d1abd21cfc647 100644
+--- a/drivers/net/ethernet/intel/ice/ice_main.c
++++ b/drivers/net/ethernet/intel/ice/ice_main.c
+@@ -2761,6 +2761,27 @@ void ice_map_xdp_rings(struct ice_vsi *vsi)
+ 	}
  }
-@@ -46,10 +49,13 @@ static int aqc111_read_cmd(struct usbnet *dev, u8 cmd, u16 value,
- 	ret = usbnet_read_cmd(dev, cmd, USB_DIR_IN | USB_TYPE_VENDOR |
- 			      USB_RECIP_DEVICE, value, index, data, size);
  
--	if (unlikely(ret < 0))
-+	if (unlikely(ret < size)) {
-+		ret = ret < 0 ? ret : -ENODATA;
++/**
++ * ice_unmap_xdp_rings - Unmap XDP rings from interrupt vectors
++ * @vsi: the VSI with XDP rings being unmapped
++ */
++static void ice_unmap_xdp_rings(struct ice_vsi *vsi)
++{
++	int v_idx;
 +
- 		netdev_warn(dev->net,
- 			    "Failed to read(0x%x) reg index 0x%04x: %d\n",
- 			    cmd, index, ret);
++	ice_for_each_q_vector(vsi, v_idx) {
++		struct ice_q_vector *q_vector = vsi->q_vectors[v_idx];
++		struct ice_tx_ring *ring;
++
++		ice_for_each_tx_ring(ring, q_vector->tx)
++			if (!ring->tx_buf || !ice_ring_is_xdp(ring))
++				break;
++
++		/* restore the value of last node prior to XDP setup */
++		q_vector->tx.tx_ring = ring;
 +	}
++}
++
+ /**
+  * ice_prepare_xdp_rings - Allocate, configure and setup Tx rings for XDP
+  * @vsi: VSI to bring up Tx rings used by XDP
+@@ -2824,7 +2845,7 @@ int ice_prepare_xdp_rings(struct ice_vsi *vsi, struct bpf_prog *prog,
+ 	if (status) {
+ 		dev_err(dev, "Failed VSI LAN queue config for XDP, error: %d\n",
+ 			status);
+-		goto clear_xdp_rings;
++		goto unmap_xdp_rings;
+ 	}
  
- 	return ret;
+ 	/* assign the prog only when it's not already present on VSI;
+@@ -2840,6 +2861,8 @@ int ice_prepare_xdp_rings(struct ice_vsi *vsi, struct bpf_prog *prog,
+ 		ice_vsi_assign_bpf_prog(vsi, prog);
+ 
+ 	return 0;
++unmap_xdp_rings:
++	ice_unmap_xdp_rings(vsi);
+ clear_xdp_rings:
+ 	ice_for_each_xdp_txq(vsi, i)
+ 		if (vsi->xdp_rings[i]) {
+@@ -2856,6 +2879,8 @@ int ice_prepare_xdp_rings(struct ice_vsi *vsi, struct bpf_prog *prog,
+ 	mutex_unlock(&pf->avail_q_mutex);
+ 
+ 	devm_kfree(dev, vsi->xdp_rings);
++	vsi->xdp_rings = NULL;
++
+ 	return -ENOMEM;
  }
+ 
+@@ -2871,7 +2896,7 @@ int ice_destroy_xdp_rings(struct ice_vsi *vsi, enum ice_xdp_cfg cfg_type)
+ {
+ 	u16 max_txqs[ICE_MAX_TRAFFIC_CLASS] = { 0 };
+ 	struct ice_pf *pf = vsi->back;
+-	int i, v_idx;
++	int i;
+ 
+ 	/* q_vectors are freed in reset path so there's no point in detaching
+ 	 * rings
+@@ -2879,17 +2904,7 @@ int ice_destroy_xdp_rings(struct ice_vsi *vsi, enum ice_xdp_cfg cfg_type)
+ 	if (cfg_type == ICE_XDP_CFG_PART)
+ 		goto free_qmap;
+ 
+-	ice_for_each_q_vector(vsi, v_idx) {
+-		struct ice_q_vector *q_vector = vsi->q_vectors[v_idx];
+-		struct ice_tx_ring *ring;
+-
+-		ice_for_each_tx_ring(ring, q_vector->tx)
+-			if (!ring->tx_buf || !ice_ring_is_xdp(ring))
+-				break;
+-
+-		/* restore the value of last node prior to XDP setup */
+-		q_vector->tx.tx_ring = ring;
+-	}
++	ice_unmap_xdp_rings(vsi);
+ 
+ free_qmap:
+ 	mutex_lock(&pf->avail_q_mutex);
+@@ -3034,11 +3049,14 @@ ice_xdp_setup_prog(struct ice_vsi *vsi, struct bpf_prog *prog,
+ 		xdp_ring_err = ice_vsi_determine_xdp_res(vsi);
+ 		if (xdp_ring_err) {
+ 			NL_SET_ERR_MSG_MOD(extack, "Not enough Tx resources for XDP");
++			goto resume_if;
+ 		} else {
+ 			xdp_ring_err = ice_prepare_xdp_rings(vsi, prog,
+ 							     ICE_XDP_CFG_FULL);
+-			if (xdp_ring_err)
++			if (xdp_ring_err) {
+ 				NL_SET_ERR_MSG_MOD(extack, "Setting up XDP Tx resources failed");
++				goto resume_if;
++			}
+ 		}
+ 		xdp_features_set_redirect_target(vsi->netdev, true);
+ 		/* reallocate Rx queues that are used for zero-copy */
+@@ -3056,6 +3074,7 @@ ice_xdp_setup_prog(struct ice_vsi *vsi, struct bpf_prog *prog,
+ 			NL_SET_ERR_MSG_MOD(extack, "Freeing XDP Rx resources failed");
+ 	}
+ 
++resume_if:
+ 	if (if_running)
+ 		ret = ice_up(vsi);
+ 
 -- 
 2.39.5
 
