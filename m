@@ -1,303 +1,169 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from NAM12-BN8-obe.outbound.protection.outlook.com (mail-bn8nam12on2062.outbound.protection.outlook.com [40.107.237.62])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AB552FA622;
-	Tue, 17 Jun 2025 16:52:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750179124; cv=none; b=Bv1Qq/4ngwTbzV4VJUk+0VkDIIEFx24FgPpFiodi2CQEyw1gNNQiJY0g+SPLsqENSFiGJzFkvcPtcgUdWSjTM2q8XnvC761NTpQm3lsC1qOCT+gA6/e+izy3nR4/bkp5GQ6jnFn7vsQPmfWZZuwGEPI69SYRv9JfxjZzG6lb9Cc=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750179124; c=relaxed/simple;
-	bh=acr92J2tpuMT4SfhqkTRjwX+PoUqrTJJJPLftUnkTT8=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=i4+QHuKr7pdfMD2M9I61KiMiW66QDS9AoYfgjyn2ILoUP/YggTJDe1bs7j9eBQAFcMvy12BDNSl55KOrbmdVId+bTQRicfT78QN0Q2nqWmsg6WeF/TNBGeSv1IAzHMrIYJEbKFqR+RtK1gXW3V0KZ56jU5msDwFOreLZSkh26Kw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JXw3Qv4v; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JXw3Qv4v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD4AEC4CEE7;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 822B42FA658;
 	Tue, 17 Jun 2025 16:52:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750179124;
-	bh=acr92J2tpuMT4SfhqkTRjwX+PoUqrTJJJPLftUnkTT8=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JXw3Qv4vL916t3H9FljIQLue0M+bpAGYsUHNm8tJCAnyNtcvrIZUGRaDf2/JP9yxa
-	 Ev/xt+n3Q1qRFGzXXauMVhqCqiqyX5D3Z8ZRPLAJw0GMYq4ft25QL8XEzTYiER/RSv
-	 sOJB2+MswVgnoCBoPQIgIneyKeTaCYaRjAYKC0Hg=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	=?UTF-8?q?Amadeusz=20S=C5=82awi=C5=84ski?= <amadeuszx.slawinski@linux.intel.com>,
-	Cezary Rojewski <cezary.rojewski@intel.com>,
-	Liam Girdwood <liam.r.girdwood@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 638/780] ASoC: Intel: avs: PCM operations for LNL-based platforms
-Date: Tue, 17 Jun 2025 17:25:46 +0200
-Message-ID: <20250617152517.455472951@linuxfoundation.org>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
-User-Agent: quilt/0.68
-X-stable: review
-X-Patchwork-Hint: ignore
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.237.62
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1750179125; cv=fail; b=CY+c2irLGvP7NBquVso3kU0NjtiAdPiItT7qwZxeUW2h/9tljymqsh4QnVwlNkXkZxaTFjZQyCOf4Bbs5CtDPzH3aUXroN0myLl8qysjFFEVxGjYPLEBAKbIIhsuZ2ak/M9urBvpbhr6MeaL5CJ2yDjPKxTn9mpII1Wgd5FV1dI=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1750179125; c=relaxed/simple;
+	bh=W/jHBY9+wzig+Imm/f1bYnWPYEN8jqOOSA7R9pNH3wM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=rVxVudY75ywR9LGRNKcLzoKGqepmfawvv2gP7zspmDZ3c4nsWuO/VKzYSY5OCUsJjMX8u092ASEG9aRi7bD1i+ckHPuz65IiLxSKJ9tspl0SoKPWzWw9R4aQKD0UaPOMUupl/LI45taMvBFO8Kt+cQb8tH5RwSvRa1fjmVgzz/E=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=WbRDOvZZ; arc=fail smtp.client-ip=40.107.237.62
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="WbRDOvZZ"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=BzWbVrIwn/EcQruLMlrHcTcOZ2HydeI0+zSDYhKz6tKx/qNQC4VWBsfw9/b6sxWZNe7EK+mAMpdp4GXkoDyXAwatA2dn58lQq6PBSaAxhgGllcWrUV9Ymy48HzBXLxPojKnR+RdaW9zN+UIqVlMyykF2PAWIkFI59V3esyuzpYgbrq9s+lgrL9FOpbpMo0G+B64A/hBb4SCDnCJUAob9HvaCZFEyIjJo0vpmnZ1Tk5UuRvjqG1cj5dSmdYFnwG/oxI4OY0d6gZqA8Gx2Wb5dZtMhl3FTn+jQ/HCYQk50DBUxFJpXzMaONdCBv7z931By9fgJjGGwmXiUqJ0jftJw/w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=wEDKXEaRCFvoocC+B46ePPr+8AdrPOlrKGNvgWg+LSk=;
+ b=XG3BbdEBMaMLSFoPA4FGkEBqZvEl4tKrzorf0hlJVO0CmDOuctLYDraRwiXeHVxF81+nKQbPs5WmpJ5rPGYk1Z4y665EErCRPDAWw5aejSvocTZjl9SoCq7YGE0qKSQbgY98pp+5lEINCdIkClyDO1V2cok5e5uXQlESdFHrjgJGwQRMZ7/DRXvnHgjEuw8I2rkfw5qDk/Af75UH3dpH+is+RoJej9KoFqXWwXPsluWqkpuAhGzTNOAH6YZYYgvZOGTRg7sZChbXfmflm3/D32LsTjPzHYCKIeoVSlCtc/petDydvctinrlDeDW/tNwywxpxKUBu7wYHsLugL4V9kA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=wEDKXEaRCFvoocC+B46ePPr+8AdrPOlrKGNvgWg+LSk=;
+ b=WbRDOvZZWJFsSvQnc+8ta6cTC45QK4tj691QQ/sXN/wyvpNJGq0hIB6aelZAp2Bhq5gQXr9tcTyCLNVLIpGavg5G+j4+22GnQy2aymF7eSkvdl547lv69OATaQOmUFlrVOgMcTQkvjSmdJMmTzQBIL7qudAMbsJQCZ7WfKeECgexmqPL57yJr7NBu9zOmJhAQ+FLmD2N/zgBu65a6WYdQvRGIhmliokwoxTajWzrTUaqQRNwPLmQDMQitQGYDMPQO4Nvr02O8hEzz2d5nFyTVOQnVnH3BIt7DOGNY1qrYTX9+Z53FZMJqVwBt1Kqgiq4AGMRHP/d6gHPmk6E1R+mAg==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from CH3PR12MB8659.namprd12.prod.outlook.com (2603:10b6:610:17c::13)
+ by SN7PR12MB6911.namprd12.prod.outlook.com (2603:10b6:806:261::8) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8835.29; Tue, 17 Jun
+ 2025 16:51:59 +0000
+Received: from CH3PR12MB8659.namprd12.prod.outlook.com
+ ([fe80::6eb6:7d37:7b4b:1732]) by CH3PR12MB8659.namprd12.prod.outlook.com
+ ([fe80::6eb6:7d37:7b4b:1732%7]) with mapi id 15.20.8835.023; Tue, 17 Jun 2025
+ 16:51:59 +0000
+Date: Tue, 17 Jun 2025 13:51:57 -0300
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: Bagas Sanjaya <bagasdotme@gmail.com>
+Cc: Jonathan Corbet <corbet@lwn.net>, iommu@lists.linux.dev,
+	Joerg Roedel <joro@8bytes.org>,
+	Justin Stitt <justinstitt@google.com>,
+	Kevin Tian <kevin.tian@intel.com>, linux-doc@vger.kernel.org,
+	linux-kselftest@vger.kernel.org, llvm@lists.linux.dev,
+	Bill Wendling <morbo@google.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nick Desaulniers <nick.desaulniers+lkml@gmail.com>,
+	Miguel Ojeda <ojeda@kernel.org>,
+	Robin Murphy <robin.murphy@arm.com>, Shuah Khan <shuah@kernel.org>,
+	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
+	Will Deacon <will@kernel.org>, Alexey Kardashevskiy <aik@amd.com>,
+	Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
+	James Gowans <jgowans@amazon.com>,
+	Michael Roth <michael.roth@amd.com>,
+	Pasha Tatashin <pasha.tatashin@soleen.com>, patches@lists.linux.dev
+Subject: Re: [PATCH v3 02/15] genpt: Add Documentation/ files
+Message-ID: <20250617165157.GA1558251@nvidia.com>
+References: <0-v3-a93aab628dbc+521-iommu_pt_jgg@nvidia.com>
+ <2-v3-a93aab628dbc+521-iommu_pt_jgg@nvidia.com>
+ <aFDMBt1J1w8I_A8U@archie.me>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aFDMBt1J1w8I_A8U@archie.me>
+X-ClientProxiedBy: YT4PR01CA0476.CANPRD01.PROD.OUTLOOK.COM
+ (2603:10b6:b01:d6::16) To CH3PR12MB8659.namprd12.prod.outlook.com
+ (2603:10b6:610:17c::13)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH3PR12MB8659:EE_|SN7PR12MB6911:EE_
+X-MS-Office365-Filtering-Correlation-Id: abdc6843-0fc7-4a62-952f-08ddadbf4655
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|376014|7416014;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?R+nRRuLXtjV3JhrjudMcrkLlEu05j9G4g7SxHoaBM6tTO1wPvrFGr3DI6EZ5?=
+ =?us-ascii?Q?hV38Ek/BQMEJQM8NUXbArqgOkQb63NSOkWYTLo9dXXo99pIMEjiAVncJlbBC?=
+ =?us-ascii?Q?ywvd2HyzvREG4BKueoA6IgNZwShS5ZhqzS/8MgerFHSuI9NcxWuf7QckE19x?=
+ =?us-ascii?Q?zgAxvQKEHiGVWg0YaScN9QtilSlQ/kkocHNtPQt8cxMFkEqlVKxZ/j9seMRY?=
+ =?us-ascii?Q?xL6P5ogKKfpiuc+BlxHDCEzs8Ke3J2jh6q50halq92Q0CYEKj0vMhYVE/Vua?=
+ =?us-ascii?Q?e+N5gUvgDw2WQbbwTwlJxzt6ccG4r4685mQwSjv34jXHwwxqM0P3OJ/FiSGA?=
+ =?us-ascii?Q?vUjLgBWbX0j/2b6eodbZ0dTfrD1cYg65DmRARjyZBn8/0y7AutqQO24Av0d9?=
+ =?us-ascii?Q?zm/MOsupvqnn8WJYaaPzSbMeE7S0I/HdxFGKCJYjHiKvYWk2bfAbFjeSL8qK?=
+ =?us-ascii?Q?5fI4zyjZMao6d0TQhhzA/Ph12YA6OIHpqJXIQl9F8bZLCVZdYqEll/E2PIsb?=
+ =?us-ascii?Q?GLql5ELBs6JTmGZy0pONMF1SAlE/QzCM/q4jTv3+NXu/bZE8pcqSAIr6xAdg?=
+ =?us-ascii?Q?zsGYNRRrtOyCWPKzGCR+6DlbLLyHQmX79VQWzD21lPi2tAMM/Sbb2FaWA4ES?=
+ =?us-ascii?Q?nKUmLoOa3jtAFxbk8U3/v7iTz9CIiiVnzawfXglSojm/JghGTIpUJD/T1JUC?=
+ =?us-ascii?Q?jLjwuCM+NfY9JYM9UDgYs4y3WRn2rbIkec3YMA8DRLO5H7HKHvFt1oan8dUi?=
+ =?us-ascii?Q?t4InhTKDmyMHZxCBjf2aksCiapcgWrqCeiQ7qAfs8nG9LCtMYhRq0ATXymF1?=
+ =?us-ascii?Q?ZRWOUy+hqpbgAXdPtZN+ZUeRpI73k+DlBI2xJ8+2pT6hTEzmNFN5WFte0e/V?=
+ =?us-ascii?Q?HJkfDfKc8xkBvx6TO9BYGrGMb7e8JtkbrG7eJLv+01Tyl+aKB/k8/T1mIBJj?=
+ =?us-ascii?Q?2WbcYnHqPE16NfaHq8fgx4Hl2cNjKu9WjpwnRMHexJnCegN5cE6ebtQVeEvb?=
+ =?us-ascii?Q?EHx4m2MEOTomwjCcRjW8da3AG84fv93kt8FvGPmwtDTwdLD7ksGJyAz3ajCH?=
+ =?us-ascii?Q?2fF1fnz9KQId+OB98MjX9iHO1OWe/yR4Oae+e3dx3+G+D+mHt9g2npbf4AT2?=
+ =?us-ascii?Q?MG8CeDNwui5/JDmYiFfUMphPzn+OeJvJ6k5FvJ18Oxc8voRt5k977acKMkWy?=
+ =?us-ascii?Q?Xi/S1BF2K4oLP6h/PsTvksbxu+1RtCR//hKHhIlHeG0La+iF2/sP6JjWZZSo?=
+ =?us-ascii?Q?lbzfF89KnsGQXON64mm5Zv389Tcejp1N3zOoXog78F0W2/N/YN4Q88Fx8ONH?=
+ =?us-ascii?Q?fyE259uvFiCwEyxDWPC82hgisraC8D+f2rkHqanM4q0yf6zARmJEdI542YGL?=
+ =?us-ascii?Q?T+m+l/DW3hGqESwMJRd2adADos/6oIWvs1Kl2Fdpy0FHwoE02A=3D=3D?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR12MB8659.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(7416014);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?bGaHacXrJfEa9H0qSzB+cmKBAvTdrnK5Ew0hWQxplimBCsyHPHXOacdP+3lF?=
+ =?us-ascii?Q?KAcDYC6823bmGzX3tAdlrDFuoTMQ5pJBUE3BPgHLgtvUBd6NJRbXC2M03tVn?=
+ =?us-ascii?Q?Y36nQ73GmlWCAg6V5mw8Lwv3EaSjjifIVUqq43Nmulf2jG8bsW1qWwpZPILa?=
+ =?us-ascii?Q?ngZK9JO36Zc55+zD5Mt5uOK9VpWumjyLvNiPKdXAbdhxjILxrsNJIPEjIGjD?=
+ =?us-ascii?Q?LQm/mflTZKA8GSHbCs/I+jlSX9Slr91Izg83wTGcAPy0eclLkuvljVIkHj0Q?=
+ =?us-ascii?Q?vBP9BlhytaXONCBtwOkG3pucXz264qxwPmxxrLTBS1RBHc1mzEijqmYneDXl?=
+ =?us-ascii?Q?d4QnG/stBKLoznCWadH79GbO0b2+dsLBBRlgsE0TVtKqILz6nCmrN8M96TGj?=
+ =?us-ascii?Q?7nZxaPhc2bfWM3oCgOwra/q0k0ys9ahOZHvZpXbReLxTdDgfCA5WoNTpSPzk?=
+ =?us-ascii?Q?M4gqgMAGQYnCcOEgbgZV+5vJGF5UObxaUpvIUsMZAhuH86id4j7f9OXem9aE?=
+ =?us-ascii?Q?eeSvBhtykLExI+O9pyQioMI/ie081IlmngRLnZJN5uudRe3dWyuW/G6OTJhu?=
+ =?us-ascii?Q?OYNY0Nli1fO1AeL3J9fBs8iyhistNOFVWKIg92ksiUZuU331yCNrVJlfGFSj?=
+ =?us-ascii?Q?D94XV81vr/ETNk+gVnJdBdDj8VUppu//m/V+0KhmdQ+u3F8tma8nJRKgG2NS?=
+ =?us-ascii?Q?NQ4C0CP5Vm5NdkH1dPAJBqHTLAfnnNtKv1uP/esztmAJ/KZGDfV3Z7yo2OvR?=
+ =?us-ascii?Q?VUjvw61hDdk0xzrvjYuqkpua18smHLVzQK8iqUywcAg6IdwyLsGkwTu0BIa1?=
+ =?us-ascii?Q?WgRtj9uWrymSKmizObKcw/MBw+h293dmKdw/677t0Ov2IOhK1woNwp/rKtJN?=
+ =?us-ascii?Q?2CrTU4TQXNCioO94eTyA90jDtj+XQISKjyd/L8tQnB7zdoMYCTjOxGTe3sgL?=
+ =?us-ascii?Q?jz1zqn+oMc+UiSnOnEb7zaMR3gL/kytrgh/NlZ1Yvp/hwS7KZ4eWYgMoSl9s?=
+ =?us-ascii?Q?EM5nLbdvNdihOx+vsZ9IolC36VmlzJpTDLyT3mkH8YaJ3fPfGIfR1QXjxjeT?=
+ =?us-ascii?Q?8v1VkR3OGrmxCTWmYVABS/BHUaStT8xMrg0FOqG/G5bRM5irYaCqbNW7W/QP?=
+ =?us-ascii?Q?KMJqWBs1YrtRk197oC1ypLI26udv14B62w2jxHhbue04nlIXXGgMoKXKf2Rq?=
+ =?us-ascii?Q?PUH9G9uzIWYcp91/+cbbHjFeA6zZfrdZUrO6VajGwPH1O/bJciaQnuTcIZEB?=
+ =?us-ascii?Q?aQ+S+4K8nr6rOM+ZjE1HDskL4CcZSwPLqU2O8nvf90DQ1rhbTHqXYFMueDF1?=
+ =?us-ascii?Q?k6zREE68BW52Z2PCiyHRO6V2+8UR8lZ6AnzxiUjqa3tEAsk0brA0Vu+KSacT?=
+ =?us-ascii?Q?QcnMkZxf7w1+/3Kx16psF7RZHkZPuRUIvGLyK70VTauicq/fCXla8BD6hCD1?=
+ =?us-ascii?Q?mRJvT6W6uvzAdU7IGPhuKlQzKYVlicAsT8vx0gw3fcfMHj/gtQs0Co/cMvCv?=
+ =?us-ascii?Q?xvFuvV1AzE8oR8hxCrRZAaomiNwJ9w8BQ1/8MFc/FomPeObrA/Sg42S8n+Vd?=
+ =?us-ascii?Q?CfF3o2iFLiwSeM6K7L0HY3HnC6S2r4Xvx4oHNE96?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: abdc6843-0fc7-4a62-952f-08ddadbf4655
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB8659.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Jun 2025 16:51:59.0969
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: lFWTRswwdc5lyxtOATdLTyiKDJsMC8UmNXPY4Ejf/w+koFwhb2EPlowuT5vbLW/o
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR12MB6911
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+On Tue, Jun 17, 2025 at 08:59:34AM +0700, Bagas Sanjaya wrote:
+> On Mon, Jun 16, 2025 at 03:06:05PM -0300, Jason Gunthorpe wrote:
+> > +The generic tests are intended to prove out the format functions and give
+> > +clearer failures to speed finding the problems. Once those pass then the entire
+>                     to speed up finding...
+> > +kunit suite should be run.
+> 
+> Thanks.
 
-------------------
+Done
 
-From: Cezary Rojewski <cezary.rojewski@intel.com>
-
-[ Upstream commit 716643786f140f2d68f22424c75b9198ffe14290 ]
-
-Starting from LNL platform the so-called non-HDAudio transfer types,
-e.g.: I2S/DMIC, utilize HDAudio LINK DMA rather than GPDMA for the data
-streaming. In essence, all transfer types now utilize HDAudio Link. Most
-of the existing code can be reused with the major difference being
-HDAudio Link query method:
-
-- fetch the Link by codec.addr in standard HDAudio transfer case
-- fetch the Link by LEPTR.ID in non-HDAudio transfer case
-
-To make the unification happen, store pointer to the Link in dma_data
-and utilize it in the common code. And to avoid confusion in
-transfer-type naming between cAVS-ACE 1.x (SkyLake till MeteorLake) and
-ACE 2.0+ architecture (LunarLake onward), use:
-
-- 'hda' for typical HDAudio transfer case
-- 'nonhda' for non-HDAudio transfer case, cAVS-ACE 1.x
-- 'althda' for non-HDAudio transfer case, ACE 2.0+
-
-Reviewed-by: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
-Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Acked-by: Liam Girdwood <liam.r.girdwood@linux.intel.com>
-Link: https://patch.msgid.link/20250407112352.3720779-7-cezary.rojewski@intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: 347c8d6db7c9 ("ASoC: Intel: avs: Fix PPLCxFMT calculation")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- sound/soc/intel/avs/pcm.c | 116 ++++++++++++++++++++++++++++----------
- 1 file changed, 85 insertions(+), 31 deletions(-)
-
-diff --git a/sound/soc/intel/avs/pcm.c b/sound/soc/intel/avs/pcm.c
-index d83ef504643bb..6116465c8f9b1 100644
---- a/sound/soc/intel/avs/pcm.c
-+++ b/sound/soc/intel/avs/pcm.c
-@@ -36,6 +36,7 @@ struct avs_dma_data {
- 	struct snd_pcm_hw_constraint_list sample_bits_list;
- 
- 	struct work_struct period_elapsed_work;
-+	struct hdac_ext_link *link;
- 	struct snd_pcm_substream *substream;
- };
- 
-@@ -325,32 +326,75 @@ static const struct snd_soc_dai_ops avs_dai_nonhda_be_ops = {
- 	.trigger = avs_dai_nonhda_be_trigger,
- };
- 
--static int avs_dai_hda_be_startup(struct snd_pcm_substream *substream, struct snd_soc_dai *dai)
-+static int __avs_dai_hda_be_startup(struct snd_pcm_substream *substream, struct snd_soc_dai *dai,
-+				    struct hdac_ext_link *link)
- {
--	struct snd_soc_pcm_runtime *rtd = snd_soc_substream_to_rtd(substream);
- 	struct hdac_ext_stream *link_stream;
- 	struct avs_dma_data *data;
--	struct hda_codec *codec;
- 	int ret;
- 
- 	ret = avs_dai_startup(substream, dai);
- 	if (ret)
- 		return ret;
- 
--	codec = dev_to_hda_codec(snd_soc_rtd_to_codec(rtd, 0)->dev);
--	link_stream = snd_hdac_ext_stream_assign(&codec->bus->core, substream,
-+	data = snd_soc_dai_get_dma_data(dai, substream);
-+	link_stream = snd_hdac_ext_stream_assign(&data->adev->base.core, substream,
- 						 HDAC_EXT_STREAM_TYPE_LINK);
- 	if (!link_stream) {
- 		avs_dai_shutdown(substream, dai);
- 		return -EBUSY;
- 	}
- 
--	data = snd_soc_dai_get_dma_data(dai, substream);
- 	data->link_stream = link_stream;
--	substream->runtime->private_data = link_stream;
-+	data->link = link;
- 	return 0;
- }
- 
-+static int avs_dai_hda_be_startup(struct snd_pcm_substream *substream, struct snd_soc_dai *dai)
-+{
-+	struct snd_soc_pcm_runtime *rtd = snd_soc_substream_to_rtd(substream);
-+	struct hdac_ext_link *link;
-+	struct avs_dma_data *data;
-+	struct hda_codec *codec;
-+	int ret;
-+
-+	codec = dev_to_hda_codec(snd_soc_rtd_to_codec(rtd, 0)->dev);
-+
-+	link = snd_hdac_ext_bus_get_hlink_by_addr(&codec->bus->core, codec->core.addr);
-+	if (!link)
-+		return -EINVAL;
-+
-+	ret = __avs_dai_hda_be_startup(substream, dai, link);
-+	if (!ret) {
-+		data = snd_soc_dai_get_dma_data(dai, substream);
-+		substream->runtime->private_data = data->link_stream;
-+	}
-+
-+	return ret;
-+}
-+
-+static int avs_dai_i2shda_be_startup(struct snd_pcm_substream *substream, struct snd_soc_dai *dai)
-+{
-+	struct avs_dev *adev = to_avs_dev(dai->component->dev);
-+	struct hdac_ext_link *link;
-+
-+	link = snd_hdac_ext_bus_get_hlink_by_id(&adev->base.core, AZX_REG_ML_LEPTR_ID_INTEL_SSP);
-+	if (!link)
-+		return -EINVAL;
-+	return __avs_dai_hda_be_startup(substream, dai, link);
-+}
-+
-+static int avs_dai_dmichda_be_startup(struct snd_pcm_substream *substream, struct snd_soc_dai *dai)
-+{
-+	struct avs_dev *adev = to_avs_dev(dai->component->dev);
-+	struct hdac_ext_link *link;
-+
-+	link = snd_hdac_ext_bus_get_hlink_by_id(&adev->base.core, AZX_REG_ML_LEPTR_ID_INTEL_DMIC);
-+	if (!link)
-+		return -EINVAL;
-+	return __avs_dai_hda_be_startup(substream, dai, link);
-+}
-+
- static void avs_dai_hda_be_shutdown(struct snd_pcm_substream *substream, struct snd_soc_dai *dai)
- {
- 	struct avs_dma_data *data = snd_soc_dai_get_dma_data(dai, substream);
-@@ -360,6 +404,14 @@ static void avs_dai_hda_be_shutdown(struct snd_pcm_substream *substream, struct
- 	avs_dai_shutdown(substream, dai);
- }
- 
-+static void avs_dai_althda_be_shutdown(struct snd_pcm_substream *substream, struct snd_soc_dai *dai)
-+{
-+	struct avs_dma_data *data = snd_soc_dai_get_dma_data(dai, substream);
-+
-+	snd_hdac_ext_stream_release(data->link_stream, HDAC_EXT_STREAM_TYPE_LINK);
-+	avs_dai_shutdown(substream, dai);
-+}
-+
- static int avs_dai_hda_be_hw_params(struct snd_pcm_substream *substream,
- 				    struct snd_pcm_hw_params *hw_params, struct snd_soc_dai *dai)
- {
-@@ -375,13 +427,8 @@ static int avs_dai_hda_be_hw_params(struct snd_pcm_substream *substream,
- 
- static int avs_dai_hda_be_hw_free(struct snd_pcm_substream *substream, struct snd_soc_dai *dai)
- {
--	struct avs_dma_data *data;
--	struct snd_soc_pcm_runtime *rtd = snd_soc_substream_to_rtd(substream);
- 	struct hdac_ext_stream *link_stream;
--	struct hdac_ext_link *link;
--	struct hda_codec *codec;
--
--	dev_dbg(dai->dev, "%s: %s\n", __func__, dai->name);
-+	struct avs_dma_data *data;
- 
- 	data = snd_soc_dai_get_dma_data(dai, substream);
- 	if (!data->path)
-@@ -393,27 +440,19 @@ static int avs_dai_hda_be_hw_free(struct snd_pcm_substream *substream, struct sn
- 	data->path = NULL;
- 
- 	/* clear link <-> stream mapping */
--	codec = dev_to_hda_codec(snd_soc_rtd_to_codec(rtd, 0)->dev);
--	link = snd_hdac_ext_bus_get_hlink_by_addr(&codec->bus->core, codec->core.addr);
--	if (!link)
--		return -EINVAL;
--
- 	if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK)
--		snd_hdac_ext_bus_link_clear_stream_id(link, hdac_stream(link_stream)->stream_tag);
-+		snd_hdac_ext_bus_link_clear_stream_id(data->link,
-+						      hdac_stream(link_stream)->stream_tag);
- 
- 	return 0;
- }
- 
- static int avs_dai_hda_be_prepare(struct snd_pcm_substream *substream, struct snd_soc_dai *dai)
- {
--	struct snd_soc_pcm_runtime *rtd = snd_soc_substream_to_rtd(substream);
- 	struct snd_pcm_runtime *runtime = substream->runtime;
- 	const struct snd_soc_pcm_stream *stream_info;
- 	struct hdac_ext_stream *link_stream;
--	struct hdac_ext_link *link;
- 	struct avs_dma_data *data;
--	struct hda_codec *codec;
--	struct hdac_bus *bus;
- 	unsigned int format_val;
- 	unsigned int bits;
- 	int ret;
-@@ -424,23 +463,18 @@ static int avs_dai_hda_be_prepare(struct snd_pcm_substream *substream, struct sn
- 	if (link_stream->link_prepared)
- 		return 0;
- 
--	codec = dev_to_hda_codec(snd_soc_rtd_to_codec(rtd, 0)->dev);
--	bus = &codec->bus->core;
- 	stream_info = snd_soc_dai_get_pcm_stream(dai, substream->stream);
- 	bits = snd_hdac_stream_format_bits(runtime->format, runtime->subformat,
- 					   stream_info->sig_bits);
- 	format_val = snd_hdac_stream_format(runtime->channels, bits, runtime->rate);
- 
--	snd_hdac_ext_stream_decouple(bus, link_stream, true);
-+	snd_hdac_ext_stream_decouple(&data->adev->base.core, link_stream, true);
- 	snd_hdac_ext_stream_reset(link_stream);
- 	snd_hdac_ext_stream_setup(link_stream, format_val);
- 
--	link = snd_hdac_ext_bus_get_hlink_by_addr(bus, codec->core.addr);
--	if (!link)
--		return -EINVAL;
--
- 	if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK)
--		snd_hdac_ext_bus_link_set_stream_id(link, hdac_stream(link_stream)->stream_tag);
-+		snd_hdac_ext_bus_link_set_stream_id(data->link,
-+						    hdac_stream(link_stream)->stream_tag);
- 
- 	ret = avs_dai_prepare(substream, dai);
- 	if (ret)
-@@ -515,6 +549,26 @@ static const struct snd_soc_dai_ops avs_dai_hda_be_ops = {
- 	.trigger = avs_dai_hda_be_trigger,
- };
- 
-+__maybe_unused
-+static const struct snd_soc_dai_ops avs_dai_i2shda_be_ops = {
-+	.startup = avs_dai_i2shda_be_startup,
-+	.shutdown = avs_dai_althda_be_shutdown,
-+	.hw_params = avs_dai_hda_be_hw_params,
-+	.hw_free = avs_dai_hda_be_hw_free,
-+	.prepare = avs_dai_hda_be_prepare,
-+	.trigger = avs_dai_hda_be_trigger,
-+};
-+
-+__maybe_unused
-+static const struct snd_soc_dai_ops avs_dai_dmichda_be_ops = {
-+	.startup = avs_dai_dmichda_be_startup,
-+	.shutdown = avs_dai_althda_be_shutdown,
-+	.hw_params = avs_dai_hda_be_hw_params,
-+	.hw_free = avs_dai_hda_be_hw_free,
-+	.prepare = avs_dai_hda_be_prepare,
-+	.trigger = avs_dai_hda_be_trigger,
-+};
-+
- static int hw_rule_param_size(struct snd_pcm_hw_params *params, struct snd_pcm_hw_rule *rule)
- {
- 	struct snd_interval *interval = hw_param_interval(params, rule->var);
--- 
-2.39.5
-
+Thanks,
+Jason 
 
 
