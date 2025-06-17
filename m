@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B990D236457;
-	Tue, 17 Jun 2025 16:05:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F51420A5EA;
+	Tue, 17 Jun 2025 16:05:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750176318; cv=none; b=KnaGwy/7r7YeZb2tZO0EjEaB33nSlKKAdjNtoSlxM0xuK9ylYpllqcTNk0LGczG1lCCbJk+wrtbvDFDXa0CenrnhH39sj40yMBjiCWLoWkluu1Fo0YlYmPh6Ym1/09x3N4t+HweTsJDg1sGdPh/5AO7ZyzJmVolJ/OuuAMKwqLc=
+	t=1750176322; cv=none; b=U7g0PJvnuNPEC3z64BWW7srUQmGVRE1n90VaGC7JWSf+A+GyQBYYlQn3QLE48QcrqlVx3SLUz/Lx6ZRhhu7E4bJgxmvDkGE8h1zN0Rk4KulMEOnz/nPQwL3GdE5/GBUhbBzkJbZK7zb+Px/TsT4zW0+UfirURhUGdRkI/X9UfFY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750176318; c=relaxed/simple;
-	bh=A3V8DrDHcfYFazuGTRh052Z+XT0rISvaZKF0e6GhsWA=;
+	s=arc-20240116; t=1750176322; c=relaxed/simple;
+	bh=5ZfWgy9esgahb0QqQijGFmO8QmsKCjGb6OQMi39jBxY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=f5/x/hpdlD84R2LX6ouAIGOpTkZr1S7fCKwM8A7qtoIP1WluL/yNttvi96kuS5yLl6ZI9/gdGNiYHO13d+WTfKYBDSCihjxN7hkRwvypDl4YpgNUcZQAWQSnWJqDSY3+wTasfeOGV4fIcqRjhrXt5ssoHzIvufSlXDSEtkqpEGw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bm93R7ot; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QkwmXEeJvDiF4XYeqro2pvdTY1L9m2lQh6cCq0Y60K3CyKMlNOEvd2w+mIUBlM9SQwd5fmyIvGxKVLK5yflZoXSqhdbIUXeHdsGAnL5ww/t/kWJg2CHQMIa3sObkOSCTR6SNEiC8yFDzInBQMkPvZ2EJ1HIK4Jn/MvCTFFNibfU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YoBjmuGh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bm93R7ot"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC7A7C4CEE3;
-	Tue, 17 Jun 2025 16:05:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YoBjmuGh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C5D6C4CEE3;
+	Tue, 17 Jun 2025 16:05:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750176318;
-	bh=A3V8DrDHcfYFazuGTRh052Z+XT0rISvaZKF0e6GhsWA=;
+	s=korg; t=1750176321;
+	bh=5ZfWgy9esgahb0QqQijGFmO8QmsKCjGb6OQMi39jBxY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bm93R7otwfwqb/Y63F9ioR4pmT+ogXo2ZdKxEcbo0YDF8cqHL/PBGxrN0uzKXIuzp
-	 pOgImzs9Ddecfe2OMKzcBaNfhqNFyPJSFQShz4F0UiWRmz2axEtZK0TzPucSdmDE3t
-	 LF4clF8CUJHVjQIQW6VZ6zC0CNzwP+LyfLZJRvKs=
+	b=YoBjmuGhxDhgeq/ZHnQlrk8lIPWDu2PPkhkewPJ0w0tOrH30Cz4K6w+blGoBsowuL
+	 6mEwpOT4lXA+H/EoaXD0LGUgVeiE6024JFIWtJ7BoO6mVTQ7/sbt9E1uWBGUvgble0
+	 4Qk/S9oGe77GiWU1Dvce0ZOXom8WN6Ex2SN/fdoQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Radim=20Kr=C4=8Dm=C3=A1=C5=99?= <rkrcmar@ventanamicro.com>,
-	Anup Patel <anup@brainfault.org>,
+	Detlev Casanova <detlev.casanova@collabora.com>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 199/512] RISC-V: KVM: lock the correct mp_state during reset
-Date: Tue, 17 Jun 2025 17:22:45 +0200
-Message-ID: <20250617152427.695928632@linuxfoundation.org>
+Subject: [PATCH 6.15 153/780] media: verisilicon: Free post processor buffers on error
+Date: Tue, 17 Jun 2025 17:17:41 +0200
+Message-ID: <20250617152457.730557260@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,47 +46,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Radim Krčmář <rkrcmar@ventanamicro.com>
+From: Detlev Casanova <detlev.casanova@collabora.com>
 
-[ Upstream commit 7917be170928189fefad490d1a1237fdfa6b856f ]
+[ Upstream commit 11beb0fc346e00c412b3bfd19013206f6b655604 ]
 
-Currently, the kvm_riscv_vcpu_sbi_system_reset() function locks
-vcpu->arch.mp_state_lock when updating tmp->arch.mp_state.mp_state
-which is incorrect hence fix it.
+During initialization, the post processor allocates the same number of
+buffers as the buf queue.
+As the init function is called in streamon(), if an allocation fails,
+streamon will return an error and streamoff() will not be called, keeping
+all post processor buffers allocated.
 
-Fixes: 2121cadec45a ("RISCV: KVM: Introduce mp_state_lock to avoid lock inversion")
-Signed-off-by: Radim Krčmář <rkrcmar@ventanamicro.com>
-Reviewed-by: Anup Patel <anup@brainfault.org>
-Link: https://lore.kernel.org/r/20250523104725.2894546-4-rkrcmar@ventanamicro.com
-Signed-off-by: Anup Patel <anup@brainfault.org>
+To avoid that, all post proc buffers are freed in case of an allocation
+error.
+
+Fixes: 26711491a807 ("media: verisilicon: Refactor postprocessor to store more buffers")
+Signed-off-by: Detlev Casanova <detlev.casanova@collabora.com>
+Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kvm/vcpu_sbi.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/media/platform/verisilicon/hantro_postproc.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/riscv/kvm/vcpu_sbi.c b/arch/riscv/kvm/vcpu_sbi.c
-index 6e704ed86a83a..635c67ed36653 100644
---- a/arch/riscv/kvm/vcpu_sbi.c
-+++ b/arch/riscv/kvm/vcpu_sbi.c
-@@ -139,9 +139,9 @@ void kvm_riscv_vcpu_sbi_system_reset(struct kvm_vcpu *vcpu,
- 	struct kvm_vcpu *tmp;
+diff --git a/drivers/media/platform/verisilicon/hantro_postproc.c b/drivers/media/platform/verisilicon/hantro_postproc.c
+index c435a393e0cb7..9f559a13d409b 100644
+--- a/drivers/media/platform/verisilicon/hantro_postproc.c
++++ b/drivers/media/platform/verisilicon/hantro_postproc.c
+@@ -250,8 +250,10 @@ int hantro_postproc_init(struct hantro_ctx *ctx)
  
- 	kvm_for_each_vcpu(i, tmp, vcpu->kvm) {
--		spin_lock(&vcpu->arch.mp_state_lock);
-+		spin_lock(&tmp->arch.mp_state_lock);
- 		WRITE_ONCE(tmp->arch.mp_state.mp_state, KVM_MP_STATE_STOPPED);
--		spin_unlock(&vcpu->arch.mp_state_lock);
-+		spin_unlock(&tmp->arch.mp_state_lock);
+ 	for (i = 0; i < num_buffers; i++) {
+ 		ret = hantro_postproc_alloc(ctx, i);
+-		if (ret)
++		if (ret) {
++			hantro_postproc_free(ctx);
+ 			return ret;
++		}
  	}
- 	kvm_make_all_cpus_request(vcpu->kvm, KVM_REQ_SLEEP);
  
+ 	return 0;
 -- 
 2.39.5
 
