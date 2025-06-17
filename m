@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D86A2ECEB1;
-	Tue, 17 Jun 2025 15:46:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D127A2F2C75;
+	Tue, 17 Jun 2025 15:46:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175205; cv=none; b=iAsVaZAaTmqp24zfzZIHSHTsbhdlBjb9oVW8FUZLSioNiQ0DIz7iXq6DZiVG/l63QTPT7OJRdoJmEAMaNp/BiCcmpmluER9Tc3a8nkOf1VC/ssFZyBH1U65Ee32iTxFWT8jOf1/GOAMjE5wsc3Bj3IWr0eMvUyvxdi5t6BVAJo0=
+	t=1750175207; cv=none; b=Wk1WGiDl/HHKo9mCWxifscbcJMSZKB31fqCgXWzvWtbkg0ChZ1tuXm+TFfKRPp7R4wBw8RToUvQNMRFgIlk4jeHRcoS1nSstOGSvPSjBiFzJYAfYq5Cfqa5+YFEBhl32InOGSoc3kFTp4Km0oi4ecNF4s1SplHD3TY31YsA3SRU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175205; c=relaxed/simple;
-	bh=x4P0Hxvb7zYphWMu8gJXoq3XZTuiTnoCFpROdUSVpUQ=;
+	s=arc-20240116; t=1750175207; c=relaxed/simple;
+	bh=9HCrRW5sKaTlAn16f8b9/mYqQt9PjiuooFUO8mwGCTg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hfJq1cKDog8sVqsHJxNYwCJtmYkzGwW/b7D3F5OxWfLU5H9g8cIaTaHGbQ5AQ+Xpy37TijdxWjXpxu0Fv4UmTuLHXNrYl+wTLq6SHSwDoJZfVlnVJd5KMwCdJ4aNWt0/4MuyMqZ/H2X3U55hV9+K6o1G1+/OIaVoXFHTv3cWLvA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=flI5ndZ8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=TTk+VRfRKfhh2xSUKT5HQULndFF8RJIquYnLGMBNCosiDEvMbfzq1l7fwwqxsRR+2M80dM7X6jK3EhnoCam5BaZj8fjkacMWhLbbOZ0SSXoeu99QOtktwPW9mUS5jgt33dGILu017ZCDtXjL1xE20/pxypKMfJAxISvOn3O0+i4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Vyp1uIp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="flI5ndZ8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D0EAC4CEF0;
-	Tue, 17 Jun 2025 15:46:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Vyp1uIp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F212C4CEF0;
+	Tue, 17 Jun 2025 15:46:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175204;
-	bh=x4P0Hxvb7zYphWMu8gJXoq3XZTuiTnoCFpROdUSVpUQ=;
+	s=korg; t=1750175207;
+	bh=9HCrRW5sKaTlAn16f8b9/mYqQt9PjiuooFUO8mwGCTg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=flI5ndZ89DAPVf0nFu7Q0eFqAH/yiK+EL0Yt0EWP6jH2lFMhtcxo+FH0Kbxm8t/3W
-	 ED6Z9jHMLTf/Nl3jw0iPCCRK1NJ2GquPcCCVaj94jPFb6zel3KkjvVKCOxcgEVq+dw
-	 j/2NgFlZDxMqm2VtMgUX9NahOnFv6Zn7DdduRH48=
+	b=1Vyp1uIpR8Z1tEPPHyRg/z8Ib5CDFQ5TtE6WYqnUvNTyhwQyl6IBGC4+vJWWUgLhh
+	 f4Xi7UMC2bp4vRhaDrlDKjDHw+j0ma+FErxL6wdRVY14JolIgVNVATMI4BDsYlZd2S
+	 V1bhF1PpbYQWdRii58KJO7K7lBsY0RLVpd4yyj1g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Faicker Mo <faicker.mo@zenlayer.com>,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Aaron Conole <aconole@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	John <jw@nuclearfallout.net>,
+	=?UTF-8?q?Roger=20Pau=20Monn=C3=A9?= <roger.pau@citrix.com>,
+	Juergen Gross <jgross@suse.com>,
+	=?UTF-8?q?Marek=20Marczykowski-G=C3=B3recki?= <marmarek@invisiblethingslab.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 153/356] net: openvswitch: Fix the dead loop of MPLS parse
-Date: Tue, 17 Jun 2025 17:24:28 +0200
-Message-ID: <20250617152344.389254074@linuxfoundation.org>
+Subject: [PATCH 6.12 104/512] xen/x86: fix initial memory balloon target
+Date: Tue, 17 Jun 2025 17:21:10 +0200
+Message-ID: <20250617152423.811406301@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-References: <20250617152338.212798615@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,79 +47,71 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Faicker Mo <faicker.mo@zenlayer.com>
+From: Roger Pau Monne <roger.pau@citrix.com>
 
-[ Upstream commit 0bdc924bfb319fb10d1113cbf091fc26fb7b1f99 ]
+[ Upstream commit 74287971dbb3fe322bb316afd9e7fb5807e23bee ]
 
-The unexpected MPLS packet may not end with the bottom label stack.
-When there are many stacks, The label count value has wrapped around.
-A dead loop occurs, soft lockup/CPU stuck finally.
+When adding extra memory regions as ballooned pages also adjust the balloon
+target, otherwise when the balloon driver is started it will populate
+memory to match the target value and consume all the extra memory regions
+added.
 
-stack backtrace:
-UBSAN: array-index-out-of-bounds in /build/linux-0Pa0xK/linux-5.15.0/net/openvswitch/flow.c:662:26
-index -1 is out of range for type '__be32 [3]'
-CPU: 34 PID: 0 Comm: swapper/34 Kdump: loaded Tainted: G           OE   5.15.0-121-generic #131-Ubuntu
-Hardware name: Dell Inc. PowerEdge C6420/0JP9TF, BIOS 2.12.2 07/14/2021
-Call Trace:
- <IRQ>
- show_stack+0x52/0x5c
- dump_stack_lvl+0x4a/0x63
- dump_stack+0x10/0x16
- ubsan_epilogue+0x9/0x36
- __ubsan_handle_out_of_bounds.cold+0x44/0x49
- key_extract_l3l4+0x82a/0x840 [openvswitch]
- ? kfree_skbmem+0x52/0xa0
- key_extract+0x9c/0x2b0 [openvswitch]
- ovs_flow_key_extract+0x124/0x350 [openvswitch]
- ovs_vport_receive+0x61/0xd0 [openvswitch]
- ? kernel_init_free_pages.part.0+0x4a/0x70
- ? get_page_from_freelist+0x353/0x540
- netdev_port_receive+0xc4/0x180 [openvswitch]
- ? netdev_port_receive+0x180/0x180 [openvswitch]
- netdev_frame_hook+0x1f/0x40 [openvswitch]
- __netif_receive_skb_core.constprop.0+0x23a/0xf00
- __netif_receive_skb_list_core+0xfa/0x240
- netif_receive_skb_list_internal+0x18e/0x2a0
- napi_complete_done+0x7a/0x1c0
- bnxt_poll+0x155/0x1c0 [bnxt_en]
- __napi_poll+0x30/0x180
- net_rx_action+0x126/0x280
- ? bnxt_msix+0x67/0x80 [bnxt_en]
- handle_softirqs+0xda/0x2d0
- irq_exit_rcu+0x96/0xc0
- common_interrupt+0x8e/0xa0
- </IRQ>
+This made the usage of the Xen `dom0_mem=,max:` command line parameter for
+dom0 not work as expected, as the target won't be adjusted and when the
+balloon is started it will populate memory straight to the 'max:' value.
+It would equally affect domUs that have memory != maxmem.
 
-Fixes: fbdcdd78da7c ("Change in Openvswitch to support MPLS label depth of 3 in ingress direction")
-Signed-off-by: Faicker Mo <faicker.mo@zenlayer.com>
-Acked-by: Ilya Maximets <i.maximets@ovn.org>
-Reviewed-by: Aaron Conole <aconole@redhat.com>
-Link: https://patch.msgid.link/259D3404-575D-4A6D-B263-1DF59A67CF89@zenlayer.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Kernels built with CONFIG_XEN_UNPOPULATED_ALLOC are not affected, because
+the extra memory regions are consumed by the unpopulated allocation driver,
+and then balloon_add_regions() becomes a no-op.
+
+Reported-by: John <jw@nuclearfallout.net>
+Fixes: 87af633689ce ('x86/xen: fix balloon target initialization for PVH dom0')
+Signed-off-by: Roger Pau Monné <roger.pau@citrix.com>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Tested-by: Marek Marczykowski-Górecki <marmarek@invisiblethingslab.com>
+Message-ID: <20250514080427.28129-1-roger.pau@citrix.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/openvswitch/flow.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/xen/balloon.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/net/openvswitch/flow.c b/net/openvswitch/flow.c
-index 8a848ce72e291..b80bd3a907739 100644
---- a/net/openvswitch/flow.c
-+++ b/net/openvswitch/flow.c
-@@ -788,7 +788,7 @@ static int key_extract_l3l4(struct sk_buff *skb, struct sw_flow_key *key)
- 			memset(&key->ipv4, 0, sizeof(key->ipv4));
- 		}
- 	} else if (eth_p_mpls(key->eth.type)) {
--		u8 label_count = 1;
-+		size_t label_count = 1;
+diff --git a/drivers/xen/balloon.c b/drivers/xen/balloon.c
+index 4bd31242bd773..e47bb157aa090 100644
+--- a/drivers/xen/balloon.c
++++ b/drivers/xen/balloon.c
+@@ -700,15 +700,18 @@ static int __init balloon_add_regions(void)
  
- 		memset(&key->mpls, 0, sizeof(key->mpls));
- 		skb_set_inner_network_header(skb, skb->mac_len);
+ 		/*
+ 		 * Extra regions are accounted for in the physmap, but need
+-		 * decreasing from current_pages to balloon down the initial
+-		 * allocation, because they are already accounted for in
+-		 * total_pages.
++		 * decreasing from current_pages and target_pages to balloon
++		 * down the initial allocation, because they are already
++		 * accounted for in total_pages.
+ 		 */
+-		if (extra_pfn_end - start_pfn >= balloon_stats.current_pages) {
++		pages = extra_pfn_end - start_pfn;
++		if (pages >= balloon_stats.current_pages ||
++		    pages >= balloon_stats.target_pages) {
+ 			WARN(1, "Extra pages underflow current target");
+ 			return -ERANGE;
+ 		}
+-		balloon_stats.current_pages -= extra_pfn_end - start_pfn;
++		balloon_stats.current_pages -= pages;
++		balloon_stats.target_pages -= pages;
+ 	}
+ 
+ 	return 0;
 -- 
 2.39.5
 
