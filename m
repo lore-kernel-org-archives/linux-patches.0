@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAC9F20F090;
-	Tue, 17 Jun 2025 15:39:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0C4220F090;
+	Tue, 17 Jun 2025 15:39:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750174746; cv=none; b=Q7iht3zAXmxg9ks7NjYVUCTVoBtVMNVsf66244uxz2yFMBoz5H60wSyjboXwgUUR2bmInpItSb03l8Sn9Oyy+i94Vgo8GJBQv0MUTe9qASAny9R92gd7ARw/jJ/YJYQUkLcWsDwBoO6r8DswOTcU9hERkctsk7A8pcbOjkliFQs=
+	t=1750174750; cv=none; b=kWVEx/LgahEHQHrHwsNYPfsBNuGACXNlmoxKzfllOD2n4CS2Mxl5By6CCAVJ2QcTxritq2MLvuVlQcByyyRaSEPCi7d+1y3F4OYwRnhHsPnjJSBoN2RUIHN8wR3HG0r4qe0XlzQ8oSk3ZL0JLKpYNyFiHQDfJljTiX+MVNkFhw4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750174746; c=relaxed/simple;
-	bh=JfUvE6FFEpIInQlwSEx4iQ/GVrmBkkbnrQ80hwNlzTw=;
+	s=arc-20240116; t=1750174750; c=relaxed/simple;
+	bh=IruC1aHYkPPDQLolQfawMohOKLm2kv/VuYfJ7C3Assw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SUrZ8h/Y7ceJBk9TtRX05Cg/1pN1vcQ9dER8D6hTY11vjbLmjH5VEH6+wW8B4LTycQwkN5Qtk6An/YQtN715FRs4C1kHUMgvArKMyCmiOGguLFouPzkpeI8yGH1QEQHCv86hcue1FB7UYjVjCtzzHoOOuE1R8IYIVM250UzjGF8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ahswMYCa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aucbmUDXtgfaRjamXrCHmxxvmxPLmclUrcQOnRyFq+DXMMaoUrShE5hwJABQQcAQcoR96i9M7q4bMDghaJzZhjmyfsPX4FcFLmM1graZmah2U9ixLqi3KsAMMJ61IftsPKSGn/f7LU76cv4Eb7RjWzGZ00bc/9JEOp1LPxMNW3A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xFceh+ks; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ahswMYCa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 221CBC4CEE3;
-	Tue, 17 Jun 2025 15:39:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xFceh+ks"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E1E7C4CEE3;
+	Tue, 17 Jun 2025 15:39:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750174746;
-	bh=JfUvE6FFEpIInQlwSEx4iQ/GVrmBkkbnrQ80hwNlzTw=;
+	s=korg; t=1750174749;
+	bh=IruC1aHYkPPDQLolQfawMohOKLm2kv/VuYfJ7C3Assw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ahswMYCazX9CiqCEk3WXcPKY4oBtSrOLB3jzTNpeWx2mWVUkCNnNY74tJEF45xsAl
-	 x7dZreADAHXmZxkjI1TnnT70Zsb3ZF97lLXfQRzeFLSISwyX7tO7MOO4BK8GFVVlQx
-	 ApSUtZTxBBdVcrGbb5ZLxtgnz8+CsxXN3dguvRCk=
+	b=xFceh+ks451cd8XLqe8Js4Zb54z4rCA3DCOZTZILFiEJ7hXzGPO786rWsLjAzbPVV
+	 +5GbUBcgHaGQWyvjYxpRj3m6AGEjOhnaitOpwVN96E22M4P8AbeKBaJzw2sBg+PXcY
+	 N1c4vsZd3+BLw05DBY6ypV93LR2gVr7uDC82NoB8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Mark Brown <broonie@kernel.org>,
+	Andreas Gruenbacher <agruenba@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 056/512] spi: sh-msiof: Fix maximum DMA transfer size
-Date: Tue, 17 Jun 2025 17:20:22 +0200
-Message-ID: <20250617152421.809539548@linuxfoundation.org>
+Subject: [PATCH 6.15 017/780] gfs2: deallocate inodes in gfs2_create_inode
+Date: Tue, 17 Jun 2025 17:15:25 +0200
+Message-ID: <20250617152452.203029241@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,73 +46,145 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Andreas Gruenbacher <agruenba@redhat.com>
 
-[ Upstream commit 0941d5166629cb766000530945e54b4e49680c68 ]
+[ Upstream commit 2c63986dd35fa9eb0d7d1530b5eb2244b7296e22 ]
 
-The maximum amount of data to transfer in a single DMA request is
-calculated from the FIFO sizes (which is technically not 100% correct,
-but a simplification, as it is limited by the maximum word count values
-in the Transmit and Control Data Registers).  However, in case there is
-both data to transmit and to receive, the transmit limit is overwritten
-by the receive limit.
+When creating and destroying inodes, we are relying on the inode hash
+table to make sure that for a given inode number, only a single inode
+will exist.  We then link that inode to its inode and iopen glock and
+let those glocks point back at the inode.  However, when iget_failed()
+is called, the inode is removed from the inode hash table before
+gfs_evict_inode() is called, and uniqueness is no longer guaranteed.
 
-Fix this by using the minimum applicable FIFO size instead.  Move the
-calculation outside the loop, so it is not repeated for each individual
-DMA transfer.
+Commit f1046a472b70 ("gfs2: gl_object races fix") was trying to work
+around that problem by detaching the inode glock from the inode before
+calling iget_failed(), but that broke the inode deallocation code in
+gfs_evict_inode().
 
-As currently tx_fifo_size is always equal to rx_fifo_size, this bug had
-no real impact.
+To fix that, deallocate partially created inodes in gfs2_create_inode()
+instead of relying on gfs_evict_inode() for doing that.
 
-Fixes: fe78d0b7691c0274 ("spi: sh-msiof: Fix FIFO size to 64 word from 256 word")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://patch.msgid.link/d9961767a97758b2614f2ee8afe1bd56dc900a60.1747401908.git.geert+renesas@glider.be
-Signed-off-by: Mark Brown <broonie@kernel.org>
+This means that gfs2_evict_inode() and its helper functions will no
+longer see partially created inodes, and so some simplifications are
+possible there.
+
+Fixes: 9ffa18884cce ("gfs2: gl_object races fix")
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-sh-msiof.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ fs/gfs2/inode.c | 27 +++++++++++++++++++--------
+ fs/gfs2/super.c |  6 +-----
+ 2 files changed, 20 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/spi/spi-sh-msiof.c b/drivers/spi/spi-sh-msiof.c
-index 3519656515ea1..1870f8c852131 100644
---- a/drivers/spi/spi-sh-msiof.c
-+++ b/drivers/spi/spi-sh-msiof.c
-@@ -918,6 +918,7 @@ static int sh_msiof_transfer_one(struct spi_controller *ctlr,
- 	void *rx_buf = t->rx_buf;
- 	unsigned int len = t->len;
- 	unsigned int bits = t->bits_per_word;
-+	unsigned int max_wdlen = 256;
- 	unsigned int bytes_per_word;
- 	unsigned int words;
- 	int n;
-@@ -931,17 +932,17 @@ static int sh_msiof_transfer_one(struct spi_controller *ctlr,
- 	if (!spi_controller_is_target(p->ctlr))
- 		sh_msiof_spi_set_clk_regs(p, t);
+diff --git a/fs/gfs2/inode.c b/fs/gfs2/inode.c
+index b2d38d09af7e8..8fd81444ffea0 100644
+--- a/fs/gfs2/inode.c
++++ b/fs/gfs2/inode.c
+@@ -697,10 +697,11 @@ static int gfs2_create_inode(struct inode *dir, struct dentry *dentry,
+ 	struct gfs2_inode *dip = GFS2_I(dir), *ip;
+ 	struct gfs2_sbd *sdp = GFS2_SB(&dip->i_inode);
+ 	struct gfs2_glock *io_gl;
+-	int error;
++	int error, dealloc_error;
+ 	u32 aflags = 0;
+ 	unsigned blocks = 1;
+ 	struct gfs2_diradd da = { .bh = NULL, .save_loc = 1, };
++	bool xattr_initialized = false;
  
-+	if (tx_buf)
-+		max_wdlen = min(max_wdlen, p->tx_fifo_size);
-+	if (rx_buf)
-+		max_wdlen = min(max_wdlen, p->rx_fifo_size);
-+
- 	while (ctlr->dma_tx && len > 15) {
- 		/*
- 		 *  DMA supports 32-bit words only, hence pack 8-bit and 16-bit
- 		 *  words, with byte resp. word swapping.
- 		 */
--		unsigned int l = 0;
+ 	if (!name->len || name->len > GFS2_FNAMESIZE)
+ 		return -ENAMETOOLONG;
+@@ -813,11 +814,11 @@ static int gfs2_create_inode(struct inode *dir, struct dentry *dentry,
+ 
+ 	error = gfs2_glock_get(sdp, ip->i_no_addr, &gfs2_inode_glops, CREATE, &ip->i_gl);
+ 	if (error)
+-		goto fail_free_inode;
++		goto fail_dealloc_inode;
+ 
+ 	error = gfs2_glock_get(sdp, ip->i_no_addr, &gfs2_iopen_glops, CREATE, &io_gl);
+ 	if (error)
+-		goto fail_free_inode;
++		goto fail_dealloc_inode;
+ 	gfs2_cancel_delete_work(io_gl);
+ 	io_gl->gl_no_formal_ino = ip->i_no_formal_ino;
+ 
+@@ -841,8 +842,10 @@ static int gfs2_create_inode(struct inode *dir, struct dentry *dentry,
+ 	if (error)
+ 		goto fail_gunlock3;
+ 
+-	if (blocks > 1)
++	if (blocks > 1) {
+ 		gfs2_init_xattr(ip);
++		xattr_initialized = true;
++	}
+ 	init_dinode(dip, ip, symname);
+ 	gfs2_trans_end(sdp);
+ 
+@@ -897,6 +900,18 @@ static int gfs2_create_inode(struct inode *dir, struct dentry *dentry,
+ 	gfs2_glock_dq_uninit(&ip->i_iopen_gh);
+ fail_gunlock2:
+ 	gfs2_glock_put(io_gl);
++fail_dealloc_inode:
++	set_bit(GIF_ALLOC_FAILED, &ip->i_flags);
++	dealloc_error = 0;
++	if (ip->i_eattr)
++		dealloc_error = gfs2_ea_dealloc(ip, xattr_initialized);
++	clear_nlink(inode);
++	mark_inode_dirty(inode);
++	if (!dealloc_error)
++		dealloc_error = gfs2_dinode_dealloc(ip);
++	if (dealloc_error)
++		fs_warn(sdp, "%s: %d\n", __func__, dealloc_error);
++	ip->i_no_addr = 0;
+ fail_free_inode:
+ 	if (ip->i_gl) {
+ 		gfs2_glock_put(ip->i_gl);
+@@ -911,10 +926,6 @@ static int gfs2_create_inode(struct inode *dir, struct dentry *dentry,
+ 	gfs2_dir_no_add(&da);
+ 	gfs2_glock_dq_uninit(&d_gh);
+ 	if (!IS_ERR_OR_NULL(inode)) {
+-		set_bit(GIF_ALLOC_FAILED, &ip->i_flags);
+-		clear_nlink(inode);
+-		if (ip->i_no_addr)
+-			mark_inode_dirty(inode);
+ 		if (inode->i_state & I_NEW)
+ 			iget_failed(inode);
+ 		else
+diff --git a/fs/gfs2/super.c b/fs/gfs2/super.c
+index e25a24ae2197f..54f1efd47a3e5 100644
+--- a/fs/gfs2/super.c
++++ b/fs/gfs2/super.c
+@@ -1258,9 +1258,6 @@ static enum evict_behavior evict_should_delete(struct inode *inode,
+ 	struct gfs2_sbd *sdp = sb->s_fs_info;
+ 	int ret;
+ 
+-	if (unlikely(test_bit(GIF_ALLOC_FAILED, &ip->i_flags)))
+-		goto should_delete;
 -
--		if (tx_buf)
--			l = min(round_down(len, 4), p->tx_fifo_size * 4);
--		if (rx_buf)
--			l = min(round_down(len, 4), p->rx_fifo_size * 4);
-+		unsigned int l = min(round_down(len, 4), max_wdlen * 4);
+ 	if (gfs2_holder_initialized(&ip->i_iopen_gh) &&
+ 	    test_bit(GLF_DEFER_DELETE, &ip->i_iopen_gh.gh_gl->gl_flags))
+ 		return EVICT_SHOULD_DEFER_DELETE;
+@@ -1290,7 +1287,6 @@ static enum evict_behavior evict_should_delete(struct inode *inode,
+ 	if (inode->i_nlink)
+ 		return EVICT_SHOULD_SKIP_DELETE;
  
- 		if (bits <= 8) {
- 			copy32 = copy_bswap32;
+-should_delete:
+ 	if (gfs2_holder_initialized(&ip->i_iopen_gh) &&
+ 	    test_bit(HIF_HOLDER, &ip->i_iopen_gh.gh_iflags))
+ 		return gfs2_upgrade_iopen_glock(inode);
+@@ -1314,7 +1310,7 @@ static int evict_unlinked_inode(struct inode *inode)
+ 	}
+ 
+ 	if (ip->i_eattr) {
+-		ret = gfs2_ea_dealloc(ip, !test_bit(GIF_ALLOC_FAILED, &ip->i_flags));
++		ret = gfs2_ea_dealloc(ip, true);
+ 		if (ret)
+ 			goto out;
+ 	}
 -- 
 2.39.5
 
