@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECF992FA621;
-	Tue, 17 Jun 2025 16:41:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4101F2FA625;
+	Tue, 17 Jun 2025 16:41:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750178475; cv=none; b=mh/dvC+5hidnJd5qfuWU4W42EO3q2GFvdOr+Vl/fDi7A7UlcBOEvPfvzOm9maG3u3kHJMn3/Oc7ZSH6ZoOPtU80FChS4G79OUzCiLzSmFpPtBZA4WrtjzcVP691LKHCPM/v/vVbEuWJi18dOATHS9AVlhoDDSx6DfRYwWWTRX2I=
+	t=1750178479; cv=none; b=q+pXW8HFPTNz1kCbk29TCzMl21mDHb2lK4uCCTrAntGPnCopUzhZ2Ew76f04yiPuCDuv6mx3HEVislnaxOWfnicHNbjUnmLoxphCgtZsuYw61OGkiQMe0iHEwokPOSY25oa/wMvNq3GrPy+HBuO/y0NtC53d/jwd+Ar3A5pDusY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750178475; c=relaxed/simple;
-	bh=w5HdXiLLYzQX56g0eD6i3Y8KKhlk36X/aGU3JPUiT1k=;
+	s=arc-20240116; t=1750178479; c=relaxed/simple;
+	bh=Jxvl1E82BpgHq7lf6Khh4VNHWyxjv7bnTJ6dRaxagNw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mtxTpXBmQdtu18X3qB5VSFOJzTynKVp7ehXH0aMxwS1CvDlexsni/pf48G1y7n96LrunuF5/YBx1NfbCAY5qbzypc3LSUwu+3/DzwALuf9GZQr/7y3HchIlL4QxltV4decr7ALte9/wZefkcIIsGSt+3JfrIxvm/XsggyMj5Zsg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c1ZmuT+m; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t6fH/rDLYbqoaK6xOVgv0pUbOvzxohpR14ULZ1jFh6DNfgAAnh0gX8NOHTNRjRxH2sEHGxS2f2uzPehm7q/4vrFia8Xl5C/8jv5pNeMuIX6OknupaW7sNH9kx97FAuaQfYM9Kgz4f5aN8sPwgqmP6w3IJroJUcb+6DUHI0f/OwQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ncWaut6z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c1ZmuT+m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C9B5C4CEE3;
-	Tue, 17 Jun 2025 16:41:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ncWaut6z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A562DC4CEE3;
+	Tue, 17 Jun 2025 16:41:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750178474;
-	bh=w5HdXiLLYzQX56g0eD6i3Y8KKhlk36X/aGU3JPUiT1k=;
+	s=korg; t=1750178479;
+	bh=Jxvl1E82BpgHq7lf6Khh4VNHWyxjv7bnTJ6dRaxagNw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c1ZmuT+mEpj78A55QRxIoxHDDZFjGn3lOP52aYl7R5gAgE0JfQy272ayPKZ9k4XzP
-	 PHMZB1l6PPo/eIUXou0vKn7fGYU7VFKjM36zQYLR0Kbno9diZzd3BHN2YUGirQeYpC
-	 JrQFVHhqxojt9uFCNiz+07jC4l1DRNxFGaInF5kI=
+	b=ncWaut6z9pm3kiUenZwBbou9LMVvB8o5sNh2rWsMmZYkKEq1jeHlX/kS37Uyt5z3S
+	 lFY1MBtNZ8/ciqd4fyY77a9XVXqn6DUCnauPnpivfRMaKIXCUoZGWJAh31gt2lG7Ax
+	 FMjeu8gsglHv4JMQZX0Z4HVxSDYg1RXNDT43RUH4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason-JH Lin <jason-jh.lin@mediatek.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Jassi Brar <jassisinghbrar@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 465/780] mailbox: mtk-cmdq: Refine GCE_GCTL_VALUE setting
-Date: Tue, 17 Jun 2025 17:22:53 +0200
-Message-ID: <20250617152510.428420255@linuxfoundation.org>
+	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
+	Mans Rullgard <mans@mansr.com>
+Subject: [PATCH 6.12 491/512] tty: serial: 8250_omap: fix TX with DMA for am33xx
+Date: Tue, 17 Jun 2025 17:27:37 +0200
+Message-ID: <20250617152439.526983064@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,148 +46,104 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jason-JH Lin <jason-jh.lin@mediatek.com>
+From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
 
-[ Upstream commit 9fcebcb37c3e0a4b6eb40768cc5a5faebf166fbe ]
+commit b495021a973e2468497689bd3e29b736747b896f upstream.
 
-Add cmdq_gctl_value_toggle() to configure GCE_CTRL_BY_SW and GCE_DDR_EN
-together in the same GCE_GCTL_VALUE register.
+Commit 1788cf6a91d9 ("tty: serial: switch from circ_buf to kfifo")
+introduced an error in the TX DMA handling for 8250_omap.
 
-For the SoCs whose GCE is located in MMINFRA and uses MMINFRA_AO power,
-this allows it to be written without enabling the clocks. Otherwise, all
-GCE registers should be written after the GCE clocks are enabled.
-Move this function into cmdq_runtime_resume() and cmdq_runtime_suspend()
-to ensure it is called when the GCE clock is enabled.
+When the OMAP_DMA_TX_KICK flag is set, the "skip_byte" is pulled from
+the kfifo and emitted directly in order to start the DMA. While the
+kfifo is updated, dma->tx_size is not decreased. This leads to
+uart_xmit_advance() called in omap_8250_dma_tx_complete() advancing the
+kfifo by one too much.
 
-Fixes: 7abd037aa581 ("mailbox: mtk-cmdq: add gce ddr enable support flow")
-Signed-off-by: Jason-JH Lin <jason-jh.lin@mediatek.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+In practice, transmitting N bytes has been seen to result in the last
+N-1 bytes being sent repeatedly.
+
+This change fixes the problem by moving all of the dma setup after the
+OMAP_DMA_TX_KICK handling and using kfifo_len() instead of the DMA size
+for the 4-byte cutoff check. This slightly changes the behaviour at
+buffer wraparound, but it still transmits the correct bytes somehow.
+
+Now, the "skip_byte" would no longer be accounted to the stats. As
+previously, dma->tx_size included also this skip byte, up->icount.tx was
+updated by aforementioned uart_xmit_advance() in
+omap_8250_dma_tx_complete(). Fix this by using the uart_fifo_out()
+helper instead of bare kfifo_get().
+
+Based on patch by Mans Rullgard <mans@mansr.com>
+
+Signed-off-by: "Jiri Slaby (SUSE)" <jirislaby@kernel.org>
+Fixes: 1788cf6a91d9 ("tty: serial: switch from circ_buf to kfifo")
+Link: https://lore.kernel.org/all/20250506150748.3162-1-mans@mansr.com/
+Reported-by: Mans Rullgard <mans@mansr.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20250522053835.3495975-1-jirislaby@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mailbox/mtk-cmdq-mailbox.c | 51 +++++++++++++-----------------
- 1 file changed, 22 insertions(+), 29 deletions(-)
+ drivers/tty/serial/8250/8250_omap.c |   25 ++++++++++---------------
+ 1 file changed, 10 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/mailbox/mtk-cmdq-mailbox.c b/drivers/mailbox/mtk-cmdq-mailbox.c
-index d186865b8dce6..ab4e8d1954a16 100644
---- a/drivers/mailbox/mtk-cmdq-mailbox.c
-+++ b/drivers/mailbox/mtk-cmdq-mailbox.c
-@@ -92,18 +92,6 @@ struct gce_plat {
- 	u32 gce_num;
- };
+--- a/drivers/tty/serial/8250/8250_omap.c
++++ b/drivers/tty/serial/8250/8250_omap.c
+@@ -1168,16 +1168,6 @@ static int omap_8250_tx_dma(struct uart_
+ 		return 0;
+ 	}
  
--static void cmdq_sw_ddr_enable(struct cmdq *cmdq, bool enable)
--{
--	WARN_ON(clk_bulk_enable(cmdq->pdata->gce_num, cmdq->clocks));
+-	sg_init_table(&sg, 1);
+-	ret = kfifo_dma_out_prepare_mapped(&tport->xmit_fifo, &sg, 1,
+-					   UART_XMIT_SIZE, dma->tx_addr);
+-	if (ret != 1) {
+-		serial8250_clear_THRI(p);
+-		return 0;
+-	}
 -
--	if (enable)
--		writel(GCE_DDR_EN | GCE_CTRL_BY_SW, cmdq->base + GCE_GCTL_VALUE);
--	else
--		writel(GCE_CTRL_BY_SW, cmdq->base + GCE_GCTL_VALUE);
+-	dma->tx_size = sg_dma_len(&sg);
 -
--	clk_bulk_disable(cmdq->pdata->gce_num, cmdq->clocks);
--}
--
- u8 cmdq_get_shift_pa(struct mbox_chan *chan)
- {
- 	struct cmdq *cmdq = container_of(chan->mbox, struct cmdq, mbox);
-@@ -112,6 +100,19 @@ u8 cmdq_get_shift_pa(struct mbox_chan *chan)
- }
- EXPORT_SYMBOL(cmdq_get_shift_pa);
- 
-+static void cmdq_gctl_value_toggle(struct cmdq *cmdq, bool ddr_enable)
-+{
-+	u32 val = cmdq->pdata->control_by_sw ? GCE_CTRL_BY_SW : 0;
+ 	if (priv->habit & OMAP_DMA_TX_KICK) {
+ 		unsigned char c;
+ 		u8 tx_lvl;
+@@ -1202,18 +1192,22 @@ static int omap_8250_tx_dma(struct uart_
+ 			ret = -EBUSY;
+ 			goto err;
+ 		}
+-		if (dma->tx_size < 4) {
++		if (kfifo_len(&tport->xmit_fifo) < 4) {
+ 			ret = -EINVAL;
+ 			goto err;
+ 		}
+-		if (!kfifo_get(&tport->xmit_fifo, &c)) {
++		if (!uart_fifo_out(&p->port, &c, 1)) {
+ 			ret = -EINVAL;
+ 			goto err;
+ 		}
+ 		skip_byte = c;
+-		/* now we need to recompute due to kfifo_get */
+-		kfifo_dma_out_prepare_mapped(&tport->xmit_fifo, &sg, 1,
+-				UART_XMIT_SIZE, dma->tx_addr);
++	}
 +
-+	if (!cmdq->pdata->control_by_sw && !cmdq->pdata->sw_ddr_en)
-+		return;
-+
-+	if (cmdq->pdata->sw_ddr_en && ddr_enable)
-+		val |= GCE_DDR_EN;
-+
-+	writel(val, cmdq->base + GCE_GCTL_VALUE);
-+}
-+
- static int cmdq_thread_suspend(struct cmdq *cmdq, struct cmdq_thread *thread)
- {
- 	u32 status;
-@@ -140,16 +141,10 @@ static void cmdq_thread_resume(struct cmdq_thread *thread)
- static void cmdq_init(struct cmdq *cmdq)
- {
- 	int i;
--	u32 gctl_regval = 0;
++	sg_init_table(&sg, 1);
++	ret = kfifo_dma_out_prepare_mapped(&tport->xmit_fifo, &sg, 1, UART_XMIT_SIZE, dma->tx_addr);
++	if (ret != 1) {
++		ret = -EINVAL;
++		goto err;
+ 	}
  
- 	WARN_ON(clk_bulk_enable(cmdq->pdata->gce_num, cmdq->clocks));
--	if (cmdq->pdata->control_by_sw)
--		gctl_regval = GCE_CTRL_BY_SW;
--	if (cmdq->pdata->sw_ddr_en)
--		gctl_regval |= GCE_DDR_EN;
+ 	desc = dmaengine_prep_slave_sg(dma->txchan, &sg, 1, DMA_MEM_TO_DEV,
+@@ -1223,6 +1217,7 @@ static int omap_8250_tx_dma(struct uart_
+ 		goto err;
+ 	}
  
--	if (gctl_regval)
--		writel(gctl_regval, cmdq->base + GCE_GCTL_VALUE);
-+	cmdq_gctl_value_toggle(cmdq, true);
++	dma->tx_size = sg_dma_len(&sg);
+ 	dma->tx_running = 1;
  
- 	writel(CMDQ_THR_ACTIVE_SLOT_CYCLES, cmdq->base + CMDQ_THR_SLOT_CYCLES);
- 	for (i = 0; i <= CMDQ_MAX_EVENT; i++)
-@@ -315,14 +310,21 @@ static irqreturn_t cmdq_irq_handler(int irq, void *dev)
- static int cmdq_runtime_resume(struct device *dev)
- {
- 	struct cmdq *cmdq = dev_get_drvdata(dev);
-+	int ret;
- 
--	return clk_bulk_enable(cmdq->pdata->gce_num, cmdq->clocks);
-+	ret = clk_bulk_enable(cmdq->pdata->gce_num, cmdq->clocks);
-+	if (ret)
-+		return ret;
-+
-+	cmdq_gctl_value_toggle(cmdq, true);
-+	return 0;
- }
- 
- static int cmdq_runtime_suspend(struct device *dev)
- {
- 	struct cmdq *cmdq = dev_get_drvdata(dev);
- 
-+	cmdq_gctl_value_toggle(cmdq, false);
- 	clk_bulk_disable(cmdq->pdata->gce_num, cmdq->clocks);
- 	return 0;
- }
-@@ -347,9 +349,6 @@ static int cmdq_suspend(struct device *dev)
- 	if (task_running)
- 		dev_warn(dev, "exist running task(s) in suspend\n");
- 
--	if (cmdq->pdata->sw_ddr_en)
--		cmdq_sw_ddr_enable(cmdq, false);
--
- 	return pm_runtime_force_suspend(dev);
- }
- 
-@@ -360,9 +359,6 @@ static int cmdq_resume(struct device *dev)
- 	WARN_ON(pm_runtime_force_resume(dev));
- 	cmdq->suspended = false;
- 
--	if (cmdq->pdata->sw_ddr_en)
--		cmdq_sw_ddr_enable(cmdq, true);
--
- 	return 0;
- }
- 
-@@ -370,9 +366,6 @@ static void cmdq_remove(struct platform_device *pdev)
- {
- 	struct cmdq *cmdq = platform_get_drvdata(pdev);
- 
--	if (cmdq->pdata->sw_ddr_en)
--		cmdq_sw_ddr_enable(cmdq, false);
--
- 	if (!IS_ENABLED(CONFIG_PM))
- 		cmdq_runtime_suspend(&pdev->dev);
- 
--- 
-2.39.5
-
+ 	desc->callback = omap_8250_dma_tx_complete;
 
 
