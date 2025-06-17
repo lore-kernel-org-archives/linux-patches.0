@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62D9C2ECE80;
-	Tue, 17 Jun 2025 15:46:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 484032E92BC;
+	Tue, 17 Jun 2025 15:46:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175163; cv=none; b=SY/fioZxz/0eGgubgxQsC7sCpmlxpOBlitNRSokDn3muCuXFPvC+1jvQSuDMs0vy+8sw0ENR5OSay1Gxf7lfFPSS/md1/zc45/WTMsXdZno7XMSpM+Fd1qTZNHJMp04u0H2W4l6fIc93zB/JwJ02lEwFqYAWpsxoQR/7JImHW80=
+	t=1750175166; cv=none; b=l/wOqHcYKLgX1gTBB4s7sAcfhooMb57ZgQCwfE6S3E0Kv8UMJyCwGvNjgUDOGh2U3G2F64pk5pz5xLZYYOzCnmK3/8Otrq/SFpzXQm+Jl70VEvQK/pZbGzY1/loZ/NF2D8/ODE3NPYudvgbzG29dSdbRy0BV3Y3teJ1EhlXoJCo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175163; c=relaxed/simple;
-	bh=u8GGos/xzkwc7FWUM845t+NcERwOfboI9BKg3jN1dQU=;
+	s=arc-20240116; t=1750175166; c=relaxed/simple;
+	bh=nPaQSG3SKtLGZIzTDRPDDdv5v+gd0kfofZ00Rj+ts2c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eFuqfFjuIF/pMvrTFw2S/Az9pFj+xSEf9CD1E3xcNQFH/Yokyyy9gBay/vctpvIoqGzjtl/+ptiBHJvgQupTl73woLKKu+bfctacLefxqN2UDFP66ZvAwvkamtevGiYzwrzBkhdkWmPyHCsm5axbRKK3RqvCnvOrJHruKNKaH3U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1ED9+lOy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VzlCnyrRDQ34IZwY6uWVFJZaMPDrSqdKETykG6kq8qZqzwGYfeaulaCAzpYm0N8msoj/BQs+C4YIw+HltqmZwU79RngcphYZU2wSMqV/VJH09SOJJ86NParj8v/3RY7IkJ88AqXyJqktpsJ+aUBmx0fFrLlEJZ+otgJ9623rbEc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0W0AS/or; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1ED9+lOy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6A3FC4CEE3;
-	Tue, 17 Jun 2025 15:46:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0W0AS/or"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5C0CC4CEE3;
+	Tue, 17 Jun 2025 15:46:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175163;
-	bh=u8GGos/xzkwc7FWUM845t+NcERwOfboI9BKg3jN1dQU=;
+	s=korg; t=1750175166;
+	bh=nPaQSG3SKtLGZIzTDRPDDdv5v+gd0kfofZ00Rj+ts2c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1ED9+lOyJ1VSdRvxnR2N9mlquoJARm0PQ95Wh7E2kVGnfaXrMDgAT3B8pWUgjlD1P
-	 q6lzkIfYvHaE8QhVEkTqE8yGNpgGMD5Y8m3uBWy0Gmh+Ndb9bJU0L3azL/XQvtnfm/
-	 HaqEH6qJwyN59zcWGIAXcznFPLWdx9r3z6ZXy2Fc=
+	b=0W0AS/orpXOnM4ohdcVuIAoBvRPu/w7eD3cUmL2kOLYyaU1KtXbK4M6jG6NMnBH4R
+	 3c6Hbbf6ARRCYGMyMAP9A0xjKXO97GiS92gHkup0hewwAHRy9EKnGhzgH5Lc3EVNR6
+	 1zpaWODMP2B/8UJG6fb9WDI4HZN7WV2rmdB9s+Zo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thangaraj Samynathan <thangaraj.s@microchip.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 149/356] net: lan743x: rename lan743x_reset_phy to lan743x_hw_reset_phy
-Date: Tue, 17 Jun 2025 17:24:24 +0200
-Message-ID: <20250617152344.234263572@linuxfoundation.org>
+Subject: [PATCH 6.12 100/512] drm/mediatek: Fix kobject put for component sub-drivers
+Date: Tue, 17 Jun 2025 17:21:06 +0200
+Message-ID: <20250617152423.649490916@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-References: <20250617152338.212798615@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,49 +48,69 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thangaraj Samynathan <thangaraj.s@microchip.com>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-[ Upstream commit 68927eb52d0af04863584930db06075d2610e194 ]
+[ Upstream commit 80805b62ea5b95eda54c225b989f929ca0691ab0 ]
 
-rename the function to lan743x_hw_reset_phy to better describe it
-operation.
+In function mtk_drm_get_all_drm_priv(), this driver is incrementing
+the refcount for the sub-drivers of mediatek-drm with a call to
+device_find_child() when taking a reference to all of those child
+devices.
 
-Fixes: 23f0703c125be ("lan743x: Add main source files for new lan743x driver")
-Signed-off-by: Thangaraj Samynathan <thangaraj.s@microchip.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20250526053048.287095-2-thangaraj.s@microchip.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+When the component bind fails multiple times this results in a
+refcount_t overflow, as the reference count is never decremented:
+fix that by adding a call to put_device() for all of the mmsys
+devices in a loop, in error cases of mtk_drm_bind() and in the
+mtk_drm_unbind() callback.
+
+Fixes: 1ef7ed48356c ("drm/mediatek: Modify mediatek-drm for mt8195 multi mmsys support")
+Reviewed-by: Chen-Yu Tsai <wenst@chromium.org>
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://patchwork.kernel.org/project/dri-devel/patch/20250403104741.71045-3-angelogioacchino.delregno@collabora.com/
+Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/microchip/lan743x_main.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/mediatek/mtk_drm_drv.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/net/ethernet/microchip/lan743x_main.c b/drivers/net/ethernet/microchip/lan743x_main.c
-index f971d60484f06..781440d5756f3 100644
---- a/drivers/net/ethernet/microchip/lan743x_main.c
-+++ b/drivers/net/ethernet/microchip/lan743x_main.c
-@@ -1373,7 +1373,7 @@ static int lan743x_mac_set_mtu(struct lan743x_adapter *adapter, int new_mtu)
+diff --git a/drivers/gpu/drm/mediatek/mtk_drm_drv.c b/drivers/gpu/drm/mediatek/mtk_drm_drv.c
+index 86541b0d5c496..3cdda6694f7f5 100644
+--- a/drivers/gpu/drm/mediatek/mtk_drm_drv.c
++++ b/drivers/gpu/drm/mediatek/mtk_drm_drv.c
+@@ -675,6 +675,10 @@ static int mtk_drm_bind(struct device *dev)
+ 	for (i = 0; i < private->data->mmsys_dev_num; i++)
+ 		private->all_drm_private[i]->drm = NULL;
+ err_put_dev:
++	for (i = 0; i < private->data->mmsys_dev_num; i++) {
++		/* For device_find_child in mtk_drm_get_all_priv() */
++		put_device(private->all_drm_private[i]->dev);
++	}
+ 	put_device(private->mutex_dev);
+ 	return ret;
  }
- 
- /* PHY */
--static int lan743x_phy_reset(struct lan743x_adapter *adapter)
-+static int lan743x_hw_reset_phy(struct lan743x_adapter *adapter)
+@@ -682,6 +686,7 @@ static int mtk_drm_bind(struct device *dev)
+ static void mtk_drm_unbind(struct device *dev)
  {
- 	u32 data;
+ 	struct mtk_drm_private *private = dev_get_drvdata(dev);
++	int i;
  
-@@ -1407,7 +1407,7 @@ static void lan743x_phy_update_flowcontrol(struct lan743x_adapter *adapter,
+ 	/* for multi mmsys dev, unregister drm dev in mmsys master */
+ 	if (private->drm_master) {
+@@ -689,6 +694,10 @@ static void mtk_drm_unbind(struct device *dev)
+ 		mtk_drm_kms_deinit(private->drm);
+ 		drm_dev_put(private->drm);
  
- static int lan743x_phy_init(struct lan743x_adapter *adapter)
- {
--	return lan743x_phy_reset(adapter);
-+	return lan743x_hw_reset_phy(adapter);
- }
- 
- static void lan743x_phy_link_status_change(struct net_device *netdev)
++		for (i = 0; i < private->data->mmsys_dev_num; i++) {
++			/* For device_find_child in mtk_drm_get_all_priv() */
++			put_device(private->all_drm_private[i]->dev);
++		}
+ 		put_device(private->mutex_dev);
+ 	}
+ 	private->mtk_drm_bound = false;
 -- 
 2.39.5
 
