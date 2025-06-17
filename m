@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75CBD2EA164;
-	Tue, 17 Jun 2025 15:55:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E3F22F430D;
+	Tue, 17 Jun 2025 15:55:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175715; cv=none; b=Qsh+6c7Dri4MVZgBP9n6+q1ESAKcWgbz/M2HpB0eKLBSIkpGgvBDGFihGb+JzmStgEO8THUmoYecU9C06PDGg7DA7rV3Rfm1f/19oTqTMzbgKmBvar7dJNDETcvoNtYtzVj94Vw/vS6MmRTSl3rq1OFfaET7DVhZ/ph4fcdp2gU=
+	t=1750175718; cv=none; b=QjkYj6gKFaD/pVi3vHIcWZQ+0yl8uSvMKf90wjdsGSj6gXLzzl1RaxR+8901XXvsOOj5EoxZuKUaRDSQe9K1Tx+SYEIruQFKndYygqd1tqB5pGM8RMNuby62h+NV7HyyLOBp/Q41fjtmiW6xnKhYpCypfqy/xaEW7XRxeXl/ZOc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175715; c=relaxed/simple;
-	bh=QS3WWtsOWzB7j1aB6vaLLhaFVzfCUBnxDdEvW9a5dWA=;
+	s=arc-20240116; t=1750175718; c=relaxed/simple;
+	bh=ke7Hh5J3uKUCRbLvLhgfnchaC6OP7RxJ11V36077Skg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a6Pi5232EJ2jZhvQpyNGemLbo/bL4hpC9rkWN2bFxWcwemJsKWtRsNwW+1wnb4yXRp1DbFr+KSdbIbGXimVUs3ObHEWVynXtJcaQ0DkIcRBI7xoGkf42VBf0uE+MuvIoItSf7CxCcOpBL5PaV5jvBGZ1RzA14vT7rLga2FLGDj8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YXHVs6gX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LE3jvO1D/NH9dzw6Wf+fb9vEEyPnaE+fXQxIDjj65SGu82krFSyOzgMWNoNWy4FuhryW2k6ujFSplaGk6MsHlU423WlAOxR3/7bTyLWDYVx8LkMYlGyh1B9qzymQ7jBnXcpn5IsrGoGXNtWg3OuE/8iap4pjfnz2ngUff7Zlz68=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XvyehRSW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YXHVs6gX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01C6DC4CEE3;
-	Tue, 17 Jun 2025 15:55:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XvyehRSW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07852C4CEE7;
+	Tue, 17 Jun 2025 15:55:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175715;
-	bh=QS3WWtsOWzB7j1aB6vaLLhaFVzfCUBnxDdEvW9a5dWA=;
+	s=korg; t=1750175718;
+	bh=ke7Hh5J3uKUCRbLvLhgfnchaC6OP7RxJ11V36077Skg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YXHVs6gX0s6Wbk9orTZhr6PwK3EINAWqe3G4TvezPyvEX46NF9Kf+W1rhXQlHV92g
-	 YrYtP4IPq+6PzFcrQkGUM4vKQsSRg1z39tI1n8kwRBo+tRhBFkM5dUjsWmYim3xlNc
-	 PKtfxRugf8mkAX1BqXFfhrIO740THk+WRy61trUw=
+	b=XvyehRSW4RtYEWVDef8/5Mtbc1+mnXljjfYZ0mMn0erFWaq8JfyYwgsDDM3tIDSg5
+	 bn0SZqyMNGSPpbF9KoJCnEuW9q2Yc3lJLCRXHPxs0rWGzNJKemaafJvzQnrEH2OElw
+	 bajCsKJDkb4D6JsWi7+eLI0hGY6rj4+JRoFWSN7g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sagarika Sharma <sharmasagarika@google.com>,
-	Minh-Anh Nguyen <minhanhdn@google.com>,
-	YiFei Zhu <zhuyifei@google.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Quentin Monnet <qmo@kernel.org>,
+	Andre Przywara <andre.przywara@arm.com>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
+	Chen-Yu Tsai <wens@csie.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 156/512] bpftool: Fix regression of "bpftool cgroup tree" EINVAL on older kernels
-Date: Tue, 17 Jun 2025 17:22:02 +0200
-Message-ID: <20250617152425.929259868@linuxfoundation.org>
+Subject: [PATCH 6.6 185/356] dt-bindings: vendor-prefixes: Add Liontron name
+Date: Tue, 17 Jun 2025 17:25:00 +0200
+Message-ID: <20250617152345.662799215@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
+References: <20250617152338.212798615@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,61 +48,42 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: YiFei Zhu <zhuyifei@google.com>
+From: Andre Przywara <andre.przywara@arm.com>
 
-[ Upstream commit 43745d11bfd9683abdf08ad7a5cc403d6a9ffd15 ]
+[ Upstream commit 9baa27a2e9fc746143ab686b6dbe2d515284a4c5 ]
 
-If cgroup_has_attached_progs queries an attach type not supported
-by the running kernel, due to the kernel being older than the bpftool
-build, it would encounter an -EINVAL from BPF_PROG_QUERY syscall.
+Liontron is a company based in Shenzen, China, making industrial
+development boards and embedded computers, mostly using Rockchip and
+Allwinner SoCs.
 
-Prior to commit 98b303c9bf05 ("bpftool: Query only cgroup-related
-attach types"), this EINVAL would be ignored by the function, allowing
-the function to only consider supported attach types. The commit
-changed so that, instead of querying all attach types, only attach
-types from the array `cgroup_attach_types` is queried. The assumption
-is that because these are only cgroup attach types, they should all
-be supported. Unfortunately this assumption may be false when the
-kernel is older than the bpftool build, where the attach types queried
-by bpftool is not yet implemented in the kernel. This would result in
-errors such as:
+Add their name to the list of vendors.
 
-  $ bpftool cgroup tree
-  CgroupPath
-  ID       AttachType      AttachFlags     Name
-  Error: can't query bpf programs attached to /sys/fs/cgroup: Invalid argument
-
-This patch restores the logic of ignoring EINVAL from prior to that patch.
-
-Fixes: 98b303c9bf05 ("bpftool: Query only cgroup-related attach types")
-Reported-by: Sagarika Sharma <sharmasagarika@google.com>
-Reported-by: Minh-Anh Nguyen <minhanhdn@google.com>
-Signed-off-by: YiFei Zhu <zhuyifei@google.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Acked-by: Quentin Monnet <qmo@kernel.org>
-Link: https://lore.kernel.org/bpf/20250428211536.1651456-1-zhuyifei@google.com
+Signed-off-by: Andre Przywara <andre.przywara@arm.com>
+Acked-by: Rob Herring (Arm) <robh@kernel.org>
+Link: https://patch.msgid.link/20250505164729.18175-2-andre.przywara@arm.com
+Signed-off-by: Chen-Yu Tsai <wens@csie.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/bpf/bpftool/cgroup.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/tools/bpf/bpftool/cgroup.c b/tools/bpf/bpftool/cgroup.c
-index 9af426d432993..afab728468bf6 100644
---- a/tools/bpf/bpftool/cgroup.c
-+++ b/tools/bpf/bpftool/cgroup.c
-@@ -221,7 +221,7 @@ static int cgroup_has_attached_progs(int cgroup_fd)
- 	for (i = 0; i < ARRAY_SIZE(cgroup_attach_types); i++) {
- 		int count = count_attached_bpf_progs(cgroup_fd, cgroup_attach_types[i]);
- 
--		if (count < 0)
-+		if (count < 0 && errno != EINVAL)
- 			return -1;
- 
- 		if (count > 0) {
+diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+index dc275ab60e534..7376a924e9aca 100644
+--- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
++++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+@@ -773,6 +773,8 @@ patternProperties:
+     description: Linux-specific binding
+   "^linx,.*":
+     description: Linx Technologies
++  "^liontron,.*":
++    description: Shenzhen Liontron Technology Co., Ltd
+   "^liteon,.*":
+     description: LITE-ON Technology Corp.
+   "^litex,.*":
 -- 
 2.39.5
 
