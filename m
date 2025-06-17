@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A482A2DFF34;
-	Tue, 17 Jun 2025 16:15:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDBCA1F37A1;
+	Tue, 17 Jun 2025 16:15:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750176933; cv=none; b=XY2eP9ixAAnerRQmC18vUgdGWvfQCtYjhq6BPJdBO4TrI3svzNvCVnnR3pezJ7Y4m8K5umK75zGCgxt0tRUAEvABAPQ3PexDJ0m5nWuYtmlRrnI6njyPGTZMiLMk7zWVrNyI+uThIV0gsest5aHjeSC9ooETd/5AHMLAl18MnG0=
+	t=1750176937; cv=none; b=tj02P0k20zAmlX+zc6IZzFLAhToZ0DUZoLmA5bEMOF68DhF5MaNO/Jm4FrR0ghGmAun3ctB48Q4tsmrsGP314crdufA5WOljq5uI/tYfO5Efrk0ybTSPTZZsz4+inTObQggCdlZPbABcXLwiJ4DxvDz//PgwdDCVsx78Jc9TV1w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750176933; c=relaxed/simple;
-	bh=eiJD/keCcVBN8g8KSdR/16ufiqZVfwsjWcbJYjM+9L8=;
+	s=arc-20240116; t=1750176937; c=relaxed/simple;
+	bh=jOePu1nYz0favQk/p+cT+fsBHgu+b4HLluMFSqVMAOI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=afFy8Foxr2QX/ijgIeW/DvLLp2mxtqGfszHBDLya0I/xgIeBLXV+mWoXe+yTTahMOFpEKac6+w4VRtPTSB3a0ePsT3ywE6cTf7NqSv9v97FNQJyQLd2qnvtsOuVoOTjXvIf6HtqhHotY1L+LBOCU+w388rsgtzfLuBfYrcX2Zc0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mn3Nn34V; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ws29VelDUaWqye1DrG6ll97LNhxJxn+/n5QJjNH4FfSUu9v0Y5GOTE7Ci/X5rYJbbbeMUfoze3kcureS4UbTPb0SnnSgNDtdPkp4JEa3Ze4EcGL2oWnQ3Ne2PlXrFq7wA6JFweq/wm+aCUNg6T4kGSCdIJwzU5pGYeVlGiE+IMc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2XuoD6li; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mn3Nn34V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07501C4CEE3;
-	Tue, 17 Jun 2025 16:15:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2XuoD6li"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E007C4CEE7;
+	Tue, 17 Jun 2025 16:15:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750176933;
-	bh=eiJD/keCcVBN8g8KSdR/16ufiqZVfwsjWcbJYjM+9L8=;
+	s=korg; t=1750176936;
+	bh=jOePu1nYz0favQk/p+cT+fsBHgu+b4HLluMFSqVMAOI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mn3Nn34VBSrisZzb1iLCkToR+wkcc73fAoTztjvCtT71Knw4X7d6tozYSvyJsqZNe
-	 rqwfP7L208nMKZKzghM77fMXH2OYGfXEoG7M3O3zNywpWjfbOS6xDMkhIl5w/tFD1f
-	 v4X+HRqkL0f9gJK87Q0BZ5YVVEouV9S4mhze/xy8=
+	b=2XuoD6lio/L+6a3ixc+o/WAXxqYeEbBuqkKfjHzL42dp3GNuMuu9HQWfkAC0IFy6b
+	 oE9JDBtS8y3E1vgAHQDsR1cVvbjbl6eWKjXUpbUZnvJtvaxDo3Wy0CNGtPyDNHRqqI
+	 1y/mtsUyGouDuABucGNGasl2O97p5Q/PbIwDcX+k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kent Overstreet <kent.overstreet@linux.dev>,
-	Benjamin Marzinski <bmarzins@redhat.com>,
-	Mikulas Patocka <mpatocka@redhat.com>,
+	Daniel Wagner <wagi@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 281/512] dm-flakey: error all IOs when num_features is absent
-Date: Tue, 17 Jun 2025 17:24:07 +0200
-Message-ID: <20250617152430.983831399@linuxfoundation.org>
+Subject: [PATCH 6.6 332/356] nvmet-fcloop: access fcpreq only when holding reqlock
+Date: Tue, 17 Jun 2025 17:27:27 +0200
+Message-ID: <20250617152351.506171884@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
+References: <20250617152338.212798615@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,70 +47,97 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Benjamin Marzinski <bmarzins@redhat.com>
+From: Daniel Wagner <wagi@kernel.org>
 
-[ Upstream commit 40ed054f39bc99eac09871c33198e501f4acdf24 ]
+[ Upstream commit 47a827cd7929d0550c3496d70b417fcb5649b27b ]
 
-dm-flakey would error all IOs if num_features was 0, but if it was
-absent, dm-flakey would never error any IO. Fix this so that no
-num_features works the same as num_features set to 0.
+The abort handling logic expects that the state and the fcpreq are only
+accessed when holding the reqlock lock.
 
-Fixes: aa7d7bc99fed7 ("dm flakey: add an "error_reads" option")
-Reported-by: Kent Overstreet <kent.overstreet@linux.dev>
-Signed-off-by: Benjamin Marzinski <bmarzins@redhat.com>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+While at it, only handle the aborts in the abort handler.
+
+Signed-off-by: Daniel Wagner <wagi@kernel.org>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-flakey.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/nvme/target/fcloop.c | 31 ++++++++++++++++---------------
+ 1 file changed, 16 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/md/dm-flakey.c b/drivers/md/dm-flakey.c
-index b690905ab89ff..806a80dd3bd9b 100644
---- a/drivers/md/dm-flakey.c
-+++ b/drivers/md/dm-flakey.c
-@@ -53,8 +53,8 @@ struct per_bio_data {
- static int parse_features(struct dm_arg_set *as, struct flakey_c *fc,
- 			  struct dm_target *ti)
+diff --git a/drivers/nvme/target/fcloop.c b/drivers/nvme/target/fcloop.c
+index 4b35bdcac185f..aeeb7455fc2e7 100644
+--- a/drivers/nvme/target/fcloop.c
++++ b/drivers/nvme/target/fcloop.c
+@@ -613,12 +613,13 @@ fcloop_fcp_recv_work(struct work_struct *work)
  {
--	int r;
--	unsigned int argc;
-+	int r = 0;
-+	unsigned int argc = 0;
- 	const char *arg_name;
+ 	struct fcloop_fcpreq *tfcp_req =
+ 		container_of(work, struct fcloop_fcpreq, fcp_rcv_work);
+-	struct nvmefc_fcp_req *fcpreq = tfcp_req->fcpreq;
++	struct nvmefc_fcp_req *fcpreq;
+ 	unsigned long flags;
+ 	int ret = 0;
+ 	bool aborted = false;
  
- 	static const struct dm_arg _args[] = {
-@@ -65,14 +65,13 @@ static int parse_features(struct dm_arg_set *as, struct flakey_c *fc,
- 		{0, PROBABILITY_BASE, "Invalid random corrupt argument"},
- 	};
- 
--	/* No feature arguments supplied. */
--	if (!as->argc)
--		return 0;
--
--	r = dm_read_arg_group(_args, as, &argc, &ti->error);
--	if (r)
-+	if (as->argc && (r = dm_read_arg_group(_args, as, &argc, &ti->error)))
- 		return r;
- 
-+	/* No feature arguments supplied. */
-+	if (!argc)
-+		goto error_all_io;
-+
- 	while (argc) {
- 		arg_name = dm_shift_arg(as);
- 		argc--;
-@@ -217,6 +216,7 @@ static int parse_features(struct dm_arg_set *as, struct flakey_c *fc,
- 	if (!fc->corrupt_bio_byte && !test_bit(ERROR_READS, &fc->flags) &&
- 	    !test_bit(DROP_WRITES, &fc->flags) && !test_bit(ERROR_WRITES, &fc->flags) &&
- 	    !fc->random_read_corrupt && !fc->random_write_corrupt) {
-+error_all_io:
- 		set_bit(ERROR_WRITES, &fc->flags);
- 		set_bit(ERROR_READS, &fc->flags);
+ 	spin_lock_irqsave(&tfcp_req->reqlock, flags);
++	fcpreq = tfcp_req->fcpreq;
+ 	switch (tfcp_req->inistate) {
+ 	case INI_IO_START:
+ 		tfcp_req->inistate = INI_IO_ACTIVE;
+@@ -633,16 +634,19 @@ fcloop_fcp_recv_work(struct work_struct *work)
  	}
+ 	spin_unlock_irqrestore(&tfcp_req->reqlock, flags);
+ 
+-	if (unlikely(aborted))
+-		ret = -ECANCELED;
+-	else {
+-		if (likely(!check_for_drop(tfcp_req)))
+-			ret = nvmet_fc_rcv_fcp_req(tfcp_req->tport->targetport,
+-				&tfcp_req->tgt_fcp_req,
+-				fcpreq->cmdaddr, fcpreq->cmdlen);
+-		else
+-			pr_info("%s: dropped command ********\n", __func__);
++	if (unlikely(aborted)) {
++		/* the abort handler will call fcloop_call_host_done */
++		return;
++	}
++
++	if (unlikely(check_for_drop(tfcp_req))) {
++		pr_info("%s: dropped command ********\n", __func__);
++		return;
+ 	}
++
++	ret = nvmet_fc_rcv_fcp_req(tfcp_req->tport->targetport,
++				   &tfcp_req->tgt_fcp_req,
++				   fcpreq->cmdaddr, fcpreq->cmdlen);
+ 	if (ret)
+ 		fcloop_call_host_done(fcpreq, tfcp_req, ret);
+ }
+@@ -657,9 +661,10 @@ fcloop_fcp_abort_recv_work(struct work_struct *work)
+ 	unsigned long flags;
+ 
+ 	spin_lock_irqsave(&tfcp_req->reqlock, flags);
+-	fcpreq = tfcp_req->fcpreq;
+ 	switch (tfcp_req->inistate) {
+ 	case INI_IO_ABORTED:
++		fcpreq = tfcp_req->fcpreq;
++		tfcp_req->fcpreq = NULL;
+ 		break;
+ 	case INI_IO_COMPLETED:
+ 		completed = true;
+@@ -681,10 +686,6 @@ fcloop_fcp_abort_recv_work(struct work_struct *work)
+ 		nvmet_fc_rcv_fcp_abort(tfcp_req->tport->targetport,
+ 					&tfcp_req->tgt_fcp_req);
+ 
+-	spin_lock_irqsave(&tfcp_req->reqlock, flags);
+-	tfcp_req->fcpreq = NULL;
+-	spin_unlock_irqrestore(&tfcp_req->reqlock, flags);
+-
+ 	fcloop_call_host_done(fcpreq, tfcp_req, -ECANCELED);
+ 	/* call_host_done releases reference for abort downcall */
+ }
 -- 
 2.39.5
 
