@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A2EA2F2366;
-	Tue, 17 Jun 2025 15:44:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EFC82F2366;
+	Tue, 17 Jun 2025 15:44:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175069; cv=none; b=Q2M0GHgPXM2bYtJ12uMXMFkSyhSIO27ZiVp0F4N4PSTa3EHDqxrgoKi6UT5pPFzaDPPrgT4IuQU8ujboMgXZv4k8XfG+kCnUaNV4UjpqSc/NvdLWmN4LvnR1hNYC1blSxVTVh1RPQRohqBFxkI1TU5fzyfjaru8/Dhn/L/NPmW4=
+	t=1750175072; cv=none; b=sqkGrGx0H57eOO/4Cv8aT87IgiEqYjGSbnYY2jy7snPqrxCvJ8mJNcZxBINyYGYGa9VQD2AfLmeNB4Gm1rhdaLjSULyRy/Ki9H+N9r35ctjSYk+tYa2kSX1tPjpJB4HYrIYV7PNmduMjjBF3wzd13tpo/TTcZ6p4L5Tym89L52g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175069; c=relaxed/simple;
-	bh=IK8f7PO3mIHlZz6k2gvIimUaYK5/M9BZvuZjsB2v7L4=;
+	s=arc-20240116; t=1750175072; c=relaxed/simple;
+	bh=NDhQI3uA1WMxgZF4xBl/ybhsR5OYsiVmNaZCWjVfnYM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=axEo5PelH4z/o4obaJ1y5r6sp6zNZHyTtVdP/8v1p9MVjTmghH1OtKPBlnAGHhgRhMt+WGnGoLeaeMjhWkxpMq2jZxxg4uDSLsy2BukMM+nCJxHmRPRQzevvRF06j+DeeKl8/Lcq6hMEsF3EvO1SrIOBwG/S32TpZ8dEdtdJgN4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B1q7Cc8D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C3jQl37VK8/VAbhcJTZ5AO/WPq4x34+FM1A4Krdc/T4mmcJwEzQCEcfZrA7FjCM8OeZ+fkq+rSLk8WlS4TpN/cOOLhtd9t0BFKGfmpXKPSDPc4+Z2Oa+jigB6EbdfSm5KVtn6pAplsdn5upBrR3NjB1Q26AvJUP/K7qTwwbtYMI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nJhbbvJy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B1q7Cc8D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B02BC4CEE3;
-	Tue, 17 Jun 2025 15:44:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nJhbbvJy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C56EC4CEE3;
+	Tue, 17 Jun 2025 15:44:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175069;
-	bh=IK8f7PO3mIHlZz6k2gvIimUaYK5/M9BZvuZjsB2v7L4=;
+	s=korg; t=1750175072;
+	bh=NDhQI3uA1WMxgZF4xBl/ybhsR5OYsiVmNaZCWjVfnYM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B1q7Cc8DnT8jnAJrGGlAhGcLB8Qnfu93yqLS1N6tuRqBggAVOJ3jQf+TNJELQzOpH
-	 v/kvAK+D2TzhxzB+u2NJxGiUrpHvgnySBJ1VwmLeYuEBApPxoa0I99o6Q9hJ1cfqK4
-	 6VZAY61axQ9xvbj9oUL/4yILWFa04BZRwEFx0D8s=
+	b=nJhbbvJyJV+T6ILu77BUosCRuG0U3gXAcNY1JKgQaUR44zy82IcptZijbWWo8+pDH
+	 uFqA7Mo3/xGE0v+xX3qh9sBGzGONNzll44YZRc0Y2AcdjFbfeUXZYz8POUJ2RYPcTC
+	 8tnur0yjgLqBgYKBLz8t9AUffRPUX+PZfcze8K4g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Biju Das <biju.das.jz@bp.renesas.com>,
+	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+	Tomi Valkeinen <tomi.valkeinen+renesas@ideasonboard.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 046/780] crypto: xts - Only add ecb if it is not already there
-Date: Tue, 17 Jun 2025 17:15:54 +0200
-Message-ID: <20250617152453.372920174@linuxfoundation.org>
+Subject: [PATCH 6.12 089/512] drm: rcar-du: Fix memory leak in rcar_du_vsps_init()
+Date: Tue, 17 Jun 2025 17:20:55 +0200
+Message-ID: <20250617152423.188386014@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,48 +48,63 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Biju Das <biju.das.jz@bp.renesas.com>
 
-[ Upstream commit 270b6f13454cb7f2f7058c50df64df409c5dcf55 ]
+[ Upstream commit 91e3bf09a90bb4340c0c3c51396e7531555efda4 ]
 
-Only add ecb to the cipher name if it isn't already ecb.
+The rcar_du_vsps_init() doesn't free the np allocated by
+of_parse_phandle_with_fixed_args() for the non-error case.
 
-Also use memcmp instead of strncmp since these strings are all
-stored in an array of length CRYPTO_MAX_ALG_NAME.
+Fix memory leak for the non-error case.
 
-Fixes: f1c131b45410 ("crypto: xts - Convert to skcipher")
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+While at it, replace the label 'error'->'done' as it applies to non-error
+case as well and update the error check condition for rcar_du_vsp_init()
+to avoid breakage in future, if it returns positive value.
+
+Fixes: 3e81374e2014 ("drm: rcar-du: Support multiple sources from the same VSP")
+Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+Link: https://lore.kernel.org/r/20231116122424.80136-1-biju.das.jz@bp.renesas.com
+Signed-off-by: Tomi Valkeinen <tomi.valkeinen+renesas@ideasonboard.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/xts.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/renesas/rcar-du/rcar_du_kms.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/crypto/xts.c b/crypto/xts.c
-index 31529c9ef08f8..46b7c70ea54bb 100644
---- a/crypto/xts.c
-+++ b/crypto/xts.c
-@@ -363,7 +363,7 @@ static int xts_create(struct crypto_template *tmpl, struct rtattr **tb)
+diff --git a/drivers/gpu/drm/renesas/rcar-du/rcar_du_kms.c b/drivers/gpu/drm/renesas/rcar-du/rcar_du_kms.c
+index 70d8ad065bfa1..4c8fe83dd6101 100644
+--- a/drivers/gpu/drm/renesas/rcar-du/rcar_du_kms.c
++++ b/drivers/gpu/drm/renesas/rcar-du/rcar_du_kms.c
+@@ -705,7 +705,7 @@ static int rcar_du_vsps_init(struct rcar_du_device *rcdu)
+ 		ret = of_parse_phandle_with_fixed_args(np, vsps_prop_name,
+ 						       cells, i, &args);
+ 		if (ret < 0)
+-			goto error;
++			goto done;
  
- 	err = crypto_grab_skcipher(&ctx->spawn, skcipher_crypto_instance(inst),
- 				   cipher_name, 0, mask);
--	if (err == -ENOENT) {
-+	if (err == -ENOENT && memcmp(cipher_name, "ecb(", 4)) {
- 		err = -ENAMETOOLONG;
- 		if (snprintf(name, CRYPTO_MAX_ALG_NAME, "ecb(%s)",
- 			     cipher_name) >= CRYPTO_MAX_ALG_NAME)
-@@ -397,7 +397,7 @@ static int xts_create(struct crypto_template *tmpl, struct rtattr **tb)
- 	/* Alas we screwed up the naming so we have to mangle the
- 	 * cipher name.
- 	 */
--	if (!strncmp(cipher_name, "ecb(", 4)) {
-+	if (!memcmp(cipher_name, "ecb(", 4)) {
- 		int len;
+ 		/*
+ 		 * Add the VSP to the list or update the corresponding existing
+@@ -743,13 +743,11 @@ static int rcar_du_vsps_init(struct rcar_du_device *rcdu)
+ 		vsp->dev = rcdu;
  
- 		len = strscpy(name, cipher_name + 4, sizeof(name));
+ 		ret = rcar_du_vsp_init(vsp, vsps[i].np, vsps[i].crtcs_mask);
+-		if (ret < 0)
+-			goto error;
++		if (ret)
++			goto done;
+ 	}
+ 
+-	return 0;
+-
+-error:
++done:
+ 	for (i = 0; i < ARRAY_SIZE(vsps); ++i)
+ 		of_node_put(vsps[i].np);
+ 
 -- 
 2.39.5
 
