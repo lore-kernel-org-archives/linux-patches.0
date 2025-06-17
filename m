@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1716B2F2377;
-	Tue, 17 Jun 2025 16:00:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B8482F2377;
+	Tue, 17 Jun 2025 16:00:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750176035; cv=none; b=HWjoqDUv/2zUWWgza5/CAIPqmSMXFqGtLbPZLGzir/NUIGCaEyHrE31zVR69EVA1E09zaU832Ii8jQQRPhWCWuuDa/q5YjgILaINTAYRt663gej6DSAdyJyzhG4cZHNvzNbW8x6WujlL5A+7UabBUnoat7UK0XGrBSHEkp8TIEE=
+	t=1750176038; cv=none; b=BJbfysSv7qVI7MWx1wjL97Y/a9mFrTsSaIX9/HXgF7Pz9QpthNmsH3sUHuWVUhrKKpR9k3/jBzkUeCWiODn7xOph3tI15m0zxNBRe9/9EQMYiJSfLOtdmv9R1zhIShdO16pqzQeMbUsDEpZqN7Aj6ZgBGGV16e0qY3erU37R4JE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750176035; c=relaxed/simple;
-	bh=0ynAEGBhiS1xbYCFyI5Jevq3fu4Q/rzhBYRRS1Jxv6E=;
+	s=arc-20240116; t=1750176038; c=relaxed/simple;
+	bh=BD+Z2vgxbqUSzYLtp0r3YcS0SgLugvjl2Gh/jykWZQs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EODmmBU6YPeRf8w5oJoPf8MtoTrcbk0fDWUqHFTPPEf6MBT0TLplCuDFw4PfIdV39levVLl1n2xue+eioHYPU7oblOtcIL5c7O/kqGVsm1fT6RI4qBWiWS5SqJCt68FKc2Rm3idX6BaTlpE1nO2przBdpXYH2XSCIEE33fXXKzc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IlDKu9Tw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=INugCel15FoD9M48bZpRqTiMwujdZdaT0YR5WblqYVXMD8gwGlBk3D1iET5h1ui41JmUpF0KDSFG7+lVw1j/og6FrMcTwAONb/+ZeKbrGX7E8vyp1XOdIXHO/Bo7A00Y0YbD8yyGT9rbCg2daSCqMc0/9c4J9DXwC4e3mSw7QLQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q8oeYKC7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IlDKu9Tw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70536C4CEF4;
-	Tue, 17 Jun 2025 16:00:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q8oeYKC7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCCFAC4CEF2;
+	Tue, 17 Jun 2025 16:00:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750176034;
-	bh=0ynAEGBhiS1xbYCFyI5Jevq3fu4Q/rzhBYRRS1Jxv6E=;
+	s=korg; t=1750176038;
+	bh=BD+Z2vgxbqUSzYLtp0r3YcS0SgLugvjl2Gh/jykWZQs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IlDKu9TwoTCsNsG+4DzZ0VNk4MnqvaTfq8Y+5SQVB/G0GZMkQCDx5Oe68mBMFm3CH
-	 02c5iz3T5gGuNBI4j33pGGleHONe9Ny4wsuCz8S5ombEvdNC+9VWONSdt7nycUu9Pu
-	 ai4ozsNpUYaPNQyh3AfBPLHJmMd8CJnkrV6riUWE=
+	b=q8oeYKC7O8KrqKw3KnJc05/zHB8CHPldTLIcVBoGU0isv1r9MrrcHVPFE4L0UDCcQ
+	 qfPfc3hjahb+vnijEjcvenwDok+1YKosEPyKEKsfS0cbDEUmrdj4iCPqTTyrHe45ae
+	 C0VG4FQ81kgv6yEhinYK/Dv8DCndlzDm74q0qJec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
-	Marcelo Schmitt <marcelo.schmitt@analog.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Xuewen Yan <xuewen.yan@unisoc.com>,
+	Di Shen <di.shen@unisoc.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 237/356] iio: adc: ad7124: Fix 3dB filter frequency reading
-Date: Tue, 17 Jun 2025 17:25:52 +0200
-Message-ID: <20250617152347.741580918@linuxfoundation.org>
+Subject: [PATCH 6.12 190/512] bpf: Revert "bpf: remove unnecessary rcu_read_{lock,unlock}() in multi-uprobe attach logic"
+Date: Tue, 17 Jun 2025 17:22:36 +0200
+Message-ID: <20250617152427.337615774@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-References: <20250617152338.212798615@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,47 +47,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+From: Di Shen <di.shen@unisoc.com>
 
-[ Upstream commit 8712e4986e7ce42a14c762c4c350f290989986a5 ]
+[ Upstream commit 4e2e6841ff761cc15a54e8bebcf35d7325ec78a2 ]
 
-The sinc4 filter has a factor 0.23 between Output Data Rate and f_{3dB}
-and for sinc3 the factor is 0.272 according to the data sheets for
-ad7124-4 (Rev. E.) and ad7124-8 (Rev. F).
+This reverts commit 4a8f635a6054.
 
-Fixes: cef2760954cf ("iio: adc: ad7124: add 3db filter")
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
-Reviewed-by: Marcelo Schmitt <marcelo.schmitt@analog.com>
-Link: https://patch.msgid.link/20250317115247.3735016-6-u.kleine-koenig@baylibre.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Althought get_pid_task() internally already calls rcu_read_lock() and
+rcu_read_unlock(), the find_vpid() was not.
+
+The documentation for find_vpid() clearly states:
+"Must be called with the tasklist_lock or rcu_read_lock() held."
+
+Add proper rcu_read_lock/unlock() to protect the find_vpid().
+
+Fixes: 4a8f635a6054 ("bpf: remove unnecessary rcu_read_{lock,unlock}() in multi-uprobe attach logic")
+Reported-by: Xuewen Yan <xuewen.yan@unisoc.com>
+Signed-off-by: Di Shen <di.shen@unisoc.com>
+Acked-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/r/20250520054943.5002-1-xuewen.yan@unisoc.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/ad7124.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/trace/bpf_trace.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/iio/adc/ad7124.c b/drivers/iio/adc/ad7124.c
-index 0e6baf017bfd1..f631351eef97b 100644
---- a/drivers/iio/adc/ad7124.c
-+++ b/drivers/iio/adc/ad7124.c
-@@ -300,9 +300,9 @@ static int ad7124_get_3db_filter_freq(struct ad7124_state *st,
- 
- 	switch (st->channels[channel].cfg.filter_type) {
- 	case AD7124_SINC3_FILTER:
--		return DIV_ROUND_CLOSEST(fadc * 230, 1000);
-+		return DIV_ROUND_CLOSEST(fadc * 272, 1000);
- 	case AD7124_SINC4_FILTER:
--		return DIV_ROUND_CLOSEST(fadc * 262, 1000);
-+		return DIV_ROUND_CLOSEST(fadc * 230, 1000);
- 	default:
- 		return -EINVAL;
+diff --git a/kernel/trace/bpf_trace.c b/kernel/trace/bpf_trace.c
+index 66075e86b691c..3ec7df7dbeec4 100644
+--- a/kernel/trace/bpf_trace.c
++++ b/kernel/trace/bpf_trace.c
+@@ -3349,7 +3349,9 @@ int bpf_uprobe_multi_link_attach(const union bpf_attr *attr, struct bpf_prog *pr
  	}
+ 
+ 	if (pid) {
++		rcu_read_lock();
+ 		task = get_pid_task(find_vpid(pid), PIDTYPE_TGID);
++		rcu_read_unlock();
+ 		if (!task) {
+ 			err = -ESRCH;
+ 			goto error_path_put;
 -- 
 2.39.5
 
