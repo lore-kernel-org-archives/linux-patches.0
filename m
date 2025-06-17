@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34A972E8E10;
-	Tue, 17 Jun 2025 16:50:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4CFA2264DD;
+	Tue, 17 Jun 2025 16:50:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750179014; cv=none; b=PwWE+yR9YqBF41ZD1jyioGVsktiFL13TIldAxdgCCaOvKsHPvwb4K4jz3sBurfKhNN+SCeGstit8cx19DvRm9G9Aydqzk/Qu+2QmPKpajhjVFpZwrKMqbSh5eT4oV0TrahoisVc1KpZ1Q24qGYOymFVjjFzsOtjdFuW4L8j6u60=
+	t=1750179017; cv=none; b=Sk6nFz6sQ9plAGA320mczArMv/n7X7OvnDq9Q93lLh2qVL4FQHYn0ITVmwsRNHgySv7ZZvOC/mjEeuSBlv6Ygq2/1E/Z89H437U3TK/moq965TU4w8RAS5Ggo8FoKFokt5LaBegnHmc4Xxw5bOm1tCT6qZrKKJyNlF9MI5NL+QY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750179014; c=relaxed/simple;
-	bh=Rcj9EEZqkNB/aPUrca5lJ3wIWKQKHSs+TaXgikqA4aY=;
+	s=arc-20240116; t=1750179017; c=relaxed/simple;
+	bh=99PzaP/SA9cGpvi8PETLFxAF/tzV8R2XhvYqJLZ/B8U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MqssLnB2fvEYLZ9jeca663Zs3qsx+U5yGNuJNq98svAs4hSqtqwykjwYcEzhBEoMtcm4l805etiZ+i261ivCpTtbve3TFXNS7BxmKyEqu1d2T4Q4iWoSpMAV9SfgmKNxXGaG+hC/JtOVcyYWOS2gNsaL5oWpjQw+lM4tZVfL3/M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lMsIrwtE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lJuMXq+cVaaECehHOg+3lt89fI0GM302wN0x6BuUjRVIvIPF/A7wywq9MRRF7PD7UnklbISX9wyohd39GlZkFAYQm5IqFoBFr0IhzoMA8rCPgzrWYEodQZvK7Yl7F77BjqospYWKcg0+hDho47V/+qry9GrfXCbBp/M7W78nrho=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CcfuaKZU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lMsIrwtE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A740DC4CEE3;
-	Tue, 17 Jun 2025 16:50:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CcfuaKZU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB217C4CEE3;
+	Tue, 17 Jun 2025 16:50:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750179014;
-	bh=Rcj9EEZqkNB/aPUrca5lJ3wIWKQKHSs+TaXgikqA4aY=;
+	s=korg; t=1750179017;
+	bh=99PzaP/SA9cGpvi8PETLFxAF/tzV8R2XhvYqJLZ/B8U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lMsIrwtEkJ/RLylKKtpgqe38Cd+Sne6PdnfuLZQSnW9Gc407ITjPuovykWzji5uhe
-	 OMgWgEjnAnEbo7w0fnr4Yol9/yaTxfc3yzYutIcPUHOERmmETuew8P9yDimwljiJ9z
-	 gNLwobz0WXHE6DFyCZLowUtQqTX1DdSzWvu1NrrI=
+	b=CcfuaKZUnMk5QsYQGRpA1facq5XUujEnubRKp0RBccKkzgLyjA0GF215XCr+uyA0p
+	 TCv0QCaXUg+hWYYAADudyVtIVbCGGQIWaHxrde2orEyh01fRSV3YnQIsi5qs8qLW6A
+	 rUjuD6Wj1Px/ZAKPIsE1HkG/XqCRTBJ7smKRZETE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Willem de Bruijn <willemb@google.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jason Xing <kerneljasonxing@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 622/780] selftests: drv-net: tso: make bkg() wait for socat to quit
-Date: Tue, 17 Jun 2025 17:25:30 +0200
-Message-ID: <20250617152516.806730985@linuxfoundation.org>
+Subject: [PATCH 6.15 623/780] net: annotate data-races around cleanup_net_task
+Date: Tue, 17 Jun 2025 17:25:31 +0200
+Message-ID: <20250617152516.846460726@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
 References: <20250617152451.485330293@linuxfoundation.org>
@@ -51,42 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit e6854be4d80ea266a7be64a65a0322bcdfa72807 ]
+[ Upstream commit 535caaca921c653b1f9838fbd5c4e9494cafc3d9 ]
 
-Commit 846742f7e32f ("selftests: drv-net: add a warning for
-bkg + shell + terminate") added a warning for bkg() used
-with terminate=True. The tso test was missed as we didn't
-have it running anywhere in NIPA. Add exit_wait=True, to avoid:
+from_cleanup_net() reads cleanup_net_task locklessly.
 
-  # Warning: combining shell and terminate is risky!
-  #          SIGTERM may not reach the child on zsh/ksh!
+Add READ_ONCE()/WRITE_ONCE() annotations to avoid
+a potential KCSAN warning, even if the race is harmless.
 
-getting printed twice for every variant.
-
-Fixes: 0d0f4174f6c8 ("selftests: drv-net: add a simple TSO test")
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20250604012055.891431-1-kuba@kernel.org
+Fixes: 0734d7c3d93c ("net: expedite synchronize_net() for cleanup_net()")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Jason Xing <kerneljasonxing@gmail.com>
+Link: https://patch.msgid.link/20250604093928.1323333-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/drivers/net/hw/tso.py | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/core/dev.c           | 2 +-
+ net/core/net_namespace.c | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/tools/testing/selftests/drivers/net/hw/tso.py b/tools/testing/selftests/drivers/net/hw/tso.py
-index eec647e7ec19c..3370827409aa0 100755
---- a/tools/testing/selftests/drivers/net/hw/tso.py
-+++ b/tools/testing/selftests/drivers/net/hw/tso.py
-@@ -39,7 +39,7 @@ def run_one_stream(cfg, ipver, remote_v4, remote_v6, should_lso):
-     port = rand_port()
-     listen_cmd = f"socat -{ipver} -t 2 -u TCP-LISTEN:{port},reuseport /dev/null,ignoreeof"
+diff --git a/net/core/dev.c b/net/core/dev.c
+index 0d891634c6927..2b20aadaf9268 100644
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -10393,7 +10393,7 @@ static void dev_index_release(struct net *net, int ifindex)
+ static bool from_cleanup_net(void)
+ {
+ #ifdef CONFIG_NET_NS
+-	return current == cleanup_net_task;
++	return current == READ_ONCE(cleanup_net_task);
+ #else
+ 	return false;
+ #endif
+diff --git a/net/core/net_namespace.c b/net/core/net_namespace.c
+index b0dfdf791ece5..599f6a89ae581 100644
+--- a/net/core/net_namespace.c
++++ b/net/core/net_namespace.c
+@@ -600,7 +600,7 @@ static void cleanup_net(struct work_struct *work)
+ 	LIST_HEAD(net_exit_list);
+ 	LIST_HEAD(dev_kill_list);
  
--    with bkg(listen_cmd, host=cfg.remote) as nc:
-+    with bkg(listen_cmd, host=cfg.remote, exit_wait=True) as nc:
-         wait_port_listen(port, host=cfg.remote)
+-	cleanup_net_task = current;
++	WRITE_ONCE(cleanup_net_task, current);
  
-         if ipver == "4":
+ 	/* Atomically snapshot the list of namespaces to cleanup */
+ 	net_kill_list = llist_del_all(&cleanup_list);
+@@ -676,7 +676,7 @@ static void cleanup_net(struct work_struct *work)
+ 		put_user_ns(net->user_ns);
+ 		net_passive_dec(net);
+ 	}
+-	cleanup_net_task = NULL;
++	WRITE_ONCE(cleanup_net_task, NULL);
+ }
+ 
+ /**
 -- 
 2.39.5
 
