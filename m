@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 920232F2379;
-	Tue, 17 Jun 2025 15:58:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDE062DFF1F;
+	Tue, 17 Jun 2025 15:58:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175904; cv=none; b=obHQJbMvohPGDXwpctky8kJeo5X4oTgbsh+au8GI986RTbsARBuxftdW0WfMxDQi6NVlw0bK5pqe+WiSJ+A5dPrv63sIHz84lqEAZEIKZBC96agMR/gqLoVixqKPntmDQSYgHK0zCt7MUr3SLwinLVNTiHRUdhcujTBQX707PeY=
+	t=1750175907; cv=none; b=syYjYg0fK2L/2/dZc1mbhD5f2LEjK5d6Kh9hkq3y4o2GSlwn9bPD2kIcfMPx0ChWws+gjjanDC0R6vvngIQyHsosoT5zzrAlwJ3ICtIrhzb9KEESWJ5/EQ9btmsJ9/wqopYsdeldPbqf4G5VQLXH9aAMr4vz+mp+CzL60f6BCd4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175904; c=relaxed/simple;
-	bh=HSNkOsKUb0xGm4hdodTUCwvK4Fz3hgp4YtFw1MYoGyE=;
+	s=arc-20240116; t=1750175907; c=relaxed/simple;
+	bh=ey0HWvXFQ9Y231RuplHoYp2/TMvyPbUh1yjuYoinRvU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tgO2sQgcIrbs061eNaMKnJIdzhwm2t70W0kIb9jkJOb5wZWp5GX0Ky0OI+lSwdTxHs+JuylYyMAyvdBzkSCnIWgLKZ9MDYemLqjpL172x0RjFQ3QYCCWkOaVkm0ZokGlD7j4HSquPtkb9PfTfU8w8h1xbEBSNKTfnMNkP8sN8fY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CdlS0kps; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eQ0/L8mY3B9OsffEQPtHf6Z16XeO5rcnzYzljfD2xNos2uxYzMZ98E/xhaAazParG9D3FdQzs48Agk7Yieh3M51xDrT+IWZmMh2c7d7DNEHVNrsmSPGO8fG979qrJqmu8T/ZIxhs6DAkcpCWZIh6yPvvEj/S6Czbdsv5hIPtjj0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jN8XLHOz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CdlS0kps"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8AAEC4CEE3;
-	Tue, 17 Jun 2025 15:58:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jN8XLHOz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3366C4CEE3;
+	Tue, 17 Jun 2025 15:58:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175904;
-	bh=HSNkOsKUb0xGm4hdodTUCwvK4Fz3hgp4YtFw1MYoGyE=;
+	s=korg; t=1750175907;
+	bh=ey0HWvXFQ9Y231RuplHoYp2/TMvyPbUh1yjuYoinRvU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CdlS0kps5haS8W89V2f6CBY5EpZ8n7sVVJsRhM2tmmLbxMnLsgSLcV6YnP6Bxz+cJ
-	 HNV3eFcF8dzF9caVM4QKTyUeJBz8F3tubxgmxHUeuvrALMnc8WKqEC50oxeYgIeKGT
-	 qNkA3AEDfz/jJ22pYZsqO88j/1MRwDXZRQgfgJ+k=
+	b=jN8XLHOzEYmfb0iHYeWmoQlPjYOeu0P6J/uBBBsZSvUxPIz20AeNQu6nkUbq877ih
+	 e6syPpW5xcf/eLHRvSAjhjzGf0rUeSDtbl6+3HxZNAIvpcgzrmMXgbzEGkn44F5Yak
+	 qYSBYrUKX9Nc1FqVHiMSisLXXvIpJRzhYD5ucFaQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Biju Das <biju.das.jz@bp.renesas.com>,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-	Tomi Valkeinen <tomi.valkeinen+renesas@ideasonboard.com>,
+	Rolf Eike Beer <eb@emlix.com>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 133/780] drm: rcar-du: Fix memory leak in rcar_du_vsps_init()
-Date: Tue, 17 Jun 2025 17:17:21 +0200
-Message-ID: <20250617152456.920252438@linuxfoundation.org>
+Subject: [PATCH 6.12 174/512] iommu: remove duplicate selection of DMAR_TABLE
+Date: Tue, 17 Jun 2025 17:22:20 +0200
+Message-ID: <20250617152426.676377365@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,63 +48,38 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Biju Das <biju.das.jz@bp.renesas.com>
+From: Rolf Eike Beer <eb@emlix.com>
 
-[ Upstream commit 91e3bf09a90bb4340c0c3c51396e7531555efda4 ]
+[ Upstream commit 9548feff840a05d61783e6316d08ed37e115f3b1 ]
 
-The rcar_du_vsps_init() doesn't free the np allocated by
-of_parse_phandle_with_fixed_args() for the non-error case.
+This is already done in intel/Kconfig.
 
-Fix memory leak for the non-error case.
-
-While at it, replace the label 'error'->'done' as it applies to non-error
-case as well and update the error check condition for rcar_du_vsp_init()
-to avoid breakage in future, if it returns positive value.
-
-Fixes: 3e81374e2014 ("drm: rcar-du: Support multiple sources from the same VSP")
-Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
-Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Link: https://lore.kernel.org/r/20231116122424.80136-1-biju.das.jz@bp.renesas.com
-Signed-off-by: Tomi Valkeinen <tomi.valkeinen+renesas@ideasonboard.com>
+Fixes: 70bad345e622 ("iommu: Fix compilation without CONFIG_IOMMU_INTEL")
+Signed-off-by: Rolf Eike Beer <eb@emlix.com>
+Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
+Link: https://lore.kernel.org/r/2232605.Mh6RI2rZIc@devpool92.emlix.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/renesas/rcar-du/rcar_du_kms.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ drivers/iommu/Kconfig | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/renesas/rcar-du/rcar_du_kms.c b/drivers/gpu/drm/renesas/rcar-du/rcar_du_kms.c
-index 70d8ad065bfa1..4c8fe83dd6101 100644
---- a/drivers/gpu/drm/renesas/rcar-du/rcar_du_kms.c
-+++ b/drivers/gpu/drm/renesas/rcar-du/rcar_du_kms.c
-@@ -705,7 +705,7 @@ static int rcar_du_vsps_init(struct rcar_du_device *rcdu)
- 		ret = of_parse_phandle_with_fixed_args(np, vsps_prop_name,
- 						       cells, i, &args);
- 		if (ret < 0)
--			goto error;
-+			goto done;
- 
- 		/*
- 		 * Add the VSP to the list or update the corresponding existing
-@@ -743,13 +743,11 @@ static int rcar_du_vsps_init(struct rcar_du_device *rcdu)
- 		vsp->dev = rcdu;
- 
- 		ret = rcar_du_vsp_init(vsp, vsps[i].np, vsps[i].crtcs_mask);
--		if (ret < 0)
--			goto error;
-+		if (ret)
-+			goto done;
- 	}
- 
--	return 0;
--
--error:
-+done:
- 	for (i = 0; i < ARRAY_SIZE(vsps); ++i)
- 		of_node_put(vsps[i].np);
- 
+diff --git a/drivers/iommu/Kconfig b/drivers/iommu/Kconfig
+index b3aa1f5d53218..1469ad0794f28 100644
+--- a/drivers/iommu/Kconfig
++++ b/drivers/iommu/Kconfig
+@@ -199,7 +199,6 @@ source "drivers/iommu/iommufd/Kconfig"
+ config IRQ_REMAP
+ 	bool "Support for Interrupt Remapping"
+ 	depends on X86_64 && X86_IO_APIC && PCI_MSI && ACPI
+-	select DMAR_TABLE if INTEL_IOMMU
+ 	help
+ 	  Supports Interrupt remapping for IO-APIC and MSI devices.
+ 	  To use x2apic mode in the CPU's which support x2APIC enhancements or
 -- 
 2.39.5
 
