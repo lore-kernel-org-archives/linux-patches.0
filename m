@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2CC92EE272;
-	Tue, 17 Jun 2025 16:25:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62BC22F9480;
+	Tue, 17 Jun 2025 16:26:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177559; cv=none; b=pSAtBmrclsDkDMR2gESVVKtv8oFtb5RWlkJ4SBZEVKQSyds9Q3Tt2sFlQBrLYp5eZKspT+G+MipQhfWXwH/63KbPG1MdBLry5mhCBKdrLoZCMkx0ncQb6Sfz12e0Ff/EXl3KCXPsk4lhJEbpLLQZCF6bC0PZG5XwYRgR1N5nsO8=
+	t=1750177562; cv=none; b=dK05/OY+oPBHRwjgVKP2o4BbgPVn3CpklUqOSVZ85cQKY5IvBT1RjFsIXhY86kVHfxYxjh+AIZNEZ4cF+3wCipBIstS5OnhuHGP/IFxxIG3M9JBWj9NeLBM1gKWEyxpYFnTPs6xDAZtt1xasPXXXfwXq0nAh9FA6GgG5vKACIj4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177559; c=relaxed/simple;
-	bh=Jp/e+2YAKCXzOmcUfoE4inZvHGUS7RONRzl833Q+VC0=;
+	s=arc-20240116; t=1750177562; c=relaxed/simple;
+	bh=Go42wSt0BNIH07fc2nZnSFUtVKFDYrIoNnFVNtu+phQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=LPlr8RNbdAI15oAN3GdHF2SGgZ6mGI9o0ZluybmJZIlDfvrg75gH7i63I+c38cGWACI26c7ncFcJkv3zyVT8emTbxQvLgD3o6cQmc0jTNrZi6MAmTLuffFKFVUiYIVzGm8jAvhNq2vzPqR/jx8peDlbb4iuXI58QBzCbrvvsCoE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mF6NDkw0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dedOFXHOhivHLxlofgjghl5UYJMNdWfUxAl7g+/YqJgBe/TVflefxEtkapjG/UEyt4LqE1vk9hP9ZtUByFkGyaULOCJi88owJUUfi22W8ruPXJgJ/9IBYlltU87ZXu5svv8TggziBChjbz9wX1Keen+uuGfVt96Mw+CWIOy1LAI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T145qwEE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mF6NDkw0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3E7BC4CEE7;
-	Tue, 17 Jun 2025 16:25:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T145qwEE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C68A6C4CEE3;
+	Tue, 17 Jun 2025 16:26:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177559;
-	bh=Jp/e+2YAKCXzOmcUfoE4inZvHGUS7RONRzl833Q+VC0=;
+	s=korg; t=1750177562;
+	bh=Go42wSt0BNIH07fc2nZnSFUtVKFDYrIoNnFVNtu+phQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mF6NDkw07E7ensCYhe3uNsw0s9hHuLqq77LLNwCIEICIXAWxXAdxNJR/Qu+6nKjJ+
-	 d7YWabQ+r9ITEffBZ1rwUWDJ2UtQXKDsC0u3ex7sM9N8uy6n2mrX7JeHvN2Z26jVlo
-	 h8SOLBzE+rfax2HdTdp+XrouTHlMsCkjYH+7wahs=
+	b=T145qwEEn1/M0QP2fwlV6nzyX0c2g2Gt2lTl3WaeWcbNafHWg6miLs3Yx241vXUYr
+	 iacfkJewVHLWLHgGiOT52bwKET+Ff5Dd0rO3RePaLYxwvqnv/u9P2z+x0wlSjHYYv5
+	 T+vbDBmvublb/W0Iph43b3nec1NiG/z3w0tCoyAE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	=?UTF-8?q?Alexis=20Lothor=C3=A9?= <alexis.lothore@bootlin.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	syzbot+0903f6d7f285e41cdf10@syzkaller.appspotmail.com,
+	KaFai Wan <mannkafai@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 363/512] net: stmmac: make sure that ptp_rate is not 0 before configuring EST
-Date: Tue, 17 Jun 2025 17:25:29 +0200
-Message-ID: <20250617152434.285750962@linuxfoundation.org>
+Subject: [PATCH 6.15 324/780] bpf: Avoid __bpf_prog_ret0_warn when jit fails
+Date: Tue, 17 Jun 2025 17:20:32 +0200
+Message-ID: <20250617152504.645728973@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,50 +46,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexis Lothoré <alexis.lothore@bootlin.com>
+From: KaFai Wan <mannkafai@gmail.com>
 
-[ Upstream commit cbefe2ffa7784525ec5d008ba87c7add19ec631a ]
+[ Upstream commit 86bc9c742426a16b52a10ef61f5b721aecca2344 ]
 
-If the ptp_rate recorded earlier in the driver happens to be 0, this
-bogus value will propagate up to EST configuration, where it will
-trigger a division by 0.
+syzkaller reported an issue:
 
-Prevent this division by 0 by adding the corresponding check and error
-code.
+WARNING: CPU: 3 PID: 217 at kernel/bpf/core.c:2357 __bpf_prog_ret0_warn+0xa/0x20 kernel/bpf/core.c:2357
+Modules linked in:
+CPU: 3 UID: 0 PID: 217 Comm: kworker/u32:6 Not tainted 6.15.0-rc4-syzkaller-00040-g8bac8898fe39
+RIP: 0010:__bpf_prog_ret0_warn+0xa/0x20 kernel/bpf/core.c:2357
+Call Trace:
+ <TASK>
+ bpf_dispatcher_nop_func include/linux/bpf.h:1316 [inline]
+ __bpf_prog_run include/linux/filter.h:718 [inline]
+ bpf_prog_run include/linux/filter.h:725 [inline]
+ cls_bpf_classify+0x74a/0x1110 net/sched/cls_bpf.c:105
+ ...
 
-Suggested-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Signed-off-by: Alexis Lothoré <alexis.lothore@bootlin.com>
-Fixes: 8572aec3d0dc ("net: stmmac: Add basic EST support for XGMAC")
-Link: https://patch.msgid.link/20250529-stmmac_tstamp_div-v4-2-d73340a794d5@bootlin.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+When creating bpf program, 'fp->jit_requested' depends on bpf_jit_enable.
+This issue is triggered because of CONFIG_BPF_JIT_ALWAYS_ON is not set
+and bpf_jit_enable is set to 1, causing the arch to attempt JIT the prog,
+but jit failed due to FAULT_INJECTION. As a result, incorrectly
+treats the program as valid, when the program runs it calls
+`__bpf_prog_ret0_warn` and triggers the WARN_ON_ONCE(1).
+
+Reported-by: syzbot+0903f6d7f285e41cdf10@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/bpf/6816e34e.a70a0220.254cdc.002c.GAE@google.com
+Fixes: fa9dd599b4da ("bpf: get rid of pure_initcall dependency to enable jits")
+Signed-off-by: KaFai Wan <mannkafai@gmail.com>
+Link: https://lore.kernel.org/r/20250526133358.2594176-1-mannkafai@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_est.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ kernel/bpf/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_est.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_est.c
-index c9693f77e1f61..ac6f2e3a3fcd2 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_est.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_est.c
-@@ -32,6 +32,11 @@ static int est_configure(struct stmmac_priv *priv, struct stmmac_est *cfg,
- 	int i, ret = 0;
- 	u32 ctrl;
+diff --git a/kernel/bpf/core.c b/kernel/bpf/core.c
+index a3e5716884211..c20babbf998f4 100644
+--- a/kernel/bpf/core.c
++++ b/kernel/bpf/core.c
+@@ -2474,7 +2474,7 @@ struct bpf_prog *bpf_prog_select_runtime(struct bpf_prog *fp, int *err)
+ 	/* In case of BPF to BPF calls, verifier did all the prep
+ 	 * work with regards to JITing, etc.
+ 	 */
+-	bool jit_needed = false;
++	bool jit_needed = fp->jit_requested;
  
-+	if (!ptp_rate) {
-+		netdev_warn(priv->dev, "Invalid PTP rate");
-+		return -EINVAL;
-+	}
-+
- 	ret |= est_write(est_addr, EST_BTR_LOW, cfg->btr[0], false);
- 	ret |= est_write(est_addr, EST_BTR_HIGH, cfg->btr[1], false);
- 	ret |= est_write(est_addr, EST_TER, cfg->ter, false);
+ 	if (fp->bpf_func)
+ 		goto finalize;
 -- 
 2.39.5
 
