@@ -1,45 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CA8E2DFF1F;
-	Tue, 17 Jun 2025 16:39:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F7C32DFF1B;
+	Tue, 17 Jun 2025 16:39:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750178344; cv=none; b=QfcBCU5ME0VzF3yFAXWxPSr13FcMonf84dF9R6dtnN1UCaiuZd0BJh9ib4tg4TyX6lPN5wMqvreZJh/BUSyIydcFweDlsDZB3YBV27ODz/nQLHALp1lcx84gKtSz3WS+zBX+MT9L6JnfSqt+N2F8IAYAuSAcaac+UVI76JSxf+U=
+	t=1750178347; cv=none; b=D604CVv05/l7kxStqgaLSfWnWk0TMtxd7havxmeuOs/1QWnvKsEy9rzUBIh/5Ej62BIiFH8ucC4HkSH/ArB7zGZALAX0lWP7sz/ghCO6YlCUGMtJ8E4h3XglOn5ymaNkqj1Jch46uamvduxekIwIiYuQTGnwLXpiauOil+S9Rwk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750178344; c=relaxed/simple;
-	bh=GJoYqscII4zAO0rOkp2D/v+BxMLPpkcEwNm7mEylm1M=;
+	s=arc-20240116; t=1750178347; c=relaxed/simple;
+	bh=s+Bvk112ZRmZ41FdVwY81mWQFnWDWyqIjeBqahuy3rk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SZXj4f3+/7bX8GmIoM61IYWEbrxehfzRvvnRMCZhws5ZVraJqfjN4cXdSsROu1hrsfjuuICyaceWocdr6LV1Ix7LNljasYN2E8MpmXo9+zj7q6aCcVzNRMppi1zBE5R3kkczPYM36tRBQNbyEooiCaBZruAWjNynyVq514axLNc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0L9RoCBe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tiaF2JXP7usUxfUKwumBJOWTBsJLT2Pss6Xf2saenaVXT9pvRd2BtC9Y0ppIwDax5eqEaKygSgVNVcQCoyqjJQymQhTvi8OMcvt22KWjUGJjweHBbwmi8z4J6on3mYgLAieBBZa4YtvJE6le9UOSFC/S9XUY+5wcsGUhkJGIWtk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ww/K6Ts8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0L9RoCBe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD468C4CEE3;
-	Tue, 17 Jun 2025 16:39:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ww/K6Ts8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1775C4CEE3;
+	Tue, 17 Jun 2025 16:39:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750178344;
-	bh=GJoYqscII4zAO0rOkp2D/v+BxMLPpkcEwNm7mEylm1M=;
+	s=korg; t=1750178347;
+	bh=s+Bvk112ZRmZ41FdVwY81mWQFnWDWyqIjeBqahuy3rk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0L9RoCBezzGLNN29o+q6wsbcKGh/M2svQxi8f6aWa21oJcR/CrJGtTqD3H6cd720A
-	 oKPUzrwPkdlB68Wlx9UmvM2bzxrmTpRppJ/m27Oaqru4Bv/mzj36/2KCHb1G3t9oOE
-	 uYkFUX0skupYsuIKfuQDXTk0eVKV7IUN/tkSmBbs=
+	b=ww/K6Ts8SxGcEGNvckY/y9nmdPdGFt62LYAZ/SZJ7LQwosehK5YztOW7SXjDngxB3
+	 74tXgGlJ3cs0TzilpTIe5AXKzGz3BgTHzdeWHQ9rLS5Dpiw7EHRQ0A909VaqA2sCUb
+	 fsAWvn1qcCkjip0AGjBxZ9rfsw9nCsD9DdLHEhac=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Hubbard <jhubbard@nvidia.com>,
-	Timur Tabi <ttabi@nvidia.com>,
-	Kane York <kanepyork@gmail.com>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Joel Fernandes <joelagnelf@nvidia.com>,
-	Miguel Ojeda <ojeda@kernel.org>
-Subject: [PATCH 6.12 482/512] objtool/rust: relax slice condition to cover more `noreturn` Rust functions
-Date: Tue, 17 Jun 2025 17:27:28 +0200
-Message-ID: <20250617152439.131646178@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.15 447/780] remoteproc: qcom_wcnss_iris: Add missing put_device() on error in probe
+Date: Tue, 17 Jun 2025 17:22:35 +0200
+Message-ID: <20250617152509.657281657@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -51,57 +48,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Miguel Ojeda <ojeda@kernel.org>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit cbeaa41dfe26b72639141e87183cb23e00d4b0dd upstream.
+[ Upstream commit 0cb4b1b97041d8a1f773425208ded253c1cb5869 ]
 
-Developers are indeed hitting other of the `noreturn` slice symbols in
-Nova [1], thus relax the last check in the list so that we catch all of
-them, i.e.
+The device_del() call matches with the device_add() but we also need
+to call put_device() to trigger the qcom_iris_release().
 
-    *_4core5slice5index22slice_index_order_fail
-    *_4core5slice5index24slice_end_index_len_fail
-    *_4core5slice5index26slice_start_index_len_fail
-    *_4core5slice5index29slice_end_index_overflow_fail
-    *_4core5slice5index31slice_start_index_overflow_fail
-
-These all exist since at least Rust 1.78.0, thus backport it too.
-
-See commit 56d680dd23c3 ("objtool/rust: list `noreturn` Rust functions")
-for more details.
-
-Cc: stable@vger.kernel.org # Needed in 6.12.y and later.
-Cc: John Hubbard <jhubbard@nvidia.com>
-Cc: Timur Tabi <ttabi@nvidia.com>
-Cc: Kane York <kanepyork@gmail.com>
-Cc: Josh Poimboeuf <jpoimboe@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Reported-by: Joel Fernandes <joelagnelf@nvidia.com>
-Fixes: 56d680dd23c3 ("objtool/rust: list `noreturn` Rust functions")
-Closes: https://lore.kernel.org/rust-for-linux/20250513180757.GA1295002@joelnvbox/ [1]
-Tested-by: Joel Fernandes <joelagnelf@nvidia.com>
-Link: https://lore.kernel.org/r/20250520185555.825242-1-ojeda@kernel.org
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 1fcef985c8bd ("remoteproc: qcom: wcnss: Fix race with iris probe")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/4604f7e0-3217-4095-b28a-3ff8b5afad3a@stanley.mountain
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/objtool/check.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/remoteproc/qcom_wcnss_iris.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/tools/objtool/check.c
-+++ b/tools/objtool/check.c
-@@ -222,7 +222,8 @@ static bool is_rust_noreturn(const struc
- 	       str_ends_with(func->name, "_7___rustc17rust_begin_unwind")				||
- 	       strstr(func->name, "_4core9panicking13assert_failed")					||
- 	       strstr(func->name, "_4core9panicking11panic_const24panic_const_")			||
--	       (strstr(func->name, "_4core5slice5index24slice_") &&
-+	       (strstr(func->name, "_4core5slice5index") &&
-+		strstr(func->name, "slice_") &&
- 		str_ends_with(func->name, "_fail"));
- }
+diff --git a/drivers/remoteproc/qcom_wcnss_iris.c b/drivers/remoteproc/qcom_wcnss_iris.c
+index b989718776bdb..2b52b403eb3f7 100644
+--- a/drivers/remoteproc/qcom_wcnss_iris.c
++++ b/drivers/remoteproc/qcom_wcnss_iris.c
+@@ -196,6 +196,7 @@ struct qcom_iris *qcom_iris_probe(struct device *parent, bool *use_48mhz_xo)
  
+ err_device_del:
+ 	device_del(&iris->dev);
++	put_device(&iris->dev);
+ 
+ 	return ERR_PTR(ret);
+ }
+@@ -203,4 +204,5 @@ struct qcom_iris *qcom_iris_probe(struct device *parent, bool *use_48mhz_xo)
+ void qcom_iris_remove(struct qcom_iris *iris)
+ {
+ 	device_del(&iris->dev);
++	put_device(&iris->dev);
+ }
+-- 
+2.39.5
+
 
 
