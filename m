@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4D8B2FA638;
-	Tue, 17 Jun 2025 16:34:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9430E2FA645;
+	Tue, 17 Jun 2025 16:34:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750178065; cv=none; b=BqjDW8QpAWTHKz/TLYPYrgKJGLmrYKNNbThBrQsUY1reZl2ljngS5Vcugay3SYkRJVG6Wr5cLLuVAYh2x4Q7KSkngESh3BaRqWM1OF73RmBvmSKQAqEhz0obVuRJJJ0abaQIn8CZiU8v+oX764fs1vG3z0lmg6U+sArqBZXkWRE=
+	t=1750178069; cv=none; b=Us5TGtC7zKadMhfJU60ftbmfCIJoT6XB5zwgiaj68qI+matlE/wRfzdd7+EZeh4lbNPvP23hxjocxeg3yssm8+5Yuexvf2RzYrH0NNVFZPDSDswdgineLWBXI9V/yZzxwWr7pQZn3tVf0qlTJ6GPqMCoaI/OX4lnsup9TpAtH+Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750178065; c=relaxed/simple;
-	bh=vAhx18E97u8es9oHibh+DRShnS4nTtZW27/f6+pkqvA=;
+	s=arc-20240116; t=1750178069; c=relaxed/simple;
+	bh=AJos5fd0734dbevzcQ4bYe5tZkSLHvP7iz0B0m9Ev34=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X6MsNh58Lo2OM4QJ3vMgXt/tZWWxHxolWgitu+JfOmLflg3newkWg7QNxh+O1afitUBZsCKkprcONISsaGJ5889E9TIEDrQ0hNtHjdAePWDOKVB8poi8q+kgSG4BD2YE8g7jtB1/Ifidk59Ktsbc5H+em91qSTY6fr1FX0IPGgc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EDUdrdb3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j63hPKhBXHi1pPf/eX87lrXHIlTKxwvCpZ1AOm7a+ABgk3CLZPO0YR3n8Gf+Uhqr/bCErPSqyOFbZvaQ+pxkiB52cdSeIEAsYKauKrxaSAuqNj7ZJAuEhxa2j3V07oA4bpwWMfnFFPjeYDW6Z32SXAfu6jdQMxtWVuFxhe0JaQI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JcDqtmaD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EDUdrdb3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44F9AC4CEE3;
-	Tue, 17 Jun 2025 16:34:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JcDqtmaD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A100AC4CEE3;
+	Tue, 17 Jun 2025 16:34:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750178065;
-	bh=vAhx18E97u8es9oHibh+DRShnS4nTtZW27/f6+pkqvA=;
+	s=korg; t=1750178069;
+	bh=AJos5fd0734dbevzcQ4bYe5tZkSLHvP7iz0B0m9Ev34=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EDUdrdb37eNxxgyLdpVaM6TjCoKAMV1dRC1qh3a9XUsOB4h+cPAEk6jptMjHgfZ31
-	 D7MHGJFocxGVZweRFF4a4xO8yl5vEX88ZwuDTpL7a2Pjql8KHhCIIP7RI0InQyvTaL
-	 Wtswz9Zq6qiphaBtPlMZxibGVDK7YHjZFM1CpSmY=
+	b=JcDqtmaDL5ndUOIzNUijUMDSMq59WkqRgDwfNYe9ucTaUeFI1iRPULNlKnQVRZe2y
+	 P2cgg+lVS73dI2ZS5v9wu/+AeIRHg56Pb9ofohuwQ+ZTrfIJkQZPfQ7/A40z4fySYg
+	 ftmXmkoGas/iLMo0zMvkpcI6GuFpNIn00dlsHhVU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Minnekhanov <alexeymin@postmarketos.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 381/780] arm64: dts: qcom: sda660-ifc6560: Fix dt-validate warning
-Date: Tue, 17 Jun 2025 17:21:29 +0200
-Message-ID: <20250617152506.975037922@linuxfoundation.org>
+Subject: [PATCH 6.12 417/512] serial: sh-sci: Move runtime PM enable to sci_probe_single()
+Date: Tue, 17 Jun 2025 17:26:23 +0200
+Message-ID: <20250617152436.474113766@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,51 +47,91 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexey Minnekhanov <alexeymin@postmarketos.org>
+From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 
-[ Upstream commit f5110806b41eaa0eb0ab1bf2787876a580c6246c ]
+[ Upstream commit 239f11209e5f282e16f5241b99256e25dd0614b6 ]
 
-If you remove clocks property, you should remove clock-names, too.
-Fixes warning with dtbs check:
+Relocate the runtime PM enable operation to sci_probe_single(). This change
+prepares the codebase for upcoming fixes.
 
- 'clocks' is a dependency of 'clock-names'
+While at it, replace the existing logic with a direct call to
+devm_pm_runtime_enable() and remove sci_cleanup_single(). The
+devm_pm_runtime_enable() function automatically handles disabling runtime
+PM during driver removal.
 
-Fixes: 34279d6e3f32c ("arm64: dts: qcom: sdm660: Add initial Inforce IFC6560 board support")
-Signed-off-by: Alexey Minnekhanov <alexeymin@postmarketos.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250504115120.1432282-4-alexeymin@postmarketos.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Link: https://lore.kernel.org/r/20250116182249.3828577-3-claudiu.beznea.uj@bp.renesas.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sda660-inforce-ifc6560.dts | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/tty/serial/sh-sci.c |   24 ++++++------------------
+ 1 file changed, 6 insertions(+), 18 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sda660-inforce-ifc6560.dts b/arch/arm64/boot/dts/qcom/sda660-inforce-ifc6560.dts
-index d402f4c85b11d..ee696317f78cc 100644
---- a/arch/arm64/boot/dts/qcom/sda660-inforce-ifc6560.dts
-+++ b/arch/arm64/boot/dts/qcom/sda660-inforce-ifc6560.dts
-@@ -175,6 +175,7 @@
- 	 * BAM DMA interconnects support is in place.
- 	 */
- 	/delete-property/ clocks;
-+	/delete-property/ clock-names;
- };
+--- a/drivers/tty/serial/sh-sci.c
++++ b/drivers/tty/serial/sh-sci.c
+@@ -3074,10 +3074,6 @@ static int sci_init_single(struct platfo
+ 		ret = sci_init_clocks(sci_port, &dev->dev);
+ 		if (ret < 0)
+ 			return ret;
+-
+-		port->dev = &dev->dev;
+-
+-		pm_runtime_enable(&dev->dev);
+ 	}
  
- &blsp1_uart2 {
-@@ -187,6 +188,7 @@
- 	 * BAM DMA interconnects support is in place.
- 	 */
- 	/delete-property/ clocks;
-+	/delete-property/ clock-names;
- };
+ 	port->type		= p->type;
+@@ -3104,11 +3100,6 @@ static int sci_init_single(struct platfo
+ 	return 0;
+ }
  
- &blsp2_uart1 {
--- 
-2.39.5
-
+-static void sci_cleanup_single(struct sci_port *port)
+-{
+-	pm_runtime_disable(port->port.dev);
+-}
+-
+ #if defined(CONFIG_SERIAL_SH_SCI_CONSOLE) || \
+     defined(CONFIG_SERIAL_SH_SCI_EARLYCON)
+ static void serial_console_putchar(struct uart_port *port, unsigned char ch)
+@@ -3278,8 +3269,6 @@ static void sci_remove(struct platform_d
+ 	sci_ports_in_use &= ~BIT(port->port.line);
+ 	uart_remove_one_port(&sci_uart_driver, &port->port);
+ 
+-	sci_cleanup_single(port);
+-
+ 	if (port->port.fifosize > 1)
+ 		device_remove_file(&dev->dev, &dev_attr_rx_fifo_trigger);
+ 	if (type == PORT_SCIFA || type == PORT_SCIFB || type == PORT_HSCIF)
+@@ -3444,6 +3433,11 @@ static int sci_probe_single(struct platf
+ 	if (ret)
+ 		return ret;
+ 
++	sciport->port.dev = &dev->dev;
++	ret = devm_pm_runtime_enable(&dev->dev);
++	if (ret)
++		return ret;
++
+ 	sciport->gpios = mctrl_gpio_init(&sciport->port, 0);
+ 	if (IS_ERR(sciport->gpios))
+ 		return PTR_ERR(sciport->gpios);
+@@ -3457,13 +3451,7 @@ static int sci_probe_single(struct platf
+ 		sciport->port.flags |= UPF_HARD_FLOW;
+ 	}
+ 
+-	ret = uart_add_one_port(&sci_uart_driver, &sciport->port);
+-	if (ret) {
+-		sci_cleanup_single(sciport);
+-		return ret;
+-	}
+-
+-	return 0;
++	return uart_add_one_port(&sci_uart_driver, &sciport->port);
+ }
+ 
+ static int sci_probe(struct platform_device *dev)
 
 
