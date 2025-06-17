@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BF90192B90;
-	Tue, 17 Jun 2025 16:23:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 879AA1DF244;
+	Tue, 17 Jun 2025 16:23:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177412; cv=none; b=tIqqKDbhvFbWZ2WRszlMbM/gvYpIFagEWs0w2Kdj1hQvzIN96CANdHiskb3qbUdxJXtR2RIYcRHgRYYS915+muxd9Du+4XeEOtH3EjgdQOdrfJpWUQCaLrD2uXh3VjDfJfxnAsA6Z/Xa+d45hsutPJ9WNB/jWCQ7V9v+qPZFF3U=
+	t=1750177415; cv=none; b=EY37Q0wK+WCKaWma3Pw5Lu6eDuPA0mok2u1PSejq1KwV0XVJTWPCgsz/PVxJSZ10hh5QwO1qEblM6eG4spOpvM8T44EEda7Gdyj1xzYc7UBNnLfzbwpEUj+BtOaarwIOhV0QFFlh408P3nVVDxaF/oMuihQ6rnz7xLzIdbDzMxQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177412; c=relaxed/simple;
-	bh=widlisDYqv6yTi49PprZ0EsfQqsGkLWF3AaNwupX03o=;
+	s=arc-20240116; t=1750177415; c=relaxed/simple;
+	bh=88RHkx3mJl/Ihge9GblCLJMmmlVJohvM5iqTEtwJXK0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t25M25gMYIZGBXDcdOZuCD86vBzHIv1LW/9CXEu4Ma/Rymk+TMPUth5irF82+EZVIbgSvK4/BrbqJUT3wSFYa1M14szIjMeAFiDJ1J/3ThM99Zv3IqPe53o8jIkrv9hVjrTefxHG6uPebkf5iGZ5/3JI9d4+78ERl/PONNzb9qQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f3ddkDvK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C/RlG2/lFVuDgGY8+iAkxt75Z25TgJwMFQfGbGVtSbbo+fcvBQlLqLBHG6UxTPVes7vY4eDl6qHBIeNo7yv8irUoqJG7clioHvnTMkh0U0hW6ENKhCHemdpnk7ixyAwJCap99FelCQ3q+qG5nV8+J3P3FzlkXPX2znMlgiReVgs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j7dzU5Yl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f3ddkDvK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 869B0C4CEE3;
-	Tue, 17 Jun 2025 16:23:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j7dzU5Yl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2A66C4CEE7;
+	Tue, 17 Jun 2025 16:23:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177412;
-	bh=widlisDYqv6yTi49PprZ0EsfQqsGkLWF3AaNwupX03o=;
+	s=korg; t=1750177415;
+	bh=88RHkx3mJl/Ihge9GblCLJMmmlVJohvM5iqTEtwJXK0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f3ddkDvK6565OzQIVxoiPGKbilJqDrKF6A7iEL1gz/ChP0izRdZtdnWWf1x2cJPEM
-	 W9jUHBaQuuj6asHJeDSsQlVbV0nitS70RE7T8YG+lM5Zpp3XJGX0RC2IcPvDjCQWio
-	 fPKhLzOH+t4zxD5M4VFXWaiP1ZUHzPMhrdbLfPJI=
+	b=j7dzU5YlOPOyZDelf0cimIl59MFdlIRH7eF64cfa4TmFbS2pWBaF1kvbk6SlMHNBJ
+	 l/Tyj+rVnnIAHMxQ5pxZ631qy1PJb1XUD1gBSHy6r81NNABzxy2sNvhV8dVuK7mo4D
+	 2NH5lem/8NewEPNQNnPR2VdqkHVeaJ4eSMZfdiQY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Chiu <chui-hao.chiu@mediatek.com>,
-	Shayne Chen <shayne.chen@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Johan Hovold <johan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 302/780] wifi: mt76: mt7996: set EHT max ampdu length capability
-Date: Tue, 17 Jun 2025 17:20:10 +0200
-Message-ID: <20250617152503.765929230@linuxfoundation.org>
+Subject: [PATCH 6.12 340/512] USB: serial: bus: fix const issue in usb_serial_device_match()
+Date: Tue, 17 Jun 2025 17:25:06 +0200
+Message-ID: <20250617152433.381377867@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,42 +46,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Peter Chiu <chui-hao.chiu@mediatek.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit 8b2f574845e33d02e7fbad2d3192a8b717567afa ]
+[ Upstream commit 92cd405b648605db4da866f3b9818b271ae84ef0 ]
 
-Set the max AMPDU length in the EHT MAC CAP. Without this patch, the
-peer station cannot obtain the correct capability, which prevents
-achieving peak throughput on the 2 GHz band.
+usb_serial_device_match() takes a const pointer, and then decides to
+cast it away into a non-const one, which is not a good thing to do
+overall.  Fix this up by properly setting the pointers to be const to
+preserve that attribute.
 
-Fixes: 1816ad9381e0 ("wifi: mt76: mt7996: add max mpdu len capability")
-Signed-off-by: Peter Chiu <chui-hao.chiu@mediatek.com>
-Signed-off-by: Shayne Chen <shayne.chen@mediatek.com>
-Link: https://patch.msgid.link/20250515032952.1653494-3-shayne.chen@mediatek.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Fixes: d69d80484598 ("driver core: have match() callback in struct bus_type take a const *")
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/init.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/usb/serial/bus.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/init.c b/drivers/net/wireless/mediatek/mt76/mt7996/init.c
-index e99dfd1771d52..4906b0ecc73e0 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/init.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/init.c
-@@ -1321,6 +1321,9 @@ mt7996_init_eht_caps(struct mt7996_phy *phy, enum nl80211_band band,
- 		u8_encode_bits(IEEE80211_EHT_MAC_CAP0_MAX_MPDU_LEN_11454,
- 			       IEEE80211_EHT_MAC_CAP0_MAX_MPDU_LEN_MASK);
+diff --git a/drivers/usb/serial/bus.c b/drivers/usb/serial/bus.c
+index d200e2c29a8ff..45cb78864c96d 100644
+--- a/drivers/usb/serial/bus.c
++++ b/drivers/usb/serial/bus.c
+@@ -17,7 +17,7 @@ static int usb_serial_device_match(struct device *dev,
+ 				   const struct device_driver *drv)
+ {
+ 	const struct usb_serial_port *port = to_usb_serial_port(dev);
+-	struct usb_serial_driver *driver = to_usb_serial_driver(drv);
++	const struct usb_serial_driver *driver = to_usb_serial_driver(drv);
  
-+	eht_cap_elem->mac_cap_info[1] |=
-+		IEEE80211_EHT_MAC_CAP1_MAX_AMPDU_LEN_MASK;
-+
- 	eht_cap_elem->phy_cap_info[0] =
- 		IEEE80211_EHT_PHY_CAP0_NDP_4_EHT_LFT_32_GI |
- 		IEEE80211_EHT_PHY_CAP0_SU_BEAMFORMER |
+ 	/*
+ 	 * drivers are already assigned to ports in serial_probe so it's
 -- 
 2.39.5
 
