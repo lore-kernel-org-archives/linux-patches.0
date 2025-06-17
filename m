@@ -1,49 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B49012ED153;
-	Tue, 17 Jun 2025 15:57:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B3EB2ED17D;
+	Tue, 17 Jun 2025 15:57:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175825; cv=none; b=hQln1RHF2c3cnlLCwZvonepdV5sYD3lXzZgiFdT1nWigAFjULHcF3JWFiR5/hGgF+94ixzFpzxkeK5xFSb+mymYuqkfruPm082bSgQvHrmgnnX1uPPe7EqQu+Qw/bVwCLpU82+eZChuANL8Nb0oMowAtnNRZT3QmeLVwPQl+78g=
+	t=1750175828; cv=none; b=r1f4lMPWYqqlXyRB+DqXthmPUdoRRIOmCTXFUJh7ftLboM372RVniy8sN2RWispEU3YRdax9iRjHjGj90I8GZQVTs1PLu3svd2MDrbO0/UJSA9cBCe7aNWfCe4Zc0WSNIYGDwbtOHMf/rnVhIddFs4HsM3GBkK+XSI01b798sck=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175825; c=relaxed/simple;
-	bh=qW4rZUenSQW6c1DyPiV/tQgqG3WiqguNRtSqBjIggJ8=;
+	s=arc-20240116; t=1750175828; c=relaxed/simple;
+	bh=dp1s5XUzzV3ZzOtiymMYGYh0CBiFdgHxHQPreT9hxpU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AmZP/HTi30Afo+Y5Q0P9h2uV/Y0GaZfTzp53KUR1+hG4IMEp90RvZ3wBG7bgwzPsPV5ap6+Hg2FVUDvMceLsTcW3Nc1fZmP/BvDIGV0tii/U4Mjbok/nJLvqeQut9LVVuHv0gC7vcGH5SOHMgsqfx+II2MxNQ1jiO+F1/gwbDMA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RC6pUSrt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jXoJ11GsMExEmEg8VEkHuiKyE1NG40z7csTBhyAMLKrGBhXFGC9pPI8s670F5VEWzBQTcwf+n5KqlxFtmcBdkPLJaw4kUNyHlSJ9tMBqC7HkLTPL2IdYe/bfCkDtxvqqA4YsSWJQu40iov29ZkJiDtojXc0Al6X6ijEKapxhgfk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yabx6ImO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RC6pUSrt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6A46C4CEE3;
-	Tue, 17 Jun 2025 15:57:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yabx6ImO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFCE7C4CEF0;
+	Tue, 17 Jun 2025 15:57:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175825;
-	bh=qW4rZUenSQW6c1DyPiV/tQgqG3WiqguNRtSqBjIggJ8=;
+	s=korg; t=1750175828;
+	bh=dp1s5XUzzV3ZzOtiymMYGYh0CBiFdgHxHQPreT9hxpU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RC6pUSrtjKj47nX6tBVzg2auc6qvPpy95fEcyA20VqVMzt4h56wgZS2sJ5tC6ZwGg
-	 msqFDpc5FpjH3Sx468izqG9sBDjxT8nFw241fgrI+5o6Ruwk4jeMa3umyh24nTHi1z
-	 /bFvVxJFwExsKcpF+3oMENBkyS/2e/0IL6FO8qmU=
+	b=Yabx6ImOBARdxG13T+CTo8uHvEag3uEngyydQEmRezU8s9/XK15FUTbG6TQajF93r
+	 wFRnOAvddkovOde74h3y+VgCLCqP+ObDfTtWtKrrCptm1jQk8sOIovd95FlIE6Q0Al
+	 pl+KxRKgu2Z/nz50sKblkGWpbCs7clAvvbza5rwg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Dapeng Mi <dapeng1.mi@linux.intel.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Andi Kleen <ak@linux.intel.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Will Deacon <will@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Marc Zyngier <maz@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 216/356] perf record: Fix incorrect --user-regs comments
-Date: Tue, 17 Jun 2025 17:25:31 +0200
-Message-ID: <20250617152346.900594408@linuxfoundation.org>
+Subject: [PATCH 6.15 126/780] arm64/fpsimd: Avoid warning when sve_to_fpsimd() is unused
+Date: Tue, 17 Jun 2025 17:17:14 +0200
+Message-ID: <20250617152456.641485801@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-References: <20250617152338.212798615@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -55,48 +50,79 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dapeng Mi <dapeng1.mi@linux.intel.com>
+From: Mark Rutland <mark.rutland@arm.com>
 
-[ Upstream commit a4a859eb6704a8aa46aa1cec5396c8d41383a26b ]
+[ Upstream commit f699c66691fb7e08a5a631c5baf5f2a19b7a6468 ]
 
-The comment of "--user-regs" option is not correct, fix it.
+Historically fpsimd_to_sve() and sve_to_fpsimd() were (conditionally)
+called by functions which were defined regardless of CONFIG_ARM64_SVE.
+Hence it was necessary that both fpsimd_to_sve() and sve_to_fpsimd()
+were always defined and not guarded by ifdeffery.
 
-"on interrupt," -> "in user space,"
+As a result of the removal of fpsimd_signal_preserve_current_state() in
+commit:
 
-Fixes: 84c417422798c897 ("perf record: Support direct --user-regs arguments")
-Reviewed-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Andi Kleen <ak@linux.intel.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20250403060810.196028-1-dapeng1.mi@linux.intel.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+  929fa99b1215966f ("arm64/fpsimd: signal: Always save+flush state early")
+
+... sve_to_fpsimd() has no callers when CONFIG_ARM64_SVE=n, resulting in
+a build-time warnign that it is unused:
+
+| arch/arm64/kernel/fpsimd.c:676:13: warning: unused function 'sve_to_fpsimd' [-Wunused-function]
+|   676 | static void sve_to_fpsimd(struct task_struct *task)
+|       |             ^~~~~~~~~~~~~
+| 1 warning generated.
+
+In contrast, fpsimd_to_sve() still has callers which are defined when
+CONFIG_ARM64_SVE=n, and it would be awkward to hide this behind
+ifdeffery and/or to use stub functions.
+
+For now, suppress the warning by marking both fpsimd_to_sve() and
+sve_to_fpsimd() as 'static inline', as we usually do for stub functions.
+The compiler will no longer warn if either function is unused.
+
+Aside from suppressing the warning, there should be no functional change
+as a result of this patch.
+
+Link: https://lore.kernel.org/linux-arm-kernel/20250429194600.GA26883@willie-the-truck/
+Reported-by: Will Deacon <will@kernel.org>
+Fixes: 929fa99b1215 ("arm64/fpsimd: signal: Always save+flush state early")
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Cc: Marc Zyngier <maz@kernel.org>
+Cc: Mark Brown <broonie@kernel.org>
+Cc: Will Deacon <will@kernel.org>
+Link: https://lore.kernel.org/r/20250430173240.4023627-1-mark.rutland@arm.com
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-record.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/kernel/fpsimd.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/perf/builtin-record.c b/tools/perf/builtin-record.c
-index b94ae33a343c2..81f77c0505fde 100644
---- a/tools/perf/builtin-record.c
-+++ b/tools/perf/builtin-record.c
-@@ -3427,7 +3427,7 @@ static struct option __record_options[] = {
- 		    "sample selected machine registers on interrupt,"
- 		    " use '-I?' to list register names", parse_intr_regs),
- 	OPT_CALLBACK_OPTARG(0, "user-regs", &record.opts.sample_user_regs, NULL, "any register",
--		    "sample selected machine registers on interrupt,"
-+		    "sample selected machine registers in user space,"
- 		    " use '--user-regs=?' to list register names", parse_user_regs),
- 	OPT_BOOLEAN(0, "running-time", &record.opts.running_time,
- 		    "Record running/enabled time of read (:S) events"),
+diff --git a/arch/arm64/kernel/fpsimd.c b/arch/arm64/kernel/fpsimd.c
+index 1edf797d2c710..0e649d0e59b06 100644
+--- a/arch/arm64/kernel/fpsimd.c
++++ b/arch/arm64/kernel/fpsimd.c
+@@ -651,7 +651,7 @@ static void __fpsimd_to_sve(void *sst, struct user_fpsimd_state const *fst,
+  * task->thread.uw.fpsimd_state must be up to date before calling this
+  * function.
+  */
+-static void fpsimd_to_sve(struct task_struct *task)
++static inline void fpsimd_to_sve(struct task_struct *task)
+ {
+ 	unsigned int vq;
+ 	void *sst = task->thread.sve_state;
+@@ -675,7 +675,7 @@ static void fpsimd_to_sve(struct task_struct *task)
+  * bytes of allocated kernel memory.
+  * task->thread.sve_state must be up to date before calling this function.
+  */
+-static void sve_to_fpsimd(struct task_struct *task)
++static inline void sve_to_fpsimd(struct task_struct *task)
+ {
+ 	unsigned int vq, vl;
+ 	void const *sst = task->thread.sve_state;
 -- 
 2.39.5
 
