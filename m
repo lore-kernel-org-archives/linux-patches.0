@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEAA42ECEAE;
-	Tue, 17 Jun 2025 16:14:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B29BA2ECEAE;
+	Tue, 17 Jun 2025 16:14:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750176875; cv=none; b=hRCvz8dbGam/bAKAWlo5rm/zwcwUCGaS4hvxngRDXZTeYbzRxjYrExZENmeIb5gkpt6Lrl5vxK4JQsQbqV+k4/7j/tR1d3CEeuXEwwbUc6rnYXAq3UP/C0jWNwwIz5jw20szn6kmvf8TdVje87KaKXwuJ6nRzt4SkeuNF73ko1k=
+	t=1750176878; cv=none; b=cTvB4rm/hL7fBKyo9TziEZHGGQP5dzH2DQMrCCvOwA6WWNdAW6VG0/6rD0pnwWhoZOqJQ18TuskcB8hASPPZ5rzgbignjppLGAIUQdOxXADktnDR17gfhZsGv19nbTByX2e09lcv9ZCB7Y4mU9hXKSVb6aovt4DSxqUmVkkp4X4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750176875; c=relaxed/simple;
-	bh=HL0Ldza2hJxnD2sBm9IaxsEX/WBNaAmyBEaEkBf+KM8=;
+	s=arc-20240116; t=1750176878; c=relaxed/simple;
+	bh=AJK/WDHkqL0swgjbygnTQ6xllN47Lu9u9NDFZnmpMdc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R+jHhDqHGhYSMbZDOYB7FCuYrosuk/4zNahl8aZGobj3FtHHqxWLwBYQr7vYjDvrL30FB8PBMQEWVeGUTCcUZdDQPbbQe9/xGynRJD7q1YW+7xHJv2NdDMPPuLXgvD/IllEfdKv3cPcnoN8S2HFIqHnCQppqVxtJO1gN15Nzio4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SAMc/QI3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DdqIB2+jClT8tmvCZegUHvi/sr+z7vSRp38+dEN1lJ0zeiN/tZCYkwDrX4VpeE1s9uijkBLnrm0zMYodWLlOV4pOkQGlnhDvizAHhFVZz93GCxjf1nbLl50xKIhGEsbJZOW0zjZx/CFDRCw/Enyzs5pFo0sG7tcQKP701iB8qd4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nROSNiJD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SAMc/QI3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D32BEC4CEE3;
-	Tue, 17 Jun 2025 16:14:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nROSNiJD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22634C4CEE3;
+	Tue, 17 Jun 2025 16:14:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750176875;
-	bh=HL0Ldza2hJxnD2sBm9IaxsEX/WBNaAmyBEaEkBf+KM8=;
+	s=korg; t=1750176878;
+	bh=AJK/WDHkqL0swgjbygnTQ6xllN47Lu9u9NDFZnmpMdc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SAMc/QI3U72lSJuZJpCxDyXdyczV7oWUq6ruyUUNgkC9+lTWBsRbYtzGPvtN9voQN
-	 EUsG2wXFgEgwxPU9Qwn1vbpfoL3x7Qxp3Ao0hqPcbWGgacZM0pfFhQv4DSBHwCLZKp
-	 AP/7KyvJ7Z9aOhMRBS+RG4JuvHzYli09WRt4BAGM=
+	b=nROSNiJD119m0nnzJyNB+ws2i8np+Uj/HEvOe2y4wJd0z62xTvLMCB72q4ragiBg2
+	 sd6+glO4VZzeMI2NcQIazWGZtC1NN2gemSTQvAwEsW1YSxTyRCVdmN51ZIZcqG4rOp
+	 klXL7K9WlkuTs0vZrUJkBzwtcW0VqQM8SXpyHY04=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
-	Stanislav Fomichev <sdf@fomichev.me>,
+	Henry Martin <bsdhenrymartin@gmail.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	"Daniel Thompson (RISCstar)" <danielt@kernel.org>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 234/780] bpf: Allow XDP dev-bound programs to perform XDP_REDIRECT into maps
-Date: Tue, 17 Jun 2025 17:19:02 +0200
-Message-ID: <20250617152500.988078634@linuxfoundation.org>
+Subject: [PATCH 6.12 275/512] backlight: pm8941: Add NULL check in wled_configure()
+Date: Tue, 17 Jun 2025 17:24:01 +0200
+Message-ID: <20250617152430.737635583@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,93 +49,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lorenzo Bianconi <lorenzo@kernel.org>
+From: Henry Martin <bsdhenrymartin@gmail.com>
 
-[ Upstream commit 714070c4cb7a10ff57450a618a936775f3036245 ]
+[ Upstream commit e12d3e1624a02706cdd3628bbf5668827214fa33 ]
 
-In the current implementation if the program is dev-bound to a specific
-device, it will not be possible to perform XDP_REDIRECT into a DEVMAP
-or CPUMAP even if the program is running in the driver NAPI context and
-it is not attached to any map entry. This seems in contrast with the
-explanation available in bpf_prog_map_compatible routine.
-Fix the issue introducing __bpf_prog_map_compatible utility routine in
-order to avoid bpf_prog_is_dev_bound() check running bpf_check_tail_call()
-at program load time (bpf_prog_select_runtime()).
-Continue forbidding to attach a dev-bound program to XDP maps
-(BPF_MAP_TYPE_PROG_ARRAY, BPF_MAP_TYPE_DEVMAP and BPF_MAP_TYPE_CPUMAP).
+devm_kasprintf() returns NULL when memory allocation fails. Currently,
+wled_configure() does not check for this case, which results in a NULL
+pointer dereference.
 
-Fixes: 3d76a4d3d4e59 ("bpf: XDP metadata RX kfuncs")
-Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
-Acked-by: Stanislav Fomichev <sdf@fomichev.me>
+Add NULL check after devm_kasprintf() to prevent this issue.
+
+Fixes: f86b77583d88 ("backlight: pm8941: Convert to using %pOFn instead of device_node.name")
+Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: "Daniel Thompson (RISCstar)" <danielt@kernel.org>
+Link: https://lore.kernel.org/r/20250401091647.22784-1-bsdhenrymartin@gmail.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/core.c | 27 ++++++++++++++++-----------
- 1 file changed, 16 insertions(+), 11 deletions(-)
+ drivers/video/backlight/qcom-wled.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/bpf/core.c b/kernel/bpf/core.c
-index ba6b6118cf504..a3e5716884211 100644
---- a/kernel/bpf/core.c
-+++ b/kernel/bpf/core.c
-@@ -2358,8 +2358,8 @@ static unsigned int __bpf_prog_ret0_warn(const void *ctx,
- 	return 0;
- }
+diff --git a/drivers/video/backlight/qcom-wled.c b/drivers/video/backlight/qcom-wled.c
+index 10129095a4c17..b19e5f73de8bb 100644
+--- a/drivers/video/backlight/qcom-wled.c
++++ b/drivers/video/backlight/qcom-wled.c
+@@ -1406,9 +1406,11 @@ static int wled_configure(struct wled *wled)
+ 	wled->ctrl_addr = be32_to_cpu(*prop_addr);
  
--bool bpf_prog_map_compatible(struct bpf_map *map,
--			     const struct bpf_prog *fp)
-+static bool __bpf_prog_map_compatible(struct bpf_map *map,
-+				      const struct bpf_prog *fp)
- {
- 	enum bpf_prog_type prog_type = resolve_prog_type(fp);
- 	bool ret;
-@@ -2368,14 +2368,6 @@ bool bpf_prog_map_compatible(struct bpf_map *map,
- 	if (fp->kprobe_override)
- 		return false;
- 
--	/* XDP programs inserted into maps are not guaranteed to run on
--	 * a particular netdev (and can run outside driver context entirely
--	 * in the case of devmap and cpumap). Until device checks
--	 * are implemented, prohibit adding dev-bound programs to program maps.
--	 */
--	if (bpf_prog_is_dev_bound(aux))
--		return false;
+ 	rc = of_property_read_string(dev->of_node, "label", &wled->name);
+-	if (rc)
++	if (rc) {
+ 		wled->name = devm_kasprintf(dev, GFP_KERNEL, "%pOFn", dev->of_node);
 -
- 	spin_lock(&map->owner.lock);
- 	if (!map->owner.type) {
- 		/* There's no owner yet where we could check for
-@@ -2409,6 +2401,19 @@ bool bpf_prog_map_compatible(struct bpf_map *map,
- 	return ret;
- }
- 
-+bool bpf_prog_map_compatible(struct bpf_map *map, const struct bpf_prog *fp)
-+{
-+	/* XDP programs inserted into maps are not guaranteed to run on
-+	 * a particular netdev (and can run outside driver context entirely
-+	 * in the case of devmap and cpumap). Until device checks
-+	 * are implemented, prohibit adding dev-bound programs to program maps.
-+	 */
-+	if (bpf_prog_is_dev_bound(fp->aux))
-+		return false;
-+
-+	return __bpf_prog_map_compatible(map, fp);
-+}
-+
- static int bpf_check_tail_call(const struct bpf_prog *fp)
- {
- 	struct bpf_prog_aux *aux = fp->aux;
-@@ -2421,7 +2426,7 @@ static int bpf_check_tail_call(const struct bpf_prog *fp)
- 		if (!map_type_contains_progs(map))
- 			continue;
- 
--		if (!bpf_prog_map_compatible(map, fp)) {
-+		if (!__bpf_prog_map_compatible(map, fp)) {
- 			ret = -EINVAL;
- 			goto out;
- 		}
++		if (!wled->name)
++			return -ENOMEM;
++	}
+ 	switch (wled->version) {
+ 	case 3:
+ 		u32_opts = wled3_opts;
 -- 
 2.39.5
 
