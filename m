@@ -1,51 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4E462DFF17;
-	Tue, 17 Jun 2025 16:42:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 604712FA655;
+	Tue, 17 Jun 2025 16:42:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750178531; cv=none; b=EQniLJP9cIP8N6jf3YVhG51DfXj8EJ0ZsL1MNHC9quHs+3Rpy196FLkEzWTKKb7y3O3qqCgvS8NICe4QEx3U4MCQGtRBySfrO1aSiHNDGiyyT432g1vej0uqOqEdsh2WAKPdrxCj+atM4noB6B+36L57ZL5UcGjT3C+HqpdDSfU=
+	t=1750178536; cv=none; b=RhYKZegC6lbdW/5rv5GHRUp/ne5JtLV9C7C/9qQHFwXL3w0jPGaRIDNzOlin4lcRPQVLMYXyT1q7OXCUhgPBN/zQycHauwp3tYNd4NNeQ8pMRxGQXNvt4qbApkrV3Ga0xjvqlw8Aq85gFS0+O2Gq7vJ+WrETeFJjNms3I9lE+8U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750178531; c=relaxed/simple;
-	bh=/rN0YO76mRMKU36m33n05D89mpU3Odkq+Tw4Lx73hv0=;
+	s=arc-20240116; t=1750178536; c=relaxed/simple;
+	bh=pyjNdgujHTVlIGAppS2Jtp7oeGNvxJ88UAbCMXozI4g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sJjEjtNWDqebrA1QxMtEbymVWXHQPX17Iu226zVpg52RSxoefHNDGYFowFjFM9EYviAZw6qsFtKDjhc6xaHur76bLjE/R3scR2EpckZ5DbTm3LmvV/hBq3UAle+TAen16GcgLeHO9xHdEkfj0YwYT2o3tuFmkmkyGYWbFczExEE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z4FrAY+4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jbfATLZ2B+5MmZmL3iwWJElOM6r8xMrB+MMpPQLi8h4l7pRjpy80ZUUaV/3V7qWc5mLzeJlEjqkHcPHl8zWwVvdZIeDh4cva241fMeCPg7dVzDFl6iu9zD3LzBTYU9PkJK3EapTEWGnPULF9GYuuW0SV0gVNR0nu+FEkVJNKfSY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D37Q9pdU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z4FrAY+4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A7FCC4CEE7;
-	Tue, 17 Jun 2025 16:42:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D37Q9pdU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7609BC4CEE3;
+	Tue, 17 Jun 2025 16:42:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750178531;
-	bh=/rN0YO76mRMKU36m33n05D89mpU3Odkq+Tw4Lx73hv0=;
+	s=korg; t=1750178534;
+	bh=pyjNdgujHTVlIGAppS2Jtp7oeGNvxJ88UAbCMXozI4g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z4FrAY+4oGH0MNSdXuVWUCnQ+HRQbGlSK2gl7Hq937l/dVfbJcRehLjlxE6O20plD
-	 O17j+oXcIPWr+v8pMRsYqiw5hbkz2i8sVWAJLPtWXMJNgrAjc9VT068zM5borluXm3
-	 Hn6EBtmY1hL8fiuFW5M1bj+8NvMIwIKB+aG5ykL4=
+	b=D37Q9pdU2FURm0GpFLAt9J7TQn9qfHAlfWBhRF0Q2AoWqvG2OIQgL7aUnrbL6qoZX
+	 3zftg94RFlVhyuA1aGghVPM1J6im6cTtz9d/d4OnC7oVJS31y3Fv52qhd7srCWWaI2
+	 FdGVOAXMyp3i5yhZ4M9yKMU4W9m/URBPxWxmoiR4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Howard Chu <howardchu95@gmail.com>,
-	Anubhav Shelat <ashelat@redhat.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Dapeng Mi <dapeng1.mi@linux.intel.com>,
-	Ian Rogers <irogers@google.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	James Clark <james.clark@linaro.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Michael Petlan <mpetlan@redhat.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Li Lingfeng <lilingfeng3@huawei.com>,
+	Anna Schumaker <anna.schumaker@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 473/780] perf trace: Always print return value for syscalls returning a pid
-Date: Tue, 17 Jun 2025 17:23:01 +0200
-Message-ID: <20250617152510.750973106@linuxfoundation.org>
+Subject: [PATCH 6.15 474/780] nfs: clear SB_RDONLY before getting superblock
+Date: Tue, 17 Jun 2025 17:23:02 +0200
+Message-ID: <20250617152510.790826426@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
 References: <20250617152451.485330293@linuxfoundation.org>
@@ -64,65 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anubhav Shelat <ashelat@redhat.com>
+From: Li Lingfeng <lilingfeng3@huawei.com>
 
-[ Upstream commit c7a48ea9b919e2fa0e4a1d9938fdb03e9afe276c ]
+[ Upstream commit 8cd9b785943c57a136536250da80ba1eb6f8eb18 ]
 
-The syscalls that were consistently observed were set_robust_list and
-rseq. This is because perf cannot find their child process.
+As described in the link, commit 52cb7f8f1778 ("nfs: ignore SB_RDONLY when
+mounting nfs") removed the check for the ro flag when determining whether
+to share the superblock, which caused issues when mounting different
+subdirectories under the same export directory via NFSv3. However, this
+change did not affect NFSv4.
 
-This change ensures that the return value is always printed.
+For NFSv3:
+1) A single superblock is created for the initial mount.
+2) When mounted read-only, this superblock carries the SB_RDONLY flag.
+3) Before commit 52cb7f8f1778 ("nfs: ignore SB_RDONLY when mounting nfs"):
+Subsequent rw mounts would not share the existing ro superblock due to
+flag mismatch, creating a new superblock without SB_RDONLY.
+After the commit:
+  The SB_RDONLY flag is ignored during superblock comparison, and this leads
+  to sharing the existing superblock even for rw mounts.
+  Ultimately results in write operations being rejected at the VFS layer.
 
-Before:
-     0.256 ( 0.001 ms): set_robust_list(head: 0x7f09c77dba20, len: 24)                        =
-     0.259 ( 0.001 ms): rseq(rseq: 0x7f09c77dc0e0, rseq_len: 32, sig: 1392848979)             =
-After:
-     0.270 ( 0.002 ms): set_robust_list(head: 0x7f0bb14a6a20, len: 24)                        = 0
-     0.273 ( 0.002 ms): rseq(rseq: 0x7f0bb14a70e0, rseq_len: 32, sig: 1392848979)             = 0
+For NFSv4:
+1) Multiple superblocks are created and the last one will be kept.
+2) The actually used superblock for ro mounts doesn't carry SB_RDONLY flag.
+Therefore, commit 52cb7f8f1778 doesn't affect NFSv4 mounts.
 
-Committer notes:
+Clear SB_RDONLY before getting superblock when NFS_MOUNT_UNSHARED is not
+set to fix it.
 
-As discussed in the thread in the Link: tag below, these two don't
-return a pid, but for syscalls returning one, we need to print the
-result and if we manage to find the children in 'perf trace' data
-structures, then print its name as well.
-
-Fixes: 11c8e39f5133aed9 ("perf trace: Infrastructure to show COMM strings for syscalls returning PIDs")
-Reviewed-by: Howard Chu <howardchu95@gmail.com>
-Signed-off-by: Anubhav Shelat <ashelat@redhat.com>
-Acked-by: Namhyung Kim <namhyung@kernel.org>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Dapeng Mi <dapeng1.mi@linux.intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: James Clark <james.clark@linaro.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Michael Petlan <mpetlan@redhat.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20250403160411.159238-2-ashelat@redhat.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: 52cb7f8f1778 ("nfs: ignore SB_RDONLY when mounting nfs")
+Closes: https://lore.kernel.org/all/12d7ea53-1202-4e21-a7ef-431c94758ce5@app.fastmail.com/T/
+Signed-off-by: Li Lingfeng <lilingfeng3@huawei.com>
+Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-trace.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nfs/super.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/tools/perf/builtin-trace.c b/tools/perf/builtin-trace.c
-index f98b5efb1f96c..7304e62b69fee 100644
---- a/tools/perf/builtin-trace.c
-+++ b/tools/perf/builtin-trace.c
-@@ -3005,8 +3005,8 @@ errno_print: {
- 	else if (sc->fmt->errpid) {
- 		struct thread *child = machine__find_thread(trace->host, ret, ret);
+diff --git a/fs/nfs/super.c b/fs/nfs/super.c
+index 9eea9e62afc9c..1a609471e85ef 100644
+--- a/fs/nfs/super.c
++++ b/fs/nfs/super.c
+@@ -1308,8 +1308,17 @@ int nfs_get_tree_common(struct fs_context *fc)
+ 	if (IS_ERR(server))
+ 		return PTR_ERR(server);
  
-+		fprintf(trace->output, "%ld", ret);
- 		if (child != NULL) {
--			fprintf(trace->output, "%ld", ret);
- 			if (thread__comm_set(child))
- 				fprintf(trace->output, " (%s)", thread__comm_str(child));
- 			thread__put(child);
++	/*
++	 * When NFS_MOUNT_UNSHARED is not set, NFS forces the sharing of a
++	 * superblock among each filesystem that mounts sub-directories
++	 * belonging to a single exported root path.
++	 * To prevent interference between different filesystems, the
++	 * SB_RDONLY flag should be removed from the superblock.
++	 */
+ 	if (server->flags & NFS_MOUNT_UNSHARED)
+ 		compare_super = NULL;
++	else
++		fc->sb_flags &= ~SB_RDONLY;
+ 
+ 	/* -o noac implies -o sync */
+ 	if (server->flags & NFS_MOUNT_NOAC)
 -- 
 2.39.5
 
