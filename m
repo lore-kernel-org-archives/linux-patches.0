@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC3282ED844;
-	Tue, 17 Jun 2025 16:06:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DB452ED879;
+	Tue, 17 Jun 2025 16:06:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750176360; cv=none; b=bfiASJ4AZ59nYnX+/xQXJFqmEpDPjq4H2fUL8NAPm3KFuhMr21Q0L+ERPuxE9RbtCzeoXnaRFIYsRgRxRMfDqk0ZXkJfhv2n1d1hyZBA/LEGQZqVtm3NdK/ihB1IVR6c01B6SAMvPY96WZpH6Wtrh+BmFP7vcbN5EMe3kPJfghM=
+	t=1750176364; cv=none; b=S5iUQ/+KTzrzMimodYE6FvsTh8ilR7lI5CrDhvImlhISXiEHtNSa8LZ44jg4HFnujaigsvY7wBgGpZdpGAzWE0FGNdY5bowJ7CJr24AA4d3pPbuaFn+M8S2AD2mXwNxkFoahY1nJPLd3EB/sAW5Y8AJ4kXqq0iD+7n3lcRKI6gg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750176360; c=relaxed/simple;
-	bh=lYccObZXlgxNzM+nE6+1gRsxRsrnte7J2XBCQhvzDko=;
+	s=arc-20240116; t=1750176364; c=relaxed/simple;
+	bh=7A++1Gflxb3wCTNa59R/JXXFKvBGtof+aUZyynopQVg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d3ssvxgs3DnEtcebrNOxEGWKw94Bt+HI91Ex/nJobnS1NWFLuHzLNlHDDziF5JgcNhBvxFiPOkQaSNcl5fd7ZII/PLGx00RvbPIw9CeTvf63OTTmLS0Pj++B77ozovq2VpUxWqFZsV4taViCDwCFac1YVY+/fxZjT6iLwiZrg1k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bcm8Cba5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=aF21qPlDG40tp8m3L3n1ybUeDShKmznOoFLb/uKrxuVM1JD63N6iRBAewXV2T09EM7zTVtfAjkcXUQxI5OT0TDQLqURc5ap6L4yDvNNQFv3diMFBG7rO4dSYnYEok3/oY6xY6FseAVj+QX65uuuswmoMJiZgvcmRHUpddJ0QsEM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oXKXDqAq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bcm8Cba5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EC76C4CEF4;
-	Tue, 17 Jun 2025 16:05:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oXKXDqAq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7464C4CEE3;
+	Tue, 17 Jun 2025 16:06:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750176360;
-	bh=lYccObZXlgxNzM+nE6+1gRsxRsrnte7J2XBCQhvzDko=;
+	s=korg; t=1750176364;
+	bh=7A++1Gflxb3wCTNa59R/JXXFKvBGtof+aUZyynopQVg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bcm8Cba5KXiKc7eR9z1suAuF05Gp67iSliNsb3drZgxAzcmeRpbT46trF8ch5JPkw
-	 aq1sHf7AecRWNvL42GfMVf1TejCBiY4h2uUxHWlvcLlnLkmjWCX9dgmoNnAik+FY2o
-	 n4Cq6oFEbQeC7X63vig7AdBaltw93U2fuui5zjco=
+	b=oXKXDqAqu06V9uW3IbbQbzAqztfms8CIzjp2hp6ua7VI8MGGKHKPWamY6ZVqhNY+9
+	 Tn//NWYcIwTb+rZLceOjnvy4ERv/6ZgUo4V6apMlGNIF/NQLTYdDqQXyr9saJkUjET
+	 sQmzNiF8kmsdDKbILwd3E1NYUufAuedtMHSTlqmY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhiguo Niu <zhiguo.niu@unisoc.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	=?UTF-8?q?Amadeusz=20S=C5=82awi=C5=84ski?= <amadeuszx.slawinski@linux.intel.com>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 216/512] f2fs: use d_inode(dentry) cleanup dentry->d_inode
-Date: Tue, 17 Jun 2025 17:23:02 +0200
-Message-ID: <20250617152428.386265934@linuxfoundation.org>
+Subject: [PATCH 6.6 270/356] ASoC: codecs: hda: Fix RPM usage count underflow
+Date: Tue, 17 Jun 2025 17:26:25 +0200
+Message-ID: <20250617152349.069943958@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
+References: <20250617152338.212798615@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,78 +46,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhiguo Niu <zhiguo.niu@unisoc.com>
+From: Cezary Rojewski <cezary.rojewski@intel.com>
 
-[ Upstream commit a6c397a31f58a1d577c2c8d04b624e9baa31951c ]
+[ Upstream commit ff0045de4ee0288dec683690f66f2f369b7d3466 ]
 
-no logic changes.
+RPM manipulation in hda_codec_probe_complete()'s error path is
+superfluous and leads to RPM usage count underflow if the
+build-controls operation fails.
 
-Signed-off-by: Zhiguo Niu <zhiguo.niu@unisoc.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+hda_codec_probe_complete() is called in:
+
+1) hda_codec_probe() for all non-HDMI codecs
+2) in card->late_probe() for HDMI codecs
+
+Error path for hda_codec_probe() takes care of bus' RPM already.
+For 2) if late_probe() fails, ASoC performs card cleanup what
+triggers hda_codec_remote() - same treatment is in 1).
+
+Fixes: b5df2a7dca1c ("ASoC: codecs: Add HD-Audio codec driver")
+Reviewed-by: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
+Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Link: https://patch.msgid.link/20250530141025.2942936-2-cezary.rojewski@intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/namei.c | 8 ++++----
- fs/f2fs/super.c | 4 ++--
- 2 files changed, 6 insertions(+), 6 deletions(-)
+ sound/soc/codecs/hda.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/f2fs/namei.c b/fs/f2fs/namei.c
-index 57d46e1439ded..f8407a645303b 100644
---- a/fs/f2fs/namei.c
-+++ b/fs/f2fs/namei.c
-@@ -413,7 +413,7 @@ static int f2fs_link(struct dentry *old_dentry, struct inode *dir,
- 
- 	if (is_inode_flag_set(dir, FI_PROJ_INHERIT) &&
- 			(!projid_eq(F2FS_I(dir)->i_projid,
--			F2FS_I(old_dentry->d_inode)->i_projid)))
-+			F2FS_I(inode)->i_projid)))
- 		return -EXDEV;
- 
- 	err = f2fs_dquot_initialize(dir);
-@@ -905,7 +905,7 @@ static int f2fs_rename(struct mnt_idmap *idmap, struct inode *old_dir,
- 
- 	if (is_inode_flag_set(new_dir, FI_PROJ_INHERIT) &&
- 			(!projid_eq(F2FS_I(new_dir)->i_projid,
--			F2FS_I(old_dentry->d_inode)->i_projid)))
-+			F2FS_I(old_inode)->i_projid)))
- 		return -EXDEV;
- 
- 	/*
-@@ -1098,10 +1098,10 @@ static int f2fs_cross_rename(struct inode *old_dir, struct dentry *old_dentry,
- 
- 	if ((is_inode_flag_set(new_dir, FI_PROJ_INHERIT) &&
- 			!projid_eq(F2FS_I(new_dir)->i_projid,
--			F2FS_I(old_dentry->d_inode)->i_projid)) ||
-+			F2FS_I(old_inode)->i_projid)) ||
- 	    (is_inode_flag_set(new_dir, FI_PROJ_INHERIT) &&
- 			!projid_eq(F2FS_I(old_dir)->i_projid,
--			F2FS_I(new_dentry->d_inode)->i_projid)))
-+			F2FS_I(new_inode)->i_projid)))
- 		return -EXDEV;
- 
- 	err = f2fs_dquot_initialize(old_dir);
-diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
-index 573cc4725e2e8..faa76531246eb 100644
---- a/fs/f2fs/super.c
-+++ b/fs/f2fs/super.c
-@@ -1862,9 +1862,9 @@ static int f2fs_statfs(struct dentry *dentry, struct kstatfs *buf)
- 	buf->f_fsid    = u64_to_fsid(id);
- 
- #ifdef CONFIG_QUOTA
--	if (is_inode_flag_set(dentry->d_inode, FI_PROJ_INHERIT) &&
-+	if (is_inode_flag_set(d_inode(dentry), FI_PROJ_INHERIT) &&
- 			sb_has_quota_limits_enabled(sb, PRJQUOTA)) {
--		f2fs_statfs_project(sb, F2FS_I(dentry->d_inode)->i_projid, buf);
-+		f2fs_statfs_project(sb, F2FS_I(d_inode(dentry))->i_projid, buf);
+diff --git a/sound/soc/codecs/hda.c b/sound/soc/codecs/hda.c
+index d57b043d6bfef..42aca0a63c441 100644
+--- a/sound/soc/codecs/hda.c
++++ b/sound/soc/codecs/hda.c
+@@ -150,7 +150,7 @@ int hda_codec_probe_complete(struct hda_codec *codec)
+ 	ret = snd_hda_codec_build_controls(codec);
+ 	if (ret < 0) {
+ 		dev_err(&hdev->dev, "unable to create controls %d\n", ret);
+-		goto out;
++		return ret;
  	}
- #endif
- 	return 0;
+ 
+ 	/* Bus suspended codecs as it does not manage their pm */
+@@ -158,7 +158,7 @@ int hda_codec_probe_complete(struct hda_codec *codec)
+ 	/* rpm was forbidden in snd_hda_codec_device_new() */
+ 	snd_hda_codec_set_power_save(codec, 2000);
+ 	snd_hda_codec_register(codec);
+-out:
++
+ 	/* Complement pm_runtime_get_sync(bus) in probe */
+ 	pm_runtime_mark_last_busy(bus->dev);
+ 	pm_runtime_put_autosuspend(bus->dev);
 -- 
 2.39.5
 
