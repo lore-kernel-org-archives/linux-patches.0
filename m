@@ -1,42 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5608E2F234A;
-	Tue, 17 Jun 2025 15:54:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA5832DFF01;
+	Tue, 17 Jun 2025 15:54:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175668; cv=none; b=WtResLBzmRMoYM7+avxXkF2iVwHB62nH0FCyyYe60Mt8Q+dQFzQgCH1XsK06KipfZb5+7zgsWdDsmD2Ro9heNSGRw3J5ShAN0N7bgdgBouwrS2uFPPEj+HzOsqdDvPmNKeTEUDwlVWcIqrMETp5Qw2Gdj2hLWi46dzte8tl//Ns=
+	t=1750175672; cv=none; b=HpvFlcABHPIQVXuWfW1naMC1OvQ3CPQ2O/Iuk0rfLOVw70KD9z+wqCn3DMfsU4vjoaqvtDgHVuq7epK5YaNo3QrHeRn/k9UEEUcJWMifUj4WpKwxaO29gixccAQA+gZUicqNv0GE0SmWjxWnRbp1Da/oEoFVAoMX5Z9FCHoR+/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175668; c=relaxed/simple;
-	bh=plSKBrq8eNy/L/TjQDX6AbsR+k45+fsrOEjV5tjIBuI=;
+	s=arc-20240116; t=1750175672; c=relaxed/simple;
+	bh=kS36JTUOjlYgzC8VMd/JlnjpFYS5hoSw5zLd8UMwgQA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VujExWHKpO6XaK+ztOTrSL74lQx+el9gHe3pNktdIpT29k3RXyDm4ywoEqUM2D1AO6SofqRP7yxMsHr63bANfSfR+d3K7F+W1a9xL1P5AInKc9aBFnVGqD3k+xTnwfG6prhhGim/7F+1pzbz37KzmyiLZOIt4SH0FU9XC118xFw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EmSqL87m; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ee1XfA8wlJCp80SI1u5bKjA9a+77bvk87VCXRRDgfPILJEZlLvWhC7JeU2MT0ERHkROxew4EIK2j7TORmza5ZbhdHohUFlLoc/XauLcR2sJcpHL3YcwIXkEFCoJ2y5yDzgfZtic0InqvPdnEVXodpC5XoTj2BmxDaa49uybS8vI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iC7aWHa2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EmSqL87m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8948C4CEE3;
-	Tue, 17 Jun 2025 15:54:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iC7aWHa2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08E1CC4CEE3;
+	Tue, 17 Jun 2025 15:54:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175668;
-	bh=plSKBrq8eNy/L/TjQDX6AbsR+k45+fsrOEjV5tjIBuI=;
+	s=korg; t=1750175671;
+	bh=kS36JTUOjlYgzC8VMd/JlnjpFYS5hoSw5zLd8UMwgQA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EmSqL87mSyW7xwWIbV32+azl4xhTPZQ7GMOQ5nfbImcsFTujGQV77gRSykYC6YTPN
-	 pQJkoigNw8b2nCqEjr286vrO7saFgpUuw/wR7SIU3NPXSGVMLXSHTQtLDiWVz9YmCU
-	 indeZQYk3ooWYDkLdQO62VeRNbiVGfHW3qMknXE0=
+	b=iC7aWHa28/h0GwTrQYZtpxLb8D4syXcPNXhNgn0M5TG5RJJl3NnkdoAqGftNrLGCK
+	 eHnbr9FiOB8x+Nu6VM1Yjk0EDF4PEN9w9/bOsb1SfCD995ipCuBnK8sH5/mhQxZpOI
+	 Ml8w9WuodDXlTaXRHfo8jksdnlc4jv4dD/cd9gF8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luca Weiss <luca.weiss@fairphone.com>,
-	Taniya Das <quic_tdas@quicinc.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Ingo Molnar <mingo@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ian Rogers <irogers@google.com>,
+	James Clark <james.clark@linaro.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 152/512] clk: qcom: camcc-sm6350: Add *_wait_val values for GDSCs
-Date: Tue, 17 Jun 2025 17:21:58 +0200
-Message-ID: <20250617152425.769282480@linuxfoundation.org>
+Subject: [PATCH 6.6 199/356] perf ui browser hists: Set actions->thread before calling do_zoom_thread()
+Date: Tue, 17 Jun 2025 17:25:14 +0200
+Message-ID: <20250617152346.226035614@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
+References: <20250617152338.212798615@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,97 +53,63 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Luca Weiss <luca.weiss@fairphone.com>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit e7b1c13280ad866f3b935f6c658713c41db61635 ]
+[ Upstream commit 1741189d843a1d5ef38538bc52a3760e2e46cb2e ]
 
-Compared to the msm-4.19 driver the mainline GDSC driver always sets the
-bits for en_rest, en_few & clk_dis, and if those values are not set
-per-GDSC in the respective driver then the default value from the GDSC
-driver is used. The downstream driver only conditionally sets
-clk_dis_wait_val if qcom,clk-dis-wait-val is given in devicetree.
+In 7cecb7fe8388d5c3 ("perf hists: Move sort__has_comm into struct
+perf_hpp_list") it assumes that act->thread is set prior to calling
+do_zoom_thread().
 
-Correct this situation by explicitly setting those values. For all GDSCs
-the reset value of those bits are used.
+This doesn't happen when we use ESC or the Left arrow key to Zoom out of
+a specific thread, making this operation not to work and we get stuck
+into the thread zoom.
 
-Fixes: 80f5451d9a7c ("clk: qcom: Add camera clock controller driver for SM6350")
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-Reviewed-by: Taniya Das <quic_tdas@quicinc.com>
-Link: https://lore.kernel.org/r/20250425-sm6350-gdsc-val-v1-1-1f252d9c5e4e@fairphone.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+In 6422184b087ff435 ("perf hists browser: Simplify zooming code using
+pstack_peek()") it says no need to set actions->thread, and at that
+point that was true, but in 7cecb7fe8388d5c3 a actions->thread == NULL
+check was added before the zoom out of thread could kick in.
+
+We can zoom out using the alternative 't' thread zoom toggle hotkey to
+finally set actions->thread before calling do_zoom_thread() and zoom
+out, but lets also fix the ESC/Zoom out of thread case.
+
+Fixes: 7cecb7fe8388d5c3 ("perf hists: Move sort__has_comm into struct perf_hpp_list")
+Reported-by: Ingo Molnar <mingo@kernel.org>
+Tested-by: Ingo Molnar <mingo@kernel.org>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: James Clark <james.clark@linaro.org>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Link: https://lore.kernel.org/r/Z_TYux5fUg2pW-pF@gmail.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/camcc-sm6350.c | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ tools/perf/ui/browsers/hists.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/qcom/camcc-sm6350.c b/drivers/clk/qcom/camcc-sm6350.c
-index f6634cc8663ef..418668184ec35 100644
---- a/drivers/clk/qcom/camcc-sm6350.c
-+++ b/drivers/clk/qcom/camcc-sm6350.c
-@@ -1694,6 +1694,9 @@ static struct clk_branch camcc_sys_tmr_clk = {
- 
- static struct gdsc bps_gdsc = {
- 	.gdscr = 0x6004,
-+	.en_rest_wait_val = 0x2,
-+	.en_few_wait_val = 0x2,
-+	.clk_dis_wait_val = 0xf,
- 	.pd = {
- 		.name = "bps_gdsc",
- 	},
-@@ -1703,6 +1706,9 @@ static struct gdsc bps_gdsc = {
- 
- static struct gdsc ipe_0_gdsc = {
- 	.gdscr = 0x7004,
-+	.en_rest_wait_val = 0x2,
-+	.en_few_wait_val = 0x2,
-+	.clk_dis_wait_val = 0xf,
- 	.pd = {
- 		.name = "ipe_0_gdsc",
- 	},
-@@ -1712,6 +1718,9 @@ static struct gdsc ipe_0_gdsc = {
- 
- static struct gdsc ife_0_gdsc = {
- 	.gdscr = 0x9004,
-+	.en_rest_wait_val = 0x2,
-+	.en_few_wait_val = 0x2,
-+	.clk_dis_wait_val = 0xf,
- 	.pd = {
- 		.name = "ife_0_gdsc",
- 	},
-@@ -1720,6 +1729,9 @@ static struct gdsc ife_0_gdsc = {
- 
- static struct gdsc ife_1_gdsc = {
- 	.gdscr = 0xa004,
-+	.en_rest_wait_val = 0x2,
-+	.en_few_wait_val = 0x2,
-+	.clk_dis_wait_val = 0xf,
- 	.pd = {
- 		.name = "ife_1_gdsc",
- 	},
-@@ -1728,6 +1740,9 @@ static struct gdsc ife_1_gdsc = {
- 
- static struct gdsc ife_2_gdsc = {
- 	.gdscr = 0xb004,
-+	.en_rest_wait_val = 0x2,
-+	.en_few_wait_val = 0x2,
-+	.clk_dis_wait_val = 0xf,
- 	.pd = {
- 		.name = "ife_2_gdsc",
- 	},
-@@ -1736,6 +1751,9 @@ static struct gdsc ife_2_gdsc = {
- 
- static struct gdsc titan_top_gdsc = {
- 	.gdscr = 0x14004,
-+	.en_rest_wait_val = 0x2,
-+	.en_few_wait_val = 0x2,
-+	.clk_dis_wait_val = 0xf,
- 	.pd = {
- 		.name = "titan_top_gdsc",
- 	},
+diff --git a/tools/perf/ui/browsers/hists.c b/tools/perf/ui/browsers/hists.c
+index bb59d27642ccf..a53a0257a4bca 100644
+--- a/tools/perf/ui/browsers/hists.c
++++ b/tools/perf/ui/browsers/hists.c
+@@ -3239,10 +3239,10 @@ static int evsel__hists_browse(struct evsel *evsel, int nr_events, const char *h
+ 				/*
+ 				 * No need to set actions->dso here since
+ 				 * it's just to remove the current filter.
+-				 * Ditto for thread below.
+ 				 */
+ 				do_zoom_dso(browser, actions);
+ 			} else if (top == &browser->hists->thread_filter) {
++				actions->thread = thread;
+ 				do_zoom_thread(browser, actions);
+ 			} else if (top == &browser->hists->socket_filter) {
+ 				do_zoom_socket(browser, actions);
 -- 
 2.39.5
 
