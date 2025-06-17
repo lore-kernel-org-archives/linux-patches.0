@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 255702EF659;
-	Tue, 17 Jun 2025 15:30:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 142E311CBA;
+	Tue, 17 Jun 2025 15:30:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750174227; cv=none; b=Nm4YPJbNI+S49yVXfFbBsnNm3uWcHEPtNGoAwBziZc25ruzi76CpIAg0syWegvh7bMgPPKsg80qYVDPBjPV4dUguAI6MWVJYZjUwDAnsfNwhAyvzI6J22P6YtXm1mA9aHVqcF159rMcY1FaBqKCT5EEtemRNnBsVXcfbYU+zGvU=
+	t=1750174230; cv=none; b=mS5DLLIMRfGSH+bfLbCw10sjpSJ3J5RfaztBzqeHXq7weNjPpwb7/TVOKjofrBeKICydXhhAtNClzeTL+2krav68GWLYFcdd1dwJc8wc7GDdx+TAaF0+GzGB7RngSpRrhNd+RpKXkE1dJevFcre+BNaYuiBGP60Tt2x0HY3OWoU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750174227; c=relaxed/simple;
-	bh=RLklqTdERyTfXh07L1x56CuKJblHSogMiMwSnKVeHJs=;
+	s=arc-20240116; t=1750174230; c=relaxed/simple;
+	bh=W//S+peJ/QOHQe1FzBBcKhFP6GRMTeFpdfQELwP8+88=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IbB4Ocszm3HNfD+dh2GaKA5W4ncSHJrym8WQ9cCAoPyM1cDM5pizaAywjs1i4104ataiDR7KGEs2bh+RRTyYvWM3ICiU6dTzQV8Jly49M4A7YXF5jQdVfU0tHHIbqd8cGAqkjkcyiaDPBctp6pWeHmIgwtn9A5MHTQDfJjhMBx8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PUyJqw3n; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=eYtnZ7frjmt823tdV5hYSnoD3XeDvI9ohxaTQnBiDscv4I6lsp43Ym0+tADYim+GNirRE8QvRps0USlul9oN585Kceg3qTHcrvsBKAmWTeuPxRVKajLw9PGnEiSuMXF1KjU8x2cEqJfYKq7oUdU2hr1mLpYCo0sAFl2wiV0rDDY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N7KSbmHE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PUyJqw3n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7C23C4CEE3;
-	Tue, 17 Jun 2025 15:30:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N7KSbmHE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39141C4CEE3;
+	Tue, 17 Jun 2025 15:30:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750174226;
-	bh=RLklqTdERyTfXh07L1x56CuKJblHSogMiMwSnKVeHJs=;
+	s=korg; t=1750174229;
+	bh=W//S+peJ/QOHQe1FzBBcKhFP6GRMTeFpdfQELwP8+88=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PUyJqw3nWPo/be8Chcb9V/jryCuM/gfMPPastoTY0EjcMYp3nsBqKnspXTRvv/veI
-	 EI1Jp+EIuEujK/OTORNywDzs8kFzoiTLUB26x48NwkciDM62Dq+kesZnJU6WK2O2Nt
-	 psOxZSR4GRYgdzMjrsGOub/zp5ZaeINSsQku9v/0=
+	b=N7KSbmHEd4hLYIu11zD7i70sZUd60e+3Lz4BQe5SYIW/6zNfKVeDCeFS9QDauYGer
+	 UtT8LZiVUzRpX+ABzjl+UE2ogzvjM1OBJ/uwdBw+MdYtMekrrwy+zRuoVrKIQ14r50
+	 huUdC4uGdmJuu9fpH0fZn/xNbQ0KfShGN+OTUOKk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qing Wang <wangqing7171@gmail.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 022/356] perf/core: Fix broken throttling when max_samples_per_tick=1
-Date: Tue, 17 Jun 2025 17:22:17 +0200
-Message-ID: <20250617152339.132105363@linuxfoundation.org>
+	Alexandre Mergnat <amergnat@baylibre.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>
+Subject: [PATCH 6.6 005/356] rtc: Make rtc_time64_to_tm() support dates before 1970
+Date: Tue, 17 Jun 2025 17:22:00 +0200
+Message-ID: <20250617152338.439159772@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
 References: <20250617152338.212798615@linuxfoundation.org>
@@ -45,70 +45,89 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Qing Wang <wangqing7171@gmail.com>
+From: Alexandre Mergnat <amergnat@baylibre.com>
 
-[ Upstream commit f51972e6f8b9a737b2b3eb588069acb538fa72de ]
+commit 7df4cfef8b351fec3156160bedfc7d6d29de4cce upstream.
 
-According to the throttling mechanism, the pmu interrupts number can not
-exceed the max_samples_per_tick in one tick. But this mechanism is
-ineffective when max_samples_per_tick=1, because the throttling check is
-skipped during the first interrupt and only performed when the second
-interrupt arrives.
+Conversion of dates before 1970 is still relevant today because these
+dates are reused on some hardwares to store dates bigger than the
+maximal date that is representable in the device's native format.
+This prominently and very soon affects the hardware covered by the
+rtc-mt6397 driver that can only natively store dates in the interval
+1900-01-01 up to 2027-12-31. So to store the date 2028-01-01 00:00:00
+to such a device, rtc_time64_to_tm() must do the right thing for
+time=-2208988800.
 
-Perhaps this bug may cause little influence in one tick, but if in a
-larger time scale, the problem can not be underestimated.
-
-When max_samples_per_tick = 1:
-Allowed-interrupts-per-second max-samples-per-second  default-HZ  ARCH
-200                           100                     100         X86
-500                           250                     250         ARM64
-...
-Obviously, the pmu interrupt number far exceed the user's expect.
-
-Fixes: e050e3f0a71b ("perf: Fix broken interrupt rate throttling")
-Signed-off-by: Qing Wang <wangqing7171@gmail.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lkml.kernel.org/r/20250405141635.243786-3-wangqing7171@gmail.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Alexandre Mergnat <amergnat@baylibre.com>
+Reviewed-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+Link: https://lore.kernel.org/r/20250428-enable-rtc-v4-1-2b2f7e3f9349@baylibre.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/events/core.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/rtc/lib.c |   24 +++++++++++++++++++-----
+ 1 file changed, 19 insertions(+), 5 deletions(-)
 
-diff --git a/kernel/events/core.c b/kernel/events/core.c
-index 5dd6424e62fa8..6460f79280ed2 100644
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -9553,14 +9553,14 @@ __perf_event_account_interrupt(struct perf_event *event, int throttle)
- 		hwc->interrupts = 1;
- 	} else {
- 		hwc->interrupts++;
--		if (unlikely(throttle &&
--			     hwc->interrupts > max_samples_per_tick)) {
--			__this_cpu_inc(perf_throttled_count);
--			tick_dep_set_cpu(smp_processor_id(), TICK_DEP_BIT_PERF_EVENTS);
--			hwc->interrupts = MAX_INTERRUPTS;
--			perf_log_throttle(event, 0);
--			ret = 1;
--		}
+--- a/drivers/rtc/lib.c
++++ b/drivers/rtc/lib.c
+@@ -46,24 +46,38 @@ EXPORT_SYMBOL(rtc_year_days);
+  * rtc_time64_to_tm - converts time64_t to rtc_time.
+  *
+  * @time:	The number of seconds since 01-01-1970 00:00:00.
+- *		(Must be positive.)
++ *		Works for values since at least 1900
+  * @tm:		Pointer to the struct rtc_time.
+  */
+ void rtc_time64_to_tm(time64_t time, struct rtc_time *tm)
+ {
+-	unsigned int secs;
+-	int days;
++	int days, secs;
+ 
+ 	u64 u64tmp;
+ 	u32 u32tmp, udays, century, day_of_century, year_of_century, year,
+ 		day_of_year, month, day;
+ 	bool is_Jan_or_Feb, is_leap_year;
+ 
+-	/* time must be positive */
++	/*
++	 * Get days and seconds while preserving the sign to
++	 * handle negative time values (dates before 1970-01-01)
++	 */
+ 	days = div_s64_rem(time, 86400, &secs);
+ 
++	/*
++	 * We need 0 <= secs < 86400 which isn't given for negative
++	 * values of time. Fixup accordingly.
++	 */
++	if (secs < 0) {
++		days -= 1;
++		secs += 86400;
 +	}
 +
-+	if (unlikely(throttle && hwc->interrupts >= max_samples_per_tick)) {
-+		__this_cpu_inc(perf_throttled_count);
-+		tick_dep_set_cpu(smp_processor_id(), TICK_DEP_BIT_PERF_EVENTS);
-+		hwc->interrupts = MAX_INTERRUPTS;
-+		perf_log_throttle(event, 0);
-+		ret = 1;
- 	}
+ 	/* day of the week, 1970-01-01 was a Thursday */
+ 	tm->tm_wday = (days + 4) % 7;
++	/* Ensure tm_wday is always positive */
++	if (tm->tm_wday < 0)
++		tm->tm_wday += 7;
  
- 	if (event->attr.freq) {
--- 
-2.39.5
-
+ 	/*
+ 	 * The following algorithm is, basically, Proposition 6.3 of Neri
+@@ -93,7 +107,7 @@ void rtc_time64_to_tm(time64_t time, str
+ 	 * thus, is slightly different from [1].
+ 	 */
+ 
+-	udays		= ((u32) days) + 719468;
++	udays		= days + 719468;
+ 
+ 	u32tmp		= 4 * udays + 3;
+ 	century		= u32tmp / 146097;
 
 
