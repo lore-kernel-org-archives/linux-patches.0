@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AAA92EF659;
-	Tue, 17 Jun 2025 15:31:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 542782EF659;
+	Tue, 17 Jun 2025 15:31:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750174279; cv=none; b=FqVyVx6ujGLUrtsOLXu/5J22t06KlhiQjXfTj8mmPmcEJ5zoegrEeJEkzRplXX4a9FQpp1XZJVDgKjiUFaNPdMi/1MN4N1kZ3nX0rJQGxwxX8CSu45BhbKq0EjQ/96vDkRQmIZH1a6NpTjpGPnM0RbJ7x8G7G2RipflVAZJPzfQ=
+	t=1750174282; cv=none; b=VeGpl7lIayUgPwVBGwqu7eceJWIMesyzaEB5ok/JNUbFLqmrdVufPXhG8gyq/SAMskbJyfxgyP8ieAXNLVMbEX9+XwZ8fW1AsE0aombsLDREyhhjeB9CNxwyQCKEN4Gtpimmr3xUy1MZjHmM76XdNzPApKiJ1FO6RAxurXF5z9I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750174279; c=relaxed/simple;
-	bh=c6u6ToaMp+/CumCafUOXPKIqQsxeXIQ2OpAjIfw7zIY=;
+	s=arc-20240116; t=1750174282; c=relaxed/simple;
+	bh=JPtVLRULCN2MhFZL/EIKryFEwaiMrGMd6fsf3oJxTnM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aPxj/cMcjr0bCwGZX1/dqmQ0INq4jgPaLSgVSnlnvMFwb2iHNOhKQpMNDXCs3ZqGCdcUF/kUhWprebmyNQemLHps2EttryZZrpH9WnQfKnXEtgtTYMVSmeeTRBv9vzYk/4XDkhMB4oQ+Suards9h/ikPO6uig2aIsIn3DWPUL4k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wzgVTdTY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Bjgpn+EqbrqpxNYVg2srOsSaExNTPsi+jaOeNHP2Ioyzpb0icTkcHOtPtYdLDNG3NZxgCuMePVe1CX5eNNUrgXdPoBLq+8XO49IQmGjzLNHr9sbnS16rG9i4L+jEz12mdAqQjhGR5hd5hAyYA3t5tsYv0OKjN+uoEprcLzbTf2A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I2kRlRnG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wzgVTdTY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6C7DC4CEE3;
-	Tue, 17 Jun 2025 15:31:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I2kRlRnG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B78B2C4CEE3;
+	Tue, 17 Jun 2025 15:31:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750174279;
-	bh=c6u6ToaMp+/CumCafUOXPKIqQsxeXIQ2OpAjIfw7zIY=;
+	s=korg; t=1750174282;
+	bh=JPtVLRULCN2MhFZL/EIKryFEwaiMrGMd6fsf3oJxTnM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wzgVTdTY844gURr5D+OxdnBVSEUD1pUnWXnP4oKPWW9ET6lEs60NFL1AIyIxIZC+X
-	 xlfqWlWEGU7cNLpw2sGUi5sgAeVmdSHl2H6qs4zlAwLkZCPbncltHEwle5BtsswSQm
-	 HmLlNaxD2gZscDwss46AOqRSfyZFwXWBxvwoneCQ=
+	b=I2kRlRnGA7/namp8JahN/MHf05DD3EkDusV4Cf/MLvNLMjBm5YLRYNqUW2G1cz2Fo
+	 aOgfz6aHJg29VjA2H+X98TJq3hdd5Q9Wdj3vOc6wZmp2F+fD+igkR3rJmCADfIBb8x
+	 0Bn0FoHREaDWJZrFT/panFiPJDz/rkjwASvirSUA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
-	David Gow <davidgow@google.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Daniil Tatianin <d-tatianin@yandex-team.ru>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 037/356] kunit: Fix wrong parameter to kunit_deactivate_static_stub()
-Date: Tue, 17 Jun 2025 17:22:32 +0200
-Message-ID: <20250617152339.712546254@linuxfoundation.org>
+Subject: [PATCH 6.6 038/356] ACPICA: exserial: dont forget to handle FFixedHW opregions for reading
+Date: Tue, 17 Jun 2025 17:22:33 +0200
+Message-ID: <20250617152339.753263489@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
 References: <20250617152338.212798615@linuxfoundation.org>
@@ -52,39 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tzung-Bi Shih <tzungbi@kernel.org>
+From: Daniil Tatianin <d-tatianin@yandex-team.ru>
 
-[ Upstream commit 772e50a76ee664e75581624f512df4e45582605a ]
+[ Upstream commit 0f8af0356a45547683a216e4921006a3c6a6d922 ]
 
-kunit_deactivate_static_stub() accepts real_fn_addr instead of
-replacement_addr.  In the case, it always passes NULL to
-kunit_deactivate_static_stub().
+The initial commit that introduced support for FFixedHW operation
+regions did add a special case in the AcpiExReadSerialBus If, but
+forgot to actually handle it inside the switch, so add the missing case
+to prevent reads from failing with AE_AML_INVALID_SPACE_ID.
 
-Fix it.
-
-Link: https://lore.kernel.org/r/20250520082050.2254875-1-tzungbi@kernel.org
-Fixes: e047c5eaa763 ("kunit: Expose 'static stub' API to redirect functions")
-Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
-Reviewed-by: David Gow <davidgow@google.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Link: https://github.com/acpica/acpica/pull/998
+Fixes: ee64b827a9a ("ACPICA: Add support for FFH Opregion special context data")
+Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
+Link: https://patch.msgid.link/20250401184312.599962-1-d-tatianin@yandex-team.ru
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/kunit/static_stub.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/acpi/acpica/exserial.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/lib/kunit/static_stub.c b/lib/kunit/static_stub.c
-index 92b2cccd5e763..484fd85251b41 100644
---- a/lib/kunit/static_stub.c
-+++ b/lib/kunit/static_stub.c
-@@ -96,7 +96,7 @@ void __kunit_activate_static_stub(struct kunit *test,
+diff --git a/drivers/acpi/acpica/exserial.c b/drivers/acpi/acpica/exserial.c
+index 5241f4c01c765..89a4ac447a2be 100644
+--- a/drivers/acpi/acpica/exserial.c
++++ b/drivers/acpi/acpica/exserial.c
+@@ -201,6 +201,12 @@ acpi_ex_read_serial_bus(union acpi_operand_object *obj_desc,
+ 		function = ACPI_READ;
+ 		break;
  
- 	/* If the replacement address is NULL, deactivate the stub. */
- 	if (!replacement_addr) {
--		kunit_deactivate_static_stub(test, replacement_addr);
-+		kunit_deactivate_static_stub(test, real_fn_addr);
- 		return;
++	case ACPI_ADR_SPACE_FIXED_HARDWARE:
++
++		buffer_length = ACPI_FFH_INPUT_BUFFER_SIZE;
++		function = ACPI_READ;
++		break;
++
+ 	default:
+ 		return_ACPI_STATUS(AE_AML_INVALID_SPACE_ID);
  	}
- 
 -- 
 2.39.5
 
