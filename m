@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8AA72DFF08;
-	Tue, 17 Jun 2025 15:58:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38F252F234A;
+	Tue, 17 Jun 2025 15:59:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175937; cv=none; b=TkoeBQ7pVzDz6oYPBmulzBsN6QvxRqNSxPVmKATIaOXlDuZ2Ic7N7kSGV1wrS3Jq3S8zwUo2DW9fhPq65TnaZpxNQRoBQuaRt017c4cNi8bJsA+uiv+v5mdPaCfBkISQgc5NPymgCluOQuiVSvj+fSJNVzhDWL2yZ7Aw01UZbnE=
+	t=1750175940; cv=none; b=ctAGe2aTGT1xRVywyI2iMY9TdchNycfSWE8xoGfx3cIt4pkdjzb5rWK9iCmWtQD8c1vJq25y9JxfZw0xZBRsTxteOejo07IK9+bHaRvjvnuUrJZKAsVurDmfnjZ+/6id/MZNdHRchf1TQncgxDdUo+DpDTr5Uf9+cZDRQhl9ha8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175937; c=relaxed/simple;
-	bh=7WKD1cS+S58nUAIYZQGSqyJr8ZKnJCLdfYHDamKSMb4=;
+	s=arc-20240116; t=1750175940; c=relaxed/simple;
+	bh=WbGsL23eaXyfikdiWm8rf2kG6/MEd1nYmLu3S0xWVeg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pFHlt1OgSAu1qHfbwILFI5QH8lNCNCpbxB25HvhgYPlasEXXnhqIaqmD1y5oNDh/HpQxPdz+THynVtNrKIps6OOItI3VjMi13Z13xgphEeRqspeGhZ/xIlo3w+SOmoqC6p4qGSjMxbHzjIborcG1JKcOO6GJY2MA58xIkeJ06HY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uNaPnPEW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=kCXI1TA0k4nhIoaSXoaOy1t9U+x/DAl7TdBc4GVZLBKrvVxa6iJq9lQ658jf5/EPnMpMU9nNmnE4W7Lx9QE1Yj+7qCxXQT8dc/2hrKxxozSMB+XHJ/2yiDKAV0//Y+lmK8i7VvDGvS0AogEmKOJEKOfhFlsMY11v/MwwXg9JUMg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hsuX/PqP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uNaPnPEW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56B1FC4CEE3;
-	Tue, 17 Jun 2025 15:58:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hsuX/PqP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AE19C4CEE3;
+	Tue, 17 Jun 2025 15:58:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175936;
-	bh=7WKD1cS+S58nUAIYZQGSqyJr8ZKnJCLdfYHDamKSMb4=;
+	s=korg; t=1750175940;
+	bh=WbGsL23eaXyfikdiWm8rf2kG6/MEd1nYmLu3S0xWVeg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uNaPnPEWwodcFVZOLqM+42JxV5QZuaf5yAftrdYakO3dYVkzKEYmkeNVMtfb0o2ru
-	 9xjHWfaqHkff4Ba0yJJ0qalww+apmvmDEfo5ERE02xRRjmATbRu9J7vGqDTljwT4z1
-	 6vle69/lPFUWb8ShMwYSXQi4iW4ccknSJ87roLfM=
+	b=hsuX/PqPw8qKrqz1A91nSmwic98UVNQb2EiSLTl1vtRYbA4VQ/pOemGJ8ndRFhTHI
+	 nqfu41XmmoSnaz54Eju3QoWsOLvLaoGI4MuBa4c76bAgdIL+Oo8IpyJRsUjRPuPtAm
+	 wpT7ToGqSZHYohy2JC2xISiQvRR1MjIjkRSUR5q4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harry Wentland <harry.wentland@amd.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Leo Li <sunpeng.li@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 136/780] drm/amd/display: Dont check for NULL divisor in fixpt code
-Date: Tue, 17 Jun 2025 17:17:24 +0200
-Message-ID: <20250617152457.039274013@linuxfoundation.org>
+Subject: [PATCH 6.6 228/356] PCI/DPC: Initialize aer_err_info before using it
+Date: Tue, 17 Jun 2025 17:25:43 +0200
+Message-ID: <20250617152347.377102924@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
+References: <20250617152338.212798615@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,85 +48,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Harry Wentland <harry.wentland@amd.com>
+From: Bjorn Helgaas <bhelgaas@google.com>
 
-[ Upstream commit d01ca8708d95a561f6462a15cad94a2c0bec7042 ]
+[ Upstream commit a424b598e6a6c1e69a2bb801d6fd16e805ab2c38 ]
 
-[Why]
-We check for a NULL divisor but don't act on it.
-This check does nothing other than throw a warning.
-It does confuse static checkers though:
-See https://lkml.org/lkml/2025/4/26/371
+Previously the struct aer_err_info "info" was allocated on the stack
+without being initialized, so it contained junk except for the fields we
+explicitly set later.
 
-[How]
-Drop the ASSERTs in both DC and SPL variants.
+Initialize "info" at declaration so it starts as all zeros.
 
-Fixes: 4562236b3bc0 ("drm/amd/dc: Add dc display driver (v2)")
-Fixes: 6efc0ab3b05d ("drm/amd/display: add back quality EASF and ISHARP and dc dependency changes")
-Signed-off-by: Harry Wentland <harry.wentland@amd.com>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Leo Li <sunpeng.li@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Reviewed-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: 8aefa9b0d910 ("PCI/DPC: Print AER status in DPC event handling")
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Tested-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Link: https://patch.msgid.link/20250522232339.1525671-2-helgaas@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/basics/fixpt31_32.c   | 5 -----
- drivers/gpu/drm/amd/display/dc/sspl/spl_fixpt31_32.c | 4 ----
- 2 files changed, 9 deletions(-)
+ drivers/pci/pcie/dpc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/basics/fixpt31_32.c b/drivers/gpu/drm/amd/display/dc/basics/fixpt31_32.c
-index 88d3f9d7dd556..452206b5095eb 100644
---- a/drivers/gpu/drm/amd/display/dc/basics/fixpt31_32.c
-+++ b/drivers/gpu/drm/amd/display/dc/basics/fixpt31_32.c
-@@ -51,8 +51,6 @@ static inline unsigned long long complete_integer_division_u64(
+diff --git a/drivers/pci/pcie/dpc.c b/drivers/pci/pcie/dpc.c
+index a5cec2a4e057d..3c3ecb9cf57af 100644
+--- a/drivers/pci/pcie/dpc.c
++++ b/drivers/pci/pcie/dpc.c
+@@ -263,7 +263,7 @@ static int dpc_get_aer_uncorrect_severity(struct pci_dev *dev,
+ void dpc_process_error(struct pci_dev *pdev)
  {
- 	unsigned long long result;
+ 	u16 cap = pdev->dpc_cap, status, source, reason, ext_reason;
+-	struct aer_err_info info;
++	struct aer_err_info info = {};
  
--	ASSERT(divisor);
--
- 	result = div64_u64_rem(dividend, divisor, remainder);
- 
- 	return result;
-@@ -213,9 +211,6 @@ struct fixed31_32 dc_fixpt_recip(struct fixed31_32 arg)
- 	 * @note
- 	 * Good idea to use Newton's method
- 	 */
--
--	ASSERT(arg.value);
--
- 	return dc_fixpt_from_fraction(
- 		dc_fixpt_one.value,
- 		arg.value);
-diff --git a/drivers/gpu/drm/amd/display/dc/sspl/spl_fixpt31_32.c b/drivers/gpu/drm/amd/display/dc/sspl/spl_fixpt31_32.c
-index 52d97918a3bd2..ebf0287417e0e 100644
---- a/drivers/gpu/drm/amd/display/dc/sspl/spl_fixpt31_32.c
-+++ b/drivers/gpu/drm/amd/display/dc/sspl/spl_fixpt31_32.c
-@@ -29,8 +29,6 @@ static inline unsigned long long spl_complete_integer_division_u64(
- {
- 	unsigned long long result;
- 
--	SPL_ASSERT(divisor);
--
- 	result = spl_div64_u64_rem(dividend, divisor, remainder);
- 
- 	return result;
-@@ -196,8 +194,6 @@ struct spl_fixed31_32 spl_fixpt_recip(struct spl_fixed31_32 arg)
- 	 * Good idea to use Newton's method
- 	 */
- 
--	SPL_ASSERT(arg.value);
--
- 	return spl_fixpt_from_fraction(
- 		spl_fixpt_one.value,
- 		arg.value);
+ 	pci_read_config_word(pdev, cap + PCI_EXP_DPC_STATUS, &status);
+ 	pci_read_config_word(pdev, cap + PCI_EXP_DPC_SOURCE_ID, &source);
 -- 
 2.39.5
 
