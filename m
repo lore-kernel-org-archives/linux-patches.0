@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3186C23B600;
-	Tue, 17 Jun 2025 16:53:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 267322FA62A;
+	Tue, 17 Jun 2025 16:54:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750179240; cv=none; b=LabjfvUZWG2bOwXEtuWbJZg88XcuZ01EaB6xzzc7CwjNpVqBh6yOHO1huOevaDKGNtta1XOgbqt7utTd3SgSxpAwWKF9LFU89IFh93JyZfJblK6cQuStFqTEWs7fJiWsZ5UsahC0yb85JlfiftcSMTjQTN5N/5d9Dxb+AWbivhI=
+	t=1750179242; cv=none; b=jbAt53tmxF8g7a7uNG7GwjxaHgK+ls99dNIwp06wmx15VNb1fAl1zX1TX83RcYJvxfmlhXpwjc5ARv3KXnruplkYwhxOs55eExwofePAy8552mD3Ylniz4QTdWQB1k8dtR67HuZitV3yF0wi3jOyTnrWMfauz1zpGiYo0kqm6jo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750179240; c=relaxed/simple;
-	bh=Mlt26PqOmlNp54wCu4oGPBQwgery6F7sXMPB7tuf5Sc=;
+	s=arc-20240116; t=1750179242; c=relaxed/simple;
+	bh=Segj1BL+M2VPUB/rH7Wk0tyKWIx0xgVGc7nD2+KXFJ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LkiaF4rdiTopXtqCNfksKEPgNu+HEfH/pyOnj5QJG9IZ5bYfCvph+aXEgtmf2kydN2kwZiR6zxsbFOFh2KXEKi9N7vszkHK9l3H4vuUF/+ynnlzRzOTuqIy+WahIIUMcziv+XYfC0/oSf60hBxeld925jZQ0JedZfWGPuXvTLbk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AwKkxXyF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=klj9OAHwqMPH0tBCxrMulmPa9uSGAfZyRk/hEW3uSX3z520kiY7zQQf+ookB+1I30vV+EXTYLejsAkuMwNqUnZ3MzSA6bFLi182Eqc/M0BAfma6MUF8oz05yCiVbVO4Ls10jACYAQ/oimLLadHoKgA0KnAGe04c4Lij22OdN4EY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CzFjpCWq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AwKkxXyF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1571BC4CEF4;
-	Tue, 17 Jun 2025 16:53:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CzFjpCWq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89D10C4CEE3;
+	Tue, 17 Jun 2025 16:54:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750179238;
-	bh=Mlt26PqOmlNp54wCu4oGPBQwgery6F7sXMPB7tuf5Sc=;
+	s=korg; t=1750179242;
+	bh=Segj1BL+M2VPUB/rH7Wk0tyKWIx0xgVGc7nD2+KXFJ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AwKkxXyFqmX2PkWgH4TRBtVq31TbyjTnGgi2SGgHdbIerKMNM7cO0FAvKKaYcV79V
-	 iAlBlFVfLN8RrEF6hC3MQSNajv4z+PWl7gEBO1Q1fl/BPMvLdTFpmhpfmabzL7aDqp
-	 tVZszC3p1izm3m61G2R2CpQyrfBuiehQtdfzcvJA=
+	b=CzFjpCWqpWLhVZlKVI31c+GbaR4tK55ay1uJdP6OLGQnY+RF7xyGav1Kvgk3MVTS8
+	 1Z1S8IoeDs+RgGlzJbCv2Ey8HCF/FGOTWxv834iYFNe7dWREtNVhZ4pgJ99q8dgIL6
+	 WKlkIKyTFP2Ye2MYshctVIrGu5bDRKMmJVbdinxs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
 	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 690/780] drm/meson: fix debug log statement when setting the HDMI clocks
-Date: Tue, 17 Jun 2025 17:26:38 +0200
-Message-ID: <20250617152519.585835237@linuxfoundation.org>
+Subject: [PATCH 6.15 691/780] drm/meson: use vclk_freq instead of pixel_freq in debug print
+Date: Tue, 17 Jun 2025 17:26:39 +0200
+Message-ID: <20250617152519.629472903@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
 References: <20250617152451.485330293@linuxfoundation.org>
@@ -53,35 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
 
-[ Upstream commit d17e61ab63fb7747b340d6a66bf1408cd5c6562b ]
+[ Upstream commit faf2f8382088e8c74bd6eeb236c8c9190e61615e ]
 
-The "phy" and "vclk" frequency labels were swapped, making it more
-difficult to debug driver errors. Swap the label order to make them
-match with the actual frequencies printed to correct this.
+meson_vclk_vic_supported_freq() has a debug print which includes the
+pixel freq. However, within the whole function the pixel freq is
+irrelevant, other than checking the end of the params array. Switch to
+printing the vclk_freq which is being compared / matched against the
+inputs to the function to avoid confusion when analyzing error reports
+from users.
 
 Fixes: e5fab2ec9ca4 ("drm/meson: vclk: add support for YUV420 setup")
 Signed-off-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
 Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
 Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/20250606203729.3311592-1-martin.blumenstingl@googlemail.com
+Link: https://lore.kernel.org/r/20250606221031.3419353-1-martin.blumenstingl@googlemail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/meson/meson_encoder_hdmi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/meson/meson_vclk.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/meson/meson_encoder_hdmi.c b/drivers/gpu/drm/meson/meson_encoder_hdmi.c
-index c08fa93e50a30..2bccda1e52a17 100644
---- a/drivers/gpu/drm/meson/meson_encoder_hdmi.c
-+++ b/drivers/gpu/drm/meson/meson_encoder_hdmi.c
-@@ -108,7 +108,7 @@ static void meson_encoder_hdmi_set_vclk(struct meson_encoder_hdmi *encoder_hdmi,
- 		venc_freq /= 2;
+diff --git a/drivers/gpu/drm/meson/meson_vclk.c b/drivers/gpu/drm/meson/meson_vclk.c
+index 3325580d885d0..c4123bb958e4c 100644
+--- a/drivers/gpu/drm/meson/meson_vclk.c
++++ b/drivers/gpu/drm/meson/meson_vclk.c
+@@ -790,9 +790,9 @@ meson_vclk_vic_supported_freq(struct meson_drm *priv,
+ 	}
  
- 	dev_dbg(priv->dev,
--		"vclk:%lluHz phy=%lluHz venc=%lluHz hdmi=%lluHz enci=%d\n",
-+		"phy:%lluHz vclk=%lluHz venc=%lluHz hdmi=%lluHz enci=%d\n",
- 		phy_freq, vclk_freq, venc_freq, hdmi_freq,
- 		priv->venc.hdmi_use_enci);
- 
+ 	for (i = 0 ; params[i].pixel_freq ; ++i) {
+-		DRM_DEBUG_DRIVER("i = %d pixel_freq = %lluHz alt = %lluHz\n",
+-				 i, params[i].pixel_freq,
+-				 PIXEL_FREQ_1000_1001(params[i].pixel_freq));
++		DRM_DEBUG_DRIVER("i = %d vclk_freq = %lluHz alt = %lluHz\n",
++				 i, params[i].vclk_freq,
++				 PIXEL_FREQ_1000_1001(params[i].vclk_freq));
+ 		DRM_DEBUG_DRIVER("i = %d phy_freq = %lluHz alt = %lluHz\n",
+ 				 i, params[i].phy_freq,
+ 				 PHY_FREQ_1000_1001(params[i].phy_freq));
 -- 
 2.39.5
 
