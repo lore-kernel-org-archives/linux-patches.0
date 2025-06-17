@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58C2F2EF659;
-	Tue, 17 Jun 2025 15:31:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B7A72ECE84;
+	Tue, 17 Jun 2025 15:31:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750174291; cv=none; b=A30YpPZCbYjm9RWXesabT6vKOOcI49DQX/mKRmFWuqvpr5a0O/k32OCS1GF9oCmYMKeDa48JCEoGcFjyz7n3nOXdIRzmvLvKPjWgg991Gw1wRfiJD0XRh8dOD+3EGtM+B/sBDNlFcD6JndzI9O01f2Tf3K4NZRSxPGsB1ZWGkWM=
+	t=1750174294; cv=none; b=O3pk7qEkfQl9S2DMhD3bOxOJhkZEUR8LuYyrft+dIAsppBTbHdxfea8uQ2OVR3XrEa+WY5GnOkoPMOB4BWw+j4kZo2gXuejU3vyqgFjOq1PcO1WlslXunu62jNxMq1PoR3bCkLlkK2Inhhfz3aO0hXkXOQzqzMNUE+OAdh2PKHk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750174291; c=relaxed/simple;
-	bh=iFgKkBLYHLIquHVbKNJG4ErZQuWH1wDuFGn9XfsPXd4=;
+	s=arc-20240116; t=1750174294; c=relaxed/simple;
+	bh=fmg/47RzG2/SpdFzpWz/IF723Tzry17JzB7X0kp1oZQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HXKH9N74JJWU1d4o9wUGiBe/E+OC7cxItXe1qydm2Bz26F4+rTZNPo+BbHqrtKBH6YEE8EtcmahmMbpPmoiHwciErdyJuS72+36B9RnCRaQsxdrpjM+6oEhbVfaaOiKSrZXQA692lwVs/9neLPQPx2V5VRefYo/FVbuXqPKb70g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GokDaXYk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kSTFUweSmoYT9N3m/kVukKz8ETjPNzPrhY/iJHbqufLl6KVK6ZONB0hVjhy/h+d80XVQpzvaCRIRqqqT4CAak/bSw4QLPUY9rqevIp6tPLs/+UkEP/ROGa73Gtof76m3xvinpB2ffnBLZYs+Hhhetwdc5j5kyHf9Nw5wMwFsN0o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hUp0ajDK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GokDaXYk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF4EDC4CEE3;
-	Tue, 17 Jun 2025 15:31:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hUp0ajDK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A5ABC4CEF0;
+	Tue, 17 Jun 2025 15:31:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750174291;
-	bh=iFgKkBLYHLIquHVbKNJG4ErZQuWH1wDuFGn9XfsPXd4=;
+	s=korg; t=1750174294;
+	bh=fmg/47RzG2/SpdFzpWz/IF723Tzry17JzB7X0kp1oZQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GokDaXYkssfD0aXQIkZk0036QnMfFckxKIITMHke0ezehHg6UPk/yhq/tLEetvoKQ
-	 YV79uiZ7D0WKVoY0koI6R1fJtLCRJPBASDlf9x+yGowuyB2y6pjhdvpZIa44ZARe/s
-	 C0h2ZJF7XDmL6HYPuRN5gHt87j05Ivjt1gGwPXs4=
+	b=hUp0ajDK4Uei81Z09ESw86yqEDGixlgYlHAbXMwYlWvn6ZWml2iuvDOwLXYKqUn/Q
+	 Op1Lx82E9Yli5K2d47r8ccpxPZ+qewvmadO6RTkf2nIXMmqCj458xeHO3aUBuXBE4l
+	 PbvgCyNvixhUGBzfJXDz9EKSEBLAdQnSfXY62jps=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Feng Xu <feng.f.xu@intel.com>,
 	Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
 	Tony Luck <tony.luck@intel.com>,
+	Feng Xu <feng.f.xu@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 041/356] EDAC/skx_common: Fix general protection fault
-Date: Tue, 17 Jun 2025 17:22:36 +0200
-Message-ID: <20250617152339.885037156@linuxfoundation.org>
+Subject: [PATCH 6.6 042/356] EDAC/{skx_common,i10nm}: Fix the loss of saved RRL for HBM pseudo channel 0
+Date: Tue, 17 Jun 2025 17:22:37 +0200
+Message-ID: <20250617152339.923026311@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
 References: <20250617152338.212798615@linuxfoundation.org>
@@ -54,64 +54,159 @@ Content-Transfer-Encoding: 8bit
 
 From: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
 
-[ Upstream commit 20d2d476b3ae18041be423671a8637ed5ffd6958 ]
+[ Upstream commit eeed3e03f4261e5e381a72ae099ff00ccafbb437 ]
 
-After loading i10nm_edac (which automatically loads skx_edac_common), if
-unload only i10nm_edac, then reload it and perform error injection testing,
-a general protection fault may occur:
+When enabling the retry_rd_err_log (RRL) feature during the loading of the
+i10nm_edac driver with the module parameter retry_rd_err_log=2 (Linux RRL
+control mode), the default values of the control bits of RRL are saved so
+that they can be restored during the unloading of the driver.
 
-  mce: [Hardware Error]: Machine check events logged
-  Oops: general protection fault ...
-  ...
-  Workqueue: events mce_gen_pool_process
-  RIP: 0010:string+0x53/0xe0
-  ...
-  Call Trace:
-  <TASK>
-  ? die_addr+0x37/0x90
-  ? exc_general_protection+0x1e7/0x3f0
-  ? asm_exc_general_protection+0x26/0x30
-  ? string+0x53/0xe0
-  vsnprintf+0x23e/0x4c0
-  snprintf+0x4d/0x70
-  skx_adxl_decode+0x16a/0x330 [skx_edac_common]
-  skx_mce_check_error.part.0+0xf8/0x220 [skx_edac_common]
-  skx_mce_check_error+0x17/0x20 [skx_edac_common]
-  ...
+In the current code, the RRL of pseudo channel 1 of HBM overwrites pseudo
+channel 0 during the loading of the driver, resulting in the loss of saved
+RRL for pseudo channel 0. This causes the RRL of pseudo channel 0 of HBM to
+be wrongly restored with the values from pseudo channel 1 when unloading
+the driver.
 
-The issue arose was because the variable 'adxl_component_count' (inside
-skx_edac_common), which counts the ADXL components, was not reset. During
-the reloading of i10nm_edac, the count was incremented by the actual number
-of ADXL components again, resulting in a count that was double the real
-number of ADXL components. This led to an out-of-bounds reference to the
-ADXL component array, causing the general protection fault above.
+Fix this issue by creating two separate groups of RRL control registers
+per channel to save default RRL settings of two {sub-,pseudo-}channels.
 
-Fix this issue by resetting the 'adxl_component_count' in adxl_put(),
-which is called during the unloading of {skx,i10nm}_edac.
-
-Fixes: 123b15863550 ("EDAC, i10nm: make skx_common.o a separate module")
-Reported-by: Feng Xu <feng.f.xu@intel.com>
+Fixes: acd4cf68fefe ("EDAC/i10nm: Retrieve and print retry_rd_err_log registers for HBM")
 Signed-off-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
 Signed-off-by: Tony Luck <tony.luck@intel.com>
 Tested-by: Feng Xu <feng.f.xu@intel.com>
-Link: https://lore.kernel.org/r/20250417150724.1170168-2-qiuxu.zhuo@intel.com
+Link: https://lore.kernel.org/r/20250417150724.1170168-3-qiuxu.zhuo@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/edac/skx_common.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/edac/i10nm_base.c | 35 +++++++++++++++++++----------------
+ drivers/edac/skx_common.h | 11 ++++++++---
+ 2 files changed, 27 insertions(+), 19 deletions(-)
 
-diff --git a/drivers/edac/skx_common.c b/drivers/edac/skx_common.c
-index d47f0055217e4..9e43aed72bd9f 100644
---- a/drivers/edac/skx_common.c
-+++ b/drivers/edac/skx_common.c
-@@ -115,6 +115,7 @@ EXPORT_SYMBOL_GPL(skx_adxl_get);
+diff --git a/drivers/edac/i10nm_base.c b/drivers/edac/i10nm_base.c
+index 67a46abe07da9..068597e8fce95 100644
+--- a/drivers/edac/i10nm_base.c
++++ b/drivers/edac/i10nm_base.c
+@@ -99,7 +99,7 @@ static u32 offsets_demand2_spr[] = {0x22c70, 0x22d80, 0x22f18, 0x22d58, 0x22c64,
+ static u32 offsets_demand_spr_hbm0[] = {0x2a54, 0x2a60, 0x2b10, 0x2a58, 0x2a5c, 0x0ee0};
+ static u32 offsets_demand_spr_hbm1[] = {0x2e54, 0x2e60, 0x2f10, 0x2e58, 0x2e5c, 0x0fb0};
  
- void skx_adxl_put(void)
+-static void __enable_retry_rd_err_log(struct skx_imc *imc, int chan, bool enable,
++static void __enable_retry_rd_err_log(struct skx_imc *imc, int chan, bool enable, u32 *rrl_ctl,
+ 				      u32 *offsets_scrub, u32 *offsets_demand,
+ 				      u32 *offsets_demand2)
  {
-+	adxl_component_count = 0;
- 	kfree(adxl_values);
- 	kfree(adxl_msg);
- }
+@@ -112,10 +112,10 @@ static void __enable_retry_rd_err_log(struct skx_imc *imc, int chan, bool enable
+ 
+ 	if (enable) {
+ 		/* Save default configurations */
+-		imc->chan[chan].retry_rd_err_log_s = s;
+-		imc->chan[chan].retry_rd_err_log_d = d;
++		rrl_ctl[0] = s;
++		rrl_ctl[1] = d;
+ 		if (offsets_demand2)
+-			imc->chan[chan].retry_rd_err_log_d2 = d2;
++			rrl_ctl[2] = d2;
+ 
+ 		s &= ~RETRY_RD_ERR_LOG_NOOVER_UC;
+ 		s |=  RETRY_RD_ERR_LOG_EN;
+@@ -129,25 +129,25 @@ static void __enable_retry_rd_err_log(struct skx_imc *imc, int chan, bool enable
+ 		}
+ 	} else {
+ 		/* Restore default configurations */
+-		if (imc->chan[chan].retry_rd_err_log_s & RETRY_RD_ERR_LOG_UC)
++		if (rrl_ctl[0] & RETRY_RD_ERR_LOG_UC)
+ 			s |=  RETRY_RD_ERR_LOG_UC;
+-		if (imc->chan[chan].retry_rd_err_log_s & RETRY_RD_ERR_LOG_NOOVER)
++		if (rrl_ctl[0] & RETRY_RD_ERR_LOG_NOOVER)
+ 			s |=  RETRY_RD_ERR_LOG_NOOVER;
+-		if (!(imc->chan[chan].retry_rd_err_log_s & RETRY_RD_ERR_LOG_EN))
++		if (!(rrl_ctl[0] & RETRY_RD_ERR_LOG_EN))
+ 			s &= ~RETRY_RD_ERR_LOG_EN;
+-		if (imc->chan[chan].retry_rd_err_log_d & RETRY_RD_ERR_LOG_UC)
++		if (rrl_ctl[1] & RETRY_RD_ERR_LOG_UC)
+ 			d |=  RETRY_RD_ERR_LOG_UC;
+-		if (imc->chan[chan].retry_rd_err_log_d & RETRY_RD_ERR_LOG_NOOVER)
++		if (rrl_ctl[1] & RETRY_RD_ERR_LOG_NOOVER)
+ 			d |=  RETRY_RD_ERR_LOG_NOOVER;
+-		if (!(imc->chan[chan].retry_rd_err_log_d & RETRY_RD_ERR_LOG_EN))
++		if (!(rrl_ctl[1] & RETRY_RD_ERR_LOG_EN))
+ 			d &= ~RETRY_RD_ERR_LOG_EN;
+ 
+ 		if (offsets_demand2) {
+-			if (imc->chan[chan].retry_rd_err_log_d2 & RETRY_RD_ERR_LOG_UC)
++			if (rrl_ctl[2] & RETRY_RD_ERR_LOG_UC)
+ 				d2 |=  RETRY_RD_ERR_LOG_UC;
+-			if (!(imc->chan[chan].retry_rd_err_log_d2 & RETRY_RD_ERR_LOG_NOOVER))
++			if (!(rrl_ctl[2] & RETRY_RD_ERR_LOG_NOOVER))
+ 				d2 &=  ~RETRY_RD_ERR_LOG_NOOVER;
+-			if (!(imc->chan[chan].retry_rd_err_log_d2 & RETRY_RD_ERR_LOG_EN))
++			if (!(rrl_ctl[2] & RETRY_RD_ERR_LOG_EN))
+ 				d2 &= ~RETRY_RD_ERR_LOG_EN;
+ 		}
+ 	}
+@@ -161,6 +161,7 @@ static void __enable_retry_rd_err_log(struct skx_imc *imc, int chan, bool enable
+ static void enable_retry_rd_err_log(bool enable)
+ {
+ 	int i, j, imc_num, chan_num;
++	struct skx_channel *chan;
+ 	struct skx_imc *imc;
+ 	struct skx_dev *d;
+ 
+@@ -175,8 +176,9 @@ static void enable_retry_rd_err_log(bool enable)
+ 			if (!imc->mbase)
+ 				continue;
+ 
++			chan = d->imc[i].chan;
+ 			for (j = 0; j < chan_num; j++)
+-				__enable_retry_rd_err_log(imc, j, enable,
++				__enable_retry_rd_err_log(imc, j, enable, chan[j].rrl_ctl[0],
+ 							  res_cfg->offsets_scrub,
+ 							  res_cfg->offsets_demand,
+ 							  res_cfg->offsets_demand2);
+@@ -190,12 +192,13 @@ static void enable_retry_rd_err_log(bool enable)
+ 			if (!imc->mbase || !imc->hbm_mc)
+ 				continue;
+ 
++			chan = d->imc[i].chan;
+ 			for (j = 0; j < chan_num; j++) {
+-				__enable_retry_rd_err_log(imc, j, enable,
++				__enable_retry_rd_err_log(imc, j, enable, chan[j].rrl_ctl[0],
+ 							  res_cfg->offsets_scrub_hbm0,
+ 							  res_cfg->offsets_demand_hbm0,
+ 							  NULL);
+-				__enable_retry_rd_err_log(imc, j, enable,
++				__enable_retry_rd_err_log(imc, j, enable, chan[j].rrl_ctl[1],
+ 							  res_cfg->offsets_scrub_hbm1,
+ 							  res_cfg->offsets_demand_hbm1,
+ 							  NULL);
+diff --git a/drivers/edac/skx_common.h b/drivers/edac/skx_common.h
+index 5acfef8fd3d36..2ea4d1d1fbef2 100644
+--- a/drivers/edac/skx_common.h
++++ b/drivers/edac/skx_common.h
+@@ -80,6 +80,9 @@
+  */
+ #define MCACOD_EXT_MEM_ERR	0x280
+ 
++/* Max RRL register sets per {,sub-,pseudo-}channel. */
++#define NUM_RRL_SET		3
++
+ /*
+  * Each cpu socket contains some pci devices that provide global
+  * information, and also some that are local to each of the two
+@@ -118,9 +121,11 @@ struct skx_dev {
+ 		struct skx_channel {
+ 			struct pci_dev	*cdev;
+ 			struct pci_dev	*edev;
+-			u32 retry_rd_err_log_s;
+-			u32 retry_rd_err_log_d;
+-			u32 retry_rd_err_log_d2;
++			/*
++			 * Two groups of RRL control registers per channel to save default RRL
++			 * settings of two {sub-,pseudo-}channels in Linux RRL control mode.
++			 */
++			u32 rrl_ctl[2][NUM_RRL_SET];
+ 			struct skx_dimm {
+ 				u8 close_pg;
+ 				u8 bank_xor_enable;
 -- 
 2.39.5
 
