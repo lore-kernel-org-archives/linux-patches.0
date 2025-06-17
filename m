@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 326372FA64D;
-	Tue, 17 Jun 2025 16:37:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 770F9235071;
+	Tue, 17 Jun 2025 16:37:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750178259; cv=none; b=qA4temZHB2i9ydAB3EjSAgD0kRiixaEBk2bbTLOuGxeI1rTsuG9fRbI8+ABMbCCPdu6ZOl80H5W5l0DU8COxA+B0bUM2gWeUZYhKERvH2w7ZoCi/Sou1Q/lZ4JT/NuGCQc3i7Jqr0z/cdgHjMq6fo8DrDXU3yvWZSIKnJwz/cv4=
+	t=1750178262; cv=none; b=aQNTZzynwfAETR/bia6OTqER8ZHyQ0QmR3ubKa22oRmzyeEQc83zb2DZcGTdOONQWIlAX7U9Cj/Ao/EYZ65hZjLirKD9WgtngaYQBQmgra0vpklpSnXVxqPEu74Nqt+A55JHZG5v+w/KOb97cLvVt81FXj44eu40x5QHCdnW5vY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750178259; c=relaxed/simple;
-	bh=gPP1eS0uAn9vbH2GrJ4mpa09TxPvFrBcq9ZZjKOFzlw=;
+	s=arc-20240116; t=1750178262; c=relaxed/simple;
+	bh=f7KRrr692difgai4LJzx8nFLMNyG9ANfAfTtodQadyM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qyEU3uYwc3BJZnDMzsrRde5SCbpyKphNAAiqV0Vl2XEUqPxFRFMttslGzLFwsRSk47iQqEYueiC70/SoZM2c6+mnmV3okF4IZ45JedJRBn72bY6Q9NtOY+Lzpkg/uB9mwxQV9ocLOCP0YOnZf/M6nEigC7z6kG3K/6Ti81+XOU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hEXfpjMf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=skvoPmaou4hCsWj26OhyUbYdL61RJZav8Cfmp5ajSVnoksjA4tNum3ZzvxSPOYc9IlvHJBUp+CcOgBzsd/0BpCgFc3jSnECE0R+D508EuawjODrYNhl1ai299k9ZhnxYmXzEVVB6R0dBEba21nP+91xmfq5cOYhdZ9GIEoLffzs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FIdEPPL/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hEXfpjMf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9604CC4CEE3;
-	Tue, 17 Jun 2025 16:37:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FIdEPPL/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9506C4CEE3;
+	Tue, 17 Jun 2025 16:37:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750178259;
-	bh=gPP1eS0uAn9vbH2GrJ4mpa09TxPvFrBcq9ZZjKOFzlw=;
+	s=korg; t=1750178262;
+	bh=f7KRrr692difgai4LJzx8nFLMNyG9ANfAfTtodQadyM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hEXfpjMfI0uDosfw1QgYaLuC2sUNKh3oLU2sYUawgxSl2jcFhxJUOy+P+kgEvJs3a
-	 IBVDcwVteLfGhewXLyO0m79BlrvpEncT2Aif8ZFZzxYAQ4B2BxR/VdEQyzejceAPcp
-	 5tj85caTHB2m3gtj4aLovelj3gBE/EZzVKTlu3T0=
+	b=FIdEPPL/pmn3Dq8kAWe5y4TjxKyfIwrMmXwbJ716v3q/wYqZtS0jDISy200MBTCsW
+	 r2MMgIKI2TDfDTV6WqxlU1iX+e7o0LJ3jMC1gEm/Hbppdq1H4M93V2ilncR3uMm6Ry
+	 hFxv1SJRYEgoWRJjODQJfgnZpd5OZo5fw3mC26Bs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Mikhail Arkhipov <m.arhipov@rosa.ru>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 470/512] btrfs: exit after state insertion failure at btrfs_convert_extent_bit()
-Date: Tue, 17 Jun 2025 17:27:16 +0200
-Message-ID: <20250617152438.624049259@linuxfoundation.org>
+Subject: [PATCH 6.15 435/780] mtd: nand: ecc-mxic: Fix use of uninitialized variable ret
+Date: Tue, 17 Jun 2025 17:22:23 +0200
+Message-ID: <20250617152509.181017514@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,44 +47,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Mikhail Arkhipov <m.arhipov@rosa.ru>
 
-[ Upstream commit 3bf179e36da917c5d9bec71c714573ed1649b7c1 ]
+[ Upstream commit d95846350aac72303036a70c4cdc69ae314aa26d ]
 
-If insert_state() state failed it returns an error pointer and we call
-extent_io_tree_panic() which will trigger a BUG() call. However if
-CONFIG_BUG is disabled, which is an uncommon and exotic scenario, then
-we fallthrough and call cache_state() which will dereference the error
-pointer, resulting in an invalid memory access.
+If ctx->steps is zero, the loop processing ECC steps is skipped,
+and the variable ret remains uninitialized. It is later checked
+and returned, which leads to undefined behavior and may cause
+unpredictable results in user space or kernel crashes.
 
-So jump to the 'out' label after calling extent_io_tree_panic(), it also
-makes the code more clear besides dealing with the exotic scenario where
-CONFIG_BUG is disabled.
+This scenario can be triggered in edge cases such as misconfigured
+geometry, ECC engine misuse, or if ctx->steps is not validated
+after initialization.
 
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Initialize ret to zero before the loop to ensure correct and safe
+behavior regardless of the ctx->steps value.
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: 48e6633a9fa2 ("mtd: nand: mxic-ecc: Add Macronix external ECC engine support")
+Signed-off-by: Mikhail Arkhipov <m.arhipov@rosa.ru>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/extent-io-tree.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/mtd/nand/ecc-mxic.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/extent-io-tree.c b/fs/btrfs/extent-io-tree.c
-index 6d08c100b01de..bb3aaf610652a 100644
---- a/fs/btrfs/extent-io-tree.c
-+++ b/fs/btrfs/extent-io-tree.c
-@@ -1456,6 +1456,7 @@ int convert_extent_bit(struct extent_io_tree *tree, u64 start, u64 end,
- 		if (IS_ERR(inserted_state)) {
- 			ret = PTR_ERR(inserted_state);
- 			extent_io_tree_panic(tree, prealloc, "insert", ret);
-+			goto out;
- 		}
- 		cache_state(inserted_state, cached_state);
- 		if (inserted_state == prealloc)
+diff --git a/drivers/mtd/nand/ecc-mxic.c b/drivers/mtd/nand/ecc-mxic.c
+index 56b56f726b998..1bf9a5a64b87a 100644
+--- a/drivers/mtd/nand/ecc-mxic.c
++++ b/drivers/mtd/nand/ecc-mxic.c
+@@ -614,7 +614,7 @@ static int mxic_ecc_finish_io_req_external(struct nand_device *nand,
+ {
+ 	struct mxic_ecc_engine *mxic = nand_to_mxic(nand);
+ 	struct mxic_ecc_ctx *ctx = nand_to_ecc_ctx(nand);
+-	int nents, step, ret;
++	int nents, step, ret = 0;
+ 
+ 	if (req->mode == MTD_OPS_RAW)
+ 		return 0;
 -- 
 2.39.5
 
