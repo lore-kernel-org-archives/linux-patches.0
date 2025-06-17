@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 388042ECE80;
-	Tue, 17 Jun 2025 15:53:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AA382E92BC;
+	Tue, 17 Jun 2025 15:53:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175620; cv=none; b=OC2b9sG/Lmb3d+zfKIPrefH2+iEnouMRlVr3SxuUX1YnRpzG0eXbeoixGp9FKq0OLlcFGNXb/PVc6pa4+B9nUJ5PE3Nb/Zg9zIc60m/Mco4OItj9wSKG59XidRpqXn+fEWAyIVycVyj0fgkob2JESo700qls5OvabmzNG6d9L8I=
+	t=1750175623; cv=none; b=DkeMdHmN7gVAfhvGmkYUFkvaEURE+dIL87MpLEfjO4XvFw1caJG1hVH8bme79Tua2krJ+BB1mtTybyLSjXVY53XhxfqIoETKIXpamFGivL5Elc0rdxR4jdMNiVas0SouxYqWz2/Rg9YHUIYn/hsXRRgF70Ni5JG6wdCCI9lYFzs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175620; c=relaxed/simple;
-	bh=ZN1Pc7u58Jl/j8M6/mVQY49AxB/KlWEw39KZ6MKaLSw=;
+	s=arc-20240116; t=1750175623; c=relaxed/simple;
+	bh=AO+GoIcaz7vpGVflnvdAu6X8fvADCAeZOx9FIeHQI44=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LRsEhu6zweOQbCiElYmTbzJUnqy3b0VVkKdpXvALghXiEOpAzaEE8nDUfcPhc2w4HeN6x4kAwaH0hOQEjQODTkpBsjvA6LLdNOvOlwg6CIYvwCvnIUqvixnLvZO1p53i0AC6U9vwiBXAbvGVovubRh8vudpZ4zx4CYevLc7Jo/k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Efls3XrJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ghBP8iD9hdTlNgcDx3cew7QirwvUjfa4NQG3WPGQTGcfst5QrOuLCuaJdMpnpnU8Vea4RN3L0wGYf3qY3JZPc/S/cEOz5LCIKG2mFA4hwTwyGX3M6ZIz5FccNPTHZeO6pD0A/uJcVJ/RlCQ5F7xm5QHs34QCrvrKZkOJsh/hw88=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nzocA2XO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Efls3XrJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99C48C4CEE3;
-	Tue, 17 Jun 2025 15:53:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nzocA2XO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCD71C4CEE7;
+	Tue, 17 Jun 2025 15:53:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175620;
-	bh=ZN1Pc7u58Jl/j8M6/mVQY49AxB/KlWEw39KZ6MKaLSw=;
+	s=korg; t=1750175623;
+	bh=AO+GoIcaz7vpGVflnvdAu6X8fvADCAeZOx9FIeHQI44=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Efls3XrJbV4ZSM4vF3KzfcUs1BfXbM6+KfCe5bSI8+vkUexo7xcvD3aETN6EJdS2+
-	 dWqkw62+p6gL+w1InPeWsvXDoo2rxQ94InkRsniZo1h4l3GiQ8vBj7Paeg48Pvbnxg
-	 tf5ytctfa2+0c/WD8iGbOknW4zSzRm1XDRoGC4lU=
+	b=nzocA2XOITsoNx4x0bAv5jer5drVAYr/zccyIzeGdtiRr4GVDhARN09dvzWntgxwG
+	 6/z0xnKaBB6WGmU4MVHvHXLyGQCkW2FLUXLIFfivppaN5XImi0KQhZCEbgplBMv8BC
+	 0hJCRAYnqTBrSn2tDpGnppO/IujVenldpC9RIxkw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Henry Martin <bsdhenrymartin@gmail.com>,
-	Andrew Jeffery <andrew@codeconstruct.com.au>,
-	Arnd Bergmann <arnd@arndb.de>,
+	Liviu Dudau <liviu.dudau@arm.com>,
+	Steven Price <steven.price@arm.com>,
+	Boris Brezillon <boris.brezillon@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 194/356] soc: aspeed: Add NULL check in aspeed_lpc_enable_snoop()
-Date: Tue, 17 Jun 2025 17:25:09 +0200
-Message-ID: <20250617152346.027747015@linuxfoundation.org>
+Subject: [PATCH 6.15 107/780] drm/panthor: Call panthor_gpu_coherency_init() after PM resume()
+Date: Tue, 17 Jun 2025 17:16:55 +0200
+Message-ID: <20250617152455.859582366@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-References: <20250617152338.212798615@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,75 +48,63 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Henry Martin <bsdhenrymartin@gmail.com>
+From: Boris Brezillon <boris.brezillon@collabora.com>
 
-[ Upstream commit f1706e0e1a74b095cbc60375b9b1e6205f5f4c98 ]
+[ Upstream commit 7d5a3b22f5b58ef89ab8770d7a44c24eecde8d66 ]
 
-devm_kasprintf() returns NULL when memory allocation fails. Currently,
-aspeed_lpc_enable_snoop() does not check for this case, which results in a
-NULL pointer dereference.
+When the device is coherent, panthor_gpu_coherency_init() will read
+GPU_COHERENCY_FEATURES to make sure the GPU supports the ACE-Lite
+coherency protocol, which will fail if the clocks/power-domains are
+not enabled when the read is done. Move the
+panthor_gpu_coherency_init() call after the device has been resumed
+to prevent that.
 
-Add NULL check after devm_kasprintf() to prevent this issue.
+Changes in v2:
+- Add Liviu's R-b
 
-Fixes: 3772e5da4454 ("drivers/misc: Aspeed LPC snoop output using misc chardev")
-Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
-Link: https://patch.msgid.link/20250401074647.21300-1-bsdhenrymartin@gmail.com
-[arj: Fix Fixes: tag to use subject from 3772e5da4454]
-Signed-off-by: Andrew Jeffery <andrew@codeconstruct.com.au>
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Changes in v3:
+- Add Steve's R-b
+
+Fixes: dd7db8d911a1 ("drm/panthor: Explicitly set the coherency mode")
+Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
+Reviewed-by: Steven Price <steven.price@arm.com>
+Link: https://lore.kernel.org/r/20250404080933.2912674-3-boris.brezillon@collabora.com
+Signed-off-by: Boris Brezillon <boris.brezillon@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/aspeed/aspeed-lpc-snoop.c | 15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/panthor/panthor_device.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/soc/aspeed/aspeed-lpc-snoop.c b/drivers/soc/aspeed/aspeed-lpc-snoop.c
-index 8cb3a0b4692cf..0f2ffee321dd9 100644
---- a/drivers/soc/aspeed/aspeed-lpc-snoop.c
-+++ b/drivers/soc/aspeed/aspeed-lpc-snoop.c
-@@ -200,11 +200,15 @@ static int aspeed_lpc_enable_snoop(struct aspeed_lpc_snoop *lpc_snoop,
- 	lpc_snoop->chan[channel].miscdev.minor = MISC_DYNAMIC_MINOR;
- 	lpc_snoop->chan[channel].miscdev.name =
- 		devm_kasprintf(dev, GFP_KERNEL, "%s%d", DEVICE_NAME, channel);
-+	if (!lpc_snoop->chan[channel].miscdev.name) {
-+		rc = -ENOMEM;
-+		goto err_free_fifo;
-+	}
- 	lpc_snoop->chan[channel].miscdev.fops = &snoop_fops;
- 	lpc_snoop->chan[channel].miscdev.parent = dev;
- 	rc = misc_register(&lpc_snoop->chan[channel].miscdev);
- 	if (rc)
--		return rc;
-+		goto err_free_fifo;
+diff --git a/drivers/gpu/drm/panthor/panthor_device.c b/drivers/gpu/drm/panthor/panthor_device.c
+index a9da1d1eeb707..c73c1608d6e68 100644
+--- a/drivers/gpu/drm/panthor/panthor_device.c
++++ b/drivers/gpu/drm/panthor/panthor_device.c
+@@ -171,10 +171,6 @@ int panthor_device_init(struct panthor_device *ptdev)
+ 	struct page *p;
+ 	int ret;
  
- 	/* Enable LPC snoop channel at requested port */
- 	switch (channel) {
-@@ -221,7 +225,8 @@ static int aspeed_lpc_enable_snoop(struct aspeed_lpc_snoop *lpc_snoop,
- 		hicrb_en = HICRB_ENSNP1D;
- 		break;
- 	default:
--		return -EINVAL;
-+		rc = -EINVAL;
-+		goto err_misc_deregister;
- 	}
+-	ret = panthor_gpu_coherency_init(ptdev);
+-	if (ret)
+-		return ret;
+-
+ 	init_completion(&ptdev->unplug.done);
+ 	ret = drmm_mutex_init(&ptdev->base, &ptdev->unplug.lock);
+ 	if (ret)
+@@ -247,6 +243,10 @@ int panthor_device_init(struct panthor_device *ptdev)
+ 	if (ret)
+ 		goto err_rpm_put;
  
- 	regmap_update_bits(lpc_snoop->regmap, HICR5, hicr5_en, hicr5_en);
-@@ -231,6 +236,12 @@ static int aspeed_lpc_enable_snoop(struct aspeed_lpc_snoop *lpc_snoop,
- 		regmap_update_bits(lpc_snoop->regmap, HICRB,
- 				hicrb_en, hicrb_en);
- 
-+	return 0;
++	ret = panthor_gpu_coherency_init(ptdev);
++	if (ret)
++		return ret;
 +
-+err_misc_deregister:
-+	misc_deregister(&lpc_snoop->chan[channel].miscdev);
-+err_free_fifo:
-+	kfifo_free(&lpc_snoop->chan[channel].fifo);
- 	return rc;
- }
- 
+ 	ret = panthor_mmu_init(ptdev);
+ 	if (ret)
+ 		goto err_unplug_gpu;
 -- 
 2.39.5
 
