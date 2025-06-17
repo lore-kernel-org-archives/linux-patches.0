@@ -1,45 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4D4C23B633;
-	Tue, 17 Jun 2025 15:33:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 289C023B633;
+	Tue, 17 Jun 2025 15:33:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750174423; cv=none; b=AlLMAAWm5SXPjt1lhkHU/GLl6vtsYdDJ1K/1+BtCYv/Z07SHXzVHE8hM5bi8BhmwmbQf0NnEwPDn2upj2DGKBMc8Xaa+VsRBzs0JoFJfO2TlRhGAeOeAJCTLefyaJmY3qy8zbkkCUynIG/FkmTF0GPM+XfIPMwMipBQ2NR/7xOI=
+	t=1750174427; cv=none; b=hqELdwGMsIv6TycLESt9GIvYBTBajN1UZwX5uFLEJEe8GsfYcdJWIuDB/Xw6l9y+M7IdQGjgSRJi5IlnccW6JxLyeoGMR0IV+nnkDFbaXr/5fib3dcUfKyOxM9yRNb/PXPR0/dT2Gnqfpii4KHE3MHp9+UZHOn/Jx3rLdcqUHSQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750174423; c=relaxed/simple;
-	bh=gUtbaNbhTv2u8upUwdOot7nxejNcPZcT/EUlOixRb+g=;
+	s=arc-20240116; t=1750174427; c=relaxed/simple;
+	bh=4wZWHtGHXZwplyCa2QXPQgAoWn5M+8jEsxFN7mf1DBQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nk0bGk7s8b/yF6H+6fwYDZDYN80iu8FHOP5oQPNG+jU0IcVKBcbHiFUO5ye/4W5z/LPpMH2Fdlqou2h2XrfZvvRjBi3unR237+j5Hf7dJeRGC0AcdW0WEWeVUfPy212ZwYQ/FXtqaRUsq9kQWD3+LwU2r9tsuUrTXYX1yN7R6D4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dSOZYRlH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=tC6x2TVLdTnp3nJdMpOtgupY1/zpWy4hDtiIEH4TqjO+IqohB5gqWHhz+UawBoAIBoIWonJRyEOIg/cfaicPERc8FfSlOiIX1pGFAW3lIb6n5zEUpQUUdRsB3MnQHeveb5D5wpzLW4ZbF/01YBAPOjrpUi6VsoMIhgWjFm3LRFg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jLSMJCgF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dSOZYRlH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4215AC4CEE3;
-	Tue, 17 Jun 2025 15:33:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jLSMJCgF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8605AC4CEE3;
+	Tue, 17 Jun 2025 15:33:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750174423;
-	bh=gUtbaNbhTv2u8upUwdOot7nxejNcPZcT/EUlOixRb+g=;
+	s=korg; t=1750174427;
+	bh=4wZWHtGHXZwplyCa2QXPQgAoWn5M+8jEsxFN7mf1DBQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dSOZYRlHxFpz8f6e9n87PKpAxRDmLe3YcLyZHgT8jpRqBrenMpUipIAeoCQv7PaAE
-	 kymtGdldfVPbK0XGJMBgtK8nGpbHPmBr/mysViugQseCdxRoudon8yqQO57QT99pNI
-	 QgdiUkyQsZLJI8/tL9nFHnFXJSw2cg+I5yWQHbME=
+	b=jLSMJCgFwEDW1iO9z/apxTAH9c4h1/WI8RQXBCkfavoHE1hBNU8fWRL5VPdCP/Mzi
+	 m78ztzAygG/S8RPNUVDi97TMKBpAtVlABsLi+0ybpUmzR5l5xXFC/XBbWZo72EnSfh
+	 pHsfBjfy1NsdDJTLKnvWLRylMob6w/Dcn0ttlzGg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Ahmed S. Darwish" <darwi@linutronix.de>,
-	Ingo Molnar <mingo@kernel.org>,
-	Andrew Cooper <andrew.cooper3@citrix.com>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	John Ogness <john.ogness@linutronix.de>,
-	x86-cpuid@lists.linux.dev,
+	=?UTF-8?q?Kornel=20Dul=C4=99ba?= <korneld@google.com>,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 017/512] x86/cpu: Sanitize CPUID(0x80000000) output
-Date: Tue, 17 Jun 2025 17:19:43 +0200
-Message-ID: <20250617152420.222948429@linuxfoundation.org>
+Subject: [PATCH 6.6 067/356] arm64: Support ARM64_VA_BITS=52 when setting ARCH_MMAP_RND_BITS_MAX
+Date: Tue, 17 Jun 2025 17:23:02 +0200
+Message-ID: <20250617152340.924595252@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
+References: <20250617152338.212798615@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,96 +46,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ahmed S. Darwish <darwi@linutronix.de>
+From: Kornel Dulęba <korneld@google.com>
 
-[ Upstream commit cc663ba3fe383a628a812f893cc98aafff39ab04 ]
+[ Upstream commit f101c56447717c595d803894ba0e215f56c6fba4 ]
 
-CPUID(0x80000000).EAX returns the max extended CPUID leaf available.  On
-x86-32 machines without an extended CPUID range, a CPUID(0x80000000)
-query will just repeat the output of the last valid standard CPUID leaf
-on the CPU; i.e., a garbage values.  Current tip:x86/cpu code protects against
-this by doing:
+When the 52-bit virtual addressing was introduced the select like
+ARCH_MMAP_RND_BITS_MAX logic was never updated to account for it.
+Because of that the rnd max bits knob is set to the default value of 18
+when ARM64_VA_BITS=52.
+Fix this by setting ARCH_MMAP_RND_BITS_MAX to the same value that would
+be used if 48-bit addressing was used. Higher values can't used here
+because 52-bit addressing is used only if the caller provides a hint to
+mmap, with a fallback to 48-bit. The knob in question is an upper bound
+for what the user can set in /proc/sys/vm/mmap_rnd_bits, which in turn
+is used to determine how many random bits can be inserted into the base
+address used for mmap allocations. Since 48-bit allocations are legal
+with ARM64_VA_BITS=52, we need to make sure that the base address is
+small enough to facilitate this.
 
-	eax = cpuid_eax(0x80000000);
-	c->extended_cpuid_level = eax;
-
-	if ((eax & 0xffff0000) == 0x80000000) {
-		// CPU has an extended CPUID range. Check for 0x80000001
-		if (eax >= 0x80000001) {
-			cpuid(0x80000001, ...);
-		}
-	}
-
-This is correct so far.  Afterwards though, the same possibly broken EAX
-value is used to check the availability of other extended CPUID leaves:
-
-	if (c->extended_cpuid_level >= 0x80000007)
-		...
-	if (c->extended_cpuid_level >= 0x80000008)
-		...
-	if (c->extended_cpuid_level >= 0x8000000a)
-		...
-	if (c->extended_cpuid_level >= 0x8000001f)
-		...
-
-which is invalid.  Fix this by immediately setting the CPU's max extended
-CPUID leaf to zero if CPUID(0x80000000).EAX doesn't indicate a valid
-CPUID extended range.
-
-While at it, add a comment, similar to kernel/head_32.S, clarifying the
-CPUID(0x80000000) sanity check.
-
-References: 8a50e5135af0 ("x86-32: Use symbolic constants, safer CPUID when enabling EFER.NX")
-Fixes: 3da99c977637 ("x86: make (early)_identify_cpu more the same between 32bit and 64 bit")
-Signed-off-by: Ahmed S. Darwish <darwi@linutronix.de>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: Andrew Cooper <andrew.cooper3@citrix.com>
-Cc: H. Peter Anvin <hpa@zytor.com>
-Cc: John Ogness <john.ogness@linutronix.de>
-Cc: x86-cpuid@lists.linux.dev
-Link: https://lore.kernel.org/r/20250506050437.10264-3-darwi@linutronix.de
+Fixes: b6d00d47e81a ("arm64: mm: Introduce 52-bit Kernel VAs")
+Signed-off-by: Kornel Dulęba <korneld@google.com>
+Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
+Link: https://lore.kernel.org/r/20250417114754.3238273-1-korneld@google.com
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cpu/common.c | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ arch/arm64/Kconfig | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/x86/kernel/cpu/common.c b/arch/x86/kernel/cpu/common.c
-index 39e9ec3dea985..b487754455236 100644
---- a/arch/x86/kernel/cpu/common.c
-+++ b/arch/x86/kernel/cpu/common.c
-@@ -1007,17 +1007,18 @@ void get_cpu_cap(struct cpuinfo_x86 *c)
- 		c->x86_capability[CPUID_D_1_EAX] = eax;
- 	}
- 
--	/* AMD-defined flags: level 0x80000001 */
-+	/*
-+	 * Check if extended CPUID leaves are implemented: Max extended
-+	 * CPUID leaf must be in the 0x80000001-0x8000ffff range.
-+	 */
- 	eax = cpuid_eax(0x80000000);
--	c->extended_cpuid_level = eax;
-+	c->extended_cpuid_level = ((eax & 0xffff0000) == 0x80000000) ? eax : 0;
- 
--	if ((eax & 0xffff0000) == 0x80000000) {
--		if (eax >= 0x80000001) {
--			cpuid(0x80000001, &eax, &ebx, &ecx, &edx);
-+	if (c->extended_cpuid_level >= 0x80000001) {
-+		cpuid(0x80000001, &eax, &ebx, &ecx, &edx);
- 
--			c->x86_capability[CPUID_8000_0001_ECX] = ecx;
--			c->x86_capability[CPUID_8000_0001_EDX] = edx;
--		}
-+		c->x86_capability[CPUID_8000_0001_ECX] = ecx;
-+		c->x86_capability[CPUID_8000_0001_EDX] = edx;
- 	}
- 
- 	if (c->extended_cpuid_level >= 0x80000007) {
+diff --git a/arch/arm64/Kconfig b/arch/arm64/Kconfig
+index 658c6a61ab6fb..4ecba0690938c 100644
+--- a/arch/arm64/Kconfig
++++ b/arch/arm64/Kconfig
+@@ -304,9 +304,9 @@ config ARCH_MMAP_RND_BITS_MAX
+ 	default 24 if ARM64_VA_BITS=39
+ 	default 27 if ARM64_VA_BITS=42
+ 	default 30 if ARM64_VA_BITS=47
+-	default 29 if ARM64_VA_BITS=48 && ARM64_64K_PAGES
+-	default 31 if ARM64_VA_BITS=48 && ARM64_16K_PAGES
+-	default 33 if ARM64_VA_BITS=48
++	default 29 if (ARM64_VA_BITS=48 || ARM64_VA_BITS=52) && ARM64_64K_PAGES
++	default 31 if (ARM64_VA_BITS=48 || ARM64_VA_BITS=52) && ARM64_16K_PAGES
++	default 33 if (ARM64_VA_BITS=48 || ARM64_VA_BITS=52)
+ 	default 14 if ARM64_64K_PAGES
+ 	default 16 if ARM64_16K_PAGES
+ 	default 18
 -- 
 2.39.5
 
