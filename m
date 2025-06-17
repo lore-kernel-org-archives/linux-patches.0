@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81EBE2FA638;
-	Tue, 17 Jun 2025 16:34:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEA9921B908;
+	Tue, 17 Jun 2025 16:34:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750178072; cv=none; b=OpBAiVBdmZuTZiEXJZ2NWolnUQA9AFN25fetOZ5FGoxsdczXps43ynppSfWOzVRtrfQvfC6/Ix3bwaCT9ZZKNvWxcH3cTjPyfujApa9xczhuAnCnGhm25Qoi4lGW5aCKq8Hi1TADw/v93XFVRHz5e/RXuJ8dYi/X1KxpahId1ss=
+	t=1750178076; cv=none; b=ZHhQNnanJzGRSvqcVBQ+nPFAYNnCwThuGThEUNERo1whmoIE6HRbQYkr+mR0PhYZ36OTfk/08zGl91TtUUwmcsRcH9NvHezaAbbUG+0mvrim/iO9Iji/zg8VhB8gP7+jxv8gqBrL0/oAiXRtKgDZ0jHXY7khyghdifJ++sHKDaM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750178072; c=relaxed/simple;
-	bh=woz5wZRqZC3wQoZqf+9EjI106chsKnhyg4PHVRBgmxQ=;
+	s=arc-20240116; t=1750178076; c=relaxed/simple;
+	bh=gjGf/tTz1X6io0Ymxx3zvYK3JbvCeLADyvtVAfgbJuQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j3NZTnDtKKX03aFnzM6T3dzjzUQR9Za75GkRuidhJqfFH5LA3tUEvz/TiwBf+SzYUZZnA25jVvpWONsUNENlHRaLZPyVx1pkvDJEHnWh9XovFZFxnPaRPtI6Dq3iiZtMLZiH3XG7IeOWXD7rUvgl4zNV+5lTi4CZkUY46kFpGQo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F7Lh1ZhO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I5SbBBVxlQDF96dy+SszcdVjWuITzwAGLblDLvYx8Y/3eRck/YbV050NjE2hH4R749jCgE2xHW/WcrvZ3fpuZ9rmHGB81XqlptBQ1mMvi1EkjWhfcYB1jqH/tlEq2tq0PccMUXdXiK76yIqcSJpj0XbXvOHoCziay+6qJ5TcTl4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YPkp5eaN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F7Lh1ZhO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E59BCC4CEE3;
-	Tue, 17 Jun 2025 16:34:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YPkp5eaN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DD3CC4CEE3;
+	Tue, 17 Jun 2025 16:34:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750178072;
-	bh=woz5wZRqZC3wQoZqf+9EjI106chsKnhyg4PHVRBgmxQ=;
+	s=korg; t=1750178075;
+	bh=gjGf/tTz1X6io0Ymxx3zvYK3JbvCeLADyvtVAfgbJuQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F7Lh1ZhOOxCPWOk5BqtAUoZqqrAhJsDeX4Y2IPwAUX89sZPka2+aLGgMscbBV49ZW
-	 Y1vx/2VrmZelu8KdGtBTxbmU4JoGctmqn65Ez6zuiR7rqYyMi3rtdkRB3+arY7U7cv
-	 pciBEmNuZiIYL9e6Po3xQnOe15TEu+PVc1O8FTkE=
+	b=YPkp5eaNk/iXlAWGG4tqB/wfnEqiD21OPb4ELUopGiNpyNxozEguCSJfC5Rr0D6fQ
+	 3t2yb0f5HWaQ1jgmFxZo1aTVwFjxlxPZYCfr2DtxRas8ZhOAbLy3ycF8Z6PWpQ9VK8
+	 S+egOSvhIRZM6XCwMtEtrb65Uz7DOf6ftp3STaHY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Sanjeev Yadav <sanjeev.y@mediatek.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Peter Wang <peter.wang@mediatek.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 382/780] arm64: dts: qcom: x1e001de-devkit: Describe USB retimers resets pin configs
-Date: Tue, 17 Jun 2025 17:21:30 +0200
-Message-ID: <20250617152507.016806540@linuxfoundation.org>
+Subject: [PATCH 6.12 418/512] scsi: core: ufs: Fix a hang in the error handler
+Date: Tue, 17 Jun 2025 17:26:24 +0200
+Message-ID: <20250617152436.513419780@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,102 +49,75 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Abel Vesa <abel.vesa@linaro.org>
+From: Sanjeev Yadav <sanjeev.y@mediatek.com>
 
-[ Upstream commit f76fdcd2550991c854a698a9f881b1579455fc0a ]
+[ Upstream commit 8a3514d348de87a9d5e2ac00fbac4faae0b97996 ]
 
-Currently, on the X Elite Devkit, the pin configuration of the reset
-gpios for all three PS8830 USB retimers are left configured by the
-bootloader.
+ufshcd_err_handling_prepare() calls ufshcd_rpm_get_sync(). The latter
+function can only succeed if UFSHCD_EH_IN_PROGRESS is not set because
+resuming involves submitting a SCSI command and ufshcd_queuecommand()
+returns SCSI_MLQUEUE_HOST_BUSY if UFSHCD_EH_IN_PROGRESS is set. Fix this
+hang by setting UFSHCD_EH_IN_PROGRESS after ufshcd_rpm_get_sync() has
+been called instead of before.
 
-Fix that by describing their pin configuration.
+Backtrace:
+__switch_to+0x174/0x338
+__schedule+0x600/0x9e4
+schedule+0x7c/0xe8
+schedule_timeout+0xa4/0x1c8
+io_schedule_timeout+0x48/0x70
+wait_for_common_io+0xa8/0x160 //waiting on START_STOP
+wait_for_completion_io_timeout+0x10/0x20
+blk_execute_rq+0xe4/0x1e4
+scsi_execute_cmd+0x108/0x244
+ufshcd_set_dev_pwr_mode+0xe8/0x250
+__ufshcd_wl_resume+0x94/0x354
+ufshcd_wl_runtime_resume+0x3c/0x174
+scsi_runtime_resume+0x64/0xa4
+rpm_resume+0x15c/0xa1c
+__pm_runtime_resume+0x4c/0x90 // Runtime resume ongoing
+ufshcd_err_handler+0x1a0/0xd08
+process_one_work+0x174/0x808
+worker_thread+0x15c/0x490
+kthread+0xf4/0x1ec
+ret_from_fork+0x10/0x20
 
-Fixes: 019e1ee32fec ("arm64: dts: qcom: x1e001de-devkit: Enable external DP support")
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20250422-x1e001de-devkit-dts-fix-retimer-gpios-v2-1-0129c4f2b6d7@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Sanjeev Yadav <sanjeev.y@mediatek.com>
+[ bvanassche: rewrote patch description ]
+Fixes: 62694735ca95 ("[SCSI] ufs: Add runtime PM support for UFS host controller driver")
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://lore.kernel.org/r/20250523201409.1676055-1-bvanassche@acm.org
+Reviewed-by: Peter Wang <peter.wang@mediatek.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/x1e001de-devkit.dts | 32 ++++++++++++++++++++
- 1 file changed, 32 insertions(+)
+ drivers/ufs/core/ufshcd.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/x1e001de-devkit.dts b/arch/arm64/boot/dts/qcom/x1e001de-devkit.dts
-index f5063a0df9fbf..8f4482ade0f98 100644
---- a/arch/arm64/boot/dts/qcom/x1e001de-devkit.dts
-+++ b/arch/arm64/boot/dts/qcom/x1e001de-devkit.dts
-@@ -790,6 +790,9 @@
- 
- 		reset-gpios = <&tlmm 185 GPIO_ACTIVE_HIGH>;
- 
-+		pinctrl-0 = <&rtmr2_default>;
-+		pinctrl-names = "default";
+diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
+index 247e425428c88..374f505fec3d1 100644
+--- a/drivers/ufs/core/ufshcd.c
++++ b/drivers/ufs/core/ufshcd.c
+@@ -6577,9 +6577,14 @@ static void ufshcd_err_handler(struct work_struct *work)
+ 		up(&hba->host_sem);
+ 		return;
+ 	}
+-	ufshcd_set_eh_in_progress(hba);
+ 	spin_unlock_irqrestore(hba->host->host_lock, flags);
 +
- 		orientation-switch;
- 		retimer-switch;
- 
-@@ -845,6 +848,9 @@
- 
- 		reset-gpios = <&pm8550_gpios 10 GPIO_ACTIVE_HIGH>;
- 
-+		pinctrl-0 = <&rtmr0_default>;
-+		pinctrl-names = "default";
+ 	ufshcd_err_handling_prepare(hba);
 +
- 		retimer-switch;
- 		orientation-switch;
- 
-@@ -900,6 +906,9 @@
- 
- 		reset-gpios = <&tlmm 176 GPIO_ACTIVE_HIGH>;
- 
-+		pinctrl-0 = <&rtmr1_default>;
-+		pinctrl-names = "default";
++	spin_lock_irqsave(hba->host->host_lock, flags);
++	ufshcd_set_eh_in_progress(hba);
++	spin_unlock_irqrestore(hba->host->host_lock, flags);
 +
- 		retimer-switch;
- 		orientation-switch;
- 
-@@ -1018,6 +1027,15 @@
- };
- 
- &pm8550_gpios {
-+	rtmr0_default: rtmr0-reset-n-active-state {
-+		pins = "gpio10";
-+		function = "normal";
-+		power-source = <1>; /* 1.8 V */
-+		bias-disable;
-+		input-disable;
-+		output-enable;
-+	};
-+
- 	usb0_3p3_reg_en: usb0-3p3-reg-en-state {
- 		pins = "gpio11";
- 		function = "normal";
-@@ -1205,6 +1223,20 @@
- 		};
- 	};
- 
-+	rtmr1_default: rtmr1-reset-n-active-state {
-+		pins = "gpio176";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	rtmr2_default: rtmr2-reset-n-active-state {
-+		pins = "gpio185";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
- 	rtmr1_1p15_reg_en: rtmr1-1p15-reg-en-state {
- 		pins = "gpio188";
- 		function = "gpio";
+ 	/* Complete requests that have door-bell cleared by h/w */
+ 	ufshcd_complete_requests(hba, false);
+ 	spin_lock_irqsave(hba->host->host_lock, flags);
 -- 
 2.39.5
 
