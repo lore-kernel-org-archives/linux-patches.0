@@ -1,40 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D8BC2EA161;
-	Tue, 17 Jun 2025 16:36:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 879F22ECD33;
+	Tue, 17 Jun 2025 16:36:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750178177; cv=none; b=iS9EfUd9LMc17mVyAwwNvNk5kDCV3a7PB6QIeLL4SOWGi5luwruWGOSKB69etgs9j4/NmKT7gcV0fhO36A1zq40WZG87jNR4KNwC+TRjPR52e9SMLLGHna7pZ0WSBY/kxXUIopiC5QAA4lyHE739CZ2Qm+QFiK5nN4BYheFYc18=
+	t=1750178180; cv=none; b=I9tS35CazYaRvTSY2A4HPim5k/05yJl6OGFL5+m03W4ZOdwUy23juwgkaO2T8CgFUuaWWEintzSCFXcuVZVilM52HPijy0ov4Wzo2GhGBNInd/Sfd+DBARCp+kYdQYXMJvcl9MYxVRjdz8KdDZcHu7HMIBcgd3RUGmez+Qxluzk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750178177; c=relaxed/simple;
-	bh=LdXTvprbEKpmZtsGvfqo+aY0+UON8pnucEklWlUj2g8=;
+	s=arc-20240116; t=1750178180; c=relaxed/simple;
+	bh=56Nk4fn8wZ4sP3B8iqpFQqOQXcP/J15g9rxcA52XOqY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TqTY7w8Zb7CH7CGvbHWI9Zq0jsMii3ETgSu/YFr/WZmULpaY9WXb4xewss6JxZOlLYSjGJ+P07sSVJh7KlwUSzQvo9a8VRjwByZajvR7PZUCHl/WIaPzn5eA79iYS+4+9V4OshWUPO7UNbgikCyyHX6ZKSWsnHG8e45JIJQJMhI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gfpjmx4E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Xn2kyZSQuHhRMH7011GMQlcZ/D3eMTMroGE9kX3dUWgWrdljV3LjOL+jIPPPvoCRXycA7SX2N0xM47zGOpw/TC78AU1wujLk57ENq1/L/MY3fGyXD6enuhtSx4Mu6dgNa5vbAe37SXMXvKSQt/lGC9sUg7vmeSYBoauF/QnPDdQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N1/XrifR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gfpjmx4E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD884C4CEE7;
-	Tue, 17 Jun 2025 16:36:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N1/XrifR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90AA6C4CEE3;
+	Tue, 17 Jun 2025 16:36:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750178177;
-	bh=LdXTvprbEKpmZtsGvfqo+aY0+UON8pnucEklWlUj2g8=;
+	s=korg; t=1750178180;
+	bh=56Nk4fn8wZ4sP3B8iqpFQqOQXcP/J15g9rxcA52XOqY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gfpjmx4EIc92dhtcuAyuWBRnReR3RKk1Wl5qLMKwGCd5CSL9ezS8jwR2Oo9SKU5Oq
-	 tOzC9Do+ZrMzmenwCslFGTVxXQfwF79AIrXrXh0DLwheNPfbXA+RDiWMZBj2Qu7uE2
-	 lUbf/rT8KOluUVTnNOiEF2PyQeixDD9NqW9hi0X0=
+	b=N1/XrifRyT1xCrUxs5X8cJ64Kv01c6cIw02PEn5uzher0gSKFEbDV1l2OyqwhnBvs
+	 2kDD0ad+rsE9Yj+q0FoCCGlWIzMCpiyvc9JJgOuQphjXmC7NW4BoXxS/5r+QARDlVK
+	 oIXhJQGdvuYNFXSYegWAgSIbolfye/bNWSV+kWEQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Dmitriy Vyukov <dvyukov@google.com>,
+	Howard Chu <howardchu95@gmail.com>,
+	Ian Rogers <irogers@google.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 457/512] Bluetooth: hci_sync: Fix broadcast/PA when using an existing instance
-Date: Tue, 17 Jun 2025 17:27:03 +0200
-Message-ID: <20250617152438.089943160@linuxfoundation.org>
+Subject: [PATCH 6.15 421/780] tools build: Dont show libunwind build status as it is opt-in
+Date: Tue, 17 Jun 2025 17:22:09 +0200
+Message-ID: <20250617152508.615981103@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,107 +55,56 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 5725bc608252050ed8a4d47d59225b7dd73474c8 ]
+[ Upstream commit a3a40391292273cf78a7920c119cdc386d694c38 ]
 
-When using and existing adv_info instance for broadcast source it
-needs to be updated to periodic first before it can be reused, also in
-case the existing instance already have data hci_set_adv_instance_data
-cannot be used directly since it would overwrite the existing data so
-this reappend the original data after the Broadcast ID, if one was
-generated.
+Since 13e17c9ff49119aa ("perf build: Make libunwind opt-in rather than
+opt-out") doesn't try to build with libunwind, so showing that it is OFF
+when building causes just distraction, remove it from FEATURES_DISPLAY.
 
-Example:
+For people that for some reason notice that there is always 'perf -vv',
+a short hand for 'perf version --build-options' and 'perf check feature
+libunwind' that now explains why it is not built:
 
-bluetoothctl># Add PBP to EA so it can be later referenced as the BIS ID
-bluetoothctl> advertise.service 0x1856 0x00 0x00
-bluetoothctl> advertise on
-...
-< HCI Command: LE Set Extended Advertising Data (0x08|0x0037) plen 13
-        Handle: 0x01
-        Operation: Complete extended advertising data (0x03)
-        Fragment preference: Minimize fragmentation (0x01)
-        Data length: 0x09
-        Service Data: Public Broadcast Announcement (0x1856)
-          Data[2]: 0000
-        Flags: 0x06
-          LE General Discoverable Mode
-          BR/EDR Not Supported
-...
-bluetoothctl># Attempt to acquire Broadcast Source transport
-bluetoothctl>transport.acquire /org/bluez/hci0/pac_bcast0/fd0
-...
-< HCI Command: LE Set Extended Advertising Data (0x08|0x0037) plen 255
-        Handle: 0x01
-        Operation: Complete extended advertising data (0x03)
-        Fragment preference: Minimize fragmentation (0x01)
-        Data length: 0x0e
-        Service Data: Broadcast Audio Announcement (0x1852)
-        Broadcast ID: 11371620 (0xad8464)
-        Service Data: Public Broadcast Announcement (0x1856)
-          Data[2]: 0000
-        Flags: 0x06
-          LE General Discoverable Mode
-          BR/EDR Not Supported
+  $ perf check feature libunwind
+             libunwind: [ OFF ]  # HAVE_LIBUNWIND_SUPPORT ( tip: Deprecated, use LIBUNWIND=1 and install libunwind-dev[el] to build with it )
+  $
 
-Link: https://github.com/bluez/bluez/issues/1117
-Fixes: eca0ae4aea66 ("Bluetooth: Add initial implementation of BIS connections")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 13e17c9ff49119aa ("perf build: Make libunwind opt-in rather than opt-out")
+Reported-by: Ingo Molnar <mingo@kernel.org>
+Tested-by: Ingo Molnar <mingo@kernel.org>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Dmitriy Vyukov <dvyukov@google.com>
+Cc: Howard Chu <howardchu95@gmail.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Link: https://lore.kernel.org/r/Z--pWmTHGb62_83e@gmail.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_sync.c | 20 +++++++++++++++-----
- 1 file changed, 15 insertions(+), 5 deletions(-)
+ tools/build/Makefile.feature | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index 59011f45906a1..3fb70b4ee8c8a 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -1559,7 +1559,8 @@ static int hci_enable_per_advertising_sync(struct hci_dev *hdev, u8 instance)
- static int hci_adv_bcast_annoucement(struct hci_dev *hdev, struct adv_info *adv)
- {
- 	u8 bid[3];
--	u8 ad[4 + 3];
-+	u8 ad[HCI_MAX_EXT_AD_LENGTH];
-+	u8 len;
- 
- 	/* Skip if NULL adv as instance 0x00 is used for general purpose
- 	 * advertising so it cannot used for the likes of Broadcast Announcement
-@@ -1585,8 +1586,10 @@ static int hci_adv_bcast_annoucement(struct hci_dev *hdev, struct adv_info *adv)
- 
- 	/* Generate Broadcast ID */
- 	get_random_bytes(bid, sizeof(bid));
--	eir_append_service_data(ad, 0, 0x1852, bid, sizeof(bid));
--	hci_set_adv_instance_data(hdev, adv->instance, sizeof(ad), ad, 0, NULL);
-+	len = eir_append_service_data(ad, 0, 0x1852, bid, sizeof(bid));
-+	memcpy(ad + len, adv->adv_data, adv->adv_data_len);
-+	hci_set_adv_instance_data(hdev, adv->instance, len + adv->adv_data_len,
-+				  ad, 0, NULL);
- 
- 	return hci_update_adv_data_sync(hdev, adv->instance);
- }
-@@ -1603,8 +1606,15 @@ int hci_start_per_adv_sync(struct hci_dev *hdev, u8 instance, u8 data_len,
- 
- 	if (instance) {
- 		adv = hci_find_adv_instance(hdev, instance);
--		/* Create an instance if that could not be found */
--		if (!adv) {
-+		if (adv) {
-+			/* Turn it into periodic advertising */
-+			adv->periodic = true;
-+			adv->per_adv_data_len = data_len;
-+			if (data)
-+				memcpy(adv->per_adv_data, data, data_len);
-+			adv->flags = flags;
-+		} else if (!adv) {
-+			/* Create an instance if that could not be found */
- 			adv = hci_add_per_instance(hdev, instance, flags,
- 						   data_len, data,
- 						   sync_interval,
+diff --git a/tools/build/Makefile.feature b/tools/build/Makefile.feature
+index 48e3f124b98ac..357749701239f 100644
+--- a/tools/build/Makefile.feature
++++ b/tools/build/Makefile.feature
+@@ -155,7 +155,6 @@ FEATURE_DISPLAY ?=              \
+          libperl                \
+          libpython              \
+          libcrypto              \
+-         libunwind              \
+          libcapstone            \
+          llvm-perf              \
+          zlib                   \
 -- 
 2.39.5
 
