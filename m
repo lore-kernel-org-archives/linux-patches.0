@@ -1,48 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECA292E8DFE;
-	Tue, 17 Jun 2025 16:15:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CD1A23771C;
+	Tue, 17 Jun 2025 16:15:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750176957; cv=none; b=D0ZsKJkhP2P6D6lAH2glT8ABG5+p5XiQkICoSCoqLV1IK+60blUwnqd+yyIQk6Qso86QRg7cA48qIWfmwewuxU06B3I6h7AHz1dAJwQO1OndwEhhKpoAy2seMp+3IfTN+xSisnUint4/nFLT73JMngVGa76sol547ntjHE0hfx4=
+	t=1750176960; cv=none; b=b6Kq/ThPGm4cF94LZ4N6d+VU1zf7Oogp4Qs52/xSjpphZLjp2F3xgzIM7YsCRA0Lv1jEqTxn+f9sDS+3lR40lmFKf4ORHhscdF0cFvNnduN4yftVAp7DLUB61sVh8pkiGuwRWgx67VFj69cCRsnXv/ZcEnARAuYsI5SrZvpqFps=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750176957; c=relaxed/simple;
-	bh=EZpRY+ElMOE8qzIRgQJJwBXrFfvZHKkQwIi5d/CkwKc=;
+	s=arc-20240116; t=1750176960; c=relaxed/simple;
+	bh=5onN8pn7bFtfz9XCQ3dfzZ0ZMtQLx5Elfs8pOQK0RZo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FDUCrrS10Aq0gmsX+VcSroiZhEku/H+0e8rHovZYDWy5O1x9yeEq0QfjZMvlEmhkYPdCq+NJYUKQ3Fi9GpN9YfjdWLl3CxTqX2reV7gQLXel8pNxVpUfZNG6jMVLdKyfU02BPHhqMLjk9zYD8W4FOjYTFsXGAGwjxJPFpkg9IFU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gp/udzM2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QGsHW39YxX9Bi/ZBdjbyOdjoebcZMoh67LShk9+xYB47tn5j3Ty9QUR2b8ztlRSce+ltDJBkq+POuEjMSPkj0GK6g+np0ze/9lBTBlp92bQcLPMyF4mm5CGPwemq98OTyccE1wiuTDXC9g3lPWCsaBvIn/RyocG6Et+AENDYMr4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ynls2JRb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gp/udzM2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3827C4CEE3;
-	Tue, 17 Jun 2025 16:15:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ynls2JRb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 541EEC4CEE3;
+	Tue, 17 Jun 2025 16:15:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750176956;
-	bh=EZpRY+ElMOE8qzIRgQJJwBXrFfvZHKkQwIi5d/CkwKc=;
+	s=korg; t=1750176959;
+	bh=5onN8pn7bFtfz9XCQ3dfzZ0ZMtQLx5Elfs8pOQK0RZo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gp/udzM2bmijUPnePLt2mkbxuW/Nbfe7nipm2bXDcvkkEVTREl42k4ao0uZJNEgxc
-	 ndpx7glPtoEkBsCEoNI5awbj1e7HChOmwzcovY3anJhXGvWzzUsNwR3qNSM5zi8c0s
-	 o/PlWn4n7u5P+EuhnIS17iHnfbgBi/YiBxSxWF1k=
+	b=ynls2JRbDlW9sOrLEimlvokNStORTlzHjdlbeZyG/lwLA2ZX06dUY9X6M9x/PUbDY
+	 l3YbqmOfrz/yCEo0LHc4eN7v+BD6IYbiKOnTkYO5qlekJ+pIfj8YoKb1bjE8GdM/L7
+	 DB2vtxKjFvf//JpetLo3+fux5uUtgAJE3DyQWgDo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Howard Chu <howardchu95@gmail.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ian Rogers <irogers@google.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 283/512] perf trace: Fix leaks of struct thread in set_filter_loop_pids()
-Date: Tue, 17 Jun 2025 17:24:09 +0200
-Message-ID: <20250617152431.061900150@linuxfoundation.org>
+Subject: [PATCH 6.6 334/356] bio: Fix bio_first_folio() for SPARSEMEM without VMEMMAP
+Date: Tue, 17 Jun 2025 17:27:29 +0200
+Message-ID: <20250617152351.581857651@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
+References: <20250617152338.212798615@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -54,53 +47,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Namhyung Kim <namhyung@kernel.org>
+From: Matthew Wilcox (Oracle) <willy@infradead.org>
 
-[ Upstream commit 30d20fb1f84ad5c92706fe2c6cbb2d4cc293e671 ]
+[ Upstream commit f826ec7966a63d48e16e0868af4e038bf9a1a3ae ]
 
-I've found some leaks from 'perf trace -a'.
+It is possible for physically contiguous folios to have discontiguous
+struct pages if SPARSEMEM is enabled and SPARSEMEM_VMEMMAP is not.
+This is correctly handled by folio_page_idx(), so remove this open-coded
+implementation.
 
-It seems there are more leaks but this is what I can find for now.
-
-Fixes: 082ab9a18e532864 ("perf trace: Filter out 'sshd' in the tracer ancestry in syswide tracing")
-Reviewed-by: Howard Chu <howardchu95@gmail.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@kernel.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20250403054213.7021-1-namhyung@kernel.org
-[ split from a larget patch ]
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: 640d1930bef4 (block: Add bio_for_each_folio_all())
+Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Link: https://lore.kernel.org/r/20250612144126.2849931-1-willy@infradead.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-trace.c | 3 +++
- 1 file changed, 3 insertions(+)
+ include/linux/bio.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/perf/builtin-trace.c b/tools/perf/builtin-trace.c
-index ecd26e058baf6..ee82e858ab200 100644
---- a/tools/perf/builtin-trace.c
-+++ b/tools/perf/builtin-trace.c
-@@ -3986,10 +3986,13 @@ static int trace__set_filter_loop_pids(struct trace *trace)
- 		if (!strcmp(thread__comm_str(parent), "sshd") ||
- 		    strstarts(thread__comm_str(parent), "gnome-terminal")) {
- 			pids[nr++] = thread__tid(parent);
-+			thread__put(parent);
- 			break;
- 		}
-+		thread__put(thread);
- 		thread = parent;
- 	}
-+	thread__put(thread);
+diff --git a/include/linux/bio.h b/include/linux/bio.h
+index b893418c3cc02..f193aef4fac08 100644
+--- a/include/linux/bio.h
++++ b/include/linux/bio.h
+@@ -294,7 +294,7 @@ static inline void bio_first_folio(struct folio_iter *fi, struct bio *bio,
  
- 	err = evlist__append_tp_filter_pids(trace->evlist, nr, pids);
- 	if (!err && trace->filter_pids.map)
+ 	fi->folio = page_folio(bvec->bv_page);
+ 	fi->offset = bvec->bv_offset +
+-			PAGE_SIZE * (bvec->bv_page - &fi->folio->page);
++			PAGE_SIZE * folio_page_idx(fi->folio, bvec->bv_page);
+ 	fi->_seg_count = bvec->bv_len;
+ 	fi->length = min(folio_size(fi->folio) - fi->offset, fi->_seg_count);
+ 	fi->_next = folio_next(fi->folio);
 -- 
 2.39.5
 
