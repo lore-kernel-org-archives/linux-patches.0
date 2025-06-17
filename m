@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 252BA212B3B;
-	Tue, 17 Jun 2025 15:47:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BDED2DFF22;
+	Tue, 17 Jun 2025 15:47:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175271; cv=none; b=sHqPkB9m9QM8n1qW04NdSQrr6IP41U2wHovyMS+h6+UptI3Te7kqSKaVdPnSVDQ+X9NpA1Q1XizAHs1NNJwF3ltuqg2KgJnHER4kR7fBZet8cRUM7Nias5mO4NX7bHoNducvNbomMAXKRJoEpQ89VDz6/BENiafZr+wwlCbxLiQ=
+	t=1750175274; cv=none; b=Z3S7KZkAN6/8Zp1YZsj6kV3etfi+8eF14RKedhSNvVpJivTmnP0Dp96XGJsiDmnwEEFU0C8wsM/z/3uCHsSVwhj92EaXcAoeacdFXyFQeRXUFlJobimWCqn8mhVIpz077aWuBhauQz5/hjwvhaw2CV/JJ8SUSmoPLNxGFUb5COg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175271; c=relaxed/simple;
-	bh=9rOow5YR01XEgjE7sYd/KU1U0PLZfqcgcSomdvBG8tg=;
+	s=arc-20240116; t=1750175274; c=relaxed/simple;
+	bh=7Zg+inp6c56P0SKZqRsXCTEoqeJE5uzbgDUsaCmUUHs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CKSjoXnHlZCq7XUXA8yq9ZPp7hSJ4Wzplo1gGKHrKqTJ8UIZxMu5k3zGUOqNT/A4+D0SgriP3tBDS1d14lSVjsRMnpDq6kuDJNoWQfZBsLW/Ko4+wbbh0CBJV86deyNRLz0JiWdTpEVZrTQt3UKrVrIpYHAASbcn234ECqFry2U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EqAUbWv3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KDH7buHgZ9uTShPdrHAUmhdWLiJMgmevYnMyF/2RdTFMK4l6K15aJlDiDUyiKW4jA8urc3sjvYtCQ8YnU0kB/3RgjyF9PLeTek96CTnYrBfCUgksW9X9Gi2nlUuYc+baJqpNPcj9R9CDRgjA5/FlVg61FxuVEiz7qU+5JnHLw8s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WIbMoo3X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EqAUbWv3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84482C4CEE3;
-	Tue, 17 Jun 2025 15:47:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WIbMoo3X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0F66C4CEE3;
+	Tue, 17 Jun 2025 15:47:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175271;
-	bh=9rOow5YR01XEgjE7sYd/KU1U0PLZfqcgcSomdvBG8tg=;
+	s=korg; t=1750175274;
+	bh=7Zg+inp6c56P0SKZqRsXCTEoqeJE5uzbgDUsaCmUUHs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EqAUbWv3IT9W6XnulSLMsL1Qos3ZExGcwsQbwa6KDamaDksOCg6YDIAEIZun8UnGc
-	 w1KRY3nB72cuJtP4ftud0USOP/vQtFrLkzqPCt1BJ/LRevsepFEBEfQf/S4PFNzvcK
-	 aXLNgfESfI2l7JIBVjOf83y81Hy750bknNNbohTY=
+	b=WIbMoo3X5UH5f6rGwlS+ZFMpthOa1b+7LhP94GbKaWNcZ+WW0vH+AWLFL92MSCnVL
+	 bkBVE267b1c3IP0JdB7/TCxxInBP7R47pCisWZlZ4M/ExbzuIfWRNPu3xjey9VEnje
+	 fFek5DLbyrvwYbGH8gqBXiIpKW/60WAEpT3vjNVs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Saket Kumar Bhaskar <skb99@linux.ibm.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Kees Cook <kees@kernel.org>,
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 110/512] selftests/bpf: Fix bpf_nf selftest failure
-Date: Tue, 17 Jun 2025 17:21:16 +0200
-Message-ID: <20250617152424.048315608@linuxfoundation.org>
+Subject: [PATCH 6.15 069/780] ASoC: SOF: ipc4-pcm: Adjust pipeline_list->pipelines allocation type
+Date: Tue, 17 Jun 2025 17:16:17 +0200
+Message-ID: <20250617152454.326619287@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,45 +48,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Saket Kumar Bhaskar <skb99@linux.ibm.com>
+From: Kees Cook <kees@kernel.org>
 
-[ Upstream commit 967e8def1100cb4b08c28a54d27ce69563fdf281 ]
+[ Upstream commit 00a371adbbfb46db561db85a9d7b53b2363880a1 ]
 
-For systems with missing iptables-legacy tool this selftest fails.
+In preparation for making the kmalloc family of allocators type aware,
+we need to make sure that the returned type from the allocation matches
+the type of the variable being assigned. (Before, the allocator would
+always return "void *", which can be implicitly cast to any pointer type.)
 
-Add check to find if iptables-legacy tool is available and skip the
-test if the tool is missing.
+The assigned type is "struct snd_sof_pipeline **", but the returned type
+will be "struct snd_sof_widget **". These are the same size allocation
+(pointer size) but the types don't match. Adjust the allocation type to
+match the assignment.
 
-Fixes: de9c8d848d90 ("selftests/bpf: S/iptables/iptables-legacy/ in the bpf_nf and xdp_synproxy test")
-Signed-off-by: Saket Kumar Bhaskar <skb99@linux.ibm.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20250409095633.33653-1-skb99@linux.ibm.com
+Signed-off-by: Kees Cook <kees@kernel.org>
+Fixes: 9c04363d222b ("ASoC: SOF: Introduce struct snd_sof_pipeline")
+Acked-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Link: https://patch.msgid.link/20250426062511.work.859-kees@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/prog_tests/bpf_nf.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ sound/soc/sof/ipc4-pcm.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/bpf_nf.c b/tools/testing/selftests/bpf/prog_tests/bpf_nf.c
-index a4a1f93878d40..fad98f01e2c06 100644
---- a/tools/testing/selftests/bpf/prog_tests/bpf_nf.c
-+++ b/tools/testing/selftests/bpf/prog_tests/bpf_nf.c
-@@ -63,6 +63,12 @@ static void test_bpf_nf_ct(int mode)
- 		.repeat = 1,
- 	);
+diff --git a/sound/soc/sof/ipc4-pcm.c b/sound/soc/sof/ipc4-pcm.c
+index c09b424ab863d..8eee3e1aadf93 100644
+--- a/sound/soc/sof/ipc4-pcm.c
++++ b/sound/soc/sof/ipc4-pcm.c
+@@ -784,7 +784,8 @@ static int sof_ipc4_pcm_setup(struct snd_sof_dev *sdev, struct snd_sof_pcm *spcm
  
-+	if (SYS_NOFAIL("iptables-legacy --version")) {
-+		fprintf(stdout, "Missing required iptables-legacy tool\n");
-+		test__skip();
-+		return;
-+	}
-+
- 	skel = test_bpf_nf__open_and_load();
- 	if (!ASSERT_OK_PTR(skel, "test_bpf_nf__open_and_load"))
- 		return;
+ 		/* allocate memory for max number of pipeline IDs */
+ 		pipeline_list->pipelines = kcalloc(ipc4_data->max_num_pipelines,
+-						   sizeof(struct snd_sof_widget *), GFP_KERNEL);
++						   sizeof(*pipeline_list->pipelines),
++						   GFP_KERNEL);
+ 		if (!pipeline_list->pipelines) {
+ 			sof_ipc4_pcm_free(sdev, spcm);
+ 			return -ENOMEM;
 -- 
 2.39.5
 
