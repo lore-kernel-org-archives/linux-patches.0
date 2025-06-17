@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA3C02ED165;
-	Tue, 17 Jun 2025 16:36:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 293811A5B9D;
+	Tue, 17 Jun 2025 16:37:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750178220; cv=none; b=sv37RzwbU2PmHA7wLBjFtmz8GJx4gIa2/58U0ZB4+Y9fr2RnhFX4teIFVIc+nnQXqCCbwUmxrLaOwpzXrM1uRW48k77pHzpxUvFeDINPDUbvDtva5qlBbSJRq/+RhG93f5WtUAf26D4pxXIwwFR9bOnVa7RIQ4kd56fdZu0DFH8=
+	t=1750178223; cv=none; b=tIkKMm7uBPk3M+jQZWf7Spi6u98QFjSO5ZdFI65BbjblWY65q2z8v5z0BqSyHiGWRuFL3xgkiaTAAcTwMl/9/B2tImSsQDe0XhFuwTOUYbsUi53CQyL0uUnTyIIB8/nBZhicsUmJTAgI+3lEwbLhtBj+o175hDp7eRFZvddv/0c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750178220; c=relaxed/simple;
-	bh=DHOo6qnZZYCA3prIseip1GpmySopar0pzf0FFh2DgvI=;
+	s=arc-20240116; t=1750178223; c=relaxed/simple;
+	bh=w9zD2uE2GgjJi1PAL9otV9V895iA8/LoXkl54HwEM2o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZRVzRQAEUOBxBhVLl1KXGQRpYKEIIT/OMCcA518CW36oR0b/kIiL/ANYhBzsJadrQmOXwW2JzHhZ3Q9S9WcqY/G0KLUeIm61l0aQNFqJoa9gZEKARGuJqZOk/sMDn45br5UyZywCxpy9OqQpaEyF4xQdEWAVk+ozENlKUHNIfSM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MQQU0wxj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=SuY6yYjs/9uVWqbwhtDL0iuSP5gf15m7lJ+RzcgKayJaAEm0L7zBuY58Tl8TiywT95RaVJK6CBVomHa4lWIt+2P4Z+jsD1nS5Ll4NKY2LZzN/4mLZ0iEBtjXZ+EopybeEWwhWR57K6twarV+Bbzlvz886gtZNsNnExvB7cp7zk0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZsyWuksB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MQQU0wxj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D792C4CEE3;
-	Tue, 17 Jun 2025 16:36:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZsyWuksB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98418C4CEE3;
+	Tue, 17 Jun 2025 16:37:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750178219;
-	bh=DHOo6qnZZYCA3prIseip1GpmySopar0pzf0FFh2DgvI=;
+	s=korg; t=1750178223;
+	bh=w9zD2uE2GgjJi1PAL9otV9V895iA8/LoXkl54HwEM2o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MQQU0wxjuVD2ScMaZNuDfH2d8a1+eE+fMdF7lD4M7BiZlLivvBoV9lyWNe8wzRTSl
-	 d9BhmEGYL4L8lSJUq4Tk5IOaD4RF+JviFv+3daWnyhpyx0gvD3P5GJHS95W78Ix39y
-	 onBwZ6V7I5qu1uXl+ax3/jD/1A0ve5DPr4+c4A4o=
+	b=ZsyWuksBdgPrrQkdUsJhdpH1Fcnp2qrlP/VteH7bxauzIeK4xd/RPeQoPu0MruWt6
+	 6G96Fwu/wqbRGQIuyrt5/Pmii13J9Y0n0GR/SwZM5ox2Aw2xF55fZvTFVoTpIDrF0H
+	 mmC9+H1848LE5Hn475SuVtMCjGQO/1pKGIkwR250=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yevgeny Kliteynik <kliteyn@nvidia.com>,
-	Mark Bloch <mbloch@nvidia.com>,
+	Marcus Wichelmann <marcus.wichelmann@hetzner-cloud.de>,
+	Eric Dumazet <edumazet@google.com>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 463/512] net/mlx5: HWS, fix missing ip_version handling in definer
-Date: Tue, 17 Jun 2025 17:27:09 +0200
-Message-ID: <20250617152438.343813704@linuxfoundation.org>
+Subject: [PATCH 6.12 442/512] net_sched: sch_sfq: fix a potential crash on gso_skb handling
+Date: Tue, 17 Jun 2025 17:26:48 +0200
+Message-ID: <20250617152437.475710833@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
 References: <20250617152419.512865572@linuxfoundation.org>
@@ -46,42 +47,72 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yevgeny Kliteynik <kliteyn@nvidia.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit b5e3c76f35ee7e814c2469c73406c5bbf110d89c ]
+[ Upstream commit 82ffbe7776d0ac084031f114167712269bf3d832 ]
 
-Fix missing field handling in definer - outer IP version.
+SFQ has an assumption of always being able to queue at least one packet.
 
-Fixes: 74a778b4a63f ("net/mlx5: HWS, added definers handling")
-Signed-off-by: Yevgeny Kliteynik <kliteyn@nvidia.com>
-Signed-off-by: Mark Bloch <mbloch@nvidia.com>
-Link: https://patch.msgid.link/20250610151514.1094735-6-mbloch@nvidia.com
+However, after the blamed commit, sch->q.len can be inflated by packets
+in sch->gso_skb, and an enqueue() on an empty SFQ qdisc can be followed
+by an immediate drop.
+
+Fix sfq_drop() to properly clear q->tail in this situation.
+
+Tested:
+
+ip netns add lb
+ip link add dev to-lb type veth peer name in-lb netns lb
+ethtool -K to-lb tso off                 # force qdisc to requeue gso_skb
+ip netns exec lb ethtool -K in-lb gro on # enable NAPI
+ip link set dev to-lb up
+ip -netns lb link set dev in-lb up
+ip addr add dev to-lb 192.168.20.1/24
+ip -netns lb addr add dev in-lb 192.168.20.2/24
+tc qdisc replace dev to-lb root sfq limit 100
+
+ip netns exec lb netserver
+
+netperf -H 192.168.20.2 -l 100 &
+netperf -H 192.168.20.2 -l 100 &
+netperf -H 192.168.20.2 -l 100 &
+netperf -H 192.168.20.2 -l 100 &
+
+Fixes: a53851e2c321 ("net: sched: explicit locking in gso_cpu fallback")
+Reported-by: Marcus Wichelmann <marcus.wichelmann@hetzner-cloud.de>
+Closes: https://lore.kernel.org/netdev/9da42688-bfaa-4364-8797-e9271f3bdaef@hetzner-cloud.de/
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
+Link: https://patch.msgid.link/20250606165127.3629486-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_definer.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/sched/sch_sfq.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_definer.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_definer.c
-index ab5f8f07f1f7e..72b19b05c0cf4 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_definer.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_definer.c
-@@ -558,6 +558,9 @@ hws_definer_conv_outer(struct mlx5hws_definer_conv_data *cd,
- 	HWS_SET_HDR(fc, match_param, IP_PROTOCOL_O,
- 		    outer_headers.ip_protocol,
- 		    eth_l3_outer.protocol_next_header);
-+	HWS_SET_HDR(fc, match_param, IP_VERSION_O,
-+		    outer_headers.ip_version,
-+		    eth_l3_outer.ip_version);
- 	HWS_SET_HDR(fc, match_param, IP_TTL_O,
- 		    outer_headers.ttl_hoplimit,
- 		    eth_l3_outer.time_to_live_hop_limit);
+diff --git a/net/sched/sch_sfq.c b/net/sched/sch_sfq.c
+index 58b42dcf8f201..a903b3c468050 100644
+--- a/net/sched/sch_sfq.c
++++ b/net/sched/sch_sfq.c
+@@ -310,7 +310,10 @@ static unsigned int sfq_drop(struct Qdisc *sch, struct sk_buff **to_free)
+ 		/* It is difficult to believe, but ALL THE SLOTS HAVE LENGTH 1. */
+ 		x = q->tail->next;
+ 		slot = &q->slots[x];
+-		q->tail->next = slot->next;
++		if (slot->next == x)
++			q->tail = NULL; /* no more active slots */
++		else
++			q->tail->next = slot->next;
+ 		q->ht[slot->hash] = SFQ_EMPTY_SLOT;
+ 		goto drop;
+ 	}
 -- 
 2.39.5
 
