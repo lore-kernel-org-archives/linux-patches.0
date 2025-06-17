@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9560F2EA16D;
-	Tue, 17 Jun 2025 15:59:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6360B2DFF0B;
+	Tue, 17 Jun 2025 15:59:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175966; cv=none; b=X6rnDfP4iSXck/aaLKWZ5h1SYdVfQXTs23hHVgls6d11rnb3R9yz53nyYafRhkmdGykqqNgjrkymVpzkyTcZzZqC+5e5iGrOLTNfjO4Y4nS58+dNYZbtwvUjFT60n8H4HMPih1xCf2xFNUgdnhgkVztaFSXN1i3bTbhkgc2Td2k=
+	t=1750175969; cv=none; b=bQ2+WOnbDL5MqBc5obeC7nwIvbClZBB/sdsOfp0CyikZmp60RAhkSDNHLW3x7eClPzhSfzj5SPWzEyHjjoePCxoGdvU5BNLCQiWVKwnhzFBupahrQAt5IFOFXLhYD9qaeF2JjohaVWJGZxP6nIF4qkdj26eFZ6dfr+CQohxq6jI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175966; c=relaxed/simple;
-	bh=PfUJVSsumcsq1XsV7neHOst5x5PmxIypYL/fyTAS27k=;
+	s=arc-20240116; t=1750175969; c=relaxed/simple;
+	bh=i0StvP6HcX48wFE0JyvgLRRAzuw3cQBOm1553WQhZtE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YQdUZSsxgzWph6OH+gI5aSjoF5RJCg4kiCwcZBgRKRyV+TiBah2yeGLCJTYMHpoTNvAaVvlxx+isgs/0V47Sy146HMoB6oDjujMfSnWqTmziL0hEi/s8Qq9yXonIbe/clnp9o3+8E65OTo7t6GoHVPnScewAOJCoJIvQnl52SqM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JXp3lr9y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K7QjvJRHFXDWqeM8S1HiQOGjav4RU35Xc7l3j6IW8MYtO3JKzMCbq4xu2EQZ7P+P8Uj64Ietczsz92uxPKemA8nhbeaUYHgax39grOHgb+0omMKWZsLefUP6yjgY2w83BajggF0c0nro1cKbN4OfwuHsZneOsj2wwGSm5qXIJ8Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bIPrMOzx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JXp3lr9y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5CD9C4CEE3;
-	Tue, 17 Jun 2025 15:59:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bIPrMOzx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C728DC4CEE3;
+	Tue, 17 Jun 2025 15:59:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175966;
-	bh=PfUJVSsumcsq1XsV7neHOst5x5PmxIypYL/fyTAS27k=;
+	s=korg; t=1750175969;
+	bh=i0StvP6HcX48wFE0JyvgLRRAzuw3cQBOm1553WQhZtE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JXp3lr9yI92npNdMT1mXCsDDZBUp0RLTO0L6g4Pm/gbh/HlKPAeMQBU/1d1NcjOmQ
-	 wjwv5521wR0Z/p6IZ6eIzj4Aet/zP/FzSUr3YrjXl1WO7krZik9ok6WfxmXKXByK0/
-	 Zk82OgHUWpUBNchRZpODU5CcNBX0oidST9kcQwX0=
+	b=bIPrMOzxLyhZU3oMvEKkdp07K03hXS1xZRre5GTFh/dXR3XuVRGeICDQhtZq6nJUI
+	 2fN5AOjUjdt4Bz+7T5JrMjtVe+FF5bxOlH/emtWjv9mCk2EP6QuLMEd9AkSUO99AyZ
+	 65meagmCq4nEi+bMDgwWoJRU8NiQDvhKUD/F6TJE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
-	Kees Cook <kees@kernel.org>,
+	Longfang Liu <liulongfang@huawei.com>,
+	Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
+	Alex Williamson <alex.williamson@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 139/780] overflow: Fix direct struct member initialization in _DEFINE_FLEX()
-Date: Tue, 17 Jun 2025 17:17:27 +0200
-Message-ID: <20250617152457.158845894@linuxfoundation.org>
+Subject: [PATCH 6.12 177/512] hisi_acc_vfio_pci: add eq and aeq interruption restore
+Date: Tue, 17 Jun 2025 17:22:23 +0200
+Message-ID: <20250617152426.814678000@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,87 +48,67 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gustavo A. R. Silva <gustavoars@kernel.org>
+From: Longfang Liu <liulongfang@huawei.com>
 
-[ Upstream commit 47e36ed7840661a9f7fb53554a1b04a5f8daffea ]
+[ Upstream commit 3495cec0787721ba7a9d5c19d0bbb66d182de584 ]
 
-Currently, to statically initialize the struct members of the `type`
-object created by _DEFINE_FLEX(), the internal `obj` member must be
-explicitly referenced at the call site. See:
+In order to ensure that the task packets of the accelerator
+device are not lost during the migration process, it is necessary
+to send an EQ and AEQ command to the device after the live migration
+is completed and to update the completion position of the task queue.
 
-struct flex {
-        int a;
-        int b;
-        struct foo flex_array[];
-};
+Let the device recheck the completed tasks data and if there are
+uncollected packets, device resend a task completion interrupt
+to the software.
 
-_DEFINE_FLEX(struct flex, instance, flex_array,
-                 FIXED_SIZE, = {
-                        .obj = {
-                                .a = 0,
-                                .b = 1,
-                        },
-                });
-
-This leaks _DEFINE_FLEX() internal implementation details and make
-the helper harder to use and read.
-
-Fix this and allow for a more natural and intuitive C99 init-style:
-
-_DEFINE_FLEX(struct flex, instance, flex_array,
-                 FIXED_SIZE, = {
-                        .a = 0,
-                        .b = 1,
-                });
-
-Note that before these changes, the `initializer` argument was optional,
-but now it's required.
-
-Also, update "counter" member initialization in DEFINE_FLEX().
-
-Fixes: 26dd68d293fd ("overflow: add DEFINE_FLEX() for on-stack allocs")
-Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
-Link: https://lore.kernel.org/r/aBQVeyKfLOkO9Yss@kspp
-Signed-off-by: Kees Cook <kees@kernel.org>
+Fixes: b0eed085903e ("hisi_acc_vfio_pci: Add support for VFIO live migration")
+Signed-off-by: Longfang Liu <liulongfang@huawei.com>
+Reviewed-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+Link: https://lore.kernel.org/r/20250510081155.55840-3-liulongfang@huawei.com
+Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/overflow.h | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/include/linux/overflow.h b/include/linux/overflow.h
-index 0c7e3dcfe8670..823a53cd9a193 100644
---- a/include/linux/overflow.h
-+++ b/include/linux/overflow.h
-@@ -396,7 +396,7 @@ static inline size_t __must_check size_sub(size_t minuend, size_t subtrahend)
-  * @name: Name for a variable to define.
-  * @member: Name of the array member.
-  * @count: Number of elements in the array; must be compile-time const.
-- * @initializer: initializer expression (could be empty for no init).
-+ * @initializer: Initializer expression (e.g., pass `= { }` at minimum).
-  */
- #define _DEFINE_FLEX(type, name, member, count, initializer...)			\
- 	_Static_assert(__builtin_constant_p(count),				\
-@@ -404,7 +404,7 @@ static inline size_t __must_check size_sub(size_t minuend, size_t subtrahend)
- 	union {									\
- 		u8 bytes[struct_size_t(type, member, count)];			\
- 		type obj;							\
--	} name##_u initializer;							\
-+	} name##_u = { .obj initializer };					\
- 	type *name = (type *)&name##_u
+diff --git a/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c b/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
+index ec38977336778..81e9a4d362fbc 100644
+--- a/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
++++ b/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
+@@ -470,6 +470,19 @@ static int vf_qm_get_match_data(struct hisi_acc_vf_core_device *hisi_acc_vdev,
+ 	return 0;
+ }
  
- /**
-@@ -438,6 +438,6 @@ static inline size_t __must_check size_sub(size_t minuend, size_t subtrahend)
-  * Use __struct_size(@NAME) to get compile-time size of it afterwards.
-  */
- #define DEFINE_FLEX(TYPE, NAME, MEMBER, COUNTER, COUNT)	\
--	_DEFINE_FLEX(TYPE, NAME, MEMBER, COUNT, = { .obj.COUNTER = COUNT, })
-+	_DEFINE_FLEX(TYPE, NAME, MEMBER, COUNT, = { .COUNTER = COUNT, })
++static void vf_qm_xeqc_save(struct hisi_qm *qm,
++			    struct hisi_acc_vf_migration_file *migf)
++{
++	struct acc_vf_data *vf_data = &migf->vf_data;
++	u16 eq_head, aeq_head;
++
++	eq_head = vf_data->qm_eqc_dw[0] & 0xFFFF;
++	qm_db(qm, 0, QM_DOORBELL_CMD_EQ, eq_head, 0);
++
++	aeq_head = vf_data->qm_aeqc_dw[0] & 0xFFFF;
++	qm_db(qm, 0, QM_DOORBELL_CMD_AEQ, aeq_head, 0);
++}
++
+ static int vf_qm_load_data(struct hisi_acc_vf_core_device *hisi_acc_vdev,
+ 			   struct hisi_acc_vf_migration_file *migf)
+ {
+@@ -566,6 +579,9 @@ static int vf_qm_state_save(struct hisi_acc_vf_core_device *hisi_acc_vdev,
+ 	}
  
- #endif /* __LINUX_OVERFLOW_H */
+ 	migf->total_length = sizeof(struct acc_vf_data);
++	/* Save eqc and aeqc interrupt information */
++	vf_qm_xeqc_save(vf_qm, migf);
++
+ 	return 0;
+ }
+ 
 -- 
 2.39.5
 
