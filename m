@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB62F18E025;
-	Tue, 17 Jun 2025 15:51:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D780C2F2346;
+	Tue, 17 Jun 2025 15:51:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175509; cv=none; b=I6egA5tAqytprRQJnfFBP4PiQFMhZjLI6XuM1Q5Fc/9BtPmDvP17q+azxqAd8cpsbP3tdA/sgjkdhitC5kOSUgB7exONmzzzJVEYcAcL2OZkOEqcjAAep5esomCwWFiKFZZWivbLzTmw0GCUDPHZ8ePhykaS9S5ar2/Mqd3B+FU=
+	t=1750175511; cv=none; b=GEgO5+j5RSzuFFq/m2Hz36UO6Ep1EFpKzQLr2fJ0tWCli37QAaOPvvB5k/xWUb7ykDvBupKd9h3Ii9qMmULb98ug6dW7M5jX3W6PPknFAkG96n8jz6VXVlv52YvhTAPHvakzeFaCCE7RZodjYq52fYLOIuw8QeozPTYAzM0r7VQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175509; c=relaxed/simple;
-	bh=GzG7faJJyGYXkQcBSSqHEJMogeEq7KfDH2icuFxnk6Q=;
+	s=arc-20240116; t=1750175511; c=relaxed/simple;
+	bh=OIXFBKsvK3sMPgEd0s6annLlqWojUXaErnNZLfTnrDk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F8eHKvDl2768I/2ZQCUo7CCZ4w0ePYKRR4/hBmLU7PC5LbikBQ5ESR9ac61WVMHllP3+5g061qNI6u+PB1QO2m5Knlap4X8llpOGMQ/wGBGPXOkl/NOs3B0/NJ0bUuLKfkZ5Ff4Hd1T3Er8SBVGr4hIB4hGpvprYAXgSO+OVSFY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Aus9i0tX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=OdwhIq2rWkphNlMV1opVagJukdNxxTB4Z1kZF6HGm5S546rEfuA2wW2FW1zx6XorYfr+4pr2Lfytp6nPMPAuxUlzSRf8FFxv5LxL9KYrgvd6a2rNx5ue0YLLuahlmFz1vs1o2GN7V7IaujWsu5zcuCK5SbOeGJxj/m1WO2kBVu0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jGGPTI7c; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Aus9i0tX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C860C4CEE3;
-	Tue, 17 Jun 2025 15:51:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jGGPTI7c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62BC5C4CEE3;
+	Tue, 17 Jun 2025 15:51:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175508;
-	bh=GzG7faJJyGYXkQcBSSqHEJMogeEq7KfDH2icuFxnk6Q=;
+	s=korg; t=1750175511;
+	bh=OIXFBKsvK3sMPgEd0s6annLlqWojUXaErnNZLfTnrDk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Aus9i0tXc39wh5N4qq2nLtQOWNF2/iilz3WvDx6dUyhoeT0S4QpN/w12Kasywher8
-	 nv9U3tcjKNelpXtrLbEw0V4Sbs4FWoWv5qX3Zi/4xW6jKrfea3t3vE9pWibnT6ScJP
-	 elEnLmFdat7T0ozFkDWb5UEJ13Fr1viToMCLG0Yo=
+	b=jGGPTI7c5c5UIt/oVGzOEeYqLw7AelwOsPJZUEe0hXHKvJkj6wrxA38ZmPK1lQlkp
+	 HRa2h8emp0GgUaInrSaMZXXR4dLf9Dm/Cfyd9I8meKZ6/4v0DV83ZjVnXW9PhZUuJ1
+	 W6wnqRYPtRwPTNZBpzGyebupSICh795ykht5T31E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maharaja Kennadyrajan <maharaja.kennadyrajan@oss.qualcomm.com>,
-	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
+	Maxime Ripard <mripard@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 133/512] wifi: ath12k: fix node corruption in ar->arvifs list
-Date: Tue, 17 Jun 2025 17:21:39 +0200
-Message-ID: <20250617152424.984903055@linuxfoundation.org>
+Subject: [PATCH 6.15 095/780] drm/vc4: tests: Use return instead of assert
+Date: Tue, 17 Jun 2025 17:16:43 +0200
+Message-ID: <20250617152455.382553080@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,83 +45,115 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maharaja Kennadyrajan <maharaja.kennadyrajan@oss.qualcomm.com>
+From: Maxime Ripard <mripard@kernel.org>
 
-[ Upstream commit 823435bd23108d6f8be89ea2d025c0e2e3769c51 ]
+[ Upstream commit 9e26a3740cc08ef8bcdc5e5d824792cd677affce ]
 
-In current WLAN recovery code flow, ath12k_core_halt() only reinitializes
-the "arvifs" list head. This will cause the list node immediately following
-the list head to become an invalid list node. Because the prev of that node
-still points to the list head "arvifs", but the next of the list head
-"arvifs" no longer points to that list node.
+The vc4_mock_atomic_add_output() and vc4_mock_atomic_del_output() assert
+that the functions they are calling didn't fail. Since some of them can
+return EDEADLK, we can't properly deal with it.
 
-When a WLAN recovery occurs during the execution of a vif removal, and it
-happens before the spin_lock_bh(&ar->data_lock) in
-ath12k_mac_vdev_delete(), list_del() will detect the previously mentioned
-situation, thereby triggering a kernel panic.
+Since both functions are expected to return an int, and all caller check
+the return value, let's just properly propagate the errors when they
+occur.
 
-The fix is to remove and reinitialize all vif list nodes from the list head
-"arvifs" during WLAN halt. The reinitialization is to make the list nodes
-valid, ensuring that the list_del() in ath12k_mac_vdev_delete() can execute
-normally.
-
-Call trace:
-__list_del_entry_valid_or_report+0xd4/0x100 (P)
-ath12k_mac_remove_link_interface.isra.0+0xf8/0x2e4 [ath12k]
-ath12k_scan_vdev_clean_work+0x40/0x164 [ath12k]
-cfg80211_wiphy_work+0xfc/0x100
-process_one_work+0x164/0x2d0
-worker_thread+0x254/0x380
-kthread+0xfc/0x100
-ret_from_fork+0x10/0x20
-
-The change is mostly copied from the ath11k patch:
-https://lore.kernel.org/all/20250320053145.3445187-1-quic_stonez@quicinc.com/
-
-Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.4.1-00199-QCAHKSWPL_SILICONZ-1
-
-Fixes: d889913205cf ("wifi: ath12k: driver for Qualcomm Wi-Fi 7 devices")
-Signed-off-by: Maharaja Kennadyrajan <maharaja.kennadyrajan@oss.qualcomm.com>
-Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250416021724.2162519-1-maharaja.kennadyrajan@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Fixes: f759f5b53f1c ("drm/vc4: tests: Introduce a mocking infrastructure")
+Fixes: 76ec18dc5afa ("drm/vc4: tests: Add unit test suite for the PV muxing")
+Reviewed-by: Maíra Canal <mcanal@igalia.com>
+Link: https://lore.kernel.org/r/20250403-drm-vc4-kunit-failures-v2-1-e09195cc8840@kernel.org
+Signed-off-by: Maxime Ripard <mripard@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/core.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/vc4/tests/vc4_mock_output.c | 36 ++++++++++++++-------
+ 1 file changed, 24 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/core.c b/drivers/net/wireless/ath/ath12k/core.c
-index 8bb8ee98188bf..c3c76e2680629 100644
---- a/drivers/net/wireless/ath/ath12k/core.c
-+++ b/drivers/net/wireless/ath/ath12k/core.c
-@@ -1004,6 +1004,7 @@ static void ath12k_rfkill_work(struct work_struct *work)
+diff --git a/drivers/gpu/drm/vc4/tests/vc4_mock_output.c b/drivers/gpu/drm/vc4/tests/vc4_mock_output.c
+index e70d7c3076acf..f0ddc223c1f83 100644
+--- a/drivers/gpu/drm/vc4/tests/vc4_mock_output.c
++++ b/drivers/gpu/drm/vc4/tests/vc4_mock_output.c
+@@ -75,24 +75,30 @@ int vc4_mock_atomic_add_output(struct kunit *test,
+ 	int ret;
  
- void ath12k_core_halt(struct ath12k *ar)
- {
-+	struct list_head *pos, *n;
- 	struct ath12k_base *ab = ar->ab;
+ 	encoder = vc4_find_encoder_by_type(drm, type);
+-	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, encoder);
++	if (!encoder)
++		return -ENODEV;
  
- 	lockdep_assert_held(&ar->conf_mutex);
-@@ -1019,7 +1020,12 @@ void ath12k_core_halt(struct ath12k *ar)
+ 	crtc = vc4_find_crtc_for_encoder(test, drm, encoder);
+-	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, crtc);
++	if (!crtc)
++		return -ENODEV;
  
- 	rcu_assign_pointer(ab->pdevs_active[ar->pdev_idx], NULL);
- 	synchronize_rcu();
--	INIT_LIST_HEAD(&ar->arvifs);
-+
-+	spin_lock_bh(&ar->data_lock);
-+	list_for_each_safe(pos, n, &ar->arvifs)
-+		list_del_init(pos);
-+	spin_unlock_bh(&ar->data_lock);
-+
- 	idr_init(&ar->txmgmt_idr);
+ 	output = encoder_to_vc4_dummy_output(encoder);
+ 	conn = &output->connector;
+ 	conn_state = drm_atomic_get_connector_state(state, conn);
+-	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, conn_state);
++	if (IS_ERR(conn_state))
++		return PTR_ERR(conn_state);
+ 
+ 	ret = drm_atomic_set_crtc_for_connector(conn_state, crtc);
+-	KUNIT_EXPECT_EQ(test, ret, 0);
++	if (ret)
++		return ret;
+ 
+ 	crtc_state = drm_atomic_get_crtc_state(state, crtc);
+-	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, crtc_state);
++	if (IS_ERR(crtc_state))
++		return PTR_ERR(crtc_state);
+ 
+ 	ret = drm_atomic_set_mode_for_crtc(crtc_state, &default_mode);
+-	KUNIT_EXPECT_EQ(test, ret, 0);
++	if (ret)
++		return ret;
+ 
+ 	crtc_state->active = true;
+ 
+@@ -113,26 +119,32 @@ int vc4_mock_atomic_del_output(struct kunit *test,
+ 	int ret;
+ 
+ 	encoder = vc4_find_encoder_by_type(drm, type);
+-	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, encoder);
++	if (!encoder)
++		return -ENODEV;
+ 
+ 	crtc = vc4_find_crtc_for_encoder(test, drm, encoder);
+-	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, crtc);
++	if (!crtc)
++		return -ENODEV;
+ 
+ 	crtc_state = drm_atomic_get_crtc_state(state, crtc);
+-	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, crtc_state);
++	if (IS_ERR(crtc_state))
++		return PTR_ERR(crtc_state);
+ 
+ 	crtc_state->active = false;
+ 
+ 	ret = drm_atomic_set_mode_for_crtc(crtc_state, NULL);
+-	KUNIT_ASSERT_EQ(test, ret, 0);
++	if (ret)
++		return ret;
+ 
+ 	output = encoder_to_vc4_dummy_output(encoder);
+ 	conn = &output->connector;
+ 	conn_state = drm_atomic_get_connector_state(state, conn);
+-	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, conn_state);
++	if (IS_ERR(conn_state))
++		return PTR_ERR(conn_state);
+ 
+ 	ret = drm_atomic_set_crtc_for_connector(conn_state, NULL);
+-	KUNIT_ASSERT_EQ(test, ret, 0);
++	if (ret)
++		return ret;
+ 
+ 	return 0;
  }
- 
 -- 
 2.39.5
 
