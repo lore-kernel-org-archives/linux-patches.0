@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C4CB2ECEA3;
-	Tue, 17 Jun 2025 15:46:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 474FD2ECEA5;
+	Tue, 17 Jun 2025 15:46:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175179; cv=none; b=j/CHj4umoq2k8XUPbWLAQFLEqh9mENY09mOVdPT056utVf8uh4+FriytCReBZD4hLyKhZ33WX6mwxcVi6yfzXBjb6OPUeKkWH8YX30BWrzaxSWG9d0StjL4OdStPGnUV7hubdAkbalugpyrpWRizcN41C+tn3T5ubiPo4MzC5B8=
+	t=1750175182; cv=none; b=bMyIKUPzThDFu6PFQIUZZROmNg2sOz+bj3OaPZBlQeqU8U/c4IpgbV0ClrC3R8BjyOVjrZWaxjbjfD97GojhNwZPXjY92z3PxPRmXNm+P2EXB7kdGwJda9k5UAHeyrkIg95I7sHXdthox7DiwjpWAhdrS3/vp6oBW8pwRyZSqnk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175179; c=relaxed/simple;
-	bh=depARD+/Lp9PuuYWz/SrMywp67ZsuGXUulpl40lIsdE=;
+	s=arc-20240116; t=1750175182; c=relaxed/simple;
+	bh=Zbe2HPkE951zSSN3DFb31EgVdlCFjkDNcawPeAgy+qU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=fyyPDYe1565rf68/GIfAt7a07x9QctjbsUq4EDam0Jl7D3n/frOl8OZQSj6lK5XTOmTjfws/egSjbDFVuHVeH5F1sONQsvEHeXicEyiSgpyFTxumKQNccIia0hLyEfE6l48yZxo7eBFSsjw9RCuDRw7PtvIga6q5YXB0s8k4N78=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jxrqLvy1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lXv2AhapT4R89K6JcXfja7RvrRYg9aCMIsMWBwNRd3sf2eXPrKE/9laKLRfyerotaYV3I82POxWqCpDG4nR5B8FUtRhnIMoK/HZvmvh8eZnDt+7GIfd061RVCGA5T//b/MNti6g2m1E7WdZQ1w5UVBKzEG4lhx5V+aa5fNDAXi0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t0DyvTzJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jxrqLvy1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C13D3C4CEE3;
-	Tue, 17 Jun 2025 15:46:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t0DyvTzJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB33CC4CEE3;
+	Tue, 17 Jun 2025 15:46:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175179;
-	bh=depARD+/Lp9PuuYWz/SrMywp67ZsuGXUulpl40lIsdE=;
+	s=korg; t=1750175182;
+	bh=Zbe2HPkE951zSSN3DFb31EgVdlCFjkDNcawPeAgy+qU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jxrqLvy1upIUMeo7vPNCKkcXHCFhXxrLorBy0qZDzf4cBhp+mWICR2PKM9c71Q6AW
-	 GhmI3i/76jnEYnou4wP1NEjJA1bGBTCofHomIX7bGRwKxZgc9S2UENRU0ZmQtVaSBW
-	 OM6MkxmuqZlBZm5eequHpx+M4R8r8Ea38fq+QEU4=
+	b=t0DyvTzJPIGZGHKqQSBANvWFOlzhLWQ2z0OhMs8pUu41HVjKC7PBy2Tkh5EHoF3zP
+	 QznRbSzGZahZVbsb2Lhr1VEvQ9sseqNATWpqSGWP+5vUQFOm32JGT1BHDJ6MAcDipT
+	 fvGNUBS0qfomCVpK/ioqkSh28kL7PIFnB2sXSMNY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
-	Willy Tarreau <w@1wt.eu>,
+	Kees Cook <kees@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 060/780] tools/nolibc: properly align dirent buffer
-Date: Tue, 17 Jun 2025 17:16:08 +0200
-Message-ID: <20250617152453.943387818@linuxfoundation.org>
+Subject: [PATCH 6.12 095/512] scsi: qedf: Use designated initializer for struct qed_fcoe_cb_ops
+Date: Tue, 17 Jun 2025 17:21:01 +0200
+Message-ID: <20250617152423.431505730@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,50 +44,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <linux@weissschuh.net>
+From: Kees Cook <kees@kernel.org>
 
-[ Upstream commit 0e75768ba24d669dbf76530e21fd51cfe2fbd2a9 ]
+[ Upstream commit d8720235d5b5cad86c1f07f65117ef2a96f8bec7 ]
 
-As byte buffer is overlaid with a 'struct dirent64'.
-it has to satisfy the structs alignment requirements.
+Recent fixes to the randstruct GCC plugin allowed it to notice
+that this structure is entirely function pointers and is therefore
+subject to randomization, but doing so requires that it always use
+designated initializers. Explicitly specify the "common" member as being
+initialized. Silences:
 
-Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
-Fixes: 665fa8dea90d ("tools/nolibc: add support for directory access")
-Acked-by: Willy Tarreau <w@1wt.eu>
-Link: https://lore.kernel.org/r/20250419-nolibc-ubsan-v2-4-060b8a016917@weissschuh.net
+drivers/scsi/qedf/qedf_main.c:702:9: error: positional initialization of field in 'struct' declared with 'designated_init' attribute [-Werror=designated-init]
+  702 |         {
+      |         ^
+
+Fixes: 035f7f87b729 ("randstruct: Enable Clang support")
+Link: https://lore.kernel.org/r/20250502224156.work.617-kees@kernel.org
+Signed-off-by: Kees Cook <kees@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/include/nolibc/dirent.h | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/scsi/qedf/qedf_main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/include/nolibc/dirent.h b/tools/include/nolibc/dirent.h
-index c5c30d0dd6806..946a697e98e4c 100644
---- a/tools/include/nolibc/dirent.h
-+++ b/tools/include/nolibc/dirent.h
-@@ -7,6 +7,7 @@
- #ifndef _NOLIBC_DIRENT_H
- #define _NOLIBC_DIRENT_H
+diff --git a/drivers/scsi/qedf/qedf_main.c b/drivers/scsi/qedf/qedf_main.c
+index e979ec1478c18..e895bd25098fd 100644
+--- a/drivers/scsi/qedf/qedf_main.c
++++ b/drivers/scsi/qedf/qedf_main.c
+@@ -699,7 +699,7 @@ static u32 qedf_get_login_failures(void *cookie)
+ }
  
-+#include "compiler.h"
- #include "stdint.h"
- #include "types.h"
- 
-@@ -58,7 +59,7 @@ int closedir(DIR *dirp)
- static __attribute__((unused))
- int readdir_r(DIR *dirp, struct dirent *entry, struct dirent **result)
- {
--	char buf[sizeof(struct linux_dirent64) + NAME_MAX + 1];
-+	char buf[sizeof(struct linux_dirent64) + NAME_MAX + 1] __nolibc_aligned_as(struct linux_dirent64);
- 	struct linux_dirent64 *ldir = (void *)buf;
- 	intptr_t i = (intptr_t)dirp;
- 	int fd, ret;
+ static struct qed_fcoe_cb_ops qedf_cb_ops = {
+-	{
++	.common = {
+ 		.link_update = qedf_link_update,
+ 		.bw_update = qedf_bw_update,
+ 		.schedule_recovery_handler = qedf_schedule_recovery_handler,
 -- 
 2.39.5
 
