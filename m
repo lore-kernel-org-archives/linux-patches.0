@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C8742F9485;
-	Tue, 17 Jun 2025 16:26:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B0872EE5E7;
+	Tue, 17 Jun 2025 16:27:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177617; cv=none; b=OZz9P8ETBkU+Oaavzbg0boeZ7ckkzmJ04CqafeSwePpWxZl/d8fq526WOEioumvmU5JobuWjq0myxS/Aqb8aB5MF00K1sghAG7ylqrC3oHMbJrj4IbsF0+VBFWGPK7tLk1chXJLto28+SqvC0I92cXFHIgeCkbwcRUWxCGMuxZk=
+	t=1750177620; cv=none; b=u0HvobxESOhhKOeVB0r4jiQSDuzZwK6TMxhKa5I5McMqZc5ADzuev8tSIDdDmUnf2vFJo/eqZf60posJHzZUP7J4hyVklFHfhHf6WWhLx+T5TLQJQT/PDI5+VH/EHlKmNhs1X9TUbaKanTCkfayOSbMpGEGiQ6AIW4hupZwSKIU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177617; c=relaxed/simple;
-	bh=ltmP0lTBBsplyHg/xn4ZrHw224Cq/thdWm103wWN5Y4=;
+	s=arc-20240116; t=1750177620; c=relaxed/simple;
+	bh=GVUnNDNhJ96B2YEM6QJxyWV0a0o8T4+sDiWXVTPYFi0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XAIDg2RTIc0eVXrCRZ18fzxnqvEoj+K9IMTQhy1dmAmkNtXDPIV2LhVftcq02gKrI2OE4FeQWf0jZfgL4iYePyY4NyL8YVQlgTdITYJpYihdGtbFzBuZ44oituSdvPJanAVl4ZKI4HysRiofyM4LeJJ1Q3IUkjgFLn0tGy+uk3U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k++gePUk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C/QdlLlIKtNZHza8Ar5meJVAQQnopBgCXgMWPCJeJzCHwl4/2S+gc0Z1I6Qp3DtT06eqme9EKZ+f2JkO28WRjOxmHutsDlSdtULXebA7lglb6alJNjJjgtyw7ekWKOfYaXDEeWuWQ9EcxHSB3DHnLJncPEwg7I8jQrdRfgo694A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ukFFzwip; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k++gePUk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2087C4CEE3;
-	Tue, 17 Jun 2025 16:26:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ukFFzwip"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC40CC4CEE3;
+	Tue, 17 Jun 2025 16:26:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177617;
-	bh=ltmP0lTBBsplyHg/xn4ZrHw224Cq/thdWm103wWN5Y4=;
+	s=korg; t=1750177620;
+	bh=GVUnNDNhJ96B2YEM6QJxyWV0a0o8T4+sDiWXVTPYFi0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k++gePUkiRA2WYcpY5CAf03tX/8wYkp0sqMGJYHB8/vff5W7A7sabE/PCcWRfAdab
-	 6BObhZIgRpdDbPoLP+1CkQ+DgLkmPFGBsBpFkfd3COeH4pW4UrAlZy+BNLZ8KGUty+
-	 LzvhfYiKATIqm7u45rd3GNi6eVILtYZxrJzQnG/E=
+	b=ukFFzwipkWlNzRR5LTvfKaiZmmrsL134WQ2wFQUM40RA2O7/dvf6nmOb0n0nnqEWw
+	 hO6W7B4Z+q5Vh0NhdZWN0IIT9RW0VDc5Ru3NactrSzZanyMv7Gf9iN4e3q6QdKcLt3
+	 0+Bm7IWAnVbB9rTdQ7AtBn7rNbp6LZzm2D39Y/R4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Faicker Mo <faicker.mo@zenlayer.com>,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Aaron Conole <aconole@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 336/780] net: openvswitch: Fix the dead loop of MPLS parse
-Date: Tue, 17 Jun 2025 17:20:44 +0200
-Message-ID: <20250617152505.138073456@linuxfoundation.org>
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Chris Bainbridge <chris.bainbridge@gmail.com>
+Subject: [PATCH 6.12 372/512] PM: sleep: Fix power.is_suspended cleanup for direct-complete devices
+Date: Tue, 17 Jun 2025 17:25:38 +0200
+Message-ID: <20250617152434.669777516@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,77 +48,62 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Faicker Mo <faicker.mo@zenlayer.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 0bdc924bfb319fb10d1113cbf091fc26fb7b1f99 ]
+[ Upstream commit d46c4c839c20a599a0eb8d73708ce401f9c7d06d ]
 
-The unexpected MPLS packet may not end with the bottom label stack.
-When there are many stacks, The label count value has wrapped around.
-A dead loop occurs, soft lockup/CPU stuck finally.
+Commit 03f1444016b7 ("PM: sleep: Fix handling devices with direct_complete
+set on errors") caused power.is_suspended to be set for devices with
+power.direct_complete set, but it forgot to ensure the clearing of that
+flag for them in device_resume(), so power.is_suspended is still set for
+them during the next system suspend-resume cycle.
 
-stack backtrace:
-UBSAN: array-index-out-of-bounds in /build/linux-0Pa0xK/linux-5.15.0/net/openvswitch/flow.c:662:26
-index -1 is out of range for type '__be32 [3]'
-CPU: 34 PID: 0 Comm: swapper/34 Kdump: loaded Tainted: G           OE   5.15.0-121-generic #131-Ubuntu
-Hardware name: Dell Inc. PowerEdge C6420/0JP9TF, BIOS 2.12.2 07/14/2021
-Call Trace:
- <IRQ>
- show_stack+0x52/0x5c
- dump_stack_lvl+0x4a/0x63
- dump_stack+0x10/0x16
- ubsan_epilogue+0x9/0x36
- __ubsan_handle_out_of_bounds.cold+0x44/0x49
- key_extract_l3l4+0x82a/0x840 [openvswitch]
- ? kfree_skbmem+0x52/0xa0
- key_extract+0x9c/0x2b0 [openvswitch]
- ovs_flow_key_extract+0x124/0x350 [openvswitch]
- ovs_vport_receive+0x61/0xd0 [openvswitch]
- ? kernel_init_free_pages.part.0+0x4a/0x70
- ? get_page_from_freelist+0x353/0x540
- netdev_port_receive+0xc4/0x180 [openvswitch]
- ? netdev_port_receive+0x180/0x180 [openvswitch]
- netdev_frame_hook+0x1f/0x40 [openvswitch]
- __netif_receive_skb_core.constprop.0+0x23a/0xf00
- __netif_receive_skb_list_core+0xfa/0x240
- netif_receive_skb_list_internal+0x18e/0x2a0
- napi_complete_done+0x7a/0x1c0
- bnxt_poll+0x155/0x1c0 [bnxt_en]
- __napi_poll+0x30/0x180
- net_rx_action+0x126/0x280
- ? bnxt_msix+0x67/0x80 [bnxt_en]
- handle_softirqs+0xda/0x2d0
- irq_exit_rcu+0x96/0xc0
- common_interrupt+0x8e/0xa0
- </IRQ>
+If that cycle is aborted in dpm_suspend(), the subsequent invocation of
+dpm_resume() will trigger a device_resume() call for every device and
+because power.is_suspended is set for the devices in question, they will
+not be skipped by device_resume() as expected which causes scary error
+messages to be logged (as appropriate).
 
-Fixes: fbdcdd78da7c ("Change in Openvswitch to support MPLS label depth of 3 in ingress direction")
-Signed-off-by: Faicker Mo <faicker.mo@zenlayer.com>
-Acked-by: Ilya Maximets <i.maximets@ovn.org>
-Reviewed-by: Aaron Conole <aconole@redhat.com>
-Link: https://patch.msgid.link/259D3404-575D-4A6D-B263-1DF59A67CF89@zenlayer.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+To address this issue, move the clearing of power.is_suspended in
+device_resume() immediately after the power.is_suspended check so it
+will be always cleared for all devices processed by that function.
+
+Fixes: 03f1444016b7 ("PM: sleep: Fix handling devices with direct_complete set on errors")
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4280
+Reported-and-tested-by: Chris Bainbridge <chris.bainbridge@gmail.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://patch.msgid.link/4990586.GXAFRqVoOG@rjwysocki.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/openvswitch/flow.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/base/power/main.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/openvswitch/flow.c b/net/openvswitch/flow.c
-index 8a848ce72e291..b80bd3a907739 100644
---- a/net/openvswitch/flow.c
-+++ b/net/openvswitch/flow.c
-@@ -788,7 +788,7 @@ static int key_extract_l3l4(struct sk_buff *skb, struct sw_flow_key *key)
- 			memset(&key->ipv4, 0, sizeof(key->ipv4));
- 		}
- 	} else if (eth_p_mpls(key->eth.type)) {
--		u8 label_count = 1;
-+		size_t label_count = 1;
+diff --git a/drivers/base/power/main.c b/drivers/base/power/main.c
+index 1abe61f11525d..faf4cdec23f04 100644
+--- a/drivers/base/power/main.c
++++ b/drivers/base/power/main.c
+@@ -916,6 +916,8 @@ static void device_resume(struct device *dev, pm_message_t state, bool async)
+ 	if (!dev->power.is_suspended)
+ 		goto Complete;
  
- 		memset(&key->mpls, 0, sizeof(key->mpls));
- 		skb_set_inner_network_header(skb, skb->mac_len);
++	dev->power.is_suspended = false;
++
+ 	if (dev->power.direct_complete) {
+ 		/* Match the pm_runtime_disable() in __device_suspend(). */
+ 		pm_runtime_enable(dev);
+@@ -971,7 +973,6 @@ static void device_resume(struct device *dev, pm_message_t state, bool async)
+ 
+  End:
+ 	error = dpm_run_callback(callback, dev, state, info);
+-	dev->power.is_suspended = false;
+ 
+ 	device_unlock(dev);
+ 	dpm_watchdog_clear(&wd);
 -- 
 2.39.5
 
