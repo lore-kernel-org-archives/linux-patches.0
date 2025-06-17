@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 707A12ECD22;
-	Tue, 17 Jun 2025 15:39:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0F9B2ECE9A;
+	Tue, 17 Jun 2025 15:39:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750174756; cv=none; b=ibmA+dRhasS3tIoD3LPJu4zaLYvwTwRsbvORx7uTVIf8FHpEV9uWqL3Be1UkeLwhYQtEbro8SDXWMd49Hl6vkPP+X8y69J7Ax6TlLLmGKUIInVTgMltzdp7d+or6Bz/UIenTCFmJ2say7pHJIQRkx5+1yyFVSjFi9bvLd6Mp5UU=
+	t=1750174759; cv=none; b=qIunjQnvDn0hrcBGfmhd1wTHIqcZ8bEMaPi5DoFgDMVcgMbjS1+9h7EPqx8v7Y8mOMqW4ASkBwURqry+iT3DhR/tVBMzSZwmrV8uuYUbZBoHqFrghnJuStIwOT3S8QB4NvQdRezRVnEdfynvt+WCH6N0BRbfH6eR24bRqCnmB2k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750174756; c=relaxed/simple;
-	bh=VAgO2QwwZjYSOrvvvaYBXnuHXD9WPu+z0CfuW4t9N7E=;
+	s=arc-20240116; t=1750174759; c=relaxed/simple;
+	bh=s4ximPgTK536oVJgACUBm2S/ZBA/C8sQ/kVtMROLKG8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RTQddl/J0+9PX3EdJr1iU8X1BiXL8/45n+1O+ObZaPrSR77toQkIMPT82vyw4tKmPJB5FjCLgJnwPjviVffeQjlzQ3YvVxkZnwVbGvnQyRlNtLsmb5g/leleXhDS/iBeC7y9rB7DF5veAP7RmOE9qMAHAMs3AGNIGE5Mna7Azu0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qg49S8Sb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uxBkjFmVODqgcVo4czezr1bShpcubYaRShi43iAAt9lYB8gnLrQ52CZ15cDl/w+c3pv+pV7acXqocvCrt7TSNBxmUi4dYb7cqmYMAMMDQwZ3i6tvpUmmkbNe12Xzb9QymeKZuL7FwRnWEUT9CRZhOg24qRpt/A7cU3qDLTFoUwY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=idT+jHda; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qg49S8Sb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBB1EC4CEE3;
-	Tue, 17 Jun 2025 15:39:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="idT+jHda"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BA43C4CEF0;
+	Tue, 17 Jun 2025 15:39:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750174756;
-	bh=VAgO2QwwZjYSOrvvvaYBXnuHXD9WPu+z0CfuW4t9N7E=;
+	s=korg; t=1750174759;
+	bh=s4ximPgTK536oVJgACUBm2S/ZBA/C8sQ/kVtMROLKG8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qg49S8SbjFEiCWv2o/gGl2ze9wCmLpHlA0BB0Es1dJsv9NzFCQhkcnMvgB/GsR3AU
-	 m3FkUJ9nnldke6OH5WOkfOKuKJZYRpzwiD6Kixb06GHERrRzSyfqn4EW9f0IoJGc0S
-	 ZVk/e7QZnT0f5ZTi+G4R8mN4GocKrMgOTNpymubM=
+	b=idT+jHda+uRhCoptyCVG1DtRFquAh+n/q1VL/dhwwDrfK5GicuBzToWtRv/8U607I
+	 oMOnyEpkh/Z6JOy7hmvMtFH4vxNR6yqYiWIpKZPlm3BdQe0+o4vO28qIfx8lPJlJsm
+	 T5MrkzDXENrHXVnloh6RR6PhzlgryNjSnrsMljQ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Martin=20Povi=C5=A1er?= <povik+lin@cutebit.org>,
-	James Calligeros <jcalligeros99@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Qing Wang <wangqing7171@gmail.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 057/512] ASoC: apple: mca: Constrain channels according to TDM mask
-Date: Tue, 17 Jun 2025 17:20:23 +0200
-Message-ID: <20250617152421.854202707@linuxfoundation.org>
+Subject: [PATCH 6.15 018/780] perf/core: Fix broken throttling when max_samples_per_tick=1
+Date: Tue, 17 Jun 2025 17:15:26 +0200
+Message-ID: <20250617152452.242035509@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,72 +45,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Martin Povišer <povik+lin@cutebit.org>
+From: Qing Wang <wangqing7171@gmail.com>
 
-[ Upstream commit e717c661e2d1a660e96c40b0fe9933e23a1d7747 ]
+[ Upstream commit f51972e6f8b9a737b2b3eb588069acb538fa72de ]
 
-We don't (and can't) configure the hardware correctly if the number of
-channels exceeds the weight of the TDM mask. Report that constraint in
-startup of FE.
+According to the throttling mechanism, the pmu interrupts number can not
+exceed the max_samples_per_tick in one tick. But this mechanism is
+ineffective when max_samples_per_tick=1, because the throttling check is
+skipped during the first interrupt and only performed when the second
+interrupt arrives.
 
-Fixes: 3df5d0d97289 ("ASoC: apple: mca: Start new platform driver")
-Signed-off-by: Martin Povišer <povik+lin@cutebit.org>
-Signed-off-by: James Calligeros <jcalligeros99@gmail.com>
-Link: https://patch.msgid.link/20250518-mca-fixes-v1-1-ee1015a695f6@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Perhaps this bug may cause little influence in one tick, but if in a
+larger time scale, the problem can not be underestimated.
+
+When max_samples_per_tick = 1:
+Allowed-interrupts-per-second max-samples-per-second  default-HZ  ARCH
+200                           100                     100         X86
+500                           250                     250         ARM64
+...
+Obviously, the pmu interrupt number far exceed the user's expect.
+
+Fixes: e050e3f0a71b ("perf: Fix broken interrupt rate throttling")
+Signed-off-by: Qing Wang <wangqing7171@gmail.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lkml.kernel.org/r/20250405141635.243786-3-wangqing7171@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/apple/mca.c | 23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+ kernel/events/core.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/sound/soc/apple/mca.c b/sound/soc/apple/mca.c
-index c9e7d40c47cc1..4a4ec1c09e132 100644
---- a/sound/soc/apple/mca.c
-+++ b/sound/soc/apple/mca.c
-@@ -464,6 +464,28 @@ static int mca_configure_serdes(struct mca_cluster *cl, int serdes_unit,
- 	return -EINVAL;
- }
- 
-+static int mca_fe_startup(struct snd_pcm_substream *substream,
-+			  struct snd_soc_dai *dai)
-+{
-+	struct mca_cluster *cl = mca_dai_to_cluster(dai);
-+	unsigned int mask, nchannels;
-+
-+	if (cl->tdm_slots) {
-+		if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK)
-+			mask = cl->tdm_tx_mask;
-+		else
-+			mask = cl->tdm_rx_mask;
-+
-+		nchannels = hweight32(mask);
-+	} else {
-+		nchannels = 2;
+diff --git a/kernel/events/core.c b/kernel/events/core.c
+index 95e703891b24f..881d768e45564 100644
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -10029,14 +10029,14 @@ __perf_event_account_interrupt(struct perf_event *event, int throttle)
+ 		hwc->interrupts = 1;
+ 	} else {
+ 		hwc->interrupts++;
+-		if (unlikely(throttle &&
+-			     hwc->interrupts > max_samples_per_tick)) {
+-			__this_cpu_inc(perf_throttled_count);
+-			tick_dep_set_cpu(smp_processor_id(), TICK_DEP_BIT_PERF_EVENTS);
+-			hwc->interrupts = MAX_INTERRUPTS;
+-			perf_log_throttle(event, 0);
+-			ret = 1;
+-		}
 +	}
 +
-+	return snd_pcm_hw_constraint_minmax(substream->runtime,
-+					    SNDRV_PCM_HW_PARAM_CHANNELS,
-+					    1, nchannels);
-+}
-+
- static int mca_fe_set_tdm_slot(struct snd_soc_dai *dai, unsigned int tx_mask,
- 			       unsigned int rx_mask, int slots, int slot_width)
- {
-@@ -680,6 +702,7 @@ static int mca_fe_hw_params(struct snd_pcm_substream *substream,
- }
++	if (unlikely(throttle && hwc->interrupts >= max_samples_per_tick)) {
++		__this_cpu_inc(perf_throttled_count);
++		tick_dep_set_cpu(smp_processor_id(), TICK_DEP_BIT_PERF_EVENTS);
++		hwc->interrupts = MAX_INTERRUPTS;
++		perf_log_throttle(event, 0);
++		ret = 1;
+ 	}
  
- static const struct snd_soc_dai_ops mca_fe_ops = {
-+	.startup = mca_fe_startup,
- 	.set_fmt = mca_fe_set_fmt,
- 	.set_bclk_ratio = mca_set_bclk_ratio,
- 	.set_tdm_slot = mca_fe_set_tdm_slot,
+ 	if (event->attr.freq) {
 -- 
 2.39.5
 
