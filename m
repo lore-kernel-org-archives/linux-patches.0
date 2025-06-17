@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71E9B293443;
-	Tue, 17 Jun 2025 15:33:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 971E52DF3CB;
+	Tue, 17 Jun 2025 15:33:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750174411; cv=none; b=cZamIsjDfj7mIyhWIgLWR3MJHtO7sjAtWlQK/vsY/7AB4mc82OCKRbeCdHFWYBtOQw/sKQzO/D647cE9YxJrcXI/A4ZI2uv8uapxpFZoZzwZRA4o61BlsFpdMzQqhqqd2bB7dWuOFNTNstOBshCT+mRb9f8Y2NGstiFatfa0i7Q=
+	t=1750174414; cv=none; b=FSyBzBFf6qE4lFFpFvjSseZy5L+paC5s981pfV1oUtGAgHrbwt4hPa4aV1C68qiD7aYUS8d5s6uLB3r2GPZF9/BmldOXaSK3JrgvyM12DBTEMSssP4+2A//22EZFTbGpRYIZeapKV1n5aC/1x8E+XQfjkLumoxQ/pZvpmqJwh7A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750174411; c=relaxed/simple;
-	bh=au4zXKKfdEgKepJ/qFsk8ZY87A6Fo6DKtdTXH77hOVM=;
+	s=arc-20240116; t=1750174414; c=relaxed/simple;
+	bh=nGq7zTQxdMTgfx4e7bDXHIKAYntGYUBZ4r3U7GqMcos=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L1L4jWfe21IWstRTUXuqr5GbtMA0gShljoAyCb2mvp7LPyn/U5RbtFpkQUBK2ca4crZZsuMFo4dU3WiEkbPL/HWJA3KQwYYAvtG0qg3n8Q7ZYSiwBrexVGyb4OZYoypikYBFPFzlgSxrtqmk3Nrh9p2j0j54tLokAJR3pml8ruM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Aw/F4max; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t+givCYztH0yD/yKA+d1JomHsvEZZtlP+iXT1Dpn1F8aTN90/LkWVmIkqaOuiNhN5SIQByMpZ+zL77jW6XdHIMLfw98FJqlxCX+PkCfVzW+AAOBnZh7w7HpCuEY4SuFm6TdbKwdsByW8TYffTgWcENYqRNEV4J9uUhUudZIrRM8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yOqWROyh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Aw/F4max"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73663C4CEE3;
-	Tue, 17 Jun 2025 15:33:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yOqWROyh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6F08C4CEE3;
+	Tue, 17 Jun 2025 15:33:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750174410;
-	bh=au4zXKKfdEgKepJ/qFsk8ZY87A6Fo6DKtdTXH77hOVM=;
+	s=korg; t=1750174414;
+	bh=nGq7zTQxdMTgfx4e7bDXHIKAYntGYUBZ4r3U7GqMcos=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Aw/F4maxbAEkgiDnpCx+Qugg2nmVcKfp8WC0cgcxGm1Hu+WvtKE6KrZw+qA5NCrPN
-	 PnaQPeQAqWA3MPBpme1+I9PYGoaPh1YquTALhQSQg/EcjPxWmT9D7h4qgKE34H0GsV
-	 oFauU7BpsRa2+u0eW7YtlHdl5CsBWWphnAHwG7qs=
+	b=yOqWROyh6gdjwtUbXcvRvSYgXLvDz55I+myyVYNX1otG4Qtwt7mxKmllVnQ46b11s
+	 VfJhDckx2hNMVHm+/w+4pZk2P3QUjAl8qFE1hoO9oAhJXnNvghXh/GbHOzQieuHIcP
+	 sqBmTKQXl2NenkVFge1UNcvlsLdberbeLPwTCLrE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joshua Thompson <funaho@jurai.org>,
-	Finn Thain <fthain@linux-m68k.org>,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Ovidiu Panait <ovidiu.panait.oss@gmail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 065/356] m68k: mac: Fix macintosh_config for Mac II
-Date: Tue, 17 Jun 2025 17:23:00 +0200
-Message-ID: <20250617152340.847317535@linuxfoundation.org>
+Subject: [PATCH 6.12 016/512] crypto: sun8i-ce - undo runtime PM changes during driver removal
+Date: Tue, 17 Jun 2025 17:19:42 +0200
+Message-ID: <20250617152420.183756985@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-References: <20250617152338.212798615@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,48 +47,80 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Finn Thain <fthain@linux-m68k.org>
+From: Ovidiu Panait <ovidiu.panait.oss@gmail.com>
 
-[ Upstream commit 52ae3f5da7e5adbe3d1319573b55dac470abb83c ]
+[ Upstream commit 9334f427576e6d361a409959b52246b0aa10476f ]
 
-When booted on my Mac II, the kernel prints this:
+The pm_runtime_use_autosuspend() call must be undone with
+pm_runtime_dont_use_autosuspend() at driver exit, but this is not
+currently handled in the driver.
 
-    Detected Macintosh model: 6
-    Apple Macintosh Unknown
+To fix this issue and at the same time simplify error handling, switch
+to devm_pm_runtime_enable(). It will call both pm_runtime_disable() and
+pm_runtime_dont_use_autosuspend() during driver removal.
 
-The catch-all entry ("Unknown") is mac_data_table[0] which is only needed
-in the unlikely event that the bootinfo model ID can't be matched.
-When model ID is 6, the search should begin and end at mac_data_table[1].
-Fix the off-by-one error that causes this problem.
-
-Cc: Joshua Thompson <funaho@jurai.org>
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Finn Thain <fthain@linux-m68k.org>
-Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Link: https://lore.kernel.org/d0f30a551064ca4810b1c48d5a90954be80634a9.1745453246.git.fthain@linux-m68k.org
-Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Fixes: 06f751b61329 ("crypto: allwinner - Add sun8i-ce Crypto Engine")
+Signed-off-by: Ovidiu Panait <ovidiu.panait.oss@gmail.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/m68k/mac/config.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../crypto/allwinner/sun8i-ce/sun8i-ce-core.c   | 17 ++++++-----------
+ 1 file changed, 6 insertions(+), 11 deletions(-)
 
-diff --git a/arch/m68k/mac/config.c b/arch/m68k/mac/config.c
-index 382f656c29eae..9f5603e01a688 100644
---- a/arch/m68k/mac/config.c
-+++ b/arch/m68k/mac/config.c
-@@ -801,7 +801,7 @@ static void __init mac_identify(void)
+diff --git a/drivers/crypto/allwinner/sun8i-ce/sun8i-ce-core.c b/drivers/crypto/allwinner/sun8i-ce/sun8i-ce-core.c
+index e55e58e164db3..fcc6832a065cb 100644
+--- a/drivers/crypto/allwinner/sun8i-ce/sun8i-ce-core.c
++++ b/drivers/crypto/allwinner/sun8i-ce/sun8i-ce-core.c
+@@ -832,13 +832,12 @@ static int sun8i_ce_pm_init(struct sun8i_ce_dev *ce)
+ 	err = pm_runtime_set_suspended(ce->dev);
+ 	if (err)
+ 		return err;
+-	pm_runtime_enable(ce->dev);
+-	return err;
+-}
+ 
+-static void sun8i_ce_pm_exit(struct sun8i_ce_dev *ce)
+-{
+-	pm_runtime_disable(ce->dev);
++	err = devm_pm_runtime_enable(ce->dev);
++	if (err)
++		return err;
++
++	return 0;
+ }
+ 
+ static int sun8i_ce_get_clks(struct sun8i_ce_dev *ce)
+@@ -1041,7 +1040,7 @@ static int sun8i_ce_probe(struct platform_device *pdev)
+ 			       "sun8i-ce-ns", ce);
+ 	if (err) {
+ 		dev_err(ce->dev, "Cannot request CryptoEngine Non-secure IRQ (err=%d)\n", err);
+-		goto error_irq;
++		goto error_pm;
  	}
  
- 	macintosh_config = mac_data_table;
--	for (m = macintosh_config; m->ident != -1; m++) {
-+	for (m = &mac_data_table[1]; m->ident != -1; m++) {
- 		if (m->ident == model) {
- 			macintosh_config = m;
- 			break;
+ 	err = sun8i_ce_register_algs(ce);
+@@ -1082,8 +1081,6 @@ static int sun8i_ce_probe(struct platform_device *pdev)
+ 	return 0;
+ error_alg:
+ 	sun8i_ce_unregister_algs(ce);
+-error_irq:
+-	sun8i_ce_pm_exit(ce);
+ error_pm:
+ 	sun8i_ce_free_chanlist(ce, MAXFLOW - 1);
+ 	return err;
+@@ -1104,8 +1101,6 @@ static void sun8i_ce_remove(struct platform_device *pdev)
+ #endif
+ 
+ 	sun8i_ce_free_chanlist(ce, MAXFLOW - 1);
+-
+-	sun8i_ce_pm_exit(ce);
+ }
+ 
+ static const struct of_device_id sun8i_ce_crypto_of_match_table[] = {
 -- 
 2.39.5
 
