@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D508E2F94B0;
-	Tue, 17 Jun 2025 16:14:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 986F22F94B0;
+	Tue, 17 Jun 2025 16:14:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750176849; cv=none; b=DwgWmjOyn5jHGQVNC6rlOe7fMuDdT8MU4aiynZgfih6xJOvyIa4LmmacAklzloqM34LsyBaB8Pk27AA15FjMkuoQwAgymueUV6uql92oN0Ka9Z7YTiFJAugpUR95b+YBCjjBrCI32nRjTrqiUdHlDC3MlvgRfPIHGXzr+C2As08=
+	t=1750176852; cv=none; b=mzcPcr9UHSHxQTZoCrvPIEkDH2fpll7OcoCd981j/W5Jr2z/VR2POawVVKWAcYqd/niFGBpa7CuxKAbF9kylTMJx4/sYsgFADDp/UcBJhkUmRJpnUrsOHMBEhdAaqT7OkP2csC5o1LzFfKe73KLhVz/9vOakfUWBiAoxI//vwVk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750176849; c=relaxed/simple;
-	bh=GpuTkOvlFon9FPWmwptXF1mvwZrWBtNcRXEc+oF345s=;
+	s=arc-20240116; t=1750176852; c=relaxed/simple;
+	bh=g6Z5oVrHQExdqb9L57XlVDyrRrZjWg4sAlVx+MzR84Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pAAH1xKEARGs5Ukkz8oaXaGzVStSZB5wT7GN/LVHa5PaYTw9HChfWlD9gSZ/J5skjotgXoJoDY8y5kHeQGB2zQAdr9eXxRd2G99JRqEhhHwcU0XLDdQmYQ/Ac4CLt5wLtQ17eM9OfH3oXyzi5zllz2UT+7modNAWUmPjZkysaCQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kyQnY2vs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AGe0WavtXk+lAzGRShb3xaXAhmgk0THOgEldd6CQ7SZGjmiRODiWW1YVRrOF9eI5l+fjbDKhnn0QRk23BNHO6mOZ4yKECIj+6TcIkL9lT7M2xMF2/FbOd6pEGnMoycIBGI+X8dFBqOohcW4sYyAWnxgC3k97LCRx0Mc08IUexVI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c1TFsW0S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kyQnY2vs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0F67C4CEE3;
-	Tue, 17 Jun 2025 16:14:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c1TFsW0S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07B16C4CEE3;
+	Tue, 17 Jun 2025 16:14:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750176849;
-	bh=GpuTkOvlFon9FPWmwptXF1mvwZrWBtNcRXEc+oF345s=;
+	s=korg; t=1750176852;
+	bh=g6Z5oVrHQExdqb9L57XlVDyrRrZjWg4sAlVx+MzR84Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kyQnY2vs62ixQ/D5ML33VAU9p7vDbzSfE5lSl2lSGQADfd66RKxxwamZmK5uE5s8O
-	 K/bazEdvLiONcWkzWDklZJBFJYnA1UU1BepS0XP5KDPlFTXhKGJF2sa9dnWxwClBNu
-	 Qw2tk2ghtsR5nX+d2iYBoP3hbVABW7NNLJYjuAKc=
+	b=c1TFsW0Sh7ap7jk8PgdAgMaTN4Nfvn9/qAULWnyqdFl7b7nMOFWJaMByWNML4JNyc
+	 v23NNyhaaT7CNRNh0R4CwzsoXqWnJe+yb5oz8QyUboOiBOPywvo+P9/VfzETv/S8Z0
+	 jVJLZff0HkfqYzwBMVM4kyrujg8ViigM6qIScTS4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Raczynski <j.raczynski@samsung.com>,
-	Wenjing Shan <wenjing.shan@samsung.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 319/356] net/mdiobus: Fix potential out-of-bounds clause 45 read/write access
-Date: Tue, 17 Jun 2025 17:27:14 +0200
-Message-ID: <20250617152351.000349066@linuxfoundation.org>
+Subject: [PATCH 6.12 257/512] ARM: dts: qcom: apq8064: add missing clocks to the timer node
+Date: Tue, 17 Jun 2025 17:23:43 +0200
+Message-ID: <20250617152430.008198396@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-References: <20250617152338.212798615@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,61 +48,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jakub Raczynski <j.raczynski@samsung.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-[ Upstream commit 260388f79e94fb3026c419a208ece8358bb7b555 ]
+[ Upstream commit 4b0eb149df58b6750cd8113e5ee5b3ac7cc51743 ]
 
-When using publicly available tools like 'mdio-tools' to read/write data
-from/to network interface and its PHY via C45 (clause 45) mdiobus,
-there is no verification of parameters passed to the ioctl and
-it accepts any mdio address.
-Currently there is support for 32 addresses in kernel via PHY_MAX_ADDR define,
-but it is possible to pass higher value than that via ioctl.
-While read/write operation should generally fail in this case,
-mdiobus provides stats array, where wrong address may allow out-of-bounds
-read/write.
+In order to fix DT schema warning and describe hardware properly, add
+missing sleep clock to the timer node.
 
-Fix that by adding address verification before C45 read/write operation.
-While this excludes this access from any statistics, it improves security of
-read/write operation.
-
-Fixes: 4e4aafcddbbf ("net: mdio: Add dedicated C45 API to MDIO bus drivers")
-Signed-off-by: Jakub Raczynski <j.raczynski@samsung.com>
-Reported-by: Wenjing Shan <wenjing.shan@samsung.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: f335b8af4fd5 ("ARM: dts: qcom: Add initial APQ8064 SoC and IFC6410 board device trees")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20250318-fix-nexus-4-v2-6-bcedd1406790@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/mdio_bus.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ arch/arm/boot/dts/qcom/qcom-apq8064.dtsi | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/phy/mdio_bus.c b/drivers/net/phy/mdio_bus.c
-index 103998969d44c..e02706b7cc1ed 100644
---- a/drivers/net/phy/mdio_bus.c
-+++ b/drivers/net/phy/mdio_bus.c
-@@ -946,6 +946,9 @@ int __mdiobus_c45_read(struct mii_bus *bus, int addr, int devad, u32 regnum)
+diff --git a/arch/arm/boot/dts/qcom/qcom-apq8064.dtsi b/arch/arm/boot/dts/qcom/qcom-apq8064.dtsi
+index ac7494ed633e1..1d802d931028d 100644
+--- a/arch/arm/boot/dts/qcom/qcom-apq8064.dtsi
++++ b/arch/arm/boot/dts/qcom/qcom-apq8064.dtsi
+@@ -326,6 +326,8 @@
+ 				     <GIC_PPI 3 (GIC_CPU_MASK_SIMPLE(2) | IRQ_TYPE_EDGE_RISING)>;
+ 			reg = <0x0200a000 0x100>;
+ 			clock-frequency = <27000000>;
++			clocks = <&sleep_clk>;
++			clock-names = "sleep";
+ 			cpu-offset = <0x80000>;
+ 		};
  
- 	lockdep_assert_held_once(&bus->mdio_lock);
- 
-+	if (addr >= PHY_MAX_ADDR)
-+		return -ENXIO;
-+
- 	if (bus->read_c45)
- 		retval = bus->read_c45(bus, addr, devad, regnum);
- 	else
-@@ -977,6 +980,9 @@ int __mdiobus_c45_write(struct mii_bus *bus, int addr, int devad, u32 regnum,
- 
- 	lockdep_assert_held_once(&bus->mdio_lock);
- 
-+	if (addr >= PHY_MAX_ADDR)
-+		return -ENXIO;
-+
- 	if (bus->write_c45)
- 		err = bus->write_c45(bus, addr, devad, regnum, val);
- 	else
 -- 
 2.39.5
 
