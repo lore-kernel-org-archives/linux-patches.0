@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CE3A2ECD18;
-	Tue, 17 Jun 2025 15:32:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E82B62E9730;
+	Tue, 17 Jun 2025 15:32:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750174352; cv=none; b=o99jhrT1yZySLgxr5ac1P9KQdBdC7uVkAGINYqjWedph/K3Eg2vhD58PMYpQf3j4BIzAQ38BPCiBiDGXrGZmLovxT229/aqWwYWlOwSMQZI2XOwv7IliqbNHNps+XXN3gRQHrWWQIENtFLRdx3INpmQBwrpnrJZ9EjNlb293Ens=
+	t=1750174356; cv=none; b=Z4/XJWOWcfaEAkEYMEP9F1RjHHLRJ2xWf8W119sVv+OUjXROJr6mdEjh2jSNBzlsWfhxv7r8MACAWazjeF5RK8+6MGsVm7l4mVolHM4dAoAjuzt2gg6HGkm4UmiEBUPRPhVy3wIZHp3nLhD1sM7qi8Dii9qyfMZ/7FgqOPEvZ80=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750174352; c=relaxed/simple;
-	bh=wJtbFZQuB2fkewZi8aN+9cLBGHhu2FnrhliG2LdRzMk=;
+	s=arc-20240116; t=1750174356; c=relaxed/simple;
+	bh=MGe5bzZoUTGtYC8LXLuXo+WEtvXCzjS7EnjrQxiPp4M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FgTIDzoLAeUmiqCsDshn/7WrB1pOfZrzdERSP2RYkIpmPN7EvMj5qbB/FafHYuguSA/zn99GDx41toTXty/PYdmNNffDzoK2cb9QzJmLawbNt2c8fn378icJYxCe1svX4kZrhlR78RakfYwh+1T6UZEvw0CSfoQ2pbdMwd7bbtk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R5ogBuHf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=C1foH8AVSxT3Xe3mN6UlquehMxRtDWLJCB1INYMBYRwWiH9IYuIwk0UU5ald4BNAFXz8vE8RyVuPjh0gPNdWExNeMa8EbBIjy+QGORuMQFJlC4smNHTNovo+ORjPeLW5Ku18pI+ggaAevrg6CwElPi6mo2aTf0mDBoc/8Yvqqy0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gFt1XhBq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R5ogBuHf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90224C4CEE3;
-	Tue, 17 Jun 2025 15:32:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gFt1XhBq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE71FC4CEF2;
+	Tue, 17 Jun 2025 15:32:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750174352;
-	bh=wJtbFZQuB2fkewZi8aN+9cLBGHhu2FnrhliG2LdRzMk=;
+	s=korg; t=1750174355;
+	bh=MGe5bzZoUTGtYC8LXLuXo+WEtvXCzjS7EnjrQxiPp4M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R5ogBuHfSgbOGJ8q/9JPYEMa/zBfz2qW0Lzo3PpNx8cEQhPfL9MLKn5Hef781QZ1W
-	 T7x8S7tHjkcoY+9Cv8UDHxBnlzvujFsIisqBbYusbItj3YcHZb2YkCc7wo2sY9koyE
-	 8wJVVsucIruPQErMczaLWVB80Ez/L0uxsF48/LNA=
+	b=gFt1XhBqlv7Ii550L4Jj9t3EvsuUWiDRaeLfHNpvel2J6OJjdcpXchYKz37bClGWq
+	 fWEXnOZRTDA4M6fmEio6qOmyaNfi4nFAMUmzrPioX+5iqLMRbqpg6IFC6rd5K5zRAG
+	 d0I7Gnhi+QVQpDaxXqvvQ7yQhRMFihoXK6iCP5QA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sandipan Das <sandipan.das@amd.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
+	Maxime Ripard <mripard@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 005/512] perf/x86/amd/uncore: Remove unused struct amd_uncore_ctx::node member
-Date: Tue, 17 Jun 2025 17:19:31 +0200
-Message-ID: <20250617152419.744206037@linuxfoundation.org>
+Subject: [PATCH 6.6 056/356] drm/vc4: tests: Use return instead of assert
+Date: Tue, 17 Jun 2025 17:22:51 +0200
+Message-ID: <20250617152340.489467007@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
+References: <20250617152338.212798615@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,38 +45,115 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sandipan Das <sandipan.das@amd.com>
+From: Maxime Ripard <mripard@kernel.org>
 
-[ Upstream commit 4f81cc2d1bf91a49d33eb6578b58db2518deef01 ]
+[ Upstream commit 9e26a3740cc08ef8bcdc5e5d824792cd677affce ]
 
-Fixes: d6389d3ccc13 ("perf/x86/amd/uncore: Refactor uncore management")
-Signed-off-by: Sandipan Das <sandipan.das@amd.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Acked-by: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/30f9254c2de6c4318dd0809ef85a1677f68eef10.1744906694.git.sandipan.das@amd.com
+The vc4_mock_atomic_add_output() and vc4_mock_atomic_del_output() assert
+that the functions they are calling didn't fail. Since some of them can
+return EDEADLK, we can't properly deal with it.
+
+Since both functions are expected to return an int, and all caller check
+the return value, let's just properly propagate the errors when they
+occur.
+
+Fixes: f759f5b53f1c ("drm/vc4: tests: Introduce a mocking infrastructure")
+Fixes: 76ec18dc5afa ("drm/vc4: tests: Add unit test suite for the PV muxing")
+Reviewed-by: Maíra Canal <mcanal@igalia.com>
+Link: https://lore.kernel.org/r/20250403-drm-vc4-kunit-failures-v2-1-e09195cc8840@kernel.org
+Signed-off-by: Maxime Ripard <mripard@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/amd/uncore.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/gpu/drm/vc4/tests/vc4_mock_output.c | 36 ++++++++++++++-------
+ 1 file changed, 24 insertions(+), 12 deletions(-)
 
-diff --git a/arch/x86/events/amd/uncore.c b/arch/x86/events/amd/uncore.c
-index 0bfde2ea5cb8c..675250598c324 100644
---- a/arch/x86/events/amd/uncore.c
-+++ b/arch/x86/events/amd/uncore.c
-@@ -38,7 +38,6 @@ struct amd_uncore_ctx {
- 	int refcnt;
- 	int cpu;
- 	struct perf_event **events;
--	struct hlist_node node;
- };
+diff --git a/drivers/gpu/drm/vc4/tests/vc4_mock_output.c b/drivers/gpu/drm/vc4/tests/vc4_mock_output.c
+index e70d7c3076acf..f0ddc223c1f83 100644
+--- a/drivers/gpu/drm/vc4/tests/vc4_mock_output.c
++++ b/drivers/gpu/drm/vc4/tests/vc4_mock_output.c
+@@ -75,24 +75,30 @@ int vc4_mock_atomic_add_output(struct kunit *test,
+ 	int ret;
  
- struct amd_uncore_pmu {
+ 	encoder = vc4_find_encoder_by_type(drm, type);
+-	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, encoder);
++	if (!encoder)
++		return -ENODEV;
+ 
+ 	crtc = vc4_find_crtc_for_encoder(test, drm, encoder);
+-	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, crtc);
++	if (!crtc)
++		return -ENODEV;
+ 
+ 	output = encoder_to_vc4_dummy_output(encoder);
+ 	conn = &output->connector;
+ 	conn_state = drm_atomic_get_connector_state(state, conn);
+-	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, conn_state);
++	if (IS_ERR(conn_state))
++		return PTR_ERR(conn_state);
+ 
+ 	ret = drm_atomic_set_crtc_for_connector(conn_state, crtc);
+-	KUNIT_EXPECT_EQ(test, ret, 0);
++	if (ret)
++		return ret;
+ 
+ 	crtc_state = drm_atomic_get_crtc_state(state, crtc);
+-	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, crtc_state);
++	if (IS_ERR(crtc_state))
++		return PTR_ERR(crtc_state);
+ 
+ 	ret = drm_atomic_set_mode_for_crtc(crtc_state, &default_mode);
+-	KUNIT_EXPECT_EQ(test, ret, 0);
++	if (ret)
++		return ret;
+ 
+ 	crtc_state->active = true;
+ 
+@@ -113,26 +119,32 @@ int vc4_mock_atomic_del_output(struct kunit *test,
+ 	int ret;
+ 
+ 	encoder = vc4_find_encoder_by_type(drm, type);
+-	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, encoder);
++	if (!encoder)
++		return -ENODEV;
+ 
+ 	crtc = vc4_find_crtc_for_encoder(test, drm, encoder);
+-	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, crtc);
++	if (!crtc)
++		return -ENODEV;
+ 
+ 	crtc_state = drm_atomic_get_crtc_state(state, crtc);
+-	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, crtc_state);
++	if (IS_ERR(crtc_state))
++		return PTR_ERR(crtc_state);
+ 
+ 	crtc_state->active = false;
+ 
+ 	ret = drm_atomic_set_mode_for_crtc(crtc_state, NULL);
+-	KUNIT_ASSERT_EQ(test, ret, 0);
++	if (ret)
++		return ret;
+ 
+ 	output = encoder_to_vc4_dummy_output(encoder);
+ 	conn = &output->connector;
+ 	conn_state = drm_atomic_get_connector_state(state, conn);
+-	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, conn_state);
++	if (IS_ERR(conn_state))
++		return PTR_ERR(conn_state);
+ 
+ 	ret = drm_atomic_set_crtc_for_connector(conn_state, NULL);
+-	KUNIT_ASSERT_EQ(test, ret, 0);
++	if (ret)
++		return ret;
+ 
+ 	return 0;
+ }
 -- 
 2.39.5
 
