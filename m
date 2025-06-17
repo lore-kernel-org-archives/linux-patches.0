@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF6FF2EA14F;
-	Tue, 17 Jun 2025 15:55:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75CBD2EA164;
+	Tue, 17 Jun 2025 15:55:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175711; cv=none; b=eQk68KMLfGf7L/3ye3nCr51Fi/5XuN2e7tWqZN1NgPhlgT/QstsNctj4u1q3Iyc64nk60ydYY7YC3An+Z2RLn3pVYMj1Jt1ozqcumeLOnUtb6+XPKTeH/ujS7fOkOSQLR8GcynpwKyMRG8XJslxuHXPRqWHmu+YAMp8wvV5lRf0=
+	t=1750175715; cv=none; b=Qsh+6c7Dri4MVZgBP9n6+q1ESAKcWgbz/M2HpB0eKLBSIkpGgvBDGFihGb+JzmStgEO8THUmoYecU9C06PDGg7DA7rV3Rfm1f/19oTqTMzbgKmBvar7dJNDETcvoNtYtzVj94Vw/vS6MmRTSl3rq1OFfaET7DVhZ/ph4fcdp2gU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175711; c=relaxed/simple;
-	bh=FfZW0Jv0Bs/jKdwdR0PYysYWcr2z9QbDGjlKwuCSv9I=;
+	s=arc-20240116; t=1750175715; c=relaxed/simple;
+	bh=QS3WWtsOWzB7j1aB6vaLLhaFVzfCUBnxDdEvW9a5dWA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PZ/7uROD229nuS/ZDse0nWDiOzSIheV+GQhhbAoOPL86Rm8Iaksao7IBYmJ4nPdfkZXV7/sEK6MnmXtggc4eMMlw3Xkk1hqR8rK14/LBq24MIW/MxrMk/D6X+dyqi2ugJiL7louJIu6YlT9b5vt6eCJCoMHnEtvTxSbpNSDZC54=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qM3iWzZm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a6Pi5232EJ2jZhvQpyNGemLbo/bL4hpC9rkWN2bFxWcwemJsKWtRsNwW+1wnb4yXRp1DbFr+KSdbIbGXimVUs3ObHEWVynXtJcaQ0DkIcRBI7xoGkf42VBf0uE+MuvIoItSf7CxCcOpBL5PaV5jvBGZ1RzA14vT7rLga2FLGDj8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YXHVs6gX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qM3iWzZm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F905C4CEE3;
-	Tue, 17 Jun 2025 15:55:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YXHVs6gX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01C6DC4CEE3;
+	Tue, 17 Jun 2025 15:55:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175710;
-	bh=FfZW0Jv0Bs/jKdwdR0PYysYWcr2z9QbDGjlKwuCSv9I=;
+	s=korg; t=1750175715;
+	bh=QS3WWtsOWzB7j1aB6vaLLhaFVzfCUBnxDdEvW9a5dWA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qM3iWzZmPKyvv8Mj+GdnbpkPTkUhc+e4P+EQ6Nb0b8u01/YDbnJNZssy0tV7rpnM1
-	 Yw0xS5WWo7GpI/HlvQC/DT+UJLUJEbl6LDjSKV4ROt5LOjTUoBWWWtzXnycj50GdCM
-	 K+JK+gs58E7RveL9joNKsO6U73AFLHIRleXq7Nws=
+	b=YXHVs6gX0s6Wbk9orTZhr6PwK3EINAWqe3G4TvezPyvEX46NF9Kf+W1rhXQlHV92g
+	 YrYtP4IPq+6PzFcrQkGUM4vKQsSRg1z39tI1n8kwRBo+tRhBFkM5dUjsWmYim3xlNc
+	 PKtfxRugf8mkAX1BqXFfhrIO740THk+WRy61trUw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Wiepert <jonathan.wiepert@gmail.com>,
+	Sagarika Sharma <sharmasagarika@google.com>,
+	Minh-Anh Nguyen <minhanhdn@google.com>,
+	YiFei Zhu <zhuyifei@google.com>,
 	Andrii Nakryiko <andrii@kernel.org>,
-	Mykyta Yatsenko <mykyta.yatsenko5@gmail.com>,
+	Quentin Monnet <qmo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 138/512] Use thread-safe function pointer in libbpf_print
-Date: Tue, 17 Jun 2025 17:21:44 +0200
-Message-ID: <20250617152425.192282393@linuxfoundation.org>
+Subject: [PATCH 6.12 156/512] bpftool: Fix regression of "bpftool cgroup tree" EINVAL on older kernels
+Date: Tue, 17 Jun 2025 17:22:02 +0200
+Message-ID: <20250617152425.929259868@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
 References: <20250617152419.512865572@linuxfoundation.org>
@@ -52,37 +54,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonathan Wiepert <jonathan.wiepert@gmail.com>
+From: YiFei Zhu <zhuyifei@google.com>
 
-[ Upstream commit 91dbac4076537b464639953c055c460d2bdfc7ea ]
+[ Upstream commit 43745d11bfd9683abdf08ad7a5cc403d6a9ffd15 ]
 
-This patch fixes a thread safety bug where libbpf_print uses the
-global variable storing the print function pointer rather than the local
-variable that had the print function set via __atomic_load_n.
+If cgroup_has_attached_progs queries an attach type not supported
+by the running kernel, due to the kernel being older than the bpftool
+build, it would encounter an -EINVAL from BPF_PROG_QUERY syscall.
 
-Fixes: f1cb927cdb62 ("libbpf: Ensure print callback usage is thread-safe")
-Signed-off-by: Jonathan Wiepert <jonathan.wiepert@gmail.com>
+Prior to commit 98b303c9bf05 ("bpftool: Query only cgroup-related
+attach types"), this EINVAL would be ignored by the function, allowing
+the function to only consider supported attach types. The commit
+changed so that, instead of querying all attach types, only attach
+types from the array `cgroup_attach_types` is queried. The assumption
+is that because these are only cgroup attach types, they should all
+be supported. Unfortunately this assumption may be false when the
+kernel is older than the bpftool build, where the attach types queried
+by bpftool is not yet implemented in the kernel. This would result in
+errors such as:
+
+  $ bpftool cgroup tree
+  CgroupPath
+  ID       AttachType      AttachFlags     Name
+  Error: can't query bpf programs attached to /sys/fs/cgroup: Invalid argument
+
+This patch restores the logic of ignoring EINVAL from prior to that patch.
+
+Fixes: 98b303c9bf05 ("bpftool: Query only cgroup-related attach types")
+Reported-by: Sagarika Sharma <sharmasagarika@google.com>
+Reported-by: Minh-Anh Nguyen <minhanhdn@google.com>
+Signed-off-by: YiFei Zhu <zhuyifei@google.com>
 Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Acked-by: Mykyta Yatsenko <mykyta.yatsenko5@gmail.com>
-Link: https://lore.kernel.org/bpf/20250424221457.793068-1-jonathan.wiepert@gmail.com
+Acked-by: Quentin Monnet <qmo@kernel.org>
+Link: https://lore.kernel.org/bpf/20250428211536.1651456-1-zhuyifei@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/libbpf.c | 2 +-
+ tools/bpf/bpftool/cgroup.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
-index c6eceae4d6ff6..bb24f6bac2073 100644
---- a/tools/lib/bpf/libbpf.c
-+++ b/tools/lib/bpf/libbpf.c
-@@ -285,7 +285,7 @@ void libbpf_print(enum libbpf_print_level level, const char *format, ...)
- 	old_errno = errno;
+diff --git a/tools/bpf/bpftool/cgroup.c b/tools/bpf/bpftool/cgroup.c
+index 9af426d432993..afab728468bf6 100644
+--- a/tools/bpf/bpftool/cgroup.c
++++ b/tools/bpf/bpftool/cgroup.c
+@@ -221,7 +221,7 @@ static int cgroup_has_attached_progs(int cgroup_fd)
+ 	for (i = 0; i < ARRAY_SIZE(cgroup_attach_types); i++) {
+ 		int count = count_attached_bpf_progs(cgroup_fd, cgroup_attach_types[i]);
  
- 	va_start(args, format);
--	__libbpf_pr(level, format, args);
-+	print_fn(level, format, args);
- 	va_end(args);
+-		if (count < 0)
++		if (count < 0 && errno != EINVAL)
+ 			return -1;
  
- 	errno = old_errno;
+ 		if (count > 0) {
 -- 
 2.39.5
 
