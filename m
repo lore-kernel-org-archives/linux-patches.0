@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E38D92EF2AC;
-	Tue, 17 Jun 2025 15:54:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4FC42EF657;
+	Tue, 17 Jun 2025 15:54:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175643; cv=none; b=um8I45z8kNCmFTOHJBLZYCax4zYJuvg+KwVLnAMpv1fbUFRqI/gISb83/PQpp+oFkqIpuVKzD6iqXDivtN+MEg5dfBSg9q78Nkos6oL3/ht2z3pgIo+baKXUc2GBnIRynQxoCXwaUzkPRWftRixSIu+4eycDxYw5ay4bncTtuuo=
+	t=1750175646; cv=none; b=jHkBLoW3hP2ey/GgOrUaGJ4IzFXbHVizfpOkg3pGFTykg+2gytpxhakKa+RUTL2ElkohPIQBpKBsh7xnwX18ul8O4JuC5RhDPrHJLm71elVlzj+lyePH0EDN2rCNSYeR9mwY9hHSYk6ZoTfbIT3cVkS4eL8opab2LJZuPzTCWIs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175643; c=relaxed/simple;
-	bh=pCLxBwfFsdDLYDtiZ/dA1poSUugIKpVKqABoVjdtaWU=;
+	s=arc-20240116; t=1750175646; c=relaxed/simple;
+	bh=cYOty/x+VNZHPTkVCQbrSmk7fAqIRDHS5xyZF8+fMSo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VUqep4GEy3oGmLMpq5meMPAwlzUpfjyabSh0RCOXtLZxJENHWx+MJ2EBtDfkFs6f6vetKALrjEShZyW7V7vyI4I4wGNX1Fa+2Mw40mQP1TfFE2s2u0QaJVKgWZbzcGzbCpw0jBXsT+8U5sy19zHCdXp/hTLRpaf6c8OEneXPV7A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uJe1xN8H; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IENIs41Hm5WBtgVScyVwiaE0JP2FELjDMDVqSgb5wc+53+qu7FZkKj8cYTpLunyLxdNDf0MJNK524LFR3DTalQ47KTRMFhs8uE4vMA7ff/W/eIZ4TD4K6naEuIuRQqy+hckzmrGthr3JKiBEpOPZ/UrYvyvJj7uAGoFXn0Ltp7Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M2O9btZG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uJe1xN8H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 295B7C4CEE7;
-	Tue, 17 Jun 2025 15:54:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M2O9btZG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7845FC4CEE3;
+	Tue, 17 Jun 2025 15:54:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175642;
-	bh=pCLxBwfFsdDLYDtiZ/dA1poSUugIKpVKqABoVjdtaWU=;
+	s=korg; t=1750175645;
+	bh=cYOty/x+VNZHPTkVCQbrSmk7fAqIRDHS5xyZF8+fMSo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uJe1xN8HZFvUqBqY4XSQ0dNuhIISkRGZ0DGLxWPU3etQBfkze4E8wRGHQaOqTTzOs
-	 d6L01+U/fRfbjSCUaq5sudR4UFtpTKbaEOnJDOyqJDIDFXUg4QP+QK/L8FrzkVA3lW
-	 Byig+UvLLzZiy/Vr5Bb+hPUBO3aBTGEOChADKo7Y=
+	b=M2O9btZG/ThYfKBqHMO9x8OA31C8+6e8i0Y6tpjU0dHSLZJgfXC2/hs7nw2AnIAVS
+	 I9hDWlC7lPZ48Q2jYFXwT+m/m90EVj8PbMgp4gmNbHuVl8XqUurIdYJbk7nWjRVOd8
+	 fwqgBH+FE06h3E0l+HNsFJhtJ8+1mot9K5P97BQ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Dr. David Alan Gilbert" <linux@treblig.org>,
-	Mark Brown <broonie@kernel.org>,
-	WangYuli <wangyuli@uniontech.com>,
-	Kees Cook <kees@kernel.org>,
+	Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>,
+	Maciej Falkowski <maciej.falkowski@linux.intel.com>,
+	Lizhi Hou <lizhi.hou@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 196/356] randstruct: gcc-plugin: Remove bogus void member
-Date: Tue, 17 Jun 2025 17:25:11 +0200
-Message-ID: <20250617152346.105748617@linuxfoundation.org>
+Subject: [PATCH 6.15 109/780] accel/amdxdna: Fix incorrect size of ERT_START_NPU commands
+Date: Tue, 17 Jun 2025 17:16:57 +0200
+Message-ID: <20250617152455.946817997@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-References: <20250617152338.212798615@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,121 +46,89 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kees Cook <kees@kernel.org>
+From: Lizhi Hou <lizhi.hou@amd.com>
 
-[ Upstream commit e136a4062174a9a8d1c1447ca040ea81accfa6a8 ]
+[ Upstream commit 6c161732ea6467c6dea0c35810ca8e8d1ae135f1 ]
 
-When building the randomized replacement tree of struct members, the
-randstruct GCC plugin would insert, as the first member, a 0-sized void
-member. This appears as though it was done to catch non-designated
-("unnamed") static initializers, which wouldn't be stable since they
-depend on the original struct layout order.
+When multiple ERT_START_NPU commands are combined in one buffer, the
+buffer size calculation is incorrect. Also, the condition to make sure
+the buffer size is not beyond 4K is also fixed.
 
-This was accomplished by having the side-effect of the "void member"
-tripping an assert in GCC internals (count_type_elements) if the member
-list ever needed to be counted (e.g. for figuring out the order of members
-during a non-designated initialization), which would catch impossible type
-(void) in the struct:
-
-security/landlock/fs.c: In function ‘hook_file_ioctl_common’:
-security/landlock/fs.c:1745:61: internal compiler error: in count_type_elements, at expr.cc:7075
- 1745 |                         .u.op = &(struct lsm_ioctlop_audit) {
-      |                                                             ^
-
-static HOST_WIDE_INT
-count_type_elements (const_tree type, bool for_ctor_p)
-{
-  switch (TREE_CODE (type))
-...
-    case VOID_TYPE:
-    default:
-      gcc_unreachable ();
-    }
-}
-
-However this is a redundant safety measure since randstruct uses the
-__designated_initializer attribute both internally and within the
-__randomized_layout attribute macro so that this would be enforced
-by the compiler directly even when randstruct was not enabled (via
--Wdesignated-init).
-
-A recent change in Landlock ended up tripping the same member counting
-routine when using a full-struct copy initializer as part of an anonymous
-initializer. This, however, is a false positive as the initializer is
-copying between identical structs (and hence identical layouts). The
-"path" member is "struct path", a randomized struct, and is being copied
-to from another "struct path", the "f_path" member:
-
-        landlock_log_denial(landlock_cred(file->f_cred), &(struct landlock_request) {
-                .type = LANDLOCK_REQUEST_FS_ACCESS,
-                .audit = {
-                        .type = LSM_AUDIT_DATA_IOCTL_OP,
-                        .u.op = &(struct lsm_ioctlop_audit) {
-                                .path = file->f_path,
-                                .cmd = cmd,
-                        },
-                },
-	...
-
-As can be seen with the coming randstruct KUnit test, there appears to
-be no behavioral problems with this kind of initialization when the void
-member is removed from the randstruct GCC plugin, so remove it.
-
-Reported-by: "Dr. David Alan Gilbert" <linux@treblig.org>
-Closes: https://lore.kernel.org/lkml/Z_PRaKx7q70MKgCA@gallifrey/
-Reported-by: Mark Brown <broonie@kernel.org>
-Closes: https://lore.kernel.org/lkml/20250407-kbuild-disable-gcc-plugins-v1-1-5d46ae583f5e@kernel.org/
-Reported-by: WangYuli <wangyuli@uniontech.com>
-Closes: https://lore.kernel.org/lkml/337D5D4887277B27+3c677db3-a8b9-47f0-93a4-7809355f1381@uniontech.com/
-Fixes: 313dd1b62921 ("gcc-plugins: Add the randstruct plugin")
-Signed-off-by: Kees Cook <kees@kernel.org>
+Fixes: aac243092b70 ("accel/amdxdna: Add command execution")
+Reviewed-by: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
+Reviewed-by: Maciej Falkowski <maciej.falkowski@linux.intel.com>
+Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>
+Link: https://lore.kernel.org/r/20250409210013.10854-1-lizhi.hou@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/gcc-plugins/randomize_layout_plugin.c | 18 +-----------------
- 1 file changed, 1 insertion(+), 17 deletions(-)
+ drivers/accel/amdxdna/aie2_message.c  |  6 +++---
+ drivers/accel/amdxdna/aie2_msg_priv.h | 10 ++++------
+ 2 files changed, 7 insertions(+), 9 deletions(-)
 
-diff --git a/scripts/gcc-plugins/randomize_layout_plugin.c b/scripts/gcc-plugins/randomize_layout_plugin.c
-index 746ff2d272f25..bb8c6631971db 100644
---- a/scripts/gcc-plugins/randomize_layout_plugin.c
-+++ b/scripts/gcc-plugins/randomize_layout_plugin.c
-@@ -348,29 +348,13 @@ static int relayout_struct(tree type)
+diff --git a/drivers/accel/amdxdna/aie2_message.c b/drivers/accel/amdxdna/aie2_message.c
+index bf4219e32cc19..82412eec9a4b8 100644
+--- a/drivers/accel/amdxdna/aie2_message.c
++++ b/drivers/accel/amdxdna/aie2_message.c
+@@ -525,7 +525,7 @@ aie2_cmdlist_fill_one_slot_cf(void *cmd_buf, u32 offset,
+ 	if (!payload)
+ 		return -EINVAL;
  
- 	shuffle(type, (tree *)newtree, shuffle_length);
+-	if (!slot_cf_has_space(offset, payload_len))
++	if (!slot_has_space(*buf, offset, payload_len))
+ 		return -ENOSPC;
  
--	/*
--	 * set up a bogus anonymous struct field designed to error out on unnamed struct initializers
--	 * as gcc provides no other way to detect such code
--	 */
--	list = make_node(FIELD_DECL);
--	TREE_CHAIN(list) = newtree[0];
--	TREE_TYPE(list) = void_type_node;
--	DECL_SIZE(list) = bitsize_zero_node;
--	DECL_NONADDRESSABLE_P(list) = 1;
--	DECL_FIELD_BIT_OFFSET(list) = bitsize_zero_node;
--	DECL_SIZE_UNIT(list) = size_zero_node;
--	DECL_FIELD_OFFSET(list) = size_zero_node;
--	DECL_CONTEXT(list) = type;
--	// to satisfy the constify plugin
--	TREE_READONLY(list) = 1;
--
- 	for (i = 0; i < num_fields - 1; i++)
- 		TREE_CHAIN(newtree[i]) = newtree[i+1];
- 	TREE_CHAIN(newtree[num_fields - 1]) = NULL_TREE;
+ 	buf->cu_idx = cu_idx;
+@@ -558,7 +558,7 @@ aie2_cmdlist_fill_one_slot_dpu(void *cmd_buf, u32 offset,
+ 	if (payload_len < sizeof(*sn) || arg_sz > MAX_DPU_ARGS_SIZE)
+ 		return -EINVAL;
  
- 	main_variant = TYPE_MAIN_VARIANT(type);
- 	for (variant = main_variant; variant; variant = TYPE_NEXT_VARIANT(variant)) {
--		TYPE_FIELDS(variant) = list;
-+		TYPE_FIELDS(variant) = newtree[0];
- 		TYPE_ATTRIBUTES(variant) = copy_list(TYPE_ATTRIBUTES(variant));
- 		TYPE_ATTRIBUTES(variant) = tree_cons(get_identifier("randomize_performed"), NULL_TREE, TYPE_ATTRIBUTES(variant));
- 		TYPE_ATTRIBUTES(variant) = tree_cons(get_identifier("designated_init"), NULL_TREE, TYPE_ATTRIBUTES(variant));
+-	if (!slot_dpu_has_space(offset, arg_sz))
++	if (!slot_has_space(*buf, offset, arg_sz))
+ 		return -ENOSPC;
+ 
+ 	buf->inst_buf_addr = sn->buffer;
+@@ -569,7 +569,7 @@ aie2_cmdlist_fill_one_slot_dpu(void *cmd_buf, u32 offset,
+ 	memcpy(buf->args, sn->prop_args, arg_sz);
+ 
+ 	/* Accurate buf size to hint firmware to do necessary copy */
+-	*size += sizeof(*buf) + arg_sz;
++	*size = sizeof(*buf) + arg_sz;
+ 	return 0;
+ }
+ 
+diff --git a/drivers/accel/amdxdna/aie2_msg_priv.h b/drivers/accel/amdxdna/aie2_msg_priv.h
+index 4e02e744b470e..6df9065b13f68 100644
+--- a/drivers/accel/amdxdna/aie2_msg_priv.h
++++ b/drivers/accel/amdxdna/aie2_msg_priv.h
+@@ -319,18 +319,16 @@ struct async_event_msg_resp {
+ } __packed;
+ 
+ #define MAX_CHAIN_CMDBUF_SIZE SZ_4K
+-#define slot_cf_has_space(offset, payload_size) \
+-	(MAX_CHAIN_CMDBUF_SIZE - ((offset) + (payload_size)) > \
+-	 offsetof(struct cmd_chain_slot_execbuf_cf, args[0]))
++#define slot_has_space(slot, offset, payload_size)		\
++	(MAX_CHAIN_CMDBUF_SIZE >= (offset) + (payload_size) +	\
++	 sizeof(typeof(slot)))
++
+ struct cmd_chain_slot_execbuf_cf {
+ 	__u32 cu_idx;
+ 	__u32 arg_cnt;
+ 	__u32 args[] __counted_by(arg_cnt);
+ };
+ 
+-#define slot_dpu_has_space(offset, payload_size) \
+-	(MAX_CHAIN_CMDBUF_SIZE - ((offset) + (payload_size)) > \
+-	 offsetof(struct cmd_chain_slot_dpu, args[0]))
+ struct cmd_chain_slot_dpu {
+ 	__u64 inst_buf_addr;
+ 	__u32 inst_size;
 -- 
 2.39.5
 
