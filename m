@@ -1,42 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D2412ED87D;
-	Tue, 17 Jun 2025 16:02:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CAF32E92BC;
+	Tue, 17 Jun 2025 16:02:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750176157; cv=none; b=Z8BIN/Pk8obFZWZwxDfzS/uJm89Pl2QlCdYUMHwospfn25aQfbMBaD03GXqkTZTitg147tp3VSqSofbQdruzm22lKyMLCDggXw8OGHeVtvfwrWqMQoXpOW1eRyo92/5t1aUtM/N/rCLz97HAAW+KAMZ0atw8tdrZ8EQvJbPY4xQ=
+	t=1750176160; cv=none; b=Wc/WLDnlyqjGuJ0S3Gi2jCVG9JqpdjmQwfipAQtpUQkPtad3pD7l2/zRApCcE7AeQZq3l9X35olvMjCu/ZzqsEf7W0sSNvM6RegQQ81fZ8AnDCN8mkH+hjH361sjFBNicg83YoWXjCYZpeGa+ugm4Ej1jOGXMsYMEvSMkAarGq0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750176157; c=relaxed/simple;
-	bh=YUEFEYYjk6Y2X9IbN7hIMTvyiyULxuvttbE7CFlVa+8=;
+	s=arc-20240116; t=1750176160; c=relaxed/simple;
+	bh=cqJ6KEVFCOIMrkbHhRa47mSLVG7uCywsCHJU5/hQz7g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UW1KQ3MZQMhxoHzSJl4EVR0RUSyf2JzovYG3673IGpoVKSKg3ObMwkWYlkztRGhbeeGk9zpw9UsB51tdJ8yIOrEGtQfQd/xvDk+WjxOL91TU9aAXZVWPPqiqMX8bpttEy+9EB4uprpvXBlu+7UKfP+vPtKY+k6rwbnoTiOBcWjc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IBvnhrdz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NPLhqXdC1XB27ajFqvneKI9mm3brQqMfa0Pre07mDwGXL1X6U5m7IZgYDaiCIVMcA1UUbErLvj0IajG+80zqJw0i5xUYSkP+aNlxkrLUNWw+SNgEVWteq2tban99/lcuN3zE2lhqo8Wlr8ZQY0ZvoP9yxk3gp03fTQFPSgJkI9E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XV/n43Or; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IBvnhrdz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97FBDC4CEE3;
-	Tue, 17 Jun 2025 16:02:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XV/n43Or"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBB81C4CEE3;
+	Tue, 17 Jun 2025 16:02:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750176157;
-	bh=YUEFEYYjk6Y2X9IbN7hIMTvyiyULxuvttbE7CFlVa+8=;
+	s=korg; t=1750176160;
+	bh=cqJ6KEVFCOIMrkbHhRa47mSLVG7uCywsCHJU5/hQz7g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IBvnhrdzWKq21ikkhYE1SBYtGfJCLmx8utKOQGsxNHnYblWhSLX5ORW/gwVxUluet
-	 +cAo65k9BmVSFk1lrx1ckLJRwfd2cQsW6d2ltWFaYrocblwbLhxMdV+LL+e7GLgXkz
-	 E2EDjR3xp/rUtC3zUBIzs6ml0aooiFwSEVp1+s+4=
+	b=XV/n43OrGqHTUb9hFfcJJ8ndGK3GNsWBkV0yarHrvkqSDj0mHKhCK1I3VqoIVR2rY
+	 f7MlOISxbXB39/Zy2LDTgZjSEc+kSj5wIpg1XsMLiS7jmUh58WHFDJdJU8c4PKVH3B
+	 IsnOP3oHWiiHZ4tAYFtvOGxy5SNc9q1irdBSDK04=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Jocelyn Falempe <jfalempe@redhat.com>,
-	Javier Martinez Canillas <javierm@redhat.com>,
+	Jack Morgenstein <jackm@nvidia.com>,
+	Feng Liu <feliu@nvidia.com>,
+	Vlad Dumitrescu <vdumitrescu@nvidia.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Sharath Srinivasan <sharath.srinivasan@oracle.com>,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 160/780] drm/panic: Use a decimal fifo to avoid u64 by u64 divide
-Date: Tue, 17 Jun 2025 17:17:48 +0200
-Message-ID: <20250617152458.007540079@linuxfoundation.org>
+Subject: [PATCH 6.12 202/512] RDMA/cma: Fix hang when cma_netevent_callback fails to queue_work
+Date: Tue, 17 Jun 2025 17:22:48 +0200
+Message-ID: <20250617152427.817907236@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,132 +52,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jocelyn Falempe <jfalempe@redhat.com>
+From: Jack Morgenstein <jackm@nvidia.com>
 
-[ Upstream commit 675008f196ca5c8d8413204e861cc2a2238581aa ]
+[ Upstream commit 92a251c3df8ea1991cd9fe00f1ab0cfce18d7711 ]
 
-On 32bits ARM, u64/u64 is not supported [1], so change the algorithm
-to use a simple fifo with decimal digits as u8 instead.
-This is slower but should compile on all architecture.
+The cited commit fixed a crash when cma_netevent_callback was called for
+a cma_id while work on that id from a previous call had not yet started.
+The work item was re-initialized in the second call, which corrupted the
+work item currently in the work queue.
 
-Link: https://lore.kernel.org/dri-devel/CANiq72ke45eOwckMhWHvmwxc03dxr4rnxxKvx+HvWdBLopZfrQ@mail.gmail.com/ [1]
-Reported-by: Miguel Ojeda <ojeda@kernel.org>
-Closes: https://lore.kernel.org/dri-devel/CANiq72ke45eOwckMhWHvmwxc03dxr4rnxxKvx+HvWdBLopZfrQ@mail.gmail.com/
-Fixes: ccb8ce526807 ("ARM: 9441/1: rust: Enable Rust support for ARMv7")
-Signed-off-by: Jocelyn Falempe <jfalempe@redhat.com>
-Link: https://lore.kernel.org/r/20250418165059.560503-1-jfalempe@redhat.com
-Acked-by: Javier Martinez Canillas <javierm@redhat.com>
+However, it left a problem when queue_work fails (because the item is
+still pending in the work queue from a previous call). In this case,
+cma_id_put (which is called in the work handler) is therefore not
+called. This results in a userspace process hang (zombie process).
+
+Fix this by calling cma_id_put() if queue_work fails.
+
+Fixes: 45f5dcdd0497 ("RDMA/cma: Fix workqueue crash in cma_netevent_work_handler")
+Link: https://patch.msgid.link/r/4f3640b501e48d0166f312a64fdadf72b059bd04.1747827103.git.leon@kernel.org
+Signed-off-by: Jack Morgenstein <jackm@nvidia.com>
+Signed-off-by: Feng Liu <feliu@nvidia.com>
+Reviewed-by: Vlad Dumitrescu <vdumitrescu@nvidia.com>
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Reviewed-by: Sharath Srinivasan <sharath.srinivasan@oracle.com>
+Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_panic_qr.rs | 71 ++++++++++++++++++++++-----------
- 1 file changed, 48 insertions(+), 23 deletions(-)
+ drivers/infiniband/core/cma.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/drm_panic_qr.rs b/drivers/gpu/drm/drm_panic_qr.rs
-index ba6724aed51c9..de2ddf5dbbd3f 100644
---- a/drivers/gpu/drm/drm_panic_qr.rs
-+++ b/drivers/gpu/drm/drm_panic_qr.rs
-@@ -366,8 +366,48 @@ impl Segment<'_> {
-         SegmentIterator {
-             segment: self,
-             offset: 0,
--            carry: 0,
--            carry_len: 0,
-+            decfifo: Default::default(),
-+        }
-+    }
-+}
-+
-+/// Max fifo size is 17 (max push) + 2 (max remaining)
-+const MAX_FIFO_SIZE: usize = 19;
-+
-+/// A simple Decimal digit FIFO
-+#[derive(Default)]
-+struct DecFifo {
-+    decimals: [u8; MAX_FIFO_SIZE],
-+    len: usize,
-+}
-+
-+impl DecFifo {
-+    fn push(&mut self, data: u64, len: usize) {
-+        let mut chunk = data;
-+        for i in (0..self.len).rev() {
-+            self.decimals[i + len] = self.decimals[i];
-+        }
-+        for i in 0..len {
-+            self.decimals[i] = (chunk % 10) as u8;
-+            chunk /= 10;
-+        }
-+        self.len += len;
-+    }
-+
-+    /// Pop 3 decimal digits from the FIFO
-+    fn pop3(&mut self) -> Option<(u16, usize)> {
-+        if self.len == 0 {
-+            None
-+        } else {
-+            let poplen = 3.min(self.len);
-+            self.len -= poplen;
-+            let mut out = 0;
-+            let mut exp = 1;
-+            for i in 0..poplen {
-+                out += self.decimals[self.len + i] as u16 * exp;
-+                exp *= 10;
-+            }
-+            Some((out, NUM_CHARS_BITS[poplen]))
-         }
-     }
- }
-@@ -375,8 +415,7 @@ impl Segment<'_> {
- struct SegmentIterator<'a> {
-     segment: &'a Segment<'a>,
-     offset: usize,
--    carry: u64,
--    carry_len: usize,
-+    decfifo: DecFifo,
- }
- 
- impl Iterator for SegmentIterator<'_> {
-@@ -394,31 +433,17 @@ impl Iterator for SegmentIterator<'_> {
-                 }
-             }
-             Segment::Numeric(data) => {
--                if self.carry_len < 3 && self.offset < data.len() {
--                    // If there are less than 3 decimal digits in the carry,
--                    // take the next 7 bytes of input, and add them to the carry.
-+                if self.decfifo.len < 3 && self.offset < data.len() {
-+                    // If there are less than 3 decimal digits in the fifo,
-+                    // take the next 7 bytes of input, and push them to the fifo.
-                     let mut buf = [0u8; 8];
-                     let len = 7.min(data.len() - self.offset);
-                     buf[..len].copy_from_slice(&data[self.offset..self.offset + len]);
-                     let chunk = u64::from_le_bytes(buf);
--                    let pow = u64::pow(10, BYTES_TO_DIGITS[len] as u32);
--                    self.carry = chunk + self.carry * pow;
-+                    self.decfifo.push(chunk, BYTES_TO_DIGITS[len]);
-                     self.offset += len;
--                    self.carry_len += BYTES_TO_DIGITS[len];
--                }
--                match self.carry_len {
--                    0 => None,
--                    len => {
--                        // take the next 3 decimal digits of the carry
--                        // and return 10bits of numeric data.
--                        let out_len = 3.min(len);
--                        self.carry_len -= out_len;
--                        let pow = u64::pow(10, self.carry_len as u32);
--                        let out = (self.carry / pow) as u16;
--                        self.carry %= pow;
--                        Some((out, NUM_CHARS_BITS[out_len]))
--                    }
-                 }
-+                self.decfifo.pop3()
-             }
-         }
-     }
+diff --git a/drivers/infiniband/core/cma.c b/drivers/infiniband/core/cma.c
+index 176d0b3e44887..81bc24a346d37 100644
+--- a/drivers/infiniband/core/cma.c
++++ b/drivers/infiniband/core/cma.c
+@@ -5231,7 +5231,8 @@ static int cma_netevent_callback(struct notifier_block *self,
+ 			   neigh->ha, ETH_ALEN))
+ 			continue;
+ 		cma_id_get(current_id);
+-		queue_work(cma_wq, &current_id->id.net_work);
++		if (!queue_work(cma_wq, &current_id->id.net_work))
++			cma_id_put(current_id);
+ 	}
+ out:
+ 	spin_unlock_irqrestore(&id_table_lock, flags);
 -- 
 2.39.5
 
