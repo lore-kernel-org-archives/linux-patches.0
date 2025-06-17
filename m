@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE261CA4B;
-	Tue, 17 Jun 2025 16:58:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4F3C2FA62E;
+	Tue, 17 Jun 2025 16:58:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750179529; cv=none; b=PsZ9s3S0fA8sH/rPznDwEs7pncsgEnNeGz7w53AFpNrUBsMnrdskW8Ou/LqbYVU8jn1B6MHdOuYIFlJ1H4k8Ndthur/oSlqJfnh1ZF36XIoX/P8CLsJmDi9/yl03BAGZ64V/N6rkUQlw5EbDmJqJCHG4Redw9s7N7PEu2S78tfo=
+	t=1750179532; cv=none; b=RhYVJY87B0OMf486qu5nsHXjJbYAM4lMZy2Jvv1YCOmWzB0TfR5fdzOEg5nXKPuH2bSBC22l5DmbGPvMUboB8FkRb8qsicBjgqC+3T2JPGORoZMymgvCsx6r5dmhBgW/wD2584xl0GbBciOhK0PMCTfBCaFdRLWNLvzJQNghZJA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750179529; c=relaxed/simple;
-	bh=tHsujHJ0ue3jrlgcx5HQScAPb3Eauy3uL4jPYuLKXiM=;
+	s=arc-20240116; t=1750179532; c=relaxed/simple;
+	bh=BJc40qBk2rQrOJWXKxS6n4gRX8RxKiW1ciLYqErwHbc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eszTlGdCYZrSJzkNVw3iVLAR6Fk+hEyUcE99d/TQVXiAlVTlDBtOhUQQXP1rpaDLt+RDK55ddAxgsNh8Nmg8OQcxdWPolxJNVN4J3XYc++KfpLL+s3UR0nPnBglLPqUYR5b4mTabvbzgMIy+p3jtQRyqrc8wg3yRSw3RV3oUSrM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=utQZlmUb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AEFhFdF3fezKIUZcDcSB46hSsOfbxGLkO93Vs7GD/zryIgn7KQm2kTczARi7dH0Ss3tFn2OINwpihqPplJNEbzX3y3randgh/ypqRrJOW+Hx0W86Y/MYRGPjroKD886F5wTrPL2q6l6QzahgwGlw1aZpFLvzqU6QmLOen+9Dpjc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ajfU/v83; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="utQZlmUb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD1D9C4CEE3;
-	Tue, 17 Jun 2025 16:58:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ajfU/v83"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C350C4CEE3;
+	Tue, 17 Jun 2025 16:58:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750179529;
-	bh=tHsujHJ0ue3jrlgcx5HQScAPb3Eauy3uL4jPYuLKXiM=;
+	s=korg; t=1750179532;
+	bh=BJc40qBk2rQrOJWXKxS6n4gRX8RxKiW1ciLYqErwHbc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=utQZlmUb9SX5uCzTNBQ0Ff3fE9kI3B+zxVEJcNSHdv/GGNgh+AttyseGNhXtaAe9l
-	 WqW3WHaEmZdPHy55Ex/et+cO3Gli4P4gS3qEu5KrTzRlDEEH6wrFDMD9xZPDD7Jfrw
-	 zClmDl/EXAzzSurGPK7Hi70dQqvQwBNHYsxKl0yM=
+	b=ajfU/v83dyyHNAYoq9YmtDVH8LkFmt/VqDfkcpdfd4uzyB3KPpIKB2X1sOdU3Qexv
+	 QFHGNzPEjsxvRbJAxTXCSEpTug35Yrib+CZmridykR1WLcj6QbveBPMmxNJ9kyvjux
+	 F0X6jVCHuSaL51FopHqBBeGlINvH6iEGM6xgCG2M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Yuan <me@yhndnzj.com>,
-	Christian Brauner <brauner@kernel.org>,
-	Luca Boccassi <luca.boccassi@gmail.com>
-Subject: [PATCH 6.15 743/780] pidfs: never refuse ppid == 0 in PIDFD_GET_INFO
-Date: Tue, 17 Jun 2025 17:27:31 +0200
-Message-ID: <20250617152521.759063684@linuxfoundation.org>
+	Bart Van Assche <bvanassche@acm.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.15 734/780] block: dont use submit_bio_noacct_nocheck in blk_zone_wplug_bio_work
+Date: Tue, 17 Jun 2025 17:27:22 +0200
+Message-ID: <20250617152521.394761805@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
 References: <20250617152451.485330293@linuxfoundation.org>
@@ -51,42 +54,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mike Yuan <me@yhndnzj.com>
+From: Christoph Hellwig <hch@lst.de>
 
-commit b55eb6eb2a7427428c59b293a0900131fc849595 upstream.
+[ Upstream commit cf625013d8741c01407bbb4a60c111b61b9fa69d ]
 
-In systemd we spotted an issue after switching to ioctl(PIDFD_GET_INFO)
-for obtaining pid number the pidfd refers to, that for processes
-with a parent from outer pidns PIDFD_GET_INFO unexpectedly yields
--ESRCH [1]. It turned out that there's an arbitrary check blocking
-this, which is not really sensible given getppid() happily returns
-0 for such processes. Just drop the spurious check and userspace
-ought to handle ppid == 0 properly everywhere.
+Bios queued up in the zone write plug have already gone through all all
+preparation in the submit_bio path, including the freeze protection.
 
-[1] https://github.com/systemd/systemd/issues/37715
+Submitting them through submit_bio_noacct_nocheck duplicates the work
+and can can cause deadlocks when freezing a queue with pending bio
+write plugs.
 
-Fixes: cdda1f26e74b ("pidfd: add ioctl to retrieve pid info")
-Signed-off-by: Mike Yuan <me@yhndnzj.com>
-Link: https://lore.kernel.org/20250604150238.42664-1-me@yhndnzj.com
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Luca Boccassi <luca.boccassi@gmail.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Go straight to ->submit_bio or blk_mq_submit_bio to bypass the
+superfluous extra freeze protection and checks.
+
+Fixes: 9b1ce7f0c6f8 ("block: Implement zone append emulation")
+Reported-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Tested-by: Damien Le Moal <dlemoal@kernel.org>
+Link: https://lore.kernel.org/r/20250611044416.2351850-1-hch@lst.de
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/pidfs.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ block/blk-zoned.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/fs/pidfs.c
-+++ b/fs/pidfs.c
-@@ -336,7 +336,7 @@ static long pidfd_info(struct file *file
- 	kinfo.pid = task_pid_vnr(task);
- 	kinfo.mask |= PIDFD_INFO_PID;
+diff --git a/block/blk-zoned.c b/block/blk-zoned.c
+index 8f15d1aa6eb89..45c91016cef38 100644
+--- a/block/blk-zoned.c
++++ b/block/blk-zoned.c
+@@ -1306,7 +1306,6 @@ static void blk_zone_wplug_bio_work(struct work_struct *work)
+ 	spin_unlock_irqrestore(&zwplug->lock, flags);
  
--	if (kinfo.pid == 0 || kinfo.tgid == 0 || (kinfo.ppid == 0 && kinfo.pid != 1))
-+	if (kinfo.pid == 0 || kinfo.tgid == 0)
- 		return -ESRCH;
+ 	bdev = bio->bi_bdev;
+-	submit_bio_noacct_nocheck(bio);
  
- copy_out:
+ 	/*
+ 	 * blk-mq devices will reuse the extra reference on the request queue
+@@ -1314,8 +1313,12 @@ static void blk_zone_wplug_bio_work(struct work_struct *work)
+ 	 * path for BIO-based devices will not do that. So drop this extra
+ 	 * reference here.
+ 	 */
+-	if (bdev_test_flag(bdev, BD_HAS_SUBMIT_BIO))
++	if (bdev_test_flag(bdev, BD_HAS_SUBMIT_BIO)) {
++		bdev->bd_disk->fops->submit_bio(bio);
+ 		blk_queue_exit(bdev->bd_disk->queue);
++	} else {
++		blk_mq_submit_bio(bio);
++	}
+ 
+ put_zwplug:
+ 	/* Drop the reference we took in disk_zone_wplug_schedule_bio_work(). */
+-- 
+2.39.5
+
 
 
