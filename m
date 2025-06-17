@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E63632EB5AB;
-	Tue, 17 Jun 2025 15:40:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 178842E9753;
+	Tue, 17 Jun 2025 15:40:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750174824; cv=none; b=htjClFQgeH9iIs8DytByfYmGSG/F6NSrQHj8wn9J6oY2nOcu+yu+5t8ppoEtnlP99JMCu3scKVxsurLZ6Lhum68mHrFrcxW8eVvdAx3YyONhcEZ5W5Gom6CEFCwYzuIezsPo+OTwY0o/ZZziN50fDnDm7c76jfTv+GUPLMYB1D0=
+	t=1750174827; cv=none; b=pqPDENvdUDq5VB2zcLxOGDGayhFny6RzZ0p9/I0NAvVA6vPKwAc2jWgrDeQp50UQ7Wv3Mj6lcTgtEBO9bjhfWUVBFBxqJQIv9Ns3M3EcBIKdt9IBh/3VY8qe/10YwSSy+lFKUcnwyAOixTYnCTTlX7kdaqc6oHjwJV1MEzvPyT4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750174824; c=relaxed/simple;
-	bh=h1tAG1q7Xcsghly2q3v90Wyowi5VvGLdbSxgpQcpAzE=;
+	s=arc-20240116; t=1750174827; c=relaxed/simple;
+	bh=XVWQ/TWRkxOiisminme+dVf9lzMEinWz6B+Ki8Z1Kd4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ruLAEh0xym6qxCqPo/yQd+zLEth9Rg65g9Cb52Eavt1xhDRH/p+W+JKzn9zCE19AuW4kkRqpdL9J8JPsb46Z0J2gTd4hbB9gNWoyKihrJaF5Orr/CFqdvmKPq+LPsGtXtv535+ICJJa0WBMZ/uztc+IpS1HsZuHCVHlpMcIUAlY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tNkoOPrx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E/yaZmz47KDsPBSr5OFD+qjJcrhmpN8TtQsHW3VEoFY7bsdtR2WSQSx+3Lio77UPfbYbOeX+iQKHIpaUnP8mvU8aHbpkgdTHg6l6f+zemIfW/HGoWYE/hweJUm4WzhcqTrkWA6quQ45sKnHBoVKU5yXEMf3UA8Q/xfgKpxMTdcM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wg7+zM2X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tNkoOPrx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56B6CC4CEE7;
-	Tue, 17 Jun 2025 15:40:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wg7+zM2X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81ECAC4CEE3;
+	Tue, 17 Jun 2025 15:40:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750174823;
-	bh=h1tAG1q7Xcsghly2q3v90Wyowi5VvGLdbSxgpQcpAzE=;
+	s=korg; t=1750174827;
+	bh=XVWQ/TWRkxOiisminme+dVf9lzMEinWz6B+Ki8Z1Kd4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tNkoOPrx/ww6XXgGtUr83h2xcrbooaN5KLmSyU850ScSl/FdtSJgjYSRkVleLWhqW
-	 qAj9aRClExNJqHR3xQ7tojZWn4KsTGw8gwaH/A345WXP3gWheX1um2aik6m6ExfNXo
-	 a4KmcbnreaQojN3uDMOA9H/+ZcTzmivK0xatrgWk=
+	b=wg7+zM2XTO+omNcEvyCERLvyeiUy/CiGz1YfwubHvdcljg3QvYgGFCbxILDZ2j33n
+	 IBK1EAUOztsVGqmxT5ASs7205WW+/WUnGyctRskHPMJg+nC35Km3wtdWdl4I8c0aD5
+	 QcuptQqHKq6MOw27U6+lz1/PV2tZ6ecQ8G2PPOE0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Annie Li <jiayanli@google.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Charles Han <hanchunchao@inspur.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 024/780] x86/microcode/AMD: Do not return error when microcode update is not necessary
-Date: Tue, 17 Jun 2025 17:15:32 +0200
-Message-ID: <20250617152452.493239051@linuxfoundation.org>
+Subject: [PATCH 6.12 064/512] drm/amd/pp: Fix potential NULL pointer dereference in atomctrl_initialize_mc_reg_table
+Date: Tue, 17 Jun 2025 17:20:30 +0200
+Message-ID: <20250617152422.175422044@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,47 +47,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Annie Li <jiayanli@google.com>
+From: Charles Han <hanchunchao@inspur.com>
 
-[ Upstream commit b43dc4ab097859c24e2a6993119c927cffc856aa ]
+[ Upstream commit 820116a39f96bdc7d426c33a804b52f53700a919 ]
 
-After
+The function atomctrl_initialize_mc_reg_table() and
+atomctrl_initialize_mc_reg_table_v2_2() does not check the return
+value of smu_atom_get_data_table(). If smu_atom_get_data_table()
+fails to retrieve vram_info, it returns NULL which is later
+dereferenced.
 
-  6f059e634dcd("x86/microcode: Clarify the late load logic"),
-
-if the load is up-to-date, the AMD side returns UCODE_OK which leads to
-load_late_locked() returning -EBADFD.
-
-Handle UCODE_OK in the switch case to avoid this error.
-
-  [ bp: Massage commit message. ]
-
-Fixes: 6f059e634dcd ("x86/microcode: Clarify the late load logic")
-Signed-off-by: Annie Li <jiayanli@google.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/20250430053424.77438-1-jiayanli@google.com
+Fixes: b3892e2bb519 ("drm/amd/pp: Use atombios api directly in powerplay (v2)")
+Fixes: 5f92b48cf62c ("drm/amd/pm: add mc register table initialization")
+Signed-off-by: Charles Han <hanchunchao@inspur.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cpu/microcode/core.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomctrl.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/arch/x86/kernel/cpu/microcode/core.c b/arch/x86/kernel/cpu/microcode/core.c
-index 079f046ee26d1..e8021d3e58824 100644
---- a/arch/x86/kernel/cpu/microcode/core.c
-+++ b/arch/x86/kernel/cpu/microcode/core.c
-@@ -696,6 +696,8 @@ static int load_late_locked(void)
- 		return load_late_stop_cpus(true);
- 	case UCODE_NFOUND:
- 		return -ENOENT;
-+	case UCODE_OK:
-+		return 0;
- 	default:
- 		return -EBADFD;
- 	}
+diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomctrl.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomctrl.c
+index 5c54c9fd44619..a76fc15a55f5b 100644
+--- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomctrl.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomctrl.c
+@@ -144,6 +144,10 @@ int atomctrl_initialize_mc_reg_table(
+ 	vram_info = (ATOM_VRAM_INFO_HEADER_V2_1 *)
+ 		smu_atom_get_data_table(hwmgr->adev,
+ 				GetIndexIntoMasterTable(DATA, VRAM_Info), &size, &frev, &crev);
++	if (!vram_info) {
++		pr_err("Could not retrieve the VramInfo table!");
++		return -EINVAL;
++	}
+ 
+ 	if (module_index >= vram_info->ucNumOfVRAMModule) {
+ 		pr_err("Invalid VramInfo table.");
+@@ -181,6 +185,10 @@ int atomctrl_initialize_mc_reg_table_v2_2(
+ 	vram_info = (ATOM_VRAM_INFO_HEADER_V2_2 *)
+ 		smu_atom_get_data_table(hwmgr->adev,
+ 				GetIndexIntoMasterTable(DATA, VRAM_Info), &size, &frev, &crev);
++	if (!vram_info) {
++		pr_err("Could not retrieve the VramInfo table!");
++		return -EINVAL;
++	}
+ 
+ 	if (module_index >= vram_info->ucNumOfVRAMModule) {
+ 		pr_err("Invalid VramInfo table.");
 -- 
 2.39.5
 
