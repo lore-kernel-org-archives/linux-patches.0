@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5F018F54;
-	Tue, 17 Jun 2025 16:44:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 054F38F54;
+	Tue, 17 Jun 2025 16:44:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750178678; cv=none; b=q7nbpvoGr1ouL7nHo0HDHV1C+/zCHN9b7nSUTwHMON/KRAfATdN/xwELaGeRn6HvO9AJrzN14p8DYvlkBeUjBMcdXN5vTWDISpWJwNh7HSNmcB0wDcGe50Ll6+c0oTvvvyYQ7p2uOcTmOeBTdBSk6IXKtdx/p6fMaubKKCsX9oU=
+	t=1750178682; cv=none; b=L4zX+w8ZhHa/pAJrU/b4wEWMlt5gnQ6bwwTyJfLoBZt1t1KEA/TsuBqzFQYzG/qOokuUIxs31QZxKcHM3/xCcvDYQp5y0+x26YZ5JWT1NMuBHr/x8qdnFfUyeX549LeuG87N2EjJ+rAVQ9ozixF8iru6bGFJP0FtlBMe/VfCmWg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750178678; c=relaxed/simple;
-	bh=/tj+tRhDkWDj+jcK4WHT0FHERCG6od9/H8eDWRgnSU8=;
+	s=arc-20240116; t=1750178682; c=relaxed/simple;
+	bh=9Z+XW2vy53Qr1Sj7gucB5nEwTNxkm6KIJ0UemzABZwk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qne+K1frcTKMov3F72e2nToWC4qIO8LoZeEqkTaqUq3Al7iuh2hYUsRbiEiPwwGLhqAtO2QzSzRQ90tgSJMxJoY08yYCm0S7mGTTdcWNz18e0q9NwX+kqQK0X5aCmppeaF86tjQKVR1Td37VQQWDb+xxrZFz54xT1oTFTEv3EBw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NCaxfNrv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=WnZlfo/FyNtirU1X+seQIRf53z0etAOSkLkB/QbzoikAuup3L6uPaTK4ulXWa3QQOY2jCi7cBS+ogkNfKZqFM55YOeHsDD1+iKL2KlXlI2ugOFh+HPtT66/ORWiseWvODQ0Ez3X27XjmS51Z7hBcIFlYYz2TVIarP7a7jTifzdw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rqZkWvOs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NCaxfNrv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25F12C4CEE3;
-	Tue, 17 Jun 2025 16:44:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rqZkWvOs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69FE2C4CEE3;
+	Tue, 17 Jun 2025 16:44:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750178678;
-	bh=/tj+tRhDkWDj+jcK4WHT0FHERCG6od9/H8eDWRgnSU8=;
+	s=korg; t=1750178681;
+	bh=9Z+XW2vy53Qr1Sj7gucB5nEwTNxkm6KIJ0UemzABZwk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NCaxfNrvlnpnkb6UivnfdZCaOF7p57DEAVPQHn4rw6ULy1o2tUpyyyqiGF2fV8yGC
-	 tShkFdj8tPbTatUs/zExcoHzdr4qLWXiuwvsmRoKtHCmL+1QWfDAkqzLEKEY2M00Yf
-	 3oHjZ/hHHt5+zF+h14cBcTKV/54GDjqHaH1+nAug=
+	b=rqZkWvOs8IqHgmswqYGWJouMb2PSI93vlbaQmc6Uti/oonCirExreERjePEbsA7Gv
+	 ArI/iZvUeQJAus4hxKcC4LBJ3+6UIoh+fOOABOe5r6swoOGWPV91Gr5dfsoxQSy882
+	 xynzaxxYu5EFtT4PPEr3tsOXHU+A30A4tHg2xwTc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian Pellegrino <bpellegrino@arka.org>,
-	Sam Winchenbach <swinchenbach@arka.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+	Marcelo Schmitt <marcelo.schmitt@analog.com>,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 521/780] iio: filter: admv8818: Support frequencies >= 2^32
-Date: Tue, 17 Jun 2025 17:23:49 +0200
-Message-ID: <20250617152512.733705927@linuxfoundation.org>
+Subject: [PATCH 6.15 522/780] iio: adc: ad7124: Fix 3dB filter frequency reading
+Date: Tue, 17 Jun 2025 17:23:50 +0200
+Message-ID: <20250617152512.772837592@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
 References: <20250617152451.485330293@linuxfoundation.org>
@@ -46,75 +46,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Brian Pellegrino <bpellegrino@arka.org>
+From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
 
-[ Upstream commit 9016776f1301627de78a633bda7c898425a56572 ]
+[ Upstream commit 8712e4986e7ce42a14c762c4c350f290989986a5 ]
 
-This patch allows writing u64 values to the ADMV8818's high and low-pass
-filter frequencies. It includes the following changes:
+The sinc4 filter has a factor 0.23 between Output Data Rate and f_{3dB}
+and for sinc3 the factor is 0.272 according to the data sheets for
+ad7124-4 (Rev. E.) and ad7124-8 (Rev. F).
 
-- Rejects negative frequencies in admv8818_write_raw.
-- Adds a write_raw_get_fmt function to admv8818's iio_info, returning
-  IIO_VAL_INT_64 for the high and low-pass filter 3dB frequency channels.
-
-Fixes: f34fe888ad05 ("iio:filter:admv8818: add support for ADMV8818")
-Signed-off-by: Brian Pellegrino <bpellegrino@arka.org>
-Signed-off-by: Sam Winchenbach <swinchenbach@arka.org>
-Link: https://patch.msgid.link/20250328174831.227202-7-sam.winchenbach@framepointer.org
+Fixes: cef2760954cf ("iio: adc: ad7124: add 3db filter")
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+Reviewed-by: Marcelo Schmitt <marcelo.schmitt@analog.com>
+Link: https://patch.msgid.link/20250317115247.3735016-6-u.kleine-koenig@baylibre.com
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/filter/admv8818.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ drivers/iio/adc/ad7124.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/iio/filter/admv8818.c b/drivers/iio/filter/admv8818.c
-index 380e119b3cf54..cc8ce0fe74e7c 100644
---- a/drivers/iio/filter/admv8818.c
-+++ b/drivers/iio/filter/admv8818.c
-@@ -402,6 +402,19 @@ static int admv8818_read_lpf_freq(struct admv8818_state *st, u64 *lpf_freq)
- 	return ret;
- }
+diff --git a/drivers/iio/adc/ad7124.c b/drivers/iio/adc/ad7124.c
+index 3ea81a98e4553..7d5d84a07cae1 100644
+--- a/drivers/iio/adc/ad7124.c
++++ b/drivers/iio/adc/ad7124.c
+@@ -301,9 +301,9 @@ static int ad7124_get_3db_filter_freq(struct ad7124_state *st,
  
-+static int admv8818_write_raw_get_fmt(struct iio_dev *indio_dev,
-+								struct iio_chan_spec const *chan,
-+								long mask)
-+{
-+	switch (mask) {
-+	case IIO_CHAN_INFO_LOW_PASS_FILTER_3DB_FREQUENCY:
-+	case IIO_CHAN_INFO_HIGH_PASS_FILTER_3DB_FREQUENCY:
-+		return IIO_VAL_INT_64;
-+	default:
-+		return -EINVAL;
-+	}
-+}
-+
- static int admv8818_write_raw(struct iio_dev *indio_dev,
- 			      struct iio_chan_spec const *chan,
- 			      int val, int val2, long info)
-@@ -410,6 +423,9 @@ static int admv8818_write_raw(struct iio_dev *indio_dev,
- 
- 	u64 freq = ((u64)val2 << 32 | (u32)val);
- 
-+	if ((s64)freq < 0)
-+		return -EINVAL;
-+
- 	switch (info) {
- 	case IIO_CHAN_INFO_LOW_PASS_FILTER_3DB_FREQUENCY:
- 		return admv8818_lpf_select(st, freq);
-@@ -571,6 +587,7 @@ static int admv8818_set_mode(struct iio_dev *indio_dev,
- 
- static const struct iio_info admv8818_info = {
- 	.write_raw = admv8818_write_raw,
-+	.write_raw_get_fmt = admv8818_write_raw_get_fmt,
- 	.read_raw = admv8818_read_raw,
- 	.debugfs_reg_access = &admv8818_reg_access,
- };
+ 	switch (st->channels[channel].cfg.filter_type) {
+ 	case AD7124_SINC3_FILTER:
+-		return DIV_ROUND_CLOSEST(fadc * 230, 1000);
++		return DIV_ROUND_CLOSEST(fadc * 272, 1000);
+ 	case AD7124_SINC4_FILTER:
+-		return DIV_ROUND_CLOSEST(fadc * 262, 1000);
++		return DIV_ROUND_CLOSEST(fadc * 230, 1000);
+ 	default:
+ 		return -EINVAL;
+ 	}
 -- 
 2.39.5
 
