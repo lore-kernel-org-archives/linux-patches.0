@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0D7F2ECEA5;
-	Tue, 17 Jun 2025 15:50:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E9202ECEAD;
+	Tue, 17 Jun 2025 15:50:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175429; cv=none; b=fdxJ0YsnytJ5kLHFP55qPMQmIMJQoi/f+eAWiSkU2Vi9cyEXdEP7UIRzs6zYBBgaxkinIE/1pbFyCmRr3D8UIBaiDlEkq1fr0n0yxJ4PMx82DF6y6epMDDeo/GpZhw16Popqp8iMEWV5Whl10Zh5PMr2Gq8iZYDE5WSiesSTtLs=
+	t=1750175432; cv=none; b=beIBaByKvL5YtODy/pQ3LAA6d0RZ90AmnY4+BGraqOGnvv4xIujidsxqGMZVbjx/wWdvC9qd5gQuIsIRYBLwxO8TFBR84kBJQ28Sjc7MfYN83nSdAHP9/IWnNjE9LicfH5gdkfwR84b+/PBklXmMehowxbsajQfneeOTU9S7O34=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175429; c=relaxed/simple;
-	bh=v3nW4vagzOHqPvzwN195a2pF3yhd/k+PZAs0VKvumF0=;
+	s=arc-20240116; t=1750175432; c=relaxed/simple;
+	bh=UkjrNNGXWMBvmGVTO1NjnHho/182TmYx9KFTYQJvPys=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mXmF5WZNZzZzJVi5FgqPDJJzKwv2gIanWKYOntByLCA5OkU4hedIdEu7zHhsZheBrgb4LZs3CFktmEyQngbEBWhNMqkgYMuLUZk1OTdjnjtZ6c0hpYpgduJYBbndOGyrofzInP2lfx+vamCiUsVcduqgBax3Z20eC55BNyjsCc8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b5jqvR4q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ehs3v0xBa4U6jBpXBoN3wiBka4KPT1t+i785GwuMqzCqOxALkB3BE8fBej1SU/wlGIbkobDZwho8+XVN8/X/ZqJm1u9WLZxg2duSm1j8JPrrs7P47ikOZg5Hg5+6nT36ZnN5HZLTV/D3cU5fbmNVi8p5xPvYCsPKQVbM+vBt+GQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e9g7U280; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b5jqvR4q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7B85C4CEE3;
-	Tue, 17 Jun 2025 15:50:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e9g7U280"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97D0BC4CEE3;
+	Tue, 17 Jun 2025 15:50:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175429;
-	bh=v3nW4vagzOHqPvzwN195a2pF3yhd/k+PZAs0VKvumF0=;
+	s=korg; t=1750175432;
+	bh=UkjrNNGXWMBvmGVTO1NjnHho/182TmYx9KFTYQJvPys=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b5jqvR4qLgs7lDKTdi4N30/lg36fsLfKMjLtAY03yrWJU89xJpPoaYogILxTEmwja
-	 R3M5rx+hF3HEfYGcsMzZrKYqCM0+MjaQL29I9nDwBqJ97I1fBiv0hgQaa6cwOMtc16
-	 bvOJXjEorNj/tYTbbW697yXu7FX8uOEnwVUjDwjY=
+	b=e9g7U280RBvOkD/UR5F7aSaal0/fJXR8+4Tbu7qJcU7/NNWMsIe8mNvhd/oENqYs1
+	 ApvaWlU6giRbWBO2Dhv/Vqqi/vF5XDNjMdNsvJCu3e+4inZQclNJBvfLQXXr+OEdVp
+	 40d2Mt9BJ3y3BbIwMSOb4zhif0AA3xbS+cw+YDzg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cosmin Ratiu <cratiu@nvidia.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Alexandre Ghiti <alexghiti@rivosinc.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Mark Pearson <mpearson-lenovo@squebb.ca>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 125/512] net/mlx5: Avoid using xso.real_dev unnecessarily
-Date: Tue, 17 Jun 2025 17:21:31 +0200
-Message-ID: <20250617152424.656705565@linuxfoundation.org>
+Subject: [PATCH 6.15 087/780] ACPI: platform_profile: Avoid initializing on non-ACPI platforms
+Date: Tue, 17 Jun 2025 17:16:35 +0200
+Message-ID: <20250617152455.057654696@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,117 +49,69 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cosmin Ratiu <cratiu@nvidia.com>
+From: Alexandre Ghiti <alexghiti@rivosinc.com>
 
-[ Upstream commit d79444e8c3d40b11f5e155e5591d53bd1e512e1f ]
+[ Upstream commit dd133162c9cff5951a692fab9811fadf46a46457 ]
 
-xso.real_dev is the active device of an offloaded xfrm state and is
-managed by bonding. As such, it's subject to change when states are
-migrated to a new device. Using it in places other than
-offloading/unoffloading the states is risky.
+The platform profile driver is loaded even on platforms that do not have
+ACPI enabled. The initialization of the sysfs entries was recently moved
+from platform_profile_register() to the module init call, and those
+entries need acpi_kobj to be initialized which is not the case when ACPI
+is disabled.
 
-This commit saves the device into the driver-specific struct
-mlx5e_ipsec_sa_entry and switches mlx5e_ipsec_init_macs() and
-mlx5e_ipsec_netevent_event() to make use of it.
+This results in the following warning:
 
-Additionally, mlx5e_xfrm_update_stats() used xso.real_dev to validate
-that correct net locks are held. But in a bonding config, the net of the
-master device is the same as the underlying devices, and the net is
-already a local var, so use that instead.
+ WARNING: CPU: 5 PID: 1 at fs/sysfs/group.c:131 internal_create_group+0xa22/0xdd8
+ Modules linked in:
+ CPU: 5 UID: 0 PID: 1 Comm: swapper/0 Tainted: G        W           6.15.0-rc7-dirty #6 PREEMPT
+ Tainted: [W]=WARN
+ Hardware name: riscv-virtio,qemu (DT)
+ epc : internal_create_group+0xa22/0xdd8
+  ra : internal_create_group+0xa22/0xdd8
 
-The only remaining references to xso.real_dev are now in the
-.xdo_dev_state_add() / .xdo_dev_state_delete() path.
+ Call Trace:
 
-Signed-off-by: Cosmin Ratiu <cratiu@nvidia.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+ internal_create_group+0xa22/0xdd8
+ sysfs_create_group+0x22/0x2e
+ platform_profile_init+0x74/0xb2
+ do_one_initcall+0x198/0xa9e
+ kernel_init_freeable+0x6d8/0x780
+ kernel_init+0x28/0x24c
+ ret_from_fork+0xe/0x18
+
+Fix this by checking if ACPI is enabled before trying to create sysfs
+entries.
+
+Fixes: 77be5cacb2c2 ("ACPI: platform_profile: Create class for ACPI platform profile")
+Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Reviewed-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Mark Pearson <mpearson-lenovo@squebb.ca>
+Link: https://patch.msgid.link/20250522141410.31315-1-alexghiti@rivosinc.com
+[ rjw: Subject and changelog edits ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/mellanox/mlx5/core/en_accel/ipsec.c | 16 +++++-----------
- .../ethernet/mellanox/mlx5/core/en_accel/ipsec.h |  1 +
- 2 files changed, 6 insertions(+), 11 deletions(-)
+ drivers/acpi/platform_profile.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c
-index 1baf8933a07cb..94edfd7713b5d 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c
-@@ -266,8 +266,7 @@ static void mlx5e_ipsec_init_macs(struct mlx5e_ipsec_sa_entry *sa_entry,
- 				  struct mlx5_accel_esp_xfrm_attrs *attrs)
+diff --git a/drivers/acpi/platform_profile.c b/drivers/acpi/platform_profile.c
+index ffbfd32f4cf1b..b43f4459a4f61 100644
+--- a/drivers/acpi/platform_profile.c
++++ b/drivers/acpi/platform_profile.c
+@@ -688,6 +688,9 @@ static int __init platform_profile_init(void)
  {
- 	struct mlx5_core_dev *mdev = mlx5e_ipsec_sa2dev(sa_entry);
--	struct xfrm_state *x = sa_entry->x;
--	struct net_device *netdev;
-+	struct net_device *netdev = sa_entry->dev;
- 	struct neighbour *n;
- 	u8 addr[ETH_ALEN];
- 	const void *pkey;
-@@ -277,8 +276,6 @@ static void mlx5e_ipsec_init_macs(struct mlx5e_ipsec_sa_entry *sa_entry,
- 	    attrs->type != XFRM_DEV_OFFLOAD_PACKET)
- 		return;
+ 	int err;
  
--	netdev = x->xso.real_dev;
--
- 	mlx5_query_mac_address(mdev, addr);
- 	switch (attrs->dir) {
- 	case XFRM_DEV_OFFLOAD_IN:
-@@ -707,6 +704,7 @@ static int mlx5e_xfrm_add_state(struct xfrm_state *x,
- 		return -ENOMEM;
- 
- 	sa_entry->x = x;
-+	sa_entry->dev = netdev;
- 	sa_entry->ipsec = ipsec;
- 	/* Check if this SA is originated from acquire flow temporary SA */
- 	if (x->xso.flags & XFRM_DEV_OFFLOAD_FLAG_ACQ)
-@@ -849,8 +847,6 @@ static int mlx5e_ipsec_netevent_event(struct notifier_block *nb,
- 	struct mlx5e_ipsec_sa_entry *sa_entry;
- 	struct mlx5e_ipsec *ipsec;
- 	struct neighbour *n = ptr;
--	struct net_device *netdev;
--	struct xfrm_state *x;
- 	unsigned long idx;
- 
- 	if (event != NETEVENT_NEIGH_UPDATE || !(n->nud_state & NUD_VALID))
-@@ -870,11 +866,9 @@ static int mlx5e_ipsec_netevent_event(struct notifier_block *nb,
- 				continue;
- 		}
- 
--		x = sa_entry->x;
--		netdev = x->xso.real_dev;
- 		data = sa_entry->work->data;
- 
--		neigh_ha_snapshot(data->addr, n, netdev);
-+		neigh_ha_snapshot(data->addr, n, sa_entry->dev);
- 		queue_work(ipsec->wq, &sa_entry->work->work);
- 	}
- 
-@@ -1005,8 +999,8 @@ static void mlx5e_xfrm_update_stats(struct xfrm_state *x)
- 	size_t headers;
- 
- 	lockdep_assert(lockdep_is_held(&x->lock) ||
--		       lockdep_is_held(&dev_net(x->xso.real_dev)->xfrm.xfrm_cfg_mutex) ||
--		       lockdep_is_held(&dev_net(x->xso.real_dev)->xfrm.xfrm_state_lock));
-+		       lockdep_is_held(&net->xfrm.xfrm_cfg_mutex) ||
-+		       lockdep_is_held(&net->xfrm.xfrm_state_lock));
- 
- 	if (x->xso.flags & XFRM_DEV_OFFLOAD_FLAG_ACQ)
- 		return;
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.h b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.h
-index 7d943e93cf6dc..9aff779c77c89 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.h
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.h
-@@ -260,6 +260,7 @@ struct mlx5e_ipsec_limits {
- struct mlx5e_ipsec_sa_entry {
- 	struct mlx5e_ipsec_esn_state esn_state;
- 	struct xfrm_state *x;
-+	struct net_device *dev;
- 	struct mlx5e_ipsec *ipsec;
- 	struct mlx5_accel_esp_xfrm_attrs attrs;
- 	void (*set_iv_op)(struct sk_buff *skb, struct xfrm_state *x,
++	if (acpi_disabled)
++		return -EOPNOTSUPP;
++
+ 	err = class_register(&platform_profile_class);
+ 	if (err)
+ 		return err;
 -- 
 2.39.5
 
