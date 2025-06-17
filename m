@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 100402EA72C;
-	Tue, 17 Jun 2025 16:41:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 272282EA756;
+	Tue, 17 Jun 2025 16:41:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750178465; cv=none; b=g4FcZtl/IL0Xnu5LywaE+7gJH05UFchwbut7MH/U3PNHeWSrK58XJa11f24mXaTcATcrij95zIQ8jk2a2zNbqN36z3krjCCrjVnU7TqbAyhgabKdVwVV8khbu0nHTYpMDqpn62Vwkix7k/fkgFDbSsK3RMci0zEqlw6nFn4tMaM=
+	t=1750178468; cv=none; b=SHJ0XkqgommmZPZ7RP0qAUQ9FozOSnC5y/KGti+3/HoGVGyXn+5rkIq6eRrSXiLgyEMG2tsbtPE2JTo67xR6jg9bepcBAcD3WO+wDUbcWQytVajYRvIyWQJ1w1SyQ2aKYDDPWEcruE/WflkM/leEESeXIVG+KAcv1UyRRdhLkkk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750178465; c=relaxed/simple;
-	bh=awFXpan8vcccc+tshElBr8CYJlKZCndFVlK6S+oLVks=;
+	s=arc-20240116; t=1750178468; c=relaxed/simple;
+	bh=XGAZxw/WjnxopWRXhIxE+4r5cebz99zjBG7lD1EMstM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YIqik9NBuNsZWJOVH81v4noV3ANcQ8u9ZzClFbg+nQdgGGAvIu+PDPCqUncrL9AvU7/7Q9OYABX8ZVH1ned1JHOchT0H29P/3BPBtZOtS95ybjxFo9eTo0HourYmZyGwHm2hLeK1G9cP4rsuDKQJmfZVDjFM2rxrDQn3NoYd2/A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V+byQ53z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QsI21i/rH885GFoKah0Iqv67xBwdriGB9Tb2+T2RkzUEEnexekaA+TMtRckV6l3qK2v42RA83vwOJshuvNfx2wX2GBivyQBnqOk7zgkGZyzdbuBxLS2qOcPC7iMc96tNbRob+385pCnLnRpzRBzVVECUjBAUl8izOjNvJD48d60=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dz7GYaM7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V+byQ53z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78FE6C4CEE3;
-	Tue, 17 Jun 2025 16:41:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dz7GYaM7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CDCDC4CEE3;
+	Tue, 17 Jun 2025 16:41:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750178464;
-	bh=awFXpan8vcccc+tshElBr8CYJlKZCndFVlK6S+oLVks=;
+	s=korg; t=1750178468;
+	bh=XGAZxw/WjnxopWRXhIxE+4r5cebz99zjBG7lD1EMstM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V+byQ53z8F6fM6TQKkB/9gb2RAz2Bu/yZY7SVvJul+v5whnahtctJnT3cHZLxvhLE
-	 aV0abP927cE3wWWzd81RLmxCD8nWTJfDoplh9kC3vM2UIk6Q7UhLkuuc0c5WJp6cf6
-	 tgBUOl76wYaerEuEUeXCN5ZD/o0FZ0NyEgaHVgwE=
+	b=Dz7GYaM7KI16yd1QMD7lcA8E3O9z85hgGaBncwrgDP5z16hDv/sRU0Lg/zp9NjUn5
+	 NqjnWnbSllfyvSSq6M8S8lEOuHhgV8LL29IfuPnMet5iInjAdSTR8rWwnWE9SdBxmf
+	 tS776Zbh25DtxUcIj6y/1WJOKCmdo6xtOco6XOBM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Stefano Stabellini <stefano.stabellini@amd.com>,
-	Juergen Gross <jgross@suse.com>
-Subject: [PATCH 6.12 503/512] xen/arm: call uaccess_ttbr0_enable for dm_op hypercall
-Date: Tue, 17 Jun 2025 17:27:49 +0200
-Message-ID: <20250617152440.004782545@linuxfoundation.org>
+	Peng Fan <peng.fan@nxp.com>,
+	Jassi Brar <jassisinghbrar@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.15 464/780] mailbox: imx: Fix TXDB_V2 sending
+Date: Tue, 17 Jun 2025 17:22:52 +0200
+Message-ID: <20250617152510.384791329@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,67 +47,77 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stefano Stabellini <stefano.stabellini@amd.com>
+From: Peng Fan <peng.fan@nxp.com>
 
-commit 7f9bbc1140ff8796230bc2634055763e271fd692 upstream.
+[ Upstream commit f5cb07ec6aabd1bb56adbdeb5f0d70cb524db2cd ]
 
-dm_op hypercalls might come from userspace and pass memory addresses as
-parameters. The memory addresses typically correspond to buffers
-allocated in userspace to hold extra hypercall parameters.
+i.MX95 features several processing domains, Cortex-M7, Cortex-A55
+secure, Cortex-A55 non-secure. Each domain could communicate with
+SCMI firmware with a dedicated MU. But the current NXP SCMI firmware
+is not a RTOS, all processing logic codes are in interrupt context.
+So if high priority Cortex-M7 is communicating with SCMI firmware and
+requires a bit more time to handle the SCMI call, Linux MU TXDB_V2
+will be timeout with high possiblity in 1000us(the current value in
+imx-mailbox.c). Per NXP SCMI firmware design, if timeout, there is
+no recover logic, so SCMI agents should never timeout and always
+wait until the check condition met.
 
-On ARM, when CONFIG_ARM64_SW_TTBR0_PAN is enabled, they might not be
-accessible by Xen, as a result ioreq hypercalls might fail. See the
-existing comment in arch/arm64/xen/hypercall.S regarding privcmd_call
-for reference.
+Based on the upper reason, enlarge the timeout value to 10ms which
+is less chance to timeout, and retry if timeout really happends.
 
-For privcmd_call, Linux calls uaccess_ttbr0_enable before issuing the
-hypercall thanks to commit 9cf09d68b89a. We need to do the same for
-dm_op. This resolves the problem.
-
-Cc: stable@kernel.org
-Fixes: 9cf09d68b89a ("arm64: xen: Enable user access before a privcmd hvc call")
-Signed-off-by: Stefano Stabellini <stefano.stabellini@amd.com>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Message-ID: <alpine.DEB.2.22.394.2505121446370.8380@ubuntu-linux-20-04-desktop>
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 5bfe4067d350 ("mailbox: imx: support channel type tx doorbell v2")
+Signed-off-by: Peng Fan <peng.fan@nxp.com>
+Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/xen/hypercall.S |   21 ++++++++++++++++++++-
- 1 file changed, 20 insertions(+), 1 deletion(-)
+ drivers/mailbox/imx-mailbox.c | 21 +++++++++++++++------
+ 1 file changed, 15 insertions(+), 6 deletions(-)
 
---- a/arch/arm64/xen/hypercall.S
-+++ b/arch/arm64/xen/hypercall.S
-@@ -83,7 +83,26 @@ HYPERCALL3(vcpu_op);
- HYPERCALL1(platform_op_raw);
- HYPERCALL2(multicall);
- HYPERCALL2(vm_assist);
--HYPERCALL3(dm_op);
-+
-+SYM_FUNC_START(HYPERVISOR_dm_op)
-+	mov x16, #__HYPERVISOR_dm_op;	\
-+	/*
-+	 * dm_op hypercalls are issued by the userspace. The kernel needs to
-+	 * enable access to TTBR0_EL1 as the hypervisor would issue stage 1
-+	 * translations to user memory via AT instructions. Since AT
-+	 * instructions are not affected by the PAN bit (ARMv8.1), we only
-+	 * need the explicit uaccess_enable/disable if the TTBR0 PAN emulation
-+	 * is enabled (it implies that hardware UAO and PAN disabled).
-+	 */
-+	uaccess_ttbr0_enable x6, x7, x8
-+	hvc XEN_IMM
-+
-+	/*
-+	 * Disable userspace access from kernel once the hyp call completed.
-+	 */
-+	uaccess_ttbr0_disable x6, x7
-+	ret
-+SYM_FUNC_END(HYPERVISOR_dm_op);
+diff --git a/drivers/mailbox/imx-mailbox.c b/drivers/mailbox/imx-mailbox.c
+index 6ef8338add0d6..6778afc64a048 100644
+--- a/drivers/mailbox/imx-mailbox.c
++++ b/drivers/mailbox/imx-mailbox.c
+@@ -226,7 +226,7 @@ static int imx_mu_generic_tx(struct imx_mu_priv *priv,
+ {
+ 	u32 *arg = data;
+ 	u32 val;
+-	int ret;
++	int ret, count;
  
- SYM_FUNC_START(privcmd_call)
- 	mov x16, x0
+ 	switch (cp->type) {
+ 	case IMX_MU_TYPE_TX:
+@@ -240,11 +240,20 @@ static int imx_mu_generic_tx(struct imx_mu_priv *priv,
+ 	case IMX_MU_TYPE_TXDB_V2:
+ 		imx_mu_write(priv, IMX_MU_xCR_GIRn(priv->dcfg->type, cp->idx),
+ 			     priv->dcfg->xCR[IMX_MU_GCR]);
+-		ret = readl_poll_timeout(priv->base + priv->dcfg->xCR[IMX_MU_GCR], val,
+-					 !(val & IMX_MU_xCR_GIRn(priv->dcfg->type, cp->idx)),
+-					 0, 1000);
+-		if (ret)
+-			dev_warn_ratelimited(priv->dev, "channel type: %d failure\n", cp->type);
++		ret = -ETIMEDOUT;
++		count = 0;
++		while (ret && (count < 10)) {
++			ret =
++			readl_poll_timeout(priv->base + priv->dcfg->xCR[IMX_MU_GCR], val,
++					   !(val & IMX_MU_xCR_GIRn(priv->dcfg->type, cp->idx)),
++					   0, 10000);
++
++			if (ret) {
++				dev_warn_ratelimited(priv->dev,
++						     "channel type: %d timeout, %d times, retry\n",
++						     cp->type, ++count);
++			}
++		}
+ 		break;
+ 	default:
+ 		dev_warn_ratelimited(priv->dev, "Send data on wrong channel type: %d\n", cp->type);
+-- 
+2.39.5
+
 
 
