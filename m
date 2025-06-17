@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45B022EB5A8;
-	Tue, 17 Jun 2025 15:29:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91825236457;
+	Tue, 17 Jun 2025 15:29:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750174191; cv=none; b=PrOJM4Wd2o2jwrNrJzcQJptrmFL5JJo1gK4zzDUkob+x/QdT8Q7v7x43AjOhMQ8W6TA9Dpp/BbX+o0JpNB3zU/3eYHIKqLTislFMSJBu+JuW81FNFYkJbOs3GBKelG5wSWpwolKH8M6Wq4rsS50L+Lb58uto6SY6P07qVEsLo30=
+	t=1750174195; cv=none; b=s4j0ZlzebSK6JJNFJE6kA+qBR2xscozjw6Q5TeArsTgtyEzYwpBiBDZSfcYwjRreQnkZZvzYLW+6X09M0g5zhhH4HRDw4tYH+UYX9ZRHI2uLKEJSDizhcDa/TiEoX5fCieg2YF5wMLMtZs55U0Wpg9php5rEZhQtxUAzKG8x3Ec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750174191; c=relaxed/simple;
-	bh=BJKMMHysefZ6AR9d1eYBJMQtTs9VLQ7nMqVFtKntjE4=;
+	s=arc-20240116; t=1750174195; c=relaxed/simple;
+	bh=Qk4RN92WOaPMlGQbi9ghAyT9B/w16OlL/pq8oWHLEnY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ua01YIpQsMBWcKLwE+rgCEwtoIwVeHcBF0VwnOYi5WIoRDH45E1UzTO3jo0LmAsc+I5eUW4YtLNHV5CwI8oGWcvNX4qxdABVJpq57RcuPktz917X0mlmdkqpfbB+daupQc60i+x4RFdC2kTuIXrnlQ7AgmtPaTVGCIV0eDLzEws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dn/9mhVd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XKMSDAVFFdcjNLzTRpqMT/ORuO1YZX8Lw5/xKiNxd9WxLGhCPaasjl3HPM8Cu+63b7I06xP+JlxVORhD3FLA+CqVtaazTuLAu5tivD1tIPO/Hvwj5nx8XM4JKyaRW1/GSPLF2zB4lIZxcjknVdChxNynyv9L9fkj1LLpuyolebM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=efgExZ2C; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dn/9mhVd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5315FC4CEE3;
-	Tue, 17 Jun 2025 15:29:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="efgExZ2C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C17E1C4CEF0;
+	Tue, 17 Jun 2025 15:29:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750174190;
-	bh=BJKMMHysefZ6AR9d1eYBJMQtTs9VLQ7nMqVFtKntjE4=;
+	s=korg; t=1750174195;
+	bh=Qk4RN92WOaPMlGQbi9ghAyT9B/w16OlL/pq8oWHLEnY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dn/9mhVdSxQ/YeArQwtkrS436y4WA9rf//GYABRIDrGl/NdMg5mbw3fcitxB4A1L7
-	 Qs5Y7Kek+TW96S4hmQ0qAbqIlQZWHT1TCTAPD6cv3V/7/ixFMIfgPCGCbAH42fJLR7
-	 gwgPW7Fs4Ba/c6SvJeeS7ib4EP+By3ttAXXbNBJI=
+	b=efgExZ2Crgtmdqqtd1Idpo5XaTmt8EfKYYStP6GLXnGn4+RkrsbgPk7Z5IIFw40L/
+	 qfYk7c70vFEtnE+xX+mlS2IcLNeYb08buqZedefN5YIf5Xr8zlrJ+6n43DvPpbsrJz
+	 QH2eG4vQ0N9elUtNTjIiAbR+sgtq6ttwmm5j8QVU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Penkler <dpenkler@gmail.com>
-Subject: [PATCH 6.6 013/356] usb: usbtmc: Fix timeout value in get_stb
-Date: Tue, 17 Jun 2025 17:22:08 +0200
-Message-ID: <20250617152338.761642070@linuxfoundation.org>
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>
+Subject: [PATCH 6.6 014/356] thunderbolt: Do not double dequeue a configuration request
+Date: Tue, 17 Jun 2025 17:22:09 +0200
+Message-ID: <20250617152338.808591252@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
 References: <20250617152338.212798615@linuxfoundation.org>
@@ -49,47 +50,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Penkler <dpenkler@gmail.com>
+From: Sergey Senozhatsky <senozhatsky@chromium.org>
 
-commit 342e4955a1f1ce28c70a589999b76365082dbf10 upstream.
+commit 0f73628e9da1ee39daf5f188190cdbaee5e0c98c upstream.
 
-wait_event_interruptible_timeout requires a timeout argument
-in units of jiffies. It was being called in usbtmc_get_stb
-with the usb timeout value which is in units of milliseconds.
+Some of our devices crash in tb_cfg_request_dequeue():
 
-Pass the timeout argument converted to jiffies.
+ general protection fault, probably for non-canonical address 0xdead000000000122
 
-Fixes: 048c6d88a021 ("usb: usbtmc: Add ioctls to set/get usb timeout")
+ CPU: 6 PID: 91007 Comm: kworker/6:2 Tainted: G U W 6.6.65
+ RIP: 0010:tb_cfg_request_dequeue+0x2d/0xa0
+ Call Trace:
+ <TASK>
+ ? tb_cfg_request_dequeue+0x2d/0xa0
+ tb_cfg_request_work+0x33/0x80
+ worker_thread+0x386/0x8f0
+ kthread+0xed/0x110
+ ret_from_fork+0x38/0x50
+ ret_from_fork_asm+0x1b/0x30
+
+The circumstances are unclear, however, the theory is that
+tb_cfg_request_work() can be scheduled twice for a request:
+first time via frame.callback from ring_work() and second
+time from tb_cfg_request().  Both times kworkers will execute
+tb_cfg_request_dequeue(), which results in double list_del()
+from the ctl->request_queue (the list poison deference hints
+at it: 0xdead000000000122).
+
+Do not dequeue requests that don't have TB_CFG_REQUEST_ACTIVE
+bit set.
+
+Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Dave Penkler <dpenkler@gmail.com>
-Link: https://lore.kernel.org/r/20250521121656.18174-4-dpenkler@gmail.com
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/class/usbtmc.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/thunderbolt/ctl.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/usb/class/usbtmc.c
-+++ b/drivers/usb/class/usbtmc.c
-@@ -483,6 +483,7 @@ static int usbtmc_get_stb(struct usbtmc_
- 	u8 tag;
- 	int rv;
- 	long wait_rv;
-+	unsigned long expire;
+--- a/drivers/thunderbolt/ctl.c
++++ b/drivers/thunderbolt/ctl.c
+@@ -143,6 +143,11 @@ static void tb_cfg_request_dequeue(struc
+ 	struct tb_ctl *ctl = req->ctl;
  
- 	dev_dbg(dev, "Enter ioctl_read_stb iin_ep_present: %d\n",
- 		data->iin_ep_present);
-@@ -512,10 +513,11 @@ static int usbtmc_get_stb(struct usbtmc_
- 	}
- 
- 	if (data->iin_ep_present) {
-+		expire = msecs_to_jiffies(file_data->timeout);
- 		wait_rv = wait_event_interruptible_timeout(
- 			data->waitq,
- 			atomic_read(&data->iin_data_valid) != 0,
--			file_data->timeout);
-+			expire);
- 		if (wait_rv < 0) {
- 			dev_dbg(dev, "wait interrupted %ld\n", wait_rv);
- 			rv = wait_rv;
+ 	mutex_lock(&ctl->request_queue_lock);
++	if (!test_bit(TB_CFG_REQUEST_ACTIVE, &req->flags)) {
++		mutex_unlock(&ctl->request_queue_lock);
++		return;
++	}
++
+ 	list_del(&req->list);
+ 	clear_bit(TB_CFG_REQUEST_ACTIVE, &req->flags);
+ 	if (test_bit(TB_CFG_REQUEST_CANCELED, &req->flags))
 
 
