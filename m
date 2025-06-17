@@ -1,51 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E15C2E8DE4;
-	Tue, 17 Jun 2025 16:40:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 852372EA735;
+	Tue, 17 Jun 2025 16:40:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750178449; cv=none; b=d5F8HzlsLtOr1PBCdvld7PG6VpstTl4LCuyRr2Zufb9fcNasvMi0pdaP4Kyv5nFTuIUDuAP4KpKtRH5//KzNL+3amegCcc+locvHcBduzAkLBZEjeeRGy1BRA274MwnvZ+/0WsydstNU4+4angBhnC9CUWwwaSsISKG4aAzVG/w=
+	t=1750178452; cv=none; b=B+RbuVXjIHkKX8JUTDQkUTPq+iUzvlxobaifssF4q4eidjgVWIZskJ+WFTqT4TBWzNt3KkyHM816ruHzQp4UKo1AweD2rQ5h80DujNAHsGVTryMfVv21QoMmXkr0M71C3GvUR/63DcUWBr8IyEI/LUJMhG47YjoErLG7O0o9Rxw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750178449; c=relaxed/simple;
-	bh=hYfsZ+h97b8SSCcK8Ze2SD1mhLygdwMfpK9oq0VwKTo=;
+	s=arc-20240116; t=1750178452; c=relaxed/simple;
+	bh=YPTLisCBJI8i/ZyCBe9WFhoE7//NpnBs033SdewI7VQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cBsG5T/PSDMVGTrdpMsA7lsTpUvwTtEKYtZjaHAGHpNwiWFUlEZqRHTA2UxRWmEJI9pEequA2vW801U6gGvLsdF4h27fkg8Sd22AAyNjQDBiRGr9pHl8Y1SGrC20zsOUum3IB6Vh97PGANLlXFUPasaCJj4zsNtyWEXZ83lX+B8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0mNSyfEt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nD0QEjK25Kq/QiF5/VLnC5euNkUqNXoUELQ4U4Sk/j07HGS3fMs9IM0Om2N0so7ujjcKJ7q8g9J35KOXYwv1HHRoubBHS62gIClJIZR1A9euj/wcRhVdQXS9K2EJuGMrkqw5MMVxQIclMqNou1A1wVjxebkV4fYTeoxGcJSQmlI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O9r3iZ/Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0mNSyfEt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A49BC4CEE3;
-	Tue, 17 Jun 2025 16:40:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O9r3iZ/Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7664C4CEE3;
+	Tue, 17 Jun 2025 16:40:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750178449;
-	bh=hYfsZ+h97b8SSCcK8Ze2SD1mhLygdwMfpK9oq0VwKTo=;
+	s=korg; t=1750178452;
+	bh=YPTLisCBJI8i/ZyCBe9WFhoE7//NpnBs033SdewI7VQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0mNSyfEtckwG/mGjGLJz6e/PSC944bXgzGUbTbgwQSQ+wSxd9w9vO2B9/9U91XrkJ
-	 ykgP3zlA3Q6gBfH3DR0+XA4HZml7/cXmL4W4cyig3hkJUkR65VYS7BnJXAl21IB8c2
-	 hVunMatEIAio6KBa29gT5KYByd374Mt7KHPPVJB8=
+	b=O9r3iZ/ZGymR1bAesqD5k2kog+lTDlcbM2TRNJ/Spue2IAKx8yDTAwofiWT25QVDr
+	 Q5ycDuq4fF8O56U0Qrpv6hSYQkwEaRR5Fre6qq+asC6gZNDfr004ogW5KhLFka+y0y
+	 AFRLGsNp2QjRwxyGJK8EBKWctdi65Rcd/+KaTwho=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
-	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
-	Steve French <sfrench@samba.org>,
-	netfs@lists.linux.dev,
-	v9fs@lists.linux.dev,
-	linux-afs@lists.infradead.org,
-	linux-cifs@vger.kernel.org,
-	ceph-devel@vger.kernel.org,
-	linux-nfs@vger.kernel.org,
-	linux-fsdevel@vger.kernel.org,
-	Christian Brauner <brauner@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 461/780] netfs: Fix undifferentiation of DIO reads from unbuffered reads
-Date: Tue, 17 Jun 2025 17:22:49 +0200
-Message-ID: <20250617152510.251693779@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Vincent Donnefort <vdonnefort@google.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.12 501/512] ring-buffer: Move cpus_read_lock() outside of buffer->mutex
+Date: Tue, 17 Jun 2025 17:27:47 +0200
+Message-ID: <20250617152439.925934207@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -57,236 +48,244 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-[ Upstream commit db26d62d79e4068934ad0dccdb92715df36352b9 ]
+commit c98cc9797b7009308fff73d41bc1d08642dab77a upstream.
 
-On cifs, "DIO reads" (specified by O_DIRECT) need to be differentiated from
-"unbuffered reads" (specified by cache=none in the mount parameters).  The
-difference is flagged in the protocol and the server may behave
-differently: Windows Server will, for example, mandate that DIO reads are
-block aligned.
+Running a modified trace-cmd record --nosplice where it does a mmap of the
+ring buffer when '--nosplice' is set, caused the following lockdep splat:
 
-Fix this by adding a NETFS_UNBUFFERED_READ to differentiate this from
-NETFS_DIO_READ, parallelling the write differentiation that already exists.
-cifs will then do the right thing.
+ ======================================================
+ WARNING: possible circular locking dependency detected
+ 6.15.0-rc7-test-00002-gfb7d03d8a82f #551 Not tainted
+ ------------------------------------------------------
+ trace-cmd/1113 is trying to acquire lock:
+ ffff888100062888 (&buffer->mutex){+.+.}-{4:4}, at: ring_buffer_map+0x11c/0xe70
 
-Fixes: 016dc8516aec ("netfs: Implement unbuffered/DIO read support")
-Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://lore.kernel.org/3444961.1747987072@warthog.procyon.org.uk
-Reviewed-by: "Paulo Alcantara (Red Hat)" <pc@manguebit.com>
-Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
-cc: Steve French <sfrench@samba.org>
-cc: netfs@lists.linux.dev
-cc: v9fs@lists.linux.dev
-cc: linux-afs@lists.infradead.org
-cc: linux-cifs@vger.kernel.org
-cc: ceph-devel@vger.kernel.org
-cc: linux-nfs@vger.kernel.org
-cc: linux-fsdevel@vger.kernel.org
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+ but task is already holding lock:
+ ffff888100a5f9f8 (&cpu_buffer->mapping_lock){+.+.}-{4:4}, at: ring_buffer_map+0xcf/0xe70
+
+ which lock already depends on the new lock.
+
+ the existing dependency chain (in reverse order) is:
+
+ -> #5 (&cpu_buffer->mapping_lock){+.+.}-{4:4}:
+        __mutex_lock+0x192/0x18c0
+        ring_buffer_map+0xcf/0xe70
+        tracing_buffers_mmap+0x1c4/0x3b0
+        __mmap_region+0xd8d/0x1f70
+        do_mmap+0x9d7/0x1010
+        vm_mmap_pgoff+0x20b/0x390
+        ksys_mmap_pgoff+0x2e9/0x440
+        do_syscall_64+0x79/0x1c0
+        entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+ -> #4 (&mm->mmap_lock){++++}-{4:4}:
+        __might_fault+0xa5/0x110
+        _copy_to_user+0x22/0x80
+        _perf_ioctl+0x61b/0x1b70
+        perf_ioctl+0x62/0x90
+        __x64_sys_ioctl+0x134/0x190
+        do_syscall_64+0x79/0x1c0
+        entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+ -> #3 (&cpuctx_mutex){+.+.}-{4:4}:
+        __mutex_lock+0x192/0x18c0
+        perf_event_init_cpu+0x325/0x7c0
+        perf_event_init+0x52a/0x5b0
+        start_kernel+0x263/0x3e0
+        x86_64_start_reservations+0x24/0x30
+        x86_64_start_kernel+0x95/0xa0
+        common_startup_64+0x13e/0x141
+
+ -> #2 (pmus_lock){+.+.}-{4:4}:
+        __mutex_lock+0x192/0x18c0
+        perf_event_init_cpu+0xb7/0x7c0
+        cpuhp_invoke_callback+0x2c0/0x1030
+        __cpuhp_invoke_callback_range+0xbf/0x1f0
+        _cpu_up+0x2e7/0x690
+        cpu_up+0x117/0x170
+        cpuhp_bringup_mask+0xd5/0x120
+        bringup_nonboot_cpus+0x13d/0x170
+        smp_init+0x2b/0xf0
+        kernel_init_freeable+0x441/0x6d0
+        kernel_init+0x1e/0x160
+        ret_from_fork+0x34/0x70
+        ret_from_fork_asm+0x1a/0x30
+
+ -> #1 (cpu_hotplug_lock){++++}-{0:0}:
+        cpus_read_lock+0x2a/0xd0
+        ring_buffer_resize+0x610/0x14e0
+        __tracing_resize_ring_buffer.part.0+0x42/0x120
+        tracing_set_tracer+0x7bd/0xa80
+        tracing_set_trace_write+0x132/0x1e0
+        vfs_write+0x21c/0xe80
+        ksys_write+0xf9/0x1c0
+        do_syscall_64+0x79/0x1c0
+        entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+ -> #0 (&buffer->mutex){+.+.}-{4:4}:
+        __lock_acquire+0x1405/0x2210
+        lock_acquire+0x174/0x310
+        __mutex_lock+0x192/0x18c0
+        ring_buffer_map+0x11c/0xe70
+        tracing_buffers_mmap+0x1c4/0x3b0
+        __mmap_region+0xd8d/0x1f70
+        do_mmap+0x9d7/0x1010
+        vm_mmap_pgoff+0x20b/0x390
+        ksys_mmap_pgoff+0x2e9/0x440
+        do_syscall_64+0x79/0x1c0
+        entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+ other info that might help us debug this:
+
+ Chain exists of:
+   &buffer->mutex --> &mm->mmap_lock --> &cpu_buffer->mapping_lock
+
+  Possible unsafe locking scenario:
+
+        CPU0                    CPU1
+        ----                    ----
+   lock(&cpu_buffer->mapping_lock);
+                                lock(&mm->mmap_lock);
+                                lock(&cpu_buffer->mapping_lock);
+   lock(&buffer->mutex);
+
+  *** DEADLOCK ***
+
+ 2 locks held by trace-cmd/1113:
+  #0: ffff888106b847e0 (&mm->mmap_lock){++++}-{4:4}, at: vm_mmap_pgoff+0x192/0x390
+  #1: ffff888100a5f9f8 (&cpu_buffer->mapping_lock){+.+.}-{4:4}, at: ring_buffer_map+0xcf/0xe70
+
+ stack backtrace:
+ CPU: 5 UID: 0 PID: 1113 Comm: trace-cmd Not tainted 6.15.0-rc7-test-00002-gfb7d03d8a82f #551 PREEMPT
+ Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+ Call Trace:
+  <TASK>
+  dump_stack_lvl+0x6e/0xa0
+  print_circular_bug.cold+0x178/0x1be
+  check_noncircular+0x146/0x160
+  __lock_acquire+0x1405/0x2210
+  lock_acquire+0x174/0x310
+  ? ring_buffer_map+0x11c/0xe70
+  ? ring_buffer_map+0x11c/0xe70
+  ? __mutex_lock+0x169/0x18c0
+  __mutex_lock+0x192/0x18c0
+  ? ring_buffer_map+0x11c/0xe70
+  ? ring_buffer_map+0x11c/0xe70
+  ? function_trace_call+0x296/0x370
+  ? __pfx___mutex_lock+0x10/0x10
+  ? __pfx_function_trace_call+0x10/0x10
+  ? __pfx___mutex_lock+0x10/0x10
+  ? _raw_spin_unlock+0x2d/0x50
+  ? ring_buffer_map+0x11c/0xe70
+  ? ring_buffer_map+0x11c/0xe70
+  ? __mutex_lock+0x5/0x18c0
+  ring_buffer_map+0x11c/0xe70
+  ? do_raw_spin_lock+0x12d/0x270
+  ? find_held_lock+0x2b/0x80
+  ? _raw_spin_unlock+0x2d/0x50
+  ? rcu_is_watching+0x15/0xb0
+  ? _raw_spin_unlock+0x2d/0x50
+  ? trace_preempt_on+0xd0/0x110
+  tracing_buffers_mmap+0x1c4/0x3b0
+  __mmap_region+0xd8d/0x1f70
+  ? ring_buffer_lock_reserve+0x99/0xff0
+  ? __pfx___mmap_region+0x10/0x10
+  ? ring_buffer_lock_reserve+0x99/0xff0
+  ? __pfx_ring_buffer_lock_reserve+0x10/0x10
+  ? __pfx_ring_buffer_lock_reserve+0x10/0x10
+  ? bpf_lsm_mmap_addr+0x4/0x10
+  ? security_mmap_addr+0x46/0xd0
+  ? lock_is_held_type+0xd9/0x130
+  do_mmap+0x9d7/0x1010
+  ? 0xffffffffc0370095
+  ? __pfx_do_mmap+0x10/0x10
+  vm_mmap_pgoff+0x20b/0x390
+  ? __pfx_vm_mmap_pgoff+0x10/0x10
+  ? 0xffffffffc0370095
+  ksys_mmap_pgoff+0x2e9/0x440
+  do_syscall_64+0x79/0x1c0
+  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+ RIP: 0033:0x7fb0963a7de2
+ Code: 00 00 00 0f 1f 44 00 00 41 f7 c1 ff 0f 00 00 75 27 55 89 cd 53 48 89 fb 48 85 ff 74 3b 41 89 ea 48 89 df b8 09 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 76 5b 5d c3 0f 1f 00 48 8b 05 e1 9f 0d 00 64
+ RSP: 002b:00007ffdcc8fb878 EFLAGS: 00000246 ORIG_RAX: 0000000000000009
+ RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007fb0963a7de2
+ RDX: 0000000000000001 RSI: 0000000000001000 RDI: 0000000000000000
+ RBP: 0000000000000001 R08: 0000000000000006 R09: 0000000000000000
+ R10: 0000000000000001 R11: 0000000000000246 R12: 0000000000000000
+ R13: 00007ffdcc8fbe68 R14: 00007fb096628000 R15: 00005633e01a5c90
+  </TASK>
+
+The issue is that cpus_read_lock() is taken within buffer->mutex. The
+memory mapped pages are taken with the mmap_lock held. The buffer->mutex
+is taken within the cpu_buffer->mapping_lock. There's quite a chain with
+all these locks, where the deadlock can be fixed by moving the
+cpus_read_lock() outside the taking of the buffer->mutex.
+
+Cc: stable@vger.kernel.org
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Vincent Donnefort <vdonnefort@google.com>
+Link: https://lore.kernel.org/20250527105820.0f45d045@gandalf.local.home
+Fixes: 117c39200d9d7 ("ring-buffer: Introducing ring-buffer mapping functions")
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/9p/vfs_addr.c             | 3 ++-
- fs/afs/write.c               | 1 +
- fs/ceph/addr.c               | 4 +++-
- fs/netfs/direct_read.c       | 3 ++-
- fs/netfs/main.c              | 1 +
- fs/netfs/misc.c              | 1 +
- fs/netfs/objects.c           | 1 +
- fs/netfs/read_collect.c      | 7 +++++--
- fs/nfs/fscache.c             | 1 +
- fs/smb/client/file.c         | 3 ++-
- include/linux/netfs.h        | 1 +
- include/trace/events/netfs.h | 1 +
- 12 files changed, 21 insertions(+), 6 deletions(-)
+ kernel/trace/ring_buffer.c |   11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/fs/9p/vfs_addr.c b/fs/9p/vfs_addr.c
-index b5a4a28e0fe79..e4420591cf354 100644
---- a/fs/9p/vfs_addr.c
-+++ b/fs/9p/vfs_addr.c
-@@ -77,7 +77,8 @@ static void v9fs_issue_read(struct netfs_io_subrequest *subreq)
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -2796,6 +2796,12 @@ int ring_buffer_resize(struct trace_buff
+ 	if (nr_pages < 2)
+ 		nr_pages = 2;
  
- 	/* if we just extended the file size, any portion not in
- 	 * cache won't be on server and is zeroes */
--	if (subreq->rreq->origin != NETFS_DIO_READ)
-+	if (subreq->rreq->origin != NETFS_UNBUFFERED_READ &&
-+	    subreq->rreq->origin != NETFS_DIO_READ)
- 		__set_bit(NETFS_SREQ_CLEAR_TAIL, &subreq->flags);
- 	if (pos + total >= i_size_read(rreq->inode))
- 		__set_bit(NETFS_SREQ_HIT_EOF, &subreq->flags);
-diff --git a/fs/afs/write.c b/fs/afs/write.c
-index 7df7b2f5e7b29..2e7526ea883ae 100644
---- a/fs/afs/write.c
-+++ b/fs/afs/write.c
-@@ -202,6 +202,7 @@ void afs_retry_request(struct netfs_io_request *wreq, struct netfs_io_stream *st
- 	case NETFS_READ_GAPS:
- 	case NETFS_READ_SINGLE:
- 	case NETFS_READ_FOR_WRITE:
-+	case NETFS_UNBUFFERED_READ:
- 	case NETFS_DIO_READ:
- 		return;
- 	default:
-diff --git a/fs/ceph/addr.c b/fs/ceph/addr.c
-index 557c326561fdc..b95c4cb21c13f 100644
---- a/fs/ceph/addr.c
-+++ b/fs/ceph/addr.c
-@@ -238,6 +238,7 @@ static void finish_netfs_read(struct ceph_osd_request *req)
- 		if (sparse && err > 0)
- 			err = ceph_sparse_ext_map_end(op);
- 		if (err < subreq->len &&
-+		    subreq->rreq->origin != NETFS_UNBUFFERED_READ &&
- 		    subreq->rreq->origin != NETFS_DIO_READ)
- 			__set_bit(NETFS_SREQ_CLEAR_TAIL, &subreq->flags);
- 		if (IS_ENCRYPTED(inode) && err > 0) {
-@@ -281,7 +282,8 @@ static bool ceph_netfs_issue_op_inline(struct netfs_io_subrequest *subreq)
- 	size_t len;
- 	int mode;
++	/*
++	 * Keep CPUs from coming online while resizing to synchronize
++	 * with new per CPU buffers being created.
++	 */
++	guard(cpus_read_lock)();
++
+ 	/* prevent another thread from changing buffer sizes */
+ 	mutex_lock(&buffer->mutex);
+ 	atomic_inc(&buffer->resizing);
+@@ -2840,7 +2846,6 @@ int ring_buffer_resize(struct trace_buff
+ 			cond_resched();
+ 		}
  
--	if (rreq->origin != NETFS_DIO_READ)
-+	if (rreq->origin != NETFS_UNBUFFERED_READ &&
-+	    rreq->origin != NETFS_DIO_READ)
- 		__set_bit(NETFS_SREQ_CLEAR_TAIL, &subreq->flags);
- 	__clear_bit(NETFS_SREQ_COPY_TO_CACHE, &subreq->flags);
+-		cpus_read_lock();
+ 		/*
+ 		 * Fire off all the required work handlers
+ 		 * We can't schedule on offline CPUs, but it's not necessary
+@@ -2880,7 +2885,6 @@ int ring_buffer_resize(struct trace_buff
+ 			cpu_buffer->nr_pages_to_update = 0;
+ 		}
  
-diff --git a/fs/netfs/direct_read.c b/fs/netfs/direct_read.c
-index a24e63d2c8186..9902766195d7b 100644
---- a/fs/netfs/direct_read.c
-+++ b/fs/netfs/direct_read.c
-@@ -188,7 +188,8 @@ ssize_t netfs_unbuffered_read_iter_locked(struct kiocb *iocb, struct iov_iter *i
+-		cpus_read_unlock();
+ 	} else {
+ 		cpu_buffer = buffer->buffers[cpu_id];
  
- 	rreq = netfs_alloc_request(iocb->ki_filp->f_mapping, iocb->ki_filp,
- 				   iocb->ki_pos, orig_count,
--				   NETFS_DIO_READ);
-+				   iocb->ki_flags & IOCB_DIRECT ?
-+				   NETFS_DIO_READ : NETFS_UNBUFFERED_READ);
- 	if (IS_ERR(rreq))
- 		return PTR_ERR(rreq);
+@@ -2908,8 +2912,6 @@ int ring_buffer_resize(struct trace_buff
+ 			goto out_err;
+ 		}
  
-diff --git a/fs/netfs/main.c b/fs/netfs/main.c
-index 70ecc8f5f2103..3db401d269e7b 100644
---- a/fs/netfs/main.c
-+++ b/fs/netfs/main.c
-@@ -39,6 +39,7 @@ static const char *netfs_origins[nr__netfs_io_origin] = {
- 	[NETFS_READ_GAPS]		= "RG",
- 	[NETFS_READ_SINGLE]		= "R1",
- 	[NETFS_READ_FOR_WRITE]		= "RW",
-+	[NETFS_UNBUFFERED_READ]		= "UR",
- 	[NETFS_DIO_READ]		= "DR",
- 	[NETFS_WRITEBACK]		= "WB",
- 	[NETFS_WRITEBACK_SINGLE]	= "W1",
-diff --git a/fs/netfs/misc.c b/fs/netfs/misc.c
-index 77e7f7c79d27c..43b67a28a8fa0 100644
---- a/fs/netfs/misc.c
-+++ b/fs/netfs/misc.c
-@@ -461,6 +461,7 @@ static ssize_t netfs_wait_for_request(struct netfs_io_request *rreq,
- 		case NETFS_DIO_READ:
- 		case NETFS_DIO_WRITE:
- 		case NETFS_READ_SINGLE:
-+		case NETFS_UNBUFFERED_READ:
- 		case NETFS_UNBUFFERED_WRITE:
- 			break;
- 		default:
-diff --git a/fs/netfs/objects.c b/fs/netfs/objects.c
-index d3eb9ba3013a7..31fa0c81e2a43 100644
---- a/fs/netfs/objects.c
-+++ b/fs/netfs/objects.c
-@@ -59,6 +59,7 @@ struct netfs_io_request *netfs_alloc_request(struct address_space *mapping,
- 	    origin == NETFS_READ_GAPS ||
- 	    origin == NETFS_READ_SINGLE ||
- 	    origin == NETFS_READ_FOR_WRITE ||
-+	    origin == NETFS_UNBUFFERED_READ ||
- 	    origin == NETFS_DIO_READ) {
- 		INIT_WORK(&rreq->work, netfs_read_collection_worker);
- 		rreq->io_streams[0].avail = true;
-diff --git a/fs/netfs/read_collect.c b/fs/netfs/read_collect.c
-index 900dd51c3b941..bad677e58a423 100644
---- a/fs/netfs/read_collect.c
-+++ b/fs/netfs/read_collect.c
-@@ -342,7 +342,8 @@ static void netfs_rreq_assess_dio(struct netfs_io_request *rreq)
- {
- 	unsigned int i;
+-		cpus_read_lock();
+-
+ 		/* Can't run something on an offline CPU. */
+ 		if (!cpu_online(cpu_id))
+ 			rb_update_pages(cpu_buffer);
+@@ -2928,7 +2930,6 @@ int ring_buffer_resize(struct trace_buff
+ 		}
  
--	if (rreq->origin == NETFS_DIO_READ) {
-+	if (rreq->origin == NETFS_UNBUFFERED_READ ||
-+	    rreq->origin == NETFS_DIO_READ) {
- 		for (i = 0; i < rreq->direct_bv_count; i++) {
- 			flush_dcache_page(rreq->direct_bv[i].bv_page);
- 			// TODO: cifs marks pages in the destination buffer
-@@ -360,7 +361,8 @@ static void netfs_rreq_assess_dio(struct netfs_io_request *rreq)
- 	}
- 	if (rreq->netfs_ops->done)
- 		rreq->netfs_ops->done(rreq);
--	if (rreq->origin == NETFS_DIO_READ)
-+	if (rreq->origin == NETFS_UNBUFFERED_READ ||
-+	    rreq->origin == NETFS_DIO_READ)
- 		inode_dio_end(rreq->inode);
- }
- 
-@@ -416,6 +418,7 @@ bool netfs_read_collection(struct netfs_io_request *rreq)
- 	//netfs_rreq_is_still_valid(rreq);
- 
- 	switch (rreq->origin) {
-+	case NETFS_UNBUFFERED_READ:
- 	case NETFS_DIO_READ:
- 	case NETFS_READ_GAPS:
- 		netfs_rreq_assess_dio(rreq);
-diff --git a/fs/nfs/fscache.c b/fs/nfs/fscache.c
-index e278a1ad1ca3e..8b07851787312 100644
---- a/fs/nfs/fscache.c
-+++ b/fs/nfs/fscache.c
-@@ -367,6 +367,7 @@ void nfs_netfs_read_completion(struct nfs_pgio_header *hdr)
- 
- 	sreq = netfs->sreq;
- 	if (test_bit(NFS_IOHDR_EOF, &hdr->flags) &&
-+	    sreq->rreq->origin != NETFS_UNBUFFERED_READ &&
- 	    sreq->rreq->origin != NETFS_DIO_READ)
- 		__set_bit(NETFS_SREQ_CLEAR_TAIL, &sreq->flags);
- 
-diff --git a/fs/smb/client/file.c b/fs/smb/client/file.c
-index 3000c8a9d3ea5..d2df10b8e6fd8 100644
---- a/fs/smb/client/file.c
-+++ b/fs/smb/client/file.c
-@@ -219,7 +219,8 @@ static void cifs_issue_read(struct netfs_io_subrequest *subreq)
- 			goto failed;
+ 		cpu_buffer->nr_pages_to_update = 0;
+-		cpus_read_unlock();
  	}
  
--	if (subreq->rreq->origin != NETFS_DIO_READ)
-+	if (subreq->rreq->origin != NETFS_UNBUFFERED_READ &&
-+	    subreq->rreq->origin != NETFS_DIO_READ)
- 		__set_bit(NETFS_SREQ_CLEAR_TAIL, &subreq->flags);
- 
- 	trace_netfs_sreq(subreq, netfs_sreq_trace_submit);
-diff --git a/include/linux/netfs.h b/include/linux/netfs.h
-index c3f230732f51d..1464b3a104989 100644
---- a/include/linux/netfs.h
-+++ b/include/linux/netfs.h
-@@ -206,6 +206,7 @@ enum netfs_io_origin {
- 	NETFS_READ_GAPS,		/* This read is a synchronous read to fill gaps */
- 	NETFS_READ_SINGLE,		/* This read should be treated as a single object */
- 	NETFS_READ_FOR_WRITE,		/* This read is to prepare a write */
-+	NETFS_UNBUFFERED_READ,		/* This is an unbuffered read */
- 	NETFS_DIO_READ,			/* This is a direct I/O read */
- 	NETFS_WRITEBACK,		/* This write was triggered by writepages */
- 	NETFS_WRITEBACK_SINGLE,		/* This monolithic write was triggered by writepages */
-diff --git a/include/trace/events/netfs.h b/include/trace/events/netfs.h
-index 402c5e82e7b8d..4175eec40048a 100644
---- a/include/trace/events/netfs.h
-+++ b/include/trace/events/netfs.h
-@@ -39,6 +39,7 @@
- 	EM(NETFS_READ_GAPS,			"RG")		\
- 	EM(NETFS_READ_SINGLE,			"R1")		\
- 	EM(NETFS_READ_FOR_WRITE,		"RW")		\
-+	EM(NETFS_UNBUFFERED_READ,		"UR")		\
- 	EM(NETFS_DIO_READ,			"DR")		\
- 	EM(NETFS_WRITEBACK,			"WB")		\
- 	EM(NETFS_WRITEBACK_SINGLE,		"W1")		\
--- 
-2.39.5
-
+  out:
 
 
