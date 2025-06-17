@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 637082DF3C9;
-	Tue, 17 Jun 2025 15:41:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85FE620F090;
+	Tue, 17 Jun 2025 15:41:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750174865; cv=none; b=iGqqr7wrVzMceaFRMuNGQU+b4LD5wf1zWKj+4Op8zSjtPQipv6o1TLRTIY4wIug2Q0+eKJ76vQRxIqSQYhAKMVGmE+DypDQsbkTfT4chs9g++KfiScniPRpdAcDcyBJOJVfidpbhyW2TvOMv1wQNMAXmHVFf3+1WpWR7WkBs1Oc=
+	t=1750174868; cv=none; b=cs6nPPyCBke9oa4UeSYXw65j8HfNJVoxUwRj8YfjqRcNYGd86e+/zWwcndlzZlGhhEv18wCC9E7P2DIy2clAR6mLSpbyYaNki6bhLwPIU/MfzogTMGfCLywGAyo+0AGRaxtHuTPqUn8GG85eIWeK1RbJI8NnfwAailJJ7SvR0Ps=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750174865; c=relaxed/simple;
-	bh=jGWxR/SbUVqyWkKBiQfuCFy54rbOTnK7/kl3zsxHmgo=;
+	s=arc-20240116; t=1750174868; c=relaxed/simple;
+	bh=nEvAb2rWD4NGGlHxLnnjHlAwxRWzIk5uwiot+gSm/Xs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=usyplanoTACPPlrY74vAI0L4iKlWvdsRBtVGJrh/xE+4qhGaJAAI3e4Sueu7GCnid+a8KBnjxvyFIOr3Et8XTksWLq94T29vs8oyRdpGSKtrb7N/xD+cWiWeAZbYxXui4l8vtikJWjhN+KlmQzvn/MkkdQYXJj7pBaWYevJ5Uuo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SsbqXHfQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VY2EyK4iXrL3lYm1dEFFQb4KqKxC8UGQNZcXISTYoDb8PEC4JnDX4cm9ezMjDdeW311dzsiPje5SrJ+vcnTtGO508CQCj+Di3D7kbUl+BIhcF4nMgt5LAMH66UhQtivrj4WT2Qlcbm4l+095pIpr/UhkM5YfAjvmbNipT5xV+mo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H2prNNPA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SsbqXHfQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9A2DC4CEE3;
-	Tue, 17 Jun 2025 15:41:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H2prNNPA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0030EC4CEE3;
+	Tue, 17 Jun 2025 15:41:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750174865;
-	bh=jGWxR/SbUVqyWkKBiQfuCFy54rbOTnK7/kl3zsxHmgo=;
+	s=korg; t=1750174868;
+	bh=nEvAb2rWD4NGGlHxLnnjHlAwxRWzIk5uwiot+gSm/Xs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SsbqXHfQaQ9dqumqWzoQi7ZKFHvv9wFM+F7Q7uByqngNi+Igrcw58r6LVg1exRKJK
-	 QBZ5I7P970dsd0/ivPBKpunAOwrH8lGPPlsSm8xuGduJRwlVTruvWLsgqPJyyJxiZG
-	 DDoaSrPry24BMEtmnDFNUuKHjX+i49TTkOQV5Fg0=
+	b=H2prNNPASL5rv4j1NR31Xtr63NbGluQnQpOPoGgaNhlRaQaUxCQQW1lzOB3VNhxtm
+	 Ne0HViJYGQs7eT10NaQiel2RYUq3I+3Ju3hsH/Eta7WQw977Q0OWZkEpxcfZtX5b3v
+	 CIVQVRxRzlBAH20WFD9JD/NzyfRLH2ug3QKyPk60=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ovidiu Panait <ovidiu.panait.oss@gmail.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Mark Brown <broonie@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 028/780] crypto: sun8i-ce - undo runtime PM changes during driver removal
-Date: Tue, 17 Jun 2025 17:15:36 +0200
-Message-ID: <20250617152452.650065760@linuxfoundation.org>
+Subject: [PATCH 6.12 068/512] arm64/fpsimd: Dont corrupt FPMR when streaming mode changes
+Date: Tue, 17 Jun 2025 17:20:34 +0200
+Message-ID: <20250617152422.329455032@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,80 +48,75 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ovidiu Panait <ovidiu.panait.oss@gmail.com>
+From: Mark Brown <broonie@kernel.org>
 
-[ Upstream commit 9334f427576e6d361a409959b52246b0aa10476f ]
+[ Upstream commit e5fa85fce08b21ed41643cb7968bf66bbd0532e3 ]
 
-The pm_runtime_use_autosuspend() call must be undone with
-pm_runtime_dont_use_autosuspend() at driver exit, but this is not
-currently handled in the driver.
+When the effective value of PSTATE.SM is changed from 0 to 1 or from 1
+to 0 by any method, an entry or exit to/from streaming SVE mode is
+performed, and hardware automatically resets a number of registers. As
+of ARM DDI 0487 L.a, this means:
 
-To fix this issue and at the same time simplify error handling, switch
-to devm_pm_runtime_enable(). It will call both pm_runtime_disable() and
-pm_runtime_dont_use_autosuspend() during driver removal.
+* All implemented bits of the SVE vector registers are set to zero.
 
-Fixes: 06f751b61329 ("crypto: allwinner - Add sun8i-ce Crypto Engine")
-Signed-off-by: Ovidiu Panait <ovidiu.panait.oss@gmail.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+* All implemented bits of the SVE predicate registers are set to zero.
+
+* All implemented bits of FFR are set to zero, if FFR is implemented in
+  the new mode.
+
+* FPSR is set to 0x0000_0000_0800_009f.
+
+* FPMR is set to 0, if FPMR is implemented.
+
+Currently task_fpsimd_load() restores FPMR before restoring SVCR (which
+is an accessor for PSTATE.{SM,ZA}), and so the restored value of FPMR
+may be clobbered if the restored value of PSTATE.SM happens to differ
+from the initial value of PSTATE.SM.
+
+Fix this by moving the restore of FPMR later.
+
+Note: this was originally posted as [1].
+
+Fixes: 203f2b95a882 ("arm64/fpsimd: Support FEAT_FPMR")
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/linux-arm-kernel/20241204-arm64-sme-reenable-v2-2-bae87728251d@kernel.org/
+[ Rutland: rewrite commit message ]
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Link: https://lore.kernel.org/r/20250409164010.3480271-7-mark.rutland@arm.com
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../crypto/allwinner/sun8i-ce/sun8i-ce-core.c   | 17 ++++++-----------
- 1 file changed, 6 insertions(+), 11 deletions(-)
+ arch/arm64/kernel/fpsimd.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/crypto/allwinner/sun8i-ce/sun8i-ce-core.c b/drivers/crypto/allwinner/sun8i-ce/sun8i-ce-core.c
-index ec1ffda9ea32e..658f520cee0ca 100644
---- a/drivers/crypto/allwinner/sun8i-ce/sun8i-ce-core.c
-+++ b/drivers/crypto/allwinner/sun8i-ce/sun8i-ce-core.c
-@@ -832,13 +832,12 @@ static int sun8i_ce_pm_init(struct sun8i_ce_dev *ce)
- 	err = pm_runtime_set_suspended(ce->dev);
- 	if (err)
- 		return err;
--	pm_runtime_enable(ce->dev);
--	return err;
--}
+diff --git a/arch/arm64/kernel/fpsimd.c b/arch/arm64/kernel/fpsimd.c
+index 42b6740d1a64c..12982f1570fca 100644
+--- a/arch/arm64/kernel/fpsimd.c
++++ b/arch/arm64/kernel/fpsimd.c
+@@ -359,9 +359,6 @@ static void task_fpsimd_load(void)
+ 	WARN_ON(preemptible());
+ 	WARN_ON(test_thread_flag(TIF_KERNEL_FPSTATE));
  
--static void sun8i_ce_pm_exit(struct sun8i_ce_dev *ce)
--{
--	pm_runtime_disable(ce->dev);
-+	err = devm_pm_runtime_enable(ce->dev);
-+	if (err)
-+		return err;
-+
-+	return 0;
- }
- 
- static int sun8i_ce_get_clks(struct sun8i_ce_dev *ce)
-@@ -1041,7 +1040,7 @@ static int sun8i_ce_probe(struct platform_device *pdev)
- 			       "sun8i-ce-ns", ce);
- 	if (err) {
- 		dev_err(ce->dev, "Cannot request CryptoEngine Non-secure IRQ (err=%d)\n", err);
--		goto error_irq;
-+		goto error_pm;
+-	if (system_supports_fpmr())
+-		write_sysreg_s(current->thread.uw.fpmr, SYS_FPMR);
+-
+ 	if (system_supports_sve() || system_supports_sme()) {
+ 		switch (current->thread.fp_type) {
+ 		case FP_STATE_FPSIMD:
+@@ -413,6 +410,9 @@ static void task_fpsimd_load(void)
+ 			restore_ffr = system_supports_fa64();
  	}
  
- 	err = sun8i_ce_register_algs(ce);
-@@ -1082,8 +1081,6 @@ static int sun8i_ce_probe(struct platform_device *pdev)
- 	return 0;
- error_alg:
- 	sun8i_ce_unregister_algs(ce);
--error_irq:
--	sun8i_ce_pm_exit(ce);
- error_pm:
- 	sun8i_ce_free_chanlist(ce, MAXFLOW - 1);
- 	return err;
-@@ -1104,8 +1101,6 @@ static void sun8i_ce_remove(struct platform_device *pdev)
- #endif
- 
- 	sun8i_ce_free_chanlist(ce, MAXFLOW - 1);
--
--	sun8i_ce_pm_exit(ce);
- }
- 
- static const struct of_device_id sun8i_ce_crypto_of_match_table[] = {
++	if (system_supports_fpmr())
++		write_sysreg_s(current->thread.uw.fpmr, SYS_FPMR);
++
+ 	if (restore_sve_regs) {
+ 		WARN_ON_ONCE(current->thread.fp_type != FP_STATE_SVE);
+ 		sve_load_state(sve_pffr(&current->thread),
 -- 
 2.39.5
 
