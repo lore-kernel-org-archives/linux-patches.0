@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2BB62E7163;
-	Tue, 17 Jun 2025 15:56:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81DE82ECD1B;
+	Tue, 17 Jun 2025 15:56:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175792; cv=none; b=qR4zuBOPHkipYH3bM3VftVDTelX6iKMKRvAIogMRV73iVLEcSFYN9UGli1u99oKgmBHhLIacJmPYupbDtv/wBdbYw4Fk3nYa6uQ6khpoo/qCwAMpRRoJKdtS2ZVLT8YXFZhh2i05fSpnpwpvDnFCs13k+yTIqbK/Uh02WF64QHQ=
+	t=1750175795; cv=none; b=qh5xID1ErZLBXv+XkP9VW6jktg2w8nZ0AP7WmMTW39wakMi9PRspWlQPZM2dCXEAwEtw8o4Tfw8x20osqiNaKJaG7xjnvq4AjglvLg7BNuI9S78lEQX6+8S0RReJLNHkMHZTS4US7m0eGMURCw+JAKQR8EIzl9q9+RXz5l/I1Uc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175792; c=relaxed/simple;
-	bh=UmeUoothHCkaDBQni1VPA5ieZXRlhGZ/3hKLTX0ZlnU=;
+	s=arc-20240116; t=1750175795; c=relaxed/simple;
+	bh=SjwfCq2W6Z95zm6X78bnomxmxNUAX9eOq+Mh/LU6cds=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o3SIXM2ZSZxddSyDGip/3spDWeRVGubC6FCIjIryRzdoE38GF06gt60wgb7pPoQk1iXdxBxE2IOSmWQNRVUcvShmsWJET1REh8y1iNIjXe0Eh0akG9GpdZrSewEyMxKhtF3FPTHMhZk0C37tDVzRO8L8VqQUnvln5nX0ZmR77gs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pBpQJrTg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kNi2Q1UEacIkOBxSA7tqBc3Ilmnj+xieNKFOLNKlu/Z02chRwzN0vQNzLfFZpGYLzfbnqe4Qemu0AEOmdGET4dU6yEKjIjPbiaGJiF4g5ouBEF6M5JWpkIGkTNTNjZZ3/fWCXNZjRHlKafL0LSMWXr8oA2cW1KoYblvqBHQwUQQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C7rwmHqX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pBpQJrTg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AA49C4CEE7;
-	Tue, 17 Jun 2025 15:56:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C7rwmHqX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09F85C4CEE3;
+	Tue, 17 Jun 2025 15:56:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175792;
-	bh=UmeUoothHCkaDBQni1VPA5ieZXRlhGZ/3hKLTX0ZlnU=;
+	s=korg; t=1750175795;
+	bh=SjwfCq2W6Z95zm6X78bnomxmxNUAX9eOq+Mh/LU6cds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pBpQJrTgwBhDWL4GQbKA2EZ6kwrepOAcJGiiRLRpHe7/w2vn8pDwbvx2CSRUMEwsN
-	 xlbvLsRVk9husovOVUsUPrnmV8JDp3JaeoM6ihzizJYmAtGAc9hOYYX5Yj3w4yu5Hg
-	 /Paiqyvjxz0tKvd5nUh+HKr61kP0Jvq247HlKwP8=
+	b=C7rwmHqXuAWL1HFG6elSz7XWTwJZJGXo07w6DG3eL+S5Tyn0/ONDYHTkozoHoOCF7
+	 VaSBItcHdRbeJ69eA+ttq9el/a8z5f/qbfHSU1hBGS2zswUPeRcvpiMae3zPCLDyx6
+	 pmi8/x8SyCmfVjhdItXGO3RksrCRv+k8wCE5DIaw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joshua Thompson <funaho@jurai.org>,
-	Finn Thain <fthain@linux-m68k.org>,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Cong Wang <xiyou.wangcong@gmail.com>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	John Fastabend <john.fastabend@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 123/780] m68k: mac: Fix macintosh_config for Mac II
-Date: Tue, 17 Jun 2025 17:17:11 +0200
-Message-ID: <20250617152456.521029615@linuxfoundation.org>
+Subject: [PATCH 6.12 164/512] ktls, sockmap: Fix missing uncharge operation
+Date: Tue, 17 Jun 2025 17:22:10 +0200
+Message-ID: <20250617152426.256160038@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,48 +49,61 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Finn Thain <fthain@linux-m68k.org>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-[ Upstream commit 52ae3f5da7e5adbe3d1319573b55dac470abb83c ]
+[ Upstream commit 79f0c39ae7d3dc628c01b02f23ca5d01f9875040 ]
 
-When booted on my Mac II, the kernel prints this:
+When we specify apply_bytes, we divide the msg into multiple segments,
+each with a length of 'send', and every time we send this part of the data
+using tcp_bpf_sendmsg_redir(), we use sk_msg_return_zero() to uncharge the
+memory of the specified 'send' size.
 
-    Detected Macintosh model: 6
-    Apple Macintosh Unknown
+However, if the first segment of data fails to send, for example, the
+peer's buffer is full, we need to release all of the msg. When releasing
+the msg, we haven't uncharged the memory of the subsequent segments.
 
-The catch-all entry ("Unknown") is mac_data_table[0] which is only needed
-in the unlikely event that the bootinfo model ID can't be matched.
-When model ID is 6, the search should begin and end at mac_data_table[1].
-Fix the off-by-one error that causes this problem.
+This modification does not make significant logical changes, but only
+fills in the missing uncharge places.
 
-Cc: Joshua Thompson <funaho@jurai.org>
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Finn Thain <fthain@linux-m68k.org>
-Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Link: https://lore.kernel.org/d0f30a551064ca4810b1c48d5a90954be80634a9.1745453246.git.fthain@linux-m68k.org
-Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
+This issue has existed all along, until it was exposed after we added the
+apply test in test_sockmap:
+commit 3448ad23b34e ("selftests/bpf: Add apply_bytes test to test_txmsg_redir_wait_sndmem in test_sockmap")
+
+Fixes: d3b18ad31f93 ("tls: add bpf support to sk_msg handling")
+Reported-by: Cong Wang <xiyou.wangcong@gmail.com>
+Closes: https://lore.kernel.org/bpf/aAmIi0vlycHtbXeb@pop-os.localdomain/T/#t
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Acked-by: John Fastabend <john.fastabend@gmail.com>
+Reviewed-by: Cong Wang <xiyou.wangcong@gmail.com>
+Link: https://lore.kernel.org/r/20250425060015.6968-2-jiayuan.chen@linux.dev
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/m68k/mac/config.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/tls/tls_sw.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/arch/m68k/mac/config.c b/arch/m68k/mac/config.c
-index e324410ef239c..d26c7f4f8c360 100644
---- a/arch/m68k/mac/config.c
-+++ b/arch/m68k/mac/config.c
-@@ -793,7 +793,7 @@ static void __init mac_identify(void)
- 	}
- 
- 	macintosh_config = mac_data_table;
--	for (m = macintosh_config; m->ident != -1; m++) {
-+	for (m = &mac_data_table[1]; m->ident != -1; m++) {
- 		if (m->ident == model) {
- 			macintosh_config = m;
- 			break;
+diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
+index b3cae4dd4f499..8fb5925f2389e 100644
+--- a/net/tls/tls_sw.c
++++ b/net/tls/tls_sw.c
+@@ -908,6 +908,13 @@ static int bpf_exec_tx_verdict(struct sk_msg *msg, struct sock *sk,
+ 					    &msg_redir, send, flags);
+ 		lock_sock(sk);
+ 		if (err < 0) {
++			/* Regardless of whether the data represented by
++			 * msg_redir is sent successfully, we have already
++			 * uncharged it via sk_msg_return_zero(). The
++			 * msg->sg.size represents the remaining unprocessed
++			 * data, which needs to be uncharged here.
++			 */
++			sk_mem_uncharge(sk, msg->sg.size);
+ 			*copied -= sk_msg_free_nocharge(sk, &msg_redir);
+ 			msg->sg.size = 0;
+ 		}
 -- 
 2.39.5
 
