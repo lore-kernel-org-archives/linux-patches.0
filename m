@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60A692ED87D;
-	Tue, 17 Jun 2025 16:21:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A76E42DFF02;
+	Tue, 17 Jun 2025 16:21:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177299; cv=none; b=Nm+stk2O1A0vn48FKegUETXjHK0zvUB7m98B465juWp51ZCH2d6zw7/Zowl2Jp0wnerYySclGE/1P0Y2nMo3n8LpJS0Q3DG+qyS/UFo50YsE3Nw5/od5wLpt83BXdCQ+kAvBFFCWw9fc4Ls8rhpeBDYf8Jy+36KlZxkdtX52t/g=
+	t=1750177302; cv=none; b=M9IYD+j5CML1q+60w6xOhMfZAajuW0XRzaB9koPQ+6MrXY7ksaD2v14HIGdJquB3zSPTQHvNYb7wlOm/TP/MkY6fhw2NE31g/738q//nGAx3C51wu7zSPBdr1k5I3XfQpgL1PV9FXjEF85z6I6PNxuHEumCH4ganTjm/uxgkAeo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177299; c=relaxed/simple;
-	bh=0pvm4aBAqMPR/FNGB1OQumJS721jYeGJQLRBAkdnAb4=;
+	s=arc-20240116; t=1750177302; c=relaxed/simple;
+	bh=3LKG0Fq88AmXqHmzTeuZWV7CvQ/dPt9AcAnahiV7mIQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WO5ZMt3ghGs6G5fNP1JRV11TUhrM/ra4EgRzIaTEq+v7P+L9Q07KWwPCI7uvLjp/zxJWqXysrd3F+1CWYo36oFByvHRlTz9CuePI0KBrAhapfksiv9Bj/P41aTJnFhv7Nkl8ueeInG1LFlNJw0Bj+BM6mfwJlKqz1YJn/DLaggk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Eo7541Tb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=juRjnrDInzD/YBzOUoE3LJG9ok5DgVu9++O67nFEec/FDx4ozoIpVBuOSdV5Yt+eyrGyfU/2IToeQTJMTJoP3SACgviY7avNu2PDm0mDLMaoCH0HWMOwyxxoZd4GjEtLVhm7X+TWaOB+c+4OplbJNufe+QKac2cc5tzSnhQGFKE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DR15T1e5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Eo7541Tb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE3F2C4CEE3;
-	Tue, 17 Jun 2025 16:21:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DR15T1e5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15A80C4CEE3;
+	Tue, 17 Jun 2025 16:21:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177299;
-	bh=0pvm4aBAqMPR/FNGB1OQumJS721jYeGJQLRBAkdnAb4=;
+	s=korg; t=1750177302;
+	bh=3LKG0Fq88AmXqHmzTeuZWV7CvQ/dPt9AcAnahiV7mIQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Eo7541TbXPkDUYfoE9+ajLMJAknrnl6AHAhylNlT27cv5TmKwkHsyhrVw9ZOJcm4a
-	 bNj/NfgoOmRuOj98MrrbA2HbHKMq68CaoS130XLbdBLCKlczRpH77+PrqFilSS8B/p
-	 13MFerAoPkOTaFKEK8k68rRf4amOjEV07gbHjLjI=
+	b=DR15T1e5QasYw5rzd49BW1VtkCmDAu7ft2Bi4NXkUUHK2VrcvDW2Ck7KDDVT696db
+	 hxGMqBFJlwZEzp99yOUmdm7se6PO8xBw7FECL3DK76vjTXzxXViIgTrKpvodhRlRC2
+	 FfwuvMLx87ECyh7/VJoKaFdt9zFCj4ZT9/sIncrc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Sam Winchenbach <swinchenbach@arka.org>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 286/780] RDMA/bnxt_re: Fix return code of bnxt_re_configure_cc
-Date: Tue, 17 Jun 2025 17:19:54 +0200
-Message-ID: <20250617152503.118921922@linuxfoundation.org>
+Subject: [PATCH 6.12 324/512] iio: filter: admv8818: fix band 4, state 15
+Date: Tue, 17 Jun 2025 17:24:50 +0200
+Message-ID: <20250617152432.729697313@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,42 +47,39 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+From: Sam Winchenbach <swinchenbach@arka.org>
 
-[ Upstream commit 990b5c07f677a0b633b41130a70771337c18343e ]
+[ Upstream commit ef0ce24f590ac075d5eda11f2d6434b303333ed6 ]
 
-Driver currently supports modifying GEN0_EXT0 CC parameters
-through debugfs hook.
+Corrects the upper range of LPF Band 4 from 18.5 GHz to 18.85 GHz per
+the ADMV8818 datasheet
 
-Fixed to return -EOPNOTSUPP instead of -EINVAL in bnxt_re_configure_cc()
-when the user tries to modify any other CC parameters.
-
-Fixes: 656dff55da19 ("RDMA/bnxt_re: Congestion control settings using debugfs hook")
-Signed-off-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
-Link: https://patch.msgid.link/20250520035910.1061918-4-kalesh-anakkur.purayil@broadcom.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: f34fe888ad05 ("iio:filter:admv8818: add support for ADMV8818")
+Signed-off-by: Sam Winchenbach <swinchenbach@arka.org>
+Link: https://patch.msgid.link/20250328174831.227202-3-sam.winchenbach@framepointer.org
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/bnxt_re/debugfs.c | 2 +-
+ drivers/iio/filter/admv8818.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/bnxt_re/debugfs.c b/drivers/infiniband/hw/bnxt_re/debugfs.c
-index 9f6392155d915..e632f1661b929 100644
---- a/drivers/infiniband/hw/bnxt_re/debugfs.c
-+++ b/drivers/infiniband/hw/bnxt_re/debugfs.c
-@@ -272,7 +272,7 @@ static int bnxt_re_configure_cc(struct bnxt_re_dev *rdev, u32 gen_ext, u32 offse
- 	int rc;
+diff --git a/drivers/iio/filter/admv8818.c b/drivers/iio/filter/admv8818.c
+index d85b7d3de8660..3d8740caa1455 100644
+--- a/drivers/iio/filter/admv8818.c
++++ b/drivers/iio/filter/admv8818.c
+@@ -103,7 +103,7 @@ static const unsigned long long freq_range_lpf[4][2] = {
+ 	{2050000000ULL, 3850000000ULL},
+ 	{3350000000ULL, 7250000000ULL},
+ 	{7000000000, 13000000000},
+-	{12550000000, 18500000000}
++	{12550000000, 18850000000}
+ };
  
- 	if (gen_ext != CC_CONFIG_GEN0_EXT0)
--		return -EINVAL;
-+		return -EOPNOTSUPP;
- 
- 	rc = bnxt_re_fill_gen0_ext0(&ccparam, offset, val);
- 	if (rc)
+ static const struct regmap_config admv8818_regmap_config = {
 -- 
 2.39.5
 
