@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 465AE2DFF00;
-	Tue, 17 Jun 2025 15:54:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5608E2F234A;
+	Tue, 17 Jun 2025 15:54:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175665; cv=none; b=qy0DNQ9rOXxBKlxVuW+kBYoGbVldD+hZ9tGQ1JxkAdOQp8GNOYUmrXyTdJIu0FVRztdgNXZQZaqzbI/S4VhZeGWvdO/k61zoS6mgaTT2LRIM29hEH/FZkfTJpvt9QZjZuQN3SutKfNNNZ/ZscqHwwYEjbPdDy5PWAiph1ocvxEg=
+	t=1750175668; cv=none; b=WtResLBzmRMoYM7+avxXkF2iVwHB62nH0FCyyYe60Mt8Q+dQFzQgCH1XsK06KipfZb5+7zgsWdDsmD2Ro9heNSGRw3J5ShAN0N7bgdgBouwrS2uFPPEj+HzOsqdDvPmNKeTEUDwlVWcIqrMETp5Qw2Gdj2hLWi46dzte8tl//Ns=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175665; c=relaxed/simple;
-	bh=I7smV/Yy8ydMSc/ztEDgxYLWqav1finAAZQCzwkOMdY=;
+	s=arc-20240116; t=1750175668; c=relaxed/simple;
+	bh=plSKBrq8eNy/L/TjQDX6AbsR+k45+fsrOEjV5tjIBuI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AHAumF+CjnDATg01YYFsuYN+aViWo2gbQ0+b9oQj1uzbhgUAliTapoysf1M8FTarJ0w5IbmpKIAnam4ZLf4jeZvRMN6gFK7fE5xfpnMsIBjOw38iXC20Lti2L6/gS8LkgUhw+5SSmkZkEzZBgbs+pm5c8rwqIJmpqYMCNcoRVv4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W1PZfqvc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VujExWHKpO6XaK+ztOTrSL74lQx+el9gHe3pNktdIpT29k3RXyDm4ywoEqUM2D1AO6SofqRP7yxMsHr63bANfSfR+d3K7F+W1a9xL1P5AInKc9aBFnVGqD3k+xTnwfG6prhhGim/7F+1pzbz37KzmyiLZOIt4SH0FU9XC118xFw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EmSqL87m; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W1PZfqvc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7653C4CEE3;
-	Tue, 17 Jun 2025 15:54:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EmSqL87m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8948C4CEE3;
+	Tue, 17 Jun 2025 15:54:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175665;
-	bh=I7smV/Yy8ydMSc/ztEDgxYLWqav1finAAZQCzwkOMdY=;
+	s=korg; t=1750175668;
+	bh=plSKBrq8eNy/L/TjQDX6AbsR+k45+fsrOEjV5tjIBuI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W1PZfqvcbNWnRNkiir7R/4c9tBkDVMdtO3qeyyIf+FoNZitaRcI68q8lp2TaZQBGM
-	 OaRKlRmmy7JC2xdTQBN3IZQh8SRBj61mAyo3nML+DkgBkhFbu1z0jiskkxENLx3pnh
-	 yaYHxAWuVv4zue5KM28wg68K/o0rp64ZQ827bxjw=
+	b=EmSqL87mSyW7xwWIbV32+azl4xhTPZQ7GMOQ5nfbImcsFTujGQV77gRSykYC6YTPN
+	 pQJkoigNw8b2nCqEjr286vrO7saFgpUuw/wR7SIU3NPXSGVMLXSHTQtLDiWVz9YmCU
+	 indeZQYk3ooWYDkLdQO62VeRNbiVGfHW3qMknXE0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hongbo Yao <andy.xu@hj-micro.com>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Will Deacon <will@kernel.org>,
+	Luca Weiss <luca.weiss@fairphone.com>,
+	Taniya Das <quic_tdas@quicinc.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 111/780] perf: arm-ni: Unregister PMUs on probe failure
-Date: Tue, 17 Jun 2025 17:16:59 +0200
-Message-ID: <20250617152456.027057934@linuxfoundation.org>
+Subject: [PATCH 6.12 152/512] clk: qcom: camcc-sm6350: Add *_wait_val values for GDSCs
+Date: Tue, 17 Jun 2025 17:21:58 +0200
+Message-ID: <20250617152425.769282480@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,121 +48,97 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hongbo Yao <andy.xu@hj-micro.com>
+From: Luca Weiss <luca.weiss@fairphone.com>
 
-[ Upstream commit 7f57afde6a44d9e044885e1125034edd4fda02e8 ]
+[ Upstream commit e7b1c13280ad866f3b935f6c658713c41db61635 ]
 
-When a resource allocation fails in one clock domain of an NI device,
-we need to properly roll back all previously registered perf PMUs in
-other clock domains of the same device.
+Compared to the msm-4.19 driver the mainline GDSC driver always sets the
+bits for en_rest, en_few & clk_dis, and if those values are not set
+per-GDSC in the respective driver then the default value from the GDSC
+driver is used. The downstream driver only conditionally sets
+clk_dis_wait_val if qcom,clk-dis-wait-val is given in devicetree.
 
-Otherwise, it can lead to kernel panics.
+Correct this situation by explicitly setting those values. For all GDSCs
+the reset value of those bits are used.
 
-Calling arm_ni_init+0x0/0xff8 [arm_ni] @ 2374
-arm-ni ARMHCB70:00: Failed to request PMU region 0x1f3c13000
-arm-ni ARMHCB70:00: probe with driver arm-ni failed with error -16
-list_add corruption: next->prev should be prev (fffffd01e9698a18),
-but was 0000000000000000. (next=ffff10001a0decc8).
-pstate: 6340009 (nZCv daif +PAN -UAO +TCO +DIT -SSBS BTYPE=--)
-pc : list_add_valid_or_report+0x7c/0xb8
-lr : list_add_valid_or_report+0x7c/0xb8
-Call trace:
- __list_add_valid_or_report+0x7c/0xb8
- perf_pmu_register+0x22c/0x3a0
- arm_ni_probe+0x554/0x70c [arm_ni]
- platform_probe+0x70/0xe8
- really_probe+0xc6/0x4d8
- driver_probe_device+0x48/0x170
- __driver_attach+0x8e/0x1c0
- bus_for_each_dev+0x64/0xf0
- driver_add+0x138/0x260
- bus_add_driver+0x68/0x138
- __platform_driver_register+0x2c/0x40
- arm_ni_init+0x14/0x2a [arm_ni]
- do_init_module+0x36/0x298
----[ end trace 0000000000000000 ]---
-Kernel panic - not syncing: Oops - BUG: Fatal exception
-SMP: stopping secondary CPUs
-
-Fixes: 4d5a7680f2b4 ("perf: Add driver for Arm NI-700 interconnect PMU")
-Signed-off-by: Hongbo Yao <andy.xu@hj-micro.com>
-Reviewed-by: Robin Murphy <robin.murphy@arm.com>
-Link: https://lore.kernel.org/r/20250403070918.4153839-1-andy.xu@hj-micro.com
-Signed-off-by: Will Deacon <will@kernel.org>
+Fixes: 80f5451d9a7c ("clk: qcom: Add camera clock controller driver for SM6350")
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+Reviewed-by: Taniya Das <quic_tdas@quicinc.com>
+Link: https://lore.kernel.org/r/20250425-sm6350-gdsc-val-v1-1-1f252d9c5e4e@fairphone.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/perf/arm-ni.c | 39 +++++++++++++++++++++------------------
- 1 file changed, 21 insertions(+), 18 deletions(-)
+ drivers/clk/qcom/camcc-sm6350.c | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-diff --git a/drivers/perf/arm-ni.c b/drivers/perf/arm-ni.c
-index fd7a5e60e9630..0c418a7ee10f3 100644
---- a/drivers/perf/arm-ni.c
-+++ b/drivers/perf/arm-ni.c
-@@ -575,6 +575,23 @@ static int arm_ni_init_cd(struct arm_ni *ni, struct arm_ni_node *node, u64 res_s
- 	return err;
- }
+diff --git a/drivers/clk/qcom/camcc-sm6350.c b/drivers/clk/qcom/camcc-sm6350.c
+index f6634cc8663ef..418668184ec35 100644
+--- a/drivers/clk/qcom/camcc-sm6350.c
++++ b/drivers/clk/qcom/camcc-sm6350.c
+@@ -1694,6 +1694,9 @@ static struct clk_branch camcc_sys_tmr_clk = {
  
-+static void arm_ni_remove(struct platform_device *pdev)
-+{
-+	struct arm_ni *ni = platform_get_drvdata(pdev);
-+
-+	for (int i = 0; i < ni->num_cds; i++) {
-+		struct arm_ni_cd *cd = ni->cds + i;
-+
-+		if (!cd->pmu_base)
-+			continue;
-+
-+		writel_relaxed(0, cd->pmu_base + NI_PMCR);
-+		writel_relaxed(U32_MAX, cd->pmu_base + NI_PMINTENCLR);
-+		perf_pmu_unregister(&cd->pmu);
-+		cpuhp_state_remove_instance_nocalls(arm_ni_hp_state, &cd->cpuhp_node);
-+	}
-+}
-+
- static void arm_ni_probe_domain(void __iomem *base, struct arm_ni_node *node)
- {
- 	u32 reg = readl_relaxed(base + NI_NODE_TYPE);
-@@ -656,8 +673,11 @@ static int arm_ni_probe(struct platform_device *pdev)
- 				reg = readl_relaxed(pd.base + NI_CHILD_PTR(c));
- 				arm_ni_probe_domain(base + reg, &cd);
- 				ret = arm_ni_init_cd(ni, &cd, res->start);
--				if (ret)
-+				if (ret) {
-+					ni->cds[cd.id].pmu_base = NULL;
-+					arm_ni_remove(pdev);
- 					return ret;
-+				}
- 			}
- 		}
- 	}
-@@ -665,23 +685,6 @@ static int arm_ni_probe(struct platform_device *pdev)
- 	return 0;
- }
+ static struct gdsc bps_gdsc = {
+ 	.gdscr = 0x6004,
++	.en_rest_wait_val = 0x2,
++	.en_few_wait_val = 0x2,
++	.clk_dis_wait_val = 0xf,
+ 	.pd = {
+ 		.name = "bps_gdsc",
+ 	},
+@@ -1703,6 +1706,9 @@ static struct gdsc bps_gdsc = {
  
--static void arm_ni_remove(struct platform_device *pdev)
--{
--	struct arm_ni *ni = platform_get_drvdata(pdev);
--
--	for (int i = 0; i < ni->num_cds; i++) {
--		struct arm_ni_cd *cd = ni->cds + i;
--
--		if (!cd->pmu_base)
--			continue;
--
--		writel_relaxed(0, cd->pmu_base + NI_PMCR);
--		writel_relaxed(U32_MAX, cd->pmu_base + NI_PMINTENCLR);
--		perf_pmu_unregister(&cd->pmu);
--		cpuhp_state_remove_instance_nocalls(arm_ni_hp_state, &cd->cpuhp_node);
--	}
--}
--
- #ifdef CONFIG_OF
- static const struct of_device_id arm_ni_of_match[] = {
- 	{ .compatible = "arm,ni-700" },
+ static struct gdsc ipe_0_gdsc = {
+ 	.gdscr = 0x7004,
++	.en_rest_wait_val = 0x2,
++	.en_few_wait_val = 0x2,
++	.clk_dis_wait_val = 0xf,
+ 	.pd = {
+ 		.name = "ipe_0_gdsc",
+ 	},
+@@ -1712,6 +1718,9 @@ static struct gdsc ipe_0_gdsc = {
+ 
+ static struct gdsc ife_0_gdsc = {
+ 	.gdscr = 0x9004,
++	.en_rest_wait_val = 0x2,
++	.en_few_wait_val = 0x2,
++	.clk_dis_wait_val = 0xf,
+ 	.pd = {
+ 		.name = "ife_0_gdsc",
+ 	},
+@@ -1720,6 +1729,9 @@ static struct gdsc ife_0_gdsc = {
+ 
+ static struct gdsc ife_1_gdsc = {
+ 	.gdscr = 0xa004,
++	.en_rest_wait_val = 0x2,
++	.en_few_wait_val = 0x2,
++	.clk_dis_wait_val = 0xf,
+ 	.pd = {
+ 		.name = "ife_1_gdsc",
+ 	},
+@@ -1728,6 +1740,9 @@ static struct gdsc ife_1_gdsc = {
+ 
+ static struct gdsc ife_2_gdsc = {
+ 	.gdscr = 0xb004,
++	.en_rest_wait_val = 0x2,
++	.en_few_wait_val = 0x2,
++	.clk_dis_wait_val = 0xf,
+ 	.pd = {
+ 		.name = "ife_2_gdsc",
+ 	},
+@@ -1736,6 +1751,9 @@ static struct gdsc ife_2_gdsc = {
+ 
+ static struct gdsc titan_top_gdsc = {
+ 	.gdscr = 0x14004,
++	.en_rest_wait_val = 0x2,
++	.en_few_wait_val = 0x2,
++	.clk_dis_wait_val = 0xf,
+ 	.pd = {
+ 		.name = "titan_top_gdsc",
+ 	},
 -- 
 2.39.5
 
