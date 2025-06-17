@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D76F02FA62B;
-	Tue, 17 Jun 2025 16:50:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 269252FA630;
+	Tue, 17 Jun 2025 16:50:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750179046; cv=none; b=JTZA36qSa9wLgy+fWXoIGivK2/iHp1TdLB6wqYjQL/Cq6+ztHjbDesH9NwEQUE+hPwGhsh02K9JqwN3FLcZL7jSXtXuNkkvX79td+D276K8dWjYscMDzWruDJZZIlm4A8GfFf+nI91QfodpIU2wZuwANKq3xMUF4hbZUEP1Mamk=
+	t=1750179050; cv=none; b=X54d/cMLyg8s8cpbxDooazbR/FiBlcw8xE+4X7AMUbmuDJPR2tHN3hSKfLb4eh6f1RcSHUlAoP3Fa+kcO3VbMW+AvAg1nEpkGIiF4vB79QX05FDgu1E3hsuJ3DWaou4qKg6TUSaLZSRItB1JDyAF4717ehXT4nfz4FLfBAhw62o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750179046; c=relaxed/simple;
-	bh=U2eOGuj3VwqTMKRrYH6En7V7hGdnSFRWZRJraWs2EZc=;
+	s=arc-20240116; t=1750179050; c=relaxed/simple;
+	bh=dvO9JJtEwNBtlJDMYOtdkd7wkNXkDY6WVDIti7H0xpE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r1WQH0j/XY0D9Epzkpd/3VYagCFryV02l/kv/YZyYvOn1wtUxfw7RCnn/6LfpWmiqZOSAsDeJwRq+IqGudGyudg7GM1cyGYkZwTsSeQxt+8l3ixvxR7xlcxt80pKZa2MktyXbR9keVfBy5DszcZkV+MgxCutfDCJ5JnCXxp6ud4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xXh1YYGT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=IsIYDsQujedMTLLL4uaVRDjiAPGEWhVSUQ+3NaT/+mvScdJFAU1/GFM2x5KLL4mQoO8BB0lim2u32gu6eBeoUYMpsDaQKy/8/gvINJl5Aui9bUWTnPUTdYDb1MT46VO69ufBWMMYAU10hKedV4QNUKbV/3ymQkoHNCh1OMxdEAM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GONzvnJo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xXh1YYGT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46164C4CEE3;
-	Tue, 17 Jun 2025 16:50:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GONzvnJo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89EE3C4CEE3;
+	Tue, 17 Jun 2025 16:50:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750179046;
-	bh=U2eOGuj3VwqTMKRrYH6En7V7hGdnSFRWZRJraWs2EZc=;
+	s=korg; t=1750179050;
+	bh=dvO9JJtEwNBtlJDMYOtdkd7wkNXkDY6WVDIti7H0xpE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xXh1YYGT51Ct9DzaWT4uwXUVPpTsHM8SQ2e+0kIZYoC2XX0TVNYxQuae2HBRRrmZI
-	 brrYEchql59S0yJhmVUKZHK85pTEqTQd8m/87bXskSytORfhuIcCMOBfTpbKtt4Tmc
-	 hqla5AERfvvLwSsdz9ygkZ3poz1QBq3yG7bRiK2I=
+	b=GONzvnJoDoVm9jCzVLxGY7xB7VmRglwtwpRld3Q7ixdUViUs9ebPeyotr8yYcQJfo
+	 MNf8VTQaZe8iq3Q2ebEXW+hGVB6YBbxN6qg6HKM/1225bnb5qvNYs0/6LD4hh1I4S8
+	 +nrQkxTcpWpERcn+diqxF6Ck2OqYoJqXTGCNQSMU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zong Li <zong.li@sifive.com>,
-	Nylon Chen <nylon.chen@sifive.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
+	Ziqi Chen <quic_ziqichen@quicinc.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Bean Huo <beanhuo@micron.com>,
+	=?UTF-8?q?Lo=C3=AFc=20Minier?= <loic.minier@oss.qualcomm.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 631/780] riscv: misaligned: fix sleeping function called during misaligned access handling
-Date: Tue, 17 Jun 2025 17:25:39 +0200
-Message-ID: <20250617152517.171750439@linuxfoundation.org>
+Subject: [PATCH 6.15 632/780] scsi: ufs: qcom: Check gear against max gear in vop freq_to_gear()
+Date: Tue, 17 Jun 2025 17:25:40 +0200
+Message-ID: <20250617152517.210867795@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
 References: <20250617152451.485330293@linuxfoundation.org>
@@ -46,74 +48,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nylon Chen <nylon.chen@sifive.com>
+From: Ziqi Chen <quic_ziqichen@quicinc.com>
 
-[ Upstream commit 61a74ad254628ccd9e88838c3c622885dfb6c588 ]
+[ Upstream commit 663d0c19f3acc0d697f623d34b8eb3b438bf2bda ]
 
-Use copy_from_user_nofault() and copy_to_user_nofault() instead of
-copy_from/to_user functions in the misaligned access trap handlers.
+The vop freq_to_gear() may return a gear greater than the negotiated max
+gear. Return the negotiated max gear if the mapped gear is greater.
 
-The following bug report was found when executing misaligned memory
-accesses:
-
-BUG: sleeping function called from invalid context at ./include/linux/uaccess.h:162
-in_atomic(): 0, irqs_disabled(): 1, non_block: 0, pid: 115, name: two
-preempt_count: 0, expected: 0
-CPU: 0 UID: 0 PID: 115 Comm: two Not tainted 6.14.0-rc5 #24
-Hardware name: riscv-virtio,qemu (DT)
-Call Trace:
- [<ffffffff800160ea>] dump_backtrace+0x1c/0x24
- [<ffffffff80002304>] show_stack+0x28/0x34
- [<ffffffff80010fae>] dump_stack_lvl+0x4a/0x68
- [<ffffffff80010fe0>] dump_stack+0x14/0x1c
- [<ffffffff8004e44e>] __might_resched+0xfa/0x104
- [<ffffffff8004e496>] __might_sleep+0x3e/0x62
- [<ffffffff801963c4>] __might_fault+0x1c/0x24
- [<ffffffff80425352>] _copy_from_user+0x28/0xaa
- [<ffffffff8000296c>] handle_misaligned_store+0x204/0x254
- [<ffffffff809eae82>] do_trap_store_misaligned+0x24/0xee
- [<ffffffff809f4f1a>] handle_exception+0x146/0x152
-
-Fixes: b686ecdeacf6 ("riscv: misaligned: Restrict user access to kernel memory")
-Fixes: 441381506ba7 ("riscv: misaligned: remove CONFIG_RISCV_M_MODE specific code")
-
-Signed-off-by: Zong Li <zong.li@sifive.com>
-Signed-off-by: Nylon Chen <nylon.chen@sifive.com>
-Link: https://lore.kernel.org/r/20250411073850.3699180-3-nylon.chen@sifive.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Fixes: c02fe9e222d1 ("scsi: ufs: qcom: Implement the freq_to_gear_speed() vop")
+Signed-off-by: Ziqi Chen <quic_ziqichen@quicinc.com>
+Link: https://lore.kernel.org/r/20250522021537.999107-2-quic_ziqichen@quicinc.com
+Reported-by: Neil Armstrong <neil.armstrong@linaro.org>
+Closes: https://lore.kernel.org/all/c7f2476a-943a-4d73-ad80-802c91e5f880@linaro.org/
+Tested-by: Neil Armstrong <neil.armstrong@linaro.org>
+Reviewed-by: Bean Huo <beanhuo@micron.com>
+Tested-by: Loïc Minier <loic.minier@oss.qualcomm.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/traps_misaligned.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/ufs/host/ufs-qcom.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/riscv/kernel/traps_misaligned.c b/arch/riscv/kernel/traps_misaligned.c
-index 77c788660223b..56f06a27d45fb 100644
---- a/arch/riscv/kernel/traps_misaligned.c
-+++ b/arch/riscv/kernel/traps_misaligned.c
-@@ -455,7 +455,7 @@ static int handle_scalar_misaligned_load(struct pt_regs *regs)
+diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+index c0761ccc1381e..28515f89ce798 100644
+--- a/drivers/ufs/host/ufs-qcom.c
++++ b/drivers/ufs/host/ufs-qcom.c
+@@ -1924,7 +1924,7 @@ static int ufs_qcom_config_esi(struct ufs_hba *hba)
  
- 	val.data_u64 = 0;
- 	if (user_mode(regs)) {
--		if (copy_from_user(&val, (u8 __user *)addr, len))
-+		if (copy_from_user_nofault(&val, (u8 __user *)addr, len))
- 			return -1;
- 	} else {
- 		memcpy(&val, (u8 *)addr, len);
-@@ -556,7 +556,7 @@ static int handle_scalar_misaligned_store(struct pt_regs *regs)
- 		return -EOPNOTSUPP;
+ static u32 ufs_qcom_freq_to_gear_speed(struct ufs_hba *hba, unsigned long freq)
+ {
+-	u32 gear = 0;
++	u32 gear = UFS_HS_DONT_CHANGE;
  
- 	if (user_mode(regs)) {
--		if (copy_to_user((u8 __user *)addr, &val, len))
-+		if (copy_to_user_nofault((u8 __user *)addr, &val, len))
- 			return -1;
- 	} else {
- 		memcpy((u8 *)addr, &val, len);
+ 	switch (freq) {
+ 	case 403000000:
+@@ -1946,10 +1946,10 @@ static u32 ufs_qcom_freq_to_gear_speed(struct ufs_hba *hba, unsigned long freq)
+ 		break;
+ 	default:
+ 		dev_err(hba->dev, "%s: Unsupported clock freq : %lu\n", __func__, freq);
+-		break;
++		return UFS_HS_DONT_CHANGE;
+ 	}
+ 
+-	return gear;
++	return min_t(u32, gear, hba->max_pwr_info.info.gear_rx);
+ }
+ 
+ /*
 -- 
 2.39.5
 
