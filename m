@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA98228504B;
-	Tue, 17 Jun 2025 16:10:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12FB228504D;
+	Tue, 17 Jun 2025 16:11:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750176658; cv=none; b=Nx4nQP/w3ZCZ8a3eChQFN0wzRc1YujENUusBNdYRki0IxJWOVok7pavDFDdGE33lzuJF+zI9hVTrt26ztnl0Z/w++djbXJfNnalkVsUGFN1fV1hYfk3D5kpmKiVE49oVSJHnI3fq8r7v1GxA1FbW1/Sz2FsrdEJdBHRBJF3ik7c=
+	t=1750176661; cv=none; b=OJgwFOV3rxYzDCkY4MMhffxwm6irTLpUlnLHocNRFzgV54+fPJNWowa1zS0G4xmh272q4efmeBNB94q5ZQOVqfMzYuC9Ix0EyAjgCsRxjviHLUNNa2FJsy8SNOTg1sEPt/csvqZu4w+o6+YxyW2+0RB49tOnr56RxP1KsKL5gUY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750176658; c=relaxed/simple;
-	bh=pGcyWBp/J9emvsUcOwcvPL+H33tZWTMNzNbp+E6rMJw=;
+	s=arc-20240116; t=1750176661; c=relaxed/simple;
+	bh=NYVNEL2vjlzhzwamzMVR2ArZlx6s5HqC1Z4nvrsvuCk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uSP3YTevYtER+ugkiP7Q9e1CP+7FpOCl6U2mfH9hdwZg24pSIiqbSgDSbtW0zb4nYJZPvZY9GrPhgpM0fkpwIlMT9VnqMwse38CwGgXoolN8LWPkRKk0MmzFqjCkn2wfx5klTTY+b/12kwvvt/1RmqQVzl1eKmnijf88enxbsxI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xCBWcrl0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mvV+iFHLTa6lw3lPdFLVIkk9OxY2ZGdQesND/qnSnl6KzcvlF2GN9k/MQtvu/mPBuoDJNQWFUX+4PU5oF7ZRyHYYJejGpNDu9HObQ4g8kGbj1Vk0k7ZDg0EqfAOLqcgaooqn+TB2cJqCTU89kj9uPPlX7vBU6MSqncyd7Ggx7r0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FzAHCuO9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xCBWcrl0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 591A6C4CEF3;
-	Tue, 17 Jun 2025 16:10:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FzAHCuO9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 766D6C4CEE3;
+	Tue, 17 Jun 2025 16:11:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750176657;
-	bh=pGcyWBp/J9emvsUcOwcvPL+H33tZWTMNzNbp+E6rMJw=;
+	s=korg; t=1750176660;
+	bh=NYVNEL2vjlzhzwamzMVR2ArZlx6s5HqC1Z4nvrsvuCk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xCBWcrl0tFtyjEHOn8cw1okVYOooR30kO++H3Q3t6z03vL9UzvXHhcAs9PLPNJj6l
-	 wzb5TyrH62G8vSX2GibL+9Is3QcTublfRz/LVFoF/I/XUgrMdpB9rvniCjAsUbYfVs
-	 uIDsopgK8FSUyf4Qc5XWsDMySe5o/LFhJ+mXWd90=
+	b=FzAHCuO9rLv5Im5h0ovAuWh/J+HAXsjVbRKbbP+m+3ZYuanpePjU/cEArkQ6UbPpZ
+	 X9Mll8lV1LihgfDaA6O2TRYvDCF71JKNhX4EUpmrzjB4rq5SOSDBeVY79IamSZ5hps
+	 n5UyhP5vpyP9j/LAFHDSqKijashxG1DEmTHtHvaY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+65761fc25a137b9c8c6e@syzkaller.appspotmail.com,
-	Phillip Lougher <phillip@squashfs.org.uk>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Rodrigo Gobbi <rodrigo.gobbi.7@gmail.com>,
+	kernel test robot <lkp@intel.com>,
+	Dan Carpenter <error27@gmail.com>,
+	Baochen Qiang <quic_bqiang@quicinc.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 251/512] Squashfs: check return result of sb_min_blocksize
-Date: Tue, 17 Jun 2025 17:23:37 +0200
-Message-ID: <20250617152429.774506375@linuxfoundation.org>
+Subject: [PATCH 6.6 302/356] wifi: ath11k: validate ath11k_crypto_mode on top of ath11k_core_qmi_firmware_ready
+Date: Tue, 17 Jun 2025 17:26:57 +0200
+Message-ID: <20250617152350.326423886@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
+References: <20250617152338.212798615@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,68 +50,81 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Phillip Lougher <phillip@squashfs.org.uk>
+From: Rodrigo Gobbi <rodrigo.gobbi.7@gmail.com>
 
-[ Upstream commit 734aa85390ea693bb7eaf2240623d41b03705c84 ]
+[ Upstream commit b0d226a60856a1b765bb9a3848c7b2322fd08c47 ]
 
-Syzkaller reports an "UBSAN: shift-out-of-bounds in squashfs_bio_read" bug.
+if ath11k_crypto_mode is invalid (not ATH11K_CRYPT_MODE_SW/ATH11K_CRYPT_MODE_HW),
+ath11k_core_qmi_firmware_ready() will not undo some actions that was previously
+started/configured. Do the validation as soon as possible in order to avoid
+undoing actions in that case and also to fix the following smatch warning:
 
-Syzkaller forks multiple processes which after mounting the Squashfs
-filesystem, issues an ioctl("/dev/loop0", LOOP_SET_BLOCK_SIZE, 0x8000).
-Now if this ioctl occurs at the same time another process is in the
-process of mounting a Squashfs filesystem on /dev/loop0, the failure
-occurs.  When this happens the following code in squashfs_fill_super()
-fails.
+drivers/net/wireless/ath/ath11k/core.c:2166 ath11k_core_qmi_firmware_ready()
+warn: missing unwind goto?
 
-----
-msblk->devblksize = sb_min_blocksize(sb, SQUASHFS_DEVBLK_SIZE);
-msblk->devblksize_log2 = ffz(~msblk->devblksize);
-----
-
-sb_min_blocksize() returns 0, which means msblk->devblksize is set to 0.
-
-As a result, ffz(~msblk->devblksize) returns 64, and msblk->devblksize_log2
-is set to 64.
-
-This subsequently causes the
-
-UBSAN: shift-out-of-bounds in fs/squashfs/block.c:195:36
-shift exponent 64 is too large for 64-bit type 'u64' (aka
-'unsigned long long')
-
-This commit adds a check for a 0 return by sb_min_blocksize().
-
-Link: https://lkml.kernel.org/r/20250409024747.876480-1-phillip@squashfs.org.uk
-Fixes: 0aa666190509 ("Squashfs: super block operations")
-Reported-by: syzbot+65761fc25a137b9c8c6e@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/67f0dd7a.050a0220.0a13.0230.GAE@google.com/
-Signed-off-by: Phillip Lougher <phillip@squashfs.org.uk>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Rodrigo Gobbi <rodrigo.gobbi.7@gmail.com>
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <error27@gmail.com>
+Closes: https://lore.kernel.org/r/202304151955.oqAetVFd-lkp@intel.com/
+Fixes: aa2092a9bab3 ("ath11k: add raw mode and software crypto support")
+Reviewed-by: Baochen Qiang <quic_bqiang@quicinc.com>
+Link: https://patch.msgid.link/20250522200519.16858-1-rodrigo.gobbi.7@gmail.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/squashfs/super.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/wireless/ath/ath11k/core.c | 28 +++++++++++++-------------
+ 1 file changed, 14 insertions(+), 14 deletions(-)
 
-diff --git a/fs/squashfs/super.c b/fs/squashfs/super.c
-index 22e812808e5cf..3a27d4268b3c4 100644
---- a/fs/squashfs/super.c
-+++ b/fs/squashfs/super.c
-@@ -202,6 +202,11 @@ static int squashfs_fill_super(struct super_block *sb, struct fs_context *fc)
- 	msblk->panic_on_errors = (opts->errors == Opt_errors_panic);
+diff --git a/drivers/net/wireless/ath/ath11k/core.c b/drivers/net/wireless/ath/ath11k/core.c
+index 12c5f50f61f90..609d8387c41f3 100644
+--- a/drivers/net/wireless/ath/ath11k/core.c
++++ b/drivers/net/wireless/ath/ath11k/core.c
+@@ -1638,6 +1638,20 @@ int ath11k_core_qmi_firmware_ready(struct ath11k_base *ab)
+ {
+ 	int ret;
  
- 	msblk->devblksize = sb_min_blocksize(sb, SQUASHFS_DEVBLK_SIZE);
-+	if (!msblk->devblksize) {
-+		errorf(fc, "squashfs: unable to set blocksize\n");
++	switch (ath11k_crypto_mode) {
++	case ATH11K_CRYPT_MODE_SW:
++		set_bit(ATH11K_FLAG_HW_CRYPTO_DISABLED, &ab->dev_flags);
++		set_bit(ATH11K_FLAG_RAW_MODE, &ab->dev_flags);
++		break;
++	case ATH11K_CRYPT_MODE_HW:
++		clear_bit(ATH11K_FLAG_HW_CRYPTO_DISABLED, &ab->dev_flags);
++		clear_bit(ATH11K_FLAG_RAW_MODE, &ab->dev_flags);
++		break;
++	default:
++		ath11k_info(ab, "invalid crypto_mode: %d\n", ath11k_crypto_mode);
 +		return -EINVAL;
 +	}
 +
- 	msblk->devblksize_log2 = ffz(~msblk->devblksize);
+ 	ret = ath11k_core_start_firmware(ab, ab->fw_mode);
+ 	if (ret) {
+ 		ath11k_err(ab, "failed to start firmware: %d\n", ret);
+@@ -1656,20 +1670,6 @@ int ath11k_core_qmi_firmware_ready(struct ath11k_base *ab)
+ 		goto err_firmware_stop;
+ 	}
  
- 	mutex_init(&msblk->meta_index_mutex);
+-	switch (ath11k_crypto_mode) {
+-	case ATH11K_CRYPT_MODE_SW:
+-		set_bit(ATH11K_FLAG_HW_CRYPTO_DISABLED, &ab->dev_flags);
+-		set_bit(ATH11K_FLAG_RAW_MODE, &ab->dev_flags);
+-		break;
+-	case ATH11K_CRYPT_MODE_HW:
+-		clear_bit(ATH11K_FLAG_HW_CRYPTO_DISABLED, &ab->dev_flags);
+-		clear_bit(ATH11K_FLAG_RAW_MODE, &ab->dev_flags);
+-		break;
+-	default:
+-		ath11k_info(ab, "invalid crypto_mode: %d\n", ath11k_crypto_mode);
+-		return -EINVAL;
+-	}
+-
+ 	if (ath11k_frame_mode == ATH11K_HW_TXRX_RAW)
+ 		set_bit(ATH11K_FLAG_RAW_MODE, &ab->dev_flags);
+ 
 -- 
 2.39.5
 
