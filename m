@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 182FE2FA64A;
-	Tue, 17 Jun 2025 16:45:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64F392FA642;
+	Tue, 17 Jun 2025 16:45:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750178738; cv=none; b=Oc2f+LaV+3OIdrYa4tIG7KsrsoLGsBHxqUsAdB/NQWggavgUEmLTlgeaQ9JfCT736cXvoahLDX4XChNjqHWNpaI6mgsdyzDZ/WtYfb2GIPiQhTaKOHKjvgo9sFP6RnykMBzFuzVosdt9c5yLMuyTmNiuHqVDczxVskHI0CipmVs=
+	t=1750178741; cv=none; b=HBaPTkv4codmBIrFZ6GcrFaX08AFthO/vHSjV0IysO8Xk7VgjvJuPsj0mJ3OPe4ZRB2TcCFC4/A6mp74UD/74C51xHJHKEsXBdzXh2wC59XuKqnBzHXmgyum0sDgOu5clyzOw69dFIz1SJS5AuaZ+g8hjCl6PjGa/wBSrtrTZV0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750178738; c=relaxed/simple;
-	bh=Vx817+w18z8PtfnLyaBODbfH42HEP0f4KyrvJVRWCuA=;
+	s=arc-20240116; t=1750178741; c=relaxed/simple;
+	bh=YdZIk6G604W+8yTtfkySuQdGFhXu9bpdkeJuxVitE6g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AGLsYUzIYJuY+bqHvb2O+sUgPh5EhtSW8vQ9ugcWkl4+VtME3FC0JqU1aHx334H707tYKhhrbb3K/SvB3qtiFyCY+RziVM7u1+kT82FCzVf6I5qgInsW6MTXWoUAtP0QVNJv7zNB4Bj/PNxEbhOWLXLvM0w5aB/VaNof+PGWn3o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u8Pd6xk4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ANG9aiOoZeisDmAcZBisYVx3byhVN3UxF4rHVvOZSeGjX+wOPJy4GMdyONt1g61BW+lYYb1576L/5US1HgNIEMyOii07o6jUYI2qqF2cwG1Nd/PXCTykl+qW25qbU5kYLJyeHnQBOptahhMX5tJ9G4tqzB+g2mKAj2Qt47vP9d0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fZL/4Z1s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u8Pd6xk4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EBD6C4CEE3;
-	Tue, 17 Jun 2025 16:45:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fZL/4Z1s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8DA6C4CEE7;
+	Tue, 17 Jun 2025 16:45:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750178738;
-	bh=Vx817+w18z8PtfnLyaBODbfH42HEP0f4KyrvJVRWCuA=;
+	s=korg; t=1750178741;
+	bh=YdZIk6G604W+8yTtfkySuQdGFhXu9bpdkeJuxVitE6g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u8Pd6xk4V3s9/7/RBQfC20lqqxE5Y5H2KaTzz1DBNg4jdnWP2lQjQtBl0eu+su8/b
-	 TdveBo0ymV5gaIao1u6BY4YQJgMkpnoUHTKAOav65Yni3Y6hdEvDjbK95/Venut8AH
-	 EIBTNzFIMLNnxcycJDWFhB8IpXaQYDzkzx5s7X80=
+	b=fZL/4Z1sRZINnZxSD7T88MRXHZ3JxvnQY0+30nvm6CID6LL40y9MgyYOuDo0ZV6O8
+	 s8Yx2gh/uzrsKlf6II+qFuXngMk+jAD4AUBnnS2pwI/Z/PeBA1pUGRNpztIWplSbSE
+	 sQxV2Lo3qfVCPHhaRDShS0amfT+2DiqwfWDeGa9o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolas Pitre <npitre@baylibre.com>,
-	Jiri Slaby <jirislaby@kernel.org>,
+	Dave Penkler <dpenkler@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 537/780] vt: remove VT_RESIZE and VT_RESIZEX from vt_compat_ioctl()
-Date: Tue, 17 Jun 2025 17:24:05 +0200
-Message-ID: <20250617152513.374987154@linuxfoundation.org>
+Subject: [PATCH 6.15 538/780] staging: gpib: Fix PCMCIA config identifier
+Date: Tue, 17 Jun 2025 17:24:06 +0200
+Message-ID: <20250617152513.420709545@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
 References: <20250617152451.485330293@linuxfoundation.org>
@@ -51,37 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolas Pitre <npitre@baylibre.com>
+From: Dave Penkler <dpenkler@gmail.com>
 
-[ Upstream commit c4c7ead7b86c1e7f11c64915b7e5bb6d2e242691 ]
+[ Upstream commit 034a456869a071c635a9997e0bf3947a6cb20b25 ]
 
-They are listed amon those cmd values that "treat 'arg' as an integer"
-which is wrong. They should instead fall into the default case. Probably
-nobody ever relied on that code since 2009 but still.
+The PCMCIA config identifier in the ines_exit_module function
+was never changed because it was misspelled in the original commit.
 
-Fixes: e92166517e3c ("tty: handle VT specific compat ioctls in vt driver")
-Signed-off-by: Nicolas Pitre <npitre@baylibre.com>
-Reviewed-by: Jiri Slaby <jirislaby@kernel.org>
-Link: https://lore.kernel.org/r/pr214s15-36r8-6732-2pop-159nq85o48r7@syhkavp.arg
+Update the config parameter to use the correct identifier from
+gpib/Kconfig
+
+Fixes: bb1bd92fa0f2 ("staging: gpib: Add ines GPIB driver")
+Signed-off-by: Dave Penkler <dpenkler@gmail.com>
+Link: https://lore.kernel.org/r/20250502072150.32714-2-dpenkler@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/vt/vt_ioctl.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/staging/gpib/ines/ines_gpib.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/tty/vt/vt_ioctl.c b/drivers/tty/vt/vt_ioctl.c
-index 4b91072f3a4e9..1f2bdd2e1cc59 100644
---- a/drivers/tty/vt/vt_ioctl.c
-+++ b/drivers/tty/vt/vt_ioctl.c
-@@ -1103,8 +1103,6 @@ long vt_compat_ioctl(struct tty_struct *tty,
- 	case VT_WAITACTIVE:
- 	case VT_RELDISP:
- 	case VT_DISALLOCATE:
--	case VT_RESIZE:
--	case VT_RESIZEX:
- 		return vt_ioctl(tty, cmd, arg);
- 
- 	/*
+diff --git a/drivers/staging/gpib/ines/ines_gpib.c b/drivers/staging/gpib/ines/ines_gpib.c
+index d93eb05dab903..8e2375d8ddac2 100644
+--- a/drivers/staging/gpib/ines/ines_gpib.c
++++ b/drivers/staging/gpib/ines/ines_gpib.c
+@@ -1484,7 +1484,7 @@ static void __exit ines_exit_module(void)
+ 	gpib_unregister_driver(&ines_pci_unaccel_interface);
+ 	gpib_unregister_driver(&ines_pci_accel_interface);
+ 	gpib_unregister_driver(&ines_isa_interface);
+-#ifdef GPIB__PCMCIA
++#ifdef CONFIG_GPIB_PCMCIA
+ 	gpib_unregister_driver(&ines_pcmcia_interface);
+ 	gpib_unregister_driver(&ines_pcmcia_unaccel_interface);
+ 	gpib_unregister_driver(&ines_pcmcia_accel_interface);
 -- 
 2.39.5
 
