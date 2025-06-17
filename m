@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3E692F2343;
-	Tue, 17 Jun 2025 16:07:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F207C2F2367;
+	Tue, 17 Jun 2025 16:08:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750176479; cv=none; b=X3SOoi9f7cBNIQBXauuf5GLvYJe1EOdlpiLq0uydsSdJY0WwMVJeKM+vAENW+21a87KgooD3E2eEu34ZJRHsQ8ux34Ra1UmzLC0amShydccjbZJLmzeORkfz9B195AerzgKkuha1L8ueiwc50IwklJbYS1ILzLrI8L/KmokjgDs=
+	t=1750176483; cv=none; b=fRHyMTjxCz9Uk/uR0dWFeB/LAb0sCsxBHGcfpVyGPlrLOZwPlhAjjjdzrfPmcO32kNLqQ3epfrxdgMDFJDRFIhgiOXWWbH6qiVhpF7BFV+NrhpPRjF+iUAMTRwaqJvU1rgicFfs4+ba2DgOizuD6xNuQ2a5yvasmKMtISR9pWK4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750176479; c=relaxed/simple;
-	bh=vJxj7QMiPGD8nUk0lLMrJSC09SqhhFJV8E1YyCpf6iM=;
+	s=arc-20240116; t=1750176483; c=relaxed/simple;
+	bh=UUTnPYcAEcO7Vr6xJLBaGBT3dslaRDwOckZ0y7WBd34=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vo9NBsgMSXqMeiNVekZ6OPTqA2KeH4IANahRFD0jQT5Wxq7t9uZiiDM8meK/oZoDkUXJzFtEVLPPzrvU8V6H7F6haWYeHLbYjNtH+enI9e52G/sUUtBNdrVVFQYdh+mGmxMf51OkU1fiCc9JUbE0lkno98O1A1CLmS7LQzLmlUU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eOo/WJIt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GILh88Q5RFvO8eTVwfAyoHOp0JzG9VFS9KtSiYxSw23ss6NADnFmulOlMEtTg2fprzq2KWnL0I4ZG5EyUa3ni5WsDOijgaYdJZ5bB72IVprBiEg1pVBHB6vADKPybDTPOYukAzZ2YXrZJWb0gQJiVlJl9pLQWqS02llB7przrao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jOQrligg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eOo/WJIt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14283C4CEE3;
-	Tue, 17 Jun 2025 16:07:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jOQrligg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5850FC4CEE3;
+	Tue, 17 Jun 2025 16:08:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750176479;
-	bh=vJxj7QMiPGD8nUk0lLMrJSC09SqhhFJV8E1YyCpf6iM=;
+	s=korg; t=1750176482;
+	bh=UUTnPYcAEcO7Vr6xJLBaGBT3dslaRDwOckZ0y7WBd34=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eOo/WJItjY6YbZbz3ZGutpOfeAzAzYgMBjgO9npBlg8tmNjdVIim7Gb3EpfLjjEyV
-	 efNyQFyZUCWfb7WiIOe3L3aWgy7T8s+L//ISFKOFj90XFI4cD7dOnNZXoCDip/t2AQ
-	 8w1/KH5YY70b9d2C0ooGXJaOmkUIa/Gvka1oMnHc=
+	b=jOQrliggMxD9JvWb99YRG70UOXY5ROd0KfNs8B+m8DHNEEhZdSN9tokcBtFtP3aHC
+	 FUahlP+VA7cP9pQv/GR+P76U7eJQ2QlXDNcDb/DCX509r8nFbASq/SYSNK+19oCofV
+	 xrumgRe+gnSCAIkUQIt6uWulQmn6J4YhOXJRYu1I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	lmarch2 <2524158037@qq.com>,
-	Viktor Malik <vmalik@redhat.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Shung-Hsi Yu <shung-hsi.yu@suse.com>,
+	Alexey Minnekhanov <alexeymin@postmarketos.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 193/780] libbpf: Fix buffer overflow in bpf_object__init_prog
-Date: Tue, 17 Jun 2025 17:18:21 +0200
-Message-ID: <20250617152459.335796551@linuxfoundation.org>
+Subject: [PATCH 6.12 234/512] arm64: dts: qcom: sdm660-xiaomi-lavender: Add missing SD card detect GPIO
+Date: Tue, 17 Jun 2025 17:23:20 +0200
+Message-ID: <20250617152429.107263937@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,108 +48,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Viktor Malik <vmalik@redhat.com>
+From: Alexey Minnekhanov <alexeymin@postmarketos.org>
 
-[ Upstream commit ee684de5c1b0ac01821320826baec7da93f3615b ]
+[ Upstream commit 2eca6af66709de0d1ba14cdf8b6d200a1337a3a2 ]
 
-As shown in [1], it is possible to corrupt a BPF ELF file such that
-arbitrary BPF instructions are loaded by libbpf. This can be done by
-setting a symbol (BPF program) section offset to a large (unsigned)
-number such that <section start + symbol offset> overflows and points
-before the section data in the memory.
+During initial porting these cd-gpios were missed. Having card detect is
+beneficial because driver does not need to do polling every second and it
+can just use IRQ. SD card detection in U-Boot is also fixed by this.
 
-Consider the situation below where:
-- prog_start = sec_start + symbol_offset    <-- size_t overflow here
-- prog_end   = prog_start + prog_size
-
-    prog_start        sec_start        prog_end        sec_end
-        |                |                 |              |
-        v                v                 v              v
-    .....................|################################|............
-
-The report in [1] also provides a corrupted BPF ELF which can be used as
-a reproducer:
-
-    $ readelf -S crash
-    Section Headers:
-      [Nr] Name              Type             Address           Offset
-           Size              EntSize          Flags  Link  Info  Align
-    ...
-      [ 2] uretprobe.mu[...] PROGBITS         0000000000000000  00000040
-           0000000000000068  0000000000000000  AX       0     0     8
-
-    $ readelf -s crash
-    Symbol table '.symtab' contains 8 entries:
-       Num:    Value          Size Type    Bind   Vis      Ndx Name
-    ...
-         6: ffffffffffffffb8   104 FUNC    GLOBAL DEFAULT    2 handle_tp
-
-Here, the handle_tp prog has section offset ffffffffffffffb8, i.e. will
-point before the actual memory where section 2 is allocated.
-
-This is also reported by AddressSanitizer:
-
-    =================================================================
-    ==1232==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x7c7302fe0000 at pc 0x7fc3046e4b77 bp 0x7ffe64677cd0 sp 0x7ffe64677490
-    READ of size 104 at 0x7c7302fe0000 thread T0
-        #0 0x7fc3046e4b76 in memcpy (/lib64/libasan.so.8+0xe4b76)
-        #1 0x00000040df3e in bpf_object__init_prog /src/libbpf/src/libbpf.c:856
-        #2 0x00000040df3e in bpf_object__add_programs /src/libbpf/src/libbpf.c:928
-        #3 0x00000040df3e in bpf_object__elf_collect /src/libbpf/src/libbpf.c:3930
-        #4 0x00000040df3e in bpf_object_open /src/libbpf/src/libbpf.c:8067
-        #5 0x00000040f176 in bpf_object__open_file /src/libbpf/src/libbpf.c:8090
-        #6 0x000000400c16 in main /poc/poc.c:8
-        #7 0x7fc3043d25b4 in __libc_start_call_main (/lib64/libc.so.6+0x35b4)
-        #8 0x7fc3043d2667 in __libc_start_main@@GLIBC_2.34 (/lib64/libc.so.6+0x3667)
-        #9 0x000000400b34 in _start (/poc/poc+0x400b34)
-
-    0x7c7302fe0000 is located 64 bytes before 104-byte region [0x7c7302fe0040,0x7c7302fe00a8)
-    allocated by thread T0 here:
-        #0 0x7fc3046e716b in malloc (/lib64/libasan.so.8+0xe716b)
-        #1 0x7fc3045ee600 in __libelf_set_rawdata_wrlock (/lib64/libelf.so.1+0xb600)
-        #2 0x7fc3045ef018 in __elf_getdata_rdlock (/lib64/libelf.so.1+0xc018)
-        #3 0x00000040642f in elf_sec_data /src/libbpf/src/libbpf.c:3740
-
-The problem here is that currently, libbpf only checks that the program
-end is within the section bounds. There used to be a check
-`while (sec_off < sec_sz)` in bpf_object__add_programs, however, it was
-removed by commit 6245947c1b3c ("libbpf: Allow gaps in BPF program
-sections to support overriden weak functions").
-
-Add a check for detecting the overflow of `sec_off + prog_sz` to
-bpf_object__init_prog to fix this issue.
-
-[1] https://github.com/lmarch2/poc/blob/main/libbpf/libbpf.md
-
-Fixes: 6245947c1b3c ("libbpf: Allow gaps in BPF program sections to support overriden weak functions")
-Reported-by: lmarch2 <2524158037@qq.com>
-Signed-off-by: Viktor Malik <vmalik@redhat.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Reviewed-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
-Link: https://github.com/lmarch2/poc/blob/main/libbpf/libbpf.md
-Link: https://lore.kernel.org/bpf/20250415155014.397603-1-vmalik@redhat.com
+Fixes: cf85e9aee210 ("arm64: dts: qcom: sdm660-xiaomi-lavender: Add eMMC and SD")
+Signed-off-by: Alexey Minnekhanov <alexeymin@postmarketos.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20250415130101.1429281-1-alexeymin@postmarketos.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/libbpf.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
-index 37d563e140515..cfb952d7002f6 100644
---- a/tools/lib/bpf/libbpf.c
-+++ b/tools/lib/bpf/libbpf.c
-@@ -896,7 +896,7 @@ bpf_object__add_programs(struct bpf_object *obj, Elf_Data *sec_data,
- 			return -LIBBPF_ERRNO__FORMAT;
- 		}
+diff --git a/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts b/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts
+index 7167f75bced3f..0b4d71c14a772 100644
+--- a/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts
++++ b/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts
+@@ -404,6 +404,8 @@
+ &sdhc_2 {
+ 	status = "okay";
  
--		if (sec_off + prog_sz > sec_sz) {
-+		if (sec_off + prog_sz > sec_sz || sec_off + prog_sz < sec_off) {
- 			pr_warn("sec '%s': program at offset %zu crosses section boundary\n",
- 				sec_name, sec_off);
- 			return -LIBBPF_ERRNO__FORMAT;
++	cd-gpios = <&tlmm 54 GPIO_ACTIVE_HIGH>;
++
+ 	vmmc-supply = <&vreg_l5b_2p95>;
+ 	vqmmc-supply = <&vreg_l2b_2p95>;
+ };
 -- 
 2.39.5
 
