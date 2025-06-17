@@ -1,47 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BF372EE5EC;
-	Tue, 17 Jun 2025 16:14:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D508E2F94B0;
+	Tue, 17 Jun 2025 16:14:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750176846; cv=none; b=pJxWwW5JReX+RuCzkdDrnvdfNBVvdmBPvnzBh/O5SAU4HSopfM9gs9YaLmqudiIfsW64INnkEzR2HdQhSH5LT4FMLkmwtc25lxF1RK5cP3lRyyY/8rAwWamXexe6TBqdJnMqdAcM+ZOuib6GJPPEOWd7sx3/HvX0BaR5vdusgLM=
+	t=1750176849; cv=none; b=DwgWmjOyn5jHGQVNC6rlOe7fMuDdT8MU4aiynZgfih6xJOvyIa4LmmacAklzloqM34LsyBaB8Pk27AA15FjMkuoQwAgymueUV6uql92oN0Ka9Z7YTiFJAugpUR95b+YBCjjBrCI32nRjTrqiUdHlDC3MlvgRfPIHGXzr+C2As08=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750176846; c=relaxed/simple;
-	bh=X3gD5hyQNrUhiKCBB96vnzpZUongkCQH5bLpWM0Jb6k=;
+	s=arc-20240116; t=1750176849; c=relaxed/simple;
+	bh=GpuTkOvlFon9FPWmwptXF1mvwZrWBtNcRXEc+oF345s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IHfeUQLdJOUsexmdLCY5tfzFcjl8EDnFWcMESQwDLsLF947rLRzI85UvX+GGS4ABC8v6Pq++dGIvhPruhoGEBNOtb5yDbAtrt1kA+A2atMe8sk648pcQlI8VZImY+nIYd8v02Yn5dtWUobxD6xeY9jhnCL2EZp0yg+U0Ip+zWkI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SPzaZ9/T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pAAH1xKEARGs5Ukkz8oaXaGzVStSZB5wT7GN/LVHa5PaYTw9HChfWlD9gSZ/J5skjotgXoJoDY8y5kHeQGB2zQAdr9eXxRd2G99JRqEhhHwcU0XLDdQmYQ/Ac4CLt5wLtQ17eM9OfH3oXyzi5zllz2UT+7modNAWUmPjZkysaCQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kyQnY2vs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SPzaZ9/T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4CB9C4CEE7;
-	Tue, 17 Jun 2025 16:14:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kyQnY2vs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0F67C4CEE3;
+	Tue, 17 Jun 2025 16:14:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750176846;
-	bh=X3gD5hyQNrUhiKCBB96vnzpZUongkCQH5bLpWM0Jb6k=;
+	s=korg; t=1750176849;
+	bh=GpuTkOvlFon9FPWmwptXF1mvwZrWBtNcRXEc+oF345s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SPzaZ9/T4nFzRMZO6MLBe+bidjfaUk69nfOo2Tj4IRQ/fFZY48T1uw3DohRTsKg8Q
-	 7LYPQ0n8XypAJDf+3XOiA7LdNwJI0kEy1BPJrk+d4lWYPJvz5WBDkbgL3q2HtfmkxL
-	 A95B+s7/noqBvk/eh4F5PRImnvMNftLJ9F3zHdlM=
+	b=kyQnY2vs62ixQ/D5ML33VAU9p7vDbzSfE5lSl2lSGQADfd66RKxxwamZmK5uE5s8O
+	 K/bazEdvLiONcWkzWDklZJBFJYnA1UU1BepS0XP5KDPlFTXhKGJF2sa9dnWxwClBNu
+	 Qw2tk2ghtsR5nX+d2iYBoP3hbVABW7NNLJYjuAKc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ingo Molnar <mingo@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ian Rogers <irogers@google.com>,
-	James Clark <james.clark@linaro.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Jakub Raczynski <j.raczynski@samsung.com>,
+	Wenjing Shan <wenjing.shan@samsung.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 272/512] perf ui browser hists: Set actions->thread before calling do_zoom_thread()
-Date: Tue, 17 Jun 2025 17:23:58 +0200
-Message-ID: <20250617152430.613838781@linuxfoundation.org>
+Subject: [PATCH 6.6 319/356] net/mdiobus: Fix potential out-of-bounds clause 45 read/write access
+Date: Tue, 17 Jun 2025 17:27:14 +0200
+Message-ID: <20250617152351.000349066@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
+References: <20250617152338.212798615@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -53,63 +48,61 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Jakub Raczynski <j.raczynski@samsung.com>
 
-[ Upstream commit 1741189d843a1d5ef38538bc52a3760e2e46cb2e ]
+[ Upstream commit 260388f79e94fb3026c419a208ece8358bb7b555 ]
 
-In 7cecb7fe8388d5c3 ("perf hists: Move sort__has_comm into struct
-perf_hpp_list") it assumes that act->thread is set prior to calling
-do_zoom_thread().
+When using publicly available tools like 'mdio-tools' to read/write data
+from/to network interface and its PHY via C45 (clause 45) mdiobus,
+there is no verification of parameters passed to the ioctl and
+it accepts any mdio address.
+Currently there is support for 32 addresses in kernel via PHY_MAX_ADDR define,
+but it is possible to pass higher value than that via ioctl.
+While read/write operation should generally fail in this case,
+mdiobus provides stats array, where wrong address may allow out-of-bounds
+read/write.
 
-This doesn't happen when we use ESC or the Left arrow key to Zoom out of
-a specific thread, making this operation not to work and we get stuck
-into the thread zoom.
+Fix that by adding address verification before C45 read/write operation.
+While this excludes this access from any statistics, it improves security of
+read/write operation.
 
-In 6422184b087ff435 ("perf hists browser: Simplify zooming code using
-pstack_peek()") it says no need to set actions->thread, and at that
-point that was true, but in 7cecb7fe8388d5c3 a actions->thread == NULL
-check was added before the zoom out of thread could kick in.
-
-We can zoom out using the alternative 't' thread zoom toggle hotkey to
-finally set actions->thread before calling do_zoom_thread() and zoom
-out, but lets also fix the ESC/Zoom out of thread case.
-
-Fixes: 7cecb7fe8388d5c3 ("perf hists: Move sort__has_comm into struct perf_hpp_list")
-Reported-by: Ingo Molnar <mingo@kernel.org>
-Tested-by: Ingo Molnar <mingo@kernel.org>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: James Clark <james.clark@linaro.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Link: https://lore.kernel.org/r/Z_TYux5fUg2pW-pF@gmail.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: 4e4aafcddbbf ("net: mdio: Add dedicated C45 API to MDIO bus drivers")
+Signed-off-by: Jakub Raczynski <j.raczynski@samsung.com>
+Reported-by: Wenjing Shan <wenjing.shan@samsung.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/ui/browsers/hists.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/phy/mdio_bus.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/tools/perf/ui/browsers/hists.c b/tools/perf/ui/browsers/hists.c
-index 49ba82bf33918..3283b6313bab8 100644
---- a/tools/perf/ui/browsers/hists.c
-+++ b/tools/perf/ui/browsers/hists.c
-@@ -3267,10 +3267,10 @@ static int evsel__hists_browse(struct evsel *evsel, int nr_events, const char *h
- 				/*
- 				 * No need to set actions->dso here since
- 				 * it's just to remove the current filter.
--				 * Ditto for thread below.
- 				 */
- 				do_zoom_dso(browser, actions);
- 			} else if (top == &browser->hists->thread_filter) {
-+				actions->thread = thread;
- 				do_zoom_thread(browser, actions);
- 			} else if (top == &browser->hists->socket_filter) {
- 				do_zoom_socket(browser, actions);
+diff --git a/drivers/net/phy/mdio_bus.c b/drivers/net/phy/mdio_bus.c
+index 103998969d44c..e02706b7cc1ed 100644
+--- a/drivers/net/phy/mdio_bus.c
++++ b/drivers/net/phy/mdio_bus.c
+@@ -946,6 +946,9 @@ int __mdiobus_c45_read(struct mii_bus *bus, int addr, int devad, u32 regnum)
+ 
+ 	lockdep_assert_held_once(&bus->mdio_lock);
+ 
++	if (addr >= PHY_MAX_ADDR)
++		return -ENXIO;
++
+ 	if (bus->read_c45)
+ 		retval = bus->read_c45(bus, addr, devad, regnum);
+ 	else
+@@ -977,6 +980,9 @@ int __mdiobus_c45_write(struct mii_bus *bus, int addr, int devad, u32 regnum,
+ 
+ 	lockdep_assert_held_once(&bus->mdio_lock);
+ 
++	if (addr >= PHY_MAX_ADDR)
++		return -ENXIO;
++
+ 	if (bus->write_c45)
+ 		err = bus->write_c45(bus, addr, devad, regnum, val);
+ 	else
 -- 
 2.39.5
 
