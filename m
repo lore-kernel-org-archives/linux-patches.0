@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E8AD2ED168;
-	Tue, 17 Jun 2025 16:12:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9CB4285065;
+	Tue, 17 Jun 2025 16:12:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750176761; cv=none; b=KAvdsaCKc8jwt/21S0cqhaG/x9Mh3e+QKAhiVC3a5hGnkMIHjKfStnhAh22Q08tDzGxnLUgMpS1wkwd5lz6E2vQuM6KDeQZDnOs0mVsqjJIk7u3n6RqtmGAsJJZiL3RJ/+kwgEnJ2wyLvXTVWqT0StXy+uGffIMGTRWMMIkETHw=
+	t=1750176764; cv=none; b=HubSGzxEa1pz4UT8G0oEtqFkBlFSxdTx1LE1bQ00LHL81dodI1Rjm2N80Q7ulmOWxLpv9YJfmyZIijFR6vYK/VXhFBZH5dE05xe5QyN7lmqNfYWrytXHs4x4jT2iKYPY6nke0Sk4n9cD/f5XkH8s6qM9dg+cpDOaZ8kfC5qncho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750176761; c=relaxed/simple;
-	bh=JugRCIzUUks3BiLCtA0T5nuII2ea97IK8RFpCbEtVCc=;
+	s=arc-20240116; t=1750176764; c=relaxed/simple;
+	bh=iLMlm5mH1fVDcuY3IAtw7n+2W4TUuAScqo/m/hs/Q/U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bjdJaPAnqb3C5OwC40bs34jHOoQEnBJVKZor5y/tZnlVUro+kNg1qu2/DE6LntWBnXTs4Ek+iVn4bM82ShYsOEiB+BM8vd6a4IUOOtURzK2eP8kFp08BNGUa+ZItq9lpdk6mM13/ABZiO0/nD+My1BLdIANVEb6HyjPRfOSv55w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tpTg4FLJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AwTbPgnjHcUU/trkRdDZ7iNBSiCPFJW80E1wVa3sfS0PPqA4LD1O2UUiCzxH7Zqe4aS0+DoilXKnuAVKKaOUdUYtkONYULVONG+EYefYRRXPuRpqDavWABNXue0AaO+KTl1cGFUWIQ7Bu5Nrq2cXD8XEwVHkpeDEVyVpAJEV9fI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NasHOaDR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tpTg4FLJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9DCFC4CEE3;
-	Tue, 17 Jun 2025 16:12:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NasHOaDR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A21FC4CEE3;
+	Tue, 17 Jun 2025 16:12:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750176761;
-	bh=JugRCIzUUks3BiLCtA0T5nuII2ea97IK8RFpCbEtVCc=;
+	s=korg; t=1750176764;
+	bh=iLMlm5mH1fVDcuY3IAtw7n+2W4TUuAScqo/m/hs/Q/U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tpTg4FLJOWO+K35aPKnPtQ7eW4OcqN74G436DD+ckOc55zKHrruksCPOP4g1IV7KK
-	 vEaiFzJEUwYRUNp7u79QbfQ7RfkbXrCYKnshFlrcTv5mHoeFB7A+uc5AaIUdBdHaUu
-	 YlU98Afq6dMIu23EcqXCUr01Kmn3O0gFcxiJxNqY=
+	b=NasHOaDRt/eVmH89HzWrpYfjncV8H6r8hjEq/nE0oZOSlnOXOkiGDNXO4HtHGgiQO
+	 JQsH6djR9bFuJjfCoImcBuIYmCX0eqcnftP7K81hI7gcGWBQqRvFMhs0pmU9rMgQth
+	 3/z+Eb6v8Rgq7g0xHLB3WIjL/dtLGsZOXKYDJXy4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Julien Massot <julien.massot@collabora.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 264/512] arm64: dts: mt6359: Rename RTC node to match binding expectations
-Date: Tue, 17 Jun 2025 17:23:50 +0200
-Message-ID: <20250617152430.289723871@linuxfoundation.org>
+Subject: [PATCH 6.6 311/356] drm/meson: use vclk_freq instead of pixel_freq in debug print
+Date: Tue, 17 Jun 2025 17:27:06 +0200
+Message-ID: <20250617152350.683889817@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
+References: <20250617152338.212798615@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,44 +47,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Julien Massot <julien.massot@collabora.com>
+From: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
 
-[ Upstream commit cfe035d8662cfbd6edff9bd89c4b516bbb34c350 ]
+[ Upstream commit faf2f8382088e8c74bd6eeb236c8c9190e61615e ]
 
-Rename the node 'mt6359rtc' to 'rtc', as required by the binding.
+meson_vclk_vic_supported_freq() has a debug print which includes the
+pixel freq. However, within the whole function the pixel freq is
+irrelevant, other than checking the end of the params array. Switch to
+printing the vclk_freq which is being compared / matched against the
+inputs to the function to avoid confusion when analyzing error reports
+from users.
 
-Fix the following dtb-check error:
-
-mediatek/mt8395-radxa-nio-12l.dtb: pmic: 'mt6359rtc' do not match
-any of the regexes: 'pinctrl-[0-9]+'
-
-Fixes: 3b7d143be4b7 ("arm64: dts: mt6359: add PMIC MT6359 related nodes")
-Signed-off-by: Julien Massot <julien.massot@collabora.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20250514-mt8395-dtb-errors-v2-3-d67b9077c59a@collabora.com
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Fixes: e5fab2ec9ca4 ("drm/meson: vclk: add support for YUV420 setup")
+Signed-off-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20250606221031.3419353-1-martin.blumenstingl@googlemail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt6359.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/meson/meson_vclk.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt6359.dtsi b/arch/arm64/boot/dts/mediatek/mt6359.dtsi
-index 57af3e7899841..779d6dfb55c00 100644
---- a/arch/arm64/boot/dts/mediatek/mt6359.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt6359.dtsi
-@@ -298,7 +298,7 @@
- 			};
- 		};
+diff --git a/drivers/gpu/drm/meson/meson_vclk.c b/drivers/gpu/drm/meson/meson_vclk.c
+index 3325580d885d0..c4123bb958e4c 100644
+--- a/drivers/gpu/drm/meson/meson_vclk.c
++++ b/drivers/gpu/drm/meson/meson_vclk.c
+@@ -790,9 +790,9 @@ meson_vclk_vic_supported_freq(struct meson_drm *priv,
+ 	}
  
--		mt6359rtc: mt6359rtc {
-+		mt6359rtc: rtc {
- 			compatible = "mediatek,mt6358-rtc";
- 		};
- 	};
+ 	for (i = 0 ; params[i].pixel_freq ; ++i) {
+-		DRM_DEBUG_DRIVER("i = %d pixel_freq = %lluHz alt = %lluHz\n",
+-				 i, params[i].pixel_freq,
+-				 PIXEL_FREQ_1000_1001(params[i].pixel_freq));
++		DRM_DEBUG_DRIVER("i = %d vclk_freq = %lluHz alt = %lluHz\n",
++				 i, params[i].vclk_freq,
++				 PIXEL_FREQ_1000_1001(params[i].vclk_freq));
+ 		DRM_DEBUG_DRIVER("i = %d phy_freq = %lluHz alt = %lluHz\n",
+ 				 i, params[i].phy_freq,
+ 				 PHY_FREQ_1000_1001(params[i].phy_freq));
 -- 
 2.39.5
 
