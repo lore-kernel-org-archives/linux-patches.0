@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27A752ED85E;
-	Tue, 17 Jun 2025 15:49:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 674C72ECD33;
+	Tue, 17 Jun 2025 15:49:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175374; cv=none; b=KdMFdY25KruCH5FLwvLxz0Hip/+UcPes1ChtcAVK2luxT8h+azUMW7P6U2CqxoIeWOI6jxo63LZuZ+lryUqbLNzj6jdRVOqmXpt53hMgre0GD1WMncJbUoGLDke2xFaWVZStOgy5WtyePqf2sw2cyjaVXOpkqOaFl5biHkCPaMw=
+	t=1750175377; cv=none; b=ovb5K5hXtMQT4FKmSXIZbflhDBJRro+QTPRO+rP0d6uWMn/gNDkVlGpIPx5uN5KUwbwLKC26oJ78a/2asw0XIoZiOdrKFWipTWjEUN1Sic4cTp6e/jUG+N7UwWszNX5lBAZi5/3dy2x8rXbZCNKPTGiV8M7YAY8C8H6kuAliEUc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175374; c=relaxed/simple;
-	bh=TcKK1Bo4NsEzzy7MP+tdN8eVUxea+HMb6+xlPQVMiy0=;
+	s=arc-20240116; t=1750175377; c=relaxed/simple;
+	bh=0rN6BOkuTqZ/eIWkjHtG6//Vgx6PbFPo1GNXOYA58LQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DA2p+JWa4EyM5RpxCmd4W2H6AuRJ6NN9zgOlR/kJn2TGfpMODTgnpg43OiGM3UzrPkecQVJHbnM/xcXH1LV+pFvq5s4aYzITr/ZaLYm4Ly1nryP2XNJxNyWhmfguzKLAR0ETmclPZHYW79+4ViO5vnWrYHMUXgUWx46r96+T2H8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TCM4xCwT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pqFr2h5hQNutLWPusNZkDpgPVLnuiyhubmqh0wkZYUdXXxjpKKPzGupBdEEoA37jqQ/w7YySOqja47Wq4sIr7pcgKblXzRaELg7xYciTtnefiqdFYKse3jCkXVIsbXryYIYHN2ej1bJX++pXNUVourr9cdf/K+dOn0MtBy8Hje8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hn2XQpUn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TCM4xCwT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88578C4CEE3;
-	Tue, 17 Jun 2025 15:49:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hn2XQpUn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC017C4CEE3;
+	Tue, 17 Jun 2025 15:49:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175374;
-	bh=TcKK1Bo4NsEzzy7MP+tdN8eVUxea+HMb6+xlPQVMiy0=;
+	s=korg; t=1750175377;
+	bh=0rN6BOkuTqZ/eIWkjHtG6//Vgx6PbFPo1GNXOYA58LQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TCM4xCwTFf0dnPdngSJc0TWq+qXaial+3DfNcLllicxVy6F/Qsw9oDvvCBQ2lvpug
-	 iJUsBClocRTc6o/f8JVNN5RfLZWraescN4Fv/zkvOjBeOpzQrAg/cRg5n9TFsNlsbS
-	 iuQuxwYwReTU+2l0mEJjLpdaMyOj6IyX3dT2Q7x4=
+	b=hn2XQpUnaTkLGD4Aze3t+BspJmH05MC9fpnt0BE/kfzSMQsOjCLdNv7sWcUWgDwZe
+	 cYtiwFDYqm1HQj1iBpe8rKkxuc9LWKsG32hdt18rWAUykf4EdOL26c6AuplBhcIywl
+	 Eu8/7yuVSk8xhTmsOf0rEgmkYyooMY+D43XeyZio=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Armin Wolf <W_Armin@gmx.de>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Jiaqing Zhao <jiaqing.zhao@linux.intel.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 082/780] ACPI: thermal: Execute _SCP before reading trip points
-Date: Tue, 17 Jun 2025 17:16:30 +0200
-Message-ID: <20250617152454.853037920@linuxfoundation.org>
+Subject: [PATCH 6.15 076/780] x86/mtrr: Check if fixed-range MTRRs exist in mtrr_save_fixed_ranges()
+Date: Tue, 17 Jun 2025 17:16:24 +0200
+Message-ID: <20250617152454.605874811@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
 References: <20250617152451.485330293@linuxfoundation.org>
@@ -51,55 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Armin Wolf <W_Armin@gmx.de>
+From: Jiaqing Zhao <jiaqing.zhao@linux.intel.com>
 
-[ Upstream commit 3f7cd28ae3d1a1d6f151178469cfaef1b07fdbcc ]
+[ Upstream commit 824c6384e8d9275d4ec7204f3f79a4ac6bc10379 ]
 
-As specified in section 11.4.13 of the ACPI specification the
-operating system is required to evaluate the _ACx and _PSV objects
-after executing the _SCP control method.
+When suspending, save_processor_state() calls mtrr_save_fixed_ranges()
+to save fixed-range MTRRs.
 
-Move the execution of the _SCP control method before the invocation
-of acpi_thermal_get_trip_points() to avoid missing updates to the
-_ACx and _PSV objects.
+On platforms without fixed-range MTRRs like the ACRN hypervisor which
+has removed fixed-range MTRR emulation, accessing these MSRs will
+trigger an unchecked MSR access error. Make sure fixed-range MTRRs are
+supported before access to prevent such error.
 
-Fixes: b09872a652d3 ("ACPI: thermal: Fold acpi_thermal_get_info() into its caller")
-Signed-off-by: Armin Wolf <W_Armin@gmx.de>
-Link: https://patch.msgid.link/20250410165456.4173-3-W_Armin@gmx.de
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Since mtrr_state.have_fixed is only set when MTRRs are present and
+enabled, checking the CPU feature flag in mtrr_save_fixed_ranges() is
+unnecessary.
+
+Fixes: 3ebad5905609 ("[PATCH] x86: Save and restore the fixed-range MTRRs of the BSP when suspending")
+Signed-off-by: Jiaqing Zhao <jiaqing.zhao@linux.intel.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://lore.kernel.org/20250509170633.3411169-2-jiaqing.zhao@linux.intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/thermal.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ arch/x86/kernel/cpu/mtrr/generic.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/thermal.c b/drivers/acpi/thermal.c
-index 0c874186f8aed..5c2defe55898f 100644
---- a/drivers/acpi/thermal.c
-+++ b/drivers/acpi/thermal.c
-@@ -803,6 +803,12 @@ static int acpi_thermal_add(struct acpi_device *device)
+diff --git a/arch/x86/kernel/cpu/mtrr/generic.c b/arch/x86/kernel/cpu/mtrr/generic.c
+index e2c6b471d2302..8c18327eb10bb 100644
+--- a/arch/x86/kernel/cpu/mtrr/generic.c
++++ b/arch/x86/kernel/cpu/mtrr/generic.c
+@@ -593,7 +593,7 @@ static void get_fixed_ranges(mtrr_type *frs)
  
- 	acpi_thermal_aml_dependency_fix(tz);
+ void mtrr_save_fixed_ranges(void *info)
+ {
+-	if (boot_cpu_has(X86_FEATURE_MTRR))
++	if (mtrr_state.have_fixed)
+ 		get_fixed_ranges(mtrr_state.fixed_ranges);
+ }
  
-+	/*
-+	 * Set the cooling mode [_SCP] to active cooling. This needs to happen before
-+	 * we retrieve the trip point values.
-+	 */
-+	acpi_execute_simple_method(tz->device->handle, "_SCP", ACPI_THERMAL_MODE_ACTIVE);
-+
- 	/* Get trip points [_ACi, _PSV, etc.] (required). */
- 	acpi_thermal_get_trip_points(tz);
- 
-@@ -814,10 +820,6 @@ static int acpi_thermal_add(struct acpi_device *device)
- 	if (result)
- 		goto free_memory;
- 
--	/* Set the cooling mode [_SCP] to active cooling. */
--	acpi_execute_simple_method(tz->device->handle, "_SCP",
--				   ACPI_THERMAL_MODE_ACTIVE);
--
- 	/* Determine the default polling frequency [_TZP]. */
- 	if (tzp)
- 		tz->polling_frequency = tzp;
 -- 
 2.39.5
 
