@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2DF2CA4B;
-	Tue, 17 Jun 2025 16:59:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E62362FA627;
+	Tue, 17 Jun 2025 16:59:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750179545; cv=none; b=Fx1hstaWdYI3CbP+rOZefiK95BQeDcmsw+cdWxoN9iKmyE7oNypuatTr3qUorwCU4tCBJ4uj9n/nHCeWTcwq9n4W6BYEGGcdtrIWUbf8hw3vUKdddilGHcqnr/ETgWa1dE4sHYhOoiWCPZ1oYvGu2QuYGwrsUOa/kqa4a0EiKGE=
+	t=1750179549; cv=none; b=ROXCKq5APbShPCVsc0zTlkI0S6vdTqGz24MX9GOUuPbnKGolSaqYe05xr8aWcT2RzXpPb3fJyg4tIT4uIjCUSRKIc7spSXoOWGl7DQ9SU78YmR/6bR8AvnDB+0NUtGvaNl9BNyrop0RTi9q7xWwfWFITWrVn3vefKhbEFdhobjY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750179545; c=relaxed/simple;
-	bh=LU9RXVPofoesJE4J9ZUiqUbxii36Rso3EoQG0ILjLUE=;
+	s=arc-20240116; t=1750179549; c=relaxed/simple;
+	bh=JOUFPt+hAjgJ/nsAam7OawmuyIsuJD1R4PZP/iTNM6E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jKXtGIOCEFqIiQKcG1l75xdoHQDnzJFC+VtkwBNPSnLnTrh25BBYY8w4oJ+8Ym9MXrtxoOQNVWBibISlVHepyZ8JFD58VB554tlJxdgCHoYotfKJQArqOjP1sbmvPJFGGWA7/UsJDZX8399iBFMeuZfGNxa0pUs0nZv/sFeeXYA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GI4hB9cu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gCrJKUPhOGSo651Mwa/MX7GwwmdEgmxCCpELe9g/Y4Prl1NjISkUCKJVtScqZQfZQUrIv3oulRPVer1VIPMoLKCZQM/KhM0XD9x+pU0KErGctlSwgiyzMwnBVCkncXasIKJsomZ8NkaOgpK7GM2w710IigkmwiA22xdF4Dk8p8w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fvfPKUQW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GI4hB9cu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D863C4CEE3;
-	Tue, 17 Jun 2025 16:59:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fvfPKUQW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58614C4CEE3;
+	Tue, 17 Jun 2025 16:59:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750179545;
-	bh=LU9RXVPofoesJE4J9ZUiqUbxii36Rso3EoQG0ILjLUE=;
+	s=korg; t=1750179548;
+	bh=JOUFPt+hAjgJ/nsAam7OawmuyIsuJD1R4PZP/iTNM6E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GI4hB9cudUd6ax4SRRPVKA1XKbfgorFxUzvj/rBXrRb/z7/qqA5G+iFynSy97NLQF
-	 dcj6xl/FflYtaFpUk2A03Lm0yysbJdEF5CRl4vwKA8YryYqCN/y8Id4tWktoyqwqX1
-	 qvjUOH7wbs2tkyOJ4Fsko4nNOMnDmT3wH7PgGyr8=
+	b=fvfPKUQW9yW1a1TjH6XAFYEPtSlIvLLBE3uzpPMPzVCB/C2HdOiwiItb3hwA1E2oD
+	 ypxnLfpUvsYy/z8KG67t3mqqN98Zh6Pz4UF5AknPO49lnvC5Ov4JRknFbMYcqntqPP
+	 cdi0YnaIVBimu+hazC8KFZkDOG72bLs1RFSaGqwg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kees Cook <kees@kernel.org>
-Subject: [PATCH 6.15 779/780] overflow: Introduce __DEFINE_FLEX for having no initializer
-Date: Tue, 17 Jun 2025 17:28:07 +0200
-Message-ID: <20250617152523.229860327@linuxfoundation.org>
+	syzbot+b12826218502df019f9d@syzkaller.appspotmail.com,
+	Andrew Price <anprice@redhat.com>,
+	Andreas Gruenbacher <agruenba@redhat.com>
+Subject: [PATCH 6.15 780/780] gfs2: Dont clear sb->s_fs_info in gfs2_sys_fs_add
+Date: Tue, 17 Jun 2025 17:28:08 +0200
+Message-ID: <20250617152523.268400317@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
 References: <20250617152451.485330293@linuxfoundation.org>
@@ -49,80 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kees Cook <kees@kernel.org>
+From: Andrew Price <anprice@redhat.com>
 
-commit 5c78e793f78732b60276401f75cc1a101f9ad121 upstream.
+commit 9126d2754c5e5d1818765811a10af0a14cf1fa0a upstream.
 
-While not yet in the tree, there is a proposed patch[1] that was
-depending on the prior behavior of _DEFINE_FLEX, which did not have an
-explicit initializer. Provide this via __DEFINE_FLEX now, which can also
-have attributes applied (e.g. __uninitialized).
+When gfs2_sys_fs_add() fails, it sets sb->s_fs_info to NULL on its error
+path (see commit 0d515210b696 ("GFS2: Add kobject release method")).
+The intention seems to be to prevent dereferencing sb->s_fs_info once
+the object pointed to has been deallocated, but that would be better
+achieved by setting the pointer to NULL in free_sbd().
 
-Examples of the resulting initializer behaviors can be seen here:
-https://godbolt.org/z/P7Go8Tr33
+As a consequence, when the call to gfs2_sys_fs_add() fails in
+gfs2_fill_super(), sdp = GFS2_SB(inode) will evaluate to NULL in iput()
+-> gfs2_drop_inode(), and accessing sdp->sd_flags will be a NULL pointer
+dereference.
 
-Link: https://lore.kernel.org/netdev/20250520205920.2134829-9-anthony.l.nguyen@intel.com [1]
-Fixes: 47e36ed78406 ("overflow: Fix direct struct member initialization in _DEFINE_FLEX()")
-Signed-off-by: Kees Cook <kees@kernel.org>
+Fix that by only setting sb->s_fs_info to NULL when actually freeing the
+object pointed to in free_sbd().
+
+Fixes: ae9f3bd8259a ("gfs2: replace sd_aspace with sd_inode")
+Reported-by: syzbot+b12826218502df019f9d@syzkaller.appspotmail.com
+Signed-off-by: Andrew Price <anprice@redhat.com>
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/overflow.h |   25 +++++++++++++++++++------
- 1 file changed, 19 insertions(+), 6 deletions(-)
+ fs/gfs2/ops_fstype.c |    4 +++-
+ fs/gfs2/sys.c        |    1 -
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
---- a/include/linux/overflow.h
-+++ b/include/linux/overflow.h
-@@ -389,25 +389,38 @@ static inline size_t __must_check size_s
- 	struct_size((type *)NULL, member, count)
+--- a/fs/gfs2/ops_fstype.c
++++ b/fs/gfs2/ops_fstype.c
+@@ -64,8 +64,11 @@ static void gfs2_tune_init(struct gfs2_t
  
- /**
-- * _DEFINE_FLEX() - helper macro for DEFINE_FLEX() family.
-- * Enables caller macro to pass (different) initializer.
-+ * __DEFINE_FLEX() - helper macro for DEFINE_FLEX() family.
-+ * Enables caller macro to pass arbitrary trailing expressions
-  *
-  * @type: structure type name, including "struct" keyword.
-  * @name: Name for a variable to define.
-  * @member: Name of the array member.
-  * @count: Number of elements in the array; must be compile-time const.
-- * @initializer: Initializer expression (e.g., pass `= { }` at minimum).
-+ * @trailer: Trailing expressions for attributes and/or initializers.
-  */
--#define _DEFINE_FLEX(type, name, member, count, initializer...)			\
-+#define __DEFINE_FLEX(type, name, member, count, trailer...)			\
- 	_Static_assert(__builtin_constant_p(count),				\
- 		       "onstack flex array members require compile-time const count"); \
- 	union {									\
- 		u8 bytes[struct_size_t(type, member, count)];			\
- 		type obj;							\
--	} name##_u = { .obj initializer };					\
-+	} name##_u trailer;							\
- 	type *name = (type *)&name##_u
- 
- /**
-+ * _DEFINE_FLEX() - helper macro for DEFINE_FLEX() family.
-+ * Enables caller macro to pass (different) initializer.
-+ *
-+ * @type: structure type name, including "struct" keyword.
-+ * @name: Name for a variable to define.
-+ * @member: Name of the array member.
-+ * @count: Number of elements in the array; must be compile-time const.
-+ * @initializer: Initializer expression (e.g., pass `= { }` at minimum).
-+ */
-+#define _DEFINE_FLEX(type, name, member, count, initializer...)			\
-+	__DEFINE_FLEX(type, name, member, count, = { .obj initializer })
+ void free_sbd(struct gfs2_sbd *sdp)
+ {
++	struct super_block *sb = sdp->sd_vfs;
 +
-+/**
-  * DEFINE_RAW_FLEX() - Define an on-stack instance of structure with a trailing
-  * flexible array member, when it does not have a __counted_by annotation.
-  *
-@@ -421,7 +434,7 @@ static inline size_t __must_check size_s
-  * Use __struct_size(@name) to get compile-time size of it afterwards.
-  */
- #define DEFINE_RAW_FLEX(type, name, member, count)	\
--	_DEFINE_FLEX(type, name, member, count, = {})
-+	__DEFINE_FLEX(type, name, member, count, = { })
+ 	if (sdp->sd_lkstats)
+ 		free_percpu(sdp->sd_lkstats);
++	sb->s_fs_info = NULL;
+ 	kfree(sdp);
+ }
  
- /**
-  * DEFINE_FLEX() - Define an on-stack instance of structure with a trailing
+@@ -1316,7 +1319,6 @@ fail_iput:
+ 	iput(sdp->sd_inode);
+ fail_free:
+ 	free_sbd(sdp);
+-	sb->s_fs_info = NULL;
+ 	return error;
+ }
+ 
+--- a/fs/gfs2/sys.c
++++ b/fs/gfs2/sys.c
+@@ -764,7 +764,6 @@ fail_reg:
+ 	fs_err(sdp, "error %d adding sysfs files\n", error);
+ 	kobject_put(&sdp->sd_kobj);
+ 	wait_for_completion(&sdp->sd_kobj_unregister);
+-	sb->s_fs_info = NULL;
+ 	return error;
+ }
+ 
 
 
