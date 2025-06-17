@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F37292ECE99;
-	Tue, 17 Jun 2025 16:02:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BEDD2ED877;
+	Tue, 17 Jun 2025 16:02:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750176131; cv=none; b=S6Zf4t39ZqoYibDxAyhDh3YGzoigMSQOZ2DkFDyEaosqrvutROZV1Fc1l2A2R1VEu7lGxgOWEB9QiSL/CQ7IzLEMIbzlhQl9UYwBYHt1XWk2eTOXAQg8J0H9UFliOa86JwWzQI72o4H9QvTRjttgR8nVnh8gN/Ra/arGebmANME=
+	t=1750176134; cv=none; b=HVH9XaqzbiELA7HMLPpmzWZLuCm8FMVxNC93HIRScZfLgiv52IigENVaqD3Cj8wH3FBlX9POkh23RbMUIj8Wt/pxtTaji2uzk4aNIyauWeqwEimWsv0yZOkN6uFGQEf47j9w8hGZXB0MCgVOwfUqmBoPR4gZ/2VRkPiacAhED0c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750176131; c=relaxed/simple;
-	bh=w41V/a9PDHNCZz5/x68i+dQ2y35+6q6th9jUv9b4rzI=;
+	s=arc-20240116; t=1750176134; c=relaxed/simple;
+	bh=XSH42miACtDUDeda3JC3CJwlb+SYuGGRrdYHw2kwEoE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QB4d7hBmgJ+Q35e+wMo+uXqOuiAiq7K8thEeNg2Pmg5hzHLeCow8xIPcylgyeLTIHUA7MJwTv1wJM3cpRoSjZsZsATMJcnN4zkgi6PSQynsRPjFi9/qX0VYK6sbW9kJNGnHaDBHVM9vmP58zEo++wH64k2C8gT83gja7BqojdtM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WqVnyz72; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UHZxMX7Hf98qe3UBM9EFon5U8KKK13zQtrt/fimeOhnKJQzt91zZJypK+KuPeI/0KdTZKX/DBP5xANJQAQ4iVHVSPCONH2Mt799cNs8l7/nzpIw/aQl82gmiqSpwFfGvJoSOUkMTyydximdHTt60lerIay2AK3bKJN1xKPy8TYc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ImnOxjt2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WqVnyz72"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 633F2C4CEE3;
-	Tue, 17 Jun 2025 16:02:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ImnOxjt2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DBA4C4CEE3;
+	Tue, 17 Jun 2025 16:02:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750176130;
-	bh=w41V/a9PDHNCZz5/x68i+dQ2y35+6q6th9jUv9b4rzI=;
+	s=korg; t=1750176134;
+	bh=XSH42miACtDUDeda3JC3CJwlb+SYuGGRrdYHw2kwEoE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WqVnyz723lYq23IE2i1roMOel49IAEFtE2os9DACwAwJyVapg1WXpByq+PBbeOxx4
-	 xSRPyQpyIbTlysYMfaJvWMg3i9qKBi4E/3WlEqct8WV/XJpk3PcOjHX1nfa3E/QpXa
-	 AdcegU7ohbtW/vGIZleAjw6/eXxXrLgEmJHo2TxE=
+	b=ImnOxjt2Ve0WxTH0iMAmO+zQIu0IrjKux95y3/AXSB0P9UtVMRDRo1WnHrf6wW1dA
+	 07tTpZf6JD7+GnfpZW7OFgDyVybR4/qKt1cgAZRDevJ+AQl1Ff243Q39rLolEnxxra
+	 EnTuS4xnn9Iwxo14AHF71lpSAk74yYsu7NTbvBUY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	NeilBrown <neil@brown.name>,
-	Christoph Hellwig <hch@lst.de>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Horatiu Vultur <horatiu.vultur@microchip.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 154/780] svcrdma: Reduce the number of rdma_rw contexts per-QP
-Date: Tue, 17 Jun 2025 17:17:42 +0200
-Message-ID: <20250617152457.769401628@linuxfoundation.org>
+Subject: [PATCH 6.6 248/356] net: lan966x: Make sure to insert the vlan tags also in host mode
+Date: Tue, 17 Jun 2025 17:26:03 +0200
+Message-ID: <20250617152348.189314248@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
+References: <20250617152338.212798615@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,97 +48,114 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Horatiu Vultur <horatiu.vultur@microchip.com>
 
-[ Upstream commit 59243315890578a040a2d50ae9e001a2ef2fcb62 ]
+[ Upstream commit 27eab4c644236a9324084a70fe79e511cbd07393 ]
 
-There is an upper bound on the number of rdma_rw contexts that can
-be created per QP.
+When running these commands on DUT (and similar at the other end)
+ip link set dev eth0 up
+ip link add link eth0 name eth0.10 type vlan id 10
+ip addr add 10.0.0.1/24 dev eth0.10
+ip link set dev eth0.10 up
+ping 10.0.0.2
 
-This invisible upper bound is because rdma_create_qp() adds one or
-more additional SQEs for each ctxt that the ULP requests via
-qp_attr.cap.max_rdma_ctxs. The QP's actual Send Queue length is on
-the order of the sum of qp_attr.cap.max_send_wr and a factor times
-qp_attr.cap.max_rdma_ctxs. The factor can be up to three, depending
-on whether MR operations are required before RDMA Reads.
+The ping will fail.
 
-This limit is not visible to RDMA consumers via dev->attrs. When the
-limit is surpassed, QP creation fails with -ENOMEM. For example:
+The reason why is failing is because, the network interfaces for lan966x
+have a flag saying that the HW can insert the vlan tags into the
+frames(NETIF_F_HW_VLAN_CTAG_TX). Meaning that the frames that are
+transmitted don't have the vlan tag inside the skb data, but they have
+it inside the skb. We already get that vlan tag and put it in the IFH
+but the problem is that we don't configure the HW to rewrite the frame
+when the interface is in host mode.
+The fix consists in actually configuring the HW to insert the vlan tag
+if it is different than 0.
 
-svcrdma's estimate of the number of rdma_rw contexts it needs is
-three times the number of pages in RPCSVC_MAXPAGES. When MAXPAGES
-is about 260, the internally-computed SQ length should be:
-
-64 credits + 10 backlog + 3 * (3 * 260) = 2414
-
-Which is well below the advertised qp_max_wr of 32768.
-
-If RPCSVC_MAXPAGES is increased to 4MB, that's 1040 pages:
-
-64 credits + 10 backlog + 3 * (3 * 1040) = 9434
-
-However, QP creation fails. Dynamic printk for mlx5 shows:
-
-calc_sq_size:618:(pid 1514): send queue size (9326 * 256 / 64 -> 65536) exceeds limits(32768)
-
-Although 9326 is still far below qp_max_wr, QP creation still
-fails.
-
-Because the total SQ length calculation is opaque to RDMA consumers,
-there doesn't seem to be much that can be done about this except for
-consumers to try to keep the requested rdma_rw ctxt count low.
-
-Fixes: 2da0f610e733 ("svcrdma: Increase the per-transport rw_ctx count")
-Reviewed-by: NeilBrown <neil@brown.name>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Fixes: 6d2c186afa5d ("net: lan966x: Add vlan support.")
+Signed-off-by: Horatiu Vultur <horatiu.vultur@microchip.com>
+Link: https://patch.msgid.link/20250528093619.3738998-1-horatiu.vultur@microchip.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/xprtrdma/svc_rdma_transport.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ .../ethernet/microchip/lan966x/lan966x_main.c |  1 +
+ .../ethernet/microchip/lan966x/lan966x_main.h |  1 +
+ .../microchip/lan966x/lan966x_switchdev.c     |  1 +
+ .../ethernet/microchip/lan966x/lan966x_vlan.c | 21 +++++++++++++++++++
+ 4 files changed, 24 insertions(+)
 
-diff --git a/net/sunrpc/xprtrdma/svc_rdma_transport.c b/net/sunrpc/xprtrdma/svc_rdma_transport.c
-index aca8bdf65d729..ca6172822b68a 100644
---- a/net/sunrpc/xprtrdma/svc_rdma_transport.c
-+++ b/net/sunrpc/xprtrdma/svc_rdma_transport.c
-@@ -406,12 +406,12 @@ static void svc_rdma_xprt_done(struct rpcrdma_notification *rn)
-  */
- static struct svc_xprt *svc_rdma_accept(struct svc_xprt *xprt)
- {
-+	unsigned int ctxts, rq_depth, maxpayload;
- 	struct svcxprt_rdma *listen_rdma;
- 	struct svcxprt_rdma *newxprt = NULL;
- 	struct rdma_conn_param conn_param;
- 	struct rpcrdma_connect_private pmsg;
- 	struct ib_qp_init_attr qp_attr;
--	unsigned int ctxts, rq_depth;
- 	struct ib_device *dev;
- 	int ret = 0;
- 	RPC_IFDEBUG(struct sockaddr *sap);
-@@ -462,12 +462,14 @@ static struct svc_xprt *svc_rdma_accept(struct svc_xprt *xprt)
- 		newxprt->sc_max_bc_requests = 2;
- 	}
+diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_main.c b/drivers/net/ethernet/microchip/lan966x/lan966x_main.c
+index 05f6c92275830..b424e75fd40c4 100644
+--- a/drivers/net/ethernet/microchip/lan966x/lan966x_main.c
++++ b/drivers/net/ethernet/microchip/lan966x/lan966x_main.c
+@@ -881,6 +881,7 @@ static int lan966x_probe_port(struct lan966x *lan966x, u32 p,
+ 	lan966x_vlan_port_set_vlan_aware(port, 0);
+ 	lan966x_vlan_port_set_vid(port, HOST_PVID, false, false);
+ 	lan966x_vlan_port_apply(port);
++	lan966x_vlan_port_rew_host(port);
  
--	/* Arbitrarily estimate the number of rw_ctxs needed for
--	 * this transport. This is enough rw_ctxs to make forward
--	 * progress even if the client is using one rkey per page
--	 * in each Read chunk.
-+	/* Arbitrary estimate of the needed number of rdma_rw contexts.
- 	 */
--	ctxts = 3 * RPCSVC_MAXPAGES;
-+	maxpayload = min(xprt->xpt_server->sv_max_payload,
-+			 RPCSVC_MAXPAYLOAD_RDMA);
-+	ctxts = newxprt->sc_max_requests * 3 *
-+		rdma_rw_mr_factor(dev, newxprt->sc_port_num,
-+				  maxpayload >> PAGE_SHIFT);
+ 	return 0;
+ }
+diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_main.h b/drivers/net/ethernet/microchip/lan966x/lan966x_main.h
+index b65d58a1552b5..5a16d76eb000d 100644
+--- a/drivers/net/ethernet/microchip/lan966x/lan966x_main.h
++++ b/drivers/net/ethernet/microchip/lan966x/lan966x_main.h
+@@ -549,6 +549,7 @@ void lan966x_vlan_port_apply(struct lan966x_port *port);
+ bool lan966x_vlan_cpu_member_cpu_vlan_mask(struct lan966x *lan966x, u16 vid);
+ void lan966x_vlan_port_set_vlan_aware(struct lan966x_port *port,
+ 				      bool vlan_aware);
++void lan966x_vlan_port_rew_host(struct lan966x_port *port);
+ int lan966x_vlan_port_set_vid(struct lan966x_port *port,
+ 			      u16 vid,
+ 			      bool pvid,
+diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_switchdev.c b/drivers/net/ethernet/microchip/lan966x/lan966x_switchdev.c
+index 1c88120eb291a..bcb4db76b75cd 100644
+--- a/drivers/net/ethernet/microchip/lan966x/lan966x_switchdev.c
++++ b/drivers/net/ethernet/microchip/lan966x/lan966x_switchdev.c
+@@ -297,6 +297,7 @@ static void lan966x_port_bridge_leave(struct lan966x_port *port,
+ 	lan966x_vlan_port_set_vlan_aware(port, false);
+ 	lan966x_vlan_port_set_vid(port, HOST_PVID, false, false);
+ 	lan966x_vlan_port_apply(port);
++	lan966x_vlan_port_rew_host(port);
+ }
+ 
+ int lan966x_port_changeupper(struct net_device *dev,
+diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_vlan.c b/drivers/net/ethernet/microchip/lan966x/lan966x_vlan.c
+index 3c44660128dae..ffb245fb7d678 100644
+--- a/drivers/net/ethernet/microchip/lan966x/lan966x_vlan.c
++++ b/drivers/net/ethernet/microchip/lan966x/lan966x_vlan.c
+@@ -149,6 +149,27 @@ void lan966x_vlan_port_set_vlan_aware(struct lan966x_port *port,
+ 	port->vlan_aware = vlan_aware;
+ }
+ 
++/* When the interface is in host mode, the interface should not be vlan aware
++ * but it should insert all the tags that it gets from the network stack.
++ * The tags are not in the data of the frame but actually in the skb and the ifh
++ * is configured already to get this tag. So what we need to do is to update the
++ * rewriter to insert the vlan tag for all frames which have a vlan tag
++ * different than 0.
++ */
++void lan966x_vlan_port_rew_host(struct lan966x_port *port)
++{
++	struct lan966x *lan966x = port->lan966x;
++	u32 val;
 +
- 	newxprt->sc_sq_depth = rq_depth + ctxts;
- 	if (newxprt->sc_sq_depth > dev->attrs.max_qp_wr)
- 		newxprt->sc_sq_depth = dev->attrs.max_qp_wr;
++	/* Tag all frames except when VID=0*/
++	val = REW_TAG_CFG_TAG_CFG_SET(2);
++
++	/* Update only some bits in the register */
++	lan_rmw(val,
++		REW_TAG_CFG_TAG_CFG,
++		lan966x, REW_TAG_CFG(port->chip_port));
++}
++
+ void lan966x_vlan_port_apply(struct lan966x_port *port)
+ {
+ 	struct lan966x *lan966x = port->lan966x;
 -- 
 2.39.5
 
