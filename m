@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 576872E8E12;
-	Tue, 17 Jun 2025 16:47:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73B641A2632;
+	Tue, 17 Jun 2025 16:48:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750178877; cv=none; b=pSOMYWGsZo5XGGiRaE9J06TZXQTv5BfZoeplcJ2+Zcj+h5A/6j5vTmHJqe25yEIhVu4kiqmwp0yRnRjxjXdgKGdNGH2jI8qCocMzBIU8l9q0wOiWruAJTpVPdWni2adHWJdhXPvT/ZwWfkmGHpWqw5zmq1A0q6C4O/QiHnOZ4XM=
+	t=1750178880; cv=none; b=SCPVyggYNnD6O5e/M0qZR65/XWj8Ou0VyNNzy5bM84BAYlwm2JNOikz3DSuvSMMENx715Z/L1lQeC1DfENnPF9KxZv4OAT5wFGre57SpmM54vg++fqGXAT+u1A6uhN1nF+HgUjmKfL4whcDjD6VzzQMhYvlr//Xyks90bDVCRak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750178877; c=relaxed/simple;
-	bh=Zll0u9TdgTT20sfGDYyhSm/0WFgwx0aAoXhlVvbPX9s=;
+	s=arc-20240116; t=1750178880; c=relaxed/simple;
+	bh=IBvwCBLN/ASl6t8K6G888PmsCb0C7SnyYuUZ+ZW+6Rg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HFK81DWI5LRZWprnsFBekUIlzHZ71VoXzxpXuzjv07+ET4YkT5IevZCafngpjz6Ywm7mGrKxA8UvKNE+TsmVndf7XW4SolvqQyctYIkYGavN+0Hg8oCwNHK08hrFB0Dt29W50+tiVNpkz6ZPLqvGhlONoQnYEs78WlRN36Gh1iU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wXAGXPNk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t/77qkuh52dwW7ziwawc4/Xp5HS//20RfczSZCp3Rnipz3aHzDie6krfXBtEIimVHy1nnW0xsUplZk/iDn9SqElwaLcPl6BJ1HutMAq92W4W0jCmn1AatMNtAaYd0gTWoH1kozZtJF1HXiaiKuOgUhM7ZOP9/ZsKiMA4pvZeKxc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kf5FkLLz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wXAGXPNk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B07EC4CEE3;
-	Tue, 17 Jun 2025 16:47:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kf5FkLLz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8D8DC4CEE3;
+	Tue, 17 Jun 2025 16:47:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750178877;
-	bh=Zll0u9TdgTT20sfGDYyhSm/0WFgwx0aAoXhlVvbPX9s=;
+	s=korg; t=1750178880;
+	bh=IBvwCBLN/ASl6t8K6G888PmsCb0C7SnyYuUZ+ZW+6Rg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wXAGXPNkky/ri/xMpafnAtvPvlpdAqxe/NXouCRfBFO/nTxp5pqMq0Aw4YQQOE1x7
-	 oA4Ro7AXrqRQ930hTWIe+mUsLwgnSPTs3yaPWOPZMcvXmHD2diq20ZBEGU0m2yRagp
-	 tvWpK09J6atH+TBVaociNV6XKkjU5opMDVFObROw=
+	b=kf5FkLLzX8B/xNgcCdb6YjXQ8bUKdFhw19on9qo9s7Sr80XhQqVtVe86chTLnxn7Y
+	 RSGJxI/tKQx1zCoxj2C4P9FVCo+zYPDPDjnxVZMLwYZlZpHPL/LBKXTKezUSTuYrzd
+	 6/bMQNCwYMBlJdudusu1piDe8wo/NRB2+qSHsbnE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Moyer <jmoyer@redhat.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Christian Schrefl <chrisi.schrefl@gmail.com>,
+	Benno Lossin <lossin@kernel.org>,
+	Alice Ryhl <aliceryhl@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 549/780] loop: add file_start_write() and file_end_write()
-Date: Tue, 17 Jun 2025 17:24:17 +0200
-Message-ID: <20250617152513.866140025@linuxfoundation.org>
+Subject: [PATCH 6.15 540/780] rust: miscdevice: fix typo in MiscDevice::ioctl documentation
+Date: Tue, 17 Jun 2025 17:24:08 +0200
+Message-ID: <20250617152513.505821629@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
 References: <20250617152451.485330293@linuxfoundation.org>
@@ -52,61 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Lei <ming.lei@redhat.com>
+From: Christian Schrefl <chrisi.schrefl@gmail.com>
 
-[ Upstream commit 39d86db34e41b96bd86f1955cd0ce6cd9c5fca4c ]
+[ Upstream commit 81e9edc1a8d657291409d70d93361d8277d226d8 ]
 
-file_start_write() and file_end_write() should be added around ->write_iter().
+Fixes one small typo (`utilties` to `utilities`) in the documentation of
+`MiscDevice::ioctl`.
 
-Recently we switch to ->write_iter() from vfs_iter_write(), and the
-implied file_start_write() and file_end_write() are lost.
-
-Also we never add them for dio code path, so add them back for covering
-both.
-
-Cc: Jeff Moyer <jmoyer@redhat.com>
-Fixes: f2fed441c69b ("loop: stop using vfs_iter_{read,write} for buffered I/O")
-Fixes: bc07c10a3603 ("block: loop: support DIO & AIO")
-Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Link: https://lore.kernel.org/r/20250527153405.837216-1-ming.lei@redhat.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: f893691e7426 ("rust: miscdevice: add base miscdevice abstraction")
+Signed-off-by: Christian Schrefl <chrisi.schrefl@gmail.com>
+Reviewed-by: Benno Lossin <lossin@kernel.org>
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Link: https://lore.kernel.org/r/20250517-rust_miscdevice_fix_typo-v1-1-8c30a6237ba9@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/loop.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ rust/kernel/miscdevice.rs | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/block/loop.c b/drivers/block/loop.c
-index e2b1f377f5856..f8d136684109a 100644
---- a/drivers/block/loop.c
-+++ b/drivers/block/loop.c
-@@ -308,11 +308,14 @@ static void lo_complete_rq(struct request *rq)
- static void lo_rw_aio_do_completion(struct loop_cmd *cmd)
- {
- 	struct request *rq = blk_mq_rq_from_pdu(cmd);
-+	struct loop_device *lo = rq->q->queuedata;
+diff --git a/rust/kernel/miscdevice.rs b/rust/kernel/miscdevice.rs
+index fa9ecc42602a4..15d10e5c1db7d 100644
+--- a/rust/kernel/miscdevice.rs
++++ b/rust/kernel/miscdevice.rs
+@@ -121,7 +121,7 @@ pub trait MiscDevice: Sized {
  
- 	if (!atomic_dec_and_test(&cmd->ref))
- 		return;
- 	kfree(cmd->bvec);
- 	cmd->bvec = NULL;
-+	if (req_op(rq) == REQ_OP_WRITE)
-+		file_end_write(lo->lo_backing_file);
- 	if (likely(!blk_should_fake_timeout(rq->q)))
- 		blk_mq_complete_request(rq);
- }
-@@ -387,9 +390,10 @@ static int lo_rw_aio(struct loop_device *lo, struct loop_cmd *cmd,
- 		cmd->iocb.ki_flags = 0;
- 	}
- 
--	if (rw == ITER_SOURCE)
-+	if (rw == ITER_SOURCE) {
-+		file_start_write(lo->lo_backing_file);
- 		ret = file->f_op->write_iter(&cmd->iocb, &iter);
--	else
-+	} else
- 		ret = file->f_op->read_iter(&cmd->iocb, &iter);
- 
- 	lo_rw_aio_do_completion(cmd);
+     /// Handler for ioctls.
+     ///
+-    /// The `cmd` argument is usually manipulated using the utilties in [`kernel::ioctl`].
++    /// The `cmd` argument is usually manipulated using the utilities in [`kernel::ioctl`].
+     ///
+     /// [`kernel::ioctl`]: mod@crate::ioctl
+     fn ioctl(
 -- 
 2.39.5
 
