@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B5C22F94B1;
-	Tue, 17 Jun 2025 16:13:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D06492F94B0;
+	Tue, 17 Jun 2025 16:13:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750176823; cv=none; b=Ihyw1vdPnz0PYGY60uEuVxkuPORg1n+tcLUNRjXpJTkg1XlMNoOXzDoGGnwhYj1y802d7HK9ErxhIA3TX1VvPb+AjJs1bHpOJsjizRyki3RIVwAsZmmtnu8pUnABU68HsPGQOk1Jh0eISkSqh4aM7O3m6oL7m5LyImZbwfgG2SI=
+	t=1750176826; cv=none; b=rDk2xx5vutXtTGEm6hBIVtV7riaFSbEWVkMKdXq9LW4FBD8dQ+ABpNYFadse1suoFeEJ8pgaOtHCLQvztOQy2JjjG2CcN6O9QY/Vs32jEps2zlOVIND1A/QwQBeNvjMOYSbU9jZSj5aB7JP0sMqrULwVcDenti/JgW3pVvk3ot4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750176823; c=relaxed/simple;
-	bh=y3fpacXJ9t0gZen7ho/8sDMX/ZTAaVy9M0WKljdykTg=;
+	s=arc-20240116; t=1750176826; c=relaxed/simple;
+	bh=EnAhmgJAJF/kUhuY7Eh9uQq6XXhaLs7e0/mRCwdhYf0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NNn8NXm0ELacEZxxPOg5hZHneblPOgs2Ai1qtDm+TJoKtY5sZ9Y0kJ5bQpbq6njE/g8/OCR0GY7mdMwvE0bw/sg6oE2ATQZmzJcQij2vBR0wqnlS0xuwyeE/bhxRWzmWvzskaTRQDXhaj3UxMocY/c0ODR8PEBD0HMmfRF+GLK0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jio+/i4m; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KGU/6MJfimD8iJhWelW6/6Y0zJ/qURlRF4pAKkMAmfbRoMbGi/5h53ogT9F6RpANgbiLBaSsf7ion4qHqnTb8w8KO1xU2gZKtpT2uF/soRTQl1wbixRNY1pd/btyAorIGMF6U26MHIJuLYqZzT3KXYd1dMRhhUGzAhIQJ36zCUQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ud3Qk3qE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jio+/i4m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7013C4CEE3;
-	Tue, 17 Jun 2025 16:13:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ud3Qk3qE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36A2EC4CEE3;
+	Tue, 17 Jun 2025 16:13:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750176823;
-	bh=y3fpacXJ9t0gZen7ho/8sDMX/ZTAaVy9M0WKljdykTg=;
+	s=korg; t=1750176826;
+	bh=EnAhmgJAJF/kUhuY7Eh9uQq6XXhaLs7e0/mRCwdhYf0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Jio+/i4mvopAI3aMVvVFerinLkjsBDCA4mLLz0RJaFRua4NW9WSCYeIaSjzKfuE79
-	 v1YaaFIntJZkKgyzNBRJH8XQEOHY/5W6I0VfafouZJFWwxhFIGLed49abvf2d2bjqd
-	 Ouj75XqO7g00pWdl7Ycm/huPtUhOA0gwtzXKalgc=
+	b=Ud3Qk3qE2g8UvSqyuWvYAbozjyPoI3WeaR51qO+kaKfmHBZBvSHVc30rzyxjcAQTg
+	 mZwYug+De/OIyOVVEneDboT98S3Of3clIZFliS9Ei9XX6w+BBA9QDuW+tEKnOIFV+3
+	 9GERPs7mjokK4KSTefOo6pApNuO86dkYVkGNu8nE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Justin Tee <justin.tee@broadcom.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Thiago Jung Bauermann <thiago.bauermann@linaro.org>,
+	Ingo Saitz <ingo@hannover.ccc.de>,
+	Kees Cook <kees@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 229/780] scsi: lpfc: Avoid potential ndlp use-after-free in dev_loss_tmo_callbk
-Date: Tue, 17 Jun 2025 17:18:57 +0200
-Message-ID: <20250617152500.779085586@linuxfoundation.org>
+Subject: [PATCH 6.12 270/512] randstruct: gcc-plugin: Fix attribute addition
+Date: Tue, 17 Jun 2025 17:23:56 +0200
+Message-ID: <20250617152430.537725645@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,98 +48,136 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Justin Tee <justin.tee@broadcom.com>
+From: Kees Cook <kees@kernel.org>
 
-[ Upstream commit b5162bb6aa1ec04dff4509b025883524b6d7e7ca ]
+[ Upstream commit f39f18f3c3531aa802b58a20d39d96e82eb96c14 ]
 
-Smatch detected a potential use-after-free of an ndlp oject in
-dev_loss_tmo_callbk during driver unload or fatal error handling.
+Based on changes in the 2021 public version of the randstruct
+out-of-tree GCC plugin[1], more carefully update the attributes on
+resulting decls, to avoid tripping checks in GCC 15's
+comptypes_check_enum_int() when it has been configured with
+"--enable-checking=misc":
 
-Fix by reordering code to avoid potential use-after-free if initial
-nodelist reference has been previously removed.
+arch/arm64/kernel/kexec_image.c:132:14: internal compiler error: in comptypes_check_enum_int, at c/c-typeck.cc:1519
+  132 | const struct kexec_file_ops kexec_image_ops = {
+      |              ^~~~~~~~~~~~~~
+ internal_error(char const*, ...), at gcc/gcc/diagnostic-global-context.cc:517
+ fancy_abort(char const*, int, char const*), at gcc/gcc/diagnostic.cc:1803
+ comptypes_check_enum_int(tree_node*, tree_node*, bool*), at gcc/gcc/c/c-typeck.cc:1519
+ ...
 
-Fixes: 4281f44ea8bf ("scsi: lpfc: Prevent NDLP reference count underflow in dev_loss_tmo callback")
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Closes: https://lore.kernel.org/linux-scsi/41c1d855-9eb5-416f-ac12-8b61929201a3@stanley.mountain/
-Signed-off-by: Justin Tee <justin.tee@broadcom.com>
-Link: https://lore.kernel.org/r/20250425194806.3585-6-justintee8345@gmail.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Link: https://archive.org/download/grsecurity/grsecurity-3.1-5.10.41-202105280954.patch.gz [1]
+Reported-by: Thiago Jung Bauermann <thiago.bauermann@linaro.org>
+Closes: https://github.com/KSPP/linux/issues/367
+Closes: https://lore.kernel.org/lkml/20250530000646.104457-1-thiago.bauermann@linaro.org/
+Reported-by: Ingo Saitz <ingo@hannover.ccc.de>
+Closes: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1104745
+Fixes: 313dd1b62921 ("gcc-plugins: Add the randstruct plugin")
+Tested-by: Thiago Jung Bauermann <thiago.bauermann@linaro.org>
+Link: https://lore.kernel.org/r/20250530221824.work.623-kees@kernel.org
+Signed-off-by: Kees Cook <kees@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/lpfc/lpfc_hbadisc.c | 32 +++++++++++++++++---------------
- 1 file changed, 17 insertions(+), 15 deletions(-)
+ scripts/gcc-plugins/gcc-common.h              | 32 +++++++++++++++++++
+ scripts/gcc-plugins/randomize_layout_plugin.c | 22 ++++++-------
+ 2 files changed, 43 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/scsi/lpfc/lpfc_hbadisc.c b/drivers/scsi/lpfc/lpfc_hbadisc.c
-index 179be6c5a43e0..c2ec4db672869 100644
---- a/drivers/scsi/lpfc/lpfc_hbadisc.c
-+++ b/drivers/scsi/lpfc/lpfc_hbadisc.c
-@@ -161,7 +161,7 @@ lpfc_dev_loss_tmo_callbk(struct fc_rport *rport)
- 	struct lpfc_hba   *phba;
- 	struct lpfc_work_evt *evtp;
- 	unsigned long iflags;
--	bool nvme_reg = false;
-+	bool drop_initial_node_ref = false;
+diff --git a/scripts/gcc-plugins/gcc-common.h b/scripts/gcc-plugins/gcc-common.h
+index 3222c1070444f..ef12c8f929eda 100644
+--- a/scripts/gcc-plugins/gcc-common.h
++++ b/scripts/gcc-plugins/gcc-common.h
+@@ -123,6 +123,38 @@ static inline tree build_const_char_string(int len, const char *str)
+ 	return cstr;
+ }
  
- 	ndlp = ((struct lpfc_rport_data *)rport->dd_data)->pnode;
- 	if (!ndlp)
-@@ -188,8 +188,13 @@ lpfc_dev_loss_tmo_callbk(struct fc_rport *rport)
- 		spin_lock_irqsave(&ndlp->lock, iflags);
- 		ndlp->rport = NULL;
- 
--		if (ndlp->fc4_xpt_flags & NVME_XPT_REGD)
--			nvme_reg = true;
-+		/* Only 1 thread can drop the initial node reference.
-+		 * If not registered for NVME and NLP_DROPPED flag is
-+		 * clear, remove the initial reference.
-+		 */
-+		if (!(ndlp->fc4_xpt_flags & NVME_XPT_REGD))
-+			if (!test_and_set_bit(NLP_DROPPED, &ndlp->nlp_flag))
-+				drop_initial_node_ref = true;
- 
- 		/* The scsi_transport is done with the rport so lpfc cannot
- 		 * call to unregister.
-@@ -200,13 +205,16 @@ lpfc_dev_loss_tmo_callbk(struct fc_rport *rport)
- 			/* If NLP_XPT_REGD was cleared in lpfc_nlp_unreg_node,
- 			 * unregister calls were made to the scsi and nvme
- 			 * transports and refcnt was already decremented. Clear
--			 * the NLP_XPT_REGD flag only if the NVME Rport is
-+			 * the NLP_XPT_REGD flag only if the NVME nrport is
- 			 * confirmed unregistered.
- 			 */
--			if (!nvme_reg && ndlp->fc4_xpt_flags & NLP_XPT_REGD) {
--				ndlp->fc4_xpt_flags &= ~NLP_XPT_REGD;
-+			if (ndlp->fc4_xpt_flags & NLP_XPT_REGD) {
-+				if (!(ndlp->fc4_xpt_flags & NVME_XPT_REGD))
-+					ndlp->fc4_xpt_flags &= ~NLP_XPT_REGD;
- 				spin_unlock_irqrestore(&ndlp->lock, iflags);
--				lpfc_nlp_put(ndlp); /* may free ndlp */
++static inline void __add_type_attr(tree type, const char *attr, tree args)
++{
++	tree oldattr;
 +
-+				/* Release scsi transport reference */
-+				lpfc_nlp_put(ndlp);
- 			} else {
- 				spin_unlock_irqrestore(&ndlp->lock, iflags);
- 			}
-@@ -214,14 +222,8 @@ lpfc_dev_loss_tmo_callbk(struct fc_rport *rport)
- 			spin_unlock_irqrestore(&ndlp->lock, iflags);
- 		}
++	if (type == NULL_TREE)
++		return;
++	oldattr = lookup_attribute(attr, TYPE_ATTRIBUTES(type));
++	if (oldattr != NULL_TREE) {
++		gcc_assert(TREE_VALUE(oldattr) == args || TREE_VALUE(TREE_VALUE(oldattr)) == TREE_VALUE(args));
++		return;
++	}
++
++	TYPE_ATTRIBUTES(type) = copy_list(TYPE_ATTRIBUTES(type));
++	TYPE_ATTRIBUTES(type) = tree_cons(get_identifier(attr), args, TYPE_ATTRIBUTES(type));
++}
++
++static inline void add_type_attr(tree type, const char *attr, tree args)
++{
++	tree main_variant = TYPE_MAIN_VARIANT(type);
++
++	__add_type_attr(TYPE_CANONICAL(type), attr, args);
++	__add_type_attr(TYPE_CANONICAL(main_variant), attr, args);
++	__add_type_attr(main_variant, attr, args);
++
++	for (type = TYPE_NEXT_VARIANT(main_variant); type; type = TYPE_NEXT_VARIANT(type)) {
++		if (!lookup_attribute(attr, TYPE_ATTRIBUTES(type)))
++			TYPE_ATTRIBUTES(type) = TYPE_ATTRIBUTES(main_variant);
++
++		__add_type_attr(TYPE_CANONICAL(type), attr, args);
++	}
++}
++
+ #define PASS_INFO(NAME, REF, ID, POS)		\
+ struct register_pass_info NAME##_pass_info = {	\
+ 	.pass = make_##NAME##_pass(),		\
+diff --git a/scripts/gcc-plugins/randomize_layout_plugin.c b/scripts/gcc-plugins/randomize_layout_plugin.c
+index 971a1908a8cc4..ff65a4f87f240 100644
+--- a/scripts/gcc-plugins/randomize_layout_plugin.c
++++ b/scripts/gcc-plugins/randomize_layout_plugin.c
+@@ -73,6 +73,9 @@ static tree handle_randomize_layout_attr(tree *node, tree name, tree args, int f
  
--		/* Only 1 thread can drop the initial node reference.  If
--		 * another thread has set NLP_DROPPED, this thread is done.
--		 */
--		if (nvme_reg || test_bit(NLP_DROPPED, &ndlp->nlp_flag))
--			return;
--
--		set_bit(NLP_DROPPED, &ndlp->nlp_flag);
--		lpfc_nlp_put(ndlp);
-+		if (drop_initial_node_ref)
-+			lpfc_nlp_put(ndlp);
- 		return;
- 	}
+ 	if (TYPE_P(*node)) {
+ 		type = *node;
++	} else if (TREE_CODE(*node) == FIELD_DECL) {
++		*no_add_attrs = false;
++		return NULL_TREE;
+ 	} else {
+ 		gcc_assert(TREE_CODE(*node) == TYPE_DECL);
+ 		type = TREE_TYPE(*node);
+@@ -348,15 +351,14 @@ static int relayout_struct(tree type)
+ 		TREE_CHAIN(newtree[i]) = newtree[i+1];
+ 	TREE_CHAIN(newtree[num_fields - 1]) = NULL_TREE;
  
++	add_type_attr(type, "randomize_performed", NULL_TREE);
++	add_type_attr(type, "designated_init", NULL_TREE);
++	if (has_flexarray)
++		add_type_attr(type, "has_flexarray", NULL_TREE);
++
+ 	main_variant = TYPE_MAIN_VARIANT(type);
+-	for (variant = main_variant; variant; variant = TYPE_NEXT_VARIANT(variant)) {
++	for (variant = main_variant; variant; variant = TYPE_NEXT_VARIANT(variant))
+ 		TYPE_FIELDS(variant) = newtree[0];
+-		TYPE_ATTRIBUTES(variant) = copy_list(TYPE_ATTRIBUTES(variant));
+-		TYPE_ATTRIBUTES(variant) = tree_cons(get_identifier("randomize_performed"), NULL_TREE, TYPE_ATTRIBUTES(variant));
+-		TYPE_ATTRIBUTES(variant) = tree_cons(get_identifier("designated_init"), NULL_TREE, TYPE_ATTRIBUTES(variant));
+-		if (has_flexarray)
+-			TYPE_ATTRIBUTES(type) = tree_cons(get_identifier("has_flexarray"), NULL_TREE, TYPE_ATTRIBUTES(type));
+-	}
+ 
+ 	/*
+ 	 * force a re-layout of the main variant
+@@ -424,10 +426,8 @@ static void randomize_type(tree type)
+ 	if (lookup_attribute("randomize_layout", TYPE_ATTRIBUTES(TYPE_MAIN_VARIANT(type))) || is_pure_ops_struct(type))
+ 		relayout_struct(type);
+ 
+-	for (variant = TYPE_MAIN_VARIANT(type); variant; variant = TYPE_NEXT_VARIANT(variant)) {
+-		TYPE_ATTRIBUTES(type) = copy_list(TYPE_ATTRIBUTES(type));
+-		TYPE_ATTRIBUTES(type) = tree_cons(get_identifier("randomize_considered"), NULL_TREE, TYPE_ATTRIBUTES(type));
+-	}
++	add_type_attr(type, "randomize_considered", NULL_TREE);
++
+ #ifdef __DEBUG_PLUGIN
+ 	fprintf(stderr, "Marking randomize_considered on struct %s\n", ORIG_TYPE_NAME(type));
+ #ifdef __DEBUG_VERBOSE
 -- 
 2.39.5
 
