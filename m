@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB2A222DF80;
-	Tue, 17 Jun 2025 16:24:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B370F204F73;
+	Tue, 17 Jun 2025 16:24:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177444; cv=none; b=q2SEANIQTqcQHVLUuszWRu9uAaFmgAiblIKTgawTwy55taxrzkRaidzY1wmUfwPZPRzMh9Zer5AxTR+aMnQPuOGDm4sbFvgB+9gs+ZyamRleEfCHluEXd5unNzmdv/iS6EHR7ChU2KstMv8IzbUy28dL7KriHt97Z9h7kUo7mVM=
+	t=1750177447; cv=none; b=iDhJFILmmqYxNZxGDSIxPzhd1xd0WW+IRmsrO30Lrxhf6L7jHf4+MWKWokOgvrCKy37+9rYwp/SjihtOYm5P7b51hJInHVKeM3F8blE3JdavZ2jMvPfS6ViFXL+1DJp/WA5HNh+JGZ1bzP7lBrQwof+jLmpGIcFbjvlaHbaoB/g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177444; c=relaxed/simple;
-	bh=wRPUB39eZpTCgqxY/J/oxE04Tm1k49t1AWOxfOW77pg=;
+	s=arc-20240116; t=1750177447; c=relaxed/simple;
+	bh=1Z4U/rortABXJpeyDaoilXO/Eu8y1lZqsNShFYuVOec=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tFboAbnAnm8dIXNChXupnG3Lu3nmBonzwK/rp4pS8f6gXY6+5Q+JX9LySuLIiO5dA/poLDrStsQ+0q2zpaa5Kn5ingBSIDICaWGeVumzg0j1DEyBwPGknqxzcNDxRscdCGTv50FpaMNdOh89ZKroB0QGDNse4RDU6bRZ8RoPPLY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nrn8nJIf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DM+D2UaTiK4EeJ8uuBYfGa1cVZUdNk/uQkfzz36fEKu365BTYrBxWcwUrAgyiEp8OZg264/o5xYLy/prfkqmFw7qB9J9ou2WRK+BurB8XnNpJrSOgTp4hvRxZ3wSg4KqaArtGM/g4JfkFv+e2kujJOUiSGZJs9PhOP/Fj0jKH1E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OwqPC7u/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nrn8nJIf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34C23C4CEE3;
-	Tue, 17 Jun 2025 16:24:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OwqPC7u/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D39CC4CEE3;
+	Tue, 17 Jun 2025 16:24:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177444;
-	bh=wRPUB39eZpTCgqxY/J/oxE04Tm1k49t1AWOxfOW77pg=;
+	s=korg; t=1750177447;
+	bh=1Z4U/rortABXJpeyDaoilXO/Eu8y1lZqsNShFYuVOec=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Nrn8nJIfPkP/fd2LEYuMtlnV7cBR+hhNuihZ36sks7v9kIKjGh+vAA0CJlNpnsmuO
-	 F5Cb/b/gsANO7FaxFIyweaWv68aZSQvXW/neSgGfIrNBJkeAoiwgpHXV6qWMlghELI
-	 tir1PvDSOS5VLbhBZhG5L9AE1Xq1GW5SBhD5qeJ4=
+	b=OwqPC7u/GXbHfZPM8eAO4aH2eSMM1iDYsELpQ0IvSGwfiKTZFfaaPDFP8rX6W2NJj
+	 7CaragKNADoWK06bY0yyPtLIjli+uF2Pw7s7CnOKHikGaX8XN0FCxY06dnD/MQ7Ymp
+	 z2JAoxkNU/uSfFwin12FhQxqNksx6nQlFlJDMYr8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quentin Schulz <quentin.schulz@cherry.de>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 347/512] net: stmmac: platform: guarantee uniqueness of bus_id
-Date: Tue, 17 Jun 2025 17:25:13 +0200
-Message-ID: <20250617152433.649613033@linuxfoundation.org>
+Subject: [PATCH 6.15 308/780] netfilter: nf_tables: nft_fib_ipv6: fix VRF ipv4/ipv6 result discrepancy
+Date: Tue, 17 Jun 2025 17:20:16 +0200
+Message-ID: <20250617152504.007279599@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,70 +47,81 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Quentin Schulz <quentin.schulz@cherry.de>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit eb7fd7aa35bfcc1e1fda4ecc42ccfcb526cdc780 ]
+[ Upstream commit 8b53f46eb430fe5b42d485873b85331d2de2c469 ]
 
-bus_id is currently derived from the ethernetX alias. If one is missing
-for the device, 0 is used. If ethernet0 points to another stmmac device
-or if there are 2+ stmmac devices without an ethernet alias, then bus_id
-will be 0 for all of those.
+With a VRF, ipv4 and ipv6 FIB expression behave differently.
 
-This is an issue because the bus_id is used to generate the mdio bus id
-(new_bus->id in drivers/net/ethernet/stmicro/stmmac/stmmac_mdio.c
-stmmac_mdio_register) and this needs to be unique.
+   fib daddr . iif oif
 
-This allows to avoid needing to define ethernet aliases for devices with
-multiple stmmac controllers (such as the Rockchip RK3588) for multiple
-stmmac devices to probe properly.
+Will return the input interface name for ipv4, but the real device
+for ipv6.  Example:
 
-Obviously, the bus_id isn't guaranteed to be stable across reboots if no
-alias is set for the device but that is easily fixed by simply adding an
-alias if this is desired.
+If VRF device name is tvrf and real (incoming) device is veth0.
+First round is ok, both ipv4 and ipv6 will yield 'veth0'.
 
-Fixes: 25c83b5c2e82 ("dt:net:stmmac: Add support to dwmac version 3.610 and 3.710")
-Signed-off-by: Quentin Schulz <quentin.schulz@cherry.de>
-Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Link: https://patch.msgid.link/20250527-stmmac-mdio-bus_id-v2-1-a5ca78454e3c@cherry.de
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+But in the second round (incoming device will be set to "tvrf"), ipv4
+will yield "tvrf" whereas ipv6 returns "veth0" for the second round too.
+
+This makes ipv6 behave like ipv4.
+
+A followup patch will add a test case for this, without this change
+it will fail with:
+  get element inet t fibif6iif { tvrf . dead:1::99 . tvrf }
+  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  FAIL: did not find tvrf . dead:1::99 . tvrf in fibif6iif
+
+Alternatively we could either not do anything at all or change
+ipv4 to also return the lower/real device, however, nft (userspace)
+doc says "iif: if fib lookup provides a route then check its output
+interface is identical to the packets input interface." which is what
+the nft fib ipv4 behaviour is.
+
+Fixes: f6d0cbcf09c5 ("netfilter: nf_tables: add fib expression")
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ net/ipv6/netfilter/nft_fib_ipv6.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
-index aaf008bdbbcd4..8fd868b671a26 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
-@@ -419,6 +419,7 @@ stmmac_probe_config_dt(struct platform_device *pdev, u8 *mac)
- 	struct device_node *np = pdev->dev.of_node;
- 	struct plat_stmmacenet_data *plat;
- 	struct stmmac_dma_cfg *dma_cfg;
-+	static int bus_id = -ENODEV;
- 	int phy_mode;
- 	void *ret;
- 	int rc;
-@@ -454,8 +455,14 @@ stmmac_probe_config_dt(struct platform_device *pdev, u8 *mac)
- 	of_property_read_u32(np, "max-speed", &plat->max_speed);
+diff --git a/net/ipv6/netfilter/nft_fib_ipv6.c b/net/ipv6/netfilter/nft_fib_ipv6.c
+index 7fd9d7b21cd42..f1f5640da6728 100644
+--- a/net/ipv6/netfilter/nft_fib_ipv6.c
++++ b/net/ipv6/netfilter/nft_fib_ipv6.c
+@@ -158,6 +158,7 @@ void nft_fib6_eval(const struct nft_expr *expr, struct nft_regs *regs,
+ {
+ 	const struct nft_fib *priv = nft_expr_priv(expr);
+ 	int noff = skb_network_offset(pkt->skb);
++	const struct net_device *found = NULL;
+ 	const struct net_device *oif = NULL;
+ 	u32 *dest = &regs->data[priv->dreg];
+ 	struct ipv6hdr *iph, _iph;
+@@ -203,11 +204,15 @@ void nft_fib6_eval(const struct nft_expr *expr, struct nft_regs *regs,
+ 	if (rt->rt6i_flags & (RTF_REJECT | RTF_ANYCAST | RTF_LOCAL))
+ 		goto put_rt_err;
  
- 	plat->bus_id = of_alias_get_id(np, "ethernet");
--	if (plat->bus_id < 0)
--		plat->bus_id = 0;
-+	if (plat->bus_id < 0) {
-+		if (bus_id < 0)
-+			bus_id = of_alias_get_highest_id("ethernet");
-+		/* No ethernet alias found, init at -1 so first bus_id is 0 */
-+		if (bus_id < 0)
-+			bus_id = -1;
-+		plat->bus_id = ++bus_id;
+-	if (oif && oif != rt->rt6i_idev->dev &&
+-	    l3mdev_master_ifindex_rcu(rt->rt6i_idev->dev) != oif->ifindex)
+-		goto put_rt_err;
++	if (!oif) {
++		found = rt->rt6i_idev->dev;
++	} else {
++		if (oif == rt->rt6i_idev->dev ||
++		    l3mdev_master_ifindex_rcu(rt->rt6i_idev->dev) == oif->ifindex)
++			found = oif;
 +	}
  
- 	/* Default to phy auto-detection */
- 	plat->phy_addr = -1;
+-	nft_fib_store_result(dest, priv, rt->rt6i_idev->dev);
++	nft_fib_store_result(dest, priv, found);
+  put_rt_err:
+ 	ip6_rt_put(rt);
+ }
 -- 
 2.39.5
 
