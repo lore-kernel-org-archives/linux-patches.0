@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AABDA202C38;
-	Tue, 17 Jun 2025 15:49:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DE262ECD39;
+	Tue, 17 Jun 2025 15:49:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175354; cv=none; b=n+GBcsqXMUwwBIoNYm4yOxH/VAfrzjDna86qFjUCjCUVFvhly7pu9asaX2fuWo7cUdhqkW1skcLumhrZVIajTyafs9z7XqxaFPn/GMX0lPoscw4sK8dZDdU3+OfUSzv5/osS7N3n3o8BH4CBxaspsA0HbkbHj/YEdf+uSm2RhS8=
+	t=1750175358; cv=none; b=gzI8vqsUXCPlNmhkjFcMAQjcjFwUoU68u8S21qLf4zXxqhh4pNEd72uF3EYXHPmivHBzGTHFJ4wq+8MLZkA3Yz19dxQi8lsOKdGMPWzqj5KcD4zVvdMRs6Y1uSsb3FOvAU/7kpYKJEP5AaXSI94P9S4daKxOWc9d2847Jv6QcfU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175354; c=relaxed/simple;
-	bh=BPTJQ0cUAYyAeVaYE88mfrz/Ee3gkoxe7Waqs97MTXU=;
+	s=arc-20240116; t=1750175358; c=relaxed/simple;
+	bh=GeIrQ2Fx3tYAUh7F77ZuoEw1Vn/JAmIzdoyWsamLy8k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=skwTk+PabEpIp04HdUnx7mYbm+igU9lNjp08rQmd+CF/at4RhyWmWXAwAN1yRmjQw0zyGNj6iqVksz6tLs5LOD9m/neccGrTxe4m70aoYn7DriJuPFXH1jHMlniRKnDwbmcoTBsm0cHSuelB6OqUpBEuPoj6Ab8C82M20jb2UJI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F98phgJM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZJSL83XVE8j/Z6f2uKhYu/T3Qkb0UJY6YGQR/UVsJ+B7y4kEyKhDtbJzAshImwCuRfxhpuB1BP+J3F7f1QhjSRApDSIG1rKh5JcHrllIdIyiMD5wt1p+acsuCYVDYS2LIrxJSBCSr+pV+WOtlY2DT7VlcNuMvkwTtsETwSUJE8I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=auVG1eDU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F98phgJM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18C91C4CEE3;
-	Tue, 17 Jun 2025 15:49:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="auVG1eDU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C53BC4CEF0;
+	Tue, 17 Jun 2025 15:49:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175354;
-	bh=BPTJQ0cUAYyAeVaYE88mfrz/Ee3gkoxe7Waqs97MTXU=;
+	s=korg; t=1750175357;
+	bh=GeIrQ2Fx3tYAUh7F77ZuoEw1Vn/JAmIzdoyWsamLy8k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F98phgJMu/LxZpeuYjEmZFcihtYrqSaKUd6oaIOZdXmAyGbqTvyYV3RPj02OX2RlU
-	 162AnGrThVrI5eeqxdDB/aM6JCbZ/twf6E4mVZx7Wo99La9CDh+yfTqZJzhoQORMBe
-	 AUBCkKEyZoMh/vBt/5BrxoDvQVFt/4YEp5PiXThQ=
+	b=auVG1eDUiceVhMg6Jc/rKU7BEcfvALbfz203WWRmiHlUg+7kLAI5RLC194FWvIsKp
+	 7clh2ijGQIDPKalcRTB+vAFS93Uc6jaAA9kDYhiNjH55+KN8RcS7RRIgvL+45f4PLh
+	 P1o2CeIQxY2akdLwZUxP/4HxkiVK5rK+Ls5ZcdGU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Adam Ford <aford173@gmail.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 080/780] thermal/drivers/mediatek/lvts: Fix debugfs unregister on failure
-Date: Tue, 17 Jun 2025 17:16:28 +0200
-Message-ID: <20250617152454.773718166@linuxfoundation.org>
+Subject: [PATCH 6.6 169/356] arm64: dts: imx8mn-beacon: Fix RTC capacitive load
+Date: Tue, 17 Jun 2025 17:24:44 +0200
+Message-ID: <20250617152345.019872885@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
+References: <20250617152338.212798615@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,81 +48,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+From: Adam Ford <aford173@gmail.com>
 
-[ Upstream commit b49825661af93d9b8d7236f914803f136896f8fd ]
+[ Upstream commit c3f03bec30efd5082b55876846d57b5d17dae7b9 ]
 
-When running the probe function for this driver, the function
-lvts_debugfs_init() gets called in lvts_domain_init() which, in
-turn, gets called in lvts_probe() before registering threaded
-interrupt handlers.
+Although not noticeable when used every day, the RTC appears to drift when
+left to sit over time.  This is due to the capacitive load not being
+properly set. Fix RTC drift by correcting the capacitive load setting
+from 7000 to 12500, which matches the actual hardware configuration.
 
-Even though it's unlikely, the last call may fail and, if it does,
-there's nothing removing the already created debugfs folder and
-files.
-
-In order to fix that, instead of calling the lvts debugfs cleanup
-function upon failure, register a devm action that will take care
-of calling that upon failure or driver removal.
-
-Since devm was used, also delete the call to lvts_debugfs_exit()
-in the lvts_remove() callback, as now that's done automatically.
-
-Fixes: f5f633b18234 ("thermal/drivers/mediatek: Add the Low Voltage Thermal Sensor driver")
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: Chen-Yu Tsai <wenst@chromium.org>
-Link: https://lore.kernel.org/r/20250402083852.20624-1-angelogioacchino.delregno@collabora.com
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+Fixes: 36ca3c8ccb53 ("arm64: dts: imx: Add Beacon i.MX8M Nano development kit")
+Signed-off-by: Adam Ford <aford173@gmail.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/mediatek/lvts_thermal.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ arch/arm64/boot/dts/freescale/imx8mn-beacon-som.dtsi | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/thermal/mediatek/lvts_thermal.c b/drivers/thermal/mediatek/lvts_thermal.c
-index 088481d91e6e2..c0be4ca55c7b8 100644
---- a/drivers/thermal/mediatek/lvts_thermal.c
-+++ b/drivers/thermal/mediatek/lvts_thermal.c
-@@ -213,6 +213,13 @@ static const struct debugfs_reg32 lvts_regs[] = {
- 	LVTS_DEBUG_FS_REGS(LVTS_CLKEN),
+diff --git a/arch/arm64/boot/dts/freescale/imx8mn-beacon-som.dtsi b/arch/arm64/boot/dts/freescale/imx8mn-beacon-som.dtsi
+index 90073b16536f4..1760062e6ffcf 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mn-beacon-som.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mn-beacon-som.dtsi
+@@ -240,6 +240,7 @@
+ 	rtc: rtc@51 {
+ 		compatible = "nxp,pcf85263";
+ 		reg = <0x51>;
++		quartz-load-femtofarads = <12500>;
+ 	};
  };
  
-+static void lvts_debugfs_exit(void *data)
-+{
-+	struct lvts_domain *lvts_td = data;
-+
-+	debugfs_remove_recursive(lvts_td->dom_dentry);
-+}
-+
- static int lvts_debugfs_init(struct device *dev, struct lvts_domain *lvts_td)
- {
- 	struct debugfs_regset32 *regset;
-@@ -245,12 +252,7 @@ static int lvts_debugfs_init(struct device *dev, struct lvts_domain *lvts_td)
- 		debugfs_create_regset32("registers", 0400, dentry, regset);
- 	}
- 
--	return 0;
--}
--
--static void lvts_debugfs_exit(struct lvts_domain *lvts_td)
--{
--	debugfs_remove_recursive(lvts_td->dom_dentry);
-+	return devm_add_action_or_reset(dev, lvts_debugfs_exit, lvts_td);
- }
- 
- #else
-@@ -1374,8 +1376,6 @@ static void lvts_remove(struct platform_device *pdev)
- 
- 	for (i = 0; i < lvts_td->num_lvts_ctrl; i++)
- 		lvts_ctrl_set_enable(&lvts_td->lvts_ctrl[i], false);
--
--	lvts_debugfs_exit(lvts_td);
- }
- 
- static const struct lvts_ctrl_data mt7988_lvts_ap_data_ctrl[] = {
 -- 
 2.39.5
 
