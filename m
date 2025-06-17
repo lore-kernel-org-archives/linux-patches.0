@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D16F2E9753;
-	Tue, 17 Jun 2025 15:37:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6E2D2E9730;
+	Tue, 17 Jun 2025 15:37:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750174630; cv=none; b=Kqu6Oq7bkWE9qfr2CruCJq0HJWwT9PvJfffXsKHnT57meQIdoZH0r5ZhQSX2K88oUL57z70NUsys1icrqOxoGBK/AlaMfPrTf3tbOblYYsXApfW7xCnqnoOjaDMgBLBaJz5saprMEaCdG0933vnBUsmSBCHyF1T2DgTccXH+jIE=
+	t=1750174633; cv=none; b=Da4Vf+ASEQK8LIS4zGVhOzlD5FYW1Ae/AmvudwQxRKzk77DRF85oQDpSJDYPVvJCm59PlVLFCmWeXMsyfWYsJHSfjbUGxpliHM2nhaK/4iHpMzXaXmBf8ue+3r7GaO0B3RnRKRRPrQaX6gAnInAf5/WLuQLqHF0dJIoyemSfM+M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750174630; c=relaxed/simple;
-	bh=OpXgOliqP0uUfe0/oveYOzD4beZbdOwN8vQklGWXs0c=;
+	s=arc-20240116; t=1750174633; c=relaxed/simple;
+	bh=+dIv1mMQd6TgCHxMhJcGooXVcGvk3G6jHGLspp5hNOg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GOExq4KTbKXIUURr31datfdGoSirNIYEHXhGf8mGmm3qnU9Tevb7CvTQHjuXxJxIUK4bASKjF0VNrw4l4xDxzRXFUB3sCTAyaKy4NIZ15a0PCqM7KOl+Z0o3j4T5hX2dhFQJNZGPd40X2JgOvidUiLlBc3mSA6XB2Pj/3fygE6w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mda+QeQI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YUGlZIPKayRVGVOSP7x4asr529Isj630C+hJqUrbg2EtIHcYbNnRzlKUlV6gQzBBCRLxpkyQthq+ICLcol1e5/vqJ6V8jihyNnRmAY0A58iZtbmDmXPprtej3koqtXi7dNGMMC6Sk+yAvwZYTJU4FX1whGr9hNWX2qROKE08Eh4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gxxAqPYM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mda+QeQI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 052C2C4CEE3;
-	Tue, 17 Jun 2025 15:37:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gxxAqPYM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 165A1C4CEE3;
+	Tue, 17 Jun 2025 15:37:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750174630;
-	bh=OpXgOliqP0uUfe0/oveYOzD4beZbdOwN8vQklGWXs0c=;
+	s=korg; t=1750174633;
+	bh=+dIv1mMQd6TgCHxMhJcGooXVcGvk3G6jHGLspp5hNOg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mda+QeQIZ/H1EngCi7UmP4gZ3qgqQebWKpJnSxJskiMCptDH6o3Zv8HHMO5KVdpC1
-	 xrEUBtCeKkBgkC4Nd4f8/b8hxLDvPpDYKpCTqVgTzOcIg4Jrcj0aA0/7887VyK86gI
-	 nkN869b1sebTfTMp0ZiCO3pRheN4RYzBUkNGn59Y=
+	b=gxxAqPYM63saM5Q1VOLKkgGMuzIukFamD37s0bsFikz28gPCKc/ktEmwsAXOvsfOg
+	 JZY5Yqg0uY3FnBrHxGfEZnguRVuMmpgpLazBFzeGteMIWWoz+nBR7T2WERZUuvjZEY
+	 sZemPckZoc538rJ6ak1SybepmR3aw7IL2grBDq5M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 032/512] crypto: xts - Only add ecb if it is not already there
-Date: Tue, 17 Jun 2025 17:19:58 +0200
-Message-ID: <20250617152420.859309135@linuxfoundation.org>
+Subject: [PATCH 6.15 003/780] crypto: iaa - Do not clobber req->base.data
+Date: Tue, 17 Jun 2025 17:15:11 +0200
+Message-ID: <20250617152451.637240696@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,48 +46,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
 From: Herbert Xu <herbert@gondor.apana.org.au>
 
-[ Upstream commit 270b6f13454cb7f2f7058c50df64df409c5dcf55 ]
+[ Upstream commit cc98d8ce934b99789d30421957fd6a20fffb1c22 ]
 
-Only add ecb to the cipher name if it isn't already ecb.
+The req->base.data field is for the user and must not be touched by
+the driver, unless you save it first.
 
-Also use memcmp instead of strncmp since these strings are all
-stored in an array of length CRYPTO_MAX_ALG_NAME.
+The iaa driver doesn't seem to be using the req->base.data value
+so just remove the assignment.
 
-Fixes: f1c131b45410 ("crypto: xts - Convert to skcipher")
+Fixes: 09646c98d0bf ("crypto: iaa - Add irq support for the crypto async interface")
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/xts.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/crypto/intel/iaa/iaa_crypto_main.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/crypto/xts.c b/crypto/xts.c
-index 672e1a3f0b0c9..91e391a6ba270 100644
---- a/crypto/xts.c
-+++ b/crypto/xts.c
-@@ -363,7 +363,7 @@ static int xts_create(struct crypto_template *tmpl, struct rtattr **tb)
+diff --git a/drivers/crypto/intel/iaa/iaa_crypto_main.c b/drivers/crypto/intel/iaa/iaa_crypto_main.c
+index 09d9589f2d681..33a285981dfd4 100644
+--- a/drivers/crypto/intel/iaa/iaa_crypto_main.c
++++ b/drivers/crypto/intel/iaa/iaa_crypto_main.c
+@@ -1187,8 +1187,7 @@ static int iaa_compress(struct crypto_tfm *tfm,	struct acomp_req *req,
+ 			" src_addr %llx, dst_addr %llx\n", __func__,
+ 			active_compression_mode->name,
+ 			src_addr, dst_addr);
+-	} else if (ctx->async_mode)
+-		req->base.data = idxd_desc;
++	}
  
- 	err = crypto_grab_skcipher(&ctx->spawn, skcipher_crypto_instance(inst),
- 				   cipher_name, 0, mask);
--	if (err == -ENOENT) {
-+	if (err == -ENOENT && memcmp(cipher_name, "ecb(", 4)) {
- 		err = -ENAMETOOLONG;
- 		if (snprintf(name, CRYPTO_MAX_ALG_NAME, "ecb(%s)",
- 			     cipher_name) >= CRYPTO_MAX_ALG_NAME)
-@@ -397,7 +397,7 @@ static int xts_create(struct crypto_template *tmpl, struct rtattr **tb)
- 	/* Alas we screwed up the naming so we have to mangle the
- 	 * cipher name.
- 	 */
--	if (!strncmp(cipher_name, "ecb(", 4)) {
-+	if (!memcmp(cipher_name, "ecb(", 4)) {
- 		int len;
+ 	dev_dbg(dev, "%s: compression mode %s,"
+ 		" desc->src1_addr %llx, desc->src1_size %d,"
+@@ -1425,8 +1424,7 @@ static int iaa_decompress(struct crypto_tfm *tfm, struct acomp_req *req,
+ 			" src_addr %llx, dst_addr %llx\n", __func__,
+ 			active_compression_mode->name,
+ 			src_addr, dst_addr);
+-	} else if (ctx->async_mode && !disable_async)
+-		req->base.data = idxd_desc;
++	}
  
- 		len = strscpy(name, cipher_name + 4, sizeof(name));
+ 	dev_dbg(dev, "%s: decompression mode %s,"
+ 		" desc->src1_addr %llx, desc->src1_size %d,"
 -- 
 2.39.5
 
