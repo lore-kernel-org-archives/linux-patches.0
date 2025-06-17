@@ -1,48 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 411292EB5CE;
-	Tue, 17 Jun 2025 16:25:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3988D2ECD23;
+	Tue, 17 Jun 2025 16:25:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177507; cv=none; b=gTpFdfdsZVW2ZxcFnbH3G/t+KCaJMKsdOZd+ESa7k/iI0Zr2IwTMb+wvNeK7mq3YYr1CYIyK3LKpKJnsZLdx+n/oreUlJQdHzC/Fv0fwzjsPj5Lnk+vE8YNdv3EVYHvmAtpJ2MfEFLWKp8PTxDK+h1SvUK1u8XpGuJv24GHGxTc=
+	t=1750177510; cv=none; b=Pltou+iee5G2+6csxuz0674Z7E8jUNz0VLm+fRBJGJ2CEWdymMQJFWBB6mOCoQc73q1XDCLt1P83TApvx3stpyNNmVDe0NO3Knj8l147yzmM1fWQsX/iB840dJ/g2XanbA0KhXKrG/1x5sU0ctriudy2+YBpCS6GDwmMyKcpdvE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177507; c=relaxed/simple;
-	bh=wWov2uJ7Jxnq3JVW9mLntW+Nfc5/Kx1kqS3207PUuBk=;
+	s=arc-20240116; t=1750177510; c=relaxed/simple;
+	bh=FPbCxWyjGpnLHbDtbkHx8w8XjkFYosu9wVqYu8GowSg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gq1Gss6tnDKENVeP5sixa5UoXIphkvMGtD6ZKVf8Nz5G+vausNSSnOvYFlfuh3zgApuRqXtCR7UUfEf4ls2vTdYwfA+PqU7Hc71mpzMJRd5jZDxV+Fnp6PhtG67nJaoK9Y16SMECesNf6tNCsX0tPMKpNWqB6zT0uNpMkGADxog=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vELxwecx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QCwIZgz10790CRNsE2M8Qy84Pz+0mizuh6cVMV6JiHm6iO6OEEeYOHM9fALbQqXYkPmNdLng3Uzqfy665DmN0hzpLcXjjzt66GiJvs43on6EBONrB/mZ4tZz9oFVr90+e8XcpETbtfjdkG1EDrRETbvs0qOy45HOjvVan4kM2QM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0cG7WjkG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vELxwecx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 420ABC4CEE3;
-	Tue, 17 Jun 2025 16:25:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0cG7WjkG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F379C4CEE7;
+	Tue, 17 Jun 2025 16:25:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177506;
-	bh=wWov2uJ7Jxnq3JVW9mLntW+Nfc5/Kx1kqS3207PUuBk=;
+	s=korg; t=1750177510;
+	bh=FPbCxWyjGpnLHbDtbkHx8w8XjkFYosu9wVqYu8GowSg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vELxwecxwZWUSWHn3js/gx/B8a1q1A4NTKWV2V7cXrWPn4/5RcR/MY1eI1kYgJnup
-	 bs/dcFoGoXtemNcCLnRLKLJzCH0bOTNsqQ8Xdv1hgZyphZI7MdzigOeZ4dK2Fpi5AP
-	 3ZFSoopNzB/2JXnjKVolhyQumE6gyqZO47yA61Ok=
+	b=0cG7WjkGPcUU7+l5kaUhPV78kj9596pi+lgpxRAT6tJG6+81no33d2+GQfYEUbcWL
+	 cOtjDfuQDnFFsNKekuppvU3u/Mh6CZbrWG70BvM6wKnD9oicNJXmbj398fFlVufqM/
+	 7WAWwdS4hbz1CrFPQlDcbG0Y5tk9iEI/ejiPIbCs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dawid Osuchowski <dawid.osuchowski@linux.intel.com>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Michal Kubiak <michal.kubiak@intel.com>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Subbaraya Sundeep <sbhatta@marvell.com>,
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
 	Simon Horman <horms@kernel.org>,
-	Jesse Brandeburg <jbrandeburg@cloudflare.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Saritha Sanigani <sarithax.sanigani@intel.com>
-Subject: [PATCH 6.12 356/512] ice: fix Tx scheduler error handling in XDP callback
-Date: Tue, 17 Jun 2025 17:25:22 +0200
-Message-ID: <20250617152434.001829051@linuxfoundation.org>
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.15 317/780] octeontx2-af: Send Link events one by one
+Date: Tue, 17 Jun 2025 17:20:25 +0200
+Message-ID: <20250617152504.368098680@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -54,184 +49,69 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michal Kubiak <michal.kubiak@intel.com>
+From: Subbaraya Sundeep <sbhatta@marvell.com>
 
-[ Upstream commit 0153f36041b8e52019ebfa8629c13bf8f9b0a951 ]
+[ Upstream commit ba5cb47b56e5d89f0a5eb5163ffbfda1e3e7cef0 ]
 
-When the XDP program is loaded, the XDP callback adds new Tx queues.
-This means that the callback must update the Tx scheduler with the new
-queue number. In the event of a Tx scheduler failure, the XDP callback
-should also fail and roll back any changes previously made for XDP
-preparation.
+Send link events one after another otherwise new message
+is overwriting the message which is being processed by PF.
 
-The previous implementation had a bug that not all changes made by the
-XDP callback were rolled back. This caused the crash with the following
-call trace:
-
-[  +9.549584] ice 0000:ca:00.0: Failed VSI LAN queue config for XDP, error: -5
-[  +0.382335] Oops: general protection fault, probably for non-canonical address 0x50a2250a90495525: 0000 [#1] SMP NOPTI
-[  +0.010710] CPU: 103 UID: 0 PID: 0 Comm: swapper/103 Not tainted 6.14.0-net-next-mar-31+ #14 PREEMPT(voluntary)
-[  +0.010175] Hardware name: Intel Corporation M50CYP2SBSTD/M50CYP2SBSTD, BIOS SE5C620.86B.01.01.0005.2202160810 02/16/2022
-[  +0.010946] RIP: 0010:__ice_update_sample+0x39/0xe0 [ice]
-
-[...]
-
-[  +0.002715] Call Trace:
-[  +0.002452]  <IRQ>
-[  +0.002021]  ? __die_body.cold+0x19/0x29
-[  +0.003922]  ? die_addr+0x3c/0x60
-[  +0.003319]  ? exc_general_protection+0x17c/0x400
-[  +0.004707]  ? asm_exc_general_protection+0x26/0x30
-[  +0.004879]  ? __ice_update_sample+0x39/0xe0 [ice]
-[  +0.004835]  ice_napi_poll+0x665/0x680 [ice]
-[  +0.004320]  __napi_poll+0x28/0x190
-[  +0.003500]  net_rx_action+0x198/0x360
-[  +0.003752]  ? update_rq_clock+0x39/0x220
-[  +0.004013]  handle_softirqs+0xf1/0x340
-[  +0.003840]  ? sched_clock_cpu+0xf/0x1f0
-[  +0.003925]  __irq_exit_rcu+0xc2/0xe0
-[  +0.003665]  common_interrupt+0x85/0xa0
-[  +0.003839]  </IRQ>
-[  +0.002098]  <TASK>
-[  +0.002106]  asm_common_interrupt+0x26/0x40
-[  +0.004184] RIP: 0010:cpuidle_enter_state+0xd3/0x690
-
-Fix this by performing the missing unmapping of XDP queues from
-q_vectors and setting the XDP rings pointer back to NULL after all those
-queues are released.
-Also, add an immediate exit from the XDP callback in case of ring
-preparation failure.
-
-Fixes: efc2214b6047 ("ice: Add support for XDP")
-Reviewed-by: Dawid Osuchowski <dawid.osuchowski@linux.intel.com>
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Signed-off-by: Michal Kubiak <michal.kubiak@intel.com>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Fixes: a88e0f936ba9 ("octeontx2: Detect the mbox up or down message via register")
+Signed-off-by: Subbaraya Sundeep <sbhatta@marvell.com>
+Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Jesse Brandeburg <jbrandeburg@cloudflare.com>
-Tested-by: Saritha Sanigani <sarithax.sanigani@intel.com> (A Contingent Worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Link: https://patch.msgid.link/1747823443-404-1-git-send-email-sbhatta@marvell.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_main.c | 47 ++++++++++++++++-------
- 1 file changed, 33 insertions(+), 14 deletions(-)
+ drivers/net/ethernet/marvell/octeontx2/af/mcs_rvu_if.c | 2 ++
+ drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c    | 2 ++
+ drivers/net/ethernet/marvell/octeontx2/af/rvu_rep.c    | 2 ++
+ 3 files changed, 6 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_main.c b/drivers/net/ethernet/intel/ice/ice_main.c
-index 63d2105fce933..d1abd21cfc647 100644
---- a/drivers/net/ethernet/intel/ice/ice_main.c
-+++ b/drivers/net/ethernet/intel/ice/ice_main.c
-@@ -2761,6 +2761,27 @@ void ice_map_xdp_rings(struct ice_vsi *vsi)
- 	}
- }
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/mcs_rvu_if.c b/drivers/net/ethernet/marvell/octeontx2/af/mcs_rvu_if.c
+index 655dd4726d36e..0277d226293e9 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/mcs_rvu_if.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/mcs_rvu_if.c
+@@ -143,6 +143,8 @@ static int mcs_notify_pfvf(struct mcs_intr_event *event, struct rvu *rvu)
  
-+/**
-+ * ice_unmap_xdp_rings - Unmap XDP rings from interrupt vectors
-+ * @vsi: the VSI with XDP rings being unmapped
-+ */
-+static void ice_unmap_xdp_rings(struct ice_vsi *vsi)
-+{
-+	int v_idx;
-+
-+	ice_for_each_q_vector(vsi, v_idx) {
-+		struct ice_q_vector *q_vector = vsi->q_vectors[v_idx];
-+		struct ice_tx_ring *ring;
-+
-+		ice_for_each_tx_ring(ring, q_vector->tx)
-+			if (!ring->tx_buf || !ice_ring_is_xdp(ring))
-+				break;
-+
-+		/* restore the value of last node prior to XDP setup */
-+		q_vector->tx.tx_ring = ring;
-+	}
-+}
-+
- /**
-  * ice_prepare_xdp_rings - Allocate, configure and setup Tx rings for XDP
-  * @vsi: VSI to bring up Tx rings used by XDP
-@@ -2824,7 +2845,7 @@ int ice_prepare_xdp_rings(struct ice_vsi *vsi, struct bpf_prog *prog,
- 	if (status) {
- 		dev_err(dev, "Failed VSI LAN queue config for XDP, error: %d\n",
- 			status);
--		goto clear_xdp_rings;
-+		goto unmap_xdp_rings;
- 	}
+ 	otx2_mbox_msg_send_up(&rvu->afpf_wq_info.mbox_up, pf);
  
- 	/* assign the prog only when it's not already present on VSI;
-@@ -2840,6 +2861,8 @@ int ice_prepare_xdp_rings(struct ice_vsi *vsi, struct bpf_prog *prog,
- 		ice_vsi_assign_bpf_prog(vsi, prog);
++	otx2_mbox_wait_for_rsp(&rvu->afpf_wq_info.mbox_up, pf);
++
+ 	mutex_unlock(&rvu->mbox_lock);
  
  	return 0;
-+unmap_xdp_rings:
-+	ice_unmap_xdp_rings(vsi);
- clear_xdp_rings:
- 	ice_for_each_xdp_txq(vsi, i)
- 		if (vsi->xdp_rings[i]) {
-@@ -2856,6 +2879,8 @@ int ice_prepare_xdp_rings(struct ice_vsi *vsi, struct bpf_prog *prog,
- 	mutex_unlock(&pf->avail_q_mutex);
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c
+index 992fa0b82e8d2..ebb56eb0d18cf 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c
+@@ -272,6 +272,8 @@ static void cgx_notify_pfs(struct cgx_link_event *event, struct rvu *rvu)
  
- 	devm_kfree(dev, vsi->xdp_rings);
-+	vsi->xdp_rings = NULL;
+ 		otx2_mbox_msg_send_up(&rvu->afpf_wq_info.mbox_up, pfid);
+ 
++		otx2_mbox_wait_for_rsp(&rvu->afpf_wq_info.mbox_up, pfid);
 +
- 	return -ENOMEM;
+ 		mutex_unlock(&rvu->mbox_lock);
+ 	} while (pfmap);
  }
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_rep.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_rep.c
+index 052ae5923e3a8..32953cca108c8 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_rep.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_rep.c
+@@ -60,6 +60,8 @@ static int rvu_rep_up_notify(struct rvu *rvu, struct rep_event *event)
  
-@@ -2871,7 +2896,7 @@ int ice_destroy_xdp_rings(struct ice_vsi *vsi, enum ice_xdp_cfg cfg_type)
- {
- 	u16 max_txqs[ICE_MAX_TRAFFIC_CLASS] = { 0 };
- 	struct ice_pf *pf = vsi->back;
--	int i, v_idx;
-+	int i;
+ 	otx2_mbox_msg_send_up(&rvu->afpf_wq_info.mbox_up, pf);
  
- 	/* q_vectors are freed in reset path so there's no point in detaching
- 	 * rings
-@@ -2879,17 +2904,7 @@ int ice_destroy_xdp_rings(struct ice_vsi *vsi, enum ice_xdp_cfg cfg_type)
- 	if (cfg_type == ICE_XDP_CFG_PART)
- 		goto free_qmap;
- 
--	ice_for_each_q_vector(vsi, v_idx) {
--		struct ice_q_vector *q_vector = vsi->q_vectors[v_idx];
--		struct ice_tx_ring *ring;
--
--		ice_for_each_tx_ring(ring, q_vector->tx)
--			if (!ring->tx_buf || !ice_ring_is_xdp(ring))
--				break;
--
--		/* restore the value of last node prior to XDP setup */
--		q_vector->tx.tx_ring = ring;
--	}
-+	ice_unmap_xdp_rings(vsi);
- 
- free_qmap:
- 	mutex_lock(&pf->avail_q_mutex);
-@@ -3034,11 +3049,14 @@ ice_xdp_setup_prog(struct ice_vsi *vsi, struct bpf_prog *prog,
- 		xdp_ring_err = ice_vsi_determine_xdp_res(vsi);
- 		if (xdp_ring_err) {
- 			NL_SET_ERR_MSG_MOD(extack, "Not enough Tx resources for XDP");
-+			goto resume_if;
- 		} else {
- 			xdp_ring_err = ice_prepare_xdp_rings(vsi, prog,
- 							     ICE_XDP_CFG_FULL);
--			if (xdp_ring_err)
-+			if (xdp_ring_err) {
- 				NL_SET_ERR_MSG_MOD(extack, "Setting up XDP Tx resources failed");
-+				goto resume_if;
-+			}
- 		}
- 		xdp_features_set_redirect_target(vsi->netdev, true);
- 		/* reallocate Rx queues that are used for zero-copy */
-@@ -3056,6 +3074,7 @@ ice_xdp_setup_prog(struct ice_vsi *vsi, struct bpf_prog *prog,
- 			NL_SET_ERR_MSG_MOD(extack, "Freeing XDP Rx resources failed");
- 	}
- 
-+resume_if:
- 	if (if_running)
- 		ret = ice_up(vsi);
- 
++	otx2_mbox_wait_for_rsp(&rvu->afpf_wq_info.mbox_up, pf);
++
+ 	mutex_unlock(&rvu->mbox_lock);
+ 	return 0;
+ }
 -- 
 2.39.5
 
