@@ -1,185 +1,126 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.17.13])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D06492F94B0;
-	Tue, 17 Jun 2025 16:13:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D0E32F94B3
+	for <patches@lists.linux.dev>; Tue, 17 Jun 2025 16:13:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.13
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750176826; cv=none; b=rDk2xx5vutXtTGEm6hBIVtV7riaFSbEWVkMKdXq9LW4FBD8dQ+ABpNYFadse1suoFeEJ8pgaOtHCLQvztOQy2JjjG2CcN6O9QY/Vs32jEps2zlOVIND1A/QwQBeNvjMOYSbU9jZSj5aB7JP0sMqrULwVcDenti/JgW3pVvk3ot4=
+	t=1750176828; cv=none; b=c2J/0faTiOHLFVI9ZBq4OChtq9Jho+3EFcSzxrTl6ASC058yv2SOD2hEO6KIRSDYQ0Y9QhYRPb2vCJ+HAwday4dWb0SO534FaABfHjgRyOPtAsmmushit8LjDf5RTYLtPmwRJlFOo7Yij4belyLVRr4xm/0jPL4id7g9Nqzx6O8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750176826; c=relaxed/simple;
-	bh=EnAhmgJAJF/kUhuY7Eh9uQq6XXhaLs7e0/mRCwdhYf0=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KGU/6MJfimD8iJhWelW6/6Y0zJ/qURlRF4pAKkMAmfbRoMbGi/5h53ogT9F6RpANgbiLBaSsf7ion4qHqnTb8w8KO1xU2gZKtpT2uF/soRTQl1wbixRNY1pd/btyAorIGMF6U26MHIJuLYqZzT3KXYd1dMRhhUGzAhIQJ36zCUQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ud3Qk3qE; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1750176828; c=relaxed/simple;
+	bh=odXfEf04AblCiwtd5oaSZsRjpkfGUvIS3F2wdch70Ro=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=BA72i/4BlmM6f4iLWhlAr6r07z35yj/IhtWdRd0Ijj852nEWpJJra4hQ4WehsNOdeKZZEYizC/kCdrduA6yhSJZX1Qpib1qJrKfEoHsrrqQbocGGysWVqj99W+7Z8y3JR9A4HetdU4eWN4s5BfHwyydTyB+hZLhDDwR/vA1nb3c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=heusel.eu; spf=pass smtp.mailfrom=heusel.eu; dkim=pass (2048-bit key) header.d=heusel.eu header.i=christian@heusel.eu header.b=BTdRH3b5; arc=none smtp.client-ip=212.227.17.13
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=heusel.eu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=heusel.eu
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ud3Qk3qE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36A2EC4CEE3;
-	Tue, 17 Jun 2025 16:13:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750176826;
-	bh=EnAhmgJAJF/kUhuY7Eh9uQq6XXhaLs7e0/mRCwdhYf0=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ud3Qk3qE2g8UvSqyuWvYAbozjyPoI3WeaR51qO+kaKfmHBZBvSHVc30rzyxjcAQTg
-	 mZwYug+De/OIyOVVEneDboT98S3Of3clIZFliS9Ei9XX6w+BBA9QDuW+tEKnOIFV+3
-	 9GERPs7mjokK4KSTefOo6pApNuO86dkYVkGNu8nE=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Thiago Jung Bauermann <thiago.bauermann@linaro.org>,
-	Ingo Saitz <ingo@hannover.ccc.de>,
-	Kees Cook <kees@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 270/512] randstruct: gcc-plugin: Fix attribute addition
-Date: Tue, 17 Jun 2025 17:23:56 +0200
-Message-ID: <20250617152430.537725645@linuxfoundation.org>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
-User-Agent: quilt/0.68
-X-stable: review
-X-Patchwork-Hint: ignore
+	dkim=pass (2048-bit key) header.d=heusel.eu header.i=christian@heusel.eu header.b="BTdRH3b5"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=heusel.eu;
+	s=s1-ionos; t=1750176778; x=1750781578; i=christian@heusel.eu;
+	bh=9kwaX69BYlfOgsIpG/Pvl71vvTAMGxrM4gg1LwJXpw0=;
+	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:Message-ID:References:
+	 MIME-Version:Content-Type:In-Reply-To:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=BTdRH3b5pRt5SsU+xd2Q9QDqes8HCXXRzARmfnrlNjAnZY+NzenFTF5qKe7u5Jjk
+	 glzBxzR6ZRfFnKfMnOZl39+Gh5YgiHwedcBcNz6Lyg9bpH0Lf7dISTgWTFR0ChsJx
+	 79baaHfhC7OpBsy0lX49WGwePnb/+2ARr8deX+CyUv7XhGrLvrh5CzFhxCOCBVxY3
+	 RzrDC1wD0tP8rPO2Opxbn3/3YAnMq9H5vbVTLOasuJ4XiC4qeiK7wXUFcw0aW1n0M
+	 3nMCpVWJ8I66Acz3KFBKaacHD3Uxh/UCMx7glCk8gvSZkLwqRqGlKxuMlLrrhHVkR
+	 VNqAAzM4x1RN8BDgSQ==
+X-UI-Sender-Class: 55c96926-9e95-11ee-ae09-1f7a4046a0f6
+Received: from localhost ([89.244.90.55]) by mrelayeu.kundenserver.de
+ (mreue109 [212.227.15.183]) with ESMTPSA (Nemesis) id
+ 1MEmAX-1uYSxd24sd-002fsg; Tue, 17 Jun 2025 18:12:58 +0200
+Date: Tue, 17 Jun 2025 18:12:56 +0200
+From: Christian Heusel <christian@heusel.eu>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, akpm@linux-foundation.org, 
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org, 
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com, f.fainelli@gmail.com, 
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, 
+	hargar@microsoft.com, broonie@kernel.org
+Subject: Re: [PATCH 6.15 000/780] 6.15.3-rc1 review
+Message-ID: <fe2120f7-8839-4a0a-8bf8-70b841a8624c@heusel.eu>
+References: <20250617152451.485330293@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-
-6.12-stable review patch.  If anyone has any objections, please let me know.
-
-------------------
-
-From: Kees Cook <kees@kernel.org>
-
-[ Upstream commit f39f18f3c3531aa802b58a20d39d96e82eb96c14 ]
-
-Based on changes in the 2021 public version of the randstruct
-out-of-tree GCC plugin[1], more carefully update the attributes on
-resulting decls, to avoid tripping checks in GCC 15's
-comptypes_check_enum_int() when it has been configured with
-"--enable-checking=misc":
-
-arch/arm64/kernel/kexec_image.c:132:14: internal compiler error: in comptypes_check_enum_int, at c/c-typeck.cc:1519
-  132 | const struct kexec_file_ops kexec_image_ops = {
-      |              ^~~~~~~~~~~~~~
- internal_error(char const*, ...), at gcc/gcc/diagnostic-global-context.cc:517
- fancy_abort(char const*, int, char const*), at gcc/gcc/diagnostic.cc:1803
- comptypes_check_enum_int(tree_node*, tree_node*, bool*), at gcc/gcc/c/c-typeck.cc:1519
- ...
-
-Link: https://archive.org/download/grsecurity/grsecurity-3.1-5.10.41-202105280954.patch.gz [1]
-Reported-by: Thiago Jung Bauermann <thiago.bauermann@linaro.org>
-Closes: https://github.com/KSPP/linux/issues/367
-Closes: https://lore.kernel.org/lkml/20250530000646.104457-1-thiago.bauermann@linaro.org/
-Reported-by: Ingo Saitz <ingo@hannover.ccc.de>
-Closes: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1104745
-Fixes: 313dd1b62921 ("gcc-plugins: Add the randstruct plugin")
-Tested-by: Thiago Jung Bauermann <thiago.bauermann@linaro.org>
-Link: https://lore.kernel.org/r/20250530221824.work.623-kees@kernel.org
-Signed-off-by: Kees Cook <kees@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- scripts/gcc-plugins/gcc-common.h              | 32 +++++++++++++++++++
- scripts/gcc-plugins/randomize_layout_plugin.c | 22 ++++++-------
- 2 files changed, 43 insertions(+), 11 deletions(-)
-
-diff --git a/scripts/gcc-plugins/gcc-common.h b/scripts/gcc-plugins/gcc-common.h
-index 3222c1070444f..ef12c8f929eda 100644
---- a/scripts/gcc-plugins/gcc-common.h
-+++ b/scripts/gcc-plugins/gcc-common.h
-@@ -123,6 +123,38 @@ static inline tree build_const_char_string(int len, const char *str)
- 	return cstr;
- }
- 
-+static inline void __add_type_attr(tree type, const char *attr, tree args)
-+{
-+	tree oldattr;
-+
-+	if (type == NULL_TREE)
-+		return;
-+	oldattr = lookup_attribute(attr, TYPE_ATTRIBUTES(type));
-+	if (oldattr != NULL_TREE) {
-+		gcc_assert(TREE_VALUE(oldattr) == args || TREE_VALUE(TREE_VALUE(oldattr)) == TREE_VALUE(args));
-+		return;
-+	}
-+
-+	TYPE_ATTRIBUTES(type) = copy_list(TYPE_ATTRIBUTES(type));
-+	TYPE_ATTRIBUTES(type) = tree_cons(get_identifier(attr), args, TYPE_ATTRIBUTES(type));
-+}
-+
-+static inline void add_type_attr(tree type, const char *attr, tree args)
-+{
-+	tree main_variant = TYPE_MAIN_VARIANT(type);
-+
-+	__add_type_attr(TYPE_CANONICAL(type), attr, args);
-+	__add_type_attr(TYPE_CANONICAL(main_variant), attr, args);
-+	__add_type_attr(main_variant, attr, args);
-+
-+	for (type = TYPE_NEXT_VARIANT(main_variant); type; type = TYPE_NEXT_VARIANT(type)) {
-+		if (!lookup_attribute(attr, TYPE_ATTRIBUTES(type)))
-+			TYPE_ATTRIBUTES(type) = TYPE_ATTRIBUTES(main_variant);
-+
-+		__add_type_attr(TYPE_CANONICAL(type), attr, args);
-+	}
-+}
-+
- #define PASS_INFO(NAME, REF, ID, POS)		\
- struct register_pass_info NAME##_pass_info = {	\
- 	.pass = make_##NAME##_pass(),		\
-diff --git a/scripts/gcc-plugins/randomize_layout_plugin.c b/scripts/gcc-plugins/randomize_layout_plugin.c
-index 971a1908a8cc4..ff65a4f87f240 100644
---- a/scripts/gcc-plugins/randomize_layout_plugin.c
-+++ b/scripts/gcc-plugins/randomize_layout_plugin.c
-@@ -73,6 +73,9 @@ static tree handle_randomize_layout_attr(tree *node, tree name, tree args, int f
- 
- 	if (TYPE_P(*node)) {
- 		type = *node;
-+	} else if (TREE_CODE(*node) == FIELD_DECL) {
-+		*no_add_attrs = false;
-+		return NULL_TREE;
- 	} else {
- 		gcc_assert(TREE_CODE(*node) == TYPE_DECL);
- 		type = TREE_TYPE(*node);
-@@ -348,15 +351,14 @@ static int relayout_struct(tree type)
- 		TREE_CHAIN(newtree[i]) = newtree[i+1];
- 	TREE_CHAIN(newtree[num_fields - 1]) = NULL_TREE;
- 
-+	add_type_attr(type, "randomize_performed", NULL_TREE);
-+	add_type_attr(type, "designated_init", NULL_TREE);
-+	if (has_flexarray)
-+		add_type_attr(type, "has_flexarray", NULL_TREE);
-+
- 	main_variant = TYPE_MAIN_VARIANT(type);
--	for (variant = main_variant; variant; variant = TYPE_NEXT_VARIANT(variant)) {
-+	for (variant = main_variant; variant; variant = TYPE_NEXT_VARIANT(variant))
- 		TYPE_FIELDS(variant) = newtree[0];
--		TYPE_ATTRIBUTES(variant) = copy_list(TYPE_ATTRIBUTES(variant));
--		TYPE_ATTRIBUTES(variant) = tree_cons(get_identifier("randomize_performed"), NULL_TREE, TYPE_ATTRIBUTES(variant));
--		TYPE_ATTRIBUTES(variant) = tree_cons(get_identifier("designated_init"), NULL_TREE, TYPE_ATTRIBUTES(variant));
--		if (has_flexarray)
--			TYPE_ATTRIBUTES(type) = tree_cons(get_identifier("has_flexarray"), NULL_TREE, TYPE_ATTRIBUTES(type));
--	}
- 
- 	/*
- 	 * force a re-layout of the main variant
-@@ -424,10 +426,8 @@ static void randomize_type(tree type)
- 	if (lookup_attribute("randomize_layout", TYPE_ATTRIBUTES(TYPE_MAIN_VARIANT(type))) || is_pure_ops_struct(type))
- 		relayout_struct(type);
- 
--	for (variant = TYPE_MAIN_VARIANT(type); variant; variant = TYPE_NEXT_VARIANT(variant)) {
--		TYPE_ATTRIBUTES(type) = copy_list(TYPE_ATTRIBUTES(type));
--		TYPE_ATTRIBUTES(type) = tree_cons(get_identifier("randomize_considered"), NULL_TREE, TYPE_ATTRIBUTES(type));
--	}
-+	add_type_attr(type, "randomize_considered", NULL_TREE);
-+
- #ifdef __DEBUG_PLUGIN
- 	fprintf(stderr, "Marking randomize_considered on struct %s\n", ORIG_TYPE_NAME(type));
- #ifdef __DEBUG_VERBOSE
--- 
-2.39.5
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="b65wpbro3ixgg3e2"
+Content-Disposition: inline
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+X-Provags-ID: V03:K1:rkeVi0aqo4aMzMglbOeMMhlCod2mVcFqnJiyVI5aZsidvr7CVy+
+ 5Cf/EVtrSMO0fPlek2bHC2ATQsWbao9hZsr2it240brdeZFZs21EfOCRztrj8+FZ9ZWuO2A
+ akM/05d55SFX9Gf9RCSfIc27eTExAMwd+IDbR+1Q5+EeiWJqMfe5IKm5dZle0AkPFmu1gV4
+ CXob+wKERhI2lgWvMowqQ==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:aqsyypDRLQA=;dWSk93rFFeHiX8CDMAFxHsc13sw
+ JbPKPm4jHhVSp6V7PBidsUdgYOx1x7cvjYLRqz1QhjWVCEa9NCqxllFHDBNYZGzJ9OsFnEfDd
+ v1e9Po4xHNYTCD2tL1i/KLEcArDz/JrnuxRLDO/oiMnLmryPnqVZmI4J5pc0La25XOs08YbKH
+ j+7I4RhsRKQ038bpq9OAiur1pq4nYzgTEil1JaaPvdCoCpIAkyt20dlbUf8d4ohwt7l9Yv8Dn
+ 9m1/x3kMXJyODKXBdsyyWyDCqlFloAU4f5H38FBsUfzykww+nXoWYEWUkl9rY3S0dmK35EkmS
+ rh6SiHHkRxzkgnR0HB7UF3AmScmTFiDF0Mq1pOBh8OqMZ6XLU/AZzwRidjC5cSPDegAsjyI4q
+ HuD2/ZtgZhLCIB9yLuwwYkS/Icf27SIAIC5KGukE0gSYj13siGe27tOHa1+30pkODxX/DwHNb
+ viX3TH8Q6BAcjB0eNG8Z2ElhxNvqZ5vqFWGYi5kB5scX37c+zWkxT9XliZBL7lzUYR/wHuKoY
+ iewxlDtk04/Mx3fXq/9hBG5DOf8f624YmLe/3e1wl1m8qIiwAUijqkVS+W6BCU9BFOJRQUlhC
+ qDP+6S6baTUOYCYnYbm5+wpajBuL4HiALwDgVmRHObVN5V14PqYzvyQ//O94PJZshoBd//b8P
+ RDjSf4/o7GqG6eTY3ogu8m6Vwd3BkFDOaPciwj7PF6yxHWBAmM1i9RPtbf5rRBm6d2tUA7pfM
+ kCK+ABNHR7L5HCFDLCh/E2fWbTJDt98B16Cn9aBVcwlGbMFO4frDL0X1Yakl7vSB91IbTPv92
+ B6IMQJJKpUxb66V4eb/8V9YwyQQl6ueA9Hryr8SeELQ3MOGhtPdlzgRcq5ere9KRFMvsYkoKh
+ v1pXfkC6zZkmicS9TIpERsJqmZBfXrR75X2wg4G6lYVavKqAPHdOPT7chTBwn4W8g5f/VgJn3
+ oCE9MiO0qH6nUI/iQbpNwviVaXF/y0SJw3QoJiTjfB0aCVaoBRGDRg8a0hR/BY6Ox7s+9fLfT
+ n02QTKiU0h1mS3m8EaAWrTCI23kfzHq8ruhVjJVgz+aanHAL/e+9Wyg0NME18HknC7271oS26
+ 5v9tfrZfkKY/gqWuahePKAAdAQ/TBwDqPYFFXaCie110mPfkv459w0VBYzUPJodd1dNCdZ4CV
+ nfmqzdP5mkXMUJPQ6ZblwsBgEMVD3nJNkquZPrlSsPjmEd/lb69RDI5/4Xs2Qg74FxXlocaHs
+ bGflXiP09EpI6wW8D1NJ7RqYKk5DEfbdRvys9s/cK5OlcpmSvlbSrBtYcO7SBRT4w3ey7xEr3
+ OcgqvXpYUQ8tf0xlf2QTk4fzwfB1NaoofwOdIffgV5Hc8Ouh8g4SGcKxUpTqF0QJArJ4ZITza
+ nu+BbRtfifaic50ymb6Q+WnMoEBxDnRoLw0igfvAEG/Jng/msp//Cugd1n
 
 
+--b65wpbro3ixgg3e2
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+Content-Disposition: inline
+Subject: Re: [PATCH 6.15 000/780] 6.15.3-rc1 review
+MIME-Version: 1.0
 
+On 25/06/17 05:15PM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.15.3 release.
+> There are 780 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Thu, 19 Jun 2025 15:22:30 +0000.
+> Anything received after that time might be too late.
+
+Tested-by: Christian Heusel <christian@heusel.eu>
+
+Tested on a ThinkPad E14 Gen 3 with a AMD Ryzen 5 5500U CPU and on the
+Steam Deck (LCD variant) aswell as a Framework Desktop.
+
+--b65wpbro3ixgg3e2
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEb3ea3iR6a4oPcswTwEfU8yi1JYUFAmhRlAgACgkQwEfU8yi1
+JYWrxRAAr22WwpGat0STLhfFC5l4KRlbFOPLB4jgZV9IPwkgK4dAL5jSfLxJxMcY
+0EbBI8mo4+Dn+A4N24VMy7XasicUdtg/48l5ImbyHEveZhWqu9LxtEg4hSEc1hLp
+qV3XaMGQ1BnYzTZnUsYqywJVJQylytUSjFIhgvvAALg8NYSnzGNQJ78U14sQjx6y
+OIVxucmlhHchMoRcPhrcorxJuk0ui9FgFwejpgyZ8RE+x1l/lGUGX9vm4nqQprgE
+xxd0H7HGomVh427b1i3avDDFu+k924McKQB6NVu3vhXmH3gd6pmHff/D2EFc9ase
+ocP9JJvH58I45PRLG6kOk1cxIwyS8h2G86/eiIcnttE6xqD/2xOj/J+ufyAdkMAe
+02r4F0oVtkZaYWLM/hgEkXMBkn944lWsMNQoFUPO/WcAM/A6+SSK8AlDgoxiprTK
+9uuegqCh3+8/E8+dj8hOpg8m0f43b6XULP8EmD0GVDlWaUCqeMpyBYes97wifDhM
+he3zfH8R+2ib0z0zeCjQbCiZYD+uwafC601DWOwhpZiPK4K6IMPMsbIegJhDwG/d
+YgzN5CZYJkRq65jYDLl4vHwVWq5HjBLgjPNew7/ul5CoaoaiUO4y6uaEub7LWGvG
+Thp3B8M4PC5ZnvFda4ATaMW2nVrbg9XDCIc7CuklYX8uHNhv260=
+=8EQi
+-----END PGP SIGNATURE-----
+
+--b65wpbro3ixgg3e2--
