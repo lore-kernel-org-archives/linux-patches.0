@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 494372F94B1;
-	Tue, 17 Jun 2025 16:13:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B5C22F94B1;
+	Tue, 17 Jun 2025 16:13:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750176820; cv=none; b=O6qm1RABYXRUb2iXnV/QG3pbxZsBQRaHkcVVu82J37zWHo/TVbU9IMmVUlWbg7OjyV/+BRjGqEF+mLHcJMSPoUyz8MO4sV9l7Sd5d2CsS6hilP8iMyP0WP9aJ5Di0aatQy/UAMLa6w9XPBJrksiMpslDd1tHEeV2nZrceZCr8WY=
+	t=1750176823; cv=none; b=Ihyw1vdPnz0PYGY60uEuVxkuPORg1n+tcLUNRjXpJTkg1XlMNoOXzDoGGnwhYj1y802d7HK9ErxhIA3TX1VvPb+AjJs1bHpOJsjizRyki3RIVwAsZmmtnu8pUnABU68HsPGQOk1Jh0eISkSqh4aM7O3m6oL7m5LyImZbwfgG2SI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750176820; c=relaxed/simple;
-	bh=QhS2aPYZjE/rY5nNuyvWQ4ytBcc2QUSnEpp/vHzmRfM=;
+	s=arc-20240116; t=1750176823; c=relaxed/simple;
+	bh=y3fpacXJ9t0gZen7ho/8sDMX/ZTAaVy9M0WKljdykTg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mUwg9/7jrtvFd2vPGvoEvKD69xDBUuqFIxRiSgQh/LvLB0AMmCAlnUEnjwgDTiPerhv+j9EUNwKzXTVDts8aiFpckdZ+Juf/R02UkNN3MOfPRzEdM0VRdlC6GJiR2PCzyaxjCDdW2FYBCYfdQD8NziGfIJoiv6LvTfU7ggamjbQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=USTuqmVb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NNn8NXm0ELacEZxxPOg5hZHneblPOgs2Ai1qtDm+TJoKtY5sZ9Y0kJ5bQpbq6njE/g8/OCR0GY7mdMwvE0bw/sg6oE2ATQZmzJcQij2vBR0wqnlS0xuwyeE/bhxRWzmWvzskaTRQDXhaj3UxMocY/c0ODR8PEBD0HMmfRF+GLK0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jio+/i4m; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="USTuqmVb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5BF9C4CEE3;
-	Tue, 17 Jun 2025 16:13:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jio+/i4m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7013C4CEE3;
+	Tue, 17 Jun 2025 16:13:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750176820;
-	bh=QhS2aPYZjE/rY5nNuyvWQ4ytBcc2QUSnEpp/vHzmRfM=;
+	s=korg; t=1750176823;
+	bh=y3fpacXJ9t0gZen7ho/8sDMX/ZTAaVy9M0WKljdykTg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=USTuqmVbuNwqUtmXSc0WsaiRS3DmERbpi8k3I8+ATMLZdnBCKcWh+O1C+G6C8EK/D
-	 AHi/oaWZhUsmA0iRFmV4gE60Zl07Hrnf39QHOKSIiZn1SAsfNq67R6Nb8uF9XZ9hvq
-	 4GwGaLQlJdP7fl7PXgm1yTN6OgUl8qccAh//T8No=
+	b=Jio+/i4mvopAI3aMVvVFerinLkjsBDCA4mLLz0RJaFRua4NW9WSCYeIaSjzKfuE79
+	 v1YaaFIntJZkKgyzNBRJH8XQEOHY/5W6I0VfafouZJFWwxhFIGLed49abvf2d2bjqd
+	 Ouj75XqO7g00pWdl7Ycm/huPtUhOA0gwtzXKalgc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Sitnicki <jakub@cloudflare.com>,
-	Michal Luczaj <mhal@rbox.co>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Justin Tee <justin.tee@broadcom.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 316/356] net: Fix TOCTOU issue in sk_is_readable()
-Date: Tue, 17 Jun 2025 17:27:11 +0200
-Message-ID: <20250617152350.879757512@linuxfoundation.org>
+Subject: [PATCH 6.15 229/780] scsi: lpfc: Avoid potential ndlp use-after-free in dev_loss_tmo_callbk
+Date: Tue, 17 Jun 2025 17:18:57 +0200
+Message-ID: <20250617152500.779085586@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-References: <20250617152338.212798615@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,54 +48,98 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michal Luczaj <mhal@rbox.co>
+From: Justin Tee <justin.tee@broadcom.com>
 
-[ Upstream commit 2660a544fdc0940bba15f70508a46cf9a6491230 ]
+[ Upstream commit b5162bb6aa1ec04dff4509b025883524b6d7e7ca ]
 
-sk->sk_prot->sock_is_readable is a valid function pointer when sk resides
-in a sockmap. After the last sk_psock_put() (which usually happens when
-socket is removed from sockmap), sk->sk_prot gets restored and
-sk->sk_prot->sock_is_readable becomes NULL.
+Smatch detected a potential use-after-free of an ndlp oject in
+dev_loss_tmo_callbk during driver unload or fatal error handling.
 
-This makes sk_is_readable() racy, if the value of sk->sk_prot is reloaded
-after the initial check. Which in turn may lead to a null pointer
-dereference.
+Fix by reordering code to avoid potential use-after-free if initial
+nodelist reference has been previously removed.
 
-Ensure the function pointer does not turn NULL after the check.
-
-Fixes: 8934ce2fd081 ("bpf: sockmap redirect ingress support")
-Suggested-by: Jakub Sitnicki <jakub@cloudflare.com>
-Signed-off-by: Michal Luczaj <mhal@rbox.co>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20250609-skisreadable-toctou-v1-1-d0dfb2d62c37@rbox.co
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 4281f44ea8bf ("scsi: lpfc: Prevent NDLP reference count underflow in dev_loss_tmo callback")
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/linux-scsi/41c1d855-9eb5-416f-ac12-8b61929201a3@stanley.mountain/
+Signed-off-by: Justin Tee <justin.tee@broadcom.com>
+Link: https://lore.kernel.org/r/20250425194806.3585-6-justintee8345@gmail.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/sock.h | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/scsi/lpfc/lpfc_hbadisc.c | 32 +++++++++++++++++---------------
+ 1 file changed, 17 insertions(+), 15 deletions(-)
 
-diff --git a/include/net/sock.h b/include/net/sock.h
-index dc625f94ee37b..e15bea43b2ecd 100644
---- a/include/net/sock.h
-+++ b/include/net/sock.h
-@@ -3043,8 +3043,11 @@ int sock_ioctl_inout(struct sock *sk, unsigned int cmd,
- int sk_ioctl(struct sock *sk, unsigned int cmd, void __user *arg);
- static inline bool sk_is_readable(struct sock *sk)
- {
--	if (sk->sk_prot->sock_is_readable)
--		return sk->sk_prot->sock_is_readable(sk);
-+	const struct proto *prot = READ_ONCE(sk->sk_prot);
+diff --git a/drivers/scsi/lpfc/lpfc_hbadisc.c b/drivers/scsi/lpfc/lpfc_hbadisc.c
+index 179be6c5a43e0..c2ec4db672869 100644
+--- a/drivers/scsi/lpfc/lpfc_hbadisc.c
++++ b/drivers/scsi/lpfc/lpfc_hbadisc.c
+@@ -161,7 +161,7 @@ lpfc_dev_loss_tmo_callbk(struct fc_rport *rport)
+ 	struct lpfc_hba   *phba;
+ 	struct lpfc_work_evt *evtp;
+ 	unsigned long iflags;
+-	bool nvme_reg = false;
++	bool drop_initial_node_ref = false;
+ 
+ 	ndlp = ((struct lpfc_rport_data *)rport->dd_data)->pnode;
+ 	if (!ndlp)
+@@ -188,8 +188,13 @@ lpfc_dev_loss_tmo_callbk(struct fc_rport *rport)
+ 		spin_lock_irqsave(&ndlp->lock, iflags);
+ 		ndlp->rport = NULL;
+ 
+-		if (ndlp->fc4_xpt_flags & NVME_XPT_REGD)
+-			nvme_reg = true;
++		/* Only 1 thread can drop the initial node reference.
++		 * If not registered for NVME and NLP_DROPPED flag is
++		 * clear, remove the initial reference.
++		 */
++		if (!(ndlp->fc4_xpt_flags & NVME_XPT_REGD))
++			if (!test_and_set_bit(NLP_DROPPED, &ndlp->nlp_flag))
++				drop_initial_node_ref = true;
+ 
+ 		/* The scsi_transport is done with the rport so lpfc cannot
+ 		 * call to unregister.
+@@ -200,13 +205,16 @@ lpfc_dev_loss_tmo_callbk(struct fc_rport *rport)
+ 			/* If NLP_XPT_REGD was cleared in lpfc_nlp_unreg_node,
+ 			 * unregister calls were made to the scsi and nvme
+ 			 * transports and refcnt was already decremented. Clear
+-			 * the NLP_XPT_REGD flag only if the NVME Rport is
++			 * the NLP_XPT_REGD flag only if the NVME nrport is
+ 			 * confirmed unregistered.
+ 			 */
+-			if (!nvme_reg && ndlp->fc4_xpt_flags & NLP_XPT_REGD) {
+-				ndlp->fc4_xpt_flags &= ~NLP_XPT_REGD;
++			if (ndlp->fc4_xpt_flags & NLP_XPT_REGD) {
++				if (!(ndlp->fc4_xpt_flags & NVME_XPT_REGD))
++					ndlp->fc4_xpt_flags &= ~NLP_XPT_REGD;
+ 				spin_unlock_irqrestore(&ndlp->lock, iflags);
+-				lpfc_nlp_put(ndlp); /* may free ndlp */
 +
-+	if (prot->sock_is_readable)
-+		return prot->sock_is_readable(sk);
-+
- 	return false;
- }
- #endif	/* _SOCK_H */
++				/* Release scsi transport reference */
++				lpfc_nlp_put(ndlp);
+ 			} else {
+ 				spin_unlock_irqrestore(&ndlp->lock, iflags);
+ 			}
+@@ -214,14 +222,8 @@ lpfc_dev_loss_tmo_callbk(struct fc_rport *rport)
+ 			spin_unlock_irqrestore(&ndlp->lock, iflags);
+ 		}
+ 
+-		/* Only 1 thread can drop the initial node reference.  If
+-		 * another thread has set NLP_DROPPED, this thread is done.
+-		 */
+-		if (nvme_reg || test_bit(NLP_DROPPED, &ndlp->nlp_flag))
+-			return;
+-
+-		set_bit(NLP_DROPPED, &ndlp->nlp_flag);
+-		lpfc_nlp_put(ndlp);
++		if (drop_initial_node_ref)
++			lpfc_nlp_put(ndlp);
+ 		return;
+ 	}
+ 
 -- 
 2.39.5
 
