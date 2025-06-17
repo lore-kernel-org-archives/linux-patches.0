@@ -1,44 +1,106 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA8D72F5489;
-	Tue, 17 Jun 2025 16:10:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B20522DFF29;
+	Tue, 17 Jun 2025 16:10:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750176616; cv=none; b=sPU4VRNsDgIlRpgWdRFCXd4vcXXvHaZyn1dgf876HjYd7MALB8YKgtTpoXCQ8De9mi7ubLBRqxvV78ZzPX735sRS13NqfdMJkwzT2TSbCyDrOhtTj1K/dlqsykNyBrqCemgdFxIEp47NGuP5azJGMvGo9kzVZ3oqKR9UuJc/xNs=
+	t=1750176620; cv=none; b=ljdaWyJ91CO29iGZArngxbuIOHk9gzQfvEDJC+d9HAbpfuBFyA6lG558Gizn8m3zG9dVxsgZPNk88jqSg50LUOXbRm2A0qFTBazxtD1noRt19DGxZf04404sFuUQF2ZPKzy/chomIZrMUOUZUxdeaMhXKyMJbUo7JONpYTnz3WU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750176616; c=relaxed/simple;
-	bh=Fw9xRX1FcVpFC27Z3aIQLLjnOUJahsNOTd2QdHMjtJc=;
+	s=arc-20240116; t=1750176620; c=relaxed/simple;
+	bh=o9Z5LHqsEqcGWoO/9fXe5jm6uC8roHd1wCjHF6ipqSw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hcb7yiTr/JhqaeIY+4EzLtDK3x6M27EYFjGiNe6QVyKyEgymXx5GbgaSP5xwxxOahfxHmctmELcvL3qV92RpvVnq6JtqVVBnpyx5ToDSi4zqbnsRqLsTu/hU281wPp8jHJsCGcv8K3YSwjxTAf9jf7h7UMm41kfL/J7jJNrNrDM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VGYUXzM/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Pv8FLotEu2lBIrrUb/MMGQzZzd+Sqayks4Tn4fxUtICzI4fYShCR7iroKSmZIauV/eyBEnB2JWes0fs7KGAzzD0/UIyuikK2RLD5ZUjRLPkOnHyphF1FW/iShbRH8vVIKaCspvweb9iMoHrXRcJdYmrtNQ/C9mJNxEMYIktzhV0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IwLqG/NW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VGYUXzM/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30B91C4CEE3;
-	Tue, 17 Jun 2025 16:10:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IwLqG/NW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41EE7C4CEE3;
+	Tue, 17 Jun 2025 16:10:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750176616;
-	bh=Fw9xRX1FcVpFC27Z3aIQLLjnOUJahsNOTd2QdHMjtJc=;
+	s=korg; t=1750176620;
+	bh=o9Z5LHqsEqcGWoO/9fXe5jm6uC8roHd1wCjHF6ipqSw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VGYUXzM/GYzMGTcvW2DN2RtBPhxT2Ozzo8TsWZELAp1gsisf418jmt/Y1xC9751lk
-	 M7vSOWVNO49ZHH2U/TbJb52nfLli7vEMRTl0B7Dqm+At+WFkgNZLJT/WgrWfCiqSLv
-	 hs9zZy7aDQ2B+uKOzhaLWrCfcFXuJSAQyxtI3N1M=
+	b=IwLqG/NWwW+CiHRjPylG4kxunBQ46cvmsFDMXsbbtlvowu3ECx22AR3lqhLj10V5P
+	 XXlEoM6ScIKDuDTZ4r7nla+KtdnKtUZ/52BwPRhdSUn6cqe5TQxZZWxjoUsGZdJyCQ
+	 IFNtse30YoI/D3DzE5a/ZHY11tlYSpQsSmaGiT08=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	P Praneesh <quic_ppranees@quicinc.com>,
-	Nicolas Escande <nico.escande@gmail.com>,
-	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
-	Karthikeyan Periyasamy <quic_periyasa@quicinc.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Jeff Johnson <quic_jjohnson@quicinc.com>,
+	Easwar Hariharan <eahariha@linux.microsoft.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Andrew Lunn <andrew+netdev@lunn.ch>,
+	Anna-Maria Behnsen <anna-maria@linutronix.de>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Daniel Mack <daniel@zonque.org>,
+	David Airlie <airlied@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Dick Kennedy <dick.kennedy@broadcom.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Haojian Zhuang <haojian.zhuang@gmail.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
+	Jack Wang <jinpu.wang@cloud.ionos.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	James Bottomley <James.Bottomley@HansenPartnership.com>,
+	James Smart <james.smart@broadcom.com>,
+	Jaroslav Kysela <perex@perex.cz>,
+	Jeff Johnson <jjohnson@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
+	Jeroen de Borst <jeroendb@google.com>,
+	Jiri Kosina <jikos@kernel.org>,
+	Joe Lawrence <joe.lawrence@redhat.com>,
+	Johan Hedberg <johan.hedberg@gmail.com>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Jozsef Kadlecsik <kadlec@netfilter.org>,
+	Julia Lawall <julia.lawall@inria.fr>,
+	Kalle Valo <kvalo@kernel.org>,
+	Louis Peens <louis.peens@corigine.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Marcel Holtmann <marcel@holtmann.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Miroslav Benes <mbenes@suse.cz>,
+	Naveen N Rao <naveen@kernel.org>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	Nicolas Palix <nicolas.palix@imag.fr>,
+	Oded Gabbay <ogabbay@kernel.org>,
+	Ofir Bitton <obitton@habana.ai>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Petr Mladek <pmladek@suse.com>,
+	Praveen Kaligineedi <pkaligineedi@google.com>,
+	Ray Jui <rjui@broadcom.com>,
+	Robert Jarzmik <robert.jarzmik@free.fr>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	=?UTF-8?q?Roger=20Pau=20Monn=C3=A9?= <roger.pau@citrix.com>,
+	Russell King <linux@armlinux.org.uk>,
+	Scott Branden <sbranden@broadcom.com>,
+	Shailend Chand <shailend@google.com>,
+	Simona Vetter <simona@ffwll.ch>,
+	Simon Horman <horms@kernel.org>,
+	Sven Schnelle <svens@linux.ibm.com>,
+	Takashi Iwai <tiwai@suse.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Xiubo Li <xiubli@redhat.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 207/780] wifi: ath12k: Avoid fetch Error bitmap and decap format from Rx TLV
-Date: Tue, 17 Jun 2025 17:18:35 +0200
-Message-ID: <20250617152459.888225976@linuxfoundation.org>
+Subject: [PATCH 6.6 298/356] wifi: ath11k: convert timeouts to secs_to_jiffies()
+Date: Tue, 17 Jun 2025 17:26:53 +0200
+Message-ID: <20250617152350.164504822@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
+References: <20250617152338.212798615@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,204 +110,122 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: P Praneesh <quic_ppranees@quicinc.com>
+From: Easwar Hariharan <eahariha@linux.microsoft.com>
 
-[ Upstream commit a6621bf6397ae6981b5041ba0a127e7dbeade746 ]
+[ Upstream commit b29425972c5234a59b6fb634125420ed74266377 ]
 
-Currently, error bitmap and decap format information are fetched from the
-MSDU Rx TLV data. This logic is inherited from ath11k. However, for ath12k
-802.11be hardware, the Rx TLV will not be present in the MSDU data.
-Instead, this information is reported separately under the MSDU END TLV
-tag. Therefore, remove the existing fetch code, handle the MSDU END TLV
-tag and fetch the above information to store it in the mon_mpdu data
-structure for use in the merge MSDU procedure.
+Commit b35108a51cf7 ("jiffies: Define secs_to_jiffies()") introduced
+secs_to_jiffies().  As the value here is a multiple of 1000, use
+secs_to_jiffies() instead of msecs_to_jiffies to avoid the multiplication.
 
-Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.3.1-00173-QCAHKSWPL_SILICONZ-1
-Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.0.c5-00481-QCAHMTSWPL_V1.0_V2.0_SILICONZ-3
+This is converted using scripts/coccinelle/misc/secs_to_jiffies.cocci with
+the following Coccinelle rules:
 
-Signed-off-by: P Praneesh <quic_ppranees@quicinc.com>
-Tested-by: Nicolas Escande <nico.escande@gmail.com>
-Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Signed-off-by: Karthikeyan Periyasamy <quic_periyasa@quicinc.com>
-Link: https://patch.msgid.link/20250324062518.2752822-4-quic_periyasa@quicinc.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Stable-dep-of: f5d6b15d9503 ("wifi: ath12k: fix wrong handling of CCMP256 and GCMP ciphers")
+@@ constant C; @@
+
+- msecs_to_jiffies(C * 1000)
++ secs_to_jiffies(C)
+
+@@ constant C; @@
+
+- msecs_to_jiffies(C * MSEC_PER_SEC)
++ secs_to_jiffies(C)
+
+Link: https://lkml.kernel.org/r/20241210-converge-secs-to-jiffies-v3-14-ddfefd7e9f2a@linux.microsoft.com
+Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+Signed-off-by: Easwar Hariharan <eahariha@linux.microsoft.com>
+Cc: Alexander Gordeev <agordeev@linux.ibm.com>
+Cc: Andrew Lunn <andrew+netdev@lunn.ch>
+Cc: Anna-Maria Behnsen <anna-maria@linutronix.de>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Christian Borntraeger <borntraeger@linux.ibm.com>
+Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
+Cc: Daniel Mack <daniel@zonque.org>
+Cc: David Airlie <airlied@gmail.com>
+Cc: David S. Miller <davem@davemloft.net>
+Cc: Dick Kennedy <dick.kennedy@broadcom.com>
+Cc: Eric Dumazet <edumazet@google.com>
+Cc: Florian Fainelli <florian.fainelli@broadcom.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Haojian Zhuang <haojian.zhuang@gmail.com>
+Cc: Heiko Carstens <hca@linux.ibm.com>
+Cc: Ilya Dryomov <idryomov@gmail.com>
+Cc: Jack Wang <jinpu.wang@cloud.ionos.com>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: James Bottomley <James.Bottomley@HansenPartnership.com>
+Cc: James Smart <james.smart@broadcom.com>
+Cc: Jaroslav Kysela <perex@perex.cz>
+Cc: Jeff Johnson <jjohnson@kernel.org>
+Cc: Jens Axboe <axboe@kernel.dk>
+Cc: Jeroen de Borst <jeroendb@google.com>
+Cc: Jiri Kosina <jikos@kernel.org>
+Cc: Joe Lawrence <joe.lawrence@redhat.com>
+Cc: Johan Hedberg <johan.hedberg@gmail.com>
+Cc: Josh Poimboeuf <jpoimboe@kernel.org>
+Cc: Jozsef Kadlecsik <kadlec@netfilter.org>
+Cc: Julia Lawall <julia.lawall@inria.fr>
+Cc: Kalle Valo <kvalo@kernel.org>
+Cc: Louis Peens <louis.peens@corigine.com>
+Cc: Lucas De Marchi <lucas.demarchi@intel.com>
+Cc: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
+Cc: Marcel Holtmann <marcel@holtmann.org>
+Cc: Martin K. Petersen <martin.petersen@oracle.com>
+Cc: Maxime Ripard <mripard@kernel.org>
+Cc: Michael Ellerman <mpe@ellerman.id.au>
+Cc: Miroslav Benes <mbenes@suse.cz>
+Cc: Naveen N Rao <naveen@kernel.org>
+Cc: Nicholas Piggin <npiggin@gmail.com>
+Cc: Nicolas Palix <nicolas.palix@imag.fr>
+Cc: Oded Gabbay <ogabbay@kernel.org>
+Cc: Ofir Bitton <obitton@habana.ai>
+Cc: Pablo Neira Ayuso <pablo@netfilter.org>
+Cc: Paolo Abeni <pabeni@redhat.com>
+Cc: Petr Mladek <pmladek@suse.com>
+Cc: Praveen Kaligineedi <pkaligineedi@google.com>
+Cc: Ray Jui <rjui@broadcom.com>
+Cc: Robert Jarzmik <robert.jarzmik@free.fr>
+Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Cc: Roger Pau Monné <roger.pau@citrix.com>
+Cc: Russell King <linux@armlinux.org.uk>
+Cc: Scott Branden <sbranden@broadcom.com>
+Cc: Shailend Chand <shailend@google.com>
+Cc: Simona Vetter <simona@ffwll.ch>
+Cc: Simon Horman <horms@kernel.org>
+Cc: Sven Schnelle <svens@linux.ibm.com>
+Cc: Takashi Iwai <tiwai@suse.com>
+Cc: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: Vasily Gorbik <gor@linux.ibm.com>
+Cc: Xiubo Li <xiubli@redhat.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: 9f6e82d11bb9 ("wifi: ath11k: avoid burning CPU in ath11k_debugfs_fw_stats_request()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/dp_mon.c | 58 ++++++++++--------------
- 1 file changed, 23 insertions(+), 35 deletions(-)
+ drivers/net/wireless/ath/ath11k/debugfs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/dp_mon.c b/drivers/net/wireless/ath/ath12k/dp_mon.c
-index 8c78f601f70aa..6fc3b92117656 100644
---- a/drivers/net/wireless/ath/ath12k/dp_mon.c
-+++ b/drivers/net/wireless/ath/ath12k/dp_mon.c
-@@ -1702,30 +1702,26 @@ static void ath12k_dp_mon_rx_msdus_set_payload(struct ath12k *ar,
+diff --git a/drivers/net/wireless/ath/ath11k/debugfs.c b/drivers/net/wireless/ath/ath11k/debugfs.c
+index 34aa04d27a1d7..a8bd944f76d92 100644
+--- a/drivers/net/wireless/ath/ath11k/debugfs.c
++++ b/drivers/net/wireless/ath/ath11k/debugfs.c
+@@ -178,7 +178,7 @@ static int ath11k_debugfs_fw_stats_request(struct ath11k *ar,
+ 	 * received 'update stats' event, we keep a 3 seconds timeout in case,
+ 	 * fw_stats_done is not marked yet
+ 	 */
+-	timeout = jiffies + msecs_to_jiffies(3 * 1000);
++	timeout = jiffies + secs_to_jiffies(3);
  
- static struct sk_buff *
- ath12k_dp_mon_rx_merg_msdus(struct ath12k *ar,
--			    struct sk_buff *head_msdu, struct sk_buff *tail_msdu,
--			    struct ieee80211_rx_status *rxs, bool *fcs_err)
-+			    struct dp_mon_mpdu *mon_mpdu,
-+			    struct ieee80211_rx_status *rxs)
- {
- 	struct ath12k_base *ab = ar->ab;
- 	struct sk_buff *msdu, *mpdu_buf, *prev_buf, *head_frag_list;
-+	struct sk_buff *head_msdu, *tail_msdu;
- 	struct hal_rx_desc *rx_desc, *tail_rx_desc;
--	u8 *hdr_desc, *dest, decap_format;
-+	u8 *hdr_desc, *dest, decap_format = mon_mpdu->decap_format;
- 	struct ieee80211_hdr_3addr *wh;
--	u32 err_bitmap, frag_list_sum_len = 0;
-+	u32 frag_list_sum_len = 0;
+ 	ath11k_debugfs_fw_stats_reset(ar);
  
- 	mpdu_buf = NULL;
-+	head_msdu = mon_mpdu->head;
-+	tail_msdu = mon_mpdu->tail;
- 
- 	if (!head_msdu)
- 		goto err_merge_fail;
- 
--	rx_desc = (struct hal_rx_desc *)head_msdu->data;
- 	tail_rx_desc = (struct hal_rx_desc *)tail_msdu->data;
- 
--	err_bitmap = ath12k_dp_rx_h_mpdu_err(ab, tail_rx_desc);
--	if (err_bitmap & HAL_RX_MPDU_ERR_FCS)
--		*fcs_err = true;
--
--	decap_format = ath12k_dp_rx_h_decap_type(ab, tail_rx_desc);
--
- 	ath12k_dp_rx_h_ppdu(ar, tail_rx_desc, rxs);
- 
- 	if (decap_format == DP_RX_DECAP_TYPE_RAW) {
-@@ -1954,7 +1950,8 @@ static void ath12k_dp_mon_update_radiotap(struct ath12k *ar,
- 
- static void ath12k_dp_mon_rx_deliver_msdu(struct ath12k *ar, struct napi_struct *napi,
- 					  struct sk_buff *msdu,
--					  struct ieee80211_rx_status *status)
-+					  struct ieee80211_rx_status *status,
-+					  u8 decap)
- {
- 	static const struct ieee80211_radiotap_he known = {
- 		.data1 = cpu_to_le16(IEEE80211_RADIOTAP_HE_DATA1_DATA_MCS_KNOWN |
-@@ -1966,7 +1963,6 @@ static void ath12k_dp_mon_rx_deliver_msdu(struct ath12k *ar, struct napi_struct
- 	struct ieee80211_sta *pubsta = NULL;
- 	struct ath12k_peer *peer;
- 	struct ath12k_skb_rxcb *rxcb = ATH12K_SKB_RXCB(msdu);
--	u8 decap = DP_RX_DECAP_TYPE_RAW;
- 	bool is_mcbc = rxcb->is_mcbc;
- 	bool is_eapol_tkip = rxcb->is_eapol;
- 
-@@ -1977,8 +1973,6 @@ static void ath12k_dp_mon_rx_deliver_msdu(struct ath12k *ar, struct napi_struct
- 		status->flag |= RX_FLAG_RADIOTAP_HE;
- 	}
- 
--	if (!(status->flag & RX_FLAG_ONLY_MONITOR))
--		decap = ath12k_dp_rx_h_decap_type(ar->ab, rxcb->rx_desc);
- 	spin_lock_bh(&ar->ab->base_lock);
- 	peer = ath12k_dp_rx_h_find_peer(ar->ab, msdu);
- 	if (peer && peer->sta) {
-@@ -2035,25 +2029,23 @@ static void ath12k_dp_mon_rx_deliver_msdu(struct ath12k *ar, struct napi_struct
- }
- 
- static int ath12k_dp_mon_rx_deliver(struct ath12k *ar,
--				    struct sk_buff *head_msdu, struct sk_buff *tail_msdu,
-+				    struct dp_mon_mpdu *mon_mpdu,
- 				    struct hal_rx_mon_ppdu_info *ppduinfo,
- 				    struct napi_struct *napi)
- {
- 	struct ath12k_pdev_dp *dp = &ar->dp;
- 	struct sk_buff *mon_skb, *skb_next, *header;
- 	struct ieee80211_rx_status *rxs = &dp->rx_status;
--	bool fcs_err = false;
-+	u8 decap = DP_RX_DECAP_TYPE_RAW;
- 
--	mon_skb = ath12k_dp_mon_rx_merg_msdus(ar,
--					      head_msdu, tail_msdu,
--					      rxs, &fcs_err);
-+	mon_skb = ath12k_dp_mon_rx_merg_msdus(ar, mon_mpdu, rxs);
- 	if (!mon_skb)
- 		goto mon_deliver_fail;
- 
- 	header = mon_skb;
- 	rxs->flag = 0;
- 
--	if (fcs_err)
-+	if (mon_mpdu->err_bitmap & HAL_RX_MPDU_ERR_FCS)
- 		rxs->flag = RX_FLAG_FAILED_FCS_CRC;
- 
- 	do {
-@@ -2070,8 +2062,12 @@ static int ath12k_dp_mon_rx_deliver(struct ath12k *ar,
- 			rxs->flag |= RX_FLAG_ALLOW_SAME_PN;
- 		}
- 		rxs->flag |= RX_FLAG_ONLY_MONITOR;
-+
-+		if (!(rxs->flag & RX_FLAG_ONLY_MONITOR))
-+			decap = mon_mpdu->decap_format;
-+
- 		ath12k_dp_mon_update_radiotap(ar, ppduinfo, mon_skb, rxs);
--		ath12k_dp_mon_rx_deliver_msdu(ar, napi, mon_skb, rxs);
-+		ath12k_dp_mon_rx_deliver_msdu(ar, napi, mon_skb, rxs, decap);
- 		mon_skb = skb_next;
- 	} while (mon_skb);
- 	rxs->flag = 0;
-@@ -2079,7 +2075,7 @@ static int ath12k_dp_mon_rx_deliver(struct ath12k *ar,
- 	return 0;
- 
- mon_deliver_fail:
--	mon_skb = head_msdu;
-+	mon_skb = mon_mpdu->head;
- 	while (mon_skb) {
- 		skb_next = mon_skb->next;
- 		dev_kfree_skb_any(mon_skb);
-@@ -2285,7 +2281,6 @@ ath12k_dp_mon_rx_parse_mon_status(struct ath12k *ar,
- 	struct hal_rx_mon_ppdu_info *ppdu_info = &pmon->mon_ppdu_info;
- 	struct dp_mon_mpdu *tmp;
- 	struct dp_mon_mpdu *mon_mpdu = pmon->mon_mpdu;
--	struct sk_buff *head_msdu, *tail_msdu;
- 	enum hal_rx_mon_status hal_status;
- 
- 	hal_status = ath12k_dp_mon_parse_rx_dest(ar, pmon, skb);
-@@ -2294,13 +2289,9 @@ ath12k_dp_mon_rx_parse_mon_status(struct ath12k *ar,
- 
- 	list_for_each_entry_safe(mon_mpdu, tmp, &pmon->dp_rx_mon_mpdu_list, list) {
- 		list_del(&mon_mpdu->list);
--		head_msdu = mon_mpdu->head;
--		tail_msdu = mon_mpdu->tail;
- 
--		if (head_msdu && tail_msdu) {
--			ath12k_dp_mon_rx_deliver(ar, head_msdu,
--						 tail_msdu, ppdu_info, napi);
--		}
-+		if (mon_mpdu->head && mon_mpdu->tail)
-+			ath12k_dp_mon_rx_deliver(ar, mon_mpdu, ppdu_info, napi);
- 
- 		kfree(mon_mpdu);
- 	}
-@@ -2985,16 +2976,13 @@ ath12k_dp_mon_tx_process_ppdu_info(struct ath12k *ar,
- 				   struct dp_mon_tx_ppdu_info *tx_ppdu_info)
- {
- 	struct dp_mon_mpdu *tmp, *mon_mpdu;
--	struct sk_buff *head_msdu, *tail_msdu;
- 
- 	list_for_each_entry_safe(mon_mpdu, tmp,
- 				 &tx_ppdu_info->dp_tx_mon_mpdu_list, list) {
- 		list_del(&mon_mpdu->list);
--		head_msdu = mon_mpdu->head;
--		tail_msdu = mon_mpdu->tail;
- 
--		if (head_msdu)
--			ath12k_dp_mon_rx_deliver(ar, head_msdu, tail_msdu,
-+		if (mon_mpdu->head)
-+			ath12k_dp_mon_rx_deliver(ar, mon_mpdu,
- 						 &tx_ppdu_info->rx_status, napi);
- 
- 		kfree(mon_mpdu);
 -- 
 2.39.5
 
