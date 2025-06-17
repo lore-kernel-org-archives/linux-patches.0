@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 290712E8E05;
-	Tue, 17 Jun 2025 16:35:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB9922E8E05;
+	Tue, 17 Jun 2025 16:35:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750178125; cv=none; b=Csvnp7gXglSgPN8nJMuEU5hk2TNV+TqFMkufSYH/6jRkuae/SvhFhXJz3MXkokPv7/trbWoe8V37evP+v2Se3y/LRbpWtoyD03//JDjTSRc/JrMrVakhE/24XENdIj3x1h7WpYm3waqh1qwXccoQ73TboTZugIy3fGrkveY76G0=
+	t=1750178128; cv=none; b=ljqucXfpb3T2OfWZ6tnFdsHcq+sONwJIKok7oCzcvLimfN3kqIyi2UP3kZWv1T/4qxlywH4b6LoleEj3eUVuw64PC5ioCwfoJploVw60DRC9CIEsmsY39fkyagiXoam6gVWcIP2hVyK9SOg+WOnx+uovJS4WhsMlR4i1BDYJqes=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750178125; c=relaxed/simple;
-	bh=3yQR18S9kCDi43+FeFUrdVziQ3bGQwBKPRBTjPleVXo=;
+	s=arc-20240116; t=1750178128; c=relaxed/simple;
+	bh=X4MwqNwTFTAA2oh9Abis/kEIIfi11MGUSxVluYCSm38=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=cIcr+soDNMCeG1aRKbEqceTwtp97jBDNryUokTn3JGHXm/FtQVL943RZbEgN7iE4utf78xtm1vU4sd1bp60PKE6Fp3T2cbi6xhvR5IyBLNgXgG2xvFr944KJP1poeJkRpy4CNghDmD5AgnCDYFz7Jf2KMIAqi/Z0jgw6ezak92g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=whEsx+SR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lOxi19/J89d7b7BN87cw57yDWOtDuW/Nrh7dopx1wo/zbwF4hStyBscGgX2ybsgW+lY3AVtWl7cTD5eRRbzSlAic4wrZ4G4fREGoWWneAAeFTbmXcOzFcmCAgumxvdoPYryFVeg0+iQnaJ+V21FoW/4tpQkGcLMHViQOGPmGLqM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rSpuRMj9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="whEsx+SR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BAD7C4CEE3;
-	Tue, 17 Jun 2025 16:35:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rSpuRMj9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFA0CC4CEE3;
+	Tue, 17 Jun 2025 16:35:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750178125;
-	bh=3yQR18S9kCDi43+FeFUrdVziQ3bGQwBKPRBTjPleVXo=;
+	s=korg; t=1750178128;
+	bh=X4MwqNwTFTAA2oh9Abis/kEIIfi11MGUSxVluYCSm38=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=whEsx+SRamhvt2O+v7znTooHtVrhvse9Qkh2N9zxoPGf5HAzk59rNkdM/5eiOz+hT
-	 3+VduqRc7WnkKxwiRMaxdbyFR8oasC2/cjPFX8BMa2rTpofF+rBKEz1PFlKYbDKzKD
-	 +FM4zGbRVWeYCFJpHZFZySDV3Ndd32jqQwMjDJLw=
+	b=rSpuRMj9ay5YQrb9Mj2NC9ThOCuGKhVy1o7qQlNggkEIcG5dHEL7VqR+dmJrTwtzL
+	 9k7jB+Hx7vYXfoktCUg9Q24KARWXbAgOkU83eFdAuaySvLWsq32DWWtPzJt+rebxSR
+	 tnNkW9tQcYlRdRAe/b89h/xh4/thfpkImcSdfx8s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Su Hui <suhui@nfschina.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Andrew Jeffery <andrew@codeconstruct.com.au>,
-	Arnd Bergmann <arnd@arndb.de>,
+	Robert Malz <robert.malz@canonical.com>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 413/780] soc: aspeed: lpc: Fix impossible judgment condition
-Date: Tue, 17 Jun 2025 17:22:01 +0200
-Message-ID: <20250617152508.291174358@linuxfoundation.org>
+Subject: [PATCH 6.12 450/512] i40e: retry VFLR handling if there is ongoing VF reset
+Date: Tue, 17 Jun 2025 17:26:56 +0200
+Message-ID: <20250617152437.803326358@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,48 +46,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Su Hui <suhui@nfschina.com>
+From: Robert Malz <robert.malz@canonical.com>
 
-[ Upstream commit d9f0a97e859bdcef51f9c187b1eb712eb13fd3ff ]
+[ Upstream commit fb4e9239e029954a37a00818b21e837cebf2aa10 ]
 
-smatch error：
-drivers/soc/aspeed/aspeed-lpc-snoop.c:169
-aspeed_lpc_snoop_config_irq() warn: platform_get_irq() does not return zero
+When a VFLR interrupt is received during a VF reset initiated from a
+different source, the VFLR may be not fully handled. This can
+leave the VF in an undefined state.
+To address this, set the I40E_VFLR_EVENT_PENDING bit again during VFLR
+handling if the reset is not yet complete. This ensures the driver
+will properly complete the VF reset in such scenarios.
 
-platform_get_irq() return non-zero IRQ number or negative error code,
-change '!lpc_snoop->irq' to 'lpc_snoop->irq < 0' to fix this.
-
-Fixes: 9f4f9ae81d0a ("drivers/misc: add Aspeed LPC snoop driver")
-Signed-off-by: Su Hui <suhui@nfschina.com>
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/20231027020703.1231875-1-suhui@nfschina.com
-Signed-off-by: Andrew Jeffery <andrew@codeconstruct.com.au>
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Fixes: 52424f974bc5 ("i40e: Fix VF hang when reset is triggered on another VF")
+Signed-off-by: Robert Malz <robert.malz@canonical.com>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/aspeed/aspeed-lpc-snoop.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/soc/aspeed/aspeed-lpc-snoop.c b/drivers/soc/aspeed/aspeed-lpc-snoop.c
-index 9ab5ba9cf1d61..57ba855f375d9 100644
---- a/drivers/soc/aspeed/aspeed-lpc-snoop.c
-+++ b/drivers/soc/aspeed/aspeed-lpc-snoop.c
-@@ -166,7 +166,7 @@ static int aspeed_lpc_snoop_config_irq(struct aspeed_lpc_snoop *lpc_snoop,
- 	int rc;
+diff --git a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
+index bde41d30c69ee..625fa93fc18bb 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
+@@ -4328,7 +4328,10 @@ int i40e_vc_process_vflr_event(struct i40e_pf *pf)
+ 		reg = rd32(hw, I40E_GLGEN_VFLRSTAT(reg_idx));
+ 		if (reg & BIT(bit_idx))
+ 			/* i40e_reset_vf will clear the bit in GLGEN_VFLRSTAT */
+-			i40e_reset_vf(vf, true);
++			if (!i40e_reset_vf(vf, true)) {
++				/* At least one VF did not finish resetting, retry next time */
++				set_bit(__I40E_VFLR_EVENT_PENDING, pf->state);
++			}
+ 	}
  
- 	lpc_snoop->irq = platform_get_irq(pdev, 0);
--	if (!lpc_snoop->irq)
-+	if (lpc_snoop->irq < 0)
- 		return -ENODEV;
- 
- 	rc = devm_request_irq(dev, lpc_snoop->irq,
+ 	return 0;
 -- 
 2.39.5
 
