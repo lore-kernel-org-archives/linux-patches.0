@@ -1,46 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 033DA2ECE84;
-	Tue, 17 Jun 2025 16:00:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82CB22ED142;
+	Tue, 17 Jun 2025 16:00:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750176055; cv=none; b=S/xF9ipiRH6DFdAy4DGWMi4801GH38NwZiJdvuihHwXcaILc7T97VOzOETs3EDy5IfvovQDHgzRc/t1wKg6cx9w1Fl88v6F+W7bQqPsACENScXIJsD67V2ed0G4caqH5Iiuwygljt4Z+Cp5g7pq+vZMIC/WEQ9LvlFJJBQr0+hA=
+	t=1750176059; cv=none; b=HPizeRhb5yLLEaV5kWMu4zQzpq+0JSR8yCKMhmZYUr7AckMlKZXSLjmiKZPFL608VQIyU2oIWYSUS34hQ+mSLsW14SpI7bYHFo6e1syxnGHFfw3E9WhgU1Zood4JjUbM8oS2aZkunqFHZVYcpIGNfW356LgL7I1NjudiIflUpE8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750176055; c=relaxed/simple;
-	bh=EzVQSnisQG8lcDrug676GcQucIWBD+nu5Zlus4Jnnuo=;
+	s=arc-20240116; t=1750176059; c=relaxed/simple;
+	bh=wi2/H+o4xD9jHm3Gt3tfklv6rJynmHUwYSE2ghx68no=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FiUNuqGidBOmevXpCRIhDjonFYs0UzY+yeUwQz5dhWnUYDjcZkWRr4sTSu17HUcGNjzstn4Thoj6L5DEqE3ilWWW3tvv9ZAKPsgcM1VqEDDDNX/H51k4ygQeofsxoesdFILPJUw0ByCoeFycLGVcNssldmRoDi9AJn6K7myJ4bw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OpW61dN8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XgATtg6S/R2aT3kdsN1BhWnjmA6N4a62SyVKYIGcgYDazBlT/X/C9JbtCIPZY0vzCC/rYYTF2e/nn0jwAc7hIiIpJ2g5wNMqKgfa9jjcUMQwr+2asRSRpX96CU3LySir2RUOAvp+6TjOK9AjTNZTIP9Y/6d6u4TbH40O/VRorI0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mlkj2Ji9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OpW61dN8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 673BBC4CEE3;
-	Tue, 17 Jun 2025 16:00:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mlkj2Ji9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4127C4CEF3;
+	Tue, 17 Jun 2025 16:00:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750176054;
-	bh=EzVQSnisQG8lcDrug676GcQucIWBD+nu5Zlus4Jnnuo=;
+	s=korg; t=1750176059;
+	bh=wi2/H+o4xD9jHm3Gt3tfklv6rJynmHUwYSE2ghx68no=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OpW61dN8uToUcbHt/8RASs2d5PWhTGF6aNSLmAeGAq1HuEKTdofSle+0eLAxME4jn
-	 2vjyCvGoexRhumXYhk5I/gASCDXPAOo0tUP03RFdqWYRxkolS3AfK/LZQnCY9cfVpc
-	 GhCE5Ask8r7p4w/8l3x3JA6qzqZkOAwDhFoceW4Q=
+	b=mlkj2Ji93DnZkqJBkgOzsE7jZMtcqsc0E4nD7UN1ASflTs3JXcl/gqvQ+6Da9CSxw
+	 ZhAbqkM2mB7+BjKD3QKxQUcSa7As0dIAsPtblIrlHSkMCl/UQIHG9UFXWS6SWagSIj
+	 acLZMhQe3d+cTaaabgZ9lP7T46RiaKqkGhSWgOj8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Aleksandrs Vinarskis <alex.vinarskis@gmail.com>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Rob Clark <robdclark@gmail.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Jessica Zhang <quic_jesszhan@quicinc.com>
-Subject: [PATCH 6.15 147/780] drm/msm/dp: Account for LTTPRs capabilities
-Date: Tue, 17 Jun 2025 17:17:35 +0200
-Message-ID: <20250617152457.493124604@linuxfoundation.org>
+	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	William Breathitt Gray <wbg@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 239/356] counter: interrupt-cnt: Protect enable/disable OPs with mutex
+Date: Tue, 17 Jun 2025 17:25:54 +0200
+Message-ID: <20250617152347.832062985@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
+References: <20250617152338.212798615@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -52,106 +48,111 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
+From: Alexander Sverdlin <alexander.sverdlin@siemens.com>
 
-[ Upstream commit c156fe2dd46774321c8eaaff9a6f04b64e6b9742 ]
+[ Upstream commit 7351312632e831e51383f48957d47712fae791ef ]
 
-Take into account LTTPR capabilities when selecting maximum allowed
-link rate, number of data lines.
+Enable/disable seems to be racy on SMP, consider the following scenario:
 
-Fixes: 72d0af4accd9 ("drm/msm/dp: Add support for LTTPR handling")
-Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
-Tested-by: Jessica Zhang <quic_jesszhan@quicinc.com> # SA8775P
-Tested-by: Johan Hovold <johan+linaro@kernel.org>
-Tested-by: Rob Clark <robdclark@gmail.com>
-Patchwork: https://patchwork.freedesktop.org/patch/652302/
-Link: https://lore.kernel.org/r/20250507230113.14270-3-alex.vinarskis@gmail.com
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+CPU0					CPU1
+
+interrupt_cnt_enable_write(true)
+{
+	if (priv->enabled == enable)
+		return 0;
+
+	if (enable) {
+		priv->enabled = true;
+					interrupt_cnt_enable_write(false)
+					{
+						if (priv->enabled == enable)
+							return 0;
+
+						if (enable) {
+							priv->enabled = true;
+							enable_irq(priv->irq);
+						} else {
+							disable_irq(priv->irq)
+							priv->enabled = false;
+						}
+		enable_irq(priv->irq);
+	} else {
+		disable_irq(priv->irq);
+		priv->enabled = false;
+	}
+
+The above would result in priv->enabled == false, but IRQ left enabled.
+Protect both write (above race) and read (to propagate the value on SMP)
+callbacks with a mutex.
+
+Signed-off-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+Fixes: a55ebd47f21f ("counter: add IRQ or GPIO based counter")
+Acked-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Link: https://lore.kernel.org/r/20250331163642.2382651-1-alexander.sverdlin@siemens.com
+Signed-off-by: William Breathitt Gray <wbg@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/dp/dp_display.c |  5 ++---
- drivers/gpu/drm/msm/dp/dp_link.h    |  3 +++
- drivers/gpu/drm/msm/dp/dp_panel.c   | 12 +++++++++++-
- 3 files changed, 16 insertions(+), 4 deletions(-)
+ drivers/counter/interrupt-cnt.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index fc07cce68382a..5c57c1d7ac601 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -369,13 +369,12 @@ static int msm_dp_display_send_hpd_notification(struct msm_dp_display_private *d
+diff --git a/drivers/counter/interrupt-cnt.c b/drivers/counter/interrupt-cnt.c
+index 229473855c5b3..bc762ba87a19b 100644
+--- a/drivers/counter/interrupt-cnt.c
++++ b/drivers/counter/interrupt-cnt.c
+@@ -3,12 +3,14 @@
+  * Copyright (c) 2021 Pengutronix, Oleksij Rempel <kernel@pengutronix.de>
+  */
  
- static void msm_dp_display_lttpr_init(struct msm_dp_display_private *dp, u8 *dpcd)
++#include <linux/cleanup.h>
+ #include <linux/counter.h>
+ #include <linux/gpio/consumer.h>
+ #include <linux/interrupt.h>
+ #include <linux/irq.h>
+ #include <linux/mod_devicetable.h>
+ #include <linux/module.h>
++#include <linux/mutex.h>
+ #include <linux/platform_device.h>
+ #include <linux/types.h>
+ 
+@@ -19,6 +21,7 @@ struct interrupt_cnt_priv {
+ 	struct gpio_desc *gpio;
+ 	int irq;
+ 	bool enabled;
++	struct mutex lock;
+ 	struct counter_signal signals;
+ 	struct counter_synapse synapses;
+ 	struct counter_count cnts;
+@@ -41,6 +44,8 @@ static int interrupt_cnt_enable_read(struct counter_device *counter,
  {
--	u8 lttpr_caps[DP_LTTPR_COMMON_CAP_SIZE];
- 	int rc;
+ 	struct interrupt_cnt_priv *priv = counter_priv(counter);
  
--	if (drm_dp_read_lttpr_common_caps(dp->aux, dpcd, lttpr_caps))
-+	if (drm_dp_read_lttpr_common_caps(dp->aux, dpcd, dp->link->lttpr_common_caps))
- 		return;
- 
--	rc = drm_dp_lttpr_init(dp->aux, drm_dp_lttpr_count(lttpr_caps));
-+	rc = drm_dp_lttpr_init(dp->aux, drm_dp_lttpr_count(dp->link->lttpr_common_caps));
- 	if (rc)
- 		DRM_ERROR("failed to set LTTPRs transparency mode, rc=%d\n", rc);
- }
-diff --git a/drivers/gpu/drm/msm/dp/dp_link.h b/drivers/gpu/drm/msm/dp/dp_link.h
-index 8db5d5698a97c..c47d75cfc720c 100644
---- a/drivers/gpu/drm/msm/dp/dp_link.h
-+++ b/drivers/gpu/drm/msm/dp/dp_link.h
-@@ -7,6 +7,7 @@
- #define _DP_LINK_H_
- 
- #include "dp_aux.h"
-+#include <drm/display/drm_dp_helper.h>
- 
- #define DS_PORT_STATUS_CHANGED 0x200
- #define DP_TEST_BIT_DEPTH_UNKNOWN 0xFFFFFFFF
-@@ -60,6 +61,8 @@ struct msm_dp_link_phy_params {
- };
- 
- struct msm_dp_link {
-+	u8 lttpr_common_caps[DP_LTTPR_COMMON_CAP_SIZE];
++	guard(mutex)(&priv->lock);
 +
- 	u32 sink_request;
- 	u32 test_response;
+ 	*enable = priv->enabled;
  
-diff --git a/drivers/gpu/drm/msm/dp/dp_panel.c b/drivers/gpu/drm/msm/dp/dp_panel.c
-index 92415bf8aa166..4e8ab75c771b1 100644
---- a/drivers/gpu/drm/msm/dp/dp_panel.c
-+++ b/drivers/gpu/drm/msm/dp/dp_panel.c
-@@ -47,7 +47,7 @@ static void msm_dp_panel_read_psr_cap(struct msm_dp_panel_private *panel)
- 
- static int msm_dp_panel_read_dpcd(struct msm_dp_panel *msm_dp_panel)
+ 	return 0;
+@@ -51,6 +56,8 @@ static int interrupt_cnt_enable_write(struct counter_device *counter,
  {
--	int rc;
-+	int rc, max_lttpr_lanes, max_lttpr_rate;
- 	struct msm_dp_panel_private *panel;
- 	struct msm_dp_link_info *link_info;
- 	u8 *dpcd, major, minor;
-@@ -75,6 +75,16 @@ static int msm_dp_panel_read_dpcd(struct msm_dp_panel *msm_dp_panel)
- 	if (link_info->rate > msm_dp_panel->max_dp_link_rate)
- 		link_info->rate = msm_dp_panel->max_dp_link_rate;
+ 	struct interrupt_cnt_priv *priv = counter_priv(counter);
  
-+	/* Limit data lanes from LTTPR capabilities, if any */
-+	max_lttpr_lanes = drm_dp_lttpr_max_lane_count(panel->link->lttpr_common_caps);
-+	if (max_lttpr_lanes && max_lttpr_lanes < link_info->num_lanes)
-+		link_info->num_lanes = max_lttpr_lanes;
++	guard(mutex)(&priv->lock);
 +
-+	/* Limit link rate from LTTPR capabilities, if any */
-+	max_lttpr_rate = drm_dp_lttpr_max_link_rate(panel->link->lttpr_common_caps);
-+	if (max_lttpr_rate && max_lttpr_rate < link_info->rate)
-+		link_info->rate = max_lttpr_rate;
+ 	if (priv->enabled == enable)
+ 		return 0;
+ 
+@@ -227,6 +234,8 @@ static int interrupt_cnt_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		return ret;
+ 
++	mutex_init(&priv->lock);
 +
- 	drm_dbg_dp(panel->drm_dev, "version: %d.%d\n", major, minor);
- 	drm_dbg_dp(panel->drm_dev, "link_rate=%d\n", link_info->rate);
- 	drm_dbg_dp(panel->drm_dev, "lane_count=%d\n", link_info->num_lanes);
+ 	ret = devm_counter_add(dev, counter);
+ 	if (ret < 0)
+ 		return dev_err_probe(dev, ret, "Failed to add counter\n");
 -- 
 2.39.5
 
