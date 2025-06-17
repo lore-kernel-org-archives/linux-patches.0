@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 524312ED14E;
-	Tue, 17 Jun 2025 15:52:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 729502ED14D;
+	Tue, 17 Jun 2025 15:53:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175578; cv=none; b=qHBIlbx/wl4m5yBTLG+kH69c0LCm5RQnUE0IUlaLR4rzW9E+Jwp21wxI8qGXMNcc5PNeFvYCRvgB47PzO50iA4NWJxZs0hL1013Jh4+aJwSPdViUo3nUWrUBINe4jL9hMoFOTfYvYMc0QCS0AT0jk9fxUYBiIwudYqstQwZmBU0=
+	t=1750175581; cv=none; b=F+rTJ0jiNYaRb9nFD8Ar+EgzWkKVE0hjv7VNX2lBAUTNivQo8RopmN7zhIqlXX2+xVZmb6c2AHIymkdxHGLmbjg52nE81MhRjkJ/htqa3tf6lND7WWTZOgEm191rx5Wx2kto5QFloCEpklkytwHDwR0hoxQC8T3K9nmPVyophdU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175578; c=relaxed/simple;
-	bh=DTu4Lz1nZbGOBiCJ5SuBh2FXA/8dHxYlEJncagWWoDQ=;
+	s=arc-20240116; t=1750175581; c=relaxed/simple;
+	bh=MCPv01huxpg2eu8cLkpx1AqtzFSOZCo2bK7QsLKSRxQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RXi2BMAJf7M5/KPAcfED/7vp9U2CoU+zOEjITY2LcV18fhDKouTHU5OKudy2ibhZY4rU9r4xK7892va/j9PtVfTTpJU56/vpvwDlI/QzsMojFgOdb/ZMJptBcGZn/YcqEqAllKhBH35qixMzC1uJSS9JF2TNYGheS4dHt7bk/3Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l+xjr1Vz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ck78zHfSApIqciXk/gMbOmicXh4zcs0wCLpG1cDdO2A8izAM4yUrAs2tSBqNqjBvmV8Z5e0LLyhThXLlGPXh78uG9IjPrvcUbHtWEVH+aHf0xcVzvilJA/pjQvTpq42plbh+kS/yFn0E59QUbnUPBa+5HT8gDXYJIysCGbD3qU0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YZw9xiG1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l+xjr1Vz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5DACC4CEE3;
-	Tue, 17 Jun 2025 15:52:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YZw9xiG1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0E86C4CEE3;
+	Tue, 17 Jun 2025 15:53:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175578;
-	bh=DTu4Lz1nZbGOBiCJ5SuBh2FXA/8dHxYlEJncagWWoDQ=;
+	s=korg; t=1750175581;
+	bh=MCPv01huxpg2eu8cLkpx1AqtzFSOZCo2bK7QsLKSRxQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l+xjr1Vzw6SWzMCU9i6fwNLmyXq9vp6uqXJ0V2aIxP9PR6ikl+kxSF6ifS7lYVk+q
-	 iXW1gJtm5rYHsu7jPW8pTTv7q9lQQczQxxcz6oLy5Yc9rkxYrRt8k+eNn6OftuCE+W
-	 fuFVCAQtzWDYCgT1quASxaOlBgYyfrorOaWhdEu4=
+	b=YZw9xiG1pHrKBl8/Lvh/YIeVSRda1ZZ7ACciMTrNaKWyqNGlgzoQ9UGhNwlyKsgnm
+	 XWI84FofF9NxCSlzV5Z6ttrNi0dRgxpX2dXAnZ+do9P0tdcLg3I4EAN0BvA+HpZAqB
+	 NrGqB88ljzxNbib+SCfICWrGFyCpwTNOFUH/P3Jk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thuan Nguyen <thuan.nguyen-hong@banvien.com.vn>,
-	Duy Nguyen <duy.nguyen.rh@renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
+	Will Deacon <will@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 190/356] arm64: dts: renesas: white-hawk-ard-audio: Fix TPU0 groups
-Date: Tue, 17 Jun 2025 17:25:05 +0200
-Message-ID: <20250617152345.858113854@linuxfoundation.org>
+Subject: [PATCH 6.15 103/780] arm64/fpsimd: Avoid clobbering kernel FPSIMD state with SMSTOP
+Date: Tue, 17 Jun 2025 17:16:51 +0200
+Message-ID: <20250617152455.703292593@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-References: <20250617152338.212798615@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,44 +50,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thuan Nguyen <thuan.nguyen-hong@banvien.com.vn>
+From: Mark Rutland <mark.rutland@arm.com>
 
-[ Upstream commit 652eea251dd852f02cef6223f367220acb3d1867 ]
+[ Upstream commit 01098d893fa8a6edb2b56e178b798e3e6b674f02 ]
 
-White Hawk ARD audio uses a clock generated by the TPU, but commit
-3d144ef10a44 ("pinctrl: renesas: r8a779g0: Fix TPU suffixes") renamed
-pin group "tpu_to0_a" to "tpu_to0_b".  Update DTS accordingly otherwise
-the sound driver does not receive a clock signal.
+On system with SME, a thread's kernel FPSIMD state may be erroneously
+clobbered during a context switch immediately after that state is
+restored. Systems without SME are unaffected.
 
-Fixes: 3d144ef10a448f89 ("pinctrl: renesas: r8a779g0: Fix TPU suffixes")
-Signed-off-by: Thuan Nguyen <thuan.nguyen-hong@banvien.com.vn>
-Signed-off-by: Duy Nguyen <duy.nguyen.rh@renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Acked-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
-Link: https://lore.kernel.org/TYCPR01MB8740608B675365215ADB0374B49CA@TYCPR01MB8740.jpnprd01.prod.outlook.com
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+If the CPU happens to be in streaming SVE mode before a context switch
+to a thread with kernel FPSIMD state, fpsimd_thread_switch() will
+restore the kernel FPSIMD state using fpsimd_load_kernel_state() while
+the CPU is still in streaming SVE mode. When fpsimd_thread_switch()
+subsequently calls fpsimd_flush_cpu_state(), this will execute an
+SMSTOP, causing an exit from streaming SVE mode. The exit from
+streaming SVE mode will cause the hardware to reset a number of
+FPSIMD/SVE/SME registers, clobbering the FPSIMD state.
+
+Fix this by calling fpsimd_flush_cpu_state() before restoring the kernel
+FPSIMD state.
+
+Fixes: e92bee9f861b ("arm64/fpsimd: Avoid erroneous elide of user state reload")
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Cc: Ard Biesheuvel <ardb@kernel.org>
+Cc: Mark Brown <broonie@kernel.org>
+Cc: Will Deacon <will@kernel.org>
+Reviewed-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/r/20250409164010.3480271-8-mark.rutland@arm.com
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../boot/dts/renesas/r8a779g0-white-hawk-ard-audio-da7212.dtso  | 2 +-
+ arch/arm64/kernel/fpsimd.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/renesas/r8a779g0-white-hawk-ard-audio-da7212.dtso b/arch/arm64/boot/dts/renesas/r8a779g0-white-hawk-ard-audio-da7212.dtso
-index e6f53377ecd90..99f62574bc3c2 100644
---- a/arch/arm64/boot/dts/renesas/r8a779g0-white-hawk-ard-audio-da7212.dtso
-+++ b/arch/arm64/boot/dts/renesas/r8a779g0-white-hawk-ard-audio-da7212.dtso
-@@ -108,7 +108,7 @@
- 	};
+diff --git a/arch/arm64/kernel/fpsimd.c b/arch/arm64/kernel/fpsimd.c
+index 9466b3c5021ac..72ab9649c705b 100644
+--- a/arch/arm64/kernel/fpsimd.c
++++ b/arch/arm64/kernel/fpsimd.c
+@@ -1575,8 +1575,8 @@ void fpsimd_thread_switch(struct task_struct *next)
+ 		fpsimd_save_user_state();
  
- 	tpu0_pins: tpu0 {
--		groups = "tpu_to0_a";
-+		groups = "tpu_to0_b";
- 		function = "tpu";
- 	};
- };
+ 	if (test_tsk_thread_flag(next, TIF_KERNEL_FPSTATE)) {
+-		fpsimd_load_kernel_state(next);
+ 		fpsimd_flush_cpu_state();
++		fpsimd_load_kernel_state(next);
+ 	} else {
+ 		/*
+ 		 * Fix up TIF_FOREIGN_FPSTATE to correctly describe next's
 -- 
 2.39.5
 
