@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCB271E8332;
-	Tue, 17 Jun 2025 15:43:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 244332ED86F;
+	Tue, 17 Jun 2025 15:43:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175032; cv=none; b=RcaUq2T5D9AjHcUM1iA5czRubLTM2NRBhaEmM3T4kRY67Ko6kGYes9C78oQ2T1hSXoGZRvlFi1o0LjE2z0a6z9QEv/Flyizhm1oGf8HPFZ4sGZ4TF51cEmkN49Jn/cJRakB+3O7Ympd1rz2+C/k+RzKDMmX0lVYK1BuAAQ/kHs0=
+	t=1750175036; cv=none; b=Z5mT7KuBlgOqmAeFau9iDvIuzcos/tcivy/XjdxGuDHYfZUsb3kb08N0EZw5I4ltbXFMoYgC01rFJ2l0vmbKPJLIB6mknZ7dgJ+P/gF2Mqj2pehnfA7RL8rKXMEflLiWrC2TSB5I3BC0d8wrUryHnBnTq1D9nGC056MtPeBF4fA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175032; c=relaxed/simple;
-	bh=pfkShT3ThsytSz7s0SmFqJw2jTpq63wtSpxLz+sP+Ew=;
+	s=arc-20240116; t=1750175036; c=relaxed/simple;
+	bh=6eiU5zB60D2Sq6XZqCIwbUN3pSy/aNuG63+MQcNF56o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GDzSuhXHITcHNvdj0Z+ZJv7sP1ETl8hXIAD0jMv2Iv/81iIuc+w76WNn4iv0i3UmPc9rudgjdJxgBQPGryB/2tNU0Uf5/UlfclH88HmlF0AOpqgpMDTp8KWZoHFSBnHa2WDjS0fXlxf+288VfSCRXfh5981xnRLb2fVhwagjeOU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=po44tDIL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bzyWtwwSFsfseMz8OSOwPKkVWfQA31Ijgyzy3ucQY0NXXFEBD5ak6KC2KQMzBKXx8lk7gQ4IBknKiHm7Fd7bOUZLSLQzqj2LHocUac3rrcIYoeF8gTz4XDxiviKDs3QLJmx2Foz2puUonUjp+KNiEd4PfLX0zpV3YY859uEC9hQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UK95iimu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="po44tDIL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D824C4CEF0;
-	Tue, 17 Jun 2025 15:43:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UK95iimu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 819DCC4CEF0;
+	Tue, 17 Jun 2025 15:43:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175032;
-	bh=pfkShT3ThsytSz7s0SmFqJw2jTpq63wtSpxLz+sP+Ew=;
+	s=korg; t=1750175036;
+	bh=6eiU5zB60D2Sq6XZqCIwbUN3pSy/aNuG63+MQcNF56o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=po44tDILEjgRYK6wjQEXpzBkq8hEBPAu1WcEqVJR2h4eW98MoGQHW7DRZcvhfxS/0
-	 U12P+GvXDVz/lsK7ZcqNmOrc8d5LRGqduwyUBM4ipo1+GdyyN9zjutEj+hSDyumrXi
-	 NcWK/MPsSWAwbM0kY7RRWO4JZwYVAC+K7Nva3PHU=
+	b=UK95iimuuPGFoxjxblSaICYHAreMfTcpaQMdn4jqbw6wLcqg4TuyN9o6wrTNPYAtO
+	 IlI9aelCTxWFkUVyeR46fYuGX7fEOaLXk7KXMpfvHJHj/YAIYMJRSQDWO6W9H8X7oz
+	 8RomzbtRp3PbUrsAKEDZu2+XktcBq2TZWUyc76rc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Qu Wenruo <wqu@suse.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 137/356] netfilter: nf_tables: nft_fib_ipv6: fix VRF ipv4/ipv6 result discrepancy
-Date: Tue, 17 Jun 2025 17:24:12 +0200
-Message-ID: <20250617152343.746344644@linuxfoundation.org>
+Subject: [PATCH 6.15 043/780] btrfs: fix wrong start offset for delalloc space release during mmap write
+Date: Tue, 17 Jun 2025 17:15:51 +0200
+Message-ID: <20250617152453.250268273@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-References: <20250617152338.212798615@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,81 +48,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit 8b53f46eb430fe5b42d485873b85331d2de2c469 ]
+[ Upstream commit 17a85f520469a1838379de8ad24f63e778f7c277 ]
 
-With a VRF, ipv4 and ipv6 FIB expression behave differently.
+If we're doing a mmap write against a folio that has i_size somewhere in
+the middle and we have multiple sectors in the folio, we may have to
+release excess space previously reserved, for the range going from the
+rounded up (to sector size) i_size to the folio's end offset. We are
+calculating the right amount to release and passing it to
+btrfs_delalloc_release_space(), but we are passing the wrong start offset
+of that range - we're passing the folio's start offset instead of the
+end offset, plus 1, of the range for which we keep the reservation. This
+may result in releasing more space then we should and eventually trigger
+an underflow of the data space_info's bytes_may_use counter.
 
-   fib daddr . iif oif
+So fix this by passing the start offset as 'end + 1' instead of
+'page_start' to btrfs_delalloc_release_space().
 
-Will return the input interface name for ipv4, but the real device
-for ipv6.  Example:
-
-If VRF device name is tvrf and real (incoming) device is veth0.
-First round is ok, both ipv4 and ipv6 will yield 'veth0'.
-
-But in the second round (incoming device will be set to "tvrf"), ipv4
-will yield "tvrf" whereas ipv6 returns "veth0" for the second round too.
-
-This makes ipv6 behave like ipv4.
-
-A followup patch will add a test case for this, without this change
-it will fail with:
-  get element inet t fibif6iif { tvrf . dead:1::99 . tvrf }
-  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  FAIL: did not find tvrf . dead:1::99 . tvrf in fibif6iif
-
-Alternatively we could either not do anything at all or change
-ipv4 to also return the lower/real device, however, nft (userspace)
-doc says "iif: if fib lookup provides a route then check its output
-interface is identical to the packets input interface." which is what
-the nft fib ipv4 behaviour is.
-
-Fixes: f6d0cbcf09c5 ("netfilter: nf_tables: add fib expression")
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: d0b7da88f640 ("Btrfs: btrfs_page_mkwrite: Reserve space in sectorsized units")
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/netfilter/nft_fib_ipv6.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ fs/btrfs/file.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ipv6/netfilter/nft_fib_ipv6.c b/net/ipv6/netfilter/nft_fib_ipv6.c
-index c9f1634b3838a..a89ce0fbfe4b1 100644
---- a/net/ipv6/netfilter/nft_fib_ipv6.c
-+++ b/net/ipv6/netfilter/nft_fib_ipv6.c
-@@ -158,6 +158,7 @@ void nft_fib6_eval(const struct nft_expr *expr, struct nft_regs *regs,
- {
- 	const struct nft_fib *priv = nft_expr_priv(expr);
- 	int noff = skb_network_offset(pkt->skb);
-+	const struct net_device *found = NULL;
- 	const struct net_device *oif = NULL;
- 	u32 *dest = &regs->data[priv->dreg];
- 	struct ipv6hdr *iph, _iph;
-@@ -202,11 +203,15 @@ void nft_fib6_eval(const struct nft_expr *expr, struct nft_regs *regs,
- 	if (rt->rt6i_flags & (RTF_REJECT | RTF_ANYCAST | RTF_LOCAL))
- 		goto put_rt_err;
- 
--	if (oif && oif != rt->rt6i_idev->dev &&
--	    l3mdev_master_ifindex_rcu(rt->rt6i_idev->dev) != oif->ifindex)
--		goto put_rt_err;
-+	if (!oif) {
-+		found = rt->rt6i_idev->dev;
-+	} else {
-+		if (oif == rt->rt6i_idev->dev ||
-+		    l3mdev_master_ifindex_rcu(rt->rt6i_idev->dev) == oif->ifindex)
-+			found = oif;
-+	}
- 
--	nft_fib_store_result(dest, priv, rt->rt6i_idev->dev);
-+	nft_fib_store_result(dest, priv, found);
-  put_rt_err:
- 	ip6_rt_put(rt);
- }
+diff --git a/fs/btrfs/file.c b/fs/btrfs/file.c
+index 71b8a825c4479..22455fbcb29eb 100644
+--- a/fs/btrfs/file.c
++++ b/fs/btrfs/file.c
+@@ -1862,7 +1862,7 @@ static vm_fault_t btrfs_page_mkwrite(struct vm_fault *vmf)
+ 		if (reserved_space < fsize) {
+ 			end = page_start + reserved_space - 1;
+ 			btrfs_delalloc_release_space(BTRFS_I(inode),
+-					data_reserved, page_start,
++					data_reserved, end + 1,
+ 					fsize - reserved_space, true);
+ 		}
+ 	}
 -- 
 2.39.5
 
