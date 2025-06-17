@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BCDD202C38;
-	Tue, 17 Jun 2025 16:11:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CA4028C024;
+	Tue, 17 Jun 2025 16:11:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750176686; cv=none; b=GyBxW+0DgbYa9h2XGbOpxWxW1IKnv1HObLHzY/P7nzy98UgMe6lZV9RkVmeFbxnA+b3kVEWK/jX5X7lXMGq8DqKw22ugv+HIzuEov9uTBt6nINFg0OFvR43hTQ6gNF/Ol2+1Xdb+0V9ZZPJwHOJo5mHUtPvprtv6rzHRuiWkhRM=
+	t=1750176689; cv=none; b=bExUgIc3AlfrhGKW44nZHnC2t2ceLMCvQhTSM8vEmHwDZiTzqfNQGLxUh1OFXCFA8Y/dSsOnAS+9kYXNbkQ0XN1XPWxDtEhFmEPHUolgiGz+SlRNqqf6bXR+P3EogI8UdfWMxgGrwxJBFe+9ShaybyfjtjxFwU9rar1mzGEyLdU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750176686; c=relaxed/simple;
-	bh=3ssUYwy3DdfehEwj2RTUYmC9VVdy14AHKcuG74/38dk=;
+	s=arc-20240116; t=1750176689; c=relaxed/simple;
+	bh=UJambC8+oPdfGi4k4l94NwTtoYs2n7loHeRc0ZjKN3k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QWw1An70h7F/ydJXjMGhwRuGDI3diovx2fQ3+0nt3AMzo3UvA+yzbpbCZ3IeTsN0ZV2SSjEGSgFqPZZltCA5nL3WOQhPfYyhnEmwk5Gjzt9iyogv25GJ9DYbCfyG+8wQ3oP6zADmAchIM9h6ZFwhszTGGjQkOFD9ZUnkmlr67ik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PVq+M9sQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lzFj1nn5LvThoq37T8lfYVTkJ6SuwMCSqnbfzJZYPtSBQQ6w306LVaQt4+xACJtRMF/P8NOrxTEehSzgHw01owXu8eqHdNE0WXxyZKZs/oXUnOBFpxd5gNx+ZQ51ZdHCWDn4r6m1TI2QFSCaycxOL63J3e2i9XQ5C03dqVN4eEw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fc+dS3ep; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PVq+M9sQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CD0AC4CEE3;
-	Tue, 17 Jun 2025 16:11:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fc+dS3ep"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D563C4CEE3;
+	Tue, 17 Jun 2025 16:11:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750176686;
-	bh=3ssUYwy3DdfehEwj2RTUYmC9VVdy14AHKcuG74/38dk=;
+	s=korg; t=1750176689;
+	bh=UJambC8+oPdfGi4k4l94NwTtoYs2n7loHeRc0ZjKN3k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PVq+M9sQbNmRZEtOcfNMSWalIyF4EEDqFcv/cUJXqBl7akwcCm80mT57KpVpDPaHf
-	 qHR5EcpS97eL6Jt45iiGuQjevg06g0yiPTtMfRSOfTBxN8xS+aW5CloY3JMOJ354j+
-	 lLojHimuIM01gHlgIQPp0y4wN2JG12x9Z4LipSTs=
+	b=Fc+dS3epkqbFTjmKMFxcpXtDtgVYunh+m7VUZohi6RUqmGh2Qr5kt3flT339jmJIX
+	 vhHP3YN953Wg6HyM2Co/B36LHZ8VscX2PKtdSUaTudu5Nw9pp2gl77oIto+y7ZGSVo
+	 nBuQjNBWwQf3MLmUricHYq5N7ZRKXtETNCIuUcL0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maharaja Kennadyrajan <maharaja.kennadyrajan@oss.qualcomm.com>,
-	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 213/780] wifi: ath12k: Prevent sending WMI commands to firmware during firmware crash
-Date: Tue, 17 Jun 2025 17:18:41 +0200
-Message-ID: <20250617152500.135577544@linuxfoundation.org>
+Subject: [PATCH 6.12 254/512] nilfs2: do not propagate ENOENT error from nilfs_btree_propagate()
+Date: Tue, 17 Jun 2025 17:23:40 +0200
+Message-ID: <20250617152429.890243013@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,104 +48,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maharaja Kennadyrajan <maharaja.kennadyrajan@oss.qualcomm.com>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-[ Upstream commit e9e094a9734ea3bd4d4d117c915ccf129ac61ba1 ]
+[ Upstream commit 8e39fbb1edbb4ec9d7c1124f403877fc167fcecd ]
 
-Currently, we encounter the following kernel call trace when a firmware
-crash occurs. This happens because the host sends WMI commands to the
-firmware while it is in recovery, causing the commands to fail and
-resulting in the kernel call trace.
+In preparation for writing logs, in nilfs_btree_propagate(), which makes
+parent and ancestor node blocks dirty starting from a modified data block
+or b-tree node block, if the starting block does not belong to the b-tree,
+i.e.  is isolated, nilfs_btree_do_lookup() called within the function
+fails with -ENOENT.
 
-Set the ATH12K_FLAG_CRASH_FLUSH and ATH12K_FLAG_RECOVERY flags when the
-host driver receives the firmware crash notification from MHI. This
-prevents sending WMI commands to the firmware during recovery.
+In this case, even though -ENOENT is an internal code, it is propagated to
+the log writer via nilfs_bmap_propagate() and may be erroneously returned
+to system calls such as fsync().
 
-Call Trace:
- <TASK>
- dump_stack_lvl+0x75/0xc0
- register_lock_class+0x6be/0x7a0
- ? __lock_acquire+0x644/0x19a0
- __lock_acquire+0x95/0x19a0
- lock_acquire+0x265/0x310
- ? ath12k_ce_send+0xa2/0x210 [ath12k]
- ? find_held_lock+0x34/0xa0
- ? ath12k_ce_send+0x56/0x210 [ath12k]
- _raw_spin_lock_bh+0x33/0x70
- ? ath12k_ce_send+0xa2/0x210 [ath12k]
- ath12k_ce_send+0xa2/0x210 [ath12k]
- ath12k_htc_send+0x178/0x390 [ath12k]
- ath12k_wmi_cmd_send_nowait+0x76/0xa0 [ath12k]
- ath12k_wmi_cmd_send+0x62/0x190 [ath12k]
- ath12k_wmi_pdev_bss_chan_info_request+0x62/0xc0 [ath1
- ath12k_mac_op_get_survey+0x2be/0x310 [ath12k]
- ieee80211_dump_survey+0x99/0x240 [mac80211]
- nl80211_dump_survey+0xe7/0x470 [cfg80211]
- ? kmalloc_reserve+0x59/0xf0
- genl_dumpit+0x24/0x70
- netlink_dump+0x177/0x360
- __netlink_dump_start+0x206/0x280
- genl_family_rcv_msg_dumpit.isra.22+0x8a/0xe0
- ? genl_family_rcv_msg_attrs_parse.isra.23+0xe0/0xe0
- ? genl_op_lock.part.12+0x10/0x10
- ? genl_dumpit+0x70/0x70
- genl_rcv_msg+0x1d0/0x290
- ? nl80211_del_station+0x330/0x330 [cfg80211]
- ? genl_get_cmd_both+0x50/0x50
- netlink_rcv_skb+0x4f/0x100
- genl_rcv+0x1f/0x30
- netlink_unicast+0x1b6/0x260
- netlink_sendmsg+0x31a/0x450
- __sock_sendmsg+0xa8/0xb0
- ____sys_sendmsg+0x1e4/0x260
- ___sys_sendmsg+0x89/0xe0
- ? local_clock_noinstr+0xb/0xc0
- ? rcu_is_watching+0xd/0x40
- ? kfree+0x1de/0x370
- ? __sys_sendmsg+0x7a/0xc0
+Fix this issue by changing the error code to -EINVAL in this case, and
+having the bmap layer detect metadata corruption and convert the error
+code appropriately.
 
-Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.4.1-00199-QCAHKSWPL_SILICONZ-1
-
-Fixes: a9b46dd2e483 ("wifi: ath12k: Add firmware coredump collection support")
-Signed-off-by: Maharaja Kennadyrajan <maharaja.kennadyrajan@oss.qualcomm.com>
-Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250416020414.2161545-1-maharaja.kennadyrajan@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Link: https://lkml.kernel.org/r/20250428173808.6452-3-konishi.ryusuke@gmail.com
+Fixes: 1f5abe7e7dbc ("nilfs2: replace BUG_ON and BUG calls triggerable from ioctl")
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Cc: Wentao Liang <vulab@iscas.ac.cn>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/mhi.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ fs/nilfs2/btree.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/mhi.c b/drivers/net/wireless/ath/ath12k/mhi.c
-index 2f6d14382ed70..4d40c4ec4b811 100644
---- a/drivers/net/wireless/ath/ath12k/mhi.c
-+++ b/drivers/net/wireless/ath/ath12k/mhi.c
-@@ -1,7 +1,7 @@
- // SPDX-License-Identifier: BSD-3-Clause-Clear
- /*
-  * Copyright (c) 2020-2021 The Linux Foundation. All rights reserved.
-- * Copyright (c) 2021-2024 Qualcomm Innovation Center, Inc. All rights reserved.
-+ * Copyright (c) 2021-2025 Qualcomm Innovation Center, Inc. All rights reserved.
-  */
+diff --git a/fs/nilfs2/btree.c b/fs/nilfs2/btree.c
+index ef5061bb56da1..9c51a4ac2627f 100644
+--- a/fs/nilfs2/btree.c
++++ b/fs/nilfs2/btree.c
+@@ -2103,11 +2103,13 @@ static int nilfs_btree_propagate(struct nilfs_bmap *btree,
  
- #include <linux/msi.h>
-@@ -285,8 +285,11 @@ static void ath12k_mhi_op_status_cb(struct mhi_controller *mhi_cntrl,
- 			break;
- 		}
- 
--		if (!(test_bit(ATH12K_FLAG_UNREGISTERING, &ab->dev_flags)))
-+		if (!(test_bit(ATH12K_FLAG_UNREGISTERING, &ab->dev_flags))) {
-+			set_bit(ATH12K_FLAG_CRASH_FLUSH, &ab->dev_flags);
-+			set_bit(ATH12K_FLAG_RECOVERY, &ab->dev_flags);
- 			queue_work(ab->workqueue_aux, &ab->reset_work);
+ 	ret = nilfs_btree_do_lookup(btree, path, key, NULL, level + 1, 0);
+ 	if (ret < 0) {
+-		if (unlikely(ret == -ENOENT))
++		if (unlikely(ret == -ENOENT)) {
+ 			nilfs_crit(btree->b_inode->i_sb,
+ 				   "writing node/leaf block does not appear in b-tree (ino=%lu) at key=%llu, level=%d",
+ 				   btree->b_inode->i_ino,
+ 				   (unsigned long long)key, level);
++			ret = -EINVAL;
 +		}
- 		break;
- 	default:
- 		break;
+ 		goto out;
+ 	}
+ 
 -- 
 2.39.5
 
