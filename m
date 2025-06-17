@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F601285055;
-	Tue, 17 Jun 2025 16:33:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 645412F4328;
+	Tue, 17 Jun 2025 16:33:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750178030; cv=none; b=Kys8AuxSjTXr3a1qjNHqXDxPfdJ2aUHt/vcyj0t1Cb3OF0CPrIprXXAIxrhzIjBvkdB+xlSJXk12USj+XPqzSDH2eA7bSjiXZ00pRlY+zRQju92PdCqhoNTX7pMgD6YMfTPBPWP5ytmDVTqQlYbj1L2ITY2QG4+LWuZ5QdOKEuQ=
+	t=1750178033; cv=none; b=O+erXwD6Eja7dAQvNdl3aG3/SuqaFKWROPn87va3hjRm1CY6gi/73pfJPTgF9JcoFuOmT2bgsoB/4KbvK3KRlBAVaFm0Q1cwVv3xiHe4P3GV1RjU217CFSA7KcgOv3r016e736JAmCzsK/jRuhyMQQWNMNMmRJfNo0EYRq/0z08=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750178030; c=relaxed/simple;
-	bh=uO+fGwNm24vXdkCKobDWW5elWjgI9A7HdZczaP6rvbA=;
+	s=arc-20240116; t=1750178033; c=relaxed/simple;
+	bh=JA0vn0W7D/XKCXXV4DPPR9FEBbpLNsGgCDSvlLVgt/w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=c/kUnffaDLOwW9YPrs/oYFENyLeVNE+pU8QqbNEFCoptuMI22jGoZeOkc9gaoyNf8EX3zj7kJDBT+Zyx3SBec9utmZ6wUergZDOfV+ygB56/n1Ifs+cZLrqq9cRNd2+lb73JWtMpQ68r/4uMfS4Z7OfHZuhyK/zQsd/3MUwbFh0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HoWZnUr2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=d8mJ18a52losmwBdYhA7vMPBeTHXuZKF81tmESYv6KDdG4yWuPhIY/0LcKEZLuTAeDCztPoclpXanfAU9o7qc9KQDXmvSp/pOP/RKT/4Mh/O+NXjdLFmJjDXSfpDy8tsygwiHjitbqPI1Zgw62+sqqK9qco3xDE6b1thyuApITQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lyJFw1u0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HoWZnUr2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52A9FC4CEE3;
-	Tue, 17 Jun 2025 16:33:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lyJFw1u0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C86DBC4CEE3;
+	Tue, 17 Jun 2025 16:33:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750178030;
-	bh=uO+fGwNm24vXdkCKobDWW5elWjgI9A7HdZczaP6rvbA=;
+	s=korg; t=1750178033;
+	bh=JA0vn0W7D/XKCXXV4DPPR9FEBbpLNsGgCDSvlLVgt/w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HoWZnUr2jQheG9RDQcIu7IvY9Rk3pD6ZOvBBQB9a5gIFfz0g55R5R9ijeUTKjuMkq
-	 RXqZ9hU3RCdezDOmB/R3h89QS33tOEQTVjNqgeaaPlOgRXweBt+zUJOOOCAPCEvteP
-	 t+EVHJrN5c/fzHTPh/fG5gkEE13/8E99GrNLP01Q=
+	b=lyJFw1u0DYqLHv5ms9KGmc/IxewvGETzQuAusIuRG3IWLe9NYhsEaqLNwK1wgdW+W
+	 0KGuCRb+3iaI03B8e6JNgkKZy8YMCyuWoF3xA8bYpjj8LGmhoUZJuEGv0IGCRhlNml
+	 xnWf4jX4c9rNjdTjxytC177wHlHGHJ/cEFb3Mito=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Lechner <dlechner@baylibre.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
+	Rodrigo Gobbi <rodrigo.gobbi.7@gmail.com>,
+	kernel test robot <lkp@intel.com>,
+	Dan Carpenter <error27@gmail.com>,
+	Baochen Qiang <quic_bqiang@quicinc.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 416/512] dt-bindings: pwm: adi,axi-pwmgen: Fix clocks
-Date: Tue, 17 Jun 2025 17:26:22 +0200
-Message-ID: <20250617152436.435526956@linuxfoundation.org>
+Subject: [PATCH 6.12 434/512] wifi: ath11k: validate ath11k_crypto_mode on top of ath11k_core_qmi_firmware_ready
+Date: Tue, 17 Jun 2025 17:26:40 +0200
+Message-ID: <20250617152437.155431589@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
 References: <20250617152419.512865572@linuxfoundation.org>
@@ -46,77 +48,83 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Lechner <dlechner@baylibre.com>
+From: Rodrigo Gobbi <rodrigo.gobbi.7@gmail.com>
 
-[ Upstream commit e683131e64f71e957ca77743cb3d313646157329 ]
+[ Upstream commit b0d226a60856a1b765bb9a3848c7b2322fd08c47 ]
 
-Fix a shortcoming in the bindings that doesn't allow for a separate
-external clock.
+if ath11k_crypto_mode is invalid (not ATH11K_CRYPT_MODE_SW/ATH11K_CRYPT_MODE_HW),
+ath11k_core_qmi_firmware_ready() will not undo some actions that was previously
+started/configured. Do the validation as soon as possible in order to avoid
+undoing actions in that case and also to fix the following smatch warning:
 
-The AXI PWMGEN IP block has a compile option ASYNC_CLK_EN that allows
-the use of an external clock for the PWM output separate from the AXI
-clock that runs the peripheral.
+drivers/net/wireless/ath/ath11k/core.c:2166 ath11k_core_qmi_firmware_ready()
+warn: missing unwind goto?
 
-This was missed in the original bindings and so users were writing dts
-files where the one and only clock specified would be the external
-clock, if there was one, incorrectly missing the separate AXI clock.
-
-The correct bindings are that the AXI clock is always required and the
-external clock is optional (must be given only when HDL compile option
-ASYNC_CLK_EN=1).
-
-Fixes: 1edf2c2a2841 ("dt-bindings: pwm: Add AXI PWM generator")
-Cc: stable@vger.kernel.org
-Signed-off-by: David Lechner <dlechner@baylibre.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20250529-pwm-axi-pwmgen-add-external-clock-v3-2-5d8809a7da91@baylibre.com
-Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
+Signed-off-by: Rodrigo Gobbi <rodrigo.gobbi.7@gmail.com>
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <error27@gmail.com>
+Closes: https://lore.kernel.org/r/202304151955.oqAetVFd-lkp@intel.com/
+Fixes: aa2092a9bab3 ("ath11k: add raw mode and software crypto support")
+Reviewed-by: Baochen Qiang <quic_bqiang@quicinc.com>
+Link: https://patch.msgid.link/20250522200519.16858-1-rodrigo.gobbi.7@gmail.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../devicetree/bindings/pwm/adi,axi-pwmgen.yaml     | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/net/wireless/ath/ath11k/core.c | 28 +++++++++++++-------------
+ 1 file changed, 14 insertions(+), 14 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/pwm/adi,axi-pwmgen.yaml b/Documentation/devicetree/bindings/pwm/adi,axi-pwmgen.yaml
-index 45e112d0efb46..5575c58357d6e 100644
---- a/Documentation/devicetree/bindings/pwm/adi,axi-pwmgen.yaml
-+++ b/Documentation/devicetree/bindings/pwm/adi,axi-pwmgen.yaml
-@@ -30,11 +30,19 @@ properties:
-     const: 3
+diff --git a/drivers/net/wireless/ath/ath11k/core.c b/drivers/net/wireless/ath/ath11k/core.c
+index d08f40f77031a..8002fb32a2cc1 100644
+--- a/drivers/net/wireless/ath/ath11k/core.c
++++ b/drivers/net/wireless/ath/ath11k/core.c
+@@ -1812,6 +1812,20 @@ int ath11k_core_qmi_firmware_ready(struct ath11k_base *ab)
+ {
+ 	int ret;
  
-   clocks:
--    maxItems: 1
-+    minItems: 1
-+    maxItems: 2
++	switch (ath11k_crypto_mode) {
++	case ATH11K_CRYPT_MODE_SW:
++		set_bit(ATH11K_FLAG_HW_CRYPTO_DISABLED, &ab->dev_flags);
++		set_bit(ATH11K_FLAG_RAW_MODE, &ab->dev_flags);
++		break;
++	case ATH11K_CRYPT_MODE_HW:
++		clear_bit(ATH11K_FLAG_HW_CRYPTO_DISABLED, &ab->dev_flags);
++		clear_bit(ATH11K_FLAG_RAW_MODE, &ab->dev_flags);
++		break;
++	default:
++		ath11k_info(ab, "invalid crypto_mode: %d\n", ath11k_crypto_mode);
++		return -EINVAL;
++	}
 +
-+  clock-names:
-+    minItems: 1
-+    items:
-+      - const: axi
-+      - const: ext
+ 	ret = ath11k_core_start_firmware(ab, ab->fw_mode);
+ 	if (ret) {
+ 		ath11k_err(ab, "failed to start firmware: %d\n", ret);
+@@ -1830,20 +1844,6 @@ int ath11k_core_qmi_firmware_ready(struct ath11k_base *ab)
+ 		goto err_firmware_stop;
+ 	}
  
- required:
-   - reg
-   - clocks
-+  - clock-names
+-	switch (ath11k_crypto_mode) {
+-	case ATH11K_CRYPT_MODE_SW:
+-		set_bit(ATH11K_FLAG_HW_CRYPTO_DISABLED, &ab->dev_flags);
+-		set_bit(ATH11K_FLAG_RAW_MODE, &ab->dev_flags);
+-		break;
+-	case ATH11K_CRYPT_MODE_HW:
+-		clear_bit(ATH11K_FLAG_HW_CRYPTO_DISABLED, &ab->dev_flags);
+-		clear_bit(ATH11K_FLAG_RAW_MODE, &ab->dev_flags);
+-		break;
+-	default:
+-		ath11k_info(ab, "invalid crypto_mode: %d\n", ath11k_crypto_mode);
+-		return -EINVAL;
+-	}
+-
+ 	if (ath11k_frame_mode == ATH11K_HW_TXRX_RAW)
+ 		set_bit(ATH11K_FLAG_RAW_MODE, &ab->dev_flags);
  
- unevaluatedProperties: false
- 
-@@ -43,6 +51,7 @@ examples:
-     pwm@44b00000 {
-         compatible = "adi,axi-pwmgen-2.00.a";
-         reg = <0x44b00000 0x1000>;
--        clocks = <&spi_clk>;
-+        clocks = <&fpga_clk>, <&spi_clk>;
-+        clock-names = "axi", "ext";
-         #pwm-cells = <3>;
-     };
 -- 
 2.39.5
 
