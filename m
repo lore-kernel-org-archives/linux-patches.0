@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 595C221018A;
-	Tue, 17 Jun 2025 16:01:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AFE12EA143;
+	Tue, 17 Jun 2025 16:01:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750176078; cv=none; b=JJgfJPmx22S8a5YdIOFkrz1oyqn5uhZgIDOCVKh1PwT2pIiQEojw+qDqt14OS83gxmit5i5qGSQh8qBaWOCk2F/Qlt1krG3ngpx/dh0kyEHbF6amPUs39IlsW6ypuHDSMerNrZt9Rp/xqQO3qj95XMKFSLyHh7ARFY916u2asWk=
+	t=1750176081; cv=none; b=UeV6Qb/XI3VxJtp/LuAMD3h0s395Du0qP5aT48qrlDtDNYTOAzetvGLbszg8Vk2G/djD1MdJS4ICB6Fg4EdAj0UfvbK62fHWQ0FhHJdovXWNeOG2cSp9pqK6EX5RRvpN+HqI74KOT49W6iM5gb0UwbzLQFMHqlvQ/wxfQnt4UNE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750176078; c=relaxed/simple;
-	bh=JjBpgtKwzGqEx8R7mHAiGT1hJ+yzwu9NlGZ9eZygxt0=;
+	s=arc-20240116; t=1750176081; c=relaxed/simple;
+	bh=GagNELsX2mRGLdz8vUneM2e6Xv66mt3u6Tgncil0gaU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bs4AOFeCjaU+aObISBMHAsNoh2QFVgdcYC6tzfRXgmcyogHZhnwE4zopyosqRV2jQ7z0g+2fkZnbnDTdmA4Vf3OIAZbC5R+Mi3G3g4DKX3M+5UuW4ExVLZDEAicwgo058gh6sQRkWbksgrX/sfGCQ9Sqy0WqJuNgAc8An4QKK1Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G4kKaRl0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oYrfHXb5BOICVNEHyMmkRDBuyiGX/eF/Id3PtTcQihDl0Y1cASP0V9FCFB0Y/d9QNDvyJo7Jx0KYapXinOYSNRtmH9YhBpiJVJ1mQefABRPwpVcAN4yNt3sHUKFfMk3/341ZqJeFu1J6uFIM6nBGYpGR3EqUOGD6r2Ym9CiRL4w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lh6reKzM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G4kKaRl0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCECAC4CEE3;
-	Tue, 17 Jun 2025 16:01:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lh6reKzM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A99CAC4CEE3;
+	Tue, 17 Jun 2025 16:01:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750176078;
-	bh=JjBpgtKwzGqEx8R7mHAiGT1hJ+yzwu9NlGZ9eZygxt0=;
+	s=korg; t=1750176081;
+	bh=GagNELsX2mRGLdz8vUneM2e6Xv66mt3u6Tgncil0gaU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G4kKaRl0sas13L9w7gmS4VQawvnPiZLRuchZqf/JNXJRWyV4BiG6XFB7GEtMUv1Ru
-	 3PedS074dQyQi5dO3zJ4TuUxYIucWmkYzRtQonrLTj99SLuMrEsjQDY/bK09pDO+eR
-	 +Slsu7d8BilmlgJwcorOJST1t4YNo065PgVL0Lfo=
+	b=Lh6reKzMqbMnuCBOHDlwQATmN9GdbxOhIPlu/zwBBi4d13Kfcp4VN32VWOADVcZw7
+	 /oYO0I+feaNS5JLJ3xPk4j4CE/95ZjWHJ99/E4nGudc8h2Q2D530hRpda4jshaPI9L
+	 wEU6M3g8zrZJM0btfcNk82QbZmPbJqZamhmuT3n8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chenyuan Yang <chenyuan0y@gmail.com>,
-	Johan Hovold <johan@kernel.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Yeoreum Yun <yeoreum.yun@arm.com>,
+	Leo Yan <leo.yan@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 226/356] phy: qcom-qmp-usb: Fix an NULL vs IS_ERR() bug
-Date: Tue, 17 Jun 2025 17:25:41 +0200
-Message-ID: <20250617152347.298581985@linuxfoundation.org>
+Subject: [PATCH 6.6 241/356] coresight: prevent deactivate active config while enabling the config
+Date: Tue, 17 Jun 2025 17:25:56 +0200
+Message-ID: <20250617152347.909300902@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
 References: <20250617152338.212798615@linuxfoundation.org>
@@ -55,54 +52,177 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chenyuan Yang <chenyuan0y@gmail.com>
+From: Yeoreum Yun <yeoreum.yun@arm.com>
 
-[ Upstream commit d14402a38c2d868cacb1facaf9be908ca6558e59 ]
+[ Upstream commit 408c97c4a5e0b634dcd15bf8b8808b382e888164 ]
 
-The qmp_usb_iomap() helper function currently returns the raw result of
-devm_ioremap() for non-exclusive mappings. Since devm_ioremap() may return
-a NULL pointer and the caller only checks error pointers with IS_ERR(),
-NULL could bypass the check and lead to an invalid dereference.
+While enable active config via cscfg_csdev_enable_active_config(),
+active config could be deactivated via configfs' sysfs interface.
+This could make UAF issue in below scenario:
 
-Fix the issue by checking if devm_ioremap() returns NULL. When it does,
-qmp_usb_iomap() now returns an error pointer via IOMEM_ERR_PTR(-ENOMEM),
-ensuring safe and consistent error handling.
+CPU0                                          CPU1
+(sysfs enable)                                load module
+                                              cscfg_load_config_sets()
+                                              activate config. // sysfs
+                                              (sys_active_cnt == 1)
+...
+cscfg_csdev_enable_active_config()
+lock(csdev->cscfg_csdev_lock)
+// here load config activate by CPU1
+unlock(csdev->cscfg_csdev_lock)
 
-Signed-off-by: Chenyuan Yang <chenyuan0y@gmail.com>
-Fixes: a5d6b1ac56cb ("phy: qcom-qmp-usb: fix memleak on probe deferral")
-CC: Johan Hovold <johan@kernel.org>
-CC: Krzysztof Kozlowski <krzk@kernel.org>
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250414125050.2118619-1-chenyuan0y@gmail.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+                                              deactivate config // sysfs
+                                              (sys_activec_cnt == 0)
+                                              cscfg_unload_config_sets()
+                                              unload module
+
+// access to config_desc which freed
+// while unloading module.
+cscfg_csdev_enable_config
+
+To address this, use cscfg_config_desc's active_cnt as a reference count
+ which will be holded when
+    - activate the config.
+    - enable the activated config.
+and put the module reference when config_active_cnt == 0.
+
+Fixes: f8cce2ff3c04 ("coresight: syscfg: Add API to activate and enable configurations")
+Suggested-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Signed-off-by: Yeoreum Yun <yeoreum.yun@arm.com>
+Reviewed-by: Leo Yan <leo.yan@arm.com>
+Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Link: https://lore.kernel.org/r/20250514161951.3427590-4-yeoreum.yun@arm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/qualcomm/phy-qcom-qmp-usb.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ .../hwtracing/coresight/coresight-config.h    |  2 +-
+ .../hwtracing/coresight/coresight-syscfg.c    | 49 +++++++++++++------
+ 2 files changed, 35 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
-index c697d01b2a2a1..5072bca0af7c5 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
-@@ -2044,12 +2044,16 @@ static void __iomem *qmp_usb_iomap(struct device *dev, struct device_node *np,
- 					int index, bool exclusive)
+diff --git a/drivers/hwtracing/coresight/coresight-config.h b/drivers/hwtracing/coresight/coresight-config.h
+index 6ba0139757418..84cdde6f0e4db 100644
+--- a/drivers/hwtracing/coresight/coresight-config.h
++++ b/drivers/hwtracing/coresight/coresight-config.h
+@@ -228,7 +228,7 @@ struct cscfg_feature_csdev {
+  * @feats_csdev:references to the device features to enable.
+  */
+ struct cscfg_config_csdev {
+-	const struct cscfg_config_desc *config_desc;
++	struct cscfg_config_desc *config_desc;
+ 	struct coresight_device *csdev;
+ 	bool enabled;
+ 	struct list_head node;
+diff --git a/drivers/hwtracing/coresight/coresight-syscfg.c b/drivers/hwtracing/coresight/coresight-syscfg.c
+index 11138a9762b01..30a561d874819 100644
+--- a/drivers/hwtracing/coresight/coresight-syscfg.c
++++ b/drivers/hwtracing/coresight/coresight-syscfg.c
+@@ -867,6 +867,25 @@ void cscfg_csdev_reset_feats(struct coresight_device *csdev)
+ }
+ EXPORT_SYMBOL_GPL(cscfg_csdev_reset_feats);
+ 
++static bool cscfg_config_desc_get(struct cscfg_config_desc *config_desc)
++{
++	if (!atomic_fetch_inc(&config_desc->active_cnt)) {
++		/* must ensure that config cannot be unloaded in use */
++		if (unlikely(cscfg_owner_get(config_desc->load_owner))) {
++			atomic_dec(&config_desc->active_cnt);
++			return false;
++		}
++	}
++
++	return true;
++}
++
++static void cscfg_config_desc_put(struct cscfg_config_desc *config_desc)
++{
++	if (!atomic_dec_return(&config_desc->active_cnt))
++		cscfg_owner_put(config_desc->load_owner);
++}
++
+ /*
+  * This activate configuration for either perf or sysfs. Perf can have multiple
+  * active configs, selected per event, sysfs is limited to one.
+@@ -890,22 +909,17 @@ static int _cscfg_activate_config(unsigned long cfg_hash)
+ 			if (config_desc->available == false)
+ 				return -EBUSY;
+ 
+-			/* must ensure that config cannot be unloaded in use */
+-			err = cscfg_owner_get(config_desc->load_owner);
+-			if (err)
++			if (!cscfg_config_desc_get(config_desc)) {
++				err = -EINVAL;
+ 				break;
++			}
++
+ 			/*
+ 			 * increment the global active count - control changes to
+ 			 * active configurations
+ 			 */
+ 			atomic_inc(&cscfg_mgr->sys_active_cnt);
+ 
+-			/*
+-			 * mark the descriptor as active so enable config on a
+-			 * device instance will use it
+-			 */
+-			atomic_inc(&config_desc->active_cnt);
+-
+ 			err = 0;
+ 			dev_dbg(cscfg_device(), "Activate config %s.\n", config_desc->name);
+ 			break;
+@@ -920,9 +934,8 @@ static void _cscfg_deactivate_config(unsigned long cfg_hash)
+ 
+ 	list_for_each_entry(config_desc, &cscfg_mgr->config_desc_list, item) {
+ 		if ((unsigned long)config_desc->event_ea->var == cfg_hash) {
+-			atomic_dec(&config_desc->active_cnt);
+ 			atomic_dec(&cscfg_mgr->sys_active_cnt);
+-			cscfg_owner_put(config_desc->load_owner);
++			cscfg_config_desc_put(config_desc);
+ 			dev_dbg(cscfg_device(), "Deactivate config %s.\n", config_desc->name);
+ 			break;
+ 		}
+@@ -1047,7 +1060,7 @@ int cscfg_csdev_enable_active_config(struct coresight_device *csdev,
+ 				     unsigned long cfg_hash, int preset)
  {
- 	struct resource res;
-+	void __iomem *mem;
+ 	struct cscfg_config_csdev *config_csdev_active = NULL, *config_csdev_item;
+-	const struct cscfg_config_desc *config_desc;
++	struct cscfg_config_desc *config_desc;
+ 	unsigned long flags;
+ 	int err = 0;
  
- 	if (!exclusive) {
- 		if (of_address_to_resource(np, index, &res))
- 			return IOMEM_ERR_PTR(-EINVAL);
- 
--		return devm_ioremap(dev, res.start, resource_size(&res));
-+		mem = devm_ioremap(dev, res.start, resource_size(&res));
-+		if (!mem)
-+			return IOMEM_ERR_PTR(-ENOMEM);
-+		return mem;
+@@ -1062,8 +1075,8 @@ int cscfg_csdev_enable_active_config(struct coresight_device *csdev,
+ 	spin_lock_irqsave(&csdev->cscfg_csdev_lock, flags);
+ 	list_for_each_entry(config_csdev_item, &csdev->config_csdev_list, node) {
+ 		config_desc = config_csdev_item->config_desc;
+-		if ((atomic_read(&config_desc->active_cnt)) &&
+-		    ((unsigned long)config_desc->event_ea->var == cfg_hash)) {
++		if (((unsigned long)config_desc->event_ea->var == cfg_hash) &&
++				cscfg_config_desc_get(config_desc)) {
+ 			config_csdev_active = config_csdev_item;
+ 			csdev->active_cscfg_ctxt = (void *)config_csdev_active;
+ 			break;
+@@ -1097,7 +1110,11 @@ int cscfg_csdev_enable_active_config(struct coresight_device *csdev,
+ 				err = -EBUSY;
+ 			spin_unlock_irqrestore(&csdev->cscfg_csdev_lock, flags);
+ 		}
++
++		if (err)
++			cscfg_config_desc_put(config_desc);
  	}
++
+ 	return err;
+ }
+ EXPORT_SYMBOL_GPL(cscfg_csdev_enable_active_config);
+@@ -1136,8 +1153,10 @@ void cscfg_csdev_disable_active_config(struct coresight_device *csdev)
+ 	spin_unlock_irqrestore(&csdev->cscfg_csdev_lock, flags);
  
- 	return devm_of_iomap(dev, np, index, NULL);
+ 	/* true if there was an enabled active config */
+-	if (config_csdev)
++	if (config_csdev) {
+ 		cscfg_csdev_disable_config(config_csdev);
++		cscfg_config_desc_put(config_csdev->config_desc);
++	}
+ }
+ EXPORT_SYMBOL_GPL(cscfg_csdev_disable_active_config);
+ 
 -- 
 2.39.5
 
