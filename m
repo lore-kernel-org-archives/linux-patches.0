@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F392A28505E;
-	Tue, 17 Jun 2025 16:51:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 693422FA623;
+	Tue, 17 Jun 2025 16:51:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750179103; cv=none; b=j0rrr/HPklh0+/RWGMZgPBL+xGcLqGL7PioVdzkJ0diE8qd0p+Lrgolcn/mrq9SnGNCMCm1FT/yEwsKQ09qrMLq0gOtSmjyvtGovz6PYkpo4JGAmTs31i5Ccag9/BWCA+c74bwVIW4vuxcNoIkpLxcK1ak7FndY1esmpNa3YMkk=
+	t=1750179105; cv=none; b=afKjPfaKz4c4f+UtTaMhks54PgyQHb3IWWdjgfYxn9MYvvuEuR92xq1yan1DGbfrSnjZG3Y0laK9UcsbX6Ys7EcigZvk3LE7H5QiKp6i1rnCPQLpEqTp9S8aE7wf4kUyxa0fsA90K0JiPl++hmydJcoC7YvQT+QakB576bhOyhI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750179103; c=relaxed/simple;
-	bh=96oCCOnnanvtIN60l39iqSt0gZ3QXoLO1BHNmFVE/7o=;
+	s=arc-20240116; t=1750179105; c=relaxed/simple;
+	bh=nlofB6hSviRw9q5Lx32Qt96KQL/wMwoMf+TiNGPnH7M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f+a7yGQ3/cPqUcVdTXhxGgQRUzDXf/mpCtpdqWeNXM/ZbGsBt/wWfRIX/cfecjlkqFgFPTiia8s6hDzi530NcqmAokcPRil9PxMKDoB4Pi0g3nhiGAv7PJZ9VH7FZ1RgJWYHgh83TvJsXrAWApeu1S1e82/jVZoPiZkVNivcfG4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qnqXMFbb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R/G2IeFZ3iQg+Vw+y9ZIvPJxg2m8a6rMZt/je/RrhhqogaAb8ibQIno8ee22bSFYd+3/it1BaCMt79td3HO4sZ96JJ4N58HVHZJt+u/Ea1BI+m/FgnmUUNBn+ZqSnGlgBqk3RIFY5J9/Vad6iNT6rcwhLdG3nO4xl31FQVReI3s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=waOwjsqI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qnqXMFbb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3B18C4CEF0;
-	Tue, 17 Jun 2025 16:51:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="waOwjsqI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDCABC4CEE3;
+	Tue, 17 Jun 2025 16:51:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750179102;
-	bh=96oCCOnnanvtIN60l39iqSt0gZ3QXoLO1BHNmFVE/7o=;
+	s=korg; t=1750179105;
+	bh=nlofB6hSviRw9q5Lx32Qt96KQL/wMwoMf+TiNGPnH7M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qnqXMFbbd/VaTdTZuBwJvQTwfMiGApvW+vvRjLg6AUsw5QkwhLIBPiouNjJQfXEsx
-	 fjeIbUgwmO0RLSCXtJJRrjRj/maaB0NKaSrxQF+GizFT0jW5cpy32Ne4HTRXf42g4U
-	 /6S5cphbDQURCYFzWtnaa3YOslXpcMmkn4Suq8hE=
+	b=waOwjsqIcSUJAYviW/wNyQnNwWbYGAKhd5HxmnYl9x/Mr32cWntAJ1iNW4+0p8gOY
+	 BMRzrb3Jxwb8PlCO+RqFEGaNAk66Dg7s21qoeNUb0Fo6p+ZZJ22Z9wgbOOss8Yz/sB
+	 dHQJWTjTdM/RdI1MCrnbAvRwBZWlQ2IE5HqtBncw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Christian Brauner <brauner@kernel.org>,
-	Jeff Layton <jlayton@kernel.org>,
 	Al Viro <viro@zeniv.linux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 649/780] fs/fhandle.c: fix a race in call of has_locked_children()
-Date: Tue, 17 Jun 2025 17:25:57 +0200
-Message-ID: <20250617152517.909257386@linuxfoundation.org>
+Subject: [PATCH 6.15 650/780] path_overmount(): avoid false negatives
+Date: Tue, 17 Jun 2025 17:25:58 +0200
+Message-ID: <20250617152517.949213556@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
 References: <20250617152451.485330293@linuxfoundation.org>
@@ -54,86 +53,64 @@ Content-Transfer-Encoding: 8bit
 
 From: Al Viro <viro@zeniv.linux.org.uk>
 
-[ Upstream commit 1f282cdc1d219c4a557f7009e81bc792820d9d9a ]
+[ Upstream commit 5f31c549382bcddbbd754c72c5433b19420d485d ]
 
-may_decode_fh() is calling has_locked_children() while holding no locks.
-That's an oopsable race...
+Holding namespace_sem is enough to make sure that result remains valid.
+It is *not* enough to avoid false negatives from __lookup_mnt().  Mounts
+can be unhashed outside of namespace_sem (stuck children getting detached
+on final mntput() of lazy-umounted mount) and having an unrelated mount
+removed from the hash chain while we traverse it may end up with false
+negative from __lookup_mnt().  We need to sample and recheck the seqlock
+component of mount_lock...
 
-The rest of the callers are safe since they are holding namespace_sem and
-are guaranteed a positive refcount on the mount in question.
-
-Rename the current has_locked_children() to __has_locked_children(), make
-it static and switch the fs/namespace.c users to it.
-
-Make has_locked_children() a wrapper for __has_locked_children(), calling
-the latter under read_seqlock_excl(&mount_lock).
+Bug predates the introduction of path_overmount() - it had come from
+the code in finish_automount() that got abstracted into that helper.
 
 Reviewed-by: Christian Brauner <brauner@kernel.org>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Fixes: 620c266f3949 ("fhandle: relax open_by_handle_at() permission checks")
+Fixes: 26df6034fdb2 ("fix automount/automount race properly")
+Fixes: 6ac392815628 ("fs: allow to mount beneath top mount")
 Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/namespace.c | 18 ++++++++++++++----
- 1 file changed, 14 insertions(+), 4 deletions(-)
+ fs/namespace.c | 19 +++++++++++++------
+ 1 file changed, 13 insertions(+), 6 deletions(-)
 
 diff --git a/fs/namespace.c b/fs/namespace.c
-index 1b466c54a357d..216807f772cd2 100644
+index 216807f772cd2..cb5126b06dcb9 100644
 --- a/fs/namespace.c
 +++ b/fs/namespace.c
-@@ -2424,7 +2424,7 @@ void drop_collected_mounts(struct vfsmount *mnt)
- 	namespace_unlock();
- }
- 
--bool has_locked_children(struct mount *mnt, struct dentry *dentry)
-+static bool __has_locked_children(struct mount *mnt, struct dentry *dentry)
+@@ -3477,18 +3477,25 @@ static int do_set_group(struct path *from_path, struct path *to_path)
+  * Check if path is overmounted, i.e., if there's a mount on top of
+  * @path->mnt with @path->dentry as mountpoint.
+  *
+- * Context: This function expects namespace_lock() to be held.
++ * Context: namespace_sem must be held at least shared.
++ * MUST NOT be called under lock_mount_hash() (there one should just
++ * call __lookup_mnt() and check if it returns NULL).
+  * Return: If path is overmounted true is returned, false if not.
+  */
+ static inline bool path_overmounted(const struct path *path)
  {
- 	struct mount *child;
- 
-@@ -2438,6 +2438,16 @@ bool has_locked_children(struct mount *mnt, struct dentry *dentry)
- 	return false;
++	unsigned seq = read_seqbegin(&mount_lock);
++	bool no_child;
++
+ 	rcu_read_lock();
+-	if (unlikely(__lookup_mnt(path->mnt, path->dentry))) {
+-		rcu_read_unlock();
+-		return true;
+-	}
++	no_child = !__lookup_mnt(path->mnt, path->dentry);
+ 	rcu_read_unlock();
+-	return false;
++	if (need_seqretry(&mount_lock, seq)) {
++		read_seqlock_excl(&mount_lock);
++		no_child = !__lookup_mnt(path->mnt, path->dentry);
++		read_sequnlock_excl(&mount_lock);
++	}
++	return unlikely(!no_child);
  }
  
-+bool has_locked_children(struct mount *mnt, struct dentry *dentry)
-+{
-+	bool res;
-+
-+	read_seqlock_excl(&mount_lock);
-+	res = __has_locked_children(mnt, dentry);
-+	read_sequnlock_excl(&mount_lock);
-+	return res;
-+}
-+
- /*
-  * Check that there aren't references to earlier/same mount namespaces in the
-  * specified subtree.  Such references can act as pins for mount namespaces
-@@ -2498,7 +2508,7 @@ struct vfsmount *clone_private_mount(const struct path *path)
- 			return ERR_PTR(-EINVAL);
- 	}
- 
--	if (has_locked_children(old_mnt, path->dentry))
-+	if (__has_locked_children(old_mnt, path->dentry))
- 		return ERR_PTR(-EINVAL);
- 
- 	new_mnt = clone_mnt(old_mnt, path->dentry, CL_PRIVATE);
-@@ -3035,7 +3045,7 @@ static struct mount *__do_loopback(struct path *old_path, int recurse)
- 	if (!may_copy_tree(old_path))
- 		return mnt;
- 
--	if (!recurse && has_locked_children(old, old_path->dentry))
-+	if (!recurse && __has_locked_children(old, old_path->dentry))
- 		return mnt;
- 
- 	if (recurse)
-@@ -3428,7 +3438,7 @@ static int do_set_group(struct path *from_path, struct path *to_path)
- 		goto out;
- 
- 	/* From mount should not have locked children in place of To's root */
--	if (has_locked_children(from, to->mnt.mnt_root))
-+	if (__has_locked_children(from, to->mnt.mnt_root))
- 		goto out;
- 
- 	/* Setting sharing groups is only allowed on private mounts */
+ /**
 -- 
 2.39.5
 
