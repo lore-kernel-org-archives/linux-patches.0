@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59800235071;
-	Tue, 17 Jun 2025 16:15:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E482D235067;
+	Tue, 17 Jun 2025 16:15:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750176905; cv=none; b=NKrHy46oYVXCjQHN9duoT12X7ONbiJOgPi/f9O7im5XGmyS6cbOf8LdWwA6m8kjGrFMyuK+K+SzqJG8egbIoMumi8cpasLomk+TT5ItXDFkKAyecpOdxHyHedZtARHT4PFTplcMswdTsG/NnrOmewmZ43QMnA5BW3WDp5yCIRiM=
+	t=1750176909; cv=none; b=DpnK+iFxCSizWnCjHnK8TyozPo2q8x+O0Mx9ePWYs6Em/t2ejdpQxd6PK4ExCpuwP3AzkKHzp6C9oFzmoy2wU0wjQv2pMzdvS37OzQCGDNb87kRinyjagJgejVz7oWBopql2N5jDxOR7APsmLVlp573wlBS9aPHWWp/1/Z1hCz0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750176905; c=relaxed/simple;
-	bh=+hqo0yVkK43Zs0PzcOyjklm5HKTXekamek3K2+pUPH0=;
+	s=arc-20240116; t=1750176909; c=relaxed/simple;
+	bh=iHjF5fwIQgqU3yg7fROVpp3bOKSOfG2JtcUxj/akvqo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lUZn0+yX6D4aW32K75G6g7scB3+f0qC/nXgdnl5xgohREmHQ4tseYWFXQNbIsOogGM5nVO84oY8eBkinNMQuzWB3P63e11SrL9GWKKG3BOVZoSu5cLqyb0/JbN6eZBdnLKr8oEM6XABt1ly1acw89U2kgdjlINmEoxjktSjbn9o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iF/Azkdg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dVQcKRSm4Kl17ktZeLb8D3imwLNs9LgfMd8JFJjz/Gsb4IbCcX40UpO30NTdAF1mroiibSuOlel/l92sjRcrx4CU1S1XHCaK96fWs04sHvNw5FIrofrfbZD7WvbAOtjWkrrAswK9OASHK9IwbJaEKTQbW6iIrGU+vK7Lk1QcGNY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=02YeJ7OZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iF/Azkdg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2230C4CEE3;
-	Tue, 17 Jun 2025 16:15:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="02YeJ7OZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A2CAC4CEE3;
+	Tue, 17 Jun 2025 16:15:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750176905;
-	bh=+hqo0yVkK43Zs0PzcOyjklm5HKTXekamek3K2+pUPH0=;
+	s=korg; t=1750176908;
+	bh=iHjF5fwIQgqU3yg7fROVpp3bOKSOfG2JtcUxj/akvqo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iF/AzkdgRC02ntYteWBVv8+EKp7LYaCwI0QBvw1BNbEde4e/bTj8Fnv14b+iXaHx2
-	 1PKExf5MljvEMVsqDjD1u6iEahvkuhe4o/mcU5dFxGyVGfo1zNozaLjuP5H6GRCYJG
-	 gOJtx/aPFofOinzqxNgixMJFlTlpx33MxZBE86Xc=
+	b=02YeJ7OZnPYIr9c0f40pr5UJNgF58DJ+6LaQvv2e7/j7feL7YAzJLnBP+T99IJ/xn
+	 OoBEQGeIc7akBtLFMYCfT8faLwKdi2LX453dnS1wtVkivgoOmB/KNXBKqjs1HH+pyh
+	 gdb3PBAe4QFlgwST8wem4KzZsICwiz73mhvvq28c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maharaja Kennadyrajan <maharaja.kennadyrajan@oss.qualcomm.com>,
-	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Daniel Jurgens <danielj@nvidia.com>,
+	Moshe Shemesh <moshe@nvidia.com>,
+	Amir Tzin <amirtz@nvidia.com>,
+	Mark Bloch <mbloch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 214/780] wifi: ath12k: fix node corruption in ar->arvifs list
-Date: Tue, 17 Jun 2025 17:18:42 +0200
-Message-ID: <20250617152500.175943743@linuxfoundation.org>
+Subject: [PATCH 6.6 324/356] net/mlx5: Fix ECVF vports unload on shutdown flow
+Date: Tue, 17 Jun 2025 17:27:19 +0200
+Message-ID: <20250617152351.191968200@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
+References: <20250617152338.212798615@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,80 +50,107 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maharaja Kennadyrajan <maharaja.kennadyrajan@oss.qualcomm.com>
+From: Amir Tzin <amirtz@nvidia.com>
 
-[ Upstream commit 823435bd23108d6f8be89ea2d025c0e2e3769c51 ]
+[ Upstream commit 687560d8a9a2d654829ad0da1ec24242f1de711d ]
 
-In current WLAN recovery code flow, ath12k_core_halt() only reinitializes
-the "arvifs" list head. This will cause the list node immediately following
-the list head to become an invalid list node. Because the prev of that node
-still points to the list head "arvifs", but the next of the list head
-"arvifs" no longer points to that list node.
+Fix shutdown flow UAF when a virtual function is created on the embedded
+chip (ECVF) of a BlueField device. In such case the vport acl ingress
+table is not properly destroyed.
 
-When a WLAN recovery occurs during the execution of a vif removal, and it
-happens before the spin_lock_bh(&ar->data_lock) in
-ath12k_mac_vdev_delete(), list_del() will detect the previously mentioned
-situation, thereby triggering a kernel panic.
+ECVF functionality is independent of ecpf_vport_exists capability and
+thus functions mlx5_eswitch_(enable|disable)_pf_vf_vports() should not
+test it when enabling/disabling ECVF vports.
 
-The fix is to remove and reinitialize all vif list nodes from the list head
-"arvifs" during WLAN halt. The reinitialization is to make the list nodes
-valid, ensuring that the list_del() in ath12k_mac_vdev_delete() can execute
-normally.
+kernel log:
+[] refcount_t: underflow; use-after-free.
+[] WARNING: CPU: 3 PID: 1 at lib/refcount.c:28
+   refcount_warn_saturate+0x124/0x220
+----------------
+[] Call trace:
+[] refcount_warn_saturate+0x124/0x220
+[] tree_put_node+0x164/0x1e0 [mlx5_core]
+[] mlx5_destroy_flow_table+0x98/0x2c0 [mlx5_core]
+[] esw_acl_ingress_table_destroy+0x28/0x40 [mlx5_core]
+[] esw_acl_ingress_lgcy_cleanup+0x80/0xf4 [mlx5_core]
+[] esw_legacy_vport_acl_cleanup+0x44/0x60 [mlx5_core]
+[] esw_vport_cleanup+0x64/0x90 [mlx5_core]
+[] mlx5_esw_vport_disable+0xc0/0x1d0 [mlx5_core]
+[] mlx5_eswitch_unload_ec_vf_vports+0xcc/0x150 [mlx5_core]
+[] mlx5_eswitch_disable_sriov+0x198/0x2a0 [mlx5_core]
+[] mlx5_device_disable_sriov+0xb8/0x1e0 [mlx5_core]
+[] mlx5_sriov_detach+0x40/0x50 [mlx5_core]
+[] mlx5_unload+0x40/0xc4 [mlx5_core]
+[] mlx5_unload_one_devl_locked+0x6c/0xe4 [mlx5_core]
+[] mlx5_unload_one+0x3c/0x60 [mlx5_core]
+[] shutdown+0x7c/0xa4 [mlx5_core]
+[] pci_device_shutdown+0x3c/0xa0
+[] device_shutdown+0x170/0x340
+[] __do_sys_reboot+0x1f4/0x2a0
+[] __arm64_sys_reboot+0x2c/0x40
+[] invoke_syscall+0x78/0x100
+[] el0_svc_common.constprop.0+0x54/0x184
+[] do_el0_svc+0x30/0xac
+[] el0_svc+0x48/0x160
+[] el0t_64_sync_handler+0xa4/0x12c
+[] el0t_64_sync+0x1a4/0x1a8
+[] --[ end trace 9c4601d68c70030e ]---
 
-Call trace:
-__list_del_entry_valid_or_report+0xd4/0x100 (P)
-ath12k_mac_remove_link_interface.isra.0+0xf8/0x2e4 [ath12k]
-ath12k_scan_vdev_clean_work+0x40/0x164 [ath12k]
-cfg80211_wiphy_work+0xfc/0x100
-process_one_work+0x164/0x2d0
-worker_thread+0x254/0x380
-kthread+0xfc/0x100
-ret_from_fork+0x10/0x20
-
-The change is mostly copied from the ath11k patch:
-https://lore.kernel.org/all/20250320053145.3445187-1-quic_stonez@quicinc.com/
-
-Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.4.1-00199-QCAHKSWPL_SILICONZ-1
-
-Fixes: d889913205cf ("wifi: ath12k: driver for Qualcomm Wi-Fi 7 devices")
-Signed-off-by: Maharaja Kennadyrajan <maharaja.kennadyrajan@oss.qualcomm.com>
-Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250416021724.2162519-1-maharaja.kennadyrajan@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Fixes: a7719b29a821 ("net/mlx5: Add management of EC VF vports")
+Reviewed-by: Daniel Jurgens <danielj@nvidia.com>
+Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
+Signed-off-by: Amir Tzin <amirtz@nvidia.com>
+Signed-off-by: Mark Bloch <mbloch@nvidia.com>
+Link: https://patch.msgid.link/20250610151514.1094735-3-mbloch@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/core.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ .../net/ethernet/mellanox/mlx5/core/eswitch.c | 21 ++++++++++++-------
+ 1 file changed, 13 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/core.c b/drivers/net/wireless/ath/ath12k/core.c
-index 34eaa6b5bf772..6b0c719be5434 100644
---- a/drivers/net/wireless/ath/ath12k/core.c
-+++ b/drivers/net/wireless/ath/ath12k/core.c
-@@ -1251,6 +1251,7 @@ static void ath12k_rfkill_work(struct work_struct *work)
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c
+index f6022c135ec02..914b380fd3eeb 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c
+@@ -1295,12 +1295,15 @@ mlx5_eswitch_enable_pf_vf_vports(struct mlx5_eswitch *esw,
+ 		ret = mlx5_eswitch_load_pf_vf_vport(esw, MLX5_VPORT_ECPF, enabled_events);
+ 		if (ret)
+ 			goto ecpf_err;
+-		if (mlx5_core_ec_sriov_enabled(esw->dev)) {
+-			ret = mlx5_eswitch_load_ec_vf_vports(esw, esw->esw_funcs.num_ec_vfs,
+-							     enabled_events);
+-			if (ret)
+-				goto ec_vf_err;
+-		}
++	}
++
++	/* Enable ECVF vports */
++	if (mlx5_core_ec_sriov_enabled(esw->dev)) {
++		ret = mlx5_eswitch_load_ec_vf_vports(esw,
++						     esw->esw_funcs.num_ec_vfs,
++						     enabled_events);
++		if (ret)
++			goto ec_vf_err;
+ 	}
  
- void ath12k_core_halt(struct ath12k *ar)
+ 	/* Enable VF vports */
+@@ -1331,9 +1334,11 @@ void mlx5_eswitch_disable_pf_vf_vports(struct mlx5_eswitch *esw)
  {
-+	struct list_head *pos, *n;
- 	struct ath12k_base *ab = ar->ab;
+ 	mlx5_eswitch_unload_vf_vports(esw, esw->esw_funcs.num_vfs);
  
- 	lockdep_assert_wiphy(ath12k_ar_to_hw(ar)->wiphy);
-@@ -1266,7 +1267,12 @@ void ath12k_core_halt(struct ath12k *ar)
- 
- 	rcu_assign_pointer(ab->pdevs_active[ar->pdev_idx], NULL);
- 	synchronize_rcu();
--	INIT_LIST_HEAD(&ar->arvifs);
++	if (mlx5_core_ec_sriov_enabled(esw->dev))
++		mlx5_eswitch_unload_ec_vf_vports(esw,
++						 esw->esw_funcs.num_ec_vfs);
 +
-+	spin_lock_bh(&ar->data_lock);
-+	list_for_each_safe(pos, n, &ar->arvifs)
-+		list_del_init(pos);
-+	spin_unlock_bh(&ar->data_lock);
-+
- 	idr_init(&ar->txmgmt_idr);
- }
+ 	if (mlx5_ecpf_vport_exists(esw->dev)) {
+-		if (mlx5_core_ec_sriov_enabled(esw->dev))
+-			mlx5_eswitch_unload_ec_vf_vports(esw, esw->esw_funcs.num_vfs);
+ 		mlx5_eswitch_unload_pf_vf_vport(esw, MLX5_VPORT_ECPF);
+ 	}
  
 -- 
 2.39.5
