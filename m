@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3485D2F2368;
-	Tue, 17 Jun 2025 16:04:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FAF42F2343;
+	Tue, 17 Jun 2025 16:04:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750176283; cv=none; b=u6eOSRy9OWs2hJ6A39Ryf6P0Gnppy0tGChw0FyJppM3Bl+sTBCJJdYtDzqcykbiTSBVxojWbxiJl8+g7E+lPK1u6B7Y1/hZsM/1EeSPJZn5308C5tA4kJlx/mH2jPVkIhiKjwgi6R2KxTWQy5lYz2KULm1Feb0tXZK3AI1s4d9E=
+	t=1750176285; cv=none; b=J/DpcBYUk5Ev3vnjybs0Zrnx1iiIOwj+A2UCcA1ubCvg+DnexNa/dCgLN3acKj4cfciAT2dqVlsTkOKzCUUNbxh9XW40RrrH4eEeXKgsc6df1ih5Tdps5UaHe69H+nPEPxivA6WN4DAf4gwL6VIFrqsgbOqhLCKQJX4Imv54NBA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750176283; c=relaxed/simple;
-	bh=ejWhfZhoAUndf0xnbYd+8El52hCCmT5tbmtCgxDcIUU=;
+	s=arc-20240116; t=1750176285; c=relaxed/simple;
+	bh=9X2azqvEAKsu+LwKXQ0fjWER52+/Q/JubWi5sqBcokY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ubq1bkSsmBljDByE0OTx9HNXtYwTtASJySY1/k2w4sohLd+lxDz1zSfmj9PZlh+cO1ZXyMs76CJyaKuB5GBOOjcBrw3Ohmjyd2yi38EIJgjNXbWXmgtSRSPrpwnO583vhoY8lrYRM3XtvE1QTvJI2O6c5n8TmBZHveosXX4NNAA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bvzln2Dw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DGk+gguoYm3uBlDedbVw7bZGEKRUAtdIgm5t8rF1uuu8bTsS6SkK+63xPtpDe6jepN9E3vACKy2lwTedp72++Ot92a6hnPvBMBtZXHN0OfZ5fXEgn22lkCWgEM+xcAcA655ixstVX0Zlmq5611Zl7DFj80fsJmwEWQ/Qt0CLOJU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eOUeJf5g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bvzln2Dw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BBC4C4CEE3;
-	Tue, 17 Jun 2025 16:04:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eOUeJf5g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9934EC4CEF1;
+	Tue, 17 Jun 2025 16:04:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750176281;
-	bh=ejWhfZhoAUndf0xnbYd+8El52hCCmT5tbmtCgxDcIUU=;
+	s=korg; t=1750176285;
+	bh=9X2azqvEAKsu+LwKXQ0fjWER52+/Q/JubWi5sqBcokY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bvzln2Dwd6otvNdyifoubRsbAUwMngozNJXf3Y4mpA1WGFvkYqts0A/TXq5gu+mUS
-	 5UAal4QxWUNbs2gsZQG9Ed6oj4QIjJEUXTYt62tBcdMD6Gvm7n9yvQiVD3cp4ernBy
-	 N0WR1yTThFeeCtv/QT7FGGGo7VZOGfMvAFDSShCI=
+	b=eOUeJf5gXJfDR6YLdJJ0VAx2hIXxNw+4NvV1E3WCl+QinhTr8Te8sap9zHOn4YkXD
+	 0Zd0lC1qeqU1u/owfjxl/2C2pf2jl5coEc7BCQKY9/UBf+jToJe0YOG+H+Aclm96rO
+	 pfQavjLF2boyf+OA50KHByyDLsyF3uWrFqbC8U/Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzkaller <syzkaller@googlegroups.com>,
-	John Cheung <john.cs.hey@gmail.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Paul Moore <paul@paul-moore.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Alok Tiwari <alok.a.tiwari@oracle.com>,
+	Mina Almasry <almasrymina@google.com>,
+	Simon Horman <horms@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 213/512] calipso: Dont call calipso functions for AF_INET sk.
-Date: Tue, 17 Jun 2025 17:22:59 +0200
-Message-ID: <20250617152428.258756785@linuxfoundation.org>
+Subject: [PATCH 6.6 262/356] gve: add missing NULL check for gve_alloc_pending_packet() in TX DQO
+Date: Tue, 17 Jun 2025 17:26:17 +0200
+Message-ID: <20250617152348.751362645@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
+References: <20250617152338.212798615@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,110 +49,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Alok Tiwari <alok.a.tiwari@oracle.com>
 
-[ Upstream commit 6e9f2df1c550ead7cecb3e450af1105735020c92 ]
+[ Upstream commit 12c331b29c7397ac3b03584e12902990693bc248 ]
 
-syzkaller reported a null-ptr-deref in txopt_get(). [0]
+gve_alloc_pending_packet() can return NULL, but gve_tx_add_skb_dqo()
+did not check for this case before dereferencing the returned pointer.
 
-The offset 0x70 was of struct ipv6_txoptions in struct ipv6_pinfo,
-so struct ipv6_pinfo was NULL there.
+Add a missing NULL check to prevent a potential NULL pointer
+dereference when allocation fails.
 
-However, this never happens for IPv6 sockets as inet_sk(sk)->pinet6
-is always set in inet6_create(), meaning the socket was not IPv6 one.
+This improves robustness in low-memory scenarios.
 
-The root cause is missing validation in netlbl_conn_setattr().
-
-netlbl_conn_setattr() switches branches based on struct
-sockaddr.sa_family, which is passed from userspace.  However,
-netlbl_conn_setattr() does not check if the address family matches
-the socket.
-
-The syzkaller must have called connect() for an IPv6 address on
-an IPv4 socket.
-
-We have a proper validation in tcp_v[46]_connect(), but
-security_socket_connect() is called in the earlier stage.
-
-Let's copy the validation to netlbl_conn_setattr().
-
-[0]:
-Oops: general protection fault, probably for non-canonical address 0xdffffc000000000e: 0000 [#1] PREEMPT SMP KASAN NOPTI
-KASAN: null-ptr-deref in range [0x0000000000000070-0x0000000000000077]
-CPU: 2 UID: 0 PID: 12928 Comm: syz.9.1677 Not tainted 6.12.0 #1
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
-RIP: 0010:txopt_get include/net/ipv6.h:390 [inline]
-RIP: 0010:
-Code: 02 00 00 49 8b ac 24 f8 02 00 00 e8 84 69 2a fd e8 ff 00 16 fd 48 8d 7d 70 48 b8 00 00 00 00 00 fc ff df 48 89 fa 48 c1 ea 03 <80> 3c 02 00 0f 85 53 02 00 00 48 8b 6d 70 48 85 ed 0f 84 ab 01 00
-RSP: 0018:ffff88811b8afc48 EFLAGS: 00010212
-RAX: dffffc0000000000 RBX: 1ffff11023715f8a RCX: ffffffff841ab00c
-RDX: 000000000000000e RSI: ffffc90007d9e000 RDI: 0000000000000070
-RBP: 0000000000000000 R08: ffffed1023715f9d R09: ffffed1023715f9e
-R10: ffffed1023715f9d R11: 0000000000000003 R12: ffff888123075f00
-R13: ffff88810245bd80 R14: ffff888113646780 R15: ffff888100578a80
-FS:  00007f9019bd7640(0000) GS:ffff8882d2d00000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007f901b927bac CR3: 0000000104788003 CR4: 0000000000770ef0
-PKRU: 80000000
-Call Trace:
- <TASK>
- calipso_sock_setattr+0x56/0x80 net/netlabel/netlabel_calipso.c:557
- netlbl_conn_setattr+0x10c/0x280 net/netlabel/netlabel_kapi.c:1177
- selinux_netlbl_socket_connect_helper+0xd3/0x1b0 security/selinux/netlabel.c:569
- selinux_netlbl_socket_connect_locked security/selinux/netlabel.c:597 [inline]
- selinux_netlbl_socket_connect+0xb6/0x100 security/selinux/netlabel.c:615
- selinux_socket_connect+0x5f/0x80 security/selinux/hooks.c:4931
- security_socket_connect+0x50/0xa0 security/security.c:4598
- __sys_connect_file+0xa4/0x190 net/socket.c:2067
- __sys_connect+0x12c/0x170 net/socket.c:2088
- __do_sys_connect net/socket.c:2098 [inline]
- __se_sys_connect net/socket.c:2095 [inline]
- __x64_sys_connect+0x73/0xb0 net/socket.c:2095
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0xaa/0x1b0 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7f901b61a12d
-Code: 02 b8 ff ff ff ff c3 66 0f 1f 44 00 00 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 a8 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007f9019bd6fa8 EFLAGS: 00000246 ORIG_RAX: 000000000000002a
-RAX: ffffffffffffffda RBX: 00007f901b925fa0 RCX: 00007f901b61a12d
-RDX: 000000000000001c RSI: 0000200000000140 RDI: 0000000000000003
-RBP: 00007f901b701505 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
-R13: 0000000000000000 R14: 00007f901b5b62a0 R15: 00007f9019bb7000
- </TASK>
-Modules linked in:
-
-Fixes: ceba1832b1b2 ("calipso: Set the calipso socket label to match the secattr.")
-Reported-by: syzkaller <syzkaller@googlegroups.com>
-Reported-by: John Cheung <john.cs.hey@gmail.com>
-Closes: https://lore.kernel.org/netdev/CAP=Rh=M1LzunrcQB1fSGauMrJrhL6GGps5cPAKzHJXj6GQV+-g@mail.gmail.com/
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Acked-by: Paul Moore <paul@paul-moore.com>
-Link: https://patch.msgid.link/20250522221858.91240-1-kuniyu@amazon.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: a57e5de476be ("gve: DQO: Add TX path")
+Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
+Reviewed-by: Mina Almasry <almasrymina@google.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netlabel/netlabel_kapi.c | 3 +++
+ drivers/net/ethernet/google/gve/gve_tx_dqo.c | 3 +++
  1 file changed, 3 insertions(+)
 
-diff --git a/net/netlabel/netlabel_kapi.c b/net/netlabel/netlabel_kapi.c
-index cd9160bbc9197..6ea16138582c0 100644
---- a/net/netlabel/netlabel_kapi.c
-+++ b/net/netlabel/netlabel_kapi.c
-@@ -1165,6 +1165,9 @@ int netlbl_conn_setattr(struct sock *sk,
- 		break;
- #if IS_ENABLED(CONFIG_IPV6)
- 	case AF_INET6:
-+		if (sk->sk_family != AF_INET6)
-+			return -EAFNOSUPPORT;
+diff --git a/drivers/net/ethernet/google/gve/gve_tx_dqo.c b/drivers/net/ethernet/google/gve/gve_tx_dqo.c
+index 89b62b8d16e14..857749fef37cf 100644
+--- a/drivers/net/ethernet/google/gve/gve_tx_dqo.c
++++ b/drivers/net/ethernet/google/gve/gve_tx_dqo.c
+@@ -716,6 +716,9 @@ static int gve_tx_add_skb_dqo(struct gve_tx_ring *tx,
+ 	s16 completion_tag;
+ 
+ 	pkt = gve_alloc_pending_packet(tx);
++	if (!pkt)
++		return -ENOMEM;
 +
- 		addr6 = (struct sockaddr_in6 *)addr;
- 		entry = netlbl_domhsh_getentry_af6(secattr->domain,
- 						   &addr6->sin6_addr);
+ 	pkt->skb = skb;
+ 	completion_tag = pkt - tx->dqo.pending_packets;
+ 
 -- 
 2.39.5
 
