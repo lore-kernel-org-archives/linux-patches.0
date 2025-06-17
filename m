@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 036DF2DFF1B;
-	Tue, 17 Jun 2025 16:03:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4875A2F2365;
+	Tue, 17 Jun 2025 16:03:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750176200; cv=none; b=bqLe9dii2Qn928ftClHTpkBbI+HiMtzrrf0NZCoFaGCgMH3Izqj4jU3W2q7w2wunvOs9Peh7NxS+b6DFA3dAIPGGlTV4jItppCBYKKsQOwYzo/8Ew+S71Yr8pNKMdgRW+sd0aM8A8qiO2Amrmsegkxx8zsZvkU86Rx2ehVZ8eAg=
+	t=1750176203; cv=none; b=SmBxWY+WFObzIV/O0dS7y+SkLTlVR2TE7vulnWzo8wzyl3tGPOjCVL625Cor9T6SZPXA6WCQJkuO+jhqca/jNr9jd7tz/CCcucRRoxxb1ZnHl/Di/do+WYvX2vFGbCTG0ahPQ6Iy5y78MOrMAB3J4kzZEGzdyaQzpoIhpZA8ZVU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750176200; c=relaxed/simple;
-	bh=WQpOpqiwbHrLBf/3tR/Ad1ZfO+qnR8Rev63TPFOgi8k=;
+	s=arc-20240116; t=1750176203; c=relaxed/simple;
+	bh=vBdJiIMXNdbggv2akM04EVO6NzPFvNdYlS5LMh1OcLo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YkrjNwM2EPu9WyfZmn0l5+KdvjtS0aG4AAILAel/BkuysM8bzbEsaDKeZhNk6P2GCRfHB3Suir9B+P6GiCSTrdVvljJrCIJiKispwBjBUPNBUpn3Ef9FiizPkz8vJqS1pf6SvsKSs9w3N0Cwn1fMipTtQ+c98NsYrCzRVSgOXCs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0ruQ7Rrp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=e5E4LzDAmL1wyj1FWKfOjmUNEBaf2aBt3ZuspD3mu1fNQfUOcPdlE39gCvw1RSDUJeItCD3KMtuhaw1RTwRWSANnew6s2maJ1rHOTmXEb87qTczEunjdaN90+znisvySUoXIHXoNV6WdUpc1JBGE/VOAZLSih2LdYfNW1QN0nhQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jVW8m/fS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0ruQ7Rrp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 674A1C4CEE3;
-	Tue, 17 Jun 2025 16:03:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jVW8m/fS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB5C6C4CEE3;
+	Tue, 17 Jun 2025 16:03:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750176199;
-	bh=WQpOpqiwbHrLBf/3tR/Ad1ZfO+qnR8Rev63TPFOgi8k=;
+	s=korg; t=1750176203;
+	bh=vBdJiIMXNdbggv2akM04EVO6NzPFvNdYlS5LMh1OcLo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0ruQ7RrpAJzW7KS/pf8DfNizh2G8kX4eMwRxN0qDpNQxhsxTxVkrQte69FATDQsxZ
-	 etxAHcoiDGv6p/rrAHkMoHQwO18PTsSosAztMzV6bC2TfBsWl5pXup4n/TAVXju8Gg
-	 YcEJiWZ1S25Ev0qwegyTbd/84W9M/gGOS4fyffDo=
+	b=jVW8m/fSeXODvAR9R9YHQMsNXSWZHfSZyExYXKe4vsO1pMLUbYDl6effti1NZdw1M
+	 TwWtEfRlAH5ATorO/RIM6yXhuhbqMdbvYK+XFAh7/DKSjoaIBERkeAQD6p1y6HaSQB
+	 ohLGG+aaujHWpGw2LoWiXVIJKVIRGQp9MTjW2HbI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	P Praneesh <praneesh.p@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	John <jw@nuclearfallout.net>,
+	=?UTF-8?q?Roger=20Pau=20Monn=C3=A9?= <roger.pau@citrix.com>,
+	Juergen Gross <jgross@suse.com>,
+	=?UTF-8?q?Marek=20Marczykowski-G=C3=B3recki?= <marmarek@invisiblethingslab.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 164/780] wifi: ath12k: Fix memory leak during vdev_id mismatch
-Date: Tue, 17 Jun 2025 17:17:52 +0200
-Message-ID: <20250617152458.164798055@linuxfoundation.org>
+Subject: [PATCH 6.15 155/780] xen/x86: fix initial memory balloon target
+Date: Tue, 17 Jun 2025 17:17:43 +0200
+Message-ID: <20250617152457.809260898@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
 References: <20250617152451.485330293@linuxfoundation.org>
@@ -45,72 +47,71 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: P Praneesh <praneesh.p@oss.qualcomm.com>
+From: Roger Pau Monne <roger.pau@citrix.com>
 
-[ Upstream commit 75ec94db880b1e4b4f9182885d60db0db6e2ee56 ]
+[ Upstream commit 74287971dbb3fe322bb316afd9e7fb5807e23bee ]
 
-Currently driver enables vdev_id check as part of the bank configuration
-in ath12k_dp_tx_get_vdev_bank_config(). This check ensures that the vdev_id
-configured in the bank register aligns with the vdev_id in the packet's
-address search table within the firmware. If there is a mismatch, the
-firmware forwards the packet with the HTT status
-HAL_WBM_REL_HTT_TX_COMP_STATUS_VDEVID_MISMATCH. Since driver does not
-handle this vdev_id mismatch HTT status, the corresponding buffers are not
-freed properly, causing a memory leak. Fix this issue by adding handling to
-free the buffers when a vdev_id mismatch HTT status is encountered.
+When adding extra memory regions as ballooned pages also adjust the balloon
+target, otherwise when the balloon driver is started it will populate
+memory to match the target value and consume all the extra memory regions
+added.
 
-Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.4.1-00199-QCAHKSWPL_SILICONZ-1
-Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.0.c5-00481-QCAHMTSWPL_V1.0_V2.0_SILICONZ-
+This made the usage of the Xen `dom0_mem=,max:` command line parameter for
+dom0 not work as expected, as the target won't be adjusted and when the
+balloon is started it will populate memory straight to the 'max:' value.
+It would equally affect domUs that have memory != maxmem.
 
-Fixes: d889913205cf ("wifi: ath12k: driver for Qualcomm Wi-Fi 7 devices")
-Signed-off-by: P Praneesh <praneesh.p@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250402174032.2651221-1-praneesh.p@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Kernels built with CONFIG_XEN_UNPOPULATED_ALLOC are not affected, because
+the extra memory regions are consumed by the unpopulated allocation driver,
+and then balloon_add_regions() becomes a no-op.
+
+Reported-by: John <jw@nuclearfallout.net>
+Fixes: 87af633689ce ('x86/xen: fix balloon target initialization for PVH dom0')
+Signed-off-by: Roger Pau Monné <roger.pau@citrix.com>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Tested-by: Marek Marczykowski-Górecki <marmarek@invisiblethingslab.com>
+Message-ID: <20250514080427.28129-1-roger.pau@citrix.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/dp_tx.c    | 1 +
- drivers/net/wireless/ath/ath12k/hal_desc.h | 3 ++-
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ drivers/xen/balloon.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/dp_tx.c b/drivers/net/wireless/ath/ath12k/dp_tx.c
-index ced232bf4aed0..1e2788df476c2 100644
---- a/drivers/net/wireless/ath/ath12k/dp_tx.c
-+++ b/drivers/net/wireless/ath/ath12k/dp_tx.c
-@@ -585,6 +585,7 @@ ath12k_dp_tx_process_htt_tx_complete(struct ath12k_base *ab,
- 	case HAL_WBM_REL_HTT_TX_COMP_STATUS_TTL:
- 	case HAL_WBM_REL_HTT_TX_COMP_STATUS_REINJ:
- 	case HAL_WBM_REL_HTT_TX_COMP_STATUS_INSPECT:
-+	case HAL_WBM_REL_HTT_TX_COMP_STATUS_VDEVID_MISMATCH:
- 		ath12k_dp_tx_free_txbuf(ab, msdu, mac_id, tx_ring);
- 		break;
- 	case HAL_WBM_REL_HTT_TX_COMP_STATUS_MEC_NOTIFY:
-diff --git a/drivers/net/wireless/ath/ath12k/hal_desc.h b/drivers/net/wireless/ath/ath12k/hal_desc.h
-index 3e8983b85de86..63d279fab3224 100644
---- a/drivers/net/wireless/ath/ath12k/hal_desc.h
-+++ b/drivers/net/wireless/ath/ath12k/hal_desc.h
-@@ -1,7 +1,7 @@
- /* SPDX-License-Identifier: BSD-3-Clause-Clear */
- /*
-  * Copyright (c) 2018-2021 The Linux Foundation. All rights reserved.
-- * Copyright (c) 2021-2022, 2024 Qualcomm Innovation Center, Inc. All rights reserved.
-+ * Copyright (c) 2021-2022, 2024-2025 Qualcomm Innovation Center, Inc. All rights reserved.
-  */
- #include "core.h"
+diff --git a/drivers/xen/balloon.c b/drivers/xen/balloon.c
+index 8c852807ba1c1..2de37dcd75566 100644
+--- a/drivers/xen/balloon.c
++++ b/drivers/xen/balloon.c
+@@ -704,15 +704,18 @@ static int __init balloon_add_regions(void)
  
-@@ -1298,6 +1298,7 @@ enum hal_wbm_htt_tx_comp_status {
- 	HAL_WBM_REL_HTT_TX_COMP_STATUS_REINJ,
- 	HAL_WBM_REL_HTT_TX_COMP_STATUS_INSPECT,
- 	HAL_WBM_REL_HTT_TX_COMP_STATUS_MEC_NOTIFY,
-+	HAL_WBM_REL_HTT_TX_COMP_STATUS_VDEVID_MISMATCH,
- 	HAL_WBM_REL_HTT_TX_COMP_STATUS_MAX,
- };
+ 		/*
+ 		 * Extra regions are accounted for in the physmap, but need
+-		 * decreasing from current_pages to balloon down the initial
+-		 * allocation, because they are already accounted for in
+-		 * total_pages.
++		 * decreasing from current_pages and target_pages to balloon
++		 * down the initial allocation, because they are already
++		 * accounted for in total_pages.
+ 		 */
+-		if (extra_pfn_end - start_pfn >= balloon_stats.current_pages) {
++		pages = extra_pfn_end - start_pfn;
++		if (pages >= balloon_stats.current_pages ||
++		    pages >= balloon_stats.target_pages) {
+ 			WARN(1, "Extra pages underflow current target");
+ 			return -ERANGE;
+ 		}
+-		balloon_stats.current_pages -= extra_pfn_end - start_pfn;
++		balloon_stats.current_pages -= pages;
++		balloon_stats.target_pages -= pages;
+ 	}
  
+ 	return 0;
 -- 
 2.39.5
 
