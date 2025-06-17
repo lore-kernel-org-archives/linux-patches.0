@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77F772E7163;
-	Tue, 17 Jun 2025 16:05:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B990D236457;
+	Tue, 17 Jun 2025 16:05:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750176315; cv=none; b=Nxa5zxj5VsFFK6X6ae2QptTzLtMKvHXgbq2tqBLaahkx4vYPj2gNR44F3D5yIfs6GT66yxMQ3n+q9H0UgJPgNZ3t256WWTHiByl+zt5OopI/KnJXi3XOKwlLLJUswvSXgEvN7ikfa48b3rN+fUI0WzFMQdjvuEwhEE6o12/suAc=
+	t=1750176318; cv=none; b=KnaGwy/7r7YeZb2tZO0EjEaB33nSlKKAdjNtoSlxM0xuK9ylYpllqcTNk0LGczG1lCCbJk+wrtbvDFDXa0CenrnhH39sj40yMBjiCWLoWkluu1Fo0YlYmPh6Ym1/09x3N4t+HweTsJDg1sGdPh/5AO7ZyzJmVolJ/OuuAMKwqLc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750176315; c=relaxed/simple;
-	bh=uoQ0E1RHzY7/StZvEAa+GdIzfZaAy4sSQUrZi1JHtQQ=;
+	s=arc-20240116; t=1750176318; c=relaxed/simple;
+	bh=A3V8DrDHcfYFazuGTRh052Z+XT0rISvaZKF0e6GhsWA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oXUAbpl33S2GvY4uZvFHSD4NC7ehAmy5MFcGK8mpMyTjxQ61PyAU/10YJ416d3jIpdZK0PAnt1UObUPn+5GzM+sjuzDjKug9FvI5lEYtxHLUObTFDyBk/EZghq44+i8cvJq5MADqRgKcWf0ks9sr2JoPsjzW5W5JpG93euLT1RE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gFmIPTU2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=f5/x/hpdlD84R2LX6ouAIGOpTkZr1S7fCKwM8A7qtoIP1WluL/yNttvi96kuS5yLl6ZI9/gdGNiYHO13d+WTfKYBDSCihjxN7hkRwvypDl4YpgNUcZQAWQSnWJqDSY3+wTasfeOGV4fIcqRjhrXt5ssoHzIvufSlXDSEtkqpEGw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bm93R7ot; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gFmIPTU2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 991AAC4CEE3;
-	Tue, 17 Jun 2025 16:05:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bm93R7ot"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC7A7C4CEE3;
+	Tue, 17 Jun 2025 16:05:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750176315;
-	bh=uoQ0E1RHzY7/StZvEAa+GdIzfZaAy4sSQUrZi1JHtQQ=;
+	s=korg; t=1750176318;
+	bh=A3V8DrDHcfYFazuGTRh052Z+XT0rISvaZKF0e6GhsWA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gFmIPTU2HdI/1gT9g1oAbBleoKsaM74uGV3TMKW+ufUsWmF53BeGKmorCrVVX/gsk
-	 9Q3bstI2pKHgbKHSt+54iC2GwN/fEG0hoMbtDh+Vi9459J/zQPJmTViGz4abGTEutk
-	 gDgk70tqcQF9P4MDBLNLfAQ3u1Lk5nDqENFQRNDQ=
+	b=bm93R7otwfwqb/Y63F9ioR4pmT+ogXo2ZdKxEcbo0YDF8cqHL/PBGxrN0uzKXIuzp
+	 pOgImzs9Ddecfe2OMKzcBaNfhqNFyPJSFQShz4F0UiWRmz2axEtZK0TzPucSdmDE3t
+	 LF4clF8CUJHVjQIQW6VZ6zC0CNzwP+LyfLZJRvKs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Wajdeczko <michal.wajdeczko@intel.com>,
-	Lucas De Marchi <lucas.demarchi@intel.com>,
+	=?UTF-8?q?Radim=20Kr=C4=8Dm=C3=A1=C5=99?= <rkrcmar@ventanamicro.com>,
+	Anup Patel <anup@brainfault.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 157/780] drm/xe/guc: Dont expose GuC privileged debugfs files if VF
-Date: Tue, 17 Jun 2025 17:17:45 +0200
-Message-ID: <20250617152457.889407637@linuxfoundation.org>
+Subject: [PATCH 6.12 199/512] RISC-V: KVM: lock the correct mp_state during reset
+Date: Tue, 17 Jun 2025 17:22:45 +0200
+Message-ID: <20250617152427.695928632@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,70 +45,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michal Wajdeczko <michal.wajdeczko@intel.com>
+From: Radim Krčmář <rkrcmar@ventanamicro.com>
 
-[ Upstream commit 387444984d7b53dbaee263887cad4ea7c8e57b34 ]
+[ Upstream commit 7917be170928189fefad490d1a1237fdfa6b856f ]
 
-Some of the GuC debugfs files require access to the data that is
-not available on the VFs. Don't expose those files on the VF driver.
+Currently, the kvm_riscv_vcpu_sbi_system_reset() function locks
+vcpu->arch.mp_state_lock when updating tmp->arch.mp_state.mp_state
+which is incorrect hence fix it.
 
-Signed-off-by: Michal Wajdeczko <michal.wajdeczko@intel.com>
-Reviewed-by: Lucas De Marchi <lucas.demarchi@intel.com>
-Link: https://lore.kernel.org/r/20250403142635.1821-3-michal.wajdeczko@intel.com
-Stable-dep-of: e22d7acf9f47 ("drm/xe/guc: Make creation of SLPC debugfs files conditional")
+Fixes: 2121cadec45a ("RISCV: KVM: Introduce mp_state_lock to avoid lock inversion")
+Signed-off-by: Radim Krčmář <rkrcmar@ventanamicro.com>
+Reviewed-by: Anup Patel <anup@brainfault.org>
+Link: https://lore.kernel.org/r/20250523104725.2894546-4-rkrcmar@ventanamicro.com
+Signed-off-by: Anup Patel <anup@brainfault.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_guc_debugfs.c | 22 ++++++++++++++++++----
- 1 file changed, 18 insertions(+), 4 deletions(-)
+ arch/riscv/kvm/vcpu_sbi.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_guc_debugfs.c b/drivers/gpu/drm/xe/xe_guc_debugfs.c
-index 9a1c78b89f457..f33013f8a0f38 100644
---- a/drivers/gpu/drm/xe/xe_guc_debugfs.c
-+++ b/drivers/gpu/drm/xe/xe_guc_debugfs.c
-@@ -103,11 +103,20 @@ static int guc_pc(struct xe_guc *guc, struct drm_printer *p)
- 	return 0;
- }
+diff --git a/arch/riscv/kvm/vcpu_sbi.c b/arch/riscv/kvm/vcpu_sbi.c
+index 6e704ed86a83a..635c67ed36653 100644
+--- a/arch/riscv/kvm/vcpu_sbi.c
++++ b/arch/riscv/kvm/vcpu_sbi.c
+@@ -139,9 +139,9 @@ void kvm_riscv_vcpu_sbi_system_reset(struct kvm_vcpu *vcpu,
+ 	struct kvm_vcpu *tmp;
  
--static const struct drm_info_list debugfs_list[] = {
-+/*
-+ * only for GuC debugfs files which can be safely used on the VF as well:
-+ * - without access to the GuC privileged registers
-+ * - without access to the PF specific GuC objects
-+ */
-+static const struct drm_info_list vf_safe_debugfs_list[] = {
- 	{ "guc_info", .show = guc_debugfs_show, .data = xe_guc_print_info },
-+	{ "guc_ctb", .show = guc_debugfs_show, .data = guc_ctb },
-+};
-+
-+/* everything else should be added here */
-+static const struct drm_info_list pf_only_debugfs_list[] = {
- 	{ "guc_log", .show = guc_debugfs_show, .data = guc_log },
- 	{ "guc_log_dmesg", .show = guc_debugfs_show, .data = guc_log_dmesg },
--	{ "guc_ctb", .show = guc_debugfs_show, .data = guc_ctb },
- 	{ "guc_pc", .show = guc_debugfs_show, .data = guc_pc },
- };
+ 	kvm_for_each_vcpu(i, tmp, vcpu->kvm) {
+-		spin_lock(&vcpu->arch.mp_state_lock);
++		spin_lock(&tmp->arch.mp_state_lock);
+ 		WRITE_ONCE(tmp->arch.mp_state.mp_state, KVM_MP_STATE_STOPPED);
+-		spin_unlock(&vcpu->arch.mp_state_lock);
++		spin_unlock(&tmp->arch.mp_state_lock);
+ 	}
+ 	kvm_make_all_cpus_request(vcpu->kvm, KVM_REQ_SLEEP);
  
-@@ -115,7 +124,12 @@ void xe_guc_debugfs_register(struct xe_guc *guc, struct dentry *parent)
- {
- 	struct drm_minor *minor = guc_to_xe(guc)->drm.primary;
- 
--	drm_debugfs_create_files(debugfs_list,
--				 ARRAY_SIZE(debugfs_list),
-+	drm_debugfs_create_files(vf_safe_debugfs_list,
-+				 ARRAY_SIZE(vf_safe_debugfs_list),
- 				 parent, minor);
-+
-+	if (!IS_SRIOV_VF(guc_to_xe(guc)))
-+		drm_debugfs_create_files(pf_only_debugfs_list,
-+					 ARRAY_SIZE(pf_only_debugfs_list),
-+					 parent, minor);
- }
 -- 
 2.39.5
 
