@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB6052EA155;
-	Tue, 17 Jun 2025 16:29:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED0492EA155;
+	Tue, 17 Jun 2025 16:29:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177770; cv=none; b=bA0NI+zznRJ+b84SKeS2Ze3TwG6kOszXcRXEaoYDdEvZ3SRGYhUgExUI0f1tgZKHnyQYoiHBbDG67CEJGqysA/vtj5GFoUkBhA5aBBLaIN/drQWEJ6/vjkJNGbUXcI261Bmi62JOOJt8LzIeC/CODQ4cyPcp3qbsYXhQU8gwQlY=
+	t=1750177774; cv=none; b=asf02cBIs/YEe1hT3Dk+4FBx+xGgtiVvVrQK3y3zbpS3/G1LPb+W8oiezeClT+XmqvpfwxiWl8SAYMsmBZTCcO8nKBwjGhR/COt8IxCwwEjAohNkzQmdlAfR1pWUnjPKCgMUmlw+9Y7W+KKNw4CKW7lEH8nJ8tG2iydsQK3+XUI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177770; c=relaxed/simple;
-	bh=osfBLEkrDLWRWnopKaYWUW8rBpxQ5AM3bFQLlUvQQgg=;
+	s=arc-20240116; t=1750177774; c=relaxed/simple;
+	bh=uJ0Twk80UpdM71ilQCRUNaBLIpeBP/qd4lDSyRzUrNo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n+QrqgImMaYKoAyrDPgurIdUiwiRPczo8jxHQk4q4cK7DIi/7ydyQOAaE4XiQrNBVdT3QOigNK3sUsp5r2UVDk7wQSSGB5KPtGcSV69x5WBac7s5XT1p56++r9ZOSX6akrAQkfP9va+Go7VKVGrzoEJmDstTjl8HcwmevqtO1a4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UNg2H1GJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h/eyD47ccIRKAUul5FpIUbBsyjGiYBqQ77Hoq0uAYJXjp7gH/g/UKHs3tvjzSgvDrlwI5adamm3A2N/9H7SLiv9iSyfnzJlPGvyeEb3bqyNeAnivwkHkl22sLLw8Z2F1XC4yhR43sTXq0JyVwwH39gColnSKH1+9U3mKJ5QGdRo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hAWW56Oj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UNg2H1GJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7B4DC4CEE7;
-	Tue, 17 Jun 2025 16:29:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hAWW56Oj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06C80C4CEE3;
+	Tue, 17 Jun 2025 16:29:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177770;
-	bh=osfBLEkrDLWRWnopKaYWUW8rBpxQ5AM3bFQLlUvQQgg=;
+	s=korg; t=1750177773;
+	bh=uJ0Twk80UpdM71ilQCRUNaBLIpeBP/qd4lDSyRzUrNo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UNg2H1GJK/+9bBkmVooM8wKW3nzwwltQfQlc13FG8lIcTg5kC4eVla+n2w1r4PNw3
-	 M2mfUsX6wXxfCYM3nKplQwW8/N77uRuyDjPIAhTHeoOvwZa24VfFyyQQgdQMZSNutl
-	 C4pLUC3KESqYnYdonlVL22I/JU9Pe6apuj3Nmg/c=
+	b=hAWW56OjMb+g0YZeAVocJeX59nTo/lQQM68LhA3CcgjyBXldfPHIWB3WKdGzz2Trb
+	 ob1pnOAhSzhgV+5T8WKC//gqVO3NUs/HuzoJZVZP41VXXUiVK7PTtKnaV5Uut4nXgA
+	 AwXRlYH2Q4GrN0/VbYJmmIFtvQsEwhXlAe7gPpJM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Brauner <brauner@kernel.org>,
-	Al Viro <viro@zeniv.linux.org.uk>,
+	Luca Weiss <luca.weiss@fairphone.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 394/512] fix propagation graph breakage by MOVE_MOUNT_SET_GROUP move_mount(2)
-Date: Tue, 17 Jun 2025 17:26:00 +0200
-Message-ID: <20250617152435.559871226@linuxfoundation.org>
+Subject: [PATCH 6.15 361/780] arm64: dts: qcom: sm8650: Fix domain-idle-state for CPU2
+Date: Tue, 17 Jun 2025 17:21:09 +0200
+Message-ID: <20250617152506.159122646@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,62 +48,42 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Luca Weiss <luca.weiss@fairphone.com>
 
-[ Upstream commit d8cc0362f918d020ca1340d7694f07062dc30f36 ]
+[ Upstream commit 9bb5ca464100e7c8f2d740148088f60e04fed8ed ]
 
-9ffb14ef61ba "move_mount: allow to add a mount into an existing group"
-breaks assertions on ->mnt_share/->mnt_slave.  For once, the data structures
-in question are actually documented.
+On SM8650 the CPUs 0-1 are "silver" (Cortex-A520), CPU 2-6 are "gold"
+(Cortex-A720) and CPU 7 is "gold-plus" (Cortex-X4).
 
-Documentation/filesystem/sharedsubtree.rst:
-        All vfsmounts in a peer group have the same ->mnt_master.  If it is
-	non-NULL, they form a contiguous (ordered) segment of slave list.
+So reference the correct "gold" idle-state for CPU core 2.
 
-do_set_group() puts a mount into the same place in propagation graph
-as the old one.  As the result, if old mount gets events from somewhere
-and is not a pure event sink, new one needs to be placed next to the
-old one in the slave list the old one's on.  If it is a pure event
-sink, we only need to make sure the new one doesn't end up in the
-middle of some peer group.
-
-"move_mount: allow to add a mount into an existing group" ends up putting
-the new one in the beginning of list; that's definitely not going to be
-in the middle of anything, so that's fine for case when old is not marked
-shared.  In case when old one _is_ marked shared (i.e. is not a pure event
-sink), that breaks the assumptions of propagation graph iterators.
-
-Put the new mount next to the old one on the list - that does the right thing
-in "old is marked shared" case and is just as correct as the current behaviour
-if old is not marked shared (kudos to Pavel for pointing that out - my original
-suggested fix changed behaviour in the "nor marked" case, which complicated
-things for no good reason).
-
-Reviewed-by: Christian Brauner <brauner@kernel.org>
-Fixes: 9ffb14ef61ba ("move_mount: allow to add a mount into an existing group")
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+Fixes: d2350377997f ("arm64: dts: qcom: add initial SM8650 dtsi")
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20250314-sm8650-cpu2-sleep-v1-1-31d5c7c87a5d@fairphone.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/namespace.c | 2 +-
+ arch/arm64/boot/dts/qcom/sm8650.dtsi | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/namespace.c b/fs/namespace.c
-index 1cb236af29bec..1022a5af691d6 100644
---- a/fs/namespace.c
-+++ b/fs/namespace.c
-@@ -3151,7 +3151,7 @@ static int do_set_group(struct path *from_path, struct path *to_path)
- 	if (IS_MNT_SLAVE(from)) {
- 		struct mount *m = from->mnt_master;
+diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+index 36919efc888c2..bf6590e09a4c4 100644
+--- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+@@ -460,7 +460,7 @@
+ 		cpu_pd2: power-domain-cpu2 {
+ 			#power-domain-cells = <0>;
+ 			power-domains = <&cluster_pd>;
+-			domain-idle-states = <&silver_cpu_sleep_0>;
++			domain-idle-states = <&gold_cpu_sleep_0>;
+ 		};
  
--		list_add(&to->mnt_slave, &m->mnt_slave_list);
-+		list_add(&to->mnt_slave, &from->mnt_slave);
- 		to->mnt_master = m;
- 	}
- 
+ 		cpu_pd3: power-domain-cpu3 {
 -- 
 2.39.5
 
