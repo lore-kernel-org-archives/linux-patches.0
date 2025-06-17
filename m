@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FFC11E502;
-	Tue, 17 Jun 2025 16:45:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AA3E19F424;
+	Tue, 17 Jun 2025 16:45:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750178712; cv=none; b=NxWueHP3KsvRWgd1EpfbY1860CzaSGZlcets/hBmyPx9iUASKuMjv4iG1U5Iyg2GvFpvm6By/X6hocV9c84NKQdi8vQZ7WCOKfYvT5fTbQb48VBeKdmP0u+cArKX3GDpzd2Z1nR/bbisacWRTA0qCUYwySbTQm8y2z+BzCXWpCc=
+	t=1750178715; cv=none; b=s3r+H/XzMIiiiX0ikVgvizh/vPtGxA7EBr/aQhHibGirYO4e0FvdcpEbZxVeKNafvm76F8gZFagfI2WxUH9kocZJ1PUXB2YZAb+TLF3/27TXHL8okWuMKxOGiH562cl/u6D1QOklsdwweQGEp/8AiWdCvct8lAKy85Q21xsNp2U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750178712; c=relaxed/simple;
-	bh=daZDzXn+/UPqsNth3XVQBteyxsS06cQkeR+R14UUHLY=;
+	s=arc-20240116; t=1750178715; c=relaxed/simple;
+	bh=W0InUr67uCZqLzOq9VqysbWJAfFLZNuZSmmL+DlzqWY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=FtNQk2jFxUVxQFxWwGJCk0Dy+Wmwqd6yhbASmU9K+8J91nr+NrQ2ey0CwSUQzK/x3FV/kMoMOxED8xvqU5v2LBBnBCNVokmmbGzsIkTXXrqQA/ci0NV9aXsC6KPVVsr/wFBE6VH7dFr74gLokqv6nZN3aGuRAabkyaF0o7p9ayg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uB3qHLO+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=FCE3OwVAbq7rKNKYAZw+UkgcSS2I7/bSQ71oMu7MYYr6FKnIjVxJU/bU61KxypaqC/bT5e790qw8IwOhmMGkMZrhFEwcO6WJ5zisuu8Po4XxuH6ugtnuIufVdww4rpxkno2TYdGyQgFmDM/FyCKxKudGn4GWbqlJjPZ+Muvty8c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ogAXvnnJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uB3qHLO+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A558C4CEE3;
-	Tue, 17 Jun 2025 16:45:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ogAXvnnJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD30BC4CEE3;
+	Tue, 17 Jun 2025 16:45:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750178711;
-	bh=daZDzXn+/UPqsNth3XVQBteyxsS06cQkeR+R14UUHLY=;
+	s=korg; t=1750178715;
+	bh=W0InUr67uCZqLzOq9VqysbWJAfFLZNuZSmmL+DlzqWY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uB3qHLO+wf1HJvZiefEZl3MinanZYeEhtlnBYHc7lAeEFx8jj6A3gJWFQvp4lvepx
-	 TBH4Pxfuo+UZ2HQ5G1YT0llawg8u2ahqZ4ZhQWbKkDBrbEaQagQvqFVtQSyzAUT29d
-	 y144py/Smbj8eVAExng6cmhuyMPtnp7DZoof/KKE=
+	b=ogAXvnnJL/IfjukQPAX4canm+7RX2pozFgS+wsT/zYkxjyWy1JxrPm652S0FyBoZ7
+	 FZ49BL9qERnkMLCGN7owL0l693SRqvFimo2x4w9/SrVoBoP4RJ6zY3SsAovhT1H4an
+	 zJdMear+N+e6SllQkt0Nym1NoqWsvfWpquVYrnfw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Angelo Dureghello <adureghello@baylibre.com>,
+	Antoniu Miclaus <antoniu.miclaus@analog.com>,
 	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 530/780] iio: dac: adi-axi-dac: fix bus read
-Date: Tue, 17 Jun 2025 17:23:58 +0200
-Message-ID: <20250617152513.097656788@linuxfoundation.org>
+Subject: [PATCH 6.15 531/780] iio: adc: ad4851: fix ad4858 chan pointer handling
+Date: Tue, 17 Jun 2025 17:23:59 +0200
+Message-ID: <20250617152513.136377636@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
 References: <20250617152451.485330293@linuxfoundation.org>
@@ -53,53 +53,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Angelo Dureghello <adureghello@baylibre.com>
+From: Antoniu Miclaus <antoniu.miclaus@analog.com>
 
-[ Upstream commit 921fece3268c3bf2e8c20dd17ff9e5454fa16fda ]
+[ Upstream commit 499a8cee812588905cc940837e69918c1649a19e ]
 
-Fix bus read function.
+The pointer returned from ad4851_parse_channels_common() is incremented
+internally as each channel is populated. In ad4858_parse_channels(),
+the same pointer was further incremented while setting ext_scan_type
+fields for each channel. This resulted in indio_dev->channels being set
+to a pointer past the end of the allocated array, potentially causing
+memory corruption or undefined behavior.
 
-Testing the driver, on a random basis, wrong reads was detected, mainly
-by a wrong DAC chip ID read at first boot.
-Before reading the expected value from the AXI regmap, need always to
-wait for busy flag to be cleared.
+Fix this by iterating over the channels using an explicit index instead
+of incrementing the pointer. This preserves the original base pointer
+and ensures all channel metadata is set correctly.
 
-Fixes: e61d7178429a ("iio: dac: adi-axi-dac: extend features")
-Signed-off-by: Angelo Dureghello <adureghello@baylibre.com>
+Fixes: 6250803fe2ec ("iio: adc: ad4851: add ad485x driver")
+Signed-off-by: Antoniu Miclaus <antoniu.miclaus@analog.com>
 Reviewed-by: Nuno Sá <nuno.sa@analog.com>
-Link: https://patch.msgid.link/20250409-ad3552r-fix-bus-read-v2-1-34d3b21e8ca0@baylibre.com
+Link: https://patch.msgid.link/20250509101657.6742-1-antoniu.miclaus@analog.com
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/dac/adi-axi-dac.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/iio/adc/ad4851.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/iio/dac/adi-axi-dac.c b/drivers/iio/dac/adi-axi-dac.c
-index 892d770aec69c..05b374e137d35 100644
---- a/drivers/iio/dac/adi-axi-dac.c
-+++ b/drivers/iio/dac/adi-axi-dac.c
-@@ -707,6 +707,7 @@ static int axi_dac_bus_reg_read(struct iio_backend *back, u32 reg, u32 *val,
- {
- 	struct axi_dac_state *st = iio_backend_get_priv(back);
- 	int ret;
-+	u32 ival;
+diff --git a/drivers/iio/adc/ad4851.c b/drivers/iio/adc/ad4851.c
+index 98ebc853db796..f1d2e2896f2a2 100644
+--- a/drivers/iio/adc/ad4851.c
++++ b/drivers/iio/adc/ad4851.c
+@@ -1034,7 +1034,7 @@ static int ad4858_parse_channels(struct iio_dev *indio_dev)
+ 	struct device *dev = &st->spi->dev;
+ 	struct iio_chan_spec *ad4851_channels;
+ 	const struct iio_chan_spec ad4851_chan = AD4858_IIO_CHANNEL;
+-	int ret;
++	int ret, i = 0;
  
- 	guard(mutex)(&st->lock);
- 
-@@ -719,6 +720,13 @@ static int axi_dac_bus_reg_read(struct iio_backend *back, u32 reg, u32 *val,
- 	if (ret)
+ 	ret = ad4851_parse_channels_common(indio_dev, &ad4851_channels,
+ 					   ad4851_chan);
+@@ -1042,15 +1042,15 @@ static int ad4858_parse_channels(struct iio_dev *indio_dev)
  		return ret;
  
-+	ret = regmap_read_poll_timeout(st->regmap,
-+				AXI_DAC_UI_STATUS_REG, ival,
-+				FIELD_GET(AXI_DAC_UI_STATUS_IF_BUSY, ival) == 0,
-+				10, 100 * KILO);
-+	if (ret)
-+		return ret;
-+
- 	return regmap_read(st->regmap, AXI_DAC_CUSTOM_RD_REG, val);
- }
+ 	device_for_each_child_node_scoped(dev, child) {
+-		ad4851_channels->has_ext_scan_type = 1;
++		ad4851_channels[i].has_ext_scan_type = 1;
+ 		if (fwnode_property_read_bool(child, "bipolar")) {
+-			ad4851_channels->ext_scan_type = ad4851_scan_type_20_b;
+-			ad4851_channels->num_ext_scan_type = ARRAY_SIZE(ad4851_scan_type_20_b);
++			ad4851_channels[i].ext_scan_type = ad4851_scan_type_20_b;
++			ad4851_channels[i].num_ext_scan_type = ARRAY_SIZE(ad4851_scan_type_20_b);
+ 		} else {
+-			ad4851_channels->ext_scan_type = ad4851_scan_type_20_u;
+-			ad4851_channels->num_ext_scan_type = ARRAY_SIZE(ad4851_scan_type_20_u);
++			ad4851_channels[i].ext_scan_type = ad4851_scan_type_20_u;
++			ad4851_channels[i].num_ext_scan_type = ARRAY_SIZE(ad4851_scan_type_20_u);
+ 		}
+-		ad4851_channels++;
++		i++;
+ 	}
  
+ 	indio_dev->channels = ad4851_channels;
 -- 
 2.39.5
 
