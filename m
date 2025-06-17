@@ -1,43 +1,54 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F0F82ED17C;
-	Tue, 17 Jun 2025 15:57:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8FB82ED17C;
+	Tue, 17 Jun 2025 15:57:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175831; cv=none; b=g5mh4rntAgv0jXeYuwC6uJn5MQUDFPKegoLZTxTEOsdMXN35voYP7a/XIMLG01980217kAp0dotEDwgBRmTjlkxIbirVsi+fpqC1nba8ukNhSoMC/GvZKTYecxU13ITZOlvlwnNYpnjWT6wu53otJG4tkDorlynNHWoBzqYEK5Q=
+	t=1750175834; cv=none; b=sxvMN74IggS1PQS2d3uGoztP8ZhR6QZdLHx6p7lry/PBi4yiTGd/Lu1IAmHm262yatc5uJHWStkDEI2BuiTaaGYdrvaB97+5mDOlo51LQa8/nzsX49SSqSxMThHDeemBFQEbPZM/4CLUWU5pnup6aOSHCabUMeYu6AvA/A5j8E0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175831; c=relaxed/simple;
-	bh=f+37sT0wk98b1czavWThPGk4jg8sjFzV9s0pmQjdpd8=;
+	s=arc-20240116; t=1750175834; c=relaxed/simple;
+	bh=2X98Nb9/jV+v+5pvTZKSzMPSMO1jQy6Nb7Gk0wZXqxo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cnzxM5wFwuuCUrYCcDHyJiQkMwDFpRHAFiG0dt3BPktp4sGG/y0x+JSRzvDo837bQ8PbIy8YBOcEyq3ZlvrmnDq9lVEhGmt2VjkG3j2THnqSag5ZH6kV9IKTwXlqkvijnQkgQnbpnWRGmBOeW+r2SWeCWTj0C7phY9QR/V7yOZM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jMNHf3le; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ul77iKmj3W7ZH1WXzuStH3a/5fXp1PTvqQT+QlsGD2y8kKC2IbQJm65YyvnM/yPBzeAGTFzqnaYwq1b7AVZ+xl+qp98Pg53UqSxiTlqvNrmfMOqs+928lFqyW/IsQmmpukRBf+D2FXRDwtNqosP/8hnZMi2bUrFp8D5uiNDL1A8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p5fTXr8Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jMNHf3le"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F08BEC4CEF0;
-	Tue, 17 Jun 2025 15:57:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p5fTXr8Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C42DEC4CEF0;
+	Tue, 17 Jun 2025 15:57:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175831;
-	bh=f+37sT0wk98b1czavWThPGk4jg8sjFzV9s0pmQjdpd8=;
+	s=korg; t=1750175834;
+	bh=2X98Nb9/jV+v+5pvTZKSzMPSMO1jQy6Nb7Gk0wZXqxo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jMNHf3ley671rXYV1R8uhVyBS45zoA7SQ+HhpJhtmapPknK+QnEX4Di/EX4hv8NaU
-	 Zd1OjeT3mPLvACLTqdT9ydqzbNPHhjYNhaTrgo54vPsTjXAxlerg/EkNRKaUni4oXc
-	 XEHIxzYef+N0N85iAjmhOsjR2bApyn8lese51g64=
+	b=p5fTXr8YItltCS+uZ0jMPO2d2cPerp8VjMZq5hgKNWNbuhPR2P+KSdAy9EvS3Ttlv
+	 0bEz5hzZ3P7fhoVSFY5YgvzrLA6YF7eS1XWJdeiDmxqc31zwWFuowk+lfDf9sHNSHz
+	 i0T7/ovJt1I7tXliplnaeoKYRlUJDe9uhfdNe8+k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+45b0c89a0fc7ae8dbadc@syzkaller.appspotmail.com,
-	Alexei Starovoitov <ast@kernel.org>,
-	Tao Chen <chen.dylane@linux.dev>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Howard Chu <howardchu95@gmail.com>,
+	Anubhav Shelat <ashelat@redhat.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Dapeng Mi <dapeng1.mi@linux.intel.com>,
+	Ian Rogers <irogers@google.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	James Clark <james.clark@linaro.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Michael Petlan <mpetlan@redhat.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 167/512] bpf: Fix WARN() in get_bpf_raw_tp_regs
-Date: Tue, 17 Jun 2025 17:22:13 +0200
-Message-ID: <20250617152426.385319415@linuxfoundation.org>
+Subject: [PATCH 6.6 217/356] perf trace: Always print return value for syscalls returning a pid
+Date: Tue, 17 Jun 2025 17:25:32 +0200
+Message-ID: <20250617152346.940828976@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
+References: <20250617152338.212798615@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,88 +60,69 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tao Chen <chen.dylane@linux.dev>
+From: Anubhav Shelat <ashelat@redhat.com>
 
-[ Upstream commit 3880cdbed1c4607e378f58fa924c5d6df900d1d3 ]
+[ Upstream commit c7a48ea9b919e2fa0e4a1d9938fdb03e9afe276c ]
 
-syzkaller reported an issue:
+The syscalls that were consistently observed were set_robust_list and
+rseq. This is because perf cannot find their child process.
 
-WARNING: CPU: 3 PID: 5971 at kernel/trace/bpf_trace.c:1861 get_bpf_raw_tp_regs+0xa4/0x100 kernel/trace/bpf_trace.c:1861
-Modules linked in:
-CPU: 3 UID: 0 PID: 5971 Comm: syz-executor205 Not tainted 6.15.0-rc5-syzkaller-00038-g707df3375124 #0 PREEMPT(full)
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2~bpo12+1 04/01/2014
-RIP: 0010:get_bpf_raw_tp_regs+0xa4/0x100 kernel/trace/bpf_trace.c:1861
-RSP: 0018:ffffc90003636fa8 EFLAGS: 00010293
-RAX: 0000000000000000 RBX: 0000000000000003 RCX: ffffffff81c6bc4c
-RDX: ffff888032efc880 RSI: ffffffff81c6bc83 RDI: 0000000000000005
-RBP: ffff88806a730860 R08: 0000000000000005 R09: 0000000000000003
-R10: 0000000000000004 R11: 0000000000000000 R12: 0000000000000004
-R13: 0000000000000001 R14: ffffc90003637008 R15: 0000000000000900
-FS:  0000000000000000(0000) GS:ffff8880d6cdf000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007f7baee09130 CR3: 0000000029f5a000 CR4: 0000000000352ef0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- <TASK>
- ____bpf_get_stack_raw_tp kernel/trace/bpf_trace.c:1934 [inline]
- bpf_get_stack_raw_tp+0x24/0x160 kernel/trace/bpf_trace.c:1931
- bpf_prog_ec3b2eefa702d8d3+0x43/0x47
- bpf_dispatcher_nop_func include/linux/bpf.h:1316 [inline]
- __bpf_prog_run include/linux/filter.h:718 [inline]
- bpf_prog_run include/linux/filter.h:725 [inline]
- __bpf_trace_run kernel/trace/bpf_trace.c:2363 [inline]
- bpf_trace_run3+0x23f/0x5a0 kernel/trace/bpf_trace.c:2405
- __bpf_trace_mmap_lock_acquire_returned+0xfc/0x140 include/trace/events/mmap_lock.h:47
- __traceiter_mmap_lock_acquire_returned+0x79/0xc0 include/trace/events/mmap_lock.h:47
- __do_trace_mmap_lock_acquire_returned include/trace/events/mmap_lock.h:47 [inline]
- trace_mmap_lock_acquire_returned include/trace/events/mmap_lock.h:47 [inline]
- __mmap_lock_do_trace_acquire_returned+0x138/0x1f0 mm/mmap_lock.c:35
- __mmap_lock_trace_acquire_returned include/linux/mmap_lock.h:36 [inline]
- mmap_read_trylock include/linux/mmap_lock.h:204 [inline]
- stack_map_get_build_id_offset+0x535/0x6f0 kernel/bpf/stackmap.c:157
- __bpf_get_stack+0x307/0xa10 kernel/bpf/stackmap.c:483
- ____bpf_get_stack kernel/bpf/stackmap.c:499 [inline]
- bpf_get_stack+0x32/0x40 kernel/bpf/stackmap.c:496
- ____bpf_get_stack_raw_tp kernel/trace/bpf_trace.c:1941 [inline]
- bpf_get_stack_raw_tp+0x124/0x160 kernel/trace/bpf_trace.c:1931
- bpf_prog_ec3b2eefa702d8d3+0x43/0x47
+This change ensures that the return value is always printed.
 
-Tracepoint like trace_mmap_lock_acquire_returned may cause nested call
-as the corner case show above, which will be resolved with more general
-method in the future. As a result, WARN_ON_ONCE will be triggered. As
-Alexei suggested, remove the WARN_ON_ONCE first.
+Before:
+     0.256 ( 0.001 ms): set_robust_list(head: 0x7f09c77dba20, len: 24)                        =
+     0.259 ( 0.001 ms): rseq(rseq: 0x7f09c77dc0e0, rseq_len: 32, sig: 1392848979)             =
+After:
+     0.270 ( 0.002 ms): set_robust_list(head: 0x7f0bb14a6a20, len: 24)                        = 0
+     0.273 ( 0.002 ms): rseq(rseq: 0x7f0bb14a70e0, rseq_len: 32, sig: 1392848979)             = 0
 
-Fixes: 9594dc3c7e71 ("bpf: fix nested bpf tracepoints with per-cpu data")
-Reported-by: syzbot+45b0c89a0fc7ae8dbadc@syzkaller.appspotmail.com
-Suggested-by: Alexei Starovoitov <ast@kernel.org>
-Signed-off-by: Tao Chen <chen.dylane@linux.dev>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20250513042747.757042-1-chen.dylane@linux.dev
+Committer notes:
 
-Closes: https://lore.kernel.org/bpf/8bc2554d-1052-4922-8832-e0078a033e1d@gmail.com
+As discussed in the thread in the Link: tag below, these two don't
+return a pid, but for syscalls returning one, we need to print the
+result and if we manage to find the children in 'perf trace' data
+structures, then print its name as well.
+
+Fixes: 11c8e39f5133aed9 ("perf trace: Infrastructure to show COMM strings for syscalls returning PIDs")
+Reviewed-by: Howard Chu <howardchu95@gmail.com>
+Signed-off-by: Anubhav Shelat <ashelat@redhat.com>
+Acked-by: Namhyung Kim <namhyung@kernel.org>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Dapeng Mi <dapeng1.mi@linux.intel.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: James Clark <james.clark@linaro.org>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Michael Petlan <mpetlan@redhat.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Link: https://lore.kernel.org/r/20250403160411.159238-2-ashelat@redhat.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/bpf_trace.c | 2 +-
+ tools/perf/builtin-trace.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/trace/bpf_trace.c b/kernel/trace/bpf_trace.c
-index 042263e739e29..66075e86b691c 100644
---- a/kernel/trace/bpf_trace.c
-+++ b/kernel/trace/bpf_trace.c
-@@ -1828,7 +1828,7 @@ static struct pt_regs *get_bpf_raw_tp_regs(void)
- 	struct bpf_raw_tp_regs *tp_regs = this_cpu_ptr(&bpf_raw_tp_regs);
- 	int nest_level = this_cpu_inc_return(bpf_raw_tp_nest_level);
+diff --git a/tools/perf/builtin-trace.c b/tools/perf/builtin-trace.c
+index 908509df007ba..7ee3285af10c9 100644
+--- a/tools/perf/builtin-trace.c
++++ b/tools/perf/builtin-trace.c
+@@ -2586,8 +2586,8 @@ errno_print: {
+ 	else if (sc->fmt->errpid) {
+ 		struct thread *child = machine__find_thread(trace->host, ret, ret);
  
--	if (WARN_ON_ONCE(nest_level > ARRAY_SIZE(tp_regs->regs))) {
-+	if (nest_level > ARRAY_SIZE(tp_regs->regs)) {
- 		this_cpu_dec(bpf_raw_tp_nest_level);
- 		return ERR_PTR(-EBUSY);
- 	}
++		fprintf(trace->output, "%ld", ret);
+ 		if (child != NULL) {
+-			fprintf(trace->output, "%ld", ret);
+ 			if (thread__comm_set(child))
+ 				fprintf(trace->output, " (%s)", thread__comm_str(child));
+ 			thread__put(child);
 -- 
 2.39.5
 
