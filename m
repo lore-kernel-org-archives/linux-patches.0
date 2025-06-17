@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51EB31E8332;
-	Tue, 17 Jun 2025 16:04:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E91412F237C;
+	Tue, 17 Jun 2025 16:04:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750176292; cv=none; b=NKYUsxpZANT+Lod7MEmsYoLCFb3g4DG31GxrzXtVXKR7xo8kUz95yNxv4Lr3/01PM5UildcR91cWSwEy5fRwwY+ZI/g+oS/cBNhpoOXg/lv9YoVQg6nxTkcvjsSYYzD4FyUvr4gOhWULT7Q5BwyukJ7aNS0psux2mAnKKcXDIjA=
+	t=1750176296; cv=none; b=W8IL14bFkHHpeQ8IkVdkXsa2HWBNhpbKwPkjTtJPakieX5iU0D5ZWEpbRJdlJ+aNjmdcgdsKGNAmfxB2dokXt45WTBjFwyVxqgXyG5KriuJvN77T2tXbthSaHyj8yAefAW4JPwU1KOsskeHRKyGNhKoYgqpAC4ry53hCUEvJB64=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750176292; c=relaxed/simple;
-	bh=fcKLchJVI4r/1zHF+TTqiKKi6rKL90wDzJlOGS23hqc=;
+	s=arc-20240116; t=1750176296; c=relaxed/simple;
+	bh=mBcMjRtfxKKtTk2JOaYwmz66QWxela/5zY6Bykevp1Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sjz18kHxD/AUI/MOChzXEuZ/T3Tp6o/7fAwsk9UaI+JyoTCQOIvU/WrQ8kevUwnQPTl+P59mpXyh1JgmB+j6e00Ocg46tSbyr1W9pP2FMMwxd87Jz6VwIeW0GcWPXl7aC33oj2xxabSj55sxuDW1dSnMEfKcfbWoraN9Gb1Zg2Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZWWNfmil; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Kos01KwsLGKMjQTxwJgVDk7oTuXcdDIvGqqjHmuR8XuDZimIDCKVZLiwO8ddhs9Dfa++4V8qQdflPUHer9S57cJF4bahmkSE3ggk8kVFpIj4pZHmk5lsF+NLlfridNo3Jq+rwwNuqYWQtDujEpQCe7/+kMvlBHEav8POELsRijQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vXVl+O1p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZWWNfmil"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D961C4CEE7;
-	Tue, 17 Jun 2025 16:04:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vXVl+O1p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4300C4CEF1;
+	Tue, 17 Jun 2025 16:04:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750176291;
-	bh=fcKLchJVI4r/1zHF+TTqiKKi6rKL90wDzJlOGS23hqc=;
+	s=korg; t=1750176295;
+	bh=mBcMjRtfxKKtTk2JOaYwmz66QWxela/5zY6Bykevp1Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZWWNfmilvbKgKh5cfPN9DKPKVXJlj/zmua6GzphKOzsIhK/PNYvId7cQpfFfLz69U
-	 jsbUyGD9CspVChbiwPY6lmGrGlf4aWRnMusHLGQ4G3q+bMQDSdPsNfYBvP1kazgXIH
-	 WgYfUxyvzx2/L8OEUXWL6vtAapHvqUFEpPzDbAc8=
+	b=vXVl+O1pfOJA2geaOTVFoR05rbhqtXtxVZrBqR7lmi26ioPDuF70ATDLtUOl7gnvL
+	 AstiA1+q8GZdYyTgH/CmjaPiIAX6/ydwENyei6md1xRnA025FmThoans1xjAW/FMKk
+	 Y7a8ImbkDjiN0ylYMKiAYGcHamaYssQuWU6FEZUw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Faicker Mo <faicker.mo@zenlayer.com>,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Aaron Conole <aconole@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Florian Westphal <fw@strlen.de>,
+	Stefano Brivio <sbrivio@redhat.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 214/512] net: openvswitch: Fix the dead loop of MPLS parse
-Date: Tue, 17 Jun 2025 17:23:00 +0200
-Message-ID: <20250617152428.308273060@linuxfoundation.org>
+Subject: [PATCH 6.6 263/356] netfilter: nf_set_pipapo_avx2: fix initial map fill
+Date: Tue, 17 Jun 2025 17:26:18 +0200
+Message-ID: <20250617152348.790340311@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
+References: <20250617152338.212798615@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,77 +48,70 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Faicker Mo <faicker.mo@zenlayer.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 0bdc924bfb319fb10d1113cbf091fc26fb7b1f99 ]
+[ Upstream commit ea77c397bff8b6d59f6d83dae1425b08f465e8b5 ]
 
-The unexpected MPLS packet may not end with the bottom label stack.
-When there are many stacks, The label count value has wrapped around.
-A dead loop occurs, soft lockup/CPU stuck finally.
+If the first field doesn't cover the entire start map, then we must zero
+out the remainder, else we leak those bits into the next match round map.
 
-stack backtrace:
-UBSAN: array-index-out-of-bounds in /build/linux-0Pa0xK/linux-5.15.0/net/openvswitch/flow.c:662:26
-index -1 is out of range for type '__be32 [3]'
-CPU: 34 PID: 0 Comm: swapper/34 Kdump: loaded Tainted: G           OE   5.15.0-121-generic #131-Ubuntu
-Hardware name: Dell Inc. PowerEdge C6420/0JP9TF, BIOS 2.12.2 07/14/2021
-Call Trace:
- <IRQ>
- show_stack+0x52/0x5c
- dump_stack_lvl+0x4a/0x63
- dump_stack+0x10/0x16
- ubsan_epilogue+0x9/0x36
- __ubsan_handle_out_of_bounds.cold+0x44/0x49
- key_extract_l3l4+0x82a/0x840 [openvswitch]
- ? kfree_skbmem+0x52/0xa0
- key_extract+0x9c/0x2b0 [openvswitch]
- ovs_flow_key_extract+0x124/0x350 [openvswitch]
- ovs_vport_receive+0x61/0xd0 [openvswitch]
- ? kernel_init_free_pages.part.0+0x4a/0x70
- ? get_page_from_freelist+0x353/0x540
- netdev_port_receive+0xc4/0x180 [openvswitch]
- ? netdev_port_receive+0x180/0x180 [openvswitch]
- netdev_frame_hook+0x1f/0x40 [openvswitch]
- __netif_receive_skb_core.constprop.0+0x23a/0xf00
- __netif_receive_skb_list_core+0xfa/0x240
- netif_receive_skb_list_internal+0x18e/0x2a0
- napi_complete_done+0x7a/0x1c0
- bnxt_poll+0x155/0x1c0 [bnxt_en]
- __napi_poll+0x30/0x180
- net_rx_action+0x126/0x280
- ? bnxt_msix+0x67/0x80 [bnxt_en]
- handle_softirqs+0xda/0x2d0
- irq_exit_rcu+0x96/0xc0
- common_interrupt+0x8e/0xa0
- </IRQ>
+The early fix was incomplete and did only fix up the generic C
+implementation.
 
-Fixes: fbdcdd78da7c ("Change in Openvswitch to support MPLS label depth of 3 in ingress direction")
-Signed-off-by: Faicker Mo <faicker.mo@zenlayer.com>
-Acked-by: Ilya Maximets <i.maximets@ovn.org>
-Reviewed-by: Aaron Conole <aconole@redhat.com>
-Link: https://patch.msgid.link/259D3404-575D-4A6D-B263-1DF59A67CF89@zenlayer.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+A followup patch adds a test case to nft_concat_range.sh.
+
+Fixes: 791a615b7ad2 ("netfilter: nf_set_pipapo: fix initial map fill")
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Reviewed-by: Stefano Brivio <sbrivio@redhat.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/openvswitch/flow.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/netfilter/nft_set_pipapo_avx2.c | 21 ++++++++++++++++++++-
+ 1 file changed, 20 insertions(+), 1 deletion(-)
 
-diff --git a/net/openvswitch/flow.c b/net/openvswitch/flow.c
-index 8a848ce72e291..b80bd3a907739 100644
---- a/net/openvswitch/flow.c
-+++ b/net/openvswitch/flow.c
-@@ -788,7 +788,7 @@ static int key_extract_l3l4(struct sk_buff *skb, struct sw_flow_key *key)
- 			memset(&key->ipv4, 0, sizeof(key->ipv4));
- 		}
- 	} else if (eth_p_mpls(key->eth.type)) {
--		u8 label_count = 1;
-+		size_t label_count = 1;
+diff --git a/net/netfilter/nft_set_pipapo_avx2.c b/net/netfilter/nft_set_pipapo_avx2.c
+index c15db28c5ebc4..be7c16c79f711 100644
+--- a/net/netfilter/nft_set_pipapo_avx2.c
++++ b/net/netfilter/nft_set_pipapo_avx2.c
+@@ -1113,6 +1113,25 @@ bool nft_pipapo_avx2_estimate(const struct nft_set_desc *desc, u32 features,
+ 	return true;
+ }
  
- 		memset(&key->mpls, 0, sizeof(key->mpls));
- 		skb_set_inner_network_header(skb, skb->mac_len);
++/**
++ * pipapo_resmap_init_avx2() - Initialise result map before first use
++ * @m:		Matching data, including mapping table
++ * @res_map:	Result map
++ *
++ * Like pipapo_resmap_init() but do not set start map bits covered by the first field.
++ */
++static inline void pipapo_resmap_init_avx2(const struct nft_pipapo_match *m, unsigned long *res_map)
++{
++	const struct nft_pipapo_field *f = m->f;
++	int i;
++
++	/* Starting map doesn't need to be set to all-ones for this implementation,
++	 * but we do need to zero the remaining bits, if any.
++	 */
++	for (i = f->bsize; i < m->bsize_max; i++)
++		res_map[i] = 0ul;
++}
++
+ /**
+  * nft_pipapo_avx2_lookup() - Lookup function for AVX2 implementation
+  * @net:	Network namespace
+@@ -1171,7 +1190,7 @@ bool nft_pipapo_avx2_lookup(const struct net *net, const struct nft_set *set,
+ 	res  = scratch->map + (map_index ? m->bsize_max : 0);
+ 	fill = scratch->map + (map_index ? 0 : m->bsize_max);
+ 
+-	/* Starting map doesn't need to be set for this implementation */
++	pipapo_resmap_init_avx2(m, res);
+ 
+ 	nft_pipapo_avx2_prepare();
+ 
 -- 
 2.39.5
 
