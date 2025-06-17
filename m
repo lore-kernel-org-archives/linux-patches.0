@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AC452F3620;
-	Tue, 17 Jun 2025 15:51:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71C9C2EA16E;
+	Tue, 17 Jun 2025 15:51:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175493; cv=none; b=CIatdDktq5OY4AyP9fEZNy8mx8cx4/bsAFUAzSqJwHpjQ1kXihVzRwoYYVlkU/Gxa+TxKp9V4sqt2wWwXKrwdGl1LnGQmQ+OTzOHo197Ry95fXYcUGphKxsxt++50XU4p+RwW4nRNLT8ax/z7jKO9M5W8+wkn5SHM+Gi1vndU20=
+	t=1750175496; cv=none; b=Je4DSl72it++AnNLp+N3vIihlzXldKwiBrX5GX6Dt1OcynMC8ck1DqnteJvKb/V5EAy4o8xXFH/7y0hBtDxp49FAABQT+XXkarl3tYCnM0g+RCasYyDIXe1TqZRA4uvvqeAtRfo5hqKGhfTmqAgVtKVc8W8Lghuoq2JpVk1AbfY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175493; c=relaxed/simple;
-	bh=ggC2utJQ3Wt6HitZPeq0eTFX5nSa8P5GbB+SbIP2TC4=;
+	s=arc-20240116; t=1750175496; c=relaxed/simple;
+	bh=pZKVwIonODxzYuLybXiKbx859x/p8kGCrnCYJ92OsSc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C5E57j5KPz8oMWJkmhfaOkITSQMxWge7YTitfuZxLCVndesQoFEv/63vYDJnf2dg7ZcPiFFd1gwXr5hJ4SvcghVtTkX7PsbhcFjYNtqHGnR7z2wQLPIrnfOi45GbqkEgV3pbpsQHDl/ufEq1tf7FgX085KUNHrUj8MaptOtV2aQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fpnsnXvY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BXfc0vwpVb8pAsMlE3kNB07hLhkyc8FPJ0NHlw2eOp1KiN0z1nhXsP1967GTKTKgP8SruYuaBg71Lmj59NKZHLoWw9Q29h9CHssnTHcNW1M5rQF7Dh1dBF7syYw6zBZsRREdvRadrugIxHtx0yO4TVpQD9OFSX8/yU3P3pE7UfQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ld5+NwI1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fpnsnXvY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D41FC4CEE3;
-	Tue, 17 Jun 2025 15:51:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ld5+NwI1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 973DDC4CEE7;
+	Tue, 17 Jun 2025 15:51:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175492;
-	bh=ggC2utJQ3Wt6HitZPeq0eTFX5nSa8P5GbB+SbIP2TC4=;
+	s=korg; t=1750175496;
+	bh=pZKVwIonODxzYuLybXiKbx859x/p8kGCrnCYJ92OsSc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fpnsnXvYsOAQy4Eo+8RKragumSJJdOeZikwU+VpZDvrZqcPGgRgNnlVH2sh3DsHRO
-	 Bp/TzqW7V99FEjfodc0MkIQJ7XOPojyIT8SJLJHbiFqYSmWA+Ma+DOfQ44oykrJ/0I
-	 2zLd1eyW5oZoaoUusY80wSDilHm4YuakBGVFnBhI=
+	b=ld5+NwI14Sy/CBeRTaYRpr/su3rz4Y/yS0xev383YC/paD8Y/YrHEoeWs53a5Mgf3
+	 U2MP3YLMe7MDMKyvmweInaTM1I2sR+Qx+oJ+DFYDPZsNs0i2hwkySByAmoLMhOP4Tb
+	 Jm20TGQ0WM1gDysG6tKd5fIEMFUk4y1hCp5h0BBw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Stefan Wahren <wahrenst@gmx.net>,
-	Maxime Ripard <mripard@kernel.org>,
-	David Turner <david.turner@raspberrypi.com>,
-	Dave Stevenson <dave.stevenson@raspberrypi.com>,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 093/780] drm/vc4: hdmi: Call HDMI hotplug helper on disconnect
-Date: Tue, 17 Jun 2025 17:16:41 +0200
-Message-ID: <20250617152455.300821602@linuxfoundation.org>
+Subject: [PATCH 6.6 182/356] nilfs2: add pointer check for nilfs_direct_propagate()
+Date: Tue, 17 Jun 2025 17:24:57 +0200
+Message-ID: <20250617152345.543022146@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
+References: <20250617152338.212798615@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,50 +48,58 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stefan Wahren <wahrenst@gmx.net>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit 34f051accedb642087fdcf19b3501fe150fbee49 ]
+[ Upstream commit f43f02429295486059605997bc43803527d69791 ]
 
-drm_atomic_helper_connector_hdmi_hotplug() must be called
-regardless of the connection status, otherwise the HDMI audio
-disconnect event won't be notified.
+Patch series "nilfs2: improve sanity checks in dirty state propagation".
 
-Fixes: 2ea9ec5d2c20 ("drm/vc4: hdmi: use drm_atomic_helper_connector_hdmi_hotplug()")
-Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
-Reviewed-by: Maxime Ripard <mripard@kernel.org>
-Signed-off-by: David Turner <david.turner@raspberrypi.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250317-vc4_hotplug-v4-2-2af625629186@raspberrypi.com
-Signed-off-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
+This fixes one missed check for block mapping anomalies and one improper
+return of an error code during a preparation step for log writing, thereby
+improving checking for filesystem corruption on writeback.
+
+This patch (of 2):
+
+In nilfs_direct_propagate(), the printer get from nilfs_direct_get_ptr()
+need to be checked to ensure it is not an invalid pointer.
+
+If the pointer value obtained by nilfs_direct_get_ptr() is
+NILFS_BMAP_INVALID_PTR, means that the metadata (in this case, i_bmap in
+the nilfs_inode_info struct) that should point to the data block at the
+buffer head of the argument is corrupted and the data block is orphaned,
+meaning that the file system has lost consistency.
+
+Add a value check and return -EINVAL when it is an invalid pointer.
+
+Link: https://lkml.kernel.org/r/20250428173808.6452-1-konishi.ryusuke@gmail.com
+Link: https://lkml.kernel.org/r/20250428173808.6452-2-konishi.ryusuke@gmail.com
+Fixes: 36a580eb489f ("nilfs2: direct block mapping")
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vc4/vc4_hdmi.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/nilfs2/direct.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/vc4/vc4_hdmi.c b/drivers/gpu/drm/vc4/vc4_hdmi.c
-index 37238a12baa58..37a7d45695f23 100644
---- a/drivers/gpu/drm/vc4/vc4_hdmi.c
-+++ b/drivers/gpu/drm/vc4/vc4_hdmi.c
-@@ -372,13 +372,13 @@ static void vc4_hdmi_handle_hotplug(struct vc4_hdmi *vc4_hdmi,
- 	 * the lock for now.
- 	 */
- 
-+	drm_atomic_helper_connector_hdmi_hotplug(connector, status);
+diff --git a/fs/nilfs2/direct.c b/fs/nilfs2/direct.c
+index 893ab36824cc2..2d8dc6b35b547 100644
+--- a/fs/nilfs2/direct.c
++++ b/fs/nilfs2/direct.c
+@@ -273,6 +273,9 @@ static int nilfs_direct_propagate(struct nilfs_bmap *bmap,
+ 	dat = nilfs_bmap_get_dat(bmap);
+ 	key = nilfs_bmap_data_get_key(bmap, bh);
+ 	ptr = nilfs_direct_get_ptr(bmap, key);
++	if (ptr == NILFS_BMAP_INVALID_PTR)
++		return -EINVAL;
 +
- 	if (status == connector_status_disconnected) {
- 		cec_phys_addr_invalidate(vc4_hdmi->cec_adap);
- 		return;
- 	}
- 
--	drm_atomic_helper_connector_hdmi_hotplug(connector, status);
--
- 	cec_s_phys_addr(vc4_hdmi->cec_adap,
- 			connector->display_info.source_physical_address, false);
- 
+ 	if (!buffer_nilfs_volatile(bh)) {
+ 		oldreq.pr_entry_nr = ptr;
+ 		newreq.pr_entry_nr = ptr;
 -- 
 2.39.5
 
