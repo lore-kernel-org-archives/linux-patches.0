@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECCF428506E;
-	Tue, 17 Jun 2025 16:38:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95E47235067;
+	Tue, 17 Jun 2025 16:38:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750178305; cv=none; b=IWVqWd48OeABdNrWZgQPS/6FBKx9Fcpe7p4S3CJ2ifq4A8qR/zWHJj/19etvZbwRj3+BDXEPbL3KptWPs8lWlctSJv6FwtWs4S1iF+m7Hw/hsTFJr3yzIeveAzAqAM4DsqppgM37dEQ5CpKKLr0Vg3MvxGrg9ZpxsK+b2qv7HIE=
+	t=1750178308; cv=none; b=f97KgygVNRle1ac/ULkKBYoDMt38RoX9p5M570XpyOyU44OclxJvN/8wCzSBzazVUJbKdTOh5ULG1CIkNBzslm33MoHva+VYPWrhjGlC++6+xKzcfUB1zkae744xjQ2J2y4s9DchCyJG7SzPbf2/PebI9VNNcnSEi5FlKNctJBE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750178305; c=relaxed/simple;
-	bh=4JLa3394yV/R30IBlwxXhT2JKG9gABRkSRZUEt55/sQ=;
+	s=arc-20240116; t=1750178308; c=relaxed/simple;
+	bh=xOFnHcfd+OaIrcPoaeSPGUExtOgWoTkKxkRkoRoanjE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rFPtmiwa9TK6zJEVmc8jnD3gvcM83dIdvIMPRGPep7+QjbuDtC1Y+feaMNnnILTPV96bm4uBB77/aHZaWAajUvtKWlwhJ0/7ccD2Pi8Nao+4cJp9T3t8EqalF76H4npUwWnp+AStc05ZjF/Oow0npG/4yOUo05rK0KctFcNOcts=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U65+Q6fQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F+Re/ip/IfNfC+ROcDh8t7K2OZGzVd9vkAmO/lOCljHwUJ9jYYC6RKqiF7IbQK6rFo3NIZajTu6yq2j3BryJOKD6Qyuh7BoegUkvZNLXjvNwjM8Adoggzv8yQGOyRYdJKjbfrVTSi3bxThx6oeXPARjiUxrRzRZaYBkEoiUgRjI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A2tEh9ZP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U65+Q6fQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E7B0C4CEE3;
-	Tue, 17 Jun 2025 16:38:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A2tEh9ZP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2DC7C4CEE3;
+	Tue, 17 Jun 2025 16:38:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750178304;
-	bh=4JLa3394yV/R30IBlwxXhT2JKG9gABRkSRZUEt55/sQ=;
+	s=korg; t=1750178308;
+	bh=xOFnHcfd+OaIrcPoaeSPGUExtOgWoTkKxkRkoRoanjE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U65+Q6fQvwFiXOSqcnu4DCv9PlmHVP+wYjZGBAKp8OFpNNSXRqC/m5SQF8m8dCOZq
-	 gLWN+/+nyq4ktaZN2Xu5QLK9fiaTALlgUAQd5/sQ35E12zjOKWwY4yslEVBfK887uW
-	 G0C/kKwSNdznfKxr05IB/QDYr7mpkCpTvtKbBjkw=
+	b=A2tEh9ZPstuN3PnrwhMm8SSDzdZY0hzKcqSr+ZSl+FTWsp29pcfgmBy1M8Ne2TL2s
+	 +xRCWETw1RSC1UfkOcMrd3CQfYHD/S5MjxUcOCY/H1X4lUXE6ROFIBk814+/MuR+i5
+	 jpYCUIuoAZrRgzik6TwqyQzAObuANmijjfG7AkMg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kent Overstreet <kent.overstreet@linux.dev>,
-	Benjamin Marzinski <bmarzins@redhat.com>,
-	Mikulas Patocka <mpatocka@redhat.com>,
+	syzbot+531502bbbe51d2f769f4@syzkaller.appspotmail.com,
+	Penglei Jiang <superman.xpt@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 441/780] dm-flakey: make corrupting read bios work
-Date: Tue, 17 Jun 2025 17:22:29 +0200
-Message-ID: <20250617152509.417770294@linuxfoundation.org>
+Subject: [PATCH 6.12 477/512] io_uring: fix use-after-free of sq->thread in __io_uring_show_fdinfo()
+Date: Tue, 17 Jun 2025 17:27:23 +0200
+Message-ID: <20250617152438.913584152@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,182 +48,209 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Benjamin Marzinski <bmarzins@redhat.com>
+From: Penglei Jiang <superman.xpt@gmail.com>
 
-[ Upstream commit 13e79076c89f6e96a6cca8f6df38b40d025907b4 ]
+[ Upstream commit ac0b8b327a5677dc6fecdf353d808161525b1ff0 ]
 
-dm-flakey corrupts the read bios in the endio function.  However, the
-corrupt_bio_* functions checked bio_has_data() to see if there was data
-to corrupt. Since this was the endio function, there was no data left to
-complete, so bio_has_data() was always false. Fix this by saving a copy
-of the bio's bi_iter in flakey_map(), and using this to initialize the
-iter for corrupting the read bios. This patch also skips cloning the bio
-for write bios with no data.
+syzbot reports:
 
-Reported-by: Kent Overstreet <kent.overstreet@linux.dev>
-Fixes: a3998799fb4df ("dm flakey: add corrupt_bio_byte feature")
-Signed-off-by: Benjamin Marzinski <bmarzins@redhat.com>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+BUG: KASAN: slab-use-after-free in getrusage+0x1109/0x1a60
+Read of size 8 at addr ffff88810de2d2c8 by task a.out/304
+
+CPU: 0 UID: 0 PID: 304 Comm: a.out Not tainted 6.16.0-rc1 #1 PREEMPT(voluntary)
+Hardware name: QEMU Ubuntu 24.04 PC (i440FX + PIIX, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x53/0x70
+ print_report+0xd0/0x670
+ ? __pfx__raw_spin_lock_irqsave+0x10/0x10
+ ? getrusage+0x1109/0x1a60
+ kasan_report+0xce/0x100
+ ? getrusage+0x1109/0x1a60
+ getrusage+0x1109/0x1a60
+ ? __pfx_getrusage+0x10/0x10
+ __io_uring_show_fdinfo+0x9fe/0x1790
+ ? ksys_read+0xf7/0x1c0
+ ? do_syscall_64+0xa4/0x260
+ ? vsnprintf+0x591/0x1100
+ ? __pfx___io_uring_show_fdinfo+0x10/0x10
+ ? __pfx_vsnprintf+0x10/0x10
+ ? mutex_trylock+0xcf/0x130
+ ? __pfx_mutex_trylock+0x10/0x10
+ ? __pfx_show_fd_locks+0x10/0x10
+ ? io_uring_show_fdinfo+0x57/0x80
+ io_uring_show_fdinfo+0x57/0x80
+ seq_show+0x38c/0x690
+ seq_read_iter+0x3f7/0x1180
+ ? inode_set_ctime_current+0x160/0x4b0
+ seq_read+0x271/0x3e0
+ ? __pfx_seq_read+0x10/0x10
+ ? __pfx__raw_spin_lock+0x10/0x10
+ ? __mark_inode_dirty+0x402/0x810
+ ? selinux_file_permission+0x368/0x500
+ ? file_update_time+0x10f/0x160
+ vfs_read+0x177/0xa40
+ ? __pfx___handle_mm_fault+0x10/0x10
+ ? __pfx_vfs_read+0x10/0x10
+ ? mutex_lock+0x81/0xe0
+ ? __pfx_mutex_lock+0x10/0x10
+ ? fdget_pos+0x24d/0x4b0
+ ksys_read+0xf7/0x1c0
+ ? __pfx_ksys_read+0x10/0x10
+ ? do_user_addr_fault+0x43b/0x9c0
+ do_syscall_64+0xa4/0x260
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7f0f74170fc9
+Code: 00 c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 8
+RSP: 002b:00007fffece049e8 EFLAGS: 00000206 ORIG_RAX: 0000000000000000
+RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007f0f74170fc9
+RDX: 0000000000001000 RSI: 00007fffece049f0 RDI: 0000000000000004
+RBP: 00007fffece05ad0 R08: 0000000000000000 R09: 00007fffece04d90
+R10: 0000000000000000 R11: 0000000000000206 R12: 00005651720a1100
+R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000000
+ </TASK>
+
+Allocated by task 298:
+ kasan_save_stack+0x33/0x60
+ kasan_save_track+0x14/0x30
+ __kasan_slab_alloc+0x6e/0x70
+ kmem_cache_alloc_node_noprof+0xe8/0x330
+ copy_process+0x376/0x5e00
+ create_io_thread+0xab/0xf0
+ io_sq_offload_create+0x9ed/0xf20
+ io_uring_setup+0x12b0/0x1cc0
+ do_syscall_64+0xa4/0x260
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+Freed by task 22:
+ kasan_save_stack+0x33/0x60
+ kasan_save_track+0x14/0x30
+ kasan_save_free_info+0x3b/0x60
+ __kasan_slab_free+0x37/0x50
+ kmem_cache_free+0xc4/0x360
+ rcu_core+0x5ff/0x19f0
+ handle_softirqs+0x18c/0x530
+ run_ksoftirqd+0x20/0x30
+ smpboot_thread_fn+0x287/0x6c0
+ kthread+0x30d/0x630
+ ret_from_fork+0xef/0x1a0
+ ret_from_fork_asm+0x1a/0x30
+
+Last potentially related work creation:
+ kasan_save_stack+0x33/0x60
+ kasan_record_aux_stack+0x8c/0xa0
+ __call_rcu_common.constprop.0+0x68/0x940
+ __schedule+0xff2/0x2930
+ __cond_resched+0x4c/0x80
+ mutex_lock+0x5c/0xe0
+ io_uring_del_tctx_node+0xe1/0x2b0
+ io_uring_clean_tctx+0xb7/0x160
+ io_uring_cancel_generic+0x34e/0x760
+ do_exit+0x240/0x2350
+ do_group_exit+0xab/0x220
+ __x64_sys_exit_group+0x39/0x40
+ x64_sys_call+0x1243/0x1840
+ do_syscall_64+0xa4/0x260
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+The buggy address belongs to the object at ffff88810de2cb00
+ which belongs to the cache task_struct of size 3712
+The buggy address is located 1992 bytes inside of
+ freed 3712-byte region [ffff88810de2cb00, ffff88810de2d980)
+
+which is caused by the task_struct pointed to by sq->thread being
+released while it is being used in the function
+__io_uring_show_fdinfo(). Holding ctx->uring_lock does not prevent ehre
+relase or exit of sq->thread.
+
+Fix this by assigning and looking up ->thread under RCU, and grabbing a
+reference to the task_struct. This ensures that it cannot get released
+while fdinfo is using it.
+
+Reported-by: syzbot+531502bbbe51d2f769f4@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/682b06a5.a70a0220.3849cf.00b3.GAE@google.com
+Fixes: 3fcb9d17206e ("io_uring/sqpoll: statistics of the true utilization of sq threads")
+Signed-off-by: Penglei Jiang <superman.xpt@gmail.com>
+Link: https://lore.kernel.org/r/20250610171801.70960-1-superman.xpt@gmail.com
+[axboe: massage commit message]
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-flakey.c | 54 ++++++++++++++++++++++--------------------
- 1 file changed, 28 insertions(+), 26 deletions(-)
+ io_uring/fdinfo.c | 12 ++++++++++--
+ io_uring/sqpoll.c |  9 ++++-----
+ 2 files changed, 14 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/md/dm-flakey.c b/drivers/md/dm-flakey.c
-index 806a80dd3bd9b..347881f323d5b 100644
---- a/drivers/md/dm-flakey.c
-+++ b/drivers/md/dm-flakey.c
-@@ -47,7 +47,8 @@ enum feature_flag_bits {
- };
+diff --git a/io_uring/fdinfo.c b/io_uring/fdinfo.c
+index ecdbe473a49f7..c6c624eb9866d 100644
+--- a/io_uring/fdinfo.c
++++ b/io_uring/fdinfo.c
+@@ -146,18 +146,26 @@ __cold void io_uring_show_fdinfo(struct seq_file *m, struct file *file)
  
- struct per_bio_data {
--	bool bio_submitted;
-+	bool bio_can_corrupt;
-+	struct bvec_iter saved_iter;
- };
+ 	if (has_lock && (ctx->flags & IORING_SETUP_SQPOLL)) {
+ 		struct io_sq_data *sq = ctx->sq_data;
++		struct task_struct *tsk;
  
- static int parse_features(struct dm_arg_set *as, struct flakey_c *fc,
-@@ -339,7 +340,8 @@ static void flakey_map_bio(struct dm_target *ti, struct bio *bio)
- }
- 
- static void corrupt_bio_common(struct bio *bio, unsigned int corrupt_bio_byte,
--			       unsigned char corrupt_bio_value)
-+			       unsigned char corrupt_bio_value,
-+			       struct bvec_iter start)
- {
- 	struct bvec_iter iter;
- 	struct bio_vec bvec;
-@@ -348,7 +350,7 @@ static void corrupt_bio_common(struct bio *bio, unsigned int corrupt_bio_byte,
- 	 * Overwrite the Nth byte of the bio's data, on whichever page
- 	 * it falls.
- 	 */
--	bio_for_each_segment(bvec, bio, iter) {
-+	__bio_for_each_segment(bvec, bio, iter, start) {
- 		if (bio_iter_len(bio, iter) > corrupt_bio_byte) {
- 			unsigned char *segment = bvec_kmap_local(&bvec);
- 			segment[corrupt_bio_byte] = corrupt_bio_value;
-@@ -357,36 +359,31 @@ static void corrupt_bio_common(struct bio *bio, unsigned int corrupt_bio_byte,
- 				"(rw=%c bi_opf=%u bi_sector=%llu size=%u)\n",
- 				bio, corrupt_bio_value, corrupt_bio_byte,
- 				(bio_data_dir(bio) == WRITE) ? 'w' : 'r', bio->bi_opf,
--				(unsigned long long)bio->bi_iter.bi_sector,
--				bio->bi_iter.bi_size);
-+				(unsigned long long)start.bi_sector,
-+				start.bi_size);
- 			break;
- 		}
- 		corrupt_bio_byte -= bio_iter_len(bio, iter);
- 	}
- }
- 
--static void corrupt_bio_data(struct bio *bio, struct flakey_c *fc)
-+static void corrupt_bio_data(struct bio *bio, struct flakey_c *fc,
-+			     struct bvec_iter start)
- {
- 	unsigned int corrupt_bio_byte = fc->corrupt_bio_byte - 1;
- 
--	if (!bio_has_data(bio))
--		return;
--
--	corrupt_bio_common(bio, corrupt_bio_byte, fc->corrupt_bio_value);
-+	corrupt_bio_common(bio, corrupt_bio_byte, fc->corrupt_bio_value, start);
- }
- 
--static void corrupt_bio_random(struct bio *bio)
-+static void corrupt_bio_random(struct bio *bio, struct bvec_iter start)
- {
- 	unsigned int corrupt_byte;
- 	unsigned char corrupt_value;
- 
--	if (!bio_has_data(bio))
--		return;
--
--	corrupt_byte = get_random_u32() % bio->bi_iter.bi_size;
-+	corrupt_byte = get_random_u32() % start.bi_size;
- 	corrupt_value = get_random_u8();
- 
--	corrupt_bio_common(bio, corrupt_byte, corrupt_value);
-+	corrupt_bio_common(bio, corrupt_byte, corrupt_value, start);
- }
- 
- static void clone_free(struct bio *clone)
-@@ -481,7 +478,7 @@ static int flakey_map(struct dm_target *ti, struct bio *bio)
- 	unsigned int elapsed;
- 	struct per_bio_data *pb = dm_per_bio_data(bio, sizeof(struct per_bio_data));
- 
--	pb->bio_submitted = false;
-+	pb->bio_can_corrupt = false;
- 
- 	if (op_is_zone_mgmt(bio_op(bio)))
- 		goto map_bio;
-@@ -490,10 +487,11 @@ static int flakey_map(struct dm_target *ti, struct bio *bio)
- 	elapsed = (jiffies - fc->start_time) / HZ;
- 	if (elapsed % (fc->up_interval + fc->down_interval) >= fc->up_interval) {
- 		bool corrupt_fixed, corrupt_random;
--		/*
--		 * Flag this bio as submitted while down.
--		 */
--		pb->bio_submitted = true;
-+
-+		if (bio_has_data(bio)) {
-+			pb->bio_can_corrupt = true;
-+			pb->saved_iter = bio->bi_iter;
-+		}
- 
++		rcu_read_lock();
++		tsk = rcu_dereference(sq->thread);
  		/*
- 		 * Error reads if neither corrupt_bio_byte or drop_writes or error_writes are set.
-@@ -516,6 +514,8 @@ static int flakey_map(struct dm_target *ti, struct bio *bio)
- 			return DM_MAPIO_SUBMITTED;
- 		}
- 
-+		if (!pb->bio_can_corrupt)
-+			goto map_bio;
- 		/*
- 		 * Corrupt matching writes.
+ 		 * sq->thread might be NULL if we raced with the sqpoll
+ 		 * thread termination.
  		 */
-@@ -535,9 +535,11 @@ static int flakey_map(struct dm_target *ti, struct bio *bio)
- 			struct bio *clone = clone_bio(ti, fc, bio);
- 			if (clone) {
- 				if (corrupt_fixed)
--					corrupt_bio_data(clone, fc);
-+					corrupt_bio_data(clone, fc,
-+							 clone->bi_iter);
- 				if (corrupt_random)
--					corrupt_bio_random(clone);
-+					corrupt_bio_random(clone,
-+							   clone->bi_iter);
- 				submit_bio(clone);
- 				return DM_MAPIO_SUBMITTED;
- 			}
-@@ -559,21 +561,21 @@ static int flakey_end_io(struct dm_target *ti, struct bio *bio,
- 	if (op_is_zone_mgmt(bio_op(bio)))
- 		return DM_ENDIO_DONE;
+-		if (sq->thread) {
++		if (tsk) {
++			get_task_struct(tsk);
++			rcu_read_unlock();
++			getrusage(tsk, RUSAGE_SELF, &sq_usage);
++			put_task_struct(tsk);
+ 			sq_pid = sq->task_pid;
+ 			sq_cpu = sq->sq_cpu;
+-			getrusage(sq->thread, RUSAGE_SELF, &sq_usage);
+ 			sq_total_time = (sq_usage.ru_stime.tv_sec * 1000000
+ 					 + sq_usage.ru_stime.tv_usec);
+ 			sq_work_time = sq->work_time;
++		} else {
++			rcu_read_unlock();
+ 		}
+ 	}
  
--	if (!*error && pb->bio_submitted && (bio_data_dir(bio) == READ)) {
-+	if (!*error && pb->bio_can_corrupt && (bio_data_dir(bio) == READ)) {
- 		if (fc->corrupt_bio_byte) {
- 			if ((fc->corrupt_bio_rw == READ) &&
- 			    all_corrupt_bio_flags_match(bio, fc)) {
- 				/*
- 				 * Corrupt successful matching READs while in down state.
- 				 */
--				corrupt_bio_data(bio, fc);
-+				corrupt_bio_data(bio, fc, pb->saved_iter);
- 			}
- 		}
- 		if (fc->random_read_corrupt) {
- 			u64 rnd = get_random_u64();
- 			u32 rem = do_div(rnd, PROBABILITY_BASE);
- 			if (rem < fc->random_read_corrupt)
--				corrupt_bio_random(bio);
-+				corrupt_bio_random(bio, pb->saved_iter);
- 		}
- 		if (test_bit(ERROR_READS, &fc->flags)) {
- 			/*
+diff --git a/io_uring/sqpoll.c b/io_uring/sqpoll.c
+index 430922c541681..b0f17a1220ecd 100644
+--- a/io_uring/sqpoll.c
++++ b/io_uring/sqpoll.c
+@@ -277,7 +277,8 @@ static int io_sq_thread(void *data)
+ 	/* offload context creation failed, just exit */
+ 	if (!current->io_uring) {
+ 		mutex_lock(&sqd->lock);
+-		sqd->thread = NULL;
++		rcu_assign_pointer(sqd->thread, NULL);
++		put_task_struct(current);
+ 		mutex_unlock(&sqd->lock);
+ 		goto err_out;
+ 	}
+@@ -386,7 +387,8 @@ static int io_sq_thread(void *data)
+ 		io_sq_tw(&retry_list, UINT_MAX);
+ 
+ 	io_uring_cancel_generic(true, sqd);
+-	sqd->thread = NULL;
++	rcu_assign_pointer(sqd->thread, NULL);
++	put_task_struct(current);
+ 	list_for_each_entry(ctx, &sqd->ctx_list, sqd_list)
+ 		atomic_or(IORING_SQ_NEED_WAKEUP, &ctx->rings->sq_flags);
+ 	io_run_task_work();
+@@ -507,9 +509,6 @@ __cold int io_sq_offload_create(struct io_ring_ctx *ctx,
+ 		ret = -EINVAL;
+ 		goto err;
+ 	}
+-
+-	if (task_to_put)
+-		put_task_struct(task_to_put);
+ 	return 0;
+ err_sqpoll:
+ 	complete(&ctx->sq_data->exited);
 -- 
 2.39.5
 
