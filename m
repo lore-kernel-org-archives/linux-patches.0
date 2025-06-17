@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 906A120F090;
-	Tue, 17 Jun 2025 15:42:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E6FE2E9753;
+	Tue, 17 Jun 2025 15:42:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750174936; cv=none; b=iEmirU7oTaA4oEFOGfXFzhz5kw2nbXNe680IlUiWjQAZ6Nu+JS708dDBaBsdZ8dHCBOvCl3H+ej1RCnODOaz0ugrQnDeOEFwTtQkjVja6hqCHtIYd5UQaI9vDdXuMxHGgVhoQQYz5pnZLJMs+EAwGmG6V0KGaQOaEEj5PR3AE9U=
+	t=1750174940; cv=none; b=blXXtyAcKOn4qnWo8AoagRCFLyO79lQ5HI6P4qDgWIsroXCC9pPFF7QKEHfCnaQZbapfpGAu13sJWUGbDurJqbtlZqZo2oqRaOQkRx1y2QEqVbwGwnFnGwFC27mXWuxJOQPb4BB0YnQR1FPBRlsEw/Tb0DZAPyMyi7B1Smtk7GQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750174936; c=relaxed/simple;
-	bh=mNJ15ttJ3O+VQA+TFkyklOE2xkiwYu6+DRQyyKGwGq8=;
+	s=arc-20240116; t=1750174940; c=relaxed/simple;
+	bh=ru66QfUEQZmtMrkiR7dyKAIeHuWj5CWvqnbJDwe4gh4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hhyerz0zlqy1diner2vrfs68b1nz9ZjJSy9bQWlSuSkJzjz6SgdfN8nQ3ZYSxaI4ZXXvrgtdnXwZbiTOPMb/nfecR7lZOXxYO8ipavQtau5chsObYOtJov+Az3iXv9JRJ5dR7LoHjkjGt8oWbnsuuNPTsQK7dnyB/4jHs/K0y/4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SuAPYl+o; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n9+6WJgotWnz0MYrxYnf0DfUM+U/U8dUsojqDK3uLeLEsI2lIj6HG2/hPUe7XvzqgvqjNVYk7r6e20e1iemF/hqnmP8zh9ND2s1BzL1zxZWmdKvQz0ywo0v14ocXq8LI/Ow6+X2CzzqCrxC0pVShc+T1YVGkSQmqLUsIGU+lvoE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p7DVBNAA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SuAPYl+o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3B4BC4CEE3;
-	Tue, 17 Jun 2025 15:42:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p7DVBNAA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4352CC4CEE7;
+	Tue, 17 Jun 2025 15:42:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750174936;
-	bh=mNJ15ttJ3O+VQA+TFkyklOE2xkiwYu6+DRQyyKGwGq8=;
+	s=korg; t=1750174939;
+	bh=ru66QfUEQZmtMrkiR7dyKAIeHuWj5CWvqnbJDwe4gh4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SuAPYl+odVPN/HHwaaOZ4UK0qr9yzbOaE2U//jk1SqZFtsfAlmX3/aCqylNNTLfh3
-	 4Us20NQmlIIFjahvHKqciYMhlWWAxGDI9GBJRA2iOsB2tC4GX4GvWuOZF27G9BWGpB
-	 I5T6nbXdoCITkaVTz6AFQ8TBGMSOe/L5SiqaALFQ=
+	b=p7DVBNAAojWG2rI2i9FpYJWwgi9L6EXLm9Pt5SDianNtVxjK7Zb3tl9H4qNrqY4b4
+	 U71dcb38RwhiQXfonSiaBeAel4Dzn5BFKGwXYD/R+I0tcA/PJ9Moj1X+EzZzRVvGcx
+	 Zhgr/liy1aDbzp55RMJFf5lVX57ogbarDKd0ak6I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Andrey Vatoropin <a.vatoropin@crpt.ru>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 035/780] crypto: marvell/cesa - Handle zero-length skcipher requests
-Date: Tue, 17 Jun 2025 17:15:43 +0200
-Message-ID: <20250617152452.930742733@linuxfoundation.org>
+Subject: [PATCH 6.12 078/512] fs/ntfs3: handle hdr_first_de() return value
+Date: Tue, 17 Jun 2025 17:20:44 +0200
+Message-ID: <20250617152422.744477356@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,38 +47,58 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Andrey Vatoropin <a.vatoropin@crpt.ru>
 
-[ Upstream commit 8a4e047c6cc07676f637608a9dd675349b5de0a7 ]
+[ Upstream commit af5cab0e5b6f8edb0be51a9f47f3f620e0b4fd70 ]
 
-Do not access random memory for zero-length skcipher requests.
-Just return 0.
+The hdr_first_de() function returns a pointer to a struct NTFS_DE. This
+pointer may be NULL. To handle the NULL error effectively, it is important
+to implement an error handler. This will help manage potential errors
+consistently.
 
-Fixes: f63601fd616a ("crypto: marvell/cesa - add a new driver for Marvell's CESA")
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Additionally, error handling for the return value already exists at other
+points where this function is called.
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: 82cae269cfa9 ("fs/ntfs3: Add initialization of super block")
+Signed-off-by: Andrey Vatoropin <a.vatoropin@crpt.ru>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/marvell/cesa/cipher.c | 3 +++
- 1 file changed, 3 insertions(+)
+ fs/ntfs3/index.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/crypto/marvell/cesa/cipher.c b/drivers/crypto/marvell/cesa/cipher.c
-index cf62db50f9585..48c5c8ea8c43e 100644
---- a/drivers/crypto/marvell/cesa/cipher.c
-+++ b/drivers/crypto/marvell/cesa/cipher.c
-@@ -459,6 +459,9 @@ static int mv_cesa_skcipher_queue_req(struct skcipher_request *req,
- 	struct mv_cesa_skcipher_req *creq = skcipher_request_ctx(req);
- 	struct mv_cesa_engine *engine;
+diff --git a/fs/ntfs3/index.c b/fs/ntfs3/index.c
+index 78d20e4baa2c9..1bf2a6593dec6 100644
+--- a/fs/ntfs3/index.c
++++ b/fs/ntfs3/index.c
+@@ -2182,6 +2182,10 @@ static int indx_get_entry_to_replace(struct ntfs_index *indx,
  
-+	if (!req->cryptlen)
-+		return 0;
-+
- 	ret = mv_cesa_skcipher_req_init(req, tmpl);
- 	if (ret)
- 		return ret;
+ 		e = hdr_first_de(&n->index->ihdr);
+ 		fnd_push(fnd, n, e);
++		if (!e) {
++			err = -EINVAL;
++			goto out;
++		}
+ 
+ 		if (!de_is_last(e)) {
+ 			/*
+@@ -2203,6 +2207,10 @@ static int indx_get_entry_to_replace(struct ntfs_index *indx,
+ 
+ 	n = fnd->nodes[level];
+ 	te = hdr_first_de(&n->index->ihdr);
++	if (!te) {
++		err = -EINVAL;
++		goto out;
++	}
+ 	/* Copy the candidate entry into the replacement entry buffer. */
+ 	re = kmalloc(le16_to_cpu(te->size) + sizeof(u64), GFP_NOFS);
+ 	if (!re) {
 -- 
 2.39.5
 
