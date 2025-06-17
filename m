@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E66E2EBDCC;
-	Tue, 17 Jun 2025 15:42:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F27422ECE81;
+	Tue, 17 Jun 2025 15:42:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750174949; cv=none; b=ob+kR6igo5GKqCxecZdwtdxcoXbzmMYK/jtkM/kCtyYHW2Ug8p/R/mJ12Vsiq0yDL+m2TP0sbfmZuOPaJUrH/2eYb0WPssag+R0dyt7Q3PKuu3pVWlr6F3jeA7dMpkKgxnf1VMYq/edtXYjAFDEhVTdSOLE6KveOlyCboOGvd5w=
+	t=1750174953; cv=none; b=op5Yi0kBORA1BUNd3tKHRRGwP228rFpRJmWVO3wwIYRZGKH3eEoyDKw9/z8ZBxzYPjQwDTkAVJM6ASTBWY70+Le7w+ovzvjGDcXSXryTsK569DiY/mFpMvIMbm0Dt1JURqegL2t11+3rb+3IrQJjtHBHpduOJ7FMdG7ZLQLz1rg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750174949; c=relaxed/simple;
-	bh=sc/jooSsAzRfEwPqtmkWFh2DGpujk+KeX0d3CREoi2Q=;
+	s=arc-20240116; t=1750174953; c=relaxed/simple;
+	bh=vQOvazko0pxgF5jKmEiTh7RYQsVhWfRDyeTYB0Ofkxw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oFImU8sTSKoxR595vc+w5s1bIBxWt5HwDc1oV03AykPCqPx4e6++tsH7L0WoXHwcu9E7SKqgSigG9vVGA2HxZu6EZ6TNdv6yHvREG8RK8SvW0hCgXQgCzUTYqGDq31c2w7wH62gWik52gopu+4XdL/ootObqIcGPIQx78OuOFpk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IF47YpOI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=IKGA9OJ1T/TwcCzaYpI0g5w0fu+zxyINtdTycXeN2d24egK5e1WPLgdX7+1t3Dm4+QAo7jn4fWt5fqRccIceddeWm10hR+6xcV5xhtk9rQRjYPytWxvfJSCBmBNyHv35+aUy3ij7zxEIbb+eqy2tLTzYQsQozrKAWGDRCHz5kaU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cpmO0lDr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IF47YpOI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00462C4CEF0;
-	Tue, 17 Jun 2025 15:42:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cpmO0lDr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 439C0C4CEE3;
+	Tue, 17 Jun 2025 15:42:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750174949;
-	bh=sc/jooSsAzRfEwPqtmkWFh2DGpujk+KeX0d3CREoi2Q=;
+	s=korg; t=1750174952;
+	bh=vQOvazko0pxgF5jKmEiTh7RYQsVhWfRDyeTYB0Ofkxw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IF47YpOIl9rehrkfzM+hqAIFgXia3DCwPbluWZgp4J57t80h7I1gAFz2cS6RsnLCM
-	 EJIEPt7iSWyX59Oi1hZF0ufy6AOLzJJIg5Un0bwmtRIZ1qcIbrCS4zIwuSMUyIG17F
-	 AKgkx2vzonCzNyrn4seRgLEFh7orJ0sbjwrakfuY=
+	b=cpmO0lDrCFfVLfOXGAxHelnQhuntnBlmtsy78xgDOnZq1edCLMSoefReuJduKKrWh
+	 V5JUpQsCJ64zHQ+ZE5EvexbaWVRDs+l0HcYWhTGzCgUsYg585DlWBKrVeGiYCgE6eN
+	 JPWXPnnAiuUAPxTpz7ClC9EVQrQUFz2uRIlQ+nVI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+e36cc3297bd3afd25e19@syzkaller.appspotmail.com,
-	Lizhi Xu <lizhi.xu@windriver.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Robert Morris <rtm@csail.mit.edu>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 079/512] fs/ntfs3: Add missing direct_IO in ntfs_aops_cmpr
-Date: Tue, 17 Jun 2025 17:20:45 +0200
-Message-ID: <20250617152422.783283484@linuxfoundation.org>
+Subject: [PATCH 6.6 131/356] wifi: ath9k_htc: Abort software beacon handling if disabled
+Date: Tue, 17 Jun 2025 17:24:06 +0200
+Message-ID: <20250617152343.509939695@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
+References: <20250617152338.212798615@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,51 +46,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lizhi Xu <lizhi.xu@windriver.com>
+From: Toke Høiland-Jørgensen <toke@toke.dk>
 
-[ Upstream commit 8b26c8c376b29cf29710fbfd093df194cefe26ad ]
+[ Upstream commit ac4e317a95a1092b5da5b9918b7118759342641c ]
 
-The ntfs3 can use the page cache directly, so its address_space_operations
-need direct_IO. Exit ntfs_direct_IO() if it is a compressed file.
+A malicious USB device can send a WMI_SWBA_EVENTID event from an
+ath9k_htc-managed device before beaconing has been enabled. This causes
+a device-by-zero error in the driver, leading to either a crash or an
+out of bounds read.
 
-Fixes: b432163ebd15 ("fs/ntfs3: Update inode->i_mapping->a_ops on compression state")
-Reported-by: syzbot+e36cc3297bd3afd25e19@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=e36cc3297bd3afd25e19
-Signed-off-by: Lizhi Xu <lizhi.xu@windriver.com>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Prevent this by aborting the handling in ath9k_htc_swba() if beacons are
+not enabled.
+
+Reported-by: Robert Morris <rtm@csail.mit.edu>
+Closes: https://lore.kernel.org/r/88967.1743099372@localhost
+Fixes: 832f6a18fc2a ("ath9k_htc: Add beacon slots")
+Signed-off-by: Toke Høiland-Jørgensen <toke@toke.dk>
+Link: https://patch.msgid.link/20250402112217.58533-1-toke@toke.dk
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/inode.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/wireless/ath/ath9k/htc_drv_beacon.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/ntfs3/inode.c b/fs/ntfs3/inode.c
-index a1e11228dafd0..5c05cccd2d40b 100644
---- a/fs/ntfs3/inode.c
-+++ b/fs/ntfs3/inode.c
-@@ -805,6 +805,10 @@ static ssize_t ntfs_direct_IO(struct kiocb *iocb, struct iov_iter *iter)
- 		ret = 0;
- 		goto out;
- 	}
-+	if (is_compressed(ni)) {
-+		ret = 0;
-+		goto out;
-+	}
+diff --git a/drivers/net/wireless/ath/ath9k/htc_drv_beacon.c b/drivers/net/wireless/ath/ath9k/htc_drv_beacon.c
+index 533471e694007..18c7654bc539d 100644
+--- a/drivers/net/wireless/ath/ath9k/htc_drv_beacon.c
++++ b/drivers/net/wireless/ath/ath9k/htc_drv_beacon.c
+@@ -290,6 +290,9 @@ void ath9k_htc_swba(struct ath9k_htc_priv *priv,
+ 	struct ath_common *common = ath9k_hw_common(priv->ah);
+ 	int slot;
  
- 	ret = blockdev_direct_IO(iocb, inode, iter,
- 				 wr ? ntfs_get_block_direct_IO_W :
-@@ -2108,5 +2112,6 @@ const struct address_space_operations ntfs_aops_cmpr = {
- 	.read_folio	= ntfs_read_folio,
- 	.readahead	= ntfs_readahead,
- 	.dirty_folio	= block_dirty_folio,
-+	.direct_IO	= ntfs_direct_IO,
- };
- // clang-format on
++	if (!priv->cur_beacon_conf.enable_beacon)
++		return;
++
+ 	if (swba->beacon_pending != 0) {
+ 		priv->beacon.bmisscnt++;
+ 		if (priv->beacon.bmisscnt > BSTUCK_THRESHOLD) {
 -- 
 2.39.5
 
