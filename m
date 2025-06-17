@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E49E2ED872;
-	Tue, 17 Jun 2025 15:45:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D446E2EE5E3;
+	Tue, 17 Jun 2025 15:45:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175137; cv=none; b=Ry6a/9/9yYjwf2M2rsMaSo6h9SzT5Y9eH/eRy3tWla7qz6ISKwAvoRy1r5UipSD4PILhVwdkVs8LGjOWYfxaX73WXtItBuISQ/EGUpXXpoI/BVyfX6gcCwKmeHpnsUz783666X1Pv+uN6qn+Qey/GnQ7oHvPUFLIzGf52a9k9Q8=
+	t=1750175140; cv=none; b=ZNg5ZSdTAGihhh0QxFiyhdyDMZMv32vpXDoL/OeuTUB3WF2kldRjk7SuS6GvUeexY8J1awWatRVrj9xViTVHQSnScGLe5twW+dtK4D+Nae0MCtXBRpMWfcrP4wKavn29ooTJ1x37tL9cit/cZMkQ2N/bvJsH4AP8PS/hpHBgVzc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175137; c=relaxed/simple;
-	bh=Aj6E+fv1/OWcH66QY0dcPP7d66kk0PvBtLzrpnhq8hQ=;
+	s=arc-20240116; t=1750175140; c=relaxed/simple;
+	bh=P6kMKSZyofVnwfcVZN1cP6ObYgdfLMd5apA/uXxSsec=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aJOsEJ7fb0Cje6C/O8C+MIY52yRfjOAuSdTGjiYR6QJCXjiHBEvahmPSN2GtzX0hq+68kE1CciOy7cv6I1qAH34A02nMsbN/58wQ0ou+2jBFJglbi3+jyw730nTd1prjyU6UnILwbgDslUE2Jiew8tfeKIqhPSnqUxpNLkVzg2U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kaOODZf4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LRE1w3l9uPdaZVX4i4dduFSFXYRh4ZsfnODjwtfKjby0vBbT5qJQgnaU6xiCKBi/uejcHC+UW+rt8J/gRCo9lc+TlGo0sC2s3uIXFNDtw9qnVxTWtPj9w5EBOdAOlP6h/Jv4rA1/VlYQM8WP8vNC8OZb4IprK1QGDRkUfUgRt8Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ny7mfZPn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kaOODZf4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92E0CC4CEF1;
-	Tue, 17 Jun 2025 15:45:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ny7mfZPn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6910C4CEE3;
+	Tue, 17 Jun 2025 15:45:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175137;
-	bh=Aj6E+fv1/OWcH66QY0dcPP7d66kk0PvBtLzrpnhq8hQ=;
+	s=korg; t=1750175140;
+	bh=P6kMKSZyofVnwfcVZN1cP6ObYgdfLMd5apA/uXxSsec=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kaOODZf4pfmGk2puJKuRunONIczmzZ67tUiESQNBw4bRRv5SQEzF7lBz/ycJPmlMY
-	 vbEr8vCoHhgpJ53H7U7od6EHHUooZCmw3Uzig5QhvytJIaWHQ3qGjdinIItyTSGBVI
-	 KWsrvazzrMAIKm+V24oWZXNrkFXAyHpo8880Vdy0=
+	b=ny7mfZPnN540ynlY0iymOc5laeky9Z/qHotcJa58beDcvsbAFo9X14uxVWWtDuEMO
+	 blEyfeo4Ry1ee3FoTICi+ddKlNVJrpSPWf5cIVfblJrO9Dy/SqKr9VRtFF+XLLZFaJ
+	 CnpCiratZJUh5XRYIv4ZTq5jFxgrgXUAk6rwuTjg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Longfang Liu <liulongfang@huawei.com>,
+	Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
+	Alex Williamson <alex.williamson@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 077/512] drm/bridge: lt9611uxc: Fix an error handling path in lt9611uxc_probe()
-Date: Tue, 17 Jun 2025 17:20:43 +0200
-Message-ID: <20250617152422.704641795@linuxfoundation.org>
+Subject: [PATCH 6.6 129/356] hisi_acc_vfio_pci: add eq and aeq interruption restore
+Date: Tue, 17 Jun 2025 17:24:04 +0200
+Message-ID: <20250617152343.431289526@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
+References: <20250617152338.212798615@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,46 +48,67 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Longfang Liu <liulongfang@huawei.com>
 
-[ Upstream commit b848cd418aebdb313364b4843f41fae82281a823 ]
+[ Upstream commit 3495cec0787721ba7a9d5c19d0bbb66d182de584 ]
 
-If lt9611uxc_audio_init() fails, some resources still need to be released
-before returning the error code.
+In order to ensure that the task packets of the accelerator
+device are not lost during the migration process, it is necessary
+to send an EQ and AEQ command to the device after the live migration
+is completed and to update the completion position of the task queue.
 
-Use the existing error handling path.
+Let the device recheck the completed tasks data and if there are
+uncollected packets, device resend a task completion interrupt
+to the software.
 
-Fixes: 0cbbd5b1a012 ("drm: bridge: add support for lontium LT9611UXC bridge")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/f167608e392c6b4d7d7f6e45e3c21878feb60cbd.1744958833.git.christophe.jaillet@wanadoo.fr
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Fixes: b0eed085903e ("hisi_acc_vfio_pci: Add support for VFIO live migration")
+Signed-off-by: Longfang Liu <liulongfang@huawei.com>
+Reviewed-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+Link: https://lore.kernel.org/r/20250510081155.55840-3-liulongfang@huawei.com
+Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/lontium-lt9611uxc.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/drivers/gpu/drm/bridge/lontium-lt9611uxc.c b/drivers/gpu/drm/bridge/lontium-lt9611uxc.c
-index 4d1d40e1f1b4d..748bed8acd2d9 100644
---- a/drivers/gpu/drm/bridge/lontium-lt9611uxc.c
-+++ b/drivers/gpu/drm/bridge/lontium-lt9611uxc.c
-@@ -879,7 +879,11 @@ static int lt9611uxc_probe(struct i2c_client *client)
- 		}
+diff --git a/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c b/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
+index d09e7d295625d..521f969e1c608 100644
+--- a/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
++++ b/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
+@@ -470,6 +470,19 @@ static int vf_qm_get_match_data(struct hisi_acc_vf_core_device *hisi_acc_vdev,
+ 	return 0;
+ }
+ 
++static void vf_qm_xeqc_save(struct hisi_qm *qm,
++			    struct hisi_acc_vf_migration_file *migf)
++{
++	struct acc_vf_data *vf_data = &migf->vf_data;
++	u16 eq_head, aeq_head;
++
++	eq_head = vf_data->qm_eqc_dw[0] & 0xFFFF;
++	qm_db(qm, 0, QM_DOORBELL_CMD_EQ, eq_head, 0);
++
++	aeq_head = vf_data->qm_aeqc_dw[0] & 0xFFFF;
++	qm_db(qm, 0, QM_DOORBELL_CMD_AEQ, aeq_head, 0);
++}
++
+ static int vf_qm_load_data(struct hisi_acc_vf_core_device *hisi_acc_vdev,
+ 			   struct hisi_acc_vf_migration_file *migf)
+ {
+@@ -566,6 +579,9 @@ static int vf_qm_state_save(struct hisi_acc_vf_core_device *hisi_acc_vdev,
  	}
  
--	return lt9611uxc_audio_init(dev, lt9611uxc);
-+	ret = lt9611uxc_audio_init(dev, lt9611uxc);
-+	if (ret)
-+		goto err_remove_bridge;
+ 	migf->total_length = sizeof(struct acc_vf_data);
++	/* Save eqc and aeqc interrupt information */
++	vf_qm_xeqc_save(vf_qm, migf);
 +
-+	return 0;
+ 	return 0;
+ }
  
- err_remove_bridge:
- 	free_irq(client->irq, lt9611uxc);
 -- 
 2.39.5
 
