@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCBB82ECE84;
-	Tue, 17 Jun 2025 16:01:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5A642E92CD;
+	Tue, 17 Jun 2025 16:01:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750176068; cv=none; b=sZDANeiM9m+7GMSLSLXsGW8yQc3RAuUG410IHCZZSH0EP8OKIE9JpB9gpFUyMYiWOfpymuQQSYUGoQMnjoZDDWc25MtqsV+RT3fmaC5vsiTHDk+ChV9RHZZzvECsBZ5d2JO8z49vXL8kzr9LvFp2hxED+K83QSN8yyg/VwR8EqM=
+	t=1750176071; cv=none; b=Vw6/C4nj5ekiaTcN9qyPj7QCwDU+jkRBZKPyXaZ7rjss5tg8IRsjQH8Zyg5nj7mg+xk6eBVcFtjmoN0zRnqTl043ut4mEfZtZwWfNN0qHskRUb3/kUJW/vosJwnu7ncHSSOuvGU3FCgWX1kKyKHfAq73V7nXNtWUI03MEzpH84I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750176068; c=relaxed/simple;
-	bh=/vyygnGhApH+qkvvbLp8F0CSkHf8/kdPxb72McteHZE=;
+	s=arc-20240116; t=1750176071; c=relaxed/simple;
+	bh=NxavLxI984YPjCQSJmQwkKes+3btoJiNDRLPkuR2d/0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oA3C7dGtYEYn8E/JkgZcZud54J+poZ2+M06KKwidjEjpTZExIAZv4jI7Zn06WoLKg9+b/BWGryCWeeAJ7TUyThPzVMnDb65RDyK8PV1QQCiKWs7k/RI+Gi83SSmboIBJk7cMtMrI4vqAygk8+26jvb2nt36ZjJRQwL39wk7Cm+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qpILxzKR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=icGC4z/4jOG5T7vSsSssNAGzka9OLmmLaxjqi3sJiPaoSCLY9GPtI+JQtm70krdGkOdeT4eD8hkIM16LYlIGG76Qb/hKZo7VoaccisaYBRMr3hX+4trp9pv4GNuKNg1cd52U+Odu2Xb6BArKgiBrY6MHErwhTm9aGdKnWXnpqjM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FtjL4bSJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qpILxzKR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5694AC4CEE3;
-	Tue, 17 Jun 2025 16:01:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FtjL4bSJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BC2AC4CEE3;
+	Tue, 17 Jun 2025 16:01:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750176068;
-	bh=/vyygnGhApH+qkvvbLp8F0CSkHf8/kdPxb72McteHZE=;
+	s=korg; t=1750176071;
+	bh=NxavLxI984YPjCQSJmQwkKes+3btoJiNDRLPkuR2d/0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qpILxzKRL0+n3xPjLIOnrxVvUMnYPwlj2aAMDauSB0QznP+mh3WQH8JXK1MZLfGPT
-	 5Aqbj3+I6bQqzq+nXRBNrPUOpnM/BjvlRdNrLLUQjMQwMvhzeUs4w5oKrl6mkEjQDU
-	 mn884k5DqEQj9+NhFGIabq28f8N/0G9pHGtImIwc=
+	b=FtjL4bSJq1i8Ez57q5hyfzPIE8jIGyiNlBGR6PSExTfar+zpTpWb8EPBwqrI3f4XB
+	 cmCvjTJu8ni9I8TQ4L3gt/n/N+6dI+Tr8ug+8dKMNO9pfXm49pEUy3ntUl0sR8844C
+	 Twbs8T1xsPxHT5anTwkAu72CJyHcrAVICw0s3aq4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marco Pagani <marco.pagani@linux.dev>,
-	Qasim Ijaz <qasdev00@gmail.com>,
-	Xu Yilun <yilun.xu@intel.com>,
-	Xu Yilun <yilun.xu@linux.intel.com>,
+	Li RongQing <lirongqing@baidu.com>,
+	Alex Williamson <alex.williamson@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 240/356] fpga: fix potential null pointer deref in fpga_mgr_test_img_load_sgt()
-Date: Tue, 17 Jun 2025 17:25:55 +0200
-Message-ID: <20250617152347.871667217@linuxfoundation.org>
+Subject: [PATCH 6.12 193/512] vfio/type1: Fix error unwind in migration dirty bitmap allocation
+Date: Tue, 17 Jun 2025 17:22:39 +0200
+Message-ID: <20250617152427.464051719@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-References: <20250617152338.212798615@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,46 +47,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Qasim Ijaz <qasdev00@gmail.com>
+From: Li RongQing <lirongqing@baidu.com>
 
-[ Upstream commit 6ebf1982038af12f3588417e4fd0417d2551da28 ]
+[ Upstream commit 4518e5a60c7fbf0cdff393c2681db39d77b4f87e ]
 
-fpga_mgr_test_img_load_sgt() allocates memory for sgt using
-kunit_kzalloc() however it does not check if the allocation failed.
-It then passes sgt to sg_alloc_table(), which passes it to
-__sg_alloc_table(). This function calls memset() on sgt in an attempt to
-zero it out. If the allocation fails then sgt will be NULL and the
-memset will trigger a NULL pointer dereference.
+When setting up dirty page tracking at the vfio IOMMU backend for
+device migration, if an error is encountered allocating a tracking
+bitmap, the unwind loop fails to free previously allocated tracking
+bitmaps.  This occurs because the wrong loop index is used to
+generate the tracking object.  This results in unintended memory
+usage for the life of the current DMA mappings where bitmaps were
+successfully allocated.
 
-Fix this by checking the allocation with KUNIT_ASSERT_NOT_ERR_OR_NULL().
+Use the correct loop index to derive the tracking object for
+freeing during unwind.
 
-Reviewed-by: Marco Pagani <marco.pagani@linux.dev>
-Fixes: ccbc1c302115 ("fpga: add an initial KUnit suite for the FPGA Manager")
-Signed-off-by: Qasim Ijaz <qasdev00@gmail.com>
-Acked-by: Xu Yilun <yilun.xu@intel.com>
-Link: https://lore.kernel.org/r/20250422153737.5264-1-qasdev00@gmail.com
-Signed-off-by: Xu Yilun <yilun.xu@linux.intel.com>
+Fixes: d6a4c185660c ("vfio iommu: Implementation of ioctl for dirty pages tracking")
+Signed-off-by: Li RongQing <lirongqing@baidu.com>
+Link: https://lore.kernel.org/r/20250521034647.2877-1-lirongqing@baidu.com
+Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/fpga/tests/fpga-mgr-test.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/vfio/vfio_iommu_type1.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/fpga/tests/fpga-mgr-test.c b/drivers/fpga/tests/fpga-mgr-test.c
-index 6acec55b60ce9..bfe25c0c0c1c3 100644
---- a/drivers/fpga/tests/fpga-mgr-test.c
-+++ b/drivers/fpga/tests/fpga-mgr-test.c
-@@ -253,6 +253,7 @@ static void fpga_mgr_test_img_load_sgt(struct kunit *test)
- 	img_buf = init_test_buffer(test, IMAGE_SIZE);
+diff --git a/drivers/vfio/vfio_iommu_type1.c b/drivers/vfio/vfio_iommu_type1.c
+index bf391b40e576f..8338cfd61fe14 100644
+--- a/drivers/vfio/vfio_iommu_type1.c
++++ b/drivers/vfio/vfio_iommu_type1.c
+@@ -294,7 +294,7 @@ static int vfio_dma_bitmap_alloc_all(struct vfio_iommu *iommu, size_t pgsize)
+ 			struct rb_node *p;
  
- 	sgt = kunit_kzalloc(test, sizeof(*sgt), GFP_KERNEL);
-+	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, sgt);
- 	ret = sg_alloc_table(sgt, 1, GFP_KERNEL);
- 	KUNIT_ASSERT_EQ(test, ret, 0);
- 	sg_init_one(sgt->sgl, img_buf, IMAGE_SIZE);
+ 			for (p = rb_prev(n); p; p = rb_prev(p)) {
+-				struct vfio_dma *dma = rb_entry(n,
++				struct vfio_dma *dma = rb_entry(p,
+ 							struct vfio_dma, node);
+ 
+ 				vfio_dma_bitmap_free(dma);
 -- 
 2.39.5
 
