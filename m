@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1740285076;
-	Tue, 17 Jun 2025 16:46:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0CF92FA642;
+	Tue, 17 Jun 2025 16:46:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750178780; cv=none; b=U7nwXy+d17jR6zE2UxUHmyk+kOo72jAY+sj1GY+pI3UG6ArgJ0qaf1WWnkm3DJJlzqv4hL/BgJ+QHLO9O0C9dnuFwLkca7C/F4win5R09FwRpph2IqFkllqDarC0pBrDRySA6gpNUHm1C+O1MkZf/4Dx9qCfgo4xqkH8EA+SfwM=
+	t=1750178782; cv=none; b=FVjn9mXgmtxDmoaYi8HYKhQed1JR/XabfbJsnQ5tbcI8Iyv1wi3EMsW0A9VDuCT6FmPkt35Qta7BCmwwp3tUZJ8au57WwWCpy3/KamHZqUv03XEIpMa1eNzrESv1Sm0EmN6YvyIdW/vgU6BUjVs/B06qYqTjvkF1IZatFUVsRoE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750178780; c=relaxed/simple;
-	bh=Y24XO4553cTtxEV4O+1mo+UJvnYvj9/zgASQjT/uaMY=;
+	s=arc-20240116; t=1750178782; c=relaxed/simple;
+	bh=6BxRuQF9p2lwJ/Uk9PbNcaUTeeNs8dk2Ir7zu4fT9b0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RkizUkN3/Iy6EomQlq4HIqs5JOadFQZmyufuFskR+uaVtTpXXVRk4uOnPaRNBLvkOyDYgzra6ysjyPaoZNe0OIdiitkS0Mf5YLkYKzG/at76APkEwFs17b2KRNdDZ4D8F/OIK0jLSGXcfqy9gZR2aNN3Htp+yNle+hXdqcs9NRk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ezTIx5Zh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kUGAFI+nv7r1jbKoqKxdQSxWbVjPvGsqu9x0gOOLqXNhIo9wNS+3mYZdCBugSp3hsVibRcaCJa+x5mQV818kX6uScTzMxemJeAYy0DgAqY8g7nkr+Kli2ncIiP4bE9fZYrSa1t19BSD3QP82c7exJ+UuuqBP2MAXWnfkpig8HMI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JSEA7GG3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ezTIx5Zh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7AEDC4CEE7;
-	Tue, 17 Jun 2025 16:46:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JSEA7GG3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F90DC4CEE3;
+	Tue, 17 Jun 2025 16:46:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750178779;
-	bh=Y24XO4553cTtxEV4O+1mo+UJvnYvj9/zgASQjT/uaMY=;
+	s=korg; t=1750178782;
+	bh=6BxRuQF9p2lwJ/Uk9PbNcaUTeeNs8dk2Ir7zu4fT9b0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ezTIx5Zhlarp/xlKi0IUNDfNpiNjCi4nWnVTxKM0XtpObcLIAP/DcBSe7QBl9ZRjl
-	 NZcV9eVi1ohvK57q3yXXh7esKVDtI1CkD0eHe87IiF+a3JCENoOcru4xRxdXiwKW0L
-	 522oXePuvzq/AxjQbU9vxchpTGTboHgsy1fSR93A=
+	b=JSEA7GG3+Pqm/hu3RbcWi12WC099lIN4pk4TGdTBAj1TQJI74u+ExZ7M1Q4ANzRB8
+	 ca61X14tJap6gZPq1zZ7x8b8WQ1Na/VUysriE6nkr4ASu/fK7wDyP1jp+w3O7x1NrN
+	 cvN3tNVK3P4rRE3tCc+D5/ISyD/n8hRz5U2BpyMw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karol Wachowski <karol.wachowski@intel.com>,
-	Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
-	Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>,
+	Douglas Anderson <dianders@chromium.org>,
+	Damon Ding <damon.ding@rock-chips.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 552/780] accel/ivpu: Reorder Doorbell Unregister and Command Queue Destruction
-Date: Tue, 17 Jun 2025 17:24:20 +0200
-Message-ID: <20250617152513.983877159@linuxfoundation.org>
+Subject: [PATCH 6.15 553/780] drm/bridge: analogix_dp: Remove CONFIG_PM related check in analogix_dp_bind()/analogix_dp_unbind()
+Date: Tue, 17 Jun 2025 17:24:21 +0200
+Message-ID: <20250617152514.024084307@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
 References: <20250617152451.485330293@linuxfoundation.org>
@@ -52,57 +52,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karol Wachowski <karol.wachowski@intel.com>
+From: Damon Ding <damon.ding@rock-chips.com>
 
-[ Upstream commit 4557cc834712eca4eae7adbd9f0a06bdd8f79c99 ]
+[ Upstream commit c71db051142a74b255cb61b84d8fedae3b70952f ]
 
-Refactor ivpu_cmdq_unregister() to ensure the doorbell is unregistered
-before destroying the command queue. The NPU firmware requires doorbells
-to be unregistered prior to command queue destruction.
+Remove the check related to CONFIG_PM in order to make the code more
+concise, as the CONFIG_PM should be a required option for many drivers.
 
-If doorbell remains registered when command queue destroy command is sent
-firmware will automatically unregister the doorbell, making subsequent
-unregister attempts no-operations (NOPs).
+In addition, it is preferable to use devm_pm_runtime_enable() instead of
+manually invoking pm_runtime_enable() followed by pm_runtime_disable().
 
-Ensure compliance with firmware expectations by moving the doorbell
-unregister call ahead of the command queue destruction logic,
-thus preventing unnecessary NOP operation.
-
-Fixes: 465a3914b254 ("accel/ivpu: Add API for command queue create/destroy/submit")
-Signed-off-by: Karol Wachowski <karol.wachowski@intel.com>
-Reviewed-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
-Signed-off-by: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
-Link: https://lore.kernel.org/r/20250515094124.255141-1-jacek.lawrynowicz@linux.intel.com
+Suggested-by: Douglas Anderson <dianders@chromium.org>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Damon Ding <damon.ding@rock-chips.com>
+Link: https://lore.kernel.org/r/20250310104114.2608063-3-damon.ding@rock-chips.com
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Stable-dep-of: fd03f82a026c ("drm/bridge: analogix_dp: Fix clk-disable removal")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/ivpu/ivpu_job.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ .../drm/bridge/analogix/analogix_dp_core.c    | 30 ++++---------------
+ 1 file changed, 6 insertions(+), 24 deletions(-)
 
-diff --git a/drivers/accel/ivpu/ivpu_job.c b/drivers/accel/ivpu/ivpu_job.c
-index b28da35c30b67..1c8e283ad9854 100644
---- a/drivers/accel/ivpu/ivpu_job.c
-+++ b/drivers/accel/ivpu/ivpu_job.c
-@@ -247,6 +247,10 @@ static int ivpu_cmdq_unregister(struct ivpu_file_priv *file_priv, struct ivpu_cm
- 	if (!cmdq->db_id)
- 		return 0;
+diff --git a/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c b/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
+index 533a6e17cf674..b7a96f5bc0074 100644
+--- a/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
++++ b/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
+@@ -1688,15 +1688,11 @@ int analogix_dp_bind(struct analogix_dp_device *dp, struct drm_device *drm_dev)
+ 	dp->drm_dev = drm_dev;
+ 	dp->encoder = dp->plat_data->encoder;
  
-+	ret = ivpu_jsm_unregister_db(vdev, cmdq->db_id);
-+	if (!ret)
-+		ivpu_dbg(vdev, JOB, "DB %d unregistered\n", cmdq->db_id);
-+
- 	if (vdev->fw->sched_mode == VPU_SCHEDULING_MODE_HW) {
- 		ret = ivpu_jsm_hws_destroy_cmdq(vdev, file_priv->ctx.id, cmdq->id);
- 		if (!ret)
-@@ -254,10 +258,6 @@ static int ivpu_cmdq_unregister(struct ivpu_file_priv *file_priv, struct ivpu_cm
- 				 cmdq->id, file_priv->ctx.id);
+-	if (IS_ENABLED(CONFIG_PM)) {
+-		pm_runtime_use_autosuspend(dp->dev);
+-		pm_runtime_set_autosuspend_delay(dp->dev, 100);
+-		pm_runtime_enable(dp->dev);
+-	} else {
+-		ret = analogix_dp_resume(dp);
+-		if (ret)
+-			return ret;
+-	}
++	pm_runtime_use_autosuspend(dp->dev);
++	pm_runtime_set_autosuspend_delay(dp->dev, 100);
++	ret = devm_pm_runtime_enable(dp->dev);
++	if (ret)
++		return ret;
+ 
+ 	dp->aux.name = "DP-AUX";
+ 	dp->aux.transfer = analogix_dpaux_transfer;
+@@ -1706,7 +1702,7 @@ int analogix_dp_bind(struct analogix_dp_device *dp, struct drm_device *drm_dev)
+ 	ret = drm_dp_aux_register(&dp->aux);
+ 	if (ret) {
+ 		DRM_ERROR("failed to register AUX (%d)\n", ret);
+-		goto err_disable_pm_runtime;
++		return ret;
  	}
  
--	ret = ivpu_jsm_unregister_db(vdev, cmdq->db_id);
--	if (!ret)
--		ivpu_dbg(vdev, JOB, "DB %d unregistered\n", cmdq->db_id);
+ 	ret = analogix_dp_create_bridge(drm_dev, dp);
+@@ -1719,13 +1715,6 @@ int analogix_dp_bind(struct analogix_dp_device *dp, struct drm_device *drm_dev)
+ 
+ err_unregister_aux:
+ 	drm_dp_aux_unregister(&dp->aux);
+-err_disable_pm_runtime:
+-	if (IS_ENABLED(CONFIG_PM)) {
+-		pm_runtime_dont_use_autosuspend(dp->dev);
+-		pm_runtime_disable(dp->dev);
+-	} else {
+-		analogix_dp_suspend(dp);
+-	}
+ 
+ 	return ret;
+ }
+@@ -1742,13 +1731,6 @@ void analogix_dp_unbind(struct analogix_dp_device *dp)
+ 	}
+ 
+ 	drm_dp_aux_unregister(&dp->aux);
 -
- 	xa_erase(&file_priv->vdev->db_xa, cmdq->db_id);
- 	cmdq->db_id = 0;
+-	if (IS_ENABLED(CONFIG_PM)) {
+-		pm_runtime_dont_use_autosuspend(dp->dev);
+-		pm_runtime_disable(dp->dev);
+-	} else {
+-		analogix_dp_suspend(dp);
+-	}
+ }
+ EXPORT_SYMBOL_GPL(analogix_dp_unbind);
  
 -- 
 2.39.5
