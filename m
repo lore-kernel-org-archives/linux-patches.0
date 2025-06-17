@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 411132FA624;
-	Tue, 17 Jun 2025 16:56:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2DE22FA625;
+	Tue, 17 Jun 2025 16:56:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750179395; cv=none; b=L7kWggeRdXe5Tw/vXyN87Rqx/b8p21FU7nP8coKnlfZHYagPiHEQSgU8JijSVVXxEZcJ908ltMoqss+J4iU4R9+UeFvwqZ3d7TDhLYTaoOpCdaTkiXmAtVXXHLM0NA02vPdxVic9b19g3rtZnBRyErxLhhFsfqyQU/ThMK6fokE=
+	t=1750179399; cv=none; b=BPdKgsQ8DTmxjihhc0QgsRUltLH/XtU1I31zBYWTuEbIwlNCJpb1SRi31EPI7nA5r2maxXCODx2qUyL4BMrQQ0E1ZOsFDYYtnaK9G6WAssJgt/1wXwYcwP+EQZwvxhLJ1/XBGelAyyEKUlaoisihDgYYqnjY25XIGwUj+C5PKa8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750179395; c=relaxed/simple;
-	bh=Gr3gJ+sNIPhqUuUTaGeVTJRSHmJsCzUhKSp5rT/fYrQ=;
+	s=arc-20240116; t=1750179399; c=relaxed/simple;
+	bh=WfeON4poukMny33221lkE3pWOWhIycsdMJANlsZrJvI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cNh1ndPlxlPo+aAJMXAYp7IuyAabGeDL/pyInhutgP+JSvwOUCJKSbwFF7JeNSIKLWijUxSyI1WVIG2naqcXIKmxU/ntsvGO3kBReqo/eiRIVRMAYnLQI2mQS8DhXjlWm3Uhq/2L9clfgGhg2RMANiFI1RiFAubOR8MRZzV9j1c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tgU+5FWN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G702dWf/3eEPc4/dnyVcXSg7g7aRouXBqrBh+QmMsNg/AsIPpEuklbdSgJpYXtDTLiCEcEHVjhgSxqNpO5LJhThFqdlAfvXcPvjb4amv+LBcO15CT99JZYdWCvghGcsYRNw2ovxv2p2V9vmFVV8CK0+tEWVhofps+k6iyKnp8CE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j9WVKXu8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tgU+5FWN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A01BEC4CEE3;
-	Tue, 17 Jun 2025 16:56:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j9WVKXu8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E37F3C4CEE3;
+	Tue, 17 Jun 2025 16:56:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750179395;
-	bh=Gr3gJ+sNIPhqUuUTaGeVTJRSHmJsCzUhKSp5rT/fYrQ=;
+	s=korg; t=1750179398;
+	bh=WfeON4poukMny33221lkE3pWOWhIycsdMJANlsZrJvI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tgU+5FWNMrMKc0LpkJKxwDFihJBqiluw5wB7bRRb+up0UhM3MeIpXkrCrD7uaxpsB
-	 oN0SqafqsRARLXlg6ASZM3pVs8jOUhMuCt2qkKrWt29l/WCgw0SgGZodXxvfIGn3VL
-	 HNhtm2QVyDd0MTnsVEHiN/h6ZqiFuMkTMUy1GKFE=
+	b=j9WVKXu8ubiNw0pNVjpHnYIljCIwRZ49hK43OuFl053pVLbRflUBCB4NZEQPVSxBY
+	 OyMJIRc2IBt2tQmanbcFsAwhZ9VrjG5czY/gxdMn2POr9aj/e78YtQRro4kfhMLSGh
+	 1lIphaPwnBQZe0B2Ac+dtscboAth90RF40DdQX9g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ravi Bangoria <ravi.bangoria@amd.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Hannes Reinecke <hare@suse.de>,
+	Nilay Shroff <nilay@linux.ibm.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Ming Lei <ming.lei@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 731/780] perf: Ensure bpf_perf_link path is properly serialized
-Date: Tue, 17 Jun 2025 17:27:19 +0200
-Message-ID: <20250617152521.264133378@linuxfoundation.org>
+Subject: [PATCH 6.15 732/780] block: use q->elevator with ->elevator_lock held in elv_iosched_show()
+Date: Tue, 17 Jun 2025 17:27:20 +0200
+Message-ID: <20250617152521.304523735@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
 References: <20250617152451.485330293@linuxfoundation.org>
@@ -51,96 +54,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Ming Lei <ming.lei@redhat.com>
 
-[ Upstream commit 7ed9138a72829d2035ecbd8dbd35b1bc3c137c40 ]
+[ Upstream commit 94209d27d14104ed828ca88cd5403a99162fe51a ]
 
-Ravi reported that the bpf_perf_link_attach() usage of
-perf_event_set_bpf_prog() is not serialized by ctx->mutex, unlike the
-PERF_EVENT_IOC_SET_BPF case.
+Use q->elevator with ->elevator_lock held in elv_iosched_show(), since
+the local cached elevator reference may become stale after getting
+->elevator_lock.
 
-Reported-by: Ravi Bangoria <ravi.bangoria@amd.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Ravi Bangoria <ravi.bangoria@amd.com>
-Link: https://lkml.kernel.org/r/20250307193305.486326750@infradead.org
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Ming Lei <ming.lei@redhat.com>
+Link: https://lore.kernel.org/r/20250505141805.2751237-5-ming.lei@redhat.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/events/core.c | 34 ++++++++++++++++++++++++++++++----
- 1 file changed, 30 insertions(+), 4 deletions(-)
+ block/elevator.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/kernel/events/core.c b/kernel/events/core.c
-index 881d768e45564..e97bc9220fd1a 100644
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -6239,6 +6239,9 @@ static int perf_event_set_output(struct perf_event *event,
- static int perf_event_set_filter(struct perf_event *event, void __user *arg);
- static int perf_copy_attr(struct perf_event_attr __user *uattr,
- 			  struct perf_event_attr *attr);
-+static int __perf_event_set_bpf_prog(struct perf_event *event,
-+				     struct bpf_prog *prog,
-+				     u64 bpf_cookie);
- 
- static long _perf_ioctl(struct perf_event *event, unsigned int cmd, unsigned long arg)
+diff --git a/block/elevator.c b/block/elevator.c
+index b4d08026b02ce..dc4cadef728e5 100644
+--- a/block/elevator.c
++++ b/block/elevator.c
+@@ -744,7 +744,6 @@ ssize_t elv_iosched_store(struct gendisk *disk, const char *buf,
+ ssize_t elv_iosched_show(struct gendisk *disk, char *name)
  {
-@@ -6301,7 +6304,7 @@ static long _perf_ioctl(struct perf_event *event, unsigned int cmd, unsigned lon
- 		if (IS_ERR(prog))
- 			return PTR_ERR(prog);
+ 	struct request_queue *q = disk->queue;
+-	struct elevator_queue *eq = q->elevator;
+ 	struct elevator_type *cur = NULL, *e;
+ 	int len = 0;
  
--		err = perf_event_set_bpf_prog(event, prog, 0);
-+		err = __perf_event_set_bpf_prog(event, prog, 0);
- 		if (err) {
- 			bpf_prog_put(prog);
- 			return err;
-@@ -11069,8 +11072,9 @@ static inline bool perf_event_is_tracing(struct perf_event *event)
- 	return false;
- }
+@@ -753,7 +752,7 @@ ssize_t elv_iosched_show(struct gendisk *disk, char *name)
+ 		len += sprintf(name+len, "[none] ");
+ 	} else {
+ 		len += sprintf(name+len, "none ");
+-		cur = eq->type;
++		cur = q->elevator->type;
+ 	}
  
--int perf_event_set_bpf_prog(struct perf_event *event, struct bpf_prog *prog,
--			    u64 bpf_cookie)
-+static int __perf_event_set_bpf_prog(struct perf_event *event,
-+				     struct bpf_prog *prog,
-+				     u64 bpf_cookie)
- {
- 	bool is_kprobe, is_uprobe, is_tracepoint, is_syscall_tp;
- 
-@@ -11108,6 +11112,20 @@ int perf_event_set_bpf_prog(struct perf_event *event, struct bpf_prog *prog,
- 	return perf_event_attach_bpf_prog(event, prog, bpf_cookie);
- }
- 
-+int perf_event_set_bpf_prog(struct perf_event *event,
-+			    struct bpf_prog *prog,
-+			    u64 bpf_cookie)
-+{
-+	struct perf_event_context *ctx;
-+	int ret;
-+
-+	ctx = perf_event_ctx_lock(event);
-+	ret = __perf_event_set_bpf_prog(event, prog, bpf_cookie);
-+	perf_event_ctx_unlock(event, ctx);
-+
-+	return ret;
-+}
-+
- void perf_event_free_bpf_prog(struct perf_event *event)
- {
- 	if (!event->prog)
-@@ -11130,7 +11148,15 @@ static void perf_event_free_filter(struct perf_event *event)
- {
- }
- 
--int perf_event_set_bpf_prog(struct perf_event *event, struct bpf_prog *prog,
-+static int __perf_event_set_bpf_prog(struct perf_event *event,
-+				     struct bpf_prog *prog,
-+				     u64 bpf_cookie)
-+{
-+	return -ENOENT;
-+}
-+
-+int perf_event_set_bpf_prog(struct perf_event *event,
-+			    struct bpf_prog *prog,
- 			    u64 bpf_cookie)
- {
- 	return -ENOENT;
+ 	spin_lock(&elv_list_lock);
 -- 
 2.39.5
 
