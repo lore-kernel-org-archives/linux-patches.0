@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B97262F2340;
-	Tue, 17 Jun 2025 16:04:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2505E2F2340;
+	Tue, 17 Jun 2025 16:04:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750176261; cv=none; b=WSL3ctwfl6Q2vhK64GIK6wu7o4nlkCSk55wEEasaGSOTQOh6l6z/qVHs0uEyFawhzrhdisXw0knUE4ovQlf1DywaYOve2Oh2hNJZyP92o3fApbBF4bISXcglfj47JHhK/fP3EvmW4q/Gs4EMGqsuU8fFgHbkp4l0jd+GBqPyjXs=
+	t=1750176265; cv=none; b=O+CFZKd0L89gRSLW0yI5/lybbeAyWZxVMIN1hfsq+PtopgfCU+dlJ3XWne9IUxK56J3U/c2UnOVileT1twRZBowGa4wLzLXiOv2SiFBn0H9OuwBB/VNRrNBMFM7I6+a9AmFH3nlh+MnnC8bpkvkavkVv72mN/+XxbP/HxtE3Ny8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750176261; c=relaxed/simple;
-	bh=ntGoDLaBKmgVnAu9SZr2lFwmkw6rixdU+zg3uwGysug=;
+	s=arc-20240116; t=1750176265; c=relaxed/simple;
+	bh=3odTpND66rAcQlNjMxe9r2IEVyvP8BytCWBsm1SGejU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kEh1GhTnIisacznjSd3kjw/hqxrH6EApph3cVLCjia1bOVe75flpcHZHKnMOC+5pZcdcXxHWJl7NuVMPHp4FgfCXMntb1+m87RiAwqGGg+n0xWW+HiuGmdZTrKQJ4db9pqCQKPb8x9hUAIX6/RmW67V0GUhAkz+VCWQDVPqGdPE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XkAWXgjy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pxEeU9TnxpvON6rCf4s2gCECkYODuId0OSXzha8XUxFYR8AKJCD8HAuuBCveAGgm7E5M3WAagl9ZFsC+H84qXNZZqK5EJBEVSdrNcjbJESosSGtOFliRHVL9s6odFS54djJtdv8gIJ7ul+PwnzZobhclAtLhU5lb53s0ia1C6Kc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KO8jgmre; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XkAWXgjy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AC8BC4CEF0;
-	Tue, 17 Jun 2025 16:04:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KO8jgmre"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8695AC4CEE3;
+	Tue, 17 Jun 2025 16:04:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750176261;
-	bh=ntGoDLaBKmgVnAu9SZr2lFwmkw6rixdU+zg3uwGysug=;
+	s=korg; t=1750176265;
+	bh=3odTpND66rAcQlNjMxe9r2IEVyvP8BytCWBsm1SGejU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XkAWXgjy5+bza9ehkTPc/vPPZH3l16fSPQqsOFhSbe9RljMgtTv/QVta97HDRMOri
-	 EZMAQgMJ3aPc5A9FUeFuHmuiwp01CrugS0bheUzX/efw0iWI80juCLe7K5KTpEMFiv
-	 2nJoTWLDXl9coGs0sh+9LOsgs4UamNoX00g/8K/E=
+	b=KO8jgmreaRZKttDpc2zHJ6odnDDsZxKIVjfphyIcx1Lv8eYPmD6bb6is/raq+GNt2
+	 NhHVtE7Fh92jTo/AJ83NXeEoRstKJvEtWo8TOHtTMoFamxbKiqrstBtkLBSSJSU2yp
+	 /9m29gFe4zk0vQRews9pFaSbz/1hxM9FeiMUYfSs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ronak Doshi <ronak.doshi@broadcom.com>,
-	Guolin Yang <guolin.yang@broadcom.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Saket Kumar Bhaskar <skb99@linux.ibm.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 260/356] vmxnet3: correctly report gso type for UDP tunnels
-Date: Tue, 17 Jun 2025 17:26:15 +0200
-Message-ID: <20250617152348.673709159@linuxfoundation.org>
+Subject: [PATCH 6.15 170/780] selftests/bpf: Fix bpf_nf selftest failure
+Date: Tue, 17 Jun 2025 17:17:58 +0200
+Message-ID: <20250617152458.406575271@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-References: <20250617152338.212798615@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,84 +47,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ronak Doshi <ronak.doshi@broadcom.com>
+From: Saket Kumar Bhaskar <skb99@linux.ibm.com>
 
-[ Upstream commit 982d30c30eaa2ec723df42e3bf526c014c1dbb88 ]
+[ Upstream commit 967e8def1100cb4b08c28a54d27ce69563fdf281 ]
 
-Commit 3d010c8031e3 ("udp: do not accept non-tunnel GSO skbs landing
-in a tunnel") added checks in linux stack to not accept non-tunnel
-GRO packets landing in a tunnel. This exposed an issue in vmxnet3
-which was not correctly reporting GRO packets for tunnel packets.
+For systems with missing iptables-legacy tool this selftest fails.
 
-This patch fixes this issue by setting correct GSO type for the
-tunnel packets.
+Add check to find if iptables-legacy tool is available and skip the
+test if the tool is missing.
 
-Currently, vmxnet3 does not support reporting inner fields for LRO
-tunnel packets. The issue is not seen for egress drivers that do not
-use skb inner fields. The workaround is to enable tnl-segmentation
-offload on the egress interfaces if the driver supports it. This
-problem pre-exists this patch fix and can be addressed as a separate
-future patch.
-
-Fixes: dacce2be3312 ("vmxnet3: add geneve and vxlan tunnel offload support")
-Signed-off-by: Ronak Doshi <ronak.doshi@broadcom.com>
-Acked-by: Guolin Yang <guolin.yang@broadcom.com>
-Link: https://patch.msgid.link/20250530152701.70354-1-ronak.doshi@broadcom.com
-[pabeni@redhat.com: dropped the changelog]
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: de9c8d848d90 ("selftests/bpf: S/iptables/iptables-legacy/ in the bpf_nf and xdp_synproxy test")
+Signed-off-by: Saket Kumar Bhaskar <skb99@linux.ibm.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20250409095633.33653-1-skb99@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/vmxnet3/vmxnet3_drv.c | 26 ++++++++++++++++++++++++++
- 1 file changed, 26 insertions(+)
+ tools/testing/selftests/bpf/prog_tests/bpf_nf.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/net/vmxnet3/vmxnet3_drv.c b/drivers/net/vmxnet3/vmxnet3_drv.c
-index beebe09eb88ff..afd78324f3aa3 100644
---- a/drivers/net/vmxnet3/vmxnet3_drv.c
-+++ b/drivers/net/vmxnet3/vmxnet3_drv.c
-@@ -1499,6 +1499,30 @@ vmxnet3_get_hdr_len(struct vmxnet3_adapter *adapter, struct sk_buff *skb,
- 	return (hlen + (hdr.tcp->doff << 2));
- }
+diff --git a/tools/testing/selftests/bpf/prog_tests/bpf_nf.c b/tools/testing/selftests/bpf/prog_tests/bpf_nf.c
+index dbd13f8e42a7a..dd6512fa652be 100644
+--- a/tools/testing/selftests/bpf/prog_tests/bpf_nf.c
++++ b/tools/testing/selftests/bpf/prog_tests/bpf_nf.c
+@@ -63,6 +63,12 @@ static void test_bpf_nf_ct(int mode)
+ 		.repeat = 1,
+ 	);
  
-+static void
-+vmxnet3_lro_tunnel(struct sk_buff *skb, __be16 ip_proto)
-+{
-+	struct udphdr *uh = NULL;
-+
-+	if (ip_proto == htons(ETH_P_IP)) {
-+		struct iphdr *iph = (struct iphdr *)skb->data;
-+
-+		if (iph->protocol == IPPROTO_UDP)
-+			uh = (struct udphdr *)(iph + 1);
-+	} else {
-+		struct ipv6hdr *iph = (struct ipv6hdr *)skb->data;
-+
-+		if (iph->nexthdr == IPPROTO_UDP)
-+			uh = (struct udphdr *)(iph + 1);
++	if (SYS_NOFAIL("iptables-legacy --version")) {
++		fprintf(stdout, "Missing required iptables-legacy tool\n");
++		test__skip();
++		return;
 +	}
-+	if (uh) {
-+		if (uh->check)
-+			skb_shinfo(skb)->gso_type |= SKB_GSO_UDP_TUNNEL_CSUM;
-+		else
-+			skb_shinfo(skb)->gso_type |= SKB_GSO_UDP_TUNNEL;
-+	}
-+}
 +
- static int
- vmxnet3_rq_rx_complete(struct vmxnet3_rx_queue *rq,
- 		       struct vmxnet3_adapter *adapter, int quota)
-@@ -1803,6 +1827,8 @@ vmxnet3_rq_rx_complete(struct vmxnet3_rx_queue *rq,
- 			if (segCnt != 0 && mss != 0) {
- 				skb_shinfo(skb)->gso_type = rcd->v4 ?
- 					SKB_GSO_TCPV4 : SKB_GSO_TCPV6;
-+				if (encap_lro)
-+					vmxnet3_lro_tunnel(skb, skb->protocol);
- 				skb_shinfo(skb)->gso_size = mss;
- 				skb_shinfo(skb)->gso_segs = segCnt;
- 			} else if ((segCnt != 0 || skb->len > mtu) && !encap_lro) {
+ 	skel = test_bpf_nf__open_and_load();
+ 	if (!ASSERT_OK_PTR(skel, "test_bpf_nf__open_and_load"))
+ 		return;
 -- 
 2.39.5
 
