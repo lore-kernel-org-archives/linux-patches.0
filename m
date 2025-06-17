@@ -1,41 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A8DA2ECEA2;
-	Tue, 17 Jun 2025 16:25:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 572742EA14E;
+	Tue, 17 Jun 2025 16:25:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177520; cv=none; b=SeixMTnLwr7BWGtadoY0EvW6kv5qqHIduZu5ZzZiOLcMriFL2yanMmf83NA7PAhyUs30AwQRcMRTmNjGzSEwiCpcJYMfJEnRVsCl9A+FOi4CpXH347cgkQFMsKqamSWcFZUNhI96l3ZEAiplkQDF2G1pnElWoHA3bF0su3Jkp6k=
+	t=1750177523; cv=none; b=tbosokMsaD/+1CTD8klOqGlPH3j3/I8wCoQdrum6xBLskbJm2mb1dCB5bQPHjAmm+JoESAcoTHiCMBoTMAhzRdyNivQ9nkIsC/u8ZsMQbTTPb5jkIyIVgHjTIlzt2Kw4SmdcmWjLCGi1ENmG4IkXLMXljZ6PXAGzCquihJWvIxs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177520; c=relaxed/simple;
-	bh=5db2C4Z1wCVcnJ3/D9q+psyc08uwvwqybU4ZZOjBKVI=;
+	s=arc-20240116; t=1750177523; c=relaxed/simple;
+	bh=qFt00c+ZCLGkjvoiOlfvC8DiGlxT3fAXjNu7pyNkFmM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XLSnBRR3F4nOru5wp0X45wgLX7Rt8tFnEYDOPsIs/pLxuVKCRMuZ44Y/Wvt3SnIafyxH/ydpoftpZ6AqF27KSMk7m1YAPlc2CIowM73PgI6/60IY7Yr89TqMcDVkwaFYgB+xtT5EMiREmfdry4k1FvHew2eQY6QFOrS2lkVtbeg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lFglrXhK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nNOmhMkD+5m5C1ZQWDYYUcJ33B2d0ZjNVD2bdID5F65IiUpAJ54UGvQwEZasulT9ku9hCtsl7SA7skaLaQsABXOUnOghbqAzIJDspYNgEsDC5DFyu/D0rGeKLCJccUiHsVG2ixGdEbNcpizUEaT77J32fuRxgCYhhM+ZDw40gLE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pnn05lv6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lFglrXhK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EDA5C4CEE3;
-	Tue, 17 Jun 2025 16:25:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pnn05lv6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9522C4CEF0;
+	Tue, 17 Jun 2025 16:25:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177520;
-	bh=5db2C4Z1wCVcnJ3/D9q+psyc08uwvwqybU4ZZOjBKVI=;
+	s=korg; t=1750177523;
+	bh=qFt00c+ZCLGkjvoiOlfvC8DiGlxT3fAXjNu7pyNkFmM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lFglrXhKZooBzNqp67JI1T8n/JYYVJu270cFWtCIQhfjVE7Shx96kGUJ3HAmVjtnS
-	 Puu9YNFJZtl+NgQZwyBRJmXdcGXOeia2jAwNr2e1GCg/gRNqJ9vdf5aXYzjwtuFXwo
-	 lWyDcv+4NBOJg9gHTCpQjJNOpg2ldkSQJOZucVBs=
+	b=Pnn05lv6Jut11WRi1d50NeNFhNcxDCw4QpqrFU7PRHn1B24Xc+5B/c7L9HdY6Efcv
+	 iXD9K0sSah+iMyYaNWifJaoU/uuU8XDTr8xyJ8b+Q03LjAv4Jd9x8lvT8i+xwzkZZW
+	 y5QqRtShdB1jRLtpZwchbEbsY0ETDuSN/FmJ+48g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 318/780] vsock/virtio: fix `rx_bytes` accounting for stream sockets
-Date: Tue, 17 Jun 2025 17:20:26 +0200
-Message-ID: <20250617152504.407560493@linuxfoundation.org>
+	Dawid Osuchowski <dawid.osuchowski@linux.intel.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Michal Kubiak <michal.kubiak@intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Jesse Brandeburg <jbrandeburg@cloudflare.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Saritha Sanigani <sarithax.sanigani@intel.com>
+Subject: [PATCH 6.12 358/512] ice: fix rebuilding the Tx scheduler tree for large queue counts
+Date: Tue, 17 Jun 2025 17:25:24 +0200
+Message-ID: <20250617152434.089139182@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,165 +50,317 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stefano Garzarella <sgarzare@redhat.com>
+From: Michal Kubiak <michal.kubiak@intel.com>
 
-[ Upstream commit 45ca7e9f0730ae36fc610e675b990e9cc9ca0714 ]
+[ Upstream commit 73145e6d81070d34a21431c9e0d7aaf2f29ca048 ]
 
-In `struct virtio_vsock_sock`, we maintain two counters:
-- `rx_bytes`: used internally to track how many bytes have been read.
-  This supports mechanisms like .stream_has_data() and sock_rcvlowat().
-- `fwd_cnt`: used for the credit mechanism to inform available receive
-  buffer space to the remote peer.
+The current implementation of the Tx scheduler allows the tree to be
+rebuilt as the user adds more Tx queues to the VSI. In such a case,
+additional child nodes are added to the tree to support the new number
+of queues.
+Unfortunately, this algorithm does not take into account that the limit
+of the VSI support node may be exceeded, so an additional node in the
+VSI layer may be required to handle all the requested queues.
 
-These counters are updated via virtio_transport_inc_rx_pkt() and
-virtio_transport_dec_rx_pkt().
+Such a scenario occurs when adding XDP Tx queues on machines with many
+CPUs. Although the driver still respects the queue limit returned by
+the FW, the Tx scheduler was unable to add those queues to its tree
+and returned one of the errors below.
 
-Since the beginning with commit 06a8fc78367d ("VSOCK: Introduce
-virtio_vsock_common.ko"), we call virtio_transport_dec_rx_pkt() in
-virtio_transport_stream_do_dequeue() only when we consume the entire
-packet, so partial reads, do not update `rx_bytes` and `fwd_cnt`.
+Such a scenario occurs when adding XDP Tx queues on machines with many
+CPUs (e.g. at least 321 CPUs, if there is already 128 Tx/Rx queue pairs).
+Although the driver still respects the queue limit returned by the FW,
+the Tx scheduler was unable to add those queues to its tree and returned
+the following errors:
 
-This is fine for `fwd_cnt`, because we still have space used for the
-entire packet, and we don't want to update the credit for the other
-peer until we free the space of the entire packet. However, this
-causes `rx_bytes` to be stale on partial reads.
+     Failed VSI LAN queue config for XDP, error: -5
+or:
+     Failed to set LAN Tx queue context, error: -22
 
-Previously, this didn’t cause issues because `rx_bytes` was used only by
-.stream_has_data(), and any unread portion of a packet implied data was
-still available. However, since commit 93b808876682
-("virtio/vsock: fix logic which reduces credit update messages"), we now
-rely on `rx_bytes` to determine if a credit update should be sent when
-the data in the RX queue drops below SO_RCVLOWAT value.
+Fix this problem by extending the tree rebuild algorithm to check if the
+current VSI node can support the requested number of queues. If it
+cannot, create as many additional VSI support nodes as necessary to
+handle all the required Tx queues. Symmetrically, adjust the VSI node
+removal algorithm to remove all nodes associated with the given VSI.
+Also, make the search for the next free VSI node more restrictive. That is,
+add queue group nodes only to the VSI support nodes that have a matching
+VSI handle.
+Finally, fix the comment describing the tree update algorithm to better
+reflect the current scenario.
 
-This patch fixes the accounting by updating `rx_bytes` with the number
-of bytes actually read, even on partial reads, while leaving `fwd_cnt`
-untouched until the packet is fully consumed. Also introduce a new
-`buf_used` counter to check that the remote peer is honoring the given
-credit; this was previously done via `rx_bytes`.
-
-Fixes: 93b808876682 ("virtio/vsock: fix logic which reduces credit update messages")
-Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
-Link: https://patch.msgid.link/20250521121705.196379-1-sgarzare@redhat.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: b0153fdd7e8a ("ice: update VSI config dynamically")
+Reviewed-by: Dawid Osuchowski <dawid.osuchowski@linux.intel.com>
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Signed-off-by: Michal Kubiak <michal.kubiak@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Jesse Brandeburg <jbrandeburg@cloudflare.com>
+Tested-by: Saritha Sanigani <sarithax.sanigani@intel.com> (A Contingent Worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/virtio_vsock.h            |  1 +
- net/vmw_vsock/virtio_transport_common.c | 26 +++++++++++++++----------
- 2 files changed, 17 insertions(+), 10 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_sched.c | 170 +++++++++++++++++----
+ 1 file changed, 142 insertions(+), 28 deletions(-)
 
-diff --git a/include/linux/virtio_vsock.h b/include/linux/virtio_vsock.h
-index 0387d64e2c66c..36fb3edfa403d 100644
---- a/include/linux/virtio_vsock.h
-+++ b/include/linux/virtio_vsock.h
-@@ -140,6 +140,7 @@ struct virtio_vsock_sock {
- 	u32 last_fwd_cnt;
- 	u32 rx_bytes;
- 	u32 buf_alloc;
-+	u32 buf_used;
- 	struct sk_buff_head rx_queue;
- 	u32 msg_count;
- };
-diff --git a/net/vmw_vsock/virtio_transport_common.c b/net/vmw_vsock/virtio_transport_common.c
-index 7f7de6d880965..2c9b1011cdcc8 100644
---- a/net/vmw_vsock/virtio_transport_common.c
-+++ b/net/vmw_vsock/virtio_transport_common.c
-@@ -441,18 +441,20 @@ static int virtio_transport_send_pkt_info(struct vsock_sock *vsk,
- static bool virtio_transport_inc_rx_pkt(struct virtio_vsock_sock *vvs,
- 					u32 len)
- {
--	if (vvs->rx_bytes + len > vvs->buf_alloc)
-+	if (vvs->buf_used + len > vvs->buf_alloc)
- 		return false;
- 
- 	vvs->rx_bytes += len;
-+	vvs->buf_used += len;
- 	return true;
+diff --git a/drivers/net/ethernet/intel/ice/ice_sched.c b/drivers/net/ethernet/intel/ice/ice_sched.c
+index 6524875b34d39..d9d09296d1d48 100644
+--- a/drivers/net/ethernet/intel/ice/ice_sched.c
++++ b/drivers/net/ethernet/intel/ice/ice_sched.c
+@@ -84,6 +84,27 @@ ice_sched_find_node_by_teid(struct ice_sched_node *start_node, u32 teid)
+ 	return NULL;
  }
  
- static void virtio_transport_dec_rx_pkt(struct virtio_vsock_sock *vvs,
--					u32 len)
-+					u32 bytes_read, u32 bytes_dequeued)
- {
--	vvs->rx_bytes -= len;
--	vvs->fwd_cnt += len;
-+	vvs->rx_bytes -= bytes_read;
-+	vvs->buf_used -= bytes_dequeued;
-+	vvs->fwd_cnt += bytes_dequeued;
++/**
++ * ice_sched_find_next_vsi_node - find the next node for a given VSI
++ * @vsi_node: VSI support node to start search with
++ *
++ * Return: Next VSI support node, or NULL.
++ *
++ * The function returns a pointer to the next node from the VSI layer
++ * assigned to the given VSI, or NULL if there is no such a node.
++ */
++static struct ice_sched_node *
++ice_sched_find_next_vsi_node(struct ice_sched_node *vsi_node)
++{
++	unsigned int vsi_handle = vsi_node->vsi_handle;
++
++	while ((vsi_node = vsi_node->sibling) != NULL)
++		if (vsi_node->vsi_handle == vsi_handle)
++			break;
++
++	return vsi_node;
++}
++
+ /**
+  * ice_aqc_send_sched_elem_cmd - send scheduling elements cmd
+  * @hw: pointer to the HW struct
+@@ -1084,8 +1105,10 @@ ice_sched_add_nodes_to_layer(struct ice_port_info *pi,
+ 		if (parent->num_children < max_child_nodes) {
+ 			new_num_nodes = max_child_nodes - parent->num_children;
+ 		} else {
+-			/* This parent is full, try the next sibling */
+-			parent = parent->sibling;
++			/* This parent is full,
++			 * try the next available sibling.
++			 */
++			parent = ice_sched_find_next_vsi_node(parent);
+ 			/* Don't modify the first node TEID memory if the
+ 			 * first node was added already in the above call.
+ 			 * Instead send some temp memory for all other
+@@ -1528,12 +1551,23 @@ ice_sched_get_free_qparent(struct ice_port_info *pi, u16 vsi_handle, u8 tc,
+ 	/* get the first queue group node from VSI sub-tree */
+ 	qgrp_node = ice_sched_get_first_node(pi, vsi_node, qgrp_layer);
+ 	while (qgrp_node) {
++		struct ice_sched_node *next_vsi_node;
++
+ 		/* make sure the qgroup node is part of the VSI subtree */
+ 		if (ice_sched_find_node_in_subtree(pi->hw, vsi_node, qgrp_node))
+ 			if (qgrp_node->num_children < max_children &&
+ 			    qgrp_node->owner == owner)
+ 				break;
+ 		qgrp_node = qgrp_node->sibling;
++		if (qgrp_node)
++			continue;
++
++		next_vsi_node = ice_sched_find_next_vsi_node(vsi_node);
++		if (!next_vsi_node)
++			break;
++
++		vsi_node = next_vsi_node;
++		qgrp_node = ice_sched_get_first_node(pi, vsi_node, qgrp_layer);
+ 	}
+ 
+ 	/* Select the best queue group */
+@@ -1779,7 +1813,11 @@ ice_sched_add_vsi_support_nodes(struct ice_port_info *pi, u16 vsi_handle,
+ 		if (!parent)
+ 			return -EIO;
+ 
+-		if (i == vsil)
++		/* Do not modify the VSI handle for already existing VSI nodes,
++		 * (if no new VSI node was added to the tree).
++		 * Assign the VSI handle only to newly added VSI nodes.
++		 */
++		if (i == vsil && num_added)
+ 			parent->vsi_handle = vsi_handle;
+ 	}
+ 
+@@ -1812,6 +1850,41 @@ ice_sched_add_vsi_to_topo(struct ice_port_info *pi, u16 vsi_handle, u8 tc)
+ 					       num_nodes);
  }
  
- void virtio_transport_inc_tx_pkt(struct virtio_vsock_sock *vvs, struct sk_buff *skb)
-@@ -581,11 +583,11 @@ virtio_transport_stream_do_dequeue(struct vsock_sock *vsk,
- 				   size_t len)
- {
- 	struct virtio_vsock_sock *vvs = vsk->trans;
--	size_t bytes, total = 0;
- 	struct sk_buff *skb;
- 	u32 fwd_cnt_delta;
- 	bool low_rx_bytes;
- 	int err = -EFAULT;
-+	size_t total = 0;
- 	u32 free_space;
- 
- 	spin_lock_bh(&vvs->rx_lock);
-@@ -597,6 +599,8 @@ virtio_transport_stream_do_dequeue(struct vsock_sock *vsk,
- 	}
- 
- 	while (total < len && !skb_queue_empty(&vvs->rx_queue)) {
-+		size_t bytes, dequeued = 0;
++/**
++ * ice_sched_recalc_vsi_support_nodes - recalculate VSI support nodes count
++ * @hw: pointer to the HW struct
++ * @vsi_node: pointer to the leftmost VSI node that needs to be extended
++ * @new_numqs: new number of queues that has to be handled by the VSI
++ * @new_num_nodes: pointer to nodes count table to modify the VSI layer entry
++ *
++ * This function recalculates the number of supported nodes that need to
++ * be added after adding more Tx queues for a given VSI.
++ * The number of new VSI support nodes that shall be added will be saved
++ * to the @new_num_nodes table for the VSI layer.
++ */
++static void
++ice_sched_recalc_vsi_support_nodes(struct ice_hw *hw,
++				   struct ice_sched_node *vsi_node,
++				   unsigned int new_numqs, u16 *new_num_nodes)
++{
++	u32 vsi_nodes_cnt = 1;
++	u32 max_queue_cnt = 1;
++	u32 qgl, vsil;
 +
- 		skb = skb_peek(&vvs->rx_queue);
- 
- 		bytes = min_t(size_t, len - total,
-@@ -620,12 +624,12 @@ virtio_transport_stream_do_dequeue(struct vsock_sock *vsk,
- 		VIRTIO_VSOCK_SKB_CB(skb)->offset += bytes;
- 
- 		if (skb->len == VIRTIO_VSOCK_SKB_CB(skb)->offset) {
--			u32 pkt_len = le32_to_cpu(virtio_vsock_hdr(skb)->len);
--
--			virtio_transport_dec_rx_pkt(vvs, pkt_len);
-+			dequeued = le32_to_cpu(virtio_vsock_hdr(skb)->len);
- 			__skb_unlink(skb, &vvs->rx_queue);
- 			consume_skb(skb);
- 		}
++	qgl = ice_sched_get_qgrp_layer(hw);
++	vsil = ice_sched_get_vsi_layer(hw);
 +
-+		virtio_transport_dec_rx_pkt(vvs, bytes, dequeued);
++	for (u32 i = vsil; i <= qgl; i++)
++		max_queue_cnt *= hw->max_children[i];
++
++	while ((vsi_node = ice_sched_find_next_vsi_node(vsi_node)) != NULL)
++		vsi_nodes_cnt++;
++
++	if (new_numqs > (max_queue_cnt * vsi_nodes_cnt))
++		new_num_nodes[vsil] = DIV_ROUND_UP(new_numqs, max_queue_cnt) -
++				      vsi_nodes_cnt;
++}
++
+ /**
+  * ice_sched_update_vsi_child_nodes - update VSI child nodes
+  * @pi: port information structure
+@@ -1863,16 +1936,25 @@ ice_sched_update_vsi_child_nodes(struct ice_port_info *pi, u16 vsi_handle,
+ 			return status;
  	}
  
- 	fwd_cnt_delta = vvs->fwd_cnt - vvs->last_fwd_cnt;
-@@ -781,7 +785,7 @@ static int virtio_transport_seqpacket_do_dequeue(struct vsock_sock *vsk,
- 				msg->msg_flags |= MSG_EOR;
- 		}
++	ice_sched_recalc_vsi_support_nodes(hw, vsi_node,
++					   new_numqs, new_num_nodes);
+ 	ice_sched_calc_vsi_child_nodes(hw, new_numqs - prev_numqs,
+ 				       new_num_nodes);
  
--		virtio_transport_dec_rx_pkt(vvs, pkt_len);
-+		virtio_transport_dec_rx_pkt(vvs, pkt_len, pkt_len);
- 		kfree_skb(skb);
- 	}
+-	/* Keep the max number of queue configuration all the time. Update the
+-	 * tree only if number of queues > previous number of queues. This may
++	/* Never decrease the number of queues in the tree. Update the tree
++	 * only if number of queues > previous number of queues. This may
+ 	 * leave some extra nodes in the tree if number of queues < previous
+ 	 * number but that wouldn't harm anything. Removing those extra nodes
+ 	 * may complicate the code if those nodes are part of SRL or
+ 	 * individually rate limited.
++	 * Also, add the required VSI support nodes if the existing ones cannot
++	 * handle the requested new number of queues.
+ 	 */
++	status = ice_sched_add_vsi_support_nodes(pi, vsi_handle, tc_node,
++						 new_num_nodes);
++	if (status)
++		return status;
++
+ 	status = ice_sched_add_vsi_child_nodes(pi, vsi_handle, tc_node,
+ 					       new_num_nodes, owner);
+ 	if (status)
+@@ -2013,6 +2095,58 @@ static bool ice_sched_is_leaf_node_present(struct ice_sched_node *node)
+ 	return (node->info.data.elem_type == ICE_AQC_ELEM_TYPE_LEAF);
+ }
  
-@@ -1735,6 +1739,7 @@ int virtio_transport_read_skb(struct vsock_sock *vsk, skb_read_actor_t recv_acto
- 	struct sock *sk = sk_vsock(vsk);
- 	struct virtio_vsock_hdr *hdr;
- 	struct sk_buff *skb;
-+	u32 pkt_len;
- 	int off = 0;
- 	int err;
++/**
++ * ice_sched_rm_vsi_subtree - remove all nodes assigned to a given VSI
++ * @pi: port information structure
++ * @vsi_node: pointer to the leftmost node of the VSI to be removed
++ * @owner: LAN or RDMA
++ * @tc: TC number
++ *
++ * Return: Zero in case of success, or -EBUSY if the VSI has leaf nodes in TC.
++ *
++ * This function removes all the VSI support nodes associated with a given VSI
++ * and its LAN or RDMA children nodes from the scheduler tree.
++ */
++static int
++ice_sched_rm_vsi_subtree(struct ice_port_info *pi,
++			 struct ice_sched_node *vsi_node, u8 owner, u8 tc)
++{
++	u16 vsi_handle = vsi_node->vsi_handle;
++	bool all_vsi_nodes_removed = true;
++	int j = 0;
++
++	while (vsi_node) {
++		struct ice_sched_node *next_vsi_node;
++
++		if (ice_sched_is_leaf_node_present(vsi_node)) {
++			ice_debug(pi->hw, ICE_DBG_SCHED, "VSI has leaf nodes in TC %d\n", tc);
++			return -EBUSY;
++		}
++		while (j < vsi_node->num_children) {
++			if (vsi_node->children[j]->owner == owner)
++				ice_free_sched_node(pi, vsi_node->children[j]);
++			else
++				j++;
++		}
++
++		next_vsi_node = ice_sched_find_next_vsi_node(vsi_node);
++
++		/* remove the VSI if it has no children */
++		if (!vsi_node->num_children)
++			ice_free_sched_node(pi, vsi_node);
++		else
++			all_vsi_nodes_removed = false;
++
++		vsi_node = next_vsi_node;
++	}
++
++	/* clean up aggregator related VSI info if any */
++	if (all_vsi_nodes_removed)
++		ice_sched_rm_agg_vsi_info(pi, vsi_handle);
++
++	return 0;
++}
++
+ /**
+  * ice_sched_rm_vsi_cfg - remove the VSI and its children nodes
+  * @pi: port information structure
+@@ -2039,7 +2173,6 @@ ice_sched_rm_vsi_cfg(struct ice_port_info *pi, u16 vsi_handle, u8 owner)
  
-@@ -1752,7 +1757,8 @@ int virtio_transport_read_skb(struct vsock_sock *vsk, skb_read_actor_t recv_acto
- 	if (le32_to_cpu(hdr->flags) & VIRTIO_VSOCK_SEQ_EOM)
- 		vvs->msg_count--;
+ 	ice_for_each_traffic_class(i) {
+ 		struct ice_sched_node *vsi_node, *tc_node;
+-		u8 j = 0;
  
--	virtio_transport_dec_rx_pkt(vvs, le32_to_cpu(hdr->len));
-+	pkt_len = le32_to_cpu(hdr->len);
-+	virtio_transport_dec_rx_pkt(vvs, pkt_len, pkt_len);
- 	spin_unlock_bh(&vvs->rx_lock);
+ 		tc_node = ice_sched_get_tc_node(pi, i);
+ 		if (!tc_node)
+@@ -2049,31 +2182,12 @@ ice_sched_rm_vsi_cfg(struct ice_port_info *pi, u16 vsi_handle, u8 owner)
+ 		if (!vsi_node)
+ 			continue;
  
- 	virtio_transport_send_credit_update(vsk);
+-		if (ice_sched_is_leaf_node_present(vsi_node)) {
+-			ice_debug(pi->hw, ICE_DBG_SCHED, "VSI has leaf nodes in TC %d\n", i);
+-			status = -EBUSY;
++		status = ice_sched_rm_vsi_subtree(pi, vsi_node, owner, i);
++		if (status)
+ 			goto exit_sched_rm_vsi_cfg;
+-		}
+-		while (j < vsi_node->num_children) {
+-			if (vsi_node->children[j]->owner == owner) {
+-				ice_free_sched_node(pi, vsi_node->children[j]);
+ 
+-				/* reset the counter again since the num
+-				 * children will be updated after node removal
+-				 */
+-				j = 0;
+-			} else {
+-				j++;
+-			}
+-		}
+-		/* remove the VSI if it has no children */
+-		if (!vsi_node->num_children) {
+-			ice_free_sched_node(pi, vsi_node);
+-			vsi_ctx->sched.vsi_node[i] = NULL;
++		vsi_ctx->sched.vsi_node[i] = NULL;
+ 
+-			/* clean up aggregator related VSI info if any */
+-			ice_sched_rm_agg_vsi_info(pi, vsi_handle);
+-		}
+ 		if (owner == ICE_SCHED_NODE_OWNER_LAN)
+ 			vsi_ctx->sched.max_lanq[i] = 0;
+ 		else
 -- 
 2.39.5
 
