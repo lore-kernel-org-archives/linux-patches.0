@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DB3C2EA158;
-	Tue, 17 Jun 2025 16:42:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 333862EA158;
+	Tue, 17 Jun 2025 16:42:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750178572; cv=none; b=XnH4jWiKrGwLqtmkbm++qzrqJuJILwsEgVTKnFz+o0RCZ6deLi0VGG7A5l8XlleiWSkX/+jT6MLRW/KcWNBZE8rNbLL/OfzeqcBNZgWCNBkNtJPQm8D+Z6gR6agcq26DX6oOQjBatFFjpwZLD/B9Rk/ub8cjmJxOJROZiLpMvnQ=
+	t=1750178575; cv=none; b=DXSoib3jcYl2gVTiHZO2e+bbWmnZjdoIEIdsTzayKOVtk3Nfx8PV7NnSWPqJfincUUjYTFa9hcEKKWY8G0IQHVh2IGrV02URQGz1GAV5rONyDYBmw3s+YzJCAr5CEfAHXU3Q1XvPhlBoHSqlM66OttCHJ5I2Ns7JUQvp1AoGupc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750178572; c=relaxed/simple;
-	bh=jkrDJPLQ5cqFkYhyfJvQXzHQ6jX2EOgmn74GgDOGbVM=;
+	s=arc-20240116; t=1750178575; c=relaxed/simple;
+	bh=tJuK8/DtIwju2VEyRNAqFfVFKZZF0QnYTl9ZqGLn1n4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XuniFJ3BJkalPq67j7+rdrpgovSuxkt7qjNGKCq+JxPUCZWKSQ28PnP41yV8S7yv7tAaX9v7rto72QZsOHtsa27jpDjmkDwOtSUhSN8NzBwgpD1XbJmGzXOTeiqCGafcFTABL1QMETrnNxYTPdraJ4mRjtvW2L15AzvrqWjxGpo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XDN9tob3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CaH7UYkmMZxFswvlNrpJF/o1h58xzcAgEhb5fEDlNJ+EHa2+E0QXjssZ65jW7kUjKPW0dxAC5Y+NMxIPNXx4gDsy8tKtopO9QoleuWn9ok54rA3FFBSk/oN5zCcgcdnCSrjWpl5mkHo+qfVlTIkBBCAW9HtcPO17EILmfuNXW2k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FtkToE6V; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XDN9tob3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EE5DC4CEE3;
-	Tue, 17 Jun 2025 16:42:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FtkToE6V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1AB0C4CEE3;
+	Tue, 17 Jun 2025 16:42:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750178571;
-	bh=jkrDJPLQ5cqFkYhyfJvQXzHQ6jX2EOgmn74GgDOGbVM=;
+	s=korg; t=1750178575;
+	bh=tJuK8/DtIwju2VEyRNAqFfVFKZZF0QnYTl9ZqGLn1n4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XDN9tob3bF+t8u/TCN4fMGF0SvtQmUxJNrmERfdttuNlVC1bhvkS3ES7PQHvvhc8f
-	 DQsXv/m6W1y3HMR/wQB0Ch9TfFToBw8wRUOCfB4Kg+vO/qVZuVEJ5/tA/XDmP53B0P
-	 4HT6Z8zkj+ORd25zypVwzpDkG+oJuuImtUPe9/ow=
+	b=FtkToE6VHWzeKhobDCm3ir6rPdQo3MEOSXQo5CyVq1xsFWS0W4KI8XqbfwwqHeooy
+	 Kry5OOtAZ3OplTQl7Jn+WF3VH/wr3AplyI/a7axNS7rVskvn5SHHHfManTbvSYhG5T
+	 /KVyDhjb8JoNJY3fxUhZX/NTwgg0iiDE2MfRyKs0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Benno Lossin <benno.lossin@proton.me>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Danilo Krummrich <dakr@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 488/780] cifs: Fix validation of SMB1 query reparse point response
-Date: Tue, 17 Jun 2025 17:23:16 +0200
-Message-ID: <20250617152511.361902206@linuxfoundation.org>
+Subject: [PATCH 6.15 489/780] rust: alloc: add missing invariant in Vec::set_len()
+Date: Tue, 17 Jun 2025 17:23:17 +0200
+Message-ID: <20250617152511.401624499@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
 References: <20250617152451.485330293@linuxfoundation.org>
@@ -45,85 +46,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pali Rohár <pali@kernel.org>
+From: Danilo Krummrich <dakr@kernel.org>
 
-[ Upstream commit 56e84c64fc257a95728ee73165456b025c48d408 ]
+[ Upstream commit fb1bf1067de979c89ae33589e0466d6ce0dde204 ]
 
-Validate the SMB1 query reparse point response per [MS-CIFS] section
-2.2.7.2 NT_TRANSACT_IOCTL.
+When setting a new length, we have to justify that the set length
+represents the exact number of elements stored in the vector.
 
-NT_TRANSACT_IOCTL response contains one word long setup data after which is
-ByteCount member. So check that SetupCount is 1 before trying to read and
-use ByteCount member.
-
-Output setup data contains ReturnedDataLen member which is the output
-length of executed IOCTL command by remote system. So check that output was
-not truncated before transferring over network.
-
-Change MaxSetupCount of NT_TRANSACT_IOCTL request from 4 to 1 as io_rsp
-structure already expects one word long output setup data. This should
-prevent server sending incompatible structure (in case it would be extended
-in future, which is unlikely).
-
-Change MaxParameterCount of NT_TRANSACT_IOCTL request from 2 to 0 as
-NT IOCTL does not have any documented output parameters and this function
-does not parse any output parameters at all.
-
-Fixes: ed3e0a149b58 ("smb: client: implement ->query_reparse_point() for SMB1")
-Signed-off-by: Pali Rohár <pali@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Reviewed-by: Benno Lossin <benno.lossin@proton.me>
+Reported-by: Alice Ryhl <aliceryhl@google.com>
+Closes: https://lore.kernel.org/rust-for-linux/20250311-iov-iter-v1-4-f6c9134ea824@google.com
+Fixes: 2aac4cd7dae3 ("rust: alloc: implement kernel `Vec` type")
+Link: https://lore.kernel.org/r/20250315154436.65065-2-dakr@kernel.org
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cifssmb.c | 20 ++++++++++++++++++--
- 1 file changed, 18 insertions(+), 2 deletions(-)
+ rust/kernel/alloc/kvec.rs | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/smb/client/cifssmb.c b/fs/smb/client/cifssmb.c
-index 477792c07d458..a3ba3346ed313 100644
---- a/fs/smb/client/cifssmb.c
-+++ b/fs/smb/client/cifssmb.c
-@@ -2753,10 +2753,10 @@ int cifs_query_reparse_point(const unsigned int xid,
- 
- 	io_req->TotalParameterCount = 0;
- 	io_req->TotalDataCount = 0;
--	io_req->MaxParameterCount = cpu_to_le32(2);
-+	io_req->MaxParameterCount = cpu_to_le32(0);
- 	/* BB find exact data count max from sess structure BB */
- 	io_req->MaxDataCount = cpu_to_le32(CIFSMaxBufSize & 0xFFFFFF00);
--	io_req->MaxSetupCount = 4;
-+	io_req->MaxSetupCount = 1;
- 	io_req->Reserved = 0;
- 	io_req->ParameterOffset = 0;
- 	io_req->DataCount = 0;
-@@ -2783,6 +2783,22 @@ int cifs_query_reparse_point(const unsigned int xid,
- 		goto error;
- 	}
- 
-+	/* SetupCount must be 1, otherwise offset to ByteCount is incorrect. */
-+	if (io_rsp->SetupCount != 1) {
-+		rc = -EIO;
-+		goto error;
-+	}
+diff --git a/rust/kernel/alloc/kvec.rs b/rust/kernel/alloc/kvec.rs
+index 87a71fd40c3ca..f62204fe563f5 100644
+--- a/rust/kernel/alloc/kvec.rs
++++ b/rust/kernel/alloc/kvec.rs
+@@ -196,6 +196,9 @@ where
+     #[inline]
+     pub unsafe fn set_len(&mut self, new_len: usize) {
+         debug_assert!(new_len <= self.capacity());
 +
-+	/*
-+	 * ReturnedDataLen is output length of executed IOCTL.
-+	 * DataCount is output length transferred over network.
-+	 * Check that we have full FSCTL_GET_REPARSE_POINT buffer.
-+	 */
-+	if (data_count != le16_to_cpu(io_rsp->ReturnedDataLen)) {
-+		rc = -EIO;
-+		goto error;
-+	}
-+
- 	end = 2 + get_bcc(&io_rsp->hdr) + (__u8 *)&io_rsp->ByteCount;
- 	start = (__u8 *)&io_rsp->hdr.Protocol + data_offset;
- 	if (start >= end) {
++        // INVARIANT: By the safety requirements of this method `new_len` represents the exact
++        // number of elements stored within `self`.
+         self.len = new_len;
+     }
+ 
 -- 
 2.39.5
 
