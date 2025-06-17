@@ -1,45 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4464D1A5B9D;
-	Tue, 17 Jun 2025 16:36:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EB021A5B9D;
+	Tue, 17 Jun 2025 16:36:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750178214; cv=none; b=HgxnrJRCEjJJfLA8mGc1PBSBsbrfKM0dqpGcyu1B+oB7Dm6Lmy1Yw0b32MS3ggn/eFvPShrdSmQd6OjDmS4Ko9AiyiZ8MsgPrYYSdtOW/t7p0Il4ymf5E0y7sZiVYIAbSoQaBZl7hJHhw+sa6T2Thyg/jsRKacn54UTiDk2DJZs=
+	t=1750178217; cv=none; b=jjan/FYpVntYvuM8HNNahQgHtKEQpdvL4f6yJO14ZnvP1kGzQnPnagL98zkaxwr3bA1X226ARZzsJeyi8xJMDd6HCT/NgqU9iBBIQ7HA/Wf8vJL/rRroEpuNQNoz8uUbm9uZSftyPRX55aa+D9vj64eEG+73+DgF8R47q85lTwE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750178214; c=relaxed/simple;
-	bh=zaL3bUrjIEvXgW6itcjJslKw/wTuc612UIu6HCe3rSg=;
+	s=arc-20240116; t=1750178217; c=relaxed/simple;
+	bh=Znm2M2ukfpvVJhVjLDAHQgRjN0uq9tGGz5kgVbhYT30=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z95QlUFlpBxol1gpNH5ME5wl9t2jNfcfY06yTSW4P5yE3idJ68696vx6+/4ELIYGEnl/WiClFhIpNqkAJcEcuipYD4T7/EiNY7CpIsQtzlVOO/fICwZLnXZzPkzRbkxrKQeZaZGm7zyw2gEDpRUQhzDM3dxaAiBIURjPqE+bhRA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jfqpa5Pc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Bej2f1FTqAEh7JbN/GX0SgILO+tgK54kovuWNdvDXEhAQZ8yiI90Fe+hPH7f0/6GoKwWwWL/P/+gs8g6aYZ4ttJ909qeGDLAHCh+8goO5ZH0H9+h0N9thlUj6JnT7/I0PAz3aBfMOuz2CDPOMq5PNhItyv1V2tDgXGMrxQUUhNI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2AktmosY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jfqpa5Pc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89189C4CEE3;
-	Tue, 17 Jun 2025 16:36:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2AktmosY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B3C8C4CEE3;
+	Tue, 17 Jun 2025 16:36:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750178214;
-	bh=zaL3bUrjIEvXgW6itcjJslKw/wTuc612UIu6HCe3rSg=;
+	s=korg; t=1750178217;
+	bh=Znm2M2ukfpvVJhVjLDAHQgRjN0uq9tGGz5kgVbhYT30=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jfqpa5Pcfj2CfyGGd0iINAyJLWuw9x6Nn6sXeTcohgLmeZCAW2nEwxHSbVN3roDfK
-	 OWJxeZqZCYX4zuTLMyXmXdtHnB+dpcc1Z5uH75vlYSlccXUVQIGEts7sVLIofVkLSA
-	 tHcKBQy0YGuVgBo5ZmG1nyu3tEuUGOEJJjrWpxg0=
+	b=2AktmosYHO+fkNVO1lL0hhmxmCpY7uDlP0SF60yc6J29b0sJCmFG0/mr05axvo4Lh
+	 55BZyMkIzjAATZP4ebap1AOMmvUbrFLOwtOkGHFK70/PfpdVpZ+cTNKdP04HAyWtY5
+	 y48brNRmc6A98/6Ma8UIeICN9j3smX9hgaZZsD4s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gavi Teitz <gavi@nvidia.com>,
-	Roi Dayan <roid@nvidia.com>,
-	Patrisious Haddad <phaddad@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Mark Bloch <mbloch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Benjamin Marzinski <bmarzins@redhat.com>,
+	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 462/512] net/mlx5: Fix return value when searching for existing flow group
-Date: Tue, 17 Jun 2025 17:27:08 +0200
-Message-ID: <20250617152438.288526188@linuxfoundation.org>
+Subject: [PATCH 6.15 426/780] dm: free table mempools if not used in __bind
+Date: Tue, 17 Jun 2025 17:22:14 +0200
+Message-ID: <20250617152508.818901002@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -51,63 +48,56 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Patrisious Haddad <phaddad@nvidia.com>
+From: Benjamin Marzinski <bmarzins@redhat.com>
 
-[ Upstream commit 8ec40e3f1f72bf8f8accf18020d487caa99f46a4 ]
+[ Upstream commit e8819e7f03470c5b468720630d9e4e1d5b99159e ]
 
-When attempting to add a rule to an existing flow group, if a matching
-flow group exists but is not active, the error code returned should be
-EAGAIN, so that the rule can be added to the matching flow group once
-it is active, rather than ENOENT, which indicates that no matching
-flow group was found.
+With request-based dm, the mempools don't need reloading when switching
+tables, but the unused table mempools are not freed until the active
+table is finally freed. Free them immediately if they are not needed.
 
-Fixes: bd71b08ec2ee ("net/mlx5: Support multiple updates of steering rules in parallel")
-Signed-off-by: Gavi Teitz <gavi@nvidia.com>
-Signed-off-by: Roi Dayan <roid@nvidia.com>
-Signed-off-by: Patrisious Haddad <phaddad@nvidia.com>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Signed-off-by: Mark Bloch <mbloch@nvidia.com>
-Link: https://patch.msgid.link/20250610151514.1094735-4-mbloch@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 29dec90a0f1d9 ("dm: fix bio_set allocation")
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Tested-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Benjamin Marzinski <bmarzins@redhat.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/fs_core.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/md/dm.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/fs_core.c b/drivers/net/ethernet/mellanox/mlx5/core/fs_core.c
-index 0ce999706d412..1bc88743d2dfa 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/fs_core.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/fs_core.c
-@@ -2200,6 +2200,7 @@ try_add_to_existing_fg(struct mlx5_flow_table *ft,
- 	struct mlx5_flow_handle *rule;
- 	struct match_list *iter;
- 	bool take_write = false;
-+	bool try_again = false;
- 	struct fs_fte *fte;
- 	u64  version = 0;
- 	int err;
-@@ -2264,6 +2265,7 @@ try_add_to_existing_fg(struct mlx5_flow_table *ft,
- 		nested_down_write_ref_node(&g->node, FS_LOCK_PARENT);
- 
- 		if (!g->node.active) {
-+			try_again = true;
- 			up_write_ref_node(&g->node, false);
- 			continue;
- 		}
-@@ -2285,7 +2287,8 @@ try_add_to_existing_fg(struct mlx5_flow_table *ft,
- 			tree_put_node(&fte->node, false);
- 		return rule;
+diff --git a/drivers/md/dm.c b/drivers/md/dm.c
+index f5c5ccb6f8d25..292414da871da 100644
+--- a/drivers/md/dm.c
++++ b/drivers/md/dm.c
+@@ -2461,10 +2461,10 @@ static struct dm_table *__bind(struct mapped_device *md, struct dm_table *t,
+ 		 * requests in the queue may refer to bio from the old bioset,
+ 		 * so you must walk through the queue to unprep.
+ 		 */
+-		if (!md->mempools) {
++		if (!md->mempools)
+ 			md->mempools = t->mempools;
+-			t->mempools = NULL;
+-		}
++		else
++			dm_free_md_mempools(t->mempools);
+ 	} else {
+ 		/*
+ 		 * The md may already have mempools that need changing.
+@@ -2473,8 +2473,8 @@ static struct dm_table *__bind(struct mapped_device *md, struct dm_table *t,
+ 		 */
+ 		dm_free_md_mempools(md->mempools);
+ 		md->mempools = t->mempools;
+-		t->mempools = NULL;
  	}
--	rule = ERR_PTR(-ENOENT);
-+	err = try_again ? -EAGAIN : -ENOENT;
-+	rule = ERR_PTR(err);
- out:
- 	kmem_cache_free(steering->ftes_cache, fte);
- 	return rule;
++	t->mempools = NULL;
+ 
+ 	old_map = rcu_dereference_protected(md->map, lockdep_is_held(&md->suspend_lock));
+ 	rcu_assign_pointer(md->map, (void *)t);
 -- 
 2.39.5
 
