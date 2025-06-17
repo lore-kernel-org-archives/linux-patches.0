@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D7932DFF06;
-	Tue, 17 Jun 2025 16:10:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D35B221550;
+	Tue, 17 Jun 2025 16:10:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750176610; cv=none; b=TLGiqUsEbvuDJtrWOfmOw2sYzw+5vcY9fmBxzhWRb46RW3+xUsjVWiMBOAqioivjcSD59KF60Hz/7j+hwRWmm8r8DyEPgE4nB7cDVjw1zTUnDmP0RfUHUpG8mJBs+A2MIKg/9O7Cx1IiKsLyO1CcQDPzmEtqERqf0BQGwKyF6wc=
+	t=1750176613; cv=none; b=lMAysAzn+qg0pgDtDvIIbpPeBX4P+zvMwZG+4OyZrVLKZWlTD9azN5O8szazJQl3GEMmm6BN0RhcLD1vqgDGSi6gXzYKx9So526ysvmasPBzDxxtw2Xx8yHjUYwQPOIFi/WzODYfgOSwjybaoZzS+fLTi1MxN8XZr1Gz8l9NctI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750176610; c=relaxed/simple;
-	bh=SzTaSq2QvUdBo5lPtThNfXVFi2/qzYy/UR1Ql1doFFk=;
+	s=arc-20240116; t=1750176613; c=relaxed/simple;
+	bh=gCADqGiUYdb1xsqgtEky/9k0fAS3eno/fwZepIjZrgA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C5J1phohVSs+eOeAcK2qTyp/1hIGMA35hnabi6i7qoliT1oPbP5zM+YvR+4dg9gqKnDmTcHq+ck0t+sqYat3pkSv+CvNhWBziUEiYqo5ikYLzdsbp+okGBxrj1ZVeIjJZOOQZb4wGaP2MglRLSlrdvPMMzysCA9tP9EiWY7/DbQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z6G1eY6O; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U3YPqk0GYGE0bsZhfjmBLpmd2Opd52zQxtzNHaK4SJSTqj026pUyDg1F6xhK2Q1224CPNr8Iv54BFVlN7PMKT2r9Fro8+c8kH29rz1ehyls+bwjSiw9Jo0dS7ueNUACSNZil0MBZGsauiGEMuXgXksuE4yIpXC7XBYONbcgnyyc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cL6+nENb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z6G1eY6O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E502C4CEE3;
-	Tue, 17 Jun 2025 16:10:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cL6+nENb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0A8DC4CEF1;
+	Tue, 17 Jun 2025 16:10:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750176610;
-	bh=SzTaSq2QvUdBo5lPtThNfXVFi2/qzYy/UR1Ql1doFFk=;
+	s=korg; t=1750176613;
+	bh=gCADqGiUYdb1xsqgtEky/9k0fAS3eno/fwZepIjZrgA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z6G1eY6OA+cNcQsr7cuEZ/cnkqUo9q0lPkv/3pf5WyKR+OdxNoEoZJirUImurCdHG
-	 g/sbRey8ESQr7+yugTp7b/NnFFQTEXfzbrkJgeCQEYzWJGwnAjtbWGtUg/0nmOL7Ke
-	 k78UhKKDf4kpiNMa/pTmPvCgcj4tvub26lgFesi8=
+	b=cL6+nENbMY6k+6yzq/258vK1RK/EHmkzld9vHJwDMTAwrKUll1roySS4dUs2D2pL4
+	 hczFGsB8FdVa6apQFx1tVm/PeXoUmjivIU7uet0RCvnfmSZE+iuLnLgsFMIng3BVwp
+	 hkE+Y+7jZPr3TyIo7x7Pzakq9sxNZiD6oW2UgBdg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	P Praneesh <quic_ppranees@quicinc.com>,
-	Nicolas Escande <nico.escande@gmail.com>,
-	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
-	Karthikeyan Periyasamy <quic_periyasa@quicinc.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Aaron Kling <webgeek1234@gmail.com>,
+	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 206/780] wifi: ath12k: Add extra TLV tag parsing support in monitor Rx path
-Date: Tue, 17 Jun 2025 17:18:34 +0200
-Message-ID: <20250617152459.849697677@linuxfoundation.org>
+Subject: [PATCH 6.12 247/512] arm64: tegra: Drop remaining serial clock-names and reset-names
+Date: Tue, 17 Jun 2025 17:23:33 +0200
+Message-ID: <20250617152429.616508304@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,339 +47,155 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: P Praneesh <quic_ppranees@quicinc.com>
+From: Aaron Kling <webgeek1234@gmail.com>
 
-[ Upstream commit 3973cda5ef496fd412fdec2c7c3403ac90e391b8 ]
+[ Upstream commit 4cd763297c2203c6ba587d7d4a9105f96597b998 ]
 
-Currently, the monitor Rx parser handler is inherited from the ath11k.
-However, the ath12k 802.11be hardware does not report the Rx TLV header
-in the MSDU data. Instead, the hardware reports those TLVs under the
-following TLV tags:
+The referenced commit only removed some of the names, missing all that
+weren't in use at the time. The commit removes the rest.
 
-1. Buffer address
-2. MPDU start
-3. MPDU end
-4. MSDU end
-
-Therefore, add support for parsing the above TLVs in the Rx monitor path
-and use this information for MSDU buffer and status updates.
-
-Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.3.1-00173-QCAHKSWPL_SILICONZ-1
-Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.0.c5-00481-QCAHMTSWPL_V1.0_V2.0_SILICONZ-3
-
-Signed-off-by: P Praneesh <quic_ppranees@quicinc.com>
-Tested-by: Nicolas Escande <nico.escande@gmail.com>
-Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Signed-off-by: Karthikeyan Periyasamy <quic_periyasa@quicinc.com>
-Link: https://patch.msgid.link/20250324062518.2752822-3-quic_periyasa@quicinc.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Stable-dep-of: f5d6b15d9503 ("wifi: ath12k: fix wrong handling of CCMP256 and GCMP ciphers")
+Fixes: 71de0a054d0e ("arm64: tegra: Drop serial clock-names and reset-names")
+Signed-off-by: Aaron Kling <webgeek1234@gmail.com>
+Link: https://lore.kernel.org/r/20250428-tegra-serial-fixes-v1-1-4f47c5d85bf6@gmail.com
+Signed-off-by: Thierry Reding <treding@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/dp.h     |   2 +
- drivers/net/wireless/ath/ath12k/dp_mon.c | 157 ++++++++++++++++++++++-
- drivers/net/wireless/ath/ath12k/dp_mon.h |   4 +-
- drivers/net/wireless/ath/ath12k/dp_rx.c  |   2 +
- drivers/net/wireless/ath/ath12k/hal_rx.h |  12 +-
- 5 files changed, 170 insertions(+), 7 deletions(-)
+ arch/arm64/boot/dts/nvidia/tegra186.dtsi | 12 ------------
+ arch/arm64/boot/dts/nvidia/tegra194.dtsi | 12 ------------
+ 2 files changed, 24 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/dp.h b/drivers/net/wireless/ath/ath12k/dp.h
-index 75435a931548c..427a87b63dec3 100644
---- a/drivers/net/wireless/ath/ath12k/dp.h
-+++ b/drivers/net/wireless/ath/ath12k/dp.h
-@@ -106,6 +106,8 @@ struct dp_mon_mpdu {
- 	struct list_head list;
- 	struct sk_buff *head;
- 	struct sk_buff *tail;
-+	u32 err_bitmap;
-+	u8 decap_format;
- };
+diff --git a/arch/arm64/boot/dts/nvidia/tegra186.dtsi b/arch/arm64/boot/dts/nvidia/tegra186.dtsi
+index 2b3bb5d0af17b..f0b7949df92c0 100644
+--- a/arch/arm64/boot/dts/nvidia/tegra186.dtsi
++++ b/arch/arm64/boot/dts/nvidia/tegra186.dtsi
+@@ -621,9 +621,7 @@
+ 		reg-shift = <2>;
+ 		interrupts = <GIC_SPI 113 IRQ_TYPE_LEVEL_HIGH>;
+ 		clocks = <&bpmp TEGRA186_CLK_UARTB>;
+-		clock-names = "serial";
+ 		resets = <&bpmp TEGRA186_RESET_UARTB>;
+-		reset-names = "serial";
+ 		status = "disabled";
+ 	};
  
- #define DP_MON_MAX_STATUS_BUF 32
-diff --git a/drivers/net/wireless/ath/ath12k/dp_mon.c b/drivers/net/wireless/ath/ath12k/dp_mon.c
-index d22800e894850..8c78f601f70aa 100644
---- a/drivers/net/wireless/ath/ath12k/dp_mon.c
-+++ b/drivers/net/wireless/ath/ath12k/dp_mon.c
-@@ -1647,7 +1647,7 @@ ath12k_dp_mon_rx_parse_status_tlv(struct ath12k *ar,
- 				u32_get_bits(info[0], HAL_RX_MPDU_START_INFO0_PPDU_ID);
- 		}
+@@ -633,9 +631,7 @@
+ 		reg-shift = <2>;
+ 		interrupts = <GIC_SPI 115 IRQ_TYPE_LEVEL_HIGH>;
+ 		clocks = <&bpmp TEGRA186_CLK_UARTD>;
+-		clock-names = "serial";
+ 		resets = <&bpmp TEGRA186_RESET_UARTD>;
+-		reset-names = "serial";
+ 		status = "disabled";
+ 	};
  
--		break;
-+		return HAL_RX_MON_STATUS_MPDU_START;
- 	}
- 	case HAL_RX_MSDU_START:
- 		/* TODO: add msdu start parsing logic */
-@@ -2088,6 +2088,144 @@ static int ath12k_dp_mon_rx_deliver(struct ath12k *ar,
- 	return -EINVAL;
- }
+@@ -645,9 +641,7 @@
+ 		reg-shift = <2>;
+ 		interrupts = <GIC_SPI 116 IRQ_TYPE_LEVEL_HIGH>;
+ 		clocks = <&bpmp TEGRA186_CLK_UARTE>;
+-		clock-names = "serial";
+ 		resets = <&bpmp TEGRA186_RESET_UARTE>;
+-		reset-names = "serial";
+ 		status = "disabled";
+ 	};
  
-+static int ath12k_dp_pkt_set_pktlen(struct sk_buff *skb, u32 len)
-+{
-+	if (skb->len > len) {
-+		skb_trim(skb, len);
-+	} else {
-+		if (skb_tailroom(skb) < len - skb->len) {
-+			if ((pskb_expand_head(skb, 0,
-+					      len - skb->len - skb_tailroom(skb),
-+					      GFP_ATOMIC))) {
-+				return -ENOMEM;
-+			}
-+		}
-+		skb_put(skb, (len - skb->len));
-+	}
-+
-+	return 0;
-+}
-+
-+static void ath12k_dp_mon_parse_rx_msdu_end_err(u32 info, u32 *errmap)
-+{
-+	if (info & RX_MSDU_END_INFO13_FCS_ERR)
-+		*errmap |= HAL_RX_MPDU_ERR_FCS;
-+
-+	if (info & RX_MSDU_END_INFO13_DECRYPT_ERR)
-+		*errmap |= HAL_RX_MPDU_ERR_DECRYPT;
-+
-+	if (info & RX_MSDU_END_INFO13_TKIP_MIC_ERR)
-+		*errmap |= HAL_RX_MPDU_ERR_TKIP_MIC;
-+
-+	if (info & RX_MSDU_END_INFO13_A_MSDU_ERROR)
-+		*errmap |= HAL_RX_MPDU_ERR_AMSDU_ERR;
-+
-+	if (info & RX_MSDU_END_INFO13_OVERFLOW_ERR)
-+		*errmap |= HAL_RX_MPDU_ERR_OVERFLOW;
-+
-+	if (info & RX_MSDU_END_INFO13_MSDU_LEN_ERR)
-+		*errmap |= HAL_RX_MPDU_ERR_MSDU_LEN;
-+
-+	if (info & RX_MSDU_END_INFO13_MPDU_LEN_ERR)
-+		*errmap |= HAL_RX_MPDU_ERR_MPDU_LEN;
-+}
-+
-+static int
-+ath12k_dp_mon_parse_status_msdu_end(struct ath12k_mon_data *pmon,
-+				    const struct hal_rx_msdu_end *msdu_end)
-+{
-+	struct dp_mon_mpdu *mon_mpdu = pmon->mon_mpdu;
-+
-+	ath12k_dp_mon_parse_rx_msdu_end_err(__le32_to_cpu(msdu_end->info2),
-+					    &mon_mpdu->err_bitmap);
-+
-+	mon_mpdu->decap_format = le32_get_bits(msdu_end->info1,
-+					       RX_MSDU_END_INFO11_DECAP_FORMAT);
-+
-+	return 0;
-+}
-+
-+static int
-+ath12k_dp_mon_parse_status_buf(struct ath12k *ar,
-+			       struct ath12k_mon_data *pmon,
-+			       const struct dp_mon_packet_info *packet_info)
-+{
-+	struct ath12k_base *ab = ar->ab;
-+	struct dp_rxdma_mon_ring *buf_ring = &ab->dp.rxdma_mon_buf_ring;
-+	struct sk_buff *msdu;
-+	int buf_id;
-+	u32 offset;
-+
-+	buf_id = u32_get_bits(packet_info->cookie, DP_RXDMA_BUF_COOKIE_BUF_ID);
-+
-+	spin_lock_bh(&buf_ring->idr_lock);
-+	msdu = idr_remove(&buf_ring->bufs_idr, buf_id);
-+	spin_unlock_bh(&buf_ring->idr_lock);
-+
-+	if (unlikely(!msdu)) {
-+		ath12k_warn(ab, "mon dest desc with inval buf_id %d\n", buf_id);
-+		return 0;
-+	}
-+
-+	dma_unmap_single(ab->dev, ATH12K_SKB_RXCB(msdu)->paddr,
-+			 msdu->len + skb_tailroom(msdu),
-+			 DMA_FROM_DEVICE);
-+
-+	offset = packet_info->dma_length + ATH12K_MON_RX_DOT11_OFFSET;
-+	if (ath12k_dp_pkt_set_pktlen(msdu, offset)) {
-+		dev_kfree_skb_any(msdu);
-+		goto dest_replenish;
-+	}
-+
-+	if (!pmon->mon_mpdu->head)
-+		pmon->mon_mpdu->head = msdu;
-+	else
-+		pmon->mon_mpdu->tail->next = msdu;
-+
-+	pmon->mon_mpdu->tail = msdu;
-+
-+dest_replenish:
-+	ath12k_dp_mon_buf_replenish(ab, buf_ring, 1);
-+
-+	return 0;
-+}
-+
-+static int
-+ath12k_dp_mon_parse_rx_dest_tlv(struct ath12k *ar,
-+				struct ath12k_mon_data *pmon,
-+				enum hal_rx_mon_status hal_status,
-+				const void *tlv_data)
-+{
-+	switch (hal_status) {
-+	case HAL_RX_MON_STATUS_MPDU_START:
-+		if (WARN_ON_ONCE(pmon->mon_mpdu))
-+			break;
-+
-+		pmon->mon_mpdu = kzalloc(sizeof(*pmon->mon_mpdu), GFP_ATOMIC);
-+		if (!pmon->mon_mpdu)
-+			return -ENOMEM;
-+		break;
-+	case HAL_RX_MON_STATUS_BUF_ADDR:
-+		return ath12k_dp_mon_parse_status_buf(ar, pmon, tlv_data);
-+	case HAL_RX_MON_STATUS_MPDU_END:
-+		/* If no MSDU then free empty MPDU */
-+		if (pmon->mon_mpdu->tail) {
-+			pmon->mon_mpdu->tail->next = NULL;
-+			list_add_tail(&pmon->mon_mpdu->list, &pmon->dp_rx_mon_mpdu_list);
-+		} else {
-+			kfree(pmon->mon_mpdu);
-+		}
-+		pmon->mon_mpdu = NULL;
-+		break;
-+	case HAL_RX_MON_STATUS_MSDU_END:
-+		return ath12k_dp_mon_parse_status_msdu_end(pmon, tlv_data);
-+	default:
-+		break;
-+	}
-+
-+	return 0;
-+}
-+
- static enum hal_rx_mon_status
- ath12k_dp_mon_parse_rx_dest(struct ath12k *ar, struct ath12k_mon_data *pmon,
- 			    struct sk_buff *skb)
-@@ -2114,14 +2252,20 @@ ath12k_dp_mon_parse_rx_dest(struct ath12k *ar, struct ath12k_mon_data *pmon,
- 			tlv_len = le64_get_bits(tlv->tl, HAL_TLV_64_HDR_LEN);
+@@ -657,9 +651,7 @@
+ 		reg-shift = <2>;
+ 		interrupts = <GIC_SPI 117 IRQ_TYPE_LEVEL_HIGH>;
+ 		clocks = <&bpmp TEGRA186_CLK_UARTF>;
+-		clock-names = "serial";
+ 		resets = <&bpmp TEGRA186_RESET_UARTF>;
+-		reset-names = "serial";
+ 		status = "disabled";
+ 	};
  
- 		hal_status = ath12k_dp_mon_rx_parse_status_tlv(ar, pmon, tlv);
-+
-+		if (ar->monitor_started &&
-+		    ath12k_dp_mon_parse_rx_dest_tlv(ar, pmon, hal_status, tlv->value))
-+			return HAL_RX_MON_STATUS_PPDU_DONE;
-+
- 		ptr += sizeof(*tlv) + tlv_len;
- 		ptr = PTR_ALIGN(ptr, HAL_TLV_64_ALIGN);
+@@ -1236,9 +1228,7 @@
+ 		reg-shift = <2>;
+ 		interrupts = <GIC_SPI 114 IRQ_TYPE_LEVEL_HIGH>;
+ 		clocks = <&bpmp TEGRA186_CLK_UARTC>;
+-		clock-names = "serial";
+ 		resets = <&bpmp TEGRA186_RESET_UARTC>;
+-		reset-names = "serial";
+ 		status = "disabled";
+ 	};
  
--		if ((ptr - skb->data) >= DP_RX_BUFFER_SIZE)
-+		if ((ptr - skb->data) > skb->len)
- 			break;
+@@ -1248,9 +1238,7 @@
+ 		reg-shift = <2>;
+ 		interrupts = <GIC_SPI 118 IRQ_TYPE_LEVEL_HIGH>;
+ 		clocks = <&bpmp TEGRA186_CLK_UARTG>;
+-		clock-names = "serial";
+ 		resets = <&bpmp TEGRA186_RESET_UARTG>;
+-		reset-names = "serial";
+ 		status = "disabled";
+ 	};
  
- 	} while ((hal_status == HAL_RX_MON_STATUS_PPDU_NOT_DONE) ||
- 		 (hal_status == HAL_RX_MON_STATUS_BUF_ADDR) ||
-+		 (hal_status == HAL_RX_MON_STATUS_MPDU_START) ||
- 		 (hal_status == HAL_RX_MON_STATUS_MPDU_END) ||
- 		 (hal_status == HAL_RX_MON_STATUS_MSDU_END));
+diff --git a/arch/arm64/boot/dts/nvidia/tegra194.dtsi b/arch/arm64/boot/dts/nvidia/tegra194.dtsi
+index 33f92b77cd9d9..c369507747851 100644
+--- a/arch/arm64/boot/dts/nvidia/tegra194.dtsi
++++ b/arch/arm64/boot/dts/nvidia/tegra194.dtsi
+@@ -766,9 +766,7 @@
+ 			reg-shift = <2>;
+ 			interrupts = <GIC_SPI 115 IRQ_TYPE_LEVEL_HIGH>;
+ 			clocks = <&bpmp TEGRA194_CLK_UARTD>;
+-			clock-names = "serial";
+ 			resets = <&bpmp TEGRA194_RESET_UARTD>;
+-			reset-names = "serial";
+ 			status = "disabled";
+ 		};
  
-@@ -2142,9 +2286,11 @@ ath12k_dp_mon_rx_parse_mon_status(struct ath12k *ar,
- 	struct dp_mon_mpdu *tmp;
- 	struct dp_mon_mpdu *mon_mpdu = pmon->mon_mpdu;
- 	struct sk_buff *head_msdu, *tail_msdu;
--	enum hal_rx_mon_status hal_status = HAL_RX_MON_STATUS_BUF_DONE;
-+	enum hal_rx_mon_status hal_status;
+@@ -778,9 +776,7 @@
+ 			reg-shift = <2>;
+ 			interrupts = <GIC_SPI 116 IRQ_TYPE_LEVEL_HIGH>;
+ 			clocks = <&bpmp TEGRA194_CLK_UARTE>;
+-			clock-names = "serial";
+ 			resets = <&bpmp TEGRA194_RESET_UARTE>;
+-			reset-names = "serial";
+ 			status = "disabled";
+ 		};
  
--	ath12k_dp_mon_parse_rx_dest(ar, pmon, skb);
-+	hal_status = ath12k_dp_mon_parse_rx_dest(ar, pmon, skb);
-+	if (hal_status != HAL_RX_MON_STATUS_PPDU_DONE)
-+		return hal_status;
+@@ -790,9 +786,7 @@
+ 			reg-shift = <2>;
+ 			interrupts = <GIC_SPI 117 IRQ_TYPE_LEVEL_HIGH>;
+ 			clocks = <&bpmp TEGRA194_CLK_UARTF>;
+-			clock-names = "serial";
+ 			resets = <&bpmp TEGRA194_RESET_UARTF>;
+-			reset-names = "serial";
+ 			status = "disabled";
+ 		};
  
- 	list_for_each_entry_safe(mon_mpdu, tmp, &pmon->dp_rx_mon_mpdu_list, list) {
- 		list_del(&mon_mpdu->list);
-@@ -2158,6 +2304,7 @@ ath12k_dp_mon_rx_parse_mon_status(struct ath12k *ar,
+@@ -817,9 +811,7 @@
+ 			reg-shift = <2>;
+ 			interrupts = <GIC_SPI 207 IRQ_TYPE_LEVEL_HIGH>;
+ 			clocks = <&bpmp TEGRA194_CLK_UARTH>;
+-			clock-names = "serial";
+ 			resets = <&bpmp TEGRA194_RESET_UARTH>;
+-			reset-names = "serial";
+ 			status = "disabled";
+ 		};
  
- 		kfree(mon_mpdu);
- 	}
-+
- 	return hal_status;
- }
+@@ -1616,9 +1608,7 @@
+ 			reg-shift = <2>;
+ 			interrupts = <GIC_SPI 114 IRQ_TYPE_LEVEL_HIGH>;
+ 			clocks = <&bpmp TEGRA194_CLK_UARTC>;
+-			clock-names = "serial";
+ 			resets = <&bpmp TEGRA194_RESET_UARTC>;
+-			reset-names = "serial";
+ 			status = "disabled";
+ 		};
  
-@@ -3346,7 +3493,7 @@ int ath12k_dp_mon_srng_process(struct ath12k *ar, int *budget,
- 		ath12k_dp_mon_rx_memset_ppdu_info(ppdu_info);
+@@ -1628,9 +1618,7 @@
+ 			reg-shift = <2>;
+ 			interrupts = <GIC_SPI 118 IRQ_TYPE_LEVEL_HIGH>;
+ 			clocks = <&bpmp TEGRA194_CLK_UARTG>;
+-			clock-names = "serial";
+ 			resets = <&bpmp TEGRA194_RESET_UARTG>;
+-			reset-names = "serial";
+ 			status = "disabled";
+ 		};
  
- 	while ((skb = __skb_dequeue(&skb_list))) {
--		hal_status = ath12k_dp_mon_parse_rx_dest(ar, pmon, skb);
-+		hal_status = ath12k_dp_mon_rx_parse_mon_status(ar, pmon, skb, napi);
- 		if (hal_status != HAL_RX_MON_STATUS_PPDU_DONE) {
- 			ppdu_info->ppdu_continuation = true;
- 			dev_kfree_skb_any(skb);
-diff --git a/drivers/net/wireless/ath/ath12k/dp_mon.h b/drivers/net/wireless/ath/ath12k/dp_mon.h
-index e4368eb42aca8..b039f6b9277c6 100644
---- a/drivers/net/wireless/ath/ath12k/dp_mon.h
-+++ b/drivers/net/wireless/ath/ath12k/dp_mon.h
-@@ -1,7 +1,7 @@
- /* SPDX-License-Identifier: BSD-3-Clause-Clear */
- /*
-  * Copyright (c) 2019-2021 The Linux Foundation. All rights reserved.
-- * Copyright (c) 2021-2024 Qualcomm Innovation Center, Inc. All rights reserved.
-+ * Copyright (c) 2021-2025 Qualcomm Innovation Center, Inc. All rights reserved.
-  */
- 
- #ifndef ATH12K_DP_MON_H
-@@ -9,6 +9,8 @@
- 
- #include "core.h"
- 
-+#define ATH12K_MON_RX_DOT11_OFFSET	5
-+
- enum dp_monitor_mode {
- 	ATH12K_DP_TX_MONITOR_MODE,
- 	ATH12K_DP_RX_MONITOR_MODE
-diff --git a/drivers/net/wireless/ath/ath12k/dp_rx.c b/drivers/net/wireless/ath/ath12k/dp_rx.c
-index 125ccbd0532ce..d6794c753f3ae 100644
---- a/drivers/net/wireless/ath/ath12k/dp_rx.c
-+++ b/drivers/net/wireless/ath/ath12k/dp_rx.c
-@@ -4482,6 +4482,8 @@ int ath12k_dp_rx_pdev_mon_attach(struct ath12k *ar)
- 
- 	pmon->mon_last_linkdesc_paddr = 0;
- 	pmon->mon_last_buf_cookie = DP_RX_DESC_COOKIE_MAX + 1;
-+	INIT_LIST_HEAD(&pmon->dp_rx_mon_mpdu_list);
-+	pmon->mon_mpdu = NULL;
- 	spin_lock_init(&pmon->mon_lock);
- 
- 	return 0;
-diff --git a/drivers/net/wireless/ath/ath12k/hal_rx.h b/drivers/net/wireless/ath/ath12k/hal_rx.h
-index 6bdcd0867d86e..6f10e4222ba6e 100644
---- a/drivers/net/wireless/ath/ath12k/hal_rx.h
-+++ b/drivers/net/wireless/ath/ath12k/hal_rx.h
-@@ -108,11 +108,12 @@ enum hal_rx_mon_status {
- 	HAL_RX_MON_STATUS_PPDU_DONE,
- 	HAL_RX_MON_STATUS_BUF_DONE,
- 	HAL_RX_MON_STATUS_BUF_ADDR,
-+	HAL_RX_MON_STATUS_MPDU_START,
- 	HAL_RX_MON_STATUS_MPDU_END,
- 	HAL_RX_MON_STATUS_MSDU_END,
- };
- 
--#define HAL_RX_MAX_MPDU		256
-+#define HAL_RX_MAX_MPDU				1024
- #define HAL_RX_NUM_WORDS_PER_PPDU_BITMAP	(HAL_RX_MAX_MPDU >> 5)
- 
- struct hal_rx_user_status {
-@@ -506,6 +507,15 @@ struct hal_rx_mpdu_start {
- 	__le32 rsvd2[16];
- } __packed;
- 
-+struct hal_rx_msdu_end {
-+	__le32 info0;
-+	__le32 rsvd0[18];
-+	__le32 info1;
-+	__le32 rsvd1[10];
-+	__le32 info2;
-+	__le32 rsvd2;
-+} __packed;
-+
- #define HAL_RX_PPDU_END_DURATION	GENMASK(23, 0)
- struct hal_rx_ppdu_end_duration {
- 	__le32 rsvd0[9];
 -- 
 2.39.5
 
