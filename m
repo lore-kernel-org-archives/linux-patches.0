@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8924018E025;
-	Tue, 17 Jun 2025 15:52:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BBD02F2343;
+	Tue, 17 Jun 2025 15:52:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175559; cv=none; b=Nt8gghJ/WIysWP6ieQd/WY+GJyLy8MDzwdXL3W5lZO53C0MYnt+nfu5ijLcxmGD7ot0HUzLS3H3JvVTdpuzZUtgkQe1zfm+my6P7C0MHvsuaqKk6aNeqL2aAHqtj/ngD+wxKPsqLWysVxekUykm8UM3xK1XR5j/xLpPCyBfs5RY=
+	t=1750175562; cv=none; b=TPjYYAxhcd+gQjQmmawmWvk7v7BT/sTMoYqXucvOiL127vMvJRshHspCeaKAnPqSQ63+dm2kWiyhmZkEPoM92420lUYvb18gLRjNeSehLmNN2myq1y038P81p73x69goTVWhykLXS2JJg+nFNZesVSMpu0Ph8VFNH/ReB5AdrXg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175559; c=relaxed/simple;
-	bh=rF6s4wzTZncY5X7BrsQQ0JNVzDnYvGUZxJuAyN4EqKk=;
+	s=arc-20240116; t=1750175562; c=relaxed/simple;
+	bh=rdq6UMwM6bLhj+N8L59NLeGPep4+KeK6bstnlr3+hEs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZJbqKozt157GkPbRZU/53IoCehMa8KAhtvCHA2+lCxpNM5+h+8vO2qa+baVTbCcqc08wpjIoFINgXfScdWjszjqhBJNCVg1JmhhG7M1/ZM+UgkjNTpcua/V6RL53cs4stWmYINdiJxmWiKK5pFP2EBB+trMPDMmOFjjTT31lNY8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tx1QV1y2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=azDB+pFdeN1F6W2JvcL+FhVAsfcHuF4VSdQzpkX09+PIzGr4gEArq21nxcd40TONMw7vAC0Sq3HjHBY0SdsLww3E6O6lcGsVn5iI0QGMBhOxE/keM3lbt4PJz2o40YYOXN1qkIc+Yl6TIFgRpjBdi7TlLL+B42CgCr7TVdkQdVU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0nPdMskz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tx1QV1y2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 932AFC4CEE3;
-	Tue, 17 Jun 2025 15:52:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0nPdMskz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC3D2C4CEE7;
+	Tue, 17 Jun 2025 15:52:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175559;
-	bh=rF6s4wzTZncY5X7BrsQQ0JNVzDnYvGUZxJuAyN4EqKk=;
+	s=korg; t=1750175562;
+	bh=rdq6UMwM6bLhj+N8L59NLeGPep4+KeK6bstnlr3+hEs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tx1QV1y2Mhjsm0Urgf/eCc1cXWb7euDktCAULcwOIXJXF4m7eOj6oXE5NyS8Kv20o
-	 b10xOkVBSo1EymSn/pqWBiowk9Uw+axXNhUxgzD98lKZrxeK/Jxbp2qAiB2/KxvG64
-	 XO1RpPILVwPp8ciMBgZgWkj7QenBvGfWaKlTPMZs=
+	b=0nPdMskzaruSXyS5OSSViHS0pHnJsb6jIoACnvlO1+wKO/WeYO0fBBTKnx0x/1TZW
+	 qITTh2EkOOR85nFlhn6gSmnm91iQpha3HSFxkkSOJeafH5Ed/cUTzQuvVncmBIBuQA
+	 vvxDhmPbaeIGkqSqJMDVo5k+H3lZK/3bkFivyL1s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	Mark Brown <broonie@kernel.org>,
-	Marc Zyngier <maz@kernel.org>,
-	Will Deacon <will@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
+	Jan Prusakowski <jprusakowski@google.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 101/780] arm64/fpsimd: Discard stale CPU state when handling SME traps
-Date: Tue, 17 Jun 2025 17:16:49 +0200
-Message-ID: <20250617152455.623422112@linuxfoundation.org>
+Subject: [PATCH 6.12 142/512] f2fs: fix to detect gcing page in f2fs_is_cp_guaranteed()
+Date: Tue, 17 Jun 2025 17:21:48 +0200
+Message-ID: <20250617152425.354021049@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,103 +48,93 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mark Brown <broonie@kernel.org>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit d3eaab3c70905c5467e5c4ea403053d67505adeb ]
+[ Upstream commit aa1be8dd64163eca4dde7fd2557eb19927a06a47 ]
 
-The logic for handling SME traps manipulates saved FPSIMD/SVE/SME state
-incorrectly, and a race with preemption can result in a task having
-TIF_SME set and TIF_FOREIGN_FPSTATE clear even though the live CPU state
-is stale (e.g. with SME traps enabled). This can result in warnings from
-do_sme_acc() where SME traps are not expected while TIF_SME is set:
+Jan Prusakowski reported a f2fs bug as below:
 
-|        /* With TIF_SME userspace shouldn't generate any traps */
-|        if (test_and_set_thread_flag(TIF_SME))
-|                WARN_ON(1);
+f2fs/007 will hang kernel during testing w/ below configs:
 
-This is very similar to the SVE issue we fixed in commit:
+kernel 6.12.18 (from pixel-kernel/android16-6.12)
+export MKFS_OPTIONS="-O encrypt -O extra_attr -O project_quota -O quota"
+export F2FS_MOUNT_OPTIONS="test_dummy_encryption,discard,fsync_mode=nobarrier,reserve_root=32768,checkpoint_merge,atgc"
 
-  751ecf6afd6568ad ("arm64/sve: Discard stale CPU state when handling SVE traps")
+cat /proc/<umount_proc_id>/stack
+f2fs_wait_on_all_pages+0xa3/0x130
+do_checkpoint+0x40c/0x5d0
+f2fs_write_checkpoint+0x258/0x550
+kill_f2fs_super+0x14f/0x190
+deactivate_locked_super+0x30/0xb0
+cleanup_mnt+0xba/0x150
+task_work_run+0x59/0xa0
+syscall_exit_to_user_mode+0x12d/0x130
+do_syscall_64+0x57/0x110
+entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
-The race can occur when the SME trap handler is preempted before and
-after manipulating the saved FPSIMD/SVE/SME state, starting and ending on
-the same CPU, e.g.
+cat /sys/kernel/debug/f2fs/status
 
-| void do_sme_acc(unsigned long esr, struct pt_regs *regs)
-| {
-|         // Trap on CPU 0 with TIF_SME clear, SME traps enabled
-|         // task->fpsimd_cpu is 0.
-|         // per_cpu_ptr(&fpsimd_last_state, 0) is task.
-|
-|         ...
-|
-|         // Preempted; migrated from CPU 0 to CPU 1.
-|         // TIF_FOREIGN_FPSTATE is set.
-|
-|         get_cpu_fpsimd_context();
-|
-|         /* With TIF_SME userspace shouldn't generate any traps */
-|         if (test_and_set_thread_flag(TIF_SME))
-|                 WARN_ON(1);
-|
-|         if (!test_thread_flag(TIF_FOREIGN_FPSTATE)) {
-|                 unsigned long vq_minus_one =
-|                         sve_vq_from_vl(task_get_sme_vl(current)) - 1;
-|                 sme_set_vq(vq_minus_one);
-|
-|                 fpsimd_bind_task_to_cpu();
-|         }
-|
-|         put_cpu_fpsimd_context();
-|
-|         // Preempted; migrated from CPU 1 to CPU 0.
-|         // task->fpsimd_cpu is still 0
-|         // If per_cpu_ptr(&fpsimd_last_state, 0) is still task then:
-|         // - Stale HW state is reused (with SME traps enabled)
-|         // - TIF_FOREIGN_FPSTATE is cleared
-|         // - A return to userspace skips HW state restore
-| }
+  - IO_W (CP: -256, Data:  256, Flush: (   0    0    1), Discard: (   0    0)) cmd:    0 undiscard:   0
 
-Fix the case where the state is not live and TIF_FOREIGN_FPSTATE is set
-by calling fpsimd_flush_task_state() to detach from the saved CPU
-state. This ensures that a subsequent context switch will not reuse the
-stale CPU state, and will instead set TIF_FOREIGN_FPSTATE, forcing the
-new state to be reloaded from memory prior to a return to userspace.
+CP IOs reference count becomes negative.
 
-Note: this was originallly posted as [1].
+The root cause is:
 
-Fixes: 8bd7f91c03d8 ("arm64/sme: Implement traps and syscall handling for SME")
-Reported-by: Mark Rutland <mark.rutland@arm.com>
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Link: https://lore.kernel.org/linux-arm-kernel/20241204-arm64-sme-reenable-v2-1-bae87728251d@kernel.org/
-[ Rutland: rewrite commit message ]
-Signed-off-by: Mark Rutland <mark.rutland@arm.com>
-Cc: Marc Zyngier <maz@kernel.org>
-Cc: Will Deacon <will@kernel.org>
-Link: https://lore.kernel.org/r/20250409164010.3480271-6-mark.rutland@arm.com
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+After 4961acdd65c9 ("f2fs: fix to tag gcing flag on page during block
+migration"), we will tag page w/ gcing flag for raw page of cluster
+during its migration.
+
+However, if the inode is both encrypted and compressed, during
+ioc_decompress(), it will tag page w/ gcing flag, and it increase
+F2FS_WB_DATA reference count:
+- f2fs_write_multi_page
+ - f2fs_write_raw_page
+  - f2fs_write_single_page
+   - do_write_page
+    - f2fs_submit_page_write
+     - WB_DATA_TYPE(bio_page, fio->compressed_page)
+     : bio_page is encrypted, so mapping is NULL, and fio->compressed_page
+       is NULL, it returns F2FS_WB_DATA
+     - inc_page_count(.., F2FS_WB_DATA)
+
+Then, during end_io(), it decrease F2FS_WB_CP_DATA reference count:
+- f2fs_write_end_io
+ - f2fs_compress_write_end_io
+  - fscrypt_pagecache_folio
+  : get raw page from encrypted page
+  - WB_DATA_TYPE(&folio->page, false)
+  : raw page has gcing flag, it returns F2FS_WB_CP_DATA
+  - dec_page_count(.., F2FS_WB_CP_DATA)
+
+In order to fix this issue, we need to detect gcing flag in raw page
+in f2fs_is_cp_guaranteed().
+
+Fixes: 4961acdd65c9 ("f2fs: fix to tag gcing flag on page during block migration")
+Reported-by: Jan Prusakowski <jprusakowski@google.com>
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kernel/fpsimd.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/f2fs/data.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/kernel/fpsimd.c b/arch/arm64/kernel/fpsimd.c
-index 1ee5f330b8ed3..c92c0a08370b2 100644
---- a/arch/arm64/kernel/fpsimd.c
-+++ b/arch/arm64/kernel/fpsimd.c
-@@ -1460,6 +1460,8 @@ void do_sme_acc(unsigned long esr, struct pt_regs *regs)
- 		sme_set_vq(vq_minus_one);
+diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
+index 8564441cef9bc..62c7fd1168a15 100644
+--- a/fs/f2fs/data.c
++++ b/fs/f2fs/data.c
+@@ -54,7 +54,7 @@ bool f2fs_is_cp_guaranteed(struct page *page)
+ 	struct f2fs_sb_info *sbi;
  
- 		fpsimd_bind_task_to_cpu();
-+	} else {
-+		fpsimd_flush_task_state(current);
- 	}
+ 	if (fscrypt_is_bounce_page(page))
+-		return false;
++		return page_private_gcing(fscrypt_pagecache_page(page));
  
- 	put_cpu_fpsimd_context();
+ 	inode = mapping->host;
+ 	sbi = F2FS_I_SB(inode);
 -- 
 2.39.5
 
