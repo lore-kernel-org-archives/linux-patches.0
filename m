@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23B652EE5E9;
-	Tue, 17 Jun 2025 15:53:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81F8A2EF291;
+	Tue, 17 Jun 2025 15:53:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175604; cv=none; b=lfnmGlJdX0oXNrESYmw1dWFbf29xV/tFTdOqwve1SS45ICJH3S+05sI607mI9QhtPuFOf0amU+DUal2pAeed6Z/goeAYwDNO93pQk1ExXGQhD/k1svkLkuHbyZh796JU9eZQJSSyjCiRFNECNvvO53BDCGo2/Eeq3D1v+B+hDs8=
+	t=1750175607; cv=none; b=Pd5y7/o6ADIOZPLdepWIn+KywWLGZm20lCWTCgLDR2K+XjnHf+Dkk3AW1MB0uxE8djw9l0i+C/z+7djZrthm7RUnEhLF4x6yG2mleP2atUfsMYKnLOnyTrGHVNDySjymuRShMEbadOy7ssKiTHPLexGOf+WdxS25pJge/8lIj+0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175604; c=relaxed/simple;
-	bh=YyZx4j02OCJuab5/4gyOa0fsuv/m38iOvBPJINRlHWQ=;
+	s=arc-20240116; t=1750175607; c=relaxed/simple;
+	bh=Q34ftcpV6hRYPhhNJ8UNTpZBTY/Yvi963AwCVigx850=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Jq2jUHzEmGCxcDMQ+Ek0OgEYxYNM5IILbJKk2hzqOjanRob0UW8Ev1vr7LMHqfY08nepA7VcRDzIQLMs/cvegO7q7YJrG2O/Hty/UsCgsi8FFRFPjKV0ZHZy2ZL2HBW4vdG2p9xpLXKWLiXVMZ3TNn34j96Ae80ZWmu94rvuhiA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xtNaeFGT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WXbIk0RQZDy+pXDAPwp9HlO4UrXaU0Q86Co/oFYnGtjBfbysoQ2e27WFr8qdA1l4yhxz/lssdC0qMDor88Q8YQU3yviHKwQITlg3MP9kDpzKddHWVS7GJ6PjI2ZV6A/TArCkyQSdHjcZ8RI/HC2ncnpjyuut0BkGZmdaPMPkYqI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LjQR65vo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xtNaeFGT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86AC0C4CEE3;
-	Tue, 17 Jun 2025 15:53:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LjQR65vo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1042C4CEE3;
+	Tue, 17 Jun 2025 15:53:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175604;
-	bh=YyZx4j02OCJuab5/4gyOa0fsuv/m38iOvBPJINRlHWQ=;
+	s=korg; t=1750175607;
+	bh=Q34ftcpV6hRYPhhNJ8UNTpZBTY/Yvi963AwCVigx850=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xtNaeFGTI9LtaFL0O3pV8H50Y6f4vsiIiEPJchiwZXUmUYomxCU7hoP9wOehv6q3N
-	 4qfn2HQMMeP+d7zjqDDlfNi8ErWcXYXNtcUZ3H8sUv/HAb3H1WI4297zRWVnGvznGQ
-	 pvacgQAxgZoD8IBTiQjNqNDdt7oS9izrkZB0Vt9s=
+	b=LjQR65voijeIEpeHwshO27ULOtuWiCfafWnJ6tEbwmxen0Kw4IU9xfEavJXfc/PJ7
+	 BBusNNlahrLsiUE7YLZpomiv1WVrTSBb+zwqUI9U5YXP+IK1/wNFHjFUasy5WNCi69
+	 /W4jnlTIM765mvLqKaxfBvpSTxCo1NMeN1wulvSI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
-	Maxime Ripard <mripard@kernel.org>,
+	Huajian Yang <huajianyang@asrmicro.com>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 096/780] drm/vc4: tests: Stop allocating the state in test init
-Date: Tue, 17 Jun 2025 17:16:44 +0200
-Message-ID: <20250617152455.421270678@linuxfoundation.org>
+Subject: [PATCH 6.12 146/512] netfilter: bridge: Move specific fragmented packet to slow_path instead of dropping it
+Date: Tue, 17 Jun 2025 17:21:52 +0200
+Message-ID: <20250617152425.522497140@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,139 +46,98 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maxime Ripard <mripard@kernel.org>
+From: Huajian Yang <huajianyang@asrmicro.com>
 
-[ Upstream commit 7e0351ae91ed2b6178abbfae96c3c6aaa1652567 ]
+[ Upstream commit aa04c6f45b9224b949aa35d4fa5f8d0ba07b23d4 ]
 
-The vc4-pv-muxing-combinations and vc5-pv-muxing-combinations test
-suites use a common test init function which, in part, allocates the
-drm atomic state the test will use.
+The config NF_CONNTRACK_BRIDGE will change the bridge forwarding for
+fragmented packets.
 
-That allocation relies on  drm_kunit_helper_atomic_state_alloc(), and
-thus requires a struct drm_modeset_acquire_ctx. This context will then
-be stored in the allocated state->acquire_ctx field.
+The original bridge does not know that it is a fragmented packet and
+forwards it directly, after NF_CONNTRACK_BRIDGE is enabled, function
+nf_br_ip_fragment and br_ip6_fragment will check the headroom.
 
-However, the context is local to the test init function, and is cleared
-as soon as drm_kunit_helper_atomic_state_alloc() is done. We thus end up
-with an dangling pointer to a cleared context in state->acquire_ctx for
-our test to consumes.
+In original br_forward, insufficient headroom of skb may indeed exist,
+but there's still a way to save the skb in the device driver after
+dev_queue_xmit.So droping the skb will change the original bridge
+forwarding in some cases.
 
-We should really allocate the context and the state in the test
-functions, so we can also control when we're done with it.
-
-Fixes: 30188df0c387 ("drm/tests: Drop drm_kunit_helper_acquire_ctx_alloc()")
-Reviewed-by: Maíra Canal <mcanal@igalia.com>
-Link: https://lore.kernel.org/r/20250403-drm-vc4-kunit-failures-v2-3-e09195cc8840@kernel.org
-Signed-off-by: Maxime Ripard <mripard@kernel.org>
+Fixes: 3c171f496ef5 ("netfilter: bridge: add connection tracking system")
+Signed-off-by: Huajian Yang <huajianyang@asrmicro.com>
+Reviewed-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/vc4/tests/vc4_test_pv_muxing.c    | 41 ++++++++++++-------
- 1 file changed, 27 insertions(+), 14 deletions(-)
+ net/bridge/netfilter/nf_conntrack_bridge.c | 12 ++++++------
+ net/ipv6/netfilter.c                       | 12 ++++++------
+ 2 files changed, 12 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/gpu/drm/vc4/tests/vc4_test_pv_muxing.c b/drivers/gpu/drm/vc4/tests/vc4_test_pv_muxing.c
-index 992e8f5c5c6ea..52c04ef33206b 100644
---- a/drivers/gpu/drm/vc4/tests/vc4_test_pv_muxing.c
-+++ b/drivers/gpu/drm/vc4/tests/vc4_test_pv_muxing.c
-@@ -20,7 +20,6 @@
+diff --git a/net/bridge/netfilter/nf_conntrack_bridge.c b/net/bridge/netfilter/nf_conntrack_bridge.c
+index 816bb0fde718e..6482de4d87509 100644
+--- a/net/bridge/netfilter/nf_conntrack_bridge.c
++++ b/net/bridge/netfilter/nf_conntrack_bridge.c
+@@ -60,19 +60,19 @@ static int nf_br_ip_fragment(struct net *net, struct sock *sk,
+ 		struct ip_fraglist_iter iter;
+ 		struct sk_buff *frag;
  
- struct pv_muxing_priv {
- 	struct vc4_dev *vc4;
--	struct drm_atomic_state *state;
- };
+-		if (first_len - hlen > mtu ||
+-		    skb_headroom(skb) < ll_rs)
++		if (first_len - hlen > mtu)
+ 			goto blackhole;
  
- static bool check_fifo_conflict(struct kunit *test,
-@@ -677,10 +676,19 @@ static void drm_vc4_test_pv_muxing(struct kunit *test)
- {
- 	const struct pv_muxing_param *params = test->param_value;
- 	const struct pv_muxing_priv *priv = test->priv;
--	struct drm_atomic_state *state = priv->state;
-+	struct drm_modeset_acquire_ctx ctx;
-+	struct drm_atomic_state *state;
-+	struct drm_device *drm;
-+	struct vc4_dev *vc4;
- 	unsigned int i;
- 	int ret;
+-		if (skb_cloned(skb))
++		if (skb_cloned(skb) ||
++		    skb_headroom(skb) < ll_rs)
+ 			goto slow_path;
  
-+	drm_modeset_acquire_init(&ctx, 0);
-+
-+	vc4 = priv->vc4;
-+	drm = &vc4->base;
-+	state = drm_kunit_helper_atomic_state_alloc(test, drm, &ctx);
-+	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, state);
- 	for (i = 0; i < params->nencoders; i++) {
- 		enum vc4_encoder_type enc_type = params->encoders[i];
+ 		skb_walk_frags(skb, frag) {
+-			if (frag->len > mtu ||
+-			    skb_headroom(frag) < hlen + ll_rs)
++			if (frag->len > mtu)
+ 				goto blackhole;
  
-@@ -700,16 +708,29 @@ static void drm_vc4_test_pv_muxing(struct kunit *test)
- 		KUNIT_EXPECT_TRUE(test, check_channel_for_encoder(test, state, enc_type,
- 								  params->check_fn));
- 	}
-+
-+	drm_modeset_drop_locks(&ctx);
-+	drm_modeset_acquire_fini(&ctx);
- }
+-			if (skb_shared(frag))
++			if (skb_shared(frag) ||
++			    skb_headroom(frag) < hlen + ll_rs)
+ 				goto slow_path;
+ 		}
  
- static void drm_vc4_test_pv_muxing_invalid(struct kunit *test)
- {
- 	const struct pv_muxing_param *params = test->param_value;
- 	const struct pv_muxing_priv *priv = test->priv;
--	struct drm_atomic_state *state = priv->state;
-+	struct drm_modeset_acquire_ctx ctx;
-+	struct drm_atomic_state *state;
-+	struct drm_device *drm;
-+	struct vc4_dev *vc4;
- 	unsigned int i;
- 	int ret;
+diff --git a/net/ipv6/netfilter.c b/net/ipv6/netfilter.c
+index 581ce055bf520..4541836ee3da2 100644
+--- a/net/ipv6/netfilter.c
++++ b/net/ipv6/netfilter.c
+@@ -164,20 +164,20 @@ int br_ip6_fragment(struct net *net, struct sock *sk, struct sk_buff *skb,
+ 		struct ip6_fraglist_iter iter;
+ 		struct sk_buff *frag2;
  
-+	drm_modeset_acquire_init(&ctx, 0);
-+
-+	vc4 = priv->vc4;
-+	drm = &vc4->base;
-+	state = drm_kunit_helper_atomic_state_alloc(test, drm, &ctx);
-+	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, state);
-+
- 	for (i = 0; i < params->nencoders; i++) {
- 		enum vc4_encoder_type enc_type = params->encoders[i];
+-		if (first_len - hlen > mtu ||
+-		    skb_headroom(skb) < (hroom + sizeof(struct frag_hdr)))
++		if (first_len - hlen > mtu)
+ 			goto blackhole;
  
-@@ -719,14 +740,15 @@ static void drm_vc4_test_pv_muxing_invalid(struct kunit *test)
+-		if (skb_cloned(skb))
++		if (skb_cloned(skb) ||
++		    skb_headroom(skb) < (hroom + sizeof(struct frag_hdr)))
+ 			goto slow_path;
  
- 	ret = drm_atomic_check_only(state);
- 	KUNIT_EXPECT_LT(test, ret, 0);
-+
-+	drm_modeset_drop_locks(&ctx);
-+	drm_modeset_acquire_fini(&ctx);
- }
+ 		skb_walk_frags(skb, frag2) {
+-			if (frag2->len > mtu ||
+-			    skb_headroom(frag2) < (hlen + hroom + sizeof(struct frag_hdr)))
++			if (frag2->len > mtu)
+ 				goto blackhole;
  
- static int vc4_pv_muxing_test_init(struct kunit *test)
- {
- 	const struct pv_muxing_param *params = test->param_value;
--	struct drm_modeset_acquire_ctx ctx;
- 	struct pv_muxing_priv *priv;
--	struct drm_device *drm;
- 	struct vc4_dev *vc4;
- 
- 	priv = kunit_kzalloc(test, sizeof(*priv), GFP_KERNEL);
-@@ -737,15 +759,6 @@ static int vc4_pv_muxing_test_init(struct kunit *test)
- 	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, vc4);
- 	priv->vc4 = vc4;
- 
--	drm_modeset_acquire_init(&ctx, 0);
--
--	drm = &vc4->base;
--	priv->state = drm_kunit_helper_atomic_state_alloc(test, drm, &ctx);
--	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, priv->state);
--
--	drm_modeset_drop_locks(&ctx);
--	drm_modeset_acquire_fini(&ctx);
--
- 	return 0;
- }
+ 			/* Partially cloned skb? */
+-			if (skb_shared(frag2))
++			if (skb_shared(frag2) ||
++			    skb_headroom(frag2) < (hlen + hroom + sizeof(struct frag_hdr)))
+ 				goto slow_path;
+ 		}
  
 -- 
 2.39.5
