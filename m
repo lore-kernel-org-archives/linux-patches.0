@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 292112EE5FF;
-	Tue, 17 Jun 2025 16:32:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FCCF1ADC97;
+	Tue, 17 Jun 2025 16:32:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177938; cv=none; b=D7suG2u5jfcBi5kmGM+DCPwFgtdgto2edflKKfRKmK/eKdg/EroNizEgMWSyV7iuidNgPXNEt3bNFlu9c2LoruLMDKpRtbCBZCsJo+0F8XQ4W0KEN2p9I8uS1CZKyzQJWcr9qVVr5SilFQHf8xlpGUWCJj3JG4KwUTMyuLGyteg=
+	t=1750177941; cv=none; b=l1s1QWV2cbw3xvR49eNkiUgN6el/ySoy/3+R2a3KCqRDmgKwvCnRd7vuS2z6WIMhIBfYomS8v3QbOGX5SKlTLsuctrLRt6VaRcP4liiyRXcnP6h7AZBxX5ysE7FNx2z7kqAa9rOJGehyG1TmJhb7hzVSv4zjnPY3a8v2+ieJO/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177938; c=relaxed/simple;
-	bh=ekNboKFFYXbB3pqvYgYg/3KJJS6ZnCVtRsPG8UDZgwU=;
+	s=arc-20240116; t=1750177941; c=relaxed/simple;
+	bh=Fv7XeuZPUQjdnW6PsBvTXU5z7CztmHrhaGyV1FHg71U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a7CjMmKB8u8YgCAoLgZnaAlT1QM3jpUgAta7NKgPvn5FRg3XJ8T+Wg9WwfsIkUKCPj47ILJXj66COcyZEWDcu8kqwgezmiZN6QEfEI9mywIKpuom6UTs2J68VoTySUZZIQDAkLQazBGsQeQngI0pa+vZPMqrVqGBmMqMppGjx1c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fUMFXbCk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PbfWAnzZE0kY4yD1i1yukum6uA+zgkTRVpsQ8uBjYbRGh+8gaGX3Izmq4VvS4xFFEK9SKoZgESccYUELP0MXLNvPSn4vMwuMm9HLbKOs5M9NQh3flNnOjIwryB7TnP90MDeqzoUi2qVV+gaCLzzFPxMvtia7ZCd0bAvBxAE3UPE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B6yIAjhT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fUMFXbCk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F101C4CEE3;
-	Tue, 17 Jun 2025 16:32:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B6yIAjhT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D34BAC4CEE3;
+	Tue, 17 Jun 2025 16:32:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177938;
-	bh=ekNboKFFYXbB3pqvYgYg/3KJJS6ZnCVtRsPG8UDZgwU=;
+	s=korg; t=1750177941;
+	bh=Fv7XeuZPUQjdnW6PsBvTXU5z7CztmHrhaGyV1FHg71U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fUMFXbCkeAO5xDcJFy/AXxGIDSMsx3qpXIm6IHq6LEnTzIr0zgBEtn1San5ObFajx
-	 z9Flr8PV08wkrJpxV14wRTW/BzcnkYYZZvyJkKesdNj1nlT1ekpgE4RT8e5wRplxmE
-	 lpEcBCITaPrBsxRe+o/2FPnmikwjOHLPx90L9JC0=
+	b=B6yIAjhTn8JiHvxv3/Z3Bg/ytebViJccOTfHAb1BGsgbDvjSktkWQQ41xEsF7XVAy
+	 hSBZ73OqqX+J3xY43FWCnXuEXqya5ylG9goSEpOcKstGWl4I3tkx8kbn2IqGdJUgOU
+	 SPum4wVPOr3ZJJzmSSs0r9ake8Nj3KyIahxZWdRI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chandrashekar Devegowda <chandrashekar.devegowda@intel.com>,
-	Kiran K <kiran.k@intel.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Peter Robinson <pbrobinson@gmail.com>,
+	Diederik de Haas <didi.debian@cknow.org>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 421/512] Bluetooth: btintel_pcie: Increase the tx and rx descriptor count
-Date: Tue, 17 Jun 2025 17:26:27 +0200
-Message-ID: <20250617152436.632935442@linuxfoundation.org>
+Subject: [PATCH 6.15 386/780] arm64: dts: rockchip: Update eMMC for NanoPi R5 series
+Date: Tue, 17 Jun 2025 17:21:34 +0200
+Message-ID: <20250617152507.179783688@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,109 +48,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chandrashekar Devegowda <chandrashekar.devegowda@intel.com>
+From: Peter Robinson <pbrobinson@gmail.com>
 
-[ Upstream commit 2dd711102ce69ae41f65d09c012441227d4aa983 ]
+[ Upstream commit 8eca9e979a1efbcc3d090f6eb3f4da621e7c87e0 ]
 
-This change addresses latency issues observed in HID use cases where
-events arrive in bursts. By increasing the Rx descriptor count to 64,
-the firmware can handle bursty data more effectively, reducing latency
-and preventing buffer overflows.
+Add the 3.3v and 1.8v regulators that are connected to
+the eMMC on the R5 series devices, as well as adding the
+eMMC data strobe, and enable eMMC HS200 mode as the
+Foresee FEMDNN0xxG-A3A55 modules support it.
 
-Signed-off-by: Chandrashekar Devegowda <chandrashekar.devegowda@intel.com>
-Signed-off-by: Kiran K <kiran.k@intel.com>
-Fixes: c2b636b3f788 ("Bluetooth: btintel_pcie: Add support for PCIe transport")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: c8ec73b05a95d ("arm64: dts: rockchip: create common dtsi for NanoPi R5 series")
+Signed-off-by: Peter Robinson <pbrobinson@gmail.com>
+Reviewed-by: Diederik de Haas <didi.debian@cknow.org>
+Link: https://lore.kernel.org/r/20250506222531.625157-1-pbrobinson@gmail.com
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btintel_pcie.c | 24 ++++++++++++------------
- drivers/bluetooth/btintel_pcie.h |  7 +++++--
- 2 files changed, 17 insertions(+), 14 deletions(-)
+ arch/arm64/boot/dts/rockchip/rk3568-nanopi-r5s.dtsi | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/bluetooth/btintel_pcie.c b/drivers/bluetooth/btintel_pcie.c
-index b8065b7ec70b6..c02d671396e24 100644
---- a/drivers/bluetooth/btintel_pcie.c
-+++ b/drivers/bluetooth/btintel_pcie.c
-@@ -1148,8 +1148,8 @@ static int btintel_pcie_alloc(struct btintel_pcie_data *data)
- 	 *  + size of index * Number of queues(2) * type of index array(4)
- 	 *  + size of context information
- 	 */
--	total = (sizeof(struct tfd) + sizeof(struct urbd0) + sizeof(struct frbd)
--		+ sizeof(struct urbd1)) * BTINTEL_DESCS_COUNT;
-+	total = (sizeof(struct tfd) + sizeof(struct urbd0)) * BTINTEL_PCIE_TX_DESCS_COUNT;
-+	total += (sizeof(struct frbd) + sizeof(struct urbd1)) * BTINTEL_PCIE_RX_DESCS_COUNT;
+diff --git a/arch/arm64/boot/dts/rockchip/rk3568-nanopi-r5s.dtsi b/arch/arm64/boot/dts/rockchip/rk3568-nanopi-r5s.dtsi
+index 00c479aa18711..a28b4af10d13a 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3568-nanopi-r5s.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3568-nanopi-r5s.dtsi
+@@ -486,9 +486,12 @@
+ &sdhci {
+ 	bus-width = <8>;
+ 	max-frequency = <200000000>;
++	mmc-hs200-1_8v;
+ 	non-removable;
+ 	pinctrl-names = "default";
+-	pinctrl-0 = <&emmc_bus8 &emmc_clk &emmc_cmd>;
++	pinctrl-0 = <&emmc_bus8 &emmc_clk &emmc_cmd &emmc_datastrobe>;
++	vmmc-supply = <&vcc_3v3>;
++	vqmmc-supply = <&vcc_1v8>;
+ 	status = "okay";
+ };
  
- 	/* Add the sum of size of index array and size of ci struct */
- 	total += (sizeof(u16) * BTINTEL_PCIE_NUM_QUEUES * 4) + sizeof(struct ctx_info);
-@@ -1174,36 +1174,36 @@ static int btintel_pcie_alloc(struct btintel_pcie_data *data)
- 	data->dma_v_addr = v_addr;
- 
- 	/* Setup descriptor count */
--	data->txq.count = BTINTEL_DESCS_COUNT;
--	data->rxq.count = BTINTEL_DESCS_COUNT;
-+	data->txq.count = BTINTEL_PCIE_TX_DESCS_COUNT;
-+	data->rxq.count = BTINTEL_PCIE_RX_DESCS_COUNT;
- 
- 	/* Setup tfds */
- 	data->txq.tfds_p_addr = p_addr;
- 	data->txq.tfds = v_addr;
- 
--	p_addr += (sizeof(struct tfd) * BTINTEL_DESCS_COUNT);
--	v_addr += (sizeof(struct tfd) * BTINTEL_DESCS_COUNT);
-+	p_addr += (sizeof(struct tfd) * BTINTEL_PCIE_TX_DESCS_COUNT);
-+	v_addr += (sizeof(struct tfd) * BTINTEL_PCIE_TX_DESCS_COUNT);
- 
- 	/* Setup urbd0 */
- 	data->txq.urbd0s_p_addr = p_addr;
- 	data->txq.urbd0s = v_addr;
- 
--	p_addr += (sizeof(struct urbd0) * BTINTEL_DESCS_COUNT);
--	v_addr += (sizeof(struct urbd0) * BTINTEL_DESCS_COUNT);
-+	p_addr += (sizeof(struct urbd0) * BTINTEL_PCIE_TX_DESCS_COUNT);
-+	v_addr += (sizeof(struct urbd0) * BTINTEL_PCIE_TX_DESCS_COUNT);
- 
- 	/* Setup FRBD*/
- 	data->rxq.frbds_p_addr = p_addr;
- 	data->rxq.frbds = v_addr;
- 
--	p_addr += (sizeof(struct frbd) * BTINTEL_DESCS_COUNT);
--	v_addr += (sizeof(struct frbd) * BTINTEL_DESCS_COUNT);
-+	p_addr += (sizeof(struct frbd) * BTINTEL_PCIE_RX_DESCS_COUNT);
-+	v_addr += (sizeof(struct frbd) * BTINTEL_PCIE_RX_DESCS_COUNT);
- 
- 	/* Setup urbd1 */
- 	data->rxq.urbd1s_p_addr = p_addr;
- 	data->rxq.urbd1s = v_addr;
- 
--	p_addr += (sizeof(struct urbd1) * BTINTEL_DESCS_COUNT);
--	v_addr += (sizeof(struct urbd1) * BTINTEL_DESCS_COUNT);
-+	p_addr += (sizeof(struct urbd1) * BTINTEL_PCIE_RX_DESCS_COUNT);
-+	v_addr += (sizeof(struct urbd1) * BTINTEL_PCIE_RX_DESCS_COUNT);
- 
- 	/* Setup data buffers for txq */
- 	err = btintel_pcie_setup_txq_bufs(data, &data->txq);
-diff --git a/drivers/bluetooth/btintel_pcie.h b/drivers/bluetooth/btintel_pcie.h
-index 5f7747f334ab8..ee0eec0237afd 100644
---- a/drivers/bluetooth/btintel_pcie.h
-+++ b/drivers/bluetooth/btintel_pcie.h
-@@ -81,8 +81,11 @@ enum {
- /* Default interrupt timeout in msec */
- #define BTINTEL_DEFAULT_INTR_TIMEOUT_MS	3000
- 
--/* The number of descriptors in TX/RX queues */
--#define BTINTEL_DESCS_COUNT	16
-+/* The number of descriptors in TX queues */
-+#define BTINTEL_PCIE_TX_DESCS_COUNT	32
-+
-+/* The number of descriptors in RX queues */
-+#define BTINTEL_PCIE_RX_DESCS_COUNT	64
- 
- /* Number of Queue for TX and RX
-  * It indicates the index of the IA(Index Array)
 -- 
 2.39.5
 
