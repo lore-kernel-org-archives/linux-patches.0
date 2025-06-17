@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B361F2ED844;
-	Tue, 17 Jun 2025 16:25:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 269CE2ED17B;
+	Tue, 17 Jun 2025 16:25:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177539; cv=none; b=oxIFGZjEoxh9OZ3jzUQzYz/GR6iLZgyAfmyJTIrnHWR7fi/gSUWe8AY0INO737zJ/agcpVvWJEnneP0PqILG8tc/BZtm8AkALJ0/8YapamrdbaEXjhPrCMa81bhJWpUWrPnY1I7weSaMEj0rforj08Wc0Wg7xdmtw6JqHRPQhIk=
+	t=1750177543; cv=none; b=dN51fDlnMIpXyzn06XFd7Nxs4WCdgid242Q8m95aZyBFsQPsiGSQEzM61zsb5ajGgtZPisYJUnFfTqU9eW7wdp+PnjHLj13FbjbA/JuANYQWuPvKUC4q86m1BIQIK7S5obaGqhkq7CUoUYQ4B0N/2BjSiMIRjfw7EP6ZOcpEYLo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177539; c=relaxed/simple;
-	bh=jEhiZIbG5iC/n09BcwoabuJ5BQZOVqOmNRn+P6uCIak=;
+	s=arc-20240116; t=1750177543; c=relaxed/simple;
+	bh=lf7+I//ydQmjtGjrS78o38ENyjIbotAmuZPj5nGtrVI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gd1pO/TV+2c0z6TGaIQIWZxMYr1w2YyQFNMpKgHRJLQZ3uZTG9UMd9pO8DUQTkBq8UR+Xgr3+r9DcWmtCHXBau6DnKMJx34WR3plXj1MnaojmH7o5mrBalNYgDCdbgsWWxw4+i/KtUTAGGyIxmCIwS4mUdXgjhT4cj/I8jlkMtg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T+1HGMAw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=D0+Bxgy1fCnO4vHOn2JAwAyv0mf+rYRVz28I9dABCgqvf+89D1VVnNuALHNlxmapJJzbeRDhoWR6vMLuRj06CJ6MKTiSKEV6OQnshOSjxXV9uZ19F70z3oBYPyqoTtwuwoG1SX5A1C+RfRA1sCmP5OlppgrWpd3Cz2OtKzi/+rA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D1DlEuPq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T+1HGMAw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22A2CC4CEE3;
-	Tue, 17 Jun 2025 16:25:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D1DlEuPq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F5A3C4CEE3;
+	Tue, 17 Jun 2025 16:25:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177539;
-	bh=jEhiZIbG5iC/n09BcwoabuJ5BQZOVqOmNRn+P6uCIak=;
+	s=korg; t=1750177543;
+	bh=lf7+I//ydQmjtGjrS78o38ENyjIbotAmuZPj5nGtrVI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T+1HGMAwusHNi2kF+q5q0vCeCKzWxq2hf/0e9k6jQHxZcl3gWd5Cw3Q4Ss4neBAF8
-	 ElwBRdAT+ets2CHjD3cXh1KTu3JjYzoPA+xu5rS8cSXWpxK6n6UITYJabnwMtdP1Q5
-	 VmTM84nrEelSmAoqbalRQJSc9XNob+nRoZ+qs7LU=
+	b=D1DlEuPq9ratwnGotJ4czPqapDc3IkiTh+QU8cP8lg84xzOsGLgjb2/DVBSdXUG9v
+	 awBMivhHGyenZC1w4ZphNxKMbU8ZCewB8Q2KE6XJi4ouGLwtXiQwtSqRDmuWsb1U0y
+	 AYCfHxzcMeGW15SHqLw2IIXP/E2Dpt0ijnbvsU84=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Suraj Gupta <suraj.gupta2@amd.com>,
-	Sean Anderson <sean.anderson@linux.dev>,
-	Paolo Abeni <pabeni@redhat.com>,
+	=?UTF-8?q?=C3=81lvaro=20Fern=C3=A1ndez=20Rojas?= <noltari@gmail.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 321/780] net: xilinx: axienet: Fix Tx skb circular buffer occupancy check in dmaengine xmit
-Date: Tue, 17 Jun 2025 17:20:29 +0200
-Message-ID: <20250617152504.523237951@linuxfoundation.org>
+Subject: [PATCH 6.12 361/512] net: dsa: tag_brcm: legacy: fix pskb_may_pull length
+Date: Tue, 17 Jun 2025 17:25:27 +0200
+Message-ID: <20250617152434.208963161@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,63 +46,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Suraj Gupta <suraj.gupta2@amd.com>
+From: Álvaro Fernández Rojas <noltari@gmail.com>
 
-[ Upstream commit 32374234ab0101881e7d0c6a8ef7ebce566c46c9 ]
+[ Upstream commit efdddc4484859082da6c7877ed144c8121c8ea55 ]
 
-In Dmaengine flow, driver maintains struct skbuf_dma_descriptor rings each
-element of which corresponds to a skb. In Tx datapath, compare available
-space in skb ring with number of skbs instead of skb fragments.
-Replace x * (MAX_SKB_FRAGS) in netif_txq_completed_wake() and
-netif_txq_maybe_stop() with x * (1 skb) to fix the comparison.
+BRCM_LEG_PORT_ID was incorrectly used for pskb_may_pull length.
+The correct check is BRCM_LEG_TAG_LEN + VLAN_HLEN, or 10 bytes.
 
-Fixes: 6a91b846af85 ("net: axienet: Introduce dmaengine support")
-Signed-off-by: Suraj Gupta <suraj.gupta2@amd.com>
-Reviewed-by: Sean Anderson <sean.anderson@linux.dev>
-Link: https://patch.msgid.link/20250521181608.669554-1-suraj.gupta2@amd.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 964dbf186eaa ("net: dsa: tag_brcm: add support for legacy tags")
+Signed-off-by: Álvaro Fernández Rojas <noltari@gmail.com>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://patch.msgid.link/20250529124406.2513779-1-noltari@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/xilinx/xilinx_axienet_main.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/dsa/tag_brcm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
-index 054abf283ab33..5f912b27bfd7f 100644
---- a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
-+++ b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
-@@ -880,7 +880,7 @@ static void axienet_dma_tx_cb(void *data, const struct dmaengine_result *result)
- 	dev_consume_skb_any(skbuf_dma->skb);
- 	netif_txq_completed_wake(txq, 1, len,
- 				 CIRC_SPACE(lp->tx_ring_head, lp->tx_ring_tail, TX_BD_NUM_MAX),
--				 2 * MAX_SKB_FRAGS);
-+				 2);
- }
+diff --git a/net/dsa/tag_brcm.c b/net/dsa/tag_brcm.c
+index 8c3c068728e51..fe75821623a4f 100644
+--- a/net/dsa/tag_brcm.c
++++ b/net/dsa/tag_brcm.c
+@@ -257,7 +257,7 @@ static struct sk_buff *brcm_leg_tag_rcv(struct sk_buff *skb,
+ 	int source_port;
+ 	u8 *brcm_tag;
  
- /**
-@@ -914,7 +914,7 @@ axienet_start_xmit_dmaengine(struct sk_buff *skb, struct net_device *ndev)
+-	if (unlikely(!pskb_may_pull(skb, BRCM_LEG_PORT_ID)))
++	if (unlikely(!pskb_may_pull(skb, BRCM_LEG_TAG_LEN + VLAN_HLEN)))
+ 		return NULL;
  
- 	dma_dev = lp->tx_chan->device;
- 	sg_len = skb_shinfo(skb)->nr_frags + 1;
--	if (CIRC_SPACE(lp->tx_ring_head, lp->tx_ring_tail, TX_BD_NUM_MAX) <= sg_len) {
-+	if (CIRC_SPACE(lp->tx_ring_head, lp->tx_ring_tail, TX_BD_NUM_MAX) <= 1) {
- 		netif_stop_queue(ndev);
- 		if (net_ratelimit())
- 			netdev_warn(ndev, "TX ring unexpectedly full\n");
-@@ -964,7 +964,7 @@ axienet_start_xmit_dmaengine(struct sk_buff *skb, struct net_device *ndev)
- 	txq = skb_get_tx_queue(lp->ndev, skb);
- 	netdev_tx_sent_queue(txq, skb->len);
- 	netif_txq_maybe_stop(txq, CIRC_SPACE(lp->tx_ring_head, lp->tx_ring_tail, TX_BD_NUM_MAX),
--			     MAX_SKB_FRAGS + 1, 2 * MAX_SKB_FRAGS);
-+			     1, 2);
- 
- 	dmaengine_submit(dma_tx_desc);
- 	dma_async_issue_pending(lp->tx_chan);
+ 	brcm_tag = dsa_etype_header_pos_rx(skb);
 -- 
 2.39.5
 
