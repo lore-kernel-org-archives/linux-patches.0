@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57BB02ED16E;
-	Tue, 17 Jun 2025 15:56:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EC822ED17C;
+	Tue, 17 Jun 2025 15:57:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175819; cv=none; b=TXWiE11tsefqiDtCElce9cGqQrExgLpBkFcynaBy2VXZtT3hIYkI9XV37N8AM+FAhfUvZfYXN8eXpVTr6vs5gPAh5agW2vokTXbr1/MK4iOSEf6R6Wq2yvUPwb1cQ7vkYPpjqTIJ74LsBVZGHGN3AoYiSuORMZ6JyRfLrEPtyCY=
+	t=1750175822; cv=none; b=TU9qnXLa9qa8J/XVzzztpDr9tppYeA+GT1Gvr/+oDNN0xHZjGwZbYRZwOfu/zADifZBLsWrHR/53ZIpJvcvKitLRcFeERw9dPQPLcpxBOp1FT1f1Nys5PTZr8LmVykYnsFBmEK8ez+t4eeE6aLrHAjeM1EgdAFqkc8JHb8Cn24o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175819; c=relaxed/simple;
-	bh=lCG1lWFdpyT8pV+YSnqqYMbYJV7qDXwuKmw/YPfEvU8=;
+	s=arc-20240116; t=1750175822; c=relaxed/simple;
+	bh=+ZTW2jqkmuH0ePxMQZbPruX/HNk9P/VkRuqFeQ7IGEM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lVQwKIQTmWDeS9XxPBdNvEoz9HeSw3G0Q6rAwDHOBVMCmjzQQsXmMOGn1/nJtmUgUJAz5MkFvWOB81iyS/clINv3NSufctZ3y/MpsSu2Vtaynh7KmaRTSDweWNPcncV0CWP8KeGKtic60ymosn31eK5nsJQ/HolBYAt/P2x5Mik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i7gL+Bec; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rq/NmMn8ORPyzDm24KOcwUMZEmVLEEC07nQXOVh+crpARyx+A29UVL4FDzXagJo/5izpO0dLE5dL3XotJSF761fGKAkNk6DsLDOwlt+DETrZrcIouZ99sjAKtXe7jYfD9vTl19BxjZxRaMO99g3JByuSGWT1gWMZJmVxNbvhXy0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EdiACq8f; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i7gL+Bec"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5826C4CEE3;
-	Tue, 17 Jun 2025 15:56:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EdiACq8f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED4AAC4CEE3;
+	Tue, 17 Jun 2025 15:57:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175819;
-	bh=lCG1lWFdpyT8pV+YSnqqYMbYJV7qDXwuKmw/YPfEvU8=;
+	s=korg; t=1750175822;
+	bh=+ZTW2jqkmuH0ePxMQZbPruX/HNk9P/VkRuqFeQ7IGEM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i7gL+Bec5aRGtip8OnoojR77wdExt950aW8BFtOe2vo0pvFAXS4m6Ed5vE7pi/v5O
-	 DIPd5/46MumiEgiFAnWvcdz4b4YQbh78Zy7lM0uL+AjFPqzB3oKDsu4CtyiWqSDJ+N
-	 GogwB/StVmD52cXuU7356PPixUVjZl3LgEMIy3BE=
+	b=EdiACq8faAk0DWLiHltwsp/fCgPAN+DSb6VKa6eKPrbqbOBN8oEE1YcK77bKxMsWA
+	 z6Bk0PIS6blKbSgmDjbg/HPAWzlzo6aqE3oDOZOIFs/A0QAMSW2gMZFOlbS3dPCn2k
+	 ur0GmzvLm2EMc70+a4M8q83nsobIZ2g/Hm8vTi1A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Kornel=20Dul=C4=99ba?= <korneld@google.com>,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
-	Will Deacon <will@kernel.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 125/780] arm64: Support ARM64_VA_BITS=52 when setting ARCH_MMAP_RND_BITS_MAX
-Date: Tue, 17 Jun 2025 17:17:13 +0200
-Message-ID: <20250617152456.603191240@linuxfoundation.org>
+Subject: [PATCH 6.12 166/512] pinctrl: at91: Fix possible out-of-boundary access
+Date: Tue, 17 Jun 2025 17:22:12 +0200
+Message-ID: <20250617152426.345963481@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,58 +45,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kornel Dulęba <korneld@google.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit f101c56447717c595d803894ba0e215f56c6fba4 ]
+[ Upstream commit 762ef7d1e6eefad9896560bfcb9bcf7f1b6df9c1 ]
 
-When the 52-bit virtual addressing was introduced the select like
-ARCH_MMAP_RND_BITS_MAX logic was never updated to account for it.
-Because of that the rnd max bits knob is set to the default value of 18
-when ARM64_VA_BITS=52.
-Fix this by setting ARCH_MMAP_RND_BITS_MAX to the same value that would
-be used if 48-bit addressing was used. Higher values can't used here
-because 52-bit addressing is used only if the caller provides a hint to
-mmap, with a fallback to 48-bit. The knob in question is an upper bound
-for what the user can set in /proc/sys/vm/mmap_rnd_bits, which in turn
-is used to determine how many random bits can be inserted into the base
-address used for mmap allocations. Since 48-bit allocations are legal
-with ARM64_VA_BITS=52, we need to make sure that the base address is
-small enough to facilitate this.
+at91_gpio_probe() doesn't check that given OF alias is not available or
+something went wrong when trying to get it. This might have consequences
+when accessing gpio_chips array with that value as an index. Note, that
+BUG() can be compiled out and hence won't actually perform the required
+checks.
 
-Fixes: b6d00d47e81a ("arm64: mm: Introduce 52-bit Kernel VAs")
-Signed-off-by: Kornel Dulęba <korneld@google.com>
-Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
-Link: https://lore.kernel.org/r/20250417114754.3238273-1-korneld@google.com
-Signed-off-by: Will Deacon <will@kernel.org>
+Fixes: 6732ae5cb47c ("ARM: at91: add pinctrl support")
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Closes: https://lore.kernel.org/r/202505052343.UHF1Zo93-lkp@intel.com/
+Link: https://lore.kernel.org/20250508200807.1384558-1-andriy.shevchenko@linux.intel.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/Kconfig | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/pinctrl/pinctrl-at91.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/Kconfig b/arch/arm64/Kconfig
-index a182295e6f08b..6527d0d5656a1 100644
---- a/arch/arm64/Kconfig
-+++ b/arch/arm64/Kconfig
-@@ -333,9 +333,9 @@ config ARCH_MMAP_RND_BITS_MAX
- 	default 24 if ARM64_VA_BITS=39
- 	default 27 if ARM64_VA_BITS=42
- 	default 30 if ARM64_VA_BITS=47
--	default 29 if ARM64_VA_BITS=48 && ARM64_64K_PAGES
--	default 31 if ARM64_VA_BITS=48 && ARM64_16K_PAGES
--	default 33 if ARM64_VA_BITS=48
-+	default 29 if (ARM64_VA_BITS=48 || ARM64_VA_BITS=52) && ARM64_64K_PAGES
-+	default 31 if (ARM64_VA_BITS=48 || ARM64_VA_BITS=52) && ARM64_16K_PAGES
-+	default 33 if (ARM64_VA_BITS=48 || ARM64_VA_BITS=52)
- 	default 14 if ARM64_64K_PAGES
- 	default 16 if ARM64_16K_PAGES
- 	default 18
+diff --git a/drivers/pinctrl/pinctrl-at91.c b/drivers/pinctrl/pinctrl-at91.c
+index 93ab277d9943c..fbe74e4ef320c 100644
+--- a/drivers/pinctrl/pinctrl-at91.c
++++ b/drivers/pinctrl/pinctrl-at91.c
+@@ -1819,12 +1819,16 @@ static int at91_gpio_probe(struct platform_device *pdev)
+ 	struct at91_gpio_chip *at91_chip = NULL;
+ 	struct gpio_chip *chip;
+ 	struct pinctrl_gpio_range *range;
++	int alias_idx;
+ 	int ret = 0;
+ 	int irq, i;
+-	int alias_idx = of_alias_get_id(np, "gpio");
+ 	uint32_t ngpio;
+ 	char **names;
+ 
++	alias_idx = of_alias_get_id(np, "gpio");
++	if (alias_idx < 0)
++		return alias_idx;
++
+ 	BUG_ON(alias_idx >= ARRAY_SIZE(gpio_chips));
+ 	if (gpio_chips[alias_idx])
+ 		return dev_err_probe(dev, -EBUSY, "%d slot is occupied.\n", alias_idx);
 -- 
 2.39.5
 
