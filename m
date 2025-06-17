@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C29818A6AE;
-	Tue, 17 Jun 2025 15:36:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74B2818A6AE;
+	Tue, 17 Jun 2025 15:36:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750174583; cv=none; b=WIB+YqYGeE5/ddsOcjo2ZKiSS0luid/Dbbxz+Nx5/f8CaA4g48Gvny3bJ6pq+/Qf7CH1OIlhXACpkcM0zgIIE3a19ON6ae3OvqRfZ90fG/1CIco6aJQWBqrDuXsFab2/geeZxOV4DFdT0ryHSMF3A+jgnMkZHI2OPajWzej6Mcw=
+	t=1750174586; cv=none; b=pnGXbfeOS5z1rknPRfse9bSNe5UWW/0N6FS+qHv5/4NR+TFfGIG+sEyDwKgxTn8IegzteW7X9RA5fK2cwr7XJNlShpCZYCzO6Wz3bwY8+7mWyPn5Ke+BqH3LuuDf4EvfMiskrXOdNYNIfZBR+LGBR/rVT25k1g9dJixAZG3uZZo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750174583; c=relaxed/simple;
-	bh=nhnxot+J/SUerMriOqInK1iGFNIN6aIRYy74839rYzk=;
+	s=arc-20240116; t=1750174586; c=relaxed/simple;
+	bh=ozBu1Wg71Cdv1fVVWDsG6okZEVWqwowW0SnWOAzVJn4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MUgZGIsY2YAZdRvRblF1cEgpdKulysg9n6WmsBasGTfwxSLIgt2GxigMm076lmK3SC9xwZp2OTLvtq/tbJByxrOiorAvCrMlh6o3sZyKGIVeFjQH0o6Fbeh81SIZBiSrzN5aG/Ye9u1Yv056vQ/bvikwk7w6SMOJl4FXvtnHJ0Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k/HxEZr8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b44LdtCvFvX1srjHWkXkl9blhfhKl2DljWp+6X4WfnYgf2+IuUV2WcO/ZuI2TQqrlFaZMAQDeS46KqZJzd6sA78BuMNLB0LtJk0KXz7ADefI/c41rVBpYXwtfBJhECoF9YBzkNvuUogdyZXCfAZQHA/LcuNF2yKT7TN55THC9Ms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XwtONz/9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k/HxEZr8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04CD0C4CEF4;
-	Tue, 17 Jun 2025 15:36:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XwtONz/9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 015DFC4CEE3;
+	Tue, 17 Jun 2025 15:36:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750174583;
-	bh=nhnxot+J/SUerMriOqInK1iGFNIN6aIRYy74839rYzk=;
+	s=korg; t=1750174586;
+	bh=ozBu1Wg71Cdv1fVVWDsG6okZEVWqwowW0SnWOAzVJn4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k/HxEZr8o+t9BlNSDSKQYsZK4YARUpSfaWsvpvCOexjrVuCLAGdIASoUYMRt86Ows
-	 0r3GvWF5yTCqPgo/73M09YhV/HLBCEMWooFEn1ZRfKo0iM6W+k5x2/K8TGhTnX8iG+
-	 wTMN9w45PujrtUFaS5pcU5nWcW78TYa1UeiAWAiI=
+	b=XwtONz/9qZJfPO5nNoP2/bO4YetJEnEwn2mA1SvhDRn0Xym+er+52LCXHU6sJJPWz
+	 BkPEloa3FiWcEw/kunB9dwjZ0FRSHH/bwwKge4QW0zjsVKUBfsLoj1y1axdZYHXTPo
+	 UZj71PCj7UwvjK0wFzIMRQCMvAm0kVq29Qp6aDFw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cosmin Ratiu <cratiu@nvidia.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Julien Massot <julien.massot@collabora.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 090/356] xfrm: Use xdo.dev instead of xdo.real_dev
-Date: Tue, 17 Jun 2025 17:23:25 +0200
-Message-ID: <20250617152341.837534963@linuxfoundation.org>
+Subject: [PATCH 6.12 039/512] ASoC: mediatek: mt8195: Set ETDM1/2 IN/OUT to COMP_DUMMY()
+Date: Tue, 17 Jun 2025 17:20:05 +0200
+Message-ID: <20250617152421.131898862@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-References: <20250617152338.212798615@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,82 +48,100 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cosmin Ratiu <cratiu@nvidia.com>
+From: Julien Massot <julien.massot@collabora.com>
 
-[ Upstream commit 25ac138f58e7d5c8bffa31e8891418d2819180c4 ]
+[ Upstream commit 7af317f7faaab09d5a78f24605057d11f5955115 ]
 
-The policy offload struct was reused from the state offload and
-real_dev was copied from dev, but it was never set to anything else.
-Simplify the code by always using xdo.dev for policies.
+ETDM2_IN_BE and ETDM1_OUT_BE are defined as COMP_EMPTY(),
+in the case the codec dai_name will be null.
 
-Signed-off-by: Cosmin Ratiu <cratiu@nvidia.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Avoid a crash if the device tree is not assigning a codec
+to these links.
+
+[    1.179936] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
+[    1.181065] Mem abort info:
+[    1.181420]   ESR = 0x0000000096000004
+[    1.181892]   EC = 0x25: DABT (current EL), IL = 32 bits
+[    1.182576]   SET = 0, FnV = 0
+[    1.182964]   EA = 0, S1PTW = 0
+[    1.183367]   FSC = 0x04: level 0 translation fault
+[    1.183983] Data abort info:
+[    1.184406]   ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000
+[    1.185097]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
+[    1.185766]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+[    1.186439] [0000000000000000] user address but active_mm is swapper
+[    1.187239] Internal error: Oops: 0000000096000004 [#1] PREEMPT SMP
+[    1.188029] Modules linked in:
+[    1.188420] CPU: 7 UID: 0 PID: 70 Comm: kworker/u32:1 Not tainted 6.14.0-rc4-next-20250226+ #85
+[    1.189515] Hardware name: Radxa NIO 12L (DT)
+[    1.190065] Workqueue: events_unbound deferred_probe_work_func
+[    1.190808] pstate: 40400009 (nZcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[    1.191683] pc : __pi_strcmp+0x24/0x140
+[    1.192170] lr : mt8195_mt6359_soc_card_probe+0x224/0x7b0
+[    1.192854] sp : ffff800083473970
+[    1.193271] x29: ffff800083473a10 x28: 0000000000001008 x27: 0000000000000002
+[    1.194168] x26: ffff800082408960 x25: ffff800082417db0 x24: ffff800082417d88
+[    1.195065] x23: 000000000000001e x22: ffff800082dbf480 x21: ffff800082dc07b8
+[    1.195961] x20: 0000000000000000 x19: 0000000000000013 x18: 00000000ffffffff
+[    1.196858] x17: 000000040044ffff x16: 005000f2b5503510 x15: 0000000000000006
+[    1.197755] x14: ffff800082407af0 x13: 6e6f69737265766e x12: 692d6b636f6c6374
+[    1.198651] x11: 0000000000000002 x10: ffff80008240b920 x9 : 0000000000000018
+[    1.199547] x8 : 0101010101010101 x7 : 0000000000000000 x6 : 0000000000000000
+[    1.200443] x5 : 0000000000000000 x4 : 8080808080000000 x3 : 303933383978616d
+[    1.201339] x2 : 0000000000000000 x1 : ffff80008240b920 x0 : 0000000000000000
+[    1.202236] Call trace:
+[    1.202545]  __pi_strcmp+0x24/0x140 (P)
+[    1.203029]  mtk_soundcard_common_probe+0x3bc/0x5b8
+[    1.203644]  platform_probe+0x70/0xe8
+[    1.204106]  really_probe+0xc8/0x3a0
+[    1.204556]  __driver_probe_device+0x84/0x160
+[    1.205104]  driver_probe_device+0x44/0x130
+[    1.205630]  __device_attach_driver+0xc4/0x170
+[    1.206189]  bus_for_each_drv+0x8c/0xf8
+[    1.206672]  __device_attach+0xa8/0x1c8
+[    1.207155]  device_initial_probe+0x1c/0x30
+[    1.207681]  bus_probe_device+0xb0/0xc0
+[    1.208165]  deferred_probe_work_func+0xa4/0x100
+[    1.208747]  process_one_work+0x158/0x3e0
+[    1.209254]  worker_thread+0x2c4/0x3e8
+[    1.209727]  kthread+0x134/0x1f0
+[    1.210136]  ret_from_fork+0x10/0x20
+[    1.210589] Code: 54000401 b50002c6 d503201f f86a6803 (f8408402)
+[    1.211355] ---[ end trace 0000000000000000 ]---
+
+Signed-off-by: Julien Massot <julien.massot@collabora.com>
+Fixes: e70b8dd26711 ("ASoC: mediatek: mt8195: Remove afe-dai component and rework codec link")
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://patch.msgid.link/20250417-mt8395-audio-sof-v1-2-30587426e5dd@collabora.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c | 2 +-
- net/xfrm/xfrm_device.c                                   | 2 --
- net/xfrm/xfrm_state.c                                    | 2 --
- 3 files changed, 1 insertion(+), 5 deletions(-)
+ sound/soc/mediatek/mt8195/mt8195-mt6359.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c
-index 463c23ae0ad1e..5161bf51fa110 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c
-@@ -1093,7 +1093,7 @@ mlx5e_ipsec_build_accel_pol_attrs(struct mlx5e_ipsec_pol_entry *pol_entry,
- static int mlx5e_xfrm_add_policy(struct xfrm_policy *x,
- 				 struct netlink_ext_ack *extack)
- {
--	struct net_device *netdev = x->xdo.real_dev;
-+	struct net_device *netdev = x->xdo.dev;
- 	struct mlx5e_ipsec_pol_entry *pol_entry;
- 	struct mlx5e_priv *priv;
- 	int err;
-diff --git a/net/xfrm/xfrm_device.c b/net/xfrm/xfrm_device.c
-index 04dc0c8a83707..7188d3592dde4 100644
---- a/net/xfrm/xfrm_device.c
-+++ b/net/xfrm/xfrm_device.c
-@@ -371,7 +371,6 @@ int xfrm_dev_policy_add(struct net *net, struct xfrm_policy *xp,
+diff --git a/sound/soc/mediatek/mt8195/mt8195-mt6359.c b/sound/soc/mediatek/mt8195/mt8195-mt6359.c
+index 8ebf6c7502aa3..400cec09c3a3c 100644
+--- a/sound/soc/mediatek/mt8195/mt8195-mt6359.c
++++ b/sound/soc/mediatek/mt8195/mt8195-mt6359.c
+@@ -822,12 +822,12 @@ SND_SOC_DAILINK_DEFS(ETDM1_IN_BE,
  
- 	xdo->dev = dev;
- 	netdev_tracker_alloc(dev, &xdo->dev_tracker, GFP_ATOMIC);
--	xdo->real_dev = dev;
- 	xdo->type = XFRM_DEV_OFFLOAD_PACKET;
- 	switch (dir) {
- 	case XFRM_POLICY_IN:
-@@ -393,7 +392,6 @@ int xfrm_dev_policy_add(struct net *net, struct xfrm_policy *xp,
- 	err = dev->xfrmdev_ops->xdo_dev_policy_add(xp, extack);
- 	if (err) {
- 		xdo->dev = NULL;
--		xdo->real_dev = NULL;
- 		xdo->type = XFRM_DEV_OFFLOAD_UNSPECIFIED;
- 		xdo->dir = 0;
- 		netdev_put(dev, &xdo->dev_tracker);
-diff --git a/net/xfrm/xfrm_state.c b/net/xfrm/xfrm_state.c
-index 86029cf5358c7..d2bd5bddfb05d 100644
---- a/net/xfrm/xfrm_state.c
-+++ b/net/xfrm/xfrm_state.c
-@@ -1326,7 +1326,6 @@ xfrm_state_find(const xfrm_address_t *daddr, const xfrm_address_t *saddr,
- 			xso->type = XFRM_DEV_OFFLOAD_PACKET;
- 			xso->dir = xdo->dir;
- 			xso->dev = xdo->dev;
--			xso->real_dev = xdo->real_dev;
- 			xso->flags = XFRM_DEV_OFFLOAD_FLAG_ACQ;
- 			netdev_hold(xso->dev, &xso->dev_tracker, GFP_ATOMIC);
- 			error = xso->dev->xfrmdev_ops->xdo_dev_state_add(x, NULL);
-@@ -1334,7 +1333,6 @@ xfrm_state_find(const xfrm_address_t *daddr, const xfrm_address_t *saddr,
- 				xso->dir = 0;
- 				netdev_put(xso->dev, &xso->dev_tracker);
- 				xso->dev = NULL;
--				xso->real_dev = NULL;
- 				xso->type = XFRM_DEV_OFFLOAD_UNSPECIFIED;
- 				x->km.state = XFRM_STATE_DEAD;
- 				to_put = x;
+ SND_SOC_DAILINK_DEFS(ETDM2_IN_BE,
+ 		     DAILINK_COMP_ARRAY(COMP_CPU("ETDM2_IN")),
+-		     DAILINK_COMP_ARRAY(COMP_EMPTY()),
++		     DAILINK_COMP_ARRAY(COMP_DUMMY()),
+ 		     DAILINK_COMP_ARRAY(COMP_EMPTY()));
+ 
+ SND_SOC_DAILINK_DEFS(ETDM1_OUT_BE,
+ 		     DAILINK_COMP_ARRAY(COMP_CPU("ETDM1_OUT")),
+-		     DAILINK_COMP_ARRAY(COMP_EMPTY()),
++		     DAILINK_COMP_ARRAY(COMP_DUMMY()),
+ 		     DAILINK_COMP_ARRAY(COMP_EMPTY()));
+ 
+ SND_SOC_DAILINK_DEFS(ETDM2_OUT_BE,
 -- 
 2.39.5
 
