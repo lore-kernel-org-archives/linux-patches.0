@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E7B62F234E;
-	Tue, 17 Jun 2025 15:59:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC7DE2DE20D;
+	Tue, 17 Jun 2025 16:00:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175999; cv=none; b=leGZeObcqmYBjboMmTlhKFAbMoxOjhwHXZYQs8xeSV7lNTy4goLxsI6kQ0BEk130lzjzO/TedbvqCEHlgBxJ4hQ6bl2aDTSaVtGGBzcgOE09PcXr3fllSAUTP4Tqv2HPrIbgzOhFJDEi0oq5somQ5WLHBcXYU5fKiD67BY7gdbQ=
+	t=1750176002; cv=none; b=T2GVAbQdn5KBXhhz3yRPoQV5v3wM52sWXBF/vKJzMVOa8f4q5KzCLQMKN7yPmBDw3qaQ7H/efYg7TGKdQ7VbV1GvMRNMlKhpM0RMuCfxig6sEqY/eR/AlhvDS3C4C8naZaAJ0ieKfBgRoGPxp968tYAwgK61AaUjQ2ZMZeZkVK0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175999; c=relaxed/simple;
-	bh=tbLus1659B5A0r19W5gR6O6cqMTFa+0q+Hr2mCQ6GT0=;
+	s=arc-20240116; t=1750176002; c=relaxed/simple;
+	bh=vyKUQYeXYSezeuO0IuawjRVFTav7XZSAzHZJhkZsTyE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rBq3IwcNs67RRQTJuP9CwAB2ygMSpFj9WLhKUaUMcmJDZ9SqZbiCfbrAg/fNCZwLzCMYFqTOImesSKr838hc0LzhIHnFHvgdLgiLQabXseLU5wRiNkUU9pWTHLY3NXdRIErnKlOt3MGgg7Z8pbs1GQiEfjaLoAkaPTPbb0rLZsc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v2P13NaQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qKyFBn3kWVuvrLa+9HWkOZx0vBarsb/gI4myQW1zGa0A2RmenjnVhwr85TqlRkv15rG08XXmNvamY7MQvMXEg56GC1zGq4PHbxfqeJm90PWwX5hDWd+j6LV7b1+WBk89ZOQIfabFL4u0OwU6SBRfxqOLof2tGDHxOuBPUNlHvwM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hvrSbQdG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v2P13NaQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C89B4C4CEE3;
-	Tue, 17 Jun 2025 15:59:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hvrSbQdG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18044C4CEE7;
+	Tue, 17 Jun 2025 16:00:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175999;
-	bh=tbLus1659B5A0r19W5gR6O6cqMTFa+0q+Hr2mCQ6GT0=;
+	s=korg; t=1750176002;
+	bh=vyKUQYeXYSezeuO0IuawjRVFTav7XZSAzHZJhkZsTyE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v2P13NaQO5hKLW7/Gp1ptwyNr5992UFL6jmil19eY7tYDvhGMILdxnEtSoMT1HmzQ
-	 wlaiZ7gafzLDKmukz1YU4cnhjxQTTqQkvdA8cYNZ+mJuUn4thktZdHyIg4y+sPxCiH
-	 qiRYMjZlnWWqjY9hFqS1zP1Wvati58x7kX96m4oc=
+	b=hvrSbQdGVmb/P8PwMTv+25+iwxQl3GN26eVsf+DQsP0nOmac4ZAYoKyFASUy52bhZ
+	 jYnYcSooHHBTp8kSBTVzvCAOhKQayFHmO8ZF+nxwbRhSTIh6cDLsNBimVqoAvl+TSa
+	 7FNeYrqnEKxbs7yfBeyyi+pTuV0kMHVig5ttadEQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>,
+	Sam Winchenbach <swinchenbach@arka.org>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 142/780] media: synopsys: hdmirx: Count dropped frames
-Date: Tue, 17 Jun 2025 17:17:30 +0200
-Message-ID: <20250617152457.284008299@linuxfoundation.org>
+Subject: [PATCH 6.6 234/356] iio: filter: admv8818: fix integer overflow
+Date: Tue, 17 Jun 2025 17:25:49 +0200
+Message-ID: <20250617152347.614202449@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
+References: <20250617152338.212798615@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,53 +47,39 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+From: Sam Winchenbach <swinchenbach@arka.org>
 
-[ Upstream commit 57c8d79adf05244b171964d1d6c7e6fabbe5f5fd ]
+[ Upstream commit fb6009a28d77edec4eb548b5875dae8c79b88467 ]
 
-The sequence number communicate the lost frames to userspace. For this
-reason, it must be incremented even when a frame is skipped. This allows
-userspace such as GStreamer to report the loss.
+HZ_PER_MHZ is only unsigned long. This math overflows, leading to
+incorrect results.
 
-Fixes: 7b59b132ad439 ("media: platform: synopsys: Add support for HDMI input driver")
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Reviewed-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Fixes: f34fe888ad05 ("iio:filter:admv8818: add support for ADMV8818")
+Signed-off-by: Sam Winchenbach <swinchenbach@arka.org>
+Link: https://patch.msgid.link/20250328174831.227202-4-sam.winchenbach@framepointer.org
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/synopsys/hdmirx/snps_hdmirx.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/iio/filter/admv8818.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/synopsys/hdmirx/snps_hdmirx.c b/drivers/media/platform/synopsys/hdmirx/snps_hdmirx.c
-index f5b3f5010ede5..7af6765532e33 100644
---- a/drivers/media/platform/synopsys/hdmirx/snps_hdmirx.c
-+++ b/drivers/media/platform/synopsys/hdmirx/snps_hdmirx.c
-@@ -1956,10 +1956,6 @@ static void dma_idle_int_handler(struct snps_hdmirx_dev *hdmirx_dev,
- 					vb_done->field = V4L2_FIELD_NONE;
- 
- 				hdmirx_vb_done(stream, vb_done);
--				stream->sequence++;
--				if (stream->sequence == 30)
--					v4l2_dbg(1, debug, v4l2_dev,
--						 "rcv frames\n");
- 			}
- 
- 			stream->curr_buf = NULL;
-@@ -1971,6 +1967,10 @@ static void dma_idle_int_handler(struct snps_hdmirx_dev *hdmirx_dev,
- 			v4l2_dbg(3, debug, v4l2_dev,
- 				 "%s: next_buf NULL, skip vb_done\n", __func__);
- 		}
-+
-+		stream->sequence++;
-+		if (stream->sequence == 30)
-+			v4l2_dbg(1, debug, v4l2_dev, "rcv frames\n");
+diff --git a/drivers/iio/filter/admv8818.c b/drivers/iio/filter/admv8818.c
+index 3d8740caa1455..cd3aff9a2f7bf 100644
+--- a/drivers/iio/filter/admv8818.c
++++ b/drivers/iio/filter/admv8818.c
+@@ -154,7 +154,7 @@ static int __admv8818_hpf_select(struct admv8818_state *st, u64 freq)
  	}
  
- DMA_IDLE_OUT:
+ 	/* Close HPF frequency gap between 12 and 12.5 GHz */
+-	if (freq >= 12000 * HZ_PER_MHZ && freq <= 12500 * HZ_PER_MHZ) {
++	if (freq >= 12000ULL * HZ_PER_MHZ && freq < 12500ULL * HZ_PER_MHZ) {
+ 		hpf_band = 3;
+ 		hpf_step = 15;
+ 	}
 -- 
 2.39.5
 
