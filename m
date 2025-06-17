@@ -1,46 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A7A218E025;
-	Tue, 17 Jun 2025 16:17:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C369418E025;
+	Tue, 17 Jun 2025 16:17:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177074; cv=none; b=B6j7FMYfyc6r607ufr9x+vANzFzUZWFTOZaJ2mgJkaOaY4drO3e+lHM1zQso82Dap5yu+wYyLEq/vDCP3aEUPklBD6qWLxCRFA+9HRB+O+uiUbR33ztmU+oMH4+mF+hOQt/naf8FAa7JaYN6ykaycPEQVPe3D65ENwwBMixwIA0=
+	t=1750177077; cv=none; b=mkTRNJarz2su69SSpg7oCgseDRUUMk06f4zsyReGvTQciv9Lr5PcVFE06sAOM8BTlhUSQp4NAFTuMHx7lX36eUQyb4rK9Wly1CwkAkR6WnhVT2X4orsAsQT7YKgazZYxUAHJJ0JVwkmcR85btG8XA7/gRBAZLBM8mJcvZ1vGP6g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177074; c=relaxed/simple;
-	bh=USLTbBVXznbGKUmgZiALHReLIuTurNqxoNpHcQdsUjc=;
+	s=arc-20240116; t=1750177077; c=relaxed/simple;
+	bh=OrBA8WF8Sf7zrRqb+W9E777Z8AaP3rJlmZzI6s/x114=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D6TRvFmTIM4wRaRJ33pA6HkhvaUpBKE5JsVNtbsdL55cBT5GZAvAk0fGxKXAkA18ThRJ3RD5OfWpLlB9stPBCbaErnVuMKuLGOqBiyKcM4qaFkZ7fOcuqZ4MPH2V1FrjZr+VvZGEv/t3OZfrIF5AhOAAtQGdfdhR5lFsHun1Eqg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DIQMNmrJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TdD+CJiCITK6PBH3m9A7EeARSuKJRJVWNGjB05Gobe5VUz70pBPxGss0oqMCgMWBxzC4hYgBC8ICEnbSDONKt76RVt0jSO0a1vPnmpPDO75FidovFuhgIKm23Aoq3hAvLK9Y35k5hLfZeXlOyz4K/IVlIylrLDmTxi0F8FcZm1M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xpAnTS4k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DIQMNmrJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 086E7C4CEE3;
-	Tue, 17 Jun 2025 16:17:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xpAnTS4k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 331DDC4CEE3;
+	Tue, 17 Jun 2025 16:17:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177074;
-	bh=USLTbBVXznbGKUmgZiALHReLIuTurNqxoNpHcQdsUjc=;
+	s=korg; t=1750177077;
+	bh=OrBA8WF8Sf7zrRqb+W9E777Z8AaP3rJlmZzI6s/x114=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DIQMNmrJOofyEkRraNkWaF7KVdO8gcZwZ+kwppZuc7zPSMDiDvqzkFHwkucVwGByA
-	 M8YnPmy5AGWpZ1sHB1k32lcLtr2vyKHTIp+F0rot9ptFZYA9fuwzGPlom84AvlouUD
-	 rfBZ5vE80lJnlM09sGDi0/UwsMmXk035as+AMVjY=
+	b=xpAnTS4kHTfbxfUvLg4PhVbA9dv2JZEMrA7213r/FLPGMmSp+xeAqdnCYSGfPPbO1
+	 K1OH+z89iVqInk65ILyyeEMSKkRbEWam7FNRvsH0IYMPqBOgY9/Y/zwPCtzJjUhuxP
+	 xmf4jgpnLA3hxYihFJ3zoerJc9QQWVnXsYFP9tgg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Leo Yan <leo.yan@arm.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	James Clark <james.clark@linaro.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 294/512] perf tests switch-tracking: Fix timestamp comparison
-Date: Tue, 17 Jun 2025 17:24:20 +0200
-Message-ID: <20250617152431.513043210@linuxfoundation.org>
+	Dave Penkler <dpenkler@gmail.com>
+Subject: [PATCH 6.6 345/356] usb: usbtmc: Fix read_stb function and get_stb ioctl
+Date: Tue, 17 Jun 2025 17:27:40 +0200
+Message-ID: <20250617152352.027254037@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
+References: <20250617152338.212798615@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -52,106 +45,73 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Leo Yan <leo.yan@arm.com>
+From: Dave Penkler <dpenkler@gmail.com>
 
-[ Upstream commit 628e124404b3db5e10e17228e680a2999018ab33 ]
+commit acb3dac2805d3342ded7dbbd164add32bbfdf21c upstream.
 
-The test might fail on the Arm64 platform with the error:
+The usbtmc488_ioctl_read_stb function relied on a positive return from
+usbtmc_get_stb to reset the srq condition in the driver. The
+USBTMC_IOCTL_GET_STB case tested for a positive return to return the stb
+to the user.
 
-  # perf test -vvv "Track with sched_switch"
-  Missing sched_switch events
-  #
+Commit: <cac01bd178d6> ("usb: usbtmc: Fix erroneous get_stb ioctl
+error returns") changed the return value of usbtmc_get_stb to 0 on
+success instead of returning the value of usb_control_msg which is
+positive in the normal case. This change caused the function
+usbtmc488_ioctl_read_stb and the USBTMC_IOCTL_GET_STB ioctl to no
+longer function correctly.
 
-The issue is caused by incorrect handling of timestamp comparisons. The
-comparison result, a signed 64-bit value, was being directly cast to an
-int, leading to incorrect sorting for sched events.
+Change the test in usbtmc488_ioctl_read_stb to test for failure
+first and return the failure code immediately.
+Change the test for the USBTMC_IOCTL_GET_STB ioctl to test for 0
+instead of a positive value.
 
-The case does not fail everytime, usually I can trigger the failure
-after run 20 ~ 30 times:
-
-  # while true; do perf test "Track with sched_switch"; done
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : FAILED!
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : FAILED!
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-
-I used cross compiler to build Perf tool on my host machine and tested on
-Debian / Juno board.  Generally, I think this issue is not very specific
-to GCC versions.  As both internal CI and my local env can reproduce the
-issue.
-
-My Host Build compiler:
-
-  # aarch64-linux-gnu-gcc --version
-  aarch64-linux-gnu-gcc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
-
-Juno Board:
-
-  # lsb_release -a
-  No LSB modules are available.
-  Distributor ID: Debian
-  Description:    Debian GNU/Linux 12 (bookworm)
-  Release:        12
-  Codename:       bookworm
-
-Fix this by explicitly returning 0, 1, or -1 based on whether the result
-is zero, positive, or negative.
-
-Fixes: d44bc558297222d9 ("perf tests: Add a test for tracking with sched_switch")
-Reviewed-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Leo Yan <leo.yan@arm.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: James Clark <james.clark@linaro.org>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Link: https://lore.kernel.org/r/20250331172759.115604-1-leo.yan@arm.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: cac01bd178d6 ("usb: usbtmc: Fix erroneous get_stb ioctl error returns")
+Cc: stable@vger.kernel.org
+Signed-off-by: Dave Penkler <dpenkler@gmail.com>
+Link: https://lore.kernel.org/r/20250521121656.18174-3-dpenkler@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/perf/tests/switch-tracking.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/class/usbtmc.c |   17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/tools/perf/tests/switch-tracking.c b/tools/perf/tests/switch-tracking.c
-index 5cab17a1942e6..ee43d8fa2ed67 100644
---- a/tools/perf/tests/switch-tracking.c
-+++ b/tools/perf/tests/switch-tracking.c
-@@ -258,7 +258,7 @@ static int compar(const void *a, const void *b)
- 	const struct event_node *nodeb = b;
- 	s64 cmp = nodea->event_time - nodeb->event_time;
+--- a/drivers/usb/class/usbtmc.c
++++ b/drivers/usb/class/usbtmc.c
+@@ -565,14 +565,15 @@ static int usbtmc488_ioctl_read_stb(stru
  
--	return cmp;
-+	return cmp < 0 ? -1 : (cmp > 0 ? 1 : 0);
+ 	rv = usbtmc_get_stb(file_data, &stb);
+ 
+-	if (rv > 0) {
+-		srq_asserted = atomic_xchg(&file_data->srq_asserted,
+-					srq_asserted);
+-		if (srq_asserted)
+-			stb |= 0x40; /* Set RQS bit */
++	if (rv < 0)
++		return rv;
++
++	srq_asserted = atomic_xchg(&file_data->srq_asserted, srq_asserted);
++	if (srq_asserted)
++		stb |= 0x40; /* Set RQS bit */
++
++	rv = put_user(stb, (__u8 __user *)arg);
+ 
+-		rv = put_user(stb, (__u8 __user *)arg);
+-	}
+ 	return rv;
+ 
  }
+@@ -2201,7 +2202,7 @@ static long usbtmc_ioctl(struct file *fi
  
- static int process_events(struct evlist *evlist,
--- 
-2.39.5
-
+ 	case USBTMC_IOCTL_GET_STB:
+ 		retval = usbtmc_get_stb(file_data, &tmp_byte);
+-		if (retval > 0)
++		if (!retval)
+ 			retval = put_user(tmp_byte, (__u8 __user *)arg);
+ 		break;
+ 
 
 
