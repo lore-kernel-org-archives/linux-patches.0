@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99A0F2DF3C9;
-	Tue, 17 Jun 2025 15:35:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59E66221F1F;
+	Tue, 17 Jun 2025 15:35:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750174535; cv=none; b=PCa0PPeskKA5tqCQnY7XAJWIzl1L3xwoqQuTWVSfb6R/tZJGkoFi9Cz9bMR+G/wQMQx2cMEc8WdrAC+Yyocoh2Tnnd8DoxOvSyJqmDgcUQ2z1eQ790HyGmlKmKUQ6Aa8j0l91lt0wqn0Xro/HqYpMZ3G2JM1xCW5kdOD8kdT0QU=
+	t=1750174538; cv=none; b=qRB6WNPp6ErQbsvYzt9WSY76PrnBbxtAlQSR7Y5tP2BgckJJeGS768hFydbuLIlKLQp7Xpz2/BTEeYh/h1EqhSrUec+gsIySMxm6QcLI36osjOoBm8FUxgF4t+ZbdEjVUqkPrQGxj03YoxGsh9jYxMhxJmHxlJCBk01PH1k4+D8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750174535; c=relaxed/simple;
-	bh=ojRFUsqfczFwui7yvFFXbI1psU9gJdBxBxiGcrpFnDM=;
+	s=arc-20240116; t=1750174538; c=relaxed/simple;
+	bh=fCTISZz1bLNj5/n9yDxbbvyNxUkVZYxH15tlMZM3M/I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k6d6p7zMO9/ocwT6g86KvfxsR0aSJtFpCLRUL+C7FpfYdzJM91iPyfJp4xfe9uZMXFplwUczwAbTeuhHcBGXzn2D0N7dpMTET3zqOX+0j3ng+UL7o6I0XKcY6bBU1iAoF//NZCpzrJcKacU52OjsjQpYI4ys6B3FrVxiKCLOlXI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lYIIUOMd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WenSxbJzz7QelcSlcy5PH1RCdF8wh4WfsASbJQz00Rps7/4a36rjcjnbh0vT/KMthqj7f3VmpctxLiHq1IlG7EqQVYMKoIwlStvLCFBlwJTyeXtnoOCR5A1a6ATSXYgpm+VDmeYPLup45Pgyxx2M3dxCytN3ZUi43gYf6BYBW9U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PReywBM/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lYIIUOMd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 212B0C4CEE3;
-	Tue, 17 Jun 2025 15:35:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PReywBM/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE449C4CEE3;
+	Tue, 17 Jun 2025 15:35:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750174535;
-	bh=ojRFUsqfczFwui7yvFFXbI1psU9gJdBxBxiGcrpFnDM=;
+	s=korg; t=1750174538;
+	bh=fCTISZz1bLNj5/n9yDxbbvyNxUkVZYxH15tlMZM3M/I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lYIIUOMdFkQs9FQbORmQTx2LzLQFSRoSftWCfhdkK6a0W2DcpUbBfwbBSQDcCa6ft
-	 sm4vGeXNCT/mdKuWZKV+Y+mokR+vTWIvMtP6vBQoK/yid8yF/Iw+xRUEwEmsrOTOpy
-	 NGQ0YqZrL7poDwJIcaV3JXVIyJNpydOkq6+Bo8pM=
+	b=PReywBM/dtSrKH972zbF4bI4MPr8fRqUW+thwcDZq1wVJ0Fvf0rVwW9dlOzY4TNWl
+	 W0X3YDKhLcuB2bDxp0vQ7a4cEExZWKFqvg4OW6ppbBkxHNA5GQYbnDB6TZFL9tk/H1
+	 U7sR0mpj/JWg8SK+rw9AJ5n8tFrbsFTs6pl+uwz8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <oliver.sang@intel.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Qing Wang <wangqing7171@gmail.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 031/512] crypto: lrw - Only add ecb if it is not already there
-Date: Tue, 17 Jun 2025 17:19:57 +0200
-Message-ID: <20250617152420.820231160@linuxfoundation.org>
+Subject: [PATCH 6.12 009/512] perf/core: Fix broken throttling when max_samples_per_tick=1
+Date: Tue, 17 Jun 2025 17:19:35 +0200
+Message-ID: <20250617152419.901351754@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
 References: <20250617152419.512865572@linuxfoundation.org>
@@ -51,46 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Qing Wang <wangqing7171@gmail.com>
 
-[ Upstream commit 3d73909bddc2ebb3224a8bc2e5ce00e9df70c15d ]
+[ Upstream commit f51972e6f8b9a737b2b3eb588069acb538fa72de ]
 
-Only add ecb to the cipher name if it isn't already ecb.
+According to the throttling mechanism, the pmu interrupts number can not
+exceed the max_samples_per_tick in one tick. But this mechanism is
+ineffective when max_samples_per_tick=1, because the throttling check is
+skipped during the first interrupt and only performed when the second
+interrupt arrives.
 
-Also use memcmp instead of strncmp since these strings are all
-stored in an array of length CRYPTO_MAX_ALG_NAME.
+Perhaps this bug may cause little influence in one tick, but if in a
+larger time scale, the problem can not be underestimated.
 
-Fixes: 700cb3f5fe75 ("crypto: lrw - Convert to skcipher")
-Reported-by: kernel test robot <oliver.sang@intel.com>
-Closes: https://lore.kernel.org/oe-lkp/202505151503.d8a6cf10-lkp@intel.com
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+When max_samples_per_tick = 1:
+Allowed-interrupts-per-second max-samples-per-second  default-HZ  ARCH
+200                           100                     100         X86
+500                           250                     250         ARM64
+...
+Obviously, the pmu interrupt number far exceed the user's expect.
+
+Fixes: e050e3f0a71b ("perf: Fix broken interrupt rate throttling")
+Signed-off-by: Qing Wang <wangqing7171@gmail.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lkml.kernel.org/r/20250405141635.243786-3-wangqing7171@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/lrw.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/events/core.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/crypto/lrw.c b/crypto/lrw.c
-index e216fbf2b7866..4bede0031c63c 100644
---- a/crypto/lrw.c
-+++ b/crypto/lrw.c
-@@ -322,7 +322,7 @@ static int lrw_create(struct crypto_template *tmpl, struct rtattr **tb)
+diff --git a/kernel/events/core.c b/kernel/events/core.c
+index 285a4548450bd..8352376d82154 100644
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -9715,14 +9715,14 @@ __perf_event_account_interrupt(struct perf_event *event, int throttle)
+ 		hwc->interrupts = 1;
+ 	} else {
+ 		hwc->interrupts++;
+-		if (unlikely(throttle &&
+-			     hwc->interrupts > max_samples_per_tick)) {
+-			__this_cpu_inc(perf_throttled_count);
+-			tick_dep_set_cpu(smp_processor_id(), TICK_DEP_BIT_PERF_EVENTS);
+-			hwc->interrupts = MAX_INTERRUPTS;
+-			perf_log_throttle(event, 0);
+-			ret = 1;
+-		}
++	}
++
++	if (unlikely(throttle && hwc->interrupts >= max_samples_per_tick)) {
++		__this_cpu_inc(perf_throttled_count);
++		tick_dep_set_cpu(smp_processor_id(), TICK_DEP_BIT_PERF_EVENTS);
++		hwc->interrupts = MAX_INTERRUPTS;
++		perf_log_throttle(event, 0);
++		ret = 1;
+ 	}
  
- 	err = crypto_grab_skcipher(spawn, skcipher_crypto_instance(inst),
- 				   cipher_name, 0, mask);
--	if (err == -ENOENT) {
-+	if (err == -ENOENT && memcmp(cipher_name, "ecb(", 4)) {
- 		err = -ENAMETOOLONG;
- 		if (snprintf(ecb_name, CRYPTO_MAX_ALG_NAME, "ecb(%s)",
- 			     cipher_name) >= CRYPTO_MAX_ALG_NAME)
-@@ -356,7 +356,7 @@ static int lrw_create(struct crypto_template *tmpl, struct rtattr **tb)
- 	/* Alas we screwed up the naming so we have to mangle the
- 	 * cipher name.
- 	 */
--	if (!strncmp(cipher_name, "ecb(", 4)) {
-+	if (!memcmp(cipher_name, "ecb(", 4)) {
- 		int len;
- 
- 		len = strscpy(ecb_name, cipher_name + 4, sizeof(ecb_name));
+ 	if (event->attr.freq) {
 -- 
 2.39.5
 
