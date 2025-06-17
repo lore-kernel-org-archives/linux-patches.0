@@ -1,45 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B233A2EBDCC;
-	Tue, 17 Jun 2025 15:41:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 385B72ECD22;
+	Tue, 17 Jun 2025 15:41:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750174886; cv=none; b=ST1n5ejqojj7o2Mk/KCwDDeBsGJBaiSygd/3lQEKs1CyX6hDX9H+WDqd8xpw8m2x82nVaMX0dbSXd+oF3f6GwPI6lcOrahfYExFG7s88dwB0kfGQ63qA7/E2fl2gKW062+8L9mFsfCr487c8BLTLx0tSEnD6RjlqfRKTtsWMPrs=
+	t=1750174890; cv=none; b=cdUQ7B9OloQrfyNmxLpAGC3ymxrryNeLW2y/eOMry67BQvgmrpoZJl79hQ+KQbqNbpfdp2TizJm+YR8hfzIk59qeGL2OP6zUjIAJrlTtC+t7rJP3DLyTqjP5mcAH4Cv7J6b8k73vnBESMpYwV/bfMd4pB8N4SEds3N88uXjHFIQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750174886; c=relaxed/simple;
-	bh=oowcxXkBPCRlRaRHiwVcI1Mi/UQ5rBmhOTN+MY7rGDI=;
+	s=arc-20240116; t=1750174890; c=relaxed/simple;
+	bh=I/gEV2DXiX2TueiQD/jQjZwfTfG4t/sxLuhserPHV3g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WpBfAaz7+7P6lvPyU3pgs+G/I6TlC/zlAqy951BU+l0DZk9mddQMmRVvoc0CF7Ux0saLpm2mP2/8UmNZAPkt1GtNcRH3tdlbs1bh6trsgXr2YuUll0erPuhwDPjbcJMqUNdroebCVq6bfaM6/aCKfwGrUYsnGbuBkyl1OU2i55A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rQm9RG+Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nqi1jcpqADlM9D40q5fkMAUzPZfujHgUOB9wPzrLapZaNVIrXTeO0DZQuZ3B9hEYrhEZTOrU0fHQ0PeXV7Qq0Ik/FHYOkAfbXadjnt9yUM2rPHNHoPhtaAip5Hfx4/FgomcEdZT0RCY5gx3X1JjxDMZa3+xJ9Rbrar8pJOawXtA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t9696M2s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rQm9RG+Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A7B8C4CEF0;
-	Tue, 17 Jun 2025 15:41:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t9696M2s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49F2FC4CEE3;
+	Tue, 17 Jun 2025 15:41:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750174886;
-	bh=oowcxXkBPCRlRaRHiwVcI1Mi/UQ5rBmhOTN+MY7rGDI=;
+	s=korg; t=1750174889;
+	bh=I/gEV2DXiX2TueiQD/jQjZwfTfG4t/sxLuhserPHV3g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rQm9RG+Y7OEwT+t5ZeZW4p8F+psSRPh458I3QOQL/TSLayibsNExtvLVKDH2L5L2W
-	 Fxb7Z6FBTH5u9ONJNtIaHAMA9pvLvB+EUb5MhDsL7fViQs4d7ey7DAQye1oelZNbFt
-	 dfiC7UCLWJBnSfWwyLdgJhXYvJb7krKREnpe1k2o=
+	b=t9696M2su09Z0X4Xp+ZgDDqjBmKX0pbrSofE1iMP2y7tywL4yzRHremFWl6aMRbLR
+	 QJcmVdbY9t9QpI52C1k5XTMoJp1X2dCFerJl0d+nEPtox+ikQuq6pUcLMsEfO07xZ/
+	 4n2K2SCZ/zs/F3PxzKp2FvwfkOO0DhV2Jg7IZnQw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Ahmed S. Darwish" <darwi@linutronix.de>,
-	Ingo Molnar <mingo@kernel.org>,
-	Andrew Cooper <andrew.cooper3@citrix.com>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	John Ogness <john.ogness@linutronix.de>,
-	x86-cpuid@lists.linux.dev,
+	Mark Rutland <mark.rutland@arm.com>,
+	Marc Zyngier <maz@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
+	Will Deacon <will@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 030/780] x86/cpu: Sanitize CPUID(0x80000000) output
-Date: Tue, 17 Jun 2025 17:15:38 +0200
-Message-ID: <20250617152452.731151133@linuxfoundation.org>
+Subject: [PATCH 6.12 070/512] arm64/fpsimd: Reset FPMR upon exec()
+Date: Tue, 17 Jun 2025 17:20:36 +0200
+Message-ID: <20250617152422.408821736@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -51,94 +50,52 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ahmed S. Darwish <darwi@linutronix.de>
+From: Mark Rutland <mark.rutland@arm.com>
 
-[ Upstream commit cc663ba3fe383a628a812f893cc98aafff39ab04 ]
+[ Upstream commit a90878f297d3dba906a6261deccb1bd4a791ba52 ]
 
-CPUID(0x80000000).EAX returns the max extended CPUID leaf available.  On
-x86-32 machines without an extended CPUID range, a CPUID(0x80000000)
-query will just repeat the output of the last valid standard CPUID leaf
-on the CPU; i.e., a garbage values.  Current tip:x86/cpu code protects against
-this by doing:
+An exec() is expected to reset all FPSIMD/SVE/SME state, and barring
+special handling of the vector lengths, the state is expected to reset
+to zero. This reset is handled in fpsimd_flush_thread(), which the core
+exec() code calls via flush_thread().
 
-	eax = cpuid_eax(0x80000000);
-	c->extended_cpuid_level = eax;
+When support was added for FPMR, no logic was added to
+fpsimd_flush_thread() to reset the FPMR value, and thus it is
+erroneously inherited across an exec().
 
-	if ((eax & 0xffff0000) == 0x80000000) {
-		// CPU has an extended CPUID range. Check for 0x80000001
-		if (eax >= 0x80000001) {
-			cpuid(0x80000001, ...);
-		}
-	}
+Add the missing reset of FPMR.
 
-This is correct so far.  Afterwards though, the same possibly broken EAX
-value is used to check the availability of other extended CPUID leaves:
-
-	if (c->extended_cpuid_level >= 0x80000007)
-		...
-	if (c->extended_cpuid_level >= 0x80000008)
-		...
-	if (c->extended_cpuid_level >= 0x8000000a)
-		...
-	if (c->extended_cpuid_level >= 0x8000001f)
-		...
-
-which is invalid.  Fix this by immediately setting the CPU's max extended
-CPUID leaf to zero if CPUID(0x80000000).EAX doesn't indicate a valid
-CPUID extended range.
-
-While at it, add a comment, similar to kernel/head_32.S, clarifying the
-CPUID(0x80000000) sanity check.
-
-References: 8a50e5135af0 ("x86-32: Use symbolic constants, safer CPUID when enabling EFER.NX")
-Fixes: 3da99c977637 ("x86: make (early)_identify_cpu more the same between 32bit and 64 bit")
-Signed-off-by: Ahmed S. Darwish <darwi@linutronix.de>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: Andrew Cooper <andrew.cooper3@citrix.com>
-Cc: H. Peter Anvin <hpa@zytor.com>
-Cc: John Ogness <john.ogness@linutronix.de>
-Cc: x86-cpuid@lists.linux.dev
-Link: https://lore.kernel.org/r/20250506050437.10264-3-darwi@linutronix.de
+Fixes: 203f2b95a882 ("arm64/fpsimd: Support FEAT_FPMR")
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Cc: Marc Zyngier <maz@kernel.org>
+Cc: Mark Brown <broonie@kernel.org>
+Cc: Will Deacon <will@kernel.org>
+Reviewed-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/r/20250409164010.3480271-9-mark.rutland@arm.com
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cpu/common.c | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ arch/arm64/kernel/fpsimd.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/x86/kernel/cpu/common.c b/arch/x86/kernel/cpu/common.c
-index 0ff057ff11ce9..5de4a879232a6 100644
---- a/arch/x86/kernel/cpu/common.c
-+++ b/arch/x86/kernel/cpu/common.c
-@@ -1005,17 +1005,18 @@ void get_cpu_cap(struct cpuinfo_x86 *c)
- 		c->x86_capability[CPUID_D_1_EAX] = eax;
+diff --git a/arch/arm64/kernel/fpsimd.c b/arch/arm64/kernel/fpsimd.c
+index 9f2b83c50f7d9..8b8cd9d238234 100644
+--- a/arch/arm64/kernel/fpsimd.c
++++ b/arch/arm64/kernel/fpsimd.c
+@@ -1663,6 +1663,9 @@ void fpsimd_flush_thread(void)
+ 		current->thread.svcr = 0;
  	}
  
--	/* AMD-defined flags: level 0x80000001 */
-+	/*
-+	 * Check if extended CPUID leaves are implemented: Max extended
-+	 * CPUID leaf must be in the 0x80000001-0x8000ffff range.
-+	 */
- 	eax = cpuid_eax(0x80000000);
--	c->extended_cpuid_level = eax;
-+	c->extended_cpuid_level = ((eax & 0xffff0000) == 0x80000000) ? eax : 0;
++	if (system_supports_fpmr())
++		current->thread.uw.fpmr = 0;
++
+ 	current->thread.fp_type = FP_STATE_FPSIMD;
  
--	if ((eax & 0xffff0000) == 0x80000000) {
--		if (eax >= 0x80000001) {
--			cpuid(0x80000001, &eax, &ebx, &ecx, &edx);
-+	if (c->extended_cpuid_level >= 0x80000001) {
-+		cpuid(0x80000001, &eax, &ebx, &ecx, &edx);
- 
--			c->x86_capability[CPUID_8000_0001_ECX] = ecx;
--			c->x86_capability[CPUID_8000_0001_EDX] = edx;
--		}
-+		c->x86_capability[CPUID_8000_0001_ECX] = ecx;
-+		c->x86_capability[CPUID_8000_0001_EDX] = edx;
- 	}
- 
- 	if (c->extended_cpuid_level >= 0x80000007) {
+ 	put_cpu_fpsimd_context();
 -- 
 2.39.5
 
