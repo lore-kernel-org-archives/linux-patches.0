@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 942362CCC5;
-	Tue, 17 Jun 2025 16:47:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1D082DFF10;
+	Tue, 17 Jun 2025 16:47:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750178870; cv=none; b=tpzbNIjBJZWDW2EnusZwKuRUOkDanBXk9csccIHKK0eiUaehX6UfCwflFdycLLFFrV8jAPmY6TA4qrY1BxHLrYSZ7HMS87RXIh8wPa0VkMS+434muTTtR/FjmbXxw3RrIV+isgFsyvHwQGvdnD9KkbvvgjcHJNuN6AYib/fBqX0=
+	t=1750178874; cv=none; b=HhOa9UF5hh1423ygZe2sPepIcRj0E9WGELfa3bNbbrRIJvOJk7ZBNA7kQ2mfqIpMdm/CFI1FnlfBOzb2NdiZR3MQcWX+0VclSeB3rBIC6sFYlXHeD5AgiSyyjiMa4uzNVyw22ElPqcq48AgPt2jNA1vzmYfsywrNzuXj2Oj5hHU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750178870; c=relaxed/simple;
-	bh=jqSuOVKrYqGtQ0VkZGrf2jrO/s649Yqp3MmL9biG4ng=;
+	s=arc-20240116; t=1750178874; c=relaxed/simple;
+	bh=9Gn5g37TLaxHAcsj91PnIaNpO5iVj2IpghnH/4ER7xY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jnxlSNCxrYE7geyN+UjILRckfFqsZiajqUxu6Gut3nYfCfS3Tbo0GLv7NjIW3OuvZNvhNz+V4i2D9s5agOpg+459iL5z2qukoAetCaKjs29ciGoxZIco3I6KhAs618PGoGPW9DLMLHAOBW+laYeOmT637hh2DUoSiol77N6FuoA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D+buchPI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fTMJtdOYzWFDeWX9Rbq/Jt2ARPRhbjntAl15rPxcnPd6M+3AyvpKA2aaQTmuJRcKSbtCDTdU3zCkV44puDtzoYWFiVRAxFa0wf9Lu19afL3Q9PnI9K1oEjqJX2A9QSca8+ZIsh+ggEnEBwdsz2q2H0fsvcITeBQH/lWdzUbEgWQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mnxk+YTl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D+buchPI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 263D0C4CEE3;
-	Tue, 17 Jun 2025 16:47:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mnxk+YTl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5076BC4CEE3;
+	Tue, 17 Jun 2025 16:47:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750178870;
-	bh=jqSuOVKrYqGtQ0VkZGrf2jrO/s649Yqp3MmL9biG4ng=;
+	s=korg; t=1750178873;
+	bh=9Gn5g37TLaxHAcsj91PnIaNpO5iVj2IpghnH/4ER7xY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D+buchPIJLLG7ZhrPv8uACLn8t7lSsmCheqcS6jZOlvivKPxwHE8ET1v0ZStKlZ9P
-	 P9kzSiPFJuKNlbQ/w4AQhuQDUsUMvHxcN3GGHuq9MsKJu94mQ4TB04DOYuSNY7G9wV
-	 q7HB2Zw7/vJ6vIVZJvoMDDEGHVVTC46ZCZZUwmrs=
+	b=Mnxk+YTl7b4jntzMzWuBs4nuYIYAW1nYgoRibtpvQqRB+//wCSSX15dzDy81CxvuB
+	 GDnw5M6OrgFQbP9mR7pfXZt70EQt9ejRpVZUZMxWOzZ/DItxwNr04jH9XZq9qed1Bd
+	 3Lh0UQID2y4JNIu57WUHUkM8RRELERqK8gOzSJ3g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 547/780] USB: gadget: udc: fix const issue in gadget_match_driver()
-Date: Tue, 17 Jun 2025 17:24:15 +0200
-Message-ID: <20250617152513.787395227@linuxfoundation.org>
+Subject: [PATCH 6.15 548/780] USB: typec: fix const issue in typec_match()
+Date: Tue, 17 Jun 2025 17:24:16 +0200
+Message-ID: <20250617152513.827710054@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
 References: <20250617152451.485330293@linuxfoundation.org>
@@ -51,34 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit 5f5cc794fac605afd3bef8065e33096aeacf6257 ]
+[ Upstream commit ae4432e01dd967a64f6670a152d91d5328032726 ]
 
-gadget_match_driver() takes a const pointer, and then decides to cast it
-away into a non-const one, which is not a good thing to do overall.  Fix
-this up by properly setting the pointers to be const to preserve that
+typec_match() takes a const pointer, and then decides to cast it away
+into a non-const one, which is not a good thing to do overall.  Fix this
+up by properly setting the pointers to be const to preserve that
 attribute.
 
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/2025052126-scholar-stainless-ad55@gregkh
 Fixes: d69d80484598 ("driver core: have match() callback in struct bus_type take a const *")
-Link: https://lore.kernel.org/r/2025052139-rash-unsaddle-7c5e@gregkh
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/udc/core.c | 2 +-
+ drivers/usb/typec/bus.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/usb/gadget/udc/core.c b/drivers/usb/gadget/udc/core.c
-index 4b3d5075621aa..d709e24c1fd42 100644
---- a/drivers/usb/gadget/udc/core.c
-+++ b/drivers/usb/gadget/udc/core.c
-@@ -1570,7 +1570,7 @@ static int gadget_match_driver(struct device *dev, const struct device_driver *d
- {
- 	struct usb_gadget *gadget = dev_to_usb_gadget(dev);
- 	struct usb_udc *udc = gadget->udc;
--	struct usb_gadget_driver *driver = container_of(drv,
-+	const struct usb_gadget_driver *driver = container_of(drv,
- 			struct usb_gadget_driver, driver);
+diff --git a/drivers/usb/typec/bus.c b/drivers/usb/typec/bus.c
+index ae90688d23e40..a884cec9ab7e8 100644
+--- a/drivers/usb/typec/bus.c
++++ b/drivers/usb/typec/bus.c
+@@ -449,7 +449,7 @@ ATTRIBUTE_GROUPS(typec);
  
- 	/* If the driver specifies a udc_name, it must match the UDC's name */
+ static int typec_match(struct device *dev, const struct device_driver *driver)
+ {
+-	struct typec_altmode_driver *drv = to_altmode_driver(driver);
++	const struct typec_altmode_driver *drv = to_altmode_driver(driver);
+ 	struct typec_altmode *altmode = to_typec_altmode(dev);
+ 	const struct typec_device_id *id;
+ 
 -- 
 2.39.5
 
