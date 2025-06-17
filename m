@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A47852E9753;
-	Tue, 17 Jun 2025 15:40:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA0CF2DF3C9;
+	Tue, 17 Jun 2025 15:40:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750174833; cv=none; b=N0sdgycOt6+cO73sgclXQ0eOapQtnd9NSnbiBH92vIvRlpiu19BeedOdoR8qwz7gHXYADu8Cq3TXtUeeQmUanO+YX34q8cQFSINPkY6cG3SIoQTCxwcocrijrSYwMo47TO5R/djS6XsnEdSmV9CQu3Sw4/YNK2e2aTqid3ja7y0=
+	t=1750174837; cv=none; b=iywydM7VEQu3DX0Zr3/2t26EMAY5F73F3WCnoqIjmsIroo0i+lp6yoNjmwuaCWPDITlpx/X/60St2tFeJJJe6X60BPWjXb0TBqF6SxTQsQeJynKdyl4BtDfZhdox5rIyk+z02sRxv1mGD19sdX1zYS/7Q91udfEsc8icwoe6fVM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750174833; c=relaxed/simple;
-	bh=ivixVKyU5Pu9o7zJHPcAEo9PbpDOiiHUM9l4W9uw8/4=;
+	s=arc-20240116; t=1750174837; c=relaxed/simple;
+	bh=a01qzjbKVsHgc/I+WxaMOAoiqzwyFWvG9JwjdH5JwjM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XFx4tZ9E/nIMNfBj3YnMXAqcxqtoeElY4bfIDZeYHrSXCtkVHaZy12z8F73/0x0Fy/1+DiIyOFkIXeg+rw7S9dqy38+mNlgWmWUrbbmQsEtgT0l5dvGK9Nx20jvMreeMhSRS74ACTEP6nrMb41oZ/bTqlW0LBkLrVennuXQWGp4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t1AGOB8F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZJzrY9/D9w/JJapymazkKONBkGjtFt8jM+kiRwrMhN9BMmLQ7GKmOU1fEFA6HPpv4N/Q6zOCzv5AlPxGmKOMFap3LyWIUpCC1ulQ4DpyMa4yVgjqtWzoqtH32yTL8+qGcOWvk3/b695TbNC8Dm8ACEyP5WrjqIG0odwV0T76wN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zQsoaqOu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t1AGOB8F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1421DC4CEE7;
-	Tue, 17 Jun 2025 15:40:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zQsoaqOu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58489C4CEF0;
+	Tue, 17 Jun 2025 15:40:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750174833;
-	bh=ivixVKyU5Pu9o7zJHPcAEo9PbpDOiiHUM9l4W9uw8/4=;
+	s=korg; t=1750174836;
+	bh=a01qzjbKVsHgc/I+WxaMOAoiqzwyFWvG9JwjdH5JwjM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t1AGOB8FErS2VWMWgICZFRHQ+FXuJh/WMBbvFbrVmyN7JzPa/LJ+/UXp9gVR2kBMt
-	 nE08ys8bq+rNd64/dtU1NmqNT3e8wCJPQQIJZLyZ1hXsMCd+ohctCusKt3Bln/fMoL
-	 oWCYZB9dPrbLY6gM3uF4vHPauVi9HZEHztXDYCGY=
+	b=zQsoaqOuhN4hLB8Ofsb824BjQFyvPq7chUfZqw6y83gsAXV2nRNkMEA6vdNp4YNAT
+	 2hhhYwdbje4HtoLocDk4gzddt20Uc/2sv7mkDuRZRXdfpSfcSFqFPjce0Zqzs42WdW
+	 Kk2XnoMcIae6WIGA9zpnsEFK7TjgWWqiv/H16R5s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nam Cao <namcao@linutronix.de>,
-	Christian Brauner <brauner@kernel.org>,
+	Alex Bee <knaerzche@gmail.com>,
+	Jonas Karlman <jonas@kwiboo.se>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 025/780] selftests: coredump: Properly initialize pointer
-Date: Tue, 17 Jun 2025 17:15:33 +0200
-Message-ID: <20250617152452.533004861@linuxfoundation.org>
+Subject: [PATCH 6.12 065/512] media: rkvdec: Fix frame size enumeration
+Date: Tue, 17 Jun 2025 17:20:31 +0200
+Message-ID: <20250617152422.213835215@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,50 +49,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nam Cao <namcao@linutronix.de>
+From: Jonas Karlman <jonas@kwiboo.se>
 
-[ Upstream commit e194d2067c958827810a7a7282dff8773633ad8c ]
+[ Upstream commit f270005b99fa19fee9a6b4006e8dee37c10f1944 ]
 
-The buffer pointer "line" is not initialized. This pointer is passed to
-getline().
+The VIDIOC_ENUM_FRAMESIZES ioctl should return all frame sizes (i.e.
+width and height in pixels) that the device supports for the given pixel
+format.
 
-It can still work if the stack is zero-initialized, because getline() can
-work with a NULL pointer as buffer.
+It doesn't make a lot of sense to return the frame-sizes in a stepwise
+manner, which is used to enforce hardware alignments requirements for
+CAPTURE buffers, for coded formats.
 
-But this is obviously broken. This bug shows up while running the test on a
-riscv64 machine.
+Instead, applications should receive an indication, about the maximum
+supported frame size for that hardware decoder, via a continuous
+frame-size enumeration.
 
-Fix it by properly initializing the pointer.
-
-Fixes: 15858da53542 ("selftests: coredump: Add stackdump test")
-Signed-off-by: Nam Cao <namcao@linutronix.de>
-Link: https://lore.kernel.org/4fb9b6fb3e0040481bacc258c44b4aab5c4df35d.1744383419.git.namcao@linutronix.de
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Fixes: cd33c830448b ("media: rkvdec: Add the rkvdec driver")
+Suggested-by: Alex Bee <knaerzche@gmail.com>
+Signed-off-by: Jonas Karlman <jonas@kwiboo.se>
+Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/coredump/stackdump_test.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/staging/media/rkvdec/rkvdec.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/coredump/stackdump_test.c b/tools/testing/selftests/coredump/stackdump_test.c
-index 137b2364a0820..c23cf95c3f6df 100644
---- a/tools/testing/selftests/coredump/stackdump_test.c
-+++ b/tools/testing/selftests/coredump/stackdump_test.c
-@@ -138,10 +138,12 @@ TEST_F(coredump, stackdump)
- 	ASSERT_NE(file, NULL);
+diff --git a/drivers/staging/media/rkvdec/rkvdec.c b/drivers/staging/media/rkvdec/rkvdec.c
+index ac398b5a97360..a1d941b0be00b 100644
+--- a/drivers/staging/media/rkvdec/rkvdec.c
++++ b/drivers/staging/media/rkvdec/rkvdec.c
+@@ -213,8 +213,14 @@ static int rkvdec_enum_framesizes(struct file *file, void *priv,
+ 	if (!fmt)
+ 		return -EINVAL;
  
- 	/* Step 4: Make sure all stack pointer values are non-zero */
-+	line = NULL;
- 	for (i = 0; -1 != getline(&line, &line_length, file); ++i) {
- 		stack = strtoull(line, NULL, 10);
- 		ASSERT_NE(stack, 0);
- 	}
-+	free(line);
- 
- 	ASSERT_EQ(i, 1 + NUM_THREAD_SPAWN);
+-	fsize->type = V4L2_FRMSIZE_TYPE_STEPWISE;
+-	fsize->stepwise = fmt->frmsize;
++	fsize->type = V4L2_FRMSIZE_TYPE_CONTINUOUS;
++	fsize->stepwise.min_width = 1;
++	fsize->stepwise.max_width = fmt->frmsize.max_width;
++	fsize->stepwise.step_width = 1;
++	fsize->stepwise.min_height = 1;
++	fsize->stepwise.max_height = fmt->frmsize.max_height;
++	fsize->stepwise.step_height = 1;
++
+ 	return 0;
+ }
  
 -- 
 2.39.5
