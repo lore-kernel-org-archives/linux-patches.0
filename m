@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B05532EB5AB;
-	Tue, 17 Jun 2025 15:39:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1BD52DF3C9;
+	Tue, 17 Jun 2025 15:39:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750174775; cv=none; b=hyIOWqpgI9obOFdfpV2I+sWSoeTiY3HkFFZXHJD/epBRIx3n722HWHLba8ke8NDFY77kCK6IOmwXnrvId5llDI1WEwbsi7ppS7AHpToprTU51kf812hvl4RsC9sv1G6S1crc1oHft41xEJGwXs+1zapVAwGsPnG3p6A849fs24E=
+	t=1750174779; cv=none; b=T25ncFhyasZgTosXFgzm3lr4zNQo8gsghJJWlPPRJKWQNKcVQFuZZVXd7fsqq0+xOyy4pRKpOnX2aXxs0IvgnsNOzgmy+YcsIeEYpl64WPZTWN4NbOxjdk5hi60789GnB8cRu/s4J5d/ulhiimSXQ+3AdIHM2d/5xMV71fgsjAU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750174775; c=relaxed/simple;
-	bh=s0kD9lt1kWNi1YObZdKjnQmI/x7T6lkgn79NB4Kvqts=;
+	s=arc-20240116; t=1750174779; c=relaxed/simple;
+	bh=GUmgAZNfWdGQuVzt+kYVrLt+EiyPFmFBIr9fGLbZ5Ds=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DNq58Fp6/yWuS6P0DyLJP1RTy6pZwdnaB2mY/L/nKyFY7Vp/AQPI5oeH7iDIuX7d62apDhrcNIFNaQfnp/h9tdmEkgDUZHq9f7Fgfhjz5OZX4zBFOz688t2amJKML58rgmtUSoUzcI4qlOpA9enl77CoY8yqmr0OqQu6HGjehwo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=woGMnX6F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LMBBhNEtO69KfyMouWuqtMvEBZwNU+OUm7jztYarACKZD1NJOJfnWYp/9wJVSz4AN2KsnYUm3eQg9I1ALG2s3Nxs3q75nnyDNcY0ywhfCJ5avQVWD8cPXFv02A2iqjeH0OIBwCtJ9dV/+KidwycXJT9o2F8W4gdy+adzC9TLR6g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wDBftx5x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="woGMnX6F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E74BC4CEE3;
-	Tue, 17 Jun 2025 15:39:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wDBftx5x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61730C4CEE3;
+	Tue, 17 Jun 2025 15:39:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750174775;
-	bh=s0kD9lt1kWNi1YObZdKjnQmI/x7T6lkgn79NB4Kvqts=;
+	s=korg; t=1750174778;
+	bh=GUmgAZNfWdGQuVzt+kYVrLt+EiyPFmFBIr9fGLbZ5Ds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=woGMnX6FzNozHEiCCQAppLNqf4qXWRjSO6zuGr2Dm0p/ukS2P4QQ/H6e3uOHgEZ30
-	 fupNVl/mcFt8XL/j50tkAUlRPc2H7KEnBfrS6D0/RvpxeDx/7xgsEwPuzHVYVggPt1
-	 suT3TVNX9Ym/AWMnthVATLm/h7CrHnVVIXiQqKNI=
+	b=wDBftx5xiOM/SkDHY4qnbRjFhCxvRmg3+pPi7QFtNyZhSKMrq4vf6J/CUJSzYbAOY
+	 We3/NKoxLO1Qu7Kk+XoprNUmb5UJKS8P5cJcBw05fkRNJC9joYy4E/CLEx0SYz3nGe
+	 ZMTqyTajmUY/ko0upovJNY+ClCszdSfqJx5XlLEA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Forbes <ian.forbes@broadcom.com>,
-	Zack Rusin <zack.rusin@broadcom.com>,
+	Huajian Yang <huajianyang@asrmicro.com>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 059/512] drm/vmwgfx: Add seqno waiter for sync_files
-Date: Tue, 17 Jun 2025 17:20:25 +0200
-Message-ID: <20250617152421.946288974@linuxfoundation.org>
+Subject: [PATCH 6.6 106/356] netfilter: bridge: Move specific fragmented packet to slow_path instead of dropping it
+Date: Tue, 17 Jun 2025 17:23:41 +0200
+Message-ID: <20250617152342.487592803@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
+References: <20250617152338.212798615@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,90 +48,96 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ian Forbes <ian.forbes@broadcom.com>
+From: Huajian Yang <huajianyang@asrmicro.com>
 
-[ Upstream commit 0039a3b35b10d9c15d3d26320532ab56cc566750 ]
+[ Upstream commit aa04c6f45b9224b949aa35d4fa5f8d0ba07b23d4 ]
 
-Because sync_files are passive waiters they do not participate in
-the processing of fences like the traditional vmw_fence_wait IOCTL.
-If userspace exclusively uses sync_files for synchronization then
-nothing in the kernel actually processes fence updates as interrupts
-for fences are masked and ignored if the kernel does not indicate to the
-SVGA device that there are active waiters.
+The config NF_CONNTRACK_BRIDGE will change the bridge forwarding for
+fragmented packets.
 
-This oversight results in a bug where the entire GUI can freeze waiting
-on a sync_file that will never be signalled as we've masked the interrupts
-to signal its completion. This bug is incredibly racy as any process which
-interacts with the fencing code via the 3D stack can process the stuck
-fences on behalf of the stuck process causing it to run again. Even a
-simple app like eglinfo is enough to resume the stuck process. Usually
-this bug is seen at a login screen like GDM because there are no other
-3D apps running.
+The original bridge does not know that it is a fragmented packet and
+forwards it directly, after NF_CONNTRACK_BRIDGE is enabled, function
+nf_br_ip_fragment and br_ip6_fragment will check the headroom.
 
-By adding a seqno waiter we re-enable interrupt based processing of the
-dma_fences associated with the sync_file which is signalled as part of a
-dma_fence_callback.
+In original br_forward, insufficient headroom of skb may indeed exist,
+but there's still a way to save the skb in the device driver after
+dev_queue_xmit.So droping the skb will change the original bridge
+forwarding in some cases.
 
-This has likely been broken since it was initially added to the kernel in
-2017 but has gone unnoticed until mutter recently started using sync_files
-heavily over the course of 2024 as part of their explicit sync support.
-
-Fixes: c906965dee22 ("drm/vmwgfx: Add export fence to file descriptor support")
-Signed-off-by: Ian Forbes <ian.forbes@broadcom.com>
-Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250228200633.642417-1-ian.forbes@broadcom.com
+Fixes: 3c171f496ef5 ("netfilter: bridge: add connection tracking system")
+Signed-off-by: Huajian Yang <huajianyang@asrmicro.com>
+Reviewed-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c | 26 +++++++++++++++++++++++++
- 1 file changed, 26 insertions(+)
+ net/bridge/netfilter/nf_conntrack_bridge.c | 12 ++++++------
+ net/ipv6/netfilter.c                       | 12 ++++++------
+ 2 files changed, 12 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c b/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
-index 2e52d73eba484..ea741bc4ac3fc 100644
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
-@@ -4086,6 +4086,23 @@ static int vmw_execbuf_tie_context(struct vmw_private *dev_priv,
- 	return 0;
- }
+diff --git a/net/bridge/netfilter/nf_conntrack_bridge.c b/net/bridge/netfilter/nf_conntrack_bridge.c
+index 4fbfbafdfa027..4b4a396d97225 100644
+--- a/net/bridge/netfilter/nf_conntrack_bridge.c
++++ b/net/bridge/netfilter/nf_conntrack_bridge.c
+@@ -60,19 +60,19 @@ static int nf_br_ip_fragment(struct net *net, struct sock *sk,
+ 		struct ip_fraglist_iter iter;
+ 		struct sk_buff *frag;
  
-+/*
-+ * DMA fence callback to remove a seqno_waiter
-+ */
-+struct seqno_waiter_rm_context {
-+	struct dma_fence_cb base;
-+	struct vmw_private *dev_priv;
-+};
-+
-+static void seqno_waiter_rm_cb(struct dma_fence *f, struct dma_fence_cb *cb)
-+{
-+	struct seqno_waiter_rm_context *ctx =
-+		container_of(cb, struct seqno_waiter_rm_context, base);
-+
-+	vmw_seqno_waiter_remove(ctx->dev_priv);
-+	kfree(ctx);
-+}
-+
- int vmw_execbuf_process(struct drm_file *file_priv,
- 			struct vmw_private *dev_priv,
- 			void __user *user_commands, void *kernel_commands,
-@@ -4266,6 +4283,15 @@ int vmw_execbuf_process(struct drm_file *file_priv,
- 		} else {
- 			/* Link the fence with the FD created earlier */
- 			fd_install(out_fence_fd, sync_file->file);
-+			struct seqno_waiter_rm_context *ctx =
-+				kmalloc(sizeof(*ctx), GFP_KERNEL);
-+			ctx->dev_priv = dev_priv;
-+			vmw_seqno_waiter_add(dev_priv);
-+			if (dma_fence_add_callback(&fence->base, &ctx->base,
-+						   seqno_waiter_rm_cb) < 0) {
-+				vmw_seqno_waiter_remove(dev_priv);
-+				kfree(ctx);
-+			}
+-		if (first_len - hlen > mtu ||
+-		    skb_headroom(skb) < ll_rs)
++		if (first_len - hlen > mtu)
+ 			goto blackhole;
+ 
+-		if (skb_cloned(skb))
++		if (skb_cloned(skb) ||
++		    skb_headroom(skb) < ll_rs)
+ 			goto slow_path;
+ 
+ 		skb_walk_frags(skb, frag) {
+-			if (frag->len > mtu ||
+-			    skb_headroom(frag) < hlen + ll_rs)
++			if (frag->len > mtu)
+ 				goto blackhole;
+ 
+-			if (skb_shared(frag))
++			if (skb_shared(frag) ||
++			    skb_headroom(frag) < hlen + ll_rs)
+ 				goto slow_path;
  		}
- 	}
+ 
+diff --git a/net/ipv6/netfilter.c b/net/ipv6/netfilter.c
+index 7c4af48d529e1..606aae4e78a9a 100644
+--- a/net/ipv6/netfilter.c
++++ b/net/ipv6/netfilter.c
+@@ -163,20 +163,20 @@ int br_ip6_fragment(struct net *net, struct sock *sk, struct sk_buff *skb,
+ 		struct ip6_fraglist_iter iter;
+ 		struct sk_buff *frag2;
+ 
+-		if (first_len - hlen > mtu ||
+-		    skb_headroom(skb) < (hroom + sizeof(struct frag_hdr)))
++		if (first_len - hlen > mtu)
+ 			goto blackhole;
+ 
+-		if (skb_cloned(skb))
++		if (skb_cloned(skb) ||
++		    skb_headroom(skb) < (hroom + sizeof(struct frag_hdr)))
+ 			goto slow_path;
+ 
+ 		skb_walk_frags(skb, frag2) {
+-			if (frag2->len > mtu ||
+-			    skb_headroom(frag2) < (hlen + hroom + sizeof(struct frag_hdr)))
++			if (frag2->len > mtu)
+ 				goto blackhole;
+ 
+ 			/* Partially cloned skb? */
+-			if (skb_shared(frag2))
++			if (skb_shared(frag2) ||
++			    skb_headroom(frag2) < (hlen + hroom + sizeof(struct frag_hdr)))
+ 				goto slow_path;
+ 		}
  
 -- 
 2.39.5
