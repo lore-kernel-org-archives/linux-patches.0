@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B82212EB5CE;
-	Tue, 17 Jun 2025 16:08:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AB792EB5CE;
+	Tue, 17 Jun 2025 16:08:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750176521; cv=none; b=iteMBqJmNsOTB3aEHE0YLljON4YU5h+BVIWzAbrndGu8Tc7RCQysMFg7eNsrgy0vXm9QqR5ew2ZY27gS/vJHwXabAopnWCqF4fQG3qF3Mw0FRNRWtnYTDIawUITrjKcGppy+RYpD/YX8wbxfiWIYZ1cQkOZ5IcxnFj/JSbfQeeE=
+	t=1750176526; cv=none; b=OkXGzlltK2dkMHshaktRw79Pw8pWOqbqpM1d42bp2TvAOBPKfN9xfz4Qito2OByqJA1bN+pbR1Pxu+Udr7j2ALog2+PDWdYWY66Fn+LKtjN20nGRKGaQ4g96nZzjnixNDjBE4k+oO1ms7MGuMM1igZsyzm/fU3+U0J57iY70y2o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750176521; c=relaxed/simple;
-	bh=ZR6/XaJYkrzXRsvpLu2l6cpfvncMxHe0sEXmqHZnm7o=;
+	s=arc-20240116; t=1750176526; c=relaxed/simple;
+	bh=IQ8P9EzTY0nSqtUPfky5Uk3WynUnCgTq+OdKp7uoXsg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D9P7N4sQ5esB2zUWi+V3bgW2KCzIapRZt4WybxAkXeTEYeXYJlJzzHV69QjQ+fZSmFtZDfmEefneNm+tdU1cRx0wnZY1AK/NdC/fKWM2Cm+NsegGTZ4s9wPdLYUtfwGIFPTCam6jp8lJnTD/Aiihkvkhshah61XzHle2cv1qVHg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r/fl2jzM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BNcmeB8791bbfFhzayeRnUSam+7WB8KZbRvs1nWdYej09hDFubDigYY99mLuZ66x0m5GyUU8HqdjL186qAWtVy3d68tx0RwqTrBDjiunKvUURh9t2we/5bER4peyZVJR7jjzA2/8lPru4blN3gnFboA8XvzhefHxTXo4MmfDlw8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IjeqWXpk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r/fl2jzM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B9E4C4CEE3;
-	Tue, 17 Jun 2025 16:08:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IjeqWXpk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D805C4CEE3;
+	Tue, 17 Jun 2025 16:08:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750176521;
-	bh=ZR6/XaJYkrzXRsvpLu2l6cpfvncMxHe0sEXmqHZnm7o=;
+	s=korg; t=1750176524;
+	bh=IQ8P9EzTY0nSqtUPfky5Uk3WynUnCgTq+OdKp7uoXsg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r/fl2jzMNp4Q2khnIKD72Cixxhu3xOS5fPE+pWeJ6tdUU78CkR8RG65xOGNDCMvVF
-	 zFhfcT/Pmk4y24lqMWuFOn0mMVPDLPSUo/pJ449NdaFBaAAHq9K997RTHtGTq1xxJY
-	 iHoZJOqSzmy5chFuSmrlpat3UZRc4DdMFu77I5Is=
+	b=IjeqWXpkSovd13MDhPBcglz6KLMU9hVyJAU1MsFUtwPczpi3OtTf3ZGVtIM5NqlhN
+	 uiFVJYxlrlXFcR71VQLtIvQC5Igld9dZmVUsnlyoVRkPV7D6IWGDLVk92B9QSPOpGd
+	 s4zQhSKFn03hfSMU1tYuFTxEvAZ3Gak4ExgHBoUQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Beleswar Padhi <b-padhi@ti.com>,
-	Bhavya Kapoor <b-kapoor@ti.com>,
-	Vignesh Raghavendra <vigneshr@ti.com>,
+	Cosmin Ratiu <cratiu@nvidia.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 285/356] arm64: dts: ti: k3-j721e-sk: Add support for multiple CAN instances
-Date: Tue, 17 Jun 2025 17:26:40 +0200
-Message-ID: <20250617152349.659382890@linuxfoundation.org>
+Subject: [PATCH 6.15 198/780] bonding: Fix multiple long standing offload races
+Date: Tue, 17 Jun 2025 17:18:26 +0200
+Message-ID: <20250617152459.533957131@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-References: <20250617152338.212798615@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,181 +50,222 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Beleswar Padhi <b-padhi@ti.com>
+From: Cosmin Ratiu <cratiu@nvidia.com>
 
-[ Upstream commit 021d3d5f0741e5393a7a110ac909fc746b1e0a4d ]
+[ Upstream commit d2fddbd3479928e52061e1c8dd302006b6283ce8 ]
 
-CAN instance 0 in the mcu domain is brought on the J721E-SK board
-through header J1. Thus, add its respective transceiver 1 dt node to add
-support for this CAN instance.
+Refactor the bonding ipsec offload operations to fix a number of
+long-standing control plane races between state migration and user
+deletion and a few other issues.
 
-CAN instances 0, 5 and 9 in the main domain are brought on the J721E-SK
-board through headers J5, J6 and J2 respectively. Thus, add their
-respective transceivers 2, 3 and 4 dt nodes to add support for these CAN
-instances.
+xfrm state deletion can happen concurrently with
+bond_change_active_slave() operation. This manifests itself as a
+bond_ipsec_del_sa() call with x->lock held, followed by a
+bond_ipsec_free_sa() a bit later from a wq. The alternate path of
+these calls coming from xfrm_dev_state_flush() can't happen, as that
+needs the RTNL lock and bond_change_active_slave() already holds it.
 
-Signed-off-by: Beleswar Padhi <b-padhi@ti.com>
-Reviewed-by: Bhavya Kapoor <b-kapoor@ti.com>
-Link: https://lore.kernel.org/r/20240430131512.1327283-1-b-padhi@ti.com
-Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
-Stable-dep-of: 97b67cc102dc ("arm64: dts: ti: k3-j721e-sk: Add DT nodes for power regulators")
+1. bond_ipsec_del_sa_all() might call xdo_dev_state_delete() a second
+   time on an xfrm state that was concurrently killed. This is bad.
+2. bond_ipsec_add_sa_all() can add a state on the new device, but
+   pending bond_ipsec_free_sa() calls from the old device will then hit
+   the WARN_ON() and then, worse, call xdo_dev_state_free() on the new
+   device without a corresponding xdo_dev_state_delete().
+3. Resolve a sleeping in atomic context introduced by the mentioned
+   "Fixes" commit.
+
+bond_ipsec_del_sa_all() and bond_ipsec_add_sa_all() now acquire x->lock
+and check for x->km.state to help with problems 1 and 2. And since
+xso.real_dev is now a private pointer managed by the bonding driver in
+xfrm state, make better use of it to fully fix problems 1 and 2. In
+bond_ipsec_del_sa_all(), set xso.real_dev to NULL while holding both the
+mutex and x->lock, which makes sure that neither bond_ipsec_del_sa() nor
+bond_ipsec_free_sa() could run concurrently.
+
+Fix problem 3 by moving the list cleanup (which requires the mutex) from
+bond_ipsec_del_sa() (called from atomic context) to bond_ipsec_free_sa()
+
+Finally, simplify bond_ipsec_del_sa() and bond_ipsec_free_sa() by using
+xso->real_dev directly, since it's now protected by locks and can be
+trusted to always reflect the offload device.
+
+Fixes: 2aeeef906d5a ("bonding: change ipsec_lock from spin lock to mutex")
+Signed-off-by: Cosmin Ratiu <cratiu@nvidia.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
+Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
+Tested-by: Hangbin Liu <liuhangbin@gmail.com>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/ti/k3-j721e-sk.dts | 116 +++++++++++++++++++++++++
- 1 file changed, 116 insertions(+)
+ drivers/net/bonding/bond_main.c | 82 +++++++++++++++------------------
+ include/net/xfrm.h              |  7 ++-
+ 2 files changed, 41 insertions(+), 48 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/ti/k3-j721e-sk.dts b/arch/arm64/boot/dts/ti/k3-j721e-sk.dts
-index d967b384071cf..5e03a7f58faa4 100644
---- a/arch/arm64/boot/dts/ti/k3-j721e-sk.dts
-+++ b/arch/arm64/boot/dts/ti/k3-j721e-sk.dts
-@@ -210,6 +210,42 @@ vdd_sd_dv_alt: gpio-regulator-tps659411 {
- 			 <3300000 0x1>;
- 	};
+diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
+index 14ebbe82a2c5b..4461220bcd58d 100644
+--- a/drivers/net/bonding/bond_main.c
++++ b/drivers/net/bonding/bond_main.c
+@@ -545,7 +545,20 @@ static void bond_ipsec_add_sa_all(struct bonding *bond)
+ 			slave_warn(bond_dev, real_dev, "%s: failed to add SA\n", __func__);
+ 			continue;
+ 		}
++
++		spin_lock_bh(&ipsec->xs->lock);
++		/* xs might have been killed by the user during the migration
++		 * to the new dev, but bond_ipsec_del_sa() should have done
++		 * nothing, as xso.real_dev is NULL.
++		 * Delete it from the device we just added it to. The pending
++		 * bond_ipsec_free_sa() call will do the rest of the cleanup.
++		 */
++		if (ipsec->xs->km.state == XFRM_STATE_DEAD &&
++		    real_dev->xfrmdev_ops->xdo_dev_state_delete)
++			real_dev->xfrmdev_ops->xdo_dev_state_delete(real_dev,
++								    ipsec->xs);
+ 		ipsec->xs->xso.real_dev = real_dev;
++		spin_unlock_bh(&ipsec->xs->lock);
+ 	}
+ out:
+ 	mutex_unlock(&bond->ipsec_lock);
+@@ -560,48 +573,20 @@ static void bond_ipsec_del_sa(struct net_device *bond_dev,
+ 			      struct xfrm_state *xs)
+ {
+ 	struct net_device *real_dev;
+-	netdevice_tracker tracker;
+-	struct bond_ipsec *ipsec;
+-	struct bonding *bond;
+-	struct slave *slave;
  
-+	transceiver1: can-phy1 {
-+		compatible = "ti,tcan1042";
-+		#phy-cells = <0>;
-+		max-bitrate = <5000000>;
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&mcu_mcan0_gpio_pins_default>;
-+		standby-gpios = <&wkup_gpio0 3 GPIO_ACTIVE_HIGH>;
-+	};
-+
-+	transceiver2: can-phy2 {
-+		compatible = "ti,tcan1042";
-+		#phy-cells = <0>;
-+		max-bitrate = <5000000>;
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&main_mcan0_gpio_pins_default>;
-+		standby-gpios = <&main_gpio0 65 GPIO_ACTIVE_HIGH>;
-+	};
-+
-+	transceiver3: can-phy3 {
-+		compatible = "ti,tcan1042";
-+		#phy-cells = <0>;
-+		max-bitrate = <5000000>;
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&main_mcan5_gpio_pins_default>;
-+		standby-gpios = <&main_gpio0 66 GPIO_ACTIVE_HIGH>;
-+	};
-+
-+	transceiver4: can-phy4 {
-+		compatible = "ti,tcan1042";
-+		#phy-cells = <0>;
-+		max-bitrate = <5000000>;
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&main_mcan9_gpio_pins_default>;
-+		standby-gpios = <&main_gpio0 67 GPIO_ACTIVE_HIGH>;
-+	};
-+
- 	dp_pwr_3v3: fixedregulator-dp-prw {
- 		compatible = "regulator-fixed";
- 		regulator-name = "dp-pwr";
-@@ -367,6 +403,45 @@ J721E_IOPAD(0x164, PIN_OUTPUT, 7) /* (V29) RGMII5_TD2 */
- 		>;
- 	};
+-	if (!bond_dev)
++	if (!bond_dev || !xs->xso.real_dev)
+ 		return;
  
-+	main_mcan0_pins_default: main-mcan0-default-pins {
-+		pinctrl-single,pins = <
-+			J721E_IOPAD(0x208, PIN_INPUT, 0) /* (W5) MCAN0_RX */
-+			J721E_IOPAD(0x20c, PIN_OUTPUT, 0) /* (W6) MCAN0_TX */
-+		>;
-+	};
-+
-+	main_mcan0_gpio_pins_default: main-mcan0-gpio-default-pins {
-+		pinctrl-single,pins = <
-+			J721E_IOPAD(0x108, PIN_INPUT, 7) /* (AD27) PRG0_PRU1_GPO2.GPIO0_65 */
-+		>;
-+	};
-+
-+	main_mcan5_pins_default: main-mcan5-default-pins {
-+		pinctrl-single,pins = <
-+			J721E_IOPAD(0x050, PIN_INPUT, 6) /* (AE21) PRG1_PRU0_GPO18.MCAN5_RX */
-+			J721E_IOPAD(0x04c, PIN_OUTPUT, 6) /* (AJ21) PRG1_PRU0_GPO17.MCAN5_TX */
-+		>;
-+	};
-+
-+	main_mcan5_gpio_pins_default: main-mcan5-gpio-default-pins {
-+		pinctrl-single,pins = <
-+			J721E_IOPAD(0x10c, PIN_INPUT, 7) /* (AC25) PRG0_PRU1_GPO3.GPIO0_66 */
-+		>;
-+	};
-+
-+	main_mcan9_pins_default: main-mcan9-default-pins {
-+		pinctrl-single,pins = <
-+			J721E_IOPAD(0x0d0, PIN_INPUT, 6) /* (AC27) PRG0_PRU0_GPO8.MCAN9_RX */
-+			J721E_IOPAD(0x0cc, PIN_OUTPUT, 6) /* (AC28) PRG0_PRU0_GPO7.MCAN9_TX */
-+		>;
-+	};
-+
-+	main_mcan9_gpio_pins_default: main-mcan9-gpio-default-pins {
-+		pinctrl-single,pins = <
-+			J721E_IOPAD(0x110, PIN_INPUT, 7) /* (AD29) PRG0_PRU1_GPO4.GPIO0_67 */
-+		>;
-+	};
-+
- 	dp0_pins_default: dp0-default-pins {
- 		pinctrl-single,pins = <
- 			J721E_IOPAD(0x1c4, PIN_INPUT, 5) /* SPI0_CS1.DP0_HPD */
-@@ -549,6 +624,19 @@ J721E_WKUP_IOPAD(0xfc, PIN_INPUT_PULLUP, 0) /* (H24) WKUP_I2C0_SDA */
- 		>;
- 	};
+-	rcu_read_lock();
+-	bond = netdev_priv(bond_dev);
+-	slave = rcu_dereference(bond->curr_active_slave);
+-	real_dev = slave ? slave->dev : NULL;
+-	netdev_hold(real_dev, &tracker, GFP_ATOMIC);
+-	rcu_read_unlock();
+-
+-	if (!slave)
+-		goto out;
+-
+-	if (!xs->xso.real_dev)
+-		goto out;
+-
+-	WARN_ON(xs->xso.real_dev != real_dev);
++	real_dev = xs->xso.real_dev;
  
-+	mcu_mcan0_pins_default: mcu-mcan0-default-pins {
-+		pinctrl-single,pins = <
-+			J721E_WKUP_IOPAD(0x0ac, PIN_INPUT, 0) /* (C29) MCU_MCAN0_RX */
-+			J721E_WKUP_IOPAD(0x0a8, PIN_OUTPUT, 0) /* (D29) MCU_MCAN0_TX */
-+		>;
-+	};
-+
-+	mcu_mcan0_gpio_pins_default: mcu-mcan0-gpio-default-pins {
-+		pinctrl-single,pins = <
-+			J721E_WKUP_IOPAD(0x0bc, PIN_INPUT, 7) /* (F27) WKUP_GPIO0_3 */
-+		>;
-+	};
-+
- 	/* Reset for M.2 M Key slot on PCIe1  */
- 	mkey_reset_pins_default: mkey-reset-pns-default-pins {
- 		pinctrl-single,pins = <
-@@ -957,6 +1045,34 @@ &pcie1_rc {
- 	num-lanes = <2>;
- };
+ 	if (!real_dev->xfrmdev_ops ||
+ 	    !real_dev->xfrmdev_ops->xdo_dev_state_delete ||
+ 	    netif_is_bond_master(real_dev)) {
+ 		slave_warn(bond_dev, real_dev, "%s: no slave xdo_dev_state_delete\n", __func__);
+-		goto out;
++		return;
+ 	}
  
-+&mcu_mcan0 {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&mcu_mcan0_pins_default>;
-+	phys = <&transceiver1>;
-+	status = "okay";
-+};
+ 	real_dev->xfrmdev_ops->xdo_dev_state_delete(real_dev, xs);
+-out:
+-	netdev_put(real_dev, &tracker);
+-	mutex_lock(&bond->ipsec_lock);
+-	list_for_each_entry(ipsec, &bond->ipsec_list, list) {
+-		if (ipsec->xs == xs) {
+-			list_del(&ipsec->list);
+-			kfree(ipsec);
+-			break;
+-		}
+-	}
+-	mutex_unlock(&bond->ipsec_lock);
+ }
+ 
+ static void bond_ipsec_del_sa_all(struct bonding *bond)
+@@ -629,9 +614,15 @@ static void bond_ipsec_del_sa_all(struct bonding *bond)
+ 				   __func__);
+ 			continue;
+ 		}
 +
-+&main_mcan0 {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&main_mcan0_pins_default>;
-+	phys = <&transceiver2>;
-+	status = "okay";
-+};
++		spin_lock_bh(&ipsec->xs->lock);
+ 		ipsec->xs->xso.real_dev = NULL;
+-		real_dev->xfrmdev_ops->xdo_dev_state_delete(real_dev,
+-							    ipsec->xs);
++		/* Don't double delete states killed by the user. */
++		if (ipsec->xs->km.state != XFRM_STATE_DEAD)
++			real_dev->xfrmdev_ops->xdo_dev_state_delete(real_dev,
++								    ipsec->xs);
++		spin_unlock_bh(&ipsec->xs->lock);
 +
-+&main_mcan5 {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&main_mcan5_pins_default>;
-+	phys = <&transceiver3>;
-+	status = "okay";
-+};
-+
-+&main_mcan9 {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&main_mcan9_pins_default>;
-+	phys = <&transceiver4>;
-+	status = "okay";
-+};
-+
- &ufs_wrapper {
- 	status = "disabled";
- };
+ 		if (real_dev->xfrmdev_ops->xdo_dev_state_free)
+ 			real_dev->xfrmdev_ops->xdo_dev_state_free(real_dev,
+ 								  ipsec->xs);
+@@ -643,34 +634,33 @@ static void bond_ipsec_free_sa(struct net_device *bond_dev,
+ 			       struct xfrm_state *xs)
+ {
+ 	struct net_device *real_dev;
+-	netdevice_tracker tracker;
++	struct bond_ipsec *ipsec;
+ 	struct bonding *bond;
+-	struct slave *slave;
+ 
+ 	if (!bond_dev)
+ 		return;
+ 
+-	rcu_read_lock();
+ 	bond = netdev_priv(bond_dev);
+-	slave = rcu_dereference(bond->curr_active_slave);
+-	real_dev = slave ? slave->dev : NULL;
+-	netdev_hold(real_dev, &tracker, GFP_ATOMIC);
+-	rcu_read_unlock();
+-
+-	if (!slave)
+-		goto out;
+ 
++	mutex_lock(&bond->ipsec_lock);
+ 	if (!xs->xso.real_dev)
+ 		goto out;
+ 
+-	WARN_ON(xs->xso.real_dev != real_dev);
++	real_dev = xs->xso.real_dev;
+ 
+ 	xs->xso.real_dev = NULL;
+-	if (real_dev && real_dev->xfrmdev_ops &&
++	if (real_dev->xfrmdev_ops &&
+ 	    real_dev->xfrmdev_ops->xdo_dev_state_free)
+ 		real_dev->xfrmdev_ops->xdo_dev_state_free(real_dev, xs);
+ out:
+-	netdev_put(real_dev, &tracker);
++	list_for_each_entry(ipsec, &bond->ipsec_list, list) {
++		if (ipsec->xs == xs) {
++			list_del(&ipsec->list);
++			kfree(ipsec);
++			break;
++		}
++	}
++	mutex_unlock(&bond->ipsec_lock);
+ }
+ 
+ /**
+diff --git a/include/net/xfrm.h b/include/net/xfrm.h
+index 01783dc3d0e32..1f1861c57e2ad 100644
+--- a/include/net/xfrm.h
++++ b/include/net/xfrm.h
+@@ -154,8 +154,11 @@ struct xfrm_dev_offload {
+ 	 */
+ 	struct net_device	*dev;
+ 	netdevice_tracker	dev_tracker;
+-	/* This is a private pointer used by the bonding driver.
+-	 * Device drivers should not use it.
++	/* This is a private pointer used by the bonding driver (and eventually
++	 * should be moved there). Device drivers should not use it.
++	 * Protected by xfrm_state.lock AND bond.ipsec_lock in most cases,
++	 * except in the .xdo_dev_state_del() flow, where only xfrm_state.lock
++	 * is held.
+ 	 */
+ 	struct net_device	*real_dev;
+ 	unsigned long		offload_handle;
 -- 
 2.39.5
 
