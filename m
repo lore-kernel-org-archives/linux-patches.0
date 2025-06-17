@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19E1B2F2374;
-	Tue, 17 Jun 2025 15:44:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 621F22F2379;
+	Tue, 17 Jun 2025 15:44:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175089; cv=none; b=W2T0iLcpqO/nwHgX4IzDfet3hFf0MpPpuVPR9eUkB/XhmFIBqxT/6kc63TQp8fnIBxz1a5+FZOxtf+O2tC60hv0Jgol/+WFTBm2y0wM4S+Tu3TEPu5S7CbqCQv7FJU1310H1SU7SykIGjeWu1b6lRR0CYLweIINp7pJhIWIgj/U=
+	t=1750175092; cv=none; b=g56cuBrh6A4nzzInExEpXg0jUATyRHjOhfCMTL0VeXs6B/BttOErxVE0EDh/fh1sr6zH2N0S6f8c8BcX1XuHGZ9onsh1LxOsPFk+Uy+VdadMYH/u3E9Lunn9hBcylOZpxfx4BoxDGdfQgtjuomXgx+c8iyZzOy2WzGHZpxXtLOU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175089; c=relaxed/simple;
-	bh=nzcCbmTkJvlxWcUjsiuKgNQxs+Z3+2kF3J3mr2P/f2E=;
+	s=arc-20240116; t=1750175092; c=relaxed/simple;
+	bh=dnihI/WzpqUJB8BLB8mm3Q0kQB4XcOCuq+KnVYNFVzo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QAdTAUp+Teg6CKjL9DjLVDgOgLHFQ9lBtdQA3sm5PsV4RFxri04yDomMsqxFaThsgWWS0qR8QWFdZw+79IKiesrttdFEaF8VYoz/J8Jh/2TBmxY73GU/NZrqdtn3mu0TBzolqHgC3gzbMhd5xvGtPNAbs2JWeLSRmI/FBnT/6Rc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SgF4aFD9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RP8C8Au0DJotpGqR8EXug6GDwHBWNBUNGDCySuH/teUJKOttJ9+iGxq5p7fZXiG/VhuatWPNIjgAHWRVHwO68YAco0TJVSBs5AyajGQnKWMkx7cFsgt24Tgd+N7RW0JBnvjEH8TghMb4l7pJ808QjhvPT9IWHobDJu8Sb+KVdZ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vfl9rnQL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SgF4aFD9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28473C4CEE3;
-	Tue, 17 Jun 2025 15:44:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vfl9rnQL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C1D7C4CEE7;
+	Tue, 17 Jun 2025 15:44:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175088;
-	bh=nzcCbmTkJvlxWcUjsiuKgNQxs+Z3+2kF3J3mr2P/f2E=;
+	s=korg; t=1750175091;
+	bh=dnihI/WzpqUJB8BLB8mm3Q0kQB4XcOCuq+KnVYNFVzo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SgF4aFD9n5PNwJwMMGmgpIONxDCp/LB8jIqtWtyizFe9HKu3hBCNlnRt0VivWLZ4M
-	 KezUyhVqx0fi6CTi8PmSBIhlrVoiTgp+FATvVUCprLBsVPHADjFC9s6f2Xs+w5FLgB
-	 hYSqPKXDNeIIas1ea5c6cAQv1mGlaaEQEimFuqOQ=
+	b=vfl9rnQLULDGWmcd163gTW5pdyngSYWQAavK659E03PGbHE6NagKHClnCwA9TDsJT
+	 eq7152GdEY1gE3H4L09x5XrrzCDvYItbee66RvF6ER+d0uwCnCp6ouH7oreuQrWstT
+	 WCVlYkKb6Jy1cjpKom3yYWcsVwN7eTwSHeh3kjdA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xuewen Yan <xuewen.yan@unisoc.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Tianchen Ding <dtcccc@linux.alibaba.com>
-Subject: [PATCH 6.15 048/780] sched/fair: Fixup wake_up_sync() vs DELAYED_DEQUEUE
-Date: Tue, 17 Jun 2025 17:15:56 +0200
-Message-ID: <20250617152453.457655601@linuxfoundation.org>
+	Casey Connolly <casey.connolly@linaro.org>,
+	David Heidelberg <david@ixit.cz>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 076/512] drm/panel: samsung-sofef00: Drop s6e3fc2x01 support
+Date: Tue, 17 Jun 2025 17:20:42 +0200
+Message-ID: <20250617152422.664797254@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,63 +48,98 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Xuewen Yan <xuewen.yan@unisoc.com>
+From: Casey Connolly <casey.connolly@linaro.org>
 
-[ Upstream commit aa3ee4f0b7541382c9f6f43f7408d73a5d4f4042 ]
+[ Upstream commit e1eb7293ab4107e9e19fa609835e657fe30dfec7 ]
 
-Delayed dequeued feature keeps a sleeping task enqueued until its
-lag has elapsed. As a result, it stays also visible in rq->nr_running.
-So when in wake_affine_idle(), we should use the real running-tasks
-in rq to check whether we should place the wake-up task to
-current cpu.
-On the other hand, add a helper function to return the nr-delayed.
+We never properly supported this panel and always used the wrong init
+sequence. Drop support so we can move it to it's own proper driver.
 
-Fixes: 152e11f6df29 ("sched/fair: Implement delayed dequeue")
-Signed-off-by: Xuewen Yan <xuewen.yan@unisoc.com>
-Reviewed-and-tested-by: Tianchen Ding <dtcccc@linux.alibaba.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Vincent Guittot <vincent.guittot@linaro.org>
-Link: https://lore.kernel.org/r/20250303105241.17251-2-xuewen.yan@unisoc.com
+Fixes: 5933baa36e26 ("drm/panel/samsung-sofef00: Add panel for OnePlus 6/T devices")
+Signed-off-by: Casey Connolly <casey.connolly@linaro.org>
+Signed-off-by: David Heidelberg <david@ixit.cz>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20250419-drop-s6e3fc2x01-support-v1-1-05edfe0d27aa@ixit.cz
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/fair.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/panel/panel-samsung-sofef00.c | 34 ++-----------------
+ 1 file changed, 2 insertions(+), 32 deletions(-)
 
-diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index 0fb9bf995a479..0c04ed4148525 100644
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -7196,6 +7196,11 @@ static bool dequeue_task_fair(struct rq *rq, struct task_struct *p, int flags)
- 	return true;
+diff --git a/drivers/gpu/drm/panel/panel-samsung-sofef00.c b/drivers/gpu/drm/panel/panel-samsung-sofef00.c
+index 04ce925b3d9db..49cfa84b34f0c 100644
+--- a/drivers/gpu/drm/panel/panel-samsung-sofef00.c
++++ b/drivers/gpu/drm/panel/panel-samsung-sofef00.c
+@@ -22,7 +22,6 @@ struct sofef00_panel {
+ 	struct mipi_dsi_device *dsi;
+ 	struct regulator *supply;
+ 	struct gpio_desc *reset_gpio;
+-	const struct drm_display_mode *mode;
+ };
+ 
+ static inline
+@@ -159,26 +158,11 @@ static const struct drm_display_mode enchilada_panel_mode = {
+ 	.height_mm = 145,
+ };
+ 
+-static const struct drm_display_mode fajita_panel_mode = {
+-	.clock = (1080 + 72 + 16 + 36) * (2340 + 32 + 4 + 18) * 60 / 1000,
+-	.hdisplay = 1080,
+-	.hsync_start = 1080 + 72,
+-	.hsync_end = 1080 + 72 + 16,
+-	.htotal = 1080 + 72 + 16 + 36,
+-	.vdisplay = 2340,
+-	.vsync_start = 2340 + 32,
+-	.vsync_end = 2340 + 32 + 4,
+-	.vtotal = 2340 + 32 + 4 + 18,
+-	.width_mm = 68,
+-	.height_mm = 145,
+-};
+-
+ static int sofef00_panel_get_modes(struct drm_panel *panel, struct drm_connector *connector)
+ {
+ 	struct drm_display_mode *mode;
+-	struct sofef00_panel *ctx = to_sofef00_panel(panel);
+ 
+-	mode = drm_mode_duplicate(connector->dev, ctx->mode);
++	mode = drm_mode_duplicate(connector->dev, &enchilada_panel_mode);
+ 	if (!mode)
+ 		return -ENOMEM;
+ 
+@@ -239,13 +223,6 @@ static int sofef00_panel_probe(struct mipi_dsi_device *dsi)
+ 	if (!ctx)
+ 		return -ENOMEM;
+ 
+-	ctx->mode = of_device_get_match_data(dev);
+-
+-	if (!ctx->mode) {
+-		dev_err(dev, "Missing device mode\n");
+-		return -ENODEV;
+-	}
+-
+ 	ctx->supply = devm_regulator_get(dev, "vddio");
+ 	if (IS_ERR(ctx->supply))
+ 		return dev_err_probe(dev, PTR_ERR(ctx->supply),
+@@ -295,14 +272,7 @@ static void sofef00_panel_remove(struct mipi_dsi_device *dsi)
  }
  
-+static inline unsigned int cfs_h_nr_delayed(struct rq *rq)
-+{
-+	return (rq->cfs.h_nr_queued - rq->cfs.h_nr_runnable);
-+}
-+
- #ifdef CONFIG_SMP
- 
- /* Working cpumask for: sched_balance_rq(), sched_balance_newidle(). */
-@@ -7357,8 +7362,12 @@ wake_affine_idle(int this_cpu, int prev_cpu, int sync)
- 	if (available_idle_cpu(this_cpu) && cpus_share_cache(this_cpu, prev_cpu))
- 		return available_idle_cpu(prev_cpu) ? prev_cpu : this_cpu;
- 
--	if (sync && cpu_rq(this_cpu)->nr_running == 1)
--		return this_cpu;
-+	if (sync) {
-+		struct rq *rq = cpu_rq(this_cpu);
-+
-+		if ((rq->nr_running - cfs_h_nr_delayed(rq)) == 1)
-+			return this_cpu;
-+	}
- 
- 	if (available_idle_cpu(prev_cpu))
- 		return prev_cpu;
+ static const struct of_device_id sofef00_panel_of_match[] = {
+-	{ // OnePlus 6 / enchilada
+-		.compatible = "samsung,sofef00",
+-		.data = &enchilada_panel_mode,
+-	},
+-	{ // OnePlus 6T / fajita
+-		.compatible = "samsung,s6e3fc2x01",
+-		.data = &fajita_panel_mode,
+-	},
++	{ .compatible = "samsung,sofef00" },
+ 	{ /* sentinel */ }
+ };
+ MODULE_DEVICE_TABLE(of, sofef00_panel_of_match);
 -- 
 2.39.5
 
