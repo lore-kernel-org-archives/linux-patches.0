@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EFC6285055;
-	Tue, 17 Jun 2025 16:33:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F601285055;
+	Tue, 17 Jun 2025 16:33:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750178026; cv=none; b=ZoqSlYvnHB9MgfhRrS0Ccql5yGhuLw3ue5efNULeK3Y2/ynoP4deHgHpPAlPVM1z4wI7Go5oQOrDIVHEct7WgYRwFNR5LzQ1aBqJl5c20690sfQDup/837zZT1SiPSEkhTH5LUlngHI+KH6nFQbJxTMTzr2u39sn0blFBlZezGI=
+	t=1750178030; cv=none; b=Kys8AuxSjTXr3a1qjNHqXDxPfdJ2aUHt/vcyj0t1Cb3OF0CPrIprXXAIxrhzIjBvkdB+xlSJXk12USj+XPqzSDH2eA7bSjiXZ00pRlY+zRQju92PdCqhoNTX7pMgD6YMfTPBPWP5ytmDVTqQlYbj1L2ITY2QG4+LWuZ5QdOKEuQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750178026; c=relaxed/simple;
-	bh=hOZXAYhh6oNIppwh3fSTMHCa14n1/ntTnck8PPm4EIk=;
+	s=arc-20240116; t=1750178030; c=relaxed/simple;
+	bh=uO+fGwNm24vXdkCKobDWW5elWjgI9A7HdZczaP6rvbA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ky0yfR1D6VlfcsXFbVaX8WuDdEX+Z9IROVfQvVkcgWI81WEKokkgPpM3Eof9MbRcs6KQex55eyZEBxwKEuWvOVC8ufhEruV+nNFvRLn0Q+UznNYzrp/l0vU2DgQ/GqOMC55bD0SPa/ipm0yzX2knMv9wH2VC/Dq0+nUdd8bMIY8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w2AGAQ5m; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=c/kUnffaDLOwW9YPrs/oYFENyLeVNE+pU8QqbNEFCoptuMI22jGoZeOkc9gaoyNf8EX3zj7kJDBT+Zyx3SBec9utmZ6wUergZDOfV+ygB56/n1Ifs+cZLrqq9cRNd2+lb73JWtMpQ68r/4uMfS4Z7OfHZuhyK/zQsd/3MUwbFh0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HoWZnUr2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w2AGAQ5m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EC3EC4CEE3;
-	Tue, 17 Jun 2025 16:33:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HoWZnUr2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52A9FC4CEE3;
+	Tue, 17 Jun 2025 16:33:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750178026;
-	bh=hOZXAYhh6oNIppwh3fSTMHCa14n1/ntTnck8PPm4EIk=;
+	s=korg; t=1750178030;
+	bh=uO+fGwNm24vXdkCKobDWW5elWjgI9A7HdZczaP6rvbA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w2AGAQ5mOyvxYBQnZw1KCxI/VRPhexHZoHlfnmL/DNPrk/mnKYEXa0/ekNjfHBg1K
-	 Fibfz4/MWt7pXTZOd5Db0NxItD9IZXrat10BA1+RNXtSx0ep3oDCP9z4zW6wwuFeWP
-	 cARPsGP/3KuJpCOOw6GlBPT92rSXHLsOx3gYr2fE=
+	b=HoWZnUr2jQheG9RDQcIu7IvY9Rk3pD6ZOvBBQB9a5gIFfz0g55R5R9ijeUTKjuMkq
+	 RXqZ9hU3RCdezDOmB/R3h89QS33tOEQTVjNqgeaaPlOgRXweBt+zUJOOOCAPCEvteP
+	 t+EVHJrN5c/fzHTPh/fG5gkEE13/8E99GrNLP01Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andre Przywara <andre.przywara@arm.com>,
-	"Rob Herring (Arm)" <robh@kernel.org>,
-	Chen-Yu Tsai <wens@csie.org>,
+	David Lechner <dlechner@baylibre.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 398/780] dt-bindings: vendor-prefixes: Add Liontron name
-Date: Tue, 17 Jun 2025 17:21:46 +0200
-Message-ID: <20250617152507.661336553@linuxfoundation.org>
+Subject: [PATCH 6.12 416/512] dt-bindings: pwm: adi,axi-pwmgen: Fix clocks
+Date: Tue, 17 Jun 2025 17:26:22 +0200
+Message-ID: <20250617152436.435526956@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,44 +46,77 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andre Przywara <andre.przywara@arm.com>
+From: David Lechner <dlechner@baylibre.com>
 
-[ Upstream commit 9baa27a2e9fc746143ab686b6dbe2d515284a4c5 ]
+[ Upstream commit e683131e64f71e957ca77743cb3d313646157329 ]
 
-Liontron is a company based in Shenzen, China, making industrial
-development boards and embedded computers, mostly using Rockchip and
-Allwinner SoCs.
+Fix a shortcoming in the bindings that doesn't allow for a separate
+external clock.
 
-Add their name to the list of vendors.
+The AXI PWMGEN IP block has a compile option ASYNC_CLK_EN that allows
+the use of an external clock for the PWM output separate from the AXI
+clock that runs the peripheral.
 
-Signed-off-by: Andre Przywara <andre.przywara@arm.com>
-Acked-by: Rob Herring (Arm) <robh@kernel.org>
-Link: https://patch.msgid.link/20250505164729.18175-2-andre.przywara@arm.com
-Signed-off-by: Chen-Yu Tsai <wens@csie.org>
+This was missed in the original bindings and so users were writing dts
+files where the one and only clock specified would be the external
+clock, if there was one, incorrectly missing the separate AXI clock.
+
+The correct bindings are that the AXI clock is always required and the
+external clock is optional (must be given only when HDL compile option
+ASYNC_CLK_EN=1).
+
+Fixes: 1edf2c2a2841 ("dt-bindings: pwm: Add AXI PWM generator")
+Cc: stable@vger.kernel.org
+Signed-off-by: David Lechner <dlechner@baylibre.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20250529-pwm-axi-pwmgen-add-external-clock-v3-2-5d8809a7da91@baylibre.com
+Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
- 1 file changed, 2 insertions(+)
+ .../devicetree/bindings/pwm/adi,axi-pwmgen.yaml     | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
-index 86f6a19b28ae2..190ab40cf23af 100644
---- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
-+++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
-@@ -864,6 +864,8 @@ patternProperties:
-     description: Linux-specific binding
-   "^linx,.*":
-     description: Linx Technologies
-+  "^liontron,.*":
-+    description: Shenzhen Liontron Technology Co., Ltd
-   "^liteon,.*":
-     description: LITE-ON Technology Corp.
-   "^litex,.*":
+diff --git a/Documentation/devicetree/bindings/pwm/adi,axi-pwmgen.yaml b/Documentation/devicetree/bindings/pwm/adi,axi-pwmgen.yaml
+index 45e112d0efb46..5575c58357d6e 100644
+--- a/Documentation/devicetree/bindings/pwm/adi,axi-pwmgen.yaml
++++ b/Documentation/devicetree/bindings/pwm/adi,axi-pwmgen.yaml
+@@ -30,11 +30,19 @@ properties:
+     const: 3
+ 
+   clocks:
+-    maxItems: 1
++    minItems: 1
++    maxItems: 2
++
++  clock-names:
++    minItems: 1
++    items:
++      - const: axi
++      - const: ext
+ 
+ required:
+   - reg
+   - clocks
++  - clock-names
+ 
+ unevaluatedProperties: false
+ 
+@@ -43,6 +51,7 @@ examples:
+     pwm@44b00000 {
+         compatible = "adi,axi-pwmgen-2.00.a";
+         reg = <0x44b00000 0x1000>;
+-        clocks = <&spi_clk>;
++        clocks = <&fpga_clk>, <&spi_clk>;
++        clock-names = "axi", "ext";
+         #pwm-cells = <3>;
+     };
 -- 
 2.39.5
 
