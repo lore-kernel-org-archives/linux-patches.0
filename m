@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C98E62E92CD;
-	Tue, 17 Jun 2025 16:35:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8C092EA142;
+	Tue, 17 Jun 2025 16:35:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750178144; cv=none; b=DGEoZPaEkAPMLm1JvYKnssyifCEEwg6qZXFCJfcgvUDljklRS0xoVTYYhBOgfiVMAtNDovseW78BD9zFYw0p4yLZXyEXPyJ82aZgeBVLZDhSzVOTNu5QWEo8ObA2oPZjlkEmAbehbFZPrdn+F8VugWO6XyhNeexkyep3eaeV58U=
+	t=1750178148; cv=none; b=WRxSGoBNovNPCGduc0aW0n/2sZP+E5NjbreaXPk3XV9oOiOLiP87P6uWMfOIekvjuQ0GvyDsHQ2GImw44Lfq+lX/5Y6NNvg57BHV5iKgN39kH3Ko+T7dBkz9k9YpT+v8wN5bKq+qlnxki2yVBuHIs0pf8VaZF3c2xg5gUxchALk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750178144; c=relaxed/simple;
-	bh=4jgiDB1c4ICennXf5qRlsdpmcgdM5AA9d7RHwd86GS0=;
+	s=arc-20240116; t=1750178148; c=relaxed/simple;
+	bh=hIkKG2sSc4z2sVQQzeeabjdzIb025dBpbLLVJsMB8u8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iXozTANMAi/EMGZ2DZwFmnNEnIZPL8wAyez2UBKAVp4rnSgvhyGsO9Gh/jMtyoG8yHRfwoCLqNDHOIy4r6RIz2pSJOKp0NNUip6KtkrEBMxA0ZA2pDzX8JPv4lg15lnj3cH7hBaJiUYEj5uAKdQwyCdt3RjqW/bE0osJNRZY85A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mdIVUtmx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X9D3btAhGi2m8hxKPX9jpJtRQV4FKbWWhqsx8TCWfFreNPzzSp6k5ZR0uBqzlT/zfKqGXXymRkphencLoFbcWjgTO+EJDs68mNUn0vXEmg1XF/kNtvojB1uPUjC7K7Esp4pxZZk0o/VSJrKx6YlfGO02tQd5UsYj1QgVXBlxiaI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jT6w197L; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mdIVUtmx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3951DC4CEE3;
-	Tue, 17 Jun 2025 16:35:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jT6w197L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95A21C4CEE3;
+	Tue, 17 Jun 2025 16:35:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750178144;
-	bh=4jgiDB1c4ICennXf5qRlsdpmcgdM5AA9d7RHwd86GS0=;
+	s=korg; t=1750178148;
+	bh=hIkKG2sSc4z2sVQQzeeabjdzIb025dBpbLLVJsMB8u8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mdIVUtmx7xFZ1LNLyu3VXzqE9mdMGMQspZzOArjYjXAACbaxL4jUVs1+OQ/roR4wW
-	 pGbdpkWXbEi15n8yIfl0lMMNRuLhUzRzu5v4+kHEbW/OEc5xgFzMLUpD/9NV8hBh0p
-	 efDB1m1m5hSTxwKo+8stStcxK+WuVzj8hd/2TSzo=
+	b=jT6w197LgbI0mQOLucRLrnrYYfzTcKcxfe3RCGhuAFedYPqWkSnZPQKjgDGZualqb
+	 0hRHLj6/I4m/DKPuAuImaa7/RX07SNUNNSz7EQjuNt64nuJCelGQvdwZbOj3EV2MaK
+	 FJJurgQNQy28KDFIvDofun5hiln/cMkdYWCnxHeM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Shtylyov <s.shtylyov@omp.ru>,
-	Helge Deller <deller@gmx.de>,
+	Andreu Montiel <Andreu.Montiel@technica-engineering.de>,
+	Carlos Fernandez <carlos.fernandez@technica-engineering.de>,
+	Subbaraya Sundeep <sbhatta@marvell.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 416/780] fbdev: core: fbcvt: avoid division by 0 in fb_cvt_hperiod()
-Date: Tue, 17 Jun 2025 17:22:04 +0200
-Message-ID: <20250617152508.414646553@linuxfoundation.org>
+Subject: [PATCH 6.12 453/512] macsec: MACsec SCI assignment for ES = 0
+Date: Tue, 17 Jun 2025 17:26:59 +0200
+Message-ID: <20250617152437.924118321@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,44 +49,130 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sergey Shtylyov <s.shtylyov@omp.ru>
+From: Carlos Fernandez <carlos.fernandez@technica-engineering.de>
 
-[ Upstream commit 3f6dae09fc8c306eb70fdfef70726e1f154e173a ]
+[ Upstream commit d9816ec74e6d6aa29219d010bba3f780ba1d9d75 ]
 
-In fb_find_mode_cvt(), iff mode->refresh somehow happens to be 0x80000000,
-cvt.f_refresh will become 0 when multiplying it by 2 due to overflow. It's
-then passed to fb_cvt_hperiod(), where it's used as a divider -- division
-by 0 will result in kernel oops. Add a sanity check for cvt.f_refresh to
-avoid such overflow...
+According to 802.1AE standard, when ES and SC flags in TCI are zero,
+used SCI should be the current active SC_RX. Current code uses the
+header MAC address. Without this patch, when ES flag is 0 (using a
+bridge or switch), header MAC will not fit the SCI and MACSec frames
+will be discarted.
 
-Found by Linux Verification Center (linuxtesting.org) with the Svace static
-analysis tool.
+In order to test this issue, MACsec link should be stablished between
+two interfaces, setting SC and ES flags to zero and a port identifier
+different than one. For example, using ip macsec tools:
 
-Fixes: 96fe6a2109db ("[PATCH] fbdev: Add VESA Coordinated Video Timings (CVT) support")
-Signed-off-by: Sergey Shtylyov <s.shtylyov@omp.ru>
-Signed-off-by: Helge Deller <deller@gmx.de>
+ip link add link $ETH0 macsec0 type macsec port 11 send_sci off
+end_station off
+ip macsec add macsec0 tx sa 0 pn 2 on key 01 $ETH1_KEY
+ip macsec add macsec0 rx port 11 address $ETH1_MAC
+ip macsec add macsec0 rx port 11 address $ETH1_MAC sa 0 pn 2 on key 02
+ip link set dev macsec0 up
+
+ip link add link $ETH1 macsec1 type macsec port 11 send_sci off
+end_station off
+ip macsec add macsec1 tx sa 0 pn 2 on key 01 $ETH0_KEY
+ip macsec add macsec1 rx port 11 address $ETH0_MAC
+ip macsec add macsec1 rx port 11 address $ETH0_MAC sa 0 pn 2 on key 02
+ip link set dev macsec1 up
+
+Fixes: c09440f7dcb3 ("macsec: introduce IEEE 802.1AE driver")
+Co-developed-by: Andreu Montiel <Andreu.Montiel@technica-engineering.de>
+Signed-off-by: Andreu Montiel <Andreu.Montiel@technica-engineering.de>
+Signed-off-by: Carlos Fernandez <carlos.fernandez@technica-engineering.de>
+Reviewed-by: Subbaraya Sundeep <sbhatta@marvell.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/core/fbcvt.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/macsec.c | 40 ++++++++++++++++++++++++++++++++++------
+ 1 file changed, 34 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/video/fbdev/core/fbcvt.c b/drivers/video/fbdev/core/fbcvt.c
-index 64843464c6613..cd3821bd82e56 100644
---- a/drivers/video/fbdev/core/fbcvt.c
-+++ b/drivers/video/fbdev/core/fbcvt.c
-@@ -312,7 +312,7 @@ int fb_find_mode_cvt(struct fb_videomode *mode, int margins, int rb)
- 	cvt.f_refresh = cvt.refresh;
- 	cvt.interlace = 1;
+diff --git a/drivers/net/macsec.c b/drivers/net/macsec.c
+index ee21592825738..090a56a5e456a 100644
+--- a/drivers/net/macsec.c
++++ b/drivers/net/macsec.c
+@@ -246,15 +246,39 @@ static sci_t make_sci(const u8 *addr, __be16 port)
+ 	return sci;
+ }
  
--	if (!cvt.xres || !cvt.yres || !cvt.refresh) {
-+	if (!cvt.xres || !cvt.yres || !cvt.refresh || cvt.f_refresh > INT_MAX) {
- 		printk(KERN_INFO "fbcvt: Invalid input parameters\n");
- 		return 1;
- 	}
+-static sci_t macsec_frame_sci(struct macsec_eth_header *hdr, bool sci_present)
++static sci_t macsec_active_sci(struct macsec_secy *secy)
+ {
+-	sci_t sci;
++	struct macsec_rx_sc *rx_sc = rcu_dereference_bh(secy->rx_sc);
++
++	/* Case single RX SC */
++	if (rx_sc && !rcu_dereference_bh(rx_sc->next))
++		return (rx_sc->active) ? rx_sc->sci : 0;
++	/* Case no RX SC or multiple */
++	else
++		return 0;
++}
++
++static sci_t macsec_frame_sci(struct macsec_eth_header *hdr, bool sci_present,
++			      struct macsec_rxh_data *rxd)
++{
++	struct macsec_dev *macsec;
++	sci_t sci = 0;
+ 
+-	if (sci_present)
++	/* SC = 1 */
++	if (sci_present) {
+ 		memcpy(&sci, hdr->secure_channel_id,
+ 		       sizeof(hdr->secure_channel_id));
+-	else
++	/* SC = 0; ES = 0 */
++	} else if ((!(hdr->tci_an & (MACSEC_TCI_ES | MACSEC_TCI_SC))) &&
++		   (list_is_singular(&rxd->secys))) {
++		/* Only one SECY should exist on this scenario */
++		macsec = list_first_or_null_rcu(&rxd->secys, struct macsec_dev,
++						secys);
++		if (macsec)
++			return macsec_active_sci(&macsec->secy);
++	} else {
+ 		sci = make_sci(hdr->eth.h_source, MACSEC_PORT_ES);
++	}
+ 
+ 	return sci;
+ }
+@@ -1108,7 +1132,7 @@ static rx_handler_result_t macsec_handle_frame(struct sk_buff **pskb)
+ 	struct macsec_rxh_data *rxd;
+ 	struct macsec_dev *macsec;
+ 	unsigned int len;
+-	sci_t sci;
++	sci_t sci = 0;
+ 	u32 hdr_pn;
+ 	bool cbit;
+ 	struct pcpu_rx_sc_stats *rxsc_stats;
+@@ -1155,11 +1179,14 @@ static rx_handler_result_t macsec_handle_frame(struct sk_buff **pskb)
+ 
+ 	macsec_skb_cb(skb)->has_sci = !!(hdr->tci_an & MACSEC_TCI_SC);
+ 	macsec_skb_cb(skb)->assoc_num = hdr->tci_an & MACSEC_AN_MASK;
+-	sci = macsec_frame_sci(hdr, macsec_skb_cb(skb)->has_sci);
+ 
+ 	rcu_read_lock();
+ 	rxd = macsec_data_rcu(skb->dev);
+ 
++	sci = macsec_frame_sci(hdr, macsec_skb_cb(skb)->has_sci, rxd);
++	if (!sci)
++		goto drop_nosc;
++
+ 	list_for_each_entry_rcu(macsec, &rxd->secys, secys) {
+ 		struct macsec_rx_sc *sc = find_rx_sc(&macsec->secy, sci);
+ 
+@@ -1282,6 +1309,7 @@ static rx_handler_result_t macsec_handle_frame(struct sk_buff **pskb)
+ 	macsec_rxsa_put(rx_sa);
+ drop_nosa:
+ 	macsec_rxsc_put(rx_sc);
++drop_nosc:
+ 	rcu_read_unlock();
+ drop_direct:
+ 	kfree_skb(skb);
 -- 
 2.39.5
 
