@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54C412EA15C;
-	Tue, 17 Jun 2025 16:11:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FFBF2E7199;
+	Tue, 17 Jun 2025 16:11:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750176699; cv=none; b=K6ySw6XLSd9d0Ex9Zu5FFDMqiy1VUmZSnyxhUFVYlopQwx8YqplXf7NWVbTDbO98TWVf92eYAvvP7rKqZvMj7xh8xT8PMCXsIHXq89qKEU6ithKDYz/IVds7PRMKkW6XZUX40leX9RdLZo19g052szKEwltU6+0Abww7jWEbtc8=
+	t=1750176702; cv=none; b=VIyfkkPkYHk41b1tojgiIxHPZMr2msmgSGwWpolLVvTThZdxVqTYR1Dtz8zQ25U7Yt9+6uYrp2cLIMBYWKFVov1UmG3slP51QSMTROh8Oxf4ZKmlTxCzC7qhI3gTqfS2+JyDoLefEZlPwy+NaATaVSfSEKAPyPyR9VJTFwhQoY8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750176699; c=relaxed/simple;
-	bh=6E9O0+QxMDbd99amdcfF0PEIF7TCyI6HjowQwiItTv8=;
+	s=arc-20240116; t=1750176702; c=relaxed/simple;
+	bh=UGZVR/idQ53ZkCRoDZw8EyS2zr9V4GNg8yt1CyNDYuA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=omLqMxXQLuqCQV4hMH4mYflWDeiL+E6G9qBNtsvrrX+/seAB5o+OvZaMlERQYB8MCbmWCseKFHgPV38noMM/aj/jWZ0MfAUaq+9n8QBeS2Nq2TO7SNMPklvlT0xrIeovkKlgsQ+igt6816eahA2TF69jA9CIT1MYNSXlUjnSrxc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MKvwuVUB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KaKRg0N1wC3EH7Xw9jZgdvTOcJ1GKy4s8zcozKN7wyER3FwZciD5XeAwyMUmDvfBPnTZ3MvOdQbvfBuKzlcE5BL8V9LHletp9MW70/cqejE7lrvD7/TLonerL/GIKU9ULEDliZk3mNXhktOApXcJaJCujNqLzj86InV4qxTR374=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QjT7Ywe/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MKvwuVUB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57575C4CEE3;
-	Tue, 17 Jun 2025 16:11:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QjT7Ywe/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C620C4CEE3;
+	Tue, 17 Jun 2025 16:11:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750176695;
-	bh=6E9O0+QxMDbd99amdcfF0PEIF7TCyI6HjowQwiItTv8=;
+	s=korg; t=1750176702;
+	bh=UGZVR/idQ53ZkCRoDZw8EyS2zr9V4GNg8yt1CyNDYuA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MKvwuVUB6a06Nn7jKSTgLirvCzvbLkxf0bsAegGWOifRSb4YZc+yMfjGxEE/Wm5bo
-	 8haqjojkGrD4Lu82/e4nEp2xVxgcc+KhWw0vWvqBNb2KEPVmDWaQ3wblyI6agetBtP
-	 O8a6oN6in+xirYkwPRifehRxs8deCraDHZWnD0Jo=
+	b=QjT7Ywe/2OJ5Xi7U6nwNlwfYKv0OygCAYC2dj3tMZmO6n7fghvnL4E8Ms+ZmSeykP
+	 T2+Nx1tv6I1fPPoHYtIZvYAJ44sMq3zlbzqtKWtdkfsrn2geyuVPRJQK6EAtnwUaqO
+	 d2ppAD23fHW6FIsYWT80KwO1oADRI5g9NSvYOVBs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	Adam Ford <aford173@gmail.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 288/356] serial: sh-sci: Move runtime PM enable to sci_probe_single()
-Date: Tue, 17 Jun 2025 17:26:43 +0200
-Message-ID: <20250617152349.774446052@linuxfoundation.org>
+Subject: [PATCH 6.12 238/512] arm64: dts: imx8mp-beacon: Fix RTC capacitive load
+Date: Tue, 17 Jun 2025 17:23:24 +0200
+Message-ID: <20250617152429.265599947@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-References: <20250617152338.212798615@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,95 +48,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+From: Adam Ford <aford173@gmail.com>
 
-commit 239f11209e5f282e16f5241b99256e25dd0614b6 upstream.
+[ Upstream commit 6821ee17537938e919e8b86a541aae451f73165b ]
 
-Relocate the runtime PM enable operation to sci_probe_single(). This change
-prepares the codebase for upcoming fixes.
+Although not noticeable when used every day, the RTC appears to drift when
+left to sit over time.  This is due to the capacitive load not being
+properly set. Fix RTC drift by correcting the capacitive load setting
+from 7000 to 12500, which matches the actual hardware configuration.
 
-While at it, replace the existing logic with a direct call to
-devm_pm_runtime_enable() and remove sci_cleanup_single(). The
-devm_pm_runtime_enable() function automatically handles disabling runtime
-PM during driver removal.
-
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Link: https://lore.kernel.org/r/20250116182249.3828577-3-claudiu.beznea.uj@bp.renesas.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Fixes: 25a5ccdce767 ("arm64: dts: freescale: Introduce imx8mp-beacon-kit")
+Signed-off-by: Adam Ford <aford173@gmail.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/sh-sci.c | 24 ++++++------------------
- 1 file changed, 6 insertions(+), 18 deletions(-)
+ arch/arm64/boot/dts/freescale/imx8mp-beacon-som.dtsi | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/tty/serial/sh-sci.c b/drivers/tty/serial/sh-sci.c
-index d57fa80b6f52a..0071cb3043e14 100644
---- a/drivers/tty/serial/sh-sci.c
-+++ b/drivers/tty/serial/sh-sci.c
-@@ -3043,10 +3043,6 @@ static int sci_init_single(struct platform_device *dev,
- 		ret = sci_init_clocks(sci_port, &dev->dev);
- 		if (ret < 0)
- 			return ret;
--
--		port->dev = &dev->dev;
--
--		pm_runtime_enable(&dev->dev);
- 	}
+diff --git a/arch/arm64/boot/dts/freescale/imx8mp-beacon-som.dtsi b/arch/arm64/boot/dts/freescale/imx8mp-beacon-som.dtsi
+index 15f7ab58db36c..88561df70d03a 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mp-beacon-som.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mp-beacon-som.dtsi
+@@ -257,6 +257,7 @@
+ 	rtc: rtc@51 {
+ 		compatible = "nxp,pcf85263";
+ 		reg = <0x51>;
++		quartz-load-femtofarads = <12500>;
+ 	};
+ };
  
- 	port->type		= p->type;
-@@ -3076,11 +3072,6 @@ static int sci_init_single(struct platform_device *dev,
- 	return 0;
- }
- 
--static void sci_cleanup_single(struct sci_port *port)
--{
--	pm_runtime_disable(port->port.dev);
--}
--
- #if defined(CONFIG_SERIAL_SH_SCI_CONSOLE) || \
-     defined(CONFIG_SERIAL_SH_SCI_EARLYCON)
- static void serial_console_putchar(struct uart_port *port, unsigned char ch)
-@@ -3250,8 +3241,6 @@ static int sci_remove(struct platform_device *dev)
- 	sci_ports_in_use &= ~BIT(port->port.line);
- 	uart_remove_one_port(&sci_uart_driver, &port->port);
- 
--	sci_cleanup_single(port);
--
- 	if (port->port.fifosize > 1)
- 		device_remove_file(&dev->dev, &dev_attr_rx_fifo_trigger);
- 	if (type == PORT_SCIFA || type == PORT_SCIFB || type == PORT_HSCIF)
-@@ -3414,6 +3403,11 @@ static int sci_probe_single(struct platform_device *dev,
- 	if (ret)
- 		return ret;
- 
-+	sciport->port.dev = &dev->dev;
-+	ret = devm_pm_runtime_enable(&dev->dev);
-+	if (ret)
-+		return ret;
-+
- 	sciport->gpios = mctrl_gpio_init(&sciport->port, 0);
- 	if (IS_ERR(sciport->gpios))
- 		return PTR_ERR(sciport->gpios);
-@@ -3427,13 +3421,7 @@ static int sci_probe_single(struct platform_device *dev,
- 		sciport->port.flags |= UPF_HARD_FLOW;
- 	}
- 
--	ret = uart_add_one_port(&sci_uart_driver, &sciport->port);
--	if (ret) {
--		sci_cleanup_single(sciport);
--		return ret;
--	}
--
--	return 0;
-+	return uart_add_one_port(&sci_uart_driver, &sciport->port);
- }
- 
- static int sci_probe(struct platform_device *dev)
 -- 
 2.39.5
 
