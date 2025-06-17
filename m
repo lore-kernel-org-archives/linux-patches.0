@@ -1,46 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD6D82DE1F3;
-	Tue, 17 Jun 2025 15:45:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E6EB2EA16B;
+	Tue, 17 Jun 2025 15:45:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175108; cv=none; b=lnC8Mlzal88zbYfrnbZFPcfClEjxMXIEJQ7ySwpHJSeyu6i4h4GmhbRFD2JfP8LlBqdNIDOr6OhVtsFgFMbGGjtk+8XKI2pHNMombDRqH82ZRIv1zWld8UxWEBcWXtAxXWaavVEB7e6PU2ol/9XhG5B/n2HKb26q6W+KT58Avfc=
+	t=1750175111; cv=none; b=Hm5CKg/zE9XVPuPnUYkRRH09VuY1dJdzG9lVBu+9u5sKAAwJV3Mq1gCpzgLnvYetL2eMhnmh+FGLOBZC4an2Hy7GECfw4D+BQh8lGM6b0QrJXViYHvBa8fvgej7ZMXV8X+6NvPKNDMzQiDBOapW8oCAd8ywmMi0OjwRDdbKK7rI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175108; c=relaxed/simple;
-	bh=mLTKk9cFhtttwTq3ZdTS4XiQqXduVurFIGhNgofI1jI=;
+	s=arc-20240116; t=1750175111; c=relaxed/simple;
+	bh=kGJNOFMG8ftysTD3OSIV5xEn17bZ8Mne/oUrwJeXUk4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J3By+fgLsnTVXRyQDPCNAdxDroRzbpeUj2+61p/1tLmDXVYXyMXImweRpPcqMdkL177K5Tb3GOAnt47JWdkOL2wvlFjxora2xgcvu4AUHlrfXrrMJip/LxwSgjcjqWdXRe/zwUMlf7i0x/nGxunORDutr3NYixGtg1sjAfQUiHo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zZCWNA/o; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DI518tQYCi97RelXiLWXvksg+qyGlosxJilbwhKfyknZa2yumMe/1jzf9eqKBS8xrsiTxEjKBTYFLxpJ2QLa1QNp6gVAGjbD6jV+AdXTerDpxDT4l/x997Wd3y4Zm76Sc6NjZHfiMOwc3+VnUUYfugAKM+2FXfGkXHo7FvIklKI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TXEgQNPs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zZCWNA/o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D2B7C4CEE3;
-	Tue, 17 Jun 2025 15:45:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TXEgQNPs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9060DC4CEE3;
+	Tue, 17 Jun 2025 15:45:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175107;
-	bh=mLTKk9cFhtttwTq3ZdTS4XiQqXduVurFIGhNgofI1jI=;
+	s=korg; t=1750175111;
+	bh=kGJNOFMG8ftysTD3OSIV5xEn17bZ8Mne/oUrwJeXUk4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zZCWNA/o90xj7O450T474HpzAqrppb/PSw1MM+/mR9aQRBGNgIaMSMSE9fPi8p8ca
-	 e/vHgsK2GDTKLlcOsKa9lx/Z/J4/lnvX5dMmvBHrX+LhSoX3P4jNQUMFKed0mC0niL
-	 bLgF4v/UoIEpIctZ24m6bd0SNQ7CeTbnkSjWUDgQ=
+	b=TXEgQNPsk84iO+rxDW02WSJXt6tqlfxVc/kZBGHaOBrK64RVilwUxRUfEtTnbvrCw
+	 K9fWD3gNMGrKjMCfZKVOS47jaQSbpoXNDE1mZTaPeMr6JP61dHY3BUjJWEtTsekZ7X
+	 eNK3Rdua3tb6dZHwLvz4NP+9e9fcWGm2zyXV6AWQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jack Morgenstein <jackm@nvidia.com>,
-	Feng Liu <feliu@nvidia.com>,
-	Vlad Dumitrescu <vdumitrescu@nvidia.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Sharath Srinivasan <sharath.srinivasan@oracle.com>,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Andreas Gruenbacher <agruenba@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 144/356] RDMA/cma: Fix hang when cma_netevent_callback fails to queue_work
-Date: Tue, 17 Jun 2025 17:24:19 +0200
-Message-ID: <20250617152344.033269243@linuxfoundation.org>
+Subject: [PATCH 6.15 050/780] gfs2: Move gfs2_trans_add_databufs
+Date: Tue, 17 Jun 2025 17:15:58 +0200
+Message-ID: <20250617152453.538147457@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-References: <20250617152338.212798615@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -52,54 +46,140 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jack Morgenstein <jackm@nvidia.com>
+From: Andreas Gruenbacher <agruenba@redhat.com>
 
-[ Upstream commit 92a251c3df8ea1991cd9fe00f1ab0cfce18d7711 ]
+[ Upstream commit d50a64e3c55e59e45e415c65531b0d76ad4cea36 ]
 
-The cited commit fixed a crash when cma_netevent_callback was called for
-a cma_id while work on that id from a previous call had not yet started.
-The work item was re-initialized in the second call, which corrupted the
-work item currently in the work queue.
+Move gfs2_trans_add_databufs() to trans.c.  Pass in a glock instead of
+a gfs2_inode.
 
-However, it left a problem when queue_work fails (because the item is
-still pending in the work queue from a previous call). In this case,
-cma_id_put (which is called in the work handler) is therefore not
-called. This results in a userspace process hang (zombie process).
-
-Fix this by calling cma_id_put() if queue_work fails.
-
-Fixes: 45f5dcdd0497 ("RDMA/cma: Fix workqueue crash in cma_netevent_work_handler")
-Link: https://patch.msgid.link/r/4f3640b501e48d0166f312a64fdadf72b059bd04.1747827103.git.leon@kernel.org
-Signed-off-by: Jack Morgenstein <jackm@nvidia.com>
-Signed-off-by: Feng Liu <feliu@nvidia.com>
-Reviewed-by: Vlad Dumitrescu <vdumitrescu@nvidia.com>
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
-Reviewed-by: Sharath Srinivasan <sharath.srinivasan@oracle.com>
-Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+Stable-dep-of: 5a90f8d49922 ("gfs2: Don't start unnecessary transactions during log flush")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/cma.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/gfs2/aops.c  | 23 +----------------------
+ fs/gfs2/aops.h  |  2 --
+ fs/gfs2/bmap.c  |  3 ++-
+ fs/gfs2/trans.c | 21 +++++++++++++++++++++
+ fs/gfs2/trans.h |  2 ++
+ 5 files changed, 26 insertions(+), 25 deletions(-)
 
-diff --git a/drivers/infiniband/core/cma.c b/drivers/infiniband/core/cma.c
-index 348527cf1e7bf..a5ceae2e075ad 100644
---- a/drivers/infiniband/core/cma.c
-+++ b/drivers/infiniband/core/cma.c
-@@ -5215,7 +5215,8 @@ static int cma_netevent_callback(struct notifier_block *self,
- 			   neigh->ha, ETH_ALEN))
- 			continue;
- 		cma_id_get(current_id);
--		queue_work(cma_wq, &current_id->id.net_work);
-+		if (!queue_work(cma_wq, &current_id->id.net_work))
-+			cma_id_put(current_id);
+diff --git a/fs/gfs2/aops.c b/fs/gfs2/aops.c
+index 68fc8af14700d..ed2c708a215a4 100644
+--- a/fs/gfs2/aops.c
++++ b/fs/gfs2/aops.c
+@@ -37,27 +37,6 @@
+ #include "aops.h"
+ 
+ 
+-void gfs2_trans_add_databufs(struct gfs2_inode *ip, struct folio *folio,
+-			     size_t from, size_t len)
+-{
+-	struct buffer_head *head = folio_buffers(folio);
+-	unsigned int bsize = head->b_size;
+-	struct buffer_head *bh;
+-	size_t to = from + len;
+-	size_t start, end;
+-
+-	for (bh = head, start = 0; bh != head || !start;
+-	     bh = bh->b_this_page, start = end) {
+-		end = start + bsize;
+-		if (end <= from)
+-			continue;
+-		if (start >= to)
+-			break;
+-		set_buffer_uptodate(bh);
+-		gfs2_trans_add_data(ip->i_gl, bh);
+-	}
+-}
+-
+ /**
+  * gfs2_get_block_noalloc - Fills in a buffer head with details about a block
+  * @inode: The inode
+@@ -133,7 +112,7 @@ static int __gfs2_jdata_write_folio(struct folio *folio,
+ 					inode->i_sb->s_blocksize,
+ 					BIT(BH_Dirty)|BIT(BH_Uptodate));
+ 		}
+-		gfs2_trans_add_databufs(ip, folio, 0, folio_size(folio));
++		gfs2_trans_add_databufs(ip->i_gl, folio, 0, folio_size(folio));
  	}
- out:
- 	spin_unlock_irqrestore(&id_table_lock, flags);
+ 	return gfs2_write_jdata_folio(folio, wbc);
+ }
+diff --git a/fs/gfs2/aops.h b/fs/gfs2/aops.h
+index a10c4334d2489..f9fa41aaeaf41 100644
+--- a/fs/gfs2/aops.h
++++ b/fs/gfs2/aops.h
+@@ -9,7 +9,5 @@
+ #include "incore.h"
+ 
+ void adjust_fs_space(struct inode *inode);
+-void gfs2_trans_add_databufs(struct gfs2_inode *ip, struct folio *folio,
+-			     size_t from, size_t len);
+ 
+ #endif /* __AOPS_DOT_H__ */
+diff --git a/fs/gfs2/bmap.c b/fs/gfs2/bmap.c
+index 366516b98b3f3..b81984def58ec 100644
+--- a/fs/gfs2/bmap.c
++++ b/fs/gfs2/bmap.c
+@@ -988,7 +988,8 @@ static void gfs2_iomap_put_folio(struct inode *inode, loff_t pos,
+ 	struct gfs2_sbd *sdp = GFS2_SB(inode);
+ 
+ 	if (!gfs2_is_stuffed(ip))
+-		gfs2_trans_add_databufs(ip, folio, offset_in_folio(folio, pos),
++		gfs2_trans_add_databufs(ip->i_gl, folio,
++					offset_in_folio(folio, pos),
+ 					copied);
+ 
+ 	folio_unlock(folio);
+diff --git a/fs/gfs2/trans.c b/fs/gfs2/trans.c
+index f8ae2c666fd60..075f7e9abe47c 100644
+--- a/fs/gfs2/trans.c
++++ b/fs/gfs2/trans.c
+@@ -226,6 +226,27 @@ void gfs2_trans_add_data(struct gfs2_glock *gl, struct buffer_head *bh)
+ 	unlock_buffer(bh);
+ }
+ 
++void gfs2_trans_add_databufs(struct gfs2_glock *gl, struct folio *folio,
++			     size_t from, size_t len)
++{
++	struct buffer_head *head = folio_buffers(folio);
++	unsigned int bsize = head->b_size;
++	struct buffer_head *bh;
++	size_t to = from + len;
++	size_t start, end;
++
++	for (bh = head, start = 0; bh != head || !start;
++	     bh = bh->b_this_page, start = end) {
++		end = start + bsize;
++		if (end <= from)
++			continue;
++		if (start >= to)
++			break;
++		set_buffer_uptodate(bh);
++		gfs2_trans_add_data(gl, bh);
++	}
++}
++
+ void gfs2_trans_add_meta(struct gfs2_glock *gl, struct buffer_head *bh)
+ {
+ 
+diff --git a/fs/gfs2/trans.h b/fs/gfs2/trans.h
+index f8ce5302280d3..790c55f59e612 100644
+--- a/fs/gfs2/trans.h
++++ b/fs/gfs2/trans.h
+@@ -42,6 +42,8 @@ int gfs2_trans_begin(struct gfs2_sbd *sdp, unsigned int blocks,
+ 
+ void gfs2_trans_end(struct gfs2_sbd *sdp);
+ void gfs2_trans_add_data(struct gfs2_glock *gl, struct buffer_head *bh);
++void gfs2_trans_add_databufs(struct gfs2_glock *gl, struct folio *folio,
++			     size_t from, size_t len);
+ void gfs2_trans_add_meta(struct gfs2_glock *gl, struct buffer_head *bh);
+ void gfs2_trans_add_revoke(struct gfs2_sbd *sdp, struct gfs2_bufdata *bd);
+ void gfs2_trans_remove_revoke(struct gfs2_sbd *sdp, u64 blkno, unsigned int len);
 -- 
 2.39.5
 
