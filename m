@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 392122DFF1B;
-	Tue, 17 Jun 2025 16:06:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 634BD2F2365;
+	Tue, 17 Jun 2025 16:07:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750176418; cv=none; b=OVAEGETzJhACzty85LckTI+j+gyHpnyKT2313JUg+ZF4tEIt1R0n7xDWjhvtA61Wr/2KRDd8aH5jObmiWl+0Y4facmubagFMXtFDDXxVHGYxq+2ipjte0T0WunwplU9zRPRPT1/MzG7d/BGe61S3j25+dbKxm1O08dzG2sHLgRw=
+	t=1750176421; cv=none; b=Xga1a009ntbf9eZnI+ZdxOObSP/dywIULrfypnR7MDC4sZjvdIpccjlYTYkSzwyJZQ4Wujtrxq/3QKOgF7xtnezoe5D26hthN+tJrvq/qYLWD8Y7Qe/xIgjw25d9tSaewn/9vCg3S2WL3JaxPtiEO4UUS3a9Ky65xpVI/01EDAQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750176418; c=relaxed/simple;
-	bh=IrzqzwhV7ZVy6GusNUFPM0dbz1Yyq3UAru8v6o5U0EQ=;
+	s=arc-20240116; t=1750176421; c=relaxed/simple;
+	bh=7pLm6KcLNN74UMme9LvnmqkTUbA4CLyv51Jst+d+sNg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i7U58y5N8g6dyP1SkMdkklyyvUkPrgjVI8G3VPnTi4thOdDqw4tj4pnYW6ywX42Xc1dKzt/UYsLvf1tNw/KSnJzlrFiURaEHe5vF3Bu60lQXprwa5sWMUgLZcS2YH5A53HTD8oNSH3etuInv426e+DRbmoSA/Wi1SN0jMI+hyhU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p26YTosV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cIr63ZXhejGOFvUUfMruPwg/a4Xe1zLlLasxAlDjRtdkDNfwevSnLwzHH0kbZvVd7YZcyQMMUPlozuZwA3YPxgb3VyXb/RPhn3kZv/5FbMzqjVOPSdxQSRfJ4lHwiF7bN7j4T6s0ll1wSka0kpFS9BpE02auk2uuwxMJwWABbBY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vrJi+KTj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p26YTosV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D024C4CEE3;
-	Tue, 17 Jun 2025 16:06:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vrJi+KTj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7D6EC4CEE3;
+	Tue, 17 Jun 2025 16:07:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750176418;
-	bh=IrzqzwhV7ZVy6GusNUFPM0dbz1Yyq3UAru8v6o5U0EQ=;
+	s=korg; t=1750176421;
+	bh=7pLm6KcLNN74UMme9LvnmqkTUbA4CLyv51Jst+d+sNg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p26YTosVL+oF784XhVT5RAggvZkM+F2tDeiTED7Hrfpv3YnOqvWappDITpPuJMTQ9
-	 2w7/YNIjmggO6qz1Mszq1R3vuBDJ201MZTdC20taFBUfrK4BRFw3IXzD8jebdB9jFX
-	 0PQAKsh5i9nJvOQw853NOH+bpv2+v4Agt6iz7bCA=
+	b=vrJi+KTjFUslNh4OIGRyNQmlbTIt2uoN/JXSER5Kpbs36k/fisxxpp+Ir+q9u1z91
+	 +/jZfZOz02GsZkKJY/tT3dWYvRbjmmZHf8WiLVkXnd3ntq3EPwdQtlwp/t4EgleDfq
+	 Bp4nKUI1HIjvYkCiOF7yWXxbOi8ekT2iW0jZS134=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+8c469a2260132cd095c1@syzkaller.appspotmail.com,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Stephan Gerhold <stephan.gerhold@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 187/780] udp: properly deal with xfrm encap and ADDRFORM
-Date: Tue, 17 Jun 2025 17:18:15 +0200
-Message-ID: <20250617152459.096012002@linuxfoundation.org>
+Subject: [PATCH 6.12 228/512] arm64: dts: qcom: sc8280xp-x13s: Drop duplicate DMIC supplies
+Date: Tue, 17 Jun 2025 17:23:14 +0200
+Message-ID: <20250617152428.869863943@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,192 +47,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
 
-[ Upstream commit c26c192c3d486a2a7d83d254bae294c2f8f50abf ]
+[ Upstream commit a2e617f4e6981aa514a569e927f90b0d39bb31b2 ]
 
-UDP GRO accounting assumes that the GRO receive callback is always
-set when the UDP tunnel is enabled, but syzkaller proved otherwise,
-leading tot the following splat:
+The WCD938x codec provides two controls for each of the MIC_BIASn outputs:
 
-WARNING: CPU: 0 PID: 5837 at net/ipv4/udp_offload.c:123 udp_tunnel_update_gro_rcv+0x28d/0x4c0 net/ipv4/udp_offload.c:123
-Modules linked in:
-CPU: 0 UID: 0 PID: 5837 Comm: syz-executor850 Not tainted 6.14.0-syzkaller-13320-g420aabef3ab5 #0 PREEMPT(full)
-Hardware name: Google Compute Engine/Google Compute Engine, BIOS Google 02/12/2025
-RIP: 0010:udp_tunnel_update_gro_rcv+0x28d/0x4c0 net/ipv4/udp_offload.c:123
-Code: 00 00 e8 c6 5a 2f f7 48 c1 e5 04 48 8d b5 20 53 c7 9a ba 10
-      00 00 00 4c 89 ff e8 ce 87 99 f7 e9 ce 00 00 00 e8 a4 5a 2f
-      f7 90 <0f> 0b 90 e9 de fd ff ff bf 01 00 00 00 89 ee e8 cf
-      5e 2f f7 85 ed
-RSP: 0018:ffffc90003effa88 EFLAGS: 00010293
-RAX: ffffffff8a93fc9c RBX: 0000000000000000 RCX: ffff8880306f9e00
-RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000000
-RBP: 0000000000000000 R08: ffffffff8a93fabe R09: 1ffffffff20bfb2e
-R10: dffffc0000000000 R11: fffffbfff20bfb2f R12: ffff88814ef21738
-R13: dffffc0000000000 R14: ffff88814ef21778 R15: 1ffff11029de42ef
-FS:  0000000000000000(0000) GS:ffff888124f96000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007f04eec760d0 CR3: 000000000eb38000 CR4: 00000000003526f0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- <TASK>
- udp_tunnel_cleanup_gro include/net/udp_tunnel.h:205 [inline]
- udpv6_destroy_sock+0x212/0x270 net/ipv6/udp.c:1829
- sk_common_release+0x71/0x2e0 net/core/sock.c:3896
- inet_release+0x17d/0x200 net/ipv4/af_inet.c:435
- __sock_release net/socket.c:647 [inline]
- sock_close+0xbc/0x240 net/socket.c:1391
- __fput+0x3e9/0x9f0 fs/file_table.c:465
- task_work_run+0x251/0x310 kernel/task_work.c:227
- exit_task_work include/linux/task_work.h:40 [inline]
- do_exit+0xa11/0x27f0 kernel/exit.c:953
- do_group_exit+0x207/0x2c0 kernel/exit.c:1102
- __do_sys_exit_group kernel/exit.c:1113 [inline]
- __se_sys_exit_group kernel/exit.c:1111 [inline]
- __x64_sys_exit_group+0x3f/0x40 kernel/exit.c:1111
- x64_sys_call+0x26c3/0x26d0 arch/x86/include/generated/asm/syscalls_64.h:232
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0xf3/0x230 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7f04eebfac79
-Code: Unable to access opcode bytes at 0x7f04eebfac4f.
-RSP: 002b:00007fffdcaa34a8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
-RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007f04eebfac79
-RDX: 000000000000003c RSI: 00000000000000e7 RDI: 0000000000000000
-RBP: 00007f04eec75270 R08: ffffffffffffffb8 R09: 00007fffdcaa36c8
-R10: 0000200000000000 R11: 0000000000000246 R12: 00007f04eec75270
-R13: 0000000000000000 R14: 00007f04eec75cc0 R15: 00007f04eebcca70
+ - "MIC BIASn" enables an internal regulator to generate the output
+   with a configurable voltage (qcom,micbiasN-microvolt).
 
-Address the issue moving the accounting hook into
-setup_udp_tunnel_sock() and set_xfrm_gro_udp_encap_rcv(), where
-the GRO callback is actually set.
+ - "VA MIC BIASn" enables "pull-up mode" that bypasses the internal
+   regulator and directly outputs fixed 1.8V from the VDD_PX pin.
+   This is intended for low-power VA (voice activation) use cases.
 
-set_xfrm_gro_udp_encap_rcv() is prone to races with IPV6_ADDRFORM,
-run the relevant setsockopt under the socket lock to ensure using
-consistent values of sk_family and up->encap_type.
+The audio-routing setup for the ThinkPad X13s currently specifies both
+as power supplies for the DMICs, but only one of them can be active
+at the same time. In practice, only the internal regulator is used
+with the current setup because the driver prefers it over pull-up mode.
 
-Refactor the GRO callback selection code, to make it clear that
-the function pointer is always initialized.
+Make this more clear by dropping the redundant routes to the pull-up
+"VA MIC BIASn" supply. There is no functional difference except that we
+skip briefly switching to pull-up mode when shutting down the microphone.
 
-Reported-by: syzbot+8c469a2260132cd095c1@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=8c469a2260132cd095c1
-Fixes: 172bf009c18d ("xfrm: Support GRO for IPv4 ESP in UDP encapsulation")
-Fixes: 5d7f5b2f6b935 ("udp_tunnel: use static call for GRO hooks when possible")
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
-Link: https://patch.msgid.link/92bcdb6899145a9a387c8fa9e3ca656642a43634.1744228733.git.pabeni@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 2e498f35c385 ("arm64: dts: qcom: sc8280xp-x13s: fix va dmic dai links and routing")
+Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+Link: https://lore.kernel.org/r/20241203-x1e80100-va-mic-bias-v1-1-0dfd4d9b492c@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/udp_tunnel.h   |  1 -
- net/ipv4/udp.c             | 31 ++++++++++++++++++++++++++-----
- net/ipv4/udp_tunnel_core.c |  2 ++
- 3 files changed, 28 insertions(+), 6 deletions(-)
+ arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/include/net/udp_tunnel.h b/include/net/udp_tunnel.h
-index 288f06f23a804..2df3b8344eb52 100644
---- a/include/net/udp_tunnel.h
-+++ b/include/net/udp_tunnel.h
-@@ -215,7 +215,6 @@ static inline void udp_tunnel_encap_enable(struct sock *sk)
- 	if (READ_ONCE(sk->sk_family) == PF_INET6)
- 		ipv6_stub->udpv6_encap_enable();
- #endif
--	udp_tunnel_update_gro_rcv(sk, true);
- 	udp_encap_enable();
- }
+diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+index 6a28cab971891..8e5951da5920d 100644
+--- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
++++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+@@ -1131,9 +1131,6 @@
+ 		"VA DMIC0", "MIC BIAS1",
+ 		"VA DMIC1", "MIC BIAS1",
+ 		"VA DMIC2", "MIC BIAS3",
+-		"VA DMIC0", "VA MIC BIAS1",
+-		"VA DMIC1", "VA MIC BIAS1",
+-		"VA DMIC2", "VA MIC BIAS3",
+ 		"TX SWR_ADC1", "ADC2_OUTPUT";
  
-diff --git a/net/ipv4/udp.c b/net/ipv4/udp.c
-index 04cd3353f1d46..af943b905804a 100644
---- a/net/ipv4/udp.c
-+++ b/net/ipv4/udp.c
-@@ -2904,15 +2904,33 @@ void udp_destroy_sock(struct sock *sk)
- 	}
- }
- 
-+typedef struct sk_buff *(*udp_gro_receive_t)(struct sock *sk,
-+					     struct list_head *head,
-+					     struct sk_buff *skb);
-+
- static void set_xfrm_gro_udp_encap_rcv(__u16 encap_type, unsigned short family,
- 				       struct sock *sk)
- {
- #ifdef CONFIG_XFRM
-+	udp_gro_receive_t new_gro_receive;
-+
- 	if (udp_test_bit(GRO_ENABLED, sk) && encap_type == UDP_ENCAP_ESPINUDP) {
--		if (family == AF_INET)
--			WRITE_ONCE(udp_sk(sk)->gro_receive, xfrm4_gro_udp_encap_rcv);
--		else if (IS_ENABLED(CONFIG_IPV6) && family == AF_INET6)
--			WRITE_ONCE(udp_sk(sk)->gro_receive, ipv6_stub->xfrm6_gro_udp_encap_rcv);
-+		if (IS_ENABLED(CONFIG_IPV6) && family == AF_INET6)
-+			new_gro_receive = ipv6_stub->xfrm6_gro_udp_encap_rcv;
-+		else
-+			new_gro_receive = xfrm4_gro_udp_encap_rcv;
-+
-+		if (udp_sk(sk)->gro_receive != new_gro_receive) {
-+			/*
-+			 * With IPV6_ADDRFORM the gro callback could change
-+			 * after being set, unregister the old one, if valid.
-+			 */
-+			if (udp_sk(sk)->gro_receive)
-+				udp_tunnel_update_gro_rcv(sk, false);
-+
-+			WRITE_ONCE(udp_sk(sk)->gro_receive, new_gro_receive);
-+			udp_tunnel_update_gro_rcv(sk, true);
-+		}
- 	}
- #endif
- }
-@@ -2962,6 +2980,7 @@ int udp_lib_setsockopt(struct sock *sk, int level, int optname,
- 		break;
- 
- 	case UDP_ENCAP:
-+		sockopt_lock_sock(sk);
- 		switch (val) {
- 		case 0:
- #ifdef CONFIG_XFRM
-@@ -2985,6 +3004,7 @@ int udp_lib_setsockopt(struct sock *sk, int level, int optname,
- 			err = -ENOPROTOOPT;
- 			break;
- 		}
-+		sockopt_release_sock(sk);
- 		break;
- 
- 	case UDP_NO_CHECK6_TX:
-@@ -3002,13 +3022,14 @@ int udp_lib_setsockopt(struct sock *sk, int level, int optname,
- 		break;
- 
- 	case UDP_GRO:
--
-+		sockopt_lock_sock(sk);
- 		/* when enabling GRO, accept the related GSO packet type */
- 		if (valbool)
- 			udp_tunnel_encap_enable(sk);
- 		udp_assign_bit(GRO_ENABLED, sk, valbool);
- 		udp_assign_bit(ACCEPT_L4, sk, valbool);
- 		set_xfrm_gro_udp_encap_rcv(up->encap_type, sk->sk_family, sk);
-+		sockopt_release_sock(sk);
- 		break;
- 
- 	/*
-diff --git a/net/ipv4/udp_tunnel_core.c b/net/ipv4/udp_tunnel_core.c
-index 3d1214e6df0ea..2326548997d3f 100644
---- a/net/ipv4/udp_tunnel_core.c
-+++ b/net/ipv4/udp_tunnel_core.c
-@@ -90,6 +90,8 @@ void setup_udp_tunnel_sock(struct net *net, struct socket *sock,
- 
- 	udp_tunnel_encap_enable(sk);
- 
-+	udp_tunnel_update_gro_rcv(sk, true);
-+
- 	if (!sk->sk_dport && !sk->sk_bound_dev_if && sk_saddr_any(sk) &&
- 	    sk->sk_kern_sock)
- 		udp_tunnel_update_gro_lookup(net, sk, true);
+ 	wcd-playback-dai-link {
 -- 
 2.39.5
 
