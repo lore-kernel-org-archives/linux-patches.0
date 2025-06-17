@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EB021A5B9D;
-	Tue, 17 Jun 2025 16:36:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA3C02ED165;
+	Tue, 17 Jun 2025 16:36:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750178217; cv=none; b=jjan/FYpVntYvuM8HNNahQgHtKEQpdvL4f6yJO14ZnvP1kGzQnPnagL98zkaxwr3bA1X226ARZzsJeyi8xJMDd6HCT/NgqU9iBBIQ7HA/Wf8vJL/rRroEpuNQNoz8uUbm9uZSftyPRX55aa+D9vj64eEG+73+DgF8R47q85lTwE=
+	t=1750178220; cv=none; b=sv37RzwbU2PmHA7wLBjFtmz8GJx4gIa2/58U0ZB4+Y9fr2RnhFX4teIFVIc+nnQXqCCbwUmxrLaOwpzXrM1uRW48k77pHzpxUvFeDINPDUbvDtva5qlBbSJRq/+RhG93f5WtUAf26D4pxXIwwFR9bOnVa7RIQ4kd56fdZu0DFH8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750178217; c=relaxed/simple;
-	bh=Znm2M2ukfpvVJhVjLDAHQgRjN0uq9tGGz5kgVbhYT30=;
+	s=arc-20240116; t=1750178220; c=relaxed/simple;
+	bh=DHOo6qnZZYCA3prIseip1GpmySopar0pzf0FFh2DgvI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bej2f1FTqAEh7JbN/GX0SgILO+tgK54kovuWNdvDXEhAQZ8yiI90Fe+hPH7f0/6GoKwWwWL/P/+gs8g6aYZ4ttJ909qeGDLAHCh+8goO5ZH0H9+h0N9thlUj6JnT7/I0PAz3aBfMOuz2CDPOMq5PNhItyv1V2tDgXGMrxQUUhNI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2AktmosY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZRVzRQAEUOBxBhVLl1KXGQRpYKEIIT/OMCcA518CW36oR0b/kIiL/ANYhBzsJadrQmOXwW2JzHhZ3Q9S9WcqY/G0KLUeIm61l0aQNFqJoa9gZEKARGuJqZOk/sMDn45br5UyZywCxpy9OqQpaEyF4xQdEWAVk+ozENlKUHNIfSM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MQQU0wxj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2AktmosY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B3C8C4CEE3;
-	Tue, 17 Jun 2025 16:36:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MQQU0wxj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D792C4CEE3;
+	Tue, 17 Jun 2025 16:36:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750178217;
-	bh=Znm2M2ukfpvVJhVjLDAHQgRjN0uq9tGGz5kgVbhYT30=;
+	s=korg; t=1750178219;
+	bh=DHOo6qnZZYCA3prIseip1GpmySopar0pzf0FFh2DgvI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2AktmosYHO+fkNVO1lL0hhmxmCpY7uDlP0SF60yc6J29b0sJCmFG0/mr05axvo4Lh
-	 55BZyMkIzjAATZP4ebap1AOMmvUbrFLOwtOkGHFK70/PfpdVpZ+cTNKdP04HAyWtY5
-	 y48brNRmc6A98/6Ma8UIeICN9j3smX9hgaZZsD4s=
+	b=MQQU0wxjuVD2ScMaZNuDfH2d8a1+eE+fMdF7lD4M7BiZlLivvBoV9lyWNe8wzRTSl
+	 d9BhmEGYL4L8lSJUq4Tk5IOaD4RF+JviFv+3daWnyhpyx0gvD3P5GJHS95W78Ix39y
+	 onBwZ6V7I5qu1uXl+ax3/jD/1A0ve5DPr4+c4A4o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Benjamin Marzinski <bmarzins@redhat.com>,
-	Mikulas Patocka <mpatocka@redhat.com>,
+	Yevgeny Kliteynik <kliteyn@nvidia.com>,
+	Mark Bloch <mbloch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 426/780] dm: free table mempools if not used in __bind
-Date: Tue, 17 Jun 2025 17:22:14 +0200
-Message-ID: <20250617152508.818901002@linuxfoundation.org>
+Subject: [PATCH 6.12 463/512] net/mlx5: HWS, fix missing ip_version handling in definer
+Date: Tue, 17 Jun 2025 17:27:09 +0200
+Message-ID: <20250617152438.343813704@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,56 +48,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Benjamin Marzinski <bmarzins@redhat.com>
+From: Yevgeny Kliteynik <kliteyn@nvidia.com>
 
-[ Upstream commit e8819e7f03470c5b468720630d9e4e1d5b99159e ]
+[ Upstream commit b5e3c76f35ee7e814c2469c73406c5bbf110d89c ]
 
-With request-based dm, the mempools don't need reloading when switching
-tables, but the unused table mempools are not freed until the active
-table is finally freed. Free them immediately if they are not needed.
+Fix missing field handling in definer - outer IP version.
 
-Fixes: 29dec90a0f1d9 ("dm: fix bio_set allocation")
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Tested-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: Benjamin Marzinski <bmarzins@redhat.com>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Fixes: 74a778b4a63f ("net/mlx5: HWS, added definers handling")
+Signed-off-by: Yevgeny Kliteynik <kliteyn@nvidia.com>
+Signed-off-by: Mark Bloch <mbloch@nvidia.com>
+Link: https://patch.msgid.link/20250610151514.1094735-6-mbloch@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ .../ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_definer.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/md/dm.c b/drivers/md/dm.c
-index f5c5ccb6f8d25..292414da871da 100644
---- a/drivers/md/dm.c
-+++ b/drivers/md/dm.c
-@@ -2461,10 +2461,10 @@ static struct dm_table *__bind(struct mapped_device *md, struct dm_table *t,
- 		 * requests in the queue may refer to bio from the old bioset,
- 		 * so you must walk through the queue to unprep.
- 		 */
--		if (!md->mempools) {
-+		if (!md->mempools)
- 			md->mempools = t->mempools;
--			t->mempools = NULL;
--		}
-+		else
-+			dm_free_md_mempools(t->mempools);
- 	} else {
- 		/*
- 		 * The md may already have mempools that need changing.
-@@ -2473,8 +2473,8 @@ static struct dm_table *__bind(struct mapped_device *md, struct dm_table *t,
- 		 */
- 		dm_free_md_mempools(md->mempools);
- 		md->mempools = t->mempools;
--		t->mempools = NULL;
- 	}
-+	t->mempools = NULL;
- 
- 	old_map = rcu_dereference_protected(md->map, lockdep_is_held(&md->suspend_lock));
- 	rcu_assign_pointer(md->map, (void *)t);
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_definer.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_definer.c
+index ab5f8f07f1f7e..72b19b05c0cf4 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_definer.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_definer.c
+@@ -558,6 +558,9 @@ hws_definer_conv_outer(struct mlx5hws_definer_conv_data *cd,
+ 	HWS_SET_HDR(fc, match_param, IP_PROTOCOL_O,
+ 		    outer_headers.ip_protocol,
+ 		    eth_l3_outer.protocol_next_header);
++	HWS_SET_HDR(fc, match_param, IP_VERSION_O,
++		    outer_headers.ip_version,
++		    eth_l3_outer.ip_version);
+ 	HWS_SET_HDR(fc, match_param, IP_TTL_O,
+ 		    outer_headers.ttl_hoplimit,
+ 		    eth_l3_outer.time_to_live_hop_limit);
 -- 
 2.39.5
 
