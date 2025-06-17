@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7840F2EF2B2;
-	Tue, 17 Jun 2025 16:12:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0A3C2EF657;
+	Tue, 17 Jun 2025 16:12:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750176774; cv=none; b=AZEUVNJV3hizaLFaTbBC8IbvMv8t3uoNsnLOhr7qGkD7fHKBOCpn+BIYMoOeqCTJI6TCoLMbasYFqdqqZmNT1CYopym7EwoIRK8k1wP9IJnRNoHH34cVnQ2PidZnKAmRq6++RbF5/tDcwLYivO69xIavSBZ9t8xMxTHFlJ4kYhM=
+	t=1750176777; cv=none; b=Jya9GuD39l5YeuaZjmYPsx5hmp0FLmHxnp6g6gW6im0eZA+4DieDedDI9E0pUfwH+a7KLw/SFjJBv3fFDY8cfJ8Pq8Kl37MkK75X7LbogvwyDz02bqfA/X8ur8zHhYi3Qq3pzXqPtVH8jvne8brBqrhwB+BBgnRi2do9psDZEfQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750176774; c=relaxed/simple;
-	bh=0WX7px96VbevHg/GA74mB7GfnLMC25EhYpNnVg7FEto=;
+	s=arc-20240116; t=1750176777; c=relaxed/simple;
+	bh=Q84nh8uDAtXTxQFo+JhMvQWRggVjuQyJcrBdscJUgqM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R8TC6/Q4FKWts/zLH54xeqD2v19uMoQoMUtYOjPxgHOAq5rWtB0YktdatscJ1F9pjWSoH6cyBFOfYOxTYGf/yyZBWBCkDQdmnx5sfcTdX8xIUC1mkILIorcK8aZLmdbkBegDyjnGK08FXF6SZLu5B2ao2JXxfmpk4CKArXQM1/g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vWZull62; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Aln92gaLSI7IqVbJC/0GuUufcPobfJE4iw/CJejad09WSDSL0o6osajq/cGT93I19frdKS1Hpjeyjcs8tl+AuBFWx/27EcHjcywMs2zZPyq9DcwzDF+emeKbjDdEJJXhwHrtNaXl0eywezQteHdHl68EePTi4BEuwzqS5s05AgM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1OR3TLnZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vWZull62"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC75DC4CEE3;
-	Tue, 17 Jun 2025 16:12:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1OR3TLnZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12007C4CEE7;
+	Tue, 17 Jun 2025 16:12:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750176774;
-	bh=0WX7px96VbevHg/GA74mB7GfnLMC25EhYpNnVg7FEto=;
+	s=korg; t=1750176777;
+	bh=Q84nh8uDAtXTxQFo+JhMvQWRggVjuQyJcrBdscJUgqM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vWZull62shBiIu46zO/TlhjkUtiyJyiXDyCOZd91OqJAwphyejRt5wyTZ9TMvn8BV
-	 fVp/KZp6Xk+MdEKRrsZPqCLbWcjTt4LXMUayjJr4W+eVmhtYvJA1M89nQl+0fQH/2O
-	 9YeXobq080l7bZuhBcEVp1K/2K+qLVHTCv6e3Wg8=
+	b=1OR3TLnZVV/fBYTYEcQPOu+q0Xtg4kjT1mewtuu2yugS82KmMUjKxnrGAfmd6JtyI
+	 uhSVrHESY6xlz0d2Dew4Pyce6DYqtUMSud2AMpxwT31nlrQP5fjJ+ErArJ66utd4aT
+	 MCNTf2ceK1irZjV0+lHbJyx7JohfwCzyyyPfH2ak=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Hewitt <christianshewitt@gmail.com>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Jay Vosburgh <jv@jvosburgh.net>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 312/356] drm/meson: fix more rounding issues with 59.94Hz modes
-Date: Tue, 17 Jun 2025 17:27:07 +0200
-Message-ID: <20250617152350.723813597@linuxfoundation.org>
+Subject: [PATCH 6.15 225/780] bonding: assign random address if device address is same as bond
+Date: Tue, 17 Jun 2025 17:18:53 +0200
+Message-ID: <20250617152500.621041445@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-References: <20250617152338.212798615@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,136 +48,94 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+From: Hangbin Liu <liuhangbin@gmail.com>
 
-[ Upstream commit 0cee6c4d3518b2e757aedae78771f17149f57653 ]
+[ Upstream commit 5c3bf6cba7911f470afd748606be5c03a9512fcc ]
 
-Commit 1017560164b6 ("drm/meson: use unsigned long long / Hz for
-frequency types") attempts to resolve video playback using 59.94Hz.
- using YUV420 by changing the clock calculation to use
-Hz instead of kHz (thus yielding more precision).
+This change addresses a MAC address conflict issue in failover scenarios,
+similar to the problem described in commit a951bc1e6ba5 ("bonding: correct
+the MAC address for 'follow' fail_over_mac policy").
 
-The basic calculation itself is correct, however the comparisions in
-meson_vclk_vic_supported_freq() and meson_vclk_setup() don't work
-anymore for 59.94Hz modes (using the freq * 1000 / 1001 logic). For
-example, drm/edid specifies a 593407kHz clock for 3840x2160@59.94Hz.
-With the mentioend commit we convert this to Hz. Then meson_vclk
-tries to find a matchig "params" entry (as the clock setup code
-currently only supports specific frequencies) by taking the venc_freq
-from the params and calculating the "alt frequency" (used for the
-59.94Hz modes) from it, which is:
-  (594000000Hz * 1000) / 1001 = 593406593Hz
+In fail_over_mac=follow mode, the bonding driver expects the formerly active
+slave to swap MAC addresses with the newly active slave during failover.
+However, under certain conditions, two slaves may end up with the same MAC
+address, which breaks this policy:
 
-Similar calculation is applied to the phy_freq (TMDS clock), which is 10
-times the pixel clock.
+1) ip link set eth0 master bond0
+   -> bond0 adopts eth0's MAC address (MAC0).
 
-Implement a new meson_vclk_freqs_are_matching_param() function whose
-purpose is to compare if the requested and calculated frequencies. They
-may not match exactly (for the reasons mentioned above). Allow the
-clocks to deviate slightly to make the 59.94Hz modes again.
+2) ip link set eth1 master bond0
+   -> eth1 is added as a backup with its own MAC (MAC1).
 
-Fixes: 1017560164b6 ("drm/meson: use unsigned long long / Hz for frequency types")
-Reported-by: Christian Hewitt <christianshewitt@gmail.com>
-Signed-off-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/20250609202751.962208-1-martin.blumenstingl@googlemail.com
+3) ip link set eth0 nomaster
+   -> eth0 is released and restores its MAC (MAC0).
+   -> eth1 becomes the active slave, and bond0 assigns MAC0 to eth1.
+
+4) ip link set eth0 master bond0
+   -> eth0 is re-added to bond0, now both eth0 and eth1 have MAC0.
+
+This results in a MAC address conflict and violates the expected behavior
+of the failover policy.
+
+To fix this, we assign a random MAC address to any newly added slave if
+its current MAC address matches that of the bond. The original (permanent)
+MAC address is saved and will be restored when the device is released
+from the bond.
+
+This ensures that each slave has a unique MAC address during failover
+transitions, preserving the integrity of the fail_over_mac=follow policy.
+
+Fixes: 3915c1e8634a ("bonding: Add "follow" option to fail_over_mac")
+Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
+Acked-by: Jay Vosburgh <jv@jvosburgh.net>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/meson/meson_vclk.c | 55 ++++++++++++++++++------------
- 1 file changed, 34 insertions(+), 21 deletions(-)
+ drivers/net/bonding/bond_main.c | 25 ++++++++++++++++++-------
+ 1 file changed, 18 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/gpu/drm/meson/meson_vclk.c b/drivers/gpu/drm/meson/meson_vclk.c
-index c4123bb958e4c..dfe0c28a0f054 100644
---- a/drivers/gpu/drm/meson/meson_vclk.c
-+++ b/drivers/gpu/drm/meson/meson_vclk.c
-@@ -110,10 +110,7 @@
- #define HDMI_PLL_LOCK		BIT(31)
- #define HDMI_PLL_LOCK_G12A	(3 << 30)
- 
--#define PIXEL_FREQ_1000_1001(_freq)	\
--	DIV_ROUND_CLOSEST_ULL((_freq) * 1000ULL, 1001ULL)
--#define PHY_FREQ_1000_1001(_freq)	\
--	(PIXEL_FREQ_1000_1001(DIV_ROUND_DOWN_ULL(_freq, 10ULL)) * 10)
-+#define FREQ_1000_1001(_freq)	DIV_ROUND_CLOSEST_ULL((_freq) * 1000ULL, 1001ULL)
- 
- /* VID PLL Dividers */
- enum {
-@@ -772,6 +769,36 @@ static void meson_hdmi_pll_generic_set(struct meson_drm *priv,
- 		  pll_freq);
- }
- 
-+static bool meson_vclk_freqs_are_matching_param(unsigned int idx,
-+						unsigned long long phy_freq,
-+						unsigned long long vclk_freq)
-+{
-+	DRM_DEBUG_DRIVER("i = %d vclk_freq = %lluHz alt = %lluHz\n",
-+			 idx, params[idx].vclk_freq,
-+			 FREQ_1000_1001(params[idx].vclk_freq));
-+	DRM_DEBUG_DRIVER("i = %d phy_freq = %lluHz alt = %lluHz\n",
-+			 idx, params[idx].phy_freq,
-+			 FREQ_1000_1001(params[idx].phy_freq));
-+
-+	/* Match strict frequency */
-+	if (phy_freq == params[idx].phy_freq &&
-+	    vclk_freq == params[idx].vclk_freq)
-+		return true;
-+
-+	/* Match 1000/1001 variant: vclk deviation has to be less than 1kHz
-+	 * (drm EDID is defined in 1kHz steps, so everything smaller must be
-+	 * rounding error) and the PHY freq deviation has to be less than
-+	 * 10kHz (as the TMDS clock is 10 times the pixel clock, so anything
-+	 * smaller must be rounding error as well).
-+	 */
-+	if (abs(vclk_freq - FREQ_1000_1001(params[idx].vclk_freq)) < 1000 &&
-+	    abs(phy_freq - FREQ_1000_1001(params[idx].phy_freq)) < 10000)
-+		return true;
-+
-+	/* no match */
-+	return false;
-+}
-+
- enum drm_mode_status
- meson_vclk_vic_supported_freq(struct meson_drm *priv,
- 			      unsigned long long phy_freq,
-@@ -790,19 +817,7 @@ meson_vclk_vic_supported_freq(struct meson_drm *priv,
+diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
+index 4461220bcd58d..17ae4b819a597 100644
+--- a/drivers/net/bonding/bond_main.c
++++ b/drivers/net/bonding/bond_main.c
+@@ -2115,15 +2115,26 @@ int bond_enslave(struct net_device *bond_dev, struct net_device *slave_dev,
+ 		 * set the master's mac address to that of the first slave
+ 		 */
+ 		memcpy(ss.__data, bond_dev->dev_addr, bond_dev->addr_len);
+-		ss.ss_family = slave_dev->type;
+-		res = dev_set_mac_address(slave_dev, (struct sockaddr *)&ss,
+-					  extack);
+-		if (res) {
+-			slave_err(bond_dev, slave_dev, "Error %d calling set_mac_address\n", res);
+-			goto err_restore_mtu;
+-		}
++	} else if (bond->params.fail_over_mac == BOND_FOM_FOLLOW &&
++		   BOND_MODE(bond) == BOND_MODE_ACTIVEBACKUP &&
++		   memcmp(slave_dev->dev_addr, bond_dev->dev_addr, bond_dev->addr_len) == 0) {
++		/* Set slave to random address to avoid duplicate mac
++		 * address in later fail over.
++		 */
++		eth_random_addr(ss.__data);
++	} else {
++		goto skip_mac_set;
  	}
  
- 	for (i = 0 ; params[i].pixel_freq ; ++i) {
--		DRM_DEBUG_DRIVER("i = %d vclk_freq = %lluHz alt = %lluHz\n",
--				 i, params[i].vclk_freq,
--				 PIXEL_FREQ_1000_1001(params[i].vclk_freq));
--		DRM_DEBUG_DRIVER("i = %d phy_freq = %lluHz alt = %lluHz\n",
--				 i, params[i].phy_freq,
--				 PHY_FREQ_1000_1001(params[i].phy_freq));
--		/* Match strict frequency */
--		if (phy_freq == params[i].phy_freq &&
--		    vclk_freq == params[i].vclk_freq)
--			return MODE_OK;
--		/* Match 1000/1001 variant */
--		if (phy_freq == PHY_FREQ_1000_1001(params[i].phy_freq) &&
--		    vclk_freq == PIXEL_FREQ_1000_1001(params[i].vclk_freq))
-+		if (meson_vclk_freqs_are_matching_param(i, phy_freq, vclk_freq))
- 			return MODE_OK;
- 	}
++	ss.ss_family = slave_dev->type;
++	res = dev_set_mac_address(slave_dev, (struct sockaddr *)&ss, extack);
++	if (res) {
++		slave_err(bond_dev, slave_dev, "Error %d calling set_mac_address\n", res);
++		goto err_restore_mtu;
++	}
++
++skip_mac_set:
++
+ 	/* set no_addrconf flag before open to prevent IPv6 addrconf */
+ 	slave_dev->priv_flags |= IFF_NO_ADDRCONF;
  
-@@ -1075,10 +1090,8 @@ void meson_vclk_setup(struct meson_drm *priv, unsigned int target,
- 	}
- 
- 	for (freq = 0 ; params[freq].pixel_freq ; ++freq) {
--		if ((phy_freq == params[freq].phy_freq ||
--		     phy_freq == PHY_FREQ_1000_1001(params[freq].phy_freq)) &&
--		    (vclk_freq == params[freq].vclk_freq ||
--		     vclk_freq == PIXEL_FREQ_1000_1001(params[freq].vclk_freq))) {
-+		if (meson_vclk_freqs_are_matching_param(freq, phy_freq,
-+							vclk_freq)) {
- 			if (vclk_freq != params[freq].vclk_freq)
- 				vic_alternate_clock = true;
- 			else
 -- 
 2.39.5
 
