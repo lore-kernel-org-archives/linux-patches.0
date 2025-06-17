@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 621F22F2379;
-	Tue, 17 Jun 2025 15:44:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A617D2ECD2F;
+	Tue, 17 Jun 2025 15:44:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175092; cv=none; b=g56cuBrh6A4nzzInExEpXg0jUATyRHjOhfCMTL0VeXs6B/BttOErxVE0EDh/fh1sr6zH2N0S6f8c8BcX1XuHGZ9onsh1LxOsPFk+Uy+VdadMYH/u3E9Lunn9hBcylOZpxfx4BoxDGdfQgtjuomXgx+c8iyZzOy2WzGHZpxXtLOU=
+	t=1750175095; cv=none; b=T4xfuf4SkZAfXsBu27o7bJQ8AAKphUd6C2QQn1XfQ0OYcMK541pc5tec1BBl0kUyCRNOE2FFlR8l9UyXgisk3uSafjHHayfNde73YNM517BGRXkOi87Il8cq13jx8bT41592BfE2x3XdNfgJAoiH2CLuK7jpaxXKUlKA8TJaHU8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175092; c=relaxed/simple;
-	bh=dnihI/WzpqUJB8BLB8mm3Q0kQB4XcOCuq+KnVYNFVzo=;
+	s=arc-20240116; t=1750175095; c=relaxed/simple;
+	bh=tnX4EgJK0xZDtXNwolo+JUo7qE4UaIrsgImcMUHyqr8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RP8C8Au0DJotpGqR8EXug6GDwHBWNBUNGDCySuH/teUJKOttJ9+iGxq5p7fZXiG/VhuatWPNIjgAHWRVHwO68YAco0TJVSBs5AyajGQnKWMkx7cFsgt24Tgd+N7RW0JBnvjEH8TghMb4l7pJ808QjhvPT9IWHobDJu8Sb+KVdZ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vfl9rnQL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Yp0GKPcj+dqZC4g7EwY950g/g3VG7O4f6sD7rFcb2DgSGxCjaKX/345nc52DYkiUYIVt2dvXIZWsKgHCV4A1eUVDjWXLxJ4GJPDUKzoDoSEfGxGCsx+m5iixpOnSs8lBxXEbNLVyC+5bmQNAOO3Zlllcv7uJrLCXwb1gOFECmGU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j3q6RKvx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vfl9rnQL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C1D7C4CEE7;
-	Tue, 17 Jun 2025 15:44:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j3q6RKvx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8BD4C4CEE3;
+	Tue, 17 Jun 2025 15:44:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175091;
-	bh=dnihI/WzpqUJB8BLB8mm3Q0kQB4XcOCuq+KnVYNFVzo=;
+	s=korg; t=1750175095;
+	bh=tnX4EgJK0xZDtXNwolo+JUo7qE4UaIrsgImcMUHyqr8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vfl9rnQLULDGWmcd163gTW5pdyngSYWQAavK659E03PGbHE6NagKHClnCwA9TDsJT
-	 eq7152GdEY1gE3H4L09x5XrrzCDvYItbee66RvF6ER+d0uwCnCp6ouH7oreuQrWstT
-	 WCVlYkKb6Jy1cjpKom3yYWcsVwN7eTwSHeh3kjdA=
+	b=j3q6RKvxH0I69YXJ9ByMa+fSryh/0PKzB/Kk9fmgqPdsxxfY7vHNdjsp+gRfsoTwS
+	 gNNlKf3tq8G/0ZoA5YVGpg7/qqIBakAT50d+Kmpg9WRA2V+FZKhRDhQWsNYY6sXi9x
+	 mN9fEfgu2K432rPPSqwQCf5txupUgVavUuzZv25Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Casey Connolly <casey.connolly@linaro.org>,
-	David Heidelberg <david@ixit.cz>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Biju Das <biju.das.jz@bp.renesas.com>,
+	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 076/512] drm/panel: samsung-sofef00: Drop s6e3fc2x01 support
-Date: Tue, 17 Jun 2025 17:20:42 +0200
-Message-ID: <20250617152422.664797254@linuxfoundation.org>
+Subject: [PATCH 6.12 091/512] drm/tegra: rgb: Fix the unbound reference count
+Date: Tue, 17 Jun 2025 17:20:57 +0200
+Message-ID: <20250617152423.267285311@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
 References: <20250617152419.512865572@linuxfoundation.org>
@@ -52,94 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Casey Connolly <casey.connolly@linaro.org>
+From: Biju Das <biju.das.jz@bp.renesas.com>
 
-[ Upstream commit e1eb7293ab4107e9e19fa609835e657fe30dfec7 ]
+[ Upstream commit 3c3642335065c3bde0742b0edc505b6ea8fdc2b3 ]
 
-We never properly supported this panel and always used the wrong init
-sequence. Drop support so we can move it to it's own proper driver.
+The of_get_child_by_name() increments the refcount in tegra_dc_rgb_probe,
+but the driver does not decrement the refcount during unbind. Fix the
+unbound reference count using devm_add_action_or_reset() helper.
 
-Fixes: 5933baa36e26 ("drm/panel/samsung-sofef00: Add panel for OnePlus 6/T devices")
-Signed-off-by: Casey Connolly <casey.connolly@linaro.org>
-Signed-off-by: David Heidelberg <david@ixit.cz>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/20250419-drop-s6e3fc2x01-support-v1-1-05edfe0d27aa@ixit.cz
+Fixes: d8f4a9eda006 ("drm: Add NVIDIA Tegra20 support")
+Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
+Link: https://lore.kernel.org/r/20250205112137.36055-1-biju.das.jz@bp.renesas.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panel/panel-samsung-sofef00.c | 34 ++-----------------
- 1 file changed, 2 insertions(+), 32 deletions(-)
+ drivers/gpu/drm/tegra/rgb.c | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/panel/panel-samsung-sofef00.c b/drivers/gpu/drm/panel/panel-samsung-sofef00.c
-index 04ce925b3d9db..49cfa84b34f0c 100644
---- a/drivers/gpu/drm/panel/panel-samsung-sofef00.c
-+++ b/drivers/gpu/drm/panel/panel-samsung-sofef00.c
-@@ -22,7 +22,6 @@ struct sofef00_panel {
- 	struct mipi_dsi_device *dsi;
- 	struct regulator *supply;
- 	struct gpio_desc *reset_gpio;
--	const struct drm_display_mode *mode;
+diff --git a/drivers/gpu/drm/tegra/rgb.c b/drivers/gpu/drm/tegra/rgb.c
+index 1e8ec50b759e4..ff5a749710db3 100644
+--- a/drivers/gpu/drm/tegra/rgb.c
++++ b/drivers/gpu/drm/tegra/rgb.c
+@@ -200,6 +200,11 @@ static const struct drm_encoder_helper_funcs tegra_rgb_encoder_helper_funcs = {
+ 	.atomic_check = tegra_rgb_encoder_atomic_check,
  };
  
- static inline
-@@ -159,26 +158,11 @@ static const struct drm_display_mode enchilada_panel_mode = {
- 	.height_mm = 145,
- };
- 
--static const struct drm_display_mode fajita_panel_mode = {
--	.clock = (1080 + 72 + 16 + 36) * (2340 + 32 + 4 + 18) * 60 / 1000,
--	.hdisplay = 1080,
--	.hsync_start = 1080 + 72,
--	.hsync_end = 1080 + 72 + 16,
--	.htotal = 1080 + 72 + 16 + 36,
--	.vdisplay = 2340,
--	.vsync_start = 2340 + 32,
--	.vsync_end = 2340 + 32 + 4,
--	.vtotal = 2340 + 32 + 4 + 18,
--	.width_mm = 68,
--	.height_mm = 145,
--};
--
- static int sofef00_panel_get_modes(struct drm_panel *panel, struct drm_connector *connector)
++static void tegra_dc_of_node_put(void *data)
++{
++	of_node_put(data);
++}
++
+ int tegra_dc_rgb_probe(struct tegra_dc *dc)
  {
- 	struct drm_display_mode *mode;
--	struct sofef00_panel *ctx = to_sofef00_panel(panel);
+ 	struct device_node *np;
+@@ -207,7 +212,14 @@ int tegra_dc_rgb_probe(struct tegra_dc *dc)
+ 	int err;
  
--	mode = drm_mode_duplicate(connector->dev, ctx->mode);
-+	mode = drm_mode_duplicate(connector->dev, &enchilada_panel_mode);
- 	if (!mode)
- 		return -ENOMEM;
+ 	np = of_get_child_by_name(dc->dev->of_node, "rgb");
+-	if (!np || !of_device_is_available(np))
++	if (!np)
++		return -ENODEV;
++
++	err = devm_add_action_or_reset(dc->dev, tegra_dc_of_node_put, np);
++	if (err < 0)
++		return err;
++
++	if (!of_device_is_available(np))
+ 		return -ENODEV;
  
-@@ -239,13 +223,6 @@ static int sofef00_panel_probe(struct mipi_dsi_device *dsi)
- 	if (!ctx)
- 		return -ENOMEM;
- 
--	ctx->mode = of_device_get_match_data(dev);
--
--	if (!ctx->mode) {
--		dev_err(dev, "Missing device mode\n");
--		return -ENODEV;
--	}
--
- 	ctx->supply = devm_regulator_get(dev, "vddio");
- 	if (IS_ERR(ctx->supply))
- 		return dev_err_probe(dev, PTR_ERR(ctx->supply),
-@@ -295,14 +272,7 @@ static void sofef00_panel_remove(struct mipi_dsi_device *dsi)
- }
- 
- static const struct of_device_id sofef00_panel_of_match[] = {
--	{ // OnePlus 6 / enchilada
--		.compatible = "samsung,sofef00",
--		.data = &enchilada_panel_mode,
--	},
--	{ // OnePlus 6T / fajita
--		.compatible = "samsung,s6e3fc2x01",
--		.data = &fajita_panel_mode,
--	},
-+	{ .compatible = "samsung,sofef00" },
- 	{ /* sentinel */ }
- };
- MODULE_DEVICE_TABLE(of, sofef00_panel_of_match);
+ 	rgb = devm_kzalloc(dc->dev, sizeof(*rgb), GFP_KERNEL);
 -- 
 2.39.5
 
