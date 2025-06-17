@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 589962ED174;
-	Tue, 17 Jun 2025 15:45:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E58B12ED17A;
+	Tue, 17 Jun 2025 15:45:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175114; cv=none; b=XBFWqY9C7oSk+Vvs9kEcijaN1mGrORRO8NdCyOF/fBF7NfAxN+ATeVS2+S9/QKEiuujQQUJKrYYHyCPXWTaz8s/6EfHeuBVLXoMn2tGHWxJ/99w6+YzXuNva3ZhzYCASiSLXN1skF0HMwi7nhmPpT5J/4EgZcFF6nlHLvG/ZYFg=
+	t=1750175118; cv=none; b=a1CZA36l8EOdtBTF9bC96tiWcyT+gZnpcajQqs7pEEtBGvT07fgKOHPgfxRzM0UNcxEs+gvgDl9dYSOBeVdZxgA+qOuMVEAJiIrBJ+UqujAXceUHGzkUIF7zUU1xsru3nO1feoxcRK5/oLMcAVLYBKM1d5beEFIKlY5Z/yS5Smc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175114; c=relaxed/simple;
-	bh=hk1Zo6wB1Trukd0OGPB8Fim4By/xbOS+znj8Taqz7QY=;
+	s=arc-20240116; t=1750175118; c=relaxed/simple;
+	bh=ZxwJmlHHjAb2V6wZNNQXVo+9ux0IA/+/h59OkqW7oU4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r2jqvpYcju8PtI4SVJM86AsmCe4IwwrTaeAbGbVKn/NEHaU+fu/xZw5/Os7FUEkM/8Ap4GC+H2j4PLuowZ3UgD9MFbOGSz7sUcqjTR2lc8xnccV7qk+RzXYrQUfYPqzJR6zx1cdQfFJxO5ed9Mol6hMknVPBqQ2CbP5ESAlUof8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SRbrGUfv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RPsvwQsf5+GQAzauBhsvCpBnoIQ0AL/walQ23eWv0MZijc95Jl7Y/b74OIQmA4T1pJINHIKfkOHoS8eQsypYDU1OpBOahR9M/e7b9Bq98/3ZqS1/JtcMP95Hq26YVmjfmyCBulmYcCSigtdDAGMVGuKWNOeSoZ5NrYNwmROWuKw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KlThkdda; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SRbrGUfv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAC86C4CEE3;
-	Tue, 17 Jun 2025 15:45:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KlThkdda"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09BD7C4CEE3;
+	Tue, 17 Jun 2025 15:45:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175114;
-	bh=hk1Zo6wB1Trukd0OGPB8Fim4By/xbOS+znj8Taqz7QY=;
+	s=korg; t=1750175117;
+	bh=ZxwJmlHHjAb2V6wZNNQXVo+9ux0IA/+/h59OkqW7oU4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SRbrGUfvkEE4BWzHexD9sl8o+BcjKfs1AZWXv8DT49l8RRDuH6OEGWJXNsS/U2IPx
-	 WboK6Zx1sekyNLhPuOaEV3U52IRMpKspAqhXY1gscdI7q6E3V3cNadFfuvYTRZL8pg
-	 jKN2rNpG4b2zpI4Aa7UkFV9u97ZNODekB4YBA8yI=
+	b=KlThkddaEzSMO1nAF2wUMNLJEY2Z8f4YpSeKHhCb/g21oL3J/V1y8m4t4Vw4ZWiJW
+	 MnHl8QH9XhgTsXwmdvWyjejyU0CaGLn0T7uAgs3/QzayuhBSKk6zYJrLspIrnjwMXa
+	 pF+6EfVMSPq3JtvP8NGSV9OnHBfAc+QewhUwWwnw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Marc Zyngier <maz@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
-	Will Deacon <will@kernel.org>,
+	Horatiu Vultur <horatiu.vultur@microchip.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 093/512] arm64/fpsimd: Do not discard modified SVE state
-Date: Tue, 17 Jun 2025 17:20:59 +0200
-Message-ID: <20250617152423.346292966@linuxfoundation.org>
+Subject: [PATCH 6.6 145/356] net: lan966x: Fix 1-step timestamping over ipv4 or ipv6
+Date: Tue, 17 Jun 2025 17:24:20 +0200
+Message-ID: <20250617152344.072847785@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
+References: <20250617152338.212798615@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,288 +47,170 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mark Rutland <mark.rutland@arm.com>
+From: Horatiu Vultur <horatiu.vultur@microchip.com>
 
-[ Upstream commit 398edaa12f9cf2be7902f306fc023c20e3ebd3e4 ]
+[ Upstream commit 57ee9584fd8606deef66d7b65fa4dcf94f6843aa ]
 
-Historically SVE state was discarded deterministically early in the
-syscall entry path, before ptrace is notified of syscall entry. This
-permitted ptrace to modify SVE state before and after the "real" syscall
-logic was executed, with the modified state being retained.
+When enabling 1-step timestamping for ptp frames that are over udpv4 or
+udpv6 then the inserted timestamp is added at the wrong offset in the
+frame, meaning that will modify the frame at the wrong place, so the
+frame will be malformed.
+To fix this, the HW needs to know which kind of frame it is to know
+where to insert the timestamp. For that there is a field in the IFH that
+says the PDU_TYPE, which can be NONE  which is the default value,
+IPV4 or IPV6. Therefore make sure to set the PDU_TYPE so the HW knows
+where to insert the timestamp.
+Like I mention before the issue is not seen with L2 frames because by
+default the PDU_TYPE has a value of 0, which represents the L2 frames.
 
-This behaviour was changed by commit:
-
-  8c845e2731041f0f ("arm64/sve: Leave SVE enabled on syscall if we don't context switch")
-
-That commit was intended to speed up workloads that used SVE by
-opportunistically leaving SVE enabled when returning from a syscall.
-The syscall entry logic was modified to truncate the SVE state without
-disabling userspace access to SVE, and fpsimd_save_user_state() was
-modified to discard userspace SVE state whenever
-in_syscall(current_pt_regs()) is true, i.e. when
-current_pt_regs()->syscallno != NO_SYSCALL.
-
-Leaving SVE enabled opportunistically resulted in a couple of changes to
-userspace visible behaviour which weren't described at the time, but are
-logical consequences of opportunistically leaving SVE enabled:
-
-* Signal handlers can observe the type of saved state in the signal's
-  sve_context record. When the kernel only tracks FPSIMD state, the 'vq'
-  field is 0 and there is no space allocated for register contents. When
-  the kernel tracks SVE state, the 'vq' field is non-zero and the
-  register contents are saved into the record.
-
-  As a result of the above commit, 'vq' (and the presence of SVE
-  register state) is non-deterministically zero or non-zero for a period
-  of time after a syscall. The effective register state is still
-  deterministic.
-
-  Hopefully no-one relies on this being deterministic. In general,
-  handlers for asynchronous events cannot expect a deterministic state.
-
-* Similarly to signal handlers, ptrace requests can observe the type of
-  saved state in the NT_ARM_SVE and NT_ARM_SSVE regsets, as this is
-  exposed in the header flags. As a result of the above commit, this is
-  now in a non-deterministic state after a syscall. The effective
-  register state is still deterministic.
-
-  Hopefully no-one relies on this being deterministic. In general,
-  debuggers would have to handle this changing at arbitrary points
-  during program flow.
-
-Discarding the SVE state within fpsimd_save_user_state() resulted in
-other changes to userspace visible behaviour which are not desirable:
-
-* A ptrace tracer can modify (or create) a tracee's SVE state at syscall
-  entry or syscall exit. As a result of the above commit, the tracee's
-  SVE state can be discarded non-deterministically after modification,
-  rather than being retained as it previously was.
-
-  Note that for co-operative tracer/tracee pairs, the tracer may
-  (re)initialise the tracee's state arbitrarily after the tracee sends
-  itself an initial SIGSTOP via a syscall, so this affects realistic
-  design patterns.
-
-* The current_pt_regs()->syscallno field can be modified via ptrace, and
-  can be altered even when the tracee is not really in a syscall,
-  causing non-deterministic discarding to occur in situations where this
-  was not previously possible.
-
-Further, using current_pt_regs()->syscallno in this way is unsound:
-
-* There are data races between readers and writers of the
-  current_pt_regs()->syscallno field.
-
-  The current_pt_regs()->syscallno field is written in interruptible
-  task context using plain C accesses, and is read in irq/softirq
-  context using plain C accesses. These accesses are subject to data
-  races, with the usual concerns with tearing, etc.
-
-* Writes to current_pt_regs()->syscallno are subject to compiler
-  reordering.
-
-  As current_pt_regs()->syscallno is written with plain C accesses,
-  the compiler is free to move those writes arbitrarily relative to
-  anything which doesn't access the same memory location.
-
-  In theory this could break signal return, where prior to restoring the
-  SVE state, restore_sigframe() calls forget_syscall(). If the write
-  were hoisted after restore of some SVE state, that state could be
-  discarded unexpectedly.
-
-  In practice that reordering cannot happen in the absence of LTO (as
-  cross compilation-unit function calls happen prevent this reordering),
-  and that reordering appears to be unlikely in the presence of LTO.
-
-Additionally, since commit:
-
-  f130ac0ae4412dbe ("arm64: syscall: unmask DAIF earlier for SVCs")
-
-... DAIF is unmasked before el0_svc_common() sets regs->syscallno to the
-real syscall number. Consequently state may be saved in SVE format prior
-to this point.
-
-Considering all of the above, current_pt_regs()->syscallno should not be
-used to infer whether the SVE state can be discarded. Luckily we can
-instead use cpu_fp_state::to_save to track when it is safe to discard
-the SVE state:
-
-* At syscall entry, after the live SVE register state is truncated, set
-  cpu_fp_state::to_save to FP_STATE_FPSIMD to indicate that only the
-  FPSIMD portion is live and needs to be saved.
-
-* At syscall exit, once the task's state is guaranteed to be live, set
-  cpu_fp_state::to_save to FP_STATE_CURRENT to indicate that TIF_SVE
-  must be considered to determine which state needs to be saved.
-
-* Whenever state is modified, it must be saved+flushed prior to
-  manipulation. The state will be truncated if necessary when it is
-  saved, and reloading the state will set fp_state::to_save to
-  FP_STATE_CURRENT, preventing subsequent discarding.
-
-This permits SVE state to be discarded *only* when it is known to have
-been truncated (and the non-FPSIMD portions must be zero), and ensures
-that SVE state is retained after it is explicitly modified.
-
-For backporting, note that this fix depends on the following commits:
-
-* b2482807fbd4 ("arm64/sme: Optimise SME exit on syscall entry")
-* f130ac0ae441 ("arm64: syscall: unmask DAIF earlier for SVCs")
-* 929fa99b1215 ("arm64/fpsimd: signal: Always save+flush state early")
-
-Fixes: 8c845e273104 ("arm64/sve: Leave SVE enabled on syscall if we don't context switch")
-Fixes: f130ac0ae441 ("arm64: syscall: unmask DAIF earlier for SVCs")
-Signed-off-by: Mark Rutland <mark.rutland@arm.com>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Marc Zyngier <maz@kernel.org>
-Cc: Mark Brown <broonie@kernel.org>
-Cc: Will Deacon <will@kernel.org>
-Link: https://lore.kernel.org/r/20250508132644.1395904-2-mark.rutland@arm.com
-Signed-off-by: Will Deacon <will@kernel.org>
+Fixes: 77eecf25bd9d2f ("net: lan966x: Update extraction/injection for timestamping")
+Signed-off-by: Horatiu Vultur <horatiu.vultur@microchip.com>
+Link: https://patch.msgid.link/20250521124159.2713525-1-horatiu.vultur@microchip.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/fpsimd.h  |  3 +++
- arch/arm64/kernel/entry-common.c | 46 ++++++++++++++++++++++++--------
- arch/arm64/kernel/fpsimd.c       | 15 ++++++-----
- 3 files changed, 47 insertions(+), 17 deletions(-)
+ .../ethernet/microchip/lan966x/lan966x_main.c |  6 +++
+ .../ethernet/microchip/lan966x/lan966x_main.h |  5 ++
+ .../ethernet/microchip/lan966x/lan966x_ptp.c  | 49 ++++++++++++++-----
+ 3 files changed, 47 insertions(+), 13 deletions(-)
 
-diff --git a/arch/arm64/include/asm/fpsimd.h b/arch/arm64/include/asm/fpsimd.h
-index f2a84efc36185..c8dcb67b81a72 100644
---- a/arch/arm64/include/asm/fpsimd.h
-+++ b/arch/arm64/include/asm/fpsimd.h
-@@ -6,6 +6,7 @@
- #define __ASM_FP_H
+diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_main.c b/drivers/net/ethernet/microchip/lan966x/lan966x_main.c
+index c3f6c10bc2393..05f6c92275830 100644
+--- a/drivers/net/ethernet/microchip/lan966x/lan966x_main.c
++++ b/drivers/net/ethernet/microchip/lan966x/lan966x_main.c
+@@ -353,6 +353,11 @@ static void lan966x_ifh_set_rew_op(void *ifh, u64 rew_op)
+ 	lan966x_ifh_set(ifh, rew_op, IFH_POS_REW_CMD, IFH_WID_REW_CMD);
+ }
  
- #include <asm/errno.h>
-+#include <asm/percpu.h>
- #include <asm/ptrace.h>
- #include <asm/processor.h>
- #include <asm/sigcontext.h>
-@@ -94,6 +95,8 @@ struct cpu_fp_state {
- 	enum fp_type to_save;
- };
- 
-+DECLARE_PER_CPU(struct cpu_fp_state, fpsimd_last_state);
-+
- extern void fpsimd_bind_state_to_cpu(struct cpu_fp_state *fp_state);
- 
- extern void fpsimd_flush_task_state(struct task_struct *target);
-diff --git a/arch/arm64/kernel/entry-common.c b/arch/arm64/kernel/entry-common.c
-index 3fcd9d080bf2a..d23315ef7b679 100644
---- a/arch/arm64/kernel/entry-common.c
-+++ b/arch/arm64/kernel/entry-common.c
-@@ -393,20 +393,16 @@ static bool cortex_a76_erratum_1463225_debug_handler(struct pt_regs *regs)
-  * As per the ABI exit SME streaming mode and clear the SVE state not
-  * shared with FPSIMD on syscall entry.
-  */
--static inline void fp_user_discard(void)
-+static inline void fpsimd_syscall_enter(void)
- {
--	/*
--	 * If SME is active then exit streaming mode.  If ZA is active
--	 * then flush the SVE registers but leave userspace access to
--	 * both SVE and SME enabled, otherwise disable SME for the
--	 * task and fall through to disabling SVE too.  This means
--	 * that after a syscall we never have any streaming mode
--	 * register state to track, if this changes the KVM code will
--	 * need updating.
--	 */
-+	/* Ensure PSTATE.SM is clear, but leave PSTATE.ZA as-is. */
- 	if (system_supports_sme())
- 		sme_smstop_sm();
- 
-+	/*
-+	 * The CPU is not in streaming mode. If non-streaming SVE is not
-+	 * supported, there is no SVE state that needs to be discarded.
-+	 */
- 	if (!system_supports_sve())
- 		return;
- 
-@@ -416,6 +412,33 @@ static inline void fp_user_discard(void)
- 		sve_vq_minus_one = sve_vq_from_vl(task_get_sve_vl(current)) - 1;
- 		sve_flush_live(true, sve_vq_minus_one);
- 	}
-+
-+	/*
-+	 * Any live non-FPSIMD SVE state has been zeroed. Allow
-+	 * fpsimd_save_user_state() to lazily discard SVE state until either
-+	 * the live state is unbound or fpsimd_syscall_exit() is called.
-+	 */
-+	__this_cpu_write(fpsimd_last_state.to_save, FP_STATE_FPSIMD);
++static void lan966x_ifh_set_oam_type(void *ifh, u64 oam_type)
++{
++	lan966x_ifh_set(ifh, oam_type, IFH_POS_PDU_TYPE, IFH_WID_PDU_TYPE);
 +}
 +
-+static __always_inline void fpsimd_syscall_exit(void)
-+{
-+	if (!system_supports_sve())
-+		return;
-+
-+	/*
-+	 * The current task's user FPSIMD/SVE/SME state is now bound to this
-+	 * CPU. The fpsimd_last_state.to_save value is either:
-+	 *
-+	 * - FP_STATE_FPSIMD, if the state has not been reloaded on this CPU
-+	 *   since fpsimd_syscall_enter().
-+	 *
-+	 * - FP_STATE_CURRENT, if the state has been reloaded on this CPU at
-+	 *   any point.
-+	 *
-+	 * Reset this to FP_STATE_CURRENT to stop lazy discarding.
-+	 */
-+	__this_cpu_write(fpsimd_last_state.to_save, FP_STATE_CURRENT);
- }
- 
- UNHANDLED(el1t, 64, sync)
-@@ -707,10 +730,11 @@ static void noinstr el0_svc(struct pt_regs *regs)
+ static void lan966x_ifh_set_timestamp(void *ifh, u64 timestamp)
  {
- 	enter_from_user_mode(regs);
- 	cortex_a76_erratum_1463225_svc_handler();
--	fp_user_discard();
-+	fpsimd_syscall_enter();
- 	local_daif_restore(DAIF_PROCCTX);
- 	do_el0_svc(regs);
- 	exit_to_user_mode(regs);
-+	fpsimd_syscall_exit();
+ 	lan966x_ifh_set(ifh, timestamp, IFH_POS_TIMESTAMP, IFH_WID_TIMESTAMP);
+@@ -380,6 +385,7 @@ static netdev_tx_t lan966x_port_xmit(struct sk_buff *skb,
+ 			return err;
+ 
+ 		lan966x_ifh_set_rew_op(ifh, LAN966X_SKB_CB(skb)->rew_op);
++		lan966x_ifh_set_oam_type(ifh, LAN966X_SKB_CB(skb)->pdu_type);
+ 		lan966x_ifh_set_timestamp(ifh, LAN966X_SKB_CB(skb)->ts_id);
+ 	}
+ 
+diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_main.h b/drivers/net/ethernet/microchip/lan966x/lan966x_main.h
+index caa9e0533c96b..b65d58a1552b5 100644
+--- a/drivers/net/ethernet/microchip/lan966x/lan966x_main.h
++++ b/drivers/net/ethernet/microchip/lan966x/lan966x_main.h
+@@ -74,6 +74,10 @@
+ #define IFH_REW_OP_ONE_STEP_PTP		0x3
+ #define IFH_REW_OP_TWO_STEP_PTP		0x4
+ 
++#define IFH_PDU_TYPE_NONE		0
++#define IFH_PDU_TYPE_IPV4		7
++#define IFH_PDU_TYPE_IPV6		8
++
+ #define FDMA_RX_DCB_MAX_DBS		1
+ #define FDMA_TX_DCB_MAX_DBS		1
+ #define FDMA_DCB_INFO_DATAL(x)		((x) & GENMASK(15, 0))
+@@ -306,6 +310,7 @@ struct lan966x_phc {
+ 
+ struct lan966x_skb_cb {
+ 	u8 rew_op;
++	u8 pdu_type;
+ 	u16 ts_id;
+ 	unsigned long jiffies;
+ };
+diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_ptp.c b/drivers/net/ethernet/microchip/lan966x/lan966x_ptp.c
+index 63905bb5a63a8..87e5e81d40dc6 100644
+--- a/drivers/net/ethernet/microchip/lan966x/lan966x_ptp.c
++++ b/drivers/net/ethernet/microchip/lan966x/lan966x_ptp.c
+@@ -322,34 +322,55 @@ void lan966x_ptp_hwtstamp_get(struct lan966x_port *port,
+ 	*cfg = phc->hwtstamp_config;
  }
  
- static void noinstr el0_fpac(struct pt_regs *regs, unsigned long esr)
-diff --git a/arch/arm64/kernel/fpsimd.c b/arch/arm64/kernel/fpsimd.c
-index c5285ee55bfb0..8854bce5cfe20 100644
---- a/arch/arm64/kernel/fpsimd.c
-+++ b/arch/arm64/kernel/fpsimd.c
-@@ -119,7 +119,7 @@
-  *   whatever is in the FPSIMD registers is not saved to memory, but discarded.
-  */
+-static int lan966x_ptp_classify(struct lan966x_port *port, struct sk_buff *skb)
++static void lan966x_ptp_classify(struct lan966x_port *port, struct sk_buff *skb,
++				 u8 *rew_op, u8 *pdu_type)
+ {
+ 	struct ptp_header *header;
+ 	u8 msgtype;
+ 	int type;
  
--static DEFINE_PER_CPU(struct cpu_fp_state, fpsimd_last_state);
-+DEFINE_PER_CPU(struct cpu_fp_state, fpsimd_last_state);
+-	if (port->ptp_tx_cmd == IFH_REW_OP_NOOP)
+-		return IFH_REW_OP_NOOP;
++	if (port->ptp_tx_cmd == IFH_REW_OP_NOOP) {
++		*rew_op = IFH_REW_OP_NOOP;
++		*pdu_type = IFH_PDU_TYPE_NONE;
++		return;
++	}
  
- __ro_after_init struct vl_info vl_info[ARM64_VEC_MAX] = {
- #ifdef CONFIG_ARM64_SVE
-@@ -453,12 +453,15 @@ static void fpsimd_save_user_state(void)
- 		*(last->fpmr) = read_sysreg_s(SYS_FPMR);
+ 	type = ptp_classify_raw(skb);
+-	if (type == PTP_CLASS_NONE)
+-		return IFH_REW_OP_NOOP;
++	if (type == PTP_CLASS_NONE) {
++		*rew_op = IFH_REW_OP_NOOP;
++		*pdu_type = IFH_PDU_TYPE_NONE;
++		return;
++	}
  
- 	/*
--	 * If a task is in a syscall the ABI allows us to only
--	 * preserve the state shared with FPSIMD so don't bother
--	 * saving the full SVE state in that case.
-+	 * Save SVE state if it is live.
-+	 *
-+	 * The syscall ABI discards live SVE state at syscall entry. When
-+	 * entering a syscall, fpsimd_syscall_enter() sets to_save to
-+	 * FP_STATE_FPSIMD to allow the SVE state to be lazily discarded until
-+	 * either new SVE state is loaded+bound or fpsimd_syscall_exit() is
-+	 * called prior to a return to userspace.
+ 	header = ptp_parse_header(skb, type);
+-	if (!header)
+-		return IFH_REW_OP_NOOP;
++	if (!header) {
++		*rew_op = IFH_REW_OP_NOOP;
++		*pdu_type = IFH_PDU_TYPE_NONE;
++		return;
++	}
+ 
+-	if (port->ptp_tx_cmd == IFH_REW_OP_TWO_STEP_PTP)
+-		return IFH_REW_OP_TWO_STEP_PTP;
++	if (type & PTP_CLASS_L2)
++		*pdu_type = IFH_PDU_TYPE_NONE;
++	if (type & PTP_CLASS_IPV4)
++		*pdu_type = IFH_PDU_TYPE_IPV4;
++	if (type & PTP_CLASS_IPV6)
++		*pdu_type = IFH_PDU_TYPE_IPV6;
++
++	if (port->ptp_tx_cmd == IFH_REW_OP_TWO_STEP_PTP) {
++		*rew_op = IFH_REW_OP_TWO_STEP_PTP;
++		return;
++	}
+ 
+ 	/* If it is sync and run 1 step then set the correct operation,
+ 	 * otherwise run as 2 step
  	 */
--	if ((last->to_save == FP_STATE_CURRENT && test_thread_flag(TIF_SVE) &&
--	     !in_syscall(current_pt_regs())) ||
-+	if ((last->to_save == FP_STATE_CURRENT && test_thread_flag(TIF_SVE)) ||
- 	    last->to_save == FP_STATE_SVE) {
- 		save_sve_regs = true;
- 		save_ffr = true;
+ 	msgtype = ptp_get_msgtype(header, type);
+-	if ((msgtype & 0xf) == 0)
+-		return IFH_REW_OP_ONE_STEP_PTP;
++	if ((msgtype & 0xf) == 0) {
++		*rew_op = IFH_REW_OP_ONE_STEP_PTP;
++		return;
++	}
+ 
+-	return IFH_REW_OP_TWO_STEP_PTP;
++	*rew_op = IFH_REW_OP_TWO_STEP_PTP;
+ }
+ 
+ static void lan966x_ptp_txtstamp_old_release(struct lan966x_port *port)
+@@ -374,10 +395,12 @@ int lan966x_ptp_txtstamp_request(struct lan966x_port *port,
+ {
+ 	struct lan966x *lan966x = port->lan966x;
+ 	unsigned long flags;
++	u8 pdu_type;
+ 	u8 rew_op;
+ 
+-	rew_op = lan966x_ptp_classify(port, skb);
++	lan966x_ptp_classify(port, skb, &rew_op, &pdu_type);
+ 	LAN966X_SKB_CB(skb)->rew_op = rew_op;
++	LAN966X_SKB_CB(skb)->pdu_type = pdu_type;
+ 
+ 	if (rew_op != IFH_REW_OP_TWO_STEP_PTP)
+ 		return 0;
 -- 
 2.39.5
 
