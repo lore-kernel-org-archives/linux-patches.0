@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F88D2FA624;
-	Tue, 17 Jun 2025 16:57:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5C982FA622;
+	Tue, 17 Jun 2025 16:57:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750179468; cv=none; b=NZ0bKWPsfQJJWzcE8QGRZi/5twNj1IyQZ39CpzGBvwvMaFatHG4kjRETV8sF7zQSJYv01oLuEe8eqoH+5qRX/87nqlr7/Q2H6NboM42fPKWAuPPLk59GAQFPBkew7ZlQ0lrfSmSaG02NAf5NMixbCskcqIfNiuqcR44kXW1tnM8=
+	t=1750179471; cv=none; b=uRofdp+eWkO0JTDdkFshfmQ14imdfG3PV8kNJ7fimI3W3p8Yf5SozeZUUi7cHsYZAGWxRCkaPygx3Ql2HRRU6RqUm9TquOOp/vba4yj8CLsGQ7T1yH0xCkk5HzYX4jzXE89pk7cXkEe9/KY0tjovRbEBX0T2KCk+aOE8+6mE7ps=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750179468; c=relaxed/simple;
-	bh=mRspAhsiC2Cif63LnsqSYpG9NPsndCF4vLZi0BhubXA=;
+	s=arc-20240116; t=1750179471; c=relaxed/simple;
+	bh=ybymj+AIYfs/0oVshFmgOFmxYe/ck/EWZwH6lmhjOmI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GYrWw3+j7Q4m8Df4/mnnButUgSK9QF4WMihkaL0ZelX8t6thjNo+KcPAvlQVu/URMevbPmhZpaFMU2R7a3ix73WJLQAn2eVdLI0e3xDTkXLwtS/2uzvBUXlMf62MqoxSo416d2Y/YqTNesKCb1SO6tFFOIYKK99WZ4JU8qS6he4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qBnb3CMd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Epo5tjOCzbLXp1Ry5l4oPeTIoEnHMl6LQqFXTPSUjbefuvqowxgyhTHX4BPiAt4jToE8l/z2ZqURDCkASfvLvSf/9xmcNdTO8qAVPzvF8EmQLh/6THby2vpaNNLt1SFvIvzxYXh3VpiHhvuK94GIDg5Kl8Jcfdqz5dnD28ItSs8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0/zYq+Rn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qBnb3CMd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D596CC4CEE3;
-	Tue, 17 Jun 2025 16:57:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0/zYq+Rn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25222C4CEE3;
+	Tue, 17 Jun 2025 16:57:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750179468;
-	bh=mRspAhsiC2Cif63LnsqSYpG9NPsndCF4vLZi0BhubXA=;
+	s=korg; t=1750179471;
+	bh=ybymj+AIYfs/0oVshFmgOFmxYe/ck/EWZwH6lmhjOmI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qBnb3CMd4Nui6MYthJCMQvo/PRj9nBfIoy1derGsvqP8qP3iBT8fwV+Y3kwpCFLFF
-	 rfFQdeNk17RPddTF9e5IvlcVsH5ggi+NbdJ0WQMbfAYtFyMfzEH+/N23l9/pDIi5+H
-	 PttUjFChsZZb0XnEG9EROSYEXWZl5CpHKwaR7jqo=
+	b=0/zYq+RnRlNO1WJyVnHX9jWGGO1itBS0fDb6av9g4qYhIKuCRoq0IG0buS1r0xawi
+	 Fw420Drz6zKm2i1tnYYuuCe2UdzPD2wNAvW0XLWsIQWoTWKr8O34uUhnU1c1JsLF2z
+	 lUhd+xknjw0ibseFb6LefGlhnbjYKY1u8owQeQf4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
-	Mans Rullgard <mans@mansr.com>
-Subject: [PATCH 6.15 755/780] tty: serial: 8250_omap: fix TX with DMA for am33xx
-Date: Tue, 17 Jun 2025 17:27:43 +0200
-Message-ID: <20250617152522.255944437@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Jonathan Stroud <jonathan.stroud@amd.com>,
+	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+Subject: [PATCH 6.15 756/780] usb: misc: onboard_usb_dev: Fix usb5744 initialization sequence
+Date: Tue, 17 Jun 2025 17:27:44 +0200
+Message-ID: <20250617152522.294211358@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
 References: <20250617152451.485330293@linuxfoundation.org>
@@ -50,100 +51,161 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
+From: Jonathan Stroud <jonathan.stroud@amd.com>
 
-commit b495021a973e2468497689bd3e29b736747b896f upstream.
+commit 1143d41922c0f87504f095417ba1870167970143 upstream.
 
-Commit 1788cf6a91d9 ("tty: serial: switch from circ_buf to kfifo")
-introduced an error in the TX DMA handling for 8250_omap.
+Introduce i2c APIs to read/write for proper configuration register
+programming. It ensures that read-modify-write sequence is performed
+and reserved bit in Runtime Flags 2 register are not touched.
 
-When the OMAP_DMA_TX_KICK flag is set, the "skip_byte" is pulled from
-the kfifo and emitted directly in order to start the DMA. While the
-kfifo is updated, dma->tx_size is not decreased. This leads to
-uart_xmit_advance() called in omap_8250_dma_tx_complete() advancing the
-kfifo by one too much.
+Also legacy smbus block write inserted an extra count value into the
+i2c data stream which breaks the register write on the usb5744.
 
-In practice, transmitting N bytes has been seen to result in the last
-N-1 bytes being sent repeatedly.
+Switching to new read/write i2c APIs fixes both issues.
 
-This change fixes the problem by moving all of the dma setup after the
-OMAP_DMA_TX_KICK handling and using kfifo_len() instead of the DMA size
-for the 4-byte cutoff check. This slightly changes the behaviour at
-buffer wraparound, but it still transmits the correct bytes somehow.
-
-Now, the "skip_byte" would no longer be accounted to the stats. As
-previously, dma->tx_size included also this skip byte, up->icount.tx was
-updated by aforementioned uart_xmit_advance() in
-omap_8250_dma_tx_complete(). Fix this by using the uart_fifo_out()
-helper instead of bare kfifo_get().
-
-Based on patch by Mans Rullgard <mans@mansr.com>
-
-Signed-off-by: "Jiri Slaby (SUSE)" <jirislaby@kernel.org>
-Fixes: 1788cf6a91d9 ("tty: serial: switch from circ_buf to kfifo")
-Link: https://lore.kernel.org/all/20250506150748.3162-1-mans@mansr.com/
-Reported-by: Mans Rullgard <mans@mansr.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250522053835.3495975-1-jirislaby@kernel.org
+Fixes: 6782311d04df ("usb: misc: onboard_usb_dev: add Microchip usb5744 SMBus programming support")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Jonathan Stroud <jonathan.stroud@amd.com>
+Co-developed-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+Signed-off-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+Link: https://lore.kernel.org/r/1747398760-284021-1-git-send-email-radhey.shyam.pandey@amd.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250_omap.c |   25 ++++++++++---------------
- 1 file changed, 10 insertions(+), 15 deletions(-)
+ drivers/usb/misc/onboard_usb_dev.c |  100 ++++++++++++++++++++++++++++++++-----
+ 1 file changed, 87 insertions(+), 13 deletions(-)
 
---- a/drivers/tty/serial/8250/8250_omap.c
-+++ b/drivers/tty/serial/8250/8250_omap.c
-@@ -1173,16 +1173,6 @@ static int omap_8250_tx_dma(struct uart_
- 		return 0;
- 	}
+--- a/drivers/usb/misc/onboard_usb_dev.c
++++ b/drivers/usb/misc/onboard_usb_dev.c
+@@ -36,9 +36,10 @@
+ #define USB5744_CMD_CREG_ACCESS			0x99
+ #define USB5744_CMD_CREG_ACCESS_LSB		0x37
+ #define USB5744_CREG_MEM_ADDR			0x00
++#define USB5744_CREG_MEM_RD_ADDR		0x04
+ #define USB5744_CREG_WRITE			0x00
+-#define USB5744_CREG_RUNTIMEFLAGS2		0x41
+-#define USB5744_CREG_RUNTIMEFLAGS2_LSB		0x1D
++#define USB5744_CREG_READ			0x01
++#define USB5744_CREG_RUNTIMEFLAGS2		0x411D
+ #define USB5744_CREG_BYPASS_UDC_SUSPEND		BIT(3)
  
--	sg_init_table(&sg, 1);
--	ret = kfifo_dma_out_prepare_mapped(&tport->xmit_fifo, &sg, 1,
--					   UART_XMIT_SIZE, dma->tx_addr);
--	if (ret != 1) {
--		serial8250_clear_THRI(p);
--		return 0;
--	}
--
--	dma->tx_size = sg_dma_len(&sg);
--
- 	if (priv->habit & OMAP_DMA_TX_KICK) {
- 		unsigned char c;
- 		u8 tx_lvl;
-@@ -1207,18 +1197,22 @@ static int omap_8250_tx_dma(struct uart_
- 			ret = -EBUSY;
- 			goto err;
- 		}
--		if (dma->tx_size < 4) {
-+		if (kfifo_len(&tport->xmit_fifo) < 4) {
- 			ret = -EINVAL;
- 			goto err;
- 		}
--		if (!kfifo_get(&tport->xmit_fifo, &c)) {
-+		if (!uart_fifo_out(&p->port, &c, 1)) {
- 			ret = -EINVAL;
- 			goto err;
- 		}
- 		skip_byte = c;
--		/* now we need to recompute due to kfifo_get */
--		kfifo_dma_out_prepare_mapped(&tport->xmit_fifo, &sg, 1,
--				UART_XMIT_SIZE, dma->tx_addr);
-+	}
+ static void onboard_dev_attach_usb_driver(struct work_struct *work);
+@@ -309,11 +310,88 @@ static void onboard_dev_attach_usb_drive
+ 		pr_err("Failed to attach USB driver: %pe\n", ERR_PTR(err));
+ }
+ 
++static int onboard_dev_5744_i2c_read_byte(struct i2c_client *client, u16 addr, u8 *data)
++{
++	struct i2c_msg msg[2];
++	u8 rd_buf[3];
++	int ret;
 +
-+	sg_init_table(&sg, 1);
-+	ret = kfifo_dma_out_prepare_mapped(&tport->xmit_fifo, &sg, 1, UART_XMIT_SIZE, dma->tx_addr);
-+	if (ret != 1) {
-+		ret = -EINVAL;
-+		goto err;
- 	}
++	u8 wr_buf[7] = {0, USB5744_CREG_MEM_ADDR, 4,
++			USB5744_CREG_READ, 1,
++			addr >> 8 & 0xff,
++			addr & 0xff};
++	msg[0].addr = client->addr;
++	msg[0].flags = 0;
++	msg[0].len = sizeof(wr_buf);
++	msg[0].buf = wr_buf;
++
++	ret = i2c_transfer(client->adapter, msg, 1);
++	if (ret < 0)
++		return ret;
++
++	wr_buf[0] = USB5744_CMD_CREG_ACCESS;
++	wr_buf[1] = USB5744_CMD_CREG_ACCESS_LSB;
++	wr_buf[2] = 0;
++	msg[0].len = 3;
++
++	ret = i2c_transfer(client->adapter, msg, 1);
++	if (ret < 0)
++		return ret;
++
++	wr_buf[0] = 0;
++	wr_buf[1] = USB5744_CREG_MEM_RD_ADDR;
++	msg[0].len = 2;
++
++	msg[1].addr = client->addr;
++	msg[1].flags = I2C_M_RD;
++	msg[1].len = 2;
++	msg[1].buf = rd_buf;
++
++	ret = i2c_transfer(client->adapter, msg, 2);
++	if (ret < 0)
++		return ret;
++	*data = rd_buf[1];
++
++	return 0;
++}
++
++static int onboard_dev_5744_i2c_write_byte(struct i2c_client *client, u16 addr, u8 data)
++{
++	struct i2c_msg msg[2];
++	int ret;
++
++	u8 wr_buf[8] = {0, USB5744_CREG_MEM_ADDR, 5,
++			USB5744_CREG_WRITE, 1,
++			addr >> 8 & 0xff,
++			addr & 0xff,
++			data};
++	msg[0].addr = client->addr;
++	msg[0].flags = 0;
++	msg[0].len = sizeof(wr_buf);
++	msg[0].buf = wr_buf;
++
++	ret = i2c_transfer(client->adapter, msg, 1);
++	if (ret < 0)
++		return ret;
++
++	msg[0].len = 3;
++	wr_buf[0] = USB5744_CMD_CREG_ACCESS;
++	wr_buf[1] = USB5744_CMD_CREG_ACCESS_LSB;
++	wr_buf[2] = 0;
++
++	ret = i2c_transfer(client->adapter, msg, 1);
++	if (ret < 0)
++		return ret;
++
++	return 0;
++}
++
+ static int onboard_dev_5744_i2c_init(struct i2c_client *client)
+ {
+ #if IS_ENABLED(CONFIG_USB_ONBOARD_DEV_USB5744)
+ 	struct device *dev = &client->dev;
+ 	int ret;
++	u8 reg;
  
- 	desc = dmaengine_prep_slave_sg(dma->txchan, &sg, 1, DMA_MEM_TO_DEV,
-@@ -1228,6 +1222,7 @@ static int omap_8250_tx_dma(struct uart_
- 		goto err;
- 	}
+ 	/*
+ 	 * Set BYPASS_UDC_SUSPEND bit to ensure MCU is always enabled
+@@ -321,20 +399,16 @@ static int onboard_dev_5744_i2c_init(str
+ 	 * The command writes 5 bytes to memory and single data byte in
+ 	 * configuration register.
+ 	 */
+-	char wr_buf[7] = {USB5744_CREG_MEM_ADDR, 5,
+-			  USB5744_CREG_WRITE, 1,
+-			  USB5744_CREG_RUNTIMEFLAGS2,
+-			  USB5744_CREG_RUNTIMEFLAGS2_LSB,
+-			  USB5744_CREG_BYPASS_UDC_SUSPEND};
+-
+-	ret = i2c_smbus_write_block_data(client, 0, sizeof(wr_buf), wr_buf);
++	ret = onboard_dev_5744_i2c_read_byte(client,
++					     USB5744_CREG_RUNTIMEFLAGS2, &reg);
+ 	if (ret)
+-		return dev_err_probe(dev, ret, "BYPASS_UDC_SUSPEND bit configuration failed\n");
++		return dev_err_probe(dev, ret, "CREG_RUNTIMEFLAGS2 read failed\n");
  
-+	dma->tx_size = sg_dma_len(&sg);
- 	dma->tx_running = 1;
+-	ret = i2c_smbus_write_word_data(client, USB5744_CMD_CREG_ACCESS,
+-					USB5744_CMD_CREG_ACCESS_LSB);
++	reg |= USB5744_CREG_BYPASS_UDC_SUSPEND;
++	ret = onboard_dev_5744_i2c_write_byte(client,
++					      USB5744_CREG_RUNTIMEFLAGS2, reg);
+ 	if (ret)
+-		return dev_err_probe(dev, ret, "Configuration Register Access Command failed\n");
++		return dev_err_probe(dev, ret, "BYPASS_UDC_SUSPEND bit configuration failed\n");
  
- 	desc->callback = omap_8250_dma_tx_complete;
+ 	/* Send SMBus command to boot hub. */
+ 	ret = i2c_smbus_write_word_data(client, USB5744_CMD_ATTACH,
 
 
