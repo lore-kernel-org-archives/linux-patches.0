@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CF952DFF09;
-	Tue, 17 Jun 2025 16:40:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6210F2DFF32;
+	Tue, 17 Jun 2025 16:40:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750178426; cv=none; b=F8oZQGcEYR1KVaqYFrHH2GuE7ar86WhNNcj/dmHd6cvIVqL3F95qWJtnh43/G4te56RyFJ85lEGDKNx8KH74q2qh8z86colHHTG7Y5A+k7wV8AWdSUCoLYXwOMyIpdJTcOMaVHVjlVbkuUCaiIvq1j2DowgUVxmSnVvgonI2VMA=
+	t=1750178429; cv=none; b=FTeQHzBLW2v+/XPHh2BD05kjcIUHpq65kezeqVmIDWiyl+85hJ8r/JODg/dRsmacY1NXJK4eAjEHt/aEihMchlnd/dNhD0W0+kf+Oljpn7A38EZZb2vzrZtPfqlN+PhkOtg0O0Krg6cnta4WVesmaHky0FoptXuuZDCaiEPw9ko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750178426; c=relaxed/simple;
-	bh=wLFWEGi+evbzrvC6yk2M8ZxgK1GVCMXoUh6S6ZSl8mw=;
+	s=arc-20240116; t=1750178429; c=relaxed/simple;
+	bh=qTrNK0NnX3vT7Qvy9hUZM4htgFtyx9yC/Q0KMPms4kc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vi5cvP7IhIkJPVobwcVoUnLaKyrimFR3MdkSPSybfQDKMiZZG1njdOcmMuvm5r1SCExjjdFilVWVky8qwQAh7EYeHCwfvDReG63Uuwta6IbyF7nGQB5b5xCTgHNEDy9YKnu0J7RTaZWGJY5/ciHqypsXF5G4b+PX6R7otlcLDUY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q3anGPDj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AYytPfwGiDDwIIbJav67PzfJmX3E5MAJFXue4DC/frAjkN2D9h5v11D1l8KhxKLZtaHWh1++Pcz+dTDMS2CCo3HZzr0DWz/xAvcgI40cf9Pun2tJD7W6e1zsxL8gX6TTFjhSRSqYONUaHqICRbHlLILdBj2H+H785Tzh3BnPESE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wa4BnRoL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q3anGPDj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80F52C4CEE3;
-	Tue, 17 Jun 2025 16:40:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wa4BnRoL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4ADBC4CEE3;
+	Tue, 17 Jun 2025 16:40:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750178426;
-	bh=wLFWEGi+evbzrvC6yk2M8ZxgK1GVCMXoUh6S6ZSl8mw=;
+	s=korg; t=1750178429;
+	bh=qTrNK0NnX3vT7Qvy9hUZM4htgFtyx9yC/Q0KMPms4kc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q3anGPDjFS8ijQFBMbu0cCD2Dq3NOvgne0Lhv/4YF8ngusm3sBaX6iVZvV8KKgSan
-	 BH03+zlU5U9g8/5bB+mcINbcd5r70lIkLIuomD4jeJtTfedBIXyfp4bM8IvuxmfJJC
-	 x0JUEqbZLFuEiwa1SkJNgE4OIACYX4Pqw4Br4RCI=
+	b=Wa4BnRoLajLRC2sA8SYv5KMvFWx5fZDUdfGgLkd7cKTghrBtbeKiLozHh6mZeyQXU
+	 cdTFw9bmrcd2c27LPTTP5dyYUT2LisnhFP7wt+poObrBtq+fI4ImOzKhFjH+35GAQP
+	 tJ+xanIEeR50htG9q4h1YxLEj9pQmzk8T2wtKPOI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Lee Jones <lee@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 458/780] mfd: exynos-lpass: Avoid calling exynos_lpass_disable() twice in exynos_lpass_remove()
-Date: Tue, 17 Jun 2025 17:22:46 +0200
-Message-ID: <20250617152510.130630897@linuxfoundation.org>
+	David Howells <dhowells@redhat.com>,
+	v9fs@lists.linux.dev,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Dominique Martinet <asmadeus@codewreck.org>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 6.12 498/512] 9p: Add a migrate_folio method
+Date: Tue, 17 Jun 2025 17:27:44 +0200
+Message-ID: <20250617152439.800755173@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,41 +49,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Matthew Wilcox (Oracle) <willy@infradead.org>
 
-[ Upstream commit b70b84556eeca5262d290e8619fe0af5b7664a52 ]
+commit 03ddd7725ed1b39cf9251e1a420559f25dac49b3 upstream.
 
-exynos_lpass_disable() is called twice in the remove function. Remove
-one of these calls.
+The migration code used to be able to migrate dirty 9p folios by writing
+them back using writepage.  When the writepage method was removed,
+we neglected to add a migrate_folio method, which means that dirty 9p
+folios have been unmovable ever since.  This reduced our success at
+defragmenting memory on machines which use 9p heavily.
 
-Fixes: 90f447170c6f ("mfd: exynos-lpass: Add runtime PM support")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/74d69e8de10308c9855db6d54155a3de4b11abfd.1745247209.git.christophe.jaillet@wanadoo.fr
-Signed-off-by: Lee Jones <lee@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 80105ed2fd27 (9p: Use netfslib read/write_iter)
+Cc: stable@vger.kernel.org
+Cc: David Howells <dhowells@redhat.com>
+Cc: v9fs@lists.linux.dev
+Signed-off-by: "Matthew Wilcox (Oracle)" <willy@infradead.org>
+Link: https://lore.kernel.org/r/20250402150005.2309458-2-willy@infradead.org
+Acked-by: Dominique Martinet <asmadeus@codewreck.org>
+Reviewed-by: David Howells <dhowells@redhat.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mfd/exynos-lpass.c | 1 -
- 1 file changed, 1 deletion(-)
+ fs/9p/vfs_addr.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/mfd/exynos-lpass.c b/drivers/mfd/exynos-lpass.c
-index 6b95927e99be7..a2785ceea8bfc 100644
---- a/drivers/mfd/exynos-lpass.c
-+++ b/drivers/mfd/exynos-lpass.c
-@@ -141,7 +141,6 @@ static void exynos_lpass_remove(struct platform_device *pdev)
- {
- 	struct exynos_lpass *lpass = platform_get_drvdata(pdev);
- 
--	exynos_lpass_disable(lpass);
- 	pm_runtime_disable(&pdev->dev);
- 	if (!pm_runtime_status_suspended(&pdev->dev))
- 		exynos_lpass_disable(lpass);
--- 
-2.39.5
-
+--- a/fs/9p/vfs_addr.c
++++ b/fs/9p/vfs_addr.c
+@@ -160,4 +160,5 @@ const struct address_space_operations v9
+ 	.invalidate_folio	= netfs_invalidate_folio,
+ 	.direct_IO		= noop_direct_IO,
+ 	.writepages		= netfs_writepages,
++	.migrate_folio		= filemap_migrate_folio,
+ };
 
 
