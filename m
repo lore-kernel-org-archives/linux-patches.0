@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 525CC524F;
-	Tue, 17 Jun 2025 16:24:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 985892EA14C;
+	Tue, 17 Jun 2025 16:25:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177497; cv=none; b=TxLg72WoQoVk1y4mMZ7Ohk1PKw2gZvwr7uCbogsnu+wKJeaH88Rs/k15Tuszar40QASvMvZh3JXjAaiiSR/5MgJhp9LrIyLMbrNLG/kkk5keaiDbd4xJmXG9eScF3CY/tXRDWr28VMr/HCQ7RGU3Fghi8UngzQAIuyfsb7Z4yzU=
+	t=1750177500; cv=none; b=P65MSr0CqDaDusrSpuAQjM01h96UmDJtxVOOoZ2M3BaNKS7WAACPCu0npP8H1uaQXYYF4nWEzb7wkCb3PpJu1mG4eUp3VaQ3klCQzve3AolMkH4wPs5Xdqw3V5axfy24bNPsryACPCalwj65Z+GeJKG53uP3eWcbGgQomyHmksM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177497; c=relaxed/simple;
-	bh=6ymRVWauvkcQMNeal7cma5lVhR06zbSeqZAXzqJ1hWw=;
+	s=arc-20240116; t=1750177500; c=relaxed/simple;
+	bh=e3XcgKv4oadElgw1ysarcR+/Kthsdn0C/BNM7dZRNEY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Gx0AxgO+WJQRT3OVYFz5m0ZI/VhbyM43Oj7MFXxvZmxduv55qM/VPL+j0j5iVAok2/FnNaUMz3orqwqcfG8Or/zISuBeck3Lid3NrRJ6vWO8OyzEUUHta4rYzaH8qFGePE9K8AHqf5VLBWsXs/qz4P/htpYmjq87w7p0TyTLYtY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gfEQEpnT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NQle9u1nboRFbKtvtWVPXft1b2aM+SAfTrdxsMuzF5iWxrBi2EYjzgfeJNKzW2kI9sEyYbm0PMjLZan0aTJpz3RxmlghT88cEg1TJEKgItBsAudGH6N5994BRwGvLWSRRsc5rhrjxXCQoqvCPwJ55PNcpciS2QNnLPEBjwvw+3o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hbai3zV+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gfEQEpnT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6535C4CEE3;
-	Tue, 17 Jun 2025 16:24:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hbai3zV+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06033C4CEE3;
+	Tue, 17 Jun 2025 16:24:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177497;
-	bh=6ymRVWauvkcQMNeal7cma5lVhR06zbSeqZAXzqJ1hWw=;
+	s=korg; t=1750177500;
+	bh=e3XcgKv4oadElgw1ysarcR+/Kthsdn0C/BNM7dZRNEY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gfEQEpnTcTwn4Z68hVb5RSuStp5AAyjPW4yRYl7/4EFMxszlXxwVST4RSsZGAPanY
-	 Y6kO6X/WqJFd4mncMpu5ZwZGSHql3fSujRQKYow7VnJB9o4T9WlPx9NpDtkeHnQ39X
-	 /JTnB9ft+SVDAmY9d2YxrtV2+c60ujnqcI847naA=
+	b=hbai3zV+zkn6vkTYzOVsREoGJyQfy3uJHdZHQNu/0e4CBo0VNwa5kBA7I7ZA/PMI5
+	 znyspuEMmOyDuWiNPu5a73EU1ITsVe/42hmfpihT+T9hoJR8ku1O6UziiZW784UbPC
+	 xauIwcFXgcZDf50RSHRcZmnqv5egsR9hgAME9+0A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Radim=20Kr=C4=8Dm=C3=A1=C5=99?= <rkrcmar@ventanamicro.com>,
-	Anup Patel <anup@brainfault.org>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 315/780] RISC-V: KVM: lock the correct mp_state during reset
-Date: Tue, 17 Jun 2025 17:20:23 +0200
-Message-ID: <20250617152504.289780169@linuxfoundation.org>
+Subject: [PATCH 6.12 355/512] Bluetooth: L2CAP: Fix not responding with L2CAP_CR_LE_ENCRYPTION
+Date: Tue, 17 Jun 2025 17:25:21 +0200
+Message-ID: <20250617152433.962581007@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,47 +44,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Radim Krčmář <rkrcmar@ventanamicro.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit 7917be170928189fefad490d1a1237fdfa6b856f ]
+[ Upstream commit 03dba9cea72f977e873e4e60e220fa596959dd8f ]
 
-Currently, the kvm_riscv_vcpu_sbi_system_reset() function locks
-vcpu->arch.mp_state_lock when updating tmp->arch.mp_state.mp_state
-which is incorrect hence fix it.
+Depending on the security set the response to L2CAP_LE_CONN_REQ shall be
+just L2CAP_CR_LE_ENCRYPTION if only encryption when BT_SECURITY_MEDIUM
+is selected since that means security mode 2 which doesn't require
+authentication which is something that is covered in the qualification
+test L2CAP/LE/CFC/BV-25-C.
 
-Fixes: 2121cadec45a ("RISCV: KVM: Introduce mp_state_lock to avoid lock inversion")
-Signed-off-by: Radim Krčmář <rkrcmar@ventanamicro.com>
-Reviewed-by: Anup Patel <anup@brainfault.org>
-Link: https://lore.kernel.org/r/20250523104725.2894546-4-rkrcmar@ventanamicro.com
-Signed-off-by: Anup Patel <anup@brainfault.org>
+Link: https://github.com/bluez/bluez/issues/1270
+Fixes: 27e2d4c8d28b ("Bluetooth: Add basic LE L2CAP connect request receiving support")
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kvm/vcpu_sbi.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/bluetooth/l2cap_core.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/riscv/kvm/vcpu_sbi.c b/arch/riscv/kvm/vcpu_sbi.c
-index d1c83a77735e0..0000ecf49b188 100644
---- a/arch/riscv/kvm/vcpu_sbi.c
-+++ b/arch/riscv/kvm/vcpu_sbi.c
-@@ -143,9 +143,9 @@ void kvm_riscv_vcpu_sbi_system_reset(struct kvm_vcpu *vcpu,
- 	struct kvm_vcpu *tmp;
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index 66fa5d6fea6ca..a40534bf9084d 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -4835,7 +4835,8 @@ static int l2cap_le_connect_req(struct l2cap_conn *conn,
  
- 	kvm_for_each_vcpu(i, tmp, vcpu->kvm) {
--		spin_lock(&vcpu->arch.mp_state_lock);
-+		spin_lock(&tmp->arch.mp_state_lock);
- 		WRITE_ONCE(tmp->arch.mp_state.mp_state, KVM_MP_STATE_STOPPED);
--		spin_unlock(&vcpu->arch.mp_state_lock);
-+		spin_unlock(&tmp->arch.mp_state_lock);
+ 	if (!smp_sufficient_security(conn->hcon, pchan->sec_level,
+ 				     SMP_ALLOW_STK)) {
+-		result = L2CAP_CR_LE_AUTHENTICATION;
++		result = pchan->sec_level == BT_SECURITY_MEDIUM ?
++			L2CAP_CR_LE_ENCRYPTION : L2CAP_CR_LE_AUTHENTICATION;
+ 		chan = NULL;
+ 		goto response_unlock;
  	}
- 	kvm_make_all_cpus_request(vcpu->kvm, KVM_REQ_SLEEP);
- 
 -- 
 2.39.5
 
