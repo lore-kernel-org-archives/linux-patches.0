@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9A892FA644;
-	Tue, 17 Jun 2025 16:34:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 770DB2FA638;
+	Tue, 17 Jun 2025 16:34:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750178046; cv=none; b=MOn1TJp03ohOUOqviSUtVI3nJnaJ5T6Zw4q72JEzBeZw/I5empdwZSyGETAhshDDBzSaIA8PEFnsO64fGoq/SOsk30xEb3tEtlYaS1GtQV+3b4TeoPk7gmR0foIIXF92pAF+VPa0Di1Iat4YbGfiucU5Ytp4ushO6q7rqAoqljo=
+	t=1750178049; cv=none; b=Jk5lL4EkvNaL97Fsusyk7gDIWjh53sr8vfHwtLugtC4iwhU+I31kCB5tclyNUl2wlt0FOSIgDX3CCzRqurE1Z7z4zkpSCJFmr8TmPBemlZ3F0wldc0p6Q3ZCSl/BPlwSbL0tENX6EqgB5+D1Dqg37xV8mnpC4rSLdNCAJM+DupU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750178046; c=relaxed/simple;
-	bh=9Pa3qeumsF47zbyGk1PNT5mKQHtIm54ZZX3z+cf/5eU=;
+	s=arc-20240116; t=1750178049; c=relaxed/simple;
+	bh=t/XgqUOUhC0VFhs73jArVG/D5bPmyepAhYIGcy6VMTA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S8sd7gqdH6rWBGBxLp53KpiNwH6q/42uJPs56jjJ5sjtZ3k0LBMvwVH6SFuKOcAG81+XVAGsIFisGaVubSxSmb9a6pAW3iJnnk9EY0tEDdRzPfsV+x6/U+qskWoMw6sRDT7vCodekyBpHsb2eSAiWtdMMln0It37hz8w2+NJPBE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pAftVlfb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=txxyxJvFflO3mZYHHW+hGel82ISQbeEpRdkbHUn8Qq6zwDb7S9NWS/213F8OOT4JeIURFUYCrW4alCBTANkSvgAanoFUPtrJOuz4HBXf+3AAHuvfD/ao3F3CdedzdmSNC6gSOZY3K4zcvz3CSlKFVvdG25rPHCOcvbGSyWuj7fw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V9cOGIcf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pAftVlfb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E37E7C4CEE7;
-	Tue, 17 Jun 2025 16:34:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V9cOGIcf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB6BCC4CEE3;
+	Tue, 17 Jun 2025 16:34:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750178046;
-	bh=9Pa3qeumsF47zbyGk1PNT5mKQHtIm54ZZX3z+cf/5eU=;
+	s=korg; t=1750178049;
+	bh=t/XgqUOUhC0VFhs73jArVG/D5bPmyepAhYIGcy6VMTA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pAftVlfbQGQbvRk5xeaoHbbijMHtEIs1sH4QfV+o3xeOord2Z+aV1TnrYa+j3JIhM
-	 MBkyu+/mWoj0f8Lh/qNRVTh7DCPwdcrLteCY8WpJ4hjXNJ2HyjKC8OnJ+d3XeU3WQB
-	 gmGVqUkW/ANdJWvrAQ5f+8TyZ6H4JWIivVhyOytY=
+	b=V9cOGIcffu6i1NssfEQDxD7I8H2GHRS56Qd7eXISA19AyPL8/sgnLbkxsOFm/zGxJ
+	 8Sqlg/ZEwS7VsFerEp7eZlppLGS++V0IH9N6XH3VbgKwGgI55ODYgdkm79yYKLM99m
+	 7S7Zh9z1rpOG86Vs1qW84ynIeFvZlrapiNSfULjU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baochen Qiang <quic_bqiang@quicinc.com>,
-	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
-	Parth Pancholi <parth.pancholi@toradex.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 436/512] wifi: ath12k: fix GCC_GCC_PCIE_HOT_RST definition for WCN7850
-Date: Tue, 17 Jun 2025 17:26:42 +0200
-Message-ID: <20250617152437.238305339@linuxfoundation.org>
+Subject: [PATCH 6.15 401/780] ARM: dts: qcom: apq8064: move replicator out of soc node
+Date: Tue, 17 Jun 2025 17:21:49 +0200
+Message-ID: <20250617152507.784051884@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,118 +48,114 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Baochen Qiang <quic_bqiang@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-[ Upstream commit 7588a893cde5385ad308400ff167d29a29913b3a ]
+[ Upstream commit f2420037d90a8354594b3da541e19dcbb60c75e1 ]
 
-GCC_GCC_PCIE_HOT_RST is wrongly defined for WCN7850, causing kernel crash
-on some specific platforms.
+The CoreSight static replicator device isn't a part of the system MMIO
+bus, as such it should not be a part of the soc node. Follow the example
+of other platforms and move it out of the soc bus to the top-level (and
+reoder ports to follow alphabetic order).
 
-Since this register is divergent for WCN7850 and QCN9274, move it to
-register table to allow different definitions. Then correct the register
-address for WCN7850 to fix this issue.
-
-Note IPQ5332 is not affected as it is not PCIe based device.
-
-Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.0.c5-00481-QCAHMTSWPL_V1.0_V2.0_SILICONZ-3
-
-Signed-off-by: Baochen Qiang <quic_bqiang@quicinc.com>
-Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Reported-by: Parth Pancholi <parth.pancholi@toradex.com>
-Closes: https://lore.kernel.org/all/86899b2235a59c9134603beebe08f2bb0b244ea0.camel@gmail.com
-Fixes: d889913205cf ("wifi: ath12k: driver for Qualcomm Wi-Fi 7 devices")
-Tested-by: Parth Pancholi <parth.pancholi@toradex.com>
-Link: https://patch.msgid.link/20250523-ath12k-wrong-global-reset-addr-v1-1-3b06eb556196@quicinc.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Fixes: 7a5c275fd821 ("ARM: dts: qcom: Add apq8064 CoreSight components")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20250318-fix-nexus-4-v2-10-bcedd1406790@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/hw.c  | 6 ++++++
- drivers/net/wireless/ath/ath12k/hw.h  | 2 ++
- drivers/net/wireless/ath/ath12k/pci.c | 6 +++---
- drivers/net/wireless/ath/ath12k/pci.h | 4 +++-
- 4 files changed, 14 insertions(+), 4 deletions(-)
+ arch/arm/boot/dts/qcom/qcom-apq8064.dtsi | 67 ++++++++++++------------
+ 1 file changed, 34 insertions(+), 33 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/hw.c b/drivers/net/wireless/ath/ath12k/hw.c
-index 5bffc428f19f5..e3eb22bb9e1cb 100644
---- a/drivers/net/wireless/ath/ath12k/hw.c
-+++ b/drivers/net/wireless/ath/ath12k/hw.c
-@@ -686,6 +686,8 @@ static const struct ath12k_hw_regs qcn9274_v1_regs = {
- 	.hal_umac_ce0_dest_reg_base = 0x01b81000,
- 	.hal_umac_ce1_src_reg_base = 0x01b82000,
- 	.hal_umac_ce1_dest_reg_base = 0x01b83000,
+diff --git a/arch/arm/boot/dts/qcom/qcom-apq8064.dtsi b/arch/arm/boot/dts/qcom/qcom-apq8064.dtsi
+index 41f8dcde20819..1dad4e4493926 100644
+--- a/arch/arm/boot/dts/qcom/qcom-apq8064.dtsi
++++ b/arch/arm/boot/dts/qcom/qcom-apq8064.dtsi
+@@ -278,6 +278,40 @@
+ 		};
+ 	};
+ 
++	replicator {
++		compatible = "arm,coresight-static-replicator";
 +
-+	.gcc_gcc_pcie_hot_rst = 0x1e38338,
- };
- 
- static const struct ath12k_hw_regs qcn9274_v2_regs = {
-@@ -775,6 +777,8 @@ static const struct ath12k_hw_regs qcn9274_v2_regs = {
- 	.hal_umac_ce0_dest_reg_base = 0x01b81000,
- 	.hal_umac_ce1_src_reg_base = 0x01b82000,
- 	.hal_umac_ce1_dest_reg_base = 0x01b83000,
++		clocks = <&rpmcc RPM_QDSS_CLK>;
++		clock-names = "apb_pclk";
 +
-+	.gcc_gcc_pcie_hot_rst = 0x1e38338,
- };
- 
- static const struct ath12k_hw_regs wcn7850_regs = {
-@@ -860,6 +864,8 @@ static const struct ath12k_hw_regs wcn7850_regs = {
- 	.hal_umac_ce0_dest_reg_base = 0x01b81000,
- 	.hal_umac_ce1_src_reg_base = 0x01b82000,
- 	.hal_umac_ce1_dest_reg_base = 0x01b83000,
++		in-ports {
++			port {
++				replicator_in: endpoint {
++					remote-endpoint = <&funnel_out>;
++				};
++			};
++		};
 +
-+	.gcc_gcc_pcie_hot_rst = 0x1e40304,
- };
- 
- static const struct ath12k_hw_hal_params ath12k_hw_hal_params_qcn9274 = {
-diff --git a/drivers/net/wireless/ath/ath12k/hw.h b/drivers/net/wireless/ath/ath12k/hw.h
-index acb81b5798ac1..862b11325a902 100644
---- a/drivers/net/wireless/ath/ath12k/hw.h
-+++ b/drivers/net/wireless/ath/ath12k/hw.h
-@@ -355,6 +355,8 @@ struct ath12k_hw_regs {
- 	u32 hal_reo_cmd_ring_base;
- 
- 	u32 hal_reo_status_ring_base;
++		out-ports {
++			#address-cells = <1>;
++			#size-cells = <0>;
 +
-+	u32 gcc_gcc_pcie_hot_rst;
- };
- 
- static inline const char *ath12k_bd_ie_type_str(enum ath12k_bd_ie_type type)
-diff --git a/drivers/net/wireless/ath/ath12k/pci.c b/drivers/net/wireless/ath/ath12k/pci.c
-index 1068cc07bc9f6..26f4b440c26d2 100644
---- a/drivers/net/wireless/ath/ath12k/pci.c
-+++ b/drivers/net/wireless/ath/ath12k/pci.c
-@@ -290,10 +290,10 @@ static void ath12k_pci_enable_ltssm(struct ath12k_base *ab)
- 
- 	ath12k_dbg(ab, ATH12K_DBG_PCI, "pci ltssm 0x%x\n", val);
- 
--	val = ath12k_pci_read32(ab, GCC_GCC_PCIE_HOT_RST);
-+	val = ath12k_pci_read32(ab, GCC_GCC_PCIE_HOT_RST(ab));
- 	val |= GCC_GCC_PCIE_HOT_RST_VAL;
--	ath12k_pci_write32(ab, GCC_GCC_PCIE_HOT_RST, val);
--	val = ath12k_pci_read32(ab, GCC_GCC_PCIE_HOT_RST);
-+	ath12k_pci_write32(ab, GCC_GCC_PCIE_HOT_RST(ab), val);
-+	val = ath12k_pci_read32(ab, GCC_GCC_PCIE_HOT_RST(ab));
- 
- 	ath12k_dbg(ab, ATH12K_DBG_PCI, "pci pcie_hot_rst 0x%x\n", val);
- 
-diff --git a/drivers/net/wireless/ath/ath12k/pci.h b/drivers/net/wireless/ath/ath12k/pci.h
-index 31584a7ad80eb..9321674eef8b8 100644
---- a/drivers/net/wireless/ath/ath12k/pci.h
-+++ b/drivers/net/wireless/ath/ath12k/pci.h
-@@ -28,7 +28,9 @@
- #define PCIE_PCIE_PARF_LTSSM			0x1e081b0
- #define PARM_LTSSM_VALUE			0x111
- 
--#define GCC_GCC_PCIE_HOT_RST			0x1e38338
-+#define GCC_GCC_PCIE_HOT_RST(ab) \
-+	((ab)->hw_params->regs->gcc_gcc_pcie_hot_rst)
++			port@0 {
++				reg = <0>;
++				replicator_out0: endpoint {
++					remote-endpoint = <&etb_in>;
++				};
++			};
 +
- #define GCC_GCC_PCIE_HOT_RST_VAL		0x10
++			port@1 {
++				reg = <1>;
++				replicator_out1: endpoint {
++					remote-endpoint = <&tpiu_in>;
++				};
++			};
++		};
++	};
++
+ 	soc: soc {
+ 		#address-cells = <1>;
+ 		#size-cells = <1>;
+@@ -1529,39 +1563,6 @@
+ 			};
+ 		};
  
- #define PCIE_PCIE_INT_ALL_CLEAR			0x1e08228
+-		replicator {
+-			compatible = "arm,coresight-static-replicator";
+-
+-			clocks = <&rpmcc RPM_QDSS_CLK>;
+-			clock-names = "apb_pclk";
+-
+-			out-ports {
+-				#address-cells = <1>;
+-				#size-cells = <0>;
+-
+-				port@0 {
+-					reg = <0>;
+-					replicator_out0: endpoint {
+-						remote-endpoint = <&etb_in>;
+-					};
+-				};
+-				port@1 {
+-					reg = <1>;
+-					replicator_out1: endpoint {
+-						remote-endpoint = <&tpiu_in>;
+-					};
+-				};
+-			};
+-
+-			in-ports {
+-				port {
+-					replicator_in: endpoint {
+-						remote-endpoint = <&funnel_out>;
+-					};
+-				};
+-			};
+-		};
+-
+ 		funnel@1a04000 {
+ 			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
+ 			reg = <0x1a04000 0x1000>;
 -- 
 2.39.5
 
