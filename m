@@ -1,45 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83574188006;
-	Tue, 17 Jun 2025 16:33:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF10E8F54;
+	Tue, 17 Jun 2025 16:33:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177990; cv=none; b=RCbkFHTXYydEi8JB82z8+LmYFQFM1ClIQsY1FLqOuCra4WoYYghYCOPyMLMF5tnABsxk+zQIe8/F04RcMmWAB4krhZkW/nB5n/J7AZtYWhSdgzuAG12YIYE4szc+4t41OZIuxh3EVdtHfingkf5NBryXezskwVCTpi7ittXylmo=
+	t=1750177993; cv=none; b=qE2yKpvrkKRR6Qj4801NoI8GvUOHOZ5UYlWSv7YfA7WZJar9+ykOJJurZGPT+xZQyGy54Dej7TnZGlWtOyeggnYCsoZ9W/ZF9T2d65xQi4gs8uykoSBP5JnxgBiA7K/5fv7iOJK/D34it647mFTUH3Y+QcGvzfTh3bwyhPmvwzY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177990; c=relaxed/simple;
-	bh=JThAhBUL5Pu9yG94BNM83LRYfVJgKjTEv6GYxM4EPQI=;
+	s=arc-20240116; t=1750177993; c=relaxed/simple;
+	bh=YQdVr+tzRVXkDJG1xkRSGGmOAnwovA88YV/xcd6pUHE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S/aTjn92PE3MccpCGFl1Zc0j3dE5qlU96WQAMHTZODV3smUi3EoEoxUd2mk3XFwM1WBXJNaADKdahl/lVYjO3mtfRUAcei++oRfAEeFHU7pTdI61K7bQUPS3GhndsL6Z2jf8WAQiXnOv5nia4G6WnHH+Rm4zH9x10kXCGFNKwPI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0/QEsx+u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=avBqqGVZrN6G1CEIsKFERnmhpyMkPvZ+JGyTH2eS6GxIOF9utiPx/YgWuvVmHpou4TM39cH5SVCmkEiewFD5ws9+AI7pBxneZqf9Vg14UOCph2TadY1poZc32HQvblnZtXlF2Y3Osf5FamvScEgAN2oxftfBYQMemMqmxNlOFms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HsA8ab2T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0/QEsx+u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6943C4CEE7;
-	Tue, 17 Jun 2025 16:33:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HsA8ab2T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EB1DC4CEE3;
+	Tue, 17 Jun 2025 16:33:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177990;
-	bh=JThAhBUL5Pu9yG94BNM83LRYfVJgKjTEv6GYxM4EPQI=;
+	s=korg; t=1750177993;
+	bh=YQdVr+tzRVXkDJG1xkRSGGmOAnwovA88YV/xcd6pUHE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0/QEsx+usmIZWWz3KbIWADidCD8mMWrBjnuMRTtJgZkRnNUhDfmYqKszoHNZTSS7H
-	 m/v9kUflJ1Xgg6+bvhwO8758yGKan4kHXd7Ic1bi439foTpGt0GKQSvJhCPT+OOeuK
-	 nethPfXiA5v0bAVat35Z60NoX2tDgDZ3mEeJFWJA=
+	b=HsA8ab2TPXNCbKfyIiIE2BbxbQ9dnL6fjU5Vbkg0yo075/rQZqYfVBRf707oQCjxE
+	 xx94ge5UjIPlnbJfLVvAAA1widCcy2itwcXESgEHYCCUxGRAlwHWvqI+lnx8uLYwEr
+	 C4iM/hrSSdFCWdi67Hc5MIP3vOIdWFuBr/zZkHSQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Murad Masimov <m.masimov@mt-integration.ru>,
-	Jan Kara <jack@suse.cz>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Alexey Minnekhanov <alexeymin@postmarketos.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 393/780] ocfs2: fix possible memory leak in ocfs2_finish_quota_recovery
-Date: Tue, 17 Jun 2025 17:21:41 +0200
-Message-ID: <20250617152507.457069965@linuxfoundation.org>
+Subject: [PATCH 6.15 380/780] arm64: dts: qcom: sdm660-lavender: Add missing USB phy supply
+Date: Tue, 17 Jun 2025 17:21:28 +0200
+Message-ID: <20250617152506.935200571@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
 References: <20250617152451.485330293@linuxfoundation.org>
@@ -58,47 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Murad Masimov <m.masimov@mt-integration.ru>
+From: Alexey Minnekhanov <alexeymin@postmarketos.org>
 
-[ Upstream commit cdc3ed3035d0fe934aa1d9b78ce256752fd3bb7d ]
+[ Upstream commit dbf62a117a1b7f605a98dd1fd1fd6c85ec324ea0 ]
 
-If ocfs2_finish_quota_recovery() exits due to an error before passing all
-rc_list elements to ocfs2_recover_local_quota_file() then it can lead to a
-memory leak as rc_list may still contain elements that have to be freed.
+Fixes the following dtbs check error:
 
-Release all memory allocated by ocfs2_add_recovery_chunk() using
-ocfs2_free_quota_recovery() instead of kfree().
+ phy@c012000: 'vdda-pll-supply' is a required property
 
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
-
-Link: https://lkml.kernel.org/r/20250402065628.706359-2-m.masimov@mt-integration.ru
-Fixes: 2205363dce74 ("ocfs2: Implement quota recovery")
-Signed-off-by: Murad Masimov <m.masimov@mt-integration.ru>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: e5d3e752b050e ("arm64: dts: qcom: sdm660-xiaomi-lavender: Add USB")
+Signed-off-by: Alexey Minnekhanov <alexeymin@postmarketos.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20250504115120.1432282-3-alexeymin@postmarketos.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/quota_local.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/ocfs2/quota_local.c b/fs/ocfs2/quota_local.c
-index e272429da3db3..de7f12858729a 100644
---- a/fs/ocfs2/quota_local.c
-+++ b/fs/ocfs2/quota_local.c
-@@ -674,7 +674,7 @@ int ocfs2_finish_quota_recovery(struct ocfs2_super *osb,
- 			break;
- 	}
- out:
--	kfree(rec);
-+	ocfs2_free_quota_recovery(rec);
- 	return status;
- }
+diff --git a/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts b/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts
+index 0b4d71c14a772..a9926ad6c6f9f 100644
+--- a/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts
++++ b/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts
+@@ -107,6 +107,7 @@
+ 	status = "okay";
+ 
+ 	vdd-supply = <&vreg_l1b_0p925>;
++	vdda-pll-supply = <&vreg_l10a_1p8>;
+ 	vdda-phy-dpdm-supply = <&vreg_l7b_3p125>;
+ };
  
 -- 
 2.39.5
