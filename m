@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8905238C1E;
-	Tue, 17 Jun 2025 16:00:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCAFC2F2375;
+	Tue, 17 Jun 2025 16:00:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750176018; cv=none; b=RzrmjVovvoiBTCNoZPBdErlyLant9ROFEZPXuckiGXbd4cVl9R2w79Zrb1pxqpGY3dLsFQGBmuK30vzhWLNdo8XKyl1mHwuNOl/jCv0MMdxeR4+fUxRMXjTrJAQfkt/rnkpRNyMHVrbtaBQMcf+2M4+tBlRdrXjJddkQG5iBxuw=
+	t=1750176021; cv=none; b=gMj8zk3t4ZXOYlM7CwBLiQzvpBepKrsh5U61Lz8mRpEKPcPpKt+Q3Q7lW61ldOvoY/sm6iFn6djpfPXKArsrc9Kf0gi9lkoG9APr63Kpzt5SKUd6Bl7O6Zllzbt+wKu6b7ohld6oj7blqJx0BcyMubqPYSUzlg51uFch9oXzA/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750176018; c=relaxed/simple;
-	bh=ySDgh8fMhDF9DWnx8HniqqFRhIE31xVgp+Dx0wWcyRw=;
+	s=arc-20240116; t=1750176021; c=relaxed/simple;
+	bh=qLpyNS7sjXgpREz10xhMyCD4WhAOlppPSPf3OwGkGrs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bv+UYD3+YLHWd9heZeofFkspVhFBFLFyCt8V6KVQutwzJlMwh8Ta2pWpvOtkApMhgdR3PeVimqzJGbwm/x58a92DLWmcIAyb4cAl0+Cp2hjB9RAFDAFhGREeUUkCB6pkrN4ZyOieyt2nkbAOiqPxUI1rGFgW1mXWpw0OkU/UfyA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s314YIEY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lIojRH8/FL5faj51ND/qSzXb+pzZtLqOnHSOS8z5maZDTY+IDJ/DTBvZaA/SQ9fGvq6KqXM3p+jd3seeCq/we6VS+D6EZ9YEtbvgcz+RwwgD3K5UEREF8fM2khpnNvim7Zm49eHSkVxNUVQeqF6x+rXNcy/dONlhn4IzGO6ZmCk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WoVQBzyU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s314YIEY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 117F3C4CEE7;
-	Tue, 17 Jun 2025 16:00:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WoVQBzyU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B4F8C4CEF4;
+	Tue, 17 Jun 2025 16:00:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750176018;
-	bh=ySDgh8fMhDF9DWnx8HniqqFRhIE31xVgp+Dx0wWcyRw=;
+	s=korg; t=1750176021;
+	bh=qLpyNS7sjXgpREz10xhMyCD4WhAOlppPSPf3OwGkGrs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s314YIEY3bPgLU5UVHzdQv2c+ukWbh+ZFxWHyiSIDU6lO6Lj4/OyBNLzCOeiOdanu
-	 M0zScxQqSTlXE2sr69YNhvj1a6XViizrbeyYobomDFNscea7Y2YfnYNivhoyHO1cXF
-	 aZQgb8wRhlZgrf1fUVcgENCp2Q+mY4BUimNqQjCY=
+	b=WoVQBzyUtuA4ipee9y8/K4iiF5ZjaJ6fiJtFFrLCYpMkjUODBdPM9gl9NJZC0uvVZ
+	 bFtRJFCSGrCIpVfM5XfiRy+GkfWv0/7r3293S9D2cn00e6kKqW1WWY/Nlk/9Dwjhh6
+	 azLmt72gqLY+NLKDspwyn1FxaZ1ADujCltyQ713M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Chiu <chui-hao.chiu@mediatek.com>,
-	Shayne Chen <shayne.chen@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Terry Tritton <terry.tritton@linaro.org>,
+	Kees Cook <kees@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 188/512] wifi: mt76: mt7996: set EHT max ampdu length capability
-Date: Tue, 17 Jun 2025 17:22:34 +0200
-Message-ID: <20250617152427.259254294@linuxfoundation.org>
+Subject: [PATCH 6.15 144/780] selftests/seccomp: fix negative_ENOSYS tracer tests on arm32
+Date: Tue, 17 Jun 2025 17:17:32 +0200
+Message-ID: <20250617152457.371781705@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,42 +47,52 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Peter Chiu <chui-hao.chiu@mediatek.com>
+From: Terry Tritton <terry.tritton@linaro.org>
 
-[ Upstream commit 8b2f574845e33d02e7fbad2d3192a8b717567afa ]
+[ Upstream commit 73989c998814d82c71d523c104c398925470d59e ]
 
-Set the max AMPDU length in the EHT MAC CAP. Without this patch, the
-peer station cannot obtain the correct capability, which prevents
-achieving peak throughput on the 2 GHz band.
+TRACE_syscall.ptrace.negative_ENOSYS and TRACE_syscall.seccomp.negative_ENOSYS
+on arm32 are being reported as failures instead of skipping.
 
-Fixes: 1816ad9381e0 ("wifi: mt76: mt7996: add max mpdu len capability")
-Signed-off-by: Peter Chiu <chui-hao.chiu@mediatek.com>
-Signed-off-by: Shayne Chen <shayne.chen@mediatek.com>
-Link: https://patch.msgid.link/20250515032952.1653494-3-shayne.chen@mediatek.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+The teardown_trace_fixture function sets the test to KSFT_FAIL in case of a
+non 0 return value from the tracer process.
+Due to _metadata now being shared between the forked processes the tracer is
+returning the KSFT_SKIP value set by the tracee which is non 0.
+
+Remove the setting of the _metadata.exit_code in teardown_trace_fixture.
+
+Fixes: 24cf65a62266 ("selftests/harness: Share _metadata between forked processes")
+Signed-off-by: Terry Tritton <terry.tritton@linaro.org>
+Link: https://lore.kernel.org/r/20250509115622.64775-1-terry.tritton@linaro.org
+Signed-off-by: Kees Cook <kees@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/init.c | 3 +++
- 1 file changed, 3 insertions(+)
+ tools/testing/selftests/seccomp/seccomp_bpf.c | 6 ------
+ 1 file changed, 6 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/init.c b/drivers/net/wireless/mediatek/mt76/mt7996/init.c
-index d8a013812d1e3..c550385541143 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/init.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/init.c
-@@ -1193,6 +1193,9 @@ mt7996_init_eht_caps(struct mt7996_phy *phy, enum nl80211_band band,
- 		u8_encode_bits(IEEE80211_EHT_MAC_CAP0_MAX_MPDU_LEN_11454,
- 			       IEEE80211_EHT_MAC_CAP0_MAX_MPDU_LEN_MASK);
+diff --git a/tools/testing/selftests/seccomp/seccomp_bpf.c b/tools/testing/selftests/seccomp/seccomp_bpf.c
+index 53bf6a9c801f8..61acbd45ffaaf 100644
+--- a/tools/testing/selftests/seccomp/seccomp_bpf.c
++++ b/tools/testing/selftests/seccomp/seccomp_bpf.c
+@@ -1629,14 +1629,8 @@ void teardown_trace_fixture(struct __test_metadata *_metadata,
+ {
+ 	if (tracer) {
+ 		int status;
+-		/*
+-		 * Extract the exit code from the other process and
+-		 * adopt it for ourselves in case its asserts failed.
+-		 */
+ 		ASSERT_EQ(0, kill(tracer, SIGUSR1));
+ 		ASSERT_EQ(tracer, waitpid(tracer, &status, 0));
+-		if (WEXITSTATUS(status))
+-			_metadata->exit_code = KSFT_FAIL;
+ 	}
+ }
  
-+	eht_cap_elem->mac_cap_info[1] |=
-+		IEEE80211_EHT_MAC_CAP1_MAX_AMPDU_LEN_MASK;
-+
- 	eht_cap_elem->phy_cap_info[0] =
- 		IEEE80211_EHT_PHY_CAP0_NDP_4_EHT_LFT_32_GI |
- 		IEEE80211_EHT_PHY_CAP0_SU_BEAMFORMER |
 -- 
 2.39.5
 
