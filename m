@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ECBC28ECE8;
-	Tue, 17 Jun 2025 16:12:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD3F2237162;
+	Tue, 17 Jun 2025 16:12:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750176731; cv=none; b=abLnoBbVtRoKwKaJDTJo8YYTBrPSdyERSEXavGY2HUtbc6SkPKos4GCRK7emOo67676W2CavbkBqzMswGR6qKTX5j45x6cm/iy7fjQk1sjxDtIAsvCjMXlYE1Nf8V1O7bj/r5FNNGNKFOSrUZLCWofutK+zxNNNZGJ3A2pYr8Rc=
+	t=1750176732; cv=none; b=kjGPaey2CV50QQDGv9hI/XJI/NQpCAmM67HrqqUvX7w23MBXxX2ccDRk1wfY+RMcVkIuMeBuVr4HuxS00Umnk16uqVLMR0h8G1Gf334sZf4PXnQkwDKq4utQfSMF+RuJnkx9k5DvkVH+AC2xHVrBIzkd5Z/81jB1WIlXANjHncw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750176731; c=relaxed/simple;
-	bh=RSfGQ5WBO3ldObr1abGv1Y+wZi3LZeG2bXHEt9ndaOg=;
+	s=arc-20240116; t=1750176732; c=relaxed/simple;
+	bh=YwQQ/89n34L7Tw819CFhAwd1PSZgVcAvf8v3R8EJvrc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XqCGXkOV+sUj0srtvayFP2bsKmiOynEcobsutw6InyY0I1wJHHh7LX0D7JmDp0z3kWF9OXy36oV9FquPY42iLprkwHd2hWm3ps2j5IooOZSA53DcEUzvqNMNabxvtnV2Z9Jtr7ZyKlgLOp4L6gWs7GDEFk2HwsI4FmWVQw/8LJ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qCX+tKau; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j1PWPa/Afhz3wIwDpd6cxStnHWt+/xrAJ8NSlz5vRsvEgSIEKSV2aSiVE3bWJW+EbyGLBPuFug1IYOG+DHGGBZQP7UNW7jnnqdy+g65F/1DR5TyPjF1WBtfiwqxtm6vQIJCjId6ms7ADw5gRxZp+nYkUtO68KkkNp05Hd/o3fB8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OAh7VcoW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qCX+tKau"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9496C4CEE3;
-	Tue, 17 Jun 2025 16:12:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OAh7VcoW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D0E2C4CEE3;
+	Tue, 17 Jun 2025 16:12:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750176729;
-	bh=RSfGQ5WBO3ldObr1abGv1Y+wZi3LZeG2bXHEt9ndaOg=;
+	s=korg; t=1750176732;
+	bh=YwQQ/89n34L7Tw819CFhAwd1PSZgVcAvf8v3R8EJvrc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qCX+tKauelFhVI5d6SsAhha1IZg596aWGLyP8C14V99vdJJHHPEjmShH9W2pzAkez
-	 6IQXL1HGkIIVWVRBrnCvvT8bMWMvoOXbkJoPS8vxAbvk16rPUToG+LX7/erQQLwa6t
-	 LV+ZZsE6tlWU4RlX2zvGraC/3aJGhKOFlL4B8Fqc=
+	b=OAh7VcoW2pSqVYmGVtIkkI3JcN2tIfDxKwm6fTkBCoOhO+6HDPzISa1pUfyGPGYNv
+	 XaRDT31Hp0rZND3+vLuuk4bGqYJ1wk6GHrj2OCUNcBjVkyqAN0JmL+7ZrKWveZwBCR
+	 ihmxJAFrxmqeGAKcKq9Ai7lKExz/lrTjDMW9YOuc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quentin Schulz <quentin.schulz@cherry.de>,
-	Lukasz Czechowski <lukasz.czechowski@thaumatec.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Jonathan Greental <yonatan02greental@gmail.com>,
+	Haren Myneni <haren@linux.ibm.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 261/512] arm64: dts: rockchip: disable unrouted USB controllers and PHY on RK3399 Puma with Haikou
-Date: Tue, 17 Jun 2025 17:23:47 +0200
-Message-ID: <20250617152430.161978386@linuxfoundation.org>
+Subject: [PATCH 6.6 308/356] powerpc/vas: Return -EINVAL if the offset is non-zero in mmap()
+Date: Tue, 17 Jun 2025 17:27:03 +0200
+Message-ID: <20250617152350.564955032@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
+References: <20250617152338.212798615@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,68 +48,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Quentin Schulz <quentin.schulz@cherry.de>
+From: Haren Myneni <haren@linux.ibm.com>
 
-[ Upstream commit febd8c6ab52c683b447fe22fc740918c86feae43 ]
+[ Upstream commit 0d67f0dee6c9176bc09a5482dd7346e3a0f14d0b ]
 
-The u2phy0_host port is the part of the USB PHY0 (namely the
-HOST0_DP/DM lanes) which routes directly to the USB2.0 HOST
-controller[1]. The other lanes of the PHY are routed to the USB3.0 OTG
-controller (dwc3), which we do use.
+The user space calls mmap() to map VAS window paste address
+and the kernel returns the complete mapped page for each
+window. So return -EINVAL if non-zero is passed for offset
+parameter to mmap().
 
-The HOST0_DP/DM lanes aren't routed on RK3399 Puma so let's simply
-disable the USB2.0 controllers.
+See Documentation/arch/powerpc/vas-api.rst for mmap()
+restrictions.
 
-USB3 OTG has been known to be unstable on RK3399 Puma Haikou for a
-while, one of the recurring issues being that only USB2 is detected and
-not USB3 in host mode. Reading the justification above and seeing that
-we are keeping u2phy0_host in the Haikou carrierboard DTS probably may
-have bothered you since it should be changed to u2phy0_otg. The issue is
-that if it's switched to that, USB OTG on Haikou is entirely broken. I
-have checked the routing in the Gerber file, the lanes are going to the
-expected ball pins (that is, NOT HOST0_DP/DM).
-u2phy0_host is for sure the wrong part of the PHY to use, but it's the
-only one that works at the moment for that board so keep it until we
-figure out what exactly is broken.
-
-No intended functional change.
-
-[1] https://rockchip.fr/Rockchip%20RK3399%20TRM%20V1.3%20Part2.pdf
-    Chapter 2 USB2.0 PHY
-
-Fixes: 2c66fc34e945 ("arm64: dts: rockchip: add RK3399-Q7 (Puma) SoM")
-Signed-off-by: Quentin Schulz <quentin.schulz@cherry.de>
-Signed-off-by: Lukasz Czechowski <lukasz.czechowski@thaumatec.com>
-Link: https://lore.kernel.org/r/20250425-onboard_usb_dev-v2-5-4a76a474a010@thaumatec.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Co-developed-by: Jonathan Greental <yonatan02greental@gmail.com>
+Signed-off-by: Jonathan Greental <yonatan02greental@gmail.com>
+Reported-by: Jonathan Greental <yonatan02greental@gmail.com>
+Fixes: dda44eb29c23 ("powerpc/vas: Add VAS user space API")
+Signed-off-by: Haren Myneni <haren@linux.ibm.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20250610021227.361980-2-maddy@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3399-puma-haikou.dts | 8 --------
- 1 file changed, 8 deletions(-)
+ arch/powerpc/platforms/book3s/vas-api.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3399-puma-haikou.dts b/arch/arm64/boot/dts/rockchip/rk3399-puma-haikou.dts
-index f6f15946579eb..57466fbfd3f9a 100644
---- a/arch/arm64/boot/dts/rockchip/rk3399-puma-haikou.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3399-puma-haikou.dts
-@@ -284,14 +284,6 @@
- 	status = "okay";
- };
+diff --git a/arch/powerpc/platforms/book3s/vas-api.c b/arch/powerpc/platforms/book3s/vas-api.c
+index 0b6365d85d117..dc6f75d3ac6ef 100644
+--- a/arch/powerpc/platforms/book3s/vas-api.c
++++ b/arch/powerpc/platforms/book3s/vas-api.c
+@@ -521,6 +521,15 @@ static int coproc_mmap(struct file *fp, struct vm_area_struct *vma)
+ 		return -EINVAL;
+ 	}
  
--&usb_host0_ehci {
--	status = "okay";
--};
--
--&usb_host0_ohci {
--	status = "okay";
--};
--
- &vopb {
- 	status = "okay";
- };
++	/*
++	 * Map complete page to the paste address. So the user
++	 * space should pass 0ULL to the offset parameter.
++	 */
++	if (vma->vm_pgoff) {
++		pr_debug("Page offset unsupported to map paste address\n");
++		return -EINVAL;
++	}
++
+ 	/* Ensure instance has an open send window */
+ 	if (!txwin) {
+ 		pr_err("No send window open?\n");
 -- 
 2.39.5
 
