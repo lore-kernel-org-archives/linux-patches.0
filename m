@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08D192EA487;
-	Tue, 17 Jun 2025 15:42:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B41772EBDCC;
+	Tue, 17 Jun 2025 15:42:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750174930; cv=none; b=OfakJ9QPfcsqpQ53zCAwZ8EQkRG8B/1eahwZbxKpbQaSiT2IC6C59GZt2SFfDWVlfJm1C6tZxT8CALEaVcCd/EjGB7tEoY6Vtv/VZzqljkMsCi2YBkSiv4qE2IAF9SRoYLVsJwW38XKMmsMkUn8/SyLs5SbSP+ul/v5IwLek6U4=
+	t=1750174933; cv=none; b=Jpag4rXSl7fbb/dDaZkFmXBtOp44THSmypAQWdy7oxziB4hiaKUzwHJy48NfMhfpaosGEOZAN6k4ZBVB001Q731PJ1e8qHIeZ6tlgx6WgqY8bYHgURtBNFI/aOUXIqQPTrOwHRllUqqR4hjD2wk5l641PacZVSCiWQfx3dxX5lc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750174930; c=relaxed/simple;
-	bh=c0QGdAnKV9Ss/q8xRlHvmoIUrn8CVfAV+Pm4nIaORrM=;
+	s=arc-20240116; t=1750174933; c=relaxed/simple;
+	bh=dgd0XN278FXIdbdnhEvgEuZLi/BMIPl9paobHYAIvbw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NhtHHUiBnpL4Gbnrpcyt2LwOw9n16zrDc0MwcrOzZzf6fkIZ4tjTl8I/Cag9UQqUSQ4Y7/gF5H0/w55jj0qNd0mr0xN23jj+W/zN084lVx+KSkmo4X7iY6exKaVjnGfE0pmyK+OgG1gH3G2z/+8iQS8DTpGyceRL69/NQLF+e3c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QNLChzm7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jbLO1UjHmWeCEruiOpb4evo+kqxr+VqNtESssidh0vpZOU787JoIPHQhef2gwa6Yt88z0bio5izjbGwKWPMWqns/WgsqTwgX3XvInJaDx5np4KZlYiqvFDy6aHZe+17z+OhBxrkmOWJlwE1IvEXHx7cKR067WLdVqMD+Jy+RXmI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UUV9X4mG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QNLChzm7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C3ECC4CEE3;
-	Tue, 17 Jun 2025 15:42:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UUV9X4mG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFFFDC4CEE7;
+	Tue, 17 Jun 2025 15:42:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750174929;
-	bh=c0QGdAnKV9Ss/q8xRlHvmoIUrn8CVfAV+Pm4nIaORrM=;
+	s=korg; t=1750174933;
+	bh=dgd0XN278FXIdbdnhEvgEuZLi/BMIPl9paobHYAIvbw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QNLChzm7P/BIEL4+FNHRBdRH1xEnv64AF7X0E/olocxuNaC7mpOXJ4dgX7ua1cDZg
-	 SDnaZiqFbqHVDuA32+5HDzOdhDX7I1rFNkagMxhNApXncIKofmbeWXcifH6AUOdx+0
-	 FO58NWsUCQdfn4mURw9OdClksA9Z64byswQEVHXc=
+	b=UUV9X4mGiZwPYpv6MbAsAOUIH1qCvUFexJvhUmYJPVZ+Nuvev/GRdcUjZ9llMfxyC
+	 3+7SrTbb5ziQdbqnz+d9xoFmPqJrMUMw6kCnqMCSq0UxrmSOVUDTX6zNzf3cXujlPI
+	 jLFyt/nbjGnyqcMlAV8pIv5EE+ZgmhKDLaUyQuPY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sandipan Das <sandipan.das@amd.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Song Liu <song@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
+	Hongbo Yao <andy.xu@hj-micro.com>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 012/780] perf/x86/amd/uncore: Prevent UMC counters from saturating
-Date: Tue, 17 Jun 2025 17:15:20 +0200
-Message-ID: <20250617152451.993400449@linuxfoundation.org>
+Subject: [PATCH 6.12 074/512] perf: arm-ni: Unregister PMUs on probe failure
+Date: Tue, 17 Jun 2025 17:20:40 +0200
+Message-ID: <20250617152422.578675618@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,88 +48,121 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sandipan Das <sandipan.das@amd.com>
+From: Hongbo Yao <andy.xu@hj-micro.com>
 
-[ Upstream commit 2492e5aba2be064d0604ae23ae0770ecc0168192 ]
+[ Upstream commit 7f57afde6a44d9e044885e1125034edd4fda02e8 ]
 
-Unlike L3 and DF counters, UMC counters (PERF_CTRs) set the Overflow bit
-(bit 48) and saturate on overflow. A subsequent pmu->read() of the event
-reports an incorrect accumulated count as there is no difference between
-the previous and the current values of the counter.
+When a resource allocation fails in one clock domain of an NI device,
+we need to properly roll back all previously registered perf PMUs in
+other clock domains of the same device.
 
-To avoid this, inspect the current counter value and proactively reset
-the corresponding PERF_CTR register on every pmu->read(). Combined with
-the periodic reads initiated by the hrtimer, the counters never get a
-chance saturate but the resolution reduces to 47 bits.
+Otherwise, it can lead to kernel panics.
 
-Fixes: 25e56847821f ("perf/x86/amd/uncore: Add memory controller support")
-Signed-off-by: Sandipan Das <sandipan.das@amd.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: Song Liu <song@kernel.org>
-Acked-by: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/dee9c8af2c6d66814cf4c6224529c144c620cf2c.1744906694.git.sandipan.das@amd.com
+Calling arm_ni_init+0x0/0xff8 [arm_ni] @ 2374
+arm-ni ARMHCB70:00: Failed to request PMU region 0x1f3c13000
+arm-ni ARMHCB70:00: probe with driver arm-ni failed with error -16
+list_add corruption: next->prev should be prev (fffffd01e9698a18),
+but was 0000000000000000. (next=ffff10001a0decc8).
+pstate: 6340009 (nZCv daif +PAN -UAO +TCO +DIT -SSBS BTYPE=--)
+pc : list_add_valid_or_report+0x7c/0xb8
+lr : list_add_valid_or_report+0x7c/0xb8
+Call trace:
+ __list_add_valid_or_report+0x7c/0xb8
+ perf_pmu_register+0x22c/0x3a0
+ arm_ni_probe+0x554/0x70c [arm_ni]
+ platform_probe+0x70/0xe8
+ really_probe+0xc6/0x4d8
+ driver_probe_device+0x48/0x170
+ __driver_attach+0x8e/0x1c0
+ bus_for_each_dev+0x64/0xf0
+ driver_add+0x138/0x260
+ bus_add_driver+0x68/0x138
+ __platform_driver_register+0x2c/0x40
+ arm_ni_init+0x14/0x2a [arm_ni]
+ do_init_module+0x36/0x298
+---[ end trace 0000000000000000 ]---
+Kernel panic - not syncing: Oops - BUG: Fatal exception
+SMP: stopping secondary CPUs
+
+Fixes: 4d5a7680f2b4 ("perf: Add driver for Arm NI-700 interconnect PMU")
+Signed-off-by: Hongbo Yao <andy.xu@hj-micro.com>
+Reviewed-by: Robin Murphy <robin.murphy@arm.com>
+Link: https://lore.kernel.org/r/20250403070918.4153839-1-andy.xu@hj-micro.com
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/amd/uncore.c | 35 ++++++++++++++++++++++++++++++++++-
- 1 file changed, 34 insertions(+), 1 deletion(-)
+ drivers/perf/arm-ni.c | 39 +++++++++++++++++++++------------------
+ 1 file changed, 21 insertions(+), 18 deletions(-)
 
-diff --git a/arch/x86/events/amd/uncore.c b/arch/x86/events/amd/uncore.c
-index 010024f09f2c4..a6fa01ef35a10 100644
---- a/arch/x86/events/amd/uncore.c
-+++ b/arch/x86/events/amd/uncore.c
-@@ -889,6 +889,39 @@ static void amd_uncore_umc_start(struct perf_event *event, int flags)
- 	perf_event_update_userpage(event);
+diff --git a/drivers/perf/arm-ni.c b/drivers/perf/arm-ni.c
+index 90fcfe693439e..3f3d2e0f91fa7 100644
+--- a/drivers/perf/arm-ni.c
++++ b/drivers/perf/arm-ni.c
+@@ -576,6 +576,23 @@ static int arm_ni_init_cd(struct arm_ni *ni, struct arm_ni_node *node, u64 res_s
+ 	return err;
  }
  
-+static void amd_uncore_umc_read(struct perf_event *event)
++static void arm_ni_remove(struct platform_device *pdev)
 +{
-+	struct hw_perf_event *hwc = &event->hw;
-+	u64 prev, new, shift;
-+	s64 delta;
++	struct arm_ni *ni = platform_get_drvdata(pdev);
 +
-+	shift = COUNTER_SHIFT + 1;
-+	prev = local64_read(&hwc->prev_count);
++	for (int i = 0; i < ni->num_cds; i++) {
++		struct arm_ni_cd *cd = ni->cds + i;
 +
-+	/*
-+	 * UMC counters do not have RDPMC assignments. Read counts directly
-+	 * from the corresponding PERF_CTR.
-+	 */
-+	rdmsrl(hwc->event_base, new);
++		if (!cd->pmu_base)
++			continue;
 +
-+	/*
-+	 * Unlike the other uncore counters, UMC counters saturate and set the
-+	 * Overflow bit (bit 48) on overflow. Since they do not roll over,
-+	 * proactively reset the corresponding PERF_CTR when bit 47 is set so
-+	 * that the counter never gets a chance to saturate.
-+	 */
-+	if (new & BIT_ULL(63 - COUNTER_SHIFT)) {
-+		wrmsrl(hwc->event_base, 0);
-+		local64_set(&hwc->prev_count, 0);
-+	} else {
-+		local64_set(&hwc->prev_count, new);
++		writel_relaxed(0, cd->pmu_base + NI_PMCR);
++		writel_relaxed(U32_MAX, cd->pmu_base + NI_PMINTENCLR);
++		perf_pmu_unregister(&cd->pmu);
++		cpuhp_state_remove_instance_nocalls(arm_ni_hp_state, &cd->cpuhp_node);
 +	}
-+
-+	delta = (new << shift) - (prev << shift);
-+	delta >>= shift;
-+	local64_add(delta, &event->count);
 +}
 +
- static
- void amd_uncore_umc_ctx_scan(struct amd_uncore *uncore, unsigned int cpu)
+ static void arm_ni_probe_domain(void __iomem *base, struct arm_ni_node *node)
  {
-@@ -967,7 +1000,7 @@ int amd_uncore_umc_ctx_init(struct amd_uncore *uncore, unsigned int cpu)
- 				.del		= amd_uncore_del,
- 				.start		= amd_uncore_umc_start,
- 				.stop		= amd_uncore_stop,
--				.read		= amd_uncore_read,
-+				.read		= amd_uncore_umc_read,
- 				.capabilities	= PERF_PMU_CAP_NO_EXCLUDE | PERF_PMU_CAP_NO_INTERRUPT,
- 				.module		= THIS_MODULE,
- 			};
+ 	u32 reg = readl_relaxed(base + NI_NODE_TYPE);
+@@ -657,8 +674,11 @@ static int arm_ni_probe(struct platform_device *pdev)
+ 				reg = readl_relaxed(pd.base + NI_CHILD_PTR(c));
+ 				arm_ni_probe_domain(base + reg, &cd);
+ 				ret = arm_ni_init_cd(ni, &cd, res->start);
+-				if (ret)
++				if (ret) {
++					ni->cds[cd.id].pmu_base = NULL;
++					arm_ni_remove(pdev);
+ 					return ret;
++				}
+ 			}
+ 		}
+ 	}
+@@ -666,23 +686,6 @@ static int arm_ni_probe(struct platform_device *pdev)
+ 	return 0;
+ }
+ 
+-static void arm_ni_remove(struct platform_device *pdev)
+-{
+-	struct arm_ni *ni = platform_get_drvdata(pdev);
+-
+-	for (int i = 0; i < ni->num_cds; i++) {
+-		struct arm_ni_cd *cd = ni->cds + i;
+-
+-		if (!cd->pmu_base)
+-			continue;
+-
+-		writel_relaxed(0, cd->pmu_base + NI_PMCR);
+-		writel_relaxed(U32_MAX, cd->pmu_base + NI_PMINTENCLR);
+-		perf_pmu_unregister(&cd->pmu);
+-		cpuhp_state_remove_instance_nocalls(arm_ni_hp_state, &cd->cpuhp_node);
+-	}
+-}
+-
+ #ifdef CONFIG_OF
+ static const struct of_device_id arm_ni_of_match[] = {
+ 	{ .compatible = "arm,ni-700" },
 -- 
 2.39.5
 
