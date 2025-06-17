@@ -1,46 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FB652ED17B;
-	Tue, 17 Jun 2025 16:25:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B361F2ED844;
+	Tue, 17 Jun 2025 16:25:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177536; cv=none; b=HMsOUuhP5vQjTA1NduQrPayLPANtFRUOwmv6M9GU+4QzayIC3YN4T3GcuQrZ3KhclYJX8usa9CfFqUuFs/+GD6QZwCavxynDfArm17rKzcOeZbU3iSAQg41UVncqsyQDL3bIVThvAuBrVbupkwGjpZ+jYUNt8sj2xAtzPZffu+Y=
+	t=1750177539; cv=none; b=oxIFGZjEoxh9OZ3jzUQzYz/GR6iLZgyAfmyJTIrnHWR7fi/gSUWe8AY0INO737zJ/agcpVvWJEnneP0PqILG8tc/BZtm8AkALJ0/8YapamrdbaEXjhPrCMa81bhJWpUWrPnY1I7weSaMEj0rforj08Wc0Wg7xdmtw6JqHRPQhIk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177536; c=relaxed/simple;
-	bh=ErRLCUVquNbbDMLc9qn46AmxXZ6r2GdANGHGuSB09WM=;
+	s=arc-20240116; t=1750177539; c=relaxed/simple;
+	bh=jEhiZIbG5iC/n09BcwoabuJ5BQZOVqOmNRn+P6uCIak=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=juPUcGB845CVdAaw39N/zKskOUOKX9Mbwa8+KH2nibtq22LLW6Qo60bbuV3jMtFfeFBp+PVD2XvxP/m5wgH5IgXVEbKPpW/rDi10Q2mJWtXDUbLPVa8ktH0iPuofdu5P2rQLwHonxL80m4pLG1lq6C1rnlDDnKeDGcQAo1+aAk0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vjc/DSfE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Gd1pO/TV+2c0z6TGaIQIWZxMYr1w2YyQFNMpKgHRJLQZ3uZTG9UMd9pO8DUQTkBq8UR+Xgr3+r9DcWmtCHXBau6DnKMJx34WR3plXj1MnaojmH7o5mrBalNYgDCdbgsWWxw4+i/KtUTAGGyIxmCIwS4mUdXgjhT4cj/I8jlkMtg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T+1HGMAw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vjc/DSfE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D417DC4CEE3;
-	Tue, 17 Jun 2025 16:25:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T+1HGMAw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22A2CC4CEE3;
+	Tue, 17 Jun 2025 16:25:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177536;
-	bh=ErRLCUVquNbbDMLc9qn46AmxXZ6r2GdANGHGuSB09WM=;
+	s=korg; t=1750177539;
+	bh=jEhiZIbG5iC/n09BcwoabuJ5BQZOVqOmNRn+P6uCIak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vjc/DSfEKc9V/xwGrRErbHSp5erusoZxTxRqO025wJzcNNLuy3yiyHOJUk78ypc/F
-	 cha+WivGN13iJej+gFQVmEMkgo9OOA2FhLWo9f+vZ0lsHxjC07roxugvL464RwgJSE
-	 Ll9BusGWt0XvhUXragaEKSPMCExvtcdt0Hxhxd1Y=
+	b=T+1HGMAwusHNi2kF+q5q0vCeCKzWxq2hf/0e9k6jQHxZcl3gWd5Cw3Q4Ss4neBAF8
+	 ElwBRdAT+ets2CHjD3cXh1KTu3JjYzoPA+xu5rS8cSXWpxK6n6UITYJabnwMtdP1Q5
+	 VmTM84nrEelSmAoqbalRQJSc9XNob+nRoZ+qs7LU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joshua Hay <joshua.a.hay@intel.com>,
-	Emil Tantilov <emil.s.tantilov@intel.com>,
-	Ahmed Zaki <ahmed.zaki@intel.com>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Samuel Salin <Samuel.salin@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Suraj Gupta <suraj.gupta2@amd.com>,
+	Sean Anderson <sean.anderson@linux.dev>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 360/512] idpf: avoid mailbox timeout delays during reset
-Date: Tue, 17 Jun 2025 17:25:26 +0200
-Message-ID: <20250617152434.170853598@linuxfoundation.org>
+Subject: [PATCH 6.15 321/780] net: xilinx: axienet: Fix Tx skb circular buffer occupancy check in dmaengine xmit
+Date: Tue, 17 Jun 2025 17:20:29 +0200
+Message-ID: <20250617152504.523237951@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -52,103 +48,61 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Emil Tantilov <emil.s.tantilov@intel.com>
+From: Suraj Gupta <suraj.gupta2@amd.com>
 
-[ Upstream commit 9dc63d8ff182150d7d7b318ab9389702a2c0a292 ]
+[ Upstream commit 32374234ab0101881e7d0c6a8ef7ebce566c46c9 ]
 
-Mailbox operations are not possible while the driver is in reset.
-Operations that require MBX exchange with the control plane will result
-in long delays if executed while a reset is in progress:
+In Dmaengine flow, driver maintains struct skbuf_dma_descriptor rings each
+element of which corresponds to a skb. In Tx datapath, compare available
+space in skb ring with number of skbs instead of skb fragments.
+Replace x * (MAX_SKB_FRAGS) in netif_txq_completed_wake() and
+netif_txq_maybe_stop() with x * (1 skb) to fix the comparison.
 
-ethtool -L <inf> combined 8& echo 1 > /sys/class/net/<inf>/device/reset
-idpf 0000:83:00.0: HW reset detected
-idpf 0000:83:00.0: Device HW Reset initiated
-idpf 0000:83:00.0: Transaction timed-out (op:504 cookie:be00 vc_op:504 salt:be timeout:2000ms)
-idpf 0000:83:00.0: Transaction timed-out (op:508 cookie:bf00 vc_op:508 salt:bf timeout:2000ms)
-idpf 0000:83:00.0: Transaction timed-out (op:512 cookie:c000 vc_op:512 salt:c0 timeout:2000ms)
-idpf 0000:83:00.0: Transaction timed-out (op:510 cookie:c100 vc_op:510 salt:c1 timeout:2000ms)
-idpf 0000:83:00.0: Transaction timed-out (op:509 cookie:c200 vc_op:509 salt:c2 timeout:60000ms)
-idpf 0000:83:00.0: Transaction timed-out (op:509 cookie:c300 vc_op:509 salt:c3 timeout:60000ms)
-idpf 0000:83:00.0: Transaction timed-out (op:505 cookie:c400 vc_op:505 salt:c4 timeout:60000ms)
-idpf 0000:83:00.0: Failed to configure queues for vport 0, -62
-
-Disable mailbox communication in case of a reset, unless it's done during
-a driver load, where the virtchnl operations are needed to configure the
-device.
-
-Fixes: 8077c727561aa ("idpf: add controlq init and reset checks")
-Co-developed-by: Joshua Hay <joshua.a.hay@intel.com>
-Signed-off-by: Joshua Hay <joshua.a.hay@intel.com>
-Signed-off-by: Emil Tantilov <emil.s.tantilov@intel.com>
-Reviewed-by: Ahmed Zaki <ahmed.zaki@intel.com>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Samuel Salin <Samuel.salin@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: 6a91b846af85 ("net: axienet: Introduce dmaengine support")
+Signed-off-by: Suraj Gupta <suraj.gupta2@amd.com>
+Reviewed-by: Sean Anderson <sean.anderson@linux.dev>
+Link: https://patch.msgid.link/20250521181608.669554-1-suraj.gupta2@amd.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/idpf/idpf_lib.c     | 18 +++++++++++++-----
- .../net/ethernet/intel/idpf/idpf_virtchnl.c    |  2 +-
- .../net/ethernet/intel/idpf/idpf_virtchnl.h    |  1 +
- 3 files changed, 15 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/xilinx/xilinx_axienet_main.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/idpf/idpf_lib.c b/drivers/net/ethernet/intel/idpf/idpf_lib.c
-index 615e74d038457..ba645ab22d394 100644
---- a/drivers/net/ethernet/intel/idpf/idpf_lib.c
-+++ b/drivers/net/ethernet/intel/idpf/idpf_lib.c
-@@ -1802,11 +1802,19 @@ void idpf_vc_event_task(struct work_struct *work)
- 	if (test_bit(IDPF_REMOVE_IN_PROG, adapter->flags))
- 		return;
- 
--	if (test_bit(IDPF_HR_FUNC_RESET, adapter->flags) ||
--	    test_bit(IDPF_HR_DRV_LOAD, adapter->flags)) {
--		set_bit(IDPF_HR_RESET_IN_PROG, adapter->flags);
--		idpf_init_hard_reset(adapter);
--	}
-+	if (test_bit(IDPF_HR_FUNC_RESET, adapter->flags))
-+		goto func_reset;
-+
-+	if (test_bit(IDPF_HR_DRV_LOAD, adapter->flags))
-+		goto drv_load;
-+
-+	return;
-+
-+func_reset:
-+	idpf_vc_xn_shutdown(adapter->vcxn_mngr);
-+drv_load:
-+	set_bit(IDPF_HR_RESET_IN_PROG, adapter->flags);
-+	idpf_init_hard_reset(adapter);
+diff --git a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
+index 054abf283ab33..5f912b27bfd7f 100644
+--- a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
++++ b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
+@@ -880,7 +880,7 @@ static void axienet_dma_tx_cb(void *data, const struct dmaengine_result *result)
+ 	dev_consume_skb_any(skbuf_dma->skb);
+ 	netif_txq_completed_wake(txq, 1, len,
+ 				 CIRC_SPACE(lp->tx_ring_head, lp->tx_ring_tail, TX_BD_NUM_MAX),
+-				 2 * MAX_SKB_FRAGS);
++				 2);
  }
  
  /**
-diff --git a/drivers/net/ethernet/intel/idpf/idpf_virtchnl.c b/drivers/net/ethernet/intel/idpf/idpf_virtchnl.c
-index 99bdb95bf2266..151beea20d343 100644
---- a/drivers/net/ethernet/intel/idpf/idpf_virtchnl.c
-+++ b/drivers/net/ethernet/intel/idpf/idpf_virtchnl.c
-@@ -376,7 +376,7 @@ static void idpf_vc_xn_init(struct idpf_vc_xn_manager *vcxn_mngr)
-  * All waiting threads will be woken-up and their transaction aborted. Further
-  * operations on that object will fail.
-  */
--static void idpf_vc_xn_shutdown(struct idpf_vc_xn_manager *vcxn_mngr)
-+void idpf_vc_xn_shutdown(struct idpf_vc_xn_manager *vcxn_mngr)
- {
- 	int i;
+@@ -914,7 +914,7 @@ axienet_start_xmit_dmaengine(struct sk_buff *skb, struct net_device *ndev)
  
-diff --git a/drivers/net/ethernet/intel/idpf/idpf_virtchnl.h b/drivers/net/ethernet/intel/idpf/idpf_virtchnl.h
-index 83da5d8da56bf..23271cf0a2160 100644
---- a/drivers/net/ethernet/intel/idpf/idpf_virtchnl.h
-+++ b/drivers/net/ethernet/intel/idpf/idpf_virtchnl.h
-@@ -66,5 +66,6 @@ int idpf_send_get_stats_msg(struct idpf_vport *vport);
- int idpf_send_set_sriov_vfs_msg(struct idpf_adapter *adapter, u16 num_vfs);
- int idpf_send_get_set_rss_key_msg(struct idpf_vport *vport, bool get);
- int idpf_send_get_set_rss_lut_msg(struct idpf_vport *vport, bool get);
-+void idpf_vc_xn_shutdown(struct idpf_vc_xn_manager *vcxn_mngr);
+ 	dma_dev = lp->tx_chan->device;
+ 	sg_len = skb_shinfo(skb)->nr_frags + 1;
+-	if (CIRC_SPACE(lp->tx_ring_head, lp->tx_ring_tail, TX_BD_NUM_MAX) <= sg_len) {
++	if (CIRC_SPACE(lp->tx_ring_head, lp->tx_ring_tail, TX_BD_NUM_MAX) <= 1) {
+ 		netif_stop_queue(ndev);
+ 		if (net_ratelimit())
+ 			netdev_warn(ndev, "TX ring unexpectedly full\n");
+@@ -964,7 +964,7 @@ axienet_start_xmit_dmaengine(struct sk_buff *skb, struct net_device *ndev)
+ 	txq = skb_get_tx_queue(lp->ndev, skb);
+ 	netdev_tx_sent_queue(txq, skb->len);
+ 	netif_txq_maybe_stop(txq, CIRC_SPACE(lp->tx_ring_head, lp->tx_ring_tail, TX_BD_NUM_MAX),
+-			     MAX_SKB_FRAGS + 1, 2 * MAX_SKB_FRAGS);
++			     1, 2);
  
- #endif /* _IDPF_VIRTCHNL_H_ */
+ 	dmaengine_submit(dma_tx_desc);
+ 	dma_async_issue_pending(lp->tx_chan);
 -- 
 2.39.5
 
