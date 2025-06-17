@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C1B52DFF1F;
-	Tue, 17 Jun 2025 15:47:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFC582DFF06;
+	Tue, 17 Jun 2025 15:47:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175241; cv=none; b=j9qa0kzsxXonCUoMTkB2/19V2ZkfUEqgB+q1pA/83+SwrPyRkGDMDRl8WzxnnhkfHWB4EEqamPrqntREjmuhsQpdy93+r1nJB50aDHIfGZ7akEYMIJPHQ1ezN9c4gHPB2DCbCqULAATRN6mCEuvAC+WDMx+FTj/BF9WZuYAUD9Q=
+	t=1750175245; cv=none; b=dLrj6bzuQbMyHRDsj4q8JM3jWJzwoS5xlYS8qAW9078AktO+pp+9xdpuPEci7DjbU55YsSgxFooFBx4bCrRWE8TXRxZutK0DtnQ3j+SBhvsD/GMMLG/7L/hAn+RYw9vqO7J2bnuicF3eidDQWV25IjMJeFQthIJYGAfAp4owSew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175241; c=relaxed/simple;
-	bh=CfFPMnTbqhS00eBNm0lyxqZwWeWQWhI3u2kbNYRJi9Q=;
+	s=arc-20240116; t=1750175245; c=relaxed/simple;
+	bh=2ECWu57gXiF9UAoY3R7mAzVKg9mNWYeSE7VwijnogP0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VydXw5ioMApgdK8MGJLR7Gvb2KpIFtwk73K76PN67u83DggKAvN2OqvExogyTJTfJYZ0jazbf6OO0d0hOKtFAiZywR5DjmUGycRHxKSXMcgpZu2QrJlR257Rm5x+0COAzh9XZzOByysYC1WS6tqD329ffOnc+OQX7w7GFOxEeLI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FGu1DJqJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OHiY2ogIgl/v6gERukCzWRNoACYdTKXWu1WYNWvR3nBxnfljQDM1lY7u8jlpJ7KEm6dqqU62pLBg4ZseaH6iOPfG9RXMNCI3yQvemp3oGV8Jtcuq5pg4niwUaox5IEC3txTAxMMMa78pX8MLF4RWs7A5aOo7gLVSIS7y/J1W/7A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SRHOlXoT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FGu1DJqJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B07EC4CEE3;
-	Tue, 17 Jun 2025 15:47:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SRHOlXoT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5019FC4CEF0;
+	Tue, 17 Jun 2025 15:47:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175241;
-	bh=CfFPMnTbqhS00eBNm0lyxqZwWeWQWhI3u2kbNYRJi9Q=;
+	s=korg; t=1750175244;
+	bh=2ECWu57gXiF9UAoY3R7mAzVKg9mNWYeSE7VwijnogP0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FGu1DJqJm3uI14Vx6xZeGnttqDkJCRLe05gY4R51o86WKfmq45gOAHEi95yUHvK33
-	 w/+ZsOqEzPAKMVPZ3O0bQ7U6Lf3stK/g+JNk2U5214z+oC7eEMBbdsPUSTb2NgBkLv
-	 fR7O9BVfe8g76m9TsXbIHKUpIRJ4qnHpBkt2dAWI=
+	b=SRHOlXoTobuC6vntPZ/Sy20ALcQHi/AS1haggmvva/fo2Zn6Yd/W5eEv3+cnS0i12
+	 KFCnQGevPyhYGzuY/sz+xVAx6Ro36Y3BEZfbPyT8eeOTUJfLLBD1Uxi5yRUufiyduJ
+	 +drYawAv3cBI9tsEyLFN96agIHsznRVPMefB22yw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yaxiong Tian <tianyaxiong@kylinos.cn>,
-	Lukasz Luba <lukasz.luba@arm.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Dzmitry Sankouski <dsankouski@gmail.com>,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 066/780] PM: EM: Fix potential division-by-zero error in em_compute_costs()
-Date: Tue, 17 Jun 2025 17:16:14 +0200
-Message-ID: <20250617152454.194607539@linuxfoundation.org>
+Subject: [PATCH 6.6 157/356] arm64: dts: qcom: sdm845-starqltechn: remove wifi
+Date: Tue, 17 Jun 2025 17:24:32 +0200
+Message-ID: <20250617152344.547245374@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
+References: <20250617152338.212798615@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,48 +49,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yaxiong Tian <tianyaxiong@kylinos.cn>
+From: Dzmitry Sankouski <dsankouski@gmail.com>
 
-[ Upstream commit 179c0c7044a378198adb36f2a12410ab68cc730a ]
+[ Upstream commit 2d3dd4b237638853b8a99353401ab8d88a6afb6c ]
 
-When the device is of a non-CPU type, table[i].performance won't be
-initialized in the previous em_init_performance(), resulting in division
-by zero when calculating costs in em_compute_costs().
+Starqltechn has broadcom chip for wifi, so sdm845 wifi part
+can be disabled.
 
-Since the 'cost' algorithm is only used for EAS energy efficiency
-calculations and is currently not utilized by other device drivers, we
-should add the _is_cpu_device(dev) check to prevent this division-by-zero
-issue.
-
-Fixes: 1b600da51073 ("PM: EM: Optimize em_cpu_energy() and remove division")
-Signed-off-by: Yaxiong Tian <tianyaxiong@kylinos.cn>
-Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
-Link: https://patch.msgid.link/tencent_7F99ED4767C1AF7889D0D8AD50F34859CE06@qq.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: d711b22eee55 ("arm64: dts: qcom: starqltechn: add initial device tree for starqltechn")
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Dzmitry Sankouski <dsankouski@gmail.com>
+Fixes: d711b22eee55 ("arm64: dts: qcom: starqltechn: add initial device  tree for starqltechn")
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Link: https://lore.kernel.org/r/20250225-starqltechn_integration_upstream-v9-2-a5d80375cb66@gmail.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/power/energy_model.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts | 8 --------
+ 1 file changed, 8 deletions(-)
 
-diff --git a/kernel/power/energy_model.c b/kernel/power/energy_model.c
-index d9b7e2b38c7a9..41606247c2776 100644
---- a/kernel/power/energy_model.c
-+++ b/kernel/power/energy_model.c
-@@ -233,6 +233,10 @@ static int em_compute_costs(struct device *dev, struct em_perf_state *table,
- 	unsigned long prev_cost = ULONG_MAX;
- 	int i, ret;
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts b/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
+index d37a433130b98..6fc30fd1262b8 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
++++ b/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
+@@ -418,14 +418,6 @@
+ 	status = "okay";
+ };
  
-+	/* This is needed only for CPUs and EAS skip other devices */
-+	if (!_is_cpu_device(dev))
-+		return 0;
-+
- 	/* Compute the cost of each performance state. */
- 	for (i = nr_states - 1; i >= 0; i--) {
- 		unsigned long power_res, cost;
+-&wifi {
+-	vdd-0.8-cx-mx-supply = <&vreg_l5a_0p8>;
+-	vdd-1.8-xo-supply = <&vreg_l7a_1p8>;
+-	vdd-1.3-rfa-supply = <&vreg_l17a_1p3>;
+-	vdd-3.3-ch0-supply = <&vreg_l25a_3p3>;
+-	status = "okay";
+-};
+-
+ &tlmm {
+ 	gpio-reserved-ranges = <0 4>, <27 4>, <81 4>, <85 4>;
+ 
 -- 
 2.39.5
 
