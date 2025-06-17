@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 457BB239561;
-	Tue, 17 Jun 2025 16:46:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40533236453;
+	Tue, 17 Jun 2025 16:46:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750178770; cv=none; b=RbWwJsuxCxWleT5E5K1MMfIw1PU/NnYeA+SCxfBatoiwQsHdb/59Cg3NPVXcXWLTTqbhcPxD8DdMsXemCaRbnOq+MgS+jU9t4m7AaQQWFxzWZnKyj2gOQnvIr8VtcCt8dAqUrZu/2mDba1RrHgFvIEiJk5Fapx0a5WhAmY1ZdPI=
+	t=1750178773; cv=none; b=fD9JlT/hyTfKat9Uim31VgycmvGXOwwxulgqGqAds0kpdw17bKnBetcLGyneSXQadXMbk9BUbK0NQRQJi4y4EpqA1MXULZz1f6Jy/a4U+J0I+iORvRpshXVXt63mD+LrBIPkysyjuDOiiALqN/g+YkzAPjVmL27hizd9DsjebUE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750178770; c=relaxed/simple;
-	bh=Sd48opIUpeSHApqDRF8B9IgLjMupzvT8xu7MR7XmKps=;
+	s=arc-20240116; t=1750178773; c=relaxed/simple;
+	bh=hJcfa3pxwvHP+0ivW8gOWmZ27Pj5xAFH8i1Y+PmKkko=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lCiwCYCNZzjmjCbAo1P6eq63VKwcCFnm2PshEX1eZC/tiwra/5BPm+R98IyfY2CSdZnMa54fC6S58a/UZBUE2sk2QgHBIZe3scM5qbjgRkQXr0K6i6XfToIcZ/zBWbFtKUqpkc5Oid5bJhiBV5gKoCq2OSDIXtmtIMWSDI3PAaU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l/1ZMpNW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FM4kdUK5NLjIQigO/iQtYAjnLOo29ybbz9wLM8WaXh/Pk8sxbpDKM3AGQNJC4Z9AsLx/7/sM0QOrA2+e983FI+vVTquGvfJEUpqL6J9kBOX7wdn+xo5Rro2rly6PDiJRoQH7QffRDtUqMJaahdGP83MG57mY2sKQsThMdb1BDw4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R2lJ28Og; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l/1ZMpNW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB272C4CEE7;
-	Tue, 17 Jun 2025 16:46:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R2lJ28Og"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A77ACC4CEE3;
+	Tue, 17 Jun 2025 16:46:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750178770;
-	bh=Sd48opIUpeSHApqDRF8B9IgLjMupzvT8xu7MR7XmKps=;
+	s=korg; t=1750178773;
+	bh=hJcfa3pxwvHP+0ivW8gOWmZ27Pj5xAFH8i1Y+PmKkko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l/1ZMpNWYnQvOsHmqp2E9rUi3ilhp7lQ3gfhXXv5iO8oah0BHfKyob8IygfPIe3vd
-	 To3NTiksvXgN9H0lE7oGek/ZoiiGkDycW5ywJ8xc5fM80kRbjWsDWwo411vh096U7y
-	 Bl2vTLyd/IJB4WKAxEAFF+y4k5EMz4Jrucmj108g=
+	b=R2lJ28OgUoRt0SAgdmphxd3UY6SaIkhjWZSDg5gyC6eOgZScsRTV26+UF2LYWqWIW
+	 TmJIGazvQyhvJOp5xxKchOBNusDd1eApKCV6UkoIxVH7SKzP+SobSSLgfQyZ7bkJnT
+	 G+zFv4oZDDTkqALvyb0pT88YO/5kIAHPuYZ4RltM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roxana Nicolescu <nicolescu.roxana@protonmail.com>,
+	Nicolas Frattaroli <nicolas.frattaroli@collabora.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 541/780] misc: lis3lv02d: Fix correct sysfs directory path for lis3lv02d
-Date: Tue, 17 Jun 2025 17:24:09 +0200
-Message-ID: <20250617152513.544266490@linuxfoundation.org>
+Subject: [PATCH 6.15 550/780] drm/connector: only call HDMI audio helper plugged cb if non-null
+Date: Tue, 17 Jun 2025 17:24:18 +0200
+Message-ID: <20250617152513.904150308@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
 References: <20250617152451.485330293@linuxfoundation.org>
@@ -50,73 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Roxana Nicolescu <nicolescu.roxana@protonmail.com>
+From: Nicolas Frattaroli <nicolas.frattaroli@collabora.com>
 
-[ Upstream commit 7b386d7454b610534026b279aa150e5a9e584082 ]
+[ Upstream commit be9b3f9a54101c19226c25ba7163d291183777a0 ]
 
-The lis3lv02d driver does not create a platform device anymore. It was
-recently changed to use a faux device instead. Therefore the sysfs path
-has changed from /sys/devices/platform/lis3lv02d to
-/sys/devices/faux/lis3lv02d.
+On driver remove, sound/soc/codecs/hdmi-codec.c calls the plugged_cb
+with NULL as the callback function and codec_dev, as seen in its
+hdmi_remove function.
 
-Fixes: 3b18ccb5472b ("misc: lis3lv02d: convert to use faux_device")
-Signed-off-by: Roxana Nicolescu <nicolescu.roxana@protonmail.com>
-Link: https://lore.kernel.org/r/20250506110002.36477-1-nicolescu.roxana@protonmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The HDMI audio helper then happily tries calling said null function
+pointer, and produces an Oops as a result.
+
+Fix this by only executing the callback if fn is non-null. This means
+the .plugged_cb and .plugged_cb_dev members still get appropriately
+cleared.
+
+Fixes: baf616647fe6 ("drm/connector: implement generic HDMI audio helpers")
+Signed-off-by: Nicolas Frattaroli <nicolas.frattaroli@collabora.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20250527-hdmi-audio-helper-remove-fix-v1-1-6cf77de364d8@collabora.com
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/misc-devices/lis3lv02d.rst | 6 +++---
- drivers/misc/lis3lv02d/Kconfig           | 4 ++--
- 2 files changed, 5 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/display/drm_hdmi_audio_helper.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/misc-devices/lis3lv02d.rst b/Documentation/misc-devices/lis3lv02d.rst
-index 959bd2b822cfa..6b3b7405ebdf6 100644
---- a/Documentation/misc-devices/lis3lv02d.rst
-+++ b/Documentation/misc-devices/lis3lv02d.rst
-@@ -22,10 +22,10 @@ sporting the feature officially called "HP Mobile Data Protection System 3D" or
- models (full list can be found in drivers/platform/x86/hp_accel.c) will have
- their axis automatically oriented on standard way (eg: you can directly play
- neverball). The accelerometer data is readable via
--/sys/devices/platform/lis3lv02d. Reported values are scaled
-+/sys/devices/faux/lis3lv02d. Reported values are scaled
- to mg values (1/1000th of earth gravity).
+diff --git a/drivers/gpu/drm/display/drm_hdmi_audio_helper.c b/drivers/gpu/drm/display/drm_hdmi_audio_helper.c
+index 05afc9f0bdd6b..ae8a0cf595fc6 100644
+--- a/drivers/gpu/drm/display/drm_hdmi_audio_helper.c
++++ b/drivers/gpu/drm/display/drm_hdmi_audio_helper.c
+@@ -103,7 +103,8 @@ static int drm_connector_hdmi_audio_hook_plugged_cb(struct device *dev,
+ 	connector->hdmi_audio.plugged_cb = fn;
+ 	connector->hdmi_audio.plugged_cb_dev = codec_dev;
  
--Sysfs attributes under /sys/devices/platform/lis3lv02d/:
-+Sysfs attributes under /sys/devices/faux/lis3lv02d/:
+-	fn(codec_dev, connector->hdmi_audio.last_state);
++	if (fn)
++		fn(codec_dev, connector->hdmi_audio.last_state);
  
- position
-       - 3D position that the accelerometer reports. Format: "(x,y,z)"
-@@ -85,7 +85,7 @@ the accelerometer are converted into a "standard" organisation of the axes
- If your laptop model is not recognized (cf "dmesg"), you can send an
- email to the maintainer to add it to the database.  When reporting a new
- laptop, please include the output of "dmidecode" plus the value of
--/sys/devices/platform/lis3lv02d/position in these four cases.
-+/sys/devices/faux/lis3lv02d/position in these four cases.
+ 	mutex_unlock(&connector->hdmi_audio.lock);
  
- Q&A
- ---
-diff --git a/drivers/misc/lis3lv02d/Kconfig b/drivers/misc/lis3lv02d/Kconfig
-index bb2fec4b5880b..56005243a230d 100644
---- a/drivers/misc/lis3lv02d/Kconfig
-+++ b/drivers/misc/lis3lv02d/Kconfig
-@@ -10,7 +10,7 @@ config SENSORS_LIS3_SPI
- 	help
- 	  This driver provides support for the LIS3LV02Dx accelerometer connected
- 	  via SPI. The accelerometer data is readable via
--	  /sys/devices/platform/lis3lv02d.
-+	  /sys/devices/faux/lis3lv02d.
- 
- 	  This driver also provides an absolute input class device, allowing
- 	  the laptop to act as a pinball machine-esque joystick.
-@@ -26,7 +26,7 @@ config SENSORS_LIS3_I2C
- 	help
- 	  This driver provides support for the LIS3LV02Dx accelerometer connected
- 	  via I2C. The accelerometer data is readable via
--	  /sys/devices/platform/lis3lv02d.
-+	  /sys/devices/faux/lis3lv02d.
- 
- 	  This driver also provides an absolute input class device, allowing
- 	  the device to act as a pinball machine-esque joystick.
 -- 
 2.39.5
 
