@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88B8F1E8332;
-	Tue, 17 Jun 2025 15:43:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFF9E1E8332;
+	Tue, 17 Jun 2025 15:43:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750174990; cv=none; b=Y418C1HojLLtZm7e58MpQosivFUtDf3c92vFX1fUIasy3d9anT6tHVuqf/k1gABN+LaPBw8dle55L+oKBGGAm80nxUi2oZb3sp6eduMMrL7Y2tirzLeWb7Njq5lIkipBBH/MJRJ4vQuJPaAybAIt1zOwtAV20IY+K39uv4Bo/fk=
+	t=1750174993; cv=none; b=XcGy4y7L+MtBVZmM4840qVVBgCa6tz2tvyNpNedt8ecN/e0Rhk+7ERtZXbIikUgx+Fwc0JOC7MYTEQAZSNp4NWC+SNwOg0k7CBZnqyXzAviiSIuNZPN95uQAkbijLlI92YNumBm5KNon6qh+cxtmcVqWQoUu6sJzmqU8xQE0rwg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750174990; c=relaxed/simple;
-	bh=qF73YeAfV+iYpLTnLZgZzJOpelM3ZGDkJcCQhgm9RY4=;
+	s=arc-20240116; t=1750174993; c=relaxed/simple;
+	bh=GP5U1ZB70H0JbDtFiGwRjwlBKP/M3sG3DLkuOjZXyj8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vpg24DLf270FGZAeDqQCyv/Ryrcw13L8AQOp1FZRlsAaqWY4XGlULQ2HlaFD9VqQr1jTbFjhA5olOno29Z584l4MFLzlmSJRoVIwfPhlcjyCraTDPxG7VUp8seVZdPdNAzso59ufAHZdML5yeebKz3TSTbg0f/bSeArdKv3v56M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uch4srJ3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZCfeoX7OHPmfhLjoYNv5br9Kks8PwF1FRly0dc3pF/utbQ6J360PtkWKDC7CDmRkr8hSjZV/kbPZBnVWEA1UvCzOBEIhwazx3MLGJG4of2p/utrDMo3TtGE3QlNQ7qI5ZhIpLr/fbvy0F8H6pfMuKr5FLa7GRpvI/3Sh69tOErg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pftsc590; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uch4srJ3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1F05C4CEE3;
-	Tue, 17 Jun 2025 15:43:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pftsc590"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0898AC4CEE3;
+	Tue, 17 Jun 2025 15:43:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750174990;
-	bh=qF73YeAfV+iYpLTnLZgZzJOpelM3ZGDkJcCQhgm9RY4=;
+	s=korg; t=1750174993;
+	bh=GP5U1ZB70H0JbDtFiGwRjwlBKP/M3sG3DLkuOjZXyj8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uch4srJ31mJHx/CzphqfBo/xOIhaJHvJ4lhX/nOtPzfdLZ2UdqY188KwvD4wlI8a7
-	 uDevt+d48ly/d1J34FDVHIvnPbFKLOHiMMF9nW6WSq3cvHcxcz7WJzvvB0zZW6JjOU
-	 2iZDs6X/Jjksuh/iYCn69Ks4pWsmB3vo5+77cWH0=
+	b=pftsc590Lsrw/B+u0cxBCILQDBpFo9IuV6qNu09ef3okSdNxgKtl0BLoH1teKogCF
+	 Hu2UzN2H3EKu36lty8GaOdlL4JFQg5mwh5EXMhEEToYuh1sHQpJ+XcxD5bsmDIf9dz
+	 wrOFHF4RjCTZXoyjoEqs92+t64g7Fw5J9SvD12Ic=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joshua Thompson <funaho@jurai.org>,
-	Finn Thain <fthain@linux-m68k.org>,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Henry Martin <bsdhenrymartin@gmail.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 082/512] m68k: mac: Fix macintosh_config for Mac II
-Date: Tue, 17 Jun 2025 17:20:48 +0200
-Message-ID: <20250617152422.901120057@linuxfoundation.org>
+Subject: [PATCH 6.6 134/356] wifi: mt76: mt7915: Fix null-ptr-deref in mt7915_mmio_wed_init()
+Date: Tue, 17 Jun 2025 17:24:09 +0200
+Message-ID: <20250617152343.628104615@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
+References: <20250617152338.212798615@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,48 +47,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Finn Thain <fthain@linux-m68k.org>
+From: Henry Martin <bsdhenrymartin@gmail.com>
 
-[ Upstream commit 52ae3f5da7e5adbe3d1319573b55dac470abb83c ]
+[ Upstream commit efb95439c1477bbc955cacd0179c35e7861b437c ]
 
-When booted on my Mac II, the kernel prints this:
+devm_ioremap() returns NULL on error. Currently, mt7915_mmio_wed_init()
+does not check for this case, which results in a NULL pointer
+dereference.
 
-    Detected Macintosh model: 6
-    Apple Macintosh Unknown
+Prevent null pointer dereference in mt7915_mmio_wed_init().
 
-The catch-all entry ("Unknown") is mac_data_table[0] which is only needed
-in the unlikely event that the bootinfo model ID can't be matched.
-When model ID is 6, the search should begin and end at mac_data_table[1].
-Fix the off-by-one error that causes this problem.
-
-Cc: Joshua Thompson <funaho@jurai.org>
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Finn Thain <fthain@linux-m68k.org>
-Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Link: https://lore.kernel.org/d0f30a551064ca4810b1c48d5a90954be80634a9.1745453246.git.fthain@linux-m68k.org
-Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Fixes: 4f831d18d12d ("wifi: mt76: mt7915: enable WED RX support")
+Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
+Link: https://patch.msgid.link/20250407061900.85317-1-bsdhenrymartin@gmail.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/m68k/mac/config.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/mt7915/mmio.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/arch/m68k/mac/config.c b/arch/m68k/mac/config.c
-index e324410ef239c..d26c7f4f8c360 100644
---- a/arch/m68k/mac/config.c
-+++ b/arch/m68k/mac/config.c
-@@ -793,7 +793,7 @@ static void __init mac_identify(void)
- 	}
- 
- 	macintosh_config = mac_data_table;
--	for (m = macintosh_config; m->ident != -1; m++) {
-+	for (m = &mac_data_table[1]; m->ident != -1; m++) {
- 		if (m->ident == model) {
- 			macintosh_config = m;
- 			break;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/mmio.c b/drivers/net/wireless/mediatek/mt76/mt7915/mmio.c
+index 7db436d908a39..f4850c6daeb72 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/mmio.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/mmio.c
+@@ -755,6 +755,9 @@ int mt7915_mmio_wed_init(struct mt7915_dev *dev, void *pdev_ptr,
+ 		wed->wlan.base = devm_ioremap(dev->mt76.dev,
+ 					      pci_resource_start(pci_dev, 0),
+ 					      pci_resource_len(pci_dev, 0));
++		if (!wed->wlan.base)
++			return -ENOMEM;
++
+ 		wed->wlan.phy_base = pci_resource_start(pci_dev, 0);
+ 		wed->wlan.wpdma_int = pci_resource_start(pci_dev, 0) +
+ 				      MT_INT_WED_SOURCE_CSR;
+@@ -782,6 +785,9 @@ int mt7915_mmio_wed_init(struct mt7915_dev *dev, void *pdev_ptr,
+ 		wed->wlan.bus_type = MTK_WED_BUS_AXI;
+ 		wed->wlan.base = devm_ioremap(dev->mt76.dev, res->start,
+ 					      resource_size(res));
++		if (!wed->wlan.base)
++			return -ENOMEM;
++
+ 		wed->wlan.phy_base = res->start;
+ 		wed->wlan.wpdma_int = res->start + MT_INT_SOURCE_CSR;
+ 		wed->wlan.wpdma_mask = res->start + MT_INT_MASK_CSR;
 -- 
 2.39.5
 
