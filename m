@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C46861E573F;
-	Tue, 17 Jun 2025 15:45:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14EE52ED16E;
+	Tue, 17 Jun 2025 15:45:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175120; cv=none; b=t8KvEDIIohqzkopY2wsX1qfnjf0mTrzjIdRDg7ctxorOyO3VuhCPaKKtnWXR+R4fbknFTGpirQLls8fGlI6Hfbj2ZFjT0vytEfa9fHcAIfDQF5BzM3RlrY12kAK06s14S/I/zYWj+amrYgOVBfXkNWvWjdeAq1LCtpYyyjB93aw=
+	t=1750175124; cv=none; b=XJ8iVLgmtyOvGI69HDgnGV6cRJclRsdfqVNlI8e0mq3xEEqkzidrLjPmxlj9WrZT9NDnK2BqlG4nbKOX1WHLwBR+ZSk5gxFomeOxrMsQ+OkvgAzD3xVok9dzQtP2k4bxhk+1RQsoFFmplcg+vsDhhrNRtCrkmdnMpyGY+cFgrws=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175120; c=relaxed/simple;
-	bh=csTfDBH0JSYiPI2tjD8LPvhLE5YD3kEfEEzeptIcigI=;
+	s=arc-20240116; t=1750175124; c=relaxed/simple;
+	bh=DvkxI8EArdV0bLtHX7BLhKv6CYsFZoHoadl+4FlcHgA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GXdQf+R3PSKhiffuVONqUhgOpL22Jj+OUtB5qD/x/bL6AVuXQNtTMKRjfeDJRzvBiHWGVPGZDSxmENfG82+catmqiUsGOTJ4CNvBiytFL7iv3bFjrgeRFkEqN1XyzPC+5cTwi6glM0auDLKCyACAR6z46omEr9P+RyhkOA0T+j4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DrdO87S9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e1NXcTgipBe8iImi2Bg+BqOoJKrQ7dH3v3glzrqv2thu6YXvIlfJTShaAiAehKj43kn2roHB6y05O+2PJcdGVuhMUQ8boq/Xfn/ViTNreZdh2/PVVGP3FqONTfEhwqgaX/Xnmfy143VgBlanL+vzF1X/8OjLBxh+njtGrIzFa04=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oQlK9IdW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DrdO87S9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 382A8C4CEE3;
-	Tue, 17 Jun 2025 15:45:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oQlK9IdW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77FA5C4CEE3;
+	Tue, 17 Jun 2025 15:45:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175120;
-	bh=csTfDBH0JSYiPI2tjD8LPvhLE5YD3kEfEEzeptIcigI=;
+	s=korg; t=1750175124;
+	bh=DvkxI8EArdV0bLtHX7BLhKv6CYsFZoHoadl+4FlcHgA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DrdO87S9K0xmMPCpXLAc3/N/BJqteifa94Eu9bgzn7Gc+v1WRXjGX7vYOclGTXD78
-	 ElpJoVB1kr5QjUlyEkHMNPN4/TOqCT6Z+5OGa+9p0KPoiCe5Q7kM7qDQBuBlIyxsIX
-	 0lDUYCyYkK1Js9y746CcywSzWzgnxWp9xLmNmJQo=
+	b=oQlK9IdWxsS1WV3Hukm7JeQ9OL553nUWPNNrwz4t6wfXY3rxEo1svSWSDmDkcz2EE
+	 YzZmp6cEqUySkx2APg6eu0IOVoNx3OGjNQ0ByDfqwesgUv8pWtWSETC33rZZfg92nB
+	 PkYnbX3dmk0GFPlhcCP22VLFTBP/xZdXl0652U28=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Gruenbacher <agruenba@redhat.com>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Kees Cook <kees@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 051/780] gfs2: Dont start unnecessary transactions during log flush
-Date: Tue, 17 Jun 2025 17:15:59 +0200
-Message-ID: <20250617152453.577789919@linuxfoundation.org>
+Subject: [PATCH 6.12 094/512] overflow: Fix direct struct member initialization in _DEFINE_FLEX()
+Date: Tue, 17 Jun 2025 17:21:00 +0200
+Message-ID: <20250617152423.388858988@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,112 +47,87 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andreas Gruenbacher <agruenba@redhat.com>
+From: Gustavo A. R. Silva <gustavoars@kernel.org>
 
-[ Upstream commit 5a90f8d499225512a385585ffe3e28f687263d47 ]
+[ Upstream commit 47e36ed7840661a9f7fb53554a1b04a5f8daffea ]
 
-Commit 8d391972ae2d ("gfs2: Remove __gfs2_writepage()") changed the log
-flush code in gfs2_ail1_start_one() to call aops->writepages() instead
-of aops->writepage().  For jdata inodes, this means that we will now try
-to reserve log space and start a transaction before we can determine
-that the pages in question have already been journaled.  When this
-happens in the context of gfs2_logd(), it can now appear that not enough
-log space is available for freeing up log space, and we will lock up.
+Currently, to statically initialize the struct members of the `type`
+object created by _DEFINE_FLEX(), the internal `obj` member must be
+explicitly referenced at the call site. See:
 
-Fix that by issuing journal writes directly instead of going through
-aops->writepages() in the log flush code.
+struct flex {
+        int a;
+        int b;
+        struct foo flex_array[];
+};
 
-Fixes: 8d391972ae2d ("gfs2: Remove __gfs2_writepage()")
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+_DEFINE_FLEX(struct flex, instance, flex_array,
+                 FIXED_SIZE, = {
+                        .obj = {
+                                .a = 0,
+                                .b = 1,
+                        },
+                });
+
+This leaks _DEFINE_FLEX() internal implementation details and make
+the helper harder to use and read.
+
+Fix this and allow for a more natural and intuitive C99 init-style:
+
+_DEFINE_FLEX(struct flex, instance, flex_array,
+                 FIXED_SIZE, = {
+                        .a = 0,
+                        .b = 1,
+                });
+
+Note that before these changes, the `initializer` argument was optional,
+but now it's required.
+
+Also, update "counter" member initialization in DEFINE_FLEX().
+
+Fixes: 26dd68d293fd ("overflow: add DEFINE_FLEX() for on-stack allocs")
+Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Link: https://lore.kernel.org/r/aBQVeyKfLOkO9Yss@kspp
+Signed-off-by: Kees Cook <kees@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/aops.c | 31 +++++++++++++++++++++++++++++++
- fs/gfs2/aops.h |  1 +
- fs/gfs2/log.c  |  7 ++++++-
- 3 files changed, 38 insertions(+), 1 deletion(-)
+ include/linux/overflow.h | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/fs/gfs2/aops.c b/fs/gfs2/aops.c
-index ed2c708a215a4..eb4270e82ef8e 100644
---- a/fs/gfs2/aops.c
-+++ b/fs/gfs2/aops.c
-@@ -117,6 +117,37 @@ static int __gfs2_jdata_write_folio(struct folio *folio,
- 	return gfs2_write_jdata_folio(folio, wbc);
- }
+diff --git a/include/linux/overflow.h b/include/linux/overflow.h
+index 0c7e3dcfe8670..823a53cd9a193 100644
+--- a/include/linux/overflow.h
++++ b/include/linux/overflow.h
+@@ -396,7 +396,7 @@ static inline size_t __must_check size_sub(size_t minuend, size_t subtrahend)
+  * @name: Name for a variable to define.
+  * @member: Name of the array member.
+  * @count: Number of elements in the array; must be compile-time const.
+- * @initializer: initializer expression (could be empty for no init).
++ * @initializer: Initializer expression (e.g., pass `= { }` at minimum).
+  */
+ #define _DEFINE_FLEX(type, name, member, count, initializer...)			\
+ 	_Static_assert(__builtin_constant_p(count),				\
+@@ -404,7 +404,7 @@ static inline size_t __must_check size_sub(size_t minuend, size_t subtrahend)
+ 	union {									\
+ 		u8 bytes[struct_size_t(type, member, count)];			\
+ 		type obj;							\
+-	} name##_u initializer;							\
++	} name##_u = { .obj initializer };					\
+ 	type *name = (type *)&name##_u
  
-+/**
-+ * gfs2_jdata_writeback - Write jdata folios to the log
-+ * @mapping: The mapping to write
-+ * @wbc: The writeback control
-+ *
-+ * Returns: errno
-+ */
-+int gfs2_jdata_writeback(struct address_space *mapping, struct writeback_control *wbc)
-+{
-+	struct inode *inode = mapping->host;
-+	struct gfs2_inode *ip = GFS2_I(inode);
-+	struct gfs2_sbd *sdp = GFS2_SB(mapping->host);
-+	struct folio *folio = NULL;
-+	int error;
-+
-+	BUG_ON(current->journal_info);
-+	if (gfs2_assert_withdraw(sdp, ip->i_gl->gl_state == LM_ST_EXCLUSIVE))
-+		return 0;
-+
-+	while ((folio = writeback_iter(mapping, wbc, folio, &error))) {
-+		if (folio_test_checked(folio)) {
-+			folio_redirty_for_writepage(wbc, folio);
-+			folio_unlock(folio);
-+			continue;
-+		}
-+		error = __gfs2_jdata_write_folio(folio, wbc);
-+	}
-+
-+	return error;
-+}
-+
  /**
-  * gfs2_writepages - Write a bunch of dirty pages back to disk
-  * @mapping: The mapping to write
-diff --git a/fs/gfs2/aops.h b/fs/gfs2/aops.h
-index f9fa41aaeaf41..bf002522a7822 100644
---- a/fs/gfs2/aops.h
-+++ b/fs/gfs2/aops.h
-@@ -9,5 +9,6 @@
- #include "incore.h"
+@@ -438,6 +438,6 @@ static inline size_t __must_check size_sub(size_t minuend, size_t subtrahend)
+  * Use __struct_size(@NAME) to get compile-time size of it afterwards.
+  */
+ #define DEFINE_FLEX(TYPE, NAME, MEMBER, COUNTER, COUNT)	\
+-	_DEFINE_FLEX(TYPE, NAME, MEMBER, COUNT, = { .obj.COUNTER = COUNT, })
++	_DEFINE_FLEX(TYPE, NAME, MEMBER, COUNT, = { .COUNTER = COUNT, })
  
- void adjust_fs_space(struct inode *inode);
-+int gfs2_jdata_writeback(struct address_space *mapping, struct writeback_control *wbc);
- 
- #endif /* __AOPS_DOT_H__ */
-diff --git a/fs/gfs2/log.c b/fs/gfs2/log.c
-index f9c5089783d24..115c4ac457e90 100644
---- a/fs/gfs2/log.c
-+++ b/fs/gfs2/log.c
-@@ -31,6 +31,7 @@
- #include "dir.h"
- #include "trace_gfs2.h"
- #include "trans.h"
-+#include "aops.h"
- 
- static void gfs2_log_shutdown(struct gfs2_sbd *sdp);
- 
-@@ -131,7 +132,11 @@ __acquires(&sdp->sd_ail_lock)
- 		if (!mapping)
- 			continue;
- 		spin_unlock(&sdp->sd_ail_lock);
--		ret = mapping->a_ops->writepages(mapping, wbc);
-+		BUG_ON(GFS2_SB(mapping->host) != sdp);
-+		if (gfs2_is_jdata(GFS2_I(mapping->host)))
-+			ret = gfs2_jdata_writeback(mapping, wbc);
-+		else
-+			ret = mapping->a_ops->writepages(mapping, wbc);
- 		if (need_resched()) {
- 			blk_finish_plug(plug);
- 			cond_resched();
+ #endif /* __LINUX_OVERFLOW_H */
 -- 
 2.39.5
 
