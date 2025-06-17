@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 131172F693F;
-	Tue, 17 Jun 2025 16:30:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AB7A2DFF20;
+	Tue, 17 Jun 2025 16:30:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177800; cv=none; b=ao7EPHNDIahno1mMQFUQ/A7i+LeiOgbFh4DOyNIButTB/JuoZc2+s4GE8R0ThKCEGuGorIRItym2JjqAJZXowbb/FMGDFqMxLz8fpUXQKQMjETYOfcf1MS6rm2ltesTQSo6hp5opgYbwxu39fAkSnBuBLguX9IuoU0BIipOfJ6Q=
+	t=1750177803; cv=none; b=fOxHe34bfPQ3Y59TwMG0afII4IfdQS3cbZKw/l6BgxdNW3/djotRCYptIAHCln6gaWnEDP8sNZHwYFJuDyHVFh/GP7m+HS5FZcNjTPUEN5/XfiFtowgaKNQMMOKg/FM1gJx4lgACJMv3s1SrRTlj/GpLrRDI4ZbeosBuWAKLsdQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177800; c=relaxed/simple;
-	bh=SnnX3vxW698vUKv/eG/rNmbKytbNKx8Z1WXbpVom5nk=;
+	s=arc-20240116; t=1750177803; c=relaxed/simple;
+	bh=3pV6C4gV7w533UGQDjcH7Bv2fYKkxk6hXjaEEchwFoA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AQxoa9/YFIh5VVSNpdyGxmbinlFS3puenz9Mw0lXLVRwV/qm99QUZak5jv/OM0zQxaCjndEM4cn4W8TEYbLSpP2MxcFihDWxm4N1nNuMbx5902uQ8BiRelHeI2wrWF1vehaQFPpTozEZS6sqRdlKgdERUP3s505OZ+NpG1Gntjs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oXX3Uu1E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U+Oo7BZcijnSCtistenEUEaqi9IQbtITY7Gypnx7b1w92wfW9n/mVUsGRUdQLvdNWOsaaS7707DGzVwYrvLIBP67yA9pJdtRGdnX3qJDGZAkiWx3n7IJM8otfzeUvFAT3WAEnpxfXaVmIEy9o8d95JJKnqTpAgIHy17D5V1lJNQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KU4R6MnJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oXX3Uu1E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DCA6C4CEE3;
-	Tue, 17 Jun 2025 16:29:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KU4R6MnJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2AADC4CEE3;
+	Tue, 17 Jun 2025 16:30:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177799;
-	bh=SnnX3vxW698vUKv/eG/rNmbKytbNKx8Z1WXbpVom5nk=;
+	s=korg; t=1750177803;
+	bh=3pV6C4gV7w533UGQDjcH7Bv2fYKkxk6hXjaEEchwFoA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oXX3Uu1Ecm2Zt7AyKt4+C2yzF8+MSK9R/uzD7RjApfUoZ1D0oCNPdeo81/vgv0slB
-	 dyB8RXOtDKipmrqE5ixjQ4clb0T3e2p33eC6ckB8URovuq9K2bwbxQrpV0QdkwtLDi
-	 TFBVvPmnopu8xyvI7QDXQrpuwrOIJpiAKoKSaDoc=
+	b=KU4R6MnJW6jaF8FVwNABNVDFafNpAptsnMXitPngt0f7GmyxbFCXTlZllRpJyKBQe
+	 GnevoTzWWIvXo6sffDfn2chuZ3a05ylAvgu5bKabTh36K3xNKcQHjnsrpMNBCIx7uw
+	 uGzCsRtUefIDSXwJUzXZhuKdbVzX28ErYwg1SXWo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xilin Wu <wuxilin123@gmail.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 356/780] arm64: dts: qcom: sm8250: Fix CPU7 opp table
-Date: Tue, 17 Jun 2025 17:21:04 +0200
-Message-ID: <20250617152505.957142091@linuxfoundation.org>
+Subject: [PATCH 6.15 365/780] ARM: dts: at91: at91sam9263: fix NAND chip selects
+Date: Tue, 17 Jun 2025 17:21:13 +0200
+Message-ID: <20250617152506.320137667@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
 References: <20250617152451.485330293@linuxfoundation.org>
@@ -52,39 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xilin Wu <wuxilin123@gmail.com>
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-[ Upstream commit 28f997b89967afdc0855d8aa7538b251fb44f654 ]
+[ Upstream commit c72ede1c24be689733bcd2233a3a56f2478429c8 ]
 
-There is a typo in cpu7_opp9. Fix it to get rid of the following
-errors.
+NAND did not work on my USB-A9263. I discovered that the offending
+commit converted the PIO bank for chip selects wrongly, so all A9263
+boards need to be fixed.
 
-[    0.198043] cpu cpu7: Voltage update failed freq=1747200
-[    0.198052] cpu cpu7: failed to update OPP for freq=1747200
-
-Fixes: 8e0e8016cb79 ("arm64: dts: qcom: sm8250: Add CPU opp tables")
-Signed-off-by: Xilin Wu <wuxilin123@gmail.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250308-fix-sm8250-cpufreq-v1-1-8a0226721399@gmail.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 1004a2977bdc ("ARM: dts: at91: Switch to the new NAND bindings")
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Reviewed-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Link: https://lore.kernel.org/r/20250402210446.5972-2-wsa+renesas@sang-engineering.com
+Signed-off-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8250.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm/boot/dts/microchip/at91sam9263ek.dts | 2 +-
+ arch/arm/boot/dts/microchip/tny_a9263.dts     | 2 +-
+ arch/arm/boot/dts/microchip/usb_a9263.dts     | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index c2937b4d9f180..68613ea7146c8 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -606,7 +606,7 @@
- 		};
- 
- 		cpu7_opp9: opp-1747200000 {
--			opp-hz = /bits/ 64 <1708800000>;
-+			opp-hz = /bits/ 64 <1747200000>;
- 			opp-peak-kBps = <5412000 42393600>;
- 		};
- 
+diff --git a/arch/arm/boot/dts/microchip/at91sam9263ek.dts b/arch/arm/boot/dts/microchip/at91sam9263ek.dts
+index 471ea25296aa1..93c5268a0845d 100644
+--- a/arch/arm/boot/dts/microchip/at91sam9263ek.dts
++++ b/arch/arm/boot/dts/microchip/at91sam9263ek.dts
+@@ -152,7 +152,7 @@
+ 				nand@3 {
+ 					reg = <0x3 0x0 0x800000>;
+ 					rb-gpios = <&pioA 22 GPIO_ACTIVE_HIGH>;
+-					cs-gpios = <&pioA 15 GPIO_ACTIVE_HIGH>;
++					cs-gpios = <&pioD 15 GPIO_ACTIVE_HIGH>;
+ 					nand-bus-width = <8>;
+ 					nand-ecc-mode = "soft";
+ 					nand-on-flash-bbt;
+diff --git a/arch/arm/boot/dts/microchip/tny_a9263.dts b/arch/arm/boot/dts/microchip/tny_a9263.dts
+index 3dd48b3e06da5..fd8244b56e059 100644
+--- a/arch/arm/boot/dts/microchip/tny_a9263.dts
++++ b/arch/arm/boot/dts/microchip/tny_a9263.dts
+@@ -64,7 +64,7 @@
+ 				nand@3 {
+ 					reg = <0x3 0x0 0x800000>;
+ 					rb-gpios = <&pioA 22 GPIO_ACTIVE_HIGH>;
+-					cs-gpios = <&pioA 15 GPIO_ACTIVE_HIGH>;
++					cs-gpios = <&pioD 15 GPIO_ACTIVE_HIGH>;
+ 					nand-bus-width = <8>;
+ 					nand-ecc-mode = "soft";
+ 					nand-on-flash-bbt;
+diff --git a/arch/arm/boot/dts/microchip/usb_a9263.dts b/arch/arm/boot/dts/microchip/usb_a9263.dts
+index 6af450cb387c9..8e1a3fb61087c 100644
+--- a/arch/arm/boot/dts/microchip/usb_a9263.dts
++++ b/arch/arm/boot/dts/microchip/usb_a9263.dts
+@@ -84,7 +84,7 @@
+ 				nand@3 {
+ 					reg = <0x3 0x0 0x800000>;
+ 					rb-gpios = <&pioA 22 GPIO_ACTIVE_HIGH>;
+-					cs-gpios = <&pioA 15 GPIO_ACTIVE_HIGH>;
++					cs-gpios = <&pioD 15 GPIO_ACTIVE_HIGH>;
+ 					nand-bus-width = <8>;
+ 					nand-ecc-mode = "soft";
+ 					nand-on-flash-bbt;
 -- 
 2.39.5
 
