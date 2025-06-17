@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDBCA1F37A1;
-	Tue, 17 Jun 2025 16:15:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 869801F37A1;
+	Tue, 17 Jun 2025 16:15:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750176937; cv=none; b=tj02P0k20zAmlX+zc6IZzFLAhToZ0DUZoLmA5bEMOF68DhF5MaNO/Jm4FrR0ghGmAun3ctB48Q4tsmrsGP314crdufA5WOljq5uI/tYfO5Efrk0ybTSPTZZsz4+inTObQggCdlZPbABcXLwiJ4DxvDz//PgwdDCVsx78Jc9TV1w=
+	t=1750176940; cv=none; b=Erft3wf7SfREi3AfBMPJ/RI3wAj6gSI7c2E+55IhtFJ9sqD/MBI3vVmU8PGNnWkr5/rysxwC/thacWVG2GIUTad2YfigsRnASkPUl0ae4/KzwM6Dl1pkNj65xKbAHRrXWFNIzT441lCBtUndriPCnUErPkAnf6cnIN1R0oAN9/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750176937; c=relaxed/simple;
-	bh=jOePu1nYz0favQk/p+cT+fsBHgu+b4HLluMFSqVMAOI=;
+	s=arc-20240116; t=1750176940; c=relaxed/simple;
+	bh=vh7fnCt9gsV3TmecoP1WcoVK3Ttk+PNuzcohUOM4hCo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ws29VelDUaWqye1DrG6ll97LNhxJxn+/n5QJjNH4FfSUu9v0Y5GOTE7Ci/X5rYJbbbeMUfoze3kcureS4UbTPb0SnnSgNDtdPkp4JEa3Ze4EcGL2oWnQ3Ne2PlXrFq7wA6JFweq/wm+aCUNg6T4kGSCdIJwzU5pGYeVlGiE+IMc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2XuoD6li; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fMkICWv3JiuaZ5ij8qfsu3szbIaRc5eP3VRayp+qpZDcVXou62BlnUg61N5sR8OcsTwAbuH8QWjiqv1ljyjz6YZBLwutxvjQik9F0+Vk4hobt7ixBHQpRFwYr1kTs4xlWj2RkfMNhepMtmXH1NSqcpmIiX//NeHBC/svWKE1ZII=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vWuRLfQC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2XuoD6li"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E007C4CEE7;
-	Tue, 17 Jun 2025 16:15:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vWuRLfQC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F003C4CEE7;
+	Tue, 17 Jun 2025 16:15:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750176936;
-	bh=jOePu1nYz0favQk/p+cT+fsBHgu+b4HLluMFSqVMAOI=;
+	s=korg; t=1750176940;
+	bh=vh7fnCt9gsV3TmecoP1WcoVK3Ttk+PNuzcohUOM4hCo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2XuoD6lio/L+6a3ixc+o/WAXxqYeEbBuqkKfjHzL42dp3GNuMuu9HQWfkAC0IFy6b
-	 oE9JDBtS8y3E1vgAHQDsR1cVvbjbl6eWKjXUpbUZnvJtvaxDo3Wy0CNGtPyDNHRqqI
-	 1y/mtsUyGouDuABucGNGasl2O97p5Q/PbIwDcX+k=
+	b=vWuRLfQCaan0OGPzkw6SXNJ6BH8XvAewban9WEfZG3DLx7cWZUFGtkOnEYDT4iDBp
+	 B6MZVyl1z0gR8c+6Hqls7Y5kpdj+n3UqusmoGv7Rhwo7pTHrAJh6qi3klq6DFaO90U
+	 iLCkFz6TPPBnu7nYc4gWkwYfqXKSc2i4a75NvR/s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Wagner <wagi@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Tom Zanussi <zanussi@kernel.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 332/356] nvmet-fcloop: access fcpreq only when holding reqlock
-Date: Tue, 17 Jun 2025 17:27:27 +0200
-Message-ID: <20250617152351.506171884@linuxfoundation.org>
+Subject: [PATCH 6.15 242/780] tracing: Move histogram trigger variables from stack to per CPU structure
+Date: Tue, 17 Jun 2025 17:19:10 +0200
+Message-ID: <20250617152501.308939114@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-References: <20250617152338.212798615@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,97 +49,240 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Daniel Wagner <wagi@kernel.org>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-[ Upstream commit 47a827cd7929d0550c3496d70b417fcb5649b27b ]
+[ Upstream commit 7ab0fc61ce73040f89b12d76a8279995ec283541 ]
 
-The abort handling logic expects that the state and the fcpreq are only
-accessed when holding the reqlock lock.
+The histogram trigger has three somewhat large arrays on the kernel stack:
 
-While at it, only handle the aborts in the abort handler.
+	unsigned long entries[HIST_STACKTRACE_DEPTH];
+	u64 var_ref_vals[TRACING_MAP_VARS_MAX];
+	char compound_key[HIST_KEY_SIZE_MAX];
 
-Signed-off-by: Daniel Wagner <wagi@kernel.org>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
+Checking the function event_hist_trigger() stack frame size, it currently
+uses 816 bytes for its stack frame due to these variables!
+
+Instead, allocate a per CPU structure that holds these arrays for each
+context level (normal, softirq, irq and NMI). That is, each CPU will have
+4 of these structures. This will be allocated when the first histogram
+trigger is enabled and freed when the last is disabled. When the
+histogram callback triggers, it will request this structure. The request
+will disable preemption, get the per CPU structure at the index of the
+per CPU variable, and increment that variable.
+
+The callback will use the arrays in this structure to perform its work and
+then release the structure. That in turn will simply decrement the per CPU
+index and enable preemption.
+
+Moving the variables from the kernel stack to the per CPU structure brings
+the stack frame of event_hist_trigger() down to just 112 bytes.
+
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Tom Zanussi <zanussi@kernel.org>
+Link: https://lore.kernel.org/20250407123851.74ea8d58@gandalf.local.home
+Fixes: 067fe038e70f6 ("tracing: Add variable reference handling to hist triggers")
+Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/fcloop.c | 31 ++++++++++++++++---------------
- 1 file changed, 16 insertions(+), 15 deletions(-)
+ kernel/trace/trace_events_hist.c | 120 +++++++++++++++++++++++++++----
+ 1 file changed, 105 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/nvme/target/fcloop.c b/drivers/nvme/target/fcloop.c
-index 4b35bdcac185f..aeeb7455fc2e7 100644
---- a/drivers/nvme/target/fcloop.c
-+++ b/drivers/nvme/target/fcloop.c
-@@ -613,12 +613,13 @@ fcloop_fcp_recv_work(struct work_struct *work)
- {
- 	struct fcloop_fcpreq *tfcp_req =
- 		container_of(work, struct fcloop_fcpreq, fcp_rcv_work);
--	struct nvmefc_fcp_req *fcpreq = tfcp_req->fcpreq;
-+	struct nvmefc_fcp_req *fcpreq;
- 	unsigned long flags;
- 	int ret = 0;
- 	bool aborted = false;
- 
- 	spin_lock_irqsave(&tfcp_req->reqlock, flags);
-+	fcpreq = tfcp_req->fcpreq;
- 	switch (tfcp_req->inistate) {
- 	case INI_IO_START:
- 		tfcp_req->inistate = INI_IO_ACTIVE;
-@@ -633,16 +634,19 @@ fcloop_fcp_recv_work(struct work_struct *work)
+diff --git a/kernel/trace/trace_events_hist.c b/kernel/trace/trace_events_hist.c
+index 1260c23cfa5fc..0ec692f80aefc 100644
+--- a/kernel/trace/trace_events_hist.c
++++ b/kernel/trace/trace_events_hist.c
+@@ -5246,17 +5246,94 @@ hist_trigger_actions(struct hist_trigger_data *hist_data,
  	}
- 	spin_unlock_irqrestore(&tfcp_req->reqlock, flags);
+ }
  
--	if (unlikely(aborted))
--		ret = -ECANCELED;
--	else {
--		if (likely(!check_for_drop(tfcp_req)))
--			ret = nvmet_fc_rcv_fcp_req(tfcp_req->tport->targetport,
--				&tfcp_req->tgt_fcp_req,
--				fcpreq->cmdaddr, fcpreq->cmdlen);
--		else
--			pr_info("%s: dropped command ********\n", __func__);
-+	if (unlikely(aborted)) {
-+		/* the abort handler will call fcloop_call_host_done */
-+		return;
++/*
++ * The hist_pad structure is used to save information to create
++ * a histogram from the histogram trigger. It's too big to store
++ * on the stack, so when the histogram trigger is initialized
++ * a percpu array of 4 hist_pad structures is allocated.
++ * This will cover every context from normal, softirq, irq and NMI
++ * in the very unlikely event that a tigger happens at each of
++ * these contexts and interrupts a currently active trigger.
++ */
++struct hist_pad {
++	unsigned long		entries[HIST_STACKTRACE_DEPTH];
++	u64			var_ref_vals[TRACING_MAP_VARS_MAX];
++	char			compound_key[HIST_KEY_SIZE_MAX];
++};
++
++static struct hist_pad __percpu *hist_pads;
++static DEFINE_PER_CPU(int, hist_pad_cnt);
++static refcount_t hist_pad_ref;
++
++/* One hist_pad for every context (normal, softirq, irq, NMI) */
++#define MAX_HIST_CNT 4
++
++static int alloc_hist_pad(void)
++{
++	lockdep_assert_held(&event_mutex);
++
++	if (refcount_read(&hist_pad_ref)) {
++		refcount_inc(&hist_pad_ref);
++		return 0;
 +	}
 +
-+	if (unlikely(check_for_drop(tfcp_req))) {
-+		pr_info("%s: dropped command ********\n", __func__);
-+		return;
- 	}
++	hist_pads = __alloc_percpu(sizeof(struct hist_pad) * MAX_HIST_CNT,
++				   __alignof__(struct hist_pad));
++	if (!hist_pads)
++		return -ENOMEM;
 +
-+	ret = nvmet_fc_rcv_fcp_req(tfcp_req->tport->targetport,
-+				   &tfcp_req->tgt_fcp_req,
-+				   fcpreq->cmdaddr, fcpreq->cmdlen);
- 	if (ret)
- 		fcloop_call_host_done(fcpreq, tfcp_req, ret);
++	refcount_set(&hist_pad_ref, 1);
++	return 0;
++}
++
++static void free_hist_pad(void)
++{
++	lockdep_assert_held(&event_mutex);
++
++	if (!refcount_dec_and_test(&hist_pad_ref))
++		return;
++
++	free_percpu(hist_pads);
++	hist_pads = NULL;
++}
++
++static struct hist_pad *get_hist_pad(void)
++{
++	struct hist_pad *hist_pad;
++	int cnt;
++
++	if (WARN_ON_ONCE(!hist_pads))
++		return NULL;
++
++	preempt_disable();
++
++	hist_pad = per_cpu_ptr(hist_pads, smp_processor_id());
++
++	if (this_cpu_read(hist_pad_cnt) == MAX_HIST_CNT) {
++		preempt_enable();
++		return NULL;
++	}
++
++	cnt = this_cpu_inc_return(hist_pad_cnt) - 1;
++
++	return &hist_pad[cnt];
++}
++
++static void put_hist_pad(void)
++{
++	this_cpu_dec(hist_pad_cnt);
++	preempt_enable();
++}
++
+ static void event_hist_trigger(struct event_trigger_data *data,
+ 			       struct trace_buffer *buffer, void *rec,
+ 			       struct ring_buffer_event *rbe)
+ {
+ 	struct hist_trigger_data *hist_data = data->private_data;
+ 	bool use_compound_key = (hist_data->n_keys > 1);
+-	unsigned long entries[HIST_STACKTRACE_DEPTH];
+-	u64 var_ref_vals[TRACING_MAP_VARS_MAX];
+-	char compound_key[HIST_KEY_SIZE_MAX];
+ 	struct tracing_map_elt *elt = NULL;
+ 	struct hist_field *key_field;
++	struct hist_pad *hist_pad;
+ 	u64 field_contents;
+ 	void *key = NULL;
+ 	unsigned int i;
+@@ -5264,12 +5341,18 @@ static void event_hist_trigger(struct event_trigger_data *data,
+ 	if (unlikely(!rbe))
+ 		return;
+ 
+-	memset(compound_key, 0, hist_data->key_size);
++	hist_pad = get_hist_pad();
++	if (!hist_pad)
++		return;
++
++	memset(hist_pad->compound_key, 0, hist_data->key_size);
+ 
+ 	for_each_hist_key_field(i, hist_data) {
+ 		key_field = hist_data->fields[i];
+ 
+ 		if (key_field->flags & HIST_FIELD_FL_STACKTRACE) {
++			unsigned long *entries = hist_pad->entries;
++
+ 			memset(entries, 0, HIST_STACKTRACE_SIZE);
+ 			if (key_field->field) {
+ 				unsigned long *stack, n_entries;
+@@ -5293,26 +5376,31 @@ static void event_hist_trigger(struct event_trigger_data *data,
+ 		}
+ 
+ 		if (use_compound_key)
+-			add_to_key(compound_key, key, key_field, rec);
++			add_to_key(hist_pad->compound_key, key, key_field, rec);
+ 	}
+ 
+ 	if (use_compound_key)
+-		key = compound_key;
++		key = hist_pad->compound_key;
+ 
+ 	if (hist_data->n_var_refs &&
+-	    !resolve_var_refs(hist_data, key, var_ref_vals, false))
+-		return;
++	    !resolve_var_refs(hist_data, key, hist_pad->var_ref_vals, false))
++		goto out;
+ 
+ 	elt = tracing_map_insert(hist_data->map, key);
+ 	if (!elt)
+-		return;
++		goto out;
+ 
+-	hist_trigger_elt_update(hist_data, elt, buffer, rec, rbe, var_ref_vals);
++	hist_trigger_elt_update(hist_data, elt, buffer, rec, rbe, hist_pad->var_ref_vals);
+ 
+-	if (resolve_var_refs(hist_data, key, var_ref_vals, true))
+-		hist_trigger_actions(hist_data, elt, buffer, rec, rbe, key, var_ref_vals);
++	if (resolve_var_refs(hist_data, key, hist_pad->var_ref_vals, true)) {
++		hist_trigger_actions(hist_data, elt, buffer, rec, rbe,
++				     key, hist_pad->var_ref_vals);
++	}
+ 
+ 	hist_poll_wakeup();
++
++ out:
++	put_hist_pad();
  }
-@@ -657,9 +661,10 @@ fcloop_fcp_abort_recv_work(struct work_struct *work)
- 	unsigned long flags;
  
- 	spin_lock_irqsave(&tfcp_req->reqlock, flags);
--	fcpreq = tfcp_req->fcpreq;
- 	switch (tfcp_req->inistate) {
- 	case INI_IO_ABORTED:
-+		fcpreq = tfcp_req->fcpreq;
-+		tfcp_req->fcpreq = NULL;
- 		break;
- 	case INI_IO_COMPLETED:
- 		completed = true;
-@@ -681,10 +686,6 @@ fcloop_fcp_abort_recv_work(struct work_struct *work)
- 		nvmet_fc_rcv_fcp_abort(tfcp_req->tport->targetport,
- 					&tfcp_req->tgt_fcp_req);
+ static void hist_trigger_stacktrace_print(struct seq_file *m,
+@@ -6157,6 +6245,9 @@ static int event_hist_trigger_init(struct event_trigger_data *data)
+ {
+ 	struct hist_trigger_data *hist_data = data->private_data;
  
--	spin_lock_irqsave(&tfcp_req->reqlock, flags);
--	tfcp_req->fcpreq = NULL;
--	spin_unlock_irqrestore(&tfcp_req->reqlock, flags);
++	if (alloc_hist_pad() < 0)
++		return -ENOMEM;
++
+ 	if (!data->ref && hist_data->attrs->name)
+ 		save_named_trigger(hist_data->attrs->name, data);
+ 
+@@ -6201,6 +6292,7 @@ static void event_hist_trigger_free(struct event_trigger_data *data)
+ 
+ 		destroy_hist_data(hist_data);
+ 	}
++	free_hist_pad();
+ }
+ 
+ static const struct event_trigger_ops event_hist_trigger_ops = {
+@@ -6216,9 +6308,7 @@ static int event_hist_trigger_named_init(struct event_trigger_data *data)
+ 
+ 	save_named_trigger(data->named_data->name, data);
+ 
+-	event_hist_trigger_init(data->named_data);
 -
- 	fcloop_call_host_done(fcpreq, tfcp_req, -ECANCELED);
- 	/* call_host_done releases reference for abort downcall */
+-	return 0;
++	return event_hist_trigger_init(data->named_data);
  }
+ 
+ static void event_hist_trigger_named_free(struct event_trigger_data *data)
 -- 
 2.39.5
 
