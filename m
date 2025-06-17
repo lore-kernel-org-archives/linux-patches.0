@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8C9E2E9753;
-	Tue, 17 Jun 2025 15:40:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28C942DF3C9;
+	Tue, 17 Jun 2025 15:40:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750174850; cv=none; b=PcbcfYSETBngyUzIKKIkVFNUxYS8YkbtDYt2MNMh7nfjSiDSc6EM45+L3/qw7xAdYdW2BDILFgtzblc71tF8RumDJWg3ovSdNT1qpnGTlFc/wvXUmOOZqgnnWTYzk7Vrfe1CBNumatiPO5B1502fMVJalJvTQExi0kSe+H+7HNg=
+	t=1750174853; cv=none; b=gz8thjNOlkRnuKc8iG8cnOuQD2orksO7jKhc6S1mjkyHTrCCPL9S5yRYRianBEHkp2WDOSt+7SzbVEkO+wj9psDobSFA/pV6ssOEpTrix3P5ubVaqSI2qf7Q1tNNg1WOa4FchkQhbrPc9JSBpwH+/c2WU9sbdh+4Js4ajHRPrJ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750174850; c=relaxed/simple;
-	bh=a4T5f1OkEkWhwj1j+uWrssIQ0o/mjHZEb5TWBAvzC9Y=;
+	s=arc-20240116; t=1750174853; c=relaxed/simple;
+	bh=aF3+v6jO19X6CZiosVcHHegyhlY0joSrYz/UfjrXZfY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YN5OMo2PgdjdLpIL+VhyLwtN7dnjTa+6cLlAt4Q2veanDeSrjuvgV1pVKWq/qsFsmyRmqaSHQixTCd2+L4iIhqzn9pi8tMdG/Gc3rihp52UxXoWdMbXTSl6z33lF4NaOS3SfSg6QhEGeF1kGGFxxazDNYsuj/4mjalWv5injP/E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UlHL8KVK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jfunDHXfSQfeDhplQD1NgTT1y1vkIjKknCVyTtIJDc6Imt82BHUvKbA+BKUjnFHCE0cWi9YZT5YiaY8KlNo4nppZX7LfOKssoR9NMIEkPkxh0NUtX+P+wFKsQFo6Ut+rB5jFat/3ieLY/xqaeb69gDWVRWIj9s+TZpZKNm/AT6w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C77ypQA5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UlHL8KVK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59481C4CEE3;
-	Tue, 17 Jun 2025 15:40:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C77ypQA5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D85EC4CEE3;
+	Tue, 17 Jun 2025 15:40:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750174849;
-	bh=a4T5f1OkEkWhwj1j+uWrssIQ0o/mjHZEb5TWBAvzC9Y=;
+	s=korg; t=1750174853;
+	bh=aF3+v6jO19X6CZiosVcHHegyhlY0joSrYz/UfjrXZfY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UlHL8KVKcwXsm4zononX05HFj2Wv2kqJvR7lIOASTFC2qmHOelfujGQk92890WPXG
-	 IgRTCm/is9LIZMrekKx+eg6Zqkv/PLT0HsMrPNjHwxvcLHtIFygqbfHg9tIowvZD7i
-	 TdAqMyvsRQ0BMoBCrazRQ5EtkwusGEYhHsSP7hrk=
+	b=C77ypQA54a3EAB6YpzU3J3FqgvGDpMaOV/fLejf28mOwqu9vNjSv4rZWM+7GKq7+4
+	 ucCxvNoTmGHzJGA2AyHL9sw61LckFLTySQl2aHi8IIC+1c26gOuUp1PAX088I7qrA7
+	 Fs8WJZn2G9AxfjERiXSKdBfBuTRqNd9PmAN7y1Jw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhongqiu Duan <dzq.aishenghu0@gmail.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Cong Wang <xiyou.wangcong@gmail.com>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	John Fastabend <john.fastabend@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 107/356] netfilter: nft_quota: match correctly when the quota just depleted
-Date: Tue, 17 Jun 2025 17:23:42 +0200
-Message-ID: <20250617152342.525232798@linuxfoundation.org>
+Subject: [PATCH 6.6 119/356] ktls, sockmap: Fix missing uncharge operation
+Date: Tue, 17 Jun 2025 17:23:54 +0200
+Message-ID: <20250617152343.015782308@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
 References: <20250617152338.212798615@linuxfoundation.org>
@@ -51,76 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhongqiu Duan <dzq.aishenghu0@gmail.com>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-[ Upstream commit bfe7cfb65c753952735c3eed703eba9a8b96a18d ]
+[ Upstream commit 79f0c39ae7d3dc628c01b02f23ca5d01f9875040 ]
 
-The xt_quota compares skb length with remaining quota, but the nft_quota
-compares it with consumed bytes.
+When we specify apply_bytes, we divide the msg into multiple segments,
+each with a length of 'send', and every time we send this part of the data
+using tcp_bpf_sendmsg_redir(), we use sk_msg_return_zero() to uncharge the
+memory of the specified 'send' size.
 
-The xt_quota can match consumed bytes up to quota at maximum. But the
-nft_quota break match when consumed bytes equal to quota.
+However, if the first segment of data fails to send, for example, the
+peer's buffer is full, we need to release all of the msg. When releasing
+the msg, we haven't uncharged the memory of the subsequent segments.
 
-i.e., nft_quota match consumed bytes in [0, quota - 1], not [0, quota].
+This modification does not make significant logical changes, but only
+fills in the missing uncharge places.
 
-Fixes: 795595f68d6c ("netfilter: nft_quota: dump consumed quota")
-Signed-off-by: Zhongqiu Duan <dzq.aishenghu0@gmail.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+This issue has existed all along, until it was exposed after we added the
+apply test in test_sockmap:
+commit 3448ad23b34e ("selftests/bpf: Add apply_bytes test to test_txmsg_redir_wait_sndmem in test_sockmap")
+
+Fixes: d3b18ad31f93 ("tls: add bpf support to sk_msg handling")
+Reported-by: Cong Wang <xiyou.wangcong@gmail.com>
+Closes: https://lore.kernel.org/bpf/aAmIi0vlycHtbXeb@pop-os.localdomain/T/#t
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Acked-by: John Fastabend <john.fastabend@gmail.com>
+Reviewed-by: Cong Wang <xiyou.wangcong@gmail.com>
+Link: https://lore.kernel.org/r/20250425060015.6968-2-jiayuan.chen@linux.dev
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_quota.c | 20 +++++++++++++-------
- 1 file changed, 13 insertions(+), 7 deletions(-)
+ net/tls/tls_sw.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/net/netfilter/nft_quota.c b/net/netfilter/nft_quota.c
-index 9b2d7463d3d32..df0798da2329b 100644
---- a/net/netfilter/nft_quota.c
-+++ b/net/netfilter/nft_quota.c
-@@ -19,10 +19,16 @@ struct nft_quota {
- };
- 
- static inline bool nft_overquota(struct nft_quota *priv,
--				 const struct sk_buff *skb)
-+				 const struct sk_buff *skb,
-+				 bool *report)
- {
--	return atomic64_add_return(skb->len, priv->consumed) >=
--	       atomic64_read(&priv->quota);
-+	u64 consumed = atomic64_add_return(skb->len, priv->consumed);
-+	u64 quota = atomic64_read(&priv->quota);
-+
-+	if (report)
-+		*report = consumed >= quota;
-+
-+	return consumed > quota;
- }
- 
- static inline bool nft_quota_invert(struct nft_quota *priv)
-@@ -34,7 +40,7 @@ static inline void nft_quota_do_eval(struct nft_quota *priv,
- 				     struct nft_regs *regs,
- 				     const struct nft_pktinfo *pkt)
- {
--	if (nft_overquota(priv, pkt->skb) ^ nft_quota_invert(priv))
-+	if (nft_overquota(priv, pkt->skb, NULL) ^ nft_quota_invert(priv))
- 		regs->verdict.code = NFT_BREAK;
- }
- 
-@@ -51,13 +57,13 @@ static void nft_quota_obj_eval(struct nft_object *obj,
- 			       const struct nft_pktinfo *pkt)
- {
- 	struct nft_quota *priv = nft_obj_data(obj);
--	bool overquota;
-+	bool overquota, report;
- 
--	overquota = nft_overquota(priv, pkt->skb);
-+	overquota = nft_overquota(priv, pkt->skb, &report);
- 	if (overquota ^ nft_quota_invert(priv))
- 		regs->verdict.code = NFT_BREAK;
- 
--	if (overquota &&
-+	if (report &&
- 	    !test_and_set_bit(NFT_QUOTA_DEPLETED_BIT, &priv->flags))
- 		nft_obj_notify(nft_net(pkt), obj->key.table, obj, 0, 0,
- 			       NFT_MSG_NEWOBJ, 0, nft_pf(pkt), 0, GFP_ATOMIC);
+diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
+index bf445a518883a..4a9a3aed5d6d4 100644
+--- a/net/tls/tls_sw.c
++++ b/net/tls/tls_sw.c
+@@ -908,6 +908,13 @@ static int bpf_exec_tx_verdict(struct sk_msg *msg, struct sock *sk,
+ 					    &msg_redir, send, flags);
+ 		lock_sock(sk);
+ 		if (err < 0) {
++			/* Regardless of whether the data represented by
++			 * msg_redir is sent successfully, we have already
++			 * uncharged it via sk_msg_return_zero(). The
++			 * msg->sg.size represents the remaining unprocessed
++			 * data, which needs to be uncharged here.
++			 */
++			sk_mem_uncharge(sk, msg->sg.size);
+ 			*copied -= sk_msg_free_nocharge(sk, &msg_redir);
+ 			msg->sg.size = 0;
+ 		}
 -- 
 2.39.5
 
