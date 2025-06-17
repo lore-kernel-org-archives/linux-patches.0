@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28B2D2ECE8A;
-	Tue, 17 Jun 2025 15:42:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63F8D2ECD2F;
+	Tue, 17 Jun 2025 15:42:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750174943; cv=none; b=XBJQNPEVuC4/d6rPft01IsgDdqTF89wdrTorG9vDmobKwJKuPe6hiiJEorOZkPGTzyIW0uQUMylz9hBmTHwxOQZR3Cpv1VkdPi4qSRnAswucZNbOKS4OskbtPQNbamFc8//pzzy8p0dAjTksLcr1NaxveexjFH0O2z2LA+pUPS8=
+	t=1750174946; cv=none; b=i8H/oTmMhGkB2Eb+z9bkqonkR2X3u51edvh4cOd/3UjTmSJm5DHdael8hu0Z3qZSI0WVyVnwtGOsSuFW5iGkUC/qXBN4WfdT67gJMWRcovnifVj1tR7wd6IVuneTiCYYVBScQaWJVDvaU7GqPTvH61D9MkmFWS6TN8Lks0BUjnA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750174943; c=relaxed/simple;
-	bh=GErZEjKMCH8R36SWtJ2JVMKwx1UQwtBdu+iZZbBnANE=;
+	s=arc-20240116; t=1750174946; c=relaxed/simple;
+	bh=ecTFWCd5Nm+4orZv0ROOt3wbbkm7n5I0eVNQhooTIZs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZShRqBP81TwA9RoBWNpEQ3MDcnq6ZOWNoronDc0+IuPophTWoPB2dnBTTiCYRnBuqAzwTcUsY2VG7NC7t9LqWdZ7i7R7tI3NcEoUB+j+T7kuDmB/dIX9nsDrIq7GQ4fChLYft6jq7AhUm8ybaVW40eUMdK6e0WZNOE4S4gUS0Ro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sk8lDkWa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fYGsZvgHGS3WKQtsiOVytm/6G9JKIr6EBuokiyli5oRtyEwyzjkRl8D5Z9lbE/KcMziej2NQVOB3G4gSzfD6/dTltgDl9CoPUi46LinneBW1+U4ZIurSxor2+LwKcV5RXLiu4g3vVmm5w2Mz0W5kCLMhXlE34KunmvIDOVoL79c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yFHwiLhb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sk8lDkWa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 860C2C4CEF3;
-	Tue, 17 Jun 2025 15:42:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yFHwiLhb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA2E1C4CEE7;
+	Tue, 17 Jun 2025 15:42:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750174943;
-	bh=GErZEjKMCH8R36SWtJ2JVMKwx1UQwtBdu+iZZbBnANE=;
+	s=korg; t=1750174946;
+	bh=ecTFWCd5Nm+4orZv0ROOt3wbbkm7n5I0eVNQhooTIZs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Sk8lDkWabvrh1IOD9BtmLBt6bPPFhKq2JN+Pd4Wbp5vNKYt9l6fde3Igv38N6eraR
-	 krEbNJkUzCg3rwsNT8RUw/MsH0yKjMQtDoLX7HBTjgLF+yt19AZAxUqMChPcCXdQL5
-	 vZuv43kaET7uoKeK7YaPczcCghrv5niMMFptViPk=
+	b=yFHwiLhbfzUEj1y2VkBuFQ5ggb8CBGsBcC4KJZ/WwO1RrX4jjgIHJSbOBHW1DW0WI
+	 RUiBkj5fdNd7OILInBre7PfibAuzbyvMkQmYLnS0CGf41aOVZD6Jm+K9/Q9dmCzH/t
+	 XVmSMJrmk2oEhq9+2Ef2+ObSpMGggREZGwvxisUg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Longfang Liu <liulongfang@huawei.com>,
-	Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
-	Alex Williamson <alex.williamson@redhat.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 130/356] hisi_acc_vfio_pci: bugfix live migration function without VF device driver
-Date: Tue, 17 Jun 2025 17:24:05 +0200
-Message-ID: <20250617152343.469431079@linuxfoundation.org>
+Subject: [PATCH 6.15 036/780] crypto: marvell/cesa - Avoid empty transfer descriptor
+Date: Tue, 17 Jun 2025 17:15:44 +0200
+Message-ID: <20250617152452.970543914@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-References: <20250617152338.212798615@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,82 +46,38 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Longfang Liu <liulongfang@huawei.com>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-[ Upstream commit 2777a40998deb36f96b6afc48bd397cf58a4edf0 ]
+[ Upstream commit 1bafd82d9a40cf09c6c40f1c09cc35b7050b1a9f ]
 
-If the VF device driver is not loaded in the Guest OS and we attempt to
-perform device data migration, the address of the migrated data will
-be NULL.
-The live migration recovery operation on the destination side will
-access a null address value, which will cause access errors.
+The user may set req->src even if req->nbytes == 0.  If there
+is no data to hash from req->src, do not generate an empty TDMA
+descriptor.
 
-Therefore, live migration of VMs without added VF device drivers
-does not require device data migration.
-In addition, when the queue address data obtained by the destination
-is empty, device queue recovery processing will not be performed.
-
-Fixes: b0eed085903e ("hisi_acc_vfio_pci: Add support for VFIO live migration")
-Signed-off-by: Longfang Liu <liulongfang@huawei.com>
-Reviewed-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
-Link: https://lore.kernel.org/r/20250510081155.55840-6-liulongfang@huawei.com
-Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
+Fixes: db509a45339f ("crypto: marvell/cesa - add TDMA support")
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../vfio/pci/hisilicon/hisi_acc_vfio_pci.c    | 22 +++++++++++++------
- 1 file changed, 15 insertions(+), 7 deletions(-)
+ drivers/crypto/marvell/cesa/hash.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c b/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
-index 521f969e1c608..712b178c42aae 100644
---- a/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
-+++ b/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
-@@ -426,13 +426,6 @@ static int vf_qm_check_match(struct hisi_acc_vf_core_device *hisi_acc_vdev,
- 		return -EINVAL;
- 	}
+diff --git a/drivers/crypto/marvell/cesa/hash.c b/drivers/crypto/marvell/cesa/hash.c
+index f150861ceaf69..6815eddc90681 100644
+--- a/drivers/crypto/marvell/cesa/hash.c
++++ b/drivers/crypto/marvell/cesa/hash.c
+@@ -663,7 +663,7 @@ static int mv_cesa_ahash_dma_req_init(struct ahash_request *req)
+ 	if (ret)
+ 		goto err_free_tdma;
  
--	ret = qm_write_regs(vf_qm, QM_VF_STATE, &vf_data->vf_qm_state, 1);
--	if (ret) {
--		dev_err(dev, "failed to write QM_VF_STATE\n");
--		return ret;
--	}
--
--	hisi_acc_vdev->vf_qm_state = vf_data->vf_qm_state;
- 	hisi_acc_vdev->match_done = true;
- 	return 0;
- }
-@@ -498,6 +491,20 @@ static int vf_qm_load_data(struct hisi_acc_vf_core_device *hisi_acc_vdev,
- 	if (migf->total_length < sizeof(struct acc_vf_data))
- 		return -EINVAL;
- 
-+	if (!vf_data->eqe_dma || !vf_data->aeqe_dma ||
-+	    !vf_data->sqc_dma || !vf_data->cqc_dma) {
-+		dev_info(dev, "resume dma addr is NULL!\n");
-+		hisi_acc_vdev->vf_qm_state = QM_NOT_READY;
-+		return 0;
-+	}
-+
-+	ret = qm_write_regs(qm, QM_VF_STATE, &vf_data->vf_qm_state, 1);
-+	if (ret) {
-+		dev_err(dev, "failed to write QM_VF_STATE\n");
-+		return -EINVAL;
-+	}
-+	hisi_acc_vdev->vf_qm_state = vf_data->vf_qm_state;
-+
- 	qm->eqe_dma = vf_data->eqe_dma;
- 	qm->aeqe_dma = vf_data->aeqe_dma;
- 	qm->sqc_dma = vf_data->sqc_dma;
-@@ -1397,6 +1404,7 @@ static int hisi_acc_vfio_pci_migrn_init_dev(struct vfio_device *core_vdev)
- 	hisi_acc_vdev->vf_id = pci_iov_vf_id(pdev) + 1;
- 	hisi_acc_vdev->pf_qm = pf_qm;
- 	hisi_acc_vdev->vf_dev = pdev;
-+	hisi_acc_vdev->vf_qm_state = QM_NOT_READY;
- 	mutex_init(&hisi_acc_vdev->state_mutex);
- 
- 	core_vdev->migration_flags = VFIO_MIGRATION_STOP_COPY | VFIO_MIGRATION_PRE_COPY;
+-	if (iter.src.sg) {
++	if (iter.base.len > iter.src.op_offset) {
+ 		/*
+ 		 * Add all the new data, inserting an operation block and
+ 		 * launch command between each full SRAM block-worth of
 -- 
 2.39.5
 
