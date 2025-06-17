@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CCC6236A73;
-	Tue, 17 Jun 2025 16:15:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A2132DFF2A;
+	Tue, 17 Jun 2025 16:15:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750176912; cv=none; b=fckBkXPDf15Z6AZNUMxS/g3Ytjp2vkZu4yWK+ojbe20Penb1oL85NGSKSsTm8E4PCjb9evXBpqBXvW/x+lS2M9dqyF4i9QL7VNvW463Ejysl/KzKgnSJeITEdVlk14JFOTmvga1ahlvhX1uxGiGuqXVRCw108GiqS1dUQLaOpj0=
+	t=1750176915; cv=none; b=gil8blimInE9zrhJDvPUGAqSJBuov2llhsTSy4xsoIgSXQXWHbwDG4QrdvcWeZPuckrGYn+JNgziYMbyZv4gxBeFbSPj0ffMX4Ky1EflldNLTAX6acy3ZRU+puo50nsM/KmgPLLFjAXNPRUUTXEcN1+Juvy7MPEl4X6mZNvgR0o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750176912; c=relaxed/simple;
-	bh=scB0jWfO8XyXa93xKOsaRPcT0nS+IvFgIePkLpAKgUM=;
+	s=arc-20240116; t=1750176915; c=relaxed/simple;
+	bh=G4tSvrkwOpTmmjcUkRTd8U5IGhFqGeW1INkCALWLdzI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hF6o0WawkUGuROhK1YrjLf05VzPrsnY5MvEIZk0kW8D0VAXkEffhQgh5w9U+kjzPVH907w5GUPBWmTeAKcuROcZz6cJ8v/8y229kz46ovqEmUSUYOq1TmLNlnHlpAL6dZnXQJIYaA/cOBPawM1EeKRV8ggd++tlnUeO7HqZecQM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2iJ9vaLK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ATsEXZE9HSR+RXGbytA03Txmd6fpUePCvATdjI0bPwqZDH0oarzgxX79iCxrhDovZsFhvGN2w731C3gdSaxGCS2C5KFTcVbEehygiQFYS0Le9GLiCGILt35Ci7ga+OJtnc1Js4wJ3orsCSz4BMRyVqdUPsH8QPLKzhQbY2Me1j4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dhABBkA2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2iJ9vaLK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67766C4CEE3;
-	Tue, 17 Jun 2025 16:15:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dhABBkA2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94FF0C4CEE3;
+	Tue, 17 Jun 2025 16:15:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750176911;
-	bh=scB0jWfO8XyXa93xKOsaRPcT0nS+IvFgIePkLpAKgUM=;
+	s=korg; t=1750176915;
+	bh=G4tSvrkwOpTmmjcUkRTd8U5IGhFqGeW1INkCALWLdzI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2iJ9vaLKKgfL9qAYdTftF3iN027y8ob2aZO9bqyp5nEYTc0FKV+NQpU+9lmKLIh+C
-	 8S1feADLqK8VpsrU3VIxMczy8iQOdciyVQpvch7MIq2l+IhLqb4MkRJY3xIGCtlP+X
-	 Lt3Ua5RM9c7u2QTt5/oiirMvsV8nUx01EOTCLJn4=
+	b=dhABBkA2ize9sZoTSiXmRlmmvoDVklhs/pBPJKgINjNxPnTEce1k+EkMSBt6OBhwN
+	 8mxzaqCf3elPw8dLwfv4F/gs6Dv+l73vlz3SoSt8lOgQaw+MrokJKfGQicJzslbDtU
+	 /91CO6cwaz4vGzZR4ZJhj3QagJ5dcDGh38fpKksU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gerrard Tai <gerrard.tai@starlabs.sg>,
-	Eric Dumazet <edumazet@google.com>,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Patrisious Haddad <phaddad@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 329/356] net_sched: tbf: fix a race in tbf_change()
-Date: Tue, 17 Jun 2025 17:27:24 +0200
-Message-ID: <20250617152351.390760074@linuxfoundation.org>
+Subject: [PATCH 6.15 239/780] RDMA/mlx5: Fix error flow upon firmware failure for RQ destruction
+Date: Tue, 17 Jun 2025 17:19:07 +0200
+Message-ID: <20250617152501.191179920@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-References: <20250617152338.212798615@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,61 +47,142 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Patrisious Haddad <phaddad@nvidia.com>
 
-[ Upstream commit 43eb466041216d25dedaef1c383ad7bd89929cbc ]
+[ Upstream commit 5d2ea5aebbb2f3ebde4403f9c55b2b057e5dd2d6 ]
 
-Gerrard Tai reported a race condition in TBF, whenever SFQ perturb timer
-fires at the wrong time.
+Upon RQ destruction if the firmware command fails which is the
+last resource to be destroyed some SW resources were already cleaned
+regardless of the failure.
 
-The race is as follows:
+Now properly rollback the object to its original state upon such failure.
 
-CPU 0                                 CPU 1
-[1]: lock root
-[2]: qdisc_tree_flush_backlog()
-[3]: unlock root
- |
- |                                    [5]: lock root
- |                                    [6]: rehash
- |                                    [7]: qdisc_tree_reduce_backlog()
- |
-[4]: qdisc_put()
+In order to avoid a use-after free in case someone tries to destroy the
+object again, which results in the following kernel trace:
+refcount_t: underflow; use-after-free.
+WARNING: CPU: 0 PID: 37589 at lib/refcount.c:28 refcount_warn_saturate+0xf4/0x148
+Modules linked in: rdma_ucm(OE) rdma_cm(OE) iw_cm(OE) ib_ipoib(OE) ib_cm(OE) ib_umad(OE) mlx5_ib(OE) rfkill mlx5_core(OE) mlxdevm(OE) ib_uverbs(OE) ib_core(OE) psample mlxfw(OE) mlx_compat(OE) macsec tls pci_hyperv_intf sunrpc vfat fat virtio_net net_failover failover fuse loop nfnetlink vsock_loopback vmw_vsock_virtio_transport_common vmw_vsock_vmci_transport vmw_vmci vsock xfs crct10dif_ce ghash_ce sha2_ce sha256_arm64 sha1_ce virtio_console virtio_gpu virtio_blk virtio_dma_buf virtio_mmio dm_mirror dm_region_hash dm_log dm_mod xpmem(OE)
+CPU: 0 UID: 0 PID: 37589 Comm: python3 Kdump: loaded Tainted: G           OE     -------  ---  6.12.0-54.el10.aarch64 #1
+Tainted: [O]=OOT_MODULE, [E]=UNSIGNED_MODULE
+Hardware name: QEMU KVM Virtual Machine, BIOS 0.0.0 02/06/2015
+pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+pc : refcount_warn_saturate+0xf4/0x148
+lr : refcount_warn_saturate+0xf4/0x148
+sp : ffff80008b81b7e0
+x29: ffff80008b81b7e0 x28: ffff000133d51600 x27: 0000000000000001
+x26: 0000000000000000 x25: 00000000ffffffea x24: ffff00010ae80f00
+x23: ffff00010ae80f80 x22: ffff0000c66e5d08 x21: 0000000000000000
+x20: ffff0000c66e0000 x19: ffff00010ae80340 x18: 0000000000000006
+x17: 0000000000000000 x16: 0000000000000020 x15: ffff80008b81b37f
+x14: 0000000000000000 x13: 2e656572662d7265 x12: ffff80008283ef78
+x11: ffff80008257efd0 x10: ffff80008283efd0 x9 : ffff80008021ed90
+x8 : 0000000000000001 x7 : 00000000000bffe8 x6 : c0000000ffff7fff
+x5 : ffff0001fb8e3408 x4 : 0000000000000000 x3 : ffff800179993000
+x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffff000133d51600
+Call trace:
+ refcount_warn_saturate+0xf4/0x148
+ mlx5_core_put_rsc+0x88/0xa0 [mlx5_ib]
+ mlx5_core_destroy_rq_tracked+0x64/0x98 [mlx5_ib]
+ mlx5_ib_destroy_wq+0x34/0x80 [mlx5_ib]
+ ib_destroy_wq_user+0x30/0xc0 [ib_core]
+ uverbs_free_wq+0x28/0x58 [ib_uverbs]
+ destroy_hw_idr_uobject+0x34/0x78 [ib_uverbs]
+ uverbs_destroy_uobject+0x48/0x240 [ib_uverbs]
+ __uverbs_cleanup_ufile+0xd4/0x1a8 [ib_uverbs]
+ uverbs_destroy_ufile_hw+0x48/0x120 [ib_uverbs]
+ ib_uverbs_close+0x2c/0x100 [ib_uverbs]
+ __fput+0xd8/0x2f0
+ __fput_sync+0x50/0x70
+ __arm64_sys_close+0x40/0x90
+ invoke_syscall.constprop.0+0x74/0xd0
+ do_el0_svc+0x48/0xe8
+ el0_svc+0x44/0x1d0
+ el0t_64_sync_handler+0x120/0x130
+ el0t_64_sync+0x1a4/0x1a8
 
-This can be abused to underflow a parent's qlen.
-
-Calling qdisc_purge_queue() instead of qdisc_tree_flush_backlog()
-should fix the race, because all packets will be purged from the qdisc
-before releasing the lock.
-
-Fixes: b05972f01e7d ("net: sched: tbf: don't call qdisc_put() while holding tree lock")
-Reported-by: Gerrard Tai <gerrard.tai@starlabs.sg>
-Suggested-by: Gerrard Tai <gerrard.tai@starlabs.sg>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Zhengchao Shao <shaozhengchao@huawei.com>
-Link: https://patch.msgid.link/20250611111515.1983366-4-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: e2013b212f9f ("net/mlx5_core: Add RQ and SQ event handling")
+Signed-off-by: Patrisious Haddad <phaddad@nvidia.com>
+Link: https://patch.msgid.link/3181433ccdd695c63560eeeb3f0c990961732101.1745839855.git.leon@kernel.org
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_tbf.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/hw/mlx5/qpc.c | 30 ++++++++++++++++++++++++++++--
+ include/linux/mlx5/driver.h      |  1 +
+ 2 files changed, 29 insertions(+), 2 deletions(-)
 
-diff --git a/net/sched/sch_tbf.c b/net/sched/sch_tbf.c
-index f92174008499b..61dd5c8f23101 100644
---- a/net/sched/sch_tbf.c
-+++ b/net/sched/sch_tbf.c
-@@ -452,7 +452,7 @@ static int tbf_change(struct Qdisc *sch, struct nlattr *opt,
+diff --git a/drivers/infiniband/hw/mlx5/qpc.c b/drivers/infiniband/hw/mlx5/qpc.c
+index d3dcc272200af..146d03ae40bd9 100644
+--- a/drivers/infiniband/hw/mlx5/qpc.c
++++ b/drivers/infiniband/hw/mlx5/qpc.c
+@@ -21,8 +21,10 @@ mlx5_get_rsc(struct mlx5_qp_table *table, u32 rsn)
+ 	spin_lock_irqsave(&table->lock, flags);
  
- 	sch_tree_lock(sch);
- 	if (child) {
--		qdisc_tree_flush_backlog(q->qdisc);
-+		qdisc_purge_queue(q->qdisc);
- 		old = q->qdisc;
- 		q->qdisc = child;
- 	}
+ 	common = radix_tree_lookup(&table->tree, rsn);
+-	if (common)
++	if (common && !common->invalid)
+ 		refcount_inc(&common->refcount);
++	else
++		common = NULL;
+ 
+ 	spin_unlock_irqrestore(&table->lock, flags);
+ 
+@@ -178,6 +180,18 @@ static int create_resource_common(struct mlx5_ib_dev *dev,
+ 	return 0;
+ }
+ 
++static void modify_resource_common_state(struct mlx5_ib_dev *dev,
++					 struct mlx5_core_qp *qp,
++					 bool invalid)
++{
++	struct mlx5_qp_table *table = &dev->qp_table;
++	unsigned long flags;
++
++	spin_lock_irqsave(&table->lock, flags);
++	qp->common.invalid = invalid;
++	spin_unlock_irqrestore(&table->lock, flags);
++}
++
+ static void destroy_resource_common(struct mlx5_ib_dev *dev,
+ 				    struct mlx5_core_qp *qp)
+ {
+@@ -609,8 +623,20 @@ int mlx5_core_create_rq_tracked(struct mlx5_ib_dev *dev, u32 *in, int inlen,
+ int mlx5_core_destroy_rq_tracked(struct mlx5_ib_dev *dev,
+ 				 struct mlx5_core_qp *rq)
+ {
++	int ret;
++
++	/* The rq destruction can be called again in case it fails, hence we
++	 * mark the common resource as invalid and only once FW destruction
++	 * is completed successfully we actually destroy the resources.
++	 */
++	modify_resource_common_state(dev, rq, true);
++	ret = destroy_rq_tracked(dev, rq->qpn, rq->uid);
++	if (ret) {
++		modify_resource_common_state(dev, rq, false);
++		return ret;
++	}
+ 	destroy_resource_common(dev, rq);
+-	return destroy_rq_tracked(dev, rq->qpn, rq->uid);
++	return 0;
+ }
+ 
+ static void destroy_sq_tracked(struct mlx5_ib_dev *dev, u32 sqn, u16 uid)
+diff --git a/include/linux/mlx5/driver.h b/include/linux/mlx5/driver.h
+index d1dfbad9a4473..e6ba8f4f4bd1f 100644
+--- a/include/linux/mlx5/driver.h
++++ b/include/linux/mlx5/driver.h
+@@ -398,6 +398,7 @@ struct mlx5_core_rsc_common {
+ 	enum mlx5_res_type	res;
+ 	refcount_t		refcount;
+ 	struct completion	free;
++	bool			invalid;
+ };
+ 
+ struct mlx5_uars_page {
 -- 
 2.39.5
 
