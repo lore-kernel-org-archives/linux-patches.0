@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86A7F2EA723;
-	Tue, 17 Jun 2025 16:40:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CD012E8DE4;
+	Tue, 17 Jun 2025 16:40:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750178439; cv=none; b=mcy0nZ22pdbuFpInmDXKruHrr+nmfTwO9WCNhp7Fmih1BOYGqEmQ33kQ2WH6TjkTtyrhG+3C1oByoRQrFOQalX0C7sCJH+omejQ2lOBdkh0L74BjmtRriV9skvOFxZADcJC2sYAQk4jHwoQU9212eRIl5lgoiX2MXQ/iBwjJwc8=
+	t=1750178442; cv=none; b=Rs3ciCZP2pVxkMAoOuED/CMgoDEUp2yWBgQHIBfouvhe04YG76ntLuO5l3LNmhPDTtY4LeP9xDVGJ4Vzk/xCiOYouczIkHHKFrn8Xsu8IoqDXRIzeyCp4cr7rB5dWbcR4z6TOY1vGXRkOP2PS6mOfi9wnzc+TYiS5BYzxa1gcVU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750178439; c=relaxed/simple;
-	bh=ImxE09Gz7YQ3A3Ms0y6Yu60VLCNX+jNVjrdr9j2UNvk=;
+	s=arc-20240116; t=1750178442; c=relaxed/simple;
+	bh=TcWBr8amqPGbZznalmEPU7w3VZ5PRKcQGVta3ZSVBQ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ai2iUyjZwcXuiXaboVP1wq3lAyq5JLWFxL8PmkG6I+F77HV+VqfP7WiWbpCtzuaNXbXpsxMyy6/jKryS+rIZhBEZYRWkOML95yUA5C6zLEZzTYL6+BgzEBtdFZ72XNqH13FDZ5zDAdcDUmpk0JzINW2hGu0E8Me1oMMHAYiUyKo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cD4FQePB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ro8n9ZsrS4LCGyX6GNG1av4ZK1FGbQ/Y3Bv9dSXyyJb3ZOUo0Izo3nPBoALLlbKEjQfLNBghcFgasxzRtQasuGe6biUEAvteK7eCW29UxU3hO2Ui5mXh8/SDIOR9LxmAQy62onv5yGkJR1+TIg8Qj66OGDYVIRQImBWdHILQKAE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0AYbQedr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cD4FQePB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BA93C4CEE3;
-	Tue, 17 Jun 2025 16:40:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0AYbQedr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF4CDC4CEE3;
+	Tue, 17 Jun 2025 16:40:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750178439;
-	bh=ImxE09Gz7YQ3A3Ms0y6Yu60VLCNX+jNVjrdr9j2UNvk=;
+	s=korg; t=1750178442;
+	bh=TcWBr8amqPGbZznalmEPU7w3VZ5PRKcQGVta3ZSVBQ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cD4FQePB8gaVSwXazDi/WaQ3e7Lg5yo/JuA7tXNkzPWfMAvF6jeLkXZe7Fs7VLr5z
-	 +lIObk/cN+oAM1AUr2Sqn0kz0Mid7wzTWcwgjzkjIbaAAPnUkryfXgSaj/EQAUwUG5
-	 M385nTb9E4+CGhjJRm2exhfYXrO7X9QEMA8JVQ0s=
+	b=0AYbQedreFhzYwTkn71B/ZNlFMjYlzX5YApqzB+6ClDju8QkSE80b6w4fS0CD6X6Q
+	 iSx7UyvKPT4eU881XZTgS+uoIV093M4itjBluK7utupashzKjmJdTiTcUlxjRF9IxP
+	 euo7Rcmb0onDqAI2C7nq5ZYgQ4ObLN18z1QN5AM8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Gladkov <legion@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Lee Jones <lee@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 460/780] mfd: stmpe-spi: Correct the name used in MODULE_DEVICE_TABLE
-Date: Tue, 17 Jun 2025 17:22:48 +0200
-Message-ID: <20250617152510.210110481@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Wupeng Ma <mawupeng1@huawei.com>
+Subject: [PATCH 6.12 490/512] VMCI: fix race between vmci_host_setup_notify and vmci_ctx_unset_notify
+Date: Tue, 17 Jun 2025 17:27:36 +0200
+Message-ID: <20250617152439.485368426@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,44 +46,99 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexey Gladkov <legion@kernel.org>
+From: Wupeng Ma <mawupeng1@huawei.com>
 
-[ Upstream commit 59d60c16ed41475f3b5f7b605e75fbf8e3628720 ]
+commit 1bd6406fb5f36c2bb1e96e27d4c3e9f4d09edde4 upstream.
 
-The name used in the macro does not exist.
+During our test, it is found that a warning can be trigger in try_grab_folio
+as follow:
 
-drivers/mfd/stmpe-spi.c:132:26: error: use of undeclared identifier 'stmpe_id'
-  132 | MODULE_DEVICE_TABLE(spi, stmpe_id);
+  ------------[ cut here ]------------
+  WARNING: CPU: 0 PID: 1678 at mm/gup.c:147 try_grab_folio+0x106/0x130
+  Modules linked in:
+  CPU: 0 UID: 0 PID: 1678 Comm: syz.3.31 Not tainted 6.15.0-rc5 #163 PREEMPT(undef)
+  RIP: 0010:try_grab_folio+0x106/0x130
+  Call Trace:
+   <TASK>
+   follow_huge_pmd+0x240/0x8e0
+   follow_pmd_mask.constprop.0.isra.0+0x40b/0x5c0
+   follow_pud_mask.constprop.0.isra.0+0x14a/0x170
+   follow_page_mask+0x1c2/0x1f0
+   __get_user_pages+0x176/0x950
+   __gup_longterm_locked+0x15b/0x1060
+   ? gup_fast+0x120/0x1f0
+   gup_fast_fallback+0x17e/0x230
+   get_user_pages_fast+0x5f/0x80
+   vmci_host_unlocked_ioctl+0x21c/0xf80
+  RIP: 0033:0x54d2cd
+  ---[ end trace 0000000000000000 ]---
 
-Fixes: e789995d5c61 ("mfd: Add support for STMPE SPI interface")
-Signed-off-by: Alexey Gladkov <legion@kernel.org>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/79d5a847303e45a46098f2d827d3d8a249a32be3.1745591072.git.legion@kernel.org
-Signed-off-by: Lee Jones <lee@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Digging into the source, context->notify_page may init by get_user_pages_fast
+and can be seen in vmci_ctx_unset_notify which will try to put_page. However
+get_user_pages_fast is not finished here and lead to following
+try_grab_folio warning. The race condition is shown as follow:
+
+cpu0			cpu1
+vmci_host_do_set_notify
+vmci_host_setup_notify
+get_user_pages_fast(uva, 1, FOLL_WRITE, &context->notify_page);
+lockless_pages_from_mm
+gup_pgd_range
+gup_huge_pmd  // update &context->notify_page
+			vmci_host_do_set_notify
+			vmci_ctx_unset_notify
+			notify_page = context->notify_page;
+			if (notify_page)
+			put_page(notify_page);	// page is freed
+__gup_longterm_locked
+__get_user_pages
+follow_trans_huge_pmd
+try_grab_folio // warn here
+
+To slove this, use local variable page to make notify_page can be seen
+after finish get_user_pages_fast.
+
+Fixes: a1d88436d53a ("VMCI: Fix two UVA mapping bugs")
+Cc: stable <stable@kernel.org>
+Closes: https://lore.kernel.org/all/e91da589-ad57-3969-d979-879bbd10dddd@huawei.com/
+Signed-off-by: Wupeng Ma <mawupeng1@huawei.com>
+Link: https://lore.kernel.org/r/20250510033040.901582-1-mawupeng1@huawei.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mfd/stmpe-spi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/misc/vmw_vmci/vmci_host.c |   11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/mfd/stmpe-spi.c b/drivers/mfd/stmpe-spi.c
-index 792236f56399a..b9cc85ea2c401 100644
---- a/drivers/mfd/stmpe-spi.c
-+++ b/drivers/mfd/stmpe-spi.c
-@@ -129,7 +129,7 @@ static const struct spi_device_id stmpe_spi_id[] = {
- 	{ "stmpe2403", STMPE2403 },
- 	{ }
- };
--MODULE_DEVICE_TABLE(spi, stmpe_id);
-+MODULE_DEVICE_TABLE(spi, stmpe_spi_id);
+--- a/drivers/misc/vmw_vmci/vmci_host.c
++++ b/drivers/misc/vmw_vmci/vmci_host.c
+@@ -227,6 +227,7 @@ static int drv_cp_harray_to_user(void __
+ static int vmci_host_setup_notify(struct vmci_ctx *context,
+ 				  unsigned long uva)
+ {
++	struct page *page;
+ 	int retval;
  
- static struct spi_driver stmpe_spi_driver = {
- 	.driver = {
--- 
-2.39.5
-
+ 	if (context->notify_page) {
+@@ -243,13 +244,11 @@ static int vmci_host_setup_notify(struct
+ 	/*
+ 	 * Lock physical page backing a given user VA.
+ 	 */
+-	retval = get_user_pages_fast(uva, 1, FOLL_WRITE, &context->notify_page);
+-	if (retval != 1) {
+-		context->notify_page = NULL;
++	retval = get_user_pages_fast(uva, 1, FOLL_WRITE, &page);
++	if (retval != 1)
+ 		return VMCI_ERROR_GENERIC;
+-	}
+-	if (context->notify_page == NULL)
+-		return VMCI_ERROR_UNAVAILABLE;
++
++	context->notify_page = page;
+ 
+ 	/*
+ 	 * Map the locked page and set up notify pointer.
 
 
