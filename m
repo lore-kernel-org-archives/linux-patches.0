@@ -1,49 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EF8B2DFF1B;
-	Tue, 17 Jun 2025 16:39:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E77C2DFF1B;
+	Tue, 17 Jun 2025 16:39:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750178357; cv=none; b=Ide4cyiZ2+DSFR/n0ofMfGClUurRkLIYCGFygZ86ufTSO36e3MO7CrU/dbJqwfhIHYPqcT19HwSHdHAMjaXQBpEog/p3Qy04r/ZiJWpiXTX2Lg8gAt1szT+uBdsm5ujJwIJ46R9f1XZ/9KkoHqN109tnZfEV3OZz0J788uLFVX4=
+	t=1750178360; cv=none; b=VOBcPvESOWnfwM11cR1W65gmbSa13Zk8BMHuixhbJTeIxOCT+dJCKpmyD5YVlqXswWdOsYzWBilyJyla5fjBUt1jpuWnT0aq0jSbblQG4XbBiQQzIZd9aTwZmUkM4SLWkgQClJzbpPMQQ4dKwwcZOdaCKTCSkYprFhYkdHCUYHU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750178357; c=relaxed/simple;
-	bh=0SbCh4Pe+L2ffR4fuH4LSC2ohy/WkjDC8ViFt1jaGy4=;
+	s=arc-20240116; t=1750178360; c=relaxed/simple;
+	bh=u1tJqXMiEt9x1hvb4rdayQiWIiWDvXzOo5zFmGR2i7o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LuYYlEfBvt2ErXqhK6xszDe7NfBh8YDwdCgGjVQkYkr6EuGcEPsxl6cHl34NjSUBWeX9J7IKdBW1eXhvwLL9uQimDGhNb5MSfhBb+dh4qr08jxNcSHpE09+rYS+ShsAS8gDCbSJ8sUtogGCtH048owaqiMMnTSxqmTpgBVlI0AU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gADPIdTa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MzFSxWGRwrRfeSwCPRg/vUA0ymEYW12OwN/Xu7ACLwksetQOvHcHf2yCxVPZ1u/m3y4cfasOt2UMif2qF/vTlfadTGpcjxzAJVv0hipBWPBxOOnwtOgZVYrM02sNNMgTVOb+P0zdv/jQsOLL+Gv4ql/S1TC2DJUBKaRqrMfAixc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aYcHXOkv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gADPIdTa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 962E5C4CEE3;
-	Tue, 17 Jun 2025 16:39:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aYcHXOkv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F223BC4CEE3;
+	Tue, 17 Jun 2025 16:39:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750178357;
-	bh=0SbCh4Pe+L2ffR4fuH4LSC2ohy/WkjDC8ViFt1jaGy4=;
+	s=korg; t=1750178360;
+	bh=u1tJqXMiEt9x1hvb4rdayQiWIiWDvXzOo5zFmGR2i7o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gADPIdTaSiB/+49ps6CxmXAgzjJw23p1SOY3hLlrfAhYEjvVWZgV/+GqurA1e6Mis
-	 ombvSsI3tsBAhhLcI8C0NoM9D/GSGg2Z8DUFS4CQ2PXJDkpJjG23xp6e3Ws/reTltv
-	 Jv6uF8DcukoogaL4uwl4iVWUXCB6VK5Rvc4CMS90=
+	b=aYcHXOkvlda23QvBU/ME1EQitH5HxFBTqGpP0UtNhUnCPzn32lUkedG/N04PKdLFN
+	 kfnNm2f4oOjz4EkctkrBAHo4QvqkJag4BD7md2pihaaOQBYGaXTvl6BmPUExwQcAfD
+	 aNsmgsSv5R0kKnKQ7+6NLIw8h46dZ1YywhrvxeuI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	James Clark <james.clark@linaro.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ian Rogers <irogers@google.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 448/780] perf tools: Fix arm64 source package build
-Date: Tue, 17 Jun 2025 17:22:36 +0200
-Message-ID: <20250617152509.699832398@linuxfoundation.org>
+	Jeff Chen <jeff.chen_1@nxp.com>,
+	Francesco Dolcini <francesco.dolcini@toradex.com>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.12 484/512] Revert "wifi: mwifiex: Fix HT40 bandwidth issue."
+Date: Tue, 17 Jun 2025 17:27:30 +0200
+Message-ID: <20250617152439.230331700@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -55,64 +47,56 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: James Clark <james.clark@linaro.org>
+From: Francesco Dolcini <francesco.dolcini@toradex.com>
 
-[ Upstream commit aea3496bbc7c20037ecc35411264de109d700fc7 ]
+commit 570896604f47d44d4ff6882d2a588428d2a6ef17 upstream.
 
-Syscall tables are generated from rules in the kernel tree. Add the
-related files to the MANIFEST to fix the Perf source package build.
+This reverts commit 4fcfcbe45734 ("wifi: mwifiex: Fix HT40 bandwidth
+issue.")
 
-Reported-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Fixes: bfb713ea53c746b0 ("perf tools: Fix arm64 build by generating unistd_64.h")
-Signed-off-by: James Clark <james.clark@linaro.org>
-Tested-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20250513-james-perf-src-pkg-fix-v1-1-bcfd0486dbd6@linaro.org
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+That commit introduces a regression, when HT40 mode is enabled,
+received packets are lost, this was experience with W8997 with both
+SDIO-UART and SDIO-SDIO variants. From an initial investigation the
+issue solves on its own after some time, but it's not clear what is
+the reason. Given that this was just a performance optimization, let's
+revert it till we have a better understanding of the issue and a proper
+fix.
+
+Cc: Jeff Chen <jeff.chen_1@nxp.com>
+Cc: stable@vger.kernel.org
+Fixes: 4fcfcbe45734 ("wifi: mwifiex: Fix HT40 bandwidth issue.")
+Closes: https://lore.kernel.org/all/20250603203337.GA109929@francesco-nb/
+Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
+Link: https://patch.msgid.link/20250605130302.55555-1-francesco@dolcini.it
+[fix commit reference format]
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/perf/MANIFEST | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/net/wireless/marvell/mwifiex/11n.c |    6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/tools/perf/MANIFEST b/tools/perf/MANIFEST
-index 364b55b00b484..34af57b8ec2a9 100644
---- a/tools/perf/MANIFEST
-+++ b/tools/perf/MANIFEST
-@@ -1,8 +1,10 @@
- COPYING
- LICENSES/preferred/GPL-2.0
- arch/arm64/tools/gen-sysreg.awk
-+arch/arm64/tools/syscall_64.tbl
- arch/arm64/tools/sysreg
- arch/*/include/uapi/asm/bpf_perf_event.h
-+include/uapi/asm-generic/Kbuild
- tools/perf
- tools/arch
- tools/scripts
-@@ -25,6 +27,10 @@ tools/lib/str_error_r.c
- tools/lib/vsprintf.c
- tools/lib/zalloc.c
- scripts/bpf_doc.py
-+scripts/Kbuild.include
-+scripts/Makefile.asm-headers
-+scripts/syscall.tbl
-+scripts/syscallhdr.sh
- tools/bpf/bpftool
- kernel/bpf/disasm.c
- kernel/bpf/disasm.h
--- 
-2.39.5
-
+--- a/drivers/net/wireless/marvell/mwifiex/11n.c
++++ b/drivers/net/wireless/marvell/mwifiex/11n.c
+@@ -403,14 +403,12 @@ mwifiex_cmd_append_11n_tlv(struct mwifie
+ 
+ 		if (sband->ht_cap.cap & IEEE80211_HT_CAP_SUP_WIDTH_20_40 &&
+ 		    bss_desc->bcn_ht_oper->ht_param &
+-		    IEEE80211_HT_PARAM_CHAN_WIDTH_ANY) {
+-			chan_list->chan_scan_param[0].radio_type |=
+-				CHAN_BW_40MHZ << 2;
++		    IEEE80211_HT_PARAM_CHAN_WIDTH_ANY)
+ 			SET_SECONDARYCHAN(chan_list->chan_scan_param[0].
+ 					  radio_type,
+ 					  (bss_desc->bcn_ht_oper->ht_param &
+ 					  IEEE80211_HT_PARAM_CHA_SEC_OFFSET));
+-		}
++
+ 		*buffer += struct_size(chan_list, chan_scan_param, 1);
+ 		ret_len += struct_size(chan_list, chan_scan_param, 1);
+ 	}
 
 
