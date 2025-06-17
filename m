@@ -1,46 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB7C02EA74C;
-	Tue, 17 Jun 2025 16:40:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16E2B285041;
+	Tue, 17 Jun 2025 16:40:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750178456; cv=none; b=DVda3In9qPwD/0Z0T7+YHs62iP70JZB6KITAt+2DH+KMf9hxBl1cnCYRfynyfk7MeXNmnt61TLKy/S6bBETwgCehCFJZZAXTqRD7B0daBIznxopLz3rBbjzwWU2FVVruGlvqENj72V1vyYzzBuFCr+qFLWh5tMZxo2BmnZozx5U=
+	t=1750178459; cv=none; b=NsEgu65ZhlD8MgbnS7PaFb0Sfavc7cFfGbfFK473Cc5EsEVDpBi714x6Qnojf44FpREgPKfSq3PwyPtw3dHFZH2bKHZIMusHbsxqfk0RLERuOfsCOuPEQ0xJaNL9sJ3qXcLBURAIFslQHGlfyB6YqaSpdTbxoIoJyrF8GLPJ/LU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750178456; c=relaxed/simple;
-	bh=jRQZc+vCMH1fzijXcGH1DG7SxdHGkhR5tmWPxiLXh2w=;
+	s=arc-20240116; t=1750178459; c=relaxed/simple;
+	bh=lDAoUGUokhW5GzHoIzgjTrLawXqclDljGsqrBZ0Dl4Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZdluJ2YdhsSzTAb2ZJhk5Akd/khvFBgF8U1l7kkYYMiT2x/lkY30K6BSEyWwuY2Pan2bYdfKl9uS+3ha6jOLxDYiq3Hwzbsk/bp4QJZQpK0N9nFcQ8M2Q61ZxZvxtxkhSXOjuf2I57OIaPlbeohDhZUe7992P5Obpear8vmFWUM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AeTFmV8V; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fzgB/yQWMiJkzYtEaLH5FKwIIfArwGIwY8CxVrdKVRtnGlzC0uD5/tRl2qkWplXYgwYQMR5cZfdUlbKBUNfx+eS8AIZ61HSxJ0k4cicBFJgNCnfo4lA0dz6VJE6WQC1zBndaQAZU1WyIX5v6m5xXyGG6tDt0QpwFsRFzGIOmEEM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oBQWBUl8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AeTFmV8V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 374D8C4CEE3;
-	Tue, 17 Jun 2025 16:40:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oBQWBUl8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AFF1C4CEE7;
+	Tue, 17 Jun 2025 16:40:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750178455;
-	bh=jRQZc+vCMH1fzijXcGH1DG7SxdHGkhR5tmWPxiLXh2w=;
+	s=korg; t=1750178459;
+	bh=lDAoUGUokhW5GzHoIzgjTrLawXqclDljGsqrBZ0Dl4Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AeTFmV8VLWwrZ7Kl29CwuWo9m9WpjJkqk6efnJajSTw6W5eC6KxltxT7acy7pvwHH
-	 l7WckuTZGztwffx63i4WSlQ1R01hoGaQ091/LxhSFNc8ELSNRw5xkwdQMo+WNlRWSf
-	 75yH6ZwnjoVp+YvOq7AtKOjFdPgJmOr9slAOD3as=
+	b=oBQWBUl83aJnZvX9dJW4GSdONC8aNVBRLN3ganR+WzfvkFVSMRmXXYmJ54GceglMx
+	 j57MACMaSTW7V6tZ8VWKpBZ3FUBAJk/qQsbO7KJJUv/64cJaxUNnCTWaGfnv+dmUfT
+	 RitRs/+xr493Rbg1DBo3g0do2FALaf+wIF8WCqiA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Leo Yan <leo.yan@arm.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	James Clark <james.clark@linaro.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 462/780] perf tests switch-tracking: Fix timestamp comparison
-Date: Tue, 17 Jun 2025 17:22:50 +0200
-Message-ID: <20250617152510.296813474@linuxfoundation.org>
+	Dave Chinner <dchinner@redhat.com>,
+	Bill ODonnell <bodonnel@redhat.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Carlos Maiolino <cem@kernel.org>
+Subject: [PATCH 6.12 502/512] xfs: dont assume perags are initialised when trimming AGs
+Date: Tue, 17 Jun 2025 17:27:48 +0200
+Message-ID: <20250617152439.963290794@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -52,106 +48,90 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Leo Yan <leo.yan@arm.com>
+From: Dave Chinner <dchinner@redhat.com>
 
-[ Upstream commit 628e124404b3db5e10e17228e680a2999018ab33 ]
+commit 23be716b1c4f3f3a6c00ee38d51a57ef7db9ef7d upstream.
 
-The test might fail on the Arm64 platform with the error:
+When running fstrim immediately after mounting a V4 filesystem,
+the fstrim fails to trim all the free space in the filesystem. It
+only trims the first extent in the by-size free space tree in each
+AG and then returns. If a second fstrim is then run, it runs
+correctly and the entire free space in the filesystem is iterated
+and discarded correctly.
 
-  # perf test -vvv "Track with sched_switch"
-  Missing sched_switch events
-  #
+The problem lies in the setup of the trim cursor - it assumes that
+pag->pagf_longest is valid without either reading the AGF first or
+checking if xfs_perag_initialised_agf(pag) is true or not.
 
-The issue is caused by incorrect handling of timestamp comparisons. The
-comparison result, a signed 64-bit value, was being directly cast to an
-int, leading to incorrect sorting for sched events.
+As a result, when a filesystem is mounted without reading the AGF
+(e.g. a clean mount on a v4 filesystem) and the first operation is a
+fstrim call, pag->pagf_longest is zero and so the free extent search
+starts at the wrong end of the by-size btree and exits after
+discarding the first record in the tree.
 
-The case does not fail everytime, usually I can trigger the failure
-after run 20 ~ 30 times:
+Fix this by deferring the initialisation of tcur->count to after
+we have locked the AGF and guaranteed that the perag is properly
+initialised. We trigger this on tcur->count == 0 after locking the
+AGF, as this will only occur on the first call to
+xfs_trim_gather_extents() for each AG. If we need to iterate,
+tcur->count will be set to the length of the record we need to
+restart at, so we can use this to ensure we only sample a valid
+pag->pagf_longest value for the iteration.
 
-  # while true; do perf test "Track with sched_switch"; done
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : FAILED!
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : FAILED!
-  106: Track with sched_switch                                         : Ok
-  106: Track with sched_switch                                         : Ok
-
-I used cross compiler to build Perf tool on my host machine and tested on
-Debian / Juno board.  Generally, I think this issue is not very specific
-to GCC versions.  As both internal CI and my local env can reproduce the
-issue.
-
-My Host Build compiler:
-
-  # aarch64-linux-gnu-gcc --version
-  aarch64-linux-gnu-gcc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
-
-Juno Board:
-
-  # lsb_release -a
-  No LSB modules are available.
-  Distributor ID: Debian
-  Description:    Debian GNU/Linux 12 (bookworm)
-  Release:        12
-  Codename:       bookworm
-
-Fix this by explicitly returning 0, 1, or -1 based on whether the result
-is zero, positive, or negative.
-
-Fixes: d44bc558297222d9 ("perf tests: Add a test for tracking with sched_switch")
-Reviewed-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Leo Yan <leo.yan@arm.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: James Clark <james.clark@linaro.org>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Link: https://lore.kernel.org/r/20250331172759.115604-1-leo.yan@arm.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Dave Chinner <dchinner@redhat.com>
+Reviewed-by: Bill O'Donnell <bodonnel@redhat.com>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Fixes: 89cfa899608f ("xfs: reduce AGF hold times during fstrim operations")
+Cc: <stable@vger.kernel.org> # v6.6
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/perf/tests/switch-tracking.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/xfs/xfs_discard.c |   17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
 
-diff --git a/tools/perf/tests/switch-tracking.c b/tools/perf/tests/switch-tracking.c
-index 8df3f9d9ffd2b..6b3aac283c371 100644
---- a/tools/perf/tests/switch-tracking.c
-+++ b/tools/perf/tests/switch-tracking.c
-@@ -264,7 +264,7 @@ static int compar(const void *a, const void *b)
- 	const struct event_node *nodeb = b;
- 	s64 cmp = nodea->event_time - nodeb->event_time;
- 
--	return cmp;
-+	return cmp < 0 ? -1 : (cmp > 0 ? 1 : 0);
+--- a/fs/xfs/xfs_discard.c
++++ b/fs/xfs/xfs_discard.c
+@@ -146,6 +146,14 @@ xfs_discard_extents(
+ 	return error;
  }
  
- static int process_events(struct evlist *evlist,
--- 
-2.39.5
-
++/*
++ * Care must be taken setting up the trim cursor as the perags may not have been
++ * initialised when the cursor is initialised. e.g. a clean mount which hasn't
++ * read in AGFs and the first operation run on the mounted fs is a trim. This
++ * can result in perag fields that aren't initialised until
++ * xfs_trim_gather_extents() calls xfs_alloc_read_agf() to lock down the AG for
++ * the free space search.
++ */
+ struct xfs_trim_cur {
+ 	xfs_agblock_t	start;
+ 	xfs_extlen_t	count;
+@@ -183,6 +191,14 @@ xfs_trim_gather_extents(
+ 	if (error)
+ 		goto out_trans_cancel;
+ 
++	/*
++	 * First time through tcur->count will not have been initialised as
++	 * pag->pagf_longest is not guaranteed to be valid before we read
++	 * the AGF buffer above.
++	 */
++	if (!tcur->count)
++		tcur->count = pag->pagf_longest;
++
+ 	if (tcur->by_bno) {
+ 		/* sub-AG discard request always starts at tcur->start */
+ 		cur = xfs_bnobt_init_cursor(mp, tp, agbp, pag);
+@@ -329,7 +345,6 @@ xfs_trim_perag_extents(
+ {
+ 	struct xfs_trim_cur	tcur = {
+ 		.start		= start,
+-		.count		= pag->pagf_longest,
+ 		.end		= end,
+ 		.minlen		= minlen,
+ 	};
 
 
