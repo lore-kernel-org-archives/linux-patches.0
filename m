@@ -1,83 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3CBE236435;
-	Tue, 17 Jun 2025 16:42:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DB3C2EA158;
+	Tue, 17 Jun 2025 16:42:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750178568; cv=none; b=m2dvr3mD/NylOPTVlHiwKjCVuGZOQNGXhoWXn3gMHdf+AfUTQcZbzTOrqNbF4ocIIIYchbSDLxcYfFt9vFeSf7V4XI39RKaDWuKhBKNPOv6ZEQR1Ln4kDntkG6+uhDHF3HNtIw/bmDzSvyxMotSSnukk6VRYmHaqK7Vr8XJ/dCg=
+	t=1750178572; cv=none; b=XnH4jWiKrGwLqtmkbm++qzrqJuJILwsEgVTKnFz+o0RCZ6deLi0VGG7A5l8XlleiWSkX/+jT6MLRW/KcWNBZE8rNbLL/OfzeqcBNZgWCNBkNtJPQm8D+Z6gR6agcq26DX6oOQjBatFFjpwZLD/B9Rk/ub8cjmJxOJROZiLpMvnQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750178568; c=relaxed/simple;
-	bh=Bdy664Lx0aO6RyyzFvyzDNh4IpctPAAKZpdUNmc/RxM=;
+	s=arc-20240116; t=1750178572; c=relaxed/simple;
+	bh=jkrDJPLQ5cqFkYhyfJvQXzHQ6jX2EOgmn74GgDOGbVM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pUHFZn3CE9o5+FNXhb3kMEJR1uQub1HWks88bot3PSsPZ0uCPtPLGQyaWIAYJe/mmOeGvj4I9gX7+GDZpRo3dKjd1dOhO1z8N1u6pTnCxXWtZ+dtIbMlGVMlfKFbqBqhViPD9QMPFKtBjBPFr8PfMwrOVKC/LY/m6GSrscPpjUY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HE8FBw5N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=XuniFJ3BJkalPq67j7+rdrpgovSuxkt7qjNGKCq+JxPUCZWKSQ28PnP41yV8S7yv7tAaX9v7rto72QZsOHtsa27jpDjmkDwOtSUhSN8NzBwgpD1XbJmGzXOTeiqCGafcFTABL1QMETrnNxYTPdraJ4mRjtvW2L15AzvrqWjxGpo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XDN9tob3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HE8FBw5N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2094C4CEE3;
-	Tue, 17 Jun 2025 16:42:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XDN9tob3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EE5DC4CEE3;
+	Tue, 17 Jun 2025 16:42:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750178568;
-	bh=Bdy664Lx0aO6RyyzFvyzDNh4IpctPAAKZpdUNmc/RxM=;
+	s=korg; t=1750178571;
+	bh=jkrDJPLQ5cqFkYhyfJvQXzHQ6jX2EOgmn74GgDOGbVM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HE8FBw5NtyJ71xDUSEZUcFe91um8nN745K2xXWZTxn4EaDQNRPuXIKvO5nUyVsX6W
-	 rWuQcnrv8UYw8md5Mzw/O/uI8sXtkfJUvsKB2EVaWSovj1Bmpx2vY7lJvtQWcFRkdi
-	 KCR0Di24jjL0MMg2u3WSqXv+o+OyQO8wSDu1O074=
+	b=XDN9tob3bF+t8u/TCN4fMGF0SvtQmUxJNrmERfdttuNlVC1bhvkS3ES7PQHvvhc8f
+	 DQsXv/m6W1y3HMR/wQB0Ch9TfFToBw8wRUOCfB4Kg+vO/qVZuVEJ5/tA/XDmP53B0P
+	 4HT6Z8zkj+ORd25zypVwzpDkG+oJuuImtUPe9/ow=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Andi Kleen <ak@linux.intel.com>,
-	Athira Rajeev <atrajeev@linux.ibm.com>,
-	Ben Gainey <ben.gainey@arm.com>,
-	Chaitanya S Prakash <chaitanyas.prakash@arm.com>,
-	Charlie Jenkins <charlie@rivosinc.com>,
-	Chun-Tse Shao <ctshao@google.com>,
-	Colin Ian King <colin.i.king@gmail.com>,
-	Dmitriy Vyukov <dvyukov@google.com>,
-	"Dr. David Alan Gilbert" <linux@treblig.org>,
-	Graham Woodward <graham.woodward@arm.com>,
-	Howard Chu <howardchu95@gmail.com>,
-	Ilkka Koskinen <ilkka@os.amperecomputing.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	James Clark <james.clark@linaro.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	John Garry <john.g.garry@oracle.com>,
-	Kajol Jain <kjain@linux.ibm.com>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	=?UTF-8?q?Krzysztof=20=C5=81opatowski?= <krzysztof.m.lopatowski@gmail.com>,
-	Leo Yan <leo.yan@linux.dev>,
-	Levi Yun <yeoreum.yun@arm.com>,
-	Li Huafei <lihuafei1@huawei.com>,
-	linux-arm-kernel@lists.infradead.org,
-	Mark Rutland <mark.rutland@arm.com>,
-	=?UTF-8?q?Martin=20Li=C5=A1ka?= <martin.liska@hey.com>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Matt Fleming <matt@readmodwrite.com>,
-	Mike Leach <mike.leach@linaro.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Ravi Bangoria <ravi.bangoria@amd.com>,
-	Song Liu <song@kernel.org>,
-	"Steinar H. Gunderson" <sesse@google.com>,
-	Stephen Brennan <stephen.s.brennan@oracle.com>,
-	Steve Clevenger <scclevenger@os.amperecomputing.com>,
-	Thomas Falcon <thomas.falcon@intel.com>,
-	Veronika Molnarova <vmolnaro@redhat.com>,
-	Weilin Wang <weilin.wang@intel.com>,
-	Will Deacon <will@kernel.org>,
-	Yicong Yang <yangyicong@hisilicon.com>,
-	Yujie Liu <yujie.liu@intel.com>,
-	Zhongqiu Han <quic_zhonhan@quicinc.com>,
-	Zixian Cai <fzczx123@gmail.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 487/780] perf callchain: Always populate the addr_location map when adding IP
-Date: Tue, 17 Jun 2025 17:23:15 +0200
-Message-ID: <20250617152511.321697149@linuxfoundation.org>
+Subject: [PATCH 6.15 488/780] cifs: Fix validation of SMB1 query reparse point response
+Date: Tue, 17 Jun 2025 17:23:16 +0200
+Message-ID: <20250617152511.361902206@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
 References: <20250617152451.485330293@linuxfoundation.org>
@@ -97,142 +52,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Pali Rohár <pali@kernel.org>
 
-[ Upstream commit a913ef6fd883c05bd6538ed21ee1e773f0d750b7 ]
+[ Upstream commit 56e84c64fc257a95728ee73165456b025c48d408 ]
 
-Dropping symbols also meant the callchain maps wasn't populated, but
-the callchain map is needed to find the DSO.
+Validate the SMB1 query reparse point response per [MS-CIFS] section
+2.2.7.2 NT_TRANSACT_IOCTL.
 
-Plumb the symbols option better, falling back to thread__find_map()
-rather than thread__find_symbol() when symbols are disabled.
+NT_TRANSACT_IOCTL response contains one word long setup data after which is
+ByteCount member. So check that SetupCount is 1 before trying to read and
+use ByteCount member.
 
-Fixes: 02b2705017d2e5ad ("perf callchain: Allow symbols to be optional when resolving a callchain")
-Signed-off-by: Ian Rogers <irogers@google.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Andi Kleen <ak@linux.intel.com>
-Cc: Athira Rajeev <atrajeev@linux.ibm.com>
-Cc: Ben Gainey <ben.gainey@arm.com>
-Cc: Chaitanya S Prakash <chaitanyas.prakash@arm.com>
-Cc: Charlie Jenkins <charlie@rivosinc.com>
-Cc: Chun-Tse Shao <ctshao@google.com>
-Cc: Colin Ian King <colin.i.king@gmail.com>
-Cc: Dmitriy Vyukov <dvyukov@google.com>
-Cc: Dr. David Alan Gilbert <linux@treblig.org>
-Cc: Graham Woodward <graham.woodward@arm.com>
-Cc: Howard Chu <howardchu95@gmail.com>
-Cc: Ilkka Koskinen <ilkka@os.amperecomputing.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: James Clark <james.clark@linaro.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: John Garry <john.g.garry@oracle.com>
-Cc: Kajol Jain <kjain@linux.ibm.com>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Krzysztof Łopatowski <krzysztof.m.lopatowski@gmail.com>
-Cc: Leo Yan <leo.yan@linux.dev>
-Cc: Levi Yun <yeoreum.yun@arm.com>
-Cc: Li Huafei <lihuafei1@huawei.com>
-Cc: linux-arm-kernel@lists.infradead.org
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Martin Liška <martin.liska@hey.com>
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Matt Fleming <matt@readmodwrite.com>
-Cc: Mike Leach <mike.leach@linaro.org>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Ravi Bangoria <ravi.bangoria@amd.com>
-Cc: Song Liu <song@kernel.org>
-Cc: Steinar H. Gunderson <sesse@google.com>
-Cc: Stephen Brennan <stephen.s.brennan@oracle.com>
-Cc: Steve Clevenger <scclevenger@os.amperecomputing.com>
-Cc: Thomas Falcon <thomas.falcon@intel.com>
-Cc: Veronika Molnarova <vmolnaro@redhat.com>
-Cc: Weilin Wang <weilin.wang@intel.com>
-Cc: Will Deacon <will@kernel.org>
-Cc: Yicong Yang <yangyicong@hisilicon.com>
-Cc: Yujie Liu <yujie.liu@intel.com>
-Cc: Zhongqiu Han <quic_zhonhan@quicinc.com>
-Cc: Zixian Cai <fzczx123@gmail.com>
-Link: https://lore.kernel.org/r/20250529044000.759937-2-irogers@google.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Output setup data contains ReturnedDataLen member which is the output
+length of executed IOCTL command by remote system. So check that output was
+not truncated before transferring over network.
+
+Change MaxSetupCount of NT_TRANSACT_IOCTL request from 4 to 1 as io_rsp
+structure already expects one word long output setup data. This should
+prevent server sending incompatible structure (in case it would be extended
+in future, which is unlikely).
+
+Change MaxParameterCount of NT_TRANSACT_IOCTL request from 2 to 0 as
+NT IOCTL does not have any documented output parameters and this function
+does not parse any output parameters at all.
+
+Fixes: ed3e0a149b58 ("smb: client: implement ->query_reparse_point() for SMB1")
+Signed-off-by: Pali Rohár <pali@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/machine.c | 6 ++++--
- tools/perf/util/thread.c  | 8 ++++++--
- tools/perf/util/thread.h  | 2 +-
- 3 files changed, 11 insertions(+), 5 deletions(-)
+ fs/smb/client/cifssmb.c | 20 ++++++++++++++++++--
+ 1 file changed, 18 insertions(+), 2 deletions(-)
 
-diff --git a/tools/perf/util/machine.c b/tools/perf/util/machine.c
-index 2531b373f2cf7..b048165b10c14 100644
---- a/tools/perf/util/machine.c
-+++ b/tools/perf/util/machine.c
-@@ -1976,7 +1976,7 @@ static void ip__resolve_ams(struct thread *thread,
- 	 * Thus, we have to try consecutively until we find a match
- 	 * or else, the symbol is unknown
- 	 */
--	thread__find_cpumode_addr_location(thread, ip, &al);
-+	thread__find_cpumode_addr_location(thread, ip, /*symbols=*/true, &al);
+diff --git a/fs/smb/client/cifssmb.c b/fs/smb/client/cifssmb.c
+index 477792c07d458..a3ba3346ed313 100644
+--- a/fs/smb/client/cifssmb.c
++++ b/fs/smb/client/cifssmb.c
+@@ -2753,10 +2753,10 @@ int cifs_query_reparse_point(const unsigned int xid,
  
- 	ams->addr = ip;
- 	ams->al_addr = al.addr;
-@@ -2078,7 +2078,7 @@ static int add_callchain_ip(struct thread *thread,
- 	al.sym = NULL;
- 	al.srcline = NULL;
- 	if (!cpumode) {
--		thread__find_cpumode_addr_location(thread, ip, &al);
-+		thread__find_cpumode_addr_location(thread, ip, symbols, &al);
- 	} else {
- 		if (ip >= PERF_CONTEXT_MAX) {
- 			switch (ip) {
-@@ -2106,6 +2106,8 @@ static int add_callchain_ip(struct thread *thread,
- 		}
- 		if (symbols)
- 			thread__find_symbol(thread, *cpumode, ip, &al);
-+		else
-+			thread__find_map(thread, *cpumode, ip, &al);
+ 	io_req->TotalParameterCount = 0;
+ 	io_req->TotalDataCount = 0;
+-	io_req->MaxParameterCount = cpu_to_le32(2);
++	io_req->MaxParameterCount = cpu_to_le32(0);
+ 	/* BB find exact data count max from sess structure BB */
+ 	io_req->MaxDataCount = cpu_to_le32(CIFSMaxBufSize & 0xFFFFFF00);
+-	io_req->MaxSetupCount = 4;
++	io_req->MaxSetupCount = 1;
+ 	io_req->Reserved = 0;
+ 	io_req->ParameterOffset = 0;
+ 	io_req->DataCount = 0;
+@@ -2783,6 +2783,22 @@ int cifs_query_reparse_point(const unsigned int xid,
+ 		goto error;
  	}
  
- 	if (al.sym != NULL) {
-diff --git a/tools/perf/util/thread.c b/tools/perf/util/thread.c
-index 89585f53c1d5c..10a01f8fbd400 100644
---- a/tools/perf/util/thread.c
-+++ b/tools/perf/util/thread.c
-@@ -410,7 +410,7 @@ int thread__fork(struct thread *thread, struct thread *parent, u64 timestamp, bo
- }
- 
- void thread__find_cpumode_addr_location(struct thread *thread, u64 addr,
--					struct addr_location *al)
-+					bool symbols, struct addr_location *al)
- {
- 	size_t i;
- 	const u8 cpumodes[] = {
-@@ -421,7 +421,11 @@ void thread__find_cpumode_addr_location(struct thread *thread, u64 addr,
- 	};
- 
- 	for (i = 0; i < ARRAY_SIZE(cpumodes); i++) {
--		thread__find_symbol(thread, cpumodes[i], addr, al);
-+		if (symbols)
-+			thread__find_symbol(thread, cpumodes[i], addr, al);
-+		else
-+			thread__find_map(thread, cpumodes[i], addr, al);
++	/* SetupCount must be 1, otherwise offset to ByteCount is incorrect. */
++	if (io_rsp->SetupCount != 1) {
++		rc = -EIO;
++		goto error;
++	}
 +
- 		if (al->map)
- 			break;
- 	}
-diff --git a/tools/perf/util/thread.h b/tools/perf/util/thread.h
-index cd574a896418a..2b90bbed7a612 100644
---- a/tools/perf/util/thread.h
-+++ b/tools/perf/util/thread.h
-@@ -126,7 +126,7 @@ struct symbol *thread__find_symbol_fb(struct thread *thread, u8 cpumode,
- 				      u64 addr, struct addr_location *al);
- 
- void thread__find_cpumode_addr_location(struct thread *thread, u64 addr,
--					struct addr_location *al);
-+					bool symbols, struct addr_location *al);
- 
- int thread__memcpy(struct thread *thread, struct machine *machine,
- 		   void *buf, u64 ip, int len, bool *is64bit);
++	/*
++	 * ReturnedDataLen is output length of executed IOCTL.
++	 * DataCount is output length transferred over network.
++	 * Check that we have full FSCTL_GET_REPARSE_POINT buffer.
++	 */
++	if (data_count != le16_to_cpu(io_rsp->ReturnedDataLen)) {
++		rc = -EIO;
++		goto error;
++	}
++
+ 	end = 2 + get_bcc(&io_rsp->hdr) + (__u8 *)&io_rsp->ByteCount;
+ 	start = (__u8 *)&io_rsp->hdr.Protocol + data_offset;
+ 	if (start >= end) {
 -- 
 2.39.5
 
