@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F85B11CBA;
-	Tue, 17 Jun 2025 15:31:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E53C11CBA;
+	Tue, 17 Jun 2025 15:31:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750174266; cv=none; b=KkVo3j9IUlsm+UMROoiqtIQAqXI714UTc76IPnzv/GcpnazSpOzIut59HA/fB+EU8TYNXodv0DdzaUe6b0skYRnEeJ5hptTeURcV4gpfsZHHRblfg+LOeKc8pfADNSc7IrQxzhUKeTNeH4wnI68M/7TjpwR8e3e7cUuBbufPKKM=
+	t=1750174268; cv=none; b=bV4toceyrk9l1lyu/v98OjNKOZLP8ea94IgW11keOvFk3NYkVdU7jyrzWdUJreGse+a30xIDwzFaH7qx4wfUCCHLK5YdZtWs0maw6B84VFdLaALwnse9wGT29mSjCpZ1dX9Tmu3xfAU5Ovty+0r4aDsn/ci2noqmtDPHmw63SJE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750174266; c=relaxed/simple;
-	bh=jFziql9/VNpYV1BioJycdxYGXuVZq0/RCgAX1tURWt0=;
+	s=arc-20240116; t=1750174268; c=relaxed/simple;
+	bh=hrNy/I+6g8xjUS8nuyZK3XM11JsPH6qSTVvxhcnu4QA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mIK78HrH8DLr/91xHCt5i6fnAx5AZTavkefUVSHscwNxtA0RE73CB7sCMqstofI44weR68e0AHxDldx2YqCpackiR0uQGehkVieLcYfZsvPaWgA0T36JsfWWJ85p34dp12wKFjLKrkZY3Ii1pEFnVkDpl/2qAvudHFdalLM5OkU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Szz3NQmH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q0m8ZG4UGI1CUqgKYkJ9QHE9OGRHxMO7Y3GLTK7PBPydpmpurbXT1KtDVx/w59LuSrNbocFadXeNpDYcuK3FXIeMa4lkkN3V5r/oof7PTUbq8OVeeZO7K7BGx+jkn2VMoEkYv/gei80GMuCKKIHml0ZBLaNwXfW2d7rW93ZN2ZE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TIlNg/ku; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Szz3NQmH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F701C4CEE7;
-	Tue, 17 Jun 2025 15:31:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TIlNg/ku"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D801C4CEE3;
+	Tue, 17 Jun 2025 15:31:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750174265;
-	bh=jFziql9/VNpYV1BioJycdxYGXuVZq0/RCgAX1tURWt0=;
+	s=korg; t=1750174268;
+	bh=hrNy/I+6g8xjUS8nuyZK3XM11JsPH6qSTVvxhcnu4QA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Szz3NQmHADWs1qZe1Q27HDZsb1e4HaNEyFBnsXIqQ1iriqtWaJyGBW4e0Q6XwYoZY
-	 O5aJuzvXMW0NNMiOdRQ6k6kxMyU3lHhqzIMIDHyiYRB9iUnN2PF9UueaXMrk9VdF+q
-	 Hf2eLiafLD+4mFgEFWryxowMUuspE/pboGHb/3xQ=
+	b=TIlNg/kuwvWpUEIDxzykbOp2WJRUlFjpbZtt5HWJwJDh7jBnm3j2Mnlu6IDfHUak0
+	 pkp5Um08nzCGEWOA+lkJxyLKlS+OvTeKp9+cyH3FJ+uMQNOtFQlt2Mpzqofcy3Q7Wh
+	 ilEMxSeoYXuHYQVwNbUOkwA1jsBlq+ADM0AC+WPs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <oliver.sang@intel.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 034/356] crypto: lrw - Only add ecb if it is not already there
-Date: Tue, 17 Jun 2025 17:22:29 +0200
-Message-ID: <20250617152339.596872158@linuxfoundation.org>
+Subject: [PATCH 6.6 035/356] crypto: xts - Only add ecb if it is not already there
+Date: Tue, 17 Jun 2025 17:22:30 +0200
+Message-ID: <20250617152339.635202968@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
 References: <20250617152338.212798615@linuxfoundation.org>
@@ -53,36 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Herbert Xu <herbert@gondor.apana.org.au>
 
-[ Upstream commit 3d73909bddc2ebb3224a8bc2e5ce00e9df70c15d ]
+[ Upstream commit 270b6f13454cb7f2f7058c50df64df409c5dcf55 ]
 
 Only add ecb to the cipher name if it isn't already ecb.
 
 Also use memcmp instead of strncmp since these strings are all
 stored in an array of length CRYPTO_MAX_ALG_NAME.
 
-Fixes: 700cb3f5fe75 ("crypto: lrw - Convert to skcipher")
-Reported-by: kernel test robot <oliver.sang@intel.com>
-Closes: https://lore.kernel.org/oe-lkp/202505151503.d8a6cf10-lkp@intel.com
+Fixes: f1c131b45410 ("crypto: xts - Convert to skcipher")
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/lrw.c | 4 ++--
+ crypto/xts.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/crypto/lrw.c b/crypto/lrw.c
-index 59260aefed280..5536ec7bf18f1 100644
---- a/crypto/lrw.c
-+++ b/crypto/lrw.c
-@@ -322,7 +322,7 @@ static int lrw_create(struct crypto_template *tmpl, struct rtattr **tb)
+diff --git a/crypto/xts.c b/crypto/xts.c
+index 038f60dd512d9..97fd0fb8757c2 100644
+--- a/crypto/xts.c
++++ b/crypto/xts.c
+@@ -363,7 +363,7 @@ static int xts_create(struct crypto_template *tmpl, struct rtattr **tb)
  
- 	err = crypto_grab_skcipher(spawn, skcipher_crypto_instance(inst),
+ 	err = crypto_grab_skcipher(&ctx->spawn, skcipher_crypto_instance(inst),
  				   cipher_name, 0, mask);
 -	if (err == -ENOENT) {
 +	if (err == -ENOENT && memcmp(cipher_name, "ecb(", 4)) {
  		err = -ENAMETOOLONG;
- 		if (snprintf(ecb_name, CRYPTO_MAX_ALG_NAME, "ecb(%s)",
+ 		if (snprintf(name, CRYPTO_MAX_ALG_NAME, "ecb(%s)",
  			     cipher_name) >= CRYPTO_MAX_ALG_NAME)
-@@ -356,7 +356,7 @@ static int lrw_create(struct crypto_template *tmpl, struct rtattr **tb)
+@@ -397,7 +397,7 @@ static int xts_create(struct crypto_template *tmpl, struct rtattr **tb)
  	/* Alas we screwed up the naming so we have to mangle the
  	 * cipher name.
  	 */
@@ -90,7 +87,7 @@ index 59260aefed280..5536ec7bf18f1 100644
 +	if (!memcmp(cipher_name, "ecb(", 4)) {
  		int len;
  
- 		len = strscpy(ecb_name, cipher_name + 4, sizeof(ecb_name));
+ 		len = strscpy(name, cipher_name + 4, sizeof(name));
 -- 
 2.39.5
 
