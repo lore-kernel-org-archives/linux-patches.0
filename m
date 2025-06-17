@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB18D2EE5EE;
-	Tue, 17 Jun 2025 16:32:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D63262EE602;
+	Tue, 17 Jun 2025 16:32:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177926; cv=none; b=srTVjJPK+Qh4i/1MbPqjF/ICGif6fr653MgwvBGcaylElXl1iQE1fJN1uWpLgNyfjXzR8QPok9Wc1nrxUhmO8V/rDcxOugp6CYemIUyWvlvyg9v42qfiIx4vSNfk5Ea4DA3R2lPONlUQ0G1Tj7MEnEfvtTrM5ClDkohw5OFKycY=
+	t=1750177928; cv=none; b=AXjQo4j/O+dPouKKweLfbodeoGHxymokKKytOI7F7l1kinJo2H+4IG7L7Z56Un4ZldOEC9NFl8hM8HdhjazAjwxmxU0nwkFhWiuqP5Vtv488vbzKb4zvpsFqJRQIKvMFMk+sw49bQTFV0WSLEvz3JpeJKOBkEDWxqoUzeg99LXw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177926; c=relaxed/simple;
-	bh=fAETykJc/JWz7S42FLkZcXzNOe9e7xVqexzTrqDZVYo=;
+	s=arc-20240116; t=1750177928; c=relaxed/simple;
+	bh=12S2OnAR81ngcj6IMFG6MgKweGS57sPPT5CuBf2vluQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X7RLnNsHROBD8RM7tRc4M4A5iy522EQblilc3/GN4ZQfZWHlqbptxRO3dzviru2x/QlkAGRdwE3pgLpwcZQhd2CT7WHZcv0OybC5gxfWEPHOYOJ2+xScfqCztND+eShbut8F3RnlAvegcnbnWNwVGkzbbhuqtwiKIrsgkYBnolU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lrwriVNz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ceuhUoYU+HEwoVz0uM1RvNa8lnfIexEzW1XGHjPGyAmyy2B/mC0YFws6wYJzxiAO85dQ/9ivwY1AP4IFs7NHv3aqxMut3jcZsh3BwmYlvWtdtrpULDvAHYNEO/qjjXRZNVjeLNorFOfvKNjvVFMWYsd8HITD1zMp3ZpYOQAzB5U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AQOnSHrf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lrwriVNz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AB51C4CEE3;
-	Tue, 17 Jun 2025 16:32:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AQOnSHrf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60EAFC4CEE3;
+	Tue, 17 Jun 2025 16:32:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177925;
-	bh=fAETykJc/JWz7S42FLkZcXzNOe9e7xVqexzTrqDZVYo=;
+	s=korg; t=1750177928;
+	bh=12S2OnAR81ngcj6IMFG6MgKweGS57sPPT5CuBf2vluQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lrwriVNzfLgSuljL+/p8vnnkT2j8/+kWjpmB6MoXe6ryrzpUB+AsznE9rSm8RMxjk
-	 9eCPr+woZJPWQ68GR3utN1eewVLFGJ4/vTOgXLtaclVz/D0CvJwVfrxOSKidzNDpO/
-	 eNbuToHxO4Ku/IdVDGigErh6GMJhLRfacMoZIDYY=
+	b=AQOnSHrfa39MCsDBungGNvi0q6zy6Z0Po4Fa9tPJeq8Ddv3FNiQ+Ltop4z8wWx0r4
+	 yxDYZZmwSe6LGldzDbx74RdjnbZmvZyW3D29gGaklP07GlCAfaT5vfE+xFzDD/7TDC
+	 p5XtgdzT3pVJW4beMnNMQXKq+nurplzyOThQyrSY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pauli Virtanen <pav@iki.fi>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Peter Robinson <pbrobinson@gmail.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 419/512] Bluetooth: hci_core: fix list_for_each_entry_rcu usage
-Date: Tue, 17 Jun 2025 17:26:25 +0200
-Message-ID: <20250617152436.553858086@linuxfoundation.org>
+Subject: [PATCH 6.15 384/780] arm64: dts: rockchip: Add vcc-supply to SPI flash on rk3566-rock3c
+Date: Tue, 17 Jun 2025 17:21:32 +0200
+Message-ID: <20250617152507.099795188@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,59 +47,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pauli Virtanen <pav@iki.fi>
+From: Peter Robinson <pbrobinson@gmail.com>
 
-[ Upstream commit 308a3a8ce8ea41b26c46169f3263e50f5997c28e ]
+[ Upstream commit a706a593cb19796f31d3a888423ef1a71885ae72 ]
 
-Releasing + re-acquiring RCU lock inside list_for_each_entry_rcu() loop
-body is not correct.
+As described in the radxa_rock_3c_v1400_schematic.pdf, the SPI Flash's
+VCC connector is connected to VCCIO_FLASH and according to the
+that same schematic, that belongs to the VCC_1V8 power source.
 
-Fix by taking the update-side hdev->lock instead.
+This fixes the following warning:
 
-Fixes: c7eaf80bfb0c ("Bluetooth: Fix hci_link_tx_to RCU lock usage")
-Signed-off-by: Pauli Virtanen <pav@iki.fi>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+  spi-nor spi4.0: supply vcc not found, using dummy regulator
+
+Fixes: ee219017ddb5 ("arm64: dts: rockchip: Add Radxa ROCK 3C")
+Signed-off-by: Peter Robinson <pbrobinson@gmail.com>
+Link: https://lore.kernel.org/r/20250506195702.593044-1-pbrobinson@gmail.com
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_core.c | 11 +++--------
- 1 file changed, 3 insertions(+), 8 deletions(-)
+ arch/arm64/boot/dts/rockchip/rk3566-rock-3c.dts | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
-index 743b63287a18f..831f41f6bc6de 100644
---- a/net/bluetooth/hci_core.c
-+++ b/net/bluetooth/hci_core.c
-@@ -3416,23 +3416,18 @@ static void hci_link_tx_to(struct hci_dev *hdev, __u8 type)
+diff --git a/arch/arm64/boot/dts/rockchip/rk3566-rock-3c.dts b/arch/arm64/boot/dts/rockchip/rk3566-rock-3c.dts
+index 53e71528e4c4c..6224d72813e59 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3566-rock-3c.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3566-rock-3c.dts
+@@ -636,6 +636,7 @@
+ 		spi-max-frequency = <104000000>;
+ 		spi-rx-bus-width = <4>;
+ 		spi-tx-bus-width = <1>;
++		vcc-supply = <&vcc_1v8>;
+ 	};
+ };
  
- 	bt_dev_err(hdev, "link tx timeout");
- 
--	rcu_read_lock();
-+	hci_dev_lock(hdev);
- 
- 	/* Kill stalled connections */
--	list_for_each_entry_rcu(c, &h->list, list) {
-+	list_for_each_entry(c, &h->list, list) {
- 		if (c->type == type && c->sent) {
- 			bt_dev_err(hdev, "killing stalled connection %pMR",
- 				   &c->dst);
--			/* hci_disconnect might sleep, so, we have to release
--			 * the RCU read lock before calling it.
--			 */
--			rcu_read_unlock();
- 			hci_disconnect(c, HCI_ERROR_REMOTE_USER_TERM);
--			rcu_read_lock();
- 		}
- 	}
- 
--	rcu_read_unlock();
-+	hci_dev_unlock(hdev);
- }
- 
- static struct hci_chan *hci_chan_sent(struct hci_dev *hdev, __u8 type,
 -- 
 2.39.5
 
