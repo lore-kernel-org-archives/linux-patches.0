@@ -1,52 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 462142CCC5;
-	Tue, 17 Jun 2025 16:37:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 862542FA64D;
+	Tue, 17 Jun 2025 16:37:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750178249; cv=none; b=O+iPmnZ4I2uNhXn7JzoekWS98O2o10iX7+lVJ11V1RBgFXQhh7R4g19+qOWfl4GNRiuXLA5Nf8ach/1vavTSkOApuVeeGmwbnTbw2FS2z9xgZS5yD3AecdcgpEvm/nMBUwHe4zqSzkQzY2SheBmhQxH4BIoocSVJng84Uu77QZQ=
+	t=1750178252; cv=none; b=FFcvSHw3h8+eHn7ax9um04DxJFPQRd+kutBYQESEvLLuvZrwqbSa+inR197FKzJbFgmYexQAfnGZF7eT7XSaD0ZSlaGDNKd9aVz49LXpkeY2DkDg4XB7QjmgprpYCK1ThKa5Uk2uKPx1V3xcORvOA1hY0v54aO3AnpFvwHnftKc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750178249; c=relaxed/simple;
-	bh=jNm+qWDLcQxG5n4S4FxFGhFm0MH7Y0l0U61wIy0M3uA=;
+	s=arc-20240116; t=1750178252; c=relaxed/simple;
+	bh=0egNTOLEcCqzddneay6OpFH/zSM0STc+OoIR0SjF4HU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=awUxBmN2SU7QIua5+hwAsfn5o3i/lFIuwFrijtmjhW3ffkM8ewrtUa05h4tTDXbDWbnk+En0CPfZIZuhnv9g9TwdWh+JsBgsCd8v0BkyM14Sozo5Xyiqk+clp4OYha7kFVfkQ5bSSu2LrqestYojSqWEES2iPVkc4qft07uiN/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iIdJZUzr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AUX8QLGvWriLWVzY4RguTgUJIsQ07NfIHWY5ivC0nXJPKNzvy7mEF3j7SGI/rG8lSB26lhurZTzJq8tkiP+EF6Lxcor1qB4ZbOXSYZp0wjI1I+RQFEuUPYv71+mzrMFSyqEr0RCghcxjPbmM1m/TU9hDkq7dP3olO5b2BixDAGA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LMUtVm4h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iIdJZUzr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F60AC4CEE3;
-	Tue, 17 Jun 2025 16:37:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LMUtVm4h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA4B5C4CEE3;
+	Tue, 17 Jun 2025 16:37:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750178249;
-	bh=jNm+qWDLcQxG5n4S4FxFGhFm0MH7Y0l0U61wIy0M3uA=;
+	s=korg; t=1750178252;
+	bh=0egNTOLEcCqzddneay6OpFH/zSM0STc+OoIR0SjF4HU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iIdJZUzrNFyvGMYOgpjSaxHEMBV+aZuLWCSSaN1bfXWbt7u9uy9Ocl6lEzEjt8PAr
-	 +rKtM0Ciu+MtJlRYSfz7m21Ddx/thC7ncSfPBY82jBkVivJJywXNVLK706G75fpJdP
-	 qxa9qDKzwOsfNmuyJ+/x9JHIO0MjGuin3bnHxLnc=
+	b=LMUtVm4hxX/n/dxb3bR8D38YdHRP9qDLAJP9CJ9a1UvnlYITUg+QphQDLId+EEUj4
+	 vclMXBHl9H+/cxVyUEGnQ/62vhVThp/ksMQspLs5sQP4bY7HAkyIq0sFv9/80JRJei
+	 FZbvpy1bGwMWPpUpWj78gBHvy+JAFeVX/TCcIcoc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephane Eranian <eranian@google.com>,
-	James Clark <james.clark@linaro.org>,
-	Ian Rogers <irogers@google.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Thomas Richter <tmricht@linux.ibm.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Breno Leitao <leitao@debian.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 433/780] perf tool_pmu: Fix aggregation on duration_time
-Date: Tue, 17 Jun 2025 17:22:21 +0200
-Message-ID: <20250617152509.101604690@linuxfoundation.org>
+Subject: [PATCH 6.12 469/512] net: drv: netdevsim: dont napi_complete() from netpoll
+Date: Tue, 17 Jun 2025 17:27:15 +0200
+Message-ID: <20250617152438.585329091@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -58,87 +47,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 68cb1567439fa325ba980f3b5b67f95d3953eafd ]
+[ Upstream commit 1264971017b4d7141352a7fe29021bdfce5d885d ]
 
-evsel__count_has_error() fails counters when the enabled or running time
-are 0. The duration_time event reads 0 when the cpu_map_idx != 0 to
-avoid aggregating time over CPUs. Change the enable and running time
-to always have a ratio of 100% so that evsel__count_has_error won't
-fail.
+netdevsim supports netpoll. Make sure we don't call napi_complete()
+from it, since it may not be scheduled. Breno reports hitting a
+warning in napi_complete_done():
 
-Before:
-```
-$ sudo /tmp/perf/perf stat --per-core -a -M UNCORE_FREQ sleep 1
+WARNING: CPU: 14 PID: 104 at net/core/dev.c:6592 napi_complete_done+0x2cc/0x560
+  __napi_poll+0x2d8/0x3a0
+  handle_softirqs+0x1fe/0x710
 
- Performance counter stats for 'system wide':
+This is presumably after netpoll stole the SCHED bit prematurely.
 
-S0-D0-C0              1      2,615,819,485      UNC_CLOCK.SOCKET                 #     2.61 UNCORE_FREQ
-S0-D0-C0              2      <not counted>      duration_time
-
-       1.002111784 seconds time elapsed
-```
-
-After:
-```
-$ perf stat --per-core -a -M UNCORE_FREQ sleep 1
-
- Performance counter stats for 'system wide':
-
-S0-D0-C0              1        758,160,296      UNC_CLOCK.SOCKET                 #     0.76 UNCORE_FREQ
-S0-D0-C0              2      1,003,438,246      duration_time
-
-       1.002486017 seconds time elapsed
-```
-
-Note: the metric reads the value a different way and isn't impacted.
-
-Fixes: 240505b2d0adcdc8 ("perf tool_pmu: Factor tool events into their own PMU")
-Reported-by: Stephane Eranian <eranian@google.com>
-Reviewed-by: James Clark <james.clark@linaro.org>
-Signed-off-by: Ian Rogers <irogers@google.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Thomas Richter <tmricht@linux.ibm.com>
-Link: https://lore.kernel.org/r/20250423050358.94310-1-irogers@google.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Reported-by: Breno Leitao <leitao@debian.org>
+Fixes: 3762ec05a9fb ("netdevsim: add NAPI support")
+Tested-by: Breno Leitao <leitao@debian.org>
+Link: https://patch.msgid.link/20250611174643.2769263-1-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/tool_pmu.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/net/netdevsim/netdev.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/tool_pmu.c b/tools/perf/util/tool_pmu.c
-index 97b327d1ce4a0..727a10e3f9900 100644
---- a/tools/perf/util/tool_pmu.c
-+++ b/tools/perf/util/tool_pmu.c
-@@ -486,8 +486,14 @@ int evsel__tool_pmu_read(struct evsel *evsel, int cpu_map_idx, int thread)
- 		delta_start *= 1000000000 / ticks_per_sec;
- 	}
- 	count->val    = delta_start;
--	count->ena    = count->run = delta_start;
- 	count->lost   = 0;
-+	/*
-+	 * The values of enabled and running must make a ratio of 100%. The
-+	 * exact values don't matter as long as they are non-zero to avoid
-+	 * issues with evsel__count_has_error.
-+	 */
-+	count->ena++;
-+	count->run++;
- 	return 0;
- }
+diff --git a/drivers/net/netdevsim/netdev.c b/drivers/net/netdevsim/netdev.c
+index 1b29d1d794a20..79b898311819d 100644
+--- a/drivers/net/netdevsim/netdev.c
++++ b/drivers/net/netdevsim/netdev.c
+@@ -353,7 +353,8 @@ static int nsim_poll(struct napi_struct *napi, int budget)
+ 	int done;
  
+ 	done = nsim_rcv(rq, budget);
+-	napi_complete(napi);
++	if (done < budget)
++		napi_complete_done(napi, done);
+ 
+ 	return done;
+ }
 -- 
 2.39.5
 
