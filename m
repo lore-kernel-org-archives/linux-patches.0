@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46D532EE619;
-	Tue, 17 Jun 2025 16:14:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B1D32DFF13;
+	Tue, 17 Jun 2025 16:14:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750176885; cv=none; b=SLD3wpykl7dFcpE5NWbYcqUvjmz7kyuh+bMsSJJchZGJZ3DktkRRZwfQhjJM5KiyoYMYxgoAeOo81+0GrSp4CXkaBWYE5kHaBKHe6LafW/USOuppg0seyxXOGJRPwk25Cax7gaW+WO3xQHMFhzS4VwqHwyAo0Brm1g0N/2Ja9ko=
+	t=1750176888; cv=none; b=Wb4yHFUu+cr8CNLd3XponJ7KQs96FSXBEzfHdYz+Um0cWSUTozJI7q5qiBD5WxYVA2Ebyfqeqi0sSYi+OJEg9xg7yVkp+KP2277ueyGZX+613tllqS0IyuY9++t6iqX5QvoBAFfza4Ct70r+ey6md8UPf7xobVDIPYJUgcNt8sQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750176885; c=relaxed/simple;
-	bh=gT5ArMBW2AofmJljPn8tUygScn9++TWLEclFd5wsyxU=;
+	s=arc-20240116; t=1750176888; c=relaxed/simple;
+	bh=zhET5Jzul07dbAMaHky9z51AIkAPZ4BEFE3Y4x0AUAU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kjVe9e3iCkJFiS+pDh4W0rv+Jnc3mwkhjP0DZa6dw3g0cVncHaWrcMPGow+8l5Ed8OL0dkJ3sPrCBlBEAvZr0SMfpcdrpgVjHujvAVg/furvaOWbuJ66BrUQyM+ZFcvJC2cmP9ezBWkiur9BC65OnzSurl/GwxXOZB1tR+U4O+Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GHk5jJ+G; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RkWAv1ve9M5LteUuC5t0qDCbQr6hR6E7uZqlYxRzb+v87t5bzftYQwdpRmuXlx5VdjSY0H+V0SSUonCfyTEzR+cY4/py+awG4PFmM6K6cbpacurXrjb36A7SU5Daa1tLUwF+vGyZFqBvyfaHJIcpSXg5uVIABfZb/mHybpOu8kM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fYBS2gi5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GHk5jJ+G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9DF8C4CEE3;
-	Tue, 17 Jun 2025 16:14:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fYBS2gi5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED7E4C4CEE7;
+	Tue, 17 Jun 2025 16:14:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750176885;
-	bh=gT5ArMBW2AofmJljPn8tUygScn9++TWLEclFd5wsyxU=;
+	s=korg; t=1750176888;
+	bh=zhET5Jzul07dbAMaHky9z51AIkAPZ4BEFE3Y4x0AUAU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GHk5jJ+GLb0DTcQWv17Upbh7eAk9/h56xi6QuhONQ4rwOaQ7+2opC9zhCdWMfYgw1
-	 fbkdGdjv4Bu1UTQv2QnStCIysS2/ALwafAWNaC/Eu5FIT3u+Mxp5LOR24WflKsJzim
-	 +cxLkYG7N7LyNYxJp5dqs6s4rmfdqo97gPdCT3GU=
+	b=fYBS2gi5UzE0N6OcoEoj+16lZaO27yf79gWLZOtw7DbVko6ZFbxaSs+91F0/yQatS
+	 O/PfF6+XFWoyiTJak/6MWGtjAQYykjDiOJCzlyEv7w9/eRmiaW4NRJk7RbyHmOqulO
+	 66nOZ0xRp5fmNhgUCFBwSsS0TRiFbK2wS4y94KDg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huajian Yang <huajianyang@asrmicro.com>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Yihang Li <liyihang9@huawei.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 235/780] netfilter: bridge: Move specific fragmented packet to slow_path instead of dropping it
-Date: Tue, 17 Jun 2025 17:19:03 +0200
-Message-ID: <20250617152501.028091753@linuxfoundation.org>
+Subject: [PATCH 6.15 217/780] scsi: hisi_sas: Call I_T_nexus after soft reset for SATA disk
+Date: Tue, 17 Jun 2025 17:18:45 +0200
+Message-ID: <20250617152500.294492281@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
 References: <20250617152451.485330293@linuxfoundation.org>
@@ -52,92 +51,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huajian Yang <huajianyang@asrmicro.com>
+From: Yihang Li <liyihang9@huawei.com>
 
-[ Upstream commit aa04c6f45b9224b949aa35d4fa5f8d0ba07b23d4 ]
+[ Upstream commit e4d953ca557e02edd3aed7390043e1b8ad1c9723 ]
 
-The config NF_CONNTRACK_BRIDGE will change the bridge forwarding for
-fragmented packets.
+In commit 21c7e972475e ("scsi: hisi_sas: Disable SATA disk phy for severe
+I_T nexus reset failure"), if the softreset fails upon certain
+conditions, the PHY connected to the disk is disabled directly. Manual
+recovery is required, which is inconvenient for users in actual use.
 
-The original bridge does not know that it is a fragmented packet and
-forwards it directly, after NF_CONNTRACK_BRIDGE is enabled, function
-nf_br_ip_fragment and br_ip6_fragment will check the headroom.
+In addition, SATA disks do not support simultaneous connection of multiple
+hosts. Therefore, when multiple controllers are connected to a SATA disk
+at the same time, the controller which is connected later failed to issue
+an ATA softreset to the SATA disk. As a result, the PHY associated with
+the disk is disabled and cannot be automatically recovered.
 
-In original br_forward, insufficient headroom of skb may indeed exist,
-but there's still a way to save the skb in the device driver after
-dev_queue_xmit.So droping the skb will change the original bridge
-forwarding in some cases.
+Now that, we will not focus on the execution result of softreset. No
+matter whether the execution is successful or not, we will directly carry
+out I_T_nexus_reset.
 
-Fixes: 3c171f496ef5 ("netfilter: bridge: add connection tracking system")
-Signed-off-by: Huajian Yang <huajianyang@asrmicro.com>
-Reviewed-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 21c7e972475e ("scsi: hisi_sas: Disable SATA disk phy for severe I_T nexus reset failure")
+Signed-off-by: Yihang Li <liyihang9@huawei.com>
+Link: https://lore.kernel.org/r/20250414080845.1220997-4-liyihang9@huawei.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/netfilter/nf_conntrack_bridge.c | 12 ++++++------
- net/ipv6/netfilter.c                       | 12 ++++++------
- 2 files changed, 12 insertions(+), 12 deletions(-)
+ drivers/scsi/hisi_sas/hisi_sas_main.c | 29 +++++----------------------
+ 1 file changed, 5 insertions(+), 24 deletions(-)
 
-diff --git a/net/bridge/netfilter/nf_conntrack_bridge.c b/net/bridge/netfilter/nf_conntrack_bridge.c
-index 816bb0fde718e..6482de4d87509 100644
---- a/net/bridge/netfilter/nf_conntrack_bridge.c
-+++ b/net/bridge/netfilter/nf_conntrack_bridge.c
-@@ -60,19 +60,19 @@ static int nf_br_ip_fragment(struct net *net, struct sock *sk,
- 		struct ip_fraglist_iter iter;
- 		struct sk_buff *frag;
+diff --git a/drivers/scsi/hisi_sas/hisi_sas_main.c b/drivers/scsi/hisi_sas/hisi_sas_main.c
+index 944cf2fb05617..d3981b6779316 100644
+--- a/drivers/scsi/hisi_sas/hisi_sas_main.c
++++ b/drivers/scsi/hisi_sas/hisi_sas_main.c
+@@ -1885,33 +1885,14 @@ static int hisi_sas_I_T_nexus_reset(struct domain_device *device)
+ 	}
+ 	hisi_sas_dereg_device(hisi_hba, device);
  
--		if (first_len - hlen > mtu ||
--		    skb_headroom(skb) < ll_rs)
-+		if (first_len - hlen > mtu)
- 			goto blackhole;
+-	rc = hisi_sas_debug_I_T_nexus_reset(device);
+-	if (rc == TMF_RESP_FUNC_COMPLETE && dev_is_sata(device)) {
+-		struct sas_phy *local_phy;
+-
++	if (dev_is_sata(device)) {
+ 		rc = hisi_sas_softreset_ata_disk(device);
+-		switch (rc) {
+-		case -ECOMM:
+-			rc = -ENODEV;
+-			break;
+-		case TMF_RESP_FUNC_FAILED:
+-		case -EMSGSIZE:
+-		case -EIO:
+-			local_phy = sas_get_local_phy(device);
+-			rc = sas_phy_enable(local_phy, 0);
+-			if (!rc) {
+-				local_phy->enabled = 0;
+-				dev_err(dev, "Disabled local phy of ATA disk %016llx due to softreset fail (%d)\n",
+-					SAS_ADDR(device->sas_addr), rc);
+-				rc = -ENODEV;
+-			}
+-			sas_put_local_phy(local_phy);
+-			break;
+-		default:
+-			break;
+-		}
++		if (rc == TMF_RESP_FUNC_FAILED)
++			dev_err(dev, "ata disk %016llx reset (%d)\n",
++				SAS_ADDR(device->sas_addr), rc);
+ 	}
  
--		if (skb_cloned(skb))
-+		if (skb_cloned(skb) ||
-+		    skb_headroom(skb) < ll_rs)
- 			goto slow_path;
- 
- 		skb_walk_frags(skb, frag) {
--			if (frag->len > mtu ||
--			    skb_headroom(frag) < hlen + ll_rs)
-+			if (frag->len > mtu)
- 				goto blackhole;
- 
--			if (skb_shared(frag))
-+			if (skb_shared(frag) ||
-+			    skb_headroom(frag) < hlen + ll_rs)
- 				goto slow_path;
- 		}
- 
-diff --git a/net/ipv6/netfilter.c b/net/ipv6/netfilter.c
-index 581ce055bf520..4541836ee3da2 100644
---- a/net/ipv6/netfilter.c
-+++ b/net/ipv6/netfilter.c
-@@ -164,20 +164,20 @@ int br_ip6_fragment(struct net *net, struct sock *sk, struct sk_buff *skb,
- 		struct ip6_fraglist_iter iter;
- 		struct sk_buff *frag2;
- 
--		if (first_len - hlen > mtu ||
--		    skb_headroom(skb) < (hroom + sizeof(struct frag_hdr)))
-+		if (first_len - hlen > mtu)
- 			goto blackhole;
- 
--		if (skb_cloned(skb))
-+		if (skb_cloned(skb) ||
-+		    skb_headroom(skb) < (hroom + sizeof(struct frag_hdr)))
- 			goto slow_path;
- 
- 		skb_walk_frags(skb, frag2) {
--			if (frag2->len > mtu ||
--			    skb_headroom(frag2) < (hlen + hroom + sizeof(struct frag_hdr)))
-+			if (frag2->len > mtu)
- 				goto blackhole;
- 
- 			/* Partially cloned skb? */
--			if (skb_shared(frag2))
-+			if (skb_shared(frag2) ||
-+			    skb_headroom(frag2) < (hlen + hroom + sizeof(struct frag_hdr)))
- 				goto slow_path;
- 		}
++	rc = hisi_sas_debug_I_T_nexus_reset(device);
+ 	if ((rc == TMF_RESP_FUNC_COMPLETE) || (rc == -ENODEV))
+ 		hisi_sas_release_task(hisi_hba, device);
  
 -- 
 2.39.5
