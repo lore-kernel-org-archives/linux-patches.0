@@ -1,49 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77A192264D6;
-	Tue, 17 Jun 2025 16:36:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CE302E264E;
+	Tue, 17 Jun 2025 16:36:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750178198; cv=none; b=pbtDqPiRl++iPoNUkg0DNNvH7BoNyXzKUdJoVSaiWMfiGzm5YP17KpPPwMVuHK0G+hxgpJ0g6vvYkrSt8CCSaN2VHBqFFGYm6S0xTKOdBVdbN3WGXZQVzxAVde96F5TETT7yBKoQI/B2sqXFwtsI/S7dH3o+86Ftz8ZIJalkL+k=
+	t=1750178201; cv=none; b=elfw2YSc0POVTEuYN6NwF56TF0iKYM2uN4tQLy1u2rDHmJOQcn/+12CiSg0kBH+hVX/zPsldOl/XfZEJ/llQkULmkoTlAvFTg8b292Txd0B1lSVctEDi/FwImiHw+UeBNyTeeGjnlfcOOiTXpl0P2xy+QudjZUWO7E7GQ0ViK6o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750178198; c=relaxed/simple;
-	bh=vQaYCV3cswK0bXRejsX24Bri7b/FHmhS+NNOqyOijhw=;
+	s=arc-20240116; t=1750178201; c=relaxed/simple;
+	bh=i6/EGNGfAUK81RAGjm6iZPNZW8jOrG5clD4s0eQaelA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pgJPXr1IrrFc3gvqDaycW6v+uELhiDrQVbJqRF7YSTGKJ6g6bZnc3lXn2YJ7l64z1lNaxVSSqngduELH8gNoOufghhaYrrp2xDvRRASMfwftdBMiZEOIxtcdj1fPcuyCAQTHvb4CdRrDbdOWVfeFB+olaPMoedC9NddLn5tbf38=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wod+5s8P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qiVnraw2Ww4chXGIegMv5GttE8FwxNiH5Dy3nw5ehMViVMuzceevXIgDtJgMqB4jnqMsZV28hpvG87CKDm4j1K1cqsmOuchGoOS48rZYJde4H2rVShebPKu01a0jTiERWQWuIKuhYdFh1oY+MaTYIrzwvvh0bRle3F+FUNKXZjE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0dUEDb3k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wod+5s8P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B96DAC4CEE7;
-	Tue, 17 Jun 2025 16:36:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0dUEDb3k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D949FC4CEE3;
+	Tue, 17 Jun 2025 16:36:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750178198;
-	bh=vQaYCV3cswK0bXRejsX24Bri7b/FHmhS+NNOqyOijhw=;
+	s=korg; t=1750178201;
+	bh=i6/EGNGfAUK81RAGjm6iZPNZW8jOrG5clD4s0eQaelA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wod+5s8P8baeSkmlujNVPy/Ei3uEB6OlWSiaUnVpwjoQ8FqfYDoRm50kGDIYPeKoe
-	 K54eMBGq9UR2aQSlSnOGu59PCy+jrbPNyTPD6l/OavtpLNFj5/wZBNuCcH5pRufQbT
-	 ScL5CNtdxrA9VpGFvZt5PsaM5M1i7TMefjXcZ6UM=
+	b=0dUEDb3kZwgRf/ARb7HOl2FtGSCe7o29zhmxIhrIh4QJR9wCVGU+eG7N2GNsuLM7H
+	 8J1mrPpDxRHKsu10AvNJJZZH4CNYXpXbY8ez3heM9NZf9GpAx/LyTsKp7HT50b4yVt
+	 8FkqeVqBSlkyNOWExAQ0wnenO5Tqycv1ReCDfiKA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ingo Molnar <mingo@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Dmitriy Vyukov <dvyukov@google.com>,
-	Howard Chu <howardchu95@gmail.com>,
-	Ian Rogers <irogers@google.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Moshe Shemesh <moshe@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Mark Bloch <mbloch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 423/780] tools build: Dont show libbfd build status as it is opt-in
-Date: Tue, 17 Jun 2025 17:22:11 +0200
-Message-ID: <20250617152508.698643634@linuxfoundation.org>
+Subject: [PATCH 6.12 460/512] net/mlx5: Ensure fw pages are always allocated on same NUMA
+Date: Tue, 17 Jun 2025 17:27:06 +0200
+Message-ID: <20250617152438.209901929@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -55,56 +49,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Moshe Shemesh <moshe@nvidia.com>
 
-[ Upstream commit e0eb84cd518084582c0d1db5d904f31b16902fdc ]
+[ Upstream commit f37258133c1e95e61db532e14067e28b4881bf24 ]
 
-Since dd317df072071903 ("perf build: Make binutil libraries opt in")
-doesn't try to build with binutils libraries, so showing that it is OFF
-when building causes just distraction, remove it from FEATURES_DISPLAY.
+When firmware asks the driver to allocate more pages, using event of
+give_pages, the driver should always allocate it from same NUMA, the
+original device NUMA. Current code uses dev_to_node() which can result
+in different NUMA as it is changed by other driver flows, such as
+mlx5_dma_zalloc_coherent_node(). Instead, use saved numa node for
+allocating firmware pages.
 
-For people that for some reason notice that there is always 'perf -vv',
-a short hand for 'perf version --build-options' and 'perf check feature
-libbfd' that now explains why it is not built:
-
-  $ perf check feature libbfd
-  libbfd: [ OFF ]  # HAVE_LIBBFD_SUPPORT ( tip: Deprecated, license incompatibility, use BUILD_NONDISTRO=1 and install binutils-dev[el] )
-  $
-
-Fixes: dd317df072071903 ("perf build: Make binutil libraries opt in")
-Tested-by: Ingo Molnar <mingo@kernel.org>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Dmitriy Vyukov <dvyukov@google.com>
-Cc: Howard Chu <howardchu95@gmail.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/Z--pWmTHGb62_83e@gmail.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: 311c7c71c9bb ("net/mlx5e: Allocate DMA coherent memory on reader NUMA node")
+Signed-off-by: Moshe Shemesh <moshe@nvidia.com>
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Signed-off-by: Mark Bloch <mbloch@nvidia.com>
+Link: https://patch.msgid.link/20250610151514.1094735-2-mbloch@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/build/Makefile.feature | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/pagealloc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/build/Makefile.feature b/tools/build/Makefile.feature
-index 357749701239f..57bd995ce6afa 100644
---- a/tools/build/Makefile.feature
-+++ b/tools/build/Makefile.feature
-@@ -147,8 +147,6 @@ endif
- FEATURE_DISPLAY ?=              \
-          libdw                  \
-          glibc                  \
--         libbfd                 \
--         libbfd-buildid		\
-          libelf                 \
-          libnuma                \
-          numa_num_possible_cpus \
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/pagealloc.c b/drivers/net/ethernet/mellanox/mlx5/core/pagealloc.c
+index 972e8e9df585b..9bc9bd83c2324 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/pagealloc.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/pagealloc.c
+@@ -291,7 +291,7 @@ static void free_4k(struct mlx5_core_dev *dev, u64 addr, u32 function)
+ static int alloc_system_page(struct mlx5_core_dev *dev, u32 function)
+ {
+ 	struct device *device = mlx5_core_dma_dev(dev);
+-	int nid = dev_to_node(device);
++	int nid = dev->priv.numa_node;
+ 	struct page *page;
+ 	u64 zero_addr = 1;
+ 	u64 addr;
 -- 
 2.39.5
 
