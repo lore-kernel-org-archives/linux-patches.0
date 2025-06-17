@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4CFA2E8DE4;
-	Tue, 17 Jun 2025 16:53:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F2672FA630;
+	Tue, 17 Jun 2025 16:53:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750179195; cv=none; b=E3rCNWateA/ExzAirR0N8UfD1mUho3hU3NLl5FItW2JA5aO+NeNPEEiDXDnSeFCWu/4OZmFvGpMsu0EBy/lFb7yq0mkBSJrrWvwbgrjBS7sg7t42AtHnapiFsu4ifYcV8XSqGqxusR5/lpUVGpUSLoMCGjsTe9oj1DHUGgDnXWc=
+	t=1750179199; cv=none; b=Tyx897yIHcV7QoWyNluGpbD0xAdnIRuNi6Jo/qqYSoG/4eja9WHC1+murr2DFFCwhSM5ChvT326KRosEnLDcxj0lqp4gqEAY5ah4dYZdN1WP7ufPGneMepnV2f1lPX5fXg6iC3xSf7buYx/7cw6XrUH99WpAyd6AbHqaRMKE74w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750179195; c=relaxed/simple;
-	bh=pIU3N+r8Jrw1pO/qT2Gbrh23fCUZ6zYnZd4yxuQbqtA=;
+	s=arc-20240116; t=1750179199; c=relaxed/simple;
+	bh=PPqKOc8TKldgSgRFXWpMTFnwuPdHp/alZGbMN4Vn39M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aJP2SF/fB9S8wICn1qpjpVPj5AKEOpI8J5r/PwoOjZQnY7cHwWU3qLUHHjb96BCEpqGB09gbGEODMhjUGawlqtzakQNo+v3CFOTiwtdVsQ8B5jVZa7JpAptT51UYfnKlC2fc4+br0EnMfAMwpeM+X550Ctz6lkxRpGqCMsYAaPQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hexqkJMs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jd2/fL22bUD8Kf79XUIZAtHopDG5Tv5JxBq+CVxq7RR5aCP0ck7w2yS3PTuLB2qd/xWfdDHW/zSJoZ9iM9SnjYd0+umcXjJdS7vC277ZjxHEeg5VuKn7zviAh9u4UPj0JZgM6BZ1XSU6EYn/YpClQPco6sI5QXNt18aQI/1dlf4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JUqRfUaY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hexqkJMs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44DA9C4CEE3;
-	Tue, 17 Jun 2025 16:53:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JUqRfUaY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0B79C4CEE3;
+	Tue, 17 Jun 2025 16:53:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750179195;
-	bh=pIU3N+r8Jrw1pO/qT2Gbrh23fCUZ6zYnZd4yxuQbqtA=;
+	s=korg; t=1750179199;
+	bh=PPqKOc8TKldgSgRFXWpMTFnwuPdHp/alZGbMN4Vn39M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hexqkJMsRSQ+OyEFzH4c2Hc74Rnj35sANLYobTt9RisVwi1aP4msaYg9s8vLUtCdg
-	 kVC8nxe0MnuVwAr5XcGgU/UdoVsRPR8DVSt2yUV6GcUJZIO9GAQzY89mkCGUq0DpsI
-	 YzzI84ntN5XZwDofztRL0wnVy5BuZ0dMNr9rrEOg=
+	b=JUqRfUaYMep2IcAs5H34Fj7DmGaXu9u8C5FA2EAm0vuAkWpSSO0btgegN1SFz03wK
+	 qr+R6abe6Aql0XF+o1UJeEbxeo5ky1gOW3RDXYhJXmL58Ufgmpj2W2/nhecnp6Vv8Y
+	 1S4uo5D1u/AgPijJuSncMa8GlLgacK5I3hZ+Izo0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeongjun Park <aha310510@gmail.com>,
-	Richard Cochran <richardcochran@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Miaoqing Pan <miaoqing.pan@oss.qualcomm.com>,
+	Baochen Qiang <quic_bqiang@quicinc.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 670/780] ptp: remove ptp->n_vclocks check logic in ptp_vclock_in_use()
-Date: Tue, 17 Jun 2025 17:26:18 +0200
-Message-ID: <20250617152518.749820136@linuxfoundation.org>
+Subject: [PATCH 6.15 679/780] wifi: ath12k: fix uaf in ath12k_core_init()
+Date: Tue, 17 Jun 2025 17:26:27 +0200
+Message-ID: <20250617152519.118285727@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
 References: <20250617152451.485330293@linuxfoundation.org>
@@ -52,88 +52,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeongjun Park <aha310510@gmail.com>
+From: Miaoqing Pan <miaoqing.pan@oss.qualcomm.com>
 
-[ Upstream commit 87f7ce260a3c838b49e1dc1ceedf1006795157a2 ]
+[ Upstream commit f3fe49dbddd73f0155a8935af47cb63693069dbe ]
 
-There is no disagreement that we should check both ptp->is_virtual_clock
-and ptp->n_vclocks to check if the ptp virtual clock is in use.
+When the execution of ath12k_core_hw_group_assign() or
+ath12k_core_hw_group_create() fails, the registered notifier chain is not
+unregistered properly. Its memory is freed after rmmod, which may trigger
+to a use-after-free (UAF) issue if there is a subsequent access to this
+notifier chain.
 
-However, when we acquire ptp->n_vclocks_mux to read ptp->n_vclocks in
-ptp_vclock_in_use(), we observe a recursive lock in the call trace
-starting from n_vclocks_store().
+Fixes the issue by calling ath12k_core_panic_notifier_unregister() in
+failure cases.
 
-============================================
-WARNING: possible recursive locking detected
-6.15.0-rc6 #1 Not tainted
---------------------------------------------
-syz.0.1540/13807 is trying to acquire lock:
-ffff888035a24868 (&ptp->n_vclocks_mux){+.+.}-{4:4}, at:
- ptp_vclock_in_use drivers/ptp/ptp_private.h:103 [inline]
-ffff888035a24868 (&ptp->n_vclocks_mux){+.+.}-{4:4}, at:
- ptp_clock_unregister+0x21/0x250 drivers/ptp/ptp_clock.c:415
+Call trace:
+ notifier_chain_register+0x4c/0x1f0 (P)
+ atomic_notifier_chain_register+0x38/0x68
+ ath12k_core_init+0x50/0x4e8 [ath12k]
+ ath12k_pci_probe+0x5f8/0xc28 [ath12k]
+ pci_device_probe+0xbc/0x1a8
+ really_probe+0xc8/0x3a0
+ __driver_probe_device+0x84/0x1b0
+ driver_probe_device+0x44/0x130
+ __driver_attach+0xcc/0x208
+ bus_for_each_dev+0x84/0x100
+ driver_attach+0x2c/0x40
+ bus_add_driver+0x130/0x260
+ driver_register+0x70/0x138
+ __pci_register_driver+0x68/0x80
+ ath12k_pci_init+0x30/0x68 [ath12k]
+ ath12k_init+0x28/0x78 [ath12k]
 
-but task is already holding lock:
-ffff888030704868 (&ptp->n_vclocks_mux){+.+.}-{4:4}, at:
- n_vclocks_store+0xf1/0x6d0 drivers/ptp/ptp_sysfs.c:215
+Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.0.c5-00481-QCAHMTSWPL_V1.0_V2.0_SILICONZ-3
 
-other info that might help us debug this:
- Possible unsafe locking scenario:
-
-       CPU0
-       ----
-  lock(&ptp->n_vclocks_mux);
-  lock(&ptp->n_vclocks_mux);
-
- *** DEADLOCK ***
-....
-============================================
-
-The best way to solve this is to remove the logic that checks
-ptp->n_vclocks in ptp_vclock_in_use().
-
-The reason why this is appropriate is that any path that uses
-ptp->n_vclocks must unconditionally check if ptp->n_vclocks is greater
-than 0 before unregistering vclocks, and all functions are already
-written this way. And in the function that uses ptp->n_vclocks, we
-already get ptp->n_vclocks_mux before unregistering vclocks.
-
-Therefore, we need to remove the redundant check for ptp->n_vclocks in
-ptp_vclock_in_use() to prevent recursive locking.
-
-Fixes: 73f37068d540 ("ptp: support ptp physical/virtual clocks conversion")
-Signed-off-by: Jeongjun Park <aha310510@gmail.com>
-Acked-by: Richard Cochran <richardcochran@gmail.com>
-Link: https://patch.msgid.link/20250520160717.7350-1-aha310510@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 6f245ea0ec6c ("wifi: ath12k: introduce device group abstraction")
+Signed-off-by: Miaoqing Pan <miaoqing.pan@oss.qualcomm.com>
+Reviewed-by: Baochen Qiang <quic_bqiang@quicinc.com>
+Link: https://patch.msgid.link/20250604055250.1228501-1-miaoqing.pan@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ptp/ptp_private.h | 12 +-----------
- 1 file changed, 1 insertion(+), 11 deletions(-)
+ drivers/net/wireless/ath/ath12k/core.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/ptp/ptp_private.h b/drivers/ptp/ptp_private.h
-index 18934e28469ee..528d86a33f37d 100644
---- a/drivers/ptp/ptp_private.h
-+++ b/drivers/ptp/ptp_private.h
-@@ -98,17 +98,7 @@ static inline int queue_cnt(const struct timestamp_event_queue *q)
- /* Check if ptp virtual clock is in use */
- static inline bool ptp_vclock_in_use(struct ptp_clock *ptp)
- {
--	bool in_use = false;
--
--	if (mutex_lock_interruptible(&ptp->n_vclocks_mux))
--		return true;
--
--	if (!ptp->is_virtual_clock && ptp->n_vclocks)
--		in_use = true;
--
--	mutex_unlock(&ptp->n_vclocks_mux);
--
--	return in_use;
-+	return !ptp->is_virtual_clock;
+diff --git a/drivers/net/wireless/ath/ath12k/core.c b/drivers/net/wireless/ath/ath12k/core.c
+index 770156347ffad..261f52b327e89 100644
+--- a/drivers/net/wireless/ath/ath12k/core.c
++++ b/drivers/net/wireless/ath/ath12k/core.c
+@@ -1902,7 +1902,8 @@ int ath12k_core_init(struct ath12k_base *ab)
+ 	if (!ag) {
+ 		mutex_unlock(&ath12k_hw_group_mutex);
+ 		ath12k_warn(ab, "unable to get hw group\n");
+-		return -ENODEV;
++		ret = -ENODEV;
++		goto err_unregister_notifier;
+ 	}
+ 
+ 	mutex_unlock(&ath12k_hw_group_mutex);
+@@ -1917,7 +1918,7 @@ int ath12k_core_init(struct ath12k_base *ab)
+ 		if (ret) {
+ 			mutex_unlock(&ag->mutex);
+ 			ath12k_warn(ab, "unable to create hw group\n");
+-			goto err;
++			goto err_destroy_hw_group;
+ 		}
+ 	}
+ 
+@@ -1925,9 +1926,12 @@ int ath12k_core_init(struct ath12k_base *ab)
+ 
+ 	return 0;
+ 
+-err:
++err_destroy_hw_group:
+ 	ath12k_core_hw_group_destroy(ab->ag);
+ 	ath12k_core_hw_group_unassign(ab);
++err_unregister_notifier:
++	ath12k_core_panic_notifier_unregister(ab);
++
+ 	return ret;
  }
  
- /* Check if ptp clock shall be free running */
 -- 
 2.39.5
 
