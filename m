@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D0EE2E06C8;
-	Tue, 17 Jun 2025 16:46:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42D44231A37;
+	Tue, 17 Jun 2025 16:46:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750178813; cv=none; b=tK04bfTnurqXgQZwLFY3aoqmhxtlsWalixblEy8P4BVcK0G2NRldDUEo7XBMpJlNliA23ftlUB3nh9X9Pd4jqqQNf9lYTvYZTeA1U9I3gpKZizHlTXsh73+TIeHt19wGhCWg2BIu4OnGbCtiZ+hqb5H7LM6zXO9lkEANL20t7AM=
+	t=1750178816; cv=none; b=KDpHBwogyJeNSP2LHZHvcKyDkhVbL8V0VbvRbKcglxyVj9l3gaxOW1oKj//juOKfig+ejwagwyQggqRS12JK3NeJWBFU8p5XdG+Z6r07C6OmxFqgFtP622kNKM6BTFHseSO0+xMCbV0fWtOVstRLduxsfpMdm+0BED+5FvndhCo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750178813; c=relaxed/simple;
-	bh=iE71t5hclpJhFqaqIv0wJaG0vbeE919mroyvW1ySfIs=;
+	s=arc-20240116; t=1750178816; c=relaxed/simple;
+	bh=jDlUQn8nBW69QAaZMuLSKKQc/wTLycrHyMs1MkfgqJk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b//7FT5YswK+i3WLfQeLKiRz89kdPxR+u4WmbW8pt6opBM/2UIbu5h8NkbBXjVx6xrnC4Y0S7V8eXErDbFjj0uRiMBe8VEUsLbAfQ5FeJ5r18+N+AKJhm34H0gTiH+ViZCH9/GxjJv1FwmUNDE1vk/C6NHuzH5z4KV8T41K5LBg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eq9zPdXX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rV/6Uu5WLSBHeTjgR9zDn4kTpkafXTOKXbHi1MC68rjt1fQ8gNMBNqgcOoaQDki1UIVkFK3Q9tOmFaDef+fwDBOrEj6h7t5M1clN2BdIftvcjHeU7fEOIgI9bnP3WfPOm0VrdFBWGb2BpPUXdSMb3gsw3Z42i4i7O1fI9mCdYmo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kZWiYETC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eq9zPdXX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACE03C4CEE3;
-	Tue, 17 Jun 2025 16:46:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kZWiYETC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B07EAC4CEE3;
+	Tue, 17 Jun 2025 16:46:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750178813;
-	bh=iE71t5hclpJhFqaqIv0wJaG0vbeE919mroyvW1ySfIs=;
+	s=korg; t=1750178816;
+	bh=jDlUQn8nBW69QAaZMuLSKKQc/wTLycrHyMs1MkfgqJk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eq9zPdXXGR/Ar4NlP4J07KGAnupuZHFCZNsdaXT5ou87WXO7PKWhP7NYn1fPybAOD
-	 RJ9SILaBWv0iVn4+RJk8I95FQz86+goQA57lUM4IqUcOw35yXMCNyTuWCpAguK8Xe/
-	 loyTKv0wN3O/eZ3vnAYHDItihhU+DLxMRPfQ/yeU=
+	b=kZWiYETCO1u30GxY6ceuxnhqnkVmX97t324goUgB2seRaqYIoBU4/nRwWHU7ywRU2
+	 5miBQt2i59fbPGHrtvWZVv61J3CbOTZx0dtiYkKaVSv+lcj1apPULGJMHI4x53R4eh
+	 LeGcV4VsRd/YRxuWi7lUU4kJNyYO/ORaFkgsgeA0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alok Tiwari <alok.a.tiwari@oracle.com>,
+	syzbot+f0c4a4aba757549ae26c@syzkaller.appspotmail.com,
+	Charalampos Mitrodimas <charmitro@posteo.net>,
+	Tung Nguyen <tung.quang.nguyen@est.tech>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 561/780] gve: Fix RX_BUFFERS_POSTED stat to report per-queue fill_cnt
-Date: Tue, 17 Jun 2025 17:24:29 +0200
-Message-ID: <20250617152514.338387353@linuxfoundation.org>
+Subject: [PATCH 6.15 562/780] net: tipc: fix refcount warning in tipc_aead_encrypt
+Date: Tue, 17 Jun 2025 17:24:30 +0200
+Message-ID: <20250617152514.376908724@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
 References: <20250617152451.485330293@linuxfoundation.org>
@@ -51,37 +53,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alok Tiwari <alok.a.tiwari@oracle.com>
+From: Charalampos Mitrodimas <charmitro@posteo.net>
 
-[ Upstream commit f41a94aade120dc60322865f363cee7865f2df01 ]
+[ Upstream commit f29ccaa07cf3d35990f4d25028cc55470d29372b ]
 
-Previously, the RX_BUFFERS_POSTED stat incorrectly reported the
-fill_cnt from RX queue 0 for all queues, resulting in inaccurate
-per-queue statistics.
-Fix this by correctly indexing priv->rx[idx].fill_cnt for each RX queue.
+syzbot reported a refcount warning [1] caused by calling get_net() on
+a network namespace that is being destroyed (refcount=0). This happens
+when a TIPC discovery timer fires during network namespace cleanup.
 
-Fixes: 24aeb56f2d38 ("gve: Add Gvnic stats AQ command and ethtool show/set-priv-flags.")
-Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
-Link: https://patch.msgid.link/20250527130830.1812903-1-alok.a.tiwari@oracle.com
+The recently added get_net() call in commit e279024617134 ("net/tipc:
+fix slab-use-after-free Read in tipc_aead_encrypt_done") attempts to
+hold a reference to the network namespace. However, if the namespace
+is already being destroyed, its refcount might be zero, leading to the
+use-after-free warning.
+
+Replace get_net() with maybe_get_net(), which safely checks if the
+refcount is non-zero before incrementing it. If the namespace is being
+destroyed, return -ENODEV early, after releasing the bearer reference.
+
+[1]: https://lore.kernel.org/all/68342b55.a70a0220.253bc2.0091.GAE@google.com/T/#m12019cf9ae77e1954f666914640efa36d52704a2
+
+Reported-by: syzbot+f0c4a4aba757549ae26c@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/68342b55.a70a0220.253bc2.0091.GAE@google.com/T/#m12019cf9ae77e1954f666914640efa36d52704a2
+Fixes: e27902461713 ("net/tipc: fix slab-use-after-free Read in tipc_aead_encrypt_done")
+Signed-off-by: Charalampos Mitrodimas <charmitro@posteo.net>
+Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
+Link: https://patch.msgid.link/20250527-net-tipc-warning-v2-1-df3dc398a047@posteo.net
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/google/gve/gve_main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/tipc/crypto.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/google/gve/gve_main.c b/drivers/net/ethernet/google/gve/gve_main.c
-index c3791cf23c876..d561d45021a58 100644
---- a/drivers/net/ethernet/google/gve/gve_main.c
-+++ b/drivers/net/ethernet/google/gve/gve_main.c
-@@ -2153,7 +2153,7 @@ void gve_handle_report_stats(struct gve_priv *priv)
- 			};
- 			stats[stats_idx++] = (struct stats) {
- 				.stat_name = cpu_to_be32(RX_BUFFERS_POSTED),
--				.value = cpu_to_be64(priv->rx[0].fill_cnt),
-+				.value = cpu_to_be64(priv->rx[idx].fill_cnt),
- 				.queue_id = cpu_to_be32(idx),
- 			};
- 		}
+diff --git a/net/tipc/crypto.c b/net/tipc/crypto.c
+index 8584893b47851..79f91b6ca8c84 100644
+--- a/net/tipc/crypto.c
++++ b/net/tipc/crypto.c
+@@ -818,7 +818,11 @@ static int tipc_aead_encrypt(struct tipc_aead *aead, struct sk_buff *skb,
+ 	}
+ 
+ 	/* Get net to avoid freed tipc_crypto when delete namespace */
+-	get_net(aead->crypto->net);
++	if (!maybe_get_net(aead->crypto->net)) {
++		tipc_bearer_put(b);
++		rc = -ENODEV;
++		goto exit;
++	}
+ 
+ 	/* Now, do encrypt */
+ 	rc = crypto_aead_encrypt(req);
 -- 
 2.39.5
 
