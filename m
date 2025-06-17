@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E02E92EE26E;
-	Tue, 17 Jun 2025 16:19:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC5D4235071;
+	Tue, 17 Jun 2025 16:19:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177173; cv=none; b=taOMI4wGSp+SaJyPaP+6hO3aNQFGYz6wpix5ouwIuAjiY/9++SwbWHbiaDsrBg4fvwzMTLdk3gf7ObbdFkxtQEEO2ah1R4zW+V64mW4sz5RBNFYQXCDxH9RoEU/kzdBfesp3p51wJeXpGduDSZRk9DCGoLNi5hs/FZfpgJZ0QV8=
+	t=1750177176; cv=none; b=qFn+grQYJwn+L8KD/tOsLPEWD7HC3+NXM4TTZ2zYM5tyr2+CxNjCCCdQGdmrOmUQwbuj6BX6pdCORUFhANHt6OrePTkzBHsGViE3ym1vinP1B4poB40Y7cr7dK3bOeV5BG/y6MjuakpdrDz+SRsas5/7+5VJr0zkRSiEvzNvYgM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177173; c=relaxed/simple;
-	bh=8xS5L3gHDfHeOQI2rTZ85pAxrVk0MX2ALgA6H/tE/EQ=;
+	s=arc-20240116; t=1750177176; c=relaxed/simple;
+	bh=DvCp6X/wyQm4He1v4rBC3o7S1B4EryhpMc2b3NR/pco=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BScnDXXK7h2aY7A6Y3HZn29kdiqcNHxoAPCUJv6pkIULrQieroTYwbxBhUwxB3ul29l2H+TbkdhqZwha+Vp/xVcI0mG8KzHsxuf4REPQXQWnUMNFLOIPCip/llPYPycu11JYK2kRe+H/CYOjK/OuzonuHOIH+Jm+H7+OPpygcWE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HIKnlMlR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=baeM2NPMWOV0ADVDOu0nLu45cR8RLAiJcKd4HERbnzuYPyLn6avD6Z+48cL/yff9FUmaXaxtvfdv5FLXU0CSaCiIKBuoFQ2gMb3E+UrrfnDHKDzG1TMK7IanNVteeSfTnL5alfleFmEFA8XGdYXYOaW9ac+m834l6LxOJ/Bjv7A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nvf8Fyl7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HIKnlMlR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08A10C4CEE3;
-	Tue, 17 Jun 2025 16:19:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nvf8Fyl7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C070C4CEE7;
+	Tue, 17 Jun 2025 16:19:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177172;
-	bh=8xS5L3gHDfHeOQI2rTZ85pAxrVk0MX2ALgA6H/tE/EQ=;
+	s=korg; t=1750177175;
+	bh=DvCp6X/wyQm4He1v4rBC3o7S1B4EryhpMc2b3NR/pco=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HIKnlMlRwha2J1hJmaw8amaktI09uWrXpMRqjrlfMNHc/SfNsDMxE/t/GvwSmRoUk
-	 vT8Mk/bFhWYJf4eF55TQ+L+21xiALnn5ZGBoHuiwwNNjnpPkAP4vor4GHw53IREY9f
-	 3zmMA7V7sxKfRVSnwyrQ5+hxt7sKPZWqSJ84+XVY=
+	b=Nvf8Fyl7h/rccGGIGASdv0f02m1wscYJuWiUmRHufES9lI0iua4xLC4YejQqbwD4P
+	 b+wX7K9qquhLhqQHyXfsXulhKvlogJTJJI1RRszMuyAJZgfV+dt/xzVd3UCXcGjC6L
+	 XlnVM3FU4+u3wkQYZhZUhqcxcPx4ZFNhCkJyGLmQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samuel Reyes <zohrlaffz@gmail.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 268/780] wifi: rtw89: pci: enlarge retry times of RX tag to 1000
-Date: Tue, 17 Jun 2025 17:19:36 +0200
-Message-ID: <20250617152502.379650689@linuxfoundation.org>
+	Oliver Neukum <oneukum@suse.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 6.6 355/356] net: usb: aqc111: debug info before sanitation
+Date: Tue, 17 Jun 2025 17:27:50 +0200
+Message-ID: <20250617152352.428374074@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
+References: <20250617152338.212798615@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,48 +47,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ping-Ke Shih <pkshih@realtek.com>
+From: Oliver Neukum <oneukum@suse.com>
 
-[ Upstream commit dda27a47c036d981ec664ac57e044a21035ffe12 ]
+commit d3faab9b5a6a0477d69c38bd11c43aa5e936f929 upstream.
 
-RX tag is sequence number to ensure RX DMA is complete. On platform
-Gigabyte X870 AORUS ELITE WIFI7, sometimes it needs longer retry times
-to complete RX DMA, or driver throws warnings and connection drops:
+If we sanitize error returns, the debug statements need
+to come before that so that we don't lose information.
 
-  rtw89_8922ae 0000:07:00.0: failed to update 162 RXBD info: -11
-  rtw89_8922ae 0000:07:00.0: failed to update 163 RXBD info: -11
-  rtw89_8922ae 0000:07:00.0: failed to update 32 RXBD info: -11
-  rtw89_8922ae 0000:07:00.0: failed to release TX skbs
-
-Fixes: 0bc7d1d4e63c ("wifi: rtw89: pci: validate RX tag for RXQ and RPQ")
-Reported-by: Samuel Reyes <zohrlaffz@gmail.com>
-Closes: https://lore.kernel.org/linux-wireless/f4355539f3ac46bbaf9c586d059a8cbb@realtek.com/T/#t
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20250509013433.7573-1-pkshih@realtek.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Oliver Neukum <oneukum@suse.com>
+Fixes: 405b0d610745 ("net: usb: aqc111: fix error handling of usbnet read calls")
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/realtek/rtw89/pci.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/usb/aqc111.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/pci.c b/drivers/net/wireless/realtek/rtw89/pci.c
-index b5cdc18f802a9..064f6a9401073 100644
---- a/drivers/net/wireless/realtek/rtw89/pci.c
-+++ b/drivers/net/wireless/realtek/rtw89/pci.c
-@@ -228,7 +228,7 @@ int rtw89_pci_sync_skb_for_device_and_validate_rx_info(struct rtw89_dev *rtwdev,
- 						       struct sk_buff *skb)
- {
- 	struct rtw89_pci_rx_info *rx_info = RTW89_PCI_RX_SKB_CB(skb);
--	int rx_tag_retry = 100;
-+	int rx_tag_retry = 1000;
- 	int ret;
+--- a/drivers/net/usb/aqc111.c
++++ b/drivers/net/usb/aqc111.c
+@@ -31,11 +31,11 @@ static int aqc111_read_cmd_nopm(struct u
+ 				   USB_RECIP_DEVICE, value, index, data, size);
  
- 	do {
--- 
-2.39.5
-
+ 	if (unlikely(ret < size)) {
+-		ret = ret < 0 ? ret : -ENODATA;
+-
+ 		netdev_warn(dev->net,
+ 			    "Failed to read(0x%x) reg index 0x%04x: %d\n",
+ 			    cmd, index, ret);
++
++		ret = ret < 0 ? ret : -ENODATA;
+ 	}
+ 
+ 	return ret;
+@@ -50,11 +50,11 @@ static int aqc111_read_cmd(struct usbnet
+ 			      USB_RECIP_DEVICE, value, index, data, size);
+ 
+ 	if (unlikely(ret < size)) {
+-		ret = ret < 0 ? ret : -ENODATA;
+-
+ 		netdev_warn(dev->net,
+ 			    "Failed to read(0x%x) reg index 0x%04x: %d\n",
+ 			    cmd, index, ret);
++
++		ret = ret < 0 ? ret : -ENODATA;
+ 	}
+ 
+ 	return ret;
 
 
