@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD7911E8332;
-	Tue, 17 Jun 2025 15:34:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F12431E8332;
+	Tue, 17 Jun 2025 15:34:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750174455; cv=none; b=C3KXGgiAdFaHCWUyC11YA8O0ucJkggHRZA6p2b/9ehXxRqb1ieJvL+WLp4H+zga8SttLfcLomK9JDHryZPXOExxSspPUX9cl0AsHwn35u6+t5nqaBXajlX9g8ErfdxYpfl88YjYDXfupL2uHUhfp3xU+Yz2zcBetWaaeCHhX8xk=
+	t=1750174459; cv=none; b=dS64UHhkFLoRaRGL1K/AmMjkHzg61x09FQTYABlCSSMZ00b5aBvUtZBKMWAykkEvivxpbtHUEEFp6GTwIB1R96HShTghPNNHyE3MqwHT0/PxsuktLnWefjMD971yN3bodtq50MZoJIi8CWk5Jijsb/0D+Mi/f5+HQfi5Qp0r6sc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750174455; c=relaxed/simple;
-	bh=WpCSFPJ5mYmxqftqM/b2xmsMBiYHlgP6lk5DDOdY8Q0=;
+	s=arc-20240116; t=1750174459; c=relaxed/simple;
+	bh=Sz48beAtrTaV/fHyMCVyUx/QcGDmuVDgVDS+LRZQDxk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gUNYOPj62rINGrb+YN2USVe+qkARUKk/XD3pzFLnEnBjeZc3zk62R7c6ALAILrvmN+Xa9G+XOngZ101iJt6FOyt3tCUroElfLbhZE9q4aESgBh5mTr3OkBIf8fCwHscwwMVCxKinjknhTTlPDXoKZgpeReFfK6MDRDoxCbAe3vw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TDUk81rD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eo9tYgqHcN8HZ4Sd/uUs6Fx5vWsuLanJetnC4rqfKSJnWrcccKW6UWt9k2MiwXAP6vgxeSH8ielyFUnHYjl2vWo76Ncl2SixlKBTHVHEkbjmvINMnD2Nl9/rQ1fSiz5M+0xXeNgZ4s+7qJFn1nsLLAl+ybEtiJoZmBa29VZhs9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m7nVbBc8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TDUk81rD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C5CFC4CEE3;
-	Tue, 17 Jun 2025 15:34:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m7nVbBc8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6045AC4CEE3;
+	Tue, 17 Jun 2025 15:34:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750174455;
-	bh=WpCSFPJ5mYmxqftqM/b2xmsMBiYHlgP6lk5DDOdY8Q0=;
+	s=korg; t=1750174458;
+	bh=Sz48beAtrTaV/fHyMCVyUx/QcGDmuVDgVDS+LRZQDxk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TDUk81rDXd+/0fHGqV3KLo/VNOzI9wNlK4iBrtaIoByK4vr67yr1N7G9PJbmoY5cP
-	 bPn84UxYABmr2RksJJoozGT7DVjAGwexKr18bbQRdXkvdhfFfaT6gKRMRENqbCPUq5
-	 WQIs0xBH33vpElzucPlzRDyjDCe9Z6bZMKx3MkOQ=
+	b=m7nVbBc8OCH/GV3uAf3ov0/FI6mEufPURN6wKazttUU5ZbMcYfLQZeBJxjFgFtLZY
+	 wd1yWb5zuOyFGH1xHmWBKOBFuAKWfp9GM04b3HLdvLkc5l70dt85C2AcHATlmfdG6S
+	 GVWCEeOZDyRakvqP6nvVc+eCvlxtOkneyMsZ0uhY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Biju Das <biju.das.jz@bp.renesas.com>,
-	Thierry Reding <treding@nvidia.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 071/356] drm/tegra: rgb: Fix the unbound reference count
-Date: Tue, 17 Jun 2025 17:23:06 +0200
-Message-ID: <20250617152341.081559659@linuxfoundation.org>
+Subject: [PATCH 6.12 022/512] crypto: marvell/cesa - Handle zero-length skcipher requests
+Date: Tue, 17 Jun 2025 17:19:48 +0200
+Message-ID: <20250617152420.431835686@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-References: <20250617152338.212798615@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,59 +46,38 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Biju Das <biju.das.jz@bp.renesas.com>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-[ Upstream commit 3c3642335065c3bde0742b0edc505b6ea8fdc2b3 ]
+[ Upstream commit 8a4e047c6cc07676f637608a9dd675349b5de0a7 ]
 
-The of_get_child_by_name() increments the refcount in tegra_dc_rgb_probe,
-but the driver does not decrement the refcount during unbind. Fix the
-unbound reference count using devm_add_action_or_reset() helper.
+Do not access random memory for zero-length skcipher requests.
+Just return 0.
 
-Fixes: d8f4a9eda006 ("drm: Add NVIDIA Tegra20 support")
-Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
-Signed-off-by: Thierry Reding <treding@nvidia.com>
-Link: https://lore.kernel.org/r/20250205112137.36055-1-biju.das.jz@bp.renesas.com
+Fixes: f63601fd616a ("crypto: marvell/cesa - add a new driver for Marvell's CESA")
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/tegra/rgb.c | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ drivers/crypto/marvell/cesa/cipher.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/tegra/rgb.c b/drivers/gpu/drm/tegra/rgb.c
-index d6424abd3c45d..8930460ba6282 100644
---- a/drivers/gpu/drm/tegra/rgb.c
-+++ b/drivers/gpu/drm/tegra/rgb.c
-@@ -190,6 +190,11 @@ static const struct drm_encoder_helper_funcs tegra_rgb_encoder_helper_funcs = {
- 	.atomic_check = tegra_rgb_encoder_atomic_check,
- };
+diff --git a/drivers/crypto/marvell/cesa/cipher.c b/drivers/crypto/marvell/cesa/cipher.c
+index 0f37dfd42d850..3876e3ce822f4 100644
+--- a/drivers/crypto/marvell/cesa/cipher.c
++++ b/drivers/crypto/marvell/cesa/cipher.c
+@@ -459,6 +459,9 @@ static int mv_cesa_skcipher_queue_req(struct skcipher_request *req,
+ 	struct mv_cesa_skcipher_req *creq = skcipher_request_ctx(req);
+ 	struct mv_cesa_engine *engine;
  
-+static void tegra_dc_of_node_put(void *data)
-+{
-+	of_node_put(data);
-+}
++	if (!req->cryptlen)
++		return 0;
 +
- int tegra_dc_rgb_probe(struct tegra_dc *dc)
- {
- 	struct device_node *np;
-@@ -197,7 +202,14 @@ int tegra_dc_rgb_probe(struct tegra_dc *dc)
- 	int err;
- 
- 	np = of_get_child_by_name(dc->dev->of_node, "rgb");
--	if (!np || !of_device_is_available(np))
-+	if (!np)
-+		return -ENODEV;
-+
-+	err = devm_add_action_or_reset(dc->dev, tegra_dc_of_node_put, np);
-+	if (err < 0)
-+		return err;
-+
-+	if (!of_device_is_available(np))
- 		return -ENODEV;
- 
- 	rgb = devm_kzalloc(dc->dev, sizeof(*rgb), GFP_KERNEL);
+ 	ret = mv_cesa_skcipher_req_init(req, tmpl);
+ 	if (ret)
+ 		return ret;
 -- 
 2.39.5
 
