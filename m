@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46FB62F198E;
-	Tue, 17 Jun 2025 16:30:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94CAA2F198B;
+	Tue, 17 Jun 2025 16:30:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177819; cv=none; b=MG5PGa/w9Kr6dJgbxTB1YrJ7AaDKNwmTNRU3FfbhEhPo2F1bAWpBRHEEOSW3aPp9otU7N9Tg7Sjyr95uc1kfPeHirM3OF1v3w8mGV5s3Mqcf3L7IKgUNco8vq6FXNOG/lTsoRUs9j8jAxA/p1LWo9RI9C5vahsDzk02RGsrtjOM=
+	t=1750177822; cv=none; b=PpgaJ6Q9zP0YSY1XZ+e6RA8AQyzbcnsrCRGc7F2ypTPSsYeJQiEOi4OayQX/krpgW3Ei1E91mvzFebICFgGNyGQJifwfe/R9nYj9Cq4UG9j3shJtbKhGHbSQqbTVUgpMtOrFqnIs7axOl0ablrUhMRhtdLhDh8Xn1z3+uJkvedQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177819; c=relaxed/simple;
-	bh=1tdV5u4ezSsLj3uj6lsuBuu+np3b8PZquSUXsWczfcA=;
+	s=arc-20240116; t=1750177822; c=relaxed/simple;
+	bh=W+N46b8+ci+NiTdJH7uuuHf52KnSEyDPO5ikvw9k/SY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rSeotpjb/TzYDOdYhZaJzlw+cuTginXZ8wm59L3epLDMqC4Tyqz37tzyIDKo6ppAWBM3NYKsRFfyotuAQDrZANG9sPa33za3P1UseDrG/mZiO8ilkkqiZaWSDQfDFTdKloagoEnV/sXvM1kzeYKEthed1Gn1yuor1RFlBJkdn04=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P/SNM2g5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VhbRlHv4SFY07EWfEEQqXsGALjmtGP5l5nY0CdWQBv5tFMHg7UxODsWCEPi6w73DcmHL7dcdRPmmod756gUEC92q2IfkcR2pe9gvhd16jbEoK4k0V5L0IggAss11P3rqeOfGncM6are9tHGQ76v+pDTT8M2NiRz+SYWbW8G9PFc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R5RezfR8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P/SNM2g5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA3DBC4CEE3;
-	Tue, 17 Jun 2025 16:30:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R5RezfR8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDEEAC4CEE3;
+	Tue, 17 Jun 2025 16:30:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177819;
-	bh=1tdV5u4ezSsLj3uj6lsuBuu+np3b8PZquSUXsWczfcA=;
+	s=korg; t=1750177822;
+	bh=W+N46b8+ci+NiTdJH7uuuHf52KnSEyDPO5ikvw9k/SY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P/SNM2g52m31zewWFxbAT02gxzmQvbifHS+bKYwDLmyZMGclaUYdnoizZUa2vWtdR
-	 X3xHQs4zOzrhL2qc7zannpz7vr2whiZCPrmAAf/oReby+0Tvo3MQNIbGiss9AnvcQB
-	 RvcnTH/HlT6ohdm5zc7clgj/Th+p84YEvqneojYg=
+	b=R5RezfR8mSwx9rDyhUJUzlv6iBU2d/jYSuPWKXYA7jbKNIDjS0fHa33rAmJwVpCJJ
+	 ZE69jgZVrAJPGeHdZHd04zPl0QldtA6JBFUfEdnO21L7DmPjiAX6tXrUTxXoK66zCW
+	 ppjarHEW/up1rwWQNk1ryRgzm4bM1eg0Oe+VuTgk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Chiu <chris.chiu@canonical.com>,
-	Simon Trimmer <simont@opensource.cirrus.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Alexey Minnekhanov <alexeymin@postmarketos.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 401/512] ALSA: hda/realtek: fix micmute LEDs on HP Laptops with ALC3247
-Date: Tue, 17 Jun 2025 17:26:07 +0200
-Message-ID: <20250617152435.835242305@linuxfoundation.org>
+Subject: [PATCH 6.15 368/780] arm64: dts: qcom: sdm660-xiaomi-lavender: Add missing SD card detect GPIO
+Date: Tue, 17 Jun 2025 17:21:16 +0200
+Message-ID: <20250617152506.438040730@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,40 +48,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chris Chiu <chris.chiu@canonical.com>
+From: Alexey Minnekhanov <alexeymin@postmarketos.org>
 
-[ Upstream commit 78f4ca3c6f6fd305b9af8c51470643617df85e11 ]
+[ Upstream commit 2eca6af66709de0d1ba14cdf8b6d200a1337a3a2 ]
 
-More HP EliteBook with Realtek HDA codec ALC3247 with combined CS35L56
-Amplifiers need quirk ALC236_FIXUP_HP_GPIO_LED to fix the micmute LED.
+During initial porting these cd-gpios were missed. Having card detect is
+beneficial because driver does not need to do polling every second and it
+can just use IRQ. SD card detection in U-Boot is also fixed by this.
 
-Signed-off-by: Chris Chiu <chris.chiu@canonical.com>
-Reviewed-by: Simon Trimmer <simont@opensource.cirrus.com>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20250321104914.544233-2-chris.chiu@canonical.com
-Stable-dep-of: f709b78aecab ("ALSA: hda/realtek - Add new HP ZBook laptop with micmute led fixup")
+Fixes: cf85e9aee210 ("arm64: dts: qcom: sdm660-xiaomi-lavender: Add eMMC and SD")
+Signed-off-by: Alexey Minnekhanov <alexeymin@postmarketos.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20250415130101.1429281-1-alexeymin@postmarketos.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -10779,6 +10779,11 @@ static const struct hda_quirk alc269_fix
- 	SND_PCI_QUIRK(0x103c, 0x8d90, "HP EliteBook 16 G12", ALC285_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8d91, "HP ZBook Firefly 14 G12", ALC285_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8d92, "HP ZBook Firefly 16 G12", ALC285_FIXUP_HP_GPIO_LED),
-+	SND_PCI_QUIRK(0x103c, 0x8dec, "HP EliteBook 640 G12", ALC236_FIXUP_HP_GPIO_LED),
-+	SND_PCI_QUIRK(0x103c, 0x8dee, "HP EliteBook 660 G12", ALC236_FIXUP_HP_GPIO_LED),
-+	SND_PCI_QUIRK(0x103c, 0x8df0, "HP EliteBook 630 G12", ALC236_FIXUP_HP_GPIO_LED),
-+	SND_PCI_QUIRK(0x103c, 0x8dfc, "HP EliteBook 645 G12", ALC236_FIXUP_HP_GPIO_LED),
-+	SND_PCI_QUIRK(0x103c, 0x8dfe, "HP EliteBook 665 G12", ALC236_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8e14, "HP ZBook Firefly 14 G12", ALC285_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8e15, "HP ZBook Firefly 14 G12", ALC285_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8e16, "HP ZBook Firefly 14 G12", ALC285_FIXUP_HP_GPIO_LED),
+diff --git a/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts b/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts
+index 7167f75bced3f..0b4d71c14a772 100644
+--- a/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts
++++ b/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts
+@@ -404,6 +404,8 @@
+ &sdhc_2 {
+ 	status = "okay";
+ 
++	cd-gpios = <&tlmm 54 GPIO_ACTIVE_HIGH>;
++
+ 	vmmc-supply = <&vreg_l5b_2p95>;
+ 	vqmmc-supply = <&vreg_l2b_2p95>;
+ };
+-- 
+2.39.5
+
 
 
