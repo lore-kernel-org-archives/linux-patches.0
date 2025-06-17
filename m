@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 227CE2ED868;
-	Tue, 17 Jun 2025 16:38:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66AF920C001;
+	Tue, 17 Jun 2025 16:38:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750178295; cv=none; b=lFgogRb+CnNu5TdI9xdQtknO4M9hPLLaXMuL7EJRocm39IYz19pZ2dkCYS5ct2O3dLfgY4MOLeJcQNfl0k8NJNkbmA0n63Bt5JR9tCfHVRuATzERYE2GxSoYIbxmkxjhPwfLlrtiV4ImTMW4vaj14E4rgLjNhJINKi/HMgIPj64=
+	t=1750178298; cv=none; b=ezRXoGO0TdHNUUEA4CdFyJUtVNqEnstdZG65AdE83PcTEp3sG0AiicPTOVM/dhVIVYmM01S4oYbjp+45hZOqAMii2YW8iq6YchBIHj2983Ut0CAx3bpie1HDiE6nXvBLkvZwCAiAj5fOY6ItQKXUx2Vn8lc5wRAy31xfK9Hc71w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750178295; c=relaxed/simple;
-	bh=Va3txz1AOXN9W30RUo/3BGv8jOQYP1iYCJfuf7f5GcM=;
+	s=arc-20240116; t=1750178298; c=relaxed/simple;
+	bh=A11kq6AxO8vdFiu4anS5GGM7J5hDqyG2joSlczYaeuQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YhDF9cs7p1GhYtuO0JRz7Rv5rlt+2P3gYXk+8t/VGkdkxmAF8JOuBksov+R8837IA51JqNU8dAaB9VD3IvRSxQWdswn5za+iuwxxhWfd2kX2xNvJKlKeK5ArDgXyy1TLNr71nAZscC2b4QJsZ6UGLmV1witYzfTMTrP8yVnRuXg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vNTYp/E3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B6k+xhVPfdP0ajCYgQ4QHlPi6LA5buUKJGOVriG3fNv5A5bcbIpRoYjQsimWuoa9MMpQ5epbcoz19nItrTu1/PBPBJiZMvnPBDLXLJh2nz9yTT0JxlHUl6x7if/lZ32f1qEvkDWUW0gwZy7CBGUYX4PJ2FbbQodSVQuKpQQ1CIM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x0aN2Yl0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vNTYp/E3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87F76C4CEE3;
-	Tue, 17 Jun 2025 16:38:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x0aN2Yl0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB91EC4CEE3;
+	Tue, 17 Jun 2025 16:38:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750178295;
-	bh=Va3txz1AOXN9W30RUo/3BGv8jOQYP1iYCJfuf7f5GcM=;
+	s=korg; t=1750178298;
+	bh=A11kq6AxO8vdFiu4anS5GGM7J5hDqyG2joSlczYaeuQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vNTYp/E3k7I5aYLDdkx3sp/Jj6N/4QAYqHsyzuZan2yuqS39+SE2Na+zZqO8WaNu/
-	 wq2dlMjDyQYnPZKNckqWd6Whkbp4iL1zTib8L7OTD6c7x86nB8OwXzgiA1seG1ul50
-	 JEO88Q+YTF3jpf9kaMnM8/BR6iA2pQ/gJ6aIXU9Q=
+	b=x0aN2Yl0iSmPc+9MaHKDp9tT8USrm2jjFjb9kQtVEpoMMIwjytzbZfXw060uU+9gw
+	 3QXD5glN5X+j2oTjpyjJIoe2jNk9zVsvE7Yt6SWmk+G1tNhjH7XLG2tEg1zs0HVNgD
+	 jFc1ZpiGYD0/ux6Bsn9wvXZz3LveXEzNyz/OEG58=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ravi Bangoria <ravi.bangoria@amd.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Kent Overstreet <kent.overstreet@linux.dev>,
+	Benjamin Marzinski <bmarzins@redhat.com>,
+	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 475/512] perf: Ensure bpf_perf_link path is properly serialized
-Date: Tue, 17 Jun 2025 17:27:21 +0200
-Message-ID: <20250617152438.821524734@linuxfoundation.org>
+Subject: [PATCH 6.15 440/780] dm-flakey: error all IOs when num_features is absent
+Date: Tue, 17 Jun 2025 17:22:28 +0200
+Message-ID: <20250617152509.378069633@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,100 +48,70 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Benjamin Marzinski <bmarzins@redhat.com>
 
-[ Upstream commit 7ed9138a72829d2035ecbd8dbd35b1bc3c137c40 ]
+[ Upstream commit 40ed054f39bc99eac09871c33198e501f4acdf24 ]
 
-Ravi reported that the bpf_perf_link_attach() usage of
-perf_event_set_bpf_prog() is not serialized by ctx->mutex, unlike the
-PERF_EVENT_IOC_SET_BPF case.
+dm-flakey would error all IOs if num_features was 0, but if it was
+absent, dm-flakey would never error any IO. Fix this so that no
+num_features works the same as num_features set to 0.
 
-Reported-by: Ravi Bangoria <ravi.bangoria@amd.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Ravi Bangoria <ravi.bangoria@amd.com>
-Link: https://lkml.kernel.org/r/20250307193305.486326750@infradead.org
+Fixes: aa7d7bc99fed7 ("dm flakey: add an "error_reads" option")
+Reported-by: Kent Overstreet <kent.overstreet@linux.dev>
+Signed-off-by: Benjamin Marzinski <bmarzins@redhat.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/events/core.c | 34 ++++++++++++++++++++++++++++++----
- 1 file changed, 30 insertions(+), 4 deletions(-)
+ drivers/md/dm-flakey.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/kernel/events/core.c b/kernel/events/core.c
-index 8352376d82154..9ce82904f761d 100644
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -6031,6 +6031,9 @@ static int perf_event_set_output(struct perf_event *event,
- static int perf_event_set_filter(struct perf_event *event, void __user *arg);
- static int perf_copy_attr(struct perf_event_attr __user *uattr,
- 			  struct perf_event_attr *attr);
-+static int __perf_event_set_bpf_prog(struct perf_event *event,
-+				     struct bpf_prog *prog,
-+				     u64 bpf_cookie);
- 
- static long _perf_ioctl(struct perf_event *event, unsigned int cmd, unsigned long arg)
+diff --git a/drivers/md/dm-flakey.c b/drivers/md/dm-flakey.c
+index b690905ab89ff..806a80dd3bd9b 100644
+--- a/drivers/md/dm-flakey.c
++++ b/drivers/md/dm-flakey.c
+@@ -53,8 +53,8 @@ struct per_bio_data {
+ static int parse_features(struct dm_arg_set *as, struct flakey_c *fc,
+ 			  struct dm_target *ti)
  {
-@@ -6099,7 +6102,7 @@ static long _perf_ioctl(struct perf_event *event, unsigned int cmd, unsigned lon
- 		if (IS_ERR(prog))
- 			return PTR_ERR(prog);
+-	int r;
+-	unsigned int argc;
++	int r = 0;
++	unsigned int argc = 0;
+ 	const char *arg_name;
  
--		err = perf_event_set_bpf_prog(event, prog, 0);
-+		err = __perf_event_set_bpf_prog(event, prog, 0);
- 		if (err) {
- 			bpf_prog_put(prog);
- 			return err;
-@@ -10756,8 +10759,9 @@ static inline bool perf_event_is_tracing(struct perf_event *event)
- 	return false;
- }
+ 	static const struct dm_arg _args[] = {
+@@ -65,14 +65,13 @@ static int parse_features(struct dm_arg_set *as, struct flakey_c *fc,
+ 		{0, PROBABILITY_BASE, "Invalid random corrupt argument"},
+ 	};
  
--int perf_event_set_bpf_prog(struct perf_event *event, struct bpf_prog *prog,
--			    u64 bpf_cookie)
-+static int __perf_event_set_bpf_prog(struct perf_event *event,
-+				     struct bpf_prog *prog,
-+				     u64 bpf_cookie)
- {
- 	bool is_kprobe, is_uprobe, is_tracepoint, is_syscall_tp;
+-	/* No feature arguments supplied. */
+-	if (!as->argc)
+-		return 0;
+-
+-	r = dm_read_arg_group(_args, as, &argc, &ti->error);
+-	if (r)
++	if (as->argc && (r = dm_read_arg_group(_args, as, &argc, &ti->error)))
+ 		return r;
  
-@@ -10795,6 +10799,20 @@ int perf_event_set_bpf_prog(struct perf_event *event, struct bpf_prog *prog,
- 	return perf_event_attach_bpf_prog(event, prog, bpf_cookie);
- }
- 
-+int perf_event_set_bpf_prog(struct perf_event *event,
-+			    struct bpf_prog *prog,
-+			    u64 bpf_cookie)
-+{
-+	struct perf_event_context *ctx;
-+	int ret;
++	/* No feature arguments supplied. */
++	if (!argc)
++		goto error_all_io;
 +
-+	ctx = perf_event_ctx_lock(event);
-+	ret = __perf_event_set_bpf_prog(event, prog, bpf_cookie);
-+	perf_event_ctx_unlock(event, ctx);
-+
-+	return ret;
-+}
-+
- void perf_event_free_bpf_prog(struct perf_event *event)
- {
- 	if (!perf_event_is_tracing(event)) {
-@@ -10814,7 +10832,15 @@ static void perf_event_free_filter(struct perf_event *event)
- {
- }
- 
--int perf_event_set_bpf_prog(struct perf_event *event, struct bpf_prog *prog,
-+static int __perf_event_set_bpf_prog(struct perf_event *event,
-+				     struct bpf_prog *prog,
-+				     u64 bpf_cookie)
-+{
-+	return -ENOENT;
-+}
-+
-+int perf_event_set_bpf_prog(struct perf_event *event,
-+			    struct bpf_prog *prog,
- 			    u64 bpf_cookie)
- {
- 	return -ENOENT;
+ 	while (argc) {
+ 		arg_name = dm_shift_arg(as);
+ 		argc--;
+@@ -217,6 +216,7 @@ static int parse_features(struct dm_arg_set *as, struct flakey_c *fc,
+ 	if (!fc->corrupt_bio_byte && !test_bit(ERROR_READS, &fc->flags) &&
+ 	    !test_bit(DROP_WRITES, &fc->flags) && !test_bit(ERROR_WRITES, &fc->flags) &&
+ 	    !fc->random_read_corrupt && !fc->random_write_corrupt) {
++error_all_io:
+ 		set_bit(ERROR_WRITES, &fc->flags);
+ 		set_bit(ERROR_READS, &fc->flags);
+ 	}
 -- 
 2.39.5
 
