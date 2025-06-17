@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3035A2FA624;
-	Tue, 17 Jun 2025 16:57:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F88D2FA624;
+	Tue, 17 Jun 2025 16:57:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750179465; cv=none; b=Hj2AoJzjK+vcr0h5UxeX+1RzotnBNaPcrCLZ7XLKAQqrQRszYLhey+mGPlOBUjRvRCNNLLl9zWguxD/H5AF3xmgq/RnJt1Zpleab3marYDVNyXcTTSpcRq78muvbX6kmHlnnCeRZ1SY06t5Pd2a5V6pBtG2BDWmF0FFNMofUX6U=
+	t=1750179468; cv=none; b=NZ0bKWPsfQJJWzcE8QGRZi/5twNj1IyQZ39CpzGBvwvMaFatHG4kjRETV8sF7zQSJYv01oLuEe8eqoH+5qRX/87nqlr7/Q2H6NboM42fPKWAuPPLk59GAQFPBkew7ZlQ0lrfSmSaG02NAf5NMixbCskcqIfNiuqcR44kXW1tnM8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750179465; c=relaxed/simple;
-	bh=pxtTVTkDbG76SjiJMbbLlmKg2Z/+h7gUFYFrJH8w3ZU=;
+	s=arc-20240116; t=1750179468; c=relaxed/simple;
+	bh=mRspAhsiC2Cif63LnsqSYpG9NPsndCF4vLZi0BhubXA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=un3inrRMgCo/n9YyVj/Fv7bycOm6j22d5yOVJQJ4WA1xVF0RdflOYjpWhB42L/bSSXC9wVCADzBbb38XpTbFc37Izx2wYVMOBbTbAIVL6YR7ViEvH32xXVBefVv2CMoPBzQLWQZYuGRBqRvhl7Yz650vEQNPBinVM4wfwxe64gE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hfoQ3X7q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GYrWw3+j7Q4m8Df4/mnnButUgSK9QF4WMihkaL0ZelX8t6thjNo+KcPAvlQVu/URMevbPmhZpaFMU2R7a3ix73WJLQAn2eVdLI0e3xDTkXLwtS/2uzvBUXlMf62MqoxSo416d2Y/YqTNesKCb1SO6tFFOIYKK99WZ4JU8qS6he4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qBnb3CMd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hfoQ3X7q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91CF7C4CEE7;
-	Tue, 17 Jun 2025 16:57:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qBnb3CMd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D596CC4CEE3;
+	Tue, 17 Jun 2025 16:57:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750179465;
-	bh=pxtTVTkDbG76SjiJMbbLlmKg2Z/+h7gUFYFrJH8w3ZU=;
+	s=korg; t=1750179468;
+	bh=mRspAhsiC2Cif63LnsqSYpG9NPsndCF4vLZi0BhubXA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hfoQ3X7qu54N2D7WOfJzf1Tfxyzez3pcjh1e9ZD4/LSQ5Oiu2WslXVPDLrX8HVQZo
-	 R5js8EQqFHvJAJyKbPW6rdBYr7sUXXTjDeV+zBoCzmdFN5v1fP8H2NRqBC/pCojje3
-	 s4rD8FtqcvxjC1X/3MAox0MMss6zhptPS5VW/nZI=
+	b=qBnb3CMd4Nui6MYthJCMQvo/PRj9nBfIoy1derGsvqP8qP3iBT8fwV+Y3kwpCFLFF
+	 rfFQdeNk17RPddTF9e5IvlcVsH5ggi+NbdJ0WQMbfAYtFyMfzEH+/N23l9/pDIi5+H
+	 PttUjFChsZZb0XnEG9EROSYEXWZl5CpHKwaR7jqo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Wupeng Ma <mawupeng1@huawei.com>
-Subject: [PATCH 6.15 754/780] VMCI: fix race between vmci_host_setup_notify and vmci_ctx_unset_notify
-Date: Tue, 17 Jun 2025 17:27:42 +0200
-Message-ID: <20250617152522.217645735@linuxfoundation.org>
+	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
+	Mans Rullgard <mans@mansr.com>
+Subject: [PATCH 6.15 755/780] tty: serial: 8250_omap: fix TX with DMA for am33xx
+Date: Tue, 17 Jun 2025 17:27:43 +0200
+Message-ID: <20250617152522.255944437@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
 References: <20250617152451.485330293@linuxfoundation.org>
@@ -50,95 +50,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wupeng Ma <mawupeng1@huawei.com>
+From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
 
-commit 1bd6406fb5f36c2bb1e96e27d4c3e9f4d09edde4 upstream.
+commit b495021a973e2468497689bd3e29b736747b896f upstream.
 
-During our test, it is found that a warning can be trigger in try_grab_folio
-as follow:
+Commit 1788cf6a91d9 ("tty: serial: switch from circ_buf to kfifo")
+introduced an error in the TX DMA handling for 8250_omap.
 
-  ------------[ cut here ]------------
-  WARNING: CPU: 0 PID: 1678 at mm/gup.c:147 try_grab_folio+0x106/0x130
-  Modules linked in:
-  CPU: 0 UID: 0 PID: 1678 Comm: syz.3.31 Not tainted 6.15.0-rc5 #163 PREEMPT(undef)
-  RIP: 0010:try_grab_folio+0x106/0x130
-  Call Trace:
-   <TASK>
-   follow_huge_pmd+0x240/0x8e0
-   follow_pmd_mask.constprop.0.isra.0+0x40b/0x5c0
-   follow_pud_mask.constprop.0.isra.0+0x14a/0x170
-   follow_page_mask+0x1c2/0x1f0
-   __get_user_pages+0x176/0x950
-   __gup_longterm_locked+0x15b/0x1060
-   ? gup_fast+0x120/0x1f0
-   gup_fast_fallback+0x17e/0x230
-   get_user_pages_fast+0x5f/0x80
-   vmci_host_unlocked_ioctl+0x21c/0xf80
-  RIP: 0033:0x54d2cd
-  ---[ end trace 0000000000000000 ]---
+When the OMAP_DMA_TX_KICK flag is set, the "skip_byte" is pulled from
+the kfifo and emitted directly in order to start the DMA. While the
+kfifo is updated, dma->tx_size is not decreased. This leads to
+uart_xmit_advance() called in omap_8250_dma_tx_complete() advancing the
+kfifo by one too much.
 
-Digging into the source, context->notify_page may init by get_user_pages_fast
-and can be seen in vmci_ctx_unset_notify which will try to put_page. However
-get_user_pages_fast is not finished here and lead to following
-try_grab_folio warning. The race condition is shown as follow:
+In practice, transmitting N bytes has been seen to result in the last
+N-1 bytes being sent repeatedly.
 
-cpu0			cpu1
-vmci_host_do_set_notify
-vmci_host_setup_notify
-get_user_pages_fast(uva, 1, FOLL_WRITE, &context->notify_page);
-lockless_pages_from_mm
-gup_pgd_range
-gup_huge_pmd  // update &context->notify_page
-			vmci_host_do_set_notify
-			vmci_ctx_unset_notify
-			notify_page = context->notify_page;
-			if (notify_page)
-			put_page(notify_page);	// page is freed
-__gup_longterm_locked
-__get_user_pages
-follow_trans_huge_pmd
-try_grab_folio // warn here
+This change fixes the problem by moving all of the dma setup after the
+OMAP_DMA_TX_KICK handling and using kfifo_len() instead of the DMA size
+for the 4-byte cutoff check. This slightly changes the behaviour at
+buffer wraparound, but it still transmits the correct bytes somehow.
 
-To slove this, use local variable page to make notify_page can be seen
-after finish get_user_pages_fast.
+Now, the "skip_byte" would no longer be accounted to the stats. As
+previously, dma->tx_size included also this skip byte, up->icount.tx was
+updated by aforementioned uart_xmit_advance() in
+omap_8250_dma_tx_complete(). Fix this by using the uart_fifo_out()
+helper instead of bare kfifo_get().
 
-Fixes: a1d88436d53a ("VMCI: Fix two UVA mapping bugs")
-Cc: stable <stable@kernel.org>
-Closes: https://lore.kernel.org/all/e91da589-ad57-3969-d979-879bbd10dddd@huawei.com/
-Signed-off-by: Wupeng Ma <mawupeng1@huawei.com>
-Link: https://lore.kernel.org/r/20250510033040.901582-1-mawupeng1@huawei.com
+Based on patch by Mans Rullgard <mans@mansr.com>
+
+Signed-off-by: "Jiri Slaby (SUSE)" <jirislaby@kernel.org>
+Fixes: 1788cf6a91d9 ("tty: serial: switch from circ_buf to kfifo")
+Link: https://lore.kernel.org/all/20250506150748.3162-1-mans@mansr.com/
+Reported-by: Mans Rullgard <mans@mansr.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20250522053835.3495975-1-jirislaby@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/vmw_vmci/vmci_host.c |   11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ drivers/tty/serial/8250/8250_omap.c |   25 ++++++++++---------------
+ 1 file changed, 10 insertions(+), 15 deletions(-)
 
---- a/drivers/misc/vmw_vmci/vmci_host.c
-+++ b/drivers/misc/vmw_vmci/vmci_host.c
-@@ -227,6 +227,7 @@ static int drv_cp_harray_to_user(void __
- static int vmci_host_setup_notify(struct vmci_ctx *context,
- 				  unsigned long uva)
- {
-+	struct page *page;
- 	int retval;
+--- a/drivers/tty/serial/8250/8250_omap.c
++++ b/drivers/tty/serial/8250/8250_omap.c
+@@ -1173,16 +1173,6 @@ static int omap_8250_tx_dma(struct uart_
+ 		return 0;
+ 	}
  
- 	if (context->notify_page) {
-@@ -243,13 +244,11 @@ static int vmci_host_setup_notify(struct
- 	/*
- 	 * Lock physical page backing a given user VA.
- 	 */
--	retval = get_user_pages_fast(uva, 1, FOLL_WRITE, &context->notify_page);
--	if (retval != 1) {
--		context->notify_page = NULL;
-+	retval = get_user_pages_fast(uva, 1, FOLL_WRITE, &page);
-+	if (retval != 1)
- 		return VMCI_ERROR_GENERIC;
+-	sg_init_table(&sg, 1);
+-	ret = kfifo_dma_out_prepare_mapped(&tport->xmit_fifo, &sg, 1,
+-					   UART_XMIT_SIZE, dma->tx_addr);
+-	if (ret != 1) {
+-		serial8250_clear_THRI(p);
+-		return 0;
 -	}
--	if (context->notify_page == NULL)
--		return VMCI_ERROR_UNAVAILABLE;
+-
+-	dma->tx_size = sg_dma_len(&sg);
+-
+ 	if (priv->habit & OMAP_DMA_TX_KICK) {
+ 		unsigned char c;
+ 		u8 tx_lvl;
+@@ -1207,18 +1197,22 @@ static int omap_8250_tx_dma(struct uart_
+ 			ret = -EBUSY;
+ 			goto err;
+ 		}
+-		if (dma->tx_size < 4) {
++		if (kfifo_len(&tport->xmit_fifo) < 4) {
+ 			ret = -EINVAL;
+ 			goto err;
+ 		}
+-		if (!kfifo_get(&tport->xmit_fifo, &c)) {
++		if (!uart_fifo_out(&p->port, &c, 1)) {
+ 			ret = -EINVAL;
+ 			goto err;
+ 		}
+ 		skip_byte = c;
+-		/* now we need to recompute due to kfifo_get */
+-		kfifo_dma_out_prepare_mapped(&tport->xmit_fifo, &sg, 1,
+-				UART_XMIT_SIZE, dma->tx_addr);
++	}
 +
-+	context->notify_page = page;
++	sg_init_table(&sg, 1);
++	ret = kfifo_dma_out_prepare_mapped(&tport->xmit_fifo, &sg, 1, UART_XMIT_SIZE, dma->tx_addr);
++	if (ret != 1) {
++		ret = -EINVAL;
++		goto err;
+ 	}
  
- 	/*
- 	 * Map the locked page and set up notify pointer.
+ 	desc = dmaengine_prep_slave_sg(dma->txchan, &sg, 1, DMA_MEM_TO_DEV,
+@@ -1228,6 +1222,7 @@ static int omap_8250_tx_dma(struct uart_
+ 		goto err;
+ 	}
+ 
++	dma->tx_size = sg_dma_len(&sg);
+ 	dma->tx_running = 1;
+ 
+ 	desc->callback = omap_8250_dma_tx_complete;
 
 
