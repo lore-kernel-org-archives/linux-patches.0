@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC3EA2FA658;
-	Tue, 17 Jun 2025 16:51:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F27F32FA658;
+	Tue, 17 Jun 2025 16:51:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750179111; cv=none; b=IiwwSFB2Bel6fjeumb0XC+mZgba1wWFnFdXCIF6s5M8gygDxTQPsjjFenVl+kaDsC5oc5Jz6Lv1c0QLEJy2m9pNkqAaFAgpx+4ZWIETNxUfGl5G/qox6B+TmA9qbZuPoQwkViHf6/4YG0IppgJa+c+UibkXnXdeP2jyWKTPZSHs=
+	t=1750179115; cv=none; b=HIt8kguDdvFppq0gdUvmwHudhgt88vIld4UuyT+/a2GWUwe+/xk3HZCjoClRIINjSBJ+OfdQix3DOGjeQ4koV+NCeACXsQ5E/5tZpZhCWjSxZu+5ynTvGYXABqQ1uQMjI4uxdoX0S+qGPdBqkr2lnkpKjdDeclbdr5PDTmOL4mM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750179111; c=relaxed/simple;
-	bh=0P92VuA0gmOjHEsbbbgnjP/j/C5fy3zaq7lGNE9j3Pg=;
+	s=arc-20240116; t=1750179115; c=relaxed/simple;
+	bh=qD1OXUF4AfnDYgY33dG9ZIbNbOOOSl5ehRWo1qOjc4s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qMVhAK/QZvNjYev6ByJZO7yxqzZKdvJIK8NC4brxX7tUxVLp3MRRH04UCDxrHdSwuSZvze3V9+Se0AvK+3fn4loJt92G082tKnZDw7RcNE/Il2a6VlJbiY6QHaIo3j9q/hkanKOi44G0A65BnXX81F3nwsGfyRPtMeENvma47c8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dpgUZ9oZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tF9lPnPQPYE5eAUbL+f5eocb2XKvp2GUnZPp8HLEJq6UrMrIBRhod9z+Sz1jqcOfW0m5WaedfluH8ZRrJ9vfsdVbEQ7JDDNOp4MmMU4VU6OfY/vifPeosvcCARUuHOIjvwQRjZwCnvOn7eiTSztlLjtzUhzVPN6jv88oTYYKBEI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uRdpGrHj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dpgUZ9oZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D1EAC4CEE3;
-	Tue, 17 Jun 2025 16:51:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uRdpGrHj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DD53C4CEE3;
+	Tue, 17 Jun 2025 16:51:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750179111;
-	bh=0P92VuA0gmOjHEsbbbgnjP/j/C5fy3zaq7lGNE9j3Pg=;
+	s=korg; t=1750179114;
+	bh=qD1OXUF4AfnDYgY33dG9ZIbNbOOOSl5ehRWo1qOjc4s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dpgUZ9oZCNVfH89+g/6I4VNjy4/PCVuX99B3LbxZQQ5seuI20oM/5qwFPz19yDoNY
-	 8s8WvUEHVxatfJYVVC7Gf15iaFNSeeaqHIt2XlgCyVDBGLOcKoqC4QcVbRqMWEEM+N
-	 KJfmZ2z967GXvstoYUHvZI42PtSfq7+teLod5JNY=
+	b=uRdpGrHjqYLT1MKnEalPNW1tBDf9DRBubWq98FJkGC+73aeoVC7rprhbehjU67H0b
+	 lfuCoVoXlU78u5SvNc+Hk6kC2itCbk3VNES3M2Y1otXJXhSEOFRO8PltePGIFEyDlD
+	 Qxm5x5V0CpGn8THbx/9ADs8UcjXEKBzrlrjjMTZQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Christian Brauner <brauner@kernel.org>,
 	Al Viro <viro@zeniv.linux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 652/780] finish_automount(): dont leak MNT_LOCKED from parent to child
-Date: Tue, 17 Jun 2025 17:26:00 +0200
-Message-ID: <20250617152518.026292035@linuxfoundation.org>
+Subject: [PATCH 6.15 653/780] fix propagation graph breakage by MOVE_MOUNT_SET_GROUP move_mount(2)
+Date: Tue, 17 Jun 2025 17:26:01 +0200
+Message-ID: <20250617152518.068459750@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
 References: <20250617152451.485330293@linuxfoundation.org>
@@ -53,50 +53,56 @@ Content-Transfer-Encoding: 8bit
 
 From: Al Viro <viro@zeniv.linux.org.uk>
 
-[ Upstream commit bab77c0d191e241d2d59a845c7ed68bfa6e1b257 ]
+[ Upstream commit d8cc0362f918d020ca1340d7694f07062dc30f36 ]
 
-Intention for MNT_LOCKED had always been to protect the internal
-mountpoints within a subtree that got copied across the userns boundary,
-not the mountpoint that tree got attached to - after all, it _was_
-exposed before the copying.
+9ffb14ef61ba "move_mount: allow to add a mount into an existing group"
+breaks assertions on ->mnt_share/->mnt_slave.  For once, the data structures
+in question are actually documented.
 
-For roots of secondary copies that is enforced in attach_recursive_mnt() -
-MNT_LOCKED is explicitly stripped for those.  For the root of primary
-copy we are almost always guaranteed that MNT_LOCKED won't be there,
-so attach_recursive_mnt() doesn't bother.  Unfortunately, one call
-chain got overlooked - triggering e.g. NFS referral will have the
-submount inherit the public flags from parent; that's fine for such
-things as read-only, nosuid, etc., but not for MNT_LOCKED.
+Documentation/filesystem/sharedsubtree.rst:
+        All vfsmounts in a peer group have the same ->mnt_master.  If it is
+	non-NULL, they form a contiguous (ordered) segment of slave list.
 
-This is particularly pointless since the mount attached by finish_automount()
-is usually expirable, which makes any protection granted by MNT_LOCKED
-null and void; just wait for a while and that mount will go away on its own.
+do_set_group() puts a mount into the same place in propagation graph
+as the old one.  As the result, if old mount gets events from somewhere
+and is not a pure event sink, new one needs to be placed next to the
+old one in the slave list the old one's on.  If it is a pure event
+sink, we only need to make sure the new one doesn't end up in the
+middle of some peer group.
 
-Include MNT_LOCKED into the set of flags to be ignored by do_add_mount() - it
-really is an internal flag.
+"move_mount: allow to add a mount into an existing group" ends up putting
+the new one in the beginning of list; that's definitely not going to be
+in the middle of anything, so that's fine for case when old is not marked
+shared.  In case when old one _is_ marked shared (i.e. is not a pure event
+sink), that breaks the assumptions of propagation graph iterators.
+
+Put the new mount next to the old one on the list - that does the right thing
+in "old is marked shared" case and is just as correct as the current behaviour
+if old is not marked shared (kudos to Pavel for pointing that out - my original
+suggested fix changed behaviour in the "nor marked" case, which complicated
+things for no good reason).
 
 Reviewed-by: Christian Brauner <brauner@kernel.org>
-Fixes: 5ff9d8a65ce8 ("vfs: Lock in place mounts from more privileged users")
+Fixes: 9ffb14ef61ba ("move_mount: allow to add a mount into an existing group")
 Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/mount.h | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/namespace.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/linux/mount.h b/include/linux/mount.h
-index 6904ad33ee7a3..1a3136e53eaa0 100644
---- a/include/linux/mount.h
-+++ b/include/linux/mount.h
-@@ -65,7 +65,8 @@ enum mount_flags {
- 	MNT_ATIME_MASK = MNT_NOATIME | MNT_NODIRATIME | MNT_RELATIME,
+diff --git a/fs/namespace.c b/fs/namespace.c
+index cb5126b06dcb9..e2780f413a2e0 100644
+--- a/fs/namespace.c
++++ b/fs/namespace.c
+@@ -3452,7 +3452,7 @@ static int do_set_group(struct path *from_path, struct path *to_path)
+ 	if (IS_MNT_SLAVE(from)) {
+ 		struct mount *m = from->mnt_master;
  
- 	MNT_INTERNAL_FLAGS = MNT_SHARED | MNT_WRITE_HOLD | MNT_INTERNAL |
--			     MNT_DOOMED | MNT_SYNC_UMOUNT | MNT_MARKED,
-+			     MNT_DOOMED | MNT_SYNC_UMOUNT | MNT_MARKED |
-+			     MNT_LOCKED,
- };
+-		list_add(&to->mnt_slave, &m->mnt_slave_list);
++		list_add(&to->mnt_slave, &from->mnt_slave);
+ 		to->mnt_master = m;
+ 	}
  
- struct vfsmount {
 -- 
 2.39.5
 
