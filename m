@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F8B72FA624;
-	Tue, 17 Jun 2025 16:57:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 811522FA62E;
+	Tue, 17 Jun 2025 16:57:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750179455; cv=none; b=SOO7H5m35+FZljFiGayn2bQ7ukwotBK0WKrLtqJfQ1tljJwtQZVcNcc0mVJp5pKKAJIB1HJwu6RupLgRzC56lLc/0X4x682pA43/j4Qe13zSvt9CaV5fUrEgNlZzNlYCx8AOqqFQxPYALIxQgbX5ZVAKTCAZ4s07DMe8RZJIxFU=
+	t=1750179458; cv=none; b=n3wXo9oCaXdKT+LagqGc0QPN7oZNgxPemk3phXg9EtwSP+RGITy4uF+vMtVZGXdAqGR36aqtFJ7xTbmGXak98ZzXw10U9sA+QtkzMjc49PENIxihdD6cldX7Ist/PbE5k9bPFPkRj8RkmqabueHy0v9I8c8ZuEfW+2Fp6uoiRhg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750179455; c=relaxed/simple;
-	bh=mYO40vBGiCJpcdjHE0DBahhWJ1/e511UFm2h5fAtQc4=;
+	s=arc-20240116; t=1750179458; c=relaxed/simple;
+	bh=EkOzSUwlwr9JzNuG9Fq4X2zQwV2DOS5bRnGiCNwNEZ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MUUq3oC6wZtlcVkZ6LvEEzZGz+NeT+BtBadrf0UPWCbHp/M9y+yrGXHPbVO9e6ZRZFMXqSvIQ28tMjnVWQqoYQCXPzZS5Hf+RY5Pno7Hdp5j9NR/XdnbxnsAVP1T4RIIQpY/uIZggghScEBITq315FdPUdHDVTHQpAtTMV5amW0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=URagdDtB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o5XjIwPYKppZ/6XX18BRgOTJTl8dgPLemoJ7+fDfbAR59i9c45zwldE5q4G54HgAO+UzWb/vOo3Eun2A/yl1ZruYA0aI235gM5xAuGjwMad6Uy0+Lr2KRtOJnHi9H+L8Tz72vnkKjJ5l6uNRicE10rRBLv3iyChRVYOPUmGnrCY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FY0yhH4c; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="URagdDtB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2A61C4CEE3;
-	Tue, 17 Jun 2025 16:57:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FY0yhH4c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5F2AC4CEE3;
+	Tue, 17 Jun 2025 16:57:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750179455;
-	bh=mYO40vBGiCJpcdjHE0DBahhWJ1/e511UFm2h5fAtQc4=;
+	s=korg; t=1750179458;
+	bh=EkOzSUwlwr9JzNuG9Fq4X2zQwV2DOS5bRnGiCNwNEZ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=URagdDtBKjWwx/ALN6JOpYi5MFiDVuGyW3A00jBY4FjjmBFmSBtM7NOuW+pvfTfiV
-	 RMdqfGaHbf9ZJg7yI1rFQkJ2Fyg93SbnHD+DMCjcIlNu8mzLqB54T6FcVX3jHircc4
-	 imPmSLXYOFJpu1RV7wMSxP6TCJS1Im7wLsjW3EgM=
+	b=FY0yhH4cNwgSnGSHzOFX+qYyTdnVn9YepE8yOIyjWkp/4TjhaqVjhdxyv8PDorPP+
+	 icw/EeacmSHg+4nNA0WQcg0FZiFjdUun9FgR6JwV6GtiobeKI6sNUS836ODCqeZDe/
+	 4ar5Q8hzcwqvY/TiBWL4QURfR/ZeivY8n34GZHo4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Peter Korsgaard <peter@korsgaard.com>,
-	Michal Simek <michal.simek@amd.com>,
-	Srinivas Kandagatla <srini@kernel.org>
-Subject: [PATCH 6.15 752/780] nvmem: zynqmp_nvmem: unbreak driver after cleanup
-Date: Tue, 17 Jun 2025 17:27:40 +0200
-Message-ID: <20250617152522.126403011@linuxfoundation.org>
+	Dave Penkler <dpenkler@gmail.com>
+Subject: [PATCH 6.15 753/780] usb: usbtmc: Fix read_stb function and get_stb ioctl
+Date: Tue, 17 Jun 2025 17:27:41 +0200
+Message-ID: <20250617152522.175618530@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
 References: <20250617152451.485330293@linuxfoundation.org>
@@ -52,37 +49,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Korsgaard <peter@korsgaard.com>
+From: Dave Penkler <dpenkler@gmail.com>
 
-commit fe8abdd175d7b547ae1a612757e7902bcd62e9cf upstream.
+commit acb3dac2805d3342ded7dbbd164add32bbfdf21c upstream.
 
-Commit 29be47fcd6a0 ("nvmem: zynqmp_nvmem: zynqmp_nvmem_probe cleanup")
-changed the driver to expect the device pointer to be passed as the
-"context", but in nvmem the context parameter comes from nvmem_config.priv
-which is never set - Leading to null pointer exceptions when the device is
-accessed.
+The usbtmc488_ioctl_read_stb function relied on a positive return from
+usbtmc_get_stb to reset the srq condition in the driver. The
+USBTMC_IOCTL_GET_STB case tested for a positive return to return the stb
+to the user.
 
-Fixes: 29be47fcd6a0 ("nvmem: zynqmp_nvmem: zynqmp_nvmem_probe cleanup")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Peter Korsgaard <peter@korsgaard.com>
-Reviewed-by: Michal Simek <michal.simek@amd.com>
-Tested-by: Michal Simek <michal.simek@amd.com>
-Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
-Link: https://lore.kernel.org/r/20250509122407.11763-3-srini@kernel.org
+Commit: <cac01bd178d6> ("usb: usbtmc: Fix erroneous get_stb ioctl
+error returns") changed the return value of usbtmc_get_stb to 0 on
+success instead of returning the value of usb_control_msg which is
+positive in the normal case. This change caused the function
+usbtmc488_ioctl_read_stb and the USBTMC_IOCTL_GET_STB ioctl to no
+longer function correctly.
+
+Change the test in usbtmc488_ioctl_read_stb to test for failure
+first and return the failure code immediately.
+Change the test for the USBTMC_IOCTL_GET_STB ioctl to test for 0
+instead of a positive value.
+
+Fixes: cac01bd178d6 ("usb: usbtmc: Fix erroneous get_stb ioctl error returns")
+Cc: stable@vger.kernel.org
+Signed-off-by: Dave Penkler <dpenkler@gmail.com>
+Link: https://lore.kernel.org/r/20250521121656.18174-3-dpenkler@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvmem/zynqmp_nvmem.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/class/usbtmc.c |   17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
---- a/drivers/nvmem/zynqmp_nvmem.c
-+++ b/drivers/nvmem/zynqmp_nvmem.c
-@@ -213,6 +213,7 @@ static int zynqmp_nvmem_probe(struct pla
- 	econfig.word_size = 1;
- 	econfig.size = ZYNQMP_NVMEM_SIZE;
- 	econfig.dev = dev;
-+	econfig.priv = dev;
- 	econfig.add_legacy_fixed_of_cells = true;
- 	econfig.reg_read = zynqmp_nvmem_read;
- 	econfig.reg_write = zynqmp_nvmem_write;
+--- a/drivers/usb/class/usbtmc.c
++++ b/drivers/usb/class/usbtmc.c
+@@ -565,14 +565,15 @@ static int usbtmc488_ioctl_read_stb(stru
+ 
+ 	rv = usbtmc_get_stb(file_data, &stb);
+ 
+-	if (rv > 0) {
+-		srq_asserted = atomic_xchg(&file_data->srq_asserted,
+-					srq_asserted);
+-		if (srq_asserted)
+-			stb |= 0x40; /* Set RQS bit */
++	if (rv < 0)
++		return rv;
++
++	srq_asserted = atomic_xchg(&file_data->srq_asserted, srq_asserted);
++	if (srq_asserted)
++		stb |= 0x40; /* Set RQS bit */
++
++	rv = put_user(stb, (__u8 __user *)arg);
+ 
+-		rv = put_user(stb, (__u8 __user *)arg);
+-	}
+ 	return rv;
+ 
+ }
+@@ -2201,7 +2202,7 @@ static long usbtmc_ioctl(struct file *fi
+ 
+ 	case USBTMC_IOCTL_GET_STB:
+ 		retval = usbtmc_get_stb(file_data, &tmp_byte);
+-		if (retval > 0)
++		if (!retval)
+ 			retval = put_user(tmp_byte, (__u8 __user *)arg);
+ 		break;
+ 
 
 
