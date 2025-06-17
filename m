@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D38BC2264DD;
-	Tue, 17 Jun 2025 16:47:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD292285048;
+	Tue, 17 Jun 2025 16:47:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750178825; cv=none; b=G3rulxlcQCTr5VTMcdUFfAExH9xy6TyDyk1YT80uQVh5ZrgNErgwNFUIUG1sxOud8bzAKDVA9BWScnC8MBGKkcE+MnD2z6Ek2xaVLkTijBIuwPKV0CP06MhfFDqPxu1TvotS3fb4CapRy8UY/HDez8h5f7umOcYCQt6IJrzRpl8=
+	t=1750178832; cv=none; b=oOrEAZKYiQaS+tStlptJUqdLsFPZjo4uaJ7asHT6mC+BLldIU7pdT3KMDvIoUnly7obUynZd9fM4XOR2FA4wxhMFyi52pBrcdN3eMBmE7lBJuKGjhgK9a2V3K0+mvDe0f3N5ziV8i/xBbAqAZgyutslGu1LgjGkXHeaTSNQZWA4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750178825; c=relaxed/simple;
-	bh=Y3Y4dPqES2+OlWSpJhj912MVGSWelqeNPoHr8pB1bXo=;
+	s=arc-20240116; t=1750178832; c=relaxed/simple;
+	bh=/fjpAQd7+hG54mcASU6h2kRBzRjkqs7y7cVNurzC8f8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BMvv3/fiYsFEhpnhQeIi8mr0Sqt8jVN+ipT1Mjn+kemaR3puaLvd4l9hF7yDcJBKj53wX8IH+cIR4yf6SU+xk7CqKjSm623Lg0nDuRwf6jO20hDxl/QvSPe0/oRZcLIq+lOVsMqnsu/A9/0m7fKSg8MmNDk3xDVtHAFq+SL8a2Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=swi5FOWC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JWqr391JYaIaWWeenTw3ZM4i0ULEwjMkMzGPkL5nfjLMo09DwZ5QyzhFX0xPSu4DThandi5bKUAO0HR8zKZrz/JtAai8B5zaUNpgJIUJcTuRKyoAlzbtuDZc52zpve9UQFPHGlZUiPa6bBF5J7z4uY+rVqlGtK4c+SS5yWyPm2Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D1rKjFZl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="swi5FOWC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A2A8C4CEE7;
-	Tue, 17 Jun 2025 16:47:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D1rKjFZl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8FB6C4CEE3;
+	Tue, 17 Jun 2025 16:47:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750178825;
-	bh=Y3Y4dPqES2+OlWSpJhj912MVGSWelqeNPoHr8pB1bXo=;
+	s=korg; t=1750178830;
+	bh=/fjpAQd7+hG54mcASU6h2kRBzRjkqs7y7cVNurzC8f8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=swi5FOWCxg9FI+trV9Z3f/4A/8/uiTW7WDQ2Esz2mIKtL4V4FrqnApbdM1i+jSuUX
-	 oKWeyIiGr9PFQPR/pl9Z7z3yfc4WQc/uS3XYnTpwhfWxKbWwis6gAjRkKcYM1onsoR
-	 wTqyO9dKCVgFBaTzFFya+BZipLNVpabyM0r/jD/I=
+	b=D1rKjFZlvYMFyxOBoMlBruQ1N2e0XiEQRiTsjpxygbqWHS968tNzMqHIO4rC+GV72
+	 cf3chsmdSY20pyZfjRd1rhPfu/RNNWiu+Fuerhi6j+1uprb7RSZZ3vFVphWOUD2uX4
+	 C6XTjLFmfje5EeTZgbiNkk5h9JnuPvLKSdFDmceM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Horatiu Vultur <horatiu.vultur@microchip.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 565/780] net: lan966x: Make sure to insert the vlan tags also in host mode
-Date: Tue, 17 Jun 2025 17:24:33 +0200
-Message-ID: <20250617152514.492010656@linuxfoundation.org>
+	Yu Kuai <yukuai3@huawei.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Mikulas Patocka <mpatocka@redhat.com>
+Subject: [PATCH 6.15 566/780] md/raid1,raid10: dont handle IO error for REQ_RAHEAD and REQ_NOWAIT
+Date: Tue, 17 Jun 2025 17:24:34 +0200
+Message-ID: <20250617152514.531966226@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
 References: <20250617152451.485330293@linuxfoundation.org>
@@ -52,110 +51,144 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Horatiu Vultur <horatiu.vultur@microchip.com>
+From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit 27eab4c644236a9324084a70fe79e511cbd07393 ]
+[ Upstream commit 9f346f7d4ea73692b82f5102ca8698e4040469ea ]
 
-When running these commands on DUT (and similar at the other end)
-ip link set dev eth0 up
-ip link add link eth0 name eth0.10 type vlan id 10
-ip addr add 10.0.0.1/24 dev eth0.10
-ip link set dev eth0.10 up
-ping 10.0.0.2
+IO with REQ_RAHEAD or REQ_NOWAIT can fail early, even if the storage medium
+is fine, hence record badblocks or remove the disk from array does not
+make sense.
 
-The ping will fail.
+This problem if found by lvm2 test lvcreate-large-raid, where dm-zero
+will fail read ahead IO directly.
 
-The reason why is failing is because, the network interfaces for lan966x
-have a flag saying that the HW can insert the vlan tags into the
-frames(NETIF_F_HW_VLAN_CTAG_TX). Meaning that the frames that are
-transmitted don't have the vlan tag inside the skb data, but they have
-it inside the skb. We already get that vlan tag and put it in the IFH
-but the problem is that we don't configure the HW to rewrite the frame
-when the interface is in host mode.
-The fix consists in actually configuring the HW to insert the vlan tag
-if it is different than 0.
-
-Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Fixes: 6d2c186afa5d ("net: lan966x: Add vlan support.")
-Signed-off-by: Horatiu Vultur <horatiu.vultur@microchip.com>
-Link: https://patch.msgid.link/20250528093619.3738998-1-horatiu.vultur@microchip.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: e879a0d9cb08 ("md/raid1,raid10: don't ignore IO flags")
+Reported-and-tested-by: Mikulas Patocka <mpatocka@redhat.com>
+Closes: https://lore.kernel.org/all/34fa755d-62c8-4588-8ee1-33cb1249bdf2@redhat.com/
+Link: https://lore.kernel.org/linux-raid/20250527081407.3004055-1-yukuai1@huaweicloud.com
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/microchip/lan966x/lan966x_main.c |  1 +
- .../ethernet/microchip/lan966x/lan966x_main.h |  1 +
- .../microchip/lan966x/lan966x_switchdev.c     |  1 +
- .../ethernet/microchip/lan966x/lan966x_vlan.c | 21 +++++++++++++++++++
- 4 files changed, 24 insertions(+)
+ drivers/md/raid1-10.c | 10 ++++++++++
+ drivers/md/raid1.c    | 19 ++++++++++---------
+ drivers/md/raid10.c   | 11 ++++++-----
+ 3 files changed, 26 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_main.c b/drivers/net/ethernet/microchip/lan966x/lan966x_main.c
-index 427bdc0e4908c..7001584f1b7a6 100644
---- a/drivers/net/ethernet/microchip/lan966x/lan966x_main.c
-+++ b/drivers/net/ethernet/microchip/lan966x/lan966x_main.c
-@@ -879,6 +879,7 @@ static int lan966x_probe_port(struct lan966x *lan966x, u32 p,
- 	lan966x_vlan_port_set_vlan_aware(port, 0);
- 	lan966x_vlan_port_set_vid(port, HOST_PVID, false, false);
- 	lan966x_vlan_port_apply(port);
-+	lan966x_vlan_port_rew_host(port);
+diff --git a/drivers/md/raid1-10.c b/drivers/md/raid1-10.c
+index c7efd8aab675c..b8b3a90697012 100644
+--- a/drivers/md/raid1-10.c
++++ b/drivers/md/raid1-10.c
+@@ -293,3 +293,13 @@ static inline bool raid1_should_read_first(struct mddev *mddev,
  
- 	return 0;
+ 	return false;
  }
-diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_main.h b/drivers/net/ethernet/microchip/lan966x/lan966x_main.h
-index 1f9df67f05044..4f75f06883693 100644
---- a/drivers/net/ethernet/microchip/lan966x/lan966x_main.h
-+++ b/drivers/net/ethernet/microchip/lan966x/lan966x_main.h
-@@ -497,6 +497,7 @@ void lan966x_vlan_port_apply(struct lan966x_port *port);
- bool lan966x_vlan_cpu_member_cpu_vlan_mask(struct lan966x *lan966x, u16 vid);
- void lan966x_vlan_port_set_vlan_aware(struct lan966x_port *port,
- 				      bool vlan_aware);
-+void lan966x_vlan_port_rew_host(struct lan966x_port *port);
- int lan966x_vlan_port_set_vid(struct lan966x_port *port,
- 			      u16 vid,
- 			      bool pvid,
-diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_switchdev.c b/drivers/net/ethernet/microchip/lan966x/lan966x_switchdev.c
-index 1c88120eb291a..bcb4db76b75cd 100644
---- a/drivers/net/ethernet/microchip/lan966x/lan966x_switchdev.c
-+++ b/drivers/net/ethernet/microchip/lan966x/lan966x_switchdev.c
-@@ -297,6 +297,7 @@ static void lan966x_port_bridge_leave(struct lan966x_port *port,
- 	lan966x_vlan_port_set_vlan_aware(port, false);
- 	lan966x_vlan_port_set_vid(port, HOST_PVID, false, false);
- 	lan966x_vlan_port_apply(port);
-+	lan966x_vlan_port_rew_host(port);
- }
- 
- int lan966x_port_changeupper(struct net_device *dev,
-diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_vlan.c b/drivers/net/ethernet/microchip/lan966x/lan966x_vlan.c
-index fa34a739c748e..7da22520724ce 100644
---- a/drivers/net/ethernet/microchip/lan966x/lan966x_vlan.c
-+++ b/drivers/net/ethernet/microchip/lan966x/lan966x_vlan.c
-@@ -149,6 +149,27 @@ void lan966x_vlan_port_set_vlan_aware(struct lan966x_port *port,
- 	port->vlan_aware = vlan_aware;
- }
- 
-+/* When the interface is in host mode, the interface should not be vlan aware
-+ * but it should insert all the tags that it gets from the network stack.
-+ * The tags are not in the data of the frame but actually in the skb and the ifh
-+ * is configured already to get this tag. So what we need to do is to update the
-+ * rewriter to insert the vlan tag for all frames which have a vlan tag
-+ * different than 0.
++
++/*
++ * bio with REQ_RAHEAD or REQ_NOWAIT can fail at anytime, before such IO is
++ * submitted to the underlying disks, hence don't record badblocks or retry
++ * in this case.
 + */
-+void lan966x_vlan_port_rew_host(struct lan966x_port *port)
++static inline bool raid1_should_handle_error(struct bio *bio)
 +{
-+	struct lan966x *lan966x = port->lan966x;
-+	u32 val;
-+
-+	/* Tag all frames except when VID=0*/
-+	val = REW_TAG_CFG_TAG_CFG_SET(2);
-+
-+	/* Update only some bits in the register */
-+	lan_rmw(val,
-+		REW_TAG_CFG_TAG_CFG,
-+		lan966x, REW_TAG_CFG(port->chip_port));
++	return !(bio->bi_opf & (REQ_RAHEAD | REQ_NOWAIT));
 +}
-+
- void lan966x_vlan_port_apply(struct lan966x_port *port)
- {
- 	struct lan966x *lan966x = port->lan966x;
+diff --git a/drivers/md/raid1.c b/drivers/md/raid1.c
+index de9bccbe7337b..1fe645e630012 100644
+--- a/drivers/md/raid1.c
++++ b/drivers/md/raid1.c
+@@ -373,14 +373,16 @@ static void raid1_end_read_request(struct bio *bio)
+ 	 */
+ 	update_head_pos(r1_bio->read_disk, r1_bio);
+ 
+-	if (uptodate)
++	if (uptodate) {
+ 		set_bit(R1BIO_Uptodate, &r1_bio->state);
+-	else if (test_bit(FailFast, &rdev->flags) &&
+-		 test_bit(R1BIO_FailFast, &r1_bio->state))
++	} else if (test_bit(FailFast, &rdev->flags) &&
++		 test_bit(R1BIO_FailFast, &r1_bio->state)) {
+ 		/* This was a fail-fast read so we definitely
+ 		 * want to retry */
+ 		;
+-	else {
++	} else if (!raid1_should_handle_error(bio)) {
++		uptodate = 1;
++	} else {
+ 		/* If all other devices have failed, we want to return
+ 		 * the error upwards rather than fail the last device.
+ 		 * Here we redefine "uptodate" to mean "Don't want to retry"
+@@ -451,16 +453,15 @@ static void raid1_end_write_request(struct bio *bio)
+ 	struct bio *to_put = NULL;
+ 	int mirror = find_bio_disk(r1_bio, bio);
+ 	struct md_rdev *rdev = conf->mirrors[mirror].rdev;
+-	bool discard_error;
+ 	sector_t lo = r1_bio->sector;
+ 	sector_t hi = r1_bio->sector + r1_bio->sectors;
+-
+-	discard_error = bio->bi_status && bio_op(bio) == REQ_OP_DISCARD;
++	bool ignore_error = !raid1_should_handle_error(bio) ||
++		(bio->bi_status && bio_op(bio) == REQ_OP_DISCARD);
+ 
+ 	/*
+ 	 * 'one mirror IO has finished' event handler:
+ 	 */
+-	if (bio->bi_status && !discard_error) {
++	if (bio->bi_status && !ignore_error) {
+ 		set_bit(WriteErrorSeen,	&rdev->flags);
+ 		if (!test_and_set_bit(WantReplacement, &rdev->flags))
+ 			set_bit(MD_RECOVERY_NEEDED, &
+@@ -511,7 +512,7 @@ static void raid1_end_write_request(struct bio *bio)
+ 
+ 		/* Maybe we can clear some bad blocks. */
+ 		if (rdev_has_badblock(rdev, r1_bio->sector, r1_bio->sectors) &&
+-		    !discard_error) {
++		    !ignore_error) {
+ 			r1_bio->bios[mirror] = IO_MADE_GOOD;
+ 			set_bit(R1BIO_MadeGood, &r1_bio->state);
+ 		}
+diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
+index ba32bac975b8d..54320a887ecc5 100644
+--- a/drivers/md/raid10.c
++++ b/drivers/md/raid10.c
+@@ -399,6 +399,8 @@ static void raid10_end_read_request(struct bio *bio)
+ 		 * wait for the 'master' bio.
+ 		 */
+ 		set_bit(R10BIO_Uptodate, &r10_bio->state);
++	} else if (!raid1_should_handle_error(bio)) {
++		uptodate = 1;
+ 	} else {
+ 		/* If all other devices that store this block have
+ 		 * failed, we want to return the error upwards rather
+@@ -456,9 +458,8 @@ static void raid10_end_write_request(struct bio *bio)
+ 	int slot, repl;
+ 	struct md_rdev *rdev = NULL;
+ 	struct bio *to_put = NULL;
+-	bool discard_error;
+-
+-	discard_error = bio->bi_status && bio_op(bio) == REQ_OP_DISCARD;
++	bool ignore_error = !raid1_should_handle_error(bio) ||
++		(bio->bi_status && bio_op(bio) == REQ_OP_DISCARD);
+ 
+ 	dev = find_bio_disk(conf, r10_bio, bio, &slot, &repl);
+ 
+@@ -472,7 +473,7 @@ static void raid10_end_write_request(struct bio *bio)
+ 	/*
+ 	 * this branch is our 'one mirror IO has finished' event handler:
+ 	 */
+-	if (bio->bi_status && !discard_error) {
++	if (bio->bi_status && !ignore_error) {
+ 		if (repl)
+ 			/* Never record new bad blocks to replacement,
+ 			 * just fail it.
+@@ -527,7 +528,7 @@ static void raid10_end_write_request(struct bio *bio)
+ 		/* Maybe we can clear some bad blocks. */
+ 		if (rdev_has_badblock(rdev, r10_bio->devs[slot].addr,
+ 				      r10_bio->sectors) &&
+-		    !discard_error) {
++		    !ignore_error) {
+ 			bio_put(bio);
+ 			if (repl)
+ 				r10_bio->devs[slot].repl_bio = IO_MADE_GOOD;
 -- 
 2.39.5
 
