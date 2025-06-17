@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F7CF221F1F;
-	Tue, 17 Jun 2025 15:35:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C67722ECD31;
+	Tue, 17 Jun 2025 15:35:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750174517; cv=none; b=j6+TIkP70JhhQ2flyokqcDhfgf3CL0dhVALuV26Y2ZJTodfUKuhRenrbAUtWLwSyfEsCIMWbrWl3NuMQlgB18ICvN5HzhlkRMRHB1jTDtpaYkyOD4UMpMbi+s2RLZNthcXNOHMObuLDn7N0GNYyjomV5XKJOWP2Mc9bKmejwX9o=
+	t=1750174522; cv=none; b=IZxc7oKL0doEPvhckhWzsDJJHg567VupZFWrclwWLVW9bUe2xhROc4yTJDWx8j41IcsOtQNSxeb3zHyvZNj092Q9E7bE13/bopUKoxQY8fsYLaXZEFsgK+0a+/wEOcfcmaqyWJ9I7B+cKUdVtcWH4u0wpBIMPxz0MoFarXo6UmU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750174517; c=relaxed/simple;
-	bh=vLEqN4+2oCpnoF9VSbiOOQK/ZErEAovFhTfvB420Ty0=;
+	s=arc-20240116; t=1750174522; c=relaxed/simple;
+	bh=UZCXn9CF8j+004ZYIfmn8jVX/USSUce/EviMiiIl68k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r5+MbfVYZDFgEYXNFgfSRBtKNRsnRNDSHxkOXqS1tbRjmiD1oFB5PGIyZe5+nmWC+e2zrx6l5IV5/ij9KJ6q+uF7+5zyxLyv+J9NiZFzzd3BNyXLdGoVOE4Y0JV2Nsr4kwP+uHBiOGGLwJ0cMm6nmzd28ELhh+ULZ2tsqUZ+eHw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lQOQo7/q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=YYiQCObe51Ek8/DrbA60D9tn+8s50I0UJSUWlqwiLh8RnG7FmOoAlO60G5tdPDl7tzlcYE5EEcY7TSup5FNYZqFsQiMDEIrLJc8xMzvT9TZeR9pB3Ps1uezOt+dprlmSP6QmUrKbHfLzTmLS3lBjYE2plEyW3mTyak/2f1ju+hI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ezRmJStt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lQOQo7/q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D86CCC4CEE3;
-	Tue, 17 Jun 2025 15:35:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ezRmJStt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28CE4C4CEF1;
+	Tue, 17 Jun 2025 15:35:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750174517;
-	bh=vLEqN4+2oCpnoF9VSbiOOQK/ZErEAovFhTfvB420Ty0=;
+	s=korg; t=1750174522;
+	bh=UZCXn9CF8j+004ZYIfmn8jVX/USSUce/EviMiiIl68k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lQOQo7/qnu8GaCjkb/uk9/OapkTCVP44UrfZAVbvEvvazBMV1oOio5HhTjwcmONBK
-	 JiRbV8o6c8Ujp4Up8itdTPCnZGanmo+xJuC8Z16pDz8bc878oAaeAZbE0SSVxbTFRz
-	 z5U4AzJWBnB/7wsvya3gLFjaUZMVUh8xp9oYji14=
+	b=ezRmJSttIygNTyOuh4WYjh6c6aEJjsrQFRUznF4LEoObgvTck8BzedOogwJwVGgLO
+	 q59zE3R64pQKWFrzouZFVHZrP45+mI/zsF08rSMluGzvcSiexnTO+olsYMcZ5xh0Fr
+	 n85C38PA27+p1OkKjlPGe6MLoSBzRQ8jpa/c3nME=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	John <jw@nuclearfallout.net>,
+	=?UTF-8?q?Roger=20Pau=20Monn=C3=A9?= <roger.pau@citrix.com>,
+	Juergen Gross <jgross@suse.com>,
+	=?UTF-8?q?Marek=20Marczykowski-G=C3=B3recki?= <marmarek@invisiblethingslab.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 029/512] btrfs: fix invalid data space release when truncating block in NOCOW mode
-Date: Tue, 17 Jun 2025 17:19:55 +0200
-Message-ID: <20250617152420.738957220@linuxfoundation.org>
+Subject: [PATCH 6.6 079/356] xen/x86: fix initial memory balloon target
+Date: Tue, 17 Jun 2025 17:23:14 +0200
+Message-ID: <20250617152341.400338132@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
+References: <20250617152338.212798615@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,60 +47,71 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Roger Pau Monne <roger.pau@citrix.com>
 
-[ Upstream commit d3914d6030aa6be2993dfc223d096ff93018c236 ]
+[ Upstream commit 74287971dbb3fe322bb316afd9e7fb5807e23bee ]
 
-If when truncating a block we fail to reserve data space and then we
-proceed anyway because we can do a NOCOW write, if we later get an error
-when trying to get the folio from the inode's mapping, we end up releasing
-data space that we haven't reserved, screwing up the bytes_may_use counter
-from the data space_info, eventually resulting in an underflow when all
-other reservations done by other tasks are released, if any, or right away
-if there are no other reservations at the moment.
+When adding extra memory regions as ballooned pages also adjust the balloon
+target, otherwise when the balloon driver is started it will populate
+memory to match the target value and consume all the extra memory regions
+added.
 
-This is because when we get an error when trying to grab the block's folio
-we call btrfs_delalloc_release_space(), which releases metadata (which we
-have reserved) and data (which we haven't reserved).
+This made the usage of the Xen `dom0_mem=,max:` command line parameter for
+dom0 not work as expected, as the target won't be adjusted and when the
+balloon is started it will populate memory straight to the 'max:' value.
+It would equally affect domUs that have memory != maxmem.
 
-Fix this by calling btrfs_delalloc_release_space() only if we did reserve
-data space, that is, if we aren't falling back to NOCOW, meaning the local
-variable @only_release_metadata has a false value, otherwise release only
-metadata by calling btrfs_delalloc_release_metadata().
+Kernels built with CONFIG_XEN_UNPOPULATED_ALLOC are not affected, because
+the extra memory regions are consumed by the unpopulated allocation driver,
+and then balloon_add_regions() becomes a no-op.
 
-Fixes: 6d4572a9d71d ("btrfs: allow btrfs_truncate_block() to fallback to nocow for data space reservation")
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Reported-by: John <jw@nuclearfallout.net>
+Fixes: 87af633689ce ('x86/xen: fix balloon target initialization for PVH dom0')
+Signed-off-by: Roger Pau Monné <roger.pau@citrix.com>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Tested-by: Marek Marczykowski-Górecki <marmarek@invisiblethingslab.com>
+Message-ID: <20250514080427.28129-1-roger.pau@citrix.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/inode.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/xen/balloon.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
-index 9ce1270addb04..1ab5b0c1b9b76 100644
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -4857,8 +4857,11 @@ int btrfs_truncate_block(struct btrfs_inode *inode, loff_t from, loff_t len,
- 	folio = __filemap_get_folio(mapping, index,
- 				    FGP_LOCK | FGP_ACCESSED | FGP_CREAT, mask);
- 	if (IS_ERR(folio)) {
--		btrfs_delalloc_release_space(inode, data_reserved, block_start,
--					     blocksize, true);
-+		if (only_release_metadata)
-+			btrfs_delalloc_release_metadata(inode, blocksize, true);
-+		else
-+			btrfs_delalloc_release_space(inode, data_reserved,
-+						     block_start, blocksize, true);
- 		btrfs_delalloc_release_extents(inode, blocksize);
- 		ret = -ENOMEM;
- 		goto out;
+diff --git a/drivers/xen/balloon.c b/drivers/xen/balloon.c
+index b0b52fa8fba6d..204ec1bcbd526 100644
+--- a/drivers/xen/balloon.c
++++ b/drivers/xen/balloon.c
+@@ -696,15 +696,18 @@ static int __init balloon_add_regions(void)
+ 
+ 		/*
+ 		 * Extra regions are accounted for in the physmap, but need
+-		 * decreasing from current_pages to balloon down the initial
+-		 * allocation, because they are already accounted for in
+-		 * total_pages.
++		 * decreasing from current_pages and target_pages to balloon
++		 * down the initial allocation, because they are already
++		 * accounted for in total_pages.
+ 		 */
+-		if (extra_pfn_end - start_pfn >= balloon_stats.current_pages) {
++		pages = extra_pfn_end - start_pfn;
++		if (pages >= balloon_stats.current_pages ||
++		    pages >= balloon_stats.target_pages) {
+ 			WARN(1, "Extra pages underflow current target");
+ 			return -ERANGE;
+ 		}
+-		balloon_stats.current_pages -= extra_pfn_end - start_pfn;
++		balloon_stats.current_pages -= pages;
++		balloon_stats.target_pages -= pages;
+ 	}
+ 
+ 	return 0;
 -- 
 2.39.5
 
