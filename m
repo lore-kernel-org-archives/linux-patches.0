@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1F682DFF02;
-	Tue, 17 Jun 2025 16:22:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C9A222AE7F;
+	Tue, 17 Jun 2025 16:22:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177322; cv=none; b=YJMP8ItSRaKSrheZAQUmwqTrmNiNFfh2hsItIHLhgo4lmoV1vLAgDSimgBmTi5oJ5c/CWtyxMOZEpeAuTJoEiaJ6KsvWDxkK6JLHp3ajIIyXvfdqqLbmAp+ShgrAVNWTd1OQX3lD192G2rXmdN/b1cE2wQH7hnysddhhLATl2Ls=
+	t=1750177325; cv=none; b=QdA5LvXNRdDB1bq8u7HXVWA8xwsdWIDw+ZDyYRZXaHr45Me1MJJbKDdDGuR0NhzCqzJTxlBQ0MrnX2y+GEjVFJVrpueCevaNlgsq3Ds8IX38R9nnthMhVtmpjuVjxikIoJdT57HAywcY8x4iFozPvzTB/RMbfWYi/bgTOIxPBgQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177322; c=relaxed/simple;
-	bh=toxTyOdb9tuATbdb149AwieUQYmZc4+cQ6sVxLTlPlI=;
+	s=arc-20240116; t=1750177325; c=relaxed/simple;
+	bh=P3WE7Zeq6ZxGmf26dZ5W2UuBHrEv55XMkxKNwYUyejY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UNUHmUenJ6ew7afTnmgHntSn1XWhKhR2KfjYTjqUFQz+Ht64RDGK7YQghEU7pbuZEZ0vl9A3gc+2IS8VodxSvI9CP8643zfKtKv6Afx7ZgKexaq+mPgByl4RCDwna/laBUcdLlSlUbMnwJBs2hCumDIcJYf41XiS9AwD3seBoYU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LxAT5uny; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cswCslzIz89y36Z4xqApLm33NCvwV0hWUY7YuRuPR++jzFCBmOvZ0ecOCEPiLVFlcl1YTawsanc6U/6Qv2rBsXZHcOkW9UTxqivz6/pqO3VJUYrZBOcptJlomHZ+45R+HllAGLS7xUIsmsT/YaU8/rq/5XWaGVhHfVWY5Cr4fa8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HpJXZufX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LxAT5uny"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B3EFC4CEE3;
-	Tue, 17 Jun 2025 16:22:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HpJXZufX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEA90C4CEF0;
+	Tue, 17 Jun 2025 16:22:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177321;
-	bh=toxTyOdb9tuATbdb149AwieUQYmZc4+cQ6sVxLTlPlI=;
+	s=korg; t=1750177325;
+	bh=P3WE7Zeq6ZxGmf26dZ5W2UuBHrEv55XMkxKNwYUyejY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LxAT5unyrG4JqtTQRqeOEqvhCmO9FZAq7AqSFELp/PqoDyRoMZsdidazhXNmswwPw
-	 dDpFOhQ26qeikf1mInKD5Zuik7kDW6e4fFiDHgrqHrlBkVI7kAWJbtKb2PpHnETSLX
-	 0UrPaEi+2YkSm9acYacHmai/YWWUJ2WhMHabN6cU=
+	b=HpJXZufXRZudjbSQ6TZxbN9CYAgbJwHSEnvwGXGWP3iZ7eisaAPN8lkEIbraHtq0F
+	 ietn+04E+sioahlDqP54kLO5JAnlSkzhwXsbr4vWtLiN5YXrFYgmpf3NwWAauhCl+P
+	 GSGE6svlAwpO9vXQm6VaFs1DAj0TNsehcvkQny7c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charles Han <hanchunchao@inspur.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Brian Pellegrino <bpellegrino@arka.org>,
+	Sam Winchenbach <swinchenbach@arka.org>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 289/780] wifi: mt76: mt7996: Add NULL check in mt7996_thermal_init
-Date: Tue, 17 Jun 2025 17:19:57 +0200
-Message-ID: <20250617152503.240025203@linuxfoundation.org>
+Subject: [PATCH 6.12 327/512] iio: filter: admv8818: Support frequencies >= 2^32
+Date: Tue, 17 Jun 2025 17:24:53 +0200
+Message-ID: <20250617152432.852297225@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,42 +48,73 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Charles Han <hanchunchao@inspur.com>
+From: Brian Pellegrino <bpellegrino@arka.org>
 
-[ Upstream commit caf4b347c5dc40fdd125793b5e82ba9fc4de5275 ]
+[ Upstream commit 9016776f1301627de78a633bda7c898425a56572 ]
 
-devm_kasprintf() can return a NULL pointer on failure,but this
-returned value in mt7996_thermal_init() is not checked.
-Add NULL check in mt7996_thermal_init(), to handle kernel NULL
-pointer dereference error.
+This patch allows writing u64 values to the ADMV8818's high and low-pass
+filter frequencies. It includes the following changes:
 
-Fixes: 69d54ce7491d ("wifi: mt76: mt7996: switch to single multi-radio wiphy")
-Signed-off-by: Charles Han <hanchunchao@inspur.com>
-Link: https://patch.msgid.link/20250407095551.32127-1-hanchunchao@inspur.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+- Rejects negative frequencies in admv8818_write_raw.
+- Adds a write_raw_get_fmt function to admv8818's iio_info, returning
+  IIO_VAL_INT_64 for the high and low-pass filter 3dB frequency channels.
+
+Fixes: f34fe888ad05 ("iio:filter:admv8818: add support for ADMV8818")
+Signed-off-by: Brian Pellegrino <bpellegrino@arka.org>
+Signed-off-by: Sam Winchenbach <swinchenbach@arka.org>
+Link: https://patch.msgid.link/20250328174831.227202-7-sam.winchenbach@framepointer.org
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/init.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/iio/filter/admv8818.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/init.c b/drivers/net/wireless/mediatek/mt76/mt7996/init.c
-index 6b660424aedc3..5af52bd1f1f12 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/init.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/init.c
-@@ -217,6 +217,9 @@ static int mt7996_thermal_init(struct mt7996_phy *phy)
+diff --git a/drivers/iio/filter/admv8818.c b/drivers/iio/filter/admv8818.c
+index 380e119b3cf54..cc8ce0fe74e7c 100644
+--- a/drivers/iio/filter/admv8818.c
++++ b/drivers/iio/filter/admv8818.c
+@@ -402,6 +402,19 @@ static int admv8818_read_lpf_freq(struct admv8818_state *st, u64 *lpf_freq)
+ 	return ret;
+ }
  
- 	name = devm_kasprintf(&wiphy->dev, GFP_KERNEL, "mt7996_%s.%d",
- 			      wiphy_name(wiphy), phy->mt76->band_idx);
-+	if (!name)
-+		return -ENOMEM;
++static int admv8818_write_raw_get_fmt(struct iio_dev *indio_dev,
++								struct iio_chan_spec const *chan,
++								long mask)
++{
++	switch (mask) {
++	case IIO_CHAN_INFO_LOW_PASS_FILTER_3DB_FREQUENCY:
++	case IIO_CHAN_INFO_HIGH_PASS_FILTER_3DB_FREQUENCY:
++		return IIO_VAL_INT_64;
++	default:
++		return -EINVAL;
++	}
++}
 +
- 	snprintf(cname, sizeof(cname), "cooling_device%d", phy->mt76->band_idx);
+ static int admv8818_write_raw(struct iio_dev *indio_dev,
+ 			      struct iio_chan_spec const *chan,
+ 			      int val, int val2, long info)
+@@ -410,6 +423,9 @@ static int admv8818_write_raw(struct iio_dev *indio_dev,
  
- 	cdev = thermal_cooling_device_register(name, phy, &mt7996_thermal_ops);
+ 	u64 freq = ((u64)val2 << 32 | (u32)val);
+ 
++	if ((s64)freq < 0)
++		return -EINVAL;
++
+ 	switch (info) {
+ 	case IIO_CHAN_INFO_LOW_PASS_FILTER_3DB_FREQUENCY:
+ 		return admv8818_lpf_select(st, freq);
+@@ -571,6 +587,7 @@ static int admv8818_set_mode(struct iio_dev *indio_dev,
+ 
+ static const struct iio_info admv8818_info = {
+ 	.write_raw = admv8818_write_raw,
++	.write_raw_get_fmt = admv8818_write_raw_get_fmt,
+ 	.read_raw = admv8818_read_raw,
+ 	.debugfs_reg_access = &admv8818_reg_access,
+ };
 -- 
 2.39.5
 
