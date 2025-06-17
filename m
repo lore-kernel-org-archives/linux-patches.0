@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2C452F2C55;
-	Tue, 17 Jun 2025 15:50:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A4D42F2C41;
+	Tue, 17 Jun 2025 15:50:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175420; cv=none; b=TL/zcdLC+5pePOMyxlPV3gvDFC2lGjZrBYqIyxrceAXlDNRSyk/wXLA530IZv4hsyTJlTCmKXZKOvbt5jWMKAmu+WltmrFZIuhXpmva0PyS+y69ldePXfkJWieDy/vHe4lKoeqPLvewI/b9F9ZJbbY0UCk8odn4xPqE/KluV8eA=
+	t=1750175423; cv=none; b=CE6vQVLQuFZcmmyG+OCy0U6LnwXcF3PEjXlRSH2g3qClJav0D0K3mUMGaTcmI1VGzwnnwvYmX0phnASIk/bEP4+l2FoRlymAnBmRb+DoxoSxQfRvzYX3eLkoZ1fPDkAjNb7TtyNZZKCvJiTamwzysNy/REb5pHN0Cvsl+QYqAD0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175420; c=relaxed/simple;
-	bh=M202Es4hzm4xT4dK+acrZRgcACAjGgD9Er5HkE8AVcg=;
+	s=arc-20240116; t=1750175423; c=relaxed/simple;
+	bh=hUN0BFYMjwI1svQL+RBOemtKZHRTdJ7o27yMzfneW+A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G7dxFqaz/Szj87MKRzvdHEvF0BIu3ALb4i1RnVHngwm0n0C421Z9+TvWUxw7Jl5jhiDkx7Pt5iUdOO65zgTNhGQiyQEeUDKATBjvtT5CudpFoGphkzkg3T6qM6t36c9MekCjrA5mPIINpErW3wc4vX8NGlcYq2d4EFmnOZhjud0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I0oHP2ki; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tHuw+BSiTrjzVIyaJtOTU9OFDfwUZz2h+IEI1rCbK2+Nxn+LqDDauku4lkpWnh+m/QgoRTrmESaYHU2zmp2/jCm+kmEMctbt2DoqzoNWevdw821OVhwiSeDgJAT4GlixYC5BQlepKECVj+qJdjGcyOhJuGtwGP5wqQuHEvV4Zrc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kPkKCEQq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I0oHP2ki"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75FF4C4CEF1;
-	Tue, 17 Jun 2025 15:50:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kPkKCEQq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0475C4CEE3;
+	Tue, 17 Jun 2025 15:50:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175419;
-	bh=M202Es4hzm4xT4dK+acrZRgcACAjGgD9Er5HkE8AVcg=;
+	s=korg; t=1750175423;
+	bh=hUN0BFYMjwI1svQL+RBOemtKZHRTdJ7o27yMzfneW+A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I0oHP2ki1qCeDfFXhbz5IxM0CCJAQkNFDWW6z9KYSLcHL2bn3aWwk7acgVGsLpipx
-	 yRWdmXerXNe79YFnNIH+tr0fvfW3Zge673z+3bu0WrHt7tu10+I+6Vqg3JUfEbNXT3
-	 W14pJeqebkCg0BNTZcGR+ucUXb+tLvqUi1Rm8lY4=
+	b=kPkKCEQq1L9EyEbpIBrALkyI7RJfQOLxo3HqDqMXMZXUO2FNJ1AgvxK2aT+MThOKt
+	 apxpr6SXYxGZwzaEmXLnjO8FhOKeSbGzULr4z9ayInx1MlZR1ZUw5OhTftbLG/fZ3v
+	 wpyBGm3v3IivvTVld1cesN6FkOaGRV0uhAlHZ9ZE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	lmarch2 <2524158037@qq.com>,
-	Viktor Malik <vmalik@redhat.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Shung-Hsi Yu <shung-hsi.yu@suse.com>,
+	Jaroslav Kysela <perex@perex.cz>,
+	Takashi Iwai <tiwai@suse.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 124/512] libbpf: Fix buffer overflow in bpf_object__init_prog
-Date: Tue, 17 Jun 2025 17:21:30 +0200
-Message-ID: <20250617152424.618110074@linuxfoundation.org>
+Subject: [PATCH 6.15 086/780] ALSA: core: fix up bus match const issues.
+Date: Tue, 17 Jun 2025 17:16:34 +0200
+Message-ID: <20250617152455.017708106@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,108 +48,120 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Viktor Malik <vmalik@redhat.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit ee684de5c1b0ac01821320826baec7da93f3615b ]
+[ Upstream commit 62f134ab190c5fd5c9f68fe638ad8e13bb8a4cb4 ]
 
-As shown in [1], it is possible to corrupt a BPF ELF file such that
-arbitrary BPF instructions are loaded by libbpf. This can be done by
-setting a symbol (BPF program) section offset to a large (unsigned)
-number such that <section start + symbol offset> overflows and points
-before the section data in the memory.
+In commit d69d80484598 ("driver core: have match() callback in struct
+bus_type take a const *"), the match bus callback was changed to have
+the driver be a const pointer.  Unfortunately that const attribute was
+thrown away when container_of() is called, which is not correct and was
+not caught by the compiler due to how container_of() is implemented.
+Fix this up by correctly preserving the const attribute of the driver
+passed to the bus match function which requires the hdac_driver match
+function to also take a const pointer for the driver structure.
 
-Consider the situation below where:
-- prog_start = sec_start + symbol_offset    <-- size_t overflow here
-- prog_end   = prog_start + prog_size
-
-    prog_start        sec_start        prog_end        sec_end
-        |                |                 |              |
-        v                v                 v              v
-    .....................|################################|............
-
-The report in [1] also provides a corrupted BPF ELF which can be used as
-a reproducer:
-
-    $ readelf -S crash
-    Section Headers:
-      [Nr] Name              Type             Address           Offset
-           Size              EntSize          Flags  Link  Info  Align
-    ...
-      [ 2] uretprobe.mu[...] PROGBITS         0000000000000000  00000040
-           0000000000000068  0000000000000000  AX       0     0     8
-
-    $ readelf -s crash
-    Symbol table '.symtab' contains 8 entries:
-       Num:    Value          Size Type    Bind   Vis      Ndx Name
-    ...
-         6: ffffffffffffffb8   104 FUNC    GLOBAL DEFAULT    2 handle_tp
-
-Here, the handle_tp prog has section offset ffffffffffffffb8, i.e. will
-point before the actual memory where section 2 is allocated.
-
-This is also reported by AddressSanitizer:
-
-    =================================================================
-    ==1232==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x7c7302fe0000 at pc 0x7fc3046e4b77 bp 0x7ffe64677cd0 sp 0x7ffe64677490
-    READ of size 104 at 0x7c7302fe0000 thread T0
-        #0 0x7fc3046e4b76 in memcpy (/lib64/libasan.so.8+0xe4b76)
-        #1 0x00000040df3e in bpf_object__init_prog /src/libbpf/src/libbpf.c:856
-        #2 0x00000040df3e in bpf_object__add_programs /src/libbpf/src/libbpf.c:928
-        #3 0x00000040df3e in bpf_object__elf_collect /src/libbpf/src/libbpf.c:3930
-        #4 0x00000040df3e in bpf_object_open /src/libbpf/src/libbpf.c:8067
-        #5 0x00000040f176 in bpf_object__open_file /src/libbpf/src/libbpf.c:8090
-        #6 0x000000400c16 in main /poc/poc.c:8
-        #7 0x7fc3043d25b4 in __libc_start_call_main (/lib64/libc.so.6+0x35b4)
-        #8 0x7fc3043d2667 in __libc_start_main@@GLIBC_2.34 (/lib64/libc.so.6+0x3667)
-        #9 0x000000400b34 in _start (/poc/poc+0x400b34)
-
-    0x7c7302fe0000 is located 64 bytes before 104-byte region [0x7c7302fe0040,0x7c7302fe00a8)
-    allocated by thread T0 here:
-        #0 0x7fc3046e716b in malloc (/lib64/libasan.so.8+0xe716b)
-        #1 0x7fc3045ee600 in __libelf_set_rawdata_wrlock (/lib64/libelf.so.1+0xb600)
-        #2 0x7fc3045ef018 in __elf_getdata_rdlock (/lib64/libelf.so.1+0xc018)
-        #3 0x00000040642f in elf_sec_data /src/libbpf/src/libbpf.c:3740
-
-The problem here is that currently, libbpf only checks that the program
-end is within the section bounds. There used to be a check
-`while (sec_off < sec_sz)` in bpf_object__add_programs, however, it was
-removed by commit 6245947c1b3c ("libbpf: Allow gaps in BPF program
-sections to support overriden weak functions").
-
-Add a check for detecting the overflow of `sec_off + prog_sz` to
-bpf_object__init_prog to fix this issue.
-
-[1] https://github.com/lmarch2/poc/blob/main/libbpf/libbpf.md
-
-Fixes: 6245947c1b3c ("libbpf: Allow gaps in BPF program sections to support overriden weak functions")
-Reported-by: lmarch2 <2524158037@qq.com>
-Signed-off-by: Viktor Malik <vmalik@redhat.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Reviewed-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
-Link: https://github.com/lmarch2/poc/blob/main/libbpf/libbpf.md
-Link: https://lore.kernel.org/bpf/20250415155014.397603-1-vmalik@redhat.com
+Cc: Jaroslav Kysela <perex@perex.cz>
+Cc: Takashi Iwai <tiwai@suse.com>
+Fixes: d69d80484598 ("driver core: have match() callback in struct bus_type take a const *")
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://patch.msgid.link/2025052204-hyphen-thermal-3e72@gregkh
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/libbpf.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/sound/hdaudio.h  | 4 ++--
+ sound/core/seq_device.c  | 2 +-
+ sound/hda/hda_bus_type.c | 6 +++---
+ sound/pci/hda/hda_bind.c | 4 ++--
+ 4 files changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
-index 6e4d417604fa0..069ffe5da96e5 100644
---- a/tools/lib/bpf/libbpf.c
-+++ b/tools/lib/bpf/libbpf.c
-@@ -887,7 +887,7 @@ bpf_object__add_programs(struct bpf_object *obj, Elf_Data *sec_data,
- 			return -LIBBPF_ERRNO__FORMAT;
- 		}
+diff --git a/include/sound/hdaudio.h b/include/sound/hdaudio.h
+index b098ceadbe74b..9a70048adbc06 100644
+--- a/include/sound/hdaudio.h
++++ b/include/sound/hdaudio.h
+@@ -223,7 +223,7 @@ struct hdac_driver {
+ 	struct device_driver driver;
+ 	int type;
+ 	const struct hda_device_id *id_table;
+-	int (*match)(struct hdac_device *dev, struct hdac_driver *drv);
++	int (*match)(struct hdac_device *dev, const struct hdac_driver *drv);
+ 	void (*unsol_event)(struct hdac_device *dev, unsigned int event);
  
--		if (sec_off + prog_sz > sec_sz) {
-+		if (sec_off + prog_sz > sec_sz || sec_off + prog_sz < sec_off) {
- 			pr_warn("sec '%s': program at offset %zu crosses section boundary\n",
- 				sec_name, sec_off);
- 			return -LIBBPF_ERRNO__FORMAT;
+ 	/* fields used by ext bus APIs */
+@@ -235,7 +235,7 @@ struct hdac_driver {
+ #define drv_to_hdac_driver(_drv) container_of(_drv, struct hdac_driver, driver)
+ 
+ const struct hda_device_id *
+-hdac_get_device_id(struct hdac_device *hdev, struct hdac_driver *drv);
++hdac_get_device_id(struct hdac_device *hdev, const struct hdac_driver *drv);
+ 
+ /*
+  * Bus verb operators
+diff --git a/sound/core/seq_device.c b/sound/core/seq_device.c
+index 4492be5d2317c..bac9f86037342 100644
+--- a/sound/core/seq_device.c
++++ b/sound/core/seq_device.c
+@@ -43,7 +43,7 @@ MODULE_LICENSE("GPL");
+ static int snd_seq_bus_match(struct device *dev, const struct device_driver *drv)
+ {
+ 	struct snd_seq_device *sdev = to_seq_dev(dev);
+-	struct snd_seq_driver *sdrv = to_seq_drv(drv);
++	const struct snd_seq_driver *sdrv = to_seq_drv(drv);
+ 
+ 	return strcmp(sdrv->id, sdev->id) == 0 &&
+ 		sdrv->argsize == sdev->argsize;
+diff --git a/sound/hda/hda_bus_type.c b/sound/hda/hda_bus_type.c
+index 7545ace7b0ee4..eb72a7af2e56e 100644
+--- a/sound/hda/hda_bus_type.c
++++ b/sound/hda/hda_bus_type.c
+@@ -21,7 +21,7 @@ MODULE_LICENSE("GPL");
+  * driver id_table and returns the matching device id entry.
+  */
+ const struct hda_device_id *
+-hdac_get_device_id(struct hdac_device *hdev, struct hdac_driver *drv)
++hdac_get_device_id(struct hdac_device *hdev, const struct hdac_driver *drv)
+ {
+ 	if (drv->id_table) {
+ 		const struct hda_device_id *id  = drv->id_table;
+@@ -38,7 +38,7 @@ hdac_get_device_id(struct hdac_device *hdev, struct hdac_driver *drv)
+ }
+ EXPORT_SYMBOL_GPL(hdac_get_device_id);
+ 
+-static int hdac_codec_match(struct hdac_device *dev, struct hdac_driver *drv)
++static int hdac_codec_match(struct hdac_device *dev, const struct hdac_driver *drv)
+ {
+ 	if (hdac_get_device_id(dev, drv))
+ 		return 1;
+@@ -49,7 +49,7 @@ static int hdac_codec_match(struct hdac_device *dev, struct hdac_driver *drv)
+ static int hda_bus_match(struct device *dev, const struct device_driver *drv)
+ {
+ 	struct hdac_device *hdev = dev_to_hdac_dev(dev);
+-	struct hdac_driver *hdrv = drv_to_hdac_driver(drv);
++	const struct hdac_driver *hdrv = drv_to_hdac_driver(drv);
+ 
+ 	if (hdev->type != hdrv->type)
+ 		return 0;
+diff --git a/sound/pci/hda/hda_bind.c b/sound/pci/hda/hda_bind.c
+index 9521e5e0e6e6f..1fef350d821ef 100644
+--- a/sound/pci/hda/hda_bind.c
++++ b/sound/pci/hda/hda_bind.c
+@@ -18,10 +18,10 @@
+ /*
+  * find a matching codec id
+  */
+-static int hda_codec_match(struct hdac_device *dev, struct hdac_driver *drv)
++static int hda_codec_match(struct hdac_device *dev, const struct hdac_driver *drv)
+ {
+ 	struct hda_codec *codec = container_of(dev, struct hda_codec, core);
+-	struct hda_codec_driver *driver =
++	const struct hda_codec_driver *driver =
+ 		container_of(drv, struct hda_codec_driver, core);
+ 	const struct hda_device_id *list;
+ 	/* check probe_id instead of vendor_id if set */
 -- 
 2.39.5
 
