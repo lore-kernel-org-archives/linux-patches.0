@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A40812EA14E;
-	Tue, 17 Jun 2025 16:03:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 120FD2CCC5;
+	Tue, 17 Jun 2025 16:03:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750176219; cv=none; b=uz7RZ66/L1QUP9kIpeEnSfg7C9GWbGNWx0lwYOCWZVpO1AoVbynWJyRzS4xv+NUjhMS6LjZpfQcKXzxjArfzcQb3VpeFJgEVA5m752wU9LwSrepFvr8e8uw9NOdOWNj9uen5DN/YtTaGB83kOqg0rv9gqQvEiRH0ggx5CcsEFJ8=
+	t=1750176223; cv=none; b=a6tzG+45dm+//6GjSXE70Dw5VLAY628By8/BACHspONjPQZiqH6P+l3yodz0OfU+PL4k8fDCWp9jrjK3ocitBjYMGxjmJWDM3Pao+BiQQ5uoTcOrFc93cRSFd/o/5JajssRGBFR9iM1OYSCQ0YPiOXWjk4KxM/HNphpYi3ANgK0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750176219; c=relaxed/simple;
-	bh=1RevyJ5EXpXvP21XP7opYpHn03lcPj3wRmLD2ZaKY0M=;
+	s=arc-20240116; t=1750176223; c=relaxed/simple;
+	bh=x3Ea/XD/GSe+Mm3PXe7D55pzqdwz8qUgKEbzQltEJoc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NX4wlcwxKXg6DKq1ZCTiC1JVQVWzMgrgUTcyQjl4pDlL7uPaW8lj3xu6cmFLTVxouD34/GGMdfrAXx7LLlIo+lX1zsehAiddAtyIXkCO4ayGKbWYaumJoBb/vEJxjgEmh6NW1Th5tQElIP5hzAwVGgvxhlphwhB/G9WVHLt1bc4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G9wJTLiw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r2awiTqscG/tYJkbGNuL2elT+I6gN5GpKN96IGxThrTptxshOikL1a0eZHXoNbF0CgX2mp7/tOwNtRrnnOokIaBVe88KXa5271kS5bHdHGtg5PG4a5GivSja6py2/NIjzk21wVR6VFqc2KsFd/0JnKVt/axaDyWpDLdYu7mKt1E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cAIzgwPI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G9wJTLiw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15950C4CEE3;
-	Tue, 17 Jun 2025 16:03:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cAIzgwPI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58B4AC4CEF4;
+	Tue, 17 Jun 2025 16:03:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750176219;
-	bh=1RevyJ5EXpXvP21XP7opYpHn03lcPj3wRmLD2ZaKY0M=;
+	s=korg; t=1750176222;
+	bh=x3Ea/XD/GSe+Mm3PXe7D55pzqdwz8qUgKEbzQltEJoc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G9wJTLiwXpw91VUgTwuf53VbWsQ5JU5dCdjKo9W9LH1/u46YLhTpzMnZUzdfBjtJm
-	 Xm+naK0i9PpoYALjB1cRdz/o/NqiKeXQstuH8KNwDn9iNr/AT8rI9jPi3sMmTrzQWs
-	 +XiOz/nfoIqtjOuNG4ITDnLUMeQlMe1L8tLFd3T8=
+	b=cAIzgwPI4ZyUKJIALcy2/fbnQkYER2HEUduINUKyg4sabtrupkyVVSghL/v0WN76M
+	 TMLESIBm+vWFAgO7/jQMbBwpx8rfVwgdZzkpwmSissfawVhQYNsU7bzphfyAwTAlEQ
+	 /pu+XMPvShwnaNOByhqZkbr3EEGvfBXLGkdPwOqs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Alexis=20Lothor=C3=A9?= <alexis.lothore@bootlin.com>,
-	Yanteng Si <si.yanteng@linux.dev>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Karthikeyan Periyasamy <karthikeyan.periyasamy@oss.qualcomm.com>,
+	P Praneesh <praneesh.p@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 256/356] net: stmmac: make sure that ptp_rate is not 0 before configuring timestamping
-Date: Tue, 17 Jun 2025 17:26:11 +0200
-Message-ID: <20250617152348.513356935@linuxfoundation.org>
+Subject: [PATCH 6.15 166/780] wifi: ath12k: Fix invalid memory access while forming 802.11 header
+Date: Tue, 17 Jun 2025 17:17:54 +0200
+Message-ID: <20250617152458.245921537@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-References: <20250617152338.212798615@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,89 +46,189 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexis Lothoré <alexis.lothore@bootlin.com>
+From: P Praneesh <praneesh.p@oss.qualcomm.com>
 
-[ Upstream commit 030ce919e114a111e83b7976ecb3597cefd33f26 ]
+[ Upstream commit be908d2360341f8bbc982fff5a5e4f8030c17f74 ]
 
-The stmmac platform drivers that do not open-code the clk_ptp_rate value
-after having retrieved the default one from the device-tree can end up
-with 0 in clk_ptp_rate (as clk_get_rate can return 0). It will
-eventually propagate up to PTP initialization when bringing up the
-interface, leading to a divide by 0:
+While forming the 802.11 header from the rx descriptor, skb_push() is
+performed for the 802.11 header length and then calls
+ath12k_dp_rx_desc_get_dot11_hdr(). Since skb_push() moves the skb->data
+pointer backwards by the 802.11 header length, the rx descriptor points to
+a different memory area than intended, causing invalid information to be
+fetched from the rx descriptor.
 
- Division by zero in kernel.
- CPU: 1 UID: 0 PID: 1 Comm: swapper/0 Not tainted 6.12.30-00001-g48313bd5768a #22
- Hardware name: STM32 (Device Tree Support)
- Call trace:
-  unwind_backtrace from show_stack+0x18/0x1c
-  show_stack from dump_stack_lvl+0x6c/0x8c
-  dump_stack_lvl from Ldiv0_64+0x8/0x18
-  Ldiv0_64 from stmmac_init_tstamp_counter+0x190/0x1a4
-  stmmac_init_tstamp_counter from stmmac_hw_setup+0xc1c/0x111c
-  stmmac_hw_setup from __stmmac_open+0x18c/0x434
-  __stmmac_open from stmmac_open+0x3c/0xbc
-  stmmac_open from __dev_open+0xf4/0x1ac
-  __dev_open from __dev_change_flags+0x1cc/0x224
-  __dev_change_flags from dev_change_flags+0x24/0x60
-  dev_change_flags from ip_auto_config+0x2e8/0x11a0
-  ip_auto_config from do_one_initcall+0x84/0x33c
-  do_one_initcall from kernel_init_freeable+0x1b8/0x214
-  kernel_init_freeable from kernel_init+0x24/0x140
-  kernel_init from ret_from_fork+0x14/0x28
- Exception stack(0xe0815fb0 to 0xe0815ff8)
+Also, when IV and ICV are not stripped from the given MSDU, mac80211
+performs PN validation for these MSDUs, which requires the crypto header.
+Before forming the crypto header from the given rx descriptor, skb_push()
+is performed for the crypto header length, which overwrites the memory
+pointed to by the rx descriptor, causing invalid information to form the
+802.11 header.
 
-Prevent this division by 0 by adding an explicit check and error log
-about the actual issue. While at it, remove the same check from
-stmmac_ptp_register, which then becomes duplicate
+Fix these issues by moving all rx descriptor accesses before the skb_push()
+operation which ensures the proper 802.11 headers are generated from the
+given rx descriptor and removing ath12k_dp_rxdesc_get_mpdu_frame_ctrl()
+for filling frame control, as this information is already fetched by
+ath12k_dp_rx_desc_get_dot11_hdr().
 
-Fixes: 19d857c9038e ("stmmac: Fix calculations for ptp counters when clock input = 50Mhz.")
-Signed-off-by: Alexis Lothoré <alexis.lothore@bootlin.com>
-Reviewed-by: Yanteng Si <si.yanteng@linux.dev>
-Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Link: https://patch.msgid.link/20250529-stmmac_tstamp_div-v4-1-d73340a794d5@bootlin.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.4.1-00199-QCAHKSWPL_SILICONZ-1
+Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.0.c5-00481-QCAHMTSWPL_V1.0_V2.0_SILICONZ-3
+
+Fixes: d889913205cf ("wifi: ath12k: driver for Qualcomm Wi-Fi 7 devices")
+Co-developed-by: Karthikeyan Periyasamy <karthikeyan.periyasamy@oss.qualcomm.com>
+Signed-off-by: Karthikeyan Periyasamy <karthikeyan.periyasamy@oss.qualcomm.com>
+Signed-off-by: P Praneesh <praneesh.p@oss.qualcomm.com>
+Link: https://patch.msgid.link/20250402180543.2670947-1-praneesh.p@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 5 +++++
- drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c  | 2 +-
- 2 files changed, 6 insertions(+), 1 deletion(-)
+ drivers/net/wireless/ath/ath12k/dp_rx.c | 27 +++++++++----------------
+ drivers/net/wireless/ath/ath12k/hal.c   | 19 -----------------
+ drivers/net/wireless/ath/ath12k/hal.h   |  1 -
+ 3 files changed, 9 insertions(+), 38 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index d3d5c01f6dcba..615d25a0e46be 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -842,6 +842,11 @@ int stmmac_init_tstamp_counter(struct stmmac_priv *priv, u32 systime_flags)
- 	if (!(priv->dma_cap.time_stamp || priv->dma_cap.atime_stamp))
- 		return -EOPNOTSUPP;
+diff --git a/drivers/net/wireless/ath/ath12k/dp_rx.c b/drivers/net/wireless/ath/ath12k/dp_rx.c
+index 75bf4211ad422..21d240cc3aee4 100644
+--- a/drivers/net/wireless/ath/ath12k/dp_rx.c
++++ b/drivers/net/wireless/ath/ath12k/dp_rx.c
+@@ -228,12 +228,6 @@ static void ath12k_dp_rx_desc_get_crypto_header(struct ath12k_base *ab,
+ 	ab->hal_rx_ops->rx_desc_get_crypto_header(desc, crypto_hdr, enctype);
+ }
  
-+	if (!priv->plat->clk_ptp_rate) {
-+		netdev_err(priv->dev, "Invalid PTP clock rate");
-+		return -EINVAL;
-+	}
+-static u16 ath12k_dp_rxdesc_get_mpdu_frame_ctrl(struct ath12k_base *ab,
+-						struct hal_rx_desc *desc)
+-{
+-	return ab->hal_rx_ops->rx_desc_get_mpdu_frame_ctl(desc);
+-}
+-
+ static inline u8 ath12k_dp_rx_get_msdu_src_link(struct ath12k_base *ab,
+ 						struct hal_rx_desc *desc)
+ {
+@@ -2122,10 +2116,13 @@ static void ath12k_get_dot11_hdr_from_rx_desc(struct ath12k *ar,
+ 	struct hal_rx_desc *rx_desc = rxcb->rx_desc;
+ 	struct ath12k_base *ab = ar->ab;
+ 	size_t hdr_len, crypto_len;
+-	struct ieee80211_hdr *hdr;
++	struct ieee80211_hdr hdr;
+ 	u16 qos_ctl;
+-	__le16 fc;
+-	u8 *crypto_hdr;
++	u8 *crypto_hdr, mesh_ctrl;
 +
- 	stmmac_config_hw_tstamping(priv, priv->ptpaddr, systime_flags);
- 	priv->systime_flags = systime_flags;
++	ath12k_dp_rx_desc_get_dot11_hdr(ab, rx_desc, &hdr);
++	hdr_len = ieee80211_hdrlen(hdr.frame_control);
++	mesh_ctrl = ath12k_dp_rx_h_mesh_ctl_present(ab, rx_desc);
  
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c
-index a04bb2e42c4ee..80ecbd73333d9 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c
-@@ -295,7 +295,7 @@ void stmmac_ptp_register(struct stmmac_priv *priv)
+ 	if (!(status->flag & RX_FLAG_IV_STRIPPED)) {
+ 		crypto_len = ath12k_dp_rx_crypto_param_len(ar, enctype);
+@@ -2133,22 +2130,16 @@ static void ath12k_get_dot11_hdr_from_rx_desc(struct ath12k *ar,
+ 		ath12k_dp_rx_desc_get_crypto_header(ab, rx_desc, crypto_hdr, enctype);
+ 	}
  
- 	/* Calculate the clock domain crossing (CDC) error if necessary */
- 	priv->plat->cdc_error_adj = 0;
--	if (priv->plat->has_gmac4 && priv->plat->clk_ptp_rate)
-+	if (priv->plat->has_gmac4)
- 		priv->plat->cdc_error_adj = (2 * NSEC_PER_SEC) / priv->plat->clk_ptp_rate;
+-	fc = cpu_to_le16(ath12k_dp_rxdesc_get_mpdu_frame_ctrl(ab, rx_desc));
+-	hdr_len = ieee80211_hdrlen(fc);
+ 	skb_push(msdu, hdr_len);
+-	hdr = (struct ieee80211_hdr *)msdu->data;
+-	hdr->frame_control = fc;
+-
+-	/* Get wifi header from rx_desc */
+-	ath12k_dp_rx_desc_get_dot11_hdr(ab, rx_desc, hdr);
++	memcpy(msdu->data, &hdr, min(hdr_len, sizeof(hdr)));
  
- 	stmmac_ptp_clock_ops.n_per_out = priv->dma_cap.pps_out_num;
+ 	if (rxcb->is_mcbc)
+ 		status->flag &= ~RX_FLAG_PN_VALIDATED;
+ 
+ 	/* Add QOS header */
+-	if (ieee80211_is_data_qos(hdr->frame_control)) {
++	if (ieee80211_is_data_qos(hdr.frame_control)) {
+ 		qos_ctl = rxcb->tid;
+-		if (ath12k_dp_rx_h_mesh_ctl_present(ab, rx_desc))
++		if (mesh_ctrl)
+ 			qos_ctl |= IEEE80211_QOS_CTL_MESH_CONTROL_PRESENT;
+ 
+ 		/* TODO: Add other QoS ctl fields when required */
+diff --git a/drivers/net/wireless/ath/ath12k/hal.c b/drivers/net/wireless/ath/ath12k/hal.c
+index cd59ff8e6c7b0..178c242a840e3 100644
+--- a/drivers/net/wireless/ath/ath12k/hal.c
++++ b/drivers/net/wireless/ath/ath12k/hal.c
+@@ -511,11 +511,6 @@ static void ath12k_hw_qcn9274_rx_desc_get_crypto_hdr(struct hal_rx_desc *desc,
+ 	crypto_hdr[7] = HAL_RX_MPDU_INFO_PN_GET_BYTE2(desc->u.qcn9274.mpdu_start.pn[1]);
+ }
+ 
+-static u16 ath12k_hw_qcn9274_rx_desc_get_mpdu_frame_ctl(struct hal_rx_desc *desc)
+-{
+-	return __le16_to_cpu(desc->u.qcn9274.mpdu_start.frame_ctrl);
+-}
+-
+ static int ath12k_hal_srng_create_config_qcn9274(struct ath12k_base *ab)
+ {
+ 	struct ath12k_hal *hal = &ab->hal;
+@@ -736,7 +731,6 @@ const struct hal_rx_ops hal_rx_qcn9274_ops = {
+ 	.rx_desc_is_da_mcbc = ath12k_hw_qcn9274_rx_desc_is_da_mcbc,
+ 	.rx_desc_get_dot11_hdr = ath12k_hw_qcn9274_rx_desc_get_dot11_hdr,
+ 	.rx_desc_get_crypto_header = ath12k_hw_qcn9274_rx_desc_get_crypto_hdr,
+-	.rx_desc_get_mpdu_frame_ctl = ath12k_hw_qcn9274_rx_desc_get_mpdu_frame_ctl,
+ 	.dp_rx_h_msdu_done = ath12k_hw_qcn9274_dp_rx_h_msdu_done,
+ 	.dp_rx_h_l4_cksum_fail = ath12k_hw_qcn9274_dp_rx_h_l4_cksum_fail,
+ 	.dp_rx_h_ip_cksum_fail = ath12k_hw_qcn9274_dp_rx_h_ip_cksum_fail,
+@@ -975,11 +969,6 @@ ath12k_hw_qcn9274_compact_rx_desc_get_crypto_hdr(struct hal_rx_desc *desc,
+ 		HAL_RX_MPDU_INFO_PN_GET_BYTE2(desc->u.qcn9274_compact.mpdu_start.pn[1]);
+ }
+ 
+-static u16 ath12k_hw_qcn9274_compact_rx_desc_get_mpdu_frame_ctl(struct hal_rx_desc *desc)
+-{
+-	return __le16_to_cpu(desc->u.qcn9274_compact.mpdu_start.frame_ctrl);
+-}
+-
+ static bool ath12k_hw_qcn9274_compact_dp_rx_h_msdu_done(struct hal_rx_desc *desc)
+ {
+ 	return !!le32_get_bits(desc->u.qcn9274_compact.msdu_end.info14,
+@@ -1080,8 +1069,6 @@ const struct hal_rx_ops hal_rx_qcn9274_compact_ops = {
+ 	.rx_desc_is_da_mcbc = ath12k_hw_qcn9274_compact_rx_desc_is_da_mcbc,
+ 	.rx_desc_get_dot11_hdr = ath12k_hw_qcn9274_compact_rx_desc_get_dot11_hdr,
+ 	.rx_desc_get_crypto_header = ath12k_hw_qcn9274_compact_rx_desc_get_crypto_hdr,
+-	.rx_desc_get_mpdu_frame_ctl =
+-		ath12k_hw_qcn9274_compact_rx_desc_get_mpdu_frame_ctl,
+ 	.dp_rx_h_msdu_done = ath12k_hw_qcn9274_compact_dp_rx_h_msdu_done,
+ 	.dp_rx_h_l4_cksum_fail = ath12k_hw_qcn9274_compact_dp_rx_h_l4_cksum_fail,
+ 	.dp_rx_h_ip_cksum_fail = ath12k_hw_qcn9274_compact_dp_rx_h_ip_cksum_fail,
+@@ -1330,11 +1317,6 @@ static void ath12k_hw_wcn7850_rx_desc_get_crypto_hdr(struct hal_rx_desc *desc,
+ 	crypto_hdr[7] = HAL_RX_MPDU_INFO_PN_GET_BYTE2(desc->u.wcn7850.mpdu_start.pn[1]);
+ }
+ 
+-static u16 ath12k_hw_wcn7850_rx_desc_get_mpdu_frame_ctl(struct hal_rx_desc *desc)
+-{
+-	return __le16_to_cpu(desc->u.wcn7850.mpdu_start.frame_ctrl);
+-}
+-
+ static int ath12k_hal_srng_create_config_wcn7850(struct ath12k_base *ab)
+ {
+ 	struct ath12k_hal *hal = &ab->hal;
+@@ -1555,7 +1537,6 @@ const struct hal_rx_ops hal_rx_wcn7850_ops = {
+ 	.rx_desc_is_da_mcbc = ath12k_hw_wcn7850_rx_desc_is_da_mcbc,
+ 	.rx_desc_get_dot11_hdr = ath12k_hw_wcn7850_rx_desc_get_dot11_hdr,
+ 	.rx_desc_get_crypto_header = ath12k_hw_wcn7850_rx_desc_get_crypto_hdr,
+-	.rx_desc_get_mpdu_frame_ctl = ath12k_hw_wcn7850_rx_desc_get_mpdu_frame_ctl,
+ 	.dp_rx_h_msdu_done = ath12k_hw_wcn7850_dp_rx_h_msdu_done,
+ 	.dp_rx_h_l4_cksum_fail = ath12k_hw_wcn7850_dp_rx_h_l4_cksum_fail,
+ 	.dp_rx_h_ip_cksum_fail = ath12k_hw_wcn7850_dp_rx_h_ip_cksum_fail,
+diff --git a/drivers/net/wireless/ath/ath12k/hal.h b/drivers/net/wireless/ath/ath12k/hal.h
+index 94e2e87359583..3156563c77e5b 100644
+--- a/drivers/net/wireless/ath/ath12k/hal.h
++++ b/drivers/net/wireless/ath/ath12k/hal.h
+@@ -1068,7 +1068,6 @@ struct hal_rx_ops {
+ 	bool (*rx_desc_is_da_mcbc)(struct hal_rx_desc *desc);
+ 	void (*rx_desc_get_dot11_hdr)(struct hal_rx_desc *desc,
+ 				      struct ieee80211_hdr *hdr);
+-	u16 (*rx_desc_get_mpdu_frame_ctl)(struct hal_rx_desc *desc);
+ 	void (*rx_desc_get_crypto_header)(struct hal_rx_desc *desc,
+ 					  u8 *crypto_hdr,
+ 					  enum hal_encrypt_type enctype);
 -- 
 2.39.5
 
