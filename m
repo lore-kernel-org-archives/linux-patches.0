@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 522A82FA64D;
-	Tue, 17 Jun 2025 16:37:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 979BC2FA64D;
+	Tue, 17 Jun 2025 16:37:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750178226; cv=none; b=r40bnO0N36ut/zUoofjf/L1ynsi78eCs3LTA+XO/3eeZNAcSdiHhievfz2/884woKGeRkQHoK00poLAvZc3KRi7IduMT+51FcUl6vn1q8PAqeNESC/RSwyKBwxo9M8o42zFFS3k7TuLKdpMQgobqDbTeb01mjRTUf8IpbGYrKNg=
+	t=1750178229; cv=none; b=PjsEXGRenM8iZYj7mjV30Qk0qXVjGV/Y4QpmwpkLWgeZnQ0y6c6D0AKXuD6utdJy6c26GCaeprupVSGyhdWqkF31o+0pTaih5/DXXwAma2LJ+zis+njzqGy61sRp5k6Y7Y9s98d5UkwYnDynPFXow/LZz0nKFjsNjsFHLLFOjhg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750178226; c=relaxed/simple;
-	bh=bVxNOVBrw27YgGO6hgmnts/gQnG48irBqphDldYP7hg=;
+	s=arc-20240116; t=1750178229; c=relaxed/simple;
+	bh=qnkdNJlzd5zntKXFFMkdjjoRACA0O/91M5sMI++XvP0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WopBqKk4uF/ApaPZIs1V7q6SxuGOqdju8zKZvY+z3gCYkejw2hwrj+U3cFrTpKKcZtENRlfxLGG59zI18HtKj8oImDgd6BCUOLvA1R3KJGkSBIS1HrSxatnrP5YNVMUFBa6MRlTaCOj0i+LeYDpaI9+6w9JpRIKrvqQhAtX9P40=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zJbaNlaf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O7KRRcqIOqm2DCFU0uow9unShbJBUHFrsYxMUZu1rtJJ+Bjr9NdPwKhE3RJz46lku+EE2aItU2KVmdTz990wq31AFQHhONW6F0AsuhGAbMvHaAR9QUsrw6q4aMevp6w/CJPqvnYCPyN2hvoHo+2PrOkdXL6hYnAmWl+6+oJvq0A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dUHfpP3i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zJbaNlaf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF9FFC4CEE3;
-	Tue, 17 Jun 2025 16:37:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dUHfpP3i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 057FAC4CEE3;
+	Tue, 17 Jun 2025 16:37:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750178226;
-	bh=bVxNOVBrw27YgGO6hgmnts/gQnG48irBqphDldYP7hg=;
+	s=korg; t=1750178229;
+	bh=qnkdNJlzd5zntKXFFMkdjjoRACA0O/91M5sMI++XvP0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zJbaNlafkRyPJmPN+hNl69fOEJU/Dt29YPRT9rFs+wwLPcf0KGZ4cfbt6LIrdgIn/
-	 mpr2t5yKSRDvBh/woqT6xZVMwkwbcRrBcv09pPrqPODe6Bl09ppFrvOcjif6vHNadA
-	 S6BnALKUvQb5TSZ8PzWZwyjaV+azZCPp8A6MdxnM=
+	b=dUHfpP3i+xBJ+mlEJPTARHhrikPCws8DYjLwfpxLvQyux6ZN2GV+a+TlF1xcPitlJ
+	 +wWM/shHq5VXvsM0Wb7UYChwkB/Mg+skexSUDvC1DjuhUQBqKqbV3sZJyxP/WIf4AB
+	 b5S/gErkQUHkJKdOlA+RqkTrWoo5qWi3avnXuw5k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Jonathan Greental <yonatan02greental@gmail.com>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 406/780] arm64: dts: qcom: qcm2290: fix (some) of QUP interconnects
-Date: Tue, 17 Jun 2025 17:21:54 +0200
-Message-ID: <20250617152508.000639070@linuxfoundation.org>
+Subject: [PATCH 6.12 443/512] powerpc/powernv/memtrace: Fix out of bounds issue in memtrace mmap
+Date: Tue, 17 Jun 2025 17:26:49 +0200
+Message-ID: <20250617152437.514354093@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,105 +48,50 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
 
-[ Upstream commit e07d2d57a1c7254d25597dcdd34f318a91ec9398 ]
+[ Upstream commit cd097df4596f3a1e9d75eb8520162de1eb8485b2 ]
 
-While adding interconnect support for the QCM2290 platform some of them
-got the c&p error, rogue MASTER_APPSS_PROC for the config_noc
-interconnect. Turn that into SLAVE_QUP_0 as expected.
+memtrace mmap issue has an out of bounds issue. This patch fixes the by
+checking that the requested mapping region size should stay within the
+allocated region size.
 
-Fixes: 5b970ff0193d ("arm64: dts: qcom: qcm2290: Hook up interconnects")
-Reported-by: Konrad Dybcio <konradybcio@kernel.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20250207-rb1-bt-v4-4-d810fc8c94a9@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Reported-by: Jonathan Greental <yonatan02greental@gmail.com>
+Fixes: 08a022ad3dfa ("powerpc/powernv/memtrace: Allow mmaping trace buffers")
+Signed-off-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20250610021227.361980-1-maddy@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/qcm2290.dtsi | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ arch/powerpc/platforms/powernv/memtrace.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/qcm2290.dtsi b/arch/arm64/boot/dts/qcom/qcm2290.dtsi
-index f0746123e594d..6e3e57dd02612 100644
---- a/arch/arm64/boot/dts/qcom/qcm2290.dtsi
-+++ b/arch/arm64/boot/dts/qcom/qcm2290.dtsi
-@@ -1073,7 +1073,7 @@
- 				interconnects = <&qup_virt MASTER_QUP_CORE_0 RPM_ALWAYS_TAG
- 						 &qup_virt SLAVE_QUP_CORE_0 RPM_ALWAYS_TAG>,
- 						<&bimc MASTER_APPSS_PROC RPM_ALWAYS_TAG
--						 &config_noc MASTER_APPSS_PROC RPM_ALWAYS_TAG>;
-+						 &config_noc SLAVE_QUP_0 RPM_ALWAYS_TAG>;
- 				interconnect-names = "qup-core",
- 						     "qup-config";
- 				#address-cells = <1>;
-@@ -1092,7 +1092,7 @@
- 				interconnects = <&qup_virt MASTER_QUP_CORE_0 RPM_ALWAYS_TAG
- 						 &qup_virt SLAVE_QUP_CORE_0 RPM_ALWAYS_TAG>,
- 						<&bimc MASTER_APPSS_PROC RPM_ALWAYS_TAG
--						 &config_noc MASTER_APPSS_PROC RPM_ALWAYS_TAG>;
-+						 &config_noc SLAVE_QUP_0 RPM_ALWAYS_TAG>;
- 				interconnect-names = "qup-core",
- 						     "qup-config";
- 				status = "disabled";
-@@ -1137,7 +1137,7 @@
- 				interconnects = <&qup_virt MASTER_QUP_CORE_0 RPM_ALWAYS_TAG
- 						 &qup_virt SLAVE_QUP_CORE_0 RPM_ALWAYS_TAG>,
- 						<&bimc MASTER_APPSS_PROC RPM_ALWAYS_TAG
--						 &config_noc MASTER_APPSS_PROC RPM_ALWAYS_TAG>;
-+						 &config_noc SLAVE_QUP_0 RPM_ALWAYS_TAG>;
- 				interconnect-names = "qup-core",
- 						     "qup-config";
- 				#address-cells = <1>;
-@@ -1184,7 +1184,7 @@
- 				interconnects = <&qup_virt MASTER_QUP_CORE_0 RPM_ALWAYS_TAG
- 						 &qup_virt SLAVE_QUP_CORE_0 RPM_ALWAYS_TAG>,
- 						<&bimc MASTER_APPSS_PROC RPM_ALWAYS_TAG
--						 &config_noc MASTER_APPSS_PROC RPM_ALWAYS_TAG>;
-+						 &config_noc SLAVE_QUP_0 RPM_ALWAYS_TAG>;
- 				interconnect-names = "qup-core",
- 						     "qup-config";
- 				#address-cells = <1>;
-@@ -1231,7 +1231,7 @@
- 				interconnects = <&qup_virt MASTER_QUP_CORE_0 RPM_ALWAYS_TAG
- 						 &qup_virt SLAVE_QUP_CORE_0 RPM_ALWAYS_TAG>,
- 						<&bimc MASTER_APPSS_PROC RPM_ALWAYS_TAG
--						 &config_noc MASTER_APPSS_PROC RPM_ALWAYS_TAG>;
-+						 &config_noc SLAVE_QUP_0 RPM_ALWAYS_TAG>;
- 				interconnect-names = "qup-core",
- 						     "qup-config";
- 				#address-cells = <1>;
-@@ -1278,7 +1278,7 @@
- 				interconnects = <&qup_virt MASTER_QUP_CORE_0 RPM_ALWAYS_TAG
- 						 &qup_virt SLAVE_QUP_CORE_0 RPM_ALWAYS_TAG>,
- 						<&bimc MASTER_APPSS_PROC RPM_ALWAYS_TAG
--						 &config_noc MASTER_APPSS_PROC RPM_ALWAYS_TAG>;
-+						 &config_noc SLAVE_QUP_0 RPM_ALWAYS_TAG>;
- 				interconnect-names = "qup-core",
- 						     "qup-config";
- 				#address-cells = <1>;
-@@ -1297,7 +1297,7 @@
- 				interconnects = <&qup_virt MASTER_QUP_CORE_0 RPM_ALWAYS_TAG
- 						 &qup_virt SLAVE_QUP_CORE_0 RPM_ALWAYS_TAG>,
- 						<&bimc MASTER_APPSS_PROC RPM_ALWAYS_TAG
--						 &config_noc MASTER_APPSS_PROC RPM_ALWAYS_TAG>;
-+						 &config_noc SLAVE_QUP_0 RPM_ALWAYS_TAG>;
- 				interconnect-names = "qup-core",
- 						     "qup-config";
- 				status = "disabled";
-@@ -1342,7 +1342,7 @@
- 				interconnects = <&qup_virt MASTER_QUP_CORE_0 RPM_ALWAYS_TAG
- 						 &qup_virt SLAVE_QUP_CORE_0 RPM_ALWAYS_TAG>,
- 						<&bimc MASTER_APPSS_PROC RPM_ALWAYS_TAG
--						 &config_noc MASTER_APPSS_PROC RPM_ALWAYS_TAG>;
-+						 &config_noc SLAVE_QUP_0 RPM_ALWAYS_TAG>;
- 				interconnect-names = "qup-core",
- 						     "qup-config";
- 				#address-cells = <1>;
+diff --git a/arch/powerpc/platforms/powernv/memtrace.c b/arch/powerpc/platforms/powernv/memtrace.c
+index 877720c645151..35471b679638a 100644
+--- a/arch/powerpc/platforms/powernv/memtrace.c
++++ b/arch/powerpc/platforms/powernv/memtrace.c
+@@ -48,11 +48,15 @@ static ssize_t memtrace_read(struct file *filp, char __user *ubuf,
+ static int memtrace_mmap(struct file *filp, struct vm_area_struct *vma)
+ {
+ 	struct memtrace_entry *ent = filp->private_data;
++	unsigned long ent_nrpages = ent->size >> PAGE_SHIFT;
++	unsigned long vma_nrpages = vma_pages(vma);
+ 
+-	if (ent->size < vma->vm_end - vma->vm_start)
++	/* The requested page offset should be within object's page count */
++	if (vma->vm_pgoff >= ent_nrpages)
+ 		return -EINVAL;
+ 
+-	if (vma->vm_pgoff << PAGE_SHIFT >= ent->size)
++	/* The requested mapping range should remain within the bounds */
++	if (vma_nrpages > ent_nrpages - vma->vm_pgoff)
+ 		return -EINVAL;
+ 
+ 	vma->vm_page_prot = pgprot_noncached(vma->vm_page_prot);
 -- 
 2.39.5
 
