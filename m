@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B1CD2F2351;
-	Tue, 17 Jun 2025 16:27:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72B0D2EE60B;
+	Tue, 17 Jun 2025 16:27:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177626; cv=none; b=lk2oh7Jt7rwh0QcngChvrfYFXItCKk8sYjKR17Hr5Ksu3VmkLt/InenekLINl772eporBiDQsiRwPHgSLjGMJAz1rWJypxgYQOSseRZBBEGOH5d4pWVIFXFU44tpgwFIrwTW7XF92JbBAKwFoLBW1D/yxoN9jZHliMXKJ/vlA4A=
+	t=1750177629; cv=none; b=HoX0i0k4KUZtHgZs25WqgVCNRZBOQ/huECtpNTnGsnZpvPOlhBOdZYtntreUgwV8LI1kWSMMVJhkXPSjL4NVC1fbIgUD63BslNXrVIdy9/9plSnqBkfR5keLXmTGdr5Br7YSLQpV9NpYHAElzzGmGDA0Fn2tbEGgnGqqiH5rrJk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177626; c=relaxed/simple;
-	bh=aLQ60jhA6KvhnEr7Ai9xtigQnYx/mcs3aqKG1Vsw5+0=;
+	s=arc-20240116; t=1750177629; c=relaxed/simple;
+	bh=SXoZo2Ngs0fS6q+UX/70oAv5f78zWGcQTNDlz3zVTTw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DB2d0yk8VmD30rb+KlFZq6BQFufySFBDCIaI1fTVfuTcgM5xj59G8yjWML8c8KZ12UAZomT0FmSBXjcV+7+FCSJKQxCul+ggcE4cNJk5n/IpBLLHdaJ7HO62n0g8jSFht36QuqPfdsXl5AzsWwlFPFGcle5bUwCiwHH/xRqQQWc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i2tXex49; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FyXPVUw71Y1XHOxfXXJOCCJ0vEtZwDbYpUwI2LUIk7vPpjnSr6hcrnUUjShi8ktUa0nkGX9bGo70hEN8nvsCKYMpOw8piIbdixpOCZP5uvpf8KCplc6KOsLrfrEL/lPz/LWkDokWd9sV+T5T4oBMy+X/t2wzvdBMC2FMf6qPOz8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ppBTJFw4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i2tXex49"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01695C4CEE3;
-	Tue, 17 Jun 2025 16:27:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ppBTJFw4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7309C4CEE7;
+	Tue, 17 Jun 2025 16:27:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177626;
-	bh=aLQ60jhA6KvhnEr7Ai9xtigQnYx/mcs3aqKG1Vsw5+0=;
+	s=korg; t=1750177629;
+	bh=SXoZo2Ngs0fS6q+UX/70oAv5f78zWGcQTNDlz3zVTTw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i2tXex49kOgjXEY7vjPwlLYAj3CKAEB0bYL4fgw53WU6h41MpuoYESg8YpTrti0Em
-	 ptiMJ/PJzwPJLz58+xt6cYFJsGLYxaQOPuoinget0l6T9lBPlwoO7ap9WsZ14wwJ++
-	 e8WLHAMmTdBINv1FGDMzmfVvjcDHgsC/8YGNyIDE=
+	b=ppBTJFw4iL3jkO7vmzgcFxr9C5Ikiz28bcd2K50UVb1+MOphPbAkT1+nWFJKFoOjV
+	 l5bpQtZ/f5BMktgG237dxUyqL0Yc62MZ7jBY0c46yuLYq9meAXaTgg/9CvdcL1Nmzw
+	 WV81nbyE9e18udZP1VWFEf91xI2R8BdoKo5+bAJY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chaitanya Kulkarni <chaitanyak@nvidia.com>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Christoph Hellwig <hch@lst.de>,
+	syzbot+aa5bb5f6860e08a60450@syzkaller.appspotmail.com,
+	Qi Han <hanqi@vivo.com>,
+	Chao Yu <chao@kernel.org>,
+	Zhiguo Niu <zhiguo.niu@unisoc.com>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 373/512] nvme: fix command limits status code
-Date: Tue, 17 Jun 2025 17:25:39 +0200
-Message-ID: <20250617152434.713978007@linuxfoundation.org>
+Subject: [PATCH 6.15 338/780] f2fs: fix to skip f2fs_balance_fs() if checkpoint is disabled
+Date: Tue, 17 Jun 2025 17:20:46 +0200
+Message-ID: <20250617152505.216746274@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,126 +50,114 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Keith Busch <kbusch@kernel.org>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 10f4a7cd724e34b7a6ff96e57ac49dc0cadececc ]
+[ Upstream commit c836d3b8d94e3dd381e7d4bb918875084f85715e ]
 
-The command specific status code, 0x183, was introduced in the NVMe 2.0
-specification defined to "Command Size Limits Exceeded" and only ever
-applied to DSM and Copy commands.  Fix the name and, remove the
-incorrect translation to error codes and special treatment in the
-target code for it.
+Syzbot reports a f2fs bug as below:
 
-Fixes: 3b7c33b28a44d4 ("nvme.h: add Write Zeroes definitions")
-Cc: Chaitanya Kulkarni <chaitanyak@nvidia.com>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
+INFO: task syz-executor328:5856 blocked for more than 144 seconds.
+      Not tainted 6.15.0-rc6-syzkaller-00208-g3c21441eeffc #0
+"echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+task:syz-executor328 state:D stack:24392 pid:5856  tgid:5832  ppid:5826   task_flags:0x400040 flags:0x00004006
+Call Trace:
+ <TASK>
+ context_switch kernel/sched/core.c:5382 [inline]
+ __schedule+0x168f/0x4c70 kernel/sched/core.c:6767
+ __schedule_loop kernel/sched/core.c:6845 [inline]
+ schedule+0x165/0x360 kernel/sched/core.c:6860
+ io_schedule+0x81/0xe0 kernel/sched/core.c:7742
+ f2fs_balance_fs+0x4b4/0x780 fs/f2fs/segment.c:444
+ f2fs_map_blocks+0x3af1/0x43b0 fs/f2fs/data.c:1791
+ f2fs_expand_inode_data+0x653/0xaf0 fs/f2fs/file.c:1872
+ f2fs_fallocate+0x4f5/0x990 fs/f2fs/file.c:1975
+ vfs_fallocate+0x6a0/0x830 fs/open.c:338
+ ioctl_preallocate fs/ioctl.c:290 [inline]
+ file_ioctl fs/ioctl.c:-1 [inline]
+ do_vfs_ioctl+0x1b8f/0x1eb0 fs/ioctl.c:885
+ __do_sys_ioctl fs/ioctl.c:904 [inline]
+ __se_sys_ioctl+0x82/0x170 fs/ioctl.c:892
+ do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+ do_syscall_64+0xf6/0x210 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+The root cause is after commit 84b5bb8bf0f6 ("f2fs: modify
+f2fs_is_checkpoint_ready logic to allow more data to be written with the
+CP disable"), we will get chance to allow f2fs_is_checkpoint_ready() to
+return true once below conditions are all true:
+1. checkpoint is disabled
+2. there are not enough free segments
+3. there are enough free blocks
+
+Then it will cause f2fs_balance_fs() to trigger foreground GC.
+
+void f2fs_balance_fs(struct f2fs_sb_info *sbi, bool need)
+...
+	if (!f2fs_is_checkpoint_ready(sbi))
+		return;
+
+And the testcase mounts f2fs image w/ gc_merge,checkpoint=disable, so deadloop
+will happen through below race condition:
+
+- f2fs_do_shutdown		- vfs_fallocate				- gc_thread_func
+				 - file_start_write
+				  - __sb_start_write(SB_FREEZE_WRITE)
+				 - f2fs_fallocate
+				  - f2fs_expand_inode_data
+				   - f2fs_map_blocks
+				    - f2fs_balance_fs
+				     - prepare_to_wait
+				     - wake_up(gc_wait_queue_head)
+				     - io_schedule
+ - bdev_freeze
+  - freeze_super
+   - sb->s_writers.frozen = SB_FREEZE_WRITE;
+   - sb_wait_write(sb, SB_FREEZE_WRITE);
+									 - if (sbi->sb->s_writers.frozen >= SB_FREEZE_WRITE) continue;
+									 : cause deadloop
+
+This patch fix to add check condition in f2fs_balance_fs(), so that if
+checkpoint is disabled, we will just skip trigger foreground GC to
+avoid such deadloop issue.
+
+Meanwhile let's remove f2fs_is_checkpoint_ready() check condition in
+f2fs_balance_fs(), since it's redundant, due to the main logic in the
+function is to check:
+a) whether checkpoint is disabled
+b) there is enough free segments
+
+f2fs_balance_fs() still has all logics after f2fs_is_checkpoint_ready()'s
+removal.
+
+Reported-by: syzbot+aa5bb5f6860e08a60450@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/linux-f2fs-devel/682d743a.a00a0220.29bc26.0289.GAE@google.com
+Fixes: 84b5bb8bf0f6 ("f2fs: modify f2fs_is_checkpoint_ready logic to allow more data to be written with the CP disable")
+Cc: Qi Han <hanqi@vivo.com>
+Signed-off-by: Chao Yu <chao@kernel.org>
+Reviewed-by: Zhiguo Niu <zhiguo.niu@unisoc.com>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/constants.c     | 2 +-
- drivers/nvme/host/core.c          | 1 -
- drivers/nvme/host/pr.c            | 2 --
- drivers/nvme/target/core.c        | 9 +--------
- drivers/nvme/target/io-cmd-bdev.c | 9 +--------
- include/linux/nvme.h              | 2 +-
- 6 files changed, 4 insertions(+), 21 deletions(-)
+ fs/f2fs/segment.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/nvme/host/constants.c b/drivers/nvme/host/constants.c
-index 2b9e6cfaf2a80..1a0058be58210 100644
---- a/drivers/nvme/host/constants.c
-+++ b/drivers/nvme/host/constants.c
-@@ -145,7 +145,7 @@ static const char * const nvme_statuses[] = {
- 	[NVME_SC_BAD_ATTRIBUTES] = "Conflicting Attributes",
- 	[NVME_SC_INVALID_PI] = "Invalid Protection Information",
- 	[NVME_SC_READ_ONLY] = "Attempted Write to Read Only Range",
--	[NVME_SC_ONCS_NOT_SUPPORTED] = "ONCS Not Supported",
-+	[NVME_SC_CMD_SIZE_LIM_EXCEEDED	] = "Command Size Limits Exceeded",
- 	[NVME_SC_ZONE_BOUNDARY_ERROR] = "Zoned Boundary Error",
- 	[NVME_SC_ZONE_FULL] = "Zone Is Full",
- 	[NVME_SC_ZONE_READ_ONLY] = "Zone Is Read Only",
-diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index 98dad1bdff440..eca764fede48f 100644
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -284,7 +284,6 @@ static blk_status_t nvme_error_status(u16 status)
- 	case NVME_SC_NS_NOT_READY:
- 		return BLK_STS_TARGET;
- 	case NVME_SC_BAD_ATTRIBUTES:
--	case NVME_SC_ONCS_NOT_SUPPORTED:
- 	case NVME_SC_INVALID_OPCODE:
- 	case NVME_SC_INVALID_FIELD:
- 	case NVME_SC_INVALID_NS:
-diff --git a/drivers/nvme/host/pr.c b/drivers/nvme/host/pr.c
-index dc7922f226004..80dd09aa01a3b 100644
---- a/drivers/nvme/host/pr.c
-+++ b/drivers/nvme/host/pr.c
-@@ -82,8 +82,6 @@ static int nvme_status_to_pr_err(int status)
- 		return PR_STS_SUCCESS;
- 	case NVME_SC_RESERVATION_CONFLICT:
- 		return PR_STS_RESERVATION_CONFLICT;
--	case NVME_SC_ONCS_NOT_SUPPORTED:
--		return -EOPNOTSUPP;
- 	case NVME_SC_BAD_ATTRIBUTES:
- 	case NVME_SC_INVALID_OPCODE:
- 	case NVME_SC_INVALID_FIELD:
-diff --git a/drivers/nvme/target/core.c b/drivers/nvme/target/core.c
-index ed2424f8a396e..4606c88136669 100644
---- a/drivers/nvme/target/core.c
-+++ b/drivers/nvme/target/core.c
-@@ -62,14 +62,7 @@ inline u16 errno_to_nvme_status(struct nvmet_req *req, int errno)
- 		return  NVME_SC_LBA_RANGE | NVME_STATUS_DNR;
- 	case -EOPNOTSUPP:
- 		req->error_loc = offsetof(struct nvme_common_command, opcode);
--		switch (req->cmd->common.opcode) {
--		case nvme_cmd_dsm:
--		case nvme_cmd_write_zeroes:
--			return NVME_SC_ONCS_NOT_SUPPORTED | NVME_STATUS_DNR;
--		default:
--			return NVME_SC_INVALID_OPCODE | NVME_STATUS_DNR;
--		}
--		break;
-+		return NVME_SC_INVALID_OPCODE | NVME_STATUS_DNR;
- 	case -ENODATA:
- 		req->error_loc = offsetof(struct nvme_rw_command, nsid);
- 		return NVME_SC_ACCESS_DENIED;
-diff --git a/drivers/nvme/target/io-cmd-bdev.c b/drivers/nvme/target/io-cmd-bdev.c
-index eaf31c823cbe8..73ecbc13c5b23 100644
---- a/drivers/nvme/target/io-cmd-bdev.c
-+++ b/drivers/nvme/target/io-cmd-bdev.c
-@@ -145,15 +145,8 @@ u16 blk_to_nvme_status(struct nvmet_req *req, blk_status_t blk_sts)
- 		req->error_loc = offsetof(struct nvme_rw_command, slba);
- 		break;
- 	case BLK_STS_NOTSUPP:
-+		status = NVME_SC_INVALID_OPCODE | NVME_STATUS_DNR;
- 		req->error_loc = offsetof(struct nvme_common_command, opcode);
--		switch (req->cmd->common.opcode) {
--		case nvme_cmd_dsm:
--		case nvme_cmd_write_zeroes:
--			status = NVME_SC_ONCS_NOT_SUPPORTED | NVME_STATUS_DNR;
--			break;
--		default:
--			status = NVME_SC_INVALID_OPCODE | NVME_STATUS_DNR;
--		}
- 		break;
- 	case BLK_STS_MEDIUM:
- 		status = NVME_SC_ACCESS_DENIED;
-diff --git a/include/linux/nvme.h b/include/linux/nvme.h
-index 1c101f6fad2f3..84d4f0657b7a8 100644
---- a/include/linux/nvme.h
-+++ b/include/linux/nvme.h
-@@ -1954,7 +1954,7 @@ enum {
- 	NVME_SC_BAD_ATTRIBUTES		= 0x180,
- 	NVME_SC_INVALID_PI		= 0x181,
- 	NVME_SC_READ_ONLY		= 0x182,
--	NVME_SC_ONCS_NOT_SUPPORTED	= 0x183,
-+	NVME_SC_CMD_SIZE_LIM_EXCEEDED	= 0x183,
+diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
+index 2a71e70c9ac97..41ca73622c8d4 100644
+--- a/fs/f2fs/segment.c
++++ b/fs/f2fs/segment.c
+@@ -424,7 +424,7 @@ void f2fs_balance_fs(struct f2fs_sb_info *sbi, bool need)
+ 	if (need && excess_cached_nats(sbi))
+ 		f2fs_balance_fs_bg(sbi, false);
+ 
+-	if (!f2fs_is_checkpoint_ready(sbi))
++	if (unlikely(is_sbi_flag_set(sbi, SBI_CP_DISABLED)))
+ 		return;
  
  	/*
- 	 * I/O Command Set Specific - Fabrics commands:
 -- 
 2.39.5
 
