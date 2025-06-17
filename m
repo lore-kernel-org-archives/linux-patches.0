@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23F7D2ECD0B;
-	Tue, 17 Jun 2025 15:41:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBE0D1E8332;
+	Tue, 17 Jun 2025 15:41:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750174905; cv=none; b=KJei69rfdTRl8FESiykAw2j/VUulzclaLRgkaKewi88QWE9jYaojmJ6B/DJw3aSeaHSQKcsRsRh/ltozB8VPbxCkNhTimN6msGYjqsShslsI7DhdcEJLXD14EfAW3PrGz1FHBSoFDO7/oKlX8f0oKg9dVicEbunYFGjNuXOdcJk=
+	t=1750174908; cv=none; b=qqao2jRbYHCMmZpLARM9GU4lM++nPIFm4Si81FawIEeAAhPVzGHG13PMsyoL4DP8+SVzTlU2QF/pOnBIXbKPJx89GmVI7wWRQnk6MBKLZNgzCo2K295G4gQq08bVDPYH9ocwldjdEfb3kgy4nG4KpvNhb10YF0ueihIzgimtDyw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750174905; c=relaxed/simple;
-	bh=qMsh8x4/dHokZtJFTUKEvS9Unmxtxnj6wvuEGYp2Ndk=;
+	s=arc-20240116; t=1750174908; c=relaxed/simple;
+	bh=Yff4nPrLdJq2tcOmNQEM12NQM3CU+5w/xzEbUYfUKk8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KfcOwzYv0cZwbZz7erF7ZJ0q7Y0BHcjEKfYIkwJHA3QA+ZilUw+BQIfpjxYDmxDGAjzQERYcwkan76g1U7oqxieh8veXjNTNSZNVdzjCCjYTrnkvxk8ZkL4/ezQ0wPT8XfPRyYFYZdPyfyy++tWNquYUC+6dTkWdQlwLZ/DuGpM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F9gAEoLR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o2dqceTUQ58vfZx5gT2XzaTyo1FnNQ0lElQCQZlCRJ3ePGQBC/pa6RotWm0jHy6CJkzzAxWgkaWzpQEgx0J65rqEHj/pAff6o/qSJJsUKf4c3Rq9DTPHOHo/hNvi/chaqLaYnbKdQ3g925yYwMIl5KrMGTS/Dhqj2JD7+foFeeQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wqPtrUes; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F9gAEoLR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8867DC4CEE3;
-	Tue, 17 Jun 2025 15:41:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wqPtrUes"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C589C4CEE3;
+	Tue, 17 Jun 2025 15:41:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750174905;
-	bh=qMsh8x4/dHokZtJFTUKEvS9Unmxtxnj6wvuEGYp2Ndk=;
+	s=korg; t=1750174908;
+	bh=Yff4nPrLdJq2tcOmNQEM12NQM3CU+5w/xzEbUYfUKk8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F9gAEoLRkqoV4yWa/PdmR6WvYWy+Ggs4xlioZQqaiF/JmRg9SH8KNWlBugXh69psz
-	 hZq0LyJ0+nfcapFxPz8KGfLHNVS9t/L3funrRJiYTFZJTnynWzlod0VUxUxjJoE+9t
-	 /CidAi6l8dcRP3QiMEwbb/AynLEkv3tFcDkvsCiM=
+	b=wqPtrUes1b08+VaRzhpqpr+6d3eLYbRyb22hrdFhPjiiadIOhS2shbfE/3ws86w8f
+	 7RlpAqaHP3HKIvoYYS2VJ9QphUzfJWYXC1F8xe/bCX95915fQJ6HdCaazCGUsoIM1v
+	 cb9nmDTjqSqKINP3Wcdk48b+QMg2vUGitmgl+cA8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>,
+	Liviu Dudau <liviu.dudau@arm.com>,
+	Steven Price <steven.price@arm.com>,
+	Boris Brezillon <boris.brezillon@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 032/780] brd: fix aligned_sector from brd_do_discard()
-Date: Tue, 17 Jun 2025 17:15:40 +0200
-Message-ID: <20250617152452.813141217@linuxfoundation.org>
+Subject: [PATCH 6.12 072/512] drm/panthor: Fix GPU_COHERENCY_ACE[_LITE] definitions
+Date: Tue, 17 Jun 2025 17:20:38 +0200
+Message-ID: <20250617152422.502181774@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,39 +48,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Boris Brezillon <boris.brezillon@collabora.com>
 
-[ Upstream commit d4099f8893b057ad7e8d61df76bdeaf807ebd679 ]
+[ Upstream commit d1df2907fb69df56aad8e4a0734dac0778c234a7 ]
 
-The calculation is just wrong, fix it by round_up().
+GPU_COHERENCY_ACE and GPU_COHERENCY_ACE_LITE definitions have been
+swapped.
 
-Fixes: 9ead7efc6f3f ("brd: implement discard support")
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20250506061756.2970934-3-yukuai1@huaweicloud.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Changes in v2:
+- New patch
+
+Changes in v3:
+- Add Steve's R-b
+
+Reported-by: Liviu Dudau <liviu.dudau@arm.com>
+Fixes: 546b366600ef ("drm/panthor: Add GPU register definitions")
+Reviewed-by: Steven Price <steven.price@arm.com>
+Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
+Link: https://lore.kernel.org/r/20250404080933.2912674-2-boris.brezillon@collabora.com
+Signed-off-by: Boris Brezillon <boris.brezillon@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/brd.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/panthor/panthor_regs.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/block/brd.c b/drivers/block/brd.c
-index 292f127cae0ab..9549cd71e083b 100644
---- a/drivers/block/brd.c
-+++ b/drivers/block/brd.c
-@@ -224,7 +224,7 @@ static int brd_do_bvec(struct brd_device *brd, struct page *page,
+diff --git a/drivers/gpu/drm/panthor/panthor_regs.h b/drivers/gpu/drm/panthor/panthor_regs.h
+index b7b3b3add1662..a7a323dc5cf92 100644
+--- a/drivers/gpu/drm/panthor/panthor_regs.h
++++ b/drivers/gpu/drm/panthor/panthor_regs.h
+@@ -133,8 +133,8 @@
+ #define GPU_COHERENCY_PROT_BIT(name)			BIT(GPU_COHERENCY_  ## name)
  
- static void brd_do_discard(struct brd_device *brd, sector_t sector, u32 size)
- {
--	sector_t aligned_sector = (sector + PAGE_SECTORS) & ~PAGE_SECTORS;
-+	sector_t aligned_sector = round_up(sector, PAGE_SECTORS);
- 	struct page *page;
+ #define GPU_COHERENCY_PROTOCOL				0x304
+-#define   GPU_COHERENCY_ACE				0
+-#define   GPU_COHERENCY_ACE_LITE			1
++#define   GPU_COHERENCY_ACE_LITE			0
++#define   GPU_COHERENCY_ACE				1
+ #define   GPU_COHERENCY_NONE				31
  
- 	size -= (aligned_sector - sector) * SECTOR_SIZE;
+ #define MCU_CONTROL					0x700
 -- 
 2.39.5
 
