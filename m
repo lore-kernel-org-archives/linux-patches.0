@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BBD02F2343;
-	Tue, 17 Jun 2025 15:52:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE6562E7185;
+	Tue, 17 Jun 2025 15:52:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175562; cv=none; b=TPjYYAxhcd+gQjQmmawmWvk7v7BT/sTMoYqXucvOiL127vMvJRshHspCeaKAnPqSQ63+dm2kWiyhmZkEPoM92420lUYvb18gLRjNeSehLmNN2myq1y038P81p73x69goTVWhykLXS2JJg+nFNZesVSMpu0Ph8VFNH/ReB5AdrXg=
+	t=1750175565; cv=none; b=UAKYKvrGLg9OU0gPmw3usDwQJ6kH5y7apd8JSNBw9MkSdcVY9Wqk6HmLUufjv06mSno1QRX6N7Kri+YLF9Diw0R+/RMVIY/vRTbG0+8YYtl/RtuVwWIJrQozatxFKlIiSz+8dB0KHMw8eDN0hJnoQ0eD8ZjaT03+FOg+nm8J17M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175562; c=relaxed/simple;
-	bh=rdq6UMwM6bLhj+N8L59NLeGPep4+KeK6bstnlr3+hEs=;
+	s=arc-20240116; t=1750175565; c=relaxed/simple;
+	bh=07bF9fI0st95FlBYCp6K0AloS6pYaSM5mELN0aAwaR0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=azDB+pFdeN1F6W2JvcL+FhVAsfcHuF4VSdQzpkX09+PIzGr4gEArq21nxcd40TONMw7vAC0Sq3HjHBY0SdsLww3E6O6lcGsVn5iI0QGMBhOxE/keM3lbt4PJz2o40YYOXN1qkIc+Yl6TIFgRpjBdi7TlLL+B42CgCr7TVdkQdVU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0nPdMskz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gXPlqjiibuQVwLJEd7VSRb0jbWUwSjAjnww1K1p4rLdrVBOjonc/7Pz9aHrk2k5AgG2Bs1obeUYhcBPQFopWMnGU9aDC08ywf3UTIpOeZrsVDJEfHD3onOGFWls2EnH0tmYRhv2Uh33VIfea6CG67XjcfYKyBrtBGmOHVUzfdmI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GeSkUhQF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0nPdMskz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC3D2C4CEE7;
-	Tue, 17 Jun 2025 15:52:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GeSkUhQF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7156C4CEF1;
+	Tue, 17 Jun 2025 15:52:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175562;
-	bh=rdq6UMwM6bLhj+N8L59NLeGPep4+KeK6bstnlr3+hEs=;
+	s=korg; t=1750175565;
+	bh=07bF9fI0st95FlBYCp6K0AloS6pYaSM5mELN0aAwaR0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0nPdMskzaruSXyS5OSSViHS0pHnJsb6jIoACnvlO1+wKO/WeYO0fBBTKnx0x/1TZW
-	 qITTh2EkOOR85nFlhn6gSmnm91iQpha3HSFxkkSOJeafH5Ed/cUTzQuvVncmBIBuQA
-	 vvxDhmPbaeIGkqSqJMDVo5k+H3lZK/3bkFivyL1s=
+	b=GeSkUhQFDafclId5jg9DARouLBwlFHSw8fP2mXOhezvCys/qM6fstJQbOAOau47Z2
+	 Lp4prjAcsQsU+NCoogbo7gvYg+qUkTIbpprTR/SQnTqhFVkHoAadi1zs4DYikhiXHM
+	 5OAf3sayz4Nudb078SeEAg99x5hhdiHybPx2RIh4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Prusakowski <jprusakowski@google.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Quentin Schulz <quentin.schulz@cherry.de>,
+	Lukasz Czechowski <lukasz.czechowski@thaumatec.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 142/512] f2fs: fix to detect gcing page in f2fs_is_cp_guaranteed()
-Date: Tue, 17 Jun 2025 17:21:48 +0200
-Message-ID: <20250617152425.354021049@linuxfoundation.org>
+Subject: [PATCH 6.6 189/356] arm64: dts: rockchip: disable unrouted USB controllers and PHY on RK3399 Puma with Haikou
+Date: Tue, 17 Jun 2025 17:25:04 +0200
+Message-ID: <20250617152345.819571183@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
+References: <20250617152338.212798615@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,93 +48,68 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Quentin Schulz <quentin.schulz@cherry.de>
 
-[ Upstream commit aa1be8dd64163eca4dde7fd2557eb19927a06a47 ]
+[ Upstream commit febd8c6ab52c683b447fe22fc740918c86feae43 ]
 
-Jan Prusakowski reported a f2fs bug as below:
+The u2phy0_host port is the part of the USB PHY0 (namely the
+HOST0_DP/DM lanes) which routes directly to the USB2.0 HOST
+controller[1]. The other lanes of the PHY are routed to the USB3.0 OTG
+controller (dwc3), which we do use.
 
-f2fs/007 will hang kernel during testing w/ below configs:
+The HOST0_DP/DM lanes aren't routed on RK3399 Puma so let's simply
+disable the USB2.0 controllers.
 
-kernel 6.12.18 (from pixel-kernel/android16-6.12)
-export MKFS_OPTIONS="-O encrypt -O extra_attr -O project_quota -O quota"
-export F2FS_MOUNT_OPTIONS="test_dummy_encryption,discard,fsync_mode=nobarrier,reserve_root=32768,checkpoint_merge,atgc"
+USB3 OTG has been known to be unstable on RK3399 Puma Haikou for a
+while, one of the recurring issues being that only USB2 is detected and
+not USB3 in host mode. Reading the justification above and seeing that
+we are keeping u2phy0_host in the Haikou carrierboard DTS probably may
+have bothered you since it should be changed to u2phy0_otg. The issue is
+that if it's switched to that, USB OTG on Haikou is entirely broken. I
+have checked the routing in the Gerber file, the lanes are going to the
+expected ball pins (that is, NOT HOST0_DP/DM).
+u2phy0_host is for sure the wrong part of the PHY to use, but it's the
+only one that works at the moment for that board so keep it until we
+figure out what exactly is broken.
 
-cat /proc/<umount_proc_id>/stack
-f2fs_wait_on_all_pages+0xa3/0x130
-do_checkpoint+0x40c/0x5d0
-f2fs_write_checkpoint+0x258/0x550
-kill_f2fs_super+0x14f/0x190
-deactivate_locked_super+0x30/0xb0
-cleanup_mnt+0xba/0x150
-task_work_run+0x59/0xa0
-syscall_exit_to_user_mode+0x12d/0x130
-do_syscall_64+0x57/0x110
-entry_SYSCALL_64_after_hwframe+0x76/0x7e
+No intended functional change.
 
-cat /sys/kernel/debug/f2fs/status
+[1] https://rockchip.fr/Rockchip%20RK3399%20TRM%20V1.3%20Part2.pdf
+    Chapter 2 USB2.0 PHY
 
-  - IO_W (CP: -256, Data:  256, Flush: (   0    0    1), Discard: (   0    0)) cmd:    0 undiscard:   0
-
-CP IOs reference count becomes negative.
-
-The root cause is:
-
-After 4961acdd65c9 ("f2fs: fix to tag gcing flag on page during block
-migration"), we will tag page w/ gcing flag for raw page of cluster
-during its migration.
-
-However, if the inode is both encrypted and compressed, during
-ioc_decompress(), it will tag page w/ gcing flag, and it increase
-F2FS_WB_DATA reference count:
-- f2fs_write_multi_page
- - f2fs_write_raw_page
-  - f2fs_write_single_page
-   - do_write_page
-    - f2fs_submit_page_write
-     - WB_DATA_TYPE(bio_page, fio->compressed_page)
-     : bio_page is encrypted, so mapping is NULL, and fio->compressed_page
-       is NULL, it returns F2FS_WB_DATA
-     - inc_page_count(.., F2FS_WB_DATA)
-
-Then, during end_io(), it decrease F2FS_WB_CP_DATA reference count:
-- f2fs_write_end_io
- - f2fs_compress_write_end_io
-  - fscrypt_pagecache_folio
-  : get raw page from encrypted page
-  - WB_DATA_TYPE(&folio->page, false)
-  : raw page has gcing flag, it returns F2FS_WB_CP_DATA
-  - dec_page_count(.., F2FS_WB_CP_DATA)
-
-In order to fix this issue, we need to detect gcing flag in raw page
-in f2fs_is_cp_guaranteed().
-
-Fixes: 4961acdd65c9 ("f2fs: fix to tag gcing flag on page during block migration")
-Reported-by: Jan Prusakowski <jprusakowski@google.com>
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: 2c66fc34e945 ("arm64: dts: rockchip: add RK3399-Q7 (Puma) SoM")
+Signed-off-by: Quentin Schulz <quentin.schulz@cherry.de>
+Signed-off-by: Lukasz Czechowski <lukasz.czechowski@thaumatec.com>
+Link: https://lore.kernel.org/r/20250425-onboard_usb_dev-v2-5-4a76a474a010@thaumatec.com
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/data.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/rockchip/rk3399-puma-haikou.dts | 8 --------
+ 1 file changed, 8 deletions(-)
 
-diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
-index 8564441cef9bc..62c7fd1168a15 100644
---- a/fs/f2fs/data.c
-+++ b/fs/f2fs/data.c
-@@ -54,7 +54,7 @@ bool f2fs_is_cp_guaranteed(struct page *page)
- 	struct f2fs_sb_info *sbi;
+diff --git a/arch/arm64/boot/dts/rockchip/rk3399-puma-haikou.dts b/arch/arm64/boot/dts/rockchip/rk3399-puma-haikou.dts
+index 115c14c0a3c68..396a6636073b5 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3399-puma-haikou.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3399-puma-haikou.dts
+@@ -251,14 +251,6 @@
+ 	status = "okay";
+ };
  
- 	if (fscrypt_is_bounce_page(page))
--		return false;
-+		return page_private_gcing(fscrypt_pagecache_page(page));
- 
- 	inode = mapping->host;
- 	sbi = F2FS_I_SB(inode);
+-&usb_host0_ehci {
+-	status = "okay";
+-};
+-
+-&usb_host0_ohci {
+-	status = "okay";
+-};
+-
+ &vopb {
+ 	status = "okay";
+ };
 -- 
 2.39.5
 
