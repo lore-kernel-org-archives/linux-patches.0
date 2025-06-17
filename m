@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 317B02DF3C9;
-	Tue, 17 Jun 2025 15:38:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7017420F090;
+	Tue, 17 Jun 2025 15:38:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750174721; cv=none; b=Nx4Dhvk4wqGz398OOJlfJx8rKmHW1erqDViP802Gx9ok/flez2UjJXDAtR3gMRpPXFHn1snRPsJENzbJ7IQ8m4aazAE5H00So3LKJRPwJKDfshxFd8kFX7rYaIfW5vLHkUfpA6Pz6rVAJeSjjQZ766QBOmUwCZjrTaxgizvAp+A=
+	t=1750174724; cv=none; b=FK1D04NFU+HEBHTGNW8rOT59WnP9siMi1gluDHNEqB5TuzXYTk4i7l2XmnzLDYR1La/WAn7crmpQPU9axQr2j9h83pXvU816FjwV7hbG5M/m6EMmB6hMFpMLbSNEGKIGk0Kb0xDNdoefkl7EJHDeyM2uRVbACOB3s9+whxz4ANA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750174721; c=relaxed/simple;
-	bh=SASNGHRMcFKz2NJluvnZHAqWe/An3dW4c2ddq5Jj5iY=;
+	s=arc-20240116; t=1750174724; c=relaxed/simple;
+	bh=gt3NNMBs8jshSCjviRvU0w2hyuC/Ai6fEDxfHfQGjPc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jj62U1Z6RD75Mezbr0JcRqH0oDgy32/BStcGv7d++IuVz3RTS1djmpLfhyRtcRu4cXGCLUfQHB/EcxrB/s5ZegjpoNQLrqIcTibnMYbQNdpufznSFp6hIkNzCVs/b6zw2Ii0naPBCH+XPoVp8eeHJ7n4IgJj3En3IdZDb26NoII=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WGrtuCw9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ir5i97wj0cYilyUjUXUuwdY7U9ybfpGI5HH3sl6PhTeadWs8vJhllQB887tyg5g3GbjSfbKdga4JCdDKQk9qiqbZRSOrcXFISQZei7rHI+PqfTnm3KdXyApajqAwTADdFCxvoDTMjvsSgTLD8ImUrE4mwnVU/u5Nk88PMqtRo70=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pLVOKwDK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WGrtuCw9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 396E1C4CEE3;
-	Tue, 17 Jun 2025 15:38:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pLVOKwDK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D7D8C4CEE3;
+	Tue, 17 Jun 2025 15:38:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750174720;
-	bh=SASNGHRMcFKz2NJluvnZHAqWe/An3dW4c2ddq5Jj5iY=;
+	s=korg; t=1750174724;
+	bh=gt3NNMBs8jshSCjviRvU0w2hyuC/Ai6fEDxfHfQGjPc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WGrtuCw9Vkftv2pQyUk/p/zPEJrI5w6vJU+iTQ7zzW35ga3i5UMq3SB/aqZ5QbHn5
-	 bQpkO2DnDTvK8zgP1R9j95ZpyF4N8Tj5sF5rxSDshQVOneKpprmr5b00hdNdlYiIEh
-	 E6bDSMnYbji8GxYRHwDaBl2QcUQH8efoGXXGZWoI=
+	b=pLVOKwDKDzvLAOyZJ3lUT8+HUgTlPiouf3M3bcORg2X4RqA0eWrAtJPoIZLE2NfHK
+	 OEn01MtO+oeynHbDsfjIcO2If4DRnnDwpoT/1fk2muaBwP2DDnx3lLucy4o3JTLo3z
+	 3IMqScH8ViS8OGbKK/FWs1t/QO6alQczmBEwaoPA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
-	Stanislav Fomichev <sdf@fomichev.me>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 105/356] bpf: Allow XDP dev-bound programs to perform XDP_REDIRECT into maps
-Date: Tue, 17 Jun 2025 17:23:40 +0200
-Message-ID: <20250617152342.450498864@linuxfoundation.org>
+Subject: [PATCH 6.12 054/512] thermal/drivers/mediatek/lvts: Fix debugfs unregister on failure
+Date: Tue, 17 Jun 2025 17:20:20 +0200
+Message-ID: <20250617152421.726913858@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-References: <20250617152338.212798615@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,93 +48,81 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lorenzo Bianconi <lorenzo@kernel.org>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-[ Upstream commit 714070c4cb7a10ff57450a618a936775f3036245 ]
+[ Upstream commit b49825661af93d9b8d7236f914803f136896f8fd ]
 
-In the current implementation if the program is dev-bound to a specific
-device, it will not be possible to perform XDP_REDIRECT into a DEVMAP
-or CPUMAP even if the program is running in the driver NAPI context and
-it is not attached to any map entry. This seems in contrast with the
-explanation available in bpf_prog_map_compatible routine.
-Fix the issue introducing __bpf_prog_map_compatible utility routine in
-order to avoid bpf_prog_is_dev_bound() check running bpf_check_tail_call()
-at program load time (bpf_prog_select_runtime()).
-Continue forbidding to attach a dev-bound program to XDP maps
-(BPF_MAP_TYPE_PROG_ARRAY, BPF_MAP_TYPE_DEVMAP and BPF_MAP_TYPE_CPUMAP).
+When running the probe function for this driver, the function
+lvts_debugfs_init() gets called in lvts_domain_init() which, in
+turn, gets called in lvts_probe() before registering threaded
+interrupt handlers.
 
-Fixes: 3d76a4d3d4e59 ("bpf: XDP metadata RX kfuncs")
-Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
-Acked-by: Stanislav Fomichev <sdf@fomichev.me>
+Even though it's unlikely, the last call may fail and, if it does,
+there's nothing removing the already created debugfs folder and
+files.
+
+In order to fix that, instead of calling the lvts debugfs cleanup
+function upon failure, register a devm action that will take care
+of calling that upon failure or driver removal.
+
+Since devm was used, also delete the call to lvts_debugfs_exit()
+in the lvts_remove() callback, as now that's done automatically.
+
+Fixes: f5f633b18234 ("thermal/drivers/mediatek: Add the Low Voltage Thermal Sensor driver")
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: Chen-Yu Tsai <wenst@chromium.org>
+Link: https://lore.kernel.org/r/20250402083852.20624-1-angelogioacchino.delregno@collabora.com
+Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/core.c | 27 ++++++++++++++++-----------
- 1 file changed, 16 insertions(+), 11 deletions(-)
+ drivers/thermal/mediatek/lvts_thermal.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/kernel/bpf/core.c b/kernel/bpf/core.c
-index 81fd1bb994164..3f140b7527cfc 100644
---- a/kernel/bpf/core.c
-+++ b/kernel/bpf/core.c
-@@ -2258,8 +2258,8 @@ static unsigned int __bpf_prog_ret0_warn(const void *ctx,
- }
- #endif
+diff --git a/drivers/thermal/mediatek/lvts_thermal.c b/drivers/thermal/mediatek/lvts_thermal.c
+index 3295b27ab70d2..944c28a0c4736 100644
+--- a/drivers/thermal/mediatek/lvts_thermal.c
++++ b/drivers/thermal/mediatek/lvts_thermal.c
+@@ -209,6 +209,13 @@ static const struct debugfs_reg32 lvts_regs[] = {
+ 	LVTS_DEBUG_FS_REGS(LVTS_CLKEN),
+ };
  
--bool bpf_prog_map_compatible(struct bpf_map *map,
--			     const struct bpf_prog *fp)
-+static bool __bpf_prog_map_compatible(struct bpf_map *map,
-+				      const struct bpf_prog *fp)
- {
- 	enum bpf_prog_type prog_type = resolve_prog_type(fp);
- 	bool ret;
-@@ -2268,14 +2268,6 @@ bool bpf_prog_map_compatible(struct bpf_map *map,
- 	if (fp->kprobe_override)
- 		return false;
- 
--	/* XDP programs inserted into maps are not guaranteed to run on
--	 * a particular netdev (and can run outside driver context entirely
--	 * in the case of devmap and cpumap). Until device checks
--	 * are implemented, prohibit adding dev-bound programs to program maps.
--	 */
--	if (bpf_prog_is_dev_bound(aux))
--		return false;
--
- 	spin_lock(&map->owner.lock);
- 	if (!map->owner.type) {
- 		/* There's no owner yet where we could check for
-@@ -2309,6 +2301,19 @@ bool bpf_prog_map_compatible(struct bpf_map *map,
- 	return ret;
- }
- 
-+bool bpf_prog_map_compatible(struct bpf_map *map, const struct bpf_prog *fp)
++static void lvts_debugfs_exit(void *data)
 +{
-+	/* XDP programs inserted into maps are not guaranteed to run on
-+	 * a particular netdev (and can run outside driver context entirely
-+	 * in the case of devmap and cpumap). Until device checks
-+	 * are implemented, prohibit adding dev-bound programs to program maps.
-+	 */
-+	if (bpf_prog_is_dev_bound(fp->aux))
-+		return false;
++	struct lvts_domain *lvts_td = data;
 +
-+	return __bpf_prog_map_compatible(map, fp);
++	debugfs_remove_recursive(lvts_td->dom_dentry);
 +}
 +
- static int bpf_check_tail_call(const struct bpf_prog *fp)
+ static int lvts_debugfs_init(struct device *dev, struct lvts_domain *lvts_td)
  {
- 	struct bpf_prog_aux *aux = fp->aux;
-@@ -2321,7 +2326,7 @@ static int bpf_check_tail_call(const struct bpf_prog *fp)
- 		if (!map_type_contains_progs(map))
- 			continue;
+ 	struct debugfs_regset32 *regset;
+@@ -241,12 +248,7 @@ static int lvts_debugfs_init(struct device *dev, struct lvts_domain *lvts_td)
+ 		debugfs_create_regset32("registers", 0400, dentry, regset);
+ 	}
  
--		if (!bpf_prog_map_compatible(map, fp)) {
-+		if (!__bpf_prog_map_compatible(map, fp)) {
- 			ret = -EINVAL;
- 			goto out;
- 		}
+-	return 0;
+-}
+-
+-static void lvts_debugfs_exit(struct lvts_domain *lvts_td)
+-{
+-	debugfs_remove_recursive(lvts_td->dom_dentry);
++	return devm_add_action_or_reset(dev, lvts_debugfs_exit, lvts_td);
+ }
+ 
+ #else
+@@ -1352,8 +1354,6 @@ static void lvts_remove(struct platform_device *pdev)
+ 
+ 	for (i = 0; i < lvts_td->num_lvts_ctrl; i++)
+ 		lvts_ctrl_set_enable(&lvts_td->lvts_ctrl[i], false);
+-
+-	lvts_debugfs_exit(lvts_td);
+ }
+ 
+ static const struct lvts_ctrl_data mt7988_lvts_ap_data_ctrl[] = {
 -- 
 2.39.5
 
