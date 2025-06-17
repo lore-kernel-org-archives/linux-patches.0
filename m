@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 364352DF3C7;
-	Tue, 17 Jun 2025 16:04:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76B932F235C;
+	Tue, 17 Jun 2025 16:04:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750176255; cv=none; b=l0lwU+ck/LjZMKxACuTVFrdj/U/19cowFKSj+ihOAoyBTsm2QlsobIvq0KsspogDKMpqUaxV67KyNNG0bsLN8ilgwQTN5ubSyBewjc7dKLQ0tjszh3wzgn4Vt5vA5I2hJ3mDCFLFqtSRVvSnSyx2COcSEAc360JvUJpl2ApVbp0=
+	t=1750176258; cv=none; b=SutRp+sRttJ9LiKIDx02lgLb4m3p4TxVPKna7jtLQOVuMLQucLW08/6yKU1TUPuJTyF7sc6mfEZ4pEzJArtSUICPK3ltPQgsKQ3yNcIjSEZJJWsh39tvQtCyrB9mfiTXhY2JEDWDNC22G5Yd6lgzHv8DUufjAv47vsIDrHpaeqc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750176255; c=relaxed/simple;
-	bh=Z4GCbQs/YqLdgyqbXvBVkOk0jcUT7wbYHctGPT9cROY=;
+	s=arc-20240116; t=1750176258; c=relaxed/simple;
+	bh=vxr4iflg2GFx4jsNsLu9Ib9oKjo2ShLpAUKYmtZB+XI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iQFlmrFUUn/JNvrcGY95ymzeT8T35ndkxnNAoxwQQKr+IMQL7FrjNN3JLrFa7uDE1xac7xAray8MUIGwNNup8OLIZzY2YZPbpIIzKxBu/spPXEUXzo+2CcXOWAW+albJtW47K+6O8iTEmJbPPrTazF1aXVy+Ar8/VMUKbs1Dqvw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IroV9ts/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eJxFzQ7pFkLSp3tpw09ayUvyGlr8gMdQkeu1BJGkdAoXWa2hqo80I9HIcm+bX666RcuUb3eCCINrPLGvemuFNWB0kQXfAY9v6XQzTJ6EuKAr4ZjY1xdv8MJlg+2gDRO6acgWG0fHPXHyemXB2d+bbGx4fNuYVA7beXT8MsLVRYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bzl6q4wH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IroV9ts/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9777AC4CEE3;
-	Tue, 17 Jun 2025 16:04:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bzl6q4wH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB32AC4CEE3;
+	Tue, 17 Jun 2025 16:04:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750176255;
-	bh=Z4GCbQs/YqLdgyqbXvBVkOk0jcUT7wbYHctGPT9cROY=;
+	s=korg; t=1750176258;
+	bh=vxr4iflg2GFx4jsNsLu9Ib9oKjo2ShLpAUKYmtZB+XI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IroV9ts/BH+mozIdfrIQMMMWFjDF1Aad7oMV2RpM9RCMGxuYOwWptgv48QmN2JNsQ
-	 pNpRaBpqc0CY7Gy+30YIgDq/fZrEudJozwVW1Nj830/WcKdh1DyEQcng8Oyy5otrpK
-	 oMef2iNisjlltcciidOgTN/MAwSbH7WnI5uRqQHM=
+	b=Bzl6q4wHISLlICP5NtSZF3cbem1or9u2F8e+KPTaUip2fDsRk9ORbwALQKMgBCh6a
+	 gHmoVDv68wKIbW9p0oQG0lJsCPrni1vVNWevVZEgzGdr2zEpUdrHSzW/toU7LrnkoE
+	 h6Aq81DV0iqg87u0XU8PmwIFhezjkp+taI0eQzh4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tao Chen <chen.dylane@linux.dev>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Hariprasad Kelam <hkelam@marvell.com>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 169/780] bpf: Check link_create.flags parameter for multi_uprobe
-Date: Tue, 17 Jun 2025 17:17:57 +0200
-Message-ID: <20250617152458.365885967@linuxfoundation.org>
+Subject: [PATCH 6.12 211/512] octeontx2-pf: QOS: Perform cache sync on send queue teardown
+Date: Tue, 17 Jun 2025 17:22:57 +0200
+Message-ID: <20250617152428.179910119@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,43 +48,72 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tao Chen <chen.dylane@linux.dev>
+From: Hariprasad Kelam <hkelam@marvell.com>
 
-[ Upstream commit a76116f422c442ab691b4dcabb25613486d34360 ]
+[ Upstream commit 479c58016099d19686e36f6c50f912360839a7fa ]
 
-The link_create.flags are currently not used for multi-uprobes, so return
--EINVAL if it is set, same as for other attach APIs.
+QOS is designed to create a new send queue whenever  a class
+is created, ensuring proper shaping and scheduling. However,
+when multiple send queues are created and deleted in a loop,
+SMMU errors are observed.
 
-We allow target_fd to have an arbitrary value for multi-uprobe, though,
-as there are existing users (libbpf) relying on this.
+This patch addresses the issue by performing an data cache sync
+during the teardown of QOS send queues.
 
-Fixes: 89ae89f53d20 ("bpf: Add multi uprobe link")
-Signed-off-by: Tao Chen <chen.dylane@linux.dev>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20250407035752.1108927-2-chen.dylane@linux.dev
+Fixes: ab6dddd2a669 ("octeontx2-pf: qos send queues management")
+Signed-off-by: Hariprasad Kelam <hkelam@marvell.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250522094742.1498295-1-hkelam@marvell.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/bpf_trace.c | 3 +++
- 1 file changed, 3 insertions(+)
+ .../ethernet/marvell/octeontx2/nic/qos_sq.c   | 22 +++++++++++++++++++
+ 1 file changed, 22 insertions(+)
 
-diff --git a/kernel/trace/bpf_trace.c b/kernel/trace/bpf_trace.c
-index ec19942321e6d..0f5906f43d7ca 100644
---- a/kernel/trace/bpf_trace.c
-+++ b/kernel/trace/bpf_trace.c
-@@ -3379,6 +3379,9 @@ int bpf_uprobe_multi_link_attach(const union bpf_attr *attr, struct bpf_prog *pr
- 	if (sizeof(u64) != sizeof(void *))
- 		return -EOPNOTSUPP;
+diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/qos_sq.c b/drivers/net/ethernet/marvell/octeontx2/nic/qos_sq.c
+index 9d887bfc31089..ac9345644068e 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/qos_sq.c
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/qos_sq.c
+@@ -256,6 +256,26 @@ int otx2_qos_enable_sq(struct otx2_nic *pfvf, int qidx)
+ 	return err;
+ }
  
-+	if (attr->link_create.flags)
-+		return -EINVAL;
++static int otx2_qos_nix_npa_ndc_sync(struct otx2_nic *pfvf)
++{
++	struct ndc_sync_op *req;
++	int rc;
 +
- 	if (!is_uprobe_multi(prog))
- 		return -EINVAL;
++	mutex_lock(&pfvf->mbox.lock);
++
++	req = otx2_mbox_alloc_msg_ndc_sync_op(&pfvf->mbox);
++	if (!req) {
++		mutex_unlock(&pfvf->mbox.lock);
++		return -ENOMEM;
++	}
++
++	req->nix_lf_tx_sync = true;
++	req->npa_lf_sync = true;
++	rc = otx2_sync_mbox_msg(&pfvf->mbox);
++	mutex_unlock(&pfvf->mbox.lock);
++	return rc;
++}
++
+ void otx2_qos_disable_sq(struct otx2_nic *pfvf, int qidx)
+ {
+ 	struct otx2_qset *qset = &pfvf->qset;
+@@ -285,6 +305,8 @@ void otx2_qos_disable_sq(struct otx2_nic *pfvf, int qidx)
  
+ 	otx2_qos_sqb_flush(pfvf, sq_idx);
+ 	otx2_smq_flush(pfvf, otx2_get_smq_idx(pfvf, sq_idx));
++	/* NIX/NPA NDC sync */
++	otx2_qos_nix_npa_ndc_sync(pfvf);
+ 	otx2_cleanup_tx_cqes(pfvf, cq);
+ 
+ 	mutex_lock(&pfvf->mbox.lock);
 -- 
 2.39.5
 
