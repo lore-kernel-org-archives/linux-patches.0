@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48AA21E8332;
-	Tue, 17 Jun 2025 15:43:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A49D2EA487;
+	Tue, 17 Jun 2025 15:43:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175013; cv=none; b=FGX+1AX2NwoD5apTApZmm2KGoXml8CqO2mikX5On67ZbbsuJC4BCM1Dn10fJbKQP7DUU92bRcgQ2b5xujrHhHVBPigWBgJgxpcdZhTFvDLJE3JfdnKocF6+V38VNO3yHo3YRpgIvKfeM3H3hzfOz3T7mgkjwzeI7O6GDRzrWDG8=
+	t=1750175016; cv=none; b=Ax1+oOGHmZbxyoU+9eLLDq+YXP8G4V9EUEbHMhiugxlFmfxWySBVTavIw3e/Prp4lBMmiFFvnigvmkgcL3o/fUOcA0qy/UFQ7wl78gPLVwLsQpwYgdUpg60w/WaX9cfcxCmHOfqC2rN0EQLN3ghxemW3mEhNNZmOEs89O+IJLss=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175013; c=relaxed/simple;
-	bh=oT0UOmi+UCCMkb9nvy6VJKSI6BCATesMgovR//KKrjY=;
+	s=arc-20240116; t=1750175016; c=relaxed/simple;
+	bh=QEnjEcXByIBu+ufQaljjLPeRBeLG6pdbfivCx221t1E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fr8mreMl0UNBrIs43m5aTOkQ/+BrOrI+ThMAsRWhcIOs2//6UIIs/rD7o1t56NCdRO3VXbCDZHb6nzfzw387f6sZlOA6mb4VvsvJxZOC30JbsIwB4EBcri6pPEAS1QqyODCVVrgqGaJpM4q2QdwZMpmv8wjSRQMzwYrf81pN9Fc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PdxyoI3C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=lCnW442p0ltVyt3MDxLvKtYddnPHWtN4k8dg+mCt0qnCWwkk246wdOoTBGhn1+OGJe4m8pc0t4+yT1KZXKx+jxMYxNzqvNNbaRcEWvtF/oKmPjkOGnwenE56f7KfDiB3ou+svpss/56JqpMUpgHyeFspO1SiFSghb1MFptPKjZs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LsnWMKus; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PdxyoI3C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D630C4CEE3;
-	Tue, 17 Jun 2025 15:43:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LsnWMKus"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED00AC4CEE3;
+	Tue, 17 Jun 2025 15:43:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175013;
-	bh=oT0UOmi+UCCMkb9nvy6VJKSI6BCATesMgovR//KKrjY=;
+	s=korg; t=1750175016;
+	bh=QEnjEcXByIBu+ufQaljjLPeRBeLG6pdbfivCx221t1E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PdxyoI3CW1BYqOYNBJJKWQaQDC8RwxuHIb9ACf7BdddnxrS9ej1cT7VtOpaW08q9N
-	 iiPZQiv2J3mclyMkiNpEVW6rZRTHx6uMfYCovJTul7cuMYg8lt95Uu+lmmyiK8JrGO
-	 e3rYL6S6WKSvcAC711o5yu3+4mU/D49tqGTekb44=
+	b=LsnWMKusgHoN000wDU65t4h8tKDDs6pqznpUMt/hyFaqLjrX6OcaU4pIpg3fxzgM9
+	 RfpxnPOIxEV8L2+aqR7XBc5+hgaSymCXiICOiaFKEKdgKf/J+Kt94UQs901sAPbklq
+	 143SxJNuAPJs+2R8UAi8PwCV8nMmnQzcGtF3zML4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	=?UTF-8?q?Kornel=20Dul=C4=99ba?= <korneld@google.com>,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 041/780] btrfs: scrub: fix a wrong error type when metadata bytenr mismatches
-Date: Tue, 17 Jun 2025 17:15:49 +0200
-Message-ID: <20250617152453.168188898@linuxfoundation.org>
+Subject: [PATCH 6.12 084/512] arm64: Support ARM64_VA_BITS=52 when setting ARCH_MMAP_RND_BITS_MAX
+Date: Tue, 17 Jun 2025 17:20:50 +0200
+Message-ID: <20250617152422.978391734@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,42 +46,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Kornel Dulęba <korneld@google.com>
 
-[ Upstream commit f2c19541e421b3235efc515dad88b581f00592ae ]
+[ Upstream commit f101c56447717c595d803894ba0e215f56c6fba4 ]
 
-When the bytenr doesn't match for a metadata tree block, we will report
-it as an csum error, which is incorrect and should be reported as a
-metadata error instead.
+When the 52-bit virtual addressing was introduced the select like
+ARCH_MMAP_RND_BITS_MAX logic was never updated to account for it.
+Because of that the rnd max bits knob is set to the default value of 18
+when ARM64_VA_BITS=52.
+Fix this by setting ARCH_MMAP_RND_BITS_MAX to the same value that would
+be used if 48-bit addressing was used. Higher values can't used here
+because 52-bit addressing is used only if the caller provides a hint to
+mmap, with a fallback to 48-bit. The knob in question is an upper bound
+for what the user can set in /proc/sys/vm/mmap_rnd_bits, which in turn
+is used to determine how many random bits can be inserted into the base
+address used for mmap allocations. Since 48-bit allocations are legal
+with ARM64_VA_BITS=52, we need to make sure that the base address is
+small enough to facilitate this.
 
-Fixes: a3ddbaebc7c9 ("btrfs: scrub: introduce a helper to verify one metadata block")
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: b6d00d47e81a ("arm64: mm: Introduce 52-bit Kernel VAs")
+Signed-off-by: Kornel Dulęba <korneld@google.com>
+Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
+Link: https://lore.kernel.org/r/20250417114754.3238273-1-korneld@google.com
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/scrub.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/Kconfig | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/fs/btrfs/scrub.c b/fs/btrfs/scrub.c
-index 61812298325a2..4c525a0408125 100644
---- a/fs/btrfs/scrub.c
-+++ b/fs/btrfs/scrub.c
-@@ -619,7 +619,7 @@ static void scrub_verify_one_metadata(struct scrub_stripe *stripe, int sector_nr
- 	memcpy(on_disk_csum, header->csum, fs_info->csum_size);
- 
- 	if (logical != btrfs_stack_header_bytenr(header)) {
--		bitmap_set(&stripe->csum_error_bitmap, sector_nr, sectors_per_tree);
-+		bitmap_set(&stripe->meta_error_bitmap, sector_nr, sectors_per_tree);
- 		bitmap_set(&stripe->error_bitmap, sector_nr, sectors_per_tree);
- 		btrfs_warn_rl(fs_info,
- 		"tree block %llu mirror %u has bad bytenr, has %llu want %llu",
+diff --git a/arch/arm64/Kconfig b/arch/arm64/Kconfig
+index a11a7a42edbfb..7887d18cce3e4 100644
+--- a/arch/arm64/Kconfig
++++ b/arch/arm64/Kconfig
+@@ -322,9 +322,9 @@ config ARCH_MMAP_RND_BITS_MAX
+ 	default 24 if ARM64_VA_BITS=39
+ 	default 27 if ARM64_VA_BITS=42
+ 	default 30 if ARM64_VA_BITS=47
+-	default 29 if ARM64_VA_BITS=48 && ARM64_64K_PAGES
+-	default 31 if ARM64_VA_BITS=48 && ARM64_16K_PAGES
+-	default 33 if ARM64_VA_BITS=48
++	default 29 if (ARM64_VA_BITS=48 || ARM64_VA_BITS=52) && ARM64_64K_PAGES
++	default 31 if (ARM64_VA_BITS=48 || ARM64_VA_BITS=52) && ARM64_16K_PAGES
++	default 33 if (ARM64_VA_BITS=48 || ARM64_VA_BITS=52)
+ 	default 14 if ARM64_64K_PAGES
+ 	default 16 if ARM64_16K_PAGES
+ 	default 18
 -- 
 2.39.5
 
