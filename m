@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C2592ECEA3;
-	Tue, 17 Jun 2025 15:46:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C4CB2ECEA3;
+	Tue, 17 Jun 2025 15:46:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175177; cv=none; b=uHqsNuWlkXEpIyxWuZukcA/Oo83ddXVvhVxVX/d31fCzLuESWamhf7NX29DSAhXF9KRlbdUw9Ds1DR4ToUtHbmE51W0/nxODtzNiFLrK0j07UHjMQ2dJqPdGAME00FLG10uwOKicN9uTeXBF0EUqKnwYEJoofnjgLKlpMklUSdM=
+	t=1750175179; cv=none; b=j/CHj4umoq2k8XUPbWLAQFLEqh9mENY09mOVdPT056utVf8uh4+FriytCReBZD4hLyKhZ33WX6mwxcVi6yfzXBjb6OPUeKkWH8YX30BWrzaxSWG9d0StjL4OdStPGnUV7hubdAkbalugpyrpWRizcN41C+tn3T5ubiPo4MzC5B8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175177; c=relaxed/simple;
-	bh=vUdaIJ/nt7Cp/XmriZbmqjCbdJi+Jk+G2yJz80cWJew=;
+	s=arc-20240116; t=1750175179; c=relaxed/simple;
+	bh=depARD+/Lp9PuuYWz/SrMywp67ZsuGXUulpl40lIsdE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FJhOF7kMF+ptHmUCRDOndYUCeAGir2VyPW0t60nkk3uYR7qNSBAgyF94KNyZt9wifps6CSMRb3BdeCFFTpSOJAzny8wg/l05NOGheVTB9e0uf0Jp7+93ki5HWv/eBdsmy9pjSxHIeSmHGaR+W1T3PxrUnyLAFWCLTtxbjxZ2yTg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cZ88zE50; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=fyyPDYe1565rf68/GIfAt7a07x9QctjbsUq4EDam0Jl7D3n/frOl8OZQSj6lK5XTOmTjfws/egSjbDFVuHVeH5F1sONQsvEHeXicEyiSgpyFTxumKQNccIia0hLyEfE6l48yZxo7eBFSsjw9RCuDRw7PtvIga6q5YXB0s8k4N78=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jxrqLvy1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cZ88zE50"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2690C4CEE3;
-	Tue, 17 Jun 2025 15:46:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jxrqLvy1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C13D3C4CEE3;
+	Tue, 17 Jun 2025 15:46:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175176;
-	bh=vUdaIJ/nt7Cp/XmriZbmqjCbdJi+Jk+G2yJz80cWJew=;
+	s=korg; t=1750175179;
+	bh=depARD+/Lp9PuuYWz/SrMywp67ZsuGXUulpl40lIsdE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cZ88zE50ci22E68+kUmQh2C8Hfh8Ac8ePvCuYWHX1GzrD72LOZ+N6yFSN/rU+RhVS
-	 ev3R/aUimIN8grUAt1S+Gwa5WR3AsaIBUSIWp/cJ4B/rXmm5+FvH9nQHVbAH8QCejK
-	 Vx0QV+xtwjJiyXz/yo7nnYAd/iUyAvzaxNOF/HtM=
+	b=jxrqLvy1upIUMeo7vPNCKkcXHCFhXxrLorBy0qZDzf4cBhp+mWICR2PKM9c71Q6AW
+	 GhmI3i/76jnEYnou4wP1NEjJA1bGBTCofHomIX7bGRwKxZgc9S2UENRU0ZmQtVaSBW
+	 OM6MkxmuqZlBZm5eequHpx+M4R8r8Ea38fq+QEU4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	Willy Tarreau <w@1wt.eu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 101/512] drm/mediatek: mtk_drm_drv: Unbind secondary mmsys components on err
-Date: Tue, 17 Jun 2025 17:21:07 +0200
-Message-ID: <20250617152423.690900175@linuxfoundation.org>
+Subject: [PATCH 6.15 060/780] tools/nolibc: properly align dirent buffer
+Date: Tue, 17 Jun 2025 17:16:08 +0200
+Message-ID: <20250617152453.943387818@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,62 +45,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+From: Thomas Weißschuh <linux@weissschuh.net>
 
-[ Upstream commit 94c933716567084bfb9e79dcd81eb2b2308e84e1 ]
+[ Upstream commit 0e75768ba24d669dbf76530e21fd51cfe2fbd2a9 ]
 
-When calling component_bind_all(), if a component that is included
-in the list fails, all of those that have been successfully bound
-will be unbound, but this driver has two components lists for two
-actual devices, as in, each mmsys instance has its own components
-list.
+As byte buffer is overlaid with a 'struct dirent64'.
+it has to satisfy the structs alignment requirements.
 
-In case mmsys0 (or actually vdosys0) is able to bind all of its
-components, but the secondary one fails, all of the components of
-the first are kept bound, while the ones of mmsys1/vdosys1 are
-correctly cleaned up.
-
-This is not right because, in case of a failure, the components
-are re-bound for all of the mmsys/vdosys instances without caring
-about the ones that were previously left in a bound state.
-
-Fix that by calling component_unbind_all() on all of the previous
-component masters that succeeded binding all subdevices when any
-of the other masters errors out.
-
-Fixes: 1ef7ed48356c ("drm/mediatek: Modify mediatek-drm for mt8195 multi mmsys support")
-Reviewed-by: Chen-Yu Tsai <wenst@chromium.org>
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://patchwork.kernel.org/project/dri-devel/patch/20250403104741.71045-4-angelogioacchino.delregno@collabora.com/
-Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
+Fixes: 665fa8dea90d ("tools/nolibc: add support for directory access")
+Acked-by: Willy Tarreau <w@1wt.eu>
+Link: https://lore.kernel.org/r/20250419-nolibc-ubsan-v2-4-060b8a016917@weissschuh.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/mediatek/mtk_drm_drv.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ tools/include/nolibc/dirent.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/mediatek/mtk_drm_drv.c b/drivers/gpu/drm/mediatek/mtk_drm_drv.c
-index 3cdda6694f7f5..42e62b0409612 100644
---- a/drivers/gpu/drm/mediatek/mtk_drm_drv.c
-+++ b/drivers/gpu/drm/mediatek/mtk_drm_drv.c
-@@ -481,8 +481,11 @@ static int mtk_drm_kms_init(struct drm_device *drm)
- 	for (i = 0; i < private->data->mmsys_dev_num; i++) {
- 		drm->dev_private = private->all_drm_private[i];
- 		ret = component_bind_all(private->all_drm_private[i]->dev, drm);
--		if (ret)
-+		if (ret) {
-+			while (--i >= 0)
-+				component_unbind_all(private->all_drm_private[i]->dev, drm);
- 			return ret;
-+		}
- 	}
+diff --git a/tools/include/nolibc/dirent.h b/tools/include/nolibc/dirent.h
+index c5c30d0dd6806..946a697e98e4c 100644
+--- a/tools/include/nolibc/dirent.h
++++ b/tools/include/nolibc/dirent.h
+@@ -7,6 +7,7 @@
+ #ifndef _NOLIBC_DIRENT_H
+ #define _NOLIBC_DIRENT_H
  
- 	/*
++#include "compiler.h"
+ #include "stdint.h"
+ #include "types.h"
+ 
+@@ -58,7 +59,7 @@ int closedir(DIR *dirp)
+ static __attribute__((unused))
+ int readdir_r(DIR *dirp, struct dirent *entry, struct dirent **result)
+ {
+-	char buf[sizeof(struct linux_dirent64) + NAME_MAX + 1];
++	char buf[sizeof(struct linux_dirent64) + NAME_MAX + 1] __nolibc_aligned_as(struct linux_dirent64);
+ 	struct linux_dirent64 *ldir = (void *)buf;
+ 	intptr_t i = (intptr_t)dirp;
+ 	int fd, ret;
 -- 
 2.39.5
 
