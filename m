@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A288A28E8;
-	Tue, 17 Jun 2025 15:53:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E55032E92BC;
+	Tue, 17 Jun 2025 15:53:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175613; cv=none; b=sH+MmcyVR9gt66SAa4sw4zMRMrmhtcIXulORgjEDmHn0DnSVlCGV5qVRotQSxbJloFafVCffmGz07cUAnICWN6nhZYUJomPUmx98CNfhmYE3dDeiQsibSTzBEWlWK1+i/Nkth9Hf8y87HPGEIUv5szLWclmgbODkp5hxJjUk3bY=
+	t=1750175617; cv=none; b=rLhaPUJIZD9P8sTpB4hkSL1fgUJcjr8McGSCI3KxukuSvcSzIKUju6z2SzY1S7DA30mhsyZSehnMHrZYJg9jPogf8ujckb7qhJOcoOOmqsJug05fSrEw451TBIQ0O5ICkHJ8qS99dc3p/4PmAvRRlrXOhABD2r47BXzKRmVpJio=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175613; c=relaxed/simple;
-	bh=nlQgucthSLVuemGGkMSKAcRw6eUSgIYtMR8NWKzxibQ=;
+	s=arc-20240116; t=1750175617; c=relaxed/simple;
+	bh=zvuaOIc3BZICiSuQW039Y9URScZ3NUE62wfpWyFrq6o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RoKRvrCPHV4aI8Hq9VEQFjW0CFBJEc2AsX75u+2WeesRMloaKc7rG7YnxpDkyr4olts/WayssgzeR+3mt8lS0fubVrRA/dE69DNOYZe7r+JUyib54/q18OkxUvC0xvMEpBIT+fIs7x9ysvG3KAZ08KBptNAgD8+d71ogTwMZGNw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vr0/DdDk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aSZlYXzJikPsw4ByCKk0TxP91OgRhWE49QPMh1AVRgExEwFTb+L8FNyg16hyIvyWVSOUcZSmASs+NqdyO84mHNGHHJLPoAgO5imNUkX8fuhCTyLEbP5LhC1WA9qs90HqC3QfaLwEf78nr5OHcuRwZM8X2+jTQJB+hqW4S/CxDlQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PG3DHP6c; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vr0/DdDk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1244FC4CEE3;
-	Tue, 17 Jun 2025 15:53:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PG3DHP6c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55B6CC4CEE3;
+	Tue, 17 Jun 2025 15:53:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175613;
-	bh=nlQgucthSLVuemGGkMSKAcRw6eUSgIYtMR8NWKzxibQ=;
+	s=korg; t=1750175616;
+	bh=zvuaOIc3BZICiSuQW039Y9URScZ3NUE62wfpWyFrq6o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vr0/DdDku0dvJldQ91IZTfCKhKTQ32/ZaUzyYGeIlwsRrYM3YY0Vq9fUkvDnct1ql
-	 Iq4PY3kWdpsmcFpqCDoPpvIh3IEdYSUj4vc3tit2WdaPkNFs+zlf/EX2GRjTYQJjdy
-	 gwzxx91we9dFRSSw3004qa4PzU+MKWfeoQsvA1ik=
+	b=PG3DHP6cFCXO2uL5LuFqyvP6DtF3XqJTHguhDBiCKgGsEFjLiSQuQhnrD6lPRb2TX
+	 6epdwf6vQvX+pmhiduCa3siPTIcM+D2gh27a4LjqSwwZLFPibzouL9NRReuCKjMnbg
+	 jkM22XvBOew+GZRqyGWbbUfy7bT3QB4LJ5ES2zCw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liviu Dudau <liviu.dudau@arm.com>,
-	Steven Price <steven.price@arm.com>,
-	Boris Brezillon <boris.brezillon@collabora.com>,
+	Zhongqiu Duan <dzq.aishenghu0@gmail.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 106/780] drm/panthor: Fix GPU_COHERENCY_ACE[_LITE] definitions
-Date: Tue, 17 Jun 2025 17:16:54 +0200
-Message-ID: <20250617152455.818749591@linuxfoundation.org>
+Subject: [PATCH 6.12 147/512] netfilter: nft_quota: match correctly when the quota just depleted
+Date: Tue, 17 Jun 2025 17:21:53 +0200
+Message-ID: <20250617152425.562552418@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,49 +47,80 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Boris Brezillon <boris.brezillon@collabora.com>
+From: Zhongqiu Duan <dzq.aishenghu0@gmail.com>
 
-[ Upstream commit d1df2907fb69df56aad8e4a0734dac0778c234a7 ]
+[ Upstream commit bfe7cfb65c753952735c3eed703eba9a8b96a18d ]
 
-GPU_COHERENCY_ACE and GPU_COHERENCY_ACE_LITE definitions have been
-swapped.
+The xt_quota compares skb length with remaining quota, but the nft_quota
+compares it with consumed bytes.
 
-Changes in v2:
-- New patch
+The xt_quota can match consumed bytes up to quota at maximum. But the
+nft_quota break match when consumed bytes equal to quota.
 
-Changes in v3:
-- Add Steve's R-b
+i.e., nft_quota match consumed bytes in [0, quota - 1], not [0, quota].
 
-Reported-by: Liviu Dudau <liviu.dudau@arm.com>
-Fixes: 546b366600ef ("drm/panthor: Add GPU register definitions")
-Reviewed-by: Steven Price <steven.price@arm.com>
-Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
-Link: https://lore.kernel.org/r/20250404080933.2912674-2-boris.brezillon@collabora.com
-Signed-off-by: Boris Brezillon <boris.brezillon@collabora.com>
+Fixes: 795595f68d6c ("netfilter: nft_quota: dump consumed quota")
+Signed-off-by: Zhongqiu Duan <dzq.aishenghu0@gmail.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panthor/panthor_regs.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/netfilter/nft_quota.c | 20 +++++++++++++-------
+ 1 file changed, 13 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/gpu/drm/panthor/panthor_regs.h b/drivers/gpu/drm/panthor/panthor_regs.h
-index b7b3b3add1662..a7a323dc5cf92 100644
---- a/drivers/gpu/drm/panthor/panthor_regs.h
-+++ b/drivers/gpu/drm/panthor/panthor_regs.h
-@@ -133,8 +133,8 @@
- #define GPU_COHERENCY_PROT_BIT(name)			BIT(GPU_COHERENCY_  ## name)
+diff --git a/net/netfilter/nft_quota.c b/net/netfilter/nft_quota.c
+index 9b2d7463d3d32..df0798da2329b 100644
+--- a/net/netfilter/nft_quota.c
++++ b/net/netfilter/nft_quota.c
+@@ -19,10 +19,16 @@ struct nft_quota {
+ };
  
- #define GPU_COHERENCY_PROTOCOL				0x304
--#define   GPU_COHERENCY_ACE				0
--#define   GPU_COHERENCY_ACE_LITE			1
-+#define   GPU_COHERENCY_ACE_LITE			0
-+#define   GPU_COHERENCY_ACE				1
- #define   GPU_COHERENCY_NONE				31
+ static inline bool nft_overquota(struct nft_quota *priv,
+-				 const struct sk_buff *skb)
++				 const struct sk_buff *skb,
++				 bool *report)
+ {
+-	return atomic64_add_return(skb->len, priv->consumed) >=
+-	       atomic64_read(&priv->quota);
++	u64 consumed = atomic64_add_return(skb->len, priv->consumed);
++	u64 quota = atomic64_read(&priv->quota);
++
++	if (report)
++		*report = consumed >= quota;
++
++	return consumed > quota;
+ }
  
- #define MCU_CONTROL					0x700
+ static inline bool nft_quota_invert(struct nft_quota *priv)
+@@ -34,7 +40,7 @@ static inline void nft_quota_do_eval(struct nft_quota *priv,
+ 				     struct nft_regs *regs,
+ 				     const struct nft_pktinfo *pkt)
+ {
+-	if (nft_overquota(priv, pkt->skb) ^ nft_quota_invert(priv))
++	if (nft_overquota(priv, pkt->skb, NULL) ^ nft_quota_invert(priv))
+ 		regs->verdict.code = NFT_BREAK;
+ }
+ 
+@@ -51,13 +57,13 @@ static void nft_quota_obj_eval(struct nft_object *obj,
+ 			       const struct nft_pktinfo *pkt)
+ {
+ 	struct nft_quota *priv = nft_obj_data(obj);
+-	bool overquota;
++	bool overquota, report;
+ 
+-	overquota = nft_overquota(priv, pkt->skb);
++	overquota = nft_overquota(priv, pkt->skb, &report);
+ 	if (overquota ^ nft_quota_invert(priv))
+ 		regs->verdict.code = NFT_BREAK;
+ 
+-	if (overquota &&
++	if (report &&
+ 	    !test_and_set_bit(NFT_QUOTA_DEPLETED_BIT, &priv->flags))
+ 		nft_obj_notify(nft_net(pkt), obj->key.table, obj, 0, 0,
+ 			       NFT_MSG_NEWOBJ, 0, nft_pf(pkt), 0, GFP_ATOMIC);
 -- 
 2.39.5
 
