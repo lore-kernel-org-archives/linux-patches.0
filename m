@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28B972FA630;
-	Tue, 17 Jun 2025 16:51:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 529ED2FA622;
+	Tue, 17 Jun 2025 16:51:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750179093; cv=none; b=MLzR8PmJDOQcwfw2P5vjQ3FRy5V2DqXNKBtOMe9dlrnAzaxaYo8fUk+3cTUZiAIAQIRqhkPOrXw3NpRkHU6sDQ2n6xFDezn2y23PwKOu9+ohoNSqPqGDIvYD9hyWlWaVODZyHpcWOjTPOazapy7CE7sodUTl5gZ3SYyq8fXSMkE=
+	t=1750179096; cv=none; b=UmH+zSbRQKvOW8qpxGr9Yzomz1DCCdH94nK22idwk3t4aIv13arrjWaNsZw73LJDlRDwND0gCAiR98BLkgrjwVIAI7vEJVxOfGzAOjZkwVTayh1c8cn20TPbK72lDT2hDCmH18AdpfQDaVASGtDCzqBYi4IoK4MwKhI9tVxHqhs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750179093; c=relaxed/simple;
-	bh=0SUb4EEoU7nVA6xdQZY7aAGQgxHnCtopSSOlQbEJHSA=;
+	s=arc-20240116; t=1750179096; c=relaxed/simple;
+	bh=beexzcq9Y5Z2PZiWbNz1x0BbujIpLxzbVdBiCezc7ds=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YIiejfugfOAGoeXITSThsLMbG8apl116EWMwBr8w1ON2Dd5S7VAQdUl6IAbZ1E6cWYLD4HQJP04St1pEJbyAQBCZCt7SNg8qkcAy9RwXQhektH01cHIFzByLOUGJxwVh+lkwy2XT5xDkTsU8+9CNVrHsTZJQWgJKuu+D5Dt4kno=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y168APuW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QXY6O5ir7VA5FsDjTEw7HdJxN06uciofrXrbs4WsYSugvwVFJaDyHcqWtfEM25KPhGnBDXcMao3RcqJiVN3bwNvvUSMeolbghgOLze5X9B6z7C06LqTYbUGpkAk5LvN9HdC49XtFzsidyZUuoTr8EJ1zlb+6SxvH+KnsXQwuhVQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DKGwXuzT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y168APuW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B80CC4CEE3;
-	Tue, 17 Jun 2025 16:51:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DKGwXuzT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6917C4CEE3;
+	Tue, 17 Jun 2025 16:51:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750179093;
-	bh=0SUb4EEoU7nVA6xdQZY7aAGQgxHnCtopSSOlQbEJHSA=;
+	s=korg; t=1750179096;
+	bh=beexzcq9Y5Z2PZiWbNz1x0BbujIpLxzbVdBiCezc7ds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y168APuWh+smjf5bT2JH4aQwG1q11f+8piKAqicKiiugskc33ZH/iC65c44/+v1JA
-	 lSKQLMUAL125tjN3S6BdKNh9c94YWNFb1MZKf5Aj8T0FvkbSFNL9KbZhyMrsIc+1iN
-	 zyLN6XbeSAChQ7HvIUjC+kx2vAGvNSp5Yk01ZUOk=
+	b=DKGwXuzT9YRpxyAT9Viu9Tuxt1uJUVSN6CeS7Ys6/VhM6Yu1PVQhNgiVxwiUYq81F
+	 jggGDK27vsr+OTabprEaDc8pmzDQzsWYIoB9wtKsqbUJlGsspSo8PoQtvKvGlCGCI2
+	 TZUoT98AYnWuK4JtaNHG3+eA0p2gz0TQEsbpMC5I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Amadeusz=20S=C5=82awi=C5=84ski?= <amadeuszx.slawinski@linux.intel.com>,
-	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Yuuki NAGAO <wf.yn386@gmail.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 646/780] ASoC: Intel: avs: Verify content returned by parse_int_array()
-Date: Tue, 17 Jun 2025 17:25:54 +0200
-Message-ID: <20250617152517.791109035@linuxfoundation.org>
+Subject: [PATCH 6.15 647/780] ASoC: ti: omap-hdmi: Re-add dai_link->platform to fix card init
+Date: Tue, 17 Jun 2025 17:25:55 +0200
+Message-ID: <20250617152517.829628204@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
 References: <20250617152451.485330293@linuxfoundation.org>
@@ -46,54 +45,81 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cezary Rojewski <cezary.rojewski@intel.com>
+From: Yuuki NAGAO <wf.yn386@gmail.com>
 
-[ Upstream commit 93e246b6769bdacb09cfff4ea0f00fe5ab4f0d7a ]
+[ Upstream commit bae071aa7bcd034054cec91666c80f812adeccd9 ]
 
-The first element of the returned array stores its length. If it is 0,
-any manipulation beyond the element at index 0 ends with null-ptr-deref.
+The removed dai_link->platform component cause a fail which
+is exposed at runtime. (ex: when a sound tool is used)
+This patch re-adds the dai_link->platform component to have
+a full card registered.
 
-Fixes: 5a565ba23abe ("ASoC: Intel: avs: Probing and firmware tracing over debugfs")
-Reviewed-by: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
-Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Link: https://patch.msgid.link/20250530141025.2942936-8-cezary.rojewski@intel.com
+Before this patch:
+$ aplay -l
+**** List of PLAYBACK Hardware Devices ****
+card 1: HDMI [HDMI], device 0: HDMI snd-soc-dummy-dai-0 []
+  Subdevices: 1/1
+  Subdevice #0: subdevice #0
+
+$ speaker-test -D plughw:1,0 -t sine
+speaker-test 1.2.8
+Playback device is plughw:1,0
+Stream parameters are 48000Hz, S16_LE, 1 channels
+Sine wave rate is 440.0000Hz
+Playback open error: -22,Invalid argument
+
+After this patch which restores the platform component:
+$ aplay -l
+**** List of PLAYBACK Hardware Devices ****
+card 0: HDMI [HDMI], device 0: HDMI snd-soc-dummy-dai-0 [HDMI snd-soc-dummy-dai-0]
+  Subdevices: 0/1
+  Subdevice #0: subdevice #0
+
+-> Resolve the playback error.
+
+Fixes: 3b0db249cf8f ("ASoC: ti: remove unnecessary dai_link->platform")
+
+Signed-off-by: Yuuki NAGAO <wf.yn386@gmail.com>
+Link: https://patch.msgid.link/20250531141341.81164-1-wf.yn386@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/avs/debugfs.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ sound/soc/ti/omap-hdmi.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/intel/avs/debugfs.c b/sound/soc/intel/avs/debugfs.c
-index 8c4edda97f757..0e826ca20619c 100644
---- a/sound/soc/intel/avs/debugfs.c
-+++ b/sound/soc/intel/avs/debugfs.c
-@@ -373,7 +373,10 @@ static ssize_t trace_control_write(struct file *file, const char __user *from, s
- 		return ret;
+diff --git a/sound/soc/ti/omap-hdmi.c b/sound/soc/ti/omap-hdmi.c
+index cf43ac19c4a6d..55e7cb96858fc 100644
+--- a/sound/soc/ti/omap-hdmi.c
++++ b/sound/soc/ti/omap-hdmi.c
+@@ -361,17 +361,20 @@ static int omap_hdmi_audio_probe(struct platform_device *pdev)
+ 	if (!card->dai_link)
+ 		return -ENOMEM;
  
- 	num_elems = *array;
--	resource_mask = array[1];
-+	if (!num_elems) {
-+		ret = -EINVAL;
-+		goto free_array;
-+	}
+-	compnent = devm_kzalloc(dev, sizeof(*compnent), GFP_KERNEL);
++	compnent = devm_kzalloc(dev, 2 * sizeof(*compnent), GFP_KERNEL);
+ 	if (!compnent)
+ 		return -ENOMEM;
+-	card->dai_link->cpus		= compnent;
++	card->dai_link->cpus		= &compnent[0];
+ 	card->dai_link->num_cpus	= 1;
+ 	card->dai_link->codecs		= &snd_soc_dummy_dlc;
+ 	card->dai_link->num_codecs	= 1;
++	card->dai_link->platforms	= &compnent[1];
++	card->dai_link->num_platforms	= 1;
  
- 	/*
- 	 * Disable if just resource mask is provided - no log priority flags.
-@@ -381,6 +384,7 @@ static ssize_t trace_control_write(struct file *file, const char __user *from, s
- 	 * Enable input format:   mask, prio1, .., prioN
- 	 * Where 'N' equals number of bits set in the 'mask'.
- 	 */
-+	resource_mask = array[1];
- 	if (num_elems == 1) {
- 		ret = disable_logs(adev, resource_mask);
- 	} else {
+ 	card->dai_link->name = card->name;
+ 	card->dai_link->stream_name = card->name;
+ 	card->dai_link->cpus->dai_name = dev_name(ad->dssdev);
++	card->dai_link->platforms->name = dev_name(ad->dssdev);
+ 	card->num_links = 1;
+ 	card->dev = dev;
+ 
 -- 
 2.39.5
 
