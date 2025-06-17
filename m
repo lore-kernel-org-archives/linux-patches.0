@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21B6018A6AE;
-	Tue, 17 Jun 2025 15:37:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66E8F18A6AE;
+	Tue, 17 Jun 2025 15:37:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750174640; cv=none; b=WNavzofiHUATei0CIHTja6H0p2tk5B+xw2yOL/f47jaTADik4VQ9lhtnyrzbZ383dfEBydYoy/TNJ9qJcXnz+g5mwCA+e9UQNhGM+8VkkXel/q/IUY/rZb22SvzqiV87xTwt/eOABdlQAcdmt2rhGQPbZjd/qh8IxdKo6QBRgMI=
+	t=1750174643; cv=none; b=qjoItrgCPig0iJWg+LwsGflQwMPuYrdtmAH2cpaOy4h7+KvMJ0XZ1h/rcz8Wp9A7cb/t4KAQNZYJ72DifA5g601msqP/A4F6VHE6xo75J2TPebECmaycGWoaWHy9VNuLDxS7YoO3phdDK48NFHJJGVEp5YyfdSbgl26jp+KZINU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750174640; c=relaxed/simple;
-	bh=0vQP3TMCUawg9z6UjIilkK/ukpdBM0rGV1vX/OZ1x5A=;
+	s=arc-20240116; t=1750174643; c=relaxed/simple;
+	bh=R5oMeOfm1PnkyQ2xSQUY4k2Bx0L9ON1qUcHPBsD+lWY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b+ty+ySKn1HDk6+i8tWRaEcEfUzx2hCW6LZN/NCe+pRERIcSk7rGupTz6D84t8i+j2ESuB9ahLuWUqSBrGzPuzDyy4Se4IUbk+uaPvcuDktfW75h8n+pBnIT4bX/rrUkkJjZtzv1q8WFLgM2mLTl6GOsYESlG8wgnWehXCFvNpI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ET3ja+nA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HkIxVLvdxa/0cXckQ44Yf12tDxLZnn6HmXr7YGfN3X9n/vyrZQGHhLsp5HeW6kRT+xxkGK+enDKyetwplgaztcEUk40Zlr1uSW3iI5tXkyUn0TDwZfBlJjiYKEXOeAZr4bOzet2VwCdio/y0tIHthpRPrWEYw74PR488tL709tA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xsAeLOmu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ET3ja+nA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84AC8C4CEE3;
-	Tue, 17 Jun 2025 15:37:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xsAeLOmu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8F51C4CEE3;
+	Tue, 17 Jun 2025 15:37:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750174640;
-	bh=0vQP3TMCUawg9z6UjIilkK/ukpdBM0rGV1vX/OZ1x5A=;
+	s=korg; t=1750174643;
+	bh=R5oMeOfm1PnkyQ2xSQUY4k2Bx0L9ON1qUcHPBsD+lWY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ET3ja+nAzUDM/ovHWR9hnnooKXP2qIP5Zu4yDk9B6upgOZgxnRD/AjjTM/J3kbomk
-	 lGQK4e7DnT+hfXPL+U+VFLt8VmyAMcOWExkLOUU7hsV9vpmvK5Wh/EdS0seSykcQYS
-	 07xIbTp0Ohy6C8wN+XfEILb9GGPPtI2+kwK/YMEE=
+	b=xsAeLOmuA2AxLLMvn10/ixd/q+ICghU8Swv1tnaipO342cZLLiRQ6SS3cVshxWaPi
+	 xhylhMUAHL8jggvPHoRvKZkGdkDhLOwZ8sMSgZ+FVDtXVWbRwCSvkyNu9O6no0PrWC
+	 +a8++mHI9gtxqg3oZqhunlPQvcbIsms6x6J1BZnY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Shiyan <eagle.alexander923@gmail.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Ovidiu Panait <ovidiu.panait.oss@gmail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 046/512] power: reset: at91-reset: Optimize at91_reset()
-Date: Tue, 17 Jun 2025 17:20:12 +0200
-Message-ID: <20250617152421.405586920@linuxfoundation.org>
+Subject: [PATCH 6.15 004/780] crypto: sun8i-ce-hash - fix error handling in sun8i_ce_hash_run()
+Date: Tue, 17 Jun 2025 17:15:12 +0200
+Message-ID: <20250617152451.676305472@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,57 +47,132 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexander Shiyan <eagle.alexander923@gmail.com>
+From: Ovidiu Panait <ovidiu.panait.oss@gmail.com>
 
-[ Upstream commit 62d48983f215bf1dd48665913318101fa3414dcf ]
+[ Upstream commit ea4dd134ef332bd9e3e734c1ba0a1521f436b678 ]
 
-This patch adds a small optimization to the low-level at91_reset()
-function, which includes:
-- Removes the extra branch, since the following store operations
-  already have proper condition checks.
-- Removes the definition of the clobber register r4, since it is
-  no longer used in the code.
+Rework error handling in sun8i_ce_hash_run() to unmap the dma buffers in
+case of failure. Currently, the dma unmap functions are not called if the
+function errors out at various points.
 
-Fixes: fcd0532fac2a ("power: reset: at91-reset: make at91sam9g45_restart() generic")
-Signed-off-by: Alexander Shiyan <eagle.alexander923@gmail.com>
-Reviewed-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Link: https://lore.kernel.org/r/20250307053809.20245-1-eagle.alexander923@gmail.com
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Fixes: 56f6d5aee88d1 ("crypto: sun8i-ce - support hash algorithms")
+Signed-off-by: Ovidiu Panait <ovidiu.panait.oss@gmail.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/reset/at91-reset.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ .../crypto/allwinner/sun8i-ce/sun8i-ce-hash.c | 34 ++++++++++++-------
+ 1 file changed, 21 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/power/reset/at91-reset.c b/drivers/power/reset/at91-reset.c
-index 16512654295f5..f1e0a0857a90c 100644
---- a/drivers/power/reset/at91-reset.c
-+++ b/drivers/power/reset/at91-reset.c
-@@ -129,12 +129,11 @@ static int at91_reset(struct notifier_block *this, unsigned long mode,
- 		"	str	%4, [%0, %6]\n\t"
- 		/* Disable SDRAM1 accesses */
- 		"1:	tst	%1, #0\n\t"
--		"	beq	2f\n\t"
- 		"	strne	%3, [%1, #" __stringify(AT91_DDRSDRC_RTR) "]\n\t"
- 		/* Power down SDRAM1 */
- 		"	strne	%4, [%1, %6]\n\t"
- 		/* Reset CPU */
--		"2:	str	%5, [%2, #" __stringify(AT91_RSTC_CR) "]\n\t"
-+		"	str	%5, [%2, #" __stringify(AT91_RSTC_CR) "]\n\t"
+diff --git a/drivers/crypto/allwinner/sun8i-ce/sun8i-ce-hash.c b/drivers/crypto/allwinner/sun8i-ce/sun8i-ce-hash.c
+index 6072dd9f390b4..3f9d79ea01aaa 100644
+--- a/drivers/crypto/allwinner/sun8i-ce/sun8i-ce-hash.c
++++ b/drivers/crypto/allwinner/sun8i-ce/sun8i-ce-hash.c
+@@ -343,9 +343,8 @@ int sun8i_ce_hash_run(struct crypto_engine *engine, void *breq)
+ 	u32 common;
+ 	u64 byte_count;
+ 	__le32 *bf;
+-	void *buf = NULL;
++	void *buf, *result;
+ 	int j, i, todo;
+-	void *result = NULL;
+ 	u64 bs;
+ 	int digestsize;
+ 	dma_addr_t addr_res, addr_pad;
+@@ -365,14 +364,14 @@ int sun8i_ce_hash_run(struct crypto_engine *engine, void *breq)
+ 	buf = kcalloc(2, bs, GFP_KERNEL | GFP_DMA);
+ 	if (!buf) {
+ 		err = -ENOMEM;
+-		goto theend;
++		goto err_out;
+ 	}
+ 	bf = (__le32 *)buf;
  
- 		"	b	.\n\t"
- 		:
-@@ -145,7 +144,7 @@ static int at91_reset(struct notifier_block *this, unsigned long mode,
- 		  "r" cpu_to_le32(AT91_DDRSDRC_LPCB_POWER_DOWN),
- 		  "r" (reset->data->reset_args),
- 		  "r" (reset->ramc_lpr)
--		: "r4");
-+	);
+ 	result = kzalloc(digestsize, GFP_KERNEL | GFP_DMA);
+ 	if (!result) {
+ 		err = -ENOMEM;
+-		goto theend;
++		goto err_free_buf;
+ 	}
  
- 	return NOTIFY_DONE;
+ 	flow = rctx->flow;
+@@ -398,7 +397,7 @@ int sun8i_ce_hash_run(struct crypto_engine *engine, void *breq)
+ 	if (nr_sgs <= 0 || nr_sgs > MAX_SG) {
+ 		dev_err(ce->dev, "Invalid sg number %d\n", nr_sgs);
+ 		err = -EINVAL;
+-		goto theend;
++		goto err_free_result;
+ 	}
+ 
+ 	len = areq->nbytes;
+@@ -411,7 +410,7 @@ int sun8i_ce_hash_run(struct crypto_engine *engine, void *breq)
+ 	if (len > 0) {
+ 		dev_err(ce->dev, "remaining len %d\n", len);
+ 		err = -EINVAL;
+-		goto theend;
++		goto err_unmap_src;
+ 	}
+ 	addr_res = dma_map_single(ce->dev, result, digestsize, DMA_FROM_DEVICE);
+ 	cet->t_dst[0].addr = desc_addr_val_le32(ce, addr_res);
+@@ -419,7 +418,7 @@ int sun8i_ce_hash_run(struct crypto_engine *engine, void *breq)
+ 	if (dma_mapping_error(ce->dev, addr_res)) {
+ 		dev_err(ce->dev, "DMA map dest\n");
+ 		err = -EINVAL;
+-		goto theend;
++		goto err_unmap_src;
+ 	}
+ 
+ 	byte_count = areq->nbytes;
+@@ -441,7 +440,7 @@ int sun8i_ce_hash_run(struct crypto_engine *engine, void *breq)
+ 	}
+ 	if (!j) {
+ 		err = -EINVAL;
+-		goto theend;
++		goto err_unmap_result;
+ 	}
+ 
+ 	addr_pad = dma_map_single(ce->dev, buf, j * 4, DMA_TO_DEVICE);
+@@ -450,7 +449,7 @@ int sun8i_ce_hash_run(struct crypto_engine *engine, void *breq)
+ 	if (dma_mapping_error(ce->dev, addr_pad)) {
+ 		dev_err(ce->dev, "DMA error on padding SG\n");
+ 		err = -EINVAL;
+-		goto theend;
++		goto err_unmap_result;
+ 	}
+ 
+ 	if (ce->variant->hash_t_dlen_in_bits)
+@@ -463,16 +462,25 @@ int sun8i_ce_hash_run(struct crypto_engine *engine, void *breq)
+ 	err = sun8i_ce_run_task(ce, flow, crypto_ahash_alg_name(tfm));
+ 
+ 	dma_unmap_single(ce->dev, addr_pad, j * 4, DMA_TO_DEVICE);
+-	dma_unmap_sg(ce->dev, areq->src, ns, DMA_TO_DEVICE);
++
++err_unmap_result:
+ 	dma_unmap_single(ce->dev, addr_res, digestsize, DMA_FROM_DEVICE);
++	if (!err)
++		memcpy(areq->result, result, algt->alg.hash.base.halg.digestsize);
+ 
++err_unmap_src:
++	dma_unmap_sg(ce->dev, areq->src, ns, DMA_TO_DEVICE);
+ 
+-	memcpy(areq->result, result, algt->alg.hash.base.halg.digestsize);
+-theend:
+-	kfree(buf);
++err_free_result:
+ 	kfree(result);
++
++err_free_buf:
++	kfree(buf);
++
++err_out:
+ 	local_bh_disable();
+ 	crypto_finalize_hash_request(engine, breq, err);
+ 	local_bh_enable();
++
+ 	return 0;
  }
 -- 
 2.39.5
