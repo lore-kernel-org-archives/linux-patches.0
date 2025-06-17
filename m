@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 634072DF3C9;
-	Tue, 17 Jun 2025 15:40:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C0892DF3C9;
+	Tue, 17 Jun 2025 15:40:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750174856; cv=none; b=u4rHXWzfkN5E50x3Wo8XI6IoPy5xNtU5gLpLoMaIs1tgVr7d7nL0YZ2LBHZvJuT0Umcx0kbbok70wNW3KQDpUlaDn/MWBxShJxX9Z/149up12MIanEXosxeVdYOqSOYFdRtGy9Fx4zPrNRvG8pH7jk63QtPLXnb3KC/mEvy+j78=
+	t=1750174859; cv=none; b=OQzZZMP+dck1MFNrmcSlNzEWrH8Nymm7Vfc/G55GMIWZfuWJfpAazK7+jBXcG5cSI88tJgVHMH4bEtSRxduyf4u740WALP0RLBDY4bQfgHbgasTQVxefUhAS8gPWwh5T9BOSpgIJ2OGaohjB+JLk+EokmmBsurCj74ii5bavC30=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750174856; c=relaxed/simple;
-	bh=7e/9s1So3Ws3z0J1UEizfqlQZI5iQLm/jvq0pWPHqEk=;
+	s=arc-20240116; t=1750174859; c=relaxed/simple;
+	bh=EHP67hnE3JcRR/spdE5zlDhdNSDxrw5sov2kaxVDD34=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XVbuLn0gAtQNUEgbAyWceGie6IkyybCn+xKBANzq+ujrOnEZJosKxTJv1l2NbnKJJ1b//MT7XP1k1K6QaWjIiWJXk1GG4ECEXreftZTMPSnm1WgjKKH3PUbsSTZdLAlZom7ey3VieYZvFP25J3XyVq5cdd5+vvAsvP14aPfYtJk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ySkPFPhs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Zl+IcD9Fdt1ytIjy+UKC9+9+Q6Iw+nhXUNfsS5yNSb2rfRrbUj5VhJebHA6ovsjv+1QaBg+bfKZJWK7IwykA4qI2EtbgEsCs6A21wUWtDcUqkz9vEr5Rm64vpRlqI/ozsEu66725qnkv0w5I8SPDz0Am1hc2mrY+/N0yKMQSzxc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jCz05Z1u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ySkPFPhs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7828C4CEF0;
-	Tue, 17 Jun 2025 15:40:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jCz05Z1u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2062C4CEE3;
+	Tue, 17 Jun 2025 15:40:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750174856;
-	bh=7e/9s1So3Ws3z0J1UEizfqlQZI5iQLm/jvq0pWPHqEk=;
+	s=korg; t=1750174859;
+	bh=EHP67hnE3JcRR/spdE5zlDhdNSDxrw5sov2kaxVDD34=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ySkPFPhs4WnpP3lug4V3T1cSvDyl3mGM+9RYubO3BjN5sNV05YeLzMpLxlQewxHbs
-	 OeWsMWX3Qrl6rPk/7huB/Gon/x3UTmhiH7vtqUDAOVEi9+q7rZyT8lwvL1+/QpLAuo
-	 blWlEj2rxefGPPq+mICA4Anu6zJhk4AmAsFRY+6s=
+	b=jCz05Z1ucLKLgHx6NXcUyZiVR1W//IYKC8mvX+hpoUPZcXFQiaJmNGt+uEEMSGbnk
+	 TuAajFdDAlf9hYpx4VbIJec/3nq3Vdw2BqMn7oumTeJAS+rSqjjxQJkY6ThBgj8mNI
+	 wv4aDrCxpGZFPYVhfCwqwhAzZt3dfgRn8hSKvTXM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nam Cao <namcao@linutronix.de>,
-	Christian Brauner <brauner@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Mark Brown <broonie@kernel.org>,
+	Marc Zyngier <maz@kernel.org>,
+	Will Deacon <will@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 027/780] selftests: coredump: Raise timeout to 2 minutes
-Date: Tue, 17 Jun 2025 17:15:35 +0200
-Message-ID: <20250617152452.610532978@linuxfoundation.org>
+Subject: [PATCH 6.12 067/512] arm64/fpsimd: Discard stale CPU state when handling SME traps
+Date: Tue, 17 Jun 2025 17:20:33 +0200
+Message-ID: <20250617152422.291172811@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,47 +50,103 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nam Cao <namcao@linutronix.de>
+From: Mark Brown <broonie@kernel.org>
 
-[ Upstream commit c6e888d02d51d1e9f9abf1587e6a5618375cac9f ]
+[ Upstream commit d3eaab3c70905c5467e5c4ea403053d67505adeb ]
 
-The test's runtime (nearly 20s) is dangerously close to the limit (30s) on
-qemu-system-riscv64:
+The logic for handling SME traps manipulates saved FPSIMD/SVE/SME state
+incorrectly, and a race with preemption can result in a task having
+TIF_SME set and TIF_FOREIGN_FPSTATE clear even though the live CPU state
+is stale (e.g. with SME traps enabled). This can result in warnings from
+do_sme_acc() where SME traps are not expected while TIF_SME is set:
 
-$ time ./stackdump_test > /dev/null
-real	0m19.210s
-user	0m0.077s
-sys	0m0.359s
+|        /* With TIF_SME userspace shouldn't generate any traps */
+|        if (test_and_set_thread_flag(TIF_SME))
+|                WARN_ON(1);
 
-There could be machines slower than qemu-system-riscv64. Therefore raise
-the test timeout to 2 minutes to be safe.
+This is very similar to the SVE issue we fixed in commit:
 
-Fixes: 15858da53542 ("selftests: coredump: Add stackdump test")
-Signed-off-by: Nam Cao <namcao@linutronix.de>
-Link: https://lore.kernel.org/dd636084d55e7828782728d087fa2298dcab1c8b.1744383419.git.namcao@linutronix.de
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+  751ecf6afd6568ad ("arm64/sve: Discard stale CPU state when handling SVE traps")
+
+The race can occur when the SME trap handler is preempted before and
+after manipulating the saved FPSIMD/SVE/SME state, starting and ending on
+the same CPU, e.g.
+
+| void do_sme_acc(unsigned long esr, struct pt_regs *regs)
+| {
+|         // Trap on CPU 0 with TIF_SME clear, SME traps enabled
+|         // task->fpsimd_cpu is 0.
+|         // per_cpu_ptr(&fpsimd_last_state, 0) is task.
+|
+|         ...
+|
+|         // Preempted; migrated from CPU 0 to CPU 1.
+|         // TIF_FOREIGN_FPSTATE is set.
+|
+|         get_cpu_fpsimd_context();
+|
+|         /* With TIF_SME userspace shouldn't generate any traps */
+|         if (test_and_set_thread_flag(TIF_SME))
+|                 WARN_ON(1);
+|
+|         if (!test_thread_flag(TIF_FOREIGN_FPSTATE)) {
+|                 unsigned long vq_minus_one =
+|                         sve_vq_from_vl(task_get_sme_vl(current)) - 1;
+|                 sme_set_vq(vq_minus_one);
+|
+|                 fpsimd_bind_task_to_cpu();
+|         }
+|
+|         put_cpu_fpsimd_context();
+|
+|         // Preempted; migrated from CPU 1 to CPU 0.
+|         // task->fpsimd_cpu is still 0
+|         // If per_cpu_ptr(&fpsimd_last_state, 0) is still task then:
+|         // - Stale HW state is reused (with SME traps enabled)
+|         // - TIF_FOREIGN_FPSTATE is cleared
+|         // - A return to userspace skips HW state restore
+| }
+
+Fix the case where the state is not live and TIF_FOREIGN_FPSTATE is set
+by calling fpsimd_flush_task_state() to detach from the saved CPU
+state. This ensures that a subsequent context switch will not reuse the
+stale CPU state, and will instead set TIF_FOREIGN_FPSTATE, forcing the
+new state to be reloaded from memory prior to a return to userspace.
+
+Note: this was originallly posted as [1].
+
+Fixes: 8bd7f91c03d8 ("arm64/sme: Implement traps and syscall handling for SME")
+Reported-by: Mark Rutland <mark.rutland@arm.com>
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/linux-arm-kernel/20241204-arm64-sme-reenable-v2-1-bae87728251d@kernel.org/
+[ Rutland: rewrite commit message ]
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Cc: Marc Zyngier <maz@kernel.org>
+Cc: Will Deacon <will@kernel.org>
+Link: https://lore.kernel.org/r/20250409164010.3480271-6-mark.rutland@arm.com
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/coredump/stackdump_test.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/kernel/fpsimd.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/tools/testing/selftests/coredump/stackdump_test.c b/tools/testing/selftests/coredump/stackdump_test.c
-index 9da10fb5e597c..fe3c728cd6be5 100644
---- a/tools/testing/selftests/coredump/stackdump_test.c
-+++ b/tools/testing/selftests/coredump/stackdump_test.c
-@@ -89,7 +89,7 @@ FIXTURE_TEARDOWN(coredump)
- 	fprintf(stderr, "Failed to cleanup stackdump test: %s\n", reason);
- }
+diff --git a/arch/arm64/kernel/fpsimd.c b/arch/arm64/kernel/fpsimd.c
+index 1aab12a320bbd..42b6740d1a64c 100644
+--- a/arch/arm64/kernel/fpsimd.c
++++ b/arch/arm64/kernel/fpsimd.c
+@@ -1460,6 +1460,8 @@ void do_sme_acc(unsigned long esr, struct pt_regs *regs)
+ 		sme_set_vq(vq_minus_one);
  
--TEST_F(coredump, stackdump)
-+TEST_F_TIMEOUT(coredump, stackdump, 120)
- {
- 	struct sigaction action = {};
- 	unsigned long long stack;
+ 		fpsimd_bind_task_to_cpu();
++	} else {
++		fpsimd_flush_task_state(current);
+ 	}
+ 
+ 	put_cpu_fpsimd_context();
 -- 
 2.39.5
 
