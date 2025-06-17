@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EB062ED174;
-	Tue, 17 Jun 2025 16:25:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE1BE2ECEA2;
+	Tue, 17 Jun 2025 16:25:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177549; cv=none; b=hmj/xZALefP8bO9XKNrkROmIsmBBruDvawXOvjYSwdtmbi9unZVleEPPDiipYCYTGMrkax1JnKGFZ+/dMbg5OgI918cTR8BHIWZ77OEl+3t3VwqxYsvA/MjHoxM9gchN4f3aKjD8lUXqIAJqiw6J0LiyubSkfG22DXX85oo3oys=
+	t=1750177552; cv=none; b=VJDvaY9HmZ177lUTFdK1tBxIhL04LcEujTAdPfcbHl5fQVs+10hhHgPXp1DIAKAT6JJItYTumzAyAyLG11+OI+MSfFLz0DR5aad2vwo41x732w+efH/AerzYRjRQKG2WjYd8lhukc4QEPMWHOoqFk8s7Ugg3JH0iqNnOwV2uZb8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177549; c=relaxed/simple;
-	bh=QCgQbm+7ezgTV/YdAMdd+aNs3kBiR2u1oFygenIJofw=;
+	s=arc-20240116; t=1750177552; c=relaxed/simple;
+	bh=1ZiHetbPeToCTZoLqVGRT4hUyNAHCsopo+Yv8fGrPtM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BdTptWZCgO/a6rjGwvcgZfJMO/HlH2Mm7l/CLS5k4p7VgWsl8O9A0I4psxxRL927E6Ilw+47bC+BwaxUS4/QlJI03FB0Esr14aIw+zRXP/+ThRBo4EJeQw/XmVuLKnHnBio1zv1jH1u4wDSD35/9ejYiR6rV7bIBCisKY5Q+sQo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HkfNtj4y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=j5aB/r/UbvduLG0pnsU4tzs5O4L6AKT1sDnoCLjMjJSXf/kSKDwGOgskHtDhDXdQ1YPD4imZok9Et9oumltHqFqhRNmHaEo6a4LF5kMbZXtAxVYzSzxhl9zWdU6XABeviMUvRA/REsZbwDJz5iIeXNgoJgz/GpqM0899QvjSQMI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u3dKjJOt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HkfNtj4y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12B74C4CEE3;
-	Tue, 17 Jun 2025 16:25:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u3dKjJOt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CE9EC4CEE3;
+	Tue, 17 Jun 2025 16:25:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177549;
-	bh=QCgQbm+7ezgTV/YdAMdd+aNs3kBiR2u1oFygenIJofw=;
+	s=korg; t=1750177552;
+	bh=1ZiHetbPeToCTZoLqVGRT4hUyNAHCsopo+Yv8fGrPtM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HkfNtj4ylNOai87PRmlXMApJV0xzbQUQJJDW2nHbELcOJbYW2yMQSTZ0jvZR+TQiQ
-	 G+EWnFLeZn8BsM3VsQsQPDfroLMZKAyFzCBJI998yjZBOsND1WryZyCxl0iWD8GJJC
-	 2BYTTTu1KJ79HE1JOONFfw89zWWJkkZ6E//UTLgs=
+	b=u3dKjJOtUXkl8iwsrP+ozVpRg3HQocpJyX+aLe40HA19pXKxMh++r4SZGVY0JWPip
+	 1rshBjMa4p/1go/tJlHeMqLhOYv7QqV2pZK7qMRuf7jVfidMVO/C4s1JzIhYUTI+oO
+	 ekA3vnFFsx9knYmGKpYYY0vD1d+NYxlKG8ljctBQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lucas De Marchi <lucas.demarchi@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	=?UTF-8?q?Alexis=20Lothor=C3=A9?= <alexis.lothore@bootlin.com>,
+	Yanteng Si <si.yanteng@linux.dev>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 344/512] drm/xe: Make xe_gt_freq part of the Documentation
-Date: Tue, 17 Jun 2025 17:25:10 +0200
-Message-ID: <20250617152433.534910898@linuxfoundation.org>
+Subject: [PATCH 6.12 362/512] net: stmmac: make sure that ptp_rate is not 0 before configuring timestamping
+Date: Tue, 17 Jun 2025 17:25:28 +0200
+Message-ID: <20250617152434.247182993@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
 References: <20250617152419.512865572@linuxfoundation.org>
@@ -53,82 +54,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rodrigo Vivi <rodrigo.vivi@intel.com>
+From: Alexis Lothoré <alexis.lothore@bootlin.com>
 
-[ Upstream commit 55f8aa083604ce098c9d6a0911c6bcde15d03a80 ]
+[ Upstream commit 030ce919e114a111e83b7976ecb3597cefd33f26 ]
 
-The documentation was created with the creation of the component,
-however it has never been actually shown in the actual Documentation.
+The stmmac platform drivers that do not open-code the clk_ptp_rate value
+after having retrieved the default one from the device-tree can end up
+with 0 in clk_ptp_rate (as clk_get_rate can return 0). It will
+eventually propagate up to PTP initialization when bringing up the
+interface, leading to a divide by 0:
 
-While doing this, fixes the identation style, to avoid new warnings
-while building htmldocs.
+ Division by zero in kernel.
+ CPU: 1 UID: 0 PID: 1 Comm: swapper/0 Not tainted 6.12.30-00001-g48313bd5768a #22
+ Hardware name: STM32 (Device Tree Support)
+ Call trace:
+  unwind_backtrace from show_stack+0x18/0x1c
+  show_stack from dump_stack_lvl+0x6c/0x8c
+  dump_stack_lvl from Ldiv0_64+0x8/0x18
+  Ldiv0_64 from stmmac_init_tstamp_counter+0x190/0x1a4
+  stmmac_init_tstamp_counter from stmmac_hw_setup+0xc1c/0x111c
+  stmmac_hw_setup from __stmmac_open+0x18c/0x434
+  __stmmac_open from stmmac_open+0x3c/0xbc
+  stmmac_open from __dev_open+0xf4/0x1ac
+  __dev_open from __dev_change_flags+0x1cc/0x224
+  __dev_change_flags from dev_change_flags+0x24/0x60
+  dev_change_flags from ip_auto_config+0x2e8/0x11a0
+  ip_auto_config from do_one_initcall+0x84/0x33c
+  do_one_initcall from kernel_init_freeable+0x1b8/0x214
+  kernel_init_freeable from kernel_init+0x24/0x140
+  kernel_init from ret_from_fork+0x14/0x28
+ Exception stack(0xe0815fb0 to 0xe0815ff8)
 
-Fixes: bef52b5c7a19 ("drm/xe: Create a xe_gt_freq component for raw management and sysfs")
-Reviewed-by: Lucas De Marchi <lucas.demarchi@intel.com>
-Link: https://lore.kernel.org/r/20250521165146.39616-3-rodrigo.vivi@intel.com
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-(cherry picked from commit af53f0fd99c3bbb3afd29f1612c9e88c5a92cc01)
-Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Prevent this division by 0 by adding an explicit check and error log
+about the actual issue. While at it, remove the same check from
+stmmac_ptp_register, which then becomes duplicate
+
+Fixes: 19d857c9038e ("stmmac: Fix calculations for ptp counters when clock input = 50Mhz.")
+Signed-off-by: Alexis Lothoré <alexis.lothore@bootlin.com>
+Reviewed-by: Yanteng Si <si.yanteng@linux.dev>
+Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Link: https://patch.msgid.link/20250529-stmmac_tstamp_div-v4-1-d73340a794d5@bootlin.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/gpu/xe/index.rst      |  1 +
- Documentation/gpu/xe/xe_gt_freq.rst | 14 ++++++++++++++
- drivers/gpu/drm/xe/xe_gt_freq.c     |  2 ++
- 3 files changed, 17 insertions(+)
- create mode 100644 Documentation/gpu/xe/xe_gt_freq.rst
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 5 +++++
+ drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c  | 2 +-
+ 2 files changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/gpu/xe/index.rst b/Documentation/gpu/xe/index.rst
-index 3f07aa3b54325..89bbdcccf8eb7 100644
---- a/Documentation/gpu/xe/index.rst
-+++ b/Documentation/gpu/xe/index.rst
-@@ -16,6 +16,7 @@ DG2, etc is provided to prototype the driver.
-    xe_migrate
-    xe_cs
-    xe_pm
-+   xe_gt_freq
-    xe_pcode
-    xe_gt_mcr
-    xe_wa
-diff --git a/Documentation/gpu/xe/xe_gt_freq.rst b/Documentation/gpu/xe/xe_gt_freq.rst
-new file mode 100644
-index 0000000000000..c0811200e3275
---- /dev/null
-+++ b/Documentation/gpu/xe/xe_gt_freq.rst
-@@ -0,0 +1,14 @@
-+.. SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index 918d7f2e8ba99..f68e3ece919cc 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -835,6 +835,11 @@ int stmmac_init_tstamp_counter(struct stmmac_priv *priv, u32 systime_flags)
+ 	if (!(priv->dma_cap.time_stamp || priv->dma_cap.atime_stamp))
+ 		return -EOPNOTSUPP;
+ 
++	if (!priv->plat->clk_ptp_rate) {
++		netdev_err(priv->dev, "Invalid PTP clock rate");
++		return -EINVAL;
++	}
 +
-+==========================
-+Xe GT Frequency Management
-+==========================
-+
-+.. kernel-doc:: drivers/gpu/drm/xe/xe_gt_freq.c
-+   :doc: Xe GT Frequency Management
-+
-+Internal API
-+============
-+
-+.. kernel-doc:: drivers/gpu/drm/xe/xe_gt_freq.c
-+   :internal:
-diff --git a/drivers/gpu/drm/xe/xe_gt_freq.c b/drivers/gpu/drm/xe/xe_gt_freq.c
-index ab76973f3e1e6..a05fde2c7b122 100644
---- a/drivers/gpu/drm/xe/xe_gt_freq.c
-+++ b/drivers/gpu/drm/xe/xe_gt_freq.c
-@@ -32,6 +32,7 @@
-  * Xe's Freq provides a sysfs API for frequency management:
-  *
-  * device/tile#/gt#/freq0/<item>_freq *read-only* files:
-+ *
-  * - act_freq: The actual resolved frequency decided by PCODE.
-  * - cur_freq: The current one requested by GuC PC to the PCODE.
-  * - rpn_freq: The Render Performance (RP) N level, which is the minimal one.
-@@ -39,6 +40,7 @@
-  * - rp0_freq: The Render Performance (RP) 0 level, which is the maximum one.
-  *
-  * device/tile#/gt#/freq0/<item>_freq *read-write* files:
-+ *
-  * - min_freq: Min frequency request.
-  * - max_freq: Max frequency request.
-  *             If max <= min, then freq_min becomes a fixed frequency request.
+ 	stmmac_config_hw_tstamping(priv, priv->ptpaddr, systime_flags);
+ 	priv->systime_flags = systime_flags;
+ 
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c
+index a6b1de9a251dd..5c85040a1b937 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c
+@@ -303,7 +303,7 @@ void stmmac_ptp_register(struct stmmac_priv *priv)
+ 
+ 	/* Calculate the clock domain crossing (CDC) error if necessary */
+ 	priv->plat->cdc_error_adj = 0;
+-	if (priv->plat->has_gmac4 && priv->plat->clk_ptp_rate)
++	if (priv->plat->has_gmac4)
+ 		priv->plat->cdc_error_adj = (2 * NSEC_PER_SEC) / priv->plat->clk_ptp_rate;
+ 
+ 	stmmac_ptp_clock_ops.n_per_out = priv->dma_cap.pps_out_num;
 -- 
 2.39.5
 
