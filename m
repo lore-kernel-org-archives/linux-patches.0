@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42D44231A37;
-	Tue, 17 Jun 2025 16:46:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C4C92E7185;
+	Tue, 17 Jun 2025 16:46:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750178816; cv=none; b=KDpHBwogyJeNSP2LHZHvcKyDkhVbL8V0VbvRbKcglxyVj9l3gaxOW1oKj//juOKfig+ejwagwyQggqRS12JK3NeJWBFU8p5XdG+Z6r07C6OmxFqgFtP622kNKM6BTFHseSO0+xMCbV0fWtOVstRLduxsfpMdm+0BED+5FvndhCo=
+	t=1750178819; cv=none; b=SeQeZyjixM8NhF7Sn7xK7JJEJhRdfzOVJzGkdVcCq9+MVCo0ewy5Qi9U9LsWfRdrLsLFU3mLeFFGYCTMA8eLpiJylDIdecFw4A3TYsepaU86Tq5Y/Z2pyQ0c9AgWNXaa9zuZR2Lz7bPZDAhnVA6XMoHiDM5OYn3PimQ835oeEB0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750178816; c=relaxed/simple;
-	bh=jDlUQn8nBW69QAaZMuLSKKQc/wTLycrHyMs1MkfgqJk=;
+	s=arc-20240116; t=1750178819; c=relaxed/simple;
+	bh=H8r7PbIGzIZofUy7tDxeeHB2eJH3QTvmlc+3Jpm3zzA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rV/6Uu5WLSBHeTjgR9zDn4kTpkafXTOKXbHi1MC68rjt1fQ8gNMBNqgcOoaQDki1UIVkFK3Q9tOmFaDef+fwDBOrEj6h7t5M1clN2BdIftvcjHeU7fEOIgI9bnP3WfPOm0VrdFBWGb2BpPUXdSMb3gsw3Z42i4i7O1fI9mCdYmo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kZWiYETC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k4VEAU2sMBPGLGcpMOlFEj/vcCEv9cCTkHhvdjo+8DMm/elB6bKy+8ltL9RgETjJQFkqxTqQhSJe020j0bR8BVe90duWIBmU7f4GJ0clDonxMijOJNJnsG5yavYNYPRqBqEu1SAg9YptShhxvqajDHilc1fDuRUQ8IEBgRA0Gyk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sz9Yefq6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kZWiYETC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B07EAC4CEE3;
-	Tue, 17 Jun 2025 16:46:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sz9Yefq6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD5B1C4CEE3;
+	Tue, 17 Jun 2025 16:46:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750178816;
-	bh=jDlUQn8nBW69QAaZMuLSKKQc/wTLycrHyMs1MkfgqJk=;
+	s=korg; t=1750178819;
+	bh=H8r7PbIGzIZofUy7tDxeeHB2eJH3QTvmlc+3Jpm3zzA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kZWiYETCO1u30GxY6ceuxnhqnkVmX97t324goUgB2seRaqYIoBU4/nRwWHU7ywRU2
-	 5miBQt2i59fbPGHrtvWZVv61J3CbOTZx0dtiYkKaVSv+lcj1apPULGJMHI4x53R4eh
-	 LeGcV4VsRd/YRxuWi7lUU4kJNyYO/ORaFkgsgeA0=
+	b=Sz9Yefq6RCWoCyQQNrtWFOyS0DWHuG7WQ+nAHlX/zst6RLrnaDv/JZoHrBxDJYQ3C
+	 ucbCy5UXFim4Xrju9JEcxusLfT0pLArp1V+oRBxwIstRruCQzizOqTzjlWhu5VwNnM
+	 tZamk1+lFZFYjndBPFimWcMvu0FFL8aWH4ePnNsw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+f0c4a4aba757549ae26c@syzkaller.appspotmail.com,
-	Charalampos Mitrodimas <charmitro@posteo.net>,
-	Tung Nguyen <tung.quang.nguyen@est.tech>,
+	Yanqing Wang <ot_yanqing.wang@mediatek.com>,
+	Macpaul Lin <macpaul.lin@mediatek.com>,
+	Biao Huang <biao.huang@mediatek.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 562/780] net: tipc: fix refcount warning in tipc_aead_encrypt
-Date: Tue, 17 Jun 2025 17:24:30 +0200
-Message-ID: <20250617152514.376908724@linuxfoundation.org>
+Subject: [PATCH 6.15 563/780] driver: net: ethernet: mtk_star_emac: fix suspend/resume issue
+Date: Tue, 17 Jun 2025 17:24:31 +0200
+Message-ID: <20250617152514.415947540@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
 References: <20250617152451.485330293@linuxfoundation.org>
@@ -53,55 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Charalampos Mitrodimas <charmitro@posteo.net>
+From: Yanqing Wang <ot_yanqing.wang@mediatek.com>
 
-[ Upstream commit f29ccaa07cf3d35990f4d25028cc55470d29372b ]
+[ Upstream commit ba99c627aac85bc746fb4a6e2d79edb3ad100326 ]
 
-syzbot reported a refcount warning [1] caused by calling get_net() on
-a network namespace that is being destroyed (refcount=0). This happens
-when a TIPC discovery timer fires during network namespace cleanup.
+Identify the cause of the suspend/resume hang: netif_carrier_off()
+is called during link state changes and becomes stuck while
+executing linkwatch_work().
 
-The recently added get_net() call in commit e279024617134 ("net/tipc:
-fix slab-use-after-free Read in tipc_aead_encrypt_done") attempts to
-hold a reference to the network namespace. However, if the namespace
-is already being destroyed, its refcount might be zero, leading to the
-use-after-free warning.
+To resolve this issue, call netif_device_detach() during the Ethernet
+suspend process to temporarily detach the network device from the
+kernel and prevent the suspend/resume hang.
 
-Replace get_net() with maybe_get_net(), which safely checks if the
-refcount is non-zero before incrementing it. If the namespace is being
-destroyed, return -ENODEV early, after releasing the bearer reference.
-
-[1]: https://lore.kernel.org/all/68342b55.a70a0220.253bc2.0091.GAE@google.com/T/#m12019cf9ae77e1954f666914640efa36d52704a2
-
-Reported-by: syzbot+f0c4a4aba757549ae26c@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/68342b55.a70a0220.253bc2.0091.GAE@google.com/T/#m12019cf9ae77e1954f666914640efa36d52704a2
-Fixes: e27902461713 ("net/tipc: fix slab-use-after-free Read in tipc_aead_encrypt_done")
-Signed-off-by: Charalampos Mitrodimas <charmitro@posteo.net>
-Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
-Link: https://patch.msgid.link/20250527-net-tipc-warning-v2-1-df3dc398a047@posteo.net
+Fixes: 8c7bd5a454ff ("net: ethernet: mtk-star-emac: new driver")
+Signed-off-by: Yanqing Wang <ot_yanqing.wang@mediatek.com>
+Signed-off-by: Macpaul Lin <macpaul.lin@mediatek.com>
+Signed-off-by: Biao Huang <biao.huang@mediatek.com>
+Link: https://patch.msgid.link/20250528075351.593068-1-macpaul.lin@mediatek.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tipc/crypto.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/mediatek/mtk_star_emac.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/net/tipc/crypto.c b/net/tipc/crypto.c
-index 8584893b47851..79f91b6ca8c84 100644
---- a/net/tipc/crypto.c
-+++ b/net/tipc/crypto.c
-@@ -818,7 +818,11 @@ static int tipc_aead_encrypt(struct tipc_aead *aead, struct sk_buff *skb,
+diff --git a/drivers/net/ethernet/mediatek/mtk_star_emac.c b/drivers/net/ethernet/mediatek/mtk_star_emac.c
+index b175119a6a7da..b83886a411210 100644
+--- a/drivers/net/ethernet/mediatek/mtk_star_emac.c
++++ b/drivers/net/ethernet/mediatek/mtk_star_emac.c
+@@ -1463,6 +1463,8 @@ static __maybe_unused int mtk_star_suspend(struct device *dev)
+ 	if (netif_running(ndev))
+ 		mtk_star_disable(ndev);
+ 
++	netif_device_detach(ndev);
++
+ 	clk_bulk_disable_unprepare(MTK_STAR_NCLKS, priv->clks);
+ 
+ 	return 0;
+@@ -1487,6 +1489,8 @@ static __maybe_unused int mtk_star_resume(struct device *dev)
+ 			clk_bulk_disable_unprepare(MTK_STAR_NCLKS, priv->clks);
  	}
  
- 	/* Get net to avoid freed tipc_crypto when delete namespace */
--	get_net(aead->crypto->net);
-+	if (!maybe_get_net(aead->crypto->net)) {
-+		tipc_bearer_put(b);
-+		rc = -ENODEV;
-+		goto exit;
-+	}
++	netif_device_attach(ndev);
++
+ 	return ret;
+ }
  
- 	/* Now, do encrypt */
- 	rc = crypto_aead_encrypt(req);
 -- 
 2.39.5
 
