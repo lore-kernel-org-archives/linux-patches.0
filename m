@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 981852E9730;
-	Tue, 17 Jun 2025 15:36:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA4F42E9730;
+	Tue, 17 Jun 2025 15:36:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750174605; cv=none; b=PS/Nxol1aMjlDE/o/S4tC8d0BykEb2zqCZXMNgoayLXAiUW4dBv04ynotlpP6J1bZVLp2Pt/1YvfqOv7PanGwiW1ubJrzlpw9fMuZQFCnO0vHAkIAMxn93/gwxempOTleSEvO9cGg3A1JHVdNTubWYiX53yh02/rNYkKMBG4LY4=
+	t=1750174609; cv=none; b=rgpvIv2VeRgBLX5kWQ11uPlIlgLLRs+2NEBT49f1RSt9PBi22TT3a4XHHb0YiSEjYT8rNA16OkcaF4z3Mcg5EhP/PgmKOguDetk8mq73A30AGiR/DVNwz85uLZ18PYCAlzWmyet/u+4X9tJVTov9iioEJROg6fo4atv8XQRsrpU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750174605; c=relaxed/simple;
-	bh=Wxz7aJbD+pcQ5erav0cvp1RmuAlJbpnFCW3h+ynjdfo=;
+	s=arc-20240116; t=1750174609; c=relaxed/simple;
+	bh=q5hWFfvffk8O4II8u8mtGuqSswxaBt/7PXGnr6Ez+Zo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mzxn38TEnsUnM0ZZZFLcjC98aBLSVYWbZFW2eLuVgYZeqjLMyq3BkQwEGFOqfUTWFX/Q7j1Aq6hWpQbdZE9hFht3PTRX2qWgyU6KXCMHDYXgi5u/+BhzK36+4JMhVq+pkqGg7PIp/wcGHyqnndXvukQKV8h3UVKMcReQ+7vPJKo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jvSffgFa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=lIiIlQlhRME3uOMP/QjQTktRt1KsM5Uz3VYoDO9mUeGPiJxqWqZ9/LjVxrRBC3sNsKtVXHfuukllsgAdacJD0aI8THJ327ehI1hahfjOpWub7GZ0/t8DIVYYBX8t/ND4i1aQ/iopgPQtbsqCBZw4ofJkqNAlNsNjA6KGF5VW7sQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QEW++Wet; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jvSffgFa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2177EC4CEE3;
-	Tue, 17 Jun 2025 15:36:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QEW++Wet"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BCAFC4CEE3;
+	Tue, 17 Jun 2025 15:36:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750174605;
-	bh=Wxz7aJbD+pcQ5erav0cvp1RmuAlJbpnFCW3h+ynjdfo=;
+	s=korg; t=1750174608;
+	bh=q5hWFfvffk8O4II8u8mtGuqSswxaBt/7PXGnr6Ez+Zo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jvSffgFa3HpEpE+NQzG+kZ+PsUgrVV2HGtJ+8Abw0KhPYfsfMd56m4372CP+ByH+G
-	 pgV7B25LBpOxE1UNSJk6NFrVoWi8Zc1elpqLRblZ29jx21ZBByPoGoW47CZISxhfGu
-	 tXRvTFH4aOs7lFCC6IuET6kTTIONnK97CnKPDSUI=
+	b=QEW++Wet45zVYSrHU98uYAmdNMW7NAHpyXSbMkCCDn+hv6yQkVVT0HbNOpNiZTTy2
+	 hks8ZSW8pCLR+MDL7ql+Sv/FuTefN6aqwlQuzSfmYfDX7H20JfG5O+lUcuVKilDCcK
+	 OrnBh3Lj4eqZmv2ic93DqvZVXLVbBzb2xp6ie8jI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ping-Ke Shih <pkshih@realtek.com>,
-	Dmitry Antipov <dmantipov@yandex.ru>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	Willy Tarreau <w@1wt.eu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 093/356] wifi: rtw88: do not ignore hardware read error during DPK
-Date: Tue, 17 Jun 2025 17:23:28 +0200
-Message-ID: <20250617152341.959106600@linuxfoundation.org>
+Subject: [PATCH 6.12 042/512] tools/nolibc: fix integer overflow in i{64,}toa_r() and
+Date: Tue, 17 Jun 2025 17:20:08 +0200
+Message-ID: <20250617152421.251891310@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-References: <20250617152338.212798615@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,46 +45,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Antipov <dmantipov@yandex.ru>
+From: Thomas Weißschuh <linux@weissschuh.net>
 
-[ Upstream commit 20d3c19bd8f9b498173c198eadf54580c8caa336 ]
+[ Upstream commit 4d231a7df1a85c7572b67a4666cb73adb977fbf6 ]
 
-In 'rtw8822c_dpk_cal_coef1()', do not ignore error returned
-by 'check_hw_ready()' but issue a warning to denote possible
-DPK issue. Compile tested only.
+In twos complement the most negative number can not be negated.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: 5227c2ee453d ("rtw88: 8822c: add SW DPK support")
-Suggested-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20250415090720.194048-1-dmantipov@yandex.ru
+Fixes: b1c21e7d99cd ("tools/nolibc/stdlib: add i64toa() and u64toa()")
+Fixes: 66c397c4d2e1 ("tools/nolibc/stdlib: replace the ltoa() function with more efficient ones")
+Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
+Acked-by: Willy Tarreau <w@1wt.eu>
+Link: https://lore.kernel.org/r/20250419-nolibc-ubsan-v2-5-060b8a016917@weissschuh.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw88/rtw8822c.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ tools/include/nolibc/stdlib.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw88/rtw8822c.c b/drivers/net/wireless/realtek/rtw88/rtw8822c.c
-index 3fe5c70ce731b..f9b2527fbeee5 100644
---- a/drivers/net/wireless/realtek/rtw88/rtw8822c.c
-+++ b/drivers/net/wireless/realtek/rtw88/rtw8822c.c
-@@ -3991,7 +3991,8 @@ static void rtw8822c_dpk_cal_coef1(struct rtw_dev *rtwdev)
- 	rtw_write32(rtwdev, REG_NCTL0, 0x00001148);
- 	rtw_write32(rtwdev, REG_NCTL0, 0x00001149);
+diff --git a/tools/include/nolibc/stdlib.h b/tools/include/nolibc/stdlib.h
+index 75aa273c23a61..4dd421ef4c021 100644
+--- a/tools/include/nolibc/stdlib.h
++++ b/tools/include/nolibc/stdlib.h
+@@ -274,7 +274,7 @@ int itoa_r(long in, char *buffer)
+ 	int len = 0;
  
--	check_hw_ready(rtwdev, 0x2d9c, MASKBYTE0, 0x55);
-+	if (!check_hw_ready(rtwdev, 0x2d9c, MASKBYTE0, 0x55))
-+		rtw_warn(rtwdev, "DPK stuck, performance may be suboptimal");
+ 	if (in < 0) {
+-		in = -in;
++		in = -(unsigned long)in;
+ 		*(ptr++) = '-';
+ 		len++;
+ 	}
+@@ -410,7 +410,7 @@ int i64toa_r(int64_t in, char *buffer)
+ 	int len = 0;
  
- 	rtw_write8(rtwdev, 0x1b10, 0x0);
- 	rtw_write32_mask(rtwdev, REG_NCTL0, BIT_SUBPAGE, 0x0000000c);
+ 	if (in < 0) {
+-		in = -in;
++		in = -(uint64_t)in;
+ 		*(ptr++) = '-';
+ 		len++;
+ 	}
 -- 
 2.39.5
 
