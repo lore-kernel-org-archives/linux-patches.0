@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 614EE2DFF39;
-	Tue, 17 Jun 2025 16:22:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6B7D1A2632;
+	Tue, 17 Jun 2025 16:22:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177376; cv=none; b=uK96D0m8hEZJ/Yz+jibyZ0w9HS/1/5iw+EeNiKcAom1vTQnbN0ice/Ncx6jTblzaKMA9CJZU1yUtE1SlCnwvjiG+nZib6LZSdIUtd+8PMbGt0OmCdBxQJQS22Qjp/Ya0EcTyHpZAQH7eePLHKuQyij2BsW90s1RtxmRvzlQKIrw=
+	t=1750177379; cv=none; b=jFmEDxEWxmeIeDRI5df295XZnQvVg1y48xLK+4C50AxqhRM556u4FDo+WpK7RwSxNYGvxM1wbq170Jd/ixda79rdXtzgB6E9wC7Epi8pN3pKm9VTbQqgzLzpGV91C6a/drYTQ5o/OTXz9iCaBEp8lZJAoeiaR0xfPvALpxSA6u8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177376; c=relaxed/simple;
-	bh=HDJ0jO1ccC9foagzA//Bn4ylTulhCDcvzxcxYkF03qw=;
+	s=arc-20240116; t=1750177379; c=relaxed/simple;
+	bh=w4xx/HJ0JDXO69E8o3tqEvWhgt6iYb0YLEfQuwhDkwQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ezKA4+7Zgljx2QjxifMWzpI+n3/iBmWoptzIAynCaL3SynUuDbLyUe4yDeVBAYqck+Pl178CgTNK5rxfKSft7LZ/vPO1hfMIkvM+We+4BbTkHxour+RuFFiklopBxtum0GG8FIy1QerNOdldYyZMC609sVxwt3YhJkeU3PailmA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ze99fWbi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kqWJVyz6pXqsA0fxGvScCtbZfFQ1//wx3AabmEE6djDYQY5SFJNRftEuyFsZ49AEYKe8RPDnwAUWNxPCEPKGojWHEYijgiHp4eOdCYlyHLPesw+sXJGkaAVZGiq836snZ0UvbqQO4AU2Fd91BncC4IJcvIZ7DGbb/yrK99beX9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XCFSarRH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ze99fWbi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6F77C4CEE3;
-	Tue, 17 Jun 2025 16:22:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XCFSarRH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15692C4CEE3;
+	Tue, 17 Jun 2025 16:22:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177376;
-	bh=HDJ0jO1ccC9foagzA//Bn4ylTulhCDcvzxcxYkF03qw=;
+	s=korg; t=1750177379;
+	bh=w4xx/HJ0JDXO69E8o3tqEvWhgt6iYb0YLEfQuwhDkwQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ze99fWbiPd5SqjTHhwaamEDtCvGE8FjwH511HFbQX/35MBOJHfdHLZJr+Z6hJU9KC
-	 NN2skdQDdksmzct4cw8lJDGbx3FknacZJCqZ7TfjZoUcfEl+u5MAhd+5u0ztPm0CSy
-	 RBiliZXTQ/M0u7NbR8fFmZ9TiioaORChIUWxogaI=
+	b=XCFSarRHNwDZ5PTnD+l99aLBbfyUtCqCZBZfrzQRKj4FMVqgX8mG9Zh1eNKCxiQjU
+	 ScETmO0SVhGlNJgap/y1JJ5UHcCO6u2xOencvGdG3oSaFTK95b//vQJqzlQfW2jdJg
+	 Hu0aj89BLYz+t+5kxxWqnJnDyOZhleGSpjL+kx0A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Henry Martin <bsdhenrymartin@gmail.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Yeoreum Yun <yeoreum.yun@arm.com>,
+	Leo Yan <leo.yan@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 297/780] wifi: mt76: mt7915: Fix null-ptr-deref in mt7915_mmio_wed_init()
-Date: Tue, 17 Jun 2025 17:20:05 +0200
-Message-ID: <20250617152503.561591550@linuxfoundation.org>
+Subject: [PATCH 6.12 335/512] coresight: prevent deactivate active config while enabling the config
+Date: Tue, 17 Jun 2025 17:25:01 +0200
+Message-ID: <20250617152433.188175263@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,53 +48,181 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Henry Martin <bsdhenrymartin@gmail.com>
+From: Yeoreum Yun <yeoreum.yun@arm.com>
 
-[ Upstream commit efb95439c1477bbc955cacd0179c35e7861b437c ]
+[ Upstream commit 408c97c4a5e0b634dcd15bf8b8808b382e888164 ]
 
-devm_ioremap() returns NULL on error. Currently, mt7915_mmio_wed_init()
-does not check for this case, which results in a NULL pointer
-dereference.
+While enable active config via cscfg_csdev_enable_active_config(),
+active config could be deactivated via configfs' sysfs interface.
+This could make UAF issue in below scenario:
 
-Prevent null pointer dereference in mt7915_mmio_wed_init().
+CPU0                                          CPU1
+(sysfs enable)                                load module
+                                              cscfg_load_config_sets()
+                                              activate config. // sysfs
+                                              (sys_active_cnt == 1)
+...
+cscfg_csdev_enable_active_config()
+lock(csdev->cscfg_csdev_lock)
+// here load config activate by CPU1
+unlock(csdev->cscfg_csdev_lock)
 
-Fixes: 4f831d18d12d ("wifi: mt76: mt7915: enable WED RX support")
-Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
-Link: https://patch.msgid.link/20250407061900.85317-1-bsdhenrymartin@gmail.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+                                              deactivate config // sysfs
+                                              (sys_activec_cnt == 0)
+                                              cscfg_unload_config_sets()
+                                              unload module
+
+// access to config_desc which freed
+// while unloading module.
+cscfg_csdev_enable_config
+
+To address this, use cscfg_config_desc's active_cnt as a reference count
+ which will be holded when
+    - activate the config.
+    - enable the activated config.
+and put the module reference when config_active_cnt == 0.
+
+Fixes: f8cce2ff3c04 ("coresight: syscfg: Add API to activate and enable configurations")
+Suggested-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Signed-off-by: Yeoreum Yun <yeoreum.yun@arm.com>
+Reviewed-by: Leo Yan <leo.yan@arm.com>
+Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Link: https://lore.kernel.org/r/20250514161951.3427590-4-yeoreum.yun@arm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7915/mmio.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ .../hwtracing/coresight/coresight-config.h    |  2 +-
+ .../hwtracing/coresight/coresight-syscfg.c    | 49 +++++++++++++------
+ 2 files changed, 35 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/mmio.c b/drivers/net/wireless/mediatek/mt76/mt7915/mmio.c
-index 876f0692850a2..9c4d5cea0c42e 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7915/mmio.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7915/mmio.c
-@@ -651,6 +651,9 @@ int mt7915_mmio_wed_init(struct mt7915_dev *dev, void *pdev_ptr,
- 		wed->wlan.base = devm_ioremap(dev->mt76.dev,
- 					      pci_resource_start(pci_dev, 0),
- 					      pci_resource_len(pci_dev, 0));
-+		if (!wed->wlan.base)
-+			return -ENOMEM;
+diff --git a/drivers/hwtracing/coresight/coresight-config.h b/drivers/hwtracing/coresight/coresight-config.h
+index 6ba0139757418..84cdde6f0e4db 100644
+--- a/drivers/hwtracing/coresight/coresight-config.h
++++ b/drivers/hwtracing/coresight/coresight-config.h
+@@ -228,7 +228,7 @@ struct cscfg_feature_csdev {
+  * @feats_csdev:references to the device features to enable.
+  */
+ struct cscfg_config_csdev {
+-	const struct cscfg_config_desc *config_desc;
++	struct cscfg_config_desc *config_desc;
+ 	struct coresight_device *csdev;
+ 	bool enabled;
+ 	struct list_head node;
+diff --git a/drivers/hwtracing/coresight/coresight-syscfg.c b/drivers/hwtracing/coresight/coresight-syscfg.c
+index 11138a9762b01..30a561d874819 100644
+--- a/drivers/hwtracing/coresight/coresight-syscfg.c
++++ b/drivers/hwtracing/coresight/coresight-syscfg.c
+@@ -867,6 +867,25 @@ void cscfg_csdev_reset_feats(struct coresight_device *csdev)
+ }
+ EXPORT_SYMBOL_GPL(cscfg_csdev_reset_feats);
+ 
++static bool cscfg_config_desc_get(struct cscfg_config_desc *config_desc)
++{
++	if (!atomic_fetch_inc(&config_desc->active_cnt)) {
++		/* must ensure that config cannot be unloaded in use */
++		if (unlikely(cscfg_owner_get(config_desc->load_owner))) {
++			atomic_dec(&config_desc->active_cnt);
++			return false;
++		}
++	}
 +
- 		wed->wlan.phy_base = pci_resource_start(pci_dev, 0);
- 		wed->wlan.wpdma_int = pci_resource_start(pci_dev, 0) +
- 				      MT_INT_WED_SOURCE_CSR;
-@@ -678,6 +681,9 @@ int mt7915_mmio_wed_init(struct mt7915_dev *dev, void *pdev_ptr,
- 		wed->wlan.bus_type = MTK_WED_BUS_AXI;
- 		wed->wlan.base = devm_ioremap(dev->mt76.dev, res->start,
- 					      resource_size(res));
-+		if (!wed->wlan.base)
-+			return -ENOMEM;
++	return true;
++}
 +
- 		wed->wlan.phy_base = res->start;
- 		wed->wlan.wpdma_int = res->start + MT_INT_SOURCE_CSR;
- 		wed->wlan.wpdma_mask = res->start + MT_INT_MASK_CSR;
++static void cscfg_config_desc_put(struct cscfg_config_desc *config_desc)
++{
++	if (!atomic_dec_return(&config_desc->active_cnt))
++		cscfg_owner_put(config_desc->load_owner);
++}
++
+ /*
+  * This activate configuration for either perf or sysfs. Perf can have multiple
+  * active configs, selected per event, sysfs is limited to one.
+@@ -890,22 +909,17 @@ static int _cscfg_activate_config(unsigned long cfg_hash)
+ 			if (config_desc->available == false)
+ 				return -EBUSY;
+ 
+-			/* must ensure that config cannot be unloaded in use */
+-			err = cscfg_owner_get(config_desc->load_owner);
+-			if (err)
++			if (!cscfg_config_desc_get(config_desc)) {
++				err = -EINVAL;
+ 				break;
++			}
++
+ 			/*
+ 			 * increment the global active count - control changes to
+ 			 * active configurations
+ 			 */
+ 			atomic_inc(&cscfg_mgr->sys_active_cnt);
+ 
+-			/*
+-			 * mark the descriptor as active so enable config on a
+-			 * device instance will use it
+-			 */
+-			atomic_inc(&config_desc->active_cnt);
+-
+ 			err = 0;
+ 			dev_dbg(cscfg_device(), "Activate config %s.\n", config_desc->name);
+ 			break;
+@@ -920,9 +934,8 @@ static void _cscfg_deactivate_config(unsigned long cfg_hash)
+ 
+ 	list_for_each_entry(config_desc, &cscfg_mgr->config_desc_list, item) {
+ 		if ((unsigned long)config_desc->event_ea->var == cfg_hash) {
+-			atomic_dec(&config_desc->active_cnt);
+ 			atomic_dec(&cscfg_mgr->sys_active_cnt);
+-			cscfg_owner_put(config_desc->load_owner);
++			cscfg_config_desc_put(config_desc);
+ 			dev_dbg(cscfg_device(), "Deactivate config %s.\n", config_desc->name);
+ 			break;
+ 		}
+@@ -1047,7 +1060,7 @@ int cscfg_csdev_enable_active_config(struct coresight_device *csdev,
+ 				     unsigned long cfg_hash, int preset)
+ {
+ 	struct cscfg_config_csdev *config_csdev_active = NULL, *config_csdev_item;
+-	const struct cscfg_config_desc *config_desc;
++	struct cscfg_config_desc *config_desc;
+ 	unsigned long flags;
+ 	int err = 0;
+ 
+@@ -1062,8 +1075,8 @@ int cscfg_csdev_enable_active_config(struct coresight_device *csdev,
+ 	spin_lock_irqsave(&csdev->cscfg_csdev_lock, flags);
+ 	list_for_each_entry(config_csdev_item, &csdev->config_csdev_list, node) {
+ 		config_desc = config_csdev_item->config_desc;
+-		if ((atomic_read(&config_desc->active_cnt)) &&
+-		    ((unsigned long)config_desc->event_ea->var == cfg_hash)) {
++		if (((unsigned long)config_desc->event_ea->var == cfg_hash) &&
++				cscfg_config_desc_get(config_desc)) {
+ 			config_csdev_active = config_csdev_item;
+ 			csdev->active_cscfg_ctxt = (void *)config_csdev_active;
+ 			break;
+@@ -1097,7 +1110,11 @@ int cscfg_csdev_enable_active_config(struct coresight_device *csdev,
+ 				err = -EBUSY;
+ 			spin_unlock_irqrestore(&csdev->cscfg_csdev_lock, flags);
+ 		}
++
++		if (err)
++			cscfg_config_desc_put(config_desc);
+ 	}
++
+ 	return err;
+ }
+ EXPORT_SYMBOL_GPL(cscfg_csdev_enable_active_config);
+@@ -1136,8 +1153,10 @@ void cscfg_csdev_disable_active_config(struct coresight_device *csdev)
+ 	spin_unlock_irqrestore(&csdev->cscfg_csdev_lock, flags);
+ 
+ 	/* true if there was an enabled active config */
+-	if (config_csdev)
++	if (config_csdev) {
+ 		cscfg_csdev_disable_config(config_csdev);
++		cscfg_config_desc_put(config_csdev->config_desc);
++	}
+ }
+ EXPORT_SYMBOL_GPL(cscfg_csdev_disable_active_config);
+ 
 -- 
 2.39.5
 
