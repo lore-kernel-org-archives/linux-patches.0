@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53A882ECE99;
-	Tue, 17 Jun 2025 15:50:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2C452F2C55;
+	Tue, 17 Jun 2025 15:50:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175412; cv=none; b=m5YnQCrc51maYmUDXRyJRy1PMMkI9uSjnAwQ6uhYVMk6mkjEWld3Q9+/wyaMpqlxQGXNwGyJi6C9UH6V2fS46dJgpyifWL7thxW/w8Z6t2KUk5YhgmyU1Atg2n4wpx2SK9oO3gLmplgl7gxWxC0RP0l1E5sNuwu+VO0pa+fAJC4=
+	t=1750175420; cv=none; b=TL/zcdLC+5pePOMyxlPV3gvDFC2lGjZrBYqIyxrceAXlDNRSyk/wXLA530IZv4hsyTJlTCmKXZKOvbt5jWMKAmu+WltmrFZIuhXpmva0PyS+y69ldePXfkJWieDy/vHe4lKoeqPLvewI/b9F9ZJbbY0UCk8odn4xPqE/KluV8eA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175412; c=relaxed/simple;
-	bh=Fz8U5wk5gCuM/c6mrfTC7weBb01v2RlBsRJtY4yrd+c=;
+	s=arc-20240116; t=1750175420; c=relaxed/simple;
+	bh=M202Es4hzm4xT4dK+acrZRgcACAjGgD9Er5HkE8AVcg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o2sDQvHABpbkrnsKclzMdD2VpUtbARWtdPQEjoPWkeEBvYbarmR7SGnFLsaXlFxAUxBNuXwCKAXTy5CSNol9bRPx8PQfyLAvhHMnFifq57G5sg23HlUBwYNWyXGzwCptXP4f7uLFKIaEAq8oi9O1ACqXuNTTkLmvHATDK0fz6Gg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1/KieOy5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G7dxFqaz/Szj87MKRzvdHEvF0BIu3ALb4i1RnVHngwm0n0C421Z9+TvWUxw7Jl5jhiDkx7Pt5iUdOO65zgTNhGQiyQEeUDKATBjvtT5CudpFoGphkzkg3T6qM6t36c9MekCjrA5mPIINpErW3wc4vX8NGlcYq2d4EFmnOZhjud0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I0oHP2ki; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1/KieOy5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9193C4CEE3;
-	Tue, 17 Jun 2025 15:50:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I0oHP2ki"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75FF4C4CEF1;
+	Tue, 17 Jun 2025 15:50:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175412;
-	bh=Fz8U5wk5gCuM/c6mrfTC7weBb01v2RlBsRJtY4yrd+c=;
+	s=korg; t=1750175419;
+	bh=M202Es4hzm4xT4dK+acrZRgcACAjGgD9Er5HkE8AVcg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1/KieOy5l+0j9y/SfOMlqjRqmwya9PXXizqEyYm2LUdyeb8/6IK//KrLFD8vQvhEI
-	 cJAa/73vqkO6l96YpR+HgYsTDIT8SKeJjULIvTmf7FFozWaDw4FBSzCopPL+Ux1eCW
-	 LIXD3KQ3xnnyMPmSyOORXVo6QDudfepBA+oJNdwE=
+	b=I0oHP2ki1qCeDfFXhbz5IxM0CCJAQkNFDWW6z9KYSLcHL2bn3aWwk7acgVGsLpipx
+	 yRWdmXerXNe79YFnNIH+tr0fvfW3Zge673z+3bu0WrHt7tu10+I+6Vqg3JUfEbNXT3
+	 W14pJeqebkCg0BNTZcGR+ucUXb+tLvqUi1Rm8lY4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+	lmarch2 <2524158037@qq.com>,
+	Viktor Malik <vmalik@redhat.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Shung-Hsi Yu <shung-hsi.yu@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 165/356] ARM: dts: at91: at91sam9263: fix NAND chip selects
-Date: Tue, 17 Jun 2025 17:24:40 +0200
-Message-ID: <20250617152344.862861338@linuxfoundation.org>
+Subject: [PATCH 6.12 124/512] libbpf: Fix buffer overflow in bpf_object__init_prog
+Date: Tue, 17 Jun 2025 17:21:30 +0200
+Message-ID: <20250617152424.618110074@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-References: <20250617152338.212798615@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,69 +49,108 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+From: Viktor Malik <vmalik@redhat.com>
 
-[ Upstream commit c72ede1c24be689733bcd2233a3a56f2478429c8 ]
+[ Upstream commit ee684de5c1b0ac01821320826baec7da93f3615b ]
 
-NAND did not work on my USB-A9263. I discovered that the offending
-commit converted the PIO bank for chip selects wrongly, so all A9263
-boards need to be fixed.
+As shown in [1], it is possible to corrupt a BPF ELF file such that
+arbitrary BPF instructions are loaded by libbpf. This can be done by
+setting a symbol (BPF program) section offset to a large (unsigned)
+number such that <section start + symbol offset> overflows and points
+before the section data in the memory.
 
-Fixes: 1004a2977bdc ("ARM: dts: at91: Switch to the new NAND bindings")
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Reviewed-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Link: https://lore.kernel.org/r/20250402210446.5972-2-wsa+renesas@sang-engineering.com
-Signed-off-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
+Consider the situation below where:
+- prog_start = sec_start + symbol_offset    <-- size_t overflow here
+- prog_end   = prog_start + prog_size
+
+    prog_start        sec_start        prog_end        sec_end
+        |                |                 |              |
+        v                v                 v              v
+    .....................|################################|............
+
+The report in [1] also provides a corrupted BPF ELF which can be used as
+a reproducer:
+
+    $ readelf -S crash
+    Section Headers:
+      [Nr] Name              Type             Address           Offset
+           Size              EntSize          Flags  Link  Info  Align
+    ...
+      [ 2] uretprobe.mu[...] PROGBITS         0000000000000000  00000040
+           0000000000000068  0000000000000000  AX       0     0     8
+
+    $ readelf -s crash
+    Symbol table '.symtab' contains 8 entries:
+       Num:    Value          Size Type    Bind   Vis      Ndx Name
+    ...
+         6: ffffffffffffffb8   104 FUNC    GLOBAL DEFAULT    2 handle_tp
+
+Here, the handle_tp prog has section offset ffffffffffffffb8, i.e. will
+point before the actual memory where section 2 is allocated.
+
+This is also reported by AddressSanitizer:
+
+    =================================================================
+    ==1232==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x7c7302fe0000 at pc 0x7fc3046e4b77 bp 0x7ffe64677cd0 sp 0x7ffe64677490
+    READ of size 104 at 0x7c7302fe0000 thread T0
+        #0 0x7fc3046e4b76 in memcpy (/lib64/libasan.so.8+0xe4b76)
+        #1 0x00000040df3e in bpf_object__init_prog /src/libbpf/src/libbpf.c:856
+        #2 0x00000040df3e in bpf_object__add_programs /src/libbpf/src/libbpf.c:928
+        #3 0x00000040df3e in bpf_object__elf_collect /src/libbpf/src/libbpf.c:3930
+        #4 0x00000040df3e in bpf_object_open /src/libbpf/src/libbpf.c:8067
+        #5 0x00000040f176 in bpf_object__open_file /src/libbpf/src/libbpf.c:8090
+        #6 0x000000400c16 in main /poc/poc.c:8
+        #7 0x7fc3043d25b4 in __libc_start_call_main (/lib64/libc.so.6+0x35b4)
+        #8 0x7fc3043d2667 in __libc_start_main@@GLIBC_2.34 (/lib64/libc.so.6+0x3667)
+        #9 0x000000400b34 in _start (/poc/poc+0x400b34)
+
+    0x7c7302fe0000 is located 64 bytes before 104-byte region [0x7c7302fe0040,0x7c7302fe00a8)
+    allocated by thread T0 here:
+        #0 0x7fc3046e716b in malloc (/lib64/libasan.so.8+0xe716b)
+        #1 0x7fc3045ee600 in __libelf_set_rawdata_wrlock (/lib64/libelf.so.1+0xb600)
+        #2 0x7fc3045ef018 in __elf_getdata_rdlock (/lib64/libelf.so.1+0xc018)
+        #3 0x00000040642f in elf_sec_data /src/libbpf/src/libbpf.c:3740
+
+The problem here is that currently, libbpf only checks that the program
+end is within the section bounds. There used to be a check
+`while (sec_off < sec_sz)` in bpf_object__add_programs, however, it was
+removed by commit 6245947c1b3c ("libbpf: Allow gaps in BPF program
+sections to support overriden weak functions").
+
+Add a check for detecting the overflow of `sec_off + prog_sz` to
+bpf_object__init_prog to fix this issue.
+
+[1] https://github.com/lmarch2/poc/blob/main/libbpf/libbpf.md
+
+Fixes: 6245947c1b3c ("libbpf: Allow gaps in BPF program sections to support overriden weak functions")
+Reported-by: lmarch2 <2524158037@qq.com>
+Signed-off-by: Viktor Malik <vmalik@redhat.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Reviewed-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
+Link: https://github.com/lmarch2/poc/blob/main/libbpf/libbpf.md
+Link: https://lore.kernel.org/bpf/20250415155014.397603-1-vmalik@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/microchip/at91sam9263ek.dts | 2 +-
- arch/arm/boot/dts/microchip/tny_a9263.dts     | 2 +-
- arch/arm/boot/dts/microchip/usb_a9263.dts     | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+ tools/lib/bpf/libbpf.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/microchip/at91sam9263ek.dts b/arch/arm/boot/dts/microchip/at91sam9263ek.dts
-index ce8baff6a9f4e..e42e1a75a715d 100644
---- a/arch/arm/boot/dts/microchip/at91sam9263ek.dts
-+++ b/arch/arm/boot/dts/microchip/at91sam9263ek.dts
-@@ -152,7 +152,7 @@
- 				nand@3 {
- 					reg = <0x3 0x0 0x800000>;
- 					rb-gpios = <&pioA 22 GPIO_ACTIVE_HIGH>;
--					cs-gpios = <&pioA 15 GPIO_ACTIVE_HIGH>;
-+					cs-gpios = <&pioD 15 GPIO_ACTIVE_HIGH>;
- 					nand-bus-width = <8>;
- 					nand-ecc-mode = "soft";
- 					nand-on-flash-bbt;
-diff --git a/arch/arm/boot/dts/microchip/tny_a9263.dts b/arch/arm/boot/dts/microchip/tny_a9263.dts
-index 62b7d9f9a926c..c8b6318aaa838 100644
---- a/arch/arm/boot/dts/microchip/tny_a9263.dts
-+++ b/arch/arm/boot/dts/microchip/tny_a9263.dts
-@@ -64,7 +64,7 @@
- 				nand@3 {
- 					reg = <0x3 0x0 0x800000>;
- 					rb-gpios = <&pioA 22 GPIO_ACTIVE_HIGH>;
--					cs-gpios = <&pioA 15 GPIO_ACTIVE_HIGH>;
-+					cs-gpios = <&pioD 15 GPIO_ACTIVE_HIGH>;
- 					nand-bus-width = <8>;
- 					nand-ecc-mode = "soft";
- 					nand-on-flash-bbt;
-diff --git a/arch/arm/boot/dts/microchip/usb_a9263.dts b/arch/arm/boot/dts/microchip/usb_a9263.dts
-index 25c643067b2ec..454176ce6d3ff 100644
---- a/arch/arm/boot/dts/microchip/usb_a9263.dts
-+++ b/arch/arm/boot/dts/microchip/usb_a9263.dts
-@@ -84,7 +84,7 @@
- 				nand@3 {
- 					reg = <0x3 0x0 0x800000>;
- 					rb-gpios = <&pioA 22 GPIO_ACTIVE_HIGH>;
--					cs-gpios = <&pioA 15 GPIO_ACTIVE_HIGH>;
-+					cs-gpios = <&pioD 15 GPIO_ACTIVE_HIGH>;
- 					nand-bus-width = <8>;
- 					nand-ecc-mode = "soft";
- 					nand-on-flash-bbt;
+diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
+index 6e4d417604fa0..069ffe5da96e5 100644
+--- a/tools/lib/bpf/libbpf.c
++++ b/tools/lib/bpf/libbpf.c
+@@ -887,7 +887,7 @@ bpf_object__add_programs(struct bpf_object *obj, Elf_Data *sec_data,
+ 			return -LIBBPF_ERRNO__FORMAT;
+ 		}
+ 
+-		if (sec_off + prog_sz > sec_sz) {
++		if (sec_off + prog_sz > sec_sz || sec_off + prog_sz < sec_off) {
+ 			pr_warn("sec '%s': program at offset %zu crosses section boundary\n",
+ 				sec_name, sec_off);
+ 			return -LIBBPF_ERRNO__FORMAT;
 -- 
 2.39.5
 
