@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 099C62EA143;
-	Tue, 17 Jun 2025 15:51:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 313562DFF0B;
+	Tue, 17 Jun 2025 15:51:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175472; cv=none; b=iF0X5Lzslnbq9OyfbHGQmAqV+/W065H55dYSwR8LMlZEQUoX3A/0JlowZHgoJQ/Cp0KzQg/MbXOLvrV2lJMKOKeyo3Lpkj2aY2RvqhqToGI50hend2gC6DCmbJj7DLTJdGjXHlCXTaLV5IfUkucxxqda/RaVN4N+X/vm0PyMDx4=
+	t=1750175476; cv=none; b=TbVn/WjJ2VtQ0ZuenZBpt73iJOVrLFkpnDFXvF45xw/woFuHAK/s1JhLa/YpSors8oj0c4rI8tyFylb73h7hkf3W6wpsufsE+fi6IAMM786QeKG7QPyBEEr+dugEfzMHCXGVaZbYUcrAEnbIME+kqZcO/4Y3ncoKC50unQD/xCk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175472; c=relaxed/simple;
-	bh=YvrvUYEBYaUw5u/Ev1tweaRTEfqkbvHuGaoANjpxQqU=;
+	s=arc-20240116; t=1750175476; c=relaxed/simple;
+	bh=kKNOB9Fcd6vZjhrfrGq0Atq4+io0KRWVrBOdX1DNRsA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rfNFu7u1ssVJUUfTvo1B0I1IN9ZxtMiy/MgrUIdBysv9niUauIhz/uqvXPiPXxQnGblNbV4NXZBoRo9WfkmD5GU1BxQXGnUPfDvfQ9Z5hwKhlZptaRcIT1VcZjdeDG++zJjrRWVzcAzIJIhU7aBDm7o72GceOv1fCDeMxJEj+B0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TASV4xwP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fKfTB9YWtTxbdJFgxDLHiY0pLoW3SAfgGS1XEMzyAGhEC6ZEOq+JmeCbYbEVFXp2tTiitC77C4VtfIGptq0t3hSkrOPW5Psu4Mb2W2X05+Lmkg0J1GbMY3Yi3OykRWaclDP/JErDxinIx+LRfdpojZS76qdKhgAWDnOqze74pLg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rz3VGohI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TASV4xwP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DCEEC4CEE3;
-	Tue, 17 Jun 2025 15:51:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rz3VGohI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EB0DC4CEF2;
+	Tue, 17 Jun 2025 15:51:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175471;
-	bh=YvrvUYEBYaUw5u/Ev1tweaRTEfqkbvHuGaoANjpxQqU=;
+	s=korg; t=1750175474;
+	bh=kKNOB9Fcd6vZjhrfrGq0Atq4+io0KRWVrBOdX1DNRsA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TASV4xwPe+Acpctriwz9ULebGTmqPq/E0v5bMUfSE/r6Aj548aaZHbi03977aA2YO
-	 Ga5YJUMgZ4BhwMp469ymfY7aCh7X3Li7J7nVRQFKW7WJ32KNoddOop7zONzG4M4Ayc
-	 5S8KUB929Iaa5Zc21JyAzAAX+sbM8T/Ry2YGi4lc=
+	b=Rz3VGohIwKctQt96uJ97NrxVRwarYBTa/0GddKTYwfn/xBwHSWDGikePcpIGXjPIg
+	 IG4D2t1QLalUib8mDvLqJa12D+j6PfSWf4ePGgsGu02xPeKk2dWJAplU/7B5KAvlQO
+	 jefSXZ86KQlraee3kTLxCH8MRgt/tWd7Lb69lU28=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vignesh Raman <vignesh.raman@collabora.com>,
-	Daniel Stone <daniels@collabora.com>,
-	Helen Koike <helen.fornazier@gmail.com>,
+	syzbot+65761fc25a137b9c8c6e@syzkaller.appspotmail.com,
+	Phillip Lougher <phillip@squashfs.org.uk>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 091/780] drm/ci: fix merge request rules
-Date: Tue, 17 Jun 2025 17:16:39 +0200
-Message-ID: <20250617152455.222206705@linuxfoundation.org>
+Subject: [PATCH 6.6 180/356] Squashfs: check return result of sb_min_blocksize
+Date: Tue, 17 Jun 2025 17:24:55 +0200
+Message-ID: <20250617152345.458591828@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
+References: <20250617152338.212798615@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,80 +48,68 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vignesh Raman <vignesh.raman@collabora.com>
+From: Phillip Lougher <phillip@squashfs.org.uk>
 
-[ Upstream commit 10646ddac2917b31c985ceff0e4982c42a9c924b ]
+[ Upstream commit 734aa85390ea693bb7eaf2240623d41b03705c84 ]
 
-Merge request pipelines were only created when changes
-were made to drivers/gpu/drm/ci/, causing MRs that
-didn't touch this path to break. Fix MR pipeline rules
-to trigger jobs for all changes.
+Syzkaller reports an "UBSAN: shift-out-of-bounds in squashfs_bio_read" bug.
 
-Run jobs automatically for marge-bot and scheduled
-pipelines, but in all other cases run manually. Also
-remove CI_PROJECT_NAMESPACE checks specific to mesa.
+Syzkaller forks multiple processes which after mounting the Squashfs
+filesystem, issues an ioctl("/dev/loop0", LOOP_SET_BLOCK_SIZE, 0x8000).
+Now if this ioctl occurs at the same time another process is in the
+process of mounting a Squashfs filesystem on /dev/loop0, the failure
+occurs.  When this happens the following code in squashfs_fill_super()
+fails.
 
-Fixes: df54f04f2020 ("drm/ci: update gitlab rules")
-Signed-off-by: Vignesh Raman <vignesh.raman@collabora.com>
-Reviewed-by: Daniel Stone <daniels@collabora.com>
-Signed-off-by: Helen Koike <helen.fornazier@gmail.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250228132620.556079-1-vignesh.raman@collabora.com
+----
+msblk->devblksize = sb_min_blocksize(sb, SQUASHFS_DEVBLK_SIZE);
+msblk->devblksize_log2 = ffz(~msblk->devblksize);
+----
+
+sb_min_blocksize() returns 0, which means msblk->devblksize is set to 0.
+
+As a result, ffz(~msblk->devblksize) returns 64, and msblk->devblksize_log2
+is set to 64.
+
+This subsequently causes the
+
+UBSAN: shift-out-of-bounds in fs/squashfs/block.c:195:36
+shift exponent 64 is too large for 64-bit type 'u64' (aka
+'unsigned long long')
+
+This commit adds a check for a 0 return by sb_min_blocksize().
+
+Link: https://lkml.kernel.org/r/20250409024747.876480-1-phillip@squashfs.org.uk
+Fixes: 0aa666190509 ("Squashfs: super block operations")
+Reported-by: syzbot+65761fc25a137b9c8c6e@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/67f0dd7a.050a0220.0a13.0230.GAE@google.com/
+Signed-off-by: Phillip Lougher <phillip@squashfs.org.uk>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/ci/gitlab-ci.yml | 19 ++++---------------
- 1 file changed, 4 insertions(+), 15 deletions(-)
+ fs/squashfs/super.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/gpu/drm/ci/gitlab-ci.yml b/drivers/gpu/drm/ci/gitlab-ci.yml
-index f04aabe8327c6..b06b9e7d3d09b 100644
---- a/drivers/gpu/drm/ci/gitlab-ci.yml
-+++ b/drivers/gpu/drm/ci/gitlab-ci.yml
-@@ -143,11 +143,11 @@ stages:
-     # Pre-merge pipeline
-     - if: &is-pre-merge $CI_PIPELINE_SOURCE == "merge_request_event"
-     # Push to a branch on a fork
--    - if: &is-fork-push $CI_PROJECT_NAMESPACE != "mesa" && $CI_PIPELINE_SOURCE == "push"
-+    - if: &is-fork-push $CI_PIPELINE_SOURCE == "push"
-     # nightly pipeline
-     - if: &is-scheduled-pipeline $CI_PIPELINE_SOURCE == "schedule"
-     # pipeline for direct pushes that bypassed the CI
--    - if: &is-direct-push $CI_PROJECT_NAMESPACE == "mesa" && $CI_PIPELINE_SOURCE == "push" && $GITLAB_USER_LOGIN != "marge-bot"
-+    - if: &is-direct-push $CI_PIPELINE_SOURCE == "push" && $GITLAB_USER_LOGIN != "marge-bot"
+diff --git a/fs/squashfs/super.c b/fs/squashfs/super.c
+index 22e812808e5cf..3a27d4268b3c4 100644
+--- a/fs/squashfs/super.c
++++ b/fs/squashfs/super.c
+@@ -202,6 +202,11 @@ static int squashfs_fill_super(struct super_block *sb, struct fs_context *fc)
+ 	msblk->panic_on_errors = (opts->errors == Opt_errors_panic);
  
+ 	msblk->devblksize = sb_min_blocksize(sb, SQUASHFS_DEVBLK_SIZE);
++	if (!msblk->devblksize) {
++		errorf(fc, "squashfs: unable to set blocksize\n");
++		return -EINVAL;
++	}
++
+ 	msblk->devblksize_log2 = ffz(~msblk->devblksize);
  
- # Rules applied to every job in the pipeline
-@@ -170,26 +170,15 @@ stages:
-     - !reference [.disable-farm-mr-rules, rules]
-     # Never run immediately after merging, as we just ran everything
-     - !reference [.never-post-merge-rules, rules]
--    # Build everything in merge pipelines, if any files affecting the pipeline
--    # were changed
-+    # Build everything in merge pipelines
-     - if: *is-merge-attempt
--      changes: &all_paths
--      - drivers/gpu/drm/ci/**/*
-       when: on_success
-     # Same as above, but for pre-merge pipelines
-     - if: *is-pre-merge
--      changes:
--        *all_paths
-       when: manual
--    # Skip everything for pre-merge and merge pipelines which don't change
--    # anything in the build
--    - if: *is-merge-attempt
--      when: never
--    - if: *is-pre-merge
--      when: never
-     # Build everything after someone bypassed the CI
-     - if: *is-direct-push
--      when: on_success
-+      when: manual
-     # Build everything in scheduled pipelines
-     - if: *is-scheduled-pipeline
-       when: on_success
+ 	mutex_init(&msblk->meta_index_mutex);
 -- 
 2.39.5
 
