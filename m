@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DC032ECE94;
-	Tue, 17 Jun 2025 15:57:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C439C2ECE80;
+	Tue, 17 Jun 2025 15:57:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175850; cv=none; b=HHUc4SN0nrrTS5zEpoVCw1BMfnTbbkcKZalC6kTQfTy4M4sIuW2dW65ARv7cMBZJmERPJxOh1RlhHNDH9YcnO2CnCplFXxatnFJMW9HPRAoF2szRWOvIT8WeszbIzg2isAlc4fNwpBVPhSrmwAjh1oyFTgHZ+k5L4OLRkPTWPKU=
+	t=1750175853; cv=none; b=QDMrb9+ivpJmLRe0x67aMnvKi2kuHIgwn0d+GR6V0HiU3lvLvFT5jMdHzlMlkhQcL/yXClfi1pEtY5pvhiGpNJFibC4ecDhVRYV+NeeGTGqOg+IanaGrr/Kier90ooxpq9ZBCDblCyIDxdBcIv0nNzXZoKh3VPD/xFn6p7yfZtU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175850; c=relaxed/simple;
-	bh=33FiWN4/YQsvzUjEV/+jqhY4PWrI+0exsnyt38+BAxo=;
+	s=arc-20240116; t=1750175853; c=relaxed/simple;
+	bh=jL1DVa3GLcpcYSoSMwkAf0Pe6nipGvpUg4vqx2cUyIE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ws69a7hVCgFkgYf/kXhkn2QgbaK969T5Exbx8X0ezyL1uUAFPev4rUFz14oIr/xzhQY46jtPtHluYsgqqSuBER4n0Eq+nLKePN5DC+lk/TiabxXxF6TY4S8/RbBc2Sko8c7AA88YtVi7HKkLYdtEV4/4KHBnev1LihGLDf/bVGk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u8oMsxUD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qVifhGP8ly2KbQPy1BUG/dgzX/HI6+xbNvCVGEL0VWXFu05nB5PfMVg8uqyhwY+hSlICdxVlWwL6C4xqJDaifDOPuEZ2wEXW7lJBEKiS53HqQ3DDhTdkujIee+TVCJNaO8OQ5I+GkuVV8cRcS+oma5cpnYEYhRSdBScGGN5Is3M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=An7BITY9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u8oMsxUD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82FEBC4CEE3;
-	Tue, 17 Jun 2025 15:57:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="An7BITY9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB656C4CEE3;
+	Tue, 17 Jun 2025 15:57:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175850;
-	bh=33FiWN4/YQsvzUjEV/+jqhY4PWrI+0exsnyt38+BAxo=;
+	s=korg; t=1750175853;
+	bh=jL1DVa3GLcpcYSoSMwkAf0Pe6nipGvpUg4vqx2cUyIE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u8oMsxUDY9loqz8kCJEBkssbTEo5BaS9EP3TCqLrJinvzlrKD+mo0CZ8Kd7ueGydy
-	 GScwtzTS+/IIQqFqqtA5bWYu5mtSPW6lqH8hXAWbIYbMtT9wgKNIFohPjO4egVRkqb
-	 5XrJP0CmcUShJN4q68j1mllX9Yc6bvv5K9f4jG1U=
+	b=An7BITY97xiHUW6x4Dc1AVgMAUFYy461f9C5JrfWUbRbeV+6GY2u7aqBsRsfbcONR
+	 XoziCgR8ExcuVZoch/mpqBdhARkEVw4aqtURCeTeIwSpQeutZmDnC5Vh+ozgcA2MHs
+	 BbnSsfcL9YOdeYoxPdULGqhSoLLflpIYYOpjHRqg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Stephan Gerhold <stephan@gerhold.net>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Vincent Knecht <vincent.knecht@mailoo.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 128/780] drm/msm/dpu: enable SmartDMA on SM8150
-Date: Tue, 17 Jun 2025 17:17:16 +0200
-Message-ID: <20250617152456.720284289@linuxfoundation.org>
+Subject: [PATCH 6.12 169/512] clk: qcom: gcc-msm8939: Fix mclk0 & mclk1 for 24 MHz
+Date: Tue, 17 Jun 2025 17:22:15 +0200
+Message-ID: <20250617152426.470636267@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,103 +50,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Vincent Knecht <vincent.knecht@mailoo.org>
 
-[ Upstream commit 6a2343de0b6f70a21bf503ac4688dc905cb068e1 ]
+[ Upstream commit 9e7acf70cf6aa7b22f67d911f50a8cd510e8fb00 ]
 
-Reworking of the catalog dropped the SmartDMA feature bit on the SM8150
-platform. Renable SmartDMA support on this SoC.
+Fix mclk0 & mclk1 parent map to use correct GPLL6 configuration and
+freq_tbl to use GPLL6 instead of GPLL0 so that they tick at 24 MHz.
 
-Fixes: 460c410f02e4 ("drm/msm/dpu: duplicate sdm845 catalog entries")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/650418/
-Link: https://lore.kernel.org/r/20250425-dpu-rework-vig-masks-v2-1-c71900687d08@oss.qualcomm.com
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Fixes: 1664014e4679 ("clk: qcom: gcc-msm8939: Add MSM8939 Generic Clock Controller")
+Suggested-by: Stephan Gerhold <stephan@gerhold.net>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Signed-off-by: Vincent Knecht <vincent.knecht@mailoo.org>
+Link: https://lore.kernel.org/r/20250414-gcc-msm8939-fixes-mclk-v2-resend2-v2-1-5ddcf572a6de@mailoo.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h   | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/clk/qcom/gcc-msm8939.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
-index 979527d98fbcb..8e23dbfeef354 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
-@@ -76,7 +76,7 @@ static const struct dpu_sspp_cfg sm8150_sspp[] = {
- 	{
- 		.name = "sspp_0", .id = SSPP_VIG0,
- 		.base = 0x4000, .len = 0x1f0,
--		.features = VIG_SDM845_MASK,
-+		.features = VIG_SDM845_MASK_SDMA,
- 		.sblk = &dpu_vig_sblk_qseed3_1_4,
- 		.xin_id = 0,
- 		.type = SSPP_TYPE_VIG,
-@@ -84,7 +84,7 @@ static const struct dpu_sspp_cfg sm8150_sspp[] = {
- 	}, {
- 		.name = "sspp_1", .id = SSPP_VIG1,
- 		.base = 0x6000, .len = 0x1f0,
--		.features = VIG_SDM845_MASK,
-+		.features = VIG_SDM845_MASK_SDMA,
- 		.sblk = &dpu_vig_sblk_qseed3_1_4,
- 		.xin_id = 4,
- 		.type = SSPP_TYPE_VIG,
-@@ -92,7 +92,7 @@ static const struct dpu_sspp_cfg sm8150_sspp[] = {
- 	}, {
- 		.name = "sspp_2", .id = SSPP_VIG2,
- 		.base = 0x8000, .len = 0x1f0,
--		.features = VIG_SDM845_MASK,
-+		.features = VIG_SDM845_MASK_SDMA,
- 		.sblk = &dpu_vig_sblk_qseed3_1_4,
- 		.xin_id = 8,
- 		.type = SSPP_TYPE_VIG,
-@@ -100,7 +100,7 @@ static const struct dpu_sspp_cfg sm8150_sspp[] = {
- 	}, {
- 		.name = "sspp_3", .id = SSPP_VIG3,
- 		.base = 0xa000, .len = 0x1f0,
--		.features = VIG_SDM845_MASK,
-+		.features = VIG_SDM845_MASK_SDMA,
- 		.sblk = &dpu_vig_sblk_qseed3_1_4,
- 		.xin_id = 12,
- 		.type = SSPP_TYPE_VIG,
-@@ -108,7 +108,7 @@ static const struct dpu_sspp_cfg sm8150_sspp[] = {
- 	}, {
- 		.name = "sspp_8", .id = SSPP_DMA0,
- 		.base = 0x24000, .len = 0x1f0,
--		.features = DMA_SDM845_MASK,
-+		.features = DMA_SDM845_MASK_SDMA,
- 		.sblk = &dpu_dma_sblk,
- 		.xin_id = 1,
- 		.type = SSPP_TYPE_DMA,
-@@ -116,7 +116,7 @@ static const struct dpu_sspp_cfg sm8150_sspp[] = {
- 	}, {
- 		.name = "sspp_9", .id = SSPP_DMA1,
- 		.base = 0x26000, .len = 0x1f0,
--		.features = DMA_SDM845_MASK,
-+		.features = DMA_SDM845_MASK_SDMA,
- 		.sblk = &dpu_dma_sblk,
- 		.xin_id = 5,
- 		.type = SSPP_TYPE_DMA,
-@@ -124,7 +124,7 @@ static const struct dpu_sspp_cfg sm8150_sspp[] = {
- 	}, {
- 		.name = "sspp_10", .id = SSPP_DMA2,
- 		.base = 0x28000, .len = 0x1f0,
--		.features = DMA_CURSOR_SDM845_MASK,
-+		.features = DMA_CURSOR_SDM845_MASK_SDMA,
- 		.sblk = &dpu_dma_sblk,
- 		.xin_id = 9,
- 		.type = SSPP_TYPE_DMA,
-@@ -132,7 +132,7 @@ static const struct dpu_sspp_cfg sm8150_sspp[] = {
- 	}, {
- 		.name = "sspp_11", .id = SSPP_DMA3,
- 		.base = 0x2a000, .len = 0x1f0,
--		.features = DMA_CURSOR_SDM845_MASK,
-+		.features = DMA_CURSOR_SDM845_MASK_SDMA,
- 		.sblk = &dpu_dma_sblk,
- 		.xin_id = 13,
- 		.type = SSPP_TYPE_DMA,
+diff --git a/drivers/clk/qcom/gcc-msm8939.c b/drivers/clk/qcom/gcc-msm8939.c
+index 7431c9a65044f..45193b3d714ba 100644
+--- a/drivers/clk/qcom/gcc-msm8939.c
++++ b/drivers/clk/qcom/gcc-msm8939.c
+@@ -432,7 +432,7 @@ static const struct parent_map gcc_xo_gpll0_gpll1a_gpll6_sleep_map[] = {
+ 	{ P_XO, 0 },
+ 	{ P_GPLL0, 1 },
+ 	{ P_GPLL1_AUX, 2 },
+-	{ P_GPLL6, 2 },
++	{ P_GPLL6, 3 },
+ 	{ P_SLEEP_CLK, 6 },
+ };
+ 
+@@ -1113,7 +1113,7 @@ static struct clk_rcg2 jpeg0_clk_src = {
+ };
+ 
+ static const struct freq_tbl ftbl_gcc_camss_mclk0_1_clk[] = {
+-	F(24000000, P_GPLL0, 1, 1, 45),
++	F(24000000, P_GPLL6, 1, 1, 45),
+ 	F(66670000, P_GPLL0, 12, 0, 0),
+ 	{ }
+ };
 -- 
 2.39.5
 
