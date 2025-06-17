@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2372D2E92BC;
-	Tue, 17 Jun 2025 15:57:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6BE42ED876;
+	Tue, 17 Jun 2025 15:57:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175873; cv=none; b=IM4rSSsKr05Oz7ShikxiOYi8O1HsiOgfC4qUuIqwpJqlaVua2geNwKtjBJk/syi+0O0TMia+J7ehKhmHN7IEp68wQDitbGS4vSkFPYsFm9IwX4nTPUjbMBlh96Kv5n5SRI7XorA1tvEf7uBgO9awyf9aw0PJCpnKTWtJhPJDlMQ=
+	t=1750175876; cv=none; b=nLmlQWA0b7xV1rAxL4PuTIUgepBqsnShBKzsnnmXX03iQYA+bGkW5ni2bQ42QNf6fBKm9I3OOAu+SRUhn2sx58olXu6HgLglniGeaTJ9gOmDtsM4Q6qqoHRGxnSBYeUTSNXHJ7fxjasLheSFFjvh9jVVnJMt9sk/8whSDLedG1U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175873; c=relaxed/simple;
-	bh=3ec4PhmvagJLuh0Z+DSPn76XYFD+nK6jO7O/2plels0=;
+	s=arc-20240116; t=1750175876; c=relaxed/simple;
+	bh=7aIWQpK92g6NhykeyRJBLUN6XUaY/mhBJ0buvNzZiwA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Oxv8B3F7Ug6PsnZ0uggUU9zDJL+b/HP8IRLW3P9Mxvhy3+AyncnVnZkA9M6w6BR9mwUMB5Sg0Ngzlv+kOMoR0Bhj42F74DdLg1QN2+iF4eEpCtQHpzhtnrX9IlfqwiAkMs0rLu4W1R534WDE8HiVgzh+xpbjnYNTG/noJR8lf74=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PMLffwXb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ergkiOrpAhbmqAUGuxwLUu8xx8qVyY0RTK71JiA7mi7DMB0MUuyc/Rzqwk/LbUwWSI6AmCx8avGD9/yoH9DrM3JJNJzKTyeixnjKRN9MdLLRbIqW3JQ0hY5k7TWqyix3rIfat0L7lM9ORNOKskcbxzS1TIZ6iUmaoMfP+9cVsjM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hUkUg8Ss; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PMLffwXb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88F4AC4CEE3;
-	Tue, 17 Jun 2025 15:57:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hUkUg8Ss"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C25FCC4CEF0;
+	Tue, 17 Jun 2025 15:57:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175873;
-	bh=3ec4PhmvagJLuh0Z+DSPn76XYFD+nK6jO7O/2plels0=;
+	s=korg; t=1750175876;
+	bh=7aIWQpK92g6NhykeyRJBLUN6XUaY/mhBJ0buvNzZiwA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PMLffwXbFj31QmjlAb5wqPES6xUIfjsG6s/EwrHXs0Ee2yiCvrKF2lXlt6b2WeVV+
-	 0dYkWIXFF/dTHQSRE5sfT1LUjwficvZtS3Sx5iY5mGfdbQfpo0p5durd6ghawRjP8u
-	 cZapuu7HBgBXPb4wqSjrMcVH6Y+4UBBRdR9ilk+g=
+	b=hUkUg8SsxPCzZPvCf3a0tRJMP7UgWD9KRiwpi2ENOMGrQN+RE/jLb5MCEaFbG1LjC
+	 GA7zA5SbYp+4x3nxIAXDR8fDz8aQsfmQNvH+rINf/FwaKi/stT2W74siEih6M4wL1l
+	 Sd5cyEhx40xtXqQrVVZronJjovzqkqQfOldcdsMU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samuel Reyes <zohrlaffz@gmail.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 171/512] wifi: rtw89: pci: enlarge retry times of RX tag to 1000
-Date: Tue, 17 Jun 2025 17:22:17 +0200
-Message-ID: <20250617152426.548185373@linuxfoundation.org>
+Subject: [PATCH 6.6 221/356] rtc: sh: assign correct interrupts with DT
+Date: Tue, 17 Jun 2025 17:25:36 +0200
+Message-ID: <20250617152347.100287277@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
+References: <20250617152338.212798615@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,46 +47,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ping-Ke Shih <pkshih@realtek.com>
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-[ Upstream commit dda27a47c036d981ec664ac57e044a21035ffe12 ]
+[ Upstream commit 8f2efdbc303fe7baa83843d3290dd6ea5ba3276c ]
 
-RX tag is sequence number to ensure RX DMA is complete. On platform
-Gigabyte X870 AORUS ELITE WIFI7, sometimes it needs longer retry times
-to complete RX DMA, or driver throws warnings and connection drops:
+The DT bindings for this driver define the interrupts in the order as
+they are numbered in the interrupt controller. The old platform_data,
+however, listed them in a different order. So, for DT based platforms,
+they are mixed up. Assign them specifically for DT, so we can keep the
+bindings stable. After the fix, 'rtctest' passes again on the Renesas
+Genmai board (RZ-A1 / R7S72100).
 
-  rtw89_8922ae 0000:07:00.0: failed to update 162 RXBD info: -11
-  rtw89_8922ae 0000:07:00.0: failed to update 163 RXBD info: -11
-  rtw89_8922ae 0000:07:00.0: failed to update 32 RXBD info: -11
-  rtw89_8922ae 0000:07:00.0: failed to release TX skbs
-
-Fixes: 0bc7d1d4e63c ("wifi: rtw89: pci: validate RX tag for RXQ and RPQ")
-Reported-by: Samuel Reyes <zohrlaffz@gmail.com>
-Closes: https://lore.kernel.org/linux-wireless/f4355539f3ac46bbaf9c586d059a8cbb@realtek.com/T/#t
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20250509013433.7573-1-pkshih@realtek.com
+Fixes: dab5aec64bf5 ("rtc: sh: add support for rza series")
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Link: https://lore.kernel.org/r/20250227134256.9167-11-wsa+renesas@sang-engineering.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw89/pci.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/rtc/rtc-sh.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/pci.c b/drivers/net/wireless/realtek/rtw89/pci.c
-index 0ac84f968994b..e203d3b2a8274 100644
---- a/drivers/net/wireless/realtek/rtw89/pci.c
-+++ b/drivers/net/wireless/realtek/rtw89/pci.c
-@@ -228,7 +228,7 @@ int rtw89_pci_sync_skb_for_device_and_validate_rx_info(struct rtw89_dev *rtwdev,
- 						       struct sk_buff *skb)
- {
- 	struct rtw89_pci_rx_info *rx_info = RTW89_PCI_RX_SKB_CB(skb);
--	int rx_tag_retry = 100;
-+	int rx_tag_retry = 1000;
- 	int ret;
+diff --git a/drivers/rtc/rtc-sh.c b/drivers/rtc/rtc-sh.c
+index cd146b5741431..341b1b776e1a3 100644
+--- a/drivers/rtc/rtc-sh.c
++++ b/drivers/rtc/rtc-sh.c
+@@ -485,9 +485,15 @@ static int __init sh_rtc_probe(struct platform_device *pdev)
+ 		return -ENOENT;
+ 	}
  
- 	do {
+-	rtc->periodic_irq = ret;
+-	rtc->carry_irq = platform_get_irq(pdev, 1);
+-	rtc->alarm_irq = platform_get_irq(pdev, 2);
++	if (!pdev->dev.of_node) {
++		rtc->periodic_irq = ret;
++		rtc->carry_irq = platform_get_irq(pdev, 1);
++		rtc->alarm_irq = platform_get_irq(pdev, 2);
++	} else {
++		rtc->alarm_irq = ret;
++		rtc->periodic_irq = platform_get_irq(pdev, 1);
++		rtc->carry_irq = platform_get_irq(pdev, 2);
++	}
+ 
+ 	res = platform_get_resource(pdev, IORESOURCE_IO, 0);
+ 	if (!res)
 -- 
 2.39.5
 
