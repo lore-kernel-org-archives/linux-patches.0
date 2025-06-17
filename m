@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19E5D2F94B2;
-	Tue, 17 Jun 2025 16:27:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D10638F54;
+	Tue, 17 Jun 2025 16:27:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177675; cv=none; b=WMucJjsX8h3ANdVOgUhPZeVgSpckD9oeHvSQwwaTL1gsdYBYiFUiOirBSpRr9T6qyjQUIeNh45hxjO3SA5TJewPgjYAtqQAX7AIfFnj/h0Cyk7uCZsXygbMh7EJNF9WBOtOlSHxZvObZKIUWheWF3cxpbEnhOOWVZ+mY87XYubg=
+	t=1750177678; cv=none; b=htpW/j7OMSgCSIS97bZiWTlBHyBbmRFjH6bItZMWl7d6cslbQl1IsCJmcJqupiGjvtibXjElLgethCj59i40NNlByloo+05RByKmGqh8GBVeBZSSiDanisfIpqzlrMT0yn6eGJGHQgMSqDEqtg7Ho3GHdKNaeeAzaaZrhyaX1Ok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177675; c=relaxed/simple;
-	bh=JcTJWUsMZ5AlyvopROO0akWxAksp2GbRm1Pi0vO0khA=;
+	s=arc-20240116; t=1750177678; c=relaxed/simple;
+	bh=MkUORlmyaeER9CkULd9gVuHblzY0pBxw1etjCopcrrI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VkVQ1itQWix1atgqO1ZA/fMk4sUuGDbZD0i1lJn1Gk6sa142Omz1VG8zaTHsrp3LZN64LlU/ME0s81k+rwjawk0SxEkBoWR1efDK69vEIcwbBaVnnUm4yYG25y0c60st+7Oknm4lm+oEHMr86GwPDv5Z2I+5fjNi9vH8pwDQpBU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fh4I7zFz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QnojV6fjrbZ0INtoWJyevoKdtKan6jhQ706gV54g4SnBvqOoDsQKF2Y3ujNXc0iry6GeiZRDyvnybAv0EF5lKF+nd/W6xpHXFM3neooy6QiAkYij41TDqcFEUq3GPagE1bJzRCKL1zNEwxrdOGUyvoCgxtOXgq6ueI4PIOcm4qc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0305Hm5S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fh4I7zFz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E39BC4CEE3;
-	Tue, 17 Jun 2025 16:27:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0305Hm5S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA987C4CEE3;
+	Tue, 17 Jun 2025 16:27:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177675;
-	bh=JcTJWUsMZ5AlyvopROO0akWxAksp2GbRm1Pi0vO0khA=;
+	s=korg; t=1750177678;
+	bh=MkUORlmyaeER9CkULd9gVuHblzY0pBxw1etjCopcrrI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fh4I7zFzn77P3P04egb3r767pk+Qk4k6+PtjgcoPVx4tIwT658oUxZ01HxeM1bUbw
-	 igGEUvjBwTXpvWyhCnfopVfJFDZzpPlQcaIy1xninY2P81v6fUicLj2KNlylJ1p3KO
-	 KrHZnEJeIVyUbwnCxA9LIHZBKsAdjH3kxM3ik38U=
+	b=0305Hm5SLv3DSPcksPN+sYEHFU4+M0sHBQGTZZ8Eclb8D9QH7B7zlPt/E2bYmOpOz
+	 jJuo3+DwIEZXnZpnM0YktW7kFlXaUCG0+m4SuRKj60maaDWCIVgLz7vHq/MEQr0RWN
+	 m5evEYjnvYLhlwCZyK6W8UPy0dKjVStVEppRVl+c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Jonas Gorski <jonas.gorski@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 344/780] arm64: dts: qcom: qcs8300: Partially revert "arm64: dts: qcom: qcs8300: add QCrypto nodes"
-Date: Tue, 17 Jun 2025 17:20:52 +0200
-Message-ID: <20250617152505.461857349@linuxfoundation.org>
+Subject: [PATCH 6.12 380/512] net: dsa: b53: allow RGMII for bcm63xx RGMII ports
+Date: Tue, 17 Jun 2025 17:25:46 +0200
+Message-ID: <20250617152434.989338835@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,57 +48,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Jonas Gorski <jonas.gorski@gmail.com>
 
-[ Upstream commit cdc117c40537c5babfa7f261360d5a98e434d59e ]
+[ Upstream commit 5ea0d42c1980e6d10e5cb56a78021db5bfcebaaf ]
 
-Partially revert commit a86d84409947 ("arm64: dts: qcom: qcs8300: add
-QCrypto nodes") by dropping the untested QCE device node.  Devicetree
-bindings test failures were reported on mailing list on 16th of January
-and after two weeks still no fixes:
+Add RGMII to supported interfaces for BCM63xx RGMII ports so they can be
+actually used in RGMII mode.
 
-  qcs8300-ride.dtb: crypto@1dfa000: compatible: 'oneOf' conditional failed, one must be fixed:
-    ...
-    'qcom,qcs8300-qce' is not one of ['qcom,ipq4019-qce', 'qcom,sm8150-qce']
+Without this, phylink will fail to configure them:
 
-Reported-by: Rob Herring <robh@kernel.org>
-Closes: https://lore.kernel.org/all/CAL_JsqL0HzzGXnCD+z4GASeXNsBxrdw8-qyfHj8S+C2ucK6EPQ@mail.gmail.com/
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250128115333.95021-2-krzysztof.kozlowski@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+[    3.580000] b53-switch 10700000.switch GbE3 (uninitialized): validation of rgmii with support 0000000,00000000,00000000,000062ff and advertisement 0000000,00000000,00000000,000062ff failed: -EINVAL
+[    3.600000] b53-switch 10700000.switch GbE3 (uninitialized): failed to connect to PHY: -EINVAL
+[    3.610000] b53-switch 10700000.switch GbE3 (uninitialized): error -22 setting up PHY for tree 0, switch 0, port 4
+
+Fixes: ce3bf94871f7 ("net: dsa: b53: add support for BCM63xx RGMIIs")
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Signed-off-by: Jonas Gorski <jonas.gorski@gmail.com>
+Link: https://patch.msgid.link/20250602193953.1010487-5-jonas.gorski@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/qcs8300.dtsi | 12 ------------
- 1 file changed, 12 deletions(-)
+ drivers/net/dsa/b53/b53_common.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/qcs8300.dtsi b/arch/arm64/boot/dts/qcom/qcs8300.dtsi
-index 4a057f7c0d9fa..13b1121cdf175 100644
---- a/arch/arm64/boot/dts/qcom/qcs8300.dtsi
-+++ b/arch/arm64/boot/dts/qcom/qcs8300.dtsi
-@@ -798,18 +798,6 @@
- 				 <&apps_smmu 0x481 0x00>;
- 		};
+diff --git a/drivers/net/dsa/b53/b53_common.c b/drivers/net/dsa/b53/b53_common.c
+index 2747a507e3ce9..a17a3083180b0 100644
+--- a/drivers/net/dsa/b53/b53_common.c
++++ b/drivers/net/dsa/b53/b53_common.c
+@@ -1441,6 +1441,10 @@ static void b53_phylink_get_caps(struct dsa_switch *ds, int port,
+ 	__set_bit(PHY_INTERFACE_MODE_MII, config->supported_interfaces);
+ 	__set_bit(PHY_INTERFACE_MODE_REVMII, config->supported_interfaces);
  
--		crypto: crypto@1dfa000 {
--			compatible = "qcom,qcs8300-qce", "qcom,qce";
--			reg = <0x0 0x01dfa000 0x0 0x6000>;
--			dmas = <&cryptobam 4>, <&cryptobam 5>;
--			dma-names = "rx", "tx";
--			iommus = <&apps_smmu 0x480 0x00>,
--				 <&apps_smmu 0x481 0x00>;
--			interconnects = <&aggre2_noc MASTER_CRYPTO_CORE0 QCOM_ICC_TAG_ALWAYS
--					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>;
--			interconnect-names = "memory";
--		};
--
- 		ice: crypto@1d88000 {
- 			compatible = "qcom,qcs8300-inline-crypto-engine",
- 				     "qcom,inline-crypto-engine";
++	/* BCM63xx RGMII ports support RGMII */
++	if (is63xx(dev) && in_range(port, B53_63XX_RGMII0, 4))
++		phy_interface_set_rgmii(config->supported_interfaces);
++
+ 	config->mac_capabilities = MAC_ASYM_PAUSE | MAC_SYM_PAUSE |
+ 		MAC_10 | MAC_100;
+ 
 -- 
 2.39.5
 
