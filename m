@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE8D02DFF2A;
-	Tue, 17 Jun 2025 15:47:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 252BA212B3B;
+	Tue, 17 Jun 2025 15:47:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175268; cv=none; b=sS58SHAYYs0kPFIztnxi7s/BvKl32/499wLInU7RrtS9SHLS9VY7jQ8Ph6dWBAzrf34PpkGxTMcPZ2tJyNpG4xtOR9TjM7HynMClteR5L9qDTG1SQdisTmyPCM8EgfNtE/CTGw3rqm/DMj1+gEent067377Ar+t1h3iFVeK7F1I=
+	t=1750175271; cv=none; b=sHqPkB9m9QM8n1qW04NdSQrr6IP41U2wHovyMS+h6+UptI3Te7kqSKaVdPnSVDQ+X9NpA1Q1XizAHs1NNJwF3ltuqg2KgJnHER4kR7fBZet8cRUM7Nias5mO4NX7bHoNducvNbomMAXKRJoEpQ89VDz6/BENiafZr+wwlCbxLiQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175268; c=relaxed/simple;
-	bh=WQObP/BVuVZ0nKgakB8RkZok6WHADFyuLJmGvqztvs8=;
+	s=arc-20240116; t=1750175271; c=relaxed/simple;
+	bh=9rOow5YR01XEgjE7sYd/KU1U0PLZfqcgcSomdvBG8tg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ss7hhhlqStpsEYA1thKoflA+2o3NcnO45NMGP6giHfIxoCSLis273XvPdwa1snWl3FPqzBolB5GRmeQi3P3bEYLP+V9mT1wlPl1V9nzMurKFrguLM88bsM6s4y73hrWke1eKyNFum0UZJCJ7QJ4Dc9Jtk1KrLV0jfxhno5Bknmg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1saB+E0H; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CKSjoXnHlZCq7XUXA8yq9ZPp7hSJ4Wzplo1gGKHrKqTJ8UIZxMu5k3zGUOqNT/A4+D0SgriP3tBDS1d14lSVjsRMnpDq6kuDJNoWQfZBsLW/Ko4+wbbh0CBJV86deyNRLz0JiWdTpEVZrTQt3UKrVrIpYHAASbcn234ECqFry2U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EqAUbWv3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1saB+E0H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68CE2C4CEE3;
-	Tue, 17 Jun 2025 15:47:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EqAUbWv3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84482C4CEE3;
+	Tue, 17 Jun 2025 15:47:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175267;
-	bh=WQObP/BVuVZ0nKgakB8RkZok6WHADFyuLJmGvqztvs8=;
+	s=korg; t=1750175271;
+	bh=9rOow5YR01XEgjE7sYd/KU1U0PLZfqcgcSomdvBG8tg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1saB+E0HlMqPjSvaDzu4XbDfp+JPW2Shb+Njp2nGk7EcfSChDPaIE8JvJ7se4QLea
-	 13vC86lY/Rt7RBOnSYOuo56BBEeMv7YvG33dV13z9IRJhpx14IVlUyocf9suUAtYfa
-	 w06UuiTzZagHcQ9xwUuT03W+3Be7yaYIFL1/ABtI=
+	b=EqAUbWv3IT9W6XnulSLMsL1Qos3ZExGcwsQbwa6KDamaDksOCg6YDIAEIZun8UnGc
+	 w1KRY3nB72cuJtP4ftud0USOP/vQtFrLkzqPCt1BJ/LRevsepFEBEfQf/S4PFNzvcK
+	 aXLNgfESfI2l7JIBVjOf83y81Hy750bknNNbohTY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dzmitry Sankouski <dsankouski@gmail.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Saket Kumar Bhaskar <skb99@linux.ibm.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 159/356] arm64: dts: qcom: sdm845-starqltechn: refactor node order
-Date: Tue, 17 Jun 2025 17:24:34 +0200
-Message-ID: <20250617152344.624112934@linuxfoundation.org>
+Subject: [PATCH 6.12 110/512] selftests/bpf: Fix bpf_nf selftest failure
+Date: Tue, 17 Jun 2025 17:21:16 +0200
+Message-ID: <20250617152424.048315608@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-References: <20250617152338.212798615@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,37 +47,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dzmitry Sankouski <dsankouski@gmail.com>
+From: Saket Kumar Bhaskar <skb99@linux.ibm.com>
 
-[ Upstream commit cba1dd3d851ebc1b6c5ae4000208a9753320694b ]
+[ Upstream commit 967e8def1100cb4b08c28a54d27ce69563fdf281 ]
 
-Fixes: d711b22eee55 ("arm64: dts: qcom: starqltechn: add initial device tree for starqltechn")
-Signed-off-by: Dzmitry Sankouski <dsankouski@gmail.com>
-Link: https://lore.kernel.org/r/20250225-starqltechn_integration_upstream-v9-4-a5d80375cb66@gmail.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+For systems with missing iptables-legacy tool this selftest fails.
+
+Add check to find if iptables-legacy tool is available and skip the
+test if the tool is missing.
+
+Fixes: de9c8d848d90 ("selftests/bpf: S/iptables/iptables-legacy/ in the bpf_nf and xdp_synproxy test")
+Signed-off-by: Saket Kumar Bhaskar <skb99@linux.ibm.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20250409095633.33653-1-skb99@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/bpf/prog_tests/bpf_nf.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts b/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
-index f3f2b25883d81..8a0d63bd594b3 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
-@@ -382,8 +382,8 @@
- };
+diff --git a/tools/testing/selftests/bpf/prog_tests/bpf_nf.c b/tools/testing/selftests/bpf/prog_tests/bpf_nf.c
+index a4a1f93878d40..fad98f01e2c06 100644
+--- a/tools/testing/selftests/bpf/prog_tests/bpf_nf.c
++++ b/tools/testing/selftests/bpf/prog_tests/bpf_nf.c
+@@ -63,6 +63,12 @@ static void test_bpf_nf_ct(int mode)
+ 		.repeat = 1,
+ 	);
  
- &sdhc_2 {
--	pinctrl-names = "default";
- 	pinctrl-0 = <&sdc2_clk_state &sdc2_cmd_state &sdc2_data_state &sd_card_det_n_state>;
-+	pinctrl-names = "default";
- 	cd-gpios = <&tlmm 126 GPIO_ACTIVE_LOW>;
- 	vmmc-supply = <&vreg_l21a_2p95>;
- 	vqmmc-supply = <&vddpx_2>;
++	if (SYS_NOFAIL("iptables-legacy --version")) {
++		fprintf(stdout, "Missing required iptables-legacy tool\n");
++		test__skip();
++		return;
++	}
++
+ 	skel = test_bpf_nf__open_and_load();
+ 	if (!ASSERT_OK_PTR(skel, "test_bpf_nf__open_and_load"))
+ 		return;
 -- 
 2.39.5
 
