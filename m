@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 495D62FA643;
-	Tue, 17 Jun 2025 16:54:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F2332FA643;
+	Tue, 17 Jun 2025 16:54:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750179248; cv=none; b=mdaJs3Eb2obpAZhWS3c8VNr0zLPwnNQyursy2dodhpc+4GEtKvDguE1/MHDx/b8D0K3lvHSmTauEPz/FuFAmvO6ySvOu5t6QxaabBnrDTceL3+TyFoUUt+xwfX3wXRm+76rAU3pTvg0KgSTEkx9FhBdYut+PRCxAY69d0G525xQ=
+	t=1750179251; cv=none; b=bVmJNwkSh8qQl/3JHaE2Aq46jn8O78kDTnBJBlZ6dNT93MEFXERxjQ3saH9Eqwx3wos3HmlV7l3I1NIkAXNwktb2unQDGcNYTlzMAmW1rNIiDXpiVDeK4U1p3y5ZKfvP1v+WWFvTOQfMev+QQSDwoOKU+cZO8DoqRMd7VymQZ/E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750179248; c=relaxed/simple;
-	bh=hkIYnbnui01PL3nJZX7FkqXIqiUlDk1Ak0KGjM+PuKk=;
+	s=arc-20240116; t=1750179251; c=relaxed/simple;
+	bh=ohNXGaoJG3Ou+8nZL/K9dUyc4L2Pf5Ur+bdzGPwMVR0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YrQidaLVDnYHqsbjXp3SR+0gEmaaURYhSBu14Sddm0PJqEz9wTL/fklXFg7yIhwZmRc6h75hiInWyJ1wrLSb5sTQO5vquqapv439jm9q1rjkXNs4JfwdhUHtfRYmXqOV1b7CCplSXz6K+VQPCnhN1Lk4yV7GlCg/YyWtz6+XnaI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xsv7f/8F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bmZ3yXtMAZkmyXXBo3v81Tw1RHkzx/qUvkPTNm4UO75cq26PTKLmVu8bCHi7l+343DZHJXbg7BpU46UR570jpY8g6YzlFWwk38K+L3D+YnPiK2Qd1lbtIEx2r/kD7+6GxjKFkLWQVA7pIL4QLFTFBrtzwKT5ozVN1NWE3QkvEak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1WqBHaKe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xsv7f/8F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA7DDC4CEE3;
-	Tue, 17 Jun 2025 16:54:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1WqBHaKe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1AACC4CEF0;
+	Tue, 17 Jun 2025 16:54:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750179248;
-	bh=hkIYnbnui01PL3nJZX7FkqXIqiUlDk1Ak0KGjM+PuKk=;
+	s=korg; t=1750179251;
+	bh=ohNXGaoJG3Ou+8nZL/K9dUyc4L2Pf5Ur+bdzGPwMVR0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xsv7f/8FDyrLwzzeKibjrX4q51SmFhh24jbV+xmXCz3Bshym7x4IQ53eqoQnnwgIc
-	 9cCTa03zE6WuwmTrThelT0jPKY/+g4Qb2xNhka0cyPKwlXFFx4tAPYpfc7UqFwM7Yn
-	 al7WoE7IKVEIk7TxB8LidBKE9C1FZezS/BtO7sJM=
+	b=1WqBHaKe1hkqyQ3/L8edJkt7OtArPWWoOQlgq6exrePkWx/X1FUEiMmU5OV6uIkmk
+	 n6x1KXwX28VhH64B4cKawNlW8Ts1htY3slSj9mQ0CczNuSlixHwa31m9B2SXoQobSZ
+	 +d6EJ+hOTJCFivUzapGisY5VltKiftpv6Wb4LdAU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen-Yu Tsai <wens@csie.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Robert Malz <robert.malz@canonical.com>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 693/780] pinctrl: sunxi: dt: Consider pin base when calculating bank number from pin
-Date: Tue, 17 Jun 2025 17:26:41 +0200
-Message-ID: <20250617152519.716982031@linuxfoundation.org>
+Subject: [PATCH 6.15 694/780] i40e: return false from i40e_reset_vf if reset is in progress
+Date: Tue, 17 Jun 2025 17:26:42 +0200
+Message-ID: <20250617152519.756061318@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
 References: <20250617152451.485330293@linuxfoundation.org>
@@ -51,66 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen-Yu Tsai <wens@csie.org>
+From: Robert Malz <robert.malz@canonical.com>
 
-[ Upstream commit 5558f27a58459a4038ebb23bcb5bd40c1e345c57 ]
+[ Upstream commit a2c90d63b71223d69a813333c1abf4fdacddbbe5 ]
 
-In prepare_function_table() when the pinctrl function table IRQ entries
-are generated, the pin bank is calculated from the absolute pin number;
-however the IRQ bank mux array is indexed from the first pin bank of the
-controller. For R_PIO controllers, this means the absolute pin bank is
-way off from the relative pin bank used for array indexing.
+The function i40e_vc_reset_vf attempts, up to 20 times, to handle a
+VF reset request, using the return value of i40e_reset_vf as an indicator
+of whether the reset was successfully triggered. Currently, i40e_reset_vf
+always returns true, which causes new reset requests to be ignored if a
+different VF reset is already in progress.
 
-Correct this by taking into account the pin base of the controller.
+This patch updates the return value of i40e_reset_vf to reflect when
+another VF reset is in progress, allowing the caller to properly use
+the retry mechanism.
 
-Fixes: f5e2cd34b12f ("pinctrl: sunxi: allow reading mux values from DT")
-Signed-off-by: Chen-Yu Tsai <wens@csie.org>
-Link: https://lore.kernel.org/20250607135203.2085226-1-wens@kernel.org
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Fixes: 52424f974bc5 ("i40e: Fix VF hang when reset is triggered on another VF")
+Signed-off-by: Robert Malz <robert.malz@canonical.com>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/sunxi/pinctrl-sunxi-dt.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/pinctrl/sunxi/pinctrl-sunxi-dt.c b/drivers/pinctrl/sunxi/pinctrl-sunxi-dt.c
-index 1833078f68776..4e34b0cd3b73a 100644
---- a/drivers/pinctrl/sunxi/pinctrl-sunxi-dt.c
-+++ b/drivers/pinctrl/sunxi/pinctrl-sunxi-dt.c
-@@ -143,7 +143,7 @@ static struct sunxi_desc_pin *init_pins_table(struct device *dev,
-  */
- static int prepare_function_table(struct device *dev, struct device_node *pnode,
- 				  struct sunxi_desc_pin *pins, int npins,
--				  const u8 *irq_bank_muxes)
-+				  unsigned pin_base, const u8 *irq_bank_muxes)
+diff --git a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
+index 1120f8e4bb670..22d5b1ec2289f 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
+@@ -1546,8 +1546,8 @@ static void i40e_cleanup_reset_vf(struct i40e_vf *vf)
+  * @vf: pointer to the VF structure
+  * @flr: VFLR was issued or not
+  *
+- * Returns true if the VF is in reset, resets successfully, or resets
+- * are disabled and false otherwise.
++ * Return: True if reset was performed successfully or if resets are disabled.
++ * False if reset is already in progress.
+  **/
+ bool i40e_reset_vf(struct i40e_vf *vf, bool flr)
  {
- 	struct device_node *node;
- 	struct property *prop;
-@@ -166,7 +166,7 @@ static int prepare_function_table(struct device *dev, struct device_node *pnode,
- 	 */
- 	for (i = 0; i < npins; i++) {
- 		struct sunxi_desc_pin *pin = &pins[i];
--		int bank = pin->pin.number / PINS_PER_BANK;
-+		int bank = (pin->pin.number - pin_base) / PINS_PER_BANK;
+@@ -1566,7 +1566,7 @@ bool i40e_reset_vf(struct i40e_vf *vf, bool flr)
  
- 		if (irq_bank_muxes[bank]) {
- 			pin->variant++;
-@@ -211,7 +211,7 @@ static int prepare_function_table(struct device *dev, struct device_node *pnode,
- 	last_bank = 0;
- 	for (i = 0; i < npins; i++) {
- 		struct sunxi_desc_pin *pin = &pins[i];
--		int bank = pin->pin.number / PINS_PER_BANK;
-+		int bank = (pin->pin.number - pin_base) / PINS_PER_BANK;
- 		int lastfunc = pin->variant + 1;
- 		int irq_mux = irq_bank_muxes[bank];
+ 	/* If VF is being reset already we don't need to continue. */
+ 	if (test_and_set_bit(I40E_VF_STATE_RESETTING, &vf->vf_states))
+-		return true;
++		return false;
  
-@@ -353,7 +353,7 @@ int sunxi_pinctrl_dt_table_init(struct platform_device *pdev,
- 		return PTR_ERR(pins);
- 
- 	ret = prepare_function_table(&pdev->dev, pnode, pins, desc->npins,
--				     irq_bank_muxes);
-+				     desc->pin_base, irq_bank_muxes);
- 	if (ret)
- 		return ret;
+ 	i40e_trigger_vf_reset(vf, flr);
  
 -- 
 2.39.5
