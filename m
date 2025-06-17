@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 472762FA63F;
-	Tue, 17 Jun 2025 16:54:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 495D62FA643;
+	Tue, 17 Jun 2025 16:54:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750179245; cv=none; b=XHjemx+KYfiDN2PsKrsK/jEC/m4bfFjxjpqNKtyJhOFd8z2zIXGTqKEeViKpKxiXBHshKI/e7Jok7YM+PskOUPB7UDx5LxEKZ0GbQlscHHIRSrI8G682Un7+l2bdCkOcyKug/D19P/K+pWw8i3TR5pMHAXe7LlXXt5UlAwgAcBk=
+	t=1750179248; cv=none; b=mdaJs3Eb2obpAZhWS3c8VNr0zLPwnNQyursy2dodhpc+4GEtKvDguE1/MHDx/b8D0K3lvHSmTauEPz/FuFAmvO6ySvOu5t6QxaabBnrDTceL3+TyFoUUt+xwfX3wXRm+76rAU3pTvg0KgSTEkx9FhBdYut+PRCxAY69d0G525xQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750179245; c=relaxed/simple;
-	bh=c6Wfu8UdQSPId0RWfTfSDoJu16dYEeM/r3/a+KSlvkI=;
+	s=arc-20240116; t=1750179248; c=relaxed/simple;
+	bh=hkIYnbnui01PL3nJZX7FkqXIqiUlDk1Ak0KGjM+PuKk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z4ADDuyBlQYr+1+gpRR3CtxGBuAeUu0RoqtvxCwUGDTzBvkU3WchLQQI0rHP2wIVelgn25TjNRvC47aDytbz6+h2c3cp3uyNTy5dsN2nnfeiZOEhpWxHyPAw/RPS6wCWyvagtgJkNsGPSljMRCGQi4NEzWF7q30NKdZIuzcDpps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DKS+f07D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YrQidaLVDnYHqsbjXp3SR+0gEmaaURYhSBu14Sddm0PJqEz9wTL/fklXFg7yIhwZmRc6h75hiInWyJ1wrLSb5sTQO5vquqapv439jm9q1rjkXNs4JfwdhUHtfRYmXqOV1b7CCplSXz6K+VQPCnhN1Lk4yV7GlCg/YyWtz6+XnaI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xsv7f/8F; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DKS+f07D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE27BC4CEE3;
-	Tue, 17 Jun 2025 16:54:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xsv7f/8F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA7DDC4CEE3;
+	Tue, 17 Jun 2025 16:54:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750179245;
-	bh=c6Wfu8UdQSPId0RWfTfSDoJu16dYEeM/r3/a+KSlvkI=;
+	s=korg; t=1750179248;
+	bh=hkIYnbnui01PL3nJZX7FkqXIqiUlDk1Ak0KGjM+PuKk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DKS+f07D5/8mKKg2nHEsjYG6k7Sp1RWywq4Q/PcO/jz/1JySIdKVgOafoZnBAO9/Z
-	 +YlU6UnhWd5s8NeIflLlBBC+YhpZZs7ePgy19LyqHHsN6lziIA6tEUCy8jr2C+lI2t
-	 brJy1Kg+4wl/8EzQAOXBlTghpGnJ4tS5v7vLgBOQ=
+	b=xsv7f/8FDyrLwzzeKibjrX4q51SmFhh24jbV+xmXCz3Bshym7x4IQ53eqoQnnwgIc
+	 9cCTa03zE6WuwmTrThelT0jPKY/+g4Qb2xNhka0cyPKwlXFFx4tAPYpfc7UqFwM7Yn
+	 al7WoE7IKVEIk7TxB8LidBKE9C1FZezS/BtO7sJM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Hewitt <christianshewitt@gmail.com>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Chen-Yu Tsai <wens@csie.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 692/780] drm/meson: fix more rounding issues with 59.94Hz modes
-Date: Tue, 17 Jun 2025 17:26:40 +0200
-Message-ID: <20250617152519.669636281@linuxfoundation.org>
+Subject: [PATCH 6.15 693/780] pinctrl: sunxi: dt: Consider pin base when calculating bank number from pin
+Date: Tue, 17 Jun 2025 17:26:41 +0200
+Message-ID: <20250617152519.716982031@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
 References: <20250617152451.485330293@linuxfoundation.org>
@@ -52,132 +51,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+From: Chen-Yu Tsai <wens@csie.org>
 
-[ Upstream commit 0cee6c4d3518b2e757aedae78771f17149f57653 ]
+[ Upstream commit 5558f27a58459a4038ebb23bcb5bd40c1e345c57 ]
 
-Commit 1017560164b6 ("drm/meson: use unsigned long long / Hz for
-frequency types") attempts to resolve video playback using 59.94Hz.
- using YUV420 by changing the clock calculation to use
-Hz instead of kHz (thus yielding more precision).
+In prepare_function_table() when the pinctrl function table IRQ entries
+are generated, the pin bank is calculated from the absolute pin number;
+however the IRQ bank mux array is indexed from the first pin bank of the
+controller. For R_PIO controllers, this means the absolute pin bank is
+way off from the relative pin bank used for array indexing.
 
-The basic calculation itself is correct, however the comparisions in
-meson_vclk_vic_supported_freq() and meson_vclk_setup() don't work
-anymore for 59.94Hz modes (using the freq * 1000 / 1001 logic). For
-example, drm/edid specifies a 593407kHz clock for 3840x2160@59.94Hz.
-With the mentioend commit we convert this to Hz. Then meson_vclk
-tries to find a matchig "params" entry (as the clock setup code
-currently only supports specific frequencies) by taking the venc_freq
-from the params and calculating the "alt frequency" (used for the
-59.94Hz modes) from it, which is:
-  (594000000Hz * 1000) / 1001 = 593406593Hz
+Correct this by taking into account the pin base of the controller.
 
-Similar calculation is applied to the phy_freq (TMDS clock), which is 10
-times the pixel clock.
-
-Implement a new meson_vclk_freqs_are_matching_param() function whose
-purpose is to compare if the requested and calculated frequencies. They
-may not match exactly (for the reasons mentioned above). Allow the
-clocks to deviate slightly to make the 59.94Hz modes again.
-
-Fixes: 1017560164b6 ("drm/meson: use unsigned long long / Hz for frequency types")
-Reported-by: Christian Hewitt <christianshewitt@gmail.com>
-Signed-off-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/20250609202751.962208-1-martin.blumenstingl@googlemail.com
+Fixes: f5e2cd34b12f ("pinctrl: sunxi: allow reading mux values from DT")
+Signed-off-by: Chen-Yu Tsai <wens@csie.org>
+Link: https://lore.kernel.org/20250607135203.2085226-1-wens@kernel.org
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/meson/meson_vclk.c | 55 ++++++++++++++++++------------
- 1 file changed, 34 insertions(+), 21 deletions(-)
+ drivers/pinctrl/sunxi/pinctrl-sunxi-dt.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/meson/meson_vclk.c b/drivers/gpu/drm/meson/meson_vclk.c
-index c4123bb958e4c..dfe0c28a0f054 100644
---- a/drivers/gpu/drm/meson/meson_vclk.c
-+++ b/drivers/gpu/drm/meson/meson_vclk.c
-@@ -110,10 +110,7 @@
- #define HDMI_PLL_LOCK		BIT(31)
- #define HDMI_PLL_LOCK_G12A	(3 << 30)
+diff --git a/drivers/pinctrl/sunxi/pinctrl-sunxi-dt.c b/drivers/pinctrl/sunxi/pinctrl-sunxi-dt.c
+index 1833078f68776..4e34b0cd3b73a 100644
+--- a/drivers/pinctrl/sunxi/pinctrl-sunxi-dt.c
++++ b/drivers/pinctrl/sunxi/pinctrl-sunxi-dt.c
+@@ -143,7 +143,7 @@ static struct sunxi_desc_pin *init_pins_table(struct device *dev,
+  */
+ static int prepare_function_table(struct device *dev, struct device_node *pnode,
+ 				  struct sunxi_desc_pin *pins, int npins,
+-				  const u8 *irq_bank_muxes)
++				  unsigned pin_base, const u8 *irq_bank_muxes)
+ {
+ 	struct device_node *node;
+ 	struct property *prop;
+@@ -166,7 +166,7 @@ static int prepare_function_table(struct device *dev, struct device_node *pnode,
+ 	 */
+ 	for (i = 0; i < npins; i++) {
+ 		struct sunxi_desc_pin *pin = &pins[i];
+-		int bank = pin->pin.number / PINS_PER_BANK;
++		int bank = (pin->pin.number - pin_base) / PINS_PER_BANK;
  
--#define PIXEL_FREQ_1000_1001(_freq)	\
--	DIV_ROUND_CLOSEST_ULL((_freq) * 1000ULL, 1001ULL)
--#define PHY_FREQ_1000_1001(_freq)	\
--	(PIXEL_FREQ_1000_1001(DIV_ROUND_DOWN_ULL(_freq, 10ULL)) * 10)
-+#define FREQ_1000_1001(_freq)	DIV_ROUND_CLOSEST_ULL((_freq) * 1000ULL, 1001ULL)
+ 		if (irq_bank_muxes[bank]) {
+ 			pin->variant++;
+@@ -211,7 +211,7 @@ static int prepare_function_table(struct device *dev, struct device_node *pnode,
+ 	last_bank = 0;
+ 	for (i = 0; i < npins; i++) {
+ 		struct sunxi_desc_pin *pin = &pins[i];
+-		int bank = pin->pin.number / PINS_PER_BANK;
++		int bank = (pin->pin.number - pin_base) / PINS_PER_BANK;
+ 		int lastfunc = pin->variant + 1;
+ 		int irq_mux = irq_bank_muxes[bank];
  
- /* VID PLL Dividers */
- enum {
-@@ -772,6 +769,36 @@ static void meson_hdmi_pll_generic_set(struct meson_drm *priv,
- 		  pll_freq);
- }
+@@ -353,7 +353,7 @@ int sunxi_pinctrl_dt_table_init(struct platform_device *pdev,
+ 		return PTR_ERR(pins);
  
-+static bool meson_vclk_freqs_are_matching_param(unsigned int idx,
-+						unsigned long long phy_freq,
-+						unsigned long long vclk_freq)
-+{
-+	DRM_DEBUG_DRIVER("i = %d vclk_freq = %lluHz alt = %lluHz\n",
-+			 idx, params[idx].vclk_freq,
-+			 FREQ_1000_1001(params[idx].vclk_freq));
-+	DRM_DEBUG_DRIVER("i = %d phy_freq = %lluHz alt = %lluHz\n",
-+			 idx, params[idx].phy_freq,
-+			 FREQ_1000_1001(params[idx].phy_freq));
-+
-+	/* Match strict frequency */
-+	if (phy_freq == params[idx].phy_freq &&
-+	    vclk_freq == params[idx].vclk_freq)
-+		return true;
-+
-+	/* Match 1000/1001 variant: vclk deviation has to be less than 1kHz
-+	 * (drm EDID is defined in 1kHz steps, so everything smaller must be
-+	 * rounding error) and the PHY freq deviation has to be less than
-+	 * 10kHz (as the TMDS clock is 10 times the pixel clock, so anything
-+	 * smaller must be rounding error as well).
-+	 */
-+	if (abs(vclk_freq - FREQ_1000_1001(params[idx].vclk_freq)) < 1000 &&
-+	    abs(phy_freq - FREQ_1000_1001(params[idx].phy_freq)) < 10000)
-+		return true;
-+
-+	/* no match */
-+	return false;
-+}
-+
- enum drm_mode_status
- meson_vclk_vic_supported_freq(struct meson_drm *priv,
- 			      unsigned long long phy_freq,
-@@ -790,19 +817,7 @@ meson_vclk_vic_supported_freq(struct meson_drm *priv,
- 	}
+ 	ret = prepare_function_table(&pdev->dev, pnode, pins, desc->npins,
+-				     irq_bank_muxes);
++				     desc->pin_base, irq_bank_muxes);
+ 	if (ret)
+ 		return ret;
  
- 	for (i = 0 ; params[i].pixel_freq ; ++i) {
--		DRM_DEBUG_DRIVER("i = %d vclk_freq = %lluHz alt = %lluHz\n",
--				 i, params[i].vclk_freq,
--				 PIXEL_FREQ_1000_1001(params[i].vclk_freq));
--		DRM_DEBUG_DRIVER("i = %d phy_freq = %lluHz alt = %lluHz\n",
--				 i, params[i].phy_freq,
--				 PHY_FREQ_1000_1001(params[i].phy_freq));
--		/* Match strict frequency */
--		if (phy_freq == params[i].phy_freq &&
--		    vclk_freq == params[i].vclk_freq)
--			return MODE_OK;
--		/* Match 1000/1001 variant */
--		if (phy_freq == PHY_FREQ_1000_1001(params[i].phy_freq) &&
--		    vclk_freq == PIXEL_FREQ_1000_1001(params[i].vclk_freq))
-+		if (meson_vclk_freqs_are_matching_param(i, phy_freq, vclk_freq))
- 			return MODE_OK;
- 	}
- 
-@@ -1075,10 +1090,8 @@ void meson_vclk_setup(struct meson_drm *priv, unsigned int target,
- 	}
- 
- 	for (freq = 0 ; params[freq].pixel_freq ; ++freq) {
--		if ((phy_freq == params[freq].phy_freq ||
--		     phy_freq == PHY_FREQ_1000_1001(params[freq].phy_freq)) &&
--		    (vclk_freq == params[freq].vclk_freq ||
--		     vclk_freq == PIXEL_FREQ_1000_1001(params[freq].vclk_freq))) {
-+		if (meson_vclk_freqs_are_matching_param(freq, phy_freq,
-+							vclk_freq)) {
- 			if (vclk_freq != params[freq].vclk_freq)
- 				vic_alternate_clock = true;
- 			else
 -- 
 2.39.5
 
