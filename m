@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DE1B2F430A;
-	Tue, 17 Jun 2025 16:28:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A20291FBEA8;
+	Tue, 17 Jun 2025 16:28:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177699; cv=none; b=fTouItv/zCphRSnFVtMiN/4IbTYd2ri2HV+R5+I5l9EHAmxBX5GyYInjneaHI8/yXyfqVn4s1PFR+qEK4r3jKTgkPwQiUcQVqxrc1Quu4xVOWf+nErOdeyyTd4lBmJYi+JY9XK/iY2bbexl5PcjzLXBe8vrpcIWqB2xdjlgaVjU=
+	t=1750177701; cv=none; b=rGAApeGx4e7EGwLWYlKPOetKKlpkkHWOyCvQvJrKDLRvx1NqnAE4wgRI9ggzZTOaUR4q8tt/5k1JkpmHpN41noVUHV6vDnucT9OBnsnajsmONFn5YwFWFF5fIHTRzeFtgv5gQMRjhTQhufHYHg3UIqQ7Y+9nN9b8TbVGyc0hE4E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177699; c=relaxed/simple;
-	bh=nNUa67koNvlEFW+chlbZByfJovpOVvbxbOgFfgaL2Sg=;
+	s=arc-20240116; t=1750177701; c=relaxed/simple;
+	bh=EsQKEqiBOW+hhuZFzCevMeQaiNdibymBJyngZ3hgNuE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iuZrDpLH9MZnGEUkb7rUQbQ0LSXYa2ssGc95Q70eFxr5vNpiAuPhWURn9AJ2G3ucbccObSmtLrXSQHYuMvcungpfjTnaOJIIfhujcesEjkADhTyTu13ZjUeefftDCHcoIe3S7uRhd87dUyyhphUhHOLA9kIChBEoWwc+aEFsQwQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r2h+cm4C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X6Erek82vn2aF7H0W6oP+PgPKE8vRao+v7Qh4oqnm2PtnnmRBGwWLNuOPY4HZ8Jvafwb7ZLbFjNz2QMG4lGV1AW4NPICcgpmmUEJiM2x4Qzlo4s8zrnDOMvNkTEnxdK+Oc2prEZK6wyX21NXRdQSMHTHKZQdyC/Y9B5lzKm9GBQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0CFwjvUe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r2h+cm4C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F533C4CEF1;
-	Tue, 17 Jun 2025 16:28:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0CFwjvUe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2A44C4CEE3;
+	Tue, 17 Jun 2025 16:28:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177697;
-	bh=nNUa67koNvlEFW+chlbZByfJovpOVvbxbOgFfgaL2Sg=;
+	s=korg; t=1750177701;
+	bh=EsQKEqiBOW+hhuZFzCevMeQaiNdibymBJyngZ3hgNuE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r2h+cm4CLhwwDl6MUfAcYvizm6HVWp5weoOkJGkk5Ottp0OFSZsgjJKN0c5B4RZJr
-	 V0UI+Sysgo26g0btM4CWjRYgbgZ3yRxEWSzphE7yxUicOTYMERyBBigqGT8DLKuEwF
-	 bh4eyA0TbHihOsasvsEMgB1aUO5eAZPXR+fIg6fI=
+	b=0CFwjvUephXQ5FzpPUJgkUwBOO8bets5XV+iUCtIHhd14Z4w9mmv/1SJmyuqe3EnK
+	 X5KKEYQtKzaizjn2zfkjBev/LRP6oAcjxo3dQ7FUt96k7ffUf/xIHdM3x7pnX6/YOv
+	 JHV4w2PaKedX0bW5sKMVaKXXGJ6wYy4nbhTtJQ1c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniele Palmas <dnlplm@gmail.com>,
-	Loic Poulain <loic.poulain@oss.qualcomm.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 383/512] net: wwan: mhi_wwan_mbim: use correct mux_id for multiplexing
-Date: Tue, 17 Jun 2025 17:25:49 +0200
-Message-ID: <20250617152435.107280956@linuxfoundation.org>
+Subject: [PATCH 6.15 348/780] arm64: dts: qcom: x1e80100-romulus: Keep L12B and L15B always on
+Date: Tue, 17 Jun 2025 17:20:56 +0200
+Message-ID: <20250617152505.628789030@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,71 +48,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Daniele Palmas <dnlplm@gmail.com>
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-[ Upstream commit 501fe52aa908c96f2c9b8d54767938a1a5960354 ]
+[ Upstream commit 0783c8b3c06b9cf16b5108d558e2faffb8c533b7 ]
 
-Recent Qualcomm chipsets like SDX72/75 require MBIM sessionId mapping
-to muxId in the range (0x70-0x8F) for the PCIe tethered use.
+These regulators power some electronic components onboard. They're
+most likely kept online by other pieces of firmware, but you can never
+be sure enough.
 
-This has been partially addressed by the referenced commit, mapping
-the default data call to muxId = 112, but the multiplexed data calls
-scenario was not properly considered, mapping sessionId = 1 to muxId
-1, while it should have been 113.
-
-Fix this by moving the session_id assignment logic to mhi_mbim_newlink,
-in order to map sessionId = n to muxId = n + WDS_BIND_MUX_DATA_PORT_MUX_ID.
-
-Fixes: 65bc58c3dcad ("net: wwan: mhi: make default data link id configurable")
-Signed-off-by: Daniele Palmas <dnlplm@gmail.com>
-Reviewed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250603091204.2802840-1-dnlplm@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 09d77be56093 ("arm64: dts: qcom: Add support for X1-based Surface Laptop 7 devices")
+Reported-by: Johan Hovold <johan+linaro@kernel.org>
+Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+Link: https://lore.kernel.org/r/20250304-topic-sl7_vregs_aon-v1-1-b2dc706e4157@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wwan/mhi_wwan_mbim.c | 9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus.dtsi | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/wwan/mhi_wwan_mbim.c b/drivers/net/wwan/mhi_wwan_mbim.c
-index 8755c5e6a65b3..c814fbd756a1e 100644
---- a/drivers/net/wwan/mhi_wwan_mbim.c
-+++ b/drivers/net/wwan/mhi_wwan_mbim.c
-@@ -550,8 +550,8 @@ static int mhi_mbim_newlink(void *ctxt, struct net_device *ndev, u32 if_id,
- 	struct mhi_mbim_link *link = wwan_netdev_drvpriv(ndev);
- 	struct mhi_mbim_context *mbim = ctxt;
+diff --git a/arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus.dtsi b/arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus.dtsi
+index 5867953c73564..6a883fafe3c77 100644
+--- a/arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus.dtsi
++++ b/arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus.dtsi
+@@ -510,6 +510,7 @@
+ 			regulator-min-microvolt = <1200000>;
+ 			regulator-max-microvolt = <1200000>;
+ 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++			regulator-always-on;
+ 		};
  
--	link->session = if_id;
- 	link->mbim = mbim;
-+	link->session = mhi_mbim_get_link_mux_id(link->mbim->mdev->mhi_cntrl) + if_id;
- 	link->ndev = ndev;
- 	u64_stats_init(&link->rx_syncp);
- 	u64_stats_init(&link->tx_syncp);
-@@ -607,7 +607,7 @@ static int mhi_mbim_probe(struct mhi_device *mhi_dev, const struct mhi_device_id
- {
- 	struct mhi_controller *cntrl = mhi_dev->mhi_cntrl;
- 	struct mhi_mbim_context *mbim;
--	int err, link_id;
-+	int err;
+ 		vreg_l13b: ldo13 {
+@@ -531,6 +532,7 @@
+ 			regulator-min-microvolt = <1800000>;
+ 			regulator-max-microvolt = <1800000>;
+ 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++			regulator-always-on;
+ 		};
  
- 	mbim = devm_kzalloc(&mhi_dev->dev, sizeof(*mbim), GFP_KERNEL);
- 	if (!mbim)
-@@ -628,11 +628,8 @@ static int mhi_mbim_probe(struct mhi_device *mhi_dev, const struct mhi_device_id
- 	/* Number of transfer descriptors determines size of the queue */
- 	mbim->rx_queue_sz = mhi_get_free_desc_count(mhi_dev, DMA_FROM_DEVICE);
- 
--	/* Get the corresponding mux_id from mhi */
--	link_id = mhi_mbim_get_link_mux_id(cntrl);
--
- 	/* Register wwan link ops with MHI controller representing WWAN instance */
--	return wwan_register_ops(&cntrl->mhi_dev->dev, &mhi_mbim_wwan_ops, mbim, link_id);
-+	return wwan_register_ops(&cntrl->mhi_dev->dev, &mhi_mbim_wwan_ops, mbim, 0);
- }
- 
- static void mhi_mbim_remove(struct mhi_device *mhi_dev)
+ 		vreg_l16b: ldo16 {
 -- 
 2.39.5
 
