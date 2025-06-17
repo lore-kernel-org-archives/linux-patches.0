@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3B25221F1F;
-	Tue, 17 Jun 2025 15:34:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85D67221F1F;
+	Tue, 17 Jun 2025 15:34:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750174496; cv=none; b=n4Vr3ChIacHC9Ra8IawaJsC8mOfkLmiZVdo/EvSZjMb9VUzUozDlI02F5hBKpZtc8ahdoBM0IVL5C7T9ratB4GwsP22AdIfI5Lj1wFXdg8wXev9zqEjqS2yClPrRRJikEktF1JHLCzQTMhesE9ekm+gmHROibE0kIeJbZgd/RyY=
+	t=1750174499; cv=none; b=OhQ7tDlNmjoH0jascmDvsTZmBG7us5/GcKneYSib09bFcQJg11ykRDOevp2mLeAa3ChEwiQ8fElvS1c49lWPC2zQAsF7aMyDg35Q521HDKL8SkjnKAxjojOrWO5vqQIE6CLwNRb7ukS44fyhyG8hYGsQa/6jJBQBLf8k2nlFjSE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750174496; c=relaxed/simple;
-	bh=TcV2H8mpWVX6pe861USilE5cu0zoKqFJzGPIjinclxw=;
+	s=arc-20240116; t=1750174499; c=relaxed/simple;
+	bh=5MTjSqD9GBCmYBYLTulY4XkLCk4HGuOY2/58TBvok8o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EFT+BlCfPE0qC1srkV4i//y+fLcpnzyDZPdlPnXBQXVtpQVVmPQrsfdCejmDn3w7yO3RqLgFn62mtHXtIfFpciTIhNA9WTTSzpX4On03aSJ4xZKtfPEWlhzRP0y42NqMZ4NDcOYEL0RgbEozwARxNyHH7kZoLrGX98Cb/z6qMwA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D/GcZcbL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lRlE+8j8ZcoK35wC6/eRLry3R6t3MLtMdKsrQn3MWXyzu+MXNVOnuD9RZCdHP8FHLlB7sDljDu5ppXrT1m+YbztX643qT7bcMI29nA0xnHTwsUWeFQPzOzJ4MVr87ymW6LClRJJ83qajeJS9WDURo/Hmw1EBFZsVLO2se3O17B4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i8lH4YLH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D/GcZcbL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D54D5C4CEE3;
-	Tue, 17 Jun 2025 15:34:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i8lH4YLH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C3F0C4CEE3;
+	Tue, 17 Jun 2025 15:34:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750174496;
-	bh=TcV2H8mpWVX6pe861USilE5cu0zoKqFJzGPIjinclxw=;
+	s=korg; t=1750174499;
+	bh=5MTjSqD9GBCmYBYLTulY4XkLCk4HGuOY2/58TBvok8o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D/GcZcbLsvQtN7ofxaJ/8zDkGinPdI8zxK0ARAoT6FnfVOivZ1h3B31dUUt68N9EX
-	 Iladse/FrozXjaPIm+CCDokdHmLXUelljUMguVxpTfAdagsmpU8sef30a/w8OTCMcV
-	 mqbxuhO0qOHJ6bJB0BNaAyjYhyvGNST2HuDbUtHg=
+	b=i8lH4YLHbXdUcc3X/B6WB0/Cr+d8lJuw1sRRbaQ/hrEQwQ8Jk/avJJDqaBHqwcY4i
+	 py/NaIx2Mmh9fWXo2pDAExL8SYufhXNiPBjPexGON0t+mpwfCDd4S8pUCPUJdN69Sl
+	 yLQQmw79+tZQC6Mz8sHE811fh0baZfyeb4yvRww0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+	Filipe Manana <fdmanana@suse.com>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 076/356] drm/mediatek: mtk_drm_drv: Fix kobject put for mtk_mutex device ptr
-Date: Tue, 17 Jun 2025 17:23:11 +0200
-Message-ID: <20250617152341.279348780@linuxfoundation.org>
+Subject: [PATCH 6.12 027/512] btrfs: scrub: update device stats when an error is detected
+Date: Tue, 17 Jun 2025 17:19:53 +0200
+Message-ID: <20250617152420.661638572@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-References: <20250617152338.212798615@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,109 +48,186 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+From: Qu Wenruo <wqu@suse.com>
 
-[ Upstream commit 22918591fb747a6d16801e74a170cf98e886f83b ]
+[ Upstream commit ec1f3a207cdf314eae4d4ae145f1ffdb829f0652 ]
 
-This driver is taking a kobject for mtk_mutex only once per mmsys
-device for each drm-mediatek driver instance, differently from the
-behavior with other components, but it is decrementing the kobj's
-refcount in a loop and once per mmsys: this is not right and will
-result in a refcount_t underflow warning when mediatek-drm returns
-multiple probe deferrals in one boot (or when manually bound and
-unbound).
+[BUG]
+Since the migration to the new scrub_stripe interface, scrub no longer
+updates the device stats when hitting an error, no matter if it's a read
+or checksum mismatch error. E.g:
 
-Besides that, the refcount for mutex_dev was not decremented for
-error cases in mtk_drm_bind(), causing another refcount_t warning
-but this time for overflow, when the failure happens not during
-driver bind but during component bind.
+  BTRFS info (device dm-2): scrub: started on devid 1
+  BTRFS error (device dm-2): unable to fixup (regular) error at logical 13631488 on dev /dev/mapper/test-scratch1 physical 13631488
+  BTRFS warning (device dm-2): checksum error at logical 13631488 on dev /dev/mapper/test-scratch1, physical 13631488, root 5, inode 257, offset 0, length 4096, links 1 (path: file)
+  BTRFS error (device dm-2): unable to fixup (regular) error at logical 13631488 on dev /dev/mapper/test-scratch1 physical 13631488
+  BTRFS warning (device dm-2): checksum error at logical 13631488 on dev /dev/mapper/test-scratch1, physical 13631488, root 5, inode 257, offset 0, length 4096, links 1 (path: file)
+  BTRFS info (device dm-2): scrub: finished on devid 1 with status: 0
 
-In order to fix one of the reasons why this is happening, remove
-the put_device(xx->mutex_dev) loop from the mtk_drm_kms_init()'s
-put_mutex_dev label (and drop the label) and add a single call to
-correctly free the single incremented refcount of mutex_dev to
-the mtk_drm_unbind() function to fix the refcount_t underflow.
+Note there is no line showing the device stats error update.
 
-Moreover, add the same call to the error cases in mtk_drm_bind()
-to fix the refcount_t overflow.
+[CAUSE]
+In the migration to the new scrub_stripe interface, we no longer call
+btrfs_dev_stat_inc_and_print().
 
-Fixes: 1ef7ed48356c ("drm/mediatek: Modify mediatek-drm for mt8195 multi mmsys support")
-Reviewed-by: Chen-Yu Tsai <wenst@chromium.org>
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://patchwork.kernel.org/project/dri-devel/patch/20250403104741.71045-2-angelogioacchino.delregno@collabora.com/
-Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+[FIX]
+- Introduce a new bitmap for metadata generation errors
+  * A new bitmap
+    @meta_gen_error_bitmap is introduced to record which blocks have
+    metadata generation mismatch errors.
+
+  * A new counter for that bitmap
+    @init_nr_meta_gen_errors, is also introduced to store the number of
+    generation mismatch errors that are found during the initial read.
+
+    This is for the error reporting at scrub_stripe_report_errors().
+
+  * New dedicated error message for unrepaired generation mismatches
+
+  * Update @meta_gen_error_bitmap if a transid mismatch is hit
+
+- Add btrfs_dev_stat_inc_and_print() calls to the following call sites
+  * scrub_stripe_report_errors()
+  * scrub_write_endio()
+    This is only for the write errors.
+
+This means there is a minor behavior change:
+
+- The timing of device stats error message
+  Since we concentrate the error messages at
+  scrub_stripe_report_errors(), the device stats error messages will all
+  show up in one go, after the detailed scrub error messages:
+
+   BTRFS error (device dm-2): unable to fixup (regular) error at logical 13631488 on dev /dev/mapper/test-scratch1 physical 13631488
+   BTRFS warning (device dm-2): checksum error at logical 13631488 on dev /dev/mapper/test-scratch1, physical 13631488, root 5, inode 257, offset 0, length 4096, links 1 (path: file)
+   BTRFS error (device dm-2): unable to fixup (regular) error at logical 13631488 on dev /dev/mapper/test-scratch1 physical 13631488
+   BTRFS warning (device dm-2): checksum error at logical 13631488 on dev /dev/mapper/test-scratch1, physical 13631488, root 5, inode 257, offset 0, length 4096, links 1 (path: file)
+   BTRFS error (device dm-2): bdev /dev/mapper/test-scratch1 errs: wr 0, rd 0, flush 0, corrupt 1, gen 0
+   BTRFS error (device dm-2): bdev /dev/mapper/test-scratch1 errs: wr 0, rd 0, flush 0, corrupt 2, gen 0
+
+Fixes: e02ee89baa66 ("btrfs: scrub: switch scrub_simple_mirror() to scrub_stripe infrastructure")
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/mediatek/mtk_drm_drv.c | 17 ++++++++++-------
- 1 file changed, 10 insertions(+), 7 deletions(-)
+ fs/btrfs/scrub.c | 32 +++++++++++++++++++++++++++++---
+ 1 file changed, 29 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/mediatek/mtk_drm_drv.c b/drivers/gpu/drm/mediatek/mtk_drm_drv.c
-index 8b41a07c3641f..108cab35ce485 100644
---- a/drivers/gpu/drm/mediatek/mtk_drm_drv.c
-+++ b/drivers/gpu/drm/mediatek/mtk_drm_drv.c
-@@ -431,7 +431,7 @@ static int mtk_drm_kms_init(struct drm_device *drm)
- 
- 	ret = drmm_mode_config_init(drm);
- 	if (ret)
--		goto put_mutex_dev;
-+		return ret;
- 
- 	drm->mode_config.min_width = 64;
- 	drm->mode_config.min_height = 64;
-@@ -450,7 +450,7 @@ static int mtk_drm_kms_init(struct drm_device *drm)
- 		drm->dev_private = private->all_drm_private[i];
- 		ret = component_bind_all(private->all_drm_private[i]->dev, drm);
- 		if (ret)
--			goto put_mutex_dev;
-+			return ret;
- 	}
+diff --git a/fs/btrfs/scrub.c b/fs/btrfs/scrub.c
+index d8fcc3eb85c88..51eb41d18c3e5 100644
+--- a/fs/btrfs/scrub.c
++++ b/fs/btrfs/scrub.c
+@@ -153,12 +153,14 @@ struct scrub_stripe {
+ 	unsigned int init_nr_io_errors;
+ 	unsigned int init_nr_csum_errors;
+ 	unsigned int init_nr_meta_errors;
++	unsigned int init_nr_meta_gen_errors;
  
  	/*
-@@ -532,9 +532,6 @@ static int mtk_drm_kms_init(struct drm_device *drm)
- err_component_unbind:
- 	for (i = 0; i < private->data->mmsys_dev_num; i++)
- 		component_unbind_all(private->all_drm_private[i]->dev, drm);
--put_mutex_dev:
--	for (i = 0; i < private->data->mmsys_dev_num; i++)
--		put_device(private->all_drm_private[i]->mutex_dev);
+ 	 * The following error bitmaps are all for the current status.
+ 	 * Every time we submit a new read, these bitmaps may be updated.
+ 	 *
+-	 * error_bitmap = io_error_bitmap | csum_error_bitmap | meta_error_bitmap;
++	 * error_bitmap = io_error_bitmap | csum_error_bitmap |
++	 *		  meta_error_bitmap | meta_generation_bitmap;
+ 	 *
+ 	 * IO and csum errors can happen for both metadata and data.
+ 	 */
+@@ -166,6 +168,7 @@ struct scrub_stripe {
+ 	unsigned long io_error_bitmap;
+ 	unsigned long csum_error_bitmap;
+ 	unsigned long meta_error_bitmap;
++	unsigned long meta_gen_error_bitmap;
  
- 	return ret;
- }
-@@ -608,8 +605,10 @@ static int mtk_drm_bind(struct device *dev)
- 		return 0;
- 
- 	drm = drm_dev_alloc(&mtk_drm_driver, dev);
--	if (IS_ERR(drm))
--		return PTR_ERR(drm);
-+	if (IS_ERR(drm)) {
-+		ret = PTR_ERR(drm);
-+		goto err_put_dev;
-+	}
- 
- 	private->drm_master = true;
- 	drm->dev_private = private;
-@@ -635,6 +634,8 @@ static int mtk_drm_bind(struct device *dev)
- 	drm_dev_put(drm);
- 	for (i = 0; i < private->data->mmsys_dev_num; i++)
- 		private->all_drm_private[i]->drm = NULL;
-+err_put_dev:
-+	put_device(private->mutex_dev);
- 	return ret;
- }
- 
-@@ -647,6 +648,8 @@ static void mtk_drm_unbind(struct device *dev)
- 		drm_dev_unregister(private->drm);
- 		mtk_drm_kms_deinit(private->drm);
- 		drm_dev_put(private->drm);
-+
-+		put_device(private->mutex_dev);
+ 	/* For writeback (repair or replace) error reporting. */
+ 	unsigned long write_error_bitmap;
+@@ -672,7 +675,7 @@ static void scrub_verify_one_metadata(struct scrub_stripe *stripe, int sector_nr
  	}
- 	private->mtk_drm_bound = false;
- 	private->drm_master = false;
+ 	if (stripe->sectors[sector_nr].generation !=
+ 	    btrfs_stack_header_generation(header)) {
+-		bitmap_set(&stripe->meta_error_bitmap, sector_nr, sectors_per_tree);
++		bitmap_set(&stripe->meta_gen_error_bitmap, sector_nr, sectors_per_tree);
+ 		bitmap_set(&stripe->error_bitmap, sector_nr, sectors_per_tree);
+ 		btrfs_warn_rl(fs_info,
+ 		"tree block %llu mirror %u has bad generation, has %llu want %llu",
+@@ -684,6 +687,7 @@ static void scrub_verify_one_metadata(struct scrub_stripe *stripe, int sector_nr
+ 	bitmap_clear(&stripe->error_bitmap, sector_nr, sectors_per_tree);
+ 	bitmap_clear(&stripe->csum_error_bitmap, sector_nr, sectors_per_tree);
+ 	bitmap_clear(&stripe->meta_error_bitmap, sector_nr, sectors_per_tree);
++	bitmap_clear(&stripe->meta_gen_error_bitmap, sector_nr, sectors_per_tree);
+ }
+ 
+ static void scrub_verify_one_sector(struct scrub_stripe *stripe, int sector_nr)
+@@ -972,8 +976,22 @@ static void scrub_stripe_report_errors(struct scrub_ctx *sctx,
+ 			if (__ratelimit(&rs) && dev)
+ 				scrub_print_common_warning("header error", dev, false,
+ 						     stripe->logical, physical);
++		if (test_bit(sector_nr, &stripe->meta_gen_error_bitmap))
++			if (__ratelimit(&rs) && dev)
++				scrub_print_common_warning("generation error", dev, false,
++						     stripe->logical, physical);
+ 	}
+ 
++	/* Update the device stats. */
++	for (int i = 0; i < stripe->init_nr_io_errors; i++)
++		btrfs_dev_stat_inc_and_print(stripe->dev, BTRFS_DEV_STAT_READ_ERRS);
++	for (int i = 0; i < stripe->init_nr_csum_errors; i++)
++		btrfs_dev_stat_inc_and_print(stripe->dev, BTRFS_DEV_STAT_CORRUPTION_ERRS);
++	/* Generation mismatch error is based on each metadata, not each block. */
++	for (int i = 0; i < stripe->init_nr_meta_gen_errors;
++	     i += (fs_info->nodesize >> fs_info->sectorsize_bits))
++		btrfs_dev_stat_inc_and_print(stripe->dev, BTRFS_DEV_STAT_GENERATION_ERRS);
++
+ 	spin_lock(&sctx->stat_lock);
+ 	sctx->stat.data_extents_scrubbed += stripe->nr_data_extents;
+ 	sctx->stat.tree_extents_scrubbed += stripe->nr_meta_extents;
+@@ -982,7 +1000,8 @@ static void scrub_stripe_report_errors(struct scrub_ctx *sctx,
+ 	sctx->stat.no_csum += nr_nodatacsum_sectors;
+ 	sctx->stat.read_errors += stripe->init_nr_io_errors;
+ 	sctx->stat.csum_errors += stripe->init_nr_csum_errors;
+-	sctx->stat.verify_errors += stripe->init_nr_meta_errors;
++	sctx->stat.verify_errors += stripe->init_nr_meta_errors +
++				    stripe->init_nr_meta_gen_errors;
+ 	sctx->stat.uncorrectable_errors +=
+ 		bitmap_weight(&stripe->error_bitmap, stripe->nr_sectors);
+ 	sctx->stat.corrected_errors += nr_repaired_sectors;
+@@ -1028,6 +1047,8 @@ static void scrub_stripe_read_repair_worker(struct work_struct *work)
+ 						    stripe->nr_sectors);
+ 	stripe->init_nr_meta_errors = bitmap_weight(&stripe->meta_error_bitmap,
+ 						    stripe->nr_sectors);
++	stripe->init_nr_meta_gen_errors = bitmap_weight(&stripe->meta_gen_error_bitmap,
++							stripe->nr_sectors);
+ 
+ 	if (bitmap_empty(&stripe->init_error_bitmap, stripe->nr_sectors))
+ 		goto out;
+@@ -1142,6 +1163,9 @@ static void scrub_write_endio(struct btrfs_bio *bbio)
+ 		bitmap_set(&stripe->write_error_bitmap, sector_nr,
+ 			   bio_size >> fs_info->sectorsize_bits);
+ 		spin_unlock_irqrestore(&stripe->write_error_lock, flags);
++		for (int i = 0; i < (bio_size >> fs_info->sectorsize_bits); i++)
++			btrfs_dev_stat_inc_and_print(stripe->dev,
++						     BTRFS_DEV_STAT_WRITE_ERRS);
+ 	}
+ 	bio_put(&bbio->bio);
+ 
+@@ -1508,10 +1532,12 @@ static void scrub_stripe_reset_bitmaps(struct scrub_stripe *stripe)
+ 	stripe->init_nr_io_errors = 0;
+ 	stripe->init_nr_csum_errors = 0;
+ 	stripe->init_nr_meta_errors = 0;
++	stripe->init_nr_meta_gen_errors = 0;
+ 	stripe->error_bitmap = 0;
+ 	stripe->io_error_bitmap = 0;
+ 	stripe->csum_error_bitmap = 0;
+ 	stripe->meta_error_bitmap = 0;
++	stripe->meta_gen_error_bitmap = 0;
+ }
+ 
+ /*
 -- 
 2.39.5
 
