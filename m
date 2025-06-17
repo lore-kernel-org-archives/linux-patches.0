@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 657102ECE99;
-	Tue, 17 Jun 2025 15:49:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B34892EE605;
+	Tue, 17 Jun 2025 15:50:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175397; cv=none; b=rkJzq2Fb03fenK8rbQ/27uvaFfGlJLZ31tORo5ThmJe4Z6YBbyZaS87iQQhxdwQjwPvX8RUj7+qrNGgWuZtaR9fpvmCNeOR/C73EmTzPvj5LwyCgDF1Pf64fmCun08EKQRDNRFXxEUUoRYmBQOeCP9lge7XxSGXxIHYlIvqUiqk=
+	t=1750175400; cv=none; b=kRaAXOaJeo85nzv8QpQfY32tPj1RHeoanuNX080U0N/h/4OHbZwFh5n67bwvp8WwlDpJwi8Xr0DiinHknMXlNEpECe/jKabO3FzEWdyrD6uY4PY8FYx5fSkM119QzM+q6mkh29vRpaEKYleI6KaB+xgcsCS5Kh13hl8LhTjGv18=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175397; c=relaxed/simple;
-	bh=c7mkup13KOb2pv0emSUK7+lp9mIgXr1v5VtYJ534n4Y=;
+	s=arc-20240116; t=1750175400; c=relaxed/simple;
+	bh=eJbZOraSOVxaC1M8YohBUKTSbFqJXrhpdznRGJoF428=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kxBTEEw0NIQpW/Awn6XDzA4QtemUfj+dzi41EN3SBwTThv63ahnGeF/pogqrIEp7gyyKHTlI2tDgYQ0zgfJ5jVXRgKlNONrtvQX4NKs3uWuMwftkM0qLN6tGhZUxbtKC89TAu612Ef5UQZKeq6aA0dPJ6p8HmqDdbbYyAlIjKb8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0RKL842n; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ZhAj0EbOPRyarv3uUz2JjVCfI1vNI6jeGBbr8kADacn9tP7sEhTTc5fTzuEXT26nItSwcs0SeQoF6oUY+WHHwO/FDh2EwZklfjkDWoGYxFzwTnSHpVxL5/YVg4ZsRWhreQvRscCe8KwRGnVjYPs+7hcY8dmOCRoLpudMo2TC7gU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LCalOfvU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0RKL842n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3B3CC4CEE3;
-	Tue, 17 Jun 2025 15:49:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LCalOfvU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5CE8C4CEE3;
+	Tue, 17 Jun 2025 15:49:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175397;
-	bh=c7mkup13KOb2pv0emSUK7+lp9mIgXr1v5VtYJ534n4Y=;
+	s=korg; t=1750175400;
+	bh=eJbZOraSOVxaC1M8YohBUKTSbFqJXrhpdznRGJoF428=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0RKL842nNd3KG6HcepB8Qr4NIb9dydV58bAAGqQy9neY61ClGDhWK9PMFM5vwNbG3
-	 BvHaHlN8dQ9JV+heWJzdlEVoYMXJoGsWJoHEGYp39pQ6y55kZZO9osf2J+2oyhtk1L
-	 WJ5qZeLaSoePlevNIr4BZYdyapSTbRtlln6lZyTg=
+	b=LCalOfvUWKIQ+sDDYH33yIflWfK2yrDMHKg55MrJ9ROi7cqj1lf2sk8eNMBE3szKZ
+	 XHsBsSV9OEXsNx7gL91PGs2bCFNVRfAexbKD4uTmlWRnshCfTqFuw3NUpwPgq0YWPw
+	 jc8lU2dlAaoTAmyfb0nBPP/QrBsyRj64C+eWuh3U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Martin=20Povi=C5=A1er?= <povik+lin@cutebit.org>,
-	James Calligeros <jcalligeros99@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 084/780] ASoC: apple: mca: Constrain channels according to TDM mask
-Date: Tue, 17 Jun 2025 17:16:32 +0200
-Message-ID: <20250617152454.939116027@linuxfoundation.org>
+Subject: [PATCH 6.6 173/356] arm64: dts: mediatek: mt6357: Drop regulator-fixed compatibles
+Date: Tue, 17 Jun 2025 17:24:48 +0200
+Message-ID: <20250617152345.180577529@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
+References: <20250617152338.212798615@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,69 +48,120 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Martin Povišer <povik+lin@cutebit.org>
+From: Nícolas F. R. A. Prado <nfraprado@collabora.com>
 
-[ Upstream commit e717c661e2d1a660e96c40b0fe9933e23a1d7747 ]
+[ Upstream commit d77e89b7b03fb945b4353f2dcc4a70b34baa7bcb ]
 
-We don't (and can't) configure the hardware correctly if the number of
-channels exceeds the weight of the TDM mask. Report that constraint in
-startup of FE.
+Some of the regulators in the MT6357 PMIC dtsi have compatible set to
+regulator-fixed, even though they don't serve any purpose: all those
+regulators are handled as a whole by the mt6357-regulator driver. In
+fact this is the only dtsi in this family of chips where this is the
+case: mt6359 and mt6358 don't have any such compatibles.
 
-Fixes: 3df5d0d97289 ("ASoC: apple: mca: Start new platform driver")
-Signed-off-by: Martin Povišer <povik+lin@cutebit.org>
-Signed-off-by: James Calligeros <jcalligeros99@gmail.com>
-Link: https://patch.msgid.link/20250518-mca-fixes-v1-1-ee1015a695f6@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+A side-effect caused by this is that the DT kselftest, which is supposed
+to identify nodes with compatibles that can be probed, but haven't,
+shows these nodes as failures.
+
+Remove the useless compatibles to move the dtsi in line with the others
+in its family and fix the DT kselftest failures.
+
+Fixes: 55749bb478f8 ("arm64: dts: mediatek: add mt6357 device-tree")
+Signed-off-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+Link: https://lore.kernel.org/r/20250502-mt6357-regulator-fixed-compatibles-removal-v1-1-a582c16743fe@collabora.com
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/apple/mca.c | 23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+ arch/arm64/boot/dts/mediatek/mt6357.dtsi | 10 ----------
+ 1 file changed, 10 deletions(-)
 
-diff --git a/sound/soc/apple/mca.c b/sound/soc/apple/mca.c
-index b4f4696809dd2..5dd24ab90d0f0 100644
---- a/sound/soc/apple/mca.c
-+++ b/sound/soc/apple/mca.c
-@@ -464,6 +464,28 @@ static int mca_configure_serdes(struct mca_cluster *cl, int serdes_unit,
- 	return -EINVAL;
- }
+diff --git a/arch/arm64/boot/dts/mediatek/mt6357.dtsi b/arch/arm64/boot/dts/mediatek/mt6357.dtsi
+index 5fafa842d312f..dca4e5c3d8e21 100644
+--- a/arch/arm64/boot/dts/mediatek/mt6357.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt6357.dtsi
+@@ -60,7 +60,6 @@
+ 			};
  
-+static int mca_fe_startup(struct snd_pcm_substream *substream,
-+			  struct snd_soc_dai *dai)
-+{
-+	struct mca_cluster *cl = mca_dai_to_cluster(dai);
-+	unsigned int mask, nchannels;
-+
-+	if (cl->tdm_slots) {
-+		if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK)
-+			mask = cl->tdm_tx_mask;
-+		else
-+			mask = cl->tdm_rx_mask;
-+
-+		nchannels = hweight32(mask);
-+	} else {
-+		nchannels = 2;
-+	}
-+
-+	return snd_pcm_hw_constraint_minmax(substream->runtime,
-+					    SNDRV_PCM_HW_PARAM_CHANNELS,
-+					    1, nchannels);
-+}
-+
- static int mca_fe_set_tdm_slot(struct snd_soc_dai *dai, unsigned int tx_mask,
- 			       unsigned int rx_mask, int slots, int slot_width)
- {
-@@ -680,6 +702,7 @@ static int mca_fe_hw_params(struct snd_pcm_substream *substream,
- }
+ 			mt6357_vfe28_reg: ldo-vfe28 {
+-				compatible = "regulator-fixed";
+ 				regulator-name = "vfe28";
+ 				regulator-min-microvolt = <2800000>;
+ 				regulator-max-microvolt = <2800000>;
+@@ -75,7 +74,6 @@
+ 			};
  
- static const struct snd_soc_dai_ops mca_fe_ops = {
-+	.startup = mca_fe_startup,
- 	.set_fmt = mca_fe_set_fmt,
- 	.set_bclk_ratio = mca_set_bclk_ratio,
- 	.set_tdm_slot = mca_fe_set_tdm_slot,
+ 			mt6357_vrf18_reg: ldo-vrf18 {
+-				compatible = "regulator-fixed";
+ 				regulator-name = "vrf18";
+ 				regulator-min-microvolt = <1800000>;
+ 				regulator-max-microvolt = <1800000>;
+@@ -83,7 +81,6 @@
+ 			};
+ 
+ 			mt6357_vrf12_reg: ldo-vrf12 {
+-				compatible = "regulator-fixed";
+ 				regulator-name = "vrf12";
+ 				regulator-min-microvolt = <1200000>;
+ 				regulator-max-microvolt = <1200000>;
+@@ -112,7 +109,6 @@
+ 			};
+ 
+ 			mt6357_vcn28_reg: ldo-vcn28 {
+-				compatible = "regulator-fixed";
+ 				regulator-name = "vcn28";
+ 				regulator-min-microvolt = <2800000>;
+ 				regulator-max-microvolt = <2800000>;
+@@ -120,7 +116,6 @@
+ 			};
+ 
+ 			mt6357_vcn18_reg: ldo-vcn18 {
+-				compatible = "regulator-fixed";
+ 				regulator-name = "vcn18";
+ 				regulator-min-microvolt = <1800000>;
+ 				regulator-max-microvolt = <1800000>;
+@@ -142,7 +137,6 @@
+ 			};
+ 
+ 			mt6357_vcamio_reg: ldo-vcamio18 {
+-				compatible = "regulator-fixed";
+ 				regulator-name = "vcamio";
+ 				regulator-min-microvolt = <1800000>;
+ 				regulator-max-microvolt = <1800000>;
+@@ -175,7 +169,6 @@
+ 			};
+ 
+ 			mt6357_vaux18_reg: ldo-vaux18 {
+-				compatible = "regulator-fixed";
+ 				regulator-name = "vaux18";
+ 				regulator-min-microvolt = <1800000>;
+ 				regulator-max-microvolt = <1800000>;
+@@ -183,7 +176,6 @@
+ 			};
+ 
+ 			mt6357_vaud28_reg: ldo-vaud28 {
+-				compatible = "regulator-fixed";
+ 				regulator-name = "vaud28";
+ 				regulator-min-microvolt = <2800000>;
+ 				regulator-max-microvolt = <2800000>;
+@@ -191,7 +183,6 @@
+ 			};
+ 
+ 			mt6357_vio28_reg: ldo-vio28 {
+-				compatible = "regulator-fixed";
+ 				regulator-name = "vio28";
+ 				regulator-min-microvolt = <2800000>;
+ 				regulator-max-microvolt = <2800000>;
+@@ -199,7 +190,6 @@
+ 			};
+ 
+ 			mt6357_vio18_reg: ldo-vio18 {
+-				compatible = "regulator-fixed";
+ 				regulator-name = "vio18";
+ 				regulator-min-microvolt = <1800000>;
+ 				regulator-max-microvolt = <1800000>;
 -- 
 2.39.5
 
