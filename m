@@ -1,45 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73AB12F9483;
-	Tue, 17 Jun 2025 16:20:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 873BB2F9483;
+	Tue, 17 Jun 2025 16:20:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177241; cv=none; b=CoS2+343xS9xh+wyURHwQ6sjqssuaLAq+OaokbXT+cT/OH7JTI3Mj+UG0FMCG+MggLCOJXN5X30UcwsGPrAL28duI+b7+LolMHE240Yoo7/CT0bXK3BASnoOOeLmIPlaF8uqGCYPStiib0xXWQZmroZkE2PsR5h9UPsCFtlHuRY=
+	t=1750177245; cv=none; b=M+YQhLLDStuvLgWf+MbMmss7oArrYdlk+miHeCtrrdLU9cFE5un0J8XwuaHVefVLm3nicSz4/xdWKTLdRY0AnlKbD5Ct3eDdcP+NwCktuLgynreljZAKNnQgsXe5HUqtkeb0n6l7wZs0LghlxUX55yrdIktTVUAGLioUW+2zcDM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177241; c=relaxed/simple;
-	bh=ef1vQEdwKmFjD6I1x9z/HUcpSx0xnydwrQEx0+mcIU4=;
+	s=arc-20240116; t=1750177245; c=relaxed/simple;
+	bh=QOVKehIsrWSgm7+cbJ2uGcYGgq4vCCt0wMTDxlWYcLE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=utqR1HvPOId1Gnw7QOub4IVSxhgWsqMzF61WD7ajDppOiga+cJuhWCl2mic52mRjsFC2vL+INoZcDqdKpZspXUnialWpTvcQ7nfK4pYlYZ0L0goWQqxMeWrCPsI/Saho9VlxOXdPzzRwmhB+ElQMTBE614ityyGHrC1nDT7wATY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vy+0+Ps5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DTT0ZZeEpFf1OtOH3JKIBD0wgIP2XoD6S6qd6/q/6XAbYe+noMwt9D+8cfCCoYpYirVjru/31E0yiYDPYI3d8QYvffRQo8u8C8+hyj79vYw22MiJlqEjFVmUIF7x0xDAQGezBLKGk+KI+JNM5Yws0MKFmFkCc7r74BVdTvR+ku4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JYPvGv3z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vy+0+Ps5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEA65C4CEE3;
-	Tue, 17 Jun 2025 16:20:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JYPvGv3z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 584E6C4CEE7;
+	Tue, 17 Jun 2025 16:20:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177241;
-	bh=ef1vQEdwKmFjD6I1x9z/HUcpSx0xnydwrQEx0+mcIU4=;
+	s=korg; t=1750177245;
+	bh=QOVKehIsrWSgm7+cbJ2uGcYGgq4vCCt0wMTDxlWYcLE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vy+0+Ps5lBfGWSq032DLVrAzQLnxME1xc5vwvTBq9cYoSs5UgP5jpuujnAxUioi1V
-	 spWdCBP0wC6B9NRIdwM5TNotP4stO+/fh3mOUM1s/tdZncpm2sChGEERGeemae11Wo
-	 TgwSB8IGXrieBzknqOVXbQ9aqN3N9ljWG9R7rbss=
+	b=JYPvGv3zkiZRfkF102lPGVt44Fg/wu1pF3YOS1KqmjlcnEhoVs1H8Wc3zLBbDG8ui
+	 0gHMda6fsY0qYVzS+AjT55YYYvp2H8x6QfKIJSebz2YO/dWW5NOyYork3O7ZbbBEgV
+	 eyGI52Ks2M8bE/5bBQQbB+gQ65UKsFl3aH5VLth4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hector Martin <marcan@marcan.st>,
-	Alyssa Rosenzweig <alyssa@rosenzweig.io>,
-	Marc Zyngier <maz@kernel.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Janne Grunau <j@jannau.net>,
-	"Rob Herring (Arm)" <robh@kernel.org>,
+	Longfang Liu <liulongfang@huawei.com>,
+	Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
+	Alex Williamson <alex.williamson@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 312/512] PCI: apple: Use gpiod_set_value_cansleep in probe flow
-Date: Tue, 17 Jun 2025 17:24:38 +0200
-Message-ID: <20250617152432.256618642@linuxfoundation.org>
+Subject: [PATCH 6.15 277/780] hisi_acc_vfio_pci: bugfix cache write-back issue
+Date: Tue, 17 Jun 2025 17:19:45 +0200
+Message-ID: <20250617152502.747143785@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -51,54 +48,72 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hector Martin <marcan@marcan.st>
+From: Longfang Liu <liulongfang@huawei.com>
 
-[ Upstream commit 7334364f9de79a9a236dd0243ba574b8d2876e89 ]
+[ Upstream commit e63c466398731bb7867f42f44b76fa984de59db2 ]
 
-We're allowed to sleep here, so tell the GPIO core by using
-gpiod_set_value_cansleep instead of gpiod_set_value.
+At present, cache write-back is placed in the device data
+copy stage after stopping the device operation.
+Writing back to the cache at this stage will cause the data
+obtained by the cache to be written back to be empty.
 
-Fixes: 1e33888fbe44 ("PCI: apple: Add initial hardware bring-up")
-Signed-off-by: Hector Martin <marcan@marcan.st>
-Signed-off-by: Alyssa Rosenzweig <alyssa@rosenzweig.io>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Tested-by: Janne Grunau <j@jannau.net>
-Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Acked-by: Alyssa Rosenzweig <alyssa@rosenzweig.io>
-Link: https://patch.msgid.link/20250401091713.2765724-12-maz@kernel.org
+In order to ensure that the cache data is written back
+successfully, the data needs to be written back into the
+stop device stage.
+
+Fixes: b0eed085903e ("hisi_acc_vfio_pci: Add support for VFIO live migration")
+Signed-off-by: Longfang Liu <liulongfang@huawei.com>
+Reviewed-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+Link: https://lore.kernel.org/r/20250510081155.55840-4-liulongfang@huawei.com
+Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/pcie-apple.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/pci/controller/pcie-apple.c b/drivers/pci/controller/pcie-apple.c
-index fefab2758a064..ddc65368e77d1 100644
---- a/drivers/pci/controller/pcie-apple.c
-+++ b/drivers/pci/controller/pcie-apple.c
-@@ -541,7 +541,7 @@ static int apple_pcie_setup_port(struct apple_pcie *pcie,
- 	rmw_set(PORT_APPCLK_EN, port->base + PORT_APPCLK);
+diff --git a/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c b/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
+index 80217aea54755..d96446f499ed0 100644
+--- a/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
++++ b/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
+@@ -566,7 +566,6 @@ static int vf_qm_state_save(struct hisi_acc_vf_core_device *hisi_acc_vdev,
+ {
+ 	struct acc_vf_data *vf_data = &migf->vf_data;
+ 	struct hisi_qm *vf_qm = &hisi_acc_vdev->vf_qm;
+-	struct device *dev = &vf_qm->pdev->dev;
+ 	int ret;
  
- 	/* Assert PERST# before setting up the clock */
--	gpiod_set_value(reset, 1);
-+	gpiod_set_value_cansleep(reset, 1);
+ 	if (unlikely(qm_wait_dev_not_ready(vf_qm))) {
+@@ -580,12 +579,6 @@ static int vf_qm_state_save(struct hisi_acc_vf_core_device *hisi_acc_vdev,
+ 	vf_data->vf_qm_state = QM_READY;
+ 	hisi_acc_vdev->vf_qm_state = vf_data->vf_qm_state;
  
- 	ret = apple_pcie_setup_refclk(pcie, port);
- 	if (ret < 0)
-@@ -552,7 +552,7 @@ static int apple_pcie_setup_port(struct apple_pcie *pcie,
+-	ret = vf_qm_cache_wb(vf_qm);
+-	if (ret) {
+-		dev_err(dev, "failed to writeback QM Cache!\n");
+-		return ret;
+-	}
+-
+ 	ret = vf_qm_read_data(vf_qm, vf_data);
+ 	if (ret)
+ 		return -EINVAL;
+@@ -1012,6 +1005,13 @@ static int hisi_acc_vf_stop_device(struct hisi_acc_vf_core_device *hisi_acc_vdev
+ 		dev_err(dev, "failed to check QM INT state!\n");
+ 		return ret;
+ 	}
++
++	ret = vf_qm_cache_wb(vf_qm);
++	if (ret) {
++		dev_err(dev, "failed to writeback QM cache!\n");
++		return ret;
++	}
++
+ 	return 0;
+ }
  
- 	/* Deassert PERST# */
- 	rmw_set(PORT_PERST_OFF, port->base + PORT_PERST);
--	gpiod_set_value(reset, 0);
-+	gpiod_set_value_cansleep(reset, 0);
- 
- 	/* Wait for 100ms after PERST# deassertion (PCIe r5.0, 6.6.1) */
- 	msleep(100);
 -- 
 2.39.5
 
