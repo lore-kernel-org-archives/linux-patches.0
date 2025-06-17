@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC7CA2ECE9E;
-	Tue, 17 Jun 2025 16:06:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BBF32DFF0E;
+	Tue, 17 Jun 2025 16:06:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750176390; cv=none; b=deI2imXOf8JVeM1uT4cv0Sh6lJIVNynuWnH/7+xG6F4TYVb7ID64kr9pyz+pKb2VAGCZxJWYl3YPJivNbGSP/IcD4LJoD/zdv+FowoBKzAO2Mwq6PHkI3Ebu43+MYMNO/pxGLDhP4M7pjtEta79MJbnHdtK8rFZxfywCtJ6BZ7o=
+	t=1750176393; cv=none; b=R7wiS5VyQPuKftENgkvIbq2RSLP9BxO9GReEnQ244ojO951+N855A55Br2HRyrRdK/yjeYWG2NFLI0OZ+CrIQY09FjE4EOk53DcldbutnifSLCycvvfUyjmEv88rEhmC0VThjktyiOqbUvseS0w9/egHTs1wDGmPcuB5bqY/Ows=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750176390; c=relaxed/simple;
-	bh=2vMKfV576QIvsxaRsYvHil3gtwk+07Zpzr7+Y13URv4=;
+	s=arc-20240116; t=1750176393; c=relaxed/simple;
+	bh=xW4nolXN0jaIvHbemW+VDjTf7CNlrys/4GKxoEtKEuE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CHejbOcx2Rb8ZtiTVU0fab2lIbWmee/WKH1DZQfC90fK1wDmTNa5CHzLjugw+eRe3U0kpRHf2Ir+mhM/vIX77b2eIyGfsHePvikB5fF0efmGjTWlw0wnPiMzg7JnzhpqWzDVarfbgp+DOp2sC0Bn7/LS+j5hYoP+mu2S/azvzps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w2wj7Toj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e9PhXOX/GQXBpTCm8oqOsPMhF7/gk1E6XL8scU48htz2hUQOkZ1FQ9EUdD82Nf51UvIfwWdyn1T/Rz24qMG2KjqHOAlZbE2B2tvgfE5XdYFOvAd+xYuiUDtitPi8qrviK4aSlxroU0zRP+taMLQFP84fZPA+K2Y+UiXb3y7wxjI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DpKqtD68; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w2wj7Toj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CAFDC4CEE3;
-	Tue, 17 Jun 2025 16:06:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DpKqtD68"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E195C4CEE3;
+	Tue, 17 Jun 2025 16:06:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750176389;
-	bh=2vMKfV576QIvsxaRsYvHil3gtwk+07Zpzr7+Y13URv4=;
+	s=korg; t=1750176392;
+	bh=xW4nolXN0jaIvHbemW+VDjTf7CNlrys/4GKxoEtKEuE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w2wj7TojF/Gwe62GRtO6daDa3JL/NBluqtqWtL9Q2UtwxbA+B2OR5e3+PNSElO2EF
-	 Va26G6GNcmi7wJ1VIxZyZbefdH40rGIZjb/QdcztLgtENWVZEtFa9rtOLw1pnnZqIK
-	 nrucLKsWz065RKUbDDnBzv7BMIOQK9Aa/r0vXKxg=
+	b=DpKqtD68mGZKbpjRZ8LFPG4Aw4VKyJQfn7Nx5pYnZEfRPXE2sM4VkDT3rQFhftbK6
+	 dxu554fDNaVjbo4i20QVktv+eeE8PD5PUDxHNZ0LQXLmXrBVII9mmWlyQzh0LIqnpq
+	 c3UWdqeVCAPr9rGbLSRx9LNLqOW4aag3jGy21B7Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Dzmitry Sankouski <dsankouski@gmail.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Yuuki NAGAO <wf.yn386@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 225/512] arm64: dts: qcom: sdm845-starqltechn: remove excess reserved gpios
-Date: Tue, 17 Jun 2025 17:23:11 +0200
-Message-ID: <20250617152428.739301006@linuxfoundation.org>
+Subject: [PATCH 6.6 273/356] ASoC: ti: omap-hdmi: Re-add dai_link->platform to fix card init
+Date: Tue, 17 Jun 2025 17:26:28 +0200
+Message-ID: <20250617152349.186943667@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
+References: <20250617152338.212798615@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,44 +47,79 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dzmitry Sankouski <dsankouski@gmail.com>
+From: Yuuki NAGAO <wf.yn386@gmail.com>
 
-[ Upstream commit fb5fce873b952f8b1c5f7edcabcc8611ef45ea7a ]
+[ Upstream commit bae071aa7bcd034054cec91666c80f812adeccd9 ]
 
-Starqltechn has 2 reserved gpio ranges <27 4>, <85 4>.
-<27 4> is spi for eSE(embedded Secure Element).
-<85 4> is spi for fingerprint.
+The removed dai_link->platform component cause a fail which
+is exposed at runtime. (ex: when a sound tool is used)
+This patch re-adds the dai_link->platform component to have
+a full card registered.
 
-Remove excess reserved gpio regions.
+Before this patch:
+$ aplay -l
+**** List of PLAYBACK Hardware Devices ****
+card 1: HDMI [HDMI], device 0: HDMI snd-soc-dummy-dai-0 []
+  Subdevices: 1/1
+  Subdevice #0: subdevice #0
 
-Fixes: d711b22eee55 ("arm64: dts: qcom: starqltechn: add initial device tree for starqltechn")
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Dzmitry Sankouski <dsankouski@gmail.com>
-Link: https://lore.kernel.org/r/20250225-starqltechn_integration_upstream-v9-5-a5d80375cb66@gmail.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+$ speaker-test -D plughw:1,0 -t sine
+speaker-test 1.2.8
+Playback device is plughw:1,0
+Stream parameters are 48000Hz, S16_LE, 1 channels
+Sine wave rate is 440.0000Hz
+Playback open error: -22,Invalid argument
+
+After this patch which restores the platform component:
+$ aplay -l
+**** List of PLAYBACK Hardware Devices ****
+card 0: HDMI [HDMI], device 0: HDMI snd-soc-dummy-dai-0 [HDMI snd-soc-dummy-dai-0]
+  Subdevices: 0/1
+  Subdevice #0: subdevice #0
+
+-> Resolve the playback error.
+
+Fixes: 3b0db249cf8f ("ASoC: ti: remove unnecessary dai_link->platform")
+
+Signed-off-by: Yuuki NAGAO <wf.yn386@gmail.com>
+Link: https://patch.msgid.link/20250531141341.81164-1-wf.yn386@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/soc/ti/omap-hdmi.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts b/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
-index 8a0d63bd594b3..5948b401165ce 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
-@@ -418,7 +418,8 @@
- };
+diff --git a/sound/soc/ti/omap-hdmi.c b/sound/soc/ti/omap-hdmi.c
+index 0a731b21e5a58..72fabf22a02ee 100644
+--- a/sound/soc/ti/omap-hdmi.c
++++ b/sound/soc/ti/omap-hdmi.c
+@@ -361,17 +361,20 @@ static int omap_hdmi_audio_probe(struct platform_device *pdev)
+ 	if (!card->dai_link)
+ 		return -ENOMEM;
  
- &tlmm {
--	gpio-reserved-ranges = <0 4>, <27 4>, <81 4>, <85 4>;
-+	gpio-reserved-ranges = <27 4>, /* SPI (eSE - embedded Secure Element) */
-+			       <85 4>; /* SPI (fingerprint reader) */
+-	compnent = devm_kzalloc(dev, sizeof(*compnent), GFP_KERNEL);
++	compnent = devm_kzalloc(dev, 2 * sizeof(*compnent), GFP_KERNEL);
+ 	if (!compnent)
+ 		return -ENOMEM;
+-	card->dai_link->cpus		= compnent;
++	card->dai_link->cpus		= &compnent[0];
+ 	card->dai_link->num_cpus	= 1;
+ 	card->dai_link->codecs		= &asoc_dummy_dlc;
+ 	card->dai_link->num_codecs	= 1;
++	card->dai_link->platforms	= &compnent[1];
++	card->dai_link->num_platforms	= 1;
  
- 	sdc2_clk_state: sdc2-clk-state {
- 		pins = "sdc2_clk";
+ 	card->dai_link->name = card->name;
+ 	card->dai_link->stream_name = card->name;
+ 	card->dai_link->cpus->dai_name = dev_name(ad->dssdev);
++	card->dai_link->platforms->name = dev_name(ad->dssdev);
+ 	card->num_links = 1;
+ 	card->dev = dev;
+ 
 -- 
 2.39.5
 
