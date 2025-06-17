@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0D85221F1F;
-	Tue, 17 Jun 2025 15:35:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99A0F2DF3C9;
+	Tue, 17 Jun 2025 15:35:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750174532; cv=none; b=lTrulJaH7322PhuWLkCcoQwGiSRA3VcdmziPdFyeCZS/7qtZucbFx9NvP7+EKbHZq3gOhpAaQ9ugwlKlDLwAZMx/zzFEEosiUNhTaFe/S8ZBmR9Q7jBGOCwV5VBZVj3uNxiWcklv7SBzxto195BX7VXijoJVf1WP0PFWiIU3vWM=
+	t=1750174535; cv=none; b=PCa0PPeskKA5tqCQnY7XAJWIzl1L3xwoqQuTWVSfb6R/tZJGkoFi9Cz9bMR+G/wQMQx2cMEc8WdrAC+Yyocoh2Tnnd8DoxOvSyJqmDgcUQ2z1eQ790HyGmlKmKUQ6Aa8j0l91lt0wqn0Xro/HqYpMZ3G2JM1xCW5kdOD8kdT0QU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750174532; c=relaxed/simple;
-	bh=XJ4E7vNKlJJPpPoHQGcbvWRXApyPQmOoCaEIyrctHBg=;
+	s=arc-20240116; t=1750174535; c=relaxed/simple;
+	bh=ojRFUsqfczFwui7yvFFXbI1psU9gJdBxBxiGcrpFnDM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OLk0C/fkN5JNblDWRXCmr6MvYpElxfMcw/h4h+pm26ksUTHbLjAxIGR8Z501HHx8foyz2k0njsLEtL2rx3m2UnHxz3h0Cd2Ggo86n93Y2aE0oInlNYKHox7JNT8ilFZRmmxWGxoO/VrzKdP7ngVzGgMh06QCRvgqQvtNim3YEzo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zQEc4Bub; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k6d6p7zMO9/ocwT6g86KvfxsR0aSJtFpCLRUL+C7FpfYdzJM91iPyfJp4xfe9uZMXFplwUczwAbTeuhHcBGXzn2D0N7dpMTET3zqOX+0j3ng+UL7o6I0XKcY6bBU1iAoF//NZCpzrJcKacU52OjsjQpYI4ys6B3FrVxiKCLOlXI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lYIIUOMd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zQEc4Bub"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EAB7C4CEE3;
-	Tue, 17 Jun 2025 15:35:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lYIIUOMd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 212B0C4CEE3;
+	Tue, 17 Jun 2025 15:35:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750174532;
-	bh=XJ4E7vNKlJJPpPoHQGcbvWRXApyPQmOoCaEIyrctHBg=;
+	s=korg; t=1750174535;
+	bh=ojRFUsqfczFwui7yvFFXbI1psU9gJdBxBxiGcrpFnDM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zQEc4BubnYtqgkYKcL6u08rkr/UWBYIx+o3ctKCyb6BiGUxJKDuobjjPGhfoSEZ+G
-	 QOSffu3sRatqZsLtnOy41jb1q2rW0c1Rdqj6cAG5vhSZPRgyrTQAJDSs0SpUppKSaZ
-	 gphYUAiHsRIYMP59sqUnqf30PCKZRbfH8e5uQl74=
+	b=lYIIUOMdFkQs9FQbORmQTx2LzLQFSRoSftWCfhdkK6a0W2DcpUbBfwbBSQDcCa6ft
+	 sm4vGeXNCT/mdKuWZKV+Y+mokR+vTWIvMtP6vBQoK/yid8yF/Iw+xRUEwEmsrOTOpy
+	 NGQ0YqZrL7poDwJIcaV3JXVIyJNpydOkq6+Bo8pM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stone Zhang <quic_stonez@quicinc.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	kernel test robot <oliver.sang@intel.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 080/356] wifi: ath11k: fix node corruption in ar->arvifs list
-Date: Tue, 17 Jun 2025 17:23:15 +0200
-Message-ID: <20250617152341.442172329@linuxfoundation.org>
+Subject: [PATCH 6.12 031/512] crypto: lrw - Only add ecb if it is not already there
+Date: Tue, 17 Jun 2025 17:19:57 +0200
+Message-ID: <20250617152420.820231160@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-References: <20250617152338.212798615@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,85 +47,50 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stone Zhang <quic_stonez@quicinc.com>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-[ Upstream commit 31e98e277ae47f56632e4d663b1d4fd12ba33ea8 ]
+[ Upstream commit 3d73909bddc2ebb3224a8bc2e5ce00e9df70c15d ]
 
-In current WLAN recovery code flow, ath11k_core_halt() only
-reinitializes the "arvifs" list head. This will cause the
-list node immediately following the list head to become an
-invalid list node. Because the prev of that node still points
-to the list head "arvifs", but the next of the list head "arvifs"
-no longer points to that list node.
+Only add ecb to the cipher name if it isn't already ecb.
 
-When a WLAN recovery occurs during the execution of a vif
-removal, and it happens before the spin_lock_bh(&ar->data_lock)
-in ath11k_mac_op_remove_interface(), list_del() will detect the
-previously mentioned situation, thereby triggering a kernel panic.
+Also use memcmp instead of strncmp since these strings are all
+stored in an array of length CRYPTO_MAX_ALG_NAME.
 
-The fix is to remove and reinitialize all vif list nodes from the
-list head "arvifs" during WLAN halt. The reinitialization is to make
-the list nodes valid, ensuring that the list_del() in
-ath11k_mac_op_remove_interface() can execute normally.
-
-Call trace:
-__list_del_entry_valid_or_report+0xb8/0xd0
-ath11k_mac_op_remove_interface+0xb0/0x27c [ath11k]
-drv_remove_interface+0x48/0x194 [mac80211]
-ieee80211_do_stop+0x6e0/0x844 [mac80211]
-ieee80211_stop+0x44/0x17c [mac80211]
-__dev_close_many+0xac/0x150
-__dev_change_flags+0x194/0x234
-dev_change_flags+0x24/0x6c
-devinet_ioctl+0x3a0/0x670
-inet_ioctl+0x200/0x248
-sock_do_ioctl+0x60/0x118
-sock_ioctl+0x274/0x35c
-__arm64_sys_ioctl+0xac/0xf0
-invoke_syscall+0x48/0x114
-...
-
-Tested-on: QCA6698AQ hw2.1 PCI WLAN.HSP.1.1-04591-QCAHSPSWPL_V1_V2_SILICONZ_IOE-1
-
-Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
-Signed-off-by: Stone Zhang <quic_stonez@quicinc.com>
-Link: https://patch.msgid.link/20250320053145.3445187-1-quic_stonez@quicinc.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Fixes: 700cb3f5fe75 ("crypto: lrw - Convert to skcipher")
+Reported-by: kernel test robot <oliver.sang@intel.com>
+Closes: https://lore.kernel.org/oe-lkp/202505151503.d8a6cf10-lkp@intel.com
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/core.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ crypto/lrw.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath11k/core.c b/drivers/net/wireless/ath/ath11k/core.c
-index fc7c4564a715c..f9870ba651d8f 100644
---- a/drivers/net/wireless/ath/ath11k/core.c
-+++ b/drivers/net/wireless/ath/ath11k/core.c
-@@ -1742,6 +1742,7 @@ static int ath11k_core_reconfigure_on_crash(struct ath11k_base *ab)
- void ath11k_core_halt(struct ath11k *ar)
- {
- 	struct ath11k_base *ab = ar->ab;
-+	struct list_head *pos, *n;
+diff --git a/crypto/lrw.c b/crypto/lrw.c
+index e216fbf2b7866..4bede0031c63c 100644
+--- a/crypto/lrw.c
++++ b/crypto/lrw.c
+@@ -322,7 +322,7 @@ static int lrw_create(struct crypto_template *tmpl, struct rtattr **tb)
  
- 	lockdep_assert_held(&ar->conf_mutex);
+ 	err = crypto_grab_skcipher(spawn, skcipher_crypto_instance(inst),
+ 				   cipher_name, 0, mask);
+-	if (err == -ENOENT) {
++	if (err == -ENOENT && memcmp(cipher_name, "ecb(", 4)) {
+ 		err = -ENAMETOOLONG;
+ 		if (snprintf(ecb_name, CRYPTO_MAX_ALG_NAME, "ecb(%s)",
+ 			     cipher_name) >= CRYPTO_MAX_ALG_NAME)
+@@ -356,7 +356,7 @@ static int lrw_create(struct crypto_template *tmpl, struct rtattr **tb)
+ 	/* Alas we screwed up the naming so we have to mangle the
+ 	 * cipher name.
+ 	 */
+-	if (!strncmp(cipher_name, "ecb(", 4)) {
++	if (!memcmp(cipher_name, "ecb(", 4)) {
+ 		int len;
  
-@@ -1756,7 +1757,12 @@ void ath11k_core_halt(struct ath11k *ar)
- 
- 	rcu_assign_pointer(ab->pdevs_active[ar->pdev_idx], NULL);
- 	synchronize_rcu();
--	INIT_LIST_HEAD(&ar->arvifs);
-+
-+	spin_lock_bh(&ar->data_lock);
-+	list_for_each_safe(pos, n, &ar->arvifs)
-+		list_del_init(pos);
-+	spin_unlock_bh(&ar->data_lock);
-+
- 	idr_init(&ar->txmgmt_idr);
- }
- 
+ 		len = strscpy(ecb_name, cipher_name + 4, sizeof(ecb_name));
 -- 
 2.39.5
 
