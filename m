@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E62D81ADC97;
-	Tue, 17 Jun 2025 16:31:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0CF41ADC97;
+	Tue, 17 Jun 2025 16:31:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177916; cv=none; b=pmWs1Ozy9McOaMA4SLyDEizjKRXYUMSV0iAbxOmRT7cyTBMU6MoxuS0cFB9aPCcLIc4KWaBcRbqujErJG0ZdNji8W/OGkDQCbUANwgs+Vjk5wHsFmv0quVR0gw9x8oiApJOzlLxDvDCCoSFulhRnm7QeITAJhAbK9IdAhA4b+44=
+	t=1750177919; cv=none; b=oikNxc5Ms4nyxLT/Ungj92vHz+becqGE+vKDnTow5HstGrXRD6EFf0JF3uDq5T0ePjuPxPdCP/dEjAzAtvW6XD/EGVzOV/xeUZnwyOzx7zuEe+2UlArS/B6SEUO9F5rUaZk/PKQy2FVZSvrtIOjwRjtK1MRtskWaQ4PjCZMtYzQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177916; c=relaxed/simple;
-	bh=7q05u2ghaZk6YnJYaCyKAcX4caVVvb5KAVBXHUo2nxg=;
+	s=arc-20240116; t=1750177919; c=relaxed/simple;
+	bh=HQSJkV+VwNRnO5B7o5sBuau5k2knXEp8o8ZbBh4avQQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IpXzbAyX2/SdzwdxpOD9GBfrkp0jntLk6CZBX1ZcM995QiB7/AfJEsp7TKXq6fbx2wn2CBwUjihObD7okhWCI41U1KDFBizeHWE1k8wVvflYGyJJy6cyOL6cZu6WCOWus+bfDghB8r9DvxeECJhi6uVeeg7wWrnmqyqzg2ZBo0o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yeqZJTP7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ovbLRWAPYOKbY9c/JjRvbRTgbKIzbRY6HVtWAvvj3HHfIDW08cMDX13edyS3GS+cktNgshrUN2HQjK8aF8UEN1zCanOeGCYSGwDUiRzkgfRwMfStmTmicuMnSx41ioNowLuGpe+5Rj9flwrrjpz8tYJ2WRrrkWyjW+tKKc2Nyt0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jeRzxqNG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yeqZJTP7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26DADC4CEE3;
-	Tue, 17 Jun 2025 16:31:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jeRzxqNG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 544A1C4CEE3;
+	Tue, 17 Jun 2025 16:31:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177915;
-	bh=7q05u2ghaZk6YnJYaCyKAcX4caVVvb5KAVBXHUo2nxg=;
+	s=korg; t=1750177918;
+	bh=HQSJkV+VwNRnO5B7o5sBuau5k2knXEp8o8ZbBh4avQQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yeqZJTP72rjAggbNb+CVOFweeo8XWQRKx+RiUwMGT7R7eMqjUFvLou/q4xa/SwDpZ
-	 xxi45a/yOdg6i5WJ3xIbKoWScTaSN8E0jegIddCTlSLR9eujHhs97XRyY7ARFqx/em
-	 UBbGo8V8I+Z9vDQNHtKTEHNxS0ptd8a7RfaVT6fU=
+	b=jeRzxqNG/mQIqHYCbUXRSKv8wCCRtNXD5lcSFVmsW8T6zHjl3xoNTMNRtP3mJ1JQy
+	 +PjOLiSRX24Tab5JN49ErCXFgagJPzNeu6KS3J7pcuh0ea32AdnQ9nsWJd6z4LyyDR
+	 Xz4z7Pg0BChvqEwC73LCtqGAADubqSdnjao/DFnc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Brauner <brauner@kernel.org>,
-	Al Viro <viro@zeniv.linux.org.uk>,
+	Manikanta Mylavarapu <quic_mmanikan@quicinc.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 393/512] path_overmount(): avoid false negatives
-Date: Tue, 17 Jun 2025 17:25:59 +0200
-Message-ID: <20250617152435.511543354@linuxfoundation.org>
+Subject: [PATCH 6.15 354/780] arm64: dts: qcom: ipq9574: fix the msi interrupt numbers of pcie3
+Date: Tue, 17 Jun 2025 17:21:02 +0200
+Message-ID: <20250617152505.876377836@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,70 +47,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
 
-[ Upstream commit 5f31c549382bcddbbd754c72c5433b19420d485d ]
+[ Upstream commit c87d58bc7f831bf3d887e6ec846246cb673c2e50 ]
 
-Holding namespace_sem is enough to make sure that result remains valid.
-It is *not* enough to avoid false negatives from __lookup_mnt().  Mounts
-can be unhashed outside of namespace_sem (stuck children getting detached
-on final mntput() of lazy-umounted mount) and having an unrelated mount
-removed from the hash chain while we traverse it may end up with false
-negative from __lookup_mnt().  We need to sample and recheck the seqlock
-component of mount_lock...
+The MSI interrupt numbers of the PCIe3 controller are incorrect. Due
+to this, the functional bring up of the QDSP6 processor on the PCIe
+endpoint has failed. Correct the MSI interrupt numbers to properly
+bring up the QDSP6 processor on the PCIe endpoint.
 
-Bug predates the introduction of path_overmount() - it had come from
-the code in finish_automount() that got abstracted into that helper.
-
-Reviewed-by: Christian Brauner <brauner@kernel.org>
-Fixes: 26df6034fdb2 ("fix automount/automount race properly")
-Fixes: 6ac392815628 ("fs: allow to mount beneath top mount")
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+Fixes: d80c7fbfa908 ("arm64: dts: qcom: ipq9574: Add PCIe PHYs and controller nodes")
+Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+Link: https://lore.kernel.org/r/20250313071422.510-1-quic_mmanikan@quicinc.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/namespace.c | 19 +++++++++++++------
- 1 file changed, 13 insertions(+), 6 deletions(-)
+ arch/arm64/boot/dts/qcom/ipq9574.dtsi | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/fs/namespace.c b/fs/namespace.c
-index c1ac585e41e36..1cb236af29bec 100644
---- a/fs/namespace.c
-+++ b/fs/namespace.c
-@@ -3176,18 +3176,25 @@ static int do_set_group(struct path *from_path, struct path *to_path)
-  * Check if path is overmounted, i.e., if there's a mount on top of
-  * @path->mnt with @path->dentry as mountpoint.
-  *
-- * Context: This function expects namespace_lock() to be held.
-+ * Context: namespace_sem must be held at least shared.
-+ * MUST NOT be called under lock_mount_hash() (there one should just
-+ * call __lookup_mnt() and check if it returns NULL).
-  * Return: If path is overmounted true is returned, false if not.
-  */
- static inline bool path_overmounted(const struct path *path)
- {
-+	unsigned seq = read_seqbegin(&mount_lock);
-+	bool no_child;
-+
- 	rcu_read_lock();
--	if (unlikely(__lookup_mnt(path->mnt, path->dentry))) {
--		rcu_read_unlock();
--		return true;
--	}
-+	no_child = !__lookup_mnt(path->mnt, path->dentry);
- 	rcu_read_unlock();
--	return false;
-+	if (need_seqretry(&mount_lock, seq)) {
-+		read_seqlock_excl(&mount_lock);
-+		no_child = !__lookup_mnt(path->mnt, path->dentry);
-+		read_sequnlock_excl(&mount_lock);
-+	}
-+	return unlikely(!no_child);
- }
+diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+index 3c02351fbb156..b790a6b288abb 100644
+--- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+@@ -974,14 +974,14 @@
+ 			ranges = <0x01000000 0x0 0x00000000 0x18200000 0x0 0x100000>,
+ 				 <0x02000000 0x0 0x18300000 0x18300000 0x0 0x7d00000>;
  
- /**
+-			interrupts = <GIC_SPI 126 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 128 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 129 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 130 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 137 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 141 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 142 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 143 IRQ_TYPE_LEVEL_HIGH>;
++			interrupts = <GIC_SPI 221 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 222 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 225 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 312 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 326 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 415 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 494 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 495 IRQ_TYPE_LEVEL_HIGH>;
+ 			interrupt-names = "msi0",
+ 					  "msi1",
+ 					  "msi2",
 -- 
 2.39.5
 
