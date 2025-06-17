@@ -1,46 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 629F32F2377;
-	Tue, 17 Jun 2025 16:07:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3E692F2343;
+	Tue, 17 Jun 2025 16:07:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750176476; cv=none; b=qB9336184tMdnFiUBNe1/ZHQ//BKv88EzXtdf/CVxdaahOwcBnZy3xU6GS7sFUtqxCSFcHbW9DeXfWSUx1Jf4L6fNeKT9QZMTAt6C1NStEcTbWF3dX9ZPmYndu5F6HUdyW87ekqhQl7btAuRw+BAHZ5WDKfcec3Khqw6WiZUdIo=
+	t=1750176479; cv=none; b=X3SOoi9f7cBNIQBXauuf5GLvYJe1EOdlpiLq0uydsSdJY0WwMVJeKM+vAENW+21a87KgooD3E2eEu34ZJRHsQ8ux34Ra1UmzLC0amShydccjbZJLmzeORkfz9B195AerzgKkuha1L8ueiwc50IwklJbYS1ILzLrI8L/KmokjgDs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750176476; c=relaxed/simple;
-	bh=S3Gn76mj+eB/JSH7ZeLYGQn6iN9SdoX7ll9XL0gSV84=;
+	s=arc-20240116; t=1750176479; c=relaxed/simple;
+	bh=vJxj7QMiPGD8nUk0lLMrJSC09SqhhFJV8E1YyCpf6iM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eICRMvjzMryU7RWtVIQaVL+TZnvLJiggmsg3ZzgOkahpjmaspgSUaAHIvArfV5B0d/Iz8Fq6P3KiudGVWQJhFT8x+5fPt+ma05hznl+GQrX6WTq0iUUrHtsWWo4DkBAGzxFLsjgFqFUbdyrt2quRIb2XM0UVTvfHBxZX6DzuRQc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NQ0GGKCG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Vo9NBsgMSXqMeiNVekZ6OPTqA2KeH4IANahRFD0jQT5Wxq7t9uZiiDM8meK/oZoDkUXJzFtEVLPPzrvU8V6H7F6haWYeHLbYjNtH+enI9e52G/sUUtBNdrVVFQYdh+mGmxMf51OkU1fiCc9JUbE0lkno98O1A1CLmS7LQzLmlUU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eOo/WJIt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NQ0GGKCG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C563AC4CEE3;
-	Tue, 17 Jun 2025 16:07:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eOo/WJIt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14283C4CEE3;
+	Tue, 17 Jun 2025 16:07:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750176476;
-	bh=S3Gn76mj+eB/JSH7ZeLYGQn6iN9SdoX7ll9XL0gSV84=;
+	s=korg; t=1750176479;
+	bh=vJxj7QMiPGD8nUk0lLMrJSC09SqhhFJV8E1YyCpf6iM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NQ0GGKCGJT3tVO3GuZyyu3AquOn6AaxTxKhdATlUgCUjN4+joXSgWoYIMsDxzDfB2
-	 SME4PY0xa1W41hx+jFPRt9OsX4lAxkLe9nYpPcc3p/R5YoKOaWwnAquRWDEwYe1GOe
-	 g1uNRsmaLU4qfd/XPEVpL3u44sVhriC2aOr+JUjU=
+	b=eOo/WJItjY6YbZbz3ZGutpOfeAzAzYgMBjgO9npBlg8tmNjdVIim7Gb3EpfLjjEyV
+	 efNyQFyZUCWfb7WiIOe3L3aWgy7T8s+L//ISFKOFj90XFI4cD7dOnNZXoCDip/t2AQ
+	 8w1/KH5YY70b9d2C0ooGXJaOmkUIa/Gvka1oMnHc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrey Konovalov <andreyknvl@google.com>,
-	Marco Elver <elver@google.com>,
-	Alexander Potapenko <glider@google.com>,
-	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
-	Dmitry Vyukov <dvyukov@google.com>,
-	kernel test robot <lkp@intel.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	lmarch2 <2524158037@qq.com>,
+	Viktor Malik <vmalik@redhat.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Shung-Hsi Yu <shung-hsi.yu@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 281/356] kasan: use unchecked __memset internally
-Date: Tue, 17 Jun 2025 17:26:36 +0200
-Message-ID: <20250617152349.503721984@linuxfoundation.org>
+Subject: [PATCH 6.15 193/780] libbpf: Fix buffer overflow in bpf_object__init_prog
+Date: Tue, 17 Jun 2025 17:18:21 +0200
+Message-ID: <20250617152459.335796551@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-References: <20250617152338.212798615@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -52,71 +49,108 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andrey Konovalov <andreyknvl@google.com>
+From: Viktor Malik <vmalik@redhat.com>
 
-[ Upstream commit 01a5ad81637672940844052404678678a0ec8854 ]
+[ Upstream commit ee684de5c1b0ac01821320826baec7da93f3615b ]
 
-KASAN code is supposed to use the unchecked __memset implementation when
-accessing its metadata.
+As shown in [1], it is possible to corrupt a BPF ELF file such that
+arbitrary BPF instructions are loaded by libbpf. This can be done by
+setting a symbol (BPF program) section offset to a large (unsigned)
+number such that <section start + symbol offset> overflows and points
+before the section data in the memory.
 
-Change uses of memset to __memset in mm/kasan/.
+Consider the situation below where:
+- prog_start = sec_start + symbol_offset    <-- size_t overflow here
+- prog_end   = prog_start + prog_size
 
-Link: https://lkml.kernel.org/r/6f621966c6f52241b5aaa7220c348be90c075371.1696605143.git.andreyknvl@google.com
-Fixes: 59e6e098d1c1 ("kasan: introduce kasan_complete_mode_report_info")
-Fixes: 3c5c3cfb9ef4 ("kasan: support backing vmalloc space with real shadow memory")
-Signed-off-by: Andrey Konovalov <andreyknvl@google.com>
-Reviewed-by: Marco Elver <elver@google.com>
-Cc: Alexander Potapenko <glider@google.com>
-Cc: Andrey Ryabinin <ryabinin.a.a@gmail.com>
-Cc: Dmitry Vyukov <dvyukov@google.com>
-Cc: kernel test robot <lkp@intel.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: b6ea95a34cbd ("kasan: avoid sleepable page allocation from atomic context")
+    prog_start        sec_start        prog_end        sec_end
+        |                |                 |              |
+        v                v                 v              v
+    .....................|################################|............
+
+The report in [1] also provides a corrupted BPF ELF which can be used as
+a reproducer:
+
+    $ readelf -S crash
+    Section Headers:
+      [Nr] Name              Type             Address           Offset
+           Size              EntSize          Flags  Link  Info  Align
+    ...
+      [ 2] uretprobe.mu[...] PROGBITS         0000000000000000  00000040
+           0000000000000068  0000000000000000  AX       0     0     8
+
+    $ readelf -s crash
+    Symbol table '.symtab' contains 8 entries:
+       Num:    Value          Size Type    Bind   Vis      Ndx Name
+    ...
+         6: ffffffffffffffb8   104 FUNC    GLOBAL DEFAULT    2 handle_tp
+
+Here, the handle_tp prog has section offset ffffffffffffffb8, i.e. will
+point before the actual memory where section 2 is allocated.
+
+This is also reported by AddressSanitizer:
+
+    =================================================================
+    ==1232==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x7c7302fe0000 at pc 0x7fc3046e4b77 bp 0x7ffe64677cd0 sp 0x7ffe64677490
+    READ of size 104 at 0x7c7302fe0000 thread T0
+        #0 0x7fc3046e4b76 in memcpy (/lib64/libasan.so.8+0xe4b76)
+        #1 0x00000040df3e in bpf_object__init_prog /src/libbpf/src/libbpf.c:856
+        #2 0x00000040df3e in bpf_object__add_programs /src/libbpf/src/libbpf.c:928
+        #3 0x00000040df3e in bpf_object__elf_collect /src/libbpf/src/libbpf.c:3930
+        #4 0x00000040df3e in bpf_object_open /src/libbpf/src/libbpf.c:8067
+        #5 0x00000040f176 in bpf_object__open_file /src/libbpf/src/libbpf.c:8090
+        #6 0x000000400c16 in main /poc/poc.c:8
+        #7 0x7fc3043d25b4 in __libc_start_call_main (/lib64/libc.so.6+0x35b4)
+        #8 0x7fc3043d2667 in __libc_start_main@@GLIBC_2.34 (/lib64/libc.so.6+0x3667)
+        #9 0x000000400b34 in _start (/poc/poc+0x400b34)
+
+    0x7c7302fe0000 is located 64 bytes before 104-byte region [0x7c7302fe0040,0x7c7302fe00a8)
+    allocated by thread T0 here:
+        #0 0x7fc3046e716b in malloc (/lib64/libasan.so.8+0xe716b)
+        #1 0x7fc3045ee600 in __libelf_set_rawdata_wrlock (/lib64/libelf.so.1+0xb600)
+        #2 0x7fc3045ef018 in __elf_getdata_rdlock (/lib64/libelf.so.1+0xc018)
+        #3 0x00000040642f in elf_sec_data /src/libbpf/src/libbpf.c:3740
+
+The problem here is that currently, libbpf only checks that the program
+end is within the section bounds. There used to be a check
+`while (sec_off < sec_sz)` in bpf_object__add_programs, however, it was
+removed by commit 6245947c1b3c ("libbpf: Allow gaps in BPF program
+sections to support overriden weak functions").
+
+Add a check for detecting the overflow of `sec_off + prog_sz` to
+bpf_object__init_prog to fix this issue.
+
+[1] https://github.com/lmarch2/poc/blob/main/libbpf/libbpf.md
+
+Fixes: 6245947c1b3c ("libbpf: Allow gaps in BPF program sections to support overriden weak functions")
+Reported-by: lmarch2 <2524158037@qq.com>
+Signed-off-by: Viktor Malik <vmalik@redhat.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Reviewed-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
+Link: https://github.com/lmarch2/poc/blob/main/libbpf/libbpf.md
+Link: https://lore.kernel.org/bpf/20250415155014.397603-1-vmalik@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/kasan/report.c | 4 ++--
- mm/kasan/shadow.c | 2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ tools/lib/bpf/libbpf.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/mm/kasan/report.c b/mm/kasan/report.c
-index ecced40e51032..465e6a53b3bf2 100644
---- a/mm/kasan/report.c
-+++ b/mm/kasan/report.c
-@@ -538,7 +538,7 @@ void kasan_report_invalid_free(void *ptr, unsigned long ip, enum kasan_report_ty
+diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
+index 37d563e140515..cfb952d7002f6 100644
+--- a/tools/lib/bpf/libbpf.c
++++ b/tools/lib/bpf/libbpf.c
+@@ -896,7 +896,7 @@ bpf_object__add_programs(struct bpf_object *obj, Elf_Data *sec_data,
+ 			return -LIBBPF_ERRNO__FORMAT;
+ 		}
  
- 	start_report(&flags, true);
- 
--	memset(&info, 0, sizeof(info));
-+	__memset(&info, 0, sizeof(info));
- 	info.type = type;
- 	info.access_addr = ptr;
- 	info.access_size = 0;
-@@ -576,7 +576,7 @@ bool kasan_report(const void *addr, size_t size, bool is_write,
- 
- 	start_report(&irq_flags, true);
- 
--	memset(&info, 0, sizeof(info));
-+	__memset(&info, 0, sizeof(info));
- 	info.type = KASAN_REPORT_ACCESS;
- 	info.access_addr = addr;
- 	info.access_size = size;
-diff --git a/mm/kasan/shadow.c b/mm/kasan/shadow.c
-index dd772f9d0f080..d687f09a7ae37 100644
---- a/mm/kasan/shadow.c
-+++ b/mm/kasan/shadow.c
-@@ -324,7 +324,7 @@ static int kasan_populate_vmalloc_pte(pte_t *ptep, unsigned long addr,
- 	if (!page)
- 		return -ENOMEM;
- 
--	memset((void *)page, KASAN_VMALLOC_INVALID, PAGE_SIZE);
-+	__memset((void *)page, KASAN_VMALLOC_INVALID, PAGE_SIZE);
- 	pte = pfn_pte(PFN_DOWN(__pa(page)), PAGE_KERNEL);
- 
- 	spin_lock(&init_mm.page_table_lock);
+-		if (sec_off + prog_sz > sec_sz) {
++		if (sec_off + prog_sz > sec_sz || sec_off + prog_sz < sec_off) {
+ 			pr_warn("sec '%s': program at offset %zu crosses section boundary\n",
+ 				sec_name, sec_off);
+ 			return -LIBBPF_ERRNO__FORMAT;
 -- 
 2.39.5
 
