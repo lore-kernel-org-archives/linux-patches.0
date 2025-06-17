@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FEF5224220;
-	Tue, 17 Jun 2025 16:24:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 525CC524F;
+	Tue, 17 Jun 2025 16:24:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177494; cv=none; b=CD108XlE+rwN6VIULUvfK3flYvuPjrQaLHhJhTgTXp4pgqPy8w3jnzeRkkrTAqWjcqk8HGvKJBIj+G9R1C6htdWuOtuZ18mr7cLLrFmU0judyZm+Tb9cBaKwKbx1A07pEC6lMJ12rxaF0qs8xQOl9sM7HUdDQk9gq+dXDM3LpkM=
+	t=1750177497; cv=none; b=TxLg72WoQoVk1y4mMZ7Ohk1PKw2gZvwr7uCbogsnu+wKJeaH88Rs/k15Tuszar40QASvMvZh3JXjAaiiSR/5MgJhp9LrIyLMbrNLG/kkk5keaiDbd4xJmXG9eScF3CY/tXRDWr28VMr/HCQ7RGU3Fghi8UngzQAIuyfsb7Z4yzU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177494; c=relaxed/simple;
-	bh=yk9rvnOpVCc56pCQy7ihDjnpNhK2ZrVayvcqQFP60LU=;
+	s=arc-20240116; t=1750177497; c=relaxed/simple;
+	bh=6ymRVWauvkcQMNeal7cma5lVhR06zbSeqZAXzqJ1hWw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VuatcCEOfKwS0sxEuHtIFSlIptwxLWnAoOY1Vf4IcslxJdloUCz/nGmQuc3xDEFcHDcX/pFXZlCN+CBf1VQAnj30xX4qwM7jalOg8lGUuayA6+/l4qg/RjdBmqce9Y+0q/QM4VNvOoMbScdiZMKqudL3g7qADv0BRrNu7DHqVHY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LCtvrFwq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Gx0AxgO+WJQRT3OVYFz5m0ZI/VhbyM43Oj7MFXxvZmxduv55qM/VPL+j0j5iVAok2/FnNaUMz3orqwqcfG8Or/zISuBeck3Lid3NrRJ6vWO8OyzEUUHta4rYzaH8qFGePE9K8AHqf5VLBWsXs/qz4P/htpYmjq87w7p0TyTLYtY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gfEQEpnT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LCtvrFwq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 762F9C4CEE3;
-	Tue, 17 Jun 2025 16:24:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gfEQEpnT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6535C4CEE3;
+	Tue, 17 Jun 2025 16:24:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177493;
-	bh=yk9rvnOpVCc56pCQy7ihDjnpNhK2ZrVayvcqQFP60LU=;
+	s=korg; t=1750177497;
+	bh=6ymRVWauvkcQMNeal7cma5lVhR06zbSeqZAXzqJ1hWw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LCtvrFwqckrsbetbep6McwwJKTHuK31fMJ+JSraUis2Xmk9FYmBankz7wGsjWdhZT
-	 uKD5mWT9H6QqjLO7Rky57nOh3j9p3B40mRsHIMAGKvxarcrDejL9gnONXrZL7Rg8Eo
-	 2tM9xZ87oRVR49UaEcKul49hv8sk2HKmSm1axUUM=
+	b=gfEQEpnTcTwn4Z68hVb5RSuStp5AAyjPW4yRYl7/4EFMxszlXxwVST4RSsZGAPanY
+	 Y6kO6X/WqJFd4mncMpu5ZwZGSHql3fSujRQKYow7VnJB9o4T9WlPx9NpDtkeHnQ39X
+	 /JTnB9ft+SVDAmY9d2YxrtV2+c60ujnqcI847naA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonas Gorski <jonas.gorski@gmail.com>,
-	=?UTF-8?q?=C3=81lvaro=20Fern=C3=A1ndez=20Rojas?= <noltari@gmail.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Mark Brown <broonie@kernel.org>,
+	=?UTF-8?q?Radim=20Kr=C4=8Dm=C3=A1=C5=99?= <rkrcmar@ventanamicro.com>,
+	Anup Patel <anup@brainfault.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 354/512] spi: bcm63xx-hsspi: fix shared reset
-Date: Tue, 17 Jun 2025 17:25:20 +0200
-Message-ID: <20250617152433.921755123@linuxfoundation.org>
+Subject: [PATCH 6.15 315/780] RISC-V: KVM: lock the correct mp_state during reset
+Date: Tue, 17 Jun 2025 17:20:23 +0200
+Message-ID: <20250617152504.289780169@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,40 +48,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Álvaro Fernández Rojas <noltari@gmail.com>
+From: Radim Krčmář <rkrcmar@ventanamicro.com>
 
-[ Upstream commit 3d6d84c8f2f66d3fd6a43a1e2ce8e6b54c573960 ]
+[ Upstream commit 7917be170928189fefad490d1a1237fdfa6b856f ]
 
-Some bmips SoCs (bcm6362, bcm63268) share the same SPI reset for both SPI
-and HSSPI controllers, so reset shouldn't be exclusive.
+Currently, the kvm_riscv_vcpu_sbi_system_reset() function locks
+vcpu->arch.mp_state_lock when updating tmp->arch.mp_state.mp_state
+which is incorrect hence fix it.
 
-Fixes: 0eeadddbf09a ("spi: bcm63xx-hsspi: add reset support")
-Reported-by: Jonas Gorski <jonas.gorski@gmail.com>
-Signed-off-by: Álvaro Fernández Rojas <noltari@gmail.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20250529130915.2519590-3-noltari@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 2121cadec45a ("RISCV: KVM: Introduce mp_state_lock to avoid lock inversion")
+Signed-off-by: Radim Krčmář <rkrcmar@ventanamicro.com>
+Reviewed-by: Anup Patel <anup@brainfault.org>
+Link: https://lore.kernel.org/r/20250523104725.2894546-4-rkrcmar@ventanamicro.com
+Signed-off-by: Anup Patel <anup@brainfault.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-bcm63xx-hsspi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/riscv/kvm/vcpu_sbi.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/spi/spi-bcm63xx-hsspi.c b/drivers/spi/spi-bcm63xx-hsspi.c
-index 1ca857c2a4aa3..8df12efeea21c 100644
---- a/drivers/spi/spi-bcm63xx-hsspi.c
-+++ b/drivers/spi/spi-bcm63xx-hsspi.c
-@@ -745,7 +745,7 @@ static int bcm63xx_hsspi_probe(struct platform_device *pdev)
- 	if (IS_ERR(clk))
- 		return PTR_ERR(clk);
+diff --git a/arch/riscv/kvm/vcpu_sbi.c b/arch/riscv/kvm/vcpu_sbi.c
+index d1c83a77735e0..0000ecf49b188 100644
+--- a/arch/riscv/kvm/vcpu_sbi.c
++++ b/arch/riscv/kvm/vcpu_sbi.c
+@@ -143,9 +143,9 @@ void kvm_riscv_vcpu_sbi_system_reset(struct kvm_vcpu *vcpu,
+ 	struct kvm_vcpu *tmp;
  
--	reset = devm_reset_control_get_optional_exclusive(dev, NULL);
-+	reset = devm_reset_control_get_optional_shared(dev, NULL);
- 	if (IS_ERR(reset))
- 		return PTR_ERR(reset);
+ 	kvm_for_each_vcpu(i, tmp, vcpu->kvm) {
+-		spin_lock(&vcpu->arch.mp_state_lock);
++		spin_lock(&tmp->arch.mp_state_lock);
+ 		WRITE_ONCE(tmp->arch.mp_state.mp_state, KVM_MP_STATE_STOPPED);
+-		spin_unlock(&vcpu->arch.mp_state_lock);
++		spin_unlock(&tmp->arch.mp_state_lock);
+ 	}
+ 	kvm_make_all_cpus_request(vcpu->kvm, KVM_REQ_SLEEP);
  
 -- 
 2.39.5
