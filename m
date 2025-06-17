@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C2862FA626;
-	Tue, 17 Jun 2025 16:59:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C9BA2FA626;
+	Tue, 17 Jun 2025 16:59:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750179562; cv=none; b=a7K6kgATAHcMlyBsxYS0S4u3ViYSlvANMB+x4y5fLhLK2bUpj1yopOr4aLeiAZWHgJsxOfbNbTSBNM5UQAq/eZOVFcThoKT+kWyCZwILM5km6fo2c1oGk0TAG7/677q8Zy9VjCm10OSZjcNxYr5JXYFeLuUYcjAnMZsRcU5M+KE=
+	t=1750179565; cv=none; b=YKctSbMgDUcs6jwwguh8ey6ofjYgGva+6IduIlp6CUpsm4wtw2Z4ovIZKcHrmy0BlyM6QLasxxGIe+6JxOFIlws/2JP1G+7swFzzIEspq7mHb8vfflOGLLv3FExhuzAv8+bnLQJi/0Smdy7TQ3GgbB51Cjw+sjsi/aki/b2rkO4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750179562; c=relaxed/simple;
-	bh=GK8mw+ZhsSQf4V3iV09E94VRm/ikTfED4F8qEaDqy0g=;
+	s=arc-20240116; t=1750179565; c=relaxed/simple;
+	bh=RQqqlo0eXbjQ6O0raZxq1bMVa20CbsWywAhWlB58YMI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZaHFU6tlCUdExwkWErmrkhK34bZqdRKZm8mrAP+IXy7UuriPWjKOUil8t8wVGaSBwlEeSjAQDoticZQw694njDGUEBx8Pb+R+75nyj9ejI3UO7NM0DAcHMxA1mmpLlsDtUOisyNK3Qe9T9Od85HPNVEtcS/tnvk1rBIYgjhOIVo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vIZhb9ea; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eVS0EYgKjbz/G0823Ok0TAPmuROISw+b2VT/VB0LAkh2bt/wAkTkZoZrPYmMjeVvtWOUSQtHY1fo5SYnYoLbtDmyikRAAZNO2AJhANJmdBY3yUj9VX2nF/Aajr6JaziFer1JjshTFFIFP6K8hfce6vshu6qRoPWtGmUy4JHHy+k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1KkRjME6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vIZhb9ea"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71EEDC4CEE3;
-	Tue, 17 Jun 2025 16:59:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1KkRjME6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D060C4CEE3;
+	Tue, 17 Jun 2025 16:59:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750179562;
-	bh=GK8mw+ZhsSQf4V3iV09E94VRm/ikTfED4F8qEaDqy0g=;
+	s=korg; t=1750179565;
+	bh=RQqqlo0eXbjQ6O0raZxq1bMVa20CbsWywAhWlB58YMI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vIZhb9eaS6RjIU6bcVrvXUuBsVUE0z8hazBtrfa7aMCREqCPidwHHG1gKeG6EU/zg
-	 zxbO7o8BRfd7uI7nvz3jF0u2O09wA6tqQs84tk0zmQgtXoV72Y0912Hcd8CDc3FWwI
-	 IA3VhuNFZtGitpZAcGlAyHivMSyrNQ/3Dl5Qg+Zw=
+	b=1KkRjME6Iw48UTElRcqvFAYT2pcEjsDCILboRXtWYGoFvrW+YcWxx8UiTrWGBbepZ
+	 lYhOwmiDnj3Z39l5TgGZ8YFZ8kMXVPJHlOo5mbx28h9dhwFQv+6RCv8LWsghFWsfc4
+	 sLj5Igx9+mkC7lMC+joGEMkWh/Cq+4qJBVKWwwHo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roman Kisel <romank@linux.microsoft.com>,
-	Michael Kelley <mhklinux@outlook.com>,
-	Wei Liu <wei.liu@kernel.org>
-Subject: [PATCH 6.15 772/780] x86/hyperv: Fix APIC ID and VP index confusion in hv_snp_boot_ap()
-Date: Tue, 17 Jun 2025 17:28:00 +0200
-Message-ID: <20250617152522.951409048@linuxfoundation.org>
+	"H. Peter Anvin (Intel)" <hpa@zytor.com>,
+	"Xin Li (Intel)" <xin@zytor.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Sohil Mehta <sohil.mehta@intel.com>
+Subject: [PATCH 6.15 773/780] x86/fred/signal: Prevent immediate repeat of single step trap on return from SIGTRAP handler
+Date: Tue, 17 Jun 2025 17:28:01 +0200
+Message-ID: <20250617152522.991999794@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
 References: <20250617152451.485330293@linuxfoundation.org>
@@ -51,244 +52,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Roman Kisel <romank@linux.microsoft.com>
+From: Xin Li (Intel) <xin@zytor.com>
 
-commit 86c48271e0d60c82665e9fd61277002391efcef7 upstream.
+commit e34dbbc85d64af59176fe59fad7b4122f4330fe2 upstream.
 
-To start an application processor in SNP-isolated guest, a hypercall
-is used that takes a virtual processor index. The hv_snp_boot_ap()
-function uses that START_VP hypercall but passes as VP index to it
-what it receives as a wakeup_secondary_cpu_64 callback: the APIC ID.
+Clear the software event flag in the augmented SS to prevent immediate
+repeat of single step trap on return from SIGTRAP handler if the trap
+flag (TF) is set without an external debugger attached.
 
-As those two aren't generally interchangeable, that may lead to hung
-APs if the VP index and the APIC ID don't match up.
+Following is a typical single-stepping flow for a user process:
 
-Update the parameter names to avoid confusion as to what the parameter
-is. Use the APIC ID to the VP index conversion to provide the correct
-input to the hypercall.
+1) The user process is prepared for single-stepping by setting
+   RFLAGS.TF = 1.
+2) When any instruction in user space completes, a #DB is triggered.
+3) The kernel handles the #DB and returns to user space, invoking the
+   SIGTRAP handler with RFLAGS.TF = 0.
+4) After the SIGTRAP handler finishes, the user process performs a
+   sigreturn syscall, restoring the original state, including
+   RFLAGS.TF = 1.
+5) Goto step 2.
 
-Cc: stable@vger.kernel.org
-Fixes: 44676bb9d566 ("x86/hyperv: Add smp support for SEV-SNP guest")
-Signed-off-by: Roman Kisel <romank@linux.microsoft.com>
-Reviewed-by: Michael Kelley <mhklinux@outlook.com>
-Link: https://lore.kernel.org/r/20250507182227.7421-2-romank@linux.microsoft.com
-Signed-off-by: Wei Liu <wei.liu@kernel.org>
-Message-ID: <20250507182227.7421-2-romank@linux.microsoft.com>
+According to the FRED specification:
+
+A) Bit 17 in the augmented SS is designated as the software event
+   flag, which is set to 1 for FRED event delivery of SYSCALL,
+   SYSENTER, or INT n.
+B) If bit 17 of the augmented SS is 1 and ERETU would result in
+   RFLAGS.TF = 1, a single-step trap will be pending upon completion
+   of ERETU.
+
+In step 4) above, the software event flag is set upon the sigreturn
+syscall, and its corresponding ERETU would restore RFLAGS.TF = 1.
+This combination causes a pending single-step trap upon completion of
+ERETU.  Therefore, another #DB is triggered before any user space
+instruction is executed, which leads to an infinite loop in which the
+SIGTRAP handler keeps being invoked on the same user space IP.
+
+Fixes: 14619d912b65 ("x86/fred: FRED entry/exit and dispatch code")
+Suggested-by: H. Peter Anvin (Intel) <hpa@zytor.com>
+Signed-off-by: Xin Li (Intel) <xin@zytor.com>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Tested-by: Sohil Mehta <sohil.mehta@intel.com>
+Cc:stable@vger.kernel.org
+Link: https://lore.kernel.org/all/20250609084054.2083189-2-xin%40zytor.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/hyperv/hv_init.c       |   33 ++++++++++++++++++++++++++++++
- arch/x86/hyperv/hv_vtl.c        |   44 +++++-----------------------------------
- arch/x86/hyperv/ivm.c           |   22 ++++++++++++++++++--
- arch/x86/include/asm/mshyperv.h |    6 +++--
- include/hyperv/hvgdk_mini.h     |    2 -
- 5 files changed, 64 insertions(+), 43 deletions(-)
+ arch/x86/include/asm/sighandling.h |   22 ++++++++++++++++++++++
+ arch/x86/kernel/signal_32.c        |    4 ++++
+ arch/x86/kernel/signal_64.c        |    4 ++++
+ 3 files changed, 30 insertions(+)
 
---- a/arch/x86/hyperv/hv_init.c
-+++ b/arch/x86/hyperv/hv_init.c
-@@ -706,3 +706,36 @@ bool hv_is_hyperv_initialized(void)
- 	return hypercall_msr.enable;
- }
- EXPORT_SYMBOL_GPL(hv_is_hyperv_initialized);
-+
-+int hv_apicid_to_vp_index(u32 apic_id)
+--- a/arch/x86/include/asm/sighandling.h
++++ b/arch/x86/include/asm/sighandling.h
+@@ -24,4 +24,26 @@ int ia32_setup_rt_frame(struct ksignal *
+ int x64_setup_rt_frame(struct ksignal *ksig, struct pt_regs *regs);
+ int x32_setup_rt_frame(struct ksignal *ksig, struct pt_regs *regs);
+ 
++/*
++ * To prevent immediate repeat of single step trap on return from SIGTRAP
++ * handler if the trap flag (TF) is set without an external debugger attached,
++ * clear the software event flag in the augmented SS, ensuring no single-step
++ * trap is pending upon ERETU completion.
++ *
++ * Note, this function should be called in sigreturn() before the original
++ * state is restored to make sure the TF is read from the entry frame.
++ */
++static __always_inline void prevent_single_step_upon_eretu(struct pt_regs *regs)
 +{
-+	u64 control;
-+	u64 status;
-+	unsigned long irq_flags;
-+	struct hv_get_vp_from_apic_id_in *input;
-+	u32 *output, ret;
-+
-+	local_irq_save(irq_flags);
-+
-+	input = *this_cpu_ptr(hyperv_pcpu_input_arg);
-+	memset(input, 0, sizeof(*input));
-+	input->partition_id = HV_PARTITION_ID_SELF;
-+	input->apic_ids[0] = apic_id;
-+
-+	output = *this_cpu_ptr(hyperv_pcpu_output_arg);
-+
-+	control = HV_HYPERCALL_REP_COMP_1 | HVCALL_GET_VP_INDEX_FROM_APIC_ID;
-+	status = hv_do_hypercall(control, input, output);
-+	ret = output[0];
-+
-+	local_irq_restore(irq_flags);
-+
-+	if (!hv_result_success(status)) {
-+		pr_err("failed to get vp index from apic id %d, status %#llx\n",
-+		       apic_id, status);
-+		return -EINVAL;
-+	}
-+
-+	return ret;
-+}
-+EXPORT_SYMBOL_GPL(hv_apicid_to_vp_index);
---- a/arch/x86/hyperv/hv_vtl.c
-+++ b/arch/x86/hyperv/hv_vtl.c
-@@ -206,41 +206,9 @@ free_lock:
- 	return ret;
- }
- 
--static int hv_vtl_apicid_to_vp_id(u32 apic_id)
--{
--	u64 control;
--	u64 status;
--	unsigned long irq_flags;
--	struct hv_get_vp_from_apic_id_in *input;
--	u32 *output, ret;
--
--	local_irq_save(irq_flags);
--
--	input = *this_cpu_ptr(hyperv_pcpu_input_arg);
--	memset(input, 0, sizeof(*input));
--	input->partition_id = HV_PARTITION_ID_SELF;
--	input->apic_ids[0] = apic_id;
--
--	output = *this_cpu_ptr(hyperv_pcpu_output_arg);
--
--	control = HV_HYPERCALL_REP_COMP_1 | HVCALL_GET_VP_ID_FROM_APIC_ID;
--	status = hv_do_hypercall(control, input, output);
--	ret = output[0];
--
--	local_irq_restore(irq_flags);
--
--	if (!hv_result_success(status)) {
--		pr_err("failed to get vp id from apic id %d, status %#llx\n",
--		       apic_id, status);
--		return -EINVAL;
--	}
--
--	return ret;
--}
--
- static int hv_vtl_wakeup_secondary_cpu(u32 apicid, unsigned long start_eip)
- {
--	int vp_id, cpu;
-+	int vp_index, cpu;
- 
- 	/* Find the logical CPU for the APIC ID */
- 	for_each_present_cpu(cpu) {
-@@ -251,18 +219,18 @@ static int hv_vtl_wakeup_secondary_cpu(u
- 		return -EINVAL;
- 
- 	pr_debug("Bringing up CPU with APIC ID %d in VTL2...\n", apicid);
--	vp_id = hv_vtl_apicid_to_vp_id(apicid);
-+	vp_index = hv_apicid_to_vp_index(apicid);
- 
--	if (vp_id < 0) {
-+	if (vp_index < 0) {
- 		pr_err("Couldn't find CPU with APIC ID %d\n", apicid);
- 		return -EINVAL;
- 	}
--	if (vp_id > ms_hyperv.max_vp_index) {
--		pr_err("Invalid CPU id %d for APIC ID %d\n", vp_id, apicid);
-+	if (vp_index > ms_hyperv.max_vp_index) {
-+		pr_err("Invalid CPU id %d for APIC ID %d\n", vp_index, apicid);
- 		return -EINVAL;
- 	}
- 
--	return hv_vtl_bringup_vcpu(vp_id, cpu, start_eip);
-+	return hv_vtl_bringup_vcpu(vp_index, cpu, start_eip);
- }
- 
- int __init hv_vtl_early_init(void)
---- a/arch/x86/hyperv/ivm.c
-+++ b/arch/x86/hyperv/ivm.c
-@@ -9,6 +9,7 @@
- #include <linux/bitfield.h>
- #include <linux/types.h>
- #include <linux/slab.h>
-+#include <linux/cpu.h>
- #include <asm/svm.h>
- #include <asm/sev.h>
- #include <asm/io.h>
-@@ -288,7 +289,7 @@ static void snp_cleanup_vmsa(struct sev_
- 		free_page((unsigned long)vmsa);
- }
- 
--int hv_snp_boot_ap(u32 cpu, unsigned long start_ip)
-+int hv_snp_boot_ap(u32 apic_id, unsigned long start_ip)
- {
- 	struct sev_es_save_area *vmsa = (struct sev_es_save_area *)
- 		__get_free_page(GFP_KERNEL | __GFP_ZERO);
-@@ -297,10 +298,27 @@ int hv_snp_boot_ap(u32 cpu, unsigned lon
- 	u64 ret, retry = 5;
- 	struct hv_enable_vp_vtl *start_vp_input;
- 	unsigned long flags;
-+	int cpu, vp_index;
- 
- 	if (!vmsa)
- 		return -ENOMEM;
- 
-+	/* Find the Hyper-V VP index which might be not the same as APIC ID */
-+	vp_index = hv_apicid_to_vp_index(apic_id);
-+	if (vp_index < 0 || vp_index > ms_hyperv.max_vp_index)
-+		return -EINVAL;
-+
 +	/*
-+	 * Find the Linux CPU number for addressing the per-CPU data, and it
-+	 * might not be the same as APIC ID.
++	 * If the trap flag (TF) is set, i.e., the sigreturn() SYSCALL instruction
++	 * is being single-stepped, do not clear the software event flag in the
++	 * augmented SS, thus a debugger won't skip over the following instruction.
 +	 */
-+	for_each_present_cpu(cpu) {
-+		if (arch_match_cpu_phys_id(cpu, apic_id))
-+			break;
-+	}
-+	if (cpu >= nr_cpu_ids)
-+		return -EINVAL;
++#ifdef CONFIG_X86_FRED
++	if (!(regs->flags & X86_EFLAGS_TF))
++		regs->fred_ss.swevent = 0;
++#endif
++}
 +
- 	native_store_gdt(&gdtr);
+ #endif /* _ASM_X86_SIGHANDLING_H */
+--- a/arch/x86/kernel/signal_32.c
++++ b/arch/x86/kernel/signal_32.c
+@@ -152,6 +152,8 @@ SYSCALL32_DEFINE0(sigreturn)
+ 	struct sigframe_ia32 __user *frame = (struct sigframe_ia32 __user *)(regs->sp-8);
+ 	sigset_t set;
  
- 	vmsa->gdtr.base = gdtr.address;
-@@ -348,7 +366,7 @@ int hv_snp_boot_ap(u32 cpu, unsigned lon
- 	start_vp_input = (struct hv_enable_vp_vtl *)ap_start_input_arg;
- 	memset(start_vp_input, 0, sizeof(*start_vp_input));
- 	start_vp_input->partition_id = -1;
--	start_vp_input->vp_index = cpu;
-+	start_vp_input->vp_index = vp_index;
- 	start_vp_input->target_vtl.target_vtl = ms_hyperv.vtl;
- 	*(u64 *)&start_vp_input->vp_context = __pa(vmsa) | 1;
++	prevent_single_step_upon_eretu(regs);
++
+ 	if (!access_ok(frame, sizeof(*frame)))
+ 		goto badframe;
+ 	if (__get_user(set.sig[0], &frame->sc.oldmask)
+@@ -175,6 +177,8 @@ SYSCALL32_DEFINE0(rt_sigreturn)
+ 	struct rt_sigframe_ia32 __user *frame;
+ 	sigset_t set;
  
---- a/arch/x86/include/asm/mshyperv.h
-+++ b/arch/x86/include/asm/mshyperv.h
-@@ -268,11 +268,11 @@ int hv_unmap_ioapic_interrupt(int ioapic
- #ifdef CONFIG_AMD_MEM_ENCRYPT
- bool hv_ghcb_negotiate_protocol(void);
- void __noreturn hv_ghcb_terminate(unsigned int set, unsigned int reason);
--int hv_snp_boot_ap(u32 cpu, unsigned long start_ip);
-+int hv_snp_boot_ap(u32 apic_id, unsigned long start_ip);
- #else
- static inline bool hv_ghcb_negotiate_protocol(void) { return false; }
- static inline void hv_ghcb_terminate(unsigned int set, unsigned int reason) {}
--static inline int hv_snp_boot_ap(u32 cpu, unsigned long start_ip) { return 0; }
-+static inline int hv_snp_boot_ap(u32 apic_id, unsigned long start_ip) { return 0; }
- #endif
++	prevent_single_step_upon_eretu(regs);
++
+ 	frame = (struct rt_sigframe_ia32 __user *)(regs->sp - 4);
  
- #if defined(CONFIG_AMD_MEM_ENCRYPT) || defined(CONFIG_INTEL_TDX_GUEST)
-@@ -306,6 +306,7 @@ static __always_inline u64 hv_raw_get_ms
- {
- 	return __rdmsr(reg);
- }
-+int hv_apicid_to_vp_index(u32 apic_id);
+ 	if (!access_ok(frame, sizeof(*frame)))
+--- a/arch/x86/kernel/signal_64.c
++++ b/arch/x86/kernel/signal_64.c
+@@ -250,6 +250,8 @@ SYSCALL_DEFINE0(rt_sigreturn)
+ 	sigset_t set;
+ 	unsigned long uc_flags;
  
- #else /* CONFIG_HYPERV */
- static inline void hyperv_init(void) {}
-@@ -327,6 +328,7 @@ static inline void hv_set_msr(unsigned i
- static inline u64 hv_get_msr(unsigned int reg) { return 0; }
- static inline void hv_set_non_nested_msr(unsigned int reg, u64 value) { }
- static inline u64 hv_get_non_nested_msr(unsigned int reg) { return 0; }
-+static inline int hv_apicid_to_vp_index(u32 apic_id) { return -EINVAL; }
- #endif /* CONFIG_HYPERV */
++	prevent_single_step_upon_eretu(regs);
++
+ 	frame = (struct rt_sigframe __user *)(regs->sp - sizeof(long));
+ 	if (!access_ok(frame, sizeof(*frame)))
+ 		goto badframe;
+@@ -366,6 +368,8 @@ COMPAT_SYSCALL_DEFINE0(x32_rt_sigreturn)
+ 	sigset_t set;
+ 	unsigned long uc_flags;
  
++	prevent_single_step_upon_eretu(regs);
++
+ 	frame = (struct rt_sigframe_x32 __user *)(regs->sp - 8);
  
---- a/include/hyperv/hvgdk_mini.h
-+++ b/include/hyperv/hvgdk_mini.h
-@@ -475,7 +475,7 @@ union hv_vp_assist_msr_contents {	 /* HV
- #define HVCALL_CREATE_PORT				0x0095
- #define HVCALL_CONNECT_PORT				0x0096
- #define HVCALL_START_VP					0x0099
--#define HVCALL_GET_VP_ID_FROM_APIC_ID			0x009a
-+#define HVCALL_GET_VP_INDEX_FROM_APIC_ID			0x009a
- #define HVCALL_FLUSH_GUEST_PHYSICAL_ADDRESS_SPACE	0x00af
- #define HVCALL_FLUSH_GUEST_PHYSICAL_ADDRESS_LIST	0x00b0
- #define HVCALL_SIGNAL_EVENT_DIRECT			0x00c0
+ 	if (!access_ok(frame, sizeof(*frame)))
 
 
