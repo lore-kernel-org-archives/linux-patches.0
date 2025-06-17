@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22BEC2FA623;
-	Tue, 17 Jun 2025 16:58:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B1462FA623;
+	Tue, 17 Jun 2025 16:58:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750179499; cv=none; b=rFxV8WImByp0fCxc02Lc/ypnrogtRM4m2F7VvnhIWtKhneiWpoMj/aogZ/KiHGJdU99SO12qFPXoMNFl7RAWSm7NC+BHSjizsGifhGTMAcnYrzXdF43kVmeUhr0yZV7XQfFHGbwe2kTZ/k50LY8RuEGmHPDpx/P2QAwi17Obk4s=
+	t=1750179500; cv=none; b=Suhwu9/494vMDE8MvOhdbpIhY/tYtjVJ83/J22OrPdCSUxPE26M35TFmZyFShnq6/a9fqwwb3NjKs77g+9fW4olzK8l6nJJjaCx9yMbTM1D94ElInFlarrFt2FcYN+wxjwfbXm8/OnFp1IDCEGkuyvoe7QPKOaKCrIQ5qf2Ct1g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750179499; c=relaxed/simple;
-	bh=qrX32344hNXTxO6sjI6ijmL5yqMv5SD7rjrbj8fUPCs=;
+	s=arc-20240116; t=1750179500; c=relaxed/simple;
+	bh=8K4l55Hx2qgYksL6qUrkwStnkmyqwHbpw7L0IcEkuj4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QYGzy2V98OB1qPG3m1O53bTN0pm4zVJ0tK7a4P2grSBJbZDZBUvINkSIPMbIuzu2o793yXXRzxn97txzUvREX7gMPET4Qf9MjdAzHH7opNPQAMVuIUGLvAwn4XQ9fsF6HrHgR6jRkLVP4PzrgMhvKwSVTshqUZMe8yKXyTb1LkA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q/2NpI0L; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=laBXxYmXXximPMQabh3jVsKiyhruGq57HyBZRrd2gaW8ovftLKjdbgYxQaRp64CxTUVTxe+L1DxVew7xe2lDfxt2lJo+TJwz3xnYbjq8Q6AeiEx1JbNTuQlTH+9VJKDkkoULgB1U7ffFCFxNeisRCkkqpd3xW7s/PmnnwphF478=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RwFucV9u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q/2NpI0L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39F15C4CEE3;
-	Tue, 17 Jun 2025 16:58:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RwFucV9u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9669CC4CEE3;
+	Tue, 17 Jun 2025 16:58:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750179496;
-	bh=qrX32344hNXTxO6sjI6ijmL5yqMv5SD7rjrbj8fUPCs=;
+	s=korg; t=1750179500;
+	bh=8K4l55Hx2qgYksL6qUrkwStnkmyqwHbpw7L0IcEkuj4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q/2NpI0LNDRf14yteBb0nKrjwnfLMKnjUOS3JEXDWDSig42WPTB6VAu4U+hNEv4Mn
-	 30A5T3Z1OAMBEbazm9/341iQTM90K+Ln1BpSgY5glAIBFHYxlCm7NiVjg6YJSrX0k3
-	 U2P+Jro0tHcWUNOPqyA2PUJnqN4ibeWk71Ak8vAM=
+	b=RwFucV9uJ68BvgcDcWXpqqbixhxD3+ZkCUuxAvySOg3tq03xRSR76nkXFCMPwkmwb
+	 U6RWMXuAjCxe7WOD/21IApu2lPqDkJbDITey57q4ANT0pMcY5YC3UeWQFkEZuowRwo
+	 hvbM8g4jgbySo7woDMqeoO3QPG/3Mx3h4TwVxDkY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Allison Karlitskaya <lis@redhat.com>,
-	Christian Brauner <brauner@kernel.org>,
-	Al Viro <viro@zeniv.linux.org.uk>
-Subject: [PATCH 6.15 763/780] Dont propagate mounts into detached trees
-Date: Tue, 17 Jun 2025 17:27:51 +0200
-Message-ID: <20250617152522.582231332@linuxfoundation.org>
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Jens Axboe <axboe@kernel.dk>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.15 737/780] bio: Fix bio_first_folio() for SPARSEMEM without VMEMMAP
+Date: Tue, 17 Jun 2025 17:27:25 +0200
+Message-ID: <20250617152521.514850504@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
 References: <20250617152451.485330293@linuxfoundation.org>
@@ -51,109 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Matthew Wilcox (Oracle) <willy@infradead.org>
 
-commit 3b5260d12b1fe76b566fe182de8abc586b827ed0 upstream.
+[ Upstream commit f826ec7966a63d48e16e0868af4e038bf9a1a3ae ]
 
-All versions up to 6.14 did not propagate mount events into detached
-tree.  Shortly after 6.14 a merge of vfs-6.15-rc1.mount.namespace
-(130e696aa68b) has changed that.
+It is possible for physically contiguous folios to have discontiguous
+struct pages if SPARSEMEM is enabled and SPARSEMEM_VMEMMAP is not.
+This is correctly handled by folio_page_idx(), so remove this open-coded
+implementation.
 
-Unfortunately, that has caused userland regressions (reported in
-https://lore.kernel.org/all/CAOYeF9WQhFDe+BGW=Dp5fK8oRy5AgZ6zokVyTj1Wp4EUiYgt4w@mail.gmail.com/)
-
-Straight revert wouldn't be an option - in particular, the variant in 6.14
-had a bug that got fixed in d1ddc6f1d9f0 ("fix IS_MNT_PROPAGATING uses")
-and we don't want to bring the bug back.
-
-This is a modification of manual revert posted by Christian, with changes
-needed to avoid reintroducing the breakage in scenario described in
-d1ddc6f1d9f0.
-
-Cc: stable@vger.kernel.org
-Reported-by: Allison Karlitskaya <lis@redhat.com>
-Tested-by: Allison Karlitskaya <lis@redhat.com>
-Acked-by: Christian Brauner <brauner@kernel.org>
-Co-developed-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 640d1930bef4 (block: Add bio_for_each_folio_all())
+Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Link: https://lore.kernel.org/r/20250612144126.2849931-1-willy@infradead.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/mount.h     |    5 -----
- fs/namespace.c |   15 ++-------------
- fs/pnode.c     |    4 ++--
- 3 files changed, 4 insertions(+), 20 deletions(-)
+ include/linux/bio.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/mount.h
-+++ b/fs/mount.h
-@@ -7,10 +7,6 @@
+diff --git a/include/linux/bio.h b/include/linux/bio.h
+index b786ec5bcc81d..b474a47ec7eef 100644
+--- a/include/linux/bio.h
++++ b/include/linux/bio.h
+@@ -291,7 +291,7 @@ static inline void bio_first_folio(struct folio_iter *fi, struct bio *bio,
  
- extern struct list_head notify_list;
- 
--typedef __u32 __bitwise mntns_flags_t;
--
--#define MNTNS_PROPAGATING	((__force mntns_flags_t)(1 << 0))
--
- struct mnt_namespace {
- 	struct ns_common	ns;
- 	struct mount *	root;
-@@ -37,7 +33,6 @@ struct mnt_namespace {
- 	struct rb_node		mnt_ns_tree_node; /* node in the mnt_ns_tree */
- 	struct list_head	mnt_ns_list; /* entry in the sequential list of mounts namespace */
- 	refcount_t		passive; /* number references not pinning @mounts */
--	mntns_flags_t		mntns_flags;
- } __randomize_layout;
- 
- struct mnt_pcp {
---- a/fs/namespace.c
-+++ b/fs/namespace.c
-@@ -3673,7 +3673,7 @@ static int do_move_mount(struct path *ol
- 	if (!(attached ? check_mnt(old) : is_anon_ns(ns)))
- 		goto out;
- 
--	if (is_anon_ns(ns)) {
-+	if (is_anon_ns(ns) && ns == p->mnt_ns) {
- 		/*
- 		 * Ending up with two files referring to the root of the
- 		 * same anonymous mount namespace would cause an error
-@@ -3681,16 +3681,7 @@ static int do_move_mount(struct path *ol
- 		 * twice into the mount tree which would be rejected
- 		 * later. But be explicit about it right here.
- 		 */
--		if ((is_anon_ns(p->mnt_ns) && ns == p->mnt_ns))
--			goto out;
--
--		/*
--		 * If this is an anonymous mount tree ensure that mount
--		 * propagation can detect mounts that were just
--		 * propagated to the target mount tree so we don't
--		 * propagate onto them.
--		 */
--		ns->mntns_flags |= MNTNS_PROPAGATING;
-+		goto out;
- 	} else if (is_anon_ns(p->mnt_ns)) {
- 		/*
- 		 * Don't allow moving an attached mount tree to an
-@@ -3747,8 +3738,6 @@ static int do_move_mount(struct path *ol
- 	if (attached)
- 		put_mountpoint(old_mp);
- out:
--	if (is_anon_ns(ns))
--		ns->mntns_flags &= ~MNTNS_PROPAGATING;
- 	unlock_mount(mp);
- 	if (!err) {
- 		if (attached) {
---- a/fs/pnode.c
-+++ b/fs/pnode.c
-@@ -231,8 +231,8 @@ static int propagate_one(struct mount *m
- 	/* skip if mountpoint isn't visible in m */
- 	if (!is_subdir(dest_mp->m_dentry, m->mnt.mnt_root))
- 		return 0;
--	/* skip if m is in the anon_ns we are emptying */
--	if (m->mnt_ns->mntns_flags & MNTNS_PROPAGATING)
-+	/* skip if m is in the anon_ns */
-+	if (is_anon_ns(m->mnt_ns))
- 		return 0;
- 
- 	if (peers(m, last_dest)) {
+ 	fi->folio = page_folio(bvec->bv_page);
+ 	fi->offset = bvec->bv_offset +
+-			PAGE_SIZE * (bvec->bv_page - &fi->folio->page);
++			PAGE_SIZE * folio_page_idx(fi->folio, bvec->bv_page);
+ 	fi->_seg_count = bvec->bv_len;
+ 	fi->length = min(folio_size(fi->folio) - fi->offset, fi->_seg_count);
+ 	fi->_next = folio_next(fi->folio);
+-- 
+2.39.5
+
 
 
