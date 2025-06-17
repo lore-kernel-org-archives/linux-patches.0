@@ -1,43 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0114D1E9B2A;
-	Tue, 17 Jun 2025 15:54:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 007E22F234A;
+	Tue, 17 Jun 2025 15:54:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175660; cv=none; b=OpYQqi5ojYNPS8H5ULohOeiOSiXXEEY73yqC++0vk0VbDlRTT63XvjOecM7ozi6JPte+8YBguuD5m7NwNRcCxuHOauF2K/V+45s9dSN9l/M5fhcwGMc9i0aR4pRYzNb3wNN90vsNU/K8dAzdawUTOtvrFc5hiEAaa2hmvb4KUZ4=
+	t=1750175662; cv=none; b=heQq8DEcVQp8vBmN4TtPuWRIEQhAq1W7ck0AeNZpbFD6eL6ZuG23MSIY70uiJlECpjEY26NjpFdEAOlCEn0xUD2quTTJRSAVFHKRYuqGdn2j/IZceKpzp7bpOiLm0CG6QMhJnGa5BGr8OTvI0FSbVd4hlaoOfwyxvMFlpxL4ses=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175660; c=relaxed/simple;
-	bh=Z30lx2qXuq6HutP7RHfI2oYvYVQDgYPqlrSNEolIj2o=;
+	s=arc-20240116; t=1750175662; c=relaxed/simple;
+	bh=Hq6KtSl9l/J3BcgjTil37GGihq86X5C/ajwQceSCe3g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gr5BL0F5UpIzft4HhDXtCjuDF4YXdIEfuWy78Y2LKC+iuhbf2sFDK7ZFjmcOugyGkdldyNYqb7EJoa2pqm0/Sv8CLEMC7GZvq4d0W9bZcmbSZ3znRFE3zfZT8nSa/MR4gmtWBVR5Ei2Vv/Qjc0qWalLeCRl8BeLGNJH4q43K6LI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FFrSpyxG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tEp8rfUlp/iCzv95h8DDHmDIiVbm6k/EyiuqUakhwhzVLWThluDQWDmrTu6+uNbdPwDlyOYQ9Nlj4ipMMWquZpiaWbTEDuSQlUIEX0GmbyD2alhSAmkljchdo58/ssNc5B3tqgSCMtAw+Hl1LGCauWLecd0YVrwiqFkWfMj3CSw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BA3cd/7l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FFrSpyxG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 204F0C4CEF0;
-	Tue, 17 Jun 2025 15:54:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BA3cd/7l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32C8CC4CEE3;
+	Tue, 17 Jun 2025 15:54:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175658;
-	bh=Z30lx2qXuq6HutP7RHfI2oYvYVQDgYPqlrSNEolIj2o=;
+	s=korg; t=1750175661;
+	bh=Hq6KtSl9l/J3BcgjTil37GGihq86X5C/ajwQceSCe3g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FFrSpyxGOyJjfCMQs1jL1D4dz3FfaTYiFUg0vD5srIv9rRu48T0ZS0Nfjhe7hk06N
-	 i0llFiH2ZDjgpsU1u6gHpJPwzpTfGfAC6+KWlRq5TsJShXVCQCGH+lN5weyYeOJXjT
-	 QNnQOQkX1UXOd1lUfMfAvDRWzpJX3Y6o6EznuW0A=
+	b=BA3cd/7lGF0NPFD2yoTgJVcM0bDXSxNPk8w1IKdN9xJTcK2xtjD47M9OdtzYosEne
+	 Ni71BcGFhz+D3yvbaF+3B30Lt5a/rW+S1+dfItwkKJRql1F457VXZFB/bpVIyu1QoK
+	 5AcyK78C4TXT8KrTXeABKYokiX0aVBHC/JoE9CIU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Tom Zanussi <zanussi@kernel.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Ingo Molnar <mingo@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Dmitriy Vyukov <dvyukov@google.com>,
+	Howard Chu <howardchu95@gmail.com>,
+	Ian Rogers <irogers@google.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	"Frank Ch. Eigler" <fche@redhat.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 151/512] tracing: Move histogram trigger variables from stack to per CPU structure
-Date: Tue, 17 Jun 2025 17:21:57 +0200
-Message-ID: <20250617152425.724632392@linuxfoundation.org>
+Subject: [PATCH 6.6 198/356] perf build: Warn when libdebuginfod devel files are not available
+Date: Tue, 17 Jun 2025 17:25:13 +0200
+Message-ID: <20250617152346.186829288@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
+References: <20250617152338.212798615@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,240 +56,113 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 7ab0fc61ce73040f89b12d76a8279995ec283541 ]
+[ Upstream commit 4fce4b91fd1aabb326c46e237eb4b19ab72598f8 ]
 
-The histogram trigger has three somewhat large arrays on the kernel stack:
+While working on 'perf version --build-options' I noticed that:
 
-	unsigned long entries[HIST_STACKTRACE_DEPTH];
-	u64 var_ref_vals[TRACING_MAP_VARS_MAX];
-	char compound_key[HIST_KEY_SIZE_MAX];
+  $ perf version --build-options
+  perf version 6.15.rc1.g312a07a00d31
+                   aio: [ on  ]  # HAVE_AIO_SUPPORT
+                   bpf: [ on  ]  # HAVE_LIBBPF_SUPPORT
+         bpf_skeletons: [ on  ]  # HAVE_BPF_SKEL
+            debuginfod: [ OFF ]  # HAVE_DEBUGINFOD_SUPPORT
+  <SNIP>
 
-Checking the function event_hist_trigger() stack frame size, it currently
-uses 816 bytes for its stack frame due to these variables!
+And looking at tools/perf/Makefile.config I also noticed that it is not
+opt-in, meaning we will attempt to build with it in all normal cases.
 
-Instead, allocate a per CPU structure that holds these arrays for each
-context level (normal, softirq, irq and NMI). That is, each CPU will have
-4 of these structures. This will be allocated when the first histogram
-trigger is enabled and freed when the last is disabled. When the
-histogram callback triggers, it will request this structure. The request
-will disable preemption, get the per CPU structure at the index of the
-per CPU variable, and increment that variable.
+So add the usual warning at build time to let the user know that
+something recommended is missing, now we see:
 
-The callback will use the arrays in this structure to perform its work and
-then release the structure. That in turn will simply decrement the per CPU
-index and enable preemption.
+  Makefile.config:563: No elfutils/debuginfod.h found, no debuginfo server support, please install elfutils-debuginfod-client-devel or equivalent
 
-Moving the variables from the kernel stack to the per CPU structure brings
-the stack frame of event_hist_trigger() down to just 112 bytes.
+And after following the recommendation:
 
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Tom Zanussi <zanussi@kernel.org>
-Link: https://lore.kernel.org/20250407123851.74ea8d58@gandalf.local.home
-Fixes: 067fe038e70f6 ("tracing: Add variable reference handling to hist triggers")
-Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+  $ perf check feature debuginfod
+            debuginfod: [ on  ]  # HAVE_DEBUGINFOD_SUPPORT
+  $ ldd ~/bin/perf | grep debuginfo
+	libdebuginfod.so.1 => /lib64/libdebuginfod.so.1 (0x00007fee5cf5f000)
+  $
+
+With this feature on several perf tools will fetch what is needed and
+not require all the contents of the debuginfo packages, for instance:
+
+  # rpm -qa | grep kernel-debuginfo
+  # pahole --running_kernel_vmlinux
+  pahole: couldn't find a vmlinux that matches the running kernel
+  HINT: Maybe you're inside a container or missing a debuginfo package?
+  #
+  # perf trace -e open* perf probe --vars icmp_rcv
+      0.000 ( 0.005 ms): perf/97391 openat(dfd: CWD, filename: "/etc/ld.so.cache", flags: RDONLY|CLOEXEC) = 3
+      0.014 ( 0.004 ms): perf/97391 openat(dfd: CWD, filename: "/lib64/libm.so.6", flags: RDONLY|CLOEXEC) = 3
+  <SNIP>
+  32130.100 ( 0.008 ms): perf/97391 openat(dfd: CWD, filename: "/root/.cache/debuginfod_client/aa3c82b4a13f9c0e0301bebb20fe958c4db6f362/debuginfo") = 3
+  <SNIP>
+  Available variables at icmp_rcv
+        @<icmp_rcv+0>
+                struct sk_buff* skb
+  <SNIP>
+  #
+  # pahole --running_kernel_vmlinux
+  /root/.cache/debuginfod_client/aa3c82b4a13f9c0e0301bebb20fe958c4db6f362/debuginfo
+  # file /root/.cache/debuginfod_client/aa3c82b4a13f9c0e0301bebb20fe958c4db6f362/debuginfo
+  /root/.cache/debuginfod_client/aa3c82b4a13f9c0e0301bebb20fe958c4db6f362/debuginfo: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, BuildID[sha1]=aa3c82b4a13f9c0e0301bebb20fe958c4db6f362, with debug_info, not stripped
+  # ls -la /root/.cache/debuginfod_client/aa3c82b4a13f9c0e0301bebb20fe958c4db6f362/debuginfo
+  -r--------. 1 root root 475401512 Mar 27 21:00 /root/.cache/debuginfod_client/aa3c82b4a13f9c0e0301bebb20fe958c4db6f362/debuginfo
+  #
+
+Then, cached:
+
+  # perf stat --null perf probe --vars icmp_rcv
+  Available variables at icmp_rcv
+        @<icmp_rcv+0>
+                struct sk_buff* skb
+
+   Performance counter stats for 'perf probe --vars icmp_rcv':
+
+       0.671389041 seconds time elapsed
+
+       0.519176000 seconds user
+       0.150860000 seconds sys
+
+Fixes: c7a14fdcb3fa7736 ("perf build-ids: Fall back to debuginfod query if debuginfo not found")
+Tested-by: Ingo Molnar <mingo@kernel.org>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Dmitriy Vyukov <dvyukov@google.com>
+Cc: Howard Chu <howardchu95@gmail.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Frank Ch. Eigler <fche@redhat.com>
+Link: https://lore.kernel.org/r/Z_dkNDj9EPFwPqq1@gmail.com
+[ Folded patch from Ingo to have the debian/ubuntu devel package added build warning message ]
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_events_hist.c | 120 +++++++++++++++++++++++++++----
- 1 file changed, 105 insertions(+), 15 deletions(-)
+ tools/perf/Makefile.config | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/kernel/trace/trace_events_hist.c b/kernel/trace/trace_events_hist.c
-index 4ebafc655223a..c56375848e088 100644
---- a/kernel/trace/trace_events_hist.c
-+++ b/kernel/trace/trace_events_hist.c
-@@ -5249,17 +5249,94 @@ hist_trigger_actions(struct hist_trigger_data *hist_data,
- 	}
- }
+diff --git a/tools/perf/Makefile.config b/tools/perf/Makefile.config
+index d66b52407e19c..9da9f878f50f7 100644
+--- a/tools/perf/Makefile.config
++++ b/tools/perf/Makefile.config
+@@ -554,6 +554,8 @@ ifndef NO_LIBELF
+     ifeq ($(feature-libdebuginfod), 1)
+       CFLAGS += -DHAVE_DEBUGINFOD_SUPPORT
+       EXTLIBS += -ldebuginfod
++    else
++      $(warning No elfutils/debuginfod.h found, no debuginfo server support, please install libdebuginfod-dev/elfutils-debuginfod-client-devel or equivalent)
+     endif
+   endif
  
-+/*
-+ * The hist_pad structure is used to save information to create
-+ * a histogram from the histogram trigger. It's too big to store
-+ * on the stack, so when the histogram trigger is initialized
-+ * a percpu array of 4 hist_pad structures is allocated.
-+ * This will cover every context from normal, softirq, irq and NMI
-+ * in the very unlikely event that a tigger happens at each of
-+ * these contexts and interrupts a currently active trigger.
-+ */
-+struct hist_pad {
-+	unsigned long		entries[HIST_STACKTRACE_DEPTH];
-+	u64			var_ref_vals[TRACING_MAP_VARS_MAX];
-+	char			compound_key[HIST_KEY_SIZE_MAX];
-+};
-+
-+static struct hist_pad __percpu *hist_pads;
-+static DEFINE_PER_CPU(int, hist_pad_cnt);
-+static refcount_t hist_pad_ref;
-+
-+/* One hist_pad for every context (normal, softirq, irq, NMI) */
-+#define MAX_HIST_CNT 4
-+
-+static int alloc_hist_pad(void)
-+{
-+	lockdep_assert_held(&event_mutex);
-+
-+	if (refcount_read(&hist_pad_ref)) {
-+		refcount_inc(&hist_pad_ref);
-+		return 0;
-+	}
-+
-+	hist_pads = __alloc_percpu(sizeof(struct hist_pad) * MAX_HIST_CNT,
-+				   __alignof__(struct hist_pad));
-+	if (!hist_pads)
-+		return -ENOMEM;
-+
-+	refcount_set(&hist_pad_ref, 1);
-+	return 0;
-+}
-+
-+static void free_hist_pad(void)
-+{
-+	lockdep_assert_held(&event_mutex);
-+
-+	if (!refcount_dec_and_test(&hist_pad_ref))
-+		return;
-+
-+	free_percpu(hist_pads);
-+	hist_pads = NULL;
-+}
-+
-+static struct hist_pad *get_hist_pad(void)
-+{
-+	struct hist_pad *hist_pad;
-+	int cnt;
-+
-+	if (WARN_ON_ONCE(!hist_pads))
-+		return NULL;
-+
-+	preempt_disable();
-+
-+	hist_pad = per_cpu_ptr(hist_pads, smp_processor_id());
-+
-+	if (this_cpu_read(hist_pad_cnt) == MAX_HIST_CNT) {
-+		preempt_enable();
-+		return NULL;
-+	}
-+
-+	cnt = this_cpu_inc_return(hist_pad_cnt) - 1;
-+
-+	return &hist_pad[cnt];
-+}
-+
-+static void put_hist_pad(void)
-+{
-+	this_cpu_dec(hist_pad_cnt);
-+	preempt_enable();
-+}
-+
- static void event_hist_trigger(struct event_trigger_data *data,
- 			       struct trace_buffer *buffer, void *rec,
- 			       struct ring_buffer_event *rbe)
- {
- 	struct hist_trigger_data *hist_data = data->private_data;
- 	bool use_compound_key = (hist_data->n_keys > 1);
--	unsigned long entries[HIST_STACKTRACE_DEPTH];
--	u64 var_ref_vals[TRACING_MAP_VARS_MAX];
--	char compound_key[HIST_KEY_SIZE_MAX];
- 	struct tracing_map_elt *elt = NULL;
- 	struct hist_field *key_field;
-+	struct hist_pad *hist_pad;
- 	u64 field_contents;
- 	void *key = NULL;
- 	unsigned int i;
-@@ -5267,12 +5344,18 @@ static void event_hist_trigger(struct event_trigger_data *data,
- 	if (unlikely(!rbe))
- 		return;
- 
--	memset(compound_key, 0, hist_data->key_size);
-+	hist_pad = get_hist_pad();
-+	if (!hist_pad)
-+		return;
-+
-+	memset(hist_pad->compound_key, 0, hist_data->key_size);
- 
- 	for_each_hist_key_field(i, hist_data) {
- 		key_field = hist_data->fields[i];
- 
- 		if (key_field->flags & HIST_FIELD_FL_STACKTRACE) {
-+			unsigned long *entries = hist_pad->entries;
-+
- 			memset(entries, 0, HIST_STACKTRACE_SIZE);
- 			if (key_field->field) {
- 				unsigned long *stack, n_entries;
-@@ -5296,26 +5379,31 @@ static void event_hist_trigger(struct event_trigger_data *data,
- 		}
- 
- 		if (use_compound_key)
--			add_to_key(compound_key, key, key_field, rec);
-+			add_to_key(hist_pad->compound_key, key, key_field, rec);
- 	}
- 
- 	if (use_compound_key)
--		key = compound_key;
-+		key = hist_pad->compound_key;
- 
- 	if (hist_data->n_var_refs &&
--	    !resolve_var_refs(hist_data, key, var_ref_vals, false))
--		return;
-+	    !resolve_var_refs(hist_data, key, hist_pad->var_ref_vals, false))
-+		goto out;
- 
- 	elt = tracing_map_insert(hist_data->map, key);
- 	if (!elt)
--		return;
-+		goto out;
- 
--	hist_trigger_elt_update(hist_data, elt, buffer, rec, rbe, var_ref_vals);
-+	hist_trigger_elt_update(hist_data, elt, buffer, rec, rbe, hist_pad->var_ref_vals);
- 
--	if (resolve_var_refs(hist_data, key, var_ref_vals, true))
--		hist_trigger_actions(hist_data, elt, buffer, rec, rbe, key, var_ref_vals);
-+	if (resolve_var_refs(hist_data, key, hist_pad->var_ref_vals, true)) {
-+		hist_trigger_actions(hist_data, elt, buffer, rec, rbe,
-+				     key, hist_pad->var_ref_vals);
-+	}
- 
- 	hist_poll_wakeup();
-+
-+ out:
-+	put_hist_pad();
- }
- 
- static void hist_trigger_stacktrace_print(struct seq_file *m,
-@@ -6160,6 +6248,9 @@ static int event_hist_trigger_init(struct event_trigger_data *data)
- {
- 	struct hist_trigger_data *hist_data = data->private_data;
- 
-+	if (alloc_hist_pad() < 0)
-+		return -ENOMEM;
-+
- 	if (!data->ref && hist_data->attrs->name)
- 		save_named_trigger(hist_data->attrs->name, data);
- 
-@@ -6204,6 +6295,7 @@ static void event_hist_trigger_free(struct event_trigger_data *data)
- 
- 		destroy_hist_data(hist_data);
- 	}
-+	free_hist_pad();
- }
- 
- static struct event_trigger_ops event_hist_trigger_ops = {
-@@ -6219,9 +6311,7 @@ static int event_hist_trigger_named_init(struct event_trigger_data *data)
- 
- 	save_named_trigger(data->named_data->name, data);
- 
--	event_hist_trigger_init(data->named_data);
--
--	return 0;
-+	return event_hist_trigger_init(data->named_data);
- }
- 
- static void event_hist_trigger_named_free(struct event_trigger_data *data)
 -- 
 2.39.5
 
