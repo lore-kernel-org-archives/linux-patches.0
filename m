@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A62AB2F94A6;
-	Tue, 17 Jun 2025 16:26:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 596FD2F94A9;
+	Tue, 17 Jun 2025 16:26:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177575; cv=none; b=KMG9fR0Bviy13u3cUQJZfq01464TtCoJlkjfbJcZJomUSQFSWlWSkdb80J/iDWICOdnb+aeuLre34+r3tef4byvxJtEPZvQkk+NFGQPSEExz2DFcCjfGcI3QIl3zUTGuqyaQK6uzAwGuJkMeM9O1QjwVio+bP0W5szmJ2S0ySl8=
+	t=1750177579; cv=none; b=ZSAj8MApJWpDTaN55QPeEzyHFFTXReAp23/g/5u7AMNCZ1veiYnK2N/vYtHTUlMDZ1/Kv2Wc3I7I3KslMIXbzNaPhehYguVWcLcFJXUgs06lCP7ZRujBY0Ooc+Ea1o8pWOSkqnOL1DYmsojR3Tl9RdGnn0GUCnpmyEfoQ2/pW2s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177575; c=relaxed/simple;
-	bh=0pVOQCgGUx8VO6aaBkJaG0KPrMO5lFAFdD1xJ3dcmCw=;
+	s=arc-20240116; t=1750177579; c=relaxed/simple;
+	bh=LVw9vogv6ScAXG9ROFrbbXuSkVPAF3K2tbi+ItTLNCM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=POUW1g6tY0kEDlV9bokGDYqug7SdwqRaxBTyOB7UO5+iwdlMs1bkWdTH6ZFTX0tYeySf2R9wKP/CBLVVqhjS02ok/J4fGNbNBnfWdm3GbpIYOXvNKsTvZvIlDIMomSkFpqM+gA7VHUa0WtLKyqcoHfkxN/QjZMRP2uqdTCZU05w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x9dd1riq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=GdFfcuGn+962RAtLqc4TGTNFJ2hmlgFrufSxsPd68/ziVhC/iFf8SnVG2OOOERtVeOYPcYWKJ0IbyhwLr6EV0RclOKAW3jU4JFIwHuCbEQZs6rAsrKS5EBWgxE6pL1J6c0p13flPWvC+o7D0Km5wVdaVicCtrF/OqNCzO9XSpYU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kTQ59reY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x9dd1riq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 142CFC4CEE3;
-	Tue, 17 Jun 2025 16:26:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kTQ59reY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE029C4CEE3;
+	Tue, 17 Jun 2025 16:26:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177575;
-	bh=0pVOQCgGUx8VO6aaBkJaG0KPrMO5lFAFdD1xJ3dcmCw=;
+	s=korg; t=1750177579;
+	bh=LVw9vogv6ScAXG9ROFrbbXuSkVPAF3K2tbi+ItTLNCM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x9dd1riqsQxuJmC8SBtE8ax0W/dyxBctPuldssoJoVxUYlK2/U2ilkhHTmZVf2gHX
-	 S6Dxte7J84EFSRmuNU1L8fiTn4ilPZ/SR39uvhuuAHsWc4yJVeD/1wVzSQ3Np+kP+b
-	 5haI7kmc5v3809y3KQvSfvFQf64z5a5Lp3pQlLvw=
+	b=kTQ59reY0SynkDFzbu+V76feQ+DuUd4sf66RtUA9Ce/wW2c+l9Vpijo30Afw0t9i/
+	 02+9T+Zkrg9XxGGUwuGyMIDI8acP9sd/bvmfwklv8l4UumGZCZsjNQzHQ/rVuantJ6
+	 9pJ3sIuYa/iTnx5b3Y8d3cMjnRVKJGviAv6fp1B0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Fang <wei.fang@nxp.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
+	Ankit Nautiyal <ankit.k.nautiyal@intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 326/780] net: phy: clear phydev->devlink when the link is deleted
-Date: Tue, 17 Jun 2025 17:20:34 +0200
-Message-ID: <20250617152504.725307366@linuxfoundation.org>
+Subject: [PATCH 6.12 366/512] drm/i915/psr: Fix using wrong mask in REG_FIELD_PREP
+Date: Tue, 17 Jun 2025 17:25:32 +0200
+Message-ID: <20250617152434.416140030@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,65 +46,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wei Fang <wei.fang@nxp.com>
+From: Jouni Högander <jouni.hogander@intel.com>
 
-[ Upstream commit 0795b05a59b1371b18ffbf09d385296b12e9f5d5 ]
+[ Upstream commit 57d63c6cd0851d3af612a556ec61b0f2a9bd522f ]
 
-There is a potential crash issue when disabling and re-enabling the
-network port. When disabling the network port, phy_detach() calls
-device_link_del() to remove the device link, but it does not clear
-phydev->devlink, so phydev->devlink is not a NULL pointer. Then the
-network port is re-enabled, but if phy_attach_direct() fails before
-calling device_link_add(), the code jumps to the "error" label and
-calls phy_detach(). Since phydev->devlink retains the old value from
-the previous attach/detach cycle, device_link_del() uses the old value,
-which accesses a NULL pointer and causes a crash. The simplified crash
-log is as follows.
+Wrong mask is used in PORT_ALPM_LFPS_CTL_FIRST_LFPS_HALF_CYCLE_DURATION and
+PORT_ALPM_LFPS_CTL_LAST_LFPS_HALF_CYCLE_DURATION.
 
-[   24.702421] Call trace:
-[   24.704856]  device_link_put_kref+0x20/0x120
-[   24.709124]  device_link_del+0x30/0x48
-[   24.712864]  phy_detach+0x24/0x168
-[   24.716261]  phy_attach_direct+0x168/0x3a4
-[   24.720352]  phylink_fwnode_phy_connect+0xc8/0x14c
-[   24.725140]  phylink_of_phy_connect+0x1c/0x34
-
-Therefore, phydev->devlink needs to be cleared when the device link is
-deleted.
-
-Fixes: bc66fa87d4fd ("net: phy: Add link between phy dev and mac dev")
-Signed-off-by: Wei Fang <wei.fang@nxp.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20250523083759.3741168-1-wei.fang@nxp.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 295099580f04 ("drm/i915/psr: Add missing ALPM AUX-Less register definitions")
+Signed-off-by: Jouni Högander <jouni.hogander@intel.com>
+Reviewed-by: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
+Link: https://lore.kernel.org/r/20250526120512.1702815-12-jouni.hogander@intel.com
+(cherry picked from commit 8097128a40ff378761034ec72cdbf6f46e466dc0)
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/phy_device.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/i915/display/intel_psr_regs.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/phy/phy_device.c b/drivers/net/phy/phy_device.c
-index cc1bfd22fb812..7d5e76a3db0e9 100644
---- a/drivers/net/phy/phy_device.c
-+++ b/drivers/net/phy/phy_device.c
-@@ -1727,8 +1727,10 @@ void phy_detach(struct phy_device *phydev)
- 	struct module *ndev_owner = NULL;
- 	struct mii_bus *bus;
+diff --git a/drivers/gpu/drm/i915/display/intel_psr_regs.h b/drivers/gpu/drm/i915/display/intel_psr_regs.h
+index 642bb15fb5475..25c0424e34db2 100644
+--- a/drivers/gpu/drm/i915/display/intel_psr_regs.h
++++ b/drivers/gpu/drm/i915/display/intel_psr_regs.h
+@@ -314,8 +314,8 @@
+ #define  PORT_ALPM_LFPS_CTL_LFPS_HALF_CYCLE_DURATION_MASK	REG_GENMASK(20, 16)
+ #define  PORT_ALPM_LFPS_CTL_LFPS_HALF_CYCLE_DURATION(val)	REG_FIELD_PREP(PORT_ALPM_LFPS_CTL_LFPS_HALF_CYCLE_DURATION_MASK, val)
+ #define  PORT_ALPM_LFPS_CTL_FIRST_LFPS_HALF_CYCLE_DURATION_MASK	REG_GENMASK(12, 8)
+-#define  PORT_ALPM_LFPS_CTL_FIRST_LFPS_HALF_CYCLE_DURATION(val)	REG_FIELD_PREP(PORT_ALPM_LFPS_CTL_LFPS_HALF_CYCLE_DURATION_MASK, val)
++#define  PORT_ALPM_LFPS_CTL_FIRST_LFPS_HALF_CYCLE_DURATION(val)	REG_FIELD_PREP(PORT_ALPM_LFPS_CTL_FIRST_LFPS_HALF_CYCLE_DURATION_MASK, val)
+ #define  PORT_ALPM_LFPS_CTL_LAST_LFPS_HALF_CYCLE_DURATION_MASK	REG_GENMASK(4, 0)
+-#define  PORT_ALPM_LFPS_CTL_LAST_LFPS_HALF_CYCLE_DURATION(val)	REG_FIELD_PREP(PORT_ALPM_LFPS_CTL_LFPS_HALF_CYCLE_DURATION_MASK, val)
++#define  PORT_ALPM_LFPS_CTL_LAST_LFPS_HALF_CYCLE_DURATION(val)	REG_FIELD_PREP(PORT_ALPM_LFPS_CTL_LAST_LFPS_HALF_CYCLE_DURATION_MASK, val)
  
--	if (phydev->devlink)
-+	if (phydev->devlink) {
- 		device_link_del(phydev->devlink);
-+		phydev->devlink = NULL;
-+	}
- 
- 	if (phydev->sysfs_links) {
- 		if (dev)
+ #endif /* __INTEL_PSR_REGS_H__ */
 -- 
 2.39.5
 
