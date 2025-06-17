@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14A912EF2AF;
-	Tue, 17 Jun 2025 16:18:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB7D02EA14E;
+	Tue, 17 Jun 2025 16:18:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177134; cv=none; b=kNrYrcZccx0hrcpwaFN5o+5refowV2l6P3zMcrwmUngnBOnsXwgzcb+7Jnelc2BHQWXixkznd553PKZ5GEm+uAtl96Fwye6Z089WowPMDrtC+3BGgr+YnLm0t6va+QNya072vqEIldN+9Tamf24/o3eVDx7+g8lIG2tjl9MqB5k=
+	t=1750177136; cv=none; b=IdEAl2EK8xlraYqQg/Rg0ZatiTjP7E7lrchmK/NXLTo8E+cLv94s4wii6A4QRD1DTeUOM9JElq9aH3Aw3Myz10sM5ZhTwy6A+4XpGjQbtgq+jgmHhmsLDOSDytpVMWmO3iWHREP3oQFd8O3kq3MQtGtO+wZUecmL0Id6x9nAxfM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177134; c=relaxed/simple;
-	bh=+PKp/2Xr8qCgu2QhPIKz7TLgTAj13aLvQF7umY+GQIc=;
+	s=arc-20240116; t=1750177136; c=relaxed/simple;
+	bh=csBi3P1F0FCM9KnMti+ilmVEkuw5h+fqy3p7jAMpknU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RxivAYDVEhlhqbOhUDJN93bQtUuAglz58rM4KF3ICkyLtSz3M++Etm+vvFdSD0YU+B55+bTHJRt54X7OVI+v19YN65Kcak8aamW0KtC+nqoN90ZqonU/98uo8knR8G2erliM2xzYhFSymrRNrldtKEV13l/SL/KuP9ysW9CXKvY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MAhjEZgF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QrIsggWqMnjajrbUbawBsixtGHqVTPibwwau5AtXMA/Brpkg9R0EGKlUef9OswX1AX8Tm6XaPDO1QpY8K2EFVbaxSa6i+TfjZJx9lNo078QOfT8u4AR1VAGH6YPLfwDiOauU1vJDga8cgz89hRsmqrvvrHujbAILw75al/T9oK4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BJ3x224U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MAhjEZgF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17A7AC4CEE3;
-	Tue, 17 Jun 2025 16:18:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BJ3x224U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B033C4CEE3;
+	Tue, 17 Jun 2025 16:18:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177132;
-	bh=+PKp/2Xr8qCgu2QhPIKz7TLgTAj13aLvQF7umY+GQIc=;
+	s=korg; t=1750177135;
+	bh=csBi3P1F0FCM9KnMti+ilmVEkuw5h+fqy3p7jAMpknU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MAhjEZgFEDLkLw48ZM3WYNGQzdNaObBDD/lzPP92S+dxxTbyrU9Hma5a/i68m7bnY
-	 pLLX05QIDRYI+Kna6T62IEfkIe9JxtBB09C4NXpXvkTCdVPTQpNFjthWi1dtJWy6YT
-	 g4gYcovofFZJBGiVRSsocByU/34nIGkcPiTE+MV8=
+	b=BJ3x224U6xNRFiel78r4buAHWjJ86T7eMYl1ejF+uupBwkiAUTsfmQ0g8xKBBlNqy
+	 MWEhBs9oqbFiRc0AgmbFysxxTDrTk6kcHO6Fq5FdP4D9y3O0GUE8Qibx6lx4rcP9O1
+	 7YjJM5tIqPPT7QgJ0JYt9QFQFGYxIVisMyBvWWdc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Lingfeng <lilingfeng3@huawei.com>,
-	Anna Schumaker <anna.schumaker@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 300/512] nfs: clear SB_RDONLY before getting superblock
-Date: Tue, 17 Jun 2025 17:24:26 +0200
-Message-ID: <20250617152431.749598831@linuxfoundation.org>
+	stable@kernel.org,
+	Stefano Stabellini <stefano.stabellini@amd.com>,
+	Juergen Gross <jgross@suse.com>
+Subject: [PATCH 6.6 351/356] xen/arm: call uaccess_ttbr0_enable for dm_op hypercall
+Date: Tue, 17 Jun 2025 17:27:46 +0200
+Message-ID: <20250617152352.264682461@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
+References: <20250617152338.212798615@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,72 +47,67 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Li Lingfeng <lilingfeng3@huawei.com>
+From: Stefano Stabellini <stefano.stabellini@amd.com>
 
-[ Upstream commit 8cd9b785943c57a136536250da80ba1eb6f8eb18 ]
+commit 7f9bbc1140ff8796230bc2634055763e271fd692 upstream.
 
-As described in the link, commit 52cb7f8f1778 ("nfs: ignore SB_RDONLY when
-mounting nfs") removed the check for the ro flag when determining whether
-to share the superblock, which caused issues when mounting different
-subdirectories under the same export directory via NFSv3. However, this
-change did not affect NFSv4.
+dm_op hypercalls might come from userspace and pass memory addresses as
+parameters. The memory addresses typically correspond to buffers
+allocated in userspace to hold extra hypercall parameters.
 
-For NFSv3:
-1) A single superblock is created for the initial mount.
-2) When mounted read-only, this superblock carries the SB_RDONLY flag.
-3) Before commit 52cb7f8f1778 ("nfs: ignore SB_RDONLY when mounting nfs"):
-Subsequent rw mounts would not share the existing ro superblock due to
-flag mismatch, creating a new superblock without SB_RDONLY.
-After the commit:
-  The SB_RDONLY flag is ignored during superblock comparison, and this leads
-  to sharing the existing superblock even for rw mounts.
-  Ultimately results in write operations being rejected at the VFS layer.
+On ARM, when CONFIG_ARM64_SW_TTBR0_PAN is enabled, they might not be
+accessible by Xen, as a result ioreq hypercalls might fail. See the
+existing comment in arch/arm64/xen/hypercall.S regarding privcmd_call
+for reference.
 
-For NFSv4:
-1) Multiple superblocks are created and the last one will be kept.
-2) The actually used superblock for ro mounts doesn't carry SB_RDONLY flag.
-Therefore, commit 52cb7f8f1778 doesn't affect NFSv4 mounts.
+For privcmd_call, Linux calls uaccess_ttbr0_enable before issuing the
+hypercall thanks to commit 9cf09d68b89a. We need to do the same for
+dm_op. This resolves the problem.
 
-Clear SB_RDONLY before getting superblock when NFS_MOUNT_UNSHARED is not
-set to fix it.
-
-Fixes: 52cb7f8f1778 ("nfs: ignore SB_RDONLY when mounting nfs")
-Closes: https://lore.kernel.org/all/12d7ea53-1202-4e21-a7ef-431c94758ce5@app.fastmail.com/T/
-Signed-off-by: Li Lingfeng <lilingfeng3@huawei.com>
-Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@kernel.org
+Fixes: 9cf09d68b89a ("arm64: xen: Enable user access before a privcmd hvc call")
+Signed-off-by: Stefano Stabellini <stefano.stabellini@amd.com>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Message-ID: <alpine.DEB.2.22.394.2505121446370.8380@ubuntu-linux-20-04-desktop>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfs/super.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ arch/arm64/xen/hypercall.S |   21 ++++++++++++++++++++-
+ 1 file changed, 20 insertions(+), 1 deletion(-)
 
-diff --git a/fs/nfs/super.c b/fs/nfs/super.c
-index ae5c5e39afa03..44e5cb00e2ccf 100644
---- a/fs/nfs/super.c
-+++ b/fs/nfs/super.c
-@@ -1303,8 +1303,17 @@ int nfs_get_tree_common(struct fs_context *fc)
- 	if (IS_ERR(server))
- 		return PTR_ERR(server);
- 
+--- a/arch/arm64/xen/hypercall.S
++++ b/arch/arm64/xen/hypercall.S
+@@ -83,7 +83,26 @@ HYPERCALL3(vcpu_op);
+ HYPERCALL1(platform_op_raw);
+ HYPERCALL2(multicall);
+ HYPERCALL2(vm_assist);
+-HYPERCALL3(dm_op);
++
++SYM_FUNC_START(HYPERVISOR_dm_op)
++	mov x16, #__HYPERVISOR_dm_op;	\
 +	/*
-+	 * When NFS_MOUNT_UNSHARED is not set, NFS forces the sharing of a
-+	 * superblock among each filesystem that mounts sub-directories
-+	 * belonging to a single exported root path.
-+	 * To prevent interference between different filesystems, the
-+	 * SB_RDONLY flag should be removed from the superblock.
++	 * dm_op hypercalls are issued by the userspace. The kernel needs to
++	 * enable access to TTBR0_EL1 as the hypervisor would issue stage 1
++	 * translations to user memory via AT instructions. Since AT
++	 * instructions are not affected by the PAN bit (ARMv8.1), we only
++	 * need the explicit uaccess_enable/disable if the TTBR0 PAN emulation
++	 * is enabled (it implies that hardware UAO and PAN disabled).
 +	 */
- 	if (server->flags & NFS_MOUNT_UNSHARED)
- 		compare_super = NULL;
-+	else
-+		fc->sb_flags &= ~SB_RDONLY;
++	uaccess_ttbr0_enable x6, x7, x8
++	hvc XEN_IMM
++
++	/*
++	 * Disable userspace access from kernel once the hyp call completed.
++	 */
++	uaccess_ttbr0_disable x6, x7
++	ret
++SYM_FUNC_END(HYPERVISOR_dm_op);
  
- 	/* -o noac implies -o sync */
- 	if (server->flags & NFS_MOUNT_NOAC)
--- 
-2.39.5
-
+ SYM_FUNC_START(privcmd_call)
+ 	mov x16, x0
 
 
