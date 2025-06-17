@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0CF41ADC97;
-	Tue, 17 Jun 2025 16:31:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24C1C1ADC97;
+	Tue, 17 Jun 2025 16:32:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177919; cv=none; b=oikNxc5Ms4nyxLT/Ungj92vHz+becqGE+vKDnTow5HstGrXRD6EFf0JF3uDq5T0ePjuPxPdCP/dEjAzAtvW6XD/EGVzOV/xeUZnwyOzx7zuEe+2UlArS/B6SEUO9F5rUaZk/PKQy2FVZSvrtIOjwRjtK1MRtskWaQ4PjCZMtYzQ=
+	t=1750177922; cv=none; b=rgWl+Eo/dyf47NTIqlFyqRKJKDopKEaTySCGfSvrHU/j15vAt2x5AIlcaJIR/qhRVT0WM5y1jvTOfdBdiIQbz2FlL6kATgdlO835/sCWDPOhvDgpxlWEtGaBNgx4Zzjziw+poXNEkLbZH2Yz/YWrqV6M9/RrMpGYlnzbOGn7MDE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177919; c=relaxed/simple;
-	bh=HQSJkV+VwNRnO5B7o5sBuau5k2knXEp8o8ZbBh4avQQ=;
+	s=arc-20240116; t=1750177922; c=relaxed/simple;
+	bh=XB02xQIxNX5qjy7yk56avs8hTBEi0UXsRjMjlPQZYc8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ovbLRWAPYOKbY9c/JjRvbRTgbKIzbRY6HVtWAvvj3HHfIDW08cMDX13edyS3GS+cktNgshrUN2HQjK8aF8UEN1zCanOeGCYSGwDUiRzkgfRwMfStmTmicuMnSx41ioNowLuGpe+5Rj9flwrrjpz8tYJ2WRrrkWyjW+tKKc2Nyt0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jeRzxqNG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Rfz8uuhif84HW4pZf2xRnTjW9WowEJdGBnHWBj0dWb3iwb/nILoZuZwh7F8aFEja3D8D14DdTYjgkAncsuKqS4S1tTfzWoPvS0UkAJApSaQhcytNI0J8ngsa9VELgMAxAbGncCk2M+FzSR4m6QlbiWnTlIYaIa2fbR/a15Gjig8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I6szu7I5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jeRzxqNG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 544A1C4CEE3;
-	Tue, 17 Jun 2025 16:31:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I6szu7I5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 950DBC4CEE3;
+	Tue, 17 Jun 2025 16:32:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177918;
-	bh=HQSJkV+VwNRnO5B7o5sBuau5k2knXEp8o8ZbBh4avQQ=;
+	s=korg; t=1750177922;
+	bh=XB02xQIxNX5qjy7yk56avs8hTBEi0UXsRjMjlPQZYc8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jeRzxqNG/mQIqHYCbUXRSKv8wCCRtNXD5lcSFVmsW8T6zHjl3xoNTMNRtP3mJ1JQy
-	 +PjOLiSRX24Tab5JN49ErCXFgagJPzNeu6KS3J7pcuh0ea32AdnQ9nsWJd6z4LyyDR
-	 Xz4z7Pg0BChvqEwC73LCtqGAADubqSdnjao/DFnc=
+	b=I6szu7I5JmfyWv8hXuHL0aGZeQInVj3OYbxdff++lDSoq+cAwp74OjeYJNkIwVSSo
+	 atFie5DPyzk0z/KED1GSJuHWW2BiGzo5yi88rhrCegCUfE0iwMMX9iU1cwtcaIR3Ll
+	 50Ai6i5UdvSydVeGbF8eMoDBcCv2kQber88AnnKg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manikanta Mylavarapu <quic_mmanikan@quicinc.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+	Nuno Sa <nuno.sa@analog.com>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Trevor Gamblin <tgamblin@baylibre.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 354/780] arm64: dts: qcom: ipq9574: fix the msi interrupt numbers of pcie3
-Date: Tue, 17 Jun 2025 17:21:02 +0200
-Message-ID: <20250617152505.876377836@linuxfoundation.org>
+Subject: [PATCH 6.12 414/512] dt-bindings: pwm: adi,axi-pwmgen: Increase #pwm-cells to 3
+Date: Tue, 17 Jun 2025 17:26:20 +0200
+Message-ID: <20250617152436.358224229@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,57 +48,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
 
-[ Upstream commit c87d58bc7f831bf3d887e6ec846246cb673c2e50 ]
+[ Upstream commit 664b5e466f915ad7fce87215ccfb038c47ace4fb ]
 
-The MSI interrupt numbers of the PCIe3 controller are incorrect. Due
-to this, the functional bring up of the QDSP6 processor on the PCIe
-endpoint has failed. Correct the MSI interrupt numbers to properly
-bring up the QDSP6 processor on the PCIe endpoint.
+Using 3 cells allows to pass additional flags and is the normal
+abstraction for new PWM descriptions. There are no device trees yet to
+adapt to this change.
 
-Fixes: d80c7fbfa908 ("arm64: dts: qcom: ipq9574: Add PCIe PHYs and controller nodes")
-Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
-Link: https://lore.kernel.org/r/20250313071422.510-1-quic_mmanikan@quicinc.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+Reviewed-by: Nuno Sa <nuno.sa@analog.com>
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
+Reviewed-by: Trevor Gamblin <tgamblin@baylibre.com>
+Link: https://lore.kernel.org/r/20241024102554.711689-2-u.kleine-koenig@baylibre.com
+Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
+Stable-dep-of: e683131e64f7 ("dt-bindings: pwm: adi,axi-pwmgen: Fix clocks")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/ipq9574.dtsi | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ Documentation/devicetree/bindings/pwm/adi,axi-pwmgen.yaml | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-index 3c02351fbb156..b790a6b288abb 100644
---- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-@@ -974,14 +974,14 @@
- 			ranges = <0x01000000 0x0 0x00000000 0x18200000 0x0 0x100000>,
- 				 <0x02000000 0x0 0x18300000 0x18300000 0x0 0x7d00000>;
+diff --git a/Documentation/devicetree/bindings/pwm/adi,axi-pwmgen.yaml b/Documentation/devicetree/bindings/pwm/adi,axi-pwmgen.yaml
+index ec6115d3796ba..aa35209f74cfa 100644
+--- a/Documentation/devicetree/bindings/pwm/adi,axi-pwmgen.yaml
++++ b/Documentation/devicetree/bindings/pwm/adi,axi-pwmgen.yaml
+@@ -27,7 +27,7 @@ properties:
+     maxItems: 1
  
--			interrupts = <GIC_SPI 126 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 128 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 129 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 130 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 137 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 141 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 142 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 143 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupts = <GIC_SPI 221 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 222 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 225 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 312 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 326 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 415 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 494 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 495 IRQ_TYPE_LEVEL_HIGH>;
- 			interrupt-names = "msi0",
- 					  "msi1",
- 					  "msi2",
+   "#pwm-cells":
+-    const: 2
++    const: 3
+ 
+   clocks:
+     maxItems: 1
+@@ -44,5 +44,5 @@ examples:
+        compatible = "adi,axi-pwmgen-2.00.a";
+        reg = <0x44b00000 0x1000>;
+        clocks = <&spi_clk>;
+-       #pwm-cells = <2>;
++       #pwm-cells = <3>;
+     };
 -- 
 2.39.5
 
