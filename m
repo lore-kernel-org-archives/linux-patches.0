@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 440172E9737;
-	Tue, 17 Jun 2025 15:32:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AF602E9737;
+	Tue, 17 Jun 2025 15:32:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750174339; cv=none; b=fjCZ9xv72EiJ9hFk2Du4ydX9tJflleHWFpJu/8J8l1knLhmXesfK7nklqUDUMYkDMNg4dV1BTvJQp79qUnx6Bu2udxQQ2UN0Gnpe1svS2F/5/zLnwluko/TH2mZeqOinznFvrhJL4Kus+dhVR6c3hERDDG2065YRtq7+Q1tq/GE=
+	t=1750174342; cv=none; b=Qs+XL2rzfyqPn3B4xbXEj/ZO+mhsTeUtJo21cXAnl1H8w1Ndfhb+FFNqseeviCu9vifmlPclBamaUlNG7ykKfFI0ny4IZOJatoTrG0Pv2WQq6zb/tzm6/mCN64p+wmeVOfPg6COXPz+rCTq3rxWG3bzQ40QRaKQbLGeRoDE20wA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750174339; c=relaxed/simple;
-	bh=fpWNPURxNgySLKKRo/LPDTcWtLEf4oyT+YD+QdvYiZw=;
+	s=arc-20240116; t=1750174342; c=relaxed/simple;
+	bh=7wykokKsXkUvkjiAiYY3iHLgxNBeseTEKXSXExr5154=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dK5xkFz5opggMBKrGtEIIhIe26a0klI8U/m3IvfRteMvHUBgb7TmaL6Pu3xWUc10wzwa3UoZsfIg12d0HIWZe9i0aQ0q7506Y8vEVKceXULqPTXiChf6Apj1CYZBRtcTLKAVbJ7YDaEsAU5s/dmy77IC6fxu/TscATEPjdvfeBo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PxGFDjIU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ncbL0j8MvZ41/xxNuqjqlCbT2ceHgneqPf1bFXshyLU65nRp2LLXDUied9pAGeTJ1Lwiy2Z3gYpU2PbL38VwO20BNdCcHVAQRW5I8KLVMWuKsSs/zdhImdlPf5q36Bh0ATzz7wBCvYJe6giZxWxSYEkNVysPhglJ9jjuVOaGwIQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SzsNelTZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PxGFDjIU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A84FBC4CEE3;
-	Tue, 17 Jun 2025 15:32:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SzsNelTZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC0DFC4CEE7;
+	Tue, 17 Jun 2025 15:32:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750174339;
-	bh=fpWNPURxNgySLKKRo/LPDTcWtLEf4oyT+YD+QdvYiZw=;
+	s=korg; t=1750174342;
+	bh=7wykokKsXkUvkjiAiYY3iHLgxNBeseTEKXSXExr5154=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PxGFDjIUV/KAb+1Z1myOeqOPXdGBbbYbikPrmohrJGa4mF0/Y5uekedbI/wFQu57f
-	 IG87EgaOYMvI2G1fadx8oHcucpvM1BcLfOrAh3FjcKMejOvLlriOZeeBxq/3MKRa5q
-	 LG4E8GJsyuYnDl69xtkQXDxa8yPjuRGJC9qexKds=
+	b=SzsNelTZSBzSoJTwUHXmz6o9Hsro4okbrgRvRiMUIczMEsZNuMMcpc0/gBkT067jX
+	 oYrk37T30W6c1JaYbx+zbAGkrjScVZfqfDcQ/zFK+KkyqVjuwOwH/DORDysM7Hfr/q
+	 k7js6VzaopIr5gdV+5/4NbaLxeyMUjbjNWZ6YnWQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ovidiu Panait <ovidiu.panait.oss@gmail.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	=?UTF-8?q?Martin=20Povi=C5=A1er?= <povik+lin@cutebit.org>,
+	James Calligeros <jcalligeros99@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 003/512] crypto: sun8i-ce-hash - fix error handling in sun8i_ce_hash_run()
-Date: Tue, 17 Jun 2025 17:19:29 +0200
-Message-ID: <20250617152419.664366627@linuxfoundation.org>
+Subject: [PATCH 6.6 054/356] ASoC: apple: mca: Constrain channels according to TDM mask
+Date: Tue, 17 Jun 2025 17:22:49 +0200
+Message-ID: <20250617152340.408931992@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
+References: <20250617152338.212798615@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,135 +46,72 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ovidiu Panait <ovidiu.panait.oss@gmail.com>
+From: Martin Povišer <povik+lin@cutebit.org>
 
-[ Upstream commit ea4dd134ef332bd9e3e734c1ba0a1521f436b678 ]
+[ Upstream commit e717c661e2d1a660e96c40b0fe9933e23a1d7747 ]
 
-Rework error handling in sun8i_ce_hash_run() to unmap the dma buffers in
-case of failure. Currently, the dma unmap functions are not called if the
-function errors out at various points.
+We don't (and can't) configure the hardware correctly if the number of
+channels exceeds the weight of the TDM mask. Report that constraint in
+startup of FE.
 
-Fixes: 56f6d5aee88d1 ("crypto: sun8i-ce - support hash algorithms")
-Signed-off-by: Ovidiu Panait <ovidiu.panait.oss@gmail.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: 3df5d0d97289 ("ASoC: apple: mca: Start new platform driver")
+Signed-off-by: Martin Povišer <povik+lin@cutebit.org>
+Signed-off-by: James Calligeros <jcalligeros99@gmail.com>
+Link: https://patch.msgid.link/20250518-mca-fixes-v1-1-ee1015a695f6@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../crypto/allwinner/sun8i-ce/sun8i-ce-hash.c | 34 ++++++++++++-------
- 1 file changed, 21 insertions(+), 13 deletions(-)
+ sound/soc/apple/mca.c | 23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
 
-diff --git a/drivers/crypto/allwinner/sun8i-ce/sun8i-ce-hash.c b/drivers/crypto/allwinner/sun8i-ce/sun8i-ce-hash.c
-index 6072dd9f390b4..3f9d79ea01aaa 100644
---- a/drivers/crypto/allwinner/sun8i-ce/sun8i-ce-hash.c
-+++ b/drivers/crypto/allwinner/sun8i-ce/sun8i-ce-hash.c
-@@ -343,9 +343,8 @@ int sun8i_ce_hash_run(struct crypto_engine *engine, void *breq)
- 	u32 common;
- 	u64 byte_count;
- 	__le32 *bf;
--	void *buf = NULL;
-+	void *buf, *result;
- 	int j, i, todo;
--	void *result = NULL;
- 	u64 bs;
- 	int digestsize;
- 	dma_addr_t addr_res, addr_pad;
-@@ -365,14 +364,14 @@ int sun8i_ce_hash_run(struct crypto_engine *engine, void *breq)
- 	buf = kcalloc(2, bs, GFP_KERNEL | GFP_DMA);
- 	if (!buf) {
- 		err = -ENOMEM;
--		goto theend;
-+		goto err_out;
- 	}
- 	bf = (__le32 *)buf;
- 
- 	result = kzalloc(digestsize, GFP_KERNEL | GFP_DMA);
- 	if (!result) {
- 		err = -ENOMEM;
--		goto theend;
-+		goto err_free_buf;
- 	}
- 
- 	flow = rctx->flow;
-@@ -398,7 +397,7 @@ int sun8i_ce_hash_run(struct crypto_engine *engine, void *breq)
- 	if (nr_sgs <= 0 || nr_sgs > MAX_SG) {
- 		dev_err(ce->dev, "Invalid sg number %d\n", nr_sgs);
- 		err = -EINVAL;
--		goto theend;
-+		goto err_free_result;
- 	}
- 
- 	len = areq->nbytes;
-@@ -411,7 +410,7 @@ int sun8i_ce_hash_run(struct crypto_engine *engine, void *breq)
- 	if (len > 0) {
- 		dev_err(ce->dev, "remaining len %d\n", len);
- 		err = -EINVAL;
--		goto theend;
-+		goto err_unmap_src;
- 	}
- 	addr_res = dma_map_single(ce->dev, result, digestsize, DMA_FROM_DEVICE);
- 	cet->t_dst[0].addr = desc_addr_val_le32(ce, addr_res);
-@@ -419,7 +418,7 @@ int sun8i_ce_hash_run(struct crypto_engine *engine, void *breq)
- 	if (dma_mapping_error(ce->dev, addr_res)) {
- 		dev_err(ce->dev, "DMA map dest\n");
- 		err = -EINVAL;
--		goto theend;
-+		goto err_unmap_src;
- 	}
- 
- 	byte_count = areq->nbytes;
-@@ -441,7 +440,7 @@ int sun8i_ce_hash_run(struct crypto_engine *engine, void *breq)
- 	}
- 	if (!j) {
- 		err = -EINVAL;
--		goto theend;
-+		goto err_unmap_result;
- 	}
- 
- 	addr_pad = dma_map_single(ce->dev, buf, j * 4, DMA_TO_DEVICE);
-@@ -450,7 +449,7 @@ int sun8i_ce_hash_run(struct crypto_engine *engine, void *breq)
- 	if (dma_mapping_error(ce->dev, addr_pad)) {
- 		dev_err(ce->dev, "DMA error on padding SG\n");
- 		err = -EINVAL;
--		goto theend;
-+		goto err_unmap_result;
- 	}
- 
- 	if (ce->variant->hash_t_dlen_in_bits)
-@@ -463,16 +462,25 @@ int sun8i_ce_hash_run(struct crypto_engine *engine, void *breq)
- 	err = sun8i_ce_run_task(ce, flow, crypto_ahash_alg_name(tfm));
- 
- 	dma_unmap_single(ce->dev, addr_pad, j * 4, DMA_TO_DEVICE);
--	dma_unmap_sg(ce->dev, areq->src, ns, DMA_TO_DEVICE);
-+
-+err_unmap_result:
- 	dma_unmap_single(ce->dev, addr_res, digestsize, DMA_FROM_DEVICE);
-+	if (!err)
-+		memcpy(areq->result, result, algt->alg.hash.base.halg.digestsize);
- 
-+err_unmap_src:
-+	dma_unmap_sg(ce->dev, areq->src, ns, DMA_TO_DEVICE);
- 
--	memcpy(areq->result, result, algt->alg.hash.base.halg.digestsize);
--theend:
--	kfree(buf);
-+err_free_result:
- 	kfree(result);
-+
-+err_free_buf:
-+	kfree(buf);
-+
-+err_out:
- 	local_bh_disable();
- 	crypto_finalize_hash_request(engine, breq, err);
- 	local_bh_enable();
-+
- 	return 0;
+diff --git a/sound/soc/apple/mca.c b/sound/soc/apple/mca.c
+index ce77934f3eef3..0e96caa607fb8 100644
+--- a/sound/soc/apple/mca.c
++++ b/sound/soc/apple/mca.c
+@@ -464,6 +464,28 @@ static int mca_configure_serdes(struct mca_cluster *cl, int serdes_unit,
+ 	return -EINVAL;
  }
+ 
++static int mca_fe_startup(struct snd_pcm_substream *substream,
++			  struct snd_soc_dai *dai)
++{
++	struct mca_cluster *cl = mca_dai_to_cluster(dai);
++	unsigned int mask, nchannels;
++
++	if (cl->tdm_slots) {
++		if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK)
++			mask = cl->tdm_tx_mask;
++		else
++			mask = cl->tdm_rx_mask;
++
++		nchannels = hweight32(mask);
++	} else {
++		nchannels = 2;
++	}
++
++	return snd_pcm_hw_constraint_minmax(substream->runtime,
++					    SNDRV_PCM_HW_PARAM_CHANNELS,
++					    1, nchannels);
++}
++
+ static int mca_fe_set_tdm_slot(struct snd_soc_dai *dai, unsigned int tx_mask,
+ 			       unsigned int rx_mask, int slots, int slot_width)
+ {
+@@ -680,6 +702,7 @@ static int mca_fe_hw_params(struct snd_pcm_substream *substream,
+ }
+ 
+ static const struct snd_soc_dai_ops mca_fe_ops = {
++	.startup = mca_fe_startup,
+ 	.set_fmt = mca_fe_set_fmt,
+ 	.set_bclk_ratio = mca_set_bclk_ratio,
+ 	.set_tdm_slot = mca_fe_set_tdm_slot,
 -- 
 2.39.5
 
