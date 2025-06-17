@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1136C2EA174;
-	Tue, 17 Jun 2025 16:11:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A63A237162;
+	Tue, 17 Jun 2025 16:11:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750176705; cv=none; b=bchbDk8Ca6hBoTI1k10O3p5Jmad5UXHvq7CzCMb7pAS+DNe/gNk/7kRYQ6JJ0FXI+HB6O9Oto6+u/A/Vjbe56fN09ZRGjiJ1Tvg4Oncq12Kh5mYbTucxi2jSSr6quSYm4JaHQiQ4Pn6wCTRK1JLIzPZFxhp+DROkBEYPntwY+2k=
+	t=1750176708; cv=none; b=pCfQAKFeoMYWIsmViMmyleFVO9UM/k/upUQ7q+LbMD2KI1P2lYT3qQE3zt5d8PyXTpuckIx1yEW7SoHn32x5CFQ4lfIpqXLDV1PbUZpfezNijFkQrTIHqGBQV4EaHX11CqFb/K1aWVPWIt2GwF38gXnlMGJks9ij+lCk1zNqS6Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750176705; c=relaxed/simple;
-	bh=oaQEP+k18KyTpUFQoZVAJ7T77xQdn/P+l7dmMUqyMHY=;
+	s=arc-20240116; t=1750176708; c=relaxed/simple;
+	bh=n/+VfxFcfcn3Hrf6HuLc0Y3S+WWT/On9G0vQLQXMVU4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WAt4emhNL7eefJiovZaoWo2GGsFl4QqxBMxbZ8HceZQW3VdyPWmT9VrrwPuk09+PucGbh7s0+/j1c4mXW5yWhzCw5/JcOcuiQne0nMHFnR8robpaxJK7IpmntCPc97NKDdXKl5kWbBvUHnGmk2s9zxyxf0kch78GROD8/qY/rKM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lkou4Diu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hJrUFeZdUZ8SThgtDLyGdRKOul/0IFLizz6oUEsL9IdlwDTXkc9ndcKIg7JJN0aevuBAHndMgrxY+O4RMG3+WOkbT++wp85ujco3g3NUBpuGlP6loxdAGIJkHUWYySFypXpVgfwdpnHn05PkWaMLY21JVJvNzQ8WKFrQYUH/Cr0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=avFTQQ/T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lkou4Diu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BD53C4CEE3;
-	Tue, 17 Jun 2025 16:11:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="avFTQQ/T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A003DC4CEE3;
+	Tue, 17 Jun 2025 16:11:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750176704;
-	bh=oaQEP+k18KyTpUFQoZVAJ7T77xQdn/P+l7dmMUqyMHY=;
+	s=korg; t=1750176708;
+	bh=n/+VfxFcfcn3Hrf6HuLc0Y3S+WWT/On9G0vQLQXMVU4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lkou4DiuNnUoBoWoWUi9Yj7wiCE91zECUeDXqm4tm/1Gisx0I6ND9fSbT81l9lfqF
-	 vgs5NpVqHbHgUjArPNjvOo+AVIJOWPTqtQkAhY2v0kSAwNj2rWMnk9KyPe3NiTcUIv
-	 VPuwFbIy5irDQ6ChSbwbIstF5SSrI7+z0BW+sCc4=
+	b=avFTQQ/T3G+kobA9dfWpdKTOuFqSYZYgvz5Y+2fV5pPZ8hG8YP3d00ZktnHBPoxTV
+	 QXYk0CTSEpUOdr3455dab0yMTqTlkZ27Sc+LaJdDe91G9SszSg82ViJa8j9ewSaKSA
+	 L+yjrzyjEL9pQg2gVHaR/rKDGHhhaJGQvQH2Kn+0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	Vaishnav Achath <vaishnav.a@ti.com>,
+	Jai Luthra <j-luthra@ti.com>,
+	Vignesh Raghavendra <vigneshr@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 289/356] serial: sh-sci: Clean sci_ports[0] after at earlycon exit
-Date: Tue, 17 Jun 2025 17:26:44 +0200
-Message-ID: <20250617152349.812027978@linuxfoundation.org>
+Subject: [PATCH 6.6 284/356] arm64: dts: ti: k3-j721e-sk: Model CSI2RX connector mux
+Date: Tue, 17 Jun 2025 17:26:39 +0200
+Message-ID: <20250617152349.620551373@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
 References: <20250617152338.212798615@linuxfoundation.org>
@@ -50,123 +52,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+From: Vaishnav Achath <vaishnav.a@ti.com>
 
-commit 5f1017069933489add0c08659673443c9905659e upstream.
+[ Upstream commit f87c88947396674586a42a163b72efa3999e3dee ]
 
-The early_console_setup() function initializes sci_ports[0].port with an
-object of type struct uart_port obtained from the struct earlycon_device
-passed as an argument to early_console_setup().
+J721E SK has the CSI2RX routed to a MIPI CSI connector and to 15-pin
+RPi camera connector through an analog mux with GPIO control, model that
+so that an overlay can control the mux state according to connected
+cameras. Also provide labels to the I2C mux bus instances so that a
+generic overlay can be used across multiple platforms.
 
-Later, during serial port probing, the serial port used as earlycon
-(e.g., port A) might be remapped to a different position in the sci_ports[]
-array, and a different serial port (e.g., port B) might be assigned to slot
-0. For example:
+J721E SK schematics: https://www.ti.com/lit/zip/sprr438
 
-sci_ports[0] = port B
-sci_ports[X] = port A
-
-In this scenario, the new port mapped at index zero (port B) retains the
-data associated with the earlycon configuration. Consequently, after the
-Linux boot process, any access to the serial port now mapped to
-sci_ports[0] (port B) will block the original earlycon port (port A).
-
-To address this, introduce an early_console_exit() function to clean up
-sci_ports[0] when earlycon is exited.
-
-To prevent the cleanup of sci_ports[0] while the serial device is still
-being used by earlycon, introduce the struct sci_port::probing flag and
-account for it in early_console_exit().
-
-Fixes: 0b0cced19ab1 ("serial: sh-sci: Add CONFIG_SERIAL_EARLYCON support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Link: https://lore.kernel.org/r/20250116182249.3828577-5-claudiu.beznea.uj@bp.renesas.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Signed-off-by: Vaishnav Achath <vaishnav.a@ti.com>
+Reviewed-by: Jai Luthra <j-luthra@ti.com>
+Link: https://lore.kernel.org/r/20240215085518.552692-6-vaishnav.a@ti.com
+Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
+Stable-dep-of: 97b67cc102dc ("arm64: dts: ti: k3-j721e-sk: Add DT nodes for power regulators")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/sh-sci.c | 32 ++++++++++++++++++++++++++++++--
- 1 file changed, 30 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/ti/k3-j721e-sk.dts | 19 +++++++++++++++++--
+ 1 file changed, 17 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/tty/serial/sh-sci.c b/drivers/tty/serial/sh-sci.c
-index 0071cb3043e14..be7e57e1d1e36 100644
---- a/drivers/tty/serial/sh-sci.c
-+++ b/drivers/tty/serial/sh-sci.c
-@@ -183,6 +183,7 @@ static struct sci_port sci_ports[SCI_NPORTS];
- static unsigned long sci_ports_in_use;
- static struct uart_driver sci_uart_driver;
- static bool sci_uart_earlycon;
-+static bool sci_uart_earlycon_dev_probing;
- 
- static inline struct sci_port *
- to_sci_port(struct uart_port *uart)
-@@ -3374,7 +3375,8 @@ static struct plat_sci_port *sci_parse_dt(struct platform_device *pdev,
- static int sci_probe_single(struct platform_device *dev,
- 				      unsigned int index,
- 				      struct plat_sci_port *p,
--				      struct sci_port *sciport)
-+				      struct sci_port *sciport,
-+				      struct resource *sci_res)
- {
- 	int ret;
- 
-@@ -3421,6 +3423,14 @@ static int sci_probe_single(struct platform_device *dev,
- 		sciport->port.flags |= UPF_HARD_FLOW;
- 	}
- 
-+	if (sci_uart_earlycon && sci_ports[0].port.mapbase == sci_res->start) {
-+		/*
-+		 * Skip cleanup the sci_port[0] in early_console_exit(), this
-+		 * port is the same as the earlycon one.
-+		 */
-+		sci_uart_earlycon_dev_probing = true;
-+	}
+diff --git a/arch/arm64/boot/dts/ti/k3-j721e-sk.dts b/arch/arm64/boot/dts/ti/k3-j721e-sk.dts
+index ccacb65683b5b..d967b384071cf 100644
+--- a/arch/arm64/boot/dts/ti/k3-j721e-sk.dts
++++ b/arch/arm64/boot/dts/ti/k3-j721e-sk.dts
+@@ -286,6 +286,15 @@ tfp410_out: endpoint {
+ 			};
+ 		};
+ 	};
 +
- 	return uart_add_one_port(&sci_uart_driver, &sciport->port);
- }
++	csi_mux: mux-controller {
++		compatible = "gpio-mux";
++		#mux-state-cells = <1>;
++		mux-gpios = <&main_gpio0 88 GPIO_ACTIVE_HIGH>;
++		idle-state = <0>;
++		pinctrl-names = "default";
++		pinctrl-0 = <&main_csi_mux_sel_pins_default>;
++	};
+ };
  
-@@ -3479,7 +3489,7 @@ static int sci_probe(struct platform_device *dev)
+ &main_pmx0 {
+@@ -352,6 +361,12 @@ J721E_IOPAD(0x214, PIN_OUTPUT, 4) /* (V4) MCAN1_TX.USB1_DRVVBUS */
+ 		>;
+ 	};
  
- 	platform_set_drvdata(dev, sp);
- 
--	ret = sci_probe_single(dev, dev_id, p, sp);
-+	ret = sci_probe_single(dev, dev_id, p, sp, res);
- 	if (ret)
- 		return ret;
- 
-@@ -3636,6 +3646,22 @@ sh_early_platform_init_buffer("earlyprintk", &sci_driver,
- #ifdef CONFIG_SERIAL_SH_SCI_EARLYCON
- static struct plat_sci_port port_cfg;
- 
-+static int early_console_exit(struct console *co)
-+{
-+	struct sci_port *sci_port = &sci_ports[0];
++	main_csi_mux_sel_pins_default: main-csi-mux-sel-default-pins {
++		pinctrl-single,pins = <
++			J721E_IOPAD(0x164, PIN_OUTPUT, 7) /* (V29) RGMII5_TD2 */
++		>;
++	};
 +
-+	/*
-+	 * Clean the slot used by earlycon. A new SCI device might
-+	 * map to this slot.
-+	 */
-+	if (!sci_uart_earlycon_dev_probing) {
-+		memset(sci_port, 0, sizeof(*sci_port));
-+		sci_uart_earlycon = false;
-+	}
-+
-+	return 0;
-+}
-+
- static int __init early_console_setup(struct earlycon_device *device,
- 				      int type)
- {
-@@ -3655,6 +3681,8 @@ static int __init early_console_setup(struct earlycon_device *device,
- 		       SCSCR_RE | SCSCR_TE | port_cfg.scscr);
+ 	dp0_pins_default: dp0-default-pins {
+ 		pinctrl-single,pins = <
+ 			J721E_IOPAD(0x1c4, PIN_INPUT, 5) /* SPI0_CS1.DP0_HPD */
+@@ -707,14 +722,14 @@ i2c-mux@70 {
+ 		reg = <0x70>;
  
- 	device->con->write = serial_console_write;
-+	device->con->exit = early_console_exit;
-+
- 	return 0;
- }
- static int __init sci_early_console_setup(struct earlycon_device *device,
+ 		/* CSI0 I2C */
+-		i2c@0 {
++		cam0_i2c: i2c@0 {
+ 			#address-cells = <1>;
+ 			#size-cells = <0>;
+ 			reg = <0>;
+ 		};
+ 
+ 		/* CSI1 I2C */
+-		i2c@1 {
++		cam1_i2c: i2c@1 {
+ 			#address-cells = <1>;
+ 			#size-cells = <0>;
+ 			reg = <1>;
 -- 
 2.39.5
 
