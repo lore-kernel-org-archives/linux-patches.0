@@ -1,44 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA4E02FA62D;
-	Tue, 17 Jun 2025 16:48:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B16842FA62D;
+	Tue, 17 Jun 2025 16:48:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750178883; cv=none; b=Q+XXkFOl9e+kSI2oG/fa2Vn4+BzwcfTHFNwCfwoGIZJL3nOMWGjoGFItym7a4hAj7tnxRreNqbKnaG1aC9vo0C3BFK9vxIrfn/B/ExqfmI8xKOlYn3AR/HDBEQMAwPi18fBwY/heyhrkOY4onjtOtMTAcFuhPskho9Ek5ud+qOc=
+	t=1750178886; cv=none; b=aZZ5G7Wo/ESHkQT8uAWU/k2lIm9DmxGLQLZIMSnMq4AGSYjRsX8atkEfpQEJ4qmXE7ym9bzK+vE22W60J7DN4oubGA6hO0jOkJKqWN2aGfrm1B5fj5XCwpyGGm1ukTmpuOCO2a2QTxylvxR8NtpGgr8O2IO18nIOWWTZ5P5eHsA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750178883; c=relaxed/simple;
-	bh=cIKRa6QPSptRWTQ15DkbCkWDSIAzkM7ngJhnHgeTcp0=;
+	s=arc-20240116; t=1750178886; c=relaxed/simple;
+	bh=frNbLBIhXU/4UxpFfNcFoAaYWSMQtZI5oofYHu+sGGc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i5FJVWxDiUxjUv8inGVYR7kIAjvLZwbVUnX9NUJcY9V4E7Z1MMZLL53XbuRqPIyW+KbSDm5M9aVGKwGfIlJ89J/meRjQtOAPKH1nDiGF5LGT7ecTA0nkc1jXMQXpBfPjwjCfR3hQ1TtaxQTvW/9uRso01bTdQvEjnyMCGsfNqu0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k3ErI1mD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=S+Qc9oQO8pf8OhqJ/22rre64pkb1tG2arOiO79GS7p+g67JyR/xY6dYaUnpKj/vsoLkX1rJpAVW64etswESRz3/1fsKvVPm1A7VVM8EGOCGZwSXCxonhiuNNADIec6vsJzicFx3+ytA7opB7KdCBULHrLaZfuocXQp+dI5N7lpY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=by5pJlAV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k3ErI1mD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2796BC4CEE3;
-	Tue, 17 Jun 2025 16:48:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="by5pJlAV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21513C4CEE3;
+	Tue, 17 Jun 2025 16:48:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750178883;
-	bh=cIKRa6QPSptRWTQ15DkbCkWDSIAzkM7ngJhnHgeTcp0=;
+	s=korg; t=1750178886;
+	bh=frNbLBIhXU/4UxpFfNcFoAaYWSMQtZI5oofYHu+sGGc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k3ErI1mD1yDSQLDWURz7Fxr6p5mziabatbrAVc2CjXju+rgi4gRmvOqPablMgKXS2
-	 ko966DyKVNrgkGwjtprTL91pXyabk1Q2aJUT/e3mnGzxaKJp85b0ChljtyAv8xiq6L
-	 l/wBK4a3T+s7DsHxz1ofnMKuuAopgvzmRGvsDP7w=
+	b=by5pJlAVNm+hKV5/MUTF/jXzaK/s9o2J1cnjBNdqgVSRXhmy8bnPRjEsauMWDPuU1
+	 2Bu5HW53FnQiy8WXkLotB/BfUP1kAWrbuHs0v6JocUHjb/9UelfRG2VDljPPzLtSmD
+	 yo0kGxWE1mMXFJt9k+kOwEZ4zOoQlxXNIYonMegg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Madhu Chittim <madhu.chittim@intel.com>,
-	Josh Hay <joshua.a.hay@intel.com>,
-	Brian Vazquez <brianvv@google.com>,
-	Luigi Rizzo <lrizzo@google.com>,
-	Simon Horman <horms@kernel.org>,
-	Samuel Salin <Samuel.salin@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
+	Ankit Nautiyal <ankit.k.nautiyal@intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 574/780] idpf: fix a race in txq wakeup
-Date: Tue, 17 Jun 2025 17:24:42 +0200
-Message-ID: <20250617152514.854485896@linuxfoundation.org>
+Subject: [PATCH 6.15 583/780] drm/i915/psr: Fix using wrong mask in REG_FIELD_PREP
+Date: Tue, 17 Jun 2025 17:24:51 +0200
+Message-ID: <20250617152515.227508836@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
 References: <20250617152451.485330293@linuxfoundation.org>
@@ -51,187 +46,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Brian Vazquez <brianvv@google.com>
+From: Jouni Högander <jouni.hogander@intel.com>
 
-[ Upstream commit 7292af042bcf22e2c18b96ed250f78498a5b28ab ]
+[ Upstream commit 57d63c6cd0851d3af612a556ec61b0f2a9bd522f ]
 
-Add a helper function to correctly handle the lockless
-synchronization when the sender needs to block. The paradigm is
+Wrong mask is used in PORT_ALPM_LFPS_CTL_FIRST_LFPS_HALF_CYCLE_DURATION and
+PORT_ALPM_LFPS_CTL_LAST_LFPS_HALF_CYCLE_DURATION.
 
-        if (no_resources()) {
-                stop_queue();
-                barrier();
-                if (!no_resources())
-                        restart_queue();
-        }
-
-netif_subqueue_maybe_stop already handles the paradigm correctly, but
-the code split the check for resources in three parts, the first one
-(descriptors) followed the protocol, but the other two (completions and
-tx_buf) were only doing the first part and so race prone.
-
-Luckily netif_subqueue_maybe_stop macro already allows you to use a
-function to evaluate the start/stop conditions so the fix only requires
-the right helper function to evaluate all the conditions at once.
-
-The patch removes idpf_tx_maybe_stop_common since it's no longer needed
-and instead adjusts separately the conditions for singleq and splitq.
-
-Note that idpf_tx_buf_hw_update doesn't need to check for resources
-since that will be covered in idpf_tx_splitq_frame.
-
-To reproduce:
-
-Reduce the threshold for pending completions to increase the chances of
-hitting this pause by changing your kernel:
-
-drivers/net/ethernet/intel/idpf/idpf_txrx.h
-
--#define IDPF_TX_COMPLQ_OVERFLOW_THRESH(txcq)   ((txcq)->desc_count >> 1)
-+#define IDPF_TX_COMPLQ_OVERFLOW_THRESH(txcq)   ((txcq)->desc_count >> 4)
-
-Use pktgen to force the host to push small pkts very aggressively:
-
-./pktgen_sample02_multiqueue.sh -i eth1 -s 100 -6 -d $IP -m $MAC \
-  -p 10000-10000 -t 16 -n 0 -v -x -c 64
-
-Fixes: 6818c4d5b3c2 ("idpf: add splitq start_xmit")
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Reviewed-by: Madhu Chittim <madhu.chittim@intel.com>
-Signed-off-by: Josh Hay <joshua.a.hay@intel.com>
-Signed-off-by: Brian Vazquez <brianvv@google.com>
-Signed-off-by: Luigi Rizzo <lrizzo@google.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Samuel Salin <Samuel.salin@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: 295099580f04 ("drm/i915/psr: Add missing ALPM AUX-Less register definitions")
+Signed-off-by: Jouni Högander <jouni.hogander@intel.com>
+Reviewed-by: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
+Link: https://lore.kernel.org/r/20250526120512.1702815-12-jouni.hogander@intel.com
+(cherry picked from commit 8097128a40ff378761034ec72cdbf6f46e466dc0)
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/intel/idpf/idpf_singleq_txrx.c   |  9 ++--
- drivers/net/ethernet/intel/idpf/idpf_txrx.c   | 45 +++++++------------
- drivers/net/ethernet/intel/idpf/idpf_txrx.h   |  8 ----
- 3 files changed, 22 insertions(+), 40 deletions(-)
+ drivers/gpu/drm/i915/display/intel_psr_regs.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/idpf/idpf_singleq_txrx.c b/drivers/net/ethernet/intel/idpf/idpf_singleq_txrx.c
-index eae1b6f474e62..6ade54e213259 100644
---- a/drivers/net/ethernet/intel/idpf/idpf_singleq_txrx.c
-+++ b/drivers/net/ethernet/intel/idpf/idpf_singleq_txrx.c
-@@ -362,17 +362,18 @@ netdev_tx_t idpf_tx_singleq_frame(struct sk_buff *skb,
- {
- 	struct idpf_tx_offload_params offload = { };
- 	struct idpf_tx_buf *first;
-+	int csum, tso, needed;
- 	unsigned int count;
- 	__be16 protocol;
--	int csum, tso;
+diff --git a/drivers/gpu/drm/i915/display/intel_psr_regs.h b/drivers/gpu/drm/i915/display/intel_psr_regs.h
+index 795e6b9cc575c..248136456048e 100644
+--- a/drivers/gpu/drm/i915/display/intel_psr_regs.h
++++ b/drivers/gpu/drm/i915/display/intel_psr_regs.h
+@@ -325,8 +325,8 @@
+ #define  PORT_ALPM_LFPS_CTL_LFPS_HALF_CYCLE_DURATION_MASK	REG_GENMASK(20, 16)
+ #define  PORT_ALPM_LFPS_CTL_LFPS_HALF_CYCLE_DURATION(val)	REG_FIELD_PREP(PORT_ALPM_LFPS_CTL_LFPS_HALF_CYCLE_DURATION_MASK, val)
+ #define  PORT_ALPM_LFPS_CTL_FIRST_LFPS_HALF_CYCLE_DURATION_MASK	REG_GENMASK(12, 8)
+-#define  PORT_ALPM_LFPS_CTL_FIRST_LFPS_HALF_CYCLE_DURATION(val)	REG_FIELD_PREP(PORT_ALPM_LFPS_CTL_LFPS_HALF_CYCLE_DURATION_MASK, val)
++#define  PORT_ALPM_LFPS_CTL_FIRST_LFPS_HALF_CYCLE_DURATION(val)	REG_FIELD_PREP(PORT_ALPM_LFPS_CTL_FIRST_LFPS_HALF_CYCLE_DURATION_MASK, val)
+ #define  PORT_ALPM_LFPS_CTL_LAST_LFPS_HALF_CYCLE_DURATION_MASK	REG_GENMASK(4, 0)
+-#define  PORT_ALPM_LFPS_CTL_LAST_LFPS_HALF_CYCLE_DURATION(val)	REG_FIELD_PREP(PORT_ALPM_LFPS_CTL_LFPS_HALF_CYCLE_DURATION_MASK, val)
++#define  PORT_ALPM_LFPS_CTL_LAST_LFPS_HALF_CYCLE_DURATION(val)	REG_FIELD_PREP(PORT_ALPM_LFPS_CTL_LAST_LFPS_HALF_CYCLE_DURATION_MASK, val)
  
- 	count = idpf_tx_desc_count_required(tx_q, skb);
- 	if (unlikely(!count))
- 		return idpf_tx_drop_skb(tx_q, skb);
- 
--	if (idpf_tx_maybe_stop_common(tx_q,
--				      count + IDPF_TX_DESCS_PER_CACHE_LINE +
--				      IDPF_TX_DESCS_FOR_CTX)) {
-+	needed = count + IDPF_TX_DESCS_PER_CACHE_LINE + IDPF_TX_DESCS_FOR_CTX;
-+	if (!netif_subqueue_maybe_stop(tx_q->netdev, tx_q->idx,
-+				       IDPF_DESC_UNUSED(tx_q),
-+				       needed, needed)) {
- 		idpf_tx_buf_hw_update(tx_q, tx_q->next_to_use, false);
- 
- 		u64_stats_update_begin(&tx_q->stats_sync);
-diff --git a/drivers/net/ethernet/intel/idpf/idpf_txrx.c b/drivers/net/ethernet/intel/idpf/idpf_txrx.c
-index 2d5f5c9f91ce1..aa16e4c1edbb8 100644
---- a/drivers/net/ethernet/intel/idpf/idpf_txrx.c
-+++ b/drivers/net/ethernet/intel/idpf/idpf_txrx.c
-@@ -2132,6 +2132,19 @@ void idpf_tx_splitq_build_flow_desc(union idpf_tx_flex_desc *desc,
- 	desc->flow.qw1.compl_tag = cpu_to_le16(params->compl_tag);
- }
- 
-+/* Global conditions to tell whether the txq (and related resources)
-+ * has room to allow the use of "size" descriptors.
-+ */
-+static int idpf_txq_has_room(struct idpf_tx_queue *tx_q, u32 size)
-+{
-+	if (IDPF_DESC_UNUSED(tx_q) < size ||
-+	    IDPF_TX_COMPLQ_PENDING(tx_q->txq_grp) >
-+		IDPF_TX_COMPLQ_OVERFLOW_THRESH(tx_q->txq_grp->complq) ||
-+	    IDPF_TX_BUF_RSV_LOW(tx_q))
-+		return 0;
-+	return 1;
-+}
-+
- /**
-  * idpf_tx_maybe_stop_splitq - 1st level check for Tx splitq stop conditions
-  * @tx_q: the queue to be checked
-@@ -2142,29 +2155,11 @@ void idpf_tx_splitq_build_flow_desc(union idpf_tx_flex_desc *desc,
- static int idpf_tx_maybe_stop_splitq(struct idpf_tx_queue *tx_q,
- 				     unsigned int descs_needed)
- {
--	if (idpf_tx_maybe_stop_common(tx_q, descs_needed))
--		goto out;
--
--	/* If there are too many outstanding completions expected on the
--	 * completion queue, stop the TX queue to give the device some time to
--	 * catch up
--	 */
--	if (unlikely(IDPF_TX_COMPLQ_PENDING(tx_q->txq_grp) >
--		     IDPF_TX_COMPLQ_OVERFLOW_THRESH(tx_q->txq_grp->complq)))
--		goto splitq_stop;
--
--	/* Also check for available book keeping buffers; if we are low, stop
--	 * the queue to wait for more completions
--	 */
--	if (unlikely(IDPF_TX_BUF_RSV_LOW(tx_q)))
--		goto splitq_stop;
--
--	return 0;
--
--splitq_stop:
--	netif_stop_subqueue(tx_q->netdev, tx_q->idx);
-+	if (netif_subqueue_maybe_stop(tx_q->netdev, tx_q->idx,
-+				      idpf_txq_has_room(tx_q, descs_needed),
-+				      1, 1))
-+		return 0;
- 
--out:
- 	u64_stats_update_begin(&tx_q->stats_sync);
- 	u64_stats_inc(&tx_q->q_stats.q_busy);
- 	u64_stats_update_end(&tx_q->stats_sync);
-@@ -2190,12 +2185,6 @@ void idpf_tx_buf_hw_update(struct idpf_tx_queue *tx_q, u32 val,
- 	nq = netdev_get_tx_queue(tx_q->netdev, tx_q->idx);
- 	tx_q->next_to_use = val;
- 
--	if (idpf_tx_maybe_stop_common(tx_q, IDPF_TX_DESC_NEEDED)) {
--		u64_stats_update_begin(&tx_q->stats_sync);
--		u64_stats_inc(&tx_q->q_stats.q_busy);
--		u64_stats_update_end(&tx_q->stats_sync);
--	}
--
- 	/* Force memory writes to complete before letting h/w
- 	 * know there are new descriptors to fetch.  (Only
- 	 * applicable for weak-ordered memory model archs,
-diff --git a/drivers/net/ethernet/intel/idpf/idpf_txrx.h b/drivers/net/ethernet/intel/idpf/idpf_txrx.h
-index b029f566e57cd..c192a6c547dd3 100644
---- a/drivers/net/ethernet/intel/idpf/idpf_txrx.h
-+++ b/drivers/net/ethernet/intel/idpf/idpf_txrx.h
-@@ -1037,12 +1037,4 @@ bool idpf_rx_singleq_buf_hw_alloc_all(struct idpf_rx_queue *rxq,
- 				      u16 cleaned_count);
- int idpf_tso(struct sk_buff *skb, struct idpf_tx_offload_params *off);
- 
--static inline bool idpf_tx_maybe_stop_common(struct idpf_tx_queue *tx_q,
--					     u32 needed)
--{
--	return !netif_subqueue_maybe_stop(tx_q->netdev, tx_q->idx,
--					  IDPF_DESC_UNUSED(tx_q),
--					  needed, needed);
--}
--
- #endif /* !_IDPF_TXRX_H_ */
+ #endif /* __INTEL_PSR_REGS_H__ */
 -- 
 2.39.5
 
