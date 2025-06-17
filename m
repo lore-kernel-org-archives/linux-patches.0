@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 319202EE61A;
-	Tue, 17 Jun 2025 16:21:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7542B2ECEA6;
+	Tue, 17 Jun 2025 16:21:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177312; cv=none; b=pD8PHl2zD//2F+oXpRCYLxzESATLhoEbrSx3bYGsPLwCitfRRCEZsoXdcJGXrvmJqQKXmug+Bi+HJ3yJvdaIPhT9MVNtbl+YM0UlZtPNLg17/EskaSTjjT7s6Rq08huw9TXzJJZDuaBFzbYYmSBPjPkMR67HrX/3mMd+m+OvgcQ=
+	t=1750177315; cv=none; b=STbLHDdX9GYtLJrAs9pdjDMG3THt0AAimTw/sN9fbbnfZi/Uop6c6Ziqdx7zxKm8oKYS68YuVwvwQck42jRvMumpqLi8SR0nSD5oB2eC4Yb5BIujcpaW4VSv+7azle4fkzJzKV9oHyTib3Txr/twuvo/dw4y6iiSFo5i24ufMgo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177312; c=relaxed/simple;
-	bh=etrEsRUGKjPJuaQYO/Y8UzT3kEl/SJiljWIEiayn+Qw=;
+	s=arc-20240116; t=1750177315; c=relaxed/simple;
+	bh=TpfZcHSBRwj/mLsbRKCsWZXfpBSrtbogjXCmDagdPoM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GUBN4wkJEcLGCFhPA3xt2HGtcj64ZvKvCHTf2UylzbiwhKnVvvE46OcDP7Px9XKqIu4XDDKy0nRCRR53GYxKXPRPydirVzuTZ0ELlkCnJpWx7l9mL8xwDAYiUJtFkdbMBosq+2AIBGXJBnsATNXaQybvHHiYd92oQ2G6lQNkqoQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rtzf8Dyp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=d1mrhSUwYm2E4zbvSn7dsKVaTc7KzMFKDSKYyFz+zUH1wU2Lncd/hw0uFj66LI7VbnBtdF5Lp6mt4PkHSjKd4Zd8drG6YK+t5SmNmZlsjFOWmrvSfjn/BD5Q3p4OKgOKkESV6/c7dX0ulkInNuWClJyLtlx11mKC8/tk07NtykA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z0shGmBR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rtzf8Dyp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0CB3C4CEE3;
-	Tue, 17 Jun 2025 16:21:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z0shGmBR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0AD8C4CEE3;
+	Tue, 17 Jun 2025 16:21:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177312;
-	bh=etrEsRUGKjPJuaQYO/Y8UzT3kEl/SJiljWIEiayn+Qw=;
+	s=korg; t=1750177315;
+	bh=TpfZcHSBRwj/mLsbRKCsWZXfpBSrtbogjXCmDagdPoM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Rtzf8DypLZV+hKT7wih1mshDvcFKqf0k/IYERr71WCzGU2ktG7jJvvrXzhNnhkDip
-	 zG59+IvMqX3Zorw2faOmLl40ZPncHP+FE8wdPGb4jit4eoRZdBNUbCfjPZIV4yFbNA
-	 KiFSdJgtFtrDuDXPCS8GlG5MMb1MwBStxeLITc0U=
+	b=z0shGmBRQtzKGooutEZ9VRXOKOUXM6MRnREm0tuLB6alZxyvMzotLO4NMdcYYJG5U
+	 XExQ8lDzghjZZw6BOsmIMk4cP4dOVCdhs8ytQp010yCVhCdwwUWxVL5im0qzcjU3s0
+	 vALwUNKsZuHjeCLNLgXr0/uKJQtztPkfeUUPM0d8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Felix Fietkau <nbd@nbd.name>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 288/780] wifi: mt76: mt7925: Fix logical vs bitwise typo
-Date: Tue, 17 Jun 2025 17:19:56 +0200
-Message-ID: <20250617152503.202018811@linuxfoundation.org>
+Subject: [PATCH 6.12 317/512] PCI/DPC: Initialize aer_err_info before using it
+Date: Tue, 17 Jun 2025 17:24:43 +0200
+Message-ID: <20250617152432.457585073@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,40 +48,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Bjorn Helgaas <bhelgaas@google.com>
 
-[ Upstream commit 88224119863c39fa67581874e1ba218fa56113b4 ]
+[ Upstream commit a424b598e6a6c1e69a2bb801d6fd16e805ab2c38 ]
 
-This was supposed to be & instead of &&.
+Previously the struct aer_err_info "info" was allocated on the stack
+without being initialized, so it contained junk except for the fields we
+explicitly set later.
 
-Fixes: f0317215b367 ("wifi: mt76: mt7925: add EHT control support based on the CLC data")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://patch.msgid.link/d323a443-4e81-4064-8563-b62274b53ef4@stanley.mountain
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Initialize "info" at declaration so it starts as all zeros.
+
+Fixes: 8aefa9b0d910 ("PCI/DPC: Print AER status in DPC event handling")
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Tested-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Link: https://patch.msgid.link/20250522232339.1525671-2-helgaas@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7925/init.c | 2 +-
+ drivers/pci/pcie/dpc.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/init.c b/drivers/net/wireless/mediatek/mt76/mt7925/init.c
-index 63cb08f4d87cc..79639be0d29ac 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7925/init.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/init.c
-@@ -89,7 +89,7 @@ void mt7925_regd_be_ctrl(struct mt792x_dev *dev, u8 *alpha2)
- 		}
+diff --git a/drivers/pci/pcie/dpc.c b/drivers/pci/pcie/dpc.c
+index 2b6ef7efa3c11..8096e4858553e 100644
+--- a/drivers/pci/pcie/dpc.c
++++ b/drivers/pci/pcie/dpc.c
+@@ -260,7 +260,7 @@ static int dpc_get_aer_uncorrect_severity(struct pci_dev *dev,
+ void dpc_process_error(struct pci_dev *pdev)
+ {
+ 	u16 cap = pdev->dpc_cap, status, source, reason, ext_reason;
+-	struct aer_err_info info;
++	struct aer_err_info info = {};
  
- 		/* Check the last one */
--		if (rule->flag && BIT(0))
-+		if (rule->flag & BIT(0))
- 			break;
- 
- 		pos += sizeof(*rule);
+ 	pci_read_config_word(pdev, cap + PCI_EXP_DPC_STATUS, &status);
+ 	pci_read_config_word(pdev, cap + PCI_EXP_DPC_SOURCE_ID, &source);
 -- 
 2.39.5
 
