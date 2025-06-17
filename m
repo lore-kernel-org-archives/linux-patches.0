@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A273E2ED176;
-	Tue, 17 Jun 2025 16:09:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0EB52ED175;
+	Tue, 17 Jun 2025 16:09:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750176541; cv=none; b=iE84eYdJYE2vGpcQzUXnLLjzSq9Ip4ytgmsm5Z6XSoOhshZ303G/LoXPKEDNEWRlc7HhF1aeSPlknZRvlnZn+bbY8iOFktU9y1+o1epioYwlxJNx6HNA8+Gx9sZMoMURqTSEVwShWD/kP5L1i9Cygu9sWfJJ7IfSIsK9lJvb0pw=
+	t=1750176545; cv=none; b=OW3K+m9oe2THUxcnoXMacHy/JYybplKoKuS8FhPT5k0b4NxkjYpuafCU9jIQaiG0WKVF3Hf3xFzkNaxQN4i8uGw57FN/FlOqpFMPUBjj2g7Lauk2mt2fJEGmEiddEkWa1bkl6XK+6Q3HoyIE2QE4485PKPF2tuKL4GpfuVpuAF4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750176541; c=relaxed/simple;
-	bh=10xGQac022hY1dr5inw4AqR3hyU42XMNxD6FFBnw4vs=;
+	s=arc-20240116; t=1750176545; c=relaxed/simple;
+	bh=1WqBctlvkE6/8FTKBaC246Gcz2jJ3C0FfFBZXSefZw4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=vEg2nNlYv0nGD3cQYaXPxbNdRqNiJcESmcZLrDLgU/84bsUr9nXhSRTfgGnzd3YbqzXVTYP+PZaI+O78/Wk3sx3RcgtEm489+Y9ETOj8+yRuaFvXlY/3RXl1Uh1bFIrhEhGeT5dcHWCZXnCv8M/j8wZKpNqCmvYrjLCkCrSgI5Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=igKzwMdG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ggkgRkNSnkcqf4QNnUbx2a3c5II2pqc/8U3EXWMYMKQU9cpDSzLUmoCx994hEw/53CQUhA08icwqGqABOaK1np1AZa4vrD7eGkFs3Imf0lt69+/pX6p/YkS3Q4vdFwLJD4u4SQjInztJzE4dLtGF+lqFaKTEbjgElfrfuASQgGM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ojVTSaQ7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="igKzwMdG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB1A4C4CEE3;
-	Tue, 17 Jun 2025 16:09:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ojVTSaQ7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A90EC4CEE3;
+	Tue, 17 Jun 2025 16:09:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750176541;
-	bh=10xGQac022hY1dr5inw4AqR3hyU42XMNxD6FFBnw4vs=;
+	s=korg; t=1750176544;
+	bh=1WqBctlvkE6/8FTKBaC246Gcz2jJ3C0FfFBZXSefZw4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=igKzwMdGvdObdliFKG2UW5zN7uay5KQfXxVmKNRplyfBVASzismxE1nanGJhml6WA
-	 TRDs2fkp8LlNGeF6yE4B4+CSYyWKXvG0CkEn9aPJApsMyEKxVdXAO5WMhlKTFUNsLU
-	 fnZoz2XIcFMCYj2Er4bBmyu1Zt0Q7Z2JsT9gFcpU=
+	b=ojVTSaQ7Msx2UGVRmwfsOjNbrZz03H70WIvH1zTVSDzIy491bbkFSGQsqwgdEKqdD
+	 UVUAuR4MLtoC1ebH2dM1LM21wnOYPKTWByE1cQnIz9B1+G/KWlju587QymAlwderuz
+	 ZXuiDwpLI1gqLE1dSIgktvOHVwXwOjE9VGKcv0cw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pauli Virtanen <pav@iki.fi>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Zhen XIN <zhen.xin@nokia-sbell.com>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 291/356] Bluetooth: hci_core: fix list_for_each_entry_rcu usage
-Date: Tue, 17 Jun 2025 17:26:46 +0200
-Message-ID: <20250617152349.892762891@linuxfoundation.org>
+Subject: [PATCH 6.15 200/780] wifi: rtw88: sdio: call rtw_sdio_indicate_tx_status unconditionally
+Date: Tue, 17 Jun 2025 17:18:28 +0200
+Message-ID: <20250617152459.612287412@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-References: <20250617152338.212798615@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,59 +48,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pauli Virtanen <pav@iki.fi>
+From: Zhen XIN <zhen.xin@nokia-sbell.com>
 
-[ Upstream commit 308a3a8ce8ea41b26c46169f3263e50f5997c28e ]
+[ Upstream commit fc5f5a0ec463ae6a07850428bd3082947e01d276 ]
 
-Releasing + re-acquiring RCU lock inside list_for_each_entry_rcu() loop
-body is not correct.
+The rtw88-sdio do not work in AP mode due to the lack of TX status report
+for management frames.
 
-Fix by taking the update-side hdev->lock instead.
+Make the invocation of rtw_sdio_indicate_tx_status unconditional and cover
+all packet queues
 
-Fixes: c7eaf80bfb0c ("Bluetooth: Fix hci_link_tx_to RCU lock usage")
-Signed-off-by: Pauli Virtanen <pav@iki.fi>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Tested-on: rtl8723ds
+
+Fixes: 65371a3f14e7 ("wifi: rtw88: sdio: Add HCI implementation for SDIO based chipsets")
+Signed-off-by: Zhen XIN <zhen.xin@nokia-sbell.com>
+Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20250410154217.1849977-2-zhen.xin@nokia-sbell.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_core.c | 11 +++--------
- 1 file changed, 3 insertions(+), 8 deletions(-)
+ drivers/net/wireless/realtek/rtw88/sdio.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
-index 30519d47e8a69..febfd389ecf43 100644
---- a/net/bluetooth/hci_core.c
-+++ b/net/bluetooth/hci_core.c
-@@ -3380,23 +3380,18 @@ static void hci_link_tx_to(struct hci_dev *hdev, __u8 type)
- 
- 	bt_dev_err(hdev, "link tx timeout");
- 
--	rcu_read_lock();
-+	hci_dev_lock(hdev);
- 
- 	/* Kill stalled connections */
--	list_for_each_entry_rcu(c, &h->list, list) {
-+	list_for_each_entry(c, &h->list, list) {
- 		if (c->type == type && c->sent) {
- 			bt_dev_err(hdev, "killing stalled connection %pMR",
- 				   &c->dst);
--			/* hci_disconnect might sleep, so, we have to release
--			 * the RCU read lock before calling it.
--			 */
--			rcu_read_unlock();
- 			hci_disconnect(c, HCI_ERROR_REMOTE_USER_TERM);
--			rcu_read_lock();
- 		}
+diff --git a/drivers/net/wireless/realtek/rtw88/sdio.c b/drivers/net/wireless/realtek/rtw88/sdio.c
+index ba600d40bba46..410f637b1add5 100644
+--- a/drivers/net/wireless/realtek/rtw88/sdio.c
++++ b/drivers/net/wireless/realtek/rtw88/sdio.c
+@@ -1224,10 +1224,7 @@ static void rtw_sdio_process_tx_queue(struct rtw_dev *rtwdev,
+ 		return;
  	}
  
--	rcu_read_unlock();
-+	hci_dev_unlock(hdev);
+-	if (queue <= RTW_TX_QUEUE_VO)
+-		rtw_sdio_indicate_tx_status(rtwdev, skb);
+-	else
+-		dev_kfree_skb_any(skb);
++	rtw_sdio_indicate_tx_status(rtwdev, skb);
  }
  
- static struct hci_chan *hci_chan_sent(struct hci_dev *hdev, __u8 type,
+ static void rtw_sdio_tx_handler(struct work_struct *work)
 -- 
 2.39.5
 
