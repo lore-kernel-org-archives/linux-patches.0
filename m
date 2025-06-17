@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B634237162;
-	Tue, 17 Jun 2025 16:11:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E415B18E025;
+	Tue, 17 Jun 2025 16:11:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750176714; cv=none; b=MGI5oSz4gqiDeAnShUcsNUFADP/qYk2GPzluUi2y9YiO1TRsTqgJZED4EuXRZOuidcQd6jday3p/6afALkAsxLC+sf66hpdZKyL2F/bg+zgQ4a/M95YCTY+U1E0ldXwRm5nMeE0HOX6UiIZYBntqJkwEqimxC/n3ZO6HNa5apjg=
+	t=1750176718; cv=none; b=GfY7c99Soa0oZ0JyFZg74x7VWuJwiILs5pzji2790IK6oYagzRYHo3CSPaUqE3lEqRIEcbOTTLWb5iDlvzE0Q03EQsd32E9tfBGlq3AFbW79jjvV4fyUAl4YnSKcpQwlR95tbypTow56CaX4oxcC8OIjL430gHLirxQRbCyhtgU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750176714; c=relaxed/simple;
-	bh=X8CnlJLkfooNguZV9X9T1njuB1z/WgT8U2TOrDcaTsE=;
+	s=arc-20240116; t=1750176718; c=relaxed/simple;
+	bh=pc/rBwwxbJwCi2MT75IgIB8ZuY0+J7ocBcJ+F74wrbk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nN0NRlHWeZz5IoxsYpv4CCvmnDgyYKtcwmuJbJmhcSjzk3PMFk9BpKkVuie3pHRwD9tfipevZn33Z4gJGQGXQd+b9f1JEgpYLr4uxk+CffLXMgQmEk8aSd9kIp3PukOrY8AgVBZi3gHl/IoJ5aKYZwIWTXQTFHmWlfHkhoGLXkk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mjRkaKot; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Avj1Mpf37Bl91Unxr65W2sO1JAcwrSAzZsdfG6umryNS3V+JHtVlbewE0RONn1m0DbYcuArY04JolqlXusGvYIEKJ7TBxqaHTCnfEcwOajoEXzJrKiUqSFoaRsrEXlsiIKzlSGT3uUA871LVFGjT/1r4m22F+JJxwlmRvnfsJ0M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CsR3ZuQY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mjRkaKot"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0495C4CEE3;
-	Tue, 17 Jun 2025 16:11:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CsR3ZuQY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11084C4CEE3;
+	Tue, 17 Jun 2025 16:11:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750176714;
-	bh=X8CnlJLkfooNguZV9X9T1njuB1z/WgT8U2TOrDcaTsE=;
+	s=korg; t=1750176717;
+	bh=pc/rBwwxbJwCi2MT75IgIB8ZuY0+J7ocBcJ+F74wrbk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mjRkaKotABopyKvwt+tV8eW4lVZ6hXaznirK7pPIbar4SBc8LEZafFQcV0jrMKk+A
-	 pVDZu1UvIrAiUWn7J9unMrMFkSsLyj6kB1/+4fu5Lz6hFSQWW5qLiel+koYaOn8C71
-	 mYb5wG/UCIErx1zlXCnO9X1HH38Fxujwlnr/50P0=
+	b=CsR3ZuQYPCqgL66VCPSEUwy6UK+yECmAfHFvvmcFz+6a12OZSH1WrmMdvdq+3qWmZ
+	 MZUSVRR1b0c6u+kUct/C2bmeiwZsgDtCzmu0O8tbzJYfi0T65whsW2mnepIaYOie66
+	 ClH6GHN3ZhJ4RP3sOfi9kngYv3aPyP4NydDx0XQA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marcus Wichelmann <marcus.wichelmann@hetzner-cloud.de>,
-	Eric Dumazet <edumazet@google.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 306/356] net_sched: sch_sfq: fix a potential crash on gso_skb handling
-Date: Tue, 17 Jun 2025 17:27:01 +0200
-Message-ID: <20250617152350.489421654@linuxfoundation.org>
+Subject: [PATCH 6.15 219/780] wifi: iwlwifi: re-add IWL_AMSDU_8K case
+Date: Tue, 17 Jun 2025 17:18:47 +0200
+Message-ID: <20250617152500.376157048@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-References: <20250617152338.212798615@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,72 +45,40 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 
-[ Upstream commit 82ffbe7776d0ac084031f114167712269bf3d832 ]
+[ Upstream commit bdd6d93d7a109ba1080336fe07d0b4eb815efaf9 ]
 
-SFQ has an assumption of always being able to queue at least one packet.
+This case in iwl_trans_get_rb_size_order was accidently combined with
+the IWL_AMSDU_12K case. Fix this.
 
-However, after the blamed commit, sch->q.len can be inflated by packets
-in sch->gso_skb, and an enqueue() on an empty SFQ qdisc can be followed
-by an immediate drop.
-
-Fix sfq_drop() to properly clear q->tail in this situation.
-
-Tested:
-
-ip netns add lb
-ip link add dev to-lb type veth peer name in-lb netns lb
-ethtool -K to-lb tso off                 # force qdisc to requeue gso_skb
-ip netns exec lb ethtool -K in-lb gro on # enable NAPI
-ip link set dev to-lb up
-ip -netns lb link set dev in-lb up
-ip addr add dev to-lb 192.168.20.1/24
-ip -netns lb addr add dev in-lb 192.168.20.2/24
-tc qdisc replace dev to-lb root sfq limit 100
-
-ip netns exec lb netserver
-
-netperf -H 192.168.20.2 -l 100 &
-netperf -H 192.168.20.2 -l 100 &
-netperf -H 192.168.20.2 -l 100 &
-netperf -H 192.168.20.2 -l 100 &
-
-Fixes: a53851e2c321 ("net: sched: explicit locking in gso_cpu fallback")
-Reported-by: Marcus Wichelmann <marcus.wichelmann@hetzner-cloud.de>
-Closes: https://lore.kernel.org/netdev/9da42688-bfaa-4364-8797-e9271f3bdaef@hetzner-cloud.de/
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Link: https://patch.msgid.link/20250606165127.3629486-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 7391b2a4f7db ("wifi: iwlwifi: rework firmware error handling")
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20250423091408.ef19205aa358.Ifbf89e7b7391cd7070267b7360c53230b3b2c57c@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_sfq.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/wireless/intel/iwlwifi/iwl-trans.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/sched/sch_sfq.c b/net/sched/sch_sfq.c
-index 002941d35b643..d564675a8be4d 100644
---- a/net/sched/sch_sfq.c
-+++ b/net/sched/sch_sfq.c
-@@ -310,7 +310,10 @@ static unsigned int sfq_drop(struct Qdisc *sch, struct sk_buff **to_free)
- 		/* It is difficult to believe, but ALL THE SLOTS HAVE LENGTH 1. */
- 		x = q->tail->next;
- 		slot = &q->slots[x];
--		q->tail->next = slot->next;
-+		if (slot->next == x)
-+			q->tail = NULL; /* no more active slots */
-+		else
-+			q->tail->next = slot->next;
- 		q->ht[slot->hash] = SFQ_EMPTY_SLOT;
- 		goto drop;
- 	}
+diff --git a/drivers/net/wireless/intel/iwlwifi/iwl-trans.h b/drivers/net/wireless/intel/iwlwifi/iwl-trans.h
+index ce4954b0d5246..44a249a753ecf 100644
+--- a/drivers/net/wireless/intel/iwlwifi/iwl-trans.h
++++ b/drivers/net/wireless/intel/iwlwifi/iwl-trans.h
+@@ -328,6 +328,7 @@ iwl_trans_get_rb_size_order(enum iwl_amsdu_size rb_size)
+ 	case IWL_AMSDU_4K:
+ 		return get_order(4 * 1024);
+ 	case IWL_AMSDU_8K:
++		return get_order(8 * 1024);
+ 	case IWL_AMSDU_12K:
+ 		return get_order(16 * 1024);
+ 	default:
 -- 
 2.39.5
 
