@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40A4718E025;
-	Tue, 17 Jun 2025 16:24:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84F652E8E17;
+	Tue, 17 Jun 2025 16:24:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177464; cv=none; b=i4msSGmfLVpVvEsxypUHhBj9dzbp4UUrarIuNC6Y7izg8QdVxns6o2+egBNfGkHwQF/avaPt+45qzioL+C3l0w5+rI5zxgsgkIm1q4j2h9j6IRW4PZz67P1BgV2GV0+0wrK1Qb/3jgDABq0WURJs9sP7cay3zNJPhP04jJlP23I=
+	t=1750177467; cv=none; b=hSADhngc4MhItbOy9SGC2Gn3WjqwbTQ/Nyu71LK3zqV11arM1TorL8Nz42ODq/T2xobbhDd5sr6f6dcBOPN7H76Sxiva+kWEdVreLjywLlBaEnqFO8XRpF9wWuLEpMVp6rHjD49NOB1S1fkzJvXpkrTZ0He3L2NmINETg4kJRsY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177464; c=relaxed/simple;
-	bh=bIgV9gya83qNuNfgRrXNDbXqn5fYdpi9crglEOCY9oE=;
+	s=arc-20240116; t=1750177467; c=relaxed/simple;
+	bh=XUcz4GEi/dn4hzvvFhwJ5o+uD+vf2+VCeWTHEf/tzQw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sTNDIMiatnhjC8a/JlHf3kQhykhWPiw+tJxPb6mFxwVrA5gpVSX+uiU8gZu8ZcfZUKwK3ZZ+SzJ2QMis+CcpQ+GdrRqk1cThijLSklW5TVOJ3WLsQ9xkeYqWOoaqyjDEMUbileudjCNj/7adxDtM+cAx7E7MUsyE4pHd1oH2Iww=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=msmyKxWX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YhiVwQWZ6lnh8hchzDj0F2ykTf2Ex1g0mUPkUeFw9hwp9BsUdIhofc75WLtzK+lxcopSkFrzaeO8WpnGj6aEX6CanyAM+140fIm+YBW2ums5R8quufLetkAq8fNOKWHpSbehK1DTebfwP8O/JyHFd0RCQ+WB+NbqlSFDgoO0qow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NSwsal3W; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="msmyKxWX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4BBFC4CEE3;
-	Tue, 17 Jun 2025 16:24:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NSwsal3W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E794EC4CEE3;
+	Tue, 17 Jun 2025 16:24:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177464;
-	bh=bIgV9gya83qNuNfgRrXNDbXqn5fYdpi9crglEOCY9oE=;
+	s=korg; t=1750177467;
+	bh=XUcz4GEi/dn4hzvvFhwJ5o+uD+vf2+VCeWTHEf/tzQw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=msmyKxWX1OLdUb3HI1bqrB+DSi0k6PWF5jFuL2ttTOh9ilze/Eze0MLfpuymhjixe
-	 /cpXTiZvNTc/Me0IYLmXCGyXsPwVFhYr1sQBxcrbe/FlPBXGPgBZffDexazBpAkjdn
-	 Jlzbv7ufb4A/qkBTGILI/TbvF7JDDKJId3/YahQo=
+	b=NSwsal3WEdPQURV+XMNoBV2YdDxTHpWEJWCWZ7Efq+xQ7v4RJhp2e53Zk4yluBLXt
+	 8vMvSw34kX/OhwobejIoDy8MwShH3OCu/pG9St8HlBqxg4B49ukoYCm7afdjwR42Kt
+	 0iTDyNxinT3uhLeW+dlfVJaj++93ZEIEdRXSjbWU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yanqing Wang <ot_yanqing.wang@mediatek.com>,
-	Macpaul Lin <macpaul.lin@mediatek.com>,
-	Biao Huang <biao.huang@mediatek.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	zepta <z3ptaa@gmail.com>,
+	Kees Cook <kees@kernel.org>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 350/512] driver: net: ethernet: mtk_star_emac: fix suspend/resume issue
-Date: Tue, 17 Jun 2025 17:25:16 +0200
-Message-ID: <20250617152433.765559130@linuxfoundation.org>
+Subject: [PATCH 6.15 311/780] Bluetooth: btintel: Check dsbr size from EFI variable
+Date: Tue, 17 Jun 2025 17:20:19 +0200
+Message-ID: <20250617152504.135100095@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,55 +48,60 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yanqing Wang <ot_yanqing.wang@mediatek.com>
+From: Kees Cook <kees@kernel.org>
 
-[ Upstream commit ba99c627aac85bc746fb4a6e2d79edb3ad100326 ]
+[ Upstream commit 3aa1dc3c9060e335e82e9c182bf3d1db29220b1b ]
 
-Identify the cause of the suspend/resume hang: netif_carrier_off()
-is called during link state changes and becomes stuck while
-executing linkwatch_work().
+Since the size of struct btintel_dsbr is already known, we can just
+start there instead of querying the EFI variable size. If the final
+result doesn't match what we expect also fail. This fixes a stack buffer
+overflow when the EFI variable is larger than struct btintel_dsbr.
 
-To resolve this issue, call netif_device_detach() during the Ethernet
-suspend process to temporarily detach the network device from the
-kernel and prevent the suspend/resume hang.
-
-Fixes: 8c7bd5a454ff ("net: ethernet: mtk-star-emac: new driver")
-Signed-off-by: Yanqing Wang <ot_yanqing.wang@mediatek.com>
-Signed-off-by: Macpaul Lin <macpaul.lin@mediatek.com>
-Signed-off-by: Biao Huang <biao.huang@mediatek.com>
-Link: https://patch.msgid.link/20250528075351.593068-1-macpaul.lin@mediatek.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reported-by: zepta <z3ptaa@gmail.com>
+Closes: https://lore.kernel.org/all/CAPBS6KoaWV9=dtjTESZiU6KK__OZX0KpDk-=JEH8jCHFLUYv3Q@mail.gmail.com
+Fixes: eb9e749c0182 ("Bluetooth: btintel: Allow configuring drive strength of BRI")
+Signed-off-by: Kees Cook <kees@kernel.org>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mediatek/mtk_star_emac.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/bluetooth/btintel.c | 10 ++--------
+ 1 file changed, 2 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/ethernet/mediatek/mtk_star_emac.c b/drivers/net/ethernet/mediatek/mtk_star_emac.c
-index c2ab87828d858..5eb7a97e7eb17 100644
---- a/drivers/net/ethernet/mediatek/mtk_star_emac.c
-+++ b/drivers/net/ethernet/mediatek/mtk_star_emac.c
-@@ -1468,6 +1468,8 @@ static __maybe_unused int mtk_star_suspend(struct device *dev)
- 	if (netif_running(ndev))
- 		mtk_star_disable(ndev);
+diff --git a/drivers/bluetooth/btintel.c b/drivers/bluetooth/btintel.c
+index 48e2f400957bc..46d9bbd8e411b 100644
+--- a/drivers/bluetooth/btintel.c
++++ b/drivers/bluetooth/btintel.c
+@@ -2719,7 +2719,7 @@ static int btintel_uefi_get_dsbr(u32 *dsbr_var)
+ 	} __packed data;
  
-+	netif_device_detach(ndev);
-+
- 	clk_bulk_disable_unprepare(MTK_STAR_NCLKS, priv->clks);
+ 	efi_status_t status;
+-	unsigned long data_size = 0;
++	unsigned long data_size = sizeof(data);
+ 	efi_guid_t guid = EFI_GUID(0xe65d8884, 0xd4af, 0x4b20, 0x8d, 0x03,
+ 				   0x77, 0x2e, 0xcc, 0x3d, 0xa5, 0x31);
  
- 	return 0;
-@@ -1492,6 +1494,8 @@ static __maybe_unused int mtk_star_resume(struct device *dev)
- 			clk_bulk_disable_unprepare(MTK_STAR_NCLKS, priv->clks);
- 	}
+@@ -2729,16 +2729,10 @@ static int btintel_uefi_get_dsbr(u32 *dsbr_var)
+ 	if (!efi_rt_services_supported(EFI_RT_SUPPORTED_GET_VARIABLE))
+ 		return -EOPNOTSUPP;
  
-+	netif_device_attach(ndev);
-+
- 	return ret;
- }
+-	status = efi.get_variable(BTINTEL_EFI_DSBR, &guid, NULL, &data_size,
+-				  NULL);
+-
+-	if (status != EFI_BUFFER_TOO_SMALL || !data_size)
+-		return -EIO;
+-
+ 	status = efi.get_variable(BTINTEL_EFI_DSBR, &guid, NULL, &data_size,
+ 				  &data);
  
+-	if (status != EFI_SUCCESS)
++	if (status != EFI_SUCCESS || data_size != sizeof(data))
+ 		return -ENXIO;
+ 
+ 	*dsbr_var = data.dsbr;
 -- 
 2.39.5
 
