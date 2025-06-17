@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64F392FA642;
-	Tue, 17 Jun 2025 16:45:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 079CD2FA659;
+	Tue, 17 Jun 2025 16:45:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750178741; cv=none; b=HBaPTkv4codmBIrFZ6GcrFaX08AFthO/vHSjV0IysO8Xk7VgjvJuPsj0mJ3OPe4ZRB2TcCFC4/A6mp74UD/74C51xHJHKEsXBdzXh2wC59XuKqnBzHXmgyum0sDgOu5clyzOw69dFIz1SJS5AuaZ+g8hjCl6PjGa/wBSrtrTZV0=
+	t=1750178745; cv=none; b=VuNXOaq917Yft3J+YjZCgamiEKGQv5y6tiEWSdmoLPb8K9UmxofLKt4SQuKryqkxXS9AbxYQdfwMjT/JMlATPWlUNIaXrw0jyA4+PL45uBN51CeabBd59RQpD1JBLp06twj//Ao6CPic9FcMIWh2ex1YRmXTGVrYfwHv/aUBk4E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750178741; c=relaxed/simple;
-	bh=YdZIk6G604W+8yTtfkySuQdGFhXu9bpdkeJuxVitE6g=;
+	s=arc-20240116; t=1750178745; c=relaxed/simple;
+	bh=tf14YffK/sAgw9222nejg53re0sYLJiwsTXld75Nttk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ANG9aiOoZeisDmAcZBisYVx3byhVN3UxF4rHVvOZSeGjX+wOPJy4GMdyONt1g61BW+lYYb1576L/5US1HgNIEMyOii07o6jUYI2qqF2cwG1Nd/PXCTykl+qW25qbU5kYLJyeHnQBOptahhMX5tJ9G4tqzB+g2mKAj2Qt47vP9d0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fZL/4Z1s; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fEoLwryfkuyAPXa3oaTpkUf3+cgHHrKA1IqaZ675yq4I1Xmmcph6/WEgjxrTxQG0lKrFVeachv9gfzVbtlaNJYwYqWQ9WXSnm/5gvS3iFMYqnugmllfGZll8gDJyoP6UVJzApQiHB+MdMYud77ntLXjvIcFe3ecdLbigsz+5OlQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QBCdnq34; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fZL/4Z1s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8DA6C4CEE7;
-	Tue, 17 Jun 2025 16:45:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QBCdnq34"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3498C4CEE7;
+	Tue, 17 Jun 2025 16:45:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750178741;
-	bh=YdZIk6G604W+8yTtfkySuQdGFhXu9bpdkeJuxVitE6g=;
+	s=korg; t=1750178744;
+	bh=tf14YffK/sAgw9222nejg53re0sYLJiwsTXld75Nttk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fZL/4Z1sRZINnZxSD7T88MRXHZ3JxvnQY0+30nvm6CID6LL40y9MgyYOuDo0ZV6O8
-	 s8Yx2gh/uzrsKlf6II+qFuXngMk+jAD4AUBnnS2pwI/Z/PeBA1pUGRNpztIWplSbSE
-	 sQxV2Lo3qfVCPHhaRDShS0amfT+2DiqwfWDeGa9o=
+	b=QBCdnq34SJ0xvbSddKQdffRwV0ShjcFsKi1zvFhhQYTtUd2LtXsfjVngHii78uu4D
+	 PA7j6hYHov7+jP2Il6NWFuucsASU2wUJje0Ml+sNk3//JnjnHJP1S5FOXscWdbzky/
+	 bRIGTTzJLvaZeflU+6gbGzVS3+2Anj14QB0c4Rks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Dave Penkler <dpenkler@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 538/780] staging: gpib: Fix PCMCIA config identifier
-Date: Tue, 17 Jun 2025 17:24:06 +0200
-Message-ID: <20250617152513.420709545@linuxfoundation.org>
+Subject: [PATCH 6.15 539/780] staging: gpib: Fix secondary address restriction
+Date: Tue, 17 Jun 2025 17:24:07 +0200
+Message-ID: <20250617152513.467941186@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
 References: <20250617152451.485330293@linuxfoundation.org>
@@ -52,36 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Dave Penkler <dpenkler@gmail.com>
 
-[ Upstream commit 034a456869a071c635a9997e0bf3947a6cb20b25 ]
+[ Upstream commit 5aac95320d0f17f1098960e903ce5e087f42bc70 ]
 
-The PCMCIA config identifier in the ines_exit_module function
-was never changed because it was misspelled in the original commit.
+GPIB secondary addresses have valid values between 0 and 31
+inclusive. The Make Secondary Address function MSA, used to form
+the protocol byte, was using the gpib_address_restrict function
+erroneously restricting the address range to 0 through 30.
 
-Update the config parameter to use the correct identifier from
-gpib/Kconfig
+Remove the call to gpib_address_restrict and simply trim the
+address to 5 bits.
 
-Fixes: bb1bd92fa0f2 ("staging: gpib: Add ines GPIB driver")
+Fixes: 2da03e7e31aa ("staging: gpib: Add user api include files")
 Signed-off-by: Dave Penkler <dpenkler@gmail.com>
-Link: https://lore.kernel.org/r/20250502072150.32714-2-dpenkler@gmail.com
+Link: https://lore.kernel.org/r/20250520155100.5808-1-dpenkler@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/gpib/ines/ines_gpib.c | 2 +-
+ drivers/staging/gpib/uapi/gpib_user.h | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/staging/gpib/ines/ines_gpib.c b/drivers/staging/gpib/ines/ines_gpib.c
-index d93eb05dab903..8e2375d8ddac2 100644
---- a/drivers/staging/gpib/ines/ines_gpib.c
-+++ b/drivers/staging/gpib/ines/ines_gpib.c
-@@ -1484,7 +1484,7 @@ static void __exit ines_exit_module(void)
- 	gpib_unregister_driver(&ines_pci_unaccel_interface);
- 	gpib_unregister_driver(&ines_pci_accel_interface);
- 	gpib_unregister_driver(&ines_isa_interface);
--#ifdef GPIB__PCMCIA
-+#ifdef CONFIG_GPIB_PCMCIA
- 	gpib_unregister_driver(&ines_pcmcia_interface);
- 	gpib_unregister_driver(&ines_pcmcia_unaccel_interface);
- 	gpib_unregister_driver(&ines_pcmcia_accel_interface);
+diff --git a/drivers/staging/gpib/uapi/gpib_user.h b/drivers/staging/gpib/uapi/gpib_user.h
+index 5ff4588686fde..0fd32fb9e7a64 100644
+--- a/drivers/staging/gpib/uapi/gpib_user.h
++++ b/drivers/staging/gpib/uapi/gpib_user.h
+@@ -178,7 +178,7 @@ static inline uint8_t MTA(unsigned int addr)
+ 
+ static inline uint8_t MSA(unsigned int addr)
+ {
+-	return gpib_address_restrict(addr) | SAD;
++	return (addr & 0x1f) | SAD;
+ }
+ 
+ static inline uint8_t PPE_byte(unsigned int dio_line, int sense)
 -- 
 2.39.5
 
