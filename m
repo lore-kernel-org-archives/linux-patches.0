@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B1D32DFF13;
-	Tue, 17 Jun 2025 16:14:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68ADE2ECEAE;
+	Tue, 17 Jun 2025 16:14:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750176888; cv=none; b=Wb4yHFUu+cr8CNLd3XponJ7KQs96FSXBEzfHdYz+Um0cWSUTozJI7q5qiBD5WxYVA2Ebyfqeqi0sSYi+OJEg9xg7yVkp+KP2277ueyGZX+613tllqS0IyuY9++t6iqX5QvoBAFfza4Ct70r+ey6md8UPf7xobVDIPYJUgcNt8sQ=
+	t=1750176893; cv=none; b=fHLzwtsD2Ali0kP1jKl4E6nMnx0qdsgkjunOXuoqRxj2DiypRmBolwxJxKaax8Xj08eZPQuQs7hbxXRk14rV1frgP+CTtoHTpKKV+RweBr7GS59sGiRU1f7agf0Ieg0Rq7v215DDtiN/3k5MQ8sUe9wb8Rw+N+ByhGqCauV+zdE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750176888; c=relaxed/simple;
-	bh=zhET5Jzul07dbAMaHky9z51AIkAPZ4BEFE3Y4x0AUAU=;
+	s=arc-20240116; t=1750176893; c=relaxed/simple;
+	bh=1w8h+HOsH4dAvjL3epDArXiK8q6+VdPR3NvMPuXp6Fo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RkWAv1ve9M5LteUuC5t0qDCbQr6hR6E7uZqlYxRzb+v87t5bzftYQwdpRmuXlx5VdjSY0H+V0SSUonCfyTEzR+cY4/py+awG4PFmM6K6cbpacurXrjb36A7SU5Daa1tLUwF+vGyZFqBvyfaHJIcpSXg5uVIABfZb/mHybpOu8kM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fYBS2gi5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tfKs5XIWZpXzFd/M/PvWwDSQIiDTPzzPHpf2ResBJel7SlcwzVXVhyFnXKV4ijJaVYxvP32CnkPanlAq+ceVQUAakUWSEoYthBN9Yk20gpA2+93TDUf6OGD8hqQvKfCT/8odYbb8X8pF76q3T6sl+S7yGzMeLf1dGLDx3h1RUwI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sAud9fYO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fYBS2gi5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED7E4C4CEE7;
-	Tue, 17 Jun 2025 16:14:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sAud9fYO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 885CBC4CEE3;
+	Tue, 17 Jun 2025 16:14:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750176888;
-	bh=zhET5Jzul07dbAMaHky9z51AIkAPZ4BEFE3Y4x0AUAU=;
+	s=korg; t=1750176892;
+	bh=1w8h+HOsH4dAvjL3epDArXiK8q6+VdPR3NvMPuXp6Fo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fYBS2gi5UzE0N6OcoEoj+16lZaO27yf79gWLZOtw7DbVko6ZFbxaSs+91F0/yQatS
-	 O/PfF6+XFWoyiTJak/6MWGtjAQYykjDiOJCzlyEv7w9/eRmiaW4NRJk7RbyHmOqulO
-	 66nOZ0xRp5fmNhgUCFBwSsS0TRiFbK2wS4y94KDg=
+	b=sAud9fYOwjbQ4/vtABV75g5yOwDzP5Iw/jVbukAcxXuR8X0In1nm4plyAc6xiPrLp
+	 MD/XvVxEz1nmnGAbNdFfjwC3Js5Lpst4fhD6KVjoIrBdCqEvkP9XNlSgmNfhbOUUCv
+	 JddUezRMZgiwwZNt78sUDfJ2OYD2H9+J36NnuE8E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yihang Li <liyihang9@huawei.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Sean Christopherson <seanjc@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 217/780] scsi: hisi_sas: Call I_T_nexus after soft reset for SATA disk
-Date: Tue, 17 Jun 2025 17:18:45 +0200
-Message-ID: <20250617152500.294492281@linuxfoundation.org>
+Subject: [PATCH 6.12 276/512] x86/irq: Ensure initial PIR loads are performed exactly once
+Date: Tue, 17 Jun 2025 17:24:02 +0200
+Message-ID: <20250617152430.779586870@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,81 +47,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yihang Li <liyihang9@huawei.com>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit e4d953ca557e02edd3aed7390043e1b8ad1c9723 ]
+[ Upstream commit 600e9606046ac3b9b7a3f0500d08a179df84c45e ]
 
-In commit 21c7e972475e ("scsi: hisi_sas: Disable SATA disk phy for severe
-I_T nexus reset failure"), if the softreset fails upon certain
-conditions, the PHY connected to the disk is disabled directly. Manual
-recovery is required, which is inconvenient for users in actual use.
+Ensure the PIR is read exactly once at the start of handle_pending_pir(),
+to guarantee that checking for an outstanding posted interrupt in a given
+chuck doesn't reload the chunk from the "real" PIR.  Functionally, a reload
+is benign, but it would defeat the purpose of pre-loading into a copy.
 
-In addition, SATA disks do not support simultaneous connection of multiple
-hosts. Therefore, when multiple controllers are connected to a SATA disk
-at the same time, the controller which is connected later failed to issue
-an ATA softreset to the SATA disk. As a result, the PHY associated with
-the disk is disabled and cannot be automatically recovered.
-
-Now that, we will not focus on the execution result of softreset. No
-matter whether the execution is successful or not, we will directly carry
-out I_T_nexus_reset.
-
-Fixes: 21c7e972475e ("scsi: hisi_sas: Disable SATA disk phy for severe I_T nexus reset failure")
-Signed-off-by: Yihang Li <liyihang9@huawei.com>
-Link: https://lore.kernel.org/r/20250414080845.1220997-4-liyihang9@huawei.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 1b03d82ba15e ("x86/irq: Install posted MSI notification handler")
+Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/r/20250401163447.846608-2-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/hisi_sas/hisi_sas_main.c | 29 +++++----------------------
- 1 file changed, 5 insertions(+), 24 deletions(-)
+ arch/x86/kernel/irq.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/hisi_sas/hisi_sas_main.c b/drivers/scsi/hisi_sas/hisi_sas_main.c
-index 944cf2fb05617..d3981b6779316 100644
---- a/drivers/scsi/hisi_sas/hisi_sas_main.c
-+++ b/drivers/scsi/hisi_sas/hisi_sas_main.c
-@@ -1885,33 +1885,14 @@ static int hisi_sas_I_T_nexus_reset(struct domain_device *device)
- 	}
- 	hisi_sas_dereg_device(hisi_hba, device);
+diff --git a/arch/x86/kernel/irq.c b/arch/x86/kernel/irq.c
+index feca4f20b06aa..85fa2db38dc42 100644
+--- a/arch/x86/kernel/irq.c
++++ b/arch/x86/kernel/irq.c
+@@ -414,7 +414,7 @@ static __always_inline bool handle_pending_pir(u64 *pir, struct pt_regs *regs)
+ 	bool handled = false;
  
--	rc = hisi_sas_debug_I_T_nexus_reset(device);
--	if (rc == TMF_RESP_FUNC_COMPLETE && dev_is_sata(device)) {
--		struct sas_phy *local_phy;
--
-+	if (dev_is_sata(device)) {
- 		rc = hisi_sas_softreset_ata_disk(device);
--		switch (rc) {
--		case -ECOMM:
--			rc = -ENODEV;
--			break;
--		case TMF_RESP_FUNC_FAILED:
--		case -EMSGSIZE:
--		case -EIO:
--			local_phy = sas_get_local_phy(device);
--			rc = sas_phy_enable(local_phy, 0);
--			if (!rc) {
--				local_phy->enabled = 0;
--				dev_err(dev, "Disabled local phy of ATA disk %016llx due to softreset fail (%d)\n",
--					SAS_ADDR(device->sas_addr), rc);
--				rc = -ENODEV;
--			}
--			sas_put_local_phy(local_phy);
--			break;
--		default:
--			break;
--		}
-+		if (rc == TMF_RESP_FUNC_FAILED)
-+			dev_err(dev, "ata disk %016llx reset (%d)\n",
-+				SAS_ADDR(device->sas_addr), rc);
- 	}
+ 	for (i = 0; i < 4; i++)
+-		pir_copy[i] = pir[i];
++		pir_copy[i] = READ_ONCE(pir[i]);
  
-+	rc = hisi_sas_debug_I_T_nexus_reset(device);
- 	if ((rc == TMF_RESP_FUNC_COMPLETE) || (rc == -ENODEV))
- 		hisi_sas_release_task(hisi_hba, device);
- 
+ 	for (i = 0; i < 4; i++) {
+ 		if (!pir_copy[i])
 -- 
 2.39.5
 
