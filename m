@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 293811A5B9D;
-	Tue, 17 Jun 2025 16:37:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 522A82FA64D;
+	Tue, 17 Jun 2025 16:37:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750178223; cv=none; b=tIkKMm7uBPk3M+jQZWf7Spi6u98QFjSO5ZdFI65BbjblWY65q2z8v5z0BqSyHiGWRuFL3xgkiaTAAcTwMl/9/B2tImSsQDe0XhFuwTOUYbsUi53CQyL0uUnTyIIB8/nBZhicsUmJTAgI+3lEwbLhtBj+o175hDp7eRFZvddv/0c=
+	t=1750178226; cv=none; b=r40bnO0N36ut/zUoofjf/L1ynsi78eCs3LTA+XO/3eeZNAcSdiHhievfz2/884woKGeRkQHoK00poLAvZc3KRi7IduMT+51FcUl6vn1q8PAqeNESC/RSwyKBwxo9M8o42zFFS3k7TuLKdpMQgobqDbTeb01mjRTUf8IpbGYrKNg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750178223; c=relaxed/simple;
-	bh=w9zD2uE2GgjJi1PAL9otV9V895iA8/LoXkl54HwEM2o=;
+	s=arc-20240116; t=1750178226; c=relaxed/simple;
+	bh=bVxNOVBrw27YgGO6hgmnts/gQnG48irBqphDldYP7hg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=SuY6yYjs/9uVWqbwhtDL0iuSP5gf15m7lJ+RzcgKayJaAEm0L7zBuY58Tl8TiywT95RaVJK6CBVomHa4lWIt+2P4Z+jsD1nS5Ll4NKY2LZzN/4mLZ0iEBtjXZ+EopybeEWwhWR57K6twarV+Bbzlvz886gtZNsNnExvB7cp7zk0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZsyWuksB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WopBqKk4uF/ApaPZIs1V7q6SxuGOqdju8zKZvY+z3gCYkejw2hwrj+U3cFrTpKKcZtENRlfxLGG59zI18HtKj8oImDgd6BCUOLvA1R3KJGkSBIS1HrSxatnrP5YNVMUFBa6MRlTaCOj0i+LeYDpaI9+6w9JpRIKrvqQhAtX9P40=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zJbaNlaf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZsyWuksB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98418C4CEE3;
-	Tue, 17 Jun 2025 16:37:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zJbaNlaf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF9FFC4CEE3;
+	Tue, 17 Jun 2025 16:37:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750178223;
-	bh=w9zD2uE2GgjJi1PAL9otV9V895iA8/LoXkl54HwEM2o=;
+	s=korg; t=1750178226;
+	bh=bVxNOVBrw27YgGO6hgmnts/gQnG48irBqphDldYP7hg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZsyWuksBdgPrrQkdUsJhdpH1Fcnp2qrlP/VteH7bxauzIeK4xd/RPeQoPu0MruWt6
-	 6G96Fwu/wqbRGQIuyrt5/Pmii13J9Y0n0GR/SwZM5ox2Aw2xF55fZvTFVoTpIDrF0H
-	 mmC9+H1848LE5Hn475SuVtMCjGQO/1pKGIkwR250=
+	b=zJbaNlafkRyPJmPN+hNl69fOEJU/Dt29YPRT9rFs+wwLPcf0KGZ4cfbt6LIrdgIn/
+	 mpr2t5yKSRDvBh/woqT6xZVMwkwbcRrBcv09pPrqPODe6Bl09ppFrvOcjif6vHNadA
+	 S6BnALKUvQb5TSZ8PzWZwyjaV+azZCPp8A6MdxnM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marcus Wichelmann <marcus.wichelmann@hetzner-cloud.de>,
-	Eric Dumazet <edumazet@google.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 442/512] net_sched: sch_sfq: fix a potential crash on gso_skb handling
-Date: Tue, 17 Jun 2025 17:26:48 +0200
-Message-ID: <20250617152437.475710833@linuxfoundation.org>
+Subject: [PATCH 6.15 406/780] arm64: dts: qcom: qcm2290: fix (some) of QUP interconnects
+Date: Tue, 17 Jun 2025 17:21:54 +0200
+Message-ID: <20250617152508.000639070@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,72 +47,107 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 82ffbe7776d0ac084031f114167712269bf3d832 ]
+[ Upstream commit e07d2d57a1c7254d25597dcdd34f318a91ec9398 ]
 
-SFQ has an assumption of always being able to queue at least one packet.
+While adding interconnect support for the QCM2290 platform some of them
+got the c&p error, rogue MASTER_APPSS_PROC for the config_noc
+interconnect. Turn that into SLAVE_QUP_0 as expected.
 
-However, after the blamed commit, sch->q.len can be inflated by packets
-in sch->gso_skb, and an enqueue() on an empty SFQ qdisc can be followed
-by an immediate drop.
-
-Fix sfq_drop() to properly clear q->tail in this situation.
-
-Tested:
-
-ip netns add lb
-ip link add dev to-lb type veth peer name in-lb netns lb
-ethtool -K to-lb tso off                 # force qdisc to requeue gso_skb
-ip netns exec lb ethtool -K in-lb gro on # enable NAPI
-ip link set dev to-lb up
-ip -netns lb link set dev in-lb up
-ip addr add dev to-lb 192.168.20.1/24
-ip -netns lb addr add dev in-lb 192.168.20.2/24
-tc qdisc replace dev to-lb root sfq limit 100
-
-ip netns exec lb netserver
-
-netperf -H 192.168.20.2 -l 100 &
-netperf -H 192.168.20.2 -l 100 &
-netperf -H 192.168.20.2 -l 100 &
-netperf -H 192.168.20.2 -l 100 &
-
-Fixes: a53851e2c321 ("net: sched: explicit locking in gso_cpu fallback")
-Reported-by: Marcus Wichelmann <marcus.wichelmann@hetzner-cloud.de>
-Closes: https://lore.kernel.org/netdev/9da42688-bfaa-4364-8797-e9271f3bdaef@hetzner-cloud.de/
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Link: https://patch.msgid.link/20250606165127.3629486-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 5b970ff0193d ("arm64: dts: qcom: qcm2290: Hook up interconnects")
+Reported-by: Konrad Dybcio <konradybcio@kernel.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20250207-rb1-bt-v4-4-d810fc8c94a9@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_sfq.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/qcm2290.dtsi | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/net/sched/sch_sfq.c b/net/sched/sch_sfq.c
-index 58b42dcf8f201..a903b3c468050 100644
---- a/net/sched/sch_sfq.c
-+++ b/net/sched/sch_sfq.c
-@@ -310,7 +310,10 @@ static unsigned int sfq_drop(struct Qdisc *sch, struct sk_buff **to_free)
- 		/* It is difficult to believe, but ALL THE SLOTS HAVE LENGTH 1. */
- 		x = q->tail->next;
- 		slot = &q->slots[x];
--		q->tail->next = slot->next;
-+		if (slot->next == x)
-+			q->tail = NULL; /* no more active slots */
-+		else
-+			q->tail->next = slot->next;
- 		q->ht[slot->hash] = SFQ_EMPTY_SLOT;
- 		goto drop;
- 	}
+diff --git a/arch/arm64/boot/dts/qcom/qcm2290.dtsi b/arch/arm64/boot/dts/qcom/qcm2290.dtsi
+index f0746123e594d..6e3e57dd02612 100644
+--- a/arch/arm64/boot/dts/qcom/qcm2290.dtsi
++++ b/arch/arm64/boot/dts/qcom/qcm2290.dtsi
+@@ -1073,7 +1073,7 @@
+ 				interconnects = <&qup_virt MASTER_QUP_CORE_0 RPM_ALWAYS_TAG
+ 						 &qup_virt SLAVE_QUP_CORE_0 RPM_ALWAYS_TAG>,
+ 						<&bimc MASTER_APPSS_PROC RPM_ALWAYS_TAG
+-						 &config_noc MASTER_APPSS_PROC RPM_ALWAYS_TAG>;
++						 &config_noc SLAVE_QUP_0 RPM_ALWAYS_TAG>;
+ 				interconnect-names = "qup-core",
+ 						     "qup-config";
+ 				#address-cells = <1>;
+@@ -1092,7 +1092,7 @@
+ 				interconnects = <&qup_virt MASTER_QUP_CORE_0 RPM_ALWAYS_TAG
+ 						 &qup_virt SLAVE_QUP_CORE_0 RPM_ALWAYS_TAG>,
+ 						<&bimc MASTER_APPSS_PROC RPM_ALWAYS_TAG
+-						 &config_noc MASTER_APPSS_PROC RPM_ALWAYS_TAG>;
++						 &config_noc SLAVE_QUP_0 RPM_ALWAYS_TAG>;
+ 				interconnect-names = "qup-core",
+ 						     "qup-config";
+ 				status = "disabled";
+@@ -1137,7 +1137,7 @@
+ 				interconnects = <&qup_virt MASTER_QUP_CORE_0 RPM_ALWAYS_TAG
+ 						 &qup_virt SLAVE_QUP_CORE_0 RPM_ALWAYS_TAG>,
+ 						<&bimc MASTER_APPSS_PROC RPM_ALWAYS_TAG
+-						 &config_noc MASTER_APPSS_PROC RPM_ALWAYS_TAG>;
++						 &config_noc SLAVE_QUP_0 RPM_ALWAYS_TAG>;
+ 				interconnect-names = "qup-core",
+ 						     "qup-config";
+ 				#address-cells = <1>;
+@@ -1184,7 +1184,7 @@
+ 				interconnects = <&qup_virt MASTER_QUP_CORE_0 RPM_ALWAYS_TAG
+ 						 &qup_virt SLAVE_QUP_CORE_0 RPM_ALWAYS_TAG>,
+ 						<&bimc MASTER_APPSS_PROC RPM_ALWAYS_TAG
+-						 &config_noc MASTER_APPSS_PROC RPM_ALWAYS_TAG>;
++						 &config_noc SLAVE_QUP_0 RPM_ALWAYS_TAG>;
+ 				interconnect-names = "qup-core",
+ 						     "qup-config";
+ 				#address-cells = <1>;
+@@ -1231,7 +1231,7 @@
+ 				interconnects = <&qup_virt MASTER_QUP_CORE_0 RPM_ALWAYS_TAG
+ 						 &qup_virt SLAVE_QUP_CORE_0 RPM_ALWAYS_TAG>,
+ 						<&bimc MASTER_APPSS_PROC RPM_ALWAYS_TAG
+-						 &config_noc MASTER_APPSS_PROC RPM_ALWAYS_TAG>;
++						 &config_noc SLAVE_QUP_0 RPM_ALWAYS_TAG>;
+ 				interconnect-names = "qup-core",
+ 						     "qup-config";
+ 				#address-cells = <1>;
+@@ -1278,7 +1278,7 @@
+ 				interconnects = <&qup_virt MASTER_QUP_CORE_0 RPM_ALWAYS_TAG
+ 						 &qup_virt SLAVE_QUP_CORE_0 RPM_ALWAYS_TAG>,
+ 						<&bimc MASTER_APPSS_PROC RPM_ALWAYS_TAG
+-						 &config_noc MASTER_APPSS_PROC RPM_ALWAYS_TAG>;
++						 &config_noc SLAVE_QUP_0 RPM_ALWAYS_TAG>;
+ 				interconnect-names = "qup-core",
+ 						     "qup-config";
+ 				#address-cells = <1>;
+@@ -1297,7 +1297,7 @@
+ 				interconnects = <&qup_virt MASTER_QUP_CORE_0 RPM_ALWAYS_TAG
+ 						 &qup_virt SLAVE_QUP_CORE_0 RPM_ALWAYS_TAG>,
+ 						<&bimc MASTER_APPSS_PROC RPM_ALWAYS_TAG
+-						 &config_noc MASTER_APPSS_PROC RPM_ALWAYS_TAG>;
++						 &config_noc SLAVE_QUP_0 RPM_ALWAYS_TAG>;
+ 				interconnect-names = "qup-core",
+ 						     "qup-config";
+ 				status = "disabled";
+@@ -1342,7 +1342,7 @@
+ 				interconnects = <&qup_virt MASTER_QUP_CORE_0 RPM_ALWAYS_TAG
+ 						 &qup_virt SLAVE_QUP_CORE_0 RPM_ALWAYS_TAG>,
+ 						<&bimc MASTER_APPSS_PROC RPM_ALWAYS_TAG
+-						 &config_noc MASTER_APPSS_PROC RPM_ALWAYS_TAG>;
++						 &config_noc SLAVE_QUP_0 RPM_ALWAYS_TAG>;
+ 				interconnect-names = "qup-core",
+ 						     "qup-config";
+ 				#address-cells = <1>;
 -- 
 2.39.5
 
