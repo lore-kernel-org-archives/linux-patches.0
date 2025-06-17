@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EAA42E264E;
-	Tue, 17 Jun 2025 16:30:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 509F61E98E3;
+	Tue, 17 Jun 2025 16:30:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177839; cv=none; b=hEYnuWaS74Fz9zb6j2NUwZJXIghoh3y57IB6hKV7pi4IJegj/TJ37HJ1XDn9UfKWMrNjTB26hPlQvHki2RF0XMLqetbzxu4hC9ibC9QbFjpYEchNs/27x/n6JEMZT9pgAPyLow349JiqUBN+yklYg5sdgOBhemjwdQT01QiBdSg=
+	t=1750177842; cv=none; b=SUE2ftU0TgVWBvcWVhlFSEWtkpx9kGMEwmSnW445w8MlZkU7BYfTxlVbZ5J1QXo/5Sa+Frq+srl+Y7wdGxx6tYLZ0dvqXEZQzqL5p4ewvqTmeUnCkp/cDwjt7WiYh+1iY5s3+DNGFLlTQ3q6YPG8VJojP725HzYHWRy7kuqlOa8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177839; c=relaxed/simple;
-	bh=9/CmTl24N4bRONdBXEx1Ja962OmSrqeo3LbQAz4b9vQ=;
+	s=arc-20240116; t=1750177842; c=relaxed/simple;
+	bh=9q2Dq3MCiqkDUZf1e7LxAzef6RvUcCL2nZi2Ot93Udg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=oQujHLvrO9QdwnMYqQXIK3AiUTqkZCERgsu9x4oscMY7cwbSBp7ch7pJdifV7lue0WWB6uNxvQ7UA4hLcwiE/W3SQBObwd4Z2Iz5IN0f/BlW0ZLzpPryl3Dx8oXnqYja6WONIAxCc1nJv7vSqceBe6wlopqHCB7T8xBZGDKBQGA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WUB6JtTL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YjjVhq6Pz3hNTcv9rlsYTpsElemhbAc9ojaKmt9xJATsd3h+57VJ59O5kGSYWfvAOVPbDJT3InQ0hcub8uoimX+AHnwBqaOu9/Gul+rd2wu024Yl9KteEKEVyW9VBscR4nrBdLOIv3R2XnaqE1Me7oCjyvnFPHW1d96L8K7kI58=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sgEC6Uzk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WUB6JtTL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7133DC4CEE3;
-	Tue, 17 Jun 2025 16:30:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sgEC6Uzk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B43FAC4CEE3;
+	Tue, 17 Jun 2025 16:30:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177838;
-	bh=9/CmTl24N4bRONdBXEx1Ja962OmSrqeo3LbQAz4b9vQ=;
+	s=korg; t=1750177842;
+	bh=9q2Dq3MCiqkDUZf1e7LxAzef6RvUcCL2nZi2Ot93Udg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WUB6JtTLmuW2kq1SV0uZG6l2vrcVPpDmhcvpPjnmeTxxi9wf6NZO/LNqqklVfEKes
-	 8k62gVY6Zpxb3hdn/teolMnGvbgsHcyj3ErhLMBmK6iTJXZb4P701W3ZaHKkqAR6kW
-	 TOG14wDWrVGPpf/OyoSKUx2964JYwGzE1QWj6qSU=
+	b=sgEC6UzkQw+omOZjK8MKaaOqcc0vYIfFgwqPzEMT6EopMh6acPA0PHkfHQFD8jTy2
+	 N4skzk79qUjLdrKiDWdzDPaQmR9K3uMsQlrj3W6UMAQe1LusjKiF7PMLFqhtyjlY7z
+	 s11z49OheJq0ARzRlu6w2IeRQDN6ne5lu3Bos8iY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Andr=C3=A9=20Draszik?= <andre.draszik@linaro.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Chris Chiu <chris.chiu@canonical.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 370/780] firmware: exynos-acpm: silence EPROBE_DEFER error on boot
-Date: Tue, 17 Jun 2025 17:21:18 +0200
-Message-ID: <20250617152506.519525360@linuxfoundation.org>
+Subject: [PATCH 6.12 404/512] ALSA: hda/realtek - Add new HP ZBook laptop with micmute led fixup
+Date: Tue, 17 Jun 2025 17:26:10 +0200
+Message-ID: <20250617152435.951868126@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,70 +45,37 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: André Draszik <andre.draszik@linaro.org>
+From: Chris Chiu <chris.chiu@canonical.com>
 
-[ Upstream commit 53734383a73888e6d765aa07f4523802fdf1ee10 ]
+[ Upstream commit f709b78aecab519dbcefa9a6603b94ad18c553e3 ]
 
-This driver emits error messages when client drivers are trying to get
-an interface handle to this driver here before this driver has
-completed _probe().
+New HP ZBook with Realtek HDA codec ALC3247 needs the quirk
+ALC236_FIXUP_HP_GPIO_LED to fix the micmute LED.
 
-Given this driver returns -EPROBE_DEFER in that case, this is not an
-error and shouldn't be emitted to the log, similar to how
-dev_err_probe() behaves, so just remove them.
-
-This change also allows us to simplify the logic around releasing of
-the acpm_np handle.
-
-Fixes: a88927b534ba ("firmware: add Exynos ACPM protocol driver")
-Signed-off-by: André Draszik <andre.draszik@linaro.org>
-Link: https://lore.kernel.org/r/20250319-acpm-fixes-v2-2-ac2c1bcf322b@linaro.org
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Chris Chiu <chris.chiu@canonical.com>
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20250520132101.120685-1-chris.chiu@canonical.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/samsung/exynos-acpm.c | 11 ++---------
- 1 file changed, 2 insertions(+), 9 deletions(-)
+ sound/pci/hda/patch_realtek.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/firmware/samsung/exynos-acpm.c b/drivers/firmware/samsung/exynos-acpm.c
-index 15e991b99f5a3..e80cb7a8da8f2 100644
---- a/drivers/firmware/samsung/exynos-acpm.c
-+++ b/drivers/firmware/samsung/exynos-acpm.c
-@@ -696,24 +696,17 @@ static const struct acpm_handle *acpm_get_by_phandle(struct device *dev,
- 		return ERR_PTR(-ENODEV);
- 
- 	pdev = of_find_device_by_node(acpm_np);
--	if (!pdev) {
--		dev_err(dev, "Cannot find device node %s\n", acpm_np->name);
--		of_node_put(acpm_np);
--		return ERR_PTR(-EPROBE_DEFER);
--	}
--
- 	of_node_put(acpm_np);
-+	if (!pdev)
-+		return ERR_PTR(-EPROBE_DEFER);
- 
- 	acpm = platform_get_drvdata(pdev);
- 	if (!acpm) {
--		dev_err(dev, "Cannot get drvdata from %s\n",
--			dev_name(&pdev->dev));
- 		platform_device_put(pdev);
- 		return ERR_PTR(-EPROBE_DEFER);
- 	}
- 
- 	if (!try_module_get(pdev->dev.driver->owner)) {
--		dev_err(dev, "Cannot get module reference.\n");
- 		platform_device_put(pdev);
- 		return ERR_PTR(-EPROBE_DEFER);
- 	}
--- 
-2.39.5
-
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -10828,6 +10828,7 @@ static const struct hda_quirk alc269_fix
+ 	SND_PCI_QUIRK(0x103c, 0x8e1a, "HP ZBook Firefly 14 G12A", ALC245_FIXUP_HP_ZBOOK_FIREFLY_G12A),
+ 	SND_PCI_QUIRK(0x103c, 0x8e1b, "HP EliteBook G12", ALC245_FIXUP_HP_ZBOOK_FIREFLY_G12A),
+ 	SND_PCI_QUIRK(0x103c, 0x8e1c, "HP EliteBook G12", ALC245_FIXUP_HP_ZBOOK_FIREFLY_G12A),
++	SND_PCI_QUIRK(0x103c, 0x8e1d, "HP ZBook X Gli 16 G12", ALC236_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8e2c, "HP EliteBook 16 G12", ALC285_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8e36, "HP 14 Enstrom OmniBook X", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x103c, 0x8e37, "HP 16 Piston OmniBook X", ALC287_FIXUP_CS35L41_I2C_2),
 
 
