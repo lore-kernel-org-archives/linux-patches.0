@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE6562E7185;
-	Tue, 17 Jun 2025 15:52:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF9712E7185;
+	Tue, 17 Jun 2025 15:52:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175565; cv=none; b=UAKYKvrGLg9OU0gPmw3usDwQJ6kH5y7apd8JSNBw9MkSdcVY9Wqk6HmLUufjv06mSno1QRX6N7Kri+YLF9Diw0R+/RMVIY/vRTbG0+8YYtl/RtuVwWIJrQozatxFKlIiSz+8dB0KHMw8eDN0hJnoQ0eD8ZjaT03+FOg+nm8J17M=
+	t=1750175568; cv=none; b=R3h00q0uds1hyQemBIv0KGZN1KgSJagkR5GZhU82QCxrE7lNZckXKQLKxXVaN89UrTz3SpDJyc7ZDGfKEXCqSTxhFexk7dsTXSEdxS50TxeLpXivqB2LKWCbxPRc2cF9Wa6nRCN9HT+AbeSiKmfKJ+uxtIy4ozh1ShE+VrxV2KY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175565; c=relaxed/simple;
-	bh=07bF9fI0st95FlBYCp6K0AloS6pYaSM5mELN0aAwaR0=;
+	s=arc-20240116; t=1750175568; c=relaxed/simple;
+	bh=VJmchrKfGDRo3GzBEy3Inijycz23kuYsgFpiv8bu/e8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gXPlqjiibuQVwLJEd7VSRb0jbWUwSjAjnww1K1p4rLdrVBOjonc/7Pz9aHrk2k5AgG2Bs1obeUYhcBPQFopWMnGU9aDC08ywf3UTIpOeZrsVDJEfHD3onOGFWls2EnH0tmYRhv2Uh33VIfea6CG67XjcfYKyBrtBGmOHVUzfdmI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GeSkUhQF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tyIq/ZSUDgCrQcbVCpcVulJc40mB4yh9Ze1FOMqakfqaIN7V01iGZFqSKePyCmxCb4vVoBIw2or2QsLoj+v6RvIBUT+QOPD+3jHt/X63d8pkiJbxGkKBFn3eDH6gaSqkWTeQGly7tRgqYMSHBvGOpUVtr7Occ/lcJJqjhRZEWTk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kyqow+U/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GeSkUhQF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7156C4CEF1;
-	Tue, 17 Jun 2025 15:52:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kyqow+U/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36305C4CEE3;
+	Tue, 17 Jun 2025 15:52:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175565;
-	bh=07bF9fI0st95FlBYCp6K0AloS6pYaSM5mELN0aAwaR0=;
+	s=korg; t=1750175568;
+	bh=VJmchrKfGDRo3GzBEy3Inijycz23kuYsgFpiv8bu/e8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GeSkUhQFDafclId5jg9DARouLBwlFHSw8fP2mXOhezvCys/qM6fstJQbOAOau47Z2
-	 Lp4prjAcsQsU+NCoogbo7gvYg+qUkTIbpprTR/SQnTqhFVkHoAadi1zs4DYikhiXHM
-	 5OAf3sayz4Nudb078SeEAg99x5hhdiHybPx2RIh4=
+	b=kyqow+U/vcuJNWT6jXcxqvrQN2p6E64xoJGxprsk0VGleIhBvIyQsSRuL9DcRV/iY
+	 dJ3lPgFvHT1D4tsnRSlTNKHMbHY/NUKABg1QkQ19u2wU2tJO2N5wWEuAknMkSKWPQr
+	 NtlKWVnWEmPlQJyeitprVXjurItzKxjPTlDhv6/M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quentin Schulz <quentin.schulz@cherry.de>,
-	Lukasz Czechowski <lukasz.czechowski@thaumatec.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Hengqi Chen <hengqi.chen@gmail.com>,
+	Feng Yang <yangfeng@kylinos.cn>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 189/356] arm64: dts: rockchip: disable unrouted USB controllers and PHY on RK3399 Puma with Haikou
-Date: Tue, 17 Jun 2025 17:25:04 +0200
-Message-ID: <20250617152345.819571183@linuxfoundation.org>
+Subject: [PATCH 6.12 136/512] libbpf: Fix event name too long error
+Date: Tue, 17 Jun 2025 17:21:42 +0200
+Message-ID: <20250617152425.108299370@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-References: <20250617152338.212798615@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,68 +48,162 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Quentin Schulz <quentin.schulz@cherry.de>
+From: Feng Yang <yangfeng@kylinos.cn>
 
-[ Upstream commit febd8c6ab52c683b447fe22fc740918c86feae43 ]
+[ Upstream commit 4dde20b1aa85d69c4281eaac9a7cfa7d2b62ecf0 ]
 
-The u2phy0_host port is the part of the USB PHY0 (namely the
-HOST0_DP/DM lanes) which routes directly to the USB2.0 HOST
-controller[1]. The other lanes of the PHY are routed to the USB3.0 OTG
-controller (dwc3), which we do use.
+When the binary path is excessively long, the generated probe_name in libbpf
+exceeds the kernel's MAX_EVENT_NAME_LEN limit (64 bytes).
+This causes legacy uprobe event attachment to fail with error code -22.
 
-The HOST0_DP/DM lanes aren't routed on RK3399 Puma so let's simply
-disable the USB2.0 controllers.
+The fix reorders the fields to place the unique ID before the name.
+This ensures that even if truncation occurs via snprintf, the unique ID
+remains intact, preserving event name uniqueness. Additionally, explicit
+checks with MAX_EVENT_NAME_LEN are added to enforce length constraints.
 
-USB3 OTG has been known to be unstable on RK3399 Puma Haikou for a
-while, one of the recurring issues being that only USB2 is detected and
-not USB3 in host mode. Reading the justification above and seeing that
-we are keeping u2phy0_host in the Haikou carrierboard DTS probably may
-have bothered you since it should be changed to u2phy0_otg. The issue is
-that if it's switched to that, USB OTG on Haikou is entirely broken. I
-have checked the routing in the Gerber file, the lanes are going to the
-expected ball pins (that is, NOT HOST0_DP/DM).
-u2phy0_host is for sure the wrong part of the PHY to use, but it's the
-only one that works at the moment for that board so keep it until we
-figure out what exactly is broken.
+Before Fix:
+	./test_progs -t attach_probe/kprobe-long_name
+	......
+	libbpf: failed to add legacy kprobe event for 'bpf_testmod_looooooooooooooooooooooooooooooong_name+0x0': -EINVAL
+	libbpf: prog 'handle_kprobe': failed to create kprobe 'bpf_testmod_looooooooooooooooooooooooooooooong_name+0x0' perf event: -EINVAL
+	test_attach_kprobe_long_event_name:FAIL:attach_kprobe_long_event_name unexpected error: -22
+	test_attach_probe:PASS:uprobe_ref_ctr_cleanup 0 nsec
+	#13/11   attach_probe/kprobe-long_name:FAIL
+	#13      attach_probe:FAIL
 
-No intended functional change.
+	./test_progs -t attach_probe/uprobe-long_name
+	......
+	libbpf: failed to add legacy uprobe event for /root/linux-bpf/bpf-next/tools/testing/selftests/bpf/test_progs:0x13efd9: -EINVAL
+	libbpf: prog 'handle_uprobe': failed to create uprobe '/root/linux-bpf/bpf-next/tools/testing/selftests/bpf/test_progs:0x13efd9' perf event: -EINVAL
+	test_attach_uprobe_long_event_name:FAIL:attach_uprobe_long_event_name unexpected error: -22
+	#13/10   attach_probe/uprobe-long_name:FAIL
+	#13      attach_probe:FAIL
+After Fix:
+	./test_progs -t attach_probe/uprobe-long_name
+	#13/10   attach_probe/uprobe-long_name:OK
+	#13      attach_probe:OK
+	Summary: 1/1 PASSED, 0 SKIPPED, 0 FAILED
 
-[1] https://rockchip.fr/Rockchip%20RK3399%20TRM%20V1.3%20Part2.pdf
-    Chapter 2 USB2.0 PHY
+	./test_progs -t attach_probe/kprobe-long_name
+	#13/11   attach_probe/kprobe-long_name:OK
+	#13      attach_probe:OK
+	Summary: 1/1 PASSED, 0 SKIPPED, 0 FAILED
 
-Fixes: 2c66fc34e945 ("arm64: dts: rockchip: add RK3399-Q7 (Puma) SoM")
-Signed-off-by: Quentin Schulz <quentin.schulz@cherry.de>
-Signed-off-by: Lukasz Czechowski <lukasz.czechowski@thaumatec.com>
-Link: https://lore.kernel.org/r/20250425-onboard_usb_dev-v2-5-4a76a474a010@thaumatec.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Fixes: 46ed5fc33db9 ("libbpf: Refactor and simplify legacy kprobe code")
+Fixes: cc10623c6810 ("libbpf: Add legacy uprobe attaching support")
+Signed-off-by: Hengqi Chen <hengqi.chen@gmail.com>
+Signed-off-by: Feng Yang <yangfeng@kylinos.cn>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20250417014848.59321-2-yangfeng59949@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3399-puma-haikou.dts | 8 --------
- 1 file changed, 8 deletions(-)
+ tools/lib/bpf/libbpf.c | 43 ++++++++++++++++--------------------------
+ 1 file changed, 16 insertions(+), 27 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3399-puma-haikou.dts b/arch/arm64/boot/dts/rockchip/rk3399-puma-haikou.dts
-index 115c14c0a3c68..396a6636073b5 100644
---- a/arch/arm64/boot/dts/rockchip/rk3399-puma-haikou.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3399-puma-haikou.dts
-@@ -251,14 +251,6 @@
- 	status = "okay";
- };
+diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
+index 069ffe5da96e5..976fabd5d4dbc 100644
+--- a/tools/lib/bpf/libbpf.c
++++ b/tools/lib/bpf/libbpf.c
+@@ -60,6 +60,8 @@
+ #define BPF_FS_MAGIC		0xcafe4a11
+ #endif
  
--&usb_host0_ehci {
--	status = "okay";
--};
++#define MAX_EVENT_NAME_LEN	64
++
+ #define BPF_FS_DEFAULT_PATH "/sys/fs/bpf"
+ 
+ #define BPF_INSN_SZ (sizeof(struct bpf_insn))
+@@ -11039,16 +11041,16 @@ static const char *tracefs_available_filter_functions_addrs(void)
+ 			     : TRACEFS"/available_filter_functions_addrs";
+ }
+ 
+-static void gen_kprobe_legacy_event_name(char *buf, size_t buf_sz,
+-					 const char *kfunc_name, size_t offset)
++static void gen_probe_legacy_event_name(char *buf, size_t buf_sz,
++					const char *name, size_t offset)
+ {
+ 	static int index = 0;
+ 	int i;
+ 
+-	snprintf(buf, buf_sz, "libbpf_%u_%s_0x%zx_%d", getpid(), kfunc_name, offset,
+-		 __sync_fetch_and_add(&index, 1));
++	snprintf(buf, buf_sz, "libbpf_%u_%d_%s_0x%zx", getpid(),
++		 __sync_fetch_and_add(&index, 1), name, offset);
+ 
+-	/* sanitize binary_path in the probe name */
++	/* sanitize name in the probe name */
+ 	for (i = 0; buf[i]; i++) {
+ 		if (!isalnum(buf[i]))
+ 			buf[i] = '_';
+@@ -11174,9 +11176,9 @@ int probe_kern_syscall_wrapper(int token_fd)
+ 
+ 		return pfd >= 0 ? 1 : 0;
+ 	} else { /* legacy mode */
+-		char probe_name[128];
++		char probe_name[MAX_EVENT_NAME_LEN];
+ 
+-		gen_kprobe_legacy_event_name(probe_name, sizeof(probe_name), syscall_name, 0);
++		gen_probe_legacy_event_name(probe_name, sizeof(probe_name), syscall_name, 0);
+ 		if (add_kprobe_event_legacy(probe_name, false, syscall_name, 0) < 0)
+ 			return 0;
+ 
+@@ -11233,10 +11235,10 @@ bpf_program__attach_kprobe_opts(const struct bpf_program *prog,
+ 					    func_name, offset,
+ 					    -1 /* pid */, 0 /* ref_ctr_off */);
+ 	} else {
+-		char probe_name[256];
++		char probe_name[MAX_EVENT_NAME_LEN];
+ 
+-		gen_kprobe_legacy_event_name(probe_name, sizeof(probe_name),
+-					     func_name, offset);
++		gen_probe_legacy_event_name(probe_name, sizeof(probe_name),
++					    func_name, offset);
+ 
+ 		legacy_probe = strdup(probe_name);
+ 		if (!legacy_probe)
+@@ -11744,20 +11746,6 @@ static int attach_uprobe_multi(const struct bpf_program *prog, long cookie, stru
+ 	return ret;
+ }
+ 
+-static void gen_uprobe_legacy_event_name(char *buf, size_t buf_sz,
+-					 const char *binary_path, uint64_t offset)
+-{
+-	int i;
 -
--&usb_host0_ohci {
--	status = "okay";
--};
+-	snprintf(buf, buf_sz, "libbpf_%u_%s_0x%zx", getpid(), binary_path, (size_t)offset);
 -
- &vopb {
- 	status = "okay";
- };
+-	/* sanitize binary_path in the probe name */
+-	for (i = 0; buf[i]; i++) {
+-		if (!isalnum(buf[i]))
+-			buf[i] = '_';
+-	}
+-}
+-
+ static inline int add_uprobe_event_legacy(const char *probe_name, bool retprobe,
+ 					  const char *binary_path, size_t offset)
+ {
+@@ -12173,13 +12161,14 @@ bpf_program__attach_uprobe_opts(const struct bpf_program *prog, pid_t pid,
+ 		pfd = perf_event_open_probe(true /* uprobe */, retprobe, binary_path,
+ 					    func_offset, pid, ref_ctr_off);
+ 	} else {
+-		char probe_name[PATH_MAX + 64];
++		char probe_name[MAX_EVENT_NAME_LEN];
+ 
+ 		if (ref_ctr_off)
+ 			return libbpf_err_ptr(-EINVAL);
+ 
+-		gen_uprobe_legacy_event_name(probe_name, sizeof(probe_name),
+-					     binary_path, func_offset);
++		gen_probe_legacy_event_name(probe_name, sizeof(probe_name),
++					    strrchr(binary_path, '/') ? : binary_path,
++					    func_offset);
+ 
+ 		legacy_probe = strdup(probe_name);
+ 		if (!legacy_probe)
 -- 
 2.39.5
 
