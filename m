@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DE081FBEA8;
-	Tue, 17 Jun 2025 16:28:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53CE61FBEA8;
+	Tue, 17 Jun 2025 16:28:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177724; cv=none; b=DuW4X7MVEnLgCuKaGHl4RxINU9hGg+H9z0ebnCvJx02i3pAD8mPDk/t0E4VqhMJ/hAtGoF9Z6Qr6A5jFMuYGQlewGwy+3nQQAVQirQPXn/QmIraMjGnyE6HI2fTmPmOnpq5pRb8twolZQUjl8uH5kCBOW4fKozIKZTaRpXsh4Nw=
+	t=1750177727; cv=none; b=ToiTWEsIiHq4JELhfqwalEWLklFciOqfi6C0FaxxBMCVZsjG39jiPeq8jbcxqDVgF4QpSigSkm1rQpqgwIbDD5/+VIQzYxnIPy44z25MkuMVpC9DpfQYmR18McrUQ81xKUGsMwB9ByK+dgHY8uPQNyNBEjFrkvm+ati98u/j1FM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177724; c=relaxed/simple;
-	bh=fE+FMsHTYt3gDDcWUJG9PVWU4P6GmhdlOkxDd/l5bLk=;
+	s=arc-20240116; t=1750177727; c=relaxed/simple;
+	bh=4CqVdLAlhzdUJRoFy6KXsjhOTn4m6INoUHlnZQ8bbKU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oyple/B57f6J/HHnU9SzA1ke7zsxu3u3wz+OJ4eAMwZUJxfMCu7HZeU1ydSL2Njl9fZdiY/bv3VMjVMe//UVCtwdDpLe/JSLLT//jBwniEFUTucuRMoekm6wISr5/iTQpWac+pm6zPD/m1pxkVv0rYBgW1BUD30mh7zKsKyOR18=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DV+SkXG6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F7akPhm7SV3Pqwm62fyxEh+WACCc9liX+naipOidympg2IW2WCpCfbkq52y2dPKeiQsHWMmOS3kAahA1nDpVxilhYKxSOiX2zkxOnulr6ixRDgsIYpfJzgdjaECobkdN7BO8mvyaIesVAebxWEJMNCM5og4f9kiNaB1G8E1fp8c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wRZrwqNz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DV+SkXG6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7188BC4CEE3;
-	Tue, 17 Jun 2025 16:28:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wRZrwqNz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B58A2C4CEE3;
+	Tue, 17 Jun 2025 16:28:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177723;
-	bh=fE+FMsHTYt3gDDcWUJG9PVWU4P6GmhdlOkxDd/l5bLk=;
+	s=korg; t=1750177727;
+	bh=4CqVdLAlhzdUJRoFy6KXsjhOTn4m6INoUHlnZQ8bbKU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DV+SkXG69rrdkEvM4XKyr5J3QBX/00Pg6IgVyVKBbn28dzi7XZCEy7kjnstiNbv3V
-	 kMptG41BX7+24gYFPwAPjSs/RPmgvE3WZN14QRU5anb+s1mnSdawsrRzyMFZ0Zbb0N
-	 8trZU3BnsKAh2AGaWXq51ZX0s1EORtPZkur7Ukj4=
+	b=wRZrwqNzV31qCyIPt+pgpznFftKa7pky81gBLC7KbyIxiJr+y+ho72u6O5EGe/KOq
+	 6Vfa5YjTpCjsqF9R61BBodcF/VvzSjwg/1DHsQVhZWhCzy1EO1jeQ5VxcWY0fruZkI
+	 tgBI57p0255NTv+UiPX3OOT15Fo9XLt1ISo6RoJg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dzmitry Sankouski <dsankouski@gmail.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Nitin Rawat <quic_nitirawa@quicinc.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 351/780] arm64: dts: qcom: sdm845-starqltechn: refactor node order
-Date: Tue, 17 Jun 2025 17:20:59 +0200
-Message-ID: <20250617152505.754754078@linuxfoundation.org>
+Subject: [PATCH 6.12 387/512] scsi: ufs: qcom: Prevent calling phy_exit() before phy_init()
+Date: Tue, 17 Jun 2025 17:25:53 +0200
+Message-ID: <20250617152435.261816512@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,37 +48,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dzmitry Sankouski <dsankouski@gmail.com>
+From: Nitin Rawat <quic_nitirawa@quicinc.com>
 
-[ Upstream commit cba1dd3d851ebc1b6c5ae4000208a9753320694b ]
+[ Upstream commit 7831003165d37ecb7b33843fcee05cada0359a82 ]
 
-Fixes: d711b22eee55 ("arm64: dts: qcom: starqltechn: add initial device tree for starqltechn")
-Signed-off-by: Dzmitry Sankouski <dsankouski@gmail.com>
-Link: https://lore.kernel.org/r/20250225-starqltechn_integration_upstream-v9-4-a5d80375cb66@gmail.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Prevent calling phy_exit() before phy_init() to avoid abnormal power
+count and the following warning during boot up.
+
+[5.146763] phy phy-1d80000.phy.0: phy_power_on was called before phy_init
+
+Fixes: 7bac65687510 ("scsi: ufs: qcom: Power off the PHY if it was already powered on in ufs_qcom_power_up_sequence()")
+Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
+Link: https://lore.kernel.org/r/20250526153821.7918-2-quic_nitirawa@quicinc.com
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/ufs/host/ufs-qcom.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts b/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
-index f3f2b25883d81..8a0d63bd594b3 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
-@@ -382,8 +382,8 @@
- };
+diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+index 4557b1bcd6356..a715f377d0a80 100644
+--- a/drivers/ufs/host/ufs-qcom.c
++++ b/drivers/ufs/host/ufs-qcom.c
+@@ -366,10 +366,9 @@ static int ufs_qcom_power_up_sequence(struct ufs_hba *hba)
+ 	if (ret)
+ 		return ret;
  
- &sdhc_2 {
--	pinctrl-names = "default";
- 	pinctrl-0 = <&sdc2_clk_state &sdc2_cmd_state &sdc2_data_state &sd_card_det_n_state>;
-+	pinctrl-names = "default";
- 	cd-gpios = <&tlmm 126 GPIO_ACTIVE_LOW>;
- 	vmmc-supply = <&vreg_l21a_2p95>;
- 	vqmmc-supply = <&vddpx_2>;
+-	if (phy->power_count) {
++	if (phy->power_count)
+ 		phy_power_off(phy);
+-		phy_exit(phy);
+-	}
++
+ 
+ 	/* phy initialization - calibrate the phy */
+ 	ret = phy_init(phy);
 -- 
 2.39.5
 
