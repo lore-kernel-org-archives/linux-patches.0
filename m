@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 637062FA626;
-	Tue, 17 Jun 2025 16:54:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A52862FA652;
+	Tue, 17 Jun 2025 16:54:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750179261; cv=none; b=QH6wR0pEV/o9Qz+YDa0tK5Ywy3qhKFG881JCZtOJlATM5xyKlwOmd09j6hiFqf2kcdpwAz0+TV6zj1OiV0fXunw7dyftVTpk7YPpw6vH6aD5UFb6zGT/LHhzn1BaxDn3hjIvS2kCc4ZeRGtAtEoac1/WO3D2oU5mHAFBJ5GSQ9I=
+	t=1750179264; cv=none; b=O0FXhK5gWnFjQAtUimTToUUp2bTRWvmxPlb32cqF6MHr11peIyw1km/FxgxF6NVUbi3nlo2jgxyezjVpt0JxK70kuZKcDsaTrzBqWWxSd+uakTSMacb61mSh8G35jDeUgT2kyU/CT6sJNoyoGiKPDdb8Oms97/ozgIAsqv4kq1I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750179261; c=relaxed/simple;
-	bh=+iiJAHBdMUvFqPXLqNOwr1D0pImetcAIXRVU9m2Odww=;
+	s=arc-20240116; t=1750179264; c=relaxed/simple;
+	bh=2flbqWcw44L23PspSVO3FITDG998NyKYffeZihIKmRc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K8XG3x8A9n64feeciJu9XCG8wEb2qb6n02MTD5/4fRC7IoUkmH5s55LjuQ/cpAfSSpF6TFqVjViMuxFu1QgifNIw7X9Z65HLZp7+wg8IsUx26yuy+1n6NPHSVY5NxEO+yHud/OJXWRTJWl6oRHotYuT5aS39t1OACOr2TtL+pr0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EkSmNMXT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f99B8ORLd2vd9rOAP/42V1T49ts0j0vBi0nNpVDn5HVVsdgHlgK8rHWbSaPX2bYvLaOAAkOM8D3rSkjZN3r/lwrf1TdnSWNkxT8QPPGQXHwCyMKQ7D+15L6HYCXP67UP8shiAhlk4D6+Har2reuXsAqRJh/+0Bk88Y3798rSHss=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bxrr7eJ5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EkSmNMXT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7BBDC4CEE3;
-	Tue, 17 Jun 2025 16:54:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bxrr7eJ5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16BDBC4CEE3;
+	Tue, 17 Jun 2025 16:54:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750179261;
-	bh=+iiJAHBdMUvFqPXLqNOwr1D0pImetcAIXRVU9m2Odww=;
+	s=korg; t=1750179264;
+	bh=2flbqWcw44L23PspSVO3FITDG998NyKYffeZihIKmRc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EkSmNMXTkWbhocSZo1dfw3v1bWPMyOUfdeSDK0hphMnfYBGWsWd7w/ff0LKohYwyW
-	 rhrQsb58qnTL/K7hvsyz5WCa4Mxm7ITt/PflQ4TwG/7pmodXc+uF6Kgd5E2AnWr1Vs
-	 BTvEvPzOLCiNyFwg7dmdDHi1tHD1yvk938DcFBQ0=
+	b=Bxrr7eJ5mEThPVAA3KkLsniBIpQxACP4afqojdQk1tOIeea80Ui4NdiszeJckExFZ
+	 j1SWTAH7lzo9IrOnz/fgXgSe1a1SWpbArFskyNa3MrzBkcdx/wvnbeoJWxZRPXwurS
+	 FIAfN/rNgMpp6hu0HoMl5Pc8O2WkgumyqA/fRupA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anton Nadezhdin <anton.nadezhdin@intel.com>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>,
+	syzbot+846bb38dc67fe62cc733@syzkaller.appspotmail.com,
+	John <john.cs.hey@gmail.com>,
+	Joe Damato <jdamato@fastly.com>,
+	Stanislav Fomichev <sdf@fomichev.me>,
+	Jacob Keller <jacob.e.keller@intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Rinitha S <sx.rinitha@intel.com>
-Subject: [PATCH 6.15 697/780] ice/ptp: fix crosstimestamp reporting
-Date: Tue, 17 Jun 2025 17:26:45 +0200
-Message-ID: <20250617152519.878420591@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.15 698/780] e1000: Move cancel_work_sync to avoid deadlock
+Date: Tue, 17 Jun 2025 17:26:46 +0200
+Message-ID: <20250617152519.922570692@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
 References: <20250617152451.485330293@linuxfoundation.org>
@@ -54,46 +55,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anton Nadezhdin <anton.nadezhdin@intel.com>
+From: Joe Damato <jdamato@fastly.com>
 
-[ Upstream commit a5a441ae283d54ec329aadc7426991dc32786d52 ]
+[ Upstream commit b4a8085ceefb7bbb12c2b71c55e71fc946c6929f ]
 
-Set use_nsecs=true as timestamp is reported in ns. Lack of this result
-in smaller timestamp error window which cause error during phc2sys
-execution on E825 NICs:
-phc2sys[1768.256]: ioctl PTP_SYS_OFFSET_PRECISE: Invalid argument
+Previously, e1000_down called cancel_work_sync for the e1000 reset task
+(via e1000_down_and_stop), which takes RTNL.
 
-This problem was introduced in the cited commit which omitted setting
-use_nsecs to true when converting the ice driver to use
-convert_base_to_cs().
+As reported by users and syzbot, a deadlock is possible in the following
+scenario:
 
-Testing hints (ethX is PF netdev):
-phc2sys -s ethX -c CLOCK_REALTIME  -O 37 -m
-phc2sys[1769.256]: CLOCK_REALTIME phc offset -5 s0 freq      -0 delay    0
+CPU 0:
+  - RTNL is held
+  - e1000_close
+  - e1000_down
+  - cancel_work_sync (cancel / wait for e1000_reset_task())
 
-Fixes: d4bea547ebb57 ("ice/ptp: Remove convert_art_to_tsc()")
-Signed-off-by: Anton Nadezhdin <anton.nadezhdin@intel.com>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Reviewed-by: Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>
-Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
+CPU 1:
+  - process_one_work
+  - e1000_reset_task
+  - take RTNL
+
+To remedy this, avoid calling cancel_work_sync from e1000_down
+(e1000_reset_task does nothing if the device is down anyway). Instead,
+call cancel_work_sync for e1000_reset_task when the device is being
+removed.
+
+Fixes: e400c7444d84 ("e1000: Hold RTNL when e1000_down can be called")
+Reported-by: syzbot+846bb38dc67fe62cc733@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/683837bf.a00a0220.52848.0003.GAE@google.com/
+Reported-by: John <john.cs.hey@gmail.com>
+Closes: https://lore.kernel.org/netdev/CAP=Rh=OEsn4y_2LvkO3UtDWurKcGPnZ_NPSXK=FbgygNXL37Sw@mail.gmail.com/
+Signed-off-by: Joe Damato <jdamato@fastly.com>
+Acked-by: Stanislav Fomichev <sdf@fomichev.me>
+Acked-by: Jacob Keller <jacob.e.keller@intel.com>
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_ptp.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/intel/e1000/e1000_main.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_ptp.c b/drivers/net/ethernet/intel/ice/ice_ptp.c
-index 1fd1ae03eb909..11ed48a62b536 100644
---- a/drivers/net/ethernet/intel/ice/ice_ptp.c
-+++ b/drivers/net/ethernet/intel/ice/ice_ptp.c
-@@ -2307,6 +2307,7 @@ static int ice_capture_crosststamp(ktime_t *device,
- 	ts = ((u64)ts_hi << 32) | ts_lo;
- 	system->cycles = ts;
- 	system->cs_id = CSID_X86_ART;
-+	system->use_nsecs = true;
+diff --git a/drivers/net/ethernet/intel/e1000/e1000_main.c b/drivers/net/ethernet/intel/e1000/e1000_main.c
+index 3f089c3d47b23..d8595e84326db 100644
+--- a/drivers/net/ethernet/intel/e1000/e1000_main.c
++++ b/drivers/net/ethernet/intel/e1000/e1000_main.c
+@@ -477,10 +477,6 @@ static void e1000_down_and_stop(struct e1000_adapter *adapter)
  
- 	/* Read Device source clock time */
- 	ts_lo = rd32(hw, cfg->dev_time_l[tmr_idx]);
+ 	cancel_delayed_work_sync(&adapter->phy_info_task);
+ 	cancel_delayed_work_sync(&adapter->fifo_stall_task);
+-
+-	/* Only kill reset task if adapter is not resetting */
+-	if (!test_bit(__E1000_RESETTING, &adapter->flags))
+-		cancel_work_sync(&adapter->reset_task);
+ }
+ 
+ void e1000_down(struct e1000_adapter *adapter)
+@@ -1266,6 +1262,10 @@ static void e1000_remove(struct pci_dev *pdev)
+ 
+ 	unregister_netdev(netdev);
+ 
++	/* Only kill reset task if adapter is not resetting */
++	if (!test_bit(__E1000_RESETTING, &adapter->flags))
++		cancel_work_sync(&adapter->reset_task);
++
+ 	e1000_phy_hw_reset(hw);
+ 
+ 	kfree(adapter->tx_ring);
 -- 
 2.39.5
 
