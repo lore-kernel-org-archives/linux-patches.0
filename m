@@ -1,45 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1292C20B807;
-	Tue, 17 Jun 2025 16:18:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3E5C18E025;
+	Tue, 17 Jun 2025 16:18:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177081; cv=none; b=S62pDqTIySxnoDnMrUUCxA2C4AjjS9Mve86CllDecIxMFG/2rMaAxigygl/YgSyjau6R6GrNmcxAOe+qmtGwGrnP73kaWfBIP5IJhQ9psAXDKJJzu6UFsGw1HxulnVOKirFpYQtlCrISq3pVxJ+lHa8QuFSSw+ejCwwPSU7oAtE=
+	t=1750177084; cv=none; b=eWcYIEWZd1bcyRUPGutgAUpAQVgt+p35qIbgxPg3jhB0GqBZeCyro2ne3ovs6VNQi7RwhRlItqIRHkJwvQJQiVJPXKmat6G9J0AqnhcXEZuzG+MD9yBep6GWy9OoxEQP1JUNwSoWsevc+HP4TC0+1jjIGC48d8GO/Yu+1JBZvAE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177081; c=relaxed/simple;
-	bh=RisM8z9N/ZaAr2risX1Q9k2s7M4+2LU8vbEayr4eaQU=;
+	s=arc-20240116; t=1750177084; c=relaxed/simple;
+	bh=nat7DGFeRNyPGVQNYniapC+khKVdZTphAyUBP+JGyOg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fav0yrhyWRvQPXu94g1OkDNfCtj2+fmXmzPXK476DH1iJHyXq0urRrRTIVTVOBGNZpZTwMvFFuodFg9oDDZi9sIRIVtQf4+zIbSJ0zgaNH3JY6vpGLEED416lNUYCDUtOAaiahWy5S+tzbmyCU/dWmSIaV52Q4P1h5HwS10FQpI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kexea6CN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gBLGBP0xWv4Zpa1fhboWbKgQpTmZmUQhmAQHkZ0jcLPDelDshG7YGW1dGll5wdsV4tjYSblQoUVnhiIh25ra2LNJTrAqdRmpukkxXZkoZJNXIf03y9T76e50EL9DQkae8Ml7qzvfKX+UlpBnszs2BvakaWwYCqhagl6SUR1nKqI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nhLEZMHC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kexea6CN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 771F5C4CEE3;
-	Tue, 17 Jun 2025 16:18:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nhLEZMHC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BADEAC4CEE3;
+	Tue, 17 Jun 2025 16:18:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177081;
-	bh=RisM8z9N/ZaAr2risX1Q9k2s7M4+2LU8vbEayr4eaQU=;
+	s=korg; t=1750177084;
+	bh=nat7DGFeRNyPGVQNYniapC+khKVdZTphAyUBP+JGyOg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kexea6CNKuetfp9rh0kjwfLGJewqr1wJ2MLN7kBS01HI8EkBlGPiCmYTEPuFV2snO
-	 cjDH624JhWJCCjRgd+sE2wr8h9/elnPyFSsWH6KnopfrKCBekcuwLygBlo5H2AExtW
-	 fwSwKUdl2tE0NLzyPayIl7w0s2g7zFslSIyskTec=
+	b=nhLEZMHCDW+SvSVH/2gVGgqWPPMhTe9kKWK75Mvv/3FbA8PbCM2BsWmk59xSWiyGZ
+	 lJLp3buuLNKXg+OqaBTi0hHrUPu+q+QgesPVFZCWo0r4Y5XLwNJ2APtlNo+UdhJKkt
+	 F6jcBOPezWZINpL7g4+jyHQC4Cq2ZaX1f4IzItCo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Tom Zanussi <zanussi@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Peng Fan <peng.fan@nxp.com>,
+	Jassi Brar <jassisinghbrar@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 255/780] tracing: Rename event_trigger_alloc() to trigger_data_alloc()
-Date: Tue, 17 Jun 2025 17:19:23 +0200
-Message-ID: <20250617152501.840952089@linuxfoundation.org>
+Subject: [PATCH 6.12 295/512] mailbox: imx: Fix TXDB_V2 sending
+Date: Tue, 17 Jun 2025 17:24:21 +0200
+Message-ID: <20250617152431.551512419@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -51,128 +47,75 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Peng Fan <peng.fan@nxp.com>
 
-[ Upstream commit f2947c4b7d0f235621c5daf78aecfbd6e22c05e5 ]
+[ Upstream commit f5cb07ec6aabd1bb56adbdeb5f0d70cb524db2cd ]
 
-The function event_trigger_alloc() creates an event_trigger_data
-descriptor and states that it needs to be freed via event_trigger_free().
-This is incorrect, it needs to be freed by trigger_data_free() as
-event_trigger_free() adds ref counting.
+i.MX95 features several processing domains, Cortex-M7, Cortex-A55
+secure, Cortex-A55 non-secure. Each domain could communicate with
+SCMI firmware with a dedicated MU. But the current NXP SCMI firmware
+is not a RTOS, all processing logic codes are in interrupt context.
+So if high priority Cortex-M7 is communicating with SCMI firmware and
+requires a bit more time to handle the SCMI call, Linux MU TXDB_V2
+will be timeout with high possiblity in 1000us(the current value in
+imx-mailbox.c). Per NXP SCMI firmware design, if timeout, there is
+no recover logic, so SCMI agents should never timeout and always
+wait until the check condition met.
 
-Rename event_trigger_alloc() to trigger_data_alloc() and state that it
-needs to be freed via trigger_data_free(). This naming convention
-was introducing bugs.
+Based on the upper reason, enlarge the timeout value to 10ms which
+is less chance to timeout, and retry if timeout really happends.
 
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Cc: Tom Zanussi <zanussi@kernel.org>
-Link: https://lore.kernel.org/20250507145455.776436410@goodmis.org
-Fixes: 86599dbe2c527 ("tracing: Add helper functions to simplify event_command.parse() callback handling")
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fixes: 5bfe4067d350 ("mailbox: imx: support channel type tx doorbell v2")
+Signed-off-by: Peng Fan <peng.fan@nxp.com>
+Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace.h                |  8 +++-----
- kernel/trace/trace_events_hist.c    |  2 +-
- kernel/trace/trace_events_trigger.c | 16 ++++++++--------
- 3 files changed, 12 insertions(+), 14 deletions(-)
+ drivers/mailbox/imx-mailbox.c | 21 +++++++++++++++------
+ 1 file changed, 15 insertions(+), 6 deletions(-)
 
-diff --git a/kernel/trace/trace.h b/kernel/trace/trace.h
-index 79be1995db44c..10ee434a9b755 100644
---- a/kernel/trace/trace.h
-+++ b/kernel/trace/trace.h
-@@ -1772,6 +1772,9 @@ extern int event_enable_register_trigger(char *glob,
- extern void event_enable_unregister_trigger(char *glob,
- 					    struct event_trigger_data *test,
- 					    struct trace_event_file *file);
-+extern struct event_trigger_data *
-+trigger_data_alloc(struct event_command *cmd_ops, char *cmd, char *param,
-+		   void *private_data);
- extern void trigger_data_free(struct event_trigger_data *data);
- extern int event_trigger_init(struct event_trigger_data *data);
- extern int trace_event_trigger_enable_disable(struct trace_event_file *file,
-@@ -1798,11 +1801,6 @@ extern bool event_trigger_check_remove(const char *glob);
- extern bool event_trigger_empty_param(const char *param);
- extern int event_trigger_separate_filter(char *param_and_filter, char **param,
- 					 char **filter, bool param_required);
--extern struct event_trigger_data *
--event_trigger_alloc(struct event_command *cmd_ops,
--		    char *cmd,
--		    char *param,
--		    void *private_data);
- extern int event_trigger_parse_num(char *trigger,
- 				   struct event_trigger_data *trigger_data);
- extern int event_trigger_set_filter(struct event_command *cmd_ops,
-diff --git a/kernel/trace/trace_events_hist.c b/kernel/trace/trace_events_hist.c
-index 0ec692f80aefc..86fd06812cdab 100644
---- a/kernel/trace/trace_events_hist.c
-+++ b/kernel/trace/trace_events_hist.c
-@@ -6795,7 +6795,7 @@ static int event_hist_trigger_parse(struct event_command *cmd_ops,
- 		return PTR_ERR(hist_data);
- 	}
- 
--	trigger_data = event_trigger_alloc(cmd_ops, cmd, param, hist_data);
-+	trigger_data = trigger_data_alloc(cmd_ops, cmd, param, hist_data);
- 	if (!trigger_data) {
- 		ret = -ENOMEM;
- 		goto out_free;
-diff --git a/kernel/trace/trace_events_trigger.c b/kernel/trace/trace_events_trigger.c
-index 6e87ae2a1a66b..9f3f76405a28c 100644
---- a/kernel/trace/trace_events_trigger.c
-+++ b/kernel/trace/trace_events_trigger.c
-@@ -804,7 +804,7 @@ int event_trigger_separate_filter(char *param_and_filter, char **param,
- }
- 
- /**
-- * event_trigger_alloc - allocate and init event_trigger_data for a trigger
-+ * trigger_data_alloc - allocate and init event_trigger_data for a trigger
-  * @cmd_ops: The event_command operations for the trigger
-  * @cmd: The cmd string
-  * @param: The param string
-@@ -815,14 +815,14 @@ int event_trigger_separate_filter(char *param_and_filter, char **param,
-  * trigger_ops to assign to the event_trigger_data.  @private_data can
-  * also be passed in and associated with the event_trigger_data.
-  *
-- * Use event_trigger_free() to free an event_trigger_data object.
-+ * Use trigger_data_free() to free an event_trigger_data object.
-  *
-  * Return: The trigger_data object success, NULL otherwise
-  */
--struct event_trigger_data *event_trigger_alloc(struct event_command *cmd_ops,
--					       char *cmd,
--					       char *param,
--					       void *private_data)
-+struct event_trigger_data *trigger_data_alloc(struct event_command *cmd_ops,
-+					      char *cmd,
-+					      char *param,
-+					      void *private_data)
+diff --git a/drivers/mailbox/imx-mailbox.c b/drivers/mailbox/imx-mailbox.c
+index f815dab3be50c..0657bd3d8f97b 100644
+--- a/drivers/mailbox/imx-mailbox.c
++++ b/drivers/mailbox/imx-mailbox.c
+@@ -226,7 +226,7 @@ static int imx_mu_generic_tx(struct imx_mu_priv *priv,
  {
- 	struct event_trigger_data *trigger_data;
- 	const struct event_trigger_ops *trigger_ops;
-@@ -989,7 +989,7 @@ event_trigger_parse(struct event_command *cmd_ops,
- 		return ret;
+ 	u32 *arg = data;
+ 	u32 val;
+-	int ret;
++	int ret, count;
  
- 	ret = -ENOMEM;
--	trigger_data = event_trigger_alloc(cmd_ops, cmd, param, file);
-+	trigger_data = trigger_data_alloc(cmd_ops, cmd, param, file);
- 	if (!trigger_data)
- 		goto out;
- 
-@@ -1793,7 +1793,7 @@ int event_enable_trigger_parse(struct event_command *cmd_ops,
- 	enable_data->enable = enable;
- 	enable_data->file = event_enable_file;
- 
--	trigger_data = event_trigger_alloc(cmd_ops, cmd, param, enable_data);
-+	trigger_data = trigger_data_alloc(cmd_ops, cmd, param, enable_data);
- 	if (!trigger_data) {
- 		kfree(enable_data);
- 		goto out;
+ 	switch (cp->type) {
+ 	case IMX_MU_TYPE_TX:
+@@ -240,11 +240,20 @@ static int imx_mu_generic_tx(struct imx_mu_priv *priv,
+ 	case IMX_MU_TYPE_TXDB_V2:
+ 		imx_mu_write(priv, IMX_MU_xCR_GIRn(priv->dcfg->type, cp->idx),
+ 			     priv->dcfg->xCR[IMX_MU_GCR]);
+-		ret = readl_poll_timeout(priv->base + priv->dcfg->xCR[IMX_MU_GCR], val,
+-					 !(val & IMX_MU_xCR_GIRn(priv->dcfg->type, cp->idx)),
+-					 0, 1000);
+-		if (ret)
+-			dev_warn_ratelimited(priv->dev, "channel type: %d failure\n", cp->type);
++		ret = -ETIMEDOUT;
++		count = 0;
++		while (ret && (count < 10)) {
++			ret =
++			readl_poll_timeout(priv->base + priv->dcfg->xCR[IMX_MU_GCR], val,
++					   !(val & IMX_MU_xCR_GIRn(priv->dcfg->type, cp->idx)),
++					   0, 10000);
++
++			if (ret) {
++				dev_warn_ratelimited(priv->dev,
++						     "channel type: %d timeout, %d times, retry\n",
++						     cp->type, ++count);
++			}
++		}
+ 		break;
+ 	default:
+ 		dev_warn_ratelimited(priv->dev, "Send data on wrong channel type: %d\n", cp->type);
 -- 
 2.39.5
 
