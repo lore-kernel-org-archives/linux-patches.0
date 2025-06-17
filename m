@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 090552EBDC0;
-	Tue, 17 Jun 2025 15:37:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2E152E88A5;
+	Tue, 17 Jun 2025 15:37:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750174676; cv=none; b=g3we2O2lIsUthDdusFY6489LfX8g4nVO72WYcqg9/69rYrRV46KFzRGFP+z+rTYmqLMNptpKGtMisqhSKqKwvG0ZdqUwma9iQF+PigkHF5oTakNJ1Lojt0/hH8Z3aIQMZQfNHpmHhJvKGRH9I6iPezcDmkY7m/7L5k1MCeZUzx4=
+	t=1750174678; cv=none; b=RTrJswcAW+U7E7Nj7KIijdnL8i8jctoTw/Z+LBARI2DgLmXY6GalUBGmPjeir6zDClZMjSKm+KnjpvS2T38J2rvcNh2dx8cXnS+Nfn+RP1F7WAaqzz6NUt18R4YV1XGI5RO4p04AHmCm1HEPqvgEtGRatOExc7Vry745PXwVOr4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750174676; c=relaxed/simple;
-	bh=Ar8gDUKPOJI41ux1GqGh51ibXWob2ThQd2MBGXb+60Q=;
+	s=arc-20240116; t=1750174678; c=relaxed/simple;
+	bh=EsIakKAO2GdpiDIeAWZ1Ig5Pdwt7xukD9VHw+pLINpg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bHaIMaudROHYxnOk5W95TmZLtq2yFMNsBTNemkKAblwx2LwEjFkGf7KxgTtfma6nBvRpjh2m++gAu73x3+ICQNSMJFM5OFN5FU4C2cP+RMgwp9zq9/mvwc2FhO8PBOSyhVa4hDKI/vTBySmq87uDxn/6Gy721pwDrAq0aCbBbcU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a/auMxbz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RZGENAxp96Ia7FHnTH3YU0/G+pO716AU/0yKBxvwkSMEhEbSK9ZWfnOPMNOfSLldan3RMsoR+j8mefY/o/b07oE0SpcASDtekSCGo41VL/IMnSPEwfW0of32qs3BsPCxcW4ZK2uvi/c5kbQ42aJItoYH87ykw8hAW7TfbciJXYs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hGZchP5p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a/auMxbz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C2CAC4CEE3;
-	Tue, 17 Jun 2025 15:37:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hGZchP5p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3825CC4CEF1;
+	Tue, 17 Jun 2025 15:37:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750174675;
-	bh=Ar8gDUKPOJI41ux1GqGh51ibXWob2ThQd2MBGXb+60Q=;
+	s=korg; t=1750174678;
+	bh=EsIakKAO2GdpiDIeAWZ1Ig5Pdwt7xukD9VHw+pLINpg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a/auMxbzyuP62TzypqjL1hKR7yMQsXFt9ykGB7YTZa+5Dm4+xvy4cqRYReLxy5i11
-	 +s7HyX8x+Vt/2TIMgOigzVNnpUn93+PzRrWmpnUBvj5BkrQ76F0NRLS3H2MkEhKyMh
-	 Hf1TamVpVMibjeIZs7mXHfpYR1pFPZSkVpAd1Zrc=
+	b=hGZchP5pkhpNwRa7Seh8855i08QYXp9AU6xfe9N5ax8ZBd+NG8XDLSHQAj5Oo3f33
+	 2yg/aDb1pOs+rYuB3OnBJgzxsDqwwSI701dnkE1v6RPo7bnN77U82CVvJE1zZ3nzl1
+	 66Agr3Wb6TkbrkeZfQiqnR/HoDBfK/wHiAD5WkMI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukas Wunner <lukas@wunner.de>,
-	Stefan Berger <stefanb@linux.ibm.com>,
-	Ignat Korchagin <ignat@cloudflare.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Jay Vosburgh <jv@jvosburgh.net>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 007/780] crypto: ecdsa - Fix NIST P521 key size reported by KEYCTL_PKEY_QUERY
-Date: Tue, 17 Jun 2025 17:15:15 +0200
-Message-ID: <20250617152451.796408810@linuxfoundation.org>
+Subject: [PATCH 6.6 101/356] bonding: assign random address if device address is same as bond
+Date: Tue, 17 Jun 2025 17:23:36 +0200
+Message-ID: <20250617152342.293626336@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
+References: <20250617152338.212798615@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,213 +48,94 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lukas Wunner <lukas@wunner.de>
+From: Hangbin Liu <liuhangbin@gmail.com>
 
-[ Upstream commit 6b7f9397c98c72902f9364056413c73fe6dee1d8 ]
+[ Upstream commit 5c3bf6cba7911f470afd748606be5c03a9512fcc ]
 
-When user space issues a KEYCTL_PKEY_QUERY system call for a NIST P521
-key, the key_size is incorrectly reported as 528 bits instead of 521.
+This change addresses a MAC address conflict issue in failover scenarios,
+similar to the problem described in commit a951bc1e6ba5 ("bonding: correct
+the MAC address for 'follow' fail_over_mac policy").
 
-That's because the key size obtained through crypto_sig_keysize() is in
-bytes and software_key_query() multiplies by 8 to yield the size in bits.
-The underlying assumption is that the key size is always a multiple of 8.
-With the recent addition of NIST P521, that's no longer the case.
+In fail_over_mac=follow mode, the bonding driver expects the formerly active
+slave to swap MAC addresses with the newly active slave during failover.
+However, under certain conditions, two slaves may end up with the same MAC
+address, which breaks this policy:
 
-Fix by returning the key_size in bits from crypto_sig_keysize() and
-adjusting the calculations in software_key_query().
+1) ip link set eth0 master bond0
+   -> bond0 adopts eth0's MAC address (MAC0).
 
-The ->key_size() callbacks of sig_alg algorithms now return the size in
-bits, whereas the ->digest_size() and ->max_size() callbacks return the
-size in bytes.  This matches with the units in struct keyctl_pkey_query.
+2) ip link set eth1 master bond0
+   -> eth1 is added as a backup with its own MAC (MAC1).
 
-Fixes: a7d45ba77d3d ("crypto: ecdsa - Register NIST P521 and extend test suite")
-Signed-off-by: Lukas Wunner <lukas@wunner.de>
-Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
-Reviewed-by: Ignat Korchagin <ignat@cloudflare.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+3) ip link set eth0 nomaster
+   -> eth0 is released and restores its MAC (MAC0).
+   -> eth1 becomes the active slave, and bond0 assigns MAC0 to eth1.
+
+4) ip link set eth0 master bond0
+   -> eth0 is re-added to bond0, now both eth0 and eth1 have MAC0.
+
+This results in a MAC address conflict and violates the expected behavior
+of the failover policy.
+
+To fix this, we assign a random MAC address to any newly added slave if
+its current MAC address matches that of the bond. The original (permanent)
+MAC address is saved and will be restored when the device is released
+from the bond.
+
+This ensures that each slave has a unique MAC address during failover
+transitions, preserving the integrity of the fail_over_mac=follow policy.
+
+Fixes: 3915c1e8634a ("bonding: Add "follow" option to fail_over_mac")
+Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
+Acked-by: Jay Vosburgh <jv@jvosburgh.net>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/asymmetric_keys/public_key.c | 8 ++++----
- crypto/ecdsa-p1363.c                | 6 ++++--
- crypto/ecdsa-x962.c                 | 5 +++--
- crypto/ecdsa.c                      | 2 +-
- crypto/ecrdsa.c                     | 2 +-
- crypto/rsassa-pkcs1.c               | 2 +-
- crypto/sig.c                        | 9 +++++++--
- include/crypto/sig.h                | 2 +-
- 8 files changed, 22 insertions(+), 14 deletions(-)
+ drivers/net/bonding/bond_main.c | 25 ++++++++++++++++++-------
+ 1 file changed, 18 insertions(+), 7 deletions(-)
 
-diff --git a/crypto/asymmetric_keys/public_key.c b/crypto/asymmetric_keys/public_key.c
-index dd44a966947fb..89dc887d2c5c7 100644
---- a/crypto/asymmetric_keys/public_key.c
-+++ b/crypto/asymmetric_keys/public_key.c
-@@ -205,6 +205,7 @@ static int software_key_query(const struct kernel_pkey_params *params,
- 			goto error_free_tfm;
- 
- 		len = crypto_sig_keysize(sig);
-+		info->key_size = len;
- 		info->max_sig_size = crypto_sig_maxsize(sig);
- 		info->max_data_size = crypto_sig_digestsize(sig);
- 
-@@ -213,8 +214,8 @@ static int software_key_query(const struct kernel_pkey_params *params,
- 			info->supported_ops |= KEYCTL_SUPPORTS_SIGN;
- 
- 		if (strcmp(params->encoding, "pkcs1") == 0) {
--			info->max_enc_size = len;
--			info->max_dec_size = len;
-+			info->max_enc_size = len / BITS_PER_BYTE;
-+			info->max_dec_size = len / BITS_PER_BYTE;
- 
- 			info->supported_ops |= KEYCTL_SUPPORTS_ENCRYPT;
- 			if (pkey->key_is_private)
-@@ -235,6 +236,7 @@ static int software_key_query(const struct kernel_pkey_params *params,
- 			goto error_free_tfm;
- 
- 		len = crypto_akcipher_maxsize(tfm);
-+		info->key_size = len * BITS_PER_BYTE;
- 		info->max_sig_size = len;
- 		info->max_data_size = len;
- 		info->max_enc_size = len;
-@@ -245,8 +247,6 @@ static int software_key_query(const struct kernel_pkey_params *params,
- 			info->supported_ops |= KEYCTL_SUPPORTS_DECRYPT;
+diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
+index 56c241246d1af..85ab692571627 100644
+--- a/drivers/net/bonding/bond_main.c
++++ b/drivers/net/bonding/bond_main.c
+@@ -2040,15 +2040,26 @@ int bond_enslave(struct net_device *bond_dev, struct net_device *slave_dev,
+ 		 * set the master's mac address to that of the first slave
+ 		 */
+ 		memcpy(ss.__data, bond_dev->dev_addr, bond_dev->addr_len);
+-		ss.ss_family = slave_dev->type;
+-		res = dev_set_mac_address(slave_dev, (struct sockaddr *)&ss,
+-					  extack);
+-		if (res) {
+-			slave_err(bond_dev, slave_dev, "Error %d calling set_mac_address\n", res);
+-			goto err_restore_mtu;
+-		}
++	} else if (bond->params.fail_over_mac == BOND_FOM_FOLLOW &&
++		   BOND_MODE(bond) == BOND_MODE_ACTIVEBACKUP &&
++		   memcmp(slave_dev->dev_addr, bond_dev->dev_addr, bond_dev->addr_len) == 0) {
++		/* Set slave to random address to avoid duplicate mac
++		 * address in later fail over.
++		 */
++		eth_random_addr(ss.__data);
++	} else {
++		goto skip_mac_set;
  	}
  
--	info->key_size = len * 8;
--
- 	ret = 0;
- 
- error_free_tfm:
-diff --git a/crypto/ecdsa-p1363.c b/crypto/ecdsa-p1363.c
-index 4454f1f8f33f5..e0c55c64711c8 100644
---- a/crypto/ecdsa-p1363.c
-+++ b/crypto/ecdsa-p1363.c
-@@ -21,7 +21,8 @@ static int ecdsa_p1363_verify(struct crypto_sig *tfm,
- 			      const void *digest, unsigned int dlen)
- {
- 	struct ecdsa_p1363_ctx *ctx = crypto_sig_ctx(tfm);
--	unsigned int keylen = crypto_sig_keysize(ctx->child);
-+	unsigned int keylen = DIV_ROUND_UP_POW2(crypto_sig_keysize(ctx->child),
-+						BITS_PER_BYTE);
- 	unsigned int ndigits = DIV_ROUND_UP_POW2(keylen, sizeof(u64));
- 	struct ecdsa_raw_sig sig;
- 
-@@ -45,7 +46,8 @@ static unsigned int ecdsa_p1363_max_size(struct crypto_sig *tfm)
- {
- 	struct ecdsa_p1363_ctx *ctx = crypto_sig_ctx(tfm);
- 
--	return 2 * crypto_sig_keysize(ctx->child);
-+	return 2 * DIV_ROUND_UP_POW2(crypto_sig_keysize(ctx->child),
-+				     BITS_PER_BYTE);
- }
- 
- static unsigned int ecdsa_p1363_digest_size(struct crypto_sig *tfm)
-diff --git a/crypto/ecdsa-x962.c b/crypto/ecdsa-x962.c
-index 90a04f4b9a2f5..ee71594d10a06 100644
---- a/crypto/ecdsa-x962.c
-+++ b/crypto/ecdsa-x962.c
-@@ -82,7 +82,7 @@ static int ecdsa_x962_verify(struct crypto_sig *tfm,
- 	int err;
- 
- 	sig_ctx.ndigits = DIV_ROUND_UP_POW2(crypto_sig_keysize(ctx->child),
--					    sizeof(u64));
-+					    sizeof(u64) * BITS_PER_BYTE);
- 
- 	err = asn1_ber_decoder(&ecdsasignature_decoder, &sig_ctx, src, slen);
- 	if (err < 0)
-@@ -103,7 +103,8 @@ static unsigned int ecdsa_x962_max_size(struct crypto_sig *tfm)
- {
- 	struct ecdsa_x962_ctx *ctx = crypto_sig_ctx(tfm);
- 	struct sig_alg *alg = crypto_sig_alg(ctx->child);
--	int slen = crypto_sig_keysize(ctx->child);
-+	int slen = DIV_ROUND_UP_POW2(crypto_sig_keysize(ctx->child),
-+				     BITS_PER_BYTE);
- 
- 	/*
- 	 * Verify takes ECDSA-Sig-Value (described in RFC 5480) as input,
-diff --git a/crypto/ecdsa.c b/crypto/ecdsa.c
-index 117526d15ddeb..a70b60a90a3c7 100644
---- a/crypto/ecdsa.c
-+++ b/crypto/ecdsa.c
-@@ -167,7 +167,7 @@ static unsigned int ecdsa_key_size(struct crypto_sig *tfm)
- {
- 	struct ecc_ctx *ctx = crypto_sig_ctx(tfm);
- 
--	return DIV_ROUND_UP(ctx->curve->nbits, 8);
-+	return ctx->curve->nbits;
- }
- 
- static unsigned int ecdsa_digest_size(struct crypto_sig *tfm)
-diff --git a/crypto/ecrdsa.c b/crypto/ecrdsa.c
-index b3dd8a3ddeb79..2c0602f0cd406 100644
---- a/crypto/ecrdsa.c
-+++ b/crypto/ecrdsa.c
-@@ -249,7 +249,7 @@ static unsigned int ecrdsa_key_size(struct crypto_sig *tfm)
- 	 * Verify doesn't need any output, so it's just informational
- 	 * for keyctl to determine the key bit size.
- 	 */
--	return ctx->pub_key.ndigits * sizeof(u64);
-+	return ctx->pub_key.ndigits * sizeof(u64) * BITS_PER_BYTE;
- }
- 
- static unsigned int ecrdsa_max_size(struct crypto_sig *tfm)
-diff --git a/crypto/rsassa-pkcs1.c b/crypto/rsassa-pkcs1.c
-index d01ac75635e00..94fa5e9600e79 100644
---- a/crypto/rsassa-pkcs1.c
-+++ b/crypto/rsassa-pkcs1.c
-@@ -301,7 +301,7 @@ static unsigned int rsassa_pkcs1_key_size(struct crypto_sig *tfm)
- {
- 	struct rsassa_pkcs1_ctx *ctx = crypto_sig_ctx(tfm);
- 
--	return ctx->key_size;
-+	return ctx->key_size * BITS_PER_BYTE;
- }
- 
- static int rsassa_pkcs1_set_pub_key(struct crypto_sig *tfm,
-diff --git a/crypto/sig.c b/crypto/sig.c
-index dfc7cae908028..53a3dd6fbe3fe 100644
---- a/crypto/sig.c
-+++ b/crypto/sig.c
-@@ -102,6 +102,11 @@ static int sig_default_set_key(struct crypto_sig *tfm,
- 	return -ENOSYS;
- }
- 
-+static unsigned int sig_default_size(struct crypto_sig *tfm)
-+{
-+	return DIV_ROUND_UP_POW2(crypto_sig_keysize(tfm), BITS_PER_BYTE);
-+}
++	ss.ss_family = slave_dev->type;
++	res = dev_set_mac_address(slave_dev, (struct sockaddr *)&ss, extack);
++	if (res) {
++		slave_err(bond_dev, slave_dev, "Error %d calling set_mac_address\n", res);
++		goto err_restore_mtu;
++	}
 +
- static int sig_prepare_alg(struct sig_alg *alg)
- {
- 	struct crypto_alg *base = &alg->base;
-@@ -117,9 +122,9 @@ static int sig_prepare_alg(struct sig_alg *alg)
- 	if (!alg->key_size)
- 		return -EINVAL;
- 	if (!alg->max_size)
--		alg->max_size = alg->key_size;
-+		alg->max_size = sig_default_size;
- 	if (!alg->digest_size)
--		alg->digest_size = alg->key_size;
-+		alg->digest_size = sig_default_size;
++skip_mac_set:
++
+ 	/* set no_addrconf flag before open to prevent IPv6 addrconf */
+ 	slave_dev->priv_flags |= IFF_NO_ADDRCONF;
  
- 	base->cra_type = &crypto_sig_type;
- 	base->cra_flags &= ~CRYPTO_ALG_TYPE_MASK;
-diff --git a/include/crypto/sig.h b/include/crypto/sig.h
-index 11024708c0692..fa6dafafab3f0 100644
---- a/include/crypto/sig.h
-+++ b/include/crypto/sig.h
-@@ -128,7 +128,7 @@ static inline void crypto_free_sig(struct crypto_sig *tfm)
- /**
-  * crypto_sig_keysize() - Get key size
-  *
-- * Function returns the key size in bytes.
-+ * Function returns the key size in bits.
-  * Function assumes that the key is already set in the transformation. If this
-  * function is called without a setkey or with a failed setkey, you may end up
-  * in a NULL dereference.
 -- 
 2.39.5
 
