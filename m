@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E94D2F198B;
-	Tue, 17 Jun 2025 16:30:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 631A92F198B;
+	Tue, 17 Jun 2025 16:30:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177829; cv=none; b=kUJsnRBmOLm5qA0wmoNuUvYInBpd69WBAZodMa/0D8Yg/mlEE9jyR8anlT/Z/MtwVIoZmvwAarfvtnSbfGT75OQxCX3ti73Qtb19s0axaLrdJ466xYH5ZBDU8iVhRShBvI/JMUZz9ayyIKYPpFKZvkCIl1o674pAqZmd9U65Zs0=
+	t=1750177832; cv=none; b=QI9u0vM22SDtOrC6kQlzd4xF+77xTMixHu4LrDoGhWFq7wzHudxnx0JuLdJx4od56ji6hDsbMbt/u3xb3AhzqBo+f5c1zvsFX+OwDf1JOkUGl/qXGQnNTeWDmczzyrMfTrmjywWndRCIwSr5K+Fa+iv2al1+9mvZbQFq6xQWUzo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177829; c=relaxed/simple;
-	bh=ZpPK4zC7mIPW/Ewg/lngX0lL5lJaPr5qI/mKM3PCkJI=;
+	s=arc-20240116; t=1750177832; c=relaxed/simple;
+	bh=dVVKY2z9zyWU+3YqovvUiwMmlhTLHuC3BZ/AglaMRN0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Iqesgf9ly1FfXazFzQzbpnsH3XbaXoXTU5gFaboU8+hiviYdEXJwSLT56SNiJMxk7spzr5aYs9PMmol5fQROpNhkNxKJRBVw6fwOEId3p95i4uEjG+NZZhu2sdEn7rvM1qzszTY/MUo4Ao6rHLCg9CepGU4eTqMEcBGf/nUZG4Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KBL/oX3u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FJO74t94dMO8TCbwLkn2x0A0c7hPRUvmZK5aaAQ2a2MhyMg/ZC/vRwD5xA7r4RkymqYdXNGPKUgDq0+3lu6G9x4TFxdB4ATeFGk1YV0hRrtYIC7HPITBMZLuZIQa1Cj1f0nVw2VDT5wFrO6Az5o2vZQSXbUcfGnA8io/6u+ep7s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WUhJcb61; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KBL/oX3u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81760C4CEF0;
-	Tue, 17 Jun 2025 16:30:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WUhJcb61"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C527CC4CEE3;
+	Tue, 17 Jun 2025 16:30:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177829;
-	bh=ZpPK4zC7mIPW/Ewg/lngX0lL5lJaPr5qI/mKM3PCkJI=;
+	s=korg; t=1750177832;
+	bh=dVVKY2z9zyWU+3YqovvUiwMmlhTLHuC3BZ/AglaMRN0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KBL/oX3uTPssasy0XZviex+m2UW/6AZQi6WE/W8vfU/u5TOJKeHxp+tEZq58ZJmRn
-	 qWak7lo7zNWErIXqLUjjJfLFoCrslR6oEJOga2hIS0a8Q+rkJlUWU6zwONn3qI7tIa
-	 ECQmAryEtPz8TY0NNiGi9AAD9N//Rc+XqTOGsUK0=
+	b=WUhJcb61nsbnWsseq5wMhv4eiog+P4ep5wIY1AHfbzQylNBmx0WsaZm7RQAgUCv6a
+	 IXRh2dXDgkNZqa+CEQUB+9UnwSSRiA5VHwoskN5BkDtSpF/1t85aZM75EjFd0iqfF1
+	 VF8+Gco29KfnNEE4FPL3ZvGDqzeKDi5Rql2K1kp0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tudor Ambarus <tudor.ambarus@linaro.org>,
-	=?UTF-8?q?Andr=C3=A9=20Draszik?= <andre.draszik@linaro.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Kailang Yang <kailang@realtek.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 369/780] firmware: exynos-acpm: fix reading longer results
-Date: Tue, 17 Jun 2025 17:21:17 +0200
-Message-ID: <20250617152506.478633307@linuxfoundation.org>
+Subject: [PATCH 6.12 403/512] ALSA: hda/realtek - Support mute led function for HP platform
+Date: Tue, 17 Jun 2025 17:26:09 +0200
+Message-ID: <20250617152435.911960917@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,119 +45,97 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: André Draszik <andre.draszik@linaro.org>
+From: Kailang Yang <kailang@realtek.com>
 
-[ Upstream commit 67af3cd813695fd3e6432b0849c453250c4685aa ]
+[ Upstream commit 22c7f77247a84d27b785ec5b706f673421ab269d ]
 
-ACPM commands that return more than 8 bytes currently don't work
-correctly, as this driver ignores any such returned bytes.
+This patch was integrated CS Amp and support mute led function for HP platform.
 
-This is evident in at least acpm_pmic_bulk_read(), where up to 8
-registers can be read back and those 8 register values are placed
-starting at &xfer->rxd[8].
-
-The reason is that xfter->rxlen is initialized with the size of a
-pointer (8 bytes), rather than the size of the byte array that pointer
-points to (16 bytes)
-
-Update the code such that we set the number of bytes expected to be the
-size of the rx buffer.
-
-Note1: While different commands have different lengths rx buffers, we
-have to specify the same length for all rx buffers since acpm_get_rx()
-assumes they're all the same length.
-
-Note2: The different commands also have different lengths tx buffers,
-but before switching the code to use the minimum possible length, some
-more testing would have to be done to ensure this works correctly in
-all situations. It seems wiser to just apply this fix here without
-additional logic changes for now.
-
-Fixes: a88927b534ba ("firmware: add Exynos ACPM protocol driver")
-Reviewed-by: Tudor Ambarus <tudor.ambarus@linaro.org>
-Signed-off-by: André Draszik <andre.draszik@linaro.org>
-Link: https://lore.kernel.org/r/20250319-acpm-fixes-v2-1-ac2c1bcf322b@linaro.org
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Kailang Yang <kailang@realtek.com>
+Link: https://lore.kernel.org/2c960ab58b4d4090ad4ee075f8cfdffd@realtek.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Stable-dep-of: f709b78aecab ("ALSA: hda/realtek - Add new HP ZBook laptop with micmute led fixup")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/samsung/exynos-acpm-pmic.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ sound/pci/hda/patch_realtek.c |   41 ++++++++++++++++++++++++++++++++---------
+ 1 file changed, 32 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/firmware/samsung/exynos-acpm-pmic.c b/drivers/firmware/samsung/exynos-acpm-pmic.c
-index 85e90d236da21..39b33a356ebd2 100644
---- a/drivers/firmware/samsung/exynos-acpm-pmic.c
-+++ b/drivers/firmware/samsung/exynos-acpm-pmic.c
-@@ -43,13 +43,13 @@ static inline u32 acpm_pmic_get_bulk(u32 data, unsigned int i)
- 	return (data >> (ACPM_PMIC_BULK_SHIFT * i)) & ACPM_PMIC_BULK_MASK;
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -7616,6 +7616,24 @@ static void alc245_fixup_hp_spectre_x360
+ 	alc245_fixup_hp_gpio_led(codec, fix, action);
  }
  
--static void acpm_pmic_set_xfer(struct acpm_xfer *xfer, u32 *cmd,
-+static void acpm_pmic_set_xfer(struct acpm_xfer *xfer, u32 *cmd, size_t cmdlen,
- 			       unsigned int acpm_chan_id)
- {
- 	xfer->txd = cmd;
- 	xfer->rxd = cmd;
--	xfer->txlen = sizeof(cmd);
--	xfer->rxlen = sizeof(cmd);
-+	xfer->txlen = cmdlen;
-+	xfer->rxlen = cmdlen;
- 	xfer->acpm_chan_id = acpm_chan_id;
- }
- 
-@@ -71,7 +71,7 @@ int acpm_pmic_read_reg(const struct acpm_handle *handle,
- 	int ret;
- 
- 	acpm_pmic_init_read_cmd(cmd, type, reg, chan);
--	acpm_pmic_set_xfer(&xfer, cmd, acpm_chan_id);
-+	acpm_pmic_set_xfer(&xfer, cmd, sizeof(cmd), acpm_chan_id);
- 
- 	ret = acpm_do_xfer(handle, &xfer);
- 	if (ret)
-@@ -104,7 +104,7 @@ int acpm_pmic_bulk_read(const struct acpm_handle *handle,
- 		return -EINVAL;
- 
- 	acpm_pmic_init_bulk_read_cmd(cmd, type, reg, chan, count);
--	acpm_pmic_set_xfer(&xfer, cmd, acpm_chan_id);
-+	acpm_pmic_set_xfer(&xfer, cmd, sizeof(cmd), acpm_chan_id);
- 
- 	ret = acpm_do_xfer(handle, &xfer);
- 	if (ret)
-@@ -144,7 +144,7 @@ int acpm_pmic_write_reg(const struct acpm_handle *handle,
- 	int ret;
- 
- 	acpm_pmic_init_write_cmd(cmd, type, reg, chan, value);
--	acpm_pmic_set_xfer(&xfer, cmd, acpm_chan_id);
-+	acpm_pmic_set_xfer(&xfer, cmd, sizeof(cmd), acpm_chan_id);
- 
- 	ret = acpm_do_xfer(handle, &xfer);
- 	if (ret)
-@@ -184,7 +184,7 @@ int acpm_pmic_bulk_write(const struct acpm_handle *handle,
- 		return -EINVAL;
- 
- 	acpm_pmic_init_bulk_write_cmd(cmd, type, reg, chan, count, buf);
--	acpm_pmic_set_xfer(&xfer, cmd, acpm_chan_id);
-+	acpm_pmic_set_xfer(&xfer, cmd, sizeof(cmd), acpm_chan_id);
- 
- 	ret = acpm_do_xfer(handle, &xfer);
- 	if (ret)
-@@ -214,7 +214,7 @@ int acpm_pmic_update_reg(const struct acpm_handle *handle,
- 	int ret;
- 
- 	acpm_pmic_init_update_cmd(cmd, type, reg, chan, value, mask);
--	acpm_pmic_set_xfer(&xfer, cmd, acpm_chan_id);
-+	acpm_pmic_set_xfer(&xfer, cmd, sizeof(cmd), acpm_chan_id);
- 
- 	ret = acpm_do_xfer(handle, &xfer);
- 	if (ret)
--- 
-2.39.5
-
++static void alc245_fixup_hp_zbook_firefly_g12a(struct hda_codec *codec,
++					  const struct hda_fixup *fix, int action)
++{
++	struct alc_spec *spec = codec->spec;
++	static const hda_nid_t conn[] = { 0x02 };
++
++	switch (action) {
++	case HDA_FIXUP_ACT_PRE_PROBE:
++		spec->gen.auto_mute_via_amp = 1;
++		snd_hda_override_conn_list(codec, 0x17, ARRAY_SIZE(conn), conn);
++		break;
++	}
++
++	cs35l41_fixup_i2c_two(codec, fix, action);
++	alc245_fixup_hp_mute_led_coefbit(codec, fix, action);
++	alc285_fixup_hp_coef_micmute_led(codec, fix, action);
++}
++
+ /*
+  * ALC287 PCM hooks
+  */
+@@ -7963,6 +7981,7 @@ enum {
+ 	ALC256_FIXUP_HEADPHONE_AMP_VOL,
+ 	ALC245_FIXUP_HP_SPECTRE_X360_EU0XXX,
+ 	ALC245_FIXUP_HP_SPECTRE_X360_16_AA0XXX,
++	ALC245_FIXUP_HP_ZBOOK_FIREFLY_G12A,
+ 	ALC285_FIXUP_ASUS_GA403U,
+ 	ALC285_FIXUP_ASUS_GA403U_HEADSET_MIC,
+ 	ALC285_FIXUP_ASUS_GA403U_I2C_SPEAKER2_TO_DAC1,
+@@ -10251,6 +10270,10 @@ static const struct hda_fixup alc269_fix
+ 		.type = HDA_FIXUP_FUNC,
+ 		.v.func = alc245_fixup_hp_spectre_x360_16_aa0xxx,
+ 	},
++	[ALC245_FIXUP_HP_ZBOOK_FIREFLY_G12A] = {
++		.type = HDA_FIXUP_FUNC,
++		.v.func = alc245_fixup_hp_zbook_firefly_g12a,
++	},
+ 	[ALC285_FIXUP_ASUS_GA403U] = {
+ 		.type = HDA_FIXUP_FUNC,
+ 		.v.func = alc285_fixup_asus_ga403u,
+@@ -10796,15 +10819,15 @@ static const struct hda_quirk alc269_fix
+ 	SND_PCI_QUIRK(0x103c, 0x8e11, "HP Trekker", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x103c, 0x8e12, "HP Trekker", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x103c, 0x8e13, "HP Trekker", ALC287_FIXUP_CS35L41_I2C_2),
+-	SND_PCI_QUIRK(0x103c, 0x8e14, "HP ZBook Firefly 14 G12", ALC285_FIXUP_HP_GPIO_LED),
+-	SND_PCI_QUIRK(0x103c, 0x8e15, "HP ZBook Firefly 14 G12", ALC285_FIXUP_HP_GPIO_LED),
+-	SND_PCI_QUIRK(0x103c, 0x8e16, "HP ZBook Firefly 14 G12", ALC285_FIXUP_HP_GPIO_LED),
+-	SND_PCI_QUIRK(0x103c, 0x8e17, "HP ZBook Firefly 14 G12", ALC285_FIXUP_HP_GPIO_LED),
+-	SND_PCI_QUIRK(0x103c, 0x8e18, "HP ZBook Firefly 14 G12A", ALC285_FIXUP_HP_GPIO_LED),
+-	SND_PCI_QUIRK(0x103c, 0x8e19, "HP ZBook Firefly 14 G12A", ALC285_FIXUP_HP_GPIO_LED),
+-	SND_PCI_QUIRK(0x103c, 0x8e1a, "HP ZBook Firefly 14 G12A", ALC285_FIXUP_HP_GPIO_LED),
+-	SND_PCI_QUIRK(0x103c, 0x8e1b, "HP EliteBook G12", ALC285_FIXUP_HP_GPIO_LED),
+-	SND_PCI_QUIRK(0x103c, 0x8e1c, "HP EliteBook G12", ALC285_FIXUP_HP_GPIO_LED),
++	SND_PCI_QUIRK(0x103c, 0x8e14, "HP ZBook Firefly 14 G12", ALC245_FIXUP_HP_ZBOOK_FIREFLY_G12A),
++	SND_PCI_QUIRK(0x103c, 0x8e15, "HP ZBook Firefly 14 G12", ALC245_FIXUP_HP_ZBOOK_FIREFLY_G12A),
++	SND_PCI_QUIRK(0x103c, 0x8e16, "HP ZBook Firefly 14 G12", ALC245_FIXUP_HP_ZBOOK_FIREFLY_G12A),
++	SND_PCI_QUIRK(0x103c, 0x8e17, "HP ZBook Firefly 14 G12", ALC245_FIXUP_HP_ZBOOK_FIREFLY_G12A),
++	SND_PCI_QUIRK(0x103c, 0x8e18, "HP ZBook Firefly 14 G12A", ALC245_FIXUP_HP_ZBOOK_FIREFLY_G12A),
++	SND_PCI_QUIRK(0x103c, 0x8e19, "HP ZBook Firefly 14 G12A", ALC245_FIXUP_HP_ZBOOK_FIREFLY_G12A),
++	SND_PCI_QUIRK(0x103c, 0x8e1a, "HP ZBook Firefly 14 G12A", ALC245_FIXUP_HP_ZBOOK_FIREFLY_G12A),
++	SND_PCI_QUIRK(0x103c, 0x8e1b, "HP EliteBook G12", ALC245_FIXUP_HP_ZBOOK_FIREFLY_G12A),
++	SND_PCI_QUIRK(0x103c, 0x8e1c, "HP EliteBook G12", ALC245_FIXUP_HP_ZBOOK_FIREFLY_G12A),
+ 	SND_PCI_QUIRK(0x103c, 0x8e2c, "HP EliteBook 16 G12", ALC285_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8e36, "HP 14 Enstrom OmniBook X", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x103c, 0x8e37, "HP 16 Piston OmniBook X", ALC287_FIXUP_CS35L41_I2C_2),
 
 
