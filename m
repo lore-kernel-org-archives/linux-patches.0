@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 766982F237E;
-	Tue, 17 Jun 2025 15:44:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19E1B2F2374;
+	Tue, 17 Jun 2025 15:44:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175085; cv=none; b=nmCygW+kXN5ZgRRsLyGmqsqex3rPou2n2acTKO88ZmxO7erAcnf/C/JqU7JZo2qQrj9aJADGJevQq93ghFHrPRAoh+LLH4fQSGBk7SEpZ4h3QJUIBdTlXwgjxQFyG16v+ueyh6h0Og0dUSZGHU1KNAb275DLacsSRMnEv0xREqA=
+	t=1750175089; cv=none; b=W2T0iLcpqO/nwHgX4IzDfet3hFf0MpPpuVPR9eUkB/XhmFIBqxT/6kc63TQp8fnIBxz1a5+FZOxtf+O2tC60hv0Jgol/+WFTBm2y0wM4S+Tu3TEPu5S7CbqCQv7FJU1310H1SU7SykIGjeWu1b6lRR0CYLweIINp7pJhIWIgj/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175085; c=relaxed/simple;
-	bh=jJBS+AgrzB7q3nbSu2Ik6AepN4384G4TjY91ix+qnfE=;
+	s=arc-20240116; t=1750175089; c=relaxed/simple;
+	bh=nzcCbmTkJvlxWcUjsiuKgNQxs+Z3+2kF3J3mr2P/f2E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=igyn8f73uFc8IVeBAD4H8BRJ1gZ4rJgpUUfwEPUk5/KOG8HzUsa1TTx+Zjl5OXwiB9FV1QnDflTYqRtSWY1IABs9DnPQZgVTgscJpznq4Nfbvxm9gW1I9Q6lmMNzE3XM4PhaSADOjUK1wDC9fQE/CcJh06Ii0cvNS50jfl71VYU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TGAzW4lh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QAdTAUp+Teg6CKjL9DjLVDgOgLHFQ9lBtdQA3sm5PsV4RFxri04yDomMsqxFaThsgWWS0qR8QWFdZw+79IKiesrttdFEaF8VYoz/J8Jh/2TBmxY73GU/NZrqdtn3mu0TBzolqHgC3gzbMhd5xvGtPNAbs2JWeLSRmI/FBnT/6Rc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SgF4aFD9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TGAzW4lh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7B8AC4CEE3;
-	Tue, 17 Jun 2025 15:44:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SgF4aFD9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28473C4CEE3;
+	Tue, 17 Jun 2025 15:44:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175085;
-	bh=jJBS+AgrzB7q3nbSu2Ik6AepN4384G4TjY91ix+qnfE=;
+	s=korg; t=1750175088;
+	bh=nzcCbmTkJvlxWcUjsiuKgNQxs+Z3+2kF3J3mr2P/f2E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TGAzW4lhgMKZFebkLw9kdZkepMcjHaN+RcUVdiGoGuCcaYuXJu2K6+32dbC8rvdVS
-	 jfIJG1DfpNMKOqs9nGWCE6qrfJBXqqmalqDdFgFoGBgMHqI9IIBUN5GreS4giKAuu0
-	 hdv53f1XLhOPHkmvVfYyoqnewKTlc3zV4OeIp7vQ=
+	b=SgF4aFD9n5PNwJwMMGmgpIONxDCp/LB8jIqtWtyizFe9HKu3hBCNlnRt0VivWLZ4M
+	 KezUyhVqx0fi6CTi8PmSBIhlrVoiTgp+FATvVUCprLBsVPHADjFC9s6f2Xs+w5FLgB
+	 hYSqPKXDNeIIas1ea5c6cAQv1mGlaaEQEimFuqOQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Radim=20Kr=C4=8Dm=C3=A1=C5=99?= <rkrcmar@ventanamicro.com>,
-	Anup Patel <anup@brainfault.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 142/356] RISC-V: KVM: lock the correct mp_state during reset
-Date: Tue, 17 Jun 2025 17:24:17 +0200
-Message-ID: <20250617152343.956124355@linuxfoundation.org>
+	Xuewen Yan <xuewen.yan@unisoc.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Tianchen Ding <dtcccc@linux.alibaba.com>
+Subject: [PATCH 6.15 048/780] sched/fair: Fixup wake_up_sync() vs DELAYED_DEQUEUE
+Date: Tue, 17 Jun 2025 17:15:56 +0200
+Message-ID: <20250617152453.457655601@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-References: <20250617152338.212798615@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,47 +47,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Radim Krčmář <rkrcmar@ventanamicro.com>
+From: Xuewen Yan <xuewen.yan@unisoc.com>
 
-[ Upstream commit 7917be170928189fefad490d1a1237fdfa6b856f ]
+[ Upstream commit aa3ee4f0b7541382c9f6f43f7408d73a5d4f4042 ]
 
-Currently, the kvm_riscv_vcpu_sbi_system_reset() function locks
-vcpu->arch.mp_state_lock when updating tmp->arch.mp_state.mp_state
-which is incorrect hence fix it.
+Delayed dequeued feature keeps a sleeping task enqueued until its
+lag has elapsed. As a result, it stays also visible in rq->nr_running.
+So when in wake_affine_idle(), we should use the real running-tasks
+in rq to check whether we should place the wake-up task to
+current cpu.
+On the other hand, add a helper function to return the nr-delayed.
 
-Fixes: 2121cadec45a ("RISCV: KVM: Introduce mp_state_lock to avoid lock inversion")
-Signed-off-by: Radim Krčmář <rkrcmar@ventanamicro.com>
-Reviewed-by: Anup Patel <anup@brainfault.org>
-Link: https://lore.kernel.org/r/20250523104725.2894546-4-rkrcmar@ventanamicro.com
-Signed-off-by: Anup Patel <anup@brainfault.org>
+Fixes: 152e11f6df29 ("sched/fair: Implement delayed dequeue")
+Signed-off-by: Xuewen Yan <xuewen.yan@unisoc.com>
+Reviewed-and-tested-by: Tianchen Ding <dtcccc@linux.alibaba.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Vincent Guittot <vincent.guittot@linaro.org>
+Link: https://lore.kernel.org/r/20250303105241.17251-2-xuewen.yan@unisoc.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kvm/vcpu_sbi.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/sched/fair.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/arch/riscv/kvm/vcpu_sbi.c b/arch/riscv/kvm/vcpu_sbi.c
-index be43278109f4e..a71d33cd81d3d 100644
---- a/arch/riscv/kvm/vcpu_sbi.c
-+++ b/arch/riscv/kvm/vcpu_sbi.c
-@@ -103,9 +103,9 @@ void kvm_riscv_vcpu_sbi_system_reset(struct kvm_vcpu *vcpu,
- 	struct kvm_vcpu *tmp;
+diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+index 0fb9bf995a479..0c04ed4148525 100644
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -7196,6 +7196,11 @@ static bool dequeue_task_fair(struct rq *rq, struct task_struct *p, int flags)
+ 	return true;
+ }
  
- 	kvm_for_each_vcpu(i, tmp, vcpu->kvm) {
--		spin_lock(&vcpu->arch.mp_state_lock);
-+		spin_lock(&tmp->arch.mp_state_lock);
- 		WRITE_ONCE(tmp->arch.mp_state.mp_state, KVM_MP_STATE_STOPPED);
--		spin_unlock(&vcpu->arch.mp_state_lock);
-+		spin_unlock(&tmp->arch.mp_state_lock);
- 	}
- 	kvm_make_all_cpus_request(vcpu->kvm, KVM_REQ_SLEEP);
++static inline unsigned int cfs_h_nr_delayed(struct rq *rq)
++{
++	return (rq->cfs.h_nr_queued - rq->cfs.h_nr_runnable);
++}
++
+ #ifdef CONFIG_SMP
  
+ /* Working cpumask for: sched_balance_rq(), sched_balance_newidle(). */
+@@ -7357,8 +7362,12 @@ wake_affine_idle(int this_cpu, int prev_cpu, int sync)
+ 	if (available_idle_cpu(this_cpu) && cpus_share_cache(this_cpu, prev_cpu))
+ 		return available_idle_cpu(prev_cpu) ? prev_cpu : this_cpu;
+ 
+-	if (sync && cpu_rq(this_cpu)->nr_running == 1)
+-		return this_cpu;
++	if (sync) {
++		struct rq *rq = cpu_rq(this_cpu);
++
++		if ((rq->nr_running - cfs_h_nr_delayed(rq)) == 1)
++			return this_cpu;
++	}
+ 
+ 	if (available_idle_cpu(prev_cpu))
+ 		return prev_cpu;
 -- 
 2.39.5
 
