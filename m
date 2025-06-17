@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EBE32ED84B;
-	Tue, 17 Jun 2025 16:31:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF0FA2EE298;
+	Tue, 17 Jun 2025 16:31:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177881; cv=none; b=oOkkl4nWKZ3t+mqSV5l52sW2lsxrVc+phWqfAS+xMPYglWvs33vq0Riw4JWOA65FAtJ03W2rJGvTowzt2qDTD7SafC5N9oUNDPBGqDrCJ5VEQDpR82Z+HVeYvyXbM/3bTAAGg3K8JSfc1CyD5BqOnTsnyfMKbr2M5yaSB5STmW8=
+	t=1750177885; cv=none; b=Q+sea/6he+39p6taWWyaxgk1l6JbEsKaNq2TZqzEIG7UYphJT2QBGeTPXYFrPvp9cFq0w/KbPUmHjIZZgCWPKihDFlWxxLa5SsvisnlkXp8ghekF+OcnwzGNHJkkGqI3JKMjnYV/DoPdfIiV2y2U16pUKuO5dPkr4stYYyYCqyg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177881; c=relaxed/simple;
-	bh=WDsiezwwVM3rZj8n/8flt0+W5ThJASA3LBcoO/UL6Qo=;
+	s=arc-20240116; t=1750177885; c=relaxed/simple;
+	bh=CO6stB7WdKHyLODPZLj2Ocv07tlYvwMmevsOiMAAyKk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lXZ2QxxljKuVfXEJd0IvT1aI/vqAzQ+js1lqBqKr+9b+ZIKh+zCBSsjHjqaI4o0r5R9YNNBbhjPtSin1uTg9pIhv7VufGkFrmZnWn0uBn+vpaQqkd22PO6tyh4we1HteUPoWYZ7VgdliuIMRtGJP2CXtVJM1o2dGei4O1+fPimg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nV1OpM5O; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=AfXeTBe01Gw8V8a4iXeEBKKTraY0G3s4aE5J2CxZvrkzkc6x47Qy8EYE+aoB6nkpsEOh8DAQyyl0qDF9HLQC+v9T837PGzqv4ubRV/ghuk6RlfTaeOI2GTv0y/3BzAvsxzOp8GnUexrCz6sa4NGj4sT/uq9XB9ye4ARJho53iSk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AbaKvuV8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nV1OpM5O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9120C4CEE3;
-	Tue, 17 Jun 2025 16:31:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AbaKvuV8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20BCDC4CEE3;
+	Tue, 17 Jun 2025 16:31:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177881;
-	bh=WDsiezwwVM3rZj8n/8flt0+W5ThJASA3LBcoO/UL6Qo=;
+	s=korg; t=1750177884;
+	bh=CO6stB7WdKHyLODPZLj2Ocv07tlYvwMmevsOiMAAyKk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nV1OpM5Oo/nswoRLsyqlrDBKhW+VL6FHNBDkS+Dx/0ShXxJ8drMYLPGs3v46Pc6V8
-	 6509zRM1av8p8Ss5bcLmpCXChs4HciecC+m+4Oj8/JqLiQncRrXbCIvQn9uzP1Uz/D
-	 aCgNSedEhSo7VjLdSAE2ZNXTjUcjRoX0Mrcnatzk=
+	b=AbaKvuV8K8L/3Ly0Zv0dXyyPIZpgxFMoJfggqBkpHmQFdo67LgKtmtvXjEpk240Hr
+	 iq5OwTTxdDtmRwRh7TSBek283u4qa5CWlHfBNDxIB06gFh9g7SNHJWIUuW99ZG0Y4S
+	 2/CsCnrFa9T21kUpy20h4ef9dDNnZTHyP//OFkVw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adam Ford <aford173@gmail.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Stephan Gerhold <stephan.gerhold@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 376/780] arm64: dts: imx8mn-beacon: Set SAI5 MCLK direction to output for HDMI audio
-Date: Tue, 17 Jun 2025 17:21:24 +0200
-Message-ID: <20250617152506.770476674@linuxfoundation.org>
+Subject: [PATCH 6.12 410/512] arm64: dts: qcom: x1e80100: Add GPU cooling
+Date: Tue, 17 Jun 2025 17:26:16 +0200
+Message-ID: <20250617152436.190969680@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,44 +47,337 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Adam Ford <aford173@gmail.com>
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
 
-[ Upstream commit a747c4dd2a60c4d0179b372032a4b98548135096 ]
+[ Upstream commit 5ba21fa11f473c9827f378ace8c9f983de9e0287 ]
 
-The HDMI bridge chip fails to generate an audio source due to the SAI5
-master clock (MCLK) direction not being set to output. This prevents proper
-clocking of the HDMI audio interface.
+Unlike the CPU, the GPU does not throttle its speed automatically when it
+reaches high temperatures. With certain high GPU loads it is possible to
+reach the critical hardware shutdown temperature of 120°C, endangering the
+hardware and making it impossible to run certain applications.
 
-Add the `fsl,sai-mclk-direction-output` property to the SAI5 node to ensure
-the MCLK is driven by the SoC, resolving the HDMI sound issue.
+Set up GPU cooling similar to the ACPI tables, by throttling the GPU speed
+when reaching 95°C and polling every 200ms.
 
-Fixes: 1d6880ceef43 ("arm64: dts: imx8mn-beacon: Add HDMI video with sound")
-Signed-off-by: Adam Ford <aford173@gmail.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 721e38301b79 ("arm64: dts: qcom: x1e80100: Add gpu support")
+Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20250219-x1e80100-thermal-fixes-v1-3-d110e44ac3f9@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx8mn-beacon-kit.dts | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/boot/dts/qcom/x1e80100.dtsi | 169 +++++++++++++------------
+ 1 file changed, 89 insertions(+), 80 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8mn-beacon-kit.dts b/arch/arm64/boot/dts/freescale/imx8mn-beacon-kit.dts
-index 1df5ceb113879..37fc5ed98d7f6 100644
---- a/arch/arm64/boot/dts/freescale/imx8mn-beacon-kit.dts
-+++ b/arch/arm64/boot/dts/freescale/imx8mn-beacon-kit.dts
-@@ -124,6 +124,7 @@
- 	assigned-clock-parents = <&clk IMX8MN_AUDIO_PLL1_OUT>;
- 	assigned-clock-rates = <24576000>;
- 	#sound-dai-cells = <0>;
-+	fsl,sai-mclk-direction-output;
- 	status = "okay";
- };
+diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+index edfea03366b46..5082ecb32089b 100644
+--- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
++++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+@@ -20,6 +20,7 @@
+ #include <dt-bindings/soc/qcom,gpr.h>
+ #include <dt-bindings/soc/qcom,rpmh-rsc.h>
+ #include <dt-bindings/sound/qcom,q6dsp-lpass-ports.h>
++#include <dt-bindings/thermal/thermal.h>
  
+ / {
+ 	interrupt-parent = <&intc>;
+@@ -7316,24 +7317,25 @@ nsp3-critical {
+ 		};
+ 
+ 		gpuss-0-thermal {
+-			polling-delay-passive = <10>;
++			polling-delay-passive = <200>;
+ 
+ 			thermal-sensors = <&tsens3 5>;
+ 
+-			trips {
+-				trip-point0 {
+-					temperature = <85000>;
+-					hysteresis = <1000>;
+-					type = "passive";
++			cooling-maps {
++				map0 {
++					trip = <&gpuss0_alert0>;
++					cooling-device = <&gpu THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+ 				};
++			};
+ 
+-				trip-point1 {
+-					temperature = <90000>;
++			trips {
++				gpuss0_alert0: trip-point0 {
++					temperature = <95000>;
+ 					hysteresis = <1000>;
+-					type = "hot";
++					type = "passive";
+ 				};
+ 
+-				trip-point2 {
++				gpu-critical {
+ 					temperature = <115000>;
+ 					hysteresis = <1000>;
+ 					type = "critical";
+@@ -7342,24 +7344,25 @@ trip-point2 {
+ 		};
+ 
+ 		gpuss-1-thermal {
+-			polling-delay-passive = <10>;
++			polling-delay-passive = <200>;
+ 
+ 			thermal-sensors = <&tsens3 6>;
+ 
+-			trips {
+-				trip-point0 {
+-					temperature = <85000>;
+-					hysteresis = <1000>;
+-					type = "passive";
++			cooling-maps {
++				map0 {
++					trip = <&gpuss1_alert0>;
++					cooling-device = <&gpu THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+ 				};
++			};
+ 
+-				trip-point1 {
+-					temperature = <90000>;
++			trips {
++				gpuss1_alert0: trip-point0 {
++					temperature = <95000>;
+ 					hysteresis = <1000>;
+-					type = "hot";
++					type = "passive";
+ 				};
+ 
+-				trip-point2 {
++				gpu-critical {
+ 					temperature = <115000>;
+ 					hysteresis = <1000>;
+ 					type = "critical";
+@@ -7368,24 +7371,25 @@ trip-point2 {
+ 		};
+ 
+ 		gpuss-2-thermal {
+-			polling-delay-passive = <10>;
++			polling-delay-passive = <200>;
+ 
+ 			thermal-sensors = <&tsens3 7>;
+ 
+-			trips {
+-				trip-point0 {
+-					temperature = <85000>;
+-					hysteresis = <1000>;
+-					type = "passive";
++			cooling-maps {
++				map0 {
++					trip = <&gpuss2_alert0>;
++					cooling-device = <&gpu THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+ 				};
++			};
+ 
+-				trip-point1 {
+-					temperature = <90000>;
++			trips {
++				gpuss2_alert0: trip-point0 {
++					temperature = <95000>;
+ 					hysteresis = <1000>;
+-					type = "hot";
++					type = "passive";
+ 				};
+ 
+-				trip-point2 {
++				gpu-critical {
+ 					temperature = <115000>;
+ 					hysteresis = <1000>;
+ 					type = "critical";
+@@ -7394,24 +7398,25 @@ trip-point2 {
+ 		};
+ 
+ 		gpuss-3-thermal {
+-			polling-delay-passive = <10>;
++			polling-delay-passive = <200>;
+ 
+ 			thermal-sensors = <&tsens3 8>;
+ 
+-			trips {
+-				trip-point0 {
+-					temperature = <85000>;
+-					hysteresis = <1000>;
+-					type = "passive";
++			cooling-maps {
++				map0 {
++					trip = <&gpuss3_alert0>;
++					cooling-device = <&gpu THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+ 				};
++			};
+ 
+-				trip-point1 {
+-					temperature = <90000>;
++			trips {
++				gpuss3_alert0: trip-point0 {
++					temperature = <95000>;
+ 					hysteresis = <1000>;
+-					type = "hot";
++					type = "passive";
+ 				};
+ 
+-				trip-point2 {
++				gpu-critical {
+ 					temperature = <115000>;
+ 					hysteresis = <1000>;
+ 					type = "critical";
+@@ -7420,24 +7425,25 @@ trip-point2 {
+ 		};
+ 
+ 		gpuss-4-thermal {
+-			polling-delay-passive = <10>;
++			polling-delay-passive = <200>;
+ 
+ 			thermal-sensors = <&tsens3 9>;
+ 
+-			trips {
+-				trip-point0 {
+-					temperature = <85000>;
+-					hysteresis = <1000>;
+-					type = "passive";
++			cooling-maps {
++				map0 {
++					trip = <&gpuss4_alert0>;
++					cooling-device = <&gpu THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+ 				};
++			};
+ 
+-				trip-point1 {
+-					temperature = <90000>;
++			trips {
++				gpuss4_alert0: trip-point0 {
++					temperature = <95000>;
+ 					hysteresis = <1000>;
+-					type = "hot";
++					type = "passive";
+ 				};
+ 
+-				trip-point2 {
++				gpu-critical {
+ 					temperature = <115000>;
+ 					hysteresis = <1000>;
+ 					type = "critical";
+@@ -7446,24 +7452,25 @@ trip-point2 {
+ 		};
+ 
+ 		gpuss-5-thermal {
+-			polling-delay-passive = <10>;
++			polling-delay-passive = <200>;
+ 
+ 			thermal-sensors = <&tsens3 10>;
+ 
+-			trips {
+-				trip-point0 {
+-					temperature = <85000>;
+-					hysteresis = <1000>;
+-					type = "passive";
++			cooling-maps {
++				map0 {
++					trip = <&gpuss5_alert0>;
++					cooling-device = <&gpu THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+ 				};
++			};
+ 
+-				trip-point1 {
+-					temperature = <90000>;
++			trips {
++				gpuss5_alert0: trip-point0 {
++					temperature = <95000>;
+ 					hysteresis = <1000>;
+-					type = "hot";
++					type = "passive";
+ 				};
+ 
+-				trip-point2 {
++				gpu-critical {
+ 					temperature = <115000>;
+ 					hysteresis = <1000>;
+ 					type = "critical";
+@@ -7472,24 +7479,25 @@ trip-point2 {
+ 		};
+ 
+ 		gpuss-6-thermal {
+-			polling-delay-passive = <10>;
++			polling-delay-passive = <200>;
+ 
+ 			thermal-sensors = <&tsens3 11>;
+ 
+-			trips {
+-				trip-point0 {
+-					temperature = <85000>;
+-					hysteresis = <1000>;
+-					type = "passive";
++			cooling-maps {
++				map0 {
++					trip = <&gpuss6_alert0>;
++					cooling-device = <&gpu THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+ 				};
++			};
+ 
+-				trip-point1 {
+-					temperature = <90000>;
++			trips {
++				gpuss6_alert0: trip-point0 {
++					temperature = <95000>;
+ 					hysteresis = <1000>;
+-					type = "hot";
++					type = "passive";
+ 				};
+ 
+-				trip-point2 {
++				gpu-critical {
+ 					temperature = <115000>;
+ 					hysteresis = <1000>;
+ 					type = "critical";
+@@ -7498,24 +7506,25 @@ trip-point2 {
+ 		};
+ 
+ 		gpuss-7-thermal {
+-			polling-delay-passive = <10>;
++			polling-delay-passive = <200>;
+ 
+ 			thermal-sensors = <&tsens3 12>;
+ 
+-			trips {
+-				trip-point0 {
+-					temperature = <85000>;
+-					hysteresis = <1000>;
+-					type = "passive";
++			cooling-maps {
++				map0 {
++					trip = <&gpuss7_alert0>;
++					cooling-device = <&gpu THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+ 				};
++			};
+ 
+-				trip-point1 {
+-					temperature = <90000>;
++			trips {
++				gpuss7_alert0: trip-point0 {
++					temperature = <95000>;
+ 					hysteresis = <1000>;
+-					type = "hot";
++					type = "passive";
+ 				};
+ 
+-				trip-point2 {
++				gpu-critical {
+ 					temperature = <115000>;
+ 					hysteresis = <1000>;
+ 					type = "critical";
 -- 
 2.39.5
 
