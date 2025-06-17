@@ -1,46 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E0142CCC5;
-	Tue, 17 Jun 2025 15:59:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6A312ECEB2;
+	Tue, 17 Jun 2025 15:59:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175956; cv=none; b=Q3CXVpyfHSvE7FpNBMJ1r/KNjKYSY2PG0TWXIHTW18dpXLu8VCtqzoMm29cOJkdeSpbfV8abT4Oc5K4/Dnd91gJLgbHE4yWp2bRKEs2Xy2crn0a3AXceMNqb/HwiBINjnqcbLt2r4/Ww/h2sIDIlX1TbBZoSzxGY0ijgruzt+6o=
+	t=1750175959; cv=none; b=UZUg720IFepyWUl33JEXtWD9w8988vR/cI5rqXlf7sQ5fTtN0Wsfzbr2HV1BPfbPkDw7OCml5qKnJTu3VBPU2pls1TqdBvZ4bjPXKf6rQ2NUIlvw+W31cAtI1bGL+rRgLtJTT2JyxO/8J62h5SF7Qgy+1KUqKTIoQu+5y/WJBYY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175956; c=relaxed/simple;
-	bh=eLBaqaIcrVvkaQ7JgM6I/LpoFBfnZJYpk3WdNXAPtdU=;
+	s=arc-20240116; t=1750175959; c=relaxed/simple;
+	bh=hcmSfGrHlOGwER+KMI44Whvtj9uYzwPR7O8kVIMrH1w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=de1SbWSeXpK1hrrWoYytVLyb4HXVvfQZ8mSHrMJD9ehSZG8K8Q1corvPBdPeXs57HTdELoBipoywE0BpDjR3kde9Iggb/fIfYJi9CSjnHT6aK8dT71ef6E7d3zq+onESSRovEwMGvu8AOhx8gwbV+wfGGCAjzKlCBtVllssLj2A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PzXIdJD5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KQw3uCXLkChlwKY9wOIx9vNREUU8rBzstAhgkXs45YbQXEq1PSIZUfapJbsqW5Uy15lhms6xQqTkSGq67V6TVexeZspqQmF6ni6qClt5cDtQPDXLw3VvdqMkWEr4Q7HsD/BUwYm3eGdBeqWxgGtTRof/w5wzubVwlmcK+E4Fg58=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zo1AS+cZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PzXIdJD5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF8AAC4CEE7;
-	Tue, 17 Jun 2025 15:59:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zo1AS+cZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EA07C4CEE3;
+	Tue, 17 Jun 2025 15:59:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175956;
-	bh=eLBaqaIcrVvkaQ7JgM6I/LpoFBfnZJYpk3WdNXAPtdU=;
+	s=korg; t=1750175959;
+	bh=hcmSfGrHlOGwER+KMI44Whvtj9uYzwPR7O8kVIMrH1w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PzXIdJD5Xd/IbUiN65pCHIosbdboEr7z2UQwS1tLd7SbVrCDGUpp7edmCEHB0Jdes
-	 /3Sr5CSS/rxfC4VKdK+wQiHrHmNakjsGTu0VdIkDvk+asFMqHxgJ587nNpoKsoflMq
-	 WGTl2Gtu5SIdLub8kKa3bqi86mcSpfhUpYriF/cY=
+	b=zo1AS+cZQap4x70u2rSg3QyD8U+Pm5SNj6eOAST4IE1LLTR+lrTrpTeJ4RWPlGY/4
+	 AswdHt4iijNrxPQVqfyCJIhPH30r4weYiPF3A7n00TH3AOx6L+c4FwXUvIaldhJ0ii
+	 33jtqQnL4MW78ahPzBaIZk2KiqSDSCds4pCIBL2I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	David Spickett <david.spickett@arm.com>,
-	Luis Machado <luis.machado@arm.com>,
-	Marc Zyngier <maz@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
-	Will Deacon <will@kernel.org>,
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 138/780] kselftest/arm64: fp-ptrace: Fix expected FPMR value when PSTATE.SM is changed
-Date: Tue, 17 Jun 2025 17:17:26 +0200
-Message-ID: <20250617152457.119196842@linuxfoundation.org>
+Subject: [PATCH 6.6 230/356] usb: renesas_usbhs: Reorder clock handling and power management in probe
+Date: Tue, 17 Jun 2025 17:25:45 +0200
+Message-ID: <20250617152347.454825218@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
+References: <20250617152338.212798615@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -52,104 +47,193 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mark Rutland <mark.rutland@arm.com>
+From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
 
-[ Upstream commit 78b23877dbba7dbcda2b89383d17bed82ce8f663 ]
+[ Upstream commit ffb34a60ce86656ba12d46e91f1ccc71dd221251 ]
 
-The fp-ptrace test suite expects that FPMR is set to zero when PSTATE.SM
-is changed via ptrace, but ptrace has never altered FPMR in this way,
-and the test logic erroneously relies upon (and has concealed) a bug
-where task_fpsimd_load() would unexpectedly and non-deterministically
-clobber FPMR.
+Reorder the initialization sequence in `usbhs_probe()` to enable runtime
+PM before accessing registers, preventing potential crashes due to
+uninitialized clocks.
 
-Using ptrace, FPMR can only be altered by writing to the NT_ARM_FPMR
-regset. The value of PSTATE.SM can be altered by writing to the
-NT_ARM_SVE or NT_ARM_SSVE regsets, and/or by changing the SME vector
-length (when writing to the NT_ARM_SVE, NT_ARM_SSVE, or NT_ARM_ZA
-regsets), but none of these writes will change the value of FPMR.
+Currently, in the probe path, registers are accessed before enabling the
+clocks, leading to a synchronous external abort on the RZ/V2H SoC.
+The problematic call flow is as follows:
 
-The task_fpsimd_load() bug was introduced with the initial FPMR support
-in commit:
+    usbhs_probe()
+        usbhs_sys_clock_ctrl()
+            usbhs_bset()
+                usbhs_write()
+                    iowrite16()  <-- Register access before enabling clocks
 
-  203f2b95a882 ("arm64/fpsimd: Support FEAT_FPMR")
+Since `iowrite16()` is performed without ensuring the required clocks are
+enabled, this can lead to access errors. To fix this, enable PM runtime
+early in the probe function and ensure clocks are acquired before register
+access, preventing crashes like the following on RZ/V2H:
 
-The incorrect FPMR test code was introduced in commit:
+[13.272640] Internal error: synchronous external abort: 0000000096000010 [#1] PREEMPT SMP
+[13.280814] Modules linked in: cec renesas_usbhs(+) drm_kms_helper fuse drm backlight ipv6
+[13.289088] CPU: 1 UID: 0 PID: 195 Comm: (udev-worker) Not tainted 6.14.0-rc7+ #98
+[13.296640] Hardware name: Renesas RZ/V2H EVK Board based on r9a09g057h44 (DT)
+[13.303834] pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[13.310770] pc : usbhs_bset+0x14/0x4c [renesas_usbhs]
+[13.315831] lr : usbhs_probe+0x2e4/0x5ac [renesas_usbhs]
+[13.321138] sp : ffff8000827e3850
+[13.324438] x29: ffff8000827e3860 x28: 0000000000000000 x27: ffff8000827e3ca0
+[13.331554] x26: ffff8000827e3ba0 x25: ffff800081729668 x24: 0000000000000025
+[13.338670] x23: ffff0000c0f08000 x22: 0000000000000000 x21: ffff0000c0f08010
+[13.345783] x20: 0000000000000000 x19: ffff0000c3b52080 x18: 00000000ffffffff
+[13.352895] x17: 0000000000000000 x16: 0000000000000000 x15: ffff8000827e36ce
+[13.360009] x14: 00000000000003d7 x13: 00000000000003d7 x12: 0000000000000000
+[13.367122] x11: 0000000000000000 x10: 0000000000000aa0 x9 : ffff8000827e3750
+[13.374235] x8 : ffff0000c1850b00 x7 : 0000000003826060 x6 : 000000000000001c
+[13.381347] x5 : 000000030d5fcc00 x4 : ffff8000825c0000 x3 : 0000000000000000
+[13.388459] x2 : 0000000000000400 x1 : 0000000000000000 x0 : ffff0000c3b52080
+[13.395574] Call trace:
+[13.398013]  usbhs_bset+0x14/0x4c [renesas_usbhs] (P)
+[13.403076]  platform_probe+0x68/0xdc
+[13.406738]  really_probe+0xbc/0x2c0
+[13.410306]  __driver_probe_device+0x78/0x120
+[13.414653]  driver_probe_device+0x3c/0x154
+[13.418825]  __driver_attach+0x90/0x1a0
+[13.422647]  bus_for_each_dev+0x7c/0xe0
+[13.426470]  driver_attach+0x24/0x30
+[13.430032]  bus_add_driver+0xe4/0x208
+[13.433766]  driver_register+0x68/0x130
+[13.437587]  __platform_driver_register+0x24/0x30
+[13.442273]  renesas_usbhs_driver_init+0x20/0x1000 [renesas_usbhs]
+[13.448450]  do_one_initcall+0x60/0x1d4
+[13.452276]  do_init_module+0x54/0x1f8
+[13.456014]  load_module+0x1754/0x1c98
+[13.459750]  init_module_from_file+0x88/0xcc
+[13.464004]  __arm64_sys_finit_module+0x1c4/0x328
+[13.468689]  invoke_syscall+0x48/0x104
+[13.472426]  el0_svc_common.constprop.0+0xc0/0xe0
+[13.477113]  do_el0_svc+0x1c/0x28
+[13.480415]  el0_svc+0x30/0xcc
+[13.483460]  el0t_64_sync_handler+0x10c/0x138
+[13.487800]  el0t_64_sync+0x198/0x19c
+[13.491453] Code: 2a0103e1 12003c42 12003c63 8b010084 (79400084)
+[13.497522] ---[ end trace 0000000000000000 ]---
 
-  7dbd26d0b22d ("kselftest/arm64: Add FPMR coverage to fp-ptrace")
-
-Subsequently, the task_fpsimd_load() bug was fixed in commit:
-
-  e5fa85fce08b ("arm64/fpsimd: Don't corrupt FPMR when streaming mode changes")
-
-... whereupon the fp-ptrace FPMR tests started failing reliably, e.g.
-
-| # # Mismatch in saved FPMR: 915058000 != 0
-| # not ok 25 SVE write, SVE 64->64, SME 64/0->64/1
-
-Fix this by changing the test to expect that FPMR is *NOT* changed when
-PSTATE.SM is changed via ptrace, matching the extant behaviour.
-
-I've chosen to update the test code rather than modifying ptrace to zero
-FPMR when PSTATE.SM changes. Not zeroing FPMR is simpler overall, and
-allows the NT_ARM_FPMR regset to be handled independently from other
-regsets, leaving less scope for error.
-
-Fixes: 7dbd26d0b22d ("kselftest/arm64: Add FPMR coverage to fp-ptrace")
-Signed-off-by: Mark Rutland <mark.rutland@arm.com>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: David Spickett <david.spickett@arm.com>
-Cc: Luis Machado <luis.machado@arm.com>
-Cc: Marc Zyngier <maz@kernel.org>
-Cc: Mark Brown <broonie@kernel.org>
-Cc: Will Deacon <will@kernel.org>
-Link: https://lore.kernel.org/r/20250508132644.1395904-22-mark.rutland@arm.com
-Signed-off-by: Will Deacon <will@kernel.org>
+Fixes: f1407d5c66240 ("usb: renesas_usbhs: Add Renesas USBHS common code")
+Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Reviewed-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+Tested-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+Link: https://lore.kernel.org/r/20250407105002.107181-4-prabhakar.mahadev-lad.rj@bp.renesas.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/arm64/fp/fp-ptrace.c | 14 +-------------
- 1 file changed, 1 insertion(+), 13 deletions(-)
+ drivers/usb/renesas_usbhs/common.c | 50 +++++++++++++++++++++++-------
+ 1 file changed, 38 insertions(+), 12 deletions(-)
 
-diff --git a/tools/testing/selftests/arm64/fp/fp-ptrace.c b/tools/testing/selftests/arm64/fp/fp-ptrace.c
-index 4930e03a7b990..762048eb354ff 100644
---- a/tools/testing/selftests/arm64/fp/fp-ptrace.c
-+++ b/tools/testing/selftests/arm64/fp/fp-ptrace.c
-@@ -891,18 +891,11 @@ static void set_initial_values(struct test_config *config)
- {
- 	int vq = __sve_vq_from_vl(vl_in(config));
- 	int sme_vq = __sve_vq_from_vl(config->sme_vl_in);
--	bool sm_change;
+diff --git a/drivers/usb/renesas_usbhs/common.c b/drivers/usb/renesas_usbhs/common.c
+index 205820544f6f9..b720899725e53 100644
+--- a/drivers/usb/renesas_usbhs/common.c
++++ b/drivers/usb/renesas_usbhs/common.c
+@@ -674,10 +674,29 @@ static int usbhs_probe(struct platform_device *pdev)
+ 	INIT_DELAYED_WORK(&priv->notify_hotplug_work, usbhsc_notify_hotplug);
+ 	spin_lock_init(usbhs_priv_to_lock(priv));
  
- 	svcr_in = config->svcr_in;
- 	svcr_expected = config->svcr_expected;
- 	svcr_out = 0;
++	/*
++	 * Acquire clocks and enable power management (PM) early in the
++	 * probe process, as the driver accesses registers during
++	 * initialization. Ensure the device is active before proceeding.
++	 */
++	pm_runtime_enable(dev);
++
++	ret = usbhsc_clk_get(dev, priv);
++	if (ret)
++		goto probe_pm_disable;
++
++	ret = pm_runtime_resume_and_get(dev);
++	if (ret)
++		goto probe_clk_put;
++
++	ret = usbhsc_clk_prepare_enable(priv);
++	if (ret)
++		goto probe_pm_put;
++
+ 	/* call pipe and module init */
+ 	ret = usbhs_pipe_probe(priv);
+ 	if (ret < 0)
+-		return ret;
++		goto probe_clk_dis_unprepare;
  
--	if (sme_supported() &&
--	    (svcr_in & SVCR_SM) != (svcr_expected & SVCR_SM))
--		sm_change = true;
--	else
--		sm_change = false;
+ 	ret = usbhs_fifo_probe(priv);
+ 	if (ret < 0)
+@@ -694,10 +713,6 @@ static int usbhs_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		goto probe_fail_rst;
+ 
+-	ret = usbhsc_clk_get(dev, priv);
+-	if (ret)
+-		goto probe_fail_clks;
 -
- 	fill_random(&v_in, sizeof(v_in));
- 	memcpy(v_expected, v_in, sizeof(v_in));
- 	memset(v_out, 0, sizeof(v_out));
-@@ -953,12 +946,7 @@ static void set_initial_values(struct test_config *config)
- 	if (fpmr_supported()) {
- 		fill_random(&fpmr_in, sizeof(fpmr_in));
- 		fpmr_in &= FPMR_SAFE_BITS;
--
--		/* Entering or exiting streaming mode clears FPMR */
--		if (sm_change)
--			fpmr_expected = 0;
--		else
--			fpmr_expected = fpmr_in;
-+		fpmr_expected = fpmr_in;
- 	} else {
- 		fpmr_in = 0;
- 		fpmr_expected = 0;
+ 	/*
+ 	 * deviece reset here because
+ 	 * USB device might be used in boot loader.
+@@ -710,7 +725,7 @@ static int usbhs_probe(struct platform_device *pdev)
+ 		if (ret) {
+ 			dev_warn(dev, "USB function not selected (GPIO)\n");
+ 			ret = -ENOTSUPP;
+-			goto probe_end_mod_exit;
++			goto probe_assert_rest;
+ 		}
+ 	}
+ 
+@@ -724,14 +739,19 @@ static int usbhs_probe(struct platform_device *pdev)
+ 	ret = usbhs_platform_call(priv, hardware_init, pdev);
+ 	if (ret < 0) {
+ 		dev_err(dev, "platform init failed.\n");
+-		goto probe_end_mod_exit;
++		goto probe_assert_rest;
+ 	}
+ 
+ 	/* reset phy for connection */
+ 	usbhs_platform_call(priv, phy_reset, pdev);
+ 
+-	/* power control */
+-	pm_runtime_enable(dev);
++	/*
++	 * Disable the clocks that were enabled earlier in the probe path,
++	 * and let the driver handle the clocks beyond this point.
++	 */
++	usbhsc_clk_disable_unprepare(priv);
++	pm_runtime_put(dev);
++
+ 	if (!usbhs_get_dparam(priv, runtime_pwctrl)) {
+ 		usbhsc_power_ctrl(priv, 1);
+ 		usbhs_mod_autonomy_mode(priv);
+@@ -748,9 +768,7 @@ static int usbhs_probe(struct platform_device *pdev)
+ 
+ 	return ret;
+ 
+-probe_end_mod_exit:
+-	usbhsc_clk_put(priv);
+-probe_fail_clks:
++probe_assert_rest:
+ 	reset_control_assert(priv->rsts);
+ probe_fail_rst:
+ 	usbhs_mod_remove(priv);
+@@ -758,6 +776,14 @@ static int usbhs_probe(struct platform_device *pdev)
+ 	usbhs_fifo_remove(priv);
+ probe_end_pipe_exit:
+ 	usbhs_pipe_remove(priv);
++probe_clk_dis_unprepare:
++	usbhsc_clk_disable_unprepare(priv);
++probe_pm_put:
++	pm_runtime_put(dev);
++probe_clk_put:
++	usbhsc_clk_put(priv);
++probe_pm_disable:
++	pm_runtime_disable(dev);
+ 
+ 	dev_info(dev, "probe failed (%d)\n", ret);
+ 
 -- 
 2.39.5
 
