@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F2E52EBDC0;
-	Tue, 17 Jun 2025 15:36:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A471221F1F;
+	Tue, 17 Jun 2025 15:36:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750174590; cv=none; b=WTOpDcL38YbUZOZKyNCRylOnFJQ+8vzMiqro/gUw91u2Kc0b/PWAbps56Zkp0f2tfGN3xEAcolWNKtBwG3JuAC5a8doyqZa7nGMrA3MiCOZe61nlRBhY66FMkg7BIY9RznFnxgpy3rwHiQa0oqlqez3NAR+6Zikg8bhziAxZrTw=
+	t=1750174593; cv=none; b=uNMh4OpYJMVQn1MveGCbyovAz+2Hu4+49EfHijC2KWrsdMYMWlhAfgf22j9jOTRFOo6WJgAHbu8SuTrQn/Nj/RopvBiKPkzAaTQF+07DlAcR/YsTotXvt1rcSU2nMkOycr4uv/6Pse5AlIdlVjGT21Q+DmwOOZM0AvLS6HUpVPU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750174590; c=relaxed/simple;
-	bh=QeB3D0gZCQxkVDVoj5cvdRv9IyPBBJhVjDUA+RNzXtE=;
+	s=arc-20240116; t=1750174593; c=relaxed/simple;
+	bh=Q0LzwnXv9I0RY5s+HfZfaZh5zPXIbkgWaBYuupY5pEg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fGVprHoApwH7atRA4LE4ie8e+8I2RErRtMsV2wUJ22qhW8kXSMo5xuUAcEyK6P16D/iXEpxs0SFEw+mXinu2ASe4YXPS8skvZBIawYX789NUXr3vhoiS2wFOrmtr6Ud90uk3Qi1bMCc/HpTHA69Z+yTdojBjuB7no3JZP95b7S0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RjXY7Jy2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ekNSIAsAKb5aRWPxo1FD0z9GIxVjWnBwXkVJjIlQUdJM5GLtZ4r+9eW8WMidCT8E9CwwSN78AvY8p6MXsdXmfulH/fh6NaKyIErPDUZKjjrqVG/wsw8Sa53CIwV4EWUyVTeCDjpY9nLeCnAu4+jDVg1LcF5Jm1gH9vl/SIiNs1U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IT7jtqjL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RjXY7Jy2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B643C4CEE7;
-	Tue, 17 Jun 2025 15:36:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IT7jtqjL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CEE3C4CEF0;
+	Tue, 17 Jun 2025 15:36:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750174590;
-	bh=QeB3D0gZCQxkVDVoj5cvdRv9IyPBBJhVjDUA+RNzXtE=;
+	s=korg; t=1750174593;
+	bh=Q0LzwnXv9I0RY5s+HfZfaZh5zPXIbkgWaBYuupY5pEg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RjXY7Jy2yCH/xV3GIMqWss1gzdjcvp897tRsDovfpczZ33Vn+HUeC32RAyQWkapCl
-	 2zBJ+Se2tSKUtQwmoWl+JZPWEi01CC+ReCQwPdSdfbdc9ufSh7Sg1EnSx8yLd9ODku
-	 pmyb6mg7Yig+ZGpx80u7G9MQaIcRPaMikfzHvqHY=
+	b=IT7jtqjL+Rpm/BnnDvm5JrrGGuanWHxAyC4USFx43lMDEFPrY/Usi7iGtWW7YhW19
+	 uuYl1BxbbiZo7ZyRGTdLFDb/ciHEX304skF/iMp4iOS7vzKBEKIIrafJXb92G2I5V5
+	 vI0yB9yTmPuZZ/w9SUplqZRWDm6wyZzRKaD9RUJ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhen XIN <zhen.xin@nokia-sbell.com>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Feng Xu <feng.f.xu@intel.com>,
+	Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
+	Tony Luck <tony.luck@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 091/356] wifi: rtw88: sdio: map mgmt frames to queue TX_DESC_QSEL_MGMT
-Date: Tue, 17 Jun 2025 17:23:26 +0200
-Message-ID: <20250617152341.882797417@linuxfoundation.org>
+Subject: [PATCH 6.12 040/512] EDAC/skx_common: Fix general protection fault
+Date: Tue, 17 Jun 2025 17:20:06 +0200
+Message-ID: <20250617152421.170613770@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-References: <20250617152338.212798615@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,48 +48,70 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhen XIN <zhen.xin@nokia-sbell.com>
+From: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
 
-[ Upstream commit b2effcdc237979dcc533d446a792fc54fd0e1213 ]
+[ Upstream commit 20d2d476b3ae18041be423671a8637ed5ffd6958 ]
 
-The rtw88-sdio do not work in AP mode due to the lack of TX status report
-for management frames.
+After loading i10nm_edac (which automatically loads skx_edac_common), if
+unload only i10nm_edac, then reload it and perform error injection testing,
+a general protection fault may occur:
 
-Map the management frames to queue TX_DESC_QSEL_MGMT, which enables the
-chip to generate TX reports for these frames
+  mce: [Hardware Error]: Machine check events logged
+  Oops: general protection fault ...
+  ...
+  Workqueue: events mce_gen_pool_process
+  RIP: 0010:string+0x53/0xe0
+  ...
+  Call Trace:
+  <TASK>
+  ? die_addr+0x37/0x90
+  ? exc_general_protection+0x1e7/0x3f0
+  ? asm_exc_general_protection+0x26/0x30
+  ? string+0x53/0xe0
+  vsnprintf+0x23e/0x4c0
+  snprintf+0x4d/0x70
+  skx_adxl_decode+0x16a/0x330 [skx_edac_common]
+  skx_mce_check_error.part.0+0xf8/0x220 [skx_edac_common]
+  skx_mce_check_error+0x17/0x20 [skx_edac_common]
+  ...
 
-Tested-on: rtl8723ds
+The issue arose was because the variable 'adxl_component_count' (inside
+skx_edac_common), which counts the ADXL components, was not reset. During
+the reloading of i10nm_edac, the count was incremented by the actual number
+of ADXL components again, resulting in a count that was double the real
+number of ADXL components. This led to an out-of-bounds reference to the
+ADXL component array, causing the general protection fault above.
 
-Fixes: 65371a3f14e7 ("wifi: rtw88: sdio: Add HCI implementation for SDIO based chipsets")
-Signed-off-by: Zhen XIN <zhen.xin@nokia-sbell.com>
-Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20250410154217.1849977-3-zhen.xin@nokia-sbell.com
+Fix this issue by resetting the 'adxl_component_count' in adxl_put(),
+which is called during the unloading of {skx,i10nm}_edac.
+
+Fixes: 123b15863550 ("EDAC, i10nm: make skx_common.o a separate module")
+Reported-by: Feng Xu <feng.f.xu@intel.com>
+Signed-off-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+Tested-by: Feng Xu <feng.f.xu@intel.com>
+Link: https://lore.kernel.org/r/20250417150724.1170168-2-qiuxu.zhuo@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw88/sdio.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ drivers/edac/skx_common.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/realtek/rtw88/sdio.c b/drivers/net/wireless/realtek/rtw88/sdio.c
-index 9043569935796..4df04579e2e7a 100644
---- a/drivers/net/wireless/realtek/rtw88/sdio.c
-+++ b/drivers/net/wireless/realtek/rtw88/sdio.c
-@@ -718,10 +718,7 @@ static u8 rtw_sdio_get_tx_qsel(struct rtw_dev *rtwdev, struct sk_buff *skb,
- 	case RTW_TX_QUEUE_H2C:
- 		return TX_DESC_QSEL_H2C;
- 	case RTW_TX_QUEUE_MGMT:
--		if (rtw_chip_wcpu_11n(rtwdev))
--			return TX_DESC_QSEL_HIGH;
--		else
--			return TX_DESC_QSEL_MGMT;
-+		return TX_DESC_QSEL_MGMT;
- 	case RTW_TX_QUEUE_HI0:
- 		return TX_DESC_QSEL_HIGH;
- 	default:
+diff --git a/drivers/edac/skx_common.c b/drivers/edac/skx_common.c
+index 85ec3196664d3..88f5ff249f2e0 100644
+--- a/drivers/edac/skx_common.c
++++ b/drivers/edac/skx_common.c
+@@ -115,6 +115,7 @@ EXPORT_SYMBOL_GPL(skx_adxl_get);
+ 
+ void skx_adxl_put(void)
+ {
++	adxl_component_count = 0;
+ 	kfree(adxl_values);
+ 	kfree(adxl_msg);
+ }
 -- 
 2.39.5
 
