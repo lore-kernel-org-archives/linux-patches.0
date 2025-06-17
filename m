@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4087202C38;
-	Tue, 17 Jun 2025 16:11:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BCDD202C38;
+	Tue, 17 Jun 2025 16:11:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750176684; cv=none; b=OU2uBGuVrx8w06t8+Ghz9OSNHrm/snjSxBmpo+HcXKxZCjbPl4PLSc43wRKV1xqLLmuaEF4yQQMZI4Ta0QGo5ypPIeBGJ2TpwDVORUD8k1gKn8+wTv69GPkFlJOYDP0OPuUrd49Q1aD1am9J9JalO6mW9LkQwMrKIrafdyoUHiI=
+	t=1750176686; cv=none; b=GyBxW+0DgbYa9h2XGbOpxWxW1IKnv1HObLHzY/P7nzy98UgMe6lZV9RkVmeFbxnA+b3kVEWK/jX5X7lXMGq8DqKw22ugv+HIzuEov9uTBt6nINFg0OFvR43hTQ6gNF/Ol2+1Xdb+0V9ZZPJwHOJo5mHUtPvprtv6rzHRuiWkhRM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750176684; c=relaxed/simple;
-	bh=AuZjo+pUx7BCNBkaHxrCF+b4ndXte9Fjq6jLDSXWZbw=;
+	s=arc-20240116; t=1750176686; c=relaxed/simple;
+	bh=3ssUYwy3DdfehEwj2RTUYmC9VVdy14AHKcuG74/38dk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bcWAbzczspHnyHmVn3Wa6V+dCufY0236kNOM2VIO8WP+ufCjckYTslSN8awSnPWVB3BVgKBHR8ncX/d/vkyZMtdZObUmAxUph6P0uxbDh89podoTi6bFr8ZE5RyuBuzBan1+dlC87/NOblhRItou38M5uzoBogcx5Yu4fhOrRjU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zMNPontN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QWw1An70h7F/ydJXjMGhwRuGDI3diovx2fQ3+0nt3AMzo3UvA+yzbpbCZ3IeTsN0ZV2SSjEGSgFqPZZltCA5nL3WOQhPfYyhnEmwk5Gjzt9iyogv25GJ9DYbCfyG+8wQ3oP6zADmAchIM9h6ZFwhszTGGjQkOFD9ZUnkmlr67ik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PVq+M9sQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zMNPontN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19CEDC4CEE3;
-	Tue, 17 Jun 2025 16:11:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PVq+M9sQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CD0AC4CEE3;
+	Tue, 17 Jun 2025 16:11:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750176683;
-	bh=AuZjo+pUx7BCNBkaHxrCF+b4ndXte9Fjq6jLDSXWZbw=;
+	s=korg; t=1750176686;
+	bh=3ssUYwy3DdfehEwj2RTUYmC9VVdy14AHKcuG74/38dk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zMNPontNvVNcaIq05kgcQeUNXSu/fMAxyK7ppKHSEvzkwzaDECSlakQqMM7fiSDsH
-	 qrAvApRoJNU5VlioVooGC9osHcAFUm9YsdAqoeg0TVYp4S9jb5rvcx+G9iBVxizxIe
-	 7koKuiUJYcVR4qdgLpzBIKLV4NPsh04RHYvm+30o=
+	b=PVq+M9sQbNmRZEtOcfNMSWalIyF4EEDqFcv/cUJXqBl7akwcCm80mT57KpVpDPaHf
+	 qHR5EcpS97eL6Jt45iiGuQjevg06g0yiPTtMfRSOfTBxN8xS+aW5CloY3JMOJ354j+
+	 lLojHimuIM01gHlgIQPp0y4wN2JG12x9Z4LipSTs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wojciech Slenska <wojciech.slenska@gmail.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Maharaja Kennadyrajan <maharaja.kennadyrajan@oss.qualcomm.com>,
+	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 304/356] pinctrl: qcom: pinctrl-qcm2290: Add missing pins
-Date: Tue, 17 Jun 2025 17:26:59 +0200
-Message-ID: <20250617152350.405201823@linuxfoundation.org>
+Subject: [PATCH 6.15 213/780] wifi: ath12k: Prevent sending WMI commands to firmware during firmware crash
+Date: Tue, 17 Jun 2025 17:18:41 +0200
+Message-ID: <20250617152500.135577544@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-References: <20250617152338.212798615@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,59 +48,104 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wojciech Slenska <wojciech.slenska@gmail.com>
+From: Maharaja Kennadyrajan <maharaja.kennadyrajan@oss.qualcomm.com>
 
-[ Upstream commit 315345610faee8a0568b522dba9e35067d1732ab ]
+[ Upstream commit e9e094a9734ea3bd4d4d117c915ccf129ac61ba1 ]
 
-Added the missing pins to the qcm2290_pins table.
+Currently, we encounter the following kernel call trace when a firmware
+crash occurs. This happens because the host sends WMI commands to the
+firmware while it is in recovery, causing the commands to fail and
+resulting in the kernel call trace.
 
-Signed-off-by: Wojciech Slenska <wojciech.slenska@gmail.com>
-Fixes: 48e049ef1238 ("pinctrl: qcom: Add QCM2290 pinctrl driver")
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/20250523101437.59092-1-wojciech.slenska@gmail.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Set the ATH12K_FLAG_CRASH_FLUSH and ATH12K_FLAG_RECOVERY flags when the
+host driver receives the firmware crash notification from MHI. This
+prevents sending WMI commands to the firmware during recovery.
+
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x75/0xc0
+ register_lock_class+0x6be/0x7a0
+ ? __lock_acquire+0x644/0x19a0
+ __lock_acquire+0x95/0x19a0
+ lock_acquire+0x265/0x310
+ ? ath12k_ce_send+0xa2/0x210 [ath12k]
+ ? find_held_lock+0x34/0xa0
+ ? ath12k_ce_send+0x56/0x210 [ath12k]
+ _raw_spin_lock_bh+0x33/0x70
+ ? ath12k_ce_send+0xa2/0x210 [ath12k]
+ ath12k_ce_send+0xa2/0x210 [ath12k]
+ ath12k_htc_send+0x178/0x390 [ath12k]
+ ath12k_wmi_cmd_send_nowait+0x76/0xa0 [ath12k]
+ ath12k_wmi_cmd_send+0x62/0x190 [ath12k]
+ ath12k_wmi_pdev_bss_chan_info_request+0x62/0xc0 [ath1
+ ath12k_mac_op_get_survey+0x2be/0x310 [ath12k]
+ ieee80211_dump_survey+0x99/0x240 [mac80211]
+ nl80211_dump_survey+0xe7/0x470 [cfg80211]
+ ? kmalloc_reserve+0x59/0xf0
+ genl_dumpit+0x24/0x70
+ netlink_dump+0x177/0x360
+ __netlink_dump_start+0x206/0x280
+ genl_family_rcv_msg_dumpit.isra.22+0x8a/0xe0
+ ? genl_family_rcv_msg_attrs_parse.isra.23+0xe0/0xe0
+ ? genl_op_lock.part.12+0x10/0x10
+ ? genl_dumpit+0x70/0x70
+ genl_rcv_msg+0x1d0/0x290
+ ? nl80211_del_station+0x330/0x330 [cfg80211]
+ ? genl_get_cmd_both+0x50/0x50
+ netlink_rcv_skb+0x4f/0x100
+ genl_rcv+0x1f/0x30
+ netlink_unicast+0x1b6/0x260
+ netlink_sendmsg+0x31a/0x450
+ __sock_sendmsg+0xa8/0xb0
+ ____sys_sendmsg+0x1e4/0x260
+ ___sys_sendmsg+0x89/0xe0
+ ? local_clock_noinstr+0xb/0xc0
+ ? rcu_is_watching+0xd/0x40
+ ? kfree+0x1de/0x370
+ ? __sys_sendmsg+0x7a/0xc0
+
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.4.1-00199-QCAHKSWPL_SILICONZ-1
+
+Fixes: a9b46dd2e483 ("wifi: ath12k: Add firmware coredump collection support")
+Signed-off-by: Maharaja Kennadyrajan <maharaja.kennadyrajan@oss.qualcomm.com>
+Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
+Link: https://patch.msgid.link/20250416020414.2161545-1-maharaja.kennadyrajan@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/qcom/pinctrl-qcm2290.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/net/wireless/ath/ath12k/mhi.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pinctrl/qcom/pinctrl-qcm2290.c b/drivers/pinctrl/qcom/pinctrl-qcm2290.c
-index f5c1c427b44e9..61b7c22e963c2 100644
---- a/drivers/pinctrl/qcom/pinctrl-qcm2290.c
-+++ b/drivers/pinctrl/qcom/pinctrl-qcm2290.c
-@@ -165,6 +165,10 @@ static const struct pinctrl_pin_desc qcm2290_pins[] = {
- 	PINCTRL_PIN(62, "GPIO_62"),
- 	PINCTRL_PIN(63, "GPIO_63"),
- 	PINCTRL_PIN(64, "GPIO_64"),
-+	PINCTRL_PIN(65, "GPIO_65"),
-+	PINCTRL_PIN(66, "GPIO_66"),
-+	PINCTRL_PIN(67, "GPIO_67"),
-+	PINCTRL_PIN(68, "GPIO_68"),
- 	PINCTRL_PIN(69, "GPIO_69"),
- 	PINCTRL_PIN(70, "GPIO_70"),
- 	PINCTRL_PIN(71, "GPIO_71"),
-@@ -179,12 +183,17 @@ static const struct pinctrl_pin_desc qcm2290_pins[] = {
- 	PINCTRL_PIN(80, "GPIO_80"),
- 	PINCTRL_PIN(81, "GPIO_81"),
- 	PINCTRL_PIN(82, "GPIO_82"),
-+	PINCTRL_PIN(83, "GPIO_83"),
-+	PINCTRL_PIN(84, "GPIO_84"),
-+	PINCTRL_PIN(85, "GPIO_85"),
- 	PINCTRL_PIN(86, "GPIO_86"),
- 	PINCTRL_PIN(87, "GPIO_87"),
- 	PINCTRL_PIN(88, "GPIO_88"),
- 	PINCTRL_PIN(89, "GPIO_89"),
- 	PINCTRL_PIN(90, "GPIO_90"),
- 	PINCTRL_PIN(91, "GPIO_91"),
-+	PINCTRL_PIN(92, "GPIO_92"),
-+	PINCTRL_PIN(93, "GPIO_93"),
- 	PINCTRL_PIN(94, "GPIO_94"),
- 	PINCTRL_PIN(95, "GPIO_95"),
- 	PINCTRL_PIN(96, "GPIO_96"),
+diff --git a/drivers/net/wireless/ath/ath12k/mhi.c b/drivers/net/wireless/ath/ath12k/mhi.c
+index 2f6d14382ed70..4d40c4ec4b811 100644
+--- a/drivers/net/wireless/ath/ath12k/mhi.c
++++ b/drivers/net/wireless/ath/ath12k/mhi.c
+@@ -1,7 +1,7 @@
+ // SPDX-License-Identifier: BSD-3-Clause-Clear
+ /*
+  * Copyright (c) 2020-2021 The Linux Foundation. All rights reserved.
+- * Copyright (c) 2021-2024 Qualcomm Innovation Center, Inc. All rights reserved.
++ * Copyright (c) 2021-2025 Qualcomm Innovation Center, Inc. All rights reserved.
+  */
+ 
+ #include <linux/msi.h>
+@@ -285,8 +285,11 @@ static void ath12k_mhi_op_status_cb(struct mhi_controller *mhi_cntrl,
+ 			break;
+ 		}
+ 
+-		if (!(test_bit(ATH12K_FLAG_UNREGISTERING, &ab->dev_flags)))
++		if (!(test_bit(ATH12K_FLAG_UNREGISTERING, &ab->dev_flags))) {
++			set_bit(ATH12K_FLAG_CRASH_FLUSH, &ab->dev_flags);
++			set_bit(ATH12K_FLAG_RECOVERY, &ab->dev_flags);
+ 			queue_work(ab->workqueue_aux, &ab->reset_work);
++		}
+ 		break;
+ 	default:
+ 		break;
 -- 
 2.39.5
 
