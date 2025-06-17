@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A49D2EA487;
-	Tue, 17 Jun 2025 15:43:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B459C2ECD0B;
+	Tue, 17 Jun 2025 15:43:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175016; cv=none; b=Ax1+oOGHmZbxyoU+9eLLDq+YXP8G4V9EUEbHMhiugxlFmfxWySBVTavIw3e/Prp4lBMmiFFvnigvmkgcL3o/fUOcA0qy/UFQ7wl78gPLVwLsQpwYgdUpg60w/WaX9cfcxCmHOfqC2rN0EQLN3ghxemW3mEhNNZmOEs89O+IJLss=
+	t=1750175019; cv=none; b=IGXXXPEr/Ip6o+dF+t0R61emCLUCZDu/NAnXTI3ByG1zx3QgeUm7ETqMR9DhWgGsC/2K74NVKxV6hOQhjKdEBASMnTR5SXasmfsQOs+liaPP3dUPFAjmG/vJ9GM8QWzAKlrq1QYy7ozey9uTxlccyKCjglIJ8utMUVGBfQwiDMY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175016; c=relaxed/simple;
-	bh=QEnjEcXByIBu+ufQaljjLPeRBeLG6pdbfivCx221t1E=;
+	s=arc-20240116; t=1750175019; c=relaxed/simple;
+	bh=JfJuR8ICMTUKinerAoZClXC34u1PY08xDQE3vTvUMQQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lCnW442p0ltVyt3MDxLvKtYddnPHWtN4k8dg+mCt0qnCWwkk246wdOoTBGhn1+OGJe4m8pc0t4+yT1KZXKx+jxMYxNzqvNNbaRcEWvtF/oKmPjkOGnwenE56f7KfDiB3ou+svpss/56JqpMUpgHyeFspO1SiFSghb1MFptPKjZs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LsnWMKus; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bN96ZzzeiAkZabHVWlpYPrH9Sqkzh1qxNZNlSJI+KY7PQGy1+jsij4r0vqJjSITDFjUk8snppTjwNkEu3aLKgmXqB1uy4GDJiqml0tHzxxbQP7U24gDNj42FzrZyi52KClylFDwsFHwFJs8t+6llIq/OU5fbO6vadh8HZp+bBWw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mCpxdhy8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LsnWMKus"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED00AC4CEE3;
-	Tue, 17 Jun 2025 15:43:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mCpxdhy8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24230C4CEE3;
+	Tue, 17 Jun 2025 15:43:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175016;
-	bh=QEnjEcXByIBu+ufQaljjLPeRBeLG6pdbfivCx221t1E=;
+	s=korg; t=1750175019;
+	bh=JfJuR8ICMTUKinerAoZClXC34u1PY08xDQE3vTvUMQQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LsnWMKusgHoN000wDU65t4h8tKDDs6pqznpUMt/hyFaqLjrX6OcaU4pIpg3fxzgM9
-	 RfpxnPOIxEV8L2+aqR7XBc5+hgaSymCXiICOiaFKEKdgKf/J+Kt94UQs901sAPbklq
-	 143SxJNuAPJs+2R8UAi8PwCV8nMmnQzcGtF3zML4=
+	b=mCpxdhy81INADDs6pvKpsBsQQON716dFFp2MOLzEgb/QqFLBDhg5Q6fz/kZ3vg54Q
+	 GZUj13+PnPNx0toJYiKLJL6GTQMwA/F2OWhe3e4N3wI/lyII8gGhhHx7FTwKt/srrB
+	 Y2Qf+ey0soPvXxkcI/9aN0kH9uaifewYeYERolfc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Kornel=20Dul=C4=99ba?= <korneld@google.com>,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
+	Hongbo Yao <andy.xu@hj-micro.com>,
+	Robin Murphy <robin.murphy@arm.com>,
 	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 084/512] arm64: Support ARM64_VA_BITS=52 when setting ARCH_MMAP_RND_BITS_MAX
-Date: Tue, 17 Jun 2025 17:20:50 +0200
-Message-ID: <20250617152422.978391734@linuxfoundation.org>
+Subject: [PATCH 6.12 075/512] perf: arm-ni: Fix missing platform_set_drvdata()
+Date: Tue, 17 Jun 2025 17:20:41 +0200
+Message-ID: <20250617152422.616474682@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
 References: <20250617152419.512865572@linuxfoundation.org>
@@ -46,58 +46,41 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kornel Dulęba <korneld@google.com>
+From: Hongbo Yao <andy.xu@hj-micro.com>
 
-[ Upstream commit f101c56447717c595d803894ba0e215f56c6fba4 ]
+[ Upstream commit fc5106088d6db75df61308ef6de314d1f7959646 ]
 
-When the 52-bit virtual addressing was introduced the select like
-ARCH_MMAP_RND_BITS_MAX logic was never updated to account for it.
-Because of that the rnd max bits knob is set to the default value of 18
-when ARM64_VA_BITS=52.
-Fix this by setting ARCH_MMAP_RND_BITS_MAX to the same value that would
-be used if 48-bit addressing was used. Higher values can't used here
-because 52-bit addressing is used only if the caller provides a hint to
-mmap, with a fallback to 48-bit. The knob in question is an upper bound
-for what the user can set in /proc/sys/vm/mmap_rnd_bits, which in turn
-is used to determine how many random bits can be inserted into the base
-address used for mmap allocations. Since 48-bit allocations are legal
-with ARM64_VA_BITS=52, we need to make sure that the base address is
-small enough to facilitate this.
+Add missing platform_set_drvdata in arm_ni_probe(), otherwise
+calling platform_get_drvdata() in remove returns NULL.
 
-Fixes: b6d00d47e81a ("arm64: mm: Introduce 52-bit Kernel VAs")
-Signed-off-by: Kornel Dulęba <korneld@google.com>
-Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
-Link: https://lore.kernel.org/r/20250417114754.3238273-1-korneld@google.com
+Fixes: 4d5a7680f2b4 ("perf: Add driver for Arm NI-700 interconnect PMU")
+Signed-off-by: Hongbo Yao <andy.xu@hj-micro.com>
+Reviewed-by: Robin Murphy <robin.murphy@arm.com>
+Link: https://lore.kernel.org/r/20250401054248.3985814-1-andy.xu@hj-micro.com
 Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/Kconfig | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/perf/arm-ni.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/Kconfig b/arch/arm64/Kconfig
-index a11a7a42edbfb..7887d18cce3e4 100644
---- a/arch/arm64/Kconfig
-+++ b/arch/arm64/Kconfig
-@@ -322,9 +322,9 @@ config ARCH_MMAP_RND_BITS_MAX
- 	default 24 if ARM64_VA_BITS=39
- 	default 27 if ARM64_VA_BITS=42
- 	default 30 if ARM64_VA_BITS=47
--	default 29 if ARM64_VA_BITS=48 && ARM64_64K_PAGES
--	default 31 if ARM64_VA_BITS=48 && ARM64_16K_PAGES
--	default 33 if ARM64_VA_BITS=48
-+	default 29 if (ARM64_VA_BITS=48 || ARM64_VA_BITS=52) && ARM64_64K_PAGES
-+	default 31 if (ARM64_VA_BITS=48 || ARM64_VA_BITS=52) && ARM64_16K_PAGES
-+	default 33 if (ARM64_VA_BITS=48 || ARM64_VA_BITS=52)
- 	default 14 if ARM64_64K_PAGES
- 	default 16 if ARM64_16K_PAGES
- 	default 18
+diff --git a/drivers/perf/arm-ni.c b/drivers/perf/arm-ni.c
+index 3f3d2e0f91fa7..b87d3a9ba7d54 100644
+--- a/drivers/perf/arm-ni.c
++++ b/drivers/perf/arm-ni.c
+@@ -661,6 +661,7 @@ static int arm_ni_probe(struct platform_device *pdev)
+ 	ni->num_cds = num_cds;
+ 	ni->part = part;
+ 	ni->id = atomic_fetch_inc(&id);
++	platform_set_drvdata(pdev, ni);
+ 
+ 	for (int v = 0; v < cfg.num_components; v++) {
+ 		reg = readl_relaxed(cfg.base + NI_CHILD_PTR(v));
 -- 
 2.39.5
 
