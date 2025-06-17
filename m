@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71C9C2EA16E;
-	Tue, 17 Jun 2025 15:51:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60EDA2EA16E;
+	Tue, 17 Jun 2025 15:51:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175496; cv=none; b=Je4DSl72it++AnNLp+N3vIihlzXldKwiBrX5GX6Dt1OcynMC8ck1DqnteJvKb/V5EAy4o8xXFH/7y0hBtDxp49FAABQT+XXkarl3tYCnM0g+RCasYyDIXe1TqZRA4uvvqeAtRfo5hqKGhfTmqAgVtKVc8W8Lghuoq2JpVk1AbfY=
+	t=1750175499; cv=none; b=QSIGnkAARGBg3cRrZxuaaGoWfD0gRtCF9T7XhNetU2moNpzF6R3VBb/OkR4/7bjQdfWVFWjrMw3/YzRcQ/3umkc8A2jr9d1NKg9LWZOV9OpRMDrF2ndzDWO8qxv4RHW0IShjOP2i9tR2YOcKUEdKH2dggzH9MyN/cmgJD1AYGOM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175496; c=relaxed/simple;
-	bh=pZKVwIonODxzYuLybXiKbx859x/p8kGCrnCYJ92OsSc=;
+	s=arc-20240116; t=1750175499; c=relaxed/simple;
+	bh=gkS/OXfC/P39HAbRRr8l7oCKNPCRY9Jucf377KlQbvU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BXfc0vwpVb8pAsMlE3kNB07hLhkyc8FPJ0NHlw2eOp1KiN0z1nhXsP1967GTKTKgP8SruYuaBg71Lmj59NKZHLoWw9Q29h9CHssnTHcNW1M5rQF7Dh1dBF7syYw6zBZsRREdvRadrugIxHtx0yO4TVpQD9OFSX8/yU3P3pE7UfQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ld5+NwI1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oPlYxETTmusu3qbuzV60nF7b1grVBMAP+zj+BF93SM7ROgoE5auiFcGJskQAZCL+0k09oEUa9jfQ4g1O0iJG1bE8Jgbdt/mQ7LXotDxAxGBuMf1IuH6M9mHD+gbDNTTuztE5BPVTEORgfI1+x/4fbYZkQddZpLk7jGUGJa+XjgI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yok1rmKq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ld5+NwI1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 973DDC4CEE7;
-	Tue, 17 Jun 2025 15:51:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yok1rmKq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1911C4CEE3;
+	Tue, 17 Jun 2025 15:51:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175496;
-	bh=pZKVwIonODxzYuLybXiKbx859x/p8kGCrnCYJ92OsSc=;
+	s=korg; t=1750175499;
+	bh=gkS/OXfC/P39HAbRRr8l7oCKNPCRY9Jucf377KlQbvU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ld5+NwI14Sy/CBeRTaYRpr/su3rz4Y/yS0xev383YC/paD8Y/YrHEoeWs53a5Mgf3
-	 U2MP3YLMe7MDMKyvmweInaTM1I2sR+Qx+oJ+DFYDPZsNs0i2hwkySByAmoLMhOP4Tb
-	 Jm20TGQ0WM1gDysG6tKd5fIEMFUk4y1hCp5h0BBw=
+	b=yok1rmKqDjDWJJw2EWhCk8NXDntNBP+MvHCJzIHjBEfXX0rZzOzNbGkidOrxCX5Yg
+	 QgxUZhAvShn4nz6dIud3Y1tN5hHOt5/cKgXO360fmGD7BH+TyQIbOfCi67gUwPDN5Z
+	 hkuOk6QOTka7YP8yrsktOVIixP1vFDkelTx/9sb8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Ramasamy Kaliappan <quic_rkaliapp@quicinc.com>,
+	Nithyanantham Paramasivam <nithyanantham.paramasivam@oss.qualcomm.com>,
+	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 182/356] nilfs2: add pointer check for nilfs_direct_propagate()
-Date: Tue, 17 Jun 2025 17:24:57 +0200
-Message-ID: <20250617152345.543022146@linuxfoundation.org>
+Subject: [PATCH 6.12 132/512] wifi: ath12k: Fix the QoS control field offset to build QoS header
+Date: Tue, 17 Jun 2025 17:21:38 +0200
+Message-ID: <20250617152424.943863912@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-References: <20250617152338.212798615@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,58 +49,70 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Ramasamy Kaliappan <quic_rkaliapp@quicinc.com>
 
-[ Upstream commit f43f02429295486059605997bc43803527d69791 ]
+[ Upstream commit 8599d4cc4191c8c1af34207a8b9414acca4afb59 ]
 
-Patch series "nilfs2: improve sanity checks in dirty state propagation".
+Currently, in the mac80211 layer, received EAPOL packets are dropped
+when the HT control field is present in the QoS header. This issue
+arises due to an incorrect QoS control field offset used to build
+the QoS header in the MSDU data, leading to a corrupted header in the
+mac80211 layer. This issue also applies to other frames that contain
+the QoS control field, such as QoS data or Null frames. To resolve
+this, use ieee80211_get_qos_ctl() to obtain the correct QoS control
+offset from the MSDU data. Additionally, ensure the QoS control header
+is copied in little-endian format within the MSDU data.
 
-This fixes one missed check for block mapping anomalies and one improper
-return of an error code during a preparation step for log writing, thereby
-improving checking for filesystem corruption on writeback.
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.4.1-00199-QCAHKSWPL_SILICONZ-1
+Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.0.c5-00481-QCAHMTSWPL_V1.0_V2.0_SILICONZ-3
 
-This patch (of 2):
-
-In nilfs_direct_propagate(), the printer get from nilfs_direct_get_ptr()
-need to be checked to ensure it is not an invalid pointer.
-
-If the pointer value obtained by nilfs_direct_get_ptr() is
-NILFS_BMAP_INVALID_PTR, means that the metadata (in this case, i_bmap in
-the nilfs_inode_info struct) that should point to the data block at the
-buffer head of the argument is corrupted and the data block is orphaned,
-meaning that the file system has lost consistency.
-
-Add a value check and return -EINVAL when it is an invalid pointer.
-
-Link: https://lkml.kernel.org/r/20250428173808.6452-1-konishi.ryusuke@gmail.com
-Link: https://lkml.kernel.org/r/20250428173808.6452-2-konishi.ryusuke@gmail.com
-Fixes: 36a580eb489f ("nilfs2: direct block mapping")
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: d889913205cf ("wifi: ath12k: driver for Qualcomm Wi-Fi 7 devices")
+Signed-off-by: Ramasamy Kaliappan <quic_rkaliapp@quicinc.com>
+Signed-off-by: Nithyanantham Paramasivam <nithyanantham.paramasivam@oss.qualcomm.com>
+Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
+Link: https://patch.msgid.link/20250415184102.2707300-1-nithyanantham.paramasivam@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nilfs2/direct.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/wireless/ath/ath12k/dp_rx.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/fs/nilfs2/direct.c b/fs/nilfs2/direct.c
-index 893ab36824cc2..2d8dc6b35b547 100644
---- a/fs/nilfs2/direct.c
-+++ b/fs/nilfs2/direct.c
-@@ -273,6 +273,9 @@ static int nilfs_direct_propagate(struct nilfs_bmap *bmap,
- 	dat = nilfs_bmap_get_dat(bmap);
- 	key = nilfs_bmap_data_get_key(bmap, bh);
- 	ptr = nilfs_direct_get_ptr(bmap, key);
-+	if (ptr == NILFS_BMAP_INVALID_PTR)
-+		return -EINVAL;
+diff --git a/drivers/net/wireless/ath/ath12k/dp_rx.c b/drivers/net/wireless/ath/ath12k/dp_rx.c
+index c2652bc8a02fd..1623298ba2c47 100644
+--- a/drivers/net/wireless/ath/ath12k/dp_rx.c
++++ b/drivers/net/wireless/ath/ath12k/dp_rx.c
+@@ -2064,7 +2064,7 @@ static void ath12k_get_dot11_hdr_from_rx_desc(struct ath12k *ar,
+ 	struct ath12k_base *ab = ar->ab;
+ 	size_t hdr_len, crypto_len;
+ 	struct ieee80211_hdr hdr;
+-	u16 qos_ctl;
++	__le16 qos_ctl;
+ 	u8 *crypto_hdr, mesh_ctrl;
+ 
+ 	ath12k_dp_rx_desc_get_dot11_hdr(ab, rx_desc, &hdr);
+@@ -2085,13 +2085,13 @@ static void ath12k_get_dot11_hdr_from_rx_desc(struct ath12k *ar,
+ 
+ 	/* Add QOS header */
+ 	if (ieee80211_is_data_qos(hdr.frame_control)) {
+-		qos_ctl = rxcb->tid;
++		struct ieee80211_hdr *qos_ptr = (struct ieee80211_hdr *)msdu->data;
 +
- 	if (!buffer_nilfs_volatile(bh)) {
- 		oldreq.pr_entry_nr = ptr;
- 		newreq.pr_entry_nr = ptr;
++		qos_ctl = cpu_to_le16(rxcb->tid & IEEE80211_QOS_CTL_TID_MASK);
+ 		if (mesh_ctrl)
+-			qos_ctl |= IEEE80211_QOS_CTL_MESH_CONTROL_PRESENT;
++			qos_ctl |= cpu_to_le16(IEEE80211_QOS_CTL_MESH_CONTROL_PRESENT);
+ 
+-		/* TODO: Add other QoS ctl fields when required */
+-		memcpy(msdu->data + (hdr_len - IEEE80211_QOS_CTL_LEN),
+-		       &qos_ctl, IEEE80211_QOS_CTL_LEN);
++		memcpy(ieee80211_get_qos_ctl(qos_ptr), &qos_ctl, IEEE80211_QOS_CTL_LEN);
+ 	}
+ }
+ 
 -- 
 2.39.5
 
