@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D05662CCC5;
-	Tue, 17 Jun 2025 16:22:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DDDA2CCC5;
+	Tue, 17 Jun 2025 16:22:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177369; cv=none; b=J94LG+rCogXTveDiDT9AofE+nr9tuoGegn7QpBx7u0y/ug2HUcc05Ab7B8tffMX/3KG/MYLmwGbFQIX1mg1quruzpQP5OFipUhv2eYR+j1hS+Jqz9vrvFgaQRCeBWo5yNwxQpxrZ3oYLgzxGldS+66xf0ZY0CftlcqUTLIMHXyA=
+	t=1750177373; cv=none; b=EglTlS7qEAzTDAvQF59w8qtYEoGC3JDonF276QgmNOOZMKCFYCIGyKrNQPm+gGoor/lVTCKkwZUYV4NtJtaVQGXD5RRuqhnBLCHGjhv1wsfk+R8w4cEpSL2E0p/hhpDmkaexBOk9aCVPgA3ZVmlCUMtRRDSv3RYTmgb3qeaWejg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177369; c=relaxed/simple;
-	bh=FPVyktUG+yUKuoTDI1K6LIEK08UggPS01544AxjgETk=;
+	s=arc-20240116; t=1750177373; c=relaxed/simple;
+	bh=7gQ/Fu0esoad02EsoVH9GvYkTTgK/3f96UGnXqAi7kE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jt0vnXvzChPXHW3sDBhaB9gu/egWK3Rz8KaRl1Nc6+ey76ar3zBfBh+wvEqJLXQwwjNsWhtawbL9uiTLHUsxhGs2HdEzLwxcz1gU08jxJ+bYdU9uHYxk6v8K0SGNCb73lKVVvPNPOe0wQbjlI2G3LG5R7e3ny6gr6iuL8Ce0Tn8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ms0JJbaL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sbl614jWvmkoLsVHFMDwdyPYFV59rD6e71+CWhQxHJjOxkhwROzPCkEH6yBmVj2tAdrLFZjsmhMbPdRKGdssN3rFadOW39JLma5am707xWc8+TzpnbEam+yZYU9GGX1kkZRwP0oGrXIOsrM5dJ7ONX+Ww8K+P8DQ55IZN8T/uGA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qRWDfVfr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ms0JJbaL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EEF8C4CEE3;
-	Tue, 17 Jun 2025 16:22:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qRWDfVfr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 826A3C4CEF0;
+	Tue, 17 Jun 2025 16:22:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177369;
-	bh=FPVyktUG+yUKuoTDI1K6LIEK08UggPS01544AxjgETk=;
+	s=korg; t=1750177373;
+	bh=7gQ/Fu0esoad02EsoVH9GvYkTTgK/3f96UGnXqAi7kE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ms0JJbaLaATdAwVX65cbLlE/hjfFvBeFMTMpGyOKGUmQBQA4uUellltJ+DHf/8Bk5
-	 yUDZGaolnfZVWXMspR5jXJwT+mtumaJuLjC3TPZarP6zKTQtzV4FGc+HKcjy9aGON4
-	 XdzbPXDR0OBTxJweyX3prXGG50XC/bjGO7exDRak=
+	b=qRWDfVfrT5BSgpl+TrXNOEkSnXIaP0Y2iBx1STFaP+ChGDap15ZAEg9GQeoZJI8Vu
+	 MGx+JjSH4P5akkXjazAplIe50rHdqaffrzefgNm2qkBZmTm1C1f1rZmEUqQO5Dw+uf
+	 K478hMBJ5RaAmi/XWwpAvScabCQQCLp99Ret9t0M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Henry Martin <bsdhenrymartin@gmail.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Marco Pagani <marco.pagani@linux.dev>,
+	Qasim Ijaz <qasdev00@gmail.com>,
+	Xu Yilun <yilun.xu@intel.com>,
+	Xu Yilun <yilun.xu@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 296/780] wifi: mt76: mt7996: Fix null-ptr-deref in mt7996_mmio_wed_init()
-Date: Tue, 17 Jun 2025 17:20:04 +0200
-Message-ID: <20250617152503.519757554@linuxfoundation.org>
+Subject: [PATCH 6.12 334/512] fpga: fix potential null pointer deref in fpga_mgr_test_img_load_sgt()
+Date: Tue, 17 Jun 2025 17:25:00 +0200
+Message-ID: <20250617152433.145129095@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,43 +49,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Henry Martin <bsdhenrymartin@gmail.com>
+From: Qasim Ijaz <qasdev00@gmail.com>
 
-[ Upstream commit 8f30e2b059757d8711a823e4c9c023db62a1d171 ]
+[ Upstream commit 6ebf1982038af12f3588417e4fd0417d2551da28 ]
 
-devm_ioremap() returns NULL on error. Currently, mt7996_mmio_wed_init()
-does not check for this case, which results in a NULL pointer
-dereference.
+fpga_mgr_test_img_load_sgt() allocates memory for sgt using
+kunit_kzalloc() however it does not check if the allocation failed.
+It then passes sgt to sg_alloc_table(), which passes it to
+__sg_alloc_table(). This function calls memset() on sgt in an attempt to
+zero it out. If the allocation fails then sgt will be NULL and the
+memset will trigger a NULL pointer dereference.
 
-Prevent null pointer dereference in mt7996_mmio_wed_init()
+Fix this by checking the allocation with KUNIT_ASSERT_NOT_ERR_OR_NULL().
 
-Fixes: 83eafc9251d6 ("wifi: mt76: mt7996: add wed tx support")
-Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
-Link: https://patch.msgid.link/20250407032349.83360-1-bsdhenrymartin@gmail.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Reviewed-by: Marco Pagani <marco.pagani@linux.dev>
+Fixes: ccbc1c302115 ("fpga: add an initial KUnit suite for the FPGA Manager")
+Signed-off-by: Qasim Ijaz <qasdev00@gmail.com>
+Acked-by: Xu Yilun <yilun.xu@intel.com>
+Link: https://lore.kernel.org/r/20250422153737.5264-1-qasdev00@gmail.com
+Signed-off-by: Xu Yilun <yilun.xu@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/mmio.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/fpga/tests/fpga-mgr-test.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mmio.c b/drivers/net/wireless/mediatek/mt76/mt7996/mmio.c
-index 13b188e281bdb..af9169030bad9 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/mmio.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/mmio.c
-@@ -323,6 +323,9 @@ int mt7996_mmio_wed_init(struct mt7996_dev *dev, void *pdev_ptr,
- 	wed->wlan.base = devm_ioremap(dev->mt76.dev,
- 				      pci_resource_start(pci_dev, 0),
- 				      pci_resource_len(pci_dev, 0));
-+	if (!wed->wlan.base)
-+		return -ENOMEM;
-+
- 	wed->wlan.phy_base = pci_resource_start(pci_dev, 0);
+diff --git a/drivers/fpga/tests/fpga-mgr-test.c b/drivers/fpga/tests/fpga-mgr-test.c
+index 9cb37aefbac4b..1902ebf5a298f 100644
+--- a/drivers/fpga/tests/fpga-mgr-test.c
++++ b/drivers/fpga/tests/fpga-mgr-test.c
+@@ -263,6 +263,7 @@ static void fpga_mgr_test_img_load_sgt(struct kunit *test)
+ 	img_buf = init_test_buffer(test, IMAGE_SIZE);
  
- 	if (hif2) {
+ 	sgt = kunit_kzalloc(test, sizeof(*sgt), GFP_KERNEL);
++	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, sgt);
+ 	ret = sg_alloc_table(sgt, 1, GFP_KERNEL);
+ 	KUNIT_ASSERT_EQ(test, ret, 0);
+ 	sg_init_one(sgt->sgl, img_buf, IMAGE_SIZE);
 -- 
 2.39.5
 
