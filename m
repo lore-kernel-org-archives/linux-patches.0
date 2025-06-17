@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D18A2DFF09;
-	Tue, 17 Jun 2025 16:03:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A40812EA14E;
+	Tue, 17 Jun 2025 16:03:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750176216; cv=none; b=OzTYR3y1jaCuP6hn2e9MG9ekNXhnNm3yH2adN8IgQj7nqDtB+rqrFHT7F1VXwhBj11fzgLtc1qv3ra4nR0ElwhB2MpxGlGynVkSO8lxrR/FAxwYHnZuTzjXkVY2rFNnvxFKZ8JFbfJBJR0eCdq5woBteNTszOEAGcI/KqIDZBtI=
+	t=1750176219; cv=none; b=uz7RZ66/L1QUP9kIpeEnSfg7C9GWbGNWx0lwYOCWZVpO1AoVbynWJyRzS4xv+NUjhMS6LjZpfQcKXzxjArfzcQb3VpeFJgEVA5m752wU9LwSrepFvr8e8uw9NOdOWNj9uen5DN/YtTaGB83kOqg0rv9gqQvEiRH0ggx5CcsEFJ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750176216; c=relaxed/simple;
-	bh=eC2zpRVSEUaaKJtzNumIhIQDzJ9as2XeLOYg5Dk85so=;
+	s=arc-20240116; t=1750176219; c=relaxed/simple;
+	bh=1RevyJ5EXpXvP21XP7opYpHn03lcPj3wRmLD2ZaKY0M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L5rjWcRLqHmgVxqtY1n4AJOgins8niuML8zoS7CiJbJIRIHowgvKJ9h0Z5ECP2w5nelkTeSMMGJ/8cyoTu7Tn8mOaYB+NCZn7grC/4UsOoWeNJ7x2oCMiSP8fitWTu1XsaQLIFRP22PqDMyq2yIOFT4wQrLARcfn/7sMuz2dUsg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pKEIkbEq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=NX4wlcwxKXg6DKq1ZCTiC1JVQVWzMgrgUTcyQjl4pDlL7uPaW8lj3xu6cmFLTVxouD34/GGMdfrAXx7LLlIo+lX1zsehAiddAtyIXkCO4ayGKbWYaumJoBb/vEJxjgEmh6NW1Th5tQElIP5hzAwVGgvxhlphwhB/G9WVHLt1bc4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G9wJTLiw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pKEIkbEq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5E10C4CEF0;
-	Tue, 17 Jun 2025 16:03:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G9wJTLiw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15950C4CEE3;
+	Tue, 17 Jun 2025 16:03:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750176216;
-	bh=eC2zpRVSEUaaKJtzNumIhIQDzJ9as2XeLOYg5Dk85so=;
+	s=korg; t=1750176219;
+	bh=1RevyJ5EXpXvP21XP7opYpHn03lcPj3wRmLD2ZaKY0M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pKEIkbEq5we7bd0IR3dYcvhImJSzdi0HbbdBsHt2QgGAoYEjJ4rsCZgWEQUF6mqo0
-	 zyJ/+cWGYRZIcRGMZT4kQv8qHMmpkjfh8L8TsoQYshzQt70Rbn2CaJ/7SzKA1RtQP/
-	 1ATF5TJRf4DEzFB0nA4ISESvibBmH0W/scR8qvAM=
+	b=G9wJTLiwXpw91VUgTwuf53VbWsQ5JU5dCdjKo9W9LH1/u46YLhTpzMnZUzdfBjtJm
+	 Xm+naK0i9PpoYALjB1cRdz/o/NqiKeXQstuH8KNwDn9iNr/AT8rI9jPi3sMmTrzQWs
+	 +XiOz/nfoIqtjOuNG4ITDnLUMeQlMe1L8tLFd3T8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Lobakin <alobakin@pm.me>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Russell King <linux@armlinux.org.uk>,
+	=?UTF-8?q?Alexis=20Lothor=C3=A9?= <alexis.lothore@bootlin.com>,
+	Yanteng Si <si.yanteng@linux.dev>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 207/512] net: phy: fix up const issues in to_mdio_device() and to_phy_device()
-Date: Tue, 17 Jun 2025 17:22:53 +0200
-Message-ID: <20250617152428.022005317@linuxfoundation.org>
+Subject: [PATCH 6.6 256/356] net: stmmac: make sure that ptp_rate is not 0 before configuring timestamping
+Date: Tue, 17 Jun 2025 17:26:11 +0200
+Message-ID: <20250617152348.513356935@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
+References: <20250617152338.212798615@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,67 +47,89 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Alexis Lothoré <alexis.lothore@bootlin.com>
 
-[ Upstream commit e9cb929670a1e98b592b30f03f06e9e20110f318 ]
+[ Upstream commit 030ce919e114a111e83b7976ecb3597cefd33f26 ]
 
-Both to_mdio_device() and to_phy_device() "throw away" the const pointer
-attribute passed to them and return a non-const pointer, which generally
-is not a good thing overall.  Fix this up by using container_of_const()
-which was designed for this very problem.
+The stmmac platform drivers that do not open-code the clk_ptp_rate value
+after having retrieved the default one from the device-tree can end up
+with 0 in clk_ptp_rate (as clk_get_rate can return 0). It will
+eventually propagate up to PTP initialization when bringing up the
+interface, leading to a divide by 0:
 
-Cc: Alexander Lobakin <alobakin@pm.me>
-Cc: Andrew Lunn <andrew@lunn.ch>
-Cc: Heiner Kallweit <hkallweit1@gmail.com>
-Cc: Russell King <linux@armlinux.org.uk>
-Fixes: 7eab14de73a8 ("mdio, phy: fix -Wshadow warnings triggered by nested container_of()")
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Link: https://patch.msgid.link/2025052246-conduit-glory-8fc9@gregkh
+ Division by zero in kernel.
+ CPU: 1 UID: 0 PID: 1 Comm: swapper/0 Not tainted 6.12.30-00001-g48313bd5768a #22
+ Hardware name: STM32 (Device Tree Support)
+ Call trace:
+  unwind_backtrace from show_stack+0x18/0x1c
+  show_stack from dump_stack_lvl+0x6c/0x8c
+  dump_stack_lvl from Ldiv0_64+0x8/0x18
+  Ldiv0_64 from stmmac_init_tstamp_counter+0x190/0x1a4
+  stmmac_init_tstamp_counter from stmmac_hw_setup+0xc1c/0x111c
+  stmmac_hw_setup from __stmmac_open+0x18c/0x434
+  __stmmac_open from stmmac_open+0x3c/0xbc
+  stmmac_open from __dev_open+0xf4/0x1ac
+  __dev_open from __dev_change_flags+0x1cc/0x224
+  __dev_change_flags from dev_change_flags+0x24/0x60
+  dev_change_flags from ip_auto_config+0x2e8/0x11a0
+  ip_auto_config from do_one_initcall+0x84/0x33c
+  do_one_initcall from kernel_init_freeable+0x1b8/0x214
+  kernel_init_freeable from kernel_init+0x24/0x140
+  kernel_init from ret_from_fork+0x14/0x28
+ Exception stack(0xe0815fb0 to 0xe0815ff8)
+
+Prevent this division by 0 by adding an explicit check and error log
+about the actual issue. While at it, remove the same check from
+stmmac_ptp_register, which then becomes duplicate
+
+Fixes: 19d857c9038e ("stmmac: Fix calculations for ptp counters when clock input = 50Mhz.")
+Signed-off-by: Alexis Lothoré <alexis.lothore@bootlin.com>
+Reviewed-by: Yanteng Si <si.yanteng@linux.dev>
+Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Link: https://patch.msgid.link/20250529-stmmac_tstamp_div-v4-1-d73340a794d5@bootlin.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/mdio.h | 5 +----
- include/linux/phy.h  | 5 +----
- 2 files changed, 2 insertions(+), 8 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 5 +++++
+ drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c  | 2 +-
+ 2 files changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/include/linux/mdio.h b/include/linux/mdio.h
-index efeca5bd7600b..84b0805918372 100644
---- a/include/linux/mdio.h
-+++ b/include/linux/mdio.h
-@@ -45,10 +45,7 @@ struct mdio_device {
- 	unsigned int reset_deassert_delay;
- };
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index d3d5c01f6dcba..615d25a0e46be 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -842,6 +842,11 @@ int stmmac_init_tstamp_counter(struct stmmac_priv *priv, u32 systime_flags)
+ 	if (!(priv->dma_cap.time_stamp || priv->dma_cap.atime_stamp))
+ 		return -EOPNOTSUPP;
  
--static inline struct mdio_device *to_mdio_device(const struct device *dev)
--{
--	return container_of(dev, struct mdio_device, dev);
--}
-+#define to_mdio_device(__dev)	container_of_const(__dev, struct mdio_device, dev)
++	if (!priv->plat->clk_ptp_rate) {
++		netdev_err(priv->dev, "Invalid PTP clock rate");
++		return -EINVAL;
++	}
++
+ 	stmmac_config_hw_tstamping(priv, priv->ptpaddr, systime_flags);
+ 	priv->systime_flags = systime_flags;
  
- /* struct mdio_driver_common: Common to all MDIO drivers */
- struct mdio_driver_common {
-diff --git a/include/linux/phy.h b/include/linux/phy.h
-index 945264f457d8a..dfc7b97f9648d 100644
---- a/include/linux/phy.h
-+++ b/include/linux/phy.h
-@@ -792,10 +792,7 @@ struct phy_device {
- #define PHY_F_NO_IRQ		0x80000000
- #define PHY_F_RXC_ALWAYS_ON	0x40000000
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c
+index a04bb2e42c4ee..80ecbd73333d9 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c
+@@ -295,7 +295,7 @@ void stmmac_ptp_register(struct stmmac_priv *priv)
  
--static inline struct phy_device *to_phy_device(const struct device *dev)
--{
--	return container_of(to_mdio_device(dev), struct phy_device, mdio);
--}
-+#define to_phy_device(__dev)	container_of_const(to_mdio_device(__dev), struct phy_device, mdio)
+ 	/* Calculate the clock domain crossing (CDC) error if necessary */
+ 	priv->plat->cdc_error_adj = 0;
+-	if (priv->plat->has_gmac4 && priv->plat->clk_ptp_rate)
++	if (priv->plat->has_gmac4)
+ 		priv->plat->cdc_error_adj = (2 * NSEC_PER_SEC) / priv->plat->clk_ptp_rate;
  
- /**
-  * struct phy_tdr_config - Configuration of a TDR raw test
+ 	stmmac_ptp_clock_ops.n_per_out = priv->dma_cap.pps_out_num;
 -- 
 2.39.5
 
