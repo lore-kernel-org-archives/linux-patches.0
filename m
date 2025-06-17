@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 201902F2366;
-	Tue, 17 Jun 2025 15:51:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 616EA2F2366;
+	Tue, 17 Jun 2025 15:51:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175460; cv=none; b=TzID4yhRsszfaDb87UkZ3yz36JOa2Ohvr/462tBl3ORYx3yCbNztgRIxydWfSAkeANIZpmjPcfy0XQ4+ORyZYo30nJxNMQWsBwIArkj5jagh3+lSkUjGkatOE/5GLCu27ZogBwgN8Zxi6HZxW9LLepFTGCf0plUWSIxZJCQuL/U=
+	t=1750175463; cv=none; b=tZho6hH5dH9mf2oJcf7s6RCcJKDNY7RZzvSwK0e39qyRrSLPTk+ickR/kn5iAUaIRxYLxv7fCRAz86mYU7wC1/9+fp9MkZDci1PYC/d/yKg453w6P6CxhY5LsE2AhFy7AYZXIgnfOI0YZwQmPm2+yQkCkIXN1tqpmUD/Uu4l4N8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175460; c=relaxed/simple;
-	bh=RMd96hefkEZpm1N898ws95um0nj94TUujc8ihRxytg8=;
+	s=arc-20240116; t=1750175463; c=relaxed/simple;
+	bh=4l0bauWxU1RUHNOBNKntL/EQZCZ5vvfRKGc1xFT4tjM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ucpT8zlfldJwYK2BjHpkxY2zjTLDM5VZkAvW7N/nzQ2Xy9ZoUQuM9yUPa8UKyhO7FgP84oZWvFlfd14Pc8L/Fh+CRaMRdOAU+XYipbISulrQs69edYXrIsQbuYCPEkSyXnb0v31RGiGud2dt/lTa9MTWopO4GlwrXvipDcBo5ao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Oa/1ded; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Mg2FAi+of9V44uuvEfkejcc7jbwDuBWKgc/gJHWq7LG1Qe7pdAnhwUGKVFSXZFjzpQk6B8wctxkG9zbnGbcryeTBYxYV/X+uzjinjg4QFrG0jvfFwem1G/JjXT39VOu1CxtPkdX3vY9UuD8OhauGT5rYOxHWqxzvHLfMiFLZ4Uo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZN78sgJw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Oa/1ded"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 737BBC4CEE3;
-	Tue, 17 Jun 2025 15:50:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZN78sgJw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFD50C4CEE7;
+	Tue, 17 Jun 2025 15:51:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175459;
-	bh=RMd96hefkEZpm1N898ws95um0nj94TUujc8ihRxytg8=;
+	s=korg; t=1750175463;
+	bh=4l0bauWxU1RUHNOBNKntL/EQZCZ5vvfRKGc1xFT4tjM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2Oa/1dedEEX+8D6tHEVRScIxoTYbPEHlpZaFXSI107ZRoZMAOio+/TmUk7DBTPZqt
-	 oDHCB63L8kN5IjLD9ISR1g5J7Rq6pMNMwlbPCnwfNIez532Wg1U29AJ7LFbUSy7LVa
-	 MK4v5H52qHv5LYq34LOWpm+plsUcqPj3uHDNlPdw=
+	b=ZN78sgJwTVvRZjC6nzZelEe+mlUn9MeZQzcD+XlTxIz0npwfORgEFj4Ku8Thj7F5a
+	 Ytjks1STnZglfugnS9xXEmn1xAfqiz/OwEq4Peq1Q7n9pF56DUAXhVeB+2sud9M00W
+	 1rG4GmKPSFUtCzUQ/7a3xuC/yjTCj5ca8wFvPaSU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhen XIN <zhen.xin@nokia-sbell.com>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 128/512] wifi: rtw88: sdio: call rtw_sdio_indicate_tx_status unconditionally
-Date: Tue, 17 Jun 2025 17:21:34 +0200
-Message-ID: <20250617152424.776514473@linuxfoundation.org>
+Subject: [PATCH 6.15 090/780] drm: xlnx: zynqmp_dpsub: fix Kconfig dependencies for ASoC
+Date: Tue, 17 Jun 2025 17:16:38 +0200
+Message-ID: <20250617152455.179895330@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,48 +47,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhen XIN <zhen.xin@nokia-sbell.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit fc5f5a0ec463ae6a07850428bd3082947e01d276 ]
+[ Upstream commit f9f087d946266bc5da7c3a17bd8fd9d01969e3cf ]
 
-The rtw88-sdio do not work in AP mode due to the lack of TX status report
-for management frames.
+The new audio code fails to build when sounds support is in a loadable
+module but the GPU driver is built-in:
 
-Make the invocation of rtw_sdio_indicate_tx_status unconditional and cover
-all packet queues
+x86_64-linux-ld: zynqmp_dp_audio.c:(.text+0x6a8): undefined reference to `devm_snd_soc_register_card'
+x86_64-linux-ld: drivers/gpu/drm/xlnx/zynqmp_dp_audio.o:(.rodata+0x1bc): undefined reference to `snd_soc_info_volsw'
+x86_64-linux-ld: drivers/gpu/drm/xlnx/zynqmp_dp_audio.o:(.rodata+0x1f0): undefined reference to `snd_soc_get_volsw'
+x86_64-linux-ld: drivers/gpu/drm/xlnx/zynqmp_dp_audio.o:(.rodata+0x1f4): undefined reference to `snd_soc_put_volsw'
 
-Tested-on: rtl8723ds
+Change the Kconfig dependency to disallow the sound support in this
+configuration.
 
-Fixes: 65371a3f14e7 ("wifi: rtw88: sdio: Add HCI implementation for SDIO based chipsets")
-Signed-off-by: Zhen XIN <zhen.xin@nokia-sbell.com>
-Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20250410154217.1849977-2-zhen.xin@nokia-sbell.com
+Fixes: 3ec5c1579305 ("drm: xlnx: zynqmp_dpsub: Add DP audio support")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250227132036.1136600-1-arnd@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw88/sdio.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ drivers/gpu/drm/xlnx/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/realtek/rtw88/sdio.c b/drivers/net/wireless/realtek/rtw88/sdio.c
-index 0316a0bec96e2..5b8e88c9759d1 100644
---- a/drivers/net/wireless/realtek/rtw88/sdio.c
-+++ b/drivers/net/wireless/realtek/rtw88/sdio.c
-@@ -1225,10 +1225,7 @@ static void rtw_sdio_process_tx_queue(struct rtw_dev *rtwdev,
- 		return;
- 	}
- 
--	if (queue <= RTW_TX_QUEUE_VO)
--		rtw_sdio_indicate_tx_status(rtwdev, skb);
--	else
--		dev_kfree_skb_any(skb);
-+	rtw_sdio_indicate_tx_status(rtwdev, skb);
- }
- 
- static void rtw_sdio_tx_handler(struct work_struct *work)
+diff --git a/drivers/gpu/drm/xlnx/Kconfig b/drivers/gpu/drm/xlnx/Kconfig
+index dbecca9bdd544..cfabf5e2a0bb0 100644
+--- a/drivers/gpu/drm/xlnx/Kconfig
++++ b/drivers/gpu/drm/xlnx/Kconfig
+@@ -22,6 +22,7 @@ config DRM_ZYNQMP_DPSUB_AUDIO
+ 	bool "ZynqMP DisplayPort Audio Support"
+ 	depends on DRM_ZYNQMP_DPSUB
+ 	depends on SND && SND_SOC
++	depends on SND_SOC=y || DRM_ZYNQMP_DPSUB=m
+ 	select SND_SOC_GENERIC_DMAENGINE_PCM
+ 	help
+ 	  Choose this option to enable DisplayPort audio support in the ZynqMP
 -- 
 2.39.5
 
