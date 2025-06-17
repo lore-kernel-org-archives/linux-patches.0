@@ -1,48 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC9B22DFF03;
-	Tue, 17 Jun 2025 16:02:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BAAF2DFF04;
+	Tue, 17 Jun 2025 16:03:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750176176; cv=none; b=efEXxujVy0JzJ069ghT5JXoJ0N+ihkgp/wga8uoxKq9wFRp4VhFtzunWZzBLXqUy7bRUt0wVaH66KtrtJqratIcwPB0lVKSNgnSBrzQj+AoaHt8E2Ws2r473NDlrUD4wTgV13Ffzj1aSMKCXlRMRF2ygs8b3qfMvuTTIbns/h9s=
+	t=1750176180; cv=none; b=Ge2sX2n3oaPHFUFCXj9k5ta5chwuNjne84BVowgy7/+tQ3mhDzkbQdF23W0zPtiFS2at3yBNqJKlDh8s7c46QKIW79D+kThJOHbbb3QcjG/2f9UmrkCo18yqMdnEgNeLK2nWDwwFXSAPvM/1LOgLJRA+Zn6r8UVuvCFna8V5Y2E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750176176; c=relaxed/simple;
-	bh=ZFQyUJsTktW88Za1Qqz6UUhXEremtQ2zeWONIBhiRyg=;
+	s=arc-20240116; t=1750176180; c=relaxed/simple;
+	bh=tIUJ1wiyVhmY4QJYvS7DhzFYI+0NYxaJcYUSAdV/dyE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OdBASvyos0jbGKQmE0rTJhMxPv3+eHe+F8DTDI9/ml8m2QGrmvU9OSctubXtJhWSze3f1Li4TIEQ9GLUHOJVEVQHEBW9xPIFF4t/mT3X68gPDSXRuM8K6sqYYdXirbkbjrZeQ1OnMuNJiIZWn1Gb1G9khLzdmPvIc1dxFNwaRUw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WHQ7JCvO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Nz6r63/qERG2kX69s4zVOdXQ1NsnN2cC4GcqUXcknmke+AlGkIm3cSEvFKTbmFTqeUceiY440BgEsXm6KH7Op1fcYZqib/JOyZjgswaS/sKUCxQ+9+AwdqY33xCUq1aJ5FFLOmS6seA58ATeNdmQLO4EV8o5bMQoTi2W5a+D1NI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CyorNmDL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WHQ7JCvO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 130ACC4CEE3;
-	Tue, 17 Jun 2025 16:02:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CyorNmDL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F488C4CEE3;
+	Tue, 17 Jun 2025 16:02:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750176176;
-	bh=ZFQyUJsTktW88Za1Qqz6UUhXEremtQ2zeWONIBhiRyg=;
+	s=korg; t=1750176179;
+	bh=tIUJ1wiyVhmY4QJYvS7DhzFYI+0NYxaJcYUSAdV/dyE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WHQ7JCvOSFFh3vmsueyfHM5S+lPBEvTeVnTH1sTmcXdWAzFWe/ETv5yfWG6I2sLi5
-	 dL8ZYM4rf337k93erpD92hy3HcRTbUrdfV6pkCxRtMuxEChdgBD/xtXmTNaU/X3I2N
-	 zZYXNsTmKvN99k8otunB3h2IyMlhL5XfnoUjfeUI=
+	b=CyorNmDLFVJTRAJ4aQOmdiiRECHte0zZ3D5w4nVSJUrOcPNSMUWCLBieuHq1xmtL8
+	 kE4LEX0vudq3CTEZO3izfig0YpNrBY9gMHQui0DF2JndtAb5PleOvJFlVXAM039YYH
+	 oTbxX1tj3Reco+vEZvlbwIkc3SYWS+lxn3eYMiMc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dawid Osuchowski <dawid.osuchowski@linux.intel.com>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Michal Kubiak <michal.kubiak@intel.com>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Jesse Brandeburg <jbrandeburg@cloudflare.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Saritha Sanigani <sarithax.sanigani@intel.com>
-Subject: [PATCH 6.6 252/356] ice: fix Tx scheduler error handling in XDP callback
-Date: Tue, 17 Jun 2025 17:26:07 +0200
-Message-ID: <20250617152348.346172616@linuxfoundation.org>
+	Stone Zhang <quic_stonez@quicinc.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.15 162/780] wifi: ath11k: fix node corruption in ar->arvifs list
+Date: Tue, 17 Jun 2025 17:17:50 +0200
+Message-ID: <20250617152458.086004687@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-References: <20250617152338.212798615@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -54,183 +47,84 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michal Kubiak <michal.kubiak@intel.com>
+From: Stone Zhang <quic_stonez@quicinc.com>
 
-[ Upstream commit 0153f36041b8e52019ebfa8629c13bf8f9b0a951 ]
+[ Upstream commit 31e98e277ae47f56632e4d663b1d4fd12ba33ea8 ]
 
-When the XDP program is loaded, the XDP callback adds new Tx queues.
-This means that the callback must update the Tx scheduler with the new
-queue number. In the event of a Tx scheduler failure, the XDP callback
-should also fail and roll back any changes previously made for XDP
-preparation.
+In current WLAN recovery code flow, ath11k_core_halt() only
+reinitializes the "arvifs" list head. This will cause the
+list node immediately following the list head to become an
+invalid list node. Because the prev of that node still points
+to the list head "arvifs", but the next of the list head "arvifs"
+no longer points to that list node.
 
-The previous implementation had a bug that not all changes made by the
-XDP callback were rolled back. This caused the crash with the following
-call trace:
+When a WLAN recovery occurs during the execution of a vif
+removal, and it happens before the spin_lock_bh(&ar->data_lock)
+in ath11k_mac_op_remove_interface(), list_del() will detect the
+previously mentioned situation, thereby triggering a kernel panic.
 
-[  +9.549584] ice 0000:ca:00.0: Failed VSI LAN queue config for XDP, error: -5
-[  +0.382335] Oops: general protection fault, probably for non-canonical address 0x50a2250a90495525: 0000 [#1] SMP NOPTI
-[  +0.010710] CPU: 103 UID: 0 PID: 0 Comm: swapper/103 Not tainted 6.14.0-net-next-mar-31+ #14 PREEMPT(voluntary)
-[  +0.010175] Hardware name: Intel Corporation M50CYP2SBSTD/M50CYP2SBSTD, BIOS SE5C620.86B.01.01.0005.2202160810 02/16/2022
-[  +0.010946] RIP: 0010:__ice_update_sample+0x39/0xe0 [ice]
+The fix is to remove and reinitialize all vif list nodes from the
+list head "arvifs" during WLAN halt. The reinitialization is to make
+the list nodes valid, ensuring that the list_del() in
+ath11k_mac_op_remove_interface() can execute normally.
 
-[...]
+Call trace:
+__list_del_entry_valid_or_report+0xb8/0xd0
+ath11k_mac_op_remove_interface+0xb0/0x27c [ath11k]
+drv_remove_interface+0x48/0x194 [mac80211]
+ieee80211_do_stop+0x6e0/0x844 [mac80211]
+ieee80211_stop+0x44/0x17c [mac80211]
+__dev_close_many+0xac/0x150
+__dev_change_flags+0x194/0x234
+dev_change_flags+0x24/0x6c
+devinet_ioctl+0x3a0/0x670
+inet_ioctl+0x200/0x248
+sock_do_ioctl+0x60/0x118
+sock_ioctl+0x274/0x35c
+__arm64_sys_ioctl+0xac/0xf0
+invoke_syscall+0x48/0x114
+...
 
-[  +0.002715] Call Trace:
-[  +0.002452]  <IRQ>
-[  +0.002021]  ? __die_body.cold+0x19/0x29
-[  +0.003922]  ? die_addr+0x3c/0x60
-[  +0.003319]  ? exc_general_protection+0x17c/0x400
-[  +0.004707]  ? asm_exc_general_protection+0x26/0x30
-[  +0.004879]  ? __ice_update_sample+0x39/0xe0 [ice]
-[  +0.004835]  ice_napi_poll+0x665/0x680 [ice]
-[  +0.004320]  __napi_poll+0x28/0x190
-[  +0.003500]  net_rx_action+0x198/0x360
-[  +0.003752]  ? update_rq_clock+0x39/0x220
-[  +0.004013]  handle_softirqs+0xf1/0x340
-[  +0.003840]  ? sched_clock_cpu+0xf/0x1f0
-[  +0.003925]  __irq_exit_rcu+0xc2/0xe0
-[  +0.003665]  common_interrupt+0x85/0xa0
-[  +0.003839]  </IRQ>
-[  +0.002098]  <TASK>
-[  +0.002106]  asm_common_interrupt+0x26/0x40
-[  +0.004184] RIP: 0010:cpuidle_enter_state+0xd3/0x690
+Tested-on: QCA6698AQ hw2.1 PCI WLAN.HSP.1.1-04591-QCAHSPSWPL_V1_V2_SILICONZ_IOE-1
 
-Fix this by performing the missing unmapping of XDP queues from
-q_vectors and setting the XDP rings pointer back to NULL after all those
-queues are released.
-Also, add an immediate exit from the XDP callback in case of ring
-preparation failure.
-
-Fixes: efc2214b6047 ("ice: Add support for XDP")
-Reviewed-by: Dawid Osuchowski <dawid.osuchowski@linux.intel.com>
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Signed-off-by: Michal Kubiak <michal.kubiak@intel.com>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Jesse Brandeburg <jbrandeburg@cloudflare.com>
-Tested-by: Saritha Sanigani <sarithax.sanigani@intel.com> (A Contingent Worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
+Signed-off-by: Stone Zhang <quic_stonez@quicinc.com>
+Link: https://patch.msgid.link/20250320053145.3445187-1-quic_stonez@quicinc.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_main.c | 47 ++++++++++++++++-------
- 1 file changed, 33 insertions(+), 14 deletions(-)
+ drivers/net/wireless/ath/ath11k/core.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_main.c b/drivers/net/ethernet/intel/ice/ice_main.c
-index 0ae7bdfff83fb..e1a68fb5e9fff 100644
---- a/drivers/net/ethernet/intel/ice/ice_main.c
-+++ b/drivers/net/ethernet/intel/ice/ice_main.c
-@@ -2650,6 +2650,27 @@ static void ice_vsi_assign_bpf_prog(struct ice_vsi *vsi, struct bpf_prog *prog)
- 		bpf_prog_put(old_prog);
- }
- 
-+/**
-+ * ice_unmap_xdp_rings - Unmap XDP rings from interrupt vectors
-+ * @vsi: the VSI with XDP rings being unmapped
-+ */
-+static void ice_unmap_xdp_rings(struct ice_vsi *vsi)
-+{
-+	int v_idx;
-+
-+	ice_for_each_q_vector(vsi, v_idx) {
-+		struct ice_q_vector *q_vector = vsi->q_vectors[v_idx];
-+		struct ice_tx_ring *ring;
-+
-+		ice_for_each_tx_ring(ring, q_vector->tx)
-+			if (!ring->tx_buf || !ice_ring_is_xdp(ring))
-+				break;
-+
-+		/* restore the value of last node prior to XDP setup */
-+		q_vector->tx.tx_ring = ring;
-+	}
-+}
-+
- /**
-  * ice_prepare_xdp_rings - Allocate, configure and setup Tx rings for XDP
-  * @vsi: VSI to bring up Tx rings used by XDP
-@@ -2749,7 +2770,7 @@ int ice_prepare_xdp_rings(struct ice_vsi *vsi, struct bpf_prog *prog,
- 	if (status) {
- 		dev_err(dev, "Failed VSI LAN queue config for XDP, error: %d\n",
- 			status);
--		goto clear_xdp_rings;
-+		goto unmap_xdp_rings;
- 	}
- 
- 	/* assign the prog only when it's not already present on VSI;
-@@ -2765,6 +2786,8 @@ int ice_prepare_xdp_rings(struct ice_vsi *vsi, struct bpf_prog *prog,
- 		ice_vsi_assign_bpf_prog(vsi, prog);
- 
- 	return 0;
-+unmap_xdp_rings:
-+	ice_unmap_xdp_rings(vsi);
- clear_xdp_rings:
- 	ice_for_each_xdp_txq(vsi, i)
- 		if (vsi->xdp_rings[i]) {
-@@ -2781,6 +2804,8 @@ int ice_prepare_xdp_rings(struct ice_vsi *vsi, struct bpf_prog *prog,
- 	mutex_unlock(&pf->avail_q_mutex);
- 
- 	devm_kfree(dev, vsi->xdp_rings);
-+	vsi->xdp_rings = NULL;
-+
- 	return -ENOMEM;
- }
- 
-@@ -2796,7 +2821,7 @@ int ice_destroy_xdp_rings(struct ice_vsi *vsi, enum ice_xdp_cfg cfg_type)
+diff --git a/drivers/net/wireless/ath/ath11k/core.c b/drivers/net/wireless/ath/ath11k/core.c
+index 3d39ff85ba94a..8d08dd47bde9c 100644
+--- a/drivers/net/wireless/ath/ath11k/core.c
++++ b/drivers/net/wireless/ath/ath11k/core.c
+@@ -2050,6 +2050,7 @@ static int ath11k_core_reconfigure_on_crash(struct ath11k_base *ab)
+ void ath11k_core_halt(struct ath11k *ar)
  {
- 	u16 max_txqs[ICE_MAX_TRAFFIC_CLASS] = { 0 };
- 	struct ice_pf *pf = vsi->back;
--	int i, v_idx;
-+	int i;
+ 	struct ath11k_base *ab = ar->ab;
++	struct list_head *pos, *n;
  
- 	/* q_vectors are freed in reset path so there's no point in detaching
- 	 * rings
-@@ -2804,17 +2829,7 @@ int ice_destroy_xdp_rings(struct ice_vsi *vsi, enum ice_xdp_cfg cfg_type)
- 	if (cfg_type == ICE_XDP_CFG_PART)
- 		goto free_qmap;
+ 	lockdep_assert_held(&ar->conf_mutex);
  
--	ice_for_each_q_vector(vsi, v_idx) {
--		struct ice_q_vector *q_vector = vsi->q_vectors[v_idx];
--		struct ice_tx_ring *ring;
--
--		ice_for_each_tx_ring(ring, q_vector->tx)
--			if (!ring->tx_buf || !ice_ring_is_xdp(ring))
--				break;
--
--		/* restore the value of last node prior to XDP setup */
--		q_vector->tx.tx_ring = ring;
--	}
-+	ice_unmap_xdp_rings(vsi);
+@@ -2065,7 +2066,12 @@ void ath11k_core_halt(struct ath11k *ar)
  
- free_qmap:
- 	mutex_lock(&pf->avail_q_mutex);
-@@ -2956,11 +2971,14 @@ ice_xdp_setup_prog(struct ice_vsi *vsi, struct bpf_prog *prog,
- 		xdp_ring_err = ice_vsi_determine_xdp_res(vsi);
- 		if (xdp_ring_err) {
- 			NL_SET_ERR_MSG_MOD(extack, "Not enough Tx resources for XDP");
-+			goto resume_if;
- 		} else {
- 			xdp_ring_err = ice_prepare_xdp_rings(vsi, prog,
- 							     ICE_XDP_CFG_FULL);
--			if (xdp_ring_err)
-+			if (xdp_ring_err) {
- 				NL_SET_ERR_MSG_MOD(extack, "Setting up XDP Tx resources failed");
-+				goto resume_if;
-+			}
- 		}
- 		xdp_features_set_redirect_target(vsi->netdev, true);
- 		/* reallocate Rx queues that are used for zero-copy */
-@@ -2978,6 +2996,7 @@ ice_xdp_setup_prog(struct ice_vsi *vsi, struct bpf_prog *prog,
- 			NL_SET_ERR_MSG_MOD(extack, "Freeing XDP Rx resources failed");
- 	}
- 
-+resume_if:
- 	if (if_running)
- 		ret = ice_up(vsi);
+ 	rcu_assign_pointer(ab->pdevs_active[ar->pdev_idx], NULL);
+ 	synchronize_rcu();
+-	INIT_LIST_HEAD(&ar->arvifs);
++
++	spin_lock_bh(&ar->data_lock);
++	list_for_each_safe(pos, n, &ar->arvifs)
++		list_del_init(pos);
++	spin_unlock_bh(&ar->data_lock);
++
+ 	idr_init(&ar->txmgmt_idr);
+ }
  
 -- 
 2.39.5
