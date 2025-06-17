@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7542B2ECEA6;
-	Tue, 17 Jun 2025 16:21:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9A552DFF02;
+	Tue, 17 Jun 2025 16:21:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177315; cv=none; b=STbLHDdX9GYtLJrAs9pdjDMG3THt0AAimTw/sN9fbbnfZi/Uop6c6Ziqdx7zxKm8oKYS68YuVwvwQck42jRvMumpqLi8SR0nSD5oB2eC4Yb5BIujcpaW4VSv+7azle4fkzJzKV9oHyTib3Txr/twuvo/dw4y6iiSFo5i24ufMgo=
+	t=1750177318; cv=none; b=nSVw+kjsl4Iq0OFZswYz50VGHpCVoa5hKS/qVW2XG0GSpZd36OwqoF/g3duxdCNKsN06EJUAO7yjJ7b4igyYr+82oqM6+O1C88Hdk90HtqetMNZxM9N5kG3xPDcBeUiecA8AVU0bpqZX/K0hphpdDNHScNeOzTb9n+EO9+9VJjs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177315; c=relaxed/simple;
-	bh=TpfZcHSBRwj/mLsbRKCsWZXfpBSrtbogjXCmDagdPoM=;
+	s=arc-20240116; t=1750177318; c=relaxed/simple;
+	bh=283AOcLPeGyBlggsjoK+xoVKKRNIqKg/QFJM4TcyYk8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=d1mrhSUwYm2E4zbvSn7dsKVaTc7KzMFKDSKYyFz+zUH1wU2Lncd/hw0uFj66LI7VbnBtdF5Lp6mt4PkHSjKd4Zd8drG6YK+t5SmNmZlsjFOWmrvSfjn/BD5Q3p4OKgOKkESV6/c7dX0ulkInNuWClJyLtlx11mKC8/tk07NtykA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z0shGmBR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TBbAx6qpWg7BFUz62++8dmAnxqPcmfiaMvfZYciYJCIru/3Z15A0L4MkpHHoqMpEaTn9u1Ul1R3rtdAqOV1I5Zcbhp/pDBVkMDO/FNaXKbZvI6tF+AoerL8cs7UGFTtKHSRdY/9X5ucvKpj91EPlcL8pidYzSBe0fKzufAigYZI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rXexbxGC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z0shGmBR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0AD8C4CEE3;
-	Tue, 17 Jun 2025 16:21:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rXexbxGC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2767BC4CEE3;
+	Tue, 17 Jun 2025 16:21:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177315;
-	bh=TpfZcHSBRwj/mLsbRKCsWZXfpBSrtbogjXCmDagdPoM=;
+	s=korg; t=1750177318;
+	bh=283AOcLPeGyBlggsjoK+xoVKKRNIqKg/QFJM4TcyYk8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z0shGmBRQtzKGooutEZ9VRXOKOUXM6MRnREm0tuLB6alZxyvMzotLO4NMdcYYJG5U
-	 XExQ8lDzghjZZw6BOsmIMk4cP4dOVCdhs8ytQp010yCVhCdwwUWxVL5im0qzcjU3s0
-	 vALwUNKsZuHjeCLNLgXr0/uKJQtztPkfeUUPM0d8=
+	b=rXexbxGCqJgJowgKY8DfMwAwu+g+Hg5IT+DoETKs1bY8Dni4OT6vYLCvTD1p12ihH
+	 +A3z9rQOq18cVpm7vFsLeyrvZn/4dBMEh/ISJnFQ80vq9RR1LQafEq2dCpnTrgHqbC
+	 ZAODmzVtCmMECQqRqNsafAF7Vv6RC/UD/yRD1wjE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Sam Winchenbach <swinchenbach@arka.org>,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 317/512] PCI/DPC: Initialize aer_err_info before using it
-Date: Tue, 17 Jun 2025 17:24:43 +0200
-Message-ID: <20250617152432.457585073@linuxfoundation.org>
+Subject: [PATCH 6.12 326/512] iio: filter: admv8818: fix range calculation
+Date: Tue, 17 Jun 2025 17:24:52 +0200
+Message-ID: <20250617152432.808905307@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
 References: <20250617152419.512865572@linuxfoundation.org>
@@ -48,48 +45,554 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bjorn Helgaas <bhelgaas@google.com>
+From: Sam Winchenbach <swinchenbach@arka.org>
 
-[ Upstream commit a424b598e6a6c1e69a2bb801d6fd16e805ab2c38 ]
+[ Upstream commit d542db7095d322bfcdc8e306db6f8c48358c9619 ]
 
-Previously the struct aer_err_info "info" was allocated on the stack
-without being initialized, so it contained junk except for the fields we
-explicitly set later.
+Search for the minimum error while ensuring that the LPF corner
+frequency is greater than the target, and the HPF corner frequency
+is lower than the target
 
-Initialize "info" at declaration so it starts as all zeros.
+This fixes issues where the range calculations were suboptimal.
 
-Fixes: 8aefa9b0d910 ("PCI/DPC: Print AER status in DPC event handling")
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Tested-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Link: https://patch.msgid.link/20250522232339.1525671-2-helgaas@kernel.org
+Add two new DTS properties to set the margin between the input frequency
+and the calculated corner frequency
+
+Below is a generated table of the differences between the old algorithm
+and the new. This is a sweep from 0 to 20 GHz in 10 MHz steps.
+=== HPF ===
+freq = 1750 MHz, 3db: bypass => 1750 MHz
+freq = 3400 MHz, 3db: 3310 => 3400 MHz
+freq = 3410 MHz, 3db: 3310 => 3400 MHz
+freq = 3420 MHz, 3db: 3310 => 3400 MHz
+freq = 3660 MHz, 3db: 3550 => 3656 MHz
+freq = 6600 MHz, 3db: 6479 => 6600 MHz
+freq = 6610 MHz, 3db: 6479 => 6600 MHz
+freq = 6620 MHz, 3db: 6479 => 6600 MHz
+freq = 6630 MHz, 3db: 6479 => 6600 MHz
+freq = 6640 MHz, 3db: 6479 => 6600 MHz
+freq = 6650 MHz, 3db: 6479 => 6600 MHz
+freq = 6660 MHz, 3db: 6479 => 6600 MHz
+freq = 6670 MHz, 3db: 6479 => 6600 MHz
+freq = 6680 MHz, 3db: 6479 => 6600 MHz
+freq = 6690 MHz, 3db: 6479 => 6600 MHz
+freq = 6700 MHz, 3db: 6479 => 6600 MHz
+freq = 6710 MHz, 3db: 6479 => 6600 MHz
+freq = 6720 MHz, 3db: 6479 => 6600 MHz
+freq = 6730 MHz, 3db: 6479 => 6600 MHz
+freq = 6960 MHz, 3db: 6736 => 6960 MHz
+freq = 6970 MHz, 3db: 6736 => 6960 MHz
+freq = 6980 MHz, 3db: 6736 => 6960 MHz
+freq = 6990 MHz, 3db: 6736 => 6960 MHz
+freq = 7320 MHz, 3db: 7249 => 7320 MHz
+freq = 7330 MHz, 3db: 7249 => 7320 MHz
+freq = 7340 MHz, 3db: 7249 => 7320 MHz
+freq = 7350 MHz, 3db: 7249 => 7320 MHz
+freq = 7360 MHz, 3db: 7249 => 7320 MHz
+freq = 7370 MHz, 3db: 7249 => 7320 MHz
+freq = 7380 MHz, 3db: 7249 => 7320 MHz
+freq = 7390 MHz, 3db: 7249 => 7320 MHz
+freq = 7400 MHz, 3db: 7249 => 7320 MHz
+freq = 7410 MHz, 3db: 7249 => 7320 MHz
+freq = 7420 MHz, 3db: 7249 => 7320 MHz
+freq = 7430 MHz, 3db: 7249 => 7320 MHz
+freq = 7440 MHz, 3db: 7249 => 7320 MHz
+freq = 7450 MHz, 3db: 7249 => 7320 MHz
+freq = 7460 MHz, 3db: 7249 => 7320 MHz
+freq = 7470 MHz, 3db: 7249 => 7320 MHz
+freq = 7480 MHz, 3db: 7249 => 7320 MHz
+freq = 7490 MHz, 3db: 7249 => 7320 MHz
+freq = 7500 MHz, 3db: 7249 => 7320 MHz
+freq = 12500 MHz, 3db: 12000 => 12500 MHz
+
+=== LPF ===
+freq = 2050 MHz, 3db: bypass => 2050 MHz
+freq = 2170 MHz, 3db: 2290 => 2170 MHz
+freq = 2290 MHz, 3db: 2410 => 2290 MHz
+freq = 2410 MHz, 3db: 2530 => 2410 MHz
+freq = 2530 MHz, 3db: 2650 => 2530 MHz
+freq = 2650 MHz, 3db: 2770 => 2650 MHz
+freq = 2770 MHz, 3db: 2890 => 2770 MHz
+freq = 2890 MHz, 3db: 3010 => 2890 MHz
+freq = 3010 MHz, 3db: 3130 => 3010 MHz
+freq = 3130 MHz, 3db: 3250 => 3130 MHz
+freq = 3250 MHz, 3db: 3370 => 3250 MHz
+freq = 3260 MHz, 3db: 3370 => 3350 MHz
+freq = 3270 MHz, 3db: 3370 => 3350 MHz
+freq = 3280 MHz, 3db: 3370 => 3350 MHz
+freq = 3290 MHz, 3db: 3370 => 3350 MHz
+freq = 3300 MHz, 3db: 3370 => 3350 MHz
+freq = 3310 MHz, 3db: 3370 => 3350 MHz
+freq = 3320 MHz, 3db: 3370 => 3350 MHz
+freq = 3330 MHz, 3db: 3370 => 3350 MHz
+freq = 3340 MHz, 3db: 3370 => 3350 MHz
+freq = 3350 MHz, 3db: 3370 => 3350 MHz
+freq = 3370 MHz, 3db: 3490 => 3370 MHz
+freq = 3490 MHz, 3db: 3610 => 3490 MHz
+freq = 3610 MHz, 3db: 3730 => 3610 MHz
+freq = 3730 MHz, 3db: 3850 => 3730 MHz
+freq = 3850 MHz, 3db: 3870 => 3850 MHz
+freq = 3870 MHz, 3db: 4130 => 3870 MHz
+freq = 4130 MHz, 3db: 4390 => 4130 MHz
+freq = 4390 MHz, 3db: 4650 => 4390 MHz
+freq = 4650 MHz, 3db: 4910 => 4650 MHz
+freq = 4910 MHz, 3db: 5170 => 4910 MHz
+freq = 5170 MHz, 3db: 5430 => 5170 MHz
+freq = 5430 MHz, 3db: 5690 => 5430 MHz
+freq = 5690 MHz, 3db: 5950 => 5690 MHz
+freq = 5950 MHz, 3db: 6210 => 5950 MHz
+freq = 6210 MHz, 3db: 6470 => 6210 MHz
+freq = 6470 MHz, 3db: 6730 => 6470 MHz
+freq = 6730 MHz, 3db: 6990 => 6730 MHz
+freq = 6990 MHz, 3db: 7250 => 6990 MHz
+freq = 7000 MHz, 3db: 7250 => 7000 MHz
+freq = 7250 MHz, 3db: 7400 => 7250 MHz
+freq = 7400 MHz, 3db: 7800 => 7400 MHz
+freq = 7800 MHz, 3db: 8200 => 7800 MHz
+freq = 8200 MHz, 3db: 8600 => 8200 MHz
+freq = 8600 MHz, 3db: 9000 => 8600 MHz
+freq = 9000 MHz, 3db: 9400 => 9000 MHz
+freq = 9400 MHz, 3db: 9800 => 9400 MHz
+freq = 9800 MHz, 3db: 10200 => 9800 MHz
+freq = 10200 MHz, 3db: 10600 => 10200 MHz
+freq = 10600 MHz, 3db: 11000 => 10600 MHz
+freq = 11000 MHz, 3db: 11400 => 11000 MHz
+freq = 11400 MHz, 3db: 11800 => 11400 MHz
+freq = 11800 MHz, 3db: 12200 => 11800 MHz
+freq = 12200 MHz, 3db: 12600 => 12200 MHz
+freq = 12210 MHz, 3db: 12600 => 12550 MHz
+freq = 12220 MHz, 3db: 12600 => 12550 MHz
+freq = 12230 MHz, 3db: 12600 => 12550 MHz
+freq = 12240 MHz, 3db: 12600 => 12550 MHz
+freq = 12250 MHz, 3db: 12600 => 12550 MHz
+freq = 12260 MHz, 3db: 12600 => 12550 MHz
+freq = 12270 MHz, 3db: 12600 => 12550 MHz
+freq = 12280 MHz, 3db: 12600 => 12550 MHz
+freq = 12290 MHz, 3db: 12600 => 12550 MHz
+freq = 12300 MHz, 3db: 12600 => 12550 MHz
+freq = 12310 MHz, 3db: 12600 => 12550 MHz
+freq = 12320 MHz, 3db: 12600 => 12550 MHz
+freq = 12330 MHz, 3db: 12600 => 12550 MHz
+freq = 12340 MHz, 3db: 12600 => 12550 MHz
+freq = 12350 MHz, 3db: 12600 => 12550 MHz
+freq = 12360 MHz, 3db: 12600 => 12550 MHz
+freq = 12370 MHz, 3db: 12600 => 12550 MHz
+freq = 12380 MHz, 3db: 12600 => 12550 MHz
+freq = 12390 MHz, 3db: 12600 => 12550 MHz
+freq = 12400 MHz, 3db: 12600 => 12550 MHz
+freq = 12410 MHz, 3db: 12600 => 12550 MHz
+freq = 12420 MHz, 3db: 12600 => 12550 MHz
+freq = 12430 MHz, 3db: 12600 => 12550 MHz
+freq = 12440 MHz, 3db: 12600 => 12550 MHz
+freq = 12450 MHz, 3db: 12600 => 12550 MHz
+freq = 12460 MHz, 3db: 12600 => 12550 MHz
+freq = 12470 MHz, 3db: 12600 => 12550 MHz
+freq = 12480 MHz, 3db: 12600 => 12550 MHz
+freq = 12490 MHz, 3db: 12600 => 12550 MHz
+freq = 12500 MHz, 3db: 12600 => 12550 MHz
+freq = 12510 MHz, 3db: 12600 => 12550 MHz
+freq = 12520 MHz, 3db: 12600 => 12550 MHz
+freq = 12530 MHz, 3db: 12600 => 12550 MHz
+freq = 12540 MHz, 3db: 12600 => 12550 MHz
+freq = 12550 MHz, 3db: 12600 => 12550 MHz
+freq = 12600 MHz, 3db: 13000 => 12600 MHz
+freq = 12610 MHz, 3db: 13000 => 12970 MHz
+freq = 12620 MHz, 3db: 13000 => 12970 MHz
+freq = 12630 MHz, 3db: 13000 => 12970 MHz
+freq = 12640 MHz, 3db: 13000 => 12970 MHz
+freq = 12650 MHz, 3db: 13000 => 12970 MHz
+freq = 12660 MHz, 3db: 13000 => 12970 MHz
+freq = 12670 MHz, 3db: 13000 => 12970 MHz
+freq = 12680 MHz, 3db: 13000 => 12970 MHz
+freq = 12690 MHz, 3db: 13000 => 12970 MHz
+freq = 12700 MHz, 3db: 13000 => 12970 MHz
+freq = 12710 MHz, 3db: 13000 => 12970 MHz
+freq = 12720 MHz, 3db: 13000 => 12970 MHz
+freq = 12730 MHz, 3db: 13000 => 12970 MHz
+freq = 12740 MHz, 3db: 13000 => 12970 MHz
+freq = 12750 MHz, 3db: 13000 => 12970 MHz
+freq = 12760 MHz, 3db: 13000 => 12970 MHz
+freq = 12770 MHz, 3db: 13000 => 12970 MHz
+freq = 12780 MHz, 3db: 13000 => 12970 MHz
+freq = 12790 MHz, 3db: 13000 => 12970 MHz
+freq = 12800 MHz, 3db: 13000 => 12970 MHz
+freq = 12810 MHz, 3db: 13000 => 12970 MHz
+freq = 12820 MHz, 3db: 13000 => 12970 MHz
+freq = 12830 MHz, 3db: 13000 => 12970 MHz
+freq = 12840 MHz, 3db: 13000 => 12970 MHz
+freq = 12850 MHz, 3db: 13000 => 12970 MHz
+freq = 12860 MHz, 3db: 13000 => 12970 MHz
+freq = 12870 MHz, 3db: 13000 => 12970 MHz
+freq = 12880 MHz, 3db: 13000 => 12970 MHz
+freq = 12890 MHz, 3db: 13000 => 12970 MHz
+freq = 12900 MHz, 3db: 13000 => 12970 MHz
+freq = 12910 MHz, 3db: 13000 => 12970 MHz
+freq = 12920 MHz, 3db: 13000 => 12970 MHz
+freq = 12930 MHz, 3db: 13000 => 12970 MHz
+freq = 12940 MHz, 3db: 13000 => 12970 MHz
+freq = 12950 MHz, 3db: 13000 => 12970 MHz
+freq = 12960 MHz, 3db: 13000 => 12970 MHz
+freq = 12970 MHz, 3db: 13000 => 12970 MHz
+freq = 13000 MHz, 3db: 13390 => 13000 MHz
+freq = 13390 MHz, 3db: 13810 => 13390 MHz
+freq = 13810 MHz, 3db: 14230 => 13810 MHz
+freq = 14230 MHz, 3db: 14650 => 14230 MHz
+freq = 14650 MHz, 3db: 15070 => 14650 MHz
+freq = 15070 MHz, 3db: 15490 => 15070 MHz
+freq = 15490 MHz, 3db: 15910 => 15490 MHz
+freq = 15910 MHz, 3db: 16330 => 15910 MHz
+freq = 16330 MHz, 3db: 16750 => 16330 MHz
+freq = 16750 MHz, 3db: 17170 => 16750 MHz
+freq = 17170 MHz, 3db: 17590 => 17170 MHz
+freq = 17590 MHz, 3db: 18010 => 17590 MHz
+freq = 18010 MHz, 3db: 18430 => 18010 MHz
+freq = 18430 MHz, 3db: 18850 => 18430 MHz
+freq = 18850 MHz, 3db: bypass => 18850 MHz
+
+Fixes: f34fe888ad05 ("iio:filter:admv8818: add support for ADMV8818")
+Signed-off-by: Sam Winchenbach <swinchenbach@arka.org>
+Link: https://patch.msgid.link/20250328174831.227202-5-sam.winchenbach@framepointer.org
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pcie/dpc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iio/filter/admv8818.c | 205 +++++++++++++++++++++++++---------
+ 1 file changed, 152 insertions(+), 53 deletions(-)
 
-diff --git a/drivers/pci/pcie/dpc.c b/drivers/pci/pcie/dpc.c
-index 2b6ef7efa3c11..8096e4858553e 100644
---- a/drivers/pci/pcie/dpc.c
-+++ b/drivers/pci/pcie/dpc.c
-@@ -260,7 +260,7 @@ static int dpc_get_aer_uncorrect_severity(struct pci_dev *dev,
- void dpc_process_error(struct pci_dev *pdev)
- {
- 	u16 cap = pdev->dpc_cap, status, source, reason, ext_reason;
--	struct aer_err_info info;
-+	struct aer_err_info info = {};
+diff --git a/drivers/iio/filter/admv8818.c b/drivers/iio/filter/admv8818.c
+index cd3aff9a2f7bf..380e119b3cf54 100644
+--- a/drivers/iio/filter/admv8818.c
++++ b/drivers/iio/filter/admv8818.c
+@@ -14,6 +14,7 @@
+ #include <linux/mod_devicetable.h>
+ #include <linux/mutex.h>
+ #include <linux/notifier.h>
++#include <linux/property.h>
+ #include <linux/regmap.h>
+ #include <linux/spi/spi.h>
+ #include <linux/units.h>
+@@ -70,6 +71,16 @@
+ #define ADMV8818_HPF_WR0_MSK			GENMASK(7, 4)
+ #define ADMV8818_LPF_WR0_MSK			GENMASK(3, 0)
  
- 	pci_read_config_word(pdev, cap + PCI_EXP_DPC_STATUS, &status);
- 	pci_read_config_word(pdev, cap + PCI_EXP_DPC_SOURCE_ID, &source);
++#define ADMV8818_BAND_BYPASS       0
++#define ADMV8818_BAND_MIN          1
++#define ADMV8818_BAND_MAX          4
++#define ADMV8818_BAND_CORNER_LOW   0
++#define ADMV8818_BAND_CORNER_HIGH  1
++
++#define ADMV8818_STATE_MIN   0
++#define ADMV8818_STATE_MAX   15
++#define ADMV8818_NUM_STATES  16
++
+ enum {
+ 	ADMV8818_BW_FREQ,
+ 	ADMV8818_CENTER_FREQ
+@@ -90,16 +101,20 @@ struct admv8818_state {
+ 	struct mutex		lock;
+ 	unsigned int		filter_mode;
+ 	u64			cf_hz;
++	u64			lpf_margin_hz;
++	u64			hpf_margin_hz;
+ };
+ 
+-static const unsigned long long freq_range_hpf[4][2] = {
++static const unsigned long long freq_range_hpf[5][2] = {
++	{0ULL, 0ULL}, /* bypass */
+ 	{1750000000ULL, 3550000000ULL},
+ 	{3400000000ULL, 7250000000ULL},
+ 	{6600000000, 12000000000},
+ 	{12500000000, 19900000000}
+ };
+ 
+-static const unsigned long long freq_range_lpf[4][2] = {
++static const unsigned long long freq_range_lpf[5][2] = {
++	{U64_MAX, U64_MAX}, /* bypass */
+ 	{2050000000ULL, 3850000000ULL},
+ 	{3350000000ULL, 7250000000ULL},
+ 	{7000000000, 13000000000},
+@@ -121,44 +136,59 @@ static const char * const admv8818_modes[] = {
+ 
+ static int __admv8818_hpf_select(struct admv8818_state *st, u64 freq)
+ {
+-	unsigned int hpf_step = 0, hpf_band = 0, i, j;
+-	u64 freq_step;
+-	int ret;
++	int band, state, ret;
++	unsigned int hpf_state = ADMV8818_STATE_MIN, hpf_band = ADMV8818_BAND_BYPASS;
++	u64 freq_error, min_freq_error, freq_corner, freq_step;
+ 
+-	if (freq < freq_range_hpf[0][0])
++	if (freq < freq_range_hpf[ADMV8818_BAND_MIN][ADMV8818_BAND_CORNER_LOW])
+ 		goto hpf_write;
+ 
+-	if (freq > freq_range_hpf[3][1]) {
+-		hpf_step = 15;
+-		hpf_band = 4;
+-
++	if (freq >= freq_range_hpf[ADMV8818_BAND_MAX][ADMV8818_BAND_CORNER_HIGH]) {
++		hpf_state = ADMV8818_STATE_MAX;
++		hpf_band = ADMV8818_BAND_MAX;
+ 		goto hpf_write;
+ 	}
+ 
+-	for (i = 0; i < 4; i++) {
+-		freq_step = div_u64((freq_range_hpf[i][1] -
+-			freq_range_hpf[i][0]), 15);
++	/* Close HPF frequency gap between 12 and 12.5 GHz */
++	if (freq >= 12000ULL * HZ_PER_MHZ && freq < 12500ULL * HZ_PER_MHZ) {
++		hpf_state = ADMV8818_STATE_MAX;
++		hpf_band = 3;
++		goto hpf_write;
++	}
+ 
+-		if (freq > freq_range_hpf[i][0] &&
+-		    (freq < freq_range_hpf[i][1] + freq_step)) {
+-			hpf_band = i + 1;
++	min_freq_error = U64_MAX;
++	for (band = ADMV8818_BAND_MIN; band <= ADMV8818_BAND_MAX; band++) {
++		/*
++		 * This (and therefore all other ranges) have a corner
++		 * frequency higher than the target frequency.
++		 */
++		if (freq_range_hpf[band][ADMV8818_BAND_CORNER_LOW] > freq)
++			break;
+ 
+-			for (j = 1; j <= 16; j++) {
+-				if (freq < (freq_range_hpf[i][0] + (freq_step * j))) {
+-					hpf_step = j - 1;
+-					break;
+-				}
++		freq_step = freq_range_hpf[band][ADMV8818_BAND_CORNER_HIGH] -
++			    freq_range_hpf[band][ADMV8818_BAND_CORNER_LOW];
++		freq_step = div_u64(freq_step, ADMV8818_NUM_STATES - 1);
++
++		for (state = ADMV8818_STATE_MIN; state <= ADMV8818_STATE_MAX; state++) {
++			freq_corner = freq_range_hpf[band][ADMV8818_BAND_CORNER_LOW] +
++				      freq_step * state;
++
++			/*
++			 * This (and therefore all other states) have a corner
++			 * frequency higher than the target frequency.
++			 */
++			if (freq_corner > freq)
++				break;
++
++			freq_error = freq - freq_corner;
++			if (freq_error < min_freq_error) {
++				min_freq_error = freq_error;
++				hpf_state = state;
++				hpf_band = band;
+ 			}
+-			break;
+ 		}
+ 	}
+ 
+-	/* Close HPF frequency gap between 12 and 12.5 GHz */
+-	if (freq >= 12000ULL * HZ_PER_MHZ && freq < 12500ULL * HZ_PER_MHZ) {
+-		hpf_band = 3;
+-		hpf_step = 15;
+-	}
+-
+ hpf_write:
+ 	ret = regmap_update_bits(st->regmap, ADMV8818_REG_WR0_SW,
+ 				 ADMV8818_SW_IN_SET_WR0_MSK |
+@@ -170,7 +200,7 @@ static int __admv8818_hpf_select(struct admv8818_state *st, u64 freq)
+ 
+ 	return regmap_update_bits(st->regmap, ADMV8818_REG_WR0_FILTER,
+ 				  ADMV8818_HPF_WR0_MSK,
+-				  FIELD_PREP(ADMV8818_HPF_WR0_MSK, hpf_step));
++				  FIELD_PREP(ADMV8818_HPF_WR0_MSK, hpf_state));
+ }
+ 
+ static int admv8818_hpf_select(struct admv8818_state *st, u64 freq)
+@@ -186,31 +216,52 @@ static int admv8818_hpf_select(struct admv8818_state *st, u64 freq)
+ 
+ static int __admv8818_lpf_select(struct admv8818_state *st, u64 freq)
+ {
+-	unsigned int lpf_step = 0, lpf_band = 0, i, j;
+-	u64 freq_step;
+-	int ret;
++	int band, state, ret;
++	unsigned int lpf_state = ADMV8818_STATE_MIN, lpf_band = ADMV8818_BAND_BYPASS;
++	u64 freq_error, min_freq_error, freq_corner, freq_step;
+ 
+-	if (freq > freq_range_lpf[3][1])
++	if (freq > freq_range_lpf[ADMV8818_BAND_MAX][ADMV8818_BAND_CORNER_HIGH])
+ 		goto lpf_write;
+ 
+-	if (freq < freq_range_lpf[0][0]) {
+-		lpf_band = 1;
+-
++	if (freq < freq_range_lpf[ADMV8818_BAND_MIN][ADMV8818_BAND_CORNER_LOW]) {
++		lpf_state = ADMV8818_STATE_MIN;
++		lpf_band = ADMV8818_BAND_MIN;
+ 		goto lpf_write;
+ 	}
+ 
+-	for (i = 0; i < 4; i++) {
+-		if (freq > freq_range_lpf[i][0] && freq < freq_range_lpf[i][1]) {
+-			lpf_band = i + 1;
+-			freq_step = div_u64((freq_range_lpf[i][1] - freq_range_lpf[i][0]), 15);
++	min_freq_error = U64_MAX;
++	for (band = ADMV8818_BAND_MAX; band >= ADMV8818_BAND_MIN; --band) {
++		/*
++		 * At this point the highest corner frequency of
++		 * all remaining ranges is below the target.
++		 * LPF corner should be >= the target.
++		 */
++		if (freq > freq_range_lpf[band][ADMV8818_BAND_CORNER_HIGH])
++			break;
++
++		freq_step = freq_range_lpf[band][ADMV8818_BAND_CORNER_HIGH] -
++			    freq_range_lpf[band][ADMV8818_BAND_CORNER_LOW];
++		freq_step = div_u64(freq_step, ADMV8818_NUM_STATES - 1);
++
++		for (state = ADMV8818_STATE_MAX; state >= ADMV8818_STATE_MIN; --state) {
+ 
+-			for (j = 0; j <= 15; j++) {
+-				if (freq < (freq_range_lpf[i][0] + (freq_step * j))) {
+-					lpf_step = j;
+-					break;
+-				}
++			freq_corner = freq_range_lpf[band][ADMV8818_BAND_CORNER_LOW] +
++				      state * freq_step;
++
++			/*
++			 * At this point all other states in range will
++			 * place the corner frequency below the target
++			 * LPF corner should >= the target.
++			 */
++			if (freq > freq_corner)
++				break;
++
++			freq_error = freq_corner - freq;
++			if (freq_error < min_freq_error) {
++				min_freq_error = freq_error;
++				lpf_state = state;
++				lpf_band = band;
+ 			}
+-			break;
+ 		}
+ 	}
+ 
+@@ -225,7 +276,7 @@ static int __admv8818_lpf_select(struct admv8818_state *st, u64 freq)
+ 
+ 	return regmap_update_bits(st->regmap, ADMV8818_REG_WR0_FILTER,
+ 				  ADMV8818_LPF_WR0_MSK,
+-				  FIELD_PREP(ADMV8818_LPF_WR0_MSK, lpf_step));
++				  FIELD_PREP(ADMV8818_LPF_WR0_MSK, lpf_state));
+ }
+ 
+ static int admv8818_lpf_select(struct admv8818_state *st, u64 freq)
+@@ -242,16 +293,28 @@ static int admv8818_lpf_select(struct admv8818_state *st, u64 freq)
+ static int admv8818_rfin_band_select(struct admv8818_state *st)
+ {
+ 	int ret;
++	u64 hpf_corner_target, lpf_corner_target;
+ 
+ 	st->cf_hz = clk_get_rate(st->clkin);
+ 
++	/* Check for underflow */
++	if (st->cf_hz > st->hpf_margin_hz)
++		hpf_corner_target = st->cf_hz - st->hpf_margin_hz;
++	else
++		hpf_corner_target = 0;
++
++	/* Check for overflow */
++	lpf_corner_target = st->cf_hz + st->lpf_margin_hz;
++	if (lpf_corner_target < st->cf_hz)
++		lpf_corner_target = U64_MAX;
++
+ 	mutex_lock(&st->lock);
+ 
+-	ret = __admv8818_hpf_select(st, st->cf_hz);
++	ret = __admv8818_hpf_select(st, hpf_corner_target);
+ 	if (ret)
+ 		goto exit;
+ 
+-	ret = __admv8818_lpf_select(st, st->cf_hz);
++	ret = __admv8818_lpf_select(st, lpf_corner_target);
+ exit:
+ 	mutex_unlock(&st->lock);
+ 	return ret;
+@@ -278,8 +341,11 @@ static int __admv8818_read_hpf_freq(struct admv8818_state *st, u64 *hpf_freq)
+ 
+ 	hpf_state = FIELD_GET(ADMV8818_HPF_WR0_MSK, data);
+ 
+-	*hpf_freq = div_u64(freq_range_hpf[hpf_band - 1][1] - freq_range_hpf[hpf_band - 1][0], 15);
+-	*hpf_freq = freq_range_hpf[hpf_band - 1][0] + (*hpf_freq * hpf_state);
++	*hpf_freq = freq_range_hpf[hpf_band][ADMV8818_BAND_CORNER_HIGH] -
++		    freq_range_hpf[hpf_band][ADMV8818_BAND_CORNER_LOW];
++	*hpf_freq = div_u64(*hpf_freq, ADMV8818_NUM_STATES - 1);
++	*hpf_freq = freq_range_hpf[hpf_band][ADMV8818_BAND_CORNER_LOW] +
++		    (*hpf_freq * hpf_state);
+ 
+ 	return ret;
+ }
+@@ -316,8 +382,11 @@ static int __admv8818_read_lpf_freq(struct admv8818_state *st, u64 *lpf_freq)
+ 
+ 	lpf_state = FIELD_GET(ADMV8818_LPF_WR0_MSK, data);
+ 
+-	*lpf_freq = div_u64(freq_range_lpf[lpf_band - 1][1] - freq_range_lpf[lpf_band - 1][0], 15);
+-	*lpf_freq = freq_range_lpf[lpf_band - 1][0] + (*lpf_freq * lpf_state);
++	*lpf_freq = freq_range_lpf[lpf_band][ADMV8818_BAND_CORNER_HIGH] -
++		    freq_range_lpf[lpf_band][ADMV8818_BAND_CORNER_LOW];
++	*lpf_freq = div_u64(*lpf_freq, ADMV8818_NUM_STATES - 1);
++	*lpf_freq = freq_range_lpf[lpf_band][ADMV8818_BAND_CORNER_LOW] +
++		    (*lpf_freq * lpf_state);
+ 
+ 	return ret;
+ }
+@@ -641,6 +710,32 @@ static int admv8818_clk_setup(struct admv8818_state *st)
+ 	return devm_add_action_or_reset(&spi->dev, admv8818_clk_notifier_unreg, st);
+ }
+ 
++static int admv8818_read_properties(struct admv8818_state *st)
++{
++	struct spi_device *spi = st->spi;
++	u32 mhz;
++	int ret;
++
++	ret = device_property_read_u32(&spi->dev, "adi,lpf-margin-mhz", &mhz);
++	if (ret == 0)
++		st->lpf_margin_hz = (u64)mhz * HZ_PER_MHZ;
++	else if (ret == -EINVAL)
++		st->lpf_margin_hz = 0;
++	else
++		return ret;
++
++
++	ret = device_property_read_u32(&spi->dev, "adi,hpf-margin-mhz", &mhz);
++	if (ret == 0)
++		st->hpf_margin_hz = (u64)mhz * HZ_PER_MHZ;
++	else if (ret == -EINVAL)
++		st->hpf_margin_hz = 0;
++	else if (ret < 0)
++		return ret;
++
++	return 0;
++}
++
+ static int admv8818_probe(struct spi_device *spi)
+ {
+ 	struct iio_dev *indio_dev;
+@@ -672,6 +767,10 @@ static int admv8818_probe(struct spi_device *spi)
+ 
+ 	mutex_init(&st->lock);
+ 
++	ret = admv8818_read_properties(st);
++	if (ret)
++		return ret;
++
+ 	ret = admv8818_init(st);
+ 	if (ret)
+ 		return ret;
 -- 
 2.39.5
 
