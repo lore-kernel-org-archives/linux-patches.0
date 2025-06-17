@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D26042ECEA3;
-	Tue, 17 Jun 2025 15:57:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20C2D2E92BC;
+	Tue, 17 Jun 2025 15:57:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175866; cv=none; b=DLiiaKmr6FId7MLnFH6ztGPHTb+07Bcm594GSpQvi8fP+bJCOPRkwqrG7J/ESzWvsBUuYLZRNdJl46og2z5WVDfD+Z3kjfnt2E6Z1vaerIAe+OqP8QvbyBIaK08NImAfy5l+kScBnKkcGVAyY+naVHkEGsrJwhmcAHK0oLF4F3A=
+	t=1750175870; cv=none; b=bn+2x3cyQ6o75ZLje+cGIRENOYTrUVEPATYtVfJplnijk8jYJPkGA7CJ1vJv3UG2dPEK358MzJ3OoldIUDepjTfFMIVbUSIqSmkukwVouY+YWhzrjABoiXXxyVfnGqFGGgTHJpmYDLz37+LjsNuOFT8uquefa84WoWELIbTYxbA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175866; c=relaxed/simple;
-	bh=3tShbO96f3WhKoWXre4qIDwqBbjEjduYmxpA6XYCL/o=;
+	s=arc-20240116; t=1750175870; c=relaxed/simple;
+	bh=ki6ICGJgZe01Q9OCFgjDXzh09GiSxZ+Z3+nM+IGR990=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=AJsKxSZD7/Y4xeW0L0ysksDPzaN129JuCE+6puo5mEcAr5W/pPJPkEgXj6T9u3AYgqc+8jHQ5e1c77c5V3H+oM0r3a82uoNnZrUdu8K/7kK2XFXqdgtaIZNJGQoCRkhlWAA0nTL7SKwf9zku3X91NKNWbCD23ne7x4kwPtP44VI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ftKuizOJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c9kDCgc5L4IzMZBPKrmvoTmQ4qlmQuiLtWAwOhFq1rSa8IVLFGfJW5kWvwUTlyqT2VZQMmezl7NsobXU5myMJvWqyKib740N46HJqyR/2DBTbfeqNaAkcqolSGNwAjzx9F/pPsUekiCFGcGVjsyJ1fH1Tvp8ZJGhcGJVXTlFbKA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ecsn8zsg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ftKuizOJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC5EAC4CEE7;
-	Tue, 17 Jun 2025 15:57:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ecsn8zsg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C97DC4CEE7;
+	Tue, 17 Jun 2025 15:57:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175866;
-	bh=3tShbO96f3WhKoWXre4qIDwqBbjEjduYmxpA6XYCL/o=;
+	s=korg; t=1750175869;
+	bh=ki6ICGJgZe01Q9OCFgjDXzh09GiSxZ+Z3+nM+IGR990=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ftKuizOJqNNdrefbEIjui3GPbi1FKEJ2w/RcbYGc6KUWTRHemBNxs+8ofH8KLxirk
-	 1/dAR0leg1w610RY83v9gFll7IKbmrlP4BntAFWYjhVQL051bQqyBfZ8nzRy7fEssW
-	 h/rlsyVyrkcq3Qwfkl3cCrWz+hTr69VZ3f/+QJTs=
+	b=ecsn8zsgXdH5Uu/AKsZ2EhzGy8aN7jm2LbupxmE5I/u9pV1QtC1k+oI3s/OmN++4s
+	 /QR0LV/EShm/l+tS1BmDBeIvgHXW2JoZNmwzf+zddGzF7WJbRA9FFzWZPf0tCROkzn
+	 p31R+LCxp1L6zFfV+dM+T6aAkhQgj4kNptWgAiI0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 220/356] cifs: Fix validation of SMB1 query reparse point response
-Date: Tue, 17 Jun 2025 17:25:35 +0200
-Message-ID: <20250617152347.056274215@linuxfoundation.org>
+Subject: [PATCH 6.15 130/780] drm/msm/dpu: remove DSC feature bit for PINGPONG on MSM8937
+Date: Tue, 17 Jun 2025 17:17:18 +0200
+Message-ID: <20250617152456.800550057@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-References: <20250617152338.212798615@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,85 +47,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pali Rohár <pali@kernel.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 56e84c64fc257a95728ee73165456b025c48d408 ]
+[ Upstream commit b43c524134e0b0ae38acecc4e1dc585940ff6f88 ]
 
-Validate the SMB1 query reparse point response per [MS-CIFS] section
-2.2.7.2 NT_TRANSACT_IOCTL.
+The MSM8937 platform doesn't have DSC blocks nor does have it DSC
+registers in the PINGPONG block. Drop the DPU_PINGPONG_DSC feature bit
+from the PINGPONG's feature mask and, as it is the only remaining bit,
+drop the .features assignment completely.
 
-NT_TRANSACT_IOCTL response contains one word long setup data after which is
-ByteCount member. So check that SetupCount is 1 before trying to read and
-use ByteCount member.
-
-Output setup data contains ReturnedDataLen member which is the output
-length of executed IOCTL command by remote system. So check that output was
-not truncated before transferring over network.
-
-Change MaxSetupCount of NT_TRANSACT_IOCTL request from 4 to 1 as io_rsp
-structure already expects one word long output setup data. This should
-prevent server sending incompatible structure (in case it would be extended
-in future, which is unlikely).
-
-Change MaxParameterCount of NT_TRANSACT_IOCTL request from 2 to 0 as
-NT IOCTL does not have any documented output parameters and this function
-does not parse any output parameters at all.
-
-Fixes: ed3e0a149b58 ("smb: client: implement ->query_reparse_point() for SMB1")
-Signed-off-by: Pali Rohár <pali@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: c079680bb0fa ("drm/msm/dpu: Add support for MSM8937")
+Reported-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Patchwork: https://patchwork.freedesktop.org/patch/640299/
+Link: https://lore.kernel.org/r/20250301-dpu-fix-catalog-v2-1-498271be8b50@linaro.org
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cifssmb.c | 20 ++++++++++++++++++--
- 1 file changed, 18 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_14_msm8937.h | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/fs/smb/client/cifssmb.c b/fs/smb/client/cifssmb.c
-index b91184ebce02c..c36ab20050c16 100644
---- a/fs/smb/client/cifssmb.c
-+++ b/fs/smb/client/cifssmb.c
-@@ -2738,10 +2738,10 @@ int cifs_query_reparse_point(const unsigned int xid,
- 
- 	io_req->TotalParameterCount = 0;
- 	io_req->TotalDataCount = 0;
--	io_req->MaxParameterCount = cpu_to_le32(2);
-+	io_req->MaxParameterCount = cpu_to_le32(0);
- 	/* BB find exact data count max from sess structure BB */
- 	io_req->MaxDataCount = cpu_to_le32(CIFSMaxBufSize & 0xFFFFFF00);
--	io_req->MaxSetupCount = 4;
-+	io_req->MaxSetupCount = 1;
- 	io_req->Reserved = 0;
- 	io_req->ParameterOffset = 0;
- 	io_req->DataCount = 0;
-@@ -2768,6 +2768,22 @@ int cifs_query_reparse_point(const unsigned int xid,
- 		goto error;
- 	}
- 
-+	/* SetupCount must be 1, otherwise offset to ByteCount is incorrect. */
-+	if (io_rsp->SetupCount != 1) {
-+		rc = -EIO;
-+		goto error;
-+	}
-+
-+	/*
-+	 * ReturnedDataLen is output length of executed IOCTL.
-+	 * DataCount is output length transferred over network.
-+	 * Check that we have full FSCTL_GET_REPARSE_POINT buffer.
-+	 */
-+	if (data_count != le16_to_cpu(io_rsp->ReturnedDataLen)) {
-+		rc = -EIO;
-+		goto error;
-+	}
-+
- 	end = 2 + get_bcc(&io_rsp->hdr) + (__u8 *)&io_rsp->ByteCount;
- 	start = (__u8 *)&io_rsp->hdr.Protocol + data_offset;
- 	if (start >= end) {
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_14_msm8937.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_14_msm8937.h
+index ad60089f18ea6..39027a21c6fee 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_14_msm8937.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_14_msm8937.h
+@@ -100,14 +100,12 @@ static const struct dpu_pingpong_cfg msm8937_pp[] = {
+ 	{
+ 		.name = "pingpong_0", .id = PINGPONG_0,
+ 		.base = 0x70000, .len = 0xd4,
+-		.features = PINGPONG_MSM8996_MASK,
+ 		.sblk = &msm8996_pp_sblk,
+ 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 8),
+ 		.intr_rdptr = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 12),
+ 	}, {
+ 		.name = "pingpong_1", .id = PINGPONG_1,
+ 		.base = 0x70800, .len = 0xd4,
+-		.features = PINGPONG_MSM8996_MASK,
+ 		.sblk = &msm8996_pp_sblk,
+ 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 9),
+ 		.intr_rdptr = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 13),
 -- 
 2.39.5
 
