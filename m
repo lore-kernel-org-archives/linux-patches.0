@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C91E2FA628;
-	Tue, 17 Jun 2025 16:48:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B29042FA628;
+	Tue, 17 Jun 2025 16:48:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750178919; cv=none; b=uSOgtgY5GbgxldgF0smfm+dQKJasq8XBZUKZF7coswbNAuqZXLqT+4qP9bMFKtjpLxGQkahWOHYmO4L9qvDkGOqcp4haXG6dTwdItFsxO9wq/lqtw9TOtAuPRekWP16kqtEA/98JQz6c/lMFEAX53gdlR/HGkdcjqNGgCahCm8U=
+	t=1750178922; cv=none; b=ksUn5KKR/JJytibnFjwCerbcpHlfhMf0i/a+msPFUrBQqnjM1UzCjju4T+i96YB2weIuajpisKMKI6CFm7yVRRWsX2nddUFNrmAI6cJb0auNbCwdvNCgkMFcbcBSltgsHST32S1gnhiUmlhd8JIirQ5CM0NpmdjRUkC/W6CMJlo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750178919; c=relaxed/simple;
-	bh=tVlvpykHaR/lcrm7j6Ffa+WJKkln0ug5YR0IFvmvICk=;
+	s=arc-20240116; t=1750178922; c=relaxed/simple;
+	bh=lwikhhTkQr3I3esT/nfh2MjyeKb0f1x+2hwX91mmwZY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nWPK1IBWOACoRcmX9yIiSJ+5eqHoW32VFLwU+irQE/Z939AiM18xGRb6KQa42ZUk/dByv55hsoMbC1HuDtteWrBDu5jcwrWTvAYMP9H0t4ucSmgwrI8Tv+gOFTDc521+1m41x7hWWJsucKPnlkXiT4xv2ZeS1e0XO1Xq+6/pWzg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cpxm0PkU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V5yh6vxKBB6aXha1M+OKxgTyLOUQS8eA7XXq3tDqbMlCU+MPzpXAwMCbYo1QtbFevJZGiSl7MMfjOh5GA2Y3l8uFBS4vqNpGnGCC7bcr9kvCNrBM/n3FA8mpEMEVdSY3ytSLu67P5hpkJBrxULPPNhxL71S+QNwGOsRp2HvGep4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yZtvhI7A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cpxm0PkU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90C11C4CEE3;
-	Tue, 17 Jun 2025 16:48:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yZtvhI7A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D48B8C4CEE3;
+	Tue, 17 Jun 2025 16:48:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750178919;
-	bh=tVlvpykHaR/lcrm7j6Ffa+WJKkln0ug5YR0IFvmvICk=;
+	s=korg; t=1750178922;
+	bh=lwikhhTkQr3I3esT/nfh2MjyeKb0f1x+2hwX91mmwZY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cpxm0PkUrChtwScVZEQgtvxdRccgLyFCCJleSCWWVBeyTkwOGIr7deKJP49gKFh4l
-	 d1q+A2LlZOc0zTnUnQOjT7CZu3HzYFunFB3Vq+iWvs4KNONHJQuKUS5J9D8+eDtoJ4
-	 5dxLNUZoNPKyVVgPqpCdU8FUXSmQsm4FNy5NnLmg=
+	b=yZtvhI7ACHCZXVqxzVCfPVlRCO+xn4HIVjZhBub1XN9JuRJ+zPXeUHHAvYxPMEXwX
+	 nPsvZrtD2TI4Z/6bE3596wf6U0HZmYYoJ8ODhxZHb43MwCn5EzfF3Bwf37GKQf87IW
+	 6JZtK4ik3i6l9fVX55fPmv4fr93LpY4U/t6d0CSs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joshua Hay <joshua.a.hay@intel.com>,
-	Emil Tantilov <emil.s.tantilov@intel.com>,
-	Ahmed Zaki <ahmed.zaki@intel.com>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Samuel Salin <Samuel.salin@intel.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 575/780] idpf: avoid mailbox timeout delays during reset
-Date: Tue, 17 Jun 2025 17:24:43 +0200
-Message-ID: <20250617152514.895343941@linuxfoundation.org>
+Subject: [PATCH 6.15 593/780] iavf: centralize watchdog requeueing itself
+Date: Tue, 17 Jun 2025 17:25:01 +0200
+Message-ID: <20250617152515.638757748@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
 References: <20250617152451.485330293@linuxfoundation.org>
@@ -56,99 +53,214 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Emil Tantilov <emil.s.tantilov@intel.com>
+From: Przemek Kitszel <przemyslaw.kitszel@intel.com>
 
-[ Upstream commit 9dc63d8ff182150d7d7b318ab9389702a2c0a292 ]
+[ Upstream commit 099418da91b7d3d46ddcccbb03075cc4f1ba2d44 ]
 
-Mailbox operations are not possible while the driver is in reset.
-Operations that require MBX exchange with the control plane will result
-in long delays if executed while a reset is in progress:
+Centralize the unlock(critlock); unlock(netdev); queue_delayed_work(watchog_task);
+pattern to one place.
 
-ethtool -L <inf> combined 8& echo 1 > /sys/class/net/<inf>/device/reset
-idpf 0000:83:00.0: HW reset detected
-idpf 0000:83:00.0: Device HW Reset initiated
-idpf 0000:83:00.0: Transaction timed-out (op:504 cookie:be00 vc_op:504 salt:be timeout:2000ms)
-idpf 0000:83:00.0: Transaction timed-out (op:508 cookie:bf00 vc_op:508 salt:bf timeout:2000ms)
-idpf 0000:83:00.0: Transaction timed-out (op:512 cookie:c000 vc_op:512 salt:c0 timeout:2000ms)
-idpf 0000:83:00.0: Transaction timed-out (op:510 cookie:c100 vc_op:510 salt:c1 timeout:2000ms)
-idpf 0000:83:00.0: Transaction timed-out (op:509 cookie:c200 vc_op:509 salt:c2 timeout:60000ms)
-idpf 0000:83:00.0: Transaction timed-out (op:509 cookie:c300 vc_op:509 salt:c3 timeout:60000ms)
-idpf 0000:83:00.0: Transaction timed-out (op:505 cookie:c400 vc_op:505 salt:c4 timeout:60000ms)
-idpf 0000:83:00.0: Failed to configure queues for vport 0, -62
-
-Disable mailbox communication in case of a reset, unless it's done during
-a driver load, where the virtchnl operations are needed to configure the
-device.
-
-Fixes: 8077c727561aa ("idpf: add controlq init and reset checks")
-Co-developed-by: Joshua Hay <joshua.a.hay@intel.com>
-Signed-off-by: Joshua Hay <joshua.a.hay@intel.com>
-Signed-off-by: Emil Tantilov <emil.s.tantilov@intel.com>
-Reviewed-by: Ahmed Zaki <ahmed.zaki@intel.com>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Samuel Salin <Samuel.salin@intel.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Signed-off-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Stable-dep-of: 120f28a6f314 ("iavf: get rid of the crit lock")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/idpf/idpf_lib.c     | 18 +++++++++++++-----
- .../net/ethernet/intel/idpf/idpf_virtchnl.c    |  2 +-
- .../net/ethernet/intel/idpf/idpf_virtchnl.h    |  1 +
- 3 files changed, 15 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/intel/iavf/iavf_main.c | 103 ++++++++------------
+ 1 file changed, 41 insertions(+), 62 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/idpf/idpf_lib.c b/drivers/net/ethernet/intel/idpf/idpf_lib.c
-index 3a033ce19cda2..2ed801398971c 100644
---- a/drivers/net/ethernet/intel/idpf/idpf_lib.c
-+++ b/drivers/net/ethernet/intel/idpf/idpf_lib.c
-@@ -1816,11 +1816,19 @@ void idpf_vc_event_task(struct work_struct *work)
- 	if (test_bit(IDPF_REMOVE_IN_PROG, adapter->flags))
- 		return;
+diff --git a/drivers/net/ethernet/intel/iavf/iavf_main.c b/drivers/net/ethernet/intel/iavf/iavf_main.c
+index a77c726435281..2c6e033c73419 100644
+--- a/drivers/net/ethernet/intel/iavf/iavf_main.c
++++ b/drivers/net/ethernet/intel/iavf/iavf_main.c
+@@ -2911,6 +2911,8 @@ static void iavf_init_config_adapter(struct iavf_adapter *adapter)
+ 	iavf_change_state(adapter, __IAVF_INIT_FAILED);
+ }
  
--	if (test_bit(IDPF_HR_FUNC_RESET, adapter->flags) ||
--	    test_bit(IDPF_HR_DRV_LOAD, adapter->flags)) {
--		set_bit(IDPF_HR_RESET_IN_PROG, adapter->flags);
--		idpf_init_hard_reset(adapter);
--	}
-+	if (test_bit(IDPF_HR_FUNC_RESET, adapter->flags))
-+		goto func_reset;
++static const int IAVF_NO_RESCHED = -1;
 +
-+	if (test_bit(IDPF_HR_DRV_LOAD, adapter->flags))
-+		goto drv_load;
+ /**
+  * iavf_watchdog_task - Periodic call-back task
+  * @work: pointer to work_struct
+@@ -2922,6 +2924,7 @@ static void iavf_watchdog_task(struct work_struct *work)
+ 						    watchdog_task.work);
+ 	struct net_device *netdev = adapter->netdev;
+ 	struct iavf_hw *hw = &adapter->hw;
++	int msec_delay;
+ 	u32 reg_val;
+ 
+ 	netdev_lock(netdev);
+@@ -2940,39 +2943,24 @@ static void iavf_watchdog_task(struct work_struct *work)
+ 	switch (adapter->state) {
+ 	case __IAVF_STARTUP:
+ 		iavf_startup(adapter);
+-		mutex_unlock(&adapter->crit_lock);
+-		netdev_unlock(netdev);
+-		queue_delayed_work(adapter->wq, &adapter->watchdog_task,
+-				   msecs_to_jiffies(30));
+-		return;
++		msec_delay = 30;
++		goto watchdog_done;
+ 	case __IAVF_INIT_VERSION_CHECK:
+ 		iavf_init_version_check(adapter);
+-		mutex_unlock(&adapter->crit_lock);
+-		netdev_unlock(netdev);
+-		queue_delayed_work(adapter->wq, &adapter->watchdog_task,
+-				   msecs_to_jiffies(30));
+-		return;
++		msec_delay = 30;
++		goto watchdog_done;
+ 	case __IAVF_INIT_GET_RESOURCES:
+ 		iavf_init_get_resources(adapter);
+-		mutex_unlock(&adapter->crit_lock);
+-		netdev_unlock(netdev);
+-		queue_delayed_work(adapter->wq, &adapter->watchdog_task,
+-				   msecs_to_jiffies(1));
+-		return;
++		msec_delay = 1;
++		goto watchdog_done;
+ 	case __IAVF_INIT_EXTENDED_CAPS:
+ 		iavf_init_process_extended_caps(adapter);
+-		mutex_unlock(&adapter->crit_lock);
+-		netdev_unlock(netdev);
+-		queue_delayed_work(adapter->wq, &adapter->watchdog_task,
+-				   msecs_to_jiffies(1));
+-		return;
++		msec_delay = 1;
++		goto watchdog_done;
+ 	case __IAVF_INIT_CONFIG_ADAPTER:
+ 		iavf_init_config_adapter(adapter);
+-		mutex_unlock(&adapter->crit_lock);
+-		netdev_unlock(netdev);
+-		queue_delayed_work(adapter->wq, &adapter->watchdog_task,
+-				   msecs_to_jiffies(1));
+-		return;
++		msec_delay = 1;
++		goto watchdog_done;
+ 	case __IAVF_INIT_FAILED:
+ 		if (test_bit(__IAVF_IN_REMOVE_TASK,
+ 			     &adapter->crit_section)) {
+@@ -2980,27 +2968,21 @@ static void iavf_watchdog_task(struct work_struct *work)
+ 			 * watchdog task, iavf_remove should handle this state
+ 			 * as it can loop forever
+ 			 */
+-			mutex_unlock(&adapter->crit_lock);
+-			netdev_unlock(netdev);
+-			return;
++			msec_delay = IAVF_NO_RESCHED;
++			goto watchdog_done;
+ 		}
+ 		if (++adapter->aq_wait_count > IAVF_AQ_MAX_ERR) {
+ 			dev_err(&adapter->pdev->dev,
+ 				"Failed to communicate with PF; waiting before retry\n");
+ 			adapter->flags |= IAVF_FLAG_PF_COMMS_FAILED;
+ 			iavf_shutdown_adminq(hw);
+-			mutex_unlock(&adapter->crit_lock);
+-			netdev_unlock(netdev);
+-			queue_delayed_work(adapter->wq,
+-					   &adapter->watchdog_task, (5 * HZ));
+-			return;
++			msec_delay = 5000;
++			goto watchdog_done;
+ 		}
+ 		/* Try again from failed step*/
+ 		iavf_change_state(adapter, adapter->last_state);
+-		mutex_unlock(&adapter->crit_lock);
+-		netdev_unlock(netdev);
+-		queue_delayed_work(adapter->wq, &adapter->watchdog_task, HZ);
+-		return;
++		msec_delay = 1000;
++		goto watchdog_done;
+ 	case __IAVF_COMM_FAILED:
+ 		if (test_bit(__IAVF_IN_REMOVE_TASK,
+ 			     &adapter->crit_section)) {
+@@ -3010,9 +2992,8 @@ static void iavf_watchdog_task(struct work_struct *work)
+ 			 */
+ 			iavf_change_state(adapter, __IAVF_INIT_FAILED);
+ 			adapter->flags &= ~IAVF_FLAG_PF_COMMS_FAILED;
+-			mutex_unlock(&adapter->crit_lock);
+-			netdev_unlock(netdev);
+-			return;
++			msec_delay = IAVF_NO_RESCHED;
++			goto watchdog_done;
+ 		}
+ 		reg_val = rd32(hw, IAVF_VFGEN_RSTAT) &
+ 			  IAVF_VFGEN_RSTAT_VFR_STATE_MASK;
+@@ -3030,18 +3011,11 @@ static void iavf_watchdog_task(struct work_struct *work)
+ 		}
+ 		adapter->aq_required = 0;
+ 		adapter->current_op = VIRTCHNL_OP_UNKNOWN;
+-		mutex_unlock(&adapter->crit_lock);
+-		netdev_unlock(netdev);
+-		queue_delayed_work(adapter->wq,
+-				   &adapter->watchdog_task,
+-				   msecs_to_jiffies(10));
+-		return;
++		msec_delay = 10;
++		goto watchdog_done;
+ 	case __IAVF_RESETTING:
+-		mutex_unlock(&adapter->crit_lock);
+-		netdev_unlock(netdev);
+-		queue_delayed_work(adapter->wq, &adapter->watchdog_task,
+-				   HZ * 2);
+-		return;
++		msec_delay = 2000;
++		goto watchdog_done;
+ 	case __IAVF_DOWN:
+ 	case __IAVF_DOWN_PENDING:
+ 	case __IAVF_TESTING:
+@@ -3068,9 +3042,8 @@ static void iavf_watchdog_task(struct work_struct *work)
+ 		break;
+ 	case __IAVF_REMOVE:
+ 	default:
+-		mutex_unlock(&adapter->crit_lock);
+-		netdev_unlock(netdev);
+-		return;
++		msec_delay = IAVF_NO_RESCHED;
++		goto watchdog_done;
+ 	}
+ 
+ 	/* check for hw reset */
+@@ -3080,24 +3053,30 @@ static void iavf_watchdog_task(struct work_struct *work)
+ 		adapter->current_op = VIRTCHNL_OP_UNKNOWN;
+ 		dev_err(&adapter->pdev->dev, "Hardware reset detected\n");
+ 		iavf_schedule_reset(adapter, IAVF_FLAG_RESET_PENDING);
+-		mutex_unlock(&adapter->crit_lock);
+-		netdev_unlock(netdev);
+-		queue_delayed_work(adapter->wq,
+-				   &adapter->watchdog_task, HZ * 2);
+-		return;
++		msec_delay = 2000;
++		goto watchdog_done;
+ 	}
+ 
+ 	mutex_unlock(&adapter->crit_lock);
+ restart_watchdog:
+ 	netdev_unlock(netdev);
 +
-+	return;
++	/* note that we schedule a different task */
+ 	if (adapter->state >= __IAVF_DOWN)
+ 		queue_work(adapter->wq, &adapter->adminq_task);
+ 	if (adapter->aq_required)
+-		queue_delayed_work(adapter->wq, &adapter->watchdog_task,
+-				   msecs_to_jiffies(20));
++		msec_delay = 20;
+ 	else
++		msec_delay = 2000;
++	goto skip_unlock;
++watchdog_done:
++	mutex_unlock(&adapter->crit_lock);
++	netdev_unlock(netdev);
++skip_unlock:
 +
-+func_reset:
-+	idpf_vc_xn_shutdown(adapter->vcxn_mngr);
-+drv_load:
-+	set_bit(IDPF_HR_RESET_IN_PROG, adapter->flags);
-+	idpf_init_hard_reset(adapter);
++	if (msec_delay != IAVF_NO_RESCHED)
+ 		queue_delayed_work(adapter->wq, &adapter->watchdog_task,
+-				   HZ * 2);
++				   msecs_to_jiffies(msec_delay));
  }
  
  /**
-diff --git a/drivers/net/ethernet/intel/idpf/idpf_virtchnl.c b/drivers/net/ethernet/intel/idpf/idpf_virtchnl.c
-index 3d2413b8684fc..5d2ca007f6828 100644
---- a/drivers/net/ethernet/intel/idpf/idpf_virtchnl.c
-+++ b/drivers/net/ethernet/intel/idpf/idpf_virtchnl.c
-@@ -376,7 +376,7 @@ static void idpf_vc_xn_init(struct idpf_vc_xn_manager *vcxn_mngr)
-  * All waiting threads will be woken-up and their transaction aborted. Further
-  * operations on that object will fail.
-  */
--static void idpf_vc_xn_shutdown(struct idpf_vc_xn_manager *vcxn_mngr)
-+void idpf_vc_xn_shutdown(struct idpf_vc_xn_manager *vcxn_mngr)
- {
- 	int i;
- 
-diff --git a/drivers/net/ethernet/intel/idpf/idpf_virtchnl.h b/drivers/net/ethernet/intel/idpf/idpf_virtchnl.h
-index 83da5d8da56bf..23271cf0a2160 100644
---- a/drivers/net/ethernet/intel/idpf/idpf_virtchnl.h
-+++ b/drivers/net/ethernet/intel/idpf/idpf_virtchnl.h
-@@ -66,5 +66,6 @@ int idpf_send_get_stats_msg(struct idpf_vport *vport);
- int idpf_send_set_sriov_vfs_msg(struct idpf_adapter *adapter, u16 num_vfs);
- int idpf_send_get_set_rss_key_msg(struct idpf_vport *vport, bool get);
- int idpf_send_get_set_rss_lut_msg(struct idpf_vport *vport, bool get);
-+void idpf_vc_xn_shutdown(struct idpf_vc_xn_manager *vcxn_mngr);
- 
- #endif /* _IDPF_VIRTCHNL_H_ */
 -- 
 2.39.5
 
