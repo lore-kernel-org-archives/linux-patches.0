@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36503237162;
-	Tue, 17 Jun 2025 16:11:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54C412EA15C;
+	Tue, 17 Jun 2025 16:11:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750176699; cv=none; b=rE1JgUo44z2ZjARCqN1IVlIb6aJOV3+vvhs1cOor6SlGPlB/V88ALYe4E/BM7p3urpK+ImprhWr15oNXMmOEy2pbhqM/V62gPsIoev3Rt3gIanCm3U8f2LG4oGrMlLPk8XlSxYbyO2YNmxuKhXcRv40SABeOr7705v8ycr2LqlE=
+	t=1750176699; cv=none; b=K6ySw6XLSd9d0Ex9Zu5FFDMqiy1VUmZSnyxhUFVYlopQwx8YqplXf7NWVbTDbO98TWVf92eYAvvP7rKqZvMj7xh8xT8PMCXsIHXq89qKEU6ithKDYz/IVds7PRMKkW6XZUX40leX9RdLZo19g052szKEwltU6+0Abww7jWEbtc8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1750176699; c=relaxed/simple;
-	bh=q1u4Hfz6wKnfEEjcDE2YLkfaiOCZy/gfMo9aIRhvLV8=;
+	bh=6E9O0+QxMDbd99amdcfF0PEIF7TCyI6HjowQwiItTv8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DiuDc7GxM6wV/9a53hrmCPv9szsBwfhlLRu4CCuZFV02+mMjmCz4eXPwTMRX7HfDy7inCS7fVU6k3T2i+QBPm6BaiXV8KVnjqPxzzlzO+optYOrR2Cuqa4epaPNc08juLMgHpScIcUkZBbWukQyBwVHyvYJUGGKDU4cJuZaICqE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gSyanxaB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=omLqMxXQLuqCQV4hMH4mYflWDeiL+E6G9qBNtsvrrX+/seAB5o+OvZaMlERQYB8MCbmWCseKFHgPV38noMM/aj/jWZ0MfAUaq+9n8QBeS2Nq2TO7SNMPklvlT0xrIeovkKlgsQ+igt6816eahA2TF69jA9CIT1MYNSXlUjnSrxc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MKvwuVUB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gSyanxaB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A9F1C4CEE7;
-	Tue, 17 Jun 2025 16:11:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MKvwuVUB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57575C4CEE3;
+	Tue, 17 Jun 2025 16:11:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750176699;
-	bh=q1u4Hfz6wKnfEEjcDE2YLkfaiOCZy/gfMo9aIRhvLV8=;
+	s=korg; t=1750176695;
+	bh=6E9O0+QxMDbd99amdcfF0PEIF7TCyI6HjowQwiItTv8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gSyanxaBh7nPmZYSPGqD0hmVMS65dgPIHhGMclWFuywnSFz5YeTPDfh7jpm5Zr65s
-	 tnzcEyx+5Ex23r2/vIIrqifniOFBkSpnQzXEKrNDEHDNwzzABd2ibI6+Xf/bqwCVMc
-	 h/C2IQen1nO5V+c09AV/at0DFmm/UQhf7A6PiVSg=
+	b=MKvwuVUB6a06Nn7jKSTgLirvCzvbLkxf0bsAegGWOifRSb4YZc+yMfjGxEE/Wm5bo
+	 8haqjojkGrD4Lu82/e4nEp2xVxgcc+KhWw0vWvqBNb2KEPVmDWaQ3wblyI6agetBtP
+	 O8a6oN6in+xirYkwPRifehRxs8deCraDHZWnD0Jo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cosmin Ratiu <cratiu@nvidia.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 197/780] bonding: Mark active offloaded xfrm_states
-Date: Tue, 17 Jun 2025 17:18:25 +0200
-Message-ID: <20250617152459.494955905@linuxfoundation.org>
+Subject: [PATCH 6.6 288/356] serial: sh-sci: Move runtime PM enable to sci_probe_single()
+Date: Tue, 17 Jun 2025 17:26:43 +0200
+Message-ID: <20250617152349.774446052@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
+References: <20250617152338.212798615@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,137 +47,95 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cosmin Ratiu <cratiu@nvidia.com>
+From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 
-[ Upstream commit fd4e41ebf66cb8b43de2f640b97314c4ee3b4499 ]
+commit 239f11209e5f282e16f5241b99256e25dd0614b6 upstream.
 
-When the active link is changed for a bond device, the existing xfrm
-states need to be migrated over to the new link. This is done with:
-- bond_ipsec_del_sa_all() goes through the offloaded states list and
-  removes all of them from hw.
-- bond_ipsec_add_sa_all() re-offloads all states to the new device.
+Relocate the runtime PM enable operation to sci_probe_single(). This change
+prepares the codebase for upcoming fixes.
 
-But because the offload status of xfrm states isn't marked in any way,
-there can be bugs.
+While at it, replace the existing logic with a direct call to
+devm_pm_runtime_enable() and remove sci_cleanup_single(). The
+devm_pm_runtime_enable() function automatically handles disabling runtime
+PM during driver removal.
 
-When all bond links are down, bond_ipsec_del_sa_all() unoffloads
-everything from the previous active link. If the same link then comes
-back up, nothing gets reoffloaded by bond_ipsec_add_sa_all().
-This results in a stack trace like this a bit later when user space
-removes the offloaded rules, because mlx5e_xfrm_del_state() is asked to
-remove a rule that's no longer offloaded:
-
- [] Call Trace:
- []  <TASK>
- []  ? __warn+0x7d/0x110
- []  ? mlx5e_xfrm_del_state+0x90/0xa0 [mlx5_core]
- []  ? report_bug+0x16d/0x180
- []  ? handle_bug+0x4f/0x90
- []  ? exc_invalid_op+0x14/0x70
- []  ? asm_exc_invalid_op+0x16/0x20
- []  ? mlx5e_xfrm_del_state+0x73/0xa0 [mlx5_core]
- []  ? mlx5e_xfrm_del_state+0x90/0xa0 [mlx5_core]
- []  bond_ipsec_del_sa+0x1ab/0x200 [bonding]
- []  xfrm_dev_state_delete+0x1f/0x60
- []  __xfrm_state_delete+0x196/0x200
- []  xfrm_state_delete+0x21/0x40
- []  xfrm_del_sa+0x69/0x110
- []  xfrm_user_rcv_msg+0x11d/0x300
- []  ? release_pages+0xca/0x140
- []  ? copy_to_user_tmpl.part.0+0x110/0x110
- []  netlink_rcv_skb+0x54/0x100
- []  xfrm_netlink_rcv+0x31/0x40
- []  netlink_unicast+0x1fc/0x2d0
- []  netlink_sendmsg+0x1e4/0x410
- []  __sock_sendmsg+0x38/0x60
- []  sock_write_iter+0x94/0xf0
- []  vfs_write+0x338/0x3f0
- []  ksys_write+0xba/0xd0
- []  do_syscall_64+0x4c/0x100
- []  entry_SYSCALL_64_after_hwframe+0x4b/0x53
-
-There's also another theoretical bug:
-Calling bond_ipsec_del_sa_all() multiple times can result in corruption
-in the driver implementation if the double-free isn't tolerated. This
-isn't nice.
-
-Before the "Fixes" commit, xs->xso.real_dev was set to NULL when an xfrm
-state was unoffloaded from a device, but a race with netdevsim's
-.xdo_dev_offload_ok() accessing real_dev was considered a sufficient
-reason to not set real_dev to NULL anymore. This unfortunately
-introduced the new bugs.
-
-Since .xdo_dev_offload_ok() was significantly refactored by [1] and
-there are no more users in the stack of xso.real_dev, that
-race is now gone and xs->xso.real_dev can now once again be used to
-represent which device (if any) currently holds the offloaded rule.
-
-Go one step further and set real_dev after add/before delete calls, to
-catch any future driver misuses of real_dev.
-
-[1] https://lore.kernel.org/netdev/cover.1739972570.git.leon@kernel.org/
-Fixes: f8cde9805981 ("bonding: fix xfrm real_dev null pointer dereference")
-Signed-off-by: Cosmin Ratiu <cratiu@nvidia.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
-Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
-Tested-by: Hangbin Liu <liuhangbin@gmail.com>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Link: https://lore.kernel.org/r/20250116182249.3828577-3-claudiu.beznea.uj@bp.renesas.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/bonding/bond_main.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/tty/serial/sh-sci.c | 24 ++++++------------------
+ 1 file changed, 6 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
-index b183a3c99f627..14ebbe82a2c5b 100644
---- a/drivers/net/bonding/bond_main.c
-+++ b/drivers/net/bonding/bond_main.c
-@@ -496,9 +496,9 @@ static int bond_ipsec_add_sa(struct net_device *bond_dev,
- 		goto out;
+diff --git a/drivers/tty/serial/sh-sci.c b/drivers/tty/serial/sh-sci.c
+index d57fa80b6f52a..0071cb3043e14 100644
+--- a/drivers/tty/serial/sh-sci.c
++++ b/drivers/tty/serial/sh-sci.c
+@@ -3043,10 +3043,6 @@ static int sci_init_single(struct platform_device *dev,
+ 		ret = sci_init_clocks(sci_port, &dev->dev);
+ 		if (ret < 0)
+ 			return ret;
+-
+-		port->dev = &dev->dev;
+-
+-		pm_runtime_enable(&dev->dev);
  	}
  
--	xs->xso.real_dev = real_dev;
- 	err = real_dev->xfrmdev_ops->xdo_dev_state_add(real_dev, xs, extack);
- 	if (!err) {
-+		xs->xso.real_dev = real_dev;
- 		ipsec->xs = xs;
- 		INIT_LIST_HEAD(&ipsec->list);
- 		mutex_lock(&bond->ipsec_lock);
-@@ -540,12 +540,12 @@ static void bond_ipsec_add_sa_all(struct bonding *bond)
- 		if (ipsec->xs->xso.real_dev == real_dev)
- 			continue;
+ 	port->type		= p->type;
+@@ -3076,11 +3072,6 @@ static int sci_init_single(struct platform_device *dev,
+ 	return 0;
+ }
  
--		ipsec->xs->xso.real_dev = real_dev;
- 		if (real_dev->xfrmdev_ops->xdo_dev_state_add(real_dev,
- 							     ipsec->xs, NULL)) {
- 			slave_warn(bond_dev, real_dev, "%s: failed to add SA\n", __func__);
--			ipsec->xs->xso.real_dev = NULL;
-+			continue;
- 		}
-+		ipsec->xs->xso.real_dev = real_dev;
+-static void sci_cleanup_single(struct sci_port *port)
+-{
+-	pm_runtime_disable(port->port.dev);
+-}
+-
+ #if defined(CONFIG_SERIAL_SH_SCI_CONSOLE) || \
+     defined(CONFIG_SERIAL_SH_SCI_EARLYCON)
+ static void serial_console_putchar(struct uart_port *port, unsigned char ch)
+@@ -3250,8 +3241,6 @@ static int sci_remove(struct platform_device *dev)
+ 	sci_ports_in_use &= ~BIT(port->port.line);
+ 	uart_remove_one_port(&sci_uart_driver, &port->port);
+ 
+-	sci_cleanup_single(port);
+-
+ 	if (port->port.fifosize > 1)
+ 		device_remove_file(&dev->dev, &dev_attr_rx_fifo_trigger);
+ 	if (type == PORT_SCIFA || type == PORT_SCIFB || type == PORT_HSCIF)
+@@ -3414,6 +3403,11 @@ static int sci_probe_single(struct platform_device *dev,
+ 	if (ret)
+ 		return ret;
+ 
++	sciport->port.dev = &dev->dev;
++	ret = devm_pm_runtime_enable(&dev->dev);
++	if (ret)
++		return ret;
++
+ 	sciport->gpios = mctrl_gpio_init(&sciport->port, 0);
+ 	if (IS_ERR(sciport->gpios))
+ 		return PTR_ERR(sciport->gpios);
+@@ -3427,13 +3421,7 @@ static int sci_probe_single(struct platform_device *dev,
+ 		sciport->port.flags |= UPF_HARD_FLOW;
  	}
- out:
- 	mutex_unlock(&bond->ipsec_lock);
-@@ -629,6 +629,7 @@ static void bond_ipsec_del_sa_all(struct bonding *bond)
- 				   __func__);
- 			continue;
- 		}
-+		ipsec->xs->xso.real_dev = NULL;
- 		real_dev->xfrmdev_ops->xdo_dev_state_delete(real_dev,
- 							    ipsec->xs);
- 		if (real_dev->xfrmdev_ops->xdo_dev_state_free)
-@@ -664,6 +665,7 @@ static void bond_ipsec_free_sa(struct net_device *bond_dev,
  
- 	WARN_ON(xs->xso.real_dev != real_dev);
+-	ret = uart_add_one_port(&sci_uart_driver, &sciport->port);
+-	if (ret) {
+-		sci_cleanup_single(sciport);
+-		return ret;
+-	}
+-
+-	return 0;
++	return uart_add_one_port(&sci_uart_driver, &sciport->port);
+ }
  
-+	xs->xso.real_dev = NULL;
- 	if (real_dev && real_dev->xfrmdev_ops &&
- 	    real_dev->xfrmdev_ops->xdo_dev_state_free)
- 		real_dev->xfrmdev_ops->xdo_dev_state_free(real_dev, xs);
+ static int sci_probe(struct platform_device *dev)
 -- 
 2.39.5
 
