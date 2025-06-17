@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65D442DFF1D;
-	Tue, 17 Jun 2025 15:51:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24B3C2ECD33;
+	Tue, 17 Jun 2025 15:51:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175466; cv=none; b=ZukrNS+Ls6Aa3gMfZ1hyIDe5mM4wwJ2DZFQDpCflhbAn6tX24IUgovBJvPeAyNJINApurInWAGxum7gaJYov8/FyGfP8PAHQIsrOIjTcTvKiv8eSMTjSCj7bIiyA0LVJKShXGTqjsVOyvCyMoieNM7zZT5cuj04BEB+pZPpsXb4=
+	t=1750175469; cv=none; b=c7EdPlUCUqOZHo1ROz/jWqdLevzs2IngTWRY4d2/h5e6kNVXCBgp4LJEfcheEQEHnqj/Q+uq8bgB8Pp9A1E2kYkvPkzKzdXJV5c+JUH2fuOVZypMpwTX+4jGtALjqf3LZdOdltbFGr6RtxYabLEzw3iwXqYllh2zhh9+xfiOHMg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175466; c=relaxed/simple;
-	bh=Y6Am4dWHTvLa7rpBYWFy82Uc69I7DtxPJSOuI3tM0LA=;
+	s=arc-20240116; t=1750175469; c=relaxed/simple;
+	bh=O85oZodD3t918pFqSQZkL+wWFi0vMAxA2kim8wqcl0Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MPrtMNEGeUBzfVhBabF7A+nK09bUlEq7DKACiK5jqCujB5rIkVmyIkuXxAeKh1UZNwWC02mcoldxR9huCCzJysCJ1/HaBxm+TyS3F44Xm8s3qWTgevgOXulTIbp0FWQoxB9+YwgqBmN+w8Fs+w8+Xy8nSWk+f3NDUhlJVmP1eJg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o1JryE5i; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=crimYVmWsSUfUaeB0GHZDKFHBF/TJCygJiKG5UOooMGbzQJkB/RQoC7D6VKYuVyy7qdQaWdC+p6HbqMUf4ycVPnpBSF2qlgATBoyxo4GDXq3yWMHWe0rJ0g+BfZkhmtTFsizt+8ENAWPTONEq3SMZpxsRixPj7nJn5ssQ1uzaf4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CHWMK6Kp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o1JryE5i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8F7EC4CEE7;
-	Tue, 17 Jun 2025 15:51:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CHWMK6Kp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAA4FC4CEF0;
+	Tue, 17 Jun 2025 15:51:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175466;
-	bh=Y6Am4dWHTvLa7rpBYWFy82Uc69I7DtxPJSOuI3tM0LA=;
+	s=korg; t=1750175469;
+	bh=O85oZodD3t918pFqSQZkL+wWFi0vMAxA2kim8wqcl0Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o1JryE5iRWZxeLSFkufeC3vyAehg2wwHdCHcuKaWSo+7ThA54ZN7Ksr5ZxN7ul4L9
-	 rb3GMBSqNlll6DxausTT7TqfeJN8mHjnriUVtSX3mvTbOR9tnbywmQJvx34ttFiE0f
-	 uSS1TRdz5oNpuuuGK0Ptb0yOKuCoIPJHYoRkgpFI=
+	b=CHWMK6KpqtuAt9vQJGxXQWps8Z4pnXVkNIVIINOSxpG9O4/rR2WHAxnyHxWYgrnWG
+	 yWjGluMVVoMLGYtEQ8VS/SGmRCKlUNB1TLywg4CKDIfhNGzqESKyafn37/dsylotFI
+	 2pJ3rVg89e5NHnKMWWUVX+P78ccAG2qh3COKat7k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prasanth Babu Mantena <p-mantena@ti.com>,
-	Nishanth Menon <nm@ti.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
+	Dmitry Antipov <dmantipov@yandex.ru>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 179/356] arm64: dts: ti: k3-j721e-common-proc-board: Enable OSPI1 on J721E
-Date: Tue, 17 Jun 2025 17:24:54 +0200
-Message-ID: <20250617152345.421084380@linuxfoundation.org>
+Subject: [PATCH 6.12 129/512] wifi: rtw88: do not ignore hardware read error during DPK
+Date: Tue, 17 Jun 2025 17:21:35 +0200
+Message-ID: <20250617152424.820470997@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-References: <20250617152338.212798615@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,38 +47,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Prasanth Babu Mantena <p-mantena@ti.com>
+From: Dmitry Antipov <dmantipov@yandex.ru>
 
-[ Upstream commit 6b8deb2ff0d31848c43a73f6044e69ba9276b3ec ]
+[ Upstream commit 20d3c19bd8f9b498173c198eadf54580c8caa336 ]
 
-J721E SoM has MT25QU512AB Serial NOR flash connected to
-OSPI1 controller. Enable ospi1 node in device tree.
+In 'rtw8822c_dpk_cal_coef1()', do not ignore error returned
+by 'check_hw_ready()' but issue a warning to denote possible
+DPK issue. Compile tested only.
 
-Fixes: 73676c480b72 ("arm64: dts: ti: k3-j721e: Enable OSPI nodes at the board level")
-Signed-off-by: Prasanth Babu Mantena <p-mantena@ti.com>
-Link: https://lore.kernel.org/r/20250507050701.3007209-1-p-mantena@ti.com
-Signed-off-by: Nishanth Menon <nm@ti.com>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: 5227c2ee453d ("rtw88: 8822c: add SW DPK support")
+Suggested-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20250415090720.194048-1-dmantipov@yandex.ru
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/ti/k3-j721e-common-proc-board.dts | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/wireless/realtek/rtw88/rtw8822c.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/ti/k3-j721e-common-proc-board.dts b/arch/arm64/boot/dts/ti/k3-j721e-common-proc-board.dts
-index fe5207ac7d85d..90ae8e948671d 100644
---- a/arch/arm64/boot/dts/ti/k3-j721e-common-proc-board.dts
-+++ b/arch/arm64/boot/dts/ti/k3-j721e-common-proc-board.dts
-@@ -557,6 +557,7 @@
- &ospi1 {
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&mcu_fss0_ospi1_pins_default>;
-+	status = "okay";
+diff --git a/drivers/net/wireless/realtek/rtw88/rtw8822c.c b/drivers/net/wireless/realtek/rtw88/rtw8822c.c
+index 1dbe1cdbc3fd4..3157cd834233d 100644
+--- a/drivers/net/wireless/realtek/rtw88/rtw8822c.c
++++ b/drivers/net/wireless/realtek/rtw88/rtw8822c.c
+@@ -3993,7 +3993,8 @@ static void rtw8822c_dpk_cal_coef1(struct rtw_dev *rtwdev)
+ 	rtw_write32(rtwdev, REG_NCTL0, 0x00001148);
+ 	rtw_write32(rtwdev, REG_NCTL0, 0x00001149);
  
- 	flash@0 {
- 		compatible = "jedec,spi-nor";
+-	check_hw_ready(rtwdev, 0x2d9c, MASKBYTE0, 0x55);
++	if (!check_hw_ready(rtwdev, 0x2d9c, MASKBYTE0, 0x55))
++		rtw_warn(rtwdev, "DPK stuck, performance may be suboptimal");
+ 
+ 	rtw_write8(rtwdev, 0x1b10, 0x0);
+ 	rtw_write32_mask(rtwdev, REG_NCTL0, BIT_SUBPAGE, 0x0000000c);
 -- 
 2.39.5
 
