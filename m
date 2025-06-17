@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DE262ECD39;
-	Tue, 17 Jun 2025 15:49:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76A3D2E973E;
+	Tue, 17 Jun 2025 15:49:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175358; cv=none; b=gzI8vqsUXCPlNmhkjFcMAQjcjFwUoU68u8S21qLf4zXxqhh4pNEd72uF3EYXHPmivHBzGTHFJ4wq+8MLZkA3Yz19dxQi8lsOKdGMPWzqj5KcD4zVvdMRs6Y1uSsb3FOvAU/7kpYKJEP5AaXSI94P9S4daKxOWc9d2847Jv6QcfU=
+	t=1750175361; cv=none; b=QUtXuRldHlB7XsNA3kZkNuSzvcoARitG44k5W3lzcLV2F6ituCoGVdikGGfnO4NjMrSpBEfnJMXfIcbUBof3RKZi9IpN9kGuhduPdZCJ9q3OsNwyUARL9DFSFNW0ITKnzEYXb74ZTP37t0VodptblU8r9G1KAjiMie2K7OVPcBk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175358; c=relaxed/simple;
-	bh=GeIrQ2Fx3tYAUh7F77ZuoEw1Vn/JAmIzdoyWsamLy8k=;
+	s=arc-20240116; t=1750175361; c=relaxed/simple;
+	bh=5ckzj0Fq6CmJ5K1BzeZVb2OoRANcwWvwXVg3O/e9wH0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZJSL83XVE8j/Z6f2uKhYu/T3Qkb0UJY6YGQR/UVsJ+B7y4kEyKhDtbJzAshImwCuRfxhpuB1BP+J3F7f1QhjSRApDSIG1rKh5JcHrllIdIyiMD5wt1p+acsuCYVDYS2LIrxJSBCSr+pV+WOtlY2DT7VlcNuMvkwTtsETwSUJE8I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=auVG1eDU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sn4POfRRCxiaM9ePJfUApQPLlCV8HRE0OI1W6xeJaXcBOVksGP8SvqbNjasnT/QxIyNzzFYoA2VdshxCAWsQhkFSZeJEg6d1uxffpIN5AiZWVh3WftiFLQa6a7xMfPctQyTY6ZRpYw7Lkveqc9cdpkXTMITOsh5Xk9e2x67urvs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MZZ0Yu+X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="auVG1eDU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C53BC4CEF0;
-	Tue, 17 Jun 2025 15:49:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MZZ0Yu+X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D18FCC4CEE3;
+	Tue, 17 Jun 2025 15:49:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175357;
-	bh=GeIrQ2Fx3tYAUh7F77ZuoEw1Vn/JAmIzdoyWsamLy8k=;
+	s=korg; t=1750175361;
+	bh=5ckzj0Fq6CmJ5K1BzeZVb2OoRANcwWvwXVg3O/e9wH0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=auVG1eDUiceVhMg6Jc/rKU7BEcfvALbfz203WWRmiHlUg+7kLAI5RLC194FWvIsKp
-	 7clh2ijGQIDPKalcRTB+vAFS93Uc6jaAA9kDYhiNjH55+KN8RcS7RRIgvL+45f4PLh
-	 P1o2CeIQxY2akdLwZUxP/4HxkiVK5rK+Ls5ZcdGU=
+	b=MZZ0Yu+XJIRfc6Yi+YGWmR1uXx0Ex0Q7VD6n+GqBA2xadkRt7wWexBLepxUPxJO/7
+	 gcw6qjT+Kpe+ObleHnZ4DqXKNTYmeZsc0hc+bgTE98B3tSu5fcv36lBdcIQ9CJjp39
+	 ERTWIfQU8qYiCREPEOhM8+vp7cLe0QhEE8NmsOqU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adam Ford <aford173@gmail.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Shawn Guo <shawnguo@kernel.org>,
+	"yohan.joung" <yohan.joung@sk.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 169/356] arm64: dts: imx8mn-beacon: Fix RTC capacitive load
-Date: Tue, 17 Jun 2025 17:24:44 +0200
-Message-ID: <20250617152345.019872885@linuxfoundation.org>
+Subject: [PATCH 6.12 119/512] f2fs: prevent the current section from being selected as a victim during GC
+Date: Tue, 17 Jun 2025 17:21:25 +0200
+Message-ID: <20250617152424.405969939@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-References: <20250617152338.212798615@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,40 +48,68 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Adam Ford <aford173@gmail.com>
+From: yohan.joung <yohan.joung@sk.com>
 
-[ Upstream commit c3f03bec30efd5082b55876846d57b5d17dae7b9 ]
+[ Upstream commit d26fecb03e1f1069480d41fa2a6cea87ebbb89b8 ]
 
-Although not noticeable when used every day, the RTC appears to drift when
-left to sit over time.  This is due to the capacitive load not being
-properly set. Fix RTC drift by correcting the capacitive load setting
-from 7000 to 12500, which matches the actual hardware configuration.
+When selecting a victim using next_victim_seg in a large section, the
+selected section might already have been cleared and designated as the
+new current section, making it actively in use.
+This behavior causes inconsistency between the SIT and SSA.
 
-Fixes: 36ca3c8ccb53 ("arm64: dts: imx: Add Beacon i.MX8M Nano development kit")
-Signed-off-by: Adam Ford <aford173@gmail.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+F2FS-fs (dm-54): Inconsistent segment (70961) type [0, 1] in SSA and SIT
+Call trace:
+dump_backtrace+0xe8/0x10c
+show_stack+0x18/0x28
+dump_stack_lvl+0x50/0x6c
+dump_stack+0x18/0x28
+f2fs_stop_checkpoint+0x1c/0x3c
+do_garbage_collect+0x41c/0x271c
+f2fs_gc+0x27c/0x828
+gc_thread_func+0x290/0x88c
+kthread+0x11c/0x164
+ret_from_fork+0x10/0x20
+
+issue scenario
+segs_per_sec=2
+- seg#0 and seg#1 are all dirty
+- all valid blocks are removed in seg#1
+- gc select this sec and next_victim_seg=seg#0
+- migrate seg#0, next_victim_seg=seg#1
+- checkpoint -> sec(seg#0, seg#1)  becomes free
+- allocator assigns sec(seg#0, seg#1) to curseg
+- gc tries to migrate seg#1
+
+Fixes: e3080b0120a1 ("f2fs: support subsectional garbage collection")
+Signed-off-by: yohan.joung <yohan.joung@sk.com>
+Signed-off-by: Chao Yu <chao@kernel.org>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx8mn-beacon-som.dtsi | 1 +
- 1 file changed, 1 insertion(+)
+ fs/f2fs/segment.h | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8mn-beacon-som.dtsi b/arch/arm64/boot/dts/freescale/imx8mn-beacon-som.dtsi
-index 90073b16536f4..1760062e6ffcf 100644
---- a/arch/arm64/boot/dts/freescale/imx8mn-beacon-som.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx8mn-beacon-som.dtsi
-@@ -240,6 +240,7 @@
- 	rtc: rtc@51 {
- 		compatible = "nxp,pcf85263";
- 		reg = <0x51>;
-+		quartz-load-femtofarads = <12500>;
- 	};
- };
+diff --git a/fs/f2fs/segment.h b/fs/f2fs/segment.h
+index 25d3cda9bd5a3..05a342933f98f 100644
+--- a/fs/f2fs/segment.h
++++ b/fs/f2fs/segment.h
+@@ -488,6 +488,11 @@ static inline void __set_test_and_free(struct f2fs_sb_info *sbi,
  
+ 	free_i->free_sections++;
+ 
++	if (GET_SEC_FROM_SEG(sbi, sbi->next_victim_seg[BG_GC]) == secno)
++		sbi->next_victim_seg[BG_GC] = NULL_SEGNO;
++	if (GET_SEC_FROM_SEG(sbi, sbi->next_victim_seg[FG_GC]) == secno)
++		sbi->next_victim_seg[FG_GC] = NULL_SEGNO;
++
+ unlock_out:
+ 	spin_unlock(&free_i->segmap_lock);
+ }
 -- 
 2.39.5
 
