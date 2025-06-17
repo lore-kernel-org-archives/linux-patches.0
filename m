@@ -1,42 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 962402ECE83;
-	Tue, 17 Jun 2025 16:25:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 338292ECEA2;
+	Tue, 17 Jun 2025 16:25:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177513; cv=none; b=kiT4pt6inMrp3QuT5dZlUSEfkXRXLxUbpReTqQVrkl7wCoQyBhBgxhI2lqtVPAYavz1w/ZRpprnlywsyj7Nyj6vWOiyH4Jej2K0M+W6QI00z09GmlAoA7QeI5+UuFK2cdHxnYa42XsLHb8DWM3vzjrk3VXpN+d8lXJbGE/inyGc=
+	t=1750177518; cv=none; b=DDz08+OktLTsk18jWNlj4w9CoVayroMWJoxr80Dhnnf8rpCbVm8xjd1Da6t3ElHmtfxmmCZOpFnLlDZI5DJCanca2mlgLj4xQepudBy8Uh1sZ8V4DEc8OfHwpU0ePmCtnl1UT/XLhGoQ31SXvkinMXYxqT6Dt/YNNniAfG2iZKk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177513; c=relaxed/simple;
-	bh=1BwQxcMYs0p1M3cI7X++Vy14XKgf/VBCihh8NGgbYbk=;
+	s=arc-20240116; t=1750177518; c=relaxed/simple;
+	bh=RXu8k6x+Es5uhbO0pXqcDCGF+Y8gBpL7vuhT90puzp8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jlnWDum++5e/VTaWBtPJjJxDyyqrQr/703IF7TM3EzcN2lSZZg7JyScC2Ml0xvjE8sPBHIj/tXAr3qeD0QCrfeVyekEgEgjWAhV8znEMsiMSp8nE6AibFLzWGwv70trc8eKfURsX1RbVfZFAWh7StGR8YZk4Z0tUIrQOHRSwUmE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lLtVK216; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dszzAv+98vPueQjk/ifda/cgGP+1yf/RbDr+Y/5dN9339X2aWgXY1PpyGiELj1h1oEBLXtW3GaeRSEjqTgF7jbHrruiE74l8c9b8VNKbOWFkS7yNfBXhz6XsguJXd0WqJ0GAgS39YRTsjdqsi6vmWAeSy+LzLjVEbmusLMh9ibw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Eqp6hkq8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lLtVK216"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07DBBC4CEE3;
-	Tue, 17 Jun 2025 16:25:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Eqp6hkq8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B4E0C4CEE3;
+	Tue, 17 Jun 2025 16:25:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177513;
-	bh=1BwQxcMYs0p1M3cI7X++Vy14XKgf/VBCihh8NGgbYbk=;
+	s=korg; t=1750177516;
+	bh=RXu8k6x+Es5uhbO0pXqcDCGF+Y8gBpL7vuhT90puzp8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lLtVK216N8wdh1VDQNs/ztHB2LB4LX83bF7TaQsVJqm88dZehng86pmCIW3TeB1jn
-	 pVMktUp+HtS156IMofRRCm23GrnucZCIY3Dkrk9xglyBxZ6iBKNOwbcj4qrErio9kK
-	 oOgWCRO+jxvij2tPDIqxgJYC46qph4CsqRToz3As=
+	b=Eqp6hkq8JSsafQiQAgBGzgOqucKxR1Ghsi8ihcougc1mBTQzdA5aak3b3t/3ybpHo
+	 6KaorGKvlu6/Fg4avlFUfvD1mNr/HB0W4Hqc9yHnWLDglKy/aKGbkRJJWS5EWD2WpY
+	 lEB7J/4fIHuULIiepmCUSmn2FqCNFpiX87K+v5Sk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Chiu <chui-hao.chiu@mediatek.com>,
-	Shayne Chen <shayne.chen@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 304/780] wifi: mt76: mt7996: fix RX buffer size of MCU event
-Date: Tue, 17 Jun 2025 17:20:12 +0200
-Message-ID: <20250617152503.844160720@linuxfoundation.org>
+	Dawid Osuchowski <dawid.osuchowski@linux.intel.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Michal Kubiak <michal.kubiak@intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Jesse Brandeburg <jbrandeburg@cloudflare.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Saritha Sanigani <sarithax.sanigani@intel.com>
+Subject: [PATCH 6.12 357/512] ice: create new Tx scheduler nodes for new queues only
+Date: Tue, 17 Jun 2025 17:25:23 +0200
+Message-ID: <20250617152434.050160264@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,73 +53,74 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shayne Chen <shayne.chen@mediatek.com>
+From: Michal Kubiak <michal.kubiak@intel.com>
 
-[ Upstream commit 42cb27af34de4acf680606fad2c1f2932110591f ]
+[ Upstream commit 6fa2942578472c9cab13a8fc1dae0d830193e0a1 ]
 
-Some management frames are first processed by the firmware and then
-passed to the driver through the MCU event rings. In CONNAC3, event rings
-do not support scatter-gather and have a size limitation of 2048 bytes.
-If a packet sized between 1728 and 2048 bytes arrives from an event ring,
-the ring will hang because the driver attempts to use scatter-gather to
-process it.
+The current implementation of the Tx scheduler tree attempts
+to create nodes for all Tx queues, ignoring the fact that some
+queues may already exist in the tree. For example, if the VSI
+already has 128 Tx queues and the user requests for 16 new queues,
+the Tx scheduler will compute the tree for 272 queues (128 existing
+queues + 144 new queues), instead of 144 queues (128 existing queues
+and 16 new queues).
+Fix that by modifying the node count calculation algorithm to skip
+the queues that already exist in the tree.
 
-To fix this, include the size of struct skb_shared_info in the MCU RX
-buffer size to prevent scatter-gather from being used for event skb in
-mt76_dma_rx_fill_buf().
-
-Fixes: 98686cd21624 ("wifi: mt76: mt7996: add driver for MediaTek Wi-Fi 7 (802.11be) devices")
-Co-developed-by: Peter Chiu <chui-hao.chiu@mediatek.com>
-Signed-off-by: Peter Chiu <chui-hao.chiu@mediatek.com>
-Signed-off-by: Shayne Chen <shayne.chen@mediatek.com>
-Link: https://patch.msgid.link/20250515032952.1653494-7-shayne.chen@mediatek.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Fixes: 5513b920a4f7 ("ice: Update Tx scheduler tree for VSI multi-Tx queue support")
+Reviewed-by: Dawid Osuchowski <dawid.osuchowski@linux.intel.com>
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Signed-off-by: Michal Kubiak <michal.kubiak@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Jesse Brandeburg <jbrandeburg@cloudflare.com>
+Tested-by: Saritha Sanigani <sarithax.sanigani@intel.com> (A Contingent Worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/dma.c    | 4 ++--
- drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h | 3 +++
- 2 files changed, 5 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_sched.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/dma.c b/drivers/net/wireless/mediatek/mt76/mt7996/dma.c
-index 69a7d9b2e38bd..4b68d2fc5e094 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/dma.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/dma.c
-@@ -493,7 +493,7 @@ int mt7996_dma_init(struct mt7996_dev *dev)
- 	ret = mt76_queue_alloc(dev, &dev->mt76.q_rx[MT_RXQ_MCU],
- 			       MT_RXQ_ID(MT_RXQ_MCU),
- 			       MT7996_RX_MCU_RING_SIZE,
--			       MT_RX_BUF_SIZE,
-+			       MT7996_RX_MCU_BUF_SIZE,
- 			       MT_RXQ_RING_BASE(MT_RXQ_MCU));
- 	if (ret)
- 		return ret;
-@@ -502,7 +502,7 @@ int mt7996_dma_init(struct mt7996_dev *dev)
- 	ret = mt76_queue_alloc(dev, &dev->mt76.q_rx[MT_RXQ_MCU_WA],
- 			       MT_RXQ_ID(MT_RXQ_MCU_WA),
- 			       MT7996_RX_MCU_RING_SIZE_WA,
--			       MT_RX_BUF_SIZE,
-+			       MT7996_RX_MCU_BUF_SIZE,
- 			       MT_RXQ_RING_BASE(MT_RXQ_MCU_WA));
- 	if (ret)
- 		return ret;
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h b/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h
-index c393784436d4c..77605403b3966 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h
-@@ -29,6 +29,9 @@
- #define MT7996_RX_RING_SIZE		1536
- #define MT7996_RX_MCU_RING_SIZE		512
- #define MT7996_RX_MCU_RING_SIZE_WA	1024
-+/* scatter-gather of mcu event is not supported in connac3 */
-+#define MT7996_RX_MCU_BUF_SIZE		(2048 + \
-+					 SKB_DATA_ALIGN(sizeof(struct skb_shared_info)))
+diff --git a/drivers/net/ethernet/intel/ice/ice_sched.c b/drivers/net/ethernet/intel/ice/ice_sched.c
+index 6ca13c5dcb14e..6524875b34d39 100644
+--- a/drivers/net/ethernet/intel/ice/ice_sched.c
++++ b/drivers/net/ethernet/intel/ice/ice_sched.c
+@@ -1604,16 +1604,16 @@ ice_sched_get_agg_node(struct ice_port_info *pi, struct ice_sched_node *tc_node,
+ /**
+  * ice_sched_calc_vsi_child_nodes - calculate number of VSI child nodes
+  * @hw: pointer to the HW struct
+- * @num_qs: number of queues
++ * @num_new_qs: number of new queues that will be added to the tree
+  * @num_nodes: num nodes array
+  *
+  * This function calculates the number of VSI child nodes based on the
+  * number of queues.
+  */
+ static void
+-ice_sched_calc_vsi_child_nodes(struct ice_hw *hw, u16 num_qs, u16 *num_nodes)
++ice_sched_calc_vsi_child_nodes(struct ice_hw *hw, u16 num_new_qs, u16 *num_nodes)
+ {
+-	u16 num = num_qs;
++	u16 num = num_new_qs;
+ 	u8 i, qgl, vsil;
  
- #define MT7996_FIRMWARE_WA		"mediatek/mt7996/mt7996_wa.bin"
- #define MT7996_FIRMWARE_WM		"mediatek/mt7996/mt7996_wm.bin"
+ 	qgl = ice_sched_get_qgrp_layer(hw);
+@@ -1863,8 +1863,9 @@ ice_sched_update_vsi_child_nodes(struct ice_port_info *pi, u16 vsi_handle,
+ 			return status;
+ 	}
+ 
+-	if (new_numqs)
+-		ice_sched_calc_vsi_child_nodes(hw, new_numqs, new_num_nodes);
++	ice_sched_calc_vsi_child_nodes(hw, new_numqs - prev_numqs,
++				       new_num_nodes);
++
+ 	/* Keep the max number of queue configuration all the time. Update the
+ 	 * tree only if number of queues > previous number of queues. This may
+ 	 * leave some extra nodes in the tree if number of queues < previous
 -- 
 2.39.5
 
