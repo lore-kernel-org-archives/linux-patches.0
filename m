@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C7B92EA173;
-	Tue, 17 Jun 2025 15:48:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FF8B21FF44;
+	Tue, 17 Jun 2025 15:48:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750175290; cv=none; b=pbkoDg1i7IwA+IECP8Tury9nTmh+k+2iT92lYx8FsUQTWmwGia7Sb5okevAw8uRVVU4RyHlB59cUil54VdMw9xYNSywv8XXWSJuVG0auT1fnzQ60GmEj8Jecks6RKXmxw3YRVJeMjuefyBP2uUQ6tTk8lyTLcQ6V8nIVK6/JLlw=
+	t=1750175293; cv=none; b=s8sECh5DYkmShH0z4ghzS19F4ssFRb6WjVxx6ZOJBxGPiinB14lrw5jjG4rPWab7rx3NrrvM2n9+TlPn5LaDUaswQpYRpFOkhb07OCBY8OX9mjtuuxoT80hNLKXUYCn5csDhVqcafgrc3XgMHq16fEovGH6PVawQBmVXA4JoLaU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750175290; c=relaxed/simple;
-	bh=tm8y/fJBuYicXPwKwrlCulH3eVqGku2Jrz2lbRh5njU=;
+	s=arc-20240116; t=1750175293; c=relaxed/simple;
+	bh=VidjBmUl/OPL92RD/8K4bvGGEHYAUu5W20NXE190XJo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KNtMVs0o2jyVwag/zBrR2Twb/mITJpXYhj0Bfw3q3bH/sf4vPMFxfkhwGWMSjyoItWYk9Um61vpyNsU8f+Az5RodCRyOJ2hOji0gTDiVWs4jPliy8tycDZNzUaOkpESRRhuIe8hcQBe6UzEn0SmpLLmJh9JkLchZU+yRR+fAMiE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HoaWYSU3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OyR/IMz+bjdGxSHULzcCiBTRFUDylkVRO4jNHQhnuODK64ykGF/m2BQHQhNoG9sP5d6XEynTukPWPceLl/yjslRe5Y/yozWkVuO0A0sAljbof+WfYneC5PvdO2bN4xUcaTKN8DWBHRoCKAUZkUgMFhVZ5ujK+EQ7C6U9xxicLuo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A1vaBjP4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HoaWYSU3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F431C4CEE3;
-	Tue, 17 Jun 2025 15:48:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A1vaBjP4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3142C4CEE3;
+	Tue, 17 Jun 2025 15:48:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750175290;
-	bh=tm8y/fJBuYicXPwKwrlCulH3eVqGku2Jrz2lbRh5njU=;
+	s=korg; t=1750175293;
+	bh=VidjBmUl/OPL92RD/8K4bvGGEHYAUu5W20NXE190XJo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HoaWYSU3kRwi/QzAzZuAxr1esx7qgLE4buF55bHXb1YMB9Cl7vIrv5a+vDOtPKFWx
-	 fJ4OhYGJm50d5Wp8Fl4dgFdIoAOrrh7utNdTjL8Hvwsa3Hcc0vHKlCSWRXEBvVEyFB
-	 H3T2Er0PvfjxCJBfyKj+9n9tVChgH+K13blkiz2A=
+	b=A1vaBjP4nn8I3npq2+umNtXeSNhFiR5N3+jIhy8590GmCXegIY8KUclp0w9i2TJq6
+	 orASz8M1+NnT4+cHEuwJteBImsPuaLvEgikQXQe8vYhEp+vIqXkpHX4LXLn7kkJpo6
+	 SA0i8kqSS3JBwSLZzqu9KVhtwiURWh+Fuaj8fCH4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luca Weiss <luca.weiss@fairphone.com>,
-	Stephan Gerhold <stephan.gerhold@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 161/356] arm64: dts: qcom: sm8350: Reenable crypto & cryptobam
-Date: Tue, 17 Jun 2025 17:24:36 +0200
-Message-ID: <20250617152344.704074744@linuxfoundation.org>
+Subject: [PATCH 6.12 112/512] bpf, sockmap: fix duplicated data transmission
+Date: Tue, 17 Jun 2025 17:21:18 +0200
+Message-ID: <20250617152424.127924351@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-References: <20250617152338.212798615@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,61 +47,70 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Luca Weiss <luca.weiss@fairphone.com>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-[ Upstream commit 75eefd474469abf95aa9ef6da8161d69f86b98b4 ]
+[ Upstream commit 3b4f14b794287be137ea2c6158765d1ea1e018a4 ]
 
-When num-channels and qcom,num-ees is not provided in devicetree, the
-driver will try to read these values from the registers during probe but
-this fails if the interconnect is not on and then crashes the system.
+In the !ingress path under sk_psock_handle_skb(), when sending data to the
+remote under snd_buf limitations, partial skb data might be transmitted.
 
-So we can provide these properties in devicetree (queried after patching
-BAM driver to enable the necessary interconnect) so we can probe
-cryptobam without reading registers and then also use the QCE as
-expected.
+Although we preserved the partial transmission state (offset/length), the
+state wasn't properly consumed during retries. This caused the retry path
+to resend the entire skb data instead of continuing from the previous
+offset, resulting in data overlap at the receiver side.
 
-Fixes: 4d29db204361 ("arm64: dts: qcom: sm8350: fix BAM DMA crash and reboot")
-Fixes: f1040a7fe8f0 ("arm64: dts: qcom: sm8350: Add Crypto Engine support")
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
-Link: https://lore.kernel.org/r/20250212-bam-dma-fixes-v1-1-f560889e65d8@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 405df89dd52c ("bpf, sockmap: Improved check for empty queue")
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Link: https://lore.kernel.org/r/20250407142234.47591-3-jiayuan.chen@linux.dev
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8350.dtsi | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ net/core/skmsg.c | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-index 5376c0a00fab6..215782b1970df 100644
---- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-@@ -1754,11 +1754,11 @@
- 			interrupts = <GIC_SPI 272 IRQ_TYPE_LEVEL_HIGH>;
- 			#dma-cells = <1>;
- 			qcom,ee = <0>;
-+			qcom,num-ees = <4>;
-+			num-channels = <16>;
- 			qcom,controlled-remotely;
- 			iommus = <&apps_smmu 0x594 0x0011>,
- 				 <&apps_smmu 0x596 0x0011>;
--			/* FIXME: Probing BAM DMA causes some abort and system hang */
--			status = "fail";
- 		};
+diff --git a/net/core/skmsg.c b/net/core/skmsg.c
+index f76cbf49c68c8..74eac311faf25 100644
+--- a/net/core/skmsg.c
++++ b/net/core/skmsg.c
+@@ -655,11 +655,6 @@ static void sk_psock_backlog(struct work_struct *work)
+ 	int ret;
  
- 		crypto: crypto@1dfa000 {
-@@ -1770,8 +1770,6 @@
- 				 <&apps_smmu 0x596 0x0011>;
- 			interconnects = <&aggre2_noc MASTER_CRYPTO 0 &mc_virt SLAVE_EBI1 0>;
- 			interconnect-names = "memory";
--			/* FIXME: dependency BAM DMA is disabled */
--			status = "disabled";
- 		};
+ 	mutex_lock(&psock->work_mutex);
+-	if (unlikely(state->len)) {
+-		len = state->len;
+-		off = state->off;
+-	}
+-
+ 	while ((skb = skb_peek(&psock->ingress_skb))) {
+ 		len = skb->len;
+ 		off = 0;
+@@ -669,6 +664,13 @@ static void sk_psock_backlog(struct work_struct *work)
+ 			off = stm->offset;
+ 			len = stm->full_len;
+ 		}
++
++		/* Resume processing from previous partial state */
++		if (unlikely(state->len)) {
++			len = state->len;
++			off = state->off;
++		}
++
+ 		ingress = skb_bpf_ingress(skb);
+ 		skb_bpf_redirect_clear(skb);
+ 		do {
+@@ -696,6 +698,8 @@ static void sk_psock_backlog(struct work_struct *work)
+ 			len -= ret;
+ 		} while (len);
  
- 		ipa: ipa@1e40000 {
++		/* The entire skb sent, clear state */
++		sk_psock_skb_state(psock, state, 0, 0);
+ 		skb = skb_dequeue(&psock->ingress_skb);
+ 		kfree_skb(skb);
+ 	}
 -- 
 2.39.5
 
