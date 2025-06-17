@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C99081E8332;
-	Tue, 17 Jun 2025 15:33:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E774623B633;
+	Tue, 17 Jun 2025 15:33:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750174404; cv=none; b=VmwZGMdUrGcHh6En/b/24iTvOUthqbIBPvcL7anplBsV0cmTV4QEcGN3AKciMBNnFjoKif5lvfLbV2Us0gwoOt2l+KtB+VsonL/DAHI5ol3HOi6hoW4CYd0t2kMQT/kPnzzkOZrfE7CWNhvn14DpWgKl/c5TaIpX+St6H4vsC2w=
+	t=1750174408; cv=none; b=hlk0BM3iFv6EAQ+hYFlGj+JsQxdodUgr+exRBou52xeKAhD8efn3uhazJCSepn6/c/NgZgj8WGEH5jUksFR+3R0rzXV0LReS1fiuXo92+zB1efhKJHq4k6RuGQuqU0dKl6g5iycpyDyP3sTLmMS+yL/Xy9qq04VQplK+ljKkGd0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750174404; c=relaxed/simple;
-	bh=s2cuhzCb0RmK9Nkluxo2SnzqwFPzq15/1hp4AOaDk7c=;
+	s=arc-20240116; t=1750174408; c=relaxed/simple;
+	bh=V+jYs8ZGLWmqJcP6Wa7qdrFxxP29zwxuIq+tvPcTWXc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K6qljVuDgg1cp15zKoh+35YrKgRz7+RjMe/JjHLc3KhXxdGBMg0tjmElT/pOnKkvVB3CvltDBUHXpWFkGkvR4Lv75ESD1DfRnBXYsn958UpqVj2kPj0QN+nTLERg/sDaBVXKY0E+GSbPssd2cnty0En5XTl0BBawClwHJkEgp78=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2mQE2AR5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dg8e/jlzXhJvs59VscK1zLw4JGoBU7htdWySedOlhCKPk8WkXudRuOYOFitLJpP+E1cbnxs4vBwh9lJUSDgB/5iFqsP2NN3usNGjnhm5llUDNBKv1Th5FUMNNbMz2ViSYVhFP1KVTHkTddcLmBOB0nubpO9gBS7h7MALqiU8EGs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L/fiZsRO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2mQE2AR5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37508C4CEE3;
-	Tue, 17 Jun 2025 15:33:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L/fiZsRO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61624C4CEE7;
+	Tue, 17 Jun 2025 15:33:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750174404;
-	bh=s2cuhzCb0RmK9Nkluxo2SnzqwFPzq15/1hp4AOaDk7c=;
+	s=korg; t=1750174407;
+	bh=V+jYs8ZGLWmqJcP6Wa7qdrFxxP29zwxuIq+tvPcTWXc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2mQE2AR5nmFZePh++KpqUnG+L+PaN63HOOKLyPXUZockH9UknCkqmt6VQLhYPkn9L
-	 gbGDIp4Qv5uaKanhRntBBa+ta8NhHcgB/CCz1Eu7TOWS6LwadDHd5b8m6o9myUl21/
-	 22df4F9rRr/eneUX5mJ4wR2QCADKnCC3BFGPuvgY=
+	b=L/fiZsROZI7nVkdiQgAS33kdVcWwf/pNAl04rkzxj+VC7arALagSIVhAzXGWIAhBO
+	 Od3hyizkeaNVB11BHE5/tKXm8VhlrdjW8aBcrKC2GZbo+0xADCs0nySDzSGqIp0dn1
+	 21lFc/fCkRHFUM51LKV2uKTgJflhTLXb1eEVEyEQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>,
-	Kees Cook <kees@kernel.org>,
+	Annie Li <jiayanli@google.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 064/356] watchdog: exar: Shorten identity name to fit correctly
-Date: Tue, 17 Jun 2025 17:22:59 +0200
-Message-ID: <20250617152340.808230508@linuxfoundation.org>
+Subject: [PATCH 6.12 015/512] x86/microcode/AMD: Do not return error when microcode update is not necessary
+Date: Tue, 17 Jun 2025 17:19:41 +0200
+Message-ID: <20250617152420.144852037@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
-References: <20250617152338.212798615@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,46 +47,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kees Cook <kees@kernel.org>
+From: Annie Li <jiayanli@google.com>
 
-[ Upstream commit 8e28276a569addb8a2324439ae473848ee52b056 ]
+[ Upstream commit b43dc4ab097859c24e2a6993119c927cffc856aa ]
 
-The static initializer for struct watchdog_info::identity is too long
-and gets initialized without a trailing NUL byte. Since the length
-of "identity" is part of UAPI and tied to ioctls, just shorten
-the name of the device. Avoids the warning seen with GCC 15's
--Wunterminated-string-initialization option:
+After
 
-drivers/watchdog/exar_wdt.c:224:27: warning: initializer-string for array of 'unsigned char' truncates NUL terminator but destination lacks 'nonstring' attribute (33 chars into 32 available) [-Wunterminated-string-initialization]
-  224 |         .identity       = "Exar/MaxLinear XR28V38x Watchdog",
-      |                           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  6f059e634dcd("x86/microcode: Clarify the late load logic"),
 
-Fixes: 81126222bd3a ("watchdog: Exar/MaxLinear XR28V38x driver")
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20250415225246.work.458-kees@kernel.org
-Signed-off-by: Kees Cook <kees@kernel.org>
+if the load is up-to-date, the AMD side returns UCODE_OK which leads to
+load_late_locked() returning -EBADFD.
+
+Handle UCODE_OK in the switch case to avoid this error.
+
+  [ bp: Massage commit message. ]
+
+Fixes: 6f059e634dcd ("x86/microcode: Clarify the late load logic")
+Signed-off-by: Annie Li <jiayanli@google.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://lore.kernel.org/20250430053424.77438-1-jiayanli@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/exar_wdt.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/kernel/cpu/microcode/core.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/watchdog/exar_wdt.c b/drivers/watchdog/exar_wdt.c
-index 7c61ff3432711..c2e3bb08df899 100644
---- a/drivers/watchdog/exar_wdt.c
-+++ b/drivers/watchdog/exar_wdt.c
-@@ -221,7 +221,7 @@ static const struct watchdog_info exar_wdt_info = {
- 	.options	= WDIOF_KEEPALIVEPING |
- 			  WDIOF_SETTIMEOUT |
- 			  WDIOF_MAGICCLOSE,
--	.identity	= "Exar/MaxLinear XR28V38x Watchdog",
-+	.identity	= "Exar XR28V38x Watchdog",
- };
- 
- static const struct watchdog_ops exar_wdt_ops = {
+diff --git a/arch/x86/kernel/cpu/microcode/core.c b/arch/x86/kernel/cpu/microcode/core.c
+index 079f046ee26d1..e8021d3e58824 100644
+--- a/arch/x86/kernel/cpu/microcode/core.c
++++ b/arch/x86/kernel/cpu/microcode/core.c
+@@ -696,6 +696,8 @@ static int load_late_locked(void)
+ 		return load_late_stop_cpus(true);
+ 	case UCODE_NFOUND:
+ 		return -ENOENT;
++	case UCODE_OK:
++		return 0;
+ 	default:
+ 		return -EBADFD;
+ 	}
 -- 
 2.39.5
 
