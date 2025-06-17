@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCAFC2F2375;
-	Tue, 17 Jun 2025 16:00:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E0262F2346;
+	Tue, 17 Jun 2025 16:00:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750176021; cv=none; b=gMj8zk3t4ZXOYlM7CwBLiQzvpBepKrsh5U61Lz8mRpEKPcPpKt+Q3Q7lW61ldOvoY/sm6iFn6djpfPXKArsrc9Kf0gi9lkoG9APr63Kpzt5SKUd6Bl7O6Zllzbt+wKu6b7ohld6oj7blqJx0BcyMubqPYSUzlg51uFch9oXzA/U=
+	t=1750176025; cv=none; b=kbnPK5JH4sNI8hUxsQv7JV85ktx55f/znrycZsq/wowKJEIOLQLgbHTJT0R9ne0YjRnh2z/jCjNu1jJk6PLULz9VNc2jMtgvtDlnHRHP5AufUeJ0MTZGb1/4iPiyjXKd18Xv2mk/qGSF564ooozb4ZZNuxxaf2xhSeFpmX+ZNhs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750176021; c=relaxed/simple;
-	bh=qLpyNS7sjXgpREz10xhMyCD4WhAOlppPSPf3OwGkGrs=;
+	s=arc-20240116; t=1750176025; c=relaxed/simple;
+	bh=72fRlqSn8QxVJonmzNRJM+8TyU4k3gXTIoMqMN8npVQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lIojRH8/FL5faj51ND/qSzXb+pzZtLqOnHSOS8z5maZDTY+IDJ/DTBvZaA/SQ9fGvq6KqXM3p+jd3seeCq/we6VS+D6EZ9YEtbvgcz+RwwgD3K5UEREF8fM2khpnNvim7Zm49eHSkVxNUVQeqF6x+rXNcy/dONlhn4IzGO6ZmCk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WoVQBzyU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g/wUY8nE8YHfcArnzZhthAi/0hKl2cS68ftuPMioceRdc6KSwiGbp+RqGDXMsmmRD/uNyYKsrUF8/TNDVFVHbmuROWYhLlDEfDpFZW9NooDwV7j4HJ5H+a4FUXXNo8w1KRcLaWx4StXkwFBFYd9M3NC5XYrR57oVDC4+w6/tags=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h1ItIem3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WoVQBzyU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B4F8C4CEF4;
-	Tue, 17 Jun 2025 16:00:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h1ItIem3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 801C2C4CEE7;
+	Tue, 17 Jun 2025 16:00:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750176021;
-	bh=qLpyNS7sjXgpREz10xhMyCD4WhAOlppPSPf3OwGkGrs=;
+	s=korg; t=1750176025;
+	bh=72fRlqSn8QxVJonmzNRJM+8TyU4k3gXTIoMqMN8npVQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WoVQBzyUtuA4ipee9y8/K4iiF5ZjaJ6fiJtFFrLCYpMkjUODBdPM9gl9NJZC0uvVZ
-	 bFtRJFCSGrCIpVfM5XfiRy+GkfWv0/7r3293S9D2cn00e6kKqW1WWY/Nlk/9Dwjhh6
-	 azLmt72gqLY+NLKDspwyn1FxaZ1ADujCltyQ713M=
+	b=h1ItIem3OmuzPm+3GbzFu7VCxvUP1ouFV1ayeSf1qWmeFJqmtSte2LH502c+d6OIi
+	 QP8VqNbECxPMh2LJ6HPdkt7v0jtthT4AvHUnyZbBlQu/cbOssttVdARbTWY4jTJBKG
+	 NHTXs0dRbR+nC9hCHli2TQGUcyJzL/OnGK8ZH2x8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Terry Tritton <terry.tritton@linaro.org>,
-	Kees Cook <kees@kernel.org>,
+	Brian Pellegrino <bpellegrino@arka.org>,
+	Sam Winchenbach <swinchenbach@arka.org>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 144/780] selftests/seccomp: fix negative_ENOSYS tracer tests on arm32
-Date: Tue, 17 Jun 2025 17:17:32 +0200
-Message-ID: <20250617152457.371781705@linuxfoundation.org>
+Subject: [PATCH 6.6 236/356] iio: filter: admv8818: Support frequencies >= 2^32
+Date: Tue, 17 Jun 2025 17:25:51 +0200
+Message-ID: <20250617152347.702959390@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
+References: <20250617152338.212798615@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,52 +48,73 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Terry Tritton <terry.tritton@linaro.org>
+From: Brian Pellegrino <bpellegrino@arka.org>
 
-[ Upstream commit 73989c998814d82c71d523c104c398925470d59e ]
+[ Upstream commit 9016776f1301627de78a633bda7c898425a56572 ]
 
-TRACE_syscall.ptrace.negative_ENOSYS and TRACE_syscall.seccomp.negative_ENOSYS
-on arm32 are being reported as failures instead of skipping.
+This patch allows writing u64 values to the ADMV8818's high and low-pass
+filter frequencies. It includes the following changes:
 
-The teardown_trace_fixture function sets the test to KSFT_FAIL in case of a
-non 0 return value from the tracer process.
-Due to _metadata now being shared between the forked processes the tracer is
-returning the KSFT_SKIP value set by the tracee which is non 0.
+- Rejects negative frequencies in admv8818_write_raw.
+- Adds a write_raw_get_fmt function to admv8818's iio_info, returning
+  IIO_VAL_INT_64 for the high and low-pass filter 3dB frequency channels.
 
-Remove the setting of the _metadata.exit_code in teardown_trace_fixture.
-
-Fixes: 24cf65a62266 ("selftests/harness: Share _metadata between forked processes")
-Signed-off-by: Terry Tritton <terry.tritton@linaro.org>
-Link: https://lore.kernel.org/r/20250509115622.64775-1-terry.tritton@linaro.org
-Signed-off-by: Kees Cook <kees@kernel.org>
+Fixes: f34fe888ad05 ("iio:filter:admv8818: add support for ADMV8818")
+Signed-off-by: Brian Pellegrino <bpellegrino@arka.org>
+Signed-off-by: Sam Winchenbach <swinchenbach@arka.org>
+Link: https://patch.msgid.link/20250328174831.227202-7-sam.winchenbach@framepointer.org
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/seccomp/seccomp_bpf.c | 6 ------
- 1 file changed, 6 deletions(-)
+ drivers/iio/filter/admv8818.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/tools/testing/selftests/seccomp/seccomp_bpf.c b/tools/testing/selftests/seccomp/seccomp_bpf.c
-index 53bf6a9c801f8..61acbd45ffaaf 100644
---- a/tools/testing/selftests/seccomp/seccomp_bpf.c
-+++ b/tools/testing/selftests/seccomp/seccomp_bpf.c
-@@ -1629,14 +1629,8 @@ void teardown_trace_fixture(struct __test_metadata *_metadata,
- {
- 	if (tracer) {
- 		int status;
--		/*
--		 * Extract the exit code from the other process and
--		 * adopt it for ourselves in case its asserts failed.
--		 */
- 		ASSERT_EQ(0, kill(tracer, SIGUSR1));
- 		ASSERT_EQ(tracer, waitpid(tracer, &status, 0));
--		if (WEXITSTATUS(status))
--			_metadata->exit_code = KSFT_FAIL;
- 	}
+diff --git a/drivers/iio/filter/admv8818.c b/drivers/iio/filter/admv8818.c
+index 380e119b3cf54..cc8ce0fe74e7c 100644
+--- a/drivers/iio/filter/admv8818.c
++++ b/drivers/iio/filter/admv8818.c
+@@ -402,6 +402,19 @@ static int admv8818_read_lpf_freq(struct admv8818_state *st, u64 *lpf_freq)
+ 	return ret;
  }
  
++static int admv8818_write_raw_get_fmt(struct iio_dev *indio_dev,
++								struct iio_chan_spec const *chan,
++								long mask)
++{
++	switch (mask) {
++	case IIO_CHAN_INFO_LOW_PASS_FILTER_3DB_FREQUENCY:
++	case IIO_CHAN_INFO_HIGH_PASS_FILTER_3DB_FREQUENCY:
++		return IIO_VAL_INT_64;
++	default:
++		return -EINVAL;
++	}
++}
++
+ static int admv8818_write_raw(struct iio_dev *indio_dev,
+ 			      struct iio_chan_spec const *chan,
+ 			      int val, int val2, long info)
+@@ -410,6 +423,9 @@ static int admv8818_write_raw(struct iio_dev *indio_dev,
+ 
+ 	u64 freq = ((u64)val2 << 32 | (u32)val);
+ 
++	if ((s64)freq < 0)
++		return -EINVAL;
++
+ 	switch (info) {
+ 	case IIO_CHAN_INFO_LOW_PASS_FILTER_3DB_FREQUENCY:
+ 		return admv8818_lpf_select(st, freq);
+@@ -571,6 +587,7 @@ static int admv8818_set_mode(struct iio_dev *indio_dev,
+ 
+ static const struct iio_info admv8818_info = {
+ 	.write_raw = admv8818_write_raw,
++	.write_raw_get_fmt = admv8818_write_raw_get_fmt,
+ 	.read_raw = admv8818_read_raw,
+ 	.debugfs_reg_access = &admv8818_reg_access,
+ };
 -- 
 2.39.5
 
