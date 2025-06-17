@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95EE52FA64D;
-	Tue, 17 Jun 2025 16:37:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1780C2DFF0A;
+	Tue, 17 Jun 2025 16:37:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750178242; cv=none; b=O8afHoQ2VF7X2emxLTml0IT76t77bJNxABVWCR42M+1WKg4krIiUarbihBQKAXjQ5fLBOeWB6nUGj2c2/j1H15/f/OSM1qKFQ62XZ0xZjsf14ZaN/CYSXnJ/4ljGf/UbkzQfYomLdR/AXZR/NHcsscS+FgSTgsHaMAd19+omGEI=
+	t=1750178246; cv=none; b=PUIBxV6vv9mkuMTBi9+T+A7KoHrVlHYSnFoPtu5itfs5VXzNU4XMjOjYFG2ehqxkA5Js3obF0f7mTz+9acXfBpxVcdW3GCWjzYOlQVpAkSboIzm3lUMl8HbyQs8s30y/6j/7QdvRNWh71rDGZLee/EDkHPyZVqJEnpcvEPcKx94=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750178242; c=relaxed/simple;
-	bh=620cGVCDZ7m0E+jqoz6BclSzn/mqpINx20Qt4gvEFuA=;
+	s=arc-20240116; t=1750178246; c=relaxed/simple;
+	bh=6TO/yT9GfzcaQ4hkPRTDfx3IAh6ORqytCeZqLHq6t24=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UomVEAX7Uv6ryuYlAM0gn3FaCWIyyBhzSvIlcQ9fbUqY1zQ2wND20urUTNeiPsp6hcVUA+moiG/obb5aqD3SgesQxD31exGAt2SpcTz/5LUbP+Ci7yDIu1z/iHoaWAhJSNxLPE2cuoMeurHbvlgAuKqUrQZkjXiKb9dB2f7IC44=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OLl9IbZj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AYOo9DBf0dUrQmxPkfCYb8bQ/J/bikGJ0N7UX8JRrTPFpRzHHmaiIW/uSyZj2CR6J/qWsrJQxaOO+BYlXJQSS9EnEWnftcP7dsTVXN2LJBt6Z4gPzgVY3O87CB9RLSGygTf354q2qu206UrGvjqv5td5l+SA1Gxfd/77i2Glp2A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jvwZPUFj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OLl9IbZj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB240C4CEF2;
-	Tue, 17 Jun 2025 16:37:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jvwZPUFj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B7E0C4CEF0;
+	Tue, 17 Jun 2025 16:37:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750178242;
-	bh=620cGVCDZ7m0E+jqoz6BclSzn/mqpINx20Qt4gvEFuA=;
+	s=korg; t=1750178246;
+	bh=6TO/yT9GfzcaQ4hkPRTDfx3IAh6ORqytCeZqLHq6t24=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OLl9IbZjh1M4SGdSwCMBNy2J/jiU7iG6lXVBVseJ7GgrplgEe6jLF6CJbCqyaXJoY
-	 ZIe5eKPZbhh8mshVMNYpAHqOBu6F7gtjZrb/qW8tLRRXuPYqaOsyGjj0m8VMw10+jh
-	 XDx/ZH+t2jizc+iAFIaIkHkmqQtmMZVC0w8LuCbQ=
+	b=jvwZPUFjSeJoCvoqBNZ38LiUstY9LQ4efT4ZbpkKdpxbxrepEDMMiETrctY1G5IXm
+	 hNXdNpSEJ6pWNPzXz5a8Em9yIqdSnoD68YNeQkGIeVzPm0QXVayBqY2taCPjoBpcDf
+	 P1rI/n67CJ2kLjNTmlkiXSdkesb1nNXv6hPqFCWg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Henry Martin <bsdhenrymartin@gmail.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	"Daniel Thompson (RISCstar)" <danielt@kernel.org>,
-	Lee Jones <lee@kernel.org>,
+	Gerrard Tai <gerrard.tai@starlabs.sg>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 428/780] backlight: pm8941: Add NULL check in wled_configure()
-Date: Tue, 17 Jun 2025 17:22:16 +0200
-Message-ID: <20250617152508.898124777@linuxfoundation.org>
+Subject: [PATCH 6.12 468/512] net_sched: ets: fix a race in ets_qdisc_change()
+Date: Tue, 17 Jun 2025 17:27:14 +0200
+Message-ID: <20250617152438.541204910@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,49 +48,60 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Henry Martin <bsdhenrymartin@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit e12d3e1624a02706cdd3628bbf5668827214fa33 ]
+[ Upstream commit d92adacdd8c2960be856e0b82acc5b7c5395fddb ]
 
-devm_kasprintf() returns NULL when memory allocation fails. Currently,
-wled_configure() does not check for this case, which results in a NULL
-pointer dereference.
+Gerrard Tai reported a race condition in ETS, whenever SFQ perturb timer
+fires at the wrong time.
 
-Add NULL check after devm_kasprintf() to prevent this issue.
+The race is as follows:
 
-Fixes: f86b77583d88 ("backlight: pm8941: Convert to using %pOFn instead of device_node.name")
-Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: "Daniel Thompson (RISCstar)" <danielt@kernel.org>
-Link: https://lore.kernel.org/r/20250401091647.22784-1-bsdhenrymartin@gmail.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+CPU 0                                 CPU 1
+[1]: lock root
+[2]: qdisc_tree_flush_backlog()
+[3]: unlock root
+ |
+ |                                    [5]: lock root
+ |                                    [6]: rehash
+ |                                    [7]: qdisc_tree_reduce_backlog()
+ |
+[4]: qdisc_put()
+
+This can be abused to underflow a parent's qlen.
+
+Calling qdisc_purge_queue() instead of qdisc_tree_flush_backlog()
+should fix the race, because all packets will be purged from the qdisc
+before releasing the lock.
+
+Fixes: b05972f01e7d ("net: sched: tbf: don't call qdisc_put() while holding tree lock")
+Reported-by: Gerrard Tai <gerrard.tai@starlabs.sg>
+Suggested-by: Gerrard Tai <gerrard.tai@starlabs.sg>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20250611111515.1983366-5-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/backlight/qcom-wled.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ net/sched/sch_ets.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/video/backlight/qcom-wled.c b/drivers/video/backlight/qcom-wled.c
-index 9afe701b2a1b6..a63bb42c8f8b0 100644
---- a/drivers/video/backlight/qcom-wled.c
-+++ b/drivers/video/backlight/qcom-wled.c
-@@ -1406,9 +1406,11 @@ static int wled_configure(struct wled *wled)
- 	wled->ctrl_addr = be32_to_cpu(*prop_addr);
- 
- 	rc = of_property_read_string(dev->of_node, "label", &wled->name);
--	if (rc)
-+	if (rc) {
- 		wled->name = devm_kasprintf(dev, GFP_KERNEL, "%pOFn", dev->of_node);
--
-+		if (!wled->name)
-+			return -ENOMEM;
-+	}
- 	switch (wled->version) {
- 	case 3:
- 		u32_opts = wled3_opts;
+diff --git a/net/sched/sch_ets.c b/net/sched/sch_ets.c
+index 2c069f0181c62..037f764822b96 100644
+--- a/net/sched/sch_ets.c
++++ b/net/sched/sch_ets.c
+@@ -661,7 +661,7 @@ static int ets_qdisc_change(struct Qdisc *sch, struct nlattr *opt,
+ 	for (i = q->nbands; i < oldbands; i++) {
+ 		if (i >= q->nstrict && q->classes[i].qdisc->q.qlen)
+ 			list_del_init(&q->classes[i].alist);
+-		qdisc_tree_flush_backlog(q->classes[i].qdisc);
++		qdisc_purge_queue(q->classes[i].qdisc);
+ 	}
+ 	WRITE_ONCE(q->nstrict, nstrict);
+ 	memcpy(q->prio2band, priomap, sizeof(priomap));
 -- 
 2.39.5
 
