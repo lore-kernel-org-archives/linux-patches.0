@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3E5C18E025;
-	Tue, 17 Jun 2025 16:18:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 365A220B807;
+	Tue, 17 Jun 2025 16:18:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177084; cv=none; b=eWcYIEWZd1bcyRUPGutgAUpAQVgt+p35qIbgxPg3jhB0GqBZeCyro2ne3ovs6VNQi7RwhRlItqIRHkJwvQJQiVJPXKmat6G9J0AqnhcXEZuzG+MD9yBep6GWy9OoxEQP1JUNwSoWsevc+HP4TC0+1jjIGC48d8GO/Yu+1JBZvAE=
+	t=1750177087; cv=none; b=fSM5VNhhV66Gt8/cNGAxt5AlypcI9AmZCGZGxKTd+MaM9XWdX7nm1a2kU6djgqUElYjQ1Seu0uT+1hQhxT7VXo8pAtr9k4lhu4IvzB+YA0v26LqNRa1cKCEnSUICY3t4krQJgdGEL7YkZl+LwWs5zODtstj01RlL87BuYcdp2aU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177084; c=relaxed/simple;
-	bh=nat7DGFeRNyPGVQNYniapC+khKVdZTphAyUBP+JGyOg=;
+	s=arc-20240116; t=1750177087; c=relaxed/simple;
+	bh=33tm+DYyXJJvtotchUNsw5+STpSUGpCRfaLqbmdWqsQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gBLGBP0xWv4Zpa1fhboWbKgQpTmZmUQhmAQHkZ0jcLPDelDshG7YGW1dGll5wdsV4tjYSblQoUVnhiIh25ra2LNJTrAqdRmpukkxXZkoZJNXIf03y9T76e50EL9DQkae8Ml7qzvfKX+UlpBnszs2BvakaWwYCqhagl6SUR1nKqI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nhLEZMHC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I3KtKEVEWMwP/iFn6xNsCwIFJXxLcu7MjN4MDa7p+wx1uE1TfIatJAtqHOQlsdAPlutIdFNGeoWPssOhcbqxMbjJG0qkphEh+G6F2+M8mAsgX5qgxJ/1tifgbWgEy3OWpiUsIsSlu2aK+XBz6OYUuKoTC0vhz/6uE9X6uDr9SnI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2lob0M9U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nhLEZMHC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BADEAC4CEE3;
-	Tue, 17 Jun 2025 16:18:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2lob0M9U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99B54C4CEE3;
+	Tue, 17 Jun 2025 16:18:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177084;
-	bh=nat7DGFeRNyPGVQNYniapC+khKVdZTphAyUBP+JGyOg=;
+	s=korg; t=1750177087;
+	bh=33tm+DYyXJJvtotchUNsw5+STpSUGpCRfaLqbmdWqsQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nhLEZMHCDW+SvSVH/2gVGgqWPPMhTe9kKWK75Mvv/3FbA8PbCM2BsWmk59xSWiyGZ
-	 lJLp3buuLNKXg+OqaBTi0hHrUPu+q+QgesPVFZCWo0r4Y5XLwNJ2APtlNo+UdhJKkt
-	 F6jcBOPezWZINpL7g4+jyHQC4Cq2ZaX1f4IzItCo=
+	b=2lob0M9U/i55OpqvU+vJyhJLHfzTcmFBcGvLzTf/o2q1cxd27SvOUGX8VdJn+xzNd
+	 F8oTZlQvg+Vd9Pf8IFSUMpSS3JBj9rJUCOy665VDh/vd8XacPclBHzFYJK/r+f3JmF
+	 au1AsGMzRueM+Vcd0vzTIzUNIHnOccjbWOx/HvBA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peng Fan <peng.fan@nxp.com>,
-	Jassi Brar <jassisinghbrar@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 295/512] mailbox: imx: Fix TXDB_V2 sending
-Date: Tue, 17 Jun 2025 17:24:21 +0200
-Message-ID: <20250617152431.551512419@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Wupeng Ma <mawupeng1@huawei.com>
+Subject: [PATCH 6.6 346/356] VMCI: fix race between vmci_host_setup_notify and vmci_ctx_unset_notify
+Date: Tue, 17 Jun 2025 17:27:41 +0200
+Message-ID: <20250617152352.065902957@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152338.212798615@linuxfoundation.org>
+References: <20250617152338.212798615@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,77 +46,99 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Wupeng Ma <mawupeng1@huawei.com>
 
-[ Upstream commit f5cb07ec6aabd1bb56adbdeb5f0d70cb524db2cd ]
+commit 1bd6406fb5f36c2bb1e96e27d4c3e9f4d09edde4 upstream.
 
-i.MX95 features several processing domains, Cortex-M7, Cortex-A55
-secure, Cortex-A55 non-secure. Each domain could communicate with
-SCMI firmware with a dedicated MU. But the current NXP SCMI firmware
-is not a RTOS, all processing logic codes are in interrupt context.
-So if high priority Cortex-M7 is communicating with SCMI firmware and
-requires a bit more time to handle the SCMI call, Linux MU TXDB_V2
-will be timeout with high possiblity in 1000us(the current value in
-imx-mailbox.c). Per NXP SCMI firmware design, if timeout, there is
-no recover logic, so SCMI agents should never timeout and always
-wait until the check condition met.
+During our test, it is found that a warning can be trigger in try_grab_folio
+as follow:
 
-Based on the upper reason, enlarge the timeout value to 10ms which
-is less chance to timeout, and retry if timeout really happends.
+  ------------[ cut here ]------------
+  WARNING: CPU: 0 PID: 1678 at mm/gup.c:147 try_grab_folio+0x106/0x130
+  Modules linked in:
+  CPU: 0 UID: 0 PID: 1678 Comm: syz.3.31 Not tainted 6.15.0-rc5 #163 PREEMPT(undef)
+  RIP: 0010:try_grab_folio+0x106/0x130
+  Call Trace:
+   <TASK>
+   follow_huge_pmd+0x240/0x8e0
+   follow_pmd_mask.constprop.0.isra.0+0x40b/0x5c0
+   follow_pud_mask.constprop.0.isra.0+0x14a/0x170
+   follow_page_mask+0x1c2/0x1f0
+   __get_user_pages+0x176/0x950
+   __gup_longterm_locked+0x15b/0x1060
+   ? gup_fast+0x120/0x1f0
+   gup_fast_fallback+0x17e/0x230
+   get_user_pages_fast+0x5f/0x80
+   vmci_host_unlocked_ioctl+0x21c/0xf80
+  RIP: 0033:0x54d2cd
+  ---[ end trace 0000000000000000 ]---
 
-Fixes: 5bfe4067d350 ("mailbox: imx: support channel type tx doorbell v2")
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Digging into the source, context->notify_page may init by get_user_pages_fast
+and can be seen in vmci_ctx_unset_notify which will try to put_page. However
+get_user_pages_fast is not finished here and lead to following
+try_grab_folio warning. The race condition is shown as follow:
+
+cpu0			cpu1
+vmci_host_do_set_notify
+vmci_host_setup_notify
+get_user_pages_fast(uva, 1, FOLL_WRITE, &context->notify_page);
+lockless_pages_from_mm
+gup_pgd_range
+gup_huge_pmd  // update &context->notify_page
+			vmci_host_do_set_notify
+			vmci_ctx_unset_notify
+			notify_page = context->notify_page;
+			if (notify_page)
+			put_page(notify_page);	// page is freed
+__gup_longterm_locked
+__get_user_pages
+follow_trans_huge_pmd
+try_grab_folio // warn here
+
+To slove this, use local variable page to make notify_page can be seen
+after finish get_user_pages_fast.
+
+Fixes: a1d88436d53a ("VMCI: Fix two UVA mapping bugs")
+Cc: stable <stable@kernel.org>
+Closes: https://lore.kernel.org/all/e91da589-ad57-3969-d979-879bbd10dddd@huawei.com/
+Signed-off-by: Wupeng Ma <mawupeng1@huawei.com>
+Link: https://lore.kernel.org/r/20250510033040.901582-1-mawupeng1@huawei.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mailbox/imx-mailbox.c | 21 +++++++++++++++------
- 1 file changed, 15 insertions(+), 6 deletions(-)
+ drivers/misc/vmw_vmci/vmci_host.c |   11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/mailbox/imx-mailbox.c b/drivers/mailbox/imx-mailbox.c
-index f815dab3be50c..0657bd3d8f97b 100644
---- a/drivers/mailbox/imx-mailbox.c
-+++ b/drivers/mailbox/imx-mailbox.c
-@@ -226,7 +226,7 @@ static int imx_mu_generic_tx(struct imx_mu_priv *priv,
+--- a/drivers/misc/vmw_vmci/vmci_host.c
++++ b/drivers/misc/vmw_vmci/vmci_host.c
+@@ -227,6 +227,7 @@ static int drv_cp_harray_to_user(void __
+ static int vmci_host_setup_notify(struct vmci_ctx *context,
+ 				  unsigned long uva)
  {
- 	u32 *arg = data;
- 	u32 val;
--	int ret;
-+	int ret, count;
++	struct page *page;
+ 	int retval;
  
- 	switch (cp->type) {
- 	case IMX_MU_TYPE_TX:
-@@ -240,11 +240,20 @@ static int imx_mu_generic_tx(struct imx_mu_priv *priv,
- 	case IMX_MU_TYPE_TXDB_V2:
- 		imx_mu_write(priv, IMX_MU_xCR_GIRn(priv->dcfg->type, cp->idx),
- 			     priv->dcfg->xCR[IMX_MU_GCR]);
--		ret = readl_poll_timeout(priv->base + priv->dcfg->xCR[IMX_MU_GCR], val,
--					 !(val & IMX_MU_xCR_GIRn(priv->dcfg->type, cp->idx)),
--					 0, 1000);
--		if (ret)
--			dev_warn_ratelimited(priv->dev, "channel type: %d failure\n", cp->type);
-+		ret = -ETIMEDOUT;
-+		count = 0;
-+		while (ret && (count < 10)) {
-+			ret =
-+			readl_poll_timeout(priv->base + priv->dcfg->xCR[IMX_MU_GCR], val,
-+					   !(val & IMX_MU_xCR_GIRn(priv->dcfg->type, cp->idx)),
-+					   0, 10000);
+ 	if (context->notify_page) {
+@@ -243,13 +244,11 @@ static int vmci_host_setup_notify(struct
+ 	/*
+ 	 * Lock physical page backing a given user VA.
+ 	 */
+-	retval = get_user_pages_fast(uva, 1, FOLL_WRITE, &context->notify_page);
+-	if (retval != 1) {
+-		context->notify_page = NULL;
++	retval = get_user_pages_fast(uva, 1, FOLL_WRITE, &page);
++	if (retval != 1)
+ 		return VMCI_ERROR_GENERIC;
+-	}
+-	if (context->notify_page == NULL)
+-		return VMCI_ERROR_UNAVAILABLE;
 +
-+			if (ret) {
-+				dev_warn_ratelimited(priv->dev,
-+						     "channel type: %d timeout, %d times, retry\n",
-+						     cp->type, ++count);
-+			}
-+		}
- 		break;
- 	default:
- 		dev_warn_ratelimited(priv->dev, "Send data on wrong channel type: %d\n", cp->type);
--- 
-2.39.5
-
++	context->notify_page = page;
+ 
+ 	/*
+ 	 * Map the locked page and set up notify pointer.
 
 
