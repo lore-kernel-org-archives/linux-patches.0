@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E415B18E025;
-	Tue, 17 Jun 2025 16:11:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B20AC18E025;
+	Tue, 17 Jun 2025 16:12:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750176718; cv=none; b=GfY7c99Soa0oZ0JyFZg74x7VWuJwiILs5pzji2790IK6oYagzRYHo3CSPaUqE3lEqRIEcbOTTLWb5iDlvzE0Q03EQsd32E9tfBGlq3AFbW79jjvV4fyUAl4YnSKcpQwlR95tbypTow56CaX4oxcC8OIjL430gHLirxQRbCyhtgU=
+	t=1750176720; cv=none; b=h4n+n3Txsbd7yw2+9S3W6IXnGf5OUnQwLAf1DhlaCzGK816F7xxxyEAUFxKRwi++xzfudiMBcpJvup+bf4rKtwFsUo28riEqRfttdUdy0N/flVpcXY3lPDKUCDip9AzCicwQwozh2mlYwN72x62/6hozWh3z+7gfpB1Ti5lJVBE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750176718; c=relaxed/simple;
-	bh=pc/rBwwxbJwCi2MT75IgIB8ZuY0+J7ocBcJ+F74wrbk=;
+	s=arc-20240116; t=1750176720; c=relaxed/simple;
+	bh=VBCMUEaaRSEbs3UyTEKkuWqJABs6SQmAEjXyQXEiqKI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Avj1Mpf37Bl91Unxr65W2sO1JAcwrSAzZsdfG6umryNS3V+JHtVlbewE0RONn1m0DbYcuArY04JolqlXusGvYIEKJ7TBxqaHTCnfEcwOajoEXzJrKiUqSFoaRsrEXlsiIKzlSGT3uUA871LVFGjT/1r4m22F+JJxwlmRvnfsJ0M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CsR3ZuQY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=XWl+3ye1c0M1O/UzSJsR8aNsnoQqAQ/Uwc98XtlrIMuqjINvCaRafgeHKiwZUW1sqN2DAq0bpwMFWpCkerbHN9y0XE2kn4LkFB43gQDIu4cl2Jrl6WcsP5SkYdgA8LnoUv1+mPaKA0gG2lmpluCQ8nmOuHbooX87akpXGTpRTss=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x2JEmIo8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CsR3ZuQY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11084C4CEE3;
-	Tue, 17 Jun 2025 16:11:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x2JEmIo8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21125C4CEE3;
+	Tue, 17 Jun 2025 16:11:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750176717;
-	bh=pc/rBwwxbJwCi2MT75IgIB8ZuY0+J7ocBcJ+F74wrbk=;
+	s=korg; t=1750176720;
+	bh=VBCMUEaaRSEbs3UyTEKkuWqJABs6SQmAEjXyQXEiqKI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CsR3ZuQYPCqgL66VCPSEUwy6UK+yECmAfHFvvmcFz+6a12OZSH1WrmMdvdq+3qWmZ
-	 MZUSVRR1b0c6u+kUct/C2bmeiwZsgDtCzmu0O8tbzJYfi0T65whsW2mnepIaYOie66
-	 ClH6GHN3ZhJ4RP3sOfi9kngYv3aPyP4NydDx0XQA=
+	b=x2JEmIo8+3BwVFaO5xDTzpyD45rxhkeGlRIimBL2Wkjp7N8VtkC9p/KQrQmFcduJV
+	 b4J+9ybmW7LPdfbOSGmBaezy9INVSGqX4ksgslAm+pKYkjNbjyVMox/rAc7C6I50zG
+	 sueS4adzxnsBXg/Y8RG00Rui81XItsNg4autn774=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
+	Vignesh Raman <vignesh.raman@collabora.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 219/780] wifi: iwlwifi: re-add IWL_AMSDU_8K case
-Date: Tue, 17 Jun 2025 17:18:47 +0200
-Message-ID: <20250617152500.376157048@linuxfoundation.org>
+Subject: [PATCH 6.12 260/512] arm64: defconfig: mediatek: enable PHY drivers
+Date: Tue, 17 Jun 2025 17:23:46 +0200
+Message-ID: <20250617152430.122153734@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,40 +46,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+From: Vignesh Raman <vignesh.raman@collabora.com>
 
-[ Upstream commit bdd6d93d7a109ba1080336fe07d0b4eb815efaf9 ]
+[ Upstream commit f52cd248d844f9451858992f924988ac413fdc7e ]
 
-This case in iwl_trans_get_rb_size_order was accidently combined with
-the IWL_AMSDU_12K case. Fix this.
+The mediatek display driver fails to probe on mt8173-elm-hana and
+mt8183-kukui-jacuzzi-juniper-sku16 in v6.14-rc4 due to missing PHY
+configurations.
 
-Fixes: 7391b2a4f7db ("wifi: iwlwifi: rework firmware error handling")
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20250423091408.ef19205aa358.Ifbf89e7b7391cd7070267b7360c53230b3b2c57c@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Commit 924d66011f24 ("drm/mediatek: stop selecting foreign drivers")
+stopped selecting the MediaTek PHY drivers, requiring them to be
+explicitly enabled in defconfig.
+
+Enable the following PHY drivers for MediaTek platforms:
+CONFIG_PHY_MTK_HDMI=m for HDMI display
+CONFIG_PHY_MTK_MIPI_DSI=m for DSI display
+CONFIG_PHY_MTK_DP=m for DP display
+
+Fixes: 924d66011f24 ("drm/mediatek: stop selecting foreign drivers")
+Reviewed-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+Signed-off-by: Vignesh Raman <vignesh.raman@collabora.com>
+Link: https://lore.kernel.org/r/20250512131933.1247830-1-vignesh.raman@collabora.com
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/iwl-trans.h | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/configs/defconfig | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/iwl-trans.h b/drivers/net/wireless/intel/iwlwifi/iwl-trans.h
-index ce4954b0d5246..44a249a753ecf 100644
---- a/drivers/net/wireless/intel/iwlwifi/iwl-trans.h
-+++ b/drivers/net/wireless/intel/iwlwifi/iwl-trans.h
-@@ -328,6 +328,7 @@ iwl_trans_get_rb_size_order(enum iwl_amsdu_size rb_size)
- 	case IWL_AMSDU_4K:
- 		return get_order(4 * 1024);
- 	case IWL_AMSDU_8K:
-+		return get_order(8 * 1024);
- 	case IWL_AMSDU_12K:
- 		return get_order(16 * 1024);
- 	default:
+diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+index 8fe7dbae33bf9..f988dd79add89 100644
+--- a/arch/arm64/configs/defconfig
++++ b/arch/arm64/configs/defconfig
+@@ -1536,6 +1536,9 @@ CONFIG_PHY_HISTB_COMBPHY=y
+ CONFIG_PHY_HISI_INNO_USB2=y
+ CONFIG_PHY_MVEBU_CP110_COMPHY=y
+ CONFIG_PHY_MTK_TPHY=y
++CONFIG_PHY_MTK_HDMI=m
++CONFIG_PHY_MTK_MIPI_DSI=m
++CONFIG_PHY_MTK_DP=m
+ CONFIG_PHY_QCOM_EDP=m
+ CONFIG_PHY_QCOM_PCIE2=m
+ CONFIG_PHY_QCOM_QMP=m
 -- 
 2.39.5
 
