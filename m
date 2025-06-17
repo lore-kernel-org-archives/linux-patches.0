@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F91B285061;
-	Tue, 17 Jun 2025 16:35:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79673285063;
+	Tue, 17 Jun 2025 16:35:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750178102; cv=none; b=JQQGi+/fHiN5rE/WBi4YmPDsHIAM/CqN7Im5ZMXleJyiml79EB+gAmGtqP+71mEqYipBY7JPyqIwmW4Pou80LWw+iHfEcmkCHO/28MN6S/cD/IVXDzJC3OUQLJoX9bA4jWtfBFg4YSSszoIHBhk3p6DZeCHro8PL4kA75CIU6jA=
+	t=1750178105; cv=none; b=AOKJK/GyVKCj/awD1s7z+rPm/rRWnqcXbdpBoFdoWfN7YEGxtNiYwrd4h0f8YWWtiF72TrcUy0RDvr6QaN8u5IZQCwZEN835vSJRIaBFIk7cLA6YVad1kiRHriuMtXgBhqqkPdok0RrX4484W1KJw8ley5eDvmpehH1JNYENQdQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750178102; c=relaxed/simple;
-	bh=nS5XPUo+MsciwtZEIlvlHBbNEV+L0Hdg4hNWn/EdFuM=;
+	s=arc-20240116; t=1750178105; c=relaxed/simple;
+	bh=YDJD12FLMjyA32SR/slzRI73awAg6/gxjve8WxoreDI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e/ksGkLQ7TvRnmPpPFl7NkCqM9EEA6MfhnJMnaUdFCrsVvQWsu5esJCb//B84LWe13AhG/HszoPccQUomhVFk9VzLzy/J0EaE0SICMJesdZwhyfIi8XQ8OiyysfGdLRcA0esyfFgn3Ee+8yVN73ZtbZo5sBjZp+KSTbnMXZjEpA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WlzjN9VO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jwC/wqzVmE5buQhAfgsnSA/SeikSePNpLr+Qx2XSZUi5iPnBx4wUc3hfc108QEiUEsyqeJd6mZkwFRP5EZ3KsQ0a0Qykp/wDMRpANgUPQll3SlY1Rb0jpM/IuoymyGwBhkOnsdH4aKDCbEXcOqgYB/+V/JiYMiKMF7NTFHDGxek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PNCFSvVo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WlzjN9VO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AFD3C4CEE7;
-	Tue, 17 Jun 2025 16:35:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PNCFSvVo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE157C4CEE3;
+	Tue, 17 Jun 2025 16:35:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750178102;
-	bh=nS5XPUo+MsciwtZEIlvlHBbNEV+L0Hdg4hNWn/EdFuM=;
+	s=korg; t=1750178105;
+	bh=YDJD12FLMjyA32SR/slzRI73awAg6/gxjve8WxoreDI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WlzjN9VOqOhC0IW1zKOj/QOBcJb5f8B9P2kmKsvaslBWtAGmtmxX+VPo77Awhnruf
-	 n17jjcSgc8/0ySB7lMRAtBE5bm162KGP17Kyh8jqSxgcAYuDaJGpMtdea/Eh+Jo0WI
-	 o/rVi3kT2Ql+uSPJuemW6X2YIzOpzvCAKTztJ8Ww=
+	b=PNCFSvVorebZPbrYCnyS+wnR6C1AEGQFd8A87UfNJQbCS7CYHawVpbWi374881SVq
+	 RMo06W4LOEm/vWB039EftQ1XB4HthcLWFqRFcSY063ru62Gkec9L7vA63+/Eh7oPDe
+	 ibAH0kwRajDTHgjoPx0saeUduOJNEySIKGHBeTBE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thuan Nguyen <thuan.nguyen-hong@banvien.com.vn>,
-	Duy Nguyen <duy.nguyen.rh@renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 410/780] arm64: dts: renesas: white-hawk-ard-audio: Fix TPU0 groups
-Date: Tue, 17 Jun 2025 17:21:58 +0200
-Message-ID: <20250617152508.163197653@linuxfoundation.org>
+Subject: [PATCH 6.12 447/512] drm/meson: use vclk_freq instead of pixel_freq in debug print
+Date: Tue, 17 Jun 2025 17:26:53 +0200
+Message-ID: <20250617152437.679085259@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,44 +47,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thuan Nguyen <thuan.nguyen-hong@banvien.com.vn>
+From: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
 
-[ Upstream commit 652eea251dd852f02cef6223f367220acb3d1867 ]
+[ Upstream commit faf2f8382088e8c74bd6eeb236c8c9190e61615e ]
 
-White Hawk ARD audio uses a clock generated by the TPU, but commit
-3d144ef10a44 ("pinctrl: renesas: r8a779g0: Fix TPU suffixes") renamed
-pin group "tpu_to0_a" to "tpu_to0_b".  Update DTS accordingly otherwise
-the sound driver does not receive a clock signal.
+meson_vclk_vic_supported_freq() has a debug print which includes the
+pixel freq. However, within the whole function the pixel freq is
+irrelevant, other than checking the end of the params array. Switch to
+printing the vclk_freq which is being compared / matched against the
+inputs to the function to avoid confusion when analyzing error reports
+from users.
 
-Fixes: 3d144ef10a448f89 ("pinctrl: renesas: r8a779g0: Fix TPU suffixes")
-Signed-off-by: Thuan Nguyen <thuan.nguyen-hong@banvien.com.vn>
-Signed-off-by: Duy Nguyen <duy.nguyen.rh@renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Acked-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
-Link: https://lore.kernel.org/TYCPR01MB8740608B675365215ADB0374B49CA@TYCPR01MB8740.jpnprd01.prod.outlook.com
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Fixes: e5fab2ec9ca4 ("drm/meson: vclk: add support for YUV420 setup")
+Signed-off-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20250606221031.3419353-1-martin.blumenstingl@googlemail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/renesas/white-hawk-ard-audio-da7212.dtso | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/meson/meson_vclk.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/renesas/white-hawk-ard-audio-da7212.dtso b/arch/arm64/boot/dts/renesas/white-hawk-ard-audio-da7212.dtso
-index c27b9b3d4e5f4..f2d53e958da11 100644
---- a/arch/arm64/boot/dts/renesas/white-hawk-ard-audio-da7212.dtso
-+++ b/arch/arm64/boot/dts/renesas/white-hawk-ard-audio-da7212.dtso
-@@ -108,7 +108,7 @@
- 	};
+diff --git a/drivers/gpu/drm/meson/meson_vclk.c b/drivers/gpu/drm/meson/meson_vclk.c
+index 3325580d885d0..c4123bb958e4c 100644
+--- a/drivers/gpu/drm/meson/meson_vclk.c
++++ b/drivers/gpu/drm/meson/meson_vclk.c
+@@ -790,9 +790,9 @@ meson_vclk_vic_supported_freq(struct meson_drm *priv,
+ 	}
  
- 	tpu0_pins: tpu0 {
--		groups = "tpu_to0_a";
-+		groups = "tpu_to0_b";
- 		function = "tpu";
- 	};
- };
+ 	for (i = 0 ; params[i].pixel_freq ; ++i) {
+-		DRM_DEBUG_DRIVER("i = %d pixel_freq = %lluHz alt = %lluHz\n",
+-				 i, params[i].pixel_freq,
+-				 PIXEL_FREQ_1000_1001(params[i].pixel_freq));
++		DRM_DEBUG_DRIVER("i = %d vclk_freq = %lluHz alt = %lluHz\n",
++				 i, params[i].vclk_freq,
++				 PIXEL_FREQ_1000_1001(params[i].vclk_freq));
+ 		DRM_DEBUG_DRIVER("i = %d phy_freq = %lluHz alt = %lluHz\n",
+ 				 i, params[i].phy_freq,
+ 				 PHY_FREQ_1000_1001(params[i].phy_freq));
 -- 
 2.39.5
 
