@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F9C620CCFB;
-	Tue, 17 Jun 2025 16:24:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 947C7204F73;
+	Tue, 17 Jun 2025 16:24:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177454; cv=none; b=awwcpgcqTc0gua8ty4vkk7zLEGmjkZ7FCYhvLKKlbtlNZtpfnGMttH7ERoWYF0EHb4MNbU1AOJjS80J1HrfrokA/VOS+FC1mXYhZCBEwTwFphoMHMidjk6RIWbMJH4Kz3y4anyBW1tWShVOhziUbjcUelJf8KqhJa96B8hZSRzE=
+	t=1750177457; cv=none; b=EOIOmNGh76fQ2+Zaqu2+EGZKLCrDIi/vkxTZIsuRuLgpH7deCNsGnNSS0YNONBw2a2qddhczfX30ipWyY0PvRhXgoi0qDZCKah6i5mJw0U9pqeZIp4IvfkvXeDI6nLaVuVggiHO/gMStEBG5pviv2Hv+/N2v1irjAM3jaNtnW8Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177454; c=relaxed/simple;
-	bh=MldG18YYgjL8IkxqjAzFZd6cXz+bDnJ4bg1Y3TEkwt4=;
+	s=arc-20240116; t=1750177457; c=relaxed/simple;
+	bh=o0OhMUDSwa2YCiicJBtLofGdMrPLVWv9z1maglfK4PM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dIzkD6Zb/ZuU2u1agZX9CDXB2cmue1hi07EsDLXCdNL+j+h0rfx28FTU8Ifj9bHkk2xVmHFd5mn4oJX19m1YBJAahpHiZmxp1hlRTzb7o9ys2BXZVgLmNzuXgr5tmT8XPNiVcsuwtmWcAE/OUwAaYziCVOQsMWFJEc45nssDAe0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=owjq/piS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e2Uf3z0aZwemrWi/oKoSV+k9kvQpnZU8faGY2iz0FnF/rYtg19/TMLHOmWtPfxY5cgUymu70b/rWPMYJF4XvnpIm1lFfFVS5T8A4Nw4xnx0oZhXswaJkEnK9WfN46CWRbamSfAP1/ZxLHYi2739rRpOSsjiTAjzx7KeIGs6TmEY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lrX00LLE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="owjq/piS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5107C4CEE3;
-	Tue, 17 Jun 2025 16:24:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lrX00LLE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03DAFC4CEE3;
+	Tue, 17 Jun 2025 16:24:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177454;
-	bh=MldG18YYgjL8IkxqjAzFZd6cXz+bDnJ4bg1Y3TEkwt4=;
+	s=korg; t=1750177457;
+	bh=o0OhMUDSwa2YCiicJBtLofGdMrPLVWv9z1maglfK4PM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=owjq/piSXSB2Kn0HC6tOnCQnfDNLvM8ofvYO9D61A8FInUcxuemgU/5NTwHmn5PrM
-	 rpKXQ/YblFU52khRpWlB6N4GpXazH3uPFYVXxEAAEiLnT8odakh75PRtahDNpOndky
-	 DarHTjPtRQH4BI7g0c5CKqZF7QVmXXJU/waMYz8Q=
+	b=lrX00LLE0GSVmRKq7DJQ0zH1QLiKP1utvUljmOKsNtL9fK4SOIHwYFFHhPEVs2g0I
+	 MK94KsyjoSbnKbb4pXD+XwXXhluZqYQ8P8d47icnhPZQ3mR0ArHXK/spBCQ62+KFvK
+	 +yAml8j39SPPmDP/0D5LYiZPa+h5Qfi+GpaXaVv0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li RongQing <lirongqing@baidu.com>,
-	Alex Williamson <alex.williamson@redhat.com>,
+	syzbot+f0c4a4aba757549ae26c@syzkaller.appspotmail.com,
+	Charalampos Mitrodimas <charmitro@posteo.net>,
+	Tung Nguyen <tung.quang.nguyen@est.tech>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 309/780] vfio/type1: Fix error unwind in migration dirty bitmap allocation
-Date: Tue, 17 Jun 2025 17:20:17 +0200
-Message-ID: <20250617152504.047644595@linuxfoundation.org>
+Subject: [PATCH 6.12 349/512] net: tipc: fix refcount warning in tipc_aead_encrypt
+Date: Tue, 17 Jun 2025 17:25:15 +0200
+Message-ID: <20250617152433.726327604@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
-References: <20250617152451.485330293@linuxfoundation.org>
+In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
+References: <20250617152419.512865572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,47 +49,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Li RongQing <lirongqing@baidu.com>
+From: Charalampos Mitrodimas <charmitro@posteo.net>
 
-[ Upstream commit 4518e5a60c7fbf0cdff393c2681db39d77b4f87e ]
+[ Upstream commit f29ccaa07cf3d35990f4d25028cc55470d29372b ]
 
-When setting up dirty page tracking at the vfio IOMMU backend for
-device migration, if an error is encountered allocating a tracking
-bitmap, the unwind loop fails to free previously allocated tracking
-bitmaps.  This occurs because the wrong loop index is used to
-generate the tracking object.  This results in unintended memory
-usage for the life of the current DMA mappings where bitmaps were
-successfully allocated.
+syzbot reported a refcount warning [1] caused by calling get_net() on
+a network namespace that is being destroyed (refcount=0). This happens
+when a TIPC discovery timer fires during network namespace cleanup.
 
-Use the correct loop index to derive the tracking object for
-freeing during unwind.
+The recently added get_net() call in commit e279024617134 ("net/tipc:
+fix slab-use-after-free Read in tipc_aead_encrypt_done") attempts to
+hold a reference to the network namespace. However, if the namespace
+is already being destroyed, its refcount might be zero, leading to the
+use-after-free warning.
 
-Fixes: d6a4c185660c ("vfio iommu: Implementation of ioctl for dirty pages tracking")
-Signed-off-by: Li RongQing <lirongqing@baidu.com>
-Link: https://lore.kernel.org/r/20250521034647.2877-1-lirongqing@baidu.com
-Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
+Replace get_net() with maybe_get_net(), which safely checks if the
+refcount is non-zero before incrementing it. If the namespace is being
+destroyed, return -ENODEV early, after releasing the bearer reference.
+
+[1]: https://lore.kernel.org/all/68342b55.a70a0220.253bc2.0091.GAE@google.com/T/#m12019cf9ae77e1954f666914640efa36d52704a2
+
+Reported-by: syzbot+f0c4a4aba757549ae26c@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/68342b55.a70a0220.253bc2.0091.GAE@google.com/T/#m12019cf9ae77e1954f666914640efa36d52704a2
+Fixes: e27902461713 ("net/tipc: fix slab-use-after-free Read in tipc_aead_encrypt_done")
+Signed-off-by: Charalampos Mitrodimas <charmitro@posteo.net>
+Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
+Link: https://patch.msgid.link/20250527-net-tipc-warning-v2-1-df3dc398a047@posteo.net
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vfio/vfio_iommu_type1.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/tipc/crypto.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/vfio/vfio_iommu_type1.c b/drivers/vfio/vfio_iommu_type1.c
-index 0ac56072af9f2..ba5d91e576af1 100644
---- a/drivers/vfio/vfio_iommu_type1.c
-+++ b/drivers/vfio/vfio_iommu_type1.c
-@@ -293,7 +293,7 @@ static int vfio_dma_bitmap_alloc_all(struct vfio_iommu *iommu, size_t pgsize)
- 			struct rb_node *p;
+diff --git a/net/tipc/crypto.c b/net/tipc/crypto.c
+index 8584893b47851..79f91b6ca8c84 100644
+--- a/net/tipc/crypto.c
++++ b/net/tipc/crypto.c
+@@ -818,7 +818,11 @@ static int tipc_aead_encrypt(struct tipc_aead *aead, struct sk_buff *skb,
+ 	}
  
- 			for (p = rb_prev(n); p; p = rb_prev(p)) {
--				struct vfio_dma *dma = rb_entry(n,
-+				struct vfio_dma *dma = rb_entry(p,
- 							struct vfio_dma, node);
+ 	/* Get net to avoid freed tipc_crypto when delete namespace */
+-	get_net(aead->crypto->net);
++	if (!maybe_get_net(aead->crypto->net)) {
++		tipc_bearer_put(b);
++		rc = -ENODEV;
++		goto exit;
++	}
  
- 				vfio_dma_bitmap_free(dma);
+ 	/* Now, do encrypt */
+ 	rc = crypto_aead_encrypt(req);
 -- 
 2.39.5
 
