@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 596FD2F94A9;
-	Tue, 17 Jun 2025 16:26:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF4812F9492;
+	Tue, 17 Jun 2025 16:26:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177579; cv=none; b=ZSAj8MApJWpDTaN55QPeEzyHFFTXReAp23/g/5u7AMNCZ1veiYnK2N/vYtHTUlMDZ1/Kv2Wc3I7I3KslMIXbzNaPhehYguVWcLcFJXUgs06lCP7ZRujBY0Ooc+Ea1o8pWOSkqnOL1DYmsojR3Tl9RdGnn0GUCnpmyEfoQ2/pW2s=
+	t=1750177582; cv=none; b=qqJo8MKv7IwJ1uNPbzorLozKBkOg9JHX3VnXxaS4HINB/w/8hyjtYX3vPpt5RDkaON0MsMFcZP7a044J+gl3DBDjVEhhkB0HShGWuFoTgePXioHCbK4tuSZJI5DHToX7+u5sJ+4YH1MeUhJMUC6a7Zev+QWDHv2Z1g1yfbmtsRs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177579; c=relaxed/simple;
-	bh=LVw9vogv6ScAXG9ROFrbbXuSkVPAF3K2tbi+ItTLNCM=;
+	s=arc-20240116; t=1750177582; c=relaxed/simple;
+	bh=USO2p/QdaUbmE4uU5NMzWpCMlAlXKf1ElgK4a6uWzPA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GdFfcuGn+962RAtLqc4TGTNFJ2hmlgFrufSxsPd68/ziVhC/iFf8SnVG2OOOERtVeOYPcYWKJ0IbyhwLr6EV0RclOKAW3jU4JFIwHuCbEQZs6rAsrKS5EBWgxE6pL1J6c0p13flPWvC+o7D0Km5wVdaVicCtrF/OqNCzO9XSpYU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kTQ59reY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P272+TftVj0tDc+XwoACF1HZGINCxyHb6ZL5z1baZI+RG9CNKX2ryZiatWY1tkaEdEXxRBUjFVQyHvpdKIjgUr/sYrSv/JbWiu1HE+7g2Q7FdqW2RoKyCzxqUu/zulK4T/6XzACvLngud9mXgwuq/fEO50SUXh8B1JeXKIyneiU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QG6TKrK5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kTQ59reY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE029C4CEE3;
-	Tue, 17 Jun 2025 16:26:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QG6TKrK5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0275C4CEE3;
+	Tue, 17 Jun 2025 16:26:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750177579;
-	bh=LVw9vogv6ScAXG9ROFrbbXuSkVPAF3K2tbi+ItTLNCM=;
+	s=korg; t=1750177582;
+	bh=USO2p/QdaUbmE4uU5NMzWpCMlAlXKf1ElgK4a6uWzPA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kTQ59reY0SynkDFzbu+V76feQ+DuUd4sf66RtUA9Ce/wW2c+l9Vpijo30Afw0t9i/
-	 02+9T+Zkrg9XxGGUwuGyMIDI8acP9sd/bvmfwklv8l4UumGZCZsjNQzHQ/rVuantJ6
-	 9pJ3sIuYa/iTnx5b3Y8d3cMjnRVKJGviAv6fp1B0=
+	b=QG6TKrK5C7Khszr394XCLyWF4ev0v3qE3i/VyRedSKg/u9EhV015QP0fD7+6hSxKY
+	 f9Kq9KMA/RdqdLWrwDG1qPKYN2vuxsXi9a3SSRmQAT0qT0k9af9J+AlNgJm6Ib9Mnh
+	 flSa7xLjY0ObPhPHtbCdopUD32sgM8IEihyDizt8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
-	Ankit Nautiyal <ankit.k.nautiyal@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	Shayne Chen <shayne.chen@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 366/512] drm/i915/psr: Fix using wrong mask in REG_FIELD_PREP
-Date: Tue, 17 Jun 2025 17:25:32 +0200
-Message-ID: <20250617152434.416140030@linuxfoundation.org>
+Subject: [PATCH 6.15 305/780] wifi: mt76: fix available_antennas setting
+Date: Tue, 17 Jun 2025 17:20:13 +0200
+Message-ID: <20250617152503.883643114@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617152419.512865572@linuxfoundation.org>
-References: <20250617152419.512865572@linuxfoundation.org>
+In-Reply-To: <20250617152451.485330293@linuxfoundation.org>
+References: <20250617152451.485330293@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,46 +45,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jouni Högander <jouni.hogander@intel.com>
+From: Shayne Chen <shayne.chen@mediatek.com>
 
-[ Upstream commit 57d63c6cd0851d3af612a556ec61b0f2a9bd522f ]
+[ Upstream commit 249173e94dd5edef9e704f89513de7d9715ddf22 ]
 
-Wrong mask is used in PORT_ALPM_LFPS_CTL_FIRST_LFPS_HALF_CYCLE_DURATION and
-PORT_ALPM_LFPS_CTL_LAST_LFPS_HALF_CYCLE_DURATION.
+Check if available_antennas_tx and available_antennas_rx are already set
+during the per-chip initialization phase; otherwise, they could be
+overwritten with incorrect values.
 
-Fixes: 295099580f04 ("drm/i915/psr: Add missing ALPM AUX-Less register definitions")
-Signed-off-by: Jouni Högander <jouni.hogander@intel.com>
-Reviewed-by: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
-Link: https://lore.kernel.org/r/20250526120512.1702815-12-jouni.hogander@intel.com
-(cherry picked from commit 8097128a40ff378761034ec72cdbf6f46e466dc0)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Fixes: 69d54ce7491d ("wifi: mt76: mt7996: switch to single multi-radio wiphy")
+Signed-off-by: Shayne Chen <shayne.chen@mediatek.com>
+Link: https://patch.msgid.link/20250515032952.1653494-8-shayne.chen@mediatek.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_psr_regs.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mac80211.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_psr_regs.h b/drivers/gpu/drm/i915/display/intel_psr_regs.h
-index 642bb15fb5475..25c0424e34db2 100644
---- a/drivers/gpu/drm/i915/display/intel_psr_regs.h
-+++ b/drivers/gpu/drm/i915/display/intel_psr_regs.h
-@@ -314,8 +314,8 @@
- #define  PORT_ALPM_LFPS_CTL_LFPS_HALF_CYCLE_DURATION_MASK	REG_GENMASK(20, 16)
- #define  PORT_ALPM_LFPS_CTL_LFPS_HALF_CYCLE_DURATION(val)	REG_FIELD_PREP(PORT_ALPM_LFPS_CTL_LFPS_HALF_CYCLE_DURATION_MASK, val)
- #define  PORT_ALPM_LFPS_CTL_FIRST_LFPS_HALF_CYCLE_DURATION_MASK	REG_GENMASK(12, 8)
--#define  PORT_ALPM_LFPS_CTL_FIRST_LFPS_HALF_CYCLE_DURATION(val)	REG_FIELD_PREP(PORT_ALPM_LFPS_CTL_LFPS_HALF_CYCLE_DURATION_MASK, val)
-+#define  PORT_ALPM_LFPS_CTL_FIRST_LFPS_HALF_CYCLE_DURATION(val)	REG_FIELD_PREP(PORT_ALPM_LFPS_CTL_FIRST_LFPS_HALF_CYCLE_DURATION_MASK, val)
- #define  PORT_ALPM_LFPS_CTL_LAST_LFPS_HALF_CYCLE_DURATION_MASK	REG_GENMASK(4, 0)
--#define  PORT_ALPM_LFPS_CTL_LAST_LFPS_HALF_CYCLE_DURATION(val)	REG_FIELD_PREP(PORT_ALPM_LFPS_CTL_LFPS_HALF_CYCLE_DURATION_MASK, val)
-+#define  PORT_ALPM_LFPS_CTL_LAST_LFPS_HALF_CYCLE_DURATION(val)	REG_FIELD_PREP(PORT_ALPM_LFPS_CTL_LAST_LFPS_HALF_CYCLE_DURATION_MASK, val)
+diff --git a/drivers/net/wireless/mediatek/mt76/mac80211.c b/drivers/net/wireless/mediatek/mt76/mac80211.c
+index b88d7e10742ee..e9605dc222910 100644
+--- a/drivers/net/wireless/mediatek/mt76/mac80211.c
++++ b/drivers/net/wireless/mediatek/mt76/mac80211.c
+@@ -449,8 +449,10 @@ mt76_phy_init(struct mt76_phy *phy, struct ieee80211_hw *hw)
+ 	wiphy_ext_feature_set(wiphy, NL80211_EXT_FEATURE_AIRTIME_FAIRNESS);
+ 	wiphy_ext_feature_set(wiphy, NL80211_EXT_FEATURE_AQL);
  
- #endif /* __INTEL_PSR_REGS_H__ */
+-	wiphy->available_antennas_tx = phy->antenna_mask;
+-	wiphy->available_antennas_rx = phy->antenna_mask;
++	if (!wiphy->available_antennas_tx)
++		wiphy->available_antennas_tx = phy->antenna_mask;
++	if (!wiphy->available_antennas_rx)
++		wiphy->available_antennas_rx = phy->antenna_mask;
+ 
+ 	wiphy->sar_capa = &mt76_sar_capa;
+ 	phy->frp = devm_kcalloc(dev->dev, wiphy->sar_capa->num_freq_ranges,
 -- 
 2.39.5
 
